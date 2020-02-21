@@ -177,7 +177,7 @@ Proc for attack log creation, because really why not
 	else
 		return pick("chest", "groin")
 
-/proc/do_mob(mob/user , mob/target, time = 30, target_zone = 0, uninterruptible = FALSE, progress = TRUE, ignore_movement = FALSE)
+/proc/do_mob(mob/user , mob/target, time = 30, target_zone = 0, uninterruptible = FALSE, progress = TRUE, ignore_movement = FALSE, datum/callback/extra_checks = null)
 	if(!user || !target)
 		return 0
 	var/user_loc = user.loc
@@ -201,7 +201,7 @@ Proc for attack log creation, because really why not
 		if(uninterruptible)
 			continue
 
-		if(!user || user.incapacitated())
+		if(QDELETED(user) || user.incapacitated())
 			. = FALSE
 			break
 
@@ -221,10 +221,14 @@ Proc for attack log creation, because really why not
 			. = FALSE
 			break
 
+		if(extra_checks && !extra_checks.Invoke())
+			. = FALSE
+			break
+
 	if (progbar)
 		qdel(progbar)
 
-/proc/do_after(mob/user, delay, atom/target = null, needhand = TRUE, progress = TRUE, incapacitation_flags = INCAPACITATION_DEFAULT, ignore_movement = FALSE, max_distance = null)
+/proc/do_after(mob/user, delay, atom/target = null, needhand = TRUE, progress = TRUE, incapacitation_flags = INCAPACITATION_DEFAULT, ignore_movement = FALSE, max_distance = null, datum/callback/extra_checks = null)
 	if(!user)
 		return 0
 	if(!delay)
@@ -255,7 +259,7 @@ Proc for attack log creation, because really why not
 		if(progress)
 			progbar.update(world.time - starttime)
 
-		if(!user || user.incapacitated(incapacitation_flags))
+		if(QDELETED(user) || user.incapacitated(incapacitation_flags))
 			. = FALSE
 			break
 
@@ -282,6 +286,10 @@ Proc for attack log creation, because really why not
 				break
 
 		if(max_distance && target && get_dist(user, target) > max_distance)
+			. = FALSE
+			break
+
+		if(extra_checks && !extra_checks.Invoke())
 			. = FALSE
 			break
 
