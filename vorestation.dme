@@ -1305,6 +1305,7 @@
 #include "code\game\objects\structures\noticeboard.dm"
 #include "code\game\objects\structures\plasticflaps.dm"
 #include "code\game\objects\structures\railing.dm"
+#include "code\game\objects\structures\reflector.dm"
 #include "code\game\objects\structures\safe.dm"
 #include "code\game\objects\structures\signs.dm"
 #include "code\game\objects\structures\simple_doors.dm"
@@ -3425,6 +3426,6 @@
 #include "maps\submaps\surface_submaps\plains\plains_areas.dm"
 #include "maps\submaps\surface_submaps\wilderness\wilderness.dm"
 #include "maps\submaps\surface_submaps\wilderness\wilderness_areas.dm"
-#include "maps\tether\tether.dm"
+#include "maps\virgo_minitest\virgo_minitest.dm"
 #include "maps\~map_system\maps.dm"
 // END_INCLUDE
