@@ -1,8 +1,6 @@
 /datum/dog_fashion
 	var/name
 	var/desc
-	var/say_list_type
-	// Legacy - Probably should be replaced with say_list datums
 	var/emote_see
 	var/emote_hear
 	var/speak
@@ -24,15 +22,13 @@
 		D.name = name
 	if(desc)
 		D.desc = desc
-	if(say_list_type)
-		D.say_list = new say_list_type(D)
 	if(D.say_list)
 		if(emote_see)
-			D.say_list.emote_see = emote_see
+			D.say_list?.emote_see = emote_see
 		if(emote_hear)
-			D.say_list.emote_hear = emote_hear
+			D.say_list?.emote_hear = emote_hear
 		if(speak)
-			D.say_list.speak = speak
+			D.say_list?.speak = speak
 
 /datum/dog_fashion/proc/get_overlay(var/obj/item/item, var/dir)
 	var/icon_state = obj_icon_state ? obj_icon_state : item?.icon_state
@@ -57,6 +53,7 @@
 /datum/dog_fashion/head/helmet
 	name = "Sergeant REAL_NAME"
 	desc = "The ever-loyal, the ever-vigilant."
+	obj_icon_state = "helmet"
 
 /datum/dog_fashion/head/chef
 	name = "Sous chef REAL_NAME"
@@ -69,14 +66,13 @@
 /datum/dog_fashion/head/kitty
 	name = "Runtime"
 	desc = "It's a cute little kitty-cat! ... wait ... what the hell?"
-	say_list_type = /datum/say_list/cat
+	emote_see = list("coughs up a furball", "stretches")
+	emote_hear = list("purrs")
+	speak = list("Purrr", "Meow!", "MAOOOOOW!", "HISSSSS", "MEEEEEEW")
 
 /datum/dog_fashion/head/rabbit
 	name = "Hoppy"
 	desc = "This is Hoppy. It's a corgi-...urmm... bunny rabbit."
-	say_list_type = /datum/say_list/dog/rabbit_hat
-
-/datum/say_list/dog/rabbit_hat
 	emote_see = list("twitches its nose", "hops around a bit")
 
 /datum/dog_fashion/head/beret
@@ -84,11 +80,13 @@
 	desc = "Mon dieu! C'est un chien!"
 	speak = list("le woof!", "le bark!", "JAPPE!!")
 	emote_see = list("cowers in fear.", "surrenders.", "plays dead.","looks as though there is a wall in front of him.")
+	obj_icon_state = "baret"
 
 /datum/dog_fashion/head/detective
 	name = "Detective REAL_NAME"
 	desc = "NAME sees through your lies..."
 	emote_see = list("investigates the area.","sniffs around for clues.","searches for scooby snacks.","takes a candycorn from the hat.")
+	obj_icon_state = "detective"
 
 /datum/dog_fashion/head/nurse
 	name = "Nurse REAL_NAME"
@@ -108,9 +106,6 @@
 /datum/dog_fashion/head/ushanka
 	name = "Communist-title Realname"
 	desc = "A follower of Karl Barx."
-	say_list_type = /datum/say_list/dog/ushanka_hat
-
-/datum/say_list/dog/ushanka_hat
 	emote_see = list("contemplates the failings of the capitalist economic model.", "ponders the pros and cons of vanguardism.")
 
 /datum/dog_fashion/head/ushanka/New(mob/M)
@@ -148,6 +143,7 @@
 	emote_hear = list("barks Christmas songs.", "yaps merrily!")
 	emote_see = list("looks for presents.", "checks his list.")
 	desc = "He's very fond of milk and cookies."
+	obj_icon_state = "santahat"
 
 /datum/dog_fashion/head/cargo_tech
 	name = "Corgi Tech REAL_NAME"
@@ -184,10 +180,6 @@
 	speak = list("HONK!", "Honk!")
 	emote_see = list("plays tricks.", "slips.")
 
-/datum/dog_fashion/back/deathsquad
-	name = "Trooper REAL_NAME"
-	desc = "That's not red paint. That's real corgi blood."
-
 /datum/dog_fashion/head/not_ian
 	name = "Definitely Not REAL_NAME"
 	desc = "That's Definitely Not Dogname"
@@ -196,9 +188,13 @@
 	..()
 	desc = "That's Definitely Not [M.real_name]."
 
+/datum/dog_fashion/back/armor
+	obj_icon_state = "armor"
+
 /datum/dog_fashion/back/hardsuit
 	name = "Space Explorer REAL_NAME"
 	desc = "That's one small step for a corgi. One giant yap for corgikind."
+	obj_icon_state = "hardsuit-engineering"
 
 /datum/dog_fashion/back/hardsuit/apply(mob/living/simple_mob/animal/passive/dog/D)
 	..()

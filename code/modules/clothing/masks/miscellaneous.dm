@@ -69,6 +69,7 @@
 	icon_state = "fake-moustache"
 	flags_inv = HIDEFACE
 	body_parts_covered = 0
+	dog_fashion = /datum/dog_fashion/head/not_ian
 
 /obj/item/clothing/mask/snorkel
 	name = "Snorkel"

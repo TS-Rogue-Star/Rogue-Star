@@ -100,6 +100,7 @@
 	icon_state = "tophat"
 	siemens_coefficient = 0.9
 	body_parts_covered = 0
+	dog_fashion = /datum/dog_fashion/head
 
 /obj/item/clothing/head/redcoat
 	name = "redcoat's hat"
@@ -138,6 +139,7 @@
 	icon_state = "nursehat"
 	siemens_coefficient = 0.9
 	body_parts_covered = 0
+	dog_fashion = /datum/dog_fashion/head/nurse
 
 /obj/item/clothing/head/syndicatefake
 	name = "red space-helmet replica"
@@ -193,6 +195,7 @@
 	desc = "Wearing these makes you looks useless, and only good for your sex appeal."
 	icon_state = "bunny"
 	body_parts_covered = 0
+	dog_fashion = /datum/dog_fashion/head/rabbit
 
 /obj/item/clothing/head/flatcap
 	name = "flat cap"
@@ -211,6 +214,7 @@
 	desc = "Yarr."
 	icon_state = "pirate"
 	body_parts_covered = 0
+	dog_fashion = /datum/dog_fashion/head/pirate
 
 /obj/item/clothing/head/hgpiratecap
 	name = "pirate hat"

@@ -121,7 +121,11 @@
 	return
 
 // Lookup the dog fashion datum for an item. We do this instead of a variable on obj/item
-/mob/living/simple_mob/animal/passive/dog/proc/get_dog_fashion(var/obj/item/I)
+/mob/living/simple_mob/animal/passive/dog/proc/get_dog_fashion(var/obj/item/clothing/I)
+	if(istype(I)) 
+		return I.dog_fashion
+	if(istype(I))
+		return /obj/item/weapon/paper
 	// TODO - Put obj/item/var/dog_fashion_type
 	if(istype(I, /obj/item/clothing/head/caphat/hop))
 		return /datum/dog_fashion/head/hop;
@@ -198,6 +202,7 @@
 
 	var/fashion_type = get_dog_fashion(item_to_add)
 	if(ispath(fashion_type, /datum/dog_fashion/head))
+		to_chat(user, "<span class='notice'>You set [item_to_add] on [src]'s head.</span>")
 		item_to_add.forceMove(src)
 		inventory_head = item_to_add
 		return TRUE
@@ -224,6 +229,7 @@
 	//The objects that corgis can wear on their backs.
 	var/fashion_type = get_dog_fashion(item_to_add)
 	if(ispath(fashion_type, /datum/dog_fashion/back))
+		to_chat(user, "<span class='notice'>You set [item_to_add] on [src]'s back.</span>")
 		item_to_add.forceMove(src)
 		inventory_back = item_to_add
 		return TRUE

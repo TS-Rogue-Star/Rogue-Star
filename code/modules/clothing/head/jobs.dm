@@ -4,6 +4,7 @@
 	name = "chef's hat"
 	desc = "It's a hat used by chefs to keep hair out of your food. Judging by the food in the mess, they don't work."
 	icon_state = "chefhat"
+	dog_fashion = /datum/dog_fashion/head/chef
 
 //Captain
 /obj/item/clothing/head/caphat
@@ -11,22 +12,26 @@
 	icon_state = "captain"
 	desc = "It's good being the king."
 	body_parts_covered = 0
+	dog_fashion = /datum/dog_fashion/head/captain
 
 /obj/item/clothing/head/caphat/cap
 	name = "colony director's cap"
 	desc = "You fear to wear it for the negligence it brings."
 	icon_state = "capcap"
+	dog_fashion = null
 
 /obj/item/clothing/head/caphat/formal
 	name = "parade hat"
 	desc = "No one in a commanding position should be without a perfect, white hat of ultimate authority."
 	icon_state = "officercap"
+	dog_fashion = null
 
 //HOP
 /obj/item/clothing/head/caphat/hop
 	name = "crew resource's hat"
 	desc = "A stylish hat that both protects you from enraged former-crewmembers and gives you a false sense of authority."
 	icon_state = "hopcap"
+	dog_fashion = /datum/dog_fashion/head/hop
 
 //Chaplain
 /obj/item/clothing/head/chaplain_hood
@@ -59,6 +64,7 @@
 	desc = "A beret, an artists favorite headwear."
 	icon_state = "beret"
 	body_parts_covered = 0
+	dog_fashion = /datum/dog_fashion/head/beret
 
 //Security
 /obj/item/clothing/head/beret/sec
@@ -66,6 +72,7 @@
 	desc = "A beret with the security insignia emblazoned on it. For officers that are more inclined towards style than safety."
 	icon_state = "beret_officer"
 	item_state_slots = list(slot_r_hand_str = "beret", slot_l_hand_str = "beret")
+	dog_fashion = null
 
 /obj/item/clothing/head/beret/sec/navy/officer
 	name = "officer beret"
@@ -112,6 +119,7 @@
 	desc = "It's a special hat issued to the Warden of a securiy force."
 	icon_state = "policehelm"
 	valid_accessory_slots = null
+	dog_fashion = /datum/dog_fashion/head/warden
 
 /obj/item/clothing/head/helmet/HoS
 	name = "Head of Security helmet"
@@ -141,6 +149,7 @@
 	siemens_coefficient = 0.9
 	valid_accessory_slots = null
 	show_examine = FALSE
+	dog_fashion = /datum/dog_fashion/head/detective
 
 /obj/item/clothing/head/det/grey
 	icon_state = "detective2"

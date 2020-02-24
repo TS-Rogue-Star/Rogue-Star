@@ -28,6 +28,8 @@
 
 	var/update_icon_define = null	// Only needed if you've got multiple files for the same type of clothing
 
+	var/datum/dog_fashion/dog_fashion = null // Type path to dog_fashion datum if this can be worn by doggos.
+
 
 //Updates the icons of the mob wearing the clothing item, if any.
 /obj/item/clothing/proc/update_clothing_icon()

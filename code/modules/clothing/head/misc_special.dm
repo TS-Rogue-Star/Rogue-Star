@@ -146,6 +146,7 @@
 	desc = "Perfect for winter in Siberia, da?"
 	icon_state = "ushankadown"
 	flags_inv = HIDEEARS
+	dog_fashion = /datum/dog_fashion/head/ushanka
 
 /obj/item/clothing/head/ushanka/attack_self(mob/user as mob)
 	if(src.icon_state == "ushankadown")
@@ -178,6 +179,7 @@
 	body_parts_covered = 0
 	siemens_coefficient = 1.5
 	item_icons = list()
+	dog_fashion = /datum/dog_fashion/head/kitty
 
 	update_icon(var/mob/living/carbon/human/user)
 		if(!istype(user)) return
@@ -201,6 +203,7 @@
 	icon_state = "santahatnorm"
 	item_state_slots = list(slot_r_hand_str = "santahat", slot_l_hand_str = "santahat")
 	body_parts_covered = 0
+	dog_fashion = /datum/dog_fashion/head/santa
 
 /obj/item/clothing/head/santa/green
 	name = "green santa hat"
@@ -208,6 +211,7 @@
 	icon_state = "santahatgreen"
 	item_state_slots = list(slot_r_hand_str = "santahatgreen", slot_l_hand_str = "santahatgreen")
 	body_parts_covered = 0
+	dog_fashion = null
 
 /*
  * Xenoarch/Surface Loot Hats
