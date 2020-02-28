@@ -2,7 +2,11 @@
 
 	#include "aubergine_defines.dm"
 	#include "aubergine_turfs.dm"
-	//#include "aubergine_things.dm"
+	#include "aubergine_doors.dm"
+	#include "aubergine_bayicons.dm"
+	#include "aubergine_helpers.dm"
+	#include "aubergine_wallframes.dm"
+	#include "aubergine_windows.dm"
 	//#include "aubergine_phoronlock.dm"
 	#include "aubergine_areas.dm"
 	//#include "aubergine_areas2.dm"

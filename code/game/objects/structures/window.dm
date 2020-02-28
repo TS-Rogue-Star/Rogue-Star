@@ -383,7 +383,7 @@
 	return
 
 /obj/structure/window/New(Loc, start_dir=null, constructed=0)
-	..()
+	. = ..()
 
 	if (start_dir)
 		set_dir(start_dir)
