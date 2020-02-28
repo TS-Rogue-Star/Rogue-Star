@@ -2,6 +2,7 @@
 	name = "wall"
 	desc = "A huge chunk of metal used to seperate rooms."
 	icon = 'icons/turf/wall_masks.dmi'
+	var/masks_icon = 'icons/turf/wall_masks.dmi'
 	icon_state = "generic"
 	opacity = 1
 	density = 1

@@ -21,6 +21,29 @@
 #define VIRGO3B_TURF_CREATE(x)	x/virgo3b/nitrogen=VIRGO3B_MOL_N2;x/virgo3b/oxygen=VIRGO3B_MOL_O2;x/virgo3b/carbon_dioxide=VIRGO3B_MOL_CO2;x/virgo3b/phoron=VIRGO3B_MOL_PHORON;x/virgo3b/temperature=VIRGO3B_AVG_TEMP;x/virgo3b/outdoors=TRUE;x/virgo3b/update_graphic(list/graphic_add = null, list/graphic_remove = null) return 0
 #define VIRGO3B_TURF_CREATE_UN(x)	x/virgo3b/nitrogen=VIRGO3B_MOL_N2;x/virgo3b/oxygen=VIRGO3B_MOL_O2;x/virgo3b/carbon_dioxide=VIRGO3B_MOL_CO2;x/virgo3b/phoron=VIRGO3B_MOL_PHORON;x/virgo3b/temperature=VIRGO3B_AVG_TEMP
 
+//Atmosphere properties
+#define VIRGO4_ONE_ATMOSPHERE	101.13 //kPa
+#define VIRGO4_AVG_TEMP	302.60 //kelvin
+
+#define VIRGO4_PER_N2		0.80 //percent
+#define VIRGO4_PER_O2		0.20
+#define VIRGO4_PER_N2O		0.00 //Currently no capacity to 'start' a turf with this. See turf.dm
+#define VIRGO4_PER_CO2		0.00
+#define VIRGO4_PER_PHORON	0.00
+
+//Math only beyond this point
+#define VIRGO4_MOL_PER_TURF	(VIRGO4_ONE_ATMOSPHERE*CELL_VOLUME/(VIRGO4_AVG_TEMP*R_IDEAL_GAS_EQUATION))
+#define VIRGO4_MOL_N2			(VIRGO4_MOL_PER_TURF * VIRGO4_PER_N2)
+#define VIRGO4_MOL_O2			(VIRGO4_MOL_PER_TURF * VIRGO4_PER_O2)
+#define VIRGO4_MOL_N2O			(VIRGO4_MOL_PER_TURF * VIRGO4_PER_N2O)
+#define VIRGO4_MOL_CO2			(VIRGO4_MOL_PER_TURF * VIRGO4_PER_CO2)
+#define VIRGO4_MOL_PHORON		(VIRGO4_MOL_PER_TURF * VIRGO4_PER_PHORON)
+
+//Turfmakers
+#define VIRGO4_SET_ATMOS	nitrogen=VIRGO4_MOL_N2;oxygen=VIRGO4_MOL_O2;carbon_dioxide=VIRGO4_MOL_CO2;phoron=VIRGO4_MOL_PHORON;temperature=VIRGO4_AVG_TEMP
+//#define VIRGO4_TURF_CREATE(x)	x/virgo3b/nitrogen=VIRGO4_MOL_N2;x/virgo3b/oxygen=VIRGO4_MOL_O2;x/virgo3b/carbon_dioxide=VIRGO4_MOL_CO2;x/virgo3b/phoron=VIRGO4_MOL_PHORON;x/virgo3b/temperature=VIRGO4_AVG_TEMP;x/virgo3b/outdoors=TRUE;x/virgo3b/update_graphic(list/graphic_add = null, list/graphic_remove = null) return 0
+//#define VIRGO4_TURF_CREATE_UN(x)	x/virgo3b/nitrogen=VIRGO4_MOL_N2;x/virgo3b/oxygen=VIRGO4_MOL_O2;x/virgo3b/carbon_dioxide=VIRGO4_MOL_CO2;x/virgo3b/phoron=VIRGO4_MOL_PHORON;x/virgo3b/temperature=VIRGO4_AVG_TEMP
+
 // This is a wall you surround the area of your "planet" with, that makes the atmosphere inside stay within bounds, even if canisters
 // are opened or other strange things occur.
 /turf/unsimulated/wall/planetary/virgo3b
@@ -28,3 +51,11 @@
 	desc = "An eight-meter tall carbyne wall. For when the wildlife on your planet is mostly militant megacorps."
 	alpha = 0xFF
 	VIRGO3B_SET_ATMOS
+
+/turf/unsimulated/wall/planetary/virgo4
+	name = "endless desert"
+	icon = 'icons/turf/outdoors.dmi'
+	icon_state = "basalt0"
+	desc = "It's basically endless glassed desert in that direction. You'd die long before you got anywhere relevant."
+	alpha = 0xFF
+	VIRGO4_SET_ATMOS
