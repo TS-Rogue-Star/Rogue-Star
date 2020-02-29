@@ -284,6 +284,56 @@
 		C.affecting -= src
 		effect_str -= C
 
+// Sunshine for indoor turfs
+/datum/light_source/sun/Destroy()
+	top_atom.light_power = initial(top_atom.light_power)
+	top_atom.light_color = initial(top_atom.light_color)
+	top_atom.light_range = initial(top_atom.light_range)
+	return ..()
+
+/datum/light_source/sun/proc/update_sun(var/brightness, var/color)
+	top_atom.light_power = brightness
+	top_atom.light_range = brightness //close enough!
+	top_atom.light_color = color
+	update()
+
+/datum/light_source/sun/apply_lum()
+	var/static/update_gen = 1
+	applied = 1
+
+	// Keep track of the last applied lum values so that the lighting can be reversed
+	applied_lum_r = lum_r
+	applied_lum_g = lum_g
+	applied_lum_b = lum_b
+
+	FOR_DVIEW(var/turf/T, light_range, source_turf, INVISIBILITY_LIGHTING)
+		if(T.outdoors)
+			continue
+
+		if(!T.lighting_corners_initialised)
+			T.generate_missing_corners()
+
+		for(var/datum/lighting_corner/C in T.get_corners())
+			if(C.update_gen == update_gen)
+				continue
+
+			C.update_gen = update_gen
+			C.affecting += src
+
+			if(!C.active)
+				effect_str[C] = 0
+				continue
+
+			APPLY_CORNER(C)
+
+		if(!T.affecting_lights)
+			T.affecting_lights = list()
+
+		T.affecting_lights += src
+		affecting_turfs    += T
+
+	update_gen++
+
 #undef effect_update
 #undef LUM_FALLOFF
 #undef REMOVE_CORNER

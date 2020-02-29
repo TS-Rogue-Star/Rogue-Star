@@ -22,35 +22,35 @@
 	var/image/I
 	var/base_color = material.icon_colour // paint_color ? paint_color : material.icon_colour
 	if(!density)
-		I = image('icons/turf/bay_wall_masks.dmi', "[material.icon_base]fwall_open")
+		I = image(masks_icon, "[material.icon_base]fwall_open")
 		I.color = base_color
 		add_overlay(I)
 		return
 
 	for(var/i = 1 to 4)
-		I = image('icons/turf/bay_wall_masks.dmi', "[material.icon_base][wall_connections[i]]", dir = 1<<(i-1))
+		I = image(masks_icon, "[material.icon_base][wall_connections[i]]", dir = 1<<(i-1))
 		I.color = base_color
 		add_overlay(I)
 		if(other_connections[i] != "0")
-			I = image('icons/turf/bay_wall_masks.dmi', "[material.icon_base]_other[wall_connections[i]]", dir = 1<<(i-1))
+			I = image(masks_icon, "[material.icon_base]_other[wall_connections[i]]", dir = 1<<(i-1))
 			I.color = base_color
 			add_overlay(I)
 
 	if(reinf_material)
 		var/reinf_color = reinf_material.icon_colour // paint_color ? paint_color : reinf_material.icon_colour
 		if(construction_stage != null && construction_stage < 6)
-			I = image('icons/turf/bay_wall_masks.dmi', "reinf_construct-[construction_stage]")
+			I = image(masks_icon, "reinf_construct-[construction_stage]")
 			I.color = reinf_color
 			add_overlay(I)
 		else
-			if("[reinf_material.icon_reinf]0" in icon_states('icons/turf/bay_wall_masks.dmi'))
+			if("[reinf_material.icon_reinf]0" in icon_states(masks_icon))
 				// Directional icon
 				for(var/i = 1 to 4)
-					I = image('icons/turf/bay_wall_masks.dmi', "[reinf_material.icon_reinf][wall_connections[i]]", dir = 1<<(i-1))
+					I = image(masks_icon, "[reinf_material.icon_reinf][wall_connections[i]]", dir = 1<<(i-1))
 					I.color = reinf_color
 					add_overlay(I)
 			else
-				I = image('icons/turf/bay_wall_masks.dmi', reinf_material.icon_reinf)
+				I = image(masks_icon, reinf_material.icon_reinf)
 				I.color = reinf_color
 				add_overlay(I)
 
@@ -84,7 +84,7 @@
 	var/alpha_inc = 256 / damage_overlays.len
 
 	for(var/i = 1; i <= damage_overlays.len; i++)
-		var/image/img = image(icon = 'icons/turf/bay_walls.dmi', icon_state = "overlay_damage")
+		var/image/img = image(icon = 'icons/turf/eris_walls.dmi', icon_state = "overlay_damage")
 		img.blend_mode = BLEND_MULTIPLY
 		img.alpha = (i * alpha_inc) - 1
 		damage_overlays[i] = img

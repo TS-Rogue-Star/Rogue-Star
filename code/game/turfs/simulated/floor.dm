@@ -32,6 +32,8 @@
 	heat_capacity = 10000
 	var/lava = 0
 
+	var/datum/light_source/sun/sunshine = null
+
 /turf/simulated/floor/is_plating()
 	return !flooring
 

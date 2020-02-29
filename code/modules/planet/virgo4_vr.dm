@@ -41,31 +41,31 @@ var/datum/planet/virgo4/planet_virgo4 = null //why?
 			low_brightness = 0.1
 			low_color = "#000066"
 
-			high_brightness = 0.4
+			high_brightness = 1
 			high_color = "#66004D"
 			min = 0
 
 		if(0.40 to 0.50) // Twilight
-			low_brightness = 0.4
+			low_brightness = 1
 			low_color = "#66004D"
 
-			high_brightness = 0.8
+			high_brightness = 2
 			high_color = "#CC3300"
 			min = 0.40
 
 		if(0.50 to 0.70) // Sunrise/set
-			low_brightness = 1.2
+			low_brightness = 2
 			low_color = "#CC3300"
 
-			high_brightness = 1.8
+			high_brightness = 3.5
 			high_color = "#FF9933"
 			min = 0.50
 
 		if(0.70 to 1.00) // Noon
-			low_brightness = 1.8
+			low_brightness = 4.0
 			low_color = "#DDDDDD"
 
-			high_brightness = 2.0
+			high_brightness = 5.0
 			high_color = "#FFFFFF"
 			min = 0.70
 

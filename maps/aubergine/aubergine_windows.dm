@@ -39,12 +39,21 @@
 
 	var/image/I
 	icon_state = ""
+	
+	var/obj/item/stack/material/glass/gtype = glasstype
+	var/material/mymat = get_material_by_name(initial(gtype.default_type))
+	var/glasscolor = mymat?.icon_colour
+	var/glassalpha = mymat?.opacity * 255
+
 	if(is_on_frame())
 		for(var/i = 1 to 4)
 			if(other_connections[i] != "0")
 				I = image(icon, "[basestate]_other_onframe[connections[i]]", dir = 1<<(i-1))
 			else
 				I = image(icon, "[basestate]_onframe[connections[i]]", dir = 1<<(i-1))
+			if(mymat)
+				I.color = glasscolor
+				I.alpha = glassalpha
 			add_overlay(I)
 	else
 		for(var/i = 1 to 4)
@@ -52,6 +61,9 @@
 				I = image(icon, "[basestate]_other[connections[i]]", dir = 1<<(i-1))
 			else
 				I = image(icon, "[basestate][connections[i]]", dir = 1<<(i-1))
+			if(mymat)
+				I.color = glasscolor
+				I.alpha = glassalpha
 			add_overlay(I)
 
 /obj/structure/window/proc/update_connections(propagate = 0)

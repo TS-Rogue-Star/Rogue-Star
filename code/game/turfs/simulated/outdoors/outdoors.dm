@@ -20,6 +20,9 @@ var/list/turf_edge_cache = list()
 	// When a turf gets demoted or promoted, this list gets adjusted.  The top-most layer is the layer on the bottom of the list, due to how pop() works.
 	var/list/turf_layers = list(/turf/simulated/floor/outdoors/rocks)
 
+	// We're shining light through a window or something else
+	var/turf/simulated/floor/shining_into = null
+
 /turf/simulated/floor/outdoors/Initialize()
 	update_icon()
 	. = ..()

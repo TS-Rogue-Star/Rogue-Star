@@ -163,6 +163,23 @@ SUBSYSTEM_DEF(planets)
 				sunlit_corners += LC
 				LC.update_gen = update_gen
 				LC.update_lumcount(lum_r, lum_g, lum_b)
+		//Create a fake light object to shine light indoors
+		if(istype(I, /turf/simulated/floor/outdoors))
+			var/turf/simulated/floor/outdoors/OT = I
+			if(OT.shining_into?.sunshine)
+				OT.shining_into.sunshine.update_sun(P.sun["brightness"], P.sun["color"])
+			else
+				for(var/dir in alldirs)
+					var/turf/simulated/floor/inturf = get_step(OT,dir)
+					if(istype(inturf))
+						if(inturf.outdoors || inturf.sunshine)
+							continue
+						OT.shining_into = inturf
+						inturf.light_power = P.sun["brightness"]
+						inturf.light_range = P.sun["brightness"] //sure why not
+						inturf.light_color = P.sun["color"]
+						inturf.sunshine = new /datum/light_source/sun(inturf, inturf)
+						break
 		CHECK_TICK
 	update_gen--
 	P.sun["lum_r"] = lum_r
