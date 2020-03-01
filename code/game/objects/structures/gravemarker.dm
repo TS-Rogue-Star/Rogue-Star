@@ -17,7 +17,6 @@
 	var/epitaph = ""		//A quick little blurb
 //	var/dir_locked = 0		//Can it be spun?	Not currently implemented
 
-	var/material/material
 
 /obj/structure/gravemarker/New(var/newloc, var/material_name)
 	..(newloc)

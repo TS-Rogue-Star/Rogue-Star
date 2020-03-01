@@ -229,16 +229,20 @@ var/airlock_icon_cache = list()
 	*/
 
 	cut_overlays()
-	add_overlay(color_overlay)
-	add_overlay(filling_overlay)
-	add_overlay(stripe_overlay)
-	add_overlay(stripe_filling_overlay)
-	add_overlay(panel_overlay)
-	add_overlay(weld_overlay)
-	//add_overlay(brace_overlay)
-	add_overlay(lights_overlay)
-	add_overlay(sparks_overlay)
-	add_overlay(damage_overlay)
+	add_overlay(list(
+		color_overlay,
+		filling_overlay,
+		stripe_overlay,
+		stripe_filling_overlay,
+		panel_overlay,
+		weld_overlay,
+		//brace_overlay,
+		lights_overlay,
+		sparks_overlay,
+		damage_overlay
+		))
+	COMPILE_OVERLAYS(src) //Time sensitive, DO IT RIGHT NOW.
+	
 
 /obj/machinery/door/airlock/do_animate(animation)
 	if(overlays)
