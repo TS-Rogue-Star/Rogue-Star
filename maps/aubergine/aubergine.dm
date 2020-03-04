@@ -1,9 +1,10 @@
 #if !defined(USING_MAP_DATUM)
 
 	#include "aubergine_defines.dm"
-	#include "aubergine_turfs.dm"
+	#include "aubergine_baywalls.dm"
+	#include "aubergine_erisfloors.dm"
 	#include "aubergine_doors.dm"
-	#include "aubergine_bayicons.dm"
+	#include "aubergine_icons.dm"
 	#include "aubergine_helpers.dm"
 	#include "aubergine_wallframes.dm"
 	#include "aubergine_windows.dm"
