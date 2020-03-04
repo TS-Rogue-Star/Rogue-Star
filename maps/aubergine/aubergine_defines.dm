@@ -24,6 +24,7 @@
 	path = "aubergine"
 
 	zlevel_datum_type = /datum/map_z_level/aubergine
+	planet_datums_to_make = list(/datum/planet/virgo4)
 
 	lobby_icon = 'icons/misc/title_vr.dmi'
 	lobby_screens = list("tether")
