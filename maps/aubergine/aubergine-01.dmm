@@ -417,9 +417,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/barrestroom)
-"dB" = (
-/turf/simulated/mineral,
-/area/crew_quarters/cafeteria)
 "dH" = (
 /turf/simulated/floor/tiled/aubergine/steel/bluecorner,
 /area/crew_quarters/visitor_lodging)
@@ -484,7 +481,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/flask/vacuumflask,
 /obj/structure/table/darkglass,
 /turf/simulated/floor/tiled/aubergine/steel/bar_dance,
-/area/crew_quarters/kitchen)
+/area/crew_quarters/bar)
 "fg" = (
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
@@ -521,7 +518,7 @@
 "gq" = (
 /obj/machinery/vending/boozeomat,
 /turf/simulated/floor/tiled/aubergine/steel/bar_dance,
-/area/crew_quarters/kitchen)
+/area/crew_quarters/bar)
 "gI" = (
 /obj/machinery/vending/dinnerware,
 /turf/simulated/floor/tiled/aubergine/cafe,
@@ -543,7 +540,7 @@
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/tiled/steel_grid,
+/turf/simulated/floor/tiled/aubergine/steel/gray_perforated,
 /area/crew_quarters/sleep/Dorm_7)
 "hM" = (
 /obj/structure/bed/chair/comfy/blue{
@@ -595,7 +592,7 @@
 	pixel_x = 24
 	},
 /turf/simulated/floor/tiled/white,
-/area/crew_quarters/kitchen)
+/area/crew_quarters/barrestroom)
 "io" = (
 /obj/machinery/vending/cola{
 	pixel_x = 0;
@@ -682,6 +679,9 @@
 /obj/structure/table/woodentable,
 /turf/simulated/floor/wood,
 /area/crew_quarters/sleep/Dorm_2)
+"kb" = (
+/turf/simulated/floor/tiled/aubergine/steel/techfloor_grid,
+/area/aubergine/surface/cool)
 "ke" = (
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
@@ -705,7 +705,7 @@
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/tiled/steel_grid,
+/turf/simulated/floor/tiled/aubergine/steel/gray_perforated,
 /area/crew_quarters/sleep/Dorm_8)
 "kU" = (
 /obj/machinery/newscaster{
@@ -755,7 +755,7 @@
 /obj/item/weapon/tool/screwdriver,
 /obj/structure/table/darkglass,
 /turf/simulated/floor/tiled/aubergine/steel/bar_dance,
-/area/crew_quarters/kitchen)
+/area/crew_quarters/bar)
 "lw" = (
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
@@ -808,12 +808,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/barrestroom)
-"mt" = (
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/tiled/steel_grid,
-/area/crew_quarters/visitor_lodging)
 "my" = (
 /obj/structure/table/woodentable,
 /turf/simulated/floor/wood,
@@ -928,6 +922,9 @@
 /obj/structure/table/woodentable,
 /turf/simulated/floor/wood,
 /area/crew_quarters/sleep/Dorm_4)
+"nV" = (
+/turf/simulated/floor/tiled/aubergine/steel/gray_platform,
+/area/aubergine/surface/cool)
 "ok" = (
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
@@ -966,7 +963,7 @@
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/tiled/steel_grid,
+/turf/simulated/floor/tiled/aubergine/steel/gray_perforated,
 /area/crew_quarters/sleep_female/toilet_female)
 "pl" = (
 /obj/structure/cable/cyan{
@@ -1046,8 +1043,11 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/civilian,
-/turf/simulated/floor/tiled/aubergine/white,
+/turf/simulated/floor/tiled/aubergine/steel/gray_perforated,
 /area/crew_quarters/barrestroom)
+"rq" = (
+/turf/simulated/floor/tiled/aubergine/steel/golden,
+/area/aubergine/surface/cool)
 "ru" = (
 /turf/simulated/wall,
 /area/crew_quarters/sleep/Dorm_4)
@@ -1088,9 +1088,6 @@
 /obj/structure/kitchenspike,
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/kitchen)
-"tf" = (
-/turf/simulated/floor/tiled/aubergine/steel/bar_flat,
-/area/crew_quarters/kitchen)
 "tj" = (
 /obj/machinery/light,
 /turf/simulated/floor/tiled/aubergine/steel/bluecorner,
@@ -1107,6 +1104,9 @@
 	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/sleep/Dorm_6)
+"uc" = (
+/turf/simulated/floor/tiled/aubergine/steel/orangecorner,
+/area/aubergine/hallway/main)
 "ue" = (
 /obj/structure/cable/cyan{
 	icon_state = "2-8"
@@ -1136,7 +1136,7 @@
 "vo" = (
 /obj/effect/floor_decal/corner/blue/diagonal,
 /obj/machinery/door/airlock/civilian,
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled/aubergine/steel/gray_perforated,
 /area/crew_quarters/kitchen)
 "vG" = (
 /obj/machinery/power/apc{
@@ -1154,6 +1154,9 @@
 	},
 /turf/simulated/floor/carpet,
 /area/crew_quarters/visitor_lodging)
+"vO" = (
+/turf/simulated/floor/tiled/aubergine/steel/monofloor,
+/area/aubergine/surface/cool)
 "vS" = (
 /obj/effect/floor_decal/industrial/danger/corner,
 /turf/simulated/floor/tiled/steel,
@@ -1234,6 +1237,16 @@
 	},
 /turf/simulated/floor/carpet,
 /area/crew_quarters/sleep/Dorm_8)
+"xI" = (
+/obj/structure/cable/cyan{
+	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	icon_state = "pipe-s";
+	dir = 4
+	},
+/turf/simulated/floor/tiled/aubergine/steel/gray_perforated,
+/area/aubergine/hallway/main)
 "xJ" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/effect/floor_decal/corner/brown/diagonal,
@@ -1263,9 +1276,6 @@
 	},
 /turf/simulated/floor/tiled/aubergine/cafe,
 /area/crew_quarters/cafeteria)
-"zd" = (
-/turf/simulated/floor/outdoors/sand,
-/area/crew_quarters/bar)
 "zD" = (
 /obj/structure/sink/puddle,
 /turf/simulated/floor/outdoors/sand,
@@ -1285,9 +1295,6 @@
 /obj/structure/curtain/open/shower,
 /turf/simulated/floor/tiled/freezer,
 /area/crew_quarters/visitor_lodging)
-"zH" = (
-/turf/simulated/floor/tiled/white,
-/area/crew_quarters/kitchen)
 "zT" = (
 /turf/simulated/floor/plating,
 /area/aubergine/surface/cool)
@@ -1342,7 +1349,7 @@
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/tiled/steel_grid,
+/turf/simulated/floor/tiled/aubergine/steel/gray_perforated,
 /area/crew_quarters/sleep/Dorm_6)
 "BM" = (
 /obj/structure/cable/cyan{
@@ -1355,6 +1362,9 @@
 	},
 /turf/simulated/floor/carpet,
 /area/crew_quarters/sleep_female/toilet_female)
+"BO" = (
+/turf/simulated/floor/tiled/aubergine/techmaint_perforated,
+/area/aubergine/surface/cool)
 "BP" = (
 /obj/machinery/firealarm{
 	pixel_y = 22
@@ -1366,13 +1376,16 @@
 /area/aubergine/eng/storage)
 "Ca" = (
 /obj/machinery/door/airlock/civilian,
-/turf/simulated/floor/tiled/steel_grid,
+/turf/simulated/floor/tiled/aubergine/steel/danger,
 /area/crew_quarters/kitchen)
+"Ce" = (
+/turf/simulated/floor/tiled/aubergine/steel/techfloor,
+/area/aubergine/surface/cool)
 "Cm" = (
 /obj/machinery/chemical_dispenser/bar_alc/full,
 /obj/structure/table/darkglass,
 /turf/simulated/floor/tiled/aubergine/steel/bar_dance,
-/area/crew_quarters/kitchen)
+/area/crew_quarters/bar)
 "Cv" = (
 /obj/structure/bed/chair/comfy/blue{
 	icon_state = "comfychair";
@@ -1474,7 +1487,7 @@
 /obj/machinery/chemical_dispenser/bar_soft/full,
 /obj/structure/table/darkglass,
 /turf/simulated/floor/tiled/aubergine/steel/bar_dance,
-/area/crew_quarters/kitchen)
+/area/crew_quarters/bar)
 "Fm" = (
 /obj/machinery/cooker/cereal,
 /turf/simulated/floor/tiled/aubergine/white/danger,
@@ -1508,6 +1521,9 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/visitor_lodging)
+"Gm" = (
+/turf/simulated/floor/tiled/aubergine/steel/gray_perforated,
+/area/aubergine/hallway/main)
 "Gq" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable/cyan{
@@ -1604,12 +1620,15 @@
 /area/aubergine/eng/storage)
 "HI" = (
 /obj/machinery/door/airlock/civilian,
-/turf/simulated/floor/tiled/steel_grid,
+/turf/simulated/floor/tiled/aubergine/steel/gray_perforated,
 /area/crew_quarters/cafeteria)
 "HK" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled/aubergine/techmaint,
 /area/aubergine/eng/solarmaint)
+"HP" = (
+/turf/simulated/floor/tiled/aubergine/steel/bluecorner,
+/area/aubergine/surface/cool)
 "HR" = (
 /obj/structure/bed/chair/modern_chair,
 /turf/simulated/floor/tiled/aubergine/steel/bar_light,
@@ -1656,6 +1675,16 @@
 	},
 /turf/simulated/floor/tiled/aubergine/techmaint,
 /area/aubergine/eng/solarmaint)
+"JA" = (
+/obj/structure/cable/cyan{
+	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	icon_state = "pipe-s";
+	dir = 4
+	},
+/turf/simulated/floor/tiled/aubergine/steel/gray_perforated,
+/area/aubergine/hallway/qpads)
 "JH" = (
 /obj/machinery/light/small{
 	icon_state = "bulb1";
@@ -1769,7 +1798,7 @@
 /area/crew_quarters/bar)
 "Mh" = (
 /obj/machinery/door/airlock/civilian,
-/turf/simulated/floor/tiled/aubergine/steel/bluecorner,
+/turf/simulated/floor/tiled/aubergine/steel/gray_perforated,
 /area/aubergine/hallway/main)
 "Ml" = (
 /obj/effect/wallframe_spawn/no_grille,
@@ -1783,7 +1812,7 @@
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled/aubergine/steel/gray_perforated,
 /area/crew_quarters/sleep/Dorm_5)
 "MN" = (
 /obj/structure/disposalpipe/segment{
@@ -1802,7 +1831,7 @@
 "MW" = (
 /obj/machinery/holoplant,
 /turf/simulated/floor/tiled/aubergine/steel/bar_flat,
-/area/crew_quarters/kitchen)
+/area/crew_quarters/bar)
 "Nb" = (
 /turf/simulated/floor/carpet,
 /area/crew_quarters/sleep/Dorm_8)
@@ -1847,7 +1876,7 @@
 "Ob" = (
 /obj/machinery/smartfridge/drinks,
 /turf/simulated/floor/tiled/aubergine/steel/bar_dance,
-/area/crew_quarters/kitchen)
+/area/crew_quarters/bar)
 "Oe" = (
 /obj/structure/bed/chair/office/light{
 	dir = 8
@@ -1873,7 +1902,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/civilian,
-/turf/simulated/floor/tiled/aubergine/steel/bluecorner,
+/turf/simulated/floor/tiled/aubergine/steel/gray_perforated,
 /area/aubergine/hallway/main)
 "OU" = (
 /turf/simulated/floor/tiled/aubergine/cafe,
@@ -1942,6 +1971,9 @@
 "QC" = (
 /turf/simulated/wall,
 /area/aubergine/hallway/main)
+"QE" = (
+/turf/simulated/floor/tiled/aubergine/steel/panels,
+/area/aubergine/surface/cool)
 "QY" = (
 /turf/simulated/wall,
 /area/aubergine/eng/solarmaint)
@@ -2074,7 +2106,7 @@
 /area/crew_quarters/bar)
 "TI" = (
 /obj/machinery/door/airlock/civilian,
-/turf/simulated/floor/tiled/steel_grid,
+/turf/simulated/floor/tiled/aubergine/steel/gray_perforated,
 /area/crew_quarters/barrestroom)
 "TR" = (
 /obj/effect/floor_decal/corner/blue/diagonal,
@@ -2274,9 +2306,6 @@
 	},
 /turf/simulated/floor/tiled/aubergine/steel/bluecorner,
 /area/aubergine/hallway/main)
-"XN" = (
-/turf/simulated/floor/tiled/aubergine/steel,
-/area/aubergine/hallway/main)
 "XQ" = (
 /obj/effect/floor_decal/corner/blue/diagonal,
 /obj/structure/closet/secure_closet/freezer/kitchen,
@@ -2331,7 +2360,7 @@
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled/aubergine/steel/gray_perforated,
 /area/crew_quarters/visitor_lodging)
 "YH" = (
 /obj/structure/bed/chair/comfy/brown{
@@ -2344,6 +2373,9 @@
 	},
 /turf/simulated/floor/tiled/aubergine/cafe,
 /area/crew_quarters/cafeteria)
+"YK" = (
+/turf/simulated/floor/tiled/aubergine/steel/gray_perforated,
+/area/aubergine/surface/cool)
 "YW" = (
 /turf/simulated/wall,
 /area/crew_quarters/bar)
@@ -2363,7 +2395,7 @@
 /area/crew_quarters/bar)
 "Zm" = (
 /obj/machinery/door/airlock/glass/civilian,
-/turf/simulated/floor/tiled/steel_grid,
+/turf/simulated/floor/tiled/aubergine/steel/gray_perforated,
 /area/crew_quarters/visitor_lodging)
 "Zu" = (
 /obj/structure/cable/cyan{
@@ -2396,7 +2428,7 @@
 	},
 /obj/machinery/recharge_station,
 /turf/simulated/floor/tiled/steel_grid,
-/area/crew_quarters/kitchen)
+/area/crew_quarters/barrestroom)
 "ZW" = (
 /obj/machinery/power/apc{
 	dir = 1;
@@ -15258,7 +15290,7 @@ ac
 iR
 iR
 iR
-Hc
+JA
 iR
 iR
 WX
@@ -15849,14 +15881,14 @@ ac
 ac
 ac
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+HP
+HP
+HP
+HP
+HP
+HP
+HP
+HP
 ac
 ac
 ac
@@ -16051,14 +16083,14 @@ ac
 ac
 ac
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+HP
+HP
+HP
+HP
+HP
+HP
+HP
+HP
 ac
 ac
 ac
@@ -16253,14 +16285,14 @@ ac
 ac
 ac
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+HP
+HP
+HP
+HP
+HP
+HP
+HP
+HP
 ac
 ac
 ac
@@ -16280,19 +16312,19 @@ YD
 WX
 WX
 WX
-mt
+YD
 WX
 WX
 WX
-mt
+YD
 WX
 WX
 WX
-mt
+YD
 WX
 WX
 WX
-mt
+YD
 WX
 at
 at
@@ -16455,14 +16487,14 @@ ac
 ac
 ac
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+as
+as
+rq
+as
+as
+YK
+as
+as
 ac
 ac
 ac
@@ -16657,14 +16689,14 @@ ac
 ac
 ac
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+HP
+HP
+HP
+HP
+HP
+HP
+HP
+HP
 ac
 ac
 ac
@@ -16859,14 +16891,14 @@ ac
 ac
 ac
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+HP
+HP
+HP
+HP
+HP
+HP
+HP
+HP
 ac
 ac
 ac
@@ -17061,14 +17093,14 @@ ac
 ac
 ac
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+as
+as
+nV
+as
+as
+vO
+as
+as
 ac
 ac
 ac
@@ -17263,14 +17295,14 @@ ac
 ac
 ac
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+HP
+HP
+HP
+HP
+HP
+HP
+HP
+HP
 ac
 ac
 ac
@@ -17465,14 +17497,14 @@ ac
 ac
 ac
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+HP
+HP
+HP
+HP
+HP
+HP
+HP
+HP
 ac
 ac
 ac
@@ -17667,14 +17699,14 @@ ac
 ac
 aq
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+as
+as
+QE
+as
+as
+Ce
+as
+as
 ac
 ac
 ac
@@ -17869,27 +17901,27 @@ ac
 ac
 ac
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+HP
+HP
+HP
+HP
+HP
+HP
+HP
+HP
 ac
 ac
 ac
 ac
 QC
 QC
-Kl
+Gm
 Ml
-nD
+xI
 QC
 QC
 QC
-nD
+xI
 QC
 QC
 QC
@@ -18071,14 +18103,14 @@ ac
 ac
 aK
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+HP
+HP
+HP
+HP
+HP
+HP
+HP
+HP
 ac
 ac
 ac
@@ -18090,7 +18122,7 @@ Kl
 nD
 Kl
 Kl
-XN
+Kl
 nD
 Kl
 rA
@@ -18273,19 +18305,19 @@ ac
 ac
 ac
 ac
+as
+as
+kb
+as
+as
+BO
+as
+as
 ac
 ac
 ac
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-Kl
+uc
 nG
 nG
 nG
@@ -18475,14 +18507,14 @@ ac
 ac
 aw
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+HP
+HP
+HP
+HP
+HP
+HP
+HP
+HP
 ac
 ac
 ac
@@ -18677,14 +18709,14 @@ ac
 ac
 aw
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+HP
+HP
+HP
+HP
+HP
+HP
+HP
+HP
 ac
 ac
 ac
@@ -18879,20 +18911,20 @@ ac
 ac
 ac
 ac
+HP
+HP
+HP
+HP
+HP
+HP
+HP
+HP
 ac
 ac
 ac
 ac
 ac
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-zd
-zd
 YW
 Ui
 Xo
@@ -19093,8 +19125,8 @@ ac
 ac
 ac
 ac
-zd
-zd
+ac
+ac
 YW
 pl
 Wh
@@ -19108,7 +19140,7 @@ NH
 NH
 MN
 qr
-tf
+qr
 Ca
 av
 av
@@ -19295,8 +19327,8 @@ ac
 ac
 ac
 ac
-zd
-zd
+ac
+ac
 YW
 qr
 qr
@@ -19497,8 +19529,8 @@ ac
 ac
 ac
 ac
-zd
-zd
+ac
+ac
 YW
 lA
 qr
@@ -19699,8 +19731,8 @@ uk
 uk
 uk
 ac
-zd
-zd
+ac
+ac
 YW
 qr
 Vy
@@ -19901,8 +19933,8 @@ uk
 uk
 uk
 ac
-zd
-zd
+ac
+ac
 iG
 Dj
 Dj
@@ -20103,8 +20135,8 @@ uk
 uk
 uk
 ac
-zd
-zd
+ac
+ac
 iG
 HR
 Dj
@@ -20305,8 +20337,8 @@ uk
 uk
 ac
 ac
-zd
-zd
+ac
+ac
 iG
 Dj
 Dj
@@ -20507,8 +20539,8 @@ ac
 ac
 ac
 ac
-zd
-zd
+ac
+ac
 YW
 qr
 Pt
@@ -20522,8 +20554,8 @@ YW
 YW
 YW
 YW
-XG
-XG
+HW
+HW
 XG
 vo
 XG
@@ -20709,8 +20741,8 @@ OU
 OU
 OU
 ac
-zd
-zd
+ac
+ac
 YW
 qr
 qr
@@ -20911,8 +20943,8 @@ OU
 OU
 OU
 ac
-zd
-zd
+ac
+ac
 YW
 qr
 qr
@@ -20927,7 +20959,7 @@ TI
 HW
 TI
 HW
-Ca
+TI
 XG
 Er
 Er
@@ -21113,8 +21145,8 @@ OU
 OU
 OU
 ac
-zd
-zd
+ac
+ac
 YW
 qr
 qr
@@ -21129,7 +21161,7 @@ ht
 ht
 ht
 ht
-zH
+ht
 XG
 Er
 Er
@@ -21315,8 +21347,8 @@ OU
 OU
 ac
 ac
-zd
-zd
+ac
+ac
 YW
 jt
 qr
@@ -21517,8 +21549,8 @@ ac
 ac
 ac
 ac
-zd
-zd
+ac
+ac
 YW
 YW
 YW
@@ -21533,19 +21565,19 @@ HW
 HW
 HW
 HW
+HW
 XG
 XG
 XG
 XG
 XG
-XG
-dB
-dB
-dB
-dB
-dB
-dB
-dB
+aS
+aS
+aS
+aS
+aS
+aS
+aS
 aS
 aS
 ab
