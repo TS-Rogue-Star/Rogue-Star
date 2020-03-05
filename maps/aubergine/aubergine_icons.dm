@@ -12,7 +12,7 @@
 	pixel_x = (src.dir & 3) ? 0 : (src.dir == 4 ? 24 : -24)
 	pixel_y = (src.dir & 3) ? (src.dir == 1 ? 22 : -22) : 0
 
-/obj/machiner/firealarm
+/obj/machinery/firealarm
 	icon = 'icons/obj/bay/firealarm.dmi'
 
 /obj/item/device/radio/intercom

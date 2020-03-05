@@ -82,14 +82,17 @@
 	has_base_range = 15
 
 /decl/flooring/tiling/aubergine/steel/bar_flat
+	name = "flat bar floor"
 	icon_base = "bar_flat"
 	build_type = /obj/item/stack/tile/floor/aubergine/steel/bar_flat
 
 /decl/flooring/tiling/aubergine/steel/bar_dance
+	name = "dancefloor"
 	icon_base = "bar_dance"
 	build_type = /obj/item/stack/tile/floor/aubergine/steel/bar_dance
 
 /decl/flooring/tiling/aubergine/steel/bar_light
+	name = "lit bar floor"
 	icon_base = "bar_light"
 	build_type = /obj/item/stack/tile/floor/aubergine/steel/bar_light
 
@@ -579,6 +582,7 @@
 	initial_flooring = /decl/flooring/tiling/aubergine
 
 
+
 //Steel tiles
 /turf/simulated/floor/tiled/aubergine/steel
 	name = "floor"
@@ -657,9 +661,11 @@
 /turf/simulated/floor/tiled/aubergine/steel/bar_light
 	icon_state = "bar_light"
 	initial_flooring = /decl/flooring/tiling/aubergine/steel/bar_light
-	light_power = 2
-	light_range = 3
-	light_color = "#00AAFF"
+
+/turf/simulated/floor/tiled/aubergine/steel/bar_light/Initialize()
+	. = ..()
+	set_light(3,4,"#00AAFF")
+
 
 
 //White Tiles
@@ -728,6 +734,7 @@
 /turf/simulated/floor/tiled/aubergine/white/monofloor
 	icon_state = "monofloor"
 	initial_flooring = /decl/flooring/tiling/aubergine/white/monofloor
+
 
 
 // Dark Tiles
