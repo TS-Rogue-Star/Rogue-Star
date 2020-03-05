@@ -92,10 +92,6 @@
 	src.equipment_path = path
 	src.cost = cost
 
-/obj/machinery/power/quantumpad/Initialize()
-	. = ..()
-	default_apply_parts()
-
 /obj/machinery/mineral/equipment_vendor/power_change()
 	var/old_stat = stat
 	..()
