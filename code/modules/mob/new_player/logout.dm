@@ -1,5 +1,6 @@
 /mob/new_player/Logout()
-	ready = 0
+	ready = FALSE
+	ready_to_observe = FALSE
 
 	// see login.dm
 	if(my_client)

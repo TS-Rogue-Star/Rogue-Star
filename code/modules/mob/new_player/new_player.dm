@@ -1,7 +1,8 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 /mob/new_player
-	var/ready = 0
+	var/ready = FALSE
+	var/ready_to_observe = FALSE
 	var/spawning = 0			//Referenced when you want to delete the new_player later on in the code.
 	var/totalPlayers = 0		//Player counts for the Lobby tab
 	var/totalPlayersReady = 0
@@ -34,6 +35,8 @@
 	if(!ticker || ticker.current_state <= GAME_STATE_PREGAME)
 		if(ready)
 			output += "<p>\[ <span class='linkOn'><b>Ready</b></span> | <a href='byond://?src=\ref[src];ready=0'>Not Ready</a> \]</p>"
+		else if(ready_to_observe)
+			output += "<p>\[ <a href='byond://?src=\ref[src];ready=1'>Ready</a> | <a href='byond://?src=\ref[src];ready=0'>Not Ready</a> \]</p>"
 		else
 			output += "<p>\[ <a href='byond://?src=\ref[src];ready=1'>Ready</a> | <span class='linkOn'><b>Not Ready</b></span> \]</p>"
 
@@ -41,7 +44,10 @@
 		output += "<a href='byond://?src=\ref[src];manifest=1'>View the Crew Manifest</A><br><br>"
 		output += "<p><a href='byond://?src=\ref[src];late_join=1'>Join Game!</A></p>"
 
-	output += "<p><a href='byond://?src=\ref[src];observe=1'>Observe</A></p>"
+	if(ready_to_observe)
+		output += "<p><span class='linkOn'><b>Observe</b></span></p>"
+	else
+		output += "<p><a href='byond://?src=\ref[src];observe=1'>Observe</A></p>"
 
 	if(!IsGuestKey(src.key))
 		establish_db_connection()
@@ -102,17 +108,21 @@
 				if(player.ready)totalPlayersReady++
 
 /mob/new_player/Topic(href, href_list[])
-	if(!client)	return 0
+	if(src != usr)
+		return 0
+	if(!client)
+		return 0
 
 	if(href_list["show_preferences"])
 		client.prefs.ShowChoices(src)
 		return 1
 
 	if(href_list["ready"])
+		ready_to_observe = FALSE
 		if(!ticker || ticker.current_state <= GAME_STATE_PREGAME) // Make sure we don't ready up after the round has started
 			ready = text2num(href_list["ready"])
 		else
-			ready = 0
+			ready = FALSE
 
 	if(href_list["refresh"])
 		//src << browse(null, "window=playersetup") //closes the player setup window
@@ -120,43 +130,15 @@
 		new_player_panel_proc()
 
 	if(href_list["observe"])
-
-		if(alert(src,"Are you sure you wish to observe? You will have to wait 60 seconds before being able to respawn!","Player Setup","Yes","No") == "Yes") //Vorestation edit - Rykka corrected to 60 seconds to match current spawn time
-			if(!client)	return 1
-
-			//Make a new mannequin quickly, and allow the observer to take the appearance
-			var/mob/living/carbon/human/dummy/mannequin = new()
-			client.prefs.dress_preview_mob(mannequin)
-			var/mob/observer/dead/observer = new(mannequin)
-			observer.moveToNullspace() //Let's not stay in our doomed mannequin
-			qdel(mannequin)
-
-			spawning = 1
-			if(client.media)
-				client.media.stop_music() // MAD JAMS cant last forever yo
-
-			observer.started_as_observer = 1
-			close_spawn_windows()
-			var/obj/O = locate("landmark*Observer-Start")
-			if(istype(O))
-				to_chat(src, "<span class='notice'>Now teleporting.</span>")
-				observer.forceMove(O.loc)
-			else
-				to_chat(src, "<span class='danger'>Could not locate an observer spawn point. Use the Teleport verb to jump to the station map.</span>")
-			observer.timeofdeath = world.time // Set the time of death so that the respawn timer works correctly.
-
-			announce_ghost_joinleave(src)
-
-			if(client.prefs.be_random_name)
-				client.prefs.real_name = random_name(client.prefs.identifying_gender)
-			observer.real_name = client.prefs.real_name
-			observer.name = observer.real_name
-			if(!client.holder && !config.antag_hud_allowed)           // For new ghosts we remove the verb from even showing up if it's not allowed.
-				observer.verbs -= /mob/observer/dead/verb/toggle_antagHUD        // Poor guys, don't know what they are missing!
-			observer.key = key
-			qdel(src)
-
-			return 1
+		ready = FALSE // So they don't get auto-joined if round starts while the confirm box is up
+		var/confirm_msg = "Are you sure you wish to observe? You will have to wait 60 seconds before being able to respawn!" //Vorestation edit - Rykka corrected to 60 seconds to match current spawn time
+		if(alert(src, confirm_msg, "Player Setup", "Yes", "No") == "Yes" && !QDELETED(src) || !isnull(client))
+			ready = FALSE
+			ready_to_observe = TRUE
+			// If it's post initialisation just do it now!
+			if(SSticker?.current_state >= GAME_STATE_PREGAME)
+				make_me_an_observer()
+				return 1
 
 	if(href_list["late_join"])
 
@@ -321,6 +303,45 @@
 			client.feedback_form.display() // In case they closed the form early.
 		else
 			client.feedback_form = new(client)
+
+// Returns true if it actually created the observer mob.
+/mob/new_player/proc/make_me_an_observer()
+	if(QDELETED(src) || !client || ready)
+		return FALSE
+
+	//Make a new mannequin quickly, and allow the observer to take the appearance
+	var/mob/living/carbon/human/dummy/mannequin = new()
+	client.prefs.dress_preview_mob(mannequin)
+	var/mob/observer/dead/observer = new(mannequin)
+	observer.moveToNullspace() //Let's not stay in our doomed mannequin
+	qdel(mannequin)
+
+	spawning = 1
+	if(client.media)
+		client.media.stop_music() // MAD JAMS cant last forever yo
+
+	observer.started_as_observer = 1
+	close_spawn_windows()
+	var/obj/O = locate("landmark*Observer-Start")
+	if(istype(O))
+		to_chat(src, "<span class='notice'>Now teleporting.</span>")
+		observer.forceMove(O.loc)
+	else
+		to_chat(src, "<span class='danger'>Could not locate an observer spawn point. Use the Teleport verb to jump to the station map.</span>")
+	observer.timeofdeath = world.time // Set the time of death so that the respawn timer works correctly.
+
+	announce_ghost_joinleave(src)
+
+	if(client.prefs.be_random_name)
+		client.prefs.real_name = random_name(client.prefs.identifying_gender)
+	observer.real_name = client.prefs.real_name
+	observer.name = observer.real_name
+	if(!client.holder && !config.antag_hud_allowed)           // For new ghosts we remove the verb from even showing up if it's not allowed.
+		observer.verbs -= /mob/observer/dead/verb/toggle_antagHUD        // Poor guys, don't know what they are missing!
+	observer.key = key
+	qdel(src)
+
+	return TRUE
 
 /mob/new_player/proc/handle_server_news()
 	if(!client)

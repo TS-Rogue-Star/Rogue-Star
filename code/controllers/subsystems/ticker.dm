@@ -62,6 +62,7 @@ var/global/datum/controller/subsystem/ticker/ticker
 		if(GAME_STATE_INIT)
 			pregame_welcome()
 			current_state = GAME_STATE_PREGAME
+			create_observers()
 		if(GAME_STATE_PREGAME)
 			pregame_tick()
 		if(GAME_STATE_SETTING_UP)
@@ -391,7 +392,13 @@ var/global/datum/controller/subsystem/ticker/ticker
 	if(temp_buckle)	qdel(temp_buckle)	//release everybody
 	return
 
+//Everyone who wanted to be an observer gets made one now
+/datum/controller/subsystem/ticker/proc/create_observers()
+	for(var/mob/new_player/player in player_list)
+		if(player.ready_to_observe)
+			player.make_me_an_observer()
 
+// Everyone who wanted to play gets made now
 /datum/controller/subsystem/ticker/proc/create_characters()
 	for(var/mob/new_player/player in player_list)
 		if(player && player.ready && player.mind)
