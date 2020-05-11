@@ -54,6 +54,7 @@ var/global/list/runlevel_flags = list(RUNLEVEL_LOBBY, RUNLEVEL_SETUP, RUNLEVEL_G
 // The numbers just define the ordering, they are meaningless otherwise.
 #define INIT_ORDER_SQLITE		40
 #define INIT_ORDER_CHEMISTRY	35
+#define INIT_ORDER_RESEARCH		32
 #define INIT_ORDER_SKYBOX		30
 #define INIT_ORDER_MAPPING		25
 #define INIT_ORDER_DECALS		20
@@ -85,6 +86,7 @@ var/global/list/runlevel_flags = list(RUNLEVEL_LOBBY, RUNLEVEL_SETUP, RUNLEVEL_G
 // If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)
 #define FIRE_PRIORITY_SHUTTLES		5
 #define FIRE_PRIORITY_SUPPLY		5
+#define FIRE_PRIORITY_RESEARCH		5
 #define FIRE_PRIORITY_NIGHTSHIFT	5
 #define FIRE_PRIORITY_ORBIT			8
 #define FIRE_PRIORITY_VOTE			9

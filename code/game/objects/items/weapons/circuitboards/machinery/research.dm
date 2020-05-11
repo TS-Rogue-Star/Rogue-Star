@@ -2,6 +2,12 @@
 #error T_BOARD macro is not defined but we need it!
 #endif
 
+/obj/item/weapon/circuitboard/ore_silo
+	name = T_BOARD("Ore Silo")
+	build_path = /obj/machinery/ore_silo
+	board_type = new /datum/frame/frame_types/machine
+	req_components = list()
+
 obj/item/weapon/circuitboard/rdserver
 	name = T_BOARD("R&D server")
 	build_path = /obj/machinery/r_n_d/server/core

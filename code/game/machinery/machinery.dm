@@ -298,6 +298,11 @@ Class Procs:
 			return 1
 	return 0
 
+
+//called on deconstruction before the final deletion
+/obj/machinery/proc/on_deconstruction()
+	return
+
 /obj/machinery/proc/default_apply_parts()
 	var/obj/item/weapon/circuitboard/CB = circuit
 	if(!istype(CB))
