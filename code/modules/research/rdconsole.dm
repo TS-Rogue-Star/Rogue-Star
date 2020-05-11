@@ -87,12 +87,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	var/research_control = TRUE		// Can this console control research
 
-// Subtype which can control machines but not research
-/obj/machinery/computer/rdconsole/production
-	circuit = /obj/item/circuitboard/computer/rdconsole/production
-	research_control = FALSE
-
-
 /obj/machinery/computer/rdconsole/proc/CallMaterialName(var/ID)
 	if(istype(ID, /material))
 		var/material/material = ID
@@ -438,7 +432,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 /obj/machinery/computer/rdconsole/proc/ui_protolathe_materials()		//Legacy code
 	RDSCREEN_UI_LATHE_CHECK
-	var/datum/component/material_container/mat_container = linked_lathe.materials.mat_container
+	var/datum/material_container/mat_container = linked_lathe.materials.mat_container
 	if (!mat_container)
 		screen = RDSCREEN_PROTOLATHE
 		return ui_protolathe()
@@ -573,7 +567,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 /obj/machinery/computer/rdconsole/proc/ui_circuit_materials()	//Legacy code!
 	RDSCREEN_UI_IMPRINTER_CHECK
-	var/datum/component/material_container/mat_container = linked_imprinter.materials.mat_container
+	var/datum/material_container/mat_container = linked_imprinter.materials.mat_container
 	if (!mat_container)
 		screen = RDSCREEN_IMPRINTER
 		return ui_circuit()
@@ -581,7 +575,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	l += ui_circuit_header()
 	l += "<h3><div class='statusDisplay'>Material Storage:</h3>"
 	for(var/mat_id in mat_container.materials)
-		var/datum/material/M = mat_id
+		var/material/M = mat_id
 		var/amount = mat_container.materials[mat_id]
 		var/ref = REF(M)
 		l += "* [amount] of [M.name]: "
@@ -1059,7 +1053,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(!linked_lathe.materials.mat_container)
 			state("No material storage linked to protolathe!")
 			return
-		var/datum/material/M = locate(ls["ejectsheet"]) in linked_lathe.materials.mat_container.materials
+		var/material/M = locate(ls["ejectsheet"]) in linked_lathe.materials.mat_container.materials
 		linked_lathe.eject_sheets(M, ls["eject_amt"])
 	//Circuit Imprinter Materials
 	if(ls["disposeI"])  //Causes the circuit imprinter to dispose of a single reagent (all of it)
@@ -1079,7 +1073,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(!linked_imprinter.materials.mat_container)
 			state("No material storage linked to circuit imprinter!")
 			return
-		var/datum/material/M = locate(ls["imprinter_ejectsheet"]) in linked_imprinter.materials.mat_container.materials
+		var/material/M = locate(ls["imprinter_ejectsheet"]) in linked_imprinter.materials.mat_container.materials
 		linked_imprinter.eject_sheets(M, ls["eject_amt"])
 	if(ls["disk_slot"])
 		disk_slot_selected = text2num(ls["disk_slot"])
@@ -1233,6 +1227,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 /obj/machinery/computer/rdconsole/proc/unlock_console(mob/user)
 	locked = FALSE
+
+
+// Subtype which can control machines but not research
+/obj/machinery/computer/rdconsole/production
+	circuit = /obj/item/weapon/circuitboard/rdconsole_production
+	research_control = FALSE
 
 /obj/machinery/computer/rdconsole/robotics
 	name = "Robotics R&D Console"

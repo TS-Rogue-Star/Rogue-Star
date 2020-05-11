@@ -2,7 +2,9 @@
 	name = "protolathe"
 	desc = "Converts raw materials into useful objects."
 	icon_state = "protolathe"
-	circuit = /obj/item/circuitboard/machine/protolathe
+	circuit = /obj/item/weapon/circuitboard/protolathe
+	idle_power_usage = 30
+	active_power_usage = 5000
 	categories = list(
 								"Power Designs",
 								"Medical Designs",

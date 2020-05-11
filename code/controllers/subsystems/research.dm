@@ -47,7 +47,9 @@ SUBSYSTEM_DEF(research)
 	initialize_all_techweb_designs()
 	initialize_all_techweb_nodes()
 	science_tech = new /datum/techweb/science
+	science_tech.organization = using_map.company_name
 	admin_tech = new /datum/techweb/admin
+	admin_tech.organization = using_map.boss_short
 	autosort_categories()
 	error_design = new
 	error_node = new
@@ -80,7 +82,7 @@ SUBSYSTEM_DEF(research)
 	if(!amt)
 		return 0
 	var/coeff = 100
-	coeff = sqrt(coeff / amt)
+	coeff = sqrt(coeff / amt) / 10
 	return coeff
 
 /datum/controller/subsystem/research/proc/autosort_categories()

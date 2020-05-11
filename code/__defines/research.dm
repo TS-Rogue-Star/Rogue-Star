@@ -37,6 +37,9 @@
 #define DEPARTMENTAL_FLAG_ENGINEERING	(1<<4)
 #define DEPARTMENTAL_FLAG_SERVICE		(1<<5)
 
+///For instances where we don't want a design showing up due to it being for debug/sanity purposes
+#define DESIGN_ID_IGNORE "IGNORE_THIS_DESIGN"
+
 /// Special id that tells the destructive analyzer to destroy for raw points/materials instead of boosting.
 #define RESEARCH_MATERIAL_RECLAMATION_ID "__materials"
 

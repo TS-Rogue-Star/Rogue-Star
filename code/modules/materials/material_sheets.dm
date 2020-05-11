@@ -1,3 +1,6 @@
+// Global typecahe of all material stacks! How convenient!
+GLOBAL_LIST_INIT(typecache_material_stack, typecacheof(/obj/item/stack/material))
+
 // Stacked resources. They use a material datum for a lot of inherited values.
 // If you're adding something here, make sure to add it to fifty_spawner_mats.dm as well
 /obj/item/stack/material

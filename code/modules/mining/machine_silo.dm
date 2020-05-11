@@ -7,11 +7,11 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "silo"
 	density = TRUE
-	circuit = /obj/item/weapon/circuitboard/machine/ore_silo
+	circuit = /obj/item/weapon/circuitboard/ore_silo
 
 	var/datum/material_container/materials
 	var/list/holds = list()
-	var/list/datum/component/remote_materials/connected = list()
+	var/list/datum/remote_materials/connected = list()
 	var/log_page = 1
 
 /obj/machinery/ore_silo/Initialize(mapload)
@@ -46,7 +46,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		GLOB.ore_silo_default = null
 
 	for(var/C in connected)
-		var/datum/component/remote_materials/mats = C
+		var/datum/remote_materials/mats = C
 		mats.disconnect_from(src)
 
 	connected = null
@@ -55,8 +55,8 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	return ..()
 
 /obj/machinery/ore_silo/proc/remote_attackby(obj/machinery/M, mob/user, obj/item/stack/material/I)
-	// stolen from /datum/component/material_container/proc/OnAttackBy
-	if(user.a_intent != INTENT_HELP)
+	// stolen from /datum/material_container/proc/OnAttackBy
+	if(user.a_intent != I_HELP)
 		return
 	if(!istype(I))
 		to_chat(user, "<span class='warning'>[M] won't accept [I]!</span>")
@@ -71,7 +71,10 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	silo_log(M, "deposited", amount, "sheets", item_mats)
 	return TRUE
 
+// Note, while this machine is constructable it is purposefully not deconstructable for balance reasons.
 /obj/machinery/ore_silo/attackby(obj/item/W, mob/user, params)
+	if(istype(I, /obj/item/device/multitool) && multitool_act(user, W))
+		return
 	if (istype(W, /obj/item/stack/material))
 		return remote_attackby(src, user, W)
 	return ..()
@@ -88,7 +91,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	var/list/ui = list("<head><title>Ore Silo</title></head><body><div class='statusDisplay'><h2>Stored Material:</h2>")
 	var/any = FALSE
 	for(var/M in materials.materials)
-		var/datum/material/mat = M
+		var/material/mat = M
 		var/amount = materials.materials[M]
 		var/sheets = round(amount) / SHEET_MATERIAL_AMOUNT
 		var/ref = REF(M)
@@ -148,7 +151,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	usr.set_machine(src)
 
 	if(href_list["remove"])
-		var/datum/component/remote_materials/mats = locate(href_list["remove"]) in connected
+		var/datum/remote_materials/mats = locate(href_list["remove"]) in connected
 		if (mats)
 			mats.disconnect_from(src)
 			connected -= mats
@@ -163,11 +166,10 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		updateUsrDialog()
 		return TRUE
 	else if(href_list["ejectsheet"])
-		var/datum/material/eject_sheet = locate(href_list["ejectsheet"])
-		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+		var/material/eject_sheet = locate(href_list["ejectsheet"])
 		var/count = materials.retrieve_sheets(text2num(href_list["eject_amt"]), eject_sheet, drop_location())
 		var/list/matlist = list()
-		matlist[eject_sheet] = MINERAL_MATERIAL_AMOUNT
+		matlist[eject_sheet] = SHEET_MATERIAL_AMOUNT
 		silo_log(src, "ejected", -count, "sheets", matlist)
 		return TRUE
 	else if(href_list["page"])
@@ -175,8 +177,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		updateUsrDialog()
 		return TRUE
 
-/obj/machinery/ore_silo/multitool_act(mob/living/user, obj/item/multitool/I)
-	. = ..()
+/obj/machinery/ore_silo/proc/multitool_act(mob/living/user, obj/item/device/multitool/I)
 	if (istype(I))
 		to_chat(user, "<span class='notice'>You log [src] in the multitool's buffer.</span>")
 		I.buffer = src
@@ -213,7 +214,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	var/list/materials
 
 /datum/ore_silo_log/New(obj/machinery/M, _action, _amount, _noun, list/mats=list())
-	timestamp = station_time_timestamp()
+	timestamp = stationtime2text()
 	machine_name = M.name
 	area_name = get_area_name(M, TRUE)
 	action = _action
@@ -243,8 +244,8 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	var/list/msg = list("([timestamp]) <b>[machine_name]</b> in [area_name]<br>[action] [abs(amount)]x [noun]<br>")
 	var/sep = ""
 	for(var/key in materials)
-		var/datum/material/M = key
-		var/val = round(materials[key]) / MINERAL_MATERIAL_AMOUNT
+		var/material/M = key
+		var/val = round(materials[key]) / SHEET_MATERIAL_AMOUNT
 		msg += sep
 		sep = ", "
 		msg += "[amount < 0 ? "-" : "+"][val] [M.name]"

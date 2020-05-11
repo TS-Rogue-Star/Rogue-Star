@@ -91,18 +91,25 @@ handles linking back and forth.
 		_MakeLocal()
 
 /datum/remote_materials/proc/OnAttackBy(datum/source, obj/item/I, mob/user)
-	if(silo && istype(I, /obj/item/stack))
+	if(istype(I, /obj/item/device/multitool))
+		return OnMultitool(parent, user, I)
+	else if(silo && istype(I, /obj/item/stack/material))
 		if(silo.remote_attackby(parent, user, I))
-			return COMPONENT_NO_AFTERATTACK
+			return TRUE
+	else if(mat_container && istype(I, /obj/item/stack/material))
+		if(mat_container.OnAttackBy(parent, user, I))
+			return TRUE
 
-/datum/remote_materials/proc/OnMultitool(datum/source, mob/user, obj/item/I)
-	if(!I.multitool_check_buffer(user, I))
-		return COMPONENT_BLOCK_TOOL_ATTACK
-	var/obj/item/multitool/M = I
-	if(!QDELETED(M.buffer) && istype(M.buffer, /obj/machinery/ore_silo))
+/datum/remote_materials/proc/OnMultitool(datum/source, mob/user, obj/item/device/multitool/M)
+	if(!istype(M))
+		return // Not a multitool, sheesh!
+	if(QDELETED(M.buffer))
+		to_chat(user, "<span class='warning'>[M] has no data buffer!</span>")
+		return TRUE
+	if(istype(M.buffer, /obj/machinery/ore_silo))
 		if(silo == M.buffer)
 			to_chat(user, "<span class='warning'>[parent] is already connected to [silo]!</span>")
-			return COMPONENT_BLOCK_TOOL_ATTACK
+			return TRUE
 		if(silo)
 			silo.connected -= src
 			silo.updateUsrDialog()
@@ -112,9 +119,9 @@ handles linking back and forth.
 		silo = M.buffer
 		silo.connected += src
 		silo.updateUsrDialog()
-		mat_container = silo.GetComponent(/datum/material_container)
+		mat_container = silo.materials
 		to_chat(user, "<span class='notice'>You connect [parent] to [silo] from the multitool's buffer.</span>")
-		return COMPONENT_BLOCK_TOOL_ATTACK
+		return TRUE
 
 /datum/remote_materials/proc/on_hold()
 	return silo && silo.holds["[get_area(parent)]/[category]"]

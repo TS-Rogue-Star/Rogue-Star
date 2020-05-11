@@ -3,10 +3,14 @@
 #endif
 
 /obj/item/weapon/circuitboard/ore_silo
-	name = T_BOARD("Ore Silo")
+	name = T_BOARD("material silo")
 	build_path = /obj/machinery/ore_silo
 	board_type = new /datum/frame/frame_types/machine
-	req_components = list()
+	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BLUESPACE = 6)
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 4,
+							/obj/item/weapon/ore/bluespace_crystal = 4,
+							/obj/item/weapon/stock_parts/console_screen = 1)
 
 obj/item/weapon/circuitboard/rdserver
 	name = T_BOARD("R&D server")
@@ -33,7 +37,7 @@ obj/item/weapon/circuitboard/rdserver/attackby(obj/item/I as obj, mob/user as mo
 
 /obj/item/weapon/circuitboard/destructive_analyzer
 	name = T_BOARD("destructive analyzer")
-	build_path = /obj/machinery/r_n_d/destructive_analyzer
+	build_path = /obj/machinery/rnd/de
 	board_type = new /datum/frame/frame_types/machine
 	origin_tech = list(TECH_MAGNET = 2, TECH_ENGINEERING = 2, TECH_DATA = 2)
 	req_components = list(
@@ -53,7 +57,7 @@ obj/item/weapon/circuitboard/rdserver/attackby(obj/item/I as obj, mob/user as mo
 
 /obj/item/weapon/circuitboard/protolathe
 	name = T_BOARD("protolathe")
-	build_path = /obj/machinery/r_n_d/protolathe
+	build_path = /obj/machinery/rnd/production/protolathe
 	board_type = new /datum/frame/frame_types/machine
 	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2)
 	req_components = list(
@@ -63,12 +67,22 @@ obj/item/weapon/circuitboard/rdserver/attackby(obj/item/I as obj, mob/user as mo
 
 /obj/item/weapon/circuitboard/circuit_imprinter
 	name = T_BOARD("circuit imprinter")
-	build_path = /obj/machinery/r_n_d/circuit_imprinter
+	build_path = /obj/machinery/rnd/production/circuit_imprinter
 	board_type = new /datum/frame/frame_types/machine
 	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2)
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/reagent_containers/glass/beaker = 2)
+
+/obj/item/weapon/circuitboard/techfab
+	name = T_BOARD("technology fabricator")
+	build_path = /obj/machinery/rnd/production/techfab
+	board_type = new /datum/frame/frame_types/machine
+	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2)
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 2,
+							/obj/item/weapon/stock_parts/manipulator = 2,
 							/obj/item/weapon/reagent_containers/glass/beaker = 2)
 
 /obj/item/weapon/circuitboard/mechfab

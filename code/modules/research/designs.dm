@@ -47,7 +47,7 @@ other types of metals and chemistry for reagents).
 	AssembleDesignInfo()
 
 /datum/design/Destroy()
-	// TODO SSresearch.techweb_designs -= id
+	SSresearch.techweb_designs -= id
 	return ..()
 
 /datum/design/proc/icon_html(client/user)

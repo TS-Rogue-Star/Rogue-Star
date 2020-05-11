@@ -23,7 +23,7 @@
 	var/obj/machinery/computer/rdconsole/linked_console
 	var/obj/item/loaded_item = null //the item loaded inside the machine (currently only used by experimentor and destructive analyzer)
 
-	
+
 /obj/machinery/rnd/proc/reset_busy()
 	busy = FALSE
 
@@ -35,37 +35,38 @@
 	QDEL_NULL(wires)
 	return ..()
 
-/obj/machinery/rnd/proc/shock(mob/user, prb)
-	if(machine_stat & (BROKEN|NOPOWER))		// unpowered, no shock
-		return FALSE
-	if(!prob(prb))
-		return FALSE
-	do_sparks(5, TRUE, src)
-	if (electrocute_mob(user, get_area(src), src, 0.7, TRUE))
-		return TRUE
-	else
-		return FALSE
-
 /obj/machinery/rnd/update_icon()
 	. = ..()
 	icon_state = panel_open ? "[initial(icon_state)]_t" : initial(icon_state)
 
 /obj/machinery/rnd/attackby(obj/item/O, mob/user)
+	if(busy)
+		to_chat(user, "<span class='warning'>[src] is busy right now.</span>")
+		return TRUE
 	if(default_deconstruction_screwdriver(user, O))
 		if(linked_console)
 			disconnect_console()
 		return
-	if(default_deconstruction_crowbar(O))
+	if(default_deconstruction_crowbar(user, O))
+		return
+	if(default_part_replacement(user, O))
 		return
 	if(panel_open && is_wire_tool(O))
-		wires.interact(user)
+		wires.Interact(user)
 		return TRUE
-	if(is_refillable() && O.is_drainable())
-		return FALSE //inserting reagents into the machine
+	if(reagents && O.is_open_container())
+		return FALSE // inserting reagents into the machine
+	// TODO - Do I need to check for borgs putting module items inside?
 	if(Insert_Item(O, user))
+		return TRUE
+	if(OnAttackBy(O, user))
 		return TRUE
 	else
 		return ..()
+
+// Let children with materials override this to forward attackbys.
+/obj/machinery/rnd/proc/OnAttackBy(obj/item/O, mob/user)
+	return
 
 //to disconnect the machine from the r&d console it's linked to
 /obj/machinery/rnd/proc/disconnect_console()
@@ -89,10 +90,10 @@
 	if(busy)
 		to_chat(user, "<span class='warning'>[src] is busy right now.</span>")
 		return FALSE
-	if(machine_stat & BROKEN)
+	if(stat & BROKEN)
 		to_chat(user, "<span class='warning'>[src] is broken.</span>")
 		return FALSE
-	if(machine_stat & NOPOWER)
+	if(stat & NOPOWER)
 		to_chat(user, "<span class='warning'>[src] has no power.</span>")
 		return FALSE
 	if(loaded_item)
@@ -110,9 +111,9 @@
 // Evidently we use power and show animations when stuff is inserted.
 /obj/machinery/rnd/proc/AfterMaterialInsert(item_inserted, id_inserted, amount_inserted)
 	var/stack_name
-	if(istype(item_inserted, /obj/item/stack/ore/bluespace_crystal))
+	if(istype(item_inserted, /obj/item/weapon/ore/bluespace_crystal))
 		stack_name = "bluespace"
-		use_power_oneoff(MINERAL_MATERIAL_AMOUNT / 10)
+		use_power_oneoff(SHEET_MATERIAL_AMOUNT / 10)
 	else
 		var/obj/item/stack/S = item_inserted
 		stack_name = S.name

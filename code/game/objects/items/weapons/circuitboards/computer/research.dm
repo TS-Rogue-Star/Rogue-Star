@@ -6,6 +6,10 @@
 	name = T_BOARD("R&D control console")
 	build_path = /obj/machinery/computer/rdconsole/core
 
+/obj/item/weapon/circuitboard/rdconsole_production
+	name = T_BOARD("R&D production only console")
+	build_path = /obj/machinery/computer/rdconsole/production
+
 /obj/item/weapon/circuitboard/rdconsole/attackby(obj/item/I as obj, mob/user as mob)
 	if(I.is_screwdriver())
 		playsound(src, I.usesound, 50, 1)

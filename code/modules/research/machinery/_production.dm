@@ -2,31 +2,33 @@
 	name = "technology fabricator"
 	desc = "Makes researched and prototype items with materials and energy."
 	layer = UNDER_JUNK_LAYER
-	var/consoleless_interface = FALSE			//Whether it can be used without a console.
-	var/efficiency_coeff = 1				//Materials needed / coeff = actual.
-	var/list/categories = list()
-	var/datum/component/remote_materials/materials
-	var/allowed_department_flags = ALL
-	var/production_animation				//What's flick()'d on print.
-	var/allowed_buildtypes = NONE
-	var/list/datum/design/cached_designs
-	var/list/datum/design/matching_designs
-	var/department_tag = "Unidentified"			//used for material distribution among other things.
-	var/datum/techweb/stored_research
-	var/datum/techweb/host_research
+	flags = OPENCONTAINER
+	var/consoleless_interface = FALSE		// Whether it can be used without a console.
+	var/efficiency_coeff = 1				// Materials needed / coeff = actual.
+	var/list/categories = list()			// TODO - Leshana - Seems to affect UI somehow?
+	var/datum/remote_materials/materials	// Material storage.`
+	var/allowed_department_flags = ALL		// Filter for which designs this will build
+	var/production_animation				// What's flick()'d on print.
+	var/allowed_buildtypes = NONE			// Filter for which designs this will build.
+	var/list/datum/design/cached_designs	// Local cache of designs this knows how to build.
+	var/list/datum/design/matching_designs	// Designs matching last search. Someday move search to be pure UI.
+	var/department_tag = "Unidentified"		// Used for material distribution among other things. TODO Leshana - How?
+	var/datum/techweb/stored_research		// Local repository of research.
+	var/datum/techweb/host_research			// Remote repositoy of research to update from.
 
+	// UI STATE
 	var/screen = RESEARCH_FABRICATOR_SCREEN_MAIN
 	var/selected_category
 
 /obj/machinery/rnd/production/Initialize(mapload)
 	. = ..()
-	create_reagents(0, OPENCONTAINER)
+	create_reagents(0)
 	matching_designs = list()
 	cached_designs = list()
 	stored_research = new
 	host_research = SSresearch.science_tech
 	update_research()
-	materials = new /datum/component/remote_materials(src, "lathe", mapload)
+	materials = new /datum/remote_materials(src, "lathe", mapload)
 	RefreshParts()
 
 /obj/machinery/rnd/production/Destroy()
@@ -50,6 +52,11 @@
 
 /obj/machinery/rnd/production/RefreshParts()
 	calculate_efficiency()
+
+/obj/machinery/rnd/production/OnAttackBy(obj/item/O, mob/user)
+	if(materials?.OnAttackBy(src, O, user))
+		return
+	return ..()
 
 /obj/machinery/rnd/production/attack_hand(mob/user as mob)
 	if(!consoleless_interface)
@@ -90,10 +97,10 @@
 
 /obj/machinery/rnd/production/proc/do_print(var/datum/design/D, amount, list/matlist, notify_admins)
 	if(notify_admins)
-		investigate_log("[key_name(usr)] built [amount] of [path] at [src]([type]).", INVESTIGATE_RESEARCH)
-		message_admins("[ADMIN_LOOKUPFLW(usr)] has built [amount] of [path] at \a [src]([type]).")
+		investigate_log("[key_name(usr)] built [amount] of [D.build_path] at [src]([type]).", INVESTIGATE_RESEARCH)
+		message_admins("[ADMIN_LOOKUPFLW(usr)] has built [amount] of [D.build_path] at \a [src]([type]).")
 	for(var/i in 1 to amount)
-		var/obj/item/I = Fabricate(drop_location(), src)
+		var/obj/item/I = D.Fabricate(drop_location(), src)
 		if(efficient_with(I.type) && LAZYLEN(I.matter) > 0)
 			I.matter = matlist.Copy()
 			// TODO - Leshana - Do we have an equivilent of this? I.material_flags |= MATERIAL_NO_EFFECTS //Find a better way to do this.
@@ -102,7 +109,7 @@
 /obj/machinery/rnd/production/proc/check_mat(datum/design/being_built, var/mat)	// now returns how many times the item can be built with the material
 	if (!materials.mat_container)  // no connected silo
 		return 0
-	var/list/all_materials = being_built.reagents_list + being_built.materials
+	var/list/all_materials = being_built.chemicals + being_built.materials
 
 	var/A = materials.mat_container.get_material_amount(mat)
 	if(!A)
@@ -114,7 +121,7 @@
 	return round(A / max(1, all_materials[mat] / ef))
 
 /obj/machinery/rnd/production/proc/efficient_with(path)
-	return !ispath(path, /obj/item/stack/sheet) && !ispath(path, /obj/item/stack/ore/bluespace_crystal)
+	return !ispath(path, /obj/item/stack/material) && !ispath(path, /obj/item/weapon/ore/bluespace_crystal)
 
 /obj/machinery/rnd/production/proc/user_try_print_id(id, amount)
 	if((!istype(linked_console) && requires_console) || !id)
@@ -127,16 +134,16 @@
 	if(!istype(D))
 		return FALSE
 	if(!(isnull(allowed_department_flags) || (D.departmental_flags & allowed_department_flags)))
-		say("Warning: Printing failed: This fabricator does not have the necessary keys to decrypt design schematics. Please update the research data with the on-screen button and contact Nanotrasen Support!")
+		state("Warning: Printing failed: This fabricator does not have the necessary keys to decrypt design schematics. Please update the research data with the on-screen button and contact Nanotrasen Support!")
 		return FALSE
 	if(D.build_type && !(D.build_type & allowed_buildtypes))
-		say("This machine does not have the necessary manipulation systems for this design. Please contact Nanotrasen Support!")
+		state("This machine does not have the necessary manipulation systems for this design. Please contact Nanotrasen Support!")
 		return FALSE
 	if(!materials.mat_container)
-		say("No connection to material storage, please contact the quartermaster.")
+		state("No connection to material storage, please contact the quartermaster.")
 		return FALSE
 	if(materials.on_hold())
-		say("Mineral access is on hold, please contact the quartermaster.")
+		state("Mineral access is on hold, please contact the quartermaster.")
 		return FALSE
 	var/power = 1000
 	amount = clamp(amount, 1, 50)
@@ -149,11 +156,11 @@
 	for(var/MAT in D.materials)
 		efficient_mats[MAT] = D.materials[MAT]/coeff
 	if(!materials.mat_container.has_materials(efficient_mats, amount))
-		say("Not enough materials to complete prototype[amount > 1? "s" : ""].")
+		state("Not enough materials to complete prototype[amount > 1? "s" : ""].")
 		return FALSE
 	for(var/R in D.reagents_list)
 		if(!reagents.has_reagent(R, D.reagents_list[R]*amount/coeff))
-			say("Not enough reagents to complete prototype[amount > 1? "s" : ""].")
+			state("Not enough reagents to complete prototype[amount > 1? "s" : ""].")
 			return FALSE
 	materials.mat_container.use_materials(efficient_mats, amount)
 	materials.silo_log(src, "built", -amount, "[D.name]", efficient_mats)
@@ -164,7 +171,7 @@
 		flick(production_animation, src)
 	var/timecoeff = D.lathe_time_factor / efficiency_coeff
 	addtimer(CALLBACK(src, .proc/reset_busy), (30 * timecoeff * amount) ** 0.5)
-	addtimer(CALLBACK(src, .proc/do_print, D.build_path, amount, efficient_mats, D.dangerous_construction), (32 * timecoeff * amount) ** 0.8)
+	addtimer(CALLBACK(src, .proc/do_print, D, amount, efficient_mats, D.dangerous_construction), (32 * timecoeff * amount) ** 0.8)
 	return TRUE
 
 /obj/machinery/rnd/production/proc/search(string)
@@ -199,7 +206,7 @@
 /obj/machinery/rnd/production/proc/ui_header()
 	var/list/l = list()
 	l += "<div class='statusDisplay'><b>[host_research.organization] [department_tag] Department Lathe</b>"
-	l += "Security protocols: [(obj_flags & EMAGGED)? "<font color='red'>Disabled</font>" : "<font color='green'>Enabled</font>"]"
+	l += "Security protocols: [emagged ? "<font color='red'>Disabled</font>" : "<font color='green'>Enabled</font>"]"
 	if (materials.mat_container)
 		l += "<A href='?src=[REF(src)];switch_screen=[RESEARCH_FABRICATOR_SCREEN_MATERIALS]'><B>Material Amount:</B> [materials.format_amount()]</A>"
 	else
@@ -216,13 +223,13 @@
 	var/list/l = list()
 	l += "<div class='statusDisplay'><h3>Material Storage:</h3>"
 	for(var/mat_id in materials.mat_container.materials)
-		var/datum/material/M = mat_id
+		var/material/M = mat_id
 		var/amount = materials.mat_container.materials[mat_id]
 		var/ref = REF(M)
 		l += "* [amount] of [M.name]: "
-		if(amount >= MINERAL_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];ejectsheet=[ref];eject_amt=1'>Eject</A> [RDSCREEN_NOBREAK]"
-		if(amount >= MINERAL_MATERIAL_AMOUNT*5) l += "<A href='?src=[REF(src)];ejectsheet=[ref];eject_amt=5'>5x</A> [RDSCREEN_NOBREAK]"
-		if(amount >= MINERAL_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];ejectsheet=[ref];eject_amt=50'>All</A>[RDSCREEN_NOBREAK]"
+		if(amount >= SHEET_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];ejectsheet=[ref];eject_amt=1'>Eject</A> [RDSCREEN_NOBREAK]"
+		if(amount >= SHEET_MATERIAL_AMOUNT*5) l += "<A href='?src=[REF(src)];ejectsheet=[ref];eject_amt=5'>5x</A> [RDSCREEN_NOBREAK]"
+		if(amount >= SHEET_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];ejectsheet=[ref];eject_amt=50'>All</A>[RDSCREEN_NOBREAK]"
 		l += ""
 	l += "</div>[RDSCREEN_NOBREAK]"
 	return l
@@ -263,7 +270,7 @@
 	var/temp_material
 	var/c = 50
 	var/t
-	var/all_materials = D.materials + D.reagents_list
+	var/all_materials = D.materials + D.chemicals
 	for(var/M in all_materials)
 		t = check_mat(D, M)
 		temp_material += " | "
@@ -294,7 +301,7 @@
 		screen = text2num(ls["switch_screen"])
 	if(ls["build"]) //Causes the Protolathe to build something.
 		if(busy)
-			say("Warning: Fabricators busy!")
+			state("Warning: Fabricators busy!")
 		else
 			user_try_print_id(ls["build"], ls["amount"])
 	if(ls["search"]) //Search for designs with name matching pattern
@@ -302,7 +309,7 @@
 		screen = RESEARCH_FABRICATOR_SCREEN_SEARCH
 	if(ls["sync_research"])
 		update_research()
-		say("Synchronizing research with host technology database.")
+		state("Synchronizing research with host technology database.")
 	if(ls["category"])
 		selected_category = ls["category"]
 	if(ls["dispose"])  //Causes the protolathe to dispose of a single reagent (all of it)
@@ -310,21 +317,21 @@
 	if(ls["disposeall"]) //Causes the protolathe to dispose of all it's reagents.
 		reagents.clear_reagents()
 	if(ls["ejectsheet"]) //Causes the protolathe to eject a sheet of material
-		var/datum/material/M = locate(ls["ejectsheet"])
+		var/material/M = locate(ls["ejectsheet"])
 		eject_sheets(M, ls["eject_amt"])
 	updateUsrDialog()
 
 /obj/machinery/rnd/production/proc/eject_sheets(eject_sheet, eject_amt)
-	var/datum/component/material_container/mat_container = materials.mat_container
+	var/datum/material_container/mat_container = materials.mat_container
 	if (!mat_container)
-		say("No access to material storage, please contact the quartermaster.")
+		state("No access to material storage, please contact the quartermaster.")
 		return 0
 	if (materials.on_hold())
-		say("Mineral access is on hold, please contact the quartermaster.")
+		state("Mineral access is on hold, please contact the quartermaster.")
 		return 0
 	var/count = mat_container.retrieve_sheets(text2num(eject_amt), eject_sheet, drop_location())
 	var/list/matlist = list()
-	matlist[eject_sheet] = MINERAL_MATERIAL_AMOUNT
+	matlist[eject_sheet] = SHEET_MATERIAL_AMOUNT
 	materials.silo_log(src, "ejected", -count, "sheets", matlist)
 	return count
 
