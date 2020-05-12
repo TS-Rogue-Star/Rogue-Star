@@ -4,6 +4,7 @@
 	name = "design"
 
 /datum/asset/iconsheet/research_designs/register()
+	var/list/sprites = list()
 	for (var/path in subtypesof(/datum/design))
 		var/datum/design/D = path
 		if(initial(D.id) == DESIGN_ID_IGNORE)
@@ -58,4 +59,4 @@
 					I.Blend(icon(icon_file, keyboard, SOUTH), ICON_OVERLAY)
 
 		sprites["[initial(D.id)]-south"] = I
-	return ..()
+	..(sprites)

@@ -31,7 +31,7 @@
 		if(WIRE_DISABLE)
 			R.disabled = !R.disabled
 
-/datum/wires/rnd/on_cut(index, mended)
+/datum/wires/rnd/UpdateCut(index, mended)
 	var/obj/machinery/rnd/R = holder
 	switch(index)
 		if(WIRE_HACK)

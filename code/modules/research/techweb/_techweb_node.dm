@@ -89,13 +89,12 @@
 	unlock_ids -= node_id
 
 /datum/techweb_node/proc/get_price(datum/techweb/host)
-	if(host)
-		var/list/actual_costs = research_costs
-		if(host.boosted_nodes[id])
-			var/list/L = host.boosted_nodes[id]
-			for(var/i in L)
-				if(actual_costs[i])
-					actual_costs[i] -= L[i]
+	if(host && host.boosted_nodes[id])
+		var/list/actual_costs = research_costs.Copy()
+		var/list/L = host.boosted_nodes[id]
+		for(var/i in L)
+			if(actual_costs[i])
+				actual_costs[i] -= L[i]
 		return actual_costs
 	else
 		return research_costs

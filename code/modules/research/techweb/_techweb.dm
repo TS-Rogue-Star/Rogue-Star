@@ -392,3 +392,6 @@
 
 /datum/techweb/specialized/autounlocking/exofab
 	allowed_buildtypes = MECHFAB
+
+/datum/techweb/specialized/autounlocking/prosfab
+	allowed_buildtypes = PROSFAB

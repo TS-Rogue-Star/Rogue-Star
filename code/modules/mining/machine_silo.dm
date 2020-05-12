@@ -73,7 +73,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 
 // Note, while this machine is constructable it is purposefully not deconstructable for balance reasons.
 /obj/machinery/ore_silo/attackby(obj/item/W, mob/user, params)
-	if(istype(I, /obj/item/device/multitool) && multitool_act(user, W))
+	if(istype(W, /obj/item/device/multitool) && multitool_act(user, W))
 		return
 	if (istype(W, /obj/item/stack/material))
 		return remote_attackby(src, user, W)

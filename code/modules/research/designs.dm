@@ -50,6 +50,18 @@ other types of metals and chemistry for reagents).
 	SSresearch.techweb_designs -= id
 	return ..()
 
+// TODO - Leshana -Validate this here!
+/datum/design/proc/InitializeMaterials()
+	var/list/temp_list = list()
+	for(var/i in materials)
+		var/amount = materials[i]
+		if(!istext(i)) //Not a category, so get the ref the normal way
+			var/material/M =  get_material_ref(i)
+			temp_list[M] = amount
+		else
+			temp_list[i] = amount
+	materials = temp_list
+
 /datum/design/proc/icon_html(client/user)
 	var/datum/asset/iconsheet/sheet = get_asset_datum(/datum/asset/iconsheet/research_designs)
 	sheet.send(user)

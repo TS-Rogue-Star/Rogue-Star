@@ -26,8 +26,7 @@
 	var/list/deliveryslot_1 = list()
 	var/list/deliveryslot_2 = list()
 	var/list/deliveryslot_3 = list()
-	var/datum/research/techonly/files //Analyzerbelly var.
-	var/synced = FALSE
+	var/datum/techweb/stored_research	// Pointer to techweb research points will be awarded to
 	var/startdrain = 500
 	var/max_item_count = 1
 	var/gulpsound = 'sound/vore/gulp.ogg'
@@ -40,10 +39,10 @@
 	var/digest_burn = 3
 	var/recycles = FALSE
 
-/obj/item/device/dogborg/sleeper/New()
-	..()
+/obj/item/device/dogborg/sleeper/Initialize()
+	. = ..()
 	flags |= NOBLUDGEON //No more attack messages
-	files = new /datum/research/techonly(src)
+	stored_research = SSresearch.science_tech
 
 /obj/item/device/dogborg/sleeper/Destroy()
 	go_out()
@@ -241,9 +240,6 @@
 		dat += "<font color='red'>Cargo compartment slot: Fuel.</font><BR>"
 		dat += "<font color='red'>([list2text(contents - (deliveryslot_1 + deliveryslot_2 + deliveryslot_3),", ")])</font><BR><BR>"
 
-	if(analyzer && !synced)
-		dat += "<A href='?src=\ref[src];sync=1'>Sync Files</A><BR>"
-
 	//Cleaning and there are still un-preserved items
 	if(cleaning && length(contents - items_preserved))
 		dat += "<font color='red'><B>Self-cleaning mode.</B> [length(contents - items_preserved)] object(s) remaining.</font><BR>"
@@ -362,24 +358,6 @@
 			playsound(src, 'sound/effects/splat.ogg', 50, 1)
 			update_patient()
 			deliverylists[delivery_tag].Cut()
-		sleeperUI(usr)
-		return
-	if(href_list["sync"])
-		synced = TRUE
-		var/success = 0
-		for(var/obj/machinery/r_n_d/server/S in machines)
-			for(var/datum/tech/T in files.known_tech) //Uploading
-				S.files.AddTech2Known(T)
-			for(var/datum/tech/T in S.files.known_tech) //Downloading
-				files.AddTech2Known(T)
-			success = 1
-			files.RefreshResearch()
-		if(success)
-			to_chat(usr, "You connect to the research server, push your data upstream to it, then pull the resulting merged data from the master branch.")
-			playsound(src, 'sound/machines/twobeep.ogg', 50, 1)
-		else
-			to_chat(usr, "Reserch server ping response timed out.  Unable to connect.  Please contact the system administrator.")
-			playsound(src, 'sound/machines/buzz-two.ogg', 50, 1)
 		sleeperUI(usr)
 		return
 
@@ -598,10 +576,10 @@
 					items_preserved |= T
 				else
 					if(analyzer && digested)
-						var/obj/item/tech_item = T
-						for(var/tech in tech_item.origin_tech)
-							files.UpdateTech(tech, tech_item.origin_tech[tech])
-							synced = FALSE
+						var/list/point_value = techweb_item_point_check(T)
+						if(LAZYLEN(point_value) && !stored_research.deconstructed_items[T.type])
+							stored_research.add_point_list(point_value)
+							stored_research.deconstructed_items[T.type] = point_value
 						drain(-50 * digested)
 					if(volume)
 						water.add_charge(volume)
@@ -691,7 +669,7 @@
 	icon_state = "decompiler"
 	max_item_count = 20
 	delivery = TRUE
-	
+
 /obj/item/device/dogborg/sleeper/compactor/supply //Miner borg belly
 	name = "Supply Satchel"
 	desc = "A mounted survival unit with fuel processor."

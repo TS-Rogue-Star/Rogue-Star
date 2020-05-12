@@ -7,20 +7,19 @@
 
 	var/min_reliability = 90 //Can't upgrade, call it laziness or a drawback
 
-	var/datum/research/techonly/files 	//The device uses the same datum structure as the R&D computer/server.
-										//This analyzer can only store tech levels, however.
+	var/datum/techweb/stored_research	// Pointer to techweb research points will be awarded to
 
 	var/obj/item/weapon/loaded_item	//What is currently inside the analyzer.
 
-/obj/item/weapon/portable_destructive_analyzer/New()
-	..()
-	files = new /datum/research/techonly(src) //Setup the research data holder.
+/obj/item/weapon/portable_destructive_analyzer/Initialize()
+	. = ..()
+	stored_research = SSresearch.science_tech
 
 /obj/item/weapon/portable_destructive_analyzer/attack_self(user as mob)
+	// TODO - Could allow boosting from here too
 	var/response = alert(user, 	"Analyzing the item inside will *DESTROY* the item for good.\n\
-							Syncing to the research server will send the data that is stored inside to research.\n\
 							Ejecting will place the loaded item onto the floor.",
-							"What would you like to do?", "Analyze", "Sync", "Eject")
+							"What would you like to do?", "Analyze", "Eject")
 	if(response == "Analyze")
 		if(loaded_item)
 			var/confirm = alert(user, "This will destroy the item inside forever.  Are you sure?","Confirm Analyze","Yes","No")
@@ -28,9 +27,12 @@
 				to_chat(user, "You activate the analyzer's microlaser, analyzing \the [loaded_item] and breaking it down.")
 				flick("portable_analyzer_scan", src)
 				playsound(src, 'sound/items/Welder2.ogg', 50, 1)
-				for(var/T in loaded_item.origin_tech)
-					files.UpdateTech(T, loaded_item.origin_tech[T])
-					to_chat(user, "\The [loaded_item] had level [loaded_item.origin_tech[T]] in [CallTechName(T)].")
+
+				var/list/point_value = techweb_item_point_check(loaded_item)
+				if(LAZYLEN(point_value) && !stored_research.deconstructed_items[loaded_item.type])
+					stored_research.add_point_list(point_value)
+					stored_research.deconstructed_items[loaded_item.type] = point_value
+					to_chat(user, "\The [loaded_item] was worth [json_encode(point_value)] points")
 				loaded_item = null
 				for(var/obj/I in contents)
 					for(var/mob/M in I.contents)
@@ -52,21 +54,6 @@
 				return
 		else
 			to_chat(user, "The [src] is empty.  Put something inside it first.")
-	if(response == "Sync")
-		var/success = 0
-		for(var/obj/machinery/r_n_d/server/S in machines)
-			for(var/datum/tech/T in files.known_tech) //Uploading
-				S.files.AddTech2Known(T)
-			for(var/datum/tech/T in S.files.known_tech) //Downloading
-				files.AddTech2Known(T)
-			success = 1
-			files.RefreshResearch()
-		if(success)
-			to_chat(user, "You connect to the research server, push your data upstream to it, then pull the resulting merged data from the master branch.")
-			playsound(src, 'sound/machines/twobeep.ogg', 50, 1)
-		else
-			to_chat(user, "Reserch server ping response timed out.  Unable to connect.  Please contact the system administrator.")
-			playsound(src, 'sound/machines/buzz-two.ogg', 50, 1)
 	if(response == "Eject")
 		if(loaded_item)
 			loaded_item.loc = get_turf(src)

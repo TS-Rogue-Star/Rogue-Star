@@ -87,7 +87,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	var/research_control = TRUE		// Can this console control research
 
-/obj/machinery/computer/rdconsole/proc/CallMaterialName(var/ID)
+/proc/CallMaterialName(var/ID)
 	if(istype(ID, /material))
 		var/material/material = ID
 		return material.display_name
@@ -95,13 +95,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		var/material/material = get_material_by_name(ID)
 		return material.display_name
 	else if(SSchemistry.chemical_reagents[ID])
-		var/datum/reagent/reagent = GLOB.chemical_reagents_list[ID]
+		var/datum/reagent/reagent = SSchemistry.chemical_reagents[ID]
 		return reagent.name
 	return ID
 
 /obj/machinery/computer/rdconsole/proc/CallReagentName(var/ID)
 	if(SSchemistry.chemical_reagents[ID])
-		var/datum/reagent/reagent = GLOB.chemical_reagents_list[ID]
+		var/datum/reagent/reagent = SSchemistry.chemical_reagents[ID]
 		return reagent.name
 	return ID
 
@@ -128,15 +128,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				linked_imprinter = D
 				D.linked_console = src
 	return
-
-// TODO - Pretty sure we want to eliminate this, its kinda whacked.
-/obj/machinery/computer/rdconsole/proc/griefProtection() //Have it automatically push research to the CentCom server so wild griffins can't fuck up R&D's work
-	for(var/obj/machinery/r_n_d/server/centcom/C in machines)
-		for(var/datum/tech/T in files.known_tech)
-			C.files.AddTech2Known(T)
-		for(var/datum/design/D in files.known_designs)
-			C.files.AddDesign2Known(D)
-		C.files.RefreshResearch()
 
 /obj/machinery/computer/rdconsole/Initialize()
 	. = ..()
@@ -220,7 +211,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			if(issilicon(user))
 				logname = "AI: [user.name]"
 			else
-				var/obj/item/weapon/card/I = user.GetIdCard();
+				var/obj/item/weapon/card/id/ID = user.GetIdCard();
 				if(istype(ID))
 					logname = "User: [ID.registered_name]"
 			var/i = stored_research.research_logs.len
@@ -749,7 +740,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 
 /obj/machinery/computer/rdconsole/proc/machine_icon(atom/item)
-	return icon2html(initial(item.icon), usr, initial(item.icon_state), SOUTH)
+	return bicon(icon(initial(item.icon), icon_state=initial(item.icon_state), dir=SOUTH))
 
 /obj/machinery/computer/rdconsole/proc/ui_techweb_single_node(datum/techweb_node/node, selflink=TRUE, minimal=FALSE)
 	var/list/l = list()
@@ -831,17 +822,19 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			lathes += "<span data-tooltip='Autolathe'>[machine_icon(/obj/machinery/autolathe)]</span>[RDSCREEN_NOBREAK]"
 		if(selected_design.build_type & MECHFAB)
 			lathes += "<span data-tooltip='Exosuit Fabricator'>[machine_icon(/obj/machinery/mecha_part_fabricator)]</span>[RDSCREEN_NOBREAK]"
+		if(selected_design.build_type & PROSFAB)
+			lathes += "<span data-tooltip='Prosthetics Fabricator'>[machine_icon(/obj/machinery/pros_fabricator)]</span>[RDSCREEN_NOBREAK]"
 		if(selected_design.build_type & BIOGENERATOR)
 			lathes += "<span data-tooltip='Biogenerator'>[machine_icon(/obj/machinery/biogenerator)]</span>[RDSCREEN_NOBREAK]"
-		if(selected_design.build_type & LIMBGROWER)
-			lathes += "<span data-tooltip='Limbgrower'>[machine_icon(/obj/machinery/limbgrower)]</span>[RDSCREEN_NOBREAK]"
+		// if(selected_design.build_type & LIMBGROWER)
+		// 	lathes += "<span data-tooltip='Limbgrower'>[machine_icon(/obj/machinery/limbgrower)]</span>[RDSCREEN_NOBREAK]"
 		if(selected_design.build_type & SMELTER)
 			lathes += "<span data-tooltip='Smelter'>[machine_icon(/obj/machinery/mineral/processing_unit)]</span>[RDSCREEN_NOBREAK]"
 		l += "Construction types:"
 		l += lathes
 		l += ""
 	l += "Required materials:"
-	var/all_mats = selected_design.materials + selected_design.reagents_list
+	var/all_mats = selected_design.materials + selected_design.chemicals
 	for(var/M in all_mats)
 		l += "* [CallMaterialName(M)] x [all_mats[M]]"
 	l += "Unlocked by:"
@@ -1132,7 +1125,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		var/datum/design/D = SSresearch.techweb_design_by_id(ls["copy_design_ID"])
 		if(D)
 			var/autolathe_friendly = TRUE
-			if(D.reagents_list.len)
+			if(D.chemicals.len)
 				autolathe_friendly = FALSE
 				D.category -= "Imported"
 			else

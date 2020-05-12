@@ -34,7 +34,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	..()
 
 /obj/machinery/rnd/destructive_analyzer/Insert_Item(obj/item/O, mob/user)
-	if(user.a_intent != INTENT_HARM)
+	if(user.a_intent != I_HURT)
 		. = 1
 		if(!is_insertion_ready(user))
 			return
@@ -53,7 +53,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 	update_icon()
 	reset_busy()
 
-/obj/machinery/rnd/destructive_analyzer/update_icon_state()
+/obj/machinery/rnd/destructive_analyzer/update_icon()
+	. = ..()
 	if(loaded_item)
 		icon_state = "d_analyzer_l"
 	else
@@ -63,12 +64,12 @@ Note: Must be placed within 3 tiles of the R&D Console
 	. = 0
 	var/datum/material_container/storage = linked_console?.linked_lathe?.materials.mat_container
 	if(storage) //Also sends salvaged materials to a linked protolathe, if any.
-		for(var/material in thing.custom_materials)
-			var/can_insert = min((storage.max_amount - storage.total_amount), (min(thing.custom_materials[material]*(decon_mod), thing.custom_materials[material])))
+		for(var/material in thing.matter)
+			var/can_insert = min((storage.max_amount - storage.total_amount), (min(thing.matter[material]*(decon_mod), thing.matter[material])))
 			storage.insert_amount_mat(can_insert, material)
 			. += can_insert
 		if(.)
-			linked_console.linked_lathe.materials.silo_log(src, "reclaimed", 1, "[thing.name]", thing.custom_materials)
+			linked_console.linked_lathe.materials.silo_log(src, "reclaimed", 1, "[thing.name]", thing.matter)
 
 /obj/machinery/rnd/destructive_analyzer/proc/destroy_item(obj/item/thing, innermode = FALSE)
 	if(QDELETED(thing) || QDELETED(src) || QDELETED(linked_console))
@@ -80,14 +81,14 @@ Note: Must be placed within 3 tiles of the R&D Console
 		use_power(250)
 		if(thing == loaded_item)
 			loaded_item = null
-		var/list/food = thing.GetDeconstructableContents()
+		var/list/food = thing.contents
 		for(var/obj/item/innerthing in food)
 			destroy_item(innerthing, TRUE)
 	reclaim_materials_from(thing)
 	for(var/mob/M in thing)
 		M.death()
-	if(istype(thing, /obj/item/stack/sheet))
-		var/obj/item/stack/sheet/S = thing
+	if(istype(thing, /obj/item/stack/material))
+		var/obj/item/stack/material/S = thing
 		if(S.amount > 1 && !innermode)
 			S.amount--
 			loaded_item = S
@@ -123,7 +124,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 			return FALSE
 		if(QDELETED(loaded_item) || QDELETED(linked_console) || !user.Adjacent(linked_console) || QDELETED(src))
 			return FALSE
-		SSblackbox.record_feedback("nested tally", "item_deconstructed", 1, list("[TN.id]", "[loaded_item.type]"))
+		// SSblackbox.record_feedback("nested tally", "item_deconstructed", 1, list("[TN.id]", "[loaded_item.type]"))
 		if(destroy_item(loaded_item))
 			linked_console.stored_research.boost_with_path(SSresearch.techweb_node_by_id(TN.id), dpath)
 
@@ -134,7 +135,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		var/user_mode_string = ""
 		if(length(point_value))
 			user_mode_string = " for [json_encode(point_value)] points"
-		else if(length(loaded_item.custom_materials))
+		else if(length(loaded_item.matter))
 			user_mode_string = " for material reclamation"
 		var/choice = input("Are you sure you want to destroy [loaded_item][user_mode_string]?") in list("Proceed", "Cancel")
 		if(choice == "Cancel")

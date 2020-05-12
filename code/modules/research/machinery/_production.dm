@@ -158,18 +158,18 @@
 	if(!materials.mat_container.has_materials(efficient_mats, amount))
 		state("Not enough materials to complete prototype[amount > 1? "s" : ""].")
 		return FALSE
-	for(var/R in D.reagents_list)
-		if(!reagents.has_reagent(R, D.reagents_list[R]*amount/coeff))
+	for(var/R in D.chemicals)
+		if(!reagents.has_reagent(R, D.chemicals[R]*amount/coeff))
 			state("Not enough reagents to complete prototype[amount > 1? "s" : ""].")
 			return FALSE
 	materials.mat_container.use_materials(efficient_mats, amount)
 	materials.silo_log(src, "built", -amount, "[D.name]", efficient_mats)
-	for(var/R in D.reagents_list)
-		reagents.remove_reagent(R, D.reagents_list[R]*amount/coeff)
+	for(var/R in D.chemicals)
+		reagents.remove_reagent(R, D.chemicals[R]*amount/coeff)
 	busy = TRUE
 	if(production_animation)
 		flick(production_animation, src)
-	var/timecoeff = D.lathe_time_factor / efficiency_coeff
+	var/timecoeff = D.time / efficiency_coeff
 	addtimer(CALLBACK(src, .proc/reset_busy), (30 * timecoeff * amount) ** 0.5)
 	addtimer(CALLBACK(src, .proc/do_print, D, amount, efficient_mats, D.dangerous_construction), (32 * timecoeff * amount) ** 0.8)
 	return TRUE

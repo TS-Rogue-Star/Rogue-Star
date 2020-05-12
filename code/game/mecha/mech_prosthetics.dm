@@ -17,7 +17,7 @@
 	var/list/hidden_materials = list(MAT_DURASTEEL, MAT_GRAPHITE, MAT_VERDANTIUM, MAT_MORPHIUM)
 	var/res_max_amount = 200000
 
-	var/datum/research/files
+	var/datum/techweb/stored_research		// Local repository of research.
 	var/list/datum/design/queue = list()
 	var/progress = 0
 	var/busy = 0
@@ -32,8 +32,8 @@
 /obj/machinery/pros_fabricator/Initialize()
 	. = ..()
 	default_apply_parts()
-
-	files = new /datum/research(src) //Setup the research data holder.
+	
+	stored_research = new /datum/techweb/specialized/autounlocking/prosfab() // Setup the research data holder.
 
 /obj/machinery/pros_fabricator/Initialize()
 	. = ..()
@@ -126,7 +126,7 @@
 		return
 
 	if(href_list["build"])
-		add_to_queue(text2num(href_list["build"]))
+		add_to_queue(href_list["build"])
 
 	if(href_list["remove"])
 		remove_from_queue(text2num(href_list["remove"]))
@@ -242,10 +242,15 @@
 	else
 		busy = 0
 
-/obj/machinery/pros_fabricator/proc/add_to_queue(var/index)
-	var/datum/design/D = files.known_designs[index]
-	queue += D
-	update_busy()
+/obj/machinery/pros_fabricator/proc/add_to_queue(id)
+	var/datum/design/D = SSresearch.techweb_design_by_id(id)
+	if(!stored_research.researched_designs[D.id])
+		return // We haven't researched that
+	else if(!(D.build_type & MECHFAB))
+		return // We can't build that!
+	else
+		queue += D
+		update_busy()
 
 /obj/machinery/pros_fabricator/proc/remove_from_queue(var/index)
 	if(index == 1)
@@ -289,10 +294,10 @@
 
 /obj/machinery/pros_fabricator/proc/get_build_options()
 	. = list()
-	for(var/i = 1 to files.known_designs.len)
-		var/datum/design/D = files.known_designs[i]
+	for(var/id in stored_research.researched_designs)
+		var/datum/design/D = SSresearch.techweb_design_by_id(id)
 		if(D.build_path && (D.build_type & PROSFAB))
-			. += list(list("name" = D.name, "id" = i, "category" = D.category, "resourses" = get_design_resourses(D), "time" = get_design_time(D)))
+			. += list(list("name" = D.name, "id" = D.id, "category" = D.category, "resourses" = get_design_resourses(D), "time" = get_design_time(D)))
 
 /obj/machinery/pros_fabricator/proc/get_design_resourses(var/datum/design/D)
 	var/list/F = list()
@@ -305,7 +310,8 @@
 
 /obj/machinery/pros_fabricator/proc/update_categories()
 	categories = list()
-	for(var/datum/design/D in files.known_designs)
+	for(var/id in stored_research.researched_designs)
+		var/datum/design/D = SSresearch.techweb_design_by_id(id)
 		if(!D.build_path || !(D.build_type & PROSFAB))
 			continue
 		categories |= D.category
@@ -346,10 +352,8 @@
 	for(var/obj/machinery/computer/rdconsole/RDC in get_area_all_atoms(get_area(src)))
 		if(!RDC.sync)
 			continue
-		for(var/datum/tech/T in RDC.files.known_tech)
-			files.AddTech2Known(T)
-		for(var/datum/design/D in RDC.files.known_designs)
-			files.AddDesign2Known(D)
-		files.RefreshResearch()
+		RDC.stored_research.copy_research_to(stored_research)
 		sync_message = "Sync complete."
+		break
+	updateUsrDialog()
 	update_categories()

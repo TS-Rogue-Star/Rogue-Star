@@ -219,6 +219,10 @@ research holder datum.
 	id = TECH_PRECURSOR
 	level = 0
 
+//
+// Tech Disk
+//
+
 /obj/item/weapon/disk/tech_disk
 	name = "technology disk"
 	desc = "A disk for storing technology data for further research."
@@ -227,11 +231,34 @@ research holder datum.
 	item_state = "card-id"
 	randpixel = 5
 	w_class = ITEMSIZE_SMALL
-	matter = list(DEFAULT_WALL_MATERIAL = 30, "glass" = 10)
-	var/datum/tech/stored
+	matter = list(MAT_STEEL = 300, MAT_GLASS = 100)
+	var/datum/techweb/stored_research
 
-/obj/item/weapon/disk/tech_disk/New()
+/obj/item/weapon/disk/tech_disk/Initialize()
+	. = ..()
 	randpixel_xy()
+
+/obj/item/weapon/disk/tech_disk/debug
+	name = "\improper CentCom technology disk"
+	desc = "A debug item for research"
+	matter = null
+
+/obj/item/weapon/disk/tech_disk/debug/Initialize()
+	. = ..()
+	stored_research = new /datum/techweb/admin
+
+/obj/item/weapon/disk/tech_disk/major
+	name = "Reformatted technology disk"
+	desc = "A disk containing a new, completed tech from the B.E.P.I.S. Upload the disk to an R&D Console to redeem the tech."
+	icon_state = "rndmajordisk"
+
+/obj/item/weapon/disk/tech_disk/major/Initialize()
+	. = ..()
+	stored_research = new /datum/techweb/bepis
+
+//
+// Design Disk
+//
 
 /obj/item/weapon/disk/design_disk
 	name = "component design disk"
@@ -241,8 +268,16 @@ research holder datum.
 	item_state = "card-id"
 	randpixel = 5
 	w_class = ITEMSIZE_SMALL
-	matter = list(DEFAULT_WALL_MATERIAL = 30, "glass" = 10)
-	var/datum/design/blueprint
+	matter = list(MAT_STEEL = 300, MAT_GLASS = 100)
+	var/list/blueprints = list()
+	var/max_blueprints = 1
 
-/obj/item/weapon/disk/design_disk/New()
+/obj/item/weapon/disk/design_disk/Initialize()
 	randpixel_xy()
+	blueprints.len = max_blueprints
+
+/obj/item/weapon/disk/design_disk/adv
+	name = "Advanced Component Design Disk"
+	desc = "A disk for storing device design data for construction in lathes. This one has extra storage space."
+	matter = list(MAT_STEEL = 300, MAT_GLASS = 100, MAT_SILVER = 50)
+	max_blueprints = 5

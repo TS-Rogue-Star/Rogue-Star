@@ -55,7 +55,19 @@
 		var/material/M = get_material_by_type(mat)
 		materials[M] = 0
 
-/datum/component/material_container/proc/has_materials(list/mats, multiplier=1)
+
+/// Returns the amount of a specific material in this container.
+/datum/material_container/proc/get_material_amount(var/material/mat)
+	// TODO
+	return
+
+/datum/material_container/proc/has_materials(list/mats, multiplier=1)
+	// TODO
+	return
+
+
+/// For consuming a dictionary of materials. mats is the map of materials to use and the corresponding amounts, example: list(M/material/glass =100, datum/material/iron=200)
+/datum/material_container/proc/use_materials(list/mats, multiplier=1)
 	// TODO
 	return
 
@@ -64,13 +76,18 @@
 	return
 
 
+/// Proc used for when player inserts materials
+/datum/material_container/proc/user_insert(obj/item/I, mob/living/user)
+	// TODO
+	return
+
 /// For inserting an amount of material
-/datum/component/material_container/proc/insert_amount_mat(amt, var/datum/material/mat)
+/datum/material_container/proc/insert_amount_mat(amt, var/material/mat)
 	// TODO
 	return
 
 /// For spawning mineral sheets at a specific location. Used by machines to output sheets.
-/datum/component/material_container/proc/retrieve_sheets(sheet_amt, var/datum/material/M, target = null)
+/datum/material_container/proc/retrieve_sheets(sheet_amt, var/material/M, target = null)
 	// TODO
 	return
 

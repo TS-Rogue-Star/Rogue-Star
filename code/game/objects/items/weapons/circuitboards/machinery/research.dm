@@ -14,7 +14,7 @@
 
 obj/item/weapon/circuitboard/rdserver
 	name = T_BOARD("R&D server")
-	build_path = /obj/machinery/r_n_d/server/core
+	build_path = /obj/machinery/rnd/server/core
 	board_type = new /datum/frame/frame_types/machine
 	origin_tech = list(TECH_DATA = 3)
 	req_components = list(
@@ -25,19 +25,19 @@ obj/item/weapon/circuitboard/rdserver/attackby(obj/item/I as obj, mob/user as mo
 	if(I.is_screwdriver())
 		playsound(src, I.usesound, 50, 1)
 		user.visible_message("<span class='notice'>\The [user] adjusts the jumper on \the [src]'s access protocol pins.</span>", "<span class='notice'>You adjust the jumper on the access protocol pins.</span>")
-		if(build_path == /obj/machinery/r_n_d/server/core)
+		if(build_path == /obj/machinery/rnd/server/core)
 			name = T_BOARD("RD Console - Robotics")
-			build_path = /obj/machinery/r_n_d/server/robotics
+			build_path = /obj/machinery/rnd/server/robotics
 			to_chat(user, "<span class='notice'>Access protocols set to robotics.</span>")
 		else
 			name = T_BOARD("RD Console")
-			build_path = /obj/machinery/r_n_d/server/core
+			build_path = /obj/machinery/rnd/server/core
 			to_chat(user, "<span class='notice'>Access protocols set to default.</span>")
 	return
 
 /obj/item/weapon/circuitboard/destructive_analyzer
 	name = T_BOARD("destructive analyzer")
-	build_path = /obj/machinery/rnd/de
+	build_path = /obj/machinery/rnd/destructive_analyzer
 	board_type = new /datum/frame/frame_types/machine
 	origin_tech = list(TECH_MAGNET = 2, TECH_ENGINEERING = 2, TECH_DATA = 2)
 	req_components = list(
