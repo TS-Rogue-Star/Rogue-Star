@@ -6749,7 +6749,7 @@
 	},
 /area/server)
 "aoI" = (
-/obj/machinery/r_n_d/server/robotics,
+/obj/machinery/rnd/server/robotics,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -7506,7 +7506,7 @@
 	},
 /area/server)
 "aqd" = (
-/obj/machinery/r_n_d/server/core,
+/obj/machinery/rnd/server/core,
 /obj/structure/window/reinforced{
 	dir = 4
 	},

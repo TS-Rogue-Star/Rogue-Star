@@ -230,9 +230,9 @@
 	update_node_status(node)
 	/* TODO - Getting money for science
 	if(get_that_dosh)
-		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SCI)
-		if(D)
-			D.adjust_money(SSeconomy.techweb_bounty)
+		var/datum/money_account/account = LAZYACCESS(department_accounts, DEPARTMENT_RESEARCH)
+		if(istype(account))
+			account.money += 250
 	*/
 	return TRUE
 
@@ -335,7 +335,7 @@
 	return researched_nodes[id]? SSresearch.techweb_node_by_id(id) : FALSE
 
 /datum/techweb/proc/isNodeVisible(datum/techweb_node/N)
-	return isNodeResearchedID(N.id)
+	return isNodeVisibleID(N.id)
 
 /datum/techweb/proc/isNodeVisibleID(id)
 	return visible_nodes[id]? SSresearch.techweb_node_by_id(id) : FALSE

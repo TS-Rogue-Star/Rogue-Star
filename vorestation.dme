@@ -3293,6 +3293,7 @@
 #include "code\modules\research\machinery\techfab.dm"
 #include "code\modules\research\techweb\__techweb_helpers.dm"
 #include "code\modules\research\techweb\_techweb.dm"
+#include "code\modules\research\techweb\_techweb_debug.dm"
 #include "code\modules\research\techweb\_techweb_node.dm"
 #include "code\modules\resleeving\circuitboards.dm"
 #include "code\modules\resleeving\computers.dm"

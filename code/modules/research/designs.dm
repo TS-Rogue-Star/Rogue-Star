@@ -22,7 +22,7 @@ other types of metals and chemistry for reagents).
 	var/name = null					//Name of the created object. If null it will be 'guessed' from build_path if possible.
 	var/desc = null					//Description of the created object. If null it will use group_desc and name where applicable.
 	var/item_name = null			//An item name before it is modified by various name-modifying procs
-	var/id = "id"					//ID of the created object for easy refernece. Alphanumeric, lower-case, no symbols.
+	var/id = DESIGN_ID_IGNORE		//ID of the created object for easy refernece. Alphanumeric, lower-case, no symbols.
 	var/list/req_tech = list()		//TECHWEB DEPRECATED - IDs of that techs the object originated from and the minimum level requirements.
 	var/build_type = null			//Flag as to what kind machine the design is built in. See defines.
 	var/list/materials = list()		//List of materials. Format: "id" = amount.
@@ -52,15 +52,22 @@ other types of metals and chemistry for reagents).
 
 // TODO - Leshana -Validate this here!
 /datum/design/proc/InitializeMaterials()
-	var/list/temp_list = list()
+	// TODO - Converts to storing material datum instances instead of ids or paths
+
+	// For now tho, lets at least validate!
 	for(var/i in materials)
-		var/amount = materials[i]
-		if(!istext(i)) //Not a category, so get the ref the normal way
-			var/material/M =  get_material_ref(i)
-			temp_list[M] = amount
-		else
-			temp_list[i] = amount
-	materials = temp_list
+		var/material/M =  get_material_ref(i)
+		if(!M)
+			log_debug("Design [id] has bad material [i]")
+	// var/list/temp_list = list()
+	// for(var/i in materials)
+	// 	var/amount = materials[i]
+	// 	if(!istext(i)) //Not a category, so get the ref the normal way
+	// 		var/material/M =  get_material_ref(i)
+	// 		temp_list[M] = amount
+	// 	else
+	// 		temp_list[i] = amount
+	// materials = temp_list
 
 /datum/design/proc/icon_html(client/user)
 	var/datum/asset/iconsheet/sheet = get_asset_datum(/datum/asset/iconsheet/research_designs)
