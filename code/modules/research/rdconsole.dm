@@ -171,7 +171,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			if(t_disk)
 				to_chat(user, "<span class='warning'>A technology disk is already loaded!</span>")
 				return
-			if(!user.drop_from_inventory(D, src))
+			if(!user.unEquip(D, target = src))
 				to_chat(user, "<span class='warning'>[D] is stuck to your hand!</span>")
 				return
 			t_disk = D
@@ -179,7 +179,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			if(d_disk)
 				to_chat(user, "<span class='warning'>A design disk is already loaded!</span>")
 				return
-			if(!user.drop_from_inventory(D, src))
+			if(!user.unEquip(D, target = src))
 				to_chat(user, "<span class='warning'>[D] is stuck to your hand!</span>")
 				return
 			d_disk = D

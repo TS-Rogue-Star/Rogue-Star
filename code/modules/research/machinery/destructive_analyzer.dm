@@ -38,7 +38,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		. = 1
 		if(!is_insertion_ready(user))
 			return
-		if(!user.drop_from_inventory(O, src))
+		if(!user.unEquip(O, target = src))
 			to_chat(user, "<span class='warning'>\The [O] is stuck to your hand, you cannot put it in \the [src]!</span>")
 			return
 		busy = TRUE

@@ -30,6 +30,7 @@
 /obj/machinery/rnd/Initialize()
 	. = ..()
 	wires = new /datum/wires/rnd(src)
+	default_apply_parts()
 
 /obj/machinery/rnd/Destroy()
 	QDEL_NULL(wires)
