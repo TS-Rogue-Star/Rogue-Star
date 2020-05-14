@@ -6,6 +6,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	desc = "An all-in-one bluespace storage and transmission system for the station's mineral distribution needs."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "silo"
+	anchored = TRUE
 	density = TRUE
 	circuit = /obj/item/weapon/circuitboard/ore_silo
 
@@ -40,6 +41,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	materials = new(src, materials_list, INFINITY, allowed_types = /obj/item/stack/material, _disable_attackby = TRUE)
 	if (!GLOB.ore_silo_default && mapload && (get_z(src) in using_map.station_levels))
 		GLOB.ore_silo_default = src
+	default_apply_parts()
 
 /obj/machinery/ore_silo/Destroy()
 	if (GLOB.ore_silo_default == src)
@@ -91,10 +93,10 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	var/list/ui = list("<head><title>Ore Silo</title></head><body><div class='statusDisplay'><h2>Stored Material:</h2>")
 	var/any = FALSE
 	for(var/M in materials.materials)
-		var/material/mat = M
+		var/material/mat = get_material_ref(M) // This way it works whether its a type, instance, or id
 		var/amount = materials.materials[M]
 		var/sheets = round(amount) / SHEET_MATERIAL_AMOUNT
-		var/ref = REF(M)
+		var/ref = REF(mat)
 		if (sheets)
 			if (sheets >= 1)
 				ui += "<a href='?src=[REF(src)];ejectsheet=[ref];eject_amt=1'>Eject</a>"
@@ -113,7 +115,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	for(var/C in connected)
 		var/datum/remote_materials/mats = C
 		var/atom/parent = mats.parent
-		var/hold_key = "[get_area(parent)]/[mats.category]"
+		var/hold_key = "[REF(get_area(parent))]/[parent.type]"
 		ui += "<a href='?src=[REF(src)];remove=[REF(mats)]'>Remove</a>"
 		ui += "<a href='?src=[REF(src)];hold[!holds[hold_key]]=[url_encode(hold_key)]'>[holds[hold_key] ? "Allow" : "Hold"]</a>"
 		ui += " <b>[parent.name]</b> in [get_area_name(parent, TRUE)]<br>"
@@ -200,6 +202,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 /obj/machinery/ore_silo/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>[src] can be linked to techfabs, circuit printers and protolathes with a multitool.</span>"
+	materials.OnExamine(src, user, .)
 
 /datum/ore_silo_log
 	var/name  // for VV
@@ -244,7 +247,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	var/list/msg = list("([timestamp]) <b>[machine_name]</b> in [area_name]<br>[action] [abs(amount)]x [noun]<br>")
 	var/sep = ""
 	for(var/key in materials)
-		var/material/M = key
+		var/material/M = get_material_ref(key)
 		var/val = round(materials[key]) / SHEET_MATERIAL_AMOUNT
 		msg += sep
 		sep = ", "

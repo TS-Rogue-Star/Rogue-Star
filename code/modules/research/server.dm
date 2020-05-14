@@ -52,6 +52,10 @@
 		icon_state = "RD-server-halt"
 	else
 		icon_state = "RD-server-on"
+	if(panel_open)
+		add_overlay("RD-server-open")
+	else
+		cut_overlay("RD-server-open")
 
 /obj/machinery/rnd/server/power_change()
 	if((. = ..()))

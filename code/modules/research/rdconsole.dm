@@ -431,10 +431,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	l += ui_protolathe_header()
 	l += "<div class='statusDisplay'><h3>Material Storage:</h3>"
 	for(var/mat_id in mat_container.materials)
-		var/material/M = mat_id
+		var/material/M = get_material_ref(mat_id)
 		var/amount = mat_container.materials[mat_id]
 		var/ref = REF(M)
-		l += "* [amount] of [M.name]: "
+		l += "* [amount] of [M.display_name]: "
 		if(amount >= SHEET_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];ejectsheet=[ref];eject_amt=1'>Eject</A> [RDSCREEN_NOBREAK]"
 		if(amount >= SHEET_MATERIAL_AMOUNT * 5) l += "<A href='?src=[REF(src)];ejectsheet=[ref];eject_amt=5'>5x</A> [RDSCREEN_NOBREAK]"
 		if(amount >= SHEET_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];ejectsheet=[ref];eject_amt=50'>All</A>[RDSCREEN_NOBREAK]"
@@ -566,10 +566,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	l += ui_circuit_header()
 	l += "<h3><div class='statusDisplay'>Material Storage:</h3>"
 	for(var/mat_id in mat_container.materials)
-		var/material/M = mat_id
+		var/material/M = get_material_ref(mat_id)
 		var/amount = mat_container.materials[mat_id]
 		var/ref = REF(M)
-		l += "* [amount] of [M.name]: "
+		l += "* [amount] of [M.display_name]: "
 		if(amount >= SHEET_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];imprinter_ejectsheet=[ref];eject_amt=1'>Eject</A> [RDSCREEN_NOBREAK]"
 		if(amount >= SHEET_MATERIAL_AMOUNT * 5) l += "<A href='?src=[REF(src)];imprinter_ejectsheet=[ref];eject_amt=5'>5x</A> [RDSCREEN_NOBREAK]"
 		if(amount >= SHEET_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];imprinter_ejectsheet=[ref];eject_amt=50'>All</A>[RDSCREEN_NOBREAK]"
@@ -1046,7 +1046,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(!linked_lathe.materials.mat_container)
 			state("No material storage linked to protolathe!")
 			return
-		var/material/M = locate(ls["ejectsheet"]) in linked_lathe.materials.mat_container.materials
+		//var/material/M = locate(ls["ejectsheet"]) in linked_lathe.materials.mat_container.materials
+		var/material/M = locate(ls["ejectsheet"])
 		linked_lathe.eject_sheets(M, ls["eject_amt"])
 	//Circuit Imprinter Materials
 	if(ls["disposeI"])  //Causes the circuit imprinter to dispose of a single reagent (all of it)
@@ -1066,7 +1067,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(!linked_imprinter.materials.mat_container)
 			state("No material storage linked to circuit imprinter!")
 			return
-		var/material/M = locate(ls["imprinter_ejectsheet"]) in linked_imprinter.materials.mat_container.materials
+		//var/material/M = locate(ls["imprinter_ejectsheet"]) in linked_imprinter.materials.mat_container.materials
+		var/material/M = locate(ls["imprinter_ejectsheet"])
 		linked_imprinter.eject_sheets(M, ls["eject_amt"])
 	if(ls["disk_slot"])
 		disk_slot_selected = text2num(ls["disk_slot"])

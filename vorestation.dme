@@ -3295,6 +3295,7 @@
 #include "code\modules\research\techweb\_techweb.dm"
 #include "code\modules\research\techweb\_techweb_debug.dm"
 #include "code\modules\research\techweb\_techweb_node.dm"
+#include "code\modules\research\techweb\all_nodes_vr.dm"
 #include "code\modules\resleeving\circuitboards.dm"
 #include "code\modules\resleeving\computers.dm"
 #include "code\modules\resleeving\designer.dm"

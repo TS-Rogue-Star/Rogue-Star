@@ -13,18 +13,22 @@ handles linking back and forth.
 	// 3. silo is null, matmat_containererials is null
 	var/obj/machinery/ore_silo/silo
 	var/datum/material_container/mat_container
+	var/datum/callback/precondition
+	var/datum/callback/after_insert
 	var/category
 	var/allow_standalone
 	var/local_size = INFINITY
 
-/datum/remote_materials/New(parent, category, mapload, allow_standalone = TRUE, force_connect = FALSE)
+/datum/remote_materials/New(parent, category, mapload, allow_standalone = TRUE, force_connect = FALSE, datum/callback/precondition, datum/callback/after_insert)
 	if(!isatom(parent))
 		CRASH("Oi! What is the meaning of this? Atoms please.")
 	src.parent = parent
 	src.category = category
 	src.allow_standalone = allow_standalone
+	src.precondition = precondition
+	src.after_insert = after_insert
 
-	if(force_connect || (mapload && (get_z(src) in using_map.station_levels)))
+	if(force_connect || (mapload && (get_z(parent) in using_map.station_levels)))
 		addtimer(CALLBACK(src, .proc/LateInitialize))
 	else if(allow_standalone)
 		_MakeLocal()
@@ -74,7 +78,7 @@ handles linking back and forth.
 		/material/plasteel/titanium,
 	)
 
-	mat_container = new(parent, allowed_mats, local_size, allowed_types=/obj/item/stack/material)
+	mat_container = new(parent, allowed_mats, local_size, allowed_types=/obj/item/stack/material, precondition = precondition, after_insert = after_insert)
 
 /datum/remote_materials/proc/set_local_size(size)
 	local_size = size
@@ -90,6 +94,11 @@ handles linking back and forth.
 	if(allow_standalone)
 		_MakeLocal()
 
+// We need to pass thru OnExamine to local materials datum (if existing) because without the component system it can't register on parent itself.
+/datum/remote_materials/proc/OnExamine(datum/source, mob/user, list/examine_list)
+	if(!silo && !mat_container)
+		mat_container.OnExamine(source, user, examine_list)
+
 /datum/remote_materials/proc/OnAttackBy(datum/source, obj/item/I, mob/user)
 	if(istype(I, /obj/item/device/multitool))
 		return OnMultitool(parent, user, I)
@@ -97,7 +106,7 @@ handles linking back and forth.
 		if(silo.remote_attackby(parent, user, I))
 			return TRUE
 	else if(mat_container && istype(I, /obj/item/stack/material))
-		if(mat_container.OnAttackBy(parent, user, I))
+		if(mat_container.OnAttackBy(parent, I, user))
 			return TRUE
 
 /datum/remote_materials/proc/OnMultitool(datum/source, mob/user, obj/item/device/multitool/M)
@@ -124,7 +133,7 @@ handles linking back and forth.
 		return TRUE
 
 /datum/remote_materials/proc/on_hold()
-	return silo && silo.holds["[get_area(parent)]/[category]"]
+	return silo && silo.holds["[REF(get_area(parent))]/[parent.type]"]
 
 /datum/remote_materials/proc/silo_log(obj/machinery/M, action, amount, noun, list/mats)
 	if(silo)

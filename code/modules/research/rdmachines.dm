@@ -60,13 +60,13 @@
 	// TODO - Do I need to check for borgs putting module items inside?
 	if(Insert_Item(O, user))
 		return TRUE
-	if(OnAttackBy(O, user))
+	if(OnAttackBy(src, O, user))
 		return TRUE
 	else
 		return ..()
 
 // Let children with materials override this to forward attackbys.
-/obj/machinery/rnd/proc/OnAttackBy(obj/item/O, mob/user)
+/obj/machinery/rnd/proc/OnAttackBy(datum/source, obj/item/O, mob/user)
 	return
 
 //to disconnect the machine from the r&d console it's linked to

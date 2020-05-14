@@ -28,7 +28,7 @@
 	stored_research = new
 	host_research = SSresearch.science_tech
 	update_research()
-	materials = new /datum/remote_materials(src, "lathe", mapload)
+	materials = new /datum/remote_materials(src, "lathe", mapload, after_insert = CALLBACK(src, .proc/AfterMaterialInsert))
 	RefreshParts()
 
 /obj/machinery/rnd/production/Destroy()
@@ -53,9 +53,13 @@
 /obj/machinery/rnd/production/RefreshParts()
 	calculate_efficiency()
 
-/obj/machinery/rnd/production/OnAttackBy(obj/item/O, mob/user)
+/obj/machinery/rnd/production/examine(var/mob/user)
+	. = ..()
+	materials?.OnExamine(src, user, .)
+
+/obj/machinery/rnd/production/OnAttackBy(datum/source, obj/item/O, mob/user)
 	if(materials?.OnAttackBy(src, O, user))
-		return
+		return TRUE
 	return ..()
 
 /obj/machinery/rnd/production/attack_hand(mob/user as mob)
