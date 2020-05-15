@@ -329,6 +329,22 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	l += "<a href='?src=[REF(src)];switch_screen=[RDSCREEN_PROTOLATHE_QUEUE]'>View Queue ([LAZYLEN(linked_lathe.queue)])</a></div>"
 	return l
 
+/obj/machinery/computer/rdconsole/proc/ui_protolathe()		//Legacy code
+	RDSCREEN_UI_LATHE_CHECK
+	var/list/l = list()
+	l += ui_protolathe_header()
+
+	l += "<form name='search' action='?src=[REF(src)]'>\
+	<input type='hidden' name='src' value='[REF(src)]'>\
+	<input type='hidden' name='search' value='to_search'>\
+	<input type='hidden' name='type' value='proto'>\
+	<input type='text' name='to_search'>\
+	<input type='submit' value='Search'>\
+	</form><HR>"
+
+	l += list_categories(linked_lathe.categories, RDSCREEN_PROTOLATHE_CATEGORY_VIEW)
+	return l
+
 /obj/machinery/computer/rdconsole/proc/ui_protolathe_category_view()	//Legacy code
 	RDSCREEN_UI_LATHE_CHECK
 	var/list/l = list()
@@ -367,23 +383,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			l += "<span class='linkOff'>[D.name]</span>[temp_material][RDSCREEN_NOBREAK]"
 		l += ""
 	l += "</div>"
-	return l
-
-/obj/machinery/computer/rdconsole/proc/ui_protolathe()		//Legacy code
-	RDSCREEN_UI_LATHE_CHECK
-	var/list/l = list()
-	l += ui_protolathe_header()
-
-	l += "<form name='search' action='?src=[REF(src)]'>\
-	<input type='hidden' name='src' value='[REF(src)]'>\
-	<input type='hidden' name='search' value='to_search'>\
-	<input type='hidden' name='type' value='proto'>\
-	<input type='text' name='to_search'>\
-	<input type='submit' value='Search'>\
-	</form><HR>"
-
-	l += list_categories(linked_lathe.categories, RDSCREEN_PROTOLATHE_CATEGORY_VIEW)
-
 	return l
 
 /obj/machinery/computer/rdconsole/proc/ui_protolathe_search()		//Legacy code
@@ -569,17 +568,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	l += "</div>"
 	return l
 
-/obj/machinery/computer/rdconsole/proc/ui_circuit_chemicals()		//legacy code
-	RDSCREEN_UI_IMPRINTER_CHECK
-	var/list/l = list()
-	l += ui_circuit_header()
-	l += "<A href='?src=[REF(src)];disposeallI=1'>Disposal All Chemicals in Storage</A><div class='statusDisplay'>"
-	l += "<h3>Chemical Storage:</h3>"
-	for(var/datum/reagent/R in linked_imprinter.reagents.reagent_list)
-		l += "[R.name]: [R.volume]"
-		l += "<A href='?src=[REF(src)];disposeI=[R]'>Purge</A>"
-	return l
-
 /obj/machinery/computer/rdconsole/proc/ui_circuit_materials()	//Legacy code!
 	RDSCREEN_UI_IMPRINTER_CHECK
 	var/datum/material_container/mat_container = linked_imprinter.materials.mat_container
@@ -599,6 +587,17 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(amount >= SHEET_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];imprinter_ejectsheet=[ref];eject_amt=50'>All</A>[RDSCREEN_NOBREAK]"
 		l += ""
 	l += "</div>[RDSCREEN_NOBREAK]"
+	return l
+
+/obj/machinery/computer/rdconsole/proc/ui_circuit_chemicals()		//legacy code
+	RDSCREEN_UI_IMPRINTER_CHECK
+	var/list/l = list()
+	l += ui_circuit_header()
+	l += "<A href='?src=[REF(src)];disposeallI=1'>Disposal All Chemicals in Storage</A><div class='statusDisplay'>"
+	l += "<h3>Chemical Storage:</h3>"
+	for(var/datum/reagent/R in linked_imprinter.reagents.reagent_list)
+		l += "[R.name]: [R.volume]"
+		l += "<A href='?src=[REF(src)];disposeI=[R]'>Purge</A>"
 	return l
 
 /obj/machinery/computer/rdconsole/proc/ui_circuit_queue()
