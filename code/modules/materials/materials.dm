@@ -149,7 +149,7 @@ GLOBAL_LIST(type_to_material)
 	var/tableslam_noise = 'sound/weapons/tablehit1.ogg'
 	// Noise made when a simple door made of this material opens or closes.
 	var/dooropen_noise = 'sound/effects/stonedoor_openclose.ogg'
-	// Path to resulting stacktype. Todo remove need for this.
+	// Path to resulting stacktype. Todo remove need for this. Must be null or subtype of /obj/item/stack/material
 	var/stack_type
 	// Wallrot crumble message.
 	var/rotting_touch_message = "crumbles under your touch"
@@ -252,6 +252,13 @@ GLOBAL_LIST(type_to_material)
 /material/proc/place_shard(var/turf/target)
 	if(shard_type)
 		return new /obj/item/weapon/material/shard(target, src.name)
+
+// Get the max stack size of this material's stack type
+/material/proc/get_stack_max_amount()
+	if(ispath(stack_type, /obj/item/stack/material))
+		var/obj/item/stack/material/sheetType = stack_type
+		return initial(sheetType.max_amount)
+	return 0
 
 // Used by walls and weapons to determine if they break or not.
 /material/proc/is_brittle()

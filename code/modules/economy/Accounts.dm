@@ -19,6 +19,22 @@
 	var/time = ""
 	var/source_terminal = ""
 
+/datum/money_account/proc/make_transaction(var/source_name, var/purpose, var/terminal_id, var/amount)
+	money += amount
+
+	//create a transaction log entry
+	var/datum/transaction/T = new()
+	T.target_name = source_name
+	T.purpose = purpose
+	if(amount < 0)
+		T.amount = "([amount])"
+	else
+		T.amount = "[amount]"
+	T.date = current_date_string
+	T.time = stationtime2text()
+	T.source_terminal = terminal_id
+	transaction_log.Add(T)
+
 /proc/create_account(var/new_owner_name = "Default user", var/starting_funds = 0, var/obj/machinery/account_database/source_db, var/offmap = FALSE)
 
 	//create a new account

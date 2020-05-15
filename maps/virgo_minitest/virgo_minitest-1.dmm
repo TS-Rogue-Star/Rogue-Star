@@ -2869,9 +2869,11 @@
 "gj" = (
 /obj/machinery/power/apc{
 	dir = 1;
+	layer = 3.2;
 	name = "north bump";
 	pixel_x = 0;
-	pixel_y = 32
+	pixel_y = 32;
+	plane = -35
 	},
 /obj/structure/cable{
 	icon_state = "0-4";
@@ -2924,6 +2926,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/structure/table/glass,
 /turf/simulated/floor/tiled,
 /area/bridge)
 "gr" = (
@@ -2940,6 +2943,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
+/obj/structure/table/glass,
 /turf/simulated/floor/tiled,
 /area/bridge)
 "gt" = (
@@ -3330,11 +3334,22 @@
 /obj/machinery/cryopod/robot,
 /turf/simulated/floor/tiled,
 /area/bridge)
+"oU" = (
+/obj/machinery/rnd/production/circuit_imprinter,
+/turf/simulated/floor/tiled,
+/area/bridge)
 "pG" = (
 /obj/machinery/camera/network/civilian{
 	icon_state = "camera";
 	dir = 9
 	},
+/turf/simulated/floor/tiled,
+/area/bridge)
+"pN" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/mecha_part_fabricator,
 /turf/simulated/floor/tiled,
 /area/bridge)
 "ql" = (
@@ -3397,6 +3412,14 @@
 	},
 /turf/simulated/shuttle/floor/voidcraft/light,
 /area/shuttle/overmapdemo)
+"vV" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/item/weapon/storage/belt/utility/fluff/vulpine,
+/obj/structure/table/glass,
+/turf/simulated/floor/tiled,
+/area/bridge)
 "xM" = (
 /obj/machinery/camera/network/civilian{
 	icon_state = "camera";
@@ -3423,11 +3446,16 @@
 /obj/effect/overmap/visitable/ship/landable/overmapdemo,
 /turf/simulated/shuttle/floor/voidcraft/light,
 /area/shuttle/overmapdemo)
+"Bz" = (
+/obj/machinery/rnd/server/core,
+/turf/simulated/floor/tiled,
+/area/bridge)
 "Gz" = (
 /turf/simulated/shuttle/wall/voidcraft/green,
 /area/shuttle/overmapdemo)
 "GC" = (
 /obj/machinery/camera/network/civilian,
+/obj/machinery/pros_fabricator,
 /turf/simulated/floor/tiled,
 /area/bridge)
 "JA" = (
@@ -3444,6 +3472,24 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/fore)
+"MH" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/fiftyspawner/diamond,
+/obj/fiftyspawner/glass,
+/obj/fiftyspawner/gold,
+/obj/fiftyspawner/phoron,
+/obj/fiftyspawner/plastic,
+/obj/fiftyspawner/rglass,
+/obj/fiftyspawner/titanium,
+/obj/fiftyspawner/uranium,
+/obj/fiftyspawner/graphite,
+/obj/fiftyspawner/osmium,
+/obj/fiftyspawner/mhydrogen,
+/obj/structure/table/glass,
+/turf/simulated/floor/tiled,
+/area/bridge)
 "ML" = (
 /obj/machinery/embedded_controller/radio/simple_docking_controller{
 	id_tag = "station_dock2";
@@ -3476,6 +3522,17 @@
 /turf/space,
 /turf/simulated/shuttle/plating/carry,
 /area/shuttle/multidemo)
+"QY" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/computer/rdconsole/core,
+/turf/simulated/floor/tiled,
+/area/bridge)
+"Rt" = (
+/obj/machinery/rnd/production/protolathe,
+/turf/simulated/floor/tiled,
+/area/bridge)
 "SN" = (
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
@@ -3483,6 +3540,14 @@
 	id_tag = "station_dock2_hatch";
 	locked = 1
 	},
+/turf/simulated/floor/tiled,
+/area/bridge)
+"SU" = (
+/obj/machinery/ore_silo,
+/turf/simulated/floor/tiled,
+/area/bridge)
+"TR" = (
+/obj/machinery/rnd/destructive_analyzer,
 /turf/simulated/floor/tiled,
 /area/bridge)
 "Ug" = (
@@ -4834,7 +4899,7 @@ gf
 gf
 go
 gf
-gf
+Bz
 gf
 gf
 go
@@ -5236,7 +5301,7 @@ gY
 aa
 aa
 fY
-gf
+SU
 gf
 gf
 gf
@@ -5442,7 +5507,7 @@ aa
 fY
 gi
 gf
-gr
+vV
 gf
 gf
 gf
@@ -5546,7 +5611,7 @@ GC
 gf
 gr
 gf
-gf
+oU
 gz
 gf
 gf
@@ -5646,9 +5711,9 @@ aa
 fY
 gj
 gf
-gr
+QY
 gf
-gf
+Rt
 gz
 gf
 gf
@@ -5746,11 +5811,11 @@ aa
 aa
 aa
 fY
-gk
+pN
 gf
 gr
 gf
-gf
+TR
 gf
 gf
 gf
@@ -5850,7 +5915,7 @@ eM
 fZ
 gk
 gf
-gr
+MH
 gf
 gf
 gy

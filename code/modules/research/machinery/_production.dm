@@ -159,7 +159,7 @@
 	var/list/efficient_mats = list()
 	for(var/MAT in D.materials)
 		efficient_mats[MAT] = D.materials[MAT]/coeff
-	if(!materials.mat_container.has_materials(efficient_mats, amount))
+	if(!materials.mat_container.can_use_materials(efficient_mats, amount))
 		state("Not enough materials to complete prototype[amount > 1? "s" : ""].")
 		return FALSE
 	for(var/R in D.chemicals)
@@ -227,7 +227,7 @@
 	var/list/l = list()
 	l += "<div class='statusDisplay'><h3>Material Storage:</h3>"
 	for(var/mat_id in materials.mat_container.materials)
-		var/material/M = mat_id
+		var/material/M = get_material_ref(mat_id)
 		var/amount = materials.mat_container.materials[mat_id]
 		var/ref = REF(M)
 		l += "* [amount] of [M.name]: "

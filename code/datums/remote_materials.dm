@@ -78,7 +78,8 @@ handles linking back and forth.
 		/material/plasteel/titanium,
 	)
 
-	mat_container = new(parent, allowed_mats, local_size, allowed_types=/obj/item/stack/material, precondition = precondition, after_insert = after_insert)
+	// atom/parent, list/allowed_mats, max_amt = 0, list/allowed_types, list/hidden_mats, preserve_composites = TRUE, datum/callback/after_insert)
+	mat_container = new(parent, allowed_mats, local_size, allowed_types=/obj/item/stack/material, after_insert = after_insert)
 
 /datum/remote_materials/proc/set_local_size(size)
 	local_size = size
@@ -106,7 +107,7 @@ handles linking back and forth.
 		if(silo.remote_attackby(parent, user, I))
 			return TRUE
 	else if(mat_container && istype(I, /obj/item/stack/material))
-		if(mat_container.OnAttackBy(parent, I, user))
+		if(mat_container.default_user_insert_item(user, I)) // TODO - Strongly examine this
 			return TRUE
 
 /datum/remote_materials/proc/OnMultitool(datum/source, mob/user, obj/item/device/multitool/M)

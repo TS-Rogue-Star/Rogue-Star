@@ -110,14 +110,21 @@
 	return ..()
 
 // Evidently we use power and show animations when stuff is inserted.
-/obj/machinery/rnd/proc/AfterMaterialInsert(item_inserted, id_inserted, amount_inserted)
-	var/stack_name
+/obj/machinery/rnd/proc/AfterMaterialInsert(item_inserted, amount_inserted)
+	log_debug("AfterMaterialInsert([item_inserted], [amount_inserted]) on [src]")
+	var/image/load_overlay
 	if(istype(item_inserted, /obj/item/weapon/ore/bluespace_crystal))
-		stack_name = "bluespace"
+		load_overlay = image(icon, src, "protolathe_bluespace")
 		use_power_oneoff(SHEET_MATERIAL_AMOUNT / 10)
-	else
-		var/obj/item/stack/S = item_inserted
-		stack_name = S.name
+	else if(istype(item_inserted, /obj/item/stack/material))
+		var/obj/item/stack/material/S = item_inserted
+		var/specific_state = "protolathe_[S.material.name]"
+		if(specific_state in cached_icon_states(icon))
+			load_overlay = image(icon, src, specific_state)
+		else
+			load_overlay = image(icon, src, "protolathe_loadlights")
+			var/image/sheet_anim = image(icon, "protolathe_loadsheet")
+			sheet_anim.color = S.material?.icon_colour
+			load_overlay.overlays += sheet_anim
 		use_power_oneoff(min(1000, (amount_inserted / 100)))
-	add_overlay("protolathe_[stack_name]")
-	addtimer(CALLBACK(src, /atom/proc/cut_overlay, "protolathe_[stack_name]"), 10)
+	flick_overlay_view(load_overlay, src, 8)

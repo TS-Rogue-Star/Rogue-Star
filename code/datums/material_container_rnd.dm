@@ -1,47 +1,40 @@
-/*
-	This datum should be used for handling mineral contents of machines and whatever else is supposed to hold minerals and make use of them.
-
-	Variables:
-		amount - raw amount of the mineral this container is holding,
-			TODO - EITHER: calculated by the defined value SHEET_MATERIAL_AMOUNT=2000.
-			TODO -     OR: material.perunit
-		max_amount - max raw amount of mineral this container can hold.
-		sheet_type - type of the mineral sheet the container handles, used for output.
-		parent - object that this container is being used by, used for output.
-		MAX_STACK_SIZE - size of a stack of mineral sheets. Constant.
-*/
-
-// TODO - About the materials var.   It would be nice if all materials/matter vars were initially populated (in code) with type paths for compile time checking.
-// 			It also would be nice if the keys at runtime were instances, for easy access to info!  Or leave the runtime keys to be types.
-//			However! for compatibilty with the rest of the codebase, we are doing to use */material/var/name* as the keys, since this is used in every other place in the code.
-//			In this way we can transition everything at once to a more robust system.
-//			In order to prepare for this, where reasonable we will use get_mateiral_ref proc, which returns an instance, but can take instance, name, or type path.
-//			In this way we transition will be even smoother as this code will already work regardless!  In time we can optimize away the conversion as reliability improves.
-
-
+/**
+ *	This datum should be used for handling mineral contents of machines and whatever else is supposed to hold minerals and make use of them.
+ *
+ * TODO - About the materials var.   It would be nice if all materials/matter vars were initially populated (in code) with type paths for compile time checking.
+ * 			It also would be nice if the keys at runtime were instances, for easy access to info!  Or leave the runtime keys to be types.
+ *			However! for compatibilty with the rest of the codebase, we are doing to use **material/var/name** as the keys, since this is used in every other place in the code.
+ *			In this way we can transition everything at once to a more robust system.
+ *			In order to prepare for this, where reasonable we will use get_mateiral_ref proc, which returns an instance, but can take instance, name, or type path.
+ *			In this way we transition will be even smoother as this code will already work regardless!  In time we can optimize away the conversion as reliability improves.
+ */
 /datum/material_container
-	var/atom/parent					// Actual atom we are providing materials to (lathe etc)
+	var/atom/parent						// Actual atom we are providing materials to (lathe etc)
+	var/tmp/total_amount = 0			// Total raw amount of material this container currently hold (auto-calculated field)
 
-	var/total_amount = 0			// Total raw amount of material this container currently holds.
-	var/max_amount					// Max raw amount of material this container can hold.
-	var/list/materials				// Map of allowed materials and current quantities.  Key = material id | Value = amount
-	// TODO - Implement hidden materials
-	var/list/hidden_materials		// IDs of material this machine will not display unless it contains them.  Must be in the materials list as well.
+	var/max_amount						// Max raw amount of material this container can hold.
+	var/list/materials					// Map of allowed materials and current quantities,  Initialized by constructor. Key = material id | Value = amount
+	var/list/hidden_materials			// IDs of material this machine will not display unless it contains them.  Must be in the materials list as well.
 
-	var/show_on_examine
-	var/disable_attackby
-	var/list/allowed_typecache
-	var/last_inserted_id
-	var/precise_insertion = FALSE
-	var/datum/callback/precondition
+	// Item insertion settings
+	var/list/preserve_composites		// If material sheets of composite material should insert the composite or break it down into its atomic types or add its main type.
+	var/list/allowed_typecache			// Types accepted by the insert_item procs. Initialized by constructor
+	var/precise_insertion = FALSE		// Flag to prompt users for amount of stacks to insert when inserting 
 	var/datum/callback/after_insert
 
-/datum/material_container/New(atom/parent, list/mat_list, max_amt = 0, _show_on_examine = FALSE, list/allowed_types, datum/callback/precondition, datum/callback/after_insert, _disable_attackby)
+/**
+ * Create new material container!
+ * @param parent Physical atom that containts the materials "in universe"
+ * @param allowed_mats Allowed material types.  List of material type paths (also will accept list of material ids)
+ * @param hidden_mats
+ * @param max_amt Maximum total volume of materials (shared across all material types)
+ * @param allowed_item_types List of obj/item type paths accepted by the insert_item procs.  A single path or list of paths. Null disables.
+ */
+/datum/material_container/New(atom/parent, list/allowed_mats, max_amt = 0, list/allowed_types, list/hidden_mats, preserve_composites = TRUE, datum/callback/after_insert)
 	src.parent = parent
-	materials = list()
 	max_amount = max(0, max_amt)
-	show_on_examine = _show_on_examine
-	disable_attackby = _disable_attackby
+	src.preserve_composites = preserve_composites
+	src.after_insert = after_insert
 
 	if(allowed_types)
 		if(ispath(allowed_types) && allowed_types == /obj/item/stack/material)
@@ -49,161 +42,217 @@
 		else
 			allowed_typecache = typecacheof(allowed_types)
 
-	src.precondition = precondition
-	src.after_insert = after_insert
-
 	// See comment at top of file for why we are using material IDs as list keys.
-	for(var/mat in mat_list) //Make the assoc list ref | amount
+	materials = list()
+	for(var/mat in allowed_mats) //Make the assoc list ref | amount
 		var/material/M = get_material_ref(mat)
 		if(!M)
 			log_debug("Material container datum for [parent] initialized with bad material [mat]")
 			continue
 		materials[M.name] = 0
+	for(var/mat in hidden_mats)
+		var/material/M = get_material_ref(mat)
+		if(!M)
+			log_debug("Material container datum for [parent] initialized with bad hidden material [mat]")
+			continue
+		materials[M.name] = 0
+		LAZYSET(hidden_materials, M.name, TRUE)
 
+// Helper to add contents to examine.
 /datum/material_container/proc/OnExamine(datum/source, mob/user, list/examine_list)
-	if(!show_on_examine)
-		return
 	for(var/I in materials)
 		var/amt = materials[I]
 		if(amt)
 			examine_list += "<span class='notice'>It has [amt] unit\s of [material_display_name(I)] stored.</span>"
 
-/// Proc that allows players to fill the parent with mats
-/datum/material_container/proc/OnAttackBy(datum/source, obj/item/I, mob/living/user)
-	var/list/tc = allowed_typecache
-	if(disable_attackby)
-		return
-	if(user.a_intent != I_HELP)
-		return
-	if(tc && !is_type_in_typecache(I, tc))
-		to_chat(user, "<span class='warning'>[parent] won't accept [I]!</span>")
-		return
-	. = TRUE // COMPONENT_NO_AFTERATTACK
-	var/datum/callback/pc = precondition
-	if(pc && !pc.Invoke(user))
-		return
-	var/material_amount = get_item_material_amount(I)
-	if(!material_amount)
-		to_chat(user, "<span class='warning'>[I] does not contain sufficient materials to be accepted by [parent].</span>")
-		return
-	if(!has_space(material_amount))
-		to_chat(user, "<span class='warning'>[parent] is full. Please remove materials from [parent] in order to insert more.</span>")
-		return
-	user_insert(I, user)
+/** Returns info about materials contained in a list format suitable for JSON/NanoUI */
+/datum/material_container/proc/materials_ui_data()
+	var/materials_ui[0]
+	for(var/mat in materials)
+		var/amount = materials[mat]
+		if(hidden_materials && !amount && (mat in hidden_materials))
+			continue // skip showing hidden materials when we have none
+		materials_ui[++materials_ui.len] = list(
+				"name" = mat,
+				"display" = material_display_name(mat),
+				"qty" = amount,
+				"max" = total_amount,
+				"percent" = (amount / total_amount * 100))
+	return materials_ui
 
-/// Proc used for when player inserts materials
-/datum/material_container/proc/user_insert(obj/item/I, mob/living/user)
+/** Helper proc for when a player attempts to load materials from an item. Intended to be called from attackby().
+ * This is truely a helper proc. You are not obligated to use this proc, its totally fine to use insert_item_materials or insert_stack_materials directly.
+ * This just handles common cases!
+ * @return FALSE if item wasn't an accepted type, otherwise TRUE (even if failed to load)
+*/
+/datum/material_container/proc/default_user_insert_item(var/mob/user, var/obj/item/I, yield_factor = 1, var/datum/callback/extra_after_insert)
 	set waitfor = FALSE
-	var/requested_amount
-	if(istype(I, /obj/item/stack) && precise_insertion)
-		var/atom/current_parent = parent
+	// Return false in the cases the item isn't intended for us. Let other stuff handle it.
+	if(user.a_intent != I_HELP)
+		return FALSE // Don't intercept if they are trying to thwack
+	if(allowed_typecache && !is_type_in_typecache(I, allowed_typecache))
+		return FALSE
+	// Okay its now an allowed type, so from hereon out we return TRUE since we have elected to handle things.
+	. = TRUE
+	yield_factor = CEILING(yield_factor, 0.01)
+	var/inserted = 0
+	if(istype(I, /obj/item/stack))
 		var/obj/item/stack/S = I
-		requested_amount = input(user, "How much do you want to insert?", "Inserting [S.singular_name]s") as num|null
-		if(isnull(requested_amount) || (requested_amount <= 0))
+		// Quick convenience check to give a helpful message to users in the most common use case of lathes.
+		if(istype(I, /obj/item/stack/material) && preserve_composites)
+			var/obj/item/stack/material/MS = I
+			if(!(MS.material.name in materials))
+				to_chat(user, "<span class='warning'>\The [parent] doesn't accept [MS.material.display_name]!</span>")
+				return
+		else if(get_total_amount(I.matter, yield_factor) <= 0)
+			to_chat(user, "<span class='warning'>[I] does not contain significant amounts of useful materials and cannot be accepted.<span>")
 			return
-		if(QDELETED(I) || QDELETED(user) || QDELETED(src) || parent != current_parent || user.check_physical_distance(current_parent) < STATUS_INTERACTIVE || user.get_active_hand() != I)
-			return
-	if(!user.canUnEquip(I))
-		to_chat(user, "<span class='warning'>[I] is stuck to you and cannot be placed into [parent].</span>")
-		return
-	var/inserted = insert_item(I, stack_amt = requested_amount)
-	if(inserted)
-		if(istype(I, /obj/item/stack))
-			var/obj/item/stack/S = I
+		var/requested_amount = S.get_amount()
+		if (precise_insertion && S.get_amount() > 1)
+			requested_amount = min(S.get_amount(), input(user, "How much do you want to insert?", "Inserting [S.singular_name]s", requested_amount) as num|null)
+			if(isnull(requested_amount) || (requested_amount <= 0))
+				return // They pressed cancel
+			if(QDELETED(I) || QDELETED(user) || QDELETED(src) || user.check_physical_distance(parent) < STATUS_INTERACTIVE || user.get_active_hand() != I)
+				return // They walked away or something
+		// Attempt the insert.  If the stack is used up completely it handles its own deletion.
+		inserted = insert_stack_materials(I, yield_factor, requested_amount)
+		if(inserted > 0)
 			to_chat(user, "<span class='notice'>You insert [inserted] [S.singular_name]\s into [parent].</span>")
-		else
+		if(inserted < requested_amount)
+			to_chat(user, "<span class='warning'>[parent] is full. Please remove materials from [parent] in order to insert more.</span>")
+	else
+		if(!user.canUnEquip(I))
+			to_chat(user, "<span class='warning'>[I] is stuck to you and cannot be placed into [parent].</span>")
+			return
+		if(get_total_amount(I.matter, yield_factor) <= 0)
+			to_chat(user, "<span class='warning'>[I] does not contain significant amounts of useful materials and cannot be accepted.<span>")
+			return
+		if(!can_insert_materials(I.matter, yield_factor))
+			to_chat(user, "<span class='warning'>[parent] is full. Please remove material in order to insert more.</span>")
+			return
+		inserted = insert_materials(I.matter, yield_factor)
+		if(inserted > 0)
 			to_chat(user, "<span class='notice'>You insert a material total of [inserted] into [parent].</span>")
 			user.remove_from_mob(I)
 			qdel(I)
-		if(after_insert)
-			after_insert.Invoke(I, last_inserted_id, inserted)
+	// Invoke callback if we in fact did anything
+	if(inserted > 0)
+		after_insert?.Invoke(I, inserted)
+		extra_after_insert?.Invoke(I, inserted)
 
-/// Proc specifically for inserting items, returns the amount of materials entered.
-/datum/material_container/proc/insert_item(obj/item/I, var/multiplier = 1, stack_amt)
-	if(!I)
+/** 
+ * Helper proc that inserts the material of an item, intended for non-user-interactive usage.
+ * As such it doesn't bother to print feedback about why insertion was denied.
+ * @yield_factor is a multiplier to the amount added to materials, NOT to the amount consumed.
+ * @force Insert even if some matter would be lost due to disallowed types or full storage
+ * @return True if anything was inserted, otherwise false.
+*/
+/datum/material_container/proc/default_insert_item(obj/item/I, yield_factor = 1, force = FALSE, datum/callback/extra_after_insert)
+	if(allowed_typecache && !is_type_in_typecache(I, allowed_typecache))
 		return FALSE
-	multiplier = CEILING(multiplier, 0.01)
 
+	yield_factor = CEILING(yield_factor, 0.01)
+	var/inserted = 0
 	if(istype(I, /obj/item/stack))
-		var/obj/item/stack/S = I
-		if(isnull(stack_amt))
-			stack_amt = S.amount
-		if(stack_amt <= 0)
-			return FALSE
-		if(stack_amt > S.amount)
-			stack_amt = S.amount
-		var/material_amt = get_item_material_amount(S) * multiplier
-		if(!material_amt)
-			return FALSE
-		stack_amt = min(stack_amt, round(((max_amount - total_amount) / material_amt)))
-		if(!stack_amt)
-			return FALSE
-		last_inserted_id = insert_item_materials(S, stack_amt * multiplier)
-		S.use(stack_amt)
-		return stack_amt
-
-	var/material_amount = get_item_material_amount(I) * multiplier
-	if(!material_amount || !has_space(material_amount))
-		return FALSE
-
-	last_inserted_id = insert_item_materials(I, multiplier)
-	return material_amount
-
-// For internal use only
-/datum/material_container/proc/insert_item_materials(obj/item/I, multiplier = 1)
-	var/primary_mat
-	var/highest_mat_value = 0
-	for(var/MAT in materials)
-		materials[MAT] += I.matter[MAT] * multiplier
-		total_amount += I.matter[MAT] * multiplier
-		if(I.matter[MAT] > highest_mat_value)
-			primary_mat = MAT
-	return primary_mat
-
-/// For inserting an amount of material (used only by destructive analyzer currently.  Look into merging it with other stuff)
-/datum/material_container/proc/insert_amount_mat(amt, mat)
-	// TODO - may not need this at all, skipping
-	return
-
-/// Uses an amount of a specific material, effectively removing it.
-/datum/material_container/proc/use_amount_mat(amt, var/material/mat)
-	if(!istype(mat))
-		mat = get_material_ref(mat)
-	if(mat && materials[mat.name] >= amt)
-		materials[mat.name] -= amt
-		total_amount -= amt
-		return amt
+		inserted = insert_stack_materials(I, yield_factor)
+	else if(force || can_insert_materials(I.matter, yield_factor))
+		inserted = insert_materials(I.matter, yield_factor)
+		if(inserted > 0)
+			qdel(I)
+	if(inserted > 0)
+		after_insert?.Invoke(I, inserted)
+		extra_after_insert?.Invoke(I, inserted)
+		return TRUE	
 	return FALSE
 
-/// Proc that returns TRUE if the container has space
-/datum/material_container/proc/has_space(amt = 0)
-	return (total_amount + amt) <= max_amount
+/**
+ * Helper proc that inserts stacks (or parts of a stack).  Note: Not necessarily material stacks, this works for any stack with matter!
+ * @yield_factor is a multiplier to the amount added to materials, NOT to the amount consumed.
+ * @stack_amt is the desired amount of stacks to use from S. May actually use less if we don't have room for it all.
+ * @return amount of stacks actually used and inserted.
+*/
+/datum/material_container/proc/insert_stack_materials(obj/item/stack/S, yield_factor = 1, stack_amt = INFINITY)
+	if(!istype(S))
+		return 0
 
-/datum/material_container/proc/has_materials(list/mats, multiplier = 1)
-	if(!mats || !mats.len)
+	var/list/matter_per_stack = S.matter
+	// Special handling for material sheets if we want the composite material instead of its component sub-materials.
+	if(istype(S, /obj/item/stack/material) && preserve_composites)
+		var/obj/item/stack/material/MS = S
+		matter_per_stack = list(MS.material.name = MS.perunit)
+
+	// Calculate mass per stack
+	var/units_per_stack = get_total_amount(matter_per_stack, multiplier = yield_factor)
+	if(units_per_stack <= 0)
+		return 0  // It contains nothing usable after all
+	var/max_that_will_fit = round((max_amount - total_amount) / units_per_stack)
+	var/stacks_to_use = clamp(stack_amt, 0, min(max_that_will_fit, S.get_amount()))
+	if(stacks_to_use >= 1 && S.use(stacks_to_use))
+		insert_materials(matter_per_stack, stacks_to_use * yield_factor)
+		return stacks_to_use
+	return 0
+
+
+// /datum/material_container/proc/get_total_item_amount(obj/item/I,  multiplier = 1, include_disallowed_types = FALSE)
+// 	if(istype(I, obj/item/stack/material) && preserve_composites)
+// 		obj/item/stack/material/MS = I
+// 		return list(MS.material.name = MS.perunit)
+
+
+//
+// Misc
+//
+
+/**
+ * Get the total quantity of materials in mats, counting only materials allowed in this container.
+ * @multiplier Multiply total by this amount
+ * @include_disallowed_types Also count materials disallowed by this container (for some reason)
+*/
+/datum/material_container/proc/get_total_amount(list/mats, multiplier = 1, include_disallowed_types = FALSE)
+	if(!LAZYLEN(mats))
+		return 0
+	var/total_amount = 0
+	for(var/x in mats)
+		var/material/M = get_material_ref(x)
+		if(M && ((M.name in materials) || include_disallowed_types))
+			total_amount += mats[x]
+	return total_amount * multiplier
+
+/// Returns the amount of a specific material in this container.
+/datum/material_container/proc/get_material_amount(var/material/mat)
+	if(!istype(mat))
+		mat = get_material_ref(mat)
+	return (mat && materials[mat.name]) || 0
+
+///////////////////////////////////////////////////////////
+// Associative materials list version of functions
+///////////////////////////////////////////////////////////
+
+/// Checks if we can affor it.
+/datum/material_container/proc/can_use_materials(list/mats, multiplier = 1)
+	if(!LAZYLEN(mats))
 		return FALSE
 	
 	for(var/x in mats)
 		var/material/M = get_material_ref(x)
-		if(!(materials[M?.name] >= (mats[x] * multiplier)))
+		var/amount_required = mats[x] * multiplier
+		if(!M || !(materials[M.name] >= amount_required))
 			return FALSE // Doesn't exist or can't afford it!
 	return TRUE
 
 /// For consuming a dictionary of materials. mats is the map of materials to use and the corresponding amounts, example: list("glass" = 100, "steel" = 200)
+/// Strict pass/fail, if *any* entry in mats isn't available, *nothing* is withdrawn.
 /datum/material_container/proc/use_materials(list/mats, multiplier = 1)
-	if(!mats || !length(mats))
+	if(!LAZYLEN(mats))
 		return FALSE
 
 	var/list/mats_to_remove = list() // Assoc list MATID | AMOUNT
-
 	for(var/x in mats) //Loop through all required materials
 		var/material/M = get_material_ref(x)
-		var/id = M.name
 		var/amount_required = mats[x] * multiplier
-		if(!(materials[id] >= amount_required)) // do we have enough of the resource?
+		if(!M || !(materials[M.name] >= amount_required)) // do we have enough of the resource?
 			return FALSE //Can't afford it
-		mats_to_remove[id] += amount_required // Add it to the assoc list of things to remove
-		continue
+		mats_to_remove[M.name] += amount_required // Add it to the assoc list of things to remove
 
 	var/total_amount_save = total_amount
 	for(var/i in mats_to_remove)
@@ -211,34 +260,68 @@
 		total_amount -= mats_to_remove[i]
 	return total_amount_save - total_amount
 
+// Checks if we can insert all the materials in mats.
+/datum/material_container/proc/can_insert_materials(list/mats, multiplier = 1, ignore_disallowed_types = FALSE)
+	if(!LAZYLEN(mats))
+		return FALSE
+
+	var/material_amount = 0
+	for(var/x in materials)
+		var/material/M = get_material_ref(x)
+		if(!M || !(M.name in materials))
+			if(ignore_disallowed_types)
+				continue;
+			return FALSE // Not an allowed material
+		material_amount += mats[x]	
+	material_amount *= multiplier
+	return (material_amount > 0) && (total_amount + material_amount <= max_amount)
+
+// Adds materials.  Partial success allowed If it fills up we add what we can and stop.
+/datum/material_container/proc/insert_materials(list/mats, multiplier = 1)
+	if(!LAZYLEN(mats))
+		return FALSE
+
+	. = 0
+	for(var/x in mats)
+		var/material/M = get_material_ref(x)
+		if(!M || !(M.name in materials))
+			continue // Not an allowed material
+		var/amount_to_add = clamp(mats[x] * multiplier, 0, max_amount - total_amount)
+		materials[M.name] += amount_to_add
+		total_amount += amount_to_add
+		. += amount_to_add
+
+///////////////////////////////////////////////////////////
+// Material Sheet functions - For outputting as sheets
+///////////////////////////////////////////////////////////
+
 /// For spawning mineral sheets at a specific location. Used by machines to output sheets.
-/datum/material_container/proc/retrieve_sheets(sheet_amt, mat, target = null)
+/datum/material_container/proc/retrieve_sheets(sheet_amt = INFINITY, mat, target = null)
 	var/material/M = get_material_ref(mat)
 	if(!M || !M.stack_type)
 		log_debug("Attempted to retrieve sheets of [mat] from [parent] but it's not valid.")
 		return 0
+	
+	if(!target)
+		target = parent.drop_location()
 
 	var/obj/item/stack/material/sheetType = M.stack_type
 	var/perSheet = initial(sheetType.perunit)
 	var/maxStackSize = initial(sheetType.max_amount)
+	var/stacks_to_make = clamp(sheet_amt, 0, round(materials[M.name] / perSheet))
 
-	if(!target)
-		target = get_turf(parent)
-	if(isnull(sheet_amt) || materials[M.name] < (sheet_amt * perSheet))
-		sheet_amt = round(materials[M.name] / perSheet)
+	// If the're asking for more than fit in a single stack, we need to spawn multiple
 	var/count = 0
-	while(sheet_amt > maxStackSize)
-		new sheetType(target, maxStackSize)
-		count += maxStackSize
-		use_amount_mat(sheet_amt * perSheet, M)
-		sheet_amt -= maxStackSize
-	if(sheet_amt >= 1)
-		new sheetType(target, sheet_amt)
-		count += sheet_amt
-		use_amount_mat(sheet_amt * perSheet, M)
+	while(stacks_to_make >= 1)
+		var/qty = min(stacks_to_make, maxStackSize)
+		if(!use_materials(list(M.name = perSheet), qty))
+			log_debug("Okay somehow didn't get val from use_materials([json_encode(list(M.name = perSheet))], [qty])")
+		new sheetType(target, qty)
+		count += qty
+		stacks_to_make -= qty
 	return count
 
-/// Proc to get all the materials and dump them as sheets
+/// Helper proc to get all the materials and dump them as sheets
 /datum/material_container/proc/retrieve_all(target = null)
 	var/result = 0
 	for(var/MAT in materials)
@@ -246,32 +329,44 @@
 			result += retrieve_sheets(null, MAT, target)
 	return result
 
-/// Returns the total amount of material in I relevant to this container; if this container does not support X, any X in 'I' will not be taken into account
-/datum/material_container/proc/get_item_material_amount(obj/item/I)
-	if(!istype(I) || !LAZYLEN(I.matter))
-		return FALSE
-	var/material_amount = 0
-	for(var/MAT in materials)
-		material_amount += I.matter[MAT]
-	return material_amount
+///////////////////////////////////////////////////////////
+// Single material version of functions
+///////////////////////////////////////////////////////////
 
-/// Returns the amount of a specific material in this container.
-/datum/material_container/proc/get_material_amount(var/mat)
-	var/material/M = get_material_ref(mat)
-	return (M && materials[M.name]) || 0
+// // private
+// // Check if we have enough space to add an amount of a specific material
+// /datum/material_container/proc/can_insert_amount_mat(amt = 0, var/material/mat)
+// 	// Note: doesn't check if mat is valid for this container.  Intentional for now since it is not always passed.
+// 	return (total_amount + amt) <= max_amount
 
-// Eject material as *amount* number of sheets.  Omitting amount ejects all of it.
-/datum/material_container/proc/eject(var/material, var/amount = -1)
-	var/material/matref = get_material_ref(material)
-	if(!matref || !(matref in materials))
-		return
-	var/obj/item/stack/material/sheetType = matref.stack_type
-	var/perSheet = initial(sheetType.perunit)
-	var/eject = round(materials[matref] / perSheet)
-	eject = (amount == -1) ? eject : min(eject, amount)
-	if(eject < 1)
-		return
-	var/obj/item/stack/material/S = new sheetType(parent.drop_location())
-	S.amount = eject
-	materials[material] -= (eject * perSheet)
-	total_amount -= (eject * perSheet)
+// // private
+// /// For inserting an amount of material.  If you try to insert more than there is room, insets what it can. Returns amount inserted.
+// /datum/material_container/proc/insert_amount_mat(amt = 0, var/material/mat)
+// 	if(!istype(mat))
+// 		mat = get_material_ref(mat)
+// 	if(!mat || !(mat.name in materials))
+// 		return FALSE // Not an allowed material
+// 	var/amount_to_add = clamp(amt, 0, max_amount - total_amount)
+// 	materials[mat.name] += amount_to_add
+// 	total_amount += amount_to_add
+// 	return amount_to_add
+
+// // private
+// // Check if we have enough of a specific material to use an amount of it.
+// /datum/material_container/proc/can_use_amount_mat(amt = 0, var/material/mat)
+// 	if(!istype(mat))
+// 		mat = get_material_ref(mat)
+// 	if(mat && materials[mat.name] >= amt)
+// 		return TRUE
+// 	return FALSE
+
+// // private
+// /// Uses an amount of a specific material, effectively removing it.
+// /datum/material_container/proc/use_amount_mat(amt = 0, var/material/mat)
+// 	if(!istype(mat))
+// 		mat = get_material_ref(mat)
+// 	if(mat && materials[mat.name] >= amt)
+// 		materials[mat.name] -= amt
+// 		total_amount -= amt
+// 		return amt
+// 	return FALSE

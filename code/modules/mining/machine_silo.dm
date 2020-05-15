@@ -38,7 +38,8 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		/material/supermatter,
 		/material/plasteel/titanium,
 	)
-	materials = new(src, materials_list, INFINITY, allowed_types = /obj/item/stack/material, _disable_attackby = TRUE)
+
+	materials = new(src, materials_list, INFINITY, allowed_types = /obj/item/stack/material)
 	if (!GLOB.ore_silo_default && mapload && (get_z(src) in using_map.station_levels))
 		GLOB.ore_silo_default = src
 	default_apply_parts()
@@ -56,6 +57,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	QDEL_NULL(materials)
 	return ..()
 
+// TODO - Think this proc over, think why we need it at all
 /obj/machinery/ore_silo/proc/remote_attackby(obj/machinery/M, mob/user, obj/item/stack/material/I)
 	// stolen from /datum/material_container/proc/OnAttackBy
 	if(user.a_intent != I_HELP)
@@ -63,15 +65,16 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	if(!istype(I))
 		to_chat(user, "<span class='warning'>[M] won't accept [I]!</span>")
 		return
-	var/item_mats = (I.matter & materials.materials)
-	if(!length(item_mats))
-		to_chat(user, "<span class='warning'>[I] does not contain sufficient materials to be accepted by [M].</span>")
-		return
-	// assumes unlimited space...
-	var/amount = I.amount
-	materials.user_insert(I, user)
-	silo_log(M, "deposited", amount, "sheets", item_mats)
+	materials.default_user_insert_item(user, I, extra_after_insert = CALLBACK(src, .log_item_inserted, M, "deposited", "[I.singular_name]"))
 	return TRUE
+
+// TODO - Make this more accurate as to the mats inserted.  right now it guesses
+/obj/machinery/ore_silo/proc/log_item_inserted(obj/machinery/M, action, noun, obj/item/I, amount_inserted)
+	log_debug("log_item_inserted([M], [action], [noun], [I] ([I?.type]), [amount_inserted],  [json_encode(I?.matter)]")
+	if(istype(I, /obj/item/stack))
+		silo_log(M, action, amount_inserted, noun, I.matter)
+	else
+		silo_log(M, action, 1, noun, I.matter)
 
 // Note, while this machine is constructable it is purposefully not deconstructable for balance reasons.
 /obj/machinery/ore_silo/attackby(obj/item/W, mob/user, params)
@@ -187,6 +190,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 
 /obj/machinery/ore_silo/proc/silo_log(obj/machinery/M, action, amount, noun, list/mats)
 	if (!length(mats))
+		log_debug("Warning, got logs with empty mats: [json_encode(args)]")
 		return
 	var/datum/ore_silo_log/entry = new(M, action, amount, noun, mats)
 

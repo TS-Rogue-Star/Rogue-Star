@@ -38,7 +38,13 @@ Note: Must be placed within 3 tiles of the R&D Console
 		. = 1
 		if(!is_insertion_ready(user))
 			return
-		if(!user.unEquip(O, target = src))
+		
+		if(istype(O, /obj/item/stack/material)) // Only deconsturcts one sheet at a time instead of the entire stack
+			var/obj/item/stack/material/S = O
+			O = S.split(1)
+			if(!O)
+				return
+		else if(!user.unEquip(O, target = src))
 			to_chat(user, "<span class='warning'>\The [O] is stuck to your hand, you cannot put it in \the [src]!</span>")
 			return
 		busy = TRUE
@@ -61,13 +67,10 @@ Note: Must be placed within 3 tiles of the R&D Console
 		icon_state = initial(icon_state)
 
 /obj/machinery/rnd/destructive_analyzer/proc/reclaim_materials_from(obj/item/thing)
-	. = 0
+	. = FALSE
 	var/datum/material_container/storage = linked_console?.linked_lathe?.materials.mat_container
 	if(storage) //Also sends salvaged materials to a linked protolathe, if any.
-		for(var/material in thing.matter)
-			var/can_insert = min((storage.max_amount - storage.total_amount), (min(thing.matter[material]*(decon_mod), thing.matter[material])))
-			storage.insert_amount_mat(can_insert, material)
-			. += can_insert
+		. = storage.default_insert_item(thing, decon_mod)
 		if(.)
 			linked_console.linked_lathe.materials.silo_log(src, "reclaimed", 1, "[thing.name]", thing.matter)
 
