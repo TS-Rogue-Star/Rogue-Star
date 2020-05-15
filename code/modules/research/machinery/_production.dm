@@ -3,18 +3,24 @@
 	desc = "Makes researched and prototype items with materials and energy."
 	layer = UNDER_JUNK_LAYER
 	flags = OPENCONTAINER
+	//speed_process = TRUE					// Need to go fast to finish quick-building stuff quickly.
 	var/consoleless_interface = FALSE		// Whether it can be used without a console.
 	var/efficiency_coeff = 1				// Materials needed / coeff = actual.
 	var/list/categories = list()			// TODO - Leshana - Seems to affect UI somehow?
 	var/datum/remote_materials/materials	// Material storage.`
 	var/allowed_department_flags = ALL		// Filter for which designs this will build
-	var/production_animation				// What's flick()'d on print.
+	var/production_start_animation			// What's flick()'d on production start
+	var/production_animation				// Icon state set during production
+	var/production_done_animation			// What's flick()'d on production finished
 	var/allowed_buildtypes = NONE			// Filter for which designs this will build.
 	var/list/datum/design/cached_designs	// Local cache of designs this knows how to build.
 	var/list/datum/design/matching_designs	// Designs matching last search. Someday move search to be pure UI.
 	var/department_tag = "Unidentified"		// Used for material distribution among other things. TODO Leshana - How?
 	var/datum/techweb/stored_research		// Local repository of research.
 	var/datum/techweb/host_research			// Remote repositoy of research to update from.
+
+	var/list/datum/design/queue = list()	// The build queue!
+	var/progress = 0						// Progress towards current build
 
 	// UI STATE
 	var/screen = RESEARCH_FABRICATOR_SCREEN_MAIN
@@ -45,13 +51,29 @@
 
 /obj/machinery/rnd/production/proc/update_designs()
 	cached_designs.Cut()
+	categories.Cut()
 	for(var/i in stored_research.researched_designs)
 		var/datum/design/d = SSresearch.techweb_design_by_id(i)
 		if((isnull(allowed_department_flags) || (d.departmental_flags & allowed_department_flags)) && (d.build_type & allowed_buildtypes))
 			cached_designs |= d
+			categories |= d.category
+	if(!category || !(category in categories))
+		category = LAZYACCESS(categories, 1)
 
 /obj/machinery/rnd/production/RefreshParts()
 	calculate_efficiency()
+
+/obj/machinery/rnd/production/set_busy()
+	if((. = ..()))
+		update_icon()
+
+/obj/machinery/rnd/production/reset_busy()
+	if((. = ..()))
+		update_icon()
+
+//
+// Interaction
+//
 
 /obj/machinery/rnd/production/examine(var/mob/user)
 	. = ..()
@@ -131,16 +153,94 @@
 		reagents.trans_to(G, G.reagents.maximum_volume)
 	return ..()
 
-/obj/machinery/rnd/production/proc/do_print(var/datum/design/D, amount, list/matlist, notify_admins)
+//
+// Production
+//
+
+/obj/machinery/rnd/production/proc/addToQueue(datum/design/D)
+	queue += D
+	START_MACHINE_PROCESSING(src)
+	return
+
+/obj/machinery/rnd/production/proc/removeFromQueue(var/index)
+	queue.Cut(index, index + 1)
+	return
+
+/// Check that we still have enough materials when popping something off the queue
+/obj/machinery/rnd/production/proc/canBuild(datum/design/D, amount = 1, say_errors = TRUE)
+	if(inoperable())
+		return FALSE // Broken or no power, oops!
+	if(!materials.mat_container)
+		if(say_errors)
+			ping("No connection to material storage, please contact the quartermaster.")
+		return FALSE
+	if(materials.on_hold())
+		if(say_errors)
+			ping("Mineral access is on hold, please contact the quartermaster.")
+		return FALSE
+	var/coeff = efficient_with(D.build_path) ? efficiency_coeff : 1
+	if(!materials.mat_container.can_use_materials(D.materials, amount / coeff))
+		if(say_errors)
+			ping("Not enough materials to complete prototype[amount > 1? "s" : ""].")
+		return FALSE
+	for(var/R in D.chemicals)
+		if(!reagents.has_reagent(R, D.chemicals[R] * amount / coeff))
+			if(say_errors)
+				ping("Not enough reagents to complete prototype[amount > 1? "s" : ""].")
+			return FALSE
+	return TRUE
+
+/obj/machinery/rnd/production/process(wait)
+	if(LAZYLEN(queue) == 0)
+		update_use_power(USE_POWER_IDLE)
+		reset_busy()
+		return PROCESS_KILL
+
+	var/datum/design/D = queue[1]
+	if(canBuild(D, say_errors = busy))
+		set_busy()
+		update_use_power(USE_POWER_ACTIVE)
+		progress += speed * wait * (1/20) // Normalized to old 20ds
+		if(progress >= D.time)
+			build(D)
+			progress = 0
+			removeFromQueue(1)
+			if(linked_console)
+				linked_console.updateUsrDialog()
+		update_icon()
+	else
+		reset_busy()
+
+// Actually finish a queued build - Use power, materials, and spawn the items - Call ONLY from process()
+/obj/machinery/rnd/production/proc/finish_queued_build(datum/design/D, amount = 1)
+	var/coeff = efficient_with(D.build_path) ? efficiency_coeff : 1
+
+	// TODO - Would be nice sometime to use power at *start* of build!
+	var/power = active_power_usage
+	for(var/M in D.materials)
+		power += round(D.materials[M] * amount / (5 * coeff))
+	use_power(power)
+
+	// Use the materials
+	var/list/efficient_mats = list()
+	for(var/M in D.materials)
+		efficient_mats[M] = D.materials[M] / coeff
+	materials.mat_container.use_materials(efficient_mats, amount)
+	materials.silo_log(src, "built", -amount, "[D.name]", efficient_mats)
+	for(var/R in D.chemicals)
+		reagents.remove_reagent(R, D.chemicals[R]*amount/coeff)
+
 	if(notify_admins)
-		investigate_log("[key_name(usr)] built [amount] of [D.build_path] at [src]([type]).", INVESTIGATE_RESEARCH)
-		message_admins("[ADMIN_LOOKUPFLW(usr)] has built [amount] of [D.build_path] at \a [src]([type]).")
+		investigate_log("[key_name(usr)] built [amount] of [D] at [src]([type]).", INVESTIGATE_RESEARCH)
+		message_admins("[ADMIN_LOOKUPFLW(usr)] has built [amount] of [D] at \a [src]([type]).")
+
 	for(var/i in 1 to amount)
-		var/obj/item/I = D.Fabricate(drop_location(), src)
-		if(efficient_with(I.type) && LAZYLEN(I.matter) > 0)
-			I.matter = matlist.Copy()
-			// TODO - Leshana - Do we have an equivilent of this? I.material_flags |= MATERIAL_NO_EFFECTS //Find a better way to do this.
+		var/obj/I = D.Fabricate(drop_location(), src)
+		if(I && LAZYLEN(I.matter) > 0) // No matter out of nowhere
+			I.matter = efficient_mats.Copy()
+	
 	// SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[type]", "[path]"))
+	return TRUE
 
 /obj/machinery/rnd/production/proc/check_mat(datum/design/being_built, var/mat)	// now returns how many times the item can be built with the material
 	if (!materials.mat_container)  // no connected silo
@@ -166,7 +266,7 @@
 		amount = text2num(amount)
 	if(isnull(amount))
 		amount = 1
-	var/datum/design/D = (linked_console || requires_console)? (linked_console.stored_research.researched_designs[id]? SSresearch.techweb_design_by_id(id) : null) : SSresearch.techweb_design_by_id(id)
+	var/datum/design/D = (linked_console) ? (linked_console.stored_research.researched_designs[id]? SSresearch.techweb_design_by_id(id) : null) : SSresearch.techweb_design_by_id(id)
 	if(!istype(D))
 		return FALSE
 	if(!(isnull(allowed_department_flags) || (D.departmental_flags & allowed_department_flags)))
@@ -175,39 +275,10 @@
 	if(D.build_type && !(D.build_type & allowed_buildtypes))
 		state("This machine does not have the necessary manipulation systems for this design. Please contact Nanotrasen Support!")
 		return FALSE
-	if(!materials.mat_container)
-		state("No connection to material storage, please contact the quartermaster.")
+	if(!canBuild(D, amount))
 		return FALSE
-	if(materials.on_hold())
-		state("Mineral access is on hold, please contact the quartermaster.")
-		return FALSE
-	var/power = 1000
-	amount = clamp(amount, 1, 50)
-	for(var/M in D.materials)
-		power += round(D.materials[M] * amount / 35)
-	power = min(3000, power)
-	use_power(power)
-	var/coeff = efficient_with(D.build_path) ? efficiency_coeff : 1
-	var/list/efficient_mats = list()
-	for(var/MAT in D.materials)
-		efficient_mats[MAT] = D.materials[MAT]/coeff
-	if(!materials.mat_container.can_use_materials(efficient_mats, amount))
-		state("Not enough materials to complete prototype[amount > 1? "s" : ""].")
-		return FALSE
-	for(var/R in D.chemicals)
-		if(!reagents.has_reagent(R, D.chemicals[R]*amount/coeff))
-			state("Not enough reagents to complete prototype[amount > 1? "s" : ""].")
-			return FALSE
-	materials.mat_container.use_materials(efficient_mats, amount)
-	materials.silo_log(src, "built", -amount, "[D.name]", efficient_mats)
-	for(var/R in D.chemicals)
-		reagents.remove_reagent(R, D.chemicals[R]*amount/coeff)
-	busy = TRUE
-	if(production_animation)
-		flick(production_animation, src)
-	var/timecoeff = D.time / efficiency_coeff
-	addtimer(CALLBACK(src, .proc/reset_busy), (30 * timecoeff * amount) ** 0.5)
-	addtimer(CALLBACK(src, .proc/do_print, D, amount, efficient_mats, D.dangerous_construction), (32 * timecoeff * amount) ** 0.8)
+	for(var/i = 1 to 5)
+		addToQueue(D)
 	return TRUE
 
 /obj/machinery/rnd/production/proc/search(string)
@@ -231,6 +302,8 @@
 			ui += ui_screen_search()
 		if(RESEARCH_FABRICATOR_SCREEN_CATEGORYVIEW)
 			ui += ui_screen_category_view()
+		if(RESEARCH_FABRICATOR_SCREEN_QUEUE)
+			ui += ui_screen_queue()
 		else
 			ui += ui_screen_main()
 	for(var/i in 1 to length(ui))
@@ -248,6 +321,7 @@
 	else
 		l += "<font color='red'>No material storage connected, please contact the quartermaster.</font>"
 	l += "<A href='?src=[REF(src)];switch_screen=[RESEARCH_FABRICATOR_SCREEN_CHEMICALS]'><B>Chemical volume:</B> [reagents.total_volume] / [reagents.maximum_volume]</A>"
+	l += "<a href='?src=[REF(src)];switch_screen=[RESEARCH_FABRICATOR_SCREEN_QUEUE]'>View Queue ([LAZYLEN(queue)])</a>"
 	l += "<a href='?src=[REF(src)];sync_research=1'>Synchronize Research</a>"
 	l += "<a href='?src=[REF(src)];switch_screen=[RESEARCH_FABRICATOR_SCREEN_MAIN]'>Main Screen</a></div>[RDSCREEN_NOBREAK]"
 	return l
@@ -278,6 +352,26 @@
 		l += "[R.name]: [R.volume]"
 		l += "<A href='?src=[REF(src)];dispose=[R.type]'>Purge</A>"
 	l += "</div>"
+	return l
+
+
+/obj/machinery/rnd/production/proc/ui_screen_queue()
+	var/list/l = list()
+	l += "<div class='statusDisplay'><h3>Construction Queue:</h3>"
+	if(!LAZYLEN(queue))
+		l += "Empty"
+	else
+		var/index = 1
+		for(var/datum/design/D in queue)
+			if(index == 1)
+				if(busy)
+					l += "<B>1: [D.name]</B>"
+				else
+					l += "<B>1: [D.name]</B> (Awaiting materials) <A href='?src=[REF(src)];remove=[index]'>(Remove)</A>"
+			else
+				l += "[index]: [D.name] <A href='?src=[REF(src)];remove=[index]'>(Remove)</A>"
+			++index
+	l += "</div>[RDSCREEN_NOBREAK]"
 	return l
 
 /obj/machinery/rnd/production/proc/ui_screen_search()
@@ -352,6 +446,8 @@
 		reagents.del_reagent(ls["dispose"])
 	if(ls["disposeall"]) //Causes the protolathe to dispose of all it's reagents.
 		reagents.clear_reagents()
+	if(ls["remove"]) // Causes protolathe to remove a queued item
+		removeFromQueue(text2num(ls["remove"]))
 	if(ls["ejectsheet"]) //Causes the protolathe to eject a sheet of material
 		var/material/M = locate(ls["ejectsheet"])
 		eject_sheets(M, ls["eject_amt"])

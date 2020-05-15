@@ -24,7 +24,12 @@
 	var/obj/item/loaded_item = null //the item loaded inside the machine (currently only used by experimentor and destructive analyzer)
 
 
+/obj/machinery/rnd/proc/set_busy()
+	. = (!busy)
+	busy = TRUE
+
 /obj/machinery/rnd/proc/reset_busy()
+	. = (busy)
 	busy = FALSE
 
 /obj/machinery/rnd/Initialize()

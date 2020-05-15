@@ -326,6 +326,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	else
 		l += "<font color='red'>No material storage connected, please contact the quartermaster.</font>"
 	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_PROTOLATHE_CHEMICALS]'><B>Chemical volume:</B> [linked_lathe.reagents.total_volume] / [linked_lathe.reagents.maximum_volume]</A></div>"
+	l += "<a href='?src=[REF(src)];switch_screen=[RESEARCH_PROTOLATHE_QUEUE]'>View Queue ([LAZYLEN(linked_lathe.queue)])</a>"
 	return l
 
 /obj/machinery/computer/rdconsole/proc/ui_protolathe_category_view()	//Legacy code
@@ -454,6 +455,28 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	l += "</div>"
 	return l
 
+/obj/machinery/computer/rdconsole/proc/ui_protolathe_queue()
+	RDSCREEN_UI_LATHE_CHECK
+	var/list/l = list()
+	l += ui_protolathe_header()
+	l += "<div class='statusDisplay'><h3>Construction Queue:</h3>"
+	if(!LAZYLEN(queue))
+		l += "Empty"
+	else
+		var/index = 1
+		for(var/datum/design/D in linked_lathe.queue)
+			if(index == 1)
+				if(linked_lathe.busy)
+					l += "<B>1: [D.name]</B>"
+				else
+					l += "<B>1: [D.name]</B> (Awaiting materials) <A href='?src=[REF(src)];removeP=[index]'>(Remove)</A>"
+			else
+				l += "[index]: [D.name] <A href='?src=[REF(src)];removeP=[index]'>(Remove)</A>"
+			++index
+	l += "</div>[RDSCREEN_NOBREAK]"
+	return l
+
+
 /obj/machinery/computer/rdconsole/proc/ui_circuit_header()		//Legacy Code
 	var/list/l = list()
 	l += "<div class='statusDisplay'><A href='?src=[REF(src)];switch_screen=[RDSCREEN_IMPRINTER]'>Circuit Imprinter Menu</A>"
@@ -462,6 +485,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	else
 		l += "<font color='red'>No material storage connected, please contact the quartermaster.</font>"
 	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_IMPRINTER_CHEMICALS]'><B>Chemical volume:</B> [linked_imprinter.reagents.total_volume] / [linked_imprinter.reagents.maximum_volume]</A></div>"
+	l += "<a href='?src=[REF(src)];switch_screen=[RESEARCH_IMPRINTER_QUEUE]'>View Queue ([LAZYLEN(linked_imprinter.queue)])</a>"
 	return l
 
 /obj/machinery/computer/rdconsole/proc/ui_circuit()		//Legacy code
@@ -574,6 +598,27 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(amount >= SHEET_MATERIAL_AMOUNT * 5) l += "<A href='?src=[REF(src)];imprinter_ejectsheet=[ref];eject_amt=5'>5x</A> [RDSCREEN_NOBREAK]"
 		if(amount >= SHEET_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];imprinter_ejectsheet=[ref];eject_amt=50'>All</A>[RDSCREEN_NOBREAK]"
 		l += ""
+	l += "</div>[RDSCREEN_NOBREAK]"
+	return l
+
+/obj/machinery/computer/rdconsole/proc/ui_circuit_queue()
+	RDSCREEN_UI_IMPRINTER_CHECK
+	var/list/l = list()
+	l += ui_circuit_header()
+	l += "<div class='statusDisplay'><h3>Construction Queue:</h3>"
+	if(!LAZYLEN(queue))
+		l += "Empty"
+	else
+		var/index = 1
+		for(var/datum/design/D in linked_imprinter.queue)
+			if(index == 1)
+				if(linked_imprinter.busy)
+					l += "<B>1: [D.name]</B>"
+				else
+					l += "<B>1: [D.name]</B> (Awaiting materials) <A href='?src=[REF(src)];removeI=[index]'>(Remove)</A>"
+			else
+				l += "[index]: [D.name] <A href='?src=[REF(src)];removeI=[index]'>(Remove)</A>"
+			++index
 	l += "</div>[RDSCREEN_NOBREAK]"
 	return l
 
@@ -1039,6 +1084,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			state("No Protolathe Linked!")
 			return
 		linked_lathe.reagents.clear_reagents()
+	if(ls["removeP"]) // Causes the protolathe to remove a queued item
+		if(QDELETED(linked_lathe))
+			state("No Protolathe Linked!")
+			return
+		linked_lathe.removeFromQueue(text2num(ls["removeP"]))
 	if(ls["ejectsheet"]) //Causes the protolathe to eject a sheet of material
 		if(QDELETED(linked_lathe))
 			state("No Protolathe Linked!")
@@ -1060,6 +1110,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			state("No Circuit Imprinter Linked!")
 			return
 		linked_imprinter.reagents.clear_reagents()
+	if(ls["removeI"]) // Causes the circuit imprinter to remove a queued item
+		if(QDELETED(linked_imprinter))
+			state("No Circuit Imprinter Linked!")
+			return
+		linked_imprinter.removeFromQueue(text2num(ls["removeI"]))
 	if(ls["imprinter_ejectsheet"]) //Causes the imprinter to eject a sheet of material
 		if(QDELETED(linked_imprinter))
 			state("No Circuit Imprinter Linked!")
