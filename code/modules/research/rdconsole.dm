@@ -160,7 +160,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 /obj/machinery/computer/rdconsole/attackby(var/obj/item/D, var/mob/user)
 	if(istype(D, /obj/item/research_notes))
 		var/obj/item/research_notes/R = D
-		SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = R.value))
+		stored_research.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = R.value))
 		playsound(src,'sound/machines/copier.ogg', 100, TRUE)
 		qdel(R)
 		updateUsrDialog()

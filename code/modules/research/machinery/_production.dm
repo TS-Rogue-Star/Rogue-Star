@@ -28,7 +28,7 @@
 	stored_research = new
 	host_research = SSresearch.science_tech
 	update_research()
-	materials = new /datum/remote_materials(src, "lathe", mapload, after_insert = CALLBACK(src, .proc/AfterMaterialInsert))
+	materials = new /datum/remote_materials(src, "lathe", mapload)
 	RefreshParts()
 
 /obj/machinery/rnd/production/Destroy()
@@ -56,6 +56,38 @@
 /obj/machinery/rnd/production/examine(var/mob/user)
 	. = ..()
 	materials?.OnExamine(src, user, .)
+
+/obj/machinery/rnd/production/Insert_Item(obj/item/I, mob/user)
+	if(istype(I, /obj/item/stack/material) && user.a_intent != I_HURT)
+		if(!materials.mat_container)
+			to_chat(user, "<span class='warning'>No material storage connected!</span>")
+		else if(is_insertion_ready(user))
+			// forward it on to our actual material container, be it local or the ore silo's
+			materials.mat_container.default_user_insert_item(src, user, I, extra_after_insert = CALLBACK(src, .proc/AfterMaterialInsert))
+		return TRUE
+	return ..()
+
+// Evidently we use power and show animations when stuff is inserted.
+/obj/machinery/rnd/production/proc/AfterMaterialInsert(obj/item/stack/material/S, amount_inserted)
+	log_debug("AfterMaterialInsert([S], [amount_inserted]) on [src]")
+	// Log the deposit with the material storage
+	var/matter_per_stack = list(S.material.name = S.perunit)
+	materials.silo_log(src, "deposited", amount_inserted, "[S.singular_name]", matter_per_stack)
+
+	// Use power for importing materials
+	use_power_oneoff(min(1000, (amount_inserted * 100)))
+
+	// Play the loading animation
+	var/specific_state = "protolathe_[S.material.name]"
+	if(specific_state in cached_icon_states(icon))
+		flick_overlay_view(image(icon, src, specific_state), src, 8)
+	else
+		var/image/load_overlay = image(icon, src, "protolathe_loadlights")
+		var/image/sheet_anim = image(icon, "protolathe_loadsheet")
+		sheet_anim.color = S.material?.icon_colour
+		load_overlay.overlays += sheet_anim
+		image(icon, src, specific_state)
+		flick_overlay_view(load_overlay, src, 8)
 
 /obj/machinery/rnd/production/OnAttackBy(datum/source, obj/item/O, mob/user)
 	if(materials?.OnAttackBy(src, O, user))

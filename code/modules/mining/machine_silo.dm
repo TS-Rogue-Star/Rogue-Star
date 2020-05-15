@@ -10,7 +10,8 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	density = TRUE
 	circuit = /obj/item/weapon/circuitboard/ore_silo
 
-	var/datum/material_container/materials
+	var/allow_local_insertion = TRUE			// If we should allow inserting sheets by hand
+	var/datum/material_container/materials		// Container for our actual materials.
 	var/list/holds = list()
 	var/list/datum/remote_materials/connected = list()
 	var/log_page = 1
@@ -57,17 +58,6 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	QDEL_NULL(materials)
 	return ..()
 
-// TODO - Think this proc over, think why we need it at all
-/obj/machinery/ore_silo/proc/remote_attackby(obj/machinery/M, mob/user, obj/item/stack/material/I)
-	// stolen from /datum/material_container/proc/OnAttackBy
-	if(user.a_intent != I_HELP)
-		return
-	if(!istype(I))
-		to_chat(user, "<span class='warning'>[M] won't accept [I]!</span>")
-		return
-	materials.default_user_insert_item(user, I, extra_after_insert = CALLBACK(src, .log_item_inserted, M, "deposited", "[I.singular_name]"))
-	return TRUE
-
 // TODO - Make this more accurate as to the mats inserted.  right now it guesses
 /obj/machinery/ore_silo/proc/log_item_inserted(obj/machinery/M, action, noun, obj/item/I, amount_inserted)
 	log_debug("log_item_inserted([M], [action], [noun], [I] ([I?.type]), [amount_inserted],  [json_encode(I?.matter)]")
@@ -80,8 +70,10 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 /obj/machinery/ore_silo/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/multitool) && multitool_act(user, W))
 		return
-	if (istype(W, /obj/item/stack/material))
-		return remote_attackby(src, user, W)
+	if(istype(W, /obj/item/stack/material) && user.a_intent == I_HELP)
+		var/obj/item/stack/material/S = W
+		materials.default_user_insert_item(src, user, S, extra_after_insert = CALLBACK(src, .proc/log_item_inserted, src, "deposited", "[S.singular_name]"))
+		return
 	return ..()
 
 /obj/machinery/ore_silo/attack_hand(mob/user)

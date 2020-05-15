@@ -85,10 +85,10 @@
  * This just handles common cases!
  * @return FALSE if item wasn't an accepted type, otherwise TRUE (even if failed to load)
 */
-/datum/material_container/proc/default_user_insert_item(var/mob/user, var/obj/item/I, yield_factor = 1, var/datum/callback/extra_after_insert)
+/datum/material_container/proc/default_user_insert_item(atom/source, mob/user, obj/item/I, yield_factor = 1, datum/callback/extra_after_insert)
 	set waitfor = FALSE
 	// Return false in the cases the item isn't intended for us. Let other stuff handle it.
-	if(user.a_intent != I_HELP)
+	if(user.a_intent == I_HURT)
 		return FALSE // Don't intercept if they are trying to thwack
 	if(allowed_typecache && !is_type_in_typecache(I, allowed_typecache))
 		return FALSE
@@ -102,7 +102,7 @@
 		if(istype(I, /obj/item/stack/material) && preserve_composites)
 			var/obj/item/stack/material/MS = I
 			if(!(MS.material.name in materials))
-				to_chat(user, "<span class='warning'>\The [parent] doesn't accept [MS.material.display_name]!</span>")
+				to_chat(user, "<span class='warning'>\The [source] doesn't accept [MS.material.display_name]!</span>")
 				return
 		else if(get_total_amount(I.matter, yield_factor) <= 0)
 			to_chat(user, "<span class='warning'>[I] does not contain significant amounts of useful materials and cannot be accepted.<span>")
@@ -112,27 +112,27 @@
 			requested_amount = min(S.get_amount(), input(user, "How much do you want to insert?", "Inserting [S.singular_name]s", requested_amount) as num|null)
 			if(isnull(requested_amount) || (requested_amount <= 0))
 				return // They pressed cancel
-			if(QDELETED(I) || QDELETED(user) || QDELETED(src) || user.check_physical_distance(parent) < STATUS_INTERACTIVE || user.get_active_hand() != I)
+			if(QDELETED(I) || QDELETED(user) || QDELETED(src) || user.check_physical_distance(source) < STATUS_INTERACTIVE || user.get_active_hand() != I)
 				return // They walked away or something
 		// Attempt the insert.  If the stack is used up completely it handles its own deletion.
 		inserted = insert_stack_materials(I, yield_factor, requested_amount)
 		if(inserted > 0)
-			to_chat(user, "<span class='notice'>You insert [inserted] [S.singular_name]\s into [parent].</span>")
+			to_chat(user, "<span class='notice'>You insert [inserted] [S.singular_name]\s into [source].</span>")
 		if(inserted < requested_amount)
-			to_chat(user, "<span class='warning'>[parent] is full. Please remove materials from [parent] in order to insert more.</span>")
+			to_chat(user, "<span class='warning'>[source] is full. Please remove materials from [source] in order to insert more.</span>")
 	else
 		if(!user.canUnEquip(I))
-			to_chat(user, "<span class='warning'>[I] is stuck to you and cannot be placed into [parent].</span>")
+			to_chat(user, "<span class='warning'>[I] is stuck to you and cannot be placed into [source].</span>")
 			return
 		if(get_total_amount(I.matter, yield_factor) <= 0)
 			to_chat(user, "<span class='warning'>[I] does not contain significant amounts of useful materials and cannot be accepted.<span>")
 			return
 		if(!can_insert_materials(I.matter, yield_factor))
-			to_chat(user, "<span class='warning'>[parent] is full. Please remove material in order to insert more.</span>")
+			to_chat(user, "<span class='warning'>[source] is full. Please remove material in order to insert more.</span>")
 			return
 		inserted = insert_materials(I.matter, yield_factor)
 		if(inserted > 0)
-			to_chat(user, "<span class='notice'>You insert a material total of [inserted] into [parent].</span>")
+			to_chat(user, "<span class='notice'>You insert a material total of [inserted] into [source].</span>")
 			user.remove_from_mob(I)
 			qdel(I)
 	// Invoke callback if we in fact did anything

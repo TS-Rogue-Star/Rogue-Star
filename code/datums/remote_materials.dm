@@ -103,12 +103,6 @@ handles linking back and forth.
 /datum/remote_materials/proc/OnAttackBy(datum/source, obj/item/I, mob/user)
 	if(istype(I, /obj/item/device/multitool))
 		return OnMultitool(parent, user, I)
-	else if(silo && istype(I, /obj/item/stack/material))
-		if(silo.remote_attackby(parent, user, I))
-			return TRUE
-	else if(mat_container && istype(I, /obj/item/stack/material))
-		if(mat_container.default_user_insert_item(user, I)) // TODO - Strongly examine this
-			return TRUE
 
 /datum/remote_materials/proc/OnMultitool(datum/source, mob/user, obj/item/device/multitool/M)
 	if(!istype(M))

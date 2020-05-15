@@ -67,12 +67,14 @@ Note: Must be placed within 3 tiles of the R&D Console
 		icon_state = initial(icon_state)
 
 /obj/machinery/rnd/destructive_analyzer/proc/reclaim_materials_from(obj/item/thing)
+	log_debug("reclaim_materials_from([thing] ([thing?.type]) matter=")
 	. = FALSE
 	var/datum/material_container/storage = linked_console?.linked_lathe?.materials.mat_container
-	if(storage) //Also sends salvaged materials to a linked protolathe, if any.
-		. = storage.default_insert_item(thing, decon_mod)
+	if(storage && LAZYLEN(thing.matter)) // Also sends salvaged materials to a linked protolathe, if any.
+		if(storage.can_insert_materials(thing.matter, decon_mod, ignore_disallowed_types = TRUE))
+			. = storage.insert_materials(thing.matter, decon_mod)
 		if(.)
-			linked_console.linked_lathe.materials.silo_log(src, "reclaimed", 1, "[thing.name]", thing.matter)
+			linked_console.linked_lathe.materials.silo_log(src, "reclaimed", decon_mod, "[thing.name]", thing.matter)
 
 /obj/machinery/rnd/destructive_analyzer/proc/destroy_item(obj/item/thing, innermode = FALSE)
 	if(QDELETED(thing) || QDELETED(src) || QDELETED(linked_console))
