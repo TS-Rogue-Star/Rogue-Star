@@ -140,6 +140,34 @@
 		after_insert?.Invoke(I, inserted)
 		extra_after_insert?.Invoke(I, inserted)
 
+/**
+ * Helper proc for the common case of inserting material sheets. For most machines this is the only way of loading, so it help to have this helper.
+ * This is to be used in the most common case of accepting only material stacks and preserving composites.
+ * @returns the number of sheets actually added.
+ */
+/datum/material_container/proc/default_insert_sheets(atom/source, mob/user, obj/item/stack/material/S, yield_factor = 1, precise_insertion = src.precise_insertion)
+	set waitfor = FALSE
+	if(user.a_intent == I_HURT)
+		return // Don't intercept if they are trying to thwack
+	if(!istype(S) || (allowed_typecache && !is_type_in_typecache(S, allowed_typecache)))
+		return // Return false in the cases the item isn't intended for us. Let other stuff handle it.
+	if(!(S.material.name in materials))
+		to_chat(user, "<span class='warning'>\The [source] doesn't accept [S.material.display_name]!</span>")
+		return
+	var/requested_amount = S.get_amount()
+	if (precise_insertion && S.get_amount() > 1)
+		requested_amount = min(S.get_amount(), input(user, "How much do you want to insert?", "Inserting [S.singular_name]s", requested_amount) as num|null)
+		if(isnull(requested_amount) || (requested_amount <= 0))
+			return // They pressed cancel
+		if(QDELETED(S) || QDELETED(user) || QDELETED(src) || user.check_physical_distance(source) < STATUS_INTERACTIVE || user.get_active_hand() != S)
+			return // They walked away or something
+	// Attempt the insert.  If the stack is used up completely it handles its own deletion.
+	. = insert_stack_materials(S, yield_factor, requested_amount)
+	if(. > 0)
+		to_chat(user, "<span class='notice'>You insert [.] [S.material.display_name] [S.singular_name]\s into [source].</span>")
+	if(. < requested_amount)
+		to_chat(user, "<span class='warning'>[source] is full. Please remove materials from [source] in order to insert more.</span>")
+
 /** 
  * Helper proc that inserts the material of an item, intended for non-user-interactive usage.
  * As such it doesn't bother to print feedback about why insertion was denied.
@@ -191,13 +219,6 @@
 		insert_materials(matter_per_stack, stacks_to_use * yield_factor)
 		return stacks_to_use
 	return 0
-
-
-// /datum/material_container/proc/get_total_item_amount(obj/item/I,  multiplier = 1, include_disallowed_types = FALSE)
-// 	if(istype(I, obj/item/stack/material) && preserve_composites)
-// 		obj/item/stack/material/MS = I
-// 		return list(MS.material.name = MS.perunit)
-
 
 //
 // Misc

@@ -6,12 +6,14 @@
 	//speed_process = TRUE					// Need to go fast to finish quick-building stuff quickly.
 	var/consoleless_interface = FALSE		// Whether it can be used without a console.
 	var/efficiency_coeff = 1				// Materials needed / coeff = actual.
+	var/build_speed = 1						// Multiplier for build speed.
 	var/list/categories = list()			// TODO - Leshana - Seems to affect UI somehow?
 	var/datum/remote_materials/materials	// Material storage.`
 	var/allowed_department_flags = ALL		// Filter for which designs this will build
 	var/production_start_animation			// What's flick()'d on production start
 	var/production_animation				// Icon state set during production
 	var/production_done_animation			// What's flick()'d on production finished
+	var/sheet_insertion_state				// Base name for sheet insertion icon states.
 	var/allowed_buildtypes = NONE			// Filter for which designs this will build.
 	var/list/datum/design/cached_designs	// Local cache of designs this knows how to build.
 	var/list/datum/design/matching_designs	// Designs matching last search. Someday move search to be pure UI.
@@ -57,8 +59,9 @@
 		if((isnull(allowed_department_flags) || (d.departmental_flags & allowed_department_flags)) && (d.build_type & allowed_buildtypes))
 			cached_designs |= d
 			categories |= d.category
-	if(!category || !(category in categories))
-		category = LAZYACCESS(categories, 1)
+	listclearnulls(categories)
+	if(!selected_category || !(selected_category in categories))
+		selected_category = LAZYACCESS(categories, 1)
 
 /obj/machinery/rnd/production/RefreshParts()
 	calculate_efficiency()
@@ -70,6 +73,14 @@
 /obj/machinery/rnd/production/reset_busy()
 	if((. = ..()))
 		update_icon()
+
+/obj/machinery/rnd/production/update_icon()
+	if(panel_open)
+		icon_state = "[initial(icon_state)]_t"
+	else if(busy && production_animation && LAZYLEN(queue))
+		icon_state = production_animation
+	else
+		icon_state = initial(icon_state)
 
 //
 // Interaction
@@ -99,13 +110,15 @@
 	// Use power for importing materials
 	use_power_oneoff(min(1000, (amount_inserted * 100)))
 
-	// Play the loading animation
-	var/specific_state = "protolathe_[S.material.name]"
+	// Play the loading animation if any
+	if(!sheet_insertion_state)
+		return
+	var/specific_state = "[sheet_insertion_state]_[S.material.name]"
 	if(specific_state in cached_icon_states(icon))
 		flick_overlay_view(image(icon, src, specific_state), src, 8)
 	else
-		var/image/load_overlay = image(icon, src, "protolathe_loadlights")
-		var/image/sheet_anim = image(icon, "protolathe_loadsheet")
+		var/image/load_overlay = image(icon, src, "[sheet_insertion_state]_loadlights")
+		var/image/sheet_anim = image(icon, "[sheet_insertion_state]_loadsheet")
 		sheet_anim.color = S.material?.icon_colour
 		load_overlay.overlays += sheet_anim
 		image(icon, src, specific_state)
@@ -139,13 +152,11 @@
 		for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 			total_storage += M.rating * 75000
 		materials.set_local_size(total_storage)
-	var/total_rating = 1.2
+	var/total_rating = 0
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
-		total_rating = clamp(total_rating - (M.rating * 0.1), 0, 1)
-	if(total_rating == 0)
-		efficiency_coeff = INFINITY
-	else
-		efficiency_coeff = 1/total_rating
+		total_rating += M.rating
+	efficiency_coeff = 1/max(1 - (total_rating - 2) / 8, 0.2)
+	build_speed = total_rating / 2
 
 //we eject the materials upon deconstruction.
 /obj/machinery/rnd/production/dismantle()
@@ -172,21 +183,21 @@
 		return FALSE // Broken or no power, oops!
 	if(!materials.mat_container)
 		if(say_errors)
-			ping("No connection to material storage, please contact the quartermaster.")
+			buzz("No connection to material storage, please contact the quartermaster.")
 		return FALSE
 	if(materials.on_hold())
 		if(say_errors)
-			ping("Mineral access is on hold, please contact the quartermaster.")
+			buzz("Mineral access is on hold, please contact the quartermaster.")
 		return FALSE
 	var/coeff = efficient_with(D.build_path) ? efficiency_coeff : 1
 	if(!materials.mat_container.can_use_materials(D.materials, amount / coeff))
 		if(say_errors)
-			ping("Not enough materials to complete prototype[amount > 1? "s" : ""].")
+			buzz("Not enough materials to complete prototype[amount > 1? "s" : ""].")
 		return FALSE
 	for(var/R in D.chemicals)
 		if(!reagents.has_reagent(R, D.chemicals[R] * amount / coeff))
 			if(say_errors)
-				ping("Not enough reagents to complete prototype[amount > 1? "s" : ""].")
+				buzz("Not enough reagents to complete prototype[amount > 1? "s" : ""].")
 			return FALSE
 	return TRUE
 
@@ -200,13 +211,15 @@
 	if(canBuild(D, say_errors = busy))
 		set_busy()
 		update_use_power(USE_POWER_ACTIVE)
-		progress += speed * wait * (1/20) // Normalized to old 20ds
+		progress += build_speed * wait * (1/10) // Normalized to seconds even if fastprocess
 		if(progress >= D.time)
-			build(D)
+			finish_queued_build(D)
 			progress = 0
 			removeFromQueue(1)
 			if(linked_console)
 				linked_console.updateUsrDialog()
+			if(!LAZYLEN(queue) && success_sound)
+				playsound(src, success_sound, 50, 0)
 		update_icon()
 	else
 		reset_busy()
@@ -215,7 +228,6 @@
 /obj/machinery/rnd/production/proc/finish_queued_build(datum/design/D, amount = 1)
 	var/coeff = efficient_with(D.build_path) ? efficiency_coeff : 1
 
-	// TODO - Would be nice sometime to use power at *start* of build!
 	var/power = active_power_usage
 	for(var/M in D.materials)
 		power += round(D.materials[M] * amount / (5 * coeff))
@@ -230,17 +242,27 @@
 	for(var/R in D.chemicals)
 		reagents.remove_reagent(R, D.chemicals[R]*amount/coeff)
 
-	if(notify_admins)
+	if(D.dangerous_construction)
 		investigate_log("[key_name(usr)] built [amount] of [D] at [src]([type]).", INVESTIGATE_RESEARCH)
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has built [amount] of [D] at \a [src]([type]).")
 
+	if(production_done_animation)
+		flick(production_done_animation, src)
+
 	for(var/i in 1 to amount)
-		var/obj/I = D.Fabricate(drop_location(), src)
+		var/obj/item/I = D.Fabricate(drop_location(), src)
 		if(I && LAZYLEN(I.matter) > 0) // No matter out of nowhere
 			I.matter = efficient_mats.Copy()
+		if(istype(I) && isturf(I.loc))
+			I.randpixel_xy() // Shift them around a bit so their visible.
 	
-	// SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[type]", "[path]"))
 	return TRUE
+
+/obj/machinery/rnd/production/drop_location()
+	// Try to drop items one step in front of us, if its open.
+	. = get_step(get_turf(src), src.dir)
+	if(!isfloor(.))
+		. = ..() // Oh well, we tried.
 
 /obj/machinery/rnd/production/proc/check_mat(datum/design/being_built, var/mat)	// now returns how many times the item can be built with the material
 	if (!materials.mat_container)  // no connected silo
@@ -259,13 +281,12 @@
 /obj/machinery/rnd/production/proc/efficient_with(path)
 	return !ispath(path, /obj/item/stack/material) && !ispath(path, /obj/item/weapon/ore/bluespace_crystal)
 
-/obj/machinery/rnd/production/proc/user_try_print_id(id, amount)
+/obj/machinery/rnd/production/proc/user_try_print_id(id, amount = 1)
 	if((!istype(linked_console) && requires_console) || !id)
 		return FALSE
 	if(istext(amount))
 		amount = text2num(amount)
-	if(isnull(amount))
-		amount = 1
+	amount = clamp(amount, 1, 50)
 	var/datum/design/D = (linked_console) ? (linked_console.stored_research.researched_designs[id]? SSresearch.techweb_design_by_id(id) : null) : SSresearch.techweb_design_by_id(id)
 	if(!istype(D))
 		return FALSE
@@ -277,7 +298,7 @@
 		return FALSE
 	if(!canBuild(D, amount))
 		return FALSE
-	for(var/i = 1 to 5)
+	for(var/i = 1 to amount)
 		addToQueue(D)
 	return TRUE
 
@@ -489,7 +510,7 @@
 	var/coeff = efficiency_coeff
 	for(var/v in stored_research.researched_designs)
 		var/datum/design/D = SSresearch.techweb_design_by_id(v)
-		if(!(selected_category in D.category)|| !(D.build_type & allowed_buildtypes))
+		if(!(selected_category == D.category || (selected_category in D.category)) || !(D.build_type & allowed_buildtypes))
 			continue
 		if(!(isnull(allowed_department_flags) || (D.departmental_flags & allowed_department_flags)))
 			continue

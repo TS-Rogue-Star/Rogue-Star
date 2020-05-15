@@ -325,8 +325,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_PROTOLATHE_MATERIALS]'><B>Material Amount:</B> [linked_lathe.materials.format_amount()]</A>"
 	else
 		l += "<font color='red'>No material storage connected, please contact the quartermaster.</font>"
-	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_PROTOLATHE_CHEMICALS]'><B>Chemical volume:</B> [linked_lathe.reagents.total_volume] / [linked_lathe.reagents.maximum_volume]</A></div>"
-	l += "<a href='?src=[REF(src)];switch_screen=[RESEARCH_PROTOLATHE_QUEUE]'>View Queue ([LAZYLEN(linked_lathe.queue)])</a>"
+	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_PROTOLATHE_CHEMICALS]'><B>Chemical volume:</B> [linked_lathe.reagents.total_volume] / [linked_lathe.reagents.maximum_volume]</A>"
+	l += "<a href='?src=[REF(src)];switch_screen=[RDSCREEN_PROTOLATHE_QUEUE]'>View Queue ([LAZYLEN(linked_lathe.queue)])</a></div>"
 	return l
 
 /obj/machinery/computer/rdconsole/proc/ui_protolathe_category_view()	//Legacy code
@@ -336,7 +336,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	l += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3>"
 	for(var/v in stored_research.researched_designs)
 		var/datum/design/D = SSresearch.techweb_design_by_id(v)
-		if(!(selected_category in D.category)|| !(D.build_type & PROTOLATHE))
+		if(!(selected_category == D.category || (selected_category in D.category)) || !(D.build_type & PROTOLATHE))
 			continue
 		if(!(isnull(linked_lathe.allowed_department_flags) || (D.departmental_flags & linked_lathe.allowed_department_flags)))
 			continue
@@ -460,7 +460,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/list/l = list()
 	l += ui_protolathe_header()
 	l += "<div class='statusDisplay'><h3>Construction Queue:</h3>"
-	if(!LAZYLEN(queue))
+	if(!LAZYLEN(linked_lathe.queue))
 		l += "Empty"
 	else
 		var/index = 1
@@ -484,8 +484,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_IMPRINTER_MATERIALS]'><B>Material Amount:</B> [linked_imprinter.materials.format_amount()]</A>"
 	else
 		l += "<font color='red'>No material storage connected, please contact the quartermaster.</font>"
-	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_IMPRINTER_CHEMICALS]'><B>Chemical volume:</B> [linked_imprinter.reagents.total_volume] / [linked_imprinter.reagents.maximum_volume]</A></div>"
-	l += "<a href='?src=[REF(src)];switch_screen=[RESEARCH_IMPRINTER_QUEUE]'>View Queue ([LAZYLEN(linked_imprinter.queue)])</a>"
+	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_IMPRINTER_CHEMICALS]'><B>Chemical volume:</B> [linked_imprinter.reagents.total_volume] / [linked_imprinter.reagents.maximum_volume]</A>"
+	l += "<a href='?src=[REF(src)];switch_screen=[RDSCREEN_IMPRINTER_QUEUE]'>View Queue ([LAZYLEN(linked_imprinter.queue)])</a></div>"
 	return l
 
 /obj/machinery/computer/rdconsole/proc/ui_circuit()		//Legacy code
@@ -513,7 +513,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	for(var/v in stored_research.researched_designs)
 		var/datum/design/D = SSresearch.techweb_design_by_id(v)
-		if(!(selected_category in D.category) || !(D.build_type & IMPRINTER))
+		if(!(selected_category == D.category || (selected_category in D.category)) || !(D.build_type & IMPRINTER))
 			continue
 		if(!(isnull(linked_imprinter.allowed_department_flags) || (D.departmental_flags & linked_imprinter.allowed_department_flags)))
 			continue
@@ -606,7 +606,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/list/l = list()
 	l += ui_circuit_header()
 	l += "<div class='statusDisplay'><h3>Construction Queue:</h3>"
-	if(!LAZYLEN(queue))
+	if(!LAZYLEN(linked_imprinter.queue))
 		l += "Empty"
 	else
 		var/index = 1
@@ -922,6 +922,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				ui += ui_protolathe_chemicals()
 			if(RDSCREEN_PROTOLATHE_SEARCH)
 				ui += ui_protolathe_search()
+			if(RDSCREEN_PROTOLATHE_QUEUE)
+				ui += ui_protolathe_queue()
 			if(RDSCREEN_IMPRINTER)
 				ui += ui_circuit()
 			if(RDSCREEN_IMPRINTER_CATEGORY_VIEW)
@@ -932,6 +934,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				ui += ui_circuit_chemicals()
 			if(RDSCREEN_IMPRINTER_SEARCH)
 				ui += ui_circuit_search()
+			if(RDSCREEN_IMPRINTER_QUEUE)
+				ui += ui_circuit_queue()
 			if(RDSCREEN_SETTINGS)
 				ui += ui_settings()
 			if(RDSCREEN_DEVICE_LINKING)

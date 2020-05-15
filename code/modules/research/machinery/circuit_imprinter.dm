@@ -18,7 +18,8 @@
 								"Misc. Machinery",
 								"Computer Parts"
 								)
-	production_animation = "circuit_imprinter_ani"
+	production_animation = "circuit_imprinter_p"
+	production_done_animation = "circuit_imprinter_ani"
 	allowed_buildtypes = IMPRINTER
 
 /obj/machinery/rnd/production/circuit_imprinter/disconnect_console()
@@ -29,6 +30,6 @@
 	. = ..()
 	var/total_rating = 0
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
-		total_rating += M.rating * 2			//There is only one.
-	total_rating = max(1, total_rating)
-	efficiency_coeff = total_rating
+		total_rating += M.rating // There is only one in imprinters
+	efficiency_coeff = 1/max(1 - (total_rating - 1) / 4, 0.2)
+	build_speed = total_rating

@@ -22,7 +22,8 @@
 	var/disabled = FALSE
 	var/obj/machinery/computer/rdconsole/linked_console
 	var/obj/item/loaded_item = null //the item loaded inside the machine (currently only used by experimentor and destructive analyzer)
-
+	var/sound/success_sound = 'sound/machines/ping.ogg'			// Plays when finished with a task.
+	var/sound/error_sound = 'sound/machines/buzz-sigh.ogg'		// Plays to alert about an error.
 
 /obj/machinery/rnd/proc/set_busy()
 	. = (!busy)
@@ -44,6 +45,11 @@
 /obj/machinery/rnd/update_icon()
 	. = ..()
 	icon_state = panel_open ? "[initial(icon_state)]_t" : initial(icon_state)
+
+/obj/machinery/rnd/proc/buzz(msg)
+	audible_message("[bicon(src)] <span class='warning'>[msg]</span>")
+	if(error_sound)
+		playsound(src, error_sound, 50, 0)
 
 /obj/machinery/rnd/attackby(obj/item/O, mob/user)
 	if(busy)

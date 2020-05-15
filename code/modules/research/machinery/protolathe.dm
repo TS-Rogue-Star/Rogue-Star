@@ -19,9 +19,12 @@
 								"Firing Pins",
 								"Computer Parts"
 								)
-	production_animation = "protolathe_n"
+	production_animation = "protolathe_p"
+	production_done_animation = "protolathe_n"
+	sheet_insertion_state = "protolathe"
 	allowed_buildtypes = PROTOLATHE
 
 /obj/machinery/rnd/production/protolathe/disconnect_console()
 	linked_console.linked_lathe = null
 	..()
+
