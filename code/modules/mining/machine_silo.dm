@@ -40,7 +40,17 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		/material/plasteel/titanium,
 	)
 
-	materials = new(src, materials_list, INFINITY, allowed_types = /obj/item/stack/material)
+	var/static/list/hidden_materials = list(
+		/material/plasteel,
+		/material/durasteel,
+		/material/graphite,
+		/material/verdantium,
+		/material/morphium,
+		/material/mhydrogen,
+		/material/supermatter,
+	)
+
+	materials = new(src, materials_list, INFINITY, allowed_types = /obj/item/stack/material, hidden_mats = hidden_materials)
 	if (!GLOB.ore_silo_default && mapload && (get_z(src) in using_map.station_levels))
 		GLOB.ore_silo_default = src
 	default_apply_parts()

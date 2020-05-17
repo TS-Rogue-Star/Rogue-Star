@@ -6,16 +6,10 @@
 		<script type='text/javascript'>
 			function receiveUpdateData(jsonString)
 			{
-				// We need both jQuery and NanoStateManager to be able to recieve data
-				// At the moment any data received before those libraries are loaded will be lost
 				if (typeof NanoStateManager != 'undefined' && typeof jQuery != 'undefined')
 				{
 					NanoStateManager.receiveUpdateData(jsonString);
 				}
-				//else
-				//{
-				//	alert('browser.recieveUpdateData failed due to jQuery or NanoStateManager being unavailiable.');
-				//}
 			}
 		</script>
 

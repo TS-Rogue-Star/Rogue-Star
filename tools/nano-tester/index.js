@@ -18,7 +18,7 @@ var config = {
 // Choose your templates here.  Hint: You'll probably never change layout, main is the one you want.
 var templateData = {
   layout: "layout_default.tmpl",
-  main: "smes.tmpl"
+  main: "techfab.tmpl"
 };
 
 // In BYOND everything is sent to the client's byond cache, so its all in one flat directory.
@@ -81,7 +81,7 @@ var server = http.createServer( function(request, response) {
 
     // still here? filename is good    
     // look up the mime type by file extension
-    response.writeHead(200, {'Content-Type': mime.getType(filename)});
+    response.writeHead(200, {'Content-Type': mime.getType(filename) || "text/html"});
     
     // read and pass the file as a stream. Not really sure if this is better,
     // but it feels less block-ish than reading the whole file

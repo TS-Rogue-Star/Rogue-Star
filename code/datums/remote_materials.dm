@@ -78,8 +78,18 @@ handles linking back and forth.
 		/material/plasteel/titanium,
 	)
 
+	var/static/list/hidden_materials = list(
+		/material/plasteel,
+		/material/durasteel,
+		/material/graphite,
+		/material/verdantium,
+		/material/morphium,
+		/material/mhydrogen,
+		/material/supermatter,
+	)
+
 	// atom/parent, list/allowed_mats, max_amt = 0, list/allowed_types, list/hidden_mats, preserve_composites = TRUE, datum/callback/after_insert)
-	mat_container = new(parent, allowed_mats, local_size, allowed_types=/obj/item/stack/material, after_insert = after_insert)
+	mat_container = new(parent, allowed_mats, local_size, allowed_types=/obj/item/stack/material, hidden_mats = hidden_materials, after_insert = after_insert)
 
 /datum/remote_materials/proc/set_local_size(size)
 	local_size = size
@@ -126,6 +136,13 @@ handles linking back and forth.
 		mat_container = silo.materials
 		to_chat(user, "<span class='notice'>You connect [parent] to [silo] from the multitool's buffer.</span>")
 		return TRUE
+
+/datum/remote_materials/proc/get_status_message()
+	if(!mat_container)
+		return "No connection to material storage, please contact the quartermaster."
+	else if(on_hold())
+		return "Material access is on hold, please contact the quartermaster."
+	return null // No errors
 
 /datum/remote_materials/proc/on_hold()
 	return silo && silo.holds["[REF(get_area(parent))]/[parent.type]"]

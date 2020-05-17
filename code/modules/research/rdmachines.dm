@@ -20,6 +20,7 @@
 	var/console_link = TRUE		//allow console link.
 	var/requires_console = TRUE
 	var/disabled = FALSE
+	var/ui_template = null
 	var/obj/machinery/computer/rdconsole/linked_console
 	var/obj/item/loaded_item = null //the item loaded inside the machine (currently only used by experimentor and destructive analyzer)
 	var/sound/success_sound = 'sound/machines/ping.ogg'			// Plays when finished with a task.
@@ -82,6 +83,20 @@
 		Insert_Item(I, user)
 		return
 	return ..()
+
+/obj/machinery/rnd/ui_interact(var/mob/user, var/ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1, var/datum/topic_state/state = default_state)
+	var/list/data = get_ui_data()
+
+	ui = SSnanoui.try_update_ui(user, src, ui_key, ui, data, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, ui_template, "Exosuit Fabricator UI", 800, 600)
+		ui.set_initial_data(data)
+		ui.open()
+		ui.set_auto_update(1)
+
+// Return data for NanoUI interface, called by ui_interact
+/obj/machinery/rnd/proc/get_ui_data()
+	return list()
 
 // Let children with materials override this to forward attackbys.
 /obj/machinery/rnd/proc/OnAttackBy(datum/source, obj/item/O, mob/user)

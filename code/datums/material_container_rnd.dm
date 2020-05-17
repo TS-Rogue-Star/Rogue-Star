@@ -67,17 +67,17 @@
 
 /** Returns info about materials contained in a list format suitable for JSON/NanoUI */
 /datum/material_container/proc/materials_ui_data()
-	var/materials_ui[0]
+	var/list/materials_ui = list()
 	for(var/mat in materials)
 		var/amount = materials[mat]
 		if(hidden_materials && !amount && (mat in hidden_materials))
 			continue // skip showing hidden materials when we have none
 		materials_ui[++materials_ui.len] = list(
-				"name" = mat,
+				"mat" = mat,
 				"display" = material_display_name(mat),
-				"qty" = amount,
-				"max" = total_amount,
-				"percent" = (amount / total_amount * 100))
+				"amt" = amount,
+				"max" = max_amount == INFINITY ? -1 : max_amount,
+				"percent" = (amount / max_amount * 100))
 	return materials_ui
 
 /** Helper proc for when a player attempts to load materials from an item. Intended to be called from attackby().

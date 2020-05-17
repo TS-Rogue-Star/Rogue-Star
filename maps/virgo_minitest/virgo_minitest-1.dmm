@@ -2944,6 +2944,8 @@
 	dir = 5
 	},
 /obj/structure/table/glass,
+/obj/fiftyspawner/steel,
+/obj/item/weapon/reagent_containers/glass/beaker/sulphuric,
 /turf/simulated/floor/tiled,
 /area/bridge)
 "gt" = (
@@ -3530,7 +3532,9 @@
 /turf/simulated/floor/tiled,
 /area/bridge)
 "Rt" = (
-/obj/machinery/rnd/production/protolathe,
+/obj/machinery/rnd/production/protolathe{
+	consoleless_interface = 1
+	},
 /turf/simulated/floor/tiled,
 /area/bridge)
 "SN" = (

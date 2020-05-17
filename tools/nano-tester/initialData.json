@@ -1,20 +1,194 @@
 {
 	"config": {
-		"title": "SMES"
+		"title": "Protolathe"
 	},
 	"data": {
-		"nameTag": "Test SMES",
-		"storedCapacity": 50,
-		"storedCapacityAbs": 400,
-		"storedCapacityMax": 800,
-		"charging": 1,
-		"chargeMode": 1,
-		"chargeLevel": 100,
-		"chargeMax": 250,
-		"chargeLoad": 0,
-		"outputOnline": 1,
-		"outputLevel": 75,
-		"outputMax": 250,
-		"outputLoad": 45
+	  "queue":[
+
+	  ],
+	  "buildable":[
+		{
+		  "name":"Component design (matter bin)",
+		  "id":"basic_matter_bin",
+		  "category":"Misc",
+		  "resourses":"steel: 80",
+		  "time":"00:03",
+		  "max": 4
+		},
+		{
+		  "name":"Power Cell Model (basic)",
+		  "id":"basic_cell",
+		  "category":"Misc",
+		  "resourses":"steel: 700, glass: 50",
+		  "time":"00:10"
+		},
+		{
+		  "name":"Component design (scanning module)",
+		  "id":"basic_sensor",
+		  "category":"Misc",
+		  "resourses":"steel: 50, glass: 20",
+		  "time":"00:03",
+		  "max": 25
+		},
+		{
+		  "name":"Component design (capacitor)",
+		  "id":"basic_capacitor",
+		  "category":null,
+		  "resourses":"steel: 50, glass: 50",
+		  "time":"00:03"
+		},
+		{
+		  "name":"Component design (micro-laser)",
+		  "id":"basic_micro_laser",
+		  "category":null,
+		  "resourses":"steel: 10, glass: 20",
+		  "time":"00:03"
+		},
+		{
+		  "name":"Component design (micro-manipulator)",
+		  "id":"micro_mani",
+		  "category":null,
+		  "resourses":"steel: 30",
+		  "time":"00:03"
+		},
+		{
+		  "name":"Data storage design (Design Storage Disk)",
+		  "id":"design_disk",
+		  "category":null,
+		  "resourses":"steel: 30, glass: 10",
+		  "time":"00:10"
+		},
+		{
+		  "name":"Data storage design (Technology Data Storage Disk)",
+		  "id":"tech_disk",
+		  "category":null,
+		  "resourses":"steel: 30, glass: 10",
+		  "time":"00:10"
+		},
+		{
+		  "name":"Medical equipment prototype (Bone Clamp)",
+		  "id":"bone_clamp",
+		  "category":null,
+		  "resourses":"steel: 12500, glass: 7500, silver: 2500",
+		  "time":"00:10"
+		},
+		{
+		  "name":"Medical equipment prototype (health analyzer)",
+		  "id":"medical_analyzer",
+		  "category":null,
+		  "resourses":"steel: 500, glass: 500",
+		  "time":"00:10"
+		},
+		{
+		  "name":"Medical equipment prototype (advanced roller bed)",
+		  "id":"roller_bed",
+		  "category":null,
+		  "resourses":"steel: 4000, glass: 2000, phoron: 2000",
+		  "time":"00:10"
+		},
+		{
+		  "name":"Medical equipment prototype (SleeveMate 3700)",
+		  "id":"sleevemate",
+		  "category":null,
+		  "resourses":"steel: 4000, glass: 4000",
+		  "time":"00:10"
+		}
+	  ],
+	  "category":"Misc",
+	  "categories":[
+		"Misc"
+	  ],
+	  "materials_status":null,
+	  "materials_amount":"0 / Unlimited (remote)",
+	  "materials":[
+		{
+		  "mat":"steel",
+		  "display":"steel",
+		  "amt":0,
+		  "max":-1,
+		  "percent":0
+		},
+		{
+		  "mat":"glass",
+		  "display":"glass",
+		  "amt":0,
+		  "max":-1,
+		  "percent":0
+		},
+		{
+		  "mat":"plastic",
+		  "display":"plastic",
+		  "amt":0,
+		  "max":-1,
+		  "percent":0
+		},
+		{
+		  "mat":"gold",
+		  "display":"gold",
+		  "amt":0,
+		  "max":-1,
+		  "percent":0
+		},
+		{
+		  "mat":"silver",
+		  "display":"silver",
+		  "amt":0,
+		  "max":-1,
+		  "percent":0
+		},
+		{
+		  "mat":"osmium",
+		  "display":"osmium",
+		  "amt":0,
+		  "max":-1,
+		  "percent":0
+		},
+		{
+		  "mat":"lead",
+		  "display":"lead",
+		  "amt":0,
+		  "max":-1,
+		  "percent":0
+		},
+		{
+		  "mat":"phoron",
+		  "display":"phoron",
+		  "amt":0,
+		  "max":-1,
+		  "percent":0
+		},
+		{
+		  "mat":"uranium",
+		  "display":"uranium",
+		  "amt":0,
+		  "max":-1,
+		  "percent":0
+		},
+		{
+		  "mat":"diamond",
+		  "display":"diamond",
+		  "amt":7800,
+		  "max":-1,
+		  "percent":0
+		},
+		{
+		  "mat":"titanium",
+		  "display":"titanium",
+		  "amt":0,
+		  "max":-1,
+		  "percent":0
+		}
+	  ],
+	  "maxres":-1,
+	  "chemicals":[
+		{
+		  "id":"sulfur",
+		  "name":"Sulfur",
+		  "amt":60
+		}
+	  ],
+	  "totalchems":60,
+	  "maxchems":120
 	}
+
 }
