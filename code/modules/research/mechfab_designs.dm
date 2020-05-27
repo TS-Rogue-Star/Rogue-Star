@@ -319,7 +319,7 @@
 
 /datum/design/item/mecha/extinguisher
 	name = "Extinguisher"
-	id = "extinguisher"
+	id = "mech_extinguisher"
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/extinguisher
 
 /datum/design/item/mecha/cable_layer

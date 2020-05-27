@@ -26,6 +26,9 @@
 	matter = list(DEFAULT_WALL_MATERIAL = 50, "glass" = 50)
 	req_components = list()
 
-/datum/category_item/autolathe/engineering/grounding_rod
+/datum/design/autolathe/engineering/grounding_rod
 	name = "grounding rod electronics"
-	path = /obj/item/weapon/circuitboard/grounding_rod
+	desc = ""
+	id = "grounding_rod"
+	materials = list(DEFAULT_WALL_MATERIAL = 50, MAT_GLASS = 50)
+	build_path = /obj/item/weapon/circuitboard/grounding_rod

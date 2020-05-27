@@ -34,6 +34,7 @@ other types of metals and chemistry for reagents).
 	var/dangerous_construction = FALSE	//notify and log for admin investigations if this is printed.
 	var/departmental_flags = ALL			//bitflags for deplathes.
 	var/list/datum/techweb_node/unlocked_by = list()
+	var/contraband = FALSE			//Only buildable in hacked machines. Mostly for autolathes.
 	var/research_icon					//Replaces the item icon in the research console
 	var/research_icon_state
 	var/icon_cache
