@@ -18,6 +18,7 @@ var config = {
 // Choose your templates here.  Hint: You'll probably never change layout, main is the one you want.
 var templateData = {
   layout: "layout_default.tmpl",
+  designBuildOptions: "design_build_options.tmpl",
   main: "techfab.tmpl"
 };
 

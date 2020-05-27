@@ -1,0 +1,24 @@
+<!-- material_container sub-template showing materials list, Intended to be embedded inside other templates.
+Expects data to have a property named "materials"
+-->
+{{if data.materials_status}}
+	{{:data.materials_status}}
+{{else}}
+    {{:data.materials_amount}}
+{{/if}}
+{{for data.materials}}
+    <div class="item">
+        <div class="itemLabelWide">
+            {{if value.max >= 0 }}
+                {{:helper.displayBar(value.amt, 0, value.max, null, value.display + " " + value.amt + " / " +  value.max)}}
+            {{else}}
+                {{:value.display}}: {{:value.amt}}{{if value.max >= 0 }}/{{:value.max}}{{/if}}
+            {{/if}}
+        </div>
+        <div class="itemContentMedium">
+            {{:helper.link('x1', "extlink", {'eject' : value.mat, 'amount' : 1}, value.amt >= 2000 ? null : 'disabled')}}
+            {{:helper.link('x5',  null,     {'eject' : value.mat, 'amount' : 5}, value.amt >= 10000 ? null : 'disabled')}}
+            {{:helper.link('x10', null,    {'eject' : value.mat, 'amount' : 10}, value.amt >= 20000 ? null : 'disabled')}}
+        </div>
+    </div>
+{{/for}}

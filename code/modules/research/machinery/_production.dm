@@ -139,6 +139,34 @@
 		return
 	ui_interact(user)
 
+/obj/machinery/rnd/production/ui_interact(var/mob/user, var/ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1, var/datum/topic_state/state = default_state)
+	var/list/data = get_ui_data()
+
+	var/datum/asset/iconsheet/research_designs/icon_assets = get_asset_datum(/datum/asset/iconsheet/research_designs)
+	icon_assets.send(user)
+
+	ui = SSnanoui.try_update_ui(user, src, ui_key, ui, data, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, ui_template, "[capitalize(name)] UI", 800, 600)
+		ui.add_template("designBuildOptions", "design_build_options.tmpl")
+		ui.add_stylesheet("../../iconsheet_[icon_assets.name].css")
+		ui.set_initial_data(data)
+		ui.open()
+		ui.set_auto_update(1)
+
+/obj/machinery/rnd/production/verb/get_ui_json()
+	set name = "Get UI JSON"
+	
+	var/data = get_ui_data()
+	var/datum/nanoui/ui = SSnanoui.get_open_ui(usr, src, "main")
+	if(ui)
+		data = ui.get_send_data(data)
+
+	var/json = json_encode(data)
+	fdel("data/tmp.json")
+	text2file(json, "data/tmp.json")
+	usr << ftp("data/tmp.json", "[name].json")
+
 //
 // Local NanoUI
 //
@@ -171,15 +199,37 @@
 		var/datum/design/D = queue[i]
 		. += D.name
 
+// Server-side calculation of build options
 /obj/machinery/rnd/production/proc/get_build_options()
-	. = list()
+	var/list/L = list()
 	for(var/id in stored_research.researched_designs)
 		var/datum/design/D = SSresearch.techweb_design_by_id(id)
 		if(!D.build_path)
 			continue
 		if(!(D.build_type & allowed_buildtypes) || !(isnull(allowed_department_flags) ||(D.departmental_flags & allowed_department_flags)))
 			continue
-		. += list(list("name" = D.name, "id" = D.id, "category" = D.category, "max" = max_build_qty(D), "resourses" = get_design_resourses(D), "time" = get_design_time(D)))
+		
+		var/mat_efficiency = efficient_with(D.build_path) ? efficiency_coeff : 1
+
+		// We combined calcualting max build qty and resources list into a single pass		
+		var/datum/material_container/mc = src.materials.mat_container
+		var/list/resources = list()
+		var/max_build_qty = 50
+		var/list/materials = D.materials
+		for(var/mat in materials)
+			var/have = mc?.get_material_amount(mat) || 0
+			var/required = max(1, materials[mat] / mat_efficiency)
+			max_build_qty = min(max_build_qty, round(have / required))
+			resources[++resources.len] = list("name" = material_display_name(mat), "amt" = required, "missing" = (have < required))
+		var/list/chemicals = D.chemicals
+		for(var/rid in chemicals)
+			var/have = reagents.get_reagent_amount(rid)
+			var/required = max(1, chemicals[rid] / mat_efficiency)
+			max_build_qty = min(max_build_qty, round(have / required))
+			resources[++resources.len] = list("name" = SSchemistry.chemical_reagents[rid]?.name, "amt" = required, "missing" = (have < required))
+
+		L[++L.len] = list("name" = D.name, "id" = D.id, "category" = D.category, "max" = max_build_qty, "resources" = resources, "time" = get_design_time(D))
+	return L
 
 /// How many of this design can we print given current resources?
 /obj/machinery/rnd/production/proc/max_build_qty(var/datum/design/D)
@@ -193,7 +243,7 @@
 		var/have = materials.mat_container.get_material_amount(mat) || reagents.get_reagent_amount(mat)
 		. = min(., round(have / max(1, all_materials[mat] / ef)))
 
-/obj/machinery/rnd/production/proc/get_design_resourses(var/datum/design/D)
+/obj/machinery/rnd/production/proc/get_design_resources(var/datum/design/D)
 	var/list/F = list()
 	// TODO - The rdconsole has a fancy version that colors the missing ones red etc
 	var/mat_efficiency = efficient_with(D.build_path) ? 1/efficiency_coeff : 1  // TODO switch to using normal instead of inverse
@@ -378,14 +428,14 @@
 		addToQueue(D)
 	return TRUE
 
-// /obj/machinery/rnd/production/proc/search(string)
-// 	matching_designs.Cut()
-// 	for(var/v in stored_research.researched_designs)
-// 		var/datum/design/D = SSresearch.techweb_design_by_id(v)
-// 		if(!(D.build_type & allowed_buildtypes) || !(isnull(allowed_department_flags) ||(D.departmental_flags & allowed_department_flags)))
-// 			continue
-// 		if(findtext(D.name,string))
-// 			matching_designs.Add(D)
+/obj/machinery/rnd/production/proc/search(string)
+	matching_designs.Cut()
+	for(var/v in stored_research.researched_designs)
+		var/datum/design/D = SSresearch.techweb_design_by_id(v)
+		if(!(D.build_type & allowed_buildtypes) || !(isnull(allowed_department_flags) ||(D.departmental_flags & allowed_department_flags)))
+			continue
+		if(findtext(D.name,string))
+			matching_designs.Add(D)
 
 // /obj/machinery/rnd/production/proc/generate_ui()
 // 	var/list/ui = list()

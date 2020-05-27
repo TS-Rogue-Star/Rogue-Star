@@ -84,16 +84,6 @@
 		return
 	return ..()
 
-/obj/machinery/rnd/ui_interact(var/mob/user, var/ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1, var/datum/topic_state/state = default_state)
-	var/list/data = get_ui_data()
-
-	ui = SSnanoui.try_update_ui(user, src, ui_key, ui, data, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, ui_template, "Exosuit Fabricator UI", 800, 600)
-		ui.set_initial_data(data)
-		ui.open()
-		ui.set_auto_update(1)
-
 // Return data for NanoUI interface, called by ui_interact
 /obj/machinery/rnd/proc/get_ui_data()
 	return list()

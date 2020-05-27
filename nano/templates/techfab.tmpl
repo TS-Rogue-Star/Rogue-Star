@@ -33,16 +33,7 @@
 	<hr style="width: 90%;">
 	{{for data.buildable}}
 		{{if !data.category || value.category == data.category}}
-			<div class="item">
-				<div class="itemLabelWide">
-					{{:helper.link(value.name, null, {'build' : value.id, 'amount': 1})}}
-					{{:helper.link("x5", null, {'build' : value.id, 'amount': 5}, value.max >= 5 ? null : 'disabled')}}
-					{{:helper.link("x10", null, {'build' : value.id, 'amount': 10}, value.max >= 10 ? null : 'disabled')}}
-				</div>
-				<div class="itemContentMedium">
-					{{:value.resourses}}, {{:value.time}}
-				</div>
-			</div>
+			{{#def.designBuildOptions}}
 		{{/if}}
 	{{/for}}
 </div>

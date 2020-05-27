@@ -1,0 +1,29 @@
+<!-- Sub-template for rendering build options in machines that can build design datums.
+    Intended to be used inside a for loop, it expects "value" to contain the design data:
+{
+    id : "design_id",
+    name : "Design Name",
+    category : "Category Name (optional)"
+    max : 5 /* Max quantity that an be built right now */
+    time : "00:05" /* Time it will take to build one */
+    resources : [
+        {
+            name: "Display Name",
+            amt: 600 /* Amount required */,
+            missing: true /* Machine doesn't have enough of this material to build one. */
+        }
+    ]
+}
+-->
+<div class="item">
+    <div class="itemLabelWide">
+        <span class='design {{>value.id}}-south'></span>
+        {{:helper.link(value.name, null, {'build' : value.id, 'amount': 1},  value.max >= 1 ? null : 'disabled')}}
+        {{:helper.link("x5",       null, {'build' : value.id, 'amount': 5},  value.max >= 5 ? null : 'disabled')}}
+        {{:helper.link("x10",      null, {'build' : value.id, 'amount': 10}, value.max >= 10 ? null : 'disabled')}}
+    </div>
+    <div class="itemContentMedium">
+        {{for value.resourses:rsc:idx}}{{if idx > 0}}, {{/if}}<span {{if rsc.missing}} class='bad'{{/if}}>{{:rsc.amt}} {{>rsc.name}}</span>{{/for}}
+        <span>{{:value.time}}</span>
+    </div>
+</div>

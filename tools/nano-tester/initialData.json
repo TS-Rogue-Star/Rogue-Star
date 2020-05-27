@@ -1,194 +1,339 @@
 {
-	"config": {
-		"title": "Protolathe"
-	},
-	"data": {
-	  "queue":[
-
-	  ],
-	  "buildable":[
-		{
-		  "name":"Component design (matter bin)",
-		  "id":"basic_matter_bin",
-		  "category":"Misc",
-		  "resourses":"steel: 80",
-		  "time":"00:03",
-		  "max": 4
-		},
-		{
-		  "name":"Power Cell Model (basic)",
-		  "id":"basic_cell",
-		  "category":"Misc",
-		  "resourses":"steel: 700, glass: 50",
-		  "time":"00:10"
-		},
-		{
-		  "name":"Component design (scanning module)",
-		  "id":"basic_sensor",
-		  "category":"Misc",
-		  "resourses":"steel: 50, glass: 20",
-		  "time":"00:03",
-		  "max": 25
-		},
-		{
-		  "name":"Component design (capacitor)",
-		  "id":"basic_capacitor",
-		  "category":null,
-		  "resourses":"steel: 50, glass: 50",
-		  "time":"00:03"
-		},
-		{
-		  "name":"Component design (micro-laser)",
-		  "id":"basic_micro_laser",
-		  "category":null,
-		  "resourses":"steel: 10, glass: 20",
-		  "time":"00:03"
-		},
-		{
-		  "name":"Component design (micro-manipulator)",
-		  "id":"micro_mani",
-		  "category":null,
-		  "resourses":"steel: 30",
-		  "time":"00:03"
-		},
-		{
-		  "name":"Data storage design (Design Storage Disk)",
-		  "id":"design_disk",
-		  "category":null,
-		  "resourses":"steel: 30, glass: 10",
-		  "time":"00:10"
-		},
-		{
-		  "name":"Data storage design (Technology Data Storage Disk)",
-		  "id":"tech_disk",
-		  "category":null,
-		  "resourses":"steel: 30, glass: 10",
-		  "time":"00:10"
-		},
-		{
-		  "name":"Medical equipment prototype (Bone Clamp)",
-		  "id":"bone_clamp",
-		  "category":null,
-		  "resourses":"steel: 12500, glass: 7500, silver: 2500",
-		  "time":"00:10"
-		},
-		{
-		  "name":"Medical equipment prototype (health analyzer)",
-		  "id":"medical_analyzer",
-		  "category":null,
-		  "resourses":"steel: 500, glass: 500",
-		  "time":"00:10"
-		},
-		{
-		  "name":"Medical equipment prototype (advanced roller bed)",
-		  "id":"roller_bed",
-		  "category":null,
-		  "resourses":"steel: 4000, glass: 2000, phoron: 2000",
-		  "time":"00:10"
-		},
-		{
-		  "name":"Medical equipment prototype (SleeveMate 3700)",
-		  "id":"sleevemate",
-		  "category":null,
-		  "resourses":"steel: 4000, glass: 4000",
-		  "time":"00:10"
-		}
-	  ],
-	  "category":"Misc",
-	  "categories":[
-		"Misc"
-	  ],
-	  "materials_status":null,
-	  "materials_amount":"0 / Unlimited (remote)",
-	  "materials":[
-		{
-		  "mat":"steel",
-		  "display":"steel",
-		  "amt":0,
-		  "max":-1,
-		  "percent":0
-		},
-		{
-		  "mat":"glass",
-		  "display":"glass",
-		  "amt":0,
-		  "max":-1,
-		  "percent":0
-		},
-		{
-		  "mat":"plastic",
-		  "display":"plastic",
-		  "amt":0,
-		  "max":-1,
-		  "percent":0
-		},
-		{
-		  "mat":"gold",
-		  "display":"gold",
-		  "amt":0,
-		  "max":-1,
-		  "percent":0
-		},
-		{
-		  "mat":"silver",
-		  "display":"silver",
-		  "amt":0,
-		  "max":-1,
-		  "percent":0
-		},
-		{
-		  "mat":"osmium",
-		  "display":"osmium",
-		  "amt":0,
-		  "max":-1,
-		  "percent":0
-		},
-		{
-		  "mat":"lead",
-		  "display":"lead",
-		  "amt":0,
-		  "max":-1,
-		  "percent":0
-		},
-		{
-		  "mat":"phoron",
-		  "display":"phoron",
-		  "amt":0,
-		  "max":-1,
-		  "percent":0
-		},
-		{
-		  "mat":"uranium",
-		  "display":"uranium",
-		  "amt":0,
-		  "max":-1,
-		  "percent":0
-		},
-		{
-		  "mat":"diamond",
-		  "display":"diamond",
-		  "amt":7800,
-		  "max":-1,
-		  "percent":0
-		},
-		{
-		  "mat":"titanium",
-		  "display":"titanium",
-		  "amt":0,
-		  "max":-1,
-		  "percent":0
-		}
-	  ],
-	  "maxres":-1,
-	  "chemicals":[
-		{
-		  "id":"sulfur",
-		  "name":"Sulfur",
-		  "amt":60
-		}
-	  ],
-	  "totalchems":60,
-	  "maxchems":120
-	}
-
+    "config": {
+        "title": "Protolathe UI",
+        "srcObject": {
+            "name": "The protolathe"
+        },
+        "stateKey": "default",
+        "status": 2,
+        "autoUpdateLayout": 0,
+        "autoUpdateContent": 1,
+        "showMap": 0,
+        "mapZLevel": 1,
+        "user": {
+            "name": "Hailey Fisher"
+        }
+    },
+    "data": {
+        "queue": [],
+        "buildable": [
+            {
+                "name": "Component design (matter bin)",
+                "id": "basic_matter_bin",
+                "category": null,
+                "max": 50,
+                "resourses": [
+                    {
+                        "name": "steel",
+                        "amt": 80,
+                        "missing": 0
+                    }
+                ],
+                "time": "00:03"
+            },
+            {
+                "name": "Power Cell Model (basic)",
+                "id": "basic_cell",
+                "category": "Misc",
+                "max": 50,
+                "resourses": [
+                    {
+                        "name": "steel",
+                        "amt": 700,
+                        "missing": 0
+                    },
+                    {
+                        "name": "glass",
+                        "amt": 50,
+                        "missing": 0
+                    }
+                ],
+                "time": "00:10"
+            },
+            {
+                "name": "Component design (scanning module)",
+                "id": "basic_sensor",
+                "category": null,
+                "max": 50,
+                "resourses": [
+                    {
+                        "name": "steel",
+                        "amt": 50,
+                        "missing": 0
+                    },
+                    {
+                        "name": "glass",
+                        "amt": 20,
+                        "missing": 0
+                    }
+                ],
+                "time": "00:03"
+            },
+            {
+                "name": "Component design (capacitor)",
+                "id": "basic_capacitor",
+                "category": null,
+                "max": 50,
+                "resourses": [
+                    {
+                        "name": "steel",
+                        "amt": 50,
+                        "missing": 0
+                    },
+                    {
+                        "name": "glass",
+                        "amt": 50,
+                        "missing": 0
+                    }
+                ],
+                "time": "00:03"
+            },
+            {
+                "name": "Component design (micro-laser)",
+                "id": "basic_micro_laser",
+                "category": null,
+                "max": 50,
+                "resourses": [
+                    {
+                        "name": "steel",
+                        "amt": 10,
+                        "missing": 0
+                    },
+                    {
+                        "name": "glass",
+                        "amt": 20,
+                        "missing": 0
+                    }
+                ],
+                "time": "00:03"
+            },
+            {
+                "name": "Component design (micro-manipulator)",
+                "id": "micro_mani",
+                "category": null,
+                "max": 50,
+                "resourses": [
+                    {
+                        "name": "steel",
+                        "amt": 30,
+                        "missing": 0
+                    }
+                ],
+                "time": "00:03"
+            },
+            {
+                "name": "Data storage design (Design Storage Disk)",
+                "id": "design_disk",
+                "category": null,
+                "max": 50,
+                "resourses": [
+                    {
+                        "name": "steel",
+                        "amt": 30,
+                        "missing": 0
+                    },
+                    {
+                        "name": "glass",
+                        "amt": 10,
+                        "missing": 0
+                    }
+                ],
+                "time": "00:10"
+            },
+            {
+                "name": "Data storage design (Technology Data Storage Disk)",
+                "id": "tech_disk",
+                "category": null,
+                "max": 50,
+                "resourses": [
+                    {
+                        "name": "steel",
+                        "amt": 30,
+                        "missing": 0
+                    },
+                    {
+                        "name": "glass",
+                        "amt": 10,
+                        "missing": 0
+                    }
+                ],
+                "time": "00:10"
+            },
+            {
+                "name": "Medical equipment prototype (Bone Clamp)",
+                "id": "bone_clamp",
+                "category": null,
+                "max": 0,
+                "resourses": [
+                    {
+                        "name": "steel",
+                        "amt": 12500,
+                        "missing": 0
+                    },
+                    {
+                        "name": "glass",
+                        "amt": 7500,
+                        "missing": 0
+                    },
+                    {
+                        "name": "silver",
+                        "amt": 2500,
+                        "missing": 1
+                    }
+                ],
+                "time": "00:10"
+            },
+            {
+                "name": "Medical equipment prototype (health analyzer)",
+                "id": "medical_analyzer",
+                "category": null,
+                "max": 50,
+                "resourses": [
+                    {
+                        "name": "steel",
+                        "amt": 500,
+                        "missing": 0
+                    },
+                    {
+                        "name": "glass",
+                        "amt": 500,
+                        "missing": 0
+                    }
+                ],
+                "time": "00:10"
+            },
+            {
+                "name": "Medical equipment prototype (advanced roller bed)",
+                "id": "roller_bed",
+                "category": null,
+                "max": 0,
+                "resourses": [
+                    {
+                        "name": "steel",
+                        "amt": 4000,
+                        "missing": 0
+                    },
+                    {
+                        "name": "glass",
+                        "amt": 2000,
+                        "missing": 0
+                    },
+                    {
+                        "name": "phoron",
+                        "amt": 2000,
+                        "missing": 1
+                    }
+                ],
+                "time": "00:10"
+            },
+            {
+                "name": "Medical equipment prototype (SleeveMate 3700)",
+                "id": "sleevemate",
+                "category": null,
+                "max": 25,
+                "resourses": [
+                    {
+                        "name": "steel",
+                        "amt": 4000,
+                        "missing": 0
+                    },
+                    {
+                        "name": "glass",
+                        "amt": 4000,
+                        "missing": 0
+                    }
+                ],
+                "time": "00:10"
+            }
+        ],
+        "category": null,
+        "categories": [
+            "Misc"
+        ],
+        "materials_status": null,
+        "materials_amount": "200000 / Unlimited (remote)",
+        "materials": [
+            {
+                "mat": "steel",
+                "display": "steel",
+                "amt": 100000,
+                "max": -1,
+                "percent": 0
+            },
+            {
+                "mat": "glass",
+                "display": "glass",
+                "amt": 100000,
+                "max": -1,
+                "percent": 0
+            },
+            {
+                "mat": "plastic",
+                "display": "plastic",
+                "amt": 0,
+                "max": -1,
+                "percent": 0
+            },
+            {
+                "mat": "gold",
+                "display": "gold",
+                "amt": 0,
+                "max": -1,
+                "percent": 0
+            },
+            {
+                "mat": "silver",
+                "display": "silver",
+                "amt": 0,
+                "max": -1,
+                "percent": 0
+            },
+            {
+                "mat": "osmium",
+                "display": "osmium",
+                "amt": 0,
+                "max": -1,
+                "percent": 0
+            },
+            {
+                "mat": "lead",
+                "display": "lead",
+                "amt": 0,
+                "max": -1,
+                "percent": 0
+            },
+            {
+                "mat": "phoron",
+                "display": "phoron",
+                "amt": 0,
+                "max": -1,
+                "percent": 0
+            },
+            {
+                "mat": "uranium",
+                "display": "uranium",
+                "amt": 0,
+                "max": -1,
+                "percent": 0
+            },
+            {
+                "mat": "diamond",
+                "display": "diamond",
+                "amt": 0,
+                "max": -1,
+                "percent": 0
+            },
+            {
+                "mat": "titanium",
+                "display": "titanium",
+                "amt": 0,
+                "max": -1,
+                "percent": 0
+            }
+        ],
+        "maxres": -1,
+        "chemicals": [],
+        "totalchems": 0,
+        "maxchems": 120
+    }
 }
