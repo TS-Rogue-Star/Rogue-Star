@@ -696,7 +696,7 @@
 		)
 		if(O.material in rock_munch)
 			nom	= rock_munch[O.material]
-			M 	= name_to_material[O.material]
+			M 	= get_material_by_name(O.material)
 		else if(istype(O, /obj/item/weapon/ore/slag))
 			nom	= list("nutrition" = 15, "remark" = "You taste dusty, crunchy mistakes. This is a travesty... but at least it is an edible one.",  "WTF" = FALSE)
 		else //Random rock.
@@ -737,7 +737,7 @@
 			var/obj/item/stack/material/stack = O.split(1) //A little off the top.
 			I	= stack
 			nom	= refined_taste[O.default_type]
-			M	= name_to_material[O.default_type]
+			M	= get_material_by_name(O.default_type)
 
 	if(nom) //Ravenous 1-4, snackage confirmed. Clear for chowdown, over.
 		playsound(src, 'sound/items/eatfood.ogg', rand(10,50), 1)

@@ -21,15 +21,14 @@ var/const/AUTOLATHE_DISABLE_WIRE = 4
 	return 0
 
 /datum/wires/autolathe/proc/update_autolathe_ui(mob/living/user)
-	if(CanUse(user))
-		var/obj/machinery/autolathe/A = holder
-		A.interact(user)
+	return // Do nothing, nano-ui will handle updating
 
 /datum/wires/autolathe/UpdateCut(index, mended)
 	var/obj/machinery/autolathe/A = holder
 	switch(index)
 		if(AUTOLATHE_HACK_WIRE)
 			A.hacked = !mended
+			A.update_designs()
 		if(AUTOLATHE_SHOCK_WIRE)
 			A.shocked = !mended
 		if(AUTOLATHE_DISABLE_WIRE)
@@ -43,9 +42,11 @@ var/const/AUTOLATHE_DISABLE_WIRE = 4
 	switch(index)
 		if(AUTOLATHE_HACK_WIRE)
 			A.hacked = !A.hacked
+			A.update_designs()
 			spawn(50)
 				if(A && !IsIndexCut(index))
 					A.hacked = 0
+					A.update_designs()
 					update_autolathe_ui(usr)
 		if(AUTOLATHE_SHOCK_WIRE)
 			A.shocked = !A.shocked

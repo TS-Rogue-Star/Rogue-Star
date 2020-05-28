@@ -16,6 +16,12 @@
 #define TECH_ARCANE "arcane"
 #define TECH_PRECURSOR "precursor"
 
+// Common states for machines with a construction queue
+#define BUILD_IDLE		1	// Not building anything.
+#define BUILD_WORKING	2	// Currently building first thing in queue
+#define BUILD_PAUSED	3	// Voluntarily paused by user command
+#define BUILD_ERROR		4	// Cannot continue building (low materials, broken, panel open, etc.)
+
 /// Used in [/datum/design][designs] to specify which machine(s) can build it
 #define IMPRINTER		(1<<0)	// For circuits. Uses glass/chemicals.
 #define PROTOLATHE		(1<<1)	// New stuff. Uses glass/metal/chemicals
@@ -55,6 +61,8 @@
 	TECHWEB_POINT_TYPE_NANITES = "Nanite Research"\
 	)
 
+// If construction/redemption efficiency ratings apply. If not, always use 100% conversion
+#define MATERIAL_EFFICIENT(A) (!(ispath(A, /obj/item/stack/material) || istype(A, /obj/item/stack/material)))
 
 /// Constants for the different screens in R&D console and machinery UIs
 #define RDSCREEN_MENU 0
