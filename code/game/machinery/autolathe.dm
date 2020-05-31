@@ -26,6 +26,7 @@
 	var/progress = 0						// Progress towards current build
 	var/list/queue = list()					// The build queue! List of list(design_to_build, qty_to_build)
 	var/build_status = BUILD_IDLE			// Current state of build queue processing.
+	var/build_error_msg = null				// Text description of problem to show.
 
 	var/sound/success_sound = 'sound/machines/ping.ogg'			// Plays when queue finished
 	var/sound/error_sound = 'sound/machines/buzz-sigh.ogg'		// Plays to alert about an error.
@@ -57,7 +58,7 @@
 
 // Update the recipie list from stored research!
 /obj/machinery/autolathe/proc/update_designs()
-	cached_designs.Cut()
+	cached_designs = list()
 	categories.Cut()
 	for(var/id in stored_research.researched_designs)
 		var/datum/design/D = SSresearch.techweb_design_by_id(id)
@@ -72,12 +73,22 @@
 /obj/machinery/autolathe/proc/get_ui_data()
 	var/list/data = list()
 
-	data["build_status"] = build_status
+	switch(build_status)
+		if(BUILD_WORKING)
+			data["build_status"] = "WORKING"
+		if(BUILD_IDLE)
+			data["build_status"] = "IDLE"
+		if(BUILD_PAUSED)
+			data["build_status"] = "PAUSED"
+		else
+			data["build_status"] = "ERROR"
+
 	var/list/current = queue.len ? queue[1] : null
 	if(current)
 		var/datum/design/current_design = current[QUEUE_DESIGN]
 		data["current"] = list("name" = current_design.name, "qty" = current[QUEUE_QTY])
-		data["builtperc"] = round((progress / current_design.time) * 100)
+		data["builtperc"] = round((progress / (current_design.time * current[QUEUE_QTY])) * 100)
+	data["error_text"] = build_error_msg
 	data["filtertext"] = filtertext
 	data["queue"] = get_ui_data_queue()
 	data["buildable"] = get_ui_data_build_options()
@@ -91,7 +102,7 @@
 	var/list/queue_data = list()
 	var/temp_metal = stored_material[DEFAULT_WALL_MATERIAL]
 	var/temp_glass = stored_material[MAT_GLASS]
-	for(var/i in queue)
+	for(var/i in 1 to queue.len)
 		var/datum/design/D = queue[i][QUEUE_DESIGN]
 		var/qty = queue[i][QUEUE_QTY]
 		var/mat_multiplier = qty * (MATERIAL_EFFICIENT(D.build_path) ? mat_efficiency : 1)
@@ -122,7 +133,7 @@
 			continue
 		var/mat_multiplier = (MATERIAL_EFFICIENT(D.build_path) ? mat_efficiency : 1)
 
-		// We combined calcualting max build qty and resources list into a single pass		
+		// We combined calcualting max build qty and resources list into a single pass
 
 		var/max_build_qty = 10 // Default max quantity
 		if(ispath(D.build_type, /obj/item/stack))
@@ -145,9 +156,9 @@
 
 	ui = SSnanoui.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, ui_template, "[capitalize(name)] UI", 800, 600)
+		ui = new(user, src, ui_key, ui_template, "[capitalize(name)] UI", 625, 600)
 		ui.add_template("designBuildOptions", "design_build_options.tmpl")
-		ui.add_stylesheet("../../iconsheet_[design_icons.name].css")
+		ui.add_stylesheet("iconsheet_[design_icons.name].css")
 		ui.set_initial_data(data)
 		ui.open()
 		ui.set_auto_update(1)
@@ -203,7 +214,7 @@
 
 	//Resources are being loaded.
 	var/obj/item/eating = O
-	if(!eating.matter)
+	if(!eating.matter || !(eating.matter[DEFAULT_WALL_MATERIAL] > 0 && eating.material[MAT_GLASS] > 0))
 		to_chat(user, "\The [eating] does not contain significant amounts of useful materials and cannot be accepted.")
 		return
 
@@ -263,8 +274,8 @@
 		return 1
 	if(shocked)
 		shock(user, 50)
-	
-	user.set_machine(src)	
+
+	user.set_machine(src)
 	ui_interact(user)
 
 /obj/machinery/autolathe/Topic(href, href_list)
@@ -273,10 +284,6 @@
 
 	usr.set_machine(src)
 	add_fingerprint(usr)
-
-	if(busy())
-		to_chat(usr, "<span class='notice'>The autolathe is busy. Please wait for completion of previous operation.</span>")
-		return
 
 	if(!isnull(href_list["search"]))
 		var/filterstring = href_list["search"]
@@ -290,6 +297,11 @@
 
 	if(href_list["build"])
 		user_try_print_id(href_list["build"], text2num(href_list["amount"]))
+
+	if(href_list["remove"])
+		remove_from_queue(text2num(href_list["remove"]))
+
+	playsound(src, 'sound/machines/click.ogg', 25, TRUE);
 
 /obj/machinery/autolathe/update_icon()
 	if(panel_open)
@@ -311,9 +323,17 @@
 /obj/machinery/autolathe/proc/update_build_status(var/new_build_status)
 	if(new_build_status == build_status)
 		return FALSE
+	else if(new_build_status != BUILD_ERROR)
+		build_error_msg = null
 	build_status = new_build_status
 	update_icon()
 	return TRUE
+
+/obj/machinery/autolathe/drop_location()
+	// Try to drop items one step in front of us, if its open.
+	. = get_step(get_turf(src), src.dir)
+	if(!isfloor(.))
+		. = ..() // Oh well, we tried.
 
 /// Check if autolathe is too busy to do things like load material or refresh parts
 /obj/machinery/autolathe/proc/busy()
@@ -341,7 +361,7 @@
 /obj/machinery/autolathe/proc/remove_from_queue(var/index)
 	queue.Cut(index, index + 1)
 	return
-	
+
 //
 // Process build queue
 //
@@ -353,12 +373,13 @@
 		return PROCESS_KILL
 
 	var/datum/design/D = queue[1][QUEUE_DESIGN]
-	if(can_build(D, queue[1][QUEUE_QTY], say_errors = (build_status != BUILD_ERROR)))
+	var/qty = queue[1][QUEUE_QTY]
+	if(can_build(D, qty, say_errors = (build_status != BUILD_ERROR)))
 		update_use_power(USE_POWER_ACTIVE)
 		update_build_status(BUILD_WORKING)
 		progress += build_speed * wait * (1/10) // Normalized to seconds even if fastprocess
-		if(progress >= D.time)
-			finish_queued_build(D, queue[1][QUEUE_QTY])
+		if(progress >= D.time * qty)
+			finish_queued_build(D, qty)
 			remove_from_queue(1)
 			progress = 0
 			if(!LAZYLEN(queue) && success_sound)
@@ -374,8 +395,9 @@
 	var/mat_multiplier = (MATERIAL_EFFICIENT(D.build_path) ? mat_efficiency : 1)
 	for(var/mat in D.materials)
 		if(stored_material[mat] < round(D.materials[mat] * mat_multiplier) * qty)
+			build_error_msg = "Not enough materials to complete construction."
 			if(say_errors)
-				audible_message("[bicon(src)] <span class='warning'>Not enough materials to complete construction.</span>")
+				audible_message("[bicon(src)] <span class='warning'>[build_error_msg]</span>")
 				if(error_sound)
 					playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
 			return FALSE

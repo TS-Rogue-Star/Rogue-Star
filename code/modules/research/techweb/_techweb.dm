@@ -369,14 +369,23 @@
 	for(var/id in SSresearch.techweb_designs)
 		var/datum/design/D = SSresearch.techweb_design_by_id(id)
 		if(D.build_type & design_autounlock_buildtypes)
-			for(var/i in D.category)
-				if(i in design_autounlock_categories)
-					add_design_by_id(D.id)
-					break
+			if(islist(D.category))
+				for(var/i in D.category)
+					if(i in design_autounlock_categories)
+						add_design_by_id(D.id)
+						break
+			else if(D.category in design_autounlock_categories)
+				add_design_by_id(D.id)
 
 /datum/techweb/specialized/autounlocking/autolathe
 	design_autounlock_buildtypes = AUTOLATHE
 	allowed_buildtypes = AUTOLATHE
+	design_autounlock_categories = list("Arms and Ammunition",
+            "Devices and Components",
+            "Engineering",
+            "General",
+            "Medical",
+            "Tools")
 
 /datum/techweb/specialized/autounlocking/limbgrower
 	design_autounlock_buildtypes = LIMBGROWER

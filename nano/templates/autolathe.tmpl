@@ -1,24 +1,36 @@
-<div class="centerize-container">
-	<div class="centerize-content">
-		
-		{{for data.materials}}
-			{{:helper.displayBar(value.amt, 0, value.max, "capitalize", (value.name + ": " + helper.formatNumber(value.amt) + " / " + helper.formatNumber(value.max) ))}}
+{{if data.error_text }}
+	<div class='statusDisplay'><span class='bad'>{{:data.error_text}}</span></div><BR>
+{{/if}}
+<div id="status" style="overflow: auto;">
+	<div id="queue" style="float: left; width: 55%;">
+		<div class="item">
+			<b><span class="nowrap">Status: {{:data.build_status}}</span></b>
+			{{if data.builtperc}}&nbsp({{:data.builtperc}}%){{/if}}
+			{{if data.queue.length}}&nbsp;-&nbsp;<b>Queue contains:</b>{{/if}}
+		</div>
+		{{for data.queue}}
+			<div class="item">
+				<div class="itemLabelWidest" {{if index == 0}}style="font-weight: bold;"{{/if}}>
+					{{:index + 1}}: {{:helper.capitalizeFirstLetter(value.name)}}{{if value.qty > 1}} (x{{:value.qty}}) {{/if}}
+					{{:helper.link((index ? 'Remove' : 'Cancel'), (index ? 'trash' : 'cancel'), {'remove' : index + 1})}}
+				</div>
+			</div>
+		{{empty}}
+			<div class="item">
+				The queue is empty
+			</div>
 		{{/for}}
 	</div>
-	<div class="clearfix"></div>
-	<div class="centerize-content">
-		<span class="nowrap">Status: {{:data.build_status}}</span>	&nbsp; 
-		<a class="white" style="float: right;" onclick="$('#designs').toggle();$('queue').toggle();">Queue ({{:data.queue.length}})</a>
-		<form method='GET' style="display: inline-block">
-			<input type='hidden' name='src' value='{{:$("body").data("urlParameters").src}}'> <!-- Super Hack Alpha -->
-			<input type='text' id='search' name='search' value="{{>data.filtertext}">
-			<input type='submit' name='' value='Search'>
-		</form>
+	<div id="materials" style="float:left; width: 44%;">
+		<div class="item"><b>Materials:</b></div>
+		{{for data.materials}}
+			<div class="item">
+				{{:helper.displayBar(value.amt, 0, value.max, "capitalize",  (value.name + ": " + helper.formatNumber(value.amt) + " / " + helper.formatNumber(value.max) ))}}
+			</div>
+		{{/for}}
 	</div>
 </div>
-<hr style="width: 90%;">
-
-
+<hr>
 <div id="designs">
 	<div class="centerize-container">
 		<div class="centerize-content">
@@ -35,53 +47,19 @@
 	<hr style="width: 90%;">
 	<table>
 		<style>.link{float: none; display: inline-block;}</style>
-	{{for data.buildable}}
-		<tr>
-			<td><span class='design {{>value.id}}-south'></span></td>
-			<td>{{:value.name}}</td>
-			<td>
-				{{for value.resourses:rsc:idx}}{{if idx > 0}}, {{/if}}<span {{if rsc.missing}} class='bad'{{/if}}>{{:rsc.amt}} {{>rsc.name}}</span>{{/for}}
-			</td>
-			<td class="nowrap">	
-				{{:helper.link("x1",       null, {'build' : value.id, 'amount': 1},  value.max >= 1 ? null : 'disabled')}}
-				{{:helper.link("x5",       null, {'build' : value.id, 'amount': 5},  value.max >= 5 ? null : 'disabled')}}
-				{{:helper.link("x10",      null, {'build' : value.id, 'amount': 10}, value.max >= 10 ? null : 'disabled')}}
-			</td>
-		</tr>
-	{{/for}}
+		{{for data.buildable}}
+			<tr>
+				<td><span class='design {{>value.id}}-south'></span></td>
+				<td>{{:value.name}}</td>
+				<td>
+					{{for value.resources:rsc:idx}}{{if idx > 0}}, {{/if}}<span {{if rsc.missing}} class='bad'{{/if}}>{{:rsc.amt}} {{>rsc.name}}</span>{{/for}}
+				</td>
+				<td class="nowrap">	
+					{{:helper.link("x1",       null, {'build' : value.id, 'amount': 1},  value.max >= 1 ? null : 'disabled')}}
+					{{:helper.link("x5",       null, {'build' : value.id, 'amount': 5},  value.max >= 5 ? null : 'disabled')}}
+					{{:helper.link("x10",      null, {'build' : value.id, 'amount': 10}, value.max >= 10 ? null : 'disabled')}}
+				</td>
+			</tr>
+		{{/for}}
 	</table>
 </div>
-<div id="queue">
-	<div class="item">
-		<b>Queue contains:</b>
-	</div>
-	{{if data.current}}
-		<div class="item">
-			<div class="itemLabelWide">
-				<b>Now: {{:data.current.name}}</b> ({{:data.builtperc}}% ready)
-			</div>
-			<div class="itemContentMedium">
-				{{:helper.link('Cancel', null, {'remove' : 1})}}
-			</div>
-		</div>
-		{{for data.queue}}
-			<div class="item">
-			<div class="itemLabelWide">
-				{{:index + 2}}: {{:value.name}}{{if value.qty > 1}} (x{{:value.qty}}){{/if}}
-			</div>
-			<div class="itemContentMedium">
-				{{:helper.link('Remove', null, {'remove' : index + 2})}}
-			</div>
-		{{empty}}
-			<div class="item">
-				The queue is empty
-			</div>
-		{{/for}}
-	{{else}}
-		<div class="item">
-			Nothing
-		</div>
-	{{/if}}
-	
-</div>
-
