@@ -247,7 +247,7 @@
 	var/datum/design/D = SSresearch.techweb_design_by_id(id)
 	if(!stored_research.researched_designs[D.id])
 		return // We haven't researched that
-	else if(!(D.build_type & MECHFAB))
+	else if(!(D.build_type & PROSFAB))
 		return // We can't build that!
 	else
 		queue += D

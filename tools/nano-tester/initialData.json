@@ -15,266 +15,518 @@
         }
     },
     "data": {
-        "build_status": "IDLE",
-        "build_error": null,
+        "build_status": 2,
         "current": {
-            "name" : "Wirecutters",
-            "builtperc": 30,
-            "qty": 1
+            "name": "half-pint glass",
+            "qty": 10
         },
-        "builtperc": 30,
+        "builtperc": 60,
+        "filtertext": null,
         "queue": [
             {
-                "name": "Wirecutters",
-                "qty": 1,
+                "name": "half-pint glass",
+                "qty": 10,
                 "can_build": 1
             },
             {
-                "name": "Steel sheets",
-                "qty": 20,
+                "name": "half-pint glass",
+                "qty": 10,
                 "can_build": 1
-            },
-            {
-                "name": "Compressed matter cartridge",
-                "qty": 1,
-                "can_build": 0
             }
         ],
         "buildable": [
             {
-                "name": "Component design (matter bin)",
-                "id": "basic_matter_bin",
-                "category": null,
-                "max": 50,
-                "resourses": [
+                "name": "bucket",
+                "id": "bucket",
+                "category": "General",
+                "max": 10,
+                "resources": [
                     {
                         "name": "steel",
-                        "amt": 80,
+                        "amt": 240,
                         "missing": 0
                     }
-                ],
-                "time": "00:03"
+                ]
             },
             {
-                "name": "Power Cell Model (basic)",
-                "id": "basic_cell",
-                "category": "Misc",
-                "max": 50,
-                "resourses": [
+                "name": "water-cooler bottle",
+                "id": "cooler_bottle",
+                "category": "General",
+                "max": 10,
+                "resources": [
+                    {
+                        "name": "glass",
+                        "amt": 2400,
+                        "missing": 0
+                    }
+                ]
+            },
+            {
+                "name": "half-pint glass",
+                "id": "drinkingglass_square",
+                "category": "General",
+                "max": 10,
+                "resources": [
+                    {
+                        "name": "glass",
+                        "amt": 72,
+                        "missing": 0
+                    }
+                ]
+            },
+            {
+                "name": "rocks glass",
+                "id": "drinkingglass_rocks",
+                "category": "General",
+                "max": 10,
+                "resources": [
+                    {
+                        "name": "glass",
+                        "amt": 48,
+                        "missing": 0
+                    }
+                ]
+            },
+            {
+                "name": "milkshake glass",
+                "id": "drinkingglass_shake",
+                "category": "General",
+                "max": 10,
+                "resources": [
+                    {
+                        "name": "glass",
+                        "amt": 36,
+                        "missing": 0
+                    }
+                ]
+            },
+            {
+                "name": "cocktail glass",
+                "id": "drinkingglass_cocktail",
+                "category": "General",
+                "max": 10,
+                "resources": [
+                    {
+                        "name": "glass",
+                        "amt": 36,
+                        "missing": 0
+                    }
+                ]
+            },
+            {
+                "name": "shot glass",
+                "id": "drinkingglass_shot",
+                "category": "General",
+                "max": 10,
+                "resources": [
+                    {
+                        "name": "glass",
+                        "amt": 12,
+                        "missing": 0
+                    }
+                ]
+            },
+            {
+                "name": "pint glass",
+                "id": "drinkingglass_pint",
+                "category": "General",
+                "max": 10,
+                "resources": [
+                    {
+                        "name": "glass",
+                        "amt": 144,
+                        "missing": 0
+                    }
+                ]
+            },
+            {
+                "name": "glass mug",
+                "id": "drinkingglass_mug",
+                "category": "General",
+                "max": 10,
+                "resources": [
+                    {
+                        "name": "glass",
+                        "amt": 96,
+                        "missing": 0
+                    }
+                ]
+            },
+            {
+                "name": "wine glass",
+                "id": "drinkingglass_wine",
+                "category": "General",
+                "max": 10,
+                "resources": [
+                    {
+                        "name": "glass",
+                        "amt": 60,
+                        "missing": 0
+                    }
+                ]
+            },
+            {
+                "name": "glass carafe",
+                "id": "drinkingglass_carafe",
+                "category": "General",
+                "max": 10,
+                "resources": [
+                    {
+                        "name": "glass",
+                        "amt": 60,
+                        "missing": 0
+                    }
+                ]
+            },
+            {
+                "name": "plastic pitcher",
+                "id": "drinkingglass_pitcher",
+                "category": "General",
+                "max": 10,
+                "resources": []
+            },
+            {
+                "name": "flashlight",
+                "id": "flashlight",
+                "category": "General",
+                "max": 10,
+                "resources": [
                     {
                         "name": "steel",
-                        "amt": 700,
+                        "amt": 60,
                         "missing": 0
                     },
                     {
                         "name": "glass",
-                        "amt": 50,
+                        "amt": 24,
                         "missing": 0
                     }
-                ],
-                "time": "00:10"
+                ]
             },
             {
-                "name": "Component design (scanning module)",
-                "id": "basic_sensor",
-                "category": null,
-                "max": 50,
-                "resourses": [
+                "name": "floor light",
+                "id": "floor_light",
+                "category": "General",
+                "max": 10,
+                "resources": [
                     {
                         "name": "steel",
-                        "amt": 50,
+                        "amt": 3000,
                         "missing": 0
                     },
                     {
                         "name": "glass",
-                        "amt": 20,
+                        "amt": 3300,
                         "missing": 0
                     }
-                ],
-                "time": "00:03"
+                ]
             },
             {
-                "name": "Component design (capacitor)",
-                "id": "basic_capacitor",
-                "category": null,
-                "max": 50,
-                "resourses": [
+                "name": "extinguisher",
+                "id": "extinguisher",
+                "category": "General",
+                "max": 10,
+                "resources": [
                     {
                         "name": "steel",
-                        "amt": 50,
+                        "amt": 108,
+                        "missing": 0
+                    }
+                ]
+            },
+            {
+                "name": "jar",
+                "id": "jar",
+                "category": "General",
+                "max": 10,
+                "resources": [
+                    {
+                        "name": "glass",
+                        "amt": 240,
+                        "missing": 0
+                    }
+                ]
+            },
+            {
+                "name": "radio headset",
+                "id": "radio_headset",
+                "category": "General",
+                "max": 10,
+                "resources": [
+                    {
+                        "name": "steel",
+                        "amt": 90,
+                        "missing": 0
+                    }
+                ]
+            },
+            {
+                "name": "station bounced radio",
+                "id": "radio_bounced",
+                "category": "General",
+                "max": 10,
+                "resources": [
+                    {
+                        "name": "steel",
+                        "amt": 90,
                         "missing": 0
                     },
                     {
                         "name": "glass",
-                        "amt": 50,
-                        "missing": 0
-                    }
-                ],
-                "time": "00:03"
-            },
-            {
-                "name": "Component design (micro-laser)",
-                "id": "basic_micro_laser",
-                "category": null,
-                "max": 50,
-                "resourses": [
-                    {
-                        "name": "steel",
-                        "amt": 10,
-                        "missing": 0
-                    },
-                    {
-                        "name": "glass",
-                        "amt": 20,
-                        "missing": 0
-                    }
-                ],
-                "time": "00:03"
-            },
-            {
-                "name": "Component design (micro-manipulator)",
-                "id": "micro_mani",
-                "category": null,
-                "max": 50,
-                "resourses": [
-                    {
-                        "name": "steel",
                         "amt": 30,
                         "missing": 0
                     }
-                ],
-                "time": "00:03"
+                ]
             },
             {
-                "name": "Data storage design (Design Storage Disk)",
-                "id": "design_disk",
-                "category": null,
-                "max": 50,
-                "resourses": [
+                "name": "suit cooling unit",
+                "id": "suit_cooler",
+                "category": "General",
+                "max": 3,
+                "resources": [
                     {
                         "name": "steel",
-                        "amt": 30,
+                        "amt": 18000,
                         "missing": 0
                     },
                     {
                         "name": "glass",
-                        "amt": 10,
+                        "amt": 4200,
                         "missing": 0
                     }
-                ],
-                "time": "00:10"
+                ]
             },
             {
-                "name": "Data storage design (Technology Data Storage Disk)",
-                "id": "tech_disk",
-                "category": null,
-                "max": 50,
-                "resourses": [
+                "name": "welding mask",
+                "id": "weldermask",
+                "category": "General",
+                "max": 10,
+                "resources": [
                     {
                         "name": "steel",
-                        "amt": 30,
+                        "amt": 3600,
                         "missing": 0
                     },
                     {
                         "name": "glass",
-                        "amt": 10,
+                        "amt": 1200,
                         "missing": 0
                     }
-                ],
-                "time": "00:10"
+                ]
             },
             {
-                "name": "Medical equipment prototype (Bone Clamp)",
-                "id": "bone_clamp",
-                "category": null,
-                "max": 0,
-                "resourses": [
+                "name": "steel sheets",
+                "id": "metal",
+                "category": "General",
+                "max": 10,
+                "resources": [
                     {
                         "name": "steel",
-                        "amt": 12500,
+                        "amt": 2000,
                         "missing": 0
-                    },
+                    }
+                ]
+            },
+            {
+                "name": "glass sheets",
+                "id": "glass",
+                "category": "General",
+                "max": 10,
+                "resources": [
                     {
                         "name": "glass",
-                        "amt": 7500,
-                        "missing": 0
-                    },
-                    {
-                        "name": "silver",
-                        "amt": 2500,
-                        "missing": 1
-                    }
-                ],
-                "time": "00:10"
-            },
-            {
-                "name": "Medical equipment prototype (health analyzer)",
-                "id": "medical_analyzer",
-                "category": null,
-                "max": 50,
-                "resourses": [
-                    {
-                        "name": "steel",
-                        "amt": 500,
-                        "missing": 0
-                    },
-                    {
-                        "name": "glass",
-                        "amt": 500,
+                        "amt": 2000,
                         "missing": 0
                     }
-                ],
-                "time": "00:10"
+                ]
             },
             {
-                "name": "Medical equipment prototype (advanced roller bed)",
-                "id": "roller_bed",
-                "category": null,
-                "max": 0,
-                "resourses": [
+                "name": "reinforced glass sheets",
+                "id": "rglass",
+                "category": "General",
+                "max": 10,
+                "resources": [
                     {
                         "name": "steel",
-                        "amt": 4000,
+                        "amt": 1000,
                         "missing": 0
                     },
                     {
                         "name": "glass",
                         "amt": 2000,
                         "missing": 0
-                    },
-                    {
-                        "name": "phoron",
-                        "amt": 2000,
-                        "missing": 1
                     }
-                ],
-                "time": "00:10"
+                ]
             },
             {
-                "name": "Medical equipment prototype (SleeveMate 3700)",
-                "id": "sleevemate",
-                "category": null,
-                "max": 25,
-                "resourses": [
+                "name": "metal rods",
+                "id": "rods",
+                "category": "General",
+                "max": 10,
+                "resources": [
                     {
                         "name": "steel",
-                        "amt": 4000,
+                        "amt": 1200,
+                        "missing": 0
+                    }
+                ]
+            },
+            {
+                "name": "spray bottle",
+                "id": "spraybottle",
+                "category": "General",
+                "max": 10,
+                "resources": [
+                    {
+                        "name": "steel",
+                        "amt": 360,
                         "missing": 0
                     },
                     {
                         "name": "glass",
-                        "amt": 4000,
+                        "amt": 360,
                         "missing": 0
                     }
-                ],
-                "time": "00:10"
+                ]
+            },
+            {
+                "name": "kitchen knife",
+                "id": "knife",
+                "category": "General",
+                "max": 10,
+                "resources": [
+                    {
+                        "name": "steel",
+                        "amt": 360,
+                        "missing": 0
+                    }
+                ]
+            },
+            {
+                "name": "tape recorder",
+                "id": "taperecorder",
+                "category": "General",
+                "max": 10,
+                "resources": [
+                    {
+                        "name": "steel",
+                        "amt": 72,
+                        "missing": 0
+                    },
+                    {
+                        "name": "glass",
+                        "amt": 36,
+                        "missing": 0
+                    }
+                ]
+            },
+            {
+                "name": "light tube",
+                "id": "tube",
+                "category": "General",
+                "max": 10,
+                "resources": [
+                    {
+                        "name": "glass",
+                        "amt": 120,
+                        "missing": 0
+                    }
+                ]
+            },
+            {
+                "name": "light bulb",
+                "id": "bulb",
+                "category": "General",
+                "max": 10,
+                "resources": [
+                    {
+                        "name": "glass",
+                        "amt": 120,
+                        "missing": 0
+                    }
+                ]
+            },
+            {
+                "name": "glass ashtray",
+                "id": "ashtray_glass",
+                "category": "General",
+                "max": 10,
+                "resources": [
+                    {
+                        "name": "glass",
+                        "amt": 240,
+                        "missing": 0
+                    }
+                ]
+            },
+            {
+                "name": "welding goggles",
+                "id": "weldinggoggles",
+                "category": "General",
+                "max": 10,
+                "resources": [
+                    {
+                        "name": "steel",
+                        "amt": 1800,
+                        "missing": 0
+                    },
+                    {
+                        "name": "glass",
+                        "amt": 1200,
+                        "missing": 0
+                    }
+                ]
+            },
+            {
+                "name": "maglight",
+                "id": "maglight",
+                "category": "General",
+                "max": 10,
+                "resources": [
+                    {
+                        "name": "steel",
+                        "amt": 240,
+                        "missing": 0
+                    },
+                    {
+                        "name": "glass",
+                        "amt": 60,
+                        "missing": 0
+                    }
+                ]
+            },
+            {
+                "name": "Holo-collar",
+                "id": "holocollar",
+                "category": "General",
+                "max": 10,
+                "resources": [
+                    {
+                        "name": "steel",
+                        "amt": 60,
+                        "missing": 0
+                    }
+                ]
+            },
+            {
+                "name": "metamorphic glass",
+                "id": "metaglass",
+                "category": "General",
+                "max": 10,
+                "resources": [
+                    {
+                        "name": "glass",
+                        "amt": 600,
+                        "missing": 0
+                    }
+                ]
             }
         ],
-        "category": null,
+        "category": "General",
         "categories": [
+            "Engineering",
             "Arms and Ammunition",
             "Devices and Components",
-            "Engineering",
             "General",
             "Medical",
             "Tools"
@@ -283,14 +535,14 @@
             {
                 "id": "steel",
                 "name": "steel",
-                "amt": 10500,
-                "max": 25000
+                "amt": 65000,
+                "max": 75000
             },
             {
                 "id": "glass",
                 "name": "glass",
-                "amt": 8000,
-                "max": 25000
+                "amt": 37500,
+                "max": 37500
             }
         ]
     }

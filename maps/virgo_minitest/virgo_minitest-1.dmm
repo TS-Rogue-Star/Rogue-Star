@@ -3336,6 +3336,10 @@
 /obj/machinery/cryopod/robot,
 /turf/simulated/floor/tiled,
 /area/bridge)
+"nZ" = (
+/obj/machinery/partslathe,
+/turf/simulated/floor/tiled,
+/area/bridge)
 "oU" = (
 /obj/machinery/rnd/production/circuit_imprinter,
 /turf/simulated/floor/tiled,
@@ -3535,6 +3539,10 @@
 /obj/machinery/rnd/production/protolathe{
 	consoleless_interface = 1
 	},
+/turf/simulated/floor/tiled,
+/area/bridge)
+"Sp" = (
+/obj/machinery/autolathe,
 /turf/simulated/floor/tiled,
 /area/bridge)
 "SN" = (
@@ -5921,7 +5929,7 @@ gk
 gf
 MH
 gf
-gf
+Sp
 gy
 gf
 gf
@@ -6125,7 +6133,7 @@ gm
 gf
 gt
 gf
-gf
+nZ
 gx
 gA
 hp
