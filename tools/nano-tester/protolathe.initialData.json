@@ -1,8 +1,8 @@
 {
     "config": {
-        "title": "Autolathe UI",
+        "title": "Protolathe UI",
         "srcObject": {
-            "name": "The autolathe"
+            "name": "The protolathe"
         },
         "stateKey": "default",
         "status": 2,
@@ -15,31 +15,7 @@
         }
     },
     "data": {
-        "build_status": "IDLE",
-        "build_error": null,
-        "current": {
-            "name" : "Wirecutters",
-            "builtperc": 30,
-            "qty": 1
-        },
-        "builtperc": 30,
-        "queue": [
-            {
-                "name": "Wirecutters",
-                "qty": 1,
-                "can_build": 1
-            },
-            {
-                "name": "Steel sheets",
-                "qty": 20,
-                "can_build": 1
-            },
-            {
-                "name": "Compressed matter cartridge",
-                "qty": 1,
-                "can_build": 0
-            }
-        ],
+        "queue": [],
         "buildable": [
             {
                 "name": "Component design (matter bin)",
@@ -272,26 +248,92 @@
         ],
         "category": null,
         "categories": [
-            "Arms and Ammunition",
-            "Devices and Components",
-            "Engineering",
-            "General",
-            "Medical",
-            "Tools"
+            "Misc"
         ],
+        "materials_status": null,
+        "materials_amount": "200000 / Unlimited (remote)",
         "materials": [
             {
-                "id": "steel",
-                "name": "steel",
-                "amt": 10500,
-                "max": 25000
+                "mat": "steel",
+                "display": "steel",
+                "amt": 100000,
+                "max": -1,
+                "percent": 0
             },
             {
-                "id": "glass",
-                "name": "glass",
-                "amt": 8000,
-                "max": 25000
+                "mat": "glass",
+                "display": "glass",
+                "amt": 100000,
+                "max": -1,
+                "percent": 0
+            },
+            {
+                "mat": "plastic",
+                "display": "plastic",
+                "amt": 0,
+                "max": -1,
+                "percent": 0
+            },
+            {
+                "mat": "gold",
+                "display": "gold",
+                "amt": 0,
+                "max": -1,
+                "percent": 0
+            },
+            {
+                "mat": "silver",
+                "display": "silver",
+                "amt": 0,
+                "max": -1,
+                "percent": 0
+            },
+            {
+                "mat": "osmium",
+                "display": "osmium",
+                "amt": 0,
+                "max": -1,
+                "percent": 0
+            },
+            {
+                "mat": "lead",
+                "display": "lead",
+                "amt": 0,
+                "max": -1,
+                "percent": 0
+            },
+            {
+                "mat": "phoron",
+                "display": "phoron",
+                "amt": 0,
+                "max": -1,
+                "percent": 0
+            },
+            {
+                "mat": "uranium",
+                "display": "uranium",
+                "amt": 0,
+                "max": -1,
+                "percent": 0
+            },
+            {
+                "mat": "diamond",
+                "display": "diamond",
+                "amt": 0,
+                "max": -1,
+                "percent": 0
+            },
+            {
+                "mat": "titanium",
+                "display": "titanium",
+                "amt": 0,
+                "max": -1,
+                "percent": 0
             }
-        ]
+        ],
+        "maxres": -1,
+        "chemicals": [],
+        "totalchems": 0,
+        "maxchems": 120
     }
 }

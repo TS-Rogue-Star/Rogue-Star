@@ -19,7 +19,7 @@ var config = {
 var templateData = {
   layout: "layout_default.tmpl",
   designBuildOptions: "design_build_options.tmpl",
-  main: "techfab.tmpl"
+  main: "autolathe.tmpl"
 };
 
 // In BYOND everything is sent to the client's byond cache, so its all in one flat directory.
@@ -33,6 +33,11 @@ const extFolderMapping = {
   ".js": path.join(process.cwd(), config.dir, "js"),
   ".css": path.join(process.cwd(), config.dir, "css"),  
   ".tmpl": path.join(process.cwd(), config.dir, "templates")
+};
+
+// For self linking.  In current nanoui code this is always just this.
+var urlParameters = {
+  "src": "ref11223344"
 };
 
 // Read the shipped index.html as a doT template.
@@ -50,6 +55,7 @@ var server = http.createServer( function(request, response) {
     response.writeHead(200, {"Content-Type": "text/html"});
     response.write(genIndexHtml({
       initialDataJson: JSON.stringify(initialData),
+      urlParametersJson: JSON.stringify(urlParameters),
       templateDataJson: JSON.stringify(templateData)
     }));
     response.end();

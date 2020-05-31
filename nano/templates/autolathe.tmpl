@@ -1,0 +1,87 @@
+<div class="centerize-container">
+	<div class="centerize-content">
+		
+		{{for data.materials}}
+			{{:helper.displayBar(value.amt, 0, value.max, "capitalize", (value.name + ": " + helper.formatNumber(value.amt) + " / " + helper.formatNumber(value.max) ))}}
+		{{/for}}
+	</div>
+	<div class="clearfix"></div>
+	<div class="centerize-content">
+		<span class="nowrap">Status: {{:data.build_status}}</span>	&nbsp; 
+		<a class="white" style="float: right;" onclick="$('#designs').toggle();$('queue').toggle();">Queue ({{:data.queue.length}})</a>
+		<form method='GET' style="display: inline-block">
+			<input type='hidden' name='src' value='{{:$("body").data("urlParameters").src}}'> <!-- Super Hack Alpha -->
+			<input type='text' id='search' name='search' value="{{>data.filtertext}">
+			<input type='submit' name='' value='Search'>
+		</form>
+	</div>
+</div>
+<hr style="width: 90%;">
+
+
+<div id="designs">
+	<div class="centerize-container">
+		<div class="centerize-content">
+			{{if data.categories}}
+				{{:helper.link("All", null, {'category' : ""}, data.category ? null : 'selected')}}
+			{{/if}}
+			{{for data.categories}}
+				{{:helper.link(value, null, {'category' : value}, value == data.category ? 'selected' : null)}}
+			{{empty}}
+			There are no known designs
+			{{/for}}
+		</div>
+	</div>
+	<hr style="width: 90%;">
+	<table>
+		<style>.link{float: none; display: inline-block;}</style>
+	{{for data.buildable}}
+		<tr>
+			<td><span class='design {{>value.id}}-south'></span></td>
+			<td>{{:value.name}}</td>
+			<td>
+				{{for value.resourses:rsc:idx}}{{if idx > 0}}, {{/if}}<span {{if rsc.missing}} class='bad'{{/if}}>{{:rsc.amt}} {{>rsc.name}}</span>{{/for}}
+			</td>
+			<td class="nowrap">	
+				{{:helper.link("x1",       null, {'build' : value.id, 'amount': 1},  value.max >= 1 ? null : 'disabled')}}
+				{{:helper.link("x5",       null, {'build' : value.id, 'amount': 5},  value.max >= 5 ? null : 'disabled')}}
+				{{:helper.link("x10",      null, {'build' : value.id, 'amount': 10}, value.max >= 10 ? null : 'disabled')}}
+			</td>
+		</tr>
+	{{/for}}
+	</table>
+</div>
+<div id="queue">
+	<div class="item">
+		<b>Queue contains:</b>
+	</div>
+	{{if data.current}}
+		<div class="item">
+			<div class="itemLabelWide">
+				<b>Now: {{:data.current.name}}</b> ({{:data.builtperc}}% ready)
+			</div>
+			<div class="itemContentMedium">
+				{{:helper.link('Cancel', null, {'remove' : 1})}}
+			</div>
+		</div>
+		{{for data.queue}}
+			<div class="item">
+			<div class="itemLabelWide">
+				{{:index + 2}}: {{:value.name}}{{if value.qty > 1}} (x{{:value.qty}}){{/if}}
+			</div>
+			<div class="itemContentMedium">
+				{{:helper.link('Remove', null, {'remove' : index + 2})}}
+			</div>
+		{{empty}}
+			<div class="item">
+				The queue is empty
+			</div>
+		{{/for}}
+	{{else}}
+		<div class="item">
+			Nothing
+		</div>
+	{{/if}}
+	
+</div>
+

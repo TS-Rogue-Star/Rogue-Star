@@ -76,10 +76,9 @@
 	var/list/current = queue.len ? queue[1] : null
 	if(current)
 		var/datum/design/current_design = current[QUEUE_DESIGN]
-		data["current"] = list(
-			"name" = current_design.name,
-			"builtperc" = round((progress / current_design.time) * 100),
-			"qty" = current[QUEUE_QTY])
+		data["current"] = list("name" = current_design.name, "qty" = current[QUEUE_QTY])
+		data["builtperc"] = round((progress / current_design.time) * 100)
+	data["filtertext"] = filtertext
 	data["queue"] = get_ui_data_queue()
 	data["buildable"] = get_ui_data_build_options()
 	data["category"] =  current_category

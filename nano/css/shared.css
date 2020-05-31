@@ -8,6 +8,28 @@ body {
     background: #272727;
 }
 
+/** Standard clearfix. */
+.clearfix::after {
+    display: block;
+    content: "";
+    clear: both;
+}
+
+.centerize-container {
+    text-align: center;
+}
+.centerize-content {
+    display: inline-block;
+}
+
+.capitalize {
+    text-transform: capitalize;
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
 #uiNoScript {
     position: fixed;
     top: 50%;
