@@ -313,7 +313,7 @@ var/list/all_maps = list()
 	// Auto-center the map if needed (Guess based on maxx/maxy)
 	if (holomap_offset_x < 0)
 		holomap_offset_x = ((HOLOMAP_ICON_SIZE - world.maxx) / 2)
-	if (holomap_offset_x < 0)
+	if (holomap_offset_y < 0)
 		holomap_offset_y = ((HOLOMAP_ICON_SIZE - world.maxy) / 2)
 	// Assign them to the map lists
 	LIST_NUMERIC_SET(map.holomap_offset_x, z, holomap_offset_x)
