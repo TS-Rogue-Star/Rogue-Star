@@ -33,6 +33,11 @@ GLOBAL_LIST_EMPTY(closet_appearances)
 var/global/list/poster_designs = list()
 var/global/list/NT_poster_designs = list()
 
+// Holomaps
+var/global/list/holomap_markers = list()
+var/global/list/holomap_chips = list()
+var/global/list/holomap_cache = list()
+
 //Preferences stuff
 	//Hairstyles
 var/global/list/hair_styles_list = list()			//stores /datum/sprite_accessory/hair indexed by name

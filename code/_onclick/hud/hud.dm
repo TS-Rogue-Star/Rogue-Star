@@ -14,8 +14,7 @@ var/list/global_huds = list(
 		global_hud.thermal,
 		global_hud.meson,
 		global_hud.science,
-		global_hud.material,
-		global_hud.holomap
+		global_hud.material
 		)
 
 /datum/hud/var/obj/screen/grab_intent
@@ -36,7 +35,6 @@ var/list/global_huds = list(
 	var/obj/screen/meson
 	var/obj/screen/science
 	var/obj/screen/material
-	var/obj/screen/holomap
 
 /datum/global_hud/proc/setup_overlay(var/icon_state)
 	var/obj/screen/screen = new /obj/screen()
@@ -92,18 +90,6 @@ var/list/global_huds = list(
 	meson = setup_overlay("meson_hud")
 	science = setup_overlay("science_hud")
 	material = setup_overlay("material_hud")
-
-	// The holomap screen object is actually totally invisible.
-	// Station maps work by setting it as an images location before sending to client, not
-	// actually changing the icon or icon state of the screen object itself!
-	// Why do they work this way? I don't know really, that is how /vg designed them, but since they DO
-	// work this way, we can take advantage of their immutability by making them part of
-	// the global_hud (something we have and /vg doesn't) instead of an instance per mob.
-	holomap = new /obj/screen()
-	holomap.name = "holomap"
-	holomap.icon = null
-	holomap.screen_loc = ui_holomap
-	holomap.mouse_opacity = 0
 
 	var/obj/screen/O
 	var/i
@@ -194,6 +180,8 @@ var/list/global_huds = list(
 	var/icon/ui_style
 	var/ui_color
 	var/ui_alpha
+
+	var/obj/screen/holomap/holomap_obj
 	
 	var/list/minihuds = list()
 
@@ -220,6 +208,7 @@ datum/hud/New(mob/owner)
 	adding = null
 	other = null
 	hotkeybuttons = null
+	holomap_obj = null
 //	item_action_list = null // ?
 	mymob = null
 	qdel_null(minihuds)
@@ -313,13 +302,23 @@ datum/hud/New(mob/owner)
 /datum/hud/proc/instantiate()
 	if(!ismob(mymob))
 		return 0
-	
+
 	mymob.create_mob_hud(src)
 
 	persistant_inventory_update()
 	mymob.reload_fullscreen() // Reload any fullscreen overlays this mob has.
 	mymob.update_action_buttons()
 	reorganize_alerts()
+
+	holomap_obj = new /obj/screen/holomap
+	holomap_obj.name = "holomap"
+	holomap_obj.icon = null
+	holomap_obj.icon_state = ""
+	holomap_obj.screen_loc = "SOUTH,WEST"
+	holomap_obj.mouse_opacity = 0
+	holomap_obj.alpha = 255
+
+	mymob.client?.screen += src.holomap_obj
 
 /mob/proc/create_mob_hud(datum/hud/HUD, apply_to_client = TRUE)
 	if(!client)

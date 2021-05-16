@@ -676,3 +676,18 @@
 		holder.screen -= src
 		holder = null
 	return ..()
+
+/obj/screen/holomap
+	icon = 'icons/480x480.dmi'
+	icon_state = "blank"
+/*
+/obj/screen/holomap/Click(location,control,params)
+	var/obj/structure/deathsquad_gravpult/G = locate() in get_turf(usr)
+	if (!G) return
+	var/list/params_list = params2list(params)
+	if (params_list.len)
+		var/new_aim = clamp(text2num(params_list["icon-y"]), 0, 480)
+		if (new_aim>6)
+			G.aim = new_aim
+			G.update_aim()
+*/

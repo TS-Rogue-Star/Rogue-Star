@@ -109,12 +109,11 @@
 	// TODO - This part!! ~Leshana
 	if(isliving(user) && anchored && !(stat & (NOPOWER|BROKEN)))
 		if(user.client)
-			holomap_datum.station_map.loc = global_hud.holomap  // Put the image on the holomap hud
+			holomap_datum.station_map.loc = user.hud_used.holomap_obj  // Put the image on the holomap hud
 			holomap_datum.station_map.alpha = 0 // Set to transparent so we can fade in
 			animate(holomap_datum.station_map, alpha = 255, time = 5, easing = LINEAR_EASING)
 			flick("station_map_activate", src)
 			// Wait, if wea re not modifying the holomap_obj... can't it be part of the global hud?
-			user.client.screen |= global_hud.holomap // TODO - HACK! This should be there permenently really.
 			user.client.images |= holomap_datum.station_map
 
 			watching_mob = user
@@ -241,9 +240,29 @@
 	origin_tech = list(TECH_DATA = 3, TECH_ENGINEERING = 2)
 	req_components = list()
 
-// TODO
-// //Portable holomaps, currently AI/Borg/MoMMI only
+/datum/holomap_marker
+	var/x
+	var/y
+	var/z
+	var/offset_x = -8
+	var/offset_y = -8
+	var/filter
+	var/id // used for icon_state of the marker on maps
+	var/icon = 'icons/holomap_markers.dmi'
+	var/color //used by path rune markers
 
-// TODO
-// OHHHH YEAH - STRATEGIC HOLOMAP! NICE!
-// It will need to wait until later tho.
+/obj/effect/landmark/holomarker
+	delete_me = TRUE
+
+	var/filter = HOLOMAP_FILTER_STATIONMAP
+	var/id = "generic"
+
+/obj/effect/landmark/holomarker/Initialize()
+	. = ..()
+	var/datum/holomap_marker/holomarker = new()
+	holomarker.id = id
+	holomarker.filter = filter
+	holomarker.x = src.x
+	holomarker.y = src.y
+	holomarker.z = src.z
+	holomap_markers["[id]_\ref[src]"] = holomarker
