@@ -65,11 +65,20 @@
 	..()
 	if(enables_planes)
 		user.recalculate_vis()
+	for(var/ac in accessories)
+		var/obj/item/O = ac
+		if(O.action) // aka it's attached, not just in a storage
+			O.action.Grant(user)
+
 
 /obj/item/clothing/dropped(var/mob/user)
 	..()
 	if(enables_planes)
 		user.recalculate_vis()
+	for(var/ac in accessories)
+		var/obj/item/O = ac
+		if(O.action) // aka it's attached, not just in a storage
+			O.action.Remove(user)
 
 //BS12: Species-restricted clothing check.
 /obj/item/clothing/mob_can_equip(M as mob, slot, disable_warning = FALSE)

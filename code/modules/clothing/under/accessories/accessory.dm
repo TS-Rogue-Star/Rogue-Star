@@ -85,6 +85,8 @@
 	if(user)
 		to_chat(user, "<span class='notice'>You attach \the [src] to \the [has_suit].</span>")
 		add_fingerprint(user)
+		if(action)
+			action.Grant(user)
 
 /obj/item/clothing/accessory/proc/on_removed(var/mob/user)
 	if(!has_suit)
@@ -94,6 +96,8 @@
 	if(user)
 		usr.put_in_hands(src)
 		add_fingerprint(user)
+		if(action)
+			action.Remove(user)
 	else if(get_turf(src))		//We actually exist in space
 		forceMove(get_turf(src))
 
@@ -106,6 +110,16 @@
 	if(has_suit)
 		return	//we aren't an object on the ground so don't call parent
 	..()
+
+/datum/action/item_action/accessory
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING|AB_CHECK_ALIVE
+
+/datum/action/item_action/accessory/CheckRemoval(mob/living/user)
+	var/obj/item/clothing/accessory/ac = target
+	if(!istype(target) || user != ac.has_suit?.loc)
+		return ..()
+	else
+		return FALSE
 
 /obj/item/clothing/accessory/tie
 	name = "blue tie"
