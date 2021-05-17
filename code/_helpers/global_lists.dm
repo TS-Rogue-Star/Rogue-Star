@@ -36,7 +36,6 @@ var/global/list/NT_poster_designs = list()
 // Holomaps
 var/global/list/holomap_markers = list()
 var/global/list/holomap_chips = list()
-var/global/list/holomap_cache = list()
 
 //Preferences stuff
 	//Hairstyles

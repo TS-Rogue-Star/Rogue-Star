@@ -311,12 +311,6 @@ datum/hud/New(mob/owner)
 	reorganize_alerts()
 
 	holomap_obj = new /obj/screen/holomap
-	holomap_obj.name = "holomap"
-	holomap_obj.icon = null
-	holomap_obj.icon_state = ""
-	holomap_obj.screen_loc = "SOUTH,WEST"
-	holomap_obj.mouse_opacity = 0
-	holomap_obj.alpha = 255
 
 	mymob.client?.screen += src.holomap_obj
 

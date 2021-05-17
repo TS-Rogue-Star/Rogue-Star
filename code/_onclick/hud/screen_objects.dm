@@ -678,8 +678,14 @@
 	return ..()
 
 /obj/screen/holomap
-	icon = 'icons/480x480.dmi'
-	icon_state = "blank"
+	name = "holomap"
+	icon = null
+	icon_state = ""
+	screen_loc = "SOUTH,WEST"
+	mouse_opacity = 0
+	alpha = 255
+	plane = PLANE_HOLOMAP
+
 /*
 /obj/screen/holomap/Click(location,control,params)
 	var/obj/structure/deathsquad_gravpult/G = locate() in get_turf(usr)

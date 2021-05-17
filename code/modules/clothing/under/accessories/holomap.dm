@@ -18,7 +18,13 @@
 	var/holomap_color = null
 	var/holomap_filter = HOLOMAP_FILTER_STATIONMAP
 
-	var/list/prefix_update = list()
+	var/list/prefix_update_head
+	var/list/prefix_update_rig
+
+	// These are local because they are different for every holochip.
+	// The maps and icons are all pixel_x and pixel_y'd so we're in the center.
+	var/list/map_image_cache = list()
+	var/list/icon_image_cache = list()
 
 	action_button_name = "Toggle Holomap"
 
@@ -29,14 +35,12 @@
 	holomap_filter = HOLOMAP_FILTER_DEATHSQUAD
 	holomap_color = "#0B74B4"
 
-
 /obj/item/clothing/accessory/holomap_chip/operative
 	name = "nuclear operative holomap chip"
 	icon_state = "holochip_op"
 	marker_prefix = "op"
 	holomap_filter = HOLOMAP_FILTER_NUKEOPS
 	holomap_color = "#13B40B"
-
 
 /obj/item/clothing/accessory/holomap_chip/ert
 	name = "emergency response team holomap chip"
@@ -45,17 +49,29 @@
 	holomap_filter = HOLOMAP_FILTER_ERT
 	holomap_color = "#5FFF28"
 
-	prefix_update = list(
-		"/obj/item/clothing/head/helmet/space/ert/commander" = "ertc",
-		"/obj/item/clothing/head/helmet/space/ert/security" = "erts",
-		"/obj/item/clothing/head/helmet/space/ert/engineer" = "erte",
-		"/obj/item/clothing/head/helmet/space/ert/medical" = "ertm",
-		)
+	prefix_update_head = list(
+		"/obj/item/clothing/head/helmet/ert/command" = "ertc",
+		"/obj/item/clothing/head/helmet/ert/security" = "erts",
+		"/obj/item/clothing/head/helmet/ert/engineer" = "erte",
+		"/obj/item/clothing/head/helmet/ert/medical" = "ertm",
+	)
+	
+	prefix_update_rig = list(
+		"/obj/item/weapon/rig/ert" = "ertc",
+		"/obj/item/weapon/rig/ert/security" = "erts",
+		"/obj/item/weapon/rig/ert/engineer" = "erte",
+		"/obj/item/weapon/rig/ert/medical" = "ertm"
+	)
 
 /obj/item/clothing/accessory/holomap_chip/Initialize()
 	. = ..()
-	holomap_chips[src] = get_turf(src)
+	holomap_chips += src
 	base_prefix = marker_prefix
+
+	var/image/ping = image('icons/effects/effects.dmi',icon_state = "holomap_ping")
+	ping.plane = PLANE_HOLOMAP
+	ping.blend_mode = BLEND_ADD
+	icon_image_cache["p"] = ping
 
 	// This would be done automatically on pickup, however
 	// we might start attached to a suit and never get picked up
@@ -68,11 +84,10 @@
 	deactivate_holomap()
 	STOP_PROCESSING(SSobj, src)
 
-	for(var/cacheIcon in holomap_cache)
-		if(findtext(cacheIcon, "\ref[src]"))
-			holomap_cache -= cacheIcon
-	
-    return ..()
+	map_image_cache.Cut()
+	icon_image_cache.Cut()
+
+	return ..()
 
 /obj/item/clothing/accessory/holomap_chip/ui_action_click()
 	togglemap()
@@ -143,11 +158,16 @@
 	holomap_images.len = 0
 
 	var/image/bgmap
-	var/holomap_bgmap = "background_\ref[src]_[T.z]"
+	var/holomap_bgmap = "[T.z]"
 
-	if(!(holomap_bgmap in holomap_cache))
+	// The main map part is cached here, with the markers (which are static, so won't be changing)
+	if(!(holomap_bgmap in map_image_cache))
 		var/image/tmp = image(SSholomaps.holoMiniMaps[T.z])
 		tmp.appearance_flags = PIXEL_SCALE
+		tmp.plane = PLANE_HOLOMAP
+		tmp.layer = HUD_LAYER
+		tmp.color = holomap_color
+		tmp.loc = activator.hud_used.holomap_obj // Attaches to the user's hud element, but not presented until this is in client.images
 
 		for(var/marker in holomap_markers)
 			var/datum/holomap_marker/holomarker = holomap_markers[marker]
@@ -163,45 +183,51 @@
 					markerImage.pixel_x = holomarker.x+holomarker.offset_x
 					markerImage.pixel_y = holomarker.y+holomarker.offset_y
 				tmp.overlays += markerImage
+		
+		map_image_cache[holomap_bgmap] = tmp
 
-		holomap_cache[holomap_bgmap] = tmp
+	bgmap = map_image_cache[holomap_bgmap]
+	
 
-	bgmap = holomap_cache[holomap_bgmap]
-	bgmap.plane = PLANE_PLAYER_HUD
-	bgmap.layer = HUD_LAYER
-	bgmap.color = holomap_color
-	bgmap.loc = activator.hud_used.holomap_obj
-
-	//Prevents the map background from sliding across the screen when the map is enabled for the first time.
+	// Prevents the map background from sliding across the screen when the map is enabled for the first time.
 	if(!bgmap.pixel_x)
 		bgmap.pixel_x = -1*T.x + activator.client.view*WORLD_ICON_SIZE + 16*(WORLD_ICON_SIZE/32)
 	if(!bgmap.pixel_y)
 		bgmap.pixel_y = -1*T.y + activator.client.view*WORLD_ICON_SIZE + 17*(WORLD_ICON_SIZE/32)
 
 
-			
+	// The holomap moves around, the user is always in the center. This slides the holomap.
 	if(using_map.holomap_offset_x.len >= T.z)
 		animate(bgmap,pixel_x = -1*T.x - using_map.holomap_offset_x[T.z] + activator.client.view*WORLD_ICON_SIZE + 16*(WORLD_ICON_SIZE/32), pixel_y = -1*T.y - using_map.holomap_offset_y[T.z] + activator.client.view*WORLD_ICON_SIZE + 17*(WORLD_ICON_SIZE/32), time = 5, easing = LINEAR_EASING)
 	else
 		animate(bgmap,pixel_x = -1*T.x + activator.client.view*WORLD_ICON_SIZE + 16*(WORLD_ICON_SIZE/32), pixel_y = -1*T.y + activator.client.view*WORLD_ICON_SIZE + 17*(WORLD_ICON_SIZE/32), time = 5, easing = LINEAR_EASING)
 	holomap_images += bgmap
 
+	// Populate holomap chip icons
 	for(var/obj/item/clothing/accessory/holomap_chip/HC in holomap_chips)
 		if(HC.holomap_filter != holomap_filter)
 			continue
 		var/obj/item/clothing/under/U = HC.has_suit
 		var/mob_indicator = HOLOMAP_ERROR
 		var/turf/TU = get_turf(HC)
+		
+		// Marker not on a turf
 		if(!TU)
 			continue
+		
+		// We're the marker
 		if(HC == src)
 			mob_indicator = HOLOMAP_YOU
+		
+		// The marker is held by a borg
 		else if(isrobot(HC.loc) && (TU.z == T.z))
 			var/mob/living/silicon/robot/R = HC.loc
 			if(R.stat == DEAD)
 				mob_indicator = HOLOMAP_DEAD
 			else
 				mob_indicator = HOLOMAP_OTHER
+		
+		// The marker is worn by a human
 		else if(U && (TU.z == T.z) && ishuman(U.loc))
 			var/mob/living/carbon/human/H = U.loc
 			if(H.get_equipped_item(slot_w_uniform) == U)
@@ -209,31 +235,38 @@
 					mob_indicator = HOLOMAP_DEAD
 				else
 					mob_indicator = HOLOMAP_OTHER
+			// It's on a uniform but not worn
 			else
 				continue
+		
+		// It's not attached to anything useful
 		else
 			continue
 
+		
+		// Ask it to update it's icon based on helmet (or whatever)
 		HC.update_marker()
 
+		// Generate the icon and apply it to the list of images to show the client
 		if(mob_indicator != HOLOMAP_ERROR)
 
-			var/holomap_marker = "marker_\ref[src]_\ref[HC]_[HC.marker_prefix]_[mob_indicator]"
+			// This is so specific because the icons are pixel_x and pixel_y only relative to OUR view of where THEY are relative to us
+			var/holomap_marker = "\ref[HC]_[HC.marker_prefix]_[mob_indicator]"
 
-			if(!(holomap_marker in holomap_cache))
-				holomap_cache[holomap_marker] = image('icons/holomap_markers.dmi',"[HC.marker_prefix][mob_indicator]")
+			if(!(holomap_marker in icon_image_cache))
+				icon_image_cache[holomap_marker] = image('icons/holomap_markers.dmi',"[HC.marker_prefix][mob_indicator]")
 
-			var/image/I = holomap_cache[holomap_marker]
-			I.plane = PLANE_PLAYER_HUD
+			var/image/I = icon_image_cache[holomap_marker]
+			I.plane = PLANE_HOLOMAP_ICONS
+			
+			handle_marker(I,T,TU)
+			
 			if(mob_indicator == HOLOMAP_YOU)
-				I.layer = HUD_LAYER+0.2
+				I.layer = HUD_LAYER-0.1
+				
 			else
 				I.layer = HUD_LAYER+0.1
 			I.loc = activator.hud_used.holomap_obj
-
-			//if a new marker is created, we immediately set its offset instead of letting animate() take care of it, so it doesn't slide accross the screen.
-
-			handle_marker(I,T,TU)
 
 			holomap_images += I
 
@@ -253,13 +286,13 @@
 		if(!istype(maraud,/obj/mecha/combat/marauder/series) && !istype(maraud,/obj/mecha/combat/marauder/mauler) && (T.z == maraud.z))//ignore custom-built and syndicate ones
 			var/holomap_marker = "marker_\ref[src]_\ref[maraud]_[maraud.occupant ? 1 : 0]"
 
-			if(!(holomap_marker in holomap_cache))
+			if(!(holomap_marker in map_image_cache))
 				var/pref = "mar"
 				if (istype(maraud,/obj/mecha/combat/marauder/seraph))
 					pref = "ser"
-				holomap_cache[holomap_marker] = image('icons/holomap_markers.dmi',"[pref][maraud.occupant ? 1 : 0]")
+				map_image_cache[holomap_marker] = image('icons/holomap_markers.dmi',"[pref][maraud.occupant ? 1 : 0]")
 
-			var/image/I = holomap_cache[holomap_marker]
+			var/image/I = map_image_cache[holomap_marker]
 			I.plane = HUD_PLANE
 			I.loc = activator.hud_used.holomap_obj
 
@@ -278,10 +311,10 @@
 		if(T.z == maul.z)
 			var/holomap_marker = "marker_\ref[src]_\ref[maul]_[maul.occupant ? 1 : 0]"
 
-			if(!(holomap_marker in holomap_cache))
-				holomap_cache[holomap_marker] = image('icons/holomap_markers.dmi',"mau[maul.occupant ? 1 : 0]")
+			if(!(holomap_marker in map_image_cache))
+				map_image_cache[holomap_marker] = image('icons/holomap_markers.dmi',"mau[maul.occupant ? 1 : 0]")
 
-			var/image/I = holomap_cache[holomap_marker]
+			var/image/I = map_image_cache[holomap_marker]
 			I.plane = HUD_PLANE
 			I.loc = activator.hud_used.holomap_obj
 
@@ -299,10 +332,10 @@
 	if(T.z == map.zMainStation)
 		var/image/bgmap
 		var/holomap_bgmap = "background_\ref[src]_[T.z]_areas"
-		if(!(holomap_bgmap in holomap_cache))
-			holomap_cache[holomap_bgmap] = image(extraMiniMaps[HOLOMAP_EXTRA_STATIONMAPAREAS+"_[map.zMainStation]"])
+		if(!(holomap_bgmap in map_image_cache))
+			map_image_cache[holomap_bgmap] = image(extraMiniMaps[HOLOMAP_EXTRA_STATIONMAPAREAS+"_[map.zMainStation]"])
 
-		bgmap = holomap_cache[holomap_bgmap]
+		bgmap = map_image_cache[holomap_bgmap]
 		bgmap.plane = HUD_PLANE
 		bgmap.layer = HUD_BASE_LAYER
 		bgmap.alpha = 127
@@ -339,13 +372,20 @@
 
 /obj/item/clothing/accessory/holomap_chip/proc/update_marker()
 	marker_prefix = base_prefix
-	if (prefix_update.len > 0)
+	if (prefix_update_head)
 		var/obj/item/clothing/under/U = has_suit
 		if(U && ishuman(U.loc))
 			var/mob/living/carbon/human/H = U.loc
 			var/obj/item/helmet = H.get_equipped_item(slot_head)
-			if(helmet && ("[helmet.type]" in prefix_update))
-				marker_prefix = prefix_update["[helmet.type]"]
+			if(helmet && ("[helmet.type]" in prefix_update_head))
+				marker_prefix = prefix_update_head["[helmet.type]"]
+	else if (prefix_update_rig)
+		var/obj/item/clothing/under/U = has_suit
+		if(U && ishuman(U.loc))
+			var/mob/living/carbon/human/H = U.loc
+			var/obj/item/weapon/rig = H.get_rig()
+			if(rig && ("[rig.type]" in prefix_update_rig))
+				marker_prefix = prefix_update_rig["[rig.type]"]
 
 /obj/item/clothing/accessory/holomap_chip/proc/handle_marker(var/image/I,var/turf/T,var/turf/TU)
 	//if a new marker is created, we immediately set its offset instead of letting animate() take care of it, so it doesn't slide accross the screen.
