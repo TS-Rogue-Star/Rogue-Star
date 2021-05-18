@@ -68,7 +68,6 @@
 		mask_icon = icon('icons/effects/64x64.dmi', "holomap_mask")
 	
 	extras_holder = new()
-	extras_holder.filters += filter(type = "alpha", icon = mask_icon)
 	
 	var/obj/screen/holomap/marker/mark = new()
 	mark.icon = 'icons/effects/64x64.dmi'
@@ -174,12 +173,16 @@
 		detach_holomap()
 		return
 
+	var/T_x = T.x // Used many times, just grab it to avoid derefs
+	var/T_y = T.y
+	var/T_z = T.z
+
 	var/obj/screen/holomap/map/bgmap
 	var/list/extras = list()
 
-	var/map_cache_key = "[T.z]"
+	var/map_cache_key = "[T_z]"
 	var/badmap = FALSE
-	if(!pinging && using_map && !(T.z in using_map.mappable_levels))
+	if(!pinging && using_map && !(T_z in using_map.mappable_levels))
 		map_cache_key = "bad"
 		badmap = TRUE
 
@@ -191,7 +194,7 @@
 		map_app.layer = HUD_LAYER
 		map_app.color = holomap_color
 
-		if(!SSholomaps.holoMiniMaps[T.z])
+		if(!SSholomaps.holoMiniMaps[T_z])
 			var/obj/screen/holomap/map/baddo = map_image_cache["bad"]
 			map_app.icon = icon(baddo.icon)
 			badmap = TRUE
@@ -202,19 +205,14 @@
 			// Apply markers
 			for(var/marker in holomap_markers)
 				var/datum/holomap_marker/holomarker = holomap_markers[marker]
-				if(holomarker.z == T.z && holomarker.filter & holomap_filter)
+				if(holomarker.z == T_z && holomarker.filter & holomap_filter)
 					var/image/markerImage = image(holomarker.icon,holomarker.id)
 					markerImage.plane = FLOAT_PLANE
 					markerImage.layer = FLOAT_LAYER
 					markerImage.appearance_flags = RESET_COLOR|PIXEL_SCALE
-					if(using_map.holomap_offset_x.len >= T.z)
-						markerImage.pixel_x = holomarker.x+holomarker.offset_x
-						markerImage.pixel_y = holomarker.y+holomarker.offset_y
-					else
-						markerImage.pixel_x = holomarker.x+holomarker.offset_x
-						markerImage.pixel_y = holomarker.y+holomarker.offset_y
-					map_app += markerImage
-		
+					markerImage.pixel_x = holomarker.x+holomarker.offset_x
+					markerImage.pixel_y = holomarker.y+holomarker.offset_y
+					map_app.overlays += markerImage
 
 			var/obj/screen/holomap/map/tmp = new()
 			tmp.appearance = map_app
@@ -223,8 +221,8 @@
 	bgmap = map_image_cache[map_cache_key]
 
 	// The holomap moves around, the user is always in the center. This slides the holomap.
-	extras_holder.pixel_x = bgmap.pixel_x = -1*T.x + bgmap.offset_x
-	extras_holder.pixel_y = bgmap.pixel_y = -1*T.y + bgmap.offset_y
+	extras_holder.pixel_x = bgmap.pixel_x = -1*T_x + bgmap.offset_x
+	extras_holder.pixel_y = bgmap.pixel_y = -1*T_y + bgmap.offset_y
 	//animate(bgmap,pixel_x = map_offset_x, pixel_y = map_offset_y, time = 5, easing = LINEAR_EASING)
 
 	// Populate holomap chip icons
@@ -244,7 +242,7 @@
 			mob_indicator = HOLOMAP_YOU
 		
 		// The marker is held by a borg
-		else if((TU.z == T.z) && isrobot(HC.loc))
+		else if((TU.z == T_z) && isrobot(HC.loc))
 			var/mob/living/silicon/robot/R = HC.loc
 			if(R.stat == DEAD)
 				mob_indicator = HOLOMAP_DEAD
@@ -252,7 +250,7 @@
 				mob_indicator = HOLOMAP_OTHER
 		
 		// The marker is worn by a human
-		else if((TU.z == T.z) && ishuman(loc))
+		else if((TU.z == T_z) && ishuman(loc))
 			var/mob/living/carbon/human/H = loc
 			if(H.stat == DEAD)
 				mob_indicator = HOLOMAP_DEAD
@@ -279,7 +277,7 @@
 				icon_image_cache[marker_cache_key] = mark
 
 			var/obj/screen/holomap/marker/mark = icon_image_cache[marker_cache_key]
-			handle_marker(mark,T,TU)
+			handle_marker(mark,TU.x,TU.y)
 			
 			if(mob_indicator == HOLOMAP_YOU)
 				mark.layer = 1 // Above the other markers
@@ -292,6 +290,7 @@
 	if(badmap)
 		extras += icon_image_cache["bad"]
 
+	extras_holder.filters = filter(type = "alpha", icon = mask_icon, x = T_x-16, y = T_y-16)
 	extras_holder.vis_contents = extras
 
 	hud_item.update(bgmap, extras_holder, badmap ? FALSE : pinging)
@@ -407,10 +406,10 @@
 			if(rig && ("[rig.type]" in prefix_update_rig))
 				marker_prefix = prefix_update_rig["[rig.type]"]
 
-/obj/item/device/mapping_unit/proc/handle_marker(var/obj/screen/holomap/marker/I,var/turf/T,var/turf/TU)
+/obj/item/device/mapping_unit/proc/handle_marker(var/obj/screen/holomap/marker/I,var/TU_x,var/TU_y)
 	//animate(I,alpha = 255, pixel_x = (TU.x-1) + I.offset_x, pixel_y = (TU.y-1) + I.offset_y, time = 5, loop = -1, easing = LINEAR_EASING)
-	I.pixel_x = (TU.x-1) + I.offset_x
-	I.pixel_y = (TU.y-1) + I.offset_y
+	I.pixel_x = (TU_x-1) + I.offset_x
+	I.pixel_y = (TU_y-1) + I.offset_y
 	//animate(alpha = 255, time = 8, loop = -1, easing = SINE_EASING)
 	animate(I, alpha = 0, time = 5, easing = SINE_EASING)
 	animate(alpha = 255, time = 2, easing = SINE_EASING)

@@ -156,11 +156,11 @@
 	lateload_z_levels = list(
 		list("Tether - Misc","Tether - Underdark","Tether - Plains"), //Stock Tether lateload maps
 		list("Offmap Ship - Talon V2"),
-		list("Asteroid Belt 1","Asteroid Belt 2"),
-		list("Desert Planet - Z1 Beach","Desert Planet - Z2 Cave"),
-		list("Remmi Aerostat - Z1 Aerostat","Remmi Aerostat - Z2 Surface"),
-		list("Debris Field - Z1 Space"),
-		list("Fuel Depot - Z1 Space")
+		//list("Asteroid Belt 1","Asteroid Belt 2"),
+		//list("Desert Planet - Z1 Beach","Desert Planet - Z2 Cave"),
+		//list("Remmi Aerostat - Z1 Aerostat","Remmi Aerostat - Z2 Surface"),
+		//list("Debris Field - Z1 Space"),
+		//list("Fuel Depot - Z1 Space")
 		)
 
 	lateload_single_pick = list(
