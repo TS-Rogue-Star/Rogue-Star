@@ -72,6 +72,7 @@
 	var/obj/screen/holomap/marker/mark = new()
 	mark.icon = 'icons/effects/64x64.dmi'
 	mark.icon_state = "holomap_none"
+	mark.layer = 5
 	icon_image_cache["bad"] = mark
 
 	var/obj/screen/holomap/map/tmp = new()
@@ -221,8 +222,10 @@
 	bgmap = map_image_cache[map_cache_key]
 
 	// The holomap moves around, the user is always in the center. This slides the holomap.
-	extras_holder.pixel_x = bgmap.pixel_x = -1*T_x + bgmap.offset_x
-	extras_holder.pixel_y = bgmap.pixel_y = -1*T_y + bgmap.offset_y
+	var/offset_x = bgmap.offset_x
+	var/offset_y = bgmap.offset_y
+	extras_holder.pixel_x = bgmap.pixel_x = -1*T_x + offset_x
+	extras_holder.pixel_y = bgmap.pixel_y = -1*T_y + offset_y
 	//animate(bgmap,pixel_x = map_offset_x, pixel_y = map_offset_y, time = 5, easing = LINEAR_EASING)
 
 	// Populate holomap chip icons
@@ -288,9 +291,12 @@
 	extra_update()
 
 	if(badmap)
+		var/obj/O = icon_image_cache["bad"]
+		O.pixel_x = T_x - offset_x
+		O.pixel_y = T_y - offset_y
 		extras += icon_image_cache["bad"]
 
-	extras_holder.filters = filter(type = "alpha", icon = mask_icon, x = T_x-16, y = T_y-16)
+	extras_holder.filters = filter(type = "alpha", icon = mask_icon, x = T_x-(offset_x*0.5), y = T_y-(offset_y*0.5))
 	extras_holder.vis_contents = extras
 
 	hud_item.update(bgmap, extras_holder, badmap ? FALSE : pinging)

@@ -678,6 +678,16 @@
 	return ..()
 
 
+/**
+ * This object holds all the on-screen elements of the mapping unit.
+ * It has a decorative frame and onscreen buttons. The map itself is drawn
+ * using a white mask and multiplying the mask against it to crop it to the
+ * size of the screen. This is not ideal, as filter() is faster, and has
+ * alpha masks, but the alpha masks it has can't be animated, so the 'ping'
+ * mode of this device isn't possible using that technique.
+ * 
+ * The markers use that technique, though, so at least there's that.
+ */
 /obj/screen/movable/holomap_holder
 	name = "gps unit"
 	icon = null
@@ -702,13 +712,18 @@
 	var/obj/screen/holomap/extras_holder/extras_holder
 
 /obj/screen/movable/holomap_holder/New()
-	mask_full = new(src)
-	mask_ping = new(src)
-	bg = new(src)
+	mask_full = new(src) // Full white square mask
+	mask_ping = new(src) // Animated 'pinging' mask
+	bg = new(src) // Background color, holds map in vis_contents, uses mult against masks
 
-	frame = new(src)
-	powbutton = new(src)
-	mapbutton = new(src)
+	frame = new(src) // Decorative frame
+	powbutton = new(src) // Clickable button
+	mapbutton = new(src) // Clickable button
+	
+	/**
+	 * The vis_contents layout is: this(frame,extras_holder,mask(bg(map)))
+	 * bg is set to BLEND_MULTIPLY against the mask to crop it.
+	 */
 	
 	mask_full.vis_contents.Add(bg)
 	mask_ping.vis_contents.Add(bg)
@@ -791,6 +806,7 @@
 
 	return TRUE
 
+// Prototype
 /obj/screen/holomap
 	plane = PLANE_HOLOMAP
 	mouse_opacity = 0
@@ -804,11 +820,15 @@
 	parent = null
 	return ..()
 
+// Holds the actual map image
 /obj/screen/holomap/map
-	name = "map display"
 	var/offset_x = 32
 	var/offset_y = 32
 
+// I really wish I could use filters for this instead of this multiplication-masking technique
+// but alpha filters can't be animated, which means I can't use them for the 'sonar ping' mode.
+// If filters start supporting animated icons in the future (for the alpha mask filter),
+// you should definitely replace these with that technique instead.
 /obj/screen/holomap/mask_full
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "holomap_mask"
@@ -828,6 +848,7 @@
 	blend_mode = BLEND_MULTIPLY
 	appearance_flags = KEEP_TOGETHER
 
+// Frame/deco components
 /obj/screen/holomap/frame
 	icon = 'icons/effects/gpshud.dmi'
 	icon_state = "frame"
@@ -873,6 +894,7 @@
 	usr << get_sfx("button")
 	return 1
 
+// Markers are 16x16, people have apparently settled on centering them on the 8,8 pixel
 /obj/screen/holomap/marker
 	icon = 'icons/holomap_markers.dmi'
 	plane = PLANE_HOLOMAP_ICONS
@@ -880,6 +902,7 @@
 	var/offset_x = -7
 	var/offset_y = -7
 
+// Holds markers in its vis_contents. It uses an alpha filter to crop them to the HUD screen size
 /obj/screen/holomap/extras_holder
 	icon = null
 	icon_state = null
