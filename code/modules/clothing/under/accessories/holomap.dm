@@ -23,27 +23,31 @@
 	var/obj/screen/movable/holomap_holder/hud_item
 	var/global/icon/mask_icon
 	var/obj/screen/holomap/extras_holder/extras_holder
+	var/hud_frame_hint
 
 /obj/item/device/mapping_unit/deathsquad
 	name = "deathsquad holomap chip"
-	//icon_state = "holochip_ds"
+	icon_state = "mapping_unit_ds"
 	marker_prefix = "ds"
 	holomap_filter = HOLOMAP_FILTER_DEATHSQUAD
 	//holomap_color = "#0B74B4"
+	hud_frame_hint = "_ds"
 
 /obj/item/device/mapping_unit/operative
 	name = "nuclear operative holomap chip"
-	//icon_state = "holochip_op"
+	icon_state = "mapping_unit_op"
 	marker_prefix = "op"
 	holomap_filter = HOLOMAP_FILTER_NUKEOPS
 	//holomap_color = "#13B40B"
+	hud_frame_hint = "_op"
 
 /obj/item/device/mapping_unit/ert
 	name = "emergency response team holomap chip"
-	//icon_state = "holochip_ert"
+	icon_state = "mapping_unit_ert"
 	marker_prefix = "ert"
 	holomap_filter = HOLOMAP_FILTER_ERT
 	//holomap_color = "#5FFF28"
+	hud_frame_hint = "_ert"
 
 	prefix_update_head = list(
 		"/obj/item/clothing/head/helmet/ert/command" = "ertc",
@@ -72,7 +76,7 @@
 	var/obj/screen/holomap/marker/mark = new()
 	mark.icon = 'icons/effects/64x64.dmi'
 	mark.icon_state = "holomap_none"
-	mark.layer = 5
+	mark.layer = 10
 	icon_image_cache["bad"] = mark
 
 	var/obj/screen/holomap/map/tmp = new()
@@ -138,7 +142,7 @@
 	if(hud_item)
 		detach_holomap()
 	hud_item = user.hud_used.holomap_obj
-	return hud_item?.attach(src)
+	return hud_item?.attach(src,hud_frame_hint)
 
 /obj/item/device/mapping_unit/proc/start_updates()
 	START_PROCESSING(SSobj, src)
@@ -278,125 +282,30 @@
 				var/obj/screen/holomap/marker/mark = new()
 				mark.icon_state = "[HC.marker_prefix][mob_indicator]"
 				icon_image_cache[marker_cache_key] = mark
+				switch(mob_indicator)
+					if(HOLOMAP_YOU)
+						mark.layer = 3 // Above the other markers
+					if(HOLOMAP_DEAD)
+						mark.layer = 2
+					else
+						mark.layer = 1
 
 			var/obj/screen/holomap/marker/mark = icon_image_cache[marker_cache_key]
 			handle_marker(mark,TU.x,TU.y)
-			
-			if(mob_indicator == HOLOMAP_YOU)
-				mark.layer = 1 // Above the other markers
 
 			extras += mark
-
-	//Additional things we might want to track
-	extra_update()
 
 	if(badmap)
 		var/obj/O = icon_image_cache["bad"]
 		O.pixel_x = T_x - offset_x
 		O.pixel_y = T_y - offset_y
-		extras += icon_image_cache["bad"]
+		extras += O
 
 	extras_holder.filters = filter(type = "alpha", icon = mask_icon, x = T_x-(offset_x*0.5), y = T_y-(offset_y*0.5))
 	extras_holder.vis_contents = extras
 
 	hud_item.update(bgmap, extras_holder, badmap ? FALSE : pinging)
 	
-
-/obj/item/device/mapping_unit/proc/extra_update()
-	return
-
-/*
-/obj/item/device/mapping_unit/deathsquad/extra_update()
-	
-	var/turf/T = get_turf(src)
-	for(var/obj/mecha/combat/marauder/maraud in mechas_list)
-		if(!istype(maraud,/obj/mecha/combat/marauder/series) && !istype(maraud,/obj/mecha/combat/marauder/mauler) && (T.z == maraud.z))//ignore custom-built and syndicate ones
-			var/holomap_marker = "marker_\ref[src]_\ref[maraud]_[maraud.occupant ? 1 : 0]"
-
-			if(!(holomap_marker in map_image_cache))
-				var/pref = "mar"
-				if (istype(maraud,/obj/mecha/combat/marauder/seraph))
-					pref = "ser"
-				map_image_cache[holomap_marker] = image('icons/holomap_markers.dmi',"[pref][maraud.occupant ? 1 : 0]")
-
-			var/image/I = map_image_cache[holomap_marker]
-			I.plane = HUD_PLANE
-			I.loc = activator.hud_used.holomap_obj
-
-			if(maraud.occupant)
-				I.layer = HUD_ABOVE_ITEM_LAYER
-			else
-				I.layer = HUD_ITEM_LAYER
-
-			handle_marker(I,T,get_turf(maraud))
-
-			holomap_images += I
-
-/obj/item/device/mapping_unit/elite/extra_update()
-	var/turf/T = get_turf(src)
-	for(var/obj/mecha/combat/marauder/mauler/maul in mechas_list)
-		if(T.z == maul.z)
-			var/holomap_marker = "marker_\ref[src]_\ref[maul]_[maul.occupant ? 1 : 0]"
-
-			if(!(holomap_marker in map_image_cache))
-				map_image_cache[holomap_marker] = image('icons/holomap_markers.dmi',"mau[maul.occupant ? 1 : 0]")
-
-			var/image/I = map_image_cache[holomap_marker]
-			I.plane = HUD_PLANE
-			I.loc = activator.hud_used.holomap_obj
-
-			if(maul.occupant)
-				I.layer = HUD_ABOVE_ITEM_LAYER
-			else
-				I.layer = HUD_ITEM_LAYER
-
-			handle_marker(I,T,get_turf(maul))
-
-			holomap_images += I
-
-/obj/item/device/mapping_unit/ert/extra_update()
-	var/turf/T = get_turf(src)
-	if(T.z == map.zMainStation)
-		var/image/bgmap
-		var/holomap_bgmap = "background_\ref[src]_[T.z]_areas"
-		if(!(holomap_bgmap in map_image_cache))
-			map_image_cache[holomap_bgmap] = image(extraMiniMaps[HOLOMAP_EXTRA_STATIONMAPAREAS+"_[map.zMainStation]"])
-
-		bgmap = map_image_cache[holomap_bgmap]
-		bgmap.plane = HUD_PLANE
-		bgmap.layer = HUD_BASE_LAYER
-		bgmap.alpha = 127
-		bgmap.loc = activator.hud_used.holomap_obj
-		bgmap.overlays.len = 0
-
-		if(!bgmap.pixel_x)
-			bgmap.pixel_x = -1*T.x
-		if(!bgmap.pixel_y)
-			bgmap.pixel_y = -1*T.y
-
-		for(var/marker in holomap_markers)
-			var/datum/holomap_marker/holomarker = holomap_markers[marker]
-			if(holomarker.z == T.z && holomarker.filter & holomap_filter)
-				var/image/markerImage = image(holomarker.icon,holomarker.id)
-				markerImage.plane = FLOAT_PLANE
-				markerImage.layer = FLOAT_LAYER
-				if(map.holomap_offset_x.len >= T.z)
-					markerImage.pixel_x = holomarker.x+holomarker.offset_x+map.holomap_offset_x[T.z]
-					markerImage.pixel_y = holomarker.y+holomarker.offset_y+map.holomap_offset_y[T.z]
-				else
-					markerImage.pixel_x = holomarker.x+holomarker.offset_x
-					markerImage.pixel_y = holomarker.y+holomarker.offset_y
-				markerImage.appearance_flags = RESET_COLOR
-				bgmap.overlays += markerImage
-
-		if(map.holomap_offset_x.len >= T.z)
-			animate(bgmap,pixel_x = -1*T.x - map.holomap_offset_x[T.z], pixel_y = -1*T.y - map.holomap_offset_y[T.z], time = 5, easing = LINEAR_EASING)
-		else
-			animate(bgmap,pixel_x = -1*T.x, pixel_y = -1*T.y, time = 5, easing = LINEAR_EASING)
-
-		holomap_images += bgmap
-*/
-
 /obj/item/device/mapping_unit/proc/update_marker()
 	marker_prefix = base_prefix
 	if (prefix_update_head)
@@ -405,17 +314,19 @@
 			var/obj/item/helmet = H.get_equipped_item(slot_head)
 			if(helmet && ("[helmet.type]" in prefix_update_head))
 				marker_prefix = prefix_update_head["[helmet.type]"]
-	else if (prefix_update_rig)
+				return
+	if (prefix_update_rig)
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
 			var/obj/item/weapon/rig = H.get_rig()
 			if(rig && ("[rig.type]" in prefix_update_rig))
 				marker_prefix = prefix_update_rig["[rig.type]"]
+				return
 
 /obj/item/device/mapping_unit/proc/handle_marker(var/obj/screen/holomap/marker/I,var/TU_x,var/TU_y)
 	//animate(I,alpha = 255, pixel_x = (TU.x-1) + I.offset_x, pixel_y = (TU.y-1) + I.offset_y, time = 5, loop = -1, easing = LINEAR_EASING)
-	I.pixel_x = (TU_x-1) + I.offset_x
-	I.pixel_y = (TU_y-1) + I.offset_y
+	I.pixel_x = TU_x + I.offset_x
+	I.pixel_y = TU_y + I.offset_y
 	//animate(alpha = 255, time = 8, loop = -1, easing = SINE_EASING)
 	animate(I, alpha = 0, time = 5, easing = SINE_EASING)
 	animate(alpha = 255, time = 2, easing = SINE_EASING)

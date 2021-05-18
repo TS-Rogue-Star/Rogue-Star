@@ -785,9 +785,10 @@
 	owner?.start_updates()
 	running = TRUE
 
-/obj/screen/movable/holomap_holder/proc/attach(var/new_owner)
+/obj/screen/movable/holomap_holder/proc/attach(var/new_owner,var/hud_frame_hint)
 	if(owner && (new_owner != owner))
 		return FALSE // no two-fisting mapping units
+	frame.icon_state = initial(frame.icon_state)+hud_frame_hint
 	vis_contents.Add(frame)
 	owner = new_owner
 	if(owner.updating)
@@ -899,8 +900,8 @@
 	icon = 'icons/holomap_markers.dmi'
 	plane = PLANE_HOLOMAP_ICONS
 
-	var/offset_x = -7
-	var/offset_y = -7
+	var/offset_x = -8
+	var/offset_y = -8
 
 // Holds markers in its vis_contents. It uses an alpha filter to crop them to the HUD screen size
 /obj/screen/holomap/extras_holder
