@@ -14,7 +14,8 @@ var/list/global_huds = list(
 		global_hud.thermal,
 		global_hud.meson,
 		global_hud.science,
-		global_hud.material
+		global_hud.material,
+		global_hud.holomap
 		)
 
 /datum/hud/var/obj/screen/grab_intent
@@ -35,6 +36,7 @@ var/list/global_huds = list(
 	var/obj/screen/meson
 	var/obj/screen/science
 	var/obj/screen/material
+	var/obj/screen/holomap
 
 /datum/global_hud/proc/setup_overlay(var/icon_state)
 	var/obj/screen/screen = new /obj/screen()
@@ -90,6 +92,12 @@ var/list/global_huds = list(
 	meson = setup_overlay("meson_hud")
 	science = setup_overlay("science_hud")
 	material = setup_overlay("material_hud")
+
+	holomap = new /obj/screen()
+	holomap.name = "holomap"
+	holomap.icon = null
+	holomap.screen_loc = ui_holomap
+	holomap.mouse_opacity = 0
 
 	var/obj/screen/O
 	var/i
@@ -181,7 +189,7 @@ var/list/global_huds = list(
 	var/ui_color
 	var/ui_alpha
 
-	var/obj/screen/holomap/holomap_obj
+	var/obj/screen/movable/holomap_holder/holomap_obj
 	
 	var/list/minihuds = list()
 
@@ -212,6 +220,7 @@ datum/hud/New(mob/owner)
 //	item_action_list = null // ?
 	mymob = null
 	qdel_null(minihuds)
+	qdel_null(holomap_obj)
 
 /datum/hud/proc/hidden_inventory_update()
 	if(!mymob) return
@@ -310,7 +319,7 @@ datum/hud/New(mob/owner)
 	mymob.update_action_buttons()
 	reorganize_alerts()
 
-	holomap_obj = new /obj/screen/holomap
+	holomap_obj = new /obj/screen/movable/holomap_holder
 
 	mymob.client?.screen += src.holomap_obj
 

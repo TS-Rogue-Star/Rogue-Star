@@ -35,7 +35,7 @@ var/global/list/NT_poster_designs = list()
 
 // Holomaps
 var/global/list/holomap_markers = list()
-var/global/list/holomap_chips = list()
+var/global/list/mapping_units = list()
 
 //Preferences stuff
 	//Hairstyles

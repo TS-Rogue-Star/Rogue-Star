@@ -677,23 +677,211 @@
 		holder = null
 	return ..()
 
-/obj/screen/holomap
-	name = "holomap"
+
+/obj/screen/movable/holomap_holder
+	name = "gps unit"
 	icon = null
 	icon_state = ""
-	screen_loc = "SOUTH,WEST"
-	mouse_opacity = 0
+	screen_loc = "CENTER,CENTER"
 	alpha = 255
+	appearance_flags = KEEP_TOGETHER
+	mouse_opacity = 1
 	plane = PLANE_HOLOMAP
 
-/*
-/obj/screen/holomap/Click(location,control,params)
-	var/obj/structure/deathsquad_gravpult/G = locate() in get_turf(usr)
-	if (!G) return
-	var/list/params_list = params2list(params)
-	if (params_list.len)
-		var/new_aim = clamp(text2num(params_list["icon-y"]), 0, 480)
-		if (new_aim>6)
-			G.aim = new_aim
-			G.update_aim()
-*/
+	var/running = FALSE
+
+	var/obj/screen/holomap/mask_full/mask_full
+	var/obj/screen/holomap/mask_ping/mask_ping
+	var/obj/screen/holomap/bg/bg
+	
+	var/obj/screen/holomap/frame/frame
+	var/obj/screen/holomap/powbutton/powbutton
+	var/obj/screen/holomap/mapbutton/mapbutton
+
+	var/obj/item/device/mapping_unit/owner
+	var/obj/screen/holomap/extras_holder/extras_holder
+
+/obj/screen/movable/holomap_holder/New()
+	mask_full = new(src)
+	mask_ping = new(src)
+	bg = new(src)
+
+	frame = new(src)
+	powbutton = new(src)
+	mapbutton = new(src)
+	
+	mask_full.vis_contents.Add(bg)
+	mask_ping.vis_contents.Add(bg)
+	frame.vis_contents.Add(powbutton,mapbutton)
+
+/obj/screen/movable/holomap_holder/Destroy()
+	hide()
+	qdel_null(powbutton)
+	qdel_null(mapbutton)
+	qdel_null(frame)
+	qdel_null(mask_full)
+	qdel_null(mask_ping)
+	qdel_null(bg)
+	extras_holder = null
+	owner = null
+	return ..()
+
+/obj/screen/movable/holomap_holder/proc/update(var/obj/screen/holomap/map, var/obj/screen/holomap/extras_holder/extras, ping = FALSE)
+	if(!running)
+		running = TRUE
+		if(ping)
+			vis_contents.Add(mask_ping)
+		else	
+			vis_contents.Add(mask_full)
+
+	bg.vis_contents.Cut()
+	bg.vis_contents.Add(map)
+	
+	if(extras && !extras_holder)
+		extras_holder = extras
+		vis_contents += extras_holder
+	if(!extras && extras_holder)
+		vis_contents -= extras_holder
+		extras_holder = null
+
+/obj/screen/movable/holomap_holder/proc/powerClick()
+	if(running)
+		off()
+	else
+		on()
+	
+/obj/screen/movable/holomap_holder/proc/mapClick()
+	if(owner)
+		if(running)
+			off()
+		owner.pinging = !owner.pinging
+		on()
+
+/obj/screen/movable/holomap_holder/proc/off()
+	frame.cut_overlay("powlight")
+	owner?.stop_updates()
+	bg.vis_contents.Cut()
+	vis_contents.Remove(mask_ping, mask_full, extras_holder)
+	extras_holder = null
+	running = FALSE
+
+/obj/screen/movable/holomap_holder/proc/on()
+	frame.add_overlay("powlight")
+	owner?.start_updates()
+	running = TRUE
+
+/obj/screen/movable/holomap_holder/proc/attach(var/new_owner)
+	if(owner && (new_owner != owner))
+		return FALSE // no two-fisting mapping units
+	vis_contents.Add(frame)
+	owner = new_owner
+	if(owner.updating)
+		frame.add_overlay("powlight")
+
+	return TRUE
+
+/obj/screen/movable/holomap_holder/proc/detach(var/old_owner)
+	if(old_owner != owner)
+		return FALSE
+	off()
+	owner = null
+
+	// Cut us out
+	vis_contents.Cut()
+
+	return TRUE
+
+/obj/screen/holomap
+	plane = PLANE_HOLOMAP
+	mouse_opacity = 0
+	var/obj/screen/movable/holomap_holder/parent
+
+/obj/screen/holomap/New()	
+	..()
+	parent = loc
+
+/obj/screen/holomap/Destroy()
+	parent = null
+	return ..()
+
+/obj/screen/holomap/map
+	name = "map display"
+	var/offset_x = 32
+	var/offset_y = 32
+
+/obj/screen/holomap/mask_full
+	icon = 'icons/effects/64x64.dmi'
+	icon_state = "holomap_mask"
+
+/obj/screen/holomap/mask_ping
+	icon = 'icons/effects/64x64.dmi'
+	icon_state = "holomap_ping"
+
+/obj/screen/holomap/mask_extras
+	icon = 'icons/effects/64x64.dmi'
+	icon_state = "holomap_mask"
+
+/obj/screen/holomap/bg
+	icon = 'icons/effects/64x64.dmi'
+	icon_state = "holomap_bg"
+
+	blend_mode = BLEND_MULTIPLY
+	appearance_flags = KEEP_TOGETHER
+
+/obj/screen/holomap/frame
+	icon = 'icons/effects/gpshud.dmi'
+	icon_state = "frame"
+	plane = PLANE_HOLOMAP_FRAME
+	pixel_x = -18
+	pixel_y = -29
+	mouse_opacity = 1
+	vis_flags = VIS_INHERIT_ID
+
+/obj/screen/holomap/powbutton
+	icon = 'icons/effects/gpshud.dmi'
+	icon_state = "powbutton"
+	plane = PLANE_HOLOMAP_FRAME
+	mouse_opacity = 1
+
+/obj/screen/holomap/powbutton/Click()
+	if(!usr.checkClickCooldown())
+		return 1
+	if(usr.stat || usr.paralysis || usr.stunned || usr.weakened)
+		return 1
+	if(istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
+		return 1
+	parent.powerClick()
+	flick("powClick",src)
+	usr << get_sfx("button")
+	return 1
+
+/obj/screen/holomap/mapbutton
+	icon = 'icons/effects/gpshud.dmi'
+	icon_state = "mapbutton"
+	plane = PLANE_HOLOMAP_FRAME
+	mouse_opacity = 1
+
+/obj/screen/holomap/mapbutton/Click()
+	if(!usr.checkClickCooldown())
+		return 1
+	if(usr.stat || usr.paralysis || usr.stunned || usr.weakened)
+		return 1
+	if(istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
+		return 1
+	parent.mapClick()
+	flick("mapClick",src)
+	usr << get_sfx("button")
+	return 1
+
+/obj/screen/holomap/marker
+	icon = 'icons/holomap_markers.dmi'
+	plane = PLANE_HOLOMAP_ICONS
+
+	var/offset_x = -7
+	var/offset_y = -7
+
+/obj/screen/holomap/extras_holder
+	icon = null
+	icon_state = null
+	plane = PLANE_HOLOMAP_ICONS
+	appearance_flags = KEEP_TOGETHER

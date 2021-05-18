@@ -109,12 +109,13 @@
 	// TODO - This part!! ~Leshana
 	if(isliving(user) && anchored && !(stat & (NOPOWER|BROKEN)))
 		if(user.client)
-			holomap_datum.station_map.loc = user.hud_used.holomap_obj  // Put the image on the holomap hud
+			holomap_datum.station_map.loc = global_hud.holomap  // Put the image on the holomap hud
 			holomap_datum.station_map.alpha = 0 // Set to transparent so we can fade in
 			animate(holomap_datum.station_map, alpha = 255, time = 5, easing = LINEAR_EASING)
 			flick("station_map_activate", src)
 			// Wait, if wea re not modifying the holomap_obj... can't it be part of the global hud?
 			user.client.images |= holomap_datum.station_map
+			user.client.screen |= global_hud.holomap // TODO - HACK! This should be there permenently really.
 
 			watching_mob = user
 			GLOB.moved_event.register(watching_mob, src, /obj/machinery/station_map/proc/checkPosition)
