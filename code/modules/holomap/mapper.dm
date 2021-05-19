@@ -1,14 +1,14 @@
 /obj/item/device/mapping_unit
 	name = "mapping unit"
-	desc = "A device meant to be attached on a jumpsuit, granting a certain degree of situational awareness."
+	desc = "A portable mapping unit, capable of locating other similar units on a map. Also has a short-range sonar mapping system."
 	icon_state = "mapping_unit"
 	item_state = null
 
 	//Holomap stuff
 	var/marker_prefix = "basic"
 	var/base_prefix = "basic"
-	var/holomap_color = null
-	var/holomap_filter = HOLOMAP_FILTER_STATIONMAP
+	var/map_color = null
+	var/mapper_filter = HOLOMAP_FILTER_STATIONMAP
 
 	var/list/prefix_update_head
 	var/list/prefix_update_rig
@@ -21,35 +21,42 @@
 	var/pinging = FALSE
 	var/updating = FALSE
 	var/global/icon/mask_icon
-	var/obj/screen/holomap/extras_holder/extras_holder
+	var/obj/screen/mapper/extras_holder/extras_holder
 	var/hud_frame_hint
 
 	var/datum/mini_hud/mapper/hud_datum
-	var/obj/screen/movable/holomap_holder/hud_item
+	var/obj/screen/movable/mapper_holder/hud_item
 
+	var/obj/item/weapon/cell/cell
+	var/cell_type = /obj/item/weapon/cell/device
+	var/power_usage = 1 // Usage per map scan (doubled for ping mode)
+	var/uses_power = 1 // If it uses power at all
+
+	var/list/debug_mappers_list
+	var/list/debug_beacons_list
 
 /obj/item/device/mapping_unit/deathsquad
-	name = "deathsquad holomap chip"
+	name = "deathsquad mapping unit"
 	icon_state = "mapping_unit_ds"
 	marker_prefix = "ds"
-	holomap_filter = HOLOMAP_FILTER_DEATHSQUAD
-	//holomap_color = "#0B74B4"
+	mapper_filter = HOLOMAP_FILTER_DEATHSQUAD
+	//map_color = "#0B74B4"
 	hud_frame_hint = "_ds"
 
 /obj/item/device/mapping_unit/operative
-	name = "nuclear operative holomap chip"
+	name = "nuclear operative mapping unit"
 	icon_state = "mapping_unit_op"
 	marker_prefix = "op"
-	holomap_filter = HOLOMAP_FILTER_NUKEOPS
-	//holomap_color = "#13B40B"
+	mapper_filter = HOLOMAP_FILTER_NUKEOPS
+	//map_color = "#13B40B"
 	hud_frame_hint = "_op"
 
 /obj/item/device/mapping_unit/ert
-	name = "emergency response team holomap chip"
+	name = "emergency response team mapping unit"
 	icon_state = "mapping_unit_ert"
 	marker_prefix = "ert"
-	holomap_filter = HOLOMAP_FILTER_ERT
-	//holomap_color = "#5FFF28"
+	mapper_filter = HOLOMAP_FILTER_ERT
+	//map_color = "#5FFF28"
 	hud_frame_hint = "_ert"
 
 	prefix_update_head = list(
@@ -68,27 +75,31 @@
 
 /obj/item/device/mapping_unit/Initialize()
 	. = ..()
-	mapping_units += src
 	base_prefix = marker_prefix
 
 	if(!mask_icon)
-		mask_icon = icon('icons/effects/64x64.dmi', "holomap_mask")
+		mask_icon = icon('icons/effects/64x64.dmi', "mapper_mask")
 	
 	extras_holder = new()
 	
-	var/obj/screen/holomap/marker/mark = new()
+	var/obj/screen/mapper/marker/mark = new()
 	mark.icon = 'icons/effects/64x64.dmi'
-	mark.icon_state = "holomap_none"
+	mark.icon_state = "mapper_none"
 	mark.layer = 10
 	icon_image_cache["bad"] = mark
 
-	var/obj/screen/holomap/map/tmp = new()
+	var/obj/screen/mapper/map/tmp = new()
 	var/icon/canvas = icon(HOLOMAP_ICON, "blank")
 	canvas.Crop(1,1,world.maxx,world.maxy)
 	canvas.DrawBox("#A7BE97",1,1,world.maxx,world.maxy)
 	tmp.icon = icon
 	map_image_cache["bad"] = tmp
 
+	if(uses_power && cell_type)
+		cell = new cell_type(src)
+
+	debug_mappers_list = mapping_units
+	debug_beacons_list = mapping_beacons
 
 /obj/item/device/mapping_unit/Destroy()
 	mapping_units -= src
@@ -105,26 +116,43 @@
 	if(loc != dropper) // Not just a juggle
 		hide_device()
 
-/obj/item/device/mapping_unit/attack_self()
-	if(usr.stat != CONSCIOUS)
+/obj/item/device/mapping_unit/attack_self(mob/user)
+	if(user.stat != CONSCIOUS)
 		return
 
-	if(!ishuman(usr))
-		to_chat(usr, "<span class='warning'>Only humanoids can use this device.</span>")
+	if(!ishuman(user))
+		to_chat(user, "<span class='warning'>Only humanoids can use this device.</span>")
 		return
 
-	var/mob/living/carbon/human/H = usr
+	var/mob/living/carbon/human/H = user
 
-	if(!ishuman(loc) || usr != loc)
+	if(!ishuman(loc) || user != loc)
 		to_chat(H, "<span class='warning'>This device needs to be on your person.</span>")
 	
 	if(hud_datum?.main_hud)
 		hide_device()
-		to_chat(H, "<span class='notice'>You put the [src] away.</span>")
+		to_chat(H, "<span class='notice'>You put \the [src] away.</span>")
 	else
 		show_device(H)
-		to_chat(H, "<span class='notice'>You hold the [src] where you can see it.</span>")
+		to_chat(H, "<span class='notice'>You hold \the [src] where you can see it.</span>")
 
+/obj/item/device/mapping_unit/attack_hand(mob/user)
+	if(cell && user.get_inactive_hand() == src) // click with empty off hand
+		to_chat(user,"<span class='notice'>You eject \the [cell] from \the [src].</span>")
+		user.put_in_hands(cell)
+		cell = null
+		if(updating)
+			stop_updates()
+	else
+		return ..()
+
+/obj/item/device/mapping_unit/attackby(obj/W, mob/user)
+	if(istype(W,cell_type) && !cell)
+		cell = W
+		cell.update_icon() //Why doesn't a cell do this already? :|
+		user.unEquip(cell)
+		cell.forceMove(src)
+		to_chat(user,"<span class='notice'>You insert \the [cell] into \the [src].</span>")
 
 
 /obj/item/device/mapping_unit/proc/first_run(mob/user)
@@ -138,14 +166,19 @@
 		hud_datum.apply_to_hud(user.hud_used)
 
 /obj/item/device/mapping_unit/proc/start_updates()
+	mapping_units += src
+	updating = TRUE
 	START_PROCESSING(SSobj, src)
 	process()
-	updating = TRUE
+
 
 
 /obj/item/device/mapping_unit/proc/stop_updates()
+	mapping_units -= src
 	STOP_PROCESSING(SSobj, src)
 	updating = FALSE
+	if(hud_item)
+		hud_item.off(FALSE)
 
 /obj/item/device/mapping_unit/proc/hide_device()
 	hud_datum.unapply_to_hud()
@@ -159,8 +192,24 @@
 
 
 /obj/item/device/mapping_unit/process()
-	update_holomap()
+	if(!updating || (uses_power && !cell))
+		stop_updates()
+		return
+	
+	if(uses_power)
+		var/power_to_use = pinging ? power_usage*2 : power_usage
+		if(cell.use(power_to_use) != power_to_use) // we weren't able to use our full power_usage amount!
+			visible_message("<span class='warning'>\The [src] flickers before going dull.</span>")
+			stop_updates()
+			return
 
+	if(!hud_item || !hud_datum)
+		log_error("Mapping device tried to update with missing hud_item or hud_datum")
+		stop_updates()
+		last_run()
+		return
+
+	update_holomap()
 
 #define HOLOMAP_ERROR	0
 #define HOLOMAP_YOU		1
@@ -168,11 +217,6 @@
 #define HOLOMAP_DEAD	3
 
 /obj/item/device/mapping_unit/proc/update_holomap()
-	if(!hud_item || !hud_datum)
-		stop_updates()
-		last_run()
-		return
-
 	var/turf/T = get_turf(src)
 	if(!T)//nullspace begone!
 		stop_updates()
@@ -182,7 +226,7 @@
 	var/T_y = T.y
 	var/T_z = T.z
 
-	var/obj/screen/holomap/map/bgmap
+	var/obj/screen/mapper/map/bgmap
 	var/list/extras = list()
 
 	var/map_cache_key = "[T_z]"
@@ -197,10 +241,10 @@
 		map_app.appearance_flags = PIXEL_SCALE
 		map_app.plane = PLANE_HOLOMAP
 		map_app.layer = HUD_LAYER
-		map_app.color = holomap_color
+		map_app.color = map_color
 
 		if(!SSholomaps.holoMiniMaps[T_z])
-			var/obj/screen/holomap/map/baddo = map_image_cache["bad"]
+			var/obj/screen/mapper/map/baddo = map_image_cache["bad"]
 			map_app.icon = icon(baddo.icon)
 			badmap = TRUE
 		// SSholomaps did map it and we're allowed to see it
@@ -210,7 +254,7 @@
 			// Apply markers
 			for(var/marker in holomap_markers)
 				var/datum/holomap_marker/holomarker = holomap_markers[marker]
-				if(holomarker.z == T_z && holomarker.filter & holomap_filter)
+				if(holomarker.z == T_z && holomarker.filter & mapper_filter)
 					var/image/markerImage = image(holomarker.icon,holomarker.id)
 					markerImage.plane = FLOAT_PLANE
 					markerImage.layer = FLOAT_LAYER
@@ -219,7 +263,7 @@
 					markerImage.pixel_y = holomarker.y+holomarker.offset_y
 					map_app.overlays += markerImage
 
-			var/obj/screen/holomap/map/tmp = new()
+			var/obj/screen/mapper/map/tmp = new()
 			tmp.appearance = map_app
 			map_image_cache[map_cache_key] = tmp
 
@@ -230,15 +274,16 @@
 	var/offset_y = bgmap.offset_y
 	extras_holder.pixel_x = bgmap.pixel_x = -1*T_x + offset_x
 	extras_holder.pixel_y = bgmap.pixel_y = -1*T_y + offset_y
-	//animate(bgmap,pixel_x = map_offset_x, pixel_y = map_offset_y, time = 5, easing = LINEAR_EASING)
 
-	// Populate holomap chip icons
+	// Populate other mapper icons
 	for(var/hc in mapping_units)
 		var/obj/item/device/mapping_unit/HC = hc
-		if(!HC.updating || HC.holomap_filter != holomap_filter)
+		if(HC.mapper_filter != mapper_filter)
 			continue
 		var/mob_indicator = HOLOMAP_ERROR
 		var/turf/TU = get_turf(HC)
+		if(TU.z != T_z)
+			continue
 		
 		// Marker not on a turf
 		if(!TU)
@@ -249,7 +294,7 @@
 			mob_indicator = HOLOMAP_YOU
 		
 		// The marker is held by a borg
-		else if((TU.z == T_z) && isrobot(HC.loc))
+		else if(isrobot(HC.loc))
 			var/mob/living/silicon/robot/R = HC.loc
 			if(R.stat == DEAD)
 				mob_indicator = HOLOMAP_DEAD
@@ -257,7 +302,7 @@
 				mob_indicator = HOLOMAP_OTHER
 		
 		// The marker is worn by a human
-		else if((TU.z == T_z) && ishuman(loc))
+		else if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
 			if(H.stat == DEAD)
 				mob_indicator = HOLOMAP_DEAD
@@ -266,8 +311,7 @@
 		
 		// It's not attached to anything useful
 		else
-			continue
-
+			mob_indicator = HOLOMAP_DEAD
 		
 		// Ask it to update it's icon based on helmet (or whatever)
 		HC.update_marker()
@@ -279,7 +323,7 @@
 			var/marker_cache_key = "\ref[HC]_[HC.marker_prefix]_[mob_indicator]"
 
 			if(!(marker_cache_key in icon_image_cache))
-				var/obj/screen/holomap/marker/mark = new()
+				var/obj/screen/mapper/marker/mark = new()
 				mark.icon_state = "[HC.marker_prefix][mob_indicator]"
 				icon_image_cache[marker_cache_key] = mark
 				switch(mob_indicator)
@@ -290,9 +334,29 @@
 					else
 						mark.layer = 1
 
-			var/obj/screen/holomap/marker/mark = icon_image_cache[marker_cache_key]
+			var/obj/screen/mapper/marker/mark = icon_image_cache[marker_cache_key]
 			handle_marker(mark,TU.x,TU.y)
+			extras += mark
 
+		// Marker beacon items
+		for(var/hb in mapping_beacons)
+			var/obj/item/device/holomap_beacon/HB = hb
+			if(HB.mapper_filter != mapper_filter)
+				continue
+			
+			var/turf/TB = get_turf(HB)
+			if(TU.z != T_z)
+				continue
+			
+			var/marker_cache_key = "\ref[HB]_marker"
+			if(!(marker_cache_key in icon_image_cache))
+				var/obj/screen/mapper/marker/mark = new()
+				mark.icon_state = "beacon"
+				mark.layer = 1
+				icon_image_cache[marker_cache_key] = mark
+			
+			var/obj/screen/mapper/marker/mark = icon_image_cache[marker_cache_key]
+			handle_marker(mark,TB.x,TB.y)
 			extras += mark
 
 	if(badmap)
@@ -323,13 +387,57 @@
 				marker_prefix = prefix_update_rig["[rig.type]"]
 				return
 
-/obj/item/device/mapping_unit/proc/handle_marker(var/obj/screen/holomap/marker/I,var/TU_x,var/TU_y)
-	//animate(I,alpha = 255, pixel_x = (TU.x-1) + I.offset_x, pixel_y = (TU.y-1) + I.offset_y, time = 5, loop = -1, easing = LINEAR_EASING)
-	I.pixel_x = TU_x + I.offset_x
-	I.pixel_y = TU_y + I.offset_y
-	//animate(alpha = 255, time = 8, loop = -1, easing = SINE_EASING)
-	animate(I, alpha = 0, time = 5, easing = SINE_EASING)
+/obj/item/device/mapping_unit/proc/handle_marker(var/atom/movable/marker,var/TU_x,var/TU_y)
+	marker.pixel_x = TU_x - 8 //16x16 icons, so to center.
+	marker.pixel_y = TU_y - 8
+	animate(marker, alpha = 0, time = 5, easing = SINE_EASING)
 	animate(alpha = 255, time = 2, easing = SINE_EASING)
+
+/obj/item/device/holomap_beacon
+	name = "holomap beacon"
+	desc = "When active, the beacon will show itself on mapping units of the same type."
+	icon_state = "holochip"
+	w_class = ITEMSIZE_TINY
+	var/mapper_filter = HOLOMAP_FILTER_STATIONMAP
+	var/in_list = FALSE
+
+/obj/item/device/holomap_beacon/Initialize()
+	. = ..()
+	if(in_list) // mapped in turned on
+		in_list = TRUE
+		mapping_beacons += src
+		icon_state = initial(icon_state) + in_list ? "_on" : ""
+
+/obj/item/device/holomap_beacon/attack_self(mob/user)
+	if(!in_list)
+		in_list = TRUE
+		mapping_beacons += src
+	else
+		in_list = FALSE
+		mapping_beacons -= src
+	icon_state = initial(icon_state) + in_list ? "_on" : ""
+	to_chat(user,SPAN_NOTICE("The [src] is now [in_list ? "broadcasting" : "disabled"]."))
+
+/obj/item/device/holomap_beacon/Destroy()
+	if(in_list)
+		mapping_beacons -= src
+	return ..()
+
+/obj/item/device/holomap_beacon/deathsquad
+	name = "deathsquad holomap beacon"
+	icon_state = "holochip_ds"
+	mapper_filter = HOLOMAP_FILTER_DEATHSQUAD
+
+/obj/item/device/holomap_beacon/operative
+	name = "operative holomap beacon"
+	icon_state = "holochip_op"
+	mapper_filter = HOLOMAP_FILTER_NUKEOPS
+
+/obj/item/device/holomap_beacon/ert
+	name = "ert holomap beacon"
+	icon_state = "holochip_ert"
+	mapper_filter = HOLOMAP_FILTER_ERT
+
 
 #undef HOLOMAP_ERROR
 #undef HOLOMAP_YOU

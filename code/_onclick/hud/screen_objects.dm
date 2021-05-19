@@ -688,7 +688,7 @@
  * 
  * The markers use that technique, though, so at least there's that.
  */
-/obj/screen/movable/holomap_holder
+/obj/screen/movable/mapper_holder
 	name = "gps unit"
 	icon = null
 	icon_state = ""
@@ -700,18 +700,18 @@
 
 	var/running = FALSE
 
-	var/obj/screen/holomap/mask_full/mask_full
-	var/obj/screen/holomap/mask_ping/mask_ping
-	var/obj/screen/holomap/bg/bg
+	var/obj/screen/mapper/mask_full/mask_full
+	var/obj/screen/mapper/mask_ping/mask_ping
+	var/obj/screen/mapper/bg/bg
 	
-	var/obj/screen/holomap/frame/frame
-	var/obj/screen/holomap/powbutton/powbutton
-	var/obj/screen/holomap/mapbutton/mapbutton
+	var/obj/screen/mapper/frame/frame
+	var/obj/screen/mapper/powbutton/powbutton
+	var/obj/screen/mapper/mapbutton/mapbutton
 
 	var/obj/item/device/mapping_unit/owner
-	var/obj/screen/holomap/extras_holder/extras_holder
+	var/obj/screen/mapper/extras_holder/extras_holder
 
-/obj/screen/movable/holomap_holder/New(newloc, newowner)
+/obj/screen/movable/mapper_holder/New(newloc, newowner)
 	owner = newowner
 	
 	mask_full = new(src) // Full white square mask
@@ -735,7 +735,7 @@
 	vis_contents.Add(frame)
 	
 
-/obj/screen/movable/holomap_holder/Destroy()
+/obj/screen/movable/mapper_holder/Destroy()
 	qdel_null(mask_full)
 	qdel_null(mask_ping)
 	qdel_null(bg)
@@ -748,7 +748,7 @@
 	owner = null
 	return ..()
 
-/obj/screen/movable/holomap_holder/proc/update(var/obj/screen/holomap/map, var/obj/screen/holomap/extras_holder/extras, ping = FALSE)
+/obj/screen/movable/mapper_holder/proc/update(var/obj/screen/mapper/map, var/obj/screen/mapper/extras_holder/extras, ping = FALSE)
 	if(!running)
 		running = TRUE
 		if(ping)
@@ -766,48 +766,49 @@
 		vis_contents -= extras_holder
 		extras_holder = null
 
-/obj/screen/movable/holomap_holder/proc/powerClick()
+/obj/screen/movable/mapper_holder/proc/powerClick()
 	if(running)
 		off()
 	else
 		on()
 	
-/obj/screen/movable/holomap_holder/proc/mapClick()
+/obj/screen/movable/mapper_holder/proc/mapClick()
 	if(owner)
 		if(running)
 			off()
 		owner.pinging = !owner.pinging
 		on()
 
-/obj/screen/movable/holomap_holder/proc/off()
+/obj/screen/movable/mapper_holder/proc/off(var/inform = TRUE)
 	frame.cut_overlay("powlight")
-	owner.stop_updates()
 	bg.vis_contents.Cut()
 	vis_contents.Remove(mask_ping, mask_full, extras_holder)
 	extras_holder = null
 	running = FALSE
+	if(inform)
+		owner.stop_updates()
 
-/obj/screen/movable/holomap_holder/proc/on()
-	if(owner.start_updates())
-		frame.add_overlay("powlight")
-		running = TRUE
+/obj/screen/movable/mapper_holder/proc/on(var/inform = TRUE)
+	frame.add_overlay("powlight")
+	if(inform)
+		owner.start_updates()
 
 // Prototype
-/obj/screen/holomap
+/obj/screen/mapper
 	plane = PLANE_HOLOMAP
 	mouse_opacity = 0
-	var/obj/screen/movable/holomap_holder/parent
+	var/obj/screen/movable/mapper_holder/parent
 
-/obj/screen/holomap/New()	
+/obj/screen/mapper/New()	
 	..()
 	parent = loc
 
-/obj/screen/holomap/Destroy()
+/obj/screen/mapper/Destroy()
 	parent = null
 	return ..()
 
 // Holds the actual map image
-/obj/screen/holomap/map
+/obj/screen/mapper/map
 	var/offset_x = 32
 	var/offset_y = 32
 
@@ -815,27 +816,23 @@
 // but alpha filters can't be animated, which means I can't use them for the 'sonar ping' mode.
 // If filters start supporting animated icons in the future (for the alpha mask filter),
 // you should definitely replace these with that technique instead.
-/obj/screen/holomap/mask_full
+/obj/screen/mapper/mask_full
 	icon = 'icons/effects/64x64.dmi'
-	icon_state = "holomap_mask"
+	icon_state = "mapper_mask"
 
-/obj/screen/holomap/mask_ping
+/obj/screen/mapper/mask_ping
 	icon = 'icons/effects/64x64.dmi'
-	icon_state = "holomap_ping"
+	icon_state = "mapper_ping"
 
-/obj/screen/holomap/mask_extras
+/obj/screen/mapper/bg
 	icon = 'icons/effects/64x64.dmi'
-	icon_state = "holomap_mask"
-
-/obj/screen/holomap/bg
-	icon = 'icons/effects/64x64.dmi'
-	icon_state = "holomap_bg"
+	icon_state = "mapper_bg"
 
 	blend_mode = BLEND_MULTIPLY
 	appearance_flags = KEEP_TOGETHER
 
 // Frame/deco components
-/obj/screen/holomap/frame
+/obj/screen/mapper/frame
 	icon = 'icons/effects/gpshud.dmi'
 	icon_state = "frame"
 	plane = PLANE_HOLOMAP_FRAME
@@ -844,13 +841,13 @@
 	mouse_opacity = 1
 	vis_flags = VIS_INHERIT_ID
 
-/obj/screen/holomap/powbutton
+/obj/screen/mapper/powbutton
 	icon = 'icons/effects/gpshud.dmi'
 	icon_state = "powbutton"
 	plane = PLANE_HOLOMAP_FRAME
 	mouse_opacity = 1
 
-/obj/screen/holomap/powbutton/Click()
+/obj/screen/mapper/powbutton/Click()
 	if(!usr.checkClickCooldown())
 		return 1
 	if(usr.stat || usr.paralysis || usr.stunned || usr.weakened)
@@ -862,13 +859,13 @@
 	usr << get_sfx("button")
 	return 1
 
-/obj/screen/holomap/mapbutton
+/obj/screen/mapper/mapbutton
 	icon = 'icons/effects/gpshud.dmi'
 	icon_state = "mapbutton"
 	plane = PLANE_HOLOMAP_FRAME
 	mouse_opacity = 1
 
-/obj/screen/holomap/mapbutton/Click()
+/obj/screen/mapper/mapbutton/Click()
 	if(!usr.checkClickCooldown())
 		return 1
 	if(usr.stat || usr.paralysis || usr.stunned || usr.weakened)
@@ -881,7 +878,7 @@
 	return 1
 
 // Markers are 16x16, people have apparently settled on centering them on the 8,8 pixel
-/obj/screen/holomap/marker
+/obj/screen/mapper/marker
 	icon = 'icons/holomap_markers.dmi'
 	plane = PLANE_HOLOMAP_ICONS
 
@@ -889,7 +886,7 @@
 	var/offset_y = -8
 
 // Holds markers in its vis_contents. It uses an alpha filter to crop them to the HUD screen size
-/obj/screen/holomap/extras_holder
+/obj/screen/mapper/extras_holder
 	icon = null
 	icon_state = null
 	plane = PLANE_HOLOMAP_ICONS
