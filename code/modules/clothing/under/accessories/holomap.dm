@@ -20,10 +20,13 @@
 
 	var/pinging = FALSE
 	var/updating = FALSE
-	var/obj/screen/movable/holomap_holder/hud_item
 	var/global/icon/mask_icon
 	var/obj/screen/holomap/extras_holder/extras_holder
 	var/hud_frame_hint
+
+	var/datum/mini_hud/mapper/hud_datum
+	var/obj/screen/movable/holomap_holder/hud_item
+
 
 /obj/item/device/mapping_unit/deathsquad
 	name = "deathsquad holomap chip"
@@ -90,22 +93,19 @@
 /obj/item/device/mapping_unit/Destroy()
 	mapping_units -= src
 
-	detach_holomap()
-
-	QDEL_LIST_NULL(map_image_cache)
-	QDEL_LIST_NULL(icon_image_cache)
+	last_run()
+	
+	map_image_cache.Cut()
+	icon_image_cache.Cut()
 	qdel_null(extras_holder)
 
 	return ..()
 
-/obj/item/device/mapping_unit/attack_self()
-	togglemap()
-
 /obj/item/device/mapping_unit/dropped(mob/dropper)
 	if(loc != dropper) // Not just a juggle
-		detach_holomap()
+		hide_device()
 
-/obj/item/device/mapping_unit/proc/togglemap()
+/obj/item/device/mapping_unit/attack_self()
 	if(usr.stat != CONSCIOUS)
 		return
 
@@ -117,38 +117,45 @@
 
 	if(!ishuman(loc) || usr != loc)
 		to_chat(H, "<span class='warning'>This device needs to be on your person.</span>")
-
-	if(hud_item)
-		if(detach_holomap(H))
-			to_chat(H, "<span class='notice'>You put the [src] away.</span>")
-	else if(attach_holomap(H))
+	
+	if(hud_datum?.main_hud)
+		hide_device()
+		to_chat(H, "<span class='notice'>You put the [src] away.</span>")
+	else
+		show_device(H)
 		to_chat(H, "<span class='notice'>You hold the [src] where you can see it.</span>")
 
 
 
-/obj/item/device/mapping_unit/proc/detach_holomap()
-	stop_updates()
-	hud_item?.detach(src)
-	hud_item = null
-	return TRUE
+/obj/item/device/mapping_unit/proc/first_run(mob/user)
+	hud_datum = new(user.hud_used, src)
+	hud_item = hud_datum.screenobjs[1]
 
-/obj/item/device/mapping_unit/proc/stop_updates()
-	STOP_PROCESSING(SSobj, src)
-	updating = FALSE
-
-
-
-/obj/item/device/mapping_unit/proc/attach_holomap(mob/user)
-	if(hud_item)
-		detach_holomap()
-	hud_item = user.hud_used.holomap_obj
-	return hud_item?.attach(src,hud_frame_hint)
+/obj/item/device/mapping_unit/proc/show_device(mob/user)
+	if(!hud_datum)
+		first_run(user)
+	else
+		hud_datum.apply_to_hud(user.hud_used)
 
 /obj/item/device/mapping_unit/proc/start_updates()
 	START_PROCESSING(SSobj, src)
 	process()
 	updating = TRUE
 
+
+/obj/item/device/mapping_unit/proc/stop_updates()
+	STOP_PROCESSING(SSobj, src)
+	updating = FALSE
+
+/obj/item/device/mapping_unit/proc/hide_device()
+	hud_datum.unapply_to_hud()
+
+/obj/item/device/mapping_unit/proc/last_run()
+	stop_updates()
+	if(!QDELETED(hud_datum))
+		qdel(hud_datum)
+	hud_datum = null
+	hud_item = null
 
 
 /obj/item/device/mapping_unit/process()
@@ -160,22 +167,15 @@
 #define HOLOMAP_OTHER	2
 #define HOLOMAP_DEAD	3
 
-/obj/item/device/mapping_unit/proc/handle_sanity(var/turf/T)
-	if(!hud_item || isnull(SSholomaps.holoMiniMaps[T.z]))
-		return FALSE
-	return TRUE
-
 /obj/item/device/mapping_unit/proc/update_holomap()
-	if(!hud_item)
-		detach_holomap()
+	if(!hud_item || !hud_datum)
+		stop_updates()
+		last_run()
 		return
 
 	var/turf/T = get_turf(src)
 	if(!T)//nullspace begone!
-		return
-
-	if(!handle_sanity(T))
-		detach_holomap()
+		stop_updates()
 		return
 
 	var/T_x = T.x // Used many times, just grab it to avoid derefs

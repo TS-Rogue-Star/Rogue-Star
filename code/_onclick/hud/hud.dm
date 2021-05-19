@@ -189,8 +189,6 @@ var/list/global_huds = list(
 	var/ui_color
 	var/ui_alpha
 
-	var/obj/screen/movable/holomap_holder/holomap_obj
-	
 	var/list/minihuds = list()
 
 datum/hud/New(mob/owner)
@@ -200,6 +198,7 @@ datum/hud/New(mob/owner)
 
 /datum/hud/Destroy()
 	. = ..()
+	qdel_null(minihuds)
 	grab_intent = null
 	hurt_intent = null
 	disarm_intent = null
@@ -216,11 +215,8 @@ datum/hud/New(mob/owner)
 	adding = null
 	other = null
 	hotkeybuttons = null
-	holomap_obj = null
 //	item_action_list = null // ?
 	mymob = null
-	qdel_null(minihuds)
-	qdel_null(holomap_obj)
 
 /datum/hud/proc/hidden_inventory_update()
 	if(!mymob) return
@@ -318,10 +314,6 @@ datum/hud/New(mob/owner)
 	mymob.reload_fullscreen() // Reload any fullscreen overlays this mob has.
 	mymob.update_action_buttons()
 	reorganize_alerts()
-
-	holomap_obj = new /obj/screen/movable/holomap_holder
-
-	mymob.client?.screen += src.holomap_obj
 
 /mob/proc/create_mob_hud(datum/hud/HUD, apply_to_client = TRUE)
 	if(!client)

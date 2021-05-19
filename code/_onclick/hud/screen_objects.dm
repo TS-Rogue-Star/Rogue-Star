@@ -711,7 +711,9 @@
 	var/obj/item/device/mapping_unit/owner
 	var/obj/screen/holomap/extras_holder/extras_holder
 
-/obj/screen/movable/holomap_holder/New()
+/obj/screen/movable/holomap_holder/New(newloc, newowner)
+	owner = newowner
+	
 	mask_full = new(src) // Full white square mask
 	mask_ping = new(src) // Animated 'pinging' mask
 	bg = new(src) // Background color, holds map in vis_contents, uses mult against masks
@@ -720,6 +722,8 @@
 	powbutton = new(src) // Clickable button
 	mapbutton = new(src) // Clickable button
 	
+	frame.icon_state = initial(frame.icon_state)+owner.hud_frame_hint
+
 	/**
 	 * The vis_contents layout is: this(frame,extras_holder,mask(bg(map)))
 	 * bg is set to BLEND_MULTIPLY against the mask to crop it.
@@ -728,15 +732,18 @@
 	mask_full.vis_contents.Add(bg)
 	mask_ping.vis_contents.Add(bg)
 	frame.vis_contents.Add(powbutton,mapbutton)
+	vis_contents.Add(frame)
+	
 
 /obj/screen/movable/holomap_holder/Destroy()
-	hide()
-	qdel_null(powbutton)
-	qdel_null(mapbutton)
-	qdel_null(frame)
 	qdel_null(mask_full)
 	qdel_null(mask_ping)
 	qdel_null(bg)
+
+	qdel_null(frame)
+	qdel_null(powbutton)
+	qdel_null(mapbutton)
+
 	extras_holder = null
 	owner = null
 	return ..()
@@ -774,38 +781,16 @@
 
 /obj/screen/movable/holomap_holder/proc/off()
 	frame.cut_overlay("powlight")
-	owner?.stop_updates()
+	owner.stop_updates()
 	bg.vis_contents.Cut()
 	vis_contents.Remove(mask_ping, mask_full, extras_holder)
 	extras_holder = null
 	running = FALSE
 
 /obj/screen/movable/holomap_holder/proc/on()
-	frame.add_overlay("powlight")
-	owner?.start_updates()
-	running = TRUE
-
-/obj/screen/movable/holomap_holder/proc/attach(var/new_owner,var/hud_frame_hint)
-	if(owner && (new_owner != owner))
-		return FALSE // no two-fisting mapping units
-	frame.icon_state = initial(frame.icon_state)+hud_frame_hint
-	vis_contents.Add(frame)
-	owner = new_owner
-	if(owner.updating)
+	if(owner.start_updates())
 		frame.add_overlay("powlight")
-
-	return TRUE
-
-/obj/screen/movable/holomap_holder/proc/detach(var/old_owner)
-	if(old_owner != owner)
-		return FALSE
-	off()
-	owner = null
-
-	// Cut us out
-	vis_contents.Cut()
-
-	return TRUE
+		running = TRUE
 
 // Prototype
 /obj/screen/holomap
