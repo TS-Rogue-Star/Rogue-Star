@@ -65,14 +65,8 @@
 	total_lighting_sources--
 	destroyed = TRUE
 	force_update()
-	if(source_atom)
-		if(!source_atom.light_sources)
-			log_runtime(EXCEPTION("Atom [source_atom] was a light source, but lacked a light source list!\n"), source_atom)
-		else
-			source_atom.light_sources -= src
-
-	if(top_atom)
-		top_atom.light_sources    -= src
+	source_atom?.light_sources?.Remove(src)
+	top_atom?.light_sources?.Remove(src)
 
 // Call it dirty, I don't care.
 // This is here so there's no performance loss on non-instant updates from the fact that the engine can also do instant updates.
