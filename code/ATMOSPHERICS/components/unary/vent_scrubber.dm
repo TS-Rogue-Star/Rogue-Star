@@ -88,7 +88,7 @@
 	frequency = new_frequency
 	radio_connection = radio_controller.add_object(src, frequency, radio_filter_in)
 
-/obj/machinery/atmospherics/unary/vent_scrubber/proc/broadcast_status()
+/obj/machinery/atmospherics/unary/vent_scrubber/broadcast_status()
 	if(!radio_connection)
 		return 0
 

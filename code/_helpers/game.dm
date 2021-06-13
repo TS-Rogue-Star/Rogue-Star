@@ -42,7 +42,8 @@
 /** Checks if any living humans are in a given area. */
 /proc/area_is_occupied(var/area/myarea)
 	// Testing suggests looping over human_mob_list is quicker than looping over area contents
-	for(var/mob/living/carbon/human/H in human_mob_list)
+	for(var/mob/living/carbon/human/H typeless in human_mob_list)
+		TYPELESS_CRUTCH(H, /mob/living/carbon/human)
 		if(H.stat >= DEAD) //Conditions for exclusion here, like if disconnected people start blocking it.
 			continue
 		var/area/A = get_area(H)
@@ -86,17 +87,17 @@
 /proc/circlerange(center=usr,radius=3)
 
 	var/turf/centerturf = get_turf(center)
-	var/list/turfs = new/list()
+	var/list/atoms = new/list()
 	var/rsq = radius * (radius+0.5)
 
-	for(var/atom/T in range(radius, centerturf))
-		var/dx = T.x - centerturf.x
-		var/dy = T.y - centerturf.y
+	for(var/atom/A in range(radius, centerturf))
+		var/dx = A.x - centerturf.x
+		var/dy = A.y - centerturf.y
 		if(dx*dx + dy*dy <= rsq)
-			turfs += T
+			atoms += A
 
-	//turfs += centerturf
-	return turfs
+	//atoms += centerturf
+	return atoms
 
 /proc/circleview(center=usr,radius=3)
 

@@ -73,12 +73,7 @@ SUBSYSTEM_DEF(machines)
 		CHECK_TICK
 
 	for(var/obj/machinery/atmospherics/unary/U in atmos_machines)
-		if(istype(U, /obj/machinery/atmospherics/unary/vent_pump))
-			var/obj/machinery/atmospherics/unary/vent_pump/T = U
-			T.broadcast_status()
-		else if(istype(U, /obj/machinery/atmospherics/unary/vent_scrubber))
-			var/obj/machinery/atmospherics/unary/vent_scrubber/T = U
-			T.broadcast_status()
+		U.broadcast_status()
 		CHECK_TICK
 
 /datum/controller/subsystem/machines/stat_entry()

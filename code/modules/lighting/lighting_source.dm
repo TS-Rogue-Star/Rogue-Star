@@ -204,7 +204,8 @@
 		if(!T.lighting_corners_initialised)
 			T.generate_missing_corners()
 
-		for(var/datum/lighting_corner/C in T.get_corners())
+		for(var/datum/lighting_corner/C typeless in T.get_corners())
+			TYPELESS_CRUTCH(C, /datum/lighting_corner)
 			if(C.update_gen == update_gen)
 				continue
 
@@ -228,7 +229,8 @@
 /datum/light_source/proc/remove_lum()
 	applied = FALSE
 
-	for(var/turf/T in affecting_turfs)
+	for(var/turf/T typeless in affecting_turfs)
+		TYPELESS_CRUTCH(T, /turf)
 		if(!T.affecting_lights)
 			T.affecting_lights = list()
 		else
@@ -236,7 +238,8 @@
 
 	affecting_turfs.Cut()
 
-	for(var/datum/lighting_corner/C in effect_str)
+	for(var/datum/lighting_corner/C typeless in effect_str)
+		TYPELESS_CRUTCH(C, /datum/lighting_corner)
 		REMOVE_CORNER(C)
 
 		C.affecting -= src
@@ -252,15 +255,19 @@
 /datum/light_source/proc/smart_vis_update()
 	var/list/datum/lighting_corner/corners = list()
 	var/list/turf/turfs                    = list()
+	var/list/turfcorners
 	FOR_DVIEW(var/turf/T, light_range, source_turf, 0)
 		if(!T.lighting_corners_initialised)
 			T.generate_missing_corners()
-		corners |= T.get_corners()
-		turfs   += T
+		turfcorners = T.get_corners()
+		if(turfcorners)
+			corners |= turfcorners
+		turfs += T
 
 	var/list/L = turfs - affecting_turfs // New turfs, add us to the affecting lights of them.
 	affecting_turfs += L
-	for(var/turf/T in L)
+	for(var/turf/T typeless in L)
+		TYPELESS_CRUTCH(T, /turf)
 		if(!T.affecting_lights)
 			T.affecting_lights = list(src)
 		else
@@ -268,10 +275,12 @@
 
 	L = affecting_turfs - turfs // Now-gone turfs, remove us from the affecting lights.
 	affecting_turfs -= L
-	for(var/turf/T in L)
+	for(var/turf/T typeless in L)
+		TYPELESS_CRUTCH(T, /turf)
 		T.affecting_lights -= src
 
-	for(var/datum/lighting_corner/C in corners - effect_str) // New corners
+	for(var/datum/lighting_corner/C typeless in corners - effect_str) // New corners
+		TYPELESS_CRUTCH(C, /datum/lighting_corner)
 		C.affecting += src
 		if(!C.active)
 			effect_str[C] = 0
@@ -279,7 +288,8 @@
 
 		APPLY_CORNER(C)
 
-	for(var/datum/lighting_corner/C in effect_str - corners) // Old, now gone, corners.
+	for(var/datum/lighting_corner/C typeless in effect_str - corners) // Old, now gone, corners.
+		TYPELESS_CRUTCH(C, /datum/lighting_corner)
 		REMOVE_CORNER(C)
 		C.affecting -= src
 		effect_str -= C

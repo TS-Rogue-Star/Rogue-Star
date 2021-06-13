@@ -99,6 +99,9 @@
 
 	return null
 
+/obj/machinery/atmospherics/unary/proc/broadcast_status()
+	return 0
+
 // Check if there are any other atmos machines in the same turf that will block this machine from initializing.
 // Intended for use when a frame-constructable machine (i.e. not made from pipe fittings) wants to wrench down and connect.
 // Returns TRUE if something is blocking, FALSE if its okay to continue.

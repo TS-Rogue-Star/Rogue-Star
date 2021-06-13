@@ -252,7 +252,8 @@ Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_coun
 			stoplag()
 
 	// Invalidate all zones
-	for(var/zone/zone in zones)
+	for(var/zone/zone typeless in zones)
+		TYPELESS_CRUTCH(zone, /zone)
 		zone.c_invalidate()
 
 	// Reset all the lists
