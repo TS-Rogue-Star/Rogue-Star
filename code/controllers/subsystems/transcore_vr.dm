@@ -50,7 +50,8 @@ SUBSYSTEM_DEF(transcore)
 		src.current_run.Cut()
 		for(var/key in databases)
 			var/datum/transcore_db/db = databases[key]
-			for(var/obj/item/weapon/implant/backup/imp as anything in db.implants)
+			for(var/obj/item/weapon/implant/backup/imp typeless in db.implants)
+				TYPELESS_CRUTCH(imp, /obj/item/weapon/implant/backup)
 				src.current_run[imp] = db
 
 	var/list/current_run = src.current_run
