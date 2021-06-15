@@ -752,8 +752,9 @@
 
 	w_class = ITEMSIZE_SMALL
 	on = 0
-	brightness_on = 5
+	light_range = 5
 	light_overlay = null
+	light_system = MOVABLE_LIGHT
 
 	action_button_name = "Toggle pom-pom"
 
