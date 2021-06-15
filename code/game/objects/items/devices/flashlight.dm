@@ -12,6 +12,7 @@
 	light_range = 4 //luminosity when on
 	light_power = 0.8	//lighting power when on
 	light_color = "#FFFFFF" //LIGHT_COLOR_INCANDESCENT_FLASHLIGHT	//lighting colour when on
+	light_cone_y_offset = -7
 	
 	var/on = 0
 	
@@ -43,8 +44,7 @@
 	if(power_usage)
 		if(cell.use(power_usage) != power_usage) // we weren't able to use our full power_usage amount!
 			visible_message("<span class='warning'>\The [src] flickers before going dull.</span>")
-			set_light(0)
-			playsound(src, 'sound/effects/sparks3.ogg', 10, 1, -3) //Small cue that your light went dull in your pocket.
+			playsound(src, 'sound/effects/sparks3.ogg', 10, 1, -3) //Small cue that your light went dull in your pocket. //VOREStation Edit
 			on = 0
 			update_brightness()
 			return PROCESS_KILL

@@ -186,12 +186,11 @@ GLOBAL_LIST_BOILERPLATE(allCasters, /obj/machinery/newscaster)
 	if(!ispowered || isbroken)
 		icon_state = "newscaster_off"
 		if(isbroken) //If the thing is smashed, add crack overlay on top of the unpowered sprite.
-			overlays.Cut()
-			overlays += image(icon, "crack3")
+			cut_overlays()
+			add_overlay("crack3")
 		return
 
-	overlays.Cut() //reset overlays
-
+	cut_overlays() //reset overlays
 	if(news_network.wanted_issue) //wanted icon state, there can be no overlays on it as it's a priority message
 		icon_state = "newscaster_wanted"
 		return
@@ -200,7 +199,7 @@ GLOBAL_LIST_BOILERPLATE(allCasters, /obj/machinery/newscaster)
 		overlays += "newscaster_alert"
 
 	if(hitstaken > 0) //Cosmetic damage overlay
-		overlays += image(icon, "crack[hitstaken]")
+		add_overlay("crack[hitstaken]")
 
 	icon_state = "newscaster_normal"
 	return
