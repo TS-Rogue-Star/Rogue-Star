@@ -464,9 +464,8 @@
 	blood_sprite_state = "helmetblood"
 
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
-	light_cone_y_offset = 14
+	light_cone_y_offset = 11
 
-	var/on = FALSE
 	var/light_overlay = "helmet_light"
 	var/image/helmet_light
 
@@ -483,7 +482,7 @@
 			to_chat(user, "You cannot toggle the light while in this [user.loc]")
 			return
 		update_flashlight(user)
-		to_chat(user, "You [on ? "enable" : "disable"] the helmet light.")
+		to_chat(user, "You [light_on ? "enable" : "disable"] the helmet light.")
 	else
 		return ..(user)
 
