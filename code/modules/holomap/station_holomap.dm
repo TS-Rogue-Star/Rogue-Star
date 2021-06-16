@@ -169,7 +169,7 @@
 	if(!holomap_datum)
 		return //Not yet.
 		
-	overlays.Cut()
+	cut_overlays()
 	if(stat & BROKEN)
 		icon_state = "station_mapb"
 	else if((stat & NOPOWER) || !anchored)
@@ -189,12 +189,12 @@
 		floor_markings.dir = src.dir
 		floor_markings.pixel_x = -src.pixel_x
 		floor_markings.pixel_y = -src.pixel_y
-		overlays += floor_markings
+		add_overlay(floor_markings)
 
 	if(panel_open)
-		overlays += "station_map-panel"
+		add_overlay("station_map-panel")
 	else
-		overlays -= "station_map-panel"
+		cut_overlay("station_map-panel")
 
 /obj/machinery/station_map/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	src.add_fingerprint(user)

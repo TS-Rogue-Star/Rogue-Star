@@ -38,11 +38,11 @@
 			gen_emissive_blocker.color = GLOB.em_block_color
 			gen_emissive_blocker.dir = dir
 			gen_emissive_blocker.appearance_flags |= appearance_flags
-			add_overlay(list(gen_emissive_blocker))
+			add_overlay(list(gen_emissive_blocker), TRUE)
 		if(EMISSIVE_BLOCK_UNIQUE)
 			render_target = ref(src)
 			em_block = new(src, render_target)
-			add_overlay(list(em_block))
+			add_overlay(list(em_block), TRUE)
 	if(opacity)
 		AddElement(/datum/element/light_blocking)
 	switch(light_system)

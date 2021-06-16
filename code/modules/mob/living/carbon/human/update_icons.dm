@@ -207,7 +207,7 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 		else
 			DI = damage_icon_parts[cache_index]
 
-		standing_image.overlays += DI
+		standing_image.add_overlay(DI)
 
 	overlays_standing[DAMAGE_LAYER]	= standing_image
 	apply_layer(DAMAGE_LAYER)
@@ -484,7 +484,7 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 	
 	var/image/semifinal = image(face_standing, layer = BODY_LAYER+HAIR_LAYER, "pixel_y" = head_organ.head_offset)
 	if(em_block_ears)
-		semifinal.overlays += em_block_ears
+		semifinal.overlays += em_block_ears // Leaving this as overlays +=
 
 	overlays_standing[HAIR_LAYER] = semifinal
 	apply_layer(HAIR_LAYER)
@@ -574,7 +574,7 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 
 	for(var/mut in mutations)
 		if(mut == LASER)
-			standing.overlays += "lasereyes_s" //TODO
+			standing.overlays += "lasereyes_s" // Leaving this as overlays +=
 
 	overlays_standing[MUTATIONS_LAYER]	= standing
 	apply_layer(MUTATIONS_LAYER)
@@ -1075,7 +1075,7 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 	for(var/datum/modifier/M in modifiers)
 		if(M.mob_overlay_state)
 			var/image/I = image(icon = 'icons/mob/modifier_effects.dmi', icon_state = M.mob_overlay_state)
-			effects.overlays += I //TODO, this compositing is annoying.
+			effects.overlays += I // Leaving this as overlays +=
 
 	overlays_standing[MODIFIER_EFFECTS_LAYER] = effects
 
@@ -1121,7 +1121,7 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 	for(var/obj/item/organ/external/E in organs)
 		if(E.open)
 			var/image/I = image(icon = 'icons/mob/surgery.dmi',  icon_state = "[E.icon_name][round(E.open)]", layer = BODY_LAYER+SURGERY_LAYER)
-			total.overlays += I //TODO: This compositing is annoying
+			total.overlays += I // Leaving this as overlays +=
 
 	if(total.overlays.len)
 		overlays_standing[SURGERY_LAYER] = total
@@ -1136,7 +1136,7 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 		var/icon/wing_s = new/icon("icon" = synthetic.icon, "icon_state" = "wing") //I dunno. If synths have some custom wing?
 		wing_s.Blend(rgb(src.r_skin, src.g_skin, src.b_skin), species.color_mult ? ICON_MULTIPLY : ICON_ADD)
 		var/image/working = image(wing_s)
-		working.overlays += em_block_image_generic(working)
+		working.overlays += em_block_image_generic(working) // Leaving this as overlays +=
 		return working
 
 	//If you have custom wings selected
@@ -1162,7 +1162,7 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 				qdel(overlay)
 		var/image/working = image(wing_s)
 		if(wing_style.em_block)
-			working.overlays += em_block_image_generic(working)
+			working.overlays += em_block_image_generic(working) // Leaving this as overlays +=
 		return working
 
 /mob/living/carbon/human/proc/get_ears_overlay()
@@ -1223,7 +1223,7 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 
 		var/image/working = image(tail_s)
 		if(tail_style.em_block)
-			working.overlays += em_block_image_generic(working)
+			working.overlays += em_block_image_generic(working) // Leaving this as overlays +=
 
 		if(isTaurTail(tail_style))
 			var/datum/sprite_accessory/tail/taur/taurtype = tail_style

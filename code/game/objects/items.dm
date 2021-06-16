@@ -633,7 +633,7 @@ var/list/global/slot_flags_enumeration = list(
 
 	//Make the blood_overlay have the proper color then apply it.
 	blood_overlay.color = blood_color
-	overlays += blood_overlay
+	add_overlay(blood_overlay)
 
 	//if this blood isn't already in the list, add it
 	if(istype(M))
@@ -915,7 +915,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 
 	var/mutable_appearance/blocker_overlay = mutable_appearance(standing.icon, standing.icon_state, plane = PLANE_EMISSIVE, appearance_flags = KEEP_APART)
 	blocker_overlay.color = GLOB.em_block_color
-	standing.overlays += blocker_overlay
+	standing.add_overlay(blocker_overlay)
 	return standing
 
 /obj/item/MouseEntered(location,control,params)
