@@ -187,8 +187,10 @@
 	alpha = 255
 
 /obj/screen/plane_master/lighting/backdrop(mob/mymob)
+	/* I'm unconvinced.
 	mymob.overlay_fullscreen("lighting_backdrop_lit", /obj/screen/fullscreen/lighting_backdrop/lit)
 	mymob.overlay_fullscreen("lighting_backdrop_unlit", /obj/screen/fullscreen/lighting_backdrop/unlit)
+	*/
 
 /*!
  * This system works by exploiting BYONDs color matrix filter to use layers to handle emissive blockers.

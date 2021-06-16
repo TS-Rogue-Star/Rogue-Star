@@ -140,6 +140,7 @@
 	transform = matrix(200, 0, 0, 0, 200, 0)
 	plane = PLANE_LIGHTING
 	blend_mode = BLEND_OVERLAY
+	show_when_dead = TRUE
 
 //Provides darkness to the back of the lighting plane
 /obj/screen/fullscreen/lighting_backdrop/lit

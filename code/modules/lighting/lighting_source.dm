@@ -294,10 +294,10 @@
 /datum/light_source/sun/New()
 	return
 
-/datum/light_source/force_update()
+/datum/light_source/sun/force_update()
 	return
 
-/datum/light_source/vis_update()
+/datum/light_source/sun/vis_update()
 	return
 
 /datum/light_source/sun/update_corners(var/list/turfs_to_update)
