@@ -59,9 +59,8 @@ SUBSYSTEM_DEF(planets)
 			P.planet_walls += T
 		else if(istype(T, /turf/simulated) && T.outdoors)
 			P.planet_floors += T
-			T.vis_contents |= P.weather_holder.visuals
-			T.vis_contents |= P.weather_holder.special_visuals
-
+			P.weather_holder.apply_to_turf(T)
+			P.sun_holder.apply_to_turf(T)
 
 /datum/controller/subsystem/planets/proc/removeTurf(var/turf/T,var/is_edge)
 	if(z_to_planet.len >= T.z)
@@ -72,8 +71,8 @@ SUBSYSTEM_DEF(planets)
 			P.planet_walls -= T
 		else
 			P.planet_floors -= T
-			T.vis_contents -= P.weather_holder.visuals
-			T.vis_contents -= P.weather_holder.special_visuals
+			P.weather_holder.remove_from_turf(T)
+			P.sun_holder.remove_from_turf(T)
 
 
 /datum/controller/subsystem/planets/fire(resumed = 0)
@@ -118,13 +117,10 @@ SUBSYSTEM_DEF(planets)
 
 /datum/controller/subsystem/planets/proc/updateSunlight(var/datum/planet/P)
 	var/new_brightness = P.sun["brightness"]
-	P.sun_source.light_power = new_brightness
+	P.sun_holder.update_brightness(new_brightness)
 	
 	var/new_color = P.sun["color"]
-	P.sun_source.light_color = new_color
-	
-	// Ask our light source to update all the corners on these turfs
-	P.sun_source.update_corners(P.planet_floors + P.planet_walls)
+	P.sun_holder.update_color(new_color)
 
 /datum/controller/subsystem/planets/proc/updateTemp(var/datum/planet/P)
 	//Set new temperatures
