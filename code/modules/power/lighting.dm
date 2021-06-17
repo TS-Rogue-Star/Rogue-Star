@@ -283,7 +283,7 @@ var/global/list/light_type_cache = list()
 	plane = OBJ_PLANE
 	layer = OBJ_LAYER
 	desc = "A floor lamp."
-	light_type = /obj/item/weapon/light/bulb
+	light_type = /obj/item/weapon/light/bulb/large
 	construct_type = /obj/machinery/light_construct/flamp
 	shows_alerts = FALSE	//VOREStation Edit
 	var/lamp_shade = 1
@@ -900,16 +900,16 @@ var/global/list/light_type_cache = list()
 
 	///The raidus in turfs this light will reach. It will be at it's most dim this many turfs away.
 	/// This is also used in power draw calculation for machinery/lights.
-	var/brightness_range = 2
+	var/brightness_range = 8
 	///The light will fall off over more/less range based on this. The formula is complicated.
 	var/brightness_power = 1
 	///The color of the light emitted.
 	var/brightness_color = LIGHT_COLOR_INCANDESCENT_TUBE
 
 	///Replaces brightness_range during nightshifts.
-	var/nightshift_range = 7
+	var/nightshift_range = 8
 	///Replaces brightness_power during nightshifts.
-	var/nightshift_power = 0.5
+	var/nightshift_power = 0.45
 	///Replaces brightness_color during nightshifts.
 	var/nightshift_color = LIGHT_COLOR_NIGHTSHIFT
 	
@@ -948,6 +948,15 @@ var/global/list/light_type_cache = list()
 
 	nightshift_range = 3
 	nightshift_power = 0.5
+
+// For 'floor lamps' in outdoor use and such
+/obj/item/weapon/light/bulb/large
+	name = "large light bulb"
+	brightness_range = 7
+	brightness_power = 1.5
+	
+	nightshift_range = 4
+	nightshift_power = 0.75
 
 /obj/item/weapon/light/throw_impact(atom/hit_atom)
 	..()

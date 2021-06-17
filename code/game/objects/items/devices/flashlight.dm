@@ -270,7 +270,7 @@
 	icon_state = "lamp"
 	force = 10
 	center_of_mass = list("x" = 13,"y" = 11)
-	light_range = 10
+	light_range = 5
 	w_class = ITEMSIZE_LARGE
 	power_use = 0
 	on = 1
@@ -282,7 +282,6 @@
 	desc = "A classic green-shaded desk lamp."
 	icon_state = "lampgreen"
 	center_of_mass = list("x" = 15,"y" = 11)
-	light_range = 5
 	light_color = "#FFC58F"
 
 /obj/item/device/flashlight/lamp/verb/toggle_light()
