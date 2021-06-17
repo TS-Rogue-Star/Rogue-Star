@@ -7,6 +7,7 @@ FIRE ALARM
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire"
 	layer = ABOVE_WINDOW_LAYER
+	blocks_emissive = FALSE
 	var/detecting = 1.0
 	var/working = 1.0
 	var/time = 10.0

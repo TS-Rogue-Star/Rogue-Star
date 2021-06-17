@@ -11,6 +11,7 @@
 	use_power = USE_POWER_IDLE
 	idle_power_usage = 10
 	power_channel = LIGHT
+	blocks_emissive = FALSE
 	var/on = 1
 	var/area/area = null
 	var/otherarea = null

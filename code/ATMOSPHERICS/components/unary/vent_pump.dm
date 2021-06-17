@@ -19,6 +19,7 @@
 	power_rating = 30000			//7500 W ~ 10 HP //VOREStation Edit - 30000 W
 
 	connect_types = CONNECT_TYPE_REGULAR|CONNECT_TYPE_SUPPLY //connects to regular and supply pipes
+	blocks_emissive = FALSE
 
 	var/area/initial_loc
 	level = 1

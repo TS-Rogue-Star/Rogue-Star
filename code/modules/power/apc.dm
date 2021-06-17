@@ -85,6 +85,7 @@ GLOBAL_LIST_EMPTY(apcs)
 	use_power = USE_POWER_OFF
 	clicksound = "switch"
 	req_access = list(access_engine_equip)
+	blocks_emissive = FALSE
 	var/area/area
 	var/areastring = null
 	var/obj/item/weapon/cell/cell

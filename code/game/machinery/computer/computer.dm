@@ -7,6 +7,7 @@
 	use_power = USE_POWER_IDLE
 	idle_power_usage = 300
 	active_power_usage = 300
+	blocks_emissive = FALSE
 	var/processing = 0
 
 	var/icon_keyboard = "generic_key"
