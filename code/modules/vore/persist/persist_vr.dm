@@ -80,8 +80,12 @@
 			return
 
 		// Okay, lets do a few checks to see if we should really save tho!
-		if(!prefs_vr.load_character(persister.mind.loaded_from_slot))
-			warning("Persist (P4P): [persister.mind] was loaded from slot [persister.mind.loaded_from_slot] but loading prefs failed.")
+		if(!prefs_vr.load_vore(persister.mind.loaded_from_slot))
+			warning("Persist (P4P): [persister.mind] was loaded from slot [persister.mind.loaded_from_slot] but loading vore failed.")
+			return // Failed to load character
+
+		if(!prefs_vr.load_nif(persister.mind.loaded_from_slot))
+			warning("Persist (P4P): [persister.mind] was loaded from slot [persister.mind.loaded_from_slot] but loading vore failed.")
 			return // Failed to load character
 
 		// For now as a safety measure we will only save if the name matches.
