@@ -64,6 +64,34 @@
 		return prefs
 
 /**
+ * Prep for save: returns a preferences object if we're ready and allowed to save this mob.
+ */
+/proc/prep_for_persist_vr(var/mob/persister)
+	if(!istype(persister))
+		crash_with("Persist (P4P): Given non-mob [persister].")
+		return
+
+	// Find out of this mob is a proper mob!
+	if (persister.mind && persister.mind.loaded_from_ckey)
+		// Okay this mob has a real loaded-from-savefile mind in it!
+		var/datum/vore_preferences/prefs_vr = preferences_datums_vr[persister.mind.loaded_from_ckey]
+		if(!prefs_vr)
+			warning("Persist (P4P): [persister.mind] was loaded from ckey [persister.mind.loaded_from_ckey] but no prefs datum found.")
+			return
+
+		// Okay, lets do a few checks to see if we should really save tho!
+		if(!prefs_vr.load_character(persister.mind.loaded_from_slot))
+			warning("Persist (P4P): [persister.mind] was loaded from slot [persister.mind.loaded_from_slot] but loading prefs failed.")
+			return // Failed to load character
+
+		// For now as a safety measure we will only save if the name matches.
+		if(prefs.real_name != persister.real_name)
+			log_debug("Persist (P4P): Skipping [persister] because ORIG:[persister.real_name] != CURR:[prefs.real_name].")
+			return
+
+		return prefs
+
+/**
  * Called when mob despawns early (via cryopod)!
  */
 /hook/despawn/proc/persist_despawned_mob(var/mob/occupant, var/obj/machinery/cryopod/pod)
@@ -223,15 +251,15 @@
 * towards future shenanigans such as upgradable NIFs or different types or things of that nature,
 * without invoking the need for a bunch of different save file variables.
 */
-/proc/persist_nif_data(var/mob/living/carbon/human/H,var/datum/preferences/prefs)
+/proc/persist_nif_data(var/mob/living/carbon/human/H,var/datum/preferences/prefs_vr)
 	if(!istype(H))
 		crash_with("Persist (NIF): Given a nonhuman: [H]")
 		return
 
-	if(!prefs)
-		prefs = prep_for_persist(H)
+	if(!prefs_vr)
+		prefs_vr = prep_for_persist(H)
 
-	if(!prefs)
+	if(!prefs_vr)
 		warning("Persist (NIF): [H] has no prefs datum, skipping")
 		return
 
@@ -242,7 +270,7 @@
 	//should keep it even though it was probably doing the quick-calibrate, and their
 	//owner will have been pre-set during the constructor.
 	if(nif && !(nif.stat == NIF_INSTALLING && !nif.owner))
-		prefs.nif_path = nif.type
+		prefs_vr.nif_path = nif.type
 		prefs.nif_durability = nif.durability
 		prefs.nif_savedata = nif.save_data.Copy()
 	else

@@ -19,7 +19,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 
 -Aro <3 */
 
-#define VORE_VERSION	2	//This is a Define so you don't have to worry about magic numbers.
+#define VORE_VERSION	3	//This is a Define so you don't have to worry about magic numbers.
 
 //
 // Overrides/additions to stock defines go here, as well as hooks. Sort them by
@@ -31,15 +31,9 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 //
 // The datum type bolted onto normal preferences datums for storing Virgo stuff
 //
+var/list/preferences_datums_vr = list()
 /client
 	var/datum/vore_preferences/prefs_vr
-
-/hook/client_new/proc/add_prefs_vr(client/C)
-	C.prefs_vr = new/datum/vore_preferences(C)
-	if(C.prefs_vr)
-		return TRUE
-
-	return FALSE
 
 /datum/vore_preferences
 	//Actual preferences
@@ -63,8 +57,14 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	var/vore_taste = "nothing in particular"
 	var/vore_smell = "nothing in particular"
 
+	var/nif_type = null
+	var/nif_health = 0
+	var/list/nif_savedata = null
+	var/died_with_nif = FALSE
+
 	//Mechanically required
-	var/path
+	var/path_vore
+	var/path_nif
 	var/slot
 	var/client/client
 	var/client_ckey
@@ -73,7 +73,9 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	if(istype(C))
 		client = C
 		client_ckey = C.ckey
+		preload()
 		load_vore()
+		load_nif()
 
 //
 //	Check if an object is capable of eating things, based on vore_organs
@@ -92,16 +94,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 /proc/check_belly(atom/movable/A)
 	return isbelly(A.loc)
 
-//
-// Save/Load Vore Preferences
-//
-/datum/vore_preferences/proc/load_path(ckey, slot, filename="character", ext="json")
-	if(!ckey || !slot)
-		return
-	path = "data/player_saves/[copytext(ckey,1,2)]/[ckey]/vore/[filename][slot].[ext]"
-
-
-/datum/vore_preferences/proc/load_vore()
+/datum/vore_preferences/proc/preload()
 	if(!client || !client_ckey)
 		return FALSE //No client, how can we save?
 	if(!client.prefs || !client.prefs.default_slot)
@@ -109,15 +102,25 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 
 	slot = client.prefs.default_slot
 
-	load_path(client_ckey,slot)
+	load_paths(client_ckey,slot)
 
-	if(!path)
+/datum/vore_preferences/proc/load_paths(ckey, slot, filename="character", ext="json")
+	if(!ckey || !slot)
+		return
+	path_vore = "data/player_saves/[copytext(ckey,1,2)]/[ckey]/vore/[filename][slot].[ext]"
+	path_nif = "data/player_saves/[copytext(ckey,1,2)]/[ckey]/vore/[filename][slot]_nif.[ext]"
+
+//
+// Save/Load Vore Preferences
+//
+/datum/vore_preferences/proc/load_vore()
+	if(!path_vore)
 		return FALSE //Path couldn't be set?
-	if(!fexists(path)) //Never saved before
+	if(!rustg_file_exists(path_vore)) //Never saved before
 		save_vore() //Make the file first
 		return TRUE
 
-	var/list/json_from_file = json_decode(file2text(path))
+	var/list/json_from_file = json_decode(rustg_file_read(path_vore))
 	if(!json_from_file)
 		return FALSE //My concern grows
 
@@ -177,7 +180,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	return TRUE
 
 /datum/vore_preferences/proc/save_vore()
-	if(!path)
+	if(!path_vore)
 		return FALSE
 
 	var/version = VORE_VERSION	//For "good times" use in the future
@@ -205,14 +208,94 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	//List to JSON
 	var/json_to_file = json_encode(settings_list)
 	if(!json_to_file)
-		log_debug("Saving: [path] failed jsonencode")
+		log_debug("Saving: [path_vore] failed jsonencode")
 		return FALSE
 
 	//Write it out
-	rustg_file_write(json_to_file, path)
+	rustg_file_write(json_to_file, path_vore)
 
-	if(!fexists(path))
-		log_debug("Saving: [path] failed file write")
+	if(!rustg_file_exists(path_vore))
+		log_debug("Saving: [path_vore] failed file write")
+		return FALSE
+
+	return TRUE
+
+//
+// Save/Load NIF persistence
+//
+/datum/vore_preferences/proc/load_nif()
+	if(!path_nif)
+		return FALSE //Path couldn't be set?
+	if(!rustg_file_exists(path_nif)) //Never saved before
+		save_nif() //Make the file first
+		return TRUE
+
+	// Legacy conversion
+	var/save_now = FALSE
+	if(client?.prefs.legacy_nif_type)
+		save_now = TRUE
+		nif_type = client.prefs.legacy_nif_type
+		nif_health = client.prefs.legacy_nif_dura
+		nif_savedata = client.prefs.legacy_nif_savedata
+		died_with_nif = FALSE
+
+		client.prefs.legacy_nif_type = null
+		client.prefs.legacy_nif_dura = null
+		client.prefs.legacy_nif_savedata = null
+		client.prefs.save_character()
+	// Normal loading
+	else
+		var/list/json_from_file = json_decode(rustg_file_read(path_nif))
+		if(!json_from_file)
+			return FALSE //My concern grows
+
+		var/version = json_from_file["version"]
+		json_from_file = patch_version(json_from_file,version)
+
+		nif_type = text2path(json_from_file["nif_type"])
+		nif_health = json_from_file["nif_health"]
+		nif_savedata = json_from_file["nif_savedata"]
+		died_with_nif = json_from_file["died_with_nif"]
+	
+	//Quick sanitize
+	if(!isnum(nif_health))
+		nif_health = 0
+	if(isnull(died_with_nif))
+		died_with_nif = FALSE
+	if(!isnull(resizable) || ispath(nif_type))
+		nif_type = null
+	if(!islist(nif_savedata))
+		nif_savedata = list()
+
+	if(save_now)
+		save_nif()
+
+	return TRUE
+
+/datum/vore_preferences/proc/save_nif()
+	if(!path_nif)
+		return FALSE
+
+	var/version = VORE_VERSION	//For "good times" use in the future
+	var/list/settings_list = list(
+			"version"				= version,
+			"nif_type"				= "[nif_type]", // type to text
+			"nif_health"			= nif_health,
+			"nif_savedata"			= nif_savedata.Copy(),
+			"died_with_nif"			= died_with_nif
+		)
+
+	//List to JSON
+	var/json_to_file = json_encode(settings_list)
+	if(!json_to_file)
+		log_debug("Saving: [path_nif] failed jsonencode")
+		return FALSE
+
+	//Write it out
+	rustg_file_write(json_to_file, path_nif)
+
+	if(!fexists(path_nif))
+		log_debug("Saving: [path_nif] failed file write")
 		return FALSE
 
 	return TRUE
