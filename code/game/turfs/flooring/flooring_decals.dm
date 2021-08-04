@@ -34,14 +34,18 @@ var/list/floor_decals = list()
 		var/cache_key = get_cache_key(T)
 		var/image/I = floor_decals[cache_key]
 		if(!I)
-			I = image(icon = icon, icon_state = icon_state, dir = dir)
-			I.layer = MAPPER_DECAL_LAYER
-			I.color = color
-			I.alpha = alpha
+			I = make_decal_image()
 			floor_decals[cache_key] = I
 		LAZYADD(T.decals, I) // Add to its decals list (so it remembers to re-apply after it cuts overlays)
 		T.add_overlay(I) // Add to its current overlays too.
 		return T
+
+/obj/effect/floor_decal/proc/make_decal_image()
+	var/image/I = image(icon = icon, icon_state = icon_state, dir = dir)
+	I.layer = MAPPER_DECAL_LAYER
+	I.color = color
+	I.alpha = alpha
+	return I
 
 /obj/effect/floor_decal/proc/get_cache_key(var/turf/T)
 	return "[alpha]-[color]-[dir]-[icon_state]-[T.layer]"

@@ -136,6 +136,7 @@ GLOBAL_LIST_EMPTY(fancy_shuttles)
 /obj/effect/floor_decal/fancy_shuttle
 	icon = 'icons/turf/fancy_shuttles/_fancy_helpers.dmi'
 	icon_state = "fancy_shuttle"
+	layer = DECAL_LAYER-1
 	var/icon_file
 	var/fancy_shuttle_tag
 
@@ -148,6 +149,9 @@ GLOBAL_LIST_EMPTY(fancy_shuttles)
 	icon_file = F.split_file
 	icon_state = "floors [x - F.x],[y - F.y]"
 	return ..()
+
+/obj/effect/floor_decal/fancy_shuttle/make_decal_image()
+	return image(icon = icon, icon_state = icon_state, layer = BUILTIN_DECAL_LAYER)
 
 /obj/effect/floor_decal/fancy_shuttle/get_cache_key(var/turf/T)
 	return "[alpha]-[color]-[dir]-[icon_state]-[T.layer]-[icon_file]"

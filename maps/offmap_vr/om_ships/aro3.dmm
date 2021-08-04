@@ -237,11 +237,14 @@
 /obj/structure/bed/chair/shuttle_padded{
 	dir = 1
 	},
-/obj/structure/cable/cyan{
-	icon_state = "2-8"
-	},
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "aro3boat"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
 	},
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/aroboat3)
@@ -812,7 +815,8 @@
 	dir = 8;
 	frequency = 1380;
 	id_tag = "aroboat3_docker";
-	pixel_x = 25
+	pixel_x = 25;
+	req_one_access = list(777)
 	},
 /obj/structure/bed/chair/shuttle_padded{
 	dir = 8
@@ -1368,9 +1372,11 @@
 /turf/simulated/floor/tiled/milspec,
 /area/aro3/medical)
 "it" = (
-/obj/effect/floor_decal/milspec/cargo,
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "aro3boat"
+	},
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/aroboat3)
@@ -1667,13 +1673,6 @@
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/aro3/medical)
-"ke" = (
-/obj/structure/fans/hardlight,
-/obj/machinery/door/blast/multi_tile/four_tile_hor_sec{
-	id = "aroshipshutter_ramp"
-	},
-/turf/simulated/floor/reinforced,
-/area/aro3/flight_deck)
 "kg" = (
 /obj/machinery/light{
 	dir = 4
@@ -2000,11 +1999,11 @@
 /turf/simulated/wall/rpshull,
 /area/space)
 "lY" = (
-/obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 4
-	},
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "aro3boat"
+	},
+/obj/structure/bed/chair/shuttle_padded{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/aroboat3)
@@ -2224,6 +2223,14 @@
 /obj/effect/floor_decal/milspec/monotile,
 /turf/simulated/floor/tiled/milspec,
 /area/aro3/function)
+"nr" = (
+/obj/structure/fans/hardlight,
+/obj/machinery/door/blast/angled{
+	dir = 2;
+	id = "aroshipshutter_ramp"
+	},
+/turf/simulated/floor/reinforced/airless,
+/area/aro3/flight_deck)
 "ns" = (
 /turf/simulated/wall/tgmc/durawall,
 /area/aro3/function)
@@ -2323,13 +2330,10 @@
 /turf/simulated/floor/wood,
 /area/aro3/suite_starboard)
 "oe" = (
-/obj/structure/sign/warning/vacuum{
-	pixel_x = 16;
-	pixel_y = -30
-	},
 /obj/effect/floor_decal/milspec/stripe{
 	dir = 1
 	},
+/obj/effect/floor_decal/milspec/stripe,
 /turf/simulated/floor/tiled/milspec,
 /area/aro3/flight_deck)
 "oh" = (
@@ -2498,6 +2502,7 @@
 /obj/effect/floor_decal/milspec/stripe{
 	dir = 6
 	},
+/obj/effect/floor_decal/milspec/stripe,
 /turf/simulated/floor/tiled/milspec,
 /area/aro3/flight_deck)
 "pl" = (
@@ -3776,7 +3781,12 @@
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/rpshull,
+/obj/structure/fans/hardlight,
+/obj/machinery/door/blast/angled{
+	dir = 2;
+	id = "aroshipshutter_ramp"
+	},
+/turf/simulated/floor/reinforced/airless,
 /area/aro3/flight_deck)
 "xI" = (
 /obj/structure/flora/pottedplant/unusual,
@@ -4031,7 +4041,6 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/structure/closet/emcloset,
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "aro3boat"
 	},
@@ -4300,11 +4309,8 @@
 /turf/simulated/floor/tiled/milspec,
 /area/aro3/kitchen)
 "Al" = (
-/obj/machinery/atmospherics/unary/vent_scrubber/on{
+/obj/structure/bed/chair/shuttle_padded{
 	dir = 8
-	},
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "aro3boat"
 	},
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/aroboat3)
@@ -4444,7 +4450,8 @@
 	name = "hangar shutters";
 	pixel_x = -28
 	},
-/obj/machinery/door/blast/multi_tile/four_tile_hor_sec{
+/obj/machinery/door/blast/angled{
+	dir = 2;
 	id = "aroshipshutter_ramp"
 	},
 /turf/simulated/floor/reinforced,
@@ -4617,6 +4624,10 @@
 	pixel_x = 28
 	},
 /obj/structure/fans/hardlight,
+/obj/machinery/door/blast/angled{
+	dir = 2;
+	id = "aroshipshutter_ramp"
+	},
 /turf/simulated/floor/reinforced,
 /area/aro3/flight_deck)
 "CN" = (
@@ -4652,11 +4663,16 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/aro3/hallway_bunkrooms)
 "Di" = (
-/obj/effect/floor_decal/industrial/warning/dust{
+/obj/effect/floor_decal/milspec/color/red/half{
 	dir = 1
 	},
-/turf/simulated/floor/reinforced/airless,
-/area/space)
+/obj/effect/floor_decal/milspec/stripe,
+/obj/machinery/computer/shuttle_control/explore/aroboat3{
+	dir = 4;
+	req_one_access = list(777)
+	},
+/turf/simulated/floor/tiled/milspec,
+/area/aro3/flight_deck)
 "Dk" = (
 /turf/simulated/floor/tiled/milspec/raised,
 /area/aro3/power)
@@ -4686,14 +4702,24 @@
 /turf/simulated/floor/tiled/milspec,
 /area/aro3/hallway_bunkrooms)
 "DA" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "aro3boat"
 	},
-/obj/effect/floor_decal/industrial/warning/dust{
-	dir = 1
+/obj/machinery/power/apc/angled/hidden{
+	dir = 8;
+	req_one_access = list(777)
 	},
-/turf/simulated/floor/reinforced/airless,
-/area/space)
+/obj/structure/cable/cyan,
+/obj/machinery/alarm/angled/hidden{
+	dir = 8;
+	req_one_access = list(777)
+	},
+/obj/structure/closet/autolok_wall{
+	dir = 1;
+	pixel_y = -32
+	},
+/turf/simulated/floor/tiled/steel,
+/area/shuttle/aroboat3)
 "DB" = (
 /obj/structure/cable/cyan{
 	icon_state = "2-8"
@@ -5043,18 +5069,11 @@
 /turf/simulated/floor/tiled/milspec,
 /area/aro3/workshop)
 "FY" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
-	},
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "aro3boat"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/aroboat3)
 "FZ" = (
@@ -6804,9 +6823,6 @@
 /turf/simulated/floor/reinforced/airless,
 /area/space)
 "Tb" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-4"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
@@ -6815,6 +6831,9 @@
 	},
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "aro3boat"
+	},
+/obj/structure/cable/cyan{
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/aroboat3)
@@ -7022,15 +7041,11 @@
 /turf/simulated/floor/tiled/milspec,
 /area/aro3/power)
 "UE" = (
-/obj/machinery/power/apc/angled/hidden{
-	dir = 8
-	},
-/obj/structure/cable/cyan{
-	icon_state = "0-4"
-	},
-/obj/effect/floor_decal/milspec/cargo,
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "aro3boat"
+	},
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/aroboat3)
@@ -7101,6 +7116,10 @@
 /area/space)
 "Vg" = (
 /obj/structure/fans/hardlight,
+/obj/machinery/door/blast/angled{
+	dir = 2;
+	id = "aroshipshutter_ramp"
+	},
 /turf/simulated/floor/reinforced,
 /area/aro3/flight_deck)
 "Vk" = (
@@ -7403,6 +7422,9 @@
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "aro3boat"
 	},
+/obj/structure/cable/cyan{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/aroboat3)
 "Yb" = (
@@ -7461,7 +7483,9 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/aro3/medical)
 "Yq" = (
-/obj/machinery/computer/shuttle_control/explore/aroboat3,
+/obj/machinery/computer/shuttle_control/explore/aroboat3{
+	req_one_access = list(777)
+	},
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "aro3boat"
 	},
@@ -17079,7 +17103,7 @@ NC
 Ty
 To
 Iq
-gH
+Di
 QA
 QA
 QA
@@ -17371,7 +17395,7 @@ FY
 Tb
 XV
 XV
-it
+DA
 QA
 ii
 Vg
@@ -17658,8 +17682,8 @@ QA
 QA
 QA
 oe
-Ur
-Di
+nr
+hD
 hD
 hD
 Au
@@ -17801,7 +17825,7 @@ MA
 MA
 pk
 xG
-DA
+te
 te
 te
 sV
@@ -17942,7 +17966,7 @@ Ov
 Ov
 Ov
 BJ
-ke
+Vg
 hD
 hD
 hD
