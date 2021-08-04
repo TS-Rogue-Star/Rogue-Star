@@ -69,7 +69,7 @@
 /datum/element/turf_z_transparency/proc/show_bottom_level(turf/our_turf)
 	if(!show_bottom_level)
 		return FALSE
-	var/turf/path = get_base_turf(our_turf.z) || /turf/space
+	var/turf/path = get_base_turf_by_area(our_turf.z) || /turf/space
 	if(!ispath(path))
 		path = text2path(path)
 		if(!ispath(path))

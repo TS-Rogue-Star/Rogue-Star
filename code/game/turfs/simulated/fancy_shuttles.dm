@@ -42,6 +42,7 @@
 	icon_state = "hull"
 	wall_masks = 'icons/turf/fancy_shuttles/_turf_helpers.dmi'
 	var/already_setup = FALSE
+	var/area_override // If you want to search a different area for the shuttle icon holder
 
 /turf/simulated/wall/fancy_shuttle/Initialize(mapload, materialtype, rmaterialtype, girdertype)
 	icon_state = ""
@@ -66,8 +67,12 @@
 	
 	cut_overlays()
 	if(!already_setup)
-		icon_state = null
-		var/obj/effect/fancy_shuttle/F = locate() in loc
+		var/area/area_to_search
+		if(area_override)
+			area_to_search = locate(area_to_search)
+		else
+			area_to_search = loc
+		var/obj/effect/fancy_shuttle/F = locate() in area_to_search
 		if(!F)
 			warning("Fancy shuttle wall at [x],[y],[z] couldn't locate a helper in [loc]")
 			return
@@ -86,11 +91,18 @@
 		add_overlay(damage_overlays[overlay])
 
 /obj/effect/floor_decal/fancy_shuttle
+	icon = 'icons/turf/fancy_shuttles/_turf_helpers.dmi'
 	icon_state = "fancy_shuttle"
 	var/icon_file
+	var/area_override // If you want to search a different area for the shuttle icon holder
 
 /obj/effect/floor_decal/fancy_shuttle/Initialize()
-	var/obj/effect/fancy_shuttle/F = locate() in loc.loc // if you didn't put me on a turf then not even god can help you
+	var/area/area_to_search
+	if(area_override)
+		area_to_search = locate(area_to_search)
+	else
+		area_to_search = loc.loc // if you didn't put me on a turf then not even god can help you
+	var/obj/effect/fancy_shuttle/F = locate() in area_to_search
 	icon = F.split_icon
 	icon_file = F.split_file
 	icon_state = "floors [x - F.x],[y - F.y]"
@@ -98,6 +110,20 @@
 
 /obj/effect/floor_decal/fancy_shuttle/get_cache_key(var/turf/T)
 	return "[alpha]-[color]-[dir]-[icon_state]-[T.layer]-[icon_file]"
+
+/**
+ * Invisible engine (otherwise the same as normal)
+ */
+/obj/machinery/atmospherics/unary/engine/fancy_shuttle
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "nothing"
+
+/obj/machinery/ion_engine/fancy_shuttle
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "nothing"
+
+/obj/machinery/ion_engine/fancy_shuttle/add_glow()
+	return
 
 /**
  * Escape shuttle
@@ -138,6 +164,16 @@
 	split_file = 'icons/turf/fancy_shuttles/dropship.dmi'
 /obj/effect/fancy_shuttle_floor_preview/dropship
 	icon = 'icons/turf/fancy_shuttles/dropship_preview.dmi'
+
+/**
+ * Orange line tram
+ * North facing: W:9, H:16
+ */
+/obj/effect/fancy_shuttle/orangeline
+	icon = 'icons/turf/fancy_shuttles/orangeline_preview.dmi'
+	split_file = 'icons/turf/fancy_shuttles/orangeline.dmi'
+/obj/effect/fancy_shuttle_floor_preview/orangeline
+	icon = 'icons/turf/fancy_shuttles/orangeline_preview.dmi'
 
 /**
  * Delivery shuttle
