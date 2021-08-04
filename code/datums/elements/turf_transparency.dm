@@ -34,6 +34,8 @@
 		if(!show_bottom_level(our_turf) && prune_on_fail) //If we cant show whats below, and we prune on fail, change the turf to plating as a fallback
 			our_turf.ChangeTurf(/turf/simulated/floor/plating)
 			return FALSE
+		else
+			return TRUE
 	if(init)
 		below_turf?.update_icon() // So the 'ceiling-less' overlay gets added.
 		our_turf.vis_contents += below_turf
