@@ -2,7 +2,8 @@
  * To map these, place down a fancy_shuttle_walls on the map and lay down /turf/simulated/wall/fancy_shuttle
  * everywhere that is included in the sprite. Up to you if you want to make some opacity=FALSE or density=FALSE
  * 
- * If you want flooring to look like the shuttle flooring, 
+ * If you want flooring to look like the shuttle flooring, put /obj/effect/floor_decal/fancy_shuttle on all of it.
+ * You can add your own decals on top of that. Just make sure to put the fancy_shuttle decal lowest.
  */
 
 /**
@@ -41,17 +42,19 @@
 	icon = 'icons/turf/fancy_shuttles/_turf_helpers.dmi'
 	icon_state = "hull"
 	wall_masks = 'icons/turf/fancy_shuttles/_turf_helpers.dmi'
-	var/already_setup = FALSE
 	var/area_override // If you want to search a different area for the shuttle icon holder
+	var/mutable_appearance/under_MA
 
 /turf/simulated/wall/fancy_shuttle/Initialize(mapload, materialtype, rmaterialtype, girdertype)
-	icon_state = ""
-	..()
-	return INITIALIZE_HINT_LATELOAD
-
-/turf/simulated/wall/fancy_shuttle/LateInitialize()
+	icon_state = null
 	. = ..()
-	AddElement(/datum/element/turf_z_transparency, TRUE)
+	do_underlay()
+
+/turf/simulated/wall/fancy_shuttle/pre_translate_A(turf/B)
+	. = ..()
+	if(under_MA)
+		underlays -= under_MA
+		under_MA = null
 
 /turf/simulated/wall/fancy_shuttle/window
 	opacity = FALSE
@@ -66,18 +69,32 @@
 		generate_overlays()
 	
 	cut_overlays()
-	if(!already_setup)
-		var/area/area_to_search
-		if(area_override)
-			area_to_search = locate(area_to_search)
-		else
-			area_to_search = loc
-		var/obj/effect/fancy_shuttle/F = locate() in area_to_search
-		if(!F)
-			warning("Fancy shuttle wall at [x],[y],[z] couldn't locate a helper in [loc]")
-			return
-		icon = F.split_icon
-		icon_state = "walls [x - F.x],[y - F.y]"
+	var/area/area_to_search
+	if(area_override)
+		area_to_search = locate(area_to_search)
+	else
+		area_to_search = loc
+	var/obj/effect/fancy_shuttle/F = locate() in area_to_search
+	if(!F)
+		warning("Fancy shuttle wall at [x],[y],[z] couldn't locate a helper in [loc]")
+		return
+	icon = F.split_icon
+	icon_state = "walls [x - F.x],[y - F.y]"
+
+	if(under_MA)
+		underlays -= under_MA
+		under_MA = null
+	var/turf/path = get_base_turf_by_area(src) || /turf/space
+	if(!ispath(path))
+		warning("[src] has invalid baseturf '[get_base_turf_by_area(src)]' in area '[get_area(src)]'")
+		path = /turf/space
+	
+	var/do_plane = ispath(path, /turf/space) ? SPACE_PLANE : null
+	var/do_state = ispath(path, /turf/space) ? "white" : initial(path.icon_state)
+	
+	under_MA = mutable_appearance(initial(path.icon), do_state, layer = TURF_LAYER-0.02, plane = do_plane)
+	under_MA.appearance_flags = RESET_ALPHA | RESET_COLOR
+	underlays += under_MA
 
 	if(damage != 0)
 		var/integrity = material.integrity

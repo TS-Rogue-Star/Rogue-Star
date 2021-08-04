@@ -104,6 +104,9 @@
 	//Are we doing shuttlework? Just to save another type check later.
 	var/shuttlework = 0
 
+	T.pre_translate_A(B)
+	T.pre_translate_B(T)
+
 	//Shuttle turfs handle their own fancy moving.
 	if(istype(T,/turf/simulated/shuttle))
 		shuttlework = 1
