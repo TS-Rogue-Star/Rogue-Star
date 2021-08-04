@@ -51,19 +51,16 @@ GLOBAL_LIST_EMPTY(fancy_shuttles)
 	icon_state = "hull"
 	wall_masks = 'icons/turf/fancy_shuttles/_fancy_helpers.dmi'
 	var/mutable_appearance/under_MA
+	var/obj/effect/overlay/vis/fancy_shuttle_space/light_slice
 	var/fancy_shuttle_tag
-
-/turf/simulated/wall/fancy_shuttle/Initialize(mapload, materialtype, rmaterialtype, girdertype)
-	if(!fancy_shuttle_tag)
-		error("Fancy shuttle wall at [x],[y],[z] has no fancy_shuttle_tag.")
-		return INITIALIZE_HINT_QDEL // will turn us into plating or space or something else fun
-	return ..()
 
 /turf/simulated/wall/fancy_shuttle/pre_translate_A(turf/B)
 	. = ..()
-	if(under_MA)
-		underlays -= under_MA
-		under_MA = null
+	remove_underlay()
+
+/turf/simulated/wall/fancy_shuttle/post_translate_B(turf/A)
+	apply_underlay()
+	return ..()
 
 /turf/simulated/wall/fancy_shuttle/window
 	opacity = FALSE
@@ -75,33 +72,46 @@ GLOBAL_LIST_EMPTY(fancy_shuttles)
 	opacity = FALSE
 	icon_state = "hull_nondense"
 
+/turf/simulated/wall/fancy_shuttle/proc/remove_underlay()
+	if(under_MA)
+		underlays -= under_MA
+		under_MA = null
+	if(light_slice)
+		qdel_null(light_slice)
+
+/turf/simulated/wall/fancy_shuttle/proc/apply_underlay()
+	remove_underlay()
+
+	var/turf/path = get_base_turf_by_area(src) || /turf/space
+	
+	var/do_plane = null
+	var/do_state = initial(path.icon_state)
+	var/do_icon = initial(path.icon)
+	if(ispath(path, /turf/space))
+		do_plane = SPACE_PLANE
+		do_state = "white"
+		light_slice = new(src)
+
+	under_MA = mutable_appearance(do_icon, do_state, layer = src.layer-0.02, plane = do_plane)
+	underlays += under_MA
+	if(light_slice)
+		vis_contents += light_slice
+
 // Trust me, this is WAY faster than the normal wall overlays shenanigans, don't worry about performance
 /turf/simulated/wall/fancy_shuttle/update_icon()
 	if(!damage_overlays[1])
 		generate_overlays()
 	
 	cut_overlays()
-	var/obj/effect/fancy_shuttle/F = GLOB.fancy_shuttles[fancy_shuttle_tag]
-	if(!F)
-		warning("Fancy shuttle wall at [x],[y],[z] couldn't locate a helper with tag [fancy_shuttle_tag]")
-		return
-	icon = F.split_icon
-	icon_state = "walls [x - F.x],[y - F.y]"
+	if(fancy_shuttle_tag) // after a shuttle jump it won't be set anymore, but the shuttle jump proc will set our icon and state
+		var/obj/effect/fancy_shuttle/F = GLOB.fancy_shuttles[fancy_shuttle_tag]
+		if(!F)
+			warning("Fancy shuttle wall at [x],[y],[z] couldn't locate a helper with tag [fancy_shuttle_tag]")
+			return
+		icon = F.split_icon
+		icon_state = "walls [x - F.x],[y - F.y]"
 
-	if(under_MA)
-		underlays -= under_MA
-		under_MA = null
-	var/turf/path = get_base_turf_by_area(src) || /turf/space
-	if(!ispath(path))
-		warning("[src] has invalid baseturf '[get_base_turf_by_area(src)]' in area '[get_area(src)]'")
-		path = /turf/space
-	
-	var/do_plane = ispath(path, /turf/space) ? SPACE_PLANE : null
-	var/do_state = ispath(path, /turf/space) ? "white" : initial(path.icon_state)
-	
-	under_MA = mutable_appearance(initial(path.icon), do_state, layer = TURF_LAYER-0.02, plane = do_plane)
-	under_MA.appearance_flags = RESET_ALPHA | RESET_COLOR
-	underlays += under_MA
+	apply_underlay()
 
 	if(damage != 0)
 		var/integrity = material.integrity
@@ -113,6 +123,21 @@ GLOBAL_LIST_EMPTY(fancy_shuttles)
 			overlay = damage_overlays.len
 
 		add_overlay(damage_overlays[overlay])
+
+/turf/simulated/wall/fancy_shuttle/update_connections()
+	return
+
+/turf/simulated/wall/fancy_shuttle/set_light(l_range, l_power, l_color, l_on)
+	return
+
+/obj/effect/overlay/vis/fancy_shuttle_space
+	icon = 'icons/turf/space.dmi'
+	icon_state = "white"
+	plane = PLANE_EMISSIVE
+	vis_flags = VIS_INHERIT_ID
+/obj/effect/overlay/vis/fancy_shuttle_space/New(var/turf/T)
+	..(null)
+	filters = filter(type = "alpha", icon = icon(T.icon, T.icon_state), flags = MASK_INVERSE)
 
 /obj/effect/floor_decal/fancy_shuttle
 	icon = 'icons/turf/fancy_shuttles/_fancy_helpers.dmi'
@@ -140,34 +165,19 @@ GLOBAL_LIST_EMPTY(fancy_shuttles)
 /obj/machinery/atmospherics/unary/engine/fancy_shuttle
 	icon = 'icons/turf/fancy_shuttles/_fancy_helpers.dmi'
 	icon_state = "gas_engine"
-
-/obj/machinery/atmospherics/unary/engine/fancy_shuttle/Initialize()
-	. = ..()
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "nothing"
+	invisibility = INVISIBILITY_MAXIMUM
 
 // Ion engine
 /obj/machinery/ion_engine/fancy_shuttle
 	icon = 'icons/turf/fancy_shuttles/_fancy_helpers.dmi'
 	icon_state = "ion_engine"
-
-/obj/machinery/ion_engine/fancy_shuttle/Initialize()
-	. = ..()
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "nothing"
-
-/obj/machinery/ion_engine/fancy_shuttle/add_glow()
-	return
+	invisibility = INVISIBILITY_MAXIMUM
 
 // Sensors
 /obj/machinery/shipsensors/fancy_shuttle
 	icon = 'icons/turf/fancy_shuttles/_fancy_helpers.dmi'
 	icon_state = "ship_sensors"
-
-/obj/machinery/shipsensors/fancy_shuttle/Initialize()
-	. = ..()
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "nothing"
+	invisibility = INVISIBILITY_MAXIMUM
 
 /**
  * Escape shuttle

@@ -349,8 +349,7 @@
 			powernets |= C.powernet
 
 	// Update our base turfs before we move, so that transparent turfs look good.
-	var/area/normal_area = destination.base_area || /area/space
-	var/new_base = initial(normal_area.base_turf) || /turf/space
+	var/new_base = destination.base_turf || /turf/space
 	for(var/area/A as anything in shuttle_area)
 		A.base_turf = new_base
 
