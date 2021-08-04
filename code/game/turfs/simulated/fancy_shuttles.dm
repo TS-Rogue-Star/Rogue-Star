@@ -51,7 +51,7 @@ GLOBAL_LIST_EMPTY(fancy_shuttles)
 	icon_state = "hull"
 	wall_masks = 'icons/turf/fancy_shuttles/_fancy_helpers.dmi'
 	var/mutable_appearance/under_MA
-	var/obj/effect/overlay/vis/fancy_shuttle_space/light_slice
+	var/mutable_appearance/under_EM
 	var/fancy_shuttle_tag
 
 /turf/simulated/wall/fancy_shuttle/pre_translate_A(turf/B)
@@ -76,8 +76,9 @@ GLOBAL_LIST_EMPTY(fancy_shuttles)
 	if(under_MA)
 		underlays -= under_MA
 		under_MA = null
-	if(light_slice)
-		qdel_null(light_slice)
+	if(under_EM)
+		underlays -= under_EM
+		under_EM = null
 
 /turf/simulated/wall/fancy_shuttle/proc/apply_underlay()
 	remove_underlay()
@@ -90,12 +91,14 @@ GLOBAL_LIST_EMPTY(fancy_shuttles)
 	if(ispath(path, /turf/space))
 		do_plane = SPACE_PLANE
 		do_state = "white"
-		light_slice = new(src)
+		
+		under_EM = mutable_appearance('icons/turf/space.dmi', "white", plane = PLANE_O_LIGHTING_VISUAL)
+		under_EM.filters = filter(type = "alpha", icon = icon(src.icon, src.icon_state), flags = MASK_INVERSE)
 
 	under_MA = mutable_appearance(do_icon, do_state, layer = src.layer-0.02, plane = do_plane)
 	underlays += under_MA
-	if(light_slice)
-		vis_contents += light_slice
+	if(under_EM)
+		underlays += under_EM
 
 // Trust me, this is WAY faster than the normal wall overlays shenanigans, don't worry about performance
 /turf/simulated/wall/fancy_shuttle/update_icon()
@@ -129,15 +132,6 @@ GLOBAL_LIST_EMPTY(fancy_shuttles)
 
 /turf/simulated/wall/fancy_shuttle/set_light(l_range, l_power, l_color, l_on)
 	return
-
-/obj/effect/overlay/vis/fancy_shuttle_space
-	icon = 'icons/turf/space.dmi'
-	icon_state = "white"
-	plane = PLANE_EMISSIVE
-	vis_flags = VIS_INHERIT_ID
-/obj/effect/overlay/vis/fancy_shuttle_space/New(var/turf/T)
-	..(null)
-	filters = filter(type = "alpha", icon = icon(T.icon, T.icon_state), flags = MASK_INVERSE)
 
 /obj/effect/floor_decal/fancy_shuttle
 	icon = 'icons/turf/fancy_shuttles/_fancy_helpers.dmi'
