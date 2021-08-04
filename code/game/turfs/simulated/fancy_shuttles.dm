@@ -1,11 +1,14 @@
 /**
  * To map these, place down a fancy_shuttle_walls on the map and lay down /turf/simulated/wall/fancy_shuttle
  * everywhere that is included in the sprite. Up to you if you want to make some opacity=FALSE or density=FALSE
+ * Set a matching fancy_shuttle_tag on your walls and on the /obj/effect/fancy_shuttle. Make sure it's unique.
  * 
  * If you want flooring to look like the shuttle flooring, put /obj/effect/floor_decal/fancy_shuttle on all of it.
  * You can add your own decals on top of that. Just make sure to put the fancy_shuttle decal lowest.
+ * Also set the same tag as your /obj/effect/fancy_shuttle on the decals.
  */
 
+GLOBAL_LIST_EMPTY(fancy_shuttles)
 /**
  * Generic shuttle
  * North facing: W:5, H:9
@@ -14,16 +17,21 @@
 	name = "shuttle wall decorator"
 	icon = 'icons/turf/fancy_shuttles/generic_preview.dmi'
 	icon_state = "walls"
-	plane = PLATING_PLANE
+	plane = TURF_PLANE
 	layer = ABOVE_TURF_LAYER
+	invisibility = INVISIBILITY_MAXIMUM
 	alpha = 90 // so you can see it a bit easier on the map if you placed walls properly
 	var/split_file = 'icons/turf/fancy_shuttles/generic.dmi'
 	var/icon/split_icon
+	var/fancy_shuttle_tag
 
-/obj/effect/fancy_shuttle/Initialize()
+/obj/effect/fancy_shuttle/New() // has to be very early so others can grab it
 	. = ..()
-	icon_state = null
+	if(!fancy_shuttle_tag)
+		error("Fancy shuttle with no tag at [x],[y],[z]! Type is: [type]")
+		return INITIALIZE_HINT_QDEL
 	split_icon = icon(split_file, null, dir)
+	GLOB.fancy_shuttles[fancy_shuttle_tag] = src
 
 /obj/effect/fancy_shuttle_floor_preview
 	name = "shuttle floor preview"
@@ -39,16 +47,17 @@
 
 // Only icon changes are damage
 /turf/simulated/wall/fancy_shuttle
-	icon = 'icons/turf/fancy_shuttles/_turf_helpers.dmi'
+	icon = 'icons/turf/fancy_shuttles/_fancy_helpers.dmi'
 	icon_state = "hull"
-	wall_masks = 'icons/turf/fancy_shuttles/_turf_helpers.dmi'
-	var/area_override // If you want to search a different area for the shuttle icon holder
+	wall_masks = 'icons/turf/fancy_shuttles/_fancy_helpers.dmi'
 	var/mutable_appearance/under_MA
+	var/fancy_shuttle_tag
 
 /turf/simulated/wall/fancy_shuttle/Initialize(mapload, materialtype, rmaterialtype, girdertype)
-	icon_state = null
-	. = ..()
-	do_underlay()
+	if(!fancy_shuttle_tag)
+		error("Fancy shuttle wall at [x],[y],[z] has no fancy_shuttle_tag.")
+		return INITIALIZE_HINT_QDEL // will turn us into plating or space or something else fun
+	return ..()
 
 /turf/simulated/wall/fancy_shuttle/pre_translate_A(turf/B)
 	. = ..()
@@ -62,21 +71,19 @@
 
 /turf/simulated/wall/fancy_shuttle/nondense
 	density = FALSE
+	blocks_air = FALSE
+	opacity = FALSE
 	icon_state = "hull_nondense"
 
+// Trust me, this is WAY faster than the normal wall overlays shenanigans, don't worry about performance
 /turf/simulated/wall/fancy_shuttle/update_icon()
 	if(!damage_overlays[1])
 		generate_overlays()
 	
 	cut_overlays()
-	var/area/area_to_search
-	if(area_override)
-		area_to_search = locate(area_to_search)
-	else
-		area_to_search = loc
-	var/obj/effect/fancy_shuttle/F = locate() in area_to_search
+	var/obj/effect/fancy_shuttle/F = GLOB.fancy_shuttles[fancy_shuttle_tag]
 	if(!F)
-		warning("Fancy shuttle wall at [x],[y],[z] couldn't locate a helper in [loc]")
+		warning("Fancy shuttle wall at [x],[y],[z] couldn't locate a helper with tag [fancy_shuttle_tag]")
 		return
 	icon = F.split_icon
 	icon_state = "walls [x - F.x],[y - F.y]"
@@ -108,18 +115,16 @@
 		add_overlay(damage_overlays[overlay])
 
 /obj/effect/floor_decal/fancy_shuttle
-	icon = 'icons/turf/fancy_shuttles/_turf_helpers.dmi'
+	icon = 'icons/turf/fancy_shuttles/_fancy_helpers.dmi'
 	icon_state = "fancy_shuttle"
 	var/icon_file
-	var/area_override // If you want to search a different area for the shuttle icon holder
+	var/fancy_shuttle_tag
 
 /obj/effect/floor_decal/fancy_shuttle/Initialize()
-	var/area/area_to_search
-	if(area_override)
-		area_to_search = locate(area_to_search)
-	else
-		area_to_search = loc.loc // if you didn't put me on a turf then not even god can help you
-	var/obj/effect/fancy_shuttle/F = locate() in area_to_search
+	var/obj/effect/fancy_shuttle/F = GLOB.fancy_shuttles[fancy_shuttle_tag]
+	if(!F)
+		warning("Fancy shuttle floor decal at [x],[y],[z] couldn't locate a helper with tag [fancy_shuttle_tag]")
+		return INITIALIZE_HINT_QDEL
 	icon = F.split_icon
 	icon_file = F.split_file
 	icon_state = "floors [x - F.x],[y - F.y]"
@@ -129,18 +134,40 @@
 	return "[alpha]-[color]-[dir]-[icon_state]-[T.layer]-[icon_file]"
 
 /**
- * Invisible engine (otherwise the same as normal)
+ * Invisible ship equipment (otherwise the same as normal)
  */
+// Gas engine
 /obj/machinery/atmospherics/unary/engine/fancy_shuttle
+	icon = 'icons/turf/fancy_shuttles/_fancy_helpers.dmi'
+	icon_state = "gas_engine"
+
+/obj/machinery/atmospherics/unary/engine/fancy_shuttle/Initialize()
+	. = ..()
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
 
+// Ion engine
 /obj/machinery/ion_engine/fancy_shuttle
+	icon = 'icons/turf/fancy_shuttles/_fancy_helpers.dmi'
+	icon_state = "ion_engine"
+
+/obj/machinery/ion_engine/fancy_shuttle/Initialize()
+	. = ..()
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
 
 /obj/machinery/ion_engine/fancy_shuttle/add_glow()
 	return
+
+// Sensors
+/obj/machinery/shipsensors/fancy_shuttle
+	icon = 'icons/turf/fancy_shuttles/_fancy_helpers.dmi'
+	icon_state = "ship_sensors"
+
+/obj/machinery/shipsensors/fancy_shuttle/Initialize()
+	. = ..()
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "nothing"
 
 /**
  * Escape shuttle
@@ -191,6 +218,16 @@
 	split_file = 'icons/turf/fancy_shuttles/orangeline.dmi'
 /obj/effect/fancy_shuttle_floor_preview/orangeline
 	icon = 'icons/turf/fancy_shuttles/orangeline_preview.dmi'
+
+/**
+ * Tour bus
+ * North facing: W:7, H:13
+ */
+/obj/effect/fancy_shuttle/tourbus
+	icon = 'icons/turf/fancy_shuttles/tourbus_preview.dmi'
+	split_file = 'icons/turf/fancy_shuttles/tourbus.dmi'
+/obj/effect/fancy_shuttle_floor_preview/tourbus
+	icon = 'icons/turf/fancy_shuttles/tourbus_preview.dmi'
 
 /**
  * Delivery shuttle
