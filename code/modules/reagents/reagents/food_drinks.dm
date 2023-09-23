@@ -55,13 +55,14 @@
 		if(IS_CHIMERA) removed *= 0.25 //VOREStation Edit
 	if(issmall(M)) removed *= 2 // Small bodymass, more effect from lower volume.
 	//VOREStation Edits Start
+	var/bonus = M.food_preference(allergen_type)
 	if(!M.isSynthetic())
 		if(!(M.species.allergens & allergen_type))	//assuming it doesn't cause a horrible reaction, we'll be ok!
 			M.heal_organ_damage(0.5 * removed, 0)
-			M.adjust_nutrition((nutriment_factor * removed) * M.species.organic_food_coeff)
+			M.adjust_nutrition(((nutriment_factor + bonus) * removed) * M.species.organic_food_coeff)
 			M.add_chemical_effect(CE_BLOODRESTORE, 4 * removed)
 	else
-		M.adjust_nutrition((nutriment_factor * removed) * M.species.synthetic_food_coeff)
+		M.adjust_nutrition(((nutriment_factor * bonus) * removed) * M.species.synthetic_food_coeff)
 
 	//VOREStation Edits Stop
 
@@ -957,7 +958,7 @@
 
 /datum/reagent/drink/affect_ingest(var/mob/living/carbon/M, var/alien, var/removed)
 	if(!(M.species.allergens & allergen_type))
-		M.adjust_nutrition(nutrition * removed)
+		M.adjust_nutrition((nutrition + M.food_preference(allergen_type)) * removed)
 	M.dizziness = max(0, M.dizziness + adj_dizzy)
 	M.drowsyness = max(0, M.drowsyness + adj_drowsy)
 	M.AdjustSleeping(adj_sleepy)
