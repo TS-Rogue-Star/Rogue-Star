@@ -553,4 +553,4 @@
 
 	if(allergen_type in species.food_preference)
 		return species.food_preference_bonus
-	return 1
+	return 0
