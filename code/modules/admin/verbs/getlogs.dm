@@ -72,7 +72,7 @@
 		return
 
 	message_admins("[key_name_admin(src)] accessed file: [path]")
-	src << run( file(path) )
+	src << ftp(file(path))
 	to_chat(src, "Attempting to send file, this may take a fair few minutes if the file is very large.")
 	return
 
@@ -87,7 +87,7 @@
 
 	var/path = "[log_path].log"
 	if( fexists(path) )
-		src << run( file(path) )
+		src << ftp(file(path))
 	else
 		to_chat(src, "<font color='red'>Error: view_txt_log(): File not found/Invalid path([path]).</font>")
 		return
