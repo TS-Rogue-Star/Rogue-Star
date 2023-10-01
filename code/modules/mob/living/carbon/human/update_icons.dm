@@ -685,6 +685,7 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 
 	//Shoes can be affected by uniform being drawn onto them
 	update_inv_shoes()
+	update_vore_belly_sprite()
 
 	if(!w_uniform)
 		return
@@ -873,6 +874,7 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 	update_inv_shoes()
 	update_tail_showing()
 	update_wing_showing()
+	update_vore_belly_sprite()
 
 	if(!wear_suit)
 		return //No point, no suit.
@@ -1378,6 +1380,7 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 	remove_layer(VORE_BELLY_LAYER)
 
 	var/image/vore_belly_image = get_vore_belly_image()
+
 	if(vore_belly_image)
 		vore_belly_image.layer = BODY_LAYER+VORE_BELLY_LAYER
 		overlays_standing[VORE_BELLY_LAYER] = vore_belly_image
@@ -1385,6 +1388,10 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 	apply_layer(VORE_BELLY_LAYER)
 
 /mob/living/carbon/human/proc/get_vore_belly_image()
+	for(var/obj/item/clothing/C in list(wear_suit, w_uniform))
+		if(istype(C) && (C.body_parts_covered & UPPER_TORSO))
+			return null
+
 	if(!(wear_suit && wear_suit.flags_inv & HIDETAIL))
 		var/vs_fullness = vore_fullness_ex["stomach"]
 		var/icon/vorebelly_s = new/icon(icon = 'icons/mob/vore/Bellies.dmi', icon_state = "[species.vore_belly_default_variant]Belly[vs_fullness][struggle_anim_stomach ? "" : " idle"]")
