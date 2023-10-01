@@ -1155,7 +1155,7 @@ window "mainwindow"
 		saved-params = "pos;size;is-minimized;is-maximized"
 		title = "TS: Rogue Star"
 		is-maximized = true
-		icon = 'icons\\virgoicon.png'
+		icon = 'icons\\tsicon 16x16.png'
 		macro = "macro"
 		menu = "menu"
 	elem "asset_cache_browser"
