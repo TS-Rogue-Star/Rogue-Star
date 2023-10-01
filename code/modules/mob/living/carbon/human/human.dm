@@ -8,13 +8,13 @@
 	has_huds = TRUE 					//We do have HUDs (like health, wanted, status, not inventory slots)
 
 	var/vore_capacity = 3
-	var/vore_capacity_ex = list("stomach" = 3, "taur belly" = 3)
-	var/vore_fullness_ex = list("stomach" = 0, "taur belly" = 0)
-	var/vore_icon_bellies = list("stomach", "taur belly")
+	var/vore_capacity_ex = list("stomach" = 3)
+	var/vore_fullness_ex = list("stomach" = 0)
+	var/vore_icon_bellies = list("stomach")
 	var/struggle_anim_stomach = FALSE
 	var/struggle_anim_taur = FALSE
-	var/vore_sprite_color = list("stomach" = "#FFFFFF", "taur belly" = "#FFFFFF")
-	var/vore_sprite_multiply = list("stomach" = TRUE, "taur belly" = TRUE)
+	var/vore_sprite_color = list("stomach" = "#FFFFFF")
+	var/vore_sprite_multiply = list("stomach" = TRUE)
 	var/vore_fullness = 0
 
 	var/embedded_flag					//To check if we've need to roll for damage on movement while an item is imbedded in us.

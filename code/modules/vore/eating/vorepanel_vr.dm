@@ -637,11 +637,6 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 				var/newcolor = input(usr, "Choose a color.", "", hhost.vore_sprite_color[belly_choice]) as color|null
 				if(newcolor)
 					hhost.vore_sprite_color[belly_choice] = newcolor
-					var/multiply = tgui_input_list(usr, "Set the color to be applied multiplicatively or additively? Currently in [hhost.vore_sprite_multiply[belly_choice] ? "Multiply" : "Add"]", "Vore Sprite Color", list("Multiply", "Add"))
-					if(multiply == "Multiply")
-						hhost.vore_sprite_multiply[belly_choice] = TRUE
-					else if(multiply == "Add")
-						hhost.vore_sprite_multiply[belly_choice] = FALSE
 					hhost.update_icons_body()
 				return TRUE
 

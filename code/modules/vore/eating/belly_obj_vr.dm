@@ -1,6 +1,7 @@
 #define VORE_SOUND_FALLOFF 0.1
 #define VORE_SOUND_RANGE 3
 
+#define DM_FLAG_VORESPRITE_BELLY	0x1
 #define DM_FLAG_VORESPRITE_TAIL     0x2
 #define DM_FLAG_VORESPRITE_MARKING  0x4
 #define DM_FLAG_VORESPRITE_ARTICLE	0x8
@@ -66,9 +67,9 @@
 	var/override_min_prey_size = FALSE	//If true, exceeding override prey number will override minimum size requirements
 	var/override_min_prey_num	= 1		//We check belly contents against this to override min size
 
-	var/vore_sprite_flags = DM_FLAG_VORESPRITE_ARTICLE
+	var/vore_sprite_flags = DM_FLAG_VORESPRITE_BELLY
 	var/tmp/static/list/vore_sprite_flag_list= list(
-		"Undergarment addition" = DM_FLAG_VORESPRITE_ARTICLE,
+		"Normal belly sprite" = DM_FLAG_VORESPRITE_BELLY,
 		//"Tail adjustment" = DM_FLAG_VORESPRITE_TAIL,
 		//"Marking addition" = DM_FLAG_VORESPRITE_MARKING
 		)
