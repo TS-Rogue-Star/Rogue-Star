@@ -7,6 +7,15 @@
 
 	has_huds = TRUE 					//We do have HUDs (like health, wanted, status, not inventory slots)
 
+	var/vore_capacity = 3
+	var/vore_capacity_ex = list("stomach" = 3, "taur belly" = 3)
+	var/vore_fullness_ex = list("stomach" = 0, "taur belly" = 0)
+	var/vore_icon_bellies = list("stomach", "taur belly")
+	var/struggle_anim_stomach = FALSE
+	var/struggle_anim_taur = FALSE
+	var/vore_sprite_color = 0xFFFFFF
+	var/vore_sprite_multiply = TRUE
+
 	var/embedded_flag					//To check if we've need to roll for damage on movement while an item is imbedded in us.
 	var/obj/item/weapon/rig/wearing_rig // This is very not good, but it's much much better than calling get_rig() every update_canmove() call.
 	var/last_push_time					//For human_attackhand.dm, keeps track of the last use of disarm
