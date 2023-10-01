@@ -1773,10 +1773,6 @@
 /mob/living/carbon/human/get_mob_riding_slots()
 	return list(back, head, wear_suit)
 
-/mob/living/carbon/human/perform_the_nom()
-	..()
-	update_vore_belly_sprite()
-
 /mob/living/carbon/human/proc/update_fullness()
 	var/list/new_fullness = list()
 	vore_fullness = 0

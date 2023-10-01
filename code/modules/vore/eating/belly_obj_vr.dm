@@ -1,9 +1,9 @@
 #define VORE_SOUND_FALLOFF 0.1
 #define VORE_SOUND_RANGE 3
 
-#define DM_FLAG_VORESPRITE_BELLY    0x1
 #define DM_FLAG_VORESPRITE_TAIL     0x2
 #define DM_FLAG_VORESPRITE_MARKING  0x4
+#define DM_FLAG_VORESPRITE_ARTICLE	0x8
 
 //
 //  Belly system 2.0, now using objects instead of datums because EH at datums.
@@ -66,9 +66,9 @@
 	var/override_min_prey_size = FALSE	//If true, exceeding override prey number will override minimum size requirements
 	var/override_min_prey_num	= 1		//We check belly contents against this to override min size
 
-	var/vore_sprite_flags = DM_FLAG_VORESPRITE_BELLY
+	var/vore_sprite_flags = DM_FLAG_VORESPRITE_ARTICLE
 	var/tmp/static/list/vore_sprite_flag_list= list(
-		"Normal belly sprite" = DM_FLAG_VORESPRITE_BELLY,
+		"Undergarment addition" = DM_FLAG_VORESPRITE_ARTICLE,
 		//"Tail adjustment" = DM_FLAG_VORESPRITE_TAIL,
 		//"Marking addition" = DM_FLAG_VORESPRITE_MARKING
 		)
@@ -87,6 +87,7 @@
 	var/tail_colouration = FALSE
 	var/tail_extra_overlay = FALSE
 	var/tail_extra_overlay2 = FALSE
+	var/undergarment_chosen = "Underwear, bottom"
 
 	// Generally just used by AI
 	var/autotransferchance = 0 				// % Chance of prey being autotransferred to transfer location
@@ -342,6 +343,10 @@
 		if(M.ai_holder)
 			M.ai_holder.handle_eaten()
 
+		if (istype(owner, /mob/living/carbon/human))
+			var/mob/living/carbon/human/hum = owner
+			hum.update_fullness()
+
 	// Intended for simple mobs
 	if(!owner.client && autotransferlocation && autotransferchance > 0)
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/belly, check_autotransfer), thing, autotransferlocation), autotransferwait)
@@ -360,6 +365,9 @@
 				L.toggle_hud_vis()
 		if((L.stat != DEAD) && L.ai_holder)
 			L.ai_holder.go_wake()
+	if (istype(owner, /mob/living/carbon/human))
+		var/mob/living/carbon/human/hum = owner
+		hum.update_fullness()
 
 /obj/belly/proc/vore_fx(mob/living/L)
 	if(!istype(L))

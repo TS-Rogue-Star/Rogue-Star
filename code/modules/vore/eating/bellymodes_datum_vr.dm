@@ -35,6 +35,10 @@ GLOBAL_LIST_INIT(digest_modes, list())
 			else
 				SEND_SOUND(L, sound(get_sfx("fancy_death_prey")))
 		B.handle_digestion_death(L)
+		if(!L)
+			if (istype(B.owner, /mob/living/carbon/human))
+				var/mob/living/carbon/human/howner = B.owner
+				howner.update_fullness()
 		if(!B.fancy_vore)
 			return list("to_update" = TRUE, "soundToPlay" = sound(get_sfx("classic_death_sounds")))
 		return list("to_update" = TRUE, "soundToPlay" = sound(get_sfx("fancy_death_pred")))
@@ -59,6 +63,10 @@ GLOBAL_LIST_INIT(digest_modes, list())
 
 	var/offset = (1 + ((L.weight - 137) / 137)) // 130 pounds = .95 140 pounds = 1.02
 	var/difference = B.owner.size_multiplier / L.size_multiplier
+	if(B.health_impacts_size)
+		if (istype(B.owner, /mob/living/carbon/human))
+			var/mob/living/carbon/human/howner = B.owner
+			howner.update_fullness()
 	if(isrobot(B.owner))
 		var/mob/living/silicon/robot/R = B.owner
 		R.cell.charge += 25 * damage_gain
