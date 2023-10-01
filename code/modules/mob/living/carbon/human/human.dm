@@ -13,8 +13,8 @@
 	var/vore_icon_bellies = list("stomach", "taur belly")
 	var/struggle_anim_stomach = FALSE
 	var/struggle_anim_taur = FALSE
-	var/vore_sprite_color = 0xFFFFFF
-	var/vore_sprite_multiply = TRUE
+	var/vore_sprite_color = list("stomach" = "#FFFFFF", "taur belly" = "#FFFFFF")
+	var/vore_sprite_multiply = list("stomach" = TRUE, "taur belly" = TRUE)
 
 	var/embedded_flag					//To check if we've need to roll for damage on movement while an item is imbedded in us.
 	var/obj/item/weapon/rig/wearing_rig // This is very not good, but it's much much better than calling get_rig() every update_canmove() call.
