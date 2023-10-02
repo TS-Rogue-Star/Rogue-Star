@@ -1153,9 +1153,9 @@ window "mainwindow"
 		anchor2 = -1,-1
 		is-default = true
 		saved-params = "pos;size;is-minimized;is-maximized"
-		title = "VOREStation"
+		title = "TS: Rogue Star"
 		is-maximized = true
-		icon = 'icons\\virgoicon.png'
+		icon = 'icons\\tsicon 16x16.png'
 		macro = "macro"
 		menu = "menu"
 	elem "asset_cache_browser"
