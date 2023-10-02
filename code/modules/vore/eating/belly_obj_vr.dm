@@ -1060,6 +1060,11 @@
 	var/sound/struggle_snuggle
 	var/sound/struggle_rustle = sound(get_sfx("rustle"))
 
+	if(istype(owner, /mob/living/carbon/human))
+		var/mob/living/carbon/human/howner = owner
+		if ((howner.vore_capacity_ex["stomach"] >= 1))
+			howner.vs_animate(belly_sprite_to_affect)
+
 	if(is_wet)
 		if(!fancy_vore)
 			struggle_snuggle = sound(get_sfx("classic_struggle_sounds"))

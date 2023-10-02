@@ -1787,3 +1787,11 @@
 		vore_fullness += new_fullness[belly_class]
 	vore_fullness = min(vore_capacity, vore_fullness)
 	update_vore_belly_sprite()
+
+/mob/living/carbon/human/proc/vs_animate(var/belly_to_animate)
+	if(belly_to_animate == "stomach")
+		vore_belly_animation()
+	else if(belly_to_animate == "taur belly")
+		vore_tail_animation()
+	else
+		return
