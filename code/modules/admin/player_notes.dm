@@ -51,6 +51,15 @@
 	note_list << note_keys
 	del(note_list) // savefile, so NOT qdel
 
+	// Rogue Star edit
+	SSwebhooks.send(
+		WEBHOOK_NOTE_MADE,
+		list(
+			"info" = "[P.author] has edited [key]'s notes: [note]",
+		)
+	)
+	// Rogue Star edit
+
 
 /proc/notes_del(var/key, var/index)
 	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
