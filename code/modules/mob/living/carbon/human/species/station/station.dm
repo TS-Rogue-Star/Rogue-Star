@@ -74,8 +74,6 @@
 	chem_strength_alcohol = 0.75
 	throwforce_absorb_threshold = 10
 
-	vore_belly_default_variant = "L"
-
 	min_age = 32
 	max_age = 260
 

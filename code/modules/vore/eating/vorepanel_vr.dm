@@ -232,11 +232,10 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			"overlay_min_prey_size"	= selected.overlay_min_prey_size,
 			"override_min_prey_size" = selected.override_min_prey_size,
 			"override_min_prey_num"	= selected.override_min_prey_num,
+			// Begin RS edit
 			"affects_voresprite" = selected.affects_vore_sprites,
 			"absorbed_voresprite" = selected.count_absorbed_prey_for_sprite,
 			"absorbed_multiplier" = selected.absorbed_multiplier,
-			"liquid_voresprite" = selected.count_liquid_for_sprite,
-			"liquid_multiplier" = selected.liquid_multiplier,
 			"item_voresprite" = selected.count_items_for_sprite,
 			"item_multiplier" = selected.item_multiplier,
 			"health_voresprite" = selected.health_impacts_size,
@@ -248,7 +247,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			"tail_colouration" = selected.tail_colouration,
 			"tail_extra_overlay" = selected.tail_extra_overlay,
 			"tail_extra_overlay2" = selected.tail_extra_overlay2
-
+			// End RS edit
 		)
 
 		var/list/addons = list()
@@ -257,11 +256,13 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 				addons.Add(flag_name)
 		selected_list["addons"] = addons
 
+		// Begin RS edit
 		var/list/vs_flags = list()
 		for(var/flag_name in selected.vore_sprite_flag_list)
 			if(selected.vore_sprite_flags & selected.vore_sprite_flag_list[flag_name])
 				vs_flags.Add(flag_name)
 		selected_list["vore_sprite_flags"] = vs_flags
+		// End RS edit
 
 		selected_list["egg_type"] = selected.egg_type
 		selected_list["contaminates"] = selected.contaminates
@@ -630,6 +631,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			host.weight_message_visible = !host.weight_message_visible
 			unsaved_changes = TRUE
 			return TRUE
+		// Begin RS edit
 		if("set_vs_color")
 			if (istype(host, /mob/living/carbon/human))
 				var/mob/living/carbon/human/hhost = host
@@ -639,6 +641,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 					hhost.vore_sprite_color[belly_choice] = newcolor
 					hhost.update_icons_body()
 				return TRUE
+		// End RS edit
 
 /datum/vore_look/proc/pick_from_inside(mob/user, params)
 	var/atom/movable/target = locate(params["pick"])
@@ -1503,6 +1506,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			qdel(host.vore_selected)
 			host.vore_selected = host.vore_organs[1]
 			. = TRUE
+		// Begin RS edit
 		if("b_affects_vore_sprites")
 			if (istype(host, /mob/living/carbon/human))
 				var/mob/living/carbon/human/hhost = host
@@ -1586,6 +1590,6 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 				if(newcolor)
 					hhost.vore_selected.tail_extra_overlay2 = newcolor
 				. = TRUE
-
+		// End RS edit
 	if(.)
 		unsaved_changes = TRUE

@@ -13,7 +13,6 @@
 	descriptors = list()
 	wikilink="https://wiki.vore-station.net/Teshari"
 	agility = 90
-	vore_belly_default_variant = "T"
 
 	male_sneeze_sound = list('sound/effects/mob_effects/tesharisneeze.ogg','sound/effects/mob_effects/tesharisneezeb.ogg')
 	female_sneeze_sound = list('sound/effects/mob_effects/tesharisneeze.ogg','sound/effects/mob_effects/tesharisneezeb.ogg')
