@@ -763,13 +763,13 @@
 /datum/gear/fluff/kenzie_medal
 	path = /obj/item/clothing/accessory/medal/conduct
 	display_name = "Kenzie's Conduct Medal"
-	ckeywhitelist = list("lm40")
+	ckeywhitelist = list("memewuff")
 	character_name = list("Kenzie Houser")
 
 /datum/gear/fluff/kenzie_hypospray
 	path = /obj/item/weapon/reagent_containers/hypospray/vial/kenzie
 	display_name = "Kenzie's Hypospray"
-	ckeywhitelist = list("lm40")
+	ckeywhitelist = list("memewuff")
 	character_name = list("Kenzie Houser")
 	allowed_roles = list("Chief Medical Officer","Medical Doctor","Chemist","Psychiatrist","Paramedic")
 
