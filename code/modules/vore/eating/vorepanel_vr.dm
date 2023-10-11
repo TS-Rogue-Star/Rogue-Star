@@ -242,6 +242,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			"resist_animation" = selected.resist_triggers_animation,
 			"voresprite_size_factor" = selected.size_factor_for_sprite,
 			"belly_sprite_to_affect" = selected.belly_sprite_to_affect,
+			"belly_sprite_option_shown" = istype(host, /mob/living/carbon/human) ? (LAZYLEN(host:vore_icon_bellies) >= 1 ? TRUE : FALSE) : FALSE, // TODO: FIX THIS
 			"tail_option_shown" = istype(host, /mob/living/carbon/human),
 			"tail_to_change_to" = selected.tail_to_change_to,
 			"tail_colouration" = selected.tail_colouration,
@@ -349,6 +350,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 		"weight_message_visible" = host.weight_message_visible,
 		"weight_messages" = host.weight_messages,
 		"eating_privacy_global" = host.eating_privacy_global,
+		"vore_sprite_color" = istype(host, /mob/living/carbon/human) ? host:vore_sprite_color : "#FFFFFF" // RS edit
 	)
 
 	return data
@@ -1507,6 +1509,16 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			host.vore_selected = host.vore_organs[1]
 			. = TRUE
 		// Begin RS edit
+		if("b_belly_sprite_to_affect")
+			if (istype(host, /mob/living/carbon/human))
+				var/mob/living/carbon/human/hhost = host
+				var/belly_choice = tgui_input_list(usr, "Which belly sprite do you want your [lowertext(hhost.vore_selected.name)] to affect?","Select Region", hhost.vore_icon_bellies)
+				if(!belly_choice) //They cancelled, no changes
+					return FALSE
+				else
+					hhost.vore_selected.belly_sprite_to_affect = belly_choice
+					hhost.update_fullness()
+				. = TRUE
 		if("b_affects_vore_sprites")
 			if (istype(host, /mob/living/carbon/human))
 				var/mob/living/carbon/human/hhost = host
