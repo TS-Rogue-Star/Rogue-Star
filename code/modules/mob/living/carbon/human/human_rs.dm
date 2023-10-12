@@ -1,12 +1,12 @@
 /mob/living/carbon/human
 	var/vore_capacity = 3
-	var/vore_capacity_ex = list("stomach" = 3)
-	var/vore_fullness_ex = list("stomach" = 0)
-	var/vore_icon_bellies = list("stomach")
+	var/vore_capacity_ex = list("stomach" = 3, "taur belly" = 3)
+	var/vore_fullness_ex = list("stomach" = 0, "taur belly" = 0)
+	var/vore_icon_bellies = list("stomach", "taur belly")
 	var/struggle_anim_stomach = FALSE
 	var/struggle_anim_taur = FALSE
-	var/vore_sprite_color = list("stomach" = "#FFFFFF")
-	var/vore_sprite_multiply = list("stomach" = TRUE)
+	var/vore_sprite_color = list("stomach" = "#FFFFFF", "taur belly" = "#FFFFFF")
+	var/vore_sprite_multiply = list("stomach" = TRUE, "taur belly" = TRUE)
 	var/vore_fullness = 0
 
 /mob/living/carbon/human/proc/update_fullness()
@@ -23,6 +23,7 @@
 		vore_fullness += new_fullness[belly_class]
 	vore_fullness = min(vore_capacity, vore_fullness)
 	update_vore_belly_sprite()
+	update_vore_tail_sprite()
 
 /mob/living/carbon/human/proc/vs_animate(var/belly_to_animate)
 	if(belly_to_animate == "stomach")
