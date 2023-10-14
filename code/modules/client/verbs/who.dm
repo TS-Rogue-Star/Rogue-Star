@@ -59,13 +59,7 @@
 	set name = "Staffwho"
 
 	var/msg = ""
-	var/modmsg = ""
-	var/devmsg = ""
-	var/eventMmsg = ""
-	var/num_mods_online = 0
 	var/num_admins_online = 0
-	var/num_devs_online = 0
-	var/num_event_managers_online = 0
 	for(var/client/C in GLOB.admins) // VOREStation Edit - GLOB
 		var/temp = ""
 		var/category = R_ADMIN
@@ -73,17 +67,7 @@
 		if(C.holder.fakekey && !check_rights_for(src, R_ADMIN|R_MOD))	// Only admins and mods can see stealthmins
 			continue
 		// VOREStation Edit End
-		if(check_rights(R_BAN, FALSE, C)) // admins //VOREStation Edit
-			num_admins_online++
-		else if(check_rights(R_ADMIN, FALSE, C) && !check_rights(R_SERVER, FALSE, C)) // mods //VOREStation Edit: Game masters
-			category = R_MOD
-			num_mods_online++
-		else if(check_rights(R_SERVER, FALSE, C)) // developers
-			category = R_SERVER
-			num_devs_online++
-		else if(check_rights(R_STEALTH, FALSE, C)) // event managers //VOREStation Edit: Retired Staff
-			category = R_EVENT
-			num_event_managers_online++
+		num_admins_online++
 
 		temp += "\t[C] is a [C.holder.rank]"
 		if(holder)
@@ -104,23 +88,8 @@
 		switch(category)
 			if(R_ADMIN)
 				msg += temp
-			if(R_MOD)
-				modmsg += temp
-			if(R_SERVER)
-				devmsg += temp
-			if(R_EVENT)
-				eventMmsg += temp
 
-	msg = "<b>Current Admins ([num_admins_online]):</b>\n" + msg
-
-	if(config.show_mods)
-		msg += "\n<b> Current Game Masters ([num_mods_online]):</b>\n" + modmsg
-
-	if(config.show_devs)
-		msg += "\n<b> Current Developers ([num_devs_online]):</b>\n" + devmsg
-
-	if(config.show_event_managers)
-		msg += "\n<b> Current Miscellaneous ([num_event_managers_online]):</b>\n" + eventMmsg
+	msg = "<b>Current Staff ([num_admins_online]):</b>\n" + msg
 
 	var/num_mentors_online = 0
 	var/mmsg = ""
