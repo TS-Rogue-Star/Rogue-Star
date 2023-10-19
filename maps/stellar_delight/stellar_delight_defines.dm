@@ -23,12 +23,8 @@
 /datum/map/stellar_delight/New()
 	..()
 	var/choice = pickweight(list(
-		"logo1" = 50,
-		"logo2" = 50,
-		"gateway" = 5,
-		"youcanttaketheskyfromme" = 200,
-		"intothedark" = 200,
-		"above3b" = 200
+		"rs_lobby" = 50,
+		"rs_lobby2" = 50
 	))
 	if(choice)
 		lobby_screens = list(choice)
@@ -46,7 +42,7 @@
 
 	zlevel_datum_type = /datum/map_z_level/stellar_delight
 
-	lobby_icon = 'icons/misc/title_vr.dmi'
+	lobby_icon = 'icons/misc/title_rs.dmi'
 	lobby_screens = list("youcanttaketheskyfromme")
 	id_hud_icons = 'icons/mob/hud_jobs_vr.dmi'
 
