@@ -26,11 +26,8 @@
 /datum/map/groundbase/New()
 	..()
 	var/choice = pickweight(list(
-		"virgo3C" = 200,
-		"rp2" = 200,
-		"logo1" = 20,
-		"logo2" = 20,
-		"gateway" = 5
+		"rs_lobby" = 50,
+		"rs_lobby2" = 50
 	))
 	if(choice)
 		lobby_screens = list(choice)
@@ -48,7 +45,7 @@
 
 	zlevel_datum_type = /datum/map_z_level/groundbase
 
-	lobby_icon = 'icons/misc/title_vr.dmi'
+	lobby_icon = 'icons/misc/title_rs.dmi'
 	lobby_screens = list("logo1")
 	id_hud_icons = 'icons/mob/hud_jobs_vr.dmi'
 

@@ -32,16 +32,8 @@
 /datum/map/tether/New()
 	..()
 	var/choice = pickweight(list(
-		"title" = 10,
-		"tether" = 50,
-		"tether_night" = 50,
-		"tether2_night" = 50,
-		"tether2_dog" = 1,
-		"tether2_love" = 1,
-		"tether_future" = 10,
-		"logo1" = 20,
-		"logo2" = 20,
-		"gateway" = 5
+		"rs_lobby" = 50,
+		"rs_lobby2" = 50
 	))
 	if(choice)
 		lobby_screens = list(choice)
@@ -59,7 +51,7 @@
 
 	zlevel_datum_type = /datum/map_z_level/tether
 
-	lobby_icon = 'icons/misc/title_vr.dmi'
+	lobby_icon = 'icons/misc/title_rs.dmi'
 	lobby_screens = list("tether2_night")
 	id_hud_icons = 'icons/mob/hud_jobs_vr.dmi'
 
