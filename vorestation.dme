@@ -3291,7 +3291,6 @@
 #include "code\modules\mob\living\voice\voice.dm"
 #include "code\modules\mob\living\voice\voice_vr.dm"
 #include "code\modules\mob\new_player\login.dm"
-#include "code\modules\mob\new_player\login_vr.dm"
 #include "code\modules\mob\new_player\logout.dm"
 #include "code\modules\mob\new_player\new_player.dm"
 #include "code\modules\mob\new_player\new_player_vr.dm"
