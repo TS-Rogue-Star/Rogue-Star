@@ -247,7 +247,10 @@
 	"count_absorbed_prey_for_sprite", //RS edit
 	"resist_triggers_animation", //RS edit
 	"size_factor_for_sprite", //RS edit
-	"belly_sprite_to_affect" //RS edit
+	"belly_sprite_to_affect", //RS edit
+	"health_impacts_size", //RS edit
+	"count_items_for_sprite", //RS edit
+	"item_multiplier" //RS edit
 	)
 
 	if (save_digest_mode == 1)
@@ -1301,6 +1304,9 @@
 	dupe.resist_triggers_animation = resist_triggers_animation
 	dupe.size_factor_for_sprite = size_factor_for_sprite
 	dupe.belly_sprite_to_affect = belly_sprite_to_affect
+	dupe.health_impacts_size = health_impacts_size
+	dupe.count_items_for_sprite = count_items_for_sprite
+	dupe.item_multiplier = item_multiplier
 	// End RS edit
 
 	//// Object-holding variables
