@@ -8,30 +8,30 @@ import { classes } from 'common/react';
 const stats = [null, 'average', 'bad'];
 
 const digestModeToColor = {
-  'Hold': null,
-  'Digest': 'red',
-  'Absorb': 'purple',
-  'Unabsorb': 'purple',
-  'Drain': 'orange',
-  'Selective': 'orange',
-  'Shrink': 'teal',
-  'Grow': 'teal',
+  Hold: null,
+  Digest: 'red',
+  Absorb: 'purple',
+  Unabsorb: 'purple',
+  Drain: 'orange',
+  Selective: 'orange',
+  Shrink: 'teal',
+  Grow: 'teal',
   'Size Steal': 'teal',
-  'Heal': 'green',
+  Heal: 'green',
   'Encase In Egg': 'blue',
 };
 
 const digestModeToPreyMode = {
-  'Hold': 'being held.',
-  'Digest': 'being digested.',
-  'Absorb': 'being absorbed.',
-  'Unabsorb': 'being unabsorbed.',
-  'Drain': 'being drained.',
-  'Selective': 'being processed.',
-  'Shrink': 'being shrunken.',
-  'Grow': 'being grown.',
+  Hold: 'being held.',
+  Digest: 'being digested.',
+  Absorb: 'being absorbed.',
+  Unabsorb: 'being unabsorbed.',
+  Drain: 'being drained.',
+  Selective: 'being processed.',
+  Shrink: 'being shrunken.',
+  Grow: 'being grown.',
   'Size Steal': 'having your size stolen.',
-  'Heal': 'being healed.',
+  Heal: 'being healed.',
   'Encase In Egg': 'being encased in an egg.',
 };
 
@@ -914,7 +914,7 @@ const VoreSelectedBellyVisuals = (props, context) => {
 
   return (
     <Fragment>
-            <Section title="Vore Sprites">
+      <Section title="Vore Sprites">
         <Flex direction="row">
           <LabeledList>
             <LabeledList.Item label="Affect Vore Sprites">
@@ -1076,7 +1076,7 @@ const VoreSelectedBellyVisuals = (props, context) => {
             )}
           </LabeledList>
         </Flex>
-            </Section>
+      </Section>
       <Section title="Belly Fullscreens Preview and Coloring">
         <Flex direction="row">
           <Box
@@ -1320,7 +1320,7 @@ const VoreContentsPanel = (props, context) => {
           textAlign="center"
           fluid
           mb={1}
-          onClick={() => act('pick_from_outside', { 'pickall': true })}>
+          onClick={() => act('pick_from_outside', { pickall: true })}>
           All
         </Button>
       )) ||
@@ -1341,8 +1341,8 @@ const VoreContentsPanel = (props, context) => {
                   act(
                     thing.outside ? 'pick_from_outside' : 'pick_from_inside',
                     {
-                      'pick': thing.ref,
-                      'belly': belly,
+                      pick: thing.ref,
+                      belly: belly,
                     }
                   )
                 }>
@@ -1373,8 +1373,8 @@ const VoreContentsPanel = (props, context) => {
                   act(
                     thing.outside ? 'pick_from_outside' : 'pick_from_inside',
                     {
-                      'pick': thing.ref,
-                      'belly': belly,
+                      pick: thing.ref,
+                      belly: belly,
                     }
                   )
                 }>
