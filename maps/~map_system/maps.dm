@@ -139,6 +139,9 @@ var/list/all_maps = list()
 
 	var/list/planet_datums_to_make = list() // Types of `/datum/planet`s that will be instantiated by SSPlanets.
 
+	var/announcement_sound = 'sound/AI/preamble.ogg'	//RS ADD
+	var/announcement_length = 18
+
 /datum/map/New()
 	..()
 	if(zlevel_datum_type)

@@ -182,7 +182,11 @@ var/global/datum/controller/subsystem/ticker/ticker
 			if (S.name != "AI")
 				qdel(S)
 		to_world("<span class='boldannounce notice'><em>Enjoy the game!</em></span>")
-		world << sound('sound/AI/welcome.ogg') // Skie
+		//RS EDIT START
+		world << using_map.announcement_sound
+		spawn(using_map.announcement_length)
+			world << sound(pickweight(welcome_sound))
+		//RS EDIT END
 		//Holiday Round-start stuff	~Carn
 		Holiday_Game_Start()
 

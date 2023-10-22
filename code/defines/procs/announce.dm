@@ -111,12 +111,12 @@
 		if(zlevels && !(M.z in zlevels))
 			continue
 		if(!istype(M,/mob/new_player) && !isdeaf(M))
-			M << 'sound/AI/preamble.ogg'
+			M << using_map.announcement_sound	//RS EDIT
 
 	if(!message_sound)
 		return
 
-	spawn(22) // based on length of preamble.ogg + arbitrary delay
+	spawn(using_map.announcement_length) // based on length of preamble.ogg + arbitrary delay	// RS EDIT
 		for(var/mob/M in player_list)
 			if(zlevels && !(M.z in zlevels))
 				continue

@@ -310,3 +310,9 @@ var/list/goon_speak_pug_sound = list('sound/talksounds/goon/pug.ogg', 'sound/tal
 var/list/goon_speak_pugg_sound = list('sound/talksounds/goon/pugg.ogg', 'sound/talksounds/goon/pugg_ask.ogg', 'sound/talksounds/goon/pugg_exclaim.ogg')
 var/list/goon_speak_roach_sound = list('sound/talksounds/goon/roach.ogg', 'sound/talksounds/goon/roach_ask.ogg', 'sound/talksounds/goon/roach_exclaim.ogg')
 var/list/goon_speak_skelly_sound = list('sound/talksounds/goon/skelly.ogg', 'sound/talksounds/goon/skelly_ask.ogg', 'sound/talksounds/goon/skelly_exclaim.ogg')
+
+var/list/welcome_sound = list('sound/voice/welcome/0.ogg' = 50,'sound/voice/welcome/1.ogg' = 50,'sound/voice/welcome/2.ogg' = 50,
+'sound/voice/welcome/3.ogg' = 50,'sound/voice/welcome/4.ogg' = 50,'sound/voice/welcome/5.ogg' = 50,'sound/voice/welcome/6.ogg' = 50,
+'sound/voice/welcome/7.ogg' = 50,'sound/voice/welcome/8.ogg' = 50,'sound/voice/welcome/9.ogg' = 50,'sound/voice/welcome/10.ogg' = 50,
+'sound/voice/welcome/11.ogg' = 50,'sound/voice/welcome/12.ogg' = 50,'sound/voice/welcome/13.ogg' = 50,'sound/voice/welcome/14.ogg' = 50,
+'sound/voice/welcome/15.ogg' = 50)
