@@ -32,12 +32,15 @@ var/datum/lore/atc_controller/atc = new/datum/lore/atc_controller
 	engchannel = "[rand(800,849)].[rand(1,9)]"
 	secchannel = "[rand(850,899)].[rand(1,9)]"
 	sdfchannel = "[rand(900,999)].[rand(1,9)]"
+	/* RS REMOVAL
 	spawn(450 SECONDS) //Lots of lag at the start of a shift. Yes, the following lines *have* to be indented or they're not delayed by the spawn properly.
 		msg("New shift beginning, resuming traffic control. This shift's Colony Frequencies are as follows: Emergency Responders: [ertchannel]. Medical: [medchannel]. Engineering: [engchannel]. Security: [secchannel]. System Defense: [sdfchannel].")
-		next_message = world.time + initial_delay
 		process()
+	*/
 
 /datum/lore/atc_controller/process()
+	return
+	/*	RS REMOVAL
 	if(world.time >= next_message)
 		if(squelched)
 			next_message = world.time + backoff_delay
@@ -47,11 +50,13 @@ var/datum/lore/atc_controller/atc = new/datum/lore/atc_controller
 
 	spawn(1 MINUTE) //We don't really need high-accuracy here.
 		process()
+	*/
 
 /datum/lore/atc_controller/proc/msg(var/message,var/sender)
 	ASSERT(message)
 	global_announcer.autosay("[message]", sender ? sender : "[using_map.dock_name] Control")
 
+/* //RS REMOVE
 /datum/lore/atc_controller/proc/reroute_traffic(var/yes = 1)
 	if(yes)
 		if(!squelched)
@@ -61,6 +66,7 @@ var/datum/lore/atc_controller/atc = new/datum/lore/atc_controller
 		if(squelched)
 			msg("Resuming normal traffic routing around [using_map.station_name].")
 		squelched = 0
+*/
 
 /datum/lore/atc_controller/proc/shift_ending(var/evac = 0)
 	msg("[using_map.shuttle_name], this is [using_map.dock_name] Control, you are cleared to complete routine transfer from [using_map.station_name] to [using_map.dock_name].")

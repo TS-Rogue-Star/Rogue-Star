@@ -293,10 +293,10 @@
 			if(params["msgid"])
 				setCurrentMessage(usr, text2num(params["msgid"]))
 			setMenuState(usr, COMM_SCREEN_MESSAGES)
-
+/*	//RS REMOVAL
 		if("toggleatc")
 			ATC.squelched = !ATC.squelched
-
+*/
 		if("delmessage")
 			var/datum/comm_message_listener/l = obtain_message_listener()
 			if(params["msgid"])
