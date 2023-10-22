@@ -315,4 +315,4 @@ var/list/welcome_sound = list('sound/voice/welcome/0.ogg' = 50,'sound/voice/welc
 'sound/voice/welcome/3.ogg' = 50,'sound/voice/welcome/4.ogg' = 50,'sound/voice/welcome/5.ogg' = 50,'sound/voice/welcome/6.ogg' = 50,
 'sound/voice/welcome/7.ogg' = 50,'sound/voice/welcome/8.ogg' = 50,'sound/voice/welcome/9.ogg' = 50,'sound/voice/welcome/10.ogg' = 50,
 'sound/voice/welcome/11.ogg' = 50,'sound/voice/welcome/12.ogg' = 50,'sound/voice/welcome/13.ogg' = 50,'sound/voice/welcome/14.ogg' = 50,
-'sound/voice/welcome/15.ogg' = 50)
+'sound/voice/welcome/15.ogg' = 50, 'sound/voice/welcome/16-SatinIsle.ogg' = 50)
