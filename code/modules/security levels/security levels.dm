@@ -80,6 +80,7 @@
 			HP.update_icon()
 		//VOREStation Add End
 
+		/*	//RS REMOVE
 		if(level >= SEC_LEVEL_RED)
 			atc.reroute_traffic(yes = 1) // Tell them fuck off we're busy.
 		else
@@ -87,6 +88,7 @@
 
 		spawn()
 			SSnightshift.check_nightshift()
+		*/
 
 		admin_chat_message(message = "Security level is now: [uppertext(get_security_level())]", color = "#CC2222") //VOREStation Add
 
