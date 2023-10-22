@@ -19,7 +19,7 @@
 
 /client/proc/cmd_mod_say(msg as text)
 	set category = "Special Verbs"
-	set name = "Msay"
+	set name = "Modsay"
 	set hidden = 1
 
 	if(!check_rights(R_ADMIN|R_MOD|R_SERVER)) //VOREStation Edit
