@@ -6,6 +6,7 @@ var/list/mentor_datums = list()
 var/list/mentor_verbs_default = list(
 	/client/proc/cmd_mentor_ticket_panel,
 	/client/proc/cmd_mentor_say,
+	/client/proc/cmd_mentor_say_alt,
 	/client/proc/cmd_dementor
 )
 
@@ -102,6 +103,12 @@ var/list/mentor_verbs_default = list(
 		to_chat(C, create_text_tag("mentor", "MENTOR:", C) + " <span class='mentor_channel'><span class='name'>[src]</span>: <span class='message'>[msg]</span></span>")
 	for(var/client/C in GLOB.admins)
 		to_chat(C, create_text_tag("mentor", "MENTOR:", C) + " <span class='mentor_channel'><span class='name'>[src]</span>: <span class='message'>[msg]</span></span>")
+
+/client/proc/cmd_mentor_say_alt(msg as text)
+	set category = "Admin"
+	set name ="Msay"
+
+	cmd_mentor_say(msg)
 
 /proc/mentor_commands(href, href_list, client/C)
 	if(href_list["mhelp"])
