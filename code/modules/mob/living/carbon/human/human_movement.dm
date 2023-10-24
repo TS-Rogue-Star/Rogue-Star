@@ -97,10 +97,12 @@
 		if(istype(pulling, /obj/item))
 			var/obj/item/pulled = pulling
 			item_tally += max(pulled.slowdown, 0)
-		else if(ishuman(pulling))
-			var/mob/living/carbon/human/H = pulling
-			var/their_slowdown = max(H.calculate_item_encumbrance(), 1)
-			item_tally = max(item_tally, their_slowdown) // If our slowdown is less than theirs, then we become as slow as them (before species modifires).
+		//RS EDIT START
+		else if(isliving(pulling))
+			var/mob/living/L = pulling
+			if(L.stat || L.resting|| L.weakened||L.stunned)
+				item_tally += 1
+		//RS EDIT END
 
 	item_tally *= species.item_slowdown_mod
 
