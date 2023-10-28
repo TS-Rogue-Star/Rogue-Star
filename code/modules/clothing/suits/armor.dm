@@ -219,7 +219,7 @@
 	icon_state = "alien_speed"
 	blood_overlay_type = "armor"
 	item_state_slots = list(slot_r_hand_str = "armor", slot_l_hand_str = "armor")
-	slowdown = -1
+	slowdown = -0.5
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 0, rad = 40)
 	siemens_coefficient = 0.4
