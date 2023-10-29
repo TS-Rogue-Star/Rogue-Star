@@ -903,7 +903,7 @@
 	stacks = MODIFIER_STACK_EXTEND
 
 	evasion = 30
-	slowdown = -1
+	slowdown = -0.5
 	attack_speed_percent = 0.75
 
 
@@ -988,6 +988,3 @@
 /decl/chemical_reaction/instant/slime/rainbow_unity/on_reaction(var/datum/reagents/holder)
 	new /obj/item/slimepotion/unity(get_turf(holder.my_atom))
 	..()
-
-
-

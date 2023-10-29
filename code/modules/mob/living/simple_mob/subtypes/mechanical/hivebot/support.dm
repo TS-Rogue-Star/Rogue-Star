@@ -42,7 +42,7 @@
 	outgoing_melee_damage_percent = 1.3
 	attack_speed_percent = 1.3
 	accuracy = 30
-	slowdown = -1
+	slowdown = -0.5
 	evasion = 30
 
 // Variant that automatically commands nearby allies to follow it when created.

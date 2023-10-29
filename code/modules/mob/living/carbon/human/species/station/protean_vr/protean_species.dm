@@ -267,7 +267,7 @@
 
 	material_name = MAT_METALHYDROGEN
 
-	slowdown = -1
+	slowdown = -0.5
 
 /datum/modifier/protean/uranium
 	name = "Protean Effect - Uranium"

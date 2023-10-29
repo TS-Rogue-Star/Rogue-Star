@@ -5,7 +5,7 @@
 	name = "Haste"
 	desc = "Allows you to move faster on average than baseline."
 	cost = 4
-	var_changes = list("slowdown" = -0.5)
+	var_changes = list("slowdown" = 0)	//RS EDIT - PENDING POTENTIAL REMOVAL DUE TO INCREASED BASE SPEED
 
 /datum/trait/positive/hardy
 	name = "Hardy"
