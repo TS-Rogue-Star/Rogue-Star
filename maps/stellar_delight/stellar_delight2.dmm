@@ -5188,6 +5188,11 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/engineering/engine_eva)
+"kU" = (
+/obj/structure/disposalpipe/segment,
+/mob/living/simple_mob/vore/alienanimals/teppi/baby,
+/turf/simulated/floor/grass,
+/area/hydroponics)
 "kV" = (
 /obj/machinery/door/firedoor/glass/hidden/steel{
 	dir = 8
@@ -5816,6 +5821,13 @@
 	},
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck2/port)
+"mc" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/mob/living/simple_mob/vore/alienanimals/teppi/baby,
+/turf/simulated/floor/grass,
+/area/hydroponics)
 "md" = (
 /obj/effect/floor_decal/industrial/outline,
 /obj/effect/floor_decal/steeldecal/steel_decals9,
@@ -31121,7 +31133,7 @@ sA
 iZ
 ii
 WN
-ok
+mc
 LS
 Jp
 KK
@@ -31264,7 +31276,7 @@ wP
 JI
 fa
 aJ
-rP
+kU
 rP
 hf
 Nw

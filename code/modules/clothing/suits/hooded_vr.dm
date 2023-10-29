@@ -42,7 +42,7 @@
 	icon_state = "robin"
 	hoodtype = /obj/item/clothing/head/hood/robin
 	armor = list(melee = 70, bullet = 40, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0)
-	slowdown = -1
+	slowdown = -0.5
 	siemens_coefficient = 3
 
 // Costume Knight Gear Here

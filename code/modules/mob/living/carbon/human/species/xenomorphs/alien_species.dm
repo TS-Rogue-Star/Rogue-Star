@@ -200,7 +200,7 @@
 	name = SPECIES_XENO_HUNTER
 	weeds_plasma_rate = 5
 	caste_name = "hunter"
-	slowdown = -1
+	slowdown = -0.5
 	total_health = 150
 	tail = "xenos_hunter_tail"
 
