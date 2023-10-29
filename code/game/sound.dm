@@ -315,4 +315,7 @@ var/list/welcome_sound = list('sound/voice/welcome/0.ogg' = 50,'sound/voice/welc
 'sound/voice/welcome/3.ogg' = 50,'sound/voice/welcome/4.ogg' = 50,'sound/voice/welcome/5.ogg' = 50,'sound/voice/welcome/6.ogg' = 50,
 'sound/voice/welcome/7.ogg' = 50,'sound/voice/welcome/8.ogg' = 50,'sound/voice/welcome/9.ogg' = 50,'sound/voice/welcome/10.ogg' = 50,
 'sound/voice/welcome/11.ogg' = 50,'sound/voice/welcome/12.ogg' = 50,'sound/voice/welcome/13.ogg' = 50,'sound/voice/welcome/14.ogg' = 50,
-'sound/voice/welcome/15.ogg' = 50, 'sound/voice/welcome/16-SatinIsle.ogg' = 50)
+'sound/voice/welcome/15.ogg' = 50, 'sound/voice/welcome/16-SatinIsle.ogg' = 50, 'sound/voice/welcome/17-seashell.ogg' = 50,
+'sound/voice/welcome/18-seashell.ogg' = 50, 'sound/voice/welcome/19-seashell.ogg' = 50, 'sound/voice/welcome/20-seashell.ogg' = 50,
+'sound/voice/welcome/21-seashell.ogg' = 50, 'sound/voice/welcome/22-seashell.ogg' = 50, 'sound/voice/welcome/23-seashell.ogg' = 50,
+'sound/voice/welcome/24-seashell.ogg' = 50, 'sound/voice/welcome/25-hazard.ogg' = 50, 'sound/voice/welcome/26-hazard.ogg' = 50, 'sound/voice/welcome/27.ogg' = 10)
