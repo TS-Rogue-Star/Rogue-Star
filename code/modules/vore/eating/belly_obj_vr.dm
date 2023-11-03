@@ -57,10 +57,9 @@
 	var/selective_preference = DM_DIGEST	// Which type of selective bellymode do we default to?
 	var/eating_privacy_local = "default"	//Overrides eating_privacy_global if not "default". Determines if attempt/success messages are subtle/loud
 	var/silicon_belly_overlay_preference = "Sleeper" //Selects between placing belly overlay in sleeper or normal vore mode. Exclusive
-	var/visible_belly_minimum_prey = 1 //What LAZYLEN(vore_selected.contents) we require to show the belly. Customizable
-	var/overlay_min_prey_size	= 0 	//Minimum prey size for belly overlay to show. 0 to disable
-	var/override_min_prey_size = FALSE	//If true, exceeding override prey number will override minimum size requirements
-	var/override_min_prey_num	= 1		//We check belly contents against this to override min size
+	var/belly_mob_mult = 1		//Multiplier for how filling mob types are in borg bellies
+	var/belly_item_mult = 1 	//Multiplier for how filling items are in borg borg bellies. Items are also weighted on item size
+	var/belly_overall_mult = 1	//Multiplier applied ontop of any other specific multipliers
 
 	// Generally just used by AI
 	var/autotransferchance = 0 				// % Chance of prey being autotransferred to transfer location
