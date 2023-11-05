@@ -166,6 +166,9 @@
 	outdoors = 1
 	},
 /area/groundbase/exploration/shuttlepad)
+"cE" = (
+/turf/simulated/floor/wood,
+/area/groundbase/command/hop)
 "cI" = (
 /obj/structure/table/glass,
 /obj/machinery/computer/med_data/laptop{
@@ -238,6 +241,10 @@
 	},
 /turf/simulated/floor/tiled/eris/dark/panels,
 /area/shuttle/groundbase/exploration)
+"fk" = (
+/obj/structure/bed/chair/comfy/blue,
+/turf/simulated/floor/wood,
+/area/groundbase/command/hop)
 "fn" = (
 /obj/structure/table/glass,
 /obj/item/weapon/paper_bin,
@@ -444,6 +451,11 @@
 	outdoors = 1
 	},
 /area/groundbase/medical/patio)
+"iD" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/wood,
+/area/groundbase/command/hop)
 "iZ" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -510,6 +522,13 @@
 /obj/structure/table/glass,
 /turf/simulated/floor/carpet,
 /area/groundbase/medical/cmo)
+"kb" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/wood,
+/area/groundbase/command/hop)
 "ke" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled,
@@ -534,6 +553,9 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/uhallway)
+"kB" = (
+/turf/simulated/floor/outdoors/sidewalk/slab,
+/area/groundbase/command/hop)
 "kL" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -736,6 +758,10 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/dorms/bathroom)
+"nP" = (
+/obj/structure/closet/secure_closet/hop2,
+/turf/simulated/floor/wood,
+/area/groundbase/command/hop)
 "nQ" = (
 /obj/structure/cable/cyan{
 	icon_state = "2-4"
@@ -806,6 +832,11 @@
 	outdoors = 1
 	},
 /area/groundbase/medical/patio)
+"oI" = (
+/obj/structure/closet/secure_closet/hop,
+/obj/item/clothing/glasses/omnihud,
+/turf/simulated/floor/carpet/sblucarpet,
+/area/groundbase/command/hop)
 "oJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
@@ -840,6 +871,15 @@
 /obj/structure/flora/pottedplant/minitree,
 /turf/simulated/floor/wood,
 /area/groundbase/medical/cmo)
+"pD" = (
+/obj/machinery/atmospherics/pipe/zpipe/down/scrubbers{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/zpipe/down/supply{
+	dir = 1
+	},
+/turf/simulated/floor/wood,
+/area/groundbase/command/hop)
 "pH" = (
 /obj/structure/table/glass,
 /obj/item/weapon/clipboard,
@@ -1133,6 +1173,12 @@
 "sY" = (
 /turf/simulated/floor/tiled/white,
 /area/groundbase/dorms/bathroom)
+"tb" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/turf/simulated/floor/carpet/sblucarpet,
+/area/groundbase/command/hop)
 "td" = (
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor/tiled{
@@ -1175,6 +1221,9 @@
 	},
 /turf/simulated/floor/tiled,
 /area/shuttle/groundbase/exploration)
+"tK" = (
+/turf/simulated/floor/carpet/sblucarpet,
+/area/groundbase/command/hop)
 "tN" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -1443,6 +1492,16 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/dorms/bathroom)
+"wF" = (
+/obj/item/weapon/bedsheet/hop,
+/obj/structure/bed/padded,
+/obj/structure/curtain/black,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/atmospherics/unary/vent_pump/on,
+/turf/simulated/floor/carpet/sblucarpet,
+/area/groundbase/command/hop)
 "wI" = (
 /obj/machinery/power/apc{
 	dir = 4
@@ -1670,6 +1729,12 @@
 /obj/structure/flora/pottedplant/small,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/level3/nw)
+"zV" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/groundbase/command/hop)
 "Af" = (
 /turf/simulated/floor{
 	edge_blending_priority = -1;
@@ -1811,6 +1876,12 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/patient4)
+"Cr" = (
+/obj/structure/bed/chair/comfy/blue{
+	dir = 1
+	},
+/turf/simulated/floor/wood,
+/area/groundbase/command/hop)
 "Cx" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 4
@@ -1980,6 +2051,12 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor,
 /area/groundbase/cargo/office)
+"EC" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/turf/simulated/floor/wood,
+/area/groundbase/command/hop)
 "EL" = (
 /turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/level3/ne)
@@ -2027,6 +2104,12 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/patient3)
+"Fd" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/sblucarpet,
+/area/groundbase/command/hop)
 "Fe" = (
 /obj/structure/bed/chair/office/dark{
 	dir = 1
@@ -2034,6 +2117,12 @@
 /obj/effect/landmark/start/iaa,
 /turf/simulated/floor/carpet/sblucarpet,
 /area/groundbase/level3/nw)
+"Fo" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/groundbase/command/hop)
 "FC" = (
 /turf/simulated/wall,
 /area/groundbase/exploration/shuttlepad)
@@ -2256,6 +2345,15 @@
 	},
 /turf/simulated/floor/carpet,
 /area/groundbase/medical/cmo)
+"IP" = (
+/obj/machinery/alarm{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/groundbase/command/hop)
 "IQ" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -2547,6 +2645,12 @@
 	outdoors = 1
 	},
 /area/groundbase/medical/patio)
+"Mk" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/machinery/door/firedoor,
+/turf/simulated/floor,
+/area/groundbase/command/hop)
 "Mm" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
@@ -2741,6 +2845,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/paramedic)
+"Ph" = (
+/turf/simulated/wall/r_wall,
+/area/groundbase/command/hop)
 "Pv" = (
 /obj/structure/closet/secure_closet/paramedic,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -2778,6 +2885,9 @@
 "PJ" = (
 /turf/simulated/floor/outdoors/grass/seasonal/dark,
 /area/groundbase/level3/se)
+"PM" = (
+/turf/simulated/open,
+/area/groundbase/command/hop)
 "PS" = (
 /obj/effect/floor_decal/industrial/warning,
 /turf/simulated/floor/reinforced{
@@ -3169,6 +3279,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/pilot)
+"VT" = (
+/obj/structure/table/woodentable,
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/groundbase/command/hop)
 "VU" = (
 /obj/effect/landmark/start/paramedic,
 /obj/structure/cable/yellow{
@@ -17639,13 +17756,13 @@ xF
 xF
 xF
 xF
-Af
-Af
-Af
-Af
-Af
-Af
-Af
+kB
+kB
+kB
+kB
+kB
+kB
+kB
 xF
 xF
 Af
@@ -17781,13 +17898,13 @@ xF
 xF
 xF
 xF
-Af
-Af
-Af
-Af
-Af
-Af
-Af
+kB
+kB
+kB
+kB
+kB
+kB
+kB
 xF
 xF
 Af
@@ -17923,13 +18040,13 @@ xF
 xF
 xF
 xF
-Af
-Af
-Af
-Af
-Af
-Af
-Af
+Ph
+Ph
+Mk
+Mk
+Mk
+Ph
+Ph
 xF
 xF
 Af
@@ -18065,13 +18182,13 @@ xF
 xF
 xF
 xF
-Af
-Af
-Af
-Af
-Af
-Af
-Af
+Mk
+wF
+tb
+oI
+nP
+zV
+Mk
 xF
 xF
 Af
@@ -18207,13 +18324,13 @@ xF
 xF
 xF
 xF
-Af
-Af
-Af
-Af
-Af
-Af
-Af
+Mk
+tK
+Fd
+tK
+cE
+PM
+Mk
 xF
 xF
 Af
@@ -18331,10 +18448,10 @@ LW
 aD
 aD
 aD
-xF
-xF
-xF
-xF
+Af
+Af
+Af
+Af
 aD
 aD
 aD
@@ -18349,13 +18466,13 @@ xF
 xF
 xF
 xF
-Af
-Af
-Af
-Af
-Af
-Af
-Af
+Mk
+tK
+Fd
+tK
+cE
+PM
+Mk
 xF
 xF
 Af
@@ -18471,12 +18588,12 @@ LW
 LW
 aD
 aD
-xF
-xF
-xF
-xF
-xF
-xF
+Af
+Af
+Af
+Af
+Af
+Af
 Af
 Af
 Af
@@ -18491,13 +18608,13 @@ xF
 xF
 xF
 xF
-Af
-Af
-Af
-Af
-Af
-Af
-Af
+Mk
+cE
+EC
+kb
+iD
+pD
+Mk
 xF
 xF
 xF
@@ -18633,13 +18750,13 @@ xF
 xF
 xF
 xF
-Af
-Af
-Af
-Af
-Af
-Af
-Af
+Mk
+IP
+fk
+VT
+Cr
+Fo
+Mk
 xF
 xF
 xF
@@ -18775,13 +18892,13 @@ xF
 xF
 xF
 xF
-Af
-Af
-Af
-Af
-Af
-Af
-Af
+Ph
+Ph
+Mk
+Mk
+Mk
+Ph
+Ph
 xF
 xF
 xF
@@ -18917,13 +19034,13 @@ xF
 xF
 xF
 xF
-Af
-Af
-Af
-Af
-Af
-Af
-Af
+kB
+kB
+kB
+kB
+kB
+kB
+kB
 xF
 xF
 xF
@@ -19059,13 +19176,13 @@ xF
 xF
 xF
 xF
-Af
-Af
-Af
-Af
-Af
-Af
-Af
+kB
+kB
+kB
+kB
+kB
+kB
+kB
 xF
 xF
 xF

@@ -2274,6 +2274,11 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/light_switch{
+	dir = 4;
+	pixel_x = -24;
+	pixel_y = 10
+	},
 /turf/simulated/floor/tiled,
 /area/groundbase/command/hop)
 "iC" = (
@@ -2347,6 +2352,15 @@
 	},
 /turf/simulated/floor/reinforced,
 /area/rnd/xenobiology)
+"iO" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/turf/simulated/floor/tiled,
+/area/groundbase/command/hop)
 "iP" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -3408,10 +3422,11 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/office)
 "nc" = (
-/obj/structure/closet/secure_closet/hop,
-/obj/item/clothing/glasses/omnihud,
-/turf/simulated/floor/tiled,
-/area/groundbase/command/hop)
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/machinery/door/firedoor,
+/turf/simulated/floor,
+/area/groundbase/civilian/library)
 "nd" = (
 /obj/structure/bookcase/bookcart,
 /obj/machinery/light{
@@ -4009,6 +4024,18 @@
 "pp" = (
 /turf/simulated/open,
 /area/groundbase/level2/se)
+"pq" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/outdoors/sidewalk/side,
+/area/groundbase/level2/sw)
 "pr" = (
 /obj/machinery/light,
 /turf/simulated/floor/reinforced,
@@ -4729,7 +4756,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/wall,
+/turf/simulated/floor/bmarble,
 /area/groundbase/civilian/chapel)
 "sg" = (
 /obj/machinery/light,
@@ -5093,6 +5120,19 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/Chemistry)
+"tv" = (
+/obj/structure/sign/directions/cryo{
+	dir = 8;
+	pixel_x = 32;
+	pixel_y = -26
+	},
+/obj/structure/sign/directions/bar{
+	dir = 8;
+	pixel_x = 32;
+	pixel_y = -32
+	},
+/turf/simulated/floor/outdoors/grass/seasonal,
+/area/groundbase/level2/ne)
 "tw" = (
 /obj/structure/sign/painting/library_private{
 	pixel_x = 32
@@ -6405,10 +6445,12 @@
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/command/bridge)
 "xV" = (
-/obj/structure/closet/secure_closet/hop2,
-/obj/machinery/light_switch{
-	dir = 1;
-	pixel_y = -30
+/obj/structure/stairs/spawner/east,
+/obj/machinery/atmospherics/pipe/zpipe/up/scrubbers{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/zpipe/up/supply{
+	dir = 1
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/command/hop)
@@ -6803,6 +6845,11 @@
 	},
 /turf/simulated/floor/carpet/blue,
 /area/groundbase/medical/psych)
+"zA" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/tiled,
+/area/groundbase/command/hop)
 "zB" = (
 /obj/structure/bed/chair/office/dark,
 /obj/effect/landmark/start/chemist,
@@ -6872,10 +6919,20 @@
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hall2)
 "Ab" = (
-/obj/structure/filingcabinet/chestdrawer,
-/obj/machinery/power/apc,
-/turf/simulated/floor/tiled,
-/area/groundbase/command/hop)
+/obj/structure/sign/directions/command{
+	dir = 6;
+	pixel_y = 40
+	},
+/obj/structure/sign/directions/cargo{
+	dir = 4;
+	pixel_y = 34
+	},
+/obj/structure/sign/directions/medical{
+	dir = 4;
+	pixel_y = 28
+	},
+/turf/simulated/floor/outdoors/grass/seasonal,
+/area/groundbase/level2/ne)
 "Ac" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-8"
@@ -6924,6 +6981,9 @@
 /area/groundbase/security/processing)
 "Aq" = (
 /obj/structure/closet/firecloset/full,
+/obj/machinery/camera/network/civilian{
+	dir = 1
+	},
 /turf/simulated/floor/wood,
 /area/groundbase/civilian/library)
 "As" = (
@@ -7483,11 +7543,14 @@
 /turf/simulated/wall/r_wall,
 /area/groundbase/dorms/room6)
 "Cl" = (
-/obj/machinery/camera/network/civilian{
-	dir = 8
+/obj/structure/sign/directions/cargo{
+	pixel_y = 29
 	},
-/turf/simulated/floor/wood,
-/area/groundbase/civilian/library)
+/obj/structure/sign/directions/medical{
+	pixel_y = 35
+	},
+/turf/simulated/floor/outdoors/grass/seasonal,
+/area/groundbase/level2/ne)
 "Cm" = (
 /obj/machinery/computer/supplycomp/control{
 	dir = 4
@@ -8586,7 +8649,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/turf/simulated/wall,
+/turf/simulated/floor/bmarble,
 /area/groundbase/civilian/chapel)
 "Hh" = (
 /obj/machinery/light,
@@ -9032,6 +9095,18 @@
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/office)
+"IN" = (
+/obj/structure/cable/yellow{
+	icon_state = "32-8"
+	},
+/obj/machinery/atmospherics/pipe/zpipe/down/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/zpipe/down/scrubbers{
+	dir = 8
+	},
+/turf/simulated/floor/outdoors/sidewalk/slab,
+/area/groundbase/level2/sw)
 "IQ" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
@@ -9799,18 +9874,18 @@
 /turf/simulated/floor/tiled/white,
 /area/medical/virology)
 "Lw" = (
-/obj/structure/cable/yellow{
-	icon_state = "32-1"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/atmospherics/pipe/zpipe/down/supply{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
 	},
-/obj/machinery/atmospherics/pipe/zpipe/down/scrubbers{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/level2/sw)
@@ -12549,6 +12624,19 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/outdoors/sidewalk,
 /area/groundbase/level2/sw)
+"Vc" = (
+/obj/structure/sign/directions/medical{
+	dir = 10;
+	pixel_x = 32;
+	pixel_y = 38
+	},
+/obj/structure/sign/directions/cargo{
+	dir = 8;
+	pixel_x = 32;
+	pixel_y = 32
+	},
+/turf/simulated/floor/outdoors/grass/seasonal,
+/area/groundbase/level2/ne)
 "Ve" = (
 /obj/structure/cable/yellow{
 	icon_state = "32-8"
@@ -12848,6 +12936,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
+/obj/structure/filingcabinet/chestdrawer,
 /turf/simulated/floor/tiled,
 /area/groundbase/command/hop)
 "Ww" = (
@@ -16799,11 +16888,11 @@ TH
 TH
 TH
 TH
-TH
-TH
-TH
-TH
-TH
+Wf
+Wf
+Wf
+Wf
+Wf
 TH
 TH
 TH
@@ -16941,11 +17030,11 @@ TH
 TH
 TH
 TH
-TH
-TH
-TH
-TH
-TH
+Wf
+Wf
+Wf
+Wf
+Wf
 TH
 TH
 TH
@@ -17083,11 +17172,11 @@ TH
 TH
 TH
 TH
-TH
-TH
-TH
-TH
-TH
+Wf
+Wf
+Wf
+Wf
+Wf
 TH
 TH
 TH
@@ -18664,7 +18753,7 @@ gE
 bD
 Gu
 ma
-av
+pq
 av
 av
 av
@@ -18806,7 +18895,7 @@ sb
 LO
 gC
 ma
-av
+pq
 av
 av
 av
@@ -18948,7 +19037,7 @@ Ir
 Xp
 pl
 ma
-av
+IN
 av
 av
 av
@@ -20203,10 +20292,10 @@ mQ
 mQ
 mQ
 mQ
-TH
-TH
-TH
-TH
+Wf
+Wf
+Wf
+Wf
 TH
 TH
 TH
@@ -20345,10 +20434,10 @@ rB
 rB
 rB
 mQ
-TH
-TH
-TH
-TH
+Wf
+Wf
+Wf
+Wf
 TH
 TH
 TH
@@ -20487,10 +20576,10 @@ rB
 rB
 rB
 mQ
-TH
-TH
-TH
-TH
+Wf
+Wf
+Wf
+Wf
 TH
 TH
 TH
@@ -20629,10 +20718,10 @@ rB
 rB
 rB
 mQ
-TH
-TH
-TH
-TH
+Wf
+Wf
+Wf
+Wf
 TH
 TH
 TH
@@ -20771,10 +20860,10 @@ rB
 rB
 rB
 mQ
-TH
-TH
-TH
-TH
+Wf
+Wf
+Wf
+Wf
 TH
 TH
 TH
@@ -20913,10 +21002,10 @@ rB
 rB
 rB
 mQ
-TH
-TH
-TH
-TH
+Wf
+Wf
+Wf
+Wf
 TH
 TH
 TH
@@ -21055,10 +21144,10 @@ rB
 rB
 rB
 mQ
-TH
-TH
-TH
-TH
+Wf
+Wf
+Wf
+Wf
 TH
 TH
 TH
@@ -21197,10 +21286,10 @@ rB
 rB
 rB
 mQ
-TH
-TH
-TH
-TH
+Wf
+Wf
+Wf
+Wf
 TH
 TH
 TH
@@ -21339,10 +21428,10 @@ rB
 rB
 rB
 mQ
-TH
-TH
-TH
-TH
+Wf
+Wf
+Wf
+Wf
 TH
 TH
 TH
@@ -21481,10 +21570,10 @@ rB
 rB
 rB
 mQ
-TH
-TH
-TH
-TH
+Wf
+Wf
+Wf
+Wf
 TH
 TH
 TH
@@ -21623,10 +21712,10 @@ rB
 rB
 rB
 mQ
-TH
-TH
-TH
-TH
+Wf
+Wf
+Wf
+Wf
 TH
 TH
 TH
@@ -21765,10 +21854,10 @@ cZ
 cZ
 zu
 mQ
-TH
-TH
-TH
-TH
+Wf
+Wf
+Wf
+Wf
 TH
 TH
 TH
@@ -21907,10 +21996,10 @@ cZ
 cZ
 Sj
 mQ
-TH
-TH
-TH
-TH
+Wf
+Wf
+Wf
+Wf
 TH
 TH
 TH
@@ -22049,10 +22138,10 @@ xZ
 LT
 tJ
 mQ
-TH
-TH
-TH
-TH
+Wf
+Wf
+Wf
+Wf
 TH
 TH
 TH
@@ -22191,10 +22280,10 @@ mQ
 mQ
 mQ
 mQ
-TH
-TH
-TH
-TH
+Wf
+Wf
+Wf
+Wf
 TH
 TH
 TH
@@ -22333,10 +22422,10 @@ it
 it
 ua
 Wf
-TH
-TH
-TH
-TH
+Wf
+Wf
+Wf
+Wf
 TH
 TH
 TH
@@ -22475,10 +22564,10 @@ Wf
 Wf
 Wf
 Wf
-TH
-TH
-TH
-TH
+Wf
+Wf
+Wf
+Wf
 TH
 TH
 TH
@@ -26002,7 +26091,7 @@ Dt
 Ng
 Ng
 Vf
-Ng
+tv
 Ng
 Ng
 Ng
@@ -26141,7 +26230,7 @@ hD
 fi
 fi
 hD
-Ng
+Ab
 Ng
 Vf
 Ng
@@ -28422,7 +28511,7 @@ Yx
 gd
 cl
 gd
-nc
+Yx
 bL
 Ng
 Ng
@@ -28704,8 +28793,8 @@ GB
 Sp
 Yx
 Yx
-QB
-Yx
+iO
+zA
 xV
 bL
 Ng
@@ -28848,7 +28937,7 @@ rR
 EP
 QB
 Yx
-Ab
+bL
 bL
 Ng
 GR
@@ -29118,7 +29207,7 @@ ju
 GZ
 hm
 DN
-Cl
+DN
 OA
 tm
 Jg
@@ -29259,13 +29348,13 @@ gK
 gK
 gK
 gK
+nc
+nc
+nc
 gK
 gK
 gK
-gK
-gK
-gK
-Ng
+Cl
 Ng
 YF
 Ng
@@ -29865,7 +29954,7 @@ Ng
 Ng
 Ng
 Ng
-Ng
+Vc
 Rb
 Ng
 FE
