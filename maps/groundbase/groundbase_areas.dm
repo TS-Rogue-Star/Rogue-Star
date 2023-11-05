@@ -216,6 +216,12 @@
 /area/groundbase/security/halle
 	name = "Security East Hallway"
 	lightswitch = 1
+/area/groundbase/security/hall2
+	name = "Security Second Floor Hallway"
+	lightswitch = 1
+/area/groundbase/security/hall3
+	name = "Security Third Floor Hallway"
+	lightswitch = 1
 /area/groundbase/security/warden
 	name = "Warden's Office"
 /area/groundbase/security/armory
@@ -408,6 +414,9 @@
 /area/groundbase/civilian/foodplace
 	name = "Uncle Grumslex's Snack Emporium"
 	lightswitch = 1
+/area/groundbase/civilian/redgate
+	name = "Redgate"
+	lightswitch = 1
 /area/groundbase/civilian/apparel
 	name = "Crew Apparel Care"
 	lightswitch = 1
@@ -501,6 +510,19 @@
 	name = "AI/Civilian Substation"
 /area/maintenance/groundbase/substation/command
 	name = "Command Substation"
+
+/area/maintenance/groundbase/substation/aitele
+	name = "AI/Telecoms Substation"
+/area/maintenance/groundbase/substation/med
+	name = "Medical Substation"
+/area/maintenance/groundbase/substation/cargo
+	name = "Cargo Substation"
+/area/maintenance/groundbase/substation/sec
+	name = "Security Substation"
+/area/maintenance/groundbase/substation/sci
+	name = "Research Substation"
+/area/maintenance/groundbase/substation/civ
+	name = "Civilian Substation"
 
 /area/maintenance/groundbase/level1/netunnel
 	name = "\improper Level 1 Northeast Tunnel"
