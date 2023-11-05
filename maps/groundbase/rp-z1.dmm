@@ -825,25 +825,6 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/command/meeting)
-"ban" = (
-/obj/structure/sign/directions/medical{
-	dir = 4;
-	pixel_y = 41
-	},
-/obj/structure/sign/directions/engineering{
-	dir = 6;
-	pixel_y = 35
-	},
-/obj/structure/sign/directions/security{
-	dir = 8;
-	pixel_y = 29
-	},
-/obj/structure/sign/directions/science{
-	dir = 10;
-	pixel_y = 23
-	},
-/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
-/area/groundbase/level1/se)
 "bat" = (
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
 /area/groundbase/level1/nw)
@@ -1111,6 +1092,14 @@
 "boq" = (
 /turf/simulated/wall/r_wall,
 /area/rnd/xenobiology)
+"boW" = (
+/obj/structure/sign/directions/bar{
+	dir = 9;
+	pixel_x = 32;
+	pixel_y = 33
+	},
+/turf/simulated/floor/outdoors/grass/seasonal,
+/area/groundbase/level1/nw)
 "bpb" = (
 /obj/random/vendorall,
 /obj/machinery/light{
@@ -1259,12 +1248,6 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /turf/simulated/floor/carpet/sblucarpet,
 /area/groundbase/security/hos)
-"bwp" = (
-/obj/structure/table/bench/padded,
-/turf/simulated/floor/outdoors/newdirt{
-	outdoors = 0
-	},
-/area/groundbase/civilian/bar)
 "bxW" = (
 /obj/effect/floor_decal/industrial/danger,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -3328,6 +3311,25 @@
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/lobby)
+"duA" = (
+/obj/structure/sign/directions/medical{
+	dir = 4;
+	pixel_y = 41
+	},
+/obj/structure/sign/directions/engineering{
+	dir = 6;
+	pixel_y = 35
+	},
+/obj/structure/sign/directions/security{
+	dir = 8;
+	pixel_y = 29
+	},
+/obj/structure/sign/directions/science{
+	dir = 10;
+	pixel_y = 23
+	},
+/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
+/area/groundbase/level1/se)
 "dve" = (
 /obj/machinery/transhuman/synthprinter,
 /turf/simulated/floor/tiled,
@@ -4298,6 +4300,14 @@
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/science/rd)
+"eAs" = (
+/obj/structure/sign/directions/cryo{
+	dir = 1;
+	pixel_x = -32;
+	pixel_y = 4
+	},
+/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow,
+/area/groundbase/level1/nw)
 "eAV" = (
 /obj/structure/table/bench/padded,
 /obj/effect/landmark/start/intern,
@@ -6301,6 +6311,16 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/science/xenohall)
+"gGP" = (
+/obj/structure/stairs/spawner/west,
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "16-0"
+	},
+/turf/simulated/floor/outdoors/sidewalk/side,
+/area/groundbase/level1/sw)
 "gGX" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/tool/crowbar,
@@ -7307,14 +7327,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/groundbase/command/tcomms/chamber)
-"hFT" = (
-/obj/structure/sign/directions/cryo{
-	dir = 1;
-	pixel_x = -32;
-	pixel_y = 4
-	},
-/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow,
-/area/groundbase/level1/nw)
 "hGk" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -8296,6 +8308,15 @@
 /obj/machinery/floodlight,
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/storage)
+"iEb" = (
+/obj/structure/table/bench/padded,
+/obj/item/device/radio/intercom{
+	pixel_y = -24
+	},
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
+/area/groundbase/civilian/bar)
 "iEK" = (
 /obj/item/weapon/gun/projectile/shotgun/doublebarrel{
 	name = "chef's double-barreled shotgun"
@@ -8893,29 +8914,6 @@
 /obj/item/weapon/stamp/rd,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/rd)
-"jkY" = (
-/obj/structure/sign/directions/medical{
-	dir = 1;
-	pixel_x = 32;
-	pixel_y = 10
-	},
-/obj/structure/sign/directions/security{
-	dir = 8;
-	pixel_x = 32;
-	pixel_y = 4
-	},
-/obj/structure/sign/directions/engineering{
-	dir = 10;
-	pixel_x = 32;
-	pixel_y = -2
-	},
-/obj/structure/sign/directions/science{
-	dir = 8;
-	pixel_x = 32;
-	pixel_y = -8
-	},
-/turf/simulated/floor/outdoors/grass/seasonal,
-/area/groundbase/level1/ne)
 "jlk" = (
 /obj/item/device/aicard,
 /obj/structure/table/reinforced,
@@ -9221,6 +9219,19 @@
 /obj/machinery/vending/wardrobe/hydrobe,
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/hydroponics)
+"jFr" = (
+/obj/structure/sign/directions/bar{
+	dir = 9;
+	pixel_x = 32;
+	pixel_y = 33
+	},
+/obj/structure/sign/directions/cryo{
+	dir = 9;
+	pixel_x = 32;
+	pixel_y = 39
+	},
+/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
+/area/groundbase/level1/ne)
 "jGM" = (
 /obj/structure/noticeboard{
 	pixel_y = -32
@@ -9236,6 +9247,14 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/command/meeting)
+"jGQ" = (
+/obj/structure/sign/directions/dorms{
+	dir = 9;
+	pixel_x = 32;
+	pixel_y = -32
+	},
+/turf/simulated/floor/outdoors/grass/seasonal,
+/area/groundbase/level1/nw)
 "jHK" = (
 /obj/machinery/computer/atmoscontrol,
 /obj/machinery/power/apc{
@@ -9932,19 +9951,6 @@
 /area/groundbase/engineering/storage)
 "ksX" = (
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
-/area/groundbase/level1/ne)
-"ktK" = (
-/obj/structure/sign/directions/command{
-	dir = 4;
-	pixel_x = 32;
-	pixel_y = 10
-	},
-/obj/structure/sign/directions/library{
-	dir = 4;
-	pixel_x = 32;
-	pixel_y = 4
-	},
-/turf/simulated/floor/outdoors/grass/seasonal,
 /area/groundbase/level1/ne)
 "ktO" = (
 /obj/effect/floor_decal/steeldecal/steel_decals10{
@@ -10732,6 +10738,10 @@
 	},
 /turf/simulated/floor/tiled/eris/cafe,
 /area/groundbase/civilian/kitchen)
+"lkQ" = (
+/obj/structure/bed/chair/sofa/bench/right,
+/turf/simulated/floor/outdoors/grass/seasonal,
+/area/groundbase/level1/sw)
 "lkY" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -13067,14 +13077,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/command/tcomms/foyer)
-"nDd" = (
-/obj/structure/sign/directions/bar{
-	dir = 9;
-	pixel_x = 32;
-	pixel_y = 33
-	},
-/turf/simulated/floor/outdoors/grass/seasonal,
-/area/groundbase/level1/nw)
 "nEi" = (
 /obj/structure/table/standard,
 /obj/random/tech_supply,
@@ -13748,6 +13750,10 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/command/meeting)
+"oww" = (
+/obj/structure/bed/chair/sofa/bench/left,
+/turf/simulated/floor/outdoors/grass/seasonal,
+/area/groundbase/level1/sw)
 "owy" = (
 /turf/simulated/floor/outdoors/newdirt,
 /area/groundbase/science/circuits)
@@ -14291,24 +14297,6 @@
 	},
 /turf/simulated/floor/outdoors/sidewalk/side,
 /area/groundbase/level1/sw)
-"oYl" = (
-/obj/structure/sign/directions/science{
-	dir = 6;
-	pixel_x = -31;
-	pixel_y = -40
-	},
-/obj/structure/sign/directions/security{
-	dir = 9;
-	pixel_x = -31;
-	pixel_y = -34
-	},
-/obj/structure/sign/directions/medical{
-	dir = 4;
-	pixel_x = -31;
-	pixel_y = -28
-	},
-/turf/simulated/floor/outdoors/grass/seasonal,
-/area/groundbase/level1/nw)
 "oYG" = (
 /turf/simulated/wall/r_wall,
 /area/groundbase/level1/se)
@@ -14665,16 +14653,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/workshop)
-"poN" = (
-/obj/structure/stairs/spawner/west,
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "16-0"
-	},
-/turf/simulated/floor/outdoors/sidewalk/side,
-/area/groundbase/level1/sw)
 "poY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -14801,6 +14779,24 @@
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/xenobot/storage)
+"psq" = (
+/obj/structure/sign/directions/science{
+	dir = 6;
+	pixel_x = -31;
+	pixel_y = -40
+	},
+/obj/structure/sign/directions/security{
+	dir = 9;
+	pixel_x = -31;
+	pixel_y = -34
+	},
+/obj/structure/sign/directions/medical{
+	dir = 4;
+	pixel_x = -31;
+	pixel_y = -28
+	},
+/turf/simulated/floor/outdoors/grass/seasonal,
+/area/groundbase/level1/nw)
 "psV" = (
 /obj/structure/disposalpipe/segment{
 	dir = 8;
@@ -15911,10 +15907,6 @@
 "qxG" = (
 /turf/simulated/floor/tiled,
 /area/groundbase/science/robotics)
-"qyI" = (
-/obj/machinery/light,
-/turf/simulated/floor/tiled,
-/area/rnd/xenobiology)
 "qyS" = (
 /obj/machinery/door/window/southright{
 	dir = 1;
@@ -16582,6 +16574,14 @@
 /obj/machinery/firealarm,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/medical/autoresleeving)
+"rdW" = (
+/obj/structure/sign/directions/cryo{
+	dir = 1;
+	pixel_x = 32;
+	pixel_y = 7
+	},
+/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
+/area/groundbase/level1/nw)
 "red" = (
 /turf/simulated/floor{
 	edge_blending_priority = -1;
@@ -17761,6 +17761,19 @@
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/groundbase/engineering/atmos)
+"sah" = (
+/obj/structure/sign/directions/command{
+	dir = 4;
+	pixel_x = 32;
+	pixel_y = 10
+	},
+/obj/structure/sign/directions/library{
+	dir = 4;
+	pixel_x = 32;
+	pixel_y = 4
+	},
+/turf/simulated/floor/outdoors/grass/seasonal,
+/area/groundbase/level1/ne)
 "saD" = (
 /obj/structure/closet/firecloset/full,
 /turf/simulated/wall/r_wall,
@@ -17808,19 +17821,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/groundbase/civilian/gameroom)
-"scH" = (
-/obj/structure/sign/directions/bar{
-	dir = 9;
-	pixel_x = 32;
-	pixel_y = 33
-	},
-/obj/structure/sign/directions/cryo{
-	dir = 9;
-	pixel_x = 32;
-	pixel_y = 39
-	},
-/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
-/area/groundbase/level1/ne)
 "sde" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -18291,9 +18291,6 @@
 /turf/simulated/floor/outdoors/sidewalk,
 /area/groundbase/level1/sw)
 "sJE" = (
-/obj/item/device/radio/intercom{
-	pixel_y = -24
-	},
 /obj/structure/table/bench/padded,
 /turf/simulated/floor/outdoors/newdirt{
 	outdoors = 0
@@ -19083,14 +19080,6 @@
 	},
 /turf/simulated/floor/outdoors/newdirt_nograss,
 /area/groundbase/level1/ne)
-"tCG" = (
-/obj/structure/sign/directions/cryo{
-	dir = 1;
-	pixel_x = 32;
-	pixel_y = 7
-	},
-/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
-/area/groundbase/level1/nw)
 "tDy" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -19376,10 +19365,6 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/lobby)
-"tTz" = (
-/obj/structure/bed/chair/sofa/bench/right,
-/turf/simulated/floor/outdoors/grass/seasonal,
-/area/groundbase/level1/sw)
 "tUS" = (
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
 /area/groundbase/civilian/clown)
@@ -19981,6 +19966,29 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/lobby)
+"urU" = (
+/obj/structure/sign/directions/medical{
+	dir = 1;
+	pixel_x = 32;
+	pixel_y = 10
+	},
+/obj/structure/sign/directions/security{
+	dir = 8;
+	pixel_x = 32;
+	pixel_y = 4
+	},
+/obj/structure/sign/directions/engineering{
+	dir = 10;
+	pixel_x = 32;
+	pixel_y = -2
+	},
+/obj/structure/sign/directions/science{
+	dir = 8;
+	pixel_x = 32;
+	pixel_y = -8
+	},
+/turf/simulated/floor/outdoors/grass/seasonal,
+/area/groundbase/level1/ne)
 "usq" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -20217,10 +20225,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/outdoors/sidewalk,
 /area/groundbase/civilian/bar)
-"uDX" = (
-/obj/structure/bed/chair/sofa/bench/left,
-/turf/simulated/floor/outdoors/grass/seasonal,
-/area/groundbase/level1/sw)
 "uFf" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -20952,14 +20956,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/civilian/bar)
-"vCc" = (
-/obj/structure/sign/directions/dorms{
-	dir = 9;
-	pixel_x = 32;
-	pixel_y = -32
-	},
-/turf/simulated/floor/outdoors/grass/seasonal,
-/area/groundbase/level1/nw)
 "vCg" = (
 /obj/structure/bed/chair/backed_red,
 /obj/structure/cable/yellow{
@@ -23597,6 +23593,10 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/command/hall)
+"ylK" = (
+/obj/machinery/light,
+/turf/simulated/floor/tiled,
+/area/rnd/xenobiology)
 "ylR" = (
 /obj/structure/cable/orange{
 	icon_state = "1-4"
@@ -27397,7 +27397,7 @@ sfb
 sfb
 sfb
 sfb
-tTz
+lkQ
 hVa
 sfb
 sfb
@@ -27539,7 +27539,7 @@ sfb
 sfb
 sfb
 sfb
-uDX
+oww
 hVa
 sfb
 sfb
@@ -28803,7 +28803,7 @@ dcE
 tJF
 rOt
 xcj
-poN
+gGP
 xcj
 rOt
 raF
@@ -28902,7 +28902,7 @@ hGk
 oeu
 oeu
 egG
-vCc
+jGQ
 oeu
 oeu
 oeu
@@ -29752,7 +29752,7 @@ oeu
 pDQ
 pjP
 dVI
-bwp
+sJE
 wRI
 mDR
 pDQ
@@ -30038,14 +30038,14 @@ cLi
 dVI
 mDR
 xOg
-bwp
+sJE
 hkB
 dVI
 qbN
 dVI
-bwp
+sJE
 xgn
-bwp
+iEb
 pBY
 pBY
 pBY
@@ -30185,7 +30185,7 @@ dVI
 dVI
 pfZ
 dVI
-bwp
+sJE
 hzC
 sJE
 nCM
@@ -30327,9 +30327,9 @@ hoO
 fck
 vWm
 bYh
-bwp
+sJE
 mDC
-bwp
+sJE
 svD
 len
 gge
@@ -30921,7 +30921,7 @@ egG
 oeu
 oeu
 lKQ
-oYl
+psq
 sfb
 sfb
 sfb
@@ -31378,7 +31378,7 @@ bfA
 gNV
 hxn
 iwj
-qyI
+ylK
 boq
 ffC
 eQS
@@ -32308,13 +32308,13 @@ oeu
 pDQ
 neL
 dVI
-bwp
-bwp
-bwp
+sJE
+sJE
+sJE
 pDQ
-bwp
-bwp
-bwp
+sJE
+sJE
+sJE
 pDQ
 pDQ
 pDQ
@@ -32458,7 +32458,7 @@ pDI
 pDI
 pDI
 rQn
-hFT
+eAs
 pDI
 pDI
 bat
@@ -33041,8 +33041,8 @@ lOz
 lOz
 kPC
 bat
-tCG
-nDd
+rdW
+boW
 tBm
 egG
 oeu
@@ -33243,7 +33243,7 @@ sfb
 sfb
 sfb
 sfb
-tTz
+lkQ
 qUW
 sfb
 kUt
@@ -33385,7 +33385,7 @@ sfb
 sfb
 sfb
 sfb
-uDX
+oww
 qUW
 sfb
 kUt
@@ -33903,7 +33903,7 @@ eiI
 eiI
 eiI
 eiI
-scH
+jFr
 fdO
 lFG
 kUt
@@ -34188,7 +34188,7 @@ qiX
 lJr
 bTX
 bTX
-ban
+duA
 lFG
 kUt
 kUt
@@ -34721,7 +34721,7 @@ amy
 amy
 lPx
 vSC
-ktK
+sah
 eiI
 xxV
 eiI
@@ -37595,7 +37595,7 @@ amy
 amy
 amy
 eiI
-jkY
+urU
 kKr
 hBH
 kKr
