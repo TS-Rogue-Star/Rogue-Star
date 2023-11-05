@@ -74,8 +74,8 @@ var/world_time_day
 				/obj/structure/flora/ausbushes/ywflowers,
 				/obj/structure/flora/mushroom
 			)
-
-			grass_chance = 30
+			if(grass_chance)
+				grass_chance = 30
 		if("summer")
 			tree_types = list(
 				/obj/structure/flora/tree/bigtree,
@@ -130,9 +130,10 @@ var/world_time_day
 				/obj/structure/flora/pumpkin,
 				/obj/structure/flora/ausbushes
 			)
-
-			grass_chance = 10
-			animal_chance = 0.25
+			if(grass_chance)
+				grass_chance = 10
+			if(animal_chance)
+				animal_chance = 0.25
 		if("winter")
 			grass_chance = 0
 			tree_types = list(
@@ -162,9 +163,10 @@ var/world_time_day
 				/obj/structure/flora/grass/green,
 				/obj/structure/flora/bush
 			)
-
-			grass_chance = 1
-			animal_chance = 0.1
+			if(grass_chance)
+				grass_chance = 1
+			if(animal_chance)
+				animal_chance = 0.1
 
 
 	if(tree_chance && prob(tree_chance) && !check_density())
