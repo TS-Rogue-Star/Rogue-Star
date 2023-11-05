@@ -142,9 +142,7 @@
 /obj/item/weapon/stool/baystool/padded{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow{
-	grass_chance = 0
-	},
+/turf/simulated/floor/outdoors/newdirt,
 /area/groundbase/civilian/bar)
 "akb" = (
 /obj/structure/disposalpipe/segment{
@@ -1094,6 +1092,14 @@
 "boq" = (
 /turf/simulated/wall/r_wall,
 /area/rnd/xenobiology)
+"boW" = (
+/obj/structure/sign/directions/bar{
+	dir = 9;
+	pixel_x = 32;
+	pixel_y = 33
+	},
+/turf/simulated/floor/outdoors/grass/seasonal,
+/area/groundbase/level1/nw)
 "bpb" = (
 /obj/random/vendorall,
 /obj/machinery/light{
@@ -1242,13 +1248,6 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /turf/simulated/floor/carpet/sblucarpet,
 /area/groundbase/security/hos)
-"bwp" = (
-/obj/structure/table/bench/padded,
-/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow{
-	grass_chance = 0;
-	outdoors = 0
-	},
-/area/groundbase/civilian/bar)
 "bxW" = (
 /obj/effect/floor_decal/industrial/danger,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -2860,8 +2859,13 @@
 /turf/simulated/floor/outdoors/sidewalk,
 /area/groundbase/level2/sw)
 "cZl" = (
-/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
-/area/space)
+/obj/structure/sign/directions/cryo{
+	dir = 8;
+	pixel_x = -32;
+	pixel_y = 4
+	},
+/turf/simulated/floor/outdoors/grass/seasonal,
+/area/groundbase/level1/nw)
 "cZU" = (
 /obj/structure/redgate,
 /turf/simulated/floor/reinforced,
@@ -3288,9 +3292,7 @@
 /obj/item/weapon/stool/baystool/padded{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow{
-	grass_chance = 0
-	},
+/turf/simulated/floor/outdoors/newdirt,
 /area/groundbase/civilian/bar)
 "dtn" = (
 /obj/structure/grille,
@@ -3309,6 +3311,25 @@
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/lobby)
+"duA" = (
+/obj/structure/sign/directions/medical{
+	dir = 4;
+	pixel_y = 41
+	},
+/obj/structure/sign/directions/engineering{
+	dir = 6;
+	pixel_y = 35
+	},
+/obj/structure/sign/directions/security{
+	dir = 8;
+	pixel_y = 29
+	},
+/obj/structure/sign/directions/science{
+	dir = 10;
+	pixel_y = 23
+	},
+/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
+/area/groundbase/level1/se)
 "dve" = (
 /obj/machinery/transhuman/synthprinter,
 /turf/simulated/floor/tiled,
@@ -4009,15 +4030,12 @@
 	},
 /area/groundbase/level1/ne)
 "eku" = (
-/obj/structure/stairs/spawner/west,
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
+/obj/structure/sign/directions/dorms{
+	dir = 1;
+	pixel_y = 32
 	},
-/obj/structure/cable/yellow{
-	icon_state = "16-0"
-	},
-/turf/simulated/floor/outdoors/sidewalk/side,
-/area/groundbase/level1/sw)
+/turf/simulated/floor/outdoors/grass/seasonal,
+/area/groundbase/level1/nw)
 "ekT" = (
 /obj/structure/bookcase,
 /obj/item/weapon/book/manual/security_space_law,
@@ -4282,6 +4300,14 @@
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/science/rd)
+"eAs" = (
+/obj/structure/sign/directions/cryo{
+	dir = 1;
+	pixel_x = -32;
+	pixel_y = 4
+	},
+/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow,
+/area/groundbase/level1/nw)
 "eAV" = (
 /obj/structure/table/bench/padded,
 /obj/effect/landmark/start/intern,
@@ -4744,9 +4770,19 @@
 /turf/simulated/floor/plating,
 /area/groundbase/engineering/storage)
 "eVe" = (
-/turf/simulated/floor/outdoors/newdirt{
-	outdoors = 0
+/obj/structure/sign/directions/security{
+	dir = 9;
+	pixel_y = 8
 	},
+/obj/structure/sign/directions/medical{
+	dir = 4;
+	pixel_y = 2
+	},
+/obj/structure/sign/directions/dorms{
+	dir = 1;
+	pixel_y = -4
+	},
+/turf/simulated/wall/r_wall,
 /area/groundbase/security/lobby)
 "eVP" = (
 /obj/machinery/atmospherics/omni/atmos_filter{
@@ -6275,6 +6311,16 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/science/xenohall)
+"gGP" = (
+/obj/structure/stairs/spawner/west,
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "16-0"
+	},
+/turf/simulated/floor/outdoors/sidewalk/side,
+/area/groundbase/level1/sw)
 "gGX" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/tool/crowbar,
@@ -6644,11 +6690,21 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/science/hall)
 "gXF" = (
-/obj/structure/sign/directions/evac{
-	dir = 8
+/obj/structure/sign/directions/bar{
+	pixel_x = -32;
+	pixel_y = 33
 	},
-/turf/simulated/wall,
-/area/groundbase/civilian/arrivals)
+/obj/structure/sign/directions/medical{
+	pixel_x = -32;
+	pixel_y = 39
+	},
+/obj/structure/sign/directions/command{
+	dir = 4;
+	pixel_x = -32;
+	pixel_y = 27
+	},
+/turf/simulated/floor/outdoors/grass/seasonal,
+/area/groundbase/level1/nw)
 "gYs" = (
 /obj/structure/table/reinforced,
 /obj/structure/cable/yellow{
@@ -8252,6 +8308,15 @@
 /obj/machinery/floodlight,
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/storage)
+"iEb" = (
+/obj/structure/table/bench/padded,
+/obj/item/device/radio/intercom{
+	pixel_y = -24
+	},
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
+/area/groundbase/civilian/bar)
 "iEK" = (
 /obj/item/weapon/gun/projectile/shotgun/doublebarrel{
 	name = "chef's double-barreled shotgun"
@@ -9154,6 +9219,19 @@
 /obj/machinery/vending/wardrobe/hydrobe,
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/hydroponics)
+"jFr" = (
+/obj/structure/sign/directions/bar{
+	dir = 9;
+	pixel_x = 32;
+	pixel_y = 33
+	},
+/obj/structure/sign/directions/cryo{
+	dir = 9;
+	pixel_x = 32;
+	pixel_y = 39
+	},
+/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
+/area/groundbase/level1/ne)
 "jGM" = (
 /obj/structure/noticeboard{
 	pixel_y = -32
@@ -9169,6 +9247,14 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/command/meeting)
+"jGQ" = (
+/obj/structure/sign/directions/dorms{
+	dir = 9;
+	pixel_x = 32;
+	pixel_y = -32
+	},
+/turf/simulated/floor/outdoors/grass/seasonal,
+/area/groundbase/level1/nw)
 "jHK" = (
 /obj/machinery/computer/atmoscontrol,
 /obj/machinery/power/apc{
@@ -9407,9 +9493,7 @@
 /obj/item/weapon/stool/baystool/padded{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow{
-	grass_chance = 0
-	},
+/turf/simulated/floor/outdoors/newdirt,
 /area/groundbase/civilian/bar)
 "jTn" = (
 /obj/structure/cable/yellow{
@@ -10654,6 +10738,10 @@
 	},
 /turf/simulated/floor/tiled/eris/cafe,
 /area/groundbase/civilian/kitchen)
+"lkQ" = (
+/obj/structure/bed/chair/sofa/bench/right,
+/turf/simulated/floor/outdoors/grass/seasonal,
+/area/groundbase/level1/sw)
 "lkY" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -11307,8 +11395,18 @@
 /turf/simulated/floor/carpet/blucarpet,
 /area/groundbase/command/captain)
 "lPx" = (
-/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
-/area/groundbase/level2/nw)
+/obj/structure/sign/directions/bar{
+	dir = 8;
+	pixel_x = 32;
+	pixel_y = -2
+	},
+/obj/structure/sign/directions/cryo{
+	dir = 8;
+	pixel_x = 32;
+	pixel_y = 4
+	},
+/turf/simulated/floor/outdoors/grass/seasonal,
+/area/groundbase/level1/ne)
 "lPP" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -12010,8 +12108,7 @@
 "mDR" = (
 /obj/structure/table/bench/padded,
 /obj/effect/landmark/start/visitor,
-/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow{
-	grass_chance = 0;
+/turf/simulated/floor/outdoors/newdirt{
 	outdoors = 0
 	},
 /area/groundbase/civilian/bar)
@@ -13653,6 +13750,10 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/command/meeting)
+"oww" = (
+/obj/structure/bed/chair/sofa/bench/left,
+/turf/simulated/floor/outdoors/grass/seasonal,
+/area/groundbase/level1/sw)
 "owy" = (
 /turf/simulated/floor/outdoors/newdirt,
 /area/groundbase/science/circuits)
@@ -14678,6 +14779,24 @@
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/xenobot/storage)
+"psq" = (
+/obj/structure/sign/directions/science{
+	dir = 6;
+	pixel_x = -31;
+	pixel_y = -40
+	},
+/obj/structure/sign/directions/security{
+	dir = 9;
+	pixel_x = -31;
+	pixel_y = -34
+	},
+/obj/structure/sign/directions/medical{
+	dir = 4;
+	pixel_x = -31;
+	pixel_y = -28
+	},
+/turf/simulated/floor/outdoors/grass/seasonal,
+/area/groundbase/level1/nw)
 "psV" = (
 /obj/structure/disposalpipe/segment{
 	dir = 8;
@@ -16455,6 +16574,14 @@
 /obj/machinery/firealarm,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/medical/autoresleeving)
+"rdW" = (
+/obj/structure/sign/directions/cryo{
+	dir = 1;
+	pixel_x = 32;
+	pixel_y = 7
+	},
+/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
+/area/groundbase/level1/nw)
 "red" = (
 /turf/simulated/floor{
 	edge_blending_priority = -1;
@@ -17634,6 +17761,19 @@
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/groundbase/engineering/atmos)
+"sah" = (
+/obj/structure/sign/directions/command{
+	dir = 4;
+	pixel_x = 32;
+	pixel_y = 10
+	},
+/obj/structure/sign/directions/library{
+	dir = 4;
+	pixel_x = 32;
+	pixel_y = 4
+	},
+/turf/simulated/floor/outdoors/grass/seasonal,
+/area/groundbase/level1/ne)
 "saD" = (
 /obj/structure/closet/firecloset/full,
 /turf/simulated/wall/r_wall,
@@ -17898,8 +18038,8 @@
 /turf/simulated/floor,
 /area/groundbase/civilian/hydroponics)
 "soW" = (
-/turf/simulated/floor/outdoors/grass/seasonal,
-/area/space)
+/turf/simulated/floor/outdoors/newdirt,
+/area/groundbase/civilian/bar)
 "spE" = (
 /obj/machinery/door/airlock/command{
 	name = "Command Meeting Room"
@@ -18151,12 +18291,8 @@
 /turf/simulated/floor/outdoors/sidewalk,
 /area/groundbase/level1/sw)
 "sJE" = (
-/obj/item/device/radio/intercom{
-	pixel_y = -24
-	},
 /obj/structure/table/bench/padded,
-/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow{
-	grass_chance = 0;
+/turf/simulated/floor/outdoors/newdirt{
 	outdoors = 0
 	},
 /area/groundbase/civilian/bar)
@@ -19830,6 +19966,29 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/lobby)
+"urU" = (
+/obj/structure/sign/directions/medical{
+	dir = 1;
+	pixel_x = 32;
+	pixel_y = 10
+	},
+/obj/structure/sign/directions/security{
+	dir = 8;
+	pixel_x = 32;
+	pixel_y = 4
+	},
+/obj/structure/sign/directions/engineering{
+	dir = 10;
+	pixel_x = 32;
+	pixel_y = -2
+	},
+/obj/structure/sign/directions/science{
+	dir = 8;
+	pixel_x = 32;
+	pixel_y = -8
+	},
+/turf/simulated/floor/outdoors/grass/seasonal,
+/area/groundbase/level1/ne)
 "usq" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -21983,8 +22142,7 @@
 "wRI" = (
 /obj/structure/table/bench/padded,
 /obj/effect/landmark/start/entertainer,
-/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow{
-	grass_chance = 0;
+/turf/simulated/floor/outdoors/newdirt{
 	outdoors = 0
 	},
 /area/groundbase/civilian/bar)
@@ -22915,8 +23073,7 @@
 "xOg" = (
 /obj/structure/table/bench/padded,
 /obj/effect/landmark/start/intern,
-/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow{
-	grass_chance = 0;
+/turf/simulated/floor/outdoors/newdirt{
 	outdoors = 0
 	},
 /area/groundbase/civilian/bar)
@@ -23436,6 +23593,10 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/command/hall)
+"ylK" = (
+/obj/machinery/light,
+/turf/simulated/floor/tiled,
+/area/rnd/xenobiology)
 "ylR" = (
 /obj/structure/cable/orange{
 	icon_state = "1-4"
@@ -26905,8 +27066,8 @@ gSA
 kZE
 dYB
 pSO
-soW
-soW
+oeu
+oeu
 noM
 noM
 noM
@@ -27047,8 +27208,8 @@ tzI
 kBc
 sOL
 pSO
-soW
-soW
+oeu
+oeu
 noM
 lUL
 tYV
@@ -27189,8 +27350,8 @@ qMY
 aKZ
 oye
 pSO
-soW
-soW
+oeu
+oeu
 noM
 hZz
 rhe
@@ -27236,7 +27397,7 @@ sfb
 sfb
 sfb
 sfb
-sfb
+lkQ
 hVa
 sfb
 sfb
@@ -27331,8 +27492,8 @@ pSO
 qRy
 pSO
 pSO
-soW
-soW
+oeu
+oeu
 noM
 gWB
 rhe
@@ -27360,16 +27521,16 @@ sfb
 sfb
 xcj
 xcj
-rOt
+xcj
 awx
 awx
 awx
 awx
-rOt
 rOt
 rOt
 xcj
 xcj
+xcj
 sfb
 sfb
 sfb
@@ -27378,7 +27539,7 @@ sfb
 sfb
 sfb
 sfb
-sfb
+oww
 hVa
 sfb
 sfb
@@ -27459,22 +27620,22 @@ eje
 rvc
 oeu
 oeu
-lPx
-lPx
-lPx
+bat
+bat
+bat
 pJX
 gmX
 pJX
-lPx
-lPx
 bat
-cZl
+bat
+bat
+bat
 tUS
 khz
 xOo
-soW
-soW
-soW
+oeu
+oeu
+oeu
 noM
 cnI
 xwt
@@ -27502,14 +27663,14 @@ nCj
 nCj
 nCj
 xQX
-rOt
+xcj
 rOt
 awx
 awx
 awx
 rOt
 rOt
-rOt
+xcj
 hKZ
 nCj
 nCj
@@ -27644,14 +27805,14 @@ sfb
 sfb
 xcj
 xcj
-rOt
+xcj
 rOt
 awx
 awx
 awx
 rOt
 rOt
-rOt
+xcj
 xcj
 xcj
 sfb
@@ -27880,7 +28041,7 @@ tpV
 tpV
 tpV
 tpV
-oeu
+eku
 hGk
 oeu
 oeu
@@ -28214,11 +28375,11 @@ uHI
 lKI
 jRi
 tJF
-sfb
-xcj
-eku
-xcj
-sfb
+rOt
+rOt
+rOt
+rOt
+rOt
 sfb
 sfb
 sfb
@@ -28356,11 +28517,11 @@ rPR
 jVm
 cSq
 tJF
-raF
-xcj
-iBv
-xcj
-sfb
+rOt
+rOt
+rOt
+rOt
+rOt
 sfb
 sfb
 sfb
@@ -28498,11 +28659,11 @@ bGv
 xRJ
 tRF
 tJF
-raF
-raF
-iBv
-sfb
-sfb
+rOt
+xcj
+xcj
+xcj
+rOt
 raF
 raF
 sfb
@@ -28640,11 +28801,11 @@ qCJ
 eSN
 dcE
 tJF
-raF
-raF
-iBv
-sfb
-raF
+rOt
+xcj
+gGP
+xcj
+rOt
 raF
 sfb
 sfb
@@ -28741,7 +28902,7 @@ hGk
 oeu
 oeu
 egG
-oeu
+jGQ
 oeu
 oeu
 oeu
@@ -28783,9 +28944,9 @@ vki
 tJF
 tJF
 raF
-sfb
+xcj
 iBv
-sfb
+xcj
 sfb
 sfb
 sfb
@@ -29591,7 +29752,7 @@ oeu
 pDQ
 pjP
 dVI
-bwp
+sJE
 wRI
 mDR
 pDQ
@@ -29877,14 +30038,14 @@ cLi
 dVI
 mDR
 xOg
-bwp
+sJE
 hkB
 dVI
 qbN
 dVI
-bwp
+sJE
 xgn
-bwp
+iEb
 pBY
 pBY
 pBY
@@ -30024,7 +30185,7 @@ dVI
 dVI
 pfZ
 dVI
-bwp
+sJE
 hzC
 sJE
 nCM
@@ -30166,9 +30327,9 @@ hoO
 fck
 vWm
 bYh
-bwp
+sJE
 mDC
-bwp
+sJE
 svD
 len
 gge
@@ -30300,7 +30461,7 @@ oeu
 oeu
 pDQ
 xKO
-pNw
+soW
 jTj
 jTj
 jTj
@@ -30760,7 +30921,7 @@ egG
 oeu
 oeu
 lKQ
-oeu
+psq
 sfb
 sfb
 sfb
@@ -31216,8 +31377,8 @@ irW
 bfA
 gNV
 hxn
-iuu
-woB
+iwj
+ylK
 boq
 ffC
 eQS
@@ -31436,7 +31597,7 @@ oeu
 oeu
 pDQ
 nat
-pNw
+soW
 aix
 aix
 aix
@@ -31567,7 +31728,7 @@ egG
 rzp
 dcU
 dcU
-gXF
+rzp
 hoQ
 rzp
 dcU
@@ -31709,13 +31870,13 @@ egG
 oeu
 oeu
 oeu
-oeu
+cZl
 plG
 oeu
 oeu
 oeu
 oeu
-oeu
+gXF
 oeu
 oeu
 dVI
@@ -32147,13 +32308,13 @@ oeu
 pDQ
 neL
 dVI
-bwp
-bwp
-bwp
+sJE
+sJE
+sJE
 pDQ
-bwp
-bwp
-bwp
+sJE
+sJE
+sJE
 pDQ
 pDQ
 pDQ
@@ -32297,7 +32458,7 @@ pDI
 pDI
 pDI
 rQn
-pDI
+eAs
 pDI
 pDI
 bat
@@ -32880,8 +33041,8 @@ lOz
 lOz
 kPC
 bat
-bat
-oeu
+rdW
+boW
 tBm
 egG
 oeu
@@ -33082,7 +33243,7 @@ sfb
 sfb
 sfb
 sfb
-sfb
+lkQ
 qUW
 sfb
 kUt
@@ -33224,7 +33385,7 @@ sfb
 sfb
 sfb
 sfb
-sfb
+oww
 qUW
 sfb
 kUt
@@ -33742,7 +33903,7 @@ eiI
 eiI
 eiI
 eiI
-ksX
+jFr
 fdO
 lFG
 kUt
@@ -34027,7 +34188,7 @@ qiX
 lJr
 bTX
 bTX
-fdO
+duA
 lFG
 kUt
 kUt
@@ -34558,9 +34719,9 @@ awx
 awx
 amy
 amy
-eiI
+lPx
 vSC
-eiI
+sah
 eiI
 xxV
 eiI
@@ -37434,7 +37595,7 @@ amy
 amy
 amy
 eiI
-eiI
+urU
 kKr
 hBH
 kKr
