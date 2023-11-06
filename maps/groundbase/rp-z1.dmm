@@ -532,9 +532,7 @@
 	pixel_x = 7;
 	pixel_y = 5
 	},
-/turf/simulated/floor/wood{
-	outdoors = 1
-	},
+/turf/simulated/floor/wood,
 /area/groundbase/civilian/bar)
 "aKZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -927,10 +925,7 @@
 	id = "rndshutters";
 	name = "Privacy Shutters"
 	},
-/turf/simulated/floor{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor,
 /area/groundbase/science/rnd)
 "bfS" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/red{
@@ -1064,10 +1059,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/simulated/floor{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor,
 /area/groundbase/science/xenobot)
 "bmp" = (
 /obj/machinery/status_display{
@@ -1816,10 +1808,7 @@
 	name = "Xenobotany Desk";
 	req_access = list(77)
 	},
-/turf/simulated/floor{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor,
 /area/groundbase/science/xenobot)
 "bWa" = (
 /obj/machinery/station_map{
@@ -2734,9 +2723,7 @@
 /obj/machinery/light_switch{
 	pixel_y = 30
 	},
-/turf/simulated/floor/wood{
-	outdoors = 1
-	},
+/turf/simulated/floor/wood,
 /area/groundbase/civilian/bar)
 "cNZ" = (
 /obj/structure/closet/jequipcloset,
@@ -5425,10 +5412,7 @@
 	name = "Circuitry Workshop";
 	req_access = list(7)
 	},
-/turf/simulated/floor{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor,
 /area/groundbase/science/circuits)
 "fHT" = (
 /obj/structure/bed/chair/office/light{
@@ -6086,10 +6070,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor,
 /area/groundbase/science/xenobot)
 "gtr" = (
 /obj/effect/floor_decal/industrial/warning/corner,
@@ -6963,6 +6944,11 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/lhallway)
+"hon" = (
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
+/area/groundbase/science/xenobot)
 "hoA" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor/tiled{
@@ -9033,9 +9019,7 @@
 "juN" = (
 /obj/structure/table/marble,
 /obj/machinery/chemical_dispenser/bar_soft/full,
-/turf/simulated/floor/wood{
-	outdoors = 1
-	},
+/turf/simulated/floor/wood,
 /area/groundbase/civilian/bar)
 "juV" = (
 /obj/effect/floor_decal/industrial/danger{
@@ -9576,7 +9560,9 @@
 /area/groundbase/civilian/toolstorage)
 "jWe" = (
 /obj/effect/mouse_hole_spawner,
-/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
+/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs{
+	outdoors = 0
+	},
 /area/groundbase/level2/sw)
 "jWX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/black{
@@ -10170,7 +10156,9 @@
 /area/groundbase/civilian/redgate)
 "kFe" = (
 /obj/machinery/light/small,
-/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
+/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs{
+	outdoors = 0
+	},
 /area/groundbase/science/hall)
 "kFx" = (
 /obj/machinery/optable,
@@ -11218,10 +11206,7 @@
 	name = "Xenobotany Desk";
 	req_access = list(77)
 	},
-/turf/simulated/floor{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor,
 /area/groundbase/science/xenobot)
 "lHc" = (
 /obj/structure/cable{
@@ -11730,6 +11715,11 @@
 	},
 /turf/simulated/floor/wood,
 /area/groundbase/civilian/gameroom)
+"mdL" = (
+/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs{
+	outdoors = 0
+	},
+/area/groundbase/level2/sw)
 "mdP" = (
 /obj/structure/closet/crate,
 /obj/item/weapon/circuitboard/smes,
@@ -11794,6 +11784,15 @@
 /obj/machinery/computer/rdconsole/robotics,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/robotics)
+"mhV" = (
+/obj/structure/table/marble,
+/obj/machinery/door/blast/gate/thin{
+	dir = 4;
+	id = "Bar";
+	layer = 3.3
+	},
+/turf/simulated/floor/wood,
+/area/groundbase/civilian/bar)
 "mic" = (
 /obj/effect/floor_decal/industrial/danger,
 /obj/structure/cable/yellow{
@@ -12428,7 +12427,8 @@
 	pixel_y = 30
 	},
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow{
-	grass_chance = 0
+	grass_chance = 0;
+	outdoors = 0
 	},
 /area/groundbase/civilian/bar)
 "nbx" = (
@@ -13153,6 +13153,15 @@
 	},
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology)
+"nJC" = (
+/obj/structure/table/marble,
+/obj/machinery/door/blast/gate/thin{
+	dir = 8;
+	id = "Bar";
+	layer = 3.3
+	},
+/turf/simulated/floor/wood,
+/area/groundbase/civilian/bar)
 "nKa" = (
 /obj/structure/bookcase,
 /obj/item/weapon/book/manual/security_space_law,
@@ -13353,7 +13362,9 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
+/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs{
+	outdoors = 0
+	},
 /area/groundbase/science/rnd)
 "nYB" = (
 /obj/effect/step_trigger/teleporter/to_mining{
@@ -13482,10 +13493,7 @@
 	id = "rndshutters";
 	name = "Privacy Shutters"
 	},
-/turf/simulated/floor{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor,
 /area/groundbase/science/rnd)
 "oes" = (
 /obj/structure/table/standard,
@@ -13755,7 +13763,9 @@
 /turf/simulated/floor/outdoors/grass/seasonal,
 /area/groundbase/level1/sw)
 "owy" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
 /area/groundbase/science/circuits)
 "owP" = (
 /obj/machinery/light/bigfloorlamp,
@@ -13900,10 +13910,7 @@
 	name = "Circuitry Workshop";
 	req_access = list(7)
 	},
-/turf/simulated/floor{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor,
 /area/groundbase/science/circuits)
 "oDC" = (
 /obj/structure/cable{
@@ -15032,6 +15039,11 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/morgue)
+"pGg" = (
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
+/area/groundbase/science/rnd)
 "pGo" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -15345,6 +15357,11 @@
 	},
 /turf/simulated/floor/bluegrid,
 /area/groundbase/command/ai/chamber)
+"pVJ" = (
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
+/area/groundbase/level2/sw)
 "pVL" = (
 /obj/machinery/light{
 	dir = 1
@@ -15486,7 +15503,9 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/or1)
 "pZo" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
 /area/groundbase/science/robotics)
 "qaM" = (
 /obj/machinery/alarm,
@@ -15634,10 +15653,7 @@
 	id = "robshutters";
 	name = "Privacy Shutters"
 	},
-/turf/simulated/floor{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor,
 /area/groundbase/science/robotics)
 "qgp" = (
 /obj/structure/table/bench/padded,
@@ -16692,10 +16708,7 @@
 	id = "rndshutters";
 	name = "Privacy Shutters"
 	},
-/turf/simulated/floor{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor,
 /area/groundbase/science/rnd)
 "rfU" = (
 /obj/structure/cable/yellow{
@@ -20176,7 +20189,9 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
+/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs{
+	outdoors = 0
+	},
 /area/groundbase/science/xenobot)
 "uBm" = (
 /obj/structure/cable{
@@ -21596,9 +21611,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = 21
 	},
-/turf/simulated/floor/wood{
-	outdoors = 1
-	},
+/turf/simulated/floor/wood,
 /area/groundbase/civilian/bar)
 "wtS" = (
 /obj/machinery/computer/rcon{
@@ -21660,10 +21673,7 @@
 	id = "rndshutters";
 	name = "Privacy Shutters"
 	},
-/turf/simulated/floor{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor,
 /area/groundbase/science/rnd)
 "wxs" = (
 /obj/machinery/power/apc{
@@ -22604,10 +22614,7 @@
 	id = "robshutters";
 	name = "Privacy Shutters"
 	},
-/turf/simulated/floor{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor,
 /area/groundbase/science/robotics)
 "xrv" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/yellow{
@@ -22716,7 +22723,9 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/groundbase/command/tcomms/chamber)
 "xwd" = (
-/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
+/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs{
+	outdoors = 0
+	},
 /area/groundbase/science/circuits)
 "xwg" = (
 /obj/structure/bed/chair/backed_red,
@@ -22789,9 +22798,7 @@
 /obj/structure/sign/double/barsign{
 	pixel_y = 32
 	},
-/turf/simulated/floor/wood{
-	outdoors = 1
-	},
+/turf/simulated/floor/wood,
 /area/groundbase/civilian/bar)
 "xAl" = (
 /obj/machinery/button/remote/blast_door{
@@ -23015,7 +23022,8 @@
 	pixel_y = 30
 	},
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow{
-	grass_chance = 0
+	grass_chance = 0;
+	outdoors = 0
 	},
 /area/groundbase/civilian/bar)
 "xKQ" = (
@@ -23290,7 +23298,9 @@
 /turf/simulated/wall/r_wall,
 /area/groundbase/engineering/ce)
 "xZu" = (
-/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
+/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs{
+	outdoors = 0
+	},
 /area/groundbase/science/robotics)
 "xZA" = (
 /obj/machinery/portable_atmospherics/hydroponics,
@@ -30602,7 +30612,7 @@ oeu
 oeu
 oeu
 pDQ
-eBk
+nJC
 hYk
 eBk
 eBk
@@ -31454,7 +31464,7 @@ oeu
 oeu
 oeu
 pDQ
-mLi
+mhV
 gbO
 mLi
 mLi
@@ -32215,9 +32225,9 @@ bfA
 rKr
 wdT
 vzN
-wdT
-wdT
-wdT
+hon
+hon
+hon
 uAc
 bZC
 xAl
@@ -32357,9 +32367,9 @@ kia
 eZu
 oZt
 oZt
-oZt
-eZu
-oZt
+mdL
+pVJ
+mdL
 jWe
 bZC
 fHJ
@@ -32499,10 +32509,10 @@ oZt
 oZt
 oZt
 oZt
-oZt
-oZt
-oZt
-oZt
+mdL
+mdL
+mdL
+mdL
 xwd
 owy
 owy
@@ -32641,12 +32651,12 @@ grR
 eZu
 oZt
 oZt
-oZt
-oZt
-oZt
-oZt
-oZt
-eZu
+mdL
+mdL
+mdL
+mdL
+mdL
+pVJ
 kFe
 kNr
 uuc
@@ -32925,12 +32935,12 @@ grR
 eZu
 oZt
 oZt
-oZt
-oZt
-oZt
-oZt
-oZt
-eZu
+mdL
+mdL
+mdL
+mdL
+mdL
+pVJ
 kFe
 dZG
 kYC
@@ -33067,10 +33077,10 @@ oZt
 oZt
 oZt
 oZt
-oZt
-oZt
-oZt
-oZt
+mdL
+mdL
+mdL
+mdL
 xZu
 pZo
 pZo
@@ -33209,10 +33219,10 @@ obA
 eZu
 oZt
 oZt
-oZt
-eZu
-oZt
-oZt
+mdL
+pVJ
+mdL
+mdL
 aOd
 qfP
 xrt
@@ -33351,9 +33361,9 @@ dyI
 jON
 ydR
 dUA
-ydR
-ydR
-ydR
+pGg
+pGg
+pGg
 nYb
 tbQ
 mhM

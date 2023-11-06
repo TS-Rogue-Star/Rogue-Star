@@ -2157,6 +2157,17 @@
 /obj/machinery/light,
 /turf/simulated/floor/wood,
 /area/groundbase/civilian/library)
+"hT" = (
+/obj/machinery/door/firedoor,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/machinery/door/blast/gate/thin{
+	dir = 4;
+	id = "Cafe";
+	layer = 3.3
+	},
+/turf/simulated/floor,
+/area/groundbase/civilian/cafe)
 "hU" = (
 /obj/structure/sign/xenobio{
 	plane = -34
@@ -5123,9 +5134,6 @@
 /turf/simulated/floor/wood,
 /area/groundbase/dorms/room8)
 "to" = (
-/obj/item/device/radio/intercom{
-	pixel_y = -24
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
@@ -6673,6 +6681,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/item/device/radio/intercom{
+	pixel_y = -24
+	},
 /turf/simulated/floor/lino,
 /area/groundbase/civilian/cafe)
 "yE" = (
@@ -7586,6 +7597,9 @@
 /obj/item/weapon/reagent_containers/food/drinks/shaker{
 	pixel_x = 5;
 	pixel_y = 6
+	},
+/obj/machinery/camera/network/civilian{
+	dir = 1
 	},
 /turf/simulated/floor/lino,
 /area/groundbase/civilian/cafe)
@@ -11718,6 +11732,17 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hall2)
+"Rw" = (
+/obj/machinery/door/firedoor,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/machinery/door/blast/gate/thin{
+	dir = 2;
+	id = "Cafe";
+	layer = 3.3
+	},
+/turf/simulated/floor,
+/area/groundbase/civilian/cafe)
 "Rx" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/landmark/start/cargo,
@@ -12108,9 +12133,6 @@
 /area/groundbase/civilian/cafe)
 "SZ" = (
 /obj/structure/table/hardwoodtable,
-/obj/machinery/camera/network/civilian{
-	dir = 8
-	},
 /obj/structure/sink/countertop{
 	dir = 8;
 	pixel_x = 7;
@@ -30349,7 +30371,7 @@ VQ
 dS
 Oa
 Hn
-fX
+Rw
 Ng
 Rb
 Ng
@@ -30633,7 +30655,7 @@ fA
 fA
 ll
 dr
-fX
+Rw
 Ng
 Rb
 Ng
@@ -30917,7 +30939,7 @@ SY
 uX
 aP
 to
-fX
+Rw
 Ng
 Rb
 Ng
@@ -31340,8 +31362,8 @@ tP
 tP
 fX
 fX
-fX
-fX
+hT
+hT
 fX
 fX
 Ng
