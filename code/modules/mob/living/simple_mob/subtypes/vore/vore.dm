@@ -2,6 +2,8 @@
 	mob_class = MOB_CLASS_ANIMAL
 	mob_bump_flag = 0
 
+	softfall = TRUE		//RS EDIT
+
 /mob/living/simple_mob
 	var/nameset
 	var/limit_renames = TRUE
@@ -71,3 +73,16 @@
 
 /mob/living/simple_mob/vore/aggressive
 	mob_bump_flag = HEAVY
+
+//The stuff we want to be revivable normally
+/mob/living/simple_mob/animal
+	ic_revivable = TRUE
+/mob/living/simple_mob/vore/otie
+	ic_revivable = TRUE
+/mob/living/simple_mob/vore
+	ic_revivable = TRUE
+//The stuff that would be revivable but that we don't want to be revivable
+/mob/living/simple_mob/animal/giant_spider/nurse //no you can't revive the ones who can lay eggs and get webs everywhere
+	ic_revivable = FALSE
+/mob/living/simple_mob/animal/giant_spider/carrier //or the ones who fart babies when they die
+	ic_revivable = FALSE
