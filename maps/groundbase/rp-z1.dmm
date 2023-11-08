@@ -60,9 +60,8 @@
 /turf/simulated/floor,
 /area/groundbase/level1/se)
 "afR" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/universal,
-/turf/simulated/wall,
-/area/groundbase/medical/resleeving)
+/turf/simulated/floor/outdoors/mud,
+/area/groundbase/level1/ne)
 "agl" = (
 /obj/effect/landmark/start/security,
 /obj/structure/cable/yellow{
@@ -142,7 +141,9 @@
 /obj/item/weapon/stool/baystool/padded{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
 /area/groundbase/civilian/bar)
 "akb" = (
 /obj/structure/disposalpipe/segment{
@@ -1626,13 +1627,6 @@
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/medical/autoresleeving)
 "bNT" = (
-/obj/machinery/button/remote/airlock{
-	desc = "A remote control switch for the medbay recovery room door.";
-	id = "AutoResleeving";
-	name = "Exit Button";
-	pixel_x = 28;
-	pixel_y = 29
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable/yellow{
@@ -1702,11 +1696,15 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/white,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/white{
+	edge_blending_priority = -1
+	},
 /area/groundbase/medical/lhallway)
 "bSk" = (
 /obj/structure/cable/yellow{
@@ -1872,7 +1870,9 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/outdoors/sidewalk/slab,
+/turf/simulated/floor/outdoors/sidewalk/slab{
+	outdoors = 0
+	},
 /area/groundbase/civilian/bar)
 "bYj" = (
 /obj/machinery/light/bigfloorlamp,
@@ -2405,7 +2405,9 @@
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/outdoors/sidewalk/side,
+/turf/simulated/floor/outdoors/sidewalk/slab{
+	outdoors = 0
+	},
 /area/groundbase/civilian/bar)
 "czw" = (
 /obj/structure/cable{
@@ -3279,7 +3281,9 @@
 /obj/item/weapon/stool/baystool/padded{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
 /area/groundbase/civilian/bar)
 "dtn" = (
 /obj/structure/grille,
@@ -3377,6 +3381,12 @@
 	},
 /turf/simulated/floor/bmarble,
 /area/groundbase/civilian/foodplace)
+"dyu" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/outdoors/newdirt,
+/area/groundbase/level1/sw)
 "dyI" = (
 /turf/simulated/wall/r_wall,
 /area/groundbase/science/rnd)
@@ -3689,12 +3699,6 @@
 /area/groundbase/engineering/atmos/monitoring)
 "dNU" = (
 /obj/machinery/vending/loadout/uniform,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
-	},
 /obj/machinery/requests_console{
 	department = "Medical";
 	departmentType = 2;
@@ -3721,9 +3725,7 @@
 "dOS" = (
 /obj/item/weapon/stool/padded,
 /obj/effect/landmark/start/bartender,
-/turf/simulated/floor/wood{
-	outdoors = 1
-	},
+/turf/simulated/floor/wood,
 /area/groundbase/civilian/bar)
 "dPT" = (
 /obj/machinery/door/firedoor,
@@ -4301,16 +4303,8 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/foodplace)
 "eBk" = (
-/obj/structure/table/marble,
-/obj/machinery/door/blast/gate/thin{
-	dir = 8;
-	id = "Bar";
-	layer = 3.3
-	},
-/turf/simulated/floor/wood{
-	outdoors = 1
-	},
-/area/groundbase/civilian/bar)
+/turf/simulated/floor/outdoors/newdirt,
+/area/groundbase/level1/ne)
 "eBt" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/firstaid/adv{
@@ -4418,7 +4412,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/sidewalk/side,
+/turf/simulated/floor/outdoors/sidewalk/side{
+	outdoors = 0
+	},
 /area/groundbase/civilian/bar)
 "eGq" = (
 /obj/machinery/mineral/output,
@@ -4876,12 +4872,14 @@
 /turf/simulated/floor/tiled/eris/cafe,
 /area/groundbase/civilian/kitchen)
 "eYS" = (
-/obj/machinery/light{
-	dir = 1
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
-/obj/machinery/washing_machine,
-/turf/simulated/floor/tiled/dark,
-/area/groundbase/medical/resleeving)
+/obj/machinery/light,
+/turf/simulated/floor/outdoors/sidewalk/side{
+	outdoors = 0
+	},
+/area/groundbase/civilian/bar)
 "eYX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
@@ -4943,13 +4941,13 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/outdoors/sidewalk,
+/turf/simulated/floor/outdoors/sidewalk{
+	outdoors = 0
+	},
 /area/groundbase/civilian/bar)
 "fcn" = (
 /obj/effect/landmark/start/bartender,
-/turf/simulated/floor/wood{
-	outdoors = 1
-	},
+/turf/simulated/floor/wood,
 /area/groundbase/civilian/bar)
 "fcF" = (
 /turf/simulated/floor/outdoors/grass/seasonal/dark,
@@ -5069,8 +5067,11 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/science/hall)
 "fkN" = (
-/turf/simulated/floor,
-/area/maintenance/groundbase/level1/netunnel)
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
+/area/groundbase/level1/nw)
 "fkX" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
@@ -5723,9 +5724,7 @@
 	name = "Bar";
 	req_access = list(25)
 	},
-/turf/simulated/floor/wood{
-	outdoors = 1
-	},
+/turf/simulated/floor/wood,
 /area/groundbase/civilian/bar)
 "gbW" = (
 /mob/living/simple_mob/animal/goat{
@@ -6499,11 +6498,6 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/hydroponics)
 "gSf" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_medical{
-	name = "Medical";
-	req_one_access = null
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
@@ -6513,7 +6507,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/bmarble,
+/turf/simulated/floor/tiled/white{
+	edge_blending_priority = -1
+	},
 /area/groundbase/medical/lhallway)
 "gSA" = (
 /obj/structure/table/woodentable,
@@ -6961,7 +6957,9 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/outdoors/sidewalk,
+/turf/simulated/floor/outdoors/sidewalk{
+	outdoors = 0
+	},
 /area/groundbase/civilian/bar)
 "hoQ" = (
 /obj/machinery/door/firedoor,
@@ -7090,21 +7088,13 @@
 /turf/simulated/floor/tiled/freezer/cold,
 /area/groundbase/civilian/kitchen/freezer)
 "huM" = (
-/obj/machinery/button/remote/airlock{
-	desc = "A remote control switch for the medbay recovery room door.";
-	dir = 1;
-	id = "Resleeving";
-	name = "Exit Button";
-	pixel_x = 28;
-	pixel_y = -29
-	},
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/medical/resleeving)
 "huZ" = (
@@ -7242,7 +7232,7 @@
 /turf/simulated/floor/outdoors/sidewalk/side{
 	outdoors = 0
 	},
-/area/groundbase/medical/lhallway)
+/area/groundbase/level1/se)
 "hCZ" = (
 /obj/structure/stairs/spawner/south,
 /obj/structure/cable/yellow,
@@ -7289,9 +7279,7 @@
 	dir = 4;
 	pixel_x = 6
 	},
-/turf/simulated/floor/wood{
-	outdoors = 1
-	},
+/turf/simulated/floor/wood,
 /area/groundbase/civilian/bar)
 "hFk" = (
 /obj/machinery/telecomms/server/presets/medical,
@@ -7360,7 +7348,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/sidewalk/side,
+/turf/simulated/floor/outdoors/sidewalk/side{
+	outdoors = 0
+	},
 /area/groundbase/civilian/bar)
 "hJg" = (
 /obj/structure/cable/orange{
@@ -7560,9 +7550,7 @@
 	name = "Bar";
 	req_access = list(25)
 	},
-/turf/simulated/floor/wood{
-	outdoors = 1
-	},
+/turf/simulated/floor/wood,
 /area/groundbase/civilian/bar)
 "hYx" = (
 /obj/machinery/light,
@@ -7782,9 +7770,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
@@ -8178,8 +8164,7 @@
 /area/groundbase/civilian/toolstorage)
 "iyE" = (
 /obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
+	dir = 4
 	},
 /turf/simulated/wall,
 /area/groundbase/medical/autoresleeving)
@@ -8368,7 +8353,6 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor/tiled/dark,
@@ -8719,7 +8703,6 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/medical/resleeving)
@@ -8826,9 +8809,7 @@
 /turf/simulated/floor/outdoors/sidewalk,
 /area/groundbase/level1/nw)
 "jiP" = (
-/turf/simulated/floor/wood{
-	outdoors = 1
-	},
+/turf/simulated/floor/wood,
 /area/groundbase/civilian/bar)
 "jiR" = (
 /obj/effect/floor_decal/techfloor/orange{
@@ -9137,8 +9118,10 @@
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/structure/disposalpipe/sortjunction{
+	dir = 4;
+	name = "Resleeving";
+	sortType = "Resleeving"
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/lhallway)
@@ -9477,7 +9460,9 @@
 /obj/item/weapon/stool/baystool/padded{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
 /area/groundbase/civilian/bar)
 "jTn" = (
 /obj/structure/cable/yellow{
@@ -9598,6 +9583,12 @@
 /obj/machinery/light/small,
 /turf/simulated/floor,
 /area/maintenance/groundbase/substation/med)
+"jZo" = (
+/obj/vehicle/boat{
+	dir = 4
+	},
+/turf/simulated/floor/water/seasonal,
+/area/groundbase/level1/ne)
 "jZQ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1;
@@ -9606,7 +9597,6 @@
 /turf/simulated/wall/r_wall,
 /area/groundbase/command/meeting)
 "kau" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -9820,9 +9810,7 @@
 "klF" = (
 /obj/structure/table/marble,
 /obj/machinery/chemical_dispenser/bar_coffee/full,
-/turf/simulated/floor/wood{
-	outdoors = 1
-	},
+/turf/simulated/floor/wood,
 /area/groundbase/civilian/bar)
 "klM" = (
 /obj/structure/cable{
@@ -9862,9 +9850,7 @@
 	id = "Bar";
 	layer = 3.3
 	},
-/turf/simulated/floor/wood{
-	outdoors = 1
-	},
+/turf/simulated/floor/wood,
 /area/groundbase/civilian/bar)
 "kqV" = (
 /obj/machinery/door/airlock/multi_tile/glass/polarized{
@@ -9917,9 +9903,7 @@
 	layer = 3.3
 	},
 /obj/effect/landmark/vermin,
-/turf/simulated/floor/wood{
-	outdoors = 1
-	},
+/turf/simulated/floor/wood,
 /area/groundbase/civilian/bar)
 "ksP" = (
 /obj/machinery/telecomms/broadcaster/preset_right/groundbase,
@@ -10214,11 +10198,12 @@
 /turf/simulated/floor/tiled/freezer/cold,
 /area/groundbase/civilian/kitchen/freezer)
 "kHU" = (
-/obj/machinery/atmospherics/unary/vent_pump/on,
-/obj/machinery/light{
-	dir = 1
+/obj/machinery/light/small{
+	dir = 4
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled/white{
+	edge_blending_priority = -1
+	},
 /area/groundbase/medical/lhallway)
 "kJs" = (
 /obj/machinery/conveyor{
@@ -10238,10 +10223,8 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt_nograss{
-	outdoors = 0
-	},
-/area/groundbase/medical/lhallway)
+/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
+/area/groundbase/level1/nw)
 "kKD" = (
 /obj/structure/cable{
 	icon_state = "2-4"
@@ -10690,10 +10673,6 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/workshop)
 "lio" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/structure/sign/painting/library_secure{
 	pixel_x = -30
 	},
@@ -10728,7 +10707,7 @@
 /area/groundbase/civilian/kitchen)
 "lkQ" = (
 /obj/structure/bed/chair/sofa/bench/right,
-/turf/simulated/floor/outdoors/grass/seasonal,
+/turf/simulated/floor/outdoors/newdirt,
 /area/groundbase/level1/sw)
 "lkY" = (
 /obj/structure/cable/yellow{
@@ -10952,7 +10931,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/sidewalk/side,
+/turf/simulated/floor/outdoors/sidewalk/side{
+	outdoors = 0
+	},
 /area/groundbase/civilian/bar)
 "luR" = (
 /obj/machinery/vending/loadout/accessory,
@@ -11025,11 +11006,11 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/hydroponics)
 "lyI" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
+/obj/machinery/station_map{
+	pixel_y = 32
 	},
-/turf/simulated/wall,
-/area/groundbase/medical/resleeving)
+/turf/simulated/floor/tiled/dark,
+/area/groundbase/security/lobby)
 "lyN" = (
 /obj/structure/table/standard,
 /obj/machinery/atmospherics/unary/vent_pump/on{
@@ -12240,16 +12221,11 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/science/xenobot)
 "mLi" = (
-/obj/structure/table/marble,
-/obj/machinery/door/blast/gate/thin{
-	dir = 4;
-	id = "Bar";
-	layer = 3.3
+/obj/machinery/light/small{
+	dir = 8
 	},
-/turf/simulated/floor/wood{
-	outdoors = 1
-	},
-/area/groundbase/civilian/bar)
+/turf/simulated/floor/tiled/dark,
+/area/groundbase/security/lobby)
 "mLE" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled,
@@ -13760,7 +13736,7 @@
 /area/groundbase/command/meeting)
 "oww" = (
 /obj/structure/bed/chair/sofa/bench/left,
-/turf/simulated/floor/outdoors/grass/seasonal,
+/turf/simulated/floor/outdoors/newdirt,
 /area/groundbase/level1/sw)
 "owy" = (
 /turf/simulated/floor/outdoors/newdirt{
@@ -14274,14 +14250,11 @@
 /obj/machinery/power/apc{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
-	},
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/medical/resleeving)
@@ -15188,10 +15161,9 @@
 /turf/simulated/floor/outdoors/grass/seasonal/dark,
 /area/groundbase/level2/sw)
 "pNw" = (
-/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow{
-	grass_chance = 0
-	},
-/area/groundbase/civilian/bar)
+/obj/machinery/light/small,
+/turf/simulated/floor/outdoors/grass/seasonal,
+/area/groundbase/level1/nw)
 "pNE" = (
 /obj/effect/landmark/start/ce,
 /turf/simulated/floor/tiled,
@@ -15901,12 +15873,17 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/structure/disposalpipe/sortjunction{
-	dir = 4;
-	name = "Resleeving";
-	sortType = "Resleeving"
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
-/turf/simulated/floor/tiled/white,
+/obj/machinery/door/airlock/medical{
+	id_tag = "Resleeving";
+	name = "Resleeving Lab";
+	req_access = list(5);
+	req_one_access = null
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/bmarble,
 /area/groundbase/medical/lhallway)
 "qwh" = (
 /obj/structure/cable/yellow{
@@ -16925,9 +16902,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/sidewalk/slab{
-	outdoors = 0
-	},
+/turf/simulated/floor/outdoors/sidewalk/side,
 /area/groundbase/civilian/bar)
 "rnI" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
@@ -17131,7 +17106,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
-/turf/simulated/floor/outdoors/sidewalk/slab,
+/turf/simulated/floor/outdoors/sidewalk/slab{
+	outdoors = 0
+	},
 /area/groundbase/civilian/bar)
 "rAm" = (
 /obj/structure/cable{
@@ -17568,9 +17545,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/medical{
-	id_tag = "Resleeving";
+	id_tag = null;
 	name = "Resleeving Lab";
-	req_access = list(5);
 	req_one_access = null
 	},
 /turf/simulated/floor/tiled/steel_ridged,
@@ -17894,15 +17870,18 @@
 "sgl" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical{
-	id_tag = "AutoResleeving";
+	id_tag = null;
 	name = "Auto-Resleeving Lab";
-	req_access = list(5);
 	req_one_access = null
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/medical/autoresleeving)
@@ -17935,15 +17914,11 @@
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/equipment)
 "siQ" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/door/airlock/medical{
-	id_tag = "Resleeving Shower";
-	name = "Resleeving Lab";
-	req_one_access = null
+/obj/machinery/light/small{
+	dir = 1
 	},
-/turf/simulated/floor/tiled/steel_ridged,
-/area/groundbase/medical/resleeving)
+/turf/simulated/floor/outdoors/grass/seasonal,
+/area/groundbase/level1/se)
 "siZ" = (
 /obj/structure/mirror{
 	pixel_y = 37
@@ -18051,7 +18026,9 @@
 /turf/simulated/floor,
 /area/groundbase/civilian/hydroponics)
 "soW" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
 /area/groundbase/civilian/bar)
 "spE" = (
 /obj/machinery/door/airlock/command{
@@ -19675,9 +19652,7 @@
 	dir = 8;
 	pixel_x = -6
 	},
-/turf/simulated/floor/wood{
-	outdoors = 1
-	},
+/turf/simulated/floor/wood,
 /area/groundbase/civilian/bar)
 "ucu" = (
 /obj/structure/cable{
@@ -20238,7 +20213,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/outdoors/sidewalk,
+/turf/simulated/floor/outdoors/sidewalk{
+	outdoors = 0
+	},
 /area/groundbase/civilian/bar)
 "uFf" = (
 /obj/structure/cable/yellow{
@@ -20839,13 +20816,9 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/science/hall)
 "vtv" = (
-/obj/machinery/firealarm{
-	dir = 4
-	},
-/obj/machinery/atmospherics/unary/vent_pump/on,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/tiled/dark,
-/area/groundbase/medical/resleeving)
+/obj/structure/sign/department/medbay,
+/turf/simulated/wall,
+/area/groundbase/medical/lhallway)
 "vtN" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -21130,16 +21103,10 @@
 	},
 /area/groundbase/civilian/bar)
 "vJB" = (
-/obj/machinery/shower{
-	pixel_y = 16
-	},
-/obj/structure/curtain/open/shower/medical,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/atmospherics/unary/vent_scrubber/on,
-/turf/simulated/floor/tiled/dark,
-/area/groundbase/medical/resleeving)
+/obj/machinery/camera/network/medbay,
+/obj/machinery/atmospherics/unary/vent_pump/on,
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/lhallway)
 "vKu" = (
 /obj/structure/bed/chair/sofa/bench/right{
 	dir = 8
@@ -21171,7 +21138,12 @@
 	name = "auto-resleeving equipment deposit"
 	},
 /obj/structure/disposalpipe/trunk,
-/turf/simulated/floor/tiled/white,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/white{
+	edge_blending_priority = -1
+	},
 /area/groundbase/medical/lhallway)
 "vME" = (
 /obj/structure/window/reinforced{
@@ -21333,8 +21305,7 @@
 	dir = 1;
 	pixel_y = -22
 	},
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor/tiled/white,
+/turf/simulated/wall,
 /area/groundbase/medical/lhallway)
 "vVq" = (
 /obj/machinery/light{
@@ -21359,7 +21330,9 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/outdoors/sidewalk/slab,
+/turf/simulated/floor/outdoors/sidewalk/slab{
+	outdoors = 0
+	},
 /area/groundbase/civilian/bar)
 "vYB" = (
 /turf/simulated/wall/r_wall,
@@ -21919,8 +21892,9 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/science/xenobot)
 "wHn" = (
-/obj/structure/sign/department/medbay,
-/turf/simulated/wall,
+/turf/simulated/floor/tiled/white{
+	edge_blending_priority = -1
+	},
 /area/groundbase/medical/lhallway)
 "wHp" = (
 /obj/structure/cable/yellow{
@@ -22390,14 +22364,12 @@
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/equipment)
 "xdX" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
+/obj/machinery/firealarm,
+/obj/machinery/light{
+	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/outdoors/sidewalk,
-/area/groundbase/civilian/bar)
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/lhallway)
 "xez" = (
 /turf/simulated/floor/bluegrid,
 /area/groundbase/command/ai/upload)
@@ -23199,7 +23171,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/sidewalk/side,
+/turf/simulated/floor/outdoors/sidewalk/side{
+	outdoors = 0
+	},
 /area/groundbase/civilian/bar)
 "xSE" = (
 /obj/machinery/botany/editor,
@@ -23256,17 +23230,21 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/workshop)
 "xXt" = (
-/obj/machinery/alarm{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/unary/vent_pump/siphon/on/atmos{
-	external_pressure_bound = 101.3;
-	external_pressure_bound_default = 101.3;
-	pressure_checks = 1;
-	pressure_checks_default = 1
+/obj/structure/disposalpipe/segment,
+/obj/machinery/button/remote/airlock{
+	desc = "A remote control switch for the medbay recovery room door.";
+	dir = 4;
+	id = "Resleeving";
+	name = "Exit Button";
+	pixel_x = -24
 	},
-/turf/simulated/floor/tiled/dark,
-/area/groundbase/medical/resleeving)
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/lhallway)
 "xXG" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
@@ -26413,7 +26391,7 @@ qgp
 epw
 tsd
 tmX
-sfb
+uhW
 lTF
 sfb
 sfb
@@ -26697,7 +26675,7 @@ ube
 epw
 tsd
 tmX
-sfb
+uhW
 lTF
 sfb
 sfb
@@ -26981,7 +26959,7 @@ epw
 uDx
 tsd
 qZJ
-sfb
+uhW
 hVa
 sfb
 sfb
@@ -27833,7 +27811,7 @@ sfb
 sfb
 sfb
 sfb
-sfb
+uhW
 rel
 sfb
 sfb
@@ -28057,7 +28035,7 @@ oeu
 oeu
 jKz
 hGk
-oeu
+lOz
 oeu
 oeu
 oeu
@@ -28259,7 +28237,7 @@ vjp
 bBK
 nlf
 sfb
-sfb
+uhW
 rel
 sfb
 sfb
@@ -28372,8 +28350,8 @@ fyG
 deE
 xsv
 sWa
-sWa
-oeu
+mLi
+lOz
 cKZ
 oeu
 gsf
@@ -28685,7 +28663,7 @@ dHI
 iyi
 dCZ
 sfb
-sfb
+uhW
 gXb
 sfb
 sfb
@@ -29083,21 +29061,22 @@ deE
 sWa
 sWa
 sWa
-oeu
+lOz
 bYI
-oeu
+lOz
 sfb
 sfb
 sfb
 sfb
 sfb
-sfb
+uhW
 hVa
+dyu
 sfb
 sfb
-sfb
-sfb
+uhW
 iBv
+uhW
 sfb
 sfb
 sfb
@@ -29110,8 +29089,7 @@ sfb
 sfb
 sfb
 sfb
-sfb
-sfb
+uhW
 gXb
 sfb
 sfb
@@ -29222,7 +29200,7 @@ rtZ
 rtZ
 rtZ
 rtZ
-sWa
+lyI
 sWa
 eVe
 oeu
@@ -29369,7 +29347,7 @@ oeu
 oeu
 oeu
 vjr
-oeu
+lOz
 sfb
 sfb
 sfb
@@ -29406,7 +29384,7 @@ sfb
 sfb
 raF
 sfb
-sfb
+uhW
 cyw
 sfb
 kUt
@@ -29491,7 +29469,7 @@ rMl
 pDQ
 oeu
 hIq
-oeu
+lOz
 rMo
 oeu
 oeu
@@ -29563,7 +29541,7 @@ pNp
 kUt
 kUt
 vmM
-sfb
+uhW
 sfb
 xcj
 rOt
@@ -29778,8 +29756,13 @@ oeu
 oeu
 rMo
 oeu
-oeu
+lOz
 tMa
+lOz
+oeu
+rMo
+oeu
+oeu
 oeu
 oeu
 rMo
@@ -29787,13 +29770,8 @@ oeu
 oeu
 oeu
 oeu
-rMo
 oeu
-oeu
-oeu
-oeu
-oeu
-oeu
+lOz
 lKQ
 oeu
 lTL
@@ -30079,7 +30057,7 @@ egG
 egG
 oeu
 lKQ
-oeu
+pNw
 lTL
 gEd
 kww
@@ -30118,6 +30096,7 @@ raF
 raF
 yjc
 wzJ
+uhW
 sfb
 sfb
 sfb
@@ -30128,8 +30107,7 @@ sfb
 sfb
 sfb
 sfb
-sfb
-sfb
+uhW
 oXx
 sfb
 sfb
@@ -30476,8 +30454,8 @@ jTj
 jTj
 jTj
 jTj
-pNw
-pNw
+dVI
+dVI
 eGl
 dVI
 dVI
@@ -30614,12 +30592,12 @@ oeu
 pDQ
 nJC
 hYk
-eBk
-eBk
-eBk
+nJC
+nJC
+nJC
 ksu
 jTj
-pNw
+dVI
 eGl
 dVI
 dVI
@@ -30759,7 +30737,7 @@ jiP
 jiP
 jiP
 fcn
-eBk
+nJC
 kql
 dtj
 czm
@@ -31327,7 +31305,7 @@ jiP
 klF
 jiP
 fcn
-mLi
+mhV
 kql
 dtj
 xSy
@@ -31466,12 +31444,12 @@ oeu
 pDQ
 mhV
 gbO
-mLi
-mLi
-mLi
-mLi
+mhV
+mhV
+mhV
+mhV
 aix
-pNw
+dVI
 xSy
 dVI
 dVI
@@ -31612,8 +31590,8 @@ aix
 aix
 aix
 aix
-pNw
-pNw
+dVI
+dVI
 luL
 akb
 qQl
@@ -31749,13 +31727,13 @@ oeu
 oeu
 pDQ
 qAx
-xdX
-xdX
-xdX
-xdX
+pES
+pES
+pES
+pES
 uDM
-xdX
-xdX
+pES
+pES
 rzN
 sKW
 eoc
@@ -32041,7 +32019,7 @@ dVI
 mDR
 xOg
 wRI
-fHG
+eYS
 pDQ
 pDQ
 pBY
@@ -32477,7 +32455,7 @@ lOz
 lOz
 kPC
 lWL
-bat
+fkN
 lOz
 lOz
 bat
@@ -33045,7 +33023,7 @@ pDI
 bat
 kPC
 tMa
-bat
+kKr
 lOz
 lOz
 lOz
@@ -33813,6 +33791,7 @@ sfQ
 sfQ
 sfQ
 pdx
+wZZ
 sfQ
 sfQ
 sfQ
@@ -33820,8 +33799,7 @@ sfQ
 sfQ
 sfQ
 sfQ
-sfQ
-sfQ
+wZZ
 uBm
 sfQ
 kUt
@@ -34482,8 +34460,9 @@ otO
 otO
 aXo
 rhA
-fdO
+wZZ
 lFG
+eZu
 kUt
 kUt
 kUt
@@ -34491,7 +34470,6 @@ kUt
 kUt
 kUt
 kUt
-kUt
 sfQ
 sfQ
 sfQ
@@ -34521,7 +34499,7 @@ sfQ
 sfQ
 sfQ
 sfQ
-sfQ
+wZZ
 pdx
 sfQ
 fcF
@@ -34766,9 +34744,9 @@ otO
 otO
 sPS
 rhA
-fdO
+wZZ
 deH
-sfQ
+wZZ
 sfQ
 sfQ
 sfQ
@@ -34800,9 +34778,9 @@ sfQ
 sfQ
 sfQ
 sfQ
-sfQ
+wZZ
 jMh
-sfQ
+wZZ
 sfQ
 sfQ
 sfQ
@@ -35052,7 +35030,7 @@ bTX
 bTX
 fdO
 deH
-sfQ
+wZZ
 sfQ
 gwl
 niH
@@ -35478,7 +35456,7 @@ axN
 eiI
 fdO
 deH
-sfQ
+wZZ
 sfQ
 tZJ
 sfz
@@ -35902,7 +35880,7 @@ oER
 oMh
 hYx
 axN
-sfQ
+wZZ
 deH
 sfQ
 sfQ
@@ -36186,7 +36164,7 @@ nSI
 qAC
 mii
 axN
-sfQ
+siQ
 bXj
 sfQ
 sfQ
@@ -36612,7 +36590,7 @@ ntf
 oMh
 hYx
 axN
-sfQ
+wZZ
 bXj
 sfQ
 sfQ
@@ -37596,19 +37574,19 @@ jSa
 irP
 awx
 awx
-vIj
-vIj
-vIj
-vIj
+awx
+awx
+amy
+amy
 amy
 amy
 amy
 amy
 eiI
 urU
-kKr
+vmr
 hBH
-kKr
+vmr
 sfQ
 sfQ
 sfQ
@@ -37732,17 +37710,17 @@ gqs
 gqs
 gqs
 psV
-fkN
+amy
 awx
 jSa
 irP
 awx
 awx
+awx
+awx
+amy
 vIj
-eYS
-xXt
-afR
-lyI
+vIj
 vIj
 vIj
 vIj
@@ -37750,7 +37728,7 @@ vIj
 vIj
 wHn
 gSf
-mKr
+wHn
 gGq
 cGJ
 cGJ
@@ -37880,10 +37858,10 @@ jSa
 irP
 awx
 awx
+awx
+awx
+amy
 vIj
-vJB
-vtv
-siQ
 lio
 ykh
 guh
@@ -38022,9 +38000,9 @@ jSa
 irP
 awx
 awx
-vIj
-vIj
-vIj
+awx
+awx
+amy
 vIj
 dNU
 pCX
@@ -38032,7 +38010,7 @@ pCX
 pCX
 alf
 vIj
-kPg
+vtv
 qvF
 vVp
 iyE
@@ -38166,7 +38144,7 @@ awx
 awx
 awx
 awx
-awx
+amy
 vIj
 oWI
 kau
@@ -38176,7 +38154,7 @@ huM
 rOE
 imG
 jAk
-sdK
+xXt
 sgl
 bNT
 kzy
@@ -38308,7 +38286,7 @@ awx
 awx
 awx
 awx
-awx
+amy
 vIj
 qVM
 pCX
@@ -38316,7 +38294,7 @@ pCX
 fUv
 mVL
 vIj
-hUY
+vJB
 ijS
 hUY
 jqs
@@ -38450,7 +38428,7 @@ awx
 awx
 awx
 awx
-awx
+amy
 vIj
 cIx
 hBq
@@ -38458,7 +38436,7 @@ rqg
 dDr
 psY
 vIj
-pox
+xdX
 pSC
 gZN
 jqs
@@ -38592,7 +38570,7 @@ irP
 awx
 awx
 awx
-awx
+amy
 vIj
 vIj
 vIj
@@ -38734,7 +38712,7 @@ irP
 awx
 awx
 awx
-awx
+amy
 pLB
 nlI
 dFi
@@ -38876,7 +38854,7 @@ gfG
 awx
 awx
 awx
-awx
+amy
 pLB
 mut
 fPt
@@ -39018,7 +38996,7 @@ jSa
 irP
 awx
 awx
-awx
+amy
 pLB
 cIa
 jNK
@@ -39160,7 +39138,7 @@ jSa
 irP
 awx
 awx
-awx
+amy
 pLB
 cTg
 rjb
@@ -39302,7 +39280,7 @@ jSa
 irP
 irP
 awx
-awx
+amy
 pLB
 bMc
 esC
@@ -39444,7 +39422,7 @@ jSa
 irP
 awx
 awx
-awx
+amy
 pLB
 pLB
 pLB
@@ -39586,7 +39564,7 @@ jSa
 irP
 awx
 awx
-awx
+amy
 vBS
 iLp
 gqx
@@ -39683,9 +39661,9 @@ awx
 amy
 amy
 amy
-ntv
-ntv
-ntv
+afR
+afR
+afR
 irP
 amy
 khe
@@ -39728,7 +39706,7 @@ jSa
 irP
 awx
 awx
-awx
+amy
 vBS
 xsX
 tpS
@@ -39824,10 +39802,10 @@ awx
 amy
 amy
 amy
+afR
 ntv
 ntv
-ntv
-ntv
+afR
 amy
 amy
 khe
@@ -39870,7 +39848,7 @@ qTb
 awx
 awx
 awx
-awx
+amy
 vBS
 aQP
 kFx
@@ -39965,12 +39943,12 @@ awx
 awx
 amy
 amy
+afR
 ntv
 ntv
 ntv
 ntv
-ntv
-ntv
+afR
 eiI
 eiI
 uRD
@@ -40012,7 +39990,7 @@ irP
 irP
 awx
 awx
-awx
+amy
 vBS
 ykm
 rgo
@@ -40112,7 +40090,7 @@ ntv
 ntv
 ntv
 ntv
-ntv
+afR
 eiI
 eiI
 eiI
@@ -40154,7 +40132,7 @@ awx
 awx
 awx
 awx
-awx
+amy
 vBS
 rCu
 yiT
@@ -40255,13 +40233,13 @@ ntv
 ntv
 ntv
 ntv
-ntv
+afR
 eiI
 owP
 eiI
 eiI
-eiI
-eiI
+eBk
+eBk
 eiI
 eiI
 xxV
@@ -40296,7 +40274,7 @@ awx
 awx
 awx
 awx
-awx
+amy
 vBS
 vBS
 vBS
@@ -40397,14 +40375,14 @@ ntv
 ntv
 ntv
 ntv
-ntv
+afR
 eiI
 eiI
 eiI
 eiI
 eiI
-eiI
-eiI
+eBk
+eBk
 eiI
 eiI
 xxV
@@ -40438,7 +40416,7 @@ awx
 awx
 awx
 awx
-awx
+amy
 eRc
 yhx
 gJX
@@ -40539,16 +40517,16 @@ ntv
 ntv
 ntv
 ntv
-ntv
+afR
 eiI
 eiI
 eiI
 eiI
 eiI
 eiI
-eiI
-eiI
-eiI
+eBk
+eBk
+eBk
 eiI
 xxV
 amy
@@ -40580,7 +40558,7 @@ awx
 awx
 awx
 awx
-awx
+amy
 eRc
 heA
 agW
@@ -40682,7 +40660,7 @@ hLI
 hLI
 ntv
 ntv
-ntv
+afR
 eiI
 eiI
 eiI
@@ -40691,7 +40669,7 @@ eiI
 eiI
 pSx
 pSx
-ntv
+afR
 eiI
 amy
 amy
@@ -40722,7 +40700,7 @@ awx
 awx
 awx
 awx
-awx
+amy
 eRc
 puP
 yhH
@@ -40830,16 +40808,16 @@ ntv
 ntv
 ntv
 ntv
-ntv
+jZo
 pSx
 pSx
-ntv
-ntv
+jZo
+afR
 amy
 amy
 irP
 irP
-ntv
+afR
 ntv
 ntv
 ntv
@@ -40864,7 +40842,7 @@ irP
 awx
 awx
 awx
-awx
+amy
 eRc
 sWU
 wnw
@@ -40977,10 +40955,10 @@ pSx
 pSx
 ntv
 ntv
-ntv
-ntv
-ntv
-ntv
+afR
+afR
+afR
+afR
 ntv
 ntv
 ntv
@@ -41006,7 +40984,7 @@ irP
 awx
 awx
 awx
-awx
+amy
 eRc
 pvH
 fHT
@@ -41148,7 +41126,7 @@ irP
 awx
 awx
 awx
-awx
+amy
 eRc
 eRc
 eRc
@@ -41290,10 +41268,10 @@ irP
 irP
 awx
 awx
-awx
-awx
-awx
-awx
+amy
+amy
+amy
+amy
 pDF
 dml
 lXY
@@ -41435,7 +41413,7 @@ awx
 awx
 awx
 awx
-awx
+amy
 pDF
 eju
 jYz
@@ -41577,7 +41555,7 @@ awx
 awx
 awx
 awx
-awx
+amy
 pDF
 krx
 vpG
@@ -41719,7 +41697,7 @@ irP
 irP
 awx
 awx
-awx
+amy
 pDF
 ndP
 pDF
@@ -41861,8 +41839,8 @@ kkl
 irP
 irP
 irP
-awx
-awx
+amy
+amy
 ibY
 awx
 awx
