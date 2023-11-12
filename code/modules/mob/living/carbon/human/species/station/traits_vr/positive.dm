@@ -1,12 +1,12 @@
 /datum/trait/positive
 	category = TRAIT_TYPE_POSITIVE
-
+/* - RS REMOVAL - Increased base speed, removed haste
 /datum/trait/positive/speed_fast
 	name = "Haste"
 	desc = "Allows you to move faster on average than baseline."
 	cost = 4
 	var_changes = list("slowdown" = 0)	//RS EDIT - PENDING POTENTIAL REMOVAL DUE TO INCREASED BASE SPEED
-
+*/
 /datum/trait/positive/hardy
 	name = "Hardy"
 	desc = "Allows you to carry heavy equipment with less slowdown."

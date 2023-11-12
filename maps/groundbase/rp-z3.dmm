@@ -56,8 +56,13 @@
 /turf/simulated/floor/tiled,
 /area/shuttle/groundbase/exploration)
 "aR" = (
-/obj/effect/floor_decal/industrial/outline,
-/turf/simulated/floor/outdoors/sidewalk/slab,
+/obj/structure/fence/corner{
+	dir = 8
+	},
+/turf/simulated/floor/tiled{
+	edge_blending_priority = -1;
+	outdoors = 1
+	},
 /area/groundbase/cargo/bay)
 "bj" = (
 /obj/structure/table/glass,
@@ -694,17 +699,8 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/medical/uhallway)
 "mC" = (
-/obj/effect/floor_decal/industrial/warning{
-	dir = 4
-	},
-/obj/effect/floor_decal/industrial/stand_clear/red{
-	dir = 8
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/simulated/floor/outdoors/sidewalk/slab,
-/area/groundbase/cargo/bay)
+/turf/simulated/wall,
+/area/groundbase/cargo/office)
 "mE" = (
 /obj/machinery/ion_engine{
 	dir = 1
@@ -742,8 +738,14 @@
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow,
 /area/groundbase/exploration/shuttlepad)
 "nk" = (
-/turf/simulated/open,
-/area/groundbase/cargo/office)
+/obj/structure/fence{
+	dir = 4
+	},
+/turf/simulated/floor{
+	edge_blending_priority = -1;
+	outdoors = 1
+	},
+/area/groundbase/cargo/bay)
 "nl" = (
 /obj/structure/railing/grey{
 	dir = 4
@@ -1431,7 +1433,7 @@
 /area/groundbase/medical/patio)
 "vf" = (
 /obj/structure/fence/corner{
-	dir = 10
+	dir = 5
 	},
 /turf/simulated/floor{
 	edge_blending_priority = -1;
@@ -1468,12 +1470,10 @@
 /turf/simulated/floor/wood,
 /area/groundbase/dorms/bathroom)
 "vD" = (
-/obj/structure/fence/corner,
-/turf/simulated/floor{
-	edge_blending_priority = -1;
-	outdoors = 1
+/turf/simulated/floor/outdoors/sidewalk/slab{
+	outdoors = 0
 	},
-/area/groundbase/cargo/bay)
+/area/groundbase/cargo/office)
 "vE" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -1592,6 +1592,15 @@
 	},
 /turf/simulated/shuttle/plating/airless,
 /area/shuttle/groundbase/exploration)
+"xx" = (
+/obj/structure/fence/corner{
+	dir = 10
+	},
+/turf/simulated/floor{
+	edge_blending_priority = -1;
+	outdoors = 1
+	},
+/area/groundbase/cargo/bay)
 "xE" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/white,
@@ -1938,14 +1947,8 @@
 	},
 /area/groundbase/level3/ne)
 "Cy" = (
-/obj/structure/fence/corner{
-	dir = 8
-	},
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
-/area/groundbase/cargo/bay)
+/turf/simulated/open,
+/area/groundbase/cargo/office)
 "CC" = (
 /obj/machinery/camera/network/medbay{
 	dir = 4
@@ -1954,15 +1957,6 @@
 	outdoors = 1
 	},
 /area/groundbase/medical/patio)
-"CY" = (
-/obj/structure/fence{
-	dir = 4
-	},
-/turf/simulated/floor{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
-/area/groundbase/cargo/bay)
 "Dk" = (
 /obj/machinery/door/airlock/command{
 	id_tag = "cmodoor";
@@ -1983,13 +1977,14 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/medical/cmo)
 "Dn" = (
-/obj/structure/fence/corner{
-	dir = 5
+/obj/effect/shuttle_landmark{
+	base_area = /area/groundbase/cargo/bay;
+	base_turf = /turf/simulated/floor/outdoors/sidewalk/slab;
+	docking_controller = "cargo_bay";
+	landmark_tag = "supply_station";
+	name = "Cargo Landing Pad"
 	},
-/turf/simulated/floor{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/cargo/bay)
 "Dt" = (
 /obj/structure/table/rack,
@@ -2052,7 +2047,12 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/uhallway)
 "Ec" = (
-/turf/simulated/wall,
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/outdoors/sidewalk/slab{
+	outdoors = 0
+	},
 /area/groundbase/cargo/office)
 "Ej" = (
 /obj/effect/landmark/start/pilot,
@@ -2188,8 +2188,10 @@
 /turf/simulated/wall,
 /area/groundbase/medical/paramedic)
 "Gc" = (
-/obj/structure/fence,
-/turf/simulated/floor{
+/obj/structure/fence{
+	dir = 4
+	},
+/turf/simulated/floor/tiled{
 	edge_blending_priority = -1;
 	outdoors = 1
 	},
@@ -2269,6 +2271,9 @@
 	},
 /area/groundbase/level3/ne)
 "GV" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/outdoors/sidewalk/slab{
 	outdoors = 0
 	},
@@ -2342,15 +2347,14 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/paramedic)
 "Ig" = (
-/obj/effect/shuttle_landmark{
-	base_area = /area/groundbase/cargo/bay;
-	base_turf = /turf/simulated/floor/outdoors/sidewalk/slab;
-	docking_controller = "cargo_bay";
-	landmark_tag = "supply_station";
-	name = "Cargo Landing Pad"
+/obj/structure/railing/grey,
+/obj/structure/cable/yellow{
+	icon_state = "32-8"
 	},
-/turf/simulated/floor/outdoors/sidewalk/slab,
-/area/groundbase/cargo/bay)
+/turf/simulated/floor/outdoors/sidewalk/slab{
+	outdoors = 0
+	},
+/area/groundbase/cargo/office)
 "Ii" = (
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/uhallway)
@@ -2817,11 +2821,13 @@
 "MQ" = (
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/pilot)
+"Na" = (
+/obj/effect/floor_decal/industrial/outline,
+/turf/simulated/floor/outdoors/sidewalk/slab,
+/area/groundbase/cargo/bay)
 "Nb" = (
 /obj/structure/railing/grey,
-/turf/simulated/floor/outdoors/sidewalk/slab{
-	outdoors = 0
-	},
+/turf/simulated/open,
 /area/groundbase/cargo/office)
 "Nc" = (
 /obj/structure/table/rack/shelf,
@@ -2852,16 +2858,17 @@
 /turf/simulated/floor/tiled,
 /area/shuttle/groundbase/exploration)
 "NY" = (
-/obj/machinery/embedded_controller/radio/simple_docking_controller{
-	frequency = 1380;
-	id_tag = "cargo_bay";
-	pixel_y = 23
+/obj/machinery/door/airlock/multi_tile/glass/polarized{
+	name = "Cargo Office";
+	req_one_access = list(31)
 	},
-/turf/simulated/floor/outdoors/sidewalk/slab,
-/area/groundbase/cargo/bay)
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/bmarble,
+/area/groundbase/cargo/office)
 "Ot" = (
-/obj/structure/railing/grey,
-/turf/simulated/open,
+/turf/simulated/floor/bmarble,
 /area/groundbase/cargo/office)
 "Oz" = (
 /obj/structure/table/rack,
@@ -2920,6 +2927,15 @@
 "Ph" = (
 /turf/simulated/wall/r_wall,
 /area/groundbase/command/hop)
+"Pu" = (
+/obj/effect/floor_decal/industrial/warning{
+	dir = 4
+	},
+/obj/effect/floor_decal/industrial/stand_clear/red{
+	dir = 8
+	},
+/turf/simulated/floor/outdoors/sidewalk/slab,
+/area/groundbase/cargo/bay)
 "Pv" = (
 /obj/structure/closet/secure_closet/paramedic,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -3135,12 +3151,12 @@
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/civilian/pilot)
 "Sy" = (
-/obj/machinery/door/airlock/multi_tile/glass/polarized{
-	name = "Cargo Office";
-	req_one_access = list(31)
+/obj/machinery/power/apc{
+	dir = 8
 	},
-/turf/simulated/floor/bmarble,
-/area/groundbase/cargo/office)
+/obj/structure/cable/yellow,
+/turf/simulated/floor/outdoors/sidewalk/slab,
+/area/groundbase/cargo/bay)
 "SI" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
@@ -3166,8 +3182,13 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/paramedic)
 "SU" = (
-/turf/simulated/floor/bmarble,
-/area/groundbase/cargo/office)
+/obj/machinery/embedded_controller/radio/simple_docking_controller{
+	frequency = 1380;
+	id_tag = "cargo_bay";
+	pixel_y = 23
+	},
+/turf/simulated/floor/outdoors/sidewalk/slab,
+/area/groundbase/cargo/bay)
 "SX" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -3227,13 +3248,16 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/medical/patient3)
 "TM" = (
-/obj/structure/fence{
+/obj/effect/floor_decal/industrial/warning{
 	dir = 4
 	},
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
+/obj/effect/floor_decal/industrial/stand_clear/red{
+	dir = 8
 	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/cargo/bay)
 "TP" = (
 /obj/machinery/door/firedoor,
@@ -3262,6 +3286,13 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/level3/nw)
+"Us" = (
+/obj/structure/fence/corner,
+/turf/simulated/floor{
+	edge_blending_priority = -1;
+	outdoors = 1
+	},
+/area/groundbase/cargo/bay)
 "Ut" = (
 /obj/structure/table/glass,
 /obj/item/weapon/clipboard,
@@ -3415,10 +3446,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/pilot)
 "Wk" = (
-/obj/effect/floor_decal/industrial/warning{
-	dir = 4
-	},
-/turf/simulated/floor/outdoors/sidewalk/slab,
+/turf/simulated/wall,
 /area/groundbase/cargo/bay)
 "Wr" = (
 /obj/machinery/door/firedoor,
@@ -3488,13 +3516,11 @@
 	},
 /area/groundbase/medical/patio)
 "Xf" = (
-/obj/effect/floor_decal/industrial/warning{
-	dir = 4
+/obj/structure/fence,
+/turf/simulated/floor{
+	edge_blending_priority = -1;
+	outdoors = 1
 	},
-/obj/effect/floor_decal/industrial/stand_clear/red{
-	dir = 8
-	},
-/turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/cargo/bay)
 "Xj" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -3596,6 +3622,12 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/uhallway)
+"YB" = (
+/obj/effect/floor_decal/industrial/warning{
+	dir = 4
+	},
+/turf/simulated/floor/outdoors/sidewalk/slab,
+/area/groundbase/cargo/bay)
 "YC" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -16856,19 +16888,19 @@ xF
 xF
 xF
 xF
-Af
-Ec
-Ey
-Ey
-Ec
-Gc
-Gc
-Gc
-Gc
-Gc
-Gc
-Gc
-vf
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
 xF
 Af
 GP
@@ -16998,20 +17030,20 @@ xF
 xF
 xF
 xF
-Af
-Ey
-GV
-GV
-Sy
-gA
-gA
-gA
-gA
-gA
-gA
-gA
-CY
-Af
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
 Af
 Af
 GP
@@ -17136,25 +17168,25 @@ Af
 Af
 xF
 xF
-Af
-Af
-Af
-Af
-Af
-Ey
-yN
-GV
-SU
-gA
-aR
-gA
-aR
-gA
-aR
-gA
-CY
-Af
-Af
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
 Af
 Af
 Af
@@ -17278,25 +17310,25 @@ Af
 xF
 xF
 xF
-Af
-GP
-GP
-GP
-GP
-Ey
-GV
-Nb
-Ec
-NY
-aR
-gA
-aR
-gA
-aR
-gA
-CY
-Af
-Af
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
 xF
 xF
 xF
@@ -17420,25 +17452,25 @@ xF
 xF
 xF
 xF
-Af
-GP
-GP
-GP
-GP
-Ey
-nk
-Ot
-Ey
-gA
-aR
-gA
-aR
-gA
-aR
-gA
-CY
-Af
-Af
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
+xF
 xF
 YS
 YS
@@ -17562,25 +17594,25 @@ xF
 xF
 xF
 xF
+xF
+xF
+xF
+xF
+xF
 Af
-GP
-GP
-GP
-Cy
-Ec
+mC
 Ey
 Ey
-Ec
 mC
 Wk
-Wk
-Wk
-Wk
-Wk
 Xf
-CY
-Af
-Af
+Xf
+Xf
+Xf
+Xf
+Xf
+xx
+xF
 xF
 YS
 YS
@@ -17704,24 +17736,24 @@ xF
 xF
 xF
 xF
+xF
+xF
+xF
+xF
+xF
 Af
-GP
-GP
-GP
-TM
+Ey
+vD
+Ec
+NY
+Sy
 gA
 gA
 gA
 gA
 gA
 gA
-gA
-gA
-gA
-gA
-gA
-CY
-Af
+nk
 Af
 xF
 YS
@@ -17846,24 +17878,24 @@ kB
 kB
 xF
 xF
+xF
 Af
-GP
-GP
-GP
-TM
-gA
-gA
-gA
-gA
-gA
-gA
-gA
-gA
-gA
-gA
-gA
-CY
 Af
+Af
+Af
+Af
+Ey
+yN
+GV
+Ot
+gA
+Na
+gA
+Na
+gA
+Na
+gA
+nk
 Af
 xF
 YS
@@ -17988,24 +18020,24 @@ kB
 kB
 xF
 xF
+xF
 Af
 GP
 GP
 GP
-TM
+GP
+Ey
+vD
+Ig
+mC
+SU
+Na
 gA
+Na
 gA
+Na
 gA
-gA
-gA
-gA
-gA
-gA
-gA
-gA
-gA
-CY
-Af
+nk
 Af
 xF
 YS
@@ -18130,24 +18162,24 @@ Ph
 Ph
 xF
 xF
+xF
 Af
 GP
 GP
 GP
-TM
+GP
+Ey
+Cy
+Nb
+Ey
 gA
-Ig
+Na
 gA
+Na
 gA
+Na
 gA
-gA
-gA
-gA
-gA
-gA
-gA
-CY
-Af
+nk
 Af
 xF
 YS
@@ -18272,25 +18304,25 @@ zV
 Mk
 xF
 xF
+xF
 Af
 GP
 GP
 GP
+aR
+mC
+Ey
+Ey
+mC
 TM
-gA
-gA
-gA
-gA
-gA
-gA
-gA
-gA
-gA
-gA
-gA
-CY
-xF
-xF
+YB
+YB
+YB
+YB
+YB
+Pu
+nk
+Af
 xF
 YS
 YS
@@ -18414,11 +18446,12 @@ PM
 Mk
 xF
 xF
+xF
 Af
 GP
 GP
 GP
-TM
+Gc
 gA
 gA
 gA
@@ -18430,9 +18463,8 @@ gA
 gA
 gA
 gA
-CY
-xF
-xF
+nk
+Af
 xF
 YS
 YS
@@ -18556,25 +18588,25 @@ PM
 Mk
 xF
 xF
-Af
-Af
-Af
-Af
-CY
-gA
-gA
-gA
-gA
-gA
-gA
-gA
-gA
-gA
-gA
-gA
-CY
 xF
-xF
+Af
+GP
+GP
+GP
+Gc
+gA
+gA
+gA
+gA
+gA
+gA
+gA
+gA
+gA
+gA
+gA
+nk
+Af
 xF
 YS
 YS
@@ -18699,10 +18731,11 @@ Mk
 xF
 xF
 xF
-xF
-xF
-xF
-CY
+Af
+GP
+GP
+GP
+Gc
 gA
 gA
 gA
@@ -18714,9 +18747,8 @@ gA
 gA
 gA
 gA
-CY
-xF
-xF
+nk
+Af
 xF
 YS
 YS
@@ -18841,24 +18873,24 @@ Mk
 xF
 xF
 xF
-xF
-xF
-xF
+Af
+GP
+GP
+GP
+Gc
+gA
 Dn
-Gc
-Gc
-Gc
-Gc
-Gc
-Gc
-Gc
-Gc
-Gc
-Gc
-Gc
-vD
-xF
-xF
+gA
+gA
+gA
+gA
+gA
+gA
+gA
+gA
+gA
+nk
+Af
 xF
 YS
 YS
@@ -18983,23 +19015,23 @@ Ph
 xF
 xF
 xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
+Af
+GP
+GP
+GP
+Gc
+gA
+gA
+gA
+gA
+gA
+gA
+gA
+gA
+gA
+gA
+gA
+nk
 xF
 xF
 YS
@@ -19125,23 +19157,23 @@ kB
 xF
 xF
 xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
+Af
+GP
+GP
+GP
+Gc
+gA
+gA
+gA
+gA
+gA
+gA
+gA
+gA
+gA
+gA
+gA
+nk
 xF
 xF
 YS
@@ -19267,23 +19299,23 @@ kB
 xF
 xF
 xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
+Af
+Af
+Af
+Af
+nk
+gA
+gA
+gA
+gA
+gA
+gA
+gA
+gA
+gA
+gA
+gA
+nk
 xF
 xF
 YS
@@ -19413,19 +19445,19 @@ xF
 xF
 xF
 xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
+nk
+gA
+gA
+gA
+gA
+gA
+gA
+gA
+gA
+gA
+gA
+gA
+nk
 xF
 xF
 YS
@@ -19555,19 +19587,19 @@ xF
 xF
 xF
 xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
-xF
+vf
+Xf
+Xf
+Xf
+Xf
+Xf
+Xf
+Xf
+Xf
+Xf
+Xf
+Xf
+Us
 xF
 xF
 YS
