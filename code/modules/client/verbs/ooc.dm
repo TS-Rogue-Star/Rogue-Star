@@ -178,6 +178,10 @@
 			admin_stuff += "/([key])"
 
 		to_chat(target, "<span class='looc'>" + create_text_tag("looc", "LOOC:", target) + " <EM>[display_name][admin_stuff]:</EM> <span class='message'>[msg]</span></span>")
+		//RS ADDITION
+		if(target.is_preference_enabled(/datum/client_preference/looc_sounds))
+			target << sound('sound/talksounds/looc_sound.ogg', volume = 50)
+		//RS ADDITION END
 
 	for(var/client/target in r_receivers)
 		var/admin_stuff = "/([key])([admin_jump_link(mob, target.holder)])"
