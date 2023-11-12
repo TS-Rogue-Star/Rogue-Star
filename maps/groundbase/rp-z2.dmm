@@ -1440,11 +1440,6 @@
 	},
 /turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/level2/ne)
-"fa" = (
-/turf/simulated/floor/outdoors/grass/seasonal{
-	outdoors = 0
-	},
-/area/groundbase/level2/ne)
 "fb" = (
 /obj/machinery/station_map{
 	dir = 4;
@@ -28052,7 +28047,7 @@ ZF
 ZF
 Ng
 Ng
-fa
+Ng
 Ng
 Jv
 of

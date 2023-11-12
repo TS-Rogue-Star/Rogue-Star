@@ -2934,6 +2934,9 @@
 /obj/effect/floor_decal/industrial/stand_clear/red{
 	dir = 8
 	},
+/obj/machinery/status_display/supply_display{
+	pixel_y = -32
+	},
 /turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/cargo/bay)
 "Pv" = (
@@ -18321,7 +18324,7 @@ YB
 YB
 YB
 Pu
-nk
+Wk
 Af
 xF
 YS
