@@ -16186,6 +16186,19 @@
 	},
 /turf/simulated/floor,
 /area/groundbase/civilian/arrivals)
+"qLn" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor,
+/area/groundbase/level1/ne)
 "qLp" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
@@ -17925,7 +17938,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/grass/seasonal,
+/turf/simulated/floor/outdoors/grass/seasonal/notrees,
 /area/groundbase/level1/se)
 "siZ" = (
 /obj/structure/mirror{
@@ -35235,15 +35248,15 @@ jUi
 jUi
 jUi
 ddP
-eiI
-eiI
+jUi
+jUi
 bTX
 rhA
 rhA
 rhA
 bTX
-ksX
-fdO
+jUi
+dzL
 gLQ
 sdm
 sdm
@@ -35377,7 +35390,6 @@ eiI
 eiI
 eiI
 ddP
-eiI
 jUi
 jUi
 jUi
@@ -35385,7 +35397,8 @@ jUi
 jUi
 jUi
 jUi
-fdO
+jUi
+dzL
 ubv
 uWG
 uWG
@@ -35519,15 +35532,15 @@ xxV
 eiI
 xxV
 ddP
-eiI
-eiI
+jUi
+jUi
 axN
 dOk
 dOk
 dOk
 axN
-eiI
-fdO
+jUi
+dzL
 deH
 wZZ
 sfQ
@@ -35669,7 +35682,7 @@ uht
 rBN
 axN
 axN
-sfQ
+dzL
 deH
 sfQ
 sfQ
@@ -35811,7 +35824,7 @@ wwp
 mii
 nVR
 axN
-sfQ
+dzL
 deH
 sfQ
 sfQ
@@ -36379,7 +36392,7 @@ gJY
 qAC
 pNQ
 axN
-sfQ
+dzL
 bXj
 sfQ
 sfQ
@@ -36805,7 +36818,7 @@ nnq
 mii
 qCN
 axN
-sfQ
+dzL
 bXj
 sfQ
 sfQ
@@ -36947,7 +36960,7 @@ cbV
 uZR
 axN
 axN
-sfQ
+dzL
 bXj
 sfQ
 sfQ
@@ -40187,7 +40200,7 @@ dPX
 ero
 ero
 ero
-ero
+qLn
 ero
 ero
 ero
