@@ -41,15 +41,16 @@
 
 		//Check traits/costs
 		var/list/megalist = client.prefs.pos_traits + client.prefs.neu_traits + client.prefs.neg_traits
-//		var/points_left = client.prefs.starting_trait_points - //RS REMOVAL
-		var/traits_left = client.prefs.max_traits
+//		var/points_left = client.prefs.starting_trait_points	//RS REMOVAL
+//		var/traits_left = client.prefs.max_traits	//RS REMOVAL
 		var/pref_synth = client.prefs.dirty_synth
 		var/pref_meat = client.prefs.gross_meatbag
 		for(var/datum/trait/T as anything in megalist)
 			var/cost = traits_costs[T]
-
-			if(cost >= 0)	//RS EDIT
+			/*	RS REMOVAL
+			if(cost >= 0)
 				traits_left--
+			*/
 
 			//A trait was removed from the game
 			if(isnull(cost))
@@ -65,9 +66,10 @@
 				to_chat(src, "<span class='warning'>Some of your traits are not usable by your character type (synthetic traits on organic, or vice versa).</span>")
 
 		//Went into negatives
-		if(traits_left < 0)	//RS REMOVAL
+		if(client.prefs.pos_traits.len > client.prefs.max_traits)	//RS REMOVAL
 			pass = FALSE
 			to_chat(src,"<span class='warning'>Your custom species is not playable. Reconfigure your traits on the VORE tab.</span>")
+			to_world("traits: [client.prefs.pos_traits.len]/[client.prefs.max_traits]")
 
 	//Final popup notice
 	if (!pass)
