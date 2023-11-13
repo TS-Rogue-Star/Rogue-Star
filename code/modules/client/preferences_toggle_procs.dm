@@ -479,6 +479,21 @@
 
 	feedback_add_details("admin_verb","TSubtleSounds")
 
+//RS ADDITION
+/client/verb/toggle_looc_sounds()
+	set name = "Sound-Toggle-LOOC"
+	set category = "Preferences"
+	set desc = "Toggle hearing a sound when somebody uses LOOC."
+
+	var/pref_path = /datum/client_preference/looc_sounds
+	toggle_preference(pref_path)
+	SScharacter_setup.queue_preferences_save(prefs)
+
+	to_chat(src, "You will now [(is_preference_enabled(/datum/client_preference/looc_sounds)) ? "hear" : "not hear"] LOOC sounds.")
+
+	feedback_add_details("admin_verb","TLOOCSounds")
+//RS ADDITION END
+
 // Not attached to a pref datum because those are strict binary toggles
 /client/verb/toggle_examine_mode()
 	set name = "Toggle Examine Mode"

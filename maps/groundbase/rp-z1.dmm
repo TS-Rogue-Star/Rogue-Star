@@ -3669,7 +3669,9 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/storage)
 "dMt" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
 /area/groundbase/unexplored/rock)
 "dMz" = (
 /obj/machinery/firealarm{
@@ -3710,6 +3712,20 @@
 /obj/effect/landmark/start/bartender,
 /turf/simulated/floor/wood,
 /area/groundbase/civilian/bar)
+"dOT" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/obj/structure/catwalk,
+/turf/simulated/floor,
+/area/groundbase/level1/ne)
 "dPT" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/highsecurity{
@@ -8487,7 +8503,9 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
 /area/groundbase/level1/ne)
 "iQN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -14867,6 +14885,20 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/office)
+"pwp" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/obj/structure/catwalk,
+/turf/simulated/floor,
+/area/groundbase/level1/ne)
 "pxg" = (
 /obj/item/weapon/storage/box/bodybags,
 /obj/item/weapon/storage/box/bodybags,
@@ -16186,6 +16218,19 @@
 	},
 /turf/simulated/floor,
 /area/groundbase/civilian/arrivals)
+"qLn" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor,
+/area/groundbase/level1/ne)
 "qLp" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
@@ -16659,6 +16704,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/catwalk,
 /turf/simulated/floor,
 /area/groundbase/level1/ne)
 "rfL" = (
@@ -17925,7 +17971,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/grass/seasonal,
+/turf/simulated/floor/outdoors/grass/seasonal/notrees,
 /area/groundbase/level1/se)
 "siZ" = (
 /obj/structure/mirror{
@@ -35235,15 +35281,15 @@ jUi
 jUi
 jUi
 ddP
-eiI
-eiI
+jUi
+jUi
 bTX
 rhA
 rhA
 rhA
 bTX
-ksX
-fdO
+jUi
+dzL
 gLQ
 sdm
 sdm
@@ -35377,7 +35423,6 @@ eiI
 eiI
 eiI
 ddP
-eiI
 jUi
 jUi
 jUi
@@ -35385,7 +35430,8 @@ jUi
 jUi
 jUi
 jUi
-fdO
+jUi
+dzL
 ubv
 uWG
 uWG
@@ -35519,15 +35565,15 @@ xxV
 eiI
 xxV
 ddP
-eiI
-eiI
+jUi
+jUi
 axN
 dOk
 dOk
 dOk
 axN
-eiI
-fdO
+jUi
+dzL
 deH
 wZZ
 sfQ
@@ -35669,7 +35715,7 @@ uht
 rBN
 axN
 axN
-sfQ
+dzL
 deH
 sfQ
 sfQ
@@ -35811,7 +35857,7 @@ wwp
 mii
 nVR
 axN
-sfQ
+dzL
 deH
 sfQ
 sfQ
@@ -36379,7 +36425,7 @@ gJY
 qAC
 pNQ
 axN
-sfQ
+dzL
 bXj
 sfQ
 sfQ
@@ -36783,7 +36829,7 @@ kgt
 qVR
 awx
 awx
-eBk
+irP
 ftw
 amy
 amy
@@ -36805,7 +36851,7 @@ nnq
 mii
 qCN
 axN
-sfQ
+dzL
 bXj
 sfQ
 sfQ
@@ -36925,7 +36971,7 @@ iGE
 qVR
 amy
 amy
-eBk
+irP
 rfx
 amy
 amy
@@ -36947,7 +36993,7 @@ cbV
 uZR
 axN
 axN
-sfQ
+dzL
 bXj
 sfQ
 sfQ
@@ -37067,7 +37113,7 @@ amy
 jSa
 amy
 amy
-eBk
+irP
 rfx
 amy
 amy
@@ -37202,16 +37248,16 @@ xuw
 mXP
 iGE
 amy
-eBk
-eBk
-eBk
-eBk
+irP
+irP
+irP
+irP
 jSa
-eBk
-eBk
-eBk
+irP
+irP
+irP
 rfx
-amy
+irP
 amy
 amy
 amy
@@ -37344,16 +37390,16 @@ nyp
 rDy
 iGE
 amy
-eBk
-eBk
-eBk
-eBk
+irP
+irP
+irP
+irP
 jSa
-eBk
-eBk
-eBk
+irP
+irP
+irP
 rfx
-amy
+irP
 amy
 amy
 amy
@@ -37485,8 +37531,8 @@ sbh
 fFQ
 gWe
 iGE
-eBk
-eBk
+irP
+irP
 amy
 amy
 amy
@@ -37494,8 +37540,8 @@ cMq
 gfG
 amy
 iPP
-rfx
-amy
+pwp
+dOT
 amy
 amy
 amy
@@ -37627,13 +37673,13 @@ iGE
 ykP
 iGE
 iGE
-eBk
-eBk
+irP
+irP
 amy
-amy
-amy
-amy
-jSa
+lBC
+lBC
+lBC
+uAa
 lBC
 lBC
 lBC
@@ -37769,7 +37815,7 @@ xib
 eZY
 teZ
 amy
-eBk
+irP
 amy
 amy
 lBC
@@ -37911,7 +37957,7 @@ ifE
 jcv
 teZ
 amy
-eBk
+irP
 amy
 amy
 lBC
@@ -38053,9 +38099,9 @@ fCe
 sKx
 teZ
 amy
-eBk
+irP
 amy
-amy
+lBC
 lBC
 lBC
 wvw
@@ -38195,9 +38241,9 @@ teZ
 oRI
 teZ
 amy
-eBk
+irP
 amy
-amy
+lBC
 wye
 gHZ
 oeZ
@@ -38339,7 +38385,7 @@ awx
 awx
 dMt
 awx
-awx
+lBC
 eNh
 pSX
 wWY
@@ -40182,12 +40228,12 @@ amy
 amy
 amy
 amy
-eBk
+irP
 dPX
 ero
 ero
 ero
-ero
+qLn
 ero
 ero
 ero
@@ -40326,15 +40372,15 @@ amy
 irP
 irP
 irP
-eBk
-eBk
-eBk
-eBk
-eBk
-eBk
-eBk
-eBk
-eBk
+irP
+irP
+irP
+irP
+irP
+irP
+irP
+irP
+irP
 awx
 awx
 awx
