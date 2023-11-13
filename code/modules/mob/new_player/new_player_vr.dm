@@ -41,14 +41,14 @@
 
 		//Check traits/costs
 		var/list/megalist = client.prefs.pos_traits + client.prefs.neu_traits + client.prefs.neg_traits
-		var/points_left = client.prefs.starting_trait_points
+//		var/points_left = client.prefs.starting_trait_points - //RS REMOVAL
 		var/traits_left = client.prefs.max_traits
 		var/pref_synth = client.prefs.dirty_synth
 		var/pref_meat = client.prefs.gross_meatbag
 		for(var/datum/trait/T as anything in megalist)
 			var/cost = traits_costs[T]
 
-			if(cost)
+			if(cost >= 0)	//RS EDIT
 				traits_left--
 
 			//A trait was removed from the game
@@ -56,8 +56,8 @@
 				pass = FALSE
 				to_chat(src,"<span class='warning'>Your custom species is not playable. One or more traits appear to have been removed from the game or renamed. Enter character setup to correct this.</span>")
 				break
-			else
-				points_left -= traits_costs[T]
+//			else	//RS REMOVAL
+//				points_left -= traits_costs[T]
 
 			var/take_flags = initial(T.can_take)
 			if((pref_synth && !(take_flags & SYNTHETICS)) || (pref_meat && !(take_flags & ORGANICS)))
@@ -65,7 +65,7 @@
 				to_chat(src, "<span class='warning'>Some of your traits are not usable by your character type (synthetic traits on organic, or vice versa).</span>")
 
 		//Went into negatives
-		if(points_left < 0 || traits_left < 0)
+		if(traits_left < 0)	//RS REMOVAL
 			pass = FALSE
 			to_chat(src,"<span class='warning'>Your custom species is not playable. Reconfigure your traits on the VORE tab.</span>")
 

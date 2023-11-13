@@ -277,35 +277,35 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 	var/traits_left = pref.max_traits
 
 
-	var/points_left = pref.starting_trait_points
+	//var/points_left = pref.starting_trait_points - RS REMOVE
 
-	for(var/T in pref.pos_traits + pref.neg_traits)
-		points_left -= traits_costs[T]
+	for(var/T in pref.pos_traits/* + pref.neg_traits*/)	//RS REMOVAL
+		//points_left -= traits_costs[T] - RS REMOVE
 		traits_left--
 	. += "<b>Traits Left:</b> [traits_left]<br>"
-	. += "<b>Points Left:</b> [points_left]<br>"
-	if(points_left < 0 || traits_left < 0 || (!pref.custom_species && pref.species == SPECIES_CUSTOM))
+//	. += "<b>Points Left:</b> [points_left]<br>" - RS REMOVE
+	if(/*points_left < 0 || */traits_left < 0 || (!pref.custom_species && pref.species == SPECIES_CUSTOM))	//RS REMOVAL
 		. += "<span style='color:red;'><b>^ Fix things! ^</b></span><br>"
 
 	. += "<a href='?src=\ref[src];add_trait=[POSITIVE_MODE]'>Positive Trait +</a><br>"
 	. += "<ul>"
 	for(var/T in pref.pos_traits)
 		var/datum/trait/trait = positive_traits[T]
-		. += "<li>- <a href='?src=\ref[src];clicked_pos_trait=[T]'>[trait.name] ([trait.cost])</a> [get_html_for_trait(trait, pref.pos_traits[T])]</li>"
+		. += "<li>- <a href='?src=\ref[src];clicked_pos_trait=[T]'>[trait.name] </a> [get_html_for_trait(trait, pref.pos_traits[T])]</li>"	//RS REMOVAL
 	. += "</ul>"
 
 	. += "<a href='?src=\ref[src];add_trait=[NEUTRAL_MODE]'>Neutral Trait +</a><br>"
 	. += "<ul>"
 	for(var/T in pref.neu_traits)
 		var/datum/trait/trait = neutral_traits[T]
-		. += "<li>- <a href='?src=\ref[src];clicked_neu_trait=[T]'>[trait.name] ([trait.cost])</a> [get_html_for_trait(trait, pref.neu_traits[T])]</li>"
+		. += "<li>- <a href='?src=\ref[src];clicked_neu_trait=[T]'>[trait.name] </a> [get_html_for_trait(trait, pref.neu_traits[T])]</li>"	//RS REMOVAL
 	. += "</ul>"
 
 	. += "<a href='?src=\ref[src];add_trait=[NEGATIVE_MODE]'>Negative Trait +</a><br>"
 	. += "<ul>"
 	for(var/T in pref.neg_traits)
 		var/datum/trait/trait = negative_traits[T]
-		. += "<li>- <a href='?src=\ref[src];clicked_neg_trait=[T]'>[trait.name] ([trait.cost])</a> [get_html_for_trait(trait, pref.neg_traits[T])]</li>"
+		. += "<li>- <a href='?src=\ref[src];clicked_neg_trait=[T]'>[trait.name] </a> [get_html_for_trait(trait, pref.neg_traits[T])]</li>"	//RS REMOVAL
 	. += "</ul>"
 
 	. += "<b>Blood Color: </b>" //People that want to use a certain species to have that species traits (xenochimera/promethean/spider) should be able to set their own blood color.
@@ -378,7 +378,7 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 
 	else if(href_list["clicked_pos_trait"])
 		var/datum/trait/trait = text2path(href_list["clicked_pos_trait"])
-		var/choice = tgui_alert(usr, "Remove [initial(trait.name)] and regain [initial(trait.cost)] points?","Remove Trait",list("Remove","Cancel"))
+		var/choice = tgui_alert(usr, "Remove [initial(trait.name)]?","Remove Trait",list("Remove","Cancel"))	//RS REMOVAL
 		if(choice == "Remove")
 			pref.pos_traits -= trait
 			var/datum/trait/instance = all_traits[trait]
@@ -396,7 +396,7 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 
 	else if(href_list["clicked_neg_trait"])
 		var/datum/trait/trait = text2path(href_list["clicked_neg_trait"])
-		var/choice = tgui_alert(usr, "Remove [initial(trait.name)] and lose [initial(trait.cost)] points?","Remove Trait",list("Remove","Cancel"))
+		var/choice = tgui_alert(usr, "Remove [initial(trait.name)]?","Remove Trait",list("Remove","Cancel"))	//RS REMOVAL
 		if(choice == "Remove")
 			pref.neg_traits -= trait
 			var/datum/trait/instance = all_traits[trait]
@@ -540,16 +540,16 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 		for(var/P in picklist)
 			var/datum/trait/T = picklist[P]
 			nicelist[T.name] = P
-
+		/*	//RS REMOVAL
 		var/points_left = pref.starting_trait_points
 		for(var/T in pref.pos_traits + pref.neu_traits + pref.neg_traits)
 			points_left -= traits_costs[T]
-
+		*/
 		var/traits_left = pref.max_traits - (pref.pos_traits.len + pref.neg_traits.len)
 
 		var/message = "Select a trait to learn more."
 		if(mode != NEUTRAL_MODE)
-			message = "\[Remaining: [points_left] points, [traits_left] traits\]\n" + message
+			message = "\[Remaining: [traits_left] traits\]\n" + message	//RS REMOVAL
 		var/title = "Traits"
 		switch(mode)
 			if(POSITIVE_MODE)
@@ -567,7 +567,7 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 				done = TRUE
 			if(trait_choice in nicelist)
 				var/datum/trait/path = nicelist[trait_choice]
-				var/choice = tgui_alert(usr, "\[Cost:[initial(path.cost)]\] [initial(path.desc)]",initial(path.name), list("Take Trait","Go Back"))
+				var/choice = tgui_alert(usr, "[initial(path.desc)]",initial(path.name), list("Take Trait","Go Back"))	//RS REMOVAL
 				if(choice != "Go Back")
 					done = TRUE
 
