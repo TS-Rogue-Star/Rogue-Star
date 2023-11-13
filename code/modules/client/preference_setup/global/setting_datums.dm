@@ -323,6 +323,14 @@ var/list/_client_preferences_by_type
 	enabled_description = "On"
 	disabled_description = "Off"
 
+//RS ADDITION
+/datum/client_preference/looc_sounds
+	description = "LOOC Sound"
+	key = "LOOC_SOUNDS"
+	enabled_description = "On"
+	disabled_description = "Off"
+//RS ADDITION END
+
 /datum/client_preference/runechat_mob
 	description = "Runechat (Mobs)"
 	key = "RUNECHAT_MOB"
@@ -373,7 +381,7 @@ var/list/_client_preferences_by_type
 	key = "RECEIVE_TIPS"
 	enabled_description = "Enabled"
 	disabled_description = "Disabled"
- 
+
 /datum/client_preference/pain_frequency
 	description = "Pain Messages Cooldown"
 	key = "PAIN_FREQUENCY"
