@@ -25,6 +25,8 @@
 	var/message = sanitize(tgui_input_text(user,"Choose a message to relay to those around you."))
 	if(message)
 		audible_message("\icon[src][bicon(src)] \The [src.name] states, \"[message]\"", runemessage = "synthesized speech")
+		playsound(get_turf(user), pick(goon_speak_bottalk_sound), 75, TRUE, falloff = 1 , is_global = TRUE, ignore_walls = FALSE, preference = /datum/client_preference/say_sounds)
+
 		if(ismob(loc))
 			loc.audible_message("", runemessage = "\[TTS Voice\] [message]")
 
