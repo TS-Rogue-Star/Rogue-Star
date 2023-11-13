@@ -69,7 +69,6 @@
 		if(client.prefs.pos_traits.len > client.prefs.max_traits)	//RS REMOVAL
 			pass = FALSE
 			to_chat(src,"<span class='warning'>Your custom species is not playable. Reconfigure your traits on the VORE tab.</span>")
-			to_world("traits: [client.prefs.pos_traits.len]/[client.prefs.max_traits]")
 
 	//Final popup notice
 	if (!pass)
