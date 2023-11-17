@@ -134,7 +134,8 @@ var/datum/planet/virgo3c/planet_virgo3c = null
 		WEATHER_ASH_STORM_SAFE	= new /datum/weather/virgo3c/ash_storm_safe(),
 		WEATHER_FALLOUT			= new /datum/weather/virgo3c/fallout(),
 		WEATHER_FALLOUT_TEMP	= new /datum/weather/virgo3c/fallout/temp(),
-		WEATHER_CONFETTI		= new /datum/weather/virgo3c/confetti()
+		WEATHER_CONFETTI		= new /datum/weather/virgo3c/confetti(),
+		WEATHER_ECLIPSE			= new /datum/weather/virgo3c/eclipse()
 		)
 	roundstart_weather_chances = list(
 		WEATHER_CLEAR		= 50,
@@ -629,6 +630,22 @@ var/datum/planet/virgo3c/planet_virgo3c = null
 		"Suddenly, colorful confetti starts raining from the sky."
 	)
 	imminent_transition_message = "A rain is starting... A rain of confetti...?"
+
+/datum/weather/virgo3c/eclipse
+	name = "eclipse"
+	temp_high = 283.15 // 10c
+	temp_low = 273.15  // 0c
+	light_modifier = 0
+	transition_chances = list(
+		WEATHER_ECLIPSE = 100
+		)
+	observed_message = "Something in space blocks out all light from the local star, casting everything in darkness!"
+	transition_messages = list(
+		"Night suddenly falls over you as something moves in front of the local star.",
+		"Something moves in front of the local star, leaving an eerie glow around its shape, while everything around you is cast in shadow.",
+		"Darkness suddenly spreads across the land as the local star is obscured by something."
+		)
+	imminent_transition_message = "Something moves in front of the local star!"
 
 /turf/unsimulated/wall/planetary/virgo3c
 	name = "impassable rock"
