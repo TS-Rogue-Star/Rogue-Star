@@ -36,6 +36,8 @@
 			else if(isnewplayer(C.mob))
 				entry += "<span class='blue'><b>In lobby</b></span>"
 
+			else
+				entry += "<span class='green'>Playing as [C.mob]</span>"
 			entry += "</td><td>"
 
 			var/age
