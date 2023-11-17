@@ -16,6 +16,7 @@
 #define WEATHER_FALLOUT				"fallout" // Modified emberfall, actually harmful. Admin only.
 #define WEATHER_FALLOUT_TEMP		"short-term fallout" // Nuclear fallout that actually ends. Firework-only
 #define WEATHER_CONFETTI			"confetti" // Firework-only
+#define WEATHER_ECLIPSE				"eclipse"	//RS ADD
 
 #define MOON_PHASE_NEW_MOON			"new moon"
 #define MOON_PHASE_WAXING_CRESCENT	"waxing crescent"
