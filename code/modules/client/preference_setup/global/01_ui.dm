@@ -9,7 +9,6 @@
 	S["ooccolor"]				>> pref.ooccolor
 	S["tooltipstyle"]			>> pref.tooltipstyle
 	S["client_fps"]				>> pref.client_fps
-	S["ambience_freq"]			>> pref.ambience_freq
 	S["ambience_chance"] 		>> pref.ambience_chance
 	S["tgui_fancy"]				>> pref.tgui_fancy
 	S["tgui_lock"]				>> pref.tgui_lock
@@ -26,7 +25,6 @@
 	S["ooccolor"]				<< pref.ooccolor
 	S["tooltipstyle"]			<< pref.tooltipstyle
 	S["client_fps"]				<< pref.client_fps
-	S["ambience_freq"]			<< pref.ambience_freq
 	S["ambience_chance"] 		<< pref.ambience_chance
 	S["tgui_fancy"]				<< pref.tgui_fancy
 	S["tgui_lock"]				<< pref.tgui_lock
@@ -43,7 +41,6 @@
 	pref.ooccolor			= sanitize_hexcolor(pref.ooccolor, initial(pref.ooccolor))
 	pref.tooltipstyle		= sanitize_inlist(pref.tooltipstyle, all_tooltip_styles, initial(pref.tooltipstyle))
 	pref.client_fps			= sanitize_integer(pref.client_fps, 0, MAX_CLIENT_FPS, initial(pref.client_fps))
-	pref.ambience_freq		= sanitize_integer(pref.ambience_freq, 0, 60, initial(pref.ambience_freq)) // No more than once per hour.
 	pref.ambience_chance 	= sanitize_integer(pref.ambience_chance, 0, 100, initial(pref.ambience_chance)) // 0-100 range.
 	pref.tgui_fancy			= sanitize_integer(pref.tgui_fancy, 0, 1, initial(pref.tgui_fancy))
 	pref.tgui_lock			= sanitize_integer(pref.tgui_lock, 0, 1, initial(pref.tgui_lock))
@@ -60,7 +57,6 @@
 	. += "-Alpha(transparency): <a href='?src=\ref[src];select_alpha=1'><b>[pref.UI_style_alpha]</b></a>�<a href='?src=\ref[src];reset=alpha'>reset</a><br>"
 	. += "<b>Tooltip Style:</b> <a href='?src=\ref[src];select_tooltip_style=1'><b>[pref.tooltipstyle]</b></a><br>"
 	. += "<b>Client FPS:</b> <a href='?src=\ref[src];select_client_fps=1'><b>[pref.client_fps]</b></a><br>"
-	. += "<b>Random Ambience Frequency:</b> <a href='?src=\ref[src];select_ambience_freq=1'><b>[pref.ambience_freq]</b></a><br>"
 	. += "<b>Ambience Chance:</b> <a href='?src=\ref[src];select_ambience_chance=1'><b>[pref.ambience_chance]</b></a><br>"
 	. += "<b>TGUI Window Mode:</b> <a href='?src=\ref[src];tgui_fancy=1'><b>[(pref.tgui_fancy) ? "Fancy (default)" : "Compatible (slower)"]</b></a><br>"
 	. += "<b>TGUI Window Placement:</b> <a href='?src=\ref[src];tgui_lock=1'><b>[(pref.tgui_lock) ? "Primary Monitor" : "Free (default)"]</b></a><br>"
