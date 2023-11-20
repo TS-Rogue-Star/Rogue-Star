@@ -13,11 +13,16 @@ var/list/sounds_cache = list()
 	if(tgui_alert(usr, "Do you ready?\nSong: [S]\nNow you can also play this sound using \"Play Server Sound\".", "Confirmation request", list("Play","Cancel")) == "Cancel")
 		return
 
+	var/our_volume = tgui_input_number(usr, "How loud? (1-100)", title = "Volume", default = 100, max_value = 100, min_value = 0)
+
+	if(!our_volume)
+		return
+
 	log_admin("[key_name(src)] played sound [S]")
 	message_admins("[key_name_admin(src)] played sound [S]", 1)
 	for(var/mob/M in player_list)
 		if(M.is_preference_enabled(/datum/client_preference/play_admin_midis))
-			M << sound(uploaded_sound, channel = VOLUME_CHANNEL_ADMIN_SOUNDS , volume = 100 * M.client.get_preference_volume_channel(VOLUME_CHANNEL_ADMIN_SOUNDS))
+			M << sound(uploaded_sound, channel = VOLUME_CHANNEL_ADMIN_SOUNDS , volume = our_volume * M.client.get_preference_volume_channel(VOLUME_CHANNEL_ADMIN_SOUNDS))
 
 	feedback_add_details("admin_verb","PGS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -26,9 +31,14 @@ var/list/sounds_cache = list()
 	set name = "Play Local Sound"
 	if(!check_rights(R_SOUNDS))	return
 
+	var/our_volume = tgui_input_number(usr, "How loud? (1-100)", title = "Volume", default = 100, max_value = 100, min_value = 0)
+
+	if(!our_volume)
+		return
+
 	log_admin("[key_name(src)] played a local sound [S]")
 	message_admins("[key_name_admin(src)] played a local sound [S]", 1)
-	playsound(src.mob, S, 50, 0, 0)
+	playsound(src.mob, S, our_volume , 0, 0, preference = /datum/client_preference/play_admin_midis, volume_channel = VOLUME_CHANNEL_ADMIN_SOUNDS)
 	feedback_add_details("admin_verb","PLS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/play_z_sound(S as sound)
@@ -44,11 +54,16 @@ var/list/sounds_cache = list()
 	if(tgui_alert(usr, "Do you ready?\nSong: [S]\nNow you can also play this sound using \"Play Server Sound\".", "Confirmation request", list("Play","Cancel")) == "Cancel")
 		return
 
+	var/our_volume = tgui_input_number(usr, "How loud? (1-100)", title = "Volume", default = 100, max_value = 100, min_value = 0)
+
+	if(!our_volume)
+		return
+
 	log_admin("[key_name(src)] played sound [S] on Z[target_z]")
 	message_admins("[key_name_admin(src)] played sound [S] on Z[target_z]", 1)
 	for(var/mob/M in player_list)
 		if(M.is_preference_enabled(/datum/client_preference/play_admin_midis) && M.z == target_z)
-			M << uploaded_sound
+			M << sound(uploaded_sound, channel = VOLUME_CHANNEL_ADMIN_SOUNDS , volume = our_volume * M.client.get_preference_volume_channel(VOLUME_CHANNEL_ADMIN_SOUNDS))
 
 	feedback_add_details("admin_verb","PZS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
