@@ -17,7 +17,7 @@ var/list/sounds_cache = list()
 	message_admins("[key_name_admin(src)] played sound [S]", 1)
 	for(var/mob/M in player_list)
 		if(M.is_preference_enabled(/datum/client_preference/play_admin_midis))
-			M << uploaded_sound
+			M << sound(uploaded_sound, channel = VOLUME_CHANNEL_ADMIN_SOUNDS , volume = 100 * M.client.get_preference_volume_channel(VOLUME_CHANNEL_ADMIN_SOUNDS))
 
 	feedback_add_details("admin_verb","PGS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
