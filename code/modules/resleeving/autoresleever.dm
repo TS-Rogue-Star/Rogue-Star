@@ -193,6 +193,7 @@
 
 	log_admin("[new_character.ckey]'s character [new_character.real_name] has been auto-resleeved.")
 	message_admins("[new_character.ckey]'s character [new_character.real_name] has been auto-resleeved.")
+	new_character.mind?.vore_death = FALSE
 
 	var/obj/item/weapon/implant/backup/imp = new(src)
 
