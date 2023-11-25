@@ -1,5 +1,16 @@
 #define CUSTOM_BORGSPRITE(x) "Custom - " + (x)
 
+/datum/robot_sprite/fluff/get_rest_sprite(var/mob/living/silicon/robot/ourborg)
+	if(!(ourborg.rest_style in rest_sprite_options))
+		ourborg.rest_style = "Default"
+	switch(ourborg.rest_style)
+		if("Sit")
+			return "[sprite_icon_state]-sit"
+		if("Bellyup")
+			return "[sprite_icon_state]-bellyup"
+		else
+			return "[sprite_icon_state]-rest"
+
 // All whitelisted dogborg sprites go here.
 
 /datum/robot_sprite/fluff
