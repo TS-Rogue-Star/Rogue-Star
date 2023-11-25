@@ -71,7 +71,7 @@
 
 	sprite_icon = 'icons/mob/robot/fluff_wide.dmi'
 	sprite_icon_state = "jademanique-kingside"
-	sprite_hud_icon_state = "k9"
+	sprite_hud_icon_state = "security"
 
 	has_eye_light_sprites = TRUE
 	has_vore_belly_sprites = TRUE
