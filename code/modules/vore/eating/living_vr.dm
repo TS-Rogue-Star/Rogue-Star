@@ -355,7 +355,7 @@
 //
 // Clearly super important. Obviously.
 //
-/mob/living/proc/lick(mob/living/tasted in living_mobs(1))
+/mob/living/proc/lick(mob/living/tasted in living_mobs(1,TRUE))	//RS EDIT
 	set name = "Lick"
 	set category = "IC"
 	set desc = "Lick someone nearby!"
@@ -396,7 +396,7 @@
 
 
 //This is just the above proc but switched about.
-/mob/living/proc/smell(mob/living/smelled in living_mobs(1))
+/mob/living/proc/smell(mob/living/smelled in living_mobs(1, TRUE))	//RS EDIT
 	set name = "Smell"
 	set category = "IC"
 	set desc = "Smell someone nearby!"
