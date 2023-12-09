@@ -219,7 +219,7 @@ Proc for attack log creation, because really why not
 	if(target?.flags & IS_BUSY)
 		to_chat(user, "<span class='warning'>Someone is already doing something with \the [target].</span>")
 		return FALSE
-		
+
 	var/atom/target_loc = null
 	if(target)
 		target_loc = target.loc
@@ -243,7 +243,7 @@ Proc for attack log creation, because really why not
 
 	if(exclusive & TASK_USER_EXCLUSIVE)
 		user.status_flags |= DOING_TASK
-	
+
 	if(target && (exclusive & TASK_TARGET_EXCLUSIVE))
 		target.flags |= IS_BUSY
 
@@ -291,12 +291,22 @@ Proc for attack log creation, because really why not
 	if(progbar)
 		qdel(progbar)
 
-/atom/proc/living_mobs(var/range = world.view)
+/atom/proc/living_mobs(var/range = world.view, var/include_hands = FALSE)	//RS EDIT
 	var/list/viewers = oviewers(src,range)
 	var/list/living = list()
 	for(var/mob/living/L in viewers)
 		living += L
 
+	if(include_hands && ishuman(src))	//RS ADD START
+		var/mob/living/carbon/human/h = src
+		if(h.l_hand && istype(h.l_hand,/obj/item/weapon/holder/micro))
+			for(var/mob/living/M in h.l_hand.contents)
+				living |= M
+		if(h.r_hand && istype(h.r_hand,/obj/item/weapon/holder/micro))
+			for(var/mob/living/M in h.r_hand.contents)
+				living |= M
+
+	//RS ADD END
 	return living
 
 /atom/proc/human_mobs(var/range = world.view)
