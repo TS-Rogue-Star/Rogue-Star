@@ -567,7 +567,9 @@
 
 	if(!owner.ckey && escape_stun)
 		owner.Weaken(escape_stun)
-
+	if(istype(M,/obj/effect/overmap/visitable/ship))	// RS EDIT START
+		var/obj/effect/overmap/visitable/ship/S = M
+		SSskybox.rebuild_skyboxes(S.map_z)	// RS EDIT END
 	return 1
 
 // Actually perform the mechanics of devouring the tasty prey.
