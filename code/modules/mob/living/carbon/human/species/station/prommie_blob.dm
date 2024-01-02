@@ -47,7 +47,7 @@
 	verbs += /mob/living/proc/set_size
 	verbs += /mob/living/proc/hide
 	verbs += /mob/living/simple_mob/proc/animal_nom
-	verbs += /mob/living/proc/shred_limb
+	//verbs += /mob/living/proc/shred_limb - RS remove
 	verbs += /mob/living/simple_mob/slime/promethean/proc/toggle_expand
 	verbs += /mob/living/simple_mob/slime/promethean/proc/prommie_select_colour
 	verbs += /mob/living/simple_mob/slime/promethean/proc/toggle_shine

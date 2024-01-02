@@ -3,7 +3,7 @@
 	item_icons = list(
 		slot_wear_mask_str = 'icons/inventory/face/mob_vr.dmi'
 		)
-
+/* RS removal: this verb should just always be on people now
 /obj/item/weapon/beartrap/equipped()
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/H = src.loc
@@ -16,3 +16,4 @@
 /obj/item/weapon/beartrap/dropped(var/mob/user)
 	user.verbs -= /mob/living/proc/shred_limb_temp
 	..()
+*/

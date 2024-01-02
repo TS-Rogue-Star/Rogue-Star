@@ -304,7 +304,7 @@
 	var/turf/T = get_turf(src)
 	if(istype(T)) T.visible_message("<span class='filter_notice'><b>[src]</b> folds outwards, expanding into a mobile form.</span>")
 	verbs |= /mob/living/silicon/pai/proc/pai_nom
-	verbs |= /mob/living/proc/vertical_nom
+//	verbs |= /mob/living/proc/vertical_nom - RS REMOVE
 	update_icon()
 
 /mob/living/silicon/pai/verb/fold_up()
@@ -477,7 +477,7 @@
 	if(isopenspace(card.loc))
 		fall()
 	verbs -= /mob/living/silicon/pai/proc/pai_nom
-	verbs -= /mob/living/proc/vertical_nom
+//	verbs -= /mob/living/proc/vertical_nom - RS REMOVE
 
 // No binary for pAIs.
 /mob/living/silicon/pai/binarycheck()

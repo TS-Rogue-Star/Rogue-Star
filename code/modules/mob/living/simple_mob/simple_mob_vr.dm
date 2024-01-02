@@ -212,7 +212,7 @@
 
 	if(!IsAdvancedToolUser())
 		verbs |= /mob/living/simple_mob/proc/animal_nom
-		verbs |= /mob/living/proc/shred_limb
+//		verbs |= /mob/living/proc/shred_limb - RS REMOVE
 
 	if(LAZYLEN(vore_organs))
 		return
@@ -220,7 +220,7 @@
 	// Since they have bellies, add verbs to toggle settings on them.
 	verbs |= /mob/living/simple_mob/proc/toggle_digestion
 	verbs |= /mob/living/simple_mob/proc/toggle_fancygurgle
-	verbs |= /mob/living/proc/vertical_nom
+//	verbs |= /mob/living/proc/vertical_nom - RS REMOVE
 
 	//A much more detailed version of the default /living implementation
 	var/obj/belly/B = new /obj/belly(src)

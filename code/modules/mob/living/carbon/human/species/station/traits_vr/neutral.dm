@@ -124,7 +124,7 @@
 /datum/trait/neutral/bloodsucker_freeform/apply(var/datum/species/S,var/mob/living/carbon/human/H)
 	..()
 	H.verbs |= /mob/living/carbon/human/proc/bloodsuck
-
+/* - RS removal: made these default verbs
 /datum/trait/neutral/succubus_drain
 	name = "Succubus Drain"
 	desc = "Makes you able to gain nutrition from draining prey in your grasp."
@@ -167,7 +167,7 @@
 /datum/trait/neutral/feeder/apply(var/datum/species/S,var/mob/living/carbon/human/H)
 	..()
 	H.verbs |= /mob/living/carbon/human/proc/slime_feed
-
+*/
 /datum/trait/neutral/stuffing_feeder
 	name = "Food Stuffer"
 	desc = "Allows you to feed food to other people whole, rather than bite by bite."
@@ -178,7 +178,7 @@
 /datum/trait/neutral/stuffing_feeder/apply(var/datum/species/S,var/mob/living/carbon/human/H)
 	..()
 	H.verbs |= /mob/living/proc/toggle_stuffing_mode
-
+/* - RS removal: made these default verbs
 /datum/trait/neutral/hard_vore
 	name = "Brutal Predation"
 	desc = "Allows you to tear off limbs & tear out internal organs."
@@ -188,7 +188,7 @@
 /datum/trait/neutral/hard_vore/apply(var/datum/species/S,var/mob/living/carbon/human/H)
 	..()
 	H.verbs |= /mob/living/proc/shred_limb
-
+*/
 /datum/trait/neutral/trashcan
 	name = "Trash Can"
 	desc = "Allows you to dispose of some garbage on the go instead of having to look for a bin or littering like an animal."
@@ -652,7 +652,7 @@
 /datum/trait/neutral/thinner/apply(var/datum/species/S,var/mob/living/carbon/human/H)
 	..()
 	H.update_transform()
-
+/* - RS removal: made these default verbs
 /datum/trait/neutral/dominate_predator
 	name = "Dominate Predator"
 	desc = "Allows you to attempt to take control of a predator while inside of their belly."
@@ -692,7 +692,7 @@
 /datum/trait/neutral/vertical_nom/apply(var/datum/species/S,var/mob/living/carbon/human/H)
 	..()
 	H.verbs |= /mob/living/proc/vertical_nom
-
+*/
 /datum/trait/neutral/micro_size_down
 	name = "Light Frame"
 	desc = "You are considered smaller than you are for micro interactions."

@@ -1,4 +1,4 @@
-/mob/living/proc/vertical_nom()
+/mob/living/verb/vertical_nom()
 	set name = "Nom from Above"
 	set desc = "Allows you to eat people who are below your tile or adjacent one. Requires passability."
 	set category = "Abilities"
