@@ -27,8 +27,6 @@
 		if(!istype(ourtable,/obj/structure/table))
 			continue
 		if(ourtable.z in using_map.station_levels)	//And on the station
-//			if(ourtable.z > 3)
-//				continue
 			var/area/A = get_area(ourtable)
 			if(A.flags & RAD_SHIELDED || A.flags & BLUE_SHIELDED)	//Not in the dorms or in maint
 				continue
