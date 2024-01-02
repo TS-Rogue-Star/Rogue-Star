@@ -69,10 +69,10 @@
 /mob/living/silicon/pai/Initialize()
 	. = ..()
 
-	verbs |= /mob/proc/dominate_predator
-	verbs |= /mob/living/proc/dominate_prey
+//	verbs |= /mob/proc/dominate_predator - RS REMOVE
+//	verbs |= /mob/living/proc/dominate_prey - RS REMOVE
 	verbs |= /mob/living/proc/set_size
-	verbs |= /mob/living/proc/shred_limb
+//	verbs |= /mob/living/proc/shred_limb - RS REMOVE
 
 /mob/living/silicon/pai/Login()
 	. = ..()

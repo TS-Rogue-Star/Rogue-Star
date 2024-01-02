@@ -506,7 +506,7 @@
 
 
 //Welcome to the adapted changeling absorb code.
-/mob/living/carbon/human/proc/succubus_drain()
+/mob/living/carbon/human/verb/succubus_drain()
 	set name = "Drain prey of nutrition"
 	set desc = "Slowly drain prey of all the nutrition in their body, feeding you in the process. You may only do this to one person at a time."
 	set category = "Abilities"
@@ -569,7 +569,7 @@
 			C.absorbing_prey = 0
 			return
 
-/mob/living/carbon/human/proc/succubus_drain_lethal()
+/mob/living/carbon/human/verb/succubus_drain_lethal()
 	set name = "Lethally drain prey" //Provide a warning that THIS WILL KILL YOUR PREY.
 	set desc = "Slowly drain prey of all the nutrition in their body, feeding you in the process. Once prey run out of nutrition, you will begin to drain them lethally. You may only do this to one person at a time."
 	set category = "Abilities"
@@ -661,7 +661,7 @@
 			absorbing_prey = 0
 			return
 
-/mob/living/carbon/human/proc/slime_feed()
+/mob/living/carbon/human/verb/slime_feed()
 	set name = "Feed prey with self"
 	set desc = "Slowly feed prey with your body, draining you in the process. You may only do this to one person at a time."
 	set category = "Abilities"
@@ -722,7 +722,7 @@
 			C.absorbing_prey = 0
 			return
 
-/mob/living/carbon/human/proc/succubus_drain_finalize()
+/mob/living/carbon/human/verb/succubus_drain_finalize()
 	set name = "Drain/Feed Finalization"
 	set desc = "Toggle to allow for draining to be prolonged. Turn this on to make it so prey will be knocked out/die while being drained, or you will feed yourself to the prey's selected stomach if you're feeding them. Can be toggled at any time."
 	set category = "Abilities"
@@ -814,7 +814,7 @@
 
 	return ..(target)
 
-/mob/living/proc/shred_limb()
+/mob/living/verb/shred_limb()
 	set name = "Damage/Remove Prey's Organ"
 	set desc = "Severely damages prey's organ. If the limb is already severely damaged, it will be torn off."
 	set category = "Abilities"
