@@ -122,7 +122,6 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 				WEBHOOK_CMDSTAFF_REQUEST,
 				list(
 					"info" = "[role] requested for [reason]",
-					"color" = message_color,
 				)
 			)
 		if(DEPARTMENT_SECURITY)
@@ -131,7 +130,6 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 				WEBHOOK_SECSTAFF_REQUEST,
 				list(
 					"info" = "[role] requested for [reason]",
-					"color" = message_color,
 				)
 			)
 		if(DEPARTMENT_ENGINEERING)
@@ -140,7 +138,6 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 				WEBHOOK_ENGSTAFF_REQUEST,
 				list(
 					"info" = "[role] requested for [reason]",
-					"color" = message_color,
 				)
 			)
 		if(DEPARTMENT_MEDICAL)
@@ -149,7 +146,6 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 				WEBHOOK_MEDSTAFF_REQUEST,
 				list(
 					"info" = "[role] requested for [reason]",
-					"color" = message_color,
 				)
 			)
 		if(DEPARTMENT_RESEARCH)
@@ -158,7 +154,6 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 				WEBHOOK_RESSTAFF_REQUEST,
 				list(
 					"info" = "[role] requested for [reason]",
-					"color" = message_color,
 				)
 			)
 		if(DEPARTMENT_CARGO)
@@ -167,7 +162,6 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 				WEBHOOK_SUPSTAFF_REQUEST,
 				list(
 					"info" = "[role] requested for [reason]",
-					"color" = message_color,
 				)
 			)
 		if(DEPARTMENT_CIVILIAN)
@@ -176,7 +170,6 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 				WEBHOOK_SERSTAFF_REQUEST,
 				list(
 					"info" = "[role] requested for [reason]",
-					"color" = message_color,
 				)
 			)
 		if(DEPARTMENT_PLANET)
@@ -185,7 +178,6 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 				WEBHOOK_EXPSTAFF_REQUEST,
 				list(
 					"info" = "[role] requested for [reason]",
-					"color" = message_color,
 				)
 			)
 		if(DEPARTMENT_SYNTHETIC)
@@ -194,7 +186,6 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 				WEBHOOK_SILSTAFF_REQUEST,
 				list(
 					"info" = "[role] requested for [reason]",
-					"color" = message_color,
 				)
 			)
 		//if(DEPARTMENT_TALON)

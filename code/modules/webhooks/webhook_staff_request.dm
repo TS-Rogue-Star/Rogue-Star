@@ -8,7 +8,7 @@
 	.["embeds"] = list(list(
 		"title" = "Staff Request",
 		"description" = data["info"],
-		"color" = COLOR_WEBHOOK_DEFAULT
+		"color" = COLOR_WEBHOOK_CMD
 	))
 
 // Security
@@ -21,7 +21,7 @@
 	.["embeds"] = list(list(
 		"title" = "Staff Request",
 		"description" = data["info"],
-		"color" = data["color"] || COLOR_WEBHOOK_DEFAULT
+		"color" = COLOR_WEBHOOK_SEC
 	))
 
 // Engineering
@@ -34,7 +34,7 @@
 	.["embeds"] = list(list(
 		"title" = "Staff Request",
 		"description" = data["info"],
-		"color" = data["color"] || COLOR_WEBHOOK_DEFAULT
+		"color" = COLOR_WEBHOOK_ENG
 	))
 
 // Medical
@@ -47,7 +47,7 @@
 	.["embeds"] = list(list(
 		"title" = "Staff Request",
 		"description" = data["info"],
-		"color" = data["color"] || COLOR_WEBHOOK_DEFAULT
+		"color" = COLOR_WEBHOOK_MEDICAL
 	))
 
 // Research
@@ -60,7 +60,7 @@
 	.["embeds"] = list(list(
 		"title" = "Staff Request",
 		"description" = data["info"],
-		"color" = data["color"] || COLOR_WEBHOOK_DEFAULT
+		"color" = COLOR_WEBHOOK_SCIENCE
 	))
 
 // Supply
@@ -73,7 +73,7 @@
 	.["embeds"] = list(list(
 		"title" = "Staff Request",
 		"description" = data["info"],
-		"color" = data["color"] || COLOR_WEBHOOK_DEFAULT
+		"color" = COLOR_WEBHOOK_SUPPLY
 	))
 
 // Service
@@ -86,7 +86,7 @@
 	.["embeds"] = list(list(
 		"title" = "Staff Request",
 		"description" = data["info"],
-		"color" = data["color"] || COLOR_WEBHOOK_DEFAULT
+		"color" = COLOR_WEBHOOK_SERVICE
 	))
 
 // Explo
@@ -99,7 +99,7 @@
 	.["embeds"] = list(list(
 		"title" = "Staff Request",
 		"description" = data["info"],
-		"color" = data["color"] || COLOR_WEBHOOK_DEFAULT
+		"color" = COLOR_WEBHOOK_EXPLO
 	))
 
 // Silicon
@@ -112,5 +112,5 @@
 	.["embeds"] = list(list(
 		"title" = "Staff Request",
 		"description" = data["info"],
-		"color" = data["color"] || COLOR_WEBHOOK_DEFAULT
+		"color" = COLOR_WEBHOOK_AI
 	))
