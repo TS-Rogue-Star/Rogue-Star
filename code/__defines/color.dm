@@ -170,6 +170,18 @@
 #define COLOR_WEBHOOK_POOR		0xE67E22 // "#E67E22"
 #define COLOR_WEBHOOK_BAD		0xE74C3C // "#E74C3C"
 
+// Begin RS edit
+#define	COLOR_WEBHOOK_AI        0xff00ff
+#define	COLOR_WEBHOOK_SERVICE   0x709b00
+#define	COLOR_WEBHOOK_SUPPLY    0x7f6539
+#define	COLOR_WEBHOOK_SCIENCE   0x993399
+#define	COLOR_WEBHOOK_MEDICAL   0x009190
+#define	COLOR_WEBHOOK_EXPLO     0x929820
+#define	COLOR_WEBHOOK_ENG       0xa66300
+#define	COLOR_WEBHOOK_SEC       0x930000
+#define	COLOR_WEBHOOK_CMD       0x204090
+// End RS edit
+
 //Some defines to generalise colours used in lighting.
 //Important note on colors. Colors can end up significantly different from the basic html picture, especially when saturated
 #define LIGHT_COLOR_RED        "#FA8282" //Warm but extremely diluted red. rgb(250, 130, 130)
