@@ -136,7 +136,7 @@
 	H.verbs |= /mob/living/carbon/human/proc/succubus_drain
 	H.verbs |= /mob/living/carbon/human/proc/succubus_drain_finalize
 	H.verbs |= /mob/living/carbon/human/proc/succubus_drain_lethal
-
+*/
 /datum/trait/neutral/long_vore
 	name = "Long Predatorial Reach"
 	desc = "Makes you able to use an unspecified appendage to grab creatures."
@@ -157,7 +157,7 @@
 /datum/trait/neutral/long_vore/apply(var/datum/species/S,var/mob/living/carbon/human/H)
 	..()
 	H.verbs |= /mob/living/proc/long_vore
-
+/* - RS removal: made these default verbs
 /datum/trait/neutral/feeder
 	name = "Feeder"
 	desc = "Allows you to feed your prey using your own body."
