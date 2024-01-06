@@ -143,7 +143,7 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 	SSwebhooks.send(
 		WEBHOOK_STAFF_REQUEST,
 		list(
-			"info" = "<@&1161212031165268039> [role] requested for [reason]",
+			"info" = "[role] requested for [reason]",
 		)
 	)
 	// End RS edit
