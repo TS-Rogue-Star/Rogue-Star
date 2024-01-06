@@ -1,6 +1,3 @@
-/datum/reagent/nutriment
-	nutriment_factor = 10
-
 /datum/reagent/toxin/meatcolony
 	name = "A colony of meat cells"
 	id = "meatcolony"
