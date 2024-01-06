@@ -171,7 +171,7 @@
 		languages |= langlist
 
 //Welcome to the adapted borer code.
-/mob/verb/dominate_predator()
+/mob/living/verb/dominate_predator()
 	set category = "Abilities"
 	set name = "Dominate Predator"
 	set desc = "Connect to and dominate the brain of your predator."
