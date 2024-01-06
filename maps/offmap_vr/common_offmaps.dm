@@ -326,11 +326,15 @@
 
 /obj/effect/landmark/map_data/fantasy
 	height = 2
-
-/datum/map_template/common_lateload/redgate/snowglobe	// RS EDIT START
+// RS EDIT START
+/datum/map_template/common_lateload/redgate/snowglobe
 	name = "Redgate - Snowglobe"
 	desc = "Avery normal snowglobe!"
-	mappath = 'maps/redgate/snowglobe.dmm'	// RS EDIT END
+	mappath = 'maps/redgate/snowglobe-b.dmm'
+
+
+
+// RS EDIT END
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Admin-use z-levels for loading whenever an admin feels like

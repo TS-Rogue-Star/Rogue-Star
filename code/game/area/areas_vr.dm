@@ -9,6 +9,8 @@
 	var/areasize = 0
 
 	var/no_comms = FALSE	//When true, blocks radios from working in the area
+	var/emotes_from_beyond = TRUE	//RS ADD
+	var/grab_zone = FALSE			//RS ADD
 
 /area/Entered(var/atom/movable/AM, oldLoc)
 	. = ..()

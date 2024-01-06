@@ -171,7 +171,7 @@
 		languages |= langlist
 
 //Welcome to the adapted borer code.
-/mob/proc/dominate_predator()
+/mob/living/verb/dominate_predator()
 	set category = "Abilities"
 	set name = "Dominate Predator"
 	set desc = "Connect to and dominate the brain of your predator."
@@ -305,7 +305,7 @@
 	else
 		to_chat(src, "<span class='warning'>\The [pred_body] is already dominated, and cannot be controlled at this time.</span>")
 
-/mob/living/proc/dominate_prey()
+/mob/living/verb/dominate_prey()
 	set category = "Abilities"
 	set name = "Dominate Prey"
 	set desc = "Connect to and dominate the brain of your prey."
@@ -399,7 +399,7 @@
 		to_chat(src, "<span class='warning'>Your body seems to no longer exist, so, you cannot return to it.</span>")
 		verbs -= /mob/living/dominated_brain/proc/cease_this_foolishness
 
-/mob/living/proc/lend_prey_control()
+/mob/living/verb/lend_prey_control()
 	set category = "Abilities"
 	set name = "Give Prey Control"
 	set desc = "Allow prey control of your body."

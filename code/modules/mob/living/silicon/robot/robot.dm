@@ -107,7 +107,7 @@
 		/mob/living/silicon/robot/proc/robot_checklaws,
 		/mob/living/silicon/robot/proc/robot_mount,
 		/mob/living/proc/toggle_rider_reins,
-		/mob/living/proc/shred_limb
+//		/mob/living/proc/shred_limb - RS REMOVE
 	)
 
 /mob/living/silicon/robot/New(loc, var/unfinished = 0)

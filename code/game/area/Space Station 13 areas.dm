@@ -1011,6 +1011,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	ambience = AMBIENCE_GENERIC
 	forbid_events = TRUE
 	forbid_singulo = TRUE
+	emotes_from_beyond = FALSE	//RS ADD
 
 /area/crew_quarters/toilet
 	name = "\improper Dormitory Toilets"

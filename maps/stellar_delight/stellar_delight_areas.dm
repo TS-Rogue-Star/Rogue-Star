@@ -131,6 +131,7 @@
 	block_suit_sensors = TRUE
 	forbid_events = TRUE
 	forbid_singulo = TRUE
+	emotes_from_beyond = FALSE	//RS ADD
 
 /area/stellardelight/deck1/dorms/dorm1
 	name = "Dormitory One"
@@ -305,4 +306,3 @@
 	name = "Deck Two Exterior"
 /area/stellardelight/deck3/exterior
 	name = "Deck Three Exterior"
-

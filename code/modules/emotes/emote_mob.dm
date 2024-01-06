@@ -236,3 +236,44 @@
 		src.holopad_emote(message)
 	else //Emote normally, then.
 		..()
+
+/mob/living/verb/emote_beyond(message as message)	//I could have put this into any other file but right here will do, now even the stars will know your sin
+	set name = "Emote Beyond"
+	set desc = "Emote to those beyond the ship!"
+	set category = "IC"
+
+	if(client.prefs.muted & MUTE_IC)
+		to_chat(src, "<span class='warning'>You cannot speak in IC (muted).</span>")
+		return
+	if (!message)
+		message = tgui_input_text(src, "Type a message to emote.","Emote Beyond")
+	message = sanitize_or_reflect(message,src)
+	if (!message)
+		return
+	if (stat == DEAD)
+		return say_dead(message)
+	var/obj/effect/overmap/visitable/ship/s = get_overmap_sector(z)
+	if(!s || !istype(s, /obj/effect/overmap/visitable/ship))
+		to_chat(src, "<span class='warning'>You can't do that here.</span>")
+		return
+
+	log_subtle(message,src)
+	message = "<span class='emote_subtle'><B>[src]</B> <I>[message]</I></span>"
+	message = "<B>(From within \the [s]) </B>" + message
+	message = encode_html_emphasis(message)
+
+	var/undisplayed_message = "<span class='emote'><B>[src]</B> <I>does something too subtle for you to see.</I></span>"
+	var/list/vis = get_mobs_and_objs_in_view_fast(get_turf(s),1,2)
+	var/list/vis_mobs = vis["mobs"]
+	vis_mobs |= src
+	for(var/mob/M as anything in vis_mobs)
+		if(isnewplayer(M))
+			continue
+		if(isobserver(M) && !is_preference_enabled(/datum/client_preference/whisubtle_vis) && !M.client?.holder)
+			spawn(0)
+				M.show_message(undisplayed_message, 2)
+		else
+			spawn(0)
+				M.show_message(message, 2)
+				if(M.is_preference_enabled(/datum/client_preference/subtle_sounds))
+					M << sound('sound/talksounds/subtle_sound.ogg', volume = 50)

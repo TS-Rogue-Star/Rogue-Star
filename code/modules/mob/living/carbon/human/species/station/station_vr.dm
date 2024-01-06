@@ -181,7 +181,7 @@
 	name_language = LANGUAGE_TERMINUS
 	species_language = LANGUAGE_TERMINUS
 	inherent_verbs = list(/mob/living/carbon/human/proc/lick_wounds,
-		/mob/living/proc/shred_limb,
+//		/mob/living/proc/shred_limb, - RS REMOVE
 		/mob/living/carbon/human/proc/tie_hair)
 	digi_allowed = TRUE
 
@@ -567,7 +567,7 @@
 	secondary_langs = list(LANGUAGE_TERMINUS)
 	name_language = LANGUAGE_TERMINUS
 	species_language = LANGUAGE_TERMINUS
-	inherent_verbs = list(/mob/living/carbon/human/proc/lick_wounds,/mob/living/proc/shred_limb,/mob/living/carbon/human/proc/tie_hair)
+	inherent_verbs = list(/mob/living/carbon/human/proc/lick_wounds,/mob/living/carbon/human/proc/tie_hair)
 	digi_allowed = TRUE
 
 	min_age = 18
