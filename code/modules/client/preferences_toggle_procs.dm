@@ -492,6 +492,20 @@
 	to_chat(src, "You will now [(is_preference_enabled(/datum/client_preference/looc_sounds)) ? "hear" : "not hear"] LOOC sounds.")
 
 	feedback_add_details("admin_verb","TLOOCSounds")
+
+/client/verb/toggle_efb()
+	set name = "Toggle Emotes from Beyond"
+	set category = "Preferences"
+	set desc = "Toggle emotes and says from outside of the ship Z level from printing in your chat."
+
+	var/pref_path = /datum/client_preference/emotes_from_beyond
+	toggle_preference(pref_path)
+	SScharacter_setup.queue_preferences_save(prefs)
+
+	to_chat(src, "You will now [(is_preference_enabled(/datum/client_preference/emotes_from_beyond)) ? "see" : "not see"] emotes from outside this Z level.")
+
+	feedback_add_details("admin_verb","TEmotesfromBeyond")
+
 //RS ADDITION END
 
 // Not attached to a pref datum because those are strict binary toggles

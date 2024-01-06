@@ -41,6 +41,13 @@
 
 	var/list/listeners = get_people_in_ship()
 	for(var/mob/M as anything in listeners)
+		if(!M.client)
+			continue
+		if(!M.client.is_preference_enabled(/datum/client_preference/emotes_from_beyond))
+			continue
+		var/area/ourarea = get_area(M)
+		if(!ourarea.emotes_from_beyond)
+			continue
 		M.hear_say(message_pieces, verb, FALSE, talker)
 
 /obj/effect/overmap/visitable/ship/show_message(msg, type, alt, alt_type)
@@ -48,6 +55,13 @@
 
 	var/list/listeners = get_people_in_ship()
 	for(var/mob/M as anything in listeners)
+		if(!M.client)
+			continue
+		if(!M.client.is_preference_enabled(/datum/client_preference/emotes_from_beyond))
+			continue
+		var/area/ourarea = get_area(M)
+		if(!ourarea.emotes_from_beyond)
+			continue
 		M.show_message(msg, type, alt, alt_type)
 
 /obj/effect/overmap/visitable/ship/see_emote(source, message, m_type)
@@ -55,4 +69,11 @@
 
 	var/list/listeners = get_people_in_ship()
 	for(var/mob/M as anything in listeners)
+		if(!M.client)
+			continue
+		if(!M.client.is_preference_enabled(/datum/client_preference/emotes_from_beyond))
+			continue
+		var/area/ourarea = get_area(M)
+		if(!ourarea.emotes_from_beyond)
+			continue
 		M.show_message(message, m_type)

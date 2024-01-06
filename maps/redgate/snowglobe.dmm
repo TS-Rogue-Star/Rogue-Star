@@ -134,7 +134,7 @@
 /obj/structure/table/steel,
 /obj/item/trash/candle,
 /turf/simulated/floor/holofloor/wood,
-/area/redgate/structure/powered)
+/area/redgate/structure/powered/grab_zone)
 "gK" = (
 /obj/effect/fake_sun/cool,
 /turf/simulated/floor/outdoors/ice,
@@ -143,7 +143,7 @@
 /obj/item/weapon/bedsheet/browndouble,
 /obj/structure/bed/double,
 /turf/simulated/floor/holofloor/wood,
-/area/redgate/structure/powered)
+/area/redgate/structure/powered/grab_zone)
 "gW" = (
 /obj/structure/sign/christmas/wreath,
 /turf/simulated/floor/outdoors/snow,
@@ -219,7 +219,7 @@
 /obj/structure/table/steel,
 /obj/random/maintenance/clean,
 /turf/simulated/floor/holofloor/wood,
-/area/redgate/structure/powered)
+/area/redgate/structure/powered/grab_zone)
 "iH" = (
 /obj/structure/sign/christmas/lights{
 	dir = 1;
@@ -386,7 +386,7 @@
 "mO" = (
 /obj/structure/table/steel,
 /turf/simulated/floor/holofloor/wood,
-/area/redgate/structure/powered)
+/area/redgate/structure/powered/grab_zone)
 "nb" = (
 /obj/structure/railing/grey{
 	dir = 1
@@ -547,6 +547,10 @@
 	},
 /turf/simulated/floor/holofloor/wood,
 /area/redgate/structure/powered)
+"Br" = (
+/mob/living/carbon/human/wolpin,
+/turf/simulated/floor/holofloor/wood,
+/area/redgate/structure/powered/grab_zone)
 "By" = (
 /obj/structure/railing/grey{
 	dir = 8
@@ -567,7 +571,7 @@
 	info = "I can feel it coming. The elder spirit of holiday fills the air in this place. The others have already fallen to its whiles... that means that it is up to me alone to stand against the dread cheer. I have gathered what I need, and will be going to confront the elder of holiday. If I do not return, remember the one who lived here, and if this place is peaceful when you find this, know that I succeeded in my hunt. I hope that by the time this is all over, I can get back to fishing. I never wanted any of this... Enough complaining though. I am sure I will be back here soon."
 	},
 /turf/simulated/floor/holofloor/wood,
-/area/redgate/structure/powered)
+/area/redgate/structure/powered/grab_zone)
 "Ca" = (
 /obj/structure/bed/chair/sofa/corp/left{
 	dir = 1
@@ -898,7 +902,7 @@
 /obj/random/maintenance/clean,
 /obj/random/maintenance/clean,
 /turf/simulated/floor/holofloor/wood,
-/area/redgate/structure/powered)
+/area/redgate/structure/powered/grab_zone)
 "JY" = (
 /obj/structure/bed/chair/sofa/left/green{
 	dir = 4
@@ -962,7 +966,7 @@
 "LL" = (
 /obj/structure/simple_door/iron,
 /turf/simulated/floor/holofloor/wood,
-/area/redgate/structure/powered)
+/area/redgate/structure/powered/grab_zone)
 "LX" = (
 /obj/machinery/computer/ship/navigation/telescreen{
 	pixel_x = -32
@@ -992,6 +996,12 @@
 /obj/item/weapon/oar,
 /turf/simulated/floor/outdoors/ice,
 /area/redgate)
+"OP" = (
+/obj/machinery/computer/ship/navigation/telescreen{
+	pixel_x = -32
+	},
+/turf/simulated/floor/holofloor/wood,
+/area/redgate/structure/powered/grab_zone)
 "OU" = (
 /obj/structure/sign/christmas/lights,
 /obj/item/clothing/head/santa,
@@ -1034,7 +1044,10 @@
 	dir = 4
 	},
 /turf/simulated/floor/holofloor/wood,
-/area/redgate/structure/powered)
+/area/redgate/structure/powered/grab_zone)
+"PS" = (
+/turf/simulated/floor/holofloor/wood,
+/area/redgate/structure/powered/grab_zone)
 "PV" = (
 /obj/structure/table/woodentable,
 /obj/machinery/computer/security/telescreen/entertainment,
@@ -1172,6 +1185,11 @@
 /obj/structure/bed/chair/wood/wings,
 /turf/simulated/floor/holofloor/wood,
 /area/redgate/structure/powered)
+"VI" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/turf/simulated/floor/plating,
+/area/redgate/structure/powered/grab_zone)
 "VW" = (
 /obj/structure/bed/chair/wood/wings{
 	dir = 1
@@ -1181,10 +1199,18 @@
 	},
 /turf/simulated/floor/holofloor/wood,
 /area/redgate/structure/powered)
+"Wk" = (
+/obj/machinery/door/airlock/glass,
+/obj/structure/fans/tiny,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/redgate/structure/powered/grab_zone)
 "WF" = (
 /obj/structure/bed/chair/sofa/left/green,
 /turf/simulated/floor/carpet,
 /area/redgate/structure/powered)
+"Xa" = (
+/turf/simulated/wall/log,
+/area/redgate/structure/powered/grab_zone)
 "Xk" = (
 /mob/living/simple_mob/vore/woof/cass,
 /turf/simulated/floor/holofloor/wood,
@@ -9613,11 +9639,11 @@ Gf
 Gf
 Gf
 Gf
-vL
-vL
-vL
-vL
-vL
+Xa
+Xa
+Xa
+Xa
+Xa
 Gf
 Gf
 Gf
@@ -9755,11 +9781,11 @@ Gf
 aH
 Gf
 Gf
-vL
+Xa
 gO
-kJ
+PS
 PQ
-vL
+Xa
 Gf
 Gf
 Gf
@@ -9897,11 +9923,11 @@ Gf
 Gf
 Gf
 Gf
-vL
-kJ
-kJ
+Xa
+PS
+Br
 BR
-vL
+Xa
 Gf
 Gf
 Gf
@@ -10039,11 +10065,11 @@ Gf
 Gf
 Gf
 Gf
-vL
+Xa
 mO
-kJ
-kJ
-vL
+PS
+PS
+Xa
 Gf
 Gf
 Gf
@@ -10178,14 +10204,14 @@ xJ
 vL
 Gf
 Gf
-vL
-vL
-vL
-vL
-vL
+Xa
+Xa
+Xa
+Xa
+Xa
 LL
-vL
-vL
+Xa
+Xa
 Gf
 Gf
 Gf
@@ -10320,14 +10346,14 @@ vL
 vL
 Gf
 Gf
-vL
+Xa
 JV
-kJ
-LX
-kJ
-kJ
-kJ
-vL
+PS
+OP
+PS
+PS
+PS
+Xa
 Gf
 Gf
 Gf
@@ -10462,14 +10488,14 @@ Gf
 Gf
 Gf
 Gf
-vL
+Xa
 hy
-kJ
-kJ
-kJ
-kJ
-kJ
-wj
+PS
+PS
+PS
+PS
+PS
+VI
 Gf
 Gf
 Gf
@@ -10604,14 +10630,14 @@ Gf
 Gf
 aH
 Ct
-Fd
-kJ
-kJ
-kJ
-kJ
-kJ
-kJ
-wj
+Wk
+PS
+PS
+PS
+PS
+PS
+PS
+VI
 Gf
 Gf
 Gf
@@ -10746,14 +10772,14 @@ Gf
 Gf
 Ct
 Ct
-vL
+Xa
 gl
-kJ
-kJ
-kJ
+PS
+PS
+PS
 hy
 hy
-wj
+VI
 Gf
 Gf
 Gf
@@ -10888,14 +10914,14 @@ Gf
 Gf
 Ct
 Gf
-vL
+Xa
 JV
-kJ
-kJ
-kJ
-kJ
-kJ
-vL
+PS
+PS
+PS
+PS
+PS
+Xa
 Gf
 Gf
 Gf
@@ -11030,14 +11056,14 @@ Gf
 Gf
 Ct
 Gf
-vL
-vL
-wj
-wj
-wj
-wj
-vL
-vL
+Xa
+Xa
+VI
+VI
+VI
+VI
+Xa
+Xa
 Gf
 Gf
 DL

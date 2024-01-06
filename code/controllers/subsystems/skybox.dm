@@ -28,20 +28,20 @@ SUBSYSTEM_DEF(skybox)
 	normal_space.layer = TURF_LAYER
 	normal_space.icon = 'icons/turf/space.dmi'
 	normal_space.icon_state = "white"
-	
+
 	//Static
 	for (var/i in 0 to 25)
 		var/mutable_appearance/MA = new(normal_space)
 		var/image/im = image('icons/turf/space_dust.dmi', "[i]")
 		im.plane = DUST_PLANE
-		im.alpha = 128 //80
+		im.alpha = 35				//DUST OPACITY
 		im.blend_mode = BLEND_ADD
-		
+
 		MA.cut_overlays()
 		MA.add_overlay(im)
 
 		dust_cache["[i]"] = MA
-	
+
 	//Moving
 	for (var/i in 0 to 14)
 		// NORTH/SOUTH
@@ -57,12 +57,12 @@ SUBSYSTEM_DEF(skybox)
 		im = image('icons/turf/space_dust_transit.dmi', "speedspace_ew_[i]")
 		im.plane = DUST_PLANE
 		im.blend_mode = BLEND_ADD
-		
+
 		MA.cut_overlays()
 		MA.add_overlay(im)
-		
+
 		speedspace_cache["EW_[i]"] = MA
-	
+
 	//Over-the-edge images
 	for (var/dir in alldirs)
 		var/mutable_appearance/MA = new(normal_space)
@@ -101,9 +101,9 @@ SUBSYSTEM_DEF(skybox)
 
 /datum/controller/subsystem/skybox/proc/generate_skybox(z)
 	var/datum/skybox_settings/settings = global.using_map.get_skybox_datum(z)
-	
+
 	var/new_overlays = list()
-	
+
 	var/image/res = image(settings.icon)
 	res.appearance_flags = KEEP_TOGETHER
 
@@ -124,9 +124,23 @@ SUBSYSTEM_DEF(skybox)
 			new_overlays += self_image
 			//VOREStation Add
 			if(isbelly(O.loc)) // Teehee
-				base.icon = 'icons/skybox/skybox_vr.dmi'
-				base.icon_state = "flesh"
+				var/obj/belly/ourbelly = O.loc
+				base.icon = 'icons/skybox/skybox_rs.dmi'
+				base.icon_state = "internal"
+				if(ourbelly.belly_fullscreen_color)
+					base.color = ourbelly.belly_fullscreen_color
+				else
+					base.color = "#7c3131"
 			//VOREStation Add End
+			//RS ADD
+			else if(!(istype(O.loc,/turf/unsimulated/map) || istype(O.loc,/turf/space)))
+				if(istype(O,/obj/effect/overmap/visitable/ship/snowglobe))
+					base.icon = 'icons/skybox/skybox_rs.dmi'
+					base.icon_state = "snowglobe"
+				else
+					base.icon = 'icons/skybox/skybox_rs.dmi'
+					base.icon_state = "ground"
+			//RS ADD END
 			else
 				for(var/obj/effect/overmap/visitable/other in O.loc)
 					if(other != O)
@@ -136,7 +150,7 @@ SUBSYSTEM_DEF(skybox)
 	for(var/datum/event/E in SSevents.active_events)
 		if(E.has_skybox_image && E.isRunning && (z in E.affecting_z))
 			new_overlays += E.get_skybox_image()
-	
+
 	for(var/image/I in new_overlays)
 		I.appearance_flags |= RESET_COLOR
 
@@ -161,7 +175,7 @@ SUBSYSTEM_DEF(skybox)
 	var/icon_state = "dyable"
 	var/color
 	var/random_color = FALSE
-	
+
 	var/use_stars = TRUE
 	var/star_icon = 'icons/skybox/skybox.dmi'
 	var/star_state = "stars"

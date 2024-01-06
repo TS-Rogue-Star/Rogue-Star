@@ -183,11 +183,35 @@
 			if("Specific Person")
 				vis = get_mobs_and_objs_in_view_fast(get_turf(src),1,2)
 				vis_mobs = vis["mobs"]
-				vis_objs = list()
+				vis_objs = vis["objs"]
 				vis_mobs -= src
 				for(var/mob/M in vis_mobs)			// ghosts get ye gone
 					if(isobserver(M) || (M.stat == DEAD))
 						vis_mobs -= M
+				if(isliving(src))
+					var/mob/living/itsme = src
+					if(itsme.vore_organs.len)
+						for(var/obj/belly/ourbelly in itsme.vore_organs)
+							for(var/anything in ourbelly.contents)
+								vis_objs |= anything
+
+				for(var/obj/O in vis_objs)	//Let's see if there is anything that might have mobs in it around!
+					if(istype(O,/obj/effect/overmap/visitable/ship))	//Let's look for ships!
+						var/obj/effect/overmap/visitable/ship/ourship = O
+						for(var/mob/living/ourmob in ourship.get_people_in_ship())
+							if(ourmob == src)
+								continue
+							if(!isliving(ourmob))
+								continue
+							if(!ourmob.client)
+								continue
+							var/area/ourarea = get_area(ourmob)
+							if(!ourarea.emotes_from_beyond)
+								continue
+							if(!ourmob.client.is_preference_enabled(/datum/client_preference/emotes_from_beyond))
+								continue
+							vis_mobs |= ourmob
+
 				if(!(vis_mobs.len))
 					to_chat(src, "<span class='warning'>No valid targets found. Your input has not been sent, but preserved:</span> [input]")
 					return

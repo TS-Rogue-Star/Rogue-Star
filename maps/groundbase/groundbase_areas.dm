@@ -460,6 +460,7 @@
 	block_suit_sensors = TRUE
 	forbid_events = TRUE
 	forbid_singulo = TRUE
+	emotes_from_beyond = FALSE	//RS ADD
 
 /area/groundbase/dorms/bathroom
 	name = "Dormitory Bathroom"

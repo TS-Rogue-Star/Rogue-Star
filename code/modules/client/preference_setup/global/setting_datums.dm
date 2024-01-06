@@ -329,6 +329,13 @@ var/list/_client_preferences_by_type
 	key = "LOOC_SOUNDS"
 	enabled_description = "On"
 	disabled_description = "Off"
+
+/datum/client_preference/emotes_from_beyond
+	description = "Emotes from Beyond"
+	key = "EMOTES_FROM_BEYOND"
+	enabled_description = "On"
+	disabled_description = "Off"
+
 //RS ADDITION END
 
 /datum/client_preference/runechat_mob
