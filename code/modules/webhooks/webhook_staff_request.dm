@@ -8,7 +8,7 @@
 	.["embeds"] = list(list(
 		"title" = "Staff Request",
 		"description" = data["info"],
-		"color" = data["color"] || COLOR_WEBHOOK_DEFAULT
+		"color" = COLOR_WEBHOOK_DEFAULT
 	))
 
 // Security
