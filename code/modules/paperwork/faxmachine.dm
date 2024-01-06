@@ -112,33 +112,89 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 		return
 	var/message_color = "#FFFFFF"
 	var/ping_name = null
+
+	// Begin RS edit
+	message_color = ping_dept.color
 	switch(ping_dept.name)
 		if(DEPARTMENT_COMMAND)
 			ping_name = "Command"
+			SSwebhooks.send(
+				WEBHOOK_CMDSTAFF_REQUEST,
+				list(
+					"info" = "[role] requested for [reason]",
+				)
+			)
 		if(DEPARTMENT_SECURITY)
 			ping_name = "Security"
+			SSwebhooks.send(
+				WEBHOOK_SECSTAFF_REQUEST,
+				list(
+					"info" = "[role] requested for [reason]",
+				)
+			)
 		if(DEPARTMENT_ENGINEERING)
 			ping_name = "Engineering"
+			SSwebhooks.send(
+				WEBHOOK_ENGSTAFF_REQUEST,
+				list(
+					"info" = "[role] requested for [reason]",
+				)
+			)
 		if(DEPARTMENT_MEDICAL)
 			ping_name = "Medical"
+			SSwebhooks.send(
+				WEBHOOK_MEDSTAFF_REQUEST,
+				list(
+					"info" = "[role] requested for [reason]",
+				)
+			)
 		if(DEPARTMENT_RESEARCH)
 			ping_name = "Research"
+			SSwebhooks.send(
+				WEBHOOK_RESSTAFF_REQUEST,
+				list(
+					"info" = "[role] requested for [reason]",
+				)
+			)
 		if(DEPARTMENT_CARGO)
 			ping_name = "Supply"
+			SSwebhooks.send(
+				WEBHOOK_SUPSTAFF_REQUEST,
+				list(
+					"info" = "[role] requested for [reason]",
+				)
+			)
 		if(DEPARTMENT_CIVILIAN)
 			ping_name = "Service"
+			SSwebhooks.send(
+				WEBHOOK_SERSTAFF_REQUEST,
+				list(
+					"info" = "[role] requested for [reason]",
+				)
+			)
 		if(DEPARTMENT_PLANET)
 			ping_name = "Expedition"
+			SSwebhooks.send(
+				WEBHOOK_EXPSTAFF_REQUEST,
+				list(
+					"info" = "[role] requested for [reason]",
+				)
+			)
 		if(DEPARTMENT_SYNTHETIC)
 			ping_name = "Silicon"
+			SSwebhooks.send(
+				WEBHOOK_SILSTAFF_REQUEST,
+				list(
+					"info" = "[role] requested for [reason]",
+				)
+			)
 		//if(DEPARTMENT_TALON)
 		//	ping_name = "Offmap"
 	if(!ping_name)
 		to_chat(L, "<span class='warning'>Selected job cannot be requested for \[ERRORUNKNOWNDEPT] reason. Please report this to system administrator.</span>")
 		return
-	message_color = ping_dept.color
+	// End RS edit
 
-	message_chat_rolerequest(message_color, ping_name, reason, role)
 	last_fax_role_request = world.time
 	to_chat(L, "<span class='notice'>Your request was transmitted.</span>")
 
