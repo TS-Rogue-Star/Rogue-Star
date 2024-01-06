@@ -138,7 +138,16 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 		return
 	message_color = ping_dept.color
 
-	message_chat_rolerequest(message_color, ping_name, reason, role)
+	// Begin RS edit
+	//message_chat_rolerequest(message_color, ping_name, reason, role)
+	SSwebhooks.send(
+		WEBHOOK_STAFF_REQUEST,
+		list(
+			"info" = "[role] requested for [reason]",
+		)
+	)
+	// End RS edit
+
 	last_fax_role_request = world.time
 	to_chat(L, "<span class='notice'>Your request was transmitted.</span>")
 
