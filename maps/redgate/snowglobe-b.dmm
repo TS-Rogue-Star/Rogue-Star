@@ -38,6 +38,18 @@
 /obj/structure/sign/christmas/lights,
 /turf/simulated/floor/carpet,
 /area/redgate/structure/powered)
+"cb" = (
+/obj/machinery/computer/ship/navigation/telescreen{
+	pixel_x = 32
+	},
+/turf/simulated/floor/holofloor/reinforced,
+/area/redgate/structure/powered/grab_zone)
+"cd" = (
+/obj/machinery/computer/ship/navigation/telescreen{
+	pixel_y = 32
+	},
+/turf/simulated/floor/holofloor/reinforced,
+/area/redgate/structure/powered/grab_zone)
 "cf" = (
 /turf/simulated/floor/holofloor/wood,
 /area/redgate/structure/powered)
@@ -689,6 +701,12 @@
 	},
 /turf/simulated/floor/outdoors/newdirt_nograss,
 /area/redgate)
+"oO" = (
+/obj/machinery/computer/ship/navigation/telescreen{
+	pixel_x = -32
+	},
+/turf/simulated/floor/holofloor/reinforced,
+/area/redgate/structure/powered/grab_zone)
 "pr" = (
 /obj/structure/bed/chair/sofa/corner/green{
 	dir = 8
@@ -1105,6 +1123,12 @@
 /obj/item/clothing/suit/storage/hooded/wintercoat,
 /turf/simulated/floor/holofloor/wood,
 /area/redgate/structure/powered)
+"GZ" = (
+/obj/machinery/computer/ship/navigation/telescreen{
+	pixel_y = -32
+	},
+/turf/simulated/floor/holofloor/reinforced,
+/area/redgate/structure/powered/grab_zone)
 "Hn" = (
 /obj/structure/bonfire,
 /turf/simulated/floor/outdoors/newdirt_nograss,
@@ -5773,7 +5797,7 @@ SB
 SB
 nl
 nK
-ti
+cb
 ti
 ti
 nK
@@ -11413,7 +11437,7 @@ SB
 nl
 ti
 ti
-ti
+GZ
 cA
 VD
 VD
@@ -11779,7 +11803,7 @@ Ry
 sR
 VD
 cA
-ti
+cd
 ti
 ti
 nl
@@ -17417,7 +17441,7 @@ SB
 SB
 nl
 Ym
-ti
+oO
 ti
 ti
 Ym
