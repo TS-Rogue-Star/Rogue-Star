@@ -43,7 +43,12 @@
 			return
 
 	if(!target)
-		toggle_portal()
+		if(density)
+			toggle_portal()
+		return
+
+	if(!target.special_condition(M))
+		return
 
 	var/turf/ourturf = find_our_turf(M)		//Find the turf on the opposite side of the target
 	if(!ourturf.check_density(TRUE,TRUE))	//Make sure there isn't a wall there
@@ -74,11 +79,16 @@
 		plane = OBJ_PLANE
 		set_light(0)
 
+/obj/structure/redgate/proc/special_condition(mob/living/M as mob)
+	return TRUE
+
 /obj/structure/redgate/Bumped(mob/M as mob)
+
 	src.teleport(M)
 	return
 
 /obj/structure/redgate/Crossed(mob/M as mob)
+
 	src.teleport(M)
 	return
 
@@ -126,6 +136,33 @@
 		return FALSE
 	else
 		return TRUE
+
+/obj/structure/redgate/away/ship_belly_check/special_condition(mob/living/M as mob)
+	var/obj/effect/overmap/visitable/ship/ourship = SSshuttles.find_ship(z)
+	if(!ourship)
+		return TRUE
+	if(!isbelly(ourship.loc))
+		return TRUE
+	var/obj/belly/ourbelly = ourship.loc
+	if(ourbelly.owner == M)
+		M.visible_message("<span class='warning'>\The [M] is tossed back as \the [src] fizzles and shuts down!</span>")
+		to_chat(M,"<span class='danger'>You feel a wildly uncomfortable sensation in your [ourbelly]! \The [ourship] resonates intensely and pushes back from \the [src]! You feel like you almost made a terrible mistake!</span>")
+		disable_gate()
+		M.halloss = 999
+		M.hallucination = 20
+		var/T = get_turf(M)
+		new /obj/effect/effect/sparks(T)
+
+		return FALSE
+	return TRUE
+
+/obj/structure/redgate/proc/disable_gate()
+	target.target = null
+	target.toggle_portal()
+	playsound(target,'sound/effects/bang.ogg', 100,1)
+	target = null
+	playsound(src,'sound/effects/bang.ogg', 100,1)
+	toggle_portal()
 
 /area/redgate
 	name = "redgate"
@@ -1057,7 +1094,3 @@
 /area/redgate/fantasy/mines
 	name = "Fantasy house"
 	icon_state = "green"
-
-
-
-

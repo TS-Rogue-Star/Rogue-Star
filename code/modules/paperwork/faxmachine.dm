@@ -110,11 +110,11 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 	if(!ping_dept)
 		to_chat(L, "<span class='warning'>Selected job cannot be requested for \[ERRORDEPTNOTFOUND] reason. Please report this to system administrator.</span>")
 		return
-	var/message_color = "#FFFFFF"
+//	var/message_color = "#FFFFFF"
 	var/ping_name = null
 
 	// Begin RS edit
-	message_color = ping_dept.color
+//	message_color = ping_dept.color
 	switch(ping_dept.name)
 		if(DEPARTMENT_COMMAND)
 			ping_name = "Command"
