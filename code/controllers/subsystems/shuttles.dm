@@ -174,3 +174,8 @@ SUBSYSTEM_DEF(shuttles)
 
 /datum/controller/subsystem/shuttles/stat_entry()
 	..("Shuttles:[process_shuttles.len]/[shuttles.len], Ships:[ships.len], L:[registered_shuttle_landmarks.len][overmap_halted ? ", HALT" : ""]")
+
+/datum/controller/subsystem/shuttles/proc/find_ship(var/our_z)
+	for(var/obj/effect/overmap/visitable/ship/ourship in ships)
+		if(our_z in ourship.map_z)
+			return ourship

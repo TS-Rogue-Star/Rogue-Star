@@ -1073,9 +1073,9 @@
 /turf/simulated/floor/holofloor/wood,
 /area/redgate/structure/powered/no_efb)
 "EP" = (
-/obj/structure/redgate/away,
 /obj/effect/fake_sun/cool,
 /obj/effect/overmap/visitable/ship/snowglobe,
+/obj/structure/redgate/away/ship_belly_check,
 /turf/simulated/floor/outdoors/sidewalk/slab,
 /area/redgate)
 "Fd" = (

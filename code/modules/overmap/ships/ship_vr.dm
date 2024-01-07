@@ -41,6 +41,8 @@
 
 	var/list/listeners = get_people_in_ship()
 	for(var/mob/M as anything in listeners)
+		if(!isliving(M))
+			continue
 		if(!M.client)
 			continue
 		if(!M.client.is_preference_enabled(/datum/client_preference/emotes_from_beyond))
@@ -55,6 +57,8 @@
 
 	var/list/listeners = get_people_in_ship()
 	for(var/mob/M as anything in listeners)
+		if(!isliving(M))
+			continue
 		if(!M.client)
 			continue
 		if(!M.client.is_preference_enabled(/datum/client_preference/emotes_from_beyond))
@@ -69,6 +73,8 @@
 
 	var/list/listeners = get_people_in_ship()
 	for(var/mob/M as anything in listeners)
+		if(!isliving(M))
+			continue
 		if(!M.client)
 			continue
 		if(!M.client.is_preference_enabled(/datum/client_preference/emotes_from_beyond))
