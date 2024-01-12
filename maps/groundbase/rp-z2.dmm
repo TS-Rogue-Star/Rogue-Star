@@ -13823,6 +13823,14 @@
 	},
 /turf/simulated/floor/tiled,
 /area/ai_monitored/storage/eva)
+"YC" = (
+/obj/item/device/geiger,
+/obj/item/device/geiger,
+/obj/item/device/geiger,
+/obj/item/device/geiger,
+/obj/structure/closet/radiation,
+/turf/simulated/floor/tiled,
+/area/rnd/xenobiology)
 "YD" = (
 /obj/structure/disposalpipe/sortjunction/wildcard/flipped{
 	dir = 1
@@ -21402,7 +21410,7 @@ dI
 tZ
 Lg
 Ee
-GL
+YC
 Th
 uw
 ti
