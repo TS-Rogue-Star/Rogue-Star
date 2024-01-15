@@ -590,4 +590,6 @@
 	excluded |= /area/groundbase/level3/se/open
 	excluded |= /area/groundbase/level3/sw/open
 	excluded |= /area/groundbase/level3/escapepad
+	excluded |= /area/groundbase/hotspring
+	excluded |= /area/groundbase/hotspring/water
 	..()
