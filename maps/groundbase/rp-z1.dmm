@@ -1168,7 +1168,8 @@
 	},
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow{
 	grass_chance = 0;
-	outdoors = 0
+	outdoors = 0;
+	snow_chance = 0
 	},
 /area/groundbase/civilian/bar)
 "bun" = (
@@ -2657,7 +2658,8 @@
 	},
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow{
 	grass_chance = 0;
-	outdoors = 0
+	outdoors = 0;
+	snow_chance = 0
 	},
 /area/groundbase/civilian/bar)
 "cLx" = (
@@ -3835,7 +3837,8 @@
 "dVI" = (
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow{
 	grass_chance = 0;
-	outdoors = 0
+	outdoors = 0;
+	snow_chance = 0
 	},
 /area/groundbase/civilian/bar)
 "dWV" = (
@@ -6908,7 +6911,8 @@
 	},
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow{
 	grass_chance = 0;
-	outdoors = 0
+	outdoors = 0;
+	snow_chance = 0
 	},
 /area/groundbase/civilian/bar)
 "hkD" = (
@@ -7215,7 +7219,8 @@
 	},
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow{
 	grass_chance = 0;
-	outdoors = 0
+	outdoors = 0;
+	snow_chance = 0
 	},
 /area/groundbase/civilian/bar)
 "hAs" = (
@@ -10893,7 +10898,8 @@
 	},
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow{
 	grass_chance = 0;
-	outdoors = 0
+	outdoors = 0;
+	snow_chance = 0
 	},
 /area/groundbase/civilian/bar)
 "lpX" = (
@@ -12099,7 +12105,8 @@
 /obj/structure/table/glass,
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow{
 	grass_chance = 0;
-	outdoors = 0
+	outdoors = 0;
+	snow_chance = 0
 	},
 /area/groundbase/civilian/bar)
 "mDR" = (
@@ -12414,7 +12421,8 @@
 	},
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow{
 	grass_chance = 0;
-	outdoors = 0
+	outdoors = 0;
+	snow_chance = 0
 	},
 /area/groundbase/civilian/bar)
 "nbx" = (
@@ -16255,7 +16263,7 @@
 	},
 /obj/structure/cable/yellow,
 /obj/machinery/power/smes/buildable{
-	RCon_tag = "Substation - Science";
+	RCon_tag = "Substation - Security";
 	output_attempt = 0
 	},
 /obj/machinery/light/small{
@@ -19388,7 +19396,8 @@
 	},
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow{
 	grass_chance = 0;
-	outdoors = 0
+	outdoors = 0;
+	snow_chance = 0
 	},
 /area/groundbase/civilian/bar)
 "tRF" = (
@@ -20638,7 +20647,7 @@
 /area/groundbase/security/lobby)
 "vec" = (
 /obj/machinery/power/breakerbox/activated{
-	RCon_tag = "Science Substation Bypass"
+	RCon_tag = "Security Substation Bypass"
 	},
 /turf/simulated/floor,
 /area/maintenance/groundbase/substation/sec)
@@ -22333,8 +22342,8 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/power/sensor{
-	name = "Powernet Sensor - Science Subgrid";
-	name_tag = "Science Subgrid"
+	name = "Powernet Sensor - Security Subgrid";
+	name_tag = "Security Subgrid"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
@@ -22494,7 +22503,8 @@
 /obj/random/paicard,
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow{
 	grass_chance = 0;
-	outdoors = 0
+	outdoors = 0;
+	snow_chance = 0
 	},
 /area/groundbase/civilian/bar)
 "xhn" = (
@@ -23108,7 +23118,8 @@
 	},
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow{
 	grass_chance = 0;
-	outdoors = 0
+	outdoors = 0;
+	snow_chance = 0
 	},
 /area/groundbase/civilian/bar)
 "xKQ" = (
@@ -23469,7 +23480,8 @@
 	},
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow{
 	grass_chance = 0;
-	outdoors = 0
+	outdoors = 0;
+	snow_chance = 0
 	},
 /area/groundbase/civilian/bar)
 "ydR" = (
