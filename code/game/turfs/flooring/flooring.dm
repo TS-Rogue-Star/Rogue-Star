@@ -116,6 +116,7 @@ var/list/flooring_types
 	var/list/movable_atom_blacklist = list()
 
 	var/check_season = FALSE	//VOREStation Addition
+	var/preset_season = null	//RS ADD
 
 /decl/flooring/proc/get_plating_type(var/turf/T)
 	return plating_type
@@ -634,3 +635,12 @@ var/list/flooring_types
 /decl/flooring/grass/seasonal_grass/dark
 	name = "grass"
 	icon_base = "darkgrass"
+
+/decl/flooring/grass/seasonal_grass/spring
+	preset_season = "spring"
+/decl/flooring/grass/seasonal_grass/summer
+	preset_season = "summer"
+/decl/flooring/grass/seasonal_grass/autumn
+	preset_season = "autumn"
+/decl/flooring/grass/seasonal_grass/winter
+	preset_season = "winter"
