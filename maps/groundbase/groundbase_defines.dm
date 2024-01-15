@@ -171,7 +171,10 @@
 		/area/groundbase/unexplored/outdoors,
 		/area/groundbase/unexplored/rock,
 		/area/groundbase/engineering/solarshed,
-		/area/groundbase/engineering/solarfield
+		/area/groundbase/engineering/solarfield,
+		/area/groundbase/hotspring,
+		/area/groundbase/hotspring/water
+
 		)
 
 	unit_test_exempt_from_atmos = list()

@@ -181,6 +181,12 @@
 	outdoors = 1
 	},
 /area/groundbase/exploration/shuttlepad)
+"cw" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/wood,
+/area/groundbase/hotspring)
 "cE" = (
 /turf/simulated/floor/wood,
 /area/groundbase/command/hop)
@@ -237,6 +243,9 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/uhallway)
+"dO" = (
+/turf/simulated/floor/outdoors/newdirt,
+/area/groundbase/level3/nw)
 "dP" = (
 /obj/structure/bed/chair/office/light{
 	dir = 4
@@ -249,6 +258,12 @@
 "dU" = (
 /turf/simulated/wall,
 /area/groundbase/medical/patient3)
+"dZ" = (
+/obj/structure/bed/chair/wood{
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/groundbase/hotspring)
 "ec" = (
 /turf/simulated/floor/outdoors/grass/seasonal/dark,
 /area/groundbase/level3/sw/open)
@@ -587,6 +602,13 @@
 "kB" = (
 /turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/command/hop)
+"kJ" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/closet/athletic_mixed,
+/turf/simulated/floor/wood,
+/area/groundbase/hotspring)
 "kL" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -609,6 +631,12 @@
 	outdoors = 1
 	},
 /area/groundbase/medical/patio)
+"kV" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/outdoors/sidewalk/slab/virgo3c,
+/area/groundbase/level3/nw)
 "kW" = (
 /obj/structure/bed/chair/shuttle{
 	dir = 1
@@ -634,6 +662,13 @@
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/pilot)
+"lP" = (
+/obj/machinery/power/apc,
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/wood,
+/area/groundbase/hotspring)
 "lR" = (
 /obj/structure/dispenser{
 	phorontanks = 0
@@ -661,6 +696,10 @@
 	outdoors = 0
 	},
 /area/groundbase/exploration/shuttlepad)
+"lY" = (
+/obj/machinery/light,
+/turf/simulated/floor/wood,
+/area/groundbase/hotspring)
 "mj" = (
 /obj/machinery/door/airlock/science{
 	name = "Shuttle";
@@ -672,6 +711,20 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/shuttle/groundbase/exploration)
+"mu" = (
+/obj/machinery/light/floortube{
+	dir = 1;
+	pixel_y = -1
+	},
+/turf/simulated/floor/wood,
+/area/groundbase/hotspring)
+"mv" = (
+/turf/simulated/floor/outdoors/grass/seasonal/preset/autumn{
+	animal_chance = 0;
+	grass_chance = 0;
+	tree_chance = 0
+	},
+/area/groundbase/level3/nw)
 "mw" = (
 /obj/structure/railing/grey{
 	dir = 8
@@ -728,6 +781,14 @@
 	outdoors = 1
 	},
 /area/groundbase/level3/ne)
+"na" = (
+/obj/effect/map_effect/interval/effect_emitter/steam/less_frequent,
+/turf/simulated/floor/water/atoll{
+	desc = "This water looks pretty shallow and calm. You'd almost feel bad for hopping in and disturbing its serene flatness. Steam wafts off of the surface!";
+	name = "hotspring";
+	outdoors = 1
+	},
+/area/groundbase/hotspring/water)
 "nd" = (
 /turf/simulated/floor{
 	edge_blending_priority = -1;
@@ -769,6 +830,19 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/paramedic)
+"nM" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/item/weapon/picnic_blankets_carried,
+/obj/item/weapon/picnic_blankets_carried,
+/obj/item/weapon/picnic_blankets_carried,
+/obj/item/weapon/picnic_blankets_carried,
+/obj/structure/closet{
+	anchored = 1
+	},
+/turf/simulated/floor/wood,
+/area/groundbase/hotspring)
 "nO" = (
 /obj/machinery/door/window/southleft{
 	dir = 1;
@@ -808,6 +882,12 @@
 	},
 /turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/exploration/shuttlepad)
+"nW" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/outdoors/sidewalk,
+/area/groundbase/level3/nw)
 "nX" = (
 /turf/simulated/mineral/cave,
 /area/groundbase/level3/nw)
@@ -952,6 +1032,13 @@
 	name = "impassable rock"
 	},
 /area/groundbase/level3/sw/open)
+"qh" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/closet/secure_closet/personal,
+/turf/simulated/floor/wood,
+/area/groundbase/hotspring)
 "ql" = (
 /obj/structure/fuel_port{
 	pixel_y = 32
@@ -966,6 +1053,10 @@
 /obj/machinery/light,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/patient4)
+"qo" = (
+/obj/structure/simple_door/wood,
+/turf/simulated/floor/wood,
+/area/groundbase/hotspring)
 "qx" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -1099,6 +1190,13 @@
 	},
 /turf/simulated/floor/outdoors/sidewalk,
 /area/groundbase/level3/ne)
+"rK" = (
+/obj/structure/prop/statue/stump_plaque{
+	desc = "A wooden stump adorned with a little plaque.  It reads, \"Summit Springs, discovered by Alpha Rare and Kazumi Kira on 1/14/2324.\"";
+	name = "Summit Springs commemorative stump"
+	},
+/turf/simulated/floor/outdoors/sidewalk/slab/virgo3c,
+/area/groundbase/level3/nw)
 "rN" = (
 /obj/machinery/computer/ship/engines{
 	dir = 1
@@ -1183,6 +1281,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/wood,
 /area/groundbase/medical/cmo)
+"sH" = (
+/turf/simulated/floor/water/atoll{
+	desc = "This water looks pretty shallow and calm. You'd almost feel bad for hopping in and disturbing its serene flatness. Steam wafts off of the surface!";
+	name = "hotspring";
+	outdoors = 1
+	},
+/area/groundbase/level3/nw)
 "sM" = (
 /obj/structure/bed/chair/shuttle{
 	dir = 4
@@ -1196,6 +1301,9 @@
 /obj/machinery/power/apc,
 /obj/structure/cable/yellow,
 /turf/simulated/floor/tiled/dark,
+/area/groundbase/level3/nw)
+"sQ" = (
+/turf/simulated/floor/outdoors/sidewalk/slab/virgo3c,
 /area/groundbase/level3/nw)
 "sX" = (
 /obj/structure/mirror{
@@ -1260,6 +1368,12 @@
 	},
 /turf/simulated/floor/tiled,
 /area/shuttle/groundbase/exploration)
+"tH" = (
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/wood,
+/area/groundbase/hotspring)
 "tK" = (
 /turf/simulated/floor/carpet/sblucarpet,
 /area/groundbase/command/hop)
@@ -1282,6 +1396,12 @@
 	},
 /turf/simulated/floor/tiled/eris/dark/panels,
 /area/shuttle/groundbase/exploration)
+"tV" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/outdoors/sidewalk/slab/virgo3c,
+/area/groundbase/level3/nw)
 "tX" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
@@ -1309,6 +1429,13 @@
 	},
 /turf/simulated/floor,
 /area/shuttle/groundbase/exploration)
+"tZ" = (
+/obj/effect/map_effect/interval/effect_emitter/steam/less_frequent,
+/turf/simulated/floor/water/atoll{
+	desc = "This water looks pretty shallow and calm. You'd almost feel bad for hopping in and disturbing its serene flatness. Steam wafts off of the surface!";
+	name = "hotspring"
+	},
+/area/groundbase/dorms/bathroom)
 "uc" = (
 /obj/structure/table/bench/marble,
 /turf/simulated/floor/tiled/white,
@@ -1480,6 +1607,10 @@
 	},
 /turf/simulated/wall/rshull,
 /area/shuttle/groundbase/exploration)
+"vO" = (
+/obj/structure/bed/chair/wood,
+/turf/simulated/floor/wood,
+/area/groundbase/hotspring)
 "wb" = (
 /turf/unsimulated/wall/planetary/normal{
 	desc = "It's quite impassable";
@@ -1545,6 +1676,13 @@
 /obj/machinery/atmospherics/unary/vent_pump/on,
 /turf/simulated/floor/carpet/sblucarpet,
 /area/groundbase/command/hop)
+"wH" = (
+/obj/machinery/door/airlock{
+	id_tag = null;
+	name = "Bathroom"
+	},
+/turf/simulated/floor/bmarble,
+/area/groundbase/dorms/bathroom)
 "wI" = (
 /obj/machinery/power/apc{
 	dir = 4
@@ -1555,6 +1693,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/wood,
 /area/groundbase/medical/cmo)
+"wK" = (
+/obj/effect/map_effect/interval/effect_emitter/steam/less_frequent,
+/turf/simulated/floor/water/atoll{
+	desc = "This water looks pretty shallow and calm. You'd almost feel bad for hopping in and disturbing its serene flatness. Steam wafts off of the surface!";
+	name = "hotspring"
+	},
+/area/groundbase/hotspring/water)
 "wT" = (
 /obj/machinery/papershredder,
 /turf/simulated/floor/wood,
@@ -1626,6 +1771,10 @@
 	},
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow,
 /area/groundbase/civilian/pilot)
+"xM" = (
+/obj/structure/simple_door/wood,
+/turf/simulated/mineral/floor/cave,
+/area/groundbase/hotspring)
 "xT" = (
 /turf/simulated/floor/carpet/sblucarpet,
 /area/groundbase/level3/nw)
@@ -1715,6 +1864,14 @@
 /obj/structure/disposalpipe/down,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/level3/nw)
+"yC" = (
+/obj/effect/map_effect/interval/effect_emitter/steam/less_frequent,
+/turf/simulated/floor/water/atoll{
+	desc = "This water looks pretty shallow and calm. You'd almost feel bad for hopping in and disturbing its serene flatness. Steam wafts off of the surface!";
+	name = "hotspring";
+	outdoors = 1
+	},
+/area/groundbase/level3/nw)
 "yD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
@@ -1753,6 +1910,21 @@
 	outdoors = 0
 	},
 /area/groundbase/cargo/office)
+"yQ" = (
+/turf/simulated/floor/water/atoll{
+	desc = "This water looks pretty shallow and calm. You'd almost feel bad for hopping in and disturbing its serene flatness. Steam wafts off of the surface!";
+	name = "hotspring"
+	},
+/area/groundbase/dorms/bathroom)
+"zd" = (
+/obj/machinery/button/remote/airlock{
+	id = "hotspring1";
+	pixel_x = -26;
+	pixel_y = -4;
+	specialfunctions = 4
+	},
+/turf/simulated/floor/wood,
+/area/groundbase/hotspring)
 "zu" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-8"
@@ -1774,6 +1946,12 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/uhallway)
+"zN" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/outdoors/sidewalk/side,
+/area/groundbase/level3/nw)
 "zP" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
@@ -1826,6 +2004,11 @@
 	outdoors = 1
 	},
 /area/groundbase/exploration/shuttlepad)
+"AA" = (
+/obj/structure/bed/double/padded,
+/obj/item/weapon/bedsheet/browndouble,
+/turf/simulated/floor/wood,
+/area/groundbase/hotspring)
 "AC" = (
 /turf/simulated/floor/outdoors/grass/seasonal,
 /area/groundbase/level3/sw/open)
@@ -2091,6 +2274,12 @@
 "Em" = (
 /turf/simulated/mineral/cave,
 /area/groundbase/level3/ne)
+"Et" = (
+/obj/structure/cable/yellow{
+	icon_state = "32-1"
+	},
+/turf/simulated/floor/outdoors/sidewalk/slab/virgo3c,
+/area/groundbase/level3/nw)
 "Ey" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
@@ -2169,6 +2358,9 @@
 	},
 /turf/simulated/floor/wood,
 /area/groundbase/command/hop)
+"Fs" = (
+/turf/simulated/mineral/cave,
+/area/groundbase/hotspring)
 "FC" = (
 /turf/simulated/wall,
 /area/groundbase/exploration/shuttlepad)
@@ -2306,6 +2498,12 @@
 	},
 /turf/simulated/floor/wood,
 /area/groundbase/medical/cmo)
+"HG" = (
+/turf/simulated/floor/water/atoll{
+	desc = "This water looks pretty shallow and calm. You'd almost feel bad for hopping in and disturbing its serene flatness. Steam wafts off of the surface!";
+	name = "hotspring"
+	},
+/area/groundbase/hotspring/water)
 "HM" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -2464,6 +2662,9 @@
 /obj/machinery/seed_storage/brig,
 /turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/level3/nw)
+"JA" = (
+/turf/simulated/wall/r_wall,
+/area/groundbase/hotspring)
 "JN" = (
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor/tiled/white,
@@ -2563,6 +2764,13 @@
 	},
 /turf/simulated/open,
 /area/groundbase/medical/uhallway)
+"KT" = (
+/obj/machinery/door/airlock{
+	id_tag = "hotspring1";
+	name = "Room 10"
+	},
+/turf/simulated/floor/bmarble,
+/area/groundbase/hotspring)
 "KU" = (
 /turf/simulated/wall/rshull,
 /area/shuttle/groundbase/exploration)
@@ -2777,6 +2985,13 @@
 	},
 /turf/simulated/floor/carpet/sblucarpet,
 /area/groundbase/level3/nw)
+"Mz" = (
+/turf/simulated/floor/water/atoll{
+	desc = "This water looks pretty shallow and calm. You'd almost feel bad for hopping in and disturbing its serene flatness. Steam wafts off of the surface!";
+	name = "hotspring";
+	outdoors = 1
+	},
+/area/groundbase/hotspring/water)
 "MA" = (
 /obj/machinery/atmospheric_field_generator/perma/underdoors,
 /obj/machinery/door/firedoor/glass/talon,
@@ -2821,6 +3036,15 @@
 "MQ" = (
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/pilot)
+"MR" = (
+/obj/structure/toilet{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/groundbase/hotspring)
 "Na" = (
 /obj/effect/floor_decal/industrial/outline,
 /turf/simulated/floor/outdoors/sidewalk/slab,
@@ -2847,6 +3071,10 @@
 	},
 /turf/simulated/floor/bmarble,
 /area/groundbase/level3/nw)
+"Nj" = (
+/obj/structure/closet/secure_closet/personal,
+/turf/simulated/floor/wood,
+/area/groundbase/hotspring)
 "NE" = (
 /obj/structure/bed/chair/shuttle{
 	dir = 4
@@ -3102,6 +3330,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/uhallway)
+"RP" = (
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/outdoors/sidewalk/slab/virgo3c,
+/area/groundbase/level3/nw)
 "RQ" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /obj/machinery/camera/network/medbay,
@@ -3128,6 +3362,10 @@
 	},
 /turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/level3/nw)
+"Sh" = (
+/obj/structure/table/woodentable,
+/turf/simulated/floor/wood,
+/area/groundbase/hotspring)
 "So" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -3250,6 +3488,9 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/medical/patient3)
+"TH" = (
+/turf/simulated/wall,
+/area/groundbase/hotspring)
 "TM" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 4
@@ -3288,6 +3529,16 @@
 	pixel_x = -27
 	},
 /turf/simulated/floor/tiled/dark,
+/area/groundbase/level3/nw)
+"Ub" = (
+/obj/structure/closet/athletic_swimwear,
+/turf/simulated/floor/wood,
+/area/groundbase/hotspring)
+"Ue" = (
+/turf/simulated/floor/outdoors/grass/seasonal/preset/spring{
+	animal_chance = 0.1;
+	tree_chance = 0
+	},
 /area/groundbase/level3/nw)
 "Us" = (
 /obj/structure/fence/corner,
@@ -3361,6 +3612,9 @@
 	},
 /turf/simulated/floor/outdoors/sidewalk/side,
 /area/groundbase/level3/se)
+"UV" = (
+/turf/simulated/floor/wood,
+/area/groundbase/hotspring)
 "Vc" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
@@ -3497,6 +3751,10 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor,
 /area/groundbase/medical/cmo)
+"WM" = (
+/obj/structure/closet/athletic_mixed,
+/turf/simulated/floor/wood,
+/area/groundbase/hotspring)
 "WU" = (
 /obj/effect/floor_decal/spline/plain{
 	dir = 1
@@ -3540,6 +3798,12 @@
 	},
 /turf/simulated/floor/carpet/sblucarpet,
 /area/groundbase/level3/nw)
+"Xp" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/outdoors/sidewalk/slab/virgo3c,
+/area/groundbase/level3/nw)
 "Xv" = (
 /obj/structure/table/steel,
 /turf/simulated/floor/tiled,
@@ -3547,6 +3811,15 @@
 "Xz" = (
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/level3/nw)
+"XE" = (
+/obj/machinery/door/airlock{
+	name = "Swimsuits and Lockers"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/bmarble,
+/area/groundbase/hotspring)
 "XG" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/white,
@@ -4099,10 +4372,10 @@ nX
 nX
 nX
 nX
-go
-go
-go
-go
+sH
+sH
+sH
+sH
 nX
 nX
 nX
@@ -4239,13 +4512,13 @@ nX
 nX
 nX
 nX
-go
-go
-go
-go
-go
-go
-go
+Mz
+Mz
+Mz
+sH
+sH
+sH
+sH
 nX
 nX
 nX
@@ -4377,18 +4650,18 @@ nX
 nX
 nX
 nX
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
+Ue
+Ue
+Ue
+Ue
+Mz
+na
+Mz
+sH
+sH
+sH
+sH
+sH
 nX
 nX
 nX
@@ -4515,23 +4788,23 @@ nX
 nX
 nX
 nX
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+sH
+sH
+sH
+sH
+sH
+sH
+sH
+sH
 nX
 nX
 nX
@@ -4654,26 +4927,26 @@ nX
 nX
 nX
 nX
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
+Mz
+Mz
+Mz
+Ue
+Ue
+dO
+dO
+dO
+dO
+dO
+Ue
+Ue
+sH
+sH
+sH
+yC
+sH
+sH
+sH
+sH
 nX
 nX
 nX
@@ -4784,39 +5057,39 @@ nX
 nX
 nX
 nX
+JA
+JA
+JA
+JA
+JA
 nX
 nX
 nX
 nX
 nX
-nX
-nX
-nX
-nX
-nX
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+dO
+dO
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+sH
+sH
+sH
+sH
+sH
+sH
+sH
+sH
 nX
 nX
 nX
@@ -4924,45 +5197,45 @@ nX
 nX
 nX
 nX
+JA
+JA
+JA
+AA
+vO
+Sh
+JA
 nX
 nX
 nX
 nX
-nX
-nX
-nX
-nX
-nX
-nX
-nX
-go
-go
-go
-go
-go
-go
-go
-go
-nX
-nX
-nX
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
+Ue
+Ue
+dO
+dO
+dO
+dO
+dO
+dO
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+sH
+sH
+sH
+sH
+yC
+sH
+Ue
+Ue
+Ue
+mv
+mv
 go
 go
 go
@@ -5066,46 +5339,46 @@ nX
 nX
 nX
 nX
+JA
+MR
+qo
+UV
+UV
+dZ
+JA
+JA
+nX
+Ue
+Ue
+Ue
+dO
+dO
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
 nX
 nX
 nX
-nX
-nX
-nX
-nX
-nX
-nX
-go
-go
-go
-go
-go
-go
-go
-go
-go
-nX
-nX
-nX
-nX
-nX
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-Ma
-go
-go
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+sH
+sH
+sH
+sH
+Ue
+Ue
+Ue
+Ue
+mv
+mv
+mv
 go
 go
 Ma
@@ -5208,46 +5481,46 @@ nX
 nX
 nX
 nX
+JA
+JA
+JA
+cw
+UV
+UV
+zd
+KT
+Ue
+Ue
+Ue
+dO
+dO
+Ue
+Ue
+Ue
 nX
 nX
 nX
 nX
 nX
 nX
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
 nX
 nX
-nX
-nX
-nX
-nX
-nX
-nX
-go
-go
-go
-go
-go
-go
-go
-go
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+mv
+mv
+mv
 Ma
 Ma
 Ma
@@ -5352,43 +5625,43 @@ nX
 nX
 nX
 nX
-nX
-nX
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-nX
-nX
-nX
+Fs
+HG
+HG
+HG
+UV
+JA
+Ue
+Ue
+dO
+dO
+Ue
+Ue
+Ue
 nX
 nX
 nX
 nX
 nX
 nX
-go
-go
-go
-go
-go
-go
-go
-go
-go
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
+HG
+UV
+Fs
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+mv
+mv
 Ma
 Ma
 Ma
@@ -5494,41 +5767,41 @@ nX
 nX
 nX
 nX
-nX
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-nX
-nX
+Fs
+HG
+wK
+HG
+UV
+JA
+Ue
+dO
+dO
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Mz
+Mz
 nX
 nX
-nX
-go
-go
-go
-go
-go
-go
-go
-go
-go
-Ma
-Ma
-Ma
-Ma
+wK
+mu
+xM
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
 PZ
 PZ
 PZ
@@ -5636,40 +5909,40 @@ nX
 nX
 nX
 nX
+Fs
+HG
+HG
+HG
+lY
+JA
+Ue
+dO
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Mz
+Mz
+Mz
 nX
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-nX
-nX
-nX
-nX
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-Ma
-Ma
+HG
+UV
+Fs
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
 PZ
 PZ
 PZ
@@ -5778,40 +6051,40 @@ nX
 nX
 nX
 nX
-nX
-go
-go
-go
-go
-go
-go
-go
-go
-go
-nX
-nX
-nX
-go
-go
-go
-go
-go
+Fs
+HG
+HG
+HG
+UV
+JA
+Ue
+dO
+Ue
+Ue
 nX
 nX
 nX
+Ue
+Ue
+Mz
+na
+Mz
 nX
-go
-go
-go
-go
-go
-go
-go
-go
-go
-Ma
-Ma
-Ma
+nX
+nX
+nX
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
 PZ
 PZ
 PZ
@@ -5920,41 +6193,41 @@ nX
 nX
 nX
 nX
-nX
-nX
-nX
-go
-go
-go
-go
-go
-go
-nX
-nX
-nX
-nX
-nX
-go
-go
-go
-go
+Fs
+Fs
+Fs
+HG
+UV
+JA
+Ue
+dO
+Ue
 nX
 nX
 nX
 nX
-go
-go
-go
 nX
-go
-go
-go
-go
-go
-go
-go
-Ma
-Ma
+Ue
+Ue
+Mz
+Mz
+nX
+nX
+nX
+nX
+Ue
+Ue
+Ue
+nX
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
 PZ
 PZ
 PZ
@@ -6064,40 +6337,40 @@ nX
 nX
 nX
 nX
+Fs
+Fs
+JA
+JA
+Ue
+dO
+Ue
 nX
 nX
 nX
 nX
-go
-go
-go
+nX
+Ue
+Ue
+Mz
+Mz
+Mz
 nX
 nX
+Ue
+Ue
+Ue
 nX
 nX
-nX
-go
-go
-go
-go
-go
-nX
-nX
-go
-go
-go
-nX
-nX
-go
-go
-go
-go
-go
-go
-go
-Ma
-Ma
-Ma
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
 PZ
 PZ
 PZ
@@ -6210,35 +6483,35 @@ nX
 nX
 nX
 nX
-go
-go
-go
+Ue
+dO
+Ue
 nX
 nX
 nX
 nX
 nX
-go
-go
-go
-go
-go
-go
-go
-go
-go
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
 nX
 nX
 nX
-go
-go
-go
-go
-go
-Ma
-Ma
-Ma
-Ma
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
 PZ
 PZ
 PZ
@@ -6352,10 +6625,10 @@ nX
 nX
 nX
 nX
-go
-go
-go
-go
+Ue
+dO
+Ue
+Ue
 nX
 nX
 nX
@@ -6363,24 +6636,24 @@ nX
 nX
 nX
 nX
-go
-go
-go
-go
+Ue
+Ue
+Ue
+Ue
 nX
 nX
 nX
 nX
-go
-go
-go
-go
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
 PZ
 PZ
 PZ
@@ -6483,6 +6756,22 @@ nX
 nX
 nX
 nX
+kk
+kk
+nX
+nX
+nX
+nX
+nX
+nX
+nX
+nX
+nX
+Ue
+dO
+dO
+Ue
+Ue
 nX
 nX
 nX
@@ -6494,34 +6783,18 @@ nX
 nX
 nX
 nX
-go
-go
-go
-go
-go
 nX
 nX
-nX
-nX
-nX
-nX
-nX
-nX
-nX
-nX
-nX
-nX
-nX
-go
-go
-go
-go
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
 PZ
 PZ
 PZ
@@ -6624,6 +6897,24 @@ nX
 nX
 nX
 nX
+kk
+kk
+kk
+kk
+nX
+nX
+nX
+nX
+nX
+nX
+nX
+nX
+Ue
+Ue
+dO
+dO
+Ue
+Ue
 nX
 nX
 nX
@@ -6635,34 +6926,16 @@ nX
 nX
 nX
 nX
-nX
-go
-go
-go
-go
-go
-nX
-nX
-nX
-nX
-nX
-nX
-nX
-nX
-nX
-nX
-nX
-nX
-go
-go
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
 PZ
 PZ
 PZ
@@ -6766,6 +7039,10 @@ YO
 YO
 YO
 YO
+kk
+yQ
+yQ
+kk
 nX
 nX
 nX
@@ -6774,17 +7051,13 @@ nX
 nX
 nX
 nX
-nX
-nX
-nX
-nX
-go
-go
-go
-go
-go
-go
-go
+Ue
+Ue
+Ue
+dO
+dO
+Ue
+Ue
 nX
 nX
 nX
@@ -6793,18 +7066,18 @@ nX
 nX
 nX
 nX
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
+Mz
+Mz
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
 PZ
 PZ
 PZ
@@ -6907,44 +7180,44 @@ hu
 nO
 sX
 ww
-YO
+wH
+kk
+tZ
+yQ
+kk
 nX
 nX
-nX
-nX
-nX
-nX
-nX
-nX
-nX
-nX
-nX
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
+Fs
+TH
+TH
+TH
+TH
+TH
+Ue
+Ue
+Ue
+Ue
+dO
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
 PZ
 PZ
 PZ
@@ -7050,42 +7323,42 @@ pX
 sY
 wD
 YO
+mz
+kk
+kk
+kk
 nX
 nX
-nX
-nX
-nX
-nX
-nX
-nX
-nX
-nX
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
+Fs
+Ub
+Ub
+kJ
+WM
+TH
+Ue
+Ue
+Ue
+Ue
+dO
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
 PZ
 PZ
 PZ
@@ -7193,31 +7466,31 @@ ud
 YO
 YO
 nX
+kk
+kk
 nX
 nX
 nX
-nX
-nX
-nX
-nX
-nX
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
+Fs
+UV
+UV
+UV
+lP
+TH
+Ue
+Ue
+sQ
+sQ
+sQ
+sQ
+sQ
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
 PZ
 PZ
 PZ
@@ -7340,25 +7613,25 @@ nX
 nX
 nX
 nX
-nX
-nX
-go
-go
-go
-go
-go
-go
-go
-go
-go
-go
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
+Fs
+HG
+UV
+UV
+nM
+TH
+Ue
+Ue
+sQ
+Mz
+Mz
+na
+sQ
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
 PZ
 PZ
 PZ
@@ -7482,24 +7755,24 @@ nX
 nX
 nX
 nX
-nX
-nX
-go
-go
-go
-go
-go
-go
-go
-go
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
+Fs
+wK
+UV
+UV
+tH
+XE
+nW
+nW
+Xp
+Mz
+rK
+Mz
+sQ
+Ue
+Ue
+Ue
+Ue
+Ue
 PZ
 PZ
 PZ
@@ -7624,23 +7897,23 @@ nX
 nX
 nX
 nX
-nX
-go
-go
-go
-go
-go
-go
-go
-go
-go
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
+Fs
+UV
+UV
+UV
+UV
+TH
+Ue
+Ue
+kV
+na
+Mz
+Mz
+sQ
+Ue
+Ue
+Ue
+Ue
 PZ
 PZ
 PZ
@@ -7766,22 +8039,22 @@ nX
 nX
 nX
 nX
-nX
-go
-go
-go
-go
-go
-go
-go
-go
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
+Fs
+Nj
+Nj
+qh
+Nj
+TH
+Ue
+Ue
+RP
+tV
+Xp
+sQ
+sQ
+Ue
+Ue
+Ue
 PZ
 PZ
 PZ
@@ -7908,21 +8181,21 @@ nX
 nX
 nX
 nX
-nX
-go
-go
-go
-go
-go
-go
-go
-go
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
+Fs
+TH
+TH
+TH
+TH
+TH
+Ue
+Ue
+Ue
+Ue
+zN
+Ue
+Ue
+Ue
+Ue
 PZ
 PZ
 PZ
@@ -8054,16 +8327,16 @@ go
 go
 go
 go
-go
-go
-go
-go
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
+mv
+mv
+Ue
+Ue
+Ue
+Ue
+zN
+Ue
+Ue
+Ue
 PZ
 PZ
 PZ
@@ -8196,16 +8469,16 @@ go
 go
 go
 go
-go
-go
-go
-go
-Ma
-Ma
-Ma
-Ma
-Ma
-Ma
+mv
+mv
+mv
+mv
+Ue
+Ue
+zN
+Ue
+Ue
+Ue
 PZ
 PZ
 PZ
@@ -8338,15 +8611,15 @@ go
 go
 go
 go
-go
-go
-go
-go
-Ma
-Ma
-Ma
-Ma
-Ma
+mv
+mv
+mv
+mv
+mv
+Ue
+zN
+Ue
+Ue
 PZ
 PZ
 PZ
@@ -8480,15 +8753,15 @@ go
 go
 go
 go
-go
-go
-go
-go
-Ma
-Ma
-Ma
-Ma
-Ma
+mv
+mv
+mv
+mv
+mv
+mv
+zN
+Ue
+Ue
 PZ
 PZ
 PZ
@@ -8623,14 +8896,14 @@ go
 go
 go
 go
-go
-go
-go
-Ma
-Ma
-Ma
-Ma
-Ma
+mv
+mv
+mv
+mv
+mv
+RP
+nW
+Et
 PZ
 PZ
 PZ
@@ -8765,14 +9038,14 @@ go
 go
 go
 go
-go
-go
-Ma
-Ma
-Ma
-Ma
-Ma
-PZ
+mv
+mv
+mv
+mv
+mv
+Ue
+Ue
+Ue
 PZ
 PZ
 PZ
@@ -8908,12 +9181,12 @@ go
 go
 go
 go
-go
-Ma
-Ma
-Ma
-Ma
-Ma
+mv
+mv
+mv
+mv
+mv
+Ue
 PZ
 PZ
 PZ
@@ -9051,10 +9324,10 @@ go
 go
 go
 go
-Ma
-Ma
-Ma
-Ma
+mv
+mv
+mv
+mv
 PZ
 PZ
 PZ
@@ -9194,9 +9467,9 @@ go
 go
 Ma
 Ma
-Ma
-Ma
-Ma
+mv
+mv
+mv
 PZ
 PZ
 PZ

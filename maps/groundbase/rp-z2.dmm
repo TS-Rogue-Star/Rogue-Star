@@ -2957,6 +2957,12 @@
 	},
 /turf/simulated/floor,
 /area/groundbase/security/warden)
+"kE" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/outdoors/sidewalk/slab,
+/area/groundbase/level2/nw)
 "kF" = (
 /obj/effect/floor_decal/industrial/hatch/yellow,
 /obj/machinery/deployable/barrier,
@@ -3150,6 +3156,12 @@
 	},
 /turf/simulated/floor/carpet,
 /area/groundbase/civilian/library)
+"lo" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/outdoors/sidewalk/side,
+/area/groundbase/level2/nw)
 "lq" = (
 /obj/machinery/door/airlock{
 	id_tag = null;
@@ -7333,6 +7345,18 @@
 "AQ" = (
 /turf/simulated/floor/tiled/white,
 /area/groundbase/dorms/bathroom)
+"AR" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/outdoors/sidewalk/slab,
+/area/groundbase/level2/nw)
 "AS" = (
 /obj/structure/table/woodentable,
 /turf/simulated/floor/lino,
@@ -10278,6 +10302,16 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled,
 /area/ai_monitored/storage/eva)
+"Mp" = (
+/obj/structure/stairs/spawner/north,
+/obj/structure/cable/yellow{
+	icon_state = "16-0"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/outdoors/sidewalk/slab,
+/area/groundbase/level2/nw)
 "Mr" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -12225,6 +12259,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/bmarble,
 /area/groundbase/civilian/library)
+"SG" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/outdoors/sidewalk/slab,
+/area/groundbase/level2/nw)
 "SN" = (
 /obj/structure/disposalpipe/sortjunction{
 	dir = 8;
@@ -18504,7 +18544,7 @@ tV
 vn
 vn
 vn
-vn
+AR
 pc
 TH
 TH
@@ -18646,7 +18686,7 @@ Gz
 WB
 WB
 WB
-WB
+lo
 WB
 WB
 TH
@@ -18788,7 +18828,7 @@ gc
 gc
 WB
 WB
-WB
+lo
 WB
 WB
 TH
@@ -18930,7 +18970,7 @@ gc
 gc
 gc
 WB
-WB
+lo
 WB
 WB
 TH
@@ -19070,9 +19110,9 @@ tn
 Ga
 gc
 gc
-gc
-WB
-WB
+Mp
+kE
+SG
 WB
 WB
 TH
@@ -19212,7 +19252,7 @@ cn
 Xv
 gc
 gc
-WB
+gc
 WB
 WB
 WB

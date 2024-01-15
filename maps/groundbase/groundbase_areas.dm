@@ -498,6 +498,13 @@
 	lightswitch = 0
 	sound_env = SMALL_SOFTFLOOR
 
+/area/groundbase/hotspring
+	name = "Hotsprings"
+	lightswitch = 1
+
+/area/groundbase/hotspring/water
+	enter_message = "The water is so warm!"
+
 /area/maintenance/groundbase/substation
 	name = "Substation"
 	holomap_color = HOLOMAP_AREACOLOR_ENGINEERING
@@ -583,4 +590,6 @@
 	excluded |= /area/groundbase/level3/se/open
 	excluded |= /area/groundbase/level3/sw/open
 	excluded |= /area/groundbase/level3/escapepad
+	excluded |= /area/groundbase/hotspring
+	excluded |= /area/groundbase/hotspring/water
 	..()
