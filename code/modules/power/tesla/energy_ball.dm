@@ -22,6 +22,7 @@
 	var/produced_power
 	var/energy_to_raise = 32
 	var/energy_to_lower = -20
+	plane = PLANE_LIGHTING_ABOVE
 
 /obj/singularity/energy_ball/New(loc, starting_energy = 50, is_miniball = FALSE)
 	..()
@@ -29,8 +30,10 @@
 
 /obj/singularity/energy_ball/Initialize()
 	. = ..()
+	/*	RS REMOVE - performance
 	if(!miniball)
 		set_light(10, 7, "#EEEEFF")
+	*/
 
 /obj/singularity/energy_ball/ex_act(severity, target)
 	return
