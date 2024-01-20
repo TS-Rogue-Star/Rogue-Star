@@ -17,6 +17,7 @@
 	var/obj/machinery/field_generator/FG2 = null
 	var/list/shockdirs
 	var/hasShocked = 0 //Used to add a delay between shocks. In some cases this used to crash servers by spawning hundreds of sparks every second.
+	plane = PLANE_LIGHTING_ABOVE
 
 /obj/machinery/containment_field/Initialize()
 	. = ..()
