@@ -678,6 +678,7 @@ var/global/datum/controller/occupations/job_master
 			.["turf"] = spawnpos.get_spawn_position()
 			.["msg"] = spawnpos.msg
 			.["channel"] = spawnpos.announce_channel
+			.["announcement"] = spawnpos.announcement
 		else
 			if(fail_deadly)
 				to_chat(C, "<span class='warning'>Your chosen spawnpoint ([spawnpos.display_name]) is unavailable for your chosen job. Please correct your spawn point choice.</span>")
@@ -686,7 +687,9 @@ var/global/datum/controller/occupations/job_master
 			var/spawning = pick(latejoin)
 			.["turf"] = get_turf(spawning)
 			.["msg"] = "will arrive at the station shortly"
+			.["announcement"] = spawnpos.announcement
 	else if(!fail_deadly)
 		var/spawning = pick(latejoin)
 		.["turf"] = get_turf(spawning)
 		.["msg"] = "has arrived on the station"
+		.["announcement"] = spawnpos.announcement

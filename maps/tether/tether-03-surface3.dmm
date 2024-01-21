@@ -9551,7 +9551,7 @@
 /turf/simulated/floor/water/deep/pool,
 /area/crew_quarters/pool)
 "apV" = (
-/obj/structure/redgate,
+/obj/machinery/cryopod/robot/door/gateway/redgate,
 /turf/simulated/floor/reinforced,
 /area/tether/surfacebase/surface_three_hall/west)
 "apW" = (

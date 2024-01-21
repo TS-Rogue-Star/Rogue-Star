@@ -3997,7 +3997,7 @@
 /turf/simulated/floor/carpet/purcarpet,
 /area/stellardelight/deck1/dorms/dorm3)
 "hL" = (
-/obj/structure/redgate,
+/obj/machinery/cryopod/robot/door/gateway/redgate,
 /turf/simulated/floor/tiled/eris/dark/danger,
 /area/stellardelight/deck1/port)
 "hM" = (
@@ -5582,6 +5582,9 @@
 "ll" = (
 /obj/machinery/light/small{
 	dir = 4
+	},
+/obj/effect/landmark{
+	name = "JoinLateRedgate"
 	},
 /turf/simulated/floor/tiled/eris/dark/danger,
 /area/stellardelight/deck1/port)
@@ -8534,6 +8537,12 @@
 	},
 /turf/simulated/floor/tiled/steel_dirty,
 /area/assembly/robotics)
+"rv" = (
+/obj/effect/landmark{
+	name = "JoinLateRedgate"
+	},
+/turf/simulated/floor/tiled/eris/dark/danger,
+/area/stellardelight/deck1/port)
 "rw" = (
 /obj/structure/cable/green{
 	icon_state = "2-4"
@@ -22065,6 +22074,9 @@
 /obj/machinery/status_display{
 	pixel_y = 32
 	},
+/obj/effect/landmark{
+	name = "JoinLateRedgate"
+	},
 /turf/simulated/floor/tiled/eris/dark/danger,
 /area/stellardelight/deck1/port)
 "UZ" = (
@@ -33341,7 +33353,7 @@ gj
 Ku
 Ku
 hY
-hY
+rv
 hY
 LV
 EN
@@ -33484,7 +33496,7 @@ Ku
 Ku
 UY
 hL
-hY
+rv
 Rk
 YT
 at

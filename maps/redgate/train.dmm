@@ -390,7 +390,7 @@
 /turf/simulated/shuttle/floor/black,
 /area/redgate/train/seating)
 "hh" = (
-/obj/structure/redgate/away{
+/obj/machinery/cryopod/robot/door/gateway/redgate/away{
 	pixel_y = 15
 	},
 /turf/simulated/shuttle/floor/white{

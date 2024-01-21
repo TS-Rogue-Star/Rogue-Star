@@ -432,6 +432,7 @@
 		return
 
 	var/turf/T = join_props["turf"]
+	var/do_announce = join_props["announcement"]
 	var/join_message = join_props["msg"]
 	var/announce_channel = join_props["channel"] || "Common"
 
@@ -482,13 +483,13 @@
 		character.buckled.set_dir(character.dir)
 
 	ticker.mode.latespawn(character)
-
-	if(J.mob_type & JOB_SILICON)
-		AnnounceCyborg(character, rank, join_message, announce_channel, character.z)
-	else
-		AnnounceArrival(character, rank, join_message, announce_channel, character.z)
-		data_core.manifest_inject(character)
-		ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
+	if(do_announce)
+		if(J.mob_type & JOB_SILICON)
+			AnnounceCyborg(character, rank, join_message, announce_channel, character.z)
+		else
+			AnnounceArrival(character, rank, join_message, announce_channel, character.z)
+			data_core.manifest_inject(character)
+			ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
 	if(ishuman(character))
 		if(character.client.prefs.auto_backup_implant)
 			var/obj/item/weapon/implant/backup/imp = new(src)

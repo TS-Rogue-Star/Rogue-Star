@@ -107,7 +107,7 @@
 
 	bot_patrolling = FALSE
 
-	allowed_spawns = list("Gateway","Cryogenic Storage","Cyborg Storage","ITV Talon Cryo")
+	allowed_spawns = list("Gateway","Cryogenic Storage","Cyborg Storage","ITV Talon Cryo", "Redgate")
 	spawnpoint_died = /datum/spawnpoint/cryo
 	spawnpoint_left = /datum/spawnpoint/gateway
 	spawnpoint_stayed = /datum/spawnpoint/cryo

@@ -309,7 +309,7 @@
 /turf/simulated/floor/outdoors/grass/seasonal/dark,
 /area/redgate/wilds)
 "Rf" = (
-/obj/structure/redgate/away,
+/obj/machinery/cryopod/robot/door/gateway/redgate/away,
 /turf/simulated/floor/wood,
 /area/redgate/structure)
 "RY" = (

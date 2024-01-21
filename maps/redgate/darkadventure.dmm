@@ -134,7 +134,7 @@
 /turf/simulated/floor/outdoors/ironsand,
 /area/redgate/wilds)
 "ro" = (
-/obj/structure/redgate/away,
+/obj/machinery/cryopod/robot/door/gateway/redgate/away,
 /turf/simulated/floor/redgrid/off{
 	alpha = 60
 	},

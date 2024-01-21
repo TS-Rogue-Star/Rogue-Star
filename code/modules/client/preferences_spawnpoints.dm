@@ -14,6 +14,7 @@ var/list/spawntypes = list()
 	var/list/disallow_job = null
 	var/announce_channel = "Common"
 	var/allowed_mob_types = JOB_SILICON|JOB_CARBON
+	var/announcement = TRUE
 
 /datum/spawnpoint/proc/check_job_spawning(job)
 	if(restrict_job && !(job in restrict_job))
@@ -52,6 +53,16 @@ var/list/spawntypes = list()
 /datum/spawnpoint/gateway/New()
 	..()
 	turfs = latejoin_gateway
+
+/datum/spawnpoint/redgate
+	display_name = "Redgate"
+	msg = "has completed translation from offsite redgate"
+	announcement = FALSE
+
+/datum/spawnpoint/redgate/New()
+	..()
+	turfs = latejoin_redgate
+
 /* VOREStation Edit
 /datum/spawnpoint/elevator
 	display_name = "Elevator"

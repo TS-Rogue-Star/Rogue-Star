@@ -32,6 +32,10 @@
 			latejoin += src				//VOREStation Addition
 			delete_me = 1
 			return
+		if("JoinLateRedgate")			//RS ADD
+			latejoin_redgate += loc
+			delete_me = 1
+			return
 		if("JoinLateElevator")
 			latejoin_elevator += loc
 			delete_me = 1

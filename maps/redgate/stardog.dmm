@@ -230,7 +230,7 @@
 /turf/simulated/floor/flesh,
 /area/redgate/stardog/flesh_abyss/stomach)
 "uQ" = (
-/obj/structure/redgate/away,
+/obj/machinery/cryopod/robot/door/gateway/redgate/away,
 /turf/simulated/floor/reinforced,
 /area/redgate/stardog/lounge)
 "vg" = (
