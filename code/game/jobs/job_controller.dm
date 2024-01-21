@@ -680,7 +680,7 @@ var/global/datum/controller/occupations/job_master
 			.["channel"] = spawnpos.announce_channel
 			.["announcement"] = spawnpos.announcement
 		else
-			if(fail_deadly)
+			if(fail_deadly || !spawnpos.announcement)
 				to_chat(C, "<span class='warning'>Your chosen spawnpoint ([spawnpos.display_name]) is unavailable for your chosen job. Please correct your spawn point choice.</span>")
 				return
 			to_chat(C, "<span class='filter_warning'>Your chosen spawnpoint ([spawnpos.display_name]) is unavailable for your chosen job. Spawning you at the Arrivals shuttle instead.</span>")

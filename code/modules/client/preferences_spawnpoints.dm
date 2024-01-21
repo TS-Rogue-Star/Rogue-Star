@@ -58,6 +58,7 @@ var/list/spawntypes = list()
 	display_name = "Redgate"
 	msg = "has completed translation from offsite redgate"
 	announcement = FALSE
+	restrict_job = list(USELESS_JOB, "Intern")
 
 /datum/spawnpoint/redgate/New()
 	..()
