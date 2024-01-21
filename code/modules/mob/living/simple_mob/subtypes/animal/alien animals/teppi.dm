@@ -119,6 +119,7 @@ GLOBAL_VAR_INIT(teppi_count, 0)	// How mant teppi DO we have?
 	var/affection_factor = 1	//Some Teppi are more happy to be loved on than others.
 	var/teppi_warned = FALSE
 	var/teppi_mutate = FALSE	//Allows Teppi to get their children's colors scrambled, and possibly other things later on!
+	var/teppi_customized = FALSE
 
 	attacktext = list("nipped", "chomped", "bonked", "stamped on")
 	attack_sound = 'sound/voice/teppi/roar.ogg' // make a better one idiot
@@ -380,10 +381,10 @@ GLOBAL_VAR_INIT(teppi_count, 0)	// How mant teppi DO we have?
 		eye_color = pickweight(possibleeyes)
 		skin_color = pickweight(possibleskin)
 	if(!marking_type)
-		marking_type = "[rand(0,13)]" //the babies don't have this set up by default, but they might pick it from their parents
+		marking_type = num2text(rand(0,13)) //the babies don't have this set up by default, but they might pick it from their parents
 	if(teppi_adult)
 		if(!horn_type)
-			horn_type = "[rand(0,1)]"
+			horn_type = num2text(rand(0,1))
 	else if(teppi_mutate)
 		var/list/possiblecolorlists = list(possiblebody, possiblemarking, possiblehorns, possibleeyes, possibleskin)
 		var/pick_a = rand(0,5)
@@ -1173,3 +1174,48 @@ GLOBAL_VAR_INIT(teppi_count, 0)	// How mant teppi DO we have?
 	marking_type = "13"
 	horn_type = "0"
 	. = ..()
+
+/mob/living/simple_mob/vore/alienanimals/teppi/customizable/Login()
+	. = ..()
+	if(!teppi_customized)
+		customize()
+
+/mob/living/simple_mob/vore/alienanimals/teppi/proc/customize()
+
+	if(tgui_alert(usr, "Do you want to customize this teppi?","Customize",list("Yes","No")) != "Yes")
+		return
+
+	var/new_color = input(usr, "Choose a base color", "Base color", color) as color|null
+	var/new_marking_color = input(usr, "Choose a marking color", "Marking color", marking_color) as color|null
+	var/new_horn_color = input(usr, "Choose a horn color", "Horn color", horn_color) as color|null
+	var/new_eye_color = input(usr, "Choose a eye color", "Eye color", eye_color) as color|null
+	var/new_skin_color = input(usr, "Choose a skin color", "Skin color", skin_color) as color|null
+	var/new_marking_type = tgui_input_number(usr, "Choose a Marking type (0-13)", "Marking type", marking_type, 13, 0)
+	var/new_horn_type = tgui_input_number(usr, "Choose a Horn type (0-1)", "Horn type", horn_type, 1, 0)
+
+	if(new_color)
+		color = new_color
+	if(new_marking_color)
+		marking_color = new_marking_color
+	if(new_horn_color)
+		horn_color = new_horn_color
+	if(new_eye_color)
+		eye_color = new_eye_color
+	if(new_skin_color)
+		skin_color = new_skin_color
+	if(new_marking_type)
+		if(new_marking_type > 13 || new_marking_type < 0)
+			new_marking_type = 0
+		marking_type = num2text(new_marking_type)
+	if(new_horn_type)
+		if(new_horn_type > 13 || new_horn_type < 0)
+			new_horn_type = 0
+		horn_type = num2text(new_horn_type)
+
+	update_icon()
+
+	if(tgui_alert(usr, "Does your teppi look okay?","Customize",list("Yes","No")) != "Yes")
+		customize()
+		return
+
+	teppi_customized = TRUE
