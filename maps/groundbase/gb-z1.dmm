@@ -6236,7 +6236,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/briefing)
 "nz" = (
-/obj/structure/redgate,
+/obj/machinery/cryopod/robot/door/gateway/redgate,
 /turf/simulated/floor/reinforced,
 /area/groundbase/civilian/toolstorage)
 "nA" = (

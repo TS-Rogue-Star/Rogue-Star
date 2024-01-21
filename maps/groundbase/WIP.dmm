@@ -36114,7 +36114,7 @@
 /turf/simulated/floor/tiled/eris/cafe,
 /area/groundbase/civilian/kitchen)
 "xJg" = (
-/obj/structure/redgate,
+/obj/machinery/cryopod/robot/door/gateway/redgate,
 /turf/simulated/floor/reinforced,
 /area/space)
 "xJA" = (

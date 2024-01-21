@@ -365,7 +365,7 @@
 /turf/simulated/floor/holofloor/wood,
 /area/redgate/structure/powered)
 "lM" = (
-/obj/structure/redgate/away,
+/obj/machinery/cryopod/robot/door/gateway/redgate/away,
 /turf/simulated/floor/outdoors/sidewalk/slab,
 /area/redgate)
 "mk" = (

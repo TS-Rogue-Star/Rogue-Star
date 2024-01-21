@@ -1604,7 +1604,7 @@
 /turf/simulated/shuttle/floor/alienplating/blue,
 /area/redgate/islands/alienship)
 "Xf" = (
-/obj/structure/redgate/away,
+/obj/machinery/cryopod/robot/door/gateway/redgate/away,
 /turf/simulated/floor/concrete,
 /area/redgate/islands/redgate)
 "Xl" = (

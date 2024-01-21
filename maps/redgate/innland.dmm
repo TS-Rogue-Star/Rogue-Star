@@ -72,7 +72,7 @@
 /turf/simulated/floor/reinforced,
 /area/redgate/structure/powered)
 "br" = (
-/obj/structure/redgate/away,
+/obj/machinery/cryopod/robot/door/gateway/redgate/away,
 /turf/simulated/floor/reinforced,
 /area/redgate/wilds)
 "bs" = (

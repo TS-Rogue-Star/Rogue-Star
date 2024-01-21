@@ -5262,7 +5262,7 @@
 /turf/simulated/floor/carpet/bcarpet,
 /area/redgate/city/house3)
 "hdO" = (
-/obj/structure/redgate/away,
+/obj/machinery/cryopod/robot/door/gateway/redgate/away,
 /turf/simulated/floor/tiled/milspec/raised,
 /area/redgate/city/science)
 "hdR" = (

@@ -74,6 +74,10 @@
 	storage_name = "Travel Oversight Control"
 	allow_items = 1
 
+/obj/machinery/computer/cryopod/gateway/redgate
+	name = "redgate oversight console"
+	desc = "An interface between visitors and the redgate oversight systems tasked with keeping track of all visitors who enter or exit from the redgate."
+
 /obj/machinery/computer/cryopod/attack_ai(mob/user)
 	attack_hand(user)
 
@@ -200,6 +204,7 @@
 
 	var/base_icon_state = "cryopod_0" //VOREStation Edit - New Icon
 	var/occupied_icon_state = "cryopod_1" //VOREStation Edit - New Icon
+	var/broken_icon_state = "cryopod_0-p" //RS EDIT
 	var/on_store_message = "has entered long-term storage."
 	var/on_store_name = "Cryogenic Oversight"
 	var/on_enter_visible_message = "starts climbing into the"
@@ -218,6 +223,16 @@
 	var/obj/machinery/computer/cryopod/control_computer
 	var/last_no_computer_message = 0
 	var/applies_stasis = 0	//VOREStation Edit: allow people to change their mind
+	var/announce_leaving = TRUE	//RS ADD
+
+/obj/machinery/cryopod/update_icon()
+	if((stat & NOPOWER) || (stat & BROKEN))
+		icon_state = broken_icon_state
+	else
+		if(occupant)
+			icon_state = occupied_icon_state
+		else
+			icon_state = base_icon_state
 
 /obj/machinery/cryopod/robot
 	name = "robotic storage unit"
@@ -514,7 +529,6 @@
 			if((G.fields["name"] == to_despawn.real_name))
 				qdel(G)
 
-	icon_state = base_icon_state
 
 	//TODO: Check objectives/mode, update new targets if this mob is the target, spawn new antags?
 
@@ -532,7 +546,7 @@
 	if(istype(to_despawn, /mob/living/dominated_brain))
 		depart_announce = FALSE
 
-	if(depart_announce)
+	if(announce_leaving && depart_announce)
 		announce.autosay("[to_despawn.real_name][departing_job ? ", [departing_job], " : " "][on_store_message]", "[on_store_name]", announce_channel, using_map.get_map_levels(z, TRUE, om_range = DEFAULT_OVERMAP_RANGE))
 		visible_message("<span class='notice'>\The [initial(name)] [on_store_visible_message_1] [to_despawn.real_name] [on_store_visible_message_2]</span>", 3)
 
@@ -550,6 +564,7 @@
 	// Delete the mob.
 	qdel(to_despawn)
 	set_occupant(null)
+	update_icon()
 
 /obj/machinery/cryopod/attackby(var/obj/item/weapon/G as obj, var/mob/user as mob)
 
@@ -574,7 +589,6 @@
 	if(usr.stat != 0)
 		return
 
-	icon_state = base_icon_state
 
 	//Eject any items that aren't meant to be in the pod.
 	var/list/items = contents
@@ -591,6 +605,7 @@
 	add_fingerprint(usr)
 
 	name = initial(name)
+	update_icon()
 	return
 
 /obj/machinery/cryopod/verb/move_inside()
@@ -633,7 +648,7 @@
 		if(usr.buckled && istype(usr.buckled, /obj/structure/bed/chair/wheelchair))
 			usr.buckled.loc = usr.loc
 
-		icon_state = occupied_icon_state
+		update_icon()
 
 		to_chat(usr, "<span class='notice'>[on_enter_occupant_message]</span>")
 		to_chat(usr, "<span class='notice'><b>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</b></span>")
@@ -670,7 +685,7 @@
 		H.Stasis(0)
 	set_occupant(null)
 
-	icon_state = base_icon_state
+	update_icon()
 
 	return
 
@@ -720,11 +735,10 @@
 				M.client.eye = src
 		else return
 
-		icon_state = occupied_icon_state
-
 		to_chat(M, "<span class='notice'>[on_enter_occupant_message]</span>")
 		to_chat(M, "<span class='notice'><b>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</b></span>")
 		set_occupant(M)
+		update_icon()
 		time_entered = world.time
 		if(ishuman(M) && applies_stasis)
 			var/mob/living/carbon/human/H = M

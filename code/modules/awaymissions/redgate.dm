@@ -1,4 +1,4 @@
-/obj/structure/redgate
+/obj/machinery/cryopod/robot/door/gateway/redgate
 	name = "redgate"
 	desc = "It leads to someplace else!"
 	icon = 'icons/obj/redgate.dmi'
@@ -7,8 +7,10 @@
 	unacidable = TRUE
 	anchored = TRUE
 	pixel_x = -16
-
-	var/obj/structure/redgate/target
+	on_enter_occupant_message = "The redgate ripples as you step through it."
+	on_store_visible_message_1 = "ripples as "
+	on_store_visible_message_2 = "finishes walks through it."
+	var/obj/machinery/cryopod/robot/door/gateway/redgate/target
 	var/secret = FALSE	//If either end of the redgate has this enabled, ghosts will not be able to click to teleport
 	var/list/exceptions = list(
 		/obj/structure/ore_box
@@ -18,7 +20,9 @@
 		/mob/living/simple_mob/vore/bigdragon
 		)	//There are some things we don't want to come through no matter what.
 
-/obj/structure/redgate/Destroy()
+	announce_leaving = FALSE
+
+/obj/machinery/cryopod/robot/door/gateway/redgate/Destroy()
 	if(target)
 		target.target = null
 		target.toggle_portal()
@@ -27,7 +31,7 @@
 
 	return ..()
 
-/obj/structure/redgate/proc/teleport(var/mob/M as mob)
+/obj/machinery/cryopod/robot/door/gateway/redgate/proc/teleport(var/mob/M as mob)
 	var/keycheck = TRUE
 	if (!istype(M,/mob/living))		//We only want mob/living, no bullets or mechs or AI eyes or items
 		if(M.type in exceptions)
@@ -59,7 +63,7 @@
 	else
 		to_chat(M, "<span class='notice'>Something blocks your way.</span>")
 
-/obj/structure/redgate/proc/find_our_turf(var/atom/movable/AM)	//This finds the turf on the opposite side of the target gate from where you are
+/obj/machinery/cryopod/robot/door/gateway/redgate/proc/find_our_turf(var/atom/movable/AM)	//This finds the turf on the opposite side of the target gate from where you are
 	var/offset_x = x - AM.x										//used for more smooth teleporting
 	var/offset_y = y - AM.y
 
@@ -67,7 +71,10 @@
 
 	return temptarg
 
-/obj/structure/redgate/proc/toggle_portal()
+/obj/machinery/cryopod/robot/door/gateway/redgate/update_icon()
+	return
+
+/obj/machinery/cryopod/robot/door/gateway/redgate/proc/toggle_portal()
 	if(target)
 		icon_state = "on"
 		density = TRUE
@@ -79,20 +86,20 @@
 		plane = OBJ_PLANE
 		set_light(0)
 
-/obj/structure/redgate/proc/special_condition(mob/living/M as mob)
+/obj/machinery/cryopod/robot/door/gateway/redgate/proc/special_condition(mob/living/M as mob)
 	return TRUE
 
-/obj/structure/redgate/Bumped(mob/M as mob)
+/obj/machinery/cryopod/robot/door/gateway/redgate/Bumped(mob/M as mob)
 
 	src.teleport(M)
 	return
 
-/obj/structure/redgate/Crossed(mob/M as mob)
+/obj/machinery/cryopod/robot/door/gateway/redgate/Crossed(mob/M as mob)
 
 	src.teleport(M)
 	return
 
-/obj/structure/redgate/attack_hand(mob/M as mob)
+/obj/machinery/cryopod/robot/door/gateway/redgate/attack_hand(mob/M as mob)
 	if(density)
 		src.teleport(M)
 	else
@@ -100,7 +107,7 @@
 			to_chat(M, "<span class='warning'>The [src] remains off... seems like it doesn't have a destination.</span>")
 
 
-/obj/structure/redgate/attack_ghost(var/mob/observer/dead/user)
+/obj/machinery/cryopod/robot/door/gateway/redgate/attack_ghost(var/mob/observer/dead/user)
 
 	if(target)
 		if(!(secret || target.secret) || user?.client?.holder)
@@ -108,14 +115,21 @@
 	else
 		return ..()
 
-/obj/structure/redgate/away/Initialize()
+/obj/machinery/cryopod/robot/door/gateway/redgate/away/Initialize()
 	. = ..()
 	if(!find_partner())
 		log_and_message_admins("An away redgate spawned but wasn't able to find a gateway to link to. If this appeared at roundstart, something has gone wrong, otherwise if you spawn another gate they should connect.")
 
-/obj/structure/redgate/proc/find_partner()
-	for(var/obj/structure/redgate/g in world)
-		if(istype(g, /obj/structure/redgate))
+/obj/machinery/cryopod/robot/door/gateway/redgate/away/find_control_computer(urgent=0)
+	if(target)
+		control_computer = target.control_computer
+
+	if(!control_computer)
+		. = ..()
+
+/obj/machinery/cryopod/robot/door/gateway/redgate/proc/find_partner()
+	for(var/obj/machinery/cryopod/robot/door/gateway/redgate/g in world)
+		if(istype(g, /obj/machinery/cryopod/robot/door/gateway/redgate))
 			if(g.target)
 				continue
 			else if(g == src)
@@ -137,7 +151,7 @@
 	else
 		return TRUE
 
-/obj/structure/redgate/away/ship_belly_check/special_condition(mob/living/M as mob)
+/obj/machinery/cryopod/robot/door/gateway/redgate/away/ship_belly_check/special_condition(mob/living/M as mob)
 	var/obj/effect/overmap/visitable/ship/ourship = SSshuttles.find_ship(z)
 	if(!ourship)
 		return TRUE
@@ -156,13 +170,18 @@
 		return FALSE
 	return TRUE
 
-/obj/structure/redgate/proc/disable_gate()
+/obj/machinery/cryopod/robot/door/gateway/redgate/proc/disable_gate()
 	target.target = null
 	target.toggle_portal()
 	playsound(target,'sound/effects/bang.ogg', 100,1)
 	target = null
 	playsound(src,'sound/effects/bang.ogg', 100,1)
 	toggle_portal()
+
+/obj/machinery/cryopod/robot/door/gateway/redgate/check_occupant_allowed(mob/M)
+	if(target)
+		. = ..()
+	else return FALSE
 
 /area/redgate
 	name = "redgate"

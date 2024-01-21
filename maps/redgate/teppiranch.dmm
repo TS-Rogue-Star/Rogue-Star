@@ -228,7 +228,7 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/redgate/structure/powered/teppi_ranch)
 "qV" = (
-/obj/structure/redgate/away,
+/obj/machinery/cryopod/robot/door/gateway/redgate/away,
 /turf/simulated/floor/reinforced,
 /area/redgate/wilds)
 "qZ" = (

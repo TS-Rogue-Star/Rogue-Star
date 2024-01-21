@@ -2376,6 +2376,12 @@
 	},
 /turf/simulated/floor/outdoors/sidewalk/side,
 /area/groundbase/level1/sw)
+"czd" = (
+/obj/machinery/computer/cryopod/gateway/redgate{
+	pixel_x = -32
+	},
+/turf/simulated/floor/tiled,
+/area/groundbase/civilian/redgate)
 "cze" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden{
 	dir = 1
@@ -2851,7 +2857,7 @@
 /turf/simulated/floor/outdoors/grass/seasonal,
 /area/groundbase/level1/nw)
 "cZU" = (
-/obj/structure/redgate,
+/obj/machinery/cryopod/robot/door/gateway/redgate,
 /turf/simulated/floor/reinforced,
 /area/groundbase/civilian/redgate)
 "dak" = (
@@ -16187,6 +16193,12 @@
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/mining)
+"qJN" = (
+/obj/effect/landmark{
+	name = "JoinLateRedgate"
+	},
+/turf/simulated/floor/reinforced,
+/area/groundbase/civilian/redgate)
 "qKi" = (
 /obj/structure/table/rack,
 /obj/item/clothing/suit/space/void/mining,
@@ -34443,7 +34455,7 @@ jUi
 ddP
 eiI
 rhA
-gOI
+czd
 gOI
 mwb
 nhl
@@ -34586,9 +34598,9 @@ ddP
 jUi
 rhA
 gOI
-otO
-otO
-otO
+qJN
+qJN
+qJN
 aXo
 rhA
 wZZ
@@ -34728,9 +34740,9 @@ ddP
 jUi
 rhA
 otO
-otO
+qJN
 cZU
-otO
+qJN
 yfp
 wHO
 iiK
@@ -34870,9 +34882,9 @@ ddP
 jUi
 rhA
 gOI
-otO
-otO
-otO
+qJN
+qJN
+qJN
 sPS
 rhA
 wZZ

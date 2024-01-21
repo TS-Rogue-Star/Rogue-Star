@@ -2060,7 +2060,7 @@
 /turf/simulated/floor/wood/alt,
 /area/redgate/fantasy/farmhouse)
 "mU" = (
-/obj/structure/redgate/away,
+/obj/machinery/cryopod/robot/door/gateway/redgate/away,
 /turf/simulated/floor/wood/alt/panel,
 /area/redgate/fantasy/redgate)
 "mW" = (

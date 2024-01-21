@@ -354,7 +354,7 @@
 	},
 /area/redgate/hotsprings/westcave)
 "kt" = (
-/obj/structure/redgate/away,
+/obj/machinery/cryopod/robot/door/gateway/redgate/away,
 /turf/simulated/floor/tiled/steel,
 /area/redgate/hotsprings/redgate)
 "kR" = (
