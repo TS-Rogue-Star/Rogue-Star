@@ -5586,6 +5586,9 @@
 /obj/effect/landmark{
 	name = "JoinLateRedgate"
 	},
+/obj/machinery/computer/cryopod/gateway/redgate{
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled/eris/dark/danger,
 /area/stellardelight/deck1/port)
 "lm" = (
