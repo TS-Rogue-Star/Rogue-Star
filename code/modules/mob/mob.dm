@@ -69,7 +69,7 @@
 	if(stat == UNCONSCIOUS || sleeping > 0)
 		to_chat(src, "<span class='filter_notice'><I>... You can almost hear someone talking ...</I></span>")
 	else
-		if(client.prefs.chat_timestamp)
+		if(client?.prefs.chat_timestamp)
 			to_chat(src,"[time] [msg]")
 		else if(teleop)
 			to_chat(teleop, create_text_tag("body", "BODY:", teleop.client) + "[msg]")
@@ -670,6 +670,7 @@
 				stat("Keys Held", keys2text(client.move_keys_held | client.mod_keys_held))
 				stat("Next Move ADD", dirs2text(client.next_move_dir_add))
 				stat("Next Move SUB", dirs2text(client.next_move_dir_sub))
+				stat("Current size:", size_multiplier * 100)	//RS ADD
 
 			if(statpanel("MC"))
 				stat("Location:", "([x], [y], [z]) [loc]")
