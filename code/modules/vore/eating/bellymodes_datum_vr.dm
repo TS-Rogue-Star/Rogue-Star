@@ -92,10 +92,12 @@ GLOBAL_LIST_INIT(digest_modes, list())
 		return null
 	var/old_nutrition = L.nutrition
 	B.steal_nutrition(L)
-	consider_healthbar(L, old_nutrition, B.owner)
 	if(L.nutrition < 100)
 		B.absorb_living(L)
+		consider_healthbar(L, old_nutrition, B.owner)
 		return list("to_update" = TRUE)
+	else
+		consider_healthbar(L, old_nutrition, B.owner)
 
 /datum/digest_mode/unabsorb
 	id = DM_UNABSORB
@@ -323,19 +325,27 @@ GLOBAL_LIST_INIT(digest_modes, list())
 	if(old_health <= L.health)
 		return
 
-	var/old_percent = (old_health / L.maxHealth) * 100
-	var/new_percent = (L.health / L.maxHealth) * 100
+	var/old_percent
+	var/new_percent
 
+	if(ishuman(L))
+		old_percent = ((old_health + 50) / (L.maxHealth + 50)) * 100
+		new_percent = ((L.health + 50) / (L.maxHealth + 50)) * 100
+	else
+		old_percent = (old_health / L.maxHealth) * 100
+		new_percent = (L.health / L.maxHealth) * 100
+
+	var/lets_announce = FALSE
 	if(new_percent <= 75 && old_percent > 75)
-		L.chat_healthbar(reciever)
-		L.chat_healthbar(L)
+		lets_announce = TRUE
 	else if(new_percent <= 50 && old_percent > 50)
-		L.chat_healthbar(reciever)
-		L.chat_healthbar(L)
+		lets_announce = TRUE
 	else if(new_percent <= 25 && old_percent > 25)
-		L.chat_healthbar(reciever)
-		L.chat_healthbar(L)
-	else if(new_percent <= 0 && old_percent > 0)
+		lets_announce = TRUE
+	else if(new_percent <= 5 && old_percent > 5)
+		lets_announce = TRUE
+
+	if(lets_announce)
 		L.chat_healthbar(reciever)
 		L.chat_healthbar(L)
 
@@ -344,58 +354,68 @@ GLOBAL_LIST_INIT(digest_modes, list())
 	if(old_health >= L.health)
 		return
 
-	var/old_percent = (old_health / L.maxHealth) * 100
-	var/new_percent = (L.health / L.maxHealth) * 100
+	var/old_percent
+	var/new_percent
 
+	if(ishuman(L))
+		old_percent = ((old_health + 50) / (L.maxHealth + 50)) * 100
+		new_percent = ((L.health + 50) / (L.maxHealth + 50)) * 100
+	else
+		old_percent = (old_health / L.maxHealth) * 100
+		new_percent = (L.health / L.maxHealth) * 100
+
+	var/lets_announce = FALSE
 	if(new_percent >= 75 && old_percent < 75)
-		L.chat_healthbar(reciever)
-		L.chat_healthbar(L)
+		lets_announce = TRUE
 	else if(new_percent >= 50 && old_percent < 50)
-		L.chat_healthbar(reciever)
-		L.chat_healthbar(L)
+		lets_announce = TRUE
 	else if(new_percent >= 25 && old_percent < 25)
-		L.chat_healthbar(reciever)
-		L.chat_healthbar(L)
-	else if(new_percent >= 0 && old_percent < 0)
+		lets_announce = TRUE
+	else if(new_percent >= 5 && old_percent < 5)
+		lets_announce = TRUE
+
+	if(lets_announce)
 		L.chat_healthbar(reciever)
 		L.chat_healthbar(L)
 
 /datum/digest_mode/absorb/consider_healthbar(mob/living/L, old_nutrition, mob/living/reciever)
-
-	if(old_nutrition >= L.nutrition)
+	if(old_nutrition <= L.nutrition)
 		return
 
 	var/old_percent = ((old_nutrition - 100) / 500) * 100
 	var/new_percent = ((L.nutrition - 100) / 500) * 100
-	if(new_percent >= 75 && old_percent < 75)
-		L.chat_healthbar(reciever)
-		L.chat_healthbar(L)
-	else if(new_percent >= 50 && old_percent < 50)
-		L.chat_healthbar(reciever)
-		L.chat_healthbar(L)
-	else if(new_percent >= 25 && old_percent < 25)
-		L.chat_healthbar(reciever)
-		L.chat_healthbar(L)
-	else if(new_percent >= 0 && old_percent < 0)
+	var/lets_announce = FALSE
+	if(new_percent <= 75 && old_percent > 75)
+		lets_announce = TRUE
+	else if(new_percent <= 50 && old_percent > 50)
+		lets_announce = TRUE
+	else if(new_percent <= 25 && old_percent > 25)
+		lets_announce = TRUE
+	else if(new_percent <= 0 && old_percent > 0)
+		lets_announce = TRUE
+
+	if(lets_announce)
 		L.chat_healthbar(reciever)
 		L.chat_healthbar(L)
 
 /datum/digest_mode/drain/consider_healthbar(mob/living/L, old_nutrition, mob/living/reciever)
 
-	if(old_nutrition >= L.nutrition)
+	if(old_nutrition <= L.nutrition)
 		return
 
 	var/old_percent = ((old_nutrition - 100) / 500) * 100
 	var/new_percent = ((L.nutrition - 100) / 500) * 100
-	if(new_percent >= 75 && old_percent < 75)
-		L.chat_healthbar(reciever)
-		L.chat_healthbar(L)
-	else if(new_percent >= 50 && old_percent < 50)
-		L.chat_healthbar(reciever)
-		L.chat_healthbar(L)
-	else if(new_percent >= 25 && old_percent < 25)
-		L.chat_healthbar(reciever)
-		L.chat_healthbar(L)
-	else if(new_percent >= 0 && old_percent < 0)
+
+	var/lets_announce = FALSE
+	if(new_percent <= 75 && old_percent > 75)
+		lets_announce = TRUE
+	else if(new_percent <= 50 && old_percent > 50)
+		lets_announce = TRUE
+	else if(new_percent <= 25 && old_percent > 25)
+		lets_announce = TRUE
+	else if(new_percent <= 0 && old_percent > 0)
+		lets_announce = TRUE
+
+	if(lets_announce)
 		L.chat_healthbar(reciever)
 		L.chat_healthbar(L)

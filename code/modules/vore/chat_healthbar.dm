@@ -1,28 +1,30 @@
 //Health bars in the game window would be pretty challenging and I don't know how to do that, so I thought this would be a good alternative
 
 /mob/living/proc/chat_healthbar(var/mob/living/reciever, override = FALSE)
-	set name = "Healthbar"
-	set category = "TEST"
-	if(!reciever)
+	if(!reciever)	//No one to send it to, don't bother
 		return
-	if(!reciever.client)
+	if(!reciever.client)	//No one is home, don't bother
 		return
-	if(!isbelly(src.loc))
-		return
-	if(!override)
+	if(!override)	//Did the person push the verb? Ignore the pref
 		if(!reciever.client.is_preference_enabled(/datum/client_preference/vore_health_bars))
 			return
-	var/ourpercent =  (health / maxHealth) * 100
+	var/ourpercent = 0
+
+	if(ishuman(src))	//humans don't die or become unconcious at 0%, it's actually like -50% or something, so, let's pretend they have 50 more health than they do
+		ourpercent = ((health + 50) / (maxHealth + 50)) * 100
+	else
+		ourpercent = (health / maxHealth) * 100
+
 	var/ourbar = ""
 	var/obj/belly/ourbelly = src.loc
 	var/which_var = "Health"
 	if(ourbelly.digest_mode == "Absorb" || ourbelly.digest_mode == "Drain")
 		ourpercent = round(((nutrition - 100) / 500) * 100)
-		which_var = "Nutrition"
+		which_var = "Nutrition"	//It's secretly also a nutrition bar depending on your digest mode
 
 	ourpercent = round(ourpercent)
 
-	switch(ourpercent)
+	switch(ourpercent)	//I thought about trying to do this in a more automated way but my brain isn't very large so enjoy my stupid switch statement
 		if(100)
 			ourbar = "|▓▓▓▓▓▓▓▓▓▓|"
 		if(95 to 99)
@@ -75,8 +77,8 @@
 	else if(stat == DEAD)
 		ourbar = "[ourbar] - DEAD"
 	if(absorbed)
-		ourbar = "<font color='#cd45f0'>[ourbar] - ABSORBED</font>"
-	else if(ourpercent > 80)
+		ourbar = "<font color='#cd45f0'>[ourbar] - ABSORBED</font>"	//Absorb is a little funny, I didn't want it to say 'absorbing ABSORBED' so we did it different
+	else if(ourpercent > 75)
 		ourbar = "<span class='green'>[ourbar] - [ourbelly.digest_mode]ing</span>"
 	else if(ourpercent > 50)
 		ourbar = "<span class='orange'>[ourbar] - [ourbelly.digest_mode]ing</span>"
@@ -95,10 +97,13 @@
 	for(var/obj/belly/b in vore_organs)
 		if(!b.contents.len)
 			continue
-		to_chat(src, "<span class='notice'>[b.digest_mode] - Within [b.name]:</span>")
+		var/belly_announce = FALSE	//We only want to announce the belly once
 		for(var/thing as anything in b.contents)
 			if(!isliving(thing))
 				continue
+			if(!belly_announce)
+				to_chat(src, "<span class='notice'>[b.digest_mode] - Within [b.name]:</span>")	//We only want to announce the belly if we found something
+				belly_announce = TRUE
 			var/mob/living/ourmob = thing
 			ourmob.chat_healthbar(src, TRUE)
 			nuffin = FALSE
