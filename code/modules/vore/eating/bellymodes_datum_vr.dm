@@ -46,6 +46,7 @@ GLOBAL_LIST_INIT(digest_modes, list())
 		return list("to_update" = TRUE, "soundToPlay" = sound(get_sfx("fancy_death_pred")))
 
 	// Deal digestion damage (and feed the pred)
+	var/old_health = L.health	// RS ADD
 	var/old_brute = L.getBruteLoss()
 	var/old_burn = L.getFireLoss()
 	var/old_oxy = L.getOxyLoss()
@@ -70,6 +71,7 @@ GLOBAL_LIST_INIT(digest_modes, list())
 		if (istype(B.owner, /mob/living/carbon/human))
 			var/mob/living/carbon/human/howner = B.owner
 			howner.update_fullness()
+	consider_healthbar(L, old_health, B.owner)
 	// End RS edit
 	if(isrobot(B.owner))
 		var/mob/living/silicon/robot/R = B.owner
@@ -88,7 +90,9 @@ GLOBAL_LIST_INIT(digest_modes, list())
 /datum/digest_mode/absorb/process_mob(obj/belly/B, mob/living/L)
 	if(!L.absorbable || L.absorbed)
 		return null
+	var/old_nutrition = L.nutrition
 	B.steal_nutrition(L)
+	consider_healthbar(L, old_nutrition, B.owner)
 	if(L.nutrition < 100)
 		B.absorb_living(L)
 		return list("to_update" = TRUE)
@@ -107,7 +111,9 @@ GLOBAL_LIST_INIT(digest_modes, list())
 	noise_chance = 10
 
 /datum/digest_mode/drain/process_mob(obj/belly/B, mob/living/L)
+	var/old_nutrition = L.nutrition
 	B.steal_nutrition(L)
+	consider_healthbar(L, old_nutrition, B.owner)
 
 /datum/digest_mode/drain/shrink
 	id = DM_SHRINK
@@ -308,3 +314,88 @@ GLOBAL_LIST_INIT(digest_modes, list())
 					else
 						tempmode = DM_DRAIN			// Otherwise drain.
 	return tempmode
+
+/datum/digest_mode/proc/consider_healthbar()
+	return
+
+/datum/digest_mode/digest/consider_healthbar(mob/living/L, old_health, mob/living/reciever)
+
+	if(old_health <= L.health)
+		return
+
+	var/old_percent = (old_health / L.maxHealth) * 100
+	var/new_percent = (L.health / L.maxHealth) * 100
+
+	if(new_percent <= 75 && old_percent > 75)
+		L.chat_healthbar(reciever)
+		L.chat_healthbar(L)
+	else if(new_percent <= 50 && old_percent > 50)
+		L.chat_healthbar(reciever)
+		L.chat_healthbar(L)
+	else if(new_percent <= 25 && old_percent > 25)
+		L.chat_healthbar(reciever)
+		L.chat_healthbar(L)
+	else if(new_percent <= 0 && old_percent > 0)
+		L.chat_healthbar(reciever)
+		L.chat_healthbar(L)
+
+/datum/digest_mode/heal/consider_healthbar(mob/living/L, old_health, mob/living/reciever)
+
+	if(old_health >= L.health)
+		return
+
+	var/old_percent = (old_health / L.maxHealth) * 100
+	var/new_percent = (L.health / L.maxHealth) * 100
+
+	if(new_percent >= 75 && old_percent < 75)
+		L.chat_healthbar(reciever)
+		L.chat_healthbar(L)
+	else if(new_percent >= 50 && old_percent < 50)
+		L.chat_healthbar(reciever)
+		L.chat_healthbar(L)
+	else if(new_percent >= 25 && old_percent < 25)
+		L.chat_healthbar(reciever)
+		L.chat_healthbar(L)
+	else if(new_percent >= 0 && old_percent < 0)
+		L.chat_healthbar(reciever)
+		L.chat_healthbar(L)
+
+/datum/digest_mode/absorb/consider_healthbar(mob/living/L, old_nutrition, mob/living/reciever)
+
+	if(old_nutrition >= L.nutrition)
+		return
+
+	var/old_percent = ((old_nutrition - 100) / 500) * 100
+	var/new_percent = ((L.nutrition - 100) / 500) * 100
+	if(new_percent >= 75 && old_percent < 75)
+		L.chat_healthbar(reciever)
+		L.chat_healthbar(L)
+	else if(new_percent >= 50 && old_percent < 50)
+		L.chat_healthbar(reciever)
+		L.chat_healthbar(L)
+	else if(new_percent >= 25 && old_percent < 25)
+		L.chat_healthbar(reciever)
+		L.chat_healthbar(L)
+	else if(new_percent >= 0 && old_percent < 0)
+		L.chat_healthbar(reciever)
+		L.chat_healthbar(L)
+
+/datum/digest_mode/drain/consider_healthbar(mob/living/L, old_nutrition, mob/living/reciever)
+
+	if(old_nutrition >= L.nutrition)
+		return
+
+	var/old_percent = ((old_nutrition - 100) / 500) * 100
+	var/new_percent = ((L.nutrition - 100) / 500) * 100
+	if(new_percent >= 75 && old_percent < 75)
+		L.chat_healthbar(reciever)
+		L.chat_healthbar(L)
+	else if(new_percent >= 50 && old_percent < 50)
+		L.chat_healthbar(reciever)
+		L.chat_healthbar(L)
+	else if(new_percent >= 25 && old_percent < 25)
+		L.chat_healthbar(reciever)
+		L.chat_healthbar(L)
+	else if(new_percent >= 0 && old_percent < 0)
+		L.chat_healthbar(reciever)
+		L.chat_healthbar(L)
