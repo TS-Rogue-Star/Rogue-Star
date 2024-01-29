@@ -1,21 +1,14 @@
-# TS-SS13
-
-[![forthebadge](http://forthebadge.com/images/badges/60-percent-of-the-time-works-every-time.svg)](http://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/compatibility-club-penguin.svg)](http://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/no-ragrets.svg)](http://forthebadge.com)
-
-[Website](https://vore-station.net) - [Forums](https://forum.vore-station.net/) - [Wiki](https://wiki.vore-station.net/)
+# ROGUE STAR
+[Website](https://rogue-star.net/) - [Forums](https://rogue-star.net/forums/index.php?sid=a270f1a1a2bdae63f0affd75af2fc4d6) - [Wiki](https://wiki.vore-station.net/)
 
 Going to make a Pull Request? Make sure you read the [CONTRIBUTING.md](.github/CONTRIBUTING.md) first!
 
-Want to make a test server or your own private server? Read our [GitHub Wiki!](https://github.com/VOREStation/VOREStation/wiki)
-
-TS-SS13 is a fork of, VOREStation, which is a fork of the Polaris code branch, itself a fork of the Baystation12 code branch, for the game Space Station 13.
-
-![Render Nanomaps](https://github.com/VOREStation/VOREStation/workflows/Render%20Nanomaps/badge.svg)
+Rogue Star is a fork of VOREStation, which is a fork of Polaris, which itself is a fork of the Baystation12 code branch, for the game Space Station 13.
 
 ---
 
 ### LICENSE
-The code for VOREStation is licensed under the [GNU Affero General Public License](http://www.gnu.org/licenses/agpl.html) version 3, which can be found in full in LICENSE-AGPL3.txt.
+The code for Rogue Star is licensed under the [GNU Affero General Public License](http://www.gnu.org/licenses/agpl.html) version 3, which can be found in full in LICENSE-AGPL3.txt.
 
 Code with a git authorship date prior to `1420675200 +0000` (2015/01/08 00:00) are licensed under the GNU General Public License version 3, which can be found in full in LICENSE-GPL3.txt.
 
@@ -40,11 +33,11 @@ Attributions and other licenses with links to original works are noted in [ATTRI
 ### GETTING THE CODE
 The simplest way to obtain the code is using the github .zip feature. If you do this, you won't be able to make a Pull Request later, though. You'll need to use the git method.
 
-Click [here](https://github.com/VOREStation/VOREStation/archive/master.zip) to get the latest code as a .zip file, then unzip it to wherever you want.
+Click [here](https://github.com/TS-Rogue-Star/Rogue-Star/archive/master.zip) to get the latest code as a .zip file, then unzip it to wherever you want.
 
 The more complicated and easier to update method is using git.  You'll need to download git or some client from [here](http://git-scm.com/).  When that's installed, right click in any folder and click on "Git Bash".  When that opens, type in:
 
-    git clone https://github.com/VOREStation/VOREStation.git
+    git clone https://github.com/TS-Rogue-Star/Rogue-Star.git
 
 (hint: hold down ctrl and press insert to paste into git bash)
 
