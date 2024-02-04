@@ -15,53 +15,6 @@
 	invisibility = INVISIBILITY_OBSERVER
 	spawn_active = TRUE
 	var/announce_prob = 35
-	var/list/possible_mobs = list("Rabbit" = /mob/living/simple_mob/vore/rabbit,
-								  "Red Panda" = /mob/living/simple_mob/vore/redpanda,
-								  "Fennec" = /mob/living/simple_mob/vore/fennec,
-								  "Fennix" = /mob/living/simple_mob/vore/fennix,
-								  "Space Bumblebee" = /mob/living/simple_mob/vore/bee,
-								  "Space Bear" = /mob/living/simple_mob/animal/space/bear,
-								  "Voracious Lizard" = /mob/living/simple_mob/vore/aggressive/dino,
-								  "Giant Frog" = /mob/living/simple_mob/vore/aggressive/frog,
-								  "Giant Rat" = /mob/living/simple_mob/vore/aggressive/rat,
-								  "Jelly Blob" = /mob/living/simple_mob/vore/jelly,
-								  "Wolf" = /mob/living/simple_mob/vore/wolf,
-								  "Juvenile Solargrub" = /mob/living/simple_mob/vore/solargrub,
-								  "Sect Queen" = /mob/living/simple_mob/vore/sect_queen,
-								  "Sect Drone" = /mob/living/simple_mob/vore/sect_drone,
-								  "Defanged Xenomorph" = /mob/living/simple_mob/vore/xeno_defanged,
-								  "Panther" = /mob/living/simple_mob/vore/aggressive/panther,
-								  "Giant Snake" = /mob/living/simple_mob/vore/aggressive/giant_snake,
-								  "Deathclaw" = /mob/living/simple_mob/vore/aggressive/deathclaw,
-								  "Otie" = /mob/living/simple_mob/vore/otie,
-								  "Mutated Otie" =/mob/living/simple_mob/vore/otie/feral,
-								  "Red Otie" = /mob/living/simple_mob/vore/otie/red,
-								  "Corrupt Hound" = /mob/living/simple_mob/vore/aggressive/corrupthound,
-								  "Corrupt Corrupt Hound" = /mob/living/simple_mob/vore/aggressive/corrupthound/prettyboi,
-								  "Hunter Giant Spider" = /mob/living/simple_mob/animal/giant_spider/hunter,
-								  "Lurker Giant Spider" = /mob/living/simple_mob/animal/giant_spider/lurker,
-								  "Pepper Giant Spider" = /mob/living/simple_mob/animal/giant_spider/pepper,
-								  "Thermic Giant Spider" = /mob/living/simple_mob/animal/giant_spider/thermic,
-								  "Webslinger Giant Spider" = /mob/living/simple_mob/animal/giant_spider/webslinger,
-								  "Frost Giant Spider" = /mob/living/simple_mob/animal/giant_spider/frost,
-								  "Nurse Giant Spider" = /mob/living/simple_mob/animal/giant_spider/nurse/eggless,
-								  "Giant Spider Queen" = /mob/living/simple_mob/animal/giant_spider/nurse/queen/eggless,
-								  "Weretiger" = /mob/living/simple_mob/vore/weretiger,
-								  "Catslug" = /mob/living/simple_mob/vore/alienanimals/catslug,
-								  "Squirrel" = /mob/living/simple_mob/vore/squirrel/big,
-								  "Pakkun" =/mob/living/simple_mob/vore/pakkun,
-								  "Snapdragon" =/mob/living/simple_mob/vore/pakkun/snapdragon,
-								  "Sand pakkun" = /mob/living/simple_mob/vore/pakkun/sand,
-								  "Fire pakkun" = /mob/living/simple_mob/vore/pakkun/fire,
-								  "Amethyst pakkun" = /mob/living/simple_mob/vore/pakkun/purple,
-								  "Raptor" = /mob/living/simple_mob/vore/raptor,
-								  "Giant Bat" = /mob/living/simple_mob/vore/bat,
-								  "Scel (Orange)" = /mob/living/simple_mob/vore/scel/orange,
-								  "Scel (Blue)" = /mob/living/simple_mob/vore/scel/blue,
-								  "Scel (Purple)" = /mob/living/simple_mob/vore/scel/purple,
-								  "Scel (Red)" = /mob/living/simple_mob/vore/scel/red,
-								  "Scel (Green)" = /mob/living/simple_mob/vore/scel/green
-								  )
 
 /obj/structure/ghost_pod/ghost_activated/maintpred/create_occupant(var/mob/M)
 	..()
@@ -74,7 +27,7 @@
 		return
 
 	while(finalized == "No" && M.client)
-		choice = tgui_input_list(M, "What type of predator do you want to play as?", "Maintpred Choice", possible_mobs)
+		choice = tgui_input_list(M, "What type of predator do you want to play as?", "Maintpred Choice", GLOB.ghost_spawnable_mobs)		//RS EDIT
 		if(!choice)	//We probably pushed the cancel button on the mob selection. Let's just put the ghost pod back in the list.
 			to_chat(M, "<span class='notice'>No mob selected, cancelling.</span>")
 			reset_ghostpod()
@@ -87,7 +40,7 @@
 		reset_ghostpod()
 		return
 
-	var/mobtype = possible_mobs[choice]
+	var/mobtype = GLOB.ghost_spawnable_mobs[choice]
 	var/mob/living/simple_mob/newPred = new mobtype(get_turf(src))
 	qdel(newPred.ai_holder)
 	newPred.ai_holder = null

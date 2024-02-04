@@ -3994,6 +3994,14 @@
 	},
 /turf/simulated/floor,
 /area/groundbase/cargo/mining)
+"egk" = (
+/obj/effect/landmark{
+	name = "maint_pred"
+	},
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
+/area/groundbase/level1/ne)
 "egG" = (
 /turf/simulated/floor/outdoors/grass/seasonal/dark,
 /area/groundbase/level1/nw)
@@ -9352,6 +9360,14 @@
 /obj/structure/sign/department/telecoms,
 /turf/simulated/wall/r_wall,
 /area/groundbase/command/tcomms/foyer)
+"jNJ" = (
+/obj/effect/landmark{
+	name = "maint_pred"
+	},
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
+/area/groundbase/level1/nw)
 "jNK" = (
 /obj/machinery/optable,
 /turf/simulated/floor/tiled/white,
@@ -25644,7 +25660,7 @@ eHS
 eHS
 eHS
 eHS
-eHS
+jNJ
 iuY
 kyu
 oeu
@@ -28735,7 +28751,7 @@ awx
 kyu
 kyu
 eHS
-eHS
+jNJ
 tpV
 wNr
 tpV
@@ -37965,7 +37981,7 @@ awx
 awx
 awx
 awx
-irP
+egk
 khe
 kBO
 kkl

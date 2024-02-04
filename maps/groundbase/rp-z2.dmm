@@ -527,6 +527,14 @@
 "cc" = (
 /turf/simulated/wall/r_wall,
 /area/groundbase/dorms/bathroom)
+"ce" = (
+/obj/effect/landmark{
+	name = "maint_pred"
+	},
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
+/area/groundbase/level2/nw)
 "cg" = (
 /obj/effect/floor_decal/chapel,
 /obj/structure/disposalpipe/segment,
@@ -5252,6 +5260,14 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/Chemistry)
+"tu" = (
+/obj/effect/landmark{
+	name = "maint_pred"
+	},
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
+/area/groundbase/level2/se)
 "tv" = (
 /obj/structure/sign/directions/cryo{
 	dir = 8;
@@ -9390,6 +9406,9 @@
 /area/groundbase/civilian/library)
 "Jb" = (
 /obj/machinery/hologram/holopad,
+/obj/effect/landmark{
+	name = "maint_pred"
+	},
 /turf/simulated/floor/tiled{
 	edge_blending_priority = -1;
 	outdoors = 0
@@ -13253,6 +13272,12 @@
 	},
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology)
+"Wk" = (
+/obj/effect/landmark{
+	name = "maint_pred"
+	},
+/turf/simulated/floor/outdoors/newdirt,
+/area/groundbase/level2/ne)
 "Wl" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-4"
@@ -16426,7 +16451,7 @@ rh
 bG
 bG
 bG
-bG
+ce
 rh
 rh
 rh
@@ -24252,7 +24277,7 @@ Gy
 Gy
 Tb
 Tb
-Tb
+Wk
 Tb
 Ng
 Gy
@@ -25388,7 +25413,7 @@ Gy
 Tb
 Gy
 Gy
-Tb
+Wk
 Tb
 Ng
 Tb
@@ -30707,7 +30732,7 @@ rh
 rh
 kp
 kp
-si
+tu
 si
 si
 kp
