@@ -124,6 +124,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/fixatmos,
 	/datum/admins/proc/quick_nif, //VOREStation Add,
 	/datum/admins/proc/set_uplink, //VOREStation Add,
+	/datum/admins/proc/add_ghost_mob_spawns, //RS ADD,
 	/datum/admins/proc/sendFax,
 	/client/proc/despawn_player,
 	/datum/admins/proc/view_feedback,
