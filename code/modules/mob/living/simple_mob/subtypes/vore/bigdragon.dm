@@ -195,7 +195,6 @@ I think I covered everything.
 
 // Weakened variant for maintpreds
 /mob/living/simple_mob/vore/bigdragon/friendly/maintpred
-	name = "lesser dragon"
 	desc = "A large, intimidating creature reminiscent of the traditional idea of medieval fire breathing lizards. This one seems weaker than the rest."
 	player_msg = "You're a nerfed variant of the large dragon with reduced health, reduced melee damage and your special attacks disabled. Resting will heal you slowly over time. Check abilities tab for functions."
 	nospecial = 1
