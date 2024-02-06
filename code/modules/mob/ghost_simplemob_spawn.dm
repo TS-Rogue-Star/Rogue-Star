@@ -1,51 +1,67 @@
 GLOBAL_VAR_INIT(ghost_mob_spawn_count, 0)
+//Keep it organized!!!
 GLOBAL_LIST_INIT(ghost_spawnable_mobs,list(
-	"Rabbit" = /mob/living/simple_mob/vore/rabbit,
-	"Red Panda" = /mob/living/simple_mob/vore/redpanda,
-	"Fennec" = /mob/living/simple_mob/vore/fennec,
-	"Fennix" = /mob/living/simple_mob/vore/fennix,
-	"Space Bumblebee" = /mob/living/simple_mob/vore/bee,
-	"Space Bear" = /mob/living/simple_mob/animal/space/bear,
-	"Voracious Lizard" = /mob/living/simple_mob/vore/aggressive/dino,
-	"Giant Frog" = /mob/living/simple_mob/vore/aggressive/frog,
-	"Giant Rat" = /mob/living/simple_mob/vore/aggressive/rat,
-	"Jelly Blob" = /mob/living/simple_mob/vore/jelly,
-	"Wolf" = /mob/living/simple_mob/vore/wolf,
-	"Juvenile Solargrub" = /mob/living/simple_mob/vore/solargrub,
-	"Sect Queen" = /mob/living/simple_mob/vore/sect_queen,
-	"Sect Drone" = /mob/living/simple_mob/vore/sect_drone,
-	"Defanged Xenomorph" = /mob/living/simple_mob/vore/xeno_defanged,
-	"Panther" = /mob/living/simple_mob/vore/aggressive/panther,
-	"Giant Snake" = /mob/living/simple_mob/vore/aggressive/giant_snake,
-	"Deathclaw" = /mob/living/simple_mob/vore/aggressive/deathclaw,
-	"Otie" = /mob/living/simple_mob/vore/otie,
-	"Mutated Otie" =/mob/living/simple_mob/vore/otie/feral,
-	"Red Otie" = /mob/living/simple_mob/vore/otie/red,
+	"Bat - Giant" = /mob/living/simple_mob/vore/bat,
+	"Bear - Space" = /mob/living/simple_mob/animal/space/bear,
+	"Bumblebee" = /mob/living/simple_mob/vore/bee,
+	"Catslug" = /mob/living/simple_mob/vore/alienanimals/catslug,
 	"Corrupt Hound" = /mob/living/simple_mob/vore/aggressive/corrupthound,
 	"Corrupt Corrupt Hound" = /mob/living/simple_mob/vore/aggressive/corrupthound/prettyboi,
-	"Hunter Giant Spider" = /mob/living/simple_mob/animal/giant_spider/hunter,
-	"Lurker Giant Spider" = /mob/living/simple_mob/animal/giant_spider/lurker,
-	"Pepper Giant Spider" = /mob/living/simple_mob/animal/giant_spider/pepper,
-	"Thermic Giant Spider" = /mob/living/simple_mob/animal/giant_spider/thermic,
-	"Webslinger Giant Spider" = /mob/living/simple_mob/animal/giant_spider/webslinger,
-	"Frost Giant Spider" = /mob/living/simple_mob/animal/giant_spider/frost,
-	"Nurse Giant Spider" = /mob/living/simple_mob/animal/giant_spider/nurse/eggless,
-	"Giant Spider Queen" = /mob/living/simple_mob/animal/giant_spider/nurse/queen/eggless,
-	"Weretiger" = /mob/living/simple_mob/vore/weretiger,
-	"Catslug" = /mob/living/simple_mob/vore/alienanimals/catslug,
-	"Squirrel" = /mob/living/simple_mob/vore/squirrel/big,
+	"Deathclaw" = /mob/living/simple_mob/vore/aggressive/deathclaw,
+	"Defanged Xenomorph" = /mob/living/simple_mob/vore/xeno_defanged,
+	"Dragon" = /mob/living/simple_mob/vore/aggressive/dragon,
+	"Dragon - V3b" = /mob/living/simple_mob/vore/aggressive/dragon/virgo3b,
+	"Dragon - Giant" = /mob/living/simple_mob/vore/bigdragon/friendly/maintpred,
+	"Dust Jumper" = /mob/living/simple_mob/vore/alienanimals/dustjumper,
+	"Fennec" = /mob/living/simple_mob/vore/fennec,
+	"Fennix" = /mob/living/simple_mob/vore/fennix,
+	"Frog - Giant" = /mob/living/simple_mob/vore/aggressive/frog,
+	"Jelly Blob" = /mob/living/simple_mob/vore/jelly,
+	"Juvenile Solargrub" = /mob/living/simple_mob/vore/solargrub,
+	"Leopardmander" = /mob/living/simple_mob/vore/leopardmander,
+	"Leopardmander - Blue" = /mob/living/simple_mob/vore/leopardmander/blue,
+	"Leopardmander - Exotic" = /mob/living/simple_mob/vore/leopardmander/exotic,
+	"Morph" = /mob/living/simple_mob/vore/morph,
+	"Otie" = /mob/living/simple_mob/vore/otie,
+	"Otie - Mutated" =/mob/living/simple_mob/vore/otie/feral,
+	"Otie - Red" = /mob/living/simple_mob/vore/otie/red,
 	"Pakkun" =/mob/living/simple_mob/vore/pakkun,
-	"Snapdragon" =/mob/living/simple_mob/vore/pakkun/snapdragon,
-	"Sand pakkun" = /mob/living/simple_mob/vore/pakkun/sand,
-	"Fire pakkun" = /mob/living/simple_mob/vore/pakkun/fire,
-	"Amethyst pakkun" = /mob/living/simple_mob/vore/pakkun/purple,
+	"Pakkun - Snapdragon" =/mob/living/simple_mob/vore/pakkun/snapdragon,
+	"Pakkun - Sand" = /mob/living/simple_mob/vore/pakkun/sand,
+	"Pakkun - Fire" = /mob/living/simple_mob/vore/pakkun/fire,
+	"Pakkun - Amethyst" = /mob/living/simple_mob/vore/pakkun/purple,
+	"Panther" = /mob/living/simple_mob/vore/aggressive/panther,
+	"Sect Queen" = /mob/living/simple_mob/vore/sect_queen,
+	"Sect Drone" = /mob/living/simple_mob/vore/sect_drone,
+	"Rabbit" = /mob/living/simple_mob/vore/rabbit,
 	"Raptor" = /mob/living/simple_mob/vore/raptor,
-	"Giant Bat" = /mob/living/simple_mob/vore/bat,
+	"Rat - Giant" = /mob/living/simple_mob/vore/aggressive/rat,
+	"Red Panda" = /mob/living/simple_mob/vore/redpanda,
+	"Seagull" = /mob/living/simple_mob/vore/seagull,
 	"Scel (Orange)" = /mob/living/simple_mob/vore/scel/orange,
 	"Scel (Blue)" = /mob/living/simple_mob/vore/scel/blue,
 	"Scel (Purple)" = /mob/living/simple_mob/vore/scel/purple,
 	"Scel (Red)" = /mob/living/simple_mob/vore/scel/red,
-	"Scel (Green)" = /mob/living/simple_mob/vore/scel/green
+	"Scel (Green)" = /mob/living/simple_mob/vore/scel/green,
+	"Snake - Giant" = /mob/living/simple_mob/vore/aggressive/giant_snake,
+	"Spider - Hunter" = /mob/living/simple_mob/animal/giant_spider/hunter,
+	"Spider - Lurker" = /mob/living/simple_mob/animal/giant_spider/lurker,
+	"Spider - Pepper" = /mob/living/simple_mob/animal/giant_spider/pepper,
+	"Spider - Thermic" = /mob/living/simple_mob/animal/giant_spider/thermic,
+	"Spider - Webslinger" = /mob/living/simple_mob/animal/giant_spider/webslinger,
+	"Spider - Frost" = /mob/living/simple_mob/animal/giant_spider/frost,
+	"Spider - Nurse" = /mob/living/simple_mob/animal/giant_spider/nurse/eggless,
+	"Spider - Queen" = /mob/living/simple_mob/animal/giant_spider/nurse/queen/eggless,
+	"Squirrel" = /mob/living/simple_mob/vore/squirrel/big,
+	"Teppi" = /mob/living/simple_mob/vore/alienanimals/teppi,
+	"Voracious Lizard" = /mob/living/simple_mob/vore/aggressive/dino,
+	"Weretiger" = /mob/living/simple_mob/vore/weretiger,
+	"Wolf" = /mob/living/simple_mob/vore/wolf,
+	"Wolf - Dire" = /mob/living/simple_mob/vore/wolf/direwolf,
+	"Wolf - Dire - Sec" = /mob/living/simple_mob/vore/wolf/direwolf/sec,
+	"Wolf - Dog" = /mob/living/simple_mob/vore/wolf/direwolf/dog,
+	"Wolf - Dog - Sec" = /mob/living/simple_mob/vore/wolf/direwolf/dog/sec,
+	"Wolf - Andrewsarchus" = /mob/living/simple_mob/vore/wolf/direwolf/andrews
 	))
 
 /mob/observer/dead/verb/join_as_simplemob()	//Copypasta from join_as_drone()
@@ -77,6 +93,11 @@ GLOBAL_LIST_INIT(ghost_spawnable_mobs,list(
 
 	if(!MayRespawn(1))
 		return
+	var/turf/ourturf = get_turf(src)
+
+	if(ourturf.check_density())
+		to_chat(src, "<span class='danger'>Something is in the way! Try somewhere else!</span>")
+		return
 
 	var/deathtime = world.time - src.timeofdeath
 	var/deathtimeminutes = round(deathtime / (1 MINUTE))
@@ -98,7 +119,7 @@ GLOBAL_LIST_INIT(ghost_spawnable_mobs,list(
 	if(!choice)
 		return
 
-	for(var/mob/living/sus in viewers(get_turf(src)))	//We can spawn the mob literally anywhere,
+	for(var/mob/living/sus in viewers(ourturf))	//We can spawn the mob literally anywhere,
 		if(!isliving(sus))								//but let's make sure that people playing in the round can't see us when we spawn
 			continue
 		if(sus.ckey)
@@ -106,7 +127,7 @@ GLOBAL_LIST_INIT(ghost_spawnable_mobs,list(
 			return
 
 	var/mobtype = GLOB.ghost_spawnable_mobs[choice]
-	var/mob/living/simple_mob/newPred = new mobtype(get_turf(src))
+	var/mob/living/simple_mob/newPred = new mobtype(ourturf)
 	qdel(newPred.ai_holder)
 	newPred.ai_holder = null
 	if(mind)
