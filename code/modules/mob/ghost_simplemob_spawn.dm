@@ -53,7 +53,7 @@ GLOBAL_LIST_INIT(ghost_spawnable_mobs,list(
 	"Spider - Nurse" = /mob/living/simple_mob/animal/giant_spider/nurse/eggless,
 	"Spider - Queen" = /mob/living/simple_mob/animal/giant_spider/nurse/queen/eggless,
 	"Squirrel" = /mob/living/simple_mob/vore/squirrel/big,
-	"Teppi" = /mob/living/simple_mob/vore/alienanimals/teppi,
+	"Teppi" = /mob/living/simple_mob/vore/alienanimals/teppi/customizable,
 	"Voracious Lizard" = /mob/living/simple_mob/vore/aggressive/dino,
 	"Weretiger" = /mob/living/simple_mob/vore/weretiger,
 	"Wolf" = /mob/living/simple_mob/vore/wolf,
