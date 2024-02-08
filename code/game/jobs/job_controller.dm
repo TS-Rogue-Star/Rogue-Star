@@ -687,9 +687,9 @@ var/global/datum/controller/occupations/job_master
 			var/spawning = pick(latejoin)
 			.["turf"] = get_turf(spawning)
 			.["msg"] = "will arrive at the station shortly"
-			.["announcement"] = spawnpos.announcement
+			.["announcement"] = TRUE
 	else if(!fail_deadly)
 		var/spawning = pick(latejoin)
 		.["turf"] = get_turf(spawning)
 		.["msg"] = "has arrived on the station"
-		.["announcement"] = spawnpos.announcement
+		.["announcement"] = TRUE
