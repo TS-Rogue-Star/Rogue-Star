@@ -697,7 +697,7 @@ GLOBAL_VAR_INIT(teppi_count, 0)	// How mant teppi DO we have?
 		teppi_sound()
 
 /mob/living/simple_mob/vore/alienanimals/teppi/proc/do_breeding()
-	if(!breedable || prevent_breeding)
+	if(!breedable || prevent_breeding || teppi_customized)
 		return
 	if(client)	//Player controlled teppi get a verb, so just do the countdown
 		if(baby_countdown > 0)
@@ -710,7 +710,7 @@ GLOBAL_VAR_INIT(teppi_count, 0)	// How mant teppi DO we have?
 		return
 	if(prob(1))
 		for(var/mob/living/simple_mob/vore/alienanimals/teppi/alltep in oview(1,src))
-			if(!teppi_adult || !alltep.teppi_adult || alltep.prevent_breeding) //Don't have babies if you or your partner is babies
+			if(!teppi_adult || !alltep.teppi_adult || alltep.prevent_breeding || alltep.teppi_customized) //Don't have babies if you or your partner is babies
 				continue
 			if(alltep.client || alltep.stat == DEAD) //Don't have babies if your partner is inhabited by a player, or dead.
 				continue
@@ -965,6 +965,9 @@ GLOBAL_VAR_INIT(teppi_count, 0)	// How mant teppi DO we have?
 	set name = "Produce Offspring"
 	set category = "Abilities"
 	set desc = "You can have babies if the conditions are right."
+	if(teppi_customized)
+		to_chat(src, "<span class='notice'>Customized teppi cannot be used for breeding purposes, sorry!</span>")
+		return
 	if(prevent_breeding)
 		to_chat(src, "<span class='notice'>You have elected to not participate in breeding mechanics, and so cannot complete that action.</span>")
 		return
@@ -989,7 +992,7 @@ GLOBAL_VAR_INIT(teppi_count, 0)	// How mant teppi DO we have?
 		return
 	. = FALSE
 	for(var/mob/living/simple_mob/vore/alienanimals/teppi/alltep in oview(1,src))
-		if(!alltep.teppi_adult || alltep.nutrition < 250 || alltep.prevent_breeding || alltep.stat == DEAD)
+		if(!alltep.teppi_adult || alltep.nutrition < 250 || alltep.prevent_breeding || alltep.stat == DEAD || alltep.teppi_customized)
 			continue
 		if(alltep)
 			log_admin("[key_name_admin(src)] produced a baby teppi at [get_area(src)] - [COORD(src)]") //Won't show up in the chat, but makes a log of who's having babies where, for investigative purposes.
