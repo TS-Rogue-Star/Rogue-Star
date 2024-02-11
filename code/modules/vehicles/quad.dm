@@ -140,6 +140,8 @@
 
 	if(istype(A, /mob/living))
 		var/mob/living/M = A
+		if(istype(M,/mob/living/simple_mob/vore/deer) && M.stat != DEAD)
+			M.Bumped(src)
 		visible_message("<span class='danger'>[src] knocks over [M]!</span>")
 		M.apply_effects(2, 2)				// Knock people down for a short moment
 		M.apply_damages(8 / move_delay)		// Smaller amount of damage than a tug, since this will always be possible because Quads don't have safeties.

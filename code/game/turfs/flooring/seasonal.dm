@@ -67,7 +67,8 @@ var/world_time_day
 				/mob/living/simple_mob/vore/wolf = 5,
 				/mob/living/simple_mob/vore/wolf/direwolf = 1,
 				/mob/living/simple_mob/vore/wolf/direwolf/dog = 1,
-				/mob/living/simple_mob/vore/squirrel = 20
+				/mob/living/simple_mob/vore/squirrel = 20,
+				/mob/living/simple_mob/vore/deer = 10
 			)
 			grass_types = list(
 				/obj/structure/flora/ausbushes/sparsegrass,
@@ -105,7 +106,8 @@ var/world_time_day
 				/mob/living/simple_mob/vore/fennix = 1,
 				/mob/living/simple_mob/vore/wolf/direwolf/dog = 1,
 				/mob/living/simple_mob/animal/passive/bird/parrot = 1,
-				/mob/living/simple_mob/vore/squirrel = 20
+				/mob/living/simple_mob/vore/squirrel = 20,
+				/mob/living/simple_mob/vore/deer = 10
 			)
 			grass_types = list(
 				/obj/structure/flora/ausbushes/sparsegrass,
@@ -130,7 +132,8 @@ var/world_time_day
 				/mob/living/simple_mob/vore/wolf = 1,
 				/mob/living/simple_mob/vore/wolf/direwolf = 1,
 				/mob/living/simple_mob/vore/wolf/direwolf/dog = 1,
-				/mob/living/simple_mob/vore/squirrel = 20
+				/mob/living/simple_mob/vore/squirrel = 20,
+				/mob/living/simple_mob/vore/deer = 10
 			)
 			grass_types = list(
 				/obj/structure/flora/ausbushes/sparsegrass,
@@ -158,7 +161,8 @@ var/world_time_day
 				/mob/living/simple_mob/vore/otie/friendly/chubby = 1,
 				/mob/living/simple_mob/vore/otie/red/friendly = 1,
 				/mob/living/simple_mob/vore/otie/red/chubby = 1,
-				/mob/living/simple_mob/vore/squirrel = 20
+				/mob/living/simple_mob/vore/squirrel = 20,
+				/mob/living/simple_mob/vore/deer = 10
 			)
 			if(prob(snow_chance))
 				chill()

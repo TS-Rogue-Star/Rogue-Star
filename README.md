@@ -18,10 +18,13 @@ If you wish to develop and host this codebase in a closed source manner you may 
 
 See [here](https://www.gnu.org/licenses/why-affero-gpl.html) for more information.
 
+All assets including but not limited to icons and sounds files located in the following locations are only to be used with permission of their creator, VerySoft, and may not be used for any purpose without permission.
+`rogue-star/icons/rogue-star`
+
 Any files located in the
-`vorestation/goon`,
-`vorestation/icons/goonstation`, or
-`vorestation/sound/goonstation`
+`rogue-star/goon`,
+`rogue-star/icons/goonstation`, or
+`rogue-star/sound/goonstation`
 directories, or any subdirectories of mentioned directories are licensed under the
 Creative Commons 3.0 BY-NC-SA license
 (https://creativecommons.org/licenses/by-nc-sa/3.0)

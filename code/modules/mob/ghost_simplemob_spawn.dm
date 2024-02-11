@@ -8,6 +8,7 @@ GLOBAL_LIST_INIT(ghost_spawnable_mobs,list(
 	"Corrupt Hound" = /mob/living/simple_mob/vore/aggressive/corrupthound,
 	"Corrupt Corrupt Hound" = /mob/living/simple_mob/vore/aggressive/corrupthound/prettyboi,
 	"Deathclaw" = /mob/living/simple_mob/vore/aggressive/deathclaw,
+	"Deer" = /mob/living/simple_mob/vore/deer,
 	"Defanged Xenomorph" = /mob/living/simple_mob/vore/xeno_defanged,
 	"Dragon" = /mob/living/simple_mob/vore/aggressive/dragon,
 	"Dragon - V3b" = /mob/living/simple_mob/vore/aggressive/dragon/virgo3b,

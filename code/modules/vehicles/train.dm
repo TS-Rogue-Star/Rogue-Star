@@ -50,6 +50,8 @@
 	if(emagged)
 		if(istype(A, /mob/living))
 			var/mob/living/M = A
+			if(istype(M,/mob/living/simple_mob/vore/deer) && M.stat != DEAD)
+				M.Bumped(src)
 			visible_message("<font color='red'>[src] knocks over [M]!</font>")
 			M.apply_effects(5, 5)				//knock people down if you hit them
 			M.apply_damages(22 / move_delay)	// and do damage according to how fast the train is going
