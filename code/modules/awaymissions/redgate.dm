@@ -188,6 +188,7 @@
 	icon = 'icons/turf/areas_vr.dmi'
 	icon_state = "redblacir"
 	base_turf = /turf/simulated/mineral/floor/cave
+	limit_mob_size = FALSE
 
 /area/redgate/wilds
 	name = "wilderness"
