@@ -42,7 +42,7 @@
 	set category = "Object"
 	set src in view(1)
 
-	var/size_select = tgui_input_number(usr, "Put the desired size (25-200%), (1-600%) in dormitory areas.", "Set Size", size_set_to * 100, 600, 1)
+	var/size_select = tgui_input_number(usr, "Put the desired size (25-200%), (1-600%) in dormitory and redgate areas.", "Set Size", size_set_to * 100, 600, 1)
 	if(!size_select)
 		return //cancelled
 	//We do valid resize testing in actual firings because people move after setting these things.
@@ -50,7 +50,7 @@
 	size_set_to = clamp((size_select/100), RESIZE_MINIMUM_DORMS, RESIZE_MAXIMUM_DORMS)
 	to_chat(usr, "<span class='notice'>You set the size to [size_select]%</span>")
 	if(size_set_to < RESIZE_MINIMUM || size_set_to > RESIZE_MAXIMUM)
-		to_chat(usr, "<span class='notice'>Note: Resizing limited to 25-200% automatically while outside dormatory areas.</span>") //hint that we clamp it in resize
+		to_chat(usr, "<span class='notice'>Note: Resizing limited to 25-200% automatically while outside dormatory and redgate areas.</span>") //hint that we clamp it in resize
 
 /obj/item/weapon/gun/energy/sizegun/update_icon(var/ignore_inhands)
 	var/grow_mode = "shrink"
