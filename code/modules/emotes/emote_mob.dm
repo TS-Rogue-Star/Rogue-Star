@@ -221,6 +221,11 @@
 						message = "<span class='emote'><B>[src]</B> ([ghost_follow_link(src, M)]) [input]</span>"
 					M.show_message(message, m_type)
 					M.create_chat_message(src, "[runemessage]", FALSE, list("emote"), (m_type == AUDIBLE_MESSAGE))
+					if(isliving(M))
+						var/mob/living/L = M
+						if(L.ai_holder)
+							var/datum/ai_holder/AI = L.ai_holder
+							AI.on_hear_emote(src, message)
 
 		for(var/obj/O as anything in o_viewers)
 			spawn(0)

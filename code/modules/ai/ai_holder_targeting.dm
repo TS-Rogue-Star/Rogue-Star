@@ -27,6 +27,7 @@
 	var/destructive = FALSE					// Will target 'neutral' structures/objects and not just 'hostile' ones.
 
 	var/forgive_resting = TRUE				//VOREStation add - If TRUE on a RETALIATE mob, then mob will drop target if it becomes hostile to you but hasn't taken damage
+	var/grab_hostile = TRUE
 
 // A lot of this is based off of /TG/'s AI code.
 
@@ -272,6 +273,9 @@
 	if(!belly_attack)
 		if(isbelly(holder.loc))
 			return FALSE
+	if(!grab_hostile && holder.health == holder.maxHealth)
+		ai_log("react_to_attack() : Was attacked by [attacker], but they did no damage and the AI has grab_hostile set to false.", AI_LOG_TRACE)
+		return FALSE
 	if(holder.IIsAlly(attacker)) // I'll overlook it THIS time...
 		ai_log("react_to_attack() : Was attacked by [attacker], but they were an ally.", AI_LOG_TRACE)
 		return FALSE

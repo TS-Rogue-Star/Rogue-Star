@@ -131,6 +131,11 @@
 		M.show_message(msg, AUDIBLE_MESSAGE, deaf_message, VISIBLE_MESSAGE)
 		if(runemessage != -1)
 			M.create_chat_message(src, "[runemessage || message]", FALSE, list("emote"), audible = FALSE)
+		if(isliving(M))
+			var/mob/living/L = M
+			if(L.ai_holder)
+				var/datum/ai_holder/AI = L.ai_holder
+				AI.on_hear_emote(src, message)
 
 /mob/proc/findname(msg)
 	for(var/mob/M in mob_list)

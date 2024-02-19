@@ -2971,7 +2971,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/smartfridge/sheets/persistent_lossy,
+/obj/machinery/smartfridge/sheets/persistent,
 /turf/simulated/floor/tiled/eris/steel/cargo,
 /area/quartermaster/storage)
 "gc" = (
@@ -4133,6 +4133,9 @@
 	},
 /obj/structure/cable{
 	icon_state = "2-8"
+	},
+/obj/effect/wire_deleter{
+	wire_deletion_rate = 5
 	},
 /turf/simulated/floor/airless,
 /area/stellardelight/deck2/exterior)
@@ -7817,6 +7820,9 @@
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
+/obj/effect/wire_deleter{
+	wire_deletion_rate = 5
+	},
 /turf/simulated/floor/airless,
 /area/stellardelight/deck2/exterior)
 "qH" = (
@@ -8645,6 +8651,9 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
+/obj/effect/wire_deleter{
+	wire_deletion_rate = 5
+	},
 /turf/simulated/floor/airless,
 /area/stellardelight/deck2/exterior)
 "sD" = (
@@ -9185,6 +9194,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/stellardelight/substation/engineering)
+"tR" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/effect/wire_deleter{
+	wire_deletion_rate = 5
+	},
+/turf/simulated/floor/airless,
+/area/stellardelight/deck2/exterior)
 "tT" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -10248,6 +10269,9 @@
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
+/obj/effect/wire_deleter{
+	wire_deletion_rate = 5
+	},
 /turf/simulated/floor/airless,
 /area/stellardelight/deck2/exterior)
 "ws" = (
@@ -10564,6 +10588,21 @@
 	},
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck2/port)
+"xf" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/effect/wire_deleter{
+	wire_deletion_rate = 5
+	},
+/turf/simulated/floor/airless,
+/area/stellardelight/deck2/exterior)
 "xg" = (
 /obj/structure/cable/green{
 	icon_state = "1-4"
@@ -11959,6 +11998,21 @@
 /obj/effect/floor_decal/industrial/outline/blue,
 /turf/simulated/floor,
 /area/stellardelight/deck2/combustionworkshop)
+"Aq" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/effect/wire_deleter{
+	wire_deletion_rate = 5
+	},
+/turf/simulated/floor/airless,
+/area/stellardelight/deck2/exterior)
 "Ar" = (
 /obj/machinery/power/pointdefense{
 	id_tag = "sd_pd"
@@ -12377,8 +12431,8 @@
 /turf/simulated/floor/tiled,
 /area/storage/art)
 "Bj" = (
-/obj/machinery/smartfridge/produce/persistent_lossy,
 /obj/machinery/door/firedoor/glass,
+/obj/machinery/smartfridge/produce/persistent,
 /turf/simulated/floor,
 /area/crew_quarters/kitchen)
 "Bk" = (
@@ -12527,6 +12581,9 @@
 	},
 /obj/structure/cable{
 	icon_state = "1-4"
+	},
+/obj/effect/wire_deleter{
+	wire_deletion_rate = 5
 	},
 /turf/simulated/floor/airless,
 /area/stellardelight/deck2/exterior)
@@ -15554,6 +15611,9 @@
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
+/obj/effect/wire_deleter{
+	wire_deletion_rate = 5
+	},
 /turf/simulated/floor/airless,
 /area/stellardelight/deck2/exterior)
 "Ih" = (
@@ -17651,6 +17711,9 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
+/obj/effect/wire_deleter{
+	wire_deletion_rate = 5
+	},
 /turf/simulated/floor/airless,
 /area/stellardelight/deck2/exterior)
 "MP" = (
@@ -18420,6 +18483,18 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/eris/white/bluecorner,
 /area/stellardelight/deck2/triage)
+"Oy" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/effect/wire_deleter{
+	wire_deletion_rate = 5
+	},
+/turf/simulated/floor/airless,
+/area/stellardelight/deck2/exterior)
 "Oz" = (
 /obj/machinery/atmospherics/unary/vent_pump/on,
 /obj/effect/floor_decal/steeldecal/steel_decals5{
@@ -20925,6 +21000,9 @@
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
+/obj/effect/wire_deleter{
+	wire_deletion_rate = 5
+	},
 /turf/simulated/floor/airless,
 /area/stellardelight/deck2/exterior)
 "Ui" = (
@@ -21984,6 +22062,15 @@
 /obj/machinery/alarm/angled,
 /turf/simulated/floor/tiled/eris/dark/cargo,
 /area/crew_quarters/recreation_area)
+"WD" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/wire_deleter{
+	wire_deletion_rate = 5
+	},
+/turf/simulated/floor/airless,
+/area/stellardelight/deck2/exterior)
 "WE" = (
 /obj/machinery/firealarm/angled{
 	dir = 4
@@ -29455,7 +29542,7 @@ Uh
 Uh
 Uh
 Uh
-NL
+Oy
 Ig
 Ig
 Ig
@@ -29597,7 +29684,7 @@ Cq
 Cq
 Cq
 Cq
-NL
+WD
 Cq
 Cq
 Cq
@@ -29739,7 +29826,7 @@ qG
 Uh
 Uh
 Uh
-NL
+Aq
 Ig
 Ig
 Ig
@@ -29881,7 +29968,7 @@ SO
 Mx
 Mx
 Mx
-NL
+WD
 Mx
 Mx
 Mx
@@ -36981,7 +37068,7 @@ kL
 yH
 yH
 yH
-NL
+WD
 yH
 yH
 yH
@@ -37123,7 +37210,7 @@ wr
 Uh
 Uh
 Uh
-NL
+xf
 Ig
 Ig
 Ig
@@ -37265,7 +37352,7 @@ Cp
 Cp
 Cp
 Cp
-NL
+WD
 Cp
 Cp
 Cp
@@ -37407,7 +37494,7 @@ Uh
 Uh
 Uh
 Uh
-NL
+tR
 MN
 MN
 MN

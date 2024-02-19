@@ -10,6 +10,7 @@ GLOBAL_LIST_INIT(ghost_spawnable_mobs,list(
 	"Deathclaw" = /mob/living/simple_mob/vore/aggressive/deathclaw,
 	"Deer" = /mob/living/simple_mob/vore/deer,
 	"Defanged Xenomorph" = /mob/living/simple_mob/vore/xeno_defanged,
+	"Doglin" = /mob/living/simple_mob/vore/doglin/basic,
 	"Dragon" = /mob/living/simple_mob/vore/aggressive/dragon,
 	"Dragon - V3b" = /mob/living/simple_mob/vore/aggressive/dragon/virgo3b,
 	"Dragon - Giant" = /mob/living/simple_mob/vore/bigdragon/friendly/maintpred,
