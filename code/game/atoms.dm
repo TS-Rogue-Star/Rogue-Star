@@ -544,6 +544,11 @@
 				M.create_chat_message(src, "[runemessage]", FALSE, list("emote"), audible = FALSE)
 		else if(blind_message)
 			M.show_message(blind_message, AUDIBLE_MESSAGE)
+		if(isliving(M))
+			var/mob/living/L = M
+			if(L.ai_holder)
+				var/datum/ai_holder/AI = L.ai_holder
+				AI.on_hear_emote(src, message)
 
 // Show a message to all mobs and objects in earshot of this atom
 // Use for objects performing audible actions
@@ -570,6 +575,11 @@
 		M.show_message(msg, AUDIBLE_MESSAGE, deaf_message, VISIBLE_MESSAGE)
 		if(runemessage != -1)
 			M.create_chat_message(src, "[runemessage || message]", FALSE, list("emote"))
+		if(isliving(M))
+			var/mob/living/L = M
+			if(L.ai_holder)
+				var/datum/ai_holder/AI = L.ai_holder
+				AI.on_hear_emote(src, message)
 
 /atom/movable/proc/dropInto(var/atom/destination)
 	while(istype(destination))

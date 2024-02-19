@@ -173,6 +173,10 @@
 			icon_state = "multitool_red"
 		return
 
+//Hopefully this will make it so you can't clear the buffer. :3c
+/obj/item/device/multitool/scioutpost/attack_self(mob/living/user)
+	return
+
 /obj/machinery/power/quantumpad/scioutpost
 
 /datum/random_map/noise/ore/virgo2		// Less OP generation map, but better than Underdark

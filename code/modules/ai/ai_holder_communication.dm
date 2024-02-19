@@ -122,9 +122,16 @@
 /datum/ai_holder/proc/on_hear_say(mob/living/speaker, message)
 	return
 
+/datum/ai_holder/proc/on_hear_emote(mob/living/speaker, message)
+	return
+
 // This is to make responses feel a bit more natural and not instant.
-/datum/ai_holder/proc/delayed_say(var/message, var/mob/speak_to)
-	spawn(rand(1 SECOND, 2 SECONDS))
+/datum/ai_holder/proc/delayed_say(var/message, var/mob/speak_to, min, max)
+	if(!min)
+		min = 1
+	if(!max)
+		max = 2
+	spawn(rand(min SECOND, max SECONDS))
 		if(!src || !holder || !can_act())  // We might've died/got deleted/etc in the meantime.
 			return
 
