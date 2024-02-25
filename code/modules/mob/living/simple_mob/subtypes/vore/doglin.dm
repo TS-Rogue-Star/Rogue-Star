@@ -461,6 +461,8 @@
 /obj/structure/doglin_hole/Initialize()
 	. = ..()
 	world_doglin_holes |= src
+	if(istype(get_turf(src),/turf/simulated/floor/outdoors/))
+		icon_state = "heehoo-d"
 
 /obj/structure/doglin_hole/Destroy()
 	world_doglin_holes -= src
