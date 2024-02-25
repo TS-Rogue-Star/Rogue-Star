@@ -496,7 +496,7 @@
 				return
 			D.yapyapyap()
 			D.visible_message("\The [D] begins to enter \the [src]...", runemessage = "...")
-			if(!do_after(D, 3 SECONDS, src, exclusive = TRUE))
+			if(!do_after(D, 3 SECONDS, src, max_distance = 1, exclusive = TRUE))
 				return
 			dest.zoop = TRUE
 			D.dir = SOUTH
@@ -525,7 +525,7 @@
 			to_chat(user, "<span class = 'warning'>You don't see anywhere to go.</span>")
 			return
 		user.visible_message("\The [user] begins to enter \the [src]...", runemessage = "...")
-		if(!do_after(user, 3 SECONDS, src, exclusive = TRUE))
+		if(!do_after(user, 3 SECONDS, src, max_distance = 1, exclusive = TRUE))
 			return
 		to_chat(user, "<span class = 'warning'>You get lost...</span>")
 		var/turf/dest_turf = get_turf(pick(possible_holes))
@@ -623,7 +623,7 @@
 	if(destination_hole)
 		user.visible_message("\The [user] begins to enter \the [src]...", runemessage = "...")
 
-		if(!do_after(user, 3 SECONDS, src, exclusive = TRUE))
+		if(!do_after(user, 3 SECONDS, src, max_distance = 1, exclusive = TRUE))
 			return
 		var/turf/dest_turf = get_turf(destination_hole.loc)
 		user.dir = SOUTH

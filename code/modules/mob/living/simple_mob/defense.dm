@@ -94,9 +94,11 @@
 			return
 		if(S.reagents)
 			S.reagents.trans_to_mob(src, S.bitesize * 5, CHEM_INGEST, multiplier = 5)
-		to_chat(user, "<span class='notice'>\The [src] takes a bite of \the [S].</span>")
-		if(user != src)
-			to_chat(user, "<span class='notice'>\The [user] feeds \the [S] to you.</span>")
+
+		if(src != user)
+			visible_message("<span class='notice'>\The [src] takes a bite of \the [S].</span>","<span class='notice'>\The [user] feeds \the [S] to you.</span>", runemessage = "monch")
+		else
+			visible_message("<span class='notice'>\The [src] takes a bite of \the [S].</span>","<span class='notice'>You take a bite of \the [S].</span>", runemessage = "monch")
 		S.bitecount ++
 		S.On_Consume(src)
 		adjust_nutrition(S.bitesize * 10)
