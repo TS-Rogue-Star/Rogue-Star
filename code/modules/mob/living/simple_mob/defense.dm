@@ -80,6 +80,31 @@
 		else
 			var/datum/gender/T = gender_datums[src.get_visible_gender()]
 			to_chat(user, "<span class='notice'>\The [src] is dead, medical items won't bring [T.him] back to life.</span>") // the gender lookup is somewhat overkill, but it functions identically to the obsolete gender macros and future-proofs this code
+	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks))
+		var/obj/item/weapon/reagent_containers/food/snacks/S = O
+		user.setClickCooldown(user.get_attack_speed(O))
+		if(resting)
+			to_chat(user, "<span class='notice'>\The [src] is napping, and doesn't respond to \the [O].</span>")
+			return
+		if(nutrition >= max_nutrition)
+			if(user == src)
+				to_chat(src, "<span class='notice'>You're too full to eat another bite.</span>")
+				return
+			to_chat(user, "<span class='notice'>\The [src] seems too full to eat.</span>")
+			return
+		if(S.reagents)
+			S.reagents.trans_to_mob(src, S.bitesize * 5, CHEM_INGEST, multiplier = 5)
+
+		if(src != user)
+			visible_message("<span class='notice'>\The [src] takes a bite of \the [S].</span>","<span class='notice'>\The [user] feeds \the [S] to you.</span>", runemessage = "monch")
+		else
+			visible_message("<span class='notice'>\The [src] takes a bite of \the [S].</span>","<span class='notice'>You take a bite of \the [S].</span>", runemessage = "monch")
+		S.bitecount ++
+		S.On_Consume(src)
+		adjust_nutrition(S.bitesize * 10)
+		playsound(src, 'sound/items/eatfood.ogg', 75, 1)
+		return
+
 	if(can_butcher(user, O))	//if the animal can be butchered, do so and return. It's likely to be gibbed.
 		harvest(user, O)
 		return

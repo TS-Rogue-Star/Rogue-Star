@@ -40,7 +40,7 @@
 	var/static/list/overlays_cache = list()
 	var/yip_cooldown = 0
 	var/doglin_special = TRUE
-
+	var/picked_color = FALSE
 
 ///// VORE RELATED /////
 	vore_active = 1
@@ -167,7 +167,9 @@
 		"haunted",
 		"distinguished",
 		"evil",
-		"pure"
+		"pure",
+		"cantankerous",
+		"suspicious"
 	)
 
 	var/list/subject = list(
@@ -233,9 +235,8 @@
 		ai_holder.delayed_say("*yap[who]", speaker, max = 10)
 	yip_cooldown += rand(1,50)
 
-//Will be a verb later. For now it is not quite ready.
-/mob/living/simple_mob/vore/doglin/proc/dig()
-	set name = "Doglin - Dig"
+/mob/living/simple_mob/vore/doglin/verb/dig()
+	set name = "Dig"
 	set category = "Abilities"
 
 	if(!isturf(src.loc) || isspace(src.loc) || istype(src.loc, /turf/simulated/floor/water))
@@ -254,7 +255,7 @@
 		return
 	for(var/stuff in ourturf.contents)
 		if(istype(stuff,/obj/structure/doglin_hole))
-			to_chat(src, "<span class = 'warning'>There is already a hold here!</span>")
+			to_chat(src, "<span class = 'warning'>There is already a hole here!</span>")
 			return
 	var/obj/structure/doglin_hole/hole = new(ourturf)
 
@@ -391,6 +392,19 @@
 	else
 		return ..()
 
+/mob/living/simple_mob/vore/doglin/verb/doglin_color()
+	set name = "Pick Color"
+	set category = "Abilities"
+	set desc = "You can set your color!"
+	if(picked_color)
+		to_chat(src, "<span class='notice'>You have already picked a color! If you picked the wrong color, ask an admin to change your picked_color variable to 0.</span>")
+		return
+	var/newcolor = input(usr, "Choose a color.", "", color) as color|null
+	if(newcolor)
+		color = newcolor
+		picked_color = TRUE
+	update_icon()
+
 /datum/category_item/catalogue/fauna/doglin
 	name = "Alien Wildlife - Doglin"
 	desc = "An alien species similar in appearance to Vulpkanin. This species speaks in a barking, yipping language. \
@@ -440,3 +454,182 @@
 	desc = "Someone dug a hole! Heehoo~"
 	icon = 'icons/rogue-star/mobx32.dmi'
 	icon_state = "heehoo"
+
+	var/static/list/world_doglin_holes = list()
+	var/zoop = FALSE
+
+/obj/structure/doglin_hole/Initialize()
+	. = ..()
+	world_doglin_holes |= src
+	if(istype(get_turf(src),/turf/simulated/floor/outdoors/))
+		icon_state = "heehoo-d"
+
+/obj/structure/doglin_hole/Destroy()
+	world_doglin_holes -= src
+	return ..()
+
+/obj/structure/doglin_hole/attack_hand(mob/living/user)
+	tunnel_travel(user)
+	return ..()
+
+/obj/structure/doglin_hole/attack_generic(mob/user, damage, attack_verb)
+	tunnel_travel(user)
+	return ..()
+
+/obj/structure/doglin_hole/attack_robot(mob/living/user)
+	var/turf/hole = get_turf(src)	//Borgs can click stuff from far away, let's make sure they're next to the hole
+	var/turf/borg = get_turf(user)
+	if(hole.AdjacentQuick(borg))
+		tunnel_travel(user)
+		return ..()
+
+/obj/structure/doglin_hole/Crossed(O)
+	. = ..()
+	if(istype(O,/mob/living/simple_mob/vore/doglin))
+		var/mob/living/simple_mob/vore/doglin/D = O
+		if(D.ckey)
+			return
+		else if(prob(25))
+			var/obj/structure/doglin_hole/dest = pick(world_doglin_holes)
+			var/turf/dest_turf = get_turf(dest)
+			if(dest_turf.z != z)
+				return
+			D.yapyapyap()
+			D.visible_message("\The [D] begins to enter \the [src]...", runemessage = "...")
+			if(!do_after(D, 3 SECONDS, src, max_distance = 1, exclusive = TRUE))
+				return
+			dest.zoop = TRUE
+			D.dir = SOUTH
+			D.forceMove(dest_turf)
+			visible_message("\The [D] disappears into \the [src]!", runemessage = "scamper")
+			D.visible_message("\The [D] appears from \the [src]!!!", runemessage = "scamper")
+			spawn(1 SECOND)
+				dest.zoop = FALSE
+
+/obj/structure/doglin_hole/proc/tunnel_travel(mob/living/user)
+	var/choice = tgui_input_list(user, "Which direction will you travel?", "Travel", list("North","South","East","West","Up","Down"))
+	if(choice)
+		find_tunnel_direction(choice, user)
+
+/obj/structure/doglin_hole/proc/find_tunnel_direction(ourdir, mob/living/user)
+
+	if(!istype(user, /mob/living/simple_mob/vore/doglin) || !ourdir)
+		var/list/possible_holes = list()
+		for(var/obj/structure/doglin_hole/hole in world_doglin_holes)
+			if(hole == src)
+				continue
+			if(hole.z == user.z)
+				possible_holes |= hole
+
+		if(!possible_holes.len)
+			to_chat(user, "<span class = 'warning'>You don't see anywhere to go.</span>")
+			return
+		user.visible_message("\The [user] begins to enter \the [src]...", runemessage = "...")
+		if(!do_after(user, 3 SECONDS, src, max_distance = 1, exclusive = TRUE))
+			return
+		to_chat(user, "<span class = 'warning'>You get lost...</span>")
+		var/turf/dest_turf = get_turf(pick(possible_holes))
+		user.dir = SOUTH
+		user.forceMove(dest_turf)
+		visible_message("\The [user] disappears into \the [src]!", runemessage = "scamper")
+		user.visible_message("\The [user] appears from \the [src]!!!", runemessage = "scamper")
+		return
+
+	var/obj/structure/doglin_hole/destination_hole
+	switch(ourdir)
+		if("North")
+			for(var/obj/structure/doglin_hole/hole in world_doglin_holes)
+				if(hole == src)
+					continue
+				if(hole.z != z)
+					continue
+				if(hole.y < y)
+					continue
+				var/ourdif = (hole.y - y) + 1
+				if(hole.x <= x + ourdif && hole.x >= x - ourdif)
+					if(!destination_hole)
+						destination_hole = hole
+					else if(hole.y < destination_hole.y)
+						destination_hole = hole
+
+		if("South")
+			for(var/obj/structure/doglin_hole/hole in world_doglin_holes)
+				if(hole == src)
+					continue
+				if(hole.z != z)
+					continue
+				if(hole.y > y)
+					continue
+				var/ourdif = (y - hole.y) + 1
+				if(hole.x <= x + ourdif && hole.x >= x - ourdif)
+					if(!destination_hole)
+						destination_hole = hole
+					else if(hole.y > destination_hole.y)
+						destination_hole = hole
+
+		if("East")
+			for(var/obj/structure/doglin_hole/hole in world_doglin_holes)
+				if(hole == src)
+					continue
+				if(hole.z != z)
+					continue
+				if(hole.x < x)
+					continue
+				var/ourdif = (hole.x - x) + 1
+				if(hole.y >= y - ourdif && hole.y <= y + ourdif)
+					if(!destination_hole)
+						destination_hole = hole
+					else if(hole.x < destination_hole.x)
+						destination_hole = hole
+
+		if("West")
+			for(var/obj/structure/doglin_hole/hole in world_doglin_holes)
+				if(hole == src)
+					continue
+				if(hole.z != z)
+					continue
+				if(hole.x > x)
+					continue
+				var/ourdif = (x - hole.x) + 1
+				if(hole.y >= y - ourdif && hole.y <= y + ourdif)
+					if(!destination_hole)
+						destination_hole = hole
+					else if(hole.x > destination_hole.x)
+						destination_hole = hole
+
+		if("Up")
+			var/turf/above = GetAbove(get_turf(src.loc))
+			if(!above)
+				to_chat(user, "<span class = 'warning'>You can't go up here.</span>")
+				return
+			for(var/obj/structure/doglin_hole/hole in world_doglin_holes)
+				if(hole.z != above.z)
+					continue
+				if((hole.y >= y - 5 && hole.y <= y + 5) && (hole.x >= x - 5 && hole.x <= x + 5))
+					destination_hole = hole
+					break
+		if("Down")
+			var/turf/below = GetBelow(get_turf(src.loc))
+			if(!below)
+				to_chat(user, "<span class = 'warning'>You can't go down here.</span>")
+				return
+			for(var/obj/structure/doglin_hole/hole in world_doglin_holes)
+				if(hole.z != below.z)
+					continue
+				if((hole.y >= y - 5 && hole.y <= y + 5) && (hole.x >= x - 5 && hole.x <= x + 5))
+					destination_hole = hole
+					break
+
+	if(destination_hole)
+		user.visible_message("\The [user] begins to enter \the [src]...", runemessage = "...")
+
+		if(!do_after(user, 3 SECONDS, src, max_distance = 1, exclusive = TRUE))
+			return
+		var/turf/dest_turf = get_turf(destination_hole.loc)
+		user.dir = SOUTH
+		user.forceMove(dest_turf)
+		visible_message("\The [user] disappears into \the [src]!", runemessage = "scamper")
+		user.visible_message("\The [user] appears from \the [src]!!!", runemessage = "scamper")
+
+	else
+		to_chat(user, "<span class = 'warning'>There isn't a tunnel in that direction.</span>")
