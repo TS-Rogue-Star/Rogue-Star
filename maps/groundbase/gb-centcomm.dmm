@@ -8890,6 +8890,10 @@
 	},
 /turf/simulated/floor/tiled,
 /area/centcom/security)
+"DV" = (
+/obj/machinery/mob_bank,
+/turf/simulated/floor/tiled,
+/area/centcom/main_hall)
 "DX" = (
 /obj/effect/floor_decal/industrial/outline,
 /turf/simulated/floor/tiled,
@@ -29167,7 +29171,7 @@ OQ
 iH
 iH
 iH
-dR
+DV
 dR
 dR
 dR

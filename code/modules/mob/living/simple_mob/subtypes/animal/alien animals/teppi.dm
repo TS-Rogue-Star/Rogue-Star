@@ -1222,3 +1222,59 @@ GLOBAL_VAR_INIT(teppi_count, 0)	// How mant teppi DO we have?
 		return
 
 	teppi_customized = TRUE
+
+/mob/living/simple_mob/vore/alienanimals/teppi/mob_bank_save(mob/living/user)
+
+	if(!teppi_adult)
+		if(user)
+			to_chat(user, "<span class='warning'>\The [src] is too young to be registered.</span>")
+		return null
+
+	if(!item_type)
+		if(user)
+			to_chat(user, "<span class='warning'>\The [src] needs a collar before it can be registered.</span>")
+		return null
+
+	var/list/to_save = list(
+		"ckey" = user.ckey,
+		"type" = type,
+		"name" = name,
+		"affinity" = affinity[user.real_name],
+		"allergen_preference" = allergen_preference,
+		"allergen_unpreference" = allergen_unpreference,
+		"body_color" = body_color,
+		"marking_color" = marking_color,
+		"horn_color" = horn_color,
+		"eye_color" = eye_color,
+		"skin_color" = skin_color,
+		"item_type" = item_type,
+		"item_color" = item_color,
+		"marking_type" = marking_type,
+		"horn_type" = horn_type,
+		"affection_factor" = affection_factor
+		)
+
+	return to_save
+
+/mob/living/simple_mob/vore/alienanimals/teppi/mob_bank_load(mob/living/user, var/list/load)
+	if(user)
+		load_owner = user.ckey
+		affinity[user.real_name] += load["affinity"]
+	else
+		load_owner = "STATION"
+	name = load["name"]
+	real_name = name
+	allergen_preference = load["allergen_preference"]
+	allergen_unpreference = load["allergen_unpreference"]
+	body_color = load["body_color"]
+	marking_color = load["marking_color"]
+	horn_color = load["horn_color"]
+	eye_color = load["eye_color"]
+	skin_color = load["skin_color"]
+	item_type = load["item_type"]
+	item_color = load["item_color"]
+	marking_type = load["marking_type"]
+	horn_type = load["horn_type"]
+	affection_factor = load["affection_factor"]
+
+	update_icon()

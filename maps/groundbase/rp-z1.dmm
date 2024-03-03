@@ -4200,6 +4200,10 @@
 /obj/machinery/light/small,
 /turf/simulated/floor,
 /area/maintenance/groundbase/substation/civ)
+"erl" = (
+/obj/machinery/mob_bank,
+/turf/simulated/floor/tiled,
+/area/groundbase/level1/nw)
 "ero" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -5746,6 +5750,10 @@
 /obj/machinery/portable_atmospherics/powered/pump/filled,
 /turf/simulated/floor/tiled/techmaint,
 /area/groundbase/engineering/atmos)
+"fZX" = (
+/obj/effect/station_pet,
+/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
+/area/groundbase/level2/sw)
 "gay" = (
 /obj/effect/floor_decal/corner_techfloor_grid{
 	dir = 5
@@ -6969,6 +6977,12 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/lhallway)
+"hoe" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/groundbase/level1/nw)
 "hon" = (
 /turf/simulated/floor/outdoors/newdirt{
 	outdoors = 0
@@ -14170,6 +14184,14 @@
 	},
 /turf/simulated/floor,
 /area/maintenance/groundbase/substation/command)
+"oRW" = (
+/obj/effect/station_pet,
+/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow{
+	grass_chance = 0;
+	outdoors = 0;
+	snow_chance = 0
+	},
+/area/groundbase/civilian/bar)
 "oRY" = (
 /obj/machinery/camera/network/research{
 	dir = 4
@@ -23091,6 +23113,12 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/groundbase/command/tcomms/chamber)
+"xHU" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/groundbase/level1/nw)
 "xJe" = (
 /obj/structure/fence{
 	dir = 4
@@ -31184,7 +31212,7 @@ dOS
 kql
 dtj
 hID
-dVI
+oRW
 dVI
 dVI
 giQ
@@ -32912,7 +32940,7 @@ uFf
 uFf
 uFf
 pTt
-oZt
+fZX
 oZt
 pNp
 pNp
@@ -33303,8 +33331,8 @@ egG
 egG
 egG
 egG
-oeu
-bat
+iuY
+iuY
 lKQ
 bat
 oeu
@@ -33445,8 +33473,8 @@ egG
 egG
 egG
 egG
-egG
-bat
+iuY
+xHU
 lKQ
 bat
 oeu
@@ -33587,8 +33615,8 @@ xxV
 xxV
 xxV
 xxV
-xxV
-ksX
+iuY
+erl
 rty
 eiI
 eiI
@@ -33729,8 +33757,8 @@ xxV
 xxV
 xxV
 xxV
-xxV
-ksX
+iuY
+hoe
 rty
 eiI
 xxV
@@ -33871,8 +33899,8 @@ xxV
 xxV
 xxV
 xxV
-xxV
-ksX
+iuY
+iuY
 rty
 ksX
 xxV

@@ -55,6 +55,8 @@
 
 	has_langs = list(LANGUAGE_SIGN)
 
+	load_owner = "seriouslydontsavethis"	//RS ADD - Catslugs smort, also most of them are unique, so just don't
+
 	var/obj/item/clothing/head/hat = null // Scughat.
 	var/can_wear_hat = TRUE				  // Some have inbuilt hats
 

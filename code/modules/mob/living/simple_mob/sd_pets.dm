@@ -3,6 +3,7 @@
 	desc = "A curiously devious robotic fox!"
 	devourable = 0
 	digestable = 0
+	load_owner = "STATION"
 
 /datum/category_item/catalogue/fauna/catslug/tulidaan
 	name = "Alien Wildlife - Catslug - Tulidaan"
@@ -29,6 +30,7 @@
 	digestable = 0
 	catalogue_data = list(/datum/category_item/catalogue/fauna/catslug/tulidaan)
 	holder_type = /obj/item/weapon/holder/catslug/tulidaan
+	load_owner = "STATION"
 
 /obj/item/weapon/holder/catslug/tulidaan
 	item_state = "tulidaan"
@@ -37,6 +39,7 @@
 	name = "Leggy"
 	desc = "Don't make fun, they have a condition."
 	digestable = 0
+	load_owner = "STATION"
 
 /mob/living/simple_mob/animal/passive/mouse/jerboa/leggy/New()
 	..()
@@ -47,6 +50,7 @@
 	name = "Feivel"
 	desc = "Heading out west wasn't far enough, so he's going to space!"
 	digestable = 0
+	load_owner = "STATION"
 
 /mob/living/simple_mob/animal/passive/mouse/brown/feivel/New()
 	..()
@@ -59,40 +63,45 @@
 	devourable = 0
 	digestable = 0
 	holder_type = /obj/item/weapon/holder/cat/jones
+	load_owner = "STATION"
 
 /obj/item/weapon/holder/cat/jones
 	item_state = "cat2"
-
 
 /mob/living/simple_mob/animal/passive/dog/void_puppy/nulle
 	name = "Nulle"
 	desc = "A guiding light through the black!"
 	devourable = 0
 	digestable = 0
+	load_owner = "STATION"
 
 /mob/living/simple_mob/animal/passive/tindalos/twigs
 	name = "Twigs"
 	desc = "Its eyes gleam with untold knowings..."
 	devourable = 0
 	digestable = 0
+	load_owner = "STATION"
 
 /mob/living/simple_mob/animal/passive/bird/azure_tit/iceman
 	name = "Iceman"
 	desc = "You wanna know who the best is? That's him. Iceman. Ice cold, no mistakes."
 	devourable = 0
 	digestable = 0
+	load_owner = "STATION"
 
 /mob/living/simple_mob/animal/passive/mimepet/gregory
 	name = "Gregory XXVI Esq."
 	desc = "It looks very distinguished."
 	devourable = 0
 	digestable = 0
+	load_owner = "STATION"
 
 /mob/living/simple_mob/vore/fennec/bridgette
 	name = "Bridgette"
 	desc = "Bridgette the brig fox! She glares at you like you did something wrong!"
 	devourable = 0
 	digestable = 0
+	load_owner = "STATION"
 
 /datum/category_item/catalogue/fauna/otie/cocoa
 	name = "Creature - Otie - Cocoa"
@@ -104,6 +113,7 @@
 	value = CATALOGUER_REWARD_TRIVIAL	//Worth less points since it lives on the ship
 
 
+
 /mob/living/simple_mob/vore/otie/red/chubby/cocoa
 	name = "Cocoa"
 	desc = "A good boi, eats the scraps when you're not looking."
@@ -113,6 +123,7 @@
 	mob_bump_flag = 32
 	ai_holder_type = /datum/ai_holder/simple_mob/melee/evasive/otie/cocoa
 	catalogue_data = list(/datum/category_item/catalogue/fauna/otie/cocoa)
+	load_owner = "STATION"
 
 
 /datum/ai_holder/simple_mob/melee/evasive/otie/cocoa

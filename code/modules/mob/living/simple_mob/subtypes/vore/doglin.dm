@@ -21,7 +21,7 @@
 	harm_intent_damage = 3
 	melee_damage_lower = 5
 	melee_damage_upper = 1
-//	catalogue_data = list(/datum/category_item/catalogue/fauna/doglin)
+	catalogue_data = list(/datum/category_item/catalogue/fauna/doglin)
 
 	attacktext = list("nipped", "chomped", "slapped", "gnaws on")
 	attack_sound = 'sound/voice/bork.ogg'
@@ -36,6 +36,8 @@
 
 	has_hands = TRUE
 	humanoid_hands = TRUE
+
+	load_owner = "seriouslydontsavethis"	//they smort
 
 	var/static/list/overlays_cache = list()
 	var/yip_cooldown = 0

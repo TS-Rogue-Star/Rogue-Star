@@ -8682,6 +8682,10 @@
 "GB" = (
 /turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/level2/ne)
+"GC" = (
+/obj/effect/station_pet,
+/turf/simulated/floor/wood,
+/area/groundbase/civilian/library)
 "GH" = (
 /turf/unsimulated/wall/planetary/normal{
 	desc = "It's quite impassable";
@@ -23829,8 +23833,8 @@ bR
 bR
 TH
 TH
-TH
-TH
+Wf
+Wf
 TH
 TH
 TH
@@ -23971,8 +23975,8 @@ bR
 bR
 TH
 TH
-TH
-TH
+Wf
+Wf
 TH
 TH
 TH
@@ -24113,8 +24117,8 @@ bR
 bR
 bR
 bR
-bR
-bR
+Wf
+Wf
 bR
 bR
 bR
@@ -24255,8 +24259,8 @@ bR
 bR
 bR
 bR
-bR
-bR
+Wf
+Wf
 bR
 bR
 bR
@@ -24397,8 +24401,8 @@ bR
 bR
 bR
 bR
-bR
-bR
+Wf
+Wf
 bR
 bR
 bR
@@ -28224,7 +28228,7 @@ oM
 gK
 Ja
 DN
-DN
+GC
 DN
 DN
 Bb

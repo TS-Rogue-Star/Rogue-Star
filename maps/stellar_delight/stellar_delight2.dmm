@@ -4425,12 +4425,10 @@
 /turf/simulated/floor/tiled/eris/white/bluecorner,
 /area/medical/cmostore)
 "jr" = (
-/obj/structure/closet/emergsuit_wall{
-	pixel_y = 29
-	},
 /obj/effect/floor_decal/milspec/color/silver/corner{
 	dir = 4
 	},
+/obj/machinery/mob_bank,
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck2/fore)
 "js" = (
@@ -13866,6 +13864,18 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled/monotile,
 /area/hydroponics)
+"EB" = (
+/obj/effect/floor_decal/milspec/color/silver/corner{
+	dir = 4
+	},
+/obj/effect/floor_decal/milspec/color/black/corner{
+	dir = 1
+	},
+/obj/structure/closet/emergsuit_wall{
+	pixel_y = 29
+	},
+/turf/simulated/floor/tiled,
+/area/stellardelight/deck2/fore)
 "EC" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/paper_bin{
@@ -17670,6 +17680,10 @@
 	},
 /turf/simulated/floor/tiled/eris/white/cargo,
 /area/stellardelight/deck2/triage)
+"MI" = (
+/obj/effect/station_pet,
+/turf/simulated/floor/glass/reinforced,
+/area/crew_quarters/recreation_area)
 "MJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 4
@@ -33191,7 +33205,7 @@ YU
 TC
 YU
 Sx
-VG
+EB
 KH
 zz
 nt
@@ -33487,7 +33501,7 @@ Fw
 vS
 Ut
 IE
-Ut
+MI
 Xx
 NS
 mL

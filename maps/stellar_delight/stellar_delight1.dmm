@@ -14490,6 +14490,10 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/security/security_equiptment_storage)
+"EE" = (
+/obj/effect/station_pet,
+/turf/simulated/floor/wood,
+/area/library)
 "EG" = (
 /obj/structure/cable/green{
 	color = "#42038a";
@@ -36760,7 +36764,7 @@ Uz
 Vp
 Sx
 aG
-iq
+EE
 dx
 LY
 Cm
