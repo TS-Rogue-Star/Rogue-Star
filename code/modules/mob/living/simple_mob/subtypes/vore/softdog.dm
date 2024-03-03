@@ -175,6 +175,7 @@
 	faction = "theatre"
 	gender = PLURAL
 	ai_holder_type = /datum/ai_holder/simple_mob/woof/cass
+	load_owner = "STATION"	//RS ADD - Pet
 
 /mob/living/simple_mob/vore/woof/cass
 	vore_digest_chance = 0

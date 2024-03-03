@@ -29,6 +29,7 @@
 	)
 
 	faction = "peasant"
+	load_owner = "seriouslydontsavethis"	//RS ADD - They're people
 
 /mob/living/simple_mob/vore/peasant/New()
 	..()
@@ -69,4 +70,3 @@
 	B.escapechance = 15
 	B.selective_preference = DM_HOLD
 	B.escape_stun = 5
-

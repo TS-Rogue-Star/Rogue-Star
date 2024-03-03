@@ -79,6 +79,9 @@
 	var/check_for_observer = FALSE
 	var/check_timer = 0
 
+	load_owner = "seriouslydontsavethis"	//RS ADD - They're people
+
+
 /mob/living/simple_mob/shadekin/Initialize()
 	//You spawned the prototype, and want a totally random one.
 	if(type == /mob/living/simple_mob/shadekin)

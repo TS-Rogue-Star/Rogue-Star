@@ -30,6 +30,7 @@
 	)
 
 	faction = "succubus"
+	load_owner = "seriouslydontsavethis"	//RS ADD - They're people
 
 /mob/living/simple_mob/vore/succubus/New()
 	..()
@@ -70,4 +71,3 @@
 	B.escapechance = 15
 	B.selective_preference = DM_DRAIN
 	B.escape_stun = 5
-
