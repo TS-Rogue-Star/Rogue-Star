@@ -37,6 +37,7 @@
 	pixel_x = -16
 	pixel_y = 0
 	faction = "wolftaur"
+	load_owner = "seriouslydontsavethis"	//RS ADD - They're people
 
 /mob/living/simple_mob/vore/wolftaur/New()
 	..()
@@ -155,4 +156,3 @@
 	icon_living = "wolftaurdark"
 	icon_rest = "wolftaurdark_rest"
 	icon_dead = "wolftaurdark-dead"
-

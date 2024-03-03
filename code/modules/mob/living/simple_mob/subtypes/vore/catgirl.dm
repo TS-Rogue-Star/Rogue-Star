@@ -36,6 +36,7 @@
 	)
 
 	faction = "catgirl"
+	load_owner = "seriouslydontsavethis"	//RS ADD - They're people
 
 /mob/living/simple_mob/vore/catgirl/New()
 	..()

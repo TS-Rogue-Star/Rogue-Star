@@ -29,6 +29,7 @@
 	)
 
 	faction = "vampire"
+	load_owner = "seriouslydontsavethis"	//RS ADD - They're people
 
 /mob/living/simple_mob/vore/vampire/New()
 	..()

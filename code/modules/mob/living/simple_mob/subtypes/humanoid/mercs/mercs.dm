@@ -41,6 +41,7 @@
 	special_attack_cooldown = 45 SECONDS
 	special_attack_min_range = 2
 	special_attack_max_range = 7
+	load_owner = "seriouslydontsavethis"	//RS ADD - They're people
 
 ////////////////////////////////
 //		Grenade Attack
