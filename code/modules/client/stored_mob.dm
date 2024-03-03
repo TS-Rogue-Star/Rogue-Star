@@ -93,6 +93,7 @@
 	var/whatname = tgui_input_text(user, "What name do you want to register for \the [ourmob]? (25 characters)", "Pet name?", ourmob.name, max_length = 25)
 	if(length(whatname) > 25)
 		to_chat(user, "<span class = 'warning'>[whatname] is too long. (25 characters)</span>")
+		return
 	if(!whatname)
 		busy_bank = FALSE
 		return
@@ -116,6 +117,7 @@
 		busy_bank = FALSE
 		log_admin("[user.ckey] saved [ourmob] - [ourmob.type] to the station pet pool.")
 		visible_message("<span class='notice'>\The [src] pings happily as it finishes scanning \the [ourmob]!</span>", runemessage = "Ping!")
+		mob_savers |= user.ckey
 		update_icon()
 		return
 
@@ -323,6 +325,7 @@
 		var/mob/living/simple_mob/M = new ourtype(get_turf(src))
 		M.mob_bank_load(load = ourmob)
 		M.desc += " It has a PET tag: \"[M.real_name]\", it is registered as a station pet!"
+		M.faction = "neutral"
 
 		log_admin("[M] - [M.type] was spawned from the station pet spawn list.")
 	qdel(src)
