@@ -1,4 +1,5 @@
 //Let's go wild let's go stupid
+//My code is an atrocity, may it stand as a testement for all who gaze my way, look and be afraid
 /obj/machinery/mob_bank
 	name = "PET System"
 	desc = "It's the petatronic energy transport system! It's a machine that can scan and retrieve your pets!"
@@ -34,6 +35,10 @@
 	if(busy_bank)
 		to_chat(user, "<span class='warning'>\The [src] is already in use.</span>")
 		return
+	if(user.real_name != user.client.prefs.real_name)
+		to_chat(user, "<span class = 'warning'>The slot you have selected in character setup is mismatched with the character you are playing as. In order to use the PET system, please select the slot that matches your character.</span>")
+		return
+
 	busy_bank = TRUE
 	var/choice = tgui_alert(user, "What would you like to do [src]?", "[src]", list("Info", "Retrieve Pet","Cancel"), timeout = 10 SECONDS)
 
@@ -66,7 +71,7 @@
 		return
 
 /obj/machinery/mob_bank/proc/persist_mob_savefile_path(mob/user)
-	return "data/player_saves/[copytext(user.ckey, 1, 2)]/[user.ckey]/persist_mob.json"
+	return "data/player_saves/[copytext(user.ckey, 1, 2)]/[user.ckey]/pet/slot[user.client.prefs.default_slot].json"
 
 /obj/machinery/mob_bank/proc/persist_mob_save(mob/user, mob/living/simple_mob/ourmob)
 	if(busy_bank)
@@ -81,8 +86,13 @@
 	if(!ourmob.save_conditions(user))
 		to_chat(user, "<span class = 'warning'>\The [ourmob] can not be registered into the PET system.</span>")
 		return
+	if(user.real_name != user.client.prefs.real_name)
+		to_chat(user, "<span class = 'warning'>The slot you have selected in character setup is mismatched with the character you are playing as. In order to use the PET system, please select the slot that matches your character.</span>")
+		return
 	busy_bank = TRUE
-	var/whatname = tgui_input_text(user, "What name do you want to register for \the [ourmob]?", "Pet name?", ourmob.name, max_length = 25)
+	var/whatname = tgui_input_text(user, "What name do you want to register for \the [ourmob]? (25 characters)", "Pet name?", ourmob.name, max_length = 25)
+	if(length(whatname) > 25)
+		to_chat(user, "<span class = 'warning'>[whatname] is too long. (25 characters)</span>")
 	if(!whatname)
 		busy_bank = FALSE
 		return
