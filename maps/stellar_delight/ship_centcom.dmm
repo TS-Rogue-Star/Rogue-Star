@@ -2416,6 +2416,10 @@
 "hN" = (
 /turf/simulated/floor/tiled/dark,
 /area/centcom/control)
+"hO" = (
+/obj/machinery/mob_bank,
+/turf/simulated/floor/tiled,
+/area/centcom/main_hall)
 "hP" = (
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "tram"
@@ -29204,7 +29208,7 @@ MV
 aM
 aM
 aM
-vu
+hO
 vu
 vu
 vu

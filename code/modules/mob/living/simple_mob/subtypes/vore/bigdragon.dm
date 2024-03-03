@@ -110,6 +110,8 @@ I think I covered everything.
 
 	plane = ABOVE_MOB_PLANE
 
+	load_owner = "seriouslydontsavethis"	//RS - ADD - They're essentially boss mobs, so, yeah, just don't.
+
 	//Dragon vars
 	var/notame
 	var/norange
