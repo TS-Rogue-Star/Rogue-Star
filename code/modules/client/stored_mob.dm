@@ -252,6 +252,9 @@
 	if(!(ai_holder.stance == STANCE_SLEEP || ai_holder.stance == STANCE_IDLE || ai_holder.stance == STANCE_FOLLOW))	//The AI is trying to do stuff, don't save it
 		to_chat(user,"<span class = 'warning'>\The [src] is too unruly to be registered.</span>")
 		return FALSE
+	if(stat != CONSCIOUS)
+		to_chat(user,"<span class = 'warning'>\The [src] is not in a condition to be scanned.</span>")
+		return FALSE
 	return TRUE
 
 /mob/living/simple_mob/proc/mob_bank_load(mob/living/user, var/list/load)
