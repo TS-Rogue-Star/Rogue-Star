@@ -67,7 +67,7 @@
 		visible_message("[src]'s eyes flicker with a curious intelligence.", runemessage = "looks around")
 		return
 	if(revivedby != "no one")
-		to_chat(src, "<span class='notice'>Where once your life had been rough and scary, you have been assisted by [revivedby]. They seem to be the reason you are on your feet again... so perhaps you should help them out.</span> <span class= warning> Being as you were revived, you are allied with the station. Do not attack anyone unless they are threatening the one who revived you. And try to listen to the one who revived you within reason. Of course, you may do scenes as you like, but you must still respect preferences.</span>")
+		to_chat(src, "<span class='notice'>You are bound to [revivedby], they take care of you, so you should follow their lead.</span> <span class= warning> You are allied with the station. Do not attack anyone unless they are threatening the one who revived you. And try to listen to the one who revived you within reason. Of course, you may do scenes as you like, but you must still respect preferences.</span>")
 		visible_message("[src]'s eyes flicker with a curious intelligence.", runemessage = "looks around")
 
 /// Evaluate someone for being allowed to join as this mob from being a ghost
