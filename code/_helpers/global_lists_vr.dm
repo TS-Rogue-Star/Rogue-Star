@@ -80,6 +80,7 @@ var/global/list/classic_release_sounds = list(
 		"Rustle 5 (cloth)" = 'sound/effects/rustle5.ogg',
 		"Zipper" = 'sound/items/zip.ogg',
 		"Splatter" = 'sound/effects/splat.ogg',
+		"Belch" = "belches",
 		"None" = null
 		)
 
@@ -115,6 +116,7 @@ var/global/list/fancy_release_sounds = list(
 		"Stomach Move" = 'sound/vore/sunesound/pred/stomachmove.ogg',
 		"Pred Escape" = 'sound/vore/sunesound/pred/escape.ogg',
 		"Splatter" = 'sound/effects/splat.ogg',
+		"Belch" = "belches",
 		"None" = null
 		)
 
