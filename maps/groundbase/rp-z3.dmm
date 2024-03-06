@@ -719,11 +719,7 @@
 /turf/simulated/floor/wood,
 /area/groundbase/hotspring)
 "mv" = (
-/turf/simulated/floor/outdoors/grass/seasonal/preset/autumn{
-	animal_chance = 0;
-	grass_chance = 0;
-	tree_chance = 0
-	},
+/turf/simulated/floor/outdoors/grass/seasonal/preset/skipwinter_autumn,
 /area/groundbase/level3/nw)
 "mw" = (
 /obj/structure/railing/grey{

@@ -18,6 +18,7 @@ var/world_time_day
 			world_time_season = "winter"
 	world_time_day = text2num(time2text(world.timeofday, "DD"))
 	world_time_year = text2num(time2text(world.timeofday, "YYYY"))
+	world_time_season = "winter"
 
 /turf/simulated/floor/outdoors/grass/seasonal
 	name = "grass"
@@ -36,6 +37,8 @@ var/world_time_day
 	var/tree_types = list()
 	var/snow_chance = 10
 	var/preset_season = null
+	var/skipseason = null
+	var/replacement_season = null
 
 /turf/simulated/floor/outdoors/grass/seasonal/Initialize()
 
@@ -217,6 +220,11 @@ var/world_time_day
 		if(preset_season == "spring" || "summer" || "autumn" || "winter")
 			ourseason = preset_season
 
+	else if(skipseason && replacement_season)
+		if(ourseason == skipseason)
+			if(replacement_season == "spring" || "summer" || "autumn" || "winter")
+				ourseason = replacement_season
+
 	switch(ourseason)
 		if("spring")
 			if(prob(50))
@@ -323,3 +331,9 @@ var/world_time_day
 	initial_flooring = /decl/flooring/grass/seasonal_grass/winter
 	color = "#0066ff"
 	preset_season = "winter"
+
+/turf/simulated/floor/outdoors/grass/seasonal/preset/skipwinter_autumn
+	initial_flooring = /decl/flooring/grass/seasonal_grass/skipwinter_autumn
+	color = "#ff00c8"
+	skipseason = "winter"
+	replacement_season = "autumn"

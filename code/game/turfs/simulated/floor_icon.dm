@@ -30,6 +30,10 @@ var/image/no_ceiling_image = null
 				if(flooring.preset_season)
 					if(flooring.preset_season == "spring" || "summer" || "autumn" || "winter")
 						ourseason = flooring.preset_season
+				else if(flooring.skipseason && flooring.replacement_season)
+					if(ourseason == flooring.skipseason)
+						if(flooring.replacement_season == "spring" || "summer" || "autumn" || "winter")
+							ourseason = flooring.replacement_season
 
 				icon_state = "[icon_state]-[ourseason]"	//VOREStation Addition End
 			if(flooring.has_base_range)
