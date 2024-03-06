@@ -117,6 +117,9 @@ var/list/flooring_types
 
 	var/check_season = FALSE	//VOREStation Addition
 	var/preset_season = null	//RS ADD
+	var/skipseason = null		//RS ADD
+	var/replacement_season = null	//RS ADD
+
 
 /decl/flooring/proc/get_plating_type(var/turf/T)
 	return plating_type
@@ -644,3 +647,6 @@ var/list/flooring_types
 	preset_season = "autumn"
 /decl/flooring/grass/seasonal_grass/winter
 	preset_season = "winter"
+/decl/flooring/grass/seasonal_grass/skipwinter_autumn
+	skipseason = "winter"
+	replacement_season = "autumn"
