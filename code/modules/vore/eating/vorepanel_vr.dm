@@ -893,6 +893,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 							var/mob/living/carbon/human/h = l
 							thismuch = thismuch * h.species.digestion_nutrition_modifier
 						l.adjust_nutrition(thismuch)
+					ourtarget.mind?.vore_death = TRUE
 					ourtarget.death()		// To make sure all on-death procs get properly called
 					if(ourtarget)
 						b.handle_digestion_death(ourtarget)
