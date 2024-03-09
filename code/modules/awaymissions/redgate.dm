@@ -12,6 +12,7 @@
 	on_store_visible_message_2 = "finishes walks through it."
 	var/obj/machinery/cryopod/robot/door/gateway/redgate/target
 	var/secret = FALSE	//If either end of the redgate has this enabled, ghosts will not be able to click to teleport
+	var/restrict_mobs = TRUE
 	var/list/exceptions = list(
 		/obj/structure/ore_box
 		)	//made it a var so that GMs or map makers can selectively allow things to pass through
@@ -33,11 +34,12 @@
 
 /obj/machinery/cryopod/robot/door/gateway/redgate/proc/teleport(var/mob/M as mob)
 	var/keycheck = TRUE
-	if (!istype(M,/mob/living))		//We only want mob/living, no bullets or mechs or AI eyes or items
+	if(!isliving(M))		//We only want mob/living, no bullets or mechs or AI eyes or items
 		if(M.type in exceptions)
 			keycheck = FALSE		//we'll allow it
-		else
-			return
+		else return
+	if(!restrict_mobs || M.faction == "neutral")
+		keycheck = FALSE		//Probably a pet or something people will want to vibe with
 
 	if(M.type in restrictions)	//Some stuff we don't want to bring EVEN IF it has a key.
 		return
@@ -45,7 +47,6 @@
 	if(keycheck)		//exceptions probably won't have a ckey
 		if(!M.ckey)		//We only want players, no bringing the weird stuff on the other side back
 			return
-
 	if(!target)
 		if(density)
 			toggle_portal()

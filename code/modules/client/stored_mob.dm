@@ -43,7 +43,7 @@
 	var/choice = tgui_alert(user, "What would you like to do [src]?", "[src]", list("Info", "Retrieve Pet","Cancel"), timeout = 10 SECONDS)
 
 	if(choice == "Info")
-		to_chat(user,"<span class = 'notice'>You can use this machine to take a scan of your pets so that they can be retrieved in future shifts. This system works on an account basis. (So all of your characters have the same pet saved.) </span><span class = 'warning'>There are a number of restrictions about what pets can be stored. No crew members or other similarly complicated/intelligent creatures (monkeys/carbons/borgs), no otherwise sapient creatures (player controlled mobs), and no hostile entities. Any already registered pets will also not be able to be registered. Further, some kinds of creatures may have their own individual restrictions.</span><span class = 'notice'> One can register a pet by presenting the pet to the scanning device. (Click and drag your mob's sprite onto the sprite of the bank.) Once one has registered a pet, they can retrieve that pet in future shifts. One can not retrieve their pet on the same shift that they registered it, as the pet will still be present!</span>")
+		to_chat(user,"<span class = 'notice'>You can use this machine to take a scan of your pets so that they can be retrieved in future shifts. This system allows you to save one mob as a pet per character. Saving or loading mobs is only available one time per shift on an account basis. (Ckey) Saving a pet makes loading a pet unavalable for the duration of the shift. </span><span class = 'warning'>There are a number of restrictions about what pets can be stored. No crew members or other similarly complicated/intelligent creatures (monkeys/carbons/borgs), no otherwise sapient creatures (player controlled mobs), and no hostile entities. Any already registered pets will also not be able to be registered. Further, some kinds of creatures may have their own individual restrictions.</span><span class = 'notice'> One can register a pet by presenting the pet to the scanning device. (Click and drag your mob's sprite onto the sprite of the bank.) Once one has registered a pet, they can retrieve that pet in future shifts. One can not retrieve their pet on the same shift that they registered it, as the pet will still be present!</span>")
 		busy_bank = FALSE
 	else if (choice == "Retrieve Pet")
 		if(user.ckey in mob_takers)
@@ -150,6 +150,11 @@
 	ourmob.real_name = whatname
 	ourmob.load_owner = user.ckey
 	var/list/to_save = ourmob.mob_bank_save(user)
+	ourmob.verbs += /mob/living/simple_mob/proc/toggle_ghostjoin
+	if(ourmob.ai_holder.hostile)
+		ourmob.verbs += /mob/living/simple_mob/proc/toggle_hostile
+		ourmob.ai_holder.hostile = FALSE
+
 	if(!to_save)
 		busy_bank = FALSE
 		visible_message("<span class='warning'>\The [src] boops unhappily. It encountered an error when attempting to save \the [ourmob]'s scan.</span>", runemessage = "boop...")
@@ -202,9 +207,14 @@
 	M.mob_bank_load(user, load)
 	M.faction = user.faction
 	M.desc += " It has a PET tag: \"[M.real_name]\", if lost, return to [user.real_name]."
+	M.revivedby = user.real_name
 	to_chat(user,"<span class = 'notice'>\The [M] appears from \the [src]!</span>")
 	log_admin("[key_name_admin(user)] retrieved [M] - [M.type] from the mob bank.")
 	mob_takers += user.ckey
+	M.verbs += /mob/living/simple_mob/proc/toggle_ghostjoin
+	if(M.ai_holder.hostile)
+		M.verbs += /mob/living/simple_mob/proc/toggle_hostile
+		M.ai_holder.hostile = FALSE
 
 /obj/machinery/mob_bank/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
@@ -265,6 +275,43 @@
 	name = load["name"]
 	real_name = name
 
+/mob/living/simple_mob/proc/toggle_ghostjoin()
+	set name = "Toggle Ghost Join"
+	set category = "OOC"
+	set src in view(1)
+
+	if(!isliving(usr))
+		return
+
+	if(usr.ckey != load_owner)
+		to_chat(usr, "<span class = 'warning'>This isn't your pet, you can't do that!</span>")
+		return
+	if(ckey)
+		to_chat(usr, "<span class = 'warning'>Someone is already controlling \the [src].</span>")
+		return
+	ghostjoin = !ghostjoin
+	to_chat(usr, "<span class = 'notice'>\The [src]'s now [ghostjoin ? "able" : "unable"] to be controlled by ghosts.</span>")
+	ghostjoin_icon()
+
+/mob/living/simple_mob/proc/toggle_hostile()
+	set name = "Toggle Hostile"
+	set category = "OOC"
+	set src in view(1)
+
+	if(!isliving(usr))
+		return
+
+	if(usr.ckey != load_owner)
+		to_chat(usr, "<span class = 'warning'>This isn't your pet, you can't do that!</span>")
+		return
+	if(ckey)
+		to_chat(usr, "<span class = 'warning'>Someone is already controlling \the [src].</span>")
+		return
+	if(!ai_holder)
+		to_chat(usr, "<span class = 'warning'>\The [src] seems to not have an AI, so you can't do that.</span>")
+		return
+	ai_holder.hostile = !ai_holder.hostile
+	to_chat(usr, "<span class = 'notice'>\The [src] is [ai_holder.hostile ? "now hostile" : "no longer hostile"].</span>")
 
 
 //STATION PET SAVE SYSTEM
