@@ -207,6 +207,9 @@
 	log_admin("[key_name_admin(user)] retrieved [M] - [M.type] from the mob bank.")
 	mob_takers += user.ckey
 	M.verbs += /mob/living/simple_mob/proc/toggle_ghostjoin
+	if(M.ai_holder.hostile)
+		M.verbs += /mob/living/simple_mob/proc/toggle_hostile
+		M.ai_holder.hostile = FALSE
 
 /obj/machinery/mob_bank/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
@@ -284,6 +287,27 @@
 	ghostjoin = !ghostjoin
 	to_chat(usr, "<span class = 'notice'>Ghost join [ghostjoin ? "enabled" : "disabled"]</span>")
 	ghostjoin_icon()
+
+/mob/living/simple_mob/proc/toggle_hostile()
+	set name = "Toggle Hostile"
+	set category = "OOC"
+	set src in view(1)
+
+	if(!isliving(usr))
+		return
+
+	if(usr.ckey != load_owner)
+		to_chat(usr, "<span class = 'warning'>This isn't your pet, you can't do that!</span>")
+		return
+	if(ckey)
+		to_chat(usr, "<span class = 'warning'>Someone is already controlling \the [src].</span>")
+		return
+	if(!ai_holder)
+		to_chat(usr, "<span class = 'warning'>\The [src] seems to not have an AI, so you can't do that.</span>")
+		return
+	ai_holder.hostile = !ai_holder.hostile
+	to_chat(usr, "<span class = 'notice'>\The [src] is [ai_holder.hostile ? "now hostile" : "no longer hostile"].</span>")
+
 
 //STATION PET SAVE SYSTEM
 /datum/persistent/saved_mobs

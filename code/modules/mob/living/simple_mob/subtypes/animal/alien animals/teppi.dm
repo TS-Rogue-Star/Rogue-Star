@@ -92,7 +92,6 @@ GLOBAL_VAR_INIT(teppi_count, 0)	// How mant teppi DO we have?
 	var/affinity = list()
 	var/allergen_preference
 	var/allergen_unpreference
-	var/body_color
 	var/marking_color
 	var/horn_color
 	var/eye_color
@@ -1242,7 +1241,7 @@ GLOBAL_VAR_INIT(teppi_count, 0)	// How mant teppi DO we have?
 		"affinity" = affinity[user.real_name],
 		"allergen_preference" = allergen_preference,
 		"allergen_unpreference" = allergen_unpreference,
-		"body_color" = body_color,
+		"body_color" = color,
 		"marking_color" = marking_color,
 		"horn_color" = horn_color,
 		"eye_color" = eye_color,
@@ -1266,7 +1265,7 @@ GLOBAL_VAR_INIT(teppi_count, 0)	// How mant teppi DO we have?
 	real_name = name
 	allergen_preference = load["allergen_preference"]
 	allergen_unpreference = load["allergen_unpreference"]
-	body_color = load["body_color"]
+	color = load["body_color"]
 	marking_color = load["marking_color"]
 	horn_color = load["horn_color"]
 	eye_color = load["eye_color"]
