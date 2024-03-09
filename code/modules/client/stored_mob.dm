@@ -150,6 +150,11 @@
 	ourmob.real_name = whatname
 	ourmob.load_owner = user.ckey
 	var/list/to_save = ourmob.mob_bank_save(user)
+	ourmob.verbs += /mob/living/simple_mob/proc/toggle_ghostjoin
+	if(ourmob.ai_holder.hostile)
+		ourmob.verbs += /mob/living/simple_mob/proc/toggle_hostile
+		ourmob.ai_holder.hostile = FALSE
+
 	if(!to_save)
 		busy_bank = FALSE
 		visible_message("<span class='warning'>\The [src] boops unhappily. It encountered an error when attempting to save \the [ourmob]'s scan.</span>", runemessage = "boop...")
@@ -285,7 +290,7 @@
 		to_chat(usr, "<span class = 'warning'>Someone is already controlling \the [src].</span>")
 		return
 	ghostjoin = !ghostjoin
-	to_chat(usr, "<span class = 'notice'>Ghost join [ghostjoin ? "enabled" : "disabled"]</span>")
+	to_chat(usr, "<span class = 'notice'>\The [src]'s now [ghostjoin ? "able" : "unable"] to be controlled by ghosts.</span>")
 	ghostjoin_icon()
 
 /mob/living/simple_mob/proc/toggle_hostile()
