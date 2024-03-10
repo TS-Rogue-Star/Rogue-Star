@@ -18,7 +18,6 @@ var/world_time_day
 			world_time_season = "winter"
 	world_time_day = text2num(time2text(world.timeofday, "DD"))
 	world_time_year = text2num(time2text(world.timeofday, "YYYY"))
-	world_time_season = "winter"
 
 /turf/simulated/floor/outdoors/grass/seasonal
 	name = "grass"

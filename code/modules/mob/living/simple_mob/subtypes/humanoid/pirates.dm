@@ -26,6 +26,8 @@
 
 	corpse = /obj/effect/landmark/mobcorpse/pirate
 
+	load_owner = "seriouslydontsavethis"	//RS ADD - They're people
+
 /mob/living/simple_mob/humanoid/pirate/ranged
 	name = "Pirate Gunner"
 	icon_state = "pirateranged"

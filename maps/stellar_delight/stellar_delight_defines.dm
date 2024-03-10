@@ -175,7 +175,8 @@
 		list("Redgate - Islands Underwater","Redgate - Islands"),
 		list("Redgate - Moving Train", "Redgate - Moving Train Upper Level"),
 		list("Redgate - Fantasy Dungeon", "Redgate - Fantasy Town"),
-		list("Redgate - Snowglobe")
+		list("Redgate - Snowglobe"),
+		list("Redgate - Pet Island")
 		)
 
 	ai_shell_restricted = TRUE

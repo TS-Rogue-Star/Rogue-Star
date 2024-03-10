@@ -38,7 +38,7 @@
 		if(M.type in exceptions)
 			keycheck = FALSE		//we'll allow it
 		else return
-	if(!restrict_mobs || M.faction == "neutral")
+	if(!restrict_mobs || M.faction == "neutral" || M.faction == "pet")
 		keycheck = FALSE		//Probably a pet or something people will want to vibe with
 
 	if(M.type in restrictions)	//Some stuff we don't want to bring EVEN IF it has a key.
