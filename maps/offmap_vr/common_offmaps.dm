@@ -332,7 +332,10 @@
 	desc = "Avery normal snowglobe!"
 	mappath = 'maps/redgate/snowglobe-b.dmm'
 
-
+/datum/map_template/common_lateload/redgate/petisland
+	name = "Redgate - Pet Island"
+	desc = "A cozy island with a bunch of potential pets on it!"
+	mappath = 'maps/redgate/petisland.dmm'
 
 // RS EDIT END
 

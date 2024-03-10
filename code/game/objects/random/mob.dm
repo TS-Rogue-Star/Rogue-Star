@@ -8,6 +8,7 @@
 	icon_state = "animal"
 
 	var/overwrite_hostility = 0
+	var/overwrite_retaliate = FALSE	//RS ADD - spaghetti
 
 	var/mob_faction = null
 	var/mob_returns_home = 0
@@ -52,6 +53,7 @@
 		AI.max_home_distance = mob_wander_distance
 		if(overwrite_hostility)
 			AI.hostile = mob_hostile
+		if(overwrite_retaliate)
 			AI.retaliate = mob_retaliate
 		AI.go_wake() //Now you can kill eachother if your faction didn't override.
 

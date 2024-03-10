@@ -55,6 +55,7 @@
 		"scel_red",
 		"scel_green"
 	)
+	load_owner = "seriouslydontsavethis"	//RS ADD - They're people
 
 /mob/living/simple_mob/vore/scel/New()
 	..()
