@@ -149,11 +149,14 @@
 	ourmob.name = whatname
 	ourmob.real_name = whatname
 	ourmob.load_owner = user.ckey
+	ourmob.faction = user.faction
 	var/list/to_save = ourmob.mob_bank_save(user)
 	ourmob.verbs += /mob/living/simple_mob/proc/toggle_ghostjoin
+	ourmob.verbs += /mob/living/simple_mob/proc/toggle_follow
 	if(ourmob.ai_holder.hostile)
 		ourmob.verbs += /mob/living/simple_mob/proc/toggle_hostile
 		ourmob.ai_holder.hostile = FALSE
+		ourmob.ai_holder.vore_hostile = FALSE
 
 	if(!to_save)
 		busy_bank = FALSE
@@ -212,9 +215,11 @@
 	log_admin("[key_name_admin(user)] retrieved [M] - [M.type] from the mob bank.")
 	mob_takers += user.ckey
 	M.verbs += /mob/living/simple_mob/proc/toggle_ghostjoin
+	M.verbs += /mob/living/simple_mob/proc/toggle_follow
 	if(M.ai_holder.hostile)
 		M.verbs += /mob/living/simple_mob/proc/toggle_hostile
 		M.ai_holder.hostile = FALSE
+		M.ai_holder.vore_hostile = FALSE
 
 /obj/machinery/mob_bank/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
@@ -313,6 +318,28 @@
 	ai_holder.hostile = !ai_holder.hostile
 	to_chat(usr, "<span class = 'notice'>\The [src] is [ai_holder.hostile ? "now hostile" : "no longer hostile"].</span>")
 
+/mob/living/simple_mob/proc/toggle_follow()
+	set name = "Toggle Follow"
+	set category = "OOC"
+	set src in view(1)
+
+	if(!isliving(usr))
+		return
+
+	if(usr.ckey != load_owner)
+		to_chat(usr, "<span class = 'warning'>This isn't your pet, you can't do that!</span>")
+		return
+	if(ckey)
+		to_chat(usr, "<span class = 'warning'>Someone is already controlling \the [src].</span>")
+		return
+	if(!ai_holder)
+		to_chat(usr, "<span class = 'warning'>\The [src] seems to not have an AI, so you can't do that.</span>")
+		return
+	if(!ai_holder.leader)
+		ai_holder.set_follow(usr, follow_for = 10 MINUTES)
+	else
+		ai_holder.lose_follow()
+	to_chat(usr, "<span class = 'notice'>\The [src] is [ai_holder.leader ? "now" : "no longer"] following you.</span>")
 
 //STATION PET SAVE SYSTEM
 /datum/persistent/saved_mobs
