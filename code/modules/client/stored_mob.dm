@@ -369,10 +369,8 @@
 	. = ..()
 	if(fexists(filename))
 		SSpersistence.stored_pets = json_decode(file2text(filename))
-
 	for(var/obj/effect/station_pet/pet in world)
 		pet.do_yo_thang_gurrrrllllllll()
-
 
 /obj/machinery/mob_bank/proc/persist_mob_save_station(mob/user, mob/living/simple_mob/ourmob)
 	var/list/to_save = ourmob.mob_bank_save(user)
@@ -386,23 +384,26 @@
 /obj/effect/station_pet
 	icon = 'icons/rogue-star/machinex32.dmi'
 	icon_state = "PET"
-	var/static/list/picked_mobs = list()
+	var/static/list/picked = list()
 
 /obj/effect/station_pet/proc/do_yo_thang_gurrrrllllllll()
+	if(SSpersistence.stored_pets.len > picked.len)
+		var/list/possible = list()
+		possible += SSpersistence.stored_pets
 
-	if(SSpersistence.stored_pets.len)
-		var/list/pickable_mobs = list()
-		pickable_mobs |= SSpersistence.stored_pets
-		pickable_mobs -= picked_mobs
-		var/list/ourmob = pick(SSpersistence.stored_pets)
+		for(var/list/pet in picked)
+			possible.Remove(list(pet))
 
-		picked_mobs |= ourmob
+		var/list/ourmob = pick(possible)
+		picked.Add(list(ourmob))
 
 		var/ourtype = ourmob["type"]
 		var/mob/living/simple_mob/M = new ourtype(get_turf(src))
 		M.mob_bank_load(load = ourmob)
 		M.desc += " It has a PET tag: \"[M.real_name]\", it is registered as a station pet!"
 		M.faction = "neutral"
+		M.ai_holder.hostile = FALSE
+		M.ai_holder.vore_hostile = FALSE
 
 		log_admin("[M] - [M.type] was spawned from the station pet spawn list.")
 	qdel(src)
