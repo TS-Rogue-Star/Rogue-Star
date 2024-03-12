@@ -1202,6 +1202,7 @@
 		species.remove_inherent_verbs(src)
 		holder_type = null
 		hunger_rate = initial(hunger_rate) //VOREStation Add
+		center_offset = species.center_offset
 
 	species = GLOB.all_species[new_species]
 
