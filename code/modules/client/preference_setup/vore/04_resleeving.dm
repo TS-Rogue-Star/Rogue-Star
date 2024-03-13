@@ -2,6 +2,7 @@
 /datum/preferences
 	var/resleeve_lock = 0	// Whether movs should have OOC reslieving protection. Default false.
 	var/resleeve_scan = 1	// Whether mob should start with a pre-spawn body scan.  Default true.
+	var/cookieman = FALSE	// Whether mod can be printed as a snack. requires body scan. Default false.
 
 // Definition of the stuff for Sizing
 /datum/category_item/player_setup_item/vore/resleeve
@@ -11,15 +12,18 @@
 /datum/category_item/player_setup_item/vore/resleeve/load_character(var/savefile/S)
 	S["resleeve_lock"]		>> pref.resleeve_lock
 	S["resleeve_scan"]		>> pref.resleeve_scan
+	S["cookieman"]			>> pref.cookieman
 
 
 /datum/category_item/player_setup_item/vore/resleeve/save_character(var/savefile/S)
 	S["resleeve_lock"]		<< pref.resleeve_lock
 	S["resleeve_scan"]		<< pref.resleeve_scan
+	S["cookieman"]			<< pref.cookieman
 
 /datum/category_item/player_setup_item/vore/resleeve/sanitize_character()
 	pref.resleeve_lock		= sanitize_integer(pref.resleeve_lock, 0, 1, initial(pref.resleeve_lock))
 	pref.resleeve_scan		= sanitize_integer(pref.resleeve_scan, 0, 1, initial(pref.resleeve_scan))
+	pref.cookieman			= sanitize_integer(pref.cookieman, 0, 1, initial(pref.cookieman))
 
 /datum/category_item/player_setup_item/vore/resleeve/copy_to_mob(var/mob/living/carbon/human/character)
 	if(character && !istype(character,/mob/living/carbon/human/dummy))
@@ -28,9 +32,11 @@
 				return // They might have been deleted during the wait
 			if(pref.resleeve_scan)
 				var/datum/transhuman/body_record/BR = new()
-				BR.init_from_mob(character, pref.resleeve_scan, pref.resleeve_lock)
+				BR.init_from_mob(character, pref.resleeve_scan, pref.resleeve_lock, pref.cookieman)
 			if(pref.resleeve_lock)
 				character.resleeve_lock = character.ckey
+			if(pref.cookieman)
+				character.cookieman = character.ckey
 			character.original_player = character.ckey
 
 /datum/category_item/player_setup_item/vore/resleeve/content(var/mob/user)

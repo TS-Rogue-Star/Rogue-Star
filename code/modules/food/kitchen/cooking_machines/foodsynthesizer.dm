@@ -8,9 +8,9 @@
 #define SYNTH_LUNCH		4
 #define SYNTH_DINNER	5
 #define SYNTH_DESSERT	6
-#define SYNTH_EXOTIC	7
-#define SYNTH_RAW		8
-#define SYNTH_CREW		9
+#define SYNTH_EXOTICRAW	7
+#define SYNTH_CREW		8
+#define SYNTH_FOODLIST	9
 
 //#define VOICE_ORDER(A, O, T) list(activator = A, order = O, temp = T)
 
@@ -18,7 +18,7 @@
 
 /obj/machinery/synthesizer
 	name = "food synthesizer"
-	desc = "a device able to produce an incredible array of conventional foods. Although only the most ascetic of users claim it produces truly good tasting products."
+	desc = "Sabresnacks brand device able to produce an incredible array of conventional foods. Although only the most ascetic of users claim it produces truly good tasting products."
 	icon = 'icons/obj/machines/foodsynthesizer.dmi'
 	icon_state = "synthesizer"
 	pixel_y = 32 //So it glues to the wall
@@ -56,22 +56,26 @@
 	//all of our food
 	var/static/datum/category_collection/synthesizer_recipes/synthesizer_recipes
 	var/static/list/recipe_list
+	var/active_category = null
+	var/menu_tab = 0
 	var/food_mimic_storage
+	var/datum/data/record/active1 = null
 
 	//Voice activation stuff
 	var/activator = "computer"
 	var/list/voicephrase
 
 	//crew printing required stuff.
+	var/datum/transhuman/body_record/active_br = null
 	var/db_key
 	var/datum/transcore_db/our_db
 
 /obj/machinery/synthesizer/Initialize()
 	. = ..()
 	cart = new /obj/item/weapon/reagent_containers/synth_disp_cartridge(src)
-	if(!synthesizer_recipes)
+	if(!LAZYLEN(synthesizer_recipes)
 		synthesizer_recipes = new()
-	if(!recipe_list)
+	if(!LAZYLEN(recipe_list)
 		for(var/typepath in subtypesof(/datum/category_item/synthesizer))
 			var/datum/category_item/synthesizer/R = new typepath()
 			if(R.name)
@@ -95,9 +99,9 @@
 /obj/machinery/synthesizer/mini/Initialize()
 	. = ..()
 	cart = new /obj/item/weapon/reagent_containers/synth_disp_cartridge/small(src)
-	if(!synthesizer_recipes)
+	if(!LAZYLEN(synthesizer_recipes)
 		synthesizer_recipes = new()
-	if(!recipe_list)
+	if(!LAZYLEN(recipe_list)
 		for(var/typepath in subtypesof(/datum/category_item/synthesizer))
 			var/datum/category_item/synthesizer/R = new typepath()
 			if(R.name)
@@ -160,29 +164,46 @@
 /obj/machinery/synthesizer/tgui_data(mob/user, datum/tgui/ui, datum/tgui_state/state)
 	var/list/data = ..()
 	var/list/recipe_list = list()
-
 	for(var/datum/category_group/synthesizer/menulist in synthesizer_recipes.categories)
 		var/datum/category_item/synthesizer/food = menulist
+
 		if(food.hidden && !hacked)
 			continue
+		var/obj/item/weapon/reagent_containers/food/snacks/morsel = food.path
+		food.desc = initial(morsel.desc)
+		food.icon = initial(morsel.icon)
 		recipe_list.Add(list(list(
-			"id" = menulist.id,
 			"name" = food.name,
+			"desc" = food.desc,
+			"icon" = food.icon,
 			"categories" = food.category,
 			"ref" = REF(food),
+			"path" = food.path
+			"randpixel" = food.randpixel
 			"voice_order" = food.voice_order,
 			"voice_temp" = food.voice_temp,
 			"hidden" = food.hidden
 		)))
-
 	data["recipes"] = recipe_list
+
+	var/bodyrecords_list_ui[0]
+	for(var/N in our_db.body_scans)
+		var/datum/transhuman/body_record/BR = our_db.body_scans[N]
+		bodyrecords_list_ui[++bodyrecords_list_ui.len] = list("name" = N, "recref" = "\ref[BR]")
+	if(bodyrecords_list_ui.len)
+	data["bodyrecords"] = bodyrecords_list_ui
 	data["busy"] = busy
 	data["isThereCart"] = cart ? TRUE : FALSE
 	data["screen"] = screen
+	data["modal"] = tgui_modal_data(src)
 	var/cartfilling[0]
 	if(cart && cart.reagents && cart.reagents.reagent_list.len)
 		for(var/datum/reagent/R in cart.reagents.reagent_list)
-			cartfilling.Add(list(list("name" = R.name, "id" = R.id, "volume" = R.volume))) // list in a list because Byond merges the first list...
+			cartfilling.Add(list(list(
+				"name" = R.name,
+				"id" = R.id,
+				"volume" = R.volume
+				))) // list in a list because Byond merges the first list...
 	data["cartfilling"] = cartfilling
 
 	if(cart)
@@ -203,19 +224,24 @@
 			data["id"] = "dinner"
 		if("SYNTH_DESSERT")
 			data["id"] = "dessert"
-		if("SYNTH_EXOTIC")
+		if("SYNTH_EXOTICRAW")
 			data["id"] = "exotic"
-		if("SYNTH_RAW")
-			data["id"] = "raw"
 		if("SYNTH_CREW")
+			data["id"] = "E"
+		if("SYNTH_FOODLIST")
+			data["name"] = data["recipes"]
 			return
+	return data
 
-	var/bodyrecords_list_ui[0]
-	for(var/N in our_db.body_scans)
-		var/datum/transhuman/body_record/BR = our_db.body_scans[N]
-		bodyrecords_list_ui[++bodyrecords_list_ui.len] = list("name" = N, "recref" = "\ref[BR]")
-		data["bodyrecords"] = bodyrecords_list_ui
-		data["modal"] = tgui_modal_data(src)
+/obj/machinery/synthesizer/tgui_static_data(mob/user)
+	var/list/data = ..()
+	var/list/category_list = list()
+	category_list.Add(list(list(
+			"id" = menulist.id
+			"category" = menulist.category_item_type
+			)))
+
+	data["categories"] = category_list
 	return data
 
 /obj/machinery/synthesizer/ui_assets(mob/user)
@@ -240,6 +266,48 @@
 		return
 
 	switch(action)
+		if("screen")
+				screen = clamp(text2num(params["screen"]) || 0, SYNTH_APPETIZER, SYNTH_FOODLIST)
+				active1 = null
+				active2 = null
+		if("infofood")
+			var/list/general = list()
+			data["recipes"] = general
+			if(istype(active1, /datum/data/record) && data_core.general.Find(active1))
+				var/list/fields = list()
+				general["fields"] = fields
+				fields[++fields.len] = FIELD("Name", active1.fields["name"], "name")
+				fields[++fields.len] = FIELD("Species", active1.fields["species"], "species")
+				var/list/photos = list()
+				general["icon"] = photos
+				photos[++photos.len] = active1.fields["photo-south"]
+				general["has_photos"] = (active1.fields["photo-south"]] ? 1 : 0)
+				general["empty"] = 0
+			else
+				general["empty"] = 1
+
+			active1 = general_record
+			screen = SYNTH_FOODLIST
+
+		if("infocrew")
+			var/list/general = list()
+			data["general"] = general
+			if(istype(active1, /datum/data/record) && data_core.general.Find(active1))
+				var/list/fields = list()
+				general["fields"] = fields
+				fields[++fields.len] = FIELD("Name", active1.fields["name"], "name")
+				fields[++fields.len] = FIELD("Species", active1.fields["species"], "species")
+				var/icon/I = get_cached_examine_icon(src)
+				general["icon"] = "\icon[A.examine_icon()]"
+				photos[++photos.len] = active1.fields["photo-south"]
+				general["has_photos"] = (active1.fields["photo-south"]] ? 1 : 0)
+				general["empty"] = 0
+			else
+				general["empty"] = 1
+
+			active1 = general_record
+			screen = SYNTH_FOODLIST
+
 		if("make")
 			var/datum/category_item/synthesizer/making = locate(params["make"])
 			if(!istype(making))
@@ -257,7 +325,7 @@
 				update_use_power(USE_POWER_ACTIVE)
 				update_icon() // light up time
 				playsound(src, 'sound/machines/replicator_input_ok.ogg', 100)
-				C.reagents.remove_reagent("synthsoygreen", 5)
+				C.reagents.remove_reagent("synthsoygreen", 5) //
 				var/obj/item/weapon/reagent_containers/food/snacks/food_mimic = new making.path(src) //Let's get this on a tray
 				food_mimic_storage = food_mimic //nice.
 				sleep(speed_grade) //machine go brrr
@@ -286,17 +354,33 @@
 
 				meal.bitesize = food_mimic?.bitesize //suffer your aerogel like 1 Nutriment turkey, nerds.
 				meal.filling_color = food_mimic?.filling_color
-				meal.trash = food_mimic?.trash	//If this can lead to exploits then we'll remove it, but.
+				meal.trash = food_mimic?.trash	//If this can lead to exploits then we'll remove it, but I like the idea.
 				qdel(food_mimic)
 				src.food_mimic_storage = null
 				src.audible_message("<span class='notice'>Please take your [meal.name].</span>", runemessage = "[meal.name] is complete!")
 				if(Adjacent(usr))
-					usr.put_in_any_hand_if_possible(meal)
+					usr.put_in_any_hand_if_possible(meal) //Autoplace in hands to save a click
+				else
+					meal.loc = src.loc //otherwise we anti-clump layer onto the floor
+					meal.randpixel_xy()
 				busy = FALSE
 				update_icon() //turn off lights, please.
+			else
+				src.audible_message("<span class='notice'>Error: Insufficent Materials. SabreSnacks recommends you have a genuine replacement cartridge available to install.</span>", runemessage = "Error: Insufficent Materials!")
+
 			return TRUE
 
-/*		if("crewprint")
+		if("photo_crew")
+			var/icon/photo = icon2base64(A.examine_icon(), key)
+			if(photo && active1)
+				active1.fields["photo_crew"] = photo
+				active1.fields["photo-south"] = "'data:image/png;base64,[icon2base64(photo)]'"
+		if("photo_food")
+				var/icon/photo = locate(params["photo_crew"]
+				if(photo && active1)
+					active1.fields["photo_food"] = photo
+					active1.fields["photo-south"] = "'data:image/png;base64,[icon2base64(photo)]'"
+		if("crewprint")
 			var/datum/category_item/synthesizer/making = locate(params["crewprint"])
 			if(!istype(making))
 				return
@@ -309,17 +393,54 @@
 				//Sanity check.
 				if(!making || !src)
 					return
+				if(istype(active_br))
 				busy = TRUE
 				update_use_power(USE_POWER_ACTIVE)
 				update_icon() // light up time
 				playsound(src, 'sound/machines/replicator_input_ok.ogg', 100)
-				C.reagents.remove_reagent("synthsoygreen", 5)
-				var/mob/living/carbon/human/dummy/mannequin = new()
-				client.prefs.dress_preview_mob(mannequin)
-				var/obj/item/weapon/reagent_containers/food/snacks/food_mimic = new(mannequin)
-				food_mimic_storage = food_mimic //I guess we need to have the item initalize first to get flavorings!
+				var/mob/living/carbon/human/dummy/mannequin = new(making.mannequin)
+				making.client.prefs.dress_preview_mob(making.mannequin)
+				food_mimic_storage = mannequin //stuff the micro in the scanner
 				sleep(speed_grade) //machine go brrr
-				playsound(src, 'sound/machines/replicator_working.ogg', 150)*/
+				playsound(src, 'sound/machines/replicator_working.ogg', 150)
+
+				//Create the cookie base.
+				var/obj/item/weapon/reagent_containers/food/snacks/synthsized_meal/meal = new /obj/item/weapon/reagent_containers/food/snacks/synthsized_meal(src.loc)
+
+				//Begin mimicking the micro
+				meal.name = mannequin.name
+				meal.desc = "A tiny replica of a crewmate!"
+				meal.icon = mannequin.icon
+				meal.icon_state = mannequin.icon_state
+
+				//flavor mixing
+				var/taste_output = food_mimic.reagents.generate_taste_message()
+				for(var/datum/reagent/F in meal.reagents.reagent_list)
+					if(F.id == "nutripaste") //This should be the only reagent, actually.
+						F.taste_description += " as well as [taste_output]"
+						F.data = list(F.taste_description = 1)
+						meal.nutriment_desc = list(F.taste_description = 1)
+
+				if(src.menu_grade >= 2) //Is the machine upgraded?
+					meal.reagents.add_reagent("nutripaste", ((1 * src.menu_grade) - 1)) //add the missing Nutriment bonus, subtracting the one we've already added in.
+
+				meal.bitesize = 1 //Smol tiny critter mimics
+				meal.filling_color = food_mimic?.filling_color
+				meal.trash = food_mimic?.trash	//If this can lead to exploits then we'll remove it, but I like the idea.
+				qdel(food_mimic)
+				src.food_mimic_storage = null
+				src.audible_message("<span class='notice'>Please take your [meal.name].</span>", runemessage = "[meal.name] is complete!")
+				if(Adjacent(usr))
+					usr.put_in_any_hand_if_possible(meal) //Autoplace in hands to save a click
+				else
+					meal.loc = src.loc //otherwise we anti-clump layer onto the floor
+					meal.randpixel_xy()
+				busy = FALSE
+				update_icon() //turn off lights, please.
+			else
+				src.audible_message("<span class='notice'>Error: Insufficent Materials. SabreSnacks recommends you have a genuine replacement cartridge available to install.</span>", runemessage = "Error: Insufficent Materials!")
+
+			return TRUE
 
 	return FALSE
 
@@ -526,15 +647,39 @@
 		// Science parts will be of help if they bother.
 	update_tgui_static_data(usr)
 
-//obj/machinery/synthesizer/proc/copy(var/atom/food) //get path.name and details from here
-//	var/obj/belly/dupe = new /obj/belly(new_owner)
+/obj/machinery/synthesizer/proc/microcompatibility(action, prams) //Check if our database has valid opt in entries
+	var/ref = params["ref"]
+	if(!length(ref))
+		return
+	active_br = locate(ref)
+	if(istype(active_br))
+		if(active_br && active_br.cookieman) //Player has opted in to be printed so let's send it
+			obtainmicro(active_br)
+		else
+			return
 
-//obj/machinery/synthesizer/proc/synthesize(var/what, var/temp, var/mob/living/user)
-//	var/atom/food
+/obj/machinery/synthesizer/proc/obtainmicro(var/datum/transhuman/body_record/current_project)
+	//Make a new mannequin quickly, and allow the observer to take the appearance
+
+	var/datum/dna2/record/R = current_project.mydna
+	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src, R.dna.species)
+	if(!R.dna.real_name)
+		R.dna.real_name = "Mystery Employee ([rand(0,999)])"
+	H.real_name = R.dna.real_name
+	H.digitigrade = R.dna.digitigrade // ensure clone mob has digitigrade var set appropriately
+	if(H.dna.digitigrade <> R.dna.digitigrade)
+		H.dna.digitigrade = R.dna.digitigrade // ensure cloned DNA is set appropriately from record??? for some reason it doesn't get set right despite the override to datum/dna/Clone()
+
+	H.dna = R.dna.Clone()
+	H.appearance_flags = current_project.aflags
+	H.resizable = TRUE //just in case
+	H.set_size(RESIZE_NORMAL) //reset scaling
+	H.set_size(RESIZE_SMALL) //snackrificial sized but still clickable too
+
 
 /obj/item/weapon/reagent_containers/synth_disp_cartridge
 	name = "Synthesizer cartridge"
-	desc = "This goes in a food Synthesizer."
+	desc = "Genuine replacement cartridge for SabreSnacks brand Food Synthesizers. It's too large for the Portable models."
 	icon = 'icons/obj/machines/foodsynthesizer.dmi'
 	icon_state = "bigcart"
 
@@ -545,6 +690,7 @@
 
 /obj/item/weapon/reagent_containers/synth_disp_cartridge/small
 	name = "Portable Synthesizer Cartridge"
+	desc = "Genuine replacement cartrifge SabreSnacks brand Portable Food Synthesizers. It can also fit within standard sized models."
 	icon_state = "Scart"
 	w_class = ITEMSIZE_NORMAL
 	volume = 100

@@ -20,6 +20,7 @@
 	filling_color = "#c5e384"
 	center_of_mass = list("x"=16, "y"=6)
 	w_class = ITEMSIZE_SMALL
+	randpixel = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/synthsized_meal/Initialize()
 	. = ..()
@@ -116,6 +117,8 @@
 *******************/
 
 /datum/category_item/synthesizer
+	var/desc							//food description to be applied to the UI, probably a better way of this
+	var/icon							//food initial icon for UI fanciness
 	var/path							//food item path
 	var/hidden = FALSE					//is it illegal/nonstandard?
 	var/list/voice_order				//what can we say to get this? Avoid exact same phrases.
