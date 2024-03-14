@@ -119,7 +119,9 @@
 		<h2>Part 3: Final Notes</h2>
 		<p>These recipes only scratch the surface, but it's all things that can be done with what is pre-provided. If you have a partner in Botany, feel free to request more meat or any other supplies to try new recipes!</p>
 		<p>The Fryer, CondiMaster3000, and other nearby devices have been deliberately left out of this guide; as you get more advanced feel free to experiment with them, though be careful with the Fryer especially as it's the #1 source of fires for learning chefs, myself included. The one other machine that is worth understanding is the <b>Gibber</b> in the freezer room. If you are delivered fish or such they can be gibbed for extra Meat, though you may need to butcher the parts with a Knife afterwards to get usable Meat! Though if the meat is purple or comes from Koi or Spacecarp <b>do not directly serve it to crew!</b> It contains toxins that are better taken care of by other departments. </p>
-		<p>Some wonderful websites share recipes and tips for learning chefs on the Extranet! Look on your PDA or preferred device at https://wiki.vore-station.net/Guide_to_Food_and_Drink and https://vore-station.net/infodump/recipes_food.html for further tips, though do note the latter is more accurate in regard to recipes. Happy cooking!</p>
+		<p>Some wonderful websites share recipes and tips for learning chefs on the Extranet! Look on your PDA or preferred device for further tips, though do note the latter is more accurate in regard to recipes. Happy cooking!</p>
+		<p>https://wiki.vore-station.net/Guide_to_Food_and_Drink <br>
+		https://vore-station.net/infodump/recipes_food.html</p>
 		<h4>Pro Tips:</h4>
 		<h4>((The Food Bags in the Chef's Closet are great for moving a lot of food at once!))</h4>
 		<h4>((Stay out of the Freezer if you're Cold Blooded!))</h4>

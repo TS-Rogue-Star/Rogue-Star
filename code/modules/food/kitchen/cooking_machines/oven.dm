@@ -13,7 +13,7 @@
 	heating_power = 6 KILOWATTS
 	//Based on a double deck electric convection oven
 
-	resistance = 12 KILOWATTS // Approx. 12 minutes to heat up.
+//	resistance = 12 KILOWATTS // Approx. 12 minutes to heat up.	//12 minutes slow
 	idle_power_usage = 2 KILOWATTS
 	//uses ~30% power to stay warm
 	optimal_power = 0.8 // Oven cooks .2 faster than the default speed.
@@ -25,7 +25,7 @@
 
 	stat = POWEROFF	//Starts turned off
 
-	var/open = FALSE // Start closed just so people don't try to preheat with it open, lol.
+//	var/open = FALSE // Start closed just so people don't try to preheat with it open, lol. // RS REMOVE
 
 	output_options = list(
 		"Pizza" = /obj/item/weapon/reagent_containers/food/snacks/variable/pizza,
@@ -49,27 +49,23 @@
 	return ..()
 
 /obj/machinery/appliance/cooker/oven/update_icon()
-	if(!open)
-		if(!stat)
-			icon_state = "ovenclosed_on"
-			if(cooking == TRUE)
-				icon_state = "ovenclosed_cooking"
-				if(oven_loop)
-					oven_loop.start(src)
-			else
-				icon_state = "ovenclosed_on"
-				if(oven_loop)
-					oven_loop.stop(src)
+	if(!stat)
+		icon_state = "ovenclosed_on"
+		if(cooking == TRUE)
+			icon_state = "ovenclosed_cooking"
+			if(oven_loop)
+				oven_loop.start(src)
 		else
-			icon_state = "ovenclosed_off"
+			icon_state = "ovenclosed_on"
 			if(oven_loop)
 				oven_loop.stop(src)
 	else
-		icon_state = "ovenopen"
+		icon_state = "ovenclosed_off"
 		if(oven_loop)
 			oven_loop.stop(src)
 	..()
 
+/*
 /obj/machinery/appliance/cooker/oven/AltClick(var/mob/user)
 	try_toggle_door(user)
 	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
@@ -80,7 +76,6 @@
 	set name = "Open/close oven door"
 
 	try_toggle_door(usr)
-
 /obj/machinery/appliance/cooker/oven/proc/try_toggle_door(mob/user)
 	if(!isliving(usr) || isAI(user))
 		return
@@ -106,7 +101,7 @@
 	playsound(src, 'sound/machines/hatch_open.ogg', 20, 1)
 	to_chat(user, "<span class='notice'>You [open? "open":"close"] the oven door</span>")
 	update_icon()
-
+*/
 /obj/machinery/appliance/cooker/oven/proc/manip(var/obj/item/I)
 	// check if someone's trying to manipulate the machine
 
@@ -116,33 +111,26 @@
 		return FALSE
 
 /obj/machinery/appliance/cooker/oven/can_insert(var/obj/item/I, var/mob/user)
-	if(!open && !manip(I))
+/*	if(!open && !manip(I))
 		to_chat(user, "<span class='warning'>You can't put anything in while the door is closed!</span>")
 		return 0
 
-	else
-		return ..()
+	else */ // RS REMOVE
+	. = ..()
 
 
 //If an oven's door is open it will lose heat every proc, even if it also gained it
 //But dont call equalize twice in one stack. A return value of -1 from the parent indicates equalize was already called
+/*
 /obj/machinery/appliance/cooker/oven/heat_up()
 	.=..()
 	if(open && . != -1)
 		var/turf/T = get_turf(src)
 		if(temperature > T.temperature)
 			equalize_temperature()
-
 /obj/machinery/appliance/cooker/oven/can_remove_items(var/mob/user, show_warning = TRUE)
-	if(!open)
-		if(show_warning)
-			to_chat(user, "<span class='warning'>You can't take anything out while the door is closed!</span>")
-		return 0
-
-	else
-		return ..()
-
-
+	return ..()
+*/ // RS REMOVE door
 //Oven has lots of recipes and combine options. The chance for interference is high, so
 //If a combine target is set the oven will do it instead of checking recipes
 /obj/machinery/appliance/cooker/oven/finish_cooking(var/datum/cooking_item/CI)

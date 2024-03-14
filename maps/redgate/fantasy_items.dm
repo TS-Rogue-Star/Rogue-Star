@@ -109,23 +109,18 @@
 	icon_state = "yeoldovenopen"
 
 /obj/machinery/appliance/cooker/oven/yeoldoven/update_icon()
-	if(!open)
-		if(!stat)
-			icon_state = "yeoldovenclosed_on"
-			if(cooking == TRUE)
-				icon_state = "yeoldovenclosed_cooking"
-				if(oven_loop)
-					oven_loop.start(src)
-			else
-				icon_state = "yeoldovenclosed_on"
-				if(oven_loop)
-					oven_loop.stop(src)
+	if(!stat)
+		icon_state = "yeoldovenclosed_on"
+		if(cooking == TRUE)
+			icon_state = "yeoldovenclosed_cooking"
+			if(oven_loop)
+				oven_loop.start(src)
 		else
-			icon_state = "yeoldovenclosed_off"
+			icon_state = "yeoldovenclosed_on"
 			if(oven_loop)
 				oven_loop.stop(src)
 	else
-		icon_state = "yeoldovenopen"
+		icon_state = "yeoldovenclosed_off"
 		if(oven_loop)
 			oven_loop.stop(src)
 

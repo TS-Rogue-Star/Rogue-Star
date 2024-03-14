@@ -73,26 +73,27 @@
 	do_empty(usr)
 
 /obj/item/weapon/reagent_containers/cooking_container/proc/do_empty(mob/user)
-	if (!isliving(user))
+	if (isobserver(user))
 		//Here we only check for ghosts. Animals are intentionally allowed to remove things from oven trays so they can eat it
 		return
+	if(user)
+		if (user.stat || user.restrained())
+			to_chat(user, "<span class='notice'>You are in no fit state to do this.</span>")
+			return
 
-	if (user.stat || user.restrained())
-		to_chat(user, "<span class='notice'>You are in no fit state to do this.</span>")
-		return
-
-	if (!Adjacent(user))
-		to_chat(user, "<span class='filter_notice'>You can't reach [src] from here.</span>")
-		return
+		if (!Adjacent(user))
+			to_chat(user, "<span class='filter_notice'>You can't reach [src] from here.</span>")
+			return
 
 	if (!contents.len)
-		to_chat(user, "<span class='warning'>There's nothing in the [src] you can remove!</span>")
+		if(user)
+			to_chat(user, "<span class='warning'>There's nothing in the [src] you can remove!</span>")
 		return
 
 	for (var/atom/movable/A in contents)
 		A.forceMove(get_turf(src))
-
-	to_chat(user, "<span class='notice'>You remove all the solid items from the [src].</span>")
+	if(user)
+		to_chat(user, "<span class='notice'>You remove all the solid items from the [src].</span>")
 
 /obj/item/weapon/reagent_containers/cooking_container/proc/check_contents()
 	if (contents.len == 0)
