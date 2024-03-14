@@ -20,7 +20,6 @@
 	filling_color = "#c5e384"
 	center_of_mass = list("x"=16, "y"=6)
 	w_class = ITEMSIZE_SMALL
-	randpixel = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/synthsized_meal/Initialize()
 	. = ..()

@@ -19,7 +19,6 @@
 	clicksound = "keyboard"
 	clickvol = 30
 
-	var/screen = null
 	var/hacked = FALSE
 	var/disabled = FALSE
 	var/shocked = FALSE
@@ -45,54 +44,41 @@
 	//all of our food
 	var/static/datum/category_collection/synthesizer_recipes/synthesizer_recipes
 	var/static/list/recipe_list
-	var/static/list/category_list
+	var/static/list/catagory_list
 	var/active_category = null
 	var/menu_tab = 0
 	var/food_mimic_storage
-	var/datum/data/record/active1 = null
 
 	//Voice activation stuff
 	var/activator = "computer"
 	var/list/voicephrase
 
 	//crew printing required stuff. Shamelessly utilizing body designer methods
-	var/map_name
-	var/obj/screen/south_preview = null
-	var/mob/living/carbon/human/dummy/mannequin/mannequin = null
 	var/datum/transhuman/body_record/active_br = null
 	var/db_key
-	var/datum/transcore_db/our_db
+	var/datum/transcore_db/crewcookie_db
 
 /obj/machinery/synthesizer/Initialize()
 	. = ..()
 	cart = new /obj/item/weapon/reagent_containers/synth_disp_cartridge(src)
-	if(!LAZYLEN(synthesizer_recipes)
+	if(!LAZYLEN(synthesizer_recipes))
 		synthesizer_recipes = new()
-	if(!LAZYLEN(recipe_list)
+	if(!LAZYLEN(recipe_list))
 		for(var/typepath in subtypesof(/datum/category_item/synthesizer))
 			var/datum/category_item/synthesizer/R = new typepath()
 			if(R.name)
 				recipe_list[R.name] = R
 			else
 				qdel(R)
-	if(!LAZYLEN(catagory_list)
+	if(!LAZYLEN(catagory_list))
 		for(var/typepath in subtypesof(/datum/category_group/synthesizer))
 			var/datum/category_group/synthesizer/C = new typepath()
 			if(C.name)
 				catagory_list[C.name] = C
 			else
 				qdel(C)
-
-	map_name = "crew_cookie_[REF(src)]_map"
-	south_preview = new
-	south_preview.name = ""
-	south_preview.assigned_map = map_name
-	south_preview.del_on_map_removal = FALSE
-	south_preview.screen_loc = "[map_name]:1,1"
-
 	wires = new(src)
-
-	our_db = SStranscore.db_by_key(db_key)
+	crewcookie_db = SStranscore.db_by_key(db_key)
 	default_apply_parts()
 	RefreshParts()
 	update_icon()
@@ -106,34 +92,11 @@
 /obj/machinery/synthesizer/mini/Initialize()
 	. = ..()
 	cart = new /obj/item/weapon/reagent_containers/synth_disp_cartridge/small(src)
-	if(!LAZYLEN(synthesizer_recipes)
-		synthesizer_recipes = new()
-	if(!LAZYLEN(recipe_list)
-		for(var/typepath in subtypesof(/datum/category_item/synthesizer))
-			var/datum/category_item/synthesizer/R = new typepath()
-			if(R.name)
-				recipe_list[R.name] = R
-			else
-				qdel(R)
-	if(!LAZYLEN(catagory_list)
-		for(var/typepath in subtypesof(/datum/category_group/synthesizer))
-			var/datum/category_group/synthesizer/C = new typepath()
-			if(C.id)
-				catagory_list[C.id] = C
-			else
-				qdel(C)
-
-	wires = new(src)
-
-	our_db = SStranscore.db_by_key(db_key)
-	default_apply_parts()
-	RefreshParts()
-	update_icon()
 
 /obj/machinery/synthesizer/Destroy()
 	qdel(wires)
 	wires = null
-	mannequin = null
+
 	for(var/obj/item/weapon/reagent_containers/synth_disp_cartridge/C in cart)
 		C.loc = get_turf(src.loc)
 		C = null
@@ -152,7 +115,6 @@
 	return
 
 // TGUI to do.
-
 
 /obj/machinery/synthesizer/ui_assets(mob/user)
 	return list(
@@ -178,89 +140,14 @@
 
 /obj/machinery/synthesizer/tgui_data(mob/user, datum/tgui/ui, datum/tgui_state/state)
 	var/list/data = ..()
-	//body records are changed, so we have to look it up every time just in case.
-	if(menu == MENU_BODYRECORDS)
-		var/bodyrecords_list_ui[0]
-		for(var/N in our_db.body_scans)
-			var/datum/transhuman/body_record/BR = our_db.body_scans[N]
-			bodyrecords_list_ui[++bodyrecords_list_ui.len] = list("name" = N, "recref" = "\ref[BR]")
-		if(bodyrecords_list_ui.len)
-			data["bodyrecords"] = bodyrecords_list_ui
+
+	//body records are changed, so we have to look it up every time just in case. We won't check here for print preference yet
+	var/bodyrecords_list_ui[0]
+	for(var/N in crewcookie_db.body_scans)
+		var/datum/transhuman/body_record/BR = crewcookie_db.body_scans[N]
+		bodyrecords_list_ui[++bodyrecords_list_ui.len] = list("name" = N, "recref" = "\ref[BR]")
 	data["bodyrecords"] = bodyrecords_list_ui
-	if(active_br)
-		data["activeBodyRecord"] = list(
-			"real_name" = active_br.mydna.name,
-			"speciesname" = active_br.speciesname ? active_br.speciesname : active_br.mydna.dna.species,
-			"gender" = active_br.bodygender,
-			"synthetic" = active_br.synthetic ? "Yes" : "No",
-			"locked" = active_br.locked ? "Low" : "High",
-			"scale" = player_size_name(active_br.sizemult),
-			"booc" = active_br.body_oocnotes,
-			"styles" = list()
-		)
 
-		var/list/styles = data["activeBodyRecord"]["styles"]
-		var/list/temp
-
-		temp = list("styleHref" = "ear_style", "style" = "Normal")
-		if(mannequin.ear_style)
-			temp["style"] = mannequin.ear_style.name
-			if(mannequin.ear_style.do_colouration)
-				temp["color"] = MOB_HEX_COLOR(mannequin, ears)
-				temp["colorHref"] = "ear_color"
-			if(mannequin.ear_style.extra_overlay)
-				temp["color2"] = MOB_HEX_COLOR(mannequin, ears2)
-				temp["colorHref2"] = "ear_color2"
-		styles["Ears"] = temp
-
-		temp = list("styleHref" = "tail_style", "style" = "Normal")
-		if(mannequin.tail_style)
-			temp["style"] = mannequin.tail_style.name
-			if(mannequin.tail_style.do_colouration)
-				temp["color"] = MOB_HEX_COLOR(mannequin, tail)
-				temp["colorHref"] = "tail_color"
-			if(mannequin.tail_style.extra_overlay)
-				temp["color2"] = MOB_HEX_COLOR(mannequin, tail2)
-				temp["colorHref2"] = "tail_color2"
-		styles["Tail"] = temp
-
-		temp = list("styleHref" = "wing_style", "style" = "Normal")
-		if(mannequin.wing_style)
-			temp["style"] = mannequin.wing_style.name
-			if(mannequin.wing_style.do_colouration)
-				temp["color"] = MOB_HEX_COLOR(mannequin, wing)
-				temp["colorHref"] = "wing_color"
-			if(mannequin.wing_style.extra_overlay)
-				temp["color2"] = MOB_HEX_COLOR(mannequin, wing2)
-				temp["colorHref2"] = "wing_color2"
-		styles["Wing"] = temp
-
-		temp = list("styleHref" = "hair_style", "style" = mannequin.h_style)
-		if(mannequin.species && (mannequin.species.appearance_flags & HAS_HAIR_COLOR))
-			temp["color"] = MOB_HEX_COLOR(mannequin, hair)
-			temp["colorHref"] = "hair_color"
-		styles["Hair"] = temp
-
-		temp = list("styleHref" = "facial_style", "style" = mannequin.f_style)
-		if(mannequin.species && (mannequin.species.appearance_flags & HAS_HAIR_COLOR))
-			temp["color"] = MOB_HEX_COLOR(mannequin, facial)
-			temp["colorHref"] = "facial_color"
-		styles["Facial"] = temp
-
-		if(mannequin.species && (mannequin.species.appearance_flags & HAS_EYE_COLOR))
-			styles["Eyes"] = list("colorHref" = "eye_color", "color" = MOB_HEX_COLOR(mannequin, eyes))
-
-		if(mannequin.species && (mannequin.species.appearance_flags & HAS_SKIN_COLOR))
-			styles["Body Color"] = list("colorHref" = "skin_color", "color" = MOB_HEX_COLOR(mannequin, skin))
-
-		if (mannequin.species && mannequin.species.selects_bodytype)
-			if (!mannequin.species.base_species)
-				mannequin.species.base_species = mannequin.species.name
-			styles["Bodytype"] = list("styleHref" = "custom_base", "style" = mannequin.species.base_species)
-
-		var/datum/preferences/designer/P = new()
-		apply_markings_to_prefs(mannequin, P)
-		data["activeBodyRecord"]["markings"] = P.body_markings
 	data["busy"] = busy
 	data["isThereCart"] = cart ? TRUE : FALSE
 	data["modal"] = tgui_modal_data(src)
@@ -298,8 +185,7 @@
 			"desc" = food.desc,
 			"icon" = food.icon,
 			"categories" = food.category,
-			"path" = food.path
-			"randpixel" = food.randpixel
+			"path" = food.path,
 			"voice_order" = food.voice_order,
 			"voice_temp" = food.voice_temp,
 			"hidden" = food.hidden
@@ -307,7 +193,7 @@
 	//
 	data["recipes"] = recipe_list
 	data["catagories"] = catagory_list //We initialized with this full list
-	data["mapRef"] = map_name //preserve the player preview map
+//	data["mapRef"] = map_name //preserve the player preview map
 	return data
 
 /obj/machinery/synthesizer/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
@@ -328,7 +214,7 @@
 
 	switch(action)
 		if("infofood")
-			var/datum/recipe_list/R = locate(params["recipes"])
+			var/datum/category_item/synthesizer/R = locate(params["infofood"])
 			if(!istype(R))
 				return FALSE
 			var/list/payload = list(
@@ -339,19 +225,14 @@
 			tgui_modal_message(src, action, "", null, payload)
 			. = TRUE
 
-		if("infocrew")
+	/*	if("infocrew")
 			var/datum/transhuman/body_record/BR = locate(params["infocrew"])
 			if(BR && istype(BR.mydna))
-				if(microcompatibility(usr) || BR.ckey == usr.ckey)
+				if(microcompatibility(BR) || BR.ckey == usr.ckey)
 					active_br = new /datum/transhuman/body_record(BR) // Load a COPY!
-					update_micro_icon()
-					menu = MENU_SPECIFICRECORD
-				else
-					active_br = null
-					temp = "Access denied: Body records are confidential."
 			else
 				active_br = null
-				temp = "ERROR: Record missing."
+				temp = "ERROR: Record missing." */
 
 		if("make")
 			var/datum/category_item/synthesizer/making = locate(params["make"])
@@ -415,12 +296,9 @@
 
 			return TRUE
 
-		if("photo_food")
-				var/icon/photo = locate(params["photo_crew"]
-				if(photo && active1)
-					active1.fields["photo_food"] = photo
-					active1.fields["photo-south"] = "'data:image/png;base64,[icon2base64(photo)]'"
-		if("crewprint")
+//		if("photo_food")
+
+/*		if("crewprint")
 			var/datum/category_item/synthesizer/making = locate(params["crewprint"])
 			if(!istype(making))
 				return
@@ -434,55 +312,55 @@
 				if(!making || !src)
 					return
 				if(istype(active_br))
-				busy = TRUE
-				update_use_power(USE_POWER_ACTIVE)
-				update_icon() // light up time
-				playsound(src, 'sound/machines/replicator_input_ok.ogg', 100)
-				var/mob/living/carbon/human/dummy/mannequin = new(making.mannequin)
-				making.client.prefs.dress_preview_mob(making.mannequin)
-				food_mimic_storage = mannequin //stuff the micro in the scanner
-				sleep(speed_grade) //machine go brrr
-				playsound(src, 'sound/machines/replicator_working.ogg', 150)
+					busy = TRUE
+					update_use_power(USE_POWER_ACTIVE)
+					update_icon() // light up time
+					playsound(src, 'sound/machines/replicator_input_ok.ogg', 100)
+					var/mob/living/carbon/human/dummy/mannequin = new(making.mannequin)
+					making.client.prefs.dress_preview_mob(making.mannequin)
+					food_mimic_storage = mannequin //stuff the micro in the scanner
+					sleep(speed_grade) //machine go brrr
+					playsound(src, 'sound/machines/replicator_working.ogg', 150)
 
-				//Create the cookie base.
-				var/obj/item/weapon/reagent_containers/food/snacks/synthsized_meal/meal = new /obj/item/weapon/reagent_containers/food/snacks/synthsized_meal(src.loc)
+					//Create the cookie base.
+					var/obj/item/weapon/reagent_containers/food/snacks/synthsized_meal/meal = new /obj/item/weapon/reagent_containers/food/snacks/synthsized_meal(src.loc)
 
-				//Begin mimicking the micro
-				meal.name = mannequin.name
-				meal.desc = "A tiny replica of a crewmate!"
-				meal.icon = mannequin.icon
-				meal.icon_state = mannequin.icon_state
+					//Begin mimicking the micro
+					meal.name = mannequin.name
+					meal.desc = "A tiny replica of a crewmate!"
+					meal.icon = mannequin.icon
+					meal.icon_state = mannequin.icon_state
 
-				//flavor mixing
-				var/taste_output = food_mimic.reagents.generate_taste_message()
-				for(var/datum/reagent/F in meal.reagents.reagent_list)
-					if(F.id == "nutripaste") //This should be the only reagent, actually.
-						F.taste_description += " as well as [taste_output]"
-						F.data = list(F.taste_description = 1)
-						meal.nutriment_desc = list(F.taste_description = 1)
+					//flavor mixing
+					var/taste_output = food_mimic.reagents.generate_taste_message()
+					for(var/datum/reagent/F in meal.reagents.reagent_list)
+						if(F.id == "nutripaste") //This should be the only reagent, actually.
+							F.taste_description += " as well as [taste_output]"
+							F.data = list(F.taste_description = 1)
+							meal.nutriment_desc = list(F.taste_description = 1)
 
-				if(src.menu_grade >= 2) //Is the machine upgraded?
-					meal.reagents.add_reagent("nutripaste", ((1 * src.menu_grade) - 1)) //add the missing Nutriment bonus, subtracting the one we've already added in.
+					if(src.menu_grade >= 2) //Is the machine upgraded?
+						meal.reagents.add_reagent("nutripaste", ((1 * src.menu_grade) - 1)) //add the missing Nutriment bonus, subtracting the one we've already added in.
 
-				meal.bitesize = 1 //Smol tiny critter mimics
-				meal.filling_color = food_mimic?.filling_color
-				meal.trash = food_mimic?.trash	//If this can lead to exploits then we'll remove it, but I like the idea.
-				qdel(food_mimic)
-				src.food_mimic_storage = null
-				src.audible_message("<span class='notice'>Please take your [meal.name].</span>", runemessage = "[meal.name] is complete!")
-				if(Adjacent(usr))
-					usr.put_in_any_hand_if_possible(meal) //Autoplace in hands to save a click
-				else
-					meal.loc = src.loc //otherwise we anti-clump layer onto the floor
-					meal.randpixel_xy()
-				busy = FALSE
-				update_icon() //turn off lights, please.
+					meal.bitesize = 1 //Smol tiny critter mimics
+					meal.filling_color = food_mimic?.filling_color
+					meal.trash = food_mimic?.trash	//If this can lead to exploits then we'll remove it, but I like the idea.
+					qdel(food_mimic)
+					src.food_mimic_storage = null
+					src.audible_message("<span class='notice'>Please take your [meal.name].</span>", runemessage = "[meal.name] is complete!")
+					if(Adjacent(usr))
+						usr.put_in_any_hand_if_possible(meal) //Autoplace in hands to save a click
+					else
+						meal.loc = src.loc //otherwise we anti-clump layer onto the floor
+						meal.randpixel_xy()
+					busy = FALSE
+					update_icon() //turn off lights, please.
 			else
 				src.audible_message("<span class='notice'>Error: Insufficent Materials. SabreSnacks recommends you have a genuine replacement cartridge available to install.</span>", runemessage = "Error: Insufficent Materials!")
 
-			return TRUE
+			return TRUE */
 
-	return FALSE
+//	return FALSE
 
 /obj/machinery/synthesizer/update_icon()
 	cut_overlays()
@@ -527,7 +405,7 @@
 	else
 		set_light_on(FALSE)
 
-//Cartridge things
+//Cartridge Interactions in Machine
 /obj/machinery/synthesizer/proc/add_cart(obj/item/weapon/reagent_containers/synth_disp_cartridge/C, mob/user)
 	if(!Adjacent(user))
 		return //How did you even try?
@@ -687,7 +565,7 @@
 		// Science parts will be of help if they bother.
 	update_tgui_static_data(usr)
 
-//Cartridge handling
+//Cartridge Item handling
 /obj/item/weapon/reagent_containers/synth_disp_cartridge
 	name = "Synthesizer cartridge"
 	desc = "Genuine replacement cartridge for SabreSnacks brand Food Synthesizers. It's too large for the Portable models."
@@ -737,7 +615,7 @@
 /obj/item/weapon/reagent_containers/synth_disp_cartridge/is_open_container()
 	return FALSE //sealed, proprietary container. aka preventing alternative beaker memes.
 
-//Circuits for contruction options
+//Circuits for contruction
 /datum/design/circuit/synthesizer
 	name = "Food Synthesizer"
 	id = "food_synthesizer"
@@ -752,7 +630,7 @@
 	req_tech = list(TECH_DATA = 5, TECH_ENGINEERING = 5, TECH_BLUESPACE = 4)
 	sort_string = "PJFSM"
 
-// Physical Boards for Food Synthesizers
+// Physical Boards for Food Synthesizer Construction
 /obj/item/weapon/circuitboard/synthesizer
 	name = T_BOARD("Food Synthesizer")
 	build_path = /obj/machinery/synthesizer
@@ -809,86 +687,7 @@
 		Insert(imgid, I)
 	return ..()
 
-//
-// Code below is for body_record designer copypasta for crew cookies
-//
 
-/obj/machinery/synthesizer/proc/microcompatibility(action, prams) //Check if our database has valid opt in entries
-	var/ref = params["ref"]
-	if(!length(ref))
-		return
-	active_br = locate(ref)
-	if(istype(active_br))
-		if(active_br && active_br.cookieman) //Player has opted in to be printed so let's send it
-			update_micro_icon(active_br)
-		else
-			return
-
-// Based on /datum/preferences/proc/update_preview_icon()
-/obj/machinery/synthesizer/proc/update_micro_icon()
-	if(!mannequin)
-		mannequin = new ()
-	obtainmicro(mannequin)
-	mannequin.ImmediateOverlayUpdate()
-
-	var/mutable_appearance/MA = new(mannequin)
-	south_preview.appearance = MA
-	south_preview.dir = SOUTH
-	south_preview.screen_loc = "[map_name]:1,1"
-	south_preview.name = ""
-
-/obj/machinery/synthesizer/proc/give_client_previews(client/C)
-	C.register_map_obj(south_preview)
-
-/obj/machinery/synthesizer/proc/obtainmicro(var/mob/living/carbon/human/H)
-	ASSERT(!QDELETED(H))
-	ASSERT(!QDELETED(active_br))
-	//Get the DNA and generate a new mob
-	var/datum/dna2/record/R = active_br.mydna
-	H.set_species(R.dna.species) // This needs to happen before anything else becuase it sets some variables.
-
-	// Update the external organs
-	for(var/part in active_br.limb_data)
-		var/status = active_br.limb_data[part]
-		if(status == null) continue //Species doesn't have limb? Child of amputated limb?
-
-		var/obj/item/organ/external/O = H.organs_by_name[part]
-		if(!O) continue //Not an organ. Perhaps another amputation removed it already.
-
-		if(status == 1) //Normal limbs
-			continue
-		else if(status == 0) //Missing limbs
-			O.remove_rejuv()
-		else if(status) //Anything else is a manufacturer
-			if(active_br.synthetic)
-				O.robotize(status)
-			else
-				O.remove_rejuv()
-
-	// Then the internal organs.  I think only O_EYES acutally counts, but lets do all just in case
-	for(var/part in active_br.organ_data)
-		var/status = active_br.organ_data[part]
-		if(status == null) continue //Species doesn't have organ? Child of missing part?
-
-		var/obj/item/organ/I = H.internal_organs_by_name[part]
-		if(!I) continue//Not an organ. Perhaps external conversion changed it already?
-
-		if(status == 0) //Normal organ
-			continue
-		else if(status == 1) //Assisted organ
-			I.mechassist()
-		else if(status == 2) //Mechanical organ
-			I.robotize()
-		else if(status == 3) //Digital organ
-			I.digitize()
-
-	// Apply DNA
-	H.dna = R.dna.Clone()
-	H.UpdateAppearance() // Update all appearance stuff from the DNA record
-	H.sync_organ_dna() // Do this because sprites depend on DNA-gender of organs (chest etc)
-	H.dress_preview_mob(active_br) //put on their gear!
-	H.regenerate_icons()
-	return 0 // Success!
 
 /* Voice activation stuff.
 can tgui accept orders that isn't through the menu? Probably. hijack that.

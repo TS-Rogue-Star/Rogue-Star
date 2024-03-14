@@ -342,6 +342,12 @@ var/list/_client_preferences_by_type
 	enabled_description = "Enabled"
 	disabled_description = "Disabled"
 
+/datum/client_preference/synth_cookie
+	description ="Synth Cookie Print"
+	key = "COOKIE_MAN"
+	enabled_description = "Allowed"
+	disabled_description = "Forbidden"
+
 //RS ADDITION END
 
 /datum/client_preference/runechat_mob
