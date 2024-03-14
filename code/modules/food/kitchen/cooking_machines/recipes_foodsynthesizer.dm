@@ -78,7 +78,7 @@
 	..()
 
 /datum/category_group/synthesizer/appasnack
-	name = "Snack / Appetizers"
+	name = "Appetizers"
 	id = "appasnacc"
 	category_item_type = /datum/category_item/synthesizer/appasnack
 

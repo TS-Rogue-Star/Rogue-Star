@@ -1,41 +1,9 @@
-import { decodeHtmlEntities } from 'common/string';
 import { Fragment } from 'inferno';
-import { useBackend } from '../backend';
-import { Box, Button, LabeledList, Section, Tabs } from '../components';
+import { useBackend, useLocalState } from '../backend';
+import { Box, Button, Flex, Input, LabeledList, Section, Tabs, Icon } from '../components';
+import { ComplexModal, modalOpen, modalRegisterBodyOverride } from '../interfaces/common/ComplexModal';
 import { Window } from '../layouts';
 
-const FoodListing = (modal, context) => {
-  const { act, data, cart } = useBackend(context);
-  const { cartfilling } = cart;
-  const { name, id, categories, path, recipes } = modal.args;
-  return (
-    <Section
-      width="400px"
-      screen={9}
-      m="-1rem"
-      pb="1rem"
-      title={name}
-      buttons={
-        <Button
-          icon="shopping-cart"
-          content={name}
-          disabled={cartfilling <= 0}
-          onClick={() => act('d_rec', { d_rec: record.ref })}
-          onClick={() => act('make', { make: path })}
-        />
-      }>
-      
-      <Section
-        title={'' + (random ? ' any ' + random + ' of:' : '')}
-        scrollable
-        height="200px">
-        {manifest.map((m) => (
-          <Box key={m}>{m}</Box>
-        ))}
-      </Section>
-    </Section>
-  );
-};
 
 export const SynthesizerMenu = (props, context) => {
   const { act, data } = useBackend(context);
@@ -52,6 +20,7 @@ export const SynthesizerMenu = (props, context) => {
       </Window.Content>
     </Window>
   );
+
   let body;
   if (screen === 2) {
       body = <AppetizerMenu />;
@@ -75,7 +44,7 @@ export const SynthesizerMenu = (props, context) => {
     <Window width={700} height={680} resizable>
       <ComplexModal maxHeight="100%" maxWidth="400px" />
       <Window.Content scrollable>
-        <MenuNavigation />
+        <viewMenuListing />
         <Section flexGrow>{body}</Section>
       </Window.Content>
     </Window>
@@ -90,53 +59,69 @@ const FoodMenuTabs = (props, context) => {
   const [tabIndex, setTabIndex] = useLocalState(context, 'tabIndex', 0);
 
   return (
-    <Tabs>
-      <Tabs.Tab
-        selected={screen === 2}
-        icon="list"
-        onClick={() => act('screen', { screen: 2 })}>
-        Appetizers
-      </Tabs.Tab>
-      <Tabs.Tab
-        selected={screen === 3}
-        icon="list"
-        onClick={() => act('screen', { screen: 3 })}>
-        Breakfast
-      </Tabs.Tab>
-      <Tabs.Tab
-        selected={screen === 4}
-        icon="list"
-        onClick={() => act('screen', { screen: 4 })}>
-        Lunch
-      </Tabs.Tab>
-      <Tabs.Tab
-        selected={screen === 5}
-        icon="list"
-        onClick={() => act('screen', { screen: 5 })}>
-        Dinner
-      </Tabs.Tab>
-      <Tabs.Tab
-        selected={screen === 6}
-        icon="list"
-        onClick={() => act('screen', { screen: 6 })}>
-        Desserts
-      </Tabs.Tab>
-      <Tabs.Tab
-        selected={screen === 7}
-        icon="list"
-        onClick={() => act('screen', { screen: 7 })}>
-        Exotic & Raw
-      </Tabs.Tab>
-      <Tabs.Tab
-        selected={screen === 8}
-        icon="fa-regular fa-address-card"
-        onClick={() => act('screen', { screen: 8 })}>
-        Crew Cookies
-      </Tabs.Tab>
-    </Tabs>
+    <Section title="Menu Options">
+      <Tabs>
+        <Tabs.Tab
+          icon="list"
+          selected={tabIndex === 0}
+          onClick={() => setTabIndex(0)}>
+          Appetizers
+        </Tabs.Tab>
+        <Tabs.Tab
+          icon="list"
+          selected={tabIndex === 1}
+          onClick={() => setTabIndex(1)}>
+          Breakfast Menu
+        </Tabs.Tab>
+        <Tabs.Tab
+          icon="list"
+          selected={tabIndex === 2}
+          onClick={() => setTabIndex(2)}>
+          Lunch Menu
+        </Tabs.Tab>
+        <Tabs.Tab
+          icon="list"
+          selected={tabIndex === 3}
+          onClick={() => setTabIndex(3)}>
+          Dinner Menu
+        </Tabs.Tab>
+        <Tabs.Tab
+          icon="list"
+          selected={tabIndex === 4}
+          onClick={() => setTabIndex(4)}>
+          Desserts Menu
+        </Tabs.Tab>
+        <Tabs.Tab
+          icon="list"
+          selected={tabIndex === 5}
+          onClick={() => setTabIndex(5)}>
+          Exotic Menu
+        </Tabs.Tab>
+        <Tabs.Tab
+          icon="list"
+          selected={tabIndex === 6}
+          onClick={() => setTabIndex(6)}>
+          Raw Offerings
+        </Tabs.Tab>
+        <Tabs.Tab
+          icon="fa-regular fa-address-card"
+          selected={tabIndex === 7}
+          onClick={() => setTabIndex(7)}>
+          Crew Cookies
+        </Tabs.Tab>
+      </Tabs>
+      {tabIndex === 0 ? <AppetizerMenu /> : null}
+      {tabIndex === 1 ? <BreakfastMenu /> : null}
+      {tabIndex === 2 ? <LunchMenu /> : null}
+      {tabIndex === 3 ? <DinnerMenu /> : null}
+      {tabIndex === 4 ? <DessertMenu /> : null}
+      {tabIndex === 5 ? <ExoticMenu /> : null}
+      {tabIndex === 6 ? <RawMenu /> : null}
+      {tabIndex === 7 ? <CrewMenu /> : null}
+    </Section>
   )}
 
-  const FoodDetailPanel = (_properties, context) => {
+const FoodDetailPanel = (_properties, context) => {
     const { act, data } = useBackend(context);
     const { general } = data;
     if (!general || !general.fields) {
@@ -160,46 +145,134 @@ const FoodMenuTabs = (props, context) => {
             general.photos.map((p, i) => (
               <Box
                 key={i}
-                display="inline-block"
+                width="64px"
                 textAlign="center"
-                color="label">
+                display="inline-block"
+                mr="0.5rem">
                 <img
-                  src={p.substr(1, p.length - 1)}
+                  className={classes(['synthesizer32x32', recipe.path])}
                   style={{
-                    width: '96px',
-                    'margin-bottom': '0.5rem',
+                    width: '100%',
                     '-ms-interpolation-mode': 'nearest-neighbor',
                   }}
                 />
                 <br />
-                Preview {i}
+                Preview
               </Box>
             ))}
-  
-  const AppetizerMenu = (_properties, context) => {
-    const { act, data } = useBackend(context);
-    const { records } = data;
-    return (
-      <Fragment>
-        <Box mt="0.5rem">
-          {records.map((record, i) => (
-            <Button
-              key={i}
-              icon="fa-solid fa-burger"
-              mb="0.5rem"
-              content={records.name
-              }
-              onClick={() => act('info', { d_rec: records.ref })}
-            />
-          ))}
-        </Box>
-      </Fragment>
-    );
-  };
-const SynthesizerMenuOrder = (props, context) => {
+          </Flex.Item>
+          </Flex>)}
+
+const BodyDesignerBodyRecords = (props, context) => {
+  const { act, data } = useBackend(context);
+  const { bodyrecords } = data;
+  return (
+    <Section
+      title="Body Records"
+      buttons={
+        <Button
+          icon="arrow-left"
+          content="Back"
+          onClick={() => act('menu', { menu: 'Main' })}
+        />
+      }>
+      {bodyrecords.map((record) => (
+        <Button
+          icon="eye"
+          key={record.name}
+          content={record.name}
+          onClick={() => act('view_brec', { view_brec: record.recref })}
+        />
+      ))}
+    </Section>
+  );
+};
+
+const SupplyConsoleMenuOrder = (props, context) => {
   const { act, data } = useBackend(context);
 
   const { categories, supply_packs, contraband, supply_points } = data;
+
+  const [activeCategory, setActiveCategory] = useLocalState(
+    context,
+    'activeCategory',
+    null
+  );
+
+  const viewingPacks = flow([
+    filter((val) => val.group === activeCategory),
+    filter((val) => !val.contraband || contraband),
+    sortBy((val) => val.name),
+    sortBy((val) => val.cost > supply_points),
+  ])(supply_packs);
+
+  // const viewingPacks = sortBy(val => val.name)(supply_packs).filter(val => val.group === activeCategory);
+
+  return (
+    <Section level={2}>
+      <Stack>
+        <Stack.Item basis="25%">
+          <Section title="Food Selection" scrollable fill height="290px">
+          <Box mt="0.5rem">
+          {recipes.map((recipes) => (
+            <Button
+              key={recipes}
+              icon="user"
+              mb="0.5rem"
+              content={recipes.name}
+              onClick={() => act('infofood', { infofood: recipes })}
+            />
+          ))}
+           </Box>
+          </Section>
+        </Stack.Item>
+      </Stack>
+        <Stack.Item grow={1} ml={2}>
+          <Section title="Contents" scrollable fill height="290px">
+            {viewingPacks.map((pack) => (
+              <Box key={pack.name}>
+                <Stack align="center" justify="flex-start">
+                  <Stack.Item basis="70%">
+                    <Button
+                      fluid
+                      icon="shopping-cart"
+                      ellipsis
+                      content={pack.name}
+                      color={pack.cost > supply_points ? 'red' : null}
+                      onClick={() => act('request_crate', { ref: recipe_list.ref })}
+                    />
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Button
+                      content="#"
+                      color={pack.cost > supply_points ? 'red' : null}
+                      onClick={() =>
+                        act('request_crate_multi', { ref: pack.ref })
+                      }
+                    />
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Button
+                      content="C"
+                      color={pack.cost > supply_points ? 'red' : null}
+                      onClick={() => act('view_crate', { crate: recipe_list.path })}
+                    />
+                  </Stack.Item>
+                  <Stack.Item grow={1}>{pack.cost} points</Stack.Item>
+                </Stack>
+              </Box>
+            ))}
+          </Section>
+        </Stack.Item>
+      </Stack>
+    </Section>
+  );
+};
+const AppetizerMenu = (props, context) => {
+  const { act, data } = useBackend(context);
+
+  const {categories, recipes} = data;
+  const { mode } = props;
 
   const [activeCategory, setActiveCategory] = useLocalState(
     context,
@@ -212,35 +285,79 @@ const SynthesizerMenuOrder = (props, context) => {
       <Stack>
         <Stack.Item basis="25%">
           <Section title="Food Selection" scrollable fill height="290px">
-            {categories.map((category) => (
-              <Button
-                key={category}
-                fluid
-                content={category}
-                selected={category === activeCategory}
-                onClick={() => setActiveCategory(category)}
-              />
-            ))}
+          <Box mt="0.5rem">
+          {recipes.map((recipes) => (
+            <Button
+              key={recipes}
+              icon="user"
+              mb="0.5rem"
+              content={recipes.name}
+              onClick={() => act('infofood', { infofood: recipes })}
+            />
+          ))}
+           </Box>
           </Section>
         </Stack.Item>
-        <Stack.Item grow={1} ml={2}>
-          <Section title="Selected Food Information" scrollable fill height="290px">
-            {viewingPacks.map((pack) => (
-              <Box key={pack.name}>
-                <Stack align="center" justify="flex-start">
-                  <Stack.Item basis="70%">
-                    <Button
-                      fluid
-                      icon="shopping-cart"
-                      ellipsis
-                      content={pack.name}
-                      color={pack.cost > supply_points ? 'red' : null}
-                      onClick={() => act('info', { ref: pack.ref })}
-                    />
-                  </Stack.Item>
-                </Stack>
+      </Stack>
+      <Stack>
+        <Stack.Item basis="25%">
+          <Section title="Food Selection" scrollable fill height="290px">
+          <Box mt="0.5rem">
+          {recipes.map((recipes) => (
+            <Button
+              key={recipes}
+              icon="user"
+              mb="0.5rem"
+              content={recipes.name}
+              onClick={() => act('infocrew', { infocrew: recipes })}
+            />
+          ))}
+           </Box>
+          </Section>
+        </Stack.Item>
+      </Stack>
+        <Flex.Item>
+        <LabeledList>
+          {general.fields.map((field, i) => (
+            <LabeledList.Item key={i} label={field.field}>
+              <Box height="20px" inline preserveWhitespace>
+                {field.value}
               </Box>
-            ))}
+              {!!field.edit && (
+                <Button
+                  icon="pen"
+                  ml="0.5rem"
+                  onClick={() => doEdit(context, field)}
+                />
+              )}
+            </LabeledList.Item>
+          ))}
+        </LabeledList>
+      </Flex.Item>
+      <Flex.Item textAlign="right">
+        {!!general.has_photos &&
+          general.photos.map((p, i) => (
+            <Box
+              key={i}
+              display="inline-block"
+              textAlign="center"
+              color="label">
+              <img
+                src={p.substr(1, p.length - 1)}
+                style={{
+                  width: '96px',
+                  'margin-bottom': '0.5rem',
+                  '-ms-interpolation-mode': 'nearest-neighbor',
+                }}
+              />
+              <br />
+              Photo #{i + 1}
+            </Box>
+          ))}
+      </Flex.Item>
+    </section>
+
+
 export const FoodSynthesizerMenuOrder = (props, context) => {
   const { act, data } = useBackend(context);
 

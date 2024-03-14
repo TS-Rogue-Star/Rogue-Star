@@ -2,18 +2,7 @@
 //Yes it's a generic food 3d printer. ~
 // in here because makes sense, if really it's just a refillable autolathe of food
 
-#define SYNTH_NOWORKY	1
-#define SYNTH_APPETIZER	2
-#define SYNTH_BREAKFAST	3
-#define SYNTH_LUNCH		4
-#define SYNTH_DINNER	5
-#define SYNTH_DESSERT	6
-#define SYNTH_EXOTICRAW	7
-#define SYNTH_CREW		8
-#define SYNTH_FOODLIST	9
-
 //#define VOICE_ORDER(A, O, T) list(activator = A, order = O, temp = T)
-
 // "Computer, Steak, Hot."
 
 /obj/machinery/synthesizer
@@ -56,6 +45,7 @@
 	//all of our food
 	var/static/datum/category_collection/synthesizer_recipes/synthesizer_recipes
 	var/static/list/recipe_list
+	var/static/list/category_list
 	var/active_category = null
 	var/menu_tab = 0
 	var/food_mimic_storage
@@ -65,7 +55,10 @@
 	var/activator = "computer"
 	var/list/voicephrase
 
-	//crew printing required stuff.
+	//crew printing required stuff. Shamelessly utilizing body designer methods
+	var/map_name
+	var/obj/screen/south_preview = null
+	var/mob/living/carbon/human/dummy/mannequin/mannequin = null
 	var/datum/transhuman/body_record/active_br = null
 	var/db_key
 	var/datum/transcore_db/our_db
@@ -82,6 +75,20 @@
 				recipe_list[R.name] = R
 			else
 				qdel(R)
+	if(!LAZYLEN(catagory_list)
+		for(var/typepath in subtypesof(/datum/category_group/synthesizer))
+			var/datum/category_group/synthesizer/C = new typepath()
+			if(C.name)
+				catagory_list[C.name] = C
+			else
+				qdel(C)
+
+	map_name = "crew_cookie_[REF(src)]_map"
+	south_preview = new
+	south_preview.name = ""
+	south_preview.assigned_map = map_name
+	south_preview.del_on_map_removal = FALSE
+	south_preview.screen_loc = "[map_name]:1,1"
 
 	wires = new(src)
 
@@ -108,6 +115,13 @@
 				recipe_list[R.name] = R
 			else
 				qdel(R)
+	if(!LAZYLEN(catagory_list)
+		for(var/typepath in subtypesof(/datum/category_group/synthesizer))
+			var/datum/category_group/synthesizer/C = new typepath()
+			if(C.id)
+				catagory_list[C.id] = C
+			else
+				qdel(C)
 
 	wires = new(src)
 
@@ -119,6 +133,7 @@
 /obj/machinery/synthesizer/Destroy()
 	qdel(wires)
 	wires = null
+	mannequin = null
 	for(var/obj/item/weapon/reagent_containers/synth_disp_cartridge/C in cart)
 		C.loc = get_turf(src.loc)
 		C = null
@@ -163,39 +178,93 @@
 
 /obj/machinery/synthesizer/tgui_data(mob/user, datum/tgui/ui, datum/tgui_state/state)
 	var/list/data = ..()
-	var/list/recipe_list = list()
-	for(var/datum/category_group/synthesizer/menulist in synthesizer_recipes.categories)
-		var/datum/category_item/synthesizer/food = menulist
-
-		if(food.hidden && !hacked)
-			continue
-		var/obj/item/weapon/reagent_containers/food/snacks/morsel = food.path
-		food.desc = initial(morsel.desc)
-		food.icon = initial(morsel.icon)
-		recipe_list.Add(list(list(
-			"name" = food.name,
-			"desc" = food.desc,
-			"icon" = food.icon,
-			"categories" = food.category,
-			"ref" = REF(food),
-			"path" = food.path
-			"randpixel" = food.randpixel
-			"voice_order" = food.voice_order,
-			"voice_temp" = food.voice_temp,
-			"hidden" = food.hidden
-		)))
-	data["recipes"] = recipe_list
-
-	var/bodyrecords_list_ui[0]
-	for(var/N in our_db.body_scans)
-		var/datum/transhuman/body_record/BR = our_db.body_scans[N]
-		bodyrecords_list_ui[++bodyrecords_list_ui.len] = list("name" = N, "recref" = "\ref[BR]")
-	if(bodyrecords_list_ui.len)
+	//body records are changed, so we have to look it up every time just in case.
+	if(menu == MENU_BODYRECORDS)
+		var/bodyrecords_list_ui[0]
+		for(var/N in our_db.body_scans)
+			var/datum/transhuman/body_record/BR = our_db.body_scans[N]
+			bodyrecords_list_ui[++bodyrecords_list_ui.len] = list("name" = N, "recref" = "\ref[BR]")
+		if(bodyrecords_list_ui.len)
+			data["bodyrecords"] = bodyrecords_list_ui
 	data["bodyrecords"] = bodyrecords_list_ui
+	if(active_br)
+		data["activeBodyRecord"] = list(
+			"real_name" = active_br.mydna.name,
+			"speciesname" = active_br.speciesname ? active_br.speciesname : active_br.mydna.dna.species,
+			"gender" = active_br.bodygender,
+			"synthetic" = active_br.synthetic ? "Yes" : "No",
+			"locked" = active_br.locked ? "Low" : "High",
+			"scale" = player_size_name(active_br.sizemult),
+			"booc" = active_br.body_oocnotes,
+			"styles" = list()
+		)
+
+		var/list/styles = data["activeBodyRecord"]["styles"]
+		var/list/temp
+
+		temp = list("styleHref" = "ear_style", "style" = "Normal")
+		if(mannequin.ear_style)
+			temp["style"] = mannequin.ear_style.name
+			if(mannequin.ear_style.do_colouration)
+				temp["color"] = MOB_HEX_COLOR(mannequin, ears)
+				temp["colorHref"] = "ear_color"
+			if(mannequin.ear_style.extra_overlay)
+				temp["color2"] = MOB_HEX_COLOR(mannequin, ears2)
+				temp["colorHref2"] = "ear_color2"
+		styles["Ears"] = temp
+
+		temp = list("styleHref" = "tail_style", "style" = "Normal")
+		if(mannequin.tail_style)
+			temp["style"] = mannequin.tail_style.name
+			if(mannequin.tail_style.do_colouration)
+				temp["color"] = MOB_HEX_COLOR(mannequin, tail)
+				temp["colorHref"] = "tail_color"
+			if(mannequin.tail_style.extra_overlay)
+				temp["color2"] = MOB_HEX_COLOR(mannequin, tail2)
+				temp["colorHref2"] = "tail_color2"
+		styles["Tail"] = temp
+
+		temp = list("styleHref" = "wing_style", "style" = "Normal")
+		if(mannequin.wing_style)
+			temp["style"] = mannequin.wing_style.name
+			if(mannequin.wing_style.do_colouration)
+				temp["color"] = MOB_HEX_COLOR(mannequin, wing)
+				temp["colorHref"] = "wing_color"
+			if(mannequin.wing_style.extra_overlay)
+				temp["color2"] = MOB_HEX_COLOR(mannequin, wing2)
+				temp["colorHref2"] = "wing_color2"
+		styles["Wing"] = temp
+
+		temp = list("styleHref" = "hair_style", "style" = mannequin.h_style)
+		if(mannequin.species && (mannequin.species.appearance_flags & HAS_HAIR_COLOR))
+			temp["color"] = MOB_HEX_COLOR(mannequin, hair)
+			temp["colorHref"] = "hair_color"
+		styles["Hair"] = temp
+
+		temp = list("styleHref" = "facial_style", "style" = mannequin.f_style)
+		if(mannequin.species && (mannequin.species.appearance_flags & HAS_HAIR_COLOR))
+			temp["color"] = MOB_HEX_COLOR(mannequin, facial)
+			temp["colorHref"] = "facial_color"
+		styles["Facial"] = temp
+
+		if(mannequin.species && (mannequin.species.appearance_flags & HAS_EYE_COLOR))
+			styles["Eyes"] = list("colorHref" = "eye_color", "color" = MOB_HEX_COLOR(mannequin, eyes))
+
+		if(mannequin.species && (mannequin.species.appearance_flags & HAS_SKIN_COLOR))
+			styles["Body Color"] = list("colorHref" = "skin_color", "color" = MOB_HEX_COLOR(mannequin, skin))
+
+		if (mannequin.species && mannequin.species.selects_bodytype)
+			if (!mannequin.species.base_species)
+				mannequin.species.base_species = mannequin.species.name
+			styles["Bodytype"] = list("styleHref" = "custom_base", "style" = mannequin.species.base_species)
+
+		var/datum/preferences/designer/P = new()
+		apply_markings_to_prefs(mannequin, P)
+		data["activeBodyRecord"]["markings"] = P.body_markings
 	data["busy"] = busy
 	data["isThereCart"] = cart ? TRUE : FALSE
-	data["screen"] = screen
 	data["modal"] = tgui_modal_data(src)
+	//We probably want to dynamically check if there's a canister every time too.
 	var/cartfilling[0]
 	if(cart && cart.reagents && cart.reagents.reagent_list.len)
 		for(var/datum/reagent/R in cart.reagents.reagent_list)
@@ -203,9 +272,9 @@
 				"name" = R.name,
 				"id" = R.id,
 				"volume" = R.volume
-				))) // list in a list because Byond merges the first list...
+				)))
 	data["cartfilling"] = cartfilling
-
+	//Especially since we need to maintain a 'fill level'
 	if(cart)
 		data["cartCurrentVolume"] = cart.reagents.total_volume
 		data["cartMaxVolume"] = cart.reagents.maximum_volume
@@ -213,41 +282,33 @@
 		data["cartCurrentVolume"] = null
 		data["cartMaxVolume"] = null
 
-	switch(screen) //show each screen tab. ID to help? maybe? idfk
-		if("SYNTH_APPETIZER")
-			data["id"] = "appasnacc"
-		if("SYNTH_BREAKFAST")
-			data["id"] = "breakfast"
-		if("SYNTH_LUNCH")
-			data["id"] = "lunch"
-		if("SYNTH_DINNER")
-			data["id"] = "dinner"
-		if("SYNTH_DESSERT")
-			data["id"] = "dessert"
-		if("SYNTH_EXOTICRAW")
-			data["id"] = "exotic"
-		if("SYNTH_CREW")
-			data["id"] = "E"
-		if("SYNTH_FOODLIST")
-			data["name"] = data["recipes"]
-			return
 	return data
 
 /obj/machinery/synthesizer/tgui_static_data(mob/user)
 	var/list/data = ..()
-	var/list/category_list = list()
-	category_list.Add(list(list(
-			"id" = menulist.id
-			"category" = menulist.category_item_type
-			)))
-
-	data["categories"] = category_list
+	//our food recipes and catagories aren't going to be changed, let's make them static to save resources
+	var/list/recipe_list = list()
+	for(var/datum/category_group/synthesizer/menulist in synthesizer_recipes.categories)
+		var/datum/category_item/synthesizer/food = menulist
+		var/obj/item/weapon/reagent_containers/food/snacks/morsel = food.path //Let's grab the food's specific details for our UI
+		food.desc = initial(morsel.desc)
+		food.icon = initial(morsel.icon)
+		recipe_list.Add(list(list(
+			"name" = food.name,
+			"desc" = food.desc,
+			"icon" = food.icon,
+			"categories" = food.category,
+			"path" = food.path
+			"randpixel" = food.randpixel
+			"voice_order" = food.voice_order,
+			"voice_temp" = food.voice_temp,
+			"hidden" = food.hidden
+		))) //a list within a list. Byond loves its lists.
+	//
+	data["recipes"] = recipe_list
+	data["catagories"] = catagory_list //We initialized with this full list
+	data["mapRef"] = map_name //preserve the player preview map
 	return data
-
-/obj/machinery/synthesizer/ui_assets(mob/user)
-	return list(
-		get_asset_datum(/datum/asset/spritesheet/synthesizer),
-	)
 
 /obj/machinery/synthesizer/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
 	if(stat & (BROKEN|NOPOWER))
@@ -266,47 +327,31 @@
 		return
 
 	switch(action)
-		if("screen")
-				screen = clamp(text2num(params["screen"]) || 0, SYNTH_APPETIZER, SYNTH_FOODLIST)
-				active1 = null
-				active2 = null
 		if("infofood")
-			var/list/general = list()
-			data["recipes"] = general
-			if(istype(active1, /datum/data/record) && data_core.general.Find(active1))
-				var/list/fields = list()
-				general["fields"] = fields
-				fields[++fields.len] = FIELD("Name", active1.fields["name"], "name")
-				fields[++fields.len] = FIELD("Species", active1.fields["species"], "species")
-				var/list/photos = list()
-				general["icon"] = photos
-				photos[++photos.len] = active1.fields["photo-south"]
-				general["has_photos"] = (active1.fields["photo-south"]] ? 1 : 0)
-				general["empty"] = 0
-			else
-				general["empty"] = 1
-
-			active1 = general_record
-			screen = SYNTH_FOODLIST
+			var/datum/recipe_list/R = locate(params["recipes"])
+			if(!istype(R))
+				return FALSE
+			var/list/payload = list(
+				"name" = R.name,
+				"desc" = R.desc,
+				"icon" = R.icon,
+			)
+			tgui_modal_message(src, action, "", null, payload)
+			. = TRUE
 
 		if("infocrew")
-			var/list/general = list()
-			data["general"] = general
-			if(istype(active1, /datum/data/record) && data_core.general.Find(active1))
-				var/list/fields = list()
-				general["fields"] = fields
-				fields[++fields.len] = FIELD("Name", active1.fields["name"], "name")
-				fields[++fields.len] = FIELD("Species", active1.fields["species"], "species")
-				var/icon/I = get_cached_examine_icon(src)
-				general["icon"] = "\icon[A.examine_icon()]"
-				photos[++photos.len] = active1.fields["photo-south"]
-				general["has_photos"] = (active1.fields["photo-south"]] ? 1 : 0)
-				general["empty"] = 0
+			var/datum/transhuman/body_record/BR = locate(params["infocrew"])
+			if(BR && istype(BR.mydna))
+				if(microcompatibility(usr) || BR.ckey == usr.ckey)
+					active_br = new /datum/transhuman/body_record(BR) // Load a COPY!
+					update_micro_icon()
+					menu = MENU_SPECIFICRECORD
+				else
+					active_br = null
+					temp = "Access denied: Body records are confidential."
 			else
-				general["empty"] = 1
-
-			active1 = general_record
-			screen = SYNTH_FOODLIST
+				active_br = null
+				temp = "ERROR: Record missing."
 
 		if("make")
 			var/datum/category_item/synthesizer/making = locate(params["make"])
@@ -370,11 +415,6 @@
 
 			return TRUE
 
-		if("photo_crew")
-			var/icon/photo = icon2base64(A.examine_icon(), key)
-			if(photo && active1)
-				active1.fields["photo_crew"] = photo
-				active1.fields["photo-south"] = "'data:image/png;base64,[icon2base64(photo)]'"
 		if("photo_food")
 				var/icon/photo = locate(params["photo_crew"]
 				if(photo && active1)
@@ -647,36 +687,7 @@
 		// Science parts will be of help if they bother.
 	update_tgui_static_data(usr)
 
-/obj/machinery/synthesizer/proc/microcompatibility(action, prams) //Check if our database has valid opt in entries
-	var/ref = params["ref"]
-	if(!length(ref))
-		return
-	active_br = locate(ref)
-	if(istype(active_br))
-		if(active_br && active_br.cookieman) //Player has opted in to be printed so let's send it
-			obtainmicro(active_br)
-		else
-			return
-
-/obj/machinery/synthesizer/proc/obtainmicro(var/datum/transhuman/body_record/current_project)
-	//Make a new mannequin quickly, and allow the observer to take the appearance
-
-	var/datum/dna2/record/R = current_project.mydna
-	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src, R.dna.species)
-	if(!R.dna.real_name)
-		R.dna.real_name = "Mystery Employee ([rand(0,999)])"
-	H.real_name = R.dna.real_name
-	H.digitigrade = R.dna.digitigrade // ensure clone mob has digitigrade var set appropriately
-	if(H.dna.digitigrade <> R.dna.digitigrade)
-		H.dna.digitigrade = R.dna.digitigrade // ensure cloned DNA is set appropriately from record??? for some reason it doesn't get set right despite the override to datum/dna/Clone()
-
-	H.dna = R.dna.Clone()
-	H.appearance_flags = current_project.aflags
-	H.resizable = TRUE //just in case
-	H.set_size(RESIZE_NORMAL) //reset scaling
-	H.set_size(RESIZE_SMALL) //snackrificial sized but still clickable too
-
-
+//Cartridge handling
 /obj/item/weapon/reagent_containers/synth_disp_cartridge
 	name = "Synthesizer cartridge"
 	desc = "Genuine replacement cartridge for SabreSnacks brand Food Synthesizers. It's too large for the Portable models."
@@ -761,16 +772,15 @@
 		/obj/item/weapon/stock_parts/scanning_module = 1)
 
 //Sprite sheet handling
-
-/datum/asset/spritesheet/synthesizer //mimic of vending machines but better optimization than not? idk
+/datum/asset/spritesheet/synthesizer //mimic of vending machines
 	name = "synthesizer"
 
 /datum/asset/spritesheet/synthesizer/register()
 	for(var/path in subtypesof(/datum/category_item/synthesizer))
 		var/obj/item/weapon/reagent_containers/food/fud = path //drinks are helpfully a subtype of food
 
-		var/icon_file
-		var/icon_state
+		var/icon_file = initial(fud.icon)
+		var/icon_state = initial(fud.icon_state)
 		var/icon/I
 
 		if(initial(fud.icon) && initial(fud.icon_state)) //if it's got an icon replacement we'll skip
@@ -795,9 +805,90 @@
 
 
 		var/imgid = replacetext(replacetext("[fud]", "/obj/item/weapon/reagent_containers/food/", ""), "/", "-")
-
+		I.Scale(128, 128) //enlarge it to look nicer on the preview
 		Insert(imgid, I)
 	return ..()
+
+//
+// Code below is for body_record designer copypasta for crew cookies
+//
+
+/obj/machinery/synthesizer/proc/microcompatibility(action, prams) //Check if our database has valid opt in entries
+	var/ref = params["ref"]
+	if(!length(ref))
+		return
+	active_br = locate(ref)
+	if(istype(active_br))
+		if(active_br && active_br.cookieman) //Player has opted in to be printed so let's send it
+			update_micro_icon(active_br)
+		else
+			return
+
+// Based on /datum/preferences/proc/update_preview_icon()
+/obj/machinery/synthesizer/proc/update_micro_icon()
+	if(!mannequin)
+		mannequin = new ()
+	obtainmicro(mannequin)
+	mannequin.ImmediateOverlayUpdate()
+
+	var/mutable_appearance/MA = new(mannequin)
+	south_preview.appearance = MA
+	south_preview.dir = SOUTH
+	south_preview.screen_loc = "[map_name]:1,1"
+	south_preview.name = ""
+
+/obj/machinery/synthesizer/proc/give_client_previews(client/C)
+	C.register_map_obj(south_preview)
+
+/obj/machinery/synthesizer/proc/obtainmicro(var/mob/living/carbon/human/H)
+	ASSERT(!QDELETED(H))
+	ASSERT(!QDELETED(active_br))
+	//Get the DNA and generate a new mob
+	var/datum/dna2/record/R = active_br.mydna
+	H.set_species(R.dna.species) // This needs to happen before anything else becuase it sets some variables.
+
+	// Update the external organs
+	for(var/part in active_br.limb_data)
+		var/status = active_br.limb_data[part]
+		if(status == null) continue //Species doesn't have limb? Child of amputated limb?
+
+		var/obj/item/organ/external/O = H.organs_by_name[part]
+		if(!O) continue //Not an organ. Perhaps another amputation removed it already.
+
+		if(status == 1) //Normal limbs
+			continue
+		else if(status == 0) //Missing limbs
+			O.remove_rejuv()
+		else if(status) //Anything else is a manufacturer
+			if(active_br.synthetic)
+				O.robotize(status)
+			else
+				O.remove_rejuv()
+
+	// Then the internal organs.  I think only O_EYES acutally counts, but lets do all just in case
+	for(var/part in active_br.organ_data)
+		var/status = active_br.organ_data[part]
+		if(status == null) continue //Species doesn't have organ? Child of missing part?
+
+		var/obj/item/organ/I = H.internal_organs_by_name[part]
+		if(!I) continue//Not an organ. Perhaps external conversion changed it already?
+
+		if(status == 0) //Normal organ
+			continue
+		else if(status == 1) //Assisted organ
+			I.mechassist()
+		else if(status == 2) //Mechanical organ
+			I.robotize()
+		else if(status == 3) //Digital organ
+			I.digitize()
+
+	// Apply DNA
+	H.dna = R.dna.Clone()
+	H.UpdateAppearance() // Update all appearance stuff from the DNA record
+	H.sync_organ_dna() // Do this because sprites depend on DNA-gender of organs (chest etc)
+	H.dress_preview_mob(active_br) //put on their gear!
+	H.regenerate_icons()
+	return 0 // Success!
 
 /* Voice activation stuff.
 can tgui accept orders that isn't through the menu? Probably. hijack that.

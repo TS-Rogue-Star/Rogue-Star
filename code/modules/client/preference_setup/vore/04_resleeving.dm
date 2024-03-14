@@ -43,6 +43,8 @@
 	. += "<br>"
 	. += "<b>Start With Body Scan:</b> <a [pref.resleeve_scan ? "class='linkOn'" : ""] href='?src=\ref[src];toggle_resleeve_scan=1'><b>[pref.resleeve_scan ? "Yes" : "No"]</b></a><br>"
 	. += "<b>Prevent Body Impersonation:</b> <a [pref.resleeve_lock ? "class='linkOn'" : ""] href='?src=\ref[src];toggle_resleeve_lock=1'><b>[pref.resleeve_lock ? "Yes" : "No"]</b></a><br>"
+	. += "<b>Allow Cookie Replicas:</b> <a [pref.cookieman ? "class='linkOn'" : ""] href='?src=\ref[src];toggle_cookieman=1'><b>[pref.cookieman ? "Yes" : "No"]</b></a><br>"
+
 
 /datum/category_item/player_setup_item/vore/resleeve/OnTopic(var/href, var/list/href_list, var/mob/user)
 	if(href_list["toggle_resleeve_lock"])
@@ -51,4 +53,7 @@
 	else if(href_list["toggle_resleeve_scan"])
 		pref.resleeve_scan = pref.resleeve_scan ? 0 : 1;
 		return TOPIC_REFRESH
+	else if(href_list["toggle_cookieman])
+		pref.cookieman = pref.cookieman ? 0: : 1;
+		return TOPIC REFRESH
 	return ..();
