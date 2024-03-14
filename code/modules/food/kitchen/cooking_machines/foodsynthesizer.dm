@@ -44,7 +44,7 @@
 	//all of our food
 	var/static/datum/category_collection/synthesizer_recipes/synthesizer_recipes
 	var/static/list/recipe_list
-	var/static/list/catagory_list
+	var/static/list/menucatagory_list
 	var/active_category = null
 	var/menu_tab = 0
 	var/food_mimic_storage
@@ -70,11 +70,11 @@
 				recipe_list[R.name] = R
 			else
 				qdel(R)
-	if(!LAZYLEN(catagory_list))
+	if(!LAZYLEN(menucatagory_list))
 		for(var/typepath in subtypesof(/datum/category_group/synthesizer))
 			var/datum/category_group/synthesizer/C = new typepath()
-			if(C.name)
-				catagory_list[C.name] = C
+			if(C.id)
+				menucatagory_list[C.id] = C
 			else
 				qdel(C)
 	wires = new(src)
@@ -184,7 +184,6 @@
 			"name" = food.name,
 			"desc" = food.desc,
 			"icon" = food.icon,
-			"categories" = food.category,
 			"path" = food.path,
 			"voice_order" = food.voice_order,
 			"voice_temp" = food.voice_temp,
@@ -192,7 +191,7 @@
 		))) //a list within a list. Byond loves its lists.
 	//
 	data["recipes"] = recipe_list
-	data["catagories"] = catagory_list //We initialized with this full list
+	data["menucatagories"] = menucatagory_list //We initialized with this full list
 //	data["mapRef"] = map_name //preserve the player preview map
 	return data
 
