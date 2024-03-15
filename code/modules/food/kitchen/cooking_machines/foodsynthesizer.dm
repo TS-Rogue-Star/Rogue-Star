@@ -163,11 +163,9 @@
 	data["cartfilling"] = cartfilling
 	//Especially since we need to maintain a 'fill level'
 	if(cart)
-		data["cartCurrentVolume"] = cart.reagents.total_volume
-		data["cartMaxVolume"] = cart.reagents.maximum_volume
-	else
-		data["cartCurrentVolume"] = null
-		data["cartMaxVolume"] = null
+		var/percent = round((cart.reagents.total_volume / cart.reagents.maximum_volume) * 100)
+		data["cartFillStatus"] = cart ? percent : null
+
 
 	return data
 
