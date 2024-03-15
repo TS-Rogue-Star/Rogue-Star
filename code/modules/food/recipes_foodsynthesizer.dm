@@ -1,13 +1,16 @@
 /datum/category_item/synthesizer/New()
 	..()
-	var/obj/item/I
+	var/obj/item/weapon/reagent_containers/food/snacks/snacc
 	if(path)
-		I = new path()
+		snacc = new path()
 
-	if(!I)	// Something has gone horribly wrong, or right.
+	if(!snacc)	// Something has gone horribly wrong, or right.
 		log_debug("[name] created an Synthesizer design without an assigned path.")
 		return
-	qdel(I)
+	desc = initial(snacc.desc) //Let's get our description text and icon while we've got the item...
+	icon = initial(snacc.icon)
+	icon_state = initial(snacc.icon_state)
+	qdel(snacc)
 
 /*********************
 * Synthed Food Setup *
@@ -116,8 +119,9 @@
 *******************/
 
 /datum/category_item/synthesizer
-	var/desc							//food description to be applied to the UI, probably a better way of this
+	var/desc							//food description to be applied to the UI.
 	var/icon							//food initial icon for UI fanciness
+	var/icon_state						// and the state
 	var/path							//food item path
 	var/hidden = FALSE					//is it illegal/nonstandard?
 	var/list/voice_order				//what can we say to get this? Avoid exact same phrases.

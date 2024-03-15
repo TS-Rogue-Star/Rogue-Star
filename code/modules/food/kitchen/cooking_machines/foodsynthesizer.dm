@@ -54,31 +54,24 @@
 	var/list/voicephrase
 
 	//crew printing required stuff. Shamelessly utilizing body designer methods
-	var/datum/transhuman/body_record/active_br = null
+/*	var/datum/transhuman/body_record/active_br = null
 	var/db_key
-	var/datum/transcore_db/crewcookie_db
+	var/datum/transcore_db/our_db */
 
 /obj/machinery/synthesizer/Initialize()
 	. = ..()
 	cart = new /obj/item/weapon/reagent_containers/synth_disp_cartridge(src)
-	if(!LAZYLEN(synthesizer_recipes))
+	if(synthesizer_recipes)
 		synthesizer_recipes = new()
-	if(!LAZYLEN(recipe_list))
+	if(recipe_list)
 		for(var/typepath in subtypesof(/datum/category_item/synthesizer))
 			var/datum/category_item/synthesizer/R = new typepath()
 			if(R.name)
 				recipe_list[R.name] = R
 			else
 				qdel(R)
-	if(!LAZYLEN(menucatagory_list))
-		for(var/typepath in subtypesof(/datum/category_group/synthesizer))
-			var/datum/category_group/synthesizer/C = new typepath()
-			if(C.id)
-				menucatagory_list[C.id] = C
-			else
-				qdel(C)
 	wires = new(src)
-	crewcookie_db = SStranscore.db_by_key(db_key)
+//	our_db = SStranscore.db_by_key(db_key)
 	default_apply_parts()
 	RefreshParts()
 	update_icon()
@@ -141,12 +134,12 @@
 /obj/machinery/synthesizer/tgui_data(mob/user, datum/tgui/ui, datum/tgui_state/state)
 	var/list/data = ..()
 
-	//body records are changed, so we have to look it up every time just in case. We won't check here for print preference yet
+/*	//body records are changed, so we have to look it up every time just in case. We won't check here for print preference yet
 	var/bodyrecords_list_ui[0]
-	for(var/N in crewcookie_db.body_scans)
-		var/datum/transhuman/body_record/BR = crewcookie_db.body_scans[N]
+	for(var/N in our_db.body_scans)
+		var/datum/transhuman/body_record/BR = our_db.body_scans[N]
 		bodyrecords_list_ui[++bodyrecords_list_ui.len] = list("name" = N, "recref" = "\ref[BR]")
-	data["bodyrecords"] = bodyrecords_list_ui
+	data["bodyrecords"] = bodyrecords_list_ui */
 
 	data["busy"] = busy
 	data["isThereCart"] = cart ? TRUE : FALSE
@@ -173,23 +166,20 @@
 	var/list/data = ..()
 	//our food recipes and catagories aren't going to be changed, let's make them static to save resources
 	var/list/recipe_list = list()
-	for(var/datum/category_group/synthesizer/menulist in synthesizer_recipes.categories)
-		var/datum/category_item/synthesizer/food = menulist
-		var/obj/item/weapon/reagent_containers/food/snacks/morsel = food.path //Let's grab the food's specific details for our UI
-		food.desc = initial(morsel.desc)
-		food.icon = initial(morsel.icon)
-		recipe_list.Add(list(list(
-			"name" = food.name,
-			"desc" = food.desc,
-			"icon" = food.icon,
-			"path" = food.path,
-			"voice_order" = food.voice_order,
-			"voice_temp" = food.voice_temp,
-			"hidden" = food.hidden
-		))) //a list within a list. Byond loves its lists.
-	//
-	data["recipes"] = recipe_list
-	data["menucatagories"] = menucatagory_list //We initialized with this full list
+	for(var/datum/category_group/synthesizer/menulist in synthesizer_recipes)
+		for(var/datum/category_item/synthesizer/food in menulist.category_item_type)
+			recipe_list.Add(list(list(
+				"name" = food.name,
+				"desc" = food.desc,
+				"icon" = food.icon,
+				"icon_state" = food.icon_state,
+				"path" = food.path,
+				"voice_order" = food.voice_order,
+				"voice_temp" = food.voice_temp,
+				"hidden" = food.hidden))) //a list within a list. Byond loves its lists.
+			data["recipes"] = recipe_list
+		menucatagory_list = menulist
+		data["menucatagories"] = menulist
 //	data["mapRef"] = map_name //preserve the player preview map
 	return data
 
