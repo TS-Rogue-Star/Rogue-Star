@@ -18,6 +18,8 @@ azmodan412 - Xenochimera
 beardedsnake - Xenochimera
 beyondmylife - Protean
 bothnevarbackwards - Diona
+briargarden - Black-Eyed Shadekin
+briargarden - Shadekin Empathy
 bricker98 - Protean
 bricker98 - Black-Eyed Shadekin
 burritojustice - Protean
@@ -107,6 +109,7 @@ mewchild - Vox
 milu - Xenochimera
 mrsebbi - Xenochimera
 mullins111 - Black-Eyed Shadekin
+murchant - Teppi
 natje - Xenochimera
 nerdass - Protean
 newyorks - Protean
@@ -198,6 +201,5 @@ xonkon - Protean
 yecrowbarman - Protean
 yeehawguvnah - Protean
 yeehawguvnah - Xenochimera
-zalvine - Shadekin Empathy
 zammyman215 - Vox
 zeracyfr - Xenochimera
