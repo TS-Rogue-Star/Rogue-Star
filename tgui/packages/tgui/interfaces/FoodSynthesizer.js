@@ -1,19 +1,22 @@
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Flex, LabeledList, Section, Tabs, ProgressBar, Stack } from '../components';
-import { ComplexModal } from '../interfaces/common/ComplexModal';
+//  import { ComplexModal } from '../interfaces/common/ComplexModal';
 import { Window } from '../layouts';
 import { flow } from 'common/fp';
 
-export const SynthesizerMenu = (props, context) => {
+export const FoodSynthesizer = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Window width={700} height={620}>
+    <Window width={700} height={700}>
       <Window.Content>
-        <ComplexModal maxWidth="100%" />
-        <Section title="SabreSnacks Menu">
-          <SynthCartGuage />
-          <FoodMenuTabs />
-        </Section>
+        <Stack fill vertical>
+          <Stack.Item>
+            <SynthCartGuage />
+          </Stack.Item>
+          <Stack.Item>
+            <FoodMenuTabs />
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );
@@ -76,15 +79,9 @@ const menus = [
 
 const FoodMenuTabs = (props, context) => {
   const { act, data } = useBackend(context);
-  const [menu, setMenu] = useSharedState(context, 'foodmenu', 0);
-  const [activeMenu] = useLocalState(context, menucatagory_list, null);
-  const menuselection = flow([
-    filter((val) => val.id === menucatagory_list),
-    sortBy((val) => val.name),
-  ])(menucatagories);
-
+  const [menu, setMenu] = useSharedState(context, 'synthmenu', 0);
   return (
-    <Window width={850} height={630}>
+    <Window>
       <Window.Content scrollable>
         <Tabs>
           {menus.map((obj, i) => (
@@ -105,58 +102,76 @@ const FoodMenuTabs = (props, context) => {
 
 const AppetizerMenu = (_properties, context) => {
   const { act, data } = useBackend(context);
-  const { recipe, recipes, name, desc, icon, path, hidden, menucatagories } =
-    data;
-  const { product } = props;
+  const { recipes } = data;
   if (!recipes) {
     return <Box color="bad">Recipes records missing!</Box>;
   }
+  const [ActiveFood, setActiveFood] = useLocalState(
+    context,
+    'ActiveFood',
+    null
+  );
+
+  const FoodList = flow([
+    filter((recipe) => recipe.name === ActiveFood),
+    filter((recipe) => !recipe.hidden || hidden),
+    sortBy((recipe) => recipe.name),
+  ])(recipes);
+
   return (
-    <Stack>
-      <Stack.Item basis="25%">
-        <Section title="Food Selection" scrollable fill height="290px">
-          <Box mt="0.5rem">
-            {recipes.map((recipes) => (
+    <Section level={2}>
+      <Stack>
+        <Stack.Item basis="25%">
+          <Section title="Food Selection" scrollable fill height="290px">
+            {menuselection.map((recipe) => (
               <Button
-                key={recipes}
+                key={recipe}
                 fluid
-                content={recipes.name}
-                selected={category === activeCategory}
-                onClick={
-                  (() => setActiveCategory(category),
-                  act('infofood', { infofood: recipes }))
-                }
+                content={recipe.name}
+                selected={recipe === ActiveFood}
+                onClick={() => setActiveFood(recipes)}
               />
             ))}
-          </Box>
-        </Section>
-      </Stack.Item>
-      <Stack.Item grow={1} ml={2}>
-        <Flex>
-          <Flex.Item>
-            <LabeledList>
-              <LabeledList.Item label="Name">{recipe.name}</LabeledList.Item>
-              <LabeledList.Item label="Description">
-                {recipe.desc}
-              </LabeledList.Item>
-            </LabeledList>
-          </Flex.Item>
-          <Flex.Item textAlign="right">
-            {product.isatom && (
-              <span
-                className={classes(['synthesizer64x64', recipe.path])}
-                style={{
-                  width: '100%',
-                  '-ms-interpolation-mode': 'nearest-neighbor',
-                }}
-              />
-            )}
-            <br />
-            Preview
-          </Flex.Item>
-        </Flex>
-      </Stack.Item>
-    </Stack>
+          </Section>
+        </Stack.Item>
+        <Stack.Item grow={1} ml={2}>
+          <Section title="Details" scrollable fill height="290px">
+            {FoodList.map((recipes) => (
+              <Box key={pack.name}>
+                <Stack align="center" justify="flex-start">
+                  <Stack.Item basis="70%">
+                    <LabeledList>
+                      <LabeledList.Item label="Name">
+                        {recipes.name}
+                      </LabeledList.Item>
+                      <LabeledList.Item label="Description">
+                        {recipe.desc}
+                      </LabeledList.Item>
+                      <LabeledList.Item label="Serving Temprature">
+                        {recipe.voice_temp}
+                      </LabeledList.Item>
+                    </LabeledList>
+                    <Button
+                      fluid
+                      icon="print"
+                      content="Begin Printing"
+                      onClick={() => act('make', { make: recipe.path })}>
+                      {toTitleCase(recipe.name)}
+                    </Button>
+                    <Box
+                      className={classes([
+                        'synthesizer64x64',
+                        recipe.icon_state,
+                      ])}
+                    />
+                  </Stack.Item>
+                </Stack>
+              </Box>
+            ))}
+          </Section>
+        </Stack.Item>
+      </Stack>
+    </Section>
   );
 };
 
