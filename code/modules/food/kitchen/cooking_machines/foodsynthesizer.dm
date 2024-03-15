@@ -60,9 +60,9 @@
 
 /obj/machinery/synthesizer/Initialize()
 	. = ..()
-	cart = new /obj/item/weapon/reagent_containers/synth_disp_cartridge(src)
-	if(synthesizer_recipes)
+	if(!synthesizer_recipes)
 		synthesizer_recipes = new()
+	cart = new /obj/item/weapon/reagent_containers/synth_disp_cartridge(src)
 	wires = new(src)
 //	our_db = SStranscore.db_by_key(db_key)
 	default_apply_parts()
@@ -77,6 +77,8 @@
 
 /obj/machinery/synthesizer/mini/Initialize()
 	. = ..()
+	if(!synthesizer_recipes)
+		synthesizer_recipes = new()
 	cart = new /obj/item/weapon/reagent_containers/synth_disp_cartridge/small(src)
 
 /obj/machinery/synthesizer/Destroy()
@@ -197,6 +199,10 @@
 		to_chat(usr, "<span class='notice'>The synthesizer is busy. Please wait for completion of previous operation.</span>")
 		playsound(src, 'sound/machines/replicator_input_failed.ogg', 100, 1)
 		return
+
+	switch(tgui_modal_act(src, action, params))
+		if(TGUI_MODAL_ANSWER)
+			return
 
 	switch(action)
 		if("infofood")
