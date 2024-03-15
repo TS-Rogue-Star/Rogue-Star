@@ -40,6 +40,7 @@
 
 /// Call by name proc references, checks if the proc exists on either this type or as a global proc.
 #define PROC_REF(X) (.proc/##X)
+#define OLD_PROC_REF(X) (.proc/##X)
 /// Call by name verb references, checks if the verb exists on either this type or as a global verb.
 #define VERB_REF(X) (.verb/##X)
 
