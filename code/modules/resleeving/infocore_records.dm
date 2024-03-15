@@ -90,12 +90,12 @@
 	var/aflags
 	var/breath_type = "oxygen"
 
-/datum/transhuman/body_record/New(var/copyfrom, var/add_to_db = 0, var/ckeylock = 0)
+/datum/transhuman/body_record/New(var/copyfrom, var/add_to_db = 0, var/ckeylock = 0, var/cookieprint = 0)
 	..()
 	if(istype(copyfrom, /datum/transhuman/body_record))
 		init_from_br(copyfrom)
 	else if(ishuman(copyfrom))
-		init_from_mob(copyfrom, add_to_db, ckeylock)
+		init_from_mob(copyfrom, add_to_db, ckeylock, cookieprint)
 
 /datum/transhuman/body_record/Destroy()
 	mydna = null
@@ -105,7 +105,7 @@
 	organ_data.Cut()
 	return QDEL_HINT_HARDDEL // For now at least there is no easy way to clear references to this in machines etc.
 
-/datum/transhuman/body_record/proc/init_from_mob(var/mob/living/carbon/human/M, var/add_to_db = 0, var/ckeylock = 0, var/database_key)
+/datum/transhuman/body_record/proc/init_from_mob(var/mob/living/carbon/human/M, var/add_to_db = 0, var/ckeylock = 0, var/cookieprint = 0, var/database_key)
 	ASSERT(!QDELETED(M))
 	ASSERT(istype(M))
 
