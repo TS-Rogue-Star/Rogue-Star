@@ -63,13 +63,6 @@
 	cart = new /obj/item/weapon/reagent_containers/synth_disp_cartridge(src)
 	if(synthesizer_recipes)
 		synthesizer_recipes = new()
-	if(recipe_list)
-		for(var/typepath in subtypesof(/datum/category_item/synthesizer))
-			var/datum/category_item/synthesizer/R = new typepath()
-			if(R.name)
-				recipe_list[R.name] = R
-			else
-				qdel(R)
 	wires = new(src)
 //	our_db = SStranscore.db_by_key(db_key)
 	default_apply_parts()
@@ -165,10 +158,16 @@
 /obj/machinery/synthesizer/tgui_static_data(mob/user)
 	var/list/data = ..()
 	//our food recipes and catagories aren't going to be changed, let's make them static to save resources
+	var/list/menucatagory_list = list()
 	var/list/recipe_list = list()
-	for(var/datum/category_group/synthesizer/menulist in synthesizer_recipes)
-		for(var/datum/category_item/synthesizer/food in menulist.category_item_type)
+
+	for(var/datum/category_group/synthesizer/menulist in synthesizer_recipes.categories)
+		menucatagory_list += menulist.name
+		for(var/datum/category_item/synthesizer/food in menulist.items)
+			if(food.hidden && !hacked)
+				continue
 			recipe_list.Add(list(list(
+				"category" = menulist.name,
 				"name" = food.name,
 				"desc" = food.desc,
 				"icon" = food.icon,
@@ -176,10 +175,10 @@
 				"path" = food.path,
 				"voice_order" = food.voice_order,
 				"voice_temp" = food.voice_temp,
-				"hidden" = food.hidden))) //a list within a list. Byond loves its lists.
-			data["recipes"] = recipe_list
-		menucatagory_list = menulist
-		data["menucatagories"] = menulist
+				"hidden" = food.hidden
+			))) //a list within a list. Byond loves its lists.
+	data["recipes"] = recipe_list
+	data["menucatagories"] = menucatagory_list
 //	data["mapRef"] = map_name //preserve the player preview map
 	return data
 
@@ -208,6 +207,7 @@
 				"name" = R.name,
 				"desc" = R.desc,
 				"icon" = R.icon,
+				"icon_state" = R.icon_state
 			)
 			tgui_modal_message(src, action, "", null, payload)
 			. = TRUE
@@ -282,8 +282,7 @@
 				src.audible_message("<span class='notice'>Error: Insufficent Materials. SabreSnacks recommends you have a genuine replacement cartridge available to install.</span>", runemessage = "Error: Insufficent Materials!")
 
 			return TRUE
-
-//		if("photo_food")
+	return FALSE
 
 /*		if("crewprint")
 			var/datum/category_item/synthesizer/making = locate(params["crewprint"])
@@ -347,7 +346,6 @@
 
 			return TRUE */
 
-//	return FALSE
 
 /obj/machinery/synthesizer/update_icon()
 	cut_overlays()
