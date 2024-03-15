@@ -66,7 +66,7 @@
 * Category Collection Setup *
 ****************************/
 
-/datum/category_collection/synthesizer_recipes
+/datum/category_collection/synthesizer
 	category_group_type = /datum/category_group/synthesizer
 
 /*************
