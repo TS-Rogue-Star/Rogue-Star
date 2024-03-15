@@ -42,7 +42,7 @@
 	var/cart_type = /obj/item/weapon/reagent_containers/synth_disp_cartridge
 
 	//all of our food
-	var/static/datum/category_collection/synthesizer_recipes/synthesizer_recipes
+	var/static/datum/category_collection/synthesizer/synthesizer_recipes
 	var/static/list/recipe_list
 	var/static/list/menucatagory_list
 	var/active_category = null
