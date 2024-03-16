@@ -1,6 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, LabeledList, Section, Tabs, ProgressBar, Stack } from '../components';
-//  import { ComplexModal } from '../interfaces/common/ComplexModal';
 import { Window } from '../layouts';
 import { flow } from 'common/fp';
 
@@ -23,13 +22,14 @@ export const FoodSynthesizer = (props, context) => {
 };
 
 const SynthCartGuage = (props, context) => {
-  const { act, data } = useBackend(context);
-  const adjustedCellChange = data.cartFillStatus;
+  const { data } = useBackend(context);
   return (
     <Section title="Cartridge Status">
-      <LabeledList.Item label={data.cart.name}>
-        <ProgressBar color="purple" value={adjustedCellChange} />
-      </LabeledList.Item>
+      <Box>
+        <LabeledList.Item label={data.cart.name}>
+          <ProgressBar color="purple" value={data.cartFillStatus} />
+        </LabeledList.Item>
+      </Box>
     </Section>
   );
 };
@@ -70,19 +70,58 @@ const menus = [
     icon: 'list',
     template: <RawMenu />,
   },
-  /* {
+];
+
+/*  {
     name: 'Crew Cookies',
     icon: 'list',
     template: <CrewMenu />,
-  },*/
-];
+  },  */
 
 const FoodMenuTabs = (props, context) => {
-  const { act, data } = useBackend(context);
-  const [menu, setMenu] = useSharedState(context, 'synthmenu', 0);
+  const [menu, setMenu] = useSharedState(context, 'menutabs', 0);
+
+  const menus = [
+    {
+      name: 'Appetizers',
+      icon: 'list',
+      template: <AppetizerMenu />,
+    },
+    {
+      name: 'Breakfast',
+      icon: 'list',
+      template: <BreakfastMenu />,
+    },
+    {
+      name: 'Lunch',
+      icon: 'list',
+      template: <LunchMenu />,
+    },
+    {
+      name: 'Dinner',
+      icon: 'list',
+      template: <DinnerMenu />,
+    },
+    {
+      name: 'Desserts',
+      icon: 'list',
+      template: <DessertMenu />,
+    },
+    {
+      name: 'Exotic Menu',
+      icon: 'list',
+      template: <ExoticMenu />,
+    },
+    {
+      name: 'Raw Offerings',
+      icon: 'list',
+      template: <RawMenu />,
+    },
+  ];
+  
   return (
     <Window>
-      <Window.Content scrollable>
+      <Box>
         <Tabs>
           {menus.map((obj, i) => (
             <Tabs.Tab
@@ -95,7 +134,7 @@ const FoodMenuTabs = (props, context) => {
           ))}
         </Tabs>
         {menus[menu].template}
-      </Window.Content>
+      </Box>
     </Window>
   );
 };
@@ -136,13 +175,13 @@ const AppetizerMenu = (_properties, context) => {
         </Stack.Item>
         <Stack.Item grow={1} ml={2}>
           <Section title="Details" scrollable fill height="290px">
-            {FoodList.map((recipes) => (
-              <Box key={pack.name}>
+            {FoodList.map((recipe) => (
+              <Box key={recipe.name}>
                 <Stack align="center" justify="flex-start">
                   <Stack.Item basis="70%">
                     <LabeledList>
                       <LabeledList.Item label="Name">
-                        {recipes.name}
+                        {recipe.name}
                       </LabeledList.Item>
                       <LabeledList.Item label="Description">
                         {recipe.desc}
@@ -211,13 +250,13 @@ const BreakfastMenu = (_properties, context) => {
         </Stack.Item>
         <Stack.Item grow={1} ml={2}>
           <Section title="Details" scrollable fill height="290px">
-            {FoodList.map((recipes) => (
-              <Box key={pack.name}>
+            {FoodList.map((recipe) => (
+              <Box key={recipe.name}>
                 <Stack align="center" justify="flex-start">
                   <Stack.Item basis="70%">
                     <LabeledList>
                       <LabeledList.Item label="Name">
-                        {recipes.name}
+                        {recipe.name}
                       </LabeledList.Item>
                       <LabeledList.Item label="Description">
                         {recipe.desc}
@@ -286,13 +325,13 @@ const LunchMenu = (_properties, context) => {
         </Stack.Item>
         <Stack.Item grow={1} ml={2}>
           <Section title="Details" scrollable fill height="290px">
-            {FoodList.map((recipes) => (
-              <Box key={pack.name}>
+            {FoodList.map((recipe) => (
+              <Box key={recipe.name}>
                 <Stack align="center" justify="flex-start">
                   <Stack.Item basis="70%">
                     <LabeledList>
                       <LabeledList.Item label="Name">
-                        {recipes.name}
+                        {recipe.name}
                       </LabeledList.Item>
                       <LabeledList.Item label="Description">
                         {recipe.desc}
@@ -361,13 +400,13 @@ const DinnerMenu = (_properties, context) => {
         </Stack.Item>
         <Stack.Item grow={1} ml={2}>
           <Section title="Details" scrollable fill height="290px">
-            {FoodList.map((recipes) => (
-              <Box key={pack.name}>
+            {FoodList.map((recipe) => (
+              <Box key={recipe.name}>
                 <Stack align="center" justify="flex-start">
                   <Stack.Item basis="70%">
                     <LabeledList>
                       <LabeledList.Item label="Name">
-                        {recipes.name}
+                        {recipe.name}
                       </LabeledList.Item>
                       <LabeledList.Item label="Description">
                         {recipe.desc}
@@ -436,13 +475,13 @@ const DessertMenu = (_properties, context) => {
         </Stack.Item>
         <Stack.Item grow={1} ml={2}>
           <Section title="Details" scrollable fill height="290px">
-            {FoodList.map((recipes) => (
-              <Box key={pack.name}>
+            {FoodList.map((recipe) => (
+              <Box key={recipe.name}>
                 <Stack align="center" justify="flex-start">
                   <Stack.Item basis="70%">
                     <LabeledList>
                       <LabeledList.Item label="Name">
-                        {recipes.name}
+                        {recipe.name}
                       </LabeledList.Item>
                       <LabeledList.Item label="Description">
                         {recipe.desc}
@@ -511,13 +550,13 @@ const ExoticMenu = (_properties, context) => {
         </Stack.Item>
         <Stack.Item grow={1} ml={2}>
           <Section title="Details" scrollable fill height="290px">
-            {FoodList.map((recipes) => (
-              <Box key={pack.name}>
+            {FoodList.map((recipe) => (
+              <Box key={recipe.name}>
                 <Stack align="center" justify="flex-start">
                   <Stack.Item basis="70%">
                     <LabeledList>
                       <LabeledList.Item label="Name">
-                        {recipes.name}
+                        {recipe.name}
                       </LabeledList.Item>
                       <LabeledList.Item label="Description">
                         {recipe.desc}
@@ -586,13 +625,13 @@ const RawMenu = (_properties, context) => {
         </Stack.Item>
         <Stack.Item grow={1} ml={2}>
           <Section title="Details" scrollable fill height="290px">
-            {FoodList.map((recipes) => (
-              <Box key={pack.name}>
+            {FoodList.map((recipe) => (
+              <Box key={recipe.name}>
                 <Stack align="center" justify="flex-start">
                   <Stack.Item basis="70%">
                     <LabeledList>
                       <LabeledList.Item label="Name">
-                        {recipes.name}
+                        {recipe.name}
                       </LabeledList.Item>
                       <LabeledList.Item label="Description">
                         {recipe.desc}
