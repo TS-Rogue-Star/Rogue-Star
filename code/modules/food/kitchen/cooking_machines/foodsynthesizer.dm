@@ -177,7 +177,8 @@
 				"path" = food.path,
 				"voice_order" = food.voice_order,
 				"voice_temp" = food.voice_temp,
-				"hidden" = food.hidden
+				"hidden" = food.hidden,
+				"ref" = "\ref[food]"
 			))) //a list within a list. Byond loves its lists.
 	data["recipes"] = recipe_list
 	data["menucatagories"] = menucatagory_list
@@ -213,7 +214,8 @@
 				"name" = R.name,
 				"desc" = R.desc,
 				"icon" = R.icon,
-				"icon_state" = R.icon_state
+				"icon_state" = R.icon_state,
+				"ref" = "\ref[R]"
 			)
 			tgui_modal_message(src, action, "", null, payload)
 			. = TRUE

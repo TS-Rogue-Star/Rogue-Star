@@ -1,5 +1,7 @@
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, LabeledList, Section, Tabs, ProgressBar, Stack } from '../components';
+import { Fragment } from 'inferno';
+import { filter, sortBy } from 'common/collections';
+import { useBackend, useLocalState, useSharedState } from '../backend';
+import { Box, Button, LabeledList, Section, Flex, Divider, Tabs, ProgressBar, Stack } from '../components';
 import { Window } from '../layouts';
 import { flow } from 'common/fp';
 
@@ -8,14 +10,22 @@ export const FoodSynthesizer = (props, context) => {
   return (
     <Window width={700} height={700}>
       <Window.Content>
-        <Stack fill vertical>
-          <Stack.Item>
-            <SynthCartGuage />
-          </Stack.Item>
-          <Stack.Item>
-            <FoodMenuTabs />
-          </Stack.Item>
-        </Stack>
+        <Section children = {any}>
+        <Flex direction="column">
+          <Stack>
+            <Stack.Item order = {1}>
+              <Section >
+              <SynthCartGuage/>
+              </Section>
+            </Stack.Item>
+            <Stack.Item order = {2}>
+              <Section>
+              <FoodMenuTabs/>
+              </Section>
+            </Stack.Item>
+          </Stack>
+        </Flex>
+        </Section>
       </Window.Content>
     </Window>
   );
@@ -23,19 +33,20 @@ export const FoodSynthesizer = (props, context) => {
 
 const SynthCartGuage = (props, context) => {
   const { data } = useBackend(context);
+  const adjustedCartChange = data.cartFillStatus / 100;
   return (
-    <Section title="Cartridge Status">
-      <Box>
-        <LabeledList.Item label={data.cart.name}>
-          <ProgressBar color="purple" value={data.cartFillStatus} />
+    <Fragment>
+      <Section title="Cartridge Status">
+        <LabeledList.Item>
+          <ProgressBar color="purple" value={adjustedCartChange} />
         </LabeledList.Item>
-      </Box>
-    </Section>
+      </Section>
+    </Fragment>
   );
 };
 
 const FoodMenuTabs = (props, context) => {
-  const [menu, setMenu] = useSharedState(context, 'menutabs', 0);
+  const [menu, setMenu] = useSharedState(context, 'menu', 0);
 
   const menus = [
     {
@@ -44,22 +55,22 @@ const FoodMenuTabs = (props, context) => {
       template: <AppetizerMenu />,
     },
     {
-      name: 'Breakfast',
+      name: 'Breakfast Menu',
       icon: 'list',
       template: <BreakfastMenu />,
     },
     {
-      name: 'Lunch',
+      name: 'Lunch Menu',
       icon: 'list',
       template: <LunchMenu />,
     },
     {
-      name: 'Dinner',
+      name: 'Dinner Menu',
       icon: 'list',
       template: <DinnerMenu />,
     },
     {
-      name: 'Desserts',
+      name: 'Dessert Menu',
       icon: 'list',
       template: <DessertMenu />,
     },
@@ -74,30 +85,30 @@ const FoodMenuTabs = (props, context) => {
       template: <RawMenu />,
     },
   ];
-  
+
   return (
-    <Window>
-      <Box>
-        <Tabs>
-          {menus.map((obj, i) => (
-            <Tabs.Tab
-              key={i}
-              icon={obj.icon}
-              selected={menu === i}
-              onClick={() => setMenu(i)}>
-              {obj.name}
-            </Tabs.Tab>
-          ))}
-        </Tabs>
-        {menus[menu].template}
-      </Box>
-    </Window>
+    <Section fill level={2}>
+      <Window>
+          <Tabs>
+            {menus.map((obj, i) => (
+              <Tabs.Tab
+                key={i}
+                icon={obj.icon}
+                selected={menu === i}
+                onClick={() => setMenu(i)}>
+                {obj.name}
+              </Tabs.Tab>
+            ))}
+          </Tabs>
+          {menus[menu].template}
+      </Window>
+    </Section>
   );
 };
 
 const AppetizerMenu = (_properties, context) => {
   const { act, data } = useBackend(context);
-  const { recipes } = data;
+  const { recipes, menucatagories } = data;
   if (!recipes) {
     return <Box color="bad">Recipes records missing!</Box>;
   }
@@ -114,11 +125,11 @@ const AppetizerMenu = (_properties, context) => {
   ])(recipes);
 
   return (
-    <Section level={2}>
+    <Section level={3}>
       <Stack>
         <Stack.Item basis="25%">
           <Section title="Food Selection" scrollable fill height="290px">
-            {menuselection.map((recipe) => (
+            {menucatagories.map((recipe) => (
               <Button
                 key={recipe}
                 fluid
@@ -172,7 +183,7 @@ const AppetizerMenu = (_properties, context) => {
 
 const BreakfastMenu = (_properties, context) => {
   const { act, data } = useBackend(context);
-  const { recipes } = data;
+  const { recipes, menucatagories } = data;
   if (!recipes) {
     return <Box color="bad">Recipes records missing!</Box>;
   }
@@ -189,11 +200,11 @@ const BreakfastMenu = (_properties, context) => {
   ])(recipes);
 
   return (
-    <Section level={2}>
+    <Section level={3}>
       <Stack>
         <Stack.Item basis="25%">
           <Section title="Food Selection" scrollable fill height="290px">
-            {menuselection.map((recipe) => (
+            {menucatagories.map((recipe) => (
               <Button
                 key={recipe}
                 fluid
@@ -247,7 +258,7 @@ const BreakfastMenu = (_properties, context) => {
 
 const LunchMenu = (_properties, context) => {
   const { act, data } = useBackend(context);
-  const { recipes } = data;
+  const { recipes, menucatagories } = data;
   if (!recipes) {
     return <Box color="bad">Recipes records missing!</Box>;
   }
@@ -264,11 +275,11 @@ const LunchMenu = (_properties, context) => {
   ])(recipes);
 
   return (
-    <Section level={2}>
+    <Section level={3}>
       <Stack>
         <Stack.Item basis="25%">
           <Section title="Food Selection" scrollable fill height="290px">
-            {menuselection.map((recipe) => (
+            {menucatagories.map((recipe) => (
               <Button
                 key={recipe}
                 fluid
@@ -322,7 +333,7 @@ const LunchMenu = (_properties, context) => {
 
 const DinnerMenu = (_properties, context) => {
   const { act, data } = useBackend(context);
-  const { recipes } = data;
+  const { recipes, menucatagories } = data;
   if (!recipes) {
     return <Box color="bad">Recipes records missing!</Box>;
   }
@@ -339,11 +350,11 @@ const DinnerMenu = (_properties, context) => {
   ])(recipes);
 
   return (
-    <Section level={2}>
+    <Section level={3}>
       <Stack>
         <Stack.Item basis="25%">
           <Section title="Food Selection" scrollable fill height="290px">
-            {menuselection.map((recipe) => (
+            {menucatagories.map((recipe) => (
               <Button
                 key={recipe}
                 fluid
@@ -397,7 +408,7 @@ const DinnerMenu = (_properties, context) => {
 
 const DessertMenu = (_properties, context) => {
   const { act, data } = useBackend(context);
-  const { recipes } = data;
+  const { recipes, menucatagories } = data;
   if (!recipes) {
     return <Box color="bad">Recipes records missing!</Box>;
   }
@@ -414,11 +425,11 @@ const DessertMenu = (_properties, context) => {
   ])(recipes);
 
   return (
-    <Section level={2}>
+    <Section level={3}>
       <Stack>
         <Stack.Item basis="25%">
           <Section title="Food Selection" scrollable fill height="290px">
-            {menuselection.map((recipe) => (
+            {menucatagories.map((recipe) => (
               <Button
                 key={recipe}
                 fluid
@@ -472,7 +483,7 @@ const DessertMenu = (_properties, context) => {
 
 const ExoticMenu = (_properties, context) => {
   const { act, data } = useBackend(context);
-  const { recipes } = data;
+  const { recipes, menucatagories } = data;
   if (!recipes) {
     return <Box color="bad">Recipes records missing!</Box>;
   }
@@ -489,11 +500,11 @@ const ExoticMenu = (_properties, context) => {
   ])(recipes);
 
   return (
-    <Section level={2}>
+    <Section level={3}>
       <Stack>
         <Stack.Item basis="25%">
           <Section title="Food Selection" scrollable fill height="290px">
-            {menuselection.map((recipe) => (
+            {menucatagories.map((recipe) => (
               <Button
                 key={recipe}
                 fluid
@@ -547,7 +558,7 @@ const ExoticMenu = (_properties, context) => {
 
 const RawMenu = (_properties, context) => {
   const { act, data } = useBackend(context);
-  const { recipes } = data;
+  const { recipes, menucatagories } = data;
   if (!recipes) {
     return <Box color="bad">Recipes records missing!</Box>;
   }
@@ -564,11 +575,11 @@ const RawMenu = (_properties, context) => {
   ])(recipes);
 
   return (
-    <Section level={2}>
+    <Section level={3}>
       <Stack>
         <Stack.Item basis="25%">
           <Section title="Food Selection" scrollable fill height="290px">
-            {menuselection.map((recipe) => (
+            {menucatagories.map((recipe) => (
               <Button
                 key={recipe}
                 fluid
