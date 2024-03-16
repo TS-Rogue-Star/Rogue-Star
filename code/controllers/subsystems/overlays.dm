@@ -88,7 +88,8 @@ SUBSYSTEM_DEF(overlays)
 				if (entry.flags & OVERLAY_QUEUED)
 					entry.ImmediateOverlayUpdate()
 			if (!ispath(entry))
-				result += entry.appearance
+				if (!islist(entry))
+					result += entry.appearance
 			else
 				var/image/image = entry
 				result += image.appearance

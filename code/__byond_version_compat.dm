@@ -1,8 +1,3 @@
-#if DM_VERSION >= 515
-#error PLEASE MAKE SURE THAT 515 IS PROPERLY TESTED AND WORKS. ESPECIALLY THE SAVE-FILES HAVE TO WORK.
-#error Additionally: Make sure that the GitHub Workflow was updated to BYOND 515 as well.
-#endif
-
 // These defines are from __513_compatibility.dm -- Please Sort
 #define CLAMP(CLVALUE, CLMIN, CLMAX) clamp(CLVALUE, CLMIN, CLMAX)
 #define TAN(x) tan(x)
@@ -45,6 +40,7 @@
 
 /// Call by name proc references, checks if the proc exists on either this type or as a global proc.
 #define PROC_REF(X) (.proc/##X)
+#define OLD_PROC_REF(X) (.proc/##X)
 /// Call by name verb references, checks if the verb exists on either this type or as a global verb.
 #define VERB_REF(X) (.verb/##X)
 
@@ -60,6 +56,7 @@
 
 /// Call by name proc references, checks if the proc exists on either this type or as a global proc.
 #define PROC_REF(X) (nameof(.proc/##X))
+#define OLD_PROC_REF(X) (.proc/##X)
 /// Call by name verb references, checks if the verb exists on either this type or as a global verb.
 #define VERB_REF(X) (nameof(.verb/##X))
 
