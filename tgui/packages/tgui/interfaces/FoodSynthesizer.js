@@ -34,50 +34,6 @@ const SynthCartGuage = (props, context) => {
   );
 };
 
-const menus = [
-  {
-    name: 'Appetizers',
-    icon: 'list',
-    template: <AppetizerMenu />,
-  },
-  {
-    name: 'Breakfast',
-    icon: 'list',
-    template: <BreakfastMenu />,
-  },
-  {
-    name: 'Lunch',
-    icon: 'list',
-    template: <LunchMenu />,
-  },
-  {
-    name: 'Dinner',
-    icon: 'list',
-    template: <DinnerMenu />,
-  },
-  {
-    name: 'Desserts',
-    icon: 'list',
-    template: <DessertMenu />,
-  },
-  {
-    name: 'Exotic Menu',
-    icon: 'list',
-    template: <ExoticMenu />,
-  },
-  {
-    name: 'Raw Offerings',
-    icon: 'list',
-    template: <RawMenu />,
-  },
-];
-
-/*  {
-    name: 'Crew Cookies',
-    icon: 'list',
-    template: <CrewMenu />,
-  },  */
-
 const FoodMenuTabs = (props, context) => {
   const [menu, setMenu] = useSharedState(context, 'menutabs', 0);
 
