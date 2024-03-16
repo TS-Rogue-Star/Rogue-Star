@@ -1656,7 +1656,7 @@
 	taste_description = "creamy chocolate"
 	reagent_state = LIQUID
 	color = "#403010"
-	nutrition = 2
+	nutrition = 5
 	adj_temp = 5
 
 	glass_name = "hot chocolate"
@@ -2586,7 +2586,6 @@
 	if(M.species.robo_ethanol_drunk || !(M.isSynthetic()))
 		if(alien == IS_DIONA)
 			return
-
 		M.adjust_nutrition((M.food_preference(allergen_type) / 2) * removed)
 
 		M.jitteriness = max(M.jitteriness - 3, 0)
