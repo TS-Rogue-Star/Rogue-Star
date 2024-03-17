@@ -301,7 +301,7 @@
 	reagents.add_reagent("coffee", 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/tea
-	name = "cup of Duke Purple tea"
+	name = "\improper Purple Tea"
 	desc = "An insult to Duke Purple is an insult to the Space Queen! Any proper gentleman will fight you, if you sully this tea."
 	description_fluff = "Duke Purple is NanoPasture's proprietary strain of black tea, noted for its strong but otherwise completely non-distinctive flavour."
 	icon_state = "chai_vended"
@@ -316,7 +316,7 @@
 	reagents.add_reagent("tea", 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/decaf_tea
-	name = "cup of Count Mauve decaffeinated tea"
+	name = "\improper Mauve decaf tea"
 	desc = "Why should bedtime stop you from enjoying a nice cuppa?"
 	description_fluff = "Count Mauve is a milder strain of NanoPasture's proprietary black tea, noted for its strong but otherwise completely non-distinctive flavour and total lack of caffeination."
 	icon_state = "chai_vended"
@@ -340,9 +340,9 @@
 	reagents.add_reagent("ice", 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/h_chocolate
-	name = "cup of Counselor's Choice hot cocoa"
-	desc = "Who needs character traits when you can enjoy a hot mug of cocoa?"
-	description_fluff = "Counselor's Choice brand hot cocoa is made with a blend of hot water and non-dairy milk powder substitute, in a compromise destined to annoy all parties."
+	name = "\improper Hot Cocoa"
+	desc = "A pleasant, creamy cup of hot chocolatey goodness."
+	description_fluff = "Simple and sweet, this hot cocoa is made from all synthetic ingredients to provide a consistent smooth creamy chocolate flavor even in the deepest reaches of space!"
 	icon_state = "coffee"
 	item_state = "hot_choc"
 	trash = /obj/item/trash/coffee
@@ -355,7 +355,7 @@
 	reagents.add_reagent("hot_coco", 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/greentea
-	name = "cup of green tea"
+	name = "\improper Green Tea"
 	desc = "Exceptionally traditional, delightfully subtle."
 	description_fluff = "Tea remains an important tradition in many cultures originating on Earth. Among these, green tea is probably the most traditional of the bunch... Though the vending machines of the modern era hardly do it justice."
 	icon_state = "greentea_vended"
@@ -370,7 +370,7 @@
 	reagents.add_reagent("greentea", 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/chaitea
-	name = "cup of chai tea"
+	name = "\improper Chai Tea"
 	desc = "The name is redundant but the flavor is delicious!"
 	description_fluff = "Chai Tea - tea blended with a spice mix of cinnamon and cloves - borders on a national drink on Kishar."
 	icon_state = "chai_vended"
@@ -385,7 +385,7 @@
 	reagents.add_reagent("chaitea", 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/decaf
-	name = "cup of decaf coffee"
+	name = "\improper Decaf Coffee"
 	desc = "Coffee with all the wake-up sucked out."
 	description_fluff = "A trial run on two NanoTrasen stations in 2481 attempted to replace all vending machine coffee with decaf in order to combat an epidemic of caffeine addiction. After two days, three major industrial accidents and a death, the initiative was cancelled. Decaf is now thankfully optional."
 	icon_state = "coffee"
@@ -513,4 +513,3 @@
 	icon_state = "vacuumflask"
 	volume = 60
 	center_of_mass = list("x"=15, "y"=4)
-
