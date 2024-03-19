@@ -5,24 +5,6 @@ import { Box, Button, LabeledList, Section, Flex, Tabs, ProgressBar, Stack } fro
 import { Window } from '../layouts';
 import { flow } from 'common/fp';
 
-const MENU_SNACC = 0;
-const MENU_BREKKIE = 1;
-const MENU_LONCH = 2;
-const MENU_DINNAH = 3;
-const MENU_DESLUT = 4;
-const MENU_EROTIC = 5;
-const MENU_RHAWH = 6;
-const MENU_CREW = 7;
-const MENU_SORT_ORDER = [
-  MENU_SNACC,
-  MENU_BREKKIE,
-  MENU_LONCH,
-  MENU_DINNAH,
-  MENU_DESLUT,
-  MENU_EROTIC,
-  MENU_RHAWH,
-];
-
 export const FoodSynthesizer = (props, context) => {
   const { act, data } = useBackend(context);
   return (
@@ -56,6 +38,15 @@ const FoodMenuTabs = (props, context) => {
     menucatagories
   );
 
+  function changetab() {
+    tguiactivemenu = () => {
+      act(setActiveMenu(sortorder));
+    };
+    byondactivemenu = () => {
+      act('setactive_menu', { setactive_menu: [sortorder] });
+    };
+  }
+
   return (
     <Flex flow-wrap>
       <Section>
@@ -67,23 +58,13 @@ const FoodMenuTabs = (props, context) => {
                 fluid
                 content={menutab.name}
                 icon="list"
-                selected={menutab === ActiveMenu}
-                onClick={() =>
-                  act(setActiveMenu, {
-                    setactive_menu: [menutab.sortorder],
-                  })
-                }
+                selected={(menutab === ActiveMenu)}
+                onClick={() => {
+                  changetab;
+                }}
               />
             </Tabs.Tab>
           ))}
-          <Tabs.Tab>
-            <Button
-              icon="user"
-              selected={active_menu === MENU_CREW}
-              content="Crew Menu"
-              onClick={() => act(CrewMenu, { crewmenu: crew.name })}
-            />
-          </Tabs.Tab>
         </Tabs>
         <Flex.Item grow>
           <FoodSelectionMenu menutab={ActiveMenu} />
@@ -92,6 +73,15 @@ const FoodMenuTabs = (props, context) => {
     </Flex>
   );
 };
+
+/*  <Tabs.Tab>
+      <Button
+        icon="user"
+        selected={active_menu === MENU_CREW}
+        content="Crew Menu"
+        onClick={() => act(CrewMenu, { crewmenu: crew.name })}
+      />
+    </Tabs.Tab> */
 
 const FoodSelectionMenu = (_properties, context) => {
   const { act, data } = useBackend(context);

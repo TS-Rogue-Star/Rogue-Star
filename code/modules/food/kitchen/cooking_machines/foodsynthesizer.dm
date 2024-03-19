@@ -175,25 +175,7 @@
 			"sortorder" = menulist.sortorder
 			)))
 	data["menucatagories"] = menucatagory_list
-
-	var/list/recipes = list()
-	data["recipes"] = recipes
-
-	switch(active_menu)
-		if(MENU_SNACC)
-			recipes = populaterecipes(MENU_SNACC)
-		if(MENU_BREKKIE)
-			recipes = populaterecipes(MENU_BREKKIE)
-		if(MENU_LONCH)
-			recipes = populaterecipes(MENU_LONCH)
-		if(MENU_DINNAH)
-			recipes = populaterecipes(MENU_DINNAH)
-		if(MENU_DESLUT)
-			recipes = populaterecipes(MENU_DESLUT)
-		if(MENU_EROTIC)
-			recipes = populaterecipes(MENU_EROTIC)
-		if(MENU_RHAWH)
-			recipes = populaterecipes(MENU_RHAWH)
+	data["recipes"] = recipe_list
 
 	return data
 
@@ -215,10 +197,10 @@
 
 	switch(action)
 		if("setactive_menu")
-			var/newmenutab = locate(params["setactive_menu"])
-			if(newmenutab != active_menu)
-				active_menu = newmenutab
-			return TRUE
+			var/newmenutab = text2num(locate(params["setactive_menu"]))
+			active_menu = newmenutab
+			populaterecipes(active_menu)
+			return
 
 	/*	if("infocrew")
 			var/datum/transhuman/body_record/BR = locate(params["infocrew"])
@@ -354,15 +336,14 @@
 
 			return TRUE */
 
-/obj/machinery/synthesizer/proc/populaterecipes(var/menuid)
+/obj/machinery/synthesizer/proc/populaterecipes(var/menuid) //Only called on tab swap, tgui_data gets updated indirectly and doesn't constantly call this
 	to_chat(world, "populaterecipes([menuid]) called")
-	var/list/specificfoodlist = list()
 	for(var/datum/category_group/synthesizer/menulist in synthesizer_recipes.categories)
 		if(menulist.sortorder == menuid)
 			for(var/datum/category_item/synthesizer/food in menulist.items)
 				if(food.hidden && !hacked)
 					continue
-				specificfoodlist.Add(list(list(
+				recipe_list.Add(list(list(
 					"catagory" = menulist.sortorder,
 					"name" = food.name,
 					"desc" = food.desc,
@@ -373,7 +354,7 @@
 					"voice_temp" = food.voice_temp,
 					"hidden" = food.hidden,
 					"ref" = "\ref[food]")))
-			return specificfoodlist
+			return recipe_list
 		else
 			to_chat(world, "somehow the menuid is actually [menuid] ????")
 			return FALSE
