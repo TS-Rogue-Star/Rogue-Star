@@ -45,8 +45,7 @@
 	var/static/datum/category_collection/synthesizer/synthesizer_recipes
 	var/static/list/recipe_list
 	var/static/list/menucatagory_list
-	var/active_category = null
-	var/menu_tab = 0
+	var/active_menu
 	var/food_mimic_storage
 
 	//Voice activation stuff
@@ -164,12 +163,13 @@
 	var/list/recipe_list = list()
 
 	for(var/datum/category_group/synthesizer/menulist in synthesizer_recipes.categories)
-		menucatagory_list += menulist.name
+		menucatagory_list += menulist.id
+		active_menu = menucatagory_list[1]
 		for(var/datum/category_item/synthesizer/food in menulist.items)
 			if(food.hidden && !hacked)
 				continue
 			recipe_list.Add(list(list(
-				"category" = menulist.name,
+				"category" = menulist.id,
 				"name" = food.name,
 				"desc" = food.desc,
 				"icon" = food.icon,
@@ -206,6 +206,10 @@
 			return
 
 	switch(action)
+		if("menupick")
+			active_menu = locate(params["menupick"])
+			return TRUE
+
 		if("infofood")
 			var/datum/category_item/synthesizer/R = locate(params["infofood"])
 			if(!istype(R))

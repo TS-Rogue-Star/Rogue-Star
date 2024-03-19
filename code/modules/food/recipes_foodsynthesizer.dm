@@ -75,6 +75,7 @@
 
 /datum/category_group/synthesizer
 	var/id = null
+	var/icon = "list"
 
 /datum/category_group/synthesizer/New()
 	..()

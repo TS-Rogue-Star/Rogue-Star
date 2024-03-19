@@ -8,24 +8,10 @@ import { flow } from 'common/fp';
 export const FoodSynthesizer = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Window width={700} height={700}>
+    <Window width={800} height={700} resizable>
       <Window.Content>
-        <Section children = {any}>
-        <Flex direction="column">
-          <Stack>
-            <Stack.Item order = {1}>
-              <Section >
-              <SynthCartGuage/>
-              </Section>
-            </Stack.Item>
-            <Stack.Item order = {2}>
-              <Section>
-              <FoodMenuTabs/>
-              </Section>
-            </Stack.Item>
-          </Stack>
-        </Flex>
-        </Section>
+        <SynthCartGuage />
+        <FoodMenuTabs />
       </Window.Content>
     </Window>
   );
@@ -35,88 +21,56 @@ const SynthCartGuage = (props, context) => {
   const { data } = useBackend(context);
   const adjustedCartChange = data.cartFillStatus / 100;
   return (
-    <Fragment>
-      <Section title="Cartridge Status">
-        <LabeledList.Item>
-          <ProgressBar color="purple" value={adjustedCartChange} />
-        </LabeledList.Item>
-      </Section>
-    </Fragment>
-  );
-};
-
-const FoodMenuTabs = (props, context) => {
-  const [menu, setMenu] = useSharedState(context, 'menu', 0);
-
-  const menus = [
-    {
-      name: 'Appetizers',
-      icon: 'list',
-      template: <AppetizerMenu />,
-    },
-    {
-      name: 'Breakfast Menu',
-      icon: 'list',
-      template: <BreakfastMenu />,
-    },
-    {
-      name: 'Lunch Menu',
-      icon: 'list',
-      template: <LunchMenu />,
-    },
-    {
-      name: 'Dinner Menu',
-      icon: 'list',
-      template: <DinnerMenu />,
-    },
-    {
-      name: 'Dessert Menu',
-      icon: 'list',
-      template: <DessertMenu />,
-    },
-    {
-      name: 'Exotic Menu',
-      icon: 'list',
-      template: <ExoticMenu />,
-    },
-    {
-      name: 'Raw Offerings',
-      icon: 'list',
-      template: <RawMenu />,
-    },
-  ];
-
-  return (
-    <Section fill level={2}>
-      <Window>
-          <Tabs>
-            {menus.map((obj, i) => (
-              <Tabs.Tab
-                key={i}
-                icon={obj.icon}
-                selected={menu === i}
-                onClick={() => setMenu(i)}>
-                {obj.name}
-              </Tabs.Tab>
-            ))}
-          </Tabs>
-          {menus[menu].template}
-      </Window>
+    <Section title="Cartridge Status">
+      <LabeledList.Item>
+        <ProgressBar color="purple" value={adjustedCartChange} />
+      </LabeledList.Item>
     </Section>
   );
 };
 
-const AppetizerMenu = (_properties, context) => {
+const FoodMenuTabs = (props, context) => {
+  const [activemenu, setMenu] = useSharedState(context, 'synthmenu', 0);
+  return (
+    <Flex>
+      <Section fill spacing={1}>
+        <Tabs>
+        {activemenu.map((foodmenu) => (
+          <Tabs.Tab
+            key={foodmenu.name}
+            icon={foodmenu.icon}
+            selected={foodmenu.selected}
+            onClick={() => act('menupick', { menupick: foodmenu.id })}>
+            {foodmenu.name}
+          </Tabs.Tab> ))}
+          <Tabs.Tab onClick={() => act('crewmenu')}>
+            <Icon name="face-grin-beam-o" />
+            Crew Menu
+          </Tabs.Tab>
+        </Tabs>
+      <Flex.Item grow>
+        {selected && (
+          <Section title={selected.foodmenu.name}>
+            <FoodSelectionMenu foodmenu={selected} />
+          </Section>
+        )}
+      </Flex.Item>
+    </Section>
+  </Flex>
+  );
+};
+
+// Need Generic menu list to cut down on copy pasta. Populate via catagory inherited by tab selection!! Category groups have ids already
+
+const FoodSelectionMenu = (_properties, context) => {
   const { act, data } = useBackend(context);
   const { recipes, menucatagories } = data;
+  const {foodmenu} = props;
+  const {category, name, desc, icon, icon_state, path, voice_order, voice_temp, hidden, ref} = recipes;
   if (!recipes) {
     return <Box color="bad">Recipes records missing!</Box>;
   }
-  const [ActiveFood, setActiveFood] = useLocalState(
-    context,
-    'ActiveFood',
-    null
-  );
+  const [ActiveFood, setActiveFood] = useSharedState(context, 'ActiveFood', 0);
 
   const FoodList = flow([
     filter((recipe) => recipe.name === ActiveFood),
@@ -125,59 +79,65 @@ const AppetizerMenu = (_properties, context) => {
   ])(recipes);
 
   return (
-    <Section level={3}>
-      <Stack>
-        <Stack.Item basis="25%">
-          <Section title="Food Selection" scrollable fill height="290px">
-            {menucatagories.map((recipe) => (
-              <Button
-                key={recipe}
-                fluid
-                content={recipe.name}
-                selected={recipe === ActiveFood}
-                onClick={() => setActiveFood(recipes)}
-              />
-            ))}
-          </Section>
-        </Stack.Item>
-        <Stack.Item grow={1} ml={2}>
-          <Section title="Details" scrollable fill height="290px">
-            {FoodList.map((recipe) => (
-              <Box key={recipe.name}>
-                <Stack align="center" justify="flex-start">
-                  <Stack.Item basis="70%">
-                    <LabeledList>
-                      <LabeledList.Item label="Name">
-                        {recipe.name}
-                      </LabeledList.Item>
-                      <LabeledList.Item label="Description">
-                        {recipe.desc}
-                      </LabeledList.Item>
-                      <LabeledList.Item label="Serving Temprature">
-                        {recipe.voice_temp}
-                      </LabeledList.Item>
-                    </LabeledList>
+    <Flex>
+      <Section>
+        <Stack>
+          <Stack.Item basis="25%">
+            <Section title="Food Selection" scrollable fill height="290px">
+              <Tabs vertical>
+                {menucatagories.map((recipe) => (
+                  <Tabs.Tab>
                     <Button
+                      key={recipe.ref}
                       fluid
-                      icon="print"
-                      content="Begin Printing"
-                      onClick={() => act('make', { make: recipe.path })}>
-                      {toTitleCase(recipe.name)}
-                    </Button>
-                    <Box
-                      className={classes([
-                        'synthesizer64x64',
-                        recipe.icon_state,
-                      ])}
+                      content={recipe.name}
+                      selected={recipe === ActiveFood}
+                      onClick={() => setActiveFood(recipe)}
                     />
-                  </Stack.Item>
-                </Stack>
-              </Box>
-            ))}
-          </Section>
-        </Stack.Item>
-      </Stack>
-    </Section>
+                  </Tabs.Tab>
+                ))}
+              </Tabs>
+            </Section>
+          </Stack.Item>
+          <Stack.Item grow={1} ml={2}>
+            <Section title="Product Details" scrollable fill height="290px">
+              {FoodList.map((recipe) => (
+                <Box key={recipe.name}>
+                  <Stack align="center" justify="flex-start">
+                    <Stack.Item basis="70%">
+                      <LabeledList>
+                        <LabeledList.Item label="Name">
+                          {recipe.name}
+                        </LabeledList.Item>
+                        <LabeledList.Item label="Description">
+                          {recipe.desc}
+                        </LabeledList.Item>
+                        <LabeledList.Item label="Serving Temprature">
+                          {recipe.voice_temp}
+                        </LabeledList.Item>
+                      </LabeledList>
+                      <Button
+                        fluid
+                        icon="print"
+                        content="Begin Printing"
+                        onClick={() => act('make', { make: recipe.ref })}>
+                        {toTitleCase(recipe.name)}
+                      </Button>
+                      <Box
+                        className={classes([
+                          'synthesizer64x64',
+                          recipe.icon_state,
+                        ])}
+                      />
+                    </Stack.Item>
+                  </Stack>
+                </Box>
+              ))}
+            </Section>
+          </Stack.Item>
+        </Stack>
+      </Section>
+    </Flex>
   );
 };
 
@@ -200,7 +160,7 @@ const BreakfastMenu = (_properties, context) => {
   ])(recipes);
 
   return (
-    <Section level={3}>
+    <Section level={2}>
       <Stack>
         <Stack.Item basis="25%">
           <Section title="Food Selection" scrollable fill height="290px">
@@ -275,7 +235,7 @@ const LunchMenu = (_properties, context) => {
   ])(recipes);
 
   return (
-    <Section level={3}>
+    <Section>
       <Stack>
         <Stack.Item basis="25%">
           <Section title="Food Selection" scrollable fill height="290px">
@@ -350,7 +310,7 @@ const DinnerMenu = (_properties, context) => {
   ])(recipes);
 
   return (
-    <Section level={3}>
+    <Section>
       <Stack>
         <Stack.Item basis="25%">
           <Section title="Food Selection" scrollable fill height="290px">
@@ -425,7 +385,7 @@ const DessertMenu = (_properties, context) => {
   ])(recipes);
 
   return (
-    <Section level={3}>
+    <Section>
       <Stack>
         <Stack.Item basis="25%">
           <Section title="Food Selection" scrollable fill height="290px">
@@ -500,7 +460,7 @@ const ExoticMenu = (_properties, context) => {
   ])(recipes);
 
   return (
-    <Section level={3}>
+    <Section>
       <Stack>
         <Stack.Item basis="25%">
           <Section title="Food Selection" scrollable fill height="290px">
@@ -575,7 +535,7 @@ const RawMenu = (_properties, context) => {
   ])(recipes);
 
   return (
-    <Section level={3}>
+    <Section>
       <Stack>
         <Stack.Item basis="25%">
           <Section title="Food Selection" scrollable fill height="290px">
