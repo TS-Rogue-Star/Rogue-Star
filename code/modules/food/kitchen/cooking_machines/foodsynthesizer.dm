@@ -54,7 +54,7 @@
 	var/static/datum/category_collection/synthesizer/synthesizer_recipes
 	var/list/recipe_list
 	var/static/list/menucatagory_list
-	var/active_menu = MENU_SNACC
+	var/active_menu = "appasnacc"
 	var/food_mimic_storage
 
 	//Voice activation stuff
@@ -167,16 +167,36 @@
 		var/percent = round((cart.reagents.total_volume / cart.reagents.maximum_volume) * 100)
 		data["cartFillStatus"] = cart ? percent : null
 
-	var/list/menucatagory_list = list()
+
+
+	return data
+
+/obj/machinery/synthesizer/tgui_static_data(mob/user)
+	var/list/data = ..()
+	var/list/menucatagories = list()
+	var/list/recipes = list()
 	for(var/datum/category_group/synthesizer/menulist in synthesizer_recipes.categories)
-		menucatagory_list.Add(list(list(
+		menucatagories.Add(list(list(
 			"name" = menulist.name,
 			"id" = menulist.id,
 			"sortorder" = menulist.sortorder
 			)))
-	data["menucatagories"] = menucatagory_list
-	data["recipes"] = recipe_list
+		for(var/datum/category_item/synthesizer/food in menulist.items)
+			recipes.Add(list(list(
+				"catagory" = menulist.id,
+				"name" = food.name,
+				"desc" = food.desc,
+				"icon" = food.icon,
+				"icon_state" = food.icon_state,
+				"path" = food.path,
+				"voice_order" = food.voice_order,
+				"voice_temp" = food.voice_temp,
+				"hidden" = food.hidden,
+				"ref" = "\ref[food]"
+				)))
 
+	data["menucatagories"] = menucatagories
+	data["recipes"] = recipes
 	return data
 
 /obj/machinery/synthesizer/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
@@ -197,8 +217,9 @@
 
 	switch(action)
 		if("setactive_menu")
-			active_menu = params["setactive_menu"]
-			populaterecipes(active_menu)
+			var/datum/category_group/synthesizer/menulist = params["setactive_menu"]
+			active_menu = menulist
+		//	populaterecipes(active_menu)
 			return
 
 	/*	if("infocrew")
@@ -335,28 +356,12 @@
 
 			return TRUE */
 
+/*
 /obj/machinery/synthesizer/proc/populaterecipes(var/menuid) //Only called on tab swap, tgui_data gets updated indirectly and doesn't constantly call this
 	to_chat(world, "populaterecipes([menuid]) called")
-	for(var/datum/category_group/synthesizer/menulist in synthesizer_recipes.categories)
-		if(menulist.sortorder == menuid)
-			for(var/datum/category_item/synthesizer/food in menulist.items)
-				if(food.hidden && !hacked)
-					continue
-				recipe_list.Add(list(list(
-					"catagory" = menulist.sortorder,
-					"name" = food.name,
-					"desc" = food.desc,
-					"icon" = food.icon,
-					"icon_state" = food.icon_state,
-					"path" = food.path,
-					"voice_order" = food.voice_order,
-					"voice_temp" = food.voice_temp,
-					"hidden" = food.hidden,
-					"ref" = "\ref[food]")))
-			return recipe_list
-		else
-			to_chat(world, "somehow the menuid is actually [menuid] ????")
-			return FALSE
+	for(var/datum/category_group/synthesizer/menulist in synthesizer_recipes.categories)*/
+
+
 
 /obj/machinery/synthesizer/update_icon()
 	cut_overlays()

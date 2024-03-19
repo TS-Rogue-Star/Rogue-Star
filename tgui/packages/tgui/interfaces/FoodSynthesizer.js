@@ -33,9 +33,8 @@ const SynthCartGuage = (props, context) => {
 const FoodMenuTabs = (props, context) => {
   const { act, data } = useBackend(context);
   const { menucatagories, active_menu } = data;
-  const menusToShow = flow([sortBy((menutab) => menutab.sortorder)])(
-    menucatagories
-  );
+
+  const menusToShow = flow([sortBy((menutab) => menutab.id)])(menucatagories);
 
   return (
     <Flex flow-wrap>
@@ -44,20 +43,20 @@ const FoodMenuTabs = (props, context) => {
           {menusToShow.map((menutab) => (
             <Tabs.Tab>
               <Button
-                key={menucatagories.sortorder}
+                key={menutab.id}
                 fluid
                 content={menutab.name}
                 icon="list"
-                selected={menutab === active_menu}
+                selected={(menutab = active_menu)}
                 onClick={() => {
-                  act('setactive_menu', { setactive_menu: menucatagories.sortorder })
+                  act('setactive_menu', { setactive_menu: selected.id });
                 }}
               />
             </Tabs.Tab>
           ))}
         </Tabs>
         <Flex.Item grow>
-          <FoodSelectionMenu menutab={active_menu} />
+          <FoodSelectionMenu />
         </Flex.Item>
       </Section>
     </Flex>
@@ -83,6 +82,7 @@ const FoodSelectionMenu = (_properties, context) => {
 
   const recipesToShow = flow([
     filter((recipe) => recipe.category === active_menu),
+    filter((recipe) => !recipe.hidden || hidden),
     sortBy((recipe) => recipe.name),
   ])(recipes);
 
