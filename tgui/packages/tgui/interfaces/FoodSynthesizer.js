@@ -1,14 +1,32 @@
-// import { Fragment } from 'inferno';
+import { classes } from 'common/react';
 import { filter, sortBy } from 'common/collections';
 import { useBackend, useSharedState } from '../backend';
 import { Box, Button, LabeledList, Section, Flex, Tabs, ProgressBar, Stack } from '../components';
 import { Window } from '../layouts';
 import { flow } from 'common/fp';
 
+const MENU_SNACC = 0;
+const MENU_BREKKIE = 1;
+const MENU_LONCH = 2;
+const MENU_DINNAH = 3;
+const MENU_DESLUT = 4;
+const MENU_EROTIC = 5;
+const MENU_RHAWH = 6;
+const MENU_CREW = 7;
+const MENU_SORT_ORDER = [
+  MENU_SNACC,
+  MENU_BREKKIE,
+  MENU_LONCH,
+  MENU_DINNAH,
+  MENU_DESLUT,
+  MENU_EROTIC,
+  MENU_RHAWH,
+];
+
 export const FoodSynthesizer = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Window width={800} height={700} resizable>
+    <Window width={900} height={500} resizable>
       <Window.Content>
         <SynthCartGuage />
         <FoodMenuTabs />
@@ -21,7 +39,7 @@ const SynthCartGuage = (props, context) => {
   const { data } = useBackend(context);
   const adjustedCartChange = data.cartFillStatus / 100;
   return (
-    <Section title="Cartridge Status">
+    <Section title="Cartridge Status" width="200">
       <LabeledList.Item>
         <ProgressBar color="purple" value={adjustedCartChange} />
       </LabeledList.Item>
@@ -32,35 +50,43 @@ const SynthCartGuage = (props, context) => {
 // dynamic selection for possible (but unlikely) additional or more specific menu making, they add tabs + the Crew menu
 const FoodMenuTabs = (props, context) => {
   const { act, data } = useBackend(context);
-  const { recipes, menucatagories } = data;
-  const [activemenu, setMenu] = useSharedState(context, 'synthmenu', 0);
+  const { active_menu, menucatagories } = data;
+  const [ActiveMenu, setActiveMenu] = useSharedState(context, 'ActiveMenu', 0);
+  const menusToShow = flow([sortBy((menutab) => menutab.sortorder)])(
+    menucatagories
+  );
+
   return (
-    <Flex>
-      <Section fill spacing={1}>
+    <Flex flow-wrap>
+      <Section>
         <Tabs>
-          {activemenu.map((foodmenu) => (
-            <Tabs.Tab
-              key={foodmenu.name}
-              icon={foodmenu.icon}
-              selected={foodmenu.selected}
-              onClick={() => act('menupick', { menupick: foodmenu.id })}>
-              {foodmenu.name}
+          {menusToShow.map((menutab) => (
+            <Tabs.Tab>
+              <Button
+                key={menutab.sortorder}
+                fluid
+                content={menutab.name}
+                icon="list"
+                selected={menutab === ActiveMenu}
+                onClick={() =>
+                  act(setActiveMenu, {
+                    setactive_menu: [menutab.sortorder],
+                  })
+                }
+              />
             </Tabs.Tab>
           ))}
           <Tabs.Tab>
             <Button
-              icon="face-grin-beam-o"
+              icon="user"
+              selected={active_menu === MENU_CREW}
               content="Crew Menu"
               onClick={() => act(CrewMenu, { crewmenu: crew.name })}
             />
           </Tabs.Tab>
         </Tabs>
         <Flex.Item grow>
-          {selected && (
-            <Section title={selected.foodmenu.name}>
-              <FoodSelectionMenu foodmenu={selected} />
-            </Section>
-          )}
+          <FoodSelectionMenu menutab={ActiveMenu} />
         </Flex.Item>
       </Section>
     </Flex>
@@ -69,90 +95,80 @@ const FoodMenuTabs = (props, context) => {
 
 const FoodSelectionMenu = (_properties, context) => {
   const { act, data } = useBackend(context);
-  const { recipes, menucatagories } = data;
-  const { active_menu } = props;
-  const {
-    category,
-    name,
-    desc,
-    icon,
-    icon_state,
-    path,
-    voice_order,
-    voice_temp,
-    hidden,
-    ref,
-  } = recipes;
+  const { active_menu, recipes } = data;
   if (!recipes) {
     return <Box color="bad">Recipes records missing!</Box>;
   }
   const [ActiveFood, setActiveFood] = useSharedState(context, 'ActiveFood', 0);
 
   const recipesToShow = flow([
-    filter((recipe) => recipe.category === active_menu[category]),
+    filter((recipe) => recipe.category === active_menu),
     sortBy((recipe) => recipe.name),
   ])(recipes);
 
   return (
-    <Flex>
-      <Section>
-        <Stack>
-          <Stack.Item basis="25%">
-            <Section title="Food Selection" scrollable fill height="290px">
-              <Tabs vertical>
-                {recipesToShow.map((recipe) => (
-                  <Tabs.Tab>
-                    <Button
-                      key={recipe.ref}
-                      fluid
-                      content={recipe.name}
-                      selected={recipe === ActiveFood}
-                      onClick={() => setActiveFood(recipe)}
-                    />
-                  </Tabs.Tab>
-                ))}
-              </Tabs>
-            </Section>
-          </Stack.Item>
-          <Stack.Item grow={1} ml={2}>
-            <Section title="Product Details" scrollable fill height="290px">
-              {FoodList.map((recipe) => (
-                <Box key={recipe.name}>
-                  <Stack align="center" justify="flex-start">
-                    <Stack.Item basis="70%">
-                      <LabeledList>
-                        <LabeledList.Item label="Name">
-                          {recipe.name}
-                        </LabeledList.Item>
-                        <LabeledList.Item label="Description">
-                          {recipe.desc}
-                        </LabeledList.Item>
-                        <LabeledList.Item label="Serving Temprature">
-                          {recipe.voice_temp}
-                        </LabeledList.Item>
-                      </LabeledList>
-                      <Button
-                        fluid
-                        icon="print"
-                        content="Begin Printing"
-                        onClick={() => act('make', { make: recipe.ref })}>
-                        {toTitleCase(recipe.name)}
-                      </Button>
-                      <Box
-                        className={classes([
-                          'synthesizer64x64',
-                          recipe.icon_state,
-                        ])}
-                      />
-                    </Stack.Item>
-                  </Stack>
-                </Box>
+    <Section level={2} width="600px">
+      <Stack>
+        <Stack.Item basis="30%">
+          <Section title="Food Selection" scrollable fill height="290px">
+            <Tabs vertical>
+              {recipesToShow.map((recipe) => (
+                <Tabs.Tab>
+                  <Button
+                    key={recipe.ref}
+                    fluid
+                    content={recipe.name}
+                    selected={recipe === ActiveFood}
+                    onClick={() => setActiveFood(recipe)}
+                  />
+                </Tabs.Tab>
               ))}
-            </Section>
-          </Stack.Item>
-        </Stack>
-      </Section>
-    </Flex>
+            </Tabs>
+          </Section>
+        </Stack.Item>
+        <Stack.Item grow={1} ml={2}>
+          <Section
+            title="Product Details"
+            scrollable
+            fill
+            height="290px"
+            width="400px">
+            <Box key={ActiveFood.name}>
+              <Stack align="center" justify="flex-start">
+                <Stack.Item>
+                  <LabeledList>
+                    <LabeledList.Item label="Name">
+                      {ActiveFood.name}
+                    </LabeledList.Item>
+                    <LabeledList.Item label="Description">
+                      {ActiveFood.desc}
+                    </LabeledList.Item>
+                    <LabeledList.Item label="Serving Temprature">
+                      {ActiveFood.voice_temp}
+                    </LabeledList.Item>
+                  </LabeledList>
+                  <Flex.Item>
+                    <Button
+                      fluid
+                      icon="print"
+                      width="150px"
+                      content="Begin Printing"
+                      onClick={() => act('make', { make: ActiveFood.ref })}
+                    />
+                  </Flex.Item>
+                  <Box
+                    className={classes([
+                      'synthesizer64x64',
+                      ActiveFood.icon_state,
+                    ])}
+                  />
+                </Stack.Item>
+              </Stack>
+            </Box>
+          </Section>
+        </Stack.Item>
+      </Stack>
+    </Section>
   );
 };
 

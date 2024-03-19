@@ -5,6 +5,15 @@
 //#define VOICE_ORDER(A, O, T) list(activator = A, order = O, temp = T)
 // "Computer, Steak, Hot."
 
+#define MENU_SNACC		0
+#define MENU_BREKKIE	1
+#define MENU_LONCH		2
+#define MENU_DINNAH		3
+#define MENU_DESLUT		4
+#define MENU_EROTIC		5
+#define MENU_RHAWH		6
+#define MENU_GITS		7
+
 /obj/machinery/synthesizer
 	name = "food synthesizer"
 	desc = "Sabresnacks brand device able to produce an incredible array of conventional foods. Although only the most ascetic of users claim it produces truly good tasting products."
@@ -45,7 +54,7 @@
 	var/static/datum/category_collection/synthesizer/synthesizer_recipes
 	var/static/list/recipe_list
 	var/static/list/menucatagory_list
-	var/active_menu
+	var/active_menu = MENU_SNACC
 	var/food_mimic_storage
 
 	//Voice activation stuff
@@ -79,6 +88,11 @@
 	if(!synthesizer_recipes)
 		synthesizer_recipes = new()
 	cart = new /obj/item/weapon/reagent_containers/synth_disp_cartridge/small(src)
+	wires = new(src)
+//	our_db = SStranscore.db_by_key(db_key)
+	default_apply_parts()
+	RefreshParts()
+	update_icon()
 
 /obj/machinery/synthesizer/Destroy()
 	qdel(wires)
@@ -137,7 +151,7 @@
 
 	data["busy"] = busy
 	data["isThereCart"] = cart ? TRUE : FALSE
-	data["modal"] = tgui_modal_data(src)
+	data["active_menu"] = active_menu
 	//We probably want to dynamically check if there's a canister every time too.
 	var/cartfilling[0]
 	if(cart && cart.reagents && cart.reagents.reagent_list.len)
@@ -153,18 +167,34 @@
 		var/percent = round((cart.reagents.total_volume / cart.reagents.maximum_volume) * 100)
 		data["cartFillStatus"] = cart ? percent : null
 
-
-	return data
-
-/obj/machinery/synthesizer/tgui_static_data(mob/user)
-	var/list/data = ..()
-	//our food recipes and catagories aren't going to be changed, let's make them static to save resources
 	var/list/menucatagory_list = list()
 	for(var/datum/category_group/synthesizer/menulist in synthesizer_recipes.categories)
-		menucatagory_list += menulist.id
-		active_menu = menucatagory_list[1]
+		menucatagory_list.Add(list(list(
+			"name" = menulist.name,
+			"id" = menulist.id,
+			"sortorder" = menulist.sortorder
+			)))
 	data["menucatagories"] = menucatagory_list
-//	data["mapRef"] = map_name //preserve the player preview map
+
+	var/list/recipes = list()
+	data["recipes"] = recipes
+
+	switch(active_menu)
+		if(MENU_SNACC)
+			recipes = populaterecipes(MENU_SNACC)
+		if(MENU_BREKKIE)
+			recipes = populaterecipes(MENU_BREKKIE)
+		if(MENU_LONCH)
+			recipes = populaterecipes(MENU_LONCH)
+		if(MENU_DINNAH)
+			recipes = populaterecipes(MENU_DINNAH)
+		if(MENU_DESLUT)
+			recipes = populaterecipes(MENU_DESLUT)
+		if(MENU_EROTIC)
+			recipes = populaterecipes(MENU_EROTIC)
+		if(MENU_RHAWH)
+			recipes = populaterecipes(MENU_RHAWH)
+
 	return data
 
 /obj/machinery/synthesizer/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
@@ -183,31 +213,12 @@
 		playsound(src, 'sound/machines/replicator_input_failed.ogg', 100, 1)
 		return
 
-	switch(tgui_modal_act(src, action, params))
-		if(TGUI_MODAL_ANSWER)
-			return
-
 	switch(action)
-		if("menupick")
-			active_menu = locate(params["menupick"])
-			var/list/payload = list()
-			payload["recipes"] = populaterecipes(active_menu)
-			tgui_modal_message(src, action, "", null, payload)
-			. = TRUE
-
-		if("infofood")
-			var/datum/category_item/synthesizer/R = locate(params["infofood"])
-			if(!istype(R))
-				return FALSE
-			var/list/payload = list(
-				"name" = R.name,
-				"desc" = R.desc,
-				"icon" = R.icon,
-				"icon_state" = R.icon_state,
-				"ref" = "\ref[R]"
-			)
-			tgui_modal_message(src, action, "", null, payload)
-			. = TRUE
+		if("setactive_menu")
+			var/newmenutab = locate(params["setactive_menu"])
+			if(newmenutab != active_menu)
+				active_menu = newmenutab
+			return TRUE
 
 	/*	if("infocrew")
 			var/datum/transhuman/body_record/BR = locate(params["infocrew"])
@@ -344,13 +355,15 @@
 			return TRUE */
 
 /obj/machinery/synthesizer/proc/populaterecipes(var/menuid)
+	to_chat(world, "populaterecipes([menuid]) called")
 	var/list/specificfoodlist = list()
 	for(var/datum/category_group/synthesizer/menulist in synthesizer_recipes.categories)
-		if(menulist.id == menuid)
+		if(menulist.sortorder == menuid)
 			for(var/datum/category_item/synthesizer/food in menulist.items)
 				if(food.hidden && !hacked)
 					continue
 				specificfoodlist.Add(list(list(
+					"catagory" = menulist.sortorder,
 					"name" = food.name,
 					"desc" = food.desc,
 					"icon" = food.icon,
