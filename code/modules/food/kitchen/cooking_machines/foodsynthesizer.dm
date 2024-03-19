@@ -160,27 +160,9 @@
 	var/list/data = ..()
 	//our food recipes and catagories aren't going to be changed, let's make them static to save resources
 	var/list/menucatagory_list = list()
-	var/list/recipe_list = list()
-
 	for(var/datum/category_group/synthesizer/menulist in synthesizer_recipes.categories)
 		menucatagory_list += menulist.id
 		active_menu = menucatagory_list[1]
-		for(var/datum/category_item/synthesizer/food in menulist.items)
-			if(food.hidden && !hacked)
-				continue
-			recipe_list.Add(list(list(
-				"category" = menulist.id,
-				"name" = food.name,
-				"desc" = food.desc,
-				"icon" = food.icon,
-				"icon_state" = food.icon_state,
-				"path" = food.path,
-				"voice_order" = food.voice_order,
-				"voice_temp" = food.voice_temp,
-				"hidden" = food.hidden,
-				"ref" = "\ref[food]"
-			))) //a list within a list. Byond loves its lists.
-	data["recipes"] = recipe_list
 	data["menucatagories"] = menucatagory_list
 //	data["mapRef"] = map_name //preserve the player preview map
 	return data
@@ -208,7 +190,10 @@
 	switch(action)
 		if("menupick")
 			active_menu = locate(params["menupick"])
-			return TRUE
+			var/list/payload = list()
+			payload["recipes"] = populaterecipes(active_menu)
+			tgui_modal_message(src, action, "", null, payload)
+			. = TRUE
 
 		if("infofood")
 			var/datum/category_item/synthesizer/R = locate(params["infofood"])
@@ -358,6 +343,27 @@
 
 			return TRUE */
 
+/obj/machinery/synthesizer/proc/populaterecipes(var/menuid)
+	var/list/specificfoodlist = list()
+	for(var/datum/category_group/synthesizer/menulist in synthesizer_recipes.categories)
+		if(menulist.id == menuid)
+			for(var/datum/category_item/synthesizer/food in menulist.items)
+				if(food.hidden && !hacked)
+					continue
+				specificfoodlist.Add(list(list(
+					"name" = food.name,
+					"desc" = food.desc,
+					"icon" = food.icon,
+					"icon_state" = food.icon_state,
+					"path" = food.path,
+					"voice_order" = food.voice_order,
+					"voice_temp" = food.voice_temp,
+					"hidden" = food.hidden,
+					"ref" = "\ref[food]")))
+			return specificfoodlist
+		else
+			to_chat(world, "somehow the menuid is actually [menuid] ????")
+			return FALSE
 
 /obj/machinery/synthesizer/update_icon()
 	cut_overlays()

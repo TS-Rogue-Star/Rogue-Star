@@ -1,6 +1,6 @@
 // import { Fragment } from 'inferno';
 import { filter, sortBy } from 'common/collections';
-import { useBackend, useLocalState, useSharedState } from '../backend';
+import { useBackend, useSharedState } from '../backend';
 import { Box, Button, LabeledList, Section, Flex, Tabs, ProgressBar, Stack } from '../components';
 import { Window } from '../layouts';
 import { flow } from 'common/fp';
@@ -29,7 +29,10 @@ const SynthCartGuage = (props, context) => {
   );
 };
 
+// dynamic selection for possible (but unlikely) additional or more specific menu making, they add tabs + the Crew menu
 const FoodMenuTabs = (props, context) => {
+  const { act, data } = useBackend(context);
+  const { recipes, menucatagories } = data;
   const [activemenu, setMenu] = useSharedState(context, 'synthmenu', 0);
   return (
     <Flex>
@@ -48,7 +51,7 @@ const FoodMenuTabs = (props, context) => {
             <Button
               icon="face-grin-beam-o"
               content="Crew Menu"
-              onClick={() => act('crewmenu')}
+              onClick={() => act(CrewMenu, { crewmenu: crew.name })}
             />
           </Tabs.Tab>
         </Tabs>
@@ -64,12 +67,10 @@ const FoodMenuTabs = (props, context) => {
   );
 };
 
-// Need Generic menu list to cut down on copy pasta. Populate via catagory inherited by tab selection!! Category groups have ids already
-
 const FoodSelectionMenu = (_properties, context) => {
   const { act, data } = useBackend(context);
   const { recipes, menucatagories } = data;
-  const { foodmenu } = props;
+  const { active_menu } = props;
   const {
     category,
     name,
@@ -87,9 +88,8 @@ const FoodSelectionMenu = (_properties, context) => {
   }
   const [ActiveFood, setActiveFood] = useSharedState(context, 'ActiveFood', 0);
 
-  const FoodList = flow([
-    filter((recipe) => recipe.name === ActiveFood),
-    filter((recipe) => !recipe.hidden || hidden),
+  const recipesToShow = flow([
+    filter((recipe) => recipe.category === active_menu[category]),
     sortBy((recipe) => recipe.name),
   ])(recipes);
 
@@ -100,7 +100,7 @@ const FoodSelectionMenu = (_properties, context) => {
           <Stack.Item basis="25%">
             <Section title="Food Selection" scrollable fill height="290px">
               <Tabs vertical>
-                {menucatagories.map((recipe) => (
+                {recipesToShow.map((recipe) => (
                   <Tabs.Tab>
                     <Button
                       key={recipe.ref}
@@ -156,456 +156,7 @@ const FoodSelectionMenu = (_properties, context) => {
   );
 };
 
-const BreakfastMenu = (_properties, context) => {
-  const { act, data } = useBackend(context);
-  const { recipes, menucatagories } = data;
-  if (!recipes) {
-    return <Box color="bad">Recipes records missing!</Box>;
-  }
-  const [ActiveFood, setActiveFood] = useLocalState(
-    context,
-    'ActiveFood',
-    null
-  );
-
-  const FoodList = flow([
-    filter((recipe) => recipe.name === ActiveFood),
-    filter((recipe) => !recipe.hidden || hidden),
-    sortBy((recipe) => recipe.name),
-  ])(recipes);
-
-  return (
-    <Section level={2}>
-      <Stack>
-        <Stack.Item basis="25%">
-          <Section title="Food Selection" scrollable fill height="290px">
-            {menucatagories.map((recipe) => (
-              <Button
-                key={recipe}
-                fluid
-                content={recipe.name}
-                selected={recipe === ActiveFood}
-                onClick={() => setActiveFood(recipes)}
-              />
-            ))}
-          </Section>
-        </Stack.Item>
-        <Stack.Item grow={1} ml={2}>
-          <Section title="Details" scrollable fill height="290px">
-            {FoodList.map((recipe) => (
-              <Box key={recipe.name}>
-                <Stack align="center" justify="flex-start">
-                  <Stack.Item basis="70%">
-                    <LabeledList>
-                      <LabeledList.Item label="Name">
-                        {recipe.name}
-                      </LabeledList.Item>
-                      <LabeledList.Item label="Description">
-                        {recipe.desc}
-                      </LabeledList.Item>
-                      <LabeledList.Item label="Serving Temprature">
-                        {recipe.voice_temp}
-                      </LabeledList.Item>
-                    </LabeledList>
-                    <Button
-                      fluid
-                      icon="print"
-                      content="Begin Printing"
-                      onClick={() => act('make', { make: recipe.path })}>
-                      {toTitleCase(recipe.name)}
-                    </Button>
-                    <Box
-                      className={classes([
-                        'synthesizer64x64',
-                        recipe.icon_state,
-                      ])}
-                    />
-                  </Stack.Item>
-                </Stack>
-              </Box>
-            ))}
-          </Section>
-        </Stack.Item>
-      </Stack>
-    </Section>
-  );
-};
-
-const LunchMenu = (_properties, context) => {
-  const { act, data } = useBackend(context);
-  const { recipes, menucatagories } = data;
-  if (!recipes) {
-    return <Box color="bad">Recipes records missing!</Box>;
-  }
-  const [ActiveFood, setActiveFood] = useLocalState(
-    context,
-    'ActiveFood',
-    null
-  );
-
-  const FoodList = flow([
-    filter((recipe) => recipe.name === ActiveFood),
-    filter((recipe) => !recipe.hidden || hidden),
-    sortBy((recipe) => recipe.name),
-  ])(recipes);
-
-  return (
-    <Section>
-      <Stack>
-        <Stack.Item basis="25%">
-          <Section title="Food Selection" scrollable fill height="290px">
-            {menucatagories.map((recipe) => (
-              <Button
-                key={recipe}
-                fluid
-                content={recipe.name}
-                selected={recipe === ActiveFood}
-                onClick={() => setActiveFood(recipes)}
-              />
-            ))}
-          </Section>
-        </Stack.Item>
-        <Stack.Item grow={1} ml={2}>
-          <Section title="Details" scrollable fill height="290px">
-            {FoodList.map((recipe) => (
-              <Box key={recipe.name}>
-                <Stack align="center" justify="flex-start">
-                  <Stack.Item basis="70%">
-                    <LabeledList>
-                      <LabeledList.Item label="Name">
-                        {recipe.name}
-                      </LabeledList.Item>
-                      <LabeledList.Item label="Description">
-                        {recipe.desc}
-                      </LabeledList.Item>
-                      <LabeledList.Item label="Serving Temprature">
-                        {recipe.voice_temp}
-                      </LabeledList.Item>
-                    </LabeledList>
-                    <Button
-                      fluid
-                      icon="print"
-                      content="Begin Printing"
-                      onClick={() => act('make', { make: recipe.path })}>
-                      {toTitleCase(recipe.name)}
-                    </Button>
-                    <Box
-                      className={classes([
-                        'synthesizer64x64',
-                        recipe.icon_state,
-                      ])}
-                    />
-                  </Stack.Item>
-                </Stack>
-              </Box>
-            ))}
-          </Section>
-        </Stack.Item>
-      </Stack>
-    </Section>
-  );
-};
-
-const DinnerMenu = (_properties, context) => {
-  const { act, data } = useBackend(context);
-  const { recipes, menucatagories } = data;
-  if (!recipes) {
-    return <Box color="bad">Recipes records missing!</Box>;
-  }
-  const [ActiveFood, setActiveFood] = useLocalState(
-    context,
-    'ActiveFood',
-    null
-  );
-
-  const FoodList = flow([
-    filter((recipe) => recipe.name === ActiveFood),
-    filter((recipe) => !recipe.hidden || hidden),
-    sortBy((recipe) => recipe.name),
-  ])(recipes);
-
-  return (
-    <Section>
-      <Stack>
-        <Stack.Item basis="25%">
-          <Section title="Food Selection" scrollable fill height="290px">
-            {menucatagories.map((recipe) => (
-              <Button
-                key={recipe}
-                fluid
-                content={recipe.name}
-                selected={recipe === ActiveFood}
-                onClick={() => setActiveFood(recipes)}
-              />
-            ))}
-          </Section>
-        </Stack.Item>
-        <Stack.Item grow={1} ml={2}>
-          <Section title="Details" scrollable fill height="290px">
-            {FoodList.map((recipe) => (
-              <Box key={recipe.name}>
-                <Stack align="center" justify="flex-start">
-                  <Stack.Item basis="70%">
-                    <LabeledList>
-                      <LabeledList.Item label="Name">
-                        {recipe.name}
-                      </LabeledList.Item>
-                      <LabeledList.Item label="Description">
-                        {recipe.desc}
-                      </LabeledList.Item>
-                      <LabeledList.Item label="Serving Temprature">
-                        {recipe.voice_temp}
-                      </LabeledList.Item>
-                    </LabeledList>
-                    <Button
-                      fluid
-                      icon="print"
-                      content="Begin Printing"
-                      onClick={() => act('make', { make: recipe.path })}>
-                      {toTitleCase(recipe.name)}
-                    </Button>
-                    <Box
-                      className={classes([
-                        'synthesizer64x64',
-                        recipe.icon_state,
-                      ])}
-                    />
-                  </Stack.Item>
-                </Stack>
-              </Box>
-            ))}
-          </Section>
-        </Stack.Item>
-      </Stack>
-    </Section>
-  );
-};
-
-const DessertMenu = (_properties, context) => {
-  const { act, data } = useBackend(context);
-  const { recipes, menucatagories } = data;
-  if (!recipes) {
-    return <Box color="bad">Recipes records missing!</Box>;
-  }
-  const [ActiveFood, setActiveFood] = useLocalState(
-    context,
-    'ActiveFood',
-    null
-  );
-
-  const FoodList = flow([
-    filter((recipe) => recipe.name === ActiveFood),
-    filter((recipe) => !recipe.hidden || hidden),
-    sortBy((recipe) => recipe.name),
-  ])(recipes);
-
-  return (
-    <Section>
-      <Stack>
-        <Stack.Item basis="25%">
-          <Section title="Food Selection" scrollable fill height="290px">
-            {menucatagories.map((recipe) => (
-              <Button
-                key={recipe}
-                fluid
-                content={recipe.name}
-                selected={recipe === ActiveFood}
-                onClick={() => setActiveFood(recipes)}
-              />
-            ))}
-          </Section>
-        </Stack.Item>
-        <Stack.Item grow={1} ml={2}>
-          <Section title="Details" scrollable fill height="290px">
-            {FoodList.map((recipe) => (
-              <Box key={recipe.name}>
-                <Stack align="center" justify="flex-start">
-                  <Stack.Item basis="70%">
-                    <LabeledList>
-                      <LabeledList.Item label="Name">
-                        {recipe.name}
-                      </LabeledList.Item>
-                      <LabeledList.Item label="Description">
-                        {recipe.desc}
-                      </LabeledList.Item>
-                      <LabeledList.Item label="Serving Temprature">
-                        {recipe.voice_temp}
-                      </LabeledList.Item>
-                    </LabeledList>
-                    <Button
-                      fluid
-                      icon="print"
-                      content="Begin Printing"
-                      onClick={() => act('make', { make: recipe.path })}>
-                      {toTitleCase(recipe.name)}
-                    </Button>
-                    <Box
-                      className={classes([
-                        'synthesizer64x64',
-                        recipe.icon_state,
-                      ])}
-                    />
-                  </Stack.Item>
-                </Stack>
-              </Box>
-            ))}
-          </Section>
-        </Stack.Item>
-      </Stack>
-    </Section>
-  );
-};
-
-const ExoticMenu = (_properties, context) => {
-  const { act, data } = useBackend(context);
-  const { recipes, menucatagories } = data;
-  if (!recipes) {
-    return <Box color="bad">Recipes records missing!</Box>;
-  }
-  const [ActiveFood, setActiveFood] = useLocalState(
-    context,
-    'ActiveFood',
-    null
-  );
-
-  const FoodList = flow([
-    filter((recipe) => recipe.name === ActiveFood),
-    filter((recipe) => !recipe.hidden || hidden),
-    sortBy((recipe) => recipe.name),
-  ])(recipes);
-
-  return (
-    <Section>
-      <Stack>
-        <Stack.Item basis="25%">
-          <Section title="Food Selection" scrollable fill height="290px">
-            {menucatagories.map((recipe) => (
-              <Button
-                key={recipe}
-                fluid
-                content={recipe.name}
-                selected={recipe === ActiveFood}
-                onClick={() => setActiveFood(recipes)}
-              />
-            ))}
-          </Section>
-        </Stack.Item>
-        <Stack.Item grow={1} ml={2}>
-          <Section title="Details" scrollable fill height="290px">
-            {FoodList.map((recipe) => (
-              <Box key={recipe.name}>
-                <Stack align="center" justify="flex-start">
-                  <Stack.Item basis="70%">
-                    <LabeledList>
-                      <LabeledList.Item label="Name">
-                        {recipe.name}
-                      </LabeledList.Item>
-                      <LabeledList.Item label="Description">
-                        {recipe.desc}
-                      </LabeledList.Item>
-                      <LabeledList.Item label="Serving Temprature">
-                        {recipe.voice_temp}
-                      </LabeledList.Item>
-                    </LabeledList>
-                    <Button
-                      fluid
-                      icon="print"
-                      content="Begin Printing"
-                      onClick={() => act('make', { make: recipe.path })}>
-                      {toTitleCase(recipe.name)}
-                    </Button>
-                    <Box
-                      className={classes([
-                        'synthesizer64x64',
-                        recipe.icon_state,
-                      ])}
-                    />
-                  </Stack.Item>
-                </Stack>
-              </Box>
-            ))}
-          </Section>
-        </Stack.Item>
-      </Stack>
-    </Section>
-  );
-};
-
-const RawMenu = (_properties, context) => {
-  const { act, data } = useBackend(context);
-  const { recipes, menucatagories } = data;
-  if (!recipes) {
-    return <Box color="bad">Recipes records missing!</Box>;
-  }
-  const [ActiveFood, setActiveFood] = useLocalState(
-    context,
-    'ActiveFood',
-    null
-  );
-
-  const FoodList = flow([
-    filter((recipe) => recipe.name === ActiveFood),
-    filter((recipe) => !recipe.hidden || hidden),
-    sortBy((recipe) => recipe.name),
-  ])(recipes);
-
-  return (
-    <Section>
-      <Stack>
-        <Stack.Item basis="25%">
-          <Section title="Food Selection" scrollable fill height="290px">
-            {menucatagories.map((recipe) => (
-              <Button
-                key={recipe}
-                fluid
-                content={recipe.name}
-                selected={recipe === ActiveFood}
-                onClick={() => setActiveFood(recipes)}
-              />
-            ))}
-          </Section>
-        </Stack.Item>
-        <Stack.Item grow={1} ml={2}>
-          <Section title="Details" scrollable fill height="290px">
-            {FoodList.map((recipe) => (
-              <Box key={recipe.name}>
-                <Stack align="center" justify="flex-start">
-                  <Stack.Item basis="70%">
-                    <LabeledList>
-                      <LabeledList.Item label="Name">
-                        {recipe.name}
-                      </LabeledList.Item>
-                      <LabeledList.Item label="Description">
-                        {recipe.desc}
-                      </LabeledList.Item>
-                      <LabeledList.Item label="Serving Temprature">
-                        {recipe.voice_temp}
-                      </LabeledList.Item>
-                    </LabeledList>
-                    <Button
-                      fluid
-                      icon="print"
-                      content="Begin Printing"
-                      onClick={() => act('make', { make: recipe.path })}>
-                      {toTitleCase(recipe.name)}
-                    </Button>
-                    <Box
-                      className={classes([
-                        'synthesizer64x64',
-                        recipe.icon_state,
-                      ])}
-                    />
-                  </Stack.Item>
-                </Stack>
-              </Box>
-            ))}
-          </Section>
-        </Stack.Item>
-      </Stack>
-    </Section>
-  );
-};
-
-/*
 const CrewMenu = (_properties, context) => {
-  const { act, data } = useBackend(context); */
+  const { act, data } = useBackend(context);
+  return <Box>This will be filled out laters</Box>;
+};
