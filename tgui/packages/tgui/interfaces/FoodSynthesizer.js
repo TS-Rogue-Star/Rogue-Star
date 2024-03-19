@@ -1,7 +1,7 @@
-import { Fragment } from 'inferno';
+// import { Fragment } from 'inferno';
 import { filter, sortBy } from 'common/collections';
 import { useBackend, useLocalState, useSharedState } from '../backend';
-import { Box, Button, LabeledList, Section, Flex, Divider, Tabs, ProgressBar, Stack } from '../components';
+import { Box, Button, LabeledList, Section, Flex, Tabs, ProgressBar, Stack } from '../components';
 import { Window } from '../layouts';
 import { flow } from 'common/fp';
 
@@ -35,28 +35,32 @@ const FoodMenuTabs = (props, context) => {
     <Flex>
       <Section fill spacing={1}>
         <Tabs>
-        {activemenu.map((foodmenu) => (
-          <Tabs.Tab
-            key={foodmenu.name}
-            icon={foodmenu.icon}
-            selected={foodmenu.selected}
-            onClick={() => act('menupick', { menupick: foodmenu.id })}>
-            {foodmenu.name}
-          </Tabs.Tab> ))}
-          <Tabs.Tab onClick={() => act('crewmenu')}>
-            <Icon name="face-grin-beam-o" />
-            Crew Menu
+          {activemenu.map((foodmenu) => (
+            <Tabs.Tab
+              key={foodmenu.name}
+              icon={foodmenu.icon}
+              selected={foodmenu.selected}
+              onClick={() => act('menupick', { menupick: foodmenu.id })}>
+              {foodmenu.name}
+            </Tabs.Tab>
+          ))}
+          <Tabs.Tab>
+            <Button
+              icon="face-grin-beam-o"
+              content="Crew Menu"
+              onClick={() => act('crewmenu')}
+            />
           </Tabs.Tab>
         </Tabs>
-      <Flex.Item grow>
-        {selected && (
-          <Section title={selected.foodmenu.name}>
-            <FoodSelectionMenu foodmenu={selected} />
-          </Section>
-        )}
-      </Flex.Item>
-    </Section>
-  </Flex>
+        <Flex.Item grow>
+          {selected && (
+            <Section title={selected.foodmenu.name}>
+              <FoodSelectionMenu foodmenu={selected} />
+            </Section>
+          )}
+        </Flex.Item>
+      </Section>
+    </Flex>
   );
 };
 
@@ -65,8 +69,19 @@ const FoodMenuTabs = (props, context) => {
 const FoodSelectionMenu = (_properties, context) => {
   const { act, data } = useBackend(context);
   const { recipes, menucatagories } = data;
-  const {foodmenu} = props;
-  const {category, name, desc, icon, icon_state, path, voice_order, voice_temp, hidden, ref} = recipes;
+  const { foodmenu } = props;
+  const {
+    category,
+    name,
+    desc,
+    icon,
+    icon_state,
+    path,
+    voice_order,
+    voice_temp,
+    hidden,
+    ref,
+  } = recipes;
   if (!recipes) {
     return <Box color="bad">Recipes records missing!</Box>;
   }
