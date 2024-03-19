@@ -32,20 +32,10 @@ const SynthCartGuage = (props, context) => {
 // dynamic selection for possible (but unlikely) additional or more specific menu making, they add tabs + the Crew menu
 const FoodMenuTabs = (props, context) => {
   const { act, data } = useBackend(context);
-  const { active_menu, menucatagories } = data;
-  const [ActiveMenu, setActiveMenu] = useSharedState(context, 'ActiveMenu', 0);
+  const { menucatagories, active_menu } = data;
   const menusToShow = flow([sortBy((menutab) => menutab.sortorder)])(
     menucatagories
   );
-
-  function changetab() {
-    tguiactivemenu = () => {
-      act(setActiveMenu(sortorder));
-    };
-    byondactivemenu = () => {
-      act('setactive_menu', { setactive_menu: [sortorder] });
-    };
-  }
 
   return (
     <Flex flow-wrap>
@@ -54,20 +44,20 @@ const FoodMenuTabs = (props, context) => {
           {menusToShow.map((menutab) => (
             <Tabs.Tab>
               <Button
-                key={menutab.sortorder}
+                key={menucatagories.sortorder}
                 fluid
                 content={menutab.name}
                 icon="list"
-                selected={(menutab === ActiveMenu)}
+                selected={menutab === active_menu}
                 onClick={() => {
-                  changetab;
+                  act('setactive_menu', { setactive_menu: menucatagories.sortorder })
                 }}
               />
             </Tabs.Tab>
           ))}
         </Tabs>
         <Flex.Item grow>
-          <FoodSelectionMenu menutab={ActiveMenu} />
+          <FoodSelectionMenu menutab={active_menu} />
         </Flex.Item>
       </Section>
     </Flex>

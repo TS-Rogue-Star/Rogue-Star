@@ -52,7 +52,7 @@
 
 	//all of our food
 	var/static/datum/category_collection/synthesizer/synthesizer_recipes
-	var/static/list/recipe_list
+	var/list/recipe_list
 	var/static/list/menucatagory_list
 	var/active_menu = MENU_SNACC
 	var/food_mimic_storage
@@ -197,8 +197,7 @@
 
 	switch(action)
 		if("setactive_menu")
-			var/newmenutab = text2num(locate(params["setactive_menu"]))
-			active_menu = newmenutab
+			active_menu = params["setactive_menu"]
 			populaterecipes(active_menu)
 			return
 
