@@ -179,7 +179,8 @@
 		menucatagories.Add(list(list(
 			"name" = menulist.name,
 			"id" = menulist.id,
-			"sortorder" = menulist.sortorder
+			"sortorder" = menulist.sortorder,
+			"ref" = "\ref[menulist]"
 			)))
 		for(var/datum/category_item/synthesizer/food in menulist.items)
 			recipes.Add(list(list(
@@ -217,10 +218,12 @@
 
 	switch(action)
 		if("setactive_menu")
+			to_chat(world, "setactive_menu called with [params["setactive_menu"]]")
 			var/datum/category_group/synthesizer/menulist = params["setactive_menu"]
-			active_menu = menulist
+			if(menulist)
+				active_menu = menulist
+			return TRUE
 		//	populaterecipes(active_menu)
-			return
 
 	/*	if("infocrew")
 			var/datum/transhuman/body_record/BR = locate(params["infocrew"])
