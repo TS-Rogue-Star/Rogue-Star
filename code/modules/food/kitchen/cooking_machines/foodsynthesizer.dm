@@ -177,23 +177,23 @@
 	var/list/recipes = list()
 	for(var/datum/category_group/synthesizer/menulist in synthesizer_recipes.categories)
 		menucatagories.Add(list(list(
-			"name" = menulist.name,
-			"id" = menulist.id,
-			"sortorder" = menulist.sortorder,
-			"ref" = "\ref[menulist]"
+			"name"		= menulist.name,
+			"id"		= menulist.id,
+			"sortorder"	= menulist.sortorder,
+			"ref"		= "\ref[menulist]"
 			)))
 		for(var/datum/category_item/synthesizer/food in menulist.items)
 			recipes.Add(list(list(
-				"catagory" = menulist.id,
-				"name" = food.name,
-				"desc" = food.desc,
-				"icon" = food.icon,
-				"icon_state" = food.icon_state,
-				"path" = food.path,
-				"voice_order" = food.voice_order,
-				"voice_temp" = food.voice_temp,
-				"hidden" = food.hidden,
-				"ref" = "\ref[food]"
+				"catagory" 		= menulist.id,
+				"name" 			= food.name,
+				"desc" 			= food.desc,
+				"icon" 			= food.icon,
+				"icon_state"	= food.icon_state,
+				"path"			= food.path,
+				"voice_order"	= food.voice_order,
+				"voice_temp"	= food.voice_temp,
+				"hidden"		= food.hidden,
+				"ref"			= "\ref[food]"
 				)))
 
 	data["menucatagories"] = menucatagories
@@ -220,10 +220,10 @@
 		if("setactive_menu")
 			to_chat(world, "setactive_menu called with [params["setactive_menu"]]")
 			var/datum/category_group/synthesizer/menulist = params["setactive_menu"]
+			to_chat(world, "setactive_menu made menulist set to ["menulist"]")
 			if(menulist)
 				active_menu = menulist
 			return TRUE
-		//	populaterecipes(active_menu)
 
 	/*	if("infocrew")
 			var/datum/transhuman/body_record/BR = locate(params["infocrew"])
