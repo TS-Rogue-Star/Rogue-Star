@@ -181,6 +181,7 @@
 				return
 //RS ADD END
 	if(newjob)
+		newjob.register_shift_key(usr.client.ckey)
 		card.access = newjob.get_access()
 		card.rank = newjob.title
 		card.assignment = newassignment
