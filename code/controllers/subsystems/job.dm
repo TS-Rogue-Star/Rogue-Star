@@ -10,12 +10,19 @@ SUBSYSTEM_DEF(job)
 	var/list/department_datums = list()
 	var/debug_messages = FALSE
 
+	var/savepath = "data/job_camp_list.json"	// RS ADD
+	var/list/shift_keys = list()				// RS ADD
+	var/list/restricted_keys = list()			// RS ADD
 
 /datum/controller/subsystem/job/Initialize(timeofday)
 	if(!department_datums.len)
 		setup_departments()
 	if(!occupations.len)
 		setup_occupations()
+	//RS ADD START
+	if(config.job_camp_time_limit)
+		load_camp_lists()
+	//RS ADD END
 	return ..()
 
 /datum/controller/subsystem/job/proc/setup_occupations(faction = "Station")
@@ -141,3 +148,25 @@ SUBSYSTEM_DEF(job)
 /datum/controller/subsystem/job/proc/job_debug_message(message)
 	if(debug_messages)
 		log_debug("JOB DEBUG: [message]")
+
+//RS ADD START
+/datum/controller/subsystem/job/proc/load_camp_lists()
+	if(fexists(savepath))
+		restricted_keys = json_decode(file2text(savepath))
+		fdel(savepath)
+
+/datum/controller/subsystem/job/Shutdown(Addr, Natural)
+	. = ..()
+	if(fexists(savepath))
+		fdel(savepath)
+	var/json_to_file = json_encode(shift_keys)
+	if(!json_to_file)
+		to_world("failed to write to json")
+		log_debug("Saving: [savepath] failed jsonencode")
+		return
+
+	//Write it out
+	rustg_file_write(json_to_file, savepath)
+	if(!fexists(savepath))
+		log_debug("Saving: failed to save [savepath]")
+//RS ADD END

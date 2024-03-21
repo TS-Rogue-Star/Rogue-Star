@@ -172,6 +172,14 @@
 		return
 	if(newassignment != newjob.title && !(newassignment in newjob.alt_titles))
 		return
+//RS ADD START
+	if(newjob.camp_protection && round_duration_in_ds < config.job_camp_time_limit)
+		if(SSjob.restricted_keys.len)
+			var/list/check = SSjob.restricted_keys[newjob.title]
+			if(usr.client.ckey in check)
+				to_chat(src,"<span class = 'danger'>[newjob.title] is not presently selectable because you played as it last round. It will become available to you in [round((config.job_camp_time_limit - round_duration_in_ds) / 600)] minutes, if slots remain open.</span>")
+				return
+//RS ADD END
 	if(newjob)
 		card.access = newjob.get_access()
 		card.rank = newjob.title

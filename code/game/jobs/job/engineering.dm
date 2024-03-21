@@ -37,6 +37,7 @@
 	job_description = "The Chief Engineer manages the Engineering Department, ensuring that the Engineers work on what needs to be done, handling distribution \
 						of manpower as much as they handle hands-on operations and repairs. They are also expected to keep the rest of the station informed of \
 						any structural threats to the station that may be hazardous to health or disruptive to work."
+	camp_protection = TRUE		//RS ADD
 
 //////////////////////////////////
 //			Engineer

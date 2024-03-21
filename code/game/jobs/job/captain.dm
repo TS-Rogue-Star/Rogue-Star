@@ -25,7 +25,7 @@ var/datum/announcement/minor/captain_announcement = new(do_newscast = 1)
 	minimum_character_age = 25
 	min_age_by_species = list(SPECIES_HUMAN_VATBORN = 14)
 	ideal_character_age = 70 // Old geezer captains ftw
-	ideal_age_by_species = list(SPECIES_HUMAN_VATBORN = 55) /// Vatborn live shorter, no other race eligible for captain besides human/skrell 
+	ideal_age_by_species = list(SPECIES_HUMAN_VATBORN = 55) /// Vatborn live shorter, no other race eligible for captain besides human/skrell
 	banned_job_species = list(SPECIES_UNATHI, SPECIES_TAJ, SPECIES_DIONA, SPECIES_PROMETHEAN, SPECIES_ZADDAT, "mechanical", "digital")
 
 	outfit_type = /decl/hierarchy/outfit/job/captain
@@ -33,7 +33,7 @@ var/datum/announcement/minor/captain_announcement = new(do_newscast = 1)
 						they do not understand everything, and are expected to delegate tasks to the appropriate crew member. The Site Manager is expected to \
 						have an understanding of Standard Operating Procedure, and is subject to it, and legal action, in the same way as every other crew member."
 	alt_titles = list("Overseer"= /datum/alt_title/overseer)
-
+	camp_protection = TRUE		//RS ADD
 
 /*
 /datum/job/captain/equip(var/mob/living/carbon/human/H)
@@ -93,7 +93,7 @@ var/datum/announcement/minor/captain_announcement = new(do_newscast = 1)
 			            access_crematorium, access_kitchen, access_cargo, access_cargo_bot, access_mailsorting, access_qm, access_hydroponics, access_lawyer,
 			            access_chapel_office, access_library, access_research, access_mining, access_heads_vault, access_mining_station,
 			            access_hop, access_RC_announce, access_keycard_auth, access_gateway)
-
+	camp_protection = TRUE		//RS ADD
 // HOP Alt Titles
 /datum/alt_title/cro
 	title = "Crew Resources Officer"

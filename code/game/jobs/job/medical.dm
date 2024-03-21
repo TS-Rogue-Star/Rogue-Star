@@ -34,7 +34,7 @@
 						staff keep the station's crew healthy and whole. They are primarily interested in making sure that patients are safely found and \
 						transported to Medical for treatment. They are expected to keep the crew informed about threats to their health and safety, and \
 						about the importance of Suit Sensors."
-
+	camp_protection = TRUE		//RS ADD
 //////////////////////////////////
 //		Medical Doctor
 //////////////////////////////////

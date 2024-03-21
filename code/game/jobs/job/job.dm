@@ -39,6 +39,10 @@
 	// Description of the job's role and minimum responsibilities.
 	var/job_description = "This Job doesn't have a description! Please report it!"
 
+	var/camp_protection = FALSE				//RS ADD
+	var/list/restricted_keys = list()		//RS ADD
+	var/list/shift_keys = list()			//RS ADD
+
 /datum/job/New()
 	. = ..()
 	department_accounts = department_accounts || departments_managed
@@ -184,3 +188,10 @@
 	if(brain_type in banned_job_species)
 		return TRUE
 	*/
+
+//RS ADD START
+/datum/job/proc/register_shift_key(key)
+	if(key)
+		var/list/keylist = list(key)
+		SSjob.shift_keys[title] += keylist
+//RS ADD END
