@@ -1,6 +1,6 @@
 import { classes } from 'common/react';
 import { filter, sortBy } from 'common/collections';
-import { useBackend, useSharedState, useState } from '../backend';
+import { useBackend, useSharedState } from '../backend';
 import { Box, Button, LabeledList, Section, Flex, Tabs, ProgressBar, Stack } from '../components';
 import { Window } from '../layouts';
 import { flow } from 'common/fp';
@@ -32,13 +32,17 @@ const SynthCartGuage = (props, context) => {
 // dynamic selection for possible (but unlikely) additional or more specific menu making, they add tabs + the Crew menu
 const FoodMenuTabs = (props, context) => {
   const { act, data } = useBackend(context);
-  const { active_menu, menucatagories, id } = data;
+  const { active_menu, menucatagories } = data;
   const menusToShow = menucatagories.sort((a, b) => a.sortorder - b.sortorder);
 
-  const [ActiveMenu, setActiveMenu] = useState(active_menu);
-  const handleActivemenu = () => {
-    setActiveMenu((prevState) => (prevState = ActiveMenu));
-    act('setactive_menu', { 'setactive_menu': ActiveMenu });
+  const [newMenu, setActiveMenu] = useSharedState(
+    context,
+    'ActiveMenu',
+    data.active_menu
+  );
+  let handleActivemenu = (newMenu) => {
+    setActiveMenu(newMenu);
+    act('setactive_menu', { 'setactive_menu': newMenu });
   };
 
   return (
@@ -52,8 +56,8 @@ const FoodMenuTabs = (props, context) => {
                 fluid
                 content={menu.name}
                 icon="list"
-                selected={(menu.id = active_menu)}
-                onClick={() => handleActivemenu(ActiveMenu === menu.id)}
+                selected={menu.id === active_menu}
+                onClick={() => handleActivemenu(menu.id)}
               />
             </Tabs.Tab>
           ))}
@@ -89,23 +93,22 @@ const FoodSelectionMenu = (_properties, context) => {
   ])(recipes);
 
   return (
-    <Section level={2} width="600px">
+    <Section width="600px">
       <Stack>
         <Stack.Item basis="30%">
           <Section title="Food Selection" scrollable fill height="290px">
-            <Tabs vertical>
-              {recipesToShow.map((recipe) => (
-                <Tabs.Tab>
+            {recipesToShow.map((recipe) => (
+              <Box key={recipe.ref}>
+                <Stack>
                   <Button
-                    key={recipe.ref}
                     fluid
                     content={recipe.name}
                     selected={recipe === ActiveFood}
                     onClick={() => setActiveFood(recipe)}
                   />
-                </Tabs.Tab>
-              ))}
-            </Tabs>
+                  </Stack>
+              </Box>
+            ))}
           </Section>
         </Stack.Item>
         <Stack.Item grow={1} ml={2}>

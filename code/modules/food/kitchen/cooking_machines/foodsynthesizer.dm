@@ -219,10 +219,7 @@
 	switch(action)
 		if("setactive_menu")
 			to_chat(world, "setactive_menu called with [params["setactive_menu"]]")
-			var/datum/category_group/synthesizer/menulist = params["setactive_menu"]
-			to_chat(world, "setactive_menu made menulist set to ["menulist"]")
-			if(menulist)
-				active_menu = menulist
+			active_menu = params["setactive_menu"]
 			return TRUE
 
 	/*	if("infocrew")
