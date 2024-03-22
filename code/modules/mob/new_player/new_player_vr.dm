@@ -70,6 +70,15 @@
 			pass = FALSE
 			to_chat(src,"<span class='warning'>Your custom species is not playable. Reconfigure your traits on the VORE tab.</span>")
 
+	//RS ADD START
+	if(J.camp_protection && round_duration_in_ds < config.job_camp_time_limit)
+		if(SSjob.restricted_keys.len)
+			var/list/check = SSjob.restricted_keys[J.title]
+			if(client.ckey in check)
+				to_chat(src,"<span class = 'danger'>[J.title] is not presently selectable because you played as it last round. It will become available to you in [round((config.job_camp_time_limit - round_duration_in_ds) / 600)] minutes, if slots remain open.</span>")
+				pass = FALSE
+	//RS ADD END
+
 	//Final popup notice
 	if (!pass)
 		tgui_alert_async(src,"There were problems with spawning your character. Check your message log for details.","Error")

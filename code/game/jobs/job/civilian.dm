@@ -106,6 +106,7 @@
 	outfit_type = /decl/hierarchy/outfit/job/cargo/qm
 	job_description = "The Quartermaster manages the Supply department, checking cargo orders and ensuring supplies get to where they are needed."
 	alt_titles = list("Supply Chief" = /datum/alt_title/supply_chief)
+	camp_protection = TRUE		//RS ADD
 
 // Quartermaster Alt Titles
 /datum/alt_title/supply_chief
