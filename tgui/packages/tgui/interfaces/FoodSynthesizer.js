@@ -87,6 +87,7 @@ const FoodMenuTabs = (props, context) => {
 const FoodSelectionMenu = (props, context) => {
   const { act, data } = useBackend(context);
   const { active_menu, recipes } = data;
+  const {hidden} = data.recipes;
   if (!recipes) {
     return <Box color="bad">Recipes records missing!</Box>;
   }
@@ -97,7 +98,7 @@ const FoodSelectionMenu = (props, context) => {
   );
 
   const recipesToShow = flow([
-    filter((recipe) => recipe.catagory == active_menu),
+    filter((recipe) => recipe.catagory === active_menu),
     filter((recipe) => !recipe.hidden || hidden),
     sortBy((recipe) => recipe.name),
   ])(recipes);

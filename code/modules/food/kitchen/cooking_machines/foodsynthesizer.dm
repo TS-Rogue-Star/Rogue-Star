@@ -240,7 +240,7 @@
 
 			//Check if we still have the materials.
 			var/obj/item/weapon/reagent_containers/synth_disp_cartridge/C = cart
-			if(src.check_cart(usr, C))
+			if(src.check_cart(C, usr))
 				//Sanity check.
 				if(!making || !src)
 					return
@@ -356,13 +356,6 @@
 
 			return TRUE */
 
-/*
-/obj/machinery/synthesizer/proc/populaterecipes(var/menuid) //Only called on tab swap, tgui_data gets updated indirectly and doesn't constantly call this
-	to_chat(world, "populaterecipes([menuid]) called")
-	for(var/datum/category_group/synthesizer/menulist in synthesizer_recipes.categories)*/
-
-
-
 /obj/machinery/synthesizer/update_icon()
 	cut_overlays()
 
@@ -421,8 +414,7 @@
 		if(user)
 			to_chat(user, "<span class='warning'>\The [src] only accepts smaller synthiziser cartridges.</span>")
 		return
-	var/obj/item/weapon/reagent_containers/synth_disp_cartridge/R = cart
-	if(cart && istype(R)) // let's hot swap that bad boy.
+	if(cart) // let's hot swap that bad boy.
 		remove_cart(user)
 		return
 	else
@@ -430,7 +422,7 @@
 		cart = C
 		C.loc = src
 		C.add_fingerprint(user)
-		to_chat(user, "<span class='notice'>You add the canister to \the [src].</span>")
+		to_chat(user, "<span class='notice'>You add [C] to \the [src].</span>")
 	update_icon()
 	SStgui.update_uis(src)
 	return
