@@ -1,4 +1,4 @@
-import { classes, useEffect } from 'common/react';
+import { classes } from 'common/react';
 import { filter, sortBy } from 'common/collections';
 import { useBackend, useSharedState } from '../backend';
 import { Box, Button, LabeledList, Section, Flex, Tabs, ProgressBar, Stack } from '../components';
@@ -49,13 +49,6 @@ const FoodMenuTabs = (props, context) => {
     data.active_menu
   );
 
-  useEffect(() => {
-    fetchData();
-    {
-      [data];
-    }
-  });
-
   let handleActivemenu = (newMenu) => {
     setActiveMenu(newMenu);
     act('setactive_menu', { 'setactive_menu': newMenu });
@@ -104,7 +97,7 @@ const FoodSelectionMenu = (props, context) => {
   );
 
   const recipesToShow = flow([
-    filter((recipe) => recipe.category === active_menu),
+    filter((recipe) => recipe.catagory == active_menu),
     filter((recipe) => !recipe.hidden || hidden),
     sortBy((recipe) => recipe.name),
   ])(recipes);
