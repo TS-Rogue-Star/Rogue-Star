@@ -5,15 +5,6 @@
 //#define VOICE_ORDER(A, O, T) list(activator = A, order = O, temp = T)
 // "Computer, Steak, Hot."
 
-#define MENU_SNACC		0
-#define MENU_BREKKIE	1
-#define MENU_LONCH		2
-#define MENU_DINNAH		3
-#define MENU_DESLUT		4
-#define MENU_EROTIC		5
-#define MENU_RHAWH		6
-#define MENU_GITS		7
-
 /obj/machinery/synthesizer
 	name = "food synthesizer"
 	desc = "Sabresnacks brand device able to produce an incredible array of conventional foods. Although only the most ascetic of users claim it produces truly good tasting products."
@@ -47,8 +38,8 @@
 	var/datum/wires/synthesizer/wires = null
 
 	//loaded cartridge
-	var/obj/item/weapon/reagent_containers/synth_disp_cartridge/cart
-	var/cart_type = /obj/item/weapon/reagent_containers/synth_disp_cartridge
+	var/obj/item/weapon/reagent_containers/synthdispcart/cart
+	var/cart_type = ITEMSIZE_LARGE
 
 	//all of our food
 	var/static/datum/category_collection/synthesizer/synthesizer_recipes
@@ -61,16 +52,16 @@
 	var/activator = "computer"
 	var/list/voicephrase
 
-	//crew printing required stuff. Shamelessly utilizing body designer methods
-/*	var/datum/transhuman/body_record/active_br = null
-	var/db_key
-	var/datum/transcore_db/our_db */
+	//crew printing required stuff.
+	var/datum/data/record/activecrew
+	var/refresh_delay = 1 MINUTE
+
 
 /obj/machinery/synthesizer/Initialize()
 	. = ..()
 	if(!synthesizer_recipes)
 		synthesizer_recipes = new()
-	cart = new /obj/item/weapon/reagent_containers/synth_disp_cartridge(src)
+	cart = new /obj/item/weapon/reagent_containers/synthdispcart(src)
 	wires = new(src)
 //	our_db = SStranscore.db_by_key(db_key)
 	default_apply_parts()
@@ -81,13 +72,13 @@
 	name = "small food synthesizer"
 	icon = 'icons/obj/machines/foodsynthesizer.dmi'
 	icon_state = "portsynth"
-	cart_type = /obj/item/weapon/reagent_containers/synth_disp_cartridge/small
+	cart_type = ITEMSIZE_NORMAL
 
 /obj/machinery/synthesizer/mini/Initialize()
 	. = ..()
 	if(!synthesizer_recipes)
 		synthesizer_recipes = new()
-	cart = new /obj/item/weapon/reagent_containers/synth_disp_cartridge/small(src)
+	cart = new /obj/item/weapon/reagent_containers/synthdispcart/small(src)
 	wires = new(src)
 //	our_db = SStranscore.db_by_key(db_key)
 	default_apply_parts()
@@ -98,7 +89,7 @@
 	qdel(wires)
 	wires = null
 
-	for(var/obj/item/weapon/reagent_containers/synth_disp_cartridge/C in cart)
+	for(var/obj/item/weapon/reagent_containers/synthdispcart/C in cart)
 		C.loc = get_turf(src.loc)
 		C = null
 	return ..()
@@ -108,7 +99,7 @@
 	if(panel_open)
 		. += "The cartridge is [cart ? "installed" : "missing"]."
 	if(cart && (!(stat & (NOPOWER|BROKEN))))
-		var/obj/item/weapon/reagent_containers/synth_disp_cartridge/C = cart
+		var/obj/item/weapon/reagent_containers/synthdispcart/C = cart
 		if(istype(C) && C.reagents && C.reagents.total_volume)
 			var/percent = round((C.reagents.total_volume / C.volume) * 100)
 			. += "The installed cartridge has [percent]% remaining."
@@ -142,13 +133,6 @@
 /obj/machinery/synthesizer/tgui_data(mob/user, datum/tgui/ui, datum/tgui_state/state)
 	var/list/data = ..()
 
-/*	//body records are changed, so we have to look it up every time just in case. We won't check here for print preference yet
-	var/bodyrecords_list_ui[0]
-	for(var/N in our_db.body_scans)
-		var/datum/transhuman/body_record/BR = our_db.body_scans[N]
-		bodyrecords_list_ui[++bodyrecords_list_ui.len] = list("name" = N, "recref" = "\ref[BR]")
-	data["bodyrecords"] = bodyrecords_list_ui */
-
 	data["busy"] = busy
 	data["isThereCart"] = cart ? TRUE : FALSE
 	data["active_menu"] = active_menu
@@ -168,6 +152,32 @@
 		data["cartFillStatus"] = cart ? percent : null
 
 
+	if(!isnull(data_core.general))
+		var/list/records = list()
+		data["records"] = records
+		for(var/datum/data/record/R in sortRecord(data_core.general))
+			records[++records.len] = list(
+			"ref" = "\ref[R]",
+			"id" = R.fields["id"],
+			"name" = R.fields["name"])
+
+	data["activecrew"] = activecrew
+	if(activecrew) //starts off null so we'll wait for user input
+		var/list/crewdata = list() //Gotta ensure we grab this info from compliant people only
+		if(istype(activecrew, /datum/data/record) && data_core.general.Find(activecrew)) //Scrape from security datacore info
+			var/list/fields = list()
+			crewdata["fields"] = fields
+			fields[++fields.len] = FIELD("Name", activecrew.fields["name"], "name")
+			fields[++fields.len] = FIELD("ID", activecrew.fields["id"], "id")
+			fields[++fields.len] = FIELD("Rank", activecrew.fields["rank"], "rank")
+			fields[++fields.len] = FIELD("Entity Classification", activecrew.fields["brain_type"], "brain_type")
+			fields[++fields.len] = FIELD("Sex", activecrew.fields["sex"], "sex")
+			fields[++fields.len] = FIELD("Species", activecrew.fields["species"], "species")
+			var/list/photos = list()
+			crewdata["photos"] = photos
+			photos[++photos.len] = activecrew.fields["photo-south"]
+			crewdata["has_photos"] = (activecrew.fields["photo-south"] ? 1 : 0)
+		data["crewdata"] = crewdata
 
 	return data
 
@@ -193,11 +203,68 @@
 				"voice_order"	= food.voice_order,
 				"voice_temp"	= food.voice_temp,
 				"hidden"		= food.hidden,
+				"isatom" 		= ispath(food.path, /atom),
+				"photopath" 	= replacetext(replacetext("[food.path]", "/obj/item/", ""), "/", "-"),
 				"ref"			= "\ref[food]"
 				)))
 
 	data["menucatagories"] = menucatagories
 	data["recipes"] = recipes
+
+	var/list/crew_cookies = list()
+	for(var/client/C in GLOB.clients)
+		// Allow opt-out. For extra protection we'll refrain from including logged out folks.
+		if(C?.mob?.mind && !C?.prefs?.synth_cookie)
+			continue
+
+		var/name = null
+		var/species = null
+		var/ref = null
+
+		if(iscarbon(C.mob))
+			var/mob/living/carbon/human/H = C.mob
+			if(data_core && data_core.general)
+				if(!find_general_record("name", H.real_name))
+					if(!find_record("name", H.real_name, data_core.hidden_general))
+						continue
+			name = H.real_name
+			species = "[H.custom_species ? H.custom_species : H.species.name]"
+			ref = "\ref[H.mob]"
+
+		if(issilicon(C.mob))
+			if(isAI(C.mob))
+				var/mob/living/silicon/ai/A = C.mob
+				name = A.name
+				species = "Artificial Intelligence"
+				ref = "\ref[A.mob]"
+
+			if(isrobot(C.mob))
+				var/mob/living/silicon/robot/R = C.mob
+				if(R.scrambledcodes || (R.module && R.module.hide_on_manifest)) //Not sure if admeme events want valid cookie print outs
+					continue
+				name = R.name
+				species = "[R.modtype] [R.braintype]"
+				ref = "\ref[R.mob]"
+
+		if(isanimal(C.mob))
+			var/mob/living/simple_mob/SM = C.mob
+			name = SM.name
+			species = initial(SM.name) //most mobs are simply named the species they are, so this ought to be useful for named critters.
+			ref = "\ref[SM.mob]"
+
+		if(!name)
+			continue
+
+		// our crew cookies are only applicable on the crew menu, and we're reusing our catagory sorting as much as possible!
+		crew_cookies.Add(list(list(
+				"catagory" = "crew",
+				"name" = name,
+				"species" = species,
+				"ref" = ref
+		)))
+
+	data["crew_cookies"] = crew_cookies
+
 	return data
 
 /obj/machinery/synthesizer/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
@@ -218,18 +285,22 @@
 
 	switch(action)
 		if("setactive_menu")
-			to_chat(world, "setactive_menu called with [params["setactive_menu"]]")
 			active_menu = params["setactive_menu"]
 			return TRUE
 
-	/*	if("infocrew")
-			var/datum/transhuman/body_record/BR = locate(params["infocrew"])
-			if(BR && istype(BR.mydna))
-				if(microcompatibility(BR) || BR.ckey == usr.ckey)
-					active_br = new /datum/transhuman/body_record(BR) // Load a COPY!
-			else
-				active_br = null
-				temp = "ERROR: Record missing." */
+		if("setactive_crew")
+			var/datum/data/record/general_record = locate(params["setactive_crew"] || "")
+				if(!data_core.general.Find(general_record))
+					return
+			activecrew = general_record
+			return TRUE
+
+		if("crew_photo")
+			var/icon/photo = get_photo(usr)
+			if(photo && activecrew)
+				activecrew.fields["photo_front"] = photo
+				activecrew.fields["photo-south"] = "'data:image/png;base64,[icon2base64(photo)]'"
+			return TRUE
 
 		if("make")
 			var/datum/category_item/synthesizer/making = locate(params["make"])
@@ -239,7 +310,7 @@
 				return
 
 			//Check if we still have the materials.
-			var/obj/item/weapon/reagent_containers/synth_disp_cartridge/C = cart
+			var/obj/item/weapon/reagent_containers/synthdispcart/C = cart
 			if(src.check_cart(C, usr))
 				//Sanity check.
 				if(!making || !src)
@@ -292,17 +363,25 @@
 				src.audible_message("<span class='notice'>Error: Insufficent Materials. SabreSnacks recommends you have a genuine replacement cartridge available to install.</span>", runemessage = "Error: Insufficent Materials!")
 
 			return TRUE
-	return FALSE
 
-/*		if("crewprint")
-			var/datum/category_item/synthesizer/making = locate(params["crewprint"])
+		if("refresh")
+			var/delay	//spam protection baybeee. Never trust your users! Especially with expensive lists!!
+			if(world.time > delay)
+				update_tgui_static_data(usr, ui)
+				delay = world.time + refresh_delay
+				return TRUE
+			else
+				to_chat(usr, "<span class='danger'>Spam Protection cooldown isn't finished! Please wait [round(delay/60)] seconds...</span>")
+
+		if("crewprint")
+	/*		var/datum/category_item/synthesizer/making = locate(params["crewprint"])
 			if(!istype(making))
 				return
 			if(making.hidden && !hacked)
 				return
 
 			//Check if we still have the materials.
-			var/obj/item/weapon/reagent_containers/synth_disp_cartridge/C = cart
+			var/obj/item/weapon/reagent_containers/synthdispcart/C = cart
 			if(src.check_cart(usr, C))
 				//Sanity check.
 				if(!making || !src)
@@ -312,17 +391,17 @@
 					update_use_power(USE_POWER_ACTIVE)
 					update_icon() // light up time
 					playsound(src, 'sound/machines/replicator_input_ok.ogg', 100)
-					var/mob/living/carbon/human/dummy/mannequin = new(making.mannequin)
+					var/obj/item/weapon/reagent_containers/food/snacks/food_mimic = new making.path(src)
 					making.client.prefs.dress_preview_mob(making.mannequin)
 					food_mimic_storage = mannequin //stuff the micro in the scanner
 					sleep(speed_grade) //machine go brrr
 					playsound(src, 'sound/machines/replicator_working.ogg', 150)
 
 					//Create the cookie base.
-					var/obj/item/weapon/reagent_containers/food/snacks/synthsized_meal/meal = new /obj/item/weapon/reagent_containers/food/snacks/synthsized_meal(src.loc)
+					var/obj/item/weapon/reagent_containers/food/snacks/synthsized_meal/crewblock/meal = new /obj/item/weapon/reagent_containers/food/snacks/synthsized_meal/crewblock(src.loc)
 
 					//Begin mimicking the micro
-					meal.name = mannequin.name
+					meal.name = data["crewdata"]["fields"]
 					meal.desc = "A tiny replica of a crewmate!"
 					meal.icon = mannequin.icon
 					meal.icon_state = mannequin.icon_state
@@ -355,6 +434,7 @@
 				src.audible_message("<span class='notice'>Error: Insufficent Materials. SabreSnacks recommends you have a genuine replacement cartridge available to install.</span>", runemessage = "Error: Insufficent Materials!")
 
 			return TRUE */
+	return FALSE
 
 /obj/machinery/synthesizer/update_icon()
 	cut_overlays()
@@ -368,7 +448,7 @@
 		else
 			add_overlay("[initial(icon_state)]_panel")
 		if(cart)
-			var/obj/item/weapon/reagent_containers/synth_disp_cartridge/C = cart
+			var/obj/item/weapon/reagent_containers/synthdispcart/C = cart
 			if(C.reagents && C.reagents.total_volume)
 				var/image/filling_overlay = image("[icon]", src, "[initial(icon_state)]fill_0")	//Modular filling
 				var/percent = round((C.reagents.total_volume / C.volume) * 100)
@@ -400,19 +480,11 @@
 		set_light_on(FALSE)
 
 //Cartridge Interactions in Machine
-/obj/machinery/synthesizer/proc/add_cart(obj/item/weapon/reagent_containers/synth_disp_cartridge/C, mob/user)
+/obj/machinery/synthesizer/proc/add_cart(obj/item/weapon/C, mob/user)
 	if(!Adjacent(user))
 		return //How did you even try?
 	if(!panel_open) //just in case
 		to_chat(user, "The hatch must be open to insert a [C].")
-		return
-	if(!istype(C)) //Never. Trust. Byond.
-		if(user)
-			to_chat(user, "<span class='warning'>\The [src] only accepts synthiziser cartridges.</span>")
-		return
-	if(istype(C) && (C != cart_type))
-		if(user)
-			to_chat(user, "<span class='warning'>\The [src] only accepts smaller synthiziser cartridges.</span>")
 		return
 	if(cart) // let's hot swap that bad boy.
 		remove_cart(user)
@@ -428,7 +500,7 @@
 	return
 
 /obj/machinery/synthesizer/proc/remove_cart(mob/user)
-	var/obj/item/weapon/reagent_containers/synth_disp_cartridge/C = cart
+	var/obj/item/weapon/reagent_containers/synthdispcart/C = cart
 	if(!C)
 		to_chat(user, "<span class='notice'>There's no cartridge here...</span>") //Sanity checks aren't ever a bad thing
 		return
@@ -437,8 +509,13 @@
 	C.loc = get_turf(loc)
 	C.update_icon()
 	cart = null
-	var/obj/item/weapon/reagent_containers/synth_disp_cartridge/R = (user.get_active_hand() || user.get_inactive_hand()) //let's check to see if you're holding a different tank
-	if(!istype(R))
+
+
+	// let's check to see if you're holding a different tank
+	var/obj/item/weapon/reagent_containers/synthdispcart/R = (user.get_active_hand() || user.get_inactive_hand())
+	if(!istype(R)) //You're not, so we move on
+		to_chat(user, "<span class='notice'>You remove [C] from  \the [src].</span>")
+	if(R.w_class > cart_type) // You are, but it's a large canister and you're trying to stuff it into the portable
 		to_chat(user, "<span class='notice'>You remove [C] from  \the [src].</span>")
 	else
 		add_cart(R, user)
@@ -447,7 +524,7 @@
 	update_icon()
 	SStgui.update_uis(src)
 
-/obj/machinery/synthesizer/proc/check_cart(obj/item/weapon/reagent_containers/synth_disp_cartridge/C, mob/user)
+/obj/machinery/synthesizer/proc/check_cart(obj/item/weapon/reagent_containers/synthdispcart/C, mob/user)
 	if(!istype(C))
 		to_chat(user, "<span class='notice'>The synthesizer cartridge is nonexistant.</span>")
 		playsound(src, 'sound/machines/replicator_input_failed.ogg', 100)
@@ -477,12 +554,15 @@
 		update_icon()
 		return
 	if(panel_open)
-		if(istype(W, /obj/item/weapon/reagent_containers/synth_disp_cartridge))
+		if(istype(W, /obj/item/weapon/reagent_containers/synthdispcart))
 			if(!anchored)
 				to_chat(user, "<span class='warning'>Anchor its bolts first.</span>")
 				return
+			if(W.w_class > cart_type) //since we confirmed it's a Cart, make sure it fits!
+				to_chat(user, "<span class='warning'>\The [src] only accepts smaller synthiziser cartridges.</span>")
+				return
 			if(cart)
-				var/choice = alert(user, "Replace the cartridge?", "", "Yes", "Cancel")
+				var/choice = alert(user, "Replace the loaded cartridge?", "", "Yes", "Cancel")
 				switch(choice)
 					if("Cancel")
 						return FALSE
@@ -559,30 +639,30 @@
 	update_tgui_static_data(usr)
 
 //Cartridge Item handling
-/obj/item/weapon/reagent_containers/synth_disp_cartridge
+/obj/item/weapon/reagent_containers/synthdispcart
 	name = "Synthesizer cartridge"
 	desc = "Genuine replacement cartridge for SabreSnacks brand Food Synthesizers. It's too large for the Portable models."
 	icon = 'icons/obj/machines/foodsynthesizer.dmi'
 	icon_state = "bigcart"
 
-	w_class = ITEMSIZE_NORMAL
+	w_class = ITEMSIZE_LARGE
 
 	volume = 250 //enough for feeding folk, but not so much it won't be needing replacment
 	possible_transfer_amounts = null
 
-/obj/item/weapon/reagent_containers/synth_disp_cartridge/small
+/obj/item/weapon/reagent_containers/synthdispcart/small
 	name = "Portable Synthesizer Cartridge"
 	desc = "Genuine replacement cartrifge SabreSnacks brand Portable Food Synthesizers. It can also fit within standard sized models."
 	icon_state = "Scart"
 	w_class = ITEMSIZE_NORMAL
 	volume = 100
 
-/obj/item/weapon/reagent_containers/synth_disp_cartridge/Initialize()
+/obj/item/weapon/reagent_containers/synthdispcart/Initialize()
 	. = ..()
 	reagents.add_reagent("synthsoygreen", volume)
 	update_icon()
 
-/obj/item/weapon/reagent_containers/synth_disp_cartridge/update_icon()
+/obj/item/weapon/reagent_containers/synthdispcart/update_icon()
 	cut_overlays()
 	if(reagents.total_volume)
 		var/image/filling_overlay = image("[icon]", src, "[initial(icon_state)]fill_0", layer = src.layer - 0.1)
@@ -597,7 +677,7 @@
 		filling_overlay.color = reagents.get_color()
 		add_overlay(filling_overlay)
 
-/obj/item/weapon/reagent_containers/synth_disp_cartridge/examine(mob/user)
+/obj/item/weapon/reagent_containers/synthdispcart/examine(mob/user)
 	. = ..()
 	if(reagents && reagents.total_volume)
 		var/percent = round((reagents.total_volume / volume) * 100)
@@ -605,7 +685,7 @@
 
 	return
 
-/obj/item/weapon/reagent_containers/synth_disp_cartridge/is_open_container()
+/obj/item/weapon/reagent_containers/synthdispcart/is_open_container()
 	return FALSE //sealed, proprietary container. aka preventing alternative beaker memes.
 
 //Circuits for contruction
@@ -647,40 +727,26 @@
 	name = "synthesizer"
 
 /datum/asset/spritesheet/synthesizer/register()
-	for(var/path in subtypesof(/datum/category_item/synthesizer))
-		var/obj/item/weapon/reagent_containers/food/fud = path //drinks are helpfully a subtype of food
-
-		var/icon_file = initial(fud.icon)
-		var/icon_state = initial(fud.icon_state)
+	for(var/datum/category_item/synthesizer/snacc in subtypesof(/datum/category_item/synthesizer))
+		var/icon_file = snacc.icon
+		var/icon_state = snacc.icon_state
 		var/icon/I
-
-		if(initial(fud.icon) && initial(fud.icon_state)) //if it's got an icon replacement we'll skip
-			icon_file = initial(fud.icon)
-			icon_state = initial(fud.icon_state)
-			if(!(icon_state in icon_states(icon_file)))
-				stack_trace("Food [fud] with icon '[icon_file]' missing state '[icon_state]'")
-				continue
-			I = icon(icon_file, icon_state, SOUTH)
-
-		else
-			// construct the icon and slap it into the resource cache
-			var/atom/meal = fud
-			if (!ispath(meal, /atom))
-				continue
-			icon_file = initial(meal.icon)
-			icon_state = initial(meal.icon_state)
-			if(!(icon_state in icon_states(icon_file)))
-				stack_trace("Food [meal] with icon '[icon_file]' missing state '[icon_state]'")
-				continue
-			I = icon(icon_file, icon_state, SOUTH)
+		// construct the icon and slap it into the resource cache
+		var/atom/meal = snacc
+		if (!ispath(meal, /atom))
+			continue
+		icon_file = meal.icon
+		icon_state = meal.icon_state
+		if(!(icon_state in icon_states(icon_file)))
+			stack_trace("Food [meal] with icon '[icon_file]' missing state '[icon_state]'")
+			continue
+		I = icon(icon_file, icon_state, SOUTH)
 
 
-		var/imgid = replacetext(replacetext("[fud]", "/obj/item/weapon/reagent_containers/food/", ""), "/", "-")
-		I.Scale(128, 128) //enlarge it to look nicer on the preview
+		var/imgid = replacetext(replacetext("[snacc.path]", "/obj/item/", ""), "/", "-")
+		I.Scale(64, 64) //enlarge it to look nicer on the preview
 		Insert(imgid, I)
 	return ..()
-
-
 
 /* Voice activation stuff.
 can tgui accept orders that isn't through the menu? Probably. hijack that.

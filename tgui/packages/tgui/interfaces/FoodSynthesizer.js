@@ -75,19 +75,11 @@ const FoodMenuTabs = (props, context) => {
     </Flex>
   );
 };
-/*  <Tabs.Tab>
-      <Button
-        icon="user"
-        selected={active_menu === MENU_CREW}
-        content="Crew Menu"
-        onClick={() => act(CrewMenu, { crewmenu: crew.name })}
-      />
-    </Tabs.Tab> */
 
 const FoodSelectionMenu = (props, context) => {
   const { act, data } = useBackend(context);
-  const { active_menu, recipes } = data;
-  const {hidden} = data.recipes;
+  const { active_menu, recipes, active_crew, crewdata, crew_cookies } = data;
+  const { hidden } = data.recipes;
   if (!recipes) {
     return <Box color="bad">Recipes records missing!</Box>;
   }
@@ -102,6 +94,82 @@ const FoodSelectionMenu = (props, context) => {
     filter((recipe) => !recipe.hidden || hidden),
     sortBy((recipe) => recipe.name),
   ])(recipes);
+
+  const [ActiveCookie, setActiveCookie] = useSharedState(
+    context,
+    'ActiveCookie',
+    data.crew_cookies
+  );
+
+  const cookiesToShow = flow([
+    filter((cookie) => cookie.catagory === active_menu),
+    sortBy((cookie) => cookie.name),
+  ])(crew_cookies);
+
+  if (active_menu === 'crew') {
+    return (
+      <Section level={2}>
+        <Stack>
+          <Stack.Item basis="30%">
+            <Section title="Food Selection" scrollable fill height="290px">
+              <Tabs vertical>
+                {cookiesToShow.map((cookie) => (
+                  <Tabs.Tab>
+                    <Button
+                      key={cookie.ref}
+                      fluid
+                      content={cookie.name}
+                      selected={cookie === ActiveCookie}
+                      onClick={() => setActiveCookie(cookie)}
+                    />
+                  </Tabs.Tab>
+                ))}
+              </Tabs>
+            </Section>
+          </Stack.Item>
+          <Flex>
+            <Flex.Item>
+              <LabeledList>
+                {crewdata.fields.map((field, i) => (
+                  <LabeledList.Item key={i} label={field.field}>
+                    <Box height="20px" inline preserveWhitespace>
+                      {field.value}
+                    </Box>
+                  </LabeledList.Item>
+                ))}
+              </LabeledList>
+            </Flex.Item>
+            <Flex.Item textAlign="right">
+              {!!crewdata.has_photos &&
+                crewdata.photos.map((p, i) => (
+                  <Box
+                    key={i}
+                    display="inline-block"
+                    textAlign="center"
+                    color="label">
+                    <img
+                      src={p.substr(1, p.length - 1)}
+                      style={{
+                        width: '96px',
+                        'margin-bottom': '0.5rem',
+                        '-ms-interpolation-mode': 'nearest-neighbor',
+                      }}
+                    />
+                    <br />
+                    {i}
+                  </Box>
+                ))}
+              <Box>
+                <Button onClick={() => act('crew_photo')}>
+                  Update Crew Photo
+                </Button>
+              </Box>
+            </Flex.Item>
+          </Flex>
+        </Stack>
+      </Section>
+    );
+  }
 
   return (
     <Section level={2}>
@@ -132,13 +200,18 @@ const FoodSelectionMenu = (props, context) => {
                     <LabeledList.Item label="Name">
                       {ActiveFood.name}
                     </LabeledList.Item>
+                    <br />
                     <LabeledList.Item label="Description">
                       {ActiveFood.desc}
                     </LabeledList.Item>
+                    <br />
                     <LabeledList.Item label="Serving Temprature">
                       {ActiveFood.voice_temp}
                     </LabeledList.Item>
                   </LabeledList>
+                  <br />
+                  <br />
+                  <br />
                   <Button
                     fluid
                     icon="print"
@@ -146,9 +219,7 @@ const FoodSelectionMenu = (props, context) => {
                     content="Begin Printing"
                     onClick={() => act('make', { make: ActiveFood.ref })}
                   />
-                  <Box
-                    className={classes(['synthesizer64x64', ActiveFood.path])}
-                  />
+                  <ProductImage recipes={ActiveFood} />
                 </Stack.Item>
               </Stack>
             </Box>
@@ -159,7 +230,28 @@ const FoodSelectionMenu = (props, context) => {
   );
 };
 
-const CrewMenu = (_properties, context) => {
-  const { act, data } = useBackend(context);
-  return <Box>This will be filled out laters</Box>;
+/** Displays the product image. Displays a default if there is none. */
+
+const ProductImage = (props) => {
+  const { ActiveFood } = props;
+
+  return ActiveFood.img ? (
+    <Box>
+      <img
+        src={`data:image/jpeg;base64,${ActiveFood.img}`}
+        style={{
+          verticalAlign: 'middle',
+        }}
+      />
+    </Box>
+  ) : (
+    <Box>
+      <span
+        className={classes(['synthesizer64x64', ActiveFood.path])}
+        style={{
+          verticalAlign: 'middle',
+        }}
+      />
+    </Box>
+  );
 };

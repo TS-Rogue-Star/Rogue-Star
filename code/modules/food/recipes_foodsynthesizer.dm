@@ -28,6 +28,11 @@
 	. = ..()
 	reagents.add_reagent("nutripaste", 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/synthsized_meal/crewblock
+	name = "Nutrient paste meal"
+	desc = "It's a synthisized edible wafer of nutrients. Everything you need and makes field rations a delicacy in comparison."
+	icon_state = "crewblock"
+
 /datum/reagent/nutriment/synthmealgoop
 	name = "Nutriment Paste"
 	id = "nutripaste"
@@ -51,13 +56,13 @@
 
 //Supply pack refills
 /datum/supply_pack/vending_refills/synthesizer
-	contains = list(/obj/item/weapon/reagent_containers/synth_disp_cartridge)
+	contains = list(/obj/item/weapon/reagent_containers/synthdispcart)
 	name = "Food Synthesizer Cartridge (Standard)"
 	cost = 20 //pricy so chef value is ever better.
 	containername = "food synthesizer cartridge crate"
 
 /datum/supply_pack/vending_refills/synthesizer/smol
-	contains = list(/obj/item/weapon/reagent_containers/synth_disp_cartridge/small)
+	contains = list(/obj/item/weapon/reagent_containers/synthdispcart/small)
 	name = "Food Synthesizer Cartridge (Portable)"
 	cost = 10
 	containername = "portable food synthesizer cartridge crate"
@@ -79,6 +84,7 @@
 #define MENU_DESLUT		4
 #define MENU_EROTIC		5
 #define MENU_RHAWH		6
+#define MENU_MEHARTY	7
 
 /datum/category_group/synthesizer
 	var/id = null
@@ -129,6 +135,12 @@
 	sortorder = MENU_RHAWH
 	category_item_type = /datum/category_item/synthesizer/raw
 
+/datum/category_group/synthesizer/crewmenu
+	name = "Crew Cookies"
+	id = "crew"
+	sortorder = MENU_MEHARTY
+	category_item_type = /datum/category_item/synthesizer/crew
+
 #undef MENU_SNACC
 #undef MENU_BREKKIE
 #undef MENU_LONCH
@@ -136,6 +148,7 @@
 #undef MENU_DESLUT
 #undef MENU_EROTIC
 #undef MENU_RHAWH
+#undef MENU_MEHARTY
 
 /*******************
 * Category entries *
@@ -149,6 +162,15 @@
 	var/hidden = FALSE					//is it illegal/nonstandard?
 	var/list/voice_order				//what can we say to get this? Avoid exact same phrases.
 	var/voice_temp						//mostly flavor but maybe also setting stuff that will warm/cool you off? idk
+
+/*********
+* Crew Cookie *
+**********/
+/datum/category_item/synthesizer/crew/cookie
+	name = "Generic Crew Cookie"
+	path = /obj/item/weapon/reagent_containers/food/snacks/synthsized_meal/crewblock
+	voice_order = list("crew cookie")
+	voice_temp = "hot"
 
 /*********
 * Snacks *
