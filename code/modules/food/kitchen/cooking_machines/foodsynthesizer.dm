@@ -219,7 +219,6 @@
 
 		var/name = null
 		var/species = null
-		var/ref = null
 
 		if(iscarbon(C.mob))
 			var/mob/living/carbon/human/H = C.mob
@@ -229,14 +228,12 @@
 						continue
 			name = H.real_name
 			species = "[H.custom_species ? H.custom_species : H.species.name]"
-			ref = "\ref[H.mob]"
 
 		if(issilicon(C.mob))
 			if(isAI(C.mob))
 				var/mob/living/silicon/ai/A = C.mob
 				name = A.name
 				species = "Artificial Intelligence"
-				ref = "\ref[A.mob]"
 
 			if(isrobot(C.mob))
 				var/mob/living/silicon/robot/R = C.mob
@@ -244,13 +241,11 @@
 					continue
 				name = R.name
 				species = "[R.modtype] [R.braintype]"
-				ref = "\ref[R.mob]"
 
 		if(isanimal(C.mob))
 			var/mob/living/simple_mob/SM = C.mob
 			name = SM.name
 			species = initial(SM.name) //most mobs are simply named the species they are, so this ought to be useful for named critters.
-			ref = "\ref[SM.mob]"
 
 		if(!name)
 			continue
@@ -259,8 +254,7 @@
 		crew_cookies.Add(list(list(
 				"catagory" = "crew",
 				"name" = name,
-				"species" = species,
-				"ref" = ref
+				"species" = species
 		)))
 
 	data["crew_cookies"] = crew_cookies
