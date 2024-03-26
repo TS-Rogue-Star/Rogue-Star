@@ -26,19 +26,31 @@ export const FoodSynthesizer = (props, context) => {
   );
 };
 
+/** Displays the current Cartridge status. */
+
 const SynthCartGuage = (props, context) => {
   const { data } = useBackend(context);
-  const adjustedCartChange = data.cartFillStatus / 100;
+  const { isThereCart, cartFillStatus } = data;
+  const adjustedCartChange = cartFillStatus / 100;
   return (
     <Section title="Cartridge Status">
+      {isThereCart ? (
       <LabeledList.Item label="Product Remaining">
-        <ProgressBar color="purple" value={adjustedCartChange} width={20} />
+        {cartFillStatus ? ( <ProgressBar color="purple" value={adjustedCartChange} width={20} /> ) : (<ProgressBar color="red" value={adjustedCartChange} width={20} />)}
       </LabeledList.Item>
+      ) : (
+        <LabeledList.Item label="Cartridge Problem">
+        <Box color="label">One or more cartridges are missing or damaged. <br /><br />
+         Sabresnacks Co. recommends ordering a genuine Sabresnacks replacement cartidge through your local logistical cargo service.
+        </Box>
+        </LabeledList.Item>
+      )}
     </Section>
   );
 };
 
-// dynamic selection for possible (but unlikely) additional or more specific menu making, they add tabs + the Crew menu
+/** Dynamic menu tabs for every listing in catagory groups. */
+
 const FoodMenuTabs = (props, context) => {
   const { act, data } = useBackend(context);
   const { active_menu, menucatagories } = data;
@@ -76,9 +88,12 @@ const FoodMenuTabs = (props, context) => {
   );
 };
 
+/** Chooses the menu item, displays information, and an image. Sorts via menu based catagory attribute listed in every catagory item. */
+
 const FoodSelectionMenu = (props, context) => {
   const { act, data } = useBackend(context);
   const { active_menu, recipes, active_crew, crewdata, crew_cookies } = data;
+  const { recipe } = props;
   const { hidden } = data.recipes;
   if (!recipes) {
     return <Box color="bad">Recipes records missing!</Box>;
@@ -116,7 +131,7 @@ const FoodSelectionMenu = (props, context) => {
                 {cookiesToShow.map((cookie) => (
                   <Tabs.Tab>
                     <Button
-                      key={cookie.ref}
+                      key={cookie.name}
                       fluid
                       content={cookie.name}
                       selected={cookie === ActiveCookie}
@@ -138,32 +153,6 @@ const FoodSelectionMenu = (props, context) => {
                   </LabeledList.Item>
                 ))}
               </LabeledList>
-            </Flex.Item>
-            <Flex.Item textAlign="right">
-              {!!crewdata.has_photos &&
-                crewdata.photos.map((p, i) => (
-                  <Box
-                    key={i}
-                    display="inline-block"
-                    textAlign="center"
-                    color="label">
-                    <img
-                      src={p.substr(1, p.length - 1)}
-                      style={{
-                        width: '96px',
-                        'margin-bottom': '0.5rem',
-                        '-ms-interpolation-mode': 'nearest-neighbor',
-                      }}
-                    />
-                    <br />
-                    {i}
-                  </Box>
-                ))}
-              <Box>
-                <Button onClick={() => act('crew_photo')}>
-                  Update Crew Photo
-                </Button>
-              </Box>
             </Flex.Item>
           </Flex>
         </Stack>
@@ -219,7 +208,7 @@ const FoodSelectionMenu = (props, context) => {
                     content="Begin Printing"
                     onClick={() => act('make', { make: ActiveFood.ref })}
                   />
-                  <ProductImage recipes={ActiveFood} />
+                  <ProductImage recipe={ActiveFood} />
                 </Stack.Item>
               </Stack>
             </Box>
@@ -233,12 +222,12 @@ const FoodSelectionMenu = (props, context) => {
 /** Displays the product image. Displays a default if there is none. */
 
 const ProductImage = (props) => {
-  const { ActiveFood } = props;
+  const { recipe } = props;
 
-  return ActiveFood.img ? (
+  return recipe.img ? (
     <Box>
       <img
-        src={`data:image/jpeg;base64,${ActiveFood.img}`}
+        src={`data:image/jpeg;base64,${recipe.img}`}
         style={{
           verticalAlign: 'middle',
         }}
@@ -247,7 +236,7 @@ const ProductImage = (props) => {
   ) : (
     <Box>
       <span
-        className={classes(['synthesizer64x64', ActiveFood.path])}
+        className={classes(['synthesizer64x64', recipe.path])}
         style={{
           verticalAlign: 'middle',
         }}
@@ -255,3 +244,30 @@ const ProductImage = (props) => {
     </Box>
   );
 };
+
+/*  <Flex.Item textAlign="right">
+              {!!crewdata.has_photos &&
+                crewdata.photos.map((p, i) => (
+                  <Box
+                    key={i}
+                    display="inline-block"
+                    textAlign="center"
+                    color="label">
+                    <img
+                      src={p.substr(1, p.length - 1)}
+                      style={{
+                        width: '96px',
+                        'margin-bottom': '0.5rem',
+                        '-ms-interpolation-mode': 'nearest-neighbor',
+                      }}
+                    />
+                    <br />
+                    {i}
+                  </Box>
+                ))}
+              <Box>
+                <Button onClick={() => act('crew_photo')}>
+                  Update Crew Photo
+                </Button>
+              </Box>
+            </Flex.Item> */  

@@ -173,10 +173,19 @@
 			fields[++fields.len] = FIELD("Entity Classification", activecrew.fields["brain_type"], "brain_type")
 			fields[++fields.len] = FIELD("Sex", activecrew.fields["sex"], "sex")
 			fields[++fields.len] = FIELD("Species", activecrew.fields["species"], "species")
+
+			// Attempt to grab the photo
+			var/icon/front
+			if(iscarbon(activecrew))
+				var/icon/charicon = cached_character_icon(activecrew)
+				front = icon(charicon, dir = SOUTH, frame = 1)
+			else // Sending null things through browse_rsc() makes a runtime and breaks the console trying to view the record.
+				front = icon('html/images/no_image32.png')
+
 			var/list/photos = list()
 			crewdata["photos"] = photos
-			photos[++photos.len] = activecrew.fields["photo-south"]
-			crewdata["has_photos"] = (activecrew.fields["photo-south"] ? 1 : 0)
+			photos[++photos.len] = "'data:image/png;base64,[icon2base64(front)]'"
+			crewdata["has_photos"] = ("'data:image/png;base64,[icon2base64(front)]'" ? 1 : 0)
 		data["crewdata"] = crewdata
 
 	return data
@@ -283,17 +292,14 @@
 			return TRUE
 
 		if("setactive_crew")
-			var/datum/data/record/general_record = locate(params["setactive_crew"] || "")
-				if(!data_core.general.Find(general_record))
-					return
+			var/datum/data/record/general_record = params["setactive_crew"]
+			if(!data_core.general.Find(general_record))
+				return
+
 			activecrew = general_record
 			return TRUE
 
 		if("crew_photo")
-			var/icon/photo = get_photo(usr)
-			if(photo && activecrew)
-				activecrew.fields["photo_front"] = photo
-				activecrew.fields["photo-south"] = "'data:image/png;base64,[icon2base64(photo)]'"
 			return TRUE
 
 		if("make")
@@ -426,16 +432,14 @@
 					update_icon() //turn off lights, please.
 			else
 				src.audible_message("<span class='notice'>Error: Insufficent Materials. SabreSnacks recommends you have a genuine replacement cartridge available to install.</span>", runemessage = "Error: Insufficent Materials!")
-
-			return TRUE */
-	return FALSE
+				*/
+			return TRUE
 
 /obj/machinery/synthesizer/update_icon()
 	cut_overlays()
 
 	icon_state = initial(icon_state) //we use this to reduce code bloat. It's nice.
 	if(panel_open)
-		icon_state = "[initial(icon_state)]_off"
 		 //add service panels just above our machine
 		if(!(stat & (NOPOWER|BROKEN)))
 			add_overlay("[initial(icon_state)]_ppanel")
@@ -458,16 +462,26 @@
 				add_overlay(filling_overlay)
 			//Then add our cart so the filling is inside of the canister.
 			add_overlay("[initial(icon_state)]_cart")
-	else
-		icon_state = "[initial(icon_state)]_on"
+		return //don't stack additional panel screen states, please.
 
 	if(stat & NOPOWER)
-		icon_state = "[initial(icon_state)]_off"
 		set_light_on(FALSE)
 		return
 
+	if(!cart)
+		add_overlay("[initial(icon_state)]_error")
+		return
+
+	if(cart && !busy)
+		var/obj/item/weapon/reagent_containers/synthdispcart/C = cart
+		if(C.reagents && C.reagents.total_volume)
+			add_overlay("[initial(icon_state)]_on")
+		else
+			add_overlay("[initial(icon_state)]_error")
+		return
+
 	if(busy)
-		icon_state = "[initial(icon_state)]_busy"
+		add_overlay("[initial(icon_state)]_busy")
 		set_light_color("#faebd7") // "antique white"
 		set_light_on(TRUE)
 	else
@@ -503,16 +517,8 @@
 	C.loc = get_turf(loc)
 	C.update_icon()
 	cart = null
+	to_chat(user, "<span class='notice'>You remove [C] from  \the [src].</span>")
 
-
-	// let's check to see if you're holding a different tank
-	var/obj/item/weapon/reagent_containers/synthdispcart/R = (user.get_active_hand() || user.get_inactive_hand())
-	if(!istype(R)) //You're not, so we move on
-		to_chat(user, "<span class='notice'>You remove [C] from  \the [src].</span>")
-	if(R.w_class > cart_type) // You are, but it's a large canister and you're trying to stuff it into the portable
-		to_chat(user, "<span class='notice'>You remove [C] from  \the [src].</span>")
-	else
-		add_cart(R, user)
 	if(Adjacent(user))
 		user.put_in_hands(C) //pick up your trash, nerd. and don't hand it to the AI. They will be upset.
 	update_icon()
@@ -524,7 +530,11 @@
 		playsound(src, 'sound/machines/replicator_input_failed.ogg', 100)
 		return FALSE
 	if((!(C.reagents)) || (C.reagents.total_volume <= 0) || (!C.reagents.has_reagent("synthsoygreen")))
-		to_chat(user, "<span class='notice'>The synthesizer cartridge is empty.</span>")
+		to_chat(user, "<span class='notice'>The synthesizer cartridge depleted, replace with a genuine Sabresnack Co cartridge.</span>")
+		playsound(src, 'sound/machines/replicator_input_failed.ogg', 100)
+		return FALSE
+	if((C.reagents) && (C.reagents.total_volume <= 0) && (!C.reagents.has_reagent("synthsoygreen")))
+		to_chat(user, "<span class='notice'>Used or Counterfeit synthesizer cartridge detected.</span>")
 		playsound(src, 'sound/machines/replicator_input_failed.ogg', 100)
 		return FALSE
 	else if(C.reagents && C.reagents.has_reagent("synthsoygreen") && (C.reagents.total_volume >= 5))
@@ -574,6 +584,7 @@
 				"<span class='notice'>You have [anchored ? "un" : ""]fastened \the [src].</span>",
 				"You hear a ratchet.")
 			anchored = !anchored
+			update_icon()
 		else
 			to_chat(user, "<span class='notice'>You decide not to [anchored ? "un" : ""]fasten \the [src].</span>")
 
