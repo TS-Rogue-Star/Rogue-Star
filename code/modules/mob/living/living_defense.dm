@@ -257,6 +257,13 @@
 /mob/living/hitby(atom/movable/AM as mob|obj,var/speed = THROWFORCE_SPEED_DIVISOR)//Standardization and logging -Sieve
 	if(istype(AM,/obj/))
 		var/obj/O = AM
+		if(stat != DEAD && istype(O,/obj/item) && trash_catching && vore_selected) //RSEdit Start || Ports trasheater throw vore from CHOMPStation PR#5987
+			var/obj/item/I = O
+			if(adminbus_trash || is_type_in_list(I,edible_trash) && I.trash_eatable && !is_type_in_list(I,item_vore_blacklist))
+				visible_message("<span class='warning'>[I] is thrown directly into [src]'s [lowertext(vore_selected.name)]!</span>")
+				I.throwing = 0
+				I.forceMove(vore_selected)
+				return //RSEdit End
 		var/dtype = O.damtype
 		var/throw_damage = O.throwforce*(speed/THROWFORCE_SPEED_DIVISOR)
 
@@ -347,6 +354,9 @@
 			add_attack_logs(thrown_mob.LAssailant,src,"Was Devoured by [thrown_mob.name] via throw vore.")
 			return
 	//VORESTATION EDIT END - Allows for thrown vore!
+
+
+
 
 /mob/living/proc/on_throw_vore_special(var/pred = TRUE, var/mob/living/target)
 	return
