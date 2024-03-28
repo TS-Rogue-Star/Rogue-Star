@@ -236,7 +236,7 @@ const ProductImage = (props) => {
   ) : (
     <Box>
       <span
-        className={classes(['synthesizer64x64', recipe.path])}
+        className={classes(['synthesizer32x32', recipe.path])}
         style={{
           verticalAlign: 'middle',
         }}

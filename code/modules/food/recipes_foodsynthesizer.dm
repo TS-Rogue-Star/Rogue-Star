@@ -166,7 +166,7 @@
 /*********
 * Crew Cookie *
 **********/
-/datum/category_item/synthesizer/crew/cookie
+/datum/category_item/synthesizer/crew/crewcookie
 	name = "Generic Crew Cookie"
 	path = /obj/item/weapon/reagent_containers/food/snacks/synthsized_meal/crewblock
 	voice_order = list("crew cookie")

@@ -5,6 +5,8 @@
 //#define VOICE_ORDER(A, O, T) list(activator = A, order = O, temp = T)
 // "Computer, Steak, Hot."
 
+#define SYNTH_FOOD_COST 5
+
 /obj/machinery/synthesizer
 	name = "food synthesizer"
 	desc = "Sabresnacks brand device able to produce an incredible array of conventional foods. Although only the most ascetic of users claim it produces truly good tasting products."
@@ -23,7 +25,7 @@
 	var/disabled = FALSE
 	var/shocked = FALSE
 	var/busy = FALSE
-	var/usage_amt = 5
+	var/usage_amt = SYNTH_FOOD_COST
 
 	light_system = STATIC_LIGHT
 	light_range = 3
@@ -63,7 +65,6 @@
 		synthesizer_recipes = new()
 	cart = new /obj/item/weapon/reagent_containers/synthdispcart(src)
 	wires = new(src)
-//	our_db = SStranscore.db_by_key(db_key)
 	default_apply_parts()
 	RefreshParts()
 	update_icon()
@@ -80,7 +81,6 @@
 		synthesizer_recipes = new()
 	cart = new /obj/item/weapon/reagent_containers/synthdispcart/small(src)
 	wires = new(src)
-//	our_db = SStranscore.db_by_key(db_key)
 	default_apply_parts()
 	RefreshParts()
 	update_icon()
@@ -97,7 +97,7 @@
 /obj/machinery/synthesizer/examine(mob/user)
 	. = ..()
 	if(panel_open)
-		. += "The cartridge is [cart ? "installed" : "missing"]."
+		. += "A cartridge is [cart ? "installed" : "missing"]."
 	if(cart && (!(stat & (NOPOWER|BROKEN))))
 		var/obj/item/weapon/reagent_containers/synthdispcart/C = cart
 		if(istype(C) && C.reagents && C.reagents.total_volume)
@@ -105,6 +105,8 @@
 			. += "The installed cartridge has [percent]% remaining."
 
 	return
+
+GLOBAL_LIST_EMPTY(synthesizer_recipes)
 
 // TGUI to do.
 
@@ -141,8 +143,6 @@
 	if(cart && cart.reagents && cart.reagents.reagent_list.len)
 		for(var/datum/reagent/R in cart.reagents.reagent_list)
 			cartfilling.Add(list(list(
-				"name" = R.name,
-				"id" = R.id,
 				"volume" = R.volume
 				)))
 	data["cartfilling"] = cartfilling
@@ -212,7 +212,6 @@
 				"voice_order"	= food.voice_order,
 				"voice_temp"	= food.voice_temp,
 				"hidden"		= food.hidden,
-				"isatom" 		= ispath(food.path, /atom),
 				"photopath" 	= replacetext(replacetext("[food.path]", "/obj/item/", ""), "/", "-"),
 				"ref"			= "\ref[food]"
 				)))
@@ -319,7 +318,7 @@
 				update_use_power(USE_POWER_ACTIVE)
 				update_icon() // light up time
 				playsound(src, 'sound/machines/replicator_input_ok.ogg', 100)
-				C.reagents.remove_reagent("synthsoygreen", 5) //
+				C.reagents.remove_reagent("synthsoygreen", SYNTH_FOOD_COST) //Drain our fuel
 				var/obj/item/weapon/reagent_containers/food/snacks/food_mimic = new making.path(src) //Let's get this on a tray
 				food_mimic_storage = food_mimic //nice.
 				sleep(speed_grade) //machine go brrr
@@ -437,7 +436,7 @@
 
 /obj/machinery/synthesizer/update_icon()
 	cut_overlays()
-
+	set_light_on(FALSE)
 	icon_state = initial(icon_state) //we use this to reduce code bloat. It's nice.
 	if(panel_open)
 		 //add service panels just above our machine
@@ -455,8 +454,7 @@
 					if(10 to 35)		filling_overlay.icon_state = "[initial(icon_state)]fill_25"
 					if(36 to 74)		filling_overlay.icon_state = "[initial(icon_state)]fill_50"
 					if(75 to 90)		filling_overlay.icon_state = "[initial(icon_state)]fill_75"
-					if(91 to 99)		filling_overlay.icon_state = "[initial(icon_state)]fill_100"
-					if(100 to INFINITY)	filling_overlay.icon_state = "[initial(icon_state)]fill_100"
+					if(91 to INFINITY)	filling_overlay.icon_state = "[initial(icon_state)]fill_100"
 				filling_overlay.color = C.reagents.get_color()
 				//Add our filling, if any.
 				add_overlay(filling_overlay)
@@ -465,7 +463,6 @@
 		return //don't stack additional panel screen states, please.
 
 	if(stat & NOPOWER)
-		set_light_on(FALSE)
 		return
 
 	if(!cart)
@@ -484,8 +481,6 @@
 		add_overlay("[initial(icon_state)]_busy")
 		set_light_color("#faebd7") // "antique white"
 		set_light_on(TRUE)
-	else
-		set_light_on(FALSE)
 
 //Cartridge Interactions in Machine
 /obj/machinery/synthesizer/proc/add_cart(obj/item/weapon/C, mob/user)
@@ -537,7 +532,7 @@
 		to_chat(user, "<span class='notice'>Used or Counterfeit synthesizer cartridge detected.</span>")
 		playsound(src, 'sound/machines/replicator_input_failed.ogg', 100)
 		return FALSE
-	else if(C.reagents && C.reagents.has_reagent("synthsoygreen") && (C.reagents.total_volume >= 5))
+	else if(C.reagents && C.reagents.has_reagent("synthsoygreen") && (C.reagents.total_volume >= SYNTH_FOOD_COST))
 		SStgui.update_uis(src)
 		return TRUE
 
@@ -641,7 +636,6 @@
 	for(var/obj/item/weapon/stock_parts/scanning_module/S in component_parts)
 		menu_grade = S.rating //how much bonus Nutriment is added to the printed food. the regular wafer is only 1
 		// Science parts will be of help if they bother.
-	update_tgui_static_data(usr)
 
 //Cartridge Item handling
 /obj/item/weapon/reagent_containers/synthdispcart
@@ -726,32 +720,6 @@
 	req_components = list(
 		/obj/item/weapon/stock_parts/manipulator = 1,
 		/obj/item/weapon/stock_parts/scanning_module = 1)
-
-//Sprite sheet handling
-/datum/asset/spritesheet/synthesizer //mimic of vending machines
-	name = "synthesizer"
-
-/datum/asset/spritesheet/synthesizer/register()
-	for(var/datum/category_item/synthesizer/snacc in subtypesof(/datum/category_item/synthesizer))
-		var/icon_file = snacc.icon
-		var/icon_state = snacc.icon_state
-		var/icon/I
-		// construct the icon and slap it into the resource cache
-		var/atom/meal = snacc
-		if (!ispath(meal, /atom))
-			continue
-		icon_file = meal.icon
-		icon_state = meal.icon_state
-		if(!(icon_state in icon_states(icon_file)))
-			stack_trace("Food [meal] with icon '[icon_file]' missing state '[icon_state]'")
-			continue
-		I = icon(icon_file, icon_state, SOUTH)
-
-
-		var/imgid = replacetext(replacetext("[snacc.path]", "/obj/item/", ""), "/", "-")
-		I.Scale(64, 64) //enlarge it to look nicer on the preview
-		Insert(imgid, I)
-	return ..()
 
 /* Voice activation stuff.
 can tgui accept orders that isn't through the menu? Probably. hijack that.
