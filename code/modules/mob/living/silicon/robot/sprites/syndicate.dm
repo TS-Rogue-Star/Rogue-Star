@@ -32,6 +32,11 @@
 	sprite_icon = 'icons/mob/robot/syndie_large.dmi'
 	sprite_hud_icon_state = "malf"
 
+/datum/robot_sprite/dogborg/tall/syndie/raptor
+	name = "Raptor V-4"
+	sprite_icon_state = "raptor"
+	rest_sprite_options = list("Default", "Bellyup")
+
 /datum/robot_sprite/dogborg/tall/syndie/meka
 	name = "MEKA"
 	sprite_icon_state = "meka"
@@ -95,6 +100,7 @@
 	name = "XI-ALP"
 	sprite_icon_state = "heavy"
 
+// Wide/dogborg sprites
 
 /datum/robot_sprite/dogborg/protector
 	module_type = "Protector"
@@ -106,25 +112,6 @@
 	sprite_icon_state = "k9"
 	has_eye_light_sprites = TRUE
 
-// Tall sprites
-
-/datum/robot_sprite/dogborg/tall/protector
-	module_type = "Protector"
-	sprite_icon = 'icons/mob/robot/syndie_large.dmi'
-	sprite_hud_icon_state = "malf"
-
-	var/has_gun_sprite = FALSE
-
-/datum/robot_sprite/dogborg/tall/protector/handle_extra_icon_updates(var/mob/living/silicon/robot/ourborg)
-	if(has_gun_sprite && istype (ourborg.module_active, /obj/item/weapon/gun/energy/dakkalaser))
-		ourborg.add_overlay("[sprite_icon_state]-gun")
-
-/datum/robot_sprite/dogborg/tall/protector/syndiprotraptor
-	name = "Raptor V-4"
-	sprite_icon_state = "syndiprotraptor"
-	has_eye_light_sprites = TRUE
-	has_gun_sprite = TRUE
-	rest_sprite_options = list("Default", "Bellyup")
 
 // Mechanist
 
@@ -148,6 +135,7 @@
 /datum/robot_sprite/dogborg/mechanist
 	module_type = "Mechanist"
 	sprite_icon = 'icons/mob/robot/mechanist_wide.dmi'
+	sprite_hud_icon_state = "malf"
 
 /datum/robot_sprite/dogborg/mechanist/pupdozer
 	name = "Pupdozer"
@@ -186,15 +174,7 @@
 /datum/robot_sprite/dogborg/combat_medic
 	module_type = "Combat Medic"
 	sprite_icon = 'icons/mob/robot/combat_medic_wide.dmi'
-
-	var/has_sleeper_light_indicator = FALSE
-
-/datum/robot_sprite/dogborg/crisis/get_belly_overlay(var/mob/living/silicon/robot/ourborg)
-	if(has_sleeper_light_indicator)
-		if(ourborg.sleeper_state == 2 && !(ourborg.vore_selected?.silicon_belly_overlay_preference == "Vorebelly")) return "[sprite_icon_state]-sleeper_g"
-		else return "[sprite_icon_state]-sleeper_r"
-	else
-		return ..()
+	sprite_hud_icon_state = "malf"
 
 /datum/robot_sprite/dogborg/combat_medic/do_equipment_glamour(var/obj/item/weapon/robot_module/module)
 	if(!has_custom_equipment_sprites)
