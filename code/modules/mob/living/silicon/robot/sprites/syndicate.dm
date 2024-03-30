@@ -1,5 +1,75 @@
 // Syndie borg sprites
 
+/* none yet
+/datum/robot_sprite/syndie
+	module_type = list("Protector", "Mechanist", "Combat Medic")
+	sprite_icon = 'icons/mob/robot/syndie.dmi'
+	sprite_hud_icon_state = "malf"
+*/
+
+// Wide/dogborg sprites
+
+/datum/robot_sprite/dogborg/syndie
+	module_type = list("Protector", "Mechanist", "Combat Medic")
+	sprite_icon = 'icons/mob/robot/syndie_wide.dmi'
+	sprite_hud_icon_state = "malf"
+
+/datum/robot_sprite/dogborg/syndie/borgi
+	name = "Borgi"
+	sprite_icon_state = "borgi"
+	has_eye_sprites = FALSE
+	has_eye_light_sprites = TRUE
+	has_dead_sprite_overlay = FALSE
+
+/datum/robot_sprite/dogborg/syndie/drake
+	name = "Drake"
+	sprite_icon_state = "drake"
+
+// Tall sprites
+
+/datum/robot_sprite/dogborg/tall/syndie
+	module_type = list("Protector", "Mechanist", "Combat Medic")
+	sprite_icon = 'icons/mob/robot/syndie_large.dmi'
+	sprite_hud_icon_state = "malf"
+
+/datum/robot_sprite/dogborg/tall/syndie/meka
+	name = "MEKA"
+	sprite_icon_state = "meka"
+	has_eye_light_sprites = TRUE
+	has_custom_open_sprites = TRUE
+	has_vore_belly_sprites = FALSE
+	rest_sprite_options = list("Default", "Sit")
+
+/datum/robot_sprite/dogborg/tall/syndie/newmeka
+	name = "MEKA v2"
+	sprite_icon_state = "newmeka"
+	has_eye_light_sprites = TRUE
+	has_custom_open_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit")
+
+/datum/robot_sprite/dogborg/tall/syndie/mmeka
+	name = "NIKO"
+	sprite_icon_state = "mmeka"
+	has_eye_light_sprites = TRUE
+	has_custom_open_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit")
+
+/datum/robot_sprite/dogborg/tall/syndie/fmeka
+	name = "NIKA"
+	sprite_icon_state = "fmeka"
+	has_eye_light_sprites = TRUE
+	has_custom_open_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit")
+
+/datum/robot_sprite/dogborg/tall/syndie/k4t
+	name = "K4T"
+	sprite_icon_state = "k4t"
+	has_eye_light_sprites = TRUE
+	has_custom_open_sprites = TRUE
+	has_vore_belly_sprites = FALSE
+	rest_sprite_options = list("Default", "Bellyup")
+
+
 // Protector
 
 // Regular sprites
@@ -25,6 +95,36 @@
 	name = "XI-ALP"
 	sprite_icon_state = "heavy"
 
+
+/datum/robot_sprite/dogborg/protector
+	module_type = "Protector"
+	sprite_icon = 'icons/mob/robot/protector_wide.dmi'
+	sprite_hud_icon_state = "malf"
+
+/datum/robot_sprite/dogborg/protector/k9
+	name = "K9"
+	sprite_icon_state = "k9"
+	has_eye_light_sprites = TRUE
+
+// Tall sprites
+
+/datum/robot_sprite/dogborg/tall/protector
+	module_type = "Protector"
+	sprite_icon = 'icons/mob/robot/syndie_large.dmi'
+	sprite_hud_icon_state = "malf"
+
+	var/has_gun_sprite = FALSE
+
+/datum/robot_sprite/dogborg/tall/protector/handle_extra_icon_updates(var/mob/living/silicon/robot/ourborg)
+	if(has_gun_sprite && istype (ourborg.module_active, /obj/item/weapon/gun/energy/dakkalaser))
+		ourborg.add_overlay("[sprite_icon_state]-gun")
+
+/datum/robot_sprite/dogborg/tall/protector/syndiprotraptor
+	name = "Raptor V-4"
+	sprite_icon_state = "syndiprotraptor"
+	has_eye_light_sprites = TRUE
+	has_gun_sprite = TRUE
+	rest_sprite_options = list("Default", "Bellyup")
 
 // Mechanist
 
@@ -55,6 +155,18 @@
 	has_eye_light_sprites = TRUE
 	rest_sprite_options = list("Default")
 
+// Tall sprites
+
+/datum/robot_sprite/dogborg/tall/mechanist
+	module_type = "Mechanist"
+	sprite_icon = 'icons/mob/robot/syndie_large.dmi'
+	sprite_hud_icon_state = "malf"
+
+/datum/robot_sprite/dogborg/tall/mechanist/syndimechraptor
+	name = "Raptor V-4"
+	sprite_icon_state = "syndimechraptor"
+	has_eye_light_sprites = TRUE
+	rest_sprite_options = list("Default", "Bellyup")
 
 // Combat Medic
 
@@ -103,3 +215,16 @@
 	sprite_icon_state = "vale"
 	has_eye_light_sprites = TRUE
 	has_sleeper_light_indicator = TRUE
+
+// Tall sprites
+
+/datum/robot_sprite/dogborg/tall/combat_medic
+	module_type = "Combat Medic"
+	sprite_icon = 'icons/mob/robot/syndie_large.dmi'
+	sprite_hud_icon_state = "malf"
+
+/datum/robot_sprite/dogborg/tall/combat_medic/syndimediraptor
+	name = "Raptor V-4"
+	sprite_icon_state = "syndimediraptor"
+	has_eye_light_sprites = TRUE
+	rest_sprite_options = list("Default", "Bellyup")
