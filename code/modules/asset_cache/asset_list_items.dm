@@ -319,42 +319,18 @@
 	name = "synthesizer"
 
 /datum/asset/spritesheet/synthesizer/register()
-	populate_recipes()
-	for(var/atom/food as anything in GLOB.synthesizer_recipes)
-		to_chat(world, "synthesizer_recipes is [GLOB.synthesizer_recipes.len]")
-		var/icon_file = initial(food.icon)
-		var/icon_state = initial(food.icon_state)
+	for (var/datum/category_item/synthesizer/path as anything in subtypesof(/datum/category_item/synthesizer))
+		var/icon_file
+		var/icon_state
 		var/icon/I
+		var/atom/item = initial(path.build_path)
+		icon_file = initial(item.icon)
+		icon_state = initial(item.icon_state)
+		I = icon(icon_file, icon_state, SOUTH)
+		I.Scale(64, 64)
+		Insert(initial(path.id), I)
+	..()
 
-		var/icon_states_list = icon_states(icon_file)
-		if(icon_state in icon_states_list)
-			I = icon(icon_file, icon_state, SOUTH)
-		else
-			var/icon_states_string
-			for(var/an_icon_state in icon_states_list)
-				if(!icon_states_string)
-					icon_states_string = "[json_encode(an_icon_state)](\ref[an_icon_state])"
-				else
-					icon_states_string += ", [json_encode(an_icon_state)](\ref[an_icon_state])"
-			stack_trace("[food] does not have a valid icon state, icon=[icon_file], icon_state=[json_encode(icon_state)](\ref[icon_state]), icon_states=[icon_states_string]")
-			I = icon('icons/turf/floors.dmi', "", SOUTH)
-		to_chat(world, "[food] should have icon=[icon_file], icon_state=[json_encode(icon_state)](\ref[icon_state])")
-		var/imgid = replacetext(replacetext("[food]", "/obj/item/", ""), "/", "-")
-		Insert(imgid, I)
-	return ..()
-
-/datum/asset/spritesheet/synthesizer/proc/populate_recipes()
-	SSatoms.map_loader_begin()
-	to_chat(world, "populate_recipes triggered")
-	for(var/datum/category_group/synthesizer/menulist in subtypesof(/datum/category_group/synthesizer))
-		to_chat(world, "menulist is [menulist]")
-		for(var/datum/category_item/synthesizer/fooditem in menulist.items)
-			to_chat(world, "fooditem is [fooditem]")
-			var/obj/item/weapon/reagent_containers/food/snacks/food = new fooditem.path
-			to_chat(world, "adding [food] to synthesizer_recipes")
-			GLOB.synthesizer_recipes.Add(food)
-			qdel(food)
-	SSatoms.map_loader_stop()
 
 //VOREStation Add End
 

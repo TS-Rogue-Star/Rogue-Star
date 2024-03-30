@@ -106,8 +106,6 @@
 
 	return
 
-GLOBAL_LIST_EMPTY(synthesizer_recipes)
-
 // TGUI to do.
 
 /obj/machinery/synthesizer/ui_assets(mob/user)
@@ -205,14 +203,14 @@ GLOBAL_LIST_EMPTY(synthesizer_recipes)
 			recipes.Add(list(list(
 				"catagory" 		= menulist.id,
 				"name" 			= food.name,
+				"id"			= food.id,
 				"desc" 			= food.desc,
 				"icon" 			= food.icon,
 				"icon_state"	= food.icon_state,
-				"path"			= food.path,
+				"path"			= food.build_path,
 				"voice_order"	= food.voice_order,
 				"voice_temp"	= food.voice_temp,
 				"hidden"		= food.hidden,
-				"photopath" 	= replacetext(replacetext("[food.path]", "/obj/item/", ""), "/", "-"),
 				"ref"			= "\ref[food]"
 				)))
 
@@ -266,7 +264,6 @@ GLOBAL_LIST_EMPTY(synthesizer_recipes)
 		)))
 
 	data["crew_cookies"] = crew_cookies
-
 	return data
 
 /obj/machinery/synthesizer/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
@@ -319,7 +316,7 @@ GLOBAL_LIST_EMPTY(synthesizer_recipes)
 				update_icon() // light up time
 				playsound(src, 'sound/machines/replicator_input_ok.ogg', 100)
 				C.reagents.remove_reagent("synthsoygreen", SYNTH_FOOD_COST) //Drain our fuel
-				var/obj/item/weapon/reagent_containers/food/snacks/food_mimic = new making.path(src) //Let's get this on a tray
+				var/obj/item/weapon/reagent_containers/food/snacks/food_mimic = new making.build_path(src) //Let's get this on a tray
 				food_mimic_storage = food_mimic //nice.
 				sleep(speed_grade) //machine go brrr
 				playsound(src, 'sound/machines/replicator_working.ogg', 150)

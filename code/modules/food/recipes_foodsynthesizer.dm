@@ -1,16 +1,21 @@
 /datum/category_item/synthesizer/New()
 	..()
 	var/obj/item/weapon/reagent_containers/food/snacks/snacc
-	if(path)
-		snacc = new path()
+	if(build_path)
+		snacc = new build_path()
 
 	if(!snacc)	// Something has gone horribly wrong, or right.
-		log_debug("[name] created an Synthesizer design without an assigned path.")
+		log_debug("[name] created an Synthesizer design without an assigned build_path.")
 		return
 	desc = initial(snacc.desc) //Let's get our description text and icon while we've got the item...
 	icon = initial(snacc.icon)
 	icon_state = initial(snacc.icon_state)
 	qdel(snacc)
+
+/datum/category_item/synthesizer/proc/icon_html(client/user)
+	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/synthesizer)
+	sheet.send(user)
+	return sheet.icon_tag(id)
 
 /*********************
 * Synthed Food Setup *
@@ -156,9 +161,10 @@
 
 /datum/category_item/synthesizer
 	var/desc							//food description to be applied to the UI.
+	var/id								//food id for spritesheet functionality
 	var/icon							//food initial icon for UI fanciness
 	var/icon_state						// and the state
-	var/path							//food item path
+	var/build_path							//food item build_path
 	var/hidden = FALSE					//is it illegal/nonstandard?
 	var/list/voice_order				//what can we say to get this? Avoid exact same phrases.
 	var/voice_temp						//mostly flavor but maybe also setting stuff that will warm/cool you off? idk
@@ -168,7 +174,8 @@
 **********/
 /datum/category_item/synthesizer/crew/crewcookie
 	name = "Generic Crew Cookie"
-	path = /obj/item/weapon/reagent_containers/food/snacks/synthsized_meal/crewblock
+	id = "crewcookie"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/synthsized_meal/crewblock
 	voice_order = list("crew cookie")
 	voice_temp = "hot"
 
@@ -178,91 +185,106 @@
 
 /datum/category_item/synthesizer/appasnack/popcorn
 	name = "Popcorn"
-	path = /obj/item/weapon/reagent_containers/food/snacks/popcorn
+	id = "popcorn"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/popcorn
 	voice_order = list("popcorn", "corn of popping")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/appasnack/nuggies
 	name = "Chicken Nugget"
-	path = /obj/item/weapon/reagent_containers/food/snacks/nugget
+	id = "chickennugget"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/nugget
 	voice_order = list("chimkin nuggy", "chicken nugget")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/appasnack/flatbread
 	name = "Flatbread"
-	path = /obj/item/weapon/reagent_containers/food/snacks/flatbread
+	id = "flatbread"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/flatbread
 	voice_order = list("flatbread")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/appasnack/tortilla
 	name = "Flour Tortilla"
-	path = /obj/item/weapon/reagent_containers/food/snacks/tortilla
+	id = "flourtortilla"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/tortilla
 	voice_order = list("tortilla", "flour tortilla")
 	voice_temp = "hot" //imagine liking *cold* Tortillas. Ugh. It offends my Texan sensibilites.
 
 /datum/category_item/synthesizer/appasnack/bun
 	name = "Burger Bun"
-	path = /obj/item/weapon/reagent_containers/food/snacks/bun
+	id = "burgerbun"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/bun
 	voice_order = list("Burger bun", "plain bun")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/appasnack/eggroll
 	name = "Egg Roll"
-	path = /obj/item/weapon/reagent_containers/food/snacks/eggroll
+	id = "eggroll"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/eggroll
 	voice_order = list("egg roll", "happy ending")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/appasnack/friedmushroom
 	name = "Fried Mushroom"
-	path = /obj/item/weapon/reagent_containers/food/snacks/friedmushroom
+	id = "friedmushroom"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/friedmushroom
 	voice_order = list("fried mushroom","fried cap")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/appasnack/watermelonslice
 	name = "Watermelon Slice"
-	path = /obj/item/weapon/reagent_containers/food/snacks/watermelonslice
+	id = "watermelonslice"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/watermelonslice
 	voice_order = list("watermelon slice")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/appasnack/truffle
 	name = "Candy (Truffle)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/truffle
+	id = "trufflecandy"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/truffle
 	voice_order = list("chocolate truffle")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/appasnack/mint
 	name = "Candy (Mint)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/mint
+	id = "mintcandy"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/mint
 	voice_order = list("candy mints", "mint candy")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/appasnack/candybar
 	name = "Candy (Bar)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/candy
+	id = "candybar"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/candy
 	voice_order = list("candy bar", "chocolate bar")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/appasnack/proteinbar
 	name = "Candy (Protein)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/candy/proteinbar
+	id = "proteincandy"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/candy/proteinbar
 	voice_order = list("protein candy bar", "protein bar")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/appasnack/cb10
 	name = "Candy (Nutty)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/cb10
+	id = "nutcandy"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/cb10
 	voice_order = list("shantak","shantak bar", "chocolate nut bar")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/appasnack/skrellsnacks
 	name = "Skrell Snacks"
-	path = /obj/item/weapon/reagent_containers/food/snacks/skrellsnacks
+	id = "skrellsnacks"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/skrellsnacks
 	voice_order = list("skrell snacks", "skrell snacc", "skrell treats")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/appasnack/admints
 	name = "Admints"
-	path = /obj/item/weapon/reagent_containers/food/snacks/mint/admints
+	id = "admints"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/mint/admints
 	voice_order = list("admints", "admin mints")
 	voice_temp = "cold"
 
@@ -272,115 +294,134 @@
 
 /datum/category_item/synthesizer/breakfastmenu/muffin
 	name = "Muffin (Plain)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/muffin
+	id = "plainmuffin"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/muffin
 	voice_order = list("plain muffin", "bald cupcake")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/breakfastmenu/bagelplain
 	name = "Bagel (Plain)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/bagelplain
+	id = "plainbagel"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/bagelplain
 	voice_order = list("bagel", "plain bagel")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/breakfastmenu/bagelsunflower
 	name = "Bagel (Sunflower)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/bagelsunflower
+	id = "sunflowerbagel"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/bagelsunflower
 	voice_order = list("sunflower bagel", "bagel sunflower", "bagel with sunflower")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/breakfastmenu/bagelcheese
 	name = "Bagel (Cheese)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/bagelcheese
+	id = "cheesebagel"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/bagelcheese
 	voice_order = list("cream cheese bagel","cheese bagel", "bagel with cheese")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/breakfastmenu/bagelraisin
 	name = "Bagel (Raisin)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/bagelraisin
+	id = "raisinbagel"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/bagelraisin
 	voice_order = list("raisin bagel", "raisen bagel", "bagel with raisins", "bagel with raisens")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/breakfastmenu/bagelpoppy
 	name = "Bagel (Poppyseed)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/bagelpoppy
+	id = "poppyseedbagel"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/bagelpoppy
 	voice_order = list("poppyseed bagel", "bagel with poppyseeds")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/breakfastmenu/croissant
 	name = "Croissant"
-	path = /obj/item/weapon/reagent_containers/food/snacks/croissant
+	id = "croissant"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/croissant
 	voice_order = list("croissant", "crossant")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/breakfastmenu/pancakes
 	name = "Pancakes"
-	path = /obj/item/weapon/reagent_containers/food/snacks/pancakes
+	id = "pancakes"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/pancakes
 	voice_order = list("plain pancakes")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/breakfastmenu/berrypancake
 	name = "Berry Pancakes"
-	path = /obj/item/weapon/reagent_containers/food/snacks/pancakes/berry
+	id = "berrypancakes"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/pancakes/berry
 	voice_order = list("berry pancakes", "pancakes with berries")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/breakfastmenu/ntmuffin
 	name = "Dwarven Breakfast Muffin"
-	path = /obj/item/weapon/reagent_containers/food/snacks/nt_muffin
+	id = "ntmuffin"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/nt_muffin
 	voice_order = list("breakfast muffin", "nt muffin")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/breakfastmenu/breakfastburrito
 	name = "Breakfast Burrito"
-	path = /obj/item/weapon/reagent_containers/food/snacks/breakfast_wrap
+	id = "breakfastburrito"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/breakfast_wrap
 	voice_order = list("Breakfast burrito")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/breakfastmenu/quicheslice
 	name = "Quiche Slice"
-	path = /obj/item/weapon/reagent_containers/food/snacks/quicheslice/filled
+	id = "quicheslice"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/quicheslice/filled
 	voice_order = list("quiche")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/breakfastmenu/poachedegg
 	name = "Egg (Poached)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/poachedegg
+	id = "poachedegg"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/poachedegg
 	voice_order = list("poached egg")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/breakfastmenu/boiledegg
 	name = "Egg (Boiled)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/boiledegg
+	id = "boiledegg"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/boiledegg
 	voice_order = list("boiled egg")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/breakfastmenu/friedegg
 	name = "Egg (Fried)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/friedegg
+	id = "friedegg"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/friedegg
 	voice_order = list("fried egg", "egg well")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/breakfastmenu/chiliedegg
 	name = "Egg (Chilied)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/chilied_eggs
+	id = "chiliegg"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/chilied_eggs
 	voice_order = list("redeemed eggs", "chili eggs")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/breakfastmenu/bacon
 	name = "Bacon wafer"
-	path = /obj/item/weapon/reagent_containers/food/snacks/bacon_stick
+	id = "baconstick"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/bacon_stick
 	voice_order = list("bacon stick", "stick of bacon")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/breakfastmenu/ovenbacon
 	name = "Oven-baked bacon"
-	path = /obj/item/weapon/reagent_containers/food/snacks/bacon/oven
+	id = "ovenbacon"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/bacon/oven
 	voice_order = list("oven bacon", "epic bacon")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/breakfastmenu/eggbacon
 	name = "Bacon and Eggs"
-	path = /obj/item/weapon/reagent_containers/food/snacks/bacon_and_eggs
+	id = "baconandeggs"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/bacon_and_eggs
 	voice_order = list("bacon and eggs", "eggs and bacon")
 	voice_temp = "hot"
 
@@ -390,176 +431,205 @@
 
 /datum/category_item/synthesizer/lunchmenu/blt
 	name = "BLT sandwich"
-	path = /obj/item/weapon/reagent_containers/food/snacks/blt
+	id = "bltsandwich"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/blt
 	voice_order = list("blt sandwich", "sandwich blt")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/lunchmenu/genericsandwich
 	name = "Sandvich"
-	path = /obj/item/weapon/reagent_containers/food/snacks/sandwich
+	id = "sandvich"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/sandwich
 	voice_order = list("lunchmenu sandwich", "sandwich")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/lunchmenu/meatbreadslice
 	name = "Meat bread (Slice)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/slice/meatbread/filled
+	id = "meatbreadslice"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/slice/meatbread/filled
 	voice_order = list("meat bread slice", "slice of meat bread")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/lunchmenu/tofubreadslice
 	name = "Tofu bread (Slice)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/slice/tofubread/filled
+	id = "tofubreadslice"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/slice/tofubread/filled
 	voice_order = list("tofu bread slice", "slice of tofu bread")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/lunchmenu/creamcheesebreadslice
 	name = "Cream cheese bread (slice)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/slice/creamcheesebread/filled
+	id = "creamcheesebreadslice"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/slice/creamcheesebread/filled
 	voice_order = list("cream cheese bread slice", "slice of cream cheese bread")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/lunchmenu/margheritaslice
 	name = "Margherita Pizza (Slice)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/slice/margherita/filled
+	id = "margheritapizzaslice"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/slice/margherita/filled
 	voice_order = list("margherita pizza", "neapolitan pizza")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/lunchmenu/meatpizzaslice
 	name = "Meat Lovers Pizza (Slice)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/slice/meatpizza/filled
+	id = "meatpizzaslice"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/slice/meatpizza/filled
 	voice_order = list("meat pizza", "meat lovers pizza", "pizza with meat")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/lunchmenu/mushroompizzasilce
 	name = "Mushroom Pizza (Slice)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/slice/mushroompizza/filled
+	id = "mushroompizzaslice"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/slice/mushroompizza/filled
 	voice_order = list("mushroom pizza", "pizza with mushroom")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/lunchmenu/veggiepizzaslice
 	name = "Vegetable Pizza (Slice)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/slice/vegetablepizza/filled
+	id = "veggiepizzaslice"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/slice/vegetablepizza/filled
 	voice_order = list("veggie pizza", "vegetable pizza", "pizza with veggies", "pizza with vegetable")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/lunchmenu/pineapplepizzaslice
 	name = "Pineapple Pizza (Slice)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/pineappleslice/filled
+	id = "pineapplepizzaslice"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/pineappleslice/filled
 	voice_order = list("pineapple pizza", "pizza with pineapple", "abomination pizza", "best pizza")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/lunchmenu/chickensandwich
 	name = "Chicken Fillet Sandwich"
-	path = /obj/item/weapon/reagent_containers/food/snacks/chickenfillet
+	id = "chickefilletsandwich"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/chickenfillet
 	voice_order = list("Chicken sandwich", "Chimkin sammich", "Chimkin sandwich")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/lunchmenu/corndog
 	name = "County Fair Corndog"
-	path = /obj/item/weapon/reagent_containers/food/snacks/corn_dog
+	id = "corndog"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/corn_dog
 	voice_order = list("corndog", "hotdog on a stick")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/lunchmenu/ovenfries
 	name = "Oven baked fries"
-	path = /obj/item/weapon/reagent_containers/food/snacks/ovenfries
+	id = "ovenfries"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/ovenfries
 	voice_order = list("oven fries")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/lunchmenu/bread
 	name = "Bread Loaf"
-	path = /obj/item/weapon/reagent_containers/food/snacks/sliceable/bread
+	id = "breadloaf"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/sliceable/bread
 	voice_order = list("bread loaf", "loaf of bread")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/lunchmenu/baguette
 	name = "Baguette"
-	path = /obj/item/weapon/reagent_containers/food/snacks/baguette
+	id = "baguetteloaf"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/baguette
 	voice_order = list("baguette", "french bread")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/lunchmenu/tofubread
 	name = "Tofu Bread Loaf"
-	path = /obj/item/weapon/reagent_containers/food/snacks/sliceable/tofubread
+	id = "tofubreadloaf"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/sliceable/tofubread
 	voice_order = list("tofu bread loaf")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/lunchmenu/macncheese
 	name = "Mac and Cheese"
-	path = /obj/item/weapon/reagent_containers/food/snacks/macncheese
+	id = "macandcheese"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/macncheese
 	voice_order = list("Mac n cheese", "macaroni and cheese", "mac and cheese")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/lunchmenu/chickenmomo
 	name = "Chicken MoMo"
-	path = /obj/item/weapon/reagent_containers/food/snacks/chickenmomo
+	id = "chickenmomo"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/chickenmomo
 	voice_order = list("chicken momo", "chicken dumplings")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/lunchmenu/veggiemomo
 	name = "Veggie MoMo"
-	path = /obj/item/weapon/reagent_containers/food/snacks/veggiemomo
+	id = "veggiemomo"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/veggiemomo
 	voice_order = list("veggie momo", "veggie dumplings", "vegetarian dumplings")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/lunchmenu/eggpancake
 	name = "Burger Omelette"
-	path = /obj/item/weapon/reagent_containers/food/snacks/egg_pancake
+	id = "eggpancake"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/egg_pancake
 	voice_order = list("egg pancake", "burger omelette")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/lunchmenu/mysteryburrito
 	name = "Burrito (Mystery Meat)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/burrito_mystery
+	id = "burritomystery"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/burrito_mystery
 	voice_order = list("mystery burrito")
 	voice_temp = "hot"
 	hidden = TRUE
 
 /datum/category_item/synthesizer/lunchmenu/fuegoburrito
 	name = "Burrito (Fuego Phoron)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/fuegoburrito
+	id = "burritofuego"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/fuegoburrito
 	voice_order = list("fire veggie burrito", "fuego phoron burrito")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/lunchmenu/meatburrito
 	name = "Burrito (carne asada)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/meatburrito
+	id = "meatburrito"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/meatburrito
 	voice_order = list("steak burrito", "carne asada burrito")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/lunchmenu/cheeseburrito
 	name = "Burrito (Cheese)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/cheeseburrito
+	id = "cheeseburrito"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/cheeseburrito
 	voice_order = list("cheese burrito", "burrito with cheese")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/lunchmenu/burrito
 	name = "Burrito (Generic)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/burrito
+	id = "genericburrito"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/burrito
 	voice_order = list("plain burrito")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/lunchmenu/spicyburrito
 	name = "Burrito (Spicy)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/burrito_spicy
+	id = "spicyburrito"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/burrito_spicy
 	voice_order = list("spicy burrito")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/lunchmenu/meatcheeseburrito
 	name = "Burrito (Carne Queso)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/burrito_cheese
+	id = "meatcheeseburrito"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/burrito_cheese
 	voice_order = list("meat and cheese burrito", "carne queso burrito")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/lunchmenu/spicycheeseburrito
 	name = "Burrito (Spicy Cheese)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/burrito_cheese_spicy
+	id = "spicycheeseburrito"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/burrito_cheese_spicy
 	voice_order = list("spicy cheese burrito", "calente queso burrito")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/lunchmenu/veganburrito
 	name = "Burrito (Vegan)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/burrito_vegan
+	id = "veggieburrito"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/burrito_vegan
 	voice_order = list("veggie burrito", "vegan burrito")
 	voice_temp = "hot"
 
@@ -570,43 +640,50 @@
 //American Continents
 /datum/category_item/synthesizer/dinnermenu/ribplate
 	name = "Rib plate"
-	path = /obj/item/weapon/reagent_containers/food/snacks/ribplate
+	id = "ribplate"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/ribplate
 	voice_order = list("plate of ribs", "rib plate")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dinnermenu/baconburger
 	name = "Burger (Bacon)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/burger/bacon
+	id = "baconburger"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/burger/bacon
 	voice_order = list("bacon burger", "burger with bacon")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dinnermenu/taco
 	name = "Taco"
-	path = /obj/item/weapon/reagent_containers/food/snacks/taco
+	id = "taco"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/taco
 	voice_order = list("regular taco")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dinnermenu/fishtaco
 	name = "Fish Taco"
-	path = /obj/item/weapon/reagent_containers/food/snacks/fish_taco
+	id = "fishtaco"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/fish_taco
 	voice_order = list("fish taco")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dinnermenu/enchiladas
 	name = "Enchiladas"
-	path = /obj/item/weapon/reagent_containers/food/snacks/enchiladas
+	id = "enchiladas"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/enchiladas
 	voice_order = list("enchiladas")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dinnermenu/turkey
 	name = "Turkey (Whole)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/sliceable/turkey
+	id = "wholeturkey"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/sliceable/turkey
 	voice_order = list("turkey", "whole turkey")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dinnermenu/tofurkey
 	name = "Tofurkey (Whole)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/tofurkey
+	id = "wholetofurkey"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/tofurkey
 	voice_order = list("tofurkey", "tofu turkey", "whole tofurkey")
 	voice_temp = "hot"
 
@@ -614,79 +691,92 @@
 
 /datum/category_item/synthesizer/dinnermenu/loadedpotato
 	name = "Loaded Baked Potato"
-	path = /obj/item/weapon/reagent_containers/food/snacks/loadedbakedpotato
+	id = "loadedpotato"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/loadedbakedpotato
 	voice_order = list("loaded potato", "baked loaded potato", "loaded baked potato")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dinnermenu/britishpotatos
 	name = "Bangers and Mash"
-	path = /obj/item/weapon/reagent_containers/food/snacks/bangersandmash
+	id = "bangersandmash"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/bangersandmash
 	voice_order = list("bangers and mash", "sausage and potatoes")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dinnermenu/cheesemash
 	name = "Cheesy Mashed Potato"
-	path = /obj/item/weapon/reagent_containers/food/snacks/cheesymash
+	id = "cheesymash"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/cheesymash
 	voice_order = list("cheese potatoes", "cheese mashed potatoes")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dinnermenu/zestfish
 	name = "Zesty Fish"
-	path = /obj/item/weapon/reagent_containers/food/snacks/zestfish
+	id = "zestfish"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/zestfish
 	voice_order = list("zesty fish", "fish dinner")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dinnermenu/meatpie
 	name = "Pie (Meat)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/meatpie
+	id = "meatpie"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/meatpie
 	voice_order = list("meat pie", "pie of meat")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dinnermenu/tofupie
 	name = "Pie (Tofu)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/tofupie
+	id = "tofupie"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/tofupie
 	voice_order = list("tofu pie", "pie of tofu")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dinnermenu/plumppie
 	name = "Pie (Mushroom)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/plump_pie
+	id = "plumppie"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/plump_pie
 	voice_order = list("mushroom pie", "plump hemlet pie")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dinnermenu/lasagna
 	name = "Lasagne"
-	path = /obj/item/weapon/reagent_containers/food/snacks/lasagna
+	id = "lasagne"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/lasagna
 	voice_order = list("lasagne", "garfield special")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dinnermenu/baconflatbread
 	name = "Bacon Flatbread"
-	path = /obj/item/weapon/reagent_containers/food/snacks/bacon_flatbread
+	id = "baconflatbread"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/bacon_flatbread
 	voice_order = list("bacon flatbread", "bacon with flatbread")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dinnermenu/meatpocket
 	name = "Meat and Cheese Flatbread"
-	path = /obj/item/weapon/reagent_containers/food/snacks/meat_pocket
+	id = "meatpocket"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/meat_pocket
 	voice_order = list("meat and cheese flatbread")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dinnermenu/risotto
 	name = "Risotto"
-	path = /obj/item/weapon/reagent_containers/food/snacks/risotto
+	id = "risotto"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/risotto
 	voice_order = list("bowl of risotto", "regular risotto")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dinnermenu/risottoballs
 	name = "Risotto Balls"
-	path = /obj/item/weapon/reagent_containers/food/snacks/risottoballs
+	id = "risottoballs"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/risottoballs
 	voice_order = list("risotto balls")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dinnermenu/stuffedmeatball
 	name = "Stuffed Meatball"
-	path = /obj/item/weapon/reagent_containers/food/snacks/stuffed_meatball
+	id = "stuffedmeatball"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/stuffed_meatball
 	voice_order = list("stuffed meatball")
 	voice_temp = "hot"
 
@@ -694,79 +784,92 @@
 
 /datum/category_item/synthesizer/dinnermenu/redcurry
 	name = "Red Curry"
-	path = /obj/item/weapon/reagent_containers/food/snacks/redcurry
+	id = "redcurry"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/redcurry
 	voice_order = list("red curry", "curry red")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dinnermenu/greencurry
 	name = "Green Curry"
-	path = /obj/item/weapon/reagent_containers/food/snacks/greencurry
+	id = "greencurry"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/greencurry
 	voice_order = list("green curry", "curry green")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dinnermenu/yellowcurry
 	name = "Yellow Curry"
-	path = /obj/item/weapon/reagent_containers/food/snacks/yellowcurry
+	id = "yellowcurry"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/yellowcurry
 	voice_order = list("yellow curry", "curry yellow")
 	voice_temp = "Hot"
 
 /datum/category_item/synthesizer/dinnermenu/bibimbap
 	name = "Bibimbap Bowl" //The best thing. Seriously.
-	path = /obj/item/weapon/reagent_containers/food/snacks/bibimbap
+	id = "bibimbap"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/bibimbap
 	voice_order = list("bibimbap", "korean hot pot")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dinnermenu/lomein
 	name = "Lo Mein"
-	path = /obj/item/weapon/reagent_containers/food/snacks/lomein
+	id = "lomein"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/lomein
 	voice_order = list("lo mein", "low main", "chinese noodles")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dinnermenu/friedrice
 	name = "Fried Rice (Plain)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/friedrice
+	id = "friedrice"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/friedrice
 	voice_order = list("egg fried rice", "plain fried rice")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dinnermenu/porkbowl
 	name = "Fried Rice (Pork)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/porkbowl
+	id = "porkfriedrice"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/porkbowl
 	voice_order = list("pork bowl", "pork fried rice")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dinnermenu/sweetnsour
 	name = "Sweet and Sour Pork"
-	path = /obj/item/weapon/reagent_containers/food/snacks/sweet_and_sour
+	id = "sweetnsour"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/sweet_and_sour
 	voice_order = list("sweet and sour pork", "sweet sour pork")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dinnermenu/meatbun
 	name = "Meat and Leaf Bun"
-	path = /obj/item/weapon/reagent_containers/food/snacks/meatbun
+	id = "meatbun"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/meatbun
 	voice_order = list("baozi", "meat and leaf dumpling", "meat and leaf bun")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dinnermenu/spicedmeatbun
 	name = "Spiced Meat Bun"
-	path = /obj/item/weapon/reagent_containers/food/snacks/spicedmeatbun
+	id = "spicedmeatbun"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/spicedmeatbun
 	voice_order = list("spiced meat bun", "char sui", "char sui bun")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dinnermenu/eggrice
 	name = "Omelette Rice (regular)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/omurice
+	id = "eggriceregular"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/omurice
 	voice_order = list("regular omelette rice", "regular omurice")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dinnermenu/eggriceheart
 	name = "Omelette Rice (heart)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/omurice/heart
+	id = "eggriceheart"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/omurice/heart
 	voice_order = list("omelette rice with heart", "omurice heart", "omurice with heart", "heart omurice")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dinnermenu/eggriceface
 	name = "Omelette Rice (face)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/omurice/face
+	id = "eggriceface"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/omurice/face
 	voice_order = list("omelette rice with face", "omurice face", "omurice with face", "face omurice")
 	voice_temp = "hot"
 
@@ -776,212 +879,247 @@
 
 /datum/category_item/synthesizer/dessert/donut
 	name = "Donut (Plain)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/donut/plain
+	id = "plaindonut"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/donut/plain
 	voice_order = list("plain donut", "donut with nothing")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/dessert/chocolate_donut
 	name = "Donut (Chocolate)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/donut/choc
+	id = "chocolatedonut"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/donut/choc
 	voice_order = list("chocolate donut", "donut with chocolate")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/dessert/pink_donut
 	name = "Donut (Pink Frosting)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/donut/pink
+	id = "pinkdonut"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/donut/pink
 	voice_order = list("pink frosted donut", "donut with pink frosting")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/dessert/homer
 	name = "Donut (Sprinkles)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/donut/homer
+	id = "sprinklesdonut"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/donut/homer
 	voice_order = list("homer donut", "donut with sprinkles")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/dessert/jelly_donut
 	name = "Donut (Jelly)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/donut/plain/jelly
+	id = "jellydonut"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/donut/plain/jelly
 	voice_order = list("jelly donut", "donut with jelly")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/dessert/meat_donut
 	name = "Donut (Meat)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/donut/meat
+	id = "meatdonut"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/donut/meat
 	voice_order = list("meat donut", "donut with meat")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/dessert/chaos_donut
 	name = "Donut (Chaos)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/donut/plain
+	id = "chaosdonut"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/donut/plain
 	voice_order = list("chaos donut", "donut with chaos", "madness donut")
 	voice_temp = "cold"
 	hidden = TRUE
 
 /datum/category_item/synthesizer/dessert/candyapple
 	name = "Candied Apple"
-	path = /obj/item/weapon/reagent_containers/food/snacks/candiedapple
+	id = "candiedapple"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/candiedapple
 	voice_order = list("candy apple", "candied apple")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/dessert/applepie
 	name = "Pie (Apple)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/applepie
+	id = "applepie"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/applepie
 	voice_order = list("apple pie", "pie with apple", "American pie")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dessert/cherrypie
 	name = "Pie (Cherry)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/cherrypie
+	id = "cherrypie"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/cherrypie
 	voice_order = list("cherry pie", "pie with cherry")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dessert/appletart
 	name = "Apple Tart"
-	path = /obj/item/weapon/reagent_containers/food/snacks/appletart
+	id = "appletart"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/appletart
 	voice_order = list("apple tart")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dessert/cinnamonbun
 	name = "cinnamon bun"
-	path = /obj/item/weapon/reagent_containers/food/snacks/cinnamonbun
+	id = "cinnamonbun"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/cinnamonbun
 	voice_order = list("Cinnamon bun","sweetroll", "cinnabun")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dessert/tastybread
 	name = "Tubular Sweet Bread"
-	path = /obj/item/weapon/reagent_containers/food/snacks/tastybread
+	id = "tastybread"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/tastybread
 	voice_order = list("bread tube")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/dessert/carrotcake
 	name = "Carrot Cake"
-	path = /obj/item/weapon/reagent_containers/food/snacks/slice/carrotcake/filled
+	id = "carrotcake"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/slice/carrotcake/filled
 	voice_order = list("carrot cake")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/dessert/cheesecake
 	name = "Cheesecake"
-	path = /obj/item/weapon/reagent_containers/food/snacks/slice/cheesecake/filled
+	id = "cheesecake"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/slice/cheesecake/filled
 	voice_order = list("cheese cake")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/dessert/plaincake
 	name = "Plain Cake"
-	path = /obj/item/weapon/reagent_containers/food/snacks/slice/plaincake/filled
+	id = "plaincake"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/slice/plaincake/filled
 	voice_order = list("plain cake")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/dessert/orangecake
 	name = "Orange Cake"
-	path = /obj/item/weapon/reagent_containers/food/snacks/slice/orangecake/filled
+	id = "orangecake"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/slice/orangecake/filled
 	voice_order = list("orange cake")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/dessert/limecake
 	name = "Lime Cake"
-	path = /obj/item/weapon/reagent_containers/food/snacks/slice/limecake/filled
+	id = "limecake"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/slice/limecake/filled
 	voice_order = list("lime cake")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/dessert/lemoncake
 	name = "Lemon Cake"
-	path = /obj/item/weapon/reagent_containers/food/snacks/slice/lemoncake/filled
+	id = "lemoncake"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/slice/lemoncake/filled
 	voice_order = list("lemon cake")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/dessert/chocolatecake
 	name = "Chocolate Cake"
-	path = /obj/item/weapon/reagent_containers/food/snacks/slice/chocolatecake/filled
+	id = "chocolatecake"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/slice/chocolatecake/filled
 	voice_order = list("chocolate cake", "mudpie")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/dessert/birthdaycake
 	name = "Birthday Cake"
-	path = /obj/item/weapon/reagent_containers/food/snacks/slice/birthdaycake/filled
+	id = "birthdaycake"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/slice/birthdaycake/filled
 	voice_order = list("Birthday cake")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/dessert/applecake
 	name = "Apple Cake"
-	path = /obj/item/weapon/reagent_containers/food/snacks/slice/applecake/filled
+	id = "applecake"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/slice/applecake/filled
 	voice_order = list("apple cake")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/dessert/pumpkinpie
 	name = "Pumpkin Pie"
-	path = /obj/item/weapon/reagent_containers/food/snacks/slice/pumpkinpie/filled
+	id = "pumpkinpie"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/slice/pumpkinpie/filled
 	voice_order = list("pumpkin pie")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dessert/keylimepieslice
 	name = "Key Lime Pie"
-	path = /obj/item/weapon/reagent_containers/food/snacks/keylimepieslice/filled
+	id = "keylimepie"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/keylimepieslice/filled
 	voice_order = list("key lime pie")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/dessert/browniesslice
 	name = "Brownie"
-	path = /obj/item/weapon/reagent_containers/food/snacks/browniesslice/filled
+	id = "brownie"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/browniesslice/filled
 	voice_order = list("brownie")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dessert/sugarcookie
 	name = "Sugar Cookie"
-	path = /obj/item/weapon/reagent_containers/food/snacks/sugarcookie
+	id = "sugarcookie"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/sugarcookie
 	voice_order = list("sugar cookie")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/dessert/custardbun
 	name = "Custard Bun"
-	path = /obj/item/weapon/reagent_containers/food/snacks/custardbun
+	id = "custardbun"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/custardbun
 	voice_order = list("custard bun")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/dessert/honeybun
 	name = "Honey Bun"
-	path = /obj/item/weapon/reagent_containers/food/snacks/honeybun
+	id = "honeybun"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/honeybun
 	voice_order = list("honey bun")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/dessert/cookie
 	name = "Cookie"
-	path = /obj/item/weapon/reagent_containers/food/snacks/cookie
+	id = "plaincookie"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/cookie
 	voice_order = list("plain cookie", "chocolate chip cookie")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dessert/fruitbar
 	name = "Fruit Bar"
-	path = /obj/item/weapon/reagent_containers/food/snacks/fruitbar
+	id = "fruitbar"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/fruitbar
 	voice_order = list("fruit bar")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/dessert/pie
 	name = "Plain Pie"
-	path = /obj/item/weapon/reagent_containers/food/snacks/pie
+	id = "plainpie"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/pie
 	voice_order = list("plain pie", "nothing pie")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dessert/amanita_pie
 	name = "Amanita Pie"
-	path = /obj/item/weapon/reagent_containers/food/snacks/amanita_pie
+	id = "amanitapie"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/amanita_pie
 	voice_order = list("amanita pie", "weed pie")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/dessert/funnelcake
 	name = "Funnel Cake"
-	path = /obj/item/weapon/reagent_containers/food/snacks/funnelcake
+	id = "funnelcake"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/funnelcake
 	voice_order = list("funnel cake", "fair cake")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/dessert/icecreamsandwich
 	name = "Ice Cream Sandwich"
-	path = /obj/item/weapon/reagent_containers/food/snacks/icecreamsandwich
+	id = "icecreamsandwich"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/icecreamsandwich
 	voice_order = list("icecream sandwich", "ice cream sandwich", "sandwich with ice cream")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/dessert/pisanggoreng
 	name = "Pisang Goreng"
-	path = /obj/item/weapon/reagent_containers/food/snacks/pisanggoreng
+	id = "pisanggoreng"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/pisanggoreng
 	voice_order = list("pisang goreng", "banana fritter")
 	voice_temp = "hot"
 
@@ -991,85 +1129,99 @@
 
 /datum/category_item/synthesizer/exotic/hatchling_suprise
 	name = "Hatchling Suprise"
-	path = /obj/item/weapon/reagent_containers/food/snacks/hatchling_suprise
+	id = "hatchlingsurpise"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/hatchling_suprise
 	voice_order = list("hatchling surpise")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/exotic/red_sun_special
 	name = "Red Sun Special"
-	path = /obj/item/weapon/reagent_containers/food/snacks/red_sun_special
+	id = "redsunspecial"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/red_sun_special
 	voice_order = list()
 	voice_temp = ""
 
 /datum/category_item/synthesizer/exotic/riztizkzi_sea
 	name = "Moghesian Sea Delight"
-	path = /obj/item/weapon/reagent_containers/food/snacks/riztizkzi_sea
+	id = "riztizkzisea"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/riztizkzi_sea
 	voice_order = list()
 	voice_temp = ""
 
 /datum/category_item/synthesizer/exotic/father_breakfast
 	name = "Fatherly Breakfast"
-	path = /obj/item/weapon/reagent_containers/food/snacks/father_breakfast
+	id = "fatherbreakfast"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/father_breakfast
 	voice_order = list()
 	voice_temp = ""
 
 /datum/category_item/synthesizer/exotic/bearburger
 	name = "Bear Burger"
-	path = /obj/item/weapon/reagent_containers/food/snacks/bearburger
+	id = "bearburger"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/bearburger
 	voice_order = list()
 	voice_temp = ""
 
 /datum/category_item/synthesizer/exotic/namagashi
 	name = "Ryo-kucha Namagashi"
-	path = /obj/item/weapon/reagent_containers/food/snacks/namagashi
+	id = "namagashi"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/namagashi
 	voice_order = list()
 	voice_temp = ""
 
 /datum/category_item/synthesizer/exotic/dionaroast
 	name = "Diona Roast"
-	path = /obj/item/weapon/reagent_containers/food/snacks/dionaroast
+	id = "dionaroast"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/dionaroast
 	voice_order = list("diona roast", "plant roast")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/exotic/burnedmess
 	name = "Dubious Food"
-	path = /obj/item/weapon/reagent_containers/food/snacks/badrecipe
+	id = "burnedmess"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/badrecipe
 	voice_order = list("right proper fuckup", "Whatever", "my college existance", "chef's disappointment", "Ramsey's nightmare")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/exotic/monkeydelight
 	name = "Monkey's Delight"
-	path = /obj/item/weapon/reagent_containers/food/snacks/monkeysdelight
+	id = "monkeydelight"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/monkeysdelight
 	voice_order = list("fancy banana", "monkey delight")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/exotic/xenopie
 	name = "Pie (Xeno)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/xemeatpie
+	id = "xenopie"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/xemeatpie
 	voice_order = list("xeno pie", "pie of xeno")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/exotic/xenobreadslice
 	name = "Xeno Bread (Slice)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/sliceable/xenomeatbread
+	id = "xenobreadslice"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/sliceable/xenomeatbread
 	voice_order = list("meat bread slice", "slice of meat bread")
 	voice_temp = "hot"
 
 /datum/category_item/synthesizer/exotic/liquidfood
 	name = "Liquid Ration (Generic)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/liquidfood
+	id = "liquidfood"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/liquidfood
 	voice_order = list("Liquid ration", "food drink", "Liquidfood")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/exotic/liquidprotein
 	name = "Liquid Ration (Protein)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/liquidprotein
+	id = "liquidprotein"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/liquidprotein
 	voice_order = list("protein liquid ration", "protein ration")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/exotic/liquidvitamin
 	name = "Liquid Ration (Vitamin)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/liquidvitamin
+	id = "liquidvitamin"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/liquidvitamin
 	voice_order = list("vitamin liquid ration", "vitamin ration")
 	voice_temp = "cold"
 
@@ -1079,55 +1231,64 @@
 
 /datum/category_item/synthesizer/raw/meat
 	name = "Meat Steak (raw)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/meat
+	id = "rawsteak"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/meat
 	voice_order = list("meat slab","slab of meat","raw steak", "raw meat steak")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/raw/bacon
 	name = "Bacon (raw)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/rawbacon
+	id = "rawbacon"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/rawbacon
 	voice_order = list("raw bacon")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/raw/mushroom
 	name = "Mushroom Slice"
-	path = /obj/item/weapon/reagent_containers/food/snacks/mushroomslice
+	id = "rawmushroom"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/mushroomslice
 	voice_order = list("mushroom slice", "raw mushroom")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/raw/tomato
 	name = "Tomato Steak (raw)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/tomatomeat
+	id = "rawtomatosteak"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/tomatomeat
 	voice_order = list("tomato slice")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/raw/bear
 	name = "Bear Steak (raw)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/bearmeat
+	id = "rawbearsteak"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/bearmeat
 	voice_order = list("raw bear steak", "slice of bear")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/raw/xeno
 	name = "Xeno Steak (raw)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/xenomeat
+	id = "rawxenosteak"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/xenomeat
 	voice_order = list("raw xeno steak")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/raw/spider
 	name = "Spider Steak (raw)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/xenomeat/spidermeat
+	id = "rawspidersteak"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/xenomeat/spidermeat
 	voice_order = list("raw spider steak")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/raw/spahgetti
 	name = "Spaghetti (raw)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/spagetti
+	id = "rawspaghetti"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/spagetti
 	voice_order = list("raw spaghetti", "uncooked spaghett")
 	voice_temp = "cold"
 
 /datum/category_item/synthesizer/raw/corgi
 	name = "Corgi Steak (raw)"
-	path = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
+	id = "rawcorgisteak"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
 	voice_order = list("Dog steak", "Dog", "Canine steak")
 	voice_temp = "cold"
 	hidden = TRUE

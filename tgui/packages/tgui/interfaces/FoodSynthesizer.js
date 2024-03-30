@@ -35,14 +35,21 @@ const SynthCartGuage = (props, context) => {
   return (
     <Section title="Cartridge Status">
       {isThereCart ? (
-      <LabeledList.Item label="Product Remaining">
-        {cartFillStatus ? ( <ProgressBar color="purple" value={adjustedCartChange} width={20} /> ) : (<ProgressBar color="red" value={adjustedCartChange} width={20} />)}
-      </LabeledList.Item>
+        <LabeledList.Item label="Product Remaining">
+          {cartFillStatus ? (
+            <ProgressBar color="purple" value={adjustedCartChange} width={20} />
+          ) : (
+            <ProgressBar color="red" value={adjustedCartChange} width={20} />
+          )}
+        </LabeledList.Item>
       ) : (
         <LabeledList.Item label="Cartridge Problem">
-        <Box color="label">One or more cartridges are missing or damaged. <br /><br />
-         Sabresnacks Co. recommends ordering a genuine Sabresnacks replacement cartidge through your local logistical cargo service.
-        </Box>
+          <Box color="label">
+            One or more cartridges are missing or damaged. <br />
+            <br />
+            Sabresnacks Co. recommends ordering a genuine Sabresnacks
+            replacement cartidge through your local logistical cargo service.
+          </Box>
         </LabeledList.Item>
       )}
     </Section>
@@ -202,13 +209,12 @@ const FoodSelectionMenu = (props, context) => {
                   <br />
                   <br />
                   <Button
-                    fluid
-                    icon="print"
-                    width="150px"
-                    content="Begin Printing"
+                    width={'64px'}
+                    height={'64px'}
+                    className={classes(['synthesizer64x64', ActiveFood.id])}
                     onClick={() => act('make', { make: ActiveFood.ref })}
                   />
-                  <ProductImage recipe={ActiveFood} />
+                  <Box color="label">Click to print the meal.</Box>
                 </Stack.Item>
               </Stack>
             </Box>
@@ -216,32 +222,6 @@ const FoodSelectionMenu = (props, context) => {
         </Stack.Item>
       </Stack>
     </Section>
-  );
-};
-
-/** Displays the product image. Displays a default if there is none. */
-
-const ProductImage = (props) => {
-  const { recipe } = props;
-
-  return recipe.img ? (
-    <Box>
-      <img
-        src={`data:image/jpeg;base64,${recipe.img}`}
-        style={{
-          verticalAlign: 'middle',
-        }}
-      />
-    </Box>
-  ) : (
-    <Box>
-      <span
-        className={classes(['synthesizer32x32', recipe.path])}
-        style={{
-          verticalAlign: 'middle',
-        }}
-      />
-    </Box>
   );
 };
 
@@ -270,4 +250,4 @@ const ProductImage = (props) => {
                   Update Crew Photo
                 </Button>
               </Box>
-            </Flex.Item> */  
+            </Flex.Item> */
