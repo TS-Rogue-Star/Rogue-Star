@@ -175,7 +175,7 @@
 	module_type = "Combat Medic"
 	sprite_icon = 'icons/mob/robot/combat_medic_wide.dmi'
 
-	var/has_sleeper_light_indicator = FALSE
+	has_sleeper_light_indicator = FALSE
 
 /datum/robot_sprite/dogborg/crisis/get_belly_overlay(var/mob/living/silicon/robot/ourborg)
 	if(has_sleeper_light_indicator)

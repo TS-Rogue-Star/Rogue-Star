@@ -189,7 +189,7 @@
 	module_type = "Surgeon"
 	sprite_icon = 'icons/mob/robot/surgical_wide.dmi'
 
-	var/has_sleeper_light_indicator = FALSE
+	has_sleeper_light_indicator = FALSE
 
 /datum/robot_sprite/dogborg/surgical/get_belly_overlay(var/mob/living/silicon/robot/ourborg)
 	if(has_sleeper_light_indicator)
@@ -314,7 +314,7 @@
 	module_type = "Crisis"
 	sprite_icon = 'icons/mob/robot/crisis_wide.dmi'
 
-	var/has_sleeper_light_indicator = FALSE
+	has_sleeper_light_indicator = FALSE
 
 /datum/robot_sprite/dogborg/crisis/get_belly_overlay(var/mob/living/silicon/robot/ourborg)
 	if(has_sleeper_light_indicator)

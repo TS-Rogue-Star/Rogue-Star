@@ -12,6 +12,7 @@
 	var/has_custom_open_sprites = FALSE
 	var/has_vore_belly_sprites = FALSE
 	var/has_vore_belly_resting_sprites = FALSE
+	var/has_sleeper_light_indicator = FALSE
 	var/has_rest_sprites = FALSE
 	var/list/rest_sprite_options
 	var/has_dead_sprite = FALSE
