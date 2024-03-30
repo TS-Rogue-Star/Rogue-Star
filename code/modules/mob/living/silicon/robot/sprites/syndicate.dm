@@ -174,7 +174,15 @@
 /datum/robot_sprite/dogborg/combat_medic
 	module_type = "Combat Medic"
 	sprite_icon = 'icons/mob/robot/combat_medic_wide.dmi'
-	sprite_hud_icon_state = "malf"
+
+	var/has_sleeper_light_indicator = FALSE
+
+/datum/robot_sprite/dogborg/crisis/get_belly_overlay(var/mob/living/silicon/robot/ourborg)
+	if(has_sleeper_light_indicator)
+		if(ourborg.sleeper_state == 2 && !(ourborg.vore_selected?.silicon_belly_overlay_preference == "Vorebelly")) return "[sprite_icon_state]-sleeper_g"
+		else return "[sprite_icon_state]-sleeper_r"
+	else
+		return ..()
 
 /datum/robot_sprite/dogborg/combat_medic/do_equipment_glamour(var/obj/item/weapon/robot_module/module)
 	if(!has_custom_equipment_sprites)
@@ -191,20 +199,7 @@
 		SP.attack_verb = list("batted", "pawed", "bopped", "whapped")
 
 /datum/robot_sprite/dogborg/combat_medic/vale
-	name = "Hound V2"
+	name = "Stray"
 	sprite_icon_state = "vale"
 	has_eye_light_sprites = TRUE
 	has_sleeper_light_indicator = TRUE
-
-// Tall sprites
-
-/datum/robot_sprite/dogborg/tall/combat_medic
-	module_type = "Combat Medic"
-	sprite_icon = 'icons/mob/robot/syndie_large.dmi'
-	sprite_hud_icon_state = "malf"
-
-/datum/robot_sprite/dogborg/tall/combat_medic/syndimediraptor
-	name = "Raptor V-4"
-	sprite_icon_state = "syndimediraptor"
-	has_eye_light_sprites = TRUE
-	rest_sprite_options = list("Default", "Bellyup")
