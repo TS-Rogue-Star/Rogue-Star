@@ -423,6 +423,14 @@ emp_act
 
 	if(istype(AM,/obj/))
 		var/obj/O = AM
+		//RSEdit Start || Ports trash eater throw vore from CHOMPStation, PR#5987
+		if(stat != DEAD && istype(O,/obj/item) && trash_catching && vore_selected)
+			var/obj/item/I = O
+			if(adminbus_trash || is_type_in_list(I,edible_trash) && I.trash_eatable && !is_type_in_list(I,item_vore_blacklist))
+				visible_message("<span class='warning'>[I] is thrown directly into [src]'s [lowertext(vore_selected.name)]!</span>")
+				I.throwing = 0
+				I.forceMove(vore_selected)
+				return //RSEdit End
 		if(in_throw_mode && speed <= THROWFORCE_SPEED_DIVISOR)	//empty active hand and we're in throw mode
 			if(canmove && !restrained())
 				if(isturf(O.loc))
