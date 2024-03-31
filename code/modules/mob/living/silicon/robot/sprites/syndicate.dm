@@ -177,13 +177,14 @@
 
 	has_sleeper_light_indicator = FALSE
 
+/* //RS REMOVAL
 /datum/robot_sprite/dogborg/crisis/get_belly_overlay(var/mob/living/silicon/robot/ourborg)
 	if(has_sleeper_light_indicator)
 		if(ourborg.sleeper_state == 2 && !(ourborg.vore_selected?.silicon_belly_overlay_preference == "Vorebelly")) return "[sprite_icon_state]-sleeper_g"
 		else return "[sprite_icon_state]-sleeper_r"
 	else
 		return ..()
-
+*/
 /datum/robot_sprite/dogborg/combat_medic/do_equipment_glamour(var/obj/item/weapon/robot_module/module)
 	if(!has_custom_equipment_sprites)
 		return
