@@ -12,6 +12,7 @@
 	S["backbag"]	>> pref.backbag
 	S["pdachoice"]	>> pref.pdachoice
 	S["communicator_visibility"]	>> pref.communicator_visibility
+	S["shoe_hater"] >> pref.shoe_hater	//RS ADD
 
 /datum/category_item/player_setup_item/general/equipment/save_character(var/savefile/S)
 	S["all_underwear"] << pref.all_underwear
@@ -19,6 +20,7 @@
 	S["backbag"]	<< pref.backbag
 	S["pdachoice"]	<< pref.pdachoice
 	S["communicator_visibility"]	<< pref.communicator_visibility
+	S["shoe_hater"] << pref.shoe_hater	//RS ADD
 
 // Moved from /datum/preferences/proc/copy_to()
 /datum/category_item/player_setup_item/general/equipment/copy_to_mob(var/mob/living/carbon/human/character)
@@ -89,6 +91,7 @@
 	. += "Backpack Type: <a href='?src=\ref[src];change_backpack=1'><b>[backbaglist[pref.backbag]]</b></a><br>"
 	. += "PDA Type: <a href='?src=\ref[src];change_pda=1'><b>[pdachoicelist[pref.pdachoice]]</b></a><br>"
 	. += "Communicator Visibility: <a href='?src=\ref[src];toggle_comm_visibility=1'><b>[(pref.communicator_visibility) ? "Yes" : "No"]</b></a><br>"
+	. += "Shoes:<a href='?src=\ref[src];toggle_shoes=1'><b>[(pref.shoe_hater) ? "No" : "Yes"]</b></a><br>"
 
 	return jointext(.,null)
 
@@ -146,6 +149,10 @@
 		if(CanUseTopic(user))
 			pref.communicator_visibility = !pref.communicator_visibility
 			return TOPIC_REFRESH
-
+	else if(href_list["toggle_shoes"])	//RS ADD START
+		if(CanUseTopic(user))
+			pref.shoe_hater = !pref.shoe_hater
+			return TOPIC_REFRESH
+			//RS ADD END
 
 	return ..()
