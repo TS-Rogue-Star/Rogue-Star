@@ -8,7 +8,7 @@ import { flow } from 'common/fp';
 export const FoodSynthesizer = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Window width={500} height={500} resizable>
+    <Window width={900} height={520} resizable>
       <Window.Content>
         <Section>
           <SynthCartGuage />
@@ -74,24 +74,23 @@ const FoodMenuTabs = (props, context) => {
   };
 
   return (
-    <Stack fill>
-      <Stack.Item wrap="wrap" basis="auto">
-        <Tabs>
-          {menusToShow.map((menu) => (
-            <Tabs.Tab>
-              <Button
+    <Section>
+      <Stack>
+        <Stack.Item>
+          <Tabs fluid textAlign="center" flexWrap="wrap">
+            {menusToShow.map((menu) => (
+              <Tabs.Tab
                 key={menu.ref}
-                fluid
-                content={menu.name}
                 icon="list"
                 selected={menu.id === active_menu}
-                onClick={() => handleActivemenu(menu.id)}
-              />
-            </Tabs.Tab>
-          ))}
-        </Tabs>
-      </Stack.Item>
-    </Stack>
+                onClick={() => handleActivemenu(menu.id)}>
+                {menu.name}
+              </Tabs.Tab>
+            ))}
+          </Tabs>
+        </Stack.Item>
+      </Stack>
+    </Section>
   );
 };
 
@@ -101,7 +100,7 @@ const FoodSelectionMenu = (props, context) => {
   const { act, data } = useBackend(context);
   const { active_menu, recipes, crewdata, crew_cookies, activecrew } = data;
   const { hidden } = data.recipes;
-//  const { fields } = data.crewdata;
+  //  const { fields } = data.crewdata;
   if (!recipes) {
     return <Box color="bad">Recipes records missing!</Box>;
   }
@@ -128,10 +127,6 @@ const FoodSelectionMenu = (props, context) => {
     filter((cookie) => cookie.catagory === active_menu),
     sortBy((cookie) => cookie.name),
   ])(crew_cookies);
-/*
-  if (active_menu === 'crew' && (!data.crewdata || !data.crewdata.fields)) {
-    return <Box color="bad">General records lost!</Box>;
-  } */
 
   if (active_menu === 'crew') {
     return (
@@ -190,12 +185,32 @@ const FoodSelectionMenu = (props, context) => {
                           />
                         )}
                       </Box>
+                      <br />
+                      <br />
+                      <br />
+                      <Box>
+                        <Button
+                          content="Refresh Information"
+                          onClick={() => act('refresh')}
+                        />
+                      </Box>
                     </Flex.Item>
                   </Stack>
                 </Box>
               </Section>
             ) : (
-              <Box color="label">Please select an offering.</Box>
+              <Section>
+                <Box color="label">Please select an offering.</Box>
+                <br />
+                <br />
+                <br />
+                <Box>
+                  <Button
+                    content="Refresh Information"
+                    onClick={() => act('refresh')}
+                  />
+                </Box>
+              </Section>
             )}
           </Stack.Item>
         </Stack>
@@ -223,7 +238,7 @@ const FoodSelectionMenu = (props, context) => {
             </Tabs>
           </Section>
         </Stack.Item>
-        <Stack.Item grow={1} ml={2}>
+        <Stack.Item grow={1} ml={4}>
           <Section title="Product Details" fill height="290px">
             <Box key={ActiveFood.ref}>
               <Stack align="center" justify="flex-start">
