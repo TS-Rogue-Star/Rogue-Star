@@ -127,6 +127,8 @@
 
 			to_chat(H, "<span class='danger'>You step on \the [src]!</span>")
 
+			return	//RS ADD - Let's just not
+
 			var/list/check = list("l_foot", "r_foot")
 			while(check.len)
 				var/picked = pick(check)
