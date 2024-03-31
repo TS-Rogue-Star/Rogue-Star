@@ -1002,7 +1002,7 @@
 	our_allergens = list(ALLERGEN_STIMULANT)
 
 //RS MOVE - Removed damage from stepping on glass shards, so this only really prevents the scary red text now, and will also protect you from barbed wire, apparently
-/datum/trait/positive/hardfeet
+/datum/trait/neutral/hardfeet
 	name = "Hard Feet"
 	desc = "Makes your nice clawed, scaled, hooved, armored, or otherwise just awfully calloused feet immune to glass shards."
 	cost = 0
