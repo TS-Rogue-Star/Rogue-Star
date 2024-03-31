@@ -327,7 +327,7 @@
 		icon_file = initial(item.icon)
 		icon_state = initial(item.icon_state)
 		I = icon(icon_file, icon_state, SOUTH)
-		I.Scale(64, 64)
+		I.Scale(128, 128)
 		Insert(initial(path.id), I)
 	..()
 

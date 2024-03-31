@@ -149,20 +149,11 @@
 		var/percent = round((cart.reagents.total_volume / cart.reagents.maximum_volume) * 100)
 		data["cartFillStatus"] = cart ? percent : null
 
-
-	if(!isnull(data_core.general))
-		var/list/records = list()
-		data["records"] = records
-		for(var/datum/data/record/R in sortRecord(data_core.general))
-			records[++records.len] = list(
-			"ref" = "\ref[R]",
-			"id" = R.fields["id"],
-			"name" = R.fields["name"])
-
 	data["activecrew"] = activecrew
 	if(activecrew) //starts off null so we'll wait for user input
-		var/list/crewdata = list() //Gotta ensure we grab this info from compliant people only
-		if(istype(activecrew, /datum/data/record) && data_core.general.Find(activecrew)) //Scrape from security datacore info
+		var/list/crewdata = list()
+		data["crewdata"] = crewdata
+		if(istype(activecrew, /datum/data/record) && data_core.general.Find(activecrew))
 			var/list/fields = list()
 			crewdata["fields"] = fields
 			fields[++fields.len] = FIELD("Name", activecrew.fields["name"], "name")
@@ -184,7 +175,10 @@
 			crewdata["photos"] = photos
 			photos[++photos.len] = "'data:image/png;base64,[icon2base64(front)]'"
 			crewdata["has_photos"] = ("'data:image/png;base64,[icon2base64(front)]'" ? 1 : 0)
-		data["crewdata"] = crewdata
+			crewdata["empty"] = FALSE
+		else
+			crewdata["empty"] = TRUE
+
 
 	return data
 
@@ -205,9 +199,6 @@
 				"name" 			= food.name,
 				"id"			= food.id,
 				"desc" 			= food.desc,
-				"icon" 			= food.icon,
-				"icon_state"	= food.icon_state,
-				"path"			= food.build_path,
 				"voice_order"	= food.voice_order,
 				"voice_temp"	= food.voice_temp,
 				"hidden"		= food.hidden,
@@ -288,11 +279,7 @@
 			return TRUE
 
 		if("setactive_crew")
-			var/datum/data/record/general_record = params["setactive_crew"]
-			if(!data_core.general.Find(general_record))
-				return
-
-			activecrew = general_record
+			activecrew = params["setactive_crew"]
 			return TRUE
 
 		if("crew_photo")

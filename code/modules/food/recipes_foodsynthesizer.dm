@@ -8,8 +8,6 @@
 		log_debug("[name] created an Synthesizer design without an assigned build_path.")
 		return
 	desc = initial(snacc.desc) //Let's get our description text and icon while we've got the item...
-	icon = initial(snacc.icon)
-	icon_state = initial(snacc.icon_state)
 	qdel(snacc)
 
 /datum/category_item/synthesizer/proc/icon_html(client/user)
@@ -162,9 +160,7 @@
 /datum/category_item/synthesizer
 	var/desc							//food description to be applied to the UI.
 	var/id								//food id for spritesheet functionality
-	var/icon							//food initial icon for UI fanciness
-	var/icon_state						// and the state
-	var/build_path							//food item build_path
+	var/build_path						//food item build_path
 	var/hidden = FALSE					//is it illegal/nonstandard?
 	var/list/voice_order				//what can we say to get this? Avoid exact same phrases.
 	var/voice_temp						//mostly flavor but maybe also setting stuff that will warm/cool you off? idk

@@ -8,7 +8,7 @@ import { flow } from 'common/fp';
 export const FoodSynthesizer = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Window width={900} height={500} resizable>
+    <Window width={500} height={500} resizable>
       <Window.Content>
         <Section>
           <SynthCartGuage />
@@ -74,8 +74,8 @@ const FoodMenuTabs = (props, context) => {
   };
 
   return (
-    <Flex flow-wrap>
-      <Section>
+    <Stack fill>
+      <Stack.Item wrap="wrap" basis="auto">
         <Tabs>
           {menusToShow.map((menu) => (
             <Tabs.Tab>
@@ -90,8 +90,8 @@ const FoodMenuTabs = (props, context) => {
             </Tabs.Tab>
           ))}
         </Tabs>
-      </Section>
-    </Flex>
+      </Stack.Item>
+    </Stack>
   );
 };
 
@@ -99,12 +99,13 @@ const FoodMenuTabs = (props, context) => {
 
 const FoodSelectionMenu = (props, context) => {
   const { act, data } = useBackend(context);
-  const { active_menu, recipes, active_crew, crewdata, crew_cookies } = data;
-  const { recipe } = props;
+  const { active_menu, recipes, crewdata, crew_cookies, activecrew } = data;
   const { hidden } = data.recipes;
+//  const { fields } = data.crewdata;
   if (!recipes) {
     return <Box color="bad">Recipes records missing!</Box>;
   }
+
   const [ActiveFood, setActiveFood] = useSharedState(
     context,
     'ActiveFood',
@@ -127,6 +128,10 @@ const FoodSelectionMenu = (props, context) => {
     filter((cookie) => cookie.catagory === active_menu),
     sortBy((cookie) => cookie.name),
   ])(crew_cookies);
+/*
+  if (active_menu === 'crew' && (!data.crewdata || !data.crewdata.fields)) {
+    return <Box color="bad">General records lost!</Box>;
+  } */
 
   if (active_menu === 'crew') {
     return (
@@ -142,26 +147,57 @@ const FoodSelectionMenu = (props, context) => {
                       fluid
                       content={cookie.name}
                       selected={cookie === ActiveCookie}
-                      onClick={() => setActiveCookie(cookie)}
+                      onClick={() => setActiveCookie(cookie.name)}
                     />
                   </Tabs.Tab>
                 ))}
               </Tabs>
             </Section>
           </Stack.Item>
-          <Flex>
-            <Flex.Item>
-              <LabeledList>
-                {crewdata.fields.map((field, i) => (
-                  <LabeledList.Item key={i} label={field.field}>
-                    <Box height="20px" inline preserveWhitespace>
-                      {field.value}
-                    </Box>
-                  </LabeledList.Item>
-                ))}
-              </LabeledList>
-            </Flex.Item>
-          </Flex>
+          <Stack.Item grow={1} ml={2}>
+            {activecrew ? (
+              <Section title="Product Details" fill height="290px">
+                <Box key={ActiveCookie.name}>
+                  <Stack align="center" justify="flex-start">
+                    <Stack.Item>
+                      <LabeledList>
+                        <LabeledList.Item label="Name">
+                          {ActiveCookie.name}
+                        </LabeledList.Item>
+                        <br />
+                        <LabeledList.Item label="Description">
+                          {ActiveCookie.species}
+                        </LabeledList.Item>
+                      </LabeledList>
+                    </Stack.Item>
+                    <Flex.Item textAlign="right">
+                      <Box
+                        inline
+                        style={{
+                          width: '101px',
+                          height: '120px',
+                          overflow: 'hidden',
+                          outline: '2px solid #4972a1',
+                        }}>
+                        {crewdata.photos && (
+                          <img
+                            src={crewdata.photos.substr(1, photos.length - 1)}
+                            style={{
+                              width: '300px',
+                              'margin-left': '-94px',
+                              '-ms-interpolation-mode': 'nearest-neighbor',
+                            }}
+                          />
+                        )}
+                      </Box>
+                    </Flex.Item>
+                  </Stack>
+                </Box>
+              </Section>
+            ) : (
+              <Box color="label">Please select an offering.</Box>
+            )}
+          </Stack.Item>
         </Stack>
       </Section>
     );
@@ -206,12 +242,10 @@ const FoodSelectionMenu = (props, context) => {
                     </LabeledList.Item>
                   </LabeledList>
                   <br />
-                  <br />
-                  <br />
                   <Button
-                    width={'64px'}
-                    height={'64px'}
-                    className={classes(['synthesizer64x64', ActiveFood.id])}
+                    width={'128px'}
+                    height={'128px'}
+                    className={classes(['synthesizer128x128', ActiveFood.id])}
                     onClick={() => act('make', { make: ActiveFood.ref })}
                   />
                   <Box color="label">Click to print the meal.</Box>
