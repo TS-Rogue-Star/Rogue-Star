@@ -1048,3 +1048,9 @@
 	extra_overlay = "triceratops_frill_spikes"
 	do_colouration = 1
 	color_blend_mode = ICON_MULTIPLY
+
+/datum/sprite_accessory/ears/sari
+	name = "sari ears/head (Sari)"
+	desc = ""
+	icon_state = "sari_ears"
+	ckeys_allowed = list("Cross_exonar")
