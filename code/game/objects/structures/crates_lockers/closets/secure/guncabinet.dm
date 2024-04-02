@@ -106,51 +106,12 @@
 	var/emagged = FALSE
 	anchored = TRUE
 
-	var/obj/item/weapon/gun/rackslot1 = null
-	var/obj/item/weapon/gun/rackslot2 = null
-	var/obj/item/weapon/gun/rackslot3 = null
-	var/obj/item/weapon/gun/rackslot4 = null
+	var/obj/item/weapon/gun/rackslot1
+	var/obj/item/weapon/gun/rackslot2
+	var/obj/item/weapon/gun/rackslot3
+	var/obj/item/weapon/gun/rackslot4
 	var/list/tgui_icons = list()
-
-/obj/structure/closet/secure_closet/guncabinet/fancy/proc/gun_check(obj/item/weapon/gun/G, mob/user)
-	if(!istype(G))
-		to_chat(user, "<span class='notice'>Only firearms are permitted to be racked.</span>")
-		return FALSE
-
-	if(G && G.locker_class != case_type)
-		to_chat(user, "<span class='notice'>This firearm will not fit properly in this rack.</span>")
-		return FALSE
-
-	user.drop_from_inventory(G, src) //Managed to pass our checks
-
-	if(!rackslot1)
-		rackslot1 = G
-		setTguiIcon("rackslot1", rackslot1)
-		update_icon()
-		return TRUE
-
-	else if(!rackslot2)
-		rackslot2 = G
-		setTguiIcon("rackslot2", rackslot2)
-		update_icon()
-		return TRUE
-
-	else if(!rackslot3)
-		rackslot3 = G
-		setTguiIcon("rackslot3", rackslot3)
-		update_icon()
-		return TRUE
-
-	else if(!rackslot4)
-		rackslot4 = G
-		setTguiIcon("rackslot4", rackslot4)
-		update_icon()
-		return TRUE
-
-	else
-		user.put_in_hands(G) //pick it back up because it didn't work
-		to_chat(user, "<span class='warning'>[src] is full.</span>")
-		return FALSE
+	var/list/guninfo = list()
 
 /obj/structure/closet/secure_closet/guncabinet/fancy/proc/setTguiIcon(key, atom/A)
 	if(!istype(A) || !key)
@@ -176,6 +137,7 @@
 	QDEL_NULL(rackslot3)
 	QDEL_NULL(rackslot4)
 	clearTguiIcons()
+	clearGunInfo()
 	return ..()
 
 /obj/structure/closet/secure_closet/guncabinet/fancy/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -228,12 +190,13 @@
 	data["emagged"] = emagged
 	data["open"] = opened
 
-	data["rackslot1"] = get_ammo_status(rackslot1, RACKONE)
-	data["rackslot2"] = get_ammo_status(rackslot2, RACKTWO)
-	data["rackslot3"] = get_ammo_status(rackslot3, RACKTHREE)
-	data["rackslot4"] = get_ammo_status(rackslot4, RACKFOUR)
+	data["rackslot1"] =	rackslot1 ? capitalize(rackslot1.name) : null
+	data["rackslot2"] =	rackslot2 ? capitalize(rackslot2.name) : null
+	data["rackslot3"] =	rackslot3 ? capitalize(rackslot3.name) : null
+	data["rackslot4"] =	rackslot4 ? capitalize(rackslot4.name) : null
 
 	data["icons"] = tgui_icons
+	data["guninfo"] = guninfo
 
 	return data
 
@@ -260,6 +223,7 @@
 				to_chat(usr, "<span class='notice'>You take [rackslot1.name] from [src].</span>")
 				rackslot1 = null
 				nullTguiIcon("rackslot1")
+				nullGunInfo("rackslot1")
 			else
 				gun_check(I, usr)
 
@@ -269,6 +233,7 @@
 				to_chat(usr, "<span class='notice'>You take [rackslot2.name] from [src].</span>")
 				rackslot1 = null
 				nullTguiIcon("rackslot2")
+				nullGunInfo("rackslot2")
 			else
 				gun_check(I, usr)
 
@@ -278,6 +243,7 @@
 				to_chat(usr, "<span class='notice'>You take [rackslot3.name] from [src].</span>")
 				rackslot1 = null
 				nullTguiIcon("rackslot3")
+				nullGunInfo("rackslot3")
 			else
 				gun_check(I, usr)
 
@@ -287,6 +253,7 @@
 				to_chat(usr, "<span class='notice'>You take [rackslot4.name] from [src].</span>")
 				rackslot1 = null
 				nullTguiIcon("rackslot4")
+				nullGunInfo("rackslot4")
 			else
 				gun_check(I, usr)
 		else
@@ -308,10 +275,68 @@
 	locked = !locked
 	return
 
-/obj/structure/closet/secure_closet/guncabinet/fancy/proc/get_ammo_status(var/obj/item/weapon/gun/W, var/number)
+/obj/structure/closet/secure_closet/guncabinet/fancy/proc/gun_check(atom/A)
+	if(!istype(A))
+		return
+	var/obj/item/weapon/gun/W = A
+	if(!istype(W))
+		to_chat(usr, "<span class='notice'>Only firearms are permitted to be racked.</span>")
+		return FALSE
+
+	if(W && W.locker_class != case_type)
+		to_chat(usr, "<span class='notice'>This firearm will not fit properly in this rack.</span>")
+		return FALSE
+
+	usr.drop_from_inventory(W, src) //Managed to pass our checks
+
+	if(!rackslot1)
+		rackslot1 = W
+		setTguiIcon("rackslot1", rackslot1)
+		get_ammo_status("rackslot1", rackslot1)
+		update_icon()
+		return TRUE
+
+	else if(!rackslot2)
+		rackslot2 = W
+		setTguiIcon("rackslot2", rackslot2)
+		get_ammo_status("rackslot2", rackslot2)
+		update_icon()
+		return TRUE
+
+	else if(!rackslot3)
+		rackslot3 = W
+		setTguiIcon("rackslot3", rackslot3)
+		get_ammo_status("rackslot3", rackslot3)
+		update_icon()
+		return TRUE
+
+	else if(!rackslot4)
+		rackslot4 = W
+		setTguiIcon("rackslot4", rackslot4)
+		get_ammo_status("rackslot4", rackslot4)
+		update_icon()
+		return TRUE
+
+	else
+		usr.put_in_hands(W) //pick it back up because it didn't work
+		to_chat(usr, "<span class='warning'>[src] is full.</span>")
+		return FALSE
+
+/obj/structure/closet/secure_closet/guncabinet/fancy/proc/nullGunInfo(key)
+	if(!key)
+		return
+	guninfo.Remove(key)
+	SStgui.update_uis(src)
+
+/obj/structure/closet/secure_closet/guncabinet/fancy/proc/clearGunInfo()
+	guninfo.Cut()
+	SStgui.update_uis(src)
+
+/obj/structure/closet/secure_closet/guncabinet/fancy/proc/get_ammo_status(key, atom/A)
 	var/ammo_max
 	var/ammo_current
 	var/list/gun = list()
+	var/obj/item/weapon/gun/W = A
 	if(W)
 		if(istype(W, /obj/item/weapon/gun/projectile))
 			var/obj/item/weapon/gun/projectile/G = W
@@ -324,14 +349,11 @@
 
 		ammo_current = round((W.get_ammo_count() / ammo_max) * 100)
 		gun.Add(list(list(
-			"name[number]" = capitalize(W.name),
-			"charge[number]" = ammo_current
+			"name" = capitalize(W.name),
+			"charge" = ammo_current
 		)))
-	else
-		gun.Add(list(list(
-			"name[number]" = "No Firearm",
-			"charge[number]" = 1)))
-	return gun
+	guninfo["[key]"] = gun
+	return TRUE
 
 /obj/structure/closet/secure_closet/guncabinet/fancy/update_icon()
 	cut_overlays()

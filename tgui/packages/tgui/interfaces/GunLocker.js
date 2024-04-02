@@ -1,176 +1,139 @@
 import { useBackend } from '../backend';
-import { Box, Button, Icon, Section, ProgressBar, LabeledList } from '../components';
+import { Box, Button, Icon, Section, Stack, ProgressBar, LabeledList } from '../components';
 import { Window } from '../layouts';
 
 export const GunLocker = (props, context) => {
   const { act, data } = useBackend(context);
+  const { rackslot } = props;
 
-  const { broken, locked, rackslot1, rackslot2, rackslot3, rackslot4, icons } =
-    data;
-  const { name1, charge1 } = data.rackslot1;
-  const { name2, charge2 } = data.rackslot2;
-  const { name3, charge3 } = data.rackslot3;
-  const { name4, charge4 } = data.rackslot4;
+  const {
+    welded,
+    emagged,
+    locked,
+    rackslot1,
+    rackslot2,
+    rackslot3,
+    rackslot4,
+    icons,
+  } = data;
 
   return (
-    <Window width={210} height={180}>
+    <Window width={330} height={400}>
       <Window.Content>
-        <Section></Section>
         <Section>
-        <Button
-          width="64px"
-          height="64px"
-          position="relative"
-          tooltip={rackslot1 ? rackslot1 : 'Rack One'}
-          tooltipPosition="bottom-end"
-          color={rackslot1 ? 'grey' : 'transparent'}
-          style={{
-            border: rackslot1 ? null : '2px solid grey',
-          }}
-          onClick={() => act('rackslot1')}>
-          <ArmoryIcons iconkey="rackslot1" />
-        </Button>
-        <Button
-          width="64px"
-          height="64px"
-          position="relative"
-          tooltip={rackslot2 ? rackslot2 : 'Rack Two'}
-          tooltipPosition="bottom"
-          color={rackslot2 ? 'grey' : 'transparent'}
-          style={{
-            border: rackslot2 ? null : '2px solid grey',
-          }}
-          onClick={() => act('rackslot2')}>
-          <ArmoryIcons iconkey="rackslot2" />
-        </Button>
-        <Button
-          width="64px"
-          height="64px"
-          position="relative"
-          tooltip={rackslot3 ? rackslot3 : 'Rack Three'}
-          tooltipPosition="bottom-end"
-          color={rackslot3 ? 'grey' : 'transparent'}
-          style={{
-            border: rackslot3 ? null : '2px solid grey',
-          }}
-          onClick={() => act('rackslot3')}>
-          <ArmoryIcons iconkey="rackslot3" />
-        </Button>
-        <Button
-          width="64px"
-          height="64px"
-          position="relative"
-          tooltip={rackslot4 ? rackslot4 : 'Rack Four'}
-          tooltipPosition="top-end"
-          color={rackslot4 ? 'grey' : 'transparent'}
-          style={{
-            border: rackslot4 ? null : '2px solid grey',
-          }}
-          onClick={() => act('spray')}>
-          <ArmoryIcons iconkey="rackslot4" />
-        </Button>
+          <Button
+            width="64px"
+            height="64px"
+            position="relative"
+            color={rackslot1 ? 'grey' : 'transparent'}
+            style={{
+              border: rackslot1 ? null : '2px solid grey',
+            }}
+            onClick={() => act('rackslot1')}>
+            <ArmoryIcons iconkey="rackslot1" />
+          </Button>
+          <Button
+            width="64px"
+            height="64px"
+            position="relative"
+            color={rackslot2 ? 'grey' : 'transparent'}
+            style={{
+              border: rackslot2 ? null : '2px solid grey',
+            }}
+            onClick={() => act('rackslot2')}>
+            <ArmoryIcons iconkey="rackslot2" />
+          </Button>
+          <Button
+            width="64px"
+            height="64px"
+            position="relative"
+            color={rackslot3 ? 'grey' : 'transparent'}
+            style={{
+              border: rackslot3 ? null : '2px solid grey',
+            }}
+            onClick={() => act('rackslot3')}>
+            <ArmoryIcons iconkey="rackslot3" />
+          </Button>
+          <Button
+            width="64px"
+            height="64px"
+            position="relative"
+            color={rackslot4 ? 'grey' : 'transparent'}
+            style={{
+              border: rackslot4 ? null : '2px solid grey',
+            }}
+            onClick={() => act('rackslot4')}>
+            <ArmoryIcons iconkey="rackslot4" />
+          </Button>
         </Section>
         <Section title="Ammunition Status">
-          <LabeledList>
-            {rackslot1.charge ? (
-              <LabeledList.Item>
-                <Box color="label">
-                  {rackslot1.name} ammunition status <br />
-                  <ProgressBar
-                    ranges={{
-                      bad: [-Infinity, 0],
-                      average: [0, 99],
-                      good: [99, Infinity],
-                    }}
-                    value={rackslot1.charge / 100}
-                    minValue={0}
-                    maxValue={100}
-                  />
-                </Box>
-              </LabeledList.Item>
-            ) : (
-              <LabeledList.Item label="Firearm not present">
-                <Box color="label">Please insert a compatible firearm.</Box>
-              </LabeledList.Item>
-            )}
-            <br />
-            {rackslot2.charge2 ? (
-              <LabeledList.Item>
-                <Box color="label">
-                  {rackslot2.name2} ammunition status <br />
-                  <ProgressBar
-                    ranges={{
-                      bad: [-Infinity, 0],
-                      average: [0, 99],
-                      good: [99, Infinity],
-                    }}
-                    value={rackslot2.charge2 / 100}
-                    minValue={0}
-                    maxValue={100}
-                  />
-                </Box>
-              </LabeledList.Item>
-            ) : (
-              <LabeledList.Item label="Firearm not present">
-                <Box color="label">Please insert a compatible firearm.</Box>
-              </LabeledList.Item>
-            )}
-            <br />
-            {rackslot3.charge3 ? (
-              <LabeledList.Item>
-                <Box color="label">
-                  {rackslot3.name3} ammunition status <br />
-                  <ProgressBar
-                    ranges={{
-                      bad: [-Infinity, 0],
-                      average: [0, 99],
-                      good: [99, Infinity],
-                    }}
-                    value={rackslot3.charge3 / 100}
-                    minValue={0}
-                    maxValue={100}
-                  />
-                </Box>
-              </LabeledList.Item>
-            ) : (
-              <LabeledList.Item label="Firearm not present">
-                <Box color="label">Please insert a compatible firearm.</Box>
-              </LabeledList.Item>
-            )}
-            <br />
-            {rackslot4.charge4 ? (
-              <LabeledList.Item>
-                <Box color="label">
-                  {rackslot4.name4} ammunition status <br />
-                  <ProgressBar
-                    ranges={{
-                      bad: [-Infinity, 0],
-                      average: [0, 99],
-                      good: [99, Infinity],
-                    }}
-                    value={rackslot4.charge4 / 100}
-                    minValue={0}
-                    maxValue={100}
-                  />
-                </Box>
-              </LabeledList.Item>
-            ) : (
-              <LabeledList.Item label="Firearm not present">
-                <Box color="label">Please insert a compatible firearm.</Box>
-              </LabeledList.Item>
-            )}
-            <br />
-          </LabeledList>
+          <Stack.Item>
+            <ArmoryInfo rackslot="rackslot1" />
+          </Stack.Item>
+          <Stack.Item>
+            <ArmoryInfo rackslot="rackslot2" />
+          </Stack.Item>
+          <Stack.Item>
+            <ArmoryInfo rackslot="rackslot3" />
+          </Stack.Item>
+          <Stack.Item>
+            <ArmoryInfo rackslot="rackslot4" />
+          </Stack.Item>
         </Section>
       </Window.Content>
     </Window>
   );
 };
 
+const ArmoryInfo = (props, context) => {
+  const { data } = useBackend(context);
+
+  const { rackslot } = props;
+
+  const { guninfo } = data;
+
+  if (rackslot in guninfo) {
+    return (
+      <LabeledList>
+        <LabeledList.Item>
+          <Box color="label">
+            <ProgressBar
+              key={rackslot}
+              ranges={{
+                bad: [-Infinity, 0],
+                average: [0, 99],
+                good: [99, 100],
+              }}
+              value={rackslot.charge / 100}
+              minValue={0}
+              maxValue={100}
+            />
+          </Box>
+        </LabeledList.Item>
+      </LabeledList>
+    );
+  }
+
+  return (
+    <LabeledList>
+      <LabeledList.Item label="Firearm not present">
+        <Box color="label">Please insert a compatible firearm.</Box>
+      </LabeledList.Item>
+    </LabeledList>
+  );
+};
+
+const iconkeysToIcons = {
+  'rackslot1': 'square-plus',
+  'rackslot2': 'square-plus',
+  'rackslot3': 'square-plus',
+  'rackslot4': 'square-plus',
+};
+
 const ArmoryIcons = (props, context) => {
   const { data } = useBackend(context);
 
-  const { iconkey } = props;
+  const { iconkey, rackslot } = props;
 
   const { icons } = data;
 
@@ -203,6 +166,8 @@ const ArmoryIcons = (props, context) => {
         width: '64px',
         height: '64px',
       }}
+      fontSize={2}
+      name={iconkeysToIcons[iconkey]}
     />
   );
 };
