@@ -1,3 +1,6 @@
+#define GUNCABINET_SPACER 3
+
+
 /obj/structure/closet/secure_closet/guncabinet
 	name = "gun cabinet"
 	icon = 'icons/obj/guncabinet.dmi'
@@ -13,10 +16,32 @@
 	..()
 	update_icon()
 
+//VOREStation Add - gun context controls
+/obj/structure/closet/secure_closet/guncabinet/open() //Don't dump everything to the floor, why would this be a good idea?
+	if(opened)
+		return FALSE
+	if(!can_open())
+		return FALSE
+	opened = TRUE
+	playsound(src, open_sound, 15, 1, -3)
+	update_icon()
+	return TRUE
+
+/obj/structure/closet/secure_closet/guncabinet/close() //Don't auto scoop
+	if(!opened)
+		return FALSE
+	if(!can_close())
+		return FALSE
+	opened = FALSE
+	playsound(src, close_sound, 15, 1, -3)
+	update_icon()
+	return TRUE
+//VOREStation Add End
+
 /obj/structure/closet/secure_closet/guncabinet/update_icon()
 	cut_overlays()
 	if(opened)
-		add_overlay("door_open")
+		add_overlay("door_openold") //VOREStationEDIT all of these should be considered 'old' sprites, but keep backwards compatability.
 	else
 		var/lazors = 0
 		var/shottas = 0
@@ -30,29 +55,29 @@
 				var/image/gun = image(icon(src.icon))
 				if (lazors > shottas)
 					lazors--
-					gun.icon_state = "laser"
+					gun.icon_state = "laserold"
 				else if (shottas)
 					shottas--
-					gun.icon_state = "projectile"
+					gun.icon_state = "projectileold"
 				gun.pixel_x = i*4
 				add_overlay(gun)
 
-		add_overlay("door")
+		add_overlay("doorold")
 
 		if(sealed)
-			add_overlay("sealed")
+			add_overlay("sealedold")
 
 		if(broken)
-			add_overlay("broken")
+			add_overlay("brokenold")
 		else if (locked)
-			add_overlay("locked")
+			add_overlay("lockedold")
 		else
-			add_overlay("open")
+			add_overlay("openold")
 
 //VOREStation Add Start
 /obj/structure/closet/secure_closet/guncabinet/excursion
 	name = "expedition weaponry cabinet"
-	req_one_access = list(access_armory)
+	req_one_access = list(access_explorer,access_armory)
 
 /obj/structure/closet/secure_closet/guncabinet/excursion/New()
 	..()
@@ -60,4 +85,339 @@
 		new /obj/item/weapon/gun/energy/locked/frontier(src)
 	for(var/i = 1 to 2)
 		new /obj/item/weapon/gun/energy/locked/frontier/holdout(src)
+
+//Fancier guncases
+#define RACKONE 1
+#define RACKTWO 2
+#define RACKTHREE 3
+#define RACKFOUR 4
+
+#define GUN_SIDEARM	0
+#define GUN_LONGARM	1
+#define GUN_HEAVY	2
+
+
+/obj/structure/closet/secure_closet/guncabinet/fancy
+	name = "arms locker"
+	icon_state = "shotguncase"
+	desc = "A strong cabinet used for securing firearms."
+	var/case_type = GUN_LONGARM
+	var/welded = FALSE
+	var/emagged = FALSE
+	anchored = TRUE
+
+	var/obj/item/weapon/gun/rackslot1 = null
+	var/obj/item/weapon/gun/rackslot2 = null
+	var/obj/item/weapon/gun/rackslot3 = null
+	var/obj/item/weapon/gun/rackslot4 = null
+	var/list/tgui_icons = list()
+
+/obj/structure/closet/secure_closet/guncabinet/fancy/proc/gun_check(obj/item/weapon/gun/G, mob/user)
+	if(!istype(G))
+		to_chat(user, "<span class='notice'>Only firearms are permitted to be racked.</span>")
+		return FALSE
+
+	if(G && G.locker_class != case_type)
+		to_chat(user, "<span class='notice'>This firearm will not fit properly in this rack.</span>")
+		return FALSE
+
+	user.drop_from_inventory(G, src) //Managed to pass our checks
+
+	if(!rackslot1)
+		rackslot1 = G
+		setTguiIcon("rackslot1", rackslot1)
+		update_icon()
+		return TRUE
+
+	else if(!rackslot2)
+		rackslot2 = G
+		setTguiIcon("rackslot2", rackslot2)
+		update_icon()
+		return TRUE
+
+	else if(!rackslot3)
+		rackslot3 = G
+		setTguiIcon("rackslot3", rackslot3)
+		update_icon()
+		return TRUE
+
+	else if(!rackslot4)
+		rackslot4 = G
+		setTguiIcon("rackslot4", rackslot4)
+		update_icon()
+		return TRUE
+
+	else
+		user.put_in_hands(G) //pick it back up because it didn't work
+		to_chat(user, "<span class='warning'>[src] is full.</span>")
+		return FALSE
+
+/obj/structure/closet/secure_closet/guncabinet/fancy/proc/setTguiIcon(key, atom/A)
+	if(!istype(A) || !key)
+		return
+
+	var/icon/F = getFlatIcon(A, defdir = SOUTH, no_anim = TRUE)
+	tgui_icons["[key]"] = "'data:image/png;base64,[icon2base64(F)]'"
+	SStgui.update_uis(src)
+
+/obj/structure/closet/secure_closet/guncabinet/fancy/proc/nullTguiIcon(key)
+	if(!key)
+		return
+	tgui_icons.Remove(key)
+	SStgui.update_uis(src)
+
+/obj/structure/closet/secure_closet/guncabinet/fancy/proc/clearTguiIcons()
+	tgui_icons.Cut()
+	SStgui.update_uis(src)
+
+/obj/structure/closet/secure_closet/guncabinet/fancy/Destroy()
+	QDEL_NULL(rackslot1)
+	QDEL_NULL(rackslot2)
+	QDEL_NULL(rackslot3)
+	QDEL_NULL(rackslot4)
+	clearTguiIcons()
+	return ..()
+
+/obj/structure/closet/secure_closet/guncabinet/fancy/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(issilicon(user) || isalien(user))
+		return
+
+	if(!Adjacent(user))
+		return
+
+	if(istype(W, /obj/item/weapon/gun) && opened)
+		var/obj/item/weapon/gun/G = W
+		gun_check(G,user) //This check inserts or denies as needed
+
+	if(istype(W, /obj/item/weapon/weldingtool) && !opened && locked)
+		var/obj/item/weapon/weldingtool/WT = W
+		if (WT.remove_fuel(0, user))
+			playsound(src, WT.usesound, 50, 1)
+			user.visible_message("<span class='danger'>[user] begins cutting through [src]'s lock.</span>", "You start cutting through the lock.", "<span class='notice'>You hear a welder in use.</span>")
+			if(do_after(user, (4 SECONDS) * WT.toolspeed))
+				welded = TRUE
+				opened = TRUE
+
+	if(istype(W, /obj/item/weapon/melee/energy/blade) && !opened && locked)
+		if(emag_act(INFINITY, user, "<span class='danger'>\The [src] has been sliced open by [user] with \an [W]</span>!", "<span class='danger'>You hear metal being sliced and sparks flying.</span>"))
+			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+			spark_system.set_up(5, 0, loc)
+			spark_system.start()
+			playsound(src, 'sound/weapons/blade1.ogg', 50, 1)
+			playsound(src, "sparks", 50, 1)
+
+/obj/structure/closet/secure_closet/guncabinet/fancy/attack_hand(mob/user as mob)
+	tgui_interact(user)
+
+/obj/structure/closet/secure_closet/guncabinet/fancy/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "GunLocker", name)
+		ui.open()
+
+/obj/structure/closet/secure_closet/guncabinet/fancy/tgui_status(mob/user)
+	if(broken)
+		return STATUS_CLOSE
+	return ..()
+
+/obj/structure/closet/secure_closet/guncabinet/fancy/tgui_data()
+	var/list/data = list()
+
+	data["welded"] = welded
+	data["locked"] = locked
+	data["emagged"] = emagged
+	data["open"] = opened
+
+	data["rackslot1"] = get_ammo_status(rackslot1, RACKONE)
+	data["rackslot2"] = get_ammo_status(rackslot2, RACKTWO)
+	data["rackslot3"] = get_ammo_status(rackslot3, RACKTHREE)
+	data["rackslot4"] = get_ammo_status(rackslot4, RACKFOUR)
+
+	data["icons"] = tgui_icons
+
+	return data
+
+/obj/structure/closet/secure_closet/guncabinet/fancy/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
+	if(..())
+		return TRUE
+
+	usr.set_machine(src)
+	add_fingerprint(usr)
+
+	var/obj/item/I = usr.get_active_hand()
+
+	switch(action)
+		if("open")
+			toggle_open(usr)
+			return TRUE
+		if("lock")
+			toggle_lock(usr)
+			return TRUE
+
+		if("rackslot1")
+			if(rackslot1)
+				usr.put_in_hands(rackslot1)
+				to_chat(usr, "<span class='notice'>You take [rackslot1.name] from [src].</span>")
+				rackslot1 = null
+				nullTguiIcon("rackslot1")
+			else
+				gun_check(I, usr)
+
+		if("rackslot2")
+			if(rackslot1)
+				usr.put_in_hands(rackslot2)
+				to_chat(usr, "<span class='notice'>You take [rackslot2.name] from [src].</span>")
+				rackslot1 = null
+				nullTguiIcon("rackslot2")
+			else
+				gun_check(I, usr)
+
+		if("rackslot3")
+			if(rackslot1)
+				usr.put_in_hands(rackslot3)
+				to_chat(usr, "<span class='notice'>You take [rackslot3.name] from [src].</span>")
+				rackslot1 = null
+				nullTguiIcon("rackslot3")
+			else
+				gun_check(I, usr)
+
+		if("rackslot4")
+			if(rackslot1)
+				usr.put_in_hands(rackslot4)
+				to_chat(usr, "<span class='notice'>You take [rackslot4.name] from [src].</span>")
+				rackslot1 = null
+				nullTguiIcon("rackslot4")
+			else
+				gun_check(I, usr)
+		else
+			return FALSE
+
+	update_icon()
+	return TRUE
+
+/obj/structure/closet/secure_closet/guncabinet/fancy/proc/toggle_open(mob/user as mob)
+	if(locked)
+		to_chat(user, "<font color='red'>It's locked.</font>")
+		return
+	opened = !opened
+	return
+
+/obj/structure/closet/secure_closet/guncabinet/fancy/proc/toggle_lock(mob/user as mob)
+	if(opened || welded || emagged) //All of these states nullify the ability to lock the doors.
+		return
+	locked = !locked
+	return
+
+/obj/structure/closet/secure_closet/guncabinet/fancy/proc/get_ammo_status(var/obj/item/weapon/gun/W, var/number)
+	var/ammo_max
+	var/ammo_current
+	var/list/gun = list()
+	if(W)
+		if(istype(W, /obj/item/weapon/gun/projectile))
+			var/obj/item/weapon/gun/projectile/G = W
+			ammo_max = G.max_shells
+		else if(istype(W, /obj/item/weapon/gun/energy))
+			var/obj/item/weapon/gun/energy/G = W
+			ammo_max = G.power_supply.maxcharge
+		else
+			ammo_max = 1
+
+		ammo_current = round((W.get_ammo_count() / ammo_max) * 100)
+		gun.Add(list(list(
+			"name[number]" = capitalize(W.name),
+			"charge[number]" = ammo_current
+		)))
+	else
+		gun.Add(list(list(
+			"name[number]" = "No Firearm",
+			"charge[number]" = 1)))
+	return gun
+
+/obj/structure/closet/secure_closet/guncabinet/fancy/update_icon()
+	cut_overlays()
+	if(contents)
+		for(var/i in 1 to contents.len)
+			var/obj/item/weapon/gun/G = contents[i]
+			var/mutable_appearance/gun_overlay = mutable_appearance(icon, G.overlay_type)
+			gun_overlay.pixel_x = 0 //reset, just in case.
+			if(rackslot1 && rackslot1 == G)
+				gun_overlay.pixel_x = GUNCABINET_SPACER * (RACKONE - 1)
+				add_overlay(gun_overlay)
+			else if(rackslot2 && rackslot2 == G)
+				gun_overlay.pixel_x = GUNCABINET_SPACER * (RACKTWO - 1)
+				add_overlay(gun_overlay)
+			else if(rackslot3 && rackslot3 == G)
+				gun_overlay.pixel_x = GUNCABINET_SPACER * (RACKTHREE - 1)
+				add_overlay(gun_overlay)
+			else if(rackslot4 && rackslot4 == G)
+				gun_overlay.pixel_x = GUNCABINET_SPACER * (RACKFOUR - 1)
+				add_overlay(gun_overlay)
+				//Probably a better way of doing this but my brain's smooth.
+
+	if(welded && opened)
+		add_overlay("[icon_state]_cut")
+		layer = OBJ_LAYER
+		return
+	else if(welded && !opened)
+		add_overlay("[icon_state]_doorcut")
+		layer = OBJ_LAYER
+		return
+	else if(!welded && opened)
+		add_overlay("[icon_state]_open")
+		layer = OBJ_LAYER
+		return
+	else
+		add_overlay("[icon_state]_door")
+		if(emagged)
+			add_overlay("[icon_state]_off")
+			return
+		else if(locked)
+			add_overlay("[icon_state]_locked")
+		else
+			add_overlay("[icon_state]_unlocked")
+		return
+
+/obj/structure/closet/secure_closet/guncabinet/fancy/emag_act(var/remaining_charges, var/mob/user, var/feedback)
+	if(!emagged)
+		emagged = TRUE
+		flick("[icon_state]_sparking",src)
+		sleep(3)
+		locked = FALSE
+		to_chat(user, (feedback ? feedback : "You short out the lock of \the [src]."))
+		update_icon()
+		return TRUE
+
+/obj/structure/closet/secure_closet/guncabinet/fancy/shotgun
+	name = "long arms locker"
+	icon_state = "shotguncase"
+
+/obj/structure/closet/secure_closet/guncabinet/fancy/rifle
+	name = "long arms locker"
+	icon_state = "riflecase"
+	desc = "A strong cabinet used for securing firearms. This one is for long arms such as rifles and shotguns."
+
+
+/obj/structure/closet/secure_closet/guncabinet/fancy/rifle/wood
+	icon_state = "riflefancy"
+
+
+/obj/structure/closet/secure_closet/guncabinet/fancy/pistol
+	name = "small arms locker"
+	icon_state = "pistolcase"
+	desc = "A strong cabinet used for securing firearms. This one is for hand-held sidearms."
+	case_type = GUN_SIDEARM
+
+/obj/structure/closet/secure_closet/guncabinet/fancy/pistol/wood
+	icon_state = "fancypistol"
+
+#undef RACKONE
+#undef RACKTWO
+#undef RACKTHREE
+#undef RACKFOUR
+
+#undef GUN_SIDEARM
+#undef GUN_LONGARM
+#undef GUN_HEAVY
+
+#undef GUNCABINET_SPACER
 //VOREStation Add End
