@@ -15,56 +15,67 @@ export const GunLocker = (props, context) => {
     rackslot3,
     rackslot4,
     icons,
+    guninfo,
   } = data;
 
   return (
     <Window width={330} height={400}>
       <Window.Content>
         <Section>
-          <Button
-            width="64px"
-            height="64px"
-            position="relative"
-            color={rackslot1 ? 'grey' : 'transparent'}
-            style={{
-              border: rackslot1 ? null : '2px solid grey',
-            }}
-            onClick={() => act('rackslot1')}>
-            <ArmoryIcons iconkey="rackslot1" />
-          </Button>
-          <Button
-            width="64px"
-            height="64px"
-            position="relative"
-            color={rackslot2 ? 'grey' : 'transparent'}
-            style={{
-              border: rackslot2 ? null : '2px solid grey',
-            }}
-            onClick={() => act('rackslot2')}>
-            <ArmoryIcons iconkey="rackslot2" />
-          </Button>
-          <Button
-            width="64px"
-            height="64px"
-            position="relative"
-            color={rackslot3 ? 'grey' : 'transparent'}
-            style={{
-              border: rackslot3 ? null : '2px solid grey',
-            }}
-            onClick={() => act('rackslot3')}>
-            <ArmoryIcons iconkey="rackslot3" />
-          </Button>
-          <Button
-            width="64px"
-            height="64px"
-            position="relative"
-            color={rackslot4 ? 'grey' : 'transparent'}
-            style={{
-              border: rackslot4 ? null : '2px solid grey',
-            }}
-            onClick={() => act('rackslot4')}>
-            <ArmoryIcons iconkey="rackslot4" />
-          </Button>
+          <Stack>
+            <Stack.Item>
+              <Button
+                width="64px"
+                height="64px"
+                position="relative"
+                color={rackslot1 ? 'grey' : 'transparent'}
+                style={{
+                  border: rackslot1 ? null : '2px solid grey',
+                }}
+                onClick={() => act('rackslot1')}>
+                <ArmoryIcons iconkey="rackslot1" />
+              </Button>
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                width="64px"
+                height="64px"
+                position="relative"
+                color={rackslot2 ? 'grey' : 'transparent'}
+                style={{
+                  border: rackslot2 ? null : '2px solid grey',
+                }}
+                onClick={() => act('rackslot2')}>
+                <ArmoryIcons iconkey="rackslot2" />
+              </Button>
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                width="64px"
+                height="64px"
+                position="relative"
+                color={rackslot3 ? 'grey' : 'transparent'}
+                style={{
+                  border: rackslot3 ? null : '2px solid grey',
+                }}
+                onClick={() => act('rackslot3')}>
+                <ArmoryIcons iconkey="rackslot3" />
+              </Button>
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                width="64px"
+                height="64px"
+                position="relative"
+                color={rackslot4 ? 'grey' : 'transparent'}
+                style={{
+                  border: rackslot4 ? null : '2px solid grey',
+                }}
+                onClick={() => act('rackslot4')}>
+                <ArmoryIcons iconkey="rackslot4" />
+              </Button>
+            </Stack.Item>
+          </Stack>
         </Section>
         <Section title="Ammunition Status">
           <Stack.Item>
@@ -102,7 +113,7 @@ const ArmoryInfo = (props, context) => {
               ranges={{
                 bad: [-Infinity, 0],
                 average: [0, 99],
-                good: [99, 100],
+                good: [99, Infinity],
               }}
               value={rackslot.charge / 100}
               minValue={0}
