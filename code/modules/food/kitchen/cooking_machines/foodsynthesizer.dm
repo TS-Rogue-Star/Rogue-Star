@@ -55,8 +55,9 @@
 	var/list/voicephrase
 
 	//crew printing required stuff.
-	var/datum/data/record/activecrew
-	var/refresh_delay = 1 MINUTE
+	var/tgui_icons
+	var/activecrew
+	var/refresh_delay = 10 SECONDS
 
 
 /obj/machinery/synthesizer/Initialize()
@@ -92,6 +93,7 @@
 	for(var/obj/item/weapon/reagent_containers/synthdispcart/C in cart)
 		C.loc = get_turf(src.loc)
 		C = null
+	clearTguiIcons()
 	return ..()
 
 /obj/machinery/synthesizer/examine(mob/user)
@@ -108,6 +110,17 @@
 
 // TGUI to do.
 
+// Crew Cookie backend stuff... I can't even fuckin' believe this is Janicart stuff
+/obj/machinery/synthesizer/proc/setTguiIcon(var/mob/M)
+	var/icon/F = icon(cached_character_icon(M), dir = SOUTH)
+	tgui_icons = "'data:image/png;base64,[icon2base64(F)]'"
+	SStgui.update_uis(src)
+
+/obj/machinery/synthesizer/proc/clearTguiIcons()
+	tgui_icons = null
+	SStgui.update_uis(src)
+
+// And literally this is all that's needed for conventional meals. lmao.
 /obj/machinery/synthesizer/ui_assets(mob/user)
 	return list(
 		get_asset_datum(/datum/asset/spritesheet/synthesizer),
@@ -150,36 +163,7 @@
 		data["cartFillStatus"] = cart ? percent : null
 
 	data["activecrew"] = activecrew
-	if(activecrew) //starts off null so we'll wait for user input
-		var/list/crewdata = list()
-		data["crewdata"] = crewdata
-		if(istype(activecrew, /datum/data/record) && data_core.general.Find(activecrew))
-			var/list/fields = list()
-			crewdata["fields"] = fields
-			fields[++fields.len] = FIELD("Name", activecrew.fields["name"], "name")
-			fields[++fields.len] = FIELD("ID", activecrew.fields["id"], "id")
-			fields[++fields.len] = FIELD("Rank", activecrew.fields["rank"], "rank")
-			fields[++fields.len] = FIELD("Entity Classification", activecrew.fields["brain_type"], "brain_type")
-			fields[++fields.len] = FIELD("Sex", activecrew.fields["sex"], "sex")
-			fields[++fields.len] = FIELD("Species", activecrew.fields["species"], "species")
-
-			// Attempt to grab the photo
-			var/icon/front
-			if(iscarbon(activecrew))
-				var/icon/charicon = cached_character_icon(activecrew)
-				front = icon(charicon, dir = SOUTH, frame = 1)
-			else // Sending null things through browse_rsc() makes a runtime and breaks the console trying to view the record.
-				front = icon('html/images/no_image32.png')
-
-			var/list/photos = list()
-			crewdata["photos"] = photos
-			photos[++photos.len] = "'data:image/png;base64,[icon2base64(front)]'"
-			crewdata["has_photos"] = ("'data:image/png;base64,[icon2base64(front)]'" ? 1 : 0)
-			crewdata["empty"] = FALSE
-		else
-			crewdata["empty"] = TRUE
-
-
+	data["crewicon"] = tgui_icons
 	return data
 
 /obj/machinery/synthesizer/tgui_static_data(mob/user)
@@ -280,9 +264,10 @@
 
 		if("setactive_crew")
 			activecrew = params["setactive_crew"]
-			return TRUE
-
-		if("crew_photo")
+			clearTguiIcons()
+			for(var/mob/M in mob_list)
+				M = mob_list.Find(activecrew)
+				setTguiIcon(M)
 			return TRUE
 
 		if("make")
@@ -354,68 +339,64 @@
 				delay = world.time + refresh_delay
 				return TRUE
 			else
-				to_chat(usr, "<span class='danger'>Spam Protection cooldown isn't finished! Please wait [round(delay/60)] seconds...</span>")
+				to_chat(usr, "<span class='danger'>Spam Protection cooldown isn't finished!</span>")
 
 		if("crewprint")
-	/*		var/datum/category_item/synthesizer/making = locate(params["crewprint"])
-			if(!istype(making))
-				return
-			if(making.hidden && !hacked)
-				return
-
+			var/active_crew = locate(params["crewprint"])
 			//Check if we still have the materials.
 			var/obj/item/weapon/reagent_containers/synthdispcart/C = cart
-			if(src.check_cart(usr, C))
+			if(src.check_cart(C, usr))
 				//Sanity check.
-				if(!making || !src)
-					return
-				if(istype(active_br))
-					busy = TRUE
-					update_use_power(USE_POWER_ACTIVE)
-					update_icon() // light up time
-					playsound(src, 'sound/machines/replicator_input_ok.ogg', 100)
-					var/obj/item/weapon/reagent_containers/food/snacks/food_mimic = new making.path(src)
-					making.client.prefs.dress_preview_mob(making.mannequin)
-					food_mimic_storage = mannequin //stuff the micro in the scanner
-					sleep(speed_grade) //machine go brrr
-					playsound(src, 'sound/machines/replicator_working.ogg', 150)
+				busy = TRUE
+				update_use_power(USE_POWER_ACTIVE)
+				update_icon() // light up time
+				playsound(src, 'sound/machines/replicator_input_ok.ogg', 100)
+				sleep(speed_grade) //machine go brrr
+				playsound(src, 'sound/machines/replicator_working.ogg', 150)
 
-					//Create the cookie base.
-					var/obj/item/weapon/reagent_containers/food/snacks/synthsized_meal/crewblock/meal = new /obj/item/weapon/reagent_containers/food/snacks/synthsized_meal/crewblock(src.loc)
+				//Create the cookie base.
+				var/obj/item/weapon/reagent_containers/food/snacks/synthsized_meal/crewblock/meal = new /obj/item/weapon/reagent_containers/food/snacks/synthsized_meal/crewblock(src.loc)
 
-					//Begin mimicking the micro
-					meal.name = data["crewdata"]["fields"]
+				//Begin mimicking the micro
+				for(var/mob/M in mob_list)
+					M = mob_list.Find(active_crew)
+					var/vore_flavor
+					if(isliving(M))
+						var/mob/living/L = M
+						if(L.vore_taste)
+							vore_flavor = L.vore_taste
+						else
+							vore_flavor = "Something impalpable"
+					else
+						vore_flavor = "Something impalpable"
+
+					meal.name = M.name
 					meal.desc = "A tiny replica of a crewmate!"
-					meal.icon = mannequin.icon
-					meal.icon_state = mannequin.icon_state
+					meal.icon = tgui_icons
+					meal.icon_state = null
 
-					//flavor mixing
-					var/taste_output = food_mimic.reagents.generate_taste_message()
+					//flavor mixing, make the cookie taste somewhat like the real thing!
 					for(var/datum/reagent/F in meal.reagents.reagent_list)
 						if(F.id == "nutripaste") //This should be the only reagent, actually.
-							F.taste_description += " as well as [taste_output]"
+							F.taste_description += " as well as [vore_flavor]"
 							F.data = list(F.taste_description = 1)
 							meal.nutriment_desc = list(F.taste_description = 1)
 
-					if(src.menu_grade >= 2) //Is the machine upgraded?
-						meal.reagents.add_reagent("nutripaste", ((1 * src.menu_grade) - 1)) //add the missing Nutriment bonus, subtracting the one we've already added in.
+				if(src.menu_grade >= 2) //Is the machine upgraded?
+					meal.reagents.add_reagent("nutripaste", ((1 * src.menu_grade) - 1)) //add the missing Nutriment bonus, subtracting the one we've already added in.
 
-					meal.bitesize = 1 //Smol tiny critter mimics
-					meal.filling_color = food_mimic?.filling_color
-					meal.trash = food_mimic?.trash	//If this can lead to exploits then we'll remove it, but I like the idea.
-					qdel(food_mimic)
-					src.food_mimic_storage = null
-					src.audible_message("<span class='notice'>Please take your [meal.name].</span>", runemessage = "[meal.name] is complete!")
-					if(Adjacent(usr))
-						usr.put_in_any_hand_if_possible(meal) //Autoplace in hands to save a click
-					else
-						meal.loc = src.loc //otherwise we anti-clump layer onto the floor
-						meal.randpixel_xy()
-					busy = FALSE
-					update_icon() //turn off lights, please.
+				meal.bitesize = 1 //Smol tiny critter mimics
+				src.audible_message("<span class='notice'>Please take your miniature [meal.name].</span>", runemessage = "Minature [meal.name] is complete!")
+				if(Adjacent(usr))
+					usr.put_in_any_hand_if_possible(meal) //Autoplace in hands to save a click
+				else
+					meal.loc = src.loc //otherwise we anti-clump layer onto the floor
+					meal.randpixel_xy()
+				busy = FALSE
+				update_icon() //turn off lights, please.
 			else
 				src.audible_message("<span class='notice'>Error: Insufficent Materials. SabreSnacks recommends you have a genuine replacement cartridge available to install.</span>", runemessage = "Error: Insufficent Materials!")
-				*/
+
 			return TRUE
 
 /obj/machinery/synthesizer/update_icon()

@@ -98,9 +98,10 @@ const FoodMenuTabs = (props, context) => {
 
 const FoodSelectionMenu = (props, context) => {
   const { act, data } = useBackend(context);
-  const { active_menu, recipes, crewdata, crew_cookies, activecrew } = data;
+  const { active_menu, recipes, crewdata, crew_cookies, activecrew, crewicon } =
+    data;
   const { hidden } = data.recipes;
-  //  const { fields } = data.crewdata;
+
   if (!recipes) {
     return <Box color="bad">Recipes records missing!</Box>;
   }
@@ -116,6 +117,11 @@ const FoodSelectionMenu = (props, context) => {
     filter((recipe) => !recipe.hidden || hidden),
     sortBy((recipe) => recipe.name),
   ])(recipes);
+
+  let handleActivecookie = (newCookie) => {
+    setActiveCookie(newCookie);
+    act('setactive_crew', { 'setactive_crew': newCookie });
+  };
 
   const [ActiveCookie, setActiveCookie] = useSharedState(
     context,
@@ -142,7 +148,7 @@ const FoodSelectionMenu = (props, context) => {
                       fluid
                       content={cookie.name}
                       selected={cookie === ActiveCookie}
-                      onClick={() => setActiveCookie(cookie.name)}
+                      onClick={() => handleActivecookie(cookie)}
                     />
                   </Tabs.Tab>
                 ))}
@@ -160,32 +166,25 @@ const FoodSelectionMenu = (props, context) => {
                           {ActiveCookie.name}
                         </LabeledList.Item>
                         <br />
-                        <LabeledList.Item label="Description">
+                        <LabeledList.Item label="Species">
                           {ActiveCookie.species}
                         </LabeledList.Item>
                       </LabeledList>
-                    </Stack.Item>
-                    <Flex.Item textAlign="right">
-                      <Box
-                        inline
-                        style={{
-                          width: '101px',
-                          height: '120px',
-                          overflow: 'hidden',
-                          outline: '2px solid #4972a1',
-                        }}>
-                        {crewdata.photos && (
-                          <img
-                            src={crewdata.photos.substr(1, photos.length - 1)}
-                            style={{
-                              width: '300px',
-                              'margin-left': '-94px',
-                              '-ms-interpolation-mode': 'nearest-neighbor',
-                            }}
-                          />
-                        )}
-                      </Box>
                       <br />
+                      <img
+                        src={crewicon.substr(1, crewicon.length - 1)}
+                        style={{
+                          width: '96px',
+                          height: '96px',
+                        }}
+                      />
+                      <br />
+                      <Button
+                        content="Print this Cookie"
+                        onClick={() =>
+                          act('crewprint', { crewprint: ActiveCookie.name })
+                        }
+                      />
                       <br />
                       <br />
                       <Box>
@@ -194,7 +193,7 @@ const FoodSelectionMenu = (props, context) => {
                           onClick={() => act('refresh')}
                         />
                       </Box>
-                    </Flex.Item>
+                    </Stack.Item>
                   </Stack>
                 </Box>
               </Section>
@@ -251,10 +250,6 @@ const FoodSelectionMenu = (props, context) => {
                     <LabeledList.Item label="Description">
                       {ActiveFood.desc}
                     </LabeledList.Item>
-                    <br />
-                    <LabeledList.Item label="Serving Temprature">
-                      {ActiveFood.voice_temp}
-                    </LabeledList.Item>
                   </LabeledList>
                   <br />
                   <Button
@@ -273,30 +268,3 @@ const FoodSelectionMenu = (props, context) => {
     </Section>
   );
 };
-
-/*  <Flex.Item textAlign="right">
-              {!!crewdata.has_photos &&
-                crewdata.photos.map((p, i) => (
-                  <Box
-                    key={i}
-                    display="inline-block"
-                    textAlign="center"
-                    color="label">
-                    <img
-                      src={p.substr(1, p.length - 1)}
-                      style={{
-                        width: '96px',
-                        'margin-bottom': '0.5rem',
-                        '-ms-interpolation-mode': 'nearest-neighbor',
-                      }}
-                    />
-                    <br />
-                    {i}
-                  </Box>
-                ))}
-              <Box>
-                <Button onClick={() => act('crew_photo')}>
-                  Update Crew Photo
-                </Button>
-              </Box>
-            </Flex.Item> */
