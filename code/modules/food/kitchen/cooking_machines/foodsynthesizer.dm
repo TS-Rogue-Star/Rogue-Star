@@ -112,15 +112,10 @@
 
 // Crew Cookie backend stuff... I can't even fuckin' believe this is Janicart stuff
 /obj/machinery/synthesizer/proc/setTguiIcon(var/mob/living/L)
-	to_chat(world, "setTguiIcon called [L]")
 	if(!isliving(L))
-		to_chat(world, "setTguiIcon considered [L] a failure")
 		return
-
 	var/icon/F = getFlatIcon(L, defdir = SOUTH, no_anim = TRUE)
-	to_chat(world, "setTguiIcon making icon with [F]")
 	tgui_icons = "'data:image/png;base64,[icon2base64(F)]'"
-	to_chat(world, "setTguiIcon set to [tgui_icons]")
 	SStgui.update_uis(src)
 
 /obj/machinery/synthesizer/proc/clearTguiIcons()
@@ -274,12 +269,20 @@
 			activecrew = params["setactive_crew"]
 			if(tgui_icons)
 				clearTguiIcons()
-			to_chat(world, "setactive_crew called with [params["setactive_crew"]]")
-			var/mob/living/mobtopicture = get_mob_for_picture(activecrew)
-			to_chat(world, "mobtopicture is [mobtopicture] who has a real name of [mobtopicture.real_name]")
-			if(mobtopicture)
-				setTguiIcon(mobtopicture)
+
+			var/mob/found
+			for(var/mob/living/L in player_list)
+				if(L.real_name == activecrew)
+					found = L
+					break
+
+			if(found)
+				if(!get_mob_for_picture(found))
+					return FALSE
+				setTguiIcon(found)
 				return TRUE
+			else
+				return FALSE
 
 		if("make")
 			var/datum/category_item/synthesizer/making = locate(params["make"])
@@ -348,37 +351,40 @@
 			return TRUE
 
 		if("crewprint")
-			var/active_crew = locate(params["crewprint"])
-			//Check if we still have the materials.
-			var/obj/item/weapon/reagent_containers/synthdispcart/C = cart
-			if(src.check_cart(C, usr))
-				//Sanity check.
-				busy = TRUE
-				update_use_power(USE_POWER_ACTIVE)
-				update_icon() // light up time
-				playsound(src, 'sound/machines/replicator_input_ok.ogg', 100)
-				sleep(speed_grade) //machine go brrr
-				playsound(src, 'sound/machines/replicator_working.ogg', 150)
+			var/active_crew = params["crewprint"]
+			var/mob/found
+			for(var/mob/living/L in player_list)
+				if(L.real_name == active_crew)
+					found = L
+					break
 
-				//Create the cookie base.
-				var/obj/item/weapon/reagent_containers/food/snacks/synthsized_meal/crewblock/meal = new /obj/item/weapon/reagent_containers/food/snacks/synthsized_meal/crewblock(src.loc)
+			if(found)
+				if(!get_mob_for_picture(found)) //verify that we can still print this person
+					return FALSE
+				//Check if we still have the materials.
+				var/obj/item/weapon/reagent_containers/synthdispcart/C = cart
+				if(src.check_cart(C, usr))
+					//Sanity check.
+					busy = TRUE
+					update_use_power(USE_POWER_ACTIVE)
+					update_icon() // light up time
+					playsound(src, 'sound/machines/replicator_input_ok.ogg', 100)
+					sleep(speed_grade) //machine go brrr
+					playsound(src, 'sound/machines/replicator_working.ogg', 150)
 
-				//Begin mimicking the micro
-				for(var/mob/M in mob_list)
-					M = active_crew
+					//Create the cookie base.
+					var/obj/item/weapon/reagent_containers/food/snacks/synthsized_meal/crewblock/meal = new /obj/item/weapon/reagent_containers/food/snacks/synthsized_meal/crewblock(src.loc)
+
+					//Begin mimicking the micro
 					var/vore_flavor
-					if(isliving(M))
-						var/mob/living/L = M
-						if(L.vore_taste)
-							vore_flavor = L.vore_taste
-						else
-							vore_flavor = "Something impalpable"
+					if(found.vore_taste)
+						vore_flavor = found.vore_taste
 					else
 						vore_flavor = "Something impalpable"
 
-					meal.name = M.name
+					meal.name = found.real_name
 					meal.desc = "A tiny replica of a crewmate!"
-					meal.icon = tgui_icons
+					meal.icon = getFlatIcon(found, defdir = SOUTH, no_anim = TRUE)
 					meal.icon_state = null
 
 					//flavor mixing, make the cookie taste somewhat like the real thing!
@@ -388,22 +394,25 @@
 							F.data = list(F.taste_description = 1)
 							meal.nutriment_desc = list(F.taste_description = 1)
 
-				if(src.menu_grade >= 2) //Is the machine upgraded?
-					meal.reagents.add_reagent("nutripaste", ((1 * src.menu_grade) - 1)) //add the missing Nutriment bonus, subtracting the one we've already added in.
+					if(src.menu_grade >= 2) //Is the machine upgraded?
+						meal.reagents.add_reagent("nutripaste", ((1 * src.menu_grade) - 1)) //add the missing Nutriment bonus, subtracting the one we've already added in.
 
-				meal.bitesize = 1 //Smol tiny critter mimics
-				src.audible_message("<span class='notice'>Please take your miniature [meal.name].</span>", runemessage = "Minature [meal.name] is complete!")
-				if(Adjacent(usr))
-					usr.put_in_any_hand_if_possible(meal) //Autoplace in hands to save a click
+					meal.bitesize = 1 //Smol tiny critter mimics
+					src.audible_message("<span class='notice'>Please take your miniature [meal.name].</span>", runemessage = "Minature [meal.name] is complete!")
+					if(Adjacent(usr))
+						usr.put_in_any_hand_if_possible(meal) //Autoplace in hands to save a click
+					else
+						meal.loc = src.loc //otherwise we anti-clump layer onto the floor
+						meal.randpixel_xy()
+					busy = FALSE
+					update_icon() //turn off lights, please.
 				else
-					meal.loc = src.loc //otherwise we anti-clump layer onto the floor
-					meal.randpixel_xy()
-				busy = FALSE
-				update_icon() //turn off lights, please.
+					src.audible_message("<span class='notice'>Error: Insufficent Materials. SabreSnacks recommends you have a genuine replacement cartridge available to install.</span>", runemessage = "Error: Insufficent Materials!")
+					return FALSE
+				return TRUE
 			else
-				src.audible_message("<span class='notice'>Error: Insufficent Materials. SabreSnacks recommends you have a genuine replacement cartridge available to install.</span>", runemessage = "Error: Insufficent Materials!")
-
-			return TRUE
+				to_chat(usr, "Warning: Invalid selection.")
+				return FALSE
 
 /obj/machinery/synthesizer/update_icon()
 	cut_overlays()
@@ -508,9 +517,17 @@
 		return TRUE
 
 /obj/machinery/synthesizer/proc/get_mob_for_picture(var/mob/living/LM)
-	for(var/mob/living/L in living_mob_list)
-		L = LM
-		return L
+	for(var/client/C in GLOB.clients)
+		if(C?.mob?.mind && !C?.prefs?.synth_cookie)
+			continue
+
+		LM = C.mob
+
+		if(!isliving(LM))
+			to_chat(usr, "Warning: Invalid selection. Please refresh the database.")
+			return FALSE
+
+		return TRUE
 
 /obj/machinery/synthesizer/attackby(obj/item/W, mob/user)
 	if(busy)

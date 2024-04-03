@@ -98,8 +98,7 @@ const FoodMenuTabs = (props, context) => {
 
 const FoodSelectionMenu = (props, context) => {
   const { act, data } = useBackend(context);
-  const { active_menu, recipes, crewdata, crew_cookies, activecrew } =
-    data;
+  const { active_menu, recipes, crewdata, crew_cookies, activecrew } = data;
   const { hidden } = data.recipes;
 
   const { iconkey } = props;
@@ -172,15 +171,13 @@ const FoodSelectionMenu = (props, context) => {
                           {ActiveCookie.species}
                         </LabeledList.Item>
                       </LabeledList>
-                      <br />
-                      <CrewCookieIcon key={ActiveCookie.name} />
-                      <br />
                       <Button
                         content="Print this Cookie"
                         onClick={() =>
                           act('crewprint', { crewprint: ActiveCookie.name })
-                        }
-                      />
+                        }>
+                        <CrewCookieIcon key={ActiveCookie.name} />
+                      </Button>
                       <br />
                       <br />
                       <Box>
@@ -248,13 +245,24 @@ const FoodSelectionMenu = (props, context) => {
                     </LabeledList.Item>
                   </LabeledList>
                   <br />
-                  <Button
-                    width={'128px'}
-                    height={'128px'}
-                    className={classes(['synthesizer128x128', ActiveFood.id])}
-                    onClick={() => act('make', { make: ActiveFood.ref })}
-                  />
-                  <Box color="label">Click to print the meal.</Box>
+                  {ActiveFood ? (
+                    <Section>
+                      <Button
+                        content="Print this meal"
+                        width={'128px'}
+                        height={'128px'}
+                        className={classes([
+                          'synthesizer128x128',
+                          ActiveFood.id,
+                        ])}
+                        onClick={() => act('make', { make: ActiveFood.ref })}
+                      />{' '}
+                    </Section>
+                  ) : (
+                    <Section>
+                      <Box color="label">Please select an offering.</Box>
+                    </Section>
+                  )}
                 </Stack.Item>
               </Stack>
             </Box>
@@ -267,42 +275,39 @@ const FoodSelectionMenu = (props, context) => {
 
 const CrewCookieIcon = (props, context) => {
   const { data } = useBackend(context);
-
-  const { iconkey } = props;
-
-  const { crewicon, activecrew } = data;
-
-  if (crewicon) {
-    return (
-      <img
-        src={crewicon.substr(1, crewicon.length - 1)}
-        style={{
-          position: 'relative',
-          left: 0,
-          right: 0,
-          top: 0,
-          bottom: 0,
-          width: '64px',
-          height: '64px',
-          '-ms-interpolation-mode': 'nearest-neighbor',
-        }}
-      />
-    );
-  }
+  const { crewicon } = data;
 
   return (
-    <Icon
-      style={{
-        position: 'relative',
-        left: 10,
-        right: 10,
-        top: 10,
-        bottom: 10,
-        width: '64px',
-        height: '64px',
-      }}
-      fontSize={4}
-      name="camera"
-    />
+    <Section>
+      {crewicon ? (
+        <img
+          src={crewicon.substr(1, crewicon.length - 1)}
+          style={{
+            position: 'relative',
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            width: '128px',
+            height: '128px',
+            '-ms-interpolation-mode': 'nearest-neighbor',
+          }}
+        />
+      ) : (
+        <Icon
+          style={{
+            position: 'relative',
+            left: 10,
+            right: 10,
+            top: 10,
+            bottom: 10,
+            width: '128px',
+            height: '128px',
+          }}
+          fontSize={4}
+          name="camera"
+        />
+      )}
+    </Section>
   );
 };
