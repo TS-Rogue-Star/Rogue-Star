@@ -225,67 +225,81 @@
 			return TRUE
 
 		if("rackslot1")
+			if(!opened)
+				to_chat(usr, "<span class='notice'[src] doors are closed.</span>")
+				return
 			if(rackslot1) //pull out the clicked slot, if there is one
 				usr.put_in_hands(rackslot1)
 				to_chat(usr, "<span class='notice'>You take [rackslot1.name] from [src].</span>")
 				rackslot1 = null
 				nullTguiIcon("rackslot1")
 				nullGunInfo("rackslot1")
-			else if(istype(W) && W.locker_class != case_type) //ain't one? try to shove the weapon in
-				rackslot1 = W
-				setTguiIcon("rackslot1", rackslot1)
-				get_ammo_status("rackslot1", rackslot1)
-				update_icon()
-			else //Can't fit it in? Yeah. no lube either.
-				to_chat(usr, "<span class='notice'>You can't seem to fit [W] into [src].</span>")
-				return FALSE
+			else
+				if(check_weapon(W)) //ain't one? try to shove the weapon in. Only returns true if it's a suitable gun
+					usr.drop_from_inventory(W, src)
+					rackslot1 = W
+					setTguiIcon("rackslot1", rackslot1)
+					get_ammo_status("rackslot1", rackslot1)
+					update_icon()
+					to_chat(usr, "<span class='notice'>You place [rackslot1.name] into [src]'s first slot.</span>")
+
 		if("rackslot2")
+			if(!opened)
+				to_chat(usr, "<span class='notice'[src] doors are closed.</span>")
+				return
+
 			if(rackslot2)
 				usr.put_in_hands(rackslot2)
 				to_chat(usr, "<span class='notice'>You take [rackslot2.name] from [src].</span>")
-				rackslot1 = null
+				rackslot2 = null
 				nullTguiIcon("rackslot2")
 				nullGunInfo("rackslot2")
-			else if(istype(W) && W.locker_class != case_type)
-				rackslot2 = W
-				setTguiIcon("rackslot2", rackslot2)
-				get_ammo_status("rackslot2", rackslot2)
-				update_icon()
 			else
-				to_chat(usr, "<span class='notice'>You can't seem to fit [W] into [src].</span>")
-				return FALSE
+				if(check_weapon(W))
+					usr.drop_from_inventory(W, src)
+					rackslot2 = W
+					setTguiIcon("rackslot2", rackslot2)
+					get_ammo_status("rackslot2", rackslot2)
+					update_icon()
+					to_chat(usr, "<span class='notice'>You place [rackslot2.name] into [src]'s second slot.</span>")
 
 		if("rackslot3")
+			if(!opened)
+				to_chat(usr, "<span class='notice'[src] doors are closed.</span>")
+				return
 			if(rackslot3)
 				usr.put_in_hands(rackslot3)
 				to_chat(usr, "<span class='notice'>You take [rackslot3.name] from [src].</span>")
-				rackslot1 = null
+				rackslot3 = null
 				nullTguiIcon("rackslot3")
 				nullGunInfo("rackslot3")
-			else if(istype(W) && W.locker_class != case_type)
-				rackslot3 = W
-				setTguiIcon("rackslot3", rackslot3)
-				get_ammo_status("rackslot3", rackslot3)
-				update_icon()
 			else
-				to_chat(usr, "<span class='notice'>You can't seem to fit [W] into [src].</span>")
-				return FALSE
+				if(check_weapon(W))
+					usr.drop_from_inventory(W, src)
+					rackslot3 = W
+					setTguiIcon("rackslot3", rackslot3)
+					get_ammo_status("rackslot3", rackslot3)
+					update_icon()
+					to_chat(usr, "<span class='notice'>You place [rackslot3.name] into [src]'s third slot.</span>")
 
 		if("rackslot4")
+			if(!opened)
+				to_chat(usr, "<span class='notice'[src] doors are closed.</span>")
+				return
 			if(rackslot4)
 				usr.put_in_hands(rackslot4)
 				to_chat(usr, "<span class='notice'>You take [rackslot4.name] from [src].</span>")
-				rackslot1 = null
+				rackslot4 = null
 				nullTguiIcon("rackslot4")
 				nullGunInfo("rackslot4")
-			else if(istype(W) && W.locker_class != case_type)
-				rackslot4 = W
-				setTguiIcon("rackslot4", rackslot4)
-				get_ammo_status("rackslot4", rackslot4)
-				update_icon()
 			else
-				to_chat(usr, "<span class='notice'>You can't seem to fit [W] into [src].</span>")
-				return FALSE
+				if(check_weapon(W))
+					usr.drop_from_inventory(W, src)
+					rackslot4 = W
+					setTguiIcon("rackslot4", rackslot4)
+					get_ammo_status("rackslot4", rackslot4)
+					update_icon()
+					to_chat(usr, "<span class='notice'>You place [rackslot4.name] into [src]'s fourth slot.</span>")
 		else
 			return FALSE
 
@@ -309,7 +323,7 @@
 
 /obj/structure/closet/secure_closet/guncabinet/fancy/CtrlClick(mob/user)
 	if(anchored)
-		toggle_open(user)
+		tgui_interact(user)
 	else
 		return
 
@@ -323,25 +337,32 @@
 	guninfo.Cut()
 	SStgui.update_uis(src)
 
+/obj/structure/closet/secure_closet/guncabinet/fancy/proc/check_weapon(atom/A)
+	if(!istype(A))
+		return FALSE
+	var/obj/item/weapon/gun/W = A
+
+	if(!istype(W))
+		to_chat(usr, "<span class='notice'>You can't seem to fit [W] into [src].</span>")
+		return FALSE
+
+	if(W && (W.locker_class != case_type))
+		to_chat(usr, "<span class='notice'>You can't seem to fit [W] into [src].</span>")
+		return FALSE
+
+	if(!opened)
+		to_chat(usr, "<span class='notice'>You need to open the doors first.</span>")
+		return FALSE
+
+	return TRUE
+
 /obj/structure/closet/secure_closet/guncabinet/fancy/proc/get_ammo_status(key, atom/A)
-	var/ammo_max
-	var/ammo_current
 	var/list/gun = list()
 	var/obj/item/weapon/gun/W = A
 	if(W)
-		if(istype(W, /obj/item/weapon/gun/projectile))
-			var/obj/item/weapon/gun/projectile/G = W
-			ammo_max = G.max_shells
-		else if(istype(W, /obj/item/weapon/gun/energy))
-			var/obj/item/weapon/gun/energy/G = W
-			ammo_max = G.power_supply.maxcharge
-		else
-			ammo_max = 1
-
-		ammo_current = round((W.get_ammo_count() / ammo_max) * 100)
 		gun.Add(list(list(
 			"name" = capitalize(W.name),
-			"charge" = ammo_current
+			"charge" = W.get_ammo_count()
 		)))
 	guninfo["[key]"] = gun
 	SStgui.update_uis(src)

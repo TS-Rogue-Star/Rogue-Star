@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, Icon, Section, Stack, ProgressBar, LabeledList } from '../components';
+import { Box, Button, Icon, Section, Stack, LabeledList } from '../components';
 import { Window } from '../layouts';
 
 export const GunLocker = (props, context) => {
@@ -78,73 +78,64 @@ export const GunLocker = (props, context) => {
           </Stack>
         </Section>
         <Section title="Ammunition Status">
-          <Stack.Item>
-            <ArmoryInfo rackslot="rackslot1" />
-          </Stack.Item>
-          <Stack.Item>
-            <ArmoryInfo rackslot="rackslot2" />
-          </Stack.Item>
-          <Stack.Item>
-            <ArmoryInfo rackslot="rackslot3" />
-          </Stack.Item>
-          <Stack.Item>
-            <ArmoryInfo rackslot="rackslot4" />
-          </Stack.Item>
+          <Stack>
+            <Stack.Item>
+              <Armoryinfo rackslot="rackslot1" />
+            </Stack.Item>
+            <Stack.Item>
+              <Armoryinfo rackslot="rackslot2" />
+            </Stack.Item>
+            <Stack.Item>
+              <Armoryinfo rackslot="rackslot3" />
+            </Stack.Item>
+            <Stack.Item>
+              <Armoryinfo rackslot="rackslot4" />
+            </Stack.Item>
+          </Stack>
         </Section>
       </Window.Content>
     </Window>
   );
 };
 
-const ArmoryInfo = (props, context) => {
+const Gunslotting = {
+  'rackslot1': 'Slot One',
+  'rackslot2': 'Slot Two',
+  'rackslot3': 'Slot Three',
+  'rackslot4': 'Slot Four',
+};
+
+const Armoryinfo = (props, context) => {
   const { data } = useBackend(context);
-
   const { rackslot } = props;
-
   const { guninfo } = data;
-
-  if (rackslot in guninfo) {
-    return (
-      <LabeledList>
-        <LabeledList.Item>
-          <Box color="label">
-            <ProgressBar
-              key={rackslot}
-              ranges={{
-                bad: [-Infinity, 0],
-                average: [0, 99],
-                good: [99, Infinity],
-              }}
-              value={rackslot.charge / 100}
-              minValue={0}
-              maxValue={100}
-            />
-          </Box>
-        </LabeledList.Item>
-      </LabeledList>
-    );
-  }
 
   return (
     <LabeledList>
-      <LabeledList.Item label="Firearm not present">
-        <Box color="label">Please insert a compatible firearm.</Box>
+      <LabeledList.Item key={guninfo[rackslot]} label={Gunslotting[rackslot]}>
+        {guninfo[rackslot] ? (
+          <Box color="label">
+            {guninfo.name} Ammunition: {guninfo.charge}
+          </Box>
+        ) : (
+          <Box color="label">Please insert a compatible firearm.</Box>
+        )}
       </LabeledList.Item>
     </LabeledList>
   );
 };
 
 const iconkeysToIcons = {
-  'rackslot1': 'square-plus',
-  'rackslot2': 'square-plus',
-  'rackslot3': 'square-plus',
-  'rackslot4': 'square-plus',
+  'rackslot1': 'box',
+  'rackslot2': 'box',
+  'rackslot3': 'box',
+  'rackslot4': 'box',
 };
 
 const ArmoryIcons = (props, context) => {
   const { data } = useBackend(context);
 
-  const { iconkey, rackslot } = props;
+  const { iconkey } = props;
 
   const { icons } = data;
 
