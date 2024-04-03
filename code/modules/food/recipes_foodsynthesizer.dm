@@ -101,7 +101,7 @@
 	id = "appasnacc"
 	sortorder = MENU_SNACC
 	category_item_type = /datum/category_item/synthesizer/appasnack
-/*
+
 /datum/category_group/synthesizer/breakfastmenu
 	name = "Breakfast Menu"
 	id = "breakfast"
@@ -136,7 +136,7 @@
 	name = "Raw Offerings"
 	id = "raw"
 	sortorder = MENU_RHAWH
-	category_item_type = /datum/category_item/synthesizer/raw */
+	category_item_type = /datum/category_item/synthesizer/raw
 
 /datum/category_group/synthesizer/crewmenu
 	name = "Crew Cookies"
@@ -203,7 +203,7 @@
 	build_path = /obj/item/weapon/reagent_containers/food/snacks/bun
 	voice_order = list("Burger bun", "plain bun")
 	voice_temp = "cold"
-/*
+
 /datum/category_item/synthesizer/appasnack/eggroll
 	name = "Egg Roll"
 	id = "eggroll"
@@ -1277,7 +1277,7 @@
 	build_path = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
 	voice_order = list("Dog steak", "Dog", "Canine steak")
 	voice_temp = "cold"
-	hidden = TRUE */
+	hidden = TRUE
 
 /*********
 * Crew Cookie *
