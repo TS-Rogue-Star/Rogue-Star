@@ -78,7 +78,7 @@ export const GunLocker = (props, context) => {
           </Stack>
         </Section>
         <Section title="Ammunition Status">
-          <Stack>
+          <Stack vertical>
             <Stack.Item>
               <Armoryinfo rackslot="rackslot1" />
             </Stack.Item>
