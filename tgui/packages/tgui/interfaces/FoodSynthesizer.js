@@ -1,7 +1,7 @@
 import { classes } from 'common/react';
 import { filter, sortBy } from 'common/collections';
 import { useBackend, useSharedState } from '../backend';
-import { Box, Button, LabeledList, Section, Flex, Tabs, ProgressBar, Stack } from '../components';
+import { Box, Button, LabeledList, Section, Flex, Tabs, ProgressBar, Stack, Icon } from '../components';
 import { Window } from '../layouts';
 import { flow } from 'common/fp';
 
@@ -98,9 +98,11 @@ const FoodMenuTabs = (props, context) => {
 
 const FoodSelectionMenu = (props, context) => {
   const { act, data } = useBackend(context);
-  const { active_menu, recipes, crewdata, crew_cookies, activecrew, crewicon } =
+  const { active_menu, recipes, crewdata, crew_cookies, activecrew } =
     data;
   const { hidden } = data.recipes;
+
+  const { iconkey } = props;
 
   if (!recipes) {
     return <Box color="bad">Recipes records missing!</Box>;
@@ -120,7 +122,7 @@ const FoodSelectionMenu = (props, context) => {
 
   let handleActivecookie = (newCookie) => {
     setActiveCookie(newCookie);
-    act('setactive_crew', { 'setactive_crew': newCookie });
+    act('setactive_crew', { 'setactive_crew': newCookie.name });
   };
 
   const [ActiveCookie, setActiveCookie] = useSharedState(
@@ -171,13 +173,7 @@ const FoodSelectionMenu = (props, context) => {
                         </LabeledList.Item>
                       </LabeledList>
                       <br />
-                      <img
-                        src={crewicon.substr(1, crewicon.length - 1)}
-                        style={{
-                          width: '96px',
-                          height: '96px',
-                        }}
-                      />
+                      <CrewCookieIcon key={ActiveCookie.name} />
                       <br />
                       <Button
                         content="Print this Cookie"
@@ -266,5 +262,47 @@ const FoodSelectionMenu = (props, context) => {
         </Stack.Item>
       </Stack>
     </Section>
+  );
+};
+
+const CrewCookieIcon = (props, context) => {
+  const { data } = useBackend(context);
+
+  const { iconkey } = props;
+
+  const { crewicon, activecrew } = data;
+
+  if (crewicon) {
+    return (
+      <img
+        src={crewicon.substr(1, crewicon.length - 1)}
+        style={{
+          position: 'relative',
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
+          width: '64px',
+          height: '64px',
+          '-ms-interpolation-mode': 'nearest-neighbor',
+        }}
+      />
+    );
+  }
+
+  return (
+    <Icon
+      style={{
+        position: 'relative',
+        left: 10,
+        right: 10,
+        top: 10,
+        bottom: 10,
+        width: '64px',
+        height: '64px',
+      }}
+      fontSize={4}
+      name="camera"
+    />
   );
 };

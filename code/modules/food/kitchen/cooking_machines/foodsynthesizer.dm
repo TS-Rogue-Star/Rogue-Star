@@ -56,7 +56,7 @@
 
 	//crew printing required stuff.
 	var/tgui_icons
-	var/activecrew
+	var/activecrew = "uristmcPlaceholder"
 	var/refresh_delay = 10 SECONDS
 
 
@@ -111,9 +111,16 @@
 // TGUI to do.
 
 // Crew Cookie backend stuff... I can't even fuckin' believe this is Janicart stuff
-/obj/machinery/synthesizer/proc/setTguiIcon(var/mob/M)
-	var/icon/F = icon(cached_character_icon(M), dir = SOUTH)
+/obj/machinery/synthesizer/proc/setTguiIcon(var/mob/living/L)
+	to_chat(world, "setTguiIcon called [L]")
+	if(!isliving(L))
+		to_chat(world, "setTguiIcon considered [L] a failure")
+		return
+
+	var/icon/F = getFlatIcon(L, defdir = SOUTH, no_anim = TRUE)
+	to_chat(world, "setTguiIcon making icon with [F]")
 	tgui_icons = "'data:image/png;base64,[icon2base64(F)]'"
+	to_chat(world, "setTguiIcon set to [tgui_icons]")
 	SStgui.update_uis(src)
 
 /obj/machinery/synthesizer/proc/clearTguiIcons()
@@ -260,15 +267,19 @@
 	switch(action)
 		if("setactive_menu")
 			active_menu = params["setactive_menu"]
+			clearTguiIcons()
 			return TRUE
 
 		if("setactive_crew")
 			activecrew = params["setactive_crew"]
-			clearTguiIcons()
-			for(var/mob/M in mob_list)
-				M = mob_list.Find(activecrew)
-				setTguiIcon(M)
-			return TRUE
+			if(tgui_icons)
+				clearTguiIcons()
+			to_chat(world, "setactive_crew called with [params["setactive_crew"]]")
+			var/mob/living/mobtopicture = get_mob_for_picture(activecrew)
+			to_chat(world, "mobtopicture is [mobtopicture] who has a real name of [mobtopicture.real_name]")
+			if(mobtopicture)
+				setTguiIcon(mobtopicture)
+				return TRUE
 
 		if("make")
 			var/datum/category_item/synthesizer/making = locate(params["make"])
@@ -333,13 +344,8 @@
 			return TRUE
 
 		if("refresh")
-			var/delay	//spam protection baybeee. Never trust your users! Especially with expensive lists!!
-			if(world.time > delay)
-				update_tgui_static_data(usr, ui)
-				delay = world.time + refresh_delay
-				return TRUE
-			else
-				to_chat(usr, "<span class='danger'>Spam Protection cooldown isn't finished!</span>")
+			update_tgui_static_data(usr, ui)
+			return TRUE
 
 		if("crewprint")
 			var/active_crew = locate(params["crewprint"])
@@ -359,7 +365,7 @@
 
 				//Begin mimicking the micro
 				for(var/mob/M in mob_list)
-					M = mob_list.Find(active_crew)
+					M = active_crew
 					var/vore_flavor
 					if(isliving(M))
 						var/mob/living/L = M
@@ -500,6 +506,11 @@
 	else if(C.reagents && C.reagents.has_reagent("synthsoygreen") && (C.reagents.total_volume >= SYNTH_FOOD_COST))
 		SStgui.update_uis(src)
 		return TRUE
+
+/obj/machinery/synthesizer/proc/get_mob_for_picture(var/mob/living/LM)
+	for(var/mob/living/L in living_mob_list)
+		L = LM
+		return L
 
 /obj/machinery/synthesizer/attackby(obj/item/W, mob/user)
 	if(busy)
