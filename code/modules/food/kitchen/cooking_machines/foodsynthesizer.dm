@@ -384,7 +384,9 @@
 
 					meal.name = found.real_name
 					meal.desc = "A tiny replica of a crewmate!"
-					meal.icon = getFlatIcon(found, defdir = SOUTH, no_anim = TRUE)
+					var/icon/F = getFlatIcon(found, defdir = SOUTH, no_anim = TRUE)
+					F.Scale(16, 16) //Half size
+					meal.icon = F
 					meal.icon_state = null
 
 					//flavor mixing, make the cookie taste somewhat like the real thing!
