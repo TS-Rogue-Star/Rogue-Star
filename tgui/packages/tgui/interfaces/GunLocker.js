@@ -115,7 +115,8 @@ const Armoryinfo = (props, context) => {
       <LabeledList.Item key={guninfo[rackslot]} label={Gunslotting[rackslot]}>
         {guninfo[rackslot] ? (
           <Box color="label">
-            {guninfo.name} Ammunition: {guninfo.charge}
+            {guninfo[rackslot][0]?.name} Ammunition:{' '}
+            {guninfo[rackslot][0]?.charge}
           </Box>
         ) : (
           <Box color="label">Please insert a compatible firearm.</Box>
