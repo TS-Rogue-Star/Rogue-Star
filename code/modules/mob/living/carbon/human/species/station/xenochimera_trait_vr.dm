@@ -15,7 +15,7 @@
 	category = 0
 	custom_only = FALSE
 
-/datum/trait/positive/hardfeet/xenochimera
+/datum/trait/neutral/hardfeet/xenochimera
 	sort = TRAIT_SORT_SPECIES
 	allowed_species = list(SPECIES_XENOCHIMERA)
 	name = "Xenochimera: Hard Feet"

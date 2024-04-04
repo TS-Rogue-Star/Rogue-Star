@@ -305,6 +305,8 @@ var/list/gamemode_cache = list()
 	var/static/suggested_byond_version
 	var/static/suggested_byond_build
 
+	var/static/job_camp_time_limit = 10 MINUTES		//RS ADD
+
 /datum/configuration/New()
 	var/list/L = subtypesof(/datum/game_mode)
 	for (var/T in L)
@@ -1051,7 +1053,10 @@ var/list/gamemode_cache = list()
 
 				if("loadout_whitelist")
 					config.loadout_whitelist = text2num(value)
-
+				//RS ADD START
+				if("job_camp_time_limit")
+					config.job_camp_time_limit = value MINUTES
+				//RS ADD END
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
 

@@ -199,6 +199,7 @@
 /datum/trait/neutral/trashcan/apply(var/datum/species/S,var/mob/living/carbon/human/H)
 	..()
 	H.verbs |= /mob/living/proc/eat_trash
+	H.verbs |= /mob/living/proc/toggle_trash_catching //RSEdit || Ports trash eater throw vore from CHOMPStation, PR#5987
 
 /datum/trait/neutral/gem_eater
 	name = "Expensive Taste"
@@ -1000,3 +1001,10 @@
 	/datum/trait/neutral/food_pref/coffee
 	)
 	our_allergens = list(ALLERGEN_STIMULANT)
+
+//RS MOVE - Removed damage from stepping on glass shards, so this only really prevents the scary red text now, and will also protect you from barbed wire, apparently
+/datum/trait/neutral/hardfeet
+	name = "Hard Feet"
+	desc = "Makes your nice clawed, scaled, hooved, armored, or otherwise just awfully calloused feet immune to glass shards."
+	cost = 0
+	var_changes = list("flags" = NO_MINOR_CUT) //Checked the flag is only used by shard stepping.

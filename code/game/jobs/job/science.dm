@@ -37,7 +37,7 @@
 						might originate from Research. The Research Director often has at least passing knowledge of most of the Research department, but \
 						are encouraged to allow their staff to perform their own duties."
 	alt_titles = list("Research Supervisor" = /datum/alt_title/research_supervisor)
-
+	camp_protection = TRUE		//RS ADD
 
 // Research Director Alt Titles
 /datum/alt_title/research_supervisor
