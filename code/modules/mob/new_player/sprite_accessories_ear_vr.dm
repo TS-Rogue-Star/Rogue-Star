@@ -1053,4 +1053,4 @@
 	name = "sari ears/head (Sari)"
 	desc = ""
 	icon_state = "sari_ears"
-	ckeys_allowed = list("Cross_exonar")
+	ckeys_allowed = list("crossexonar")
