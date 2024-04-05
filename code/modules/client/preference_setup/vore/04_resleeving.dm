@@ -27,7 +27,7 @@
 
 /datum/category_item/player_setup_item/vore/resleeve/copy_to_mob(var/mob/living/carbon/human/character)
 	if(character && !istype(character,/mob/living/carbon/human/dummy))
-		spawn(50)
+		spawn(5 SECONDS)
 			if(QDELETED(character) || QDELETED(pref))
 				return // They might have been deleted during the wait
 			if(pref.resleeve_scan)

@@ -114,7 +114,8 @@
 		if(db)
 			var/datum/transhuman/body_record/BR = db.body_scans[H.mind.name] //Access the Crew's stored cookieicon.
 			crewpicture = BR.cookieicon
-			tgui_icons = "'data:image/png;base64,[icon2base64(BR.cookieicon)]'"
+			usr << ftp(crewpicture)
+			tgui_icons = "'data:image/png;base64,[icon2base64(crewpicture)]'"
 
 	else //Simple animals, Silicons, etc don't have records, so we'll just grab their current state.
 		var/icon/F = getFlatIcon(L, defdir = SOUTH, no_anim = TRUE)
