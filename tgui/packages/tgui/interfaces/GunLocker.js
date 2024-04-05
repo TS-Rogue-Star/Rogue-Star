@@ -115,8 +115,9 @@ const Armoryinfo = (props, context) => {
       <LabeledList.Item key={guninfo[rackslot]} label={Gunslotting[rackslot]}>
         {guninfo[rackslot] ? (
           <Box color="label">
-            {guninfo[rackslot][0]?.name}<br />Ammunition:{' '}
-            {guninfo[rackslot][0]?.charge}
+            {guninfo[rackslot][0]?.name}
+            <br />
+            Ammunition: {guninfo[rackslot][0]?.charge}
           </Box>
         ) : (
           <Box color="label">EMPTY</Box>
