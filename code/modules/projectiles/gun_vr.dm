@@ -30,6 +30,13 @@
 	locker_class = GUN_SIDEARM
 	overlay_type = "silverpistol"
 
+/obj/item/weapon/gun/projectile/deagle/gold
+	overlay_type = "goldpistol"
+
+/obj/item/weapon/gun/projectile/automatic/mini_uzi
+	locker_class = GUN_SIDEARM
+	overlay_type = "uzi"
+
 /obj/item/weapon/gun/projectile/pistol
 	locker_class = GUN_SIDEARM
 	overlay_type = "pistol"
@@ -73,7 +80,7 @@
 
 /obj/item/weapon/gun/energy/retro
 	locker_class = GUN_SIDEARM
-	overlay_type = "energypistol"
+	overlay_type = "retro"
 
 /obj/item/weapon/gun/energy/alien
 	locker_class = GUN_SIDEARM
@@ -111,10 +118,34 @@
 	locker_class = GUN_SIDEARM
 	overlay_type = "nsfw"
 
+/obj/item/weapon/gun/energy/phasegun/pistol
+	locker_class = GUN_SIDEARM
+	overlay_type = "energypistol"
+
+/obj/item/weapon/gun/energy/lasertag
+	locker_class = GUN_SIDEARM
+	overlay_type = "omnitag"
+
+/obj/item/weapon/gun/energy/lasertag/blue
+	overlay_type = "bluetag"
+
+/obj/item/weapon/gun/energy/lasertag/blue/sub
+	overlay_type = "bluetwo"
+
+/obj/item/weapon/gun/energy/lasertag/red
+	overlay_type = "redtag"
+
+/obj/item/weapon/gun/energy/lasertag/red/dom
+	overlay_type = "redtwo"
+
 /* Long arms */
 /obj/item/weapon/gun/energy/gun/rifle
 	locker_class = GUN_LONGARM
 	overlay_type = "erifle"
+
+/obj/item/weapon/gun/energy/phasegun
+	locker_class = GUN_LONGARM
+	overlay_type = "ecarbine"
 
 /obj/item/weapon/gun/energy/gun/sniperrifle
 	locker_class = GUN_LONGARM
@@ -135,6 +166,9 @@
 /obj/item/weapon/gun/energy/laser
 	locker_class = GUN_LONGARM
 	overlay_type = "laser"
+
+/obj/item/weapon/gun/energy/laser/sleek
+	overlay_type = "lrifle"
 
 /obj/item/weapon/gun/energy/ionrifle
 	locker_class = GUN_LONGARM
@@ -164,21 +198,36 @@
 	locker_class = GUN_LONGARM
 	overlay_type = "arifle"
 
+/obj/item/weapon/gun/projectile/automatic/bullpup
+	locker_class = GUN_LONGARM
+	overlay_type = "arifle"
+
 /obj/item/weapon/gun/projectile/automatic/c20r
 	locker_class = GUN_LONGARM
 	overlay_type = "c20r"
 
 /obj/item/weapon/gun/projectile/automatic/pdw
 	locker_class = GUN_LONGARM
-	overlay_type = "c20r"
+	overlay_type = "pdw"
 
 /obj/item/weapon/gun/projectile/automatic/wt550
 	locker_class = GUN_LONGARM
 	overlay_type = "wt550"
 
-/obj/item/weapon/gun/projectile/shotgun/doublebarrel/flare
+/obj/item/weapon/gun/projectile/automatic/tommygun
+	locker_class = GUN_LONGARM
+	overlay_type = "tommy"
+
+/obj/item/weapon/gun/projectile/automatic/p90
+	locker_class = GUN_LONGARM
+	overlay_type = "p90"
+
+/obj/item/weapon/gun/projectile/shotgun/doublebarrel
 	locker_class = GUN_LONGARM
 	overlay_type = "shotgun"
+
+/obj/item/weapon/gun/projectile/shotgun/doublebarrel/sawn
+	overlay_type = "shotsawn"
 
 /obj/item/weapon/gun/projectile/shotgun/pump
 	locker_class = GUN_LONGARM
@@ -187,6 +236,13 @@
 /obj/item/weapon/gun/projectile/shotgun/pump/combat
 	locker_class = GUN_LONGARM
 	overlay_type = "riotshotgun"
+
+/obj/item/weapon/gun/projectile/shotgun/pump/rifle
+	overlay_type = "leveraction"
+
+/obj/item/weapon/gun/projectile/garand
+	locker_class = GUN_LONGARM
+	overlay_type = "leveraction"
 
 /obj/item/weapon/gun/energy/medigun
 	locker_class = GUN_LONGARM
@@ -209,6 +265,7 @@
 	overlay_type = "fuelrodgun"
 
 /* Heavy Weapons */
+//aka, shit usually too big to fit into my armory sprites.
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw
 	locker_class = GUN_LONGARM
@@ -218,4 +275,10 @@
 	locker_class = GUN_HEAVY
 
 /obj/item/weapon/gun/projectile/heavysniper
+	locker_class = GUN_HEAVY
+
+/obj/item/weapon/gun/launcher
+	locker_class = GUN_HEAVY
+
+/obj/item/weapon/gun/projectile/SVD
 	locker_class = GUN_HEAVY

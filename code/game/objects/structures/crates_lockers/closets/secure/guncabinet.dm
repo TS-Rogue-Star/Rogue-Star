@@ -113,6 +113,52 @@
 	var/list/tgui_icons = list()
 	var/list/guninfo = list()
 
+/obj/structure/closet/secure_closet/guncabinet/fancy/LateInitialize()
+	if(istype(loc, /mob/living)) return
+	var/obj/item/I
+	for(I in loc)
+		if(I.density || I.anchored || I == src) continue
+		lateintgunstuff(I)
+	update_icon()
+
+/obj/structure/closet/secure_closet/guncabinet/fancy/proc/lateintgunstuff(obj/item/weapon/gun/G)
+	if(!istype(G))
+		return
+
+	if(G && G.locker_class != case_type)
+		return
+
+	if(!rackslot1)
+		G.forceMove(src)
+		rackslot1 = G
+		setTguiIcon("rackslot1", rackslot1)
+		get_ammo_status("rackslot1", rackslot1)
+		return
+
+	else if(!rackslot2)
+		G.forceMove(src)
+		rackslot2 = G
+		setTguiIcon("rackslot2", rackslot2)
+		get_ammo_status("rackslot2", rackslot2)
+		return
+
+	else if(!rackslot3)
+		G.forceMove(src)
+		rackslot3 = G
+		setTguiIcon("rackslot3", rackslot3)
+		get_ammo_status("rackslot3", rackslot3)
+		return
+
+	else if(!rackslot4)
+		G.forceMove(src)
+		rackslot4 = G
+		setTguiIcon("rackslot3", rackslot4)
+		get_ammo_status("rackslot3", rackslot4)
+		return
+
+	else
+		return
+
 /obj/structure/closet/secure_closet/guncabinet/fancy/proc/setTguiIcon(key, atom/A)
 	if(!istype(A) || !key)
 		return
@@ -240,7 +286,6 @@
 					rackslot1 = W
 					setTguiIcon("rackslot1", rackslot1)
 					get_ammo_status("rackslot1", rackslot1)
-					update_icon()
 					to_chat(usr, "<span class='notice'>You place [rackslot1.name] into [src]'s first slot.</span>")
 
 		if("rackslot2")
@@ -260,7 +305,6 @@
 					rackslot2 = W
 					setTguiIcon("rackslot2", rackslot2)
 					get_ammo_status("rackslot2", rackslot2)
-					update_icon()
 					to_chat(usr, "<span class='notice'>You place [rackslot2.name] into [src]'s second slot.</span>")
 
 		if("rackslot3")
@@ -279,7 +323,6 @@
 					rackslot3 = W
 					setTguiIcon("rackslot3", rackslot3)
 					get_ammo_status("rackslot3", rackslot3)
-					update_icon()
 					to_chat(usr, "<span class='notice'>You place [rackslot3.name] into [src]'s third slot.</span>")
 
 		if("rackslot4")
@@ -298,7 +341,6 @@
 					rackslot4 = W
 					setTguiIcon("rackslot4", rackslot4)
 					get_ammo_status("rackslot4", rackslot4)
-					update_icon()
 					to_chat(usr, "<span class='notice'>You place [rackslot4.name] into [src]'s fourth slot.</span>")
 		else
 			return FALSE
