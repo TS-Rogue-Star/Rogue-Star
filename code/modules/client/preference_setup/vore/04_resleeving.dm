@@ -35,8 +35,6 @@
 				BR.init_from_mob(character, pref.resleeve_scan, pref.resleeve_lock, pref.synth_cookie)
 			if(pref.resleeve_lock)
 				character.resleeve_lock = character.ckey
-			if(pref.synth_cookie)
-				character.synth_cookie = character.ckey
 			character.original_player = character.ckey
 
 /datum/category_item/player_setup_item/vore/resleeve/content(var/mob/user)

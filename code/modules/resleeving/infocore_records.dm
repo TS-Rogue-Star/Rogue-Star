@@ -89,8 +89,10 @@
 	var/weight
 	var/aflags
 	var/breath_type = "oxygen"
+	var/cookielock
+	var/icon/cookieicon
 
-/datum/transhuman/body_record/New(var/copyfrom, var/add_to_db = 0, var/ckeylock = 0, var/cookieprint = 0)
+/datum/transhuman/body_record/New(var/copyfrom, var/add_to_db = FALSE, var/ckeylock = FALSE, var/cookieprint = FALSE)
 	..()
 	if(istype(copyfrom, /datum/transhuman/body_record))
 		init_from_br(copyfrom)
@@ -103,14 +105,17 @@
 	mind_ref = null
 	limb_data.Cut()
 	organ_data.Cut()
+	cookieicon = null
 	return QDEL_HINT_HARDDEL // For now at least there is no easy way to clear references to this in machines etc.
 
-/datum/transhuman/body_record/proc/init_from_mob(var/mob/living/carbon/human/M, var/add_to_db = 0, var/ckeylock = 0, var/cookieprint = 0, var/database_key)
+/datum/transhuman/body_record/proc/init_from_mob(var/mob/living/carbon/human/M, var/add_to_db = FALSE, var/ckeylock = FALSE, var/cookieprint = FALSE, var/database_key)
 	ASSERT(!QDELETED(M))
 	ASSERT(istype(M))
 
 	//Person OOCly doesn't want people impersonating them
 	locked = ckeylock
+	//Or doesn't want a cookie print of them
+	cookielock = cookieprint
 
 	//Prevent people from printing restricted and whitelisted species
 	var/datum/species/S = GLOB.all_species["[M.dna.species]"]
@@ -189,6 +194,9 @@
 		if(mod.flags & MODIFIER_GENETIC)
 			genetic_modifiers.Add(mod.type)
 
+	if(cookielock) // get an icon saved of the scanned person. for use in Food Synthesizer's cookie printing.
+		cookieicon = getFlatIcon(M, defdir = SOUTH, no_anim = TRUE)
+
 	if(add_to_db)
 		SStranscore.add_body(src, database_key = database_key)
 
@@ -223,3 +231,5 @@
 	src.toocomplex = orig.toocomplex
 	src.sizemult = orig.sizemult
 	src.aflags = orig.aflags
+	src.cookielock = orig.cookielock
+	src.cookieicon = orig.cookieicon

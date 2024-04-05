@@ -45,7 +45,6 @@
 
 	//all of our food
 	var/static/datum/category_collection/synthesizer/synthesizer_recipes
-	var/list/recipe_list
 	var/static/list/menucatagory_list
 	var/active_menu = "appasnacc"
 	var/food_mimic_storage
@@ -56,6 +55,7 @@
 
 	//crew printing required stuff.
 	var/tgui_icons
+	var/icon/crewpicture
 	var/activecrew = "uristmcPlaceholder"
 	var/refresh_delay = 10 SECONDS
 
@@ -78,13 +78,7 @@
 
 /obj/machinery/synthesizer/mini/Initialize()
 	. = ..()
-	if(!synthesizer_recipes)
-		synthesizer_recipes = new()
 	cart = new /obj/item/weapon/reagent_containers/synthdispcart/small(src)
-	wires = new(src)
-	default_apply_parts()
-	RefreshParts()
-	update_icon()
 
 /obj/machinery/synthesizer/Destroy()
 	qdel(wires)
@@ -114,12 +108,23 @@
 /obj/machinery/synthesizer/proc/setTguiIcon(var/mob/living/L)
 	if(!isliving(L))
 		return
-	var/icon/F = getFlatIcon(L, defdir = SOUTH, no_anim = TRUE)
-	tgui_icons = "'data:image/png;base64,[icon2base64(F)]'"
+	if(ishuman(L)) //Utilize the body records for humans to avoid metagaming problems
+		var/mob/living/carbon/human/H = L
+		var/datum/transcore_db/db = SStranscore.db_by_mind_name(H.mind.name)
+		if(db)
+			var/datum/transhuman/body_record/BR = db.body_scans[H.mind.name] //Access the Crew's stored cookieicon.
+			crewpicture = BR.cookieicon
+			tgui_icons = "'data:image/png;base64,[icon2base64(BR.cookieicon)]'"
+
+	else //Simple animals, Silicons, etc don't have records, so we'll just grab their current state.
+		var/icon/F = getFlatIcon(L, defdir = SOUTH, no_anim = TRUE)
+		crewpicture = F
+		tgui_icons = "'data:image/png;base64,[icon2base64(F)]'"
 	SStgui.update_uis(src)
 
 /obj/machinery/synthesizer/proc/clearTguiIcons()
 	tgui_icons = null
+	crewpicture = null
 	SStgui.update_uis(src)
 
 // And literally this is all that's needed for conventional meals. lmao.
@@ -358,9 +363,11 @@
 					found = L
 					break
 
-			if(found)
-				if(!get_mob_for_picture(found)) //verify that we can still print this person
-					return FALSE
+			if(found && !get_mob_for_picture(found)) //verify that we can still print this person
+				to_chat(usr, "Warning: Invalid selection.")
+				return FALSE
+
+			else
 				//Check if we still have the materials.
 				var/obj/item/weapon/reagent_containers/synthdispcart/C = cart
 				if(src.check_cart(C, usr))
@@ -384,7 +391,7 @@
 
 					meal.name = found.real_name
 					meal.desc = "A tiny replica of a crewmate!"
-					var/icon/F = getFlatIcon(found, defdir = SOUTH, no_anim = TRUE)
+					var/icon/F = crewpicture
 					F.Scale(16, 16) //Half size
 					meal.icon = F
 					meal.icon_state = null
@@ -412,9 +419,6 @@
 					src.audible_message("<span class='notice'>Error: Insufficent Materials. SabreSnacks recommends you have a genuine replacement cartridge available to install.</span>", runemessage = "Error: Insufficent Materials!")
 					return FALSE
 				return TRUE
-			else
-				to_chat(usr, "Warning: Invalid selection.")
-				return FALSE
 
 /obj/machinery/synthesizer/update_icon()
 	cut_overlays()
@@ -519,17 +523,15 @@
 		return TRUE
 
 /obj/machinery/synthesizer/proc/get_mob_for_picture(var/mob/living/LM)
-	for(var/client/C in GLOB.clients)
-		if(C?.mob?.mind && !C?.prefs?.synth_cookie)
-			continue
+	if(!istype(LM))
+		to_chat(usr, "Warning: Invalid selection. Please refresh the database.")
+		return FALSE
 
-		LM = C.mob
-
-		if(!isliving(LM))
-			to_chat(usr, "Warning: Invalid selection. Please refresh the database.")
-			return FALSE
-
+	if(LM.client?.prefs?.synth_cookie)
 		return TRUE
+
+	to_chat(usr, "Warning: Invalid selection. Please refresh the database.")
+	return FALSE
 
 /obj/machinery/synthesizer/attackby(obj/item/W, mob/user)
 	if(busy)
