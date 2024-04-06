@@ -58,12 +58,15 @@
 	var/icon/crewpicture
 	var/activecrew = "uristmcPlaceholder"
 	var/refresh_delay = 10 SECONDS
+	var/db_key
+	var/datum/transcore_db/our_db
 
 
 /obj/machinery/synthesizer/Initialize()
 	. = ..()
 	if(!synthesizer_recipes)
 		synthesizer_recipes = new()
+	our_db = SStranscore.db_by_key(db_key)
 	cart = new /obj/item/weapon/reagent_containers/synthdispcart(src)
 	wires = new(src)
 	default_apply_parts()
@@ -110,11 +113,10 @@
 		return
 	if(ishuman(L)) //Utilize the body records for humans to avoid metagaming problems
 		var/mob/living/carbon/human/H = L
-		var/datum/transcore_db/db = SStranscore.db_by_mind_name(H.mind.name)
+		var/datum/transcore_db/db = SStranscore.db_by_key(db_key)
 		if(db)
-			var/datum/transhuman/body_record/BR = db.body_scans[H.mind.name] //Access the Crew's stored cookieicon.
+			var/datum/transhuman/body_record/BR = our_db.body_scans[H.mind.name] //Access the Crew's stored cookieicon.
 			crewpicture = BR.cookieicon
-			usr << ftp(crewpicture)
 			tgui_icons = "'data:image/png;base64,[icon2base64(crewpicture)]'"
 
 	else //Simple animals, Silicons, etc don't have records, so we'll just grab their current state.
@@ -211,10 +213,14 @@
 
 		if(iscarbon(C.mob))
 			var/mob/living/carbon/human/H = C.mob
-			if(data_core && data_core.general)
-				if(!find_general_record("name", H.real_name))
-					if(!find_record("name", H.real_name, data_core.hidden_general))
-						continue
+			var/datum/transcore_db/db = SStranscore.db_by_key(db_key)
+			if(db)
+				var/datum/transhuman/body_record/BR = our_db.body_scans[H.mind.name]
+				if(!BR) //extra check to make sure people have a body record, and no-one will immediately on start.
+					continue
+				if(BR && !BR.cookieunlock) //check if the person permits cookie printing in their Body record file too
+					continue
+
 			name = H.real_name
 			species = "[H.custom_species ? H.custom_species : H.species.name]"
 
@@ -377,6 +383,7 @@
 					update_use_power(USE_POWER_ACTIVE)
 					update_icon() // light up time
 					playsound(src, 'sound/machines/replicator_input_ok.ogg', 100)
+					C.reagents.remove_reagent("synthsoygreen", SYNTH_FOOD_COST) //Drain our fuel
 					sleep(speed_grade) //machine go brrr
 					playsound(src, 'sound/machines/replicator_working.ogg', 150)
 

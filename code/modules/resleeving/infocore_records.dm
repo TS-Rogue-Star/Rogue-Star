@@ -194,13 +194,8 @@
 		if(mod.flags & MODIFIER_GENETIC)
 			genetic_modifiers.Add(mod.type)
 
-	to_chat(world, "cookieunlock for [M] is [cookieunlock ? "TRUE" : "FALSE"]")
-	to_chat(world, "initial icon of [M] says [cookieicon]")
 	if(cookieunlock) // get an icon saved of the scanned person. for use in Food Synthesizer's cookie printing.
-		to_chat(world, "attempting [M] 's cookieicon")
 		cookieicon = getFlatIcon(M, defdir = SOUTH, no_anim = TRUE)
-		usr << ftp(cookieicon)
-		to_chat(world, "getflaticon of [M] says [cookieicon]")
 
 	if(add_to_db)
 		SStranscore.add_body(src, database_key = database_key)
