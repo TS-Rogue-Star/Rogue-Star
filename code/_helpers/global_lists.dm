@@ -48,6 +48,15 @@ var/global/list/ear_styles_list = list()	// Stores /datum/sprite_accessory/ears 
 var/global/list/tail_styles_list = list()	// Stores /datum/sprite_accessory/tail indexed by type
 var/global/list/wing_styles_list = list()	// Stores /datum/sprite_accessory/wing indexed by type
 
+//Fine-Tuned marking sorting for preference selection because I can't touch paths
+var/global/list/body_marking_heads = list()
+var/global/list/body_marking_bodies = list()
+var/global/list/body_marking_addons = list()
+var/global/list/body_marking_limbs = list()
+var/global/list/body_marking_skintone = list()
+var/global/list/body_marking_teshari = list()
+var/global/list/body_marking_vox = list()
+
 GLOBAL_LIST_INIT(custom_species_bases, new) // Species that can be used for a Custom Species icon base
 	//Underwear
 var/datum/category_collection/underwear/global_underwear = new()
@@ -145,6 +154,15 @@ GLOBAL_LIST_EMPTY(mannequins)
 			else
 				facial_hair_styles_male_list += H.name
 				facial_hair_styles_female_list += H.name
+
+var/global/list/body_marking_heads = list()
+var/global/list/body_marking_bodies = list()
+var/global/list/body_marking_addons = list()
+var/global/list/body_marking_limbs = list()
+var/global/list/body_marking_skintone = list()
+var/global/list/body_marking_teshari = list()
+var/global/list/body_marking_vox = list()
+
 
 	//Body markings - Initialise all /datum/sprite_accessory/marking into an list indexed by marking name
 	paths = subtypesof(/datum/sprite_accessory/marking)
