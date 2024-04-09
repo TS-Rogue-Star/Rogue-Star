@@ -8,7 +8,6 @@
 /datum/sprite_accessory/tail
 	name = "You should not see this..."
 	icon = 'icons/mob/vore/tails_vr.dmi'
-	desc = ""
 	do_colouration = FALSE //Set to TRUE to enable coloration using the tail color.
 
 	species_allowed = list(
@@ -31,7 +30,6 @@
 	var/extra_overlay2 //Tertiary.
 	var/show_species_tail = FALSE // If false, do not render species' tail.
 	var/clothing_can_hide = TRUE // If true, clothing with HIDETAIL hides it
-	var/desc = "You should not see this..."
 	var/ani_state // State when wagging/animated
 	var/extra_overlay_w // Wagging state for extra overlay
 	var/extra_overlay2_w // Tertiary wagging.
@@ -65,8 +63,7 @@
 	icon_state = null
 
 /datum/sprite_accessory/tail/squirrel
-	name = "squirrel, colorable"
-	desc = ""
+	name = "squirrel"
 	icon_state = "squirrel"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
@@ -1154,6 +1151,7 @@
 	name = "Teshari bee thorax"
 	icon = 'icons/mob/vore/tails_vr.dmi'
 	icon_state = "beethorax_tesh"
+	species_allowed = list(SPECIES_TESHARI)
 
 /datum/sprite_accessory/tail/teshbuggo
 	name = "Teshari bug abdomen, colorable"
@@ -1161,6 +1159,7 @@
 	icon_state = "teshbug_s"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	species_allowed = list(SPECIES_TESHARI)
 
 /datum/sprite_accessory/tail/teshbuggobee
 	name = "Teshari bug abdomen, bee top, dual-colorable"
@@ -1169,6 +1168,7 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "teshbee_markings"
+	species_allowed = list(SPECIES_TESHARI)
 
 /datum/sprite_accessory/tail/teshbeefull
 	name = "Teshari bug abdomen, bee full, dual-colorable"
@@ -1177,6 +1177,7 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "teshbeefull_markings"
+	species_allowed = list(SPECIES_TESHARI)
 
 /datum/sprite_accessory/tail/teshbuggounder
 	name = "Teshari bug abdomen, underside, dual-colorable"
@@ -1185,6 +1186,7 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "teshunder_markings"
+	species_allowed = list(SPECIES_TESHARI)
 
 /datum/sprite_accessory/tail/teshbuggofirefly
 	name = "Teshari bug abdomen, firefly, dual-colorable"
@@ -1193,6 +1195,7 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "teshfirefly_markings"
+	species_allowed = list(SPECIES_TESHARI)
 
 /datum/sprite_accessory/tail/fatteshbuggo
 	name = "Teshari fat bug abdomen, colorable"
@@ -1200,6 +1203,7 @@
 	icon_state = "teshbugfat_s"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	species_allowed = list(SPECIES_TESHARI)
 
 /datum/sprite_accessory/tail/fatteshbuggobee
 	name = "Teshari fat bug abdomen, bee top, dual-colorable"
@@ -1208,6 +1212,7 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "teshfatbee_markings"
+	species_allowed = list(SPECIES_TESHARI)
 
 /datum/sprite_accessory/tail/fatteshbeefull
 	name = "Teshari fat bug abdomen, bee full, dual-colorable"
@@ -1216,6 +1221,7 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "teshfatbeefull_markings"
+	species_allowed = list(SPECIES_TESHARI)
 
 /datum/sprite_accessory/tail/fatteshbuggounder
 	name = "Teshari fat bug abdomen, underside, dual-colorable"
@@ -1224,6 +1230,7 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "teshfatunder_markings"
+	species_allowed = list(SPECIES_TESHARI)
 
 /datum/sprite_accessory/tail/fatteshbuggofirefly
 	name = "Teshari fat bug abdomen, firefly, dual-colorable"
@@ -1232,6 +1239,7 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "teshfatfirefly_markings"
+	species_allowed = list(SPECIES_TESHARI)
 
 /***	Leg replacements but tails		***/
 

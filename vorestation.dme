@@ -3326,6 +3326,7 @@
 #include "code\modules\mob\new_player\sprite_accessories_wing_large_vr.dm"
 #include "code\modules\mob\new_player\sprite_accessories_wing_vr.dm"
 #include "code\modules\mob\new_player\sprite_markings\markings_accessories.dm"
+#include "code\modules\mob\new_player\sprite_markings\markings_augment.dm"
 #include "code\modules\mob\new_player\sprite_markings\markings_body.dm"
 #include "code\modules\mob\new_player\sprite_markings\markings_diona.dm"
 #include "code\modules\mob\new_player\sprite_markings\markings_head.dm"

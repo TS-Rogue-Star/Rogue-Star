@@ -109,7 +109,7 @@
 
 /datum/sprite_accessory/ears/kara
 	name = "Pterokara horn"
-	icon = 'icons/mob/vore/ears_vr.dmi'
+	icon = 'icons/mob/vore/ears_snowflake.dmi'
 	icon_state = "kara_horn"
 	ckeys_allowed = list("satinisle")
 

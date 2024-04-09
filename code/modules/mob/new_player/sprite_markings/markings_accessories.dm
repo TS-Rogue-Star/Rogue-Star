@@ -353,9 +353,6 @@
 	genetic = FALSE
 	sorting_group = MARKINGS_TATSCAR
 
-
-
-
 /***  Bandages ***/
 
 /datum/sprite_accessory/marking/bandage

@@ -25,21 +25,21 @@
 	icon = 'icons/mob/human_face_vr.dmi'
 	icon_state = "citheronia_hair"
 	ckeys_allowed = list("Kira72")
-	do_colouration = 0
+	do_colouration = FALSE
 
 /datum/sprite_accessory/hair/taramaw
 	name = "Hairmaw (Liquidfirefly)"
 	icon = 'icons/mob/human_face_vr.dmi'
 	icon_state = "maw_hair"
 	ckeys_allowed = list("liquidfirefly")
-	do_colouration = 0
+	do_colouration = FALSE
 
 /datum/sprite_accessory/hair/citheronia_colorable
 	name = "Citheronia Hair"
 	icon = 'icons/mob/human_face_vr.dmi'
 	icon_add = 'icons/mob/human_face_vr_add.dmi'
 	icon_state = "citheronia_hair_c"
-	do_colouration = 1
+	do_colouration = TRUE
 
 /datum/sprite_accessory/hair/sergal_plain
 	name = "Sergal Plain"
@@ -577,15 +577,11 @@
 /datum/sprite_accessory/hair_accessory
 	name = "You should not see this..."
 	icon = 'icons/mob/vore/hair_accessories_vr.dmi'
-	do_colouration = 0 // Set to 1 to blend (ICON_ADD) hair color
-
-	var/ignores_lighting = 0 // Whether or not this hair accessory will ignore lighting and glow in the dark.
-	color_blend_mode = ICON_ADD // Only appliciable if do_coloration = 1
-	var/desc = "You should not see this..."
+	var/ignores_lighting = FALSE // Whether or not this hair accessory will ignore lighting and glow in the dark.
 
 /datum/sprite_accessory/hair_accessory/verie_hair_glow
 	name = "veries hair glow"
 	desc = ""
 	icon_state = "verie_hair_glow"
-	ignores_lighting = 1
+	ignores_lighting = TRUE
 	//ckeys_allowed = list("vitoras") // This probably won't come into play EVER but better safe than sorry

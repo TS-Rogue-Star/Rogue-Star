@@ -8,7 +8,6 @@
 /datum/sprite_accessory/ears
 	name = "You should not see this..."
 	icon = 'icons/mob/human_races/sprite_accessories/ears.dmi'
-	desc = ""
 	do_colouration = FALSE // Set to TRUE to blend (ICON_ADD) hair color
 	species_allowed = list(
 			SPECIES_HUMAN,			SPECIES_SKRELL,
@@ -26,7 +25,6 @@
 	color_blend_mode = ICON_ADD // Only appliciable if do_coloration = TRUE
 	var/extra_overlay // Icon state of an additional overlay to blend in.
 	var/extra_overlay2
-	var/desc = "You should not see this..."
 	em_block = TRUE
 
 /***	Mundane Critters	***/
@@ -304,7 +302,6 @@
 
 /datum/sprite_accessory/ears/wilddog
 	name = "Wild Dog Ears"
-	icon = 'icons/mob/vore/ears_vr.dmi'
 	icon_state = "wild_dog"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
@@ -312,7 +309,6 @@
 
 /datum/sprite_accessory/ears/singlesidehorn
 	name = "Single Side Horn"
-	icon = 'icons/mob/vore/ears_vr.dmi'
 	icon_state = "single-side-horn"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
@@ -342,8 +338,6 @@
 /***	Exotic Critters		***/
 /datum/sprite_accessory/ears/alien_slug
 	name = "Alien slug antennae"
-
-	icon = 'icons/mob/vore/ears_vr.dmi'
 	icon_state = "alien_slug"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
@@ -422,19 +416,16 @@
 
 /datum/sprite_accessory/ears/teshbeeantenna
 	name = "Teshari bee antenna"
-	icon = 'icons/mob/vore/ears_vr.dmi'
 	icon_state = "teshbee"
 
 /datum/sprite_accessory/ears/teshantenna
 	name = "Teshari antenna, colorable"
-	icon = 'icons/mob/vore/ears_vr.dmi'
 	icon_state = "teshantenna"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 
 /datum/sprite_accessory/ears/curlyteshantenna
 	name = "Teshari curly antenna, colorable"
-	icon = 'icons/mob/vore/ears_vr.dmi'
 	icon_state = "curly_bug_tesh"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY

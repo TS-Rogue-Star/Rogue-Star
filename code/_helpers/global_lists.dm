@@ -49,6 +49,15 @@ var/global/list/tail_styles_list = list()	// Stores /datum/sprite_accessory/tail
 var/global/list/wing_styles_list = list()	// Stores /datum/sprite_accessory/wing indexed by type
 
 //Fine-Tuned marking sorting for preference selection because I can't touch paths
+#define MARKINGS_HEAD		0
+#define MARKINGS_BODY		1
+#define MARKINGS_LIMBS		2
+#define MARKINGS_TATSCAR 	3
+#define MARKINGS_TESHARI	4
+#define MARKINGS_VOX		5
+#define MARKINGS_SKINTONE	6
+#define MARKINGS_AUG		7
+
 var/global/list/body_marking_heads = list()
 var/global/list/body_marking_bodies = list()
 var/global/list/body_marking_addons = list()
@@ -56,6 +65,7 @@ var/global/list/body_marking_limbs = list()
 var/global/list/body_marking_skintone = list()
 var/global/list/body_marking_teshari = list()
 var/global/list/body_marking_vox = list()
+var/global/list/body_marking_augment = list()
 
 GLOBAL_LIST_INIT(custom_species_bases, new) // Species that can be used for a Custom Species icon base
 	//Underwear
@@ -155,15 +165,6 @@ GLOBAL_LIST_EMPTY(mannequins)
 				facial_hair_styles_male_list += H.name
 				facial_hair_styles_female_list += H.name
 
-var/global/list/body_marking_heads = list()
-var/global/list/body_marking_bodies = list()
-var/global/list/body_marking_addons = list()
-var/global/list/body_marking_limbs = list()
-var/global/list/body_marking_skintone = list()
-var/global/list/body_marking_teshari = list()
-var/global/list/body_marking_vox = list()
-
-
 	//Body markings - Initialise all /datum/sprite_accessory/marking into an list indexed by marking name
 	paths = subtypesof(/datum/sprite_accessory/marking)
 	for(var/path in paths)
@@ -171,6 +172,23 @@ var/global/list/body_marking_vox = list()
 		body_marking_styles_list[M.name] = M
 		if(!M.genetic)
 			body_marking_nopersist_list[M.name] = M
+		if(M.sorting_group == MARKINGS_HEAD)
+			body_marking_heads[M.name] = M
+		if(M.sorting_group == MARKINGS_BODY)
+			body_marking_bodies[M.name] = M
+		if(M.sorting_group == MARKINGS_LIMBS)
+			body_marking_limbs[M.name] = M
+		if(M.sorting_group == MARKINGS_TATSCAR)
+			body_marking_addons[M.name] = M
+		if(M.sorting_group == MARKINGS_TESHARI)
+			body_marking_teshari[M.name] = M
+		if(M.sorting_group == MARKINGS_VOX)
+			body_marking_vox[M.name] = M
+		if(M.sorting_group == MARKINGS_SKINTONE)
+			body_marking_skintone[M.name] = M
+		if(M.sorting_group == MARKINGS_AUG)
+			body_marking_augment[M.name] = M
+
 
 	//Surgery Steps - Initialize all /datum/surgery_step into a list
 	paths = subtypesof(/datum/surgery_step)

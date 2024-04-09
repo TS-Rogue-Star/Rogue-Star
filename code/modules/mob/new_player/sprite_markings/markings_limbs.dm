@@ -151,6 +151,14 @@
 	organ_override = TRUE
 	sorting_group = MARKINGS_LIMBS
 
+/datum/sprite_accessory/marking/vr_birdpants
+	name = "leg coverings (nev/rap)"
+	icon = 'icons/mob/human_races/markings_vr.dmi'
+	icon_state = "birdpants"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_R_LEG, BP_L_LEG, BP_GROIN)
+	sorting_group = MARKINGS_LIMBS
+
 //Digitigrade markings
 /datum/sprite_accessory/marking/digi
 	icon = 'icons/mob/human_races/markings_digi.dmi'

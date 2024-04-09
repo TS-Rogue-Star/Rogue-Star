@@ -1,26 +1,45 @@
+//Heterochromia
+
+/datum/sprite_accessory/marking/heterochromia
+	name = "Heterochromia (right eye)"
+	icon_state = "heterochromia"
+	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
+
+/datum/sprite_accessory/marking/vr_heterochromia_l
+	name = "Heterochromia (left eye)"
+	icon = 'icons/mob/human_races/markings_vr.dmi'
+	icon_state = "heterochromia_l"
+	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
+
 /***	Unspecified Based	***/
 /datum/sprite_accessory/marking/patchesface
 	name = "Color Patches (Face)"
 	icon_state = "patchesface"
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 datum/sprite_accessory/marking/vr_monoeye
 	name = "Monoeye"
 	icon = 'icons/mob/human_races/markings_vr.dmi'
 	icon_state = "monoeye"
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_spidereyes
 	name = "Spider Eyes"
 	icon = 'icons/mob/human_races/markings_vr.dmi'
 	icon_state = "spidereyes"
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_closedeyes
 	name = "Closed Eyes"
 	icon = 'icons/mob/human_races/markings_vr.dmi'
 	icon_state = "eyes_closed"
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_brows
 	name = "Eyebrows"
@@ -28,6 +47,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "brows"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_nevrean_female
 	name = "Female Nevrean beak"
@@ -36,6 +56,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	body_parts = list(BP_HEAD)
 	color_blend_mode = ICON_MULTIPLY
 	gender = FEMALE
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_nevrean_male
 	name = "Male Nevrean beak"
@@ -44,12 +65,14 @@ datum/sprite_accessory/marking/vr_monoeye
 	body_parts = list(BP_HEAD)
 	color_blend_mode = ICON_MULTIPLY
 	gender = MALE
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_jagged_teeth
 	name = "Jagged teeth"
 	icon = 'icons/mob/human_races/markings_vr.dmi'
 	icon_state = "jagged"
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_blank_face
 	name = "Blank round face (use with monster mouth)"
@@ -57,30 +80,35 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "blankface"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_monster_mouth
 	name = "Monster mouth"
 	icon = 'icons/mob/human_races/markings_vr.dmi'
 	icon_state = "monster"
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_saber_teeth
 	name = "Saber teeth"
 	icon = 'icons/mob/human_races/markings_vr.dmi'
 	icon_state = "saber"
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_fangs
 	name = "Fangs"
 	icon = 'icons/mob/human_races/markings_vr.dmi'
 	icon_state = "fangs"
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_tusks
 	name = "Tusks"
 	icon = 'icons/mob/human_races/markings_vr.dmi'
 	icon_state = "tusks"
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_otie_face
 	name = "Otie face"
@@ -88,6 +116,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "otieface"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_otie_nose
 	name = "Otie nose"
@@ -95,6 +124,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "otie_nose"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_otienose_lite
 	name = "Short otie nose"
@@ -102,6 +132,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "otienose_lite"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_corvid_beak
 	name = "Corvid beak"
@@ -109,6 +140,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "corvidbeak"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_cow_nose
 	name = "Cow nose"
@@ -116,6 +148,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "cownose"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_zmask
 	name = "Eye mask"
@@ -123,6 +156,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "zmask"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_znose
 	name = "Jagged snout"
@@ -130,6 +164,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "znose"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_otter_nose
 	name = "Otter nose"
@@ -137,6 +172,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "otternose"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_otter_face
 	name = "Otter face"
@@ -144,6 +180,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "otterface"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_deer_face
 	name = "Deer face"
@@ -151,6 +188,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "deerface"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_sharkface
 	name = "Akula snout"
@@ -158,6 +196,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "sharkface"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_sheppy_face
 	name = "Shepherd snout"
@@ -165,6 +204,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "shepface"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_zorren_face_male
 	name = "Zorren Male Face"
@@ -173,6 +213,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
 	gender = MALE
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_zorren_face_female
 	name = "Zorren Female Face"
@@ -181,6 +222,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
 	gender = FEMALE
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_zorren_muzzle_male
 	name = "Zorren Male Muzzle"
@@ -189,6 +231,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
 	gender = MALE
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_zorren_muzzle_female
 	name = "Zorren Female Muzzle"
@@ -197,24 +240,28 @@ datum/sprite_accessory/marking/vr_monoeye
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
 	gender = FEMALE
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_animeeyesinner
 	name = "Anime Eyes Inner"
 	icon = 'icons/mob/human_races/markings_vr.dmi'
 	icon_state = "animeeyesinner"
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_animeeyesouter
 	name = "Anime Eyes Outer"
 	icon = 'icons/mob/human_races/markings_vr.dmi'
 	icon_state = "animeeyesouter"
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_panda_eye_marks
 	name = "Panda Eye Markings"
 	icon = 'icons/mob/human_races/markings_vr.dmi'
 	icon_state = "eyes_panda"
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_tentacle_head
 	name = "Squid Head"
@@ -222,6 +269,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "tentaclehead"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_tentacle_mouth
 	name = "Tentacle Mouth"
@@ -229,6 +277,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "tentaclemouth"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_head_paint_front
 	name = "Head Paint Front"
@@ -236,6 +285,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "paintfront"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_head_paint_back
 	name = "Head Paint"
@@ -243,7 +293,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "paint"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
-
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_zaprat_cheeks
 	name = "Cheek Marks"
@@ -251,6 +301,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "zaprat_cheeks"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_secbirbfeathers
 	name = "Secretary Bird Feathers"
@@ -258,6 +309,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "secbirbfeathers"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_zmaskanime
 	name = "eye mask (anime eyes)"
@@ -265,13 +317,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "zmaskanime"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
-
-/datum/sprite_accessory/marking/vr_birdpants
-	name = "leg coverings (nev/rap)"
-	icon = 'icons/mob/human_races/markings_vr.dmi'
-	icon_state = "birdpants"
-	color_blend_mode = ICON_MULTIPLY
-	body_parts = list(BP_R_LEG, BP_L_LEG, BP_GROIN)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_nevrean_long
 	name = "Long Snout"
@@ -279,6 +325,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "nevrean_long"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_nevrean_beak //that's right, its bird rework time
 	name = "nevrean beak"
@@ -286,6 +333,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "nevrean_beak"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_parrot_beak
 	name = "parrot beak (nev)"
@@ -293,6 +341,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "parrot_beak"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_thin_beak //kiwis and hummingbirds
 	name = "thin beak (nev)"
@@ -300,6 +349,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "thin_beak"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_finch_beak
 	name = "finch beak (nev)"
@@ -307,6 +357,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "finch_beak"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_pelican_beak
 	name = "pelican beak (nev)"
@@ -314,6 +365,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "pelican_beak"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_pelican_beak_pouch //recolor the pouch
 	name = "pelican beak pouch (nev)"
@@ -321,6 +373,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "pelican_beak_pouch"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_toucan_beak
 	name = "toucan beak (nev)"
@@ -328,6 +381,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "toucan_beak"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_toucan_beak_tip //recolor the tip
 	name = "toucan beak tip (nev)"
@@ -335,6 +389,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "toucan_beak_tip"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_raptor_beak_small
 	name = "bird of prey beak, small (nev)"
@@ -342,6 +397,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "raptor_beak_small"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_raptor_beak_large
 	name = "bird of prey beak, large (nev)"
@@ -349,6 +405,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "raptor_beak_large"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_nev_heartface
 	name = "heart face (nev)"
@@ -356,6 +413,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "heartface"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_nev_fullhead
 	name = "full head recolor (nev)"
@@ -363,6 +421,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "full_head_nev"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_nev_tophead
 	name = "top of the head recolor (nev)"
@@ -370,6 +429,7 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "top_head_nev"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_nev_cheeks //the face ones
 	name = "bird face cheeks (nev)"
@@ -377,32 +437,38 @@ datum/sprite_accessory/marking/vr_monoeye
 	icon_state = "cheeks_nev"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /***	Spess Kahjiit	***/
 /datum/sprite_accessory/marking/taj_earsout
 	name = "Outer Ear (Taj)"
 	icon_state = "taj_earsout"
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/taj_earsin
 	name = "Inner Ear (Taj)"
 	icon_state = "taj_earsin"
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/taj_nose
 	name = "Nose Color (Taj)"
 	icon_state = "taj_nose"
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/taj_muzzle
 	name = "Muzzle Color (Taj)"
 	icon_state = "taj_muzzle"
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/taj_face
 	name = "Cheeks Color (Taj)"
 	icon_state = "taj_face"
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_taj_nose_alt
 	name = "Nose Color, alt. (Taj)"
