@@ -635,9 +635,14 @@
 		//Drones can mail themselves through maint.
 		if(istype(AM, /mob/living/silicon/robot/drone))
 			var/mob/living/silicon/robot/drone/drone = AM
+			if(drone.client)	// if a client mob, update eye to follow this holder
+				drone.client.eye = src
 			src.destinationTag = drone.mail_destination
 		//RS ADD START
 		else if(isliving(AM))
+			var/mob/living/L = AM
+			if(L.client)	// if a client mob, update eye to follow this holder
+				L.client.eye = src
 			if(src.destinationTag && src.destinationTag != "")
 				return
 			src.destinationTag = "Bar"
