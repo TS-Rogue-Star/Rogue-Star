@@ -20,7 +20,7 @@
 	body_parts = list(BP_HEAD)
 	sorting_group = MARKINGS_HEAD
 
-datum/sprite_accessory/marking/vr_monoeye
+/datum/sprite_accessory/marking/vr_monoeye
 	name = "Monoeye"
 	icon = 'icons/mob/human_races/markings_vr.dmi'
 	icon_state = "monoeye"
