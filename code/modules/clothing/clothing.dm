@@ -819,6 +819,7 @@
 	show_messages = 1
 	blood_sprite_state = "uniformblood"
 
+	var/taurized = FALSE
 	var/has_sensor = 1 //For the crew computer 2 = unable to change mode
 	var/sensor_mode = 0
 		/*
@@ -943,6 +944,45 @@
 
 	set_clothing_index()
 
+/obj/item/clothing/under/equipped(var/mob/user, var/slot)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/taurtail = istaurtail(H.tail_style)
+		if((taurized && !taurtail) || (!taurized && taurtail))
+			taurize(user, taurtail)
+
+	return ..()
+
+//if it works for suits, it works for uniforms too!
+/obj/item/clothing/under/proc/taurize(var/mob/living/carbon/human/Taur, has_taur_tail = FALSE)
+	if(has_taur_tail)
+		var/datum/sprite_accessory/tail/taur/taurtail = Taur.tail_style
+		if(taurtail.under_sprites && (get_worn_icon_state(slot_w_uniform_str) in cached_icon_states(taurtail.under_sprites)))
+			icon_override = taurtail.under_sprites
+			taurized = TRUE
+	else
+		taurized = FALSE
+
+	if(!taurized)
+		icon_override = initial(icon_override)
+		taurized = FALSE
+
+// Taur clothes need to be shifted so its centered on their taur half.
+/obj/item/clothing/under/make_worn_icon(var/body_type,var/slot_name,var/inhands,var/default_icon,var/default_layer = 0,var/icon/clip_mask)
+	var/image/standing = ..()
+	if(taurized) //Special snowflake var on suits
+		standing.pixel_x = -16
+		standing.layer = BODY_LAYER + 17 // 17 is above tail layer, so will not be covered by taurbody. TAIL_UPPER_LAYER +1
+	return standing
+
+/obj/item/clothing/under/apply_accessories(var/image/standing)
+	if(LAZYLEN(accessories) && taurized)
+		for(var/obj/item/clothing/accessory/A in accessories)
+			var/image/I = new(A.get_mob_overlay())
+			I.pixel_x = 16 //Opposite of the pixel_x on the suit (-16) from taurization to cancel it out and puts the accessory in the correct place on the body.
+			standing.add_overlay(I)
+	else
+		return ..()
 
 /obj/item/clothing/under/examine(mob/user)
 	. = ..()
