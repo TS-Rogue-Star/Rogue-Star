@@ -17,15 +17,6 @@
 	conversion in savefile.dm
 */
 
-#define MARKINGS_HEAD		0
-#define MARKINGS_BODY		1
-#define MARKINGS_LIMBS		2
-#define MARKINGS_TATSCAR 	3
-#define MARKINGS_TESHARI	4
-#define MARKINGS_VOX		5
-#define MARKINGS_SKINTONE	6
-#define MARKINGS_AUG		7
-
 /datum/sprite_accessory
 
 	var/icon			// the icon file the accessory is located in

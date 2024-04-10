@@ -49,15 +49,6 @@ var/global/list/tail_styles_list = list()	// Stores /datum/sprite_accessory/tail
 var/global/list/wing_styles_list = list()	// Stores /datum/sprite_accessory/wing indexed by type
 
 //Fine-Tuned marking sorting for preference selection because I can't touch paths
-#define MARKINGS_HEAD		0
-#define MARKINGS_BODY		1
-#define MARKINGS_LIMBS		2
-#define MARKINGS_TATSCAR 	3
-#define MARKINGS_TESHARI	4
-#define MARKINGS_VOX		5
-#define MARKINGS_SKINTONE	6
-#define MARKINGS_AUG		7
-
 var/global/list/body_marking_heads = list()
 var/global/list/body_marking_bodies = list()
 var/global/list/body_marking_addons = list()

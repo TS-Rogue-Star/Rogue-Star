@@ -884,7 +884,7 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 				usable_markings -= M
 		*/ //VOREStation Removal End
 		var/category_choice = tgui_input_list(user, "Choose a category for marking style", "Character Preference", list(
-				"All", "Head and face", "Body",
+				"All", "Head and Face", "Body",
 				"Arms and Legs", "Bandages and Scars",
 				"Skin and Panels", "Teshari Specific",
 				 "Vox Specific", "Augmentations"))
@@ -893,7 +893,7 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 		switch(category_choice)
 			if("All")
 				marking_category = pref.body_markings.Copy() ^ body_marking_styles_list.Copy()
-			if("Head and face")
+			if("Head and Face")
 				marking_category = pref.body_markings.Copy() ^ pref.get_available_styles(global.body_marking_heads).Copy()
 			if("Body")
 				marking_category = pref.body_markings.Copy() ^ pref.get_available_styles(global.body_marking_bodies).Copy()
