@@ -183,7 +183,7 @@
 											// must be awake, not stunned or whatever
 		msg = "[user.name] climbs into the [src]."
 		to_chat(user, "You climb into the [src].")
-		log_and_message_admins("climbed into disposals!", user)
+//		log_and_message_admins("climbed into disposals!", user) //RS REMOVE
 	else if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
 		msg = "[user.name] stuffs [target.name] into the [src]!"
 		to_chat(user, "You stuff [target.name] into the [src]!")
@@ -518,7 +518,7 @@
 
 			AM.forceMove(src.loc)
 			AM.pipe_eject(0)
-			if(!istype(AM,/mob/living/silicon/robot/drone)) //Poor drones kept smashing windows and taking system damage being fired out of disposals. ~Z
+			if(!istype(AM,/mob/living)) //Poor drones kept smashing windows and taking system damage being fired out of disposals. ~Z	// RS EDIT
 				spawn(1)
 					if(AM)
 						AM.throw_at(target, 5, 1)
@@ -635,7 +635,30 @@
 		//Drones can mail themselves through maint.
 		if(istype(AM, /mob/living/silicon/robot/drone))
 			var/mob/living/silicon/robot/drone/drone = AM
+			if(drone.client)	// if a client mob, update eye to follow this holder
+				drone.client.eye = src
 			src.destinationTag = drone.mail_destination
+		//RS ADD START
+		else if(isliving(AM))
+			var/mob/living/L = AM
+			if(L.client)	// if a client mob, update eye to follow this holder
+				L.client.eye = src
+			if(src.destinationTag && src.destinationTag != "")
+				return
+			src.destinationTag = "Bar"
+			if(ishuman(AM))
+				var/mob/living/carbon/human/C = AM
+				if(C.wear_id)
+					var/obj/item/weapon/card/id/our_id
+					if(istype(C.wear_id, /obj/item/weapon/card/id))
+						our_id = C.wear_id
+					else if(istype(C.wear_id, /obj/item/device/pda))
+						var/obj/item/device/pda/P = C.wear_id
+						if(P.id)
+							our_id = P.id
+					if(our_id && our_id.department_tag)
+						src.destinationTag = our_id.department_tag
+		//RS ADD END
 
 
 // start the movement process
@@ -660,11 +683,11 @@
 		sleep(1)		// was 1
 		if(!loc) return // check if we got GC'd
 
-		if(hasmob && prob(3))
+/*		if(hasmob && prob(3))		//RS REMOVE - Let's just not
 			for(var/mob/living/H in src)
 				if(!istype(H,/mob/living/silicon/robot/drone)) //Drones use the mailing code to move through the disposal system,
 					H.take_overall_damage(20, 0, "Blunt Trauma")//horribly maim any living creature jumping down disposals.  c'est la vie
-
+*/
 		var/obj/structure/disposalpipe/curr = loc
 		last = curr
 		curr = curr.transfer(src)
