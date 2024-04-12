@@ -111,10 +111,12 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	var/client_ckey
 
 /datum/vore_preferences/New(client/C)
+	log_debug("Kenzie debug begins for [C]")
 	if(istype(C))
 		client = C
 		client_ckey = C.ckey
-		load_vore()
+		var/success = load_vore()
+		log_debug("Loaded vore for [C] with [success]")
 
 //
 //	Check if an object is capable of eating things, based on vore_organs
