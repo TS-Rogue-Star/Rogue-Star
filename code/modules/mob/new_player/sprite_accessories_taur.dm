@@ -571,19 +571,6 @@
 	fullness_icons = 1
 	struggle_anim = TRUE
 
-/datum/sprite_accessory/tail/taur/alraune/alraune_2c
-	name = "Alraune (dual color)"
-	icon_state = "alraunecolor_s"
-	ani_state = "alraunecolor_closed_s"
-	ckeys_allowed = null
-	do_colouration = TRUE
-	extra_overlay = "alraunecolor_markings"
-	extra_overlay_w = "alraunecolor_closed_markings"
-	clip_mask_state = "taur_clip_mask_alraune"
-	icon_sprite_tag = "alraune"
-
-
-
 /datum/sprite_accessory/tail/taur/rat
 	name = "Rat (Taur)"
 	icon_state = "rat_s"
@@ -998,6 +985,17 @@
 	extra_overlay = "ant_markings"
 
 /***		Misc/Fantasy Critters		***/
+
+/datum/sprite_accessory/tail/taur/alraune/alraune_2c
+	name = "Alraune (dual color)"
+	icon_state = "alraunecolor_s"
+	ani_state = "alraunecolor_closed_s"
+	ckeys_allowed = null
+	do_colouration = TRUE
+	extra_overlay = "alraunecolor_markings"
+	extra_overlay_w = "alraunecolor_closed_markings"
+	clip_mask_state = "taur_clip_mask_alraune"
+	icon_sprite_tag = "alraune"
 
 /* CHOMPEdit - removed as a sprite accessory of the same name already exists for us, and having this here stops it from registering as a sprite accessory.
 /datum/sprite_accessory/tail/taur/sect_drone
