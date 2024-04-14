@@ -294,7 +294,7 @@
 	to_chat(owner,"<span class='notice'>[thing] slides into your [lowertext(name)].</span>")
 
 	//Sound w/ antispam flag setting
-	if(vore_sound && !recent_sound)
+	if(vore_sound && !recent_sound  && !istype(thing, /mob/observer)) //RSEdit: Ports VOREStation PR15918 || does not play vorebelly insertion sound upon ghost entering
 		var/soundfile
 		if(!fancy_vore)
 			soundfile = classic_vore_sounds[vore_sound]
