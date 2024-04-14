@@ -219,7 +219,12 @@
 				if(M)
 					if(isobserver(M))
 						message = "<span class='emote'><B>[src]</B> ([ghost_follow_link(src, M)]) [input]</span>"
-					M.show_message(message, m_type)
+					//RSEdit start: Ports CHOMPStation PR4296 || If you are in the same tile, right next to, or being held by a person doing an emote, you should be able to see it while blind
+					if(m_type != AUDIBLE_MESSAGE && (src.Adjacent(M) || (istype(src.loc, /obj/item/weapon/holder) && src.loc.loc == M)))
+						M.show_message(message)
+					else
+						M.show_message(message, m_type)
+					//RSEdit end
 					M.create_chat_message(src, "[runemessage]", FALSE, list("emote"), (m_type == AUDIBLE_MESSAGE))
 					if(isliving(M))
 						var/mob/living/L = M
