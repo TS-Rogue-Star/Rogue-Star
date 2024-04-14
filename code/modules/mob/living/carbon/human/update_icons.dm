@@ -347,7 +347,7 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 		var/icon_y_offset = 0
 
 		if(istype(tail_style, /datum/sprite_accessory/tail/taur))	// Tail icon 'cookie cutters' are filled in where icons are preserved. We need to invert that.
-			if(tail_style.clip_mask) //VOREStation Edit.
+			if(tail_style.clip_mask && tail_style.requires_clipping) // trim it if we need to.
 				Cutter = new(icon = (tail_style.clip_mask_icon ? tail_style.clip_mask_icon : tail_style.icon), icon_state = tail_style.clip_mask_state)
 
 				Cutter.Blend("#000000", ICON_MULTIPLY)	// Make it all black.
@@ -918,7 +918,9 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 	var/valid_clip_mask = tail_style?.clip_mask
 
 	if(tail_is_rendered && valid_clip_mask && !(istype(suit) && suit.taurized)) //Clip the lower half of the suit off using the tail's clip mask for taurs since taur bodies aren't hidden.
-		c_mask = valid_clip_mask
+		if(tail_style.requires_clipping) //but only if the suit doesn't have a valid override
+			c_mask = valid_clip_mask
+
 	overlays_standing[SUIT_LAYER] = wear_suit.make_worn_icon(body_type = species.get_bodytype(src), slot_name = slot_wear_suit_str, default_icon = suit_sprite, default_layer = SUIT_LAYER, clip_mask = c_mask)
 
 	apply_layer(SUIT_LAYER)
@@ -1069,10 +1071,16 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 	var/species_tail = species.get_tail(src) // Species tail icon_state prefix.
 
 	//This one is actually not that bad I guess.
-	if(species_tail && !(wear_suit && wear_suit.flags_inv & HIDETAIL))
-		var/icon/tail_s = get_tail_icon()
-		tail_image = image(icon = tail_s, icon_state = "[species_tail]_s", layer = BODY_LAYER+tail_layer)
-		tail_image.alpha = chest?.transparent ? 180 : 255 //VORESTATION EDIT: transparent instead of nonsolid
+	if(species_tail)
+		if(!(wear_suit && wear_suit.flags_inv & HIDETAIL)) //not wearing a suit or it doesn't hide our tail
+			var/icon/tail_s = get_tail_icon()
+			tail_image = image(icon = tail_s, icon_state = "[species_tail]_s", layer = BODY_LAYER+tail_layer)
+			tail_image.alpha = chest?.transparent ? 180 : 255 //VORESTATION EDIT: transparent instead of nonsolid
+		else if(wear_suit)	//we are wearing one, let's see if we have a tail sock to squish on. All tails have at least a white and black, taurize() handles taur specific ones!
+			var/obj/item/clothing/suit/sock = wear_suit
+			if(sock?.tailsock)	//starts off as null. updated during equipped()
+				var/icon/tail_s = get_tail_icon()
+				tail_image = image(icon = tail_s, icon_state = "[sock.tailsock]", layer = BODY_LAYER+tail_layer+0.1)
 		overlays_standing[tail_layer] = tail_image
 		animate_tail_reset()
 
@@ -1385,6 +1393,24 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 		else if(islongtail(tail_style))
 			working.pixel_x = tail_style.offset_x
 			working.pixel_y = tail_style.offset_y
+
+		to_chat(world, "let's check our wear_suit")
+		if(wear_suit)
+			to_chat(world, "we're wearing one, supposedly.")
+			var/obj/item/clothing/suit/socksuit = wear_suit
+			if(socksuit?.tailsock) // Tailsock support for universal sprite freedoms.
+				to_chat(world, "we've got a sock to put on")
+				var/tail_layer = get_tail_layer()
+				var/image/tailsockoverlay
+				if(istaurtail(tail_style))
+					var/datum/sprite_accessory/tail/taur/taurtype = tail_style
+					tailsockoverlay = image("icon" = taurtype.suit_sprites, "icon_state" = socksuit.tailsock)
+				else
+					tailsockoverlay = image("icon" = tail_style.icon, "icon_state" = socksuit.tailsock)
+				tailsockoverlay.layer = BODY_LAYER+tail_layer+0.1 //nudge it just above our adaptive tail layer
+				to_chat(world, "sock is [tailsockoverlay.icon] with [tailsockoverlay.icon_state] on [tailsockoverlay.layer]")
+				working.overlays += tailsockoverlay
+
 		return working
 	return null
 

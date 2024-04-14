@@ -20,6 +20,7 @@
 	var/ani_state // State when wagging/animated
 	var/extra_overlay_w // Wagging state for extra overlay
 	var/extra_overlay2_w // Tertiary wagging.
+	var/requires_clipping = FALSE
 	var/icon/clip_mask_icon = null //Icon file used for clip mask.
 	var/clip_mask_state = null //Icon state to generate clip mask. Clip mask is used to 'clip' off the lower part of clothing such as jumpsuits & full suits.
 	var/icon/clip_mask = null //Instantiated clip mask of given icon and state
@@ -289,7 +290,8 @@
 	desc = ""
 	icon_state = "satyr"
 	color_blend_mode = ICON_MULTIPLY
-	do_colouration = 1
+	do_colouration = TRUE
+	requires_clipping = TRUE
 	hide_body_parts = list(BP_L_LEG, BP_L_FOOT, BP_R_LEG, BP_R_FOOT) //Exclude pelvis just in case.
 	clip_mask_icon = 'icons/mob/human_races/sprite_accessories/taurs.dmi'
 	clip_mask_state = "taur_clip_mask_def" //Used to clip off the lower part of suits & uniforms.

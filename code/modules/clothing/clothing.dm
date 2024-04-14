@@ -737,6 +737,12 @@
 	blood_sprite_state = "suitblood" //Defaults to the suit's blood overlay, so that some blood renders instead of no blood.
 
 	var/taurized = FALSE
+	var/taursuited = FALSE	//Better to assume they aren't trimmed, but many are now.
+	var/tailsock
+	//	Set this to tailwhite or tailblack (Or whatever else colored tails you've got) to layer a universal tail(s) sock.
+	//	regular icons are "[user.tail_style]_[tailsock]" and taurs are "[taurtail.icon_sprite_tag]_[tailsock]"
+	//	It's reset upon equipping, to avoid mismatched icons.
+
 	siemens_coefficient = 0.9
 	w_class = ITEMSIZE_NORMAL
 	preserve_item = 1
@@ -759,11 +765,16 @@
 		M.update_inv_wear_suit()
 
 /obj/item/clothing/suit/equipped(var/mob/user, var/slot)
+	to_chat(world, "suit equipped called, our tailsock is [tailsock]")
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		var/taurtail = istaurtail(H.tail_style)
+		to_chat(world, "taurtail = [taurtail], taurized = [taurized]")
 		if((taurized && !taurtail) || (!taurized && taurtail))
 			taurize(user, taurtail)
+			to_chat(world, "taurized results: taurtail = [taurtail], taurized = [taurized], tailsock = [tailsock]")
+		else if(!taurized && !taurtail && H.tail_style)	//we have a tail, it's just not a tauric one.
+			tailsock = "[H.tail_style]_[initial(tailsock)]"	//So we make sure our tailsock is set to be added onto our full-coverage suit / rig
 
 	return ..()
 
@@ -772,7 +783,9 @@
 		var/datum/sprite_accessory/tail/taur/taurtail = Taur.tail_style
 		if(taurtail.suit_sprites && (get_worn_icon_state(slot_wear_suit_str) in cached_icon_states(taurtail.suit_sprites)))
 			icon_override = taurtail.suit_sprites
+			tailsock = "[taurtail.icon_sprite_tag]_[tailsock]"
 			taurized = TRUE
+
 	// means that if a taur puts on an already taurized suit without a taur sprite
 	// for their taur type, but the previous taur type had a sprite, it stays
 	// taurized and they end up with that taur style which is funny
@@ -788,7 +801,7 @@
 	var/image/standing = ..()
 	if(taurized) //Special snowflake var on suits
 		standing.pixel_x = -16
-		standing.layer = BODY_LAYER + 17 // 17 is above tail layer, so will not be covered by taurbody. TAIL_UPPER_LAYER +1
+		standing.layer = BODY_LAYER + 17 // 17 is above tail layer, so will not be covered by taurbody. TAIL_UPPER_LAYER +1 //Currently GLASSES_LAYER
 	return standing
 
 /obj/item/clothing/suit/apply_accessories(var/image/standing)
@@ -799,7 +812,6 @@
 			standing.add_overlay(I)
 	else
 		return ..()
-
 
 ///////////////////////////////////////////////////////////////////////
 //Under clothing

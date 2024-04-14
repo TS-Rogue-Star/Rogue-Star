@@ -27,6 +27,7 @@
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
 	min_pressure_protection = 0.2 * ONE_ATMOSPHERE
 	max_pressure_protection = 20  * ONE_ATMOSPHERE
+	tailsock = "tailblack"
 
 /obj/item/clothing/suit/fire/firefighter
 	name = "firesuit"

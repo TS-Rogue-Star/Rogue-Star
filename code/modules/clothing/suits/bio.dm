@@ -28,6 +28,7 @@
 	siemens_coefficient = 0.9
 	flags = PHORONGUARD
 	item_flags = THICKMATERIAL
+	tailsock = "tailwhite"
 
 //Standard biosuit, orange stripe
 /obj/item/clothing/head/bio_hood/general

@@ -135,9 +135,8 @@
 	var/can_ride = FALSE			//whether we're real rideable taur or just in that category.
 
 	hide_body_parts	= list(BP_L_LEG, BP_L_FOOT, BP_R_LEG, BP_R_FOOT) //Exclude pelvis just in case.
-	clip_mask_icon = 'icons/mob/human_races/sprite_accessories/taurs.dmi'
+	clip_mask_icon = 'icons/mob/vore/taurs_vr.dmi'
 	clip_mask_state = "taur_clip_mask_def" //Used to clip off the lower part of suits & uniforms.
-
 	icon = 'icons/mob/vore/taurs_vr.dmi'
 
 	can_ride = TRUE			//whether we're real rideable taur or just in that category
@@ -169,9 +168,6 @@
 	//Messages for smalls moving under larges
 	var/msg_owner_stepunder		= "%owner runs between your legs." //Weird becuase in the case this is used, %owner is the 'bumper' (src)
 	var/msg_prey_stepunder		= "You run between %prey's legs." //Same, inverse
-	hide_body_parts	= list(BP_L_LEG, BP_L_FOOT, BP_R_LEG, BP_R_FOOT) //Exclude pelvis just in case.
-	clip_mask_icon = 'icons/mob/vore/taurs_vr.dmi'
-	clip_mask_state = "taur_clip_mask_def" //Used to clip off the lower part of suits & uniforms.
 
 /datum/sprite_accessory/tail
 	//Taur Belly overlay handling
@@ -190,8 +186,8 @@
 /datum/sprite_accessory/tail/taur/wolf
 	name = "Wolf (Taur)"
 	icon_state = "wolf_s"
-	under_sprites = 'icons/mob/taursuits_wolf_vr.dmi'
-	suit_sprites = 'icons/mob/taursuits_wolf_vr.dmi'
+	under_sprites = 'icons/inventory/suit/taursuits_wolf.dmi'
+	suit_sprites = 'icons/inventory/suit/taursuits_wolf.dmi'
 	icon_sprite_tag = "wolf"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
@@ -288,7 +284,7 @@
 /datum/sprite_accessory/tail/taur/feline
 	name = "Feline (Taur)"
 	icon_state = "feline_s"
-	suit_sprites = 'icons/mob/taursuits_feline_vr.dmi'
+	suit_sprites = 'icons/inventory/suit/taursuits_feline.dmi'
 	icon_sprite_tag = "feline"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
@@ -416,7 +412,7 @@
 /datum/sprite_accessory/tail/taur/cow
 	name = "Cow (Taur)"
 	icon_state = "cow_s"
-	suit_sprites = 'icons/mob/taursuits_cow_vr.dmi'
+	suit_sprites = 'icons/inventory/suit/taursuits_cow.dmi'
 	icon_sprite_tag = "cow"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
@@ -444,7 +440,7 @@
 	name = "Cow w/ paws (Taur)"
 	icon_state = "pawcow_s"
 	extra_overlay = "pawcow_markings"
-	suit_sprites = 'icons/mob/taursuits_cow_vr.dmi'
+	suit_sprites = 'icons/inventory/suit/taursuits_cow.dmi'
 	icon_sprite_tag = "cow"
 
 	msg_owner_disarm_run = "You quickly push %prey to the ground with your paw!"
@@ -466,7 +462,7 @@
 	name = "Deer dual-color (Taur)"
 	icon_state = "deer_s"
 	extra_overlay = "deer_markings"
-	suit_sprites = 'icons/mob/taursuits_deer_vr.dmi'
+	suit_sprites = 'icons/inventory/suit/taursuits_deer.dmi'
 	icon_sprite_tag = "deer"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
@@ -505,8 +501,8 @@
 /datum/sprite_accessory/tail/taur/horse
 	name = "Horse (Taur)"
 	icon_state = "horse_s"
-	under_sprites = 'icons/mob/taursuits_horse_vr.dmi'
-	suit_sprites = 'icons/mob/taursuits_horse_vr.dmi'
+	under_sprites = 'icons/inventory/suit/taursuits_horse.dmi'
+	suit_sprites = 'icons/inventory/suit/taursuits_horse.dmi'
 	icon_sprite_tag = "horse"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
@@ -545,23 +541,18 @@
 	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
 	loaf_offset = 3
 
-
-
-
-
-
-
 /datum/sprite_accessory/tail/taur/frog
 	name = "Frog (Taur)"
 	icon_state = "frog_s"
 	icon_sprite_tag = "frog"
+	requires_clipping = TRUE
 
 /datum/sprite_accessory/tail/taur/otie
 	name = "Otie (Taur)"
 	icon_state = "otie_s"
 	extra_overlay = "otie_markings"
 	extra_overlay2 = "otie_markings_2"
-	suit_sprites = 'icons/mob/taursuits_otie_vr.dmi'
+	suit_sprites = 'icons/inventory/suit/taursuits_otie.dmi'
 	icon_sprite_tag = "otie"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
@@ -593,7 +584,7 @@
 	name = "Drake (Taur)"
 	icon_state = "drake_s"
 	extra_overlay = "drake_markings"
-	suit_sprites = 'icons/mob/taursuits_drake_ch.dmi'
+	suit_sprites = 'icons/inventory/suit/taursuits_drake.dmi'
 	icon_sprite_tag = "drake"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
@@ -620,14 +611,14 @@
 	icon_state = "noodle_s"
 	extra_overlay = "noodle_markings"
 	extra_overlay2 = "noodle_markings_2"
-	suit_sprites = 'icons/mob/taursuits_noodle_vr.dmi'
+	suit_sprites = 'icons/inventory/suit/taursuits_noodle.dmi'
 	clip_mask_state = "taur_clip_mask_noodle"
 	icon_sprite_tag = "noodle"
 
 /datum/sprite_accessory/tail/taur/lizard
 	name = "Lizard (Taur)"
 	icon_state = "lizard_s"
-	suit_sprites = 'icons/mob/taursuits_lizard_ch.dmi'
+	suit_sprites = 'icons/inventory/suit/taursuits_lizard.dmi'
 	icon_sprite_tag = "lizard"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
@@ -703,7 +694,7 @@
 /datum/sprite_accessory/tail/taur/naga
 	name = "Naga (Taur)"
 	icon_state = "naga_s"
-	suit_sprites = 'icons/mob/taursuits_naga.dmi'
+	suit_sprites = 'icons/inventory/suit/taursuits_naga.dmi'
 	vore_tail_sprite_variant = "Naga"
 	fullness_icons = 1
 	struggle_anim = TRUE
@@ -747,30 +738,27 @@
 	icon_state = "fatnaga_s"
 	extra_overlay = "fatnaga_markings"
 
-/datum/sprite_accessory/tail/taur/naga/alt_2c
+/datum/sprite_accessory/tail/taur/naga/alt/alt_2c
 	name = "Naga alt style dual-color (Taur)"
-	suit_sprites = 'icons/mob/taursuits_naga_alt_vr.dmi'
+	suit_sprites = 'icons/inventory/suit/taursuits_naga_alt.dmi'
 	icon_state = "altnaga_s"
 	extra_overlay = "altnaga_markings"
 	//icon_sprite_tag = "altnaga2c"
 
-/datum/sprite_accessory/tail/taur/naga/alt_3c
+/datum/sprite_accessory/tail/taur/naga/alt/alt_3c
 	name = "Naga alt style tri-color (Taur)"
-	suit_sprites = 'icons/mob/taursuits_naga_alt_vr.dmi'
 	icon_state = "altnaga_s"
 	extra_overlay = "altnaga_markings"
 	extra_overlay2 = "altnaga_stripes"
 
-/datum/sprite_accessory/tail/taur/naga/alt_3c_rattler
+/datum/sprite_accessory/tail/taur/naga/alt/alt_3c_rattler
 	name = "Naga alt style tri-color, rattler (Taur)"
-	suit_sprites = 'icons/mob/taursuits_naga_alt_vr.dmi'
 	icon_state = "altnaga_s"
 	extra_overlay = "altnaga_markings"
 	extra_overlay2 = "altnaga_rattler"
 
-/datum/sprite_accessory/tail/taur/naga/alt_3c_tailmaw
+/datum/sprite_accessory/tail/taur/naga/alt/alt_3c_tailmaw
 	name = "Naga alt style tri-color, tailmaw (Taur)"
-	suit_sprites = 'icons/mob/taursuits_naga_alt_vr.dmi'
 	icon_state = "altnagatailmaw_s"
 	extra_overlay = "altnagatailmaw_markings"
 	extra_overlay2 = "altnagatailmaw_eyes"
@@ -827,6 +815,7 @@
 	icon_state = "tent_s"
 	icon_sprite_tag = "tentacle"
 	can_ride = FALSE
+	requires_clipping = TRUE
 
 	msg_prey_stepunder = "You run between %prey's tentacles."
 	msg_owner_stepunder = "%owner runs between your tentacles."
@@ -860,7 +849,7 @@
 /datum/sprite_accessory/tail/taur/spider
 	name = "Spider (Taur)"
 	icon_state = "spider_s"
-	suit_sprites = 'icons/mob/taursuits_spider_vr.dmi'
+	suit_sprites = 'icons/inventory/suit/taursuits_spider.dmi'
 	icon_sprite_tag = "spider"
 
 	msg_owner_disarm_run = "You quickly push %prey to the ground with your leg!"
@@ -917,7 +906,7 @@
 /datum/sprite_accessory/tail/taur/slug
 	name = "Slug (Taur)"
 	icon_state = "slug_s"
-	suit_sprites = 'icons/mob/taursuits_slug_vr.dmi'
+	suit_sprites = 'icons/inventory/suit/taursuits_slug.dmi'
 	icon_sprite_tag = "slug"
 
 	vore_tail_sprite_variant = "Slug"
@@ -955,7 +944,6 @@
 	name = "Snail (Taur)"
 	icon_state = "slug_s"
 	extra_overlay = "snail_shell_marking"
-
 
 /datum/sprite_accessory/tail/taur/wasp
 	name = "Wasp (dual color)"
