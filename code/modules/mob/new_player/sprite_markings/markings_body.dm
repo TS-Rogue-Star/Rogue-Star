@@ -115,22 +115,6 @@
 	body_parts = list(BP_GROIN,BP_TORSO)
 	sorting_group = MARKINGS_BODY
 
-/datum/sprite_accessory/marking/vr_fingers_toes
-	name = "Fingers and toes"
-	icon = 'icons/mob/human_races/markings_vr.dmi'
-	icon_state = "fingerstoes"
-	color_blend_mode = ICON_MULTIPLY
-	body_parts = list(BP_L_FOOT,BP_R_FOOT,BP_L_HAND,BP_R_HAND)
-	sorting_group = MARKINGS_BODY
-
-/datum/sprite_accessory/marking/vr_otie_socks
-	name = "Fingerless socks"
-	icon = 'icons/mob/human_races/markings_vr.dmi'
-	icon_state = "otiesocks"
-	color_blend_mode = ICON_MULTIPLY
-	body_parts = list(BP_L_FOOT,BP_R_FOOT,BP_L_LEG,BP_R_LEG,BP_L_ARM,BP_R_ARM,BP_L_HAND,BP_R_HAND)
-	sorting_group = MARKINGS_BODY
-
 /datum/sprite_accessory/marking/vr_corvid_belly
 	name = "Corvid belly"
 	icon = 'icons/mob/human_races/markings_vr.dmi'

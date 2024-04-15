@@ -889,39 +889,31 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 				"Skin and Panels", "Teshari Specific",
 				 "Vox Specific", "Augmentations"))
 		if(!category_choice) return
-		var/marking_category = null
-		var/list/style_results = list()
+		var/marking_category
 		switch(category_choice)
 			if("All")
-				marking_category = pref.body_markings.Copy() ^ body_marking_styles_list.Copy()
+				marking_category = body_marking_styles_list.Copy()
 			if("Head and Face")
-				style_results = pref.get_available_styles(global.body_marking_heads)
-				marking_category = pref.body_markings.Copy() ^ style_results.Copy()
+				marking_category = body_marking_heads.Copy()
 			if("Body")
-				style_results = pref.get_available_styles(global.body_marking_bodies)
-				marking_category = pref.body_markings.Copy() ^ style_results.Copy()
+				marking_category = body_marking_bodies.Copy()
 			if("Arms and Legs")
-				style_results = pref.get_available_styles(global.body_marking_limbs)
-				marking_category = pref.body_markings.Copy() ^ style_results.Copy()
+				marking_category = body_marking_limbs.Copy()
 			if("Bandages and Scars")
-				style_results = pref.get_available_styles(global.body_marking_addons)
-				marking_category = pref.body_markings.Copy() ^ style_results.Copy()
+				marking_category = body_marking_addons.Copy()
 			if("Skin and Panels")
-				style_results = pref.get_available_styles(global.body_marking_skintone)
-				marking_category = pref.body_markings.Copy() ^ style_results.Copy()
+				marking_category = body_marking_skintone.Copy()
 			if("Teshari Specific")
-				style_results = pref.get_available_styles(global.body_marking_teshari)
-				marking_category = pref.body_markings.Copy() ^ style_results.Copy()
+				marking_category = body_marking_teshari.Copy()
 			if("Vox Specific")
-				style_results = pref.get_available_styles(global.body_marking_vox)
-				marking_category = pref.body_markings.Copy() ^ style_results.Copy()
+				marking_category = body_marking_vox.Copy()
 			if("Augmentations")
-				style_results = pref.get_available_styles(global.body_marking_augment)
-				marking_category = pref.body_markings.Copy() ^ style_results.Copy()
+				marking_category = body_marking_augment.Copy()
 
-		var/new_marking = tgui_input_list(user, "Choose a body marking for [marking_category]:", "Character Preference", marking_category)
+		var/new_marking = tgui_input_list(user, "Choose a body marking for [category_choice]:", "Character Preference", marking_category)
 		if(new_marking && CanUseTopic(user))
 			pref.body_markings[new_marking] = pref.mass_edit_marking_list(new_marking) //New markings start black
+			marking_category = null
 			return TOPIC_REFRESH_UPDATE_PREVIEW
 
 	else if(href_list["marking_up"])
