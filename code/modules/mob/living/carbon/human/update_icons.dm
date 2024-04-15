@@ -1080,7 +1080,7 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 			var/obj/item/clothing/suit/sock = wear_suit
 			if(sock?.tailsock)	//starts off as null. updated during equipped()
 				var/icon/tail_s = get_tail_icon()
-				tail_image = image(icon = tail_s, icon_state = "[sock.tailsock]", layer = BODY_LAYER+tail_layer+0.1)
+				tail_image = image(icon = tail_s, icon_state = "[sock.tailsock]", layer = BODY_LAYER+SUIT_LAYER+0.1)
 		overlays_standing[tail_layer] = tail_image
 		animate_tail_reset()
 
@@ -1407,7 +1407,7 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 					tailsockoverlay = image("icon" = taurtype.suit_sprites, "icon_state" = socksuit.tailsock)
 				else
 					tailsockoverlay = image("icon" = tail_style.icon, "icon_state" = socksuit.tailsock)
-				tailsockoverlay.layer = BODY_LAYER+tail_layer+0.1 //nudge it just above our adaptive tail layer
+				tailsockoverlay.layer = BODY_LAYER+SUIT_LAYER+0.1 //nudge it just above our suit layer
 				to_chat(world, "sock is [tailsockoverlay.icon] with [tailsockoverlay.icon_state] on [tailsockoverlay.layer]")
 				working.overlays += tailsockoverlay
 
