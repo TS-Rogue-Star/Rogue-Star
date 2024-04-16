@@ -16,6 +16,16 @@
 //Alraune organs
 #define A_FRUIT	"fruit gland"
 
+//Marking Sorting
+#define MARKINGS_HEAD		0
+#define MARKINGS_BODY		1
+#define MARKINGS_LIMBS		2
+#define MARKINGS_TATSCAR 	3
+#define MARKINGS_TESHARI	4
+#define MARKINGS_VOX		5
+#define MARKINGS_SKINTONE	6
+#define MARKINGS_AUG		7
+
 //species defines
 
 //station species

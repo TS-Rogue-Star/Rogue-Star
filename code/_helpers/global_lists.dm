@@ -48,6 +48,16 @@ var/global/list/ear_styles_list = list()	// Stores /datum/sprite_accessory/ears 
 var/global/list/tail_styles_list = list()	// Stores /datum/sprite_accessory/tail indexed by type
 var/global/list/wing_styles_list = list()	// Stores /datum/sprite_accessory/wing indexed by type
 
+//Fine-Tuned marking sorting for preference selection because I can't touch paths
+var/global/list/body_marking_heads = list()
+var/global/list/body_marking_bodies = list()
+var/global/list/body_marking_addons = list()
+var/global/list/body_marking_limbs = list()
+var/global/list/body_marking_skintone = list()
+var/global/list/body_marking_teshari = list()
+var/global/list/body_marking_vox = list()
+var/global/list/body_marking_augment = list()
+
 GLOBAL_LIST_INIT(custom_species_bases, new) // Species that can be used for a Custom Species icon base
 	//Underwear
 var/datum/category_collection/underwear/global_underwear = new()
@@ -153,6 +163,23 @@ GLOBAL_LIST_EMPTY(mannequins)
 		body_marking_styles_list[M.name] = M
 		if(!M.genetic)
 			body_marking_nopersist_list[M.name] = M
+		if(M.sorting_group == MARKINGS_HEAD)
+			body_marking_heads[M.name] = M
+		if(M.sorting_group == MARKINGS_BODY)
+			body_marking_bodies[M.name] = M
+		if(M.sorting_group == MARKINGS_LIMBS)
+			body_marking_limbs[M.name] = M
+		if(M.sorting_group == MARKINGS_TATSCAR)
+			body_marking_addons[M.name] = M
+		if(M.sorting_group == MARKINGS_TESHARI)
+			body_marking_teshari[M.name] = M
+		if(M.sorting_group == MARKINGS_VOX)
+			body_marking_vox[M.name] = M
+		if(M.sorting_group == MARKINGS_SKINTONE)
+			body_marking_skintone[M.name] = M
+		if(M.sorting_group == MARKINGS_AUG)
+			body_marking_augment[M.name] = M
+
 
 	//Surgery Steps - Initialize all /datum/surgery_step into a list
 	paths = subtypesof(/datum/surgery_step)

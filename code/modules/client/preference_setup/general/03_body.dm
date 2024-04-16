@@ -873,7 +873,7 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 		return TOPIC_REFRESH_UPDATE_PREVIEW
 
 	else if(href_list["marking_style"])
-		var/list/usable_markings = pref.body_markings.Copy() ^ body_marking_styles_list.Copy()
+		// var/list/usable_markings = pref.body_markings.Copy() ^ body_marking_styles_list.Copy() //We sort these now
 		/* VOREStation Removal - No markings whitelist, let people mix/match
 		for(var/M in usable_markings)
 			var/datum/sprite_accessory/S = usable_markings[M]
@@ -883,9 +883,37 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 			else if(!(pref.species in S.species_allowed) && !(pref.custom_base in S.species_allowed) && !(spec.base_species in S.species_allowed))
 				usable_markings -= M
 		*/ //VOREStation Removal End
-		var/new_marking = tgui_input_list(user, "Choose a body marking:", "Character Preference", usable_markings)
+		var/category_choice = tgui_input_list(user, "Choose a category for marking style", "Character Preference", list(
+				"All", "Head and Face", "Body",
+				"Arms and Legs", "Bandages and Scars",
+				"Skin and Panels", "Teshari Specific",
+				 "Vox Specific", "Augmentations"))
+		if(!category_choice) return
+		var/marking_category
+		switch(category_choice)
+			if("All")
+				marking_category = body_marking_styles_list.Copy()
+			if("Head and Face")
+				marking_category = body_marking_heads.Copy()
+			if("Body")
+				marking_category = body_marking_bodies.Copy()
+			if("Arms and Legs")
+				marking_category = body_marking_limbs.Copy()
+			if("Bandages and Scars")
+				marking_category = body_marking_addons.Copy()
+			if("Skin and Panels")
+				marking_category = body_marking_skintone.Copy()
+			if("Teshari Specific")
+				marking_category = body_marking_teshari.Copy()
+			if("Vox Specific")
+				marking_category = body_marking_vox.Copy()
+			if("Augmentations")
+				marking_category = body_marking_augment.Copy()
+
+		var/new_marking = tgui_input_list(user, "Choose a body marking for [category_choice]:", "Character Preference", marking_category)
 		if(new_marking && CanUseTopic(user))
 			pref.body_markings[new_marking] = pref.mass_edit_marking_list(new_marking) //New markings start black
+			marking_category = null
 			return TOPIC_REFRESH_UPDATE_PREVIEW
 
 	else if(href_list["marking_up"])
