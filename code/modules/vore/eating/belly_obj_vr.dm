@@ -294,7 +294,7 @@
 	to_chat(owner,"<span class='notice'>[thing] slides into your [lowertext(name)].</span>")
 
 	//Sound w/ antispam flag setting
-	if(vore_sound && !recent_sound && !istype(thing, /mob/observer)) //RSEdit: Ports VOREStation PR15918 | Don't play release sound for ghosts
+	if(vore_sound && !recent_sound  && !istype(thing, /mob/observer)) //RSEdit: Ports VOREStation PR15918 || does not play vorebelly insertion sound upon ghost entering
 		var/soundfile
 		if(!fancy_vore)
 			soundfile = classic_vore_sounds[vore_sound]
@@ -1219,7 +1219,7 @@
 	if(!(content in src) || !istype(target))
 		return
 	content.forceMove(target)
-	if(ismob(content) && !isobserver(content)) ////RSEdit: Ports VOREStation PR15918 | Fixes bug where camera is not set to follow the ghost
+	if(ismob(content) && !isobserver(content)) //RSEdit: Ports VOREStation PR15918 | Fixes bug where camera is not set to follow the ghost
 		var/mob/ourmob = content
 		ourmob.reset_view(owner)
 	if(isitem(content))
