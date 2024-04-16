@@ -10,7 +10,6 @@
 	var/tail_hidden = FALSE
 	var/markings_len = 0 //mostly an arbitrary number
 	var/low_sorting_priority = FALSE
-	var/synth_cookie		//Only crew can be printed cookies, for now. Least for preferences.
 
 /mob/living/carbon/human/proc/shadekin_get_energy()
 	var/datum/species/shadekin/SK = species

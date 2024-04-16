@@ -173,7 +173,7 @@
 
 	our_db.m_backup(user.mind,nif,one_time = TRUE)
 	var/datum/transhuman/body_record/BR = new()
-	BR.init_from_mob(user, TRUE, TRUE, user.client.prefs.synth_cookie, database_key = db_key)
+	BR.init_from_mob(user, TRUE, TRUE, database_key = db_key)
 
 	return "<br><span class='notice'>Backup scan completed!</span><br><b>Note:</b> A backup implant is required for automated notifications to the appropriate department in case of incident."
 
