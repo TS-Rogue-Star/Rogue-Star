@@ -67,18 +67,29 @@
 	icon_state = "squirrel"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"squirrel, colorable",
+		"squirel, orange",
+		"squirrel, red"
+	)
 
 /datum/sprite_accessory/tail/kitty
 	name = "kitty, downwards"
 	icon_state = "kittydown"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"kitty, colorable, downwards"
+	)
 
 /datum/sprite_accessory/tail/kittyup
 	name = "kitty, upwards"
 	icon_state = "kittyup"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"kitty, colorable, upwards"
+	)
 
 /datum/sprite_accessory/tail/tiger_white
 	name = "tiger"
@@ -86,6 +97,9 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "tigerinnerwhite"
+	backup_name = list(
+		"tiger, colorable"
+	)
 
 /datum/sprite_accessory/tail/stripey
 	name = "stripey taj"
@@ -93,29 +107,46 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "stripeytail_mark"
+	backup_name = list(
+		"stripey taj, colorable",
+		"stripey taj, brown"
+	)
 
 /datum/sprite_accessory/tail/chameleon
 	name = "Chameleon"
 	icon_state = "chameleon"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"Chameleon, colorable"
+	)
 
 /datum/sprite_accessory/tail/bunny
 	name = "bunny"
 	icon_state = "bunny"
 	do_colouration = TRUE
+	backup_name = list(
+		"bunny, colorable"
+	)
 
 /datum/sprite_accessory/tail/bear
 	name = "bear"
 	icon_state = "bear"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"bear, colorable",
+		"bear, brown"
+	)
 
 /datum/sprite_accessory/tail/dragon
 	name = "dragon"
 	icon_state = "dragon"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"dragon, colorable"
+	)
 
 /datum/sprite_accessory/tail/wolf
 	name = "wolf"
@@ -123,36 +154,59 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "wolfinner"
+	backup_name = list(
+		"wolf, colorable",
+		"wolf, grey",
+		"wolf, green",
+		"wolf, wise",
+		"wolf, black"
+	)
 
 /datum/sprite_accessory/tail/mouse
 	name = "mouse"
 	icon_state = "mouse"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"mouse, colorable",
+		"mouse, pink"
+	)
 
 /datum/sprite_accessory/tail/horse
 	name = "horse"
 	icon_state = "horse"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"horse tail, colorable"
+	)
 
 /datum/sprite_accessory/tail/cow
 	name = "cow tail"
 	icon_state = "cow"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"cow tail, colorable"
+	)
 
 /datum/sprite_accessory/tail/fantail
 	name = "avian fantail"
 	icon_state = "fantail"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"avian fantail, colorable"
+	)
 
 /datum/sprite_accessory/tail/wagtail
 	name = "avian wagtail"
 	icon_state = "wagtail"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"avian wagtail, colorable"
+	)
 
 /datum/sprite_accessory/tail/nevreandc
 	name = "nevrean tail"
@@ -160,6 +214,9 @@
 	extra_overlay = "nevreantail_dc_tail"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"nevrean tail, dual-color"
+	)
 
 /datum/sprite_accessory/tail/nevreanwagdc
 	name = "nevrean wagtail"
@@ -167,6 +224,9 @@
 	extra_overlay = "wagtail_dc_tail"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"nevrean wagtail, dual-color"
+	)
 
 /datum/sprite_accessory/tail/nevreanwagdc_alt
 	name = "nevrean wagtail, marked"
@@ -174,6 +234,9 @@
 	extra_overlay = "wagtail2_dc_mark"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"nevrean wagtail, marked, dual-color"
+	)
 
 /datum/sprite_accessory/tail/crossfox
 	name = "cross fox"
@@ -187,6 +250,9 @@
 	name = "spade-tail"
 	icon_state = "spadetail-black"
 	do_colouration = TRUE
+	backup_name = list(
+		"spade-tail (colorable)"
+	)
 
 /datum/sprite_accessory/tail/snag
 	name = "xenomorph tail 1"
@@ -223,6 +289,9 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "ringtail_mark"
+	backup_name = list(
+		"ringtail, colorable"
+	)
 
 /datum/sprite_accessory/tail/ringtailwag
 	name = "ringtail (vwag)"
@@ -247,6 +316,9 @@
 	icon_state = "tailmaw"
 	color_blend_mode = ICON_MULTIPLY
 	do_colouration = TRUE
+	backup_name = list(
+		"tailmaw, colorable"
+	)
 
 /datum/sprite_accessory/tail/curltail
 	name = "curltail (vwag)"
@@ -316,6 +388,9 @@
 	icon_state = "snaketail"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"snake tail, colorable"
+	)
 
 /datum/sprite_accessory/tail/bigsnaketail
 	name = "large snake tail (vwag)"
@@ -416,7 +491,7 @@
 	extra_overlay = "teshpattern_fem_tail"
 
 /datum/sprite_accessory/tail/tesh_pattern_fem_alt
-	name = "Teshari male tail alt. pattern"
+	name = "Teshari female tail alt. pattern"
 	icon_state = "teshtail_s"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
@@ -427,12 +502,14 @@
 	icon_state = "nightstalker"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"Nightstalker, colorable"
+	)
 
 /datum/sprite_accessory/tail/zenghu_taj
 	name = "Zeng-Hu Tajaran Synth tail"
 	desc = ""
 	icon_state = "zenghu_taj"
-
 
 /datum/sprite_accessory/tail/tail_smooth
 	name = "Smooth Lizard Tail, colorable"
@@ -859,48 +936,75 @@
 	icon_state = "tail_s"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"default zorren tail, colorable"
+	)
 
 /datum/sprite_accessory/tail/special/foxhc
 	name = "highlander zorren tail"
 	icon_state = "foxtail_hc_s"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"highlander zorren tail, colorable"
+	)
 
 /datum/sprite_accessory/tail/special/fennechc
 	name = "flatland zorren tail"
 	icon_state = "fentail_hc_s"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"flatland zorren tail, colorable"
+	)
 
 /datum/sprite_accessory/tail/special/armalishc
 	name = "armalis tail"
 	icon_state = "armalis_tail_humanoid_hc_s"
 	do_colouration = TRUE
+	backup_name = list(
+		"armalis tail, colorable"
+	)
 
 /datum/sprite_accessory/tail/special/xenodronehc
 	name = "xenomorph drone tail"
 	icon_state = "xenos_drone_tail_hc_s"
 	do_colouration = TRUE
+	backup_name = list(
+		"xenomorph drone tail, colorable"
+	)
 
 /datum/sprite_accessory/tail/special/xenosentinelhc
 	name = "xenomorph sentinel tail"
 	icon_state = "xenos_sentinel_tail_hc_s"
 	do_colouration = TRUE
+	backup_name = list(
+		"xenomorph sentinel tail, colorable"
+	)
 
 /datum/sprite_accessory/tail/special/xenohunterhc
 	name = "xenomorph hunter tail"
 	icon_state = "xenos_hunter_tail_hc_s"
 	do_colouration = TRUE
+	backup_name = list(
+		"xenomorph hunter tail, colorable"
+	)
 
 /datum/sprite_accessory/tail/special/xenoqueenhc
 	name = "xenomorph queen tail"
 	icon_state = "xenos_queen_tail_hc_s"
 	do_colouration = TRUE
+	backup_name = list(
+		"xenomorph queen tail, colorable"
+	)
 
 /datum/sprite_accessory/tail/special/monkeyhc
 	name = "monkey tail"
 	icon_state = "chimptail_hc_s"
 	do_colouration = TRUE
+	backup_name = list(
+		"monkey tail, colorable"
+	)
 
 /datum/sprite_accessory/tail/special/tesharitailhc
 	name = "teshari tail, colorable"
