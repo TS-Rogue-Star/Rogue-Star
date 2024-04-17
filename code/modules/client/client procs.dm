@@ -181,6 +181,10 @@
 	if(isnewplayer(src.mob))
 		to_chat(src, "<font color='red'>If the title screen is black, resources are still downloading. Please be patient until the title screen appears.</font>")
 
+	if(src.mob && src.mob.bellies_loaded == FALSE) // Quick fix
+		log_debug("Fallback reload of bellies from [src] into [src.mob]")
+		src.mob.init_vore()
+
 	GLOB.clients += src
 	GLOB.directory[ckey] = src
 
