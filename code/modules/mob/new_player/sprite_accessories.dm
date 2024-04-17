@@ -49,6 +49,8 @@
 
 	var/sorting_group //For use in the Preference menu
 
+	var/list/backup_name = null		//RS ADD - compat
+
 /*
 ////////////////////////////
 /  =--------------------=  /
