@@ -332,7 +332,7 @@
 						"Yoga Teacher" = /datum/alt_title/yoga_teacher, "Masseuse" = /datum/alt_title/masseuse, "Tradesperson" = /datum/alt_title/tradesperson,
 						"Streamer" = /datum/alt_title/streamer, "Influencer" = /datum/alt_title/influencer, "Paranormal Investigator" = /datum/alt_title/paranormal_investigator,
 						"Personal Secretary" = /datum/alt_title/personal_secretary, "Stylist" = /datum/alt_title/stylist, "Fisher" = /datum/alt_title/fisher,
-						"Fortune Teller" = /datum/alt_title/fortune_teller, "Spirit Healer" = /datum/alt_title/spirit_healer)
+						"Fortune Teller" = /datum/alt_title/fortune_teller, "Spirit Healer" = /datum/alt_title/spirit_healer, "Taxi" = /datum/alt_title/taxi)
 
 /datum/alt_title/lawyer
 	title = "Lawyer"
@@ -402,5 +402,6 @@
 	title = "Spirit Healer"
 	title_blurb = "A Spirit Healer offers alternative forms of medicine. Rituals, magic rocks, seances... It totally works. What's that about placebo?"
 
-
-
+/datum/alt_title/taxi
+	title = "Taxi"
+	title_blurb = "A Taxi is someone who brings people from here to there."

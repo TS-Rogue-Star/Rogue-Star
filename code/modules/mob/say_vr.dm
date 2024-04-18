@@ -224,7 +224,7 @@
 		for(var/mob/M as anything in vis_mobs)
 			if(isnewplayer(M))
 				continue
-			if(isobserver(M) && !is_preference_enabled(/datum/client_preference/whisubtle_vis) && !M.client?.holder)
+			if(isobserver(M) && !(is_preference_enabled(/datum/client_preference/whisubtle_vis) || (isbelly(M.loc) && src == M.loc:owner)) && !M.client?.holder) //RS edit: Ports CHOMPStation PR4296 || Ghosts in vorebellies can see messages even if the pred has ghost privacy on
 				spawn(0)
 					M.show_message(undisplayed_message, 2)
 			else

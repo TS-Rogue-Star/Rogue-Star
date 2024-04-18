@@ -27,7 +27,7 @@
 		return
 	else
 		return
-
+/*	//RS REMOVE
 /obj/structure/plasticflaps/CanPass(atom/A, turf/T)
 	if(istype(A) && A.checkpass(PASSGLASS))
 		return prob(60)
@@ -49,7 +49,7 @@
 		return issmall(M)
 
 	return ..()
-
+*/
 /obj/structure/plasticflaps/ex_act(severity)
 	switch(severity)
 		if (1)
