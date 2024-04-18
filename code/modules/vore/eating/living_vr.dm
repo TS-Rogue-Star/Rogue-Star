@@ -49,7 +49,7 @@
 
 /mob/proc/init_vore()
 	//Something else made organs, meanwhile.
-	if(LAZYLEN(vore_organs))
+	if(LAZYLEN(vore_organs) && src.bellies_loaded == TRUE)
 		return TRUE
 
 	//We'll load our client's organs if we have one
@@ -59,7 +59,11 @@
 			return FALSE
 		if(LAZYLEN(vore_organs))
 			vore_selected = vore_organs[1]
+			src.bellies_loaded = TRUE
 			return TRUE
+	else
+		log_debug("Failed to copy vore preferences for [client] into [src]")
+		src.bellies_loaded = FALSE
 
 	//Or, we can create a basic one for them
 	if(!LAZYLEN(vore_organs) && isliving(src))
