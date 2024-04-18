@@ -977,7 +977,7 @@
 		owner.adjust_nutrition((nutrition_percent / 100) * 15 * digested)
 		if(isrobot(owner))
 			var/mob/living/silicon/robot/R = owner
-			R.cell.charge += ((nutrition_percent / 100) * 100 * digested)
+			R.cell.charge += ((nutrition_percent / 100) * 50 * digested)
 	return digested
 
 //Determine where items should fall out of us into.
