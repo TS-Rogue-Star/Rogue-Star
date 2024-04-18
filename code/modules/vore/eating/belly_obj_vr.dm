@@ -974,7 +974,7 @@
 	if(!digested)
 		items_preserved |= item
 	else
-		owner.adjust_nutrition((nutrition_percent / 100) * 10 * digested)
+		owner.adjust_nutrition((nutrition_percent / 100) * 15 * digested)
 		if(isrobot(owner))
 			var/mob/living/silicon/robot/R = owner
 			R.cell.charge += ((nutrition_percent / 100) * 100 * digested)
