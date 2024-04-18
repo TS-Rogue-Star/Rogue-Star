@@ -974,10 +974,10 @@
 	if(!digested)
 		items_preserved |= item
 	else
-		owner.adjust_nutrition((nutrition_percent / 100) * 5 * digested)
+		owner.adjust_nutrition((nutrition_percent / 100) * 10 * digested)
 		if(isrobot(owner))
 			var/mob/living/silicon/robot/R = owner
-			R.cell.charge += ((nutrition_percent / 100) * 50 * digested)
+			R.cell.charge += ((nutrition_percent / 100) * 100 * digested)
 	return digested
 
 //Determine where items should fall out of us into.
