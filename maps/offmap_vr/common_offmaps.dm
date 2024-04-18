@@ -260,7 +260,7 @@
 /datum/map_template/common_lateload/redgate/darkadventure
 	name = "Redgate - Dark Adventure"
 	desc = "This place seems broken!"
-	mappath = 'maps/redgate/darkadventure2.dmm'
+	mappath = 'maps/redgate/darkadventure.dmm'
 
 /datum/map_template/common_lateload/redgate/stardog
 	name = "Redgate - Star Dog"

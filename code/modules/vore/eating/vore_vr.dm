@@ -34,9 +34,6 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 /client
 	var/datum/vore_preferences/prefs_vr
 
-/mob
-	var/bellies_loaded = TRUE
-
 /hook/client_new/proc/add_prefs_vr(client/C)
 	C.prefs_vr = new/datum/vore_preferences(C)
 	if(C.prefs_vr)
@@ -117,8 +114,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	if(istype(C))
 		client = C
 		client_ckey = C.ckey
-		var/success = load_vore()
-		log_debug("Loaded vore preferences for [C] with [success]")
+		load_vore()
 
 //
 //	Check if an object is capable of eating things, based on vore_organs
