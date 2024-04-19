@@ -108,8 +108,20 @@
 	if(speaking.flags & NONVERBAL)
 		if(sdisabilities & BLIND || blinded)
 			return FALSE
-		if(!other || !(other in view(src)))
+		if(!other) //RSEdit start: Ports CHOMPStation PR4296 || Fixes seeing non-verbal languages while being held
 			return FALSE
+		if(istype(other.loc, /obj/item/weapon/holder))
+			if(istype(src.loc, /obj/item/weapon/holder))
+				if(!(other.loc in view(src.loc.loc)))
+					return FALSE
+			else if(!(other.loc in view(src)))
+				return FALSE
+		else if(istype(src.loc, /obj/item/weapon/holder))
+			if(!(other in view(src.loc.loc)))
+				return FALSE
+		else if(!(other in view(src)))
+			return FALSE
+		//RS Edit end
 
 	//Language check.
 	for(var/datum/language/L in languages)

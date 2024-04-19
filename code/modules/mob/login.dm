@@ -84,3 +84,7 @@
 	if(cloaked && cloaked_selfimage)
 		client.images += cloaked_selfimage
 	SEND_SIGNAL(src, COMSIG_MOB_CLIENT_LOGIN, client)
+
+	if(src.client && src.bellies_loaded == FALSE) // Quick fix
+		log_debug("Fallback reload of bellies from [src.client] into [src]")
+		src.init_vore()

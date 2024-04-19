@@ -443,10 +443,14 @@
 	close_spawn_windows()
 
 	job_master.AssignRole(src, rank, 1)
+	log_debug("Assigned role [rank] to [src.ckey] with [src.client]") // TODO; delete debug from HERE
 
 	var/mob/living/character = create_character(T)	//creates the human and transfers vars and mind
+	log_debug("Created character [character.real_name] for [character.ckey] with [character.client]")
 	character = job_master.EquipRank(character, rank, 1)					//equips the human
+	log_debug("Equipped character [character.real_name] for [character.ckey] with [character.client]")
 	UpdateFactionList(character)
+	log_debug("Updated faction list for character [character.real_name] for [character.ckey] with [character.client]")
 	if(character && character.client)
 		var/obj/screen/splash/Spl = new(character.client, TRUE)
 		Spl.Fade(TRUE)
@@ -483,6 +487,7 @@
 		character.buckled.set_dir(character.dir)
 
 	ticker.mode.latespawn(character)
+	log_debug("Latespawned character [character.real_name] for [character.ckey] with [character.client]")
 	if(do_announce)
 		if(J.mob_type & JOB_SILICON)
 			AnnounceCyborg(character, rank, join_message, announce_channel, character.z)
@@ -498,6 +503,7 @@
 				imp.post_implant(character)
 
 	qdel(src) // Delete new_player mob
+	log_debug("Deleted old mob of character [character.real_name] for [character.ckey] with [character.client]") // TODO; TO HERE.
 
 /mob/new_player/proc/AnnounceCyborg(var/mob/living/character, var/rank, var/join_message, var/channel, var/zlevel)
 	if (ticker.current_state == GAME_STATE_PLAYING)
