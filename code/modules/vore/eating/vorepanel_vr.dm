@@ -727,9 +727,8 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 /datum/vore_look/proc/pick_from_outside(mob/user, params)
 	var/intent
 
-	//Handle the [All] choice. Ugh inelegant. Someone make this pretty.
 	if(params["pickall"])
-		intent = tgui_alert(user, "Eject all, Move all?","Query",list("Eject all","Cancel","Move all"))
+		intent = tgui_alert(user, "You are affecting all [lowertext(host.vore_selected)] contents with this choice.","[uppertext(host.vore_selected)] contents management",list("Eject all","Move all","Advance all","Cancel"))
 		switch(intent)
 			if("Cancel")
 				return TRUE
@@ -752,15 +751,38 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 					return FALSE
 
 				for(var/atom/movable/target in host.vore_selected)
+					to_chat(target,"<span class='warning'>You're squished from [host]'s host.vore_selected to their [lowertext(choice.name)]!</span>")
+					host.vore_selected.transfer_contents(target, choice, 1)
+				return TRUE
+			//RS ADD START
+			if("Advance all")
+				if(host.stat)
+					to_chat(user,"<span class='warning'>You can't do that in your state!</span>")
+					return TRUE
+				var/list/choices = list()
+				var/obj/belly/choice
+				for(var/obj/belly/b in host.vore_organs)
+					if(b.name == host.vore_selected.transferlocation || b.name == host.vore_selected.transferlocation_secondary)
+						choices += b
+				if(!choices.len)
+					to_chat(user,"<span class='warning'>You haven't configured any transfer locations for your [lowertext(host.vore_selected)]. Please configure at least one transfer location in order to advance your [lowertext(host.vore_selected)]'s contents.</span>")
+				else
+					choice = tgui_input_list(user, "Advance your [lowertext(host.vore_selected)]'s contents to which belly?","Select Belly", choices)
+
+				if(!choice)
+					return TRUE
+
+				for(var/atom/movable/target in host.vore_selected)
 					to_chat(target,"<span class='warning'>You're squished from [host]'s [lowertext(host.vore_selected)] to their [lowertext(choice.name)]!</span>")
 					host.vore_selected.transfer_contents(target, choice, 1)
 				return TRUE
+			//RS ADD END
 		return
 
 	var/atom/movable/target = locate(params["pick"])
 	if(!(target in host.vore_selected))
 		return TRUE // Not in our X anymore, update UI
-	var/list/available_options = list("Examine", "Eject", "Move", "Transfer")
+	var/list/available_options = list("Examine", "Eject", "Move", "Advance", "Transfer")
 	if(ishuman(target))
 		available_options += "Transform"
 	if(isliving(target))
@@ -913,6 +935,26 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 					b.absorb_living(ourtarget)
 				if("Cancel")
 					return
+		//RS ADD START
+		if("Advance")
+			if(host.stat)
+				to_chat(user,"<span class='warning'>You can't do that in your state!</span>")
+				return TRUE
+			var/list/choices = list()
+			var/obj/belly/choice
+			for(var/obj/belly/b in host.vore_organs)
+				if(b.name == host.vore_selected.transferlocation || b.name == host.vore_selected.transferlocation_secondary)
+					choices += b
+			if(!choices.len)
+				to_chat(user,"<span class='warning'>You haven't configured any transfer locations for your [lowertext(host.vore_selected)]. Please configure at least one transfer location in order to advance your [lowertext(host.vore_selected)]'s contents.</span>")
+			else
+				choice = tgui_input_list(user, "Advance your [lowertext(host.vore_selected)]'s contents to which belly?","Select Belly", choices)
+
+			if(!choice || !(target in host.vore_selected))
+				return TRUE
+			to_chat(target,"<span class='warning'>You're squished from [host]'s [lowertext(host.vore_selected.name)] to their [lowertext(choice.name)]!</span>")
+			host.vore_selected.transfer_contents(target, choice)
+		//RS ADD END
 
 /datum/vore_look/proc/set_attr(mob/user, params)
 	if(!host.vore_selected)
