@@ -258,7 +258,7 @@
 /obj/belly/proc/handle_digestion_death(mob/living/M)
 	var/digest_alert_owner = pick(digest_messages_owner)
 	var/digest_alert_prey = pick(digest_messages_prey)
-	var/compensation = M.maxHealth / 5 //Dead body bonus.
+	var/compensation = M.maxHealth / 1.5 //Dead body bonus.
 	if(ishuman(M))
 		compensation += M.getOxyLoss() //How much of the prey's damage was caused by passive crit oxyloss to compensate the lost nutrition.
 
