@@ -1,6 +1,3 @@
-#define GUNCABINET_SPACER 3
-
-
 /obj/structure/closet/secure_closet/guncabinet
 	name = "gun cabinet"
 	icon = 'icons/obj/guncabinet.dmi'
@@ -16,7 +13,6 @@
 	..()
 	update_icon()
 
-//VOREStation Add - gun context controls
 /obj/structure/closet/secure_closet/guncabinet/open() //Don't dump everything to the floor, why would this be a good idea?
 	if(opened)
 		return FALSE
@@ -36,12 +32,11 @@
 	playsound(src, close_sound, 15, 1, -3)
 	update_icon()
 	return TRUE
-//VOREStation Add End
 
 /obj/structure/closet/secure_closet/guncabinet/update_icon()
 	cut_overlays()
 	if(opened)
-		add_overlay("door_openold") //VOREStationEDIT all of these should be considered 'old' sprites, but keep backwards compatability.
+		add_overlay("door_openold") //all of these should be considered 'old' sprites, but keep backwards compatability.
 	else
 		var/lazors = 0
 		var/shottas = 0
@@ -74,10 +69,9 @@
 		else
 			add_overlay("openold")
 
-//VOREStation Add Start
 /obj/structure/closet/secure_closet/guncabinet/excursion
 	name = "expedition weaponry cabinet"
-	req_one_access = list(access_explorer,access_armory)
+	req_one_access = list(access_armory)
 
 /obj/structure/closet/secure_closet/guncabinet/excursion/New()
 	..()
@@ -96,6 +90,7 @@
 #define GUN_LONGARM	1
 #define GUN_HEAVY	2
 
+#define GUNCABINET_SPACER 3
 
 /obj/structure/closet/secure_closet/guncabinet/fancy
 	name = "arms locker"
@@ -292,20 +287,18 @@
 			if(!opened)
 				to_chat(usr, "<span class='notice'[src] doors are closed.</span>")
 				return
-
 			if(rackslot2)
 				usr.put_in_hands(rackslot2)
 				to_chat(usr, "<span class='notice'>You take [rackslot2.name] from [src].</span>")
 				rackslot2 = null
 				nullTguiIcon("rackslot2")
 				nullGunInfo("rackslot2")
-			else
-				if(check_weapon(W))
-					usr.drop_from_inventory(W, src)
-					rackslot2 = W
-					setTguiIcon("rackslot2", rackslot2)
-					get_ammo_status("rackslot2", rackslot2)
-					to_chat(usr, "<span class='notice'>You place [rackslot2.name] into [src]'s second slot.</span>")
+			else if(check_weapon(W))
+				usr.drop_from_inventory(W, src)
+				rackslot2 = W
+				setTguiIcon("rackslot2", rackslot2)
+				get_ammo_status("rackslot2", rackslot2)
+				to_chat(usr, "<span class='notice'>You place [rackslot2.name] into [src]'s second slot.</span>")
 
 		if("rackslot3")
 			if(!opened)
@@ -317,13 +310,12 @@
 				rackslot3 = null
 				nullTguiIcon("rackslot3")
 				nullGunInfo("rackslot3")
-			else
-				if(check_weapon(W))
-					usr.drop_from_inventory(W, src)
-					rackslot3 = W
-					setTguiIcon("rackslot3", rackslot3)
-					get_ammo_status("rackslot3", rackslot3)
-					to_chat(usr, "<span class='notice'>You place [rackslot3.name] into [src]'s third slot.</span>")
+			else if(check_weapon(W))
+				usr.drop_from_inventory(W, src)
+				rackslot3 = W
+				setTguiIcon("rackslot3", rackslot3)
+				get_ammo_status("rackslot3", rackslot3)
+				to_chat(usr, "<span class='notice'>You place [rackslot3.name] into [src]'s third slot.</span>")
 
 		if("rackslot4")
 			if(!opened)
@@ -335,13 +327,12 @@
 				rackslot4 = null
 				nullTguiIcon("rackslot4")
 				nullGunInfo("rackslot4")
-			else
-				if(check_weapon(W))
-					usr.drop_from_inventory(W, src)
-					rackslot4 = W
-					setTguiIcon("rackslot4", rackslot4)
-					get_ammo_status("rackslot4", rackslot4)
-					to_chat(usr, "<span class='notice'>You place [rackslot4.name] into [src]'s fourth slot.</span>")
+			else if(check_weapon(W))
+				usr.drop_from_inventory(W, src)
+				rackslot4 = W
+				setTguiIcon("rackslot4", rackslot4)
+				get_ammo_status("rackslot4", rackslot4)
+				to_chat(usr, "<span class='notice'>You place [rackslot4.name] into [src]'s fourth slot.</span>")
 		else
 			return FALSE
 
@@ -473,10 +464,8 @@
 	icon_state = "riflecase"
 	desc = "A strong cabinet used for securing firearms. This one is for long arms such as rifles and shotguns."
 
-
 /obj/structure/closet/secure_closet/guncabinet/fancy/rifle/wood
 	icon_state = "riflefancy"
-
 
 /obj/structure/closet/secure_closet/guncabinet/fancy/pistol
 	name = "small arms locker"
@@ -497,4 +486,3 @@
 #undef GUN_HEAVY
 
 #undef GUNCABINET_SPACER
-//VOREStation Add End
