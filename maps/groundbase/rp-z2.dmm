@@ -9397,7 +9397,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/effect/landmark/start/qm,
+/obj/structure/filingcabinet/filingcabinet,
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/office)
 "Ja" = (
@@ -11270,7 +11270,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/machinery/smartfridge/sheets/persistent_lossy,
+/obj/machinery/smartfridge/sheets/persistent,
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/office)
 "Pr" = (
@@ -11949,6 +11949,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
+/obj/effect/landmark/start/qm,
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/office)
 "Ry" = (
@@ -12240,8 +12241,9 @@
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/civilian/chapel)
 "Sy" = (
-/obj/structure/filingcabinet/filingcabinet,
-/turf/simulated/floor/tiled,
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/smartfridge/sheets/persistent,
+/turf/simulated/floor/plating,
 /area/groundbase/cargo/office)
 "Sz" = (
 /obj/structure/grille,
@@ -28831,8 +28833,8 @@ HK
 hF
 ER
 kj
+WZ
 Sy
-sX
 Sw
 pT
 ep
