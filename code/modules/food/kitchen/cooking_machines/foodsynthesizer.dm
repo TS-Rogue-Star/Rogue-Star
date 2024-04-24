@@ -12,7 +12,6 @@
 	desc = "Sabresnacks brand device able to produce an incredible array of conventional foods. Although only the most ascetic of users claim it produces truly good tasting products."
 	icon = 'icons/obj/machines/foodsynthesizer.dmi'
 	icon_state = "synthesizer"
-	pixel_y = 32 //So it glues to the wall
 	density = FALSE
 	anchored = TRUE
 	use_power = USE_POWER_IDLE
@@ -73,6 +72,9 @@
 	RefreshParts()
 	update_icon()
 
+	if(!pixel_x && !pixel_y)
+		offset_synth()
+
 /obj/machinery/synthesizer/mini
 	name = "small food synthesizer"
 	icon = 'icons/obj/machines/foodsynthesizer.dmi'
@@ -105,8 +107,13 @@
 
 	return
 
-// TGUI to do.
+//offsets to make the machine squish to a wall. They're all south facing so it looks weird but every other direction is AWFUL
+/obj/machinery/synthesizer/proc/offset_synth()
+	pixel_x = (dir & 3) ? 0 : (dir == 4 ? -24 : 24)
+	pixel_y = (dir & 3) ? (dir == 1 ? -22 : 30) : 0
 
+
+// TGUI
 // Crew Cookie backend stuff... I can't even fuckin' believe this is Janicart stuff
 /obj/machinery/synthesizer/proc/setTguiIcon(var/mob/living/L)
 	if(!isliving(L))
