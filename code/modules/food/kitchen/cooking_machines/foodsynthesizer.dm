@@ -338,7 +338,7 @@
 						meal.nutriment_desc = list(F.taste_description = 1)
 
 				if(src.menu_grade >= 2) //Is the machine upgraded?
-					meal.reagents.add_reagent("nutripaste", ((1 * src.menu_grade) - 1)) //add the missing Nutriment bonus, subtracting the one we've already added in.
+					meal.reagents.add_reagent("nutripaste", ((1 + src.menu_grade) - 1)) //add the missing Nutriment bonus, subtracting the one we've already added in.
 
 				meal.bitesize = food_mimic?.bitesize //suffer your aerogel like 1 Nutriment turkey, nerds.
 				meal.filling_color = food_mimic?.filling_color
@@ -412,7 +412,7 @@
 							meal.nutriment_desc = list(F.taste_description = 1)
 
 					if(src.menu_grade >= 2) //Is the machine upgraded?
-						meal.reagents.add_reagent("nutripaste", ((1 * src.menu_grade) - 1)) //add the missing Nutriment bonus, subtracting the one we've already added in.
+						meal.reagents.add_reagent("nutripaste", ((1 + src.menu_grade) - 1)) //add the missing Nutriment bonus, subtracting the one we've already added in.
 
 					meal.bitesize = 1 //Smol tiny critter mimics
 					src.audible_message("<span class='notice'>Please take your miniature [meal.name].</span>", runemessage = "Minature [meal.name] is complete!")
@@ -639,7 +639,7 @@
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		speed_grade = (10 SECONDS) / M.rating //let's try to make it worthwhile to upgrade 'em 10s, 5s, 3.3s, 2.5s
 	for(var/obj/item/weapon/stock_parts/scanning_module/S in component_parts)
-		menu_grade = S.rating //how much bonus Nutriment is added to the printed food. the regular wafer is only 1
+		menu_grade = S.rating //how much bonus Nutriment is added to the printed food. the regular wafer is only 5.
 		// Science parts will be of help if they bother.
 
 //Cartridge Item handling

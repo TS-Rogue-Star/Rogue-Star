@@ -29,7 +29,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/synthsized_meal/Initialize()
 	. = ..()
-	reagents.add_reagent("nutripaste", 1)
+	reagents.add_reagent("nutripaste", 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/synthsized_meal/crewblock
 	name = "Nutrient paste meal"
@@ -42,7 +42,7 @@
 	description = "a revoltingly bland paste of nutrition."
 	taste_description = "undefinable blandness" //This gets updated with our printed food's taste descriptor
 	taste_mult = 1
-	nutriment_factor = 15 //half the power of real Nutriment. for balance.
+	nutriment_factor = 20 // 2/3rds the power of real Nutriment. for balance.
 	reagent_state = SOLID
 	color = "#c5e384"
 
