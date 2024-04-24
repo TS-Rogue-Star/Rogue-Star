@@ -192,8 +192,8 @@
 					var/mob/living/itsme = src
 					if(itsme.vore_organs.len)
 						for(var/obj/belly/ourbelly in itsme.vore_organs)
-							for(var/anything in ourbelly.contents)
-								vis_objs |= anything
+							for(var/obj/O in ourbelly.contents)
+								vis_objs |= O
 
 				for(var/obj/O in vis_objs)	//Let's see if there is anything that might have mobs in it around!
 					if(istype(O,/obj/effect/overmap/visitable/ship))	//Let's look for ships!
