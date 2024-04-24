@@ -539,7 +539,7 @@
 	else if(doorstatus == CABINET_REPAIR)
 		. += "The doors are patched, but need to be welded to re-secure."
 
-/obj/structure/closet/secure_closet/guncabinet/fancy/emag_act()
+/obj/structure/closet/secure_closet/guncabinet/fancy/emag_act(var/remaining_charges, var/mob/user)
 	if(!emagged && !welded)
 		emagged = TRUE
 		if(!opened) //look I only have one sparking animation ok?
