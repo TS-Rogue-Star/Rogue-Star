@@ -449,7 +449,7 @@
 // Release all contents of this belly into the owning mob's location.
 // If that location is another mob, contents are transferred into whichever of its bellies the owning mob is in.
 // Returns the number of mobs so released.
-/obj/belly/proc/release_all_contents(include_absorbed = FALSE, silent = FALSE)
+/obj/belly/proc/release_all_contents(include_absorbed = FALSE, silent = FALSE, include_bones = FALSE)	//RS EDIT
 	//Don't bother if we don't have contents
 	if(!contents.len)
 		return FALSE
@@ -463,6 +463,8 @@
 			var/mob/living/L = AM
 			if(L.absorbed && !include_absorbed)
 				continue
+		if(istype(AM, /obj/item/weapon/digestion_remains) && !include_bones)	// RS ADD
+			continue	//RS ADD
 		count += release_specific_contents(AM, silent = TRUE)
 
 	//Clean up our own business

@@ -737,8 +737,19 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 				if(host.stat)
 					to_chat(user,"<span class='warning'>You can't do that in your state!</span>")
 					return TRUE
+				//RS ADD START
+				var/bones_detected = FALSE
+				var/bone_time = FALSE
+				for(var/thing in host.vore_selected.contents)
+					if(istype(thing, /obj/item/weapon/digestion_remains))
+						bones_detected = TRUE
+						break
+				if(bones_detected)
+					if(tgui_alert(user, "Do you want to include the remains that are inside your [lowertext(host.vore_selected)]?","",list("Yes","No")) == "Yes")
+						bone_time = TRUE
+				//RS ADD END
 
-				host.vore_selected.release_all_contents()
+				host.vore_selected.release_all_contents(include_bones = bone_time)	//RS EDIT
 				return TRUE
 
 			if("Move all")

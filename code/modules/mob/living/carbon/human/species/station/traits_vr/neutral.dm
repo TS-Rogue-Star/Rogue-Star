@@ -1008,3 +1008,11 @@
 	desc = "Makes your nice clawed, scaled, hooved, armored, or otherwise just awfully calloused feet immune to glass shards."
 	cost = 0
 	var_changes = list("flags" = NO_MINOR_CUT) //Checked the flag is only used by shard stepping.
+//RS ADD
+/datum/trait/neutral/nodigestpain
+	name = "Painless Digestion"
+	desc = "Makes it so that you feel no pain from being digested, even if you otherwise would."
+	cost = 0
+	var_changes = list("digest_pain" = FALSE)
+	custom_only = FALSE
+	can_take = ORGANICS
