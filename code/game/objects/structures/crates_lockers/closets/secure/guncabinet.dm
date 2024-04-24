@@ -92,6 +92,10 @@
 
 #define GUNCABINET_SPACER 3
 
+#define CABINET_NORMAL	0
+#define CABINET_REPAIR	1
+#define CABINET_BROKEN	2
+
 /obj/structure/closet/secure_closet/guncabinet/fancy
 	name = "arms locker"
 	icon_state = "shotguncase"
@@ -99,7 +103,10 @@
 	var/case_type = GUN_LONGARM
 	var/welded = FALSE
 	var/emagged = FALSE
+	var/repair_material = MAT_STEEL
+	var/doorstatus = CABINET_NORMAL
 	anchored = TRUE
+	store_mobs = FALSE
 
 	var/obj/item/weapon/gun/rackslot1
 	var/obj/item/weapon/gun/rackslot2
@@ -147,8 +154,8 @@
 	else if(!rackslot4)
 		G.forceMove(src)
 		rackslot4 = G
-		setTguiIcon("rackslot3", rackslot4)
-		get_ammo_status("rackslot3", rackslot4)
+		setTguiIcon("rackslot4", rackslot4)
+		get_ammo_status("rackslot4", rackslot4)
 		return
 
 	else
@@ -181,40 +188,94 @@
 	clearGunInfo()
 	return ..()
 
-/obj/structure/closet/secure_closet/guncabinet/fancy/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/closet/secure_closet/guncabinet/fancy/attackby(obj/item/I as obj, mob/user as mob)
 	if(issilicon(user) || isalien(user))
 		return
 
 	if(!Adjacent(user))
 		return
 
-	if(istype(W, /obj/item/weapon/gun) && opened)
+	if(istype(I, /obj/item/weapon/gun) && opened)
 		tgui_interact(user)
 
-	if(istype(W, /obj/item/weapon/weldingtool) && !opened && locked)
-		var/obj/item/weapon/weldingtool/WT = W
-		if (WT.remove_fuel(0, user))
-			playsound(src, WT.usesound, 50, 1)
-			user.visible_message("<span class='danger'>[user] begins cutting through [src]'s lock.</span>", "You start cutting through the lock.", "<span class='notice'>You hear a welder in use.</span>")
-			if(do_after(user, (4 SECONDS) * WT.toolspeed))
-				welded = TRUE
-				opened = TRUE
+	if(I.has_tool_quality(TOOL_WELDER))
+		var/obj/item/weapon/weldingtool/WT = I
+		if(!opened && locked) //let's cut it open!
+			if(WT.remove_fuel(0, user))
+				playsound(src, WT.usesound, 50, 1)
+				user.visible_message("<span class='danger'>[user] begins cutting through [src]'s lock.</span>", "<span class='danger'>You start cutting through the lock.</span>", "<span class='notice'>You hear a welder in use.</span>")
+				if(do_after(user, (5 SECONDS) * WT.toolspeed))
+					playsound(src, WT.usesound, 50, 1)
+					welded = TRUE
+					locked = FALSE
+					doorstatus = CABINET_BROKEN
+					update_icon()
+					return
+			else
+				to_chat(user, "<span class='notice'>You need more welding fuel.</span>")
+		else if(!opened && doorstatus == CABINET_REPAIR)
+			if(WT.remove_fuel(0, user))
+				playsound(src, WT.usesound, 50, 1)
+				user.visible_message("<span class='notice'>[user] begins mending the material of [src]'s doors.</span>", "<span class='notice'>You start mending the doors.</span>", "<span class='notice'>You hear a welder in use.</span>")
+				if(do_after(user, (5 SECONDS) * WT.toolspeed))
+					playsound(src, WT.usesound, 50, 1)
+					welded = FALSE
+					emagged = FALSE
+					doorstatus = CABINET_NORMAL
+					update_icon()
+					return
+			else
+				to_chat(user, "<span class='notice'>You need more welding fuel.</span>")
 
-	if(istype(W, /obj/item/weapon/melee/energy/blade) && !opened && locked)
-		if(emag_act(INFINITY, user, "<span class='danger'>\The [src] has been sliced open by [user] with \an [W]</span>!", "<span class='danger'>You hear metal being sliced and sparks flying.</span>"))
+		else if(opened || doorstatus == CABINET_NORMAL)
+			to_chat(user, "<span class='notice'>There's nothing to cut or mend.</span>")
+
+	if(welded && doorstatus == CABINET_BROKEN && istype(I, /obj/item/stack/material)) //let's fix it!
+		if(I.get_material_name() == repair_material)
+			var/obj/item/stack/M = I
+			if(M.get_amount() < 2)
+				to_chat(user, "<span class='warning'>You need at least two sheets of material.</span>")
+				return
+			playsound(src, 'sound/items/Crowbar.ogg', 50, 1)
+			to_chat(user, "<span class='notice'>You start to add material to the damaged doors.</span>")
+			if(do_after(user, (5 SECONDS)) && doorstatus == CABINET_BROKEN)
+				if(M.use(2))
+					playsound(src, 'sound/items/Crowbar.ogg', 50, 1)
+					to_chat(user, "<span class='notice'>You add the new material for the door, it needs to be welded secure now.</span>")
+					doorstatus = CABINET_REPAIR
+					update_icon()
+		else
+			to_chat(user, "<span class='notice'>You need a different repair material for the doors.</span>")
+
+	if(istype(I, /obj/item/weapon/melee/energy) && !opened && locked)
+		var/obj/item/weapon/melee/energy/cutter = I
+		if(cutter.active) //no chop chop if you ain't on
+			user.visible_message("<span class='danger'>\The [src] is being sliced open by [user] with \an [cutter]</span>!", "<span class='danger'>You start cutting through the lock.</span>", "<span class='danger'>You hear metal being sliced and sparks flying.</span>")
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, loc)
 			spark_system.start()
 			playsound(src, 'sound/weapons/blade1.ogg', 50, 1)
 			playsound(src, "sparks", 50, 1)
-	else
-		tgui_interact(user)
+
+			if(do_after(user, (2 SECONDS)))
+				spark_system.set_up(5, 0, loc)
+				spark_system.start()
+				playsound(src, 'sound/weapons/blade1.ogg', 50, 1)
+				playsound(src, "sparks", 50, 1)
+				welded = TRUE
+				locked = FALSE
+				doorstatus = CABINET_BROKEN
+				update_icon()
+				return
+
+	tgui_interact(user)
 
 /obj/structure/closet/secure_closet/guncabinet/fancy/attack_hand(mob/user as mob)
 	add_fingerprint(user)
 	if(locked)
-		togglelock(user)
+		toggle_lock(user)
 	else
+		tgui_interact(user)
 		toggle(user)
 
 
@@ -348,11 +409,31 @@
 	return
 
 /obj/structure/closet/secure_closet/guncabinet/fancy/proc/toggle_lock(mob/user as mob)
-	if(opened || welded || emagged) //All of these states nullify the ability to lock the doors.
+	if(opened)
+		to_chat(user, "<span class='notice'>Close the locker first.</span>")
 		return
-	locked = !locked
+
+	if(welded || emagged)
+		to_chat(user, "<span class='notice'>The lock is broken and in need of repair.</span>")
+		return
+
+	if(allowed(user) && !welded && !emagged)
+		locked = !locked
+		playsound(src, 'sound/machines/click.ogg', 15, 1, -3)
+		for(var/mob/O in viewers(user, 3))
+			if((O.client && !( O.blinded )))
+				to_chat(O, "<span class='notice'>The locker has been [locked ? null : "un"]locked by [user].</span>")
+		update_icon()
+	else
+		to_chat(user, "<span class='notice'>Access Denied</span>")
 	SStgui.update_uis(src)
 	return
+
+/obj/structure/closet/secure_closet/guncabinet/fancy/AltClick()
+	if(ishuman(usr) || isrobot(usr))
+		toggle_lock(usr)
+	else
+		return
 
 /obj/structure/closet/secure_closet/guncabinet/fancy/CtrlClick(mob/user)
 	if(anchored)
@@ -423,11 +504,17 @@
 				//Probably a better way of doing this but my brain's smooth.
 
 	if(welded && opened)
-		add_overlay("[icon_state]_cut")
+		if(doorstatus == CABINET_BROKEN)
+			add_overlay("[icon_state]_cut")
+		else if(doorstatus == CABINET_REPAIR)
+			add_overlay("[icon_state]_openrepair")
 		layer = OBJ_LAYER
 		return
 	else if(welded && !opened)
-		add_overlay("[icon_state]_doorcut")
+		if(doorstatus == CABINET_BROKEN)
+			add_overlay("[icon_state]_doorcut")
+		else if(doorstatus == CABINET_REPAIR)
+			add_overlay("[icon_state]_doorrepair")
 		layer = OBJ_LAYER
 		return
 	else if(!welded && opened)
@@ -445,33 +532,45 @@
 			add_overlay("[icon_state]_unlocked")
 		return
 
-/obj/structure/closet/secure_closet/guncabinet/fancy/emag_act(var/remaining_charges, var/mob/user, var/feedback)
-	if(!emagged)
+/obj/structure/closet/secure_closet/guncabinet/fancy/examine(mob/user)
+	. = ..()
+	if(doorstatus == CABINET_BROKEN)
+		. += "The door lock is broken!"
+	else if(doorstatus == CABINET_REPAIR)
+		. += "The doors are patched, but need to be welded to re-secure."
+
+/obj/structure/closet/secure_closet/guncabinet/fancy/emag_act()
+	if(!emagged && !welded)
 		emagged = TRUE
-		flick("[icon_state]_sparking",src)
+		if(!opened) //look I only have one sparking animation ok?
+			flick("[icon_state]_sparking",src)
+		playsound(src, "sparks", 50, 1)
 		sleep(3)
 		locked = FALSE
-		to_chat(user, (feedback ? feedback : "You short out the lock of \the [src]."))
+		to_chat(user, "You short out the lock of \the [src].")
+		doorstatus = CABINET_BROKEN
 		update_icon()
 		return TRUE
 
 /obj/structure/closet/secure_closet/guncabinet/fancy/shotgun
-	name = "long arms locker"
+	name = "Shotgun locker"
 	icon_state = "shotguncase"
 
 /obj/structure/closet/secure_closet/guncabinet/fancy/rifle
-	name = "long arms locker"
+	name = "Rifle locker"
 	icon_state = "riflecase"
 	desc = "A strong cabinet used for securing firearms. This one is for long arms such as rifles and shotguns."
 
 /obj/structure/closet/secure_closet/guncabinet/fancy/rifle/wood
 	icon_state = "riflefancy"
+	repair_material = MAT_RGLASS
 
 /obj/structure/closet/secure_closet/guncabinet/fancy/pistol
-	name = "small arms locker"
+	name = "Small Arms locker"
 	icon_state = "pistolcase"
 	desc = "A strong cabinet used for securing firearms. This one is for hand-held sidearms."
 	case_type = GUN_SIDEARM
+	repair_material = MAT_RGLASS
 
 /obj/structure/closet/secure_closet/guncabinet/fancy/pistol/wood
 	icon_state = "fancypistol"
@@ -486,3 +585,7 @@
 #undef GUN_HEAVY
 
 #undef GUNCABINET_SPACER
+
+#undef CABINET_NORMAL
+#undef CABINET_REPAIR
+#undef CABINET_BROKEN
