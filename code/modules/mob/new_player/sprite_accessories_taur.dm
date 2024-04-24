@@ -194,7 +194,7 @@
 	suit_sprites = 'icons/inventory/suit/taursuits_wolf.dmi'
 	icon_sprite_tag = "wolf"
 	can_loaf = TRUE
-	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
+	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
 	loaf_offset = 4
 	vore_tail_sprite_variant = "Wolf"
 	fullness_icons = 3
@@ -287,7 +287,7 @@
 	extra_overlay = "fox_markings"
 	extra_overlay2 = "fox_markings2"
 	can_loaf = TRUE
-	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
+	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
 	loaf_offset = 4
 	backup_name = list("Fox (Taur, 3-color)")
 
@@ -302,7 +302,7 @@
 	suit_sprites = 'icons/inventory/suit/taursuits_feline.dmi'
 	icon_sprite_tag = "feline"
 	can_loaf = TRUE
-	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
+	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
 	loaf_offset = 5
 
 	vore_tail_sprite_variant = "Feline"
@@ -417,7 +417,7 @@
 	extra_overlay2 = "skunk_markings_2"
 	icon_sprite_tag = "skunk"
 	can_loaf = TRUE
-	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
+	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
 	loaf_offset = 3
 	vore_tail_sprite_variant = "Skunk"
 	belly_variant_when_loaf = TRUE
@@ -440,7 +440,7 @@
 	suit_sprites = 'icons/inventory/suit/taursuits_cow.dmi'
 	icon_sprite_tag = "cow"
 	can_loaf = TRUE
-	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
+	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
 	loaf_offset = 3
 	vore_tail_sprite_variant = "Cow"
 	fullness_icons = 1
@@ -492,7 +492,7 @@
 	suit_sprites = 'icons/inventory/suit/taursuits_deer.dmi'
 	icon_sprite_tag = "deer"
 	can_loaf = TRUE
-	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
+	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
 	loaf_offset = 7
 	vore_tail_sprite_variant = "Deer"
 	belly_variant_when_loaf = TRUE
@@ -536,7 +536,7 @@
 	suit_sprites = 'icons/inventory/suit/taursuits_horse.dmi'
 	icon_sprite_tag = "horse"
 	can_loaf = TRUE
-	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
+	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
 	loaf_offset = 4
 	vore_tail_sprite_variant = "Horse"
 	fullness_icons = 1
@@ -569,7 +569,7 @@
 	extra_overlay = "synthhorse_markings"
 	extra_overlay2 = "synthhorse_glow"
 	can_loaf = TRUE
-	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
+	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
 	loaf_offset = 3
 	backup_name = list("SynthHorse dual-color (Taur)")
 
@@ -581,7 +581,7 @@
 	suit_sprites = 'icons/inventory/suit/taursuits_drake.dmi'
 	icon_sprite_tag = "drake"
 	can_loaf = TRUE
-	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
+	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
 	loaf_offset = 6
 	vore_tail_sprite_variant = "Drake"
 	belly_variant_when_loaf = TRUE
@@ -619,7 +619,7 @@
 	suit_sprites = 'icons/inventory/suit/taursuits_lizard.dmi'
 	icon_sprite_tag = "lizard"
 	can_loaf = TRUE
-	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
+	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
 	loaf_offset = 5
 
 	vore_tail_sprite_variant = "Lizard"
@@ -631,8 +631,6 @@
 /datum/sprite_accessory/tail/taur/lizard/fatlizard
 	name = "Fat Lizard"
 	icon_state = "fatlizard_s"
-	can_loaf = TRUE
-	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
 	loaf_offset = 3
 	backup_name = list("Fat Lizard (Taur)")
 
@@ -647,8 +645,6 @@
 	icon_state = "lizard_s"
 	extra_overlay = "lizard_markings"
 	icon_sprite_tag = "lizard2c"
-	can_loaf = TRUE
-	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
 	loaf_offset = 5
 	backup_name = list("Lizard dual-color (Taur)")
 
@@ -656,8 +652,6 @@
 	name = "Fat Lizard"
 	icon_state = "fatlizard_s"
 	extra_overlay = "fatlizard_markings"
-	can_loaf = TRUE
-	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
 	loaf_offset = 3
 	backup_name = list("Fat Lizard (Taur, dual-color)")
 
@@ -674,8 +668,6 @@
 	icon_state = "synthlizard_s"
 	extra_overlay = "synthlizard_markings"
 	extra_overlay2 = "synthlizard_glow"
-	can_loaf = TRUE
-	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
 	loaf_offset = 3
 	vore_tail_sprite_variant = "SynthLiz"
 	backup_name = list("SynthLizard dual-color (Taur)")
@@ -685,8 +677,6 @@
 	icon_state = "fatsynthlizard_s"
 	extra_overlay = "fatsynthlizard_markings"
 	extra_overlay2 = "fatsynthlizard_glow"
-	can_loaf = TRUE
-	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
 	loaf_offset = 3
 	backup_name = list("Fat SynthLizard dual-color (Taur)")
 
@@ -1031,7 +1021,7 @@
 	suit_sprites = 'icons/inventory/suit/taursuits_otie.dmi'
 	icon_sprite_tag = "otie"
 	can_loaf = TRUE
-	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
+	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
 	loaf_offset = 5
 	vore_tail_sprite_variant = "Otie"
 	belly_variant_when_loaf = TRUE

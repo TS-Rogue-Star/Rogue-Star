@@ -1,14 +1,4 @@
-// Special snowflake tails/taurhalves
-
-//spoopylizz: Roiz Lizden
-/datum/sprite_accessory/tail/taur/roiz_long_lizard // Not ACTUALLY a taur, but it uses 32x64 so it wouldn't fit in tails.dmi, and having it as a tail bugs up the sprite.
-	name = "Long Lizard Tail (Roiz Lizden)"
-	icon_state = "roiz_tail_s"
-	do_colouration = 0
-	ckeys_allowed = list("spoopylizz")
-	hide_body_parts = null
-	clip_mask_icon = null
-	clip_mask_state = null
+// Special snowflake taurhalves
 
 //wickedtemp: Chakat Tempest
 /datum/sprite_accessory/tail/taur/feline/tempest

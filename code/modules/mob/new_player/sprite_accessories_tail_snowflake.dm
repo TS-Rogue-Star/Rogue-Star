@@ -75,8 +75,17 @@
 
 /datum/sprite_accessory/tail/kara
 	name = "Pterokara Tail"
-	icon = 'icons/mob/vore/tails_vr.dmi'
 	icon_state = "kara_tail"
 	ckeys_allowed = list("satinisle")
 
+/datum/sprite_accessory/tail/longtail/long_lizard/roiz //Not a Taur, so be YEETED from tauric pathing, nerd.
+	name = "Long Lizard Tail (Roiz Lizden)"
+	icon_state = "roiz_tail_s"
+	do_colouration = FALSE
+	ckeys_allowed = list("spoopylizz")
 
+/datum/sprite_accessory/tail/peacocktail_red //this is ckey locked for now, but prettiebyrd wants these tails to be unlocked at a later date
+	name = "Peacock tail (vwag)"
+	icon_state = "peacocktail_red"
+	ani_state = "peacocktail_red_w"
+	ckeys_allowed = list("prettiebyrd")
