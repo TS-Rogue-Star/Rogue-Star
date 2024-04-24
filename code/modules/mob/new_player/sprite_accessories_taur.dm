@@ -611,6 +611,7 @@
 	suit_sprites = 'icons/inventory/suit/taursuits_noodle.dmi'
 	clip_mask_state = "taur_clip_mask_noodle"
 	icon_sprite_tag = "noodle"
+	requires_clipping = TRUE
 	backup_name = list("Eastern Dragon (Taur)")
 
 /datum/sprite_accessory/tail/taur/lizard
@@ -695,6 +696,7 @@
 	fullness_icons = 1
 	struggle_anim = TRUE
 	icon_sprite_tag = "naga"
+	requires_clipping = TRUE
 
 	msg_owner_help_walk = "You carefully slither around %prey."
 	msg_prey_help_walk = "%owner's huge tail slithers past beside you!"
@@ -780,6 +782,7 @@
 	icon_state = "mermaid_s"
 	can_ride = 0
 	icon_sprite_tag = "mermaid"
+	requires_clipping = TRUE
 
 	msg_owner_help_walk = "You carefully slither around %prey."
 	msg_prey_help_walk = "%owner's huge tail slithers past beside you!"
@@ -865,6 +868,7 @@
 	icon_state = "spider_s"
 	suit_sprites = 'icons/inventory/suit/taursuits_spider.dmi'
 	icon_sprite_tag = "spider"
+	requires_clipping = TRUE
 
 	msg_owner_disarm_run = "You quickly push %prey to the ground with your leg!"
 	msg_prey_disarm_run = "%owner pushes you down to the ground with their leg!"
@@ -929,6 +933,7 @@
 	icon_state = "slug_s"
 	suit_sprites = 'icons/inventory/suit/taursuits_slug.dmi'
 	icon_sprite_tag = "slug"
+	requires_clipping = TRUE
 
 	vore_tail_sprite_variant = "Slug"
 	fullness_icons = 1
@@ -975,6 +980,7 @@
 	extra_overlay = "wasp_markings"
 	clip_mask_state = "taur_clip_mask_wasp"
 	icon_sprite_tag = "wasp"
+	requires_clipping = TRUE
 
 	msg_owner_disarm_run = "You quickly push %prey to the ground with your leg!"
 	msg_prey_disarm_run = "%owner pushes you down to the ground with their leg!"
@@ -1088,6 +1094,7 @@
 	extra_overlay = "fat_sect_drone_markings"
 	icon_sprite_tag = "sect_drone"
 	backup_name = list("Fat Sect Drone (Taur)")
+	requires_clipping = TRUE
 
 /datum/sprite_accessory/tail/taur/sect_drone/drone_wag
 	name = "Sect Drone, Fat vwag"
@@ -1097,4 +1104,4 @@
 	extra_overlay_w = "fat_sect_drone_markings"
 	icon_sprite_tag = "sect_drone"
 	backup_name = list("Sect Drone (Taur, Fat vwag)")
-
+	requires_clipping = TRUE

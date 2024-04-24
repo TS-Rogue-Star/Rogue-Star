@@ -1078,9 +1078,12 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 			tail_image.alpha = chest?.transparent ? 180 : 255 //VORESTATION EDIT: transparent instead of nonsolid
 		else if(wear_suit)	//we are wearing one, let's see if we have a tail sock to squish on. All tails have at least a white and black, taurize() handles taur specific ones!
 			var/obj/item/clothing/suit/sock = wear_suit
-			if(sock?.tailsock)	//starts off as null. updated during equipped()
+
+			if(sock?.tailsockcolor)	//Only suits requiring one have a tailsock color at all
 				var/icon/tail_s = get_tail_icon()
-				tail_image = image(icon = tail_s, icon_state = "[sock.tailsock]", layer = BODY_LAYER+SUIT_LAYER+0.1)
+				var/datum/sprite_accessory/tail/sockable = species_tail
+				tail_image = image(icon = tail_s, icon_state = "[sockable.tailsock]", layer = BODY_LAYER+SUIT_LAYER+0.1)
+				tail_image.color = sock.tailsockcolor
 		overlays_standing[tail_layer] = tail_image
 		animate_tail_reset()
 
@@ -1394,21 +1397,17 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 			working.pixel_x = tail_style.offset_x
 			working.pixel_y = tail_style.offset_y
 
-		to_chat(world, "let's check our wear_suit")
 		if(wear_suit)
-			to_chat(world, "we're wearing one, supposedly.")
 			var/obj/item/clothing/suit/socksuit = wear_suit
-			if(socksuit?.tailsock) // Tailsock support for universal sprite freedoms.
-				to_chat(world, "we've got a sock to put on")
-				var/tail_layer = get_tail_layer()
+			if(socksuit?.tailsockcolor) // Tailsock support for universal sprite freedoms. only suits which need 'em gets a sock color
 				var/image/tailsockoverlay
 				if(istaurtail(tail_style))
 					var/datum/sprite_accessory/tail/taur/taurtype = tail_style
-					tailsockoverlay = image("icon" = taurtype.suit_sprites, "icon_state" = socksuit.tailsock)
+					tailsockoverlay = image("icon" = taurtype.suit_sprites, "icon_state" = taurtype.tailsock)
 				else
-					tailsockoverlay = image("icon" = tail_style.icon, "icon_state" = socksuit.tailsock)
+					tailsockoverlay = image("icon" = tail_style.icon, "icon_state" = tail_style.tailsock)
+				tailsockoverlay.color = socksuit.tailsockcolor	//color it in a suitable fashion
 				tailsockoverlay.layer = BODY_LAYER+SUIT_LAYER+0.1 //nudge it just above our suit layer
-				to_chat(world, "sock is [tailsockoverlay.icon] with [tailsockoverlay.icon_state] on [tailsockoverlay.layer]")
 				working.overlays += tailsockoverlay
 
 		return working

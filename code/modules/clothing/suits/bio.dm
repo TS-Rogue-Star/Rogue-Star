@@ -28,7 +28,7 @@
 	siemens_coefficient = 0.9
 	flags = PHORONGUARD
 	item_flags = THICKMATERIAL
-	tailsock = "tailwhite"
+	tailsockcolor = "#b8babb"
 
 //Standard biosuit, orange stripe
 /obj/item/clothing/head/bio_hood/general
@@ -68,6 +68,7 @@
 	icon_state = "bio_janitor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDEJUMPSUIT|HIDETAIL|HIDETIE|HIDEHOLSTER
+	tailsockcolor = "#848683"
 
 //Scientist's biosuit, white with a pink-ish hue
 /obj/item/clothing/head/bio_hood/scientist
@@ -77,6 +78,7 @@
 	icon_state = "bio_scientist"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDEJUMPSUIT|HIDETAIL|HIDETIE|HIDEHOLSTER
+	tailsockcolor = "#ccb8a8"
 
 //CMO's biosuit, blue stripe
 /obj/item/clothing/suit/bio_suit/cmo

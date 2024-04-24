@@ -64,6 +64,7 @@
 	var/obj/item/weapon/material/knife/tacknife
 	max_pressure_protection = null
 	min_pressure_protection = null
+	tailsockcolor = "#252525"	//placeholder until rig reworks
 
 /obj/item/clothing/suit/space/rig/attack_hand(var/mob/living/M)
 	if(tacknife)

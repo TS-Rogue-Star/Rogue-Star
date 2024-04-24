@@ -89,6 +89,7 @@
 	preserve_item = 1
 	valid_accessory_slots = (ACCESSORY_SLOT_OVER | ACCESSORY_SLOT_ARMBAND | ACCESSORY_SLOT_DECOR)
 	var/list/supporting_limbs //If not-null, automatically splints breaks. Checked when removing the suit.
+	tailsockcolor = "#262626"
 
 //VOREStation edit start - use the specially refitted sprites by KBraid. Done this way to avoid breaking subtypes.
 /obj/item/clothing/suit/space/Initialize()
