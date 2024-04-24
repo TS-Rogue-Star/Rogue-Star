@@ -1303,7 +1303,18 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 			return TOPIC_REFRESH_UPDATE_PREVIEW
 
 	else if(href_list["tail_style"])
-		var/new_tail_style = tgui_input_list(user, "Select a tail style for this character:", "Character Preference", pref.get_available_styles(global.tail_styles_list), pref.tail_style)
+		var/category_choice = tgui_input_list(user, "Choose between humanoid or tauric tails", "Character Preference", list("All", "Humanoid", "Taur Body"))
+		if(!category_choice) return
+		var/tail_category
+		switch(category_choice)
+			if("All")
+				tail_category = pref.get_available_styles(global.tail_styles_list)
+			if("Humanoid")
+				tail_category = pref.get_available_styles(global.tail_styles_human)
+			if("Taur Body")
+				tail_category = pref.get_available_styles(global.tail_styles_tauric)
+
+		var/new_tail_style = tgui_input_list(user, "Select a tail style for this character, (Normal = no special tail):", "Character Preference", tail_category)
 		if(new_tail_style)
 			pref.tail_style = new_tail_style
 		return TOPIC_REFRESH_UPDATE_PREVIEW

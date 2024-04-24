@@ -58,6 +58,9 @@ var/global/list/body_marking_teshari = list()
 var/global/list/body_marking_vox = list()
 var/global/list/body_marking_augment = list()
 
+var/global/list/tail_styles_human = list()	// Store Humanoid specific tails for easier sorting
+var/global/list/tail_styles_tauric = list()	// Store Tauric specific tails for easier sorting
+
 GLOBAL_LIST_INIT(custom_species_bases, new) // Species that can be used for a Custom Species icon base
 	//Underwear
 var/datum/category_collection/underwear/global_underwear = new()
@@ -283,7 +286,12 @@ GLOBAL_LIST_EMPTY(mannequins)
 	paths = subtypesof(/datum/sprite_accessory/tail) - /datum/sprite_accessory/tail/taur
 	for(var/path in paths)
 		var/datum/sprite_accessory/tail/instance = new path()
-		tail_styles_list[path] = instance
+		tail_styles_list[path] = instance	//Build our All list
+		if(instance.style == TAIL_HUMANOID)	//Sort Humanoid and Tauric ones
+			tail_styles_human[path] = instance
+		if(instance.style == TAIL_TAURIC)
+			tail_styles_tauric[path] = instance
+
 
 	// Custom Wings
 	paths = subtypesof(/datum/sprite_accessory/wing)

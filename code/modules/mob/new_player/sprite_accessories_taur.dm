@@ -122,7 +122,7 @@
 
 /datum/sprite_accessory/tail/taur
 	name = "You should not see this..."
-	icon = 'icons/mob/human_races/sprite_accessories/taurs.dmi'
+	icon = 'icons/mob/vore/taurs.dmi'
 	do_colouration = 1 // Yes color, using tail color
 	color_blend_mode = ICON_MULTIPLY  // The sprites for taurs are designed for ICON_MULTIPLY
 	em_block = TRUE
@@ -135,12 +135,14 @@
 	var/can_ride = FALSE			//whether we're real rideable taur or just in that category.
 
 	hide_body_parts	= list(BP_L_LEG, BP_L_FOOT, BP_R_LEG, BP_R_FOOT) //Exclude pelvis just in case.
-	clip_mask_icon = 'icons/mob/vore/taurs_vr.dmi'
+	clip_mask_icon = 'icons/mob/vore/taurs.dmi'
 	clip_mask_state = "taur_clip_mask_def" //Used to clip off the lower part of suits & uniforms.
-	icon = 'icons/mob/vore/taurs_vr.dmi'
+
 
 	can_ride = TRUE			//whether we're real rideable taur or just in that category
 	offset_x = -16
+
+	style = TAIL_TAURIC
 
 	//Could do nested lists but it started becoming a nightmare. It'd be more fun for lookups of a_intent and m_intent, but then subtypes need to
 	//duplicate all the messages, and it starts getting awkward. These are singletons, anyway!
@@ -178,13 +180,15 @@
 	var/struggle_anim = FALSE
 	var/bellies_icon_path = 'icons/mob/vore/Taur_Bellies.dmi'
 
+	var/style = TAIL_HUMANOID
+
 // Species-unique long tails/taurhalves
 
 // Tails/taurhalves for everyone
 
 /***		Fluffy Paw Critters		***/
 /datum/sprite_accessory/tail/taur/wolf
-	name = "Wolf (Taur)"
+	name = "Wolf"
 	icon_state = "wolf_s"
 	under_sprites = 'icons/inventory/suit/taursuits_wolf.dmi'
 	suit_sprites = 'icons/inventory/suit/taursuits_wolf.dmi'
@@ -192,97 +196,108 @@
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
 	loaf_offset = 4
-	vore_tail_sprite_variant = "N"
+	vore_tail_sprite_variant = "Wolf"
 	fullness_icons = 3
 	struggle_anim = TRUE
+	backup_name = list("Wolf (Taur)")
 
 /datum/sprite_accessory/tail/taur/wolf/fatwolf
-	name = "Fat Wolf (Taur)"
+	name = "Fat Wolf"
 	icon_state = "fatwolf_s"
 	icon_sprite_tag = "fatwolf"	//This could be modified later.
 	loaf_offset = 3
+	backup_name = list("Fat Wolf (Taur)")
 
 /datum/sprite_accessory/tail/taur/wolf/wolf_wag
-	name = "Wolf (Taur, Fat vwag)"
+	name = "Wolf, Fat vwag"
 	icon_state = "wolf_s"
 	ani_state = "fatwolf_s"
+	backup_name = list("Wolf (Taur, Fat vwag)")
 
 /datum/sprite_accessory/tail/taur/wolf/wolf_2c
-	name = "Wolf dual-color (Taur)"
+	name = "Wolf, 2-color"
 	icon_state = "wolf_s"
 	extra_overlay = "wolf_markings"
-	//icon_sprite_tag = "wolf2c"
+	backup_name = list("Wolf dual-color (Taur)")
 
 /datum/sprite_accessory/tail/taur/wolf/fatwolf_2c
-	name = "Fat Wolf dual-color (Taur)"
+	name = "Fat Wolf, 2-color"
 	icon_state = "fatwolf_s"
 	extra_overlay = "fatwolf_markings"
-	//icon_sprite_tag = "fatwolf2c"
+	backup_name = list("Fat Wolf dual-color (Taur)")
+
+/datum/sprite_accessory/tail/taur/wolf/wolf_wag
+	name = "Wolf, 2-color Fat vwag"
+	icon_state = "wolf_s"
+	extra_overlay = "wolf_markings"
+	ani_state = "fatwolf_s"
+	extra_overlay_w = "fatwolf_markings"
+	backup_name = list("Wolf (Taur, Fat vwag)")
 
 /datum/sprite_accessory/tail/taur/wolf/wolf_3c //this was overriding 2c before...?
-	name = "Wolf 3-color (Taur)"
+	name = "Wolf, 3-color"
 	icon_state = "wolf_s"
 	extra_overlay = "wolf_markings"
 	extra_overlay2 = "wolf_markings_2"
-	//icon_sprite_tag = "wolf2c"
+	backup_name = list("Wolf 3-color (Taur)")
 
 /datum/sprite_accessory/tail/taur/wolf/fatwolf_3c
-	name = "Fat Wolf 3-color (Taur)"
-	icon = 'icons/mob/vore/taurs_ch.dmi' //CHOMPEdit
+	name = "Fat Wolf, 3-color"
 	icon_state = "fatwolf_s"
 	extra_overlay = "fatwolf_markings"
-	extra_overlay2 = "fatwolf_markings_2" //CHOMPEdit
-	//icon_sprite_tag = "fatwolf2c"
+	extra_overlay2 = "fatwolf_markings_2"
 	loaf_offset = 3
+	backup_name = list("Fat Wolf 3-color (Taur)")
 
 /datum/sprite_accessory/tail/taur/wolf/wolf_3c_wag
-	name = "Wolf 3-color (Taur, Fat vwag)"
-	icon = 'icons/mob/vore/taurs_ch.dmi' //CHOMPEdit
+	name = "Wolf, 3-color Fat vwag"
 	icon_state = "wolf_s"
 	extra_overlay = "wolf_markings"
 	extra_overlay2 = "wolf_markings_2"
 	ani_state = "fatwolf_s"
 	extra_overlay_w = "fatwolf_markings"
-	extra_overlay2_w = "fatwolf_markings_2" //CHOMPEdit
+	extra_overlay2_w = "fatwolf_markings_2"
+	backup_name = list("Wolf 3-color (Taur, Fat vwag)")
 
 /datum/sprite_accessory/tail/taur/wolf/synthwolf
-	name = "SynthWolf dual-color (Taur)"
+	name = "SynthWolf"
 	icon_state = "synthwolf_s"
 	extra_overlay = "synthwolf_markings"
 	extra_overlay2 = "synthwolf_glow"
-	//icon_sprite_tag = "synthwolf"
 	loaf_offset = 3
+	backup_name = list("SynthWolf dual-color (Taur)")
 
 /datum/sprite_accessory/tail/taur/wolf/synthwolf/fatwolf
-	name = "Fat SynthWolf dual-color (Taur)"
+	name = "Fat SynthWolf"
 	icon_state = "fatsynthwolf_s"
 	extra_overlay = "fatsynthwolf_markings"
 	extra_overlay2 = "fatsynthwolf_glow"
+	backup_name = list("Fat SynthWolf dual-color (Taur)")
 
 /datum/sprite_accessory/tail/taur/wolf/synthwolf/fatwolf_wag
-	name = "SynthWolf dual-color (Taur, Fat vwag)"
-	icon_state = "synthwolf_s"
-	extra_overlay = "synthwolf_markings"
-	extra_overlay2 = "synthwolf_glow"
+	name = "SynthWolf, Fat vwag"
 	ani_state = "fatsynthwolf_s"
 	extra_overlay_w = "fatsynthwolf_markings"
 	extra_overlay2_w = "fatsynthwolf_glow"
+	backup_name = list("SynthWolf dual-color (Taur, Fat vwag)")
 
 /datum/sprite_accessory/tail/taur/fox
-	name = "Fox (Taur, 3-color)"
+	name = "Fox"
 	icon_state = "fox"
 	extra_overlay = "fox_markings"
 	extra_overlay2 = "fox_markings2"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
 	loaf_offset = 4
+	backup_name = list("Fox (Taur, 3-color)")
 
 /datum/sprite_accessory/tail/taur/fox/kitsune
-	name = "Kitsune (Taur)"
+	name = "Fox, Kitsune"
 	icon_state = "kitsune"
+	backup_name = list("Kitsune (Taur)")
 
 /datum/sprite_accessory/tail/taur/feline
-	name = "Feline (Taur)"
+	name = "Feline"
 	icon_state = "feline_s"
 	suit_sprites = 'icons/inventory/suit/taursuits_feline.dmi'
 	icon_sprite_tag = "feline"
@@ -295,97 +310,97 @@
 	fullness_icons = 1
 	struggle_anim = TRUE
 
+	backup_name = list("Feline (Taur)")
+
+/datum/sprite_accessory/tail/taur/feline/spots
+	name = "Feline, spotted"
+	extra_overlay = "feline_spots"
+
 /datum/sprite_accessory/tail/taur/feline/fatfeline
-	name = "Fat Feline (Taur)"
+	name = "Fat Feline"
 	icon_state = "fatfeline_s"
 	icon_sprite_tag = "fatfeline"
-	can_loaf = TRUE
-	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
 	loaf_offset = 3
+	backup_name = list("Fat Feline (Taur)")
 
 /datum/sprite_accessory/tail/taur/feline/fatfeline_wag
-	name = "Fat Feline (Taur, Fat vwag)"
+	name = "Feline, Fat vwag"
 	icon_state = "fatfeline_s"
 	ani_state = "fatfeline_w"
-	can_loaf = TRUE
-	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
 	loaf_offset = 3
+	backup_name = list("Fat Feline (Taur, Fat vwag)")
 
 /datum/sprite_accessory/tail/taur/feline/feline_3c
-	name = "Feline 3-color (Taur)"
+	name = "Feline, multi-color"
 	icon_state = "feline_s"
 	extra_overlay = "feline_markings"
 	extra_overlay2 = "feline_markings_2"
 	icon_sprite_tag = "feline3c"
-	can_loaf = TRUE
-	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
+	backup_name = list("Feline 3-color (Taur)")
 
 /datum/sprite_accessory/tail/taur/feline/fatfeline_3c
-	name = "Fat Feline 3-color (Taur)"
-	icon = 'icons/mob/vore/taurs_ch.dmi' //CHOMPEdit
+	name = "Fat Feline, multi-color"
 	icon_state = "fatfeline_s"
 	extra_overlay = "fatfeline_markings"
-	extra_overlay2 = "fatfeline_markings_2" //CHOMPEdit
+	extra_overlay2 = "fatfeline_markings_2"
 	icon_sprite_tag = "fatfeline3c"
-	can_loaf = TRUE
-	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
 	loaf_offset = 3
+	backup_name = list("Fat Feline 3-color (Taur)")
 
 /datum/sprite_accessory/tail/taur/feline/feline_3c_wag
-	name = "Feline 3-color (Taur, Fat vwag)"
-	icon = 'icons/mob/vore/taurs_ch.dmi' //CHOMPEdit
+	name = "Feline, multi-color, Fat vwag"
 	icon_state = "feline_s"
 	extra_overlay = "feline_markings"
 	extra_overlay2 = "feline_markings_2"
 	ani_state = "fatfeline_s"
 	extra_overlay_w = "fatfeline_markings"
-	extra_overlay2_w = "fatfeline_markings_2" //CHOMPEdit
+	extra_overlay2_w = "fatfeline_markings_2"
 	loaf_offset = 3
+	backup_name = list("Feline 3-color (Taur, Fat vwag)")
 
 /datum/sprite_accessory/tail/taur/feline/synthfeline
-	name = "SynthFeline dual-color (Taur)"
+	name = "SynthFeline"
 	icon_state = "synthfeline_s"
 	extra_overlay = "synthfeline_markings"
 	extra_overlay2 = "synthfeline_glow"
-	//icon_sprite_tag = "synthfeline"
-	can_loaf = TRUE
-	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
 	loaf_offset = 3
+	backup_name = list("SynthFeline dual-color (Taur)")
 
 /datum/sprite_accessory/tail/taur/feline/synthfeline/fat
-	name = "Fat SynthFeline dual-color (Taur)"
+	name = "Fat SynthFeline"
 	icon_state = "fatsynthfeline_s"
 	extra_overlay = "fatsynthfeline_markings"
 	extra_overlay2 = "fatsynthfeline_glow"
-	can_loaf = TRUE
-	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
-	loaf_offset = 3
+	backup_name = list("Fat SynthFeline dual-color (Taur)")
 
 /datum/sprite_accessory/tail/taur/feline/synthfeline/synthfeline_wag
-	name = "SynthFeline dual-color (Taur, Fat vwag)"
+	name = "SynthFeline, Fat vwag"
 	icon_state = "synthfeline_s"
 	extra_overlay = "synthfeline_markings"
 	extra_overlay2 = "synthfeline_glow"
 	ani_state = "fatsynthfeline_s"
 	extra_overlay_w = "fatsynthfeline_markings"
 	extra_overlay2_w = "fatsynthfeline_glow"
+	backup_name = list("SynthFeline dual-color (Taur, Fat vwag)")
 
 /datum/sprite_accessory/tail/taur/synthetic/syntheticagi
-	name = "Synthetic chassis - agile (Taur)"
+	name = "Synthetic chassis, Agile"
 	icon_state = "synthtaur1_s"
 	extra_overlay = "synthtaur1_markings"
 	extra_overlay2 = "synthtaur1_glow"
 	clip_mask_state = "taur_clip_mask_synthtaur1"
+	backup_name = list("Synthetic chassis - agile (Taur)")
 
 /datum/sprite_accessory/tail/taur/synthetic/syntheticagi_fat
-	name = "Synthetic chassis - agile (Taur, Fat)"
+	name = "Synthetic chassis, Fat"
 	icon_state = "synthtaur1_s"
 	extra_overlay = "synthtaur1_fat_markings"
 	extra_overlay2 = "synthtaur1_glow"
 	clip_mask_state = "taur_clip_mask_synthtaur1"
+	backup_name = list("Synthetic chassis - agile (Taur, Fat)")
 
 /datum/sprite_accessory/tail/taur/synthetic/syntheticagi_wag
-	name = "Synthetic chassis - agile (Taur, Fat vwag)"
+	name = "Synthetic chassis, Agile but Fat vwag"
 	icon_state = "synthtaur1_s"
 	extra_overlay = "synthtaur1_markings"
 	extra_overlay2 = "synthtaur1_glow"
@@ -393,9 +408,10 @@
 	extra_overlay_w = "synthtaur1_fat_markings"
 	extra_overlay2_w = "synthtaur1_glow"
 	clip_mask_state = "taur_clip_mask_synthtaur1"
+	backup_name = list("Synthetic chassis - agile (Taur, Fat vwag)")
 
 /datum/sprite_accessory/tail/taur/skunk
-	name = "Skunk (Taur)"
+	name = "Skunk"
 	icon_state = "skunk_s"
 	extra_overlay = "skunk_markings"
 	extra_overlay2 = "skunk_markings_2"
@@ -407,10 +423,19 @@
 	belly_variant_when_loaf = TRUE
 	fullness_icons = 1
 	struggle_anim = TRUE
+	backup_name = list("Skunk (Taur)")
+
+/datum/sprite_accessory/tail/taur/rat
+	name = "Rat"
+	icon_state = "rat_s"
+	extra_overlay = "rat_markings"
+	clip_mask_state = "taur_clip_mask_rat"
+	icon_sprite_tag = "rat"
+	backup_name = list("Rat (Taur)")
 
 /***		Hooved Critters			***/
 /datum/sprite_accessory/tail/taur/cow
-	name = "Cow (Taur)"
+	name = "Cow"
 	icon_state = "cow_s"
 	suit_sprites = 'icons/inventory/suit/taursuits_cow.dmi'
 	icon_sprite_tag = "cow"
@@ -436,12 +461,12 @@
 	msg_owner_grab_fail = "You step down onto %prey, squishing them and forcing them down to the ground!"
 	msg_prey_grab_fail = "%owner steps down and squishes you with their hoof, forcing you down to the ground!"
 
-/datum/sprite_accessory/tail/taur/cow/paw // this grabs suit sprites from the normal cow, the outline is the same
-	name = "Cow w/ paws (Taur)"
+	backup_name = list("Cow (Taur)")
+
+/datum/sprite_accessory/tail/taur/cow/paw
+	name = "Cow w/ paws"
 	icon_state = "pawcow_s"
 	extra_overlay = "pawcow_markings"
-	suit_sprites = 'icons/inventory/suit/taursuits_cow.dmi'
-	icon_sprite_tag = "cow"
 
 	msg_owner_disarm_run = "You quickly push %prey to the ground with your paw!"
 	msg_prey_disarm_run = "%owner pushes you down to the ground with their paw!"
@@ -458,8 +483,10 @@
 	msg_owner_grab_fail = "You step down onto %prey, squishing them and forcing them down to the ground!"
 	msg_prey_grab_fail = "%owner steps down and squishes you with their paw, forcing you down to the ground!"
 
+	backup_name = list("Cow w/ paws (Taur)")
+
 /datum/sprite_accessory/tail/taur/deer
-	name = "Deer dual-color (Taur)"
+	name = "Deer"
 	icon_state = "deer_s"
 	extra_overlay = "deer_markings"
 	suit_sprites = 'icons/inventory/suit/taursuits_deer.dmi'
@@ -487,19 +514,23 @@
 	msg_owner_grab_fail = "You step down onto %prey, squishing them and forcing them down to the ground!"
 	msg_prey_grab_fail = "%owner steps down and squishes you with their hoof, forcing you down to the ground!"
 
+	backup_name = list("Deer dual-color (Taur)")
+
 /datum/sprite_accessory/tail/taur/deer/fatdeer
-	name = "Fat Deer (Dual-color Taur)"
+	name = "Fat Deer"
 	icon_state = "fatdeer_s"
 	extra_overlay = "fatdeer_markings"
+	backup_name = list("Fat Deer (Dual-color Taur)")
 
 /datum/sprite_accessory/tail/taur/deer/fatdeer_wag
-	name = "Deer vwag (Dual-color, Taur, Fat)"
+	name = "Deer, Fat vwag "
 	icon_state = "deer_s"
 	ani_state = "fatdeer_s"
 	extra_overlay_w = "fatdeer_markings"
+	backup_name = list("Deer vwag (Dual-color, Taur, Fat)")
 
 /datum/sprite_accessory/tail/taur/horse
-	name = "Horse (Taur)"
+	name = "Horse"
 	icon_state = "horse_s"
 	under_sprites = 'icons/inventory/suit/taursuits_horse.dmi'
 	suit_sprites = 'icons/inventory/suit/taursuits_horse.dmi'
@@ -525,63 +556,26 @@
 
 	msg_owner_grab_fail = "You step down onto %prey, squishing them and forcing them down to the ground!"
 	msg_prey_grab_fail = "%owner steps down and squishes you with their hoof, forcing you down to the ground!"
+	backup_name = list("Horse (Taur)")
 
 /datum/sprite_accessory/tail/taur/horse/horse_2c
-	name = "Horse & colorable tail (Taur)"
+	name = "Horse, colorable tail"
 	extra_overlay = "horse_markings"
-	//icon_sprite_tag = "horse2c"
+	backup_name = list("Horse & colorable tail (Taur)")
 
 /datum/sprite_accessory/tail/taur/horse/synthhorse
-	name = "SynthHorse dual-color (Taur)"
+	name = "SynthHorse"
 	icon_state = "synthhorse_s"
 	extra_overlay = "synthhorse_markings"
 	extra_overlay2 = "synthhorse_glow"
-	//icon_sprite_tag = "synthhorse"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
 	loaf_offset = 3
-
-/datum/sprite_accessory/tail/taur/frog
-	name = "Frog (Taur)"
-	icon_state = "frog_s"
-	icon_sprite_tag = "frog"
-	requires_clipping = TRUE
-
-/datum/sprite_accessory/tail/taur/otie
-	name = "Otie (Taur)"
-	icon_state = "otie_s"
-	extra_overlay = "otie_markings"
-	extra_overlay2 = "otie_markings_2"
-	suit_sprites = 'icons/inventory/suit/taursuits_otie.dmi'
-	icon_sprite_tag = "otie"
-	can_loaf = TRUE
-	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
-	loaf_offset = 5
-	vore_tail_sprite_variant = "Otie"
-	belly_variant_when_loaf = TRUE
-	fullness_icons = 1
-	struggle_anim = TRUE
-
-/datum/sprite_accessory/tail/taur/rat
-	name = "Rat (Taur)"
-	icon_state = "rat_s"
-	extra_overlay = "rat_markings"
-	clip_mask_state = "taur_clip_mask_rat"
-	icon_sprite_tag = "rat"
-
-/datum/sprite_accessory/tail/taur/zorgoia
-	name = "Zorgoia (Taur)"
-	icon = 'icons/mob/human_races/sprite_accessories/taurs.dmi'
-	icon_state = "zorgoia"
-	extra_overlay = "zorgoia_fluff"
-
-/datum/sprite_accessory/tail/taur/zorgoia/fat
-	name = "Zorgoia (Fat Taur)"
-	extra_overlay = "zorgoia_fat"
+	backup_name = list("SynthHorse dual-color (Taur)")
 
 /***		Scaled Critters		***/
 /datum/sprite_accessory/tail/taur/drake
-	name = "Drake (Taur)"
+	name = "Drake"
 	icon_state = "drake_s"
 	extra_overlay = "drake_markings"
 	suit_sprites = 'icons/inventory/suit/taursuits_drake.dmi'
@@ -593,30 +587,34 @@
 	belly_variant_when_loaf = TRUE
 	fullness_icons = 1
 	struggle_anim = TRUE
+	backup_name = list("Drake (Taur)")
 
 /datum/sprite_accessory/tail/taur/drake/fat
-	name = "Fat Drake (Taur)"
+	name = "Fat Drake"
 	icon_state = "fatdrake_s"
 	extra_overlay = "fatdrake_markings"
+	backup_name = list("Fat Drake (Taur)")
 
 /datum/sprite_accessory/tail/taur/drake/drake_vwag
-	name = "Drake (Taur, Fat vwag)"
+	name = "Drake, Fat vwag"
 	icon_state = "drake_s"
 	extra_overlay = "drake_markings"
 	ani_state = "fatdrake_s"
 	extra_overlay_w = "fatdrake_markings"
+	backup_name = list("Drake (Taur, Fat vwag)")
 
 /datum/sprite_accessory/tail/taur/noodle
-	name = "Eastern Dragon (Taur)"
+	name = "Eastern Dragon"
 	icon_state = "noodle_s"
 	extra_overlay = "noodle_markings"
 	extra_overlay2 = "noodle_markings_2"
 	suit_sprites = 'icons/inventory/suit/taursuits_noodle.dmi'
 	clip_mask_state = "taur_clip_mask_noodle"
 	icon_sprite_tag = "noodle"
+	backup_name = list("Eastern Dragon (Taur)")
 
 /datum/sprite_accessory/tail/taur/lizard
-	name = "Lizard (Taur)"
+	name = "Lizard"
 	icon_state = "lizard_s"
 	suit_sprites = 'icons/inventory/suit/taursuits_lizard.dmi'
 	icon_sprite_tag = "lizard"
@@ -628,71 +626,79 @@
 	fullness_icons = 1
 	struggle_anim = TRUE
 
+	backup_name = list("Lizard (Taur)")
+
 /datum/sprite_accessory/tail/taur/lizard/fatlizard
-	name = "Fat Lizard (Taur)"
+	name = "Fat Lizard"
 	icon_state = "fatlizard_s"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
 	loaf_offset = 3
+	backup_name = list("Fat Lizard (Taur)")
 
 /datum/sprite_accessory/tail/taur/lizard/lizard_wag
-	name = "Lizard (Taur, Fat vwag)"
+	name = "Lizard, Fat vwag"
 	icon_state = "lizard_s"
 	ani_state = "fatlizard_s"
+	backup_name = list("Lizard (Taur, Fat vwag)")
 
 /datum/sprite_accessory/tail/taur/lizard/lizard_2c
-	name = "Lizard dual-color (Taur)"
+	name = "Lizard dual-color"
 	icon_state = "lizard_s"
 	extra_overlay = "lizard_markings"
 	icon_sprite_tag = "lizard2c"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
 	loaf_offset = 5
+	backup_name = list("Lizard dual-color (Taur)")
 
 /datum/sprite_accessory/tail/taur/lizard/fatlizard_2c
-	name = "Fat Lizard (Taur, dual-color)"
+	name = "Fat Lizard"
 	icon_state = "fatlizard_s"
 	extra_overlay = "fatlizard_markings"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
 	loaf_offset = 3
+	backup_name = list("Fat Lizard (Taur, dual-color)")
 
 /datum/sprite_accessory/tail/taur/lizard/lizard_2c_wag
-	name = "Fat Lizard (Taur, dual-color, Fat vwag)"
+	name = "Lizard, Fat vwag"
 	icon_state = "lizard_s"
 	extra_overlay = "lizard_markings"
 	ani_state = "fatlizard_s"
 	extra_overlay_w = "fatlizard_markings"
+	backup_name = list("Fat Lizard (Taur, dual-color, Fat vwag)")
 
 /datum/sprite_accessory/tail/taur/lizard/synthlizard
-	name = "SynthLizard dual-color (Taur)"
+	name = "SynthLizard"
 	icon_state = "synthlizard_s"
 	extra_overlay = "synthlizard_markings"
 	extra_overlay2 = "synthlizard_glow"
-	icon_sprite_tag = "synthlizard"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
 	loaf_offset = 3
 	vore_tail_sprite_variant = "SynthLiz"
+	backup_name = list("SynthLizard dual-color (Taur)")
 
 /datum/sprite_accessory/tail/taur/lizard/synthlizard/fat
-	name = "Fat SynthLizard dual-color (Taur)"
+	name = "Fat SynthLizard"
 	icon_state = "fatsynthlizard_s"
 	extra_overlay = "fatsynthlizard_markings"
 	extra_overlay2 = "fatsynthlizard_glow"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
 	loaf_offset = 3
+	backup_name = list("Fat SynthLizard dual-color (Taur)")
 
 /datum/sprite_accessory/tail/taur/lizard/synthlizard/fat/wag
-	name = "SynthLizard dual-color (Taur, Fat vwag)"
-	icon_state = "fatsynthlizard_s"
+	name = "SynthLizard, Fat vwag"
 	ani_state = "fatsynthlizard_s"
 	extra_overlay_w = "fatsynthlizard_markings"
 	extra_overlay2_w = "fatsynthlizard_glow"
+	backup_name = list("SynthLizard dual-color (Taur, Fat vwag)")
 
 /datum/sprite_accessory/tail/taur/naga
-	name = "Naga (Taur)"
+	name = "Naga"
 	icon_state = "naga_s"
 	suit_sprites = 'icons/inventory/suit/taursuits_naga.dmi'
 	vore_tail_sprite_variant = "Naga"
@@ -727,47 +733,60 @@
 	msg_prey_stepunder = "You jump over %prey's thick tail."
 	msg_owner_stepunder = "%owner bounds over your tail."
 
+	backup_name = list("Naga (Taur)")
+
 /datum/sprite_accessory/tail/taur/naga/naga_2c
-	name = "Naga dual-color (Taur)"
+	name = "Naga dual-color"
 	icon_state = "naga_s"
 	extra_overlay = "naga_markings"
-	//icon_sprite_tag = "naga2c"
+	backup_name = list("Naga dual-color (Taur)")
 
 /datum/sprite_accessory/tail/taur/naga/fat
-	name = "Naga (Taur, Fat, dual color)"
+	name = "Fat Naga, dual color"
 	icon_state = "fatnaga_s"
 	extra_overlay = "fatnaga_markings"
+	backup_name = list("Naga (Taur, Fat, dual color)")
 
 /datum/sprite_accessory/tail/taur/naga/alt/alt_2c
-	name = "Naga alt style dual-color (Taur)"
+	name = "Naga alt dual-color"
 	suit_sprites = 'icons/inventory/suit/taursuits_naga_alt.dmi'
 	icon_state = "altnaga_s"
 	extra_overlay = "altnaga_markings"
-	//icon_sprite_tag = "altnaga2c"
+	backup_name = list("Naga alt style dual-color (Taur)")
 
 /datum/sprite_accessory/tail/taur/naga/alt/alt_3c
-	name = "Naga alt style tri-color (Taur)"
+	name = "Naga alt tri-color"
 	icon_state = "altnaga_s"
 	extra_overlay = "altnaga_markings"
 	extra_overlay2 = "altnaga_stripes"
+	backup_name = list("Naga alt style tri-color (Taur)")
 
 /datum/sprite_accessory/tail/taur/naga/alt/alt_3c_rattler
-	name = "Naga alt style tri-color, rattler (Taur)"
+	name = "Naga alt tri-color, rattler"
 	icon_state = "altnaga_s"
 	extra_overlay = "altnaga_markings"
 	extra_overlay2 = "altnaga_rattler"
+	backup_name = list("Naga alt style tri-color, rattler (Taur)")
 
 /datum/sprite_accessory/tail/taur/naga/alt/alt_3c_tailmaw
-	name = "Naga alt style tri-color, tailmaw (Taur)"
+	name = "Naga alt tri-color, tailmaw"
 	icon_state = "altnagatailmaw_s"
 	extra_overlay = "altnagatailmaw_markings"
 	extra_overlay2 = "altnagatailmaw_eyes"
+	backup_name = list("Naga alt style tri-color, tailmaw (Taur)")
 
 
 
 /***		Sea Critters		***/
+/datum/sprite_accessory/tail/taur/frog
+	name = "Frog"
+	icon_state = "frog_s"
+	icon_sprite_tag = "frog"
+	requires_clipping = TRUE
+	backup_name = list("Frog (Taur)")
+
 /datum/sprite_accessory/tail/taur/mermaid
-	name = "Mermaid (Taur)"
+	name = "Mermaid"
 	icon_state = "mermaid_s"
 	can_ride = 0
 	icon_sprite_tag = "mermaid"
@@ -798,20 +817,23 @@
 
 	msg_prey_stepunder = "You jump over %prey's thick tail."
 	msg_owner_stepunder = "%owner bounds over your tail."
+	backup_name = list("Mermaid (Taur)")
 
 /datum/sprite_accessory/tail/taur/mermaid/alt
-	name = "Mermaid Alt. (Taur)"
+	name = "Mermaid Alt."
 	icon_state = "altmermaid_s"
 	icon_sprite_tag = "altmermaid"
+	backup_name = list("Mermaid Alt. (Taur)")
 
 /datum/sprite_accessory/tail/taur/mermaid/alt/marked
-	name = "Mermaid Koi (Taur)"
+	name = "Mermaid Alt, Koi"
 	icon_state = "altmermaid_s"
 	extra_overlay = "altmermaid_markings"
 	extra_overlay2 = "altmermaid_markings2"
+	backup_name = list("Mermaid Koi (Taur)")
 
 /datum/sprite_accessory/tail/taur/tents
-	name = "Tentacles (Taur)"
+	name = "Tentacles"
 	icon_state = "tent_s"
 	icon_sprite_tag = "tentacle"
 	can_ride = FALSE
@@ -838,16 +860,18 @@
 	msg_owner_grab_fail = "You step down onto %prey with one of your tentacles, forcing them onto the ground!"
 	msg_prey_grab_fail = "%owner steps down onto you with one of their tentacles, squishing you and forcing you onto the ground!"
 
+	backup_name = list("Tentacles (Taur)")
+
 /datum/sprite_accessory/tail/taur/tents/thicc
-	name = "Thick Tentacles (Taur)"
+	name = "Thick Tentacles"
 	icon_state = "tentacle_s"
 	icon_sprite_tag = "thick_tentacles"
-
+	backup_name = list("Thick Tentacles (Taur)")
 
 
 /***		Insect bodies		***/
 /datum/sprite_accessory/tail/taur/spider
-	name = "Spider (Taur)"
+	name = "Spider"
 	icon_state = "spider_s"
 	suit_sprites = 'icons/inventory/suit/taursuits_spider.dmi'
 	icon_sprite_tag = "spider"
@@ -866,45 +890,52 @@
 
 	msg_owner_grab_fail = "You step down onto %prey, squishing them and forcing them down to the ground!"
 	msg_prey_grab_fail = "%owner steps down and squishes you with their leg, forcing you down to the ground!"
-
-/datum/sprite_accessory/tail/taur/spider/giantspider_colorable	//these are honestly better fit for vass icontypes whoops	//why the fuck didn't you make these a spider subtype??
-	name = "Giant Spider dual-color (Taur)"
-	icon_state = "giantspidertaur-colorable"
-	extra_overlay = "giantspidertaur-colorable-markings"
-	icon_sprite_tag = "giantspidertaur-colorable"
+	backup_name = list("Spider (Taur)")
 
 /datum/sprite_accessory/tail/taur/spider/carrierspider
-	name = "Carrier Spider (Taur)"
+	name = "Spider, Carrier"
 	icon_state = "carrierspidertaur"
 	extra_overlay = null
 	icon_sprite_tag = "carrierspidertaur"
+	backup_name = list("Carrier Spider (Taur)")
 
 /datum/sprite_accessory/tail/taur/spider/giantspider
-	name = "Giant Spider (Taur)"
+	name = "Spider, Giant"
 	icon_state = "giantspidertaur"
 	extra_overlay = null
 	icon_sprite_tag = "giantspidertaur"
+	backup_name = list("Giant Spider (Taur)")
+
+/datum/sprite_accessory/tail/taur/spider/giantspider_colorable	//these are honestly better fit for vass icontypes whoops	//why the fuck didn't you make these a spider subtype??
+	name = "Spider, Giant (Colorable)"
+	icon_state = "giantspidertaur-colorable"
+	extra_overlay = "giantspidertaur-colorable-markings"
+	icon_sprite_tag = "giantspidertaur-colorable"
+	backup_name = list("Giant Spider dual-color (Taur)")
 
 /datum/sprite_accessory/tail/taur/spider/phoronspider
-	name = "Phorogenic Spider (Taur)"
+	name = "Spider, Phorogenic"
 	icon_state = "phoronspidertaur"
 	extra_overlay = null
 	icon_sprite_tag = "phoronspidertaur"
+	backup_name = list("Phorogenic Spider (Taur)")
 
 /datum/sprite_accessory/tail/taur/spider/sparkspider
-	name = "Voltaic Spider (Taur)"
+	name = "Spider, Voltaic"
 	icon_state = "sparkspidertaur"
 	extra_overlay = null
 	icon_sprite_tag = "sparkspidertaur"
+	backup_name = list("Voltaic Spider (Taur)")
 
 /datum/sprite_accessory/tail/taur/spider/frostspider
-	name = "Frost Spider (Taur)"
+	name = "Spider, Frost"
 	icon_state = "frostspidertaur"
 	extra_overlay = null
 	icon_sprite_tag = "frostspidertaur"
+	backup_name = list("Frost Spider (Taur)")
 
 /datum/sprite_accessory/tail/taur/slug
-	name = "Slug (Taur)"
+	name = "Slug"
 	icon_state = "slug_s"
 	suit_sprites = 'icons/inventory/suit/taursuits_slug.dmi'
 	icon_sprite_tag = "slug"
@@ -940,13 +971,16 @@
 	msg_prey_stepunder = "You jump over %prey's thick tail."
 	msg_owner_stepunder = "%owner bounds over your tail."
 
+	backup_name = list("Slug (Taur)")
+
 /datum/sprite_accessory/tail/taur/slug/snail
-	name = "Snail (Taur)"
+	name = "Snail"
 	icon_state = "slug_s"
 	extra_overlay = "snail_shell_marking"
+	backup_name = list("Snail (Taur)")
 
 /datum/sprite_accessory/tail/taur/wasp
-	name = "Wasp (dual color)"
+	name = "Wasp"
 	icon_state = "wasp_s"
 	extra_overlay = "wasp_markings"
 	clip_mask_state = "taur_clip_mask_wasp"
@@ -967,15 +1001,18 @@
 	msg_owner_grab_fail = "You step down onto %prey, squishing them and forcing them down to the ground!"
 	msg_prey_grab_fail = "%owner steps down and squishes you with their leg, forcing you down to the ground!"
 
+	backup_name = list("Wasp (dual color)")
+
 /datum/sprite_accessory/tail/taur/wasp/ant
-	name = "Ant (dual color)"
+	name = "Ant"
 	icon_state = "ant_s"
 	extra_overlay = "ant_markings"
+	backup_name = list("Ant (dual color)")
 
 /***		Misc/Fantasy Critters		***/
 
 /datum/sprite_accessory/tail/taur/alraune/alraune_2c
-	name = "Alraune (dual color)"
+	name = "Alraune"
 	icon_state = "alraunecolor_s"
 	ani_state = "alraunecolor_closed_s"
 	ckeys_allowed = null
@@ -984,6 +1021,53 @@
 	extra_overlay_w = "alraunecolor_closed_markings"
 	clip_mask_state = "taur_clip_mask_alraune"
 	icon_sprite_tag = "alraune"
+	backup_name = list("Alraune (dual color)")
+
+/datum/sprite_accessory/tail/taur/otie
+	name = "Otie"
+	icon_state = "otie_s"
+	extra_overlay = "otie_markings"
+	extra_overlay2 = "otie_markings_2"
+	suit_sprites = 'icons/inventory/suit/taursuits_otie.dmi'
+	icon_sprite_tag = "otie"
+	can_loaf = TRUE
+	icon_loaf = 'icons/mob/vore/taurs_vr_loaf.dmi'
+	loaf_offset = 5
+	vore_tail_sprite_variant = "Otie"
+	belly_variant_when_loaf = TRUE
+	fullness_icons = 1
+	struggle_anim = TRUE
+	backup_name = list("Otie (Taur)")
+
+/datum/sprite_accessory/tail/taur/otie/fat
+	name = "Fat Otie"
+	icon_state = "fatotie_s"
+	extra_overlay = "fatotie_markings"
+	extra_overlay2 = "fatotie_markings_2"
+
+/datum/sprite_accessory/tail/taur/sergal
+	name = "Sergal"
+	icon_state = "sergal_s"
+	icon_sprite_tag = "sergal"
+	extra_overlay = "sergal_markings"
+
+/datum/sprite_accessory/tail/taur/sergal/fat
+	name = "Fat Sergal"
+	icon_state = "fatsergal_s"
+	icon_sprite_tag = "fatsergal"
+	extra_overlay = "fatsergal_markings"
+
+/datum/sprite_accessory/tail/taur/zorgoia
+	name = "Zorgoia"
+	icon = 'icons/mob/human_races/sprite_accessories/taurs.dmi'
+	icon_state = "zorgoia"
+	extra_overlay = "zorgoia_fluff"
+	backup_name = list("Zorgoia (Taur)")
+
+/datum/sprite_accessory/tail/taur/zorgoia/fat
+	name = "Fat Zorgoia"
+	extra_overlay = "zorgoia_fat"
+	backup_name = list("Zorgoia (Fat Taur)")
 
 /* CHOMPEdit - removed as a sprite accessory of the same name already exists for us, and having this here stops it from registering as a sprite accessory.
 /datum/sprite_accessory/tail/taur/sect_drone
@@ -1009,16 +1093,18 @@
 */
 
 /datum/sprite_accessory/tail/taur/sect_drone/fat
-	name = "Fat Sect Drone (Taur)"
+	name = "Fat Sect Drone"
 	icon_state = "fat_sect_drone"
 	extra_overlay = "fat_sect_drone_markings"
-	icon_sprite_tag = "sect_drone" //CHOMPEdit addition
+	icon_sprite_tag = "sect_drone"
+	backup_name = list("Fat Sect Drone (Taur)")
 
 /datum/sprite_accessory/tail/taur/sect_drone/drone_wag
-	name = "Sect Drone (Taur, Fat vwag)"
+	name = "Sect Drone, Fat vwag"
 	icon_state = "sect_drone"
 	extra_overlay = "sect_drone_markings"
 	ani_state = "fat_sect_drone"
 	extra_overlay_w = "fat_sect_drone_markings"
-	icon_sprite_tag = "sect_drone" //CHOMPEdit addition
+	icon_sprite_tag = "sect_drone"
+	backup_name = list("Sect Drone (Taur, Fat vwag)")
 

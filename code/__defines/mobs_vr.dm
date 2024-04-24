@@ -26,6 +26,10 @@
 #define MARKINGS_SKINTONE	6
 #define MARKINGS_AUG		7
 
+//Tail vs Taur Sorting
+#define TAIL_HUMANOID		0
+#define TAIL_TAURIC			1
+
 //species defines
 
 //station species
