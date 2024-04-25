@@ -182,3 +182,15 @@
 /datum/ai_holder/simple_mob/melee/evasive/corrupthound
 	violent_breakthrough = TRUE
 	can_breakthrough = TRUE
+
+/mob/living/simple_mob/vore/aggressive/corrupthound/verb/soft_steps()
+	set name = "Soft Steps"
+	set desc = "Adjust your servos to move more quietly."
+	set category = "Abilities"
+
+	if(movement_sound)
+		movement_sound = null
+		to_chat(src, "<span class = 'notice'>You begin walking more quietly.</span>")
+	else
+		movement_sound = 'sound/effects/houndstep.ogg'
+		to_chat(src, "<span class = 'notice'>You begin walking more loudly!</span>")
