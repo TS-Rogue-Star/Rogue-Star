@@ -123,26 +123,23 @@
 /datum/sprite_accessory/tail/taur
 	name = "You should not see this..."
 	icon = 'icons/mob/vore/taurs.dmi'
-	do_colouration = 1 // Yes color, using tail color
-	color_blend_mode = ICON_MULTIPLY  // The sprites for taurs are designed for ICON_MULTIPLY
 	em_block = TRUE
 
-	var/icon/suit_sprites = null //File for suit sprites, if any.
+	var/icon/suit_sprites = null			//File for suit sprites, if any.
 	var/icon/under_sprites = null
 
-	var/icon_sprite_tag			// This is where we put stuff like _Horse, so we can assign icons easier.
+	var/icon_sprite_tag						// This is where we put stuff like _Horse, so we can assign icons easier.
 
-	var/can_ride = FALSE			//whether we're real rideable taur or just in that category.
+	var/can_ride = FALSE					//whether we're real rideable taur or just in that category.
 
-	hide_body_parts	= list(BP_L_LEG, BP_L_FOOT, BP_R_LEG, BP_R_FOOT) //Exclude pelvis just in case.
+	hide_body_parts	= list(BP_L_LEG, BP_L_FOOT, BP_R_LEG, BP_R_FOOT) //Exclude pelvis just in case. Ensures these parts don't get rendered in base human icon.
 	clip_mask_icon = 'icons/mob/vore/taurs.dmi'
 	clip_mask_state = "taur_clip_mask_def" //Used to clip off the lower part of suits & uniforms.
-
 
 	can_ride = TRUE			//whether we're real rideable taur or just in that category
 	offset_x = -16
 
-	style = TAIL_TAURIC
+	style = TAIL_TAURIC		//Sorting var
 
 	//Could do nested lists but it started becoming a nightmare. It'd be more fun for lookups of a_intent and m_intent, but then subtypes need to
 	//duplicate all the messages, and it starts getting awkward. These are singletons, anyway!
@@ -171,18 +168,6 @@
 	var/msg_owner_stepunder		= "%owner runs between your legs." //Weird becuase in the case this is used, %owner is the 'bumper' (src)
 	var/msg_prey_stepunder		= "You run between %prey's legs." //Same, inverse
 
-/datum/sprite_accessory/tail
-	//Taur Belly overlay handling
-	//Reduces headache from update_icons code by being above taurs. No 32x32 belly sprites exist tho, so...
-	var/vore_tail_sprite_variant = ""
-	var/belly_variant_when_loaf = FALSE
-	var/fullness_icons = 0
-	var/struggle_anim = FALSE
-	var/bellies_icon_path = 'icons/mob/vore/Taur_Bellies.dmi'
-
-	var/style = TAIL_HUMANOID
-
-// Species-unique long tails/taurhalves
 
 // Tails/taurhalves for everyone
 
@@ -284,6 +269,7 @@
 /datum/sprite_accessory/tail/taur/fox
 	name = "Fox"
 	icon_state = "fox"
+	suit_sprites = 'icons/inventory/suit/taursuits_fox.dmi'
 	extra_overlay = "fox_markings"
 	extra_overlay2 = "fox_markings2"
 	can_loaf = TRUE
@@ -383,36 +369,10 @@
 	extra_overlay2_w = "fatsynthfeline_glow"
 	backup_name = list("SynthFeline dual-color (Taur, Fat vwag)")
 
-/datum/sprite_accessory/tail/taur/synthetic/syntheticagi
-	name = "Synthetic chassis, Agile"
-	icon_state = "synthtaur1_s"
-	extra_overlay = "synthtaur1_markings"
-	extra_overlay2 = "synthtaur1_glow"
-	clip_mask_state = "taur_clip_mask_synthtaur1"
-	backup_name = list("Synthetic chassis - agile (Taur)")
-
-/datum/sprite_accessory/tail/taur/synthetic/syntheticagi_fat
-	name = "Synthetic chassis, Fat"
-	icon_state = "synthtaur1_s"
-	extra_overlay = "synthtaur1_fat_markings"
-	extra_overlay2 = "synthtaur1_glow"
-	clip_mask_state = "taur_clip_mask_synthtaur1"
-	backup_name = list("Synthetic chassis - agile (Taur, Fat)")
-
-/datum/sprite_accessory/tail/taur/synthetic/syntheticagi_wag
-	name = "Synthetic chassis, Agile but Fat vwag"
-	icon_state = "synthtaur1_s"
-	extra_overlay = "synthtaur1_markings"
-	extra_overlay2 = "synthtaur1_glow"
-	ani_state = "synthtaur1_s"
-	extra_overlay_w = "synthtaur1_fat_markings"
-	extra_overlay2_w = "synthtaur1_glow"
-	clip_mask_state = "taur_clip_mask_synthtaur1"
-	backup_name = list("Synthetic chassis - agile (Taur, Fat vwag)")
-
 /datum/sprite_accessory/tail/taur/skunk
 	name = "Skunk"
 	icon_state = "skunk_s"
+	suit_sprites = 'icons/inventory/suit/taursuits_skunk.dmi'
 	extra_overlay = "skunk_markings"
 	extra_overlay2 = "skunk_markings_2"
 	icon_sprite_tag = "skunk"
@@ -428,10 +388,57 @@
 /datum/sprite_accessory/tail/taur/rat
 	name = "Rat"
 	icon_state = "rat_s"
+	suit_sprites = 'icons/inventory/suit/taursuits_rat.dmi'
 	extra_overlay = "rat_markings"
 	clip_mask_state = "taur_clip_mask_rat"
 	icon_sprite_tag = "rat"
 	backup_name = list("Rat (Taur)")
+
+/datum/sprite_accessory/tail/taur/otie
+	name = "Otie"
+	icon_state = "otie_s"
+	extra_overlay = "otie_markings"
+	extra_overlay2 = "otie_markings_2"
+	suit_sprites = 'icons/inventory/suit/taursuits_otie.dmi'
+	icon_sprite_tag = "otie"
+	can_loaf = TRUE
+	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
+	loaf_offset = 5
+	vore_tail_sprite_variant = "Otie"
+	belly_variant_when_loaf = TRUE
+	fullness_icons = 1
+	struggle_anim = TRUE
+	backup_name = list("Otie (Taur)")
+
+/datum/sprite_accessory/tail/taur/otie/fat
+	name = "Fat Otie"
+	icon_state = "fatotie_s"
+	extra_overlay = "fatotie_markings"
+	extra_overlay2 = "fatotie_markings_2"
+
+/datum/sprite_accessory/tail/taur/sergal
+	name = "Sergal"
+	icon_state = "sergal_s"
+	icon_sprite_tag = "sergal"
+	extra_overlay = "sergal_markings"
+
+/datum/sprite_accessory/tail/taur/sergal/fat
+	name = "Fat Sergal"
+	icon_state = "fatsergal_s"
+	icon_sprite_tag = "fatsergal"
+	extra_overlay = "fatsergal_markings"
+
+/datum/sprite_accessory/tail/taur/zorgoia
+	name = "Zorgoia"
+	icon_state = "zorgoia"
+	suit_sprites = 'icons/inventory/suit/taursuits_zorgoia.dmi'
+	extra_overlay = "zorgoia_fluff"
+	backup_name = list("Zorgoia (Taur)")
+
+/datum/sprite_accessory/tail/taur/zorgoia/fat
+	name = "Fat Zorgoia"
+	extra_overlay = "zorgoia_fat"
+	backup_name = list("Zorgoia (Fat Taur)")
 
 /***		Hooved Critters			***/
 /datum/sprite_accessory/tail/taur/cow
@@ -608,7 +615,7 @@
 	icon_state = "noodle_s"
 	extra_overlay = "noodle_markings"
 	extra_overlay2 = "noodle_markings_2"
-	suit_sprites = 'icons/inventory/suit/taursuits_noodle.dmi'
+	suit_sprites = 'icons/inventory/suit/taursuits_unsuitable.dmi'
 	clip_mask_state = "taur_clip_mask_noodle"
 	icon_sprite_tag = "noodle"
 	requires_clipping = TRUE
@@ -691,7 +698,7 @@
 /datum/sprite_accessory/tail/taur/naga
 	name = "Naga"
 	icon_state = "naga_s"
-	suit_sprites = 'icons/inventory/suit/taursuits_naga.dmi'
+	suit_sprites = 'icons/inventory/suit/taursuits_unsuitable.dmi'
 	vore_tail_sprite_variant = "Naga"
 	fullness_icons = 1
 	struggle_anim = TRUE
@@ -739,9 +746,9 @@
 	extra_overlay = "fatnaga_markings"
 	backup_name = list("Naga (Taur, Fat, dual color)")
 
-/datum/sprite_accessory/tail/taur/naga/alt/alt_2c
+/datum/sprite_accessory/tail/taur/naga/alt
 	name = "Naga alt dual-color"
-	suit_sprites = 'icons/inventory/suit/taursuits_naga_alt.dmi'
+	suit_sprites = 'icons/inventory/suit/taursuits_unsuitable.dmi'
 	icon_state = "altnaga_s"
 	extra_overlay = "altnaga_markings"
 	backup_name = list("Naga alt style dual-color (Taur)")
@@ -749,14 +756,12 @@
 /datum/sprite_accessory/tail/taur/naga/alt/alt_3c
 	name = "Naga alt tri-color"
 	icon_state = "altnaga_s"
-	extra_overlay = "altnaga_markings"
 	extra_overlay2 = "altnaga_stripes"
 	backup_name = list("Naga alt style tri-color (Taur)")
 
 /datum/sprite_accessory/tail/taur/naga/alt/alt_3c_rattler
 	name = "Naga alt tri-color, rattler"
 	icon_state = "altnaga_s"
-	extra_overlay = "altnaga_markings"
 	extra_overlay2 = "altnaga_rattler"
 	backup_name = list("Naga alt style tri-color, rattler (Taur)")
 
@@ -775,6 +780,7 @@
 	icon_state = "frog_s"
 	icon_sprite_tag = "frog"
 	requires_clipping = TRUE
+	suit_sprites = 'icons/inventory/suit/taursuits_unsuitable.dmi'
 	backup_name = list("Frog (Taur)")
 
 /datum/sprite_accessory/tail/taur/mermaid
@@ -783,6 +789,7 @@
 	can_ride = 0
 	icon_sprite_tag = "mermaid"
 	requires_clipping = TRUE
+	suit_sprites = 'icons/inventory/suit/taursuits_unsuitable.dmi'
 
 	msg_owner_help_walk = "You carefully slither around %prey."
 	msg_prey_help_walk = "%owner's huge tail slithers past beside you!"
@@ -820,7 +827,6 @@
 
 /datum/sprite_accessory/tail/taur/mermaid/alt/marked
 	name = "Mermaid Alt, Koi"
-	icon_state = "altmermaid_s"
 	extra_overlay = "altmermaid_markings"
 	extra_overlay2 = "altmermaid_markings2"
 	backup_name = list("Mermaid Koi (Taur)")
@@ -831,6 +837,7 @@
 	icon_sprite_tag = "tentacle"
 	can_ride = FALSE
 	requires_clipping = TRUE
+	suit_sprites = 'icons/inventory/suit/taursuits_unsuitable.dmi'
 
 	msg_prey_stepunder = "You run between %prey's tentacles."
 	msg_owner_stepunder = "%owner runs between your tentacles."
@@ -866,7 +873,7 @@
 /datum/sprite_accessory/tail/taur/spider
 	name = "Spider"
 	icon_state = "spider_s"
-	suit_sprites = 'icons/inventory/suit/taursuits_spider.dmi'
+	suit_sprites = 'icons/inventory/suit/taursuits_unsuitable.dmi'
 	icon_sprite_tag = "spider"
 	requires_clipping = TRUE
 
@@ -889,15 +896,15 @@
 /datum/sprite_accessory/tail/taur/spider/carrierspider
 	name = "Spider, Carrier"
 	icon_state = "carrierspidertaur"
-	extra_overlay = null
 	icon_sprite_tag = "carrierspidertaur"
+	do_colouration = FALSE
 	backup_name = list("Carrier Spider (Taur)")
 
 /datum/sprite_accessory/tail/taur/spider/giantspider
 	name = "Spider, Giant"
 	icon_state = "giantspidertaur"
-	extra_overlay = null
 	icon_sprite_tag = "giantspidertaur"
+	do_colouration = FALSE
 	backup_name = list("Giant Spider (Taur)")
 
 /datum/sprite_accessory/tail/taur/spider/giantspider_colorable	//these are honestly better fit for vass icontypes whoops	//why the fuck didn't you make these a spider subtype??
@@ -910,28 +917,28 @@
 /datum/sprite_accessory/tail/taur/spider/phoronspider
 	name = "Spider, Phorogenic"
 	icon_state = "phoronspidertaur"
-	extra_overlay = null
+	do_colouration = FALSE
 	icon_sprite_tag = "phoronspidertaur"
 	backup_name = list("Phorogenic Spider (Taur)")
 
 /datum/sprite_accessory/tail/taur/spider/sparkspider
 	name = "Spider, Voltaic"
 	icon_state = "sparkspidertaur"
-	extra_overlay = null
+	do_colouration = FALSE
 	icon_sprite_tag = "sparkspidertaur"
 	backup_name = list("Voltaic Spider (Taur)")
 
 /datum/sprite_accessory/tail/taur/spider/frostspider
 	name = "Spider, Frost"
 	icon_state = "frostspidertaur"
-	extra_overlay = null
+	do_colouration = FALSE
 	icon_sprite_tag = "frostspidertaur"
 	backup_name = list("Frost Spider (Taur)")
 
 /datum/sprite_accessory/tail/taur/slug
 	name = "Slug"
 	icon_state = "slug_s"
-	suit_sprites = 'icons/inventory/suit/taursuits_slug.dmi'
+	suit_sprites = 'icons/inventory/suit/taursuits_unsuitable.dmi'
 	icon_sprite_tag = "slug"
 	requires_clipping = TRUE
 
@@ -981,6 +988,7 @@
 	clip_mask_state = "taur_clip_mask_wasp"
 	icon_sprite_tag = "wasp"
 	requires_clipping = TRUE
+	suit_sprites = 'icons/inventory/suit/taursuits_unsuitable.dmi'
 
 	msg_owner_disarm_run = "You quickly push %prey to the ground with your leg!"
 	msg_prey_disarm_run = "%owner pushes you down to the ground with their leg!"
@@ -1002,6 +1010,7 @@
 /datum/sprite_accessory/tail/taur/wasp/ant
 	name = "Ant"
 	icon_state = "ant_s"
+	icon_sprite_tag = "ant"
 	extra_overlay = "ant_markings"
 	backup_name = list("Ant (dual color)")
 
@@ -1019,51 +1028,34 @@
 	icon_sprite_tag = "alraune"
 	backup_name = list("Alraune (dual color)")
 
-/datum/sprite_accessory/tail/taur/otie
-	name = "Otie"
-	icon_state = "otie_s"
-	extra_overlay = "otie_markings"
-	extra_overlay2 = "otie_markings_2"
-	suit_sprites = 'icons/inventory/suit/taursuits_otie.dmi'
-	icon_sprite_tag = "otie"
-	can_loaf = TRUE
-	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
-	loaf_offset = 5
-	vore_tail_sprite_variant = "Otie"
-	belly_variant_when_loaf = TRUE
-	fullness_icons = 1
-	struggle_anim = TRUE
-	backup_name = list("Otie (Taur)")
+/datum/sprite_accessory/tail/taur/synthetic/syntheticagi
+	name = "Synthetic chassis, Agile"
+	icon_state = "synthtaur1_s"
+	extra_overlay = "synthtaur1_markings"
+	extra_overlay2 = "synthtaur1_glow"
+	clip_mask_state = "taur_clip_mask_synthtaur1"
+	backup_name = list("Synthetic chassis - agile (Taur)")
+	requires_clipping = TRUE
+	suit_sprites = 'icons/inventory/suit/taursuits_unsuitable.dmi'
 
-/datum/sprite_accessory/tail/taur/otie/fat
-	name = "Fat Otie"
-	icon_state = "fatotie_s"
-	extra_overlay = "fatotie_markings"
-	extra_overlay2 = "fatotie_markings_2"
+/datum/sprite_accessory/tail/taur/synthetic/syntheticagi/fat
+	name = "Synthetic chassis, Fat"
+	icon_state = "synthtaur1_s"
+	extra_overlay = "synthtaur1_fat_markings"
+	extra_overlay2 = "synthtaur1_glow"
+	clip_mask_state = "taur_clip_mask_synthtaur1"
+	backup_name = list("Synthetic chassis - agile (Taur, Fat)")
 
-/datum/sprite_accessory/tail/taur/sergal
-	name = "Sergal"
-	icon_state = "sergal_s"
-	icon_sprite_tag = "sergal"
-	extra_overlay = "sergal_markings"
-
-/datum/sprite_accessory/tail/taur/sergal/fat
-	name = "Fat Sergal"
-	icon_state = "fatsergal_s"
-	icon_sprite_tag = "fatsergal"
-	extra_overlay = "fatsergal_markings"
-
-/datum/sprite_accessory/tail/taur/zorgoia
-	name = "Zorgoia"
-	icon = 'icons/mob/human_races/sprite_accessories/taurs.dmi'
-	icon_state = "zorgoia"
-	extra_overlay = "zorgoia_fluff"
-	backup_name = list("Zorgoia (Taur)")
-
-/datum/sprite_accessory/tail/taur/zorgoia/fat
-	name = "Fat Zorgoia"
-	extra_overlay = "zorgoia_fat"
-	backup_name = list("Zorgoia (Fat Taur)")
+/datum/sprite_accessory/tail/taur/synthetic/syntheticagi/wag
+	name = "Synthetic chassis, Agile but Fat vwag"
+	icon_state = "synthtaur1_s"
+	extra_overlay = "synthtaur1_markings"
+	extra_overlay2 = "synthtaur1_glow"
+	ani_state = "synthtaur1_s"
+	extra_overlay_w = "synthtaur1_fat_markings"
+	extra_overlay2_w = "synthtaur1_glow"
+	clip_mask_state = "taur_clip_mask_synthtaur1"
+	backup_name = list("Synthetic chassis - agile (Taur, Fat vwag)")
 
 /* CHOMPEdit - removed as a sprite accessory of the same name already exists for us, and having this here stops it from registering as a sprite accessory.
 /datum/sprite_accessory/tail/taur/sect_drone
@@ -1095,6 +1087,7 @@
 	icon_sprite_tag = "sect_drone"
 	backup_name = list("Fat Sect Drone (Taur)")
 	requires_clipping = TRUE
+	suit_sprites = 'icons/inventory/suit/taursuits_unsuitable.dmi'
 
 /datum/sprite_accessory/tail/taur/sect_drone/drone_wag
 	name = "Sect Drone, Fat vwag"
@@ -1105,3 +1098,4 @@
 	icon_sprite_tag = "sect_drone"
 	backup_name = list("Sect Drone (Taur, Fat vwag)")
 	requires_clipping = TRUE
+	suit_sprites = 'icons/inventory/suit/taursuits_unsuitable.dmi'

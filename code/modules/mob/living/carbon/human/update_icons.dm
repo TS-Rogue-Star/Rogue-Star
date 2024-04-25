@@ -346,7 +346,7 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 		var/icon_x_offset = 0
 		var/icon_y_offset = 0
 
-		if(istype(tail_style, /datum/sprite_accessory/tail/taur))	// Tail icon 'cookie cutters' are filled in where icons are preserved. We need to invert that.
+		if(istype(tail_style, /datum/sprite_accessory/tail))	// Tail icon 'cookie cutters' are filled in where icons are preserved. We need to invert that.
 			if(tail_style.clip_mask && tail_style.requires_clipping) // trim it if we need to.
 				Cutter = new(icon = (tail_style.clip_mask_icon ? tail_style.clip_mask_icon : tail_style.icon), icon_state = tail_style.clip_mask_state)
 
@@ -1403,9 +1403,16 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 				var/image/tailsockoverlay
 				if(istaurtail(tail_style))
 					var/datum/sprite_accessory/tail/taur/taurtype = tail_style
-					tailsockoverlay = image("icon" = taurtype.suit_sprites, "icon_state" = taurtype.tailsock)
+					if(wagging && tail_style.ani_state)	//check if we're waggin'
+						tailsockoverlay = image("icon" = taurtype.suit_sprites, "icon_state" = taurtype.tailsock_w)
+					else
+						tailsockoverlay = image("icon" = taurtype.suit_sprites, "icon_state" = taurtype.tailsock)
 				else
-					tailsockoverlay = image("icon" = tail_style.icon, "icon_state" = tail_style.tailsock)
+					var/datum/sprite_accessory/tail/tailtype = tail_style
+					if(wagging && tail_style.ani_state)
+						tailsockoverlay = image("icon" = tailtype.icon, "icon_state" = tailtype.tailsock_w)
+					else
+						tailsockoverlay = image("icon" = tailtype.icon, "icon_state" = tailtype.tailsock)
 				tailsockoverlay.color = socksuit.tailsockcolor	//color it in a suitable fashion
 				tailsockoverlay.layer = BODY_LAYER+SUIT_LAYER+0.1 //nudge it just above our suit layer
 				working.overlays += tailsockoverlay

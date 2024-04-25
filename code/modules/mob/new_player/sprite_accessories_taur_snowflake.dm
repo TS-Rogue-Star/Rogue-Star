@@ -21,6 +21,7 @@
 	ckeys_allowed = list("liquidfirefly")
 	do_colouration = FALSE
 	requires_clipping = TRUE
+	suit_sprites = 'icons/inventory/suit/taursuits_unsuitable.dmi'
 
 	msg_owner_disarm_run = "You quickly push %prey to the ground with your leg!"
 	msg_prey_disarm_run = "%owner pushes you down to the ground with their leg!"
@@ -47,6 +48,7 @@
 	can_ride = FALSE
 	clip_mask_state = "taur_clip_mask_alraune"
 	requires_clipping = TRUE
+	suit_sprites = 'icons/inventory/suit/taursuits_unsuitable.dmi'
 
 	msg_prey_stepunder = "You run between %prey's vines."
 	msg_owner_stepunder = "%owner runs between your vines."
