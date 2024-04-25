@@ -2860,8 +2860,11 @@
 /turf/simulated/floor/tiled/dark,
 /area/rnd/research)
 "fq" = (
-/obj/structure/table/steel_reinforced,
 /obj/effect/floor_decal/milspec/color/black,
+/obj/structure/closet/secure_closet/guncabinet/fancy/rifle,
+/obj/item/weapon/gun/energy/laser,
+/obj/item/weapon/gun/energy/laser,
+/obj/item/weapon/gun/energy/ionrifle,
 /turf/simulated/floor/tiled/dark,
 /area/security/armoury)
 "fr" = (
@@ -3807,7 +3810,6 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/stellardelight/deck1/aft)
 "hu" = (
-/obj/structure/table/rack/shelf/steel,
 /obj/item/weapon/gun/energy/gun{
 	pixel_y = 7
 	},
@@ -3815,6 +3817,8 @@
 	pixel_y = -5
 	},
 /obj/effect/floor_decal/milspec/color/black,
+/obj/structure/closet/secure_closet/guncabinet/fancy/pistol,
+/obj/item/weapon/gun/energy/ionrifle/pistol,
 /turf/simulated/floor/tiled/dark,
 /area/security/armoury)
 "hv" = (
@@ -9923,7 +9927,6 @@
 /area/stellardelight/deck1/starboard)
 "uy" = (
 /obj/structure/table/rack/shelf/steel,
-/obj/item/weapon/gun/energy/ionrifle/pistol,
 /obj/machinery/camera/network/security,
 /obj/effect/floor_decal/milspec/color/black,
 /turf/simulated/floor/tiled/dark,
@@ -12109,7 +12112,6 @@
 /area/library)
 "zp" = (
 /obj/structure/table/rack/shelf/steel,
-/obj/item/weapon/gun/energy/ionrifle,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
@@ -15704,7 +15706,6 @@
 /turf/simulated/floor/tiled/eris/white/bluecorner,
 /area/stellardelight/deck1/resleeving)
 "Hz" = (
-/obj/structure/table/rack/shelf/steel,
 /obj/item/weapon/gun/projectile/shotgun/pump{
 	ammo_type = /obj/item/ammo_casing/a12g/pellet;
 	pixel_x = 1;
@@ -15719,6 +15720,7 @@
 	dir = 4
 	},
 /obj/effect/floor_decal/milspec/color/black,
+/obj/structure/closet/secure_closet/guncabinet/fancy/shotgun,
 /turf/simulated/floor/tiled/dark,
 /area/security/armoury)
 "HA" = (
@@ -21134,14 +21136,6 @@
 /area/maintenance/stellardelight/deck1/portcent)
 "Te" = (
 /obj/structure/table/rack/shelf/steel,
-/obj/item/weapon/gun/energy/laser{
-	pixel_x = -1;
-	pixel_y = 2
-	},
-/obj/item/weapon/gun/energy/laser{
-	pixel_x = -1;
-	pixel_y = -11
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/purple{
 	dir = 9
 	},
