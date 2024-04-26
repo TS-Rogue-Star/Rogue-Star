@@ -34,6 +34,9 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "ears_plain-inner"
+	backup_name = list(
+		"tajaran, colorable (old)"
+	)
 
 /datum/sprite_accessory/ears/taj_ears_tall
 	name = "Tajaran Tall Ears"
@@ -41,6 +44,9 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "msai_plain-inner"
+	backup_name = list(
+		"tajaran tall, colorable (old)"
+	)
 
 /datum/sprite_accessory/ears/alt_ram_horns
 	name = "Solid ram horns"
@@ -60,6 +66,9 @@
 	icon_state = "foxearshc"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"highlander zorren ears, colorable"
+	)
 
 /datum/sprite_accessory/ears/fenearshc
 	name = "flatland zorren ears"
@@ -67,12 +76,18 @@
 	extra_overlay = "fenears-inner"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"flatland zorren ears, colorable"
+	)
 
 /datum/sprite_accessory/ears/sergalhc
 	name = "Sergal ears"
 	icon_state = "serg_plain_s"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"Sergal ears, colorable"
+	)
 
 /datum/sprite_accessory/ears/mousehc
 	name = "mouse"
@@ -80,12 +95,19 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "mouseinner"
+	backup_name = list(
+		"mouse, colorable",
+	)
 
 /datum/sprite_accessory/ears/mousehcno
 	name = "mouse, no inner"
 	icon_state = "mouse"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"mouse, colorable, no inner",
+		"mouse-grey"
+	)
 
 /datum/sprite_accessory/ears/wolfhc
 	name = "wolf"
@@ -93,12 +115,23 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "wolfinner"
+	backup_name = list(
+		"wolf, colorable",
+		"wolf, grey",
+		"wolf, green",
+		"wolf, wise"
+	)
 
 /datum/sprite_accessory/ears/bearhc
 	name = "bear"
 	icon_state = "bear"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"bear, colorable",
+		"bear, brown",
+		"bear, panda"
+	)
 
 /datum/sprite_accessory/ears/smallbear
 	name = "small bear"
@@ -111,6 +144,11 @@
 	icon_state = "squirrel"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"squirrel, colorable",
+		"squirrel-orange",
+		"squirrel, red"
+	)
 
 /datum/sprite_accessory/ears/kittyhc
 	name = "kitty"
@@ -118,12 +156,19 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "kittyinner"
+	backup_name = list(
+		"kitty, colorable"
+	)
 
 /datum/sprite_accessory/ears/bunnyhc
 	name = "bunny"
 	icon_state = "bunny"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"bunny, colorable",
+		"bunny, white"
+	)
 
 /datum/sprite_accessory/ears/antlers
 	name = "antlers"
@@ -162,6 +207,9 @@
 	icon_state = "cow-c"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"cow, horns, colorable"
+	)
 
 /datum/sprite_accessory/ears/cow_nohorns
 	name = "cow, no horns"
@@ -181,6 +229,9 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "otie-inner"
+	backup_name = list(
+		"otie, colorable"
+	)
 
 /datum/sprite_accessory/ears/donkey
 	name = "donkey"
@@ -188,6 +239,9 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "otie-inner"
+	backup_name = list(
+		"donkey, colorable"
+	)
 
 /datum/sprite_accessory/ears/zears
 	name = "jagged ears"
@@ -227,36 +281,54 @@
 	icon_state = "floppy_bun"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"floopy bunny ears (colorable)"
+	)
 
 /datum/sprite_accessory/ears/shark
 	name = "shark ears"
 	icon_state = "shark_ears"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"shark ears (Colorable)"
+	)
 
 /datum/sprite_accessory/ears/sharkhigh
 	name = "shark upper ears"
 	icon_state = "shark_ears_upper"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"shark upper ears (Colorable)"
+	)
 
 /datum/sprite_accessory/ears/sharklow
 	name = "shark lower ears"
 	icon_state = "shark_ears_lower"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"shark lower ears (Colorable)"
+	)
 
 /datum/sprite_accessory/ears/sharkfin
 	name = "shark fin"
 	icon_state = "shark_fin"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"shark fin (Colorable)"
+	)
 
 /datum/sprite_accessory/ears/sharkfinalt
 	name = "shark fin alt"
 	icon_state = "shark_fin_alt"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"shark fin alt style (Colorable)"
+	)
 
 /datum/sprite_accessory/ears/sharkboth
 	name = "shark ears and fin"
@@ -264,6 +336,9 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "shark_fin"
+	backup_name = list(
+		"shark ears and fin (Colorable)"
+	)
 
 /datum/sprite_accessory/ears/sharkbothalt
 	name = "shark ears and fin alt"
@@ -271,6 +346,9 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "shark_fin_alt"
+	backup_name = list(
+		"shark ears and fin alt style (Colorable)"
+	)
 
 /datum/sprite_accessory/ears/sharkhighboth
 	name = "shark upper ears and fin"
@@ -278,6 +356,9 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "shark_fin"
+	backup_name = list(
+		"shark upper ears and fin (Colorable)"
+	)
 
 /datum/sprite_accessory/ears/sharkhighbothalt
 	name = "shark upper ears and fin alt"
@@ -285,6 +366,9 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "shark_fin_alt"
+	backup_name = list(
+		"shark upper ears and fin alt style (Colorable)"
+	)
 
 /datum/sprite_accessory/ears/sharklowboth
 	name = "shark lower ears and fin"
@@ -292,6 +376,9 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "shark_fin"
+	backup_name = list(
+		"shark lower ears and fin (Colorable)"
+	)
 
 /datum/sprite_accessory/ears/sharklowbothalt
 	name = "shark lower ears and fin alt"
@@ -299,6 +386,9 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "shark_fin_alt"
+	backup_name = list(
+		"shark lower ears and fin alt style (Colorable)"
+	)
 
 /datum/sprite_accessory/ears/wilddog
 	name = "Wild Dog Ears"
@@ -327,6 +417,9 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "kittyr"
+	backup_name = list(
+		"kitty right only, colorable"
+	)
 
 /datum/sprite_accessory/ears/cobra_hood
 	name = "Cobra hood (large)"
@@ -385,6 +478,9 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "teshariinner"
+	backup_name = list(
+		"Teshari (colorable fluff)"
+	)
 
 /datum/sprite_accessory/ears/tesharihigh
 	name = "Teshari upper ears"
@@ -392,6 +488,9 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "tesharihighinner"
+	backup_name = list(
+		"Teshari upper ears (colorable fluff)"
+	)
 
 /datum/sprite_accessory/ears/tesharilow
 	name = "Teshari lower ears"
@@ -399,6 +498,9 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "tesharilowinner"
+	backup_name = list(
+		"Teshari lower ears (colorable fluff)"
+	)
 
 /datum/sprite_accessory/ears/tesh_pattern_ear_male
 	name = "Teshari male ear pattern"
@@ -406,6 +508,9 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "teshari_male_pattern"
+	backup_name = list(
+		"Teshari male ear pattern (colorable)"
+	)
 
 /datum/sprite_accessory/ears/tesh_pattern_ear_female
 	name = "Teshari female ear pattern"
@@ -413,6 +518,9 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "teshari_female_pattern"
+	backup_name = list(
+		"Teshari female ear pattern (colorable)"
+	)
 
 /datum/sprite_accessory/ears/teshbeeantenna
 	name = "Teshari bee antenna"
@@ -462,24 +570,36 @@
 	icon_state = "oni-h1_c"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"oni horns, colorable"
+	)
 
 /datum/sprite_accessory/ears/demon_horns1_c
 	name = "demon horns"
 	icon_state = "demon-horns1_c"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"demon horns, colorable"
+	)
 
 /datum/sprite_accessory/ears/demon_horns2
 	name = "demon horns, outward color"
 	icon_state = "demon-horns2"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"demon horns, colorable(outward)"
+	)
 
 /datum/sprite_accessory/ears/dragon_horns
 	name = "dragon horns"
 	icon_state = "dragon-horns"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+	backup_name = list(
+		"dragon horns, colorable"
+	)
 
 /datum/sprite_accessory/ears/elfs1
 	name = "pointed ears (tall)"
@@ -534,6 +654,9 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "caprahorns"
+	backup_name = list(
+		"Caprine horns with pointy ears, colorable"
+	)
 
 /datum/sprite_accessory/ears/elf_oni_colorable
 	name = "oni horns with pointy ears"
@@ -541,6 +664,9 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "oni-h1_c"
+	backup_name = list(
+		"oni horns with pointy ears, colorable"
+	)
 
 /datum/sprite_accessory/ears/elf_demon_colorable
 	name = "Demon horns with pointy ears"
@@ -548,6 +674,9 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "demon-horns1_c"
+	backup_name = list(
+		"Demon horns with pointy ears, colorable"
+	)
 
 /datum/sprite_accessory/ears/elf_demon_outwards_colorable
 	name = "Demon horns with pointy ears, outwards"
@@ -555,6 +684,9 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "demon-horns2"
+	backup_name = list(
+		"Demon horns with pointy ears, outwards, colourable"
+	)
 
 /datum/sprite_accessory/ears/elf_dragon_colorable
 	name = "Dragon horns with pointy ears"
@@ -562,6 +694,15 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "dragon-horns"
+	backup_name = list(
+		"Dragon horns with pointy ears, colourable"
+	)
+
+/datum/sprite_accessory/ears/forward_curled_demon_horns_bony
+	name = "Succubus horns, colourable"
+	icon_state = "succu-horns_b"
+	do_colouration = TRUE
+	color_blend_mode = ICON_MULTIPLY
 
 /datum/sprite_accessory/ears/forward_curled_demon_horns_bony_with_colorable_ears
 	name = "Succubus horns with pointy ears, colourable"
@@ -595,12 +736,6 @@
 /datum/sprite_accessory/ears/synthhorns_curly
 	name = "Synth horns, curly"
 	icon_state = "synthhorns_curled"
-	do_colouration = TRUE
-	color_blend_mode = ICON_MULTIPLY
-
-/datum/sprite_accessory/ears/forward_curled_demon_horns_bony
-	name = "Succubus horns, colourable"
-	icon_state = "succu-horns_b"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 
@@ -657,10 +792,3 @@
 
 
 // Special snowflake ears go below here.
-
-/datum/sprite_accessory/ears/shadekin
-	name = "Shadekin Ears, colorable"
-	icon_state = "shadekin"
-	do_colouration = TRUE
-	color_blend_mode = ICON_MULTIPLY
-	species_allowed = list(SPECIES_SHADEKIN, SPECIES_SHADEKIN_CREW)

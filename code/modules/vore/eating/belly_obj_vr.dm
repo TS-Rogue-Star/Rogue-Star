@@ -294,7 +294,7 @@
 	to_chat(owner,"<span class='notice'>[thing] slides into your [lowertext(name)].</span>")
 
 	//Sound w/ antispam flag setting
-	if(vore_sound && !recent_sound  && !istype(thing, /mob/observer)) //RSEdit: Ports VOREStation PR15918 || does not play vorebelly insertion sound upon ghost entering
+	if(vore_sound && !recent_sound && !istype(thing, /mob/observer)) //RSEdit: Ports VOREStation PR15918 || does not play vorebelly insertion sound upon ghost entering
 		var/soundfile
 		if(!fancy_vore)
 			soundfile = classic_vore_sounds[vore_sound]
@@ -449,7 +449,7 @@
 // Release all contents of this belly into the owning mob's location.
 // If that location is another mob, contents are transferred into whichever of its bellies the owning mob is in.
 // Returns the number of mobs so released.
-/obj/belly/proc/release_all_contents(include_absorbed = FALSE, silent = FALSE)
+/obj/belly/proc/release_all_contents(include_absorbed = FALSE, silent = FALSE, include_bones = FALSE)	//RS EDIT
 	//Don't bother if we don't have contents
 	if(!contents.len)
 		return FALSE
@@ -463,6 +463,8 @@
 			var/mob/living/L = AM
 			if(L.absorbed && !include_absorbed)
 				continue
+		if(istype(AM, /obj/item/weapon/digestion_remains) && !include_bones)	// RS ADD
+			continue	//RS ADD
 		count += release_specific_contents(AM, silent = TRUE)
 
 	//Clean up our own business
@@ -563,7 +565,7 @@
 			privacy_volume = 25
 
 	//Print notifications/sound if necessary
-	if(!silent)
+	if(!silent && !isobserver(M)) //RSEdit: Ports VOREStation PR15918 | Don't display release message for ghosts
 		owner.visible_message("<font color='green'><b>[owner] [release_verb] [M] from their [lowertext(name)]!</b></font>",range = privacy_range)
 		var/soundfile
 		if(!fancy_vore)
@@ -974,7 +976,7 @@
 	if(!digested)
 		items_preserved |= item
 	else
-		owner.adjust_nutrition((nutrition_percent / 100) * 5 * digested)
+		owner.adjust_nutrition((nutrition_percent / 100) * 15 * digested)
 		if(isrobot(owner))
 			var/mob/living/silicon/robot/R = owner
 			R.cell.charge += ((nutrition_percent / 100) * 50 * digested)
@@ -1219,7 +1221,7 @@
 	if(!(content in src) || !istype(target))
 		return
 	content.forceMove(target)
-	if(ismob(content))
+	if(ismob(content) && !isobserver(content)) //RSEdit: Ports VOREStation PR15918 | Fixes bug where camera is not set to follow the ghost
 		var/mob/ourmob = content
 		ourmob.reset_view(owner)
 	if(isitem(content))

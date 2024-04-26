@@ -117,12 +117,25 @@
 /*			Ears of atypical size!			*/
 /********************************************/
 
+/datum/sprite_accessory/ears/shadekin
+	name = "Shadekin Ears"
+	icon_state = "shadekin"
+	do_colouration = TRUE
+	color_blend_mode = ICON_MULTIPLY
+	species_allowed = list(SPECIES_SHADEKIN, SPECIES_SHADEKIN_CREW)
+	backup_name = list(
+		"Shadekin Ears, colorable"
+	)
+
 /datum/sprite_accessory/ears/shadekin/round
-	name = "Shadekin Ears Round, colorable"
+	name = "Shadekin Ears Round"
 	icon = 'icons/mob/vore/ears_32x64.dmi'
 	icon_state = "shadekin-round"
 	do_colouration = TRUE
 	extra_overlay = "shadekin-round-inner"
+	backup_name = list(
+		"Shadekin Ears Round, colorable"
+	)
 
 /datum/sprite_accessory/ears/bnnuy
 	name = "Bnnuy Ears"

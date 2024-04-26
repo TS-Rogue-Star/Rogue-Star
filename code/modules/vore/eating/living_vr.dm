@@ -317,7 +317,7 @@
 //
 /mob/living/proc/release_vore_contents(var/include_absorbed = TRUE, var/silent = FALSE)
 	for(var/obj/belly/B as anything in vore_organs)
-		B.release_all_contents(include_absorbed, silent)
+		B.release_all_contents(include_absorbed, silent, TRUE)	//RS EDIT
 
 //
 // Returns examine messages for bellies
