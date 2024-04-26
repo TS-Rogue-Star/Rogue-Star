@@ -48,6 +48,8 @@
 	can_ride = FALSE
 	clip_mask_state = "taur_clip_mask_alraune"
 	requires_clipping = TRUE
+	tailsock = "alraune"
+	tailsock_w = "alraune_closed"
 	suit_sprites = 'icons/inventory/suit/taursuits_unsuitable.dmi'
 
 	msg_prey_stepunder = "You run between %prey's vines."

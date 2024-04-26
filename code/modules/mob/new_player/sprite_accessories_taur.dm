@@ -182,6 +182,7 @@
 	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
 	loaf_offset = 4
 	vore_tail_sprite_variant = "Wolf"
+	tailsock = "wolf_sock"
 	fullness_icons = 3
 	struggle_anim = TRUE
 	backup_name = list("Wolf (Taur)")
@@ -272,6 +273,7 @@
 	suit_sprites = 'icons/inventory/suit/taursuits_fox.dmi'
 	extra_overlay = "fox_markings"
 	extra_overlay2 = "fox_markings2"
+	tailsock = "fox_sock"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
 	loaf_offset = 4
@@ -280,6 +282,9 @@
 /datum/sprite_accessory/tail/taur/fox/kitsune
 	name = "Fox, Kitsune"
 	icon_state = "kitsune"
+	extra_overlay = "kitsune_markings"
+	extra_overlay2 = "kitsune_markings2"
+	tailsock = "kitsune_sock"
 	backup_name = list("Kitsune (Taur)")
 
 /datum/sprite_accessory/tail/taur/feline
@@ -287,6 +292,7 @@
 	icon_state = "feline_s"
 	suit_sprites = 'icons/inventory/suit/taursuits_feline.dmi'
 	icon_sprite_tag = "feline"
+	tailsock = "feline_sock"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
 	loaf_offset = 5
@@ -376,6 +382,7 @@
 	extra_overlay = "skunk_markings"
 	extra_overlay2 = "skunk_markings_2"
 	icon_sprite_tag = "skunk"
+	tailsock = "skunk_sock"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
 	loaf_offset = 3
@@ -390,6 +397,7 @@
 	icon_state = "rat_s"
 	suit_sprites = 'icons/inventory/suit/taursuits_rat.dmi'
 	extra_overlay = "rat_markings"
+	tailsock = "rat_sock"
 	clip_mask_state = "taur_clip_mask_rat"
 	icon_sprite_tag = "rat"
 	backup_name = list("Rat (Taur)")
@@ -401,6 +409,7 @@
 	extra_overlay2 = "otie_markings_2"
 	suit_sprites = 'icons/inventory/suit/taursuits_otie.dmi'
 	icon_sprite_tag = "otie"
+	tailsock = "otie_sock"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
 	loaf_offset = 5
@@ -421,6 +430,7 @@
 	icon_state = "sergal_s"
 	icon_sprite_tag = "sergal"
 	extra_overlay = "sergal_markings"
+	tailsock = "sergal_sock"
 
 /datum/sprite_accessory/tail/taur/sergal/fat
 	name = "Fat Sergal"
@@ -433,6 +443,7 @@
 	icon_state = "zorgoia"
 	suit_sprites = 'icons/inventory/suit/taursuits_zorgoia.dmi'
 	extra_overlay = "zorgoia_fluff"
+	tailsock = "zorgoia_sock"
 	backup_name = list("Zorgoia (Taur)")
 
 /datum/sprite_accessory/tail/taur/zorgoia/fat
@@ -446,6 +457,7 @@
 	icon_state = "cow_s"
 	suit_sprites = 'icons/inventory/suit/taursuits_cow.dmi'
 	icon_sprite_tag = "cow"
+	tailsock = "cow_sock"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
 	loaf_offset = 3
@@ -498,6 +510,7 @@
 	extra_overlay = "deer_markings"
 	suit_sprites = 'icons/inventory/suit/taursuits_deer.dmi'
 	icon_sprite_tag = "deer"
+	tailsock = "deer_sock"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
 	loaf_offset = 7
@@ -542,6 +555,7 @@
 	under_sprites = 'icons/inventory/suit/taursuits_horse.dmi'
 	suit_sprites = 'icons/inventory/suit/taursuits_horse.dmi'
 	icon_sprite_tag = "horse"
+	tailsock = "horse_sock"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
 	loaf_offset = 4
@@ -587,6 +601,7 @@
 	extra_overlay = "drake_markings"
 	suit_sprites = 'icons/inventory/suit/taursuits_drake.dmi'
 	icon_sprite_tag = "drake"
+	tailsock = "drake_sock"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
 	loaf_offset = 6
@@ -626,6 +641,7 @@
 	icon_state = "lizard_s"
 	suit_sprites = 'icons/inventory/suit/taursuits_lizard.dmi'
 	icon_sprite_tag = "lizard"
+	tailsock = "lizard_sock"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
 	loaf_offset = 5
@@ -979,6 +995,7 @@
 	name = "Snail"
 	icon_state = "slug_s"
 	extra_overlay = "snail_shell_marking"
+	tailsock = "snail_s"
 	backup_name = list("Snail (Taur)")
 
 /datum/sprite_accessory/tail/taur/wasp
@@ -1022,6 +1039,8 @@
 	ani_state = "alraunecolor_closed_s"
 	ckeys_allowed = null
 	do_colouration = TRUE
+	tailsock = "alraune"
+	tailsock_w = "alraune_closed"
 	extra_overlay = "alraunecolor_markings"
 	extra_overlay_w = "alraunecolor_closed_markings"
 	clip_mask_state = "taur_clip_mask_alraune"
@@ -1042,6 +1061,7 @@
 	name = "Synthetic chassis, Fat"
 	icon_state = "synthtaur1_s"
 	extra_overlay = "synthtaur1_fat_markings"
+	tailsock = "synthtaur1fat_sock"
 	extra_overlay2 = "synthtaur1_glow"
 	clip_mask_state = "taur_clip_mask_synthtaur1"
 	backup_name = list("Synthetic chassis - agile (Taur, Fat)")
@@ -1052,6 +1072,7 @@
 	extra_overlay = "synthtaur1_markings"
 	extra_overlay2 = "synthtaur1_glow"
 	ani_state = "synthtaur1_s"
+	tailsock_w = "synthtaur1fat_sock"
 	extra_overlay_w = "synthtaur1_fat_markings"
 	extra_overlay2_w = "synthtaur1_glow"
 	clip_mask_state = "taur_clip_mask_synthtaur1"
