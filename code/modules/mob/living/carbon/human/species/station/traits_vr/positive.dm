@@ -85,7 +85,7 @@
 		/datum/trait/positive/numbinject,
 		/datum/trait/positive/omniinject
 		)
-	has_preferences = list("trait_injection_verb" = list(TRAIT_PREF_TYPE_STRING, "Verb", TRAIT_VAREDIT_TARGET_MOB, "Bite"))
+	has_preferences = list("trait_injection_verb" = list(TRAIT_PREF_TYPE_STRING, "Verb", TRAIT_VAREDIT_TARGET_MOB, "bites"))
 	custom_only = FALSE
 
 /datum/trait/positive/shrinkinject/apply(var/datum/species/S,var/mob/living/carbon/human/H)
@@ -103,7 +103,7 @@
 		/datum/trait/positive/numbinject,
 		/datum/trait/positive/omniinject
 		)
-	has_preferences = list("trait_injection_verb" = list(TRAIT_PREF_TYPE_STRING, "Verb", TRAIT_VAREDIT_TARGET_MOB, "Bite"))
+	has_preferences = list("trait_injection_verb" = list(TRAIT_PREF_TYPE_STRING, "Verb", TRAIT_VAREDIT_TARGET_MOB, "bites"))
 	custom_only = FALSE
 
 /datum/trait/positive/growinject/apply(var/datum/species/S,var/mob/living/carbon/human/H)
@@ -121,7 +121,7 @@
 		/datum/trait/positive/numbinject,
 		/datum/trait/positive/omniinject
 		)
-	has_preferences = list("trait_injection_verb" = list(TRAIT_PREF_TYPE_STRING, "Verb", TRAIT_VAREDIT_TARGET_MOB, "Bite"))
+	has_preferences = list("trait_injection_verb" = list(TRAIT_PREF_TYPE_STRING, "Verb", TRAIT_VAREDIT_TARGET_MOB, "bites"))
 	custom_only = FALSE
 
 /datum/trait/positive/sizeinject/apply(var/datum/species/S,var/mob/living/carbon/human/H)
@@ -142,7 +142,7 @@
 		/datum/trait/positive/omniinject
 		)
 	custom_only = FALSE
-	has_preferences = list("trait_injection_verb" = list(TRAIT_PREF_TYPE_STRING, "Verb", TRAIT_VAREDIT_TARGET_MOB, "Bite"))
+	has_preferences = list("trait_injection_verb" = list(TRAIT_PREF_TYPE_STRING, "Verb", TRAIT_VAREDIT_TARGET_MOB, "bites"))
 
 /datum/trait/positive/numbinject/apply(var/datum/species/S,var/mob/living/carbon/human/H)
 	..()
@@ -160,7 +160,7 @@
 		/datum/trait/positive/numbinject
 		)
 	custom_only = FALSE
-	has_preferences = list("trait_injection_verb" = list(TRAIT_PREF_TYPE_STRING, "Verb", TRAIT_VAREDIT_TARGET_MOB, "Bite"))
+	has_preferences = list("trait_injection_verb" = list(TRAIT_PREF_TYPE_STRING, "Verb", TRAIT_VAREDIT_TARGET_MOB, "bites"))
 
 /datum/trait/positive/omniinject/apply(var/datum/species/S,var/mob/living/carbon/human/H)
 	..()

@@ -30,7 +30,7 @@
 	var/list/trait_injection_reagents = list() 	//RSEdit: Reagents available from injection traits
 	var/trait_injection_selected = null			//RSEdit: What trait reagent you're injecting.
 	var/trait_injection_amount = 5				//RSEdit: How much you're injecting with traits.
-	var/trait_injection_verb = "bite"			//RSEdit: Which fluffy manner you're doing the injecting.
+	var/trait_injection_verb = "bites"			//RSEdit: Which fluffy manner you're doing the injecting.
 	var/regen_sounds = list(
 		'sound/effects/mob_effects/xenochimera/regen_1.ogg',
 		'sound/effects/mob_effects/xenochimera/regen_2.ogg',

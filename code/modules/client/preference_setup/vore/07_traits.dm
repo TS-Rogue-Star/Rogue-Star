@@ -48,7 +48,7 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 	var/dirty_synth = 0		//Are you a synth
 	var/gross_meatbag = 0		//Where'd I leave my Voight-Kampff test kit?
 
-	var/trait_injection_verb = "Bite"	//RS EDIT
+	var/trait_injection_verb = "bites"	//RS EDIT
 
 /datum/preferences/proc/get_custom_bases_for_species(var/new_species)
 	if (!new_species)
