@@ -1530,6 +1530,7 @@
 		if(Adjacent(target))	//We leapt at them but we didn't manage to hit them, let's see if we're next to them
 			target.Weaken(2)	//get knocked down, idiot
 
+//RS ADD START
 /mob/living/proc/injection() // Allows the user to inject reagents into others somehow, like stinging, or biting.
 	set name = "Injection"
 	set category = "Abilities"
@@ -1545,7 +1546,17 @@
 		to_chat(src, "<span class='warning'>It doesn't work that way.</span>")
 		return
 
-	var/choice = tgui_alert(src, "Do you wish to inject somebody, or adjust settings?", "Selection List", list("Inject", "Change reagent", "Change amount", "Change verb"))
+	var/list/choices = list("Inject")
+
+	if(trait_injection_reagents.len > 1)
+		choices += "Change reagent"
+	else if(!trait_injection_selected)
+		trait_injection_selected = trait_injection_reagents[1]
+
+	choices += "Change amount"
+	choices += "Change verb"
+
+	var/choice = tgui_alert(src, "Do you wish to inject somebody, or adjust settings?", "Selection List", choices)
 
 	if(choice == "Change reagent")
 		var/reagent_choice = tgui_input_list(usr, "Choose which reagent to inject!", "Select reagent", trait_injection_reagents)
@@ -1560,7 +1571,7 @@
 		to_chat(src, "<span class='notice'>You prepare to inject [trait_injection_amount] units of [trait_injection_selected ? "[trait_injection_selected]" : "...nothing. Select a reagent before trying to inject anything."]</span>")
 		return
 	if(choice == "Change verb")
-		var/verb_choice = tgui_input_text(usr, "Choose the percieved manner of injection, such as 'bite' or 'sting', don't be misleading or abusive.", "How are you injecting?", max_length = 60) //Whoaa there cowboy don't put a novel in there.
+		var/verb_choice = tgui_input_text(usr, "Choose the percieved manner of injection, such as 'bite' or 'sting', don't be misleading or abusive.", "How are you injecting?", trait_injection_verb, max_length = 60) //Whoaa there cowboy don't put a novel in there.
 		if(verb_choice)
 			trait_injection_verb = verb_choice
 		to_chat(src, "<span class='notice'>You will [trait_injection_verb] your targets.</span>")
@@ -1587,7 +1598,7 @@
 			return
 
 		if(!istype(target, /mob/living/carbon)) //Safety.
-			to_chat(src, "<span class='warning'>You need to select a living target!</span>")
+			to_chat(src, "<span class='warning'>That won't work on that kind of creature! (Only works on crew/monkeys)</span>")
 			return
 
 		if(target.isSynthetic())
@@ -1606,5 +1617,27 @@
 			add_attack_logs(src,target,"Injection trait ([trait_injection_selected], [trait_injection_amount])")
 			if(target.reagents)
 				target.reagents.add_reagent(trait_injection_selected, trait_injection_amount)
-			visible_message("<span class='warning'>[usr] [trait_injection_verb]s [target]!</span>","<span class='notice'>You [trait_injection_verb] [target].</span>")
-			return
+			var/ourmsg = "<span class='warning'>[usr] [trait_injection_verb] [target] "
+			switch(zone_sel.selecting)
+				if(BP_HEAD)
+					ourmsg += "on the head!"
+				if(BP_TORSO)
+					ourmsg += "on the chest!"
+				if(BP_GROIN)
+					ourmsg += "on the groin!"
+				if(BP_R_ARM, BP_L_ARM)
+					ourmsg += "on the arm!"
+				if(BP_R_HAND, BP_L_HAND)
+					ourmsg += "on the hand!"
+				if(BP_R_LEG, BP_L_LEG)
+					ourmsg += "on the leg!"
+				if(BP_R_FOOT, BP_L_FOOT)
+					ourmsg += "on the foot!"
+				if("mouth")
+					ourmsg += "on the mouth!"
+				if("eyes")
+					ourmsg += "on the eyes!"
+			ourmsg += "</span>"
+			visible_message(ourmsg)
+
+//RS ADD END

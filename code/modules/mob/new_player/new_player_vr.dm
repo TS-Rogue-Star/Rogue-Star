@@ -65,10 +65,10 @@
 				pass = FALSE
 				to_chat(src, "<span class='warning'>Some of your traits are not usable by your character type (synthetic traits on organic, or vice versa).</span>")
 
-		//Went into negatives
-		if(client.prefs.pos_traits.len > client.prefs.max_traits)	//RS REMOVAL
-			pass = FALSE
-			to_chat(src,"<span class='warning'>Your custom species is not playable. Reconfigure your traits on the VORE tab.</span>")
+	//Went into negatives
+	if(client.prefs.pos_traits.len > client.prefs.max_traits)	//RS EDIT
+		pass = FALSE
+		to_chat(src,"<span class='warning'>Your custom species is not playable. Reconfigure your traits on the VORE tab.</span>")
 
 	//RS ADD START
 	if(J.camp_protection && round_duration_in_ds < config.job_camp_time_limit)
