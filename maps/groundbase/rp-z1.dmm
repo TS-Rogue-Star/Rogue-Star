@@ -1634,10 +1634,10 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/lhallway)
 "bPd" = (
-/obj/machinery/alarm{
-	dir = 4
-	},
-/turf/simulated/floor/tiled,
+/obj/structure/window/reinforced/full,
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/turf/simulated/floor,
 /area/groundbase/engineering/lobby)
 "bPy" = (
 /obj/machinery/door/firedoor/glass,
@@ -3071,6 +3071,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
+/obj/machinery/firealarm,
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/lobby)
 "dhn" = (
@@ -3820,6 +3821,9 @@
 	dir = 1;
 	pixel_y = -22
 	},
+/obj/machinery/alarm{
+	dir = 8
+	},
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/lobby)
 "dVi" = (
@@ -4424,12 +4428,6 @@
 /obj/structure/sign/department/ai,
 /turf/simulated/wall/r_wall,
 /area/groundbase/command/ai/foyer)
-"eFR" = (
-/obj/machinery/firealarm{
-	dir = 8
-	},
-/turf/simulated/floor/tiled,
-/area/groundbase/engineering/lobby)
 "eGf" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 4;
@@ -11287,6 +11285,7 @@
 /area/groundbase/science/xenobot)
 "lJr" = (
 /obj/machinery/light/small,
+/obj/structure/table/rack,
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/redgate)
 "lJu" = (
@@ -13309,6 +13308,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/structure/table/rack,
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/redgate)
 "nTn" = (
@@ -15759,6 +15759,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
+/obj/structure/table/rack,
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/redgate)
 "qkZ" = (
@@ -23234,6 +23235,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
 	},
+/obj/structure/table/rack,
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/redgate)
 "xOg" = (
@@ -35079,10 +35081,10 @@ sfQ
 sfQ
 tZJ
 tZJ
-tZJ
-tZJ
-tZJ
-tZJ
+bPd
+bPd
+bPd
+bPd
 tZJ
 gqq
 gqq
@@ -35223,8 +35225,8 @@ gwl
 niH
 nxP
 nxP
-bPd
-eFR
+nxP
+nxP
 dgQ
 gqq
 haG
