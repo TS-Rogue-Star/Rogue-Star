@@ -83,7 +83,7 @@
 	if(!choice)
 		return
 
-	visible_message(span("warning","\The [src]'s eyes flash ominously!"))
+	visible_message(span("warning","\The [src]tenses up in preparation to leap!"))
 	to_chat(choice, span("danger","\The [src] focuses on you!"))
 	// Telegraph, since getting stunned suddenly feels bad.
 	do_windup_animation(choice, 1 SECOND)
