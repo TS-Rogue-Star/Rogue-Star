@@ -227,8 +227,9 @@
 		)
 
 	lateload_gb_north = list(
-		list("Northern Wilds 1"),
-		list("Northern Wilds 2")
+//		list("Northern Wilds 1"),
+//		list("Northern Wilds 2"),
+		list("Northern Wilds CUSTOM")
 		)
 	lateload_gb_south = list(
 		list("Southern Wilds 1"),
@@ -512,6 +513,12 @@
 	name = "Northern Wilds 2"
 	desc = "Wilderness"
 	mappath = 'maps/groundbase/northwilds/northwilds2.dmm'
+	associated_map_datum = /datum/map_z_level/gb_lateload/gb_north_wilds
+
+/datum/map_template/gb_lateload/wilds/north/type2
+	name = "Northern Wilds CUSTOM"
+	desc = "Wilderness"
+	mappath = 'maps/groundbase/northwilds/northwilds_custom.dmm'
 	associated_map_datum = /datum/map_z_level/gb_lateload/gb_north_wilds
 
 /datum/map_template/gb_lateload/wilds/south/type1
