@@ -135,7 +135,8 @@ var/datum/planet/virgo3c/planet_virgo3c = null
 		WEATHER_FALLOUT			= new /datum/weather/virgo3c/fallout(),
 		WEATHER_FALLOUT_TEMP	= new /datum/weather/virgo3c/fallout/temp(),
 		WEATHER_CONFETTI		= new /datum/weather/virgo3c/confetti(),
-		WEATHER_ECLIPSE			= new /datum/weather/virgo3c/eclipse()
+		WEATHER_ECLIPSE			= new /datum/weather/virgo3c/eclipse(),
+		WEATHER_FOG_ECLIPSE		= new /datum/weather/virgo3c/fog/eclipse()
 		)
 	roundstart_weather_chances = list(
 		WEATHER_CLEAR		= 50,
@@ -646,6 +647,21 @@ var/datum/planet/virgo3c/planet_virgo3c = null
 		"Darkness suddenly spreads across the land as the local star is obscured by something."
 		)
 	imminent_transition_message = "Something moves in front of the local star!"
+
+/datum/weather/virgo3c/fog/eclipse
+	name = "foggy eclipse"
+	light_modifier = 0
+
+	transition_chances = list(
+		WEATHER_FOG_ECLIPSE = 100
+		)
+	observed_message = "A fogbank has rolled over the region."
+	transition_messages = list(
+		"A thick fog rolls in.",
+		"The sky disappears as the air becomes dense.",
+		"The clouds drift lower, as if to blot out everything."
+	)
+	imminent_transition_message = "Clouds are drifting down as the area is getting extremely foggy."
 
 /turf/unsimulated/wall/planetary/virgo3c
 	name = "impassable rock"
