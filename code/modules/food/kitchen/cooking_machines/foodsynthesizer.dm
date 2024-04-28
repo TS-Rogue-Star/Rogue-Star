@@ -46,6 +46,7 @@
 	var/static/datum/category_collection/synthesizer/synthesizer_recipes
 	var/static/list/menucatagory_list
 	var/active_menu = "appasnacc"
+	var/activefood
 	var/food_mimic_storage
 
 	//Voice activation stuff
@@ -55,7 +56,7 @@
 	//crew printing required stuff.
 	var/tgui_icons
 	var/icon/crewpicture
-	var/activecrew = "uristmcPlaceholder"
+	var/activecrew
 	var/refresh_delay = 10 SECONDS
 	var/db_key
 	var/datum/transcore_db/our_db
@@ -166,6 +167,9 @@
 	data["busy"] = busy
 	data["isThereCart"] = cart ? TRUE : FALSE
 	data["active_menu"] = active_menu
+	data["activefood"] = activefood
+	data["activecrew"] = activecrew
+	data["crewicon"] = tgui_icons
 	//We probably want to dynamically check if there's a canister every time too.
 	var/cartfilling[0]
 	if(cart && cart.reagents && cart.reagents.reagent_list.len)
@@ -178,9 +182,6 @@
 	if(cart)
 		var/percent = round((cart.reagents.total_volume / cart.reagents.maximum_volume) * 100)
 		data["cartFillStatus"] = cart ? percent : null
-
-	data["activecrew"] = activecrew
-	data["crewicon"] = tgui_icons
 	return data
 
 /obj/machinery/synthesizer/tgui_static_data(mob/user)
@@ -281,7 +282,14 @@
 	switch(action)
 		if("setactive_menu")
 			active_menu = params["setactive_menu"]
-			clearTguiIcons()
+			activecrew = null
+			activefood = null
+			if(tgui_icons)
+				clearTguiIcons()
+			return TRUE
+
+		if("setactive_food")
+			activefood = params["setactive_food"]
 			return TRUE
 
 		if("setactive_crew")
@@ -399,7 +407,7 @@
 
 					//Begin mimicking the micro
 					var/vore_flavor
-					if(found.vore_taste)
+					if(found?.vore_taste)
 						vore_flavor = found.vore_taste
 					else
 						vore_flavor = "Something impalpable"
@@ -412,16 +420,15 @@
 					meal.icon_state = null
 
 					//flavor mixing, make the cookie taste somewhat like the real thing!
-					for(var/datum/reagent/F in meal.reagents.reagent_list)
-						if(F.id == "nutripaste") //This should be the only reagent, actually.
-							F.taste_description += " as well as [vore_flavor]"
-							F.data = list(F.taste_description = 1)
-							meal.nutriment_desc = list(F.taste_description = 1)
+					for(var/datum/reagent/foodpaste in meal.reagents.reagent_list)
+						if(foodpaste.id == "nutripaste") //This should be the only reagent, actually.
+							foodpaste.taste_description += " as well as [vore_flavor]"
+							foodpaste.data = list(foodpaste.taste_description = 1)
+							meal.nutriment_desc = list(foodpaste.taste_description = 1)
 
 					if(src.menu_grade >= 2) //Is the machine upgraded?
 						meal.reagents.add_reagent("nutripaste", ((1 + src.menu_grade) - 1)) //add the missing Nutriment bonus, subtracting the one we've already added in.
 
-					meal.bitesize = 1 //Smol tiny critter mimics
 					src.audible_message("<span class='notice'>Please take your miniature [meal.name].</span>", runemessage = "Minature [meal.name] is complete!")
 					if(Adjacent(usr))
 						usr.put_in_any_hand_if_possible(meal) //Autoplace in hands to save a click

@@ -15,22 +15,25 @@
 * Synthed Food Setup *
 **********************/
 /obj/item/weapon/reagent_containers/food/snacks/synthsized_meal
-	name = "Nutrient paste meal"
+	name = "Nutrient paste wafer"
 	desc = "It's a synthisized edible wafer of nutrients. Everything you need and makes field rations a delicacy in comparison."
 	icon = 'icons/obj/machines/foodsynthesizer.dmi'
 	icon_state = "pasteblock"
 	filling_color = "#c5e384"
 	center_of_mass = list("x"=16, "y"=6)
 	w_class = ITEMSIZE_SMALL
+	bitesize = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/synthsized_meal/Initialize()
 	. = ..()
 	reagents.add_reagent("nutripaste", 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/synthsized_meal/crewblock
-	name = "Nutrient paste meal"
+	name = "Crew paste block"
 	desc = "It's a synthisized edible wafer of nutrients. Everything you need and makes field rations a delicacy in comparison."
 	icon_state = "crewblock"
+	bitesize = 30 //one chomp. bitesize = amount taken per bite? I guess? weird.
+	eating_sound = 'sound/vore/sunesound/pred/swallow_01.ogg' //hehe
 
 /datum/reagent/nutriment/synthmealgoop
 	name = "Nutriment Paste"
@@ -1274,6 +1277,20 @@
 	voice_order = list("Dog steak", "Dog", "Canine steak")
 	voice_temp = "cold"
 	hidden = TRUE
+
+/datum/category_item/synthesizer/raw/waferblock
+	name = "Nutrient paste wafer"
+	id = "rawwaferblock"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/synthsized_meal
+	voice_order = list("paste block")
+	voice_temp = "cold"
+
+/datum/category_item/synthesizer/raw/wafercrewblock
+	name = "Generic Crew Cookie"
+	id = "rawwafercrew"
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/synthsized_meal/crewblock
+	voice_order = list("crew block")
+	voice_temp = "cold"
 
 /*********
 * Crew Cookie *

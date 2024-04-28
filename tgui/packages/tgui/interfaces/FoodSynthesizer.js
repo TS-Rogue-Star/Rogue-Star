@@ -98,7 +98,7 @@ const FoodMenuTabs = (props, context) => {
 
 const FoodSelectionMenu = (props, context) => {
   const { act, data } = useBackend(context);
-  const { active_menu, recipes, crewdata, crew_cookies, activecrew } = data;
+  const { active_menu, recipes, activefood, crew_cookies, activecrew } = data;
   const { hidden } = data.recipes;
 
   const { iconkey } = props;
@@ -106,6 +106,11 @@ const FoodSelectionMenu = (props, context) => {
   if (!recipes) {
     return <Box color="bad">Recipes records missing!</Box>;
   }
+
+  let handleActivefood = (newFood) => {
+    setActiveFood(newFood);
+    act('setactive_food', { 'setactive_food': newFood.id });
+  };
 
   const [ActiveFood, setActiveFood] = useSharedState(
     context,
@@ -223,7 +228,7 @@ const FoodSelectionMenu = (props, context) => {
                     fluid
                     content={recipe.name}
                     selected={recipe === ActiveFood}
-                    onClick={() => setActiveFood(recipe)}
+                    onClick={() => handleActivefood(recipe)}
                   />
                 </Tabs.Tab>
               ))}
@@ -231,22 +236,22 @@ const FoodSelectionMenu = (props, context) => {
           </Section>
         </Stack.Item>
         <Stack.Item grow={1} ml={4}>
-          <Section title="Product Details" fill height="290px">
-            <Box key={ActiveFood.ref}>
-              <Stack align="center" justify="flex-start">
-                <Stack.Item>
-                  <LabeledList>
-                    <LabeledList.Item label="Name">
-                      {ActiveFood.name}
-                    </LabeledList.Item>
-                    <br />
-                    <LabeledList.Item label="Description">
-                      {ActiveFood.desc}
-                    </LabeledList.Item>
-                  </LabeledList>
-                  <br />
-                  {ActiveFood ? (
+          {activefood ? (
+            <Section title="Product Details" fill height="290px">
+              <Box>
+                <Stack align="center" justify="flex-start">
+                  <Stack.Item>
                     <Section>
+                      <LabeledList>
+                        <LabeledList.Item label="Name">
+                          {ActiveFood.name}
+                        </LabeledList.Item>
+                        <br />
+                        <LabeledList.Item label="Description">
+                          {ActiveFood.desc}
+                        </LabeledList.Item>
+                      </LabeledList>
+                      <br />
                       <Button
                         content="Print this meal"
                         width={'128px'}
@@ -258,15 +263,15 @@ const FoodSelectionMenu = (props, context) => {
                         onClick={() => act('make', { make: ActiveFood.ref })}
                       />{' '}
                     </Section>
-                  ) : (
-                    <Section>
-                      <Box color="label">Please select an offering.</Box>
-                    </Section>
-                  )}
-                </Stack.Item>
-              </Stack>
-            </Box>
-          </Section>
+                  </Stack.Item>
+                </Stack>
+              </Box>
+            </Section>
+          ) : (
+            <Section>
+              <Box color="label">Please select an offering.</Box>
+            </Section>
+          )}
         </Stack.Item>
       </Stack>
     </Section>
