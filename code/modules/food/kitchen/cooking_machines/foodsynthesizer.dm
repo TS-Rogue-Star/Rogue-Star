@@ -276,7 +276,6 @@
 
 	if(busy)
 		to_chat(usr, "<span class='notice'>The synthesizer is busy. Please wait for completion of previous operation.</span>")
-		playsound(src, 'sound/machines/replicator_input_failed.ogg', 100, 1)
 		return
 
 	switch(action)
@@ -775,7 +774,6 @@ can tgui accept orders that isn't through the menu? Probably. hijack that.
 			menutype = REPLICATING
 			idle_power_usage = 400
 			icon_state = "replicator-on"
-			playsound(src, 'DS13/sound/effects/replicator.ogg', 100, 1)
 			ready = FALSE
 			var/speed_mult = 60 //Starts off hella slow.
 			speed_mult -= (speed_grade*10) //Upgrade with manipulators to make this faster!
