@@ -327,12 +327,10 @@
 				busy = TRUE
 				update_use_power(USE_POWER_ACTIVE)
 				update_icon() // light up time
-				playsound(src, 'sound/machines/replicator_input_ok.ogg', 100)
 				C.reagents.remove_reagent("synthsoygreen", SYNTH_FOOD_COST) //Drain our fuel
 				var/obj/item/weapon/reagent_containers/food/snacks/food_mimic = new making.build_path(src) //Let's get this on a tray
 				food_mimic_storage = food_mimic //nice.
 				sleep(speed_grade) //machine go brrr
-				playsound(src, 'sound/machines/replicator_working.ogg', 150)
 
 				//Create the desired item.
 				var/obj/item/weapon/reagent_containers/food/snacks/synthsized_meal/meal = new /obj/item/weapon/reagent_containers/food/snacks/synthsized_meal(src.loc)
@@ -397,10 +395,8 @@
 					busy = TRUE
 					update_use_power(USE_POWER_ACTIVE)
 					update_icon() // light up time
-					playsound(src, 'sound/machines/replicator_input_ok.ogg', 100)
 					C.reagents.remove_reagent("synthsoygreen", SYNTH_FOOD_COST) //Drain our fuel
 					sleep(speed_grade) //machine go brrr
-					playsound(src, 'sound/machines/replicator_working.ogg', 150)
 
 					//Create the cookie base.
 					var/obj/item/weapon/reagent_containers/food/snacks/synthsized_meal/crewblock/meal = new /obj/item/weapon/reagent_containers/food/snacks/synthsized_meal/crewblock(src.loc)
@@ -530,15 +526,12 @@
 /obj/machinery/synthesizer/proc/check_cart(obj/item/weapon/reagent_containers/synthdispcart/C, mob/user)
 	if(!istype(C))
 		to_chat(user, "<span class='notice'>The synthesizer cartridge is nonexistant.</span>")
-		playsound(src, 'sound/machines/replicator_input_failed.ogg', 100)
 		return FALSE
 	if((!(C.reagents)) || (C.reagents.total_volume <= 0) || (!C.reagents.has_reagent("synthsoygreen")))
 		to_chat(user, "<span class='notice'>The synthesizer cartridge depleted, replace with a genuine Sabresnack Co cartridge.</span>")
-		playsound(src, 'sound/machines/replicator_input_failed.ogg', 100)
 		return FALSE
 	if((C.reagents) && (C.reagents.total_volume <= 0) && (!C.reagents.has_reagent("synthsoygreen")))
 		to_chat(user, "<span class='notice'>Used or Counterfeit synthesizer cartridge detected.</span>")
-		playsound(src, 'sound/machines/replicator_input_failed.ogg', 100)
 		return FALSE
 	else if(C.reagents && C.reagents.has_reagent("synthsoygreen") && (C.reagents.total_volume >= SYNTH_FOOD_COST))
 		SStgui.update_uis(src)
@@ -557,7 +550,6 @@
 
 /obj/machinery/synthesizer/attackby(obj/item/W, mob/user)
 	if(busy)
-		playsound(src, 'sound/machines/replicator_input_failed.ogg', 100)
 		audible_message("<span class='notice'>\The [src] is busy. Please wait for completion of previous operation.</span>", runemessage = "The Synthesizer is busy.")
 		return
 	if(default_part_replacement(user, W))
