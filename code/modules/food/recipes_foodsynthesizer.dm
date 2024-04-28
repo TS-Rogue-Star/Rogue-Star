@@ -1,14 +1,10 @@
 /datum/category_item/synthesizer/New()
 	..()
-	var/obj/item/weapon/reagent_containers/food/snacks/snacc
-	if(build_path)
-		snacc = new build_path()
-
+	var/obj/item/weapon/reagent_containers/food/snacks/snacc = build_path
 	if(!snacc)	// Something has gone horribly wrong, or right.
 		log_debug("[name] created an Synthesizer design without an assigned build_path.")
 		return
-	desc = initial(snacc.desc) //Let's get our description text and icon while we've got the item...
-	qdel(snacc)
+	desc = initial(snacc.desc) //Let's get our description text
 
 /datum/category_item/synthesizer/proc/icon_html(client/user)
 	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/synthesizer)
