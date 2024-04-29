@@ -227,9 +227,9 @@
 		)
 
 	lateload_gb_north = list(
-//		list("Northern Wilds 1"),
-//		list("Northern Wilds 2"),
-		list("Northern Wilds CUSTOM")
+		list("Northern Wilds 1"),
+		list("Northern Wilds 2")
+//		list("Northern Wilds CUSTOM")
 		)
 	lateload_gb_south = list(
 		list("Southern Wilds 1"),
