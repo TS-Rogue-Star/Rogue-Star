@@ -435,7 +435,7 @@
 /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/preloaded/antitoxin
 	name = "vial (Anti-Tox)"
 	icon_state = "hypovial-a"
-	comes_with = list("antitoxin" = 30)
+	comes_with = list("anti_toxin" = 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/preloaded/kelotane
 	name = "vial (kelotane)"
@@ -470,7 +470,7 @@
 /obj/item/weapon/reagent_containers/glass/bottle/hypovial/large/preloaded/antitoxin
 	name = "large vial (Anti-Tox)"
 	icon_state = "hypoviallarge-a"
-	comes_with = list("antitoxin" = 60)
+	comes_with = list("anti_toxin" = 60)
 
 /obj/item/weapon/reagent_containers/glass/bottle/hypovial/large/preloaded/dermaline
 	name = "large vial (Dermaline)"
