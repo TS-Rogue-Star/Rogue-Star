@@ -7,7 +7,9 @@
 	if(!check_rights(R_FUN))
 		return
 	var/list/possible_verbs = list(
-		/mob/living/proc/blue_shift
+		/mob/living/proc/blue_shift,
+		/mob/living/proc/vore_leap_attack
+
 		)
 
 	var/choice = tgui_input_list(usr, "Which verb would you like to add/remove?", "Event Verb", possible_verbs)
@@ -56,3 +58,50 @@
 	sparks.start()
 	visible_message("<span class='warning'>Electrical sparks manifest from nowhere around \the [src]!</span>")
 	qdel(sparks)
+
+/mob/living/proc/vore_leap_attack()
+	set name = "Leap"
+	set desc = "Leap at a target, eating or stunning them!"
+	set category = "Abilities"
+	set waitfor = FALSE
+
+	var/list/targets = list()
+	for(var/mob/living/L in view(world.view, get_turf(src)))
+		if(L == src)
+			continue
+		if(!isliving(L))
+			continue
+		if(!L.devourable || !L.throw_vore)
+			continue
+		targets += L
+
+	if(!targets.len)
+		to_chat(src, span("warning","There are no valid targets in range."))
+
+	var/mob/living/choice = tgui_input_list(src, "Pick a target! (Only those with viable mechanical prefs are included)", "Target Choice", targets)
+
+	if(!choice)
+		return
+
+	visible_message(span("warning","\The [src]tenses up in preparation to leap!"))
+	to_chat(choice, span("danger","\The [src] focuses on you!"))
+	// Telegraph, since getting stunned suddenly feels bad.
+	do_windup_animation(choice, 1 SECOND)
+	sleep(1 SECOND) // For the telegraphing.
+
+	if(choice.z != z)	//Make sure you haven't disappeared to somewhere we can't go
+		return FALSE
+
+	// Do the actual leap.
+	status_flags |= LEAPING // Lets us pass over everything.
+	visible_message(span("critical","\The [src] leaps at \the [choice]!"))
+	throw_at(get_step(choice, get_turf(src)), 7, 1, src)
+	playsound(src, 'sound/weapons/spiderlunge.ogg', 75, 1)
+
+	sleep(5) // For the throw to complete. It won't hold up the AI ticker due to waitfor being false.
+
+	if(status_flags & LEAPING)
+		status_flags &= ~LEAPING // Revert special passage ability.
+
+	if(Adjacent(choice))	//We leapt at them but we didn't manage to hit them, let's see if we're next to them
+		choice.Weaken(2)	//get knocked down, idiot

@@ -59,6 +59,7 @@
 	cost = 1
 	var_changes = list("unarmed_types" = list(/datum/unarmed_attack/stomp, /datum/unarmed_attack/kick, /datum/unarmed_attack/claws, /datum/unarmed_attack/bite/sharp))
 
+/* - RS REMOVAL - Rolling numbing enzyme into a trait that lets you inject it without also killing them.
 /datum/trait/positive/melee_attack_fangs
 	name = "Special Attack: Sharp Melee & Numbing Fangs" // Trait Organization for easier browsing. TODO: Proper categorization of 'health/ability/resist/etc'
 	desc = "Provides sharp melee attacks that do slightly more damage, along with fangs that makes the person bit unable to feel their body or pain."
@@ -70,6 +71,106 @@
 	desc = "Provides fangs that makes the person bit unable to feel their body or pain."
 	cost = 1
 	var_changes = list("unarmed_types" = list(/datum/unarmed_attack/stomp, /datum/unarmed_attack/kick, /datum/unarmed_attack/punch, /datum/unarmed_attack/bite/sharp/numbing))
+*/
+
+//RS ADD START
+
+/datum/trait/positive/shrinkinject
+	name = "Venom: Microcillin"
+	desc = "Provides the ability to inject a shrinking chemical into others, through a bite, or sting, or however else."
+	cost = 1
+	excludes = list(
+		/datum/trait/positive/growinject,
+		/datum/trait/positive/sizeinject,
+		/datum/trait/positive/numbinject,
+		/datum/trait/positive/omniinject
+		)
+	has_preferences = list("trait_injection_verb" = list(TRAIT_PREF_TYPE_STRING, "Verb", TRAIT_VAREDIT_TARGET_MOB, "bites"))
+	custom_only = FALSE
+
+/datum/trait/positive/shrinkinject/apply(var/datum/species/S,var/mob/living/carbon/human/H)
+	..()
+	H.verbs |= /mob/living/proc/injection
+	H.trait_injection_reagents += "microcillin"
+
+/datum/trait/positive/growinject
+	name = "Venom: Macrocillin"
+	desc = "Provides the ability to inject a growing chemical into others, through a bite, or sting, or however else."
+	cost = 1
+	excludes = list(
+		/datum/trait/positive/shrinkinject,
+		/datum/trait/positive/sizeinject,
+		/datum/trait/positive/numbinject,
+		/datum/trait/positive/omniinject
+		)
+	has_preferences = list("trait_injection_verb" = list(TRAIT_PREF_TYPE_STRING, "Verb", TRAIT_VAREDIT_TARGET_MOB, "bites"))
+	custom_only = FALSE
+
+/datum/trait/positive/growinject/apply(var/datum/species/S,var/mob/living/carbon/human/H)
+	..()
+	H.verbs |= /mob/living/proc/injection
+	H.trait_injection_reagents += "macrocillin"
+
+/datum/trait/positive/sizeinject
+	name = "Venom: Size changing (all)"
+	desc = "Provides the ability to inject all manner of size changing chemicals into others, through a bite, or sting, or however else."
+	cost = 1
+	excludes = list(
+		/datum/trait/positive/shrinkinject,
+		/datum/trait/positive/growinject,
+		/datum/trait/positive/numbinject,
+		/datum/trait/positive/omniinject
+		)
+	has_preferences = list("trait_injection_verb" = list(TRAIT_PREF_TYPE_STRING, "Verb", TRAIT_VAREDIT_TARGET_MOB, "bites"))
+	custom_only = FALSE
+
+/datum/trait/positive/sizeinject/apply(var/datum/species/S,var/mob/living/carbon/human/H)
+	..()
+	H.verbs |= /mob/living/proc/injection
+	H.trait_injection_reagents += "microcillin"
+	H.trait_injection_reagents += "macrocillin"
+	H.trait_injection_reagents += "normalcillin"
+
+/datum/trait/positive/numbinject
+	name = "Venom: Numbing"
+	desc = "Provides the ability to inject chemicals that make others unable to feel their body or pain."
+	cost = 1
+	excludes = list(
+		/datum/trait/positive/shrinkinject,
+		/datum/trait/positive/growinject,
+		/datum/trait/positive/sizeinject,
+		/datum/trait/positive/omniinject
+		)
+	custom_only = FALSE
+	has_preferences = list("trait_injection_verb" = list(TRAIT_PREF_TYPE_STRING, "Verb", TRAIT_VAREDIT_TARGET_MOB, "bites"))
+
+/datum/trait/positive/numbinject/apply(var/datum/species/S,var/mob/living/carbon/human/H)
+	..()
+	H.verbs |= /mob/living/proc/injection
+	H.trait_injection_reagents += "numbenzyme"
+
+/datum/trait/positive/omniinject
+	name = "Venom: All"
+	desc = "Provides the ability to inject chemicals that make others unable to feel their body or pain, and also size changing chemicals."
+	cost = 1
+	excludes = list(
+		/datum/trait/positive/shrinkinject,
+		/datum/trait/positive/growinject,
+		/datum/trait/positive/sizeinject,
+		/datum/trait/positive/numbinject
+		)
+	custom_only = FALSE
+	has_preferences = list("trait_injection_verb" = list(TRAIT_PREF_TYPE_STRING, "Verb", TRAIT_VAREDIT_TARGET_MOB, "bites"))
+
+/datum/trait/positive/omniinject/apply(var/datum/species/S,var/mob/living/carbon/human/H)
+	..()
+	H.verbs |= /mob/living/proc/injection
+	H.trait_injection_reagents += "numbenzyme"
+	H.trait_injection_reagents += "microcillin"
+	H.trait_injection_reagents += "macrocillin"
+	H.trait_injection_reagents += "normalcillin"
+
+//RS ADD END
 
 /datum/trait/positive/minor_brute_resist
 	name = "Brute Resist, Minor"

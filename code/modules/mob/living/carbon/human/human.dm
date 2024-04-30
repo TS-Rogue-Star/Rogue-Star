@@ -1615,9 +1615,12 @@
 	if(isSynthetic())
 		return 0
 	//RS ADD START
-	if(!species.digest_pain && (isbelly(src.loc) || istype(src.loc, /turf/simulated/floor/water/digestive_enzymes)))
-		var/obj/belly/b = src.loc
-		if(b.digest_mode == DM_DIGEST || b.digest_mode == DM_SELECT)
+	if(!species.digest_pain)
+		if(isbelly(src.loc))
+			var/obj/belly/b = src.loc
+			if(b.digest_mode == DM_DIGEST || b.digest_mode == DM_SELECT)
+				return FALSE
+		else if(istype(src.loc, /turf/simulated/floor/water/digestive_enzymes))
 			return FALSE
 	//RS ADD END
 	for(var/datum/modifier/M in modifiers)
