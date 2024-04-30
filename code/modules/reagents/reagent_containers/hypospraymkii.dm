@@ -132,7 +132,7 @@
 			return FALSE
 		unload_hypo(vial, user)
 
-	if(istype(I, /obj/item/weapon/reagent_containers/glass/bottle/hypovial))
+	else if(istype(I, /obj/item/weapon/reagent_containers/glass/bottle/hypovial))
 		var/obj/item/weapon/reagent_containers/glass/bottle/hypovial/V = I
 		if(!is_type_in_list(V, allowed_containers))
 			to_chat(user, "<span class='notice'>[src] doesn't accept this type of vial.</span>")
@@ -146,7 +146,6 @@
 	else
 		to_chat(user, "<span class='notice'>This doesn't fit in [src].</span>")
 		return FALSE
-	return FALSE
 
 /obj/item/weapon/hypospray_mkii/emag_act(mob/user)
 	. = ..()
