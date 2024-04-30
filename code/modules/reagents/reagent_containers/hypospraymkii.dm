@@ -113,7 +113,7 @@
 	. += "[src] is set to [mode ? "Inject" : "Spray"] contents on application."
 
 /obj/item/weapon/hypospray_mkii/proc/unload_hypo(obj/item/I, mob/user)
-	if((istype(I, /obj/item/weapon/reagent_containers/glass/bottle/hypovial)))
+	if(istype(I, /obj/item/weapon/reagent_containers/glass/bottle/hypovial))
 		var/obj/item/weapon/reagent_containers/glass/bottle/hypovial/V = I
 		V.forceMove(user.loc)
 		user.put_in_hands(V)
@@ -126,13 +126,13 @@
 		return
 
 /obj/item/weapon/hypospray_mkii/attackby(obj/item/I, mob/living/user)
-	if((istype(I, /obj/item/weapon/reagent_containers/glass/bottle/hypovial) && vial != null))
+	if(istype(I, /obj/item/weapon/reagent_containers/glass/bottle/hypovial) && vial != null)
 		if(!quickload)
 			to_chat(user, "<span class='warning'>[src] can not hold more than one vial!</span>")
 			return FALSE
 		unload_hypo(vial, user)
 
-	if((istype(I, /obj/item/weapon/reagent_containers/glass/bottle/hypovial)))
+	if(istype(I, /obj/item/weapon/reagent_containers/glass/bottle/hypovial))
 		var/obj/item/weapon/reagent_containers/glass/bottle/hypovial/V = I
 		if(!is_type_in_list(V, allowed_containers))
 			to_chat(user, "<span class='notice'>[src] doesn't accept this type of vial.</span>")
