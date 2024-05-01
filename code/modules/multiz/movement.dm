@@ -539,6 +539,12 @@
 				visible_message("<span class='warning'>\The [src] falls from above and slams into \the [landing]!</span>", \
 					"<span class='danger'>You fall off and hit \the [landing]!</span>", \
 					"You hear something slam into \the [landing].")
+				if(ishuman(src))	//RS ADD START - Teehee
+					var/mob/living/carbon/human/H = src
+					if(H.weight >= MAX_MOB_WEIGHT)
+						var/turf/T = get_turf(landing)
+						explosion(T, 0, 0, 1, 2)	//RS ADD END
+
 			playsound(src, "punch", 25, 1, -1)
 
 		// Because wounds heal rather quickly, 10 (the default for this proc) should be enough to discourage jumping off but not be enough to ruin you, at least for the first time.
