@@ -809,12 +809,12 @@
 		return
 
 	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))// trying to unlock the interface with an ID card
-		togglelock()
+		togglelock(user)
 	return ..()
 
 /obj/machinery/alarm/verb/togglelock(mob/user as mob)
 	if(stat & (NOPOWER|BROKEN))
-		to_chat(user, "It does nothing.")
+		to_chat(user, "<span class='notice'>It does nothing.</span>")
 		return
 	else
 		if(allowed(usr) && !wires.is_cut(WIRE_IDSCAN))
@@ -826,7 +826,7 @@
 
 /obj/machinery/alarm/AltClick()
 	..()
-	togglelock()
+	togglelock(usr)
 
 /obj/machinery/alarm/power_change()
 	..()
