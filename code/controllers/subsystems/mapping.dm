@@ -31,6 +31,9 @@ SUBSYSTEM_DEF(mapping)
 	// Lateload Code related to Expedition areas.
 	if(using_map) // VOREStation Edit: Re-enable this.
 		loadLateMaps()
+		if(config.do_funny_names && using_map.sub.len)	//RS ADD
+			using_map.funny_name()						//RS ADD
+
 	..()
 
 /datum/controller/subsystem/mapping/proc/load_map_templates()
