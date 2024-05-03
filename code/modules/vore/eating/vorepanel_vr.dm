@@ -835,6 +835,10 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			if(host.stat)
 				to_chat(user,"<span class='warning'>You can't do that in your state!</span>")
 				return TRUE
+			if(isliving(target))
+				var/mob/living/p = target
+				if(!p.ssd_vore_check(host))
+					return
 
 			var/mob/living/belly_owner = host
 
