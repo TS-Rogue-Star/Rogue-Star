@@ -48,6 +48,8 @@
 	step_mechanics_pref = client.prefs_vr.step_mechanics_pref
 	pickup_pref = client.prefs_vr.pickup_pref
 
+	ssd_vore = client.prefs_vr.ssd_vore	//RS ADD
+
 /mob/living/simple_mob/proc/set_name()
 	set name = "Set Name"
 	set desc = "Sets your mobs name. You only get to do this once."
@@ -86,3 +88,12 @@
 	ic_revivable = FALSE
 /mob/living/simple_mob/animal/giant_spider/carrier //or the ones who fart babies when they die
 	ic_revivable = FALSE
+
+/mob/living/verb/toggle_ssd_vore()
+	set name = "Toggle SSD Vore"
+	set desc = "Toggles whether or not you can be eaten while SSD."
+	set category = "Preferences"
+
+	client.prefs_vr.ssd_vore = !client.prefs_vr.ssd_vore
+	ssd_vore = client.prefs_vr.ssd_vore
+	to_chat(src, "<span class='notice'>SSD Vore is now [ssd_vore ? "<font color='green'>enabled</font>" : "<font color='red'>disabled</font>"].</span>")
