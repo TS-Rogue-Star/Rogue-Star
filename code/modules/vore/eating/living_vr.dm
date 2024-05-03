@@ -524,16 +524,28 @@
 /mob/living/proc/eat_held_mob(mob/living/user, mob/living/prey, mob/living/pred)
 	var/belly
 	if(user != pred)
+		if((pred.resting || pred.sleeping) && !pred.client)	//RP ADD START
+			to_chat(user, "<span class='warning'>They aren't aren't in a state eat anyone.</span>")
+			return FALSE
+			//RP ADD END
 		belly = tgui_input_list(usr, "Choose Belly", "Belly Choice", pred.vore_organs)
 	else
 		belly = pred.vore_selected
 	return perform_the_nom(user, prey, pred, belly)
 
 /mob/living/proc/feed_self_to_grabbed(mob/living/user, mob/living/pred)
+	if((pred.resting || pred.sleeping) && !pred.client)	//RP ADD START
+		to_chat(user, "<span class='warning'>They aren't aren't in a state eat anyone.</span>")
+		return FALSE
+		//RP ADD END
 	var/belly = tgui_input_list(usr, "Choose Belly", "Belly Choice", pred.vore_organs)
 	return perform_the_nom(user, user, pred, belly)
 
 /mob/living/proc/feed_grabbed_to_other(mob/living/user, mob/living/prey, mob/living/pred)
+	if((pred.resting || pred.sleeping) && !pred.client)	//RP ADD START
+		to_chat(user, "<span class='warning'>They aren't aren't in a state eat anyone.</span>")
+		return FALSE
+		//RP ADD END
 	var/belly = tgui_input_list(usr, "Choose Belly", "Belly Choice", pred.vore_organs)
 	return perform_the_nom(user, prey, pred, belly)
 
@@ -566,7 +578,9 @@
 	if(prey.absorbed || pred.absorbed)
 		to_chat(user, "<span class='warning'>They aren't aren't in a state to be devoured.</span>")
 		return FALSE
-
+	if((pred.resting || pred.sleeping) && !pred.client)	//RP ADD START
+		to_chat(user, "<span class='warning'>They aren't aren't in a state eat anyone.</span>")
+		return FALSE	//RP ADD END
 	//Determining vore attempt privacy
 	var/message_range = world.view
 	if(!pred.is_slipping && !prey.is_slipping) //We only care about privacy preference if it's NOT a spontaneous vore.
