@@ -3860,9 +3860,6 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/triage)
 "nu" = (
-/obj/structure/cable/green{
-	dir = 1
-	},
 /obj/machinery/door/blast/regular{
 	closed_layer = 10;
 	density = 0;
@@ -3875,6 +3872,9 @@
 	open_layer = 1
 	},
 /obj/structure/grille,
+/obj/structure/cable/green{
+	icon_state = "0-2"
+	},
 /obj/structure/window/reinforced/full,
 /obj/structure/window/reinforced{
 	dir = 1
@@ -4147,7 +4147,7 @@
 	open_layer = 1
 	},
 /obj/structure/cable/green{
-	dir = 1
+	icon_state = "0-2"
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
@@ -4610,15 +4610,13 @@
 	open_layer = 1
 	},
 /obj/structure/cable/green{
-	dir = 4;
+	icon_state = "2-8"
+	},
+/obj/structure/cable/green{
 	icon_state = "1-8"
 	},
 /obj/structure/cable/green{
-	dir = 4
-	},
-/obj/structure/cable/green{
-	dir = 4;
-	icon_state = "1-4"
+	icon_state = "0-8"
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
@@ -5736,9 +5734,6 @@
 	opacity = 0;
 	open_layer = 1
 	},
-/obj/structure/cable/green{
-	dir = 1
-	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
 /obj/structure/window/reinforced{
@@ -5746,6 +5741,9 @@
 	},
 /obj/structure/window/reinforced{
 	dir = 1
+	},
+/obj/structure/cable/green{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
 /area/groundbase/command/bridge)
@@ -9171,14 +9169,13 @@
 	open_layer = 1
 	},
 /obj/structure/cable/green{
-	dir = 8;
 	icon_state = "1-4"
 	},
 /obj/structure/cable/green{
-	dir = 8
+	icon_state = "2-4"
 	},
 /obj/structure/cable/green{
-	icon_state = "1-4"
+	icon_state = "0-4"
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
@@ -10227,6 +10224,28 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/dorms)
+"IW" = (
+/obj/machinery/door/blast/regular{
+	closed_layer = 10;
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "bridge blast";
+	layer = 1;
+	name = "Bridge Blast Doors";
+	opacity = 0;
+	open_layer = 1
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/cable/green{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/groundbase/command/bridge)
 "IX" = (
 /obj/machinery/button/remote/airlock{
 	id = "dorm7";
@@ -13192,9 +13211,6 @@
 	layer = 3.1;
 	name = "HoP's Shutters"
 	},
-/obj/structure/cable/green{
-	dir = 1
-	},
 /turf/simulated/floor/plating,
 /area/groundbase/command/hop)
 "Sq" = (
@@ -14066,9 +14082,6 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/triage)
 "UZ" = (
-/obj/effect/landmark{
-	name = "lightsout"
-	},
 /obj/effect/floor_decal/emblem/nt2,
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
@@ -28151,7 +28164,7 @@ Ng
 Ng
 Vf
 Ng
-nu
+IW
 Hf
 xU
 dO
@@ -28293,7 +28306,7 @@ Ng
 Ng
 Vf
 Ng
-nu
+IW
 nj
 LB
 At
@@ -28435,7 +28448,7 @@ Ng
 Tb
 Vf
 Ng
-nu
+IW
 yu
 Tu
 UZ
@@ -28577,7 +28590,7 @@ fm
 fm
 eZ
 Ng
-nu
+IW
 Vg
 LB
 zt
@@ -28719,7 +28732,7 @@ Ng
 Tb
 Vf
 Ng
-nu
+IW
 Ww
 xU
 Nr
@@ -28861,7 +28874,7 @@ Ng
 Ng
 Vf
 Ng
-nu
+IW
 Np
 sM
 fs
