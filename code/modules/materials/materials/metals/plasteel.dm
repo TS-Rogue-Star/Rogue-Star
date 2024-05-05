@@ -19,6 +19,11 @@
 	recipes += list(
 		new /datum/stack_recipe("AI core", /obj/structure/AIcore, 4, time = 50, one_per_turf = 1, recycle_material = "[name]"),
 		new /datum/stack_recipe("Metal crate", /obj/structure/closet/crate, 10, time = 50, one_per_turf = 1, recycle_material = "[name]"),
+		new /datum/stack_recipe_list("Gun Lockers",list(
+			new /datum/stack_recipe("Gun Locker, Shotgun", /obj/structure/closet/secure_closet/guncabinet/fancy/shotgun, 10, time = 50, one_per_turf = 1, on_floor = 1),
+			new /datum/stack_recipe("Gun Locker, Rifle", /obj/structure/closet/secure_closet/guncabinet/fancy/rifle, 10, time = 50, one_per_turf = 1, on_floor = 1),
+			new /datum/stack_recipe("Gun Locker, Sidearms", /obj/structure/closet/secure_closet/guncabinet/fancy/pistol, 10, time = 50, one_per_turf = 1, on_floor = 1)
+		)),
 		new /datum/stack_recipe("knife grip", /obj/item/weapon/material/butterflyhandle, 4, time = 20, one_per_turf = 0, on_floor = 1, supplied_material = "[name]"),
 		new /datum/stack_recipe("dark floor tile", /obj/item/stack/tile/floor/dark, 1, 4, 20, recycle_material = "[name]"),
 		new /datum/stack_recipe("roller bed", /obj/item/roller, 5, time = 30, on_floor = 1, recycle_material = "[name]"),

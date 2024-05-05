@@ -198,6 +198,19 @@
 	if(istype(I, /obj/item/weapon/gun) && opened)
 		tgui_interact(user)
 
+	if(I.has_tool_quality(TOOL_WRENCH))
+		playsound(src, W.usesound, 100, 1)
+		if(anchored)
+			user.visible_message("[user] begins unsecuring [src] from the floor.", "You start unsecuring [src] from the floor.", "<span class='notice'>You hear a wrench in use.</span>")
+		else
+			user.visible_message("[user] begins securing [src] to the floor.", "You start securing [src] to the floor.", "<span class='notice'>You hear a wrench in use.</span>")
+
+		if(do_after(user, 20 SECONDS * W.toolspeed))
+			if(!src) return
+			to_chat(user, "<span class='notice'>You [anchored? "un" : ""]secured [src]!</span>")
+			anchored = !anchored
+		return
+
 	if(I.has_tool_quality(TOOL_WELDER))
 		var/obj/item/weapon/weldingtool/WT = I
 		if(!opened && locked) //let's cut it open!
