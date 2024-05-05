@@ -7446,7 +7446,6 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/Chemistry)
 "yN" = (
-/obj/structure/table/rack/shelf/steel,
 /obj/item/weapon/gun/energy/gun{
 	pixel_y = 7
 	},
@@ -7457,6 +7456,8 @@
 	dir = 8;
 	name = "supply isolation valve"
 	},
+/obj/structure/closet/secure_closet/guncabinet/fancy/pistol,
+/obj/item/weapon/gun/energy/ionrifle/pistol,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/armory)
 "yS" = (
@@ -9991,7 +9992,6 @@
 	},
 /area/groundbase/dorms/room2)
 "Ik" = (
-/obj/structure/table/rack/shelf/steel,
 /obj/item/weapon/gun/projectile/shotgun/pump{
 	ammo_type = /obj/item/ammo_casing/a12g/pellet;
 	pixel_x = 1;
@@ -10002,6 +10002,7 @@
 	pixel_x = 2;
 	pixel_y = -6
 	},
+/obj/structure/closet/secure_closet/guncabinet/fancy/shotgun,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/armory)
 "Im" = (
@@ -11822,14 +11823,6 @@
 /area/ai_monitored/storage/eva)
 "Op" = (
 /obj/structure/table/rack/shelf/steel,
-/obj/item/weapon/gun/energy/laser{
-	pixel_x = -1;
-	pixel_y = 2
-	},
-/obj/item/weapon/gun/energy/laser{
-	pixel_x = -1;
-	pixel_y = -11
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/purple,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/armory)
@@ -12368,7 +12361,10 @@
 /turf/simulated/floor/wood,
 /area/groundbase/dorms/room3)
 "PK" = (
-/obj/structure/table/steel_reinforced,
+/obj/structure/closet/secure_closet/guncabinet/fancy/rifle,
+/obj/item/weapon/gun/energy/laser,
+/obj/item/weapon/gun/energy/laser,
+/obj/item/weapon/gun/energy/ionrifle,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/armory)
 "PL" = (
@@ -12395,12 +12391,6 @@
 /area/groundbase/security/hall2)
 "PO" = (
 /obj/structure/table/rack/shelf/steel,
-/obj/item/weapon/gun/energy/ionrifle{
-	pixel_y = -4
-	},
-/obj/item/weapon/gun/energy/ionrifle/pistol{
-	pixel_y = 4
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/purple{
 	dir = 8
 	},
