@@ -341,7 +341,7 @@
 
 		if("rackslot1")
 			if(!opened)
-				to_chat(usr, "<span class='notice'[src] doors are closed.</span>")
+				to_chat(usr, "<span class='notice'>[src] doors are closed.</span>")
 				return
 			if(rackslot1) //pull out the clicked slot, if there is one
 				usr.put_in_hands(rackslot1)
@@ -359,7 +359,7 @@
 
 		if("rackslot2")
 			if(!opened)
-				to_chat(usr, "<span class='notice'[src] doors are closed.</span>")
+				to_chat(usr, "<span class='notice'>[src] doors are closed.</span>")
 				return
 			if(rackslot2)
 				usr.put_in_hands(rackslot2)
@@ -376,7 +376,7 @@
 
 		if("rackslot3")
 			if(!opened)
-				to_chat(usr, "<span class='notice'[src] doors are closed.</span>")
+				to_chat(usr, "<span class='notice'>[src] doors are closed.</span>")
 				return
 			if(rackslot3)
 				usr.put_in_hands(rackslot3)
@@ -393,7 +393,7 @@
 
 		if("rackslot4")
 			if(!opened)
-				to_chat(usr, "<span class='notice'[src] doors are closed.</span>")
+				to_chat(usr, "<span class='notice'>[src] doors are closed.</span>")
 				return
 			if(rackslot4)
 				usr.put_in_hands(rackslot4)
