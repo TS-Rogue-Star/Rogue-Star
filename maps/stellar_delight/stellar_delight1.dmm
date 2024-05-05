@@ -19026,8 +19026,8 @@
 	},
 /obj/structure/disposalpipe/sortjunction/flipped{
 	dir = 4;
-	name = "Bar";
-	sortType = "Bar"
+	name = "Chapel";
+	sortType = "Chapel"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9

@@ -270,6 +270,7 @@
 
 	if(throwing)
 		return
+	var/depth = 0	//RS ADD
 	//VOREStation Edit Start. Flight on mobs.
 	if(isliving(src))
 		var/mob/living/L = src //VOREStation Edit Start. Flight on mobs.
@@ -293,6 +294,10 @@
 				return
 		if(LAZYLEN(L.grabbed_by)) //If you're grabbed (presumably by someone flying) let's not have you fall. This also allows people to grab onto you while you jump over a railing to prevent you from falling!
 			return
+		if(istype(T, /turf/simulated/open))		//RS ADD
+			var/turf/simulated/open/ot = T		//RS ADD
+			depth = ot.get_depth()				//RS ADD
+
 	//VOREStation Edit End
 
 	if(can_fall() && can_fall_to(below))
@@ -303,7 +308,7 @@
 		var/is_client_moving = (ismob(M) && M.client && M.client.moving)
 		spawn(0)
 			if(is_client_moving) M.client.moving = 1
-			handle_fall(below)
+			handle_fall(below, depth)	//RS EDIT
 			if(is_client_moving) M.client.moving = 0
 		// TODO - handle fall on damage!
 
@@ -398,7 +403,7 @@
 	return falling_atom.fall_impact(src)
 
 // Actually process the falling movement and impacts.
-/atom/movable/proc/handle_fall(var/turf/landing)
+/atom/movable/proc/handle_fall(var/turf/landing, var/depth)		//RS EDIT
 	var/turf/oldloc = loc
 
 	// Now lets move there!
@@ -409,7 +414,7 @@
 	var/atom/A = find_fall_target(oldloc, landing)
 	if(special_fall_handle(A) || !A || !A.check_impact(src))
 		return
-	fall_impact(A)
+	fall_impact(A, depth = depth)	//RS EDIT
 
 /atom/movable/proc/special_fall_handle(var/atom/A)
 	return FALSE
@@ -420,8 +425,8 @@
 	return FALSE
 
 /atom/movable/proc/find_fall_target(var/turf/oldloc, var/turf/landing)
-	if(isopenspace(oldloc))
-		oldloc.visible_message("<span class='notice'>\The [src] falls down through \the [oldloc]!</span>", "<span class='notice'>You hear something falling through the air.</span>")
+//	if(isopenspace(oldloc))	//RS REMOVE - Notifications are handled by other procs!
+//		oldloc.visible_message("<span class='notice'>\The [src] falls down through \the [oldloc]!</span>", "<span class='notice'>You hear something falling through the air.</span>")
 
 	// If the turf has density, we give it first dibs
 	if (landing.density && landing.CheckFall(src))
@@ -495,18 +500,20 @@
 // If silent is True, the proc won't play sound or give a message.
 // If planetary is True, it's harder to stop the fall damage
 
-/atom/movable/proc/fall_impact(var/atom/hit_atom, var/damage_min = 0, var/damage_max = 10, var/silent = FALSE, var/planetary = FALSE)
+/atom/movable/proc/fall_impact(var/atom/hit_atom, var/damage_min = 0, var/damage_max = 10, var/silent = FALSE, var/planetary = FALSE, var/depth)	//RS EDIT
 	if(!silent)
 		visible_message("\The [src] falls from above and slams into \the [hit_atom]!", "You hear something slam into \the [hit_atom].")
 	for(var/atom/movable/A in src.contents)
 		A.fall_impact(hit_atom, damage_min, damage_max, silent = TRUE)
 
 // Take damage from falling and hitting the ground
-/mob/living/fall_impact(var/atom/hit_atom, var/damage_min = 0, var/damage_max = 5, var/silent = FALSE, var/planetary = FALSE)
+/mob/living/fall_impact(var/atom/hit_atom, var/damage_min = 0, var/damage_max = 5, var/silent = FALSE, var/planetary = FALSE, var/depth)		//RS EDIT
 	var/turf/landing = get_turf(hit_atom)
 	var/safe_fall = FALSE
 	if(src.softfall || (istype(src, /mob/living/simple_mob) && src.mob_size <= MOB_SMALL))
 		safe_fall = TRUE
+	if(depth == 1 && !ishuman(src))		//RS EDIT - Humans get checked in their own special proc with their species. If the traits are right they can get hurt from this, so let's not apply this to them
+		safe_fall = TRUE				//RS EDIT
 	if(planetary && src.CanParachute())
 		if(!silent)
 			visible_message("<span class='warning'>\The [src] glides in from above and lands on \the [landing]!</span>", \
@@ -515,9 +522,10 @@
 		return
 	else if(!planetary && safe_fall) // Falling one floor and falling one atmosphere are very different things
 		if(!silent)
-			visible_message("<span class='warning'>\The [src] falls from above and lands on \the [landing]!</span>", \
+			visible_message("<span class='warning'>\The [src] drops from above and lands safely on \the [landing]!</span>", \
 				"<span class='danger'>You land on \the [landing]!</span>", \
 				"You hear something land \the [landing].")
+			playsound(src, "rustle", 25, 1)		//RS ADD - From species.dm
 		return
 	else
 		if(!silent)
@@ -531,6 +539,12 @@
 				visible_message("<span class='warning'>\The [src] falls from above and slams into \the [landing]!</span>", \
 					"<span class='danger'>You fall off and hit \the [landing]!</span>", \
 					"You hear something slam into \the [landing].")
+				if(ishuman(src))	//RS ADD START - Teehee
+					var/mob/living/carbon/human/H = src
+					if(H.weight >= MAX_MOB_WEIGHT)
+						var/turf/T = get_turf(landing)
+						explosion(T, 0, 0, 1, 2)	//RS ADD END
+
 			playsound(src, "punch", 25, 1, -1)
 
 		// Because wounds heal rather quickly, 10 (the default for this proc) should be enough to discourage jumping off but not be enough to ruin you, at least for the first time.
@@ -540,8 +554,8 @@
 		Weaken(4)
 		updatehealth()
 
-/mob/living/carbon/human/fall_impact(atom/hit_atom, damage_min, damage_max, silent, planetary)
-	if(!species?.handle_falling(src, hit_atom, damage_min, damage_max, silent, planetary))
+/mob/living/carbon/human/fall_impact(atom/hit_atom, damage_min, damage_max, silent, planetary, depth)	//RS EDIT
+	if(!species?.handle_falling(src, hit_atom, damage_min, damage_max, silent, planetary, depth))		//RS EDIT
 		..()
 
 //Using /atom/movable instead of /obj/item because I'm not sure what all humans can pick up or wear
@@ -597,7 +611,7 @@
 	// Then call parent to have us actually fall
 	return ..()
 
-/obj/mecha/fall_impact(var/atom/hit_atom, var/damage_min = 15, var/damage_max = 30, var/silent = FALSE, var/planetary = FALSE)
+/obj/mecha/fall_impact(var/atom/hit_atom, var/damage_min = 15, var/damage_max = 30, var/silent = FALSE, var/planetary = FALSE, var/depth)	//RS EDIT
 	// Anything on the same tile as the landing tile is gonna have a bad day.
 	for(var/mob/living/L in hit_atom.contents)
 		L.visible_message("<span class='danger'>\The [src] crushes \the [L] as it lands on them!</span>")

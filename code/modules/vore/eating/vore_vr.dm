@@ -34,6 +34,9 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 /client
 	var/datum/vore_preferences/prefs_vr
 
+/mob
+	var/bellies_loaded = TRUE
+
 /hook/client_new/proc/add_prefs_vr(client/C)
 	C.prefs_vr = new/datum/vore_preferences(C)
 	if(C.prefs_vr)
@@ -110,11 +113,14 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	var/client/client
 	var/client_ckey
 
+	var/ssd_vore = FALSE	//RS ADD
+
 /datum/vore_preferences/New(client/C)
 	if(istype(C))
 		client = C
 		client_ckey = C.ckey
-		load_vore()
+		var/success = load_vore()
+		log_debug("Loaded vore preferences for [C] with [success]")
 
 //
 //	Check if an object is capable of eating things, based on vore_organs
@@ -196,6 +202,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	weight_messages = json_from_file["weight_messages"]
 	eating_privacy_global = json_from_file["eating_privacy_global"]
 	vore_sprite_color = json_from_file["vore_sprite_color"] // RS edit
+	ssd_vore = json_from_file["ssd_vore"] // RS edit
 
 	//Quick sanitize
 	if(isnull(digestable))
@@ -283,6 +290,8 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 
 	if(isnull(vore_sprite_color)) //RS edit
 		vore_sprite_color = list("stomach" = "#000", "taur belly" = "#000") //RS edit
+	if(isnull(ssd_vore))	//RS ADD
+		ssd_vore = FALSE	//RS ADD
 
 	return TRUE
 
@@ -324,6 +333,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 			"weight_messages"			= weight_messages,
 			"eating_privacy_global"		= eating_privacy_global,
 			"vore_sprite_color"		= vore_sprite_color, //RS edit
+			"ssd_vore"				= ssd_vore	//RS ADD
 		)
 
 	//List to JSON

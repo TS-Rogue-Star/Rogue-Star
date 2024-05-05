@@ -38,21 +38,21 @@
 			message = nutrition_messages[1]
 		if(50 to 99)
 			message = nutrition_messages[2]
-		if(100 to 499)
+		if(100 to 1800)
 			message = nutrition_messages[3]
-		if(500 to 999) // Fat.
+		if(1801 to 2800) // Fat.
 			message = nutrition_messages[4]
-		if(1000 to 1399)
+		if(2801 to 3900)
 			message = nutrition_messages[5]
-		if(1400 to 1934) // One person fully digested.
+		if(3901 to 10000) // One person fully digested.
 			message = nutrition_messages[6]
-		if(1935 to 3004) // Two people.
+		if(10001 to 18000) // Two people.
 			message = nutrition_messages[7]
-		if(3005 to 4074) // Three people.
+		if(18001 to 27000) // Three people.
 			message = nutrition_messages[8]
-		if(4075 to 5124) // Four people.
+		if(27001 to 39000) // Four people.
 			message = nutrition_messages[9]
-		if(5125 to INFINITY) // More.
+		if(39001 to INFINITY) // More.
 			message = nutrition_messages[10]
 	if(message)
 		message = "<span class='notice'>[message]</span>"

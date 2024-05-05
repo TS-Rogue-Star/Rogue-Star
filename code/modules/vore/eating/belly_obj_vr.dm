@@ -271,10 +271,22 @@
 	STOP_PROCESSING(SSbellies, src)
 	owner?.vore_organs?.Remove(src)
 	owner = null
+	for(var/mob/observer/G in src)
+		G.forceMove(get_turf(src)) //RSEdit: Ports kicking ghosts out of deleted vorgans, CHOMPStation PR#7132
 	return ..()
 
 // Called whenever an atom enters this belly
 /obj/belly/Entered(atom/movable/thing, atom/OldLoc)
+
+	if(istype(thing, /mob/observer)) //RSEdit: Ports keeping a ghost in a vorebelly, CHOMPStation PR#3072
+		if(desc) //RSEdit: Ports letting ghosts see belly descriptions on transfer, CHOMPStation PR#4772
+			//Allow ghosts see where they are if they're still getting squished along inside.
+			var/formatted_desc
+			formatted_desc = replacetext(desc, "%belly", lowertext(name)) //replace with this belly's name
+			formatted_desc = replacetext(formatted_desc, "%pred", owner) //replace with this belly's owner
+			formatted_desc = replacetext(formatted_desc, "%prey", thing) //replace with whatever mob entered into this belly
+			to_chat(thing, "<span class='notice'><B>[formatted_desc]</B></span>")
+
 	if(OldLoc in contents)
 		return //Someone dropping something (or being stripdigested)
 
@@ -282,7 +294,7 @@
 	to_chat(owner,"<span class='notice'>[thing] slides into your [lowertext(name)].</span>")
 
 	//Sound w/ antispam flag setting
-	if(vore_sound && !recent_sound)
+	if(vore_sound && !recent_sound && !istype(thing, /mob/observer)) //RSEdit: Ports VOREStation PR15918 || does not play vorebelly insertion sound upon ghost entering
 		var/soundfile
 		if(!fancy_vore)
 			soundfile = classic_vore_sounds[vore_sound]
@@ -437,7 +449,7 @@
 // Release all contents of this belly into the owning mob's location.
 // If that location is another mob, contents are transferred into whichever of its bellies the owning mob is in.
 // Returns the number of mobs so released.
-/obj/belly/proc/release_all_contents(include_absorbed = FALSE, silent = FALSE)
+/obj/belly/proc/release_all_contents(include_absorbed = FALSE, silent = FALSE, include_bones = FALSE)	//RS EDIT
 	//Don't bother if we don't have contents
 	if(!contents.len)
 		return FALSE
@@ -451,6 +463,8 @@
 			var/mob/living/L = AM
 			if(L.absorbed && !include_absorbed)
 				continue
+		if(istype(AM, /obj/item/weapon/digestion_remains) && !include_bones)	// RS ADD
+			continue	//RS ADD
 		count += release_specific_contents(AM, silent = TRUE)
 
 	//Clean up our own business
@@ -551,7 +565,7 @@
 			privacy_volume = 25
 
 	//Print notifications/sound if necessary
-	if(!silent)
+	if(!silent && !isobserver(M)) //RSEdit: Ports VOREStation PR15918 | Don't display release message for ghosts
 		owner.visible_message("<font color='green'><b>[owner] [release_verb] [M] from their [lowertext(name)]!</b></font>",range = privacy_range)
 		var/soundfile
 		if(!fancy_vore)
@@ -834,7 +848,9 @@
 	//Incase they have the loop going, let's double check to stop it.
 	M.stop_sound_channel(CHANNEL_PREYLOOP)
 	// Delete the digested mob
-	M.ghostize() // Make sure they're out, so we can copy attack logs and such.
+	var/mob/observer/G = M.ghostize() //RSEdit start || Ports keeping a ghost in a vorebelly, CHOMPStation PR#3074 || Make sure they're out, so we can copy attack logs and such.
+	if(G)
+		G.forceMove(src) //RSEdit end.
 	qdel(M)
 
 // Handle a mob being absorbed
@@ -960,7 +976,7 @@
 	if(!digested)
 		items_preserved |= item
 	else
-		owner.adjust_nutrition((nutrition_percent / 100) * 5 * digested)
+		owner.adjust_nutrition((nutrition_percent / 100) * 15 * digested)
 		if(isrobot(owner))
 			var/mob/living/silicon/robot/R = owner
 			R.cell.charge += ((nutrition_percent / 100) * 50 * digested)
@@ -1205,7 +1221,7 @@
 	if(!(content in src) || !istype(target))
 		return
 	content.forceMove(target)
-	if(ismob(content))
+	if(ismob(content) && !isobserver(content)) //RSEdit: Ports VOREStation PR15918 | Fixes bug where camera is not set to follow the ghost
 		var/mob/ourmob = content
 		ourmob.reset_view(owner)
 	if(isitem(content))
