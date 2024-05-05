@@ -13160,6 +13160,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/smes/buildable{
+	RCon_tag = "Substation - AI/Telecomms";
 	charge = 5e+006;
 	input_attempt = 1;
 	input_level = 200000;
