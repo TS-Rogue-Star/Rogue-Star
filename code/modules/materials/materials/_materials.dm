@@ -366,7 +366,7 @@ var/list/name_to_material
 
 	if(integrity>=50)
 		recipes += list(
-		new /datum/stack_recipe_list("[display_name] constructions",list(
+		new /datum/stack_recipe_list("basic material constructions",list(
 			new /datum/stack_recipe_list("basic furniture",list(
 				new /datum/stack_recipe("simple door", /obj/structure/simple_door, 10, one_per_turf = 1, on_floor = 1, supplied_material = "[name]", pass_stack_color = TRUE),
 				new /datum/stack_recipe("barricade", /obj/structure/barricade, 5, time = 50, one_per_turf = 1, on_floor = 1, supplied_material = "[name]", pass_stack_color = TRUE),

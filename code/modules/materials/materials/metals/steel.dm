@@ -185,7 +185,7 @@
 			new /datum/stack_recipe("dance pole", /obj/structure/dancepole, 2, one_per_turf = 1, on_floor = 1, time = 20),
 		)),
 
-		new /datum/stack_recipe_list("construction", list(
+		new /datum/stack_recipe_list("Steel specific construction", list(
 			new /datum/stack_recipe("apc frame", /obj/item/frame/apc, 2, recycle_material = "[name]"),
 			new /datum/stack_recipe("metal rod", /obj/item/stack/rods, 1, 2, 60, recycle_material = "[name]"),
 			new /datum/stack_recipe("machine frame parts", /obj/item/frame, 5, time = 25, on_floor = 1, recycle_material = "[name]"),
