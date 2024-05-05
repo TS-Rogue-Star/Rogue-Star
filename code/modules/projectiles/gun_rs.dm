@@ -122,6 +122,10 @@
 	locker_class = GUN_SIDEARM
 	overlay_type = "energypistol"
 
+/obj/item/weapon/gun/energy/locked/frontier/holdout
+	locker_class = GUN_SIDEARM
+	overlay_type = "energypistol"
+
 /obj/item/weapon/gun/energy/lasertag
 	locker_class = GUN_SIDEARM
 	overlay_type = "omnitag"
@@ -151,6 +155,10 @@
 	overlay_type = "erifle"
 
 /obj/item/weapon/gun/energy/phasegun
+	locker_class = GUN_LONGARM
+	overlay_type = "ecarbine"
+
+/obj/item/weapon/gun/energy/locked/frontier
 	locker_class = GUN_LONGARM
 	overlay_type = "ecarbine"
 
