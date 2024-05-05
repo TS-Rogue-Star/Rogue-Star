@@ -6,7 +6,7 @@
 //Extra vars for Gun lockers
 
 /obj/item/weapon/gun/
-	var/locker_class = GUN_SIDEARM
+	var/locker_class = GUN_LONGARM
 	var/overlay_type = "genericplaceholder"
 
 /obj/item/weapon/gun/launcher
@@ -137,6 +137,13 @@
 
 /obj/item/weapon/gun/energy/lasertag/red/dom
 	overlay_type = "redtwo"
+
+/obj/item/weapon/gun/energy/mouseray
+	overlay_type = "mouseray"
+	locker_class = GUN_SIDEARM
+
+/obj/item/weapon/gun/energy/mouseray/medical
+	overlay_type = "medray"
 
 /* Long arms */
 /obj/item/weapon/gun/energy/gun/rifle
