@@ -1,21 +1,63 @@
 /datum/map
 	var/list/adj = list(
+		"Aggro",
 		"Breathless",
+		"Calm",
 		"Dauntless",
 		"Daunted",
-		"Enthusiastic"
+		"Dubious",
+		"Enraged",
+		"Enthusiastic",
+		"Gronchy",
+		"Gwumpy",
+		"Immense",
+		"Incredible",
+		"Leggy",
+		"Machismo",
+		"Mischievous",
+		"Pensive",
+		"Powerful",
+		"Rascally",
+		"Rogue",
+		"Scrungly",
+		"Silly",
+		"Soft",
+		"Space",
+		"Tranquil",
+		"Weary",
+		"Wise"
 	)
 	var/list/sub = list(
-		"Rascals",
-		"Peebs",
+		"Doofs",
+		"Dreamers",
 		"Cheese Puffs",
-		"Dreamers"
+		"Goobers",
+		"Gremlins",
+		"Kin",
+		"Mischief",
+		"Peebs",
+		"Rascals",
+		"Rogues",
+		"Station",
+		"Teppi"
 	)
+
 	var/list/suf = list(
 		"of the Radicalscape",
 		"in the Gloom",
 		"upon the Wind",
-		"among the Stars"
+		"among the Stars",
+		"in the Lasagna",
+		"around the Lasagna",
+		"on the Lasagna",
+		"of the Dark",
+		"upon the Space Dog",
+		"13",
+		"of Horrors",
+		"in Toyland",
+		"of Terror",
+		"from Outer Space",
+		"across the 13th Dimension"
 	)
 
 
