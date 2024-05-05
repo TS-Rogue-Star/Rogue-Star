@@ -8,7 +8,7 @@
 #define SYNTH_FOOD_COST 5
 
 /obj/machinery/synthesizer
-	name = "food synthesizer"
+	name = "Food Synthesizer"
 	desc = "Sabresnacks brand device able to produce an incredible array of conventional foods. Although only the most ascetic of users claim it produces truly good tasting products."
 	icon = 'icons/obj/machines/foodsynthesizer.dmi'
 	icon_state = "synthesizer"
@@ -77,10 +77,10 @@
 		offset_synth()
 
 /obj/machinery/synthesizer/mini
-	name = "small food synthesizer"
-	icon = 'icons/obj/machines/foodsynthesizer.dmi'
+	name = "Mini Food Synthesizer"
 	icon_state = "portsynth"
 	cart_type = ITEMSIZE_NORMAL
+	circuit = /obj/item/weapon/circuitboard/synthesizer/mini
 
 /obj/machinery/synthesizer/mini/Initialize()
 	. = ..()
@@ -465,6 +465,10 @@
 			add_overlay("[initial(icon_state)]_cart")
 		return //don't stack additional panel screen states, please.
 
+	if((stat && BROKEN))
+		icon_state = "[initial(icon_state)]x"
+		return
+
 	if(stat & NOPOWER)
 		return
 
@@ -716,7 +720,7 @@
 /obj/item/weapon/circuitboard/synthesizer
 	name = T_BOARD("Food Synthesizer")
 	build_path = /obj/machinery/synthesizer
-	board_type = new /datum/frame/frame_types/machine
+	board_type = new /datum/frame/frame_types/foodsynthesizer
 	matter = list(MAT_STEEL = 50, MAT_GLASS = 50)
 	req_components = list(
 		/obj/item/weapon/stock_parts/manipulator = 1,
@@ -725,7 +729,7 @@
 /obj/item/weapon/circuitboard/synthesizer/mini
 	name = T_BOARD("Portable Food Synthesizer")
 	build_path = /obj/machinery/synthesizer/mini
-	board_type = new /datum/frame/frame_types/machine
+	board_type = new /datum/frame/frame_types/foodsynthesizer/mini
 	matter = list(MAT_STEEL = 50, MAT_GLASS = 50)
 	req_components = list(
 		/obj/item/weapon/stock_parts/manipulator = 1,
