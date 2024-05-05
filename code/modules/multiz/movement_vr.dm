@@ -1,5 +1,5 @@
 
-/mob/living/handle_fall(var/turf/landing)
+/mob/living/handle_fall(var/turf/landing, var/depth)		//RS EDIT
 	var/mob/drop_mob = locate(/mob/living, landing)
 
 	if(locate(/obj/structure/stairs) in landing)

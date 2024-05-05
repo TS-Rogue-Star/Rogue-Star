@@ -221,6 +221,8 @@
 	var/rarity_value = 1									// Relative rarity/collector value for this species.
 	var/economic_modifier = 2								// How much money this species makes
 
+	var/clumsy = FALSE										//RS ADD - Take damage from 1 z falls
+
 	// Determines the organs that the species spawns with and
 	var/list/has_organ = list(								// which required-organ checks are conducted.
 		O_HEART =		/obj/item/organ/internal/heart,
@@ -551,9 +553,9 @@
 	if(amount > 0)
 		H.adjustToxLoss(amount)
 
-/datum/species/proc/handle_falling(mob/living/carbon/human/H, atom/hit_atom, damage_min, damage_max, silent, planetary)
-	if(soft_landing)
-		if(planetary || !istype(H))
+/datum/species/proc/handle_falling(mob/living/carbon/human/H, atom/hit_atom, damage_min, damage_max, silent, planetary, depth)	//RS EDIT
+	if(soft_landing || depth == 1)		//RS EDIT
+		if(planetary || !istype(H) || clumsy)	//RS EDIT
 			return FALSE
 
 		var/turf/landing = get_turf(hit_atom)
@@ -561,8 +563,8 @@
 			return FALSE
 
 		if(!silent)
-			to_chat(H, SPAN_NOTICE("You manage to lower impact of the fall and land safely."))
-			landing.visible_message("<b>\The [H]</b> lowers down from above, landing safely.")
+			to_chat(H, SPAN_NOTICE("You lower down safely."))	//RS EDIT
+			landing.visible_message("<b>\The [H]</b> lowers down from above.")	//RS EDIT
 			playsound(H, "rustle", 25, 1)
 		return TRUE
 
@@ -570,4 +572,3 @@
 
 /datum/species/proc/post_spawn_special(mob/living/carbon/human/H)
 	return
-
