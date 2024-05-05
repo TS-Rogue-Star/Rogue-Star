@@ -211,19 +211,19 @@
 		)
 
 	lateload_redgate = list(
-		list("Redgate - Teppi Ranch"),
-		list("Redgate - Innland"),
+//		list("Redgate - Teppi Ranch"),
+//		list("Redgate - Innland"),
 //		list("Redgate - Abandoned Island"),	//This will come back later
-		list("Redgate - Dark Adventure"),
-		list("Redgate - Eggnog Town Underground","Redgate - Eggnog Town"),
-		list("Redgate - Star Dog"),
-		list("Redgate - Hotsprings"),
-		list("Redgate - Rain City"),
-		list("Redgate - Islands Underwater","Redgate - Islands"),
-		list("Redgate - Moving Train", "Redgate - Moving Train Upper Level"),
-		list("Redgate - Fantasy Dungeon", "Redgate - Fantasy Town"),
-		list("Redgate - Snowglobe"),
-		list("Redgate - Pet Island")
+//		list("Redgate - Dark Adventure"),
+//		list("Redgate - Eggnog Town Underground","Redgate - Eggnog Town"),
+//		list("Redgate - Star Dog"),
+//		list("Redgate - Hotsprings"),
+//		list("Redgate - Rain City"),
+//		list("Redgate - Islands Underwater","Redgate - Islands"),
+//		list("Redgate - Moving Train", "Redgate - Moving Train Upper Level"),
+		list("Redgate - Fantasy Dungeon", "Redgate - Fantasy Town")
+//		list("Redgate - Snowglobe"),
+//		list("Redgate - Pet Island")
 		)
 
 	lateload_gb_north = list(
