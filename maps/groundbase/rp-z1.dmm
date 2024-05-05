@@ -4419,6 +4419,12 @@
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/storage)
+"eEz" = (
+/obj/machinery/synthesizer{
+	dir = 1
+	},
+/turf/simulated/floor/outdoors/grass/seasonal,
+/area/groundbase/civilian/bar)
 "eEF" = (
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/yellow,
 /obj/machinery/meter,
@@ -29789,7 +29795,7 @@ hGk
 oeu
 oeu
 oeu
-oeu
+eEz
 pDQ
 hks
 rDZ

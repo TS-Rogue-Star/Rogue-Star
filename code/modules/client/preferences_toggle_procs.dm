@@ -519,7 +519,6 @@
 
 	feedback_add_details("admin_verb","TVoreHealthBars")
 
-
 //RS ADDITION END
 
 // Not attached to a pref datum because those are strict binary toggles
