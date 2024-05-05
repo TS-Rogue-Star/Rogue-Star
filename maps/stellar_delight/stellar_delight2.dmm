@@ -21422,6 +21422,19 @@
 	},
 /turf/simulated/floor/tiled/eris/dark/techfloor_grid,
 /area/storage/tech)
+"UW" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/structure/cable{
+	icon_state = "16-0"
+	},
+/obj/effect/floor_decal/shuttle/loading,
+/turf/simulated/floor/airless,
+/area/stellardelight/deck2/exterior)
 "UX" = (
 /obj/structure/table/gamblingtable,
 /turf/simulated/floor/carpet,
@@ -29757,7 +29770,7 @@ Cq
 Cq
 Cq
 Cq
-WD
+UW
 Cq
 Cq
 Cq
@@ -37425,7 +37438,7 @@ Cp
 Cp
 Cp
 Cp
-WD
+UW
 Cp
 Cp
 Cp
