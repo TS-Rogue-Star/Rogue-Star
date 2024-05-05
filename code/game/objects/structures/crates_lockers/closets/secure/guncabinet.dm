@@ -288,8 +288,9 @@
 	if(locked)
 		toggle_lock(user)
 	else
-		tgui_interact(user)
 		toggle(user)
+		if(opened)
+			tgui_interact(user)
 
 
 /obj/structure/closet/secure_closet/guncabinet/fancy/tgui_interact(mob/user, datum/tgui/ui)
