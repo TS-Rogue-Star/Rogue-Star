@@ -727,6 +727,7 @@
 		slot_l_hand_str = 'icons/mob/items/lefthand_suits.dmi',
 		slot_r_hand_str = 'icons/mob/items/righthand_suits.dmi',
 		)
+	default_worn_icon = 'icons/inventory/suit/mob.dmi'
 	name = "suit"
 	var/fire_resist = T0C+100
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
@@ -810,6 +811,7 @@
 		slot_r_hand_str = 'icons/mob/items/righthand_uniforms.dmi',
 		)
 	name = "under"
+	default_worn_icon = 'icons/inventory/uniform/mob.dmi'
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	permeability_coefficient = 0.90
 	slot_flags = SLOT_ICLOTHING
