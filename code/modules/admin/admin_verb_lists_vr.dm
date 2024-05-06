@@ -175,7 +175,8 @@ var/list/admin_verbs_fun = list(
 	/client/proc/narrate_mob_args, //VOREStation Add
 	/client/proc/getPlayerStatus, //VORESTation Add
 	/client/proc/manage_event_triggers,
-	/client/proc/toggle_event_verb	//RS ADD
+	/client/proc/toggle_event_verb,		//RS ADD
+	/client/proc/change_station_name	//RS ADD
 
 	)
 

@@ -306,6 +306,7 @@ var/list/gamemode_cache = list()
 	var/static/suggested_byond_build
 
 	var/static/job_camp_time_limit = 10 MINUTES		//RS ADD
+	var/static/do_funny_names = TRUE				//RS ADD
 
 /datum/configuration/New()
 	var/list/L = subtypesof(/datum/game_mode)
@@ -1056,6 +1057,8 @@ var/list/gamemode_cache = list()
 				//RS ADD START
 				if("job_camp_time_limit")
 					config.job_camp_time_limit = value MINUTES
+				if("dont_do_funny_names")
+					config.do_funny_names = FALSE
 				//RS ADD END
 				else
 					log_misc("Unknown setting in configuration: '[name]'")

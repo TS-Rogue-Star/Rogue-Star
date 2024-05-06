@@ -266,6 +266,10 @@
 					X << 'sound/effects/tones/newplayerping.ogg'
 				window_flash(X)
 		//VOREStation Edit end.
+	//RS ADD START
+	if(config.do_funny_names)
+		update_special_station_name()
+	//RS ADD END
 
 	//////////////
 	//DISCONNECT//
@@ -617,3 +621,8 @@
 	else
 		winset(usr, "input", "is-visible=false")
 */
+
+//RS ADD START
+/client/proc/update_special_station_name()
+	winset(src, "mainwindow", "title=\"Rogue Star: [GLOB.special_station_name]\"")
+//RS ADD END

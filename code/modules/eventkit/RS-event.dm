@@ -1,3 +1,5 @@
+GLOBAL_VAR(special_station_name)
+
 /client/proc/toggle_event_verb()
 	set category = "Fun"
 	set name = "Toggle Event Verb"
@@ -105,3 +107,21 @@
 
 	if(Adjacent(choice))	//We leapt at them but we didn't manage to hit them, let's see if we're next to them
 		choice.Weaken(2)	//get knocked down, idiot
+
+/client/proc/change_station_name()
+	set category = "Fun"
+	set name = "Change Station Name"
+	set desc = "Change what it says in the top left of everyone's client"
+
+	if(!check_rights(R_FUN))
+		return
+
+	var/newname = input(usr,"What would you like to change the name to?", "Name change",GLOB.special_station_name)
+
+	if(newname)
+		if(tgui_alert(usr, "Are you sure you want to change the name to Rogue Star: [newname]?", "Change Station name",list("Yes","No")) == "Yes")
+			log_and_message_admins("[key_name_admin(usr)] changed the station name from \"[GLOB.special_station_name]\" to \"[newname]\".")
+			GLOB.special_station_name = newname
+			for(var/mob/M in player_list)
+				if(M.client)
+					M.client.update_special_station_name()
