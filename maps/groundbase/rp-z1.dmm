@@ -9107,6 +9107,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/tiled,
 /area/groundbase/science/rd)
 "iBX" = (
@@ -10950,6 +10953,9 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/tiled,
 /area/groundbase/science/rd)
 "kom" = (
@@ -12966,6 +12972,12 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/science/rd)
@@ -15117,6 +15129,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/tiled,
 /area/groundbase/science/rd)
 "oqW" = (
@@ -16553,6 +16568,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/science/rd)
