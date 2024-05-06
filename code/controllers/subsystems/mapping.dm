@@ -84,15 +84,40 @@ SUBSYSTEM_DEF(mapping)
 	var/list/redgate_load = using_map.lateload_redgate
 	var/loaded_redgate									//RS ADD START - var for loading a map selected in the previous round
 	var/loaded_gateway									//var for loading a map selected in the previous round
-	if(fexists("data/persistent/next_round_maps.json"))	//File gets written in special_persist.dm
+	if(fexists(ADMIN_CUSTOM_MAP_LOAD_PATH))
+		var/file_contents
+		var/list/load_list
 		log_debug("ADMIN LOAD CUSTOM: Next_round_maps file located, attempting to load")
-		var/list/load_list = json_decode(file2text("data/persistent/next_round_maps.json"))
-		if(load_list)
-			log_debug("ADMIN LOAD CUSTOM: Loaded data from next_round_maps.json")
 
-		log_debug("ADMIN LOAD CUSTOM: The file should have been read, data is as follows: RG: [load_list["Redgate"]] GW: [load_list["Gateway"]]")
-		loaded_redgate = load_list["Redgate"]
-		loaded_gateway = load_list["Gateway"]		//RS ADD END
+		try	//To load the file's contents
+			file_contents = file2text(ADMIN_CUSTOM_MAP_LOAD_PATH)
+			log_debug("ADMIN LOAD CUSTOM: File contents written.")
+		catch(var/exception/load_exception)
+			error("ADMIN LOAD CUSTOM: Failed to load file!")
+			error("ADMIN LOAD CUSTOM catch: [load_exception] on [load_exception.file]:[load_exception.line]")
+
+		if(file_contents)
+			try	//To decode the file's contents
+				load_list = json_decode(file_contents)
+				log_debug("ADMIN LOAD CUSTOM: File contents decoded.")
+			catch(var/exception/decode_exception)
+				error("ADMIN LOAD CUSTOM: Failed to decode json! Contents to follow: [file_contents]")
+				error("ADMIN LOAD CUSTOM catch: [decode_exception] on [decode_exception.file]:[decode_exception.line]")
+
+		try	//To remove the file
+			log_debug("ADMIN LOAD CUSTOM: Removing previous round's custom map load data file.")
+			fdel(ADMIN_CUSTOM_MAP_LOAD_PATH)
+		catch(var/exception/remove_exception)
+			error("ADMIN LOAD CUSTOM: Failed to remove file: [ADMIN_CUSTOM_MAP_LOAD_PATH]")
+			error("ADMIN LOAD CUSTOM catch: [remove_exception] on [remove_exception.file]:[remove_exception.line]")
+
+		if(islist(load_list))	//Let's apply the data!
+			log_debug("ADMIN LOAD CUSTOM: Loaded data from file.")
+			loaded_redgate = load_list["Redgate"]
+			loaded_gateway = load_list["Gateway"]
+			log_debug("ADMIN LOAD CUSTOM: The file should have been read, data is as follows: RG: [loaded_redgate] GW: [loaded_gateway]")
+
+		//RS ADD END
 
 	for(var/list/maplist in deffo_load)
 		if(!islist(maplist))

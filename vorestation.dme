@@ -29,6 +29,7 @@
 #include "code\__defines\_planes+layers.dm"
 #include "code\__defines\_planes+layers_vr.dm"
 #include "code\__defines\_protect.dm"
+#include "code\__defines\_RS_defines.dm"
 #include "code\__defines\_tick.dm"
 #include "code\__defines\admin.dm"
 #include "code\__defines\admin_vr.dm"

@@ -6,9 +6,10 @@
 /datum/persistent/next_round_maps
 	name = "next round maps"
 
-/datum/persistent/next_round_maps/Shutdown()
-	var/filename = "data/persistent/next_round_maps.json"	//Let's just hard code this I'm sure it will be fine
+/datum/persistent/next_round_maps/SetFilename()
+	filename = ADMIN_CUSTOM_MAP_LOAD_PATH
 
+/datum/persistent/next_round_maps/Shutdown()
 	var/list/to_save = list()
 
 	if(SSpersistence.redgate)
@@ -16,17 +17,18 @@
 	if(SSpersistence.gateway)						//Your map list needs to have the name you want saved as the index for the actual map names to be compatible
 		to_save["Gateway"] = SSpersistence.gateway
 	if(fexists(filename))	//Delete the file so we can save a new one
+		log_debug("Removing previous round's custom map load data.")
 		fdel(filename)
 	if(!to_save.len)		//Nothing to save, let's just quit here
-		log_debug("No custom next round data detected, aborting Shutdown function.")
+		log_debug("No custom map load data detected, aborting Shutdown function.")
 		return
 
-	log_debug("Saving custom next round map data.")
+	log_debug("Saving custom map load data.")
 	to_file(file(filename), json_encode(to_save))	//Save it as a json file!
 	if(fexists(filename))	//Did we do it?
-		log_debug("Saved custom next round data to [filename].")	//Nice
+		log_debug("Saved custom map load data to [filename].")	//Nice
 	else
-		log_debug("Tried to save custom next round data to [filename], but something went wrong!")	//Don't ask me about this if it doesn't work I won't know why
+		log_debug("Tried to save custom map load data to [filename], but something went wrong!")	//Don't ask me about this if it doesn't work I won't know why
 
 /client/proc/pick_next_random_map()
 	set name = "Pick Next Random Map"
