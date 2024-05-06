@@ -79,9 +79,20 @@ SUBSYSTEM_DEF(mapping)
 // VOREStation Edit Start: Enable This
 /datum/controller/subsystem/mapping/proc/loadLateMaps()
 	var/list/deffo_load = using_map.lateload_z_levels
-	var/list/maybe_load = using_map.lateload_gateway
-	var/list/also_load = using_map.lateload_overmap
+	var/list/gateway_load = using_map.lateload_gateway	//RS EDIT - renamed for readability
+	var/list/om_extra_load = using_map.lateload_overmap	//RS EDIT - renamed for readability
 	var/list/redgate_load = using_map.lateload_redgate
+	var/loaded_redgate									//RS ADD START - var for loading a map selected in the previous round
+	var/loaded_gateway									//var for loading a map selected in the previous round
+	if(fexists("data/persistent/next_round_maps.json"))	//File gets written in special_persist.dm
+		log_debug("ADMIN LOAD CUSTOM: Next_round_maps file located, attempting to load")
+		var/list/load_list = json_decode(file2text("data/persistent/next_round_maps.json"))
+		if(load_list)
+			log_debug("ADMIN LOAD CUSTOM: Loaded data from next_round_maps.json")
+
+		log_debug("ADMIN LOAD CUSTOM: The file should have been read, data is as follows: RG: [load_list["Redgate"]] GW: [load_list["Gateway"]]")
+		loaded_redgate = load_list["Redgate"]
+		loaded_gateway = load_list["Gateway"]		//RS ADD END
 
 	for(var/list/maplist in deffo_load)
 		if(!islist(maplist))
@@ -96,8 +107,13 @@ SUBSYSTEM_DEF(mapping)
 			MT.load_new_z(centered = FALSE)
 			CHECK_TICK
 
-	if(LAZYLEN(maybe_load))
-		var/picklist = pick(maybe_load)
+	if(LAZYLEN(gateway_load))	//RS EDIT START
+		var/picklist
+		if(loaded_gateway)		//Do we have a selection from the previous round?
+			log_debug("ADMIN LOAD CUSTOM: Gateway selection from previous round detected, using loaded data instead of random selection.")
+			picklist = gateway_load[loaded_gateway]		//Let's try to load it then!
+		if(!picklist)									//If we don't, or it saved nothing, then let's do the default behavior!
+			picklist = gateway_load[pick(gateway_load)]		//RS EDIT END
 
 		if(!picklist) //No lateload maps at all
 			return
@@ -118,8 +134,8 @@ SUBSYSTEM_DEF(mapping)
 				admin_notice("Gateway: [MT]", R_DEBUG)
 				MT.load_new_z(centered = FALSE)
 
-	if(LAZYLEN(also_load)) //Just copied from gateway picking, this is so we can have a kind of OM map version of the same concept.
-		var/picklist = pick(also_load)
+	if(LAZYLEN(om_extra_load)) //Just copied from gateway picking, this is so we can have a kind of OM map version of the same concept.	//RS EDIT
+		var/picklist = pick(om_extra_load)	//RS EDIT
 
 		if(!picklist) //No lateload maps at all
 			return
@@ -141,7 +157,12 @@ SUBSYSTEM_DEF(mapping)
 				MT.load_new_z(centered = FALSE)
 
 	if(LAZYLEN(redgate_load))
-		var/picklist = pick(redgate_load)
+		var/picklist	//RS ADD START
+		if(loaded_redgate)	//Do we have a selection from the previous round?
+			log_debug("ADMIN LOAD CUSTOM: Redgate selection from previous round detected, using loaded data instead of random selection.")
+			picklist = redgate_load[loaded_redgate]		//Let's try to load it then!
+		if(!picklist)									//If we don't, or it saved nothing, then let's do the default behavior!
+			picklist = redgate_load[pick(redgate_load)]	//RS ADD END
 
 		if(!picklist) //No lateload maps at all
 			return
