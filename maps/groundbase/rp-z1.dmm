@@ -20846,6 +20846,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/effect/floor_decal/milspec/color/purple/corner{
+	dir = 1
+	},
 /turf/simulated/floor/tiled,
 /area/groundbase/science/xenohall)
 "tdZ" = (
