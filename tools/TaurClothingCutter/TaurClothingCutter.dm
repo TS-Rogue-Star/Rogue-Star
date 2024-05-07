@@ -21,11 +21,11 @@ obj
 
 /client/verb/split_sprites()
 	set name = "Begin The Decimation"
-	set desc = "Loads SpritesToSnip.dmi and cuts them with Taur_Cutter.dmi"
+	set desc = "Loads SpritesToSnip.dmi and cuts them with TaurCutter.dmi"
 	set category = "Here"
 
 	var/icon/SpritesToSnip = icon('SpritesToSnip.dmi')
-	var/icon/Taur_Cutter = icon('Taur_Cutter.dmi')
+	var/icon/Taur_Cutter = icon('TaurCutter.dmi')
 
 	var/icon/RunningOutput = new ()
 
@@ -46,11 +46,11 @@ obj
 			//Blend with AND to cut
 			Original.Blend(Cutter,ICON_AND) //AND, not ADD
 
-			//Make a useful name
+			//Make a useful name, ideally we want to keep the same name to avoid headaches later.
 			var/good_name = "[OriginalState]"
 
 			//Add to the output with the good name
 			RunningOutput.Insert(Original,good_name)
 
-	//Give the output
+	//Give the output. dmis get overwritten when exported to. So break up your saves in sequence and then import them all into the main file.
 	usr << ftp(RunningOutput,"taursuits_.dmi")
