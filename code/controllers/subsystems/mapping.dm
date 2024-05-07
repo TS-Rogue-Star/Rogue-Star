@@ -79,9 +79,45 @@ SUBSYSTEM_DEF(mapping)
 // VOREStation Edit Start: Enable This
 /datum/controller/subsystem/mapping/proc/loadLateMaps()
 	var/list/deffo_load = using_map.lateload_z_levels
-	var/list/maybe_load = using_map.lateload_gateway
-	var/list/also_load = using_map.lateload_overmap
+	var/list/gateway_load = using_map.lateload_gateway	//RS EDIT - renamed for readability
+	var/list/om_extra_load = using_map.lateload_overmap	//RS EDIT - renamed for readability
 	var/list/redgate_load = using_map.lateload_redgate
+	var/loaded_redgate									//RS ADD START - var for loading a map selected in the previous round
+	var/loaded_gateway									//var for loading a map selected in the previous round
+	if(fexists(ADMIN_CUSTOM_MAP_LOAD_PATH))
+		var/file_contents
+		var/list/load_list
+		log_debug("ADMIN LOAD CUSTOM: Next_round_maps file located, attempting to load")
+
+		try	//To load the file's contents
+			file_contents = file2text(ADMIN_CUSTOM_MAP_LOAD_PATH)
+			log_debug("ADMIN LOAD CUSTOM: File contents written.")
+		catch(var/exception/load_exception)
+			error("ADMIN LOAD CUSTOM: Failed to load file!")
+			error("ADMIN LOAD CUSTOM catch: [load_exception] on [load_exception.file]:[load_exception.line]")
+
+		if(file_contents)
+			try	//To decode the file's contents
+				load_list = json_decode(file_contents)
+				log_debug("ADMIN LOAD CUSTOM: File contents decoded.")
+			catch(var/exception/decode_exception)
+				error("ADMIN LOAD CUSTOM: Failed to decode json! Contents to follow: [file_contents]")
+				error("ADMIN LOAD CUSTOM catch: [decode_exception] on [decode_exception.file]:[decode_exception.line]")
+
+		try	//To remove the file
+			log_debug("ADMIN LOAD CUSTOM: Removing previous round's custom map load data file.")
+			fdel(ADMIN_CUSTOM_MAP_LOAD_PATH)
+		catch(var/exception/remove_exception)
+			error("ADMIN LOAD CUSTOM: Failed to remove file: [ADMIN_CUSTOM_MAP_LOAD_PATH]")
+			error("ADMIN LOAD CUSTOM catch: [remove_exception] on [remove_exception.file]:[remove_exception.line]")
+
+		if(islist(load_list))	//Let's apply the data!
+			log_debug("ADMIN LOAD CUSTOM: Loaded data from file.")
+			loaded_redgate = load_list["Redgate"]
+			loaded_gateway = load_list["Gateway"]
+			log_debug("ADMIN LOAD CUSTOM: The file should have been read, data is as follows: RG: [loaded_redgate] GW: [loaded_gateway]")
+
+		//RS ADD END
 
 	for(var/list/maplist in deffo_load)
 		if(!islist(maplist))
@@ -96,8 +132,13 @@ SUBSYSTEM_DEF(mapping)
 			MT.load_new_z(centered = FALSE)
 			CHECK_TICK
 
-	if(LAZYLEN(maybe_load))
-		var/picklist = pick(maybe_load)
+	if(LAZYLEN(gateway_load))	//RS EDIT START
+		var/picklist
+		if(loaded_gateway)		//Do we have a selection from the previous round?
+			log_debug("ADMIN LOAD CUSTOM: Gateway selection from previous round detected, using loaded data instead of random selection.")
+			picklist = gateway_load[loaded_gateway]		//Let's try to load it then!
+		if(!picklist)									//If we don't, or it saved nothing, then let's do the default behavior!
+			picklist = gateway_load[pick(gateway_load)]		//RS EDIT END
 
 		if(!picklist) //No lateload maps at all
 			return
@@ -118,8 +159,8 @@ SUBSYSTEM_DEF(mapping)
 				admin_notice("Gateway: [MT]", R_DEBUG)
 				MT.load_new_z(centered = FALSE)
 
-	if(LAZYLEN(also_load)) //Just copied from gateway picking, this is so we can have a kind of OM map version of the same concept.
-		var/picklist = pick(also_load)
+	if(LAZYLEN(om_extra_load)) //Just copied from gateway picking, this is so we can have a kind of OM map version of the same concept.	//RS EDIT
+		var/picklist = pick(om_extra_load)	//RS EDIT
 
 		if(!picklist) //No lateload maps at all
 			return
@@ -141,7 +182,12 @@ SUBSYSTEM_DEF(mapping)
 				MT.load_new_z(centered = FALSE)
 
 	if(LAZYLEN(redgate_load))
-		var/picklist = pick(redgate_load)
+		var/picklist	//RS ADD START
+		if(loaded_redgate)	//Do we have a selection from the previous round?
+			log_debug("ADMIN LOAD CUSTOM: Redgate selection from previous round detected, using loaded data instead of random selection.")
+			picklist = redgate_load[loaded_redgate]		//Let's try to load it then!
+		if(!picklist)									//If we don't, or it saved nothing, then let's do the default behavior!
+			picklist = redgate_load[pick(redgate_load)]	//RS ADD END
 
 		if(!picklist) //No lateload maps at all
 			return
