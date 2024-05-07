@@ -129,6 +129,9 @@
 /area/groundbase/science/picnic
 	name = "Science Break Room"
 	lightswitch = 1
+/area/groundbase/science/lockerroom
+	name = "Science Locker Room"
+	lightswitch = 1
 
 /area/groundbase/science/outpost
 	name = "Science Outpost"

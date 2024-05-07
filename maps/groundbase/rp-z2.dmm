@@ -501,13 +501,6 @@
 "bR" = (
 /turf/simulated/open,
 /area/groundbase/level2/ne)
-"bS" = (
-/obj/structure/table/bench/steel,
-/obj/effect/floor_decal/milspec/color/red/half{
-	dir = 8
-	},
-/turf/simulated/floor/tiled/dark,
-/area/groundbase/security/hall2)
 "bV" = (
 /obj/machinery/requests_console{
 	department = "Virology";
@@ -857,13 +850,15 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/effect/floor_decal/milspec/color/red/half{
-	dir = 1
-	},
-/turf/simulated/floor/tiled/dark,
+/turf/simulated/floor/tiled/eris/cafe,
 /area/groundbase/security/hall2)
 "de" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology)
 "dg" = (
@@ -902,10 +897,7 @@
 	dir = 8
 	},
 /obj/machinery/disposal,
-/obj/effect/floor_decal/milspec/color/red/half{
-	dir = 1
-	},
-/turf/simulated/floor/tiled/dark,
+/turf/simulated/floor/tiled/eris/cafe,
 /area/groundbase/security/hall2)
 "dm" = (
 /obj/structure/bed/chair/office/dark{
@@ -1439,10 +1431,7 @@
 /area/medical/virology)
 "eG" = (
 /obj/random/vendorall,
-/obj/effect/floor_decal/milspec/color/red/half{
-	dir = 5
-	},
-/turf/simulated/floor/tiled/dark,
+/turf/simulated/floor/tiled/eris/cafe,
 /area/groundbase/security/hall2)
 "eH" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -2041,7 +2030,7 @@
 /mob/living/simple_mob/vore/alienanimals/catslug/custom/gatslug{
 	ghostjoin = 1
 	},
-/turf/simulated/floor/tiled/dark,
+/turf/simulated/floor/tiled/eris/cafe,
 /area/groundbase/security/hall2)
 "gJ" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
@@ -2301,7 +2290,13 @@
 /area/rnd/xenobiology)
 "hK" = (
 /obj/structure/cable/yellow{
-	icon_state = "1-8"
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
 	},
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology)
@@ -2663,7 +2658,22 @@
 	},
 /area/groundbase/dorms/room7)
 "iZ" = (
-/turf/simulated/open,
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 4
+	},
+/obj/effect/floor_decal/milspec/color/purple/corner{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
 /area/rnd/xenobiology)
 "ja" = (
 /obj/structure/cable/yellow{
@@ -3209,15 +3219,14 @@
 /area/groundbase/civilian/library)
 "kI" = (
 /obj/structure/cable/yellow{
-	icon_state = "1-4"
+	icon_state = "32-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
+/obj/machinery/atmospherics/pipe/zpipe/down/scrubbers{
+	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
+/obj/machinery/atmospherics/pipe/zpipe/down/supply{
+	dir = 8
 	},
-/obj/effect/floor_decal/milspec/color/purple/half,
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology)
 "kK" = (
@@ -3258,15 +3267,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/armory)
-"kN" = (
-/obj/effect/floor_decal/milspec/color/purple/corner{
-	dir = 1
-	},
-/obj/effect/floor_decal/steeldecal/steel_decals5{
-	dir = 4
-	},
-/turf/simulated/floor/tiled,
-/area/rnd/xenobiology)
 "kO" = (
 /turf/unsimulated/wall/planetary/normal{
 	desc = "It's quite impassable";
@@ -3698,6 +3698,11 @@
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology)
 "mQ" = (
@@ -3737,15 +3742,6 @@
 "mU" = (
 /obj/machinery/light{
 	dir = 8
-	},
-/obj/structure/cable/yellow{
-	icon_state = "1-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
 	},
 /obj/effect/floor_decal/milspec/color/purple/half{
 	dir = 8
@@ -4062,10 +4058,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/effect/floor_decal/milspec/color/red/half{
-	dir = 10
-	},
-/turf/simulated/floor/tiled/dark,
+/turf/simulated/floor/tiled/eris/cafe,
 /area/groundbase/security/hall2)
 "oc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -4177,11 +4170,6 @@
 /turf/simulated/floor/tiled,
 /area/ai_monitored/storage/eva)
 "oD" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/light,
 /obj/structure/table/steel,
 /obj/machinery/reagentgrinder{
@@ -4390,15 +4378,6 @@
 /area/groundbase/dorms/room4)
 "pf" = (
 /obj/machinery/hologram/holopad,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
-	},
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology)
 "pg" = (
@@ -4496,10 +4475,7 @@
 "pw" = (
 /obj/structure/table/steel_reinforced,
 /obj/item/weapon/storage/box/donut,
-/obj/effect/floor_decal/milspec/color/red/half{
-	dir = 4
-	},
-/turf/simulated/floor/tiled/dark,
+/turf/simulated/floor/tiled/eris/cafe,
 /area/groundbase/security/hall2)
 "px" = (
 /obj/machinery/firealarm{
@@ -4749,10 +4725,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
-/obj/effect/floor_decal/milspec/color/red/corner{
-	dir = 8
-	},
-/turf/simulated/floor/tiled/dark,
+/turf/simulated/floor/tiled/eris/cafe,
 /area/groundbase/security/hall2)
 "ql" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -5180,7 +5153,7 @@
 	dir = 4
 	},
 /obj/effect/floor_decal/milspec/color/red/half{
-	dir = 1
+	dir = 5
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hall2)
@@ -6479,6 +6452,12 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/triage)
+"vF" = (
+/obj/effect/floor_decal/milspec/color/purple/half{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/rnd/xenobiology)
 "vH" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -7031,11 +7010,6 @@
 /obj/machinery/camera/network/research/xenobio{
 	dir = 4
 	},
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/floor_decal/milspec/color/purple/half{
 	dir = 9
 	},
@@ -7924,14 +7898,10 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/security/armory)
 "AL" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology)
@@ -8490,10 +8460,7 @@
 "CO" = (
 /obj/structure/table/steel_reinforced,
 /obj/item/weapon/hand_labeler,
-/obj/effect/floor_decal/milspec/color/red/half{
-	dir = 6
-	},
-/turf/simulated/floor/tiled/dark,
+/turf/simulated/floor/tiled/eris/cafe,
 /area/groundbase/security/hall2)
 "CQ" = (
 /obj/structure/table/rack/shelf,
@@ -9708,13 +9675,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/command/bridge)
-"Hp" = (
-/obj/structure/table/bench/steel,
-/obj/effect/floor_decal/milspec/color/red/half{
-	dir = 4
-	},
-/turf/simulated/floor/tiled/dark,
-/area/groundbase/security/hall2)
 "Hq" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/wood,
@@ -9772,8 +9732,7 @@
 /area/groundbase/medical/triage)
 "Hz" = (
 /obj/structure/table/steel_reinforced,
-/obj/effect/floor_decal/milspec/color/red/half,
-/turf/simulated/floor/tiled/dark,
+/turf/simulated/floor/tiled/eris/cafe,
 /area/groundbase/security/hall2)
 "HB" = (
 /obj/structure/table/reinforced,
@@ -9873,7 +9832,9 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/effect/floor_decal/milspec/color/red/half,
+/obj/effect/floor_decal/milspec/color/red/half{
+	dir = 6
+	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hall2)
 "HW" = (
@@ -10747,10 +10708,7 @@
 "Ku" = (
 /obj/structure/table/steel_reinforced,
 /obj/item/device/ticket_printer,
-/obj/effect/floor_decal/milspec/color/red/half{
-	dir = 4
-	},
-/turf/simulated/floor/tiled/dark,
+/turf/simulated/floor/tiled/eris/cafe,
 /area/groundbase/security/hall2)
 "Kv" = (
 /obj/structure/disposalpipe/trunk{
@@ -10996,10 +10954,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/civilian/chapel)
 "Lr" = (
-/obj/effect/floor_decal/milspec/color/red/half{
-	dir = 8
-	},
-/turf/simulated/floor/tiled/dark,
+/turf/simulated/floor/tiled/eris/cafe,
 /area/groundbase/security/hall2)
 "Ls" = (
 /obj/effect/floor_decal/steeldecal/steel_decals10{
@@ -11721,10 +11676,7 @@
 	dir = 8
 	},
 /obj/structure/cable/yellow,
-/obj/effect/floor_decal/milspec/color/red/half{
-	dir = 8
-	},
-/turf/simulated/floor/tiled/dark,
+/turf/simulated/floor/tiled/eris/cafe,
 /area/groundbase/security/hall2)
 "NR" = (
 /obj/machinery/light{
@@ -12406,7 +12358,7 @@
 /area/groundbase/security/hall2)
 "PM" = (
 /obj/structure/table/bench/steel,
-/turf/simulated/floor/tiled/dark,
+/turf/simulated/floor/tiled/eris/cafe,
 /area/groundbase/security/hall2)
 "PO" = (
 /obj/structure/table/rack/shelf/steel,
@@ -13761,6 +13713,11 @@
 /area/groundbase/dorms/room8)
 "TZ" = (
 /obj/effect/landmark/start/xenobio,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology)
 "Ua" = (
@@ -14126,22 +14083,7 @@
 /turf/simulated/floor/outdoors/newdirt,
 /area/groundbase/level2/ne)
 "Ve" = (
-/obj/structure/cable/yellow{
-	icon_state = "32-8"
-	},
-/obj/machinery/atmospherics/pipe/zpipe/down/scrubbers{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/zpipe/down/supply{
-	dir = 8
-	},
-/obj/effect/floor_decal/milspec/color/purple/corner{
-	dir = 8
-	},
-/obj/effect/floor_decal/steeldecal/steel_decals5{
-	dir = 4
-	},
-/turf/simulated/floor/tiled,
+/turf/simulated/open,
 /area/rnd/xenobiology)
 "Vf" = (
 /obj/structure/cable/yellow{
@@ -14704,14 +14646,9 @@
 /turf/simulated/floor/tiled,
 /area/ai_monitored/storage/eva)
 "Xs" = (
-/obj/machinery/light/floortube{
-	pixel_y = 4
+/obj/effect/floor_decal/milspec/color/purple/half{
+	dir = 5
 	},
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology)
 "Xv" = (
@@ -15315,11 +15252,11 @@
 	req_access = null;
 	req_one_access = list(47,55)
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/rnd/xenobiology)
 "Zx" = (
@@ -15408,8 +15345,9 @@
 /turf/simulated/floor/wood,
 /area/groundbase/dorms/room3)
 "ZN" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-4"
+/obj/structure/railing,
+/obj/effect/floor_decal/milspec/color/purple/half{
+	dir = 4
 	},
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology)
@@ -15441,10 +15379,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/effect/floor_decal/milspec/color/red/half{
-	dir = 8
-	},
-/turf/simulated/floor/tiled/dark,
+/turf/simulated/floor/tiled/eris/cafe,
 /area/groundbase/security/hall2)
 "ZU" = (
 /obj/structure/disposalpipe/segment{
@@ -20666,7 +20601,7 @@ qi
 ZS
 NQ
 Lr
-bS
+PM
 ob
 jP
 TH
@@ -20804,10 +20739,10 @@ ph
 XI
 dV
 da
-JX
+Lr
 PM
 gH
-JX
+Lr
 PM
 Hz
 jP
@@ -20946,11 +20881,11 @@ ux
 Tq
 dV
 eG
-QG
+Lr
 Ku
 pw
-QG
-Hp
+Lr
+PM
 CO
 jP
 TH
@@ -22837,7 +22772,7 @@ jf
 jf
 jf
 jf
-fv
+jf
 tL
 av
 av
@@ -22965,11 +22900,11 @@ ND
 GL
 GL
 qf
-ZN
+GL
 pf
-Xs
-OM
-OM
+qf
+GL
+GL
 oD
 jf
 xs
@@ -22977,9 +22912,9 @@ mU
 el
 jf
 aE
+vF
 el
 jf
-fv
 tL
 av
 av
@@ -23107,10 +23042,10 @@ mn
 mn
 mn
 mn
+mn
 hK
-vi
-GL
-GL
+AL
+AL
 TZ
 de
 Zw
@@ -23119,9 +23054,9 @@ AL
 qX
 Us
 Mo
-kI
+OM
+iZ
 jf
-fv
 tL
 av
 av
@@ -23260,10 +23195,10 @@ Nu
 JZ
 JB
 hU
-kN
-Ve
+Xs
+ZN
+kI
 jf
-fv
 tL
 av
 av
@@ -23402,10 +23337,10 @@ jf
 jf
 jf
 jf
-iZ
-iZ
 jf
-fv
+jf
+Ve
+jf
 tL
 av
 av
@@ -23543,11 +23478,11 @@ mY
 pr
 jf
 fv
-jf
-iZ
-iZ
-jf
 fv
+fv
+jf
+Ve
+jf
 tL
 av
 av
@@ -23685,11 +23620,11 @@ mY
 Jd
 jf
 fv
-jf
-jf
-jf
-jf
 fv
+fv
+jf
+jf
+jf
 tL
 av
 av
@@ -25672,12 +25607,12 @@ jf
 jf
 jf
 jf
-fv
-fv
-fv
-fv
-fv
-fv
+tL
+tL
+tL
+tL
+tL
+tL
 tL
 av
 av
@@ -25814,13 +25749,13 @@ fv
 fv
 fv
 fv
-fv
-fv
-fv
-fv
-fv
-fv
 tL
+av
+av
+av
+av
+av
+av
 av
 av
 pp
@@ -25957,12 +25892,12 @@ fv
 fv
 fv
 tL
-tL
-tL
-tL
-tL
-tL
-tL
+av
+av
+av
+av
+av
+av
 av
 av
 pp
