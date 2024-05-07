@@ -107,6 +107,7 @@
 	var/doorstatus = CABINET_NORMAL
 	anchored = TRUE
 	store_mobs = FALSE
+	is_animating_door = FALSE
 
 	var/obj/item/weapon/gun/rackslot1
 	var/obj/item/weapon/gun/rackslot2
@@ -288,7 +289,7 @@
 	if(locked)
 		toggle_lock(user)
 	else
-		toggle(user)
+		toggle_open(user)
 		if(opened)
 			tgui_interact(user)
 
@@ -418,7 +419,9 @@
 	if(locked)
 		to_chat(user, "<font color='red'>It's locked.</font>")
 		return
-	opened = !opened
+
+	opened ? close() : open()
+	update_icon()
 	SStgui.update_uis(src)
 	return
 
@@ -465,24 +468,22 @@
 	guninfo.Cut()
 	SStgui.update_uis(src)
 
-/obj/structure/closet/secure_closet/guncabinet/fancy/proc/check_weapon(atom/A)
-	if(!istype(A))
-		return FALSE
-	var/obj/item/weapon/gun/W = A
-
-	if(!istype(W))
-		to_chat(usr, "<span class='notice'>You can't seem to fit [W] into [src].</span>")
+/obj/structure/closet/secure_closet/guncabinet/fancy/proc/check_weapon(var/obj/item/I)
+	if(!istype(I))
 		return FALSE
 
-	if(W && (W.locker_class != case_type))
-		to_chat(usr, "<span class='notice'>You can't seem to fit [W] into [src].</span>")
-		return FALSE
+	if(istype(I, /obj/item/weapon/gun))
+		var/obj/item/weapon/gun/W = I
+		if(W && (W.locker_class != case_type))
+			to_chat(usr, "<span class='notice'>You can't seem to fit [W] into [src].</span>")
+			return FALSE
+		if(!opened)
+			to_chat(usr, "<span class='notice'>You need to open the doors first.</span>")
+			return FALSE
 
-	if(!opened)
-		to_chat(usr, "<span class='notice'>You need to open the doors first.</span>")
-		return FALSE
+		return TRUE
 
-	return TRUE
+	return FALSE
 
 /obj/structure/closet/secure_closet/guncabinet/fancy/proc/get_ammo_status(key, atom/A)
 	var/list/gun = list()
@@ -565,6 +566,10 @@
 		doorstatus = CABINET_BROKEN
 		update_icon()
 		return TRUE
+
+/obj/structure/closet/secure_closet/guncabinet/fancy/relaymove(mob/user as mob)
+	if(user.stat || !isturf(loc))
+		return
 
 /obj/structure/closet/secure_closet/guncabinet/fancy/shotgun
 	name = "Shotgun locker"
