@@ -7372,7 +7372,7 @@
 	pixel_x = -26;
 	req_access = list(29,47)
 	},
-/turf/simulated/floor/outdoors/sidewalk{
+/turf/simulated/floor/outdoors/sidewalk/slab{
 	outdoors = 0
 	},
 /area/groundbase/science/robotics)
@@ -8910,7 +8910,7 @@
 /area/groundbase/engineering/eva)
 "iuu" = (
 /obj/machinery/recharge_station,
-/turf/simulated/floor/outdoors/sidewalk{
+/turf/simulated/floor/outdoors/sidewalk/slab{
 	outdoors = 0
 	},
 /area/groundbase/science/robotics)
@@ -18467,7 +18467,7 @@
 /area/groundbase/command/tcomms/chamber)
 "rfl" = (
 /obj/machinery/mech_recharger,
-/turf/simulated/floor/outdoors/sidewalk{
+/turf/simulated/floor/outdoors/sidewalk/slab{
 	outdoors = 0
 	},
 /area/groundbase/science/robotics)
@@ -18617,7 +18617,7 @@
 	dir = 1
 	},
 /obj/machinery/light,
-/turf/simulated/floor/outdoors/sidewalk{
+/turf/simulated/floor/outdoors/sidewalk/slab{
 	outdoors = 0
 	},
 /area/groundbase/science/robotics)
@@ -19221,6 +19221,11 @@
 "rHL" = (
 /turf/simulated/wall,
 /area/groundbase/civilian/kitchen/freezer)
+"rHP" = (
+/turf/simulated/floor/outdoors/sidewalk/side{
+	outdoors = 0
+	},
+/area/groundbase/science/robotics)
 "rIc" = (
 /obj/random/vendorall,
 /obj/machinery/light{
@@ -25605,7 +25610,7 @@
 	},
 /area/groundbase/civilian/bar)
 "xOn" = (
-/turf/simulated/floor/outdoors/sidewalk{
+/turf/simulated/floor/outdoors/sidewalk/slab{
 	outdoors = 0
 	},
 /area/groundbase/science/robotics)
@@ -36376,7 +36381,7 @@ tbQ
 tbQ
 aOd
 vnU
-xOn
+rHP
 vnU
 vnU
 nbQ
@@ -36518,7 +36523,7 @@ fAP
 tbQ
 sfQ
 sfQ
-sdm
+jMh
 sfQ
 sfQ
 nbQ
@@ -36660,7 +36665,7 @@ iDf
 tbQ
 sfQ
 sfQ
-sdm
+jMh
 sfQ
 sfQ
 sfQ
@@ -36802,7 +36807,7 @@ oyP
 tbQ
 sfQ
 sfQ
-sdm
+jMh
 sfQ
 sfQ
 sfQ
@@ -36944,7 +36949,7 @@ tbQ
 tbQ
 sfQ
 sfQ
-sdm
+jMh
 sfQ
 sfQ
 sfQ
@@ -37086,7 +37091,7 @@ sfQ
 sfQ
 sfQ
 sfQ
-sdm
+jMh
 sfQ
 sfQ
 sfQ
@@ -37228,7 +37233,7 @@ tJi
 tJi
 tJi
 tJi
-tJi
+qgu
 tJi
 qgu
 tJi
