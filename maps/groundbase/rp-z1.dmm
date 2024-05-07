@@ -7682,6 +7682,9 @@
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
 	},
+/obj/machinery/camera/network/research{
+	dir = 4
+	},
 /turf/simulated/floor/tiled,
 /area/groundbase/science/xenohall)
 "hmp" = (
@@ -9970,12 +9973,6 @@
 /obj/machinery/chemical_dispenser/bar_soft/full,
 /turf/simulated/floor/wood,
 /area/groundbase/civilian/bar)
-"juQ" = (
-/obj/structure/closet/secure_closet/scientist,
-/obj/machinery/camera/network/research,
-/obj/effect/floor_decal/milspec/color/purple/half,
-/turf/simulated/floor/tiled/white,
-/area/groundbase/science/lockerroom)
 "juV" = (
 /obj/effect/floor_decal/industrial/danger{
 	dir = 1
@@ -13695,8 +13692,8 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/workshop)
 "mSu" = (
-/obj/structure/closet/wardrobe/robotics_black,
 /obj/effect/floor_decal/milspec/color/purple/half,
+/obj/structure/closet/secure_closet/scientist,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/science/lockerroom)
 "mSE" = (
@@ -21465,11 +21462,6 @@
 "tNT" = (
 /turf/simulated/wall/r_wall,
 /area/maintenance/groundbase/substation/sec)
-"tOR" = (
-/turf/simulated/floor/outdoors/sidewalk{
-	outdoors = 0
-	},
-/area/groundbase/level1/se)
 "tOZ" = (
 /obj/machinery/atmospherics/pipe/tank/carbon_dioxide,
 /turf/simulated/floor/tiled/techmaint,
@@ -23048,7 +23040,7 @@
 /turf/simulated/floor/outdoors/grass/seasonal{
 	outdoors = 0
 	},
-/area/groundbase/level1/se)
+/area/groundbase/science/robotics)
 "vot" = (
 /obj/machinery/vending/wardrobe/genedrobe,
 /obj/effect/floor_decal/milspec/color/purple/half,
@@ -23513,7 +23505,7 @@
 /turf/simulated/floor/outdoors/grass/seasonal{
 	outdoors = 0
 	},
-/area/groundbase/level1/se)
+/area/groundbase/science/robotics)
 "vNh" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -34407,7 +34399,7 @@ flt
 oVa
 xnN
 uHN
-juQ
+jSi
 wrG
 aFq
 gci
@@ -36396,7 +36388,7 @@ tbQ
 tbQ
 tbQ
 vME
-tOR
+xOn
 vnU
 vnU
 nbQ
