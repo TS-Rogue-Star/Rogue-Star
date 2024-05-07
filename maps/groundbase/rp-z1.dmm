@@ -13459,13 +13459,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/engine)
-"mGz" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/recharge_station,
-/turf/simulated/floor/tiled/dark,
-/area/groundbase/science/robotics)
 "mHH" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1;
@@ -23501,14 +23494,6 @@
 	edge_blending_priority = -1
 	},
 /area/groundbase/medical/lhallway)
-"vME" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/simulated/floor/outdoors/grass/seasonal{
-	outdoors = 0
-	},
-/area/groundbase/science/robotics)
 "vNh" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -36244,7 +36229,7 @@ mmx
 oDi
 wrY
 tbQ
-mGz
+lor
 sZd
 ckb
 jXy
@@ -36389,8 +36374,8 @@ tbQ
 tbQ
 tbQ
 tbQ
-tbQ
-vME
+aOd
+vnU
 xOn
 vnU
 vnU
