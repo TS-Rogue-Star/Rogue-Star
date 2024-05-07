@@ -28,7 +28,7 @@
 /obj/item/clothing/suit/drake_cloak
 	name = "drake cloak"
 	desc = "A simple cloak for drake-taurs."
-	icon = 'icons/inventory/suit/taursuits_drake.dmi'
+	icon = 'icons/inventory/suit/taursuits_snowflake.dmi'
 	icon_state = "cloak"
 	item_state_slots = list(slot_r_hand_str = "capjacket", slot_l_hand_str = "capjacket")
 	body_parts_covered = UPPER_TORSO|ARMS
