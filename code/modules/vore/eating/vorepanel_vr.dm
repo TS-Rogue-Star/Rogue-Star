@@ -762,7 +762,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 					return FALSE
 
 				for(var/atom/movable/target in host.vore_selected)
-					to_chat(target,"<span class='warning'>You're squished from [host]'s host.vore_selected to their [lowertext(choice.name)]!</span>")
+					to_chat(target,"<span class='warning'>You're squished from [host]'s [host.vore_selected] to their [lowertext(choice.name)]!</span>")
 					host.vore_selected.transfer_contents(target, choice, 1)
 				return TRUE
 			//RS ADD START

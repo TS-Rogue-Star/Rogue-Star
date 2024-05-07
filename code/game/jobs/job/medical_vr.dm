@@ -80,7 +80,7 @@
 
 /datum/job/paramedic
 	pto_type = PTO_MEDICAL
-	alt_titles = list("Emergency Medical Technician" = /datum/alt_title/emt, "Medical Responder" = /datum/alt_title/medical_responder, "Search and Rescue" = /datum/alt_title/sar)
+	alt_titles = list("Emergency Medical Technician" = /datum/alt_title/emt, "Medical Responder" = /datum/alt_title/medical_responder, "Search and Rescue" = /datum/alt_title/sar, "Ambulance" = /datum/alt_title/ambulance)
 	total_positions = 3
 	spawn_positions = 3
 
@@ -92,3 +92,6 @@
 
 /datum/alt_title/sar
 	title = "Search and Rescue"
+
+/datum/alt_title/ambulance
+	title = "Ambulance"

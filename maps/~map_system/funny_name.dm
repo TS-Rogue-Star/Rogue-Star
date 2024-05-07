@@ -114,6 +114,6 @@
 
 /datum/map/proc/funny_name()
 	GLOB.special_station_name = "[pick(adj)] [pick(sub)] [pick(suf)]"
-	for(var/mob/living/L in player_list)
-		if(L.client)
-			L.client.update_special_station_name()
+	for(var/mob/M in player_list)
+		if(M.client)
+			M.client.update_special_station_name()
