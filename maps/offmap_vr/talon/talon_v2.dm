@@ -375,6 +375,7 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 
 	starts_with = list(
 		/obj/item/weapon/storage/backpack/dufflebag/captain,
+		/obj/item/gunbox/talon_cap,
 		/obj/item/clothing/suit/storage/vest,
 		/obj/item/clothing/accessory/solgov/department/command/army,
 		/obj/item/clothing/glasses/omnihud/all,
@@ -404,6 +405,7 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 		/obj/item/device/flash,
 		/obj/item/device/flashlight/maglight,
 		/obj/item/clothing/glasses/sunglasses,
+		/obj/item/clothing/accessory/holster/waist,
 		/obj/item/weapon/storage/belt/security,
 		/obj/item/device/radio/headset/talon,
 		/obj/item/clothing/accessory/solgov/department/security/army,

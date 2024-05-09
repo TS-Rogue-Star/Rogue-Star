@@ -17,6 +17,12 @@
 	description_fluff = "The leading arms producer in the SCG, Hephaestus typically only uses its 'top level' branding for its military-grade equipment used by armed forces across human space."
 	ammo_type = /obj/item/ammo_casing/a12g/beanbag
 
+/obj/item/weapon/gun/projectile/shotgun/pump/combat/talon_cap
+	name = "talon captain's shotgun"
+	desc = "Built for close quarters combat, the Hephaestus Industries KS-40 is widely regarded as a weapon of choice for repelling boarders. This one has 'Property of the Talon Captain' inscribed on the stock."
+	description_fluff = "The leading arms producer in the SCG, Hephaestus typically only uses its 'top level' branding for its military-grade equipment used by armed forces across human space."
+	ammo_type = /obj/item/ammo_casing/a12g
+
 //Compact shotgun, this version's for usage later by mappers/coders/w.e.
 /obj/item/weapon/gun/projectile/shotgun/compact
 	name = "compact shotgun"
