@@ -12797,6 +12797,12 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/medical/virology)
+"Rj" = (
+/turf/simulated/floor/tiled{
+	edge_blending_priority = -1;
+	outdoors = 1
+	},
+/area/groundbase/level2/se)
 "Rl" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
@@ -25045,12 +25051,12 @@ fv
 fv
 fv
 fv
-tL
-tL
-tL
-tL
-tL
-tL
+fv
+fv
+fv
+fv
+fv
+fv
 tL
 tL
 av
@@ -25187,13 +25193,13 @@ fv
 fv
 fv
 fv
+fv
+fv
+fv
+fv
+fv
+fv
 tL
-av
-av
-av
-av
-av
-av
 av
 av
 av
@@ -25329,13 +25335,13 @@ fv
 fv
 fv
 fv
-tL
-av
-av
-pp
-pp
-pp
-pp
+fv
+fv
+fv
+Rj
+Rj
+Rj
+lX
 pp
 pp
 pp
@@ -25471,13 +25477,13 @@ fv
 fv
 fv
 fv
-tL
-av
-av
-pp
-pp
-pp
-pp
+fv
+fv
+fv
+Rj
+Rj
+Rj
+lX
 pp
 pp
 pp
@@ -25614,12 +25620,12 @@ tL
 tL
 tL
 tL
-av
-av
-pp
-pp
-pp
-pp
+fv
+fv
+Rj
+Rj
+Rj
+lX
 pp
 pp
 pp
@@ -25755,13 +25761,13 @@ av
 av
 av
 av
-av
-av
-av
-pp
-pp
-pp
-pp
+tL
+tL
+tL
+lX
+lX
+lX
+lX
 pp
 pp
 pp

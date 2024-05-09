@@ -6376,16 +6376,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/groundbase/command/ai/foyer)
-"gdi" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/outdoors/sidewalk,
-/area/groundbase/level1/se)
 "gdp" = (
 /obj/structure/cable/yellow{
 	icon_state = "0-4"
@@ -7378,7 +7368,7 @@
 	pixel_x = -26;
 	req_access = list(29,47)
 	},
-/turf/simulated/floor/outdoors/sidewalk{
+/turf/simulated/floor/outdoors/sidewalk/slab{
 	outdoors = 0
 	},
 /area/groundbase/science/robotics)
@@ -7687,6 +7677,9 @@
 	},
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
+	},
+/obj/machinery/camera/network/research{
+	dir = 4
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/science/xenohall)
@@ -8913,7 +8906,7 @@
 /area/groundbase/engineering/eva)
 "iuu" = (
 /obj/machinery/recharge_station,
-/turf/simulated/floor/outdoors/sidewalk{
+/turf/simulated/floor/outdoors/sidewalk/slab{
 	outdoors = 0
 	},
 /area/groundbase/science/robotics)
@@ -9976,12 +9969,6 @@
 /obj/machinery/chemical_dispenser/bar_soft/full,
 /turf/simulated/floor/wood,
 /area/groundbase/civilian/bar)
-"juQ" = (
-/obj/structure/closet/secure_closet/scientist,
-/obj/machinery/camera/network/research,
-/obj/effect/floor_decal/milspec/color/purple/half,
-/turf/simulated/floor/tiled/white,
-/area/groundbase/science/lockerroom)
 "juV" = (
 /obj/effect/floor_decal/industrial/danger{
 	dir = 1
@@ -13468,13 +13455,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/engine)
-"mGz" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/recharge_station,
-/turf/simulated/floor/tiled/dark,
-/area/groundbase/science/robotics)
 "mHH" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1;
@@ -13701,8 +13681,8 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/workshop)
 "mSu" = (
-/obj/structure/closet/wardrobe/robotics_black,
 /obj/effect/floor_decal/milspec/color/purple/half,
+/obj/structure/closet/secure_closet/scientist,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/science/lockerroom)
 "mSE" = (
@@ -18483,7 +18463,7 @@
 /area/groundbase/command/tcomms/chamber)
 "rfl" = (
 /obj/machinery/mech_recharger,
-/turf/simulated/floor/outdoors/sidewalk{
+/turf/simulated/floor/outdoors/sidewalk/slab{
 	outdoors = 0
 	},
 /area/groundbase/science/robotics)
@@ -18633,7 +18613,7 @@
 	dir = 1
 	},
 /obj/machinery/light,
-/turf/simulated/floor/outdoors/sidewalk{
+/turf/simulated/floor/outdoors/sidewalk/slab{
 	outdoors = 0
 	},
 /area/groundbase/science/robotics)
@@ -19237,6 +19217,11 @@
 "rHL" = (
 /turf/simulated/wall,
 /area/groundbase/civilian/kitchen/freezer)
+"rHP" = (
+/turf/simulated/floor/outdoors/sidewalk/side{
+	outdoors = 0
+	},
+/area/groundbase/science/robotics)
 "rIc" = (
 /obj/random/vendorall,
 /obj/machinery/light{
@@ -20855,6 +20840,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/effect/floor_decal/milspec/color/purple/corner{
+	dir = 1
+	},
 /turf/simulated/floor/tiled,
 /area/groundbase/science/xenohall)
 "tdZ" = (
@@ -21471,11 +21459,6 @@
 "tNT" = (
 /turf/simulated/wall/r_wall,
 /area/maintenance/groundbase/substation/sec)
-"tOR" = (
-/turf/simulated/floor/outdoors/sidewalk{
-	outdoors = 0
-	},
-/area/groundbase/level1/se)
 "tOZ" = (
 /obj/machinery/atmospherics/pipe/tank/carbon_dioxide,
 /turf/simulated/floor/tiled/techmaint,
@@ -23054,7 +23037,7 @@
 /turf/simulated/floor/outdoors/grass/seasonal{
 	outdoors = 0
 	},
-/area/groundbase/level1/se)
+/area/groundbase/science/robotics)
 "vot" = (
 /obj/machinery/vending/wardrobe/genedrobe,
 /obj/effect/floor_decal/milspec/color/purple/half,
@@ -23512,14 +23495,6 @@
 	edge_blending_priority = -1
 	},
 /area/groundbase/medical/lhallway)
-"vME" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/simulated/floor/outdoors/grass/seasonal{
-	outdoors = 0
-	},
-/area/groundbase/level1/se)
 "vNh" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -24414,7 +24389,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/outdoors/sidewalk,
+/turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/level1/se)
 "wJP" = (
 /obj/machinery/hologram/holopad,
@@ -25510,15 +25485,6 @@
 /obj/machinery/light,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/morgue)
-"xJF" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/outdoors/sidewalk,
-/area/groundbase/level1/se)
 "xJK" = (
 /obj/machinery/hologram/holopad,
 /obj/structure/cable/yellow{
@@ -25631,7 +25597,7 @@
 	},
 /area/groundbase/civilian/bar)
 "xOn" = (
-/turf/simulated/floor/outdoors/sidewalk{
+/turf/simulated/floor/outdoors/sidewalk/slab{
 	outdoors = 0
 	},
 /area/groundbase/science/robotics)
@@ -34413,7 +34379,7 @@ flt
 oVa
 xnN
 uHN
-juQ
+jSi
 wrG
 aFq
 gci
@@ -36255,7 +36221,7 @@ mmx
 oDi
 wrY
 tbQ
-mGz
+lor
 sZd
 ckb
 jXy
@@ -36400,9 +36366,9 @@ tbQ
 tbQ
 tbQ
 tbQ
-tbQ
-vME
-tOR
+aOd
+vnU
+rHP
 vnU
 vnU
 nbQ
@@ -36413,7 +36379,7 @@ woB
 ktC
 nbQ
 sfQ
-xJF
+pdx
 sfQ
 sfQ
 sfQ
@@ -36544,7 +36510,7 @@ fAP
 tbQ
 sfQ
 sfQ
-sdm
+jMh
 sfQ
 sfQ
 nbQ
@@ -36555,7 +36521,7 @@ nbQ
 nbQ
 nbQ
 sfQ
-xJF
+pdx
 sfQ
 sfQ
 sfQ
@@ -36686,7 +36652,7 @@ iDf
 tbQ
 sfQ
 sfQ
-sdm
+jMh
 sfQ
 sfQ
 sfQ
@@ -36697,7 +36663,7 @@ sfQ
 sfQ
 sfQ
 sfQ
-xJF
+pdx
 sfQ
 fcF
 sfQ
@@ -36828,7 +36794,7 @@ oyP
 tbQ
 sfQ
 sfQ
-sdm
+jMh
 sfQ
 sfQ
 sfQ
@@ -36839,7 +36805,7 @@ wJr
 tJi
 tJi
 tJi
-gdi
+uLM
 sfQ
 fcF
 fcF
@@ -36970,14 +36936,14 @@ tbQ
 tbQ
 sfQ
 sfQ
-sdm
+jMh
 sfQ
 sfQ
 sfQ
 sfQ
 sfQ
 sfQ
-xJF
+pdx
 sfQ
 sfQ
 sfQ
@@ -37112,14 +37078,14 @@ sfQ
 sfQ
 sfQ
 sfQ
-sdm
+jMh
 sfQ
 sfQ
 sfQ
 sfQ
 sfQ
 sfQ
-xJF
+pdx
 sfQ
 sfQ
 fcF
@@ -37254,7 +37220,7 @@ tJi
 tJi
 tJi
 tJi
-tJi
+qgu
 tJi
 qgu
 tJi
