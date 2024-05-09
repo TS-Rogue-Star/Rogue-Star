@@ -55,6 +55,8 @@
 	newPred.ckey = M.ckey
 	newPred.visible_message("<span class='warning'>[newPred] emerges from somewhere!</span>")
 	log_and_message_admins("successfully entered \a [src] and became a [newPred].")
+	newPred.mob_radio = new /obj/item/device/radio/headset/mob_headset(newPred)		//RS ADD START
+	newPred.mob_radio.frequency = PUB_FREQ		//RS ADD START
 	qdel(src)
 
 /obj/structure/ghost_pod/ghost_activated/maintpred/no_announce

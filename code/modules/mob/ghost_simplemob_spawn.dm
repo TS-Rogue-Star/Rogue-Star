@@ -27,6 +27,7 @@ GLOBAL_LIST_INIT(ghost_spawnable_mobs,list(
 	"Otie" = /mob/living/simple_mob/vore/otie,
 	"Otie - Mutated" =/mob/living/simple_mob/vore/otie/feral,
 	"Otie - Red" = /mob/living/simple_mob/vore/otie/red,
+	"Otie - Guard" = /mob/living/simple_mob/vore/otie/security,
 	"Pakkun" =/mob/living/simple_mob/vore/pakkun,
 	"Pakkun - Snapdragon" =/mob/living/simple_mob/vore/pakkun/snapdragon,
 	"Pakkun - Sand" = /mob/living/simple_mob/vore/pakkun/sand,
@@ -145,6 +146,9 @@ GLOBAL_LIST_INIT(ghost_spawnable_mobs,list(
 
 	newPred.ckey = src.ckey
 	newPred.visible_message("<span class='warning'>[newPred] emerges from somewhere!</span>")
+
+	newPred.mob_radio = new /obj/item/device/radio/headset/mob_headset(newPred)
+	newPred.mob_radio.frequency = PUB_FREQ
 
 /datum/admins/proc/add_ghost_mob_spawns()
 	set category = "Fun"
