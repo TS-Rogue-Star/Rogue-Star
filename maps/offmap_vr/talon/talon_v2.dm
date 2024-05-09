@@ -370,12 +370,14 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 
 /obj/structure/closet/secure_closet/talon_captain
 	name = "talon captain's locker"
-	req_access = list(access_talon)
+	req_access = list(access_talon_cap)
 	closet_appearance = /decl/closet_appearance/secure_closet/talon/captain
 
 	starts_with = list(
 		/obj/item/weapon/storage/backpack/dufflebag/captain,
 		/obj/item/clothing/suit/storage/vest,
+		/obj/item/clothing/accessory/solgov/department/command/army,
+		/obj/item/clothing/glasses/omnihud/all,
 		/obj/item/weapon/melee/telebaton,
 		/obj/item/device/flash,
 		/obj/item/device/radio/headset/talon,
@@ -392,7 +394,7 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 	closet_appearance = /decl/closet_appearance/secure_closet/talon/guard
 
 	starts_with = list(
-		/obj/item/clothing/suit/armor/pcarrier/light,
+		/obj/item/clothing/suit/storage/vest,
 		/obj/item/clothing/under/utility,
 		/obj/item/clothing/shoes/boots/jackboots,
 		/obj/item/clothing/shoes/boots/jackboots/toeless,
@@ -422,6 +424,7 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 		/obj/item/clothing/under/rank/medical,
 		/obj/item/clothing/under/rank/nurse,
 		/obj/item/clothing/under/rank/orderly,
+		/obj/item/clothing/accessory/solgov/department/medical/army,
 		/obj/item/clothing/suit/storage/toggle/labcoat/modern,
 		/obj/item/clothing/suit/storage/toggle/fr_jacket,
 		/obj/item/clothing/shoes/white,
@@ -440,6 +443,8 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 
 	starts_with = list(
 		/obj/item/clothing/accessory/storage/brown_vest,
+		/obj/item/clothing/accessory/solgov/department/engineering/army,
+		/obj/item/clothing/glasses/omnihud/eng/meson,
 		/obj/item/device/flashlight,
 		/obj/item/weapon/extinguisher,
 		/obj/item/clamp,
@@ -462,6 +467,7 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 
 	starts_with = list(
 		/obj/item/weapon/material/knife/tacknife/survival,
+		/obj/item/clothing/accessory/solgov/department/service/army,
 		/obj/item/clothing/head/pilot,
 		/obj/item/clothing/under/rank/pilot1,
 		/obj/item/clothing/suit/storage/toggle/bomber/pilot,
