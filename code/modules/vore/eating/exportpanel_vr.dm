@@ -28,7 +28,7 @@
 	var/mob/living/host = user
 
 	data["db_version"] = "0.1"
-	data["db_repo"] = "vorestation"
+	data["db_repo"] = "roguestar"
 	data["mob_name"] = host.real_name
 
 	for(var/belly in host.vore_organs)

@@ -46,7 +46,7 @@ RUN /bin/bash -c "source _build_dependencies.sh \
 
 FROM base as dm_base
 
-WORKDIR /vorestation
+WORKDIR /roguestar
 
 FROM dm_base as build
 
