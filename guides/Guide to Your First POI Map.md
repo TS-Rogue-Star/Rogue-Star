@@ -36,7 +36,7 @@ VSCode: If you’ve already installed VSCode and told it to associate with .dm f
 
 Hit Select Folder. We’ll open to a blank screen. Hit Ctrl + P to open a specific file, and type in wilderness_areas, and select wilderness_areas.dm. From here, refer to the joint section below.
 
-DreamMaker: This should have opened with our filetree, as screenshotted. [https://i.imgur.com/m8FjRAs.png](https://i.imgur.com/m8FjRAs.png) If it did not, navigate to File, Open Environment, and select vorestation.dme. Then, navigate to maps, submaps, surface submaps, wilderness, and open wilderness_areas.dm.
+DreamMaker: This should have opened with our filetree, as screenshotted. [https://i.imgur.com/m8FjRAs.png](https://i.imgur.com/m8FjRAs.png) If it did not, navigate to File, Open Environment, and select roguestar.dme. Then, navigate to maps, submaps, surface submaps, wilderness, and open wilderness_areas.dm.
 
 Joint (This assumes we’ve located the file as per instructions above. If you’re not using Dream Maker or VSCode, you’re expected to understand how to open the file yourself.) This section will be done in VSCode, but later iterations will screenshot the process in Dream Maker (it’s basically identical, just waiting on the wiki page to bother doing so.)
 
@@ -68,7 +68,7 @@ We are going to do something first before opening any environments. Go to File, 
 
 Under Save Options, **change this to TGM.** Check Sanitize Variables. Also check Clean Unused Keys, if this is not already checked. Nudge mode should be pixel_x/pixel_y.
 
-With that done, hit Open Environment, and navigate to the folder we downloaded in the earlier step. Open vorestation.dme, for VORE + CHOMP, or Polaris.dme for Polaris.
+With that done, hit Open Environment, and navigate to the folder we downloaded in the earlier step. Open roguestar.dme, for VORE + CHOMP, or Polaris.dme for Polaris.
 
 The file will load, and then you’ll still be at a blank screen, but now the Environment Tree should have 4 directories under it. \
 This is what it looks like. [https://i.imgur.com/RtURzx8.png](https://i.imgur.com/RtURzx8.png)
