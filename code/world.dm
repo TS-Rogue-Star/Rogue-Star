@@ -15,7 +15,7 @@
 	view = "15x15"
 	hub = "Exadv1.spacestation13"
 	hub_password = "kMZy3U5jJHSiBQjr"
-	name = "VOREStation" //VOREStation Edit
+	name = "RogueStar" //RS Edit
 	visibility = 0 //VOREStation Edit
 	cache_lifespan = 7
 	fps = 20 // If this isnt hard-defined, anything relying on this variable before world load will cry a lot

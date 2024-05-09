@@ -52,7 +52,7 @@ FROM dm_base as build
 
 COPY . .
 
-RUN DreamMaker -max_errors 0 vorestation.dme
+RUN DreamMaker -max_errors 0 roguestar.dme
 
 FROM dm_base
 
@@ -71,9 +71,9 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p /root/.byond/bin
 
-COPY --from=build /vorestation/ ./
+COPY --from=build /roguestar/ ./
 COPY --from=rust_g /rust_g/target/release/librust_g.so ./librust_g.so
 
-#VOLUME [ "/vorestation/config", "/vorestation/data" ]
+#VOLUME [ "/roguestar/config", "/roguestar/data" ]
 
-ENTRYPOINT [ "DreamDaemon", "vorestation.dmb", "-port", "2303", "-trusted", "-close", "-verbose" ]
+ENTRYPOINT [ "DreamDaemon", "roguestar.dmb", "-port", "2303", "-trusted", "-close", "-verbose" ]
