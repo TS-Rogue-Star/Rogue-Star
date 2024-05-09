@@ -50,6 +50,15 @@
 
 	ssd_vore = client.prefs_vr.ssd_vore	//RS ADD
 
+
+/mob/living/carbon/human/login_prefs()	//RS ADD START
+	. = ..()
+
+	allow_contaminate = client.prefs_vr.allow_contaminate
+	allow_stripping = client.prefs_vr.allow_stripping
+
+	//RS ADD END
+
 /mob/living/simple_mob/proc/set_name()
 	set name = "Set Name"
 	set desc = "Sets your mobs name. You only get to do this once."
@@ -89,11 +98,32 @@
 /mob/living/simple_mob/animal/giant_spider/carrier //or the ones who fart babies when they die
 	ic_revivable = FALSE
 
+//RS ADD START
 /mob/living/verb/toggle_ssd_vore()
-	set name = "Toggle SSD Vore"
+	set name = "Vore: Toggle SSD Vore"
 	set desc = "Toggles whether or not you can be eaten while SSD."
 	set category = "Preferences"
 
 	client.prefs_vr.ssd_vore = !client.prefs_vr.ssd_vore
 	ssd_vore = client.prefs_vr.ssd_vore
 	to_chat(src, "<span class='notice'>SSD Vore is now [ssd_vore ? "<font color='green'>enabled</font>" : "<font color='red'>disabled</font>"].</span>")
+
+/mob/living/carbon/human/verb/toggle_stripping()
+	set name = "Vore: Toggle Stripping"
+	set desc = "Toggles whether or not bellies can strip your clothes off of you."
+	set category = "Preferences"
+
+	client.prefs_vr.allow_stripping = !client.prefs_vr.allow_stripping
+	allow_stripping = client.prefs_vr.allow_stripping
+	to_chat(src, "<span class='notice'>Stripping is now [allow_stripping ? "<font color='green'>allowed</font>" : "<font color='red'>disallowed</font>"].</span>")
+
+/mob/living/carbon/human/verb/toggle_contaminate()
+	set name = "Vore: Toggle Contaminate"
+	set desc = "Toggles whether or not bellies can contaminate or digest items you are presentl wearing."
+	set category = "Preferences"
+
+	client.prefs_vr.allow_contaminate = !client.prefs_vr.allow_contaminate
+	allow_contaminate = client.prefs_vr.allow_contaminate
+	to_chat(src, "<span class='notice'>Contamination is now [allow_contaminate ? "<font color='green'>allowed</font>" : "<font color='red'>disallowed</font>"].</span>")
+
+//RS ADD END

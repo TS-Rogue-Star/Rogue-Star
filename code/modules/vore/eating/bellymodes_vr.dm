@@ -197,23 +197,25 @@
 
 				//Worn items flag
 				if(mode_flags & DM_FLAG_AFFECTWORN)
-					for(var/slot in slots)
-						var/obj/item/I = H.get_equipped_item(slot = slot)
-						if(I && I.canremove)
-							if(handle_digesting_item(I))
-								digestion_noise_chance = 25
-								to_update = TRUE
-								break
+					if(H.allow_contaminate)		//RS EDIT START
+						for(var/slot in slots)
+							var/obj/item/I = H.get_equipped_item(slot = slot)
+							if(I && I.canremove)
+								if(handle_digesting_item(I,H))
+									digestion_noise_chance = 25
+									to_update = TRUE
+									break		//RS EDIT END
 
 				//Stripping flag
 				if(mode_flags & DM_FLAG_STRIPPING)
-					for(var/slot in slots)
-						var/obj/item/I = H.get_equipped_item(slot = slot)
-						if(I && H.unEquip(I, force = FALSE))
-							handle_digesting_item(I)
-							digestion_noise_chance = 25
-							to_update = TRUE
-							break // Digest off one by one, not all at once
+					if(H.allow_stripping)		//RS EDIT START
+						for(var/slot in slots)
+							var/obj/item/I = H.get_equipped_item(slot = slot)
+							if(I && H.unEquip(I, force = FALSE))
+								handle_digesting_item(I,H)
+								digestion_noise_chance = 25
+								to_update = TRUE
+								break // Digest off one by one, not all at once	//RS EDIT END
 
 		//get rid of things like blood drops and gibs that end up in there
 		else if(istype(A, /obj/effect/decal/cleanable))
@@ -237,12 +239,19 @@
 			M.playsound_local(get_turf(src), preyloop, 80, 0, channel = CHANNEL_PREYLOOP)
 			M.next_preyloop = (world.time + (52 SECONDS))
 
-/obj/belly/proc/handle_digesting_item(obj/item/I)
+/obj/belly/proc/handle_digesting_item(obj/item/I,mob/living/carbon/human/H)		//RS EDIT
 	var/did_an_item = FALSE
 	// We always contaminate IDs.
 	if(contaminates || istype(I, /obj/item/weapon/card/id))
-		I.gurgle_contaminate(src, contamination_flavor, contamination_color)
-
+		if(H)	//RS EDIT START
+			if(H.allow_contaminate)
+				I.gurgle_contaminate(src, contamination_flavor, contamination_color)
+		else
+			I.gurgle_contaminate(src, contamination_flavor, contamination_color)
+	if(H)
+		if(!H.allow_stripping)
+			items_preserved |= I
+			return did_an_item		//RS EDIT END
 	switch(item_digest_mode)
 		if(IM_HOLD)
 			items_preserved |= I
