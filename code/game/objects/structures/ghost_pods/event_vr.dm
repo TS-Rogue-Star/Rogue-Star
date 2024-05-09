@@ -20,6 +20,7 @@
 	..()
 	var/choice
 	var/finalized = "No"
+	var/mobtype		//RS EDIT
 
 	if(jobban_isbanned(M, "GhostRoles"))
 		to_chat(M, "<span class='warning'>You cannot inhabit this creature because you are banned from playing ghost roles.</span>")
@@ -28,19 +29,25 @@
 
 	while(finalized == "No" && M.client)
 		choice = tgui_input_list(M, "What type of predator do you want to play as?", "Maintpred Choice", GLOB.ghost_spawnable_mobs)		//RS EDIT
-		if(!choice)	//We probably pushed the cancel button on the mob selection. Let's just put the ghost pod back in the list.
-			to_chat(M, "<span class='notice'>No mob selected, cancelling.</span>")
-			reset_ghostpod()
-			return
+		if(choice)		//RS EDIT START
+			if(islist(GLOB.ghost_spawnable_mobs[choice]))	//Allow for nested list for organization reasons
+				var/list/ourlist = GLOB.ghost_spawnable_mobs[choice]
+				var/newchoice = tgui_input_list(M, "Which one?", "[choice]", ourlist)
+				if(!newchoice)
+					to_chat(M, "<span class='notice'>No mob selected, cancelling.</span>")
+					reset_ghostpod()
+					return
+				choice = newchoice
+				mobtype = ourlist[newchoice]
+			else
+				mobtype = GLOB.ghost_spawnable_mobs[choice]	//RS EDIT END
 
-		if(choice)
 			finalized = tgui_alert(M, "Are you sure you want to play as [choice]?","Confirmation",list("No","Yes"))
 
 	if(!choice)	//If somehow we ended up here and we don't have a choice, let's just reset things!
 		reset_ghostpod()
 		return
 
-	var/mobtype = GLOB.ghost_spawnable_mobs[choice]
 	var/mob/living/simple_mob/newPred = new mobtype(get_turf(src))
 	qdel(newPred.ai_holder)
 	newPred.ai_holder = null
@@ -55,6 +62,11 @@
 	newPred.ckey = M.ckey
 	newPred.visible_message("<span class='warning'>[newPred] emerges from somewhere!</span>")
 	log_and_message_admins("successfully entered \a [src] and became a [newPred].")
+	newPred.mob_radio = new /obj/item/device/radio/headset/mob_headset(newPred)		//RS ADD
+	newPred.mob_radio.frequency = PUB_FREQ		//RS ADD
+	newPred.sight |= SEE_SELF		//RS ADD
+	newPred.sight |= SEE_MOBS		//RS ADD
+
 	qdel(src)
 
 /obj/structure/ghost_pod/ghost_activated/maintpred/no_announce
