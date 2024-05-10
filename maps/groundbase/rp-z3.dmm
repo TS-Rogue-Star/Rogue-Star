@@ -3367,6 +3367,15 @@
 	},
 /turf/simulated/floor/wood,
 /area/groundbase/hotspring)
+"MS" = (
+/obj/effect/shuttle_landmark/premade/groundbase{
+	name = "Rascal's Pass Shuttlepad"
+	},
+/turf/simulated/floor/reinforced{
+	edge_blending_priority = -1;
+	outdoors = 1
+	},
+/area/groundbase/level3/ne)
 "Na" = (
 /obj/effect/floor_decal/industrial/outline,
 /turf/simulated/floor/outdoors/sidewalk/slab,
@@ -18129,7 +18138,7 @@ mS
 mS
 mS
 mS
-mS
+MS
 mS
 mS
 mS
