@@ -26138,7 +26138,6 @@
 	name = "Exit Button";
 	pixel_x = -24
 	},
-/obj/effect/floor_decal/corner/paleblue/full,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/lhallway)
 "xXG" = (
