@@ -3452,7 +3452,9 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/machinery/firealarm,
+/obj/machinery/firealarm{
+	dir = 1
+	},
 /obj/effect/floor_decal/milspec/color/orange/half{
 	dir = 10
 	},
