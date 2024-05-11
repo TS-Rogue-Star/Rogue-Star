@@ -139,11 +139,8 @@
 
 /datum/sprite_accessory/ears/shadekin/dualcolor
 	name = "Shadekin Ears (Dual Colorable)"
-	desc = ""
 	icon = 'icons/mob/vore/ears_32x64.dmi'
 	icon_state = "shadekindual"
-	do_colouration = 1
-	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "shadekin-under"
 
 /datum/sprite_accessory/ears/bnnuy
