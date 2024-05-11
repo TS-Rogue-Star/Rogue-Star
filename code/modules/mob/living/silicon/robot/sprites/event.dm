@@ -46,6 +46,11 @@
 	if(DL)
 		DL.icon_state = "sleeperlost"
 
+	var/obj/item/weapon/dogborg/pounce/SA = locate() in module.modules
+	if(SA)
+		SA.name = "pounce"
+		SA.icon_state = "pounce"
+
 /datum/robot_sprite/dogborg/lost/stray
 	name = "Stray"
 	sprite_icon_state = "stray"
