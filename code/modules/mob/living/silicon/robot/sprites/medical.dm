@@ -212,6 +212,10 @@
 		SP.icon_state = "defibpaddles0"
 		SP.attack_verb = list("batted", "pawed", "bopped", "whapped")
 
+	var/obj/item/device/dogborg/sleeper/trauma/SB = locate() in module.modules
+	if(SB)
+		SB.icon_state = "sleeper"
+
 /datum/robot_sprite/dogborg/surgical/vale
 	name = "Traumahound"
 	sprite_icon_state = "vale"
@@ -250,6 +254,10 @@
 		SP.icon = 'icons/mob/dogborg_vr.dmi'
 		SP.icon_state = "defibpaddles0"
 		SP.attack_verb = list("batted", "pawed", "bopped", "whapped")
+
+	var/obj/item/device/dogborg/sleeper/trauma/SB = locate() in module.modules
+	if(SB)
+		SB.icon_state = "sleeper"
 
 /datum/robot_sprite/dogborg/tall/surgical/raptor
 	name = "Raptor V-4"
@@ -337,6 +345,10 @@
 		SP.icon_state = "defibpaddles0"
 		SP.attack_verb = list("batted", "pawed", "bopped", "whapped")
 
+	var/obj/item/device/dogborg/sleeper/SB = locate() in module.modules
+	if(SB)
+		SB.icon_state = "sleeper"
+
 /datum/robot_sprite/dogborg/crisis/hound
 	name = "Medihound"
 	sprite_icon_state = "hound"
@@ -389,6 +401,10 @@
 		SP.icon = 'icons/mob/dogborg_vr.dmi'
 		SP.icon_state = "defibpaddles0"
 		SP.attack_verb = list("batted", "pawed", "bopped", "whapped")
+
+	var/obj/item/device/dogborg/sleeper/SB = locate() in module.modules
+	if(SB)
+		SB.icon_state = "sleeper"
 
 /datum/robot_sprite/dogborg/tall/crisis/raptor
 	name = "Raptor V-4"
