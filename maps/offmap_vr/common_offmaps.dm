@@ -337,6 +337,11 @@
 	desc = "A cozy island with a bunch of potential pets on it!"
 	mappath = 'maps/redgate/petisland.dmm'
 
+/datum/map_template/common_lateload/redgate/northstar
+	name = "Redgate - North Star"
+	desc = "A mysterious gloomy land."
+	mappath = 'maps/redgate/da2ns.dmm'
+
 // RS EDIT END
 
 //////////////////////////////////////////////////////////////////////////////////////
