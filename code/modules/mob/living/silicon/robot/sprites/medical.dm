@@ -92,6 +92,24 @@
 	module_type = list("Crisis", "Surgeon")
 	sprite_icon = 'icons/mob/robot/medical_large.dmi'
 
+/datum/robot_sprite/dogborg/tall/medical/do_equipment_glamour(var/obj/item/weapon/robot_module/module)
+	if(!has_custom_equipment_sprites)
+		return
+
+	..()
+
+	var/obj/item/weapon/shockpaddles/robot/SP = locate() in module.modules
+	if(SP)
+		SP.name = "paws of life"
+		SP.desc = "Zappy paws. For fixing cardiac arrest."
+		SP.icon = 'icons/mob/dogborg_vr.dmi'
+		SP.icon_state = "defibpaddles0"
+		SP.attack_verb = list("batted", "pawed", "bopped", "whapped")
+
+	var/obj/item/device/dogborg/sleeper/SB = locate() in module.modules // This might cause an issue if someone makes changes between surgical/crisis sleepers, oh well!
+	if(SB)
+		SB.icon_state = "sleeper"
+
 /datum/robot_sprite/dogborg/tall/medical/meka
 	name = "MEKA"
 	sprite_icon_state = "meka"

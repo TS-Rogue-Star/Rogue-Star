@@ -791,20 +791,20 @@
 /obj/item/device/dogborg/sleeper/syndie
 	name = "Combat Triage Belly"
 	desc = "A mounted sleeper that stabilizes patients and can inject reagents in the borg's reserves. This one is for more extreme combat scenarios."
-	icon_state = "sleepersyndiemed"
+	icon_state = "notsleepersyndiemed"
 	injection_chems = list("healing_nanites", "hyperzine", "tramadol", "oxycodone", "spaceacillin", "peridaxon", "osteodaxon", "myelamine", "synthblood")
 	digest_multiplier = 2
 
 /obj/item/device/dogborg/sleeper/K9/syndie
 	name = "Cell-Belly"
 	desc = "A mounted portable cell that holds anyone you wish for processing or 'processing'."
-	icon_state = "sleepersyndiebrig"
+	icon_state = "notsleepersyndiebrig"
 	digest_multiplier = 3
 
 /obj/item/device/dogborg/sleeper/compactor/syndie
 	name = "Advanced Matter Decompiler"
 	desc = "A mounted matter decompiling unit with fuel processor, for recycling anything and everyone in your way."
-	icon_state = "sleepersyndieeng"
+	icon_state = "notsleepersyndieeng"
 	max_item_count = 35
 	digest_multiplier = 3
 
