@@ -186,24 +186,28 @@
 	starts_with = list(/obj/item/weapon/hypospray_mkii/tricord, /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/preloaded/tricordrazine = 3)
 
 /obj/item/weapon/storage/firstaid/hypokit/brute
+	name = "hypospray mk.II brute kit"
 	icon_state = "firstaid-brute-mini"
 	desc = "Contains a Mk II Hypospray and its hypovials. It can only hold mk.II related items. This one is prefilled with Bicaridine."
 	starts_with = list(/obj/item/weapon/hypospray_mkii/brute, /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/preloaded/bicaridine = 3)
 	item_state_slots = list(slot_r_hand_str = "firstaid-advanced", slot_l_hand_str = "firstaid-advanced")
 
 /obj/item/weapon/storage/firstaid/hypokit/burn
+	name = "hypospray mk.II burn kit"
 	icon_state = "firstaid-burn-mini"
 	desc = "Contains a Mk II Hypospray and its hypovials. It can only hold mk.II related items. This one is prefilled with Kelotane."
 	starts_with = list(/obj/item/weapon/hypospray_mkii/burn, /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/preloaded/kelotane = 3)
 	item_state_slots = list(slot_r_hand_str = "firstaid-ointment", slot_l_hand_str = "firstaid-ointment")
 
 /obj/item/weapon/storage/firstaid/hypokit/toxin
+	name = "hypospray mk.II toxin kit"
 	icon_state = "firstaid-toxin-mini"
 	desc = "Contains a Mk II Hypospray and its hypovials. It can only hold mk.II related items. This one is prefilled with Dylovene."
 	starts_with = list(/obj/item/weapon/hypospray_mkii/toxin, /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/preloaded/antitoxin = 3)
 	item_state_slots = list(slot_r_hand_str = "firstaid-toxin", slot_l_hand_str = "firstaid-toxin")
 
 /obj/item/weapon/storage/firstaid/hypokit/oxy
+	name = "hypospray mk.II oxygen kit"
 	icon_state = "firstaid-o2-mini"
 	desc = "Contains a Mk II Hypospray and its hypovials. It can only hold mk.II related items. This one is prefilled with Dexalin."
 	starts_with = list(/obj/item/weapon/hypospray_mkii/oxygen, /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/preloaded/dexalin = 3)
