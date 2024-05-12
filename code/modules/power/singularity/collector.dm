@@ -25,6 +25,9 @@ var/global/list/rad_collectors = list()
 	rad_collectors -= src
 	return ..()
 
+/obj/machinery/power/rad_collector/should_have_node()
+	return TRUE
+
 /obj/machinery/power/rad_collector/process()
 	//so that we don't zero out the meter if the SM is processed first.
 	last_power = last_power_new

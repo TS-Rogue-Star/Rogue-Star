@@ -14,6 +14,7 @@
 	use_power = USE_POWER_OFF
 	idle_power_usage = 0
 	active_power_usage = 0
+	var/cable_layer
 
 /obj/machinery/power/Destroy()
 	disconnect_from_network()

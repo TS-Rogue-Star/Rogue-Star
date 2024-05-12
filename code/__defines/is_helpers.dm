@@ -25,6 +25,14 @@
 
 #define isstructure(A)	istype(A, /obj/structure)
 
+#define iscable(A) (istype(A, /obj/structure/cable))
+
+#define ismachinery(A) (istype(A, /obj/machinery))
+
+#define ispowermachinery(A) (istype(A, /obj/machinery/power))
+
+#define isAPC(A) (istype(A, /obj/machinery/power/apc))
+
 //---------------
 //#define isarea(D)		istype(D, /area)	//Built in
 

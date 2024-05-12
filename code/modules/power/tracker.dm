@@ -28,6 +28,9 @@
 	unset_control() //remove from control computer
 	..()
 
+/obj/machinery/power/tracker/should_have_node()
+	return TRUE
+
 //set the control of the tracker to a given computer if closer than SOLAR_MAX_DIST
 /obj/machinery/power/tracker/proc/set_control(var/obj/machinery/power/solar_control/SC)
 	if(SC && (get_dist(src, SC) > SOLAR_MAX_DIST))

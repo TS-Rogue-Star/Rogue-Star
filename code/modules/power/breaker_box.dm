@@ -1,7 +1,7 @@
 // Updated version of old powerswitch by Atlantis
 // Has better texture, and is now considered electronic device
 // AI has ability to toggle it in 5 seconds
-// Humans need 30 seconds (AI is faster when it comes to complex electronics)
+// Humans need 30 seconds (AI is faster when it comes to complex electronics) //ITS A FUCKING SWITCH
 // Used for advanced grid control (read: Substations)
 
 /obj/machinery/power/breakerbox
@@ -9,22 +9,25 @@
 	desc = "Large machine with heavy duty switching circuits used for advanced grid control."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "bbox_off"
-	//directwired = 0
+	//directwired = FALSE
 	var/icon_state_on = "bbox_on"
 	var/icon_state_off = "bbox_off"
 	density = TRUE
 	anchored = TRUE
 	unacidable = TRUE
 	circuit = /obj/item/weapon/circuitboard/breakerbox
-	var/on = 0
-	var/busy = 0
-	var/directions = list(1,2,4,8,5,6,9,10)
+	var/obj/structure/cable/stored
+	var/on = FALSE
+	var/busy = FALSE
+	var/directions = GLOB.cardinal
 	var/RCon_tag = "NO_TAG"
-	var/update_locked = 0
+	var/update_locked = FALSE
 
 /obj/machinery/power/breakerbox/Destroy()
 	for(var/obj/structure/cable/C in src.loc)
 		qdel(C)
+	if(stored)
+		stored = null
 	. = ..()
 	for(var/datum/tgui_module/rcon/R in world)
 		R.FindDevices()
@@ -32,6 +35,9 @@
 /obj/machinery/power/breakerbox/Initialize()
 	. = ..()
 	default_apply_parts()
+
+/obj/machinery/power/breakerbox/should_have_node()
+	return TRUE
 
 /obj/machinery/power/breakerbox/activated
 	icon_state = "bbox_on"
@@ -42,7 +48,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/power/breakerbox/activated/LateInitialize()
-	set_state(1)
+	set_state(TRUE)
 
 /obj/machinery/power/breakerbox/examine(mob/user)
 	. = ..()
@@ -60,15 +66,15 @@
 		to_chat(user, "<font color='red'>System is busy. Please wait until current operation is finished before changing power settings.</font>")
 		return
 
-	busy = 1
+	busy = TRUE
 	to_chat(user, "<font color='green'>Updating power settings...</font>")
-	if(do_after(user, 50))
+	if(do_after(user, 5 SECONDS))
 		set_state(!on)
 		to_chat(user, "<font color='green'>Update Completed. New setting:[on ? "on": "off"]</font>")
-		update_locked = 1
-		spawn(600)
-			update_locked = 0
-	busy = 0
+		update_locked = TRUE
+		spawn(10 SECONDS)	//why was it 5 minutes cool down...
+			update_locked = FALSE
+	busy = FALSE
 
 
 /obj/machinery/power/breakerbox/attack_hand(mob/user)
@@ -80,19 +86,18 @@
 		to_chat(user, "<font color='red'>System is busy. Please wait until current operation is finished before changing power settings.</font>")
 		return
 
-	busy = 1
-	for(var/mob/O in viewers(user))
-		O.show_message(text("<font color='red'>[user] started reprogramming [src]!</font>"), 1)
+	busy = TRUE
+	visible_message("<font color='red'>[user] started reprogramming [src]!</font>")
 
-	if(do_after(user, 50))
+	if(do_after(user, 5 SECONDS))
 		set_state(!on)
 		user.visible_message(\
 		"<span class='notice'>[user.name] [on ? "enabled" : "disabled"] the breaker box!</span>",\
 		"<span class='notice'>You [on ? "enabled" : "disabled"] the breaker box!</span>")
-		update_locked = 1
-		spawn(600)
-			update_locked = 0
-	busy = 0
+		update_locked = TRUE
+		spawn(10 SECONDS)
+			update_locked = FALSE
+	busy = FALSE
 
 /obj/machinery/power/breakerbox/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if(istype(W, /obj/item/device/multitool))
@@ -118,38 +123,36 @@
 		var/list/connection_dirs = list()
 		for(var/direction in directions)
 			for(var/obj/structure/cable/C in get_step(src,direction))
-				if(C.d1 == turn(direction, 180) || C.d2 == turn(direction, 180))
-					connection_dirs += direction
-					break
+				connection_dirs += direction
+				cable_layer = C.cable_layer //Ensure our cable layer matches the connections
+				break
 
-		for(var/direction in connection_dirs)
+		if(stored) //let's try to preserve our wire to save on generations.
+			var/obj/structure/cable/C = stored
+			C.loc = loc
+			stored = null
+			if(!C.breaker_box)
+				C.breaker_box = src
+			C.Connect_cable()
+		else
 			var/obj/structure/cable/C = new/obj/structure/cable(src.loc)
-			C.d1 = 0
-			C.d2 = direction
-			C.icon_state = "[C.d1]-[C.d2]"
-			C.breaker_box = src
-
-			var/datum/powernet/PN = new()
-			PN.add_cable(C)
-
-			C.mergeConnectedNetworks(C.d2)
-			C.mergeConnectedNetworksOnTurf()
-
-			if(C.d2 & (C.d2 - 1))// if the cable is layed diagonally, check the others 2 possible directions
-				C.mergeDiagonalsNetworks(C.d2)
+			C.cable_layer = cable_layer	//ensuring the new cable is, also, the correct layer.
+			if(!C.breaker_box)
+				C.breaker_box = src
 
 	else
 		icon_state = icon_state_off
 		for(var/obj/structure/cable/C in src.loc)
-			qdel(C)
+			if(!C) return
+
 
 // Used by RCON to toggle the breaker box.
 /obj/machinery/power/breakerbox/proc/auto_toggle()
 	if(!update_locked)
 		set_state(!on)
-		update_locked = 1
+		update_locked = TRUE
 		spawn(600)
-			update_locked = 0
+			update_locked = FALSE
 
 /obj/machinery/power/breakerbox/process()
-	return 1
+	return TRUE

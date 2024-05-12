@@ -42,6 +42,9 @@ GLOBAL_LIST_EMPTY(solars_list)
 	unset_control() //remove from control computer
 	. = ..()
 
+/obj/machinery/power/solar/should_have_node()
+	return TRUE
+
 //set the control of the panel to a given computer if closer than SOLAR_MAX_DIST
 /obj/machinery/power/solar/proc/set_control(var/obj/machinery/power/solar_control/SC)
 	ASSERT(!control)
@@ -123,7 +126,7 @@ GLOBAL_LIST_EMPTY(solars_list)
 		return 0  //if there's no SSsun.sun or the panel is not linked to a solar control computer, no need to proceed
 	if(!powernet || powernet != control.powernet)
 		return 0 // We aren't connected to the controller
-	if(obscured) 
+	if(obscured)
 		return 0 //get no light from the SSsun.sun, so don't generate power
 	return GLOB.solar_gen_rate * sunfrac
 

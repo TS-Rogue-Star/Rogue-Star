@@ -34,6 +34,9 @@
 	wires = null
 	return ..()
 
+/obj/machinery/particle_acclerator/control_box/should_have_node()
+	return TRUE
+
 /obj/machinery/particle_accelerator/control_box/attack_hand(mob/user as mob)
 	if(construction_state >= 3)
 		tgui_interact(user)

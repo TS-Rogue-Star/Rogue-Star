@@ -216,6 +216,9 @@
 	if(compressor)
 		compressor.locate_machinery()
 
+/obj/machinery/power/turbine/should_have_node()
+	return TRUE
+
 /obj/machinery/power/turbine/attackby(obj/item/W, mob/user)
 	src.add_fingerprint(user)
 

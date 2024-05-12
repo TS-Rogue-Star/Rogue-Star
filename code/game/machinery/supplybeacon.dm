@@ -40,6 +40,9 @@
 	..()
 	if(!drop_type) drop_type = pick(supply_drop_random_loot_types())
 
+/obj/machinery/power/supply_beacon/should_have_node()
+	return anchored
+
 /obj/machinery/power/supply_beacon/supermatter
 	name = "supermatter supply beacon"
 	drop_type = "supermatter"

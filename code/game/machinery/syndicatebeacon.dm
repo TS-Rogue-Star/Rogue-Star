@@ -87,6 +87,9 @@
 	var/active = 0
 	var/icontype = "beacon"
 
+/obj/machinery/power/singularity_beacon/should_have_node()
+	return anchored
+
 /obj/machinery/power/singularity_beacon/proc/Activate(mob/user = null)
 	if(surplus() < 1500)
 		if(user)

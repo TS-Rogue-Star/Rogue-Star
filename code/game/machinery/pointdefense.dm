@@ -160,6 +160,9 @@ GLOBAL_LIST_BOILERPLATE(pointdefense_turrets, /obj/machinery/power/pointdefense)
 	if(!id_tag)
 		. += "[desc_panel_image("multitool")]to set ident tag and connect to a mainframe."
 
+/obj/machinery/power/pointdefense/should_have_node()
+	return anchored
+
 /obj/machinery/power/pointdefense/update_icon()
 	if(!active || !id_tag || inoperable())
 		icon_state = "[initial(icon_state)]_off"

@@ -240,6 +240,9 @@ GLOBAL_LIST_EMPTY(apcs)
 
 	return ..()
 
+/obj/machinery/power/apc/should_have_node()
+	return TRUE
+
 /obj/machinery/power/apc/proc/offset_apc()
 	pixel_x = (dir & 3) ? 0 : (dir == 4 ? 26 : -26)
 	pixel_y = (dir & 3) ? (dir == 1 ? 26 : -26) : 0
@@ -1373,3 +1376,6 @@ GLOBAL_LIST_EMPTY(apcs)
 #undef APC_HAS_ELECTRONICS_NONE
 #undef APC_HAS_ELECTRONICS_WIRED
 #undef APC_HAS_ELECTRONICS_SECURED
+
+/area/proc/get_apc()
+	return apc

@@ -30,6 +30,9 @@
 
 	var/integrity = 80
 
+/obj/machinery/power/emitter/should_have_node()
+	return TRUE
+
 /obj/machinery/power/emitter/verb/rotate_clockwise()
 	set name = "Rotate Emitter Clockwise"
 	set category = "Object"

@@ -37,6 +37,9 @@
 	. = ..()
 	default_apply_parts()
 
+/obj/machinery/power/tesla_coil/should_have_node()
+	return TRUE
+
 /obj/machinery/power/tesla_coil/Destroy()
 	QDEL_NULL(wires)
 	return ..()

@@ -144,6 +144,45 @@
 		playsound(src, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 	return success
 
+//Cables laying helpers
+/turf/proc/handleRCL(obj/item/twohanded/rcl/C, mob/user)
+	if(C.loaded)
+		for(var/obj/structure/pipe_cleaner/LC in src)
+			if(!LC.d1 || !LC.d2)
+				LC.handlecable(C, user)
+				return
+		C.loaded.place_turf(src, user)
+		if(C.wiring_gui_menu)
+			C.wiringGuiUpdate(user)
+		C.is_empty(user)
+
+/turf/proc/can_have_cabling()
+	return TRUE
+
+/turf/proc/can_lay_cable()
+	return can_have_cabling() & !intact_tile
+
+/turf/attackby(obj/item/C, mob/user, params)
+	if(..())
+		return TRUE
+	if(can_lay_cable() && istype(C, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/coil = C
+		coil.place_turf(src, user)
+		return TRUE
+	else if(can_have_cabling() && istype(C, /obj/item/stack/pipe_cleaner_coil))
+		var/obj/item/stack/pipe_cleaner_coil/coil = C
+		for(var/obj/structure/pipe_cleaner/LC in src)
+			if(!LC.d1 || !LC.d2)
+				LC.attackby(C, user)
+				return
+		coil.place_turf(src, user)
+		return TRUE
+
+	else if(istype(C, /obj/item/weapon/rcl))
+		handleRCL(C, user)
+
+	return FALSE
+
 /turf/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 	var/turf/T = get_turf(user)
 	var/area/A = T.loc
@@ -241,6 +280,7 @@
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
 		O.hide(O.hides_under_flooring() && !is_plating())
+		SEND_SIGNAL(O, COMSIG_OBJ_HIDE, intact_tile)
 
 /turf/proc/AdjacentTurfs(var/check_blockage = TRUE)
 	. = list()

@@ -73,6 +73,8 @@
 	mode_list = null
 	. = ..()
 
+/obj/machinery/power/shield_generator/should_have_node()
+	return TRUE
 
 /obj/machinery/power/shield_generator/RefreshParts()
 	max_energy = 0

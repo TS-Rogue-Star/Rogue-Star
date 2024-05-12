@@ -29,6 +29,9 @@
 	if(get_dist(user, src) <= 2)
 		. += "There is a small display that reads \"[convert_k2c(target_temp)]C\"."
 
+/obj/machinery/power/thermoregulator/should_have_node()
+	return anchored
+
 /obj/machinery/power/thermoregulator/attackby(obj/item/I, mob/user)
 	if(I.is_screwdriver())
 		if(default_deconstruction_screwdriver(user,I))
