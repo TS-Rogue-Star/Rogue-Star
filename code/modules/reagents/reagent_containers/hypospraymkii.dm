@@ -206,8 +206,8 @@
 		return
 	add_attack_logs(user, L, "[user] applied [src] to [L], which had [contained] (INTENT: [uppertext(user.a_intent)]) (MODE: [fp_verb])")
 	if(L != user)
-		L.visible_message("<span class='danger'>[user] [mode ? "Injects" : "Sprays"] with the [src] on [L]!</span>", \
-						"<span class='userdanger'>[user] [mode ? "Injects" : "Sprays"] you with the [src]!</span>")
+		L.visible_message("<span class='danger'>[user] [fp_verb] with the [src] on [L]!</span>", \
+						"<span class='userdanger'>[user] [fp_verb] you with the [src]!</span>")
 	else
 		add_attack_logs(user, L, "[user] applied [src] on [L] with [src] which had [contained]")
 
