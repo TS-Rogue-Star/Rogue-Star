@@ -1531,13 +1531,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/wood,
 /area/groundbase/medical/cmo)
-"sH" = (
-/turf/simulated/floor/water/atoll{
-	desc = "This water looks pretty shallow and calm. You'd almost feel bad for hopping in and disturbing its serene flatness. Steam wafts off of the surface!";
-	name = "hotspring";
-	outdoors = 1
-	},
-/area/groundbase/level3/nw)
 "sK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -2194,14 +2187,6 @@
 /obj/machinery/atmospherics/pipe/zpipe/down/supply,
 /obj/structure/disposalpipe/down,
 /turf/simulated/floor/tiled/dark,
-/area/groundbase/level3/nw)
-"yC" = (
-/obj/effect/map_effect/interval/effect_emitter/steam/less_frequent,
-/turf/simulated/floor/water/atoll{
-	desc = "This water looks pretty shallow and calm. You'd almost feel bad for hopping in and disturbing its serene flatness. Steam wafts off of the surface!";
-	name = "hotspring";
-	outdoors = 1
-	},
 /area/groundbase/level3/nw)
 "yD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -5031,10 +5016,10 @@ nX
 nX
 nX
 nX
-sH
-sH
-sH
-sH
+Mz
+Mz
+Mz
+Mz
 nX
 nX
 nX
@@ -5174,10 +5159,10 @@ nX
 Mz
 Mz
 Mz
-sH
-sH
-sH
-sH
+Mz
+Mz
+Mz
+Mz
 nX
 nX
 nX
@@ -5316,11 +5301,11 @@ Ue
 Mz
 na
 Mz
-sH
-sH
-sH
-sH
-sH
+Mz
+Mz
+Mz
+Mz
+Mz
 nX
 nX
 nX
@@ -5456,14 +5441,14 @@ Ue
 Ue
 Ue
 Ue
-sH
-sH
-sH
-sH
-sH
-sH
-sH
-sH
+Mz
+Mz
+Mz
+Mz
+Mz
+Mz
+Mz
+Mz
 nX
 nX
 nX
@@ -5598,14 +5583,14 @@ dO
 dO
 Ue
 Ue
-sH
-sH
-sH
-yC
-sH
-sH
-sH
-sH
+Mz
+Mz
+Mz
+na
+Mz
+Mz
+Mz
+Mz
 nX
 nX
 nX
@@ -5741,14 +5726,14 @@ Ue
 Ue
 Ue
 Ue
-sH
-sH
-sH
-sH
-sH
-sH
-sH
-sH
+Mz
+Mz
+Mz
+Mz
+Mz
+Mz
+Mz
+Mz
 nX
 nX
 nX
@@ -5884,12 +5869,12 @@ Ue
 Ue
 Ue
 Ue
-sH
-sH
-sH
-sH
-yC
-sH
+Mz
+Mz
+Mz
+Mz
+na
+Mz
 Ue
 Ue
 Ue
@@ -6027,10 +6012,10 @@ Ue
 Ue
 Ue
 Ue
-sH
-sH
-sH
-sH
+Mz
+Mz
+Mz
+Mz
 Ue
 Ue
 Ue

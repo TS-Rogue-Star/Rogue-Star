@@ -4409,6 +4409,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/machinery/light,
 /turf/simulated/floor/tiled,
 /area/ai_monitored/storage/eva)
 "po" = (
@@ -5482,6 +5483,14 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/civilian/chapel)
+"sH" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/computer/guestpass{
+	dir = 4;
+	pixel_x = -22
+	},
+/turf/simulated/floor/tiled,
+/area/ai_monitored/storage/eva)
 "sJ" = (
 /turf/simulated/wall,
 /area/groundbase/level2/ne)
@@ -8993,11 +9002,10 @@
 /turf/simulated/floor/wood,
 /area/groundbase/dorms/room6)
 "EZ" = (
-/obj/machinery/computer/guestpass{
-	dir = 4;
-	pixel_x = -22
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor/tiled,
 /area/ai_monitored/storage/eva)
 "Fb" = (
@@ -20058,7 +20066,7 @@ TH
 ma
 QS
 Xp
-Xp
+sH
 Xp
 Xp
 EZ
