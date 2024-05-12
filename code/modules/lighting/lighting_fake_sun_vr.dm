@@ -218,6 +218,7 @@ var/static/list/fake_sunlight_zs = list()
 		)
 	)
 
+//RS ADD START
 /obj/effect/fake_sun/gloom
 	name = "gloomy fake sun"
 	do_weather = TRUE
@@ -229,3 +230,4 @@ var/static/list/fake_sunlight_zs = list()
 			"color" = "#8627b3"
 		)
 	)
+//RS ADD END

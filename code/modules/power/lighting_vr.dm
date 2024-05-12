@@ -247,6 +247,8 @@
 /obj/machinery/light/small/torch/attackby()
 	return
 
+//RS ADD START
+
 /obj/light_object/torch
 	icon = 'icons/obj/lighting_vr.dmi'
 	name = "wall torch"
@@ -263,3 +265,5 @@
 /obj/light_object/torch/Initialize(mapload)
 	. = ..()
 	set_light_on(TRUE)
+
+//RS ADD END

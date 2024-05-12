@@ -211,20 +211,20 @@
 		)
 	//List associations used in admin load selection feature
 	lateload_redgate = list(
-//		"Teppi Ranch" = list("Redgate - Teppi Ranch"),
-//		"Innland" = list("Redgate - Innland"),
+		"Teppi Ranch" = list("Redgate - Teppi Ranch"),
+		"Innland" = list("Redgate - Innland"),
 //		"Abandoned Island" = list("Redgate - Abandoned Island"),	//This will come back later
-//		"Dark Adventure" = list("Redgate - Dark Adventure"),
-//		"Eggnog Town" = list("Redgate - Eggnog Town Underground","Redgate - Eggnog Town"),
-//		"Star Dog" = list("Redgate - Star Dog"),
-//		"Hotsprings" = list("Redgate - Hotsprings"),
-//		"Rain City" = list("Redgate - Rain City"),
-//		"Islands" = list("Redgate - Islands Underwater","Redgate - Islands"),
-//		"Moving Train" = list("Redgate - Moving Train", "Redgate - Moving Train Upper Level"),
-//		"Fantasy Town" = list("Redgate - Fantasy Dungeon", "Redgate - Fantasy Town"),
-//		"Snowglobe" = list("Redgate - Snowglobe"),
-//		"Pet Island" = list("Redgate - Pet Island"),
-		"North Star" = list("Redgate - North Star")
+		"Dark Adventure" = list("Redgate - Dark Adventure"),
+		"Eggnog Town" = list("Redgate - Eggnog Town Underground","Redgate - Eggnog Town"),
+		"Star Dog" = list("Redgate - Star Dog"),
+		"Hotsprings" = list("Redgate - Hotsprings"),
+		"Rain City" = list("Redgate - Rain City"),
+		"Islands" = list("Redgate - Islands Underwater","Redgate - Islands"),
+		"Moving Train" = list("Redgate - Moving Train", "Redgate - Moving Train Upper Level"),
+		"Fantasy Town" = list("Redgate - Fantasy Dungeon", "Redgate - Fantasy Town"),
+		"Snowglobe" = list("Redgate - Snowglobe"),
+		"Pet Island" = list("Redgate - Pet Island")
+//		"North Star" = list("Redgate - North Star") // Not ready yet
 		)
 
 	lateload_gb_north = list(
