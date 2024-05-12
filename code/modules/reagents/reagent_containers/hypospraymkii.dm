@@ -195,9 +195,9 @@
 	var/fp_verb = mode == HYPO_SPRAY ? "spray" : "inject"
 
 	if(L != user)
-		L.visible_message("<span class='danger'>[user] is trying to [fp_verb] [L] with [src]!</span>", \
-						"<span class='userdanger'>[user] is trying to [fp_verb] you with [src]!</span>")
-	add_attack_logs(user, L, "[user] attemped to use [src] [L] which had [contained]")
+		L.visible_message("<span class='danger'>\The [user] is trying to [fp_verb] \the [L] with \the [src]!</span>", \
+						"<span class='userdanger'>\The [user] is trying to [fp_verb] you with \the [src]!</span>")
+	add_attack_logs(user, L, "[user] attemped to use [src] on [L] which had [contained]")
 
 	if(!do_mob(user, L, inject_wait))
 		return
@@ -206,8 +206,8 @@
 		return
 	add_attack_logs(user, L, "[user] applied [src] to [L], which had [contained] (INTENT: [uppertext(user.a_intent)]) (MODE: [fp_verb])")
 	if(L != user)
-		L.visible_message("<span class='danger'>[user] [fp_verb] with the [src] on [L]!</span>", \
-						"<span class='userdanger'>[user] [fp_verb] you with the [src]!</span>")
+		L.visible_message("<span class='danger'>\The [user] [fp_verb]s \the [L] with \the [src]!</span>", \
+						"<span class='userdanger'>\The [user] [fp_verb]s you with \the [src]!</span>")
 	else
 		add_attack_logs(user, L, "[user] applied [src] on [L] with [src] which had [contained]")
 
@@ -225,7 +225,7 @@
 		if(user.incapacitated())
 			return
 		else if(!vial)
-			to_chat(user, "This Hypo needs to be loaded first!")
+			to_chat(user, "\The [src] needs to be loaded first!")
 			return
 		else
 			unload_hypo(vial,user)
