@@ -108,6 +108,16 @@
 	module_type = "Miner"
 	sprite_icon = 'icons/mob/robot/mining_wide.dmi'
 
+/datum/robot_sprite/dogborg/mining/do_equipment_glamour(var/obj/item/weapon/robot_module/module)
+	if(!has_custom_equipment_sprites)
+		return
+
+	..()
+
+	var/obj/item/device/dogborg/sleeper/compactor/supply/DCS = locate() in module.modules
+	if(DCS)
+		DCS.icon_state = "sleeperc"
+
 /datum/robot_sprite/dogborg/mining/vale
 	name = "KMine"
 	sprite_icon_state = "vale"
@@ -132,6 +142,16 @@
 /datum/robot_sprite/dogborg/tall/mining
 	module_type = "Miner"
 	sprite_icon = 'icons/mob/robot/mining_large.dmi'
+
+/datum/robot_sprite/dogborg/tall/mining/do_equipment_glamour(var/obj/item/weapon/robot_module/module)
+	if(!has_custom_equipment_sprites)
+		return
+
+	..()
+
+	var/obj/item/device/dogborg/sleeper/compactor/supply/DCS = locate() in module.modules
+	if(DCS)
+		DCS.icon_state = "sleeperc"
 
 /datum/robot_sprite/dogborg/tall/mining/raptor
 	name = "Raptor V-4"
