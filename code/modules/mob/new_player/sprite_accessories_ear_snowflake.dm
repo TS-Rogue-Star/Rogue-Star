@@ -137,6 +137,12 @@
 		"Shadekin Ears Round, colorable"
 	)
 
+/datum/sprite_accessory/ears/shadekin/dualcolor
+	name = "Shadekin Ears (Dual Colorable)"
+	icon = 'icons/mob/vore/ears_32x64.dmi'
+	icon_state = "shadekindual"
+	extra_overlay = "shadekin-under"
+
 /datum/sprite_accessory/ears/bnnuy
 	name = "Bnnuy Ears"
 	icon = 'icons/mob/vore/ears_32x64.dmi'
