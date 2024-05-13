@@ -73,6 +73,8 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	var/pickup_pref = TRUE
 
 	var/vore_sprite_color = list("stomach" = "#000", "taur belly" = "#000") // RS edit
+	var/allow_contaminate = TRUE	//RS EDIT
+	var/allow_stripping = TRUE		//RS EDIT
 
 	var/list/belly_prefs = list()
 	var/vore_taste = "nothing in particular"
@@ -112,6 +114,8 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	var/slot
 	var/client/client
 	var/client_ckey
+
+	var/ssd_vore = FALSE	//RS ADD
 
 /datum/vore_preferences/New(client/C)
 	if(istype(C))
@@ -200,6 +204,9 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	weight_messages = json_from_file["weight_messages"]
 	eating_privacy_global = json_from_file["eating_privacy_global"]
 	vore_sprite_color = json_from_file["vore_sprite_color"] // RS edit
+	ssd_vore = json_from_file["ssd_vore"] // RS edit
+	allow_contaminate = json_from_file["allow_contaminate"] // RS edit
+	allow_stripping = json_from_file["allow_stripping"] // RS edit
 
 	//Quick sanitize
 	if(isnull(digestable))
@@ -287,6 +294,12 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 
 	if(isnull(vore_sprite_color)) //RS edit
 		vore_sprite_color = list("stomach" = "#000", "taur belly" = "#000") //RS edit
+	if(isnull(ssd_vore))	//RS ADD
+		ssd_vore = FALSE	//RS ADD
+	if(isnull(allow_contaminate))	//RS ADD
+		allow_contaminate = TRUE	//RS ADD
+	if(isnull(allow_stripping))	//RS ADD
+		allow_stripping = TRUE	//RS ADD
 
 	return TRUE
 
@@ -328,6 +341,10 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 			"weight_messages"			= weight_messages,
 			"eating_privacy_global"		= eating_privacy_global,
 			"vore_sprite_color"		= vore_sprite_color, //RS edit
+			"ssd_vore"				= ssd_vore,	//RS ADD
+			"allow_contaminate" 	= allow_contaminate, // RS edit
+			"allow_stripping" 		= allow_stripping // RS edit
+
 		)
 
 	//List to JSON

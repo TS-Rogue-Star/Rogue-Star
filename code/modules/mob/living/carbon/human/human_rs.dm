@@ -8,6 +8,8 @@
 	var/vore_sprite_color = list("stomach" = "#FFFFFF", "taur belly" = "#FFFFFF")
 	var/vore_sprite_multiply = list("stomach" = TRUE, "taur belly" = TRUE)
 	var/vore_fullness = 0
+	var/allow_contaminate = TRUE
+	var/allow_stripping = TRUE
 
 /mob/living/carbon/human/proc/update_fullness()
 	var/list/new_fullness = list()

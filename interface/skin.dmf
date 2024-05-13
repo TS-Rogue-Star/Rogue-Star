@@ -1153,7 +1153,7 @@ window "mainwindow"
 		anchor2 = -1,-1
 		is-default = true
 		saved-params = "pos;size;is-minimized;is-maximized"
-		title = "TS: Rogue Star"
+		title = "Rogue Star"
 		is-maximized = true
 		icon = 'icons\\tsicon 16x16.png'
 		macro = "macro"

@@ -62,4 +62,6 @@
 			voice_sounds_list = talk_sound
 	//VOREStation Add End
 
+	player_login_key_log = ckey		//RS ADD
+
 	return .

@@ -154,9 +154,13 @@
 	if(!proximity) return
 	if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1)
 		if(!welding && max_fuel)
+			if(get_fuel() == max_fuel)
+				to_chat(user, "<span class='notice'>Welder is already topped off!</span>")
+				return
 			O.reagents.trans_to_obj(src, max_fuel)
 			to_chat(user, "<span class='notice'>Welder refueled</span>")
 			playsound(src, 'sound/effects/refill.ogg', 50, 1, -6)
+			update_icon()
 			return
 		else if(!welding)
 			to_chat(user, "<span class='notice'>[src] doesn't use fuel.</span>")

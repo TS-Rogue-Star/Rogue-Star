@@ -3859,9 +3859,6 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/triage)
 "nu" = (
-/obj/structure/cable/green{
-	dir = 1
-	},
 /obj/machinery/door/blast/regular{
 	closed_layer = 10;
 	density = 0;
@@ -3874,6 +3871,9 @@
 	open_layer = 1
 	},
 /obj/structure/grille,
+/obj/structure/cable/green{
+	icon_state = "0-2"
+	},
 /obj/structure/window/reinforced/full,
 /obj/structure/window/reinforced{
 	dir = 1
@@ -4143,7 +4143,7 @@
 	open_layer = 1
 	},
 /obj/structure/cable/green{
-	dir = 1
+	icon_state = "0-2"
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
@@ -4590,15 +4590,13 @@
 	open_layer = 1
 	},
 /obj/structure/cable/green{
-	dir = 4;
+	icon_state = "2-8"
+	},
+/obj/structure/cable/green{
 	icon_state = "1-8"
 	},
 /obj/structure/cable/green{
-	dir = 4
-	},
-/obj/structure/cable/green{
-	dir = 4;
-	icon_state = "1-4"
+	icon_state = "0-8"
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
@@ -5726,9 +5724,6 @@
 	opacity = 0;
 	open_layer = 1
 	},
-/obj/structure/cable/green{
-	dir = 1
-	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
 /obj/structure/window/reinforced{
@@ -5736,6 +5731,9 @@
 	},
 /obj/structure/window/reinforced{
 	dir = 1
+	},
+/obj/structure/cable/green{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
 /area/groundbase/command/bridge)
@@ -7437,7 +7435,6 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/Chemistry)
 "yN" = (
-/obj/structure/table/rack/shelf/steel,
 /obj/item/weapon/gun/energy/gun{
 	pixel_y = 7
 	},
@@ -7448,6 +7445,8 @@
 	dir = 8;
 	name = "supply isolation valve"
 	},
+/obj/structure/closet/secure_closet/guncabinet/fancy/pistol,
+/obj/item/weapon/gun/energy/ionrifle/pistol,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/armory)
 "yS" = (
@@ -9153,14 +9152,13 @@
 	open_layer = 1
 	},
 /obj/structure/cable/green{
-	dir = 8;
 	icon_state = "1-4"
 	},
 /obj/structure/cable/green{
-	dir = 8
+	icon_state = "2-4"
 	},
 /obj/structure/cable/green{
-	icon_state = "1-4"
+	icon_state = "0-4"
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
@@ -9968,7 +9966,6 @@
 	},
 /area/groundbase/dorms/room2)
 "Ik" = (
-/obj/structure/table/rack/shelf/steel,
 /obj/item/weapon/gun/projectile/shotgun/pump{
 	ammo_type = /obj/item/ammo_casing/a12g/pellet;
 	pixel_x = 1;
@@ -9979,6 +9976,7 @@
 	pixel_x = 2;
 	pixel_y = -6
 	},
+/obj/structure/closet/secure_closet/guncabinet/fancy/shotgun,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/armory)
 "Im" = (
@@ -10203,6 +10201,28 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/dorms)
+"IW" = (
+/obj/machinery/door/blast/regular{
+	closed_layer = 10;
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "bridge blast";
+	layer = 1;
+	name = "Bridge Blast Doors";
+	opacity = 0;
+	open_layer = 1
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/cable/green{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/groundbase/command/bridge)
 "IX" = (
 /obj/machinery/button/remote/airlock{
 	id = "dorm7";
@@ -11790,14 +11810,6 @@
 /area/ai_monitored/storage/eva)
 "Op" = (
 /obj/structure/table/rack/shelf/steel,
-/obj/item/weapon/gun/energy/laser{
-	pixel_x = -1;
-	pixel_y = 2
-	},
-/obj/item/weapon/gun/energy/laser{
-	pixel_x = -1;
-	pixel_y = -11
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/purple,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/armory)
@@ -12336,7 +12348,10 @@
 /turf/simulated/floor/wood,
 /area/groundbase/dorms/room3)
 "PK" = (
-/obj/structure/table/steel_reinforced,
+/obj/structure/closet/secure_closet/guncabinet/fancy/rifle,
+/obj/item/weapon/gun/energy/laser,
+/obj/item/weapon/gun/energy/laser,
+/obj/item/weapon/gun/energy/ionrifle,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/armory)
 "PL" = (
@@ -12363,12 +12378,6 @@
 /area/groundbase/security/hall2)
 "PO" = (
 /obj/structure/table/rack/shelf/steel,
-/obj/item/weapon/gun/energy/ionrifle{
-	pixel_y = -4
-	},
-/obj/item/weapon/gun/energy/ionrifle/pistol{
-	pixel_y = 4
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/purple{
 	dir = 8
 	},
@@ -13175,9 +13184,6 @@
 	id = "hop_office_desk";
 	layer = 3.1;
 	name = "HoP's Shutters"
-	},
-/obj/structure/cable/green{
-	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/groundbase/command/hop)
@@ -14058,9 +14064,6 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/triage)
 "UZ" = (
-/obj/effect/landmark{
-	name = "lightsout"
-	},
 /obj/effect/floor_decal/emblem/nt2,
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
@@ -28124,7 +28127,7 @@ Ng
 Ng
 Vf
 Ng
-nu
+IW
 Hf
 xU
 dO
@@ -28266,7 +28269,7 @@ Ng
 Ng
 Vf
 Ng
-nu
+IW
 nj
 LB
 At
@@ -28408,7 +28411,7 @@ Ng
 Tb
 Vf
 Ng
-nu
+IW
 yu
 Tu
 UZ
@@ -28550,7 +28553,7 @@ fm
 fm
 eZ
 Ng
-nu
+IW
 Vg
 LB
 zt
@@ -28692,7 +28695,7 @@ Ng
 Tb
 Vf
 Ng
-nu
+IW
 Ww
 xU
 Nr
@@ -28834,7 +28837,7 @@ Ng
 Ng
 Vf
 Ng
-nu
+IW
 Np
 sM
 fs

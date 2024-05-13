@@ -50,6 +50,13 @@
 			return
 	..()
 
+/obj/item/device/radio/headset/mob_headset/handle_message_mode(mob/living/M, list/message_pieces, channel)	//RS ADD START
+	if(isanimal(M))
+		if(!istype(M.default_language,/datum/language/common))
+			to_chat(M,"<span class = 'warning'>You need to speak common to speak on the radio!</span>")
+			return
+	return ..()		//RS ADD END
+
 /obj/item/device/radio/headset/headset_cargo
 	desc = "A headset used by the QM's slaves."
 

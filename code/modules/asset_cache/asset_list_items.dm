@@ -314,6 +314,24 @@
 	InsertAll("", downscaledVC)
 	..()
 
+
+/datum/asset/spritesheet/synthesizer
+	name = "synthesizer"
+
+/datum/asset/spritesheet/synthesizer/register()
+	for (var/datum/category_item/synthesizer/path as anything in subtypesof(/datum/category_item/synthesizer))
+		var/icon_file
+		var/icon_state
+		var/icon/I
+		var/atom/item = initial(path.build_path)
+		icon_file = initial(item.icon)
+		icon_state = initial(item.icon_state)
+		I = icon(icon_file, icon_state, SOUTH)
+		I.Scale(128, 128)
+		Insert(initial(path.id), I)
+	..()
+
+
 //VOREStation Add End
 
 // // Representative icons for each research design
