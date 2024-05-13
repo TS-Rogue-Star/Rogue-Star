@@ -3,6 +3,7 @@
 	desc = "A flexible, superconducting insulated multi Z layer hub for heavy-duty multi Z power transfer."
 	icon = 'icons/obj/pipes_n_cables/structures.dmi'
 	icon_state = "cablerelay-on"
+	layer = WIRES_LAYER
 	cable_layer = CABLE_LAYER_1|CABLE_LAYER_2|CABLE_LAYER_3
 
 /obj/structure/cable/multilayer/multiz/get_cable_connections(powernetless_only)

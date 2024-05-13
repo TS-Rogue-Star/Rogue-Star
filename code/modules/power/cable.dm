@@ -1,40 +1,4 @@
-//Use this only for things that aren't a subtype of obj/machinery/power
-//For things that are, override "should_have_node()" on them
-GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/grille, /obj/machinery/shield_gen, /obj/item/device/powersink)))
 
-#define UNDER_SMES -1
-#define UNDER_TERMINAL 1
-
-/obj/structure/cable
-	level = 1
-	anchored =TRUE
-	unacidable = TRUE
-	var/datum/powernet/powernet
-	name = "power cable"
-	desc = "A flexible superconducting cable for heavy-duty power transfer."
-	icon = 'icons/obj/cables/layer_cable.dmi'
-	icon_state = "l2-1-2-4-8-node"
-	color = CABLELAYERTWOCOLOR
-	layer = WIRES_LAYER
-	plane = PLATING_PLANE
-	var/linked_dirs = 0 //bitflag
-	var/node = FALSE //used for sprites display
-	var/cable_layer = CABLE_LAYER_2 //bitflag 1,2,4
-	var/obj/machinery/power/breakerbox/breaker_box
-
-/obj/structure/cable/layer1
-	color = CABLELAYERONECOLOR
-	cable_color = CABLELAYERONECOLOR
-	cable_layer = CABLE_LAYER_1
-	layer = WIRES_LAYER - 0.01
-	icon_state = "l1-1-2-4-8-node"
-
-/obj/structure/cable/layer3
-	color = CABLELAYERTHREECOLOR
-	cable_color = CABLELAYERTHREECOLOR
-	cable_layer = CABLE_LAYER_3
-	layer = WIRES_LAYER + 0.01
-	icon_state = "l4-1-2-4-8-node"
 
 /obj/structure/cable/drain_power(var/drain_check, var/surge, var/amount = 0)
 	if(drain_check)

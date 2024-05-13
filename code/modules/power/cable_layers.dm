@@ -2,11 +2,11 @@
 /obj/structure/cable/multilayer
 	name = "multilayer cable hub"
 	desc = "A flexible, superconducting insulated multilayer hub for heavy-duty multilayer power transfer."
-	icon = 'icons/obj/pipes_n_cables/structures.dmi'
+	icon = 'icons/obj/cables/structures.dmi'
 	icon_state = "cable_bridge"
 	cable_layer = CABLE_LAYER_2
 	layer = WIRE_LAYER - 0.02 //Below all cables Disabled layers can lay over hub
-	color = CABLE_COLOR_WHITE
+	color = COLOR_WHITE
 
 /obj/structure/cable/multilayer/update_icon_state()
 	SHOULD_CALL_PARENT(FALSE)
@@ -15,19 +15,19 @@
 /obj/structure/cable/multilayer/update_icon()
 	. = ..()
 	underlays.Cut()
-	var/mutable_appearance/cable_node_3 = mutable_appearance('icons/obj/pipes_n_cables/layer_cable.dmi', "l4-1-2-4-8-node")
-	cable_node_3.color = CABLE_COLOR_BLUE
+	var/mutable_appearance/cable_node_3 = mutable_appearance('icons/obj/cables/layer_cable.dmi', "l4-1-2-4-8-node")
+	cable_node_3.color = CABLELAYERTHREECOLOR
 	cable_node_3?.alpha = cable_layer & CABLE_LAYER_3 ? 255 : 0
 	underlays += cable_node_3
-	var/mutable_appearance/cable_node_2 = mutable_appearance('icons/obj/pipes_n_cables/layer_cable.dmi', "l2-1-2-4-8-node")
-	cable_node_2.color = CABLE_COLOR_YELLOW
+	var/mutable_appearance/cable_node_2 = mutable_appearance('icons/obj/cables/layer_cable.dmi', "l2-1-2-4-8-node")
+	cable_node_2.color = CABLELAYERTWOCOLOR
 	cable_node_2?.alpha = cable_layer & CABLE_LAYER_2 ? 255 : 0
 	underlays += cable_node_2
-	var/mutable_appearance/cable_node_1 = mutable_appearance('icons/obj/pipes_n_cables/layer_cable.dmi', "l1-1-2-4-8-node")
-	cable_node_1.color = CABLE_COLOR_RED
+	var/mutable_appearance/cable_node_1 = mutable_appearance('icons/obj/cables/layer_cable.dmi', "l1-1-2-4-8-node")
+	cable_node_1.color = CABLELAYERONECOLOR
 	cable_node_1?.alpha = cable_layer & CABLE_LAYER_1 ? 255 : 0
 	underlays += cable_node_1
-	var/mutable_appearance/machinery_node = mutable_appearance('icons/obj/pipes_n_cables/layer_cable.dmi', "l2-noconnection")
+	var/mutable_appearance/machinery_node = mutable_appearance('icons/obj/cables/layer_cable.dmi', "l2-noconnection")
 	machinery_node.color = "black"
 	underlays += machinery_node
 
@@ -87,7 +87,7 @@ GLOBAL_LIST(hub_radial_layer_list)
 /obj/structure/cable/multilayer/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE
-	if(!ISADVANCEDTOOLUSER(user))
+	if(!user.IsAdvancedToolUser())
 		to_chat(user, span_warning("You don't have the dexterity to do this!"))
 		return FALSE
 	if(user.incapacitated() || !user.Adjacent(src))

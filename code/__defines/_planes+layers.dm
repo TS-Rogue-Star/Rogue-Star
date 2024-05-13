@@ -61,9 +61,9 @@ What is the naming convention for planes or layers?
 #define PLATING_PLANE			-44 // Plating
 	#define DISPOSAL_LAYER		2.1 // Under objects, even when planeswapped
 	#define PIPES_LAYER			2.2	// Under objects, even when planeswapped
-	#define WIRES_LAYER			2.3 // Under objects, even when planeswapped
-	#define WIRE_BRIDGE_LAYER	2.31 // Over wires, obviously.
-	#define WIRE_TERMINAL_LAYER 2.32 // just over wires and bridges.
+	#define WIRES_LAYER			2.3 // Under objects, even when planeswapped layered wires are +/- 0.01 of this layer
+	#define WIRE_TERMINAL_LAYER 2.32
+	#define WIRE_MULTIZ_LAYER 2.33 // just over wires and bridges.
 	#define ATMOS_LAYER			2.4 // Pipe-like atmos machinery that goes on the floor, like filters.
 	#define ABOVE_UTILITY		2.5 // Above stuff like pipes and wires
 #define TURF_PLANE				-45 // Turfs themselves, most flooring
