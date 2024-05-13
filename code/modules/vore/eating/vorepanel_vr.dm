@@ -350,7 +350,10 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 		"weight_message_visible" = host.weight_message_visible,
 		"weight_messages" = host.weight_messages,
 		"eating_privacy_global" = host.eating_privacy_global,
-		"vore_sprite_color" = istype(host, /mob/living/carbon/human) ? host:vore_sprite_color : "#FFFFFF" // RS edit
+		"vore_sprite_color" = istype(host, /mob/living/carbon/human) ? host:vore_sprite_color : "#FFFFFF", // RS edit
+		"allowcontamination" = istype(host, /mob/living/carbon/human) ? host:allow_contaminate : TRUE, // RS edit
+		"allowstripping" = istype(host, /mob/living/carbon/human) ? host:allow_stripping : TRUE, // RS edit
+		"allowssdvore" = host.ssd_vore, // RS edit
 	)
 
 	return data
@@ -643,6 +646,28 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 					hhost.vore_sprite_color[belly_choice] = newcolor
 					hhost.update_icons_body()
 				return TRUE
+		if("toggle_allowcontamination")
+			if (istype(host, /mob/living/carbon/human))
+				var/mob/living/carbon/human/hhost = host
+				hhost.allow_contaminate = !hhost.allow_contaminate
+				if(host.client.prefs_vr)
+					host.client.prefs_vr.allow_contaminate = hhost.allow_contaminate
+				unsaved_changes = TRUE
+				return TRUE
+		if("toggle_allowstripping")
+			if (istype(host, /mob/living/carbon/human))
+				var/mob/living/carbon/human/hhost = host
+				hhost.allow_stripping = !hhost.allow_stripping
+				if(host.client.prefs_vr)
+					host.client.prefs_vr.allow_stripping = hhost.allow_stripping
+				unsaved_changes = TRUE
+				return TRUE
+		if("toggle_allowssdvore")
+			host.ssd_vore = !host.ssd_vore
+			if(host.client.prefs_vr)
+				host.client.prefs_vr.ssd_vore = host.ssd_vore
+			unsaved_changes = TRUE
+			return TRUE
 		// End RS edit
 
 /datum/vore_look/proc/pick_from_inside(mob/user, params)
