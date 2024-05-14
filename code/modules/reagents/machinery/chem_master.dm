@@ -25,7 +25,7 @@
 
 /obj/machinery/chem_master/New()
 	..()
-	var/datum/reagents/R = new/datum/reagents(900)	//Just a huge random number so the buffer should (probably) never dump your reagents.
+	var/datum/reagents/R = new/datum/reagents(300)	// Exactly one bluespace beaker
 	reagents = R	//There should be a nano ui thingy to warn of this.
 	R.my_atom = src
 
@@ -458,6 +458,14 @@
 			else
 				reagents.remove_reagent(id, amount)
 		if("eject")
+			if(!beaker)
+				return
+			beaker.forceMove(get_turf(src))
+			if(Adjacent(usr) && !issilicon(usr))
+				usr.put_in_hands(beaker)
+			beaker = null
+			update_icon()
+		if("ejectandclear")
 			if(!beaker)
 				return
 			beaker.forceMove(get_turf(src))
