@@ -1020,7 +1020,7 @@
 /area/gateway/honlethhighlands/gate)
 "pO" = (
 /obj/structure/cable/pink,
-/obj/machinery/power/smes/buildable/offmap_spawn/empty,
+/obj/machinery/power/smes/offmap_spawn/empty,
 /turf/simulated/floor/tiled,
 /area/gateway/honlethhighlands/town/engineering)
 "pR" = (

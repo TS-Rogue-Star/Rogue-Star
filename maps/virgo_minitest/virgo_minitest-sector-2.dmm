@@ -38,7 +38,7 @@
 	pixel_y = 0
 	},
 /obj/effect/floor_decal/industrial/outline/yellow,
-/obj/machinery/power/smes/buildable,
+/obj/machinery/power/smes,
 /turf/simulated/floor/plating,
 /area/awaymission)
 "ak" = (

@@ -1675,7 +1675,7 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/patient1)
 "us" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	charge = 500000
 	},
 /obj/structure/cable/cyan{

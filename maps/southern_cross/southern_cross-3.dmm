@@ -3542,7 +3542,7 @@
 /turf/simulated/floor/plating,
 /area/surface/outpost/mining_main/gen_room)
 "hw" = (
-/obj/machinery/power/smes/buildable/outpost_substation{
+/obj/machinery/power/smes/outpost_substation{
 	RCon_tag = "Outpost - Mining";
 	charge = 500000;
 	input_attempt = 1;
@@ -4267,7 +4267,7 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/surface/outpost/main/garage)
 "jd" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Outpost - Main Power Unit 1";
 	charge = 1.5e+007;
 	cur_coils = 3;
@@ -4284,7 +4284,7 @@
 /turf/simulated/floor/plating,
 /area/surface/outpost/mining_main/gen_room)
 "je" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Outpost - Main Power Unit 2";
 	charge = 1.5e+007;
 	cur_coils = 3;
@@ -4998,7 +4998,7 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/surface/outpost/main/garage)
 "kv" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Outpost - Main Power Unit 1";
 	charge = 1.5e+007;
 	cur_coils = 3;
@@ -5435,7 +5435,7 @@
 /turf/simulated/floor/plating,
 /area/surface/outpost/main/gen_room/smes)
 "lB" = (
-/obj/machinery/power/smes/buildable/outpost_substation{
+/obj/machinery/power/smes/outpost_substation{
 	RCon_tag = "Outpost - Dorms";
 	charge = 500000;
 	input_attempt = 1;
@@ -9953,7 +9953,7 @@
 /turf/simulated/wall,
 /area/surface/outpost/research/xenoresearch/smes)
 "uS" = (
-/obj/machinery/power/smes/buildable/outpost_substation{
+/obj/machinery/power/smes/outpost_substation{
 	RCon_tag = "Outpost - Research";
 	charge = 500000;
 	input_attempt = 1;

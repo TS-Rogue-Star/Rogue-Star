@@ -1,16 +1,16 @@
-/obj/machinery/power/smes/buildable/hybrid
+/obj/machinery/power/smes/hybrid
 	name = "hybrid power storage unit"
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit, modified with alien technology to generate small amounts of power from seemingly nowhere."
 	icon = 'icons/obj/power_vr.dmi'
 	var/recharge_rate = 10000
 	var/overlay_icon = 'icons/obj/power_vr.dmi'
 
-/obj/machinery/power/smes/buildable/hybrid/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/power/smes/hybrid/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if(W.is_screwdriver() || W.is_wirecutter())
 		to_chat(user,"<span class='warning'>\The [src] full of weird alien technology that's best not messed with.</span>")
 		return 0
 
-/obj/machinery/power/smes/buildable/hybrid/update_icon()
+/obj/machinery/power/smes/hybrid/update_icon()
 	cut_overlays()
 	if(stat & BROKEN)	return
 
@@ -29,7 +29,7 @@
 		add_overlay("smes-og[clevel]")
 	return
 
-/obj/machinery/power/smes/buildable/hybrid/process()
+/obj/machinery/power/smes/hybrid/process()
 	charge += min(recharge_rate, capacity - charge)
 	..()
 

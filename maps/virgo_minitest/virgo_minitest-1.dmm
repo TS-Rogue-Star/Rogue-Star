@@ -721,7 +721,7 @@
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	charge = 1.5e+007;
 	cur_coils = 3
 	},
@@ -4989,7 +4989,7 @@
 /turf/simulated/floor,
 /area/engineering/workshop)
 "Bo" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Engine - Core";
 	charge = 2e+006;
 	input_attempt = 1;
@@ -6164,7 +6164,7 @@
 /turf/space,
 /area/space)
 "PH" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Power - Main";
 	charge = 2e+007;
 	cur_coils = 4;

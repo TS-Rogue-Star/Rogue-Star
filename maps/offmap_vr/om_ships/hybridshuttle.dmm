@@ -68,7 +68,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/blue_fo)
 "ak" = (
-/obj/machinery/power/smes/buildable/hybrid,
+/obj/machinery/power/smes/hybrid,
 /obj/structure/cable{
 	icon_state = "0-8"
 	},

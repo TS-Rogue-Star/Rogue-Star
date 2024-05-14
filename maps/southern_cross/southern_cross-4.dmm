@@ -2995,7 +2995,7 @@
 /turf/simulated/floor/reinforced,
 /area/surface/outpost/research/xenoarcheology/isolation_c)
 "fV" = (
-/obj/machinery/power/smes/buildable/outpost_substation{
+/obj/machinery/power/smes/outpost_substation{
 	RCon_tag = "Outpost - Xenoarch";
 	charge = 500000;
 	input_attempt = 1;

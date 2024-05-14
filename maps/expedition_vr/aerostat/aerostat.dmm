@@ -1339,7 +1339,7 @@
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat/solars)
 "dK" = (
-/obj/machinery/power/smes/buildable,
+/obj/machinery/power/smes,
 /obj/structure/cable,
 /turf/simulated/floor/bluegrid/virgo2,
 /area/tether_away/aerostat/inside)
@@ -1357,7 +1357,7 @@
 /turf/simulated/floor/bluegrid/virgo2,
 /area/tether_away/aerostat/inside)
 "dM" = (
-/obj/machinery/power/smes/buildable,
+/obj/machinery/power/smes,
 /obj/structure/cable{
 	icon_state = "0-2"
 	},

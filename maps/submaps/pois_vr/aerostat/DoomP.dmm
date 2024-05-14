@@ -117,14 +117,14 @@
 /turf/simulated/floor/tiled,
 /area/submap/virgo2/DoomP)
 "aE" = (
-/obj/machinery/power/smes/buildable/point_of_interest,
+/obj/machinery/power/smes/point_of_interest,
 /obj/structure/cable/green{
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
 /area/submap/virgo2/DoomP)
 "aF" = (
-/obj/machinery/power/smes/buildable/point_of_interest,
+/obj/machinery/power/smes/point_of_interest,
 /obj/structure/cable/green{
 	icon_state = "0-4"
 	},

@@ -758,7 +758,7 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/sdf_cutter)
 "TP" = (
-/obj/machinery/power/smes/buildable/point_of_interest,
+/obj/machinery/power/smes/point_of_interest,
 /obj/machinery/light,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/sdf_cutter)

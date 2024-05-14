@@ -9371,7 +9371,7 @@
 /obj/structure/cable/green{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Security";
 	output_attempt = 0
 	},
@@ -16926,7 +16926,7 @@
 	icon_state = "0-2"
 	},
 /obj/structure/cable,
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Command";
 	output_attempt = 0
 	},
@@ -20406,7 +20406,7 @@
 /turf/simulated/floor/tiled,
 /area/rnd/rdoffice)
 "aKU" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Research";
 	output_attempt = 0
 	},
@@ -33276,7 +33276,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ai_cyborg_station)
 "rRj" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	charge = 5e+006;
 	input_attempt = 1;
 	input_level = 200000;

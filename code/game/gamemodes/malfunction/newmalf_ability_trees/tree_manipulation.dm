@@ -145,7 +145,7 @@
 
 	// Verify if we can overload the target, if yes, calculate explosion strength. Some things have higher explosion strength than others, depending on charge(APCs, SMESs)
 	if(N && istype(N)) // /obj/machinery/power first, these create bigger explosions due to direct powernet connection
-		if(!istype(N, /obj/machinery/power/apc) && !istype(N, /obj/machinery/power/smes/buildable) && (!N.powernet || !N.powernet.avail)) // Directly connected machine which is not an APC or SMES. Either it has no powernet connection or it's powernet does not have enough power to overload
+		if(!istype(N, /obj/machinery/power/apc) && !istype(N, /obj/machinery/power/smes) && (!N.powernet || !N.powernet.avail)) // Directly connected machine which is not an APC or SMES. Either it has no powernet connection or it's powernet does not have enough power to overload
 			to_chat(user, "<span class='notice'>ERROR: Low network voltage. Unable to overload. Increase network power level and try again.</span>")
 			return
 		else if (istype(N, /obj/machinery/power/apc)) // APC. Explosion is increased by available cell power.
@@ -155,8 +155,8 @@
 			else
 				to_chat(user, "<span class='notice'>ERROR: APC Malfunction - Cell depleted or removed. Unable to overload.</span>")
 				return
-		else if (istype(N, /obj/machinery/power/smes/buildable)) // SMES. These explode in a very very very big boom. Similar to magnetic containment failure when messing with coils.
-			var/obj/machinery/power/smes/buildable/S = N
+		else if (istype(N, /obj/machinery/power/smes)) // SMES. These explode in a very very very big boom. Similar to magnetic containment failure when messing with coils.
+			var/obj/machinery/power/smes/S = N
 			if(S.charge && S.RCon)
 				explosion_intensity = 4 + round(S.charge / 1000000)
 			else

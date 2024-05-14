@@ -3032,7 +3032,7 @@
 /turf/simulated/floor/plating,
 /area/shuttle/bearcat/maintenance_power)
 "gZ" = (
-/obj/machinery/power/smes/buildable,
+/obj/machinery/power/smes,
 /obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/shuttle/bearcat/maintenance_power)

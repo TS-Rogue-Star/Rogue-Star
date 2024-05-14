@@ -2923,7 +2923,7 @@
 /turf/simulated/floor/tiled/white,
 /area/mothership/chemistry)
 "gh" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	capacity = 2e+007;
 	charge = 2e+007;
 	cur_coils = 4;

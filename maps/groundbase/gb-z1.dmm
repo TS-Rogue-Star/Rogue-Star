@@ -7077,7 +7077,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/mining)
 "pu" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Power - Main";
 	charge = 2e+007;
 	cur_coils = 4;
@@ -8199,7 +8199,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Engineering";
 	output_attempt = 0
 	},
@@ -10109,7 +10109,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - AI/Telecomms";
 	output_attempt = 0
 	},
@@ -12476,7 +12476,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Civilian";
 	output_attempt = 0
 	},
@@ -12990,7 +12990,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Cargo";
 	output_attempt = 0
 	},
@@ -13571,7 +13571,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	charge = 5e+006;
 	input_attempt = 1;
 	input_level = 200000;
@@ -14105,7 +14105,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/engine)
 "Gr" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Medical";
 	output_attempt = 0
 	},
@@ -19001,7 +19001,7 @@
 	icon_state = "0-2"
 	},
 /obj/structure/cable/yellow,
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Science";
 	output_attempt = 0
 	},
@@ -19793,7 +19793,7 @@
 	icon_state = "0-2"
 	},
 /obj/structure/cable/yellow,
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Security";
 	output_attempt = 0
 	},

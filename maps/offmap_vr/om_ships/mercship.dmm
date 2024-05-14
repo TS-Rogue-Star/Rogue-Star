@@ -2208,7 +2208,7 @@
 /obj/effect/floor_decal/borderfloorblack{
 	dir = 5
 	},
-/obj/machinery/power/smes/buildable,
+/obj/machinery/power/smes,
 /turf/simulated/floor/tiled/dark,
 /area/ship/mercenary/engineeringcntrl)
 "dR" = (

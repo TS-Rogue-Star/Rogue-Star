@@ -284,7 +284,7 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 	. = ..()
 	access = list(access_talon, access_synth)
 
-/obj/machinery/power/smes/buildable/offmap_spawn/New()
+/obj/machinery/power/smes/offmap_spawn/New()
 	..(1)
 	charge = 1e7
 	RCon = TRUE

@@ -2049,7 +2049,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/manta/recreation)
 "il" = (
-/obj/machinery/power/smes/buildable/point_of_interest,
+/obj/machinery/power/smes/point_of_interest,
 /obj/structure/cable/orange{
 	icon_state = "0-2"
 	},
@@ -10524,7 +10524,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/manta/bridge)
 "Vz" = (
-/obj/machinery/power/smes/buildable/point_of_interest,
+/obj/machinery/power/smes/point_of_interest,
 /obj/structure/cable/orange{
 	icon_state = "0-2"
 	},

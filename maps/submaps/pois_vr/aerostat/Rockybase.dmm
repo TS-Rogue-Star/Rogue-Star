@@ -611,7 +611,7 @@
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/smes/buildable/point_of_interest,
+/obj/machinery/power/smes/point_of_interest,
 /turf/simulated/floor/plating/virgo2,
 /area/submap/virgo2/Rockybase)
 "cg" = (
@@ -698,7 +698,7 @@
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/smes/buildable/point_of_interest,
+/obj/machinery/power/smes/point_of_interest,
 /turf/simulated/floor/plating/virgo2,
 /area/submap/virgo2/Rockybase)
 "ct" = (

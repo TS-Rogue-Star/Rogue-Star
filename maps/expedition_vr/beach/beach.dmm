@@ -655,7 +655,7 @@
 /obj/structure/cable/cyan{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/smes/buildable/offmap_spawn/empty,
+/obj/machinery/power/smes/offmap_spawn/empty,
 /turf/simulated/floor/tiled/asteroid_steel,
 /area/tether_away/beach/powershed)
 "kK" = (

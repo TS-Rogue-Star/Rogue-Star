@@ -128,7 +128,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/sdf_corvette)
 "hy" = (
-/obj/machinery/power/smes/buildable,
+/obj/machinery/power/smes,
 /obj/structure/cable/green{
 	d2 = 4;
 	icon_state = "0-4"

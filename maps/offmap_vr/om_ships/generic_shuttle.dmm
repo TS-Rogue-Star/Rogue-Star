@@ -744,7 +744,7 @@
 /turf/simulated/floor/plating,
 /area/shuttle/generic_shuttle/eng)
 "bB" = (
-/obj/machinery/power/smes/buildable/point_of_interest,
+/obj/machinery/power/smes/point_of_interest,
 /obj/structure/cable{
 	icon_state = "0-8"
 	},

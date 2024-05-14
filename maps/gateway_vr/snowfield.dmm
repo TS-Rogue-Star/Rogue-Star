@@ -98,7 +98,7 @@
 /turf/simulated/floor/plating,
 /area/awaymission/snowfield/base)
 "ao" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	charge = 2.5e+006;
 	input_attempt = 1;
 	input_level = 250000;

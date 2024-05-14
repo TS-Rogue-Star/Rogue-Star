@@ -4615,7 +4615,7 @@
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/starboardcargo)
 "Fh" = (
-/obj/machinery/power/smes/buildable/offmap_spawn,
+/obj/machinery/power/smes/offmap_spawn,
 /obj/structure/cable/pink{
 	icon_state = "0-4"
 	},
@@ -5916,7 +5916,7 @@
 /turf/simulated/floor/tiled/monotile,
 /area/itglight/lockers)
 "NJ" = (
-/obj/machinery/power/smes/buildable/offmap_spawn,
+/obj/machinery/power/smes/offmap_spawn,
 /obj/structure/cable/pink{
 	icon_state = "0-8"
 	},

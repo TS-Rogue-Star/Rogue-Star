@@ -1380,7 +1380,7 @@
 /obj/structure/cable/green{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Science Outpost";
 	output_attempt = 0
 	},
@@ -3584,7 +3584,7 @@
 /obj/structure/cable/heavyduty{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Power - Solar Array";
 	cur_coils = 3;
 	output_attempt = 0
@@ -5283,7 +5283,7 @@
 /area/groundbase/science/outpost/toxing_gasworks)
 "Pw" = (
 /obj/structure/cable,
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	charge = 500000
 	},
 /turf/simulated/floor/tiled/techfloor,

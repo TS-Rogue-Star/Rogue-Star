@@ -16752,7 +16752,7 @@
 /turf/simulated/wall/r_wall,
 /area/tcomm/entrance)
 "aHb" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Telecommunications Satellite";
 	charge = 6e+006;
 	input_attempt = 1;
@@ -21295,7 +21295,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Auxiliary - Main";
 	charge = 1e+007;
 	cur_coils = 4;
@@ -34350,7 +34350,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Security"
 	},
 /turf/simulated/floor/plating,
@@ -37045,7 +37045,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Atmospherics";
 	charge = 2e+006;
 	input_attempt = 1
@@ -39492,7 +39492,7 @@
 /turf/simulated/floor/tiled,
 /area/engineering/atmos)
 "bvA" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Engineering"
 	},
 /obj/structure/cable/green{
@@ -55947,7 +55947,7 @@
 /turf/simulated/floor,
 /area/maintenance/substation/central)
 "bZG" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Central"
 	},
 /obj/structure/cable/green,
@@ -65946,7 +65946,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Engine - Core";
 	charge = 2e+006;
 	input_attempt = 1;
@@ -66031,7 +66031,7 @@
 /area/engineering/engine_smes)
 "ctB" = (
 /obj/structure/cable,
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Engine - Main";
 	charge = 1e+007;
 	cur_coils = 4;
@@ -76943,7 +76943,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/substation/medical)
 "cNG" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Medical"
 	},
 /obj/structure/cable/green,
@@ -77398,7 +77398,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/quartermaster/office)
 "cOz" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Cargo"
 	},
 /obj/structure/cable/green,
@@ -89192,7 +89192,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Civilian"
 	},
 /turf/simulated/floor/plating,
@@ -98503,7 +98503,7 @@
 /area/ai)
 "dBz" = (
 /obj/structure/cable/cyan,
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	charge = 5e+006;
 	input_attempt = 1;
 	input_level = 200000;
@@ -99914,7 +99914,7 @@
 /area/maintenance/solars/foreportsolar)
 "dDY" = (
 /obj/structure/cable,
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Solar - Fore Port";
 	input_attempt = 1;
 	input_level = 150000;
@@ -99998,7 +99998,7 @@
 /area/maintenance/thirddeck/forestarboard)
 "dEg" = (
 /obj/structure/cable,
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Solar - Fore Starboard";
 	input_attempt = 1;
 	input_level = 150000;
@@ -101699,7 +101699,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Command"
 	},
 /turf/simulated/floor,
@@ -107494,7 +107494,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Solar - Aft Port";
 	input_attempt = 1;
 	input_level = 150000;
@@ -107891,7 +107891,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Solar - Aft Starboard";
 	input_attempt = 1;
 	input_level = 150000;
@@ -112735,7 +112735,7 @@
 /turf/simulated/floor/tiled/white,
 /area/rnd/research_lockerroom)
 "ebx" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Research";
 	charge = 1e+007
 	},

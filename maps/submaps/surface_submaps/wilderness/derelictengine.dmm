@@ -297,7 +297,7 @@
 "QS" = (/obj/random/mob/robotic/hivebot,/turf/simulated/floor/tiled/techfloor,/area/submap/DerelictEngine)
 "QT" = (/obj/machinery/porta_turret/alien{faction = "hivebot"},/obj/effect/floor_decal/techfloor{dir = 8},/turf/simulated/shuttle/floor/alienplating/external,/area/submap/DerelictEngine)
 "QW" = (/obj/effect/floor_decal/techfloor{dir = 4},/turf/simulated/floor/tiled/techfloor,/area/submap/DerelictEngine)
-"Rk" = (/obj/effect/floor_decal/techfloor/orange{dir = 6},/obj/structure/cable{d2 = 8; icon_state = "0-8"},/obj/machinery/power/smes/buildable{icon = 'icons/obj/alien_smes.dmi'; icon_state = "unit"; input_level = 950000; name = "Alien Royal Capacitor"; output_level = 950000},/turf/simulated/floor/tiled/techfloor,/area/submap/DerelictEngine)
+"Rk" = (/obj/effect/floor_decal/techfloor/orange{dir = 6},/obj/structure/cable{d2 = 8; icon_state = "0-8"},/obj/machinery/power/smes{icon = 'icons/obj/alien_smes.dmi'; icon_state = "unit"; input_level = 950000; name = "Alien Royal Capacitor"; output_level = 950000},/turf/simulated/floor/tiled/techfloor,/area/submap/DerelictEngine)
 "Ro" = (/obj/effect/floor_decal/techfloor{dir = 4},/mob/living/simple_mob/mechanical/hivebot/tank/armored/anti_bullet,/turf/simulated/floor/tiled/techfloor,/area/submap/DerelictEngine)
 "RA" = (/obj/effect/floor_decal/techfloor{dir = 1},/obj/effect/floor_decal/techfloor/hole/right{dir = 1},/turf/simulated/floor/tiled/techfloor,/area/submap/DerelictEngine)
 "RB" = (/obj/effect/floor_decal/techfloor{dir = 8},/turf/simulated/shuttle/floor/alien,/area/submap/DerelictEngine)

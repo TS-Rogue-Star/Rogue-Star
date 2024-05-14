@@ -11907,7 +11907,7 @@
 /obj/structure/cable/orange{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Surface Civilian";
 	output_attempt = 0
 	},
@@ -38273,7 +38273,7 @@
 /obj/structure/cable/green{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	charge = 500000
 	},
 /turf/simulated/floor/tiled,

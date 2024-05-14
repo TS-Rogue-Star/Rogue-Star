@@ -4,12 +4,12 @@
 
 /obj/item/weapon/circuitboard/smes
 	name = T_BOARD("superconductive magnetic energy storage")
-	build_path = /obj/machinery/power/smes/buildable
+	build_path = /obj/machinery/power/smes
 	board_type = new /datum/frame/frame_types/machine
 	origin_tech = list(TECH_POWER = 6, TECH_ENGINEERING = 4)
 	req_components = list(/obj/item/weapon/smes_coil = 1, /obj/item/stack/cable_coil = 30)
 
-/obj/item/weapon/circuitboard/smes/construct(var/obj/machinery/power/smes/buildable/S)
+/obj/item/weapon/circuitboard/smes/construct(var/obj/machinery/power/smes/S)
 	if(..(S))
 		S.output_attempt = 0 //built SMES default to off
 

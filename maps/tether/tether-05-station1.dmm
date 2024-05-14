@@ -151,7 +151,7 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/engineering/engine_smes)
 "aas" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Engine - Core";
 	charge = 2e+006;
 	input_attempt = 1;
@@ -293,7 +293,7 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/engineering/engine_smes)
 "aaG" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Power - Main";
 	charge = 2e+007;
 	cur_coils = 4;
@@ -1438,7 +1438,7 @@
 /turf/simulated/floor/tiled,
 /area/hallway/station/atrium)
 "acO" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Engineering";
 	output_attempt = 0
 	},
@@ -3878,7 +3878,7 @@
 /turf/simulated/floor/tiled,
 /area/quartermaster/office)
 "ahk" = (
-/obj/machinery/power/smes/buildable/point_of_interest,
+/obj/machinery/power/smes/point_of_interest,
 /obj/structure/cable/cyan{
 	icon_state = "0-2"
 	},
@@ -10989,7 +10989,7 @@
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/sleep/engi_wash)
 "aES" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Cargo";
 	output_attempt = 0
 	},
@@ -14271,7 +14271,7 @@
 /turf/simulated/floor/tiled,
 /area/engineering/gravity_lobby)
 "bJG" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Asteroid civilian";
 	output_attempt = 0
 	},
@@ -16405,7 +16405,7 @@
 /turf/simulated/floor,
 /area/maintenance/substation/exploration)
 "dAx" = (
-/obj/machinery/power/smes/buildable/point_of_interest,
+/obj/machinery/power/smes/point_of_interest,
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
@@ -17511,7 +17511,7 @@
 	},
 /area/shuttle/excursion/cargo)
 "fca" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Exploration";
 	output_attempt = 0
 	},
@@ -23524,7 +23524,7 @@
 /turf/simulated/floor/tiled/monotile,
 /area/tether/exploration)
 "kRF" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Telecomms";
 	charge = 100000;
 	output_level = 1000
@@ -34098,7 +34098,7 @@
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/smes/buildable/point_of_interest,
+/obj/machinery/power/smes/point_of_interest,
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "medbus";
 	name = "medbus"

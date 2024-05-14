@@ -10299,7 +10299,7 @@
 /obj/structure/cable/cyan{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	charge = 5e+006;
 	input_attempt = 1;
 	input_level = 200000;
@@ -31622,7 +31622,7 @@
 /turf/simulated/wall/r_wall,
 /area/surface/station/rnd/workshop)
 "vFa" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Command";
 	charge = 2e+006
 	},

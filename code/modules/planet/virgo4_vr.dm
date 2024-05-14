@@ -605,7 +605,7 @@ var/datum/planet/virgo4/planet_virgo4 = null
 	name = "deep ocean"
 	alpha = 0
 
-/obj/machinery/power/smes/buildable/offmap_spawn/empty/New()
+/obj/machinery/power/smes/offmap_spawn/empty/New()
 	..(1)
 	charge = 0
 	RCon = TRUE

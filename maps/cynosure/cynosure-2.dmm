@@ -3119,7 +3119,7 @@
 /turf/simulated/floor/plating,
 /area/surface/station/maintenance/east/gnd)
 "byd" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Medical";
 	charge = 2e+006
 	},
@@ -8648,7 +8648,7 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/surface/station/chapel/main)
 "ekM" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Cargo";
 	charge = 2e+006
 	},
@@ -11539,7 +11539,7 @@
 	icon_state = "0-2"
 	},
 /obj/structure/cable/green,
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Security";
 	charge = 2e+006
 	},
@@ -13900,7 +13900,7 @@
 /turf/simulated/floor/tiled,
 /area/surface/station/crew_quarters/heads/hop)
 "gEG" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Solar - West";
 	cur_coils = 2;
 	input_attempt = 1;
@@ -14228,7 +14228,7 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/surface/station/medical/storage/primary_storage)
 "gLG" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Civilian";
 	charge = 2e+006
 	},
@@ -14700,7 +14700,7 @@
 /turf/simulated/floor/plating,
 /area/surface/station/hallway/primary/groundfloor/west/elevator)
 "gWx" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Atmospherics";
 	charge = 2e+006;
 	input_attempt = 1
@@ -31566,7 +31566,7 @@
 /turf/simulated/floor/reinforced/airmix,
 /area/surface/station/engineering/atmos)
 "oVm" = (
-/obj/machinery/power/smes/buildable/point_of_interest,
+/obj/machinery/power/smes/point_of_interest,
 /obj/structure/cable/cyan{
 	icon_state = "0-8"
 	},
@@ -32723,7 +32723,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/surface/station/crew_quarters/heads/hos)
 "prS" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Engineering";
 	charge = 2e+006
 	},
@@ -34703,7 +34703,7 @@
 /turf/simulated/floor/tiled,
 /area/surface/station/hallway/primary/groundfloor/north)
 "qpj" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Research";
 	charge = 1e+007
 	},
@@ -42588,7 +42588,7 @@
 /turf/simulated/floor/tiled/old_tile/blue,
 /area/surface/station/arrivals/cynosure/cryo)
 "uaT" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Solar - Northeast";
 	cur_coils = 2;
 	input_attempt = 1;
@@ -43452,7 +43452,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/surface/station/ai/upload)
 "uAd" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Reactor - Main";
 	charge = 2e+007;
 	cur_coils = 4;
@@ -45800,7 +45800,7 @@
 	},
 /area/surface/outside/plains/station)
 "vDZ" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Arrivals";
 	charge = 2e+006;
 	input_attempt = 1
@@ -48754,7 +48754,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/surface/station/security/interrogation)
 "xas" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Reactor - Core";
 	charge = 2e+006;
 	input_attempt = 1;

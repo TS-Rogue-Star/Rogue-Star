@@ -2493,7 +2493,7 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 9
 	},
-/obj/machinery/power/smes/buildable/hybrid{
+/obj/machinery/power/smes/hybrid{
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit, linked to an advanced looking generator..";
 	input_attempt = 1;
 	input_level = 250000;
@@ -3575,7 +3575,7 @@
 /obj/structure/cable/cyan{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/smes/buildable/hybrid{
+/obj/machinery/power/smes/hybrid{
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit, linked to an advanced looking generator..";
 	input_attempt = 1;
 	input_level = 250000;

@@ -784,7 +784,7 @@
 /turf/simulated/floor/tiled/steel,
 /area/submap/debrisfield/tinyshuttle/engine)
 "bu" = (
-/obj/machinery/power/smes/buildable/outpost_substation{
+/obj/machinery/power/smes/outpost_substation{
 	charge = 3e+006;
 	input_attempt = 1;
 	input_level = 200000

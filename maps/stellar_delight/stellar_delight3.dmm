@@ -1912,7 +1912,7 @@
 /turf/simulated/open,
 /area/stellardelight/deck2/fore)
 "gQ" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	charge = 5e+006;
 	input_attempt = 1;
 	input_level = 200000;
@@ -9062,7 +9062,7 @@
 	icon_state = "0-2"
 	},
 /obj/structure/cable/blue,
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Command";
 	output_attempt = 0
 	},
@@ -13159,7 +13159,7 @@
 /obj/structure/cable/blue{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - AI/Telecomms";
 	charge = 5e+006;
 	input_attempt = 1;
@@ -13731,7 +13731,7 @@
 /turf/simulated/open,
 /area/stellardelight/deck2/port)
 "Wn" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	charge = 500000
 	},
 /obj/effect/floor_decal/fancy_shuttle{

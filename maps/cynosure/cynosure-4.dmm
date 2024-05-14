@@ -3035,7 +3035,7 @@
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Telecommunications Satellite";
 	charge = 5e+006;
 	input_attempt = 1;

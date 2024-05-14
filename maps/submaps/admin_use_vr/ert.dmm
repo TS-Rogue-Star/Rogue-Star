@@ -7590,7 +7590,7 @@
 /area/ship/ert/eng_storage)
 "OH" = (
 /obj/structure/cable/yellow,
-/obj/machinery/power/smes/buildable/point_of_interest,
+/obj/machinery/power/smes/point_of_interest,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/ert/engineering)
 "OM" = (
@@ -9151,7 +9151,7 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/ert/med)
 "Xu" = (
-/obj/machinery/power/smes/buildable/point_of_interest,
+/obj/machinery/power/smes/point_of_interest,
 /obj/structure/cable/yellow,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/ert/engineering)

@@ -1481,7 +1481,7 @@
 /area/offmap/aerostat/solars)
 "dK" = (
 /obj/structure/cable,
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	charge = 2e+006;
 	input_attempt = 1;
 	input_level = 100000;
@@ -1505,7 +1505,7 @@
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	charge = 2e+006;
 	input_attempt = 1;
 	input_level = 100000;

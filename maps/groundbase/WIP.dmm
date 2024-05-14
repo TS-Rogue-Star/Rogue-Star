@@ -1687,7 +1687,7 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/morgue)
 "bpp" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	charge = 500000
 	},
 /obj/structure/cable/cyan{
@@ -5400,7 +5400,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	charge = 5e+006;
 	input_attempt = 1;
 	input_level = 200000;
@@ -9444,7 +9444,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - AI/Telecomms";
 	output_attempt = 0
 	},
@@ -11204,7 +11204,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Civilian";
 	output_attempt = 0
 	},
@@ -12640,7 +12640,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/command/hall)
 "ist" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Power - Main";
 	charge = 2e+007;
 	cur_coils = 4;
@@ -17760,7 +17760,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Command";
 	output_attempt = 0
 	},
@@ -36157,7 +36157,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Engineering";
 	output_attempt = 0
 	},

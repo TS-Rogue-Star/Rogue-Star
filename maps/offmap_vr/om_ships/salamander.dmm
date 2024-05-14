@@ -893,7 +893,7 @@
 /area/shuttle/salamander_engineering)
 "ma" = (
 /obj/structure/cable,
-/obj/machinery/power/smes/buildable/point_of_interest,
+/obj/machinery/power/smes/point_of_interest,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/salamander_engineering)
 "mg" = (

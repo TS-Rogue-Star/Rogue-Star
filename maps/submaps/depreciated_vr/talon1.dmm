@@ -3021,7 +3021,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/smes/buildable/offmap_spawn{
+/obj/machinery/power/smes/offmap_spawn{
 	RCon_tag = "Talon Starboard SMES"
 	},
 /turf/simulated/floor/tiled/eris/dark/cyancorner,
@@ -4594,7 +4594,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/smes/buildable/offmap_spawn{
+/obj/machinery/power/smes/offmap_spawn{
 	RCon_tag = "Talon Port SMES"
 	},
 /turf/simulated/floor/tiled/eris/dark/cyancorner,

@@ -3105,7 +3105,7 @@
 	color = "#42038a";
 	icon_state = "0-2"
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Exploration";
 	output_attempt = 0
 	},
@@ -3640,7 +3640,7 @@
 	icon_state = "0-2"
 	},
 /obj/structure/cable/pink,
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Security";
 	output_attempt = 0
 	},
@@ -15328,7 +15328,7 @@
 /obj/structure/cable/green{
 	color = "#42038a"
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Research";
 	output_attempt = 0
 	},
@@ -18877,7 +18877,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Cargo";
 	output_attempt = 0
 	},
@@ -19617,7 +19617,7 @@
 /obj/structure/cable/green{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Civilian";
 	output_attempt = 0
 	},
@@ -19720,7 +19720,7 @@
 	icon_state = "0-2"
 	},
 /obj/structure/cable/orange,
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Atmospherics";
 	output_attempt = 0
 	},
@@ -21260,7 +21260,7 @@
 /obj/structure/cable/white{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Medical";
 	output_attempt = 0
 	},

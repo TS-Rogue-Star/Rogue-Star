@@ -1064,7 +1064,7 @@
 /turf/simulated/floor/carpet/sblucarpet,
 /area/stellardelight/deck2/briefingroom)
 "cc" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Engine - Core";
 	charge = 2e+006;
 	input_attempt = 1;
@@ -4113,7 +4113,7 @@
 /area/crew_quarters/kitchen)
 "iG" = (
 /obj/structure/cable,
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Power - Main";
 	charge = 2e+007;
 	cur_coils = 4;
@@ -20591,7 +20591,7 @@
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck2/aftstarboard)
 "Te" = (
-/obj/machinery/power/smes/buildable/offmap_spawn/empty{
+/obj/machinery/power/smes/offmap_spawn/empty{
 	RCon_tag = "Solar Array - Port"
 	},
 /obj/structure/cable,
@@ -21243,7 +21243,7 @@
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck2/starboard)
 "UB" = (
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Substation - Engineering";
 	output_attempt = 0
 	},
@@ -23686,7 +23686,7 @@
 /turf/simulated/floor/tiled,
 /area/hydroponics)
 "ZX" = (
-/obj/machinery/power/smes/buildable/offmap_spawn/empty{
+/obj/machinery/power/smes/offmap_spawn/empty{
 	RCon_tag = "Solar Array - Starboard"
 	},
 /obj/structure/cable,

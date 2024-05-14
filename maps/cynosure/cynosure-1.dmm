@@ -13875,7 +13875,7 @@
 /area/surface/outpost/research/xenoarcheology/exp_prep)
 "FD" = (
 /obj/structure/cable/yellow,
-/obj/machinery/power/smes/buildable{
+/obj/machinery/power/smes{
 	RCon_tag = "Auxiliary - Main";
 	charge = 1e+007;
 	cur_coils = 4;
@@ -18337,7 +18337,7 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/surface/station/rnd/hallway/bmt)
 "PH" = (
-/obj/machinery/power/smes/buildable/outpost_substation{
+/obj/machinery/power/smes/outpost_substation{
 	RCon_tag = "Outpost - Xenoarch";
 	charge = 5e+006;
 	input_attempt = 1;

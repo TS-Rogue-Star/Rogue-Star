@@ -1912,7 +1912,7 @@
 /obj/structure/railing/grey{
 	dir = 1
 	},
-/obj/machinery/power/smes/buildable/offmap_spawn{
+/obj/machinery/power/smes/offmap_spawn{
 	RCon_tag = "Talon Port SMES"
 	},
 /obj/structure/cable/green{
@@ -3907,7 +3907,7 @@
 /turf/simulated/floor/wood,
 /area/talon_v2/crew_quarters/sec_room)
 "mT" = (
-/obj/machinery/power/smes/buildable/offmap_spawn{
+/obj/machinery/power/smes/offmap_spawn{
 	RCon_tag = "Talon Port SMES"
 	},
 /obj/structure/cable/yellow,
@@ -9496,7 +9496,7 @@
 /turf/simulated/floor/wood,
 /area/talon_v2/crew_quarters/sec_room)
 "GP" = (
-/obj/machinery/power/smes/buildable/offmap_spawn{
+/obj/machinery/power/smes/offmap_spawn{
 	RCon_tag = "Talon Port SMES"
 	},
 /obj/structure/cable/green{
@@ -12321,7 +12321,7 @@
 	dir = 1;
 	pixel_y = -32
 	},
-/obj/machinery/power/smes/buildable/offmap_spawn{
+/obj/machinery/power/smes/offmap_spawn{
 	RCon_tag = "Talon Port SMES"
 	},
 /obj/structure/cable/green{

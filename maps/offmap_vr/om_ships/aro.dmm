@@ -2832,7 +2832,7 @@
 /turf/simulated/shuttle/floor/alienplating/blue,
 /area/ship/aro/engineering)
 "gG" = (
-/obj/machinery/power/smes/buildable/hybrid{
+/obj/machinery/power/smes/hybrid{
 	output_level = 250000
 	},
 /obj/structure/cable/cyan{
