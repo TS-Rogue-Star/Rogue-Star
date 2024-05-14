@@ -7723,7 +7723,7 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/groundbase/engineering/atmos)
+/area/groundbase/level1/se)
 "hmp" = (
 /obj/item/device/radio/intercom{
 	dir = 1;
@@ -25727,9 +25727,6 @@
 "xxV" = (
 /turf/simulated/floor/outdoors/grass/seasonal/dark,
 /area/groundbase/level1/ne)
-"xyU" = (
-/turf/simulated/floor,
-/area/groundbase/engineering/atmos)
 "xza" = (
 /obj/machinery/computer/guestpass{
 	dir = 8;
@@ -41854,7 +41851,7 @@ sQP
 tMX
 nwF
 muM
-xyU
+bED
 sLR
 sLR
 sLR
@@ -41997,7 +41994,7 @@ rOT
 eXk
 bSq
 bsJ
-gIg
+sLR
 sLR
 sLR
 giv
@@ -43844,7 +43841,7 @@ awx
 awx
 awx
 awx
-sLR
+gIg
 bED
 sLR
 sLR
