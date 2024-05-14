@@ -319,8 +319,11 @@
 /area/groundbase/engineering/workshop
 	name = "Engineering Workshop"
 	lightswitch = 1
-/area/groundbase/engineering/eva
-	name = "Engineering EVA"
+/area/groundbase/engineering/showers
+	name = "Engineering Showers"
+/area/groundbase/engineering/breakroom
+	name = "Engineering Break Room"
+	lightswitch = 1
 /area/groundbase/engineering/storage
 	name = "Engineering Storage"
 	lightswitch = 1
@@ -341,6 +344,8 @@
 	name = "Solar Field"
 	lightswitch = 1
 	sound_env = SOUND_ENVIRONMENT_MOUNTAINS
+/area/groundbase/engineering/pumpingstation
+	name = "Pumping Station"
 
 /area/groundbase/cargo
 	name = "Cargo"

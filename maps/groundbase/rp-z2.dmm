@@ -150,6 +150,12 @@
 /obj/structure/sign/department/chapel,
 /turf/simulated/wall,
 /area/groundbase/civilian/chapel)
+"aH" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/simulated/floor/outdoors/grass/seasonal,
+/area/groundbase/level2/se)
 "aI" = (
 /obj/machinery/suit_cycler/exploration,
 /obj/effect/floor_decal/industrial/outline{
@@ -2234,6 +2240,12 @@
 	},
 /turf/simulated/floor/lino,
 /area/groundbase/civilian/chapel/office)
+"hu" = (
+/obj/effect/floor_decal/industrial/warning{
+	dir = 5
+	},
+/turf/simulated/floor/outdoors/sidewalk/slab,
+/area/groundbase/level2/se)
 "hx" = (
 /obj/structure/sign/painting/public{
 	pixel_y = 30
@@ -2642,6 +2654,12 @@
 /obj/effect/floor_decal/milspec/color/red/half,
 /turf/simulated/floor/tiled,
 /area/groundbase/security/processing)
+"iW" = (
+/obj/effect/floor_decal/industrial/warning{
+	dir = 10
+	},
+/turf/simulated/floor/outdoors/sidewalk/slab,
+/area/groundbase/level2/se)
 "iX" = (
 /turf/simulated/floor/tiled{
 	edge_blending_priority = -1;
@@ -2711,6 +2729,9 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/medical/virology)
+"jj" = (
+/turf/simulated/floor/outdoors/sidewalk,
+/area/groundbase/level2/se)
 "jk" = (
 /obj/item/stack/cable_coil/random,
 /obj/item/stack/cable_coil/random,
@@ -4509,7 +4530,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/grass/seasonal,
+/turf/simulated/floor/outdoors/sidewalk,
 /area/groundbase/level2/ne)
 "pE" = (
 /obj/machinery/processor,
@@ -5047,6 +5068,12 @@
 "rk" = (
 /turf/simulated/wall,
 /area/groundbase/level3/escapepad)
+"rn" = (
+/obj/effect/floor_decal/industrial/warning{
+	dir = 8
+	},
+/turf/simulated/floor/outdoors/sidewalk/slab,
+/area/groundbase/level2/se)
 "rp" = (
 /obj/structure/bed/chair/backed_red,
 /obj/machinery/power/apc{
@@ -7622,6 +7649,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/cargo/qm)
+"zH" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/simulated/floor/outdoors/grass/seasonal,
+/area/groundbase/level2/se)
 "zJ" = (
 /turf/simulated/floor/outdoors/grass/seasonal,
 /area/groundbase/level2/se)
@@ -7976,6 +8009,12 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/civilian/chapel)
+"AY" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/simulated/floor/outdoors/sidewalk,
+/area/groundbase/level2/se)
 "AZ" = (
 /obj/machinery/button/remote/blast_door{
 	dir = 1;
@@ -8809,6 +8848,18 @@
 /obj/structure/stairs/spawner/south,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/triage)
+"Eh" = (
+/obj/effect/floor_decal/industrial/warning{
+	dir = 1
+	},
+/turf/simulated/floor/outdoors/sidewalk/slab,
+/area/groundbase/level2/se)
+"Ej" = (
+/obj/effect/floor_decal/industrial/warning{
+	dir = 6
+	},
+/turf/simulated/floor/outdoors/sidewalk/slab,
+/area/groundbase/level2/se)
 "Ek" = (
 /obj/structure/sign/painting/library_secure{
 	pixel_y = -30
@@ -8947,6 +8998,9 @@
 	},
 /turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/level2/sw)
+"EM" = (
+/turf/simulated/floor/outdoors/sidewalk/slab,
+/area/groundbase/level2/se)
 "EP" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin{
@@ -9103,6 +9157,12 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/Chemistry)
+"FA" = (
+/obj/effect/floor_decal/industrial/warning{
+	dir = 9
+	},
+/turf/simulated/floor/outdoors/sidewalk/slab,
+/area/groundbase/level2/se)
 "FB" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled,
@@ -9711,6 +9771,10 @@
 "Hs" = (
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/warden)
+"Hu" = (
+/obj/effect/floor_decal/industrial/warning,
+/turf/simulated/floor/outdoors/sidewalk/slab,
+/area/groundbase/level2/se)
 "Hw" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
@@ -11173,6 +11237,9 @@
 "LX" = (
 /turf/simulated/wall/r_wall,
 /area/groundbase/level2/nw)
+"LZ" = (
+/turf/simulated/floor/outdoors/sidewalk/side,
+/area/groundbase/level2/se)
 "Ma" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -13286,6 +13353,12 @@
 	},
 /turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/level2/nw)
+"SJ" = (
+/obj/effect/floor_decal/industrial/warning{
+	dir = 4
+	},
+/turf/simulated/floor/outdoors/sidewalk/slab,
+/area/groundbase/level2/se)
 "SL" = (
 /obj/effect/floor_decal/milspec/color/purple/half,
 /turf/simulated/floor/tiled,
@@ -27188,7 +27261,7 @@ VW
 VW
 VW
 IY
-GR
+zJ
 zJ
 zJ
 zJ
@@ -27330,10 +27403,10 @@ VW
 VW
 VW
 IY
-GR
-GR
-GR
-GR
+zJ
+zJ
+zJ
+zJ
 zJ
 zJ
 lX
@@ -27472,15 +27545,15 @@ VW
 VW
 VW
 IY
-GR
-GR
-GR
-GR
-GR
 zJ
 zJ
-zJ
-lX
+FA
+rn
+rn
+rn
+rn
+rn
+iW
 lX
 lX
 lX
@@ -27614,15 +27687,15 @@ VW
 VW
 VW
 IY
-GR
-GR
-GR
-GR
-GR
-GR
-GR
 zJ
 zJ
+Eh
+EM
+EM
+EM
+EM
+EM
+Hu
 zJ
 zJ
 zJ
@@ -27756,17 +27829,17 @@ VW
 VW
 VW
 IY
-tP
-tP
-tP
-GR
-GR
-GR
-GR
-GR
-GR
-GR
-GR
+KF
+KF
+Eh
+EM
+EM
+EM
+EM
+EM
+Hu
+zJ
+zJ
 GR
 GR
 GR
@@ -27898,17 +27971,17 @@ VW
 VW
 VW
 IY
-tP
-tP
-tP
-tP
-tP
-GR
-GR
-GR
-GR
-tP
-tP
+KF
+KF
+Eh
+EM
+EM
+EM
+EM
+EM
+Hu
+KF
+KF
 tP
 tP
 GR
@@ -28040,17 +28113,17 @@ VW
 VW
 VW
 IY
-tP
-tP
-tP
-tP
-tP
-tP
-GR
-GR
-GR
-tP
-tP
+KF
+KF
+Eh
+EM
+EM
+EM
+EM
+EM
+Hu
+KF
+KF
 tP
 tP
 tP
@@ -28182,17 +28255,17 @@ VW
 VW
 VW
 IY
-tP
-tP
-tP
-GR
-GR
-GR
-GR
-GR
-GR
-GR
-tP
+KF
+KF
+Eh
+EM
+EM
+EM
+EM
+EM
+Hu
+zJ
+KF
 tP
 tP
 tP
@@ -28324,17 +28397,17 @@ VW
 VW
 VW
 IY
-tP
-GR
-GR
-GR
-GR
-GR
-GR
-GR
-GR
-GR
-GR
+KF
+zJ
+hu
+SJ
+SJ
+SJ
+SJ
+SJ
+Ej
+zJ
+zJ
 tP
 tP
 tP
@@ -28466,17 +28539,17 @@ VW
 VW
 VW
 IY
-GR
-GR
-GR
-GR
-GR
-GR
-GR
-GR
-GR
-GR
-GR
+zJ
+zJ
+zJ
+zJ
+zJ
+LZ
+zJ
+zJ
+zJ
+zJ
+zJ
 GR
 tP
 tP
@@ -28608,17 +28681,17 @@ VW
 VW
 VW
 IY
-GR
-GR
-GR
-GR
-tP
-tP
-tP
-GR
-GR
-GR
-GR
+zJ
+zJ
+zJ
+zJ
+KF
+LZ
+KF
+zJ
+zJ
+zJ
+zJ
 GR
 GR
 tP
@@ -28750,17 +28823,17 @@ VW
 VW
 VW
 IY
-GR
-GR
-tP
-tP
-tP
-tP
-tP
-tP
-tP
-GR
-tP
+zJ
+zJ
+zJ
+KF
+KF
+LZ
+KF
+KF
+KF
+zJ
+KF
 GR
 GR
 GR
@@ -28892,17 +28965,17 @@ VW
 VW
 VW
 mg
-GR
-tP
-tP
-tP
-tP
-tP
-tP
-tP
-tP
-tP
-tP
+zJ
+KF
+KF
+KF
+KF
+LZ
+KF
+KF
+KF
+KF
+KF
 tP
 tP
 GR
@@ -29034,13 +29107,13 @@ Et
 Et
 Et
 AA
-tP
-tP
-tP
-tP
-tP
-tP
-tP
+KF
+KF
+KF
+KF
+KF
+LZ
+KF
 KF
 KF
 KF
@@ -29162,27 +29235,27 @@ zJ
 zJ
 zJ
 zJ
-GR
-GR
-GR
-GR
-GR
-GR
-GR
-GR
-GR
-GR
-GR
-tP
-tP
-tP
-tP
-tP
-tP
-tP
-tP
-tP
-tP
+zJ
+aH
+aH
+aH
+zJ
+zJ
+zJ
+zJ
+zJ
+zJ
+zJ
+KF
+KF
+KF
+KF
+KF
+KF
+KF
+KF
+LZ
+KF
 KF
 KF
 KF
@@ -29304,27 +29377,27 @@ zJ
 KF
 KF
 zJ
-tP
-tP
-tP
-tP
-GR
-tP
-tP
-tP
-tP
-GR
-GR
-tP
-tP
-tP
-tP
-tP
-tP
-tP
-tP
-tP
-tP
+EM
+pp
+pp
+pp
+zH
+KF
+KF
+KF
+KF
+zJ
+zJ
+KF
+KF
+KF
+KF
+KF
+KF
+KF
+KF
+LZ
+KF
 KF
 KF
 kp
@@ -29434,39 +29507,39 @@ ZF
 Yk
 ZF
 MR
-pi
+Jv
 pC
-Ng
-Ng
-Ng
-zJ
-zJ
-zJ
+of
+of
+of
+jj
+jj
+jj
+jj
+jj
+jj
+jj
+EM
+AY
+AY
+AY
+jj
+jj
+jj
+jj
+jj
+jj
+jj
+jj
+jj
+jj
+jj
+jj
+jj
+jj
+jj
+EM
 KF
-KF
-KF
-KF
-GR
-tP
-tP
-tP
-tP
-tP
-GR
-tP
-GR
-GR
-tP
-tP
-tP
-tP
-tP
-tP
-tP
-tP
-tP
-tP
-tP
 KF
 kp
 kp
