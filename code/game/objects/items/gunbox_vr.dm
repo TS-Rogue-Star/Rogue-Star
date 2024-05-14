@@ -34,7 +34,6 @@
 	var/list/options = list()
 	options["Talon's combat shotgun"] = list(/obj/item/weapon/gun/projectile/shotgun/pump/combat/talon, /obj/item/ammo_magazine/ammo_box/b12g/beanbag)
 	options["Talon's phase rifle"] = list(/obj/item/weapon/gun/energy/phasegun/rifle/talon, /obj/item/weapon/cell/device/weapon, /obj/item/weapon/cell/device/weapon)
-	options["\improper Talon's LR1 \"Shishi\""] = list(/obj/item/weapon/gun/energy/laser/sleek/talon, /obj/item/weapon/cell/device/weapon)
 	var/choice = tgui_input_list(user,"Choose your favorite rifle for today!", "Talon Rifle!", options)
 	if(src && choice)
 		var/list/things_to_spawn = options[choice]
