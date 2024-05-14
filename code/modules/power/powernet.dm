@@ -10,6 +10,7 @@
 	var/viewload = 0			// the load as it appears on the power console (gradually updated)
 	var/netexcess = 0			// excess power on the powernet (typically avail-load)
 	var/delayedload = 0			// load applied to powernet between power ticks.
+	var/problem = FALSE			// power events or something
 
 
 /datum/powernet/New()
@@ -55,9 +56,8 @@
 /datum/powernet/proc/remove_machine(obj/machinery/power/M)
 	nodes -=M
 	M.powernet = null
-	if(is_empty()).
+	if(is_empty())
 		qdel(src)
-
 
 //add a power machine to the current powernet
 //Warning : this proc DON'T check if the machine exists

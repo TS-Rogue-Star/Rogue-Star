@@ -1,13 +1,38 @@
+//Use this only for things that aren't a subtype of obj/machinery/power
+//For things that are, override "should_have_node()" on them
+GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/grille, /obj/machinery/shield_gen, /obj/item/device/powersink, /obj/machinery/shieldwallgen)))
 
+#define UNDER_SMES -1
+#define UNDER_TERMINAL 1
 
-/obj/structure/cable/drain_power(var/drain_check, var/surge, var/amount = 0)
-	if(drain_check)
-		return TRUE
+/obj/structure/cable
+	level = 1
+	anchored =TRUE
+	unacidable = TRUE
+	var/datum/powernet/powernet
+	name = "power cable"
+	desc = "A flexible superconducting cable for heavy-duty power transfer."
+	icon = 'icons/obj/cables/layer_cable.dmi'
+	icon_state = "l2-1-2-4-8-node"
+	color = CABLELAYERTWOCOLOR
+	layer = WIRES_LAYER
+	plane = PLATING_PLANE
+	var/linked_dirs = 0 //bitflag
+	var/node = FALSE //used for sprites display
+	var/cable_layer = CABLE_LAYER_2 //bitflag 1,2,4
+	var/obj/machinery/power/breakerbox/breaker_box
 
-	if(!powernet)
-		return FALSE
+/obj/structure/cable/layer1
+	color = CABLELAYERONECOLOR
+	cable_layer = CABLE_LAYER_1
+	layer = WIRES_LAYER - 0.01
+	icon_state = "l1-1-2-4-8-node"
 
-	return powernet.draw_power(amount)
+/obj/structure/cable/layer3
+	color = CABLELAYERTHREECOLOR
+	cable_layer = CABLE_LAYER_3
+	layer = WIRES_LAYER + 0.01
+	icon_state = "l4-1-2-4-8-node"
 
 /obj/structure/cable/yellow
 	color = COLOR_YELLOW
@@ -68,7 +93,7 @@
 			under_thing = UNDER_SMES	//Allow breakerboxes to connect directly to the SMES node
 			search_parent = P
 			break
-	for(var/check_dir in GLOB.cardinals)
+	for(var/check_dir in GLOB.cardinal)
 		var/TB = get_step(src, check_dir)
 		//don't link from smes to its terminal
 		if(under_thing)
@@ -99,7 +124,7 @@
 
 ///Clear the linked indicator bitflags
 /obj/structure/cable/proc/Disconnect_cable()
-	for(var/check_dir in GLOB.cardinals)
+	for(var/check_dir in GLOB.cardinal)
 		var/inverse = REVERSE_DIR(check_dir)
 		if(linked_dirs & check_dir)
 			var/TB = get_step(loc, check_dir)
@@ -110,7 +135,7 @@
 
 /obj/structure/cable/Destroy()					// called when a cable is deleted
 	//Clear the linked indicator bitflags
-	for(var/check_dir in GLOB.cardinals)
+	for(var/check_dir in GLOB.cardinal)
 		var/inverse = turn(check_dir, 180)
 		if(linked_dirs & check_dir)
 			var/TB = get_step(loc, check_dir)
@@ -143,7 +168,7 @@
 		icon_state = "l[cable_layer]-noconnection"
 	else
 		var/list/dir_icon_list = list()
-		for(var/check_dir in GLOB.cardinals)
+		for(var/check_dir in GLOB.cardinal)
 			if(linked_dirs & check_dir)
 				dir_icon_list += "[check_dir]"
 		var/dir_string = dir_icon_list.Join("-")
@@ -164,7 +189,7 @@
 	var/turf/T = get_turf(src)
 	if(!T.is_plating())
 		return
-	if(W.tool_behaviour == TOOL_WIRECUTTER)
+	if(W.has_tool_quality(TOOL_WIRECUTTER))
 
 		if(breaker_box)
 			to_chat(user, "<span class='warning'>This cable is connected to nearby breaker box. Use breaker box to interact with it.</span>")
@@ -176,7 +201,7 @@
 		deconstruct()
 		return
 
-	else if(W.tool_behaviour == TOOL_MULTITOOL)
+	else if(W.has_tool_quality == TOOL_MULTITOOL)
 		if(powernet && (powernet.avail > 0))		// is it powered?
 			to_chat(user, "<span class='danger'>Total power: [DisplayPower(powernet.avail)]\nLoad: [DisplayPower(powernet.load)]\nExcess power: [DisplayPower(surplus())]</span>")
 		else
@@ -208,12 +233,12 @@
 			qdel(src)
 		if(2.0)
 			if (prob(50))
-				new/obj/item/stack/cable_coil(src.loc, src.d1 ? 2 : 1, color)
+				new/obj/item/stack/cable_coil(src.loc, color)
 				qdel(src)
 
 		if(3.0)
 			if (prob(25))
-				new/obj/item/stack/cable_coil(src.loc, src.d1 ? 2 : 1, color)
+				new/obj/item/stack/cable_coil(src.loc, color)
 				qdel(src)
 	return
 
@@ -300,97 +325,79 @@
 		node = TRUE
 		if(!PM.connect_to_network())
 			PM.disconnect_from_network() //if we somehow can't connect the machine to the new powernet, remove it from the old nonetheless
+
 //////////////////////////////////////////////
 // Powernets handling helpers
 //////////////////////////////////////////////
 
-//if powernetless_only = 1, will only get connections without powernet
-/obj/structure/cable/proc/get_connections(var/powernetless_only = 0)
-	. = list()	// this will be a list of all connected power objects
-	var/turf/T
-
-	// Handle standard cables in adjacent turfs
-	for(var/cable_dir in list(d1, d2))
-		if(cable_dir == 0)
-			continue
-		var/reverse = reverse_dir[cable_dir]
-		T = get_zstep(src, cable_dir)
-		if(T)
+/obj/structure/cable/proc/get_cable_connections(powernetless_only)
+	. = list()
+	var/turf/T = get_turf(src)
+	for(var/check_dir in GLOB.cardinal)
+		if(linked_dirs & check_dir)
+			T = get_step(src, check_dir)
 			for(var/obj/structure/cable/C in T)
-				if(C.d1 == reverse || C.d2 == reverse)
+				if(cable_layer & C.cable_layer)
 					. += C
-		if(cable_dir & (cable_dir - 1)) // Diagonal, check for /\/\/\ style cables along cardinal directions
-			for(var/pair in list(NORTH|SOUTH, EAST|WEST))
-				T = get_step(src, cable_dir & pair)
-				if(T)
-					var/req_dir = cable_dir ^ pair
-					for(var/obj/structure/cable/C in T)
-						if(C.d1 == req_dir || C.d2 == req_dir)
-							. += C
 
-	// Handle cables on the same turf as us
-	for(var/obj/structure/cable/C in loc)
-		if(C.d1 == d1 || C.d2 == d1 || C.d1 == d2 || C.d2 == d2) // if either of C's d1 and d2 match either of ours
+/obj/structure/cable/proc/get_all_cable_connections(powernetless_only)
+	. = list()
+	var/turf/T
+	for(var/check_dir in GLOB.cardinal)
+		T = get_step(src, check_dir)
+		for(var/obj/structure/cable/C in T.contents - src)
 			. += C
 
-	if(d1 == 0)
-		for(var/obj/machinery/power/P in loc)
-			if(P.powernet == 0) continue // exclude APCs with powernet=0
-			if(!powernetless_only || !P.powernet)
+/obj/structure/cable/proc/get_machine_connections(powernetless_only)
+	. = list()
+	for(var/obj/machinery/power/P in get_turf(src))
+		if(!powernetless_only || !P.powernet)
+			if(P.anchored)
 				. += P
 
-	// if the caller asked for powernetless cables only, dump the ones with powernets
-	if(powernetless_only)
-		for(var/obj/structure/cable/C in .)
-			if(C.powernet)
-				. -= C
+/obj/structure/cable/proc/auto_propagate_cut_cable(obj/O)
+	if(O && !QDELETED(O))
+		var/datum/powernet/newPN = new()// creates a new powernet...
+		propagate_network(O, newPN)//... and propagates it to the other side of the cable
 
-//should be called after placing a cable which extends another cable, creating a "smooth" cable that no longer terminates in the centre of a turf.
-//needed as this can, unlike other placements, disconnect cables
-/obj/structure/cable/proc/denode()
-	var/turf/T1 = loc
-	if(!T1) return
-
-	var/list/powerlist = power_list(T1,src,0,0) //find the other cables that ended in the centre of the turf, with or without a powernet
-	if(powerlist.len>0)
-		var/datum/powernet/PN = new()
-		propagate_network(powerlist[1],PN) //propagates the new powernet beginning at the source cable
-
-		if(PN.is_empty()) //can happen with machines made nodeless when smoothing cables
-			qdel(PN)
+//Makes a new network for the cable and propgates it.
+//If it finds another network in the process, aborts and uses that one and propagates off of it instead
+/obj/structure/cable/proc/propagate_if_no_network()
+	if(powernet)
+		return
+	var/datum/powernet/newPN = new()
+	propagate_network(src, newPN, TRUE)
 
 // cut the cable's powernet at this cable and updates the powergrid
-/obj/structure/cable/proc/cut_cable_from_powernet()
-	var/turf/T1 = loc
-	var/list/P_list
-	if(!T1)	return
-	if(d1)
-		T1 = get_step(T1, d1)
-		P_list = power_list(T1, src, turn(d1,180),0,cable_only = 1)	// what adjacently joins on to cut cable...
-
-	P_list += power_list(loc, src, d1, 0, cable_only = 1)//... and on turf
-
-
-	if(P_list.len == 0)//if nothing in both list, then the cable was a lone cable, just delete it and its powernet
-		powernet.remove_cable(src)
-
-		for(var/obj/machinery/power/P in T1)//check if it was powering a machine
-			if(!P.connect_to_network()) //can't find a node cable on a the turf to connect to
-				P.disconnect_from_network() //remove from current network (and delete powernet)
+/obj/structure/cable/proc/cut_cable_from_powernet(remove = TRUE)
+	if(!powernet)
 		return
 
+	var/turf/T1 = loc
+	if(!T1)
+		return
+
+	//clear the powernet of any machines on tile first
+	for(var/obj/machinery/power/P in T1)
+		P.disconnect_from_network()
+
+	var/list/P_list = list()
+	for(var/dir_check in GLOB.cardinal)
+		if(linked_dirs & dir_check)
+			T1 = get_step(loc, dir_check)
+			P_list += locate(/obj/structure/cable) in T1
+
 	// remove the cut cable from its turf and powernet, so that it doesn't get count in propagate_network worklist
-	loc = null
+	if(remove)
+		moveToNullspace()
 	powernet.remove_cable(src) //remove the cut cable from its powernet
 
-	var/datum/powernet/newPN = new()// creates a new powernet...
-	propagate_network(P_list[1], newPN)//... and propagates it to the other side of the cable
-
-	// Disconnect machines connected to nodes
-	if(d1 == 0) // if we cut a node (O-X) cable
-		for(var/obj/machinery/power/P in T1)
-			if(!P.connect_to_network()) //can't find a node cable on a the turf to connect to
-				P.disconnect_from_network() //remove from current network
+	var/first = TRUE
+	for(var/obj/O in P_list)
+		if(first)
+			first = FALSE
+			continue
+		addtimer(CALLBACK(O, .proc/auto_propagate_cut_cable, O), 0) //so we don't rebuild the network X times when singulo/explosion destroys a line of X cables
 
 ///////////////////////////////////////////////
 // The cable coil object, used for laying cable
@@ -432,15 +439,143 @@
 	uses_charge = 1
 	charge_costs = list(1)
 
-/obj/item/stack/cable_coil/New(loc, length = MAXCOIL, var/param_color = null)
-	..()
-	src.amount = length
-	if (param_color) // It should be red by default, so only recolor it if parameter was specified.
-		color = param_color
+////////////////////////////////
+// Definitions
+////////////////////////////////
+
+GLOBAL_LIST_INIT(cable_coil_recipes, list(
+				new/datum/stack_recipe("cable restraints", /obj/item/weapon/restraints/handcuffs/cable, 15),
+				new/datum/stack_recipe("multilayer cable", /obj/structure/cable/multilayer, 1),
+				new/datum/stack_recipe("multiZ cable", /obj/structure/cable/multilayer/multiz, 1)
+				))
+
+/obj/item/stack/cable_coil
+	name = "cable coil"
+	gender = NEUTER //That's a cable coil sounds better than that's some cable coils
+	icon = 'icons/obj/power.dmi'
+	icon_state = "coil"
+	item_state = "coil"
+	max_amount = MAXCOIL
+	amount = MAXCOIL
+//	merge_type = /obj/item/stack/cable_coil // This is here to let its children merge between themselves
+	stacktype = /obj/item/stack/cable_coil
+	color = COLOR_RED
+	desc = "A coil of insulated power cable."
+	throwforce = 0
+	w_class = ITEMSIZE_SMALL
+	slot_flags = SLOT_BELT
+	throw_speed = 3
+	throw_range = 5
+	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
+	singular_name = "length"
+	drop_sound = 'sound/items/drop/accessory.ogg'
+	pickup_sound = 'sound/items/pickup/accessory.ogg'
+	singular_name = "cable"
+	usesound = 'sound/items/deconstruct.ogg'
+	var/obj/structure/cable/target_type = /obj/structure/cable
+	var/target_layer = CABLE_LAYER_2
+	matter = list(MAT_STEEL = 50, MAT_GLASS = 20)
+	tool_qualities = list(TOOL_CABLE_COIL)
+
+/obj/item/stack/cable_coil/Initialize(mapload, new_amount = null)
+	. = ..()
 	pixel_x = rand(-2,2)
 	pixel_y = rand(-2,2)
 	update_icon()
-	update_wclass()
+	recipes = GLOB.cable_coil_recipes
+
+/obj/item/stack/cable_coil/examine(mob/user)
+	. = ..()
+	. += "<b>Ctrl+Click</b> to change the layer you are placing on."
+	. += ""
+
+/obj/item/stack/cable_coil/proc/check_menu(mob/living/user)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated() || !user.Adjacent(src))
+		return FALSE
+	return TRUE
+
+GLOBAL_LIST(cable_radial_layer_list)
+
+/obj/item/stack/cable_coil/CtrlClick(mob/living/user)
+	if(loc!=user)
+		return ..()
+	if(!user)
+		return
+	if(!GLOB.cable_radial_layer_list)
+		GLOB.cable_radial_layer_list = list(
+		"Layer 1" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-red"),
+		"Layer 2" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-yellow"),
+		"Layer 3" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-blue"),
+		"Multilayer cable hub" = image(icon = 'icons/obj/cables/structures.dmi', icon_state = "cable_bridge"),
+		"Multi Z layer cable hub" = image(icon = 'icons/obj/cables/structures.dmi', icon_state = "cablerelay-broken-cable")
+		)
+	var/layer_result = show_radial_menu(user, src, GLOB.cable_radial_layer_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	if(!check_menu(user))
+		return
+	switch(layer_result)
+		if("Layer 1")
+			if(istype(src, /obj/item/stack/cable_coil/alien))
+				target_type = /obj/structure/cable/layer1
+				target_layer = CABLE_LAYER_1
+				icon = 'icons/obj/abductor.dmi'
+				icon_state = "coil"
+				return //snowflake ayylmao cable just gets its layers updated
+			name = "cable coil"
+			icon_state = "coil"
+			color = CABLELAYERONECOLOR
+			target_type = /obj/structure/cable/layer1
+			target_layer = CABLE_LAYER_1
+		if("Layer 2")
+			if(istype(src, /obj/item/stack/cable_coil/alien))
+				target_type = /obj/structure/cable/layer2
+				target_layer = CABLE_LAYER_2
+				icon = 'icons/obj/abductor.dmi'
+				icon_state = "coil"
+				return
+			name = "cable coil"
+			icon_state = "coil"
+			color = CABLELAYERTWOCOLOR
+			target_type = /obj/structure/cable
+			target_layer = CABLE_LAYER_2
+		if("Layer 3")
+			if(istype(src, /obj/item/stack/cable_coil/alien))
+				target_type = /obj/structure/cable/layer3
+				target_layer = CABLE_LAYER_3
+				icon = 'icons/obj/abductor.dmi'
+				icon_state = "coil"
+				return
+			name = "cable coil"
+			icon_state = "coil"
+			color = CABLELAYERTHREECOLOR
+			target_type = /obj/structure/cable/layer3
+			target_layer = CABLE_LAYER_3
+		if("Multilayer cable hub")
+			if(istype(src, /obj/item/stack/cable_coil/alien))
+				target_type = /obj/structure/cable/multilayer
+				target_layer = CABLE_LAYER_2
+				icon = 'icons/obj/cables/structures.dmi'
+				icon_state = "cable_bridge"
+				return
+			name = "multilayer cable hub"
+			icon_state = "cable_bridge"
+			color = "white"
+			target_type = /obj/structure/cable/multilayer
+			target_layer = CABLE_LAYER_2
+		if("Multi Z layer cable hub")
+			if(istype(src, /obj/item/stack/cable_coil/alien))
+				target_type = /obj/structure/cable/multilayer/multiz
+				target_layer = CABLE_LAYER_2
+				icon = 'icons/obj/cables/structures.dmi'
+				icon_state = "cablerelay-broken-cable"
+				return
+			name = "multi z layer cable hub"
+			icon_state = "cablerelay-broken-cable"
+			color = "white"
+			target_type = /obj/structure/cable/multilayer/multiz
+			target_layer = CABLE_LAYER_2
+	update_icon()
 
 ///////////////////////////////////
 // General procedures
@@ -494,9 +629,9 @@
 	if(!selected_color)
 		return
 
-	var/final_color = possible_cable_coil_colours[selected_color]
+	var/final_color = GLOB.possible_cable_coil_colours[selected_color]
 	if(!final_color)
-		final_color = possible_cable_coil_colours["Red"]
+		final_color = GLOB.possible_cable_coil_colours["Red"]
 		selected_color = "red"
 	color = final_color
 	to_chat(user, "<span class='notice'>You change \the [src]'s color to [lowertext(selected_color)].</span>")
@@ -509,7 +644,7 @@
 
 /obj/item/stack/cable_coil/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/multitool))
-		var/selected_type = tgui_input_list(usr, "Pick new colour.", "Cable Colour", possible_cable_coil_colours)
+		var/selected_type = tgui_input_list(usr, "Pick new colour.", "Cable Colour", GLOB.possible_cable_coil_colours)
 		set_cable_color(selected_type, usr)
 		return
 	return ..()
@@ -535,7 +670,7 @@
 	set name = "Change Colour"
 	set category = "Object"
 
-	var/selected_type = tgui_input_list(usr, "Pick new colour.", "Cable Colour", possible_cable_coil_colours)
+	var/selected_type = tgui_input_list(usr, "Pick new colour.", "Cable Colour", GLOB.possible_cable_coil_colours)
 	set_cable_color(selected_type, usr)
 
 // Items usable on a cable coil :
@@ -561,181 +696,64 @@
 // Cable laying procedures
 //////////////////////////////////////////////
 
-// called when cable_coil is clicked on a turf/simulated/floor
-/obj/item/stack/cable_coil/proc/turf_place(turf/simulated/F, mob/user)
+// called when cable_coil is clicked on a turf
+/obj/item/stack/cable_coil/proc/place_turf(turf/T, mob/user, dirnew)
 	if(!isturf(user.loc))
 		return
 
+	if(!isturf(T) || T.is_intact || !T.can_have_cabling())
+		to_chat(user, "<span class='warning'>You can only lay cables on catwalks and plating!</span>")
+		return
+
 	if(get_amount() < 1) // Out of cable
-		to_chat(user, "There is no cable left.")
+		to_chat(user, "<span class='warning'>There is no cable left!</span>")
 		return
 
-	if(get_dist(F,user) > 1) // Too far
-		to_chat(user, "You can't lay cable at a place that far away.")
+	if(get_dist(T,user) > 1) // Too far
+		to_chat(user, "<span class='warning'>You can't lay cable at a place that far away!</span>")
 		return
 
-	if(!F.is_plating())		// Ff floor is intact, complain
-		to_chat(user, "You can't lay cable there unless the floor tiles are removed.")
-		return
-
-	var/dirn
-	if(user.loc == F)
-		dirn = user.dir			// if laying on the tile we're on, lay in the direction we're facing
-	else
-		dirn = get_dir(F, user)
-
-	var/end_dir = 0
-	if(istype(F, /turf/simulated/open))
-		if(!can_use(2))
-			to_chat(user, "You don't have enough cable to do this!")
-			return
-		end_dir = DOWN
-
-	for(var/obj/structure/cable/LC in F)
-		if((LC.d1 == dirn && LC.d2 == end_dir ) || ( LC.d2 == dirn && LC.d1 == end_dir))
-			to_chat(user, "<span class='warning'>There's already a cable at that position.</span>")
+	for(var/obj/structure/cable/C in T)
+		if(C.cable_layer & target_layer)
+			to_chat(user, "<span class='warning'>There's already a cable at that position!</span>")
 			return
 
-	put_cable(F, user, end_dir, dirn)
-	if(end_dir == DOWN)
-		put_cable(GetBelow(F), user, UP, 0)
-		to_chat(user, "You slide some cable downward.")
-
-/obj/item/stack/cable_coil/proc/put_cable(turf/simulated/F, mob/user, d1, d2)
-	if(!istype(F))
-		return
-
-	var/obj/structure/cable/C = new(F)
-	C.cableColor(color)
-	C.d1 = d1
-	C.d2 = d2
-	C.add_fingerprint(user)
-	C.update_icon()
+	var/obj/structure/cable/C = new target_type(T)
 
 	//create a new powernet with the cable, if needed it will be merged later
 	var/datum/powernet/PN = new()
 	PN.add_cable(C)
 
-	C.mergeConnectedNetworks(C.d1) //merge the powernets...
-	C.mergeConnectedNetworks(C.d2) //...in the two new cable directions
-	C.mergeConnectedNetworksOnTurf()
-
-	if(C.d1 & (C.d1 - 1))// if the cable is layed diagonally, check the others 2 possible directions
-		C.mergeDiagonalsNetworks(C.d1)
-
-	if(C.d2 & (C.d2 - 1))// if the cable is layed diagonally, check the others 2 possible directions
-		C.mergeDiagonalsNetworks(C.d2)
+	for(var/dir_check in GLOB.cardinal)
+		C.mergeConnectedNetworks(dir_check) //merge the powernet with adjacents powernets
+	C.mergeConnectedNetworksOnTurf() //merge the powernet with on turf powernets
 
 	use(1)
-	if (C.shock(user, 50))
-		if (prob(50)) //fail
-			new/obj/item/stack/cable_coil(C.loc, 1, C.color)
-			qdel(C)
 
-// called when cable_coil is click on an installed obj/cable
-// or click on a turf that already contains a "node" cable
-/obj/item/stack/cable_coil/proc/cable_join(obj/structure/cable/C, mob/user)
-	var/turf/U = user.loc
-	if(!isturf(U))
-		return
+	if(C.shock(user, 50))
+		if(prob(50)) //fail
+			new /obj/item/stack/cable_coil(get_turf(C), 1)
+			C.deconstruct()
 
-	var/turf/T = C.loc
+	return C
 
-	if(!isturf(T) || !T.is_plating())		// sanity checks, also stop use interacting with T-scanner revealed cable
-		return
-
-	if(get_dist(C, user) > 1)		// make sure it's close enough
-		to_chat(user, "You can't lay cable at a place that far away.")
-		return
-
-	if(U == T) //if clicked on the turf we're standing on, try to put a cable in the direction we're facing
-		turf_place(T,user)
-		return
-
-	var/dirn = get_dir(C, user)
-
-	// one end of the clicked cable is pointing towards us
-	if(C.d1 == dirn || C.d2 == dirn)
-		if(!U.is_plating())						// can't place a cable if the floor is complete
-			to_chat(user, "You can't lay cable there unless the floor tiles are removed.")
-			return
-		else
-			// cable is pointing at us, we're standing on an open tile
-			// so create a stub pointing at the clicked cable on our tile
-
-			var/fdirn = turn(dirn, 180)		// the opposite direction
-
-			for(var/obj/structure/cable/LC in U)		// check to make sure there's not a cable there already
-				if(LC.d1 == fdirn || LC.d2 == fdirn)
-					to_chat(user, "There's already a cable at that position.")
-					return
-			put_cable(U,user,0,fdirn)
-			return
-
-	// exisiting cable doesn't point at our position, so see if it's a stub
-	else if(C.d1 == 0)
-							// if so, make it a full cable pointing from it's old direction to our dirn
-		var/nd1 = C.d2	// these will be the new directions
-		var/nd2 = dirn
-
-
-		if(nd1 > nd2)		// swap directions to match icons/states
-			nd1 = dirn
-			nd2 = C.d2
-
-
-		for(var/obj/structure/cable/LC in T)		// check to make sure there's no matching cable
-			if(LC == C)			// skip the cable we're interacting with
-				continue
-			if((LC.d1 == nd1 && LC.d2 == nd2) || (LC.d1 == nd2 && LC.d2 == nd1) )	// make sure no cable matches either direction
-				to_chat(user, "There's already a cable at that position.")
-				return
-
-
-		C.cableColor(color)
-
-		C.d1 = nd1
-		C.d2 = nd2
-
-		C.add_fingerprint()
-		C.update_icon()
-
-
-		C.mergeConnectedNetworks(C.d1) //merge the powernets...
-		C.mergeConnectedNetworks(C.d2) //...in the two new cable directions
-		C.mergeConnectedNetworksOnTurf()
-
-		if(C.d1 & (C.d1 - 1))// if the cable is layed diagonally, check the others 2 possible directions
-			C.mergeDiagonalsNetworks(C.d1)
-
-		if(C.d2 & (C.d2 - 1))// if the cable is layed diagonally, check the others 2 possible directions
-			C.mergeDiagonalsNetworks(C.d2)
-
-		use(1)
-
-		if (C.shock(user, 50))
-			if (prob(50)) //fail
-				new/obj/item/stack/cable_coil(C.loc, 2, C.color)
-				qdel(C)
-				return
-
-		C.denode()// this call may have disconnected some cables that terminated on the centre of the turf, if so split the powernets.
-		return
-
-//////////////////////////////
-// Misc.
-/////////////////////////////
+/obj/item/stack/cable_coil/five
+	amount = 5
 
 /obj/item/stack/cable_coil/cut
-	item_state = "coil2"
+	amount = null
+	icon_state = "coil2"
 
-/obj/item/stack/cable_coil/cut/New(loc)
-	..()
-	src.amount = rand(1,2)
+/obj/item/stack/cable_coil/cut/Initialize(mapload)
+	. = ..()
+	if(!amount)
+		amount = rand(1,2)
 	pixel_x = rand(-2,2)
 	pixel_y = rand(-2,2)
 	update_icon()
-	update_wclass()
+
+#undef UNDER_SMES
+#undef UNDER_TERMINAL
 
 /obj/item/stack/cable_coil/yellow
 	stacktype = /obj/item/stack/cable_coil
@@ -822,7 +840,6 @@
 
 //Endless alien cable coil
 
-
 /datum/category_item/catalogue/anomalous/precursor_a/alien_wire
 	name = "Precursor Alpha Object - Recursive Spool"
 	desc = "Upon visual inspection, this merely appears to be a \
@@ -857,7 +874,7 @@
 	stacktype = null
 	toolspeed = 0.25
 
-/obj/item/stack/cable_coil/alien/New(loc, length = MAXCOIL, var/param_color = null)		//There has to be a better way to do this.
+/obj/item/stack/cable_coil/alien/New(loc, amount = MAXCOIL, var/param_color = null)		//There has to be a better way to do this.
 	if(embed_chance == -1)		//From /obj/item, don't want to do what the normal cable_coil does
 		if(sharp)
 			embed_chance = force/w_class

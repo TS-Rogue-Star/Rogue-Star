@@ -47,7 +47,7 @@
 	var/last_used = 0
 
 /obj/machinery/power/debug_items/infinite_cable_powersink/process()
-	last_used = draw_power(power_usage_rate)
+	last_used = add_load(power_usage_rate)
 
 /obj/machinery/power/debug_items/infinite_cable_powersink/show_info(var/mob/user)
 	. = ..()

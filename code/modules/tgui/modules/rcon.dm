@@ -13,7 +13,7 @@
 	var/number_pages = 0
 
 /datum/tgui_module/rcon/proc/filter_smeslist(var/page)
-	number_pages = known_SMESs.len / SMES_PER_PAGE 
+	number_pages = known_SMESs.len / SMES_PER_PAGE
 
 	if(number_pages != round(number_pages))
 		number_pages = round(number_pages) + 1
@@ -35,7 +35,7 @@
 
 	// SMES DATA (simplified view)
 	var/list/smeslist[0]
-	for(var/obj/machinery/power/smes/buildable/SMES in filtered_smeslist)
+	for(var/obj/machinery/power/smes/SMES in filtered_smeslist)
 		var/list/smes_data = SMES.tgui_data()
 		smes_data["RCON_tag"] = SMES.RCon_tag
 		smeslist.Add(list(smes_data))
@@ -65,24 +65,24 @@
 			current_page = page
 			. = TRUE
 		if("smes_in_toggle")
-			var/obj/machinery/power/smes/buildable/SMES = GetSMESByTag(params["smes"])
+			var/obj/machinery/power/smes/SMES = GetSMESByTag(params["smes"])
 			if(SMES)
 				SMES.toggle_input()
 			. = TRUE
 		if("smes_out_toggle")
-			var/obj/machinery/power/smes/buildable/SMES = GetSMESByTag(params["smes"])
+			var/obj/machinery/power/smes/SMES = GetSMESByTag(params["smes"])
 			if(SMES)
 				SMES.toggle_output()
 			. = TRUE
 		if("smes_in_set")
-			var/obj/machinery/power/smes/buildable/SMES = GetSMESByTag(params["smes"])
+			var/obj/machinery/power/smes/SMES = GetSMESByTag(params["smes"])
 			if(SMES)
 				SMES.tgui_set_io(SMES_TGUI_INPUT, params["target"], text2num(params["adjust"]))
 				// var/inputset = (input(usr, "Enter new input level (0-[SMES.input_level_max/1000] kW)", "SMES Input Power Control", SMES.input_level/1000) as num) * 1000
 				// SMES.set_input(inputset)
 			. = TRUE
 		if("smes_out_set")
-			var/obj/machinery/power/smes/buildable/SMES = GetSMESByTag(params["smes"])
+			var/obj/machinery/power/smes/SMES = GetSMESByTag(params["smes"])
 			if(SMES)
 				SMES.tgui_set_io(SMES_TGUI_OUTPUT, params["target"], text2num(params["adjust"]))
 				// var/outputset = (input(usr, "Enter new output level (0-[SMES.output_level_max/1000] kW)", "SMES Output Power Control", SMES.output_level/1000) as num) * 1000
@@ -108,7 +108,7 @@
 	if(!tag)
 		return
 
-	for(var/obj/machinery/power/smes/buildable/S in known_SMESs)
+	for(var/obj/machinery/power/smes/S in known_SMESs)
 		if(S.RCon_tag == tag)
 			return S
 
@@ -121,7 +121,7 @@
 	var/z = get_z(tgui_host())
 	var/list/map_levels = using_map.get_map_levels(z)
 
-	for(var/obj/machinery/power/smes/buildable/SMES in GLOB.smeses)
+	for(var/obj/machinery/power/smes/SMES in machines)
 		if(!(SMES.z in map_levels))
 			continue
 		if(SMES.RCon_tag && (SMES.RCon_tag != "NO_TAG") && SMES.RCon)
@@ -136,7 +136,7 @@
 
 /datum/tgui_module/rcon/ntos
 	ntos = TRUE
-	
+
 /datum/tgui_module/rcon/robot
 /datum/tgui_module/rcon/robot/tgui_state(mob/user)
 	return GLOB.tgui_self_state

@@ -58,8 +58,8 @@
 	connect_to_network()
 	if(powernet)
 		if(powernet.problem)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 // Proc: process()
 // Parameters: None
@@ -71,7 +71,7 @@
 	else
 		use_power = USE_POWER_ACTIVE
 		record()
-	return 1
+	return TRUE
 
 // This tracks historical usage, for TGUI power monitors
 /obj/machinery/power/sensor/proc/record()
@@ -266,8 +266,3 @@
 		data["load_percentage"] = 100
 	data["alarm"] = powernet.problem ? 1 : 0
 	return data
-
-
-
-
-

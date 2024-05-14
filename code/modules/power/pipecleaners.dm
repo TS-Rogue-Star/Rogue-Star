@@ -28,12 +28,11 @@ By design, d1 is the smallest direction and d2 is the highest
 	desc = "A bendable piece of wire covered in fuzz. Fun for arts and crafts!"
 	icon = 'icons/obj/pipes_n_cables/pipe_cleaner.dmi'
 	icon_state = "0-1"
-	layer = WIRE_LAYER //Above hidden pipes, GAS_PIPE_HIDDEN_LAYER
+	layer = WIRES_LAYER //Above hidden pipes, GAS_PIPE_HIDDEN_LAYER
 	anchored = TRUE
-	obj_flags = CAN_BE_HIT
-	color = CABLE_HEX_COLOR_RED
+	color = COLOR_RED
 	///For updating inhand icons.
-	var/pipecleaner_color = CABLE_COLOR_RED
+	var/pipecleaner_color = COLOR_RED
 	/// Pipe_cleaner direction 1 (see above)
 	var/d1 = 0
 	/// pipe_cleaner direction 2 (see above)
@@ -42,36 +41,36 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/obj/item/stack/pipe_cleaner_coil/stored
 
 /obj/structure/pipe_cleaner/yellow
-	color = CABLE_HEX_COLOR_YELLOW
-	pipecleaner_color = CABLE_COLOR_YELLOW
+	color = COLOR_YELLOW
+	pipecleaner_color = COLOR_YELLOW
 
 /obj/structure/pipe_cleaner/green
-	color = CABLE_HEX_COLOR_GREEN
-	pipecleaner_color = CABLE_COLOR_GREEN
+	color = COLOR_GREEN
+	pipecleaner_color = COLOR_GREEN
 
 /obj/structure/pipe_cleaner/blue
-	color = CABLE_HEX_COLOR_BLUE
-	pipecleaner_color = CABLE_COLOR_BLUE
+	color = COLOR_BLUE
+	pipecleaner_color = COLOR_BLUE
 
 /obj/structure/pipe_cleaner/pink
-	color = CABLE_HEX_COLOR_PINK
-	pipecleaner_color = CABLE_COLOR_YELLOW
+	color = COLOR_PINK
+	pipecleaner_color = COLOR_YELLOW
 
 /obj/structure/pipe_cleaner/orange
-	color = CABLE_HEX_COLOR_ORANGE
-	pipecleaner_color = CABLE_COLOR_ORANGE
+	color = COLOR_ORANGE
+	pipecleaner_color = COLOR_ORANGE
 
 /obj/structure/pipe_cleaner/cyan
-	color = CABLE_HEX_COLOR_CYAN
-	pipecleaner_color = CABLE_COLOR_CYAN
+	color = COLOR_CYAN
+	pipecleaner_color = COLOR_CYAN
 
 /obj/structure/pipe_cleaner/white
-	color = CABLE_HEX_COLOR_WHITE
-	pipecleaner_color = CABLE_COLOR_WHITE
+	color = COLOR_WHITE
+	pipecleaner_color = COLOR_WHITE
 
 /obj/structure/pipe_cleaner/brown
-	color = CABLE_HEX_COLOR_BROWN
-	pipecleaner_color = CABLE_COLOR_BROWN
+	color = COLOR_BROWN
+	pipecleaner_color = COLOR_BROWN
 
 
 // the power pipe_cleaner object
@@ -90,10 +89,10 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	if(!param_color)
 		param_color = "white"
-	color = possible_cable_coil_colours[param_color]
+	color = GLOB.possible_cable_coil_colours[param_color]
 	pipecleaner_color = param_color
 	stored?.set_pipecleaner_color(pipecleaner_color)
-	update_appearance()
+	update_icon()
 
 	if(isturf(loc))
 		var/turf/turf_loc = loc
@@ -161,7 +160,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/pipe_cleaner/proc/update_stored(length = 1, colorC = COLOR_RED)
 	stored.amount = length
 	stored.color = colorC
-	stored.update_appearance()
+	stored.update_icon()
 
 /obj/structure/pipe_cleaner/click_alt(mob/living/user)
 	cut_pipe_cleaner(user)
@@ -203,7 +202,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	usesound = 'sound/items/deconstruct.ogg'
 	cost = 1
 	source = /datum/robot_energy_storage/pipe_cleaner
-	color = CABLE_HEX_COLOR_RED
+	color = COLOR_RED
 	///For updating inhand icons.
 	var/pipecleaner_color = CABLE_COLOR_RED
 
@@ -238,7 +237,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/item/stack/pipe_cleaner_coil/proc/set_pipecleaner_color(new_color)
 	color = possible_cable_coil_colours[new_color]
 	pipecleaner_color = new_color
-	update_appearance()
+	update_icon()
 
 /obj/item/stack/pipe_cleaner_coil/suicide_act(mob/living/user)
 	if(locate(/obj/structure/chair/stool) in get_turf(user))
@@ -260,7 +259,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	pixel_x = base_pixel_x + rand(-2, 2)
 	pixel_y = base_pixel_y + rand(-2, 2)
-	update_appearance()
+	update_icon()
 
 ///////////////////////////////////
 // General procedures
@@ -293,7 +292,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		amount = max_amount
 	else
 		amount += extra
-	update_appearance()
+	update_icon()
 
 ///////////////////////////////////////////////
 // Cable laying procedures
@@ -453,7 +452,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	pipecleaner_color = COLOR_BLUE
 
 /obj/item/stack/pipe_cleaner_coil/green
-	color = CABLE_HEX_COLOR_GREEN
+	color = COLOR_GREEN
 	pipecleaner_color = CABLE_COLOR_GREEN
 
 /obj/item/stack/pipe_cleaner_coil/pink

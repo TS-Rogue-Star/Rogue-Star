@@ -62,7 +62,7 @@
 				if(cell.fully_charged())
 					return FALSE
 
-				if(transfer_amount && assembly.draw_power(amount_to_move)) // CELLRATE is already handled in draw_power()
+				if(transfer_amount && assembly.add_load(amount_to_move)) // CELLRATE is already handled in draw_power()
 					cell.give(transfer_amount * CELLRATE)
 				AM.update_icon()
 

@@ -156,7 +156,7 @@
 	if(!active)
 		return PROCESS_KILL
 	else
-		if(draw_power(1500) < 1500)
+		if(add_load(1500) < 1500)
 			Deactivate()
 
 /obj/machinery/power/singularity_beacon/syndicate

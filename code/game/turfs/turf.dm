@@ -160,7 +160,7 @@
 	return TRUE
 
 /turf/proc/can_lay_cable()
-	return can_have_cabling() & !intact_tile
+	return can_have_cabling() & !is_intact
 
 /turf/attackby(obj/item/C, mob/user, params)
 	if(..())
@@ -280,7 +280,7 @@
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
 		O.hide(O.hides_under_flooring() && !is_plating())
-		SEND_SIGNAL(O, COMSIG_OBJ_HIDE, intact_tile)
+		SEND_SIGNAL(O, COMSIG_OBJ_HIDE, is_intact)
 
 /turf/proc/AdjacentTurfs(var/check_blockage = TRUE)
 	. = list()

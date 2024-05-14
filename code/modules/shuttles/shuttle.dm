@@ -376,7 +376,8 @@
 	for(var/datum/powernet/P in powernets)
 		cables |= P.cables
 		qdel(P)
-	SSmachines.setup_powernets_for_cables(cables)
+	if(cables)
+		auto_propagate_cut_cable(cables)
 
 	// Adjust areas of mothershuttle so it doesn't try and bring us with it if it jumps while we aren't on it.
 	if(mothershuttle)

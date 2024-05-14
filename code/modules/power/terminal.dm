@@ -4,7 +4,7 @@
 // using this solves the problem of having the APC in a wall yet also inside an area
 
 /obj/machinery/power/terminal
-	name = "terminal"
+	name = "terminal (L2)"
 	icon_state = "term"
 	desc = "It's an underfloor wiring terminal for power equipment."
 	level = 1
@@ -13,6 +13,14 @@
 	layer = WIRE_TERMINAL_LAYER
 	unacidable = TRUE
 	var/obj/machinery/power/master = null
+
+/obj/machinery/power/terminal/layer1
+	name = "terminal (L1)"
+	cable_layer = CABLE_LAYER_1
+
+/obj/machinery/power/terminal/layer3
+	name = "terminal (L3)"
+	cable_layer = CABLE_LAYER_3
 
 
 // Needed so terminals are not removed from machines list.
@@ -24,11 +32,11 @@
 	. = ..()
 	var/turf/T = get_turf(src)
 	if(level == 1)
-		hide(T.intact_tile)
+		hide(T.is_intact)
 
 /obj/machinery/power/terminal/Destroy()
 	if(master)
-		master.disconnect_terminal()
+		master.disconnect_terminal(cable_layer)
 		master = null
 	return ..()
 
@@ -40,29 +48,37 @@
 		invisibility = 0
 		icon_state = "term"
 
+/obj/machinery/power/terminal/overload(var/obj/machinery/power/source)
+	if(master)
+		master.overload(source)
 
 /obj/machinery/power/proc/can_terminal_dismantle()
 	. = FALSE
 
+/obj/machinery/power/terminal/examine(mob/user)
+	. = ..()
+	if(!QDELETED(powernet))
+		. += span_notice("It's operating on the [LOWER_TEXT(GLOB.cable_layer_to_name["[cable_layer]"])].")
+	else
+		. += span_warning("It's disconnected from the [LOWER_TEXT(GLOB.cable_layer_to_name["[cable_layer]"])].")
 
-/obj/machinery/power/terminal/dismantle(mob/living/user)
-	var/turf/T = get_turf(src)
-	if(T.intact_tile)
-		to_chat(user, "<span class='warning'>You must first expose the power terminal!</span>")
-		return FALSE
+/obj/machinery/power/terminal/should_have_node()
+	return TRUE
+
+/obj/machinery/power/terminal/proc/dismantle(mob/living/user, obj/item/I, cable_layer)
+	if(isturf(loc))
+		var/turf/T = loc
+		if(T.is_plating())
+			to_chat(user, "<span class='filter_notice'><span class='warning'>You must remove the floor plating first!</span></span>")
 
 	if(master && !master.can_terminal_dismantle())
 		return FALSE
 
-	user.visible_message("<span class='notice'>[user] starts removing [master]'s wiring and terminal.</span>",
-		"<span class='notice'>You start removing [master]'s wiring and terminal.</span>")
-
-	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
-	if(!do_after(user, 50, TRUE, 5, BUSY_ICON_BUILD))
-		return FALSE
-
-	if(master && !master.can_terminal_dismantle())
-		return FALSE
+	user.visible_message(span_notice("[user.name] dismantles the cable terminal from [master]."))
+	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+	if(I.use_tool(src, user, 50))
+		if(master && !master.can_terminal_dismantle())
+			return FALSE
 
 	if(prob(50) && electrocute_mob(user, powernet, src, 1, TRUE))
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
@@ -70,9 +86,14 @@
 		s.start()
 		return FALSE
 
-	new /obj/item/stack/cable_coil(get_turf(src), 10)
-	user.visible_message("<span class='notice'>[user] removes [src]'s wiring and terminal.</span>",
-			"<span class='notice'>You remove [src]'s wiring and terminal.</span>")
-	qdel(src)
+		var/obj/item/stack/cable_coil/cable = new (drop_location(), 10)
+		qdel(src)
+		master.terminalconnections -= src
+		var/terminalslot = master.get_terminal_slot(cable_layer)
+		master.disconnect_terminal(terminalslot)
+		to_chat(user, "<span class='filter_notice'><span class='warning'>You finish removing the terminal.</span></span>")
 
-	. = TRUE
+/obj/machinery/power/terminal/wirecutter_act(mob/living/user, obj/item/I, var/cable_layer)
+	..()
+	dismantle(user, I, cable_layer)
+	return TRUE

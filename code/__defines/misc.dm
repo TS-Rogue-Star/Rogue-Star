@@ -323,6 +323,13 @@ var/global/list/##LIST_NAME = list();\
 
 #define DEFAULT_OVERMAP_RANGE 0 // Makes general computers and devices be able to connect to other overmap z-levels on the same tile.
 
+#define REVERSE_DIR(dir) ( ((dir & 85) << 1) | ((dir & 170) >> 1) )
+#define ISDIAGONALDIR(d) (d&(d-1))
+
+/// BYOND's string procs don't support being used on datum references (as in it doesn't look for a name for stringification)
+/// We just use this macro to ensure that we will only pass strings to this BYOND-level function without developers needing to really worry about it.
+#define LOWER_TEXT(thing) lowertext(UNLINT("[thing]"))
+
 /*
 	Used for wire name appearances. Replaces the color name on the left with the one on the right.
 	The color on the left is the one used as the actual color of the wire, but it doesn't look good when written.

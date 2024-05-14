@@ -43,7 +43,7 @@
 	// Now we handle idle power draw.
 	for(var/obj/item/integrated_circuit/IC in contents)
 		if(IC.power_draw_idle)
-			if(!draw_power(IC.power_draw_idle))
+			if(!add_delayedload(IC.power_draw_idle))
 				IC.power_fail()
 
 
@@ -372,7 +372,7 @@
 		AM.emp_act(severity)
 
 // Returns true if power was successfully drawn.
-/obj/item/device/electronic_assembly/proc/draw_power(amount)
+/obj/item/device/electronic_assembly/proc/add_delayedload(amount)
 	if(battery)
 		var/lost = battery.use(amount * CELLRATE)
 		net_power -= lost

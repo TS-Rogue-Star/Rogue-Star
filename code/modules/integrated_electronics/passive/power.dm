@@ -211,10 +211,10 @@
 		if(should_act) // We're gonna give or take from the net.
 			if(drawing)
 				var/to_transfer = min(throughput, assembly.battery.amount_missing() / CELLRATE) // So we don't need to draw 10kW if the cell needs much less.
-				var/amount = IO.draw_power(to_transfer)
+				var/amount = IO.add_delayedload(to_transfer)
 				assembly.give_power(amount)
 			else
-				var/amount = assembly.draw_power(throughput)
+				var/amount = assembly.add_delayedload(throughput)
 				IO.add_avail(amount / CELLRATE)
 
 		set_pin_data(IC_OUTPUT, 1, IO.avail())

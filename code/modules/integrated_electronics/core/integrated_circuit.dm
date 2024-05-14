@@ -252,7 +252,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 /obj/item/integrated_circuit/proc/draw_idle_power()
 	if(assembly)
-		return assembly.draw_power(power_draw_idle)
+		return assembly.add_delayedload(power_draw_idle)
 
 // Override this for special behaviour when there's no power left.
 /obj/item/integrated_circuit/proc/power_fail()
@@ -262,7 +262,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 /obj/item/integrated_circuit/proc/check_power()
 	if(!assembly)
 		return FALSE // Not in an assembly, therefore no power.
-	if(assembly.draw_power(power_draw_per_use))
+	if(assembly.add_delayedload(power_draw_per_use))
 		return TRUE // Battery has enough.
 	return FALSE // Not enough power.
 

@@ -176,7 +176,7 @@ GLOBAL_LIST_EMPTY(apcs)
 	//twizs can do that without having to pry floortiles.
 	if(terminal && terminal.powernet)
 		terminal.powernet.trigger_warning()
-		drained_energy += terminal.powernet.draw_power(amount)
+		drained_energy += terminal.powernet.add_load(amount)
 
 	//The grid rarely gives the full amount requested, or perhaps the grid
 	//isn't connected (wire cut), in either case we draw what we didn't get
@@ -1006,9 +1006,9 @@ GLOBAL_LIST_EMPTY(apcs)
 	return (chargemode && charging == 1 && operating)
 
 
-/obj/machinery/power/apc/draw_power(var/amount)
+/obj/machinery/power/apc/add_load(var/amount)
 	if(terminal && terminal.powernet)
-		return terminal.powernet.draw_power(amount)
+		return terminal.powernet.add_load(amount)
 	return 0
 
 /obj/machinery/power/apc/avail()
@@ -1061,11 +1061,11 @@ GLOBAL_LIST_EMPTY(apcs)
 
 		if(excess > lastused_total)		// if power excess recharge the cell
 										// by the same amount just used
-			var/draw = draw_power(cellused/CELLRATE) // draw the power needed to charge this cell
+			var/draw = add_load(cellused/CELLRATE) // draw the power needed to charge this cell
 			cell.give(draw * CELLRATE)
 		else		// no excess, and not enough per-apc
 			if( (cell.charge/CELLRATE + excess) >= lastused_total)		// can we draw enough from cell+grid to cover last usage?
-				var/draw = draw_power(excess)
+				var/draw = add_load(excess)
 				cell.charge = min(cell.maxcharge, cell.charge + CELLRATE * draw)	//recharge with what we can
 				charging = 0
 			else	// not enough power available to run the last tick!
@@ -1088,7 +1088,7 @@ GLOBAL_LIST_EMPTY(apcs)
 				// Max charge is capped to % per second constant
 				var/ch = min(excess*CELLRATE, cell.maxcharge*chargelevel)
 
-				ch = draw_power(ch/CELLRATE) // Removes the power we're taking from the grid
+				ch = add_load(ch/CELLRATE) // Removes the power we're taking from the grid
 				cell.give(ch*CELLRATE) // actually recharge the cell
 				lastused_charging = ch
 				lastused_total += ch // Sensors need this to stop reporting APC charging as "Other" load

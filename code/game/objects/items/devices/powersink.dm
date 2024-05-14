@@ -100,7 +100,7 @@
 	set_light(12)
 	PN.trigger_warning()
 	// found a powernet, so drain up to max power from it
-	drained = PN.draw_power(drain_rate)
+	drained = PN.add_load(drain_rate)
 	// if tried to drain more than available on powernet
 	// now look for APCs and drain their cells
 	if(drained < drain_rate)

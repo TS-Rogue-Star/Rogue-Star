@@ -1,5 +1,5 @@
 /datum/wires/smes
-	holder_type = /obj/machinery/power/smes/buildable
+	holder_type = /obj/machinery/power/smes
 	wire_count = 5
 	proper_name = "SMES"
 
@@ -8,20 +8,20 @@
 	return ..()
 
 /datum/wires/smes/interactable(mob/user)
-	var/obj/machinery/power/smes/buildable/S = holder
+	var/obj/machinery/power/smes/S = holder
 	if(S.panel_open)
 		return TRUE
 	return FALSE
 
 /datum/wires/smes/get_status()
-	var/obj/machinery/power/smes/buildable/S = holder
+	var/obj/machinery/power/smes/S = holder
 	. = ..()
 	. += "The green light is [(S.input_cut || S.input_pulsed || S.output_cut || S.output_pulsed) ? "off" : "on"]."
 	. += "The red light is [(S.safeties_enabled || S.grounding) ? "off" : "blinking"]."
 	. += "The blue light is [S.RCon ? "on" : "off"]."
 
 /datum/wires/smes/on_cut(wire, mend)
-	var/obj/machinery/power/smes/buildable/S = holder
+	var/obj/machinery/power/smes/S = holder
 	switch(wire)
 		if(WIRE_SMES_RCON)
 			S.RCon = mend
@@ -36,7 +36,7 @@
 	..()
 
 /datum/wires/smes/on_pulse(wire)
-	var/obj/machinery/power/smes/buildable/S = holder
+	var/obj/machinery/power/smes/S = holder
 	switch(wire)
 		if(WIRE_SMES_RCON)
 			if(S.RCon)

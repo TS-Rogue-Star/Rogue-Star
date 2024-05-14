@@ -74,50 +74,50 @@
 
 /datum/unit_test/wire_test/start_test()
 	set background=1
-
 	var/wire_test_count = 0
 	var/bad_tests = 0
-	var/turf/T = null
-	var/obj/structure/cable/C = null
-	var/list/cable_turfs = list()
-	var/list/dirs_checked = list()
-
-	var/list/exempt_from_wires = list()
-	exempt_from_wires += using_map.unit_test_exempt_from_wires.Copy()
-
 	var/list/zs_to_test = using_map.unit_test_z_levels || list(1) //Either you set it, or you just get z1
 
-	for(var/color in possible_cable_coil_colours)
-		cable_turfs = list()
+	for(var/datum/powernet/powernets as anything in SSmachines.powernets)
 
-		for(C in world)
-			T = null
+		//nodes (machines, which includes APCs and SMES)
+		if(!length(powernets.nodes))
+			log_unit_test(length(powernets.cables), "[powernets] found with no nodes OR cables connected, something has gone horribly wrong.")
 
-			T = get_turf(C)
-			var/area/A = get_area(T)
-			if(T && (T.z in zs_to_test) && !(A.type in exempt_from_wires))
-				if(C.color == possible_cable_coil_colours[color])
-					cable_turfs |= get_turf(C)
+			var/obj/structure/cable/found_cable = powernets.cables[1]
+			//Check if they're a station area
+			var/area/cable_area = get_area(found_cable)
+			if(!(cable_area.type in zs_to_test) || !cable_area.requires_power)
+				continue
+			wire_test_count++
+			log_unit_test("[powernets] found with no nodes connected ([found_cable.x], [found_cable.y], [found_cable.z])).")
 
-		for(T in cable_turfs)
-			var/bad_msg = "--------------- [T.name] \[[T.x] / [T.y] / [T.z]\] [color]"
-			dirs_checked.Cut()
-			for(C in T)
-				wire_test_count++
-				var/combined_dir = "[C.d1]-[C.d2]"
-				if(combined_dir in dirs_checked)
-					bad_tests++
-					log_unit_test("[bad_msg] Contains multiple wires with same direction on top of each other.")
-				dirs_checked.Add(combined_dir)
+		//cables
+		if(!length(powernets.cables))
+			bad_tests++
+			log_unit_test(length(powernets.nodes), "[powernets] found with no cables OR nodes connected, something has gone horribly wrong.")
 
-		log_unit_test("[color] wires checked.")
+			var/obj/machinery/power/found_machine = powernets.nodes[1]
+			//Check if they're a station area
+			var/area/machine_area = get_area(found_machine)
+			if(!(machine_area.type in zs_to_test || !machine_area.requires_power)
+				continue
+			wire_test_count++
+			log_unit_test("[powernets] found with no cables connected ([found_machine.x], [found_machine.y], [found_machine.z]).")
 
-	if(bad_tests)
-		fail("\[[bad_tests] / [wire_test_count]\] Some turfs had overlapping wires going the same direction.")
+		if(!powernets.avail && !(locate(/obj/machinery/power/terminal) in powernets.nodes)) //No power roundstart, so check for an SMES connection (Solars, Turbine).
+			var/obj/structure/cable/random_cable = powernets.cables[1]
+			//Check if they're a station area
+			var/area/cable_area = get_area(random_cable)
+			if(!(cable_area.type in zs_to_test || !cable_area.requires_power)
+				continue
+			wire_test_count++
+			log_unit_test("[powernets] found with no power roundstart, connected to a cable at ([random_cable.x], [random_cable.y], [random_cable.z]).")
+		log_unit_test("wires checked.")
+	if(bad_tests++)
+		fail("Maps contained [powernets] powernets which had overlapping wires on the same layer.\n")
 	else
-		pass("All \[[wire_test_count]\] wires had no overlapping cables going the same direction.")
-
-	return 1
+		pass("No Powernet issues detected.\n")
 
 /datum/unit_test/active_edges
 	name = "MAP: Active edges (all maps)"
@@ -168,6 +168,6 @@
 	if(active_edges)
 		fail("Maps contained [active_edges] active edges at round-start.\n" + edge_log.Join("\n"))
 	else
-		pass("No active edges.")
+		pass("No active edges.\n")
 
 	return 1

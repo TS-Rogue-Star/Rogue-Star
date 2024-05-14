@@ -27,9 +27,6 @@
 	cable_node_1.color = CABLELAYERONECOLOR
 	cable_node_1?.alpha = cable_layer & CABLE_LAYER_1 ? 255 : 0
 	underlays += cable_node_1
-	var/mutable_appearance/machinery_node = mutable_appearance('icons/obj/cables/layer_cable.dmi', "l2-noconnection")
-	machinery_node.color = "black"
-	underlays += machinery_node
 
 /obj/structure/cable/multilayer/Initialize(mapload)
 	. = ..()
@@ -40,7 +37,7 @@
 	if(!mapload)
 		auto_propagate_cut_cable(src)
 
-	update_appearance()
+	update_icon()
 
 /obj/structure/cable/multilayer/examine(mob/user)
 	. += ..()
