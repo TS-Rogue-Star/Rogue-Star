@@ -41,6 +41,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/floor_decal/steeldecal/steel_decals5,
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/pilot)
 "aM" = (
@@ -82,12 +83,6 @@
 	outdoors = 1
 	},
 /area/groundbase/cargo/bay)
-"aV" = (
-/obj/effect/floor_decal/corner/paleblue{
-	dir = 10
-	},
-/turf/simulated/floor/tiled/white,
-/area/groundbase/medical/uhallway)
 "bj" = (
 /obj/structure/table/glass,
 /obj/item/weapon/paper_bin,
@@ -272,8 +267,14 @@
 	},
 /area/groundbase/level3/sw/open)
 "dF" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
 /obj/structure/cable/yellow{
-	icon_state = "4-8"
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/uhallway)
@@ -295,6 +296,12 @@
 "dU" = (
 /turf/simulated/wall,
 /area/groundbase/medical/patient3)
+"dY" = (
+/obj/effect/floor_decal/corner/paleblue{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/uhallway)
 "dZ" = (
 /obj/structure/bed/chair/wood{
 	dir = 8
@@ -311,6 +318,13 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/level3/nw)
+"es" = (
+/obj/structure/table/bench/marble,
+/obj/effect/floor_decal/corner/paleblue/full{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/uhallway)
 "eG" = (
 /turf/simulated/wall,
 /area/groundbase/civilian/pilot)
@@ -350,6 +364,12 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/paramedic)
+"fL" = (
+/obj/effect/floor_decal/corner/paleblue{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/uhallway)
 "fP" = (
 /obj/effect/floor_decal/spline/plain{
 	dir = 1
@@ -393,12 +413,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/machinery/door/airlock{
-	name = "Pilots Office";
-	req_access = list(67)
-	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/glass{
+	name = "Pilots Office";
+	req_access = list(67)
 	},
 /turf/simulated/floor/bmarble,
 /area/groundbase/civilian/pilot)
@@ -427,6 +447,11 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/level3/nw)
+"gt" = (
+/obj/structure/table/glass,
+/obj/random/soap,
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/medicalshowers)
 "gA" = (
 /turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/cargo/bay)
@@ -446,6 +471,9 @@
 	},
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 6
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/uhallway)
@@ -588,10 +616,7 @@
 /area/groundbase/dorms/bathroom)
 "io" = (
 /obj/structure/railing/grey,
-/turf/simulated/floor{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
 /area/groundbase/medical/patio)
 "iv" = (
 /obj/machinery/suit_cycler/medical,
@@ -692,7 +717,7 @@
 /area/groundbase/command/hop)
 "ke" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/monotile,
 /area/groundbase/civilian/pilot)
 "kj" = (
 /obj/machinery/firealarm,
@@ -749,6 +774,15 @@
 	outdoors = 1
 	},
 /area/groundbase/medical/patio)
+"kT" = (
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/medicalshowers)
 "kV" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -774,11 +808,18 @@
 "lH" = (
 /turf/simulated/floor/tiled/monotile,
 /area/shuttle/groundbase/exploration)
+"lN" = (
+/obj/structure/table/bench/marble,
+/obj/effect/floor_decal/corner/paleblue/full{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/uhallway)
 "lO" = (
 /mob/living/simple_mob/vore/alienanimals/catslug/custom/pilotslug{
 	ghostjoin = 1
 	},
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/monotile,
 /area/groundbase/civilian/pilot)
 "lP" = (
 /obj/machinery/power/apc,
@@ -890,7 +931,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
-/turf/simulated/floor/outdoors/sidewalk,
+/turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/level3/se)
 "mS" = (
 /turf/simulated/floor/reinforced{
@@ -948,6 +989,8 @@
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 5
 	},
+/obj/structure/table/glass,
+/obj/machinery/recharger,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/paramedic)
 "nM" = (
@@ -1052,7 +1095,7 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/paramedic)
 "on" = (
-/obj/effect/floor_decal/industrial/warning{
+/obj/effect/floor_decal/milspec/color/green/half{
 	dir = 1
 	},
 /turf/simulated/floor/tiled{
@@ -1060,16 +1103,24 @@
 	},
 /area/groundbase/medical/patio)
 "op" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/full,
-/obj/machinery/door/firedoor,
-/turf/simulated/floor,
-/area/groundbase/medical/uhallway)
+/obj/machinery/door/airlock/multi_tile/glass/polarized{
+	id_tag = null;
+	id_tint = null;
+	name = "Medbay Airlock";
+	req_one_access = list(5)
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled/steel_ridged,
+/area/groundbase/medical/medicalshowers)
 "ot" = (
-/obj/effect/floor_decal/industrial/warning{
+/obj/random/vendorall,
+/obj/effect/floor_decal/milspec/color/green/half{
 	dir = 1
 	},
-/obj/random/vendorall,
 /turf/simulated/floor/tiled{
 	outdoors = 1
 	},
@@ -1094,6 +1145,12 @@
 	},
 /turf/simulated/floor/carpet/sblucarpet,
 /area/groundbase/level3/nw)
+"oN" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/machinery/door/firedoor,
+/turf/simulated/floor,
+/area/groundbase/medical/uhallway)
 "oT" = (
 /obj/structure/table/rack,
 /obj/item/clothing/shoes/magboots,
@@ -1154,6 +1211,18 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/uhallway)
+"pS" = (
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/medicalshowers)
+"pW" = (
+/obj/effect/floor_decal/corner/paleblue{
+	dir = 10
+	},
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/uhallway)
 "pX" = (
 /obj/machinery/alarm{
 	dir = 8
@@ -1185,6 +1254,13 @@
 /obj/structure/closet/secure_closet/personal,
 /turf/simulated/floor/wood,
 /area/groundbase/hotspring)
+"qi" = (
+/obj/machinery/door/airlock{
+	id_tag = "z2medstall1";
+	name = "Restroom Stall"
+	},
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/medicalshowers)
 "qj" = (
 /obj/effect/floor_decal/milspec/color/red/half{
 	dir = 8
@@ -1197,6 +1273,13 @@
 	},
 /turf/simulated/floor/tiled,
 /area/shuttle/groundbase/exploration)
+"qm" = (
+/obj/structure/table/bench/marble,
+/obj/effect/floor_decal/corner/paleblue/full{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/uhallway)
 "qn" = (
 /obj/structure/closet/secure_closet/personal/patient,
 /obj/machinery/firealarm{
@@ -1448,13 +1531,14 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/wood,
 /area/groundbase/medical/cmo)
-"sH" = (
-/turf/simulated/floor/water/atoll{
-	desc = "This water looks pretty shallow and calm. You'd almost feel bad for hopping in and disturbing its serene flatness. Steam wafts off of the surface!";
-	name = "hotspring";
-	outdoors = 1
+"sK" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
 	},
-/area/groundbase/level3/nw)
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/uhallway)
 "sM" = (
 /obj/structure/bed/chair/shuttle{
 	dir = 4
@@ -1574,17 +1658,14 @@
 /turf/simulated/floor/outdoors/sidewalk/slab/virgo3c,
 /area/groundbase/level3/nw)
 "tX" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/uhallway)
@@ -1712,10 +1793,10 @@
 /turf/simulated/mineral/cave,
 /area/groundbase/level3/se)
 "uR" = (
-/obj/effect/floor_decal/industrial/warning{
+/obj/machinery/vending/coffee,
+/obj/effect/floor_decal/milspec/color/green/half{
 	dir = 1
 	},
-/obj/machinery/vending/coffee,
 /turf/simulated/floor/tiled{
 	outdoors = 1
 	},
@@ -1785,6 +1866,18 @@
 	},
 /turf/simulated/floor/wood,
 /area/groundbase/dorms/bathroom)
+"vA" = (
+/obj/structure/sink{
+	pixel_y = 20
+	},
+/obj/structure/mirror{
+	pixel_y = 37
+	},
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/medicalshowers)
+"vC" = (
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/medicalshowers)
 "vD" = (
 /turf/simulated/floor/outdoors/sidewalk/slab{
 	outdoors = 0
@@ -1915,6 +2008,19 @@
 "xc" = (
 /turf/simulated/mineral/cave,
 /area/groundbase/level3/sw/open)
+"xh" = (
+/obj/structure/window/basic{
+	dir = 8
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 8
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 1
+	},
+/obj/machinery/light/small,
+/turf/simulated/floor/tiled/techfloor,
+/area/groundbase/medical/medicalshowers)
 "xm" = (
 /turf/simulated/wall,
 /area/groundbase/medical/patient2)
@@ -1967,6 +2073,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/uhallway)
 "xL" = (
@@ -1995,16 +2104,18 @@
 	},
 /turf/simulated/floor/carpet/retro,
 /area/groundbase/dorms/bathroom)
-"yd" = (
-/obj/machinery/firealarm{
+"ye" = (
+/obj/machinery/door/window{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/effect/floor_decal/corner/paleblue{
-	dir = 9
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 8
 	},
-/turf/simulated/floor/tiled/white,
-/area/groundbase/medical/uhallway)
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/groundbase/medical/medicalshowers)
 "yg" = (
 /obj/structure/bed/chair/shuttle{
 	dir = 1
@@ -2077,14 +2188,6 @@
 /obj/structure/disposalpipe/down,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/level3/nw)
-"yC" = (
-/obj/effect/map_effect/interval/effect_emitter/steam/less_frequent,
-/turf/simulated/floor/water/atoll{
-	desc = "This water looks pretty shallow and calm. You'd almost feel bad for hopping in and disturbing its serene flatness. Steam wafts off of the surface!";
-	name = "hotspring";
-	outdoors = 1
-	},
-/area/groundbase/level3/nw)
 "yD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
@@ -2148,18 +2251,14 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-4"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
-	},
 /obj/machinery/light{
 	dir = 4
 	},
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 6
 	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/uhallway)
 "zN" = (
@@ -2275,12 +2374,11 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/patient4)
 "AY" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 9
+	},
+/obj/machinery/firealarm{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/uhallway)
@@ -2372,6 +2470,10 @@
 "Cy" = (
 /turf/simulated/open,
 /area/groundbase/cargo/office)
+"Cz" = (
+/obj/machinery/power/apc,
+/turf/simulated/wall,
+/area/groundbase/medical/medicalshowers)
 "CC" = (
 /obj/machinery/camera/network/medbay{
 	dir = 4
@@ -2383,6 +2485,17 @@
 	outdoors = 1
 	},
 /area/groundbase/medical/patio)
+"CW" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/medicalshowers)
+"Dc" = (
+/obj/structure/table/bench/marble,
+/obj/effect/floor_decal/corner/paleblue/full,
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/uhallway)
 "Dh" = (
 /obj/effect/floor_decal/milspec/color/red/half{
 	dir = 9
@@ -2458,8 +2571,13 @@
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 10
 	},
+/obj/structure/table/glass,
+/obj/machinery/recharger,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/paramedic)
+"DG" = (
+/turf/simulated/floor/tiled/steel_ridged,
+/area/groundbase/medical/medicalshowers)
 "DL" = (
 /obj/effect/floor_decal/milspec/color/red/half{
 	dir = 4
@@ -2489,11 +2607,14 @@
 /turf/simulated/floor,
 /area/groundbase/medical/patient4)
 "Eb" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/uhallway)
 "Ec" = (
@@ -2643,6 +2764,19 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/patient2)
+"FF" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/machinery/door/airlock/glass,
+/obj/machinery/door/firedoor/glass,
+/turf/simulated/floor/plating,
+/area/groundbase/civilian/pilot)
+"FL" = (
+/obj/effect/floor_decal/corner/paleblue{
+	dir = 9
+	},
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/uhallway)
 "FQ" = (
 /obj/structure/railing/grey,
 /turf/simulated/open,
@@ -2840,6 +2974,19 @@
 	outdoors = 0
 	},
 /area/groundbase/cargo/office)
+"Ih" = (
+/obj/structure/toilet{
+	dir = 4
+	},
+/obj/machinery/button/remote/airlock{
+	id = "z2medstall1";
+	pixel_x = 10;
+	pixel_y = 27;
+	specialfunctions = 4
+	},
+/obj/machinery/light/small,
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/medicalshowers)
 "Ii" = (
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/uhallway)
@@ -2969,9 +3116,18 @@
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/level3/nw)
 "JN" = (
-/obj/machinery/hologram/holopad,
+/obj/structure/toilet{
+	dir = 4
+	},
+/obj/machinery/button/remote/airlock{
+	id = "z2medstall2";
+	pixel_x = 10;
+	pixel_y = 27;
+	specialfunctions = 4
+	},
+/obj/machinery/light/small,
 /turf/simulated/floor/tiled/white,
-/area/groundbase/medical/uhallway)
+/area/groundbase/medical/medicalshowers)
 "JV" = (
 /obj/machinery/light{
 	dir = 4
@@ -3000,6 +3156,22 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/level3/nw)
+"Kn" = (
+/obj/structure/window/basic{
+	dir = 8
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 8
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 1
+	},
+/obj/machinery/firealarm,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/groundbase/medical/medicalshowers)
 "Ko" = (
 /turf/simulated/floor/reinforced{
 	edge_blending_priority = -1;
@@ -3195,16 +3367,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/level3/nw)
-"LT" = (
-/obj/machinery/atmospherics/unary/vent_scrubber/on{
-	dir = 1
-	},
-/obj/machinery/camera/network/medbay{
-	dir = 1
-	},
-/obj/effect/floor_decal/corner/paleblue/full,
-/turf/simulated/floor/tiled/white,
-/area/groundbase/medical/uhallway)
 "LU" = (
 /obj/effect/floor_decal/industrial/warning,
 /turf/simulated/floor/reinforced{
@@ -3353,10 +3515,13 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 4
+	},
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/pilot)
 "MQ" = (
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/monotile,
 /area/groundbase/civilian/pilot)
 "MR" = (
 /obj/structure/toilet{
@@ -3367,6 +3532,15 @@
 	},
 /turf/simulated/floor/wood,
 /area/groundbase/hotspring)
+"MS" = (
+/obj/effect/shuttle_landmark/premade/groundbase{
+	name = "Rascal's Pass Shuttlepad"
+	},
+/turf/simulated/floor/reinforced{
+	edge_blending_priority = -1;
+	outdoors = 1
+	},
+/area/groundbase/level3/ne)
 "Na" = (
 /obj/effect/floor_decal/industrial/outline,
 /turf/simulated/floor/outdoors/sidewalk/slab,
@@ -3382,6 +3556,10 @@
 /obj/item/clothing/shoes/magboots,
 /obj/item/clothing/suit/space/void/pilot,
 /obj/item/clothing/head/helmet/space/void/pilot,
+/obj/machinery/light_switch{
+	dir = 8;
+	pixel_x = 30
+	},
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/pilot)
 "Nd" = (
@@ -3417,6 +3595,12 @@
 	},
 /turf/simulated/floor/bmarble,
 /area/groundbase/cargo/office)
+"Op" = (
+/obj/machinery/alarm{
+	dir = 1
+	},
+/turf/simulated/wall,
+/area/groundbase/medical/medicalshowers)
 "Ot" = (
 /turf/simulated/floor/bmarble,
 /area/groundbase/cargo/office)
@@ -3480,6 +3664,12 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/level3/nw)
+"Pb" = (
+/obj/machinery/alarm{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/groundbase/civilian/pilot)
 "Pf" = (
 /obj/structure/table/rack,
 /obj/item/weapon/rig/medical/equipped,
@@ -3621,13 +3811,6 @@
 /turf/simulated/wall,
 /area/groundbase/medical/patient1)
 "Rg" = (
-/obj/structure/closet/walllocker_double{
-	dir = 8;
-	name = "misc equipment cabinet";
-	pixel_x = -32
-	},
-/obj/item/weapon/storage/box/nifsofts_pilot,
-/obj/item/device/multitool/station_buffered,
 /obj/structure/table/steel,
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/pilot)
@@ -3682,16 +3865,8 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/patient2)
 "RM" = (
-/obj/machinery/station_map{
-	dir = 8;
-	pixel_x = 32
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/effect/floor_decal/corner/paleblue{
-	dir = 6
-	},
-/turf/simulated/floor/tiled/white,
-/area/groundbase/medical/uhallway)
+/turf/simulated/wall,
+/area/groundbase/medical/medicalshowers)
 "RP" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
@@ -3776,6 +3951,9 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/uhallway)
 "SS" = (
@@ -3811,10 +3989,6 @@
 	},
 /area/groundbase/exploration/shuttlepad)
 "Tc" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -3910,6 +4084,18 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/level3/nw)
+"TU" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/uhallway)
 "Ub" = (
 /obj/structure/closet/athletic_swimwear,
 /turf/simulated/floor/wood,
@@ -3920,6 +4106,19 @@
 	tree_chance = 0
 	},
 /area/groundbase/level3/nw)
+"Uh" = (
+/obj/machinery/shower{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/groundbase/medical/medicalshowers)
+"Un" = (
+/obj/machinery/door/airlock{
+	id_tag = "z2medstall2";
+	name = "Restroom Stall"
+	},
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/medicalshowers)
 "Us" = (
 /obj/structure/fence/corner,
 /turf/simulated/floor{
@@ -3955,11 +4154,11 @@
 /obj/machinery/alarm{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 6
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/uhallway)
 "Uy" = (
@@ -4025,6 +4224,22 @@
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/pilot)
+"Vw" = (
+/obj/structure/flora/pottedplant/stoutbush,
+/turf/simulated/floor/tiled{
+	outdoors = 1
+	},
+/area/groundbase/medical/patio)
+"Vy" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/medicalshowers)
 "VB" = (
 /obj/structure/fence,
 /obj/effect/floor_decal/milspec/color/red/half{
@@ -4045,6 +4260,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/floor_decal/steeldecal/steel_decals5,
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/pilot)
 "VT" = (
@@ -4068,10 +4284,6 @@
 /obj/item/clothing/shoes/magboots,
 /obj/item/clothing/suit/space/void/pilot,
 /obj/item/clothing/head/helmet/space/void/pilot,
-/obj/machinery/light_switch{
-	dir = 8;
-	pixel_x = 30
-	},
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/pilot)
 "Wf" = (
@@ -4094,9 +4306,6 @@
 "Wi" = (
 /obj/structure/table/steel,
 /obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 4
-	},
-/obj/machinery/alarm{
 	dir = 4
 	},
 /turf/simulated/floor/tiled,
@@ -4178,6 +4387,21 @@
 	outdoors = 1
 	},
 /area/groundbase/medical/patio)
+"WZ" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/machinery/door/firedoor/glass,
+/turf/simulated/floor/plating,
+/area/groundbase/civilian/pilot)
+"Xa" = (
+/obj/effect/floor_decal/corner/paleblue{
+	dir = 10
+	},
+/obj/structure/table/bench/marble,
+/turf/simulated/floor/tiled{
+	outdoors = 1
+	},
+/area/groundbase/medical/patio)
 "Xe" = (
 /obj/effect/floor_decal/milspec/color/red/half{
 	dir = 4
@@ -4213,6 +4437,13 @@
 /turf/simulated/floor/outdoors/sidewalk/slab/virgo3c,
 /area/groundbase/level3/nw)
 "Xv" = (
+/obj/structure/closet/walllocker_double{
+	dir = 8;
+	name = "misc equipment cabinet";
+	pixel_x = -32
+	},
+/obj/item/weapon/storage/box/nifsofts_pilot,
+/obj/item/device/multitool/station_buffered,
 /obj/structure/table/steel,
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/pilot)
@@ -4317,9 +4548,6 @@
 /area/groundbase/cargo/bay)
 "YC" = (
 /obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/yellow{
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
@@ -4334,20 +4562,23 @@
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 9
 	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/uhallway)
 "YE" = (
 /turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/level3/nw)
 "YI" = (
-/obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 1
-	},
-/obj/effect/floor_decal/corner/paleblue/full{
-	dir = 4
-	},
+/obj/structure/table/glass,
+/obj/item/weapon/towel/random,
+/obj/item/weapon/towel/random,
+/obj/item/weapon/towel/random,
+/obj/machinery/light,
+/obj/structure/cable/yellow,
 /turf/simulated/floor/tiled/white,
-/area/groundbase/medical/uhallway)
+/area/groundbase/medical/medicalshowers)
 "YO" = (
 /turf/simulated/wall/r_wall,
 /area/groundbase/dorms/bathroom)
@@ -4794,10 +5025,10 @@ nX
 nX
 nX
 nX
-sH
-sH
-sH
-sH
+Mz
+Mz
+Mz
+Mz
 nX
 nX
 nX
@@ -4937,10 +5168,10 @@ nX
 Mz
 Mz
 Mz
-sH
-sH
-sH
-sH
+Mz
+Mz
+Mz
+Mz
 nX
 nX
 nX
@@ -5079,11 +5310,11 @@ Ue
 Mz
 na
 Mz
-sH
-sH
-sH
-sH
-sH
+Mz
+Mz
+Mz
+Mz
+Mz
 nX
 nX
 nX
@@ -5219,14 +5450,14 @@ Ue
 Ue
 Ue
 Ue
-sH
-sH
-sH
-sH
-sH
-sH
-sH
-sH
+Mz
+Mz
+Mz
+Mz
+Mz
+Mz
+Mz
+Mz
 nX
 nX
 nX
@@ -5361,14 +5592,14 @@ dO
 dO
 Ue
 Ue
-sH
-sH
-sH
-yC
-sH
-sH
-sH
-sH
+Mz
+Mz
+Mz
+na
+Mz
+Mz
+Mz
+Mz
 nX
 nX
 nX
@@ -5504,14 +5735,14 @@ Ue
 Ue
 Ue
 Ue
-sH
-sH
-sH
-sH
-sH
-sH
-sH
-sH
+Mz
+Mz
+Mz
+Mz
+Mz
+Mz
+Mz
+Mz
 nX
 nX
 nX
@@ -5647,12 +5878,12 @@ Ue
 Ue
 Ue
 Ue
-sH
-sH
-sH
-sH
-yC
-sH
+Mz
+Mz
+Mz
+Mz
+na
+Mz
 Ue
 Ue
 Ue
@@ -5790,10 +6021,10 @@ Ue
 Ue
 Ue
 Ue
-sH
-sH
-sH
-sH
+Mz
+Mz
+Mz
+Mz
 Ue
 Ue
 Ue
@@ -18129,7 +18360,7 @@ mS
 mS
 mS
 mS
-mS
+MS
 mS
 mS
 mS
@@ -18350,8 +18581,8 @@ YS
 Wy
 eG
 eG
-eG
-eG
+FF
+WZ
 eG
 eG
 eG
@@ -19062,7 +19293,7 @@ eG
 Nc
 VV
 MN
-MQ
+Pb
 eG
 OL
 HZ
@@ -19202,7 +19433,7 @@ Wy
 Wy
 eG
 eG
-eG
+WZ
 fZ
 eG
 eG
@@ -19465,14 +19696,14 @@ Ib
 Wg
 Ib
 Dv
-WB
+Mu
 YS
 YS
-YS
-YS
-YS
-YS
-Wy
+RM
+RM
+RM
+RM
+RM
 PJ
 PJ
 PJ
@@ -19599,7 +19830,7 @@ WW
 vd
 WW
 Rv
-aJ
+Xa
 Mu
 ci
 wI
@@ -19608,13 +19839,13 @@ nY
 sE
 ES
 Mu
-YS
-YS
-YS
-YS
-YS
-YS
-Wy
+oN
+oN
+RM
+Ih
+RM
+JN
+RM
 Wy
 PJ
 Wy
@@ -19741,7 +19972,7 @@ WW
 vd
 WW
 Rv
-aJ
+Xa
 Mu
 Mu
 Mu
@@ -19750,13 +19981,13 @@ Dk
 Mu
 Mu
 Mu
-QQ
-QQ
-QQ
-YS
-YS
-YS
-Wy
+lN
+Dc
+RM
+qi
+RM
+Un
+RM
 Wy
 Wy
 Az
@@ -19879,7 +20110,7 @@ YS
 io
 on
 Rv
-WW
+Vw
 vd
 WW
 Rv
@@ -19890,15 +20121,15 @@ pO
 YC
 tX
 AY
-AY
+FL
 Tc
-yd
-LT
-QQ
-YS
-YS
-YS
-Wy
+dY
+pW
+RM
+vA
+vC
+vC
+RM
 Wy
 Wy
 MB
@@ -20034,13 +20265,13 @@ rx
 mw
 mw
 dF
-Ii
-aV
+sK
+sK
 op
-YS
-YS
-YS
-YS
+Vy
+kT
+YI
+Cz
 Wy
 Wy
 MB
@@ -20175,14 +20406,14 @@ xJ
 KN
 nl
 nl
-dF
-JN
-aV
-op
-YS
-YS
-YS
-YS
+TU
+Ii
+Ii
+DG
+CW
+pS
+gt
+Op
 Wy
 Wy
 MB
@@ -20318,14 +20549,14 @@ SI
 ko
 Uw
 zu
+fL
+pW
 RM
-YI
-QQ
-YS
-YS
-YS
-YS
-YS
+vA
+vC
+vC
+RM
+Wy
 Wy
 MB
 gk
@@ -20447,7 +20678,7 @@ YS
 io
 on
 XQ
-WW
+Vw
 WW
 WW
 Rv
@@ -20460,14 +20691,14 @@ qX
 FW
 FW
 LF
-QQ
-QQ
-QQ
-YS
-YS
-YS
-YS
-YS
+qm
+es
+RM
+Kn
+ye
+xh
+RM
+Wy
 Wy
 MB
 KU
@@ -20593,7 +20824,7 @@ WW
 WW
 WW
 Rv
-aJ
+Xa
 FW
 BU
 DA
@@ -20602,13 +20833,13 @@ jG
 Sq
 Pv
 FW
-YS
-YS
-YS
-YS
-YS
-YS
-YS
+oN
+oN
+RM
+Uh
+Uh
+Uh
+RM
 Wy
 Wy
 MB
@@ -20735,7 +20966,7 @@ WW
 WW
 WW
 Rv
-aJ
+Xa
 FW
 Oz
 ST
@@ -20746,11 +20977,11 @@ Dt
 FW
 YS
 YS
-YS
-YS
-YS
-YS
-YS
+RM
+RM
+RM
+RM
+RM
 Wy
 Wy
 MB

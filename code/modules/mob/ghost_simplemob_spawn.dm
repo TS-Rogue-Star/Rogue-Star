@@ -20,18 +20,34 @@ GLOBAL_LIST_INIT(ghost_spawnable_mobs,list(
 	"Frog - Giant" = /mob/living/simple_mob/vore/aggressive/frog,
 	"Jelly Blob" = /mob/living/simple_mob/vore/jelly,
 	"Juvenile Solargrub" = /mob/living/simple_mob/vore/solargrub,
-	"Leopardmander" = /mob/living/simple_mob/vore/leopardmander,
-	"Leopardmander - Blue" = /mob/living/simple_mob/vore/leopardmander/blue,
-	"Leopardmander - Exotic" = /mob/living/simple_mob/vore/leopardmander/exotic,
+	"Leopardmander Selection" = list(
+		"Leopardmander" = /mob/living/simple_mob/vore/leopardmander,
+		"Leopardmander - Blue" = /mob/living/simple_mob/vore/leopardmander/blue,
+		"Leopardmander - Exotic" = /mob/living/simple_mob/vore/leopardmander/exotic
+	),
 	"Morph" = /mob/living/simple_mob/vore/morph,
-	"Otie" = /mob/living/simple_mob/vore/otie,
-	"Otie - Mutated" =/mob/living/simple_mob/vore/otie/feral,
-	"Otie - Red" = /mob/living/simple_mob/vore/otie/red,
-	"Pakkun" =/mob/living/simple_mob/vore/pakkun,
-	"Pakkun - Snapdragon" =/mob/living/simple_mob/vore/pakkun/snapdragon,
-	"Pakkun - Sand" = /mob/living/simple_mob/vore/pakkun/sand,
-	"Pakkun - Fire" = /mob/living/simple_mob/vore/pakkun/fire,
-	"Pakkun - Amethyst" = /mob/living/simple_mob/vore/pakkun/purple,
+	"Otie Selection" = list(
+		"Otie" = /mob/living/simple_mob/vore/otie,
+		"Chubby Otie" = /mob/living/simple_mob/vore/otie/friendly/chubby,
+		"Tamed Otie" = /mob/living/simple_mob/vore/otie/cotie,
+		"Chubby Tamed Otie" = /mob/living/simple_mob/vore/otie/cotie/chubby,
+		"Guard Otie" = /mob/living/simple_mob/vore/otie/security,
+		"Chubby Guard Otie" = /mob/living/simple_mob/vore/otie/security/chubby,
+		"Mutated Otie" =/mob/living/simple_mob/vore/otie/feral,
+		"Chubby Mutated Feral Otie" = /mob/living/simple_mob/vore/otie/feral/chubby,
+		"Mutated Guard Otie" = /mob/living/simple_mob/vore/otie/security/phoron,
+		"Red Otie" = /mob/living/simple_mob/vore/otie/red,
+		"Chubby Red Otie" = /mob/living/simple_mob/vore/otie/red/chubby,
+		"Red Guard Otie" = /mob/living/simple_mob/vore/otie/security/phoron/red,
+		"Chubby Red Guard Otie" = /mob/living/simple_mob/vore/otie/security/phoron/red/chubby
+	),
+	"Pakkun Selection" = list(
+		"Pakkun" =/mob/living/simple_mob/vore/pakkun,
+		"Pakkun - Snapdragon" =/mob/living/simple_mob/vore/pakkun/snapdragon,
+		"Pakkun - Sand" = /mob/living/simple_mob/vore/pakkun/sand,
+		"Pakkun - Fire" = /mob/living/simple_mob/vore/pakkun/fire,
+		"Pakkun - Amethyst" = /mob/living/simple_mob/vore/pakkun/purple
+	),
 	"Panther" = /mob/living/simple_mob/vore/aggressive/panther,
 	"Sect Queen" = /mob/living/simple_mob/vore/sect_queen,
 	"Sect Drone" = /mob/living/simple_mob/vore/sect_drone,
@@ -40,30 +56,36 @@ GLOBAL_LIST_INIT(ghost_spawnable_mobs,list(
 	"Rat - Giant" = /mob/living/simple_mob/vore/aggressive/rat,
 	"Red Panda" = /mob/living/simple_mob/vore/redpanda,
 	"Seagull" = /mob/living/simple_mob/vore/seagull,
-	"Scel (Orange)" = /mob/living/simple_mob/vore/scel/orange,
-	"Scel (Blue)" = /mob/living/simple_mob/vore/scel/blue,
-	"Scel (Purple)" = /mob/living/simple_mob/vore/scel/purple,
-	"Scel (Red)" = /mob/living/simple_mob/vore/scel/red,
-	"Scel (Green)" = /mob/living/simple_mob/vore/scel/green,
+	"Scel Selection" = list(
+		"Scel (Orange)" = /mob/living/simple_mob/vore/scel/orange,
+		"Scel (Blue)" = /mob/living/simple_mob/vore/scel/blue,
+		"Scel (Purple)" = /mob/living/simple_mob/vore/scel/purple,
+		"Scel (Red)" = /mob/living/simple_mob/vore/scel/red,
+		"Scel (Green)" = /mob/living/simple_mob/vore/scel/green
+	),
 	"Snake - Giant" = /mob/living/simple_mob/vore/aggressive/giant_snake,
-	"Spider - Hunter" = /mob/living/simple_mob/animal/giant_spider/hunter,
-	"Spider - Lurker" = /mob/living/simple_mob/animal/giant_spider/lurker,
-	"Spider - Pepper" = /mob/living/simple_mob/animal/giant_spider/pepper,
-	"Spider - Thermic" = /mob/living/simple_mob/animal/giant_spider/thermic,
-	"Spider - Webslinger" = /mob/living/simple_mob/animal/giant_spider/webslinger,
-	"Spider - Frost" = /mob/living/simple_mob/animal/giant_spider/frost,
-	"Spider - Nurse" = /mob/living/simple_mob/animal/giant_spider/nurse/eggless,
-	"Spider - Queen" = /mob/living/simple_mob/animal/giant_spider/nurse/queen/eggless,
+	"Spider Selection" = list(
+		"Spider - Hunter" = /mob/living/simple_mob/animal/giant_spider/hunter,
+		"Spider - Lurker" = /mob/living/simple_mob/animal/giant_spider/lurker,
+		"Spider - Pepper" = /mob/living/simple_mob/animal/giant_spider/pepper,
+		"Spider - Thermic" = /mob/living/simple_mob/animal/giant_spider/thermic,
+		"Spider - Webslinger" = /mob/living/simple_mob/animal/giant_spider/webslinger,
+		"Spider - Frost" = /mob/living/simple_mob/animal/giant_spider/frost,
+		"Spider - Nurse" = /mob/living/simple_mob/animal/giant_spider/nurse/eggless,
+		"Spider - Queen" = /mob/living/simple_mob/animal/giant_spider/nurse/queen/eggless
+	),
 	"Squirrel" = /mob/living/simple_mob/vore/squirrel/big,
 	"Teppi" = /mob/living/simple_mob/vore/alienanimals/teppi/customizable,
 	"Voracious Lizard" = /mob/living/simple_mob/vore/aggressive/dino,
 	"Weretiger" = /mob/living/simple_mob/vore/weretiger,
-	"Wolf" = /mob/living/simple_mob/vore/wolf,
-	"Wolf - Dire" = /mob/living/simple_mob/vore/wolf/direwolf,
-	"Wolf - Dire - Sec" = /mob/living/simple_mob/vore/wolf/direwolf/sec,
-	"Wolf - Dog" = /mob/living/simple_mob/vore/wolf/direwolf/dog,
-	"Wolf - Dog - Sec" = /mob/living/simple_mob/vore/wolf/direwolf/dog/sec,
-	"Wolf - Andrewsarchus" = /mob/living/simple_mob/vore/wolf/direwolf/andrews
+	"Wolf Selection" = list(
+		"Wolf" = /mob/living/simple_mob/vore/wolf,
+		"Wolf - Dire" = /mob/living/simple_mob/vore/wolf/direwolf,
+		"Wolf - Dire - Sec" = /mob/living/simple_mob/vore/wolf/direwolf/sec,
+		"Wolf - Dog" = /mob/living/simple_mob/vore/wolf/direwolf/dog,
+		"Wolf - Dog - Sec" = /mob/living/simple_mob/vore/wolf/direwolf/dog/sec,
+		"Wolf - Andrewsarchus" = /mob/living/simple_mob/vore/wolf/direwolf/andrews
+	)
 	))
 
 /mob/observer/dead/verb/join_as_simplemob()	//Copypasta from join_as_drone()
@@ -117,8 +139,22 @@ GLOBAL_LIST_INIT(ghost_spawnable_mobs,list(
 		to_chat(usr, "You must wait 5 minutes to spawn as a mob!")
 		return
 
+	var/mobtype
 	var/choice = tgui_input_list(src, "What type of mob do you want to spawn as?", "Mob Choice", GLOB.ghost_spawnable_mobs)
 	if(!choice)
+		return
+
+	if(islist(GLOB.ghost_spawnable_mobs[choice]))
+		var/list/ourlist = GLOB.ghost_spawnable_mobs[choice]
+		var/newchoice = tgui_input_list(src, "Which one?", "[choice]", ourlist)
+		if(!newchoice)
+			return
+		choice = newchoice
+		mobtype = ourlist[newchoice]
+	else
+		mobtype = GLOB.ghost_spawnable_mobs[choice]
+
+	if(tgui_alert(src, "Are you sure you want to play as [choice]?","Confirmation",list("No","Yes")) != "Yes")
 		return
 
 	for(var/mob/living/sus in viewers(ourturf))	//We can spawn the mob literally anywhere,
@@ -128,7 +164,6 @@ GLOBAL_LIST_INIT(ghost_spawnable_mobs,list(
 			to_chat(src, "<span class='danger'>\The [sus] can see you here, try somewhere more discreet!</span>")
 			return
 
-	var/mobtype = GLOB.ghost_spawnable_mobs[choice]
 	var/mob/living/simple_mob/newPred = new mobtype(ourturf)
 	qdel(newPred.ai_holder)
 	newPred.ai_holder = null
@@ -145,6 +180,11 @@ GLOBAL_LIST_INIT(ghost_spawnable_mobs,list(
 
 	newPred.ckey = src.ckey
 	newPred.visible_message("<span class='warning'>[newPred] emerges from somewhere!</span>")
+
+	newPred.mob_radio = new /obj/item/device/radio/headset/mob_headset(newPred)
+	newPred.mob_radio.frequency = PUB_FREQ
+	newPred.sight |= SEE_SELF
+	newPred.sight |= SEE_MOBS
 
 /datum/admins/proc/add_ghost_mob_spawns()
 	set category = "Fun"

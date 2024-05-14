@@ -40,7 +40,6 @@
 	)
 
 	var/player_login_key_log			//RS ADD: keeps track of a ckey if we join with one to help determine if we're a PC
-	var/ssd_vore = FALSE				//RS ADD: if false, makes mob undevourable if player_login_key_log is set
 
 //
 // Hook for generic creation of stuff on new creatures
@@ -315,6 +314,8 @@
 
 	if (istype(src, /mob/living/carbon/human)) //RS edit
 		src:vore_sprite_color = P.vore_sprite_color //RS edit
+		src:allow_contaminate = P.allow_contaminate //RS edit
+		src:allow_stripping = P.allow_stripping //RS edit
 	if(isliving(src))	//RS ADD
 		src:ssd_vore = P.ssd_vore	//RS ADD
 
@@ -1114,6 +1115,10 @@
 	dispvoreprefs += "<b>Leaves Remains:</b> [digest_leave_remains ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
 	dispvoreprefs += "<b>Mob Vore:</b> [allowmobvore ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
 	dispvoreprefs += "<b>Selective Mode Pref:</b> [src.selective_preference]<br>"
+	if(ishuman(src))	//RS ADD START
+		var/mob/living/carbon/human/H = src
+		dispvoreprefs += "<b>Stripping:</b> [H.allow_stripping ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+		dispvoreprefs += "<b>Contamination:</b> [H.allow_contaminate ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"	//RS ADD END
 	dispvoreprefs += "<u><b>-SPONTANEOUS PREFERENCES-</b></u><br>"
 	dispvoreprefs += "<b>Spontaneous vore prey:</b> [can_be_drop_prey ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
 	dispvoreprefs += "<b>Spontaneous vore pred:</b> [can_be_drop_pred ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"

@@ -112,6 +112,10 @@
 		J.icon_state = "defibpaddles0"
 		J.attack_verb = list("batted", "pawed", "bopped", "whapped")
 
+	var/obj/item/device/dogborg/sleeper/compactor/analyzer/DA = locate() in module.modules
+	if(DA)
+		DA.icon_state = "analyzer"
+
 /datum/robot_sprite/dogborg/science/vale
 	name = "Hound V2"
 	sprite_icon_state = "vale"
@@ -167,6 +171,10 @@
 		J.icon = 'icons/mob/dogborg_vr.dmi'
 		J.icon_state = "defibpaddles0"
 		J.attack_verb = list("batted", "pawed", "bopped", "whapped")
+
+	var/obj/item/device/dogborg/sleeper/compactor/analyzer/DA = locate() in module.modules
+	if(DA)
+		DA.icon_state = "analyzer"
 
 /datum/robot_sprite/dogborg/tall/science/raptor
 	name = "Raptor V-4"

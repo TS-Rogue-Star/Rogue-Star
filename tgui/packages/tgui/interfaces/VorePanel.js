@@ -1416,6 +1416,9 @@ const VoreUserPreferences = (props, context) => {
     nutrition_message_visible,
     weight_message_visible,
     eating_privacy_global,
+    allowstripping,
+    allowcontamination,
+    allowssdvore,
   } = data.prefs;
 
   const { show_pictures } = data;
@@ -1698,6 +1701,57 @@ const VoreUserPreferences = (props, context) => {
         disabled: 'Do Not Allow Leaving Remains',
       },
     },
+    allow_contamination: {
+      action: 'toggle_allowcontamination',
+      test: allowcontamination,
+      tooltip: {
+        main: '',
+        enable:
+          'Regardless of Predator Setting, your worn items will not be contaminated.' +
+          ' Click this to enable contamination.',
+        disable:
+          'This setting controls whether or not a pred is allowed to contaminate your worn items.' +
+          ' Click to disable contamination.',
+      },
+      content: {
+        enabled: 'Allow Contamination',
+        disabled: 'Disallow Contamination',
+      },
+    },
+    allow_stripping: {
+      action: 'toggle_allowstripping',
+      test: allowstripping,
+      tooltip: {
+        main: '',
+        enable:
+          'Regardless of Predator Setting, your worn items will not be stripped.' +
+          ' Click this to enable stripping.',
+        disable:
+          'This setting controls whether or not a pred is allowed to strip your worn items.' +
+          ' Click to disable contamination.',
+      },
+      content: {
+        enabled: 'Allow Stripping',
+        disabled: 'Disallow Stripping',
+      },
+    },
+    allow_ssdvore: {
+      action: 'toggle_allowssdvore',
+      test: allowssdvore,
+      tooltip: {
+        main: '',
+        enable:
+          'You cannot be eaten while disconnected.' +
+          ' Click this to enable SSD vore.',
+        disable:
+          'This setting controls whether or not you can be eaten while disconnected.' +
+          ' Click to disable SSD vore.',
+      },
+      content: {
+        enabled: 'Allow SSD Vore',
+        disabled: 'Disallow SSD Vore',
+      },
+    },
     pickuppref: {
       action: 'toggle_pickuppref',
       test: pickup_mechanics_active,
@@ -1863,6 +1917,15 @@ const VoreUserPreferences = (props, context) => {
         </Flex.Item>
         <Flex.Item basis="32%">
           <VoreUserPreferenceItem spec={preferences.spontaneous_tf} />
+        </Flex.Item>
+        <Flex.Item basis="32%">
+          <VoreUserPreferenceItem spec={preferences.allow_stripping} />
+        </Flex.Item>
+        <Flex.Item basis="32%" grow={1}>
+          <VoreUserPreferenceItem spec={preferences.allow_contamination} />
+        </Flex.Item>
+        <Flex.Item basis="32%">
+          <VoreUserPreferenceItem spec={preferences.allow_ssdvore} />
         </Flex.Item>
         <Flex.Item basis="32%">
           <Button

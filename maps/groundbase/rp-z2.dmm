@@ -1402,6 +1402,9 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/civilian/chapel)
+"eB" = (
+/turf/simulated/floor/outdoors/grass/seasonal/notrees,
+/area/groundbase/level2/se)
 "eC" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -4406,6 +4409,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/machinery/light,
 /turf/simulated/floor/tiled,
 /area/ai_monitored/storage/eva)
 "po" = (
@@ -4961,6 +4965,11 @@
 	name = "impassable rock"
 	},
 /area/groundbase/level2/ne)
+"rb" = (
+/turf/simulated/floor/water/seasonal{
+	outdoors = 0
+	},
+/area/groundbase/level2/se)
 "rc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
@@ -5472,6 +5481,14 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/civilian/chapel)
+"sH" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/computer/guestpass{
+	dir = 4;
+	pixel_x = -22
+	},
+/turf/simulated/floor/tiled,
+/area/ai_monitored/storage/eva)
 "sJ" = (
 /turf/simulated/wall,
 /area/groundbase/level2/ne)
@@ -8984,11 +9001,10 @@
 /turf/simulated/floor/wood,
 /area/groundbase/dorms/room6)
 "EZ" = (
-/obj/machinery/computer/guestpass{
-	dir = 4;
-	pixel_x = -22
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor/tiled,
 /area/ai_monitored/storage/eva)
 "Fb" = (
@@ -12797,6 +12813,12 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/medical/virology)
+"Rj" = (
+/turf/simulated/floor/tiled{
+	edge_blending_priority = -1;
+	outdoors = 1
+	},
+/area/groundbase/level2/se)
 "Rl" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
@@ -13739,6 +13761,9 @@
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/office)
+"Uc" = (
+/turf/simulated/wall,
+/area/groundbase/level2/se)
 "Ud" = (
 /turf/simulated/wall/r_wall,
 /area/groundbase/dorms/room4)
@@ -15338,6 +15363,9 @@
 "ZF" = (
 /turf/simulated/wall,
 /area/groundbase/cargo/office)
+"ZH" = (
+/turf/simulated/floor/outdoors/grass/seasonal/dark/notrees,
+/area/groundbase/level2/se)
 "ZJ" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -20041,7 +20069,7 @@ TH
 ma
 QS
 Xp
-Xp
+sH
 Xp
 Xp
 EZ
@@ -25045,12 +25073,12 @@ fv
 fv
 fv
 fv
-tL
-tL
-tL
-tL
-tL
-tL
+fv
+fv
+fv
+fv
+fv
+fv
 tL
 tL
 av
@@ -25187,13 +25215,13 @@ fv
 fv
 fv
 fv
+fv
+fv
+fv
+fv
+fv
+fv
 tL
-av
-av
-av
-av
-av
-av
 av
 av
 av
@@ -25329,13 +25357,13 @@ fv
 fv
 fv
 fv
-tL
-av
-av
-pp
-pp
-pp
-pp
+fv
+fv
+fv
+Rj
+Rj
+Rj
+lX
 pp
 pp
 pp
@@ -25471,13 +25499,13 @@ fv
 fv
 fv
 fv
-tL
-av
-av
-pp
-pp
-pp
-pp
+fv
+fv
+fv
+Rj
+Rj
+Rj
+lX
 pp
 pp
 pp
@@ -25614,12 +25642,12 @@ tL
 tL
 tL
 tL
-av
-av
-pp
-pp
-pp
-pp
+fv
+fv
+Rj
+Rj
+Rj
+lX
 pp
 pp
 pp
@@ -25755,13 +25783,13 @@ av
 av
 av
 av
-av
-av
-av
-pp
-pp
-pp
-pp
+tL
+tL
+tL
+lX
+lX
+lX
+lX
 pp
 pp
 pp
@@ -30276,12 +30304,12 @@ RL
 RL
 Ek
 Qi
-zJ
-zJ
-KF
-KF
-KF
-KF
+eB
+eB
+ZH
+ZH
+ZH
+ZH
 kp
 kp
 kp
@@ -30418,13 +30446,13 @@ Hq
 lH
 Ef
 Bl
-zJ
-zJ
-zJ
-KF
-KF
-KF
-kp
+eB
+eB
+Uc
+ZH
+ZH
+ZH
+Uc
 kp
 kp
 kp
@@ -30560,13 +30588,13 @@ Ef
 uP
 Ef
 Bl
-zJ
-zJ
-KF
-KF
-KF
-KF
-kp
+eB
+eB
+ZH
+ZH
+ZH
+ZH
+ZH
 kp
 kp
 kp
@@ -30702,13 +30730,13 @@ fx
 kL
 Ye
 Qi
-zJ
-zJ
-KF
-KF
-KF
-KF
-kp
+eB
+eB
+ZH
+ZH
+ZH
+ZH
+ZH
 kp
 kp
 kp
@@ -30845,12 +30873,12 @@ Qi
 Qi
 Qi
 fw
-zJ
-KF
-KF
-KF
-KF
-kp
+eB
+ZH
+ZH
+ZH
+ZH
+ZH
 kp
 kp
 kp
@@ -30987,12 +31015,12 @@ NR
 Qp
 pX
 fw
-zJ
-zJ
-KF
-KF
-KF
-KF
+eB
+ZH
+ZH
+ZH
+ZH
+ZH
 kp
 kp
 kp
@@ -31129,12 +31157,12 @@ qx
 UV
 Eg
 fw
-zJ
-KF
-KF
-KF
-KF
-KF
+eB
+ZH
+ZH
+ZH
+ZH
+ZH
 kp
 kp
 kp
@@ -31271,13 +31299,13 @@ RR
 DB
 fw
 fw
-zJ
-KF
-KF
-KF
-KF
-KF
-KF
+eB
+ZH
+ZH
+ZH
+ZH
+ZH
+kp
 kp
 kp
 rh
@@ -31412,14 +31440,14 @@ dY
 eq
 tf
 Lj
-zJ
-zJ
-zJ
-KF
-KF
-KF
-KF
-KF
+eB
+eB
+ZH
+ZH
+ZH
+ZH
+ZH
+kp
 kp
 kp
 rh
@@ -31554,13 +31582,13 @@ Ls
 cB
 hO
 fw
-zJ
-zJ
-KF
-KF
-KF
-KF
-KF
+eB
+eB
+ZH
+ZH
+ZH
+ZH
+ZH
 kp
 kp
 kp
@@ -31696,13 +31724,13 @@ Yc
 cB
 nq
 fw
-zJ
-KF
-KF
-KF
-KF
-KF
-KF
+eB
+ZH
+Uc
+ZH
+ZH
+ZH
+Uc
 kp
 kp
 kp
@@ -31838,13 +31866,13 @@ tS
 cB
 uq
 fw
-zJ
-KF
-KF
-KF
-KF
-KF
-KF
+eB
+ZH
+ZH
+ZH
+ZH
+ZH
+ZH
 kp
 kp
 kp
@@ -31852,12 +31880,12 @@ rh
 rh
 rh
 rh
-rh
-rh
-rh
-rh
-rh
-rh
+kp
+kp
+kp
+kp
+kp
+kp
 rh
 rh
 rh
@@ -31993,14 +32021,14 @@ kp
 rh
 rh
 rh
-rh
-rh
-rh
-rh
-rh
-rh
-rh
-rh
+kp
+kp
+kp
+kp
+rb
+kp
+kp
+kp
 rh
 rh
 rh
@@ -32135,14 +32163,14 @@ kp
 rh
 rh
 rh
-rh
-rh
-rh
-rh
-rh
-rh
-rh
-rh
+kp
+kp
+kp
+rb
+rb
+rb
+kp
+kp
 rh
 rh
 rh
@@ -32280,12 +32308,12 @@ kp
 kp
 kp
 kp
-rh
-rh
-rh
-rh
-rh
-rh
+rb
+rb
+rb
+rb
+kp
+kp
 rh
 rh
 rh
@@ -32422,12 +32450,12 @@ kp
 kp
 kp
 kp
-kp
-rh
-rh
-rh
-rh
-rh
+rb
+rb
+rb
+rb
+si
+si
 rh
 rh
 rh
@@ -32564,15 +32592,15 @@ Ag
 Ag
 kp
 kp
-kp
-kp
-rh
-rh
-rh
-rh
-rh
-rh
-rh
+rb
+rb
+rb
+rb
+si
+si
+YX
+YX
+YX
 rh
 rh
 rh
@@ -32706,17 +32734,17 @@ Dc
 Ag
 kp
 kp
-kp
-kp
+rb
+rb
+rb
+rb
+si
+si
 rh
 rh
-rh
-rh
-rh
-rh
-rh
-rh
-rh
+YX
+YX
+YX
 rh
 rh
 rh
@@ -32848,18 +32876,18 @@ UT
 Ag
 kp
 kp
+rb
+rb
+rb
+rb
 kp
 kp
 rh
 rh
 rh
 rh
-rh
-rh
-rh
-rh
-rh
-rh
+YX
+YX
 rh
 rh
 rh
@@ -32991,11 +33019,11 @@ Ag
 kp
 kp
 kp
+rb
+rb
 kp
-rh
-rh
-rh
-rh
+kp
+kp
 rh
 rh
 rh
@@ -33134,11 +33162,11 @@ kp
 kp
 kp
 kp
+kp
+kp
+kp
 rh
 rh
-rh
-rh
-YX
 YX
 YX
 YX
@@ -33276,8 +33304,8 @@ kp
 kp
 kp
 kp
-rh
-rh
+kp
+kp
 rh
 rh
 YX
@@ -33418,10 +33446,10 @@ kp
 kp
 kp
 kp
+kp
 rh
 rh
 rh
-YX
 YX
 YX
 rh
@@ -34404,7 +34432,7 @@ Ag
 Ag
 Ag
 Ag
-Ag
+qO
 Ag
 Ag
 Ag
@@ -34543,11 +34571,11 @@ kp
 kp
 kp
 kp
-kp
-kp
-kp
-kp
-kp
+si
+si
+si
+si
+si
 kp
 kp
 kp

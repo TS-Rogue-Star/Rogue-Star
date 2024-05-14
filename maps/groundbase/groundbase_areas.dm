@@ -299,6 +299,11 @@
 	name = "Medical Patient Room 4"
 /area/groundbase/medical/morgue
 	name = "Morgue"
+/area/groundbase/medical/medicalshowers
+	name = "Medical Showers"
+	lightswitch = 1
+/area/groundbase/medical/geneticslab
+	name = "Genetics Lab"
 
 /area/groundbase/engineering
 	name = "Engineering"

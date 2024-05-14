@@ -73,7 +73,7 @@
 	name = "oxygen deprivation first aid kit"
 	desc = "A box full of oxygen goodies."
 	icon_state = "o2"
-	item_state_slots = list(slot_r_hand_str = "firstaid-o2", slot_l_hand_str = "firstaid-o2") 
+	item_state_slots = list(slot_r_hand_str = "firstaid-o2", slot_l_hand_str = "firstaid-o2")
 	starts_with = list(
 		/obj/item/weapon/reagent_containers/pill/dexalin,
 		/obj/item/weapon/reagent_containers/pill/dexalin,
@@ -166,6 +166,71 @@
 	desc = "Contains chemicals to mend broken bones."
 	max_storage_space = ITEMSIZE_COST_SMALL * 7
 	starts_with = list(/obj/item/weapon/reagent_containers/hypospray/autoinjector/bonemed = 8)
+
+/*
+ * Hypospray MK II kits
+ */
+
+
+/obj/item/weapon/storage/firstaid/hypokit
+	name = "hypospray mk.II kit"
+	desc = "Contains a Mk II Hypospray and its hypovials. It can only hold mk.II related items."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "firstaid-mini"
+	starts_with = list(/obj/item/weapon/hypospray_mkii, /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small = 3)
+	can_hold = list(/obj/item/weapon/hypospray_mkii, /obj/item/weapon/reagent_containers/glass/bottle/hypovial)
+	//can fit large and small vials, and any of the mkiis. but that's it. No free Analyzer either.
+
+/obj/item/weapon/storage/firstaid/hypokit/tricord
+	desc = "Contains a Mk II Hypospray and its hypovials. It can only hold mk.II related items. This one is prefilled with Tricordazine."
+	starts_with = list(/obj/item/weapon/hypospray_mkii/tricord, /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/preloaded/tricordrazine = 3)
+
+/obj/item/weapon/storage/firstaid/hypokit/brute
+	name = "hypospray mk.II brute kit"
+	icon_state = "firstaid-brute-mini"
+	desc = "Contains a Mk II Hypospray and its hypovials. It can only hold mk.II related items. This one is prefilled with Bicaridine."
+	starts_with = list(/obj/item/weapon/hypospray_mkii/brute, /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/preloaded/bicaridine = 3)
+	item_state_slots = list(slot_r_hand_str = "firstaid-advanced", slot_l_hand_str = "firstaid-advanced")
+
+/obj/item/weapon/storage/firstaid/hypokit/burn
+	name = "hypospray mk.II burn kit"
+	icon_state = "firstaid-burn-mini"
+	desc = "Contains a Mk II Hypospray and its hypovials. It can only hold mk.II related items. This one is prefilled with Kelotane."
+	starts_with = list(/obj/item/weapon/hypospray_mkii/burn, /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/preloaded/kelotane = 3)
+	item_state_slots = list(slot_r_hand_str = "firstaid-ointment", slot_l_hand_str = "firstaid-ointment")
+
+/obj/item/weapon/storage/firstaid/hypokit/toxin
+	name = "hypospray mk.II toxin kit"
+	icon_state = "firstaid-toxin-mini"
+	desc = "Contains a Mk II Hypospray and its hypovials. It can only hold mk.II related items. This one is prefilled with Dylovene."
+	starts_with = list(/obj/item/weapon/hypospray_mkii/toxin, /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/preloaded/antitoxin = 3)
+	item_state_slots = list(slot_r_hand_str = "firstaid-toxin", slot_l_hand_str = "firstaid-toxin")
+
+/obj/item/weapon/storage/firstaid/hypokit/oxy
+	name = "hypospray mk.II oxygen kit"
+	icon_state = "firstaid-o2-mini"
+	desc = "Contains a Mk II Hypospray and its hypovials. It can only hold mk.II related items. This one is prefilled with Dexalin."
+	starts_with = list(/obj/item/weapon/hypospray_mkii/oxygen, /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/preloaded/dexalin = 3)
+	item_state_slots = list(slot_r_hand_str = "firstaid-o2", slot_l_hand_str = "firstaid-o2")
+
+/obj/item/weapon/storage/firstaid/hypokit/cmo
+	name = "CMO's mk.II Kit"
+	desc = "Contains a large Deluxe Mk II Hypospray and its hypovials. It can only hold mk.II related items."
+	icon_state = "firstaid-tactical-mini"
+	starts_with = list(/obj/item/weapon/hypospray_mkii/CMO,
+	/obj/item/weapon/reagent_containers/glass/bottle/hypovial/large/preloaded/bicaridine,
+	/obj/item/weapon/reagent_containers/glass/bottle/hypovial/large/preloaded/antitoxin,
+	/obj/item/weapon/reagent_containers/glass/bottle/hypovial/large/preloaded/dermaline,
+	/obj/item/weapon/reagent_containers/glass/bottle/hypovial/large/preloaded/dexalin
+	)
+
+	item_state_slots = list(slot_r_hand_str = "firstaid-surgery", slot_l_hand_str = "firstaid-surgery")
+
+/obj/item/weapon/storage/firstaid/hypokit/cmo/combat
+	name = "Combat hypospray mk.II kit"
+	desc = "Contains a combat rated Deluxe Mk II Hypospray and its hypovials. It can only hold mk.II related items."
+	starts_with = list(/obj/item/weapon/hypospray_mkii/CMO/combat, /obj/item/weapon/reagent_containers/glass/bottle/hypovial/large/preloaded/combat = 4)
+	item_state_slots = list(slot_r_hand_str = "firstaid-surgery", slot_l_hand_str = "firstaid-surgery")
 
 /*
  * Pill Bottles
