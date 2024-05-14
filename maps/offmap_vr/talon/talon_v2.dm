@@ -503,7 +503,7 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 
 	starts_with = list(
 		/obj/item/device/radio/headset/talon,
-		/obj/item/clothing/head/soft/talon
+		/obj/item/clothing/head/soft/talon,
 		/obj/item/clothing/head/helmet/space/void/refurb/mining/talon,
 		/obj/item/clothing/suit/space/void/refurb/mining/talon,
 		/obj/item/weapon/tank/oxygen,
