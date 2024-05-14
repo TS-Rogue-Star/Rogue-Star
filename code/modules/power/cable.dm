@@ -111,8 +111,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 					if(term && (!term.master || term.master == search_parent))
 						continue
 				if(UNDER_TERMINAL)
+					var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in TB
 					var/obj/machinery/power/smes/S = locate(/obj/machinery/power/smes) in TB
-					if(S && (!S.terminal || S.terminal == search_parent))
+					if(S && (!S.term || S.term == search_parent))
 						continue
 		var/inverse = REVERSE_DIR(check_dir)
 		for(var/obj/structure/cable/C in TB)
@@ -444,7 +445,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 ////////////////////////////////
 
 GLOBAL_LIST_INIT(cable_coil_recipes, list(
-				new/datum/stack_recipe("cable restraints", /obj/item/weapon/restraints/handcuffs/cable, 15),
+				new/datum/stack_recipe("cable restraints", /obj/item/weapon/handcuffs/cable, 15),
 				new/datum/stack_recipe("multilayer cable", /obj/structure/cable/multilayer, 1),
 				new/datum/stack_recipe("multiZ cable", /obj/structure/cable/multilayer/multiz, 1)
 				))
@@ -529,7 +530,7 @@ GLOBAL_LIST(cable_radial_layer_list)
 			target_layer = CABLE_LAYER_1
 		if("Layer 2")
 			if(istype(src, /obj/item/stack/cable_coil/alien))
-				target_type = /obj/structure/cable/layer2
+				target_type = /obj/structure/cable
 				target_layer = CABLE_LAYER_2
 				icon = 'icons/obj/abductor.dmi'
 				icon_state = "coil"
@@ -701,7 +702,7 @@ GLOBAL_LIST(cable_radial_layer_list)
 	if(!isturf(user.loc))
 		return
 
-	if(!isturf(T) || T.is_intact || !T.can_have_cabling())
+	if(!isturf(T) || T.is_plating() || !T.can_have_cabling())
 		to_chat(user, "<span class='warning'>You can only lay cables on catwalks and plating!</span>")
 		return
 

@@ -97,7 +97,7 @@
 				to_chat(user, "<span class='warning'>This section is too damaged to support anything. Use a welder to fix the damage.</span>")
 				return
 			var/obj/item/stack/cable_coil/coil = C
-			coil.turf_place(src, user)
+			coil.place_turf(src, user)
 			return
 		// Placing flooring on plating
 		else if(istype(C, /obj/item/stack))

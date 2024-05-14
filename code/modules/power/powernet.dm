@@ -30,6 +30,15 @@
 /datum/powernet/proc/is_empty()
 	return !cables.len && !nodes.len
 
+/datum/powernet/proc/draw_power(var/amount)
+	var/draw = between(0, amount, avail - load)
+	load += draw
+	return draw
+
+// Triggers warning for certain amount of ticks
+/datum/powernet/proc/trigger_warning(var/duration_ticks = 20)
+	problem = max(duration_ticks, problem)
+
 //remove a cable from the current powernet
 //if the powernet is then empty, delete it
 //Warning : this proc DON'T check if the cable exists

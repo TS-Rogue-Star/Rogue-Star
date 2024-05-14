@@ -303,7 +303,7 @@
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = W
 		var/turf/T = user.loc
-		if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE || !isfloorturf(T))
+		if(!is_plating(T))
 			return
 		if(get_dist(src, user) > 1)
 			return
@@ -322,7 +322,7 @@
 	. = list()
 	var/turf/T
 
-	for(var/card in GLOB.cardinals)
+	for(var/card in GLOB.cardinal)
 		T = get_step(loc,card)
 
 		for(var/obj/structure/cable/C in T)
@@ -337,7 +337,7 @@
 	. = list()
 	var/turf/T
 
-	for(var/card in GLOB.cardinals)
+	for(var/card in GLOB.cardinal)
 		T = get_step(loc,card)
 
 		for(var/obj/structure/cable/C in T)
@@ -355,7 +355,18 @@
 
 /proc/update_cable_icons_on_turf(turf/T)
 	for(var/obj/structure/cable/C in T.contents)
-		C.update_appearance()
+		C.update_icon()
+
+// Used for power spikes by the engine, has specific effects on different machines.
+/obj/machinery/power/proc/overload(var/obj/machinery/power/source)
+	return
+
+// Used by the grid checker upon receiving a power spike.
+/obj/machinery/power/proc/do_grid_check()
+	return
+
+/obj/machinery/power/proc/power_spike()
+	return
 
 ///////////////////////////////////////////
 // GLOBAL PROCS for powernets handling
@@ -425,11 +436,11 @@
 		power_source = Cable.powernet
 
 	var/datum/powernet/PN
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/weapon/stock_parts/cell/cell
 
 	if (istype(power_source, /datum/powernet))
 		PN = power_source
-	else if (istype(power_source, /obj/item/stock_parts/cell))
+	else if (istype(power_source, /obj/item/weapon/stock_parts/cell))
 		cell = power_source
 	else if (istype(power_source, /obj/machinery/power/apc))
 		var/obj/machinery/power/apc/apc = power_source
@@ -443,6 +454,12 @@
 		return
 
 	return list("powernet" = PN, "cell" = cell)
+
+/obj/machinery/power/proc/viewload()
+	if(powernet)
+		return powernet.viewload
+	else
+		return FALSE
 
 //Determines how strong could be shock, deals damage to mob, uses power.
 //M is a mob who touched wire/whatever
@@ -507,6 +524,6 @@
 		return null
 	for(var/obj/structure/cable/C in src)
 		if(C.cable_layer & cable_layer)
-			C.update_appearance() // I hate this. it's here because update_icon_state SCANS nearby turfs for objects to connect to. Wastes cpu time
+			C.update_icon() // I hate this. it's here because update_icon_state SCANS nearby turfs for objects to connect to. Wastes cpu time
 			return C
 	return null

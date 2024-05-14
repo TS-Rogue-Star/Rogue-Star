@@ -176,7 +176,7 @@ GLOBAL_LIST_EMPTY(apcs)
 	//twizs can do that without having to pry floortiles.
 	if(terminal && terminal.powernet)
 		terminal.powernet.trigger_warning()
-		drained_energy += terminal.powernet.add_load(amount)
+		drained_energy += terminal.powernet.draw_power(amount)
 
 	//The grid rarely gives the full amount requested, or perhaps the grid
 	//isn't connected (wire cut), in either case we draw what we didn't get
@@ -997,7 +997,7 @@ GLOBAL_LIST_EMPTY(apcs)
 
 /obj/machinery/power/apc/proc/last_surplus()
 	if(terminal && terminal.powernet)
-		return terminal.powernet.last_surplus()
+		return terminal.powernet.netexcess()
 	else
 		return 0
 
@@ -1008,7 +1008,7 @@ GLOBAL_LIST_EMPTY(apcs)
 
 /obj/machinery/power/apc/add_load(var/amount)
 	if(terminal && terminal.powernet)
-		return terminal.powernet.add_load(amount)
+		return terminal.powernet.draw_power(amount)
 	return 0
 
 /obj/machinery/power/apc/avail()

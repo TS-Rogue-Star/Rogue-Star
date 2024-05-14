@@ -303,7 +303,7 @@
 
 				var/drained_energy = PN_damage * 10 / CELLRATE
 
-				PN.add_delayedload(drained_energy)
+				PN.draw_power(drained_energy)
 
 				if(ishuman(user))
 					var/mob/living/carbon/human/H = user

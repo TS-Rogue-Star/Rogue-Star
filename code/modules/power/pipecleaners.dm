@@ -453,7 +453,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/item/stack/pipe_cleaner_coil/green
 	color = COLOR_GREEN
-	pipecleaner_color = CABLE_COLOR_GREEN
+	pipecleaner_color = COLOR_GREEN
 
 /obj/item/stack/pipe_cleaner_coil/pink
 	color = COLOR_PINK

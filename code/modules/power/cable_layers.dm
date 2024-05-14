@@ -5,7 +5,7 @@
 	icon = 'icons/obj/cables/structures.dmi'
 	icon_state = "cable_bridge"
 	cable_layer = CABLE_LAYER_2
-	layer = WIRE_LAYER - 0.02 //Below all cables Disabled layers can lay over hub
+	layer = WIRES_LAYER - 0.02 //Below all cables Disabled layers can lay over hub
 	color = COLOR_WHITE
 
 /obj/structure/cable/multilayer/update_icon_state()

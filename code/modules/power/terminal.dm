@@ -32,7 +32,7 @@
 	. = ..()
 	var/turf/T = get_turf(src)
 	if(level == 1)
-		hide(T.is_intact)
+		hide(T.is_plating())
 
 /obj/machinery/power/terminal/Destroy()
 	if(master)
@@ -76,7 +76,7 @@
 
 	user.visible_message(span_notice("[user.name] dismantles the cable terminal from [master]."))
 	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-	if(I.use_tool(src, user, 50))
+	if(I.do_after(src, user, 50))
 		if(master && !master.can_terminal_dismantle())
 			return FALSE
 
@@ -86,7 +86,7 @@
 		s.start()
 		return FALSE
 
-		var/obj/item/stack/cable_coil/cable = new (drop_location(), 10)
+		new /obj/item/stack/cable_coil(get_turf(src), 10)
 		qdel(src)
 		master.terminalconnections -= src
 		var/terminalslot = master.get_terminal_slot(cable_layer)
@@ -94,6 +94,5 @@
 		to_chat(user, "<span class='filter_notice'><span class='warning'>You finish removing the terminal.</span></span>")
 
 /obj/machinery/power/terminal/wirecutter_act(mob/living/user, obj/item/I, var/cable_layer)
-	..()
 	dismantle(user, I, cable_layer)
 	return TRUE

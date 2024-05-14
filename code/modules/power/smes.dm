@@ -3,8 +3,8 @@
 
 #define SMESMAXCHARGELEVEL	250 KILOWATTS
 #define SMESMAXOUTPUT		250 KILOWATTS
-#define SMESRATE			0.05	// rate of internal charge to external power
 #define SMESHEALTHPOOL		500
+#define SMESRATE			0.05	// rate of internal charge to external power
 #define SMESMAXCOIL			6		//Maxmimum Coil number
 #define SMESDEFAULTSTART	1		//Starting number of coils
 
@@ -102,11 +102,11 @@
 
 	component_parts = list()
 	component_parts += new /obj/item/stack/cable_coil(src,30)
-	component_parts += new /obj/item/circuitboard/machine/smes(src)
+	component_parts += new /obj/item/weapon/circuitboard/machine/smes(src)
 
 	// Allows for mapped-in SMESs with larger capacity/IO
 	for(var/i = 1, i <= cur_coils, i++)
-		component_parts += new /obj/item/stock_parts/smes_coil(src)
+		component_parts += new /obj/item/weapon/stock_parts/smes_coil(src)
 
 	recalc_coils()
 	update_icon()
@@ -188,6 +188,30 @@
 
 /obj/machinery/power/smes/proc/chargedisplay()
 	return CLAMP(round(5.5*charge/capacity),0,5)
+
+/obj/machinery/power/smes/proc/inputting(var/do_input)
+	input_attempt = do_input
+	if(!input_attempt)
+		inputting = FALSE
+
+/obj/machinery/power/smes/proc/outputting(var/do_output)
+	output_attempt = do_output
+	if(!output_attempt)
+		outputting = FALSE
+
+// Proc: toggle_input()
+// Parameters: None
+// Description: Switches the input on/off depending on previous setting
+/obj/machinery/power/smes/proc/toggle_input()
+	inputting(!input_attempt)
+	update_icon()
+
+// Proc: toggle_output()
+// Parameters: None
+// Description: Switches the output on/off depending on previous setting
+/obj/machinery/power/smes/proc/toggle_output()
+	outputting(!output_attempt)
+	update_icon()
 
 /obj/machinery/power/smes/process()
 	if(stat & BROKEN)
@@ -280,21 +304,18 @@
 	if(terminal_cable_layer)
 		if(terminal_cable_layer == CABLE_LAYER_1)
 			terminal1 = new/obj/machinery/power/terminal/layer1(turf)
-			terminal1.setDir(get_dir(turf,src))
+			terminal1.set_dir(get_dir(turf,src))
 			terminal1.master = src
-			terminal1.connect_to_network
 			terminalconnections += terminal1
 		else if(terminal_cable_layer == CABLE_LAYER_2)
 			terminal2 = new/obj/machinery/power/terminal(turf)
-			terminal2.setDir(get_dir(turf,src))
+			terminal2.set_dir(get_dir(turf,src))
 			terminal2.master = src
-			terminal2.connect_to_network
 			terminalconnections += terminal2
 		else if(terminal_cable_layer == CABLE_LAYER_3)
 			terminal3 = new/obj/machinery/power/terminal/layer3(turf)
-			terminal3.setDir(get_dir(turf,src))
+			terminal3.set_dir(get_dir(turf,src))
 			terminal3.master = src
-			terminal3.connect_to_network
 			terminalconnections += terminal3
 	else if(!terminalconnections.len) //no more terminals? Broken machine, clearly.
 		stat |= BROKEN
@@ -353,7 +374,7 @@
 		to_chat(user, "<span class='warning'>The [src]'s indicator lights are flashing wildly. It seems to be overloaded! Touching it now is probably not a good idea.</span>")
 		return
 	//opening using screwdriver
-	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), item))
+	if(default_deconstruction_screwdriver(user, W))
 		update_icon()
 		return
 
@@ -373,12 +394,12 @@
 			to_chat(user, "<span class='warning'>Turn off the [src] first!</span>")
 			return
 
-		// Probability of failure if safety circuit is disabled (in %)
-		var/failure_probability = round((charge / capacity) * 100)
+	// Probability of failure if safety circuit is disabled (in %)
+	var/failure_probability = round((charge / capacity) * 100)
 
-		// If failure probability is below 5% it's usually safe to do modifications
-		if (failure_probability < 5)
-			failure_probability = 0
+	// If failure probability is below 5% it's usually safe to do modifications
+	if (failure_probability < 5)
+		failure_probability = 0
 
 	if(W.has_tool_quality(TOOL_CROWBAR))
 		if (terminalconnections.len)
@@ -439,7 +460,7 @@
 			return
 
 		var/turf/T = get_turf(user)
-		if (T.intact_tile) //is the floor plating removed ?
+		if (T.is_plating()) //is the floor plating removed ?
 			to_chat(user, "<span class='warning'>You must first remove the floor plating!</span>")
 			return
 
@@ -447,7 +468,7 @@
 			to_chat(user, "<span class='warning'>You must open the maintenance panel first!</span>")
 			return
 
-		if(C.cable_layer)
+		if(C && C.cable_layer)
 			if(get_terminal_slot(C.cable_layer))
 				to_chat(user, "<span class='warning'>This SMES already has a power terminal on this layer!</span>")
 				return
@@ -481,7 +502,7 @@
 		if(panel_open)
 			var/obj/machinery/power/terminal/term = (locate() in user.loc) //You gotta stand on the turf
 			if(term)
-				term.wirecutteract(user, W, term.cable_layer)
+				term.wirecutter_act(user, W, term.cable_layer)
 			else
 				to_chat(user, "<span class='notice'>You must stand on top of the power terminal you wish to remove.</span>")
 				return FALSE
@@ -583,6 +604,26 @@
 
 /obj/machinery/power/smes/proc/log_smes(mob/user)
 	investigate_log("Input/Output: [input_level]/[output_level] | Charge: [charge] | Output-mode: [output_attempt?"ON":"OFF"] | Input-mode: [input_attempt?"AUTO":"OFF"] by [user ? key_name(user) : "outside forces"] | At [src.loc]")
+
+/obj/machinery/power/smes/proc/tgui_set_io(io, target, adjust)
+	if(target == "min")
+		target = 0
+		. = TRUE
+	else if(target == "max")
+		target = output_level_max
+		. = TRUE
+	else if(adjust)
+		target = output_level + adjust
+		. = TRUE
+	else if(text2num(target) != null)
+		target = text2num(target)
+		. = TRUE
+	if(.)
+		switch(io)
+			if(SMES_TGUI_INPUT)
+				set_input(target)
+			if(SMES_TGUI_OUTPUT)
+				set_output(target)
 
 /obj/machinery/power/smes/proc/ion_act()
 	if(src.z == 1)
@@ -760,4 +801,3 @@
 				A.overload_lighting()
 			if (prob(failure_chance))
 				A.set_broken()
-#undef SMESRATE

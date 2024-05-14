@@ -14,7 +14,7 @@
 	unacidable = TRUE
 	var/id = null
 
-/obj/structure/cable/ender/get_connections(var/powernetless_only = FALSE)
+/obj/structure/cable/ender/Connect_cable(var/powernetless_only = FALSE)
 	. = ..() // Do the normal stuff
 	if(id)
 		for(var/obj/structure/cable/ender/target in GLOB.cable_list)

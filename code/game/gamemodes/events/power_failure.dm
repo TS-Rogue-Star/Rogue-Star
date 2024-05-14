@@ -46,11 +46,12 @@
 /proc/power_restore_quick(var/announce = TRUE)
 
 	for(var/obj/machinery/power/smes/S in machines)
-		if(!S.is_critical && S.cell && (S.z in using_map.station_levels))
+		if(!S.is_critical && (S.z in using_map.station_levels))
 			continue
 		S.charge = S.capacity
 		S.output_level = S.output_level_max
-		S.outputting = TRUE
+		S.output_attempt = TRUE
+		S.input_attempt = TRUE
 		S.update_icon()
 		S.power_change()
 
