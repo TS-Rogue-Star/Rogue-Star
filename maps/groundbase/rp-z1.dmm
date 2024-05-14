@@ -4498,7 +4498,7 @@
 	name = "Shuttle Access"
 	},
 /turf/simulated/floor/tiled/steel_ridged,
-/area/groundbase/level1/se)
+/area/groundbase/engineering/workshop)
 "emw" = (
 /obj/effect/floor_decal/industrial/danger{
 	dir = 8
@@ -10063,6 +10063,14 @@
 /obj/machinery/firealarm,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/groundbase/command/tcomms/chamber)
+"jzY" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/tiled{
+	outdoors = 0
+	},
+/area/groundbase/level1/se)
 "jAk" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -14345,17 +14353,9 @@
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/atmos)
 "nwP" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
+/turf/simulated/floor/tiled{
+	outdoors = 0
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/effect/catwalk_plated,
-/turf/simulated/floor,
 /area/groundbase/level1/se)
 "nxl" = (
 /obj/structure/cable/yellow{
@@ -22889,8 +22889,10 @@
 /area/groundbase/level1/ne)
 "uNk" = (
 /obj/structure/stairs/spawner/north,
-/turf/simulated/floor/tiled,
-/area/groundbase/engineering/workshop)
+/turf/simulated/floor/tiled{
+	outdoors = 0
+	},
+/area/groundbase/level1/se)
 "uNq" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 1
@@ -40541,13 +40543,13 @@ sfQ
 oYG
 bfm
 rCi
-gqq
+oYG
 uNk
-uar
-uar
+nwP
+jzY
 emj
 kyy
-nwP
+fnK
 wlI
 iFQ
 byC
@@ -40683,13 +40685,13 @@ sfQ
 oYG
 rCi
 rCi
-gqq
-gqq
-gqq
-gqq
+oYG
+oYG
+oYG
+oYG
 gqq
 qgI
-nwP
+fnK
 dNc
 iFQ
 ugm
@@ -40831,7 +40833,7 @@ bED
 bED
 uAP
 qgI
-nwP
+fnK
 dNc
 iFQ
 wXJ
