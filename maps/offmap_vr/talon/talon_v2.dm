@@ -375,6 +375,7 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 
 	starts_with = list(
 		/obj/item/weapon/storage/backpack/dufflebag/captain,
+		/obj/item/clothing/head/beret/talon/command,
 		/obj/item/clothing/suit/storage/vest,
 		/obj/item/clothing/head/helmet,
 		/obj/item/clothing/accessory/solgov/department/command/army,
