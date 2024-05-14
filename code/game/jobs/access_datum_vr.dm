@@ -23,12 +23,6 @@ var/const/access_pilot = 67
 	desc = "Talon"
 	access_type = ACCESS_TYPE_PRIVATE
 
-/var/const/access_talon_cap = 302
-/datum/access/captain
-	id = access_captain
-	desc = "Talon Captain"
-	access_type = ACCESS_TYPE_PRIVATE
-
 /var/const/access_xenobotany = 77
 /datum/access/xenobotany
 	id = access_xenobotany

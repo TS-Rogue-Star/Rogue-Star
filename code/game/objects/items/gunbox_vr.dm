@@ -24,18 +24,17 @@
 /*
  * Talon Captain's Box
  */
-/obj/item/gunbox/talon_cap
-	name = "Talon Captain's rifle case"
+/obj/item/gunbox/talon
+	name = "Talon's rifle case"
 	desc = "A secure guncase containing the talon captain's beloved rifle."
 	icon = 'icons/obj/storage_vr.dmi'
 	icon_state = "gunboxw"
 
-/obj/item/gunbox/talon_cap/attack_self(mob/living/user)
+/obj/item/gunbox/talon/attack_self(mob/living/user)
 	var/list/options = list()
-	options["Talon Captain's combat shotgun"] = list(/obj/item/weapon/gun/projectile/shotgun/pump/combat/talon_cap, /obj/item/ammo_magazine/ammo_box/b12g/beanbag)
-	options["Talon captain's phase rifle"] = list(/obj/item/weapon/gun/energy/phasegun/rifle/talon_cap, /obj/item/weapon/cell/device/weapon, /obj/item/weapon/cell/device/weapon)
-	options["\improper Talon captain's LR1 \"Shishi\""] = list(/obj/item/weapon/gun/energy/laser/sleek/talon_cap, /obj/item/weapon/cell/device/weapon)
-	options["Talon captain's shredder rifle"] = list(/obj/item/weapon/gun/magnetic/railgun/flechette/sif/talon_cap, /obj/item/weapon/magnetic_ammo, /obj/item/weapon/magnetic_ammo, /obj/item/weapon/magnetic_ammo)
+	options["Talon's combat shotgun"] = list(/obj/item/weapon/gun/projectile/shotgun/pump/combat/talon, /obj/item/ammo_magazine/ammo_box/b12g/beanbag)
+	options["Talon's phase rifle"] = list(/obj/item/weapon/gun/energy/phasegun/rifle/talon, /obj/item/weapon/cell/device/weapon, /obj/item/weapon/cell/device/weapon)
+	options["\improper Talon's LR1 \"Shishi\""] = list(/obj/item/weapon/gun/energy/laser/sleek/talon, /obj/item/weapon/cell/device/weapon)
 	var/choice = tgui_input_list(user,"Choose your favorite rifle for today!", "Talon Rifle!", options)
 	if(src && choice)
 		var/list/things_to_spawn = options[choice]

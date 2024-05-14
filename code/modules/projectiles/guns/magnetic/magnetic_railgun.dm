@@ -224,7 +224,3 @@
 		list(mode_name="semiauto", burst=1, fire_delay=0, move_delay=null, one_handed_penalty=15, burst_accuracy=null, dispersion=null),
 		list(mode_name="short bursts", burst=3, fire_delay=null, move_delay=5, one_handed_penalty=30, burst_accuracy=list(0,-15,-15), dispersion=list(0.0, 0.6, 1.0)),
 		)
-
-/obj/item/weapon/gun/magnetic/railgun/flechette/sif/talon_cap
-	name = "talon captain's shredder rifle"
-	desc = "The MI-12B Kaldr is a burst fire capable coilgun that fires modified slugs intended for damaging soft targets. This one has 'Property of the Talon Captain' inscribed on the stock."

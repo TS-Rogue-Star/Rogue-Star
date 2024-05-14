@@ -29,8 +29,8 @@
 	pto_type = PTO_TALON
 	timeoff_factor = 1
 	dept_time_required = 60
-	access = list(access_talon, access_talon_cap)
-	minimal_access = list(access_talon, access_talon_cap)
+	access = list(access_talon)
+	minimal_access = list(access_talon)
 	alt_titles = list("Talon Commander" = /datum/alt_title/talon_commander)
 
 /datum/alt_title/talon_commander

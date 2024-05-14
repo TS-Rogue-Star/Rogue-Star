@@ -370,13 +370,13 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 
 /obj/structure/closet/secure_closet/talon_captain
 	name = "talon captain's locker"
-	req_access = list(access_talon_cap)
+	req_access = list(access_talon)
 	closet_appearance = /decl/closet_appearance/secure_closet/talon/captain
 
 	starts_with = list(
 		/obj/item/weapon/storage/backpack/dufflebag/captain,
-		/obj/item/gunbox/talon_cap,
 		/obj/item/clothing/suit/storage/vest,
+		/obj/item/clothing/head/helmet,
 		/obj/item/clothing/accessory/solgov/department/command/army,
 		/obj/item/clothing/glasses/omnihud/all,
 		/obj/item/weapon/melee/telebaton,
@@ -396,7 +396,9 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 
 	starts_with = list(
 		/obj/item/clothing/suit/storage/vest,
+		/obj/item/clothing/head/helmet,
 		/obj/item/clothing/under/utility,
+		/obj/item/clothing/head/soft/talon,
 		/obj/item/clothing/shoes/boots/jackboots,
 		/obj/item/clothing/shoes/boots/jackboots/toeless,
 		/obj/item/weapon/handcuffs = 2,
@@ -408,6 +410,7 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 		/obj/item/clothing/accessory/holster/waist,
 		/obj/item/weapon/storage/belt/security,
 		/obj/item/device/radio/headset/talon,
+		/obj/item/clothing/head/beret/talon/command,
 		/obj/item/clothing/accessory/solgov/department/security/army,
 		/obj/item/clothing/head/helmet/space/void/refurb/marine/talon,
 		/obj/item/clothing/suit/space/void/refurb/marine/talon,
@@ -425,6 +428,7 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 	starts_with = list(
 		/obj/item/clothing/under/rank/medical,
 		/obj/item/clothing/under/rank/nurse,
+		/obj/item/clothing/head/soft/talon,
 		/obj/item/clothing/under/rank/orderly,
 		/obj/item/clothing/accessory/solgov/department/medical/army,
 		/obj/item/clothing/suit/storage/toggle/labcoat/modern,
@@ -449,6 +453,7 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 		/obj/item/clothing/glasses/omnihud/eng/meson,
 		/obj/item/device/flashlight,
 		/obj/item/weapon/extinguisher,
+		/obj/item/clothing/head/soft/talon,
 		/obj/item/clamp,
 		/obj/item/device/radio/headset/talon,
 		/obj/item/clothing/suit/storage/hazardvest,
@@ -477,6 +482,7 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 		/obj/item/weapon/reagent_containers/food/snacks/liquidfood,
 		/obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle,
 		/obj/item/device/radio,
+		/obj/item/clothing/head/soft/talon,
 		/obj/item/clothing/under/utility/blue,
 		/obj/item/clothing/accessory/solgov/specialty/pilot,
 		/obj/item/clothing/shoes/boots/jackboots,
@@ -497,6 +503,7 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 
 	starts_with = list(
 		/obj/item/device/radio/headset/talon,
+		/obj/item/clothing/head/soft/talon
 		/obj/item/clothing/head/helmet/space/void/refurb/mining/talon,
 		/obj/item/clothing/suit/space/void/refurb/mining/talon,
 		/obj/item/weapon/tank/oxygen,

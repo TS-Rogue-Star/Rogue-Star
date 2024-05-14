@@ -73,9 +73,9 @@
 /*
  * Sleek Laser Rifle for Talon Cap
  */
-/obj/item/weapon/gun/energy/laser/sleek/talon_cap
-	name = "\improper talon captain's LR1 \"Shishi\""
-	desc = "A Bishamonten Company LR1 \"Shishi\" rifle, a rare early 23rd century futurist design with a nonetheless timeless ability to kill. This one has 'Property of the Talon Captain' inscribed on the stock."
+/obj/item/weapon/gun/energy/laser/sleek/talon
+	name = "\improper talon's LR1 \"Shishi\""
+	desc = "A Bishamonten Company LR1 \"Shishi\" rifle, a rare early 23rd century futurist design with a nonetheless timeless ability to kill. This one has 'Property of the ITV Talon' inscribed on the stock."
 
 /*
  * Retro Laser Rifle
