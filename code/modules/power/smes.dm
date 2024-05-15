@@ -1,13 +1,6 @@
 // the SMES
 // stores power
 
-#define SMESMAXCHARGELEVEL	250 KILOWATTS
-#define SMESMAXOUTPUT		250 KILOWATTS
-#define SMESHEALTHPOOL		500
-#define SMESRATE			0.05	// rate of internal charge to external power
-#define SMESMAXCOIL			6		//Maxmimum Coil number
-#define SMESDEFAULTSTART	1		//Starting number of coils
-
 /obj/machinery/power/smes
 	name = "power storage unit"
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit."
@@ -21,14 +14,14 @@
 
 	var/input_attempt = TRUE //attempting to charge ?
 	var/inputting = TRUE
-	var/input_level = 50 KILOWATTS //amount of power the SMES attempts to charge by
-	var/input_level_max = SMESMAXCHARGELEVEL //cap on input level
+	var/input_level = SMESSTARTCHARGELVL //amount of power the SMES attempts to charge by, 50kW
+	var/input_level_max = SMESMAXCHARGELEVEL //cap on input level 250kW
 	var/input_available = 0 //amount of charge available from input last tick
 
 	var/output_attempt = TRUE //attempting to output ?
 	var/outputting = TRUE
-	var/output_level = 50 KILOWATTS //amount of power the SMES attempts to output
-	var/output_level_max = SMESMAXOUTPUT // cap on output level
+	var/output_level = SMESSTARTOUTLVL //amount of power the SMES attempts to output, 50kW
+	var/output_level_max = SMESMAXOUTPUT // cap on output level 250kW
 	var/output_used = 0 //amount of power actually outputted. may be less than output_level if the powernet returns excess power
 
 	//Baycode snowflake
@@ -468,14 +461,23 @@
 			to_chat(user, "<span class='warning'>You must open the maintenance panel first!</span>")
 			return
 
-		if(C && C.cable_layer)
-			if(get_terminal_slot(C.cable_layer))
+		if(C && C.target_layer)
+			if(get_terminal_slot(C.target_layer))
 				to_chat(user, "<span class='warning'>This SMES already has a power terminal on this layer!</span>")
 				return
 
 		if(C.get_amount() < 10)
 			to_chat(user, "<span class='warning'>You need more wires!</span>")
 			return
+
+		var/terminal_cable_layer = cable_layer // Default to machine's cable layer
+		var/choice = tgui_input_list(user, "Select Power Input Cable Layer", "Select Cable Layer", GLOB.cable_name_to_layer)
+		if(isnull(choice))
+			return
+		if(get_terminal_slot(choice))
+			to_chat(user, "<span class='warning'>There is already a terminal plugged into this layer!</span>")
+			return
+		terminal_cable_layer = GLOB.cable_name_to_layer[choice]
 
 		to_chat(user, "<span class='notice'>You start building the power terminal...</span>")
 		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
@@ -494,7 +496,7 @@
 			"<span class='notice'>You build the power terminal.</span>")
 
 		//build the terminal and link it to the network
-		make_terminal(T, C.cable_layer)
+		make_terminal(T, C.target_layer)
 		connect_to_network()
 		return FALSE
 

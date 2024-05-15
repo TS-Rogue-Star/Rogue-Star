@@ -436,11 +436,11 @@
 		power_source = Cable.powernet
 
 	var/datum/powernet/PN
-	var/obj/item/weapon/stock_parts/cell/cell
+	var/obj/item/weapon/cell/cell
 
 	if (istype(power_source, /datum/powernet))
 		PN = power_source
-	else if (istype(power_source, /obj/item/weapon/stock_parts/cell))
+	else if (istype(power_source, /obj/item/weapon/cell))
 		cell = power_source
 	else if (istype(power_source, /obj/machinery/power/apc))
 		var/obj/machinery/power/apc/apc = power_source

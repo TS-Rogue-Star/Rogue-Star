@@ -39,6 +39,13 @@ GLOBAL_LIST_EMPTY(apcs)
 #define APC_HAS_ELECTRONICS_WIRED 1
 #define APC_HAS_ELECTRONICS_SECURED 2
 
+// APC cover status:
+/// The APCs cover is closed.
+#define APC_COVER_CLOSED 0
+/// The APCs cover is open.
+#define APC_COVER_OPENED 1
+/// The APCs cover is missing.
+#define APC_COVER_REMOVED 2
 
 // the Area Power Controller (APC), formerly Power Distribution Unit (PDU)
 // one per area, needs wire conection to power network through a terminal
@@ -58,7 +65,7 @@ GLOBAL_LIST_EMPTY(apcs)
 //NOTE: STUFF STOLEN FROM AIRLOCK.DM thx
 
 /obj/machinery/power/apc/critical
-	is_critical = 1
+	is_critical = TRUE
 
 /obj/machinery/power/apc/high
 	cell_type = /obj/item/weapon/cell/high
@@ -67,7 +74,7 @@ GLOBAL_LIST_EMPTY(apcs)
 	cell_type = /obj/item/weapon/cell/super
 
 /obj/machinery/power/apc/super/critical
-	is_critical = 1
+	is_critical = TRUE
 
 /obj/machinery/power/apc/hyper
 	cell_type = /obj/item/weapon/cell/hyper
@@ -90,6 +97,7 @@ GLOBAL_LIST_EMPTY(apcs)
 	desc = "A control terminal for the area electrical systems."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "apc0"
+
 	layer = ABOVE_WINDOW_LAYER
 	anchored = TRUE
 	unacidable = TRUE
@@ -98,19 +106,20 @@ GLOBAL_LIST_EMPTY(apcs)
 	req_access = list(access_engine_equip)
 	blocks_emissive = FALSE
 	vis_flags = VIS_HIDE // They have an emissive that looks bad in openspace due to their wall-mounted nature
+
 	var/area/area
 	var/areastring = null
 	var/obj/item/weapon/cell/cell
-	var/chargelevel = 0.0005  // Cap for how fast APC cells charge, as a percentage-per-tick (0.01 means cellcharge is capped to 1% per second)
+	var/chargelevel = CELLRATE  // Cap for how fast APC cells charge, as a percentage-per-tick (0.01 means cellcharge is capped to 1% per second)
 	var/start_charge = 90				// initial cell charge %
 	var/cell_type = /obj/item/weapon/cell/apc
-	var/opened = 0 //0=closed, 1=opened, 2=cover removed
-	var/shorted = 0
+	var/opened = APC_COVER_CLOSED //0=closed, 1=opened, 2=cover removed
+	var/shorted = FALSE
 	var/grid_check = FALSE
 	var/lighting = POWERCHAN_ON_AUTO
 	var/equipment = POWERCHAN_ON_AUTO
 	var/environ = POWERCHAN_ON_AUTO
-	var/operating = 1
+	var/operating = TRUE
 	var/charging = 0
 	var/chargemode = 1
 	var/chargecount = 0
@@ -124,10 +133,10 @@ GLOBAL_LIST_EMPTY(apcs)
 	var/lastused_charging = 0
 	var/lastused_total = 0
 	var/main_status = APC_EXTERNAL_POWER_NOTCONNECTED
+	powernet = FALSE // set so that APCs aren't found as powernet nodes //Hackish, Horrible, was like this before I changed it :(
 	var/mob/living/silicon/ai/hacker = null // Malfunction var. If set AI hacked the APC and has full control.
-	var/wiresexposed = 0
-	powernet = 0		// set so that APCs aren't found as powernet nodes //Hackish, Horrible, was like this before I changed it :(
-	var/debug= 0
+	var/wiresexposed = FALSE
+	var/debug= FALSE
 	var/autoflag= 0		// 0 = off, 1= eqp and lights off, 2 = eqp off, 3 = all on.
 	var/has_electronics = APC_HAS_ELECTRONICS_NONE // 0 - none, 1 - plugged in, 2 - secured by screwdriver
 	var/beenhit = 0 // used for counting how many times it has been hit, used for Aliens at the moment
@@ -470,7 +479,7 @@ GLOBAL_LIST_EMPTY(apcs)
 	if(issilicon(user) && get_dist(src,user) > 1)
 		return attack_hand(user)
 	add_fingerprint(user)
-	if(W.is_crowbar() && opened)
+	if((W.has_tool_quality(TOOL_CROWBAR)) && opened)
 		if(has_electronics == APC_HAS_ELECTRONICS_WIRED)
 			if(terminal)
 				to_chat(user, "<span class='warning'>Disconnect the wires first.</span>")
@@ -494,7 +503,7 @@ GLOBAL_LIST_EMPTY(apcs)
 		else if(opened != 2) //cover isn't removed
 			opened = 0
 			update_icon()
-	else if(W.is_crowbar() && !(stat & BROKEN) )
+	else if((W.has_tool_quality(TOOL_CROWBAR)) && !(stat & BROKEN))
 		if(coverlocked && !(stat & MAINT))
 			to_chat(user, "<span class='warning'>The cover is locked and cannot be opened.</span>")
 			return
@@ -520,7 +529,7 @@ GLOBAL_LIST_EMPTY(apcs)
 			"<span class='notice'>You insert the power cell.</span>")
 		chargecount = 0
 		update_icon()
-	else if	(W.is_screwdriver())	// haxing
+	else if	((W.has_tool_quality(TOOL_SCREWDRIVER)))	// haxing
 		if(opened)
 			if(cell)
 				to_chat(user, "<span class='warning'>Remove the power cell first.</span>")
@@ -558,13 +567,21 @@ GLOBAL_LIST_EMPTY(apcs)
 		if(C.get_amount() < 10)
 			to_chat(user, "<span class='warning'>You need ten lengths of cable for that.</span>")
 			return
+
+		var/terminal_cable_layer = CABLE_LAYER_2
+		var/choice = tgui_input_list(user, "Select Power Input Cable Layer", "Select Cable Layer", GLOB.cable_name_to_layer)
+		if(isnull(choice))
+			return
+		terminal_cable_layer = GLOB.cable_name_to_layer[choice]
+
 		user.visible_message("<span class='warning'>[user.name] adds cables to the APC frame.</span>", \
 							"You start adding cables to the APC frame...")
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, 20))
 			if(C.get_amount() >= 10 && !terminal && opened && has_electronics != APC_HAS_ELECTRONICS_SECURED)
-				var/obj/structure/cable/N = T.get_cable_node()
-				if(prob(50) && electrocute_mob(usr, N, N))
+				var/turf/our_turf = get_turf(src)
+				var/obj/structure/cable/cable_node = our_turf.get_cable_node(terminal_cable_layer)
+				if(prob(50) && electrocute_mob(usr, cable_node, cable_node))
 					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 					s.set_up(5, 1, src)
 					s.start()
@@ -574,9 +591,11 @@ GLOBAL_LIST_EMPTY(apcs)
 				user.visible_message(\
 					"<span class='warning'>[user.name] has added cables to the APC frame!</span>",\
 					"You add cables to the APC frame.")
-				make_terminal()
+
+				make_terminal(terminal_cable_layer)
 				terminal.connect_to_network()
-	else if(W.is_wirecutter() && terminal && opened && has_electronics != APC_HAS_ELECTRONICS_SECURED)
+				return
+	else if((W.has_tool_quality(TOOL_WIRECUTTER)) && terminal && opened && has_electronics != APC_HAS_ELECTRONICS_SECURED)
 		var/turf/T = loc
 		if(istype(T) && !T.is_plating())
 			to_chat(user, "<span class='warning'>You must remove the floor plating in front of the APC first.</span>")
@@ -608,7 +627,7 @@ GLOBAL_LIST_EMPTY(apcs)
 	else if(istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics == APC_HAS_ELECTRONICS_NONE && ((stat & BROKEN)))
 		to_chat(user, "<span class='warning'>The [src] is too broken for that. Repair it first.</span>")
 		return
-	else if(istype(W, /obj/item/weapon/weldingtool) && opened && has_electronics == APC_HAS_ELECTRONICS_NONE && !terminal)
+	else if((W.has_tool_quality(TOOL_WELDER)) && opened && has_electronics == APC_HAS_ELECTRONICS_NONE && !terminal)
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.get_fuel() < 3)
 			to_chat(user, "<span class='warning'>You need more welding fuel to complete this task.</span>")
@@ -649,7 +668,7 @@ GLOBAL_LIST_EMPTY(apcs)
 				if(opened==2)
 					opened = 1
 				update_icon()
-		else if(istype(W, /obj/item/device/multitool) && (hacker || emagged))
+		else if((W.has_tool_quality(TOOL_MULTITOOL)) && (hacker || emagged))
 			if(cell)
 				to_chat(user, "<span class='warning'>You need to remove the power cell first.</span>")
 				return
@@ -861,15 +880,10 @@ GLOBAL_LIST_EMPTY(apcs)
 		area.power_light = (lighting >= POWERCHAN_ON)
 		area.power_equip = (equipment >= POWERCHAN_ON)
 		area.power_environ = (environ >= POWERCHAN_ON)
-//		if(area.name == "AI Chamber")
-//			spawn(10)
-//				to_world(" [area.name] [area.power_equip]")
 	else
 		area.power_light = 0
 		area.power_equip = 0
 		area.power_environ = 0
-//		if(area.name == "AI Chamber")
-//			to_world("[area.power_equip]")
 	area.power_change()
 
 /obj/machinery/power/apc/proc/can_use(mob/user as mob, var/loud = 0) //used by attack_hand() and Topic()

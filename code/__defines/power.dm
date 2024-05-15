@@ -10,14 +10,14 @@
 #define SOLAR_TRACK_TIMED 1
 #define SOLAR_TRACK_AUTO 2
 
-// Converts cable layer to its human readable name
+/// Converts cable layer to its human readable name
 GLOBAL_LIST_INIT(cable_layer_to_name, list(
 	"[CABLE_LAYER_1]" = CABLE_LAYER_1_NAME,
 	"[CABLE_LAYER_2]" = CABLE_LAYER_2_NAME,
 	"[CABLE_LAYER_3]" = CABLE_LAYER_3_NAME
 ))
 
-// Converts cable color name to its layer
+/// Converts cable color name to its layer
 GLOBAL_LIST_INIT(cable_name_to_layer, list(
 	CABLE_LAYER_1_NAME = CABLE_LAYER_1,
 	CABLE_LAYER_2_NAME = CABLE_LAYER_2,
@@ -26,6 +26,7 @@ GLOBAL_LIST_INIT(cable_name_to_layer, list(
 
 /// Cable layer colors for easier editing later
 /// IF YOU CHANGE THESE YOU NEED TO UPDATE THE RADIAL MENUS FOR RCL AND CABLES TO THOSE COLORS IN icons/hud/radial.dmi
+/// Also update the names at the top of this file!
 #define CABLELAYERONECOLOR		COLOR_RED
 #define CABLELAYERTWOCOLOR		COLOR_YELLOW
 #define CABLELAYERTHREECOLOR	COLOR_BLUE
@@ -55,10 +56,21 @@ GLOBAL_LIST_INIT(possible_cable_coil_colours, list(
 		"Beige" = COLOR_BEIGE,
 		"Brown" = COLOR_BROWN
 	))
+///SMES Unit defines to avoid magic numbers
+#define SMESMAXCHARGELEVEL	250 KILOWATTS
+#define SMESSTARTCHARGELVL	50 KILOWATTS
+#define SMESMAXOUTPUT		250 KILOWATTS
+#define SMESSTARTOUTLVL		50 KILOWATTS
+#define SMESHEALTHPOOL		500
+#define SMESRATE			0.05	// rate of internal charge to external power
+#define SMESMAXCOIL			6		//Maxmimum Coil number
+#define SMESDEFAULTSTART	1		//Starting number of coils
 
+///Power cell
 #define CELLRATE 0.002 // Multiplier for watts per tick <> cell storage (e.g., 0.02 means if there is a load of 1000 watts, 20 units will be taken from a cell per second)
                        // It's a conversion constant. power_used*CELLRATE = charge_provided, or charge_used/CELLRATE = power_provided
 
+///Fancy maths with watts that doesn't really matter with some other people's weird as fuck math.
 #define KILOWATTS *1000
 #define MEGAWATTS *1000000
 #define GIGAWATTS *1000000000

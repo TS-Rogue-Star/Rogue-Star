@@ -111,10 +111,10 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 					if(term && (!term.master || term.master == search_parent))
 						continue
 				if(UNDER_TERMINAL)
-					var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in TB
 					var/obj/machinery/power/smes/S = locate(/obj/machinery/power/smes) in TB
-					if(S && (!S.term || S.term == search_parent))
-						continue
+					for(var/obj/machinery/power/terminal/terms in S.terminalconnections)
+						if(S && (!S.terms || terms.master == search_parent))
+							continue
 		var/inverse = REVERSE_DIR(check_dir)
 		for(var/obj/structure/cable/C in TB)
 			if(C.cable_layer & cable_layer)
@@ -202,9 +202,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		deconstruct()
 		return
 
-	else if(W.has_tool_quality == TOOL_MULTITOOL)
+	if(W.has_tool_quality(TOOL_MULTITOOL))
 		if(powernet && (powernet.avail > 0))		// is it powered?
-			to_chat(user, "<span class='danger'>Total power: [DisplayPower(powernet.avail)]\nLoad: [DisplayPower(powernet.load)]\nExcess power: [DisplayPower(surplus())]</span>")
+			to_chat(user, "<span class='danger'>Total power: [DisplayPower(powernet.avail)]\nLoad: [DisplayPower(powernet.load)]\nExcess power: [DisplayPower(powernet.surplus())]</span>")
 		else
 			to_chat(user, "<span class='danger'>The cable is not powered.</span>")
 		shock(user, 5, 0.2)

@@ -145,7 +145,7 @@
 	return success
 
 //Cables laying helpers
-/turf/proc/handleRCL(obj/item/twohanded/rcl/C, mob/user)
+/turf/proc/handleRCL(obj/item/weapon/material/twohanded/rcl/C, mob/user)
 	if(C.loaded)
 		for(var/obj/structure/pipe_cleaner/LC in src)
 			if(!LC.d1 || !LC.d2)
@@ -178,7 +178,7 @@
 		coil.place_turf(src, user)
 		return TRUE
 
-	else if(istype(C, /obj/item/weapon/rcl))
+	else if(istype(C, obj/item/weapon/material/twohanded/rcl))
 		handleRCL(C, user)
 
 	return FALSE
@@ -280,7 +280,6 @@
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
 		O.hide(O.hides_under_flooring() && !is_plating())
-		SEND_SIGNAL(O, COMSIG_OBJ_HIDE, !is_plating)
 
 /turf/proc/AdjacentTurfs(var/check_blockage = TRUE)
 	. = list()
