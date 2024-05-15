@@ -605,4 +605,6 @@
 	excluded |= /area/groundbase/level3/escapepad
 	excluded |= /area/groundbase/hotspring
 	excluded |= /area/groundbase/hotspring/water
+	excluded |= /area/groundbase/medical/geneticslab
+	excluded |= /area/groundbase/engineering/pumpingstation
 	..()
