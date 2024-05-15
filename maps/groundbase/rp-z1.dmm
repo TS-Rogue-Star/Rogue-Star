@@ -10139,19 +10139,9 @@
 /turf/simulated/floor,
 /area/groundbase/civilian/arrivals)
 "jBT" = (
-/obj/structure/closet/walllocker_double/medical/north{
-	dir = 1;
-	pixel_y = -32
-	},
-/obj/item/bodybag/cryobag,
-/obj/item/bodybag/cryobag,
-/obj/random/medical/lite,
-/obj/random/medical/lite,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/structure/table/reinforced,
-/turf/simulated/floor/tiled/white,
-/area/groundbase/engineering/showers)
+/obj/machinery/hologram/holopad,
+/turf/simulated/floor/tiled,
+/area/groundbase/engineering/ce)
 "jDY" = (
 /obj/structure/table/woodentable,
 /turf/simulated/floor/wood,
@@ -10438,9 +10428,19 @@
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/atmos)
 "jRc" = (
-/obj/machinery/portable_atmospherics/canister/phoron,
-/turf/simulated/floor/tiled/monotile,
-/area/groundbase/engineering/atmos)
+/obj/structure/closet/walllocker_double/medical/north{
+	dir = 1;
+	pixel_y = -32
+	},
+/obj/item/bodybag/cryobag,
+/obj/item/bodybag/cryobag,
+/obj/random/medical/lite,
+/obj/random/medical/lite,
+/obj/item/weapon/storage/firstaid/regular,
+/obj/item/weapon/storage/firstaid/regular,
+/obj/structure/table/reinforced,
+/turf/simulated/floor/tiled/white,
+/area/groundbase/engineering/showers)
 "jRi" = (
 /obj/machinery/alarm{
 	dir = 1
@@ -13933,6 +13933,10 @@
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hos)
 "nfV" = (
+/obj/machinery/portable_atmospherics/canister/phoron,
+/turf/simulated/floor/tiled/monotile,
+/area/groundbase/engineering/atmos)
+"ngb" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/atmos)
@@ -39473,7 +39477,7 @@ uBu
 wWC
 ufh
 gIE
-hMq
+jBT
 hMq
 xFd
 dtZ
@@ -40468,7 +40472,7 @@ wlI
 iFQ
 byC
 sxQ
-jBT
+jRc
 iFQ
 dMz
 tEv
@@ -42601,7 +42605,7 @@ uOh
 jJV
 gDs
 jQL
-jRc
+nfV
 wos
 krj
 org
@@ -42743,7 +42747,7 @@ vRA
 oEM
 lZb
 mnX
-nfV
+ngb
 wos
 bhi
 exK
@@ -43453,10 +43457,10 @@ awx
 awx
 awx
 awx
-awx
+sLR
 wAT
 voB
-awx
+sLR
 awx
 awx
 awx
@@ -43594,7 +43598,7 @@ awx
 awx
 awx
 awx
-awx
+sLR
 wAT
 voB
 awx
@@ -43736,9 +43740,9 @@ awx
 awx
 awx
 awx
-awx
+sLR
 giv
-awx
+sLR
 awx
 awx
 awx
@@ -43878,7 +43882,7 @@ awx
 awx
 awx
 awx
-awx
+sLR
 giv
 awx
 awx
@@ -44164,7 +44168,7 @@ red
 sLR
 sLR
 giv
-awx
+sLR
 awx
 awx
 awx
