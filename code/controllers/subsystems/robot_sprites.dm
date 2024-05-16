@@ -65,7 +65,7 @@ SUBSYSTEM_DEF(robot_sprites)
 		return
 
 	if(wlcheck && istype(wlcheck))
-		. |= get_whitelisted_sprites(wlcheck.ckey, wlcheck.sprite_name, module)
+		. |= get_whitelisted_sprites(wlcheck.ckey, module)
 
 	. |= cyborg_sprites_by_module[module]
 
@@ -78,7 +78,7 @@ SUBSYSTEM_DEF(robot_sprites)
 	var/list/sprite_list = cyborg_sprites_by_module[module]
 
 	if(wlcheck && istype(wlcheck))
-		sprite_list |= get_whitelisted_sprites(wlcheck.ckey, wlcheck.sprite_name, module)
+		sprite_list |= get_whitelisted_sprites(wlcheck.ckey, module)
 
 	if(!islist(sprite_list))
 		return 0
@@ -102,14 +102,14 @@ SUBSYSTEM_DEF(robot_sprites)
 
 	return chosen_sprite
 
-/datum/controller/subsystem/robot_sprites/proc/get_whitelisted_sprites(var/ckey, var/spritename, var/module)
+/datum/controller/subsystem/robot_sprites/proc/get_whitelisted_sprites(var/ckey, var/module)
 	. = list()
 
-	if(!ckey || !spritename || !module || !(module in whitelisted_sprites_by_module))
+	if(!ckey || !module || !(module in whitelisted_sprites_by_module))
 		return
 
 	for(var/datum/robot_sprite/RS in whitelisted_sprites_by_module[module])
-		if(RS.whitelist_ckey == ckey && RS.whitelist_charname == spritename)
+		if(RS.whitelist_ckey == ckey)
 			. |= RS
 
 	return
