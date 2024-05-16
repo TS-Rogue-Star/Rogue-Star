@@ -1,11 +1,13 @@
+#define RCLMAXCAPACITY 90	//three full stacks
+
 /obj/item/weapon/material/twohanded/rcl //WHY IS YOUR TWO HANDED CODE MARKED 'MATERIAL', POLARIS?! WHAT IS MATERIAL ABOUT IT?!
 	name = "rapid cable layer"
 	desc = "A device used to rapidly deploy cables. It has screws on the side which can be removed to slide off the cables. Do not use without insulation!"
 	icon = 'icons/obj/tools.dmi'
-	icon_state = "rcl-empty"
-	item_state = "rcl-0"
-	var/obj/structure/cable/last
-	var/obj/item/stack/cable_coil/loaded
+	icon_state = "rcl"
+	base_icon = "rcl"
+	drop_sound = 'sound/items/drop/gun.ogg'
+	pickup_sound = 'sound/items/pickup/gun.ogg'
 	opacity = FALSE
 	flags = NOBLUDGEON
 	force = 5
@@ -14,20 +16,47 @@
 	throw_range = 5
 	w_class = ITEMSIZE_NORMAL
 	origin_tech = list(TECH_ENGINEERING = 2, TECH_MATERIAL = 2)
-	var/max_amount = 90
-	var/active = FALSE
-	actions_types = list(/datum/action/item_action/rcl_col,/datum/action/item_action/rcl_gui)
+	/// maximum amount of cable this device can hold
+	var/max_amount = RCLMAXCAPACITY
+	/// current amount of cable in the machine
+	var/current_amount = 0
+	/// Choosable list of color options
 	var/list/colors = GLOB.possible_cable_coil_colours
-	var/current_color_index = 1
-	var/datum/component/mobhook
-	var/datum/radial_menu/persistent/wiring_gui_menu
+	/// the player currently holding this device.
+	var/mob/listeningTo
+	/// what layer of cable are we working with
+	var/cable_layer = CABLE_LAYER_2
+	/// what color we'll be using for both the sprites and cables
+	var/layingcolor = CABLELAYERTWOCOLOR
+	/// optional locked color for avoiding recoloring wires on modify_cable
+	var/layercolorlock = FALSE
+	/// cached reference of the cable used in the device
+	var/obj/item/stack/cable_coil/cable
+	/// radial menu to select cable layer
+	var/list/radial_menu = null
+
+/obj/item/weapon/material/twohanded/rcl/Initialize(mapload)
+	. = ..()
+
+/obj/item/weapon/material/twohanded/rcl/Destroy(force)
+	. = ..()
+	if(!QDELETED(cable))
+		QDEL_NULL(cable)
+
+/obj/item/weapon/material/twohanded/rcl/examine(mob/user)
+	. = ..()
+	if(cable)
+		. += to_chat(user, "<span class='notice'>It contains [cable.amount]/[max_amount] cables.</span>")
+	. += to_chat(user, "<span class='notice'>It's set to [LOWER_TEXT(GLOB.cable_layer_to_name["[cable_layer]"])].</span>")
+	. += to_chat(user, "<span class='notice'>Alt click to adjust layers.</span>")
+	. += to_chat(user, "<span class='notice'>Ctrl click to toggle the cable painting lock. It is currently [layercolorlock ? "locked." : "unlocked."]</span>")
 
 /obj/item/weapon/material/twohanded/rcl/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = W
 
 		if(!loaded)
-			if(!user.drop_location(W, src))
+			if(!user.transferItemToLoc(W, src))
 				to_chat(user, "<span class='warning'>[src] is stuck to your hand!</span>")
 				return
 			else
@@ -64,24 +93,30 @@
 	else
 		..()
 
-/obj/item/weapon/material/twohanded/rcl/examine(mob/user)
-	. = ..()
-	. += "Dual wield & walk over floors to lay cable."
-	. += "It has [loaded.amount] pieces remaining."
-	. += "Right click on it to dispense a custom amount of cable."
-	. += "Alt click to change cable layer."
-
 /obj/item/weapon/material/twohanded/rcl/Destroy()
 	QDEL_NULL(loaded)
 	last = null
-	QDEL_NULL(mobhook)
+	listeningTo = null
 	QDEL_NULL(wiring_gui_menu)
 	return ..()
 
+/obj/item/weapon/material/twohanded/update_held_icon()
+	var/mob/living/M = loc
+	if(istype(M) && M.can_wield_item(src) && is_held_twohanded(M))
+		wielded = TRUE
+		name = "[base_name] (wielded)"
+		update_icon()
+	else
+		wielded = FALSE
+		force = force_unwielded
+		name = "[base_name]"
+	update_icon()
+	..()
+
 /obj/item/weapon/material/twohanded/rcl/update_icon()
+	. = ..()
 	if(!loaded)
-		icon_state = "rcl-empty"
-		item_state = "rcl-empty"
+		icon_state = "rcl0"
 		return
 	cut_overlays()
 	var/cable_amount = 0
@@ -94,241 +129,91 @@
 			cable_amount = 1
 		else
 			cable_amount = 0
-
 	var/mutable_appearance/cable_overlay = mutable_appearance(icon, "rcl-[cable_amount]")
-	cable_overlay.color = GLOB.cable_colors[colors[current_color_index]]
-	if(cable_amount >= 1)
-		icon_state = "rcl"
-		item_state = "rcl"
-		add_overlay(cable_overlay)
-	else
-		icon_state = "rcl-empty"
-		item_state = "rcl-0"
+	cable_overlay.color = layingcolor
+	if(cable_amount)
 		add_overlay(cable_overlay)
 
-
-/obj/item/weapon/material/twohanded/rcl/proc/is_empty(mob/user, loud = 1)
-	update_icon()
-	if(!loaded || !loaded.amount)
-		if(loud)
-			to_chat(user, "<span class='notice'>The last of the cables unreel from [src].</span>")
-		if(loaded)
-			QDEL_NULL(loaded)
-			loaded = null
-		QDEL_NULL(wiring_gui_menu)
-		unwield(user)
-		active = wielded
-		return TRUE
-	return FALSE
-
-/obj/item/weapon/material/twohanded/rcl/pickup(mob/user)
-	..()
-	getMobhook(user)
-
-
+/obj/item/weapon/material/twohanded/rcl/equipped(mob/user)
+	. = ..()
+	if(listeningTo == to_hook)
+		return .
+	if(listeningTo)
+		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
+	RegisterSignal(to_hook, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
+	listeningTo = to_hook
 
 /obj/item/weapon/material/twohanded/rcl/dropped(mob/wearer)
 	..()
-	if(mobhook)
-		active = FALSE
-		QDEL_NULL(mobhook)
+	UnregisterSignal(wearer, COMSIG_MOVABLE_MOVED)
+	listeningTo = null
 	last = null
+	QDEL_NULL(wiring_gui_menu)
 
-/obj/item/weapon/material/twohanded/rcl/attack_self(mob/user)
-	..()
-	active = wielded
-	if(!active)
-		last = null
-	else if(!last)
-		for(var/obj/structure/cable/C in get_turf(user))
-			if(C.d1 == FALSE || C.d2 == FALSE)
-				last = C
-				break
+/obj/item/weapon/material/twohanded/rcl/attackby(obj/item/attacking_item, mob/living/user)
+	if(!istype(attacking_item, /obj/item/stack/cable_coil))
+		return
+	if (istype(attacking_item, /obj/item/stack/cable_coil/alien) ||
+		istype(attacking_item, /obj/item/stack/cable_coil/heavyduty))
+		return	//please do not vore the special coils
 
-obj/item/twohanded/rcl/proc/getMobhook(mob/to_hook)
-	if(to_hook)
-		if(mobhook && mobhook.parent != to_hook)
-			QDEL_NULL(mobhook)
-		if (!mobhook)
-			mobhook = to_hook.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/trigger)))
-	else
-		QDEL_NULL(mobhook)
+	var/obj/item/stack/cable_coil/cable = attacking_item
+	add_cable(user, cable)
+	return TRUE
 
 /obj/item/weapon/material/twohanded/rcl/proc/trigger(mob/user)
-	if(active)
+	SIGNAL_HANDLER
+
+	if(wielded)
 		layCable(user)
 	if(wiring_gui_menu) //update the wire options as you move
 		wiringGuiUpdate(user)
 
-
-//previous contents of trigger(), lays cable each time the player moves
-/obj/item/weapon/material/twohanded/rcl/proc/layCable(mob/user)
-	if(!isturf(user.loc))
-		return
-	if(is_empty(user, 0))
-		to_chat(user, "<span class='warning'>\The [src] is empty!</span>")
-		return
-	else
-		if(last)
-			if(get_dist(last, user) == 1) //hacky, but it works
-				var/turf/T = get_turf(user)
-				if(T.is_plating || !T.can_have_cabling())
-					last = null
-					return
-				if(get_dir(last, user) == last.d2)
-					//Did we just walk backwards? Well, that's the one direction we CAN'T complete a stub.
-					last = null
-					return
-				loaded.cable_join(last, user, FALSE)
-				if(is_empty(user))
-					return //If we've run out, display message and exit
-			else
-				last = null
-		loaded.item_color	 = colors[current_color_index]
-		last = loaded.place_turf(get_turf(src), user, turn(user.dir, 180))
-		is_empty(user) //If we've run out, display message
-	update_icon()
-
-//searches the current tile for a stub cable of the same colour
-/obj/item/weapon/material/twohanded/rcl/proc/findLinkingCable(mob/user)
-	var/turf/T
-	if(!isturf(user.loc))
-		return
-
-	T = get_turf(user)
-	if(T.intact || !T.can_have_cabling())
-		return
-
-	for(var/obj/structure/cable/C in T)
-		if(!C)
-			continue
-		if(C.cable_color != GLOB.cable_colors[colors[current_color_index]])
-			continue
-		if(C.d1 == 0)
-			return C
-			break
-	return
-
-
-/obj/item/weapon/material/twohanded/rcl/proc/wiringGuiGenerateChoices(mob/user)
-	var/fromdir = 0
-	var/obj/structure/cable/linkingCable = findLinkingCable(user)
-	if(linkingCable)
-		fromdir = linkingCable.d2
-
-	var/list/wiredirs = list("1","5","4","6","2","10","8","9")
-	for(var/icondir in wiredirs)
-		var/dirnum = text2num(icondir)
-		var/cablesuffix = "[min(fromdir,dirnum)]-[max(fromdir,dirnum)]"
-		if(fromdir == dirnum) //cables can't loop back on themselves
-			cablesuffix = "invalid"
-		var/image/img = image(icon = 'icons/mob/radial.dmi', icon_state = "cable_[cablesuffix]")
-		img.color = GLOB.cable_colors[colors[current_color_index]]
-		wiredirs[icondir] = img
-	return wiredirs
-
-/obj/item/weapon/material/twohanded/rcl/proc/showWiringGui(mob/user)
-	var/list/choices = wiringGuiGenerateChoices(user)
-
-	wiring_gui_menu = show_radial_menu_persistent(user, src , choices, select_proc = CALLBACK(src, .proc/wiringGuiReact, user), radius = 42)
-
-/obj/item/weapon/material/twohanded/rcl/proc/wiringGuiUpdate(mob/user)
-	if(!wiring_gui_menu)
-		return
-
-	wiring_gui_menu.entry_animation = FALSE //stop the open anim from playing each time we update
-	var/list/choices = wiringGuiGenerateChoices(user)
-
-	wiring_gui_menu.change_choices(choices,FALSE)
-
-
-//Callback used to respond to interactions with the wiring menu
-/obj/item/weapon/material/twohanded/rcl/proc/wiringGuiReact(mob/living/user,choice)
-	if(!choice) //close on a null choice (the center button)
-		QDEL_NULL(wiring_gui_menu)
-		return
-
-	choice = text2num(choice)
-
-	if(!isturf(user.loc))
-		return
-	if(is_empty(user, 0))
-		to_chat(user, "<span class='warning'>\The [src] is empty!</span>")
-		return
-
-	var/turf/T = get_turf(user)
-	if(T.intact || !T.can_have_cabling())
-		return
-
-	loaded.item_color	 = colors[current_color_index]
-
-	var/obj/structure/cable/linkingCable = findLinkingCable(user)
-	if(linkingCable)
-		if(choice != linkingCable.d2)
-			loaded.cable_join(linkingCable, user, FALSE, choice)
-			last = null
-	else
-		last = loaded.place_turf(get_turf(src), user, choice)
-
-	is_empty(user) //If we've run out, display message
-
-	wiringGuiUpdate(user)
-
-
-/obj/item/weapon/material/twohanded/rcl/pre_loaded/Initialize() //Comes preloaded with cable, for testing stuff
-	. = ..()
-	loaded = new()
-	loaded.max_amount = max_amount
-	loaded.amount = max_amount
-	update_icon()
-
-/obj/item/weapon/material/twohanded/rcl/Initialize()
-	. = ..()
-	update_icon()
-
-/obj/item/weapon/material/twohanded/rcl/ui_action_click(mob/user, action)
-	if(istype(action, /datum/action/item_action/rcl_col))
-		current_color_index++;
-		if (current_color_index > colors.len)
-			current_color_index = 1
-		var/cwname = colors[current_color_index]
-		to_chat(user, "Color changed to [cwname]!")
-		if(loaded)
-			loaded.item_color= colors[current_color_index]
-			update_icon()
-		if(wiring_gui_menu)
-			wiringGuiUpdate(user)
-	else if(istype(action, /datum/action/item_action/rcl_gui))
-		if(wiring_gui_menu) //The menu is already open, close it
-			QDEL_NULL(wiring_gui_menu)
-		else //open the menu
-			showWiringGui(user)
+/obj/item/weapon/material/twohanded/rcl/CtrlClick(mob/user)
+	layercolorlock = !layercolorlock
+	to_chat(user, "<span class='notice'>Wire colors are now [layercolorlock ? "locked." : "unlocked."] in. You will not replace the colors on [LOWER_TEXT(GLOB.cable_layer_to_name["[cable_layer]"])]</span>")
 
 /obj/item/weapon/material/twohanded/rcl/AltClick(mob/user)
-	. = ..()
 	if(!radial_menu)
 		radial_menu = list(
-			"Layer 1" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-red"),
-			"Layer 2" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-yellow"),
-			"Layer 3" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-blue"),
+			"Layer 1" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-red"),
+			"Layer 2" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-yellow"),
+			"Layer 3" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-blue"),
+			"Color Select" = image(icon = 'icons/mob/radial.dmi', icon_state = "rcl_rainbow")
 		)
 
 	var/layer_result = show_radial_menu(user, src, radial_menu, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
-		return
+		return FALSE
 	switch(layer_result)
 		if("Layer 1")
 			cable_layer = CABLE_LAYER_1
+			if(!layercolorlock)
+				layingcolor = CABLELAYERONECOLOR
 		if("Layer 2")
 			cable_layer = CABLE_LAYER_2
+			if(!layercolorlock)
+				layingcolor = CABLELAYERTWOCOLOR
 		if("Layer 3")
 			cable_layer = CABLE_LAYER_3
+			if(!layercolorlock)
+				layingcolor = CABLELAYERTHREECOLOR
+		if("Color Select")
+			if(layercolorlock)
+				to_chat(user, "<span class='notice'>Wire colors are locked, silly.</span>"
+			var/selected_type = tgui_input_list(usr, "Pick new color to apply on this layer.", "Cable Wire Color", GLOB.possible_cable_coil_colours)
+			if(!selected_type)
+				return
+			layingcolor = selected_type
+
+	update_icon()
+	return TRUE
 
 /obj/item/weapon/material/twohanded/rcl/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE
 	if(!user.IsAdvancedToolUser())
-		to_chat(user, span_warning("You don't have the dexterity to do this!"))
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return FALSE
 	if(user.stat || !user.Adjacent(src))
 		return FALSE
@@ -337,7 +222,7 @@ obj/item/twohanded/rcl/proc/getMobhook(mob/to_hook)
 /// insert cable into the rwd
 /obj/item/weapon/material/twohanded/rcl/proc/add_cable(mob/user, obj/item/stack/cable_coil/cable)
 	if(current_amount == max_amount)
-		to_chat(user, span_warning("device is full!"))
+		to_chat(user, "<span class='warning'>The device is full!</span>")
 		return
 
 	var/insert_amount = min(cable.amount, max_amount - current_amount)
@@ -346,21 +231,30 @@ obj/item/twohanded/rcl/proc/getMobhook(mob/to_hook)
 
 	delta_cable(insert_amount, decrement = FALSE)
 	update_icon()
-	to_chat(user, span_warning("you insert [insert_amount] cable"))
+	to_chat(user, "<span class='notice'>Inserted [insert_amount] cable.</span>")
 
 /// modify cable properties according to its layer
 /obj/item/weapon/material/twohanded/rcl/proc/modify_cable(obj/item/stack/cable_coil/target_cable)
 	switch(cable_layer)
 		if(CABLE_LAYER_1)
-			target_cable.set_cable_color(CABLELAYERONECOLOR)
+			if(!layercolorlock)
+				target_cable.color = CABLELAYERONECOLOR
+			else
+				target_cable.set_cable_color(laying_color)
 			target_cable.target_type = /obj/structure/cable/layer1
 			target_cable.target_layer = CABLE_LAYER_1
 		if(CABLE_LAYER_2)
-			target_cable.set_cable_color(CABLELAYERTWOCOLOR)
+			if(!layercolorlock)
+				target_cable.color = CABLELAYERTWOCOLOR
+			else
+				target_cable.set_cable_color(laying_color)
 			target_cable.target_type = /obj/structure/cable
 			target_cable.target_layer = CABLE_LAYER_2
 		else
-			target_cable.set_cable_color(CABLELAYERTHREECOLOR)
+			if(!layercolorlock)
+				target_cable.set_cable_color = CABLELAYERTHREECOLOR
+			else
+				target_cable.set_cable_color(laying_color)
 			target_cable.target_type = /obj/structure/cable/layer3
 			target_cable.target_layer = CABLE_LAYER_3
 	return target_cable
@@ -426,3 +320,11 @@ obj/item/twohanded/rcl/proc/getMobhook(mob/to_hook)
 	// pick up any stray cable pieces lying on the floor
 	for(var/obj/item/stack/cable_coil/cable_piece in the_turf)
 		add_cable(user, cable_piece)
+
+/obj/item/weapon/material/twohanded/rcl/preloaded
+	current_amount = RCLMAXCAPACITY
+
+/obj/item/weapon/material/twohanded/rcl/admin
+	name = "admin RWD"
+	max_amount = INFINITY
+	current_amount = INFINITY
