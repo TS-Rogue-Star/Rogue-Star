@@ -140,10 +140,29 @@
 		C.hitsound = 'sound/weapons/bite.ogg'
 		C.attack_verb = list("nibbled", "bit", "gnawed", "chomped", "nommed")
 
+	var/obj/item/device/boop_module/D = locate() in module.modules
+	if(D)
+		D.name = "boop module"
+		D.desc = "The BOOP module, a simple reagent and atmosphere scanner."
+		D.icon = 'icons/mob/dogborg_vr.dmi'
+		D.icon_state = "nose"
+		D.attack_verb = list("nuzzled", "nosed", "booped")
+
+	var/obj/item/device/robot_tongue/E = locate() in module.modules
+	if(E)
+		E.name = "synthetic tongue"
+		E.desc = "Useful for slurping mess off the floor before affectionately licking the crew members in the face."
+		E.icon_state = "synthtongue"
+		E.hitsound = 'sound/effects/attackblob.ogg'
+		E.dogfluff = TRUE
+
+	var/obj/item/weapon/dogborg/pounce/SA = locate() in module.emag
+	if(SA)
+		SA.name = "pounce"
+		SA.icon_state = "pounce"
 
 /datum/robot_sprite/dogborg/tall
 	has_dead_sprite_overlay = FALSE
-	has_custom_equipment_sprites = FALSE
 	vis_height = 64
 
 

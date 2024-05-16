@@ -217,3 +217,17 @@ var/static/list/fake_sunlight_zs = list()
 			"color" = "#1c49ff"
 		)
 	)
+
+//RS ADD START
+/obj/effect/fake_sun/gloom
+	name = "gloomy fake sun"
+	do_weather = TRUE
+	weather_visuals_icon = 'icons/effects/weather.dmi'
+	weather_visuals_icon_state = "fog"
+	possible_light_setups = list(
+		list(
+			"brightness" = 1,
+			"color" = "#8627b3"
+		)
+	)
+//RS ADD END

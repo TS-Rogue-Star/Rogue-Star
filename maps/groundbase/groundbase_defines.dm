@@ -224,6 +224,7 @@
 		"Fantasy Town" = list("Redgate - Fantasy Dungeon", "Redgate - Fantasy Town"),
 		"Snowglobe" = list("Redgate - Snowglobe"),
 		"Pet Island" = list("Redgate - Pet Island")
+//		"North Star" = list("Redgate - North Star") // Not ready yet
 		)
 
 	lateload_gb_north = list(

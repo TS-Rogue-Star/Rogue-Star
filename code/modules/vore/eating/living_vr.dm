@@ -40,7 +40,6 @@
 	)
 
 	var/player_login_key_log			//RS ADD: keeps track of a ckey if we join with one to help determine if we're a PC
-	var/ssd_vore = FALSE				//RS ADD: if false, makes mob undevourable if player_login_key_log is set
 
 //
 // Hook for generic creation of stuff on new creatures
@@ -315,6 +314,8 @@
 
 	if (istype(src, /mob/living/carbon/human)) //RS edit
 		src:vore_sprite_color = P.vore_sprite_color //RS edit
+		src:allow_contaminate = P.allow_contaminate //RS edit
+		src:allow_stripping = P.allow_stripping //RS edit
 	if(isliving(src))	//RS ADD
 		src:ssd_vore = P.ssd_vore	//RS ADD
 

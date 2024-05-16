@@ -109,6 +109,16 @@
 	module_type = "Janitor"
 	sprite_icon = 'icons/mob/robot/janitor_wide.dmi'
 
+/datum/robot_sprite/dogborg/janitor/do_equipment_glamour(var/obj/item/weapon/robot_module/module)
+	if(!has_custom_equipment_sprites)
+		return
+
+	..()
+
+	var/obj/item/device/dogborg/sleeper/compactor/DC = locate() in module.modules
+	if(DC)
+		DC.icon_state = "compactor"
+
 /datum/robot_sprite/dogborg/janitor/scrubpup
 	name = "Scrubpup"
 	sprite_icon_state = "scrubpup"
@@ -144,6 +154,16 @@
 /datum/robot_sprite/dogborg/tall/janitor
 	module_type = "Janitor"
 	sprite_icon = 'icons/mob/robot/janitor_large.dmi'
+
+/datum/robot_sprite/dogborg/tall/janitor/do_equipment_glamour(var/obj/item/weapon/robot_module/module)
+	if(!has_custom_equipment_sprites)
+		return
+
+	..()
+
+	var/obj/item/device/dogborg/sleeper/compactor/DC = locate() in module.modules
+	if(DC)
+		DC.icon_state = "compactor"
 
 /datum/robot_sprite/dogborg/tall/janitor/raptor
 	name = "Raptor V-4"

@@ -780,6 +780,13 @@
 /obj/machinery/oxygen_pump/anesthetic,
 /turf/simulated/wall,
 /area/groundbase/medical/or2)
+"aQQ" = (
+/obj/machinery/atmospherics/unary/vent_pump/on,
+/turf/simulated/floor{
+	edge_blending_priority = -1;
+	outdoors = 0
+	},
+/area/groundbase/medical/geneticslab)
 "aRz" = (
 /obj/machinery/autolathe{
 	dir = 1;
@@ -807,11 +814,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/carpet/oracarpet,
 /area/groundbase/engineering/ce)
-"aSW" = (
-/obj/machinery/vending/wardrobe/scidrobe,
-/obj/effect/floor_decal/milspec/color/purple/half,
-/turf/simulated/floor/tiled/white,
-/area/groundbase/science/lockerroom)
 "aUp" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
@@ -1032,6 +1034,13 @@
 	},
 /turf/simulated/floor/carpet/sblucarpet,
 /area/groundbase/security/hos)
+"bfm" = (
+/obj/effect/decal/cleanable/blood/xeno{
+	dir = 4;
+	icon_state = "gib6"
+	},
+/turf/simulated/floor/reinforced,
+/area/groundbase/medical/geneticslab)
 "bfA" = (
 /turf/simulated/wall/r_wall,
 /area/groundbase/science/xenobot)
@@ -1224,6 +1233,9 @@
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/ce)
+"bnz" = (
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/geneticslab)
 "boq" = (
 /turf/simulated/wall/r_wall,
 /area/rnd/xenobiology)
@@ -1368,12 +1380,6 @@
 	snow_chance = 0
 	},
 /area/groundbase/civilian/bar)
-"bun" = (
-/obj/structure/morgue{
-	dir = 8
-	},
-/turf/simulated/floor/tiled/white,
-/area/groundbase/medical/morgue)
 "bup" = (
 /obj/machinery/telecomms/server/presets/science,
 /turf/simulated/floor/tiled/dark{
@@ -1938,6 +1944,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/outdoors/sidewalk,
 /area/groundbase/level1/nw)
+"bRw" = (
+/obj/structure/girder,
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
+/area/groundbase/medical/geneticslab)
 "bRx" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
@@ -3052,11 +3064,11 @@
 /turf/simulated/floor/bluegrid,
 /area/groundbase/command/ai/chamber)
 "cNk" = (
-/obj/structure/closet/wardrobe/robotics_black,
 /obj/effect/floor_decal/milspec/color/purple/half,
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/vending/wardrobe/scidrobe,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/science/lockerroom)
 "cNU" = (
@@ -3174,6 +3186,15 @@
 /obj/machinery/alarm,
 /turf/simulated/floor,
 /area/maintenance/groundbase/substation/sec)
+"cUG" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/turf/simulated/floor{
+	edge_blending_priority = -1;
+	outdoors = 0
+	},
+/area/groundbase/medical/geneticslab)
 "cVQ" = (
 /obj/machinery/recharger,
 /obj/item/weapon/storage/box/syringegun,
@@ -3187,6 +3208,16 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/equipment)
+"cXv" = (
+/obj/item/stack/cable_coil{
+	amount = 2;
+	color = "#ffff00"
+	},
+/turf/simulated/floor{
+	edge_blending_priority = -1;
+	outdoors = 0
+	},
+/area/groundbase/medical/geneticslab)
 "cYE" = (
 /obj/machinery/suspension_gen,
 /obj/effect/floor_decal/milspec/color/purple/half,
@@ -3421,7 +3452,9 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/machinery/firealarm,
+/obj/machinery/firealarm{
+	dir = 1
+	},
 /obj/effect/floor_decal/milspec/color/orange/half{
 	dir = 10
 	},
@@ -3970,10 +4003,14 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/lhallway)
 "dIA" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/item/weapon/storage/box/bodybags,
+/obj/item/weapon/storage/box/bodybags,
+/obj/structure/table/standard,
+/obj/item/device/camera,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 8
+	},
+/obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
 	},
 /turf/simulated/floor/tiled/white,
@@ -4161,6 +4198,11 @@
 "dRQ" = (
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/janitor)
+"dSo" = (
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
+/area/groundbase/medical/geneticslab)
 "dSx" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -4688,6 +4730,25 @@
 	temperature = 80
 	},
 /area/groundbase/command/tcomms/chamber)
+"evW" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/item/stack/rods,
+/obj/item/weapon/material/shard{
+	icon_state = "small"
+	},
+/obj/item/weapon/material/shard{
+	icon_state = "medium";
+	pixel_x = -3;
+	pixel_y = 10
+	},
+/obj/structure/cable/yellow,
+/turf/simulated/floor{
+	edge_blending_priority = -1;
+	outdoors = 0
+	},
+/area/groundbase/medical/geneticslab)
 "ewQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -5581,9 +5642,6 @@
 /obj/effect/floor_decal/milspec/color/purple/half{
 	dir = 10
 	},
-/obj/machinery/firealarm{
-	dir = 8
-	},
 /turf/simulated/floor/tiled,
 /area/groundbase/science/hall)
 "fkN" = (
@@ -5855,6 +5913,11 @@
 	},
 /turf/simulated/floor,
 /area/maintenance/groundbase/substation/command)
+"fCA" = (
+/obj/structure/table/standard,
+/obj/machinery/alarm,
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/morgue)
 "fCI" = (
 /obj/machinery/blackbox_recorder,
 /turf/simulated/floor/tiled,
@@ -6782,6 +6845,28 @@
 	},
 /turf/simulated/floor/tiled/eris/cafe,
 /area/groundbase/civilian/kitchen)
+"gvo" = (
+/obj/item/weapon/material/shard{
+	icon_state = "medium";
+	pixel_x = 6;
+	pixel_y = -2
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/item/stack/cable_coil{
+	amount = 2;
+	color = "#ffff00"
+	},
+/turf/simulated/floor{
+	edge_blending_priority = -1;
+	outdoors = 0
+	},
+/area/groundbase/medical/geneticslab)
 "gvV" = (
 /obj/machinery/portable_atmospherics/canister/phoron,
 /obj/effect/floor_decal/industrial/warning{
@@ -7085,6 +7170,22 @@
 /obj/structure/undies_wardrobe,
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/apparel)
+"gKv" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/morgue)
+"gKG" = (
+/obj/item/weapon/material/shard{
+	icon_state = "medium";
+	pixel_x = -4
+	},
+/obj/effect/decal/cleanable/blood/xeno{
+	icon_state = "gibdown1"
+	},
+/turf/simulated/floor/reinforced,
+/area/groundbase/medical/geneticslab)
 "gLE" = (
 /obj/machinery/alarm{
 	dir = 4
@@ -7769,6 +7870,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/outdoors/sidewalk,
 /area/groundbase/level1/nw)
+"hpD" = (
+/turf/simulated/floor/reinforced,
+/area/groundbase/medical/geneticslab)
 "hpG" = (
 /obj/machinery/telecomms/server/presets/common,
 /turf/simulated/floor/tiled/dark{
@@ -7932,6 +8036,22 @@
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/mining)
+"hyr" = (
+/obj/item/weapon/material/shard,
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor{
+	edge_blending_priority = -1;
+	outdoors = 0
+	},
+/area/groundbase/medical/geneticslab)
 "hyO" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/wood,
@@ -8306,6 +8426,10 @@
 /obj/effect/floor_decal/milspec/color/purple/half,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/xenobot)
+"hWi" = (
+/obj/structure/sign/biohazard,
+/turf/simulated/wall/r_wall,
+/area/groundbase/medical/geneticslab)
 "hXE" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/bluegrid,
@@ -8374,10 +8498,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/detective)
-"hZG" = (
-/obj/machinery/hologram/holopad,
-/turf/simulated/floor/tiled/white,
-/area/groundbase/medical/morgue)
 "hZR" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-8"
@@ -8435,6 +8555,11 @@
 	dir = 4;
 	pixel_x = -30
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/obj/structure/table/standard,
+/obj/item/device/sleevemate,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/morgue)
 "idk" = (
@@ -8788,6 +8913,10 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/groundbase/civilian/arrivals)
+"iqb" = (
+/obj/structure/sign/department/gene,
+/turf/simulated/wall,
+/area/groundbase/medical/geneticslab)
 "iqp" = (
 /obj/machinery/r_n_d/circuit_imprinter,
 /obj/item/weapon/reagent_containers/glass/beaker/sulphuric,
@@ -9547,9 +9676,8 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/ce)
 "jbN" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/firealarm{
-	dir = 8
+/obj/structure/morgue{
+	dir = 1
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/morgue)
@@ -9637,6 +9765,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/command/meeting)
+"jdG" = (
+/obj/machinery/dna_scannernew,
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/geneticslab)
 "jee" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -10493,11 +10625,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/foodplace)
-"jSi" = (
-/obj/structure/closet/secure_closet/scientist,
-/obj/effect/floor_decal/milspec/color/purple/half,
-/turf/simulated/floor/tiled/white,
-/area/groundbase/science/lockerroom)
 "jTc" = (
 /obj/structure/disposalpipe/segment{
 	dir = 8;
@@ -10594,6 +10721,13 @@
 	outdoors = 0
 	},
 /area/groundbase/level2/sw)
+"jWq" = (
+/obj/structure/girder/reinforced,
+/turf/simulated/floor{
+	edge_blending_priority = -1;
+	outdoors = 0
+	},
+/area/groundbase/medical/geneticslab)
 "jWX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/black{
 	dir = 4
@@ -10772,9 +10906,13 @@
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/science/xenohall)
 "keJ" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/tiled/white,
-/area/groundbase/medical/morgue)
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
+/area/groundbase/level1/ne)
 "keT" = (
 /obj/structure/disposalpipe/segment{
 	dir = 2;
@@ -11050,10 +11188,13 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/science/server)
 "ktO" = (
+/obj/effect/landmark/start/medical,
+/obj/effect/floor_decal/corner/paleblue{
+	dir = 10
+	},
 /obj/effect/floor_decal/steeldecal/steel_decals10{
 	dir = 8
 	},
-/obj/effect/landmark/start/medical,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/lhallway)
 "kut" = (
@@ -11122,6 +11263,21 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/groundbase/command/hall)
+"kwq" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor{
+	edge_blending_priority = -1;
+	outdoors = 0
+	},
+/area/groundbase/medical/geneticslab)
 "kww" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
@@ -11605,6 +11761,18 @@
 	name = "impassable rock"
 	},
 /area/groundbase/level1/sw)
+"kTI" = (
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor{
+	edge_blending_priority = -1;
+	outdoors = 0
+	},
+/area/groundbase/medical/geneticslab)
 "kUk" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -11748,6 +11916,15 @@
 "kYZ" = (
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 10
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/equipment)
@@ -12669,6 +12846,9 @@
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/science/xenobot/storage)
+"lQT" = (
+/turf/simulated/wall/r_wall,
+/area/groundbase/medical/geneticslab)
 "lRt" = (
 /obj/effect/landmark/vines,
 /obj/effect/landmark{
@@ -13554,8 +13734,15 @@
 /turf/simulated/wall,
 /area/groundbase/medical/lhallway)
 "mKH" = (
-/turf/simulated/mineral/floor,
-/area/groundbase/level1/se)
+/obj/item/weapon/surgical/cautery,
+/obj/structure/table/standard,
+/obj/item/weapon/autopsy_scanner,
+/obj/item/weapon/surgical/scalpel,
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/morgue)
 "mKO" = (
 /obj/structure/table/glass,
 /obj/machinery/reagentgrinder,
@@ -13682,7 +13869,7 @@
 /area/groundbase/engineering/workshop)
 "mSu" = (
 /obj/effect/floor_decal/milspec/color/purple/half,
-/obj/structure/closet/secure_closet/scientist,
+/obj/machinery/vending/wardrobe/robodrobe,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/science/lockerroom)
 "mSE" = (
@@ -14177,13 +14364,10 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/apparel)
 "nsk" = (
-/obj/structure/morgue{
+/obj/machinery/optable,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
-/obj/machinery/atmospherics/unary/vent_scrubber/on{
-	dir = 8
-	},
-/obj/machinery/camera/network/medbay,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/morgue)
 "nsl" = (
@@ -14742,7 +14926,8 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/foodplace)
 "nVv" = (
-/obj/machinery/optable,
+/obj/structure/table/standard,
+/obj/machinery/firealarm,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/morgue)
 "nVR" = (
@@ -14937,6 +15122,13 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/groundbase/command/tcomms/chamber)
+"oeM" = (
+/obj/machinery/door/airlock/medical{
+	name = "Morgue"
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/groundbase/medical/morgue)
 "oeN" = (
 /obj/machinery/lapvend,
 /turf/simulated/floor/tiled,
@@ -15128,6 +15320,17 @@
 /obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/science/robotics)
+"osp" = (
+/obj/structure/table/rack{
+	dir = 8;
+	layer = 2.6
+	},
+/obj/random/firstaid,
+/obj/random/maintenance,
+/turf/simulated/floor/outdoors/newdirt_nograss{
+	outdoors = 0
+	},
+/area/groundbase/level1/se)
 "otl" = (
 /obj/structure/table/rack{
 	dir = 8;
@@ -15385,6 +15588,12 @@
 	},
 /turf/simulated/floor/outdoors/sidewalk,
 /area/groundbase/level1/sw)
+"oDD" = (
+/turf/simulated/floor{
+	edge_blending_priority = -1;
+	outdoors = 0
+	},
+/area/groundbase/medical/geneticslab)
 "oEj" = (
 /obj/structure/frame,
 /obj/structure/noticeboard{
@@ -16472,16 +16681,11 @@
 /turf/simulated/floor,
 /area/groundbase/level1/ne)
 "pxg" = (
-/obj/item/weapon/storage/box/bodybags,
-/obj/item/weapon/storage/box/bodybags,
-/obj/structure/table/standard,
-/obj/item/device/camera,
-/obj/item/device/sleevemate,
-/obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 1
+/obj/structure/salvageable/console{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/white,
-/area/groundbase/medical/morgue)
+/area/groundbase/medical/geneticslab)
 "pxt" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 8
@@ -16502,6 +16706,15 @@
 "pxL" = (
 /obj/effect/floor_decal/corner/paleblue/full{
 	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/equipment)
@@ -16642,14 +16855,13 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/command/tcomms/foyer)
 "pGb" = (
-/obj/structure/morgue{
-	dir = 8
+/obj/structure/table/reinforced,
+/obj/machinery/alarm,
+/turf/simulated/floor{
+	edge_blending_priority = -1;
+	outdoors = 0
 	},
-/obj/machinery/camera/network/medbay{
-	dir = 1
-	},
-/turf/simulated/floor/tiled/white,
-/area/groundbase/medical/morgue)
+/area/groundbase/medical/geneticslab)
 "pGg" = (
 /turf/simulated/floor/outdoors/newdirt{
 	outdoors = 0
@@ -17190,6 +17402,10 @@
 	pixel_y = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/equipment)
 "qbk" = (
@@ -17555,9 +17771,8 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/hydroponics)
 "qsU" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/alarm{
-	dir = 4
+/obj/machinery/light{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/morgue)
@@ -18084,6 +18299,12 @@
 	},
 /turf/simulated/floor/bmarble,
 /area/groundbase/civilian/clown)
+"qSa" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/geneticslab)
 "qSn" = (
 /obj/effect/landmark/start/chef,
 /turf/simulated/floor/tiled/eris/cafe,
@@ -18803,6 +19024,12 @@
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 10
 	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/equipment)
 "rqg" = (
@@ -19371,6 +19598,13 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hos)
+"rLV" = (
+/obj/structure/closet/wardrobe/genetics_white,
+/turf/simulated/floor{
+	edge_blending_priority = -1;
+	outdoors = 0
+	},
+/area/groundbase/medical/geneticslab)
 "rMa" = (
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/command/hall)
@@ -19403,6 +19637,10 @@
 /area/groundbase/civilian/hydroponics/out)
 "rMQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/equipment)
 "rNi" = (
@@ -20132,6 +20370,29 @@
 	temperature = 80
 	},
 /area/groundbase/command/tcomms/chamber)
+"sxs" = (
+/obj/item/weapon/material/shard{
+	icon_state = "small";
+	pixel_x = 8
+	},
+/turf/simulated/floor/reinforced,
+/area/groundbase/medical/geneticslab)
+"sxD" = (
+/obj/machinery/door/airlock/medical{
+	name = "Genetics"
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/steel_ridged,
+/area/groundbase/medical/geneticslab)
 "sxQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -21488,8 +21749,11 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-4"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/equipment)
 "tPB" = (
@@ -21738,12 +22002,8 @@
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/detective)
 "tZi" = (
-/obj/item/weapon/surgical/cautery,
-/obj/structure/table/standard,
-/obj/item/weapon/autopsy_scanner,
-/obj/item/weapon/surgical/scalpel,
-/turf/simulated/floor/tiled/white,
-/area/groundbase/medical/morgue)
+/turf/simulated/wall,
+/area/groundbase/medical/geneticslab)
 "tZB" = (
 /obj/machinery/vending/wardrobe/virodrobe,
 /obj/machinery/atmospherics/unary/vent_pump/on,
@@ -21920,6 +22180,13 @@
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/ce)
+"ufH" = (
+/obj/structure/cable/yellow,
+/turf/simulated/floor{
+	edge_blending_priority = -1;
+	outdoors = 0
+	},
+/area/groundbase/medical/geneticslab)
 "ufL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -21996,14 +22263,14 @@
 /turf/simulated/floor/outdoors/newdirt_nograss,
 /area/groundbase/level1/nw)
 "uiG" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
 /obj/structure/cable/yellow{
 	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/morgue)
@@ -22106,6 +22373,18 @@
 "ulz" = (
 /turf/simulated/wall/r_wall,
 /area/groundbase/security/equipment)
+"umP" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/geneticslab)
 "uno" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8
@@ -22405,6 +22684,10 @@
 	outdoors = 0
 	},
 /area/groundbase/science/xenobot)
+"uAp" = (
+/obj/effect/floor_decal/milspec/color/purple/half,
+/turf/simulated/floor/tiled/white,
+/area/groundbase/science/lockerroom)
 "uBm" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -23039,8 +23322,8 @@
 	},
 /area/groundbase/science/robotics)
 "vot" = (
-/obj/machinery/vending/wardrobe/genedrobe,
 /obj/effect/floor_decal/milspec/color/purple/half,
+/obj/structure/closet/secure_closet/scientist,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/science/lockerroom)
 "voB" = (
@@ -23139,8 +23422,8 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/science/server)
 "vsY" = (
-/obj/machinery/vending/wardrobe/robodrobe,
 /obj/effect/floor_decal/milspec/color/purple/half,
+/obj/structure/closet/wardrobe/robotics_black,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/science/lockerroom)
 "vtv" = (
@@ -23288,6 +23571,12 @@
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 10
 	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/equipment)
 "vCI" = (
@@ -23352,11 +23641,15 @@
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/command/meeting)
 "vFk" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
-	},
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 10
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/equipment)
@@ -23672,6 +23965,15 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/groundbase/command/ai/upload)
+"vVF" = (
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor{
+	edge_blending_priority = -1;
+	outdoors = 0
+	},
+/area/groundbase/medical/geneticslab)
 "vWc" = (
 /turf/simulated/floor/wood,
 /area/groundbase/command/captain)
@@ -23757,6 +24059,17 @@
 "wdT" = (
 /turf/simulated/floor/outdoors/grass/seasonal,
 /area/groundbase/science/xenobot)
+"wdV" = (
+/obj/structure/table/rack{
+	dir = 8;
+	layer = 2.6
+	},
+/obj/item/weapon/storage/mre/random,
+/obj/random/maintenance,
+/turf/simulated/floor/outdoors/newdirt_nograss{
+	outdoors = 0
+	},
+/area/groundbase/level1/se)
 "wfH" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled,
@@ -23806,6 +24119,12 @@
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers,
 /turf/simulated/floor/tiled/techmaint,
 /area/groundbase/engineering/atmos)
+"wlI" = (
+/obj/effect/decal/cleanable/blood/xeno{
+	icon_state = "gib3"
+	},
+/turf/simulated/floor/reinforced,
+/area/groundbase/medical/geneticslab)
 "wlL" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
@@ -24476,6 +24795,14 @@
 "wOi" = (
 /turf/simulated/wall/r_wall,
 /area/groundbase/command/ai/upload)
+"wOq" = (
+/obj/item/device/pda/geneticist,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/unary/vent_scrubber/on,
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/geneticslab)
 "wOs" = (
 /turf/simulated/wall,
 /area/groundbase/civilian/kitchen/backroom)
@@ -24575,6 +24902,14 @@
 	outdoors = 0
 	},
 /area/groundbase/civilian/bar)
+"wRL" = (
+/obj/structure/table/reinforced,
+/obj/machinery/firealarm,
+/obj/random/medical,
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
+/area/groundbase/medical/geneticslab)
 "wSh" = (
 /obj/machinery/vending/loadout/loadout_misc,
 /turf/simulated/floor/tiled,
@@ -25001,6 +25336,8 @@
 /obj/machinery/vending/wallmed1/public{
 	pixel_y = 28
 	},
+/obj/random/soap,
+/obj/structure/table/standard,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/science/lockerroom)
 "xoe" = (
@@ -25242,6 +25579,12 @@
 "xxo" = (
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/science/hall)
+"xxu" = (
+/obj/machinery/light/small,
+/turf/simulated/floor/outdoors/newdirt_nograss{
+	outdoors = 0
+	},
+/area/groundbase/level1/se)
 "xxM" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -25482,9 +25825,17 @@
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
 /area/groundbase/civilian/hydroponics/out)
 "xJE" = (
-/obj/machinery/light,
+/obj/item/stack/cable_coil{
+	amount = 1
+	},
+/obj/machinery/power/apc{
+	dir = 1
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/tiled/white,
-/area/groundbase/medical/morgue)
+/area/groundbase/medical/geneticslab)
 "xJK" = (
 /obj/machinery/hologram/holopad,
 /obj/structure/cable/yellow{
@@ -25793,7 +26144,6 @@
 	name = "Exit Button";
 	pixel_x = -24
 	},
-/obj/effect/floor_decal/corner/paleblue/full,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/lhallway)
 "xXG" = (
@@ -34095,7 +34445,7 @@ brg
 oVa
 szS
 cHP
-aSW
+vot
 boq
 gjy
 xHb
@@ -34379,7 +34729,7 @@ flt
 oVa
 xnN
 uHN
-jSi
+uAp
 wrG
 aFq
 gci
@@ -34521,7 +34871,7 @@ bGO
 oVa
 jPR
 uHN
-jSi
+uAp
 wrG
 grR
 ike
@@ -35803,13 +36153,13 @@ wrG
 hkk
 wrG
 wrG
-meE
-meE
-meE
+nbQ
+nbQ
+nbQ
 rbV
-meE
-meE
-meE
+nbQ
+nbQ
+nbQ
 meE
 sfb
 sfb
@@ -41733,7 +42083,7 @@ gFb
 pLB
 hkW
 vTh
-mKr
+tlg
 eam
 nbx
 dLD
@@ -42301,7 +42651,7 @@ puM
 vBS
 qYr
 vTh
-mKr
+tlg
 eam
 eVT
 dLD
@@ -43439,13 +43789,13 @@ cLx
 soF
 cLx
 cLx
-nVv
-tZi
 cLx
-eam
-eam
-eam
-awx
+tZi
+tZi
+tZi
+sxD
+tZi
+tZi
 awx
 awx
 awx
@@ -43581,18 +43931,18 @@ icL
 uiG
 qsU
 jbN
-keJ
-pxg
 cLx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-oYG
-oYG
+pxg
+jdG
+bnz
+umP
+oDD
+hWi
+lQT
+jWq
+lQT
+lQT
+bsJ
 oYG
 oYG
 red
@@ -43722,20 +44072,20 @@ cLx
 dIA
 sTe
 sTe
-hZG
-sTe
-xJE
+jbN
 cLx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
+xJE
+qSa
+wOq
+kwq
+vVF
+gvo
+sxs
+bfm
+hpD
+lQT
+bsJ
 oYG
-mKH
-mKH
 nYB
 red
 vmr
@@ -43862,22 +44212,22 @@ dml
 lXY
 cLx
 nsk
-bun
-bun
-bun
-bun
-pGb
+sTe
+sTe
+jbN
 cLx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
+pGb
+oDD
+bnz
+kTI
+hyr
+ufH
+hpD
+hpD
+hpD
+lQT
+bsJ
 oYG
-mKH
-mKH
 nYB
 red
 vmr
@@ -44003,22 +44353,22 @@ pDF
 eju
 jYz
 cLx
+mKH
+sTe
+sTe
+jbN
 cLx
-cLx
-cLx
-cLx
-cLx
-cLx
-cLx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-oYG
-oYG
+wRL
+dSo
+aQQ
+cUG
+cXv
+evW
+gKG
+hpD
+wlI
+lQT
+bsJ
 oYG
 oYG
 red
@@ -44144,30 +44494,30 @@ amy
 pDF
 krx
 vpG
-pDF
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
+cLx
+nVv
+sTe
+sTe
+jbN
+cLx
+rLV
+dSo
+dSo
+dSo
+oDD
+hWi
+lQT
+lQT
+jWq
+lQT
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
 klM
 kKj
 sLR
@@ -44286,30 +44636,30 @@ amy
 pDF
 ndP
 pDF
-pDF
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
+cLx
+fCA
+sTe
+gKv
+jbN
+cLx
+tZi
+bRw
+dSo
+tZi
+iqb
+tZi
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
 sLR
 giv
 sLR
@@ -44427,32 +44777,32 @@ irP
 amy
 amy
 ibY
-awx
-awx
-awx
-awx
-awx
-awx
-awx
+irP
+cLx
+cLx
+oeM
+cLx
+cLx
+cLx
+bsJ
+bsJ
 sLR
 sLR
 sLR
-sLR
-sLR
-sLR
-sLR
-sLR
-sLR
-sLR
-sLR
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
 giv
 sLR
 sLR
@@ -44569,32 +44919,32 @@ irP
 irP
 irP
 ibY
-awx
 irP
+keJ
+sLR
+bED
+sLR
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
 sLR
 sLR
-sLR
-sLR
-wAT
-aew
-aew
-aew
-aew
-aew
-aew
-aew
-aew
-kKj
-sLR
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
 giv
 sLR
 sLR
@@ -44714,29 +45064,29 @@ rCz
 huZ
 huZ
 aew
-aew
-aew
-aew
-voB
-sLR
-sLR
-sLR
-awx
-awx
-sLR
-sLR
-sLR
-klM
-aew
 kKj
 sLR
 sLR
-awx
-awx
-awx
-awx
-awx
-awx
+sLR
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
+sLR
+bsJ
+bsJ
+bsJ
+bsJ
+sLR
+sLR
+sLR
+sLR
+bsJ
+bsJ
+bsJ
+bsJ
+bsJ
 giv
 sLR
 bsJ
@@ -44856,28 +45206,28 @@ irP
 irP
 irP
 sLR
-sLR
-sLR
-awx
-awx
-sLR
-sLR
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-sLR
 klM
-aew
 kKj
 sLR
 sLR
 sLR
 sLR
-awx
+sLR
+sLR
+sLR
+sLR
+sLR
+sLR
+sLR
+sLR
+sLR
+sLR
+sLR
+sLR
+sLR
+sLR
+sLR
+bsJ
 sLR
 giv
 sLR
@@ -44999,22 +45349,22 @@ awx
 awx
 awx
 awx
-awx
-awx
-awx
-sLR
-sLR
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-awx
-sLR
-sLR
 klM
+aew
+aew
+aew
+aew
+aew
+aew
+aew
+aew
+aew
+aew
+aew
+aew
+aew
+aew
+aew
 aew
 aew
 aew
@@ -45146,7 +45496,7 @@ awx
 awx
 sLR
 sLR
-awx
+xxu
 oYG
 oYG
 oYG
@@ -45571,8 +45921,8 @@ awx
 awx
 awx
 awx
-awx
-awx
+wdV
+osp
 oYG
 oYG
 oYG

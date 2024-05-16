@@ -106,15 +106,14 @@
 			var/mob/living/carbon/human/H = target
 			H.forcesay(hit_appends)
 
-//Boop //New and improved, now a simple reagent sniffer.
+//Boop //New and improved, now a simple reagent sniffer. //No longer a sniffer, sprite datums turn it into one.
 /obj/item/device/boop_module
-	name = "boop module"
-	icon = 'icons/mob/dogborg_vr.dmi'
-	icon_state = "nose"
-	desc = "The BOOP module, a simple reagent and atmosphere scanner."
+	name = "scanner module"
+	icon = 'icons/obj/device_alt.dmi'
+	icon_state = "forensic2"
+	desc = "The scanner module, a simple reagent and atmosphere scanner."
 	force = 0
 	throwforce = 0
-	attack_verb = list("nuzzled", "nosed", "booped")
 	w_class = ITEMSIZE_TINY
 
 /obj/item/device/boop_module/New()
@@ -161,7 +160,7 @@
 				dat += "\n \t <span class='notice'>[R]</span>"
 
 		if(dat)
-			to_chat(user, "<span class='notice'>Your BOOP module indicates: [dat]</span>")
+			to_chat(user, "<span class='notice'>Your [name] indicates: [dat]</span>")
 		else
 			to_chat(user, "<span class='notice'>No active chemical agents detected in [O].</span>")
 	else
@@ -229,14 +228,14 @@
 	reagent_ids = list("tricordrazine", "inaprovaline", "oxycodone", "dexalin" ,"spaceacillin")
 
 
-//Tongue stuff
+//Tongue stuff //Formerly the tongue, returns to tongue via sprite datum. Let it be known that I hate what I'm doing here.
 /obj/item/device/robot_tongue
-	name = "synthetic tongue"
-	desc = "Useful for slurping mess off the floor before affectionately licking the crew members in the face."
+	name = "\improper Ms. Fusion portable reactor"
+	desc = "A miracle of modern science that converts household waste into modest amounts of energy. The 'fusion' part may just be a misleading brand name."
 	icon = 'icons/mob/dogborg_vr.dmi'
-	icon_state = "synthtongue"
-	hitsound = 'sound/effects/attackblob.ogg'
+	icon_state = "nottongue"
 	var/emagged = 0
+	var/dogfluff = FALSE
 
 /obj/item/device/robot_tongue/New()
 	..()
@@ -247,15 +246,17 @@
 	if(R.emagged || R.emag_items)
 		emagged = !emagged
 		if(emagged)
-			name = "hacked tongue of doom"
-			desc = "Your tongue has been upgraded successfully. Congratulations."
-			icon = 'icons/mob/dogborg_vr.dmi'
-			icon_state = "syndietongue"
+			name = "[dogfluff ? "hacked tongue of doom" : "faulty Ms. Fusion portable reactor"]"
+			desc = "Your [dogfluff ? "tongue" : "reactor"] has been [dogfluff ? "upgraded" : "sabotaged"] successfully. Congratulations."
+			if(dogfluff)
+				icon = 'icons/mob/dogborg_vr.dmi'
+				icon_state = "syndietongue"
 		else
-			name = "synthetic tongue"
-			desc = "Useful for slurping mess off the floor before affectionately licking the crew members in the face."
-			icon = 'icons/mob/dogborg_vr.dmi'
-			icon_state = "synthtongue"
+			name = "[dogfluff ? "synthetic tongue" : "\improper Ms. Fusion portable reactor"]"
+			desc = "[dogfluff ? "Useful for slurping mess off the floor before affectionately licking the crew members in the face." : "A miracle of modern science that converts household waste into modest amounts of energy. The 'fusion' part may just be a misleading brand name."]"
+			if(dogfluff)
+				icon = 'icons/mob/dogborg_vr.dmi'
+				icon_state = "synthtongue"
 		update_icon()
 
 /obj/item/device/robot_tongue/afterattack(atom/target, mob/user, proximity)
@@ -268,18 +269,18 @@
 		return
 	else if(istype(target,/obj/item))
 		if(istype(target,/obj/item/trash))
-			user.visible_message("<span class='filter_notice'>[user] nibbles away at \the [target.name].</span>", "<span class='notice'>You begin to nibble away at \the [target.name]...</span>")
+			user.visible_message("<span class='filter_notice'>[user] [dogfluff ? "nibbles away at \the [target.name]." : "starts placing \the [target.name] into its reactor."]</span>", "<span class='notice'>You begin to [dogfluff ? "nibble away at \the [target.name]" : "place \the [target.name] into your reactor"]...</span>")
 			if(do_after (user, 50))
-				user.visible_message("<span class='filter_notice'>[user] finishes eating \the [target.name].</span>", "<span class='notice'>You finish eating \the [target.name].</span>")
+				user.visible_message("<span class='filter_notice'>[user] [dogfluff ? "finishes eating \the [target.name]." : "places \the [target.name] into its reactor."]</span>", "<span class='notice'>You finish [dogfluff ? "eating \the [target.name]." : "placing \the [target.name] into your reactor."]</span>")
 				to_chat(user, "<span class='notice'>You finish off \the [target.name].</span>")
 				qdel(target)
 				var/mob/living/silicon/robot/R = user
 				R.cell.charge += 250
 			return
 		if(istype(target,/obj/item/weapon/cell))
-			user.visible_message("<span class='filter_notice'>[user] begins cramming \the [target.name] down its throat.</span>", "<span class='notice'>You begin cramming \the [target.name] down your throat...</span>")
+			user.visible_message("<span class='filter_notice'>[user] begins cramming \the [target.name] [dogfluff ? "down its throat." : "into its reactor."]</span>", "<span class='notice'>You begin cramming \the [target.name] [dogfluff ? "down your throat" : "into your reactor"]...</span>")
 			if(do_after (user, 50))
-				user.visible_message("<span class='filter_notice'>[user] finishes gulping down \the [target.name].</span>", "<span class='notice'>You finish swallowing \the [target.name].</span>")
+				user.visible_message("<span class='filter_notice'>[user] finishes [dogfluff ? "gulping down \the [target.name]." : "fitting \the [target.name] into its reactor."]</span>", "<span class='notice'>You finish [dogfluff ? "swallowing \the [target.name]." : "fitting \the [target.name] into your reactor."]</span>")
 				to_chat(user, "<span class='notice'>You finish off \the [target.name], and gain some charge!</span>")
 				var/mob/living/silicon/robot/R = user
 				var/obj/item/weapon/cell/C = target
@@ -295,13 +296,14 @@
 			L.Stun(1)
 			L.Weaken(1)
 			L.apply_effect(STUTTER, 1)
-			L.visible_message("<span class='danger'>[user] has shocked [L] with its tongue!</span>", \
-								"<span class='userdanger'>[user] has shocked you with its tongue! You can feel the betrayal.</span>")
+			L.visible_message("<span class='danger'>[user] has shocked [L] with its [dogfluff ? "tongue" : "reactor"]!</span>", \
+								"<span class='userdanger'>[user] has shocked you with its [dogfluff ? "tongue" : "reactor"]! [dogfluff ? "You can feel the betrayal." : "Great scott!"]</span>")
 			playsound(src, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 			R.cell.charge -= 666
 		else
-			user.visible_message("<span class='notice'>\The [user] affectionately licks all over \the [target]'s face!</span>", "<span class='notice'>You affectionately lick all over \the [target]'s face!</span>")
-			playsound(src, 'sound/effects/attackblob.ogg', 50, 1)
+			user.visible_message("<span class='notice'>\The [user] [dogfluff ? "affectionately licks all over" : "shoves its reactor against"]  \the [target]'s face!</span>", "<span class='notice'>You [dogfluff ? "affectionately lick all over" : "shove your reactor against"] \the [target]'s face!</span>")
+			if(dogfluff)
+				playsound(src, 'sound/effects/attackblob.ogg', 50, 1)
 			var/mob/living/carbon/human/H = target
 			if(H.species.lightweight == 1)
 				H.Weaken(3)
@@ -343,7 +345,7 @@
 /obj/item/weapon/combat_borgblade
 	name = "energy blade"
 	icon = 'icons/mob/dogborg_vr.dmi'
-	icon_state = "swordtail"
+	icon_state = "notswordtail"
 	desc = "A glowing dagger. It appears to be extremely sharp."
 	force = 20 //Takes 5 hits to 100-0
 	sharp = TRUE
@@ -392,9 +394,9 @@
 
 //Pounce stuff for K-9
 /obj/item/weapon/dogborg/pounce
-	name = "pounce"
+	name = "\improper R.A.M. module"
 	icon = 'icons/mob/dogborg_vr.dmi'
-	icon_state = "pounce"
+	icon_state = "notpounce"
 	desc = "Leap at your target to momentarily stun them."
 	force = 0
 	throwforce = 0
