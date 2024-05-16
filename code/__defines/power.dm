@@ -69,8 +69,20 @@ GLOBAL_LIST_INIT(possible_cable_coil_colours, list(
 ///Power cell
 #define CELLRATE 0.002 // Multiplier for watts per tick <> cell storage (e.g., 0.02 means if there is a load of 1000 watts, 20 units will be taken from a cell per second)
                        // It's a conversion constant. power_used*CELLRATE = charge_provided, or charge_used/CELLRATE = power_provided
-
+#define CELLDEFAULTMAX 1 KILOWATTS
 ///Fancy maths with watts that doesn't really matter with some other people's weird as fuck math.
-#define KILOWATTS *1000
-#define MEGAWATTS *1000000
-#define GIGAWATTS *1000000000
+#define WATTS 		*1
+#define KILOWATTS 	*1000
+#define MEGAWATTS 	*1000000
+#define GIGAWATTS 	*1000000000
+
+///siemens_coefficient ratings to reduce confusing magic number values
+#define SIEMENS_RESISTANCE_FULL				0
+#define SIEMENS_RESISTANCE_THREEQUARTER		0.25
+#define SIEMENS_RESISTANCE_HALF				0.5
+#define SIEMENS_RESISTANCE_QUARTER			0.75
+#define SIEMENS_RESISTANCE_TENTH			0.9
+#define SIEMENS_RESISTANCE_NONE				1
+#define SIEMENS_RESISTANCE_NONEPOINTFIVE	1.5
+#define SIEMENS_RESISTANCE_NONEDOUBLE		2
+#define SIEMENS_RESISTANCE_NONETRIPLE		3

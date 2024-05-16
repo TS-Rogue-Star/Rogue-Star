@@ -28,8 +28,8 @@
 	should_be_mapped = TRUE
 
 
-/obj/machinery/power/smes/batteryrack/New()
-	..()
+/obj/machinery/power/smes/batteryrack/Initialize(mapload)
+	. = ..()
 	add_parts()
 	RefreshParts()
 
@@ -50,7 +50,7 @@
 	for(var/obj/item/weapon/stock_parts/matter_bin/MB in component_parts)
 		maxcells += MB.rating * 3
 
-	max_transfer_rate = 10000 * capacitor_efficiency // 30kw - 90kw depending on used capacitors.
+	max_transfer_rate = 10 KILOWATTS * capacitor_efficiency // 30kw - 90kw depending on used capacitors.
 	max_cells = min(PSU_MAXCELLS, maxcells)
 	input_level = max_transfer_rate
 	output_level = max_transfer_rate
@@ -63,6 +63,11 @@
 
 /obj/machinery/power/smes/batteryrack/check_terminals()
 	return TRUE // we don't necessarily need terminals
+
+/obj/machinery/power/smes/batteryrack/proc/Percentage()
+	if(!capacity)
+		return 0
+	return round(100.0*charge/capacity, 0.1)
 
 /obj/machinery/power/smes/batteryrack/update_icon()
 	cut_overlays()

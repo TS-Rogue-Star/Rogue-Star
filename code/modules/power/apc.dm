@@ -120,11 +120,11 @@ GLOBAL_LIST_EMPTY(apcs)
 	var/equipment = POWERCHAN_ON_AUTO
 	var/environ = POWERCHAN_ON_AUTO
 	var/operating = TRUE
-	var/charging = 0
+	var/charging = FALSE
 	var/chargemode = 1
 	var/chargecount = 0
-	var/locked = 1
-	var/coverlocked = 1
+	var/locked = TRUE
+	var/coverlocked = TRUE
 	var/aidisabled = 0
 	var/obj/machinery/power/terminal/terminal = null
 	var/lastused_light = 0
@@ -145,10 +145,10 @@ GLOBAL_LIST_EMPTY(apcs)
 	var/emergency_lights = FALSE
 	var/update_state = -1
 	var/update_overlay = -1
-	var/is_critical = 0
+	var/is_critical = FALSE
 	var/global/status_overlays = 0
 	var/failure_timer = 0
-	var/force_update = 0
+	var/force_update = FALSE
 	var/updating_icon = 0
 	var/global/list/status_overlays_environ
 	var/alarms_hidden = FALSE //If power alarms from this APC are visible on consoles
@@ -269,10 +269,11 @@ GLOBAL_LIST_EMPTY(apcs)
 /obj/machinery/power/apc/proc/energy_fail(var/duration)
 	failure_timer = max(failure_timer, round(duration))
 
-/obj/machinery/power/apc/proc/make_terminal()
+/obj/machinery/power/apc/proc/make_terminal(terminal_cable_layer = cable_layer)
 	// create a terminal object at the same position as original turf loc
 	// wires will attach to this
 	terminal = new/obj/machinery/power/terminal(loc)
+	terminal.cable_layer = terminal_cable_layer
 	terminal.set_dir(dir)
 	terminal.master = src
 
@@ -1003,33 +1004,30 @@ GLOBAL_LIST_EMPTY(apcs)
 	update()
 	update_icon()
 
-/obj/machinery/power/apc/surplus()
-	if(terminal)
-		return terminal.surplus()
-	else
-		return 0
-
-/obj/machinery/power/apc/proc/last_surplus()
-	if(terminal && terminal.powernet)
-		return terminal.powernet.netexcess()
-	else
-		return 0
-
 //Returns 1 if the APC should attempt to charge
 /obj/machinery/power/apc/proc/attempt_charging()
 	return (chargemode && charging == 1 && operating)
 
-
-/obj/machinery/power/apc/add_load(var/amount)
-	if(terminal && terminal.powernet)
-		return terminal.powernet.draw_power(amount)
+/// Returns the surplus energy from the terminal's grid.
+/obj/machinery/power/apc/surplus()
+	if(terminal)
+		return terminal.surplus()
 	return 0
 
-/obj/machinery/power/apc/avail()
+/// Adds load (energy) to the terminal's grid.
+/obj/machinery/power/apc/add_load(amount)
+	if(terminal?.powernet)
+		terminal.add_load(amount)
+
+/// Returns the amount of energy the terminal's grid has.
+/obj/machinery/power/apc/avail(amount)
 	if(terminal)
-		return terminal.avail()
-	else
-		return 0
+		return terminal.avail(amount)
+	return 0
+
+/// Returns the surplus energy from the terminal's grid and the cell.
+/obj/machinery/power/apc/available_energy()
+	return cell?.charge + surplus()
 
 /obj/machinery/power/apc/process()
 	if(!area.requires_power)

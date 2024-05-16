@@ -81,9 +81,10 @@
 			return FALSE
 
 	if(prob(50) && electrocute_mob(user, powernet, src, 1, TRUE))
-		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-		s.set_up(5, 1, src)
-		s.start()
+		var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
+		sparks.set_up(5, 0, src)
+		sparks.attach(loc)
+		sparks.start()
 		return FALSE
 
 		new /obj/item/stack/cable_coil(get_turf(src), 10)

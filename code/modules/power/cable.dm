@@ -113,7 +113,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 				if(UNDER_TERMINAL)
 					var/obj/machinery/power/smes/S = locate(/obj/machinery/power/smes) in TB
 					for(var/obj/machinery/power/terminal/terms in S.terminalconnections)
-						if(S && (!S.terms || terms.master == search_parent))
+						if(S && (!terms || terms.master == search_parent))
 							continue
 		var/inverse = REVERSE_DIR(check_dir)
 		for(var/obj/structure/cable/C in TB)
@@ -162,29 +162,29 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	update_icon()
 
 /obj/structure/cable/hides_under_flooring()
-	return 1
+	return TRUE
 
 /obj/structure/cable/update_icon()
 	if(!linked_dirs)
 		icon_state = "l[cable_layer]-noconnection"
-	else
-		var/list/dir_icon_list = list()
-		for(var/check_dir in GLOB.cardinal)
-			if(linked_dirs & check_dir)
-				dir_icon_list += "[check_dir]"
-		var/dir_string = dir_icon_list.Join("-")
-		if(dir_icon_list.len > 1)
-			for(var/obj/O in loc)
-				if(GLOB.wire_node_generating_types[O.type])
+	var/list/dir_icon_list = list()
+	for(var/check_dir in GLOB.cardinal)
+		if(linked_dirs & check_dir)
+			dir_icon_list += "[check_dir]"
+	var/dir_string = dir_icon_list.Join("-")
+	if(dir_icon_list.len > 1)
+		for(var/obj/O in loc)
+			if(GLOB.wire_node_generating_types[O.type])
+				dir_string = "[dir_string]-node"
+				break
+			else if(istype(O, /obj/machinery/power))
+				var/obj/machinery/power/P = O
+				if(P.should_have_node())
 					dir_string = "[dir_string]-node"
 					break
-				else if(istype(O, /obj/machinery/power))
-					var/obj/machinery/power/P = O
-					if(P.should_have_node())
-						dir_string = "[dir_string]-node"
-						break
-		dir_string = "l[cable_layer]-[dir_string]"
-		icon_state = dir_string
+	dir_string = "l[cable_layer]-[dir_string]"
+	icon_state = dir_string
+	return ..()
 
 /obj/structure/cable/proc/handlecable(obj/item/W, mob/user, params)
 	var/turf/T = get_turf(src)
@@ -203,10 +203,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		return
 
 	if(W.has_tool_quality(TOOL_MULTITOOL))
-		if(powernet && (powernet.avail > 0))		// is it powered?
-			to_chat(user, "<span class='danger'>Total power: [DisplayPower(powernet.avail)]\nLoad: [DisplayPower(powernet.load)]\nExcess power: [DisplayPower(powernet.surplus())]</span>")
-		else
-			to_chat(user, "<span class='danger'>The cable is not powered.</span>")
+		to_chat(user, get_power_info())
 		shock(user, 5, 0.2)
 
 	else
@@ -243,11 +240,15 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 				qdel(src)
 	return
 
-/obj/structure/cable/proc/cableColor(var/colorC)
-	var/color_n = "#DD0000"
-	if(colorC)
-		color_n = colorC
-	color = color_n
+/obj/structure/cable/proc/get_power_info()
+	if(powernet?.avail > 0)
+		return "<span class='filter_notice'><span class='warning'>Total power: [DisplayPower(powernet.avail)]\nLoad: [DisplayPower(powernet.load)]\nExcess power: [DisplayPower(surplus())]</span></span>"
+	else
+		return "<span class='filter_notice'><span class='warning'>The cable is not powered.</span></span>"
+
+/obj/structure/cable/deconstruct(disassembled = TRUE)
+	var/obj/item/stack/cable_coil/cable = new(drop_location(), 1)
+	cable.set_cable_color(color)
 
 // Items usable on a cable :
 //   - Wirecutters : cut it duh !
@@ -260,17 +261,63 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 /obj/structure/cable/attack_tk(mob/user)
 	return
 
+/obj/structure/cable/singularity_pull(S, current_size)
+	..()
+	if(current_size >= STAGE_FIVE)
+		deconstruct()
+
+////////////////////////////////////////////
+// Power related
+///////////////////////////////////////////
+
+// All power generation handled in add_avail()
+// Machines should use add_load(), surplus(), avail()
+// Non-machines should use add_delayedload(), delayed_surplus(), newavail()
+
+/obj/structure/cable/proc/add_avail(amount)
+	if(powernet)
+		powernet.newavail += amount
+
+/obj/structure/cable/proc/add_load(amount)
+	if(powernet)
+		powernet.load += amount
+
+/obj/structure/cable/proc/surplus()
+	if(powernet)
+		return clamp(powernet.avail-powernet.load, 0, powernet.avail)
+	else
+		return 0
+
+/obj/structure/cable/proc/avail(amount)
+	if(powernet)
+		return amount ? powernet.avail >= amount : powernet.avail
+	else
+		return 0
+
+/obj/structure/cable/proc/add_delayedload(amount)
+	if(powernet)
+		powernet.delayedload += amount
+
+/obj/structure/cable/proc/delayed_surplus()
+	if(powernet)
+		return clamp(powernet.newavail - powernet.delayedload, 0, powernet.newavail)
+	else
+		return 0
+
+/obj/structure/cable/proc/newavail()
+	if(powernet)
+		return powernet.newavail
+	else
+		return 0
+
 /////////////////////////////////////////////////
 // Cable laying helpers
 ////////////////////////////////////////////////
 
 // merge with the powernets of power objects in the given direction
 /obj/structure/cable/proc/mergeConnectedNetworks(direction)
-
-	var/inverse_dir = (!direction)? 0 : turn(direction, 180) //flip the direction, to match with the source position on its turf
-
-	var/turf/TB  = get_step(src, direction)
-
+	var/inverse_dir = (!direction)? 0 : REVERSE_DIR(direction) //flip the direction, to match with the source position on its turf
+	var/turf/TB = get_step(src, direction)
 	for(var/obj/structure/cable/C in TB)
 		if(!C)
 			continue
@@ -361,13 +408,12 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		var/datum/powernet/newPN = new()// creates a new powernet...
 		propagate_network(O, newPN)//... and propagates it to the other side of the cable
 
-//Makes a new network for the cable and propgates it.
-//If it finds another network in the process, aborts and uses that one and propagates off of it instead
+//Makes a new network for the cable and propgates it. If we already have one, just die
 /obj/structure/cable/proc/propagate_if_no_network()
 	if(powernet)
 		return
 	var/datum/powernet/newPN = new()
-	propagate_network(src, newPN, TRUE)
+	propagate_network(src, newPN)
 
 // cut the cable's powernet at this cable and updates the powergrid
 /obj/structure/cable/proc/cut_cable_from_powernet(remove = TRUE)
@@ -398,7 +444,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		if(first)
 			first = FALSE
 			continue
-		addtimer(CALLBACK(O, .proc/auto_propagate_cut_cable, O), 0) //so we don't rebuild the network X times when singulo/explosion destroys a line of X cables
+		addtimer(CALLBACK(O, PROC_REF(auto_propagate_cut_cable), O), 0) //so we don't rebuild the network X times when singulo/explosion destroys a line of X cables
 
 ///////////////////////////////////////////////
 // The cable coil object, used for laying cable
@@ -443,12 +489,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 ////////////////////////////////
 // Definitions
 ////////////////////////////////
-
-GLOBAL_LIST_INIT(cable_coil_recipes, list(
-				new/datum/stack_recipe("cable restraints", /obj/item/weapon/handcuffs/cable, 15),
-				new/datum/stack_recipe("multilayer cable", /obj/structure/cable/multilayer, 1),
-				new/datum/stack_recipe("multiZ cable", /obj/structure/cable/multilayer/multiz, 1)
-				))
+#define CABLE_RESTRAINTS_COST 15
 
 /obj/item/stack/cable_coil
 	name = "cable coil"
@@ -483,15 +524,16 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(
 	pixel_x = rand(-2,2)
 	pixel_y = rand(-2,2)
 	update_icon()
-	recipes = GLOB.cable_coil_recipes
 
 /obj/item/stack/cable_coil/examine(mob/user)
 	. = ..()
-	. += "<b>Ctrl+Click</b> to change the layer you are placing on."
-	. += ""
+	. += "<b>Use it in hand</b> to change the layer you are placing on, amongst other things."
 
 /obj/item/stack/cable_coil/proc/check_menu(mob/living/user)
 	if(!istype(user))
+		return FALSE
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, span_warning("You don't have the dexterity to do this!"))
 		return FALSE
 	if(user.incapacitated() || !user.Adjacent(src))
 		return FALSE
@@ -499,81 +541,68 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(
 
 GLOBAL_LIST(cable_radial_layer_list)
 
-/obj/item/stack/cable_coil/CtrlClick(mob/living/user)
-	if(loc!=user)
-		return ..()
+/obj/item/stack/cable_coil/attack_self(mob/living/user)
 	if(!user)
 		return
-	if(!GLOB.cable_radial_layer_list)
-		GLOB.cable_radial_layer_list = list(
-		"Layer 1" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-red"),
-		"Layer 2" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-yellow"),
-		"Layer 3" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-blue"),
-		"Multilayer cable hub" = image(icon = 'icons/obj/cables/structures.dmi', icon_state = "cable_bridge"),
-		"Multi Z layer cable hub" = image(icon = 'icons/obj/cables/structures.dmi', icon_state = "cablerelay-broken-cable")
-		)
-	var/layer_result = show_radial_menu(user, src, GLOB.cable_radial_layer_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+
+	var/image/restraints_icon = image(icon = 'icons/obj/restraints.dmi', icon_state = "cuff")
+	restraints_icon.maptext = "<span [amount >= CABLE_RESTRAINTS_COST ? "" : "style='color: red'"]>[CABLE_RESTRAINTS_COST]</span>"
+	restraints_icon.color = color
+
+	var/list/radial_menu = list(
+	"Layer 1" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-red"),
+	"Layer 2" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-yellow"),
+	"Layer 3" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-blue"),
+	"Multilayer cable hub" = image(icon = 'icons/obj/pipes_n_cables/structures.dmi', icon_state = "cable_bridge"),
+	"Multi Z layer cable hub" = image(icon = 'icons/obj/pipes_n_cables/structures.dmi', icon_state = "cablerelay-broken-cable"),
+	"Cable restraints" = restraints_icon
+	)
+	var/layer_result = show_radial_menu(user, src, radial_menu, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	switch(layer_result)
 		if("Layer 1")
+			color = CABLELAYERONECOLOR
 			if(istype(src, /obj/item/stack/cable_coil/alien))
-				target_type = /obj/structure/cable/layer1
-				target_layer = CABLE_LAYER_1
+				set_cable_color(COLOR_SILVER)
 				icon = 'icons/obj/abductor.dmi'
-				icon_state = "coil"
-				return //snowflake ayylmao cable just gets its layers updated
 			name = "cable coil"
 			icon_state = "coil"
-			color = CABLELAYERONECOLOR
 			target_type = /obj/structure/cable/layer1
 			target_layer = CABLE_LAYER_1
 		if("Layer 2")
+			color =  CABLELAYERTWOCOLOR
 			if(istype(src, /obj/item/stack/cable_coil/alien))
-				target_type = /obj/structure/cable
-				target_layer = CABLE_LAYER_2
+				set_cable_color(COLOR_SILVER)
 				icon = 'icons/obj/abductor.dmi'
-				icon_state = "coil"
-				return
 			name = "cable coil"
 			icon_state = "coil"
-			color = CABLELAYERTWOCOLOR
 			target_type = /obj/structure/cable
 			target_layer = CABLE_LAYER_2
 		if("Layer 3")
+			color = CABLELAYERTHREECOLOR
 			if(istype(src, /obj/item/stack/cable_coil/alien))
-				target_type = /obj/structure/cable/layer3
-				target_layer = CABLE_LAYER_3
+				set_cable_color(COLOR_SILVER)
 				icon = 'icons/obj/abductor.dmi'
-				icon_state = "coil"
-				return
 			name = "cable coil"
 			icon_state = "coil"
-			color = CABLELAYERTHREECOLOR
 			target_type = /obj/structure/cable/layer3
 			target_layer = CABLE_LAYER_3
 		if("Multilayer cable hub")
+			set_cable_color(COLOR_WHITE)
 			if(istype(src, /obj/item/stack/cable_coil/alien))
-				target_type = /obj/structure/cable/multilayer
-				target_layer = CABLE_LAYER_2
 				icon = 'icons/obj/cables/structures.dmi'
-				icon_state = "cable_bridge"
-				return
 			name = "multilayer cable hub"
+			desc = "A multilayer cable hub."
 			icon_state = "cable_bridge"
-			color = "white"
 			target_type = /obj/structure/cable/multilayer
 			target_layer = CABLE_LAYER_2
 		if("Multi Z layer cable hub")
+			set_cable_color(COLOR_WHITE)
 			if(istype(src, /obj/item/stack/cable_coil/alien))
-				target_type = /obj/structure/cable/multilayer/multiz
-				target_layer = CABLE_LAYER_2
 				icon = 'icons/obj/cables/structures.dmi'
-				icon_state = "cablerelay-broken-cable"
-				return
 			name = "multi z layer cable hub"
 			icon_state = "cablerelay-broken-cable"
-			color = "white"
 			target_type = /obj/structure/cable/multilayer/multiz
 			target_layer = CABLE_LAYER_2
 	update_icon()
@@ -614,8 +643,9 @@ GLOBAL_LIST(cable_radial_layer_list)
 		return ..()
 
 /obj/item/stack/cable_coil/update_icon()
-	if (!color)
-		color = pick(COLOR_RED, COLOR_BLUE, COLOR_LIME, COLOR_ORANGE, COLOR_WHITE, COLOR_PINK, COLOR_YELLOW, COLOR_CYAN)
+	if (!color)	//should only be for randomly gen'd coils.
+		var/colorpick = pick(GLOB.possible_cable_coil_colours)
+		set_cable_color(colorpick)
 	if(amount == 1)
 		icon_state = "coil1"
 		name = "cable piece"
@@ -716,7 +746,7 @@ GLOBAL_LIST(cable_radial_layer_list)
 
 	for(var/obj/structure/cable/C in T)
 		if(C.cable_layer & target_layer)
-			to_chat(user, "<span class='warning'>There's already a cable at that position!</span>")
+			to_chat(user, "<span class='warning'>There's already a cable at that position and layer!</span>")
 			return
 
 	var/obj/structure/cable/C = new target_type(T)
@@ -733,7 +763,6 @@ GLOBAL_LIST(cable_radial_layer_list)
 
 	if(C.shock(user, 50))
 		if(prob(50)) //fail
-			new /obj/item/stack/cable_coil(get_turf(C), 1)
 			C.deconstruct()
 
 	return C
@@ -753,6 +782,7 @@ GLOBAL_LIST(cable_radial_layer_list)
 	pixel_y = rand(-2,2)
 	update_icon()
 
+#undef CABLE_RESTRAINTS_COST
 #undef UNDER_SMES
 #undef UNDER_TERMINAL
 
@@ -830,7 +860,8 @@ GLOBAL_LIST(cable_radial_layer_list)
 
 /obj/item/stack/cable_coil/random/New()
 	stacktype = /obj/item/stack/cable_coil
-	color = pick(COLOR_RED, COLOR_BLUE, COLOR_LIME, COLOR_WHITE, COLOR_PINK, COLOR_YELLOW, COLOR_CYAN, COLOR_SILVER, COLOR_GRAY, COLOR_BLACK, COLOR_MAROON, COLOR_OLIVE, COLOR_LIME, COLOR_TEAL, COLOR_NAVY, COLOR_PURPLE, COLOR_BEIGE, COLOR_BROWN)
+	var/colorpick = pick(GLOB.possible_cable_coil_colours) //don't need a massive check list when we've already got a cable color list
+	set_cable_color(colorpick)
 	..()
 
 /obj/item/stack/cable_coil/random_belt/New()

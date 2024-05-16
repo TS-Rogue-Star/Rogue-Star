@@ -16,17 +16,17 @@
 	w_class = ITEMSIZE_NORMAL
 	/// Are we EMP immune?
 	var/emp_proof = FALSE
-	var/static/cell_uid = 1		// Unique ID of this power cell. Used to reduce bunch of uglier code in nanoUI.
-	var/c_uid
-	var/charge = 0	// note %age conveted to actual charge in New
-	var/maxcharge = 1000
-	var/rigged = 0		// true if rigged to explode
-	var/minor_fault = 0 //If not 100% reliable, it will build up faults.
-	var/self_recharge = FALSE // If true, the cell will recharge itself.
-	var/charge_amount = 25 // How much power to give, if self_recharge is true.  The number is in absolute cell charge, as it gets divided by CELLRATE later.
-	var/last_use = 0 // A tracker for use in self-charging
-	var/connector_type = "standard" //What connector sprite to use when in a cell charger, null if no connectors
+	var/charge = 0					// note %age conveted to actual charge in New
+	var/maxcharge = CELLDEFAULTMAX	// 1kW
+	var/rigged = FALSE				// true if rigged to explode
+	var/corrupted = FALSE			//true if sus
+	var/minor_fault = 0				//If not 100% reliable, it will build up faults.
+	var/self_recharge = FALSE		// If true, the cell will recharge itself.
+	var/charge_amount = 25 WATTS	// How much power to give, if self_recharge is true.  The number is in absolute cell charge, as it gets divided by CELLRATE later.
 	var/charge_delay = 0 // How long it takes for the cell to start recharging after last use
+	var/last_use = 0 // A tracker for use in self-charging
+
+	var/connector_type = "standard" //What connector sprite to use when in a cell charger, null if no connectors
 	matter = list(MAT_STEEL = 700, MAT_GLASS = 50)
 	drop_sound = 'sound/items/drop/component.ogg'
 	pickup_sound = 'sound/items/pickup/component.ogg'
@@ -35,8 +35,12 @@
 	var/standard_overlays = TRUE
 	var/last_overlay_state = null // Used to optimize update_icon() calls.
 
-/obj/item/weapon/cell/New()
-	..()
+	//batteryrack nonsense
+	var/static/cell_uid = 1		// Unique ID of this power cell. Used to reduce bunch of uglier code in nanoUI.
+	var/c_uid
+
+/obj/item/weapon/cell/Initialize(mapload)
+	. = ..()
 	c_uid = cell_uid++
 	charge = maxcharge
 	update_icon()
@@ -97,10 +101,7 @@
 #undef OVERLAY_EMPTY
 
 /obj/item/weapon/cell/proc/percent()		// return % charge of cell
-	var/charge_percent = 0
-	if(maxcharge > 0)
-		charge_percent = 100.0*charge/maxcharge
-	return charge_percent
+	return 100 * charge / maxcharge
 
 /obj/item/weapon/cell/proc/fully_charged()
 	return (charge == maxcharge)
@@ -114,15 +115,16 @@
 	return max(maxcharge - charge, 0)
 
 // use power from a cell, returns the amount actually used
-/obj/item/weapon/cell/proc/use(var/amount)
-	if(rigged && amount > 0)
+/obj/item/weapon/cell/proc/use(used, force = FALSE)
+	if(rigged && used > 0)
 		explode()
-		return 0
-	var/used = min(charge, amount)
-	charge -= used
+		return FALSE
+	if(!force && charge < used)
+		return FALSE
+	charge = max(charge - used, 0)
 	last_use = world.time
 	update_icon()
-	return used
+	return TRUE
 
 // Checks if the specified amount can be provided. If it can, it removes the amount
 // from the cell and returns 1. Otherwise does nothing and returns 0.
@@ -133,23 +135,21 @@
 	return 1
 
 // recharge the cell
-/obj/item/weapon/cell/proc/give(var/amount)
+/obj/item/weapon/cell/proc/give(amount)
 	if(rigged && amount > 0)
 		explode()
 		return 0
-
-	if(maxcharge < amount)	return 0
-	var/amount_used = min(maxcharge-charge,amount)
-	charge += amount_used
-	update_icon()
-	if(loc)
-		loc.update_icon()
-	return amount_used
-
+	if(maxcharge < amount)
+		amount = maxcharge
+	var/power_used = min(maxcharge-charge,amount)
+	charge += power_used
+	return power_used
 
 /obj/item/weapon/cell/examine(mob/user)
 	. = ..()
 	if(Adjacent(user))
+		if(corrupted)
+			.+= "The casing doesn't seem quite right."
 		. += "It has a power rating of [maxcharge]."
 		. += "The charge meter reads [round(src.percent() )]%."
 
@@ -170,21 +170,21 @@
 		S.reagents.clear_reagents()
 
 /obj/item/weapon/cell/proc/explode()
-	var/turf/T = get_turf(src.loc)
+	var/turf/T = get_turf(loc)
 /*
  * 1000-cell	explosion(T, -1, 0, 1, 1)
  * 2500-cell	explosion(T, -1, 0, 1, 1)
  * 10000-cell	explosion(T, -1, 1, 3, 3)
  * 15000-cell	explosion(T, -1, 2, 4, 4)
  * */
-	if (charge==0)
+	if (!charge)
 		return
 	var/devastation_range = -1 //round(charge/11000)
 	var/heavy_impact_range = round(sqrt(charge)/60)
 	var/light_impact_range = round(sqrt(charge)/30)
 	var/flash_range = light_impact_range
-	if (light_impact_range==0)
-		rigged = 0
+	if (!light_impact_range)
+		rigged = FALSE
 		corrupt()
 		return
 	//explosion(T, 0, 1, 2, 2)
@@ -198,9 +198,11 @@
 
 /obj/item/weapon/cell/proc/corrupt()
 	charge /= 2
-	maxcharge /= 2
-	if (prob(10))
-		rigged = 1 //broken batterys are dangerous
+	maxcharge = max(maxcharge/2, CELLRATE)
+	if(prob(10))
+		rigged = TRUE //broken batteries are dangerous
+	corrupted = TRUE
+
 
 /obj/item/weapon/cell/emp_act(severity)
 	if(emp_proof)
@@ -217,7 +219,10 @@
 	update_icon()
 	..()
 
-/obj/item/weapon/cell/ex_act(severity)
+/obj/item/weapon/cell/ex_act(severity, target)
+	. = ..()
+	if(QDELETED(src))
+		return FALSE
 
 	switch(severity)
 		if(1.0)
@@ -235,7 +240,7 @@
 				return
 			if (prob(25))
 				corrupt()
-	return
+	return TRUE
 
 /obj/item/weapon/cell/proc/get_electrocute_damage()
 	//1kW = 5

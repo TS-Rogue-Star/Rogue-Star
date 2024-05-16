@@ -132,7 +132,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	//To lay cable.
 	if(istype(C, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = C
-		coil.turf_place(src, user)
+		coil.place_turf(src, user)
 		return
 	return
 

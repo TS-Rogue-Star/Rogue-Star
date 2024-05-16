@@ -95,11 +95,11 @@
 
 	component_parts = list()
 	component_parts += new /obj/item/stack/cable_coil(src,30)
-	component_parts += new /obj/item/weapon/circuitboard/machine/smes(src)
+	component_parts += new /obj/item/weapon/circuitboard/smes(src)
 
 	// Allows for mapped-in SMESs with larger capacity/IO
 	for(var/i = 1, i <= cur_coils, i++)
-		component_parts += new /obj/item/weapon/stock_parts/smes_coil(src)
+		component_parts += new /obj/item/weapon/smes_coil(src)
 
 	recalc_coils()
 	update_icon()
@@ -179,6 +179,11 @@
 		return TRUE
 	return FALSE
 
+/obj/machinery/power/smes/proc/Percentage()
+	if(!capacity)
+		return 0
+	return round(100.0*charge/capacity, 0.1)
+
 /obj/machinery/power/smes/proc/chargedisplay()
 	return CLAMP(round(5.5*charge/capacity),0,5)
 
@@ -204,6 +209,20 @@
 // Description: Switches the output on/off depending on previous setting
 /obj/machinery/power/smes/proc/toggle_output()
 	outputting(!output_attempt)
+	update_icon()
+
+// Proc: set_input()
+// Parameters: 1 (new_input - New input value in Watts)
+// Description: Sets input setting on this SMES. Trims it if limits are exceeded.
+/obj/machinery/power/smes/proc/set_input(var/new_input = 0)
+	input_level = between(0, new_input, input_level_max)
+	update_icon()
+
+// Proc: set_output()
+// Parameters: 1 (new_output - New output value in Watts)
+// Description: Sets output setting on this SMES. Trims it if limits are exceeded.
+/obj/machinery/power/smes/proc/set_output(var/new_output = 0)
+	output_level = between(0, new_output, output_level_max)
 	update_icon()
 
 /obj/machinery/power/smes/process()
@@ -433,8 +452,8 @@
 		to_chat(user, "<span class='filter_notice'><span class='warning'>You need to open access hatch on [src] first!</span></span>")
 		return FALSE
 
-	if(W.has_tool_quality(TOOL_WELDER))
-		var/obj/item/weapon/weldingtool/WT = W.get_welder()
+	if(istype(W, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = W
 		if(!WT.isOn())
 			to_chat(user, "<span class='filter_notice'>Turn on \the [WT] first!</span>")
 			return FALSE
@@ -526,13 +545,13 @@
 
 	return ..()
 
-/obj/machinery/power/smes/ui_interact(mob/user, datum/tgui/ui)
+/obj/machinery/power/smes/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Smes", name)
 		ui.open()
 
-/obj/machinery/power/smes/ui_data()
+/obj/machinery/power/smes/tgui_data()
 	var/list/data = list(
 		"capacity" = capacity,
 		"capacityPercent" = round(100*charge/capacity, 0.1),
@@ -552,7 +571,7 @@
 	)
 	return data
 
-/obj/machinery/power/smes/ui_act(action, params)
+/obj/machinery/power/smes/tgui_act(action, params)
 	. = ..()
 	if(.)
 		return
@@ -633,25 +652,23 @@
 			for(var/mob/M in viewers(src))
 				M.show_message("<span class='warning'> The [src.name] is making strange noises!</span>", 3, "<span class='warning'> You hear sizzling electronics.</span>", 2)
 			sleep(10*pick(4,5,6,7,10,14))
-			var/datum/effect_system/smoke_spread/smoke = new /datum/effect_system/smoke_spread()
-			smoke.set_up(1, 0, src.loc)
-			smoke.attach(src)
+			var/datum/effect/effect/system/smoke_spread/smoke = new
+			smoke.set_up(1,0, src.loc, 0)
 			smoke.start()
 			explosion(src.loc, -1, 0, 1, 3, 1, 0)
 			qdel(src)
 			return
 		if(prob(15)) //Power drain
-			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-			s.set_up(3, 1, src)
-			s.start()
+			var/datum/effect/effect/system/smoke_spread/smoke = new
+			smoke.set_up(3,0, src.loc, 0)
+			smoke.start()
 			if(prob(50))
 				emp_act(1)
 			else
 				emp_act(2)
 		if(prob(5)) //smoke only
-			var/datum/effect_system/smoke_spread/smoke = new /datum/effect_system/smoke_spread()
-			smoke.set_up(1, 0, src.loc)
-			smoke.attach(src)
+			var/datum/effect/effect/system/smoke_spread/smoke = new
+			smoke.set_up(1,0, src.loc, 0)
 			smoke.start()
 
 

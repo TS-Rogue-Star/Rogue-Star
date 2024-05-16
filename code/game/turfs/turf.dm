@@ -178,7 +178,7 @@
 		coil.place_turf(src, user)
 		return TRUE
 
-	else if(istype(C, obj/item/weapon/material/twohanded/rcl))
+	else if(istype(C, /obj/item/weapon/material/twohanded/rcl))
 		handleRCL(C, user)
 
 	return FALSE

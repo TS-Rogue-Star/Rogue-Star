@@ -1,8 +1,8 @@
 /*
  * Empty
  */
-/obj/item/weapon/cell/empty/New()
-	..()
+/obj/item/weapon/cell/empty/Initialize()
+	. = ..()
 	charge = 0
 
 /*
@@ -14,14 +14,14 @@
 	description_fluff = "You can't top the rust top." //TOTALLY TRADEMARK INFRINGEMENT
 	origin_tech = list(TECH_POWER = 0)
 	icon_state = "crap"
-	maxcharge = 500
+	maxcharge = 0.5 KILOWATTS
 	matter = list(MAT_STEEL = 700, MAT_GLASS = 40)
 
 /obj/item/weapon/cell/crap/update_icon() //No visible charge indicator
 	return
 
-/obj/item/weapon/cell/crap/empty/New()
-	..()
+/obj/item/weapon/cell/crap/empty/Initialize()
+	. = ..()
 	charge = 0
 
 /*
@@ -31,7 +31,7 @@
 	name = "heavy-duty power cell"
 	origin_tech = list(TECH_POWER = 1)
 	icon_state = "apc"
-	maxcharge = 5000
+	maxcharge = 5 KILOWATTS
 	matter = list(MAT_STEEL = 700, MAT_GLASS = 50)
 
 /*
@@ -41,11 +41,11 @@
 	name = "high-capacity power cell"
 	origin_tech = list(TECH_POWER = 2)
 	icon_state = "high"
-	maxcharge = 10000
+	maxcharge = 10 KILOWATTS
 	matter = list(MAT_STEEL = 700, MAT_GLASS = 60)
 
-/obj/item/weapon/cell/high/empty/New()
-	..()
+/obj/item/weapon/cell/high/empty/Initialize()
+	. = ..()
 	charge = 0
 	update_icon()
 
@@ -56,11 +56,11 @@
 	name = "super-capacity power cell"
 	origin_tech = list(TECH_POWER = 5)
 	icon_state = "super"
-	maxcharge = 20000
+	maxcharge = 20 KILOWATTS
 	matter = list(MAT_STEEL = 700, MAT_GLASS = 70)
 
-/obj/item/weapon/cell/super/empty/New()
-	..()
+/obj/item/weapon/cell/super/empty/Initialize()
+	. = ..()
 	charge = 0
 	update_icon()
 
@@ -71,7 +71,7 @@
 	name = "hyper-capacity power cell"
 	origin_tech = list(TECH_POWER = 6)
 	icon_state = "hyper"
-	maxcharge = 30000
+	maxcharge = 30 KILOWATTS
 	matter = list(MAT_STEEL = 700, MAT_GLASS = 80)
 
 /obj/item/weapon/cell/hyper/empty/New()
@@ -86,8 +86,8 @@
 	name = "mecha power cell"
 	icon_state = "mech"
 	connector_type = "mech"
-	charge = 15000
-	maxcharge = 15000
+	charge = 15 KILOWATTS
+	maxcharge = 15 KILOWATTS
 	matter = list(MAT_STEEL = 800, MAT_GLASS = 60)
 
 /obj/item/weapon/cell/mech/lead
@@ -95,8 +95,8 @@
 	desc = "An ancient battery design not commonly seen anymore. It looks like it'd fit inside a mech however..."
 	origin_tech = list(TECH_POWER = 0) //Litteraly an old car battery, doesn't need tech
 	icon_state = "lead"
-	charge = 8000
-	maxcharge = 8000
+	charge = 8 KILOWATTS
+	maxcharge = 8 KILOWATTS
 	matter = list(MAT_STEEL = 300, MAT_GLASS = 10)
 
 /obj/item/weapon/cell/mech/lead/update_icon() //No visible charge indicator
@@ -106,16 +106,16 @@
 	name = "high-capacity mecha power cell"
 	origin_tech = list(TECH_POWER = 3)
 	icon_state = "blue"
-	charge = 20000
-	maxcharge = 20000
+	charge = 20 KILOWATTS
+	maxcharge = 20 KILOWATTS
 	matter = list(MAT_STEEL = 800, MAT_GLASS = 80)
 
 /obj/item/weapon/cell/mech/super
 	name = "super-capacity mecha power cell"
 	origin_tech = list(TECH_POWER = 6)
 	icon_state = "white"
-	charge = 25000
-	maxcharge = 25000
+	charge = 25 KILOWATTS
+	maxcharge = 25 KILOWATTS
 	matter = list(MAT_STEEL = 800, MAT_GLASS = 100)
 
 /*
@@ -125,14 +125,14 @@
 	name = "infinite-capacity power cell!"
 	icon_state = "infinity"
 	origin_tech =  null
-	maxcharge = 30000 //determines how badly mobs get shocked
+	maxcharge = 30 KILOWATTS //determines how badly mobs get shocked
 	matter = list(MAT_STEEL = 700, MAT_GLASS = 80)
 
 /obj/item/weapon/cell/infinite/check_charge()
-	return 1
+	return TRUE
 
 /obj/item/weapon/cell/infinite/use()
-	return 1
+	return TRUE
 
 /*
  * Potato
@@ -142,8 +142,8 @@
 	desc = "A rechargable starch based power cell."
 	origin_tech = list(TECH_POWER = 1)
 	icon_state = "potato"
-	charge = 100
-	maxcharge = 300
+	charge = 100 WATTS
+	maxcharge = 300 WATTS
 	minor_fault = 1
 
 /*
@@ -156,8 +156,8 @@
 	icon = 'icons/mob/slimes.dmi' //'icons/obj/harvest.dmi'
 	icon_state = "yellow slime extract" //"potato_battery"
 	connector_type = "slime"
-	description_info = "This 'cell' holds a max charge of 10k and self recharges over time."
-	maxcharge = 10000
+	description_info = "This 'cell' holds a max charge of 10kWs and self recharges over time."
+	maxcharge = 10 KILOWATTS
 	matter = null
 	self_recharge = TRUE
 	standard_overlays = FALSE
@@ -168,7 +168,7 @@
 /obj/item/weapon/cell/emergency_light
 	name = "miniature power cell"
 	desc = "A tiny power cell with a very low power capacity. Used in light fixtures to power them in the event of an outage."
-	maxcharge = 120 //Emergency lights use 0.2 W per tick, meaning ~10 minutes of emergency power from a cell
+	maxcharge = 120 WATTS	//Emergency lights use 0.2 W per tick, meaning ~10 minutes of emergency power from a cell
 	matter = list(MAT_GLASS = 20)
 	icon_state = "em_light"
 	connector_type = "emergency"
@@ -194,7 +194,7 @@
 	icon = 'icons/obj/power_cells.dmi'
 	icon_state = "backup"
 	w_class = ITEMSIZE_SMALL
-	var/amount = 100
+	var/amount = 100 WATTS
 	var/used = FALSE
 
 /obj/item/device/fbp_backup_cell/Initialize()

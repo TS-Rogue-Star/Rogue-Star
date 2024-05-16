@@ -22,8 +22,8 @@
 	origin_tech = list(TECH_POWER = 8, TECH_ENGINEERING = 6)
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "cell"
-	maxcharge = 4800 //10x the device version
-	charge_amount = 1200 //10x the device version
+	maxcharge = 4.8 KILOWATTS //10x the device version
+	charge_amount = 1.2 KILOWATTS //10x the device version
 	self_recharge = TRUE
 	charge_delay = 50
 	matter = null

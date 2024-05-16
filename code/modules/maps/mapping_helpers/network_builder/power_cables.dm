@@ -32,9 +32,9 @@
 /obj/effect/mapping_helpers/network_builder/power_cable/build_network()
 	if(cabletype == CABLE)
 		new /obj/structure/cable(loc,color,cable_layer)
-	if(cabletype = MULTIZ)
+	if(cabletype == MULTIZ)
 		new /obj/structure/cable/multilayer/multiz(loc) //multizs have all three layers active at all times.
-	if(cabletype = BRIDGE)
+	if(cabletype == BRIDGE)
 		new /obj/structure/cable/multilayer/connected(loc)	//as do bridges
 
 /obj/effect/mapping_helpers/network_builder/power_cable/cablerelay
