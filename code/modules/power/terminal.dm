@@ -72,6 +72,7 @@
 		var/turf/T = loc
 		if(T.is_plating())
 			to_chat(user, "<span class='filter_notice'><span class='warning'>You must remove the floor plating first!</span></span>")
+			return FALSE
 
 	if(master && !master.can_terminal_dismantle())
 		return FALSE
@@ -99,6 +100,7 @@
 		else
 			master.disconnect_terminal()
 		to_chat(user, "<span class='filter_notice'><span class='warning'>You finish removing the terminal.</span></span>")
+		return TRUE
 	else
 		to_chat(user, "<span class='filter_notice'><span class='warning'>You need to use a wirecutting tool!</span></span>")
 		return FALSE
