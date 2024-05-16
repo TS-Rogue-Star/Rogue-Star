@@ -33,6 +33,8 @@ GLOBAL_LIST_INIT(cable_name_to_layer, list(
 
 #define MAXCOIL 30
 
+#define	SOLARGRUBFATTENED 7 MEGAWATTS
+
 var/global/defer_powernet_rebuild = 0      // True if net rebuild will be called manually after an event.
 
 GLOBAL_LIST_INIT(possible_cable_coil_colours, list(

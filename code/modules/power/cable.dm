@@ -191,7 +191,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	if(!T.is_plating())
 		return
 	if(W.has_tool_quality(TOOL_WIRECUTTER))
-
 		if(breaker_box)
 			to_chat(user, "<span class='warning'>This cable is connected to nearby breaker box. Use breaker box to interact with it.</span>")
 			return

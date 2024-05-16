@@ -81,7 +81,7 @@ var/global/list/grub_machine_overlays = list()
 	if(!.)	// || ai_inactive
 		return
 
-	if(power_drained >= 7 MEGAWATTS && prob(5))
+	if(power_drained >= SOLARGRUBFATTENED && prob(5))
 		expand_grub()
 		return
 

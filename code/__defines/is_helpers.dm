@@ -33,6 +33,8 @@
 
 #define isAPC(A) (istype(A, /obj/machinery/power/apc))
 
+#define isSMES(A) (istype(A, /obj/machinery/power/smes))
+
 //---------------
 //#define isarea(D)		istype(D, /area)	//Built in
 

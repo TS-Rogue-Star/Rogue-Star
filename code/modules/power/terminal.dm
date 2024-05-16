@@ -87,12 +87,15 @@
 		sparks.start()
 		return FALSE
 
-		new /obj/item/stack/cable_coil(get_turf(src), 10)
-		qdel(src)
-		master.terminalconnections -= src
-		var/terminalslot = master.get_terminal_slot(cable_layer)
-		master.disconnect_terminal(terminalslot)
-		to_chat(user, "<span class='filter_notice'><span class='warning'>You finish removing the terminal.</span></span>")
+	new /obj/item/stack/cable_coil(get_turf(src), 10)
+	qdel(src)
+	if(isSMES(master))
+		var/obj/machinery/power/smes/fatbat = master
+		var/terminalslot = fatbat.get_terminal_slot(cable_layer)
+		fatbat.disconnect_terminal(terminalslot)
+	else
+		master.disconnect_terminal()
+	to_chat(user, "<span class='filter_notice'><span class='warning'>You finish removing the terminal.</span></span>")
 
 /obj/machinery/power/terminal/wirecutter_act(mob/living/user, obj/item/I, var/cable_layer)
 	dismantle(user, I, cable_layer)
