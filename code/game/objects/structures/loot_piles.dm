@@ -380,7 +380,7 @@ Loot piles can be depleted, if loot_depleted is turned on.  Note that players wh
 		/obj/item/weapon/mining_scanner/advanced,
 		/obj/item/device/multitool,
 		/obj/item/mecha_parts/mecha_equipment/generator,
-		/obj/item/mecha_parts/mecha_equipment/tool/cable_layer,
+		// /obj/item/mecha_parts/mecha_equipment/tool/cable_layer,
 		/obj/item/mecha_parts/mecha_equipment/tool/drill,
 		/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp,
 		/obj/item/mecha_parts/mecha_equipment/tool/passenger,

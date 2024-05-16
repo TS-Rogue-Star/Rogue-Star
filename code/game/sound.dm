@@ -105,7 +105,7 @@
 ///Play sound for all online mobs on a given Z-level. Good for ambient sounds.
 /proc/playsound_z(z, soundin, _volume)
 	soundin = sound(get_sfx(soundin), channel = SSsounds.random_available_channel(), volume = _volume)
-	for(var/mob/M in GLOB.player_list)
+	for(var/mob/M in global.player_list)
 		if(isnewplayer(M))
 			continue
 		if (M.z == z)

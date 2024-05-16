@@ -61,14 +61,6 @@
 	internal_cells = null
 	return ..()
 
-/obj/machinery/power/smes/batteryrack/check_terminals()
-	return TRUE // we don't necessarily need terminals
-
-/obj/machinery/power/smes/batteryrack/proc/Percentage()
-	if(!capacity)
-		return 0
-	return round(100.0*charge/capacity, 0.1)
-
 /obj/machinery/power/smes/batteryrack/update_icon()
 	cut_overlays()
 	icon_update = 0
@@ -117,7 +109,7 @@
 			output_attempt = 1
 
 // Store charge in the power cells, instead of using the charge var. Amount is in joules.
-/obj/machinery/power/smes/batteryrack/add_charge(var/amount)
+/obj/machinery/power/smes/batteryrack/proc/add_charge(var/amount)
 	amount *= CELLRATE // Convert to CELLRATE first.
 	if(equalise)
 		// Now try to get least charged cell and use the power from it.
@@ -135,7 +127,7 @@
 			return
 
 
-/obj/machinery/power/smes/batteryrack/remove_charge(var/amount)
+/obj/machinery/power/smes/batteryrack/proc/remove_charge(var/amount)
 	amount *= CELLRATE // Convert to CELLRATE first.
 	if(equalise)
 		// Now try to get most charged cell and use the power from it.

@@ -889,38 +889,38 @@ GLOBAL_LIST_EMPTY(apcs)
 
 /obj/machinery/power/apc/proc/can_use(mob/user as mob, var/loud = 0) //used by attack_hand() and Topic()
 	if(!user.client)
-		return 0
+		return FALSE
 	if(isobserver(user) && is_admin(user)) //This is to allow nanoUI interaction by ghost admins.
-		return 1
+		return TRUE
 	if(user.stat)
-		return 0
+		return FALSE
 	if(inoperable())
-		return 0
+		return FALSE
 	if(!user.IsAdvancedToolUser())
-		return 0
+		return FALSE
 	if(user.restrained())
 		to_chat(user, "<span class='warning'>Your hands must be free to use [src].</span>")
-		return 0
+		return FALSE
 	if(user.lying)
 		to_chat(user, "<span class='warning'>You must stand to use [src]!</span>")
-		return 0
+		return FALSE
 	autoflag = 5
 	if(istype(user, /mob/living/silicon))
-		var/permit = 0 // Malfunction variable. If AI hacks APC it can control it even without AI control wire.
+		var/permit = FALSE // Malfunction variable. If AI hacks APC it can control it even without AI control wire.
 		var/mob/living/silicon/ai/AI = user
 		var/mob/living/silicon/robot/robot = user
 		if(hacker)
 			if(hacker == AI)
-				permit = 1
+				permit = TRUE
 			else if(istype(robot) && robot.connected_ai && robot.connected_ai == hacker) // Cyborgs can use APCs hacked by their AI
-				permit = 1
+				permit = TRUE
 
 		if(aidisabled && !permit)
 			if(!loud)
 				to_chat(user, "<span class='danger'>\The AI control for [src] has been disabled!</span>")
-			return 0
+			return FALSE
 	else
-		if(!in_range(src, user) || !istype(loc, /turf))
+		if(!in_range(src, user) || !isturf(loc))
 			return 0
 	var/mob/living/carbon/human/H = user
 	if(istype(H) && prob(H.getBrainLoss()))
@@ -1026,7 +1026,7 @@ GLOBAL_LIST_EMPTY(apcs)
 	return 0
 
 /// Returns the surplus energy from the terminal's grid and the cell.
-/obj/machinery/power/apc/available_energy()
+/obj/machinery/power/apc/proc/available_energy()
 	return cell?.charge + surplus()
 
 /obj/machinery/power/apc/process()

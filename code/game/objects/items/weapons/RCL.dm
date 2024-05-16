@@ -20,8 +20,6 @@
 	var/max_amount = RCLMAXCAPACITY
 	/// current amount of cable in the machine
 	var/current_amount = 0
-	/// Choosable list of color options
-	var/list/colors = GLOB.possible_cable_coil_colours
 	/// the player currently holding this device.
 	var/mob/listeningTo
 	/// what layer of cable are we working with
@@ -55,49 +53,47 @@
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = W
 
-		if(!loaded)
-			if(!user.transferItemToLoc(W, src))
+		if(!cable)
+			if(!user.drop_location(W, src))
 				to_chat(user, "<span class='warning'>[src] is stuck to your hand!</span>")
 				return
 			else
-				loaded = W //W.loc is src at this point.
-				loaded.max_amount = max_amount //We store a lot.
+				cable = W //W.loc is src at this point.
+				cable.max_amount = max_amount //We store a lot.
 				return
 
-		if(loaded.amount < max_amount)
-			var/transfer_amount = min(max_amount - loaded.amount, C.amount)
+		if(cable.amount < max_amount)
+			var/transfer_amount = min(max_amount - cable.amount, C.amount)
 			C.use(transfer_amount)
-			loaded.amount += transfer_amount
+			cable.amount += transfer_amount
 		else
 			return
 		update_icon()
-		to_chat(user, "<span class='notice'>You add the cables to [src]. It now contains [loaded.amount].</span>")
+		to_chat(user, "<span class='notice'>You add the cables to [src]. It now contains [cable.amount].</span>")
 	else if(W.has_tool_quality(TOOL_SCREWDRIVER))
-		if(!loaded)
+		if(!cable)
 			return
 		to_chat(user, "<span class='notice'>You loosen the securing screws on the side, allowing you to lower the guiding edge and retrieve the wires.</span>")
-		while(loaded.amount > 30) //There are only two kinds of situations: "nodiff" (60,90), or "diff" (31-59, 61-89)
-			var/diff = loaded.amount % 30
+		while(cable.amount > 30) //There are only two kinds of situations: "nodiff" (60,90), or "diff" (31-59, 61-89)
+			var/diff = cable.amount % 30
 			if(diff)
-				loaded.use(diff)
+				cable.use(diff)
 				new /obj/item/stack/cable_coil(get_turf(user), diff)
 			else
-				loaded.use(30)
+				cable.use(30)
 				new /obj/item/stack/cable_coil(get_turf(user), 30)
-		loaded.max_amount = initial(loaded.max_amount)
-		if(!user.put_in_hands(loaded))
-			loaded.forceMove(get_turf(user))
+		cable.max_amount = initial(cable.max_amount)
+		if(!user.put_in_hands(cable))
+			cable.forceMove(get_turf(user))
 
-		loaded = null
+		cable = null
 		update_icon()
 	else
 		..()
 
 /obj/item/weapon/material/twohanded/rcl/Destroy()
-	QDEL_NULL(loaded)
-	last = null
+	QDEL_NULL(cable)
 	listeningTo = null
-	QDEL_NULL(wiring_gui_menu)
 	return ..()
 
 /obj/item/weapon/material/twohanded/update_held_icon()
@@ -115,12 +111,12 @@
 
 /obj/item/weapon/material/twohanded/rcl/update_icon()
 	. = ..()
-	if(!loaded)
+	if(!cable)
 		icon_state = "rcl0"
 		return
 	cut_overlays()
 	var/cable_amount = 0
-	switch(loaded.amount)
+	switch(cable.amount)
 		if(61 to INFINITY)
 			cable_amount = 3
 		if(31 to 60)
@@ -134,7 +130,7 @@
 	if(cable_amount)
 		add_overlay(cable_overlay)
 
-/obj/item/weapon/material/twohanded/rcl/equipped(mob/user)
+/obj/item/weapon/material/twohanded/rcl/equipped(mob/to_hook)
 	. = ..()
 	if(listeningTo == to_hook)
 		return .
@@ -147,27 +143,16 @@
 	..()
 	UnregisterSignal(wearer, COMSIG_MOVABLE_MOVED)
 	listeningTo = null
-	last = null
-	QDEL_NULL(wiring_gui_menu)
 
 /obj/item/weapon/material/twohanded/rcl/attackby(obj/item/attacking_item, mob/living/user)
 	if(!istype(attacking_item, /obj/item/stack/cable_coil))
 		return
-	if (istype(attacking_item, /obj/item/stack/cable_coil/alien) ||
-		istype(attacking_item, /obj/item/stack/cable_coil/heavyduty))
+	if ((istype(attacking_item, /obj/item/stack/cable_coil/alien)) || (istype(attacking_item, /obj/item/stack/cable_coil/heavyduty)))
 		return	//please do not vore the special coils
 
 	var/obj/item/stack/cable_coil/cable = attacking_item
 	add_cable(user, cable)
 	return TRUE
-
-/obj/item/weapon/material/twohanded/rcl/proc/trigger(mob/user)
-	SIGNAL_HANDLER
-
-	if(wielded)
-		layCable(user)
-	if(wiring_gui_menu) //update the wire options as you move
-		wiringGuiUpdate(user)
 
 /obj/item/weapon/material/twohanded/rcl/CtrlClick(mob/user)
 	layercolorlock = !layercolorlock
@@ -200,7 +185,7 @@
 				layingcolor = CABLELAYERTHREECOLOR
 		if("Color Select")
 			if(layercolorlock)
-				to_chat(user, "<span class='notice'>Wire colors are locked, silly.</span>"
+				to_chat(user, "<span class='notice'>Wire colors are locked, silly.</span>")
 			var/selected_type = tgui_input_list(usr, "Pick new color to apply on this layer.", "Cable Wire Color", GLOB.possible_cable_coil_colours)
 			if(!selected_type)
 				return
@@ -240,21 +225,21 @@
 			if(!layercolorlock)
 				target_cable.color = CABLELAYERONECOLOR
 			else
-				target_cable.set_cable_color(laying_color)
+				target_cable.set_cable_color(layingcolor)
 			target_cable.target_type = /obj/structure/cable/layer1
 			target_cable.target_layer = CABLE_LAYER_1
 		if(CABLE_LAYER_2)
 			if(!layercolorlock)
 				target_cable.color = CABLELAYERTWOCOLOR
 			else
-				target_cable.set_cable_color(laying_color)
+				target_cable.set_cable_color(layingcolor)
 			target_cable.target_type = /obj/structure/cable
 			target_cable.target_layer = CABLE_LAYER_2
 		else
 			if(!layercolorlock)
-				target_cable.set_cable_color = CABLELAYERTHREECOLOR
+				target_cable.color = CABLELAYERTHREECOLOR
 			else
-				target_cable.set_cable_color(laying_color)
+				target_cable.set_cable_color(layingcolor)
 			target_cable.target_type = /obj/structure/cable/layer3
 			target_cable.target_layer = CABLE_LAYER_3
 	return target_cable
@@ -308,7 +293,7 @@
 	 * - the turf can hold cable
 	 * - there is no cable on the turf or there is cable on the turf but its not the same layer we are gonna put on the turf
 	 */
-	if(active && the_turf.can_have_cabling() && the_turf.can_lay_cable() && cable_allowed_here(the_turf))
+	if(wielded && the_turf.can_have_cabling() && the_turf.can_lay_cable() && cable_allowed_here(the_turf))
 		var/obj/item/stack/cable_coil/coil = get_cable()
 		if(!coil)
 			return

@@ -8,10 +8,6 @@
 	layer = WIRES_LAYER - 0.02 //Below all cables Disabled layers can lay over hub
 	color = COLOR_WHITE
 
-/obj/structure/cable/multilayer/update_icon_state()
-	SHOULD_CALL_PARENT(FALSE)
-	return
-
 /obj/structure/cable/multilayer/update_icon()
 	. = ..()
 	underlays.Cut()
@@ -55,9 +51,9 @@ GLOBAL_LIST(hub_radial_layer_list)
 		return
 	if(!GLOB.hub_radial_layer_list)
 		GLOB.hub_radial_layer_list = list(
-			"Layer 1" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-red"),
-			"Layer 2" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-yellow"),
-			"Layer 3" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-blue")
+			"Layer 1" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-red"),
+			"Layer 2" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-yellow"),
+			"Layer 3" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-blue")
 			)
 
 	var/layer_result = show_radial_menu(user, src, GLOB.hub_radial_layer_list, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)

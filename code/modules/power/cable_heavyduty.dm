@@ -9,10 +9,9 @@
 	desc = "This cable is tough. It cannot be cut with simple hand tools."
 	plane = PLATING_PLANE
 	layer = PIPES_LAYER - 0.05 //Just below pipes
-	color = null
+	color = COLOR_WHITE	//so it doesn't get recolored to like, pink or something
 
 /obj/structure/cable/heavyduty/attackby(obj/item/W, mob/user)
-
 	var/turf/T = src.loc
 	if(!T.is_plating())
 		return
@@ -25,6 +24,3 @@
 		return
 	else
 		..()
-
-/obj/structure/cable/heavyduty/cableColor(var/colorC)
-	return

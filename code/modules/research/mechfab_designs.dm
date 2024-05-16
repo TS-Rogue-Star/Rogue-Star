@@ -322,11 +322,12 @@
 	id = "extinguisher"
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/extinguisher
 
+/* //Needs a complete rebuild mechanically and I can't be assed to do that myself
 /datum/design/item/mecha/cable_layer
 	name = "Cable Layer"
 	id = "mech_cable_layer"
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/cable_layer
-	materials = list(MAT_STEEL = 7500, MAT_PLASTIC = 1000)
+	materials = list(MAT_STEEL = 7500, MAT_PLASTIC = 1000) */
 
 /datum/design/item/mecha/flaregun
 	name = "Flare Launcher"

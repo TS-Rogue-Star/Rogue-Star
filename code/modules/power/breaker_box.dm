@@ -18,7 +18,6 @@
 	var/obj/structure/cable/stored
 	var/on = FALSE
 	var/busy = FALSE
-	var/directions = GLOB.cardinal
 	var/RCon_tag = "NO_TAG"
 	var/update_locked = FALSE
 
@@ -120,7 +119,7 @@
 	if(on)
 		icon_state = icon_state_on
 		var/list/connection_dirs = list()
-		for(var/direction in directions)
+		for(var/direction in GLOB.cardinal)
 			for(var/obj/structure/cable/C in get_step(src,direction))
 				connection_dirs += direction
 				cable_layer = C.cable_layer //Ensure our cable layer matches the connections

@@ -70,17 +70,19 @@
 
 /obj/machinery/power/smes/examine(user)
 	..()
-	var/msg
-	if(!terminalconnections.len)
-		to_chat(user, "<span class='warning'>This SMES has no power terminals!</span>")
+	var/list/msg
 	if(panel_open)
-		to_chat(user, "<span class='notice'>The maintenance hatch is open.</span>")
-	if(terminal1)
-		to_chat(user, "<span class='notice'>Terminal 1 is connected.</span>")
-	if(terminal2)
-		to_chat(user, "<span class='notice'>Terminal 2 is connected.</span>")
-	if(terminal3)
-		to_chat(user, "<span class='notice'>Terminal 3 is connected.</span>")
+		msg += "<span class='notice'>The maintenance hatch is open.</span>"
+	if(!terminalconnections.len)
+		msg += "<span class='warning'>This SMES has no power terminals!</span>"
+	for(var/obj/machinery/power/terminal/connected in terminalconnections)
+		if(connected == terminal1)
+			msg += "<span class='notice'>Terminal 1 is connected.</span>"
+		else if(connected == terminal2)
+			msg += "<span class='notice'>Terminal 2 is connected.</span>"
+		else if(connected == terminal3)
+			msg += "<span class='notice'>Terminal 3 is connected.</span>"
+	to_chat(user, msg)
 
 /obj/machinery/power/smes/Initialize(mapload)
 	. = ..()
@@ -489,7 +491,7 @@
 			to_chat(user, "<span class='warning'>You need more wires!</span>")
 			return
 
-		var/terminal_cable_layer = cable_layer // Default to machine's cable layer
+		var/terminal_cable_layer = C.target_layer // Default to machine's cable layer
 		var/choice = tgui_input_list(user, "Select Power Input Cable Layer", "Select Cable Layer", GLOB.cable_name_to_layer)
 		if(isnull(choice))
 			return
@@ -515,7 +517,7 @@
 			"<span class='notice'>You build the power terminal.</span>")
 
 		//build the terminal and link it to the network
-		make_terminal(T, C.target_layer)
+		make_terminal(T, terminal_cable_layer)
 		connect_to_network()
 		return FALSE
 
@@ -523,7 +525,7 @@
 		if(panel_open)
 			var/obj/machinery/power/terminal/term = (locate() in user.loc) //You gotta stand on the turf
 			if(term)
-				term.wirecutter_act(user, W, term.cable_layer)
+				term.dismantle(user, W, term.cable_layer)
 			else
 				to_chat(user, "<span class='notice'>You must stand on top of the power terminal you wish to remove.</span>")
 				return FALSE

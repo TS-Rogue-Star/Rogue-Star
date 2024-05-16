@@ -1,6 +1,12 @@
 //Use this only for things that aren't a subtype of obj/machinery/power
 //For things that are, override "should_have_node()" on them
-GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/grille, /obj/machinery/shield_gen, /obj/item/device/powersink, /obj/machinery/shieldwallgen)))
+GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
+						/obj/structure/grille,
+						/obj/machinery/shield_gen,
+						/obj/item/device/powersink,
+						/obj/machinery/shieldwallgen,
+						/obj/machinery/particle_accelerator/control_box
+						)))
 
 #define UNDER_SMES -1
 #define UNDER_TERMINAL 1
@@ -151,6 +157,11 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 	return ..()									// then go ahead and delete the cable
 
+/obj/structure/cable/proc/deconstruct()
+	var/obj/item/stack/cable_coil/cable = new(drop_location(), 1)
+	cable.set_cable_color(color)
+	qdel(src)
+
 ///////////////////////////////////
 // General procedures
 ///////////////////////////////////
@@ -244,10 +255,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		return "<span class='filter_notice'><span class='warning'>Total power: [DisplayPower(powernet.avail)]\nLoad: [DisplayPower(powernet.load)]\nExcess power: [DisplayPower(surplus())]</span></span>"
 	else
 		return "<span class='filter_notice'><span class='warning'>The cable is not powered.</span></span>"
-
-/obj/structure/cable/deconstruct(disassembled = TRUE)
-	var/obj/item/stack/cable_coil/cable = new(drop_location(), 1)
-	cable.set_cable_color(color)
 
 // Items usable on a cable :
 //   - Wirecutters : cut it duh !
@@ -544,16 +551,16 @@ GLOBAL_LIST(cable_radial_layer_list)
 	if(!user)
 		return
 
-	var/image/restraints_icon = image(icon = 'icons/obj/restraints.dmi', icon_state = "cuff")
+	var/image/restraints_icon = image(icon = 'icons/obj/items.dmi', icon_state = "cuff")
 	restraints_icon.maptext = "<span [amount >= CABLE_RESTRAINTS_COST ? "" : "style='color: red'"]>[CABLE_RESTRAINTS_COST]</span>"
 	restraints_icon.color = color
 
 	var/list/radial_menu = list(
-	"Layer 1" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-red"),
-	"Layer 2" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-yellow"),
-	"Layer 3" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-blue"),
-	"Multilayer cable hub" = image(icon = 'icons/obj/pipes_n_cables/structures.dmi', icon_state = "cable_bridge"),
-	"Multi Z layer cable hub" = image(icon = 'icons/obj/pipes_n_cables/structures.dmi', icon_state = "cablerelay-broken-cable"),
+	"Layer 1" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-red"),
+	"Layer 2" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-yellow"),
+	"Layer 3" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-blue"),
+	"Multilayer cable hub" = image(icon = 'icons/obj/cables/structures.dmi', icon_state = "cable_bridge"),
+	"Multi Z layer cable hub" = image(icon = 'icons/obj/cables/structures.dmi', icon_state = "cablerelay-broken-cable"),
 	"Cable restraints" = restraints_icon
 	)
 	var/layer_result = show_radial_menu(user, src, radial_menu, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)

@@ -105,9 +105,10 @@ By design, d1 is the smallest direction and d2 is the highest
 		QDEL_NULL(stored)
 	return ..()									// then go ahead and delete the pipe_cleaner
 
-/obj/structure/pipe_cleaner/deconstruct(disassembled = TRUE)
+/obj/structure/pipe_cleaner/proc/deconstruct()
 	var/obj/item/stack/pipe_cleaner_coil/cable = new(drop_location(), 1)
 	cable.color = color
+	qdel(src)
 
 ///////////////////////////////////
 // General procedures
@@ -247,7 +248,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/item/stack/pipe_cleaner_coil/proc/get_new_pipe_cleaner(location)
 	var/path = /obj/structure/pipe_cleaner
-	return new path(location, item_color)
+	return new path(location, color)
 
 // called when pipe_cleaner_coil is clicked on a turf
 /obj/item/stack/pipe_cleaner_coil/proc/place_turf(turf/T, mob/user, dirnew)

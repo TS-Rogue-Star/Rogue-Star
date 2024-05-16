@@ -113,11 +113,11 @@
 				continue
 			wire_test_count++
 			log_unit_test("[powernets] found with no power roundstart, connected to a cable at ([random_cable.x], [random_cable.y], [random_cable.z]).")
-		log_unit_test("wires checked.")
+		log_unit_test("[wire_test_count] wires checked.")
 	if(bad_tests++)
 		fail("Maps contained powernets which had overlapping wires on the same layer.\n")
 	else
-		pass("No Powernet issues detected.\n")
+		pass("No Powernet issues detected out of [wire_test_count] tests.\n")
 
 /datum/unit_test/active_edges
 	name = "MAP: Active edges (all maps)"

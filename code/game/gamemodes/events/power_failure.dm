@@ -16,7 +16,7 @@
 		if(!C.is_critical && C.cell && (C.z in using_map.station_levels))
 			C.cell.charge = 0
 
-	playsound_z(3, 'sound/effects/powerloss.ogg')
+//	playsound_z(3, 'sound/effects/powerloss.ogg')
 
 	sleep(100)
 	if(announce)

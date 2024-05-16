@@ -65,7 +65,9 @@
 /obj/machinery/power/terminal/should_have_node()
 	return TRUE
 
-/obj/machinery/power/terminal/proc/dismantle(mob/living/user, obj/item/I, cable_layer)
+/obj/machinery/power/terminal/dismantle(mob/living/user, obj/item/I, cable_layer)
+	if(!istype(I))
+		return
 	if(isturf(loc))
 		var/turf/T = loc
 		if(T.is_plating())
@@ -76,27 +78,27 @@
 
 	user.visible_message(span_notice("[user.name] dismantles the cable terminal from [master]."))
 	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-	if(I.do_after(src, user, 50))
-		if(master && !master.can_terminal_dismantle())
+	if(I.has_tool_quality(TOOL_WIRECUTTER))
+		if(do_after(user, 20 * I.toolspeed))
+			if(master && !master.can_terminal_dismantle())
+				return FALSE
+
+		if(prob(50) && electrocute_mob(user, powernet, src, 1, TRUE))
+			var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
+			sparks.set_up(5, 0, src)
+			sparks.attach(loc)
+			sparks.start()
 			return FALSE
 
-	if(prob(50) && electrocute_mob(user, powernet, src, 1, TRUE))
-		var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
-		sparks.set_up(5, 0, src)
-		sparks.attach(loc)
-		sparks.start()
-		return FALSE
-
-	new /obj/item/stack/cable_coil(get_turf(src), 10)
-	qdel(src)
-	if(isSMES(master))
-		var/obj/machinery/power/smes/fatbat = master
-		var/terminalslot = fatbat.get_terminal_slot(cable_layer)
-		fatbat.disconnect_terminal(terminalslot)
+		new /obj/item/stack/cable_coil(get_turf(src), 10)
+		qdel(src)
+		if(isSMES(master))
+			var/obj/machinery/power/smes/fatbat = master
+			var/terminalslot = fatbat.get_terminal_slot(cable_layer)
+			fatbat.disconnect_terminal(terminalslot)
+		else
+			master.disconnect_terminal()
+		to_chat(user, "<span class='filter_notice'><span class='warning'>You finish removing the terminal.</span></span>")
 	else
-		master.disconnect_terminal()
-	to_chat(user, "<span class='filter_notice'><span class='warning'>You finish removing the terminal.</span></span>")
-
-/obj/machinery/power/terminal/wirecutter_act(mob/living/user, obj/item/I, var/cable_layer)
-	dismantle(user, I, cable_layer)
-	return TRUE
+		to_chat(user, "<span class='filter_notice'><span class='warning'>You need to use a wirecutting tool!</span></span>")
+		return FALSE
