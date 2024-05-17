@@ -107,6 +107,10 @@
 			if(!(cable_area.type in zs_to_test || !cable_area.requires_power))
 				continue
 			fail("[powernets] found with no power roundstart, connected to a cable at ([random_cable.x], [random_cable.y], [random_cable.z]).")
+		else
+			pass("No Abnormal powernets detected!")
+
+		return TRUE
 
 /datum/unit_test/active_edges
 	name = "MAP: Active edges (all maps)"
