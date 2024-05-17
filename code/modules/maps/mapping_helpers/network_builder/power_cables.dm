@@ -1,10 +1,12 @@
-#define CABLE 0
-#define BRIDGE 1
-#define MULTIZ 2
+#define CABLE	0
+#define BRIDGE	1
+#define MULTIZ	2
+#define HEAVY	4
+#define ENDER	5
 
 /// Automatically links on init to power cables and other cable builder helpers. Only supports cardinals.
 /obj/effect/mapping_helpers/network_builder/power_cable
-	name = "power line L2 autobuilder"
+	name = "base line autobuilder"
 	icon_state = "L2powerlinebuilder"
 	color = CABLELAYERTWOCOLOR
 	/// default our layering to 2
@@ -18,7 +20,7 @@
 
 /obj/effect/mapping_helpers/network_builder/power_cable/check_duplicates()
 	var/obj/structure/cable/C = locate() in loc
-	if(C)
+	if(C && C.cable_layer == cable_layer)
 		return C
 	for(var/obj/effect/mapping_helpers/network_builder/power_cable/other in loc)
 		if(other == src)
@@ -31,11 +33,26 @@
 /// Smart Cables means we shouldn't have to worry about fiddling
 /obj/effect/mapping_helpers/network_builder/power_cable/build_network()
 	if(cabletype == CABLE)
-		new /obj/structure/cable(loc,color,cable_layer)
+		if(cable_layer == CABLE_LAYER_1)
+			new /obj/structure/cable/layer1(loc)
+		else if(cable_layer == CABLE_LAYER_3)
+			new /obj/structure/cable/layer3(loc)
+		else if(cable_layer == CABLE_LAYER_2)
+			new /obj/structure/cable(loc)
+		return
+
 	if(cabletype == MULTIZ)
 		new /obj/structure/cable/multilayer/multiz(loc) //multizs have all three layers active at all times.
+		return
 	if(cabletype == BRIDGE)
 		new /obj/structure/cable/multilayer/connected(loc)	//as do bridges
+		return
+	if(cabletype == HEAVY)
+		new /obj/structure/cable/heavyduty(loc)
+		return
+	if(cabletype == ENDER)
+		new /obj/structure/cable/heavyduty/ender(loc)
+		return
 
 /obj/effect/mapping_helpers/network_builder/power_cable/cablerelay
 	name = "power multi-z cable relay autobuilder"
@@ -53,46 +70,35 @@
 	color = CABLELAYERONECOLOR
 	cable_layer = CABLE_LAYER_1
 
+/obj/effect/mapping_helpers/network_builder/power_cable/layer2
+	name = "power line L2 autobuilder"
+	icon_state = "L2powerlinebuilder"
+	color = CABLELAYERTWOCOLOR
+	cable_layer = CABLE_LAYER_2
+
 /obj/effect/mapping_helpers/network_builder/power_cable/layer3
 	name = "power line L3 autobuilder"
 	icon_state = "L3powerlinebuilder"
 	color = CABLELAYERTHREECOLOR
 	cable_layer = CABLE_LAYER_3
 
-/// I really didn't feel like doing a ton of copy/pasta for layer memes, so uh, yeah. I'm sure you can just dirty edit in mapmaker.
-// Red
-/obj/effect/mapping_helpers/network_builder/power_cable/red
-	color = COLOR_RED
-
-// White
-/obj/effect/mapping_helpers/network_builder/power_cable/white
+/obj/effect/mapping_helpers/network_builder/power_cable/heavy
+	name = "Heavy Powerline autobuilder"
+	icon_state = "heavy"
+	cable_layer = CABLE_LAYER_4
 	color = COLOR_WHITE
+	cabletype = HEAVY
 
-// Cyan
-/obj/effect/mapping_helpers/network_builder/power_cable/cyan
-	color = COLOR_CYAN
-
-// Orange
-/obj/effect/mapping_helpers/network_builder/power_cable/orange
-	color = COLOR_ORANGE
-
-// Pink
-/obj/effect/mapping_helpers/network_builder/power_cable/pink
-	color = COLOR_PINK
-
-// Blue
-/obj/effect/mapping_helpers/network_builder/power_cable/blue
-	color = COLOR_BLUE
-
-// Green
-/obj/effect/mapping_helpers/network_builder/power_cable/green
-	color = COLOR_GREEN
-
-// Yellow
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow
-	color = COLOR_YELLOW
+/obj/effect/mapping_helpers/network_builder/power_cable/ender
+	name = "Heavy Ender Transmit autobuilder"
+	icon_state = "ender"
+	cable_layer = CABLE_LAYER_4
+	color = COLOR_WHITE
+	cabletype = ENDER
 
 
 #undef CABLE
 #undef BRIDGE
 #undef MULTIZ
+#undef HEAVY
+#undef ENDER

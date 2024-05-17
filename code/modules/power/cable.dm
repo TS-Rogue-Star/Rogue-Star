@@ -118,14 +118,16 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 						continue
 				if(UNDER_TERMINAL)
 					var/obj/machinery/power/smes/S = locate(/obj/machinery/power/smes) in TB
-					for(var/obj/machinery/power/terminal/terms in S.terminalconnections)
-						if(S && (!terms || terms.master == search_parent))
-							continue
+					if(S)
+						for(var/obj/machinery/power/terminal/terms in S.terminalconnections)
+							if(!terms || terms.master == search_parent)
+								continue
 		var/inverse = REVERSE_DIR(check_dir)
 		for(var/obj/structure/cable/C in TB)
 			if(C.cable_layer & cable_layer)
 				linked_dirs |= check_dir
 				C.linked_dirs |= inverse
+				C.update_icon()
 
 	update_icon()
 
@@ -178,24 +180,24 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 /obj/structure/cable/update_icon()
 	if(!linked_dirs)
 		icon_state = "l[cable_layer]-noconnection"
-	var/list/dir_icon_list = list()
-	for(var/check_dir in GLOB.cardinal)
-		if(linked_dirs & check_dir)
-			dir_icon_list += "[check_dir]"
-	var/dir_string = dir_icon_list.Join("-")
-	if(dir_icon_list.len > 1)
-		for(var/obj/O in loc)
-			if(GLOB.wire_node_generating_types[O.type])
-				dir_string = "[dir_string]-node"
-				break
-			else if(istype(O, /obj/machinery/power))
-				var/obj/machinery/power/P = O
-				if(P.should_have_node())
+	else
+		var/list/dir_icon_list = list()
+		for(var/check_dir in GLOB.cardinal)
+			if(linked_dirs & check_dir)
+				dir_icon_list += "[check_dir]"
+		var/dir_string = dir_icon_list.Join("-")
+		if(dir_icon_list.len > 1)
+			for(var/obj/O in loc)
+				if(GLOB.wire_node_generating_types[O.type])
 					dir_string = "[dir_string]-node"
 					break
-	dir_string = "l[cable_layer]-[dir_string]"
-	icon_state = dir_string
-	return ..()
+				else if(istype(O, /obj/machinery/power))
+					var/obj/machinery/power/P = O
+					if(P.should_have_node())
+						dir_string = "[dir_string]-node"
+						break
+		dir_string = "l[cable_layer]-[dir_string]"
+		icon_state = dir_string
 
 /obj/structure/cable/proc/handlecable(obj/item/W, mob/user, params)
 	var/turf/T = get_turf(src)
@@ -739,11 +741,11 @@ GLOBAL_LIST(cable_radial_layer_list)
 //////////////////////////////////////////////
 
 // called when cable_coil is clicked on a turf
-/obj/item/stack/cable_coil/proc/place_turf(turf/T, mob/user, dirnew)
+/obj/item/stack/cable_coil/proc/place_turf(turf/simulated/T, mob/user, dirnew)
 	if(!isturf(user.loc))
 		return
 
-	if(!isturf(T) || T.is_plating() || !T.can_have_cabling())
+	if(!isturf(T) || !T.is_plating() || !T.can_have_cabling())
 		to_chat(user, "<span class='warning'>You can only lay cables on catwalks and plating!</span>")
 		return
 
