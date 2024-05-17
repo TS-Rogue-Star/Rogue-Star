@@ -51,7 +51,7 @@
 	var/turf/T = get_turf(user)
 	if(!T.is_plating())
 		return
-	if(istype(W, /obj/item/stack/cable_coil/heavyduty)
+	if(istype(W, /obj/item/stack/cable_coil/heavyduty))
 		to_chat(user, "<span class='notice'>There is already heavy cabling here.</span>")
 		return
 	if(W.has_tool_quality(TOOL_CABLE_COIL))
