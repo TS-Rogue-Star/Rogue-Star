@@ -7,7 +7,7 @@
 	matter = list(MAT_STEEL = 200, MAT_GLASS = 200)
 	color = COLOR_WHITE
 	target_type = /obj/structure/cable/heavyduty
-
+	tool_qualities = list(TOOL_CABLE_COIL)
 
 /obj/item/stack/cable_coil/heavyduty/attack_self(mob/living/user)
 	if(!user)
@@ -51,11 +51,11 @@
 	var/turf/T = get_turf(user)
 	if(!T.is_plating())
 		return
-	if(W.has_tool_quality(TOOL_CABLE_COIL))
-		to_chat(user, "<span class='notice'>You will need heavier cables to connect to these.</span>")
-		return
 	if(istype(W, /obj/item/stack/cable_coil/heavyduty)
 		to_chat(user, "<span class='notice'>There is already heavy cabling here.</span>")
+		return
+	if(W.has_tool_quality(TOOL_CABLE_COIL))
+		to_chat(user, "<span class='notice'>You will need heavier cables to connect to these.</span>")
 		return
 	else
 		..()
