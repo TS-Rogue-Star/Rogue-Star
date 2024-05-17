@@ -31,7 +31,7 @@
 	var/integrity = 80
 
 /obj/machinery/power/emitter/should_have_node()
-	return TRUE
+	return welded
 
 /obj/machinery/power/emitter/verb/rotate_clockwise()
 	set name = "Rotate Emitter Clockwise"

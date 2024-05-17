@@ -553,7 +553,7 @@ GLOBAL_LIST(cable_radial_layer_list)
 	if(!user)
 		return
 
-	var/image/restraints_icon = image(icon = 'icons/obj/items.dmi', icon_state = "cuff")
+	var/image/restraints_icon = image(icon = 'icons/obj/items.dmi', icon_state = "cuff_white")
 	restraints_icon.maptext = "<span [amount >= CABLE_RESTRAINTS_COST ? "" : "style='color: red'"]>[CABLE_RESTRAINTS_COST]</span>"
 	restraints_icon.color = color
 
