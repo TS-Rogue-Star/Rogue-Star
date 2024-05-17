@@ -31,9 +31,7 @@
 /turf/simulated/wall/iron,
 /area/awaymission/carpfarm/base)
 "an" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/industrial/outline/yellow,
 /obj/machinery/power/smes,
 /turf/simulated/floor/plating,
@@ -48,17 +46,13 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/awaymission/carpfarm/base)
 "ap" = (
 /obj/effect/floor_decal/industrial/outline/yellow,
 /obj/machinery/power/port_gen/pacman,
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/awaymission/carpfarm/base)
 "aq" = (

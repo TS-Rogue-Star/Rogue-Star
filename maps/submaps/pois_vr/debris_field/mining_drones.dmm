@@ -11,15 +11,11 @@
 /area/submap/debrisfield/mining_outpost)
 "d" = (
 /obj/machinery/power/rtg,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/mining_outpost)
 "e" = (
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/power/smes/batteryrack/mapped{
 	input_attempt = 1;
 	mode = 3;
@@ -34,9 +30,7 @@
 /turf/simulated/wall,
 /area/submap/debrisfield/mining_outpost)
 "h" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/wall,
 /area/submap/debrisfield/mining_outpost)
 "i" = (
@@ -75,9 +69,7 @@
 	dir = 1;
 	pixel_y = 24
 	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/airless,
 /area/submap/debrisfield/mining_outpost)
 "p" = (

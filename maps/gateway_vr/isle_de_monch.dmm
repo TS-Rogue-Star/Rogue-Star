@@ -7,9 +7,7 @@
 /turf/simulated/floor/plating,
 /area/tether_away/beach/resort)
 "bh" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -125,9 +123,7 @@
 /turf/simulated/floor/plating,
 /area/tether_away/beach/resort)
 "hj" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
@@ -139,9 +135,7 @@
 /turf/simulated/floor/outdoors/grass/forest,
 /area/tether_away/beach/resort)
 "im" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/item/weapon/melee/baton/cattleprod{
 	desc = "Metal rod with wire attached to it.";
 	name = "jury-rigged antenna";
@@ -230,9 +224,7 @@
 /turf/simulated/floor/plating,
 /area/tether_away/beach/resort)
 "mp" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/outdoors/grass/forest,
 /area/tether_away/beach/resort)
 "mr" = (
@@ -290,9 +282,7 @@
 /obj/machinery/door/firedoor/multi_tile{
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -328,9 +318,7 @@
 /turf/simulated/floor/plating,
 /area/tether_away/beach/resort)
 "pB" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/techmaint,
@@ -347,9 +335,7 @@
 /turf/simulated/floor/plating,
 /area/tether_away/beach/resort)
 "qf" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
@@ -519,16 +505,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/tether_away/beach/resort)
 "xM" = (
 /obj/item/stack/cable_coil,
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/item/weapon/melee/baton/cattleprod{
 	desc = "Metal rod with wire attached to it.";
 	name = "jury-rigged antenna";
@@ -683,15 +665,7 @@
 /turf/simulated/floor/plating,
 /area/tether_away/beach/resort)
 "DW" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
@@ -829,9 +803,7 @@
 /area/tether_away/beach/resort)
 "Mm" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
@@ -941,9 +913,7 @@
 	name = "north bump";
 	pixel_y = 24
 	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
@@ -968,9 +938,7 @@
 /turf/simulated/wall/r_wall,
 /area/tether_away/beach/resort)
 "RJ" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/outdoors/grass/forest,
 /area/tether_away/beach/resort)
 "Sk" = (
@@ -1029,9 +997,7 @@
 /area/tether_away/beach/resort)
 "TR" = (
 /obj/machinery/power/port_gen/pacman,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/outdoors/grass/forest,
 /area/tether_away/beach/resort)
 "TW" = (
@@ -1040,9 +1006,7 @@
 	name = "west bump";
 	pixel_x = -28
 	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/structure/handrail,
 /obj/machinery/light{
 	dir = 8
@@ -1101,12 +1065,7 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/tether_away/beach/resort)
 "Vs" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/outdoors/grass/forest,
 /area/tether_away/beach/resort)
 "VD" = (
@@ -1131,9 +1090,7 @@
 /turf/simulated/floor/plating,
 /area/tether_away/beach/resort)
 "WJ" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
@@ -1184,9 +1141,7 @@
 /turf/simulated/floor/plating,
 /area/tether_away/beach/resort)
 "XA" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/outdoors/grass,
 /area/tether_away/beach/resort)
 "XJ" = (

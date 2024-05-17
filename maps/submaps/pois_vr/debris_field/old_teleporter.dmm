@@ -30,9 +30,7 @@
 	opened = 1;
 	pixel_y = 24
 	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/old_tele)
 "g" = (
@@ -52,9 +50,7 @@
 /turf/space,
 /area/space)
 "k" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/old_tele)
 "l" = (
@@ -66,15 +62,11 @@
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/old_tele)
 "n" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/old_tele)
 "o" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/old_tele)
 "p" = (

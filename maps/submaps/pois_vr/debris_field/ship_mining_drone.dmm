@@ -23,18 +23,14 @@
 	rate = 5;
 	req_access = list(-1)
 	},
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/mining_drone_ship)
 "ae" = (
 /turf/simulated/mineral/vacuum,
 /area/submap/debrisfield/mining_drone_ship)
 "af" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/mining_drone_ship)
 "ag" = (
@@ -48,18 +44,11 @@
 	icon_state = "gridchecker_off";
 	name = "capacitor bank"
 	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/mining_drone_ship)
 "ai" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/mining_drone_ship)
 "aj" = (
@@ -104,9 +93,7 @@
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/mining_drone_ship)
 "ap" = (
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/power/terminal{
 	dir = 8
 	},
@@ -124,24 +111,15 @@
 	name = "capacitor bank";
 	power_gen = 12000
 	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/mining_drone_ship)
 "as" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/mining_drone_ship)
 "at" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/mining_drone_ship)
 "au" = (
@@ -149,9 +127,7 @@
 	id = "miner_poi_toggle"
 	},
 /obj/structure/catwalk,
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/mining_drone_ship)
 "av" = (
@@ -159,16 +135,14 @@
 	operating = 1
 	},
 /obj/structure/catwalk,
-/obj/structure/cable/yellow{
+/obj/structure/cable,
 	icon_state = "4-8";
 	plane = -45
 	},
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/mining_drone_ship)
 "aw" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/mining_drone_ship)
 "ax" = (
@@ -547,9 +521,7 @@
 	icon_state = "gridchecker_off";
 	name = "capacitor bank"
 	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/light/small/poi{
 	dir = 8
 	},

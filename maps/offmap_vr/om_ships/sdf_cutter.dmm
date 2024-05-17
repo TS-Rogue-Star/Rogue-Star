@@ -28,7 +28,7 @@
 "dy" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable/yellow{
+/obj/structure/cable,
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
@@ -65,7 +65,7 @@
 	dir = 1
 	},
 /obj/structure/handrail,
-/obj/structure/cable/yellow{
+/obj/structure/cable,
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
@@ -73,12 +73,12 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/sdf_cutter)
 "fi" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable,
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/cable/green{
+/obj/structure/cable,
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -91,7 +91,7 @@
 "fD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable/yellow{
+/obj/structure/cable,
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -177,7 +177,7 @@
 	dir = 8;
 	pixel_x = 22
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable,
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -265,7 +265,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/sdf_cutter)
 "pZ" = (
-/obj/structure/cable/green{
+/obj/structure/cable,
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
@@ -362,7 +362,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/fuel{
 	dir = 1
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable,
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
@@ -423,7 +423,7 @@
 /obj/machinery/power/apc/alarms_hidden{
 	pixel_y = -24
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable,
 	d2 = 8;
 	icon_state = "0-8"
 	},
@@ -467,7 +467,7 @@
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable/yellow{
+/obj/structure/cable,
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -502,7 +502,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable,
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -519,7 +519,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/sdf_cutter)
 "FP" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable,
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
@@ -559,7 +559,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable,
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
@@ -572,7 +572,7 @@
 /area/shuttle/sdf_cutter)
 "Jy" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable/green{
+/obj/structure/cable,
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -615,7 +615,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 4
 	},
-/obj/structure/cable/green{
+/obj/structure/cable,
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
@@ -674,7 +674,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/airlock/voidcraft,
-/obj/structure/cable/yellow{
+/obj/structure/cable,
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -693,7 +693,7 @@
 /area/shuttle/sdf_cutter)
 "Pf" = (
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
-/obj/structure/cable/green{
+/obj/structure/cable,
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
@@ -708,7 +708,7 @@
 	dir = 4
 	},
 /obj/structure/handrail,
-/obj/structure/cable/green{
+/obj/structure/cable,
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
@@ -741,7 +741,7 @@
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 1
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable,
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
@@ -797,7 +797,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 4
 	},
-/obj/structure/cable/green{
+/obj/structure/cable,
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"

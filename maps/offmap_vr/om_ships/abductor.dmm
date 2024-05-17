@@ -52,15 +52,7 @@
 /turf/simulated/shuttle/floor/alienplating,
 /area/abductor/interior)
 "eV" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/shuttle/floor/alien,
 /area/abductor/interior)
 "fo" = (
@@ -159,9 +151,7 @@
 /turf/simulated/shuttle/floor/alienplating,
 /area/abductor/interior)
 "kT" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/porta_turret/alien/abductor,
 /turf/simulated/shuttle/floor/alienplating,
 /area/abductor/interior)
@@ -226,9 +216,7 @@
 /turf/simulated/shuttle/floor/alienplating,
 /area/abductor/interior)
 "pC" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/shuttle/floor/alienplating,
 /area/abductor/interior)
 "pG" = (
@@ -266,9 +254,7 @@
 /turf/simulated/shuttle/floor/alienplating,
 /area/abductor/interior)
 "rg" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/shuttle/floor/alien,
 /area/abductor/interior)
 "rB" = (
@@ -413,9 +399,7 @@
 /turf/simulated/shuttle/floor/alienplating,
 /area/abductor/interior)
 "yB" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/shuttle/floor/alien,
 /area/abductor/interior)
 "zk" = (
@@ -425,18 +409,7 @@
 /turf/simulated/shuttle/floor/alienplating,
 /area/abductor/interior)
 "zu" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/shuttle/floor/alien,
 /area/abductor/interior)
 "AZ" = (
@@ -468,9 +441,7 @@
 /turf/simulated/shuttle/floor/alienplating,
 /area/abductor/interior)
 "EA" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/shuttle/floor/alienplating,
 /area/abductor/interior)
 "Fh" = (
@@ -623,9 +594,7 @@
 /obj/machinery/door/airlock/alien{
 	req_one_access = list(777)
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/shuttle/floor/alienplating,
 /area/abductor/interior)
 "Ll" = (
@@ -696,9 +665,7 @@
 	name = "Equipment Access";
 	req_one_access = list(777)
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/shuttle/floor/alienplating,
 /area/abductor/interior)
 "PJ" = (
@@ -826,9 +793,7 @@
 /area/abductor/interior)
 "VT" = (
 /obj/machinery/power/shield_generator/charged,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/simulated/shuttle/floor/alien,
 /area/abductor/interior)
 "Wl" = (
@@ -837,9 +802,7 @@
 /turf/simulated/shuttle/floor/alienplating,
 /area/abductor/interior)
 "WB" = (
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/power/rtg/abductor/built/abductor,
 /turf/simulated/shuttle/floor/alien,
 /area/abductor/interior)
@@ -881,9 +844,7 @@
 /turf/simulated/shuttle/floor/alienplating,
 /area/abductor/interior)
 "YA" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/machinery/power/rtg/abductor/built/abductor,
 /turf/simulated/shuttle/floor/alien,
 /area/abductor/interior)

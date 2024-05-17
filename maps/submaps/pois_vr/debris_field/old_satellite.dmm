@@ -42,21 +42,14 @@
 /turf/template_noop,
 /area/space)
 "h" = (
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/power/solar/fake{
 	adir = 135
 	},
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/old_sat)
 "i" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/power/solar/fake{
 	adir = 135
 	},
@@ -66,9 +59,7 @@
 /obj/structure/window/phoronbasic{
 	dir = 8
 	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/random/tech_supply/component,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/old_sat)
@@ -78,25 +69,16 @@
 	icon_state = "3";
 	state = 3
 	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/bluegrid/airless,
 /area/submap/debrisfield/old_sat)
 "l" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/random/tech_supply/component,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/old_sat)
 "m" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/machinery/power/solar/fake{
 	stat = 1
 	},

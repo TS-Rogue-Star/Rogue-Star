@@ -8,18 +8,14 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/maintenance/tether_midpoint)
 "cC" = (
@@ -145,9 +141,6 @@
 /obj/structure/disposalpipe/up{
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "16-0"
-	},
 /obj/structure/cable,
 /obj/effect/ceiling,
 /turf/simulated/floor/plating,
@@ -194,13 +187,9 @@
 /area/tether/midpoint)
 "no" = (
 /obj/machinery/atmospherics/pipe/simple/visible,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/effect/ceiling,
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/visible/scrubbers{
 	dir = 4
 	},
@@ -303,15 +292,11 @@
 /obj/effect/floor_decal/borderfloorblack{
 	dir = 6
 	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/tether/midpoint)
 "tn" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
 	},
@@ -321,9 +306,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/tether/midpoint)
 "tB" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/borderfloorblack{
 	dir = 4
 	},
@@ -380,9 +363,7 @@
 /obj/machinery/atmospherics/pipe/zpipe/down/scrubbers,
 /obj/machinery/atmospherics/pipe/zpipe/down/supply,
 /obj/structure/lattice,
-/obj/structure/cable{
-	icon_state = "32-2"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/down,
 /obj/machinery/door/firedoor/glass,
 /turf/simulated/open,
@@ -406,9 +387,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -454,9 +433,7 @@
 /turf/simulated/floor/plating,
 /area/tether/midpoint)
 "EI" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
@@ -511,9 +488,7 @@
 /area/tether/midpoint)
 "HK" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/plating,
@@ -523,9 +498,7 @@
 /turf/simulated/floor/wood,
 /area/tether/midpoint)
 "It" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
@@ -618,9 +591,7 @@
 /turf/simulated/floor/plating,
 /area/tether/midpoint)
 "Oq" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/lattice,
 /obj/structure/disposalpipe/down,
 /obj/machinery/door/firedoor/glass,
@@ -657,9 +628,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -696,9 +665,7 @@
 /turf/simulated/floor/midpoint_glass/reinf,
 /area/tether/midpoint)
 "Tz" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/borderfloorblack{
 	dir = 5
 	},
@@ -714,9 +681,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
@@ -778,9 +743,7 @@
 	name = "west bump";
 	pixel_x = -28
 	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/tether/midpoint)
 "YB" = (

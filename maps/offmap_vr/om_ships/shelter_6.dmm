@@ -443,9 +443,7 @@
 	layer = 2.45;
 	plane = -44
 	},
-/obj/structure/cable/cyan{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/effect/catwalk_plated/white,
 /turf/simulated/floor/bluegrid,
 /area/shuttle/tabiranth)
@@ -535,9 +533,7 @@
 /turf/simulated/floor/reinforced,
 /area/shuttle/tabiranth)
 "aC" = (
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/telecomms/relay{
 	density = 0;
 	layer = 2.45;
@@ -959,12 +955,7 @@
 /turf/simulated/floor/tiled/white,
 /area/shuttle/tabiranth)
 "aW" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/cyan{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/white,
 /area/shuttle/tabiranth)
 "aX" = (
@@ -975,9 +966,7 @@
 	name = "west bump";
 	pixel_x = -28
 	},
-/obj/structure/cable/cyan{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/white,
 /area/shuttle/tabiranth)
 "aY" = (
@@ -990,9 +979,7 @@
 /turf/simulated/floor/bluegrid,
 /area/shuttle/tabiranth)
 "aZ" = (
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/white,
 /area/shuttle/tabiranth)
 "ba" = (
@@ -1012,9 +999,7 @@
 /turf/simulated/floor/tiled/white,
 /area/shuttle/tabiranth)
 "bd" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/item/device/perfect_tele_beacon/stationary{
 	tele_name = "Tabiranth";
 	tele_network = "centcom"
@@ -1083,15 +1068,11 @@
 	input_level = 200000;
 	output_level = 200000
 	},
-/obj/structure/cable/cyan{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/tabiranth)
 "bm" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/machinery/power/terminal{
 	dir = 8
 	},
@@ -1252,9 +1233,7 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/tabiranth)
 "bA" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/door/airlock/alien/blue{
 	req_one_access = list(108)
 	},

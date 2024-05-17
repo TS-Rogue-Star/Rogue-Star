@@ -21,7 +21,7 @@
 /turf/simulated/floor/plating,
 /area/om_adventure/poi/shuttlewreck2)
 "g" = (
-/obj/structure/cable/green{
+/obj/structure/cable,
 	icon_state = "4-10"
 	},
 /turf/simulated/floor/plating,
@@ -95,9 +95,7 @@
 /area/template_noop)
 "x" = (
 /obj/machinery/power/port_gen/pacman,
-/obj/structure/cable/green{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/om_adventure/poi/shuttlewreck2)
 "y" = (
@@ -113,7 +111,7 @@
 /turf/simulated/shuttle/floor/white,
 /area/om_adventure/poi/shuttlewreck2)
 "D" = (
-/obj/structure/cable/green{
+/obj/structure/cable,
 	icon_state = "2-5"
 	},
 /turf/simulated/shuttle/floor/white,

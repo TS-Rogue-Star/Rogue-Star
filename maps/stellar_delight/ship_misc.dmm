@@ -3050,9 +3050,7 @@
 	},
 /area/holodeck/source_patient_ward)
 "UG" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/space/transit/east,
 /area/space)
 "Wf" = (
@@ -3095,9 +3093,7 @@
 	},
 /area/holodeck/source_patient_ward)
 "XG" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/space/transit/west,
 /area/space)
 "Yn" = (

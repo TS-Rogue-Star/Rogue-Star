@@ -118,19 +118,12 @@
 /area/submap/virgo2/DoomP)
 "aE" = (
 /obj/machinery/power/smes/point_of_interest,
-/obj/structure/cable/green{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/submap/virgo2/DoomP)
 "aF" = (
 /obj/machinery/power/smes/point_of_interest,
-/obj/structure/cable/green{
-	icon_state = "0-4"
-	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/submap/virgo2/DoomP)
 "aG" = (
@@ -140,9 +133,7 @@
 	pixel_x = 0;
 	pixel_y = 24
 	},
-/obj/structure/cable/green{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/submap/virgo2/DoomP)
 "aH" = (
@@ -233,9 +224,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/submap/virgo2/DoomP)
 "aU" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/submap/virgo2/DoomP)
 "aV" = (

@@ -84,9 +84,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/aro/bridge)
 "an" = (
-/obj/structure/cable/cyan{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc/alarms_hidden{
 	dir = 1;
 	name = "north bump";
@@ -119,24 +117,18 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/aro/bridge)
 "as" = (
-/obj/structure/cable/cyan{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/aro/bridge)
 "at" = (
 /obj/effect/floor_decal/techfloor{
 	dir = 4
 	},
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/aro/bridge)
 "au" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/aro/bridge)
 "av" = (
@@ -168,9 +160,7 @@
 /area/ship/aro/bridge)
 "ay" = (
 /obj/effect/floor_decal/techfloor/corner,
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
@@ -202,9 +192,7 @@
 /area/ship/aro/recreation)
 "aD" = (
 /obj/machinery/door/airlock/alien/blue,
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/aro/recreation)
 "aE" = (
@@ -228,9 +216,7 @@
 /turf/simulated/floor/wood,
 /area/ship/aro/recreation)
 "aG" = (
-/obj/structure/cable/cyan{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
@@ -245,9 +231,7 @@
 /turf/simulated/floor/wood,
 /area/ship/aro/recreation)
 "aH" = (
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
@@ -255,30 +239,21 @@
 /turf/simulated/floor/wood,
 /area/ship/aro/recreation)
 "aI" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-4"
-	},
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
 /turf/simulated/floor/wood,
 /area/ship/aro/recreation)
 "aJ" = (
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
 /turf/simulated/floor/wood,
 /area/ship/aro/recreation)
 "aK" = (
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/alarm/alarms_hidden{
 	pixel_y = 25
 	},
@@ -292,9 +267,7 @@
 	name = "exterior shutters";
 	pixel_x = 28
 	},
-/obj/structure/cable/cyan{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/ship/aro/recreation)
 "aM" = (
@@ -331,9 +304,7 @@
 /area/ship/aro/recreation)
 "aR" = (
 /obj/structure/closet/crate/bin,
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/ship/aro/recreation)
 "aS" = (
@@ -352,9 +323,7 @@
 /turf/simulated/floor/reinforced,
 /area/ship/aro/holodeck)
 "aU" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/ship/aro/recreation)
 "aV" = (
@@ -372,9 +341,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/ship/aro/recreation)
 "aY" = (
@@ -397,9 +364,7 @@
 	density = 0;
 	pixel_x = 32
 	},
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/ship/aro/recreation)
 "bb" = (
@@ -455,27 +420,21 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 1
 	},
-/obj/structure/cable/cyan{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/white,
 /area/ship/aro/recreation)
 "bg" = (
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 1
 	},
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/white,
 /area/ship/aro/recreation)
 "bh" = (
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 1
 	},
-/obj/structure/cable/cyan{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/white,
 /area/ship/aro/recreation)
 "bi" = (
@@ -526,9 +485,7 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/aro/recreation)
 "bo" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/white,
 /area/ship/aro/recreation)
 "bp" = (
@@ -569,9 +526,7 @@
 /area/ship/aro/centralarea)
 "bw" = (
 /obj/machinery/door/airlock/alien/blue,
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/aro/centralarea)
 "bx" = (
@@ -602,9 +557,7 @@
 /obj/effect/floor_decal/techfloor{
 	dir = 4
 	},
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/aro/centralarea)
 "bC" = (
@@ -651,9 +604,7 @@
 /obj/effect/floor_decal/techfloor{
 	dir = 4
 	},
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/aro/centralarea)
 "bJ" = (
@@ -855,9 +806,7 @@
 /obj/effect/floor_decal/techfloor{
 	dir = 4
 	},
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
@@ -1085,9 +1034,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/aro/centralarea)
 "cG" = (
-/obj/structure/cable/cyan{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc/alarms_hidden{
 	dir = 8;
 	name = "west bump";
@@ -1127,9 +1074,7 @@
 	dir = 10
 	},
 /obj/effect/floor_decal/techfloor,
-/obj/structure/cable/cyan{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
@@ -1143,9 +1088,7 @@
 /obj/effect/floor_decal/techfloor/corner{
 	dir = 1
 	},
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -1155,12 +1098,7 @@
 /obj/effect/floor_decal/techfloor/corner{
 	dir = 4
 	},
-/obj/structure/cable/cyan{
-	icon_state = "1-4"
-	},
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
@@ -1174,9 +1112,7 @@
 	dir = 10
 	},
 /obj/effect/floor_decal/techfloor,
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
@@ -1195,9 +1131,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/structure/cable/cyan{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
@@ -1263,9 +1197,7 @@
 /obj/effect/floor_decal/techfloor{
 	dir = 8
 	},
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
@@ -1343,9 +1275,7 @@
 /obj/effect/floor_decal/techfloor/hole/right{
 	dir = 8
 	},
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/aro/centralarea)
@@ -1405,9 +1335,7 @@
 /obj/effect/floor_decal/techfloor{
 	dir = 8
 	},
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
@@ -1462,9 +1390,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
-/obj/structure/cable/cyan{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/aro/centralarea)
 "dw" = (
@@ -1480,9 +1406,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/aro/centralarea)
 "dx" = (
@@ -1498,9 +1422,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/aro/centralarea)
 "dy" = (
@@ -1508,12 +1430,7 @@
 	dir = 1
 	},
 /obj/effect/floor_decal/techfloor/corner,
-/obj/structure/cable/cyan{
-	icon_state = "2-4"
-	},
-/obj/structure/cable/cyan{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/aro/centralarea)
 "dz" = (
@@ -1523,9 +1440,7 @@
 /obj/effect/floor_decal/techfloor{
 	dir = 1
 	},
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/aro/centralarea)
 "dA" = (
@@ -1535,9 +1450,7 @@
 /obj/effect/floor_decal/techfloor/corner{
 	dir = 1
 	},
-/obj/structure/cable/cyan{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/aro/centralarea)
 "dB" = (
@@ -1587,9 +1500,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/aro/centralarea)
 "dJ" = (
@@ -1672,9 +1583,7 @@
 /obj/effect/floor_decal/techfloor{
 	dir = 4
 	},
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/aro/centralarea)
 "dS" = (
@@ -1702,9 +1611,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/structure/cable/cyan{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/power/shield_generator/charged{
 	field_radius = 35;
 	initial_shield_modes = 2113;
@@ -1716,9 +1623,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/cable/cyan{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/aro/centralarea)
 "dW" = (
@@ -1769,9 +1674,7 @@
 /obj/effect/floor_decal/techfloor/corner{
 	dir = 4
 	},
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/aro/centralarea)
 "ec" = (
@@ -1840,9 +1743,7 @@
 /area/ship/aro/midshipshangars)
 "em" = (
 /obj/machinery/door/airlock/alien/blue,
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/aro/midshipshangars)
 "en" = (
@@ -1865,9 +1766,7 @@
 /area/ship/aro/midshipshangars)
 "eq" = (
 /obj/structure/catwalk,
-/obj/structure/cable/cyan{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc/alarms_hidden{
 	dir = 1;
 	name = "north bump";
@@ -1890,9 +1789,7 @@
 /obj/effect/floor_decal/techfloor{
 	dir = 4
 	},
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/aro/midshipshangars)
 "et" = (
@@ -1930,9 +1827,7 @@
 /area/ship/aro/midshipshangars)
 "ex" = (
 /obj/structure/catwalk,
-/obj/structure/cable/cyan{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
@@ -1943,9 +1838,7 @@
 /area/ship/aro/midshipshangars)
 "ey" = (
 /obj/structure/catwalk,
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
@@ -1956,9 +1849,7 @@
 /area/ship/aro/midshipshangars)
 "ez" = (
 /obj/machinery/door/airlock/alien/blue,
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
@@ -1974,9 +1865,7 @@
 /obj/effect/floor_decal/techfloor/corner{
 	dir = 8
 	},
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -1986,12 +1875,7 @@
 /obj/effect/floor_decal/techfloor/corner{
 	dir = 4
 	},
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/cyan{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
@@ -2053,9 +1937,7 @@
 /obj/effect/floor_decal/techfloor{
 	dir = 4
 	},
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/aro/midshipshangars)
 "eJ" = (
@@ -2253,9 +2135,7 @@
 /obj/effect/floor_decal/techfloor/corner{
 	dir = 4
 	},
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
@@ -2427,9 +2307,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/aro/midshipshangars)
 "fC" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/techfloor{
 	dir = 4
 	},
@@ -2449,9 +2327,7 @@
 /area/ship/aro/engineering)
 "fG" = (
 /obj/machinery/door/airlock/alien/blue,
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/aro/engineering)
 "fH" = (
@@ -2492,9 +2368,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/aro/engineering)
 "fM" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/techfloor/corner{
 	dir = 4
 	},
@@ -2592,9 +2466,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/aro/engineering)
 "fY" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/aro/engineering)
 "fZ" = (
@@ -2679,9 +2551,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/aro/engineering)
 "gm" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/techfloor,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/aro/engineering)
@@ -2760,27 +2630,18 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/cyan{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/shuttle/floor/alienplating/blue,
 /area/ship/aro/engineering)
 "gy" = (
 /obj/structure/railing{
 	dir = 1
 	},
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/shuttle/floor/alienplating/blue,
 /area/ship/aro/engineering)
 "gz" = (
-/obj/structure/cable/cyan{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc/alarms_hidden{
 	dir = 4;
 	name = "east bump";
@@ -2817,27 +2678,18 @@
 /turf/simulated/shuttle/floor/alienplating/blue,
 /area/ship/aro/engineering)
 "gE" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-4"
-	},
-/obj/structure/cable/cyan{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/shuttle/floor/alienplating/blue,
 /area/ship/aro/engineering)
 "gF" = (
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/shuttle/floor/alienplating/blue,
 /area/ship/aro/engineering)
 "gG" = (
 /obj/machinery/power/smes/hybrid{
 	output_level = 250000
 	},
-/obj/structure/cable/cyan{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/shuttle/floor/alienplating/blue,
 /area/ship/aro/engineering)
 "gH" = (
@@ -3002,9 +2854,7 @@
 /obj/machinery/door/airlock/alien/blue,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/aro/centralarea)
 "qJ" = (
@@ -3102,9 +2952,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/aro/centralarea)
 "HK" = (

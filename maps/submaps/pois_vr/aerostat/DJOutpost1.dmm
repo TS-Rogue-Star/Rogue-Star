@@ -61,9 +61,7 @@
 "m" = (
 /obj/machinery/computer/message_monitor,
 /obj/item/weapon/paper/monitorkey,
-/obj/structure/cable/yellow{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/submap/virgo2/DJOutpost1)
 "n" = (
@@ -77,9 +75,7 @@
 /area/submap/virgo2/DJOutpost1)
 "o" = (
 /obj/effect/overlay/snow/floor,
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor{
 	outdoors = 1
 	},
@@ -111,16 +107,12 @@
 /obj/structure/bed/chair/office/dark{
 	dir = 1
 	},
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/submap/virgo2/DJOutpost1)
 "u" = (
 /obj/effect/overlay/snow/floor,
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/closet/crate,
 /obj/item/stack/material/phoron{
 	amount = 25

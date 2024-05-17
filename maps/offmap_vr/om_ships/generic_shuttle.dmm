@@ -478,9 +478,7 @@
 /area/shuttle/generic_shuttle/gen)
 "bc" = (
 /obj/effect/floor_decal/steeldecal/steel_decals_central5,
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled{
 	icon_state = "monotile"
 	},
@@ -547,9 +545,7 @@
 	},
 /area/shuttle/generic_shuttle/gen)
 "bi" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
@@ -665,9 +661,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/door/airlock,
 /turf/simulated/floor/tiled{
 	icon_state = "monotile"
@@ -708,9 +702,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/supply{
 	dir = 4
 	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -729,25 +721,19 @@
 /obj/machinery/atmospherics/pipe/simple/visible/supply{
 	dir = 4
 	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/shuttle/generic_shuttle/eng)
 "bA" = (
 /obj/machinery/atmospherics/pipe/simple/visible/supply{
 	dir = 10
 	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/shuttle/generic_shuttle/eng)
 "bB" = (
 /obj/machinery/power/smes/point_of_interest,
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/shuttle/generic_shuttle/eng)
 "bC" = (

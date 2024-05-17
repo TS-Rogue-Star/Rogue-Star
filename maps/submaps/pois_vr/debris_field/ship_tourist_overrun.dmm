@@ -24,9 +24,7 @@
 /obj/effect/decal/cleanable/filth,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/yellow,
 /area/submap/debrisfield/luxury_boat/crew)
 "aM" = (
@@ -61,12 +59,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/green{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/yellow,
 /area/submap/debrisfield/luxury_boat/crew)
 "bF" = (
@@ -78,9 +71,7 @@
 	pixel_y = 32;
 	req_one_access = null
 	},
-/obj/structure/cable/green{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/luxury_boat/engine)
 "bG" = (
@@ -134,9 +125,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/ash,
-/obj/structure/cable/green{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/milspec,
 /area/submap/debrisfield/luxury_boat/bridge)
 "df" = (
@@ -193,21 +182,14 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/yellow,
 /area/submap/debrisfield/luxury_boat/crew)
 "eL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/item/space_spider_egg,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/luxury_boat/engine)
@@ -232,9 +214,7 @@
 /turf/simulated/shuttle/plating/airless/carry,
 /area/submap/debrisfield/luxury_boat/engine)
 "fH" = (
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/luxury_boat/engine)
 "fI" = (
@@ -247,9 +227,7 @@
 	dir = 1;
 	pixel_y = 26
 	},
-/obj/structure/cable/green{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/yellow,
 /area/submap/debrisfield/luxury_boat/crew)
 "gf" = (
@@ -263,9 +241,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/yellow,
 /area/submap/debrisfield/luxury_boat/crew)
 "gP" = (
@@ -273,9 +249,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/luxury_boat/engine)
 "gY" = (
@@ -317,9 +291,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/luxury_boat/engine)
 "ih" = (
@@ -356,9 +328,7 @@
 /obj/effect/decal/cleanable/blood/drip,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/yellow,
 /area/submap/debrisfield/luxury_boat/crew)
 "jT" = (
@@ -463,9 +433,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
-/obj/structure/cable/green{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor/tiled/milspec,
 /area/submap/debrisfield/luxury_boat/bridge)
@@ -538,9 +506,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/yellow,
 /area/submap/debrisfield/luxury_boat/crew)
 "oX" = (
@@ -693,9 +659,7 @@
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/luxury_boat/engine)
 "sN" = (
-/obj/structure/cable/green{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/luxury_boat/engine)
 "sO" = (
@@ -708,9 +672,7 @@
 /obj/machinery/door/airlock/external,
 /obj/effect/map_helper/airlock/door/int_door,
 /obj/effect/spider/stickyweb,
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/airless,
 /area/submap/debrisfield/luxury_boat/engine)
 "tw" = (
@@ -756,9 +718,7 @@
 "uP" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/yellow,
 /area/submap/debrisfield/luxury_boat/crew)
 "vc" = (
@@ -796,9 +756,7 @@
 "wq" = (
 /obj/machinery/door/airlock/hatch,
 /obj/effect/spider/stickyweb,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/luxury_boat/engine)
 "wv" = (
@@ -814,17 +772,13 @@
 /area/submap/debrisfield/luxury_boat/crew)
 "wy" = (
 /obj/structure/lattice,
-/obj/structure/cable/green{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/item/space_spider_egg,
 /turf/simulated/shuttle/plating/airless/carry,
 /area/submap/debrisfield/luxury_boat/engine)
 "wz" = (
 /obj/effect/catwalk_plated,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/luxury_boat/engine)
 "wJ" = (
@@ -851,9 +805,7 @@
 /area/submap/debrisfield/luxury_boat/engine)
 "xT" = (
 /obj/machinery/atmospherics/pipe/manifold4w/hidden,
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/submap/debrisfield/luxury_boat/engine)
 "xW" = (
@@ -864,9 +816,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/effect/spider/stickyweb,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/door/firedoor/glass,
 /turf/simulated/floor/tiled/milspec,
 /area/submap/debrisfield/luxury_boat/bridge)
@@ -897,9 +847,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor/tiled/milspec,
 /area/submap/debrisfield/luxury_boat/bridge)
@@ -927,9 +875,7 @@
 /area/submap/debrisfield/luxury_boat/engine)
 "zh" = (
 /obj/machinery/power/port_gen/pacman/super,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/luxury_boat/engine)
 "zr" = (
@@ -970,9 +916,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
-/obj/structure/cable/green{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/luxury_boat/engine)
 "Aj" = (
@@ -1031,9 +975,7 @@
 /obj/effect/decal/cleanable/blood/drip,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/yellow,
 /area/submap/debrisfield/luxury_boat/crew)
 "CL" = (
@@ -1126,22 +1068,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
-/obj/structure/cable/green{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/yellow,
 /area/submap/debrisfield/luxury_boat/crew)
 "Fo" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/green{
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/luxury_boat/engine)
 "Fs" = (
@@ -1197,9 +1129,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden{
 	dir = 4
 	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/luxury_boat/engine)
 "Hd" = (
@@ -1212,9 +1142,7 @@
 "Hr" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/yellow,
 /area/submap/debrisfield/luxury_boat/crew)
 "Il" = (
@@ -1258,18 +1186,14 @@
 "JS" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/light/small,
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/luxury_boat/engine)
 "JV" = (
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/luxury_boat/engine)
 "Kg" = (
@@ -1315,18 +1239,14 @@
 /turf/simulated/floor/lino,
 /area/submap/debrisfield/luxury_boat/crew)
 "Mh" = (
-/obj/structure/cable/green{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /obj/structure/lattice,
 /turf/simulated/shuttle/plating/airless/carry,
 /area/submap/debrisfield/luxury_boat/engine)
 "Mq" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/map_helper/airlock/door/ext_door,
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/luxury_boat/engine)
 "MX" = (
@@ -1345,9 +1265,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/yellow,
 /area/submap/debrisfield/luxury_boat/crew)
 "NI" = (
@@ -1367,9 +1285,7 @@
 	dir = 1;
 	pixel_y = 26
 	},
-/obj/structure/cable/green{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/milspec,
 /area/submap/debrisfield/luxury_boat/bridge)
 "NR" = (
@@ -1389,12 +1305,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/item/space_spider_egg,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/luxury_boat/engine)
@@ -1440,9 +1351,7 @@
 /obj/effect/decal/cleanable/ash,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor/tiled/milspec,
 /area/submap/debrisfield/luxury_boat/bridge)
@@ -1474,9 +1383,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/effect/shuttle_landmark/shuttle_initializer/luxury_boat,
 /obj/effect/overmap/visitable/ship/landable/luxury_boat,
 /turf/simulated/floor/tiled/yellow,
@@ -1497,21 +1404,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/luxury_boat/engine)
 "Ts" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/luxury_boat/engine)
 "TV" = (
@@ -1613,9 +1510,7 @@
 /obj/machinery/power/smes{
 	charge = 500000
 	},
-/obj/structure/cable/green{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/luxury_boat/engine)
 "XK" = (
@@ -1677,9 +1572,7 @@
 /area/submap/debrisfield/luxury_boat/cryo)
 "YW" = (
 /obj/machinery/atmospherics/pipe/manifold4w/hidden,
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/luxury_boat/engine)
 "Ze" = (
@@ -1695,9 +1588,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 6
 	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/yellow,
 /area/submap/debrisfield/luxury_boat/crew)
 "ZX" = (

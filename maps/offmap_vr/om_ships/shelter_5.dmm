@@ -170,9 +170,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/shuttle/deployable/escapepod)
 "r" = (
-/obj/structure/cable/cyan{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/power/rtg/advanced,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/shuttle/deployable/escapepod)
@@ -181,9 +179,7 @@
 /obj/structure/bed/chair/shuttle{
 	dir = 1
 	},
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/shuttle/deployable/escapepod)
 "t" = (
@@ -192,9 +188,7 @@
 	name = "south bump";
 	pixel_y = -28
 	},
-/obj/structure/cable/cyan{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/techfloor{
 	icon_state = "techfloor_edges";
 	dir = 6
@@ -217,9 +211,7 @@
 /obj/structure/bed/chair/shuttle{
 	dir = 1
 	},
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/light/small,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/shuttle/deployable/escapepod)

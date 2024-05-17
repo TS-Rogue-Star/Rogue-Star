@@ -35,9 +35,7 @@
 /turf/simulated/floor/wood/broken,
 /area/submap/virgo2/DJOutpost1)
 "h" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /obj/structure/loot_pile/maint/technical,
 /turf/simulated/floor/wood/broken,
 /area/submap/virgo2/DJOutpost1)
@@ -53,9 +51,7 @@
 /obj/structure/bed/chair/office/dark{
 	dir = 1
 	},
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood/broken,
 /area/submap/virgo2/DJOutpost1)
 "m" = (
@@ -125,9 +121,7 @@
 /obj/item/weapon/material/shard{
 	icon_state = "medium"
 	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/submap/virgo2/DJOutpost1)
 "D" = (

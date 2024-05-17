@@ -9,16 +9,12 @@
 	stat = 1
 	},
 /obj/structure/lattice,
-/obj/structure/cable/green{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/simulated/shuttle/plating/airless/carry,
 /area/submap/debrisfield/tinyshuttle/bridge)
 "ac" = (
 /obj/structure/lattice,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/shuttle/plating/airless/carry,
 /area/submap/debrisfield/tinyshuttle/bridge)
 "ad" = (
@@ -38,9 +34,7 @@
 /turf/simulated/floor/plating,
 /area/submap/debrisfield/tinyshuttle/crew)
 "af" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/door/airlock/external,
 /obj/effect/map_helper/airlock/door/ext_door,
 /obj/effect/floor_decal/steeldecal/monofloor{
@@ -76,18 +70,14 @@
 /turf/simulated/floor/tiled,
 /area/submap/debrisfield/tinyshuttle/crew)
 "ak" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/corner/brown/full{
 	dir = 1
 	},
 /turf/simulated/floor/tiled,
 /area/submap/debrisfield/tinyshuttle/crew)
 "al" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/door/airlock/glass_external/public,
 /obj/effect/map_helper/airlock/door/int_door,
 /obj/effect/floor_decal/steeldecal/monofloor{
@@ -100,9 +90,7 @@
 	dir = 4;
 	id_tag = "temp"
 	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/machinery/embedded_controller/radio/airlock/docking_port{
 	dir = 8;
 	frequency = 1380;
@@ -130,9 +118,7 @@
 /turf/simulated/wall/thull,
 /area/submap/debrisfield/tinyshuttle/bridge)
 "ap" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/grille,
 /obj/structure/window/titanium/full,
 /obj/structure/window/titanium{
@@ -167,9 +153,7 @@
 /turf/simulated/floor/tiled,
 /area/submap/debrisfield/tinyshuttle/crew)
 "at" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/airlock_sensor/airlock_interior{
 	dir = 8;
 	pixel_x = 24
@@ -193,7 +177,7 @@
 /turf/simulated/floor/plating,
 /area/submap/debrisfield/tinyshuttle/bridge)
 "av" = (
-/obj/structure/cable/green{
+/obj/structure/cable,
 	icon_state = "1-6"
 	},
 /obj/effect/floor_decal/corner/black/border{
@@ -276,9 +260,7 @@
 /turf/simulated/floor/tiled,
 /area/submap/debrisfield/tinyshuttle/crew)
 "aD" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/corner/brown{
 	dir = 4
 	},
@@ -304,9 +286,7 @@
 	name = "north bump";
 	pixel_y = 24
 	},
-/obj/structure/cable/green{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/corner/brown{
 	dir = 5
 	},
@@ -323,10 +303,10 @@
 /turf/simulated/floor/tiled/airless,
 /area/submap/debrisfield/tinyshuttle/bridge)
 "aI" = (
-/obj/structure/cable/green{
+/obj/structure/cable,
 	icon_state = "4-9"
 	},
-/obj/structure/cable/green{
+/obj/structure/cable,
 	icon_state = "4-10"
 	},
 /obj/structure/bed/chair/shuttle{
@@ -341,20 +321,18 @@
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 4
 	},
-/obj/structure/cable/green{
+/obj/structure/cable,
 	dir = 1;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/tiled/airless,
 /area/submap/debrisfield/tinyshuttle/bridge)
 "aK" = (
-/obj/structure/cable/green{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 8
 	},
-/obj/structure/cable/green{
+/obj/structure/cable,
 	dir = 1;
 	icon_state = "4-8"
 	},
@@ -393,7 +371,7 @@
 /turf/simulated/floor/tiled,
 /area/submap/debrisfield/tinyshuttle/crew)
 "aO" = (
-/obj/structure/cable/green{
+/obj/structure/cable,
 	dir = 1;
 	icon_state = "4-8"
 	},
@@ -410,7 +388,7 @@
 /turf/simulated/floor/tiled/airless,
 /area/submap/debrisfield/tinyshuttle/crew)
 "aP" = (
-/obj/structure/cable/green{
+/obj/structure/cable,
 	icon_state = "6-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden{
@@ -425,37 +403,26 @@
 /turf/simulated/floor/tiled,
 /area/submap/debrisfield/tinyshuttle/crew)
 "aQ" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
 	},
 /turf/simulated/floor/tiled,
 /area/submap/debrisfield/tinyshuttle/crew)
 "aR" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 10
 	},
 /turf/simulated/floor/tiled,
 /area/submap/debrisfield/tinyshuttle/crew)
 "aS" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /turf/simulated/floor/tiled,
 /area/submap/debrisfield/tinyshuttle/crew)
 "aT" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/tiled,
 /area/submap/debrisfield/tinyshuttle/crew)
@@ -479,7 +446,7 @@
 /obj/machinery/computer/ship/sensors{
 	dir = 4
 	},
-/obj/structure/cable/green{
+/obj/structure/cable,
 	icon_state = "2-5"
 	},
 /obj/effect/floor_decal/corner/blue/full,
@@ -539,9 +506,7 @@
 /turf/simulated/floor/tiled/airless,
 /area/submap/debrisfield/tinyshuttle/bridge)
 "ba" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 6
 	},
@@ -587,7 +552,7 @@
 /turf/simulated/floor/tiled,
 /area/submap/debrisfield/tinyshuttle/crew)
 "be" = (
-/obj/structure/cable/green{
+/obj/structure/cable,
 	icon_state = "4-9"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden{
@@ -602,13 +567,11 @@
 /turf/simulated/floor/tiled,
 /area/submap/debrisfield/tinyshuttle/crew)
 "bf" = (
-/obj/structure/cable/green{
+/obj/structure/cable,
 	dir = 1;
 	icon_state = "4-8"
 	},
-/obj/structure/cable/green{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
@@ -619,7 +582,7 @@
 /turf/simulated/floor/tiled,
 /area/submap/debrisfield/tinyshuttle/crew)
 "bg" = (
-/obj/structure/cable/green{
+/obj/structure/cable,
 	dir = 1;
 	icon_state = "4-8"
 	},
@@ -643,9 +606,7 @@
 /turf/simulated/wall/thull,
 /area/submap/debrisfield/tinyshuttle/hangar)
 "bj" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /obj/machinery/door/airlock/hatch{
 	req_one_access = list()
@@ -660,10 +621,10 @@
 /turf/simulated/wall/thull,
 /area/submap/debrisfield/tinyshuttle/engine)
 "bl" = (
-/obj/structure/cable/green{
+/obj/structure/cable,
 	icon_state = "6-8"
 	},
-/obj/structure/cable/green{
+/obj/structure/cable,
 	icon_state = "1-6"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden{
@@ -682,9 +643,7 @@
 /turf/simulated/floor/tiled,
 /area/submap/debrisfield/tinyshuttle/crew)
 "bm" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden{
 	dir = 4
 	},
@@ -707,10 +666,7 @@
 /turf/simulated/floor/greengrid/airless,
 /area/submap/debrisfield/tinyshuttle/bridge)
 "bo" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/green{
+/obj/structure/cable,
 	icon_state = "9-10"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden,
@@ -731,9 +687,7 @@
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/tinyshuttle/bridge)
 "bq" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
@@ -767,7 +721,7 @@
 /turf/simulated/floor/tiled/techmaint/airless,
 /area/submap/debrisfield/tinyshuttle/hangar)
 "bt" = (
-/obj/structure/cable/green{
+/obj/structure/cable,
 	icon_state = "5-6"
 	},
 /obj/structure/extinguisher_cabinet{
@@ -789,9 +743,7 @@
 	input_attempt = 1;
 	input_level = 200000
 	},
-/obj/structure/cable/green{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/steel,
 /area/submap/debrisfield/tinyshuttle/engine)
 "bv" = (
@@ -799,9 +751,7 @@
 /turf/simulated/wall/thull,
 /area/submap/debrisfield/tinyshuttle/engine)
 "bw" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden{
 	dir = 4
 	},
@@ -839,9 +789,7 @@
 /obj/structure/handrail{
 	dir = 8
 	},
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 9
 	},
@@ -878,9 +826,7 @@
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
 	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
@@ -893,7 +839,7 @@
 /turf/simulated/floor/tiled/steel,
 /area/submap/debrisfield/tinyshuttle/engine)
 "bD" = (
-/obj/structure/cable/green{
+/obj/structure/cable,
 	icon_state = "4-9"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden,
@@ -910,9 +856,7 @@
 /turf/simulated/wall/thull,
 /area/submap/debrisfield/tinyshuttle/engine)
 "bF" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/grille,
 /obj/structure/window/titanium/full,
 /obj/structure/window/titanium,
@@ -939,7 +883,7 @@
 /turf/simulated/floor/reinforced/airless,
 /area/submap/debrisfield/tinyshuttle/hangar)
 "bJ" = (
-/obj/structure/cable/green{
+/obj/structure/cable,
 	dir = 1;
 	icon_state = "4-8"
 	},
@@ -977,9 +921,7 @@
 	name = "east bump";
 	pixel_x = 28
 	},
-/obj/structure/cable/green{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/structure/cable/green,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8

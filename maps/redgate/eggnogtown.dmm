@@ -118,9 +118,7 @@
 /turf/simulated/floor/lino,
 /area/redgate/eggnogtown/bar)
 "aq" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating{
 	temperature = 258.15
 	},
@@ -653,7 +651,7 @@
 /turf/simulated/floor/bmarble,
 /area/redgate/eggnogtown/arturoswolfden)
 "cF" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable,
 	icon_state = "2-9"
 	},
 /turf/simulated/floor/plating{
@@ -1590,9 +1588,7 @@
 /area/redgate/eggnogtown/greenhouse)
 "oz" = (
 /obj/item/trash/candle,
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating{
 	temperature = 258.15
 	},
@@ -1772,7 +1768,7 @@
 /area/redgate/eggnogtown/kitchihome/guestroom)
 "rz" = (
 /obj/item/trash/candle,
-/obj/structure/cable/yellow{
+/obj/structure/cable,
 	dir = 1
 	},
 /turf/simulated/floor/plating{
@@ -2151,9 +2147,7 @@
 /turf/simulated/floor/outdoors/grass/forest,
 /area/redgate/eggnogtown/greenhouse)
 "wx" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating{
 	temperature = 258.15
 	},
@@ -2826,15 +2820,10 @@
 /area/redgate/eggnogtown/loniabode)
 "GQ" = (
 /obj/structure/barricade/cutout,
-/obj/structure/cable/yellow{
+/obj/structure/cable,
 	dir = 1
 	},
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/item/clothing/accessory/sweater/uglyxmas,
 /obj/effect/decal/cleanable/crayon,
 /turf/simulated/floor/plating{
@@ -3400,9 +3389,7 @@
 /area/redgate/eggnogtown/hall)
 "ON" = (
 /obj/item/trash/candle,
-/obj/structure/cable/yellow{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating{
 	temperature = 258.15
 	},
@@ -3513,10 +3500,10 @@
 /turf/simulated/floor/tiled/eris/white/monofloor,
 /area/redgate/eggnogtown/kitchihome/kitchen)
 "PP" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable,
 	icon_state = "0-6"
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable,
 	icon_state = "0-10"
 	},
 /obj/structure/cable/yellow,
@@ -3561,7 +3548,7 @@
 /turf/simulated/wall/iron,
 /area/redgate/eggnogtown/hall/south)
 "Qr" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable,
 	icon_state = "2-5"
 	},
 /turf/simulated/floor/plating{

@@ -30,9 +30,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/awaymission/lucky7/dock1)
 "ad" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/light_switch{
 	dir = 4;
 	pixel_x = -26;
@@ -56,9 +54,7 @@
 /turf/simulated/floor/tiled/eris/steel/bar_dance,
 /area/awaymission/lucky7/loungeprivateroom)
 "ah" = (
-/obj/structure/cable/green{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/casinofloor)
@@ -91,9 +87,7 @@
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/dock2)
 "ak" = (
-/obj/structure/cable/green{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/hotelhall)
 "al" = (
@@ -109,9 +103,7 @@
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/hall1)
 "am" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -129,9 +121,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/structure/catwalk,
-/obj/structure/cable/green{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/maint2)
 "ap" = (
@@ -296,9 +286,7 @@
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/casinofloor)
 "aJ" = (
-/obj/structure/cable/green{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	alarms_hidden = 1;
 	dir = 8;
@@ -308,12 +296,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/awaymission/lucky7/loungeprivateroom)
 "aK" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/green{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/junction{
 	dir = 1
 	},
@@ -323,9 +306,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 10
 	},
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/entry)
@@ -366,9 +347,7 @@
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/maint1)
 "aQ" = (
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/awaymission/lucky7/loungeprivateroom)
 "aR" = (
@@ -384,9 +363,7 @@
 /obj/effect/floor_decal/corner/lightgrey/border{
 	dir = 1
 	},
-/obj/structure/cable/green{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	alarms_hidden = 1;
 	dir = 1;
@@ -396,9 +373,7 @@
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/entry)
 "aT" = (
-/obj/structure/cable/green{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	alarms_hidden = 1;
 	dir = 1;
@@ -454,9 +429,7 @@
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/lounge)
 "bc" = (
-/obj/structure/cable/green{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/awaymission/lucky7/gateway)
 "be" = (
@@ -495,9 +468,7 @@
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/privateroom/four)
 "bo" = (
-/obj/structure/cable/green{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/awaymission/lucky7/loungeprivateroom)
 "bp" = (
@@ -569,9 +540,7 @@
 	dir = 4
 	},
 /obj/structure/catwalk,
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/item/device/radio{
 	pixel_x = 10;
 	pixel_y = 8
@@ -610,9 +579,7 @@
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/entry)
 "bN" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/awaymission/lucky7/loungeprivateroom)
 "bP" = (
@@ -700,9 +667,7 @@
 /obj/effect/floor_decal/corner/lightgrey/border{
 	dir = 1
 	},
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/entry)
@@ -867,9 +832,7 @@
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/hall1)
 "do" = (
-/obj/structure/cable/green{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	alarms_hidden = 1;
 	dir = 1;
@@ -930,9 +893,7 @@
 /area/awaymission/lucky7/maint1)
 "dG" = (
 /obj/structure/window/basic,
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/junction{
 	dir = 8
 	},
@@ -950,9 +911,7 @@
 /turf/simulated/floor/carpet/retro,
 /area/awaymission/lucky7/arcade)
 "dS" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/door/morgue{
 	dir = 2;
 	name = "Private Room";
@@ -1175,9 +1134,7 @@
 	name = "Private Room 3"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/privateroom/three)
 "eY" = (
@@ -1208,9 +1165,7 @@
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/bar)
 "fl" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -1294,9 +1249,7 @@
 	name = "Private Room 1"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/privateroom)
 "fH" = (
@@ -1449,12 +1402,7 @@
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/entry)
 "gB" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/green{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/hall2)
@@ -1484,9 +1432,7 @@
 /turf/simulated/wall,
 /area/awaymission/lucky7/dock1)
 "gN" = (
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/hall2)
 "gS" = (
@@ -1507,16 +1453,12 @@
 /obj/machinery/door/airlock{
 	name = "Arcade"
 	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/item/tape/engineering,
 /turf/simulated/floor/carpet/retro,
 /area/awaymission/lucky7/arcade)
 "gZ" = (
-/obj/structure/cable/green{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/retro,
 /area/awaymission/lucky7/arcade)
 "hc" = (
@@ -1535,12 +1477,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/cable/green{
-	icon_state = "1-8"
-	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/casinofloor)
 "hm" = (
@@ -1576,9 +1513,7 @@
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/dock1)
 "hu" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/hall2)
@@ -1643,9 +1578,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/awaymission/lucky7/dock2)
 "hM" = (
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/door/airlock/glass,
 /obj/machinery/door/firedoor/glass,
 /turf/simulated/floor/tiled,
@@ -1668,15 +1601,11 @@
 /turf/simulated/floor/lino,
 /area/awaymission/lucky7/bar)
 "hU" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/privateroom)
 "ia" = (
-/obj/structure/cable/green{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	alarms_hidden = 1;
 	dir = 4;
@@ -1686,9 +1615,7 @@
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/privateroom)
 "ib" = (
-/obj/structure/cable/green{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/barbackroom)
 "id" = (
@@ -1723,9 +1650,7 @@
 /turf/simulated/floor/carpet/retro,
 /area/awaymission/lucky7/arcade)
 "it" = (
-/obj/structure/cable/green{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	alarms_hidden = 1;
 	dir = 1;
@@ -1776,12 +1701,7 @@
 /area/awaymission/lucky7/entry)
 "iB" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/green{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/hall2)
 "iE" = (
@@ -1845,9 +1765,7 @@
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/maint1)
 "jd" = (
-/obj/structure/cable/green{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
@@ -1890,9 +1808,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/door/firedoor/glass/hidden/steel,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/entry)
@@ -1952,9 +1868,7 @@
 /obj/effect/floor_decal/corner/lightgrey/bordercorner2{
 	dir = 6
 	},
-/obj/structure/cable/green{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	alarms_hidden = 1;
 	dir = 4;
@@ -2016,9 +1930,7 @@
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/maint2)
 "jQ" = (
-/obj/structure/cable/green{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	alarms_hidden = 1;
 	dir = 4;
@@ -2031,9 +1943,7 @@
 /turf/simulated/floor/water/pool,
 /area/awaymission/lucky7/privateroom/vip)
 "jV" = (
-/obj/structure/cable/green{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	alarms_hidden = 1;
 	dir = 1;
@@ -2066,9 +1976,7 @@
 "kc" = (
 /obj/effect/floor_decal/borderfloor/corner,
 /obj/effect/floor_decal/corner/lightgrey/bordercorner,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/entry)
 "kd" = (
@@ -2103,9 +2011,7 @@
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/entry)
 "kp" = (
-/obj/structure/cable/green{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/lounge)
 "ks" = (
@@ -2176,9 +2082,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/structure/catwalk,
-/obj/structure/cable/green{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/trash)
 "kO" = (
@@ -2196,9 +2100,7 @@
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/barbackroom)
 "kQ" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/casinofloor)
 "kV" = (
@@ -2212,9 +2114,7 @@
 	dir = 4
 	},
 /obj/structure/catwalk,
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/trash)
 "li" = (
@@ -2222,9 +2122,7 @@
 	dir = 4
 	},
 /obj/structure/catwalk,
-/obj/structure/cable/green{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/trash)
 "lm" = (
@@ -2304,9 +2202,7 @@
 /area/awaymission/lucky7/kitchen)
 "lZ" = (
 /obj/structure/bed/chair/comfy/beige,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/green,
 /area/awaymission/lucky7/privategameroom/two)
 "mb" = (
@@ -2334,9 +2230,7 @@
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/lounge)
 "mp" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/security)
@@ -2353,9 +2247,7 @@
 /obj/effect/floor_decal/corner/paleblue/bordercorner2{
 	dir = 6
 	},
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled/white,
 /area/awaymission/lucky7/medical)
@@ -2430,7 +2322,7 @@
 "mN" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/catwalk,
-/obj/structure/cable/green{
+/obj/structure/cable,
 	dir = 1;
 	icon_state = "1-2"
 	},
@@ -2438,12 +2330,7 @@
 /area/awaymission/lucky7/trash)
 "mO" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/green{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/hall2)
 "mQ" = (
@@ -2469,9 +2356,7 @@
 "mS" = (
 /obj/machinery/door/airlock/glass,
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/dock1)
 "mT" = (
@@ -2529,9 +2414,7 @@
 /turf/simulated/floor/tiled/techmaint/airless,
 /area/awaymission/lucky7/barbackroom)
 "np" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/lounge)
 "nq" = (
@@ -2566,9 +2449,7 @@
 /area/awaymission/lucky7/dock1)
 "nv" = (
 /obj/structure/table/gamblingtable,
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/green,
 /area/awaymission/lucky7/privategameroom/two)
 "nw" = (
@@ -2584,9 +2465,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/awaymission/lucky7/dock1)
 "nz" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/privateroom/three)
 "nA" = (
@@ -2633,9 +2512,7 @@
 	id_tag = "L7 PGR 1";
 	name = "Private Game Room 1"
 	},
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/purple,
 /area/awaymission/lucky7/privategameroom)
 "nK" = (
@@ -2651,9 +2528,7 @@
 	id_tag = "L7 PGR 2";
 	name = "Private Game Room 2"
 	},
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/green,
 /area/awaymission/lucky7/privategameroom/two)
 "nN" = (
@@ -2706,9 +2581,7 @@
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/dock1)
 "nY" = (
-/obj/structure/cable/green{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/privateroom/two)
 "ob" = (
@@ -2728,9 +2601,7 @@
 	id_tag = "L7 PGR 3";
 	name = "Private Game Room 3"
 	},
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/blue2,
 /area/awaymission/lucky7/privategameroom/three)
 "ol" = (
@@ -2739,12 +2610,7 @@
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/laundry)
 "op" = (
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/green{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/hall2)
 "oq" = (
@@ -2758,9 +2624,7 @@
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/privateroom/vip)
 "os" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/laundry)
 "oA" = (
@@ -2774,9 +2638,7 @@
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/lounge)
 "oE" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -2814,9 +2676,7 @@
 /turf/simulated/floor/carpet/green,
 /area/awaymission/lucky7/privategameroom/two)
 "oO" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/privateroom/two)
 "oP" = (
@@ -2844,9 +2704,7 @@
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/security)
 "oV" = (
-/obj/structure/cable/green{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -2873,9 +2731,7 @@
 	req_one_access = null
 	},
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/security)
@@ -2929,9 +2785,7 @@
 	pixel_x = 24;
 	pixel_y = 26
 	},
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/purple,
 /area/awaymission/lucky7/privategameroom)
 "pA" = (
@@ -2950,9 +2804,7 @@
 	pixel_x = 24;
 	pixel_y = 26
 	},
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/green,
 /area/awaymission/lucky7/privategameroom/two)
 "pE" = (
@@ -2975,17 +2827,13 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/awaymission/lucky7/maint1)
 "pM" = (
-/obj/structure/cable/green{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/security)
 "pN" = (
 /obj/structure/bed/chair/comfy/beige,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/purple,
 /area/awaymission/lucky7/privategameroom)
 "pO" = (
@@ -3025,9 +2873,7 @@
 	pixel_x = 24;
 	pixel_y = 26
 	},
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/blue2,
 /area/awaymission/lucky7/privategameroom/three)
 "qg" = (
@@ -3058,9 +2904,7 @@
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/trash)
 "qs" = (
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/privateroom/vip)
 "qt" = (
@@ -3125,9 +2969,7 @@
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/bar)
 "qH" = (
-/obj/structure/cable/green{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/hall2)
 "qL" = (
@@ -3259,7 +3101,7 @@
 	name = "Trash Collection"
 	},
 /obj/structure/catwalk,
-/obj/structure/cable/green{
+/obj/structure/cable,
 	dir = 1;
 	icon_state = "1-2"
 	},
@@ -3340,9 +3182,7 @@
 /area/awaymission/lucky7/trash)
 "sm" = (
 /obj/structure/table/standard,
-/obj/structure/cable/green{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	alarms_hidden = 1;
 	dir = 1;
@@ -3389,9 +3229,7 @@
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/lounge)
 "sv" = (
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
@@ -3448,9 +3286,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/awaymission/lucky7/gateway)
 "sV" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/entry)
 "sX" = (
@@ -3566,9 +3402,7 @@
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/workshop)
 "tz" = (
-/obj/structure/cable/green{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/privateroom/three)
 "tD" = (
@@ -3615,9 +3449,7 @@
 /obj/effect/floor_decal/borderfloor{
 	dir = 5
 	},
-/obj/structure/cable/green{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/corner/yellow/border{
 	dir = 5
 	},
@@ -3659,9 +3491,7 @@
 /area/awaymission/lucky7/gateway)
 "tY" = (
 /obj/structure/table/gamblingtable,
-/obj/structure/cable/green{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/blue2,
 /area/awaymission/lucky7/privategameroom/three)
 "tZ" = (
@@ -3755,9 +3585,7 @@
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/dock1)
 "uy" = (
-/obj/structure/cable/green{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/rust,
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'HIGH VOLTAGE'";
@@ -3768,9 +3596,7 @@
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/maint2)
 "uz" = (
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -3793,9 +3619,7 @@
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/maint2)
 "uB" = (
-/obj/structure/cable/green{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	alarms_hidden = 1;
 	dir = 1;
@@ -3828,12 +3652,7 @@
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/bar)
 "uI" = (
-/obj/structure/cable/green{
-	icon_state = "2-8"
-	},
-/obj/structure/cable/green{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	alarms_hidden = 1;
 	dir = 1;
@@ -3884,16 +3703,14 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/bar)
 "va" = (
 /obj/effect/floor_decal/rust,
 /obj/structure/disposalpipe/segment,
 /obj/structure/catwalk,
-/obj/structure/cable/green{
+/obj/structure/cable,
 	dir = 1;
 	icon_state = "1-2"
 	},
@@ -4060,9 +3877,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/button/remote/airlock{
 	id = "L7 Room 4";
 	name = "Door Lock";
@@ -4076,9 +3891,7 @@
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/privateroom/four)
 "wt" = (
-/obj/structure/cable/green{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	alarms_hidden = 1;
 	dir = 1;
@@ -4263,9 +4076,7 @@
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/lounge)
 "xz" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/entry)
@@ -4274,9 +4085,7 @@
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/casinofloor)
 "xF" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/privateroom/four)
 "xH" = (
@@ -4291,9 +4100,7 @@
 /obj/machinery/door/firedoor/glass/hidden/steel{
 	dir = 1
 	},
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/entry)
@@ -4379,9 +4186,7 @@
 /turf/simulated/floor/tiled/white,
 /area/awaymission/lucky7/privateroom/four)
 "yk" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/entry)
 "yo" = (
@@ -4470,9 +4275,7 @@
 "yZ" = (
 /obj/machinery/door/airlock/maintenance/common,
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled/techfloor,
 /area/awaymission/lucky7/maint1)
@@ -4485,9 +4288,7 @@
 /obj/effect/floor_decal/borderfloor{
 	dir = 4
 	},
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/corner/yellow/border{
 	dir = 4
 	},
@@ -4533,9 +4334,7 @@
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/hall1)
 "zq" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/effect/decal/cleanable/blood/oil,
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/maint2)
@@ -4618,15 +4417,11 @@
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/casinofloor)
 "zQ" = (
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/cable/green{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/hall1)
 "zR" = (
@@ -4660,9 +4455,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/structure/catwalk,
-/obj/structure/cable/green{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/maint2)
 "Ab" = (
@@ -4721,9 +4514,7 @@
 	dir = 4
 	},
 /obj/structure/catwalk,
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/maint2)
 "Ay" = (
@@ -4747,16 +4538,12 @@
 	dir = 4
 	},
 /obj/structure/catwalk,
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/maint2)
 "AG" = (
 /obj/structure/table/gamblingtable,
-/obj/structure/cable/green{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/purple,
 /area/awaymission/lucky7/privategameroom)
 "AJ" = (
@@ -4812,9 +4599,7 @@
 "AQ" = (
 /obj/machinery/vending/deluxe_cigs/open,
 /obj/effect/floor_decal/spline/plain,
-/obj/structure/cable/green{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	alarms_hidden = 1;
 	dir = 1;
@@ -4854,12 +4639,7 @@
 	dir = 1
 	},
 /obj/structure/catwalk,
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/green{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/maint2)
 "AY" = (
@@ -4880,12 +4660,7 @@
 	icon_state = "pipe-j2"
 	},
 /obj/structure/catwalk,
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/green{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/maint2)
 "Bf" = (
@@ -4901,9 +4676,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/awaymission/lucky7/maint2)
 "Bq" = (
@@ -4913,9 +4686,7 @@
 /obj/effect/floor_decal/corner/grey/border{
 	dir = 1
 	},
-/obj/structure/cable/green{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	alarms_hidden = 1;
 	dir = 1;
@@ -4932,9 +4703,7 @@
 	dir = 8;
 	icon_state = "pipe-j2"
 	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/bar)
 "BA" = (
@@ -4945,9 +4714,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/awaymission/lucky7/breakroom)
 "BH" = (
@@ -4958,12 +4725,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/green{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/awaymission/lucky7/breakroom)
 "BK" = (
@@ -4989,15 +4751,11 @@
 /area/awaymission/lucky7/lounge)
 "BT" = (
 /obj/structure/table/woodentable,
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/awaymission/lucky7/breakroom)
 "BV" = (
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/structure/bed/chair/sofa/left/black{
 	dir = 8
 	},
@@ -5035,9 +4793,7 @@
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/security)
 "Ci" = (
-/obj/structure/cable/green{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/awaymission/lucky7/breakroom)
 "Ck" = (
@@ -5117,18 +4873,14 @@
 /area/awaymission/lucky7/entry)
 "CG" = (
 /obj/structure/table/gamblingtable,
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/purple,
 /area/awaymission/lucky7/privategameroom)
 "CI" = (
 /obj/machinery/door/firedoor/glass/hidden/steel{
 	dir = 2
 	},
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/entry)
@@ -5148,21 +4900,14 @@
 /obj/effect/floor_decal/spline/plain{
 	dir = 1
 	},
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/hotelhall)
 "CO" = (
 /obj/structure/disposalpipe/junction{
 	dir = 4
 	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/green{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/hotelhall)
 "CQ" = (
@@ -5245,9 +4990,7 @@
 "Dv" = (
 /obj/machinery/door/airlock/glass,
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -5271,12 +5014,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 9
 	},
-/obj/structure/cable/green{
-	icon_state = "1-8"
-	},
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -5311,9 +5049,7 @@
 /area/awaymission/lucky7/privateroom/five)
 "DO" = (
 /obj/machinery/atmospherics/pipe/simple/hidden,
-/obj/structure/cable/green{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/dock2)
 "DP" = (
@@ -5323,9 +5059,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/awaymission/lucky7/medical)
 "DQ" = (
-/obj/structure/cable/green{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	alarms_hidden = 1;
 	dir = 1;
@@ -5356,9 +5090,7 @@
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/dock1)
 "DS" = (
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/junction{
 	dir = 4;
 	icon_state = "pipe-j2"
@@ -5420,9 +5152,7 @@
 	name = "VIP Room"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/privateroom/vip)
 "Es" = (
@@ -5438,9 +5168,7 @@
 	name = "Workshop";
 	req_one_access = null
 	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -5473,22 +5201,16 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/awaymission/lucky7/security)
 "EB" = (
-/obj/structure/cable/green{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/hall1)
 "EC" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/maint2)
 "EF" = (
@@ -5514,9 +5236,7 @@
 /obj/effect/floor_decal/rust,
 /obj/structure/disposalpipe/segment,
 /obj/structure/catwalk,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/maint2)
 "ES" = (
@@ -5542,9 +5262,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/industrial/warning{
 	dir = 1
 	},
@@ -5587,9 +5305,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/structure/cable/green{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/hotelhall)
 "Fm" = (
@@ -5631,23 +5347,17 @@
 /obj/machinery/door/firedoor/glass/hidden/steel{
 	dir = 8
 	},
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/entry)
 "FF" = (
-/obj/structure/cable/green{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/hall1)
 "FG" = (
 /obj/effect/floor_decal/borderfloor,
 /obj/effect/floor_decal/corner/grey/border,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/hotelhall)
 "FJ" = (
@@ -5692,9 +5402,7 @@
 /obj/effect/floor_decal/rust,
 /obj/structure/disposalpipe/segment,
 /obj/structure/catwalk,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -5746,9 +5454,7 @@
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/bar)
 "Gg" = (
-/obj/structure/cable/green{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/privateroom)
 "Gh" = (
@@ -5774,9 +5480,7 @@
 /area/awaymission/lucky7/privateroom/vip)
 "Gm" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable/green{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/machinery/button/remote/airlock{
 	id = "L7 VIP Room";
 	name = "Door Lock";
@@ -5810,9 +5514,7 @@
 "Gr" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/catwalk,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/maint2)
 "Gs" = (
@@ -5825,9 +5527,7 @@
 /area/awaymission/lucky7/kitchen)
 "Gz" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/awaymission/lucky7/breakroom)
 "GA" = (
@@ -5856,9 +5556,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/structure/cable/green{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/hotelhall)
 "GP" = (
@@ -5899,18 +5597,11 @@
 "GT" = (
 /obj/effect/floor_decal/borderfloor,
 /obj/effect/floor_decal/corner/lightgrey/border,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/entry)
 "GV" = (
-/obj/structure/cable/green{
-	icon_state = "1-4"
-	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
@@ -5950,12 +5641,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/awaymission/lucky7/gateway)
 "Hl" = (
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/green{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/junction{
 	dir = 8
 	},
@@ -6061,9 +5747,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/button/remote/airlock{
 	id = "L7 Room 1";
 	name = "Door Lock";
@@ -6115,9 +5799,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/hotelhall)
 "Ij" = (
@@ -6222,9 +5904,7 @@
 /turf/simulated/floor/tiled/white,
 /area/awaymission/lucky7/privateroom/five)
 "IF" = (
-/obj/structure/cable/green{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/privateroom/five)
 "IJ" = (
@@ -6307,9 +5987,7 @@
 /area/awaymission/lucky7/medical)
 "Jq" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/casinofloor)
 "Jw" = (
@@ -6330,12 +6008,7 @@
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/privateroom/two)
 "Jz" = (
-/obj/structure/cable/green{
-	icon_state = "2-4"
-	},
-/obj/structure/cable/green{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/junction/yjunction{
 	dir = 4
 	},
@@ -6345,9 +6018,7 @@
 /turf/simulated/wall,
 /area/awaymission/lucky7/barbackroom)
 "JC" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/hall1)
 "JE" = (
@@ -6401,9 +6072,7 @@
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/casinofloor)
 "JP" = (
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/borderfloor{
 	dir = 4
 	},
@@ -6419,19 +6088,12 @@
 /obj/structure/disposalpipe/junction/yjunction{
 	dir = 1
 	},
-/obj/structure/cable/green{
-	icon_state = "1-4"
-	},
-/obj/structure/cable/green{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/hotelhall)
 "JU" = (
 /obj/machinery/door/airlock/maintenance/common,
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/door/firedoor/glass,
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
@@ -6441,9 +6103,7 @@
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/privateroom/five)
 "Ka" = (
-/obj/structure/cable/green{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/structure/bed/chair/sofa/bench/left,
 /obj/effect/floor_decal/borderfloorblack{
 	dir = 5
@@ -6460,9 +6120,7 @@
 /turf/simulated/wall,
 /area/awaymission/lucky7/kitchen)
 "Ki" = (
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -6497,16 +6155,12 @@
 /turf/simulated/floor/tiled/white,
 /area/awaymission/lucky7/kitchen)
 "Kn" = (
-/obj/structure/cable/green{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/structure/catwalk,
-/obj/structure/cable/green{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/maint2)
 "Ks" = (
@@ -6533,33 +6187,25 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/awaymission/lucky7/security)
 "Kw" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/rust,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/structure/catwalk,
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/item/stack/material/phoron{
 	amount = 2
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/maint2)
 "Kx" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/junction{
 	dir = 4
 	},
 /obj/structure/catwalk,
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/maint2)
@@ -6585,12 +6231,7 @@
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/barbackroom)
 "KH" = (
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/green{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
@@ -6602,9 +6243,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/structure/catwalk,
-/obj/structure/cable/green{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/maint2)
 "KK" = (
@@ -6620,9 +6259,7 @@
 	name = "Private Room 4"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/privateroom/four)
 "KN" = (
@@ -6698,9 +6335,7 @@
 /obj/effect/floor_decal/rust,
 /obj/structure/disposalpipe/segment,
 /obj/structure/catwalk,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/maint2)
 "Lj" = (
@@ -6708,9 +6343,7 @@
 	name = "Breakroom"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/awaymission/lucky7/breakroom)
 "Lk" = (
@@ -6805,9 +6438,7 @@
 /area/awaymission/lucky7/privateroom/vip)
 "LA" = (
 /obj/structure/bed/chair/comfy/beige,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/blue2,
 /area/awaymission/lucky7/privategameroom/three)
 "LB" = (
@@ -6981,9 +6612,7 @@
 	pixel_x = -27;
 	start_charge = 0
 	},
-/obj/structure/cable/green{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/purple,
 /area/awaymission/lucky7/privategameroom)
 "Me" = (
@@ -7059,9 +6688,7 @@
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/hotelhall)
 "Mo" = (
-/obj/structure/cable/green{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	alarms_hidden = 1;
 	dir = 4;
@@ -7141,9 +6768,7 @@
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/hall1)
 "MG" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/hall1)
@@ -7159,9 +6784,7 @@
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/hall1)
 "MQ" = (
-/obj/structure/cable/green{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	alarms_hidden = 1;
 	dir = 4;
@@ -7197,9 +6820,7 @@
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/maint2)
 "MZ" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/hall2)
 "Na" = (
@@ -7228,9 +6849,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/entry)
 "Nd" = (
@@ -7241,12 +6860,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/cable/green{
-	icon_state = "1-8"
-	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/bar)
 "Ni" = (
@@ -7282,30 +6896,18 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/green{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/entry)
 "Nr" = (
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/entry)
 "Ny" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
@@ -7315,9 +6917,7 @@
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/casinofloor)
 "NC" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/door/firedoor/glass,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/lounge)
@@ -7326,9 +6926,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/button/remote/airlock{
 	id = "L7 Room 5";
 	name = "Door Lock";
@@ -7342,9 +6940,7 @@
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/privateroom/five)
 "NF" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/industrial/warning{
 	dir = 9
 	},
@@ -7484,9 +7080,7 @@
 	dir = 1
 	},
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/casinofloor)
 "Om" = (
@@ -7548,9 +7142,7 @@
 /turf/simulated/floor/tiled/white,
 /area/awaymission/lucky7/privateroom/vip)
 "Ow" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/casinofloor)
@@ -7763,9 +7355,7 @@
 /obj/item/weapon/reagent_containers/glass/beaker{
 	pixel_x = 5
 	},
-/obj/structure/cable/green{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	alarms_hidden = 1;
 	dir = 8;
@@ -7777,15 +7367,11 @@
 "Ps" = (
 /obj/effect/floor_decal/corner/grey/diagonal,
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable/green{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/white,
 /area/awaymission/lucky7/kitchen)
 "Pu" = (
-/obj/structure/cable/green{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	alarms_hidden = 1;
 	dir = 4;
@@ -7825,9 +7411,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/button/remote/airlock{
 	id = "L7 Room 3";
 	name = "Door Lock";
@@ -7884,9 +7468,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/barbackroom)
 "PQ" = (
@@ -7930,9 +7512,7 @@
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/lounge)
 "Qg" = (
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -7949,9 +7529,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/barbackroom)
 "Qm" = (
@@ -8029,9 +7607,7 @@
 /area/awaymission/lucky7/entry)
 "Qt" = (
 /obj/structure/table/gamblingtable,
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/blue2,
 /area/awaymission/lucky7/privategameroom/three)
 "Qv" = (
@@ -8047,9 +7623,7 @@
 /obj/effect/floor_decal/corner/red/border{
 	dir = 8
 	},
-/obj/structure/cable/green{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	alarms_hidden = 1;
 	dir = 8;
@@ -8078,15 +7652,11 @@
 	dir = 4
 	},
 /obj/structure/catwalk,
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/maint2)
 "QM" = (
-/obj/structure/cable/green{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	alarms_hidden = 1;
 	dir = 1;
@@ -8167,12 +7737,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/green{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/hotelhall)
 "Rw" = (
@@ -8187,9 +7752,7 @@
 /turf/simulated/floor/lino,
 /area/awaymission/lucky7/bar)
 "RF" = (
-/obj/structure/cable/green{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	alarms_hidden = 1;
 	dir = 4;
@@ -8278,12 +7841,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/green{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/hotelhall)
 "Sj" = (
@@ -8291,9 +7849,7 @@
 /obj/structure/disposalpipe/junction/yjunction{
 	dir = 8
 	},
-/obj/structure/cable/green{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/casinofloor)
 "Sk" = (
@@ -8308,9 +7864,7 @@
 	name = "Private Room 4"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/privateroom/five)
 "Sm" = (
@@ -8360,9 +7914,7 @@
 /obj/machinery/door/firedoor/glass/hidden/steel{
 	dir = 8
 	},
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/hall1)
@@ -8414,12 +7966,7 @@
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/hotelhall)
 "SP" = (
-/obj/structure/cable/green{
-	icon_state = "1-8"
-	},
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -8462,9 +8009,7 @@
 /area/awaymission/lucky7/workshop)
 "SY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/entry)
@@ -8487,9 +8032,7 @@
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/security)
 "Ta" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/item/stack/material/phoron{
 	amount = 6
 	},
@@ -8508,9 +8051,7 @@
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/lounge)
 "Tf" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/industrial/warning{
 	dir = 10
 	},
@@ -8577,9 +8118,7 @@
 /turf/simulated/floor/carpet/turcarpet,
 /area/awaymission/lucky7/bar)
 "Tt" = (
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -8587,9 +8126,7 @@
 /area/awaymission/lucky7/entry)
 "Tu" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/hall2)
 "Tv" = (
@@ -8622,9 +8159,7 @@
 /area/awaymission/lucky7/entry)
 "TD" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/hotelhall)
 "TF" = (
@@ -8640,9 +8175,7 @@
 /obj/machinery/door/airlock/glass,
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/atmospherics/pipe/simple/hidden,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/dock2)
 "TI" = (
@@ -8651,15 +8184,11 @@
 	name = "Private Room 2"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/privateroom/two)
 "TK" = (
-/obj/structure/cable/green{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -8709,9 +8238,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/casinofloor)
 "TT" = (
@@ -8743,12 +8270,7 @@
 	dir = 8;
 	icon_state = "pipe-j2"
 	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/green{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/hotelhall)
 "TX" = (
@@ -8782,9 +8304,7 @@
 	pixel_x = -27;
 	start_charge = 0
 	},
-/obj/structure/cable/green{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/green,
 /area/awaymission/lucky7/privategameroom/two)
 "Ub" = (
@@ -8843,9 +8363,7 @@
 /turf/simulated/floor/water/pool,
 /area/awaymission/lucky7/privateroom/vip)
 "Uv" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/borderfloorblack{
 	dir = 4
 	},
@@ -8870,9 +8388,7 @@
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/entry)
 "UE" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled/techfloor,
 /area/awaymission/lucky7/maint1)
@@ -8934,9 +8450,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/button/remote/airlock{
 	id = "L7 Room 2";
 	name = "Door Lock";
@@ -8962,12 +8476,7 @@
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/security)
 "Vk" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/green{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/casinofloor)
 "Vm" = (
@@ -9100,9 +8609,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/casinofloor)
 "Wd" = (
@@ -9173,9 +8680,7 @@
 /area/awaymission/lucky7/security)
 "Wm" = (
 /obj/structure/table/gamblingtable,
-/obj/structure/cable/green{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/green,
 /area/awaymission/lucky7/privategameroom/two)
 "Wp" = (
@@ -9207,9 +8712,7 @@
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/bar)
 "Wu" = (
-/obj/structure/cable/green{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/junction{
 	dir = 1;
 	icon_state = "pipe-j2"
@@ -9248,9 +8751,7 @@
 /turf/simulated/floor/tiled/white,
 /area/awaymission/lucky7/kitchen)
 "WE" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/hall1)
 "WG" = (
@@ -9329,9 +8830,7 @@
 "WV" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/catwalk,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -9347,9 +8846,7 @@
 /turf/simulated/floor/tiled/white,
 /area/awaymission/lucky7/privateroom)
 "Xa" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/privateroom/five)
 "Xf" = (
@@ -9370,9 +8867,7 @@
 "Xn" = (
 /obj/machinery/door/airlock/glass,
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -9496,9 +8991,7 @@
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/privateroom/four)
 "XS" = (
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -9532,9 +9025,7 @@
 /turf/simulated/floor/tiled/white,
 /area/awaymission/lucky7/medical)
 "Yc" = (
-/obj/structure/cable/green{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -9558,9 +9049,7 @@
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/hall1)
 "Yn" = (
-/obj/structure/cable/green{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -9638,18 +9127,14 @@
 "YQ" = (
 /obj/structure/casino_table/blackjack_m,
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/light/floortube{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/casinofloor)
 "YT" = (
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/hall1)
 "YX" = (
@@ -9840,18 +9325,14 @@
 	pixel_x = -27;
 	start_charge = 0
 	},
-/obj/structure/cable/green{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/blue2,
 /area/awaymission/lucky7/privategameroom/three)
 "ZR" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -9874,9 +9355,7 @@
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/privateroom/two)
 "ZV" = (
-/obj/structure/cable/green{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/privateroom/four)
 "ZW" = (

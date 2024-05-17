@@ -1,8 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/obj/structure/cable/green{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/mineral/floor/virgo3b{
 	ignore_mapgen = 1
 	},
@@ -34,22 +32,18 @@
 /turf/simulated/wall/r_wall,
 /area/mine/explored/underdark)
 "ai" = (
-/obj/structure/cable/green{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/outdoors/dirt/virgo3b,
 /area/mine/explored/underdark)
 "aj" = (
 /obj/machinery/power/port_gen/pacman,
-/obj/structure/cable/green{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/mineral/floor/virgo3b{
 	ignore_mapgen = 1
 	},
 /area/mine/explored/underdark)
 "ak" = (
-/obj/structure/cable/green{
+/obj/structure/cable,
 	icon_state = "4-10"
 	},
 /obj/machinery/light/small{
@@ -61,21 +55,15 @@
 	},
 /area/mine/explored/underdark)
 "al" = (
-/obj/structure/cable/green{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/outdoors/dirt/virgo3b,
 /area/mine/explored/underdark)
 "am" = (
-/obj/structure/cable/green{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/outdoors/dirt/virgo3b,
 /area/mine/explored/underdark)
 "an" = (
-/obj/structure/cable/green{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/mineral/floor/virgo3b{
 	ignore_mapgen = 1
 	},
@@ -84,19 +72,17 @@
 /turf/simulated/floor/outdoors/dirt/virgo3b,
 /area/mine/explored/underdark)
 "ap" = (
-/obj/structure/cable/green{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/outdoors/dirt/virgo3b,
 /area/mine/explored/underdark)
 "aq" = (
-/obj/structure/cable/green{
+/obj/structure/cable,
 	icon_state = "5-8"
 	},
 /turf/simulated/floor/outdoors/dirt/virgo3b,
 /area/mine/explored/underdark)
 "ar" = (
-/obj/structure/cable/green{
+/obj/structure/cable,
 	icon_state = "1-5"
 	},
 /turf/simulated/floor/outdoors/dirt/virgo3b,
@@ -118,13 +104,13 @@
 /turf/simulated/floor/tiled/steel_dirty/virgo3b,
 /area/mine/explored/underdark)
 "av" = (
-/obj/structure/cable/green{
+/obj/structure/cable,
 	icon_state = "4-10"
 	},
 /turf/simulated/floor/outdoors/dirt/virgo3b,
 /area/mine/explored/underdark)
 "aw" = (
-/obj/structure/cable/green{
+/obj/structure/cable,
 	icon_state = "0-10"
 	},
 /obj/machinery/power/apc{
@@ -152,15 +138,13 @@
 /turf/simulated/floor/tiled/steel_dirty/virgo3b,
 /area/mine/explored/underdark)
 "aA" = (
-/obj/structure/cable/green{
+/obj/structure/cable,
 	icon_state = "0-10"
 	},
 /turf/simulated/floor/outdoors/dirt/virgo3b,
 /area/mine/explored/underdark)
 "aB" = (
-/obj/structure/cable/green{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/mineral/floor/virgo3b{
 	ignore_mapgen = 1
 	},
@@ -192,7 +176,7 @@
 /turf/simulated/floor/virgo3b,
 /area/mine/explored/underdark)
 "aI" = (
-/obj/structure/cable/green{
+/obj/structure/cable,
 	icon_state = "5-8"
 	},
 /turf/simulated/mineral/floor/virgo3b{
@@ -250,7 +234,7 @@
 /turf/simulated/floor/outdoors/dirt/virgo3b,
 /area/mine/explored/underdark)
 "aU" = (
-/obj/structure/cable/green{
+/obj/structure/cable,
 	icon_state = "1-5"
 	},
 /turf/simulated/mineral/floor/virgo3b{

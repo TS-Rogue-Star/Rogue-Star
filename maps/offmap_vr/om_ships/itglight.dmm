@@ -1032,12 +1032,7 @@
 /turf/simulated/floor,
 /area/itglight/starboardengi)
 "gH" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-4"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/binary/pump/on{
 	dir = 1;
 	name = "Scrubber to Waste"
@@ -1126,12 +1121,7 @@
 /turf/simulated/floor/tiled/eris/dark/monofloor,
 /area/itglight/cockpit)
 "hm" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-4"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/floor,
@@ -1280,12 +1270,7 @@
 /turf/simulated/floor,
 /area/itglight/medbay)
 "ih" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/machinery/power/solar,
 /turf/simulated/floor/airless,
 /area/itglight/starboardsolars)
@@ -1766,12 +1751,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/portengi)
 "lw" = (
@@ -1809,12 +1789,7 @@
 	},
 /area/itglight/cockpit)
 "lK" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/binary/pump/on{
 	name = "Air to Distro"
 	},
@@ -1934,15 +1909,7 @@
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/metingroom)
 "mu" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/portsolars)
 "mF" = (
@@ -1993,9 +1960,7 @@
 /turf/simulated/floor/tiled/monotile,
 /area/shuttle/itglightshuttle)
 "ne" = (
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/power/solar,
 /turf/simulated/floor/airless,
 /area/itglight/starboardsolars)
@@ -2110,9 +2075,7 @@
 /turf/simulated/floor,
 /area/itglight/portengi)
 "nW" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 5
 	},
@@ -2575,12 +2538,7 @@
 	},
 /area/itglight/restrooms)
 "rf" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/starboardsolars)
 "rg" = (
@@ -2627,21 +2585,11 @@
 /turf/simulated/floor/tiled/monotile,
 /area/shuttle/itglightshuttle)
 "rF" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/starboardengi)
 "rJ" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/portsolars)
 "rM" = (
@@ -2726,12 +2674,7 @@
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/starboardhighsec)
 "sX" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/portengi)
 "ta" = (
@@ -2766,12 +2709,7 @@
 	dir = 8;
 	pixel_x = 32
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/portsolars)
 "to" = (
@@ -2833,12 +2771,7 @@
 	},
 /area/itglight/starboardcargo)
 "tC" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/floor,
 /area/itglight/starboardengi)
@@ -2956,9 +2889,7 @@
 	},
 /area/itglight/starboarddocking)
 "uv" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/portsolars)
 "uy" = (
@@ -3629,15 +3560,11 @@
 	},
 /area/itglight/starboardengi)
 "zn" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/portsolars)
 "zp" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 9
 	},
@@ -3656,9 +3583,7 @@
 "zr" = (
 /obj/machinery/power/terminal,
 /obj/structure/cable/heavyduty,
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/itglight/starboardengi)
 "zs" = (
@@ -3693,12 +3618,7 @@
 	dir = 4;
 	pixel_x = -32
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/starboardsolars)
 "zG" = (
@@ -3727,12 +3647,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/starboardengi)
 "zQ" = (
@@ -4057,15 +3972,7 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/itglight/portdocking)
 "Cg" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/portsolars)
 "Cl" = (
@@ -4133,9 +4040,7 @@
 "CI" = (
 /obj/machinery/power/terminal,
 /obj/structure/cable/heavyduty,
-/obj/structure/cable/yellow{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/itglight/portengi)
 "CJ" = (
@@ -4184,15 +4089,7 @@
 /turf/simulated/floor,
 /area/itglight/starboardengi)
 "CX" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/starboardsolars)
 "Db" = (
@@ -4557,12 +4454,7 @@
 /turf/simulated/floor/tiled/eris/white/cargo,
 /area/itglight/medbay)
 "EV" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /obj/structure/cable/heavyduty{
 	icon_state = "4-8"
 	},
@@ -4674,22 +4566,12 @@
 	},
 /area/itglight/lockers)
 "FH" = (
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /obj/machinery/power/solar,
 /turf/simulated/floor/airless,
 /area/itglight/portsolars)
 "FI" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/portsolars)
 "FQ" = (
@@ -4929,15 +4811,7 @@
 /obj/structure/cable/heavyduty{
 	icon_state = "0-4"
 	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/portsolars)
 "GV" = (
@@ -5172,12 +5046,7 @@
 	},
 /area/itglight/portengi)
 "IF" = (
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/machinery/power/solar,
 /turf/simulated/floor/airless,
 /area/itglight/portsolars)
@@ -5340,12 +5209,7 @@
 /obj/structure/cable/heavyduty{
 	icon_state = "4-8"
 	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/starboardsolars)
 "JJ" = (
@@ -5542,9 +5406,7 @@
 /turf/simulated/floor/reinforced,
 /area/itglight/shuttlebay)
 "Lg" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/machinery/power/solar,
 /turf/simulated/floor/airless,
 /area/itglight/portsolars)
@@ -5785,9 +5647,7 @@
 /turf/simulated/floor/glass/reinforced,
 /area/itglight/common)
 "MG" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/starboardsolars)
 "MI" = (
@@ -6022,9 +5882,7 @@
 /area/itglight/passengersleeping)
 "Oj" = (
 /obj/machinery/power/tracker,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/portsolars)
 "Ol" = (
@@ -6291,9 +6149,7 @@
 /area/itglight/shuttlebay)
 "PN" = (
 /obj/machinery/power/tracker,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/starboardsolars)
 "PO" = (
@@ -6572,12 +6428,7 @@
 /turf/simulated/floor/tiled/white,
 /area/itglight/showers)
 "Ry" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /obj/structure/cable/heavyduty{
 	icon_state = "4-8"
 	},
@@ -6597,9 +6448,7 @@
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
 	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/floor,
 /area/itglight/portengi)
@@ -6661,15 +6510,7 @@
 /obj/structure/cable/heavyduty{
 	icon_state = "0-8"
 	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/starboardsolars)
 "SF" = (
@@ -7134,9 +6975,7 @@
 /turf/simulated/floor,
 /area/itglight/portengi)
 "Wb" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/starboardsolars)
 "Wc" = (
@@ -7158,9 +6997,7 @@
 /obj/structure/cable/pink{
 	icon_state = "1-2"
 	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/starboardsolars)
 "Wh" = (
@@ -7203,9 +7040,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/itglight/passengersleeping)
 "WD" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/portsolars)
 "WE" = (
@@ -7383,19 +7218,12 @@
 /turf/simulated/floor/tiled/white,
 /area/itglight/restrooms)
 "XE" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/power/solar,
 /turf/simulated/floor/airless,
 /area/itglight/starboardsolars)
 "XF" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/portsolars)
 "XH" = (
@@ -7405,9 +7233,7 @@
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
 	},
-/obj/structure/cable/yellow{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/floor,
 /area/itglight/starboardengi)
@@ -7441,9 +7267,7 @@
 /turf/simulated/floor/airless,
 /area/itglight/starboardsolars)
 "XP" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/starboardsolars)
 "XQ" = (
@@ -7455,9 +7279,7 @@
 /obj/structure/cable/pink{
 	icon_state = "1-2"
 	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/portsolars)
 "XX" = (
@@ -7511,9 +7333,7 @@
 /turf/simulated/floor,
 /area/itglight/portengi)
 "Ys" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/starboardsolars)
 "Yt" = (
@@ -7525,19 +7345,12 @@
 /turf/simulated/floor/airless,
 /area/itglight/portsolars)
 "Yw" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/machinery/power/solar,
 /turf/simulated/floor/airless,
 /area/itglight/starboardsolars)
 "Yy" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/starboardsolars)
 "Yz" = (
@@ -7681,15 +7494,7 @@
 /turf/simulated/floor/tiled/white,
 /area/itglight/showers)
 "Zh" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/starboardsolars)
 "Zi" = (
@@ -7733,9 +7538,7 @@
 /turf/simulated/floor/tiled/eris/cafe,
 /area/itglight/kitchen)
 "Zq" = (
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/power/solar,
 /turf/simulated/floor/airless,
 /area/itglight/portsolars)
@@ -7802,12 +7605,7 @@
 /obj/structure/cable/heavyduty{
 	icon_state = "4-8"
 	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/starboardengi)
 "ZN" = (

@@ -37,7 +37,7 @@
 /turf/simulated/shuttle/floor,
 /area/submap/event_autonomous_drone/cargo)
 "eW" = (
-/obj/structure/cable/green{
+/obj/structure/cable,
 	dir = 1;
 	icon_state = "4-8"
 	},
@@ -47,9 +47,7 @@
 /turf/simulated/shuttle/floor/yellow,
 /area/submap/event_autonomous_drone/engineering)
 "gz" = (
-/obj/structure/cable/green{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
 	dir = 6
 	},
@@ -69,9 +67,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 9
 	},
-/obj/structure/cable/green{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/shuttle/plating,
 /area/submap/event_autonomous_drone/command)
 "jA" = (
@@ -84,9 +80,7 @@
 /turf/simulated/shuttle/plating,
 /area/submap/event_autonomous_drone/command)
 "lB" = (
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/shuttle/plating,
 /area/submap/event_autonomous_drone/command)
 "mU" = (
@@ -113,16 +107,12 @@
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
 	dir = 8
 	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/shuttle/floor/yellow,
 /area/submap/event_autonomous_drone/engineering)
 "pM" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance_hatch,
 /turf/simulated/shuttle/floor/yellow,
@@ -195,9 +185,7 @@
 /turf/simulated/shuttle/plating,
 /area/submap/event_autonomous_drone/command)
 "tF" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/visible/fuel,
 /turf/simulated/shuttle/plating,
 /area/submap/event_autonomous_drone/command)
@@ -205,9 +193,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
 	dir = 5
 	},
-/obj/structure/cable/green{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/shuttle/plating,
 /area/submap/event_autonomous_drone/command)
 "xS" = (
@@ -233,9 +219,7 @@
 /turf/simulated/shuttle/plating/airless/carry,
 /area/submap/event_autonomous_drone/engineering)
 "Af" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/visible/fuel,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch,
@@ -271,12 +255,7 @@
 /turf/simulated/shuttle/plating,
 /area/submap/event_autonomous_drone/command)
 "Cb" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/green{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/visible/fuel,
 /turf/simulated/shuttle/floor,
 /area/submap/event_autonomous_drone/cargo)
@@ -317,9 +296,7 @@
 /obj/machinery/power/apc/alarms_hidden{
 	pixel_y = -26
 	},
-/obj/structure/cable/green{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/simulated/shuttle/floor/yellow,
 /area/submap/event_autonomous_drone/engineering)
 "NF" = (
@@ -346,18 +323,11 @@
 /obj/machinery/power/smes{
 	charge = 500000
 	},
-/obj/structure/cable/green{
-	icon_state = "0-4"
-	},
-/obj/structure/cable/green{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/shuttle/floor/yellow,
 /area/submap/event_autonomous_drone/engineering)
 "QU" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/visible/fuel{
 	dir = 8
 	},
@@ -367,9 +337,7 @@
 /turf/simulated/shuttle/wall/dark/hard_corner,
 /area/submap/event_autonomous_drone/cargo)
 "RG" = (
-/obj/structure/cable/green{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc/alarms_hidden{
 	pixel_y = -26
 	},
@@ -388,9 +356,7 @@
 /obj/machinery/power/apc/alarms_hidden{
 	pixel_y = -26
 	},
-/obj/structure/cable/green{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -458,16 +424,12 @@
 /turf/simulated/shuttle/wall/dark,
 /area/submap/event_autonomous_drone/command)
 "Xr" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/visible/fuel,
 /turf/simulated/shuttle/floor,
 /area/submap/event_autonomous_drone/cargo)
 "Xx" = (
-/obj/structure/cable/green{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/machinery/computer/ship/sensors{
 	dir = 1
 	},
@@ -488,9 +450,7 @@
 	dir = 8;
 	icon_state = "2-4"
 	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/shuttle/floor/yellow,
 /area/submap/event_autonomous_drone/engineering)
 "Yg" = (

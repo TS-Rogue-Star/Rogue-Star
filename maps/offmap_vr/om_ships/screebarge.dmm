@@ -47,9 +47,7 @@
 	dir = 1;
 	icon_state = "emitter"
 	},
-/obj/structure/cable/cyan{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -89,12 +87,7 @@
 /turf/simulated/floor/plating,
 /area/shuttle/screebarge/fore)
 "an" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-4"
-	},
-/obj/structure/cable/cyan{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/reinforced,
 /area/shuttle/screebarge/fore)
 "ao" = (
@@ -106,9 +99,7 @@
 	dir = 1;
 	icon_state = "pipe-s"
 	},
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/reinforced,
 /area/shuttle/screebarge/fore)
 "ap" = (
@@ -116,27 +107,15 @@
 	dir = 1;
 	icon_state = "bay_chair_preview"
 	},
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/reinforced,
 /area/shuttle/screebarge/fore)
 "aq" = (
-/obj/structure/cable/cyan{
-	icon_state = "2-4"
-	},
-/obj/structure/cable/cyan{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/reinforced,
 /area/shuttle/screebarge/fore)
 "ar" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-8"
-	},
-/obj/structure/cable/cyan{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/reinforced,
 /area/shuttle/screebarge/fore)
 "as" = (
@@ -149,9 +128,7 @@
 /turf/simulated/floor/plating,
 /area/shuttle/screebarge/fore)
 "at" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/reinforced,
 /area/shuttle/screebarge/fore)
 "au" = (
@@ -195,9 +172,7 @@
 	dir = 1;
 	icon_state = "term"
 	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/reinforced,
 /area/shuttle/screebarge/fore)
 "aA" = (
@@ -220,9 +195,7 @@
 	dir = 8;
 	icon_state = "bay_chair_preview"
 	},
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/reinforced,
 /area/shuttle/screebarge/fore)
 "aD" = (
@@ -248,9 +221,7 @@
 	dir = 1;
 	icon_state = "bay_chair_preview"
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/reinforced,
 /area/shuttle/screebarge/fore)
 "aG" = (
@@ -267,9 +238,7 @@
 /turf/simulated/floor/reinforced,
 /area/shuttle/screebarge/fore)
 "aI" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/reinforced,
 /area/shuttle/screebarge/fore)
 "aJ" = (
@@ -277,9 +246,7 @@
 	dir = 1;
 	icon_state = "emitter"
 	},
-/obj/structure/cable/cyan{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -299,9 +266,7 @@
 /area/shuttle/screebarge/mid)
 "aN" = (
 /obj/machinery/door/airlock/maintenance/command,
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/shuttle/screebarge/mid)
 "aO" = (
@@ -342,9 +307,7 @@
 /turf/simulated/floor/tiled/steel_dirty,
 /area/shuttle/screebarge/mid)
 "aU" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/shuttle/screebarge/mid)
 "aV" = (
@@ -361,37 +324,24 @@
 /turf/simulated/floor/tiled/steel_dirty,
 /area/shuttle/screebarge/mid)
 "aX" = (
-/obj/structure/cable/cyan{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/shuttle/screebarge/mid)
 "aY" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/shuttle/screebarge/mid)
 "aZ" = (
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/shuttle/screebarge/mid)
 "ba" = (
 /obj/machinery/door/airlock/maintenance/medical,
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/shuttle/screebarge/mid)
 "bb" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-8"
-	},
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/shuttle/screebarge/mid)
 "bc" = (
@@ -412,15 +362,11 @@
 /turf/simulated/floor/tiled/steel_dirty,
 /area/shuttle/screebarge/mid)
 "be" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/shuttle/screebarge/mid)
 "bf" = (
-/obj/structure/cable/cyan{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	pixel_x = 28
 	},
@@ -433,9 +379,7 @@
 	id_tag = "battlebarge_foredoor";
 	locked = 1
 	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/shuttle/screebarge/fore)
 "bh" = (
@@ -443,9 +387,7 @@
 /area/shuttle/screebarge/aft)
 "bi" = (
 /obj/machinery/door/airlock/maintenance/engi,
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/shuttle/screebarge/aft)
 "bj" = (
@@ -467,9 +409,7 @@
 	dir = 1;
 	icon_state = "map"
 	},
-/obj/structure/cable/cyan{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/shuttle/screebarge/aft)
 "bm" = (
@@ -477,9 +417,7 @@
 	dir = 4;
 	icon_state = "map_off"
 	},
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/shuttle/screebarge/aft)
 "bn" = (
@@ -487,9 +425,7 @@
 	dir = 1;
 	icon_state = "map"
 	},
-/obj/structure/cable/cyan{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	pixel_x = 0;
 	pixel_y = 28
@@ -527,9 +463,7 @@
 /turf/simulated/floor/plating,
 /area/shuttle/screebarge/aft)
 "bs" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/machinery/light/small,
 /turf/simulated/floor/reinforced,
 /area/shuttle/screebarge/fore)
@@ -586,9 +520,7 @@
 /turf/simulated/shuttle/plating/airless/carry,
 /area/shuttle/screebarge/aft)
 "bB" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/effect/shuttle_landmark/shuttle_initializer/screebarge,
 /obj/effect/overmap/visitable/ship/landable/screebarge,
 /turf/simulated/floor/reinforced,
@@ -642,9 +574,7 @@
 	dir = 8;
 	icon_state = "bay_chair_preview"
 	},
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/panic_button{
 	pixel_x = 32;
 	pixel_y = 32
