@@ -3,11 +3,7 @@
 /obj/effect/floor_decal/industrial/warning/corner{
 	dir = 1
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/gecko_cr_engineering)
 "aj" = (
@@ -26,11 +22,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/gecko_cr_cockpit)
 "aK" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/structure/catwalk,
 /obj/structure/railing/grey,
 /turf/simulated/floor/plating,
@@ -312,11 +304,7 @@
 /area/shuttle/gecko_cr_engineering)
 "hC" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/railing/grey{
 	dir = 4
 	},
@@ -367,11 +355,7 @@
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /obj/effect/catwalk_plated,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
@@ -379,11 +363,7 @@
 /area/shuttle/gecko_cr_cockpit)
 "im" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/railing/grey{
 	dir = 4
 	},
@@ -401,11 +381,7 @@
 /turf/template_noop,
 /area/shuttle/gecko_cr_engineering)
 "iL" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/effect/catwalk_plated,
@@ -768,11 +744,7 @@
 /obj/machinery/firealarm{
 	pixel_y = 26
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/reinforced,
 /area/shuttle/gecko_cr)
 "pr" = (
@@ -825,11 +797,7 @@
 "pH" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
@@ -845,11 +813,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/gecko_cr_cockpit)
 "qh" = (
@@ -940,11 +904,7 @@
 /area/shuttle/gecko_cr_engineering)
 "rA" = (
 /obj/structure/railing/grey,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -1001,10 +961,7 @@
 	name = "north bump";
 	pixel_y = 24
 	},
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/meter,
 /obj/effect/catwalk_plated/dark,
 /turf/simulated/floor/plating,
@@ -1172,10 +1129,7 @@
 /area/shuttle/gecko_cr)
 "wF" = (
 /obj/machinery/power/smes,
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/gecko_cr_engineering)
 "wG" = (
@@ -1231,11 +1185,7 @@
 "xf" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/catwalk,
 /obj/structure/railing/grey{
 	dir = 4
@@ -1436,11 +1386,7 @@
 "Bp" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/effect/catwalk_plated,
 /turf/simulated/floor/plating,
 /area/shuttle/gecko_cr)
@@ -1559,11 +1505,7 @@
 /area/shuttle/gecko_cr_cockpit)
 "Da" = (
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/railing/grey{
 	dir = 8
 	},
@@ -1605,11 +1547,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/gecko_cr_cockpit)
 "Dl" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
 	},
@@ -1749,11 +1687,7 @@
 /obj/effect/floor_decal/industrial/warning,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/gecko_cr_cockpit)
 "FS" = (
@@ -2028,11 +1962,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/door/airlock/hatch{
 	req_one_access = list()
 	},
@@ -2061,19 +1991,11 @@
 "Ld" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/industrial/warning{
 	dir = 1
 	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/gecko_cr_engineering)
 "Ln" = (
@@ -2098,11 +2020,7 @@
 /area/shuttle/gecko_cr)
 "LU" = (
 /obj/structure/bed/chair/bay/comfy,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
@@ -2118,10 +2036,7 @@
 	name = "north bump";
 	pixel_y = 24
 	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/gecko_cr_engineering)
 "Mf" = (
@@ -2168,11 +2083,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/shuttle/gecko_cr_engineering)
@@ -2225,10 +2136,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -2291,11 +2199,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/gecko_cr_cockpit)
 "OJ" = (
@@ -2350,11 +2254,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/gecko_cr_cockpit)
 "Pc" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
@@ -2382,11 +2282,7 @@
 "Pz" = (
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/catwalk,
 /obj/structure/railing/grey{
 	dir = 4
@@ -2406,11 +2302,7 @@
 /obj/effect/floor_decal/industrial/warning,
 /obj/structure/closet/crate/engineering,
 /obj/item/weapon/storage/toolbox/mechanical,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/item/weapon/storage/toolbox/electrical,
 /obj/effect/floor_decal/industrial/outline/grey,
 /turf/simulated/floor/tiled/techfloor,
@@ -2525,31 +2417,19 @@
 "Ri" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/gecko_cr_cockpit)
 "Rp" = (
 /obj/structure/railing/grey,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/shuttle/gecko_cr)
 "RB" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/door/blast/regular{
 	density = 0;
 	dir = 4;
@@ -2606,16 +2486,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/handrail,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/effect/catwalk_plated,
 /turf/simulated/floor/plating,
 /area/shuttle/gecko_cr)
@@ -2711,11 +2582,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/gecko_cr_engineering)
 "UY" = (
@@ -2765,11 +2632,7 @@
 "Vr" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/gecko_cr_cockpit)
 "Vs" = (
@@ -2807,11 +2670,7 @@
 /turf/simulated/floor/plating,
 /area/shuttle/gecko_cr_engineering)
 "Wo" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/industrial/warning/corner,
 /obj/effect/floor_decal/industrial/warning/corner{
 	dir = 8
@@ -2869,11 +2728,7 @@
 /area/template_noop)
 "WW" = (
 /obj/effect/floor_decal/industrial/warning,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/gecko_cr_engineering)
 "WZ" = (
@@ -2897,11 +2752,7 @@
 "Xn" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,

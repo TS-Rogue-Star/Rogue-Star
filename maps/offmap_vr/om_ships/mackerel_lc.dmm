@@ -37,20 +37,12 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/mackerel_lc)
 "cg" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/door/airlock/hatch{
 	req_one_access = list()
 	},
@@ -290,10 +282,7 @@
 /obj/effect/floor_decal/industrial/warning/corner{
 	dir = 1
 	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/mackerel_lc)
 "sL" = (
@@ -360,11 +349,7 @@
 /area/shuttle/mackerel_lc)
 "wF" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/industrial/warning/corner{
 	dir = 8
 	},
@@ -404,11 +389,7 @@
 /turf/template_noop,
 /area/shuttle/mackerel_lc)
 "zq" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/wall/rshull,
 /area/shuttle/mackerel_lc)
 "BN" = (
@@ -419,11 +400,7 @@
 /obj/machinery/atmospherics/pipe/manifold/visible/yellow{
 	dir = 1
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/industrial/warning{
 	dir = 1
 	},
@@ -464,11 +441,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/mackerel_lc)
 "EC" = (
@@ -549,10 +522,7 @@
 /area/shuttle/mackerel_lc)
 "GF" = (
 /obj/machinery/power/smes,
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/shuttle/mackerel_lc)
 "GK" = (
@@ -593,11 +563,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/mackerel_lc)
 "Ko" = (
@@ -765,11 +731,7 @@
 /area/shuttle/mackerel_lc)
 "Wj" = (
 /obj/effect/floor_decal/industrial/warning,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/mackerel_lc)
 "Wr" = (
@@ -796,11 +758,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/mackerel_lc)
 "Xn" = (
@@ -814,11 +772,7 @@
 /area/shuttle/mackerel_lc)
 "Xs" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/mackerel_lc)
 "Zb" = (

@@ -68,10 +68,7 @@
 /area/shuttle/salamander_wreck)
 "bI" = (
 /obj/structure/handrail,
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
@@ -137,11 +134,7 @@
 	},
 /area/shuttle/salamander_wreck_head)
 "bY" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
@@ -164,10 +157,7 @@
 /obj/structure/handrail{
 	dir = 1
 	},
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
@@ -236,11 +226,7 @@
 /turf/simulated/floor/airless,
 /area/shuttle/salamander_wreck_engineering)
 "dO" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
@@ -309,11 +295,7 @@
 /area/shuttle/salamander_wreck)
 "eP" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
@@ -351,11 +333,7 @@
 /turf/simulated/floor/airless,
 /area/shuttle/salamander_wreck_engineering)
 "fE" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/railing/grey{
 	dir = 8
 	},
@@ -415,11 +393,7 @@
 	},
 /area/shuttle/salamander_wreck)
 "gl" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
@@ -521,11 +495,7 @@
 /turf/simulated/floor/tiled/techmaint/airless,
 /area/shuttle/salamander_wreck)
 "hp" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/techmaint/airless,
@@ -550,11 +520,7 @@
 /turf/simulated/floor/tiled/techmaint/airless,
 /area/shuttle/salamander_wreck_cockpit)
 "hO" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -584,11 +550,7 @@
 /turf/simulated/floor/airless,
 /area/shuttle/salamander_wreck_engineering)
 "im" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -598,38 +560,21 @@
 	},
 /area/shuttle/salamander_wreck_engineering)
 "is" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/techmaint/airless,
 /area/shuttle/salamander_wreck_engineering)
 "iC" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/techmaint/airless,
 /area/shuttle/salamander_wreck)
 "iJ" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
@@ -657,11 +602,7 @@
 /turf/simulated/floor/tiled/techmaint/airless,
 /area/shuttle/salamander_wreck)
 "iS" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
@@ -669,11 +610,7 @@
 /turf/simulated/floor/tiled/techmaint/airless,
 /area/shuttle/salamander_wreck)
 "iW" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
@@ -705,21 +642,7 @@
 	},
 /area/shuttle/salamander_wreck)
 "jT" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
@@ -736,11 +659,7 @@
 /obj/machinery/door/firedoor/multi_tile{
 	dir = 1
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -760,11 +679,7 @@
 /turf/simulated/floor/airless,
 /area/shuttle/salamander_wreck_engineering)
 "kL" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/handrail{
 	dir = 8
 	},
@@ -821,11 +736,7 @@
 /area/shuttle/salamander_wreck)
 "ld" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
@@ -996,11 +907,7 @@
 	},
 /area/shuttle/salamander_wreck_cockpit)
 "nB" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
@@ -1144,16 +1051,7 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/salamander_wreck)
 "qg" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -1170,10 +1068,7 @@
 /area/shuttle/salamander_wreck_cockpit)
 "qn" = (
 /obj/structure/handrail,
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
@@ -1250,11 +1145,7 @@
 /turf/simulated/floor/tiled/techmaint/airless,
 /area/shuttle/salamander_wreck)
 "rw" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /turf/simulated/floor/tiled/techmaint/airless,
 /area/shuttle/salamander_wreck)
@@ -1267,11 +1158,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint/airless,
 /area/shuttle/salamander_wreck)
 "sb" = (
@@ -1329,11 +1216,7 @@
 	},
 /area/shuttle/salamander_wreck_q1)
 "vI" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
@@ -1347,11 +1230,7 @@
 /turf/simulated/floor/plating,
 /area/shuttle/salamander_wreck)
 "xL" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -1362,11 +1241,7 @@
 /turf/simulated/floor/tiled/techmaint/airless,
 /area/shuttle/salamander_wreck)
 "yv" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -1383,11 +1258,7 @@
 /turf/template_noop,
 /area/shuttle/salamander_wreck_head)
 "zO" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
@@ -1429,10 +1300,7 @@
 /obj/structure/handrail{
 	dir = 1
 	},
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
@@ -1551,11 +1419,7 @@
 /area/shuttle/salamander_wreck_cockpit)
 "Gr" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
@@ -1567,11 +1431,7 @@
 /turf/simulated/floor/tiled/techmaint/airless,
 /area/shuttle/salamander_wreck_q1)
 "HG" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/structure/handrail{
 	dir = 1
 	},
@@ -1615,11 +1475,7 @@
 	},
 /area/shuttle/salamander_wreck)
 "IQ" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
@@ -1699,11 +1555,7 @@
 /turf/template_noop,
 /area/shuttle/salamander_wreck_engineering)
 "No" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
@@ -1801,11 +1653,7 @@
 /area/shuttle/salamander_wreck)
 "Qq" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
@@ -1893,11 +1741,7 @@
 	},
 /area/shuttle/salamander_wreck_q2)
 "Td" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /obj/structure/railing/grey{
 	dir = 8
 	},
@@ -2024,11 +1868,7 @@
 /turf/simulated/floor/airless,
 /area/shuttle/salamander_wreck_engineering)
 "WN" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/door/airlock/multi_tile/metal{
 	density = 0;
 	dir = 2;
@@ -2098,10 +1938,7 @@
 /obj/machinery/power/port_gen/pacman/mrs{
 	anchored = 1
 	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/machinery/alarm/alarms_hidden{
 	pixel_y = 26
 	},

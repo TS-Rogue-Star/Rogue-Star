@@ -154,11 +154,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/mackerel_hc)
 "mf" = (
@@ -229,22 +225,14 @@
 /area/shuttle/mackerel_hc)
 "rr" = (
 /obj/effect/floor_decal/industrial/warning,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/mackerel_hc)
 "sg" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/yellow{
 	dir = 1
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/industrial/warning{
 	dir = 1
 	},
@@ -337,20 +325,12 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/mackerel_hc)
 "wF" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/wall/rshull,
 /area/shuttle/mackerel_hc)
 "xd" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/mackerel_hc)
 "xB" = (
@@ -367,10 +347,7 @@
 /area/shuttle/mackerel_hc)
 "zq" = (
 /obj/machinery/power/smes,
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/shuttle/mackerel_hc)
 "zY" = (
@@ -393,11 +370,7 @@
 /area/shuttle/mackerel_hc)
 "BN" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/door/airlock/hatch{
 	req_one_access = list()
 	},
@@ -447,11 +420,7 @@
 /area/shuttle/mackerel_hc)
 "Dl" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/industrial/warning/corner{
 	dir = 8
 	},
@@ -535,11 +504,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/mackerel_hc)
 "GW" = (
@@ -676,11 +641,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/mackerel_hc)
 "PI" = (
@@ -784,10 +745,7 @@
 /obj/effect/floor_decal/industrial/warning/corner{
 	dir = 1
 	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/mackerel_hc)
 "TG" = (
@@ -881,11 +839,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/mackerel_hc)
 "Zb" = (

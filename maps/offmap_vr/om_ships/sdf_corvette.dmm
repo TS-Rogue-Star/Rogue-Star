@@ -75,11 +75,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/sdf_corvette)
 "en" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
@@ -174,11 +170,7 @@
 /turf/simulated/wall/rshull,
 /area/shuttle/sdf_corvette)
 "lN" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
@@ -186,11 +178,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/sdf_corvette)
 "lW" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/door/firedoor/glass,
 /obj/effect/map_helper/airlock/door/int_door,
 /obj/machinery/door/airlock/voidcraft,
@@ -310,10 +298,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
 	pixel_x = -30
@@ -321,11 +306,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/sdf_corvette)
 "sG" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 4
 	},
@@ -347,11 +328,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/fuel{
 	dir = 8
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 8
 	},
@@ -372,11 +349,6 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/sdf_corvette)
 "uD" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/structure/cable,
 	d1 = 1;
 	d2 = 2;
@@ -418,11 +390,6 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/sdf_corvette)
 "xk" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/structure/cable,
 	d1 = 4;
 	d2 = 8;
@@ -439,11 +406,7 @@
 /turf/simulated/wall/rshull,
 /area/shuttle/sdf_corvette)
 "yA" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
@@ -491,11 +454,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/sdf_corvette)
 "Cg" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 4
 	},
@@ -582,11 +541,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 4
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/door/firedoor/glass,
 /obj/effect/floor_decal/industrial/warning{
 	dir = 4
@@ -633,11 +588,7 @@
 /obj/structure/handrail{
 	dir = 1
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden,
 /obj/machinery/button/remote/airlock{
 	dir = 1;

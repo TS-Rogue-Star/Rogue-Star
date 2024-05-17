@@ -212,16 +212,7 @@
 /turf/space,
 /area/space)
 "aK" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/space,
 /area/space)
 "aL" = (
@@ -281,11 +272,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/mercbase/command)
 "fq" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/mercbase/barracks)
 "fK" = (
@@ -561,11 +548,7 @@
 /turf/simulated/floor,
 /area/mercbase/airlock)
 "gR" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/mercbase/command)
 "gS" = (
@@ -591,11 +574,6 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /turf/simulated/floor/tiled/dark,
 /area/mercbase/medical)
 "gU" = (
@@ -604,11 +582,7 @@
 /turf/simulated/floor/plating,
 /area/mercbase/engineering)
 "gV" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/mercbase/power)
 "gW" = (
@@ -639,11 +613,7 @@
 /area/mercbase/medicalOR)
 "ha" = (
 /obj/machinery/atmospherics/unary/vent_pump/on,
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/mercbase/medicalOR)
 "hb" = (
@@ -799,11 +769,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /turf/simulated/floor/tiled/dark,
 /area/mercbase/hall)
 "hw" = (
@@ -838,11 +803,7 @@
 	icon_state = "intact-aux";
 	dir = 10
 	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/mercbase/hall)
 "hC" = (
@@ -933,11 +894,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/mercbase/medical)
 "hN" = (
@@ -1014,11 +971,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/mercbase/medical)
@@ -1041,11 +993,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/mercbase/eqroom)
 "hV" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/mercbase/medical)
 "hW" = (
@@ -1156,11 +1104,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /turf/simulated/floor/tiled/dark,
 /area/mercbase/hall)
 "ii" = (
@@ -1227,11 +1170,7 @@
 "io" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/mercbase/power)
 "ip" = (
@@ -1564,11 +1503,6 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /turf/simulated/floor/tiled/dark,
 /area/mercbase/hall)
 "jn" = (
@@ -1660,16 +1594,6 @@
 /area/mercbase/panels)
 "jy" = (
 /obj/structure/cable,
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /turf/simulated/floor/plating,
 /area/mercbase/panels)
 "jz" = (
@@ -1705,16 +1629,6 @@
 /area/mercbase/panels)
 "jG" = (
 /obj/structure/cable,
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /turf/simulated/floor/plating,
 /area/mercbase/panels)
 "jH" = (
@@ -1737,11 +1651,6 @@
 	dir = 6
 	},
 /obj/structure/cable,
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /turf/simulated/floor/tiled/dark,
 /area/mercbase/engineering)
 "jL" = (
@@ -1928,11 +1837,7 @@
 /turf/simulated/floor,
 /area/mercbase/fuel)
 "ki" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/mercbase/roid)
 "kj" = (
@@ -1974,11 +1879,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable,
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /turf/simulated/floor/tiled/dark,
 /area/mercbase/engineering)
 "kp" = (
@@ -2008,11 +1908,7 @@
 	icon_state = "intact-aux";
 	dir = 6
 	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/mercbase/hall)
 "ks" = (
@@ -2139,11 +2035,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/mercbase/barracks)
 "kH" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 1
@@ -2663,11 +2555,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/mercbase/hall)
 "mB" = (
@@ -2752,11 +2640,7 @@
 "mL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/mercbase/dock)
 "mM" = (
@@ -2773,11 +2657,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/mercbase/command)
 "mO" = (
