@@ -54,7 +54,7 @@
 	var/obj/machinery/power/terminal/terminal1
 	var/obj/machinery/power/terminal/terminal2
 	var/obj/machinery/power/terminal/terminal3	//max of three extras 'cuz this is very silly.
-	var/list/terminalconnections
+	var/list/terminalconnections = list()
 		//Three layers of cables = one terminal per layer, but each direction is on a different layer to make powernets less shit. Shouldn't be stackable.
 	//Buildable Vars
 	var/max_coils = SMESMAXCOIL			//30M capacity, 1.5MW input/output when fully upgraded /w default coils
