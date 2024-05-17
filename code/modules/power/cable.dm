@@ -169,7 +169,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 //If underfloor, hide the cable
 /obj/structure/cable/hide(var/i)
 	if(istype(loc, /turf))
-		invisibility = i ? 101 : 0
+		invisibility = i ? INVISIBILITY_MAXIMUM : 0
 	update_icon()
 
 /obj/structure/cable/hides_under_flooring()
@@ -611,6 +611,11 @@ GLOBAL_LIST(cable_radial_layer_list)
 			icon_state = "cablerelay-broken-cable"
 			target_type = /obj/structure/cable/multilayer/multiz
 			target_layer = CABLE_LAYER_2
+		if("Cable restraints")
+			if (amount >= CABLE_RESTRAINTS_COST)
+				if(use(CABLE_RESTRAINTS_COST))
+					var/obj/item/weapon/handcuffs/cable/restraints = new(null, color)
+					user.put_in_hands(restraints)
 	update_icon()
 
 ///////////////////////////////////

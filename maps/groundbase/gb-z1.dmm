@@ -4117,9 +4117,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/groundbase/command/tcomms/chamber)
 "jO" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "1-4"
-	},
+/obj/structure/cable/heavyduty,
 /turf/simulated/floor,
 /area/groundbase/unexplored/outdoors)
 "jP" = (
@@ -7417,9 +7415,7 @@
 /turf/simulated/wall,
 /area/groundbase/medical/lhallway)
 "rP" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "0-8"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/cable,
 /obj/structure/railing,
 /obj/structure/railing{
@@ -9125,7 +9121,6 @@
 /area/groundbase/level1/southeastspur)
 "wp" = (
 /obj/structure/cable/ender{
-	icon_state = "2-8";
 	id = "westwilds"
 	},
 /obj/structure/railing{
@@ -12151,9 +12146,7 @@
 /turf/simulated/floor/outdoors/newdirt,
 /area/maintenance/groundbase/level1/swtunnel)
 "Eh" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "1-2"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/railing{
 	dir = 4
 	},
@@ -12501,9 +12494,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/iaa1)
 "Ff" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "2-8"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/railing{
 	dir = 4
 	},
@@ -14728,9 +14719,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/gateway)
 "KN" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "1-4"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/railing,
 /turf/simulated/floor,
 /area/groundbase/unexplored/outdoors)
@@ -17749,9 +17738,7 @@
 	},
 /area/groundbase/security/halls)
 "SM" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "4-8"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/railing,
 /obj/structure/railing{
 	dir = 1

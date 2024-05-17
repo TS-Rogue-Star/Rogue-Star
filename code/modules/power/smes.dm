@@ -134,7 +134,7 @@
 					terminal1 = term
 				else if(term.cable_layer == CABLE_LAYER_2)
 					terminal2 = term
-				else if(term.cable_layer == CABLE_LAYER_3)
+				else if(term.cable_layer == CABLE_LAYER_3 || term.cable_layer == CABLE_LAYER_4)
 					terminal3 = term
 				terminalconnections |= term
 				term.master = src
@@ -326,7 +326,7 @@
 			terminal2.set_dir(get_dir(turf,src))
 			terminal2.master = src
 			terminalconnections += terminal2
-		else if(terminal_cable_layer == CABLE_LAYER_3)
+		else if(terminal_cable_layer == CABLE_LAYER_3 || terminal_cable_layer == CABLE_LAYER_4 )
 			terminal3 = new/obj/machinery/power/terminal/layer3(turf)
 			terminal3.set_dir(get_dir(turf,src))
 			terminal3.master = src
@@ -340,7 +340,7 @@
 		return terminal1
 	else if(terminalslot == CABLE_LAYER_2)
 		return terminal2
-	else if(terminalslot == CABLE_LAYER_3)
+	else if(terminalslot == CABLE_LAYER_3 || terminalslot == CABLE_LAYER_3)
 		return terminal3
 
 /obj/machinery/power/smes/disconnect_terminal(terminalslot)
@@ -454,7 +454,7 @@
 		to_chat(user, "<span class='filter_notice'><span class='warning'>You need to open access hatch on [src] first!</span></span>")
 		return FALSE
 
-	if(istype(W, /obj/item/weapon/weldingtool))
+	if(W.has_tool_quality(TOOL_WELDER))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(!WT.isOn())
 			to_chat(user, "<span class='filter_notice'>Turn on \the [WT] first!</span>")
@@ -467,7 +467,7 @@
 			damage = 0
 		return FALSE
 
-	else if(istype(W, /obj/item/stack/cable_coil) && !building_terminal)
+	else if(W.has_tool_quality(TOOL_CABLE_COIL) && !building_terminal)
 		var/obj/item/stack/cable_coil/C = W
 		var/dir = get_dir(user,src)
 		if(ISDIAGONALDIR(dir))//we don't want diagonal click

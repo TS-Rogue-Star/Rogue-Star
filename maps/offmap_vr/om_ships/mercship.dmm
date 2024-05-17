@@ -456,11 +456,7 @@
 	dir = 1;
 	icon_state = "term"
 	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/borderfloorblack{
 	dir = 1
 	},
@@ -914,11 +910,7 @@
 	pixel_x = 0;
 	pixel_y = 24
 	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/borderfloorblack{
 	dir = 1
 	},
@@ -1117,11 +1109,7 @@
 	dir = 1;
 	icon_state = "term"
 	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/borderfloorblack{
 	dir = 1
 	},
@@ -1175,11 +1163,7 @@
 	pixel_x = 0;
 	pixel_y = 24
 	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/borderfloorblack{
 	dir = 1
 	},
@@ -1586,11 +1570,7 @@
 	dir = 1;
 	icon_state = "term"
 	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/borderfloorblack{
 	dir = 9
 	},
@@ -1979,11 +1959,7 @@
 	dir = 1;
 	icon_state = "term"
 	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /obj/structure/table/reinforced,
 /obj/effect/floor_decal/borderfloorblack{
 	dir = 1
@@ -2201,11 +2177,7 @@
 /obj/effect/floor_decal/borderfloorblack{
 	dir = 4
 	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/ship/mercenary/engineeringcntrl)
 "eo" = (
@@ -2365,11 +2337,7 @@
 	dir = 1;
 	icon_state = "term"
 	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/borderfloorblack{
 	dir = 1
 	},
@@ -2672,11 +2640,7 @@
 	dir = 1;
 	icon_state = "term"
 	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 10;
 	icon_state = "intact-fuel"
@@ -3030,11 +2994,7 @@
 	dir = 1;
 	icon_state = "term"
 	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/borderfloorblack{
 	dir = 1
 	},
@@ -3204,11 +3164,7 @@
 	dir = 1;
 	icon_state = "term"
 	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/borderfloorblack{
 	dir = 1
 	},
@@ -3339,11 +3295,7 @@
 	dir = 1;
 	icon_state = "term"
 	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/borderfloorblack{
 	dir = 1
 	},

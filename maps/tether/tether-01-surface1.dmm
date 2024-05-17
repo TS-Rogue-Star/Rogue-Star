@@ -40,9 +40,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/obj/structure/cable/heavyduty{
-	icon_state = "1-2"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/railing{
 	dir = 4
 	},
@@ -1439,7 +1437,6 @@
 /area/tether/surfacebase/lowernortheva/external)
 "acN" = (
 /obj/structure/cable/ender{
-	icon_state = "1-2";
 	id = "surface-mining"
 	},
 /obj/structure/railing{
@@ -4394,9 +4391,7 @@
 /turf/simulated/wall,
 /area/tether/surfacebase/north_stairs_one)
 "aib" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "1-2"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/railing{
 	dir = 8
 	},
@@ -4851,9 +4846,7 @@
 /turf/simulated/floor/tiled,
 /area/tether/surfacebase/north_stairs_one)
 "aiT" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "1-2"
-	},
+/obj/structure/cable/heavyduty,
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
@@ -5298,9 +5291,7 @@
 /turf/simulated/floor/tiled,
 /area/rnd/hallway)
 "ajC" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "1-2"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/railing{
 	dir = 4
 	},
@@ -5310,9 +5301,7 @@
 /turf/simulated/floor/virgo3b,
 /area/tether/surfacebase/outside/outside1)
 "ajD" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "1-2"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/catwalk,
 /obj/structure/railing{
 	dir = 1
@@ -5321,26 +5310,20 @@
 /turf/simulated/floor/virgo3b,
 /area/tether/surfacebase/outside/outside1)
 "ajE" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "1-2"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/catwalk,
 /obj/effect/floor_decal/rust,
 /turf/simulated/floor/virgo3b,
 /area/tether/surfacebase/outside/outside1)
 "ajF" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "1-2"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/catwalk,
 /obj/structure/railing,
 /obj/effect/floor_decal/rust,
 /turf/simulated/floor/virgo3b,
 /area/tether/surfacebase/outside/outside1)
 "ajG" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "1-2"
-	},
+/obj/structure/cable/heavyduty,
 /obj/effect/floor_decal/rust,
 /turf/simulated/floor/plating,
 /area/maintenance/lower/mining_eva)
@@ -14206,9 +14189,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/obj/structure/cable/heavyduty{
-	icon_state = "2-4"
-	},
+/obj/structure/cable/heavyduty,
 /turf/simulated/floor/virgo3b,
 /area/tether/surfacebase/outside/outside1)
 "azt" = (
@@ -14798,9 +14779,7 @@
 /area/maintenance/lower/solars)
 "aAl" = (
 /obj/structure/cable,
-/obj/structure/cable/heavyduty{
-	icon_state = "0-8"
-	},
+/obj/structure/cable/heavyduty,
 /turf/simulated/floor/virgo3b,
 /area/tether/surfacebase/outside/outside1)
 "aAm" = (
@@ -14841,9 +14820,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/lower/research)
 "aAs" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "1-2"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/railing{
 	dir = 8
 	},
@@ -14864,9 +14841,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/lower/research)
 "aAu" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "1-2"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/railing{
 	dir = 8
 	},
@@ -14910,9 +14885,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/lower/research)
 "aAx" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "4-8"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/railing{
 	dir = 1
 	},
@@ -15383,9 +15356,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/lower/research)
 "aBu" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "1-8"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/railing,
 /obj/structure/railing{
 	dir = 4
@@ -18108,7 +18079,6 @@
 /area/tether/surfacebase/tram)
 "aGD" = (
 /obj/structure/cable/ender{
-	icon_state = "4-8";
 	id = "surface-solars"
 	},
 /obj/structure/railing{
@@ -18118,9 +18088,7 @@
 /turf/simulated/floor/virgo3b_indoors,
 /area/tether/surfacebase/outside/outside1)
 "aGE" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "4-8"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/railing{
 	dir = 1
 	},
@@ -18129,9 +18097,7 @@
 /area/tether/surfacebase/outside/outside1)
 "aGG" = (
 /obj/effect/floor_decal/rust,
-/obj/structure/cable/heavyduty{
-	icon_state = "4-8"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/catwalk,
 /turf/simulated/floor/virgo3b_indoors,
 /area/tether/surfacebase/outside/outside1)
@@ -31110,9 +31076,7 @@
 	},
 /area/looking_glass/lg_1)
 "iwg" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "1-2"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/railing{
 	dir = 8
 	},
@@ -36223,9 +36187,7 @@
 /turf/simulated/floor/tiled,
 /area/rnd/hallway)
 "yiS" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "4-8"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/railing{
 	dir = 1
 	},

@@ -67,10 +67,7 @@
 "n" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
-/obj/structure/cable{
-	icon_state = "4-8";
-	pixel_x = 0
-	},
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/submap/virgo2/DJOutpost1)
 "o" = (

@@ -7,9 +7,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/standard{
 	dir = 4;
 	door_color = "#a39342";
@@ -29,9 +27,7 @@
 /mob/living/simple_mob/vore/woof/cass,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/common)
 "ac" = (
@@ -46,9 +42,7 @@
 /turf/space,
 /area/space)
 "ae" = (
-/obj/structure/cable/pink{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/power/pointdefense{
 	id_tag = "dauntless_pd"
 	},
@@ -217,16 +211,12 @@
 /turf/simulated/floor/carpet/sblucarpet,
 /area/itglight/captain)
 "aH" = (
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/white/cargo,
 /area/itglight/medbay)
 "aK" = (
 /obj/effect/map_helper/airlock/door/simple,
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/external/glass{
 	dir = 4;
 	door_color = "#AA0000"
@@ -292,9 +282,7 @@
 /turf/simulated/floor/carpet,
 /area/itglight/readyroom)
 "bk" = (
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/button/remote/airlock{
@@ -312,24 +300,18 @@
 /turf/simulated/floor/tiled/eris/cafe,
 /area/itglight/kitchen)
 "bp" = (
-/obj/structure/cable/pink{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/captain)
 "bq" = (
 /obj/machinery/power/pointdefense{
 	id_tag = "dauntless_pd"
 	},
-/obj/structure/cable/pink{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/captain)
 "bs" = (
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
@@ -342,18 +324,14 @@
 /turf/simulated/floor/carpet,
 /area/itglight/readyroom)
 "by" = (
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/bed/chair/bay/chair/padded/brown{
 	dir = 8
 	},
 /turf/simulated/floor/carpet,
 /area/itglight/readyroom)
 "bA" = (
-/obj/structure/cable/pink{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -372,24 +350,18 @@
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/shuttlebay)
 "bE" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable/pink{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/itglight/captain)
 "bF" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
@@ -400,9 +372,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/dark/monofloor,
 /area/itglight/cockpit)
 "bT" = (
@@ -415,9 +385,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/light_switch{
 	dir = 4;
 	on = 0;
@@ -428,9 +396,7 @@
 /area/itglight/readyroom)
 "cf" = (
 /obj/structure/table/steel_reinforced,
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/item/weapon/reagent_containers/food/condiment/small/saltshaker{
 	pixel_x = -3
 	},
@@ -450,9 +416,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/structure/bed/chair/bay/chair/padded/brown{
 	dir = 4
 	},
@@ -462,9 +426,7 @@
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/standard{
 	stripe_color = "#785134"
 	},
@@ -477,9 +439,7 @@
 	dir = 4;
 	pixel_x = 25
 	},
-/obj/structure/cable/pink{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/structure/bed/double/padded,
 /obj/item/weapon/bedsheet/browndouble,
 /turf/simulated/floor/carpet/turcarpet,
@@ -509,15 +469,11 @@
 /area/itglight/kitchen)
 "cA" = (
 /obj/machinery/portable_atmospherics/hydroponics,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/cafe,
 /area/itglight/kitchen)
 "cM" = (
-/obj/structure/cable/pink{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/readyroom)
 "cR" = (
@@ -529,13 +485,11 @@
 	cell_type = /obj/item/weapon/cell/hyper;
 	pixel_y = -25
 	},
-/obj/structure/cable/pink,
+/obj/structure/cable,,
 /turf/simulated/floor/wood,
 /area/itglight/captain)
 "cU" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
@@ -555,9 +509,7 @@
 /turf/simulated/floor/airless,
 /area/itglight/shuttlebay)
 "cW" = (
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/captain)
 "cY" = (
@@ -625,9 +577,7 @@
 /turf/simulated/floor/carpet,
 /area/itglight/readyroom)
 "dD" = (
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/readyroom)
 "dE" = (
@@ -644,9 +594,7 @@
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/metingroom)
 "dP" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
@@ -692,7 +640,7 @@
 	cell_type = /obj/item/weapon/cell/hyper;
 	pixel_y = -25
 	},
-/obj/structure/cable/pink,
+/obj/structure/cable,,
 /turf/simulated/floor/carpet,
 /area/itglight/readyroom)
 "ei" = (
@@ -707,9 +655,7 @@
 "el" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/standard{
 	door_color = "#a39342";
 	req_one_access = list(777);
@@ -719,9 +665,7 @@
 /area/itglight/cockpit)
 "em" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/door/blast/regular/open{
 	dir = 4;
 	id = "dauntless_blastdoors";
@@ -739,15 +683,7 @@
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/porthighsec)
 "eq" = (
-/obj/structure/cable/pink{
-	icon_state = "1-8"
-	},
-/obj/structure/cable/pink{
-	icon_state = "2-8"
-	},
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -808,9 +744,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/metingroom)
 "eQ" = (
@@ -841,9 +775,7 @@
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/starboardhighsec)
 "eZ" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
@@ -916,19 +848,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/pink{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/cafe,
 /area/itglight/kitchen)
 "fP" = (
 /obj/effect/floor_decal/industrial/outline/yellow,
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/metingroom)
 "fX" = (
@@ -937,9 +862,7 @@
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/porthighsec)
 "fY" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/industrial/warning{
 	dir = 4
 	},
@@ -961,15 +884,11 @@
 /turf/simulated/floor/tiled/eris/dark/monofloor,
 /area/itglight/cockpit)
 "gh" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/metingroom)
 "gk" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "2-8"
-	},
+/obj/structure/cable/heavyduty,
 /obj/machinery/atmospherics/pipe/manifold/hidden,
 /obj/structure/catwalk,
 /turf/simulated/floor,
@@ -979,9 +898,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/light_switch{
 	on = 0;
 	pixel_x = 26;
@@ -1004,9 +921,7 @@
 /turf/simulated/floor/tiled/eris/white/cargo,
 /area/itglight/medbay)
 "gu" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/structure/table/wooden_reinforced,
 /obj/item/device/flashlight/lamp/green,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -1023,9 +938,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 4
 	},
-/obj/structure/cable/pink{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 5
 	},
@@ -1045,9 +958,7 @@
 	},
 /area/itglight/portcargo)
 "gL" = (
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet/sblucarpet,
 /area/itglight/captain)
 "gO" = (
@@ -1069,15 +980,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/pink{
-	icon_state = "1-4"
-	},
-/obj/structure/cable/pink{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/metingroom)
 "gX" = (
@@ -1168,12 +1071,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/structure/cable/pink{
-	icon_state = "2-8"
-	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet,
 /area/itglight/readyroom)
 "hy" = (
@@ -1209,9 +1107,7 @@
 /turf/space,
 /area/space)
 "hO" = (
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/carpet,
 /area/itglight/readyroom)
 "hS" = (
@@ -1240,9 +1136,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/light_switch{
 	on = 0;
 	pixel_x = 26;
@@ -1275,9 +1169,7 @@
 /turf/simulated/floor/airless,
 /area/itglight/starboardsolars)
 "ii" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/button/remote/airlock{
 	dir = 4;
 	id = "itglight_shuttle_port";
@@ -1295,16 +1187,12 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
-/obj/structure/cable/pink{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/effect/catwalk_plated,
 /turf/simulated/floor,
 /area/itglight/cockpit)
 "im" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "4-8"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/catwalk,
 /obj/machinery/atmospherics/pipe/manifold/hidden{
 	dir = 8
@@ -1325,9 +1213,7 @@
 /area/itglight/crew2)
 "iq" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -1349,9 +1235,7 @@
 /turf/simulated/floor/tiled/eris/white/cargo,
 /area/itglight/medbay)
 "it" = (
-/obj/structure/cable/pink{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
@@ -1362,9 +1246,7 @@
 /turf/simulated/floor,
 /area/itglight/cockpit)
 "iu" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
@@ -1381,9 +1263,7 @@
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/afthall)
 "iC" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
@@ -1391,9 +1271,7 @@
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/shuttlebay)
 "iI" = (
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
@@ -1408,9 +1286,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/standard{
 	dir = 4;
 	door_color = "#a39342";
@@ -1432,15 +1308,7 @@
 /turf/simulated/floor,
 /area/itglight/readyroom)
 "iT" = (
-/obj/structure/cable/pink{
-	icon_state = "2-8"
-	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/pink{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/monotile,
 /area/shuttle/itglightshuttle)
 "iU" = (
@@ -1451,9 +1319,7 @@
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/metingroom)
 "iZ" = (
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/shuttlebay)
 "jg" = (
@@ -1529,7 +1395,7 @@
 	nightshift_setting = 3;
 	pixel_x = -25
 	},
-/obj/structure/cable/pink,
+/obj/structure/cable,,
 /turf/simulated/floor/tiled/eris/dark/monofloor,
 /area/itglight/cockpit)
 "jF" = (
@@ -1558,21 +1424,11 @@
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/starboardhighsec)
 "jQ" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/pink{
-	icon_state = "2-8"
-	},
-/obj/structure/cable/pink{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/shuttlebay)
 "jV" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/external/glass{
 	dir = 4;
 	door_color = "#AA0000";
@@ -1584,9 +1440,7 @@
 /area/shuttle/itglightshuttle)
 "ka" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/dark/gray_platform,
 /area/itglight/cockpit)
 "kn" = (
@@ -1602,9 +1456,7 @@
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/shuttlebay)
 "kp" = (
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/eris/dark/gray_platform,
 /area/itglight/cockpit)
@@ -1657,21 +1509,14 @@
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/metingroom)
 "kO" = (
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
-/obj/structure/cable/pink{
-	icon_state = "2-4"
-	},
-/obj/structure/cable/pink{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/metingroom)
 "kR" = (
@@ -1684,9 +1529,7 @@
 	dir = 4;
 	pixel_x = 25
 	},
-/obj/structure/cable/pink{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/white,
 /area/itglight/showers)
 "kY" = (
@@ -1699,9 +1542,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/structure/handrail{
 	dir = 1
 	},
@@ -1714,9 +1555,7 @@
 	dir = 4;
 	pixel_x = 25
 	},
-/obj/structure/cable/pink{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/afthall)
 "li" = (
@@ -1736,9 +1575,7 @@
 /area/itglight/starboardengi)
 "lu" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/angled_bay/standard{
 	door_color = "#a39342";
@@ -1766,9 +1603,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/light_switch{
 	dir = 4;
 	on = 0;
@@ -1874,9 +1709,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/structure/handrail{
 	dir = 1
 	},
@@ -1886,9 +1719,7 @@
 /obj/machinery/power/pointdefense{
 	id_tag = "dauntless_pd"
 	},
-/obj/structure/cable/pink{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/shuttlebay)
 "mq" = (
@@ -1896,16 +1727,12 @@
 	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/starboardhighsec)
 "ms" = (
 /obj/effect/floor_decal/industrial/outline/yellow,
-/obj/structure/cable/pink{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/metingroom)
 "mu" = (
@@ -1927,9 +1754,7 @@
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/starboardhighsec)
 "mR" = (
-/obj/structure/cable/pink{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/structure/bed/chair/bay/chair/padded/brown{
 	dir = 8
 	},
@@ -1943,9 +1768,7 @@
 	nightshift_setting = 3;
 	pixel_x = -25
 	},
-/obj/structure/cable/pink{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/porthighsec)
 "na" = (
@@ -1991,9 +1814,7 @@
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/metingroom)
 "nq" = (
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/metingroom)
@@ -2005,9 +1826,7 @@
 /area/itglight/portengi)
 "nv" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/angled_bay/standard{
@@ -2049,9 +1868,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 9
 	},
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /obj/structure/catwalk,
 /turf/simulated/floor,
@@ -2093,12 +1910,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/pink{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/dark/monofloor,
 /area/itglight/cockpit)
 "of" = (
@@ -2121,24 +1933,18 @@
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/porthighsec)
 "oq" = (
-/obj/structure/cable/pink{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/shuttlebay)
 "ov" = (
-/obj/structure/cable/pink{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
-/obj/structure/cable/pink{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/effect/catwalk_plated,
 /turf/simulated/floor,
 /area/itglight/metingroom)
@@ -2152,9 +1958,7 @@
 /turf/simulated/floor/tiled/eris/dark/gray_platform,
 /area/itglight/cockpit)
 "oy" = (
-/obj/structure/cable/pink{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
@@ -2165,9 +1969,7 @@
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/metingroom)
 "oA" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -2187,9 +1989,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/porthighsec)
 "oH" = (
@@ -2226,9 +2026,7 @@
 "oT" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/pink{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/porthighsec)
 "oU" = (
@@ -2262,9 +2060,7 @@
 	nightshift_setting = 3;
 	pixel_x = -25
 	},
-/obj/structure/cable/pink{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/fiftyspawner/phoron,
 /obj/fiftyspawner/phoron,
 /obj/fiftyspawner/phoron,
@@ -2279,9 +2075,7 @@
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/porthighsec)
 "pn" = (
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
@@ -2293,9 +2087,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable/pink{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/shuttlebay)
 "py" = (
@@ -2306,9 +2098,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/catwalk,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 10
@@ -2339,15 +2129,11 @@
 	dir = 4;
 	pixel_x = 25
 	},
-/obj/structure/cable/pink{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/white/cargo,
 /area/itglight/medbay)
 "pU" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
@@ -2392,9 +2178,7 @@
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/metingroom)
 "qq" = (
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
@@ -2402,12 +2186,7 @@
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/metingroom)
 "qt" = (
-/obj/structure/cable/pink{
-	icon_state = "1-8"
-	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/white/cargo,
 /area/itglight/medbay)
 "qA" = (
@@ -2429,9 +2208,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/metingroom)
 "qG" = (
@@ -2470,9 +2247,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/item/weapon/stool/baystool/padded{
 	dir = 8
 	},
@@ -2559,9 +2334,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/portcargo)
 "rn" = (
@@ -2599,9 +2372,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable/pink{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/portcargo)
 "rZ" = (
@@ -2652,9 +2423,7 @@
 	dir = 4;
 	pixel_x = 25
 	},
-/obj/structure/cable/pink{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/shuttle/floor/black,
 /area/shuttle/itglightshuttle)
 "sQ" = (
@@ -2714,15 +2483,11 @@
 /area/itglight/portsolars)
 "to" = (
 /obj/machinery/power/solar_control,
-/obj/structure/cable/heavyduty{
-	icon_state = "0-2"
-	},
+/obj/structure/cable/heavyduty,
 /turf/simulated/floor,
 /area/itglight/portengi)
 "tq" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -2739,9 +2504,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/light,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/metingroom)
@@ -2780,9 +2543,7 @@
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/porthighsec)
 "tE" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
@@ -2795,15 +2556,11 @@
 /area/itglight/shuttlebay)
 "tH" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
-/obj/structure/cable/pink{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/starboardhighsec)
 "tL" = (
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
@@ -2812,9 +2569,7 @@
 /turf/simulated/floor,
 /area/itglight/metingroom)
 "tP" = (
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/effect/catwalk_plated,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
@@ -2822,9 +2577,7 @@
 /area/itglight/forehall)
 "ud" = (
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/catwalk,
 /turf/simulated/floor,
@@ -2836,29 +2589,14 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/pink{
-	icon_state = "2-4"
-	},
-/obj/structure/cable/pink{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/afthall)
 "uk" = (
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/pink{
-	icon_state = "2-4"
-	},
-/obj/structure/cable/pink{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/afthall)
 "ul" = (
@@ -2898,9 +2636,7 @@
 /turf/simulated/floor/airless,
 /area/itglight/starboardsolars)
 "uz" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
@@ -2968,9 +2704,7 @@
 /turf/simulated/floor/carpet/turcarpet,
 /area/itglight/crew4)
 "vO" = (
-/obj/structure/cable/pink{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/shuttlebay)
 "vR" = (
@@ -2996,9 +2730,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/common)
 "wg" = (
@@ -3082,15 +2814,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/pink{
-	icon_state = "2-4"
-	},
-/obj/structure/cable/pink{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/item/device/radio/intercom{
 	dir = 1;
 	pixel_y = 25
@@ -3107,9 +2831,7 @@
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/standard{
 	stripe_color = "#785134"
 	},
@@ -3129,9 +2851,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/standard{
 	dir = 4;
 	door_color = "#a39342";
@@ -3142,9 +2862,7 @@
 /area/itglight/starboardhighsec)
 "wL" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/angled_bay/standard{
@@ -3162,9 +2880,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
-/obj/structure/cable/pink{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/starboardhighsec)
 "wS" = (
@@ -3185,15 +2901,7 @@
 /turf/simulated/floor/glass/reinforced,
 /area/itglight/common)
 "wX" = (
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/pink{
-	icon_state = "1-8"
-	},
-/obj/structure/cable/pink{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/shuttlebay)
 "wY" = (
@@ -3210,9 +2918,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/standard/glass{
 	dir = 4;
 	stripe_color = "#785134"
@@ -3256,9 +2962,7 @@
 "xr" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/starboardcargo)
 "xw" = (
@@ -3321,9 +3025,7 @@
 	dir = 1;
 	pixel_y = 25
 	},
-/obj/structure/cable/pink{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden,
 /obj/structure/catwalk,
 /turf/simulated/floor,
@@ -3338,9 +3040,7 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 8
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/shuttlebay)
 "xT" = (
@@ -3382,9 +3082,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
-/obj/structure/cable/pink{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/porthighsec)
 "yn" = (
@@ -3399,16 +3097,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/porthighsec)
 "yy" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable/heavyduty{
-	icon_state = "4-8"
-	},
+/obj/structure/cable/heavyduty,
 /obj/effect/map_helper/airlock/door/int_door,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
@@ -3458,9 +3152,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/standard{
 	dir = 4;
 	door_color = "#a39342";
@@ -3492,9 +3184,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/portcargo)
 "yQ" = (
@@ -3528,18 +3218,14 @@
 	dir = 1;
 	pixel_y = 25
 	},
-/obj/structure/cable/pink{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden,
 /obj/structure/catwalk,
 /turf/simulated/floor,
 /area/itglight/starboarddocking)
 "yZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/starboardhighsec)
 "za" = (
@@ -3549,9 +3235,7 @@
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/starboardhighsec)
 "zj" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "4-8"
-	},
+/obj/structure/cable/heavyduty,
 /turf/simulated/floor/airless,
 /area/itglight/portsolars)
 "zm" = (
@@ -3571,9 +3255,7 @@
 /turf/simulated/floor,
 /area/itglight/starboardengi)
 "zq" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "4-8"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/catwalk,
 /obj/machinery/atmospherics/pipe/manifold/hidden{
 	dir = 4
@@ -3638,9 +3320,7 @@
 	nightshift_setting = 3;
 	pixel_x = 25
 	},
-/obj/structure/cable/pink{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/starboardhighsec)
 "zM" = (
@@ -3701,24 +3381,15 @@
 /turf/simulated/floor,
 /area/itglight/portengi)
 "As" = (
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/pink{
-	icon_state = "2-4"
-	},
-/obj/structure/cable/pink{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/monotile,
 /area/itglight/forehall)
 "Au" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable/pink{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/machinery/alarm/angled/hidden{
 	dir = 4;
 	pixel_x = -26
@@ -3726,9 +3397,7 @@
 /turf/simulated/floor/carpet/turcarpet,
 /area/itglight/crew4)
 "AF" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/monotile,
 /area/itglight/forehall)
 "AG" = (
@@ -3739,9 +3408,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/standard/glass{
 	dir = 4;
 	stripe_color = "#785134"
@@ -3772,9 +3439,7 @@
 	dir = 1;
 	pixel_y = 25
 	},
-/obj/structure/cable/pink{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/monotile,
 /area/itglight/forehall)
 "AK" = (
@@ -3782,19 +3447,13 @@
 /turf/simulated/floor/tiled/eris/cafe,
 /area/itglight/kitchen)
 "AM" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/pink{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
-/obj/structure/cable/pink{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/structure/catwalk,
 /turf/simulated/floor,
 /area/itglight/starboardengi)
@@ -3835,9 +3494,7 @@
 	dir = 4;
 	pixel_x = 25
 	},
-/obj/structure/cable/pink{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/monotile,
 /area/itglight/lockers)
 "Bj" = (
@@ -3850,9 +3507,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/itglight/starboarddocking)
 "Bo" = (
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden,
 /obj/structure/catwalk,
 /turf/simulated/floor,
@@ -3866,9 +3521,7 @@
 /area/itglight/starboardhighsec)
 "BA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable/pink{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/machinery/alarm/angled/hidden{
 	dir = 4;
 	pixel_x = -26
@@ -3880,27 +3533,18 @@
 	dir = 1
 	},
 /obj/machinery/light,
-/obj/structure/cable/pink{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/shuttle/floor/black,
 /area/shuttle/itglightshuttle)
 "BM" = (
-/obj/structure/cable/pink{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/pink{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/shuttlebay)
 "BP" = (
@@ -3941,9 +3585,7 @@
 	dir = 4;
 	pixel_x = 25
 	},
-/obj/structure/cable/pink{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/structure/bed/double/padded,
 /obj/item/weapon/bedsheet/browndouble,
 /turf/simulated/floor/carpet/turcarpet,
@@ -3962,9 +3604,7 @@
 "Ca" = (
 /obj/machinery/door/firedoor/glass,
 /obj/effect/map_helper/airlock/door/ext_door,
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/external/glass{
 	dir = 4;
 	door_color = "#AA0000"
@@ -3977,9 +3617,7 @@
 /area/itglight/portsolars)
 "Cl" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable/pink{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/machinery/alarm/angled/hidden{
 	dir = 4;
 	pixel_x = -26
@@ -3994,9 +3632,7 @@
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/porthighsec)
 "Cq" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/access_button{
 	command = "cycle_exterior";
 	frequency = 1380;
@@ -4045,12 +3681,7 @@
 /area/itglight/portengi)
 "CJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden,
-/obj/structure/cable/pink{
-	icon_state = "1-4"
-	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/structure/catwalk,
 /turf/simulated/floor,
 /area/itglight/portdocking)
@@ -4061,9 +3692,7 @@
 	},
 /area/itglight/portdocking)
 "CO" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/embedded_controller/radio/airlock/docking_port{
 	dir = 8;
 	frequency = 1380;
@@ -4094,9 +3723,7 @@
 /area/itglight/starboardsolars)
 "Db" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/effect/map_helper/airlock/door/int_door,
 /obj/machinery/access_button{
 	command = "cycle_interior";
@@ -4138,15 +3765,11 @@
 /turf/simulated/floor,
 /area/itglight/starboardengi)
 "Do" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/portcargo)
 "Dp" = (
-/obj/structure/cable/pink{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
@@ -4171,21 +3794,14 @@
 /turf/simulated/floor/carpet/turcarpet,
 /area/itglight/crew3)
 "Dy" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable/pink{
-	icon_state = "2-4"
-	},
-/obj/structure/cable/pink{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/effect/catwalk_plated,
 /turf/simulated/floor,
 /area/itglight/portcargo)
@@ -4196,9 +3812,7 @@
 /area/itglight/portdocking)
 "DF" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
@@ -4216,15 +3830,11 @@
 "DH" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/portcargo)
 "DJ" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
@@ -4237,27 +3847,14 @@
 /turf/simulated/floor/tiled/monotile,
 /area/itglight/forehall)
 "DK" = (
-/obj/structure/cable/pink{
-	icon_state = "1-8"
-	},
-/obj/structure/cable/pink{
-	icon_state = "1-4"
-	},
-/obj/structure/cable/pink{
-	icon_state = "2-8"
-	},
-/obj/structure/cable/pink{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /obj/effect/floor_decal/emblem/itgdauntless,
 /turf/simulated/floor/tiled/monotile,
 /area/itglight/forehall)
 "DP" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
@@ -4271,9 +3868,7 @@
 /area/itglight/forehall)
 "DQ" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
@@ -4289,27 +3884,18 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/itglight/starboardcargo)
 "DZ" = (
-/obj/structure/cable/pink{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/shuttlebay)
 "Ej" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
-/obj/structure/cable/pink{
-	icon_state = "2-8"
-	},
-/obj/structure/cable/pink{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /obj/effect/catwalk_plated,
 /turf/simulated/floor,
 /area/itglight/starboardcargo)
@@ -4321,9 +3907,7 @@
 /area/itglight/starboardcargo)
 "En" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable/pink{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/machinery/alarm/angled/hidden{
 	dir = 4;
 	pixel_x = -26
@@ -4347,9 +3931,7 @@
 "EC" = (
 /obj/machinery/door/firedoor/glass,
 /obj/effect/map_helper/airlock/door/int_door,
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/access_button{
 	command = "cycle_interior";
 	frequency = 1380;
@@ -4369,9 +3951,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/itglight/passengersleeping)
 "EH" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/embedded_controller/radio/airlock/docking_port{
 	dir = 4;
 	frequency = 1380;
@@ -4388,9 +3968,7 @@
 /area/itglight/starboarddocking)
 "EI" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/door/blast/regular/open{
 	dir = 4;
 	id = "dauntless_blastdoors";
@@ -4403,23 +3981,15 @@
 /turf/simulated/floor,
 /area/itglight/shuttlebay)
 "EL" = (
-/obj/structure/cable/pink{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden,
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/structure/catwalk,
-/obj/structure/cable/pink{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/itglight/starboarddocking)
 "EP" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/access_button{
 	command = "cycle_exterior";
 	frequency = 1380;
@@ -4455,30 +4025,19 @@
 /area/itglight/medbay)
 "EV" = (
 /obj/structure/cable,
-/obj/structure/cable/heavyduty{
-	icon_state = "4-8"
-	},
+/obj/structure/cable/heavyduty,
 /turf/simulated/floor/airless,
 /area/itglight/portengi)
 "EX" = (
 /obj/effect/shuttle_landmark/shuttle_initializer/itglightshuttle,
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/monotile,
 /area/shuttle/itglightshuttle)
 "EZ" = (
-/obj/structure/cable/pink{
-	icon_state = "2-4"
-	},
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/pink{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/shuttlebay)
 "Fc" = (
@@ -4492,9 +4051,7 @@
 "Fe" = (
 /obj/machinery/door/firedoor/glass,
 /obj/effect/map_helper/airlock/door/ext_door,
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/external/glass{
 	dir = 4;
 	door_color = "#AA0000"
@@ -4508,16 +4065,12 @@
 /area/itglight/starboardcargo)
 "Fh" = (
 /obj/machinery/power/smes/offmap_spawn,
-/obj/structure/cable/pink{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/itglight/portengi)
 "Fu" = (
 /obj/machinery/power/solar_control,
-/obj/structure/cable/heavyduty{
-	icon_state = "0-2"
-	},
+/obj/structure/cable/heavyduty,
 /turf/simulated/floor,
 /area/itglight/starboardengi)
 "Fw" = (
@@ -4527,9 +4080,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/white,
 /area/itglight/showers)
 "Fx" = (
@@ -4579,9 +4130,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/structure/catwalk,
 /turf/simulated/floor,
 /area/itglight/portengi)
@@ -4598,9 +4147,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
@@ -4613,16 +4160,12 @@
 "Ga" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/afthall)
 "Gb" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable/heavyduty{
-	icon_state = "4-8"
-	},
+/obj/structure/cable/heavyduty,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
@@ -4645,9 +4188,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/light_switch{
 	on = 0;
 	pixel_x = 26;
@@ -4736,9 +4277,7 @@
 /turf/simulated/floor/tiled/eris/white/cargo,
 /area/itglight/medbay)
 "Gu" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
@@ -4756,9 +4295,7 @@
 /turf/simulated/floor,
 /area/itglight/portdocking)
 "GD" = (
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/effect/floor_decal/emblem/itgdauntless{
@@ -4769,9 +4306,7 @@
 "GG" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/portcargo)
 "GI" = (
@@ -4787,9 +4322,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/itglight/portdocking)
 "GO" = (
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/light_switch{
 	on = 0;
 	pixel_x = 26;
@@ -4808,9 +4341,7 @@
 /turf/simulated/floor/tiled/eris/cafe,
 /area/itglight/kitchen)
 "GU" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "0-4"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/portsolars)
@@ -4861,9 +4392,7 @@
 /area/itglight/starboarddocking)
 "HB" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/door/blast/regular/open{
 	dir = 4;
 	id = "dauntless_blastdoors";
@@ -4891,28 +4420,20 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/itglight/starboarddocking)
 "HJ" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/shuttlebay)
 "HM" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
-/obj/structure/cable/pink{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/structure/catwalk,
-/obj/structure/cable/pink{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/itglight/portengi)
 "HN" = (
@@ -4929,9 +4450,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/itglight/portdocking)
 "HP" = (
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden,
 /obj/structure/catwalk,
 /turf/simulated/floor,
@@ -4977,9 +4496,7 @@
 	},
 /area/itglight/starboarddocking)
 "Ia" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
@@ -4989,9 +4506,7 @@
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/portcargo)
 "Ij" = (
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
@@ -5001,9 +4516,7 @@
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/afthall)
 "Iu" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
@@ -5028,9 +4541,7 @@
 /turf/simulated/floor,
 /area/itglight/portdocking)
 "Iy" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
@@ -5062,9 +4573,7 @@
 	dir = 4;
 	pixel_x = 25
 	},
-/obj/structure/cable/pink{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/shuttlebay)
 "IN" = (
@@ -5075,9 +4584,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/common)
 "IQ" = (
@@ -5096,9 +4603,7 @@
 /turf/simulated/floor,
 /area/itglight/portengi)
 "IS" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/starboardcargo)
 "Jc" = (
@@ -5109,16 +4614,12 @@
 	nightshift_setting = 3;
 	pixel_y = 25
 	},
-/obj/structure/cable/pink{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/portcargo)
 "Jg" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable/heavyduty{
-	icon_state = "4-8"
-	},
+/obj/structure/cable/heavyduty,
 /obj/effect/map_helper/airlock/door/ext_door,
 /obj/machinery/access_button{
 	command = "cycle_exterior";
@@ -5137,9 +4638,7 @@
 "Ji" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/common)
 "Jk" = (
@@ -5162,9 +4661,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
-/obj/structure/cable/pink{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/common)
 "Jt" = (
@@ -5200,15 +4697,11 @@
 "JC" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable/pink{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/portcargo)
 "JI" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "4-8"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/starboardsolars)
@@ -5217,9 +4710,7 @@
 /turf/simulated/floor/tiled/eris/cafe,
 /area/itglight/kitchen)
 "JL" = (
-/obj/structure/cable/pink{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/shuttlebay)
 "JM" = (
@@ -5246,9 +4737,7 @@
 	dir = 4;
 	pixel_x = 25
 	},
-/obj/structure/cable/pink{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/structure/bed/double/padded,
 /obj/item/weapon/bedsheet/browndouble,
 /turf/simulated/floor/carpet/turcarpet,
@@ -5275,9 +4764,7 @@
 /turf/simulated/floor,
 /area/itglight/starboardengi)
 "Ka" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "2-4"
-	},
+/obj/structure/cable/heavyduty,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
@@ -5301,17 +4788,13 @@
 	nightshift_setting = 3;
 	pixel_y = 25
 	},
-/obj/structure/cable/pink{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/starboardcargo)
 "Kn" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable/pink{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/starboardcargo)
 "Kt" = (
@@ -5332,15 +4815,11 @@
 /obj/machinery/power/pointdefense{
 	id_tag = "dauntless_pd"
 	},
-/obj/structure/cable/pink{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/shuttlebay)
 "Kx" = (
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/vending/dinnerware{
 	dir = 8
 	},
@@ -5359,9 +4838,7 @@
 	nightshift_setting = 3;
 	pixel_x = 25
 	},
-/obj/structure/cable/pink{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/itglight/portengi)
 "KG" = (
@@ -5400,9 +4877,7 @@
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/portcargo)
 "KQ" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/reinforced,
 /area/itglight/shuttlebay)
 "Lg" = (
@@ -5411,9 +4886,7 @@
 /turf/simulated/floor/airless,
 /area/itglight/portsolars)
 "Lh" = (
-/obj/structure/cable/pink{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/portsolars)
 "Lk" = (
@@ -5456,9 +4929,7 @@
 	},
 /area/itglight/portdocking)
 "LG" = (
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/monotile,
@@ -5489,9 +4960,7 @@
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/starboardcargo)
 "LU" = (
-/obj/structure/cable/pink{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/shuttlebay)
 "LX" = (
@@ -5512,12 +4981,7 @@
 "LZ" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
-/obj/structure/cable/pink{
-	icon_state = "1-4"
-	},
-/obj/structure/cable/pink{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/common)
 "Mg" = (
@@ -5531,9 +4995,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/common)
 "Mh" = (
@@ -5549,9 +5011,7 @@
 	dir = 4;
 	pixel_x = 25
 	},
-/obj/structure/cable/pink{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/structure/bed/double/padded,
 /obj/item/weapon/bedsheet/browndouble,
 /turf/simulated/floor/carpet/turcarpet,
@@ -5566,9 +5026,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
-/obj/structure/cable/pink{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/common)
 "Mm" = (
@@ -5595,9 +5053,7 @@
 /turf/simulated/floor,
 /area/itglight/passengersleeping)
 "Mu" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -5612,9 +5068,7 @@
 /area/itglight/shuttlebay)
 "Mv" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/itglight/passengersleeping)
 "My" = (
@@ -5636,9 +5090,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/common)
 "MF" = (
@@ -5651,9 +5103,7 @@
 /turf/simulated/floor/airless,
 /area/itglight/starboardsolars)
 "MI" = (
-/obj/structure/cable/pink{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/starboardsolars)
 "ML" = (
@@ -5662,9 +5112,7 @@
 /turf/simulated/floor/tiled/monotile,
 /area/itglight/lockers)
 "MO" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/starboardsolars)
 "MS" = (
@@ -5678,9 +5126,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/common)
 "Na" = (
@@ -5692,9 +5138,7 @@
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/standard{
 	stripe_color = "#785134"
 	},
@@ -5707,9 +5151,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/white,
 /area/itglight/showers)
 "Ne" = (
@@ -5762,9 +5204,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 10
 	},
-/obj/structure/cable/pink{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 9
 	},
@@ -5777,9 +5217,7 @@
 /area/itglight/lockers)
 "NJ" = (
 /obj/machinery/power/smes/offmap_spawn,
-/obj/structure/cable/pink{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/itglight/starboardengi)
 "NM" = (
@@ -5796,9 +5234,7 @@
 /turf/simulated/floor,
 /area/itglight/starboardengi)
 "NQ" = (
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/cafe,
 /area/itglight/kitchen)
 "NR" = (
@@ -5823,9 +5259,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /turf/simulated/floor/tiled/eris/white/cargo,
 /area/itglight/medbay)
@@ -5841,16 +5275,14 @@
 	dir = 4;
 	pixel_x = 25
 	},
-/obj/structure/cable/pink,
+/obj/structure/cable,,
 /turf/simulated/floor/tiled/eris/cafe,
 /area/itglight/kitchen)
 "Oc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
-/obj/structure/cable/pink{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc/angled{
 	alarms_hidden = 1;
 	cell_type = /obj/item/weapon/cell/hyper;
@@ -5860,9 +5292,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/itglight/passengersleeping)
 "Oe" = (
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
@@ -5895,9 +5325,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
-/obj/structure/cable/pink{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_y = 32
 	},
@@ -5905,9 +5333,7 @@
 /area/itglight/common)
 "Om" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/door/blast/regular/open{
 	dir = 4;
 	id = "dauntless_blastdoors";
@@ -5927,9 +5353,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/newscaster{
 	pixel_y = 28
 	},
@@ -5945,9 +5369,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/common)
 "Ov" = (
@@ -5955,9 +5377,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
-/obj/structure/cable/pink{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/itglight/passengersleeping)
 "Ow" = (
@@ -5967,12 +5387,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable/pink{
-	icon_state = "1-8"
-	},
-/obj/structure/cable/pink{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/common)
 "Ox" = (
@@ -5993,9 +5408,7 @@
 /area/itglight/lockers)
 "OC" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/button/remote/airlock{
@@ -6032,9 +5445,7 @@
 /obj/structure/bed/chair/bay/chair{
 	dir = 1
 	},
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/shuttle/floor/black,
 /area/shuttle/itglightshuttle)
 "OJ" = (
@@ -6068,9 +5479,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/standard/glass{
 	dir = 4
 	},
@@ -6119,9 +5528,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/light_switch{
 	dir = 4;
 	on = 0;
@@ -6179,9 +5586,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/common)
 "Qh" = (
@@ -6194,9 +5599,7 @@
 	dir = 1;
 	pixel_y = 25
 	},
-/obj/structure/cable/pink{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/metingroom)
 "Qi" = (
@@ -6222,18 +5625,7 @@
 /area/itglight/lockers)
 "Qs" = (
 /obj/effect/catwalk_plated,
-/obj/structure/cable/pink{
-	icon_state = "1-8"
-	},
-/obj/structure/cable/pink{
-	icon_state = "1-4"
-	},
-/obj/structure/cable/pink{
-	icon_state = "2-8"
-	},
-/obj/structure/cable/pink{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /turf/simulated/floor,
@@ -6250,9 +5642,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/standard/glass{
 	dir = 4;
 	door_color = "#FFFFFF";
@@ -6268,9 +5658,7 @@
 /obj/structure/handrail{
 	dir = 8
 	},
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/common)
@@ -6281,9 +5669,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/cafe,
 /area/itglight/kitchen)
 "QQ" = (
@@ -6371,9 +5757,7 @@
 /area/itglight/portengi)
 "Rp" = (
 /obj/structure/table/wooden_reinforced,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -6404,9 +5788,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/light_switch{
 	dir = 8;
 	on = 0;
@@ -6429,9 +5811,7 @@
 /area/itglight/showers)
 "Ry" = (
 /obj/structure/cable,
-/obj/structure/cable/heavyduty{
-	icon_state = "4-8"
-	},
+/obj/structure/cable/heavyduty,
 /turf/simulated/floor/airless,
 /area/itglight/portsolars)
 "RL" = (
@@ -6461,18 +5841,14 @@
 /turf/simulated/floor/tiled/eris/white/cargo,
 /area/itglight/medbay)
 "Sw" = (
-/obj/structure/cable/pink{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
-/obj/structure/cable/pink{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/common)
 "Sz" = (
@@ -6489,34 +5865,26 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/monotile,
 /area/itglight/lockers)
 "SB" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/standard{
 	stripe_color = "#785134"
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/itglight/crew1)
 "SE" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "0-8"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/starboardsolars)
 "SF" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -6538,9 +5906,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/monotile,
 /area/itglight/lockers)
 "SH" = (
@@ -6574,9 +5940,7 @@
 /area/itglight/kitchen)
 "SO" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/angled_bay/standard/glass,
@@ -6595,9 +5959,7 @@
 /turf/simulated/floor/tiled/monotile,
 /area/itglight/lockers)
 "SY" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/portsolars)
 "Tb" = (
@@ -6610,12 +5972,6 @@
 /turf/simulated/floor/tiled/white,
 /area/itglight/restrooms)
 "Td" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "0-4"
-	},
-/obj/structure/cable/heavyduty{
-	icon_state = "0-8"
-	},
 /obj/structure/cable/heavyduty,
 /obj/structure/catwalk,
 /obj/machinery/atmospherics/pipe/simple/hidden{
@@ -6650,9 +6006,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /obj/structure/catwalk,
 /turf/simulated/floor,
@@ -6686,17 +6040,10 @@
 /area/itglight/shuttlebay)
 "TS" = (
 /obj/effect/catwalk_plated,
-/obj/structure/cable/pink{
-	icon_state = "1-8"
-	},
-/obj/structure/cable/pink{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/itglight/shuttlebay)
 "TU" = (
@@ -6749,9 +6096,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/light_switch{
 	dir = 4;
 	on = 0;
@@ -6762,9 +6107,7 @@
 /area/itglight/medbay)
 "UI" = (
 /obj/machinery/body_scanconsole,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/white/cargo,
 /area/itglight/medbay)
 "UL" = (
@@ -6780,9 +6123,7 @@
 /turf/simulated/floor/tiled/white,
 /area/itglight/showers)
 "UO" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
@@ -6822,9 +6163,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/afthall)
 "Ve" = (
@@ -6849,9 +6188,7 @@
 /turf/simulated/floor/tiled/white,
 /area/itglight/showers)
 "Vq" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
@@ -6881,9 +6218,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/common)
 "VB" = (
@@ -6900,9 +6235,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/light_switch{
 	on = 0;
 	pixel_x = 26;
@@ -6928,9 +6261,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/structure/sign/itg{
 	pixel_y = 26
 	},
@@ -6988,15 +6319,10 @@
 /obj/machinery/power/pointdefense{
 	id_tag = "dauntless_pd"
 	},
-/obj/structure/cable/pink{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/portsolars)
 "Wf" = (
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
 /obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/starboardsolars)
@@ -7051,9 +6377,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
-/obj/structure/cable/pink{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/common)
 "WG" = (
@@ -7064,7 +6388,7 @@
 	cell_type = /obj/item/weapon/cell/hyper;
 	pixel_y = -25
 	},
-/obj/structure/cable/pink,
+/obj/structure/cable,,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/common)
 "WN" = (
@@ -7081,9 +6405,7 @@
 /area/itglight/lockers)
 "WP" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable/heavyduty{
-	icon_state = "4-8"
-	},
+/obj/structure/cable/heavyduty,
 /obj/effect/map_helper/airlock/door/ext_door,
 /obj/machinery/access_button{
 	command = "cycle_exterior";
@@ -7115,9 +6437,7 @@
 /turf/simulated/floor/tiled/eris/cafe,
 /area/itglight/kitchen)
 "WZ" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "4-8"
-	},
+/obj/structure/cable/heavyduty,
 /turf/simulated/floor/airless,
 /area/itglight/starboardsolars)
 "Xb" = (
@@ -7153,18 +6473,14 @@
 	dir = 8;
 	pixel_x = -25
 	},
-/obj/structure/cable/pink{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/white,
 /area/itglight/restrooms)
 "Xn" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/light,
 /turf/simulated/floor/tiled/white,
 /area/itglight/restrooms)
@@ -7179,9 +6495,7 @@
 	},
 /area/itglight/common)
 "Xv" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/white,
 /area/itglight/restrooms)
 "Xx" = (
@@ -7199,9 +6513,7 @@
 /turf/simulated/floor/tiled/eris/white/techfloor_grid,
 /area/itglight/medbay)
 "XA" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "4-8"
-	},
+/obj/structure/cable/heavyduty,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 10
 	},
@@ -7212,9 +6524,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/white,
 /area/itglight/restrooms)
 "XE" = (
@@ -7238,9 +6548,7 @@
 /turf/simulated/floor,
 /area/itglight/starboardengi)
 "XM" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/light_switch{
 	dir = 8;
 	on = 0;
@@ -7261,9 +6569,7 @@
 /obj/machinery/power/pointdefense{
 	id_tag = "dauntless_pd"
 	},
-/obj/structure/cable/pink{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/starboardsolars)
 "XP" = (
@@ -7276,9 +6582,6 @@
 	},
 /area/itglight/captain)
 "XT" = (
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
 /obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/portsolars)
@@ -7388,9 +6691,7 @@
 	pixel_y = 21;
 	plane = -34
 	},
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/cafe,
 /area/itglight/kitchen)
 "YM" = (
@@ -7423,9 +6724,7 @@
 /area/itglight/kitchen)
 "YR" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/standard{
 	dir = 4;
 	stripe_color = "#785134"
@@ -7433,32 +6732,17 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/itglight/restrooms)
 "YT" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/afthall)
 "YU" = (
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/pink{
-	icon_state = "2-4"
-	},
-/obj/structure/cable/pink{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/afthall)
 "YX" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "0-4"
-	},
-/obj/structure/cable/heavyduty{
-	icon_state = "0-8"
-	},
 /obj/structure/cable/heavyduty,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 6
@@ -7473,9 +6757,7 @@
 /area/itglight/portengi)
 "Zc" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/standard{
 	dir = 4;
 	stripe_color = "#785134"
@@ -7488,9 +6770,7 @@
 /turf/simulated/floor/tiled/eris/cafe,
 /area/itglight/kitchen)
 "Zf" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/white,
 /area/itglight/showers)
 "Zh" = (
@@ -7501,16 +6781,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/white,
 /area/itglight/showers)
 "Zj" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
@@ -7555,9 +6831,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/common)
 "Zw" = (
@@ -7602,9 +6876,7 @@
 /turf/simulated/floor/tiled/eris/white/cargo,
 /area/itglight/medbay)
 "ZM" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "4-8"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/starboardengi)
@@ -7648,9 +6920,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/alarm/angled/hidden{
 	pixel_y = 26
 	},
@@ -7658,9 +6928,7 @@
 /area/itglight/afthall)
 "ZZ" = (
 /obj/machinery/sleep_console,
-/obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/white/cargo,
 /area/itglight/medbay)
 

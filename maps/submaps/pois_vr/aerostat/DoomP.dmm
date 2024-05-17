@@ -137,9 +137,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/submap/virgo2/DoomP)
 "aH" = (
-/obj/structure/cable{
-	icon_state = "0-2";
-	},
+/obj/structure/cable,
 /obj/machinery/power/port_gen/pacman,
 /turf/simulated/floor/plating,
 /area/submap/virgo2/DoomP)
@@ -196,9 +194,7 @@
 	icon_state = "term";
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "0-4";
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/submap/virgo2/DoomP)
 "aS" = (
@@ -206,20 +202,11 @@
 	icon_state = "term";
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "0-4";
-	},
-/obj/structure/cable{
-	icon_state = "4-8";
-	pixel_x = 0
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/submap/virgo2/DoomP)
 "aT" = (
-/obj/structure/cable{
-	icon_state = "4-8";
-	pixel_x = 0
-	},
+/obj/structure/cable,
 /mob/living/simple_mob/humanoid/merc/melee/sword/space,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/submap/virgo2/DoomP)

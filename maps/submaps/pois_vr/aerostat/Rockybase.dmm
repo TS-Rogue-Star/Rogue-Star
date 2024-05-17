@@ -599,10 +599,7 @@
 /turf/simulated/floor/plating/virgo2,
 /area/submap/virgo2/Rockybase)
 "ce" = (
-/obj/structure/cable{
-	icon_state = "4-8";
-	pixel_x = 0
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating/virgo2,
 /area/submap/virgo2/Rockybase)
 "cf" = (
@@ -659,9 +656,7 @@
 /turf/simulated/floor/tiled/techfloor/virgo2,
 /area/submap/virgo2/Rockybase)
 "cq" = (
-/obj/structure/cable{
-	icon_state = "0-4";
-	},
+/obj/structure/cable,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -674,10 +669,6 @@
 /turf/simulated/floor/plating/virgo2,
 /area/submap/virgo2/Rockybase)
 "cr" = (
-/obj/structure/cable{
-	icon_state = "4-8";
-	pixel_x = 0
-	},
 /obj/structure/cable,
 /turf/simulated/floor/plating/virgo2,
 /area/submap/virgo2/Rockybase)

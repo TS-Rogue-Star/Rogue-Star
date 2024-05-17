@@ -1962,9 +1962,7 @@
 /turf/simulated/floor/snow/snow2,
 /area/awaymission/snow_outpost/outside)
 "gD" = (
-/obj/structure/cable{
-	icon_state = "0-2";
-	},
+/obj/structure/cable,
 /obj/machinery/porta_turret/alien/destroyed,
 /turf/simulated/shuttle/floor/alienplating,
 /area/awaymission/snow_outpost/dark)
@@ -1981,10 +1979,7 @@
 /turf/simulated/shuttle/floor/alienplating,
 /area/awaymission/snow_outpost/dark)
 "gF" = (
-/obj/structure/cable{
-	icon_state = "1-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /turf/simulated/shuttle/floor/alienplating,
 /area/awaymission/snow_outpost/dark)
 "gG" = (
@@ -2005,10 +2000,7 @@
 /turf/simulated/shuttle/floor/alienplating,
 /area/awaymission/snow_outpost/dark)
 "gI" = (
-/obj/structure/cable{
-	icon_state = "4-8";
-	pixel_x = 0
-	},
+/obj/structure/cable,
 /turf/simulated/shuttle/floor/alienplating,
 /area/awaymission/snow_outpost/dark)
 "gJ" = (

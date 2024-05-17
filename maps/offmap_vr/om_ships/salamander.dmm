@@ -393,10 +393,7 @@
 	name = "west bump";
 	pixel_x = -28
 	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/structure/handrail,
 /obj/machinery/light{
 	dir = 8
@@ -1756,10 +1753,7 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/salamander)
 "Vh" = (
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "east bump";

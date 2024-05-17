@@ -5,6 +5,8 @@
 	#define CABLE_LAYER_2_NAME "Yellow Power Line"
 #define CABLE_LAYER_3 (1<<2)
 	#define CABLE_LAYER_3_NAME "Blue Power Line"
+#define CABLE_LAYER_4 (1<<3)
+	#define CABLE_LAYER_4_NAME "Heavy Power Line"
 
 #define SOLAR_TRACK_OFF 0
 #define SOLAR_TRACK_TIMED 1
@@ -14,14 +16,16 @@
 GLOBAL_LIST_INIT(cable_layer_to_name, list(
 	"[CABLE_LAYER_1]" = CABLE_LAYER_1_NAME,
 	"[CABLE_LAYER_2]" = CABLE_LAYER_2_NAME,
-	"[CABLE_LAYER_3]" = CABLE_LAYER_3_NAME
+	"[CABLE_LAYER_3]" = CABLE_LAYER_3_NAME,
+	"[CABLE_LAYER_4]" = CABLE_LAYER_4_NAME
 ))
 
 /// Converts cable color name to its layer
 GLOBAL_LIST_INIT(cable_name_to_layer, list(
 	CABLE_LAYER_1_NAME = CABLE_LAYER_1,
 	CABLE_LAYER_2_NAME = CABLE_LAYER_2,
-	CABLE_LAYER_3_NAME = CABLE_LAYER_3
+	CABLE_LAYER_3_NAME = CABLE_LAYER_3,
+	CABLE_LAYER_4_NAME = CABLE_LAYER_4
 	))
 
 /// Cable layer colors for easier editing later
@@ -30,6 +34,7 @@ GLOBAL_LIST_INIT(cable_name_to_layer, list(
 #define CABLELAYERONECOLOR		COLOR_RED
 #define CABLELAYERTWOCOLOR		COLOR_YELLOW
 #define CABLELAYERTHREECOLOR	COLOR_BLUE
+/// Cable layer 4 has fancy black and red wire colors. though I guess someone could recolor sometime...
 
 #define MAXCOIL 30
 

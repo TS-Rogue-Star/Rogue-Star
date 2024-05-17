@@ -62,9 +62,7 @@
 	pixel_x = 0;
 	pixel_y = 24
 	},
-/obj/structure/cable{
-	icon_state = "0-4";
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/blue_fo)
 "ak" = (

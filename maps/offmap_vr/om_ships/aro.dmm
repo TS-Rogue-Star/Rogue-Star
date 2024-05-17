@@ -2696,9 +2696,7 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/structure/cable/pink{
-	dir = 1
-	},
+/obj/structure/cable,
 /turf/simulated/shuttle/floor/alienplating/blue,
 /area/ship/aro/engineering)
 "gI" = (
@@ -2752,10 +2750,7 @@
 /turf/simulated/shuttle/floor/alienplating/blue,
 /area/ship/aro/engineering)
 "gQ" = (
-/obj/structure/cable/pink{
-	dir = 1;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/shuttle/floor/alienplating/blue,
 /area/ship/aro/engineering)
 "gR" = (
@@ -2775,10 +2770,7 @@
 /turf/simulated/shuttle/wall/alien/blue,
 /area/ship/aro/engines)
 "gU" = (
-/obj/structure/cable/pink{
-	dir = 1;
-	icon_state = "2-5"
-	},
+/obj/structure/cable,
 /turf/simulated/shuttle/wall/alien/blue,
 /area/ship/aro/engines)
 "gV" = (

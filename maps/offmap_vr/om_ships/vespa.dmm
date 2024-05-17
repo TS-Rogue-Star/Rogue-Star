@@ -388,10 +388,7 @@
 	dir = 1;
 	icon_state = "term"
 	},
-/obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/ship/expe/maintenancerim)
 "bn" = (
@@ -3837,10 +3834,7 @@
 	dir = 1;
 	icon_state = "term"
 	},
-/obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/borderfloorblack{
 	dir = 1;
 	icon_state = "borderfloor_black"
@@ -3907,10 +3901,7 @@
 	dir = 1;
 	icon_state = "term"
 	},
-/obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/borderfloorblack{
 	dir = 1;
 	icon_state = "borderfloor_black"
@@ -4034,10 +4025,7 @@
 	dir = 1;
 	icon_state = "term"
 	},
-/obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/borderfloorwhite{
 	dir = 5;
 	icon_state = "borderfloor_white"
@@ -4415,10 +4403,7 @@
 	dir = 4;
 	icon_state = "term"
 	},
-/obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/ship/expe/sm)
 "jA" = (
@@ -6957,10 +6942,7 @@
 /area/ship/expe/sm)
 "oy" = (
 /obj/machinery/power/rad_collector,
-/obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/ship/expe/sm)
 "oz" = (
@@ -6969,10 +6951,7 @@
 	icon_state = "intact"
 	},
 /obj/machinery/power/rad_collector,
-/obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/ship/expe/sm)
 "oA" = (
@@ -7724,10 +7703,7 @@
 	dir = 1;
 	icon_state = "term"
 	},
-/obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/borderfloorblack{
 	dir = 1;
 	icon_state = "borderfloor_black"
@@ -8099,10 +8075,7 @@
 	dir = 1;
 	icon_state = "term"
 	},
-/obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/ship/expe/smstorage)
 "qE" = (

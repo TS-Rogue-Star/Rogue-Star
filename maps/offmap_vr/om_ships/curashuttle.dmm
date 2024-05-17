@@ -950,9 +950,6 @@
 	pixel_y = 28
 	},
 /obj/structure/cable,
-/obj/structure/cable{
-	icon_state = "0-6"
-	},
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
 	dir = 4
 	},
@@ -1075,9 +1072,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/shuttle/curabitur/curashuttle/eng)
 "ch" = (
-/obj/structure/cable{
-	icon_state = "6-9"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/visible/yellow{
 	dir = 8
 	},
@@ -1331,9 +1326,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/structure/cable{
-	icon_state = "0-6"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/visible/yellow,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/shuttle/curabitur/curashuttle/eng)
@@ -1345,18 +1338,14 @@
 /area/shuttle/curabitur/curashuttle/eng)
 "tI" = (
 /obj/machinery/power/smes/point_of_interest,
-/obj/structure/cable{
-	icon_state = "0-9"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/shuttle/curabitur/curashuttle/eng)
 "MI" = (
 /obj/machinery/power/port_gen/pacman/mrs{
 	anchored = 1
 	},
-/obj/structure/cable{
-	icon_state = "0-9"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/shuttle/curabitur/curashuttle/eng)
 "OD" = (

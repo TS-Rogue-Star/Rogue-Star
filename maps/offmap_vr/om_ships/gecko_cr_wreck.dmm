@@ -187,10 +187,7 @@
 	pixel_x = 24;
 	start_charge = 0
 	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/gecko_cr_cockpit_wreck)
 "eP" = (

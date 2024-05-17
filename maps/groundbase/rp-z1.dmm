@@ -2762,7 +2762,6 @@
 	dir = 1
 	},
 /obj/structure/cable/ender{
-	icon_state = "4-8";
 	id = "westwilds"
 	},
 /turf/simulated/floor,
@@ -15131,9 +15130,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/foodplace)
 "ppG" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "0-8"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/cable,
 /turf/simulated/floor,
 /area/groundbase/level1/sw)
@@ -24183,9 +24180,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/obj/structure/cable/heavyduty{
-	icon_state = "4-8"
-	},
+/obj/structure/cable/heavyduty,
 /turf/simulated/floor,
 /area/groundbase/level1/sw)
 "yeB" = (

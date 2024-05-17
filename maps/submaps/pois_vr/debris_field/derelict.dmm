@@ -108,10 +108,7 @@
 /turf/simulated/wall,
 /area/submap/debrisfield/derelict/bridge)
 "as" = (
-/obj/structure/cable{
-	icon_state = "1-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /turf/simulated/wall,
 /area/submap/debrisfield/derelict/bridge)
 "at" = (
@@ -134,10 +131,6 @@
 /area/submap/debrisfield/derelict/interior)
 "ay" = (
 /obj/structure/cable,
-/obj/structure/cable{
-	icon_state = "1-2";
-	pixel_y = 0
-	},
 /obj/machinery/power/fractal_reactor{
 	alpha = 0;
 	invisibility = 101
@@ -150,26 +143,17 @@
 /turf/simulated/floor/tiled/monotile,
 /area/submap/debrisfield/derelict/interior)
 "aA" = (
-/obj/structure/cable{
-	icon_state = "1-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /obj/item/weapon/grenade/empgrenade,
 /turf/simulated/floor/bluegrid,
 /area/submap/debrisfield/derelict/interior)
 "aB" = (
 /obj/tether_away_spawner/debrisfield/derelict/corrupt_maint_swarm,
-/obj/structure/cable{
-	icon_state = "1-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /turf/simulated/floor/bluegrid,
 /area/submap/debrisfield/derelict/interior)
 "aC" = (
-/obj/structure/cable{
-	icon_state = "1-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /turf/simulated/floor/bluegrid,
 /area/submap/debrisfield/derelict/interior)
 "aD" = (
@@ -178,10 +162,7 @@
 /area/submap/debrisfield/derelict/interior)
 "aE" = (
 /obj/machinery/door/airlock/alien,
-/obj/structure/cable{
-	icon_state = "1-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/submap/debrisfield/derelict/interior)
 "aF" = (
@@ -192,10 +173,7 @@
 /turf/simulated/floor/tiled/steel_dirty,
 /area/submap/debrisfield/derelict/interior)
 "aH" = (
-/obj/structure/cable{
-	icon_state = "1-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/submap/debrisfield/derelict/interior)
 "aI" = (
@@ -210,10 +188,7 @@
 /turf/space,
 /area/space)
 "aL" = (
-/obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /obj/machinery/power/fractal_reactor{
 	alpha = 0;
 	invisibility = 101
@@ -232,10 +207,7 @@
 /area/submap/debrisfield/derelict/interior)
 "aN" = (
 /obj/random/humanoidremains,
-/obj/structure/cable{
-	icon_state = "1-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/submap/debrisfield/derelict/interior)
 "aO" = (
@@ -339,10 +311,7 @@
 /turf/simulated/floor/reinforced,
 /area/submap/debrisfield/derelict/interior)
 "bj" = (
-/obj/structure/cable{
-	icon_state = "1-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /turf/simulated/floor/reinforced,
 /area/submap/debrisfield/derelict/interior)
 "bk" = (
@@ -379,21 +348,11 @@
 /turf/simulated/floor/reinforced,
 /area/submap/debrisfield/derelict/interior)
 "bs" = (
-/obj/structure/cable{
-	icon_state = "1-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /turf/simulated/wall,
 /area/submap/debrisfield/derelict/interior)
 "bt" = (
-/obj/structure/cable{
-	icon_state = "1-2";
-	pixel_y = 0
-	},
-/obj/structure/cable{
-	icon_state = "1-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/submap/debrisfield/derelict/interior)
 "bu" = (
@@ -519,10 +478,7 @@
 /area/submap/debrisfield/derelict/interior)
 "bV" = (
 /obj/item/xenos_claw,
-/obj/structure/cable{
-	icon_state = "1-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/submap/debrisfield/derelict/interior)
 "bW" = (
@@ -544,18 +500,10 @@
 /turf/simulated/floor/tiled/dark,
 /area/submap/debrisfield/derelict/interior)
 "bZ" = (
-/obj/structure/cable{
-	icon_state = "1-2";
-	pixel_y = 0
-	},
 /obj/structure/cable,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/submap/debrisfield/derelict/interior)
 "ca" = (
-/obj/structure/cable{
-	icon_state = "1-2";
-	pixel_y = 0
-	},
 /obj/structure/cable,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/submap/debrisfield/derelict/interior)
@@ -598,10 +546,7 @@
 /turf/simulated/floor/tiled/white,
 /area/submap/debrisfield/derelict/interior)
 "ck" = (
-/obj/structure/cable{
-	icon_state = "1-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/submap/debrisfield/derelict/interior)
 "cl" = (
@@ -609,10 +554,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/submap/debrisfield/derelict/interior)
 "cm" = (
-/obj/structure/cable{
-	icon_state = "1-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/white,
 /area/submap/debrisfield/derelict/interior)
 "cn" = (
@@ -622,10 +564,7 @@
 /area/submap/debrisfield/derelict/interior)
 "co" = (
 /obj/machinery/door/airlock/alien,
-/obj/structure/cable{
-	icon_state = "1-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/submap/debrisfield/derelict/interior)
 "cp" = (
@@ -637,10 +576,6 @@
 /turf/simulated/floor/tiled/dark,
 /area/submap/debrisfield/derelict/interior)
 "cr" = (
-/obj/structure/cable{
-	icon_state = "1-2";
-	pixel_y = 0
-	},
 /obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/submap/debrisfield/derelict/interior)
@@ -666,10 +601,7 @@
 /turf/simulated/floor/tiled/neutral,
 /area/submap/debrisfield/derelict/interior)
 "cw" = (
-/obj/structure/cable{
-	icon_state = "1-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/neutral,
 /area/submap/debrisfield/derelict/interior)
 "cx" = (
@@ -709,10 +641,7 @@
 /area/submap/debrisfield/derelict/ai_access_port)
 "cI" = (
 /obj/machinery/door/airlock/alien,
-/obj/structure/cable{
-	icon_state = "1-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/submap/debrisfield/derelict/ai_access_port)
 "cJ" = (
@@ -724,10 +653,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/submap/debrisfield/derelict/ai_access_port)
 "cN" = (
-/obj/structure/cable{
-	icon_state = "1-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/submap/debrisfield/derelict/ai_access_port)
 "cO" = (
@@ -757,10 +683,7 @@
 /area/submap/debrisfield/derelict/ai_access_starboard)
 "cX" = (
 /obj/machinery/door/airlock/alien,
-/obj/structure/cable{
-	icon_state = "1-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/submap/debrisfield/derelict/ai_access_starboard)
 "cY" = (
@@ -768,17 +691,11 @@
 /area/submap/debrisfield/derelict/ai_access_starboard)
 "cZ" = (
 /obj/random/humanoidremains,
-/obj/structure/cable{
-	icon_state = "1-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/submap/debrisfield/derelict/ai_access_port)
 "da" = (
-/obj/structure/cable{
-	icon_state = "1-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/submap/debrisfield/derelict/ai_access_starboard)
 "db" = (
@@ -799,10 +716,6 @@
 /turf/simulated/floor/tiled/dark,
 /area/submap/debrisfield/derelict/ai_access_port)
 "de" = (
-/obj/structure/cable{
-	icon_state = "1-2";
-	pixel_y = 0
-	},
 /obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/submap/debrisfield/derelict/ai_access_starboard)
@@ -853,10 +766,7 @@
 	name = "AI Core";
 	req_access = list(16)
 	},
-/obj/structure/cable{
-	icon_state = "1-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/submap/debrisfield/derelict/ai_chamber)
 "dn" = (

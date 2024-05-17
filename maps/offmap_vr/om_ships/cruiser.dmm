@@ -2440,10 +2440,7 @@
 /obj/machinery/power/port_gen/pacman/super/potato{
 	sheets = 100
 	},
-/obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/mothership/vault)
@@ -2452,10 +2449,7 @@
 	dir = 4;
 	pixel_y = 0
 	},
-/obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 0
-	},
+/obj/structure/cable,
 /obj/machinery/power/port_gen/pacman/super/potato{
 	sheets = 100
 	},

@@ -32,6 +32,8 @@
 	var/obj/item/stack/cable_coil/cable
 	/// radial menu to select cable layer
 	var/list/radial_menu = null
+	/// Allow people to directly build terminals and wire machines with it
+	tool_qualities = list(TOOL_CABLE_COIL)
 
 /obj/item/weapon/material/twohanded/rcl/Initialize(mapload)
 	. = ..()
@@ -50,7 +52,7 @@
 	. += to_chat(user, "<span class='notice'>Ctrl click to toggle the cable painting lock. It is currently [layercolorlock ? "locked." : "unlocked."]</span>")
 
 /obj/item/weapon/material/twohanded/rcl/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/stack/cable_coil))
+	if(W.has_tool_quality(TOOL_CABLE_COIL))
 		var/obj/item/stack/cable_coil/C = W
 
 		if(!cable)

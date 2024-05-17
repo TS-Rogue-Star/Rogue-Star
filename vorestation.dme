@@ -3582,7 +3582,6 @@
 #include "code\modules\power\batteryrack_vr.dm"
 #include "code\modules\power\breaker_box.dm"
 #include "code\modules\power\cable.dm"
-#include "code\modules\power\cable_ender.dm"
 #include "code\modules\power\cable_heavyduty.dm"
 #include "code\modules\power\cable_layers.dm"
 #include "code\modules\power\cable_multiz.dm"

@@ -196,25 +196,16 @@
 /turf/simulated/floor/virgo3b_indoors,
 /area/tether/outpost/solars_shed)
 "aH" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "4-8"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/grille,
 /turf/simulated/floor/virgo3b_indoors,
 /area/tether/outpost/solars_shed)
 "aI" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "2-4"
-	},
+/obj/structure/cable/heavyduty,
 /turf/simulated/floor/virgo3b_indoors,
 /area/tether/outpost/solars_shed)
 "aJ" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "0-8"
-	},
-/obj/structure/cable/heavyduty{
-	icon_state = "0-2"
-	},
+/obj/structure/cable/heavyduty,
 /obj/machinery/power/sensor{
 	name = "Powernet Sensor - Solar Farm Output";
 	name_tag = "Solar Farm Output"
@@ -234,9 +225,7 @@
 /turf/simulated/floor/virgo3b_indoors,
 /area/tether/outpost/solars_shed)
 "aN" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "1-2"
-	},
+/obj/structure/cable/heavyduty,
 /turf/simulated/floor/virgo3b,
 /area/tether/outpost/solars_outside)
 "aO" = (
@@ -330,9 +319,7 @@
 /turf/simulated/floor/virgo3b_indoors,
 /area/tether/outpost/solars_shed)
 "ba" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "1-2"
-	},
+/obj/structure/cable/heavyduty,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -352,9 +339,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/obj/structure/cable/heavyduty{
-	icon_state = "1-4"
-	},
+/obj/structure/cable/heavyduty,
 /turf/simulated/floor/virgo3b,
 /area/tether/outpost/solars_outside)
 "bd" = (
@@ -422,17 +407,13 @@
 /turf/simulated/floor/tiled/steel_dirty/virgo3b,
 /area/tether/outpost/solars_outside)
 "bn" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "4-8"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/railing,
 /turf/simulated/floor/virgo3b,
 /area/tether/outpost/solars_outside)
 "bo" = (
 /obj/effect/floor_decal/rust,
-/obj/structure/cable/heavyduty{
-	icon_state = "4-8"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/railing,
 /obj/structure/railing{
 	dir = 1
@@ -440,9 +421,7 @@
 /turf/simulated/floor/virgo3b,
 /area/mine/explored)
 "bp" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "4-8"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/railing,
 /obj/structure/railing{
 	dir = 1
@@ -465,9 +444,7 @@
 /turf/simulated/floor/tiled/steel_dirty/virgo3b,
 /area/tether/outpost/solars_outside)
 "bt" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "2-8"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/railing{
 	dir = 1
 	},
@@ -549,9 +526,7 @@
 /turf/simulated/floor/tiled/steel_dirty/virgo3b,
 /area/tether/outpost/solars_outside)
 "bI" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "1-2"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/railing{
 	dir = 4
 	},
@@ -565,9 +540,7 @@
 /turf/simulated/floor/outdoors/dirt/virgo3b,
 /area/mine/explored)
 "bK" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "1-4"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/railing{
 	dir = 8
 	},
@@ -601,9 +574,7 @@
 /turf/simulated/wall,
 /area/tether/outpost/solars_shed)
 "bQ" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "4-8"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/railing{
 	dir = 1
 	},
@@ -612,41 +583,31 @@
 /area/mine/explored)
 "bR" = (
 /obj/effect/floor_decal/rust,
-/obj/structure/cable/heavyduty{
-	icon_state = "1-2"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/catwalk,
 /obj/effect/floor_decal/rust,
 /turf/simulated/floor/virgo3b,
 /area/mine/explored)
 "bS" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "1-2"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/catwalk,
 /obj/effect/floor_decal/rust,
 /turf/simulated/floor/virgo3b,
 /area/mine/explored)
 "bT" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "1-2"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/railing,
 /obj/structure/catwalk,
 /obj/effect/floor_decal/rust,
 /turf/simulated/floor/virgo3b,
 /area/mine/explored)
 "bU" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "4-8"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/railing{
 	dir = 1
 	},
 /obj/structure/railing,
-/obj/structure/cable/heavyduty{
-	icon_state = "2-4"
-	},
+/obj/structure/cable/heavyduty,
 /turf/simulated/floor/virgo3b,
 /area/mine/explored)
 "bV" = (
@@ -753,9 +714,7 @@
 /turf/simulated/wall,
 /area/rnd/outpost/airlock)
 "cm" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "4-8"
-	},
+/obj/structure/cable/heavyduty,
 /turf/simulated/floor/virgo3b,
 /area/mine/explored)
 "cn" = (
@@ -1158,7 +1117,6 @@
 /area/rnd/outpost/airlock)
 "dd" = (
 /obj/structure/cable/ender{
-	icon_state = "4-8";
 	id = "surface-solars"
 	},
 /turf/simulated/floor/virgo3b,
@@ -1548,9 +1506,7 @@
 /turf/simulated/floor/tiled,
 /area/rnd/outpost/airlock)
 "ec" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "1-2"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/railing{
 	dir = 8
 	},
@@ -1568,9 +1524,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/cable/heavyduty{
-	icon_state = "4-8"
-	},
+/obj/structure/cable/heavyduty,
 /obj/machinery/door/firedoor/glass,
 /turf/simulated/floor,
 /area/maintenance/substation/outpost)
@@ -1578,15 +1532,11 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/obj/structure/cable/heavyduty{
-	icon_state = "1-4"
-	},
+/obj/structure/cable/heavyduty,
 /turf/simulated/floor/virgo3b,
 /area/mine/explored)
 "eg" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "4-8"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/railing{
 	dir = 1
 	},
@@ -2180,9 +2130,7 @@
 /turf/simulated/floor,
 /area/maintenance/substation/outpost)
 "fg" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "0-4"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/cable,
 /turf/simulated/floor,
 /area/maintenance/substation/outpost)
@@ -5999,16 +5947,12 @@
 /turf/simulated/wall/r_wall,
 /area/rnd/outpost/anomaly_lab/analysis)
 "mu" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "4-8"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/railing,
 /turf/simulated/floor/virgo3b,
 /area/mine/explored)
 "mv" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "1-2"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/railing{
 	dir = 4
 	},
@@ -6529,9 +6473,7 @@
 /turf/simulated/floor/tiled,
 /area/rnd/outpost)
 "nB" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "1-8"
-	},
+/obj/structure/cable/heavyduty,
 /obj/structure/railing{
 	dir = 4
 	},
