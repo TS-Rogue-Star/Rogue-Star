@@ -261,6 +261,9 @@ macro "borghotkeymode"
 		name = "F8"
 		command = "Invisimin"
 	elem
+		name = "F9"
+		command = "msay"
+	elem
 		name = "F12"
 		command = "F12"
 	elem
@@ -490,6 +493,9 @@ macro "macro"
 	elem
 		name = "F8"
 		command = "Invisimin"
+	elem
+		name = "F9"
+		command = "msay"
 	elem
 		name = "F12"
 		command = "F12"
@@ -778,6 +784,9 @@ macro "hotkeymode"
 		name = "F8"
 		command = "Invisimin"
 	elem
+		name = "F9"
+		command = "msay"
+	elem
 		name = "F12"
 		command = "F12"
 	elem
@@ -1001,6 +1010,9 @@ macro "borgmacro"
 	elem
 		name = "F8"
 		command = "Invisimin"
+	elem
+		name = "F9"
+		command = "msay"
 	elem
 		name = "F12"
 		command = "F12"
