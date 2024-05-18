@@ -401,7 +401,7 @@
 	pixel_x = 10;
 	pixel_y = -24
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/effect/floor_decal/borderfloor,
 /obj/effect/floor_decal/corner/brown/border,
 /turf/simulated/floor/tiled,
@@ -641,7 +641,6 @@
 	name_tag = "Mining Outpost Subgrid"
 	},
 /obj/structure/cable,
-/obj/structure/cable/green,
 /turf/simulated/floor/plating,
 /area/outpost/mining_main/maintenance)
 "bG" = (

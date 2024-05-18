@@ -222,7 +222,7 @@
 /turf/simulated/floor/wood,
 /area/groundbase/dorms/room7)
 "ay" = (
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	dir = 4;
 	nightshift_setting = 2
@@ -3919,7 +3919,6 @@
 /area/groundbase/science/circuits)
 "la" = (
 /obj/structure/cable,
-/obj/structure/cable/yellow,
 /obj/machinery/power/sensor{
 	name = "Powernet Sensor - Command Subgrid";
 	name_tag = "Command Subgrid"
@@ -6843,7 +6842,7 @@
 /obj/machinery/power/apc{
 	dir = 4
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
@@ -6984,10 +6983,7 @@
 /turf/simulated/floor/wood,
 /area/groundbase/command/captain)
 "uw" = (
-/obj/structure/cable/yellow,
 /obj/structure/cable,
-	icon_state = "16-0"
-	},
 /obj/machinery/atmospherics/pipe/zpipe/up/supply{
 	dir = 1
 	},
@@ -8105,9 +8101,6 @@
 /turf/simulated/floor,
 /area/maintenance/groundbase/substation/command)
 "xW" = (
-/obj/structure/cable,
-	icon_state = "16-0"
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/zpipe/up/supply{
 	dir = 4
@@ -11829,7 +11822,7 @@
 	},
 /obj/structure/window/reinforced/full,
 /obj/structure/window/reinforced,
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/machinery/door/blast/shutters{
 	dir = 2;
 	id = "hop_office_desk";
@@ -13435,7 +13428,6 @@
 /turf/simulated/floor,
 /area/groundbase/civilian/hydroponics)
 "NR" = (
-/obj/structure/cable/yellow,
 /obj/structure/cable,
 /obj/machinery/power/smes{
 	RCon_tag = "Substation - Command";
@@ -15990,7 +15982,7 @@
 "VH" = (
 /obj/structure/table/standard,
 /obj/machinery/power/apc,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/cafe,
 /area/groundbase/civilian/kitchen)
 "VI" = (

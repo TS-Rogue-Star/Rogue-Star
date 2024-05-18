@@ -257,7 +257,6 @@
 /area/rnd/outpost)
 "aR" = (
 /obj/structure/cable,
-/obj/structure/cable/yellow,
 /obj/machinery/power/solar_control{
 	dir = 1
 	},
@@ -2125,7 +2124,6 @@
 	RCon_tag = "Substation - Science Outpost";
 	output_attempt = 0
 	},
-/obj/structure/cable/green,
 /obj/structure/cable,
 /turf/simulated/floor,
 /area/maintenance/substation/outpost)
@@ -2301,7 +2299,6 @@
 /turf/simulated/floor,
 /area/maintenance/substation/outpost)
 "fA" = (
-/obj/structure/cable/green,
 /obj/structure/cable,
 /obj/machinery/power/sensor{
 	name = "Powernet Sensor - Science Outpost Subgrid";
@@ -2413,7 +2410,7 @@
 	name = "south bump";
 	pixel_y = -24
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/machinery/light_switch{
 	dir = 8;
 	pixel_x = 28
@@ -2568,7 +2565,7 @@
 	name = "west bump";
 	pixel_x = -28
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/effect/floor_decal/borderfloor{
 	dir = 10
 	},
@@ -3334,7 +3331,7 @@
 	name = "east bump";
 	pixel_x = 24
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/effect/floor_decal/corner/purple/full{
 	dir = 4
 	},
@@ -6954,7 +6951,7 @@
 	name = "south bump";
 	pixel_y = -24
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/structure/bed/chair/wood{
 	dir = 4
 	},

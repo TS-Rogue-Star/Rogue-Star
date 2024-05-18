@@ -178,8 +178,6 @@
 /area/submap/debrisfield/tinyshuttle/bridge)
 "av" = (
 /obj/structure/cable,
-	icon_state = "1-6"
-	},
 /obj/effect/floor_decal/corner/black/border{
 	dir = 6
 	},
@@ -304,11 +302,6 @@
 /area/submap/debrisfield/tinyshuttle/bridge)
 "aI" = (
 /obj/structure/cable,
-	icon_state = "4-9"
-	},
-/obj/structure/cable,
-	icon_state = "4-10"
-	},
 /obj/structure/bed/chair/shuttle{
 	dir = 8
 	},
@@ -322,9 +315,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-	dir = 1;
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/tiled/airless,
 /area/submap/debrisfield/tinyshuttle/bridge)
 "aK" = (
@@ -333,9 +323,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-	dir = 1;
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
@@ -372,9 +359,6 @@
 /area/submap/debrisfield/tinyshuttle/crew)
 "aO" = (
 /obj/structure/cable,
-	dir = 1;
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 8
 	},
@@ -389,8 +373,6 @@
 /area/submap/debrisfield/tinyshuttle/crew)
 "aP" = (
 /obj/structure/cable,
-	icon_state = "6-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 10
 	},
@@ -439,7 +421,7 @@
 	stat = 1
 	},
 /obj/structure/lattice,
-/obj/structure/cable/green,
+/obj/structure/cable,
 /turf/simulated/shuttle/plating/airless/carry,
 /area/submap/debrisfield/tinyshuttle/bridge)
 "aW" = (
@@ -447,8 +429,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-	icon_state = "2-5"
-	},
 /obj/effect/floor_decal/corner/blue/full,
 /turf/simulated/floor/tiled/airless,
 /area/submap/debrisfield/tinyshuttle/bridge)
@@ -493,7 +473,7 @@
 	name = "east bump";
 	pixel_x = 28
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light_switch{
 	dir = 1;
@@ -553,8 +533,6 @@
 /area/submap/debrisfield/tinyshuttle/crew)
 "be" = (
 /obj/structure/cable,
-	icon_state = "4-9"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 8
 	},
@@ -568,10 +546,6 @@
 /area/submap/debrisfield/tinyshuttle/crew)
 "bf" = (
 /obj/structure/cable,
-	dir = 1;
-	icon_state = "4-8"
-	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
@@ -583,9 +557,6 @@
 /area/submap/debrisfield/tinyshuttle/crew)
 "bg" = (
 /obj/structure/cable,
-	dir = 1;
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 8
 	},
@@ -622,11 +593,6 @@
 /area/submap/debrisfield/tinyshuttle/engine)
 "bl" = (
 /obj/structure/cable,
-	icon_state = "6-8"
-	},
-/obj/structure/cable,
-	icon_state = "1-6"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 8
 	},
@@ -667,8 +633,6 @@
 /area/submap/debrisfield/tinyshuttle/bridge)
 "bo" = (
 /obj/structure/cable,
-	icon_state = "9-10"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /obj/machinery/door/airlock/hatch{
 	req_one_access = list()
@@ -722,8 +686,6 @@
 /area/submap/debrisfield/tinyshuttle/hangar)
 "bt" = (
 /obj/structure/cable,
-	icon_state = "5-6"
-	},
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
 	pixel_x = -30
@@ -840,8 +802,6 @@
 /area/submap/debrisfield/tinyshuttle/engine)
 "bD" = (
 /obj/structure/cable,
-	icon_state = "4-9"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
@@ -879,14 +839,11 @@
 	name = "east bump";
 	pixel_x = 28
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /turf/simulated/floor/reinforced/airless,
 /area/submap/debrisfield/tinyshuttle/hangar)
 "bJ" = (
 /obj/structure/cable,
-	dir = 1;
-	icon_state = "4-8"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
@@ -922,7 +879,6 @@
 	pixel_x = 28
 	},
 /obj/structure/cable,
-/obj/structure/cable/green,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},

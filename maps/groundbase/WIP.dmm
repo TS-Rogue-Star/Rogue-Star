@@ -801,7 +801,7 @@
 "aHp" = (
 /obj/structure/table/standard,
 /obj/machinery/power/apc,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/cafe,
 /area/groundbase/civilian/kitchen)
 "aHW" = (
@@ -7190,7 +7190,7 @@
 	dir = 8;
 	nightshift_setting = 2
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/toolstorage)
 "fcf" = (
@@ -7950,7 +7950,7 @@
 /obj/machinery/light,
 /obj/machinery/holoplant,
 /obj/machinery/power/apc,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/simulated/floor/bluegrid,
 /area/groundbase/command/ai/chamber)
 "fHm" = (
@@ -8067,7 +8067,7 @@
 /area/shuttle/groundbase/exploration)
 "fJL" = (
 /obj/machinery/power/apc,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/medical/autoresleeving)
 "fJM" = (
@@ -10797,7 +10797,7 @@
 	},
 /obj/structure/window/reinforced/full,
 /obj/structure/window/reinforced,
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/machinery/door/blast/shutters{
 	dir = 2;
 	id = "hop_office_desk";
@@ -11210,7 +11210,7 @@
 /turf/simulated/wall,
 /area/groundbase/cargo/mining)
 "hVo" = (
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	dir = 4;
 	nightshift_setting = 2
@@ -13019,7 +13019,7 @@
 "jfj" = (
 /obj/machinery/power/rtg/reg/c,
 /obj/effect/floor_decal/industrial/outline/yellow,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/simulated/floor/reinforced,
 /area/groundbase/engineering/engine)
 "jfl" = (
@@ -14214,7 +14214,7 @@
 /area/groundbase/engineering/engine)
 "jTT" = (
 /obj/machinery/power/apc,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hall3)
 "jUC" = (
@@ -16095,7 +16095,7 @@
 /obj/machinery/power/apc{
 	dir = 4
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
@@ -16272,10 +16272,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/office)
 "lod" = (
-/obj/structure/cable/yellow,
 /obj/structure/cable,
-	icon_state = "16-0"
-	},
 /obj/machinery/atmospherics/pipe/zpipe/up/supply{
 	dir = 1
 	},
@@ -16452,8 +16449,6 @@
 /area/medical/virology)
 "ltG" = (
 /obj/structure/cable,
-	icon_state = "16-0"
-	},
 /obj/machinery/atmospherics/pipe/zpipe/up/supply{
 	dir = 4
 	},
@@ -16620,7 +16615,6 @@
 /turf/simulated/floor/tiled,
 /area/shuttle/groundbase/exploration)
 "lAb" = (
-/obj/structure/cable/yellow,
 /obj/structure/cable,
 /obj/machinery/power/smes{
 	RCon_tag = "Substation - Command";
@@ -18489,9 +18483,6 @@
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hall2)
 "mUo" = (
-/obj/structure/cable,
-	icon_state = "16-0"
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/zpipe/up/supply{
 	dir = 8
@@ -22319,10 +22310,7 @@
 /turf/simulated/wall/r_wall,
 /area/groundbase/command/captainq)
 "pLc" = (
-/obj/structure/cable/yellow,
 /obj/structure/cable,
-	icon_state = "16-0"
-	},
 /obj/machinery/atmospherics/pipe/zpipe/up/supply{
 	dir = 1
 	},
@@ -23572,7 +23560,7 @@
 /area/groundbase/command/hop)
 "qDb" = (
 /obj/effect/floor_decal/industrial/outline/yellow,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/simulated/floor/reinforced,
 /area/groundbase/engineering/engine)
 "qDk" = (
@@ -27389,7 +27377,6 @@
 /area/groundbase/science/robotics)
 "tcg" = (
 /obj/structure/cable,
-/obj/structure/cable/yellow,
 /obj/machinery/power/sensor{
 	name = "Powernet Sensor - Command Subgrid";
 	name_tag = "Command Subgrid"
@@ -27802,7 +27789,7 @@
 /area/groundbase/engineering/atmos/monitoring)
 "tul" = (
 /obj/machinery/power/apc,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/purple{
 	dir = 5
 	},
@@ -28858,8 +28845,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-	icon_state = "16-0"
-	},
 /obj/machinery/atmospherics/pipe/zpipe/up/scrubbers{
 	dir = 4
 	},
@@ -32442,9 +32427,6 @@
 /area/groundbase/security/detective)
 "wFC" = (
 /obj/structure/cable,
-	icon_state = "16-0"
-	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/zpipe/up/scrubbers,
 /obj/machinery/atmospherics/pipe/zpipe/up/supply,
 /obj/structure/disposalpipe/up,
@@ -34026,7 +34008,7 @@
 /obj/machinery/power/apc{
 	dir = 8
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hall2)
 "xQF" = (
@@ -34154,7 +34136,7 @@
 /area/groundbase/engineering/atmos)
 "xUt" = (
 /obj/machinery/power/port_gen/pacman,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/shuttle/groundbase/exploration)
 "xUw" = (

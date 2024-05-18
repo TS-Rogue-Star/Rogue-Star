@@ -140,7 +140,7 @@
 "ar" = (
 /obj/effect/floor_decal/borderfloor,
 /obj/effect/floor_decal/corner/lightgrey/border,
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	alarms_hidden = 1;
 	pixel_y = -27;
@@ -399,7 +399,7 @@
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/casinofloor)
 "aW" = (
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/machinery/power/fractal_reactor/fluff/smes,
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/maint2)
@@ -2323,9 +2323,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/catwalk,
 /obj/structure/cable,
-	dir = 1;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/trash)
 "mO" = (
@@ -2556,7 +2553,7 @@
 /obj/effect/floor_decal/corner/lightgrey/bordercorner2{
 	dir = 6
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	alarms_hidden = 1;
 	dir = 4;
@@ -3102,9 +3099,6 @@
 	},
 /obj/structure/catwalk,
 /obj/structure/cable,
-	dir = 1;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/trash)
 "rB" = (
@@ -3711,9 +3705,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/catwalk,
 /obj/structure/cable,
-	dir = 1;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/maint2)
 "vb" = (
@@ -9249,7 +9240,7 @@
 /obj/effect/floor_decal/corner/paleblue/border{
 	dir = 6
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},

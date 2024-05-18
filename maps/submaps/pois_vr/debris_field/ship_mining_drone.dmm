@@ -136,9 +136,6 @@
 	},
 /obj/structure/catwalk,
 /obj/structure/cable,
-	icon_state = "4-8";
-	plane = -45
-	},
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/mining_drone_ship)
 "aw" = (

@@ -295,7 +295,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	dir = 4
 	},
@@ -1524,7 +1524,7 @@
 /area/groundbase/science/outpost/toxins_storage)
 "nA" = (
 /obj/machinery/power/apc,
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/structure/table/standard,
 /obj/fiftyspawner/steel,
 /turf/simulated/floor/tiled/white,
@@ -4167,7 +4167,7 @@
 /obj/machinery/power/apc{
 	dir = 4
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/effect/floor_decal/corner/purple/full{
 	dir = 4
 	},
@@ -4354,7 +4354,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/structure/cable/green,
 /turf/simulated/floor,
 /area/groundbase/science/outpost/substation)
 "LU" = (

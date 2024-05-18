@@ -845,8 +845,6 @@
 	dir = 1
 	},
 /obj/structure/cable,
-	icon_state = "16-0"
-	},
 /obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/techfloor,
 /area/maintenance/lower/public_garden_maintenence)
@@ -1860,7 +1858,7 @@
 /obj/effect/floor_decal/corner/paleblue/bordercorner2{
 	dir = 9
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/tether/surfacebase/medical/paramed)
 "adE" = (
@@ -5793,8 +5791,6 @@
 	},
 /obj/effect/floor_decal/industrial/outline/yellow,
 /obj/structure/cable,
-	icon_state = "16-0"
-	},
 /obj/machinery/atmospherics/pipe/zpipe/up/scrubbers{
 	dir = 4
 	},
@@ -5804,7 +5800,7 @@
 /obj/structure/disposalpipe/up{
 	dir = 4
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor,
 /area/maintenance/lower/public_garden_maintenence)
 "akH" = (
@@ -6319,7 +6315,7 @@
 /obj/effect/floor_decal/corner/lightgrey/border{
 	dir = 6
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/tether/surfacebase/public_garden_one)
 "alB" = (
@@ -9340,7 +9336,7 @@
 /turf/simulated/floor/tiled,
 /area/storage/art)
 "are" = (
-/obj/structure/cable/green,
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/vacant/vacant_site)
 "arf" = (
@@ -9682,8 +9678,6 @@
 /area/vacant/vacant_site)
 "arL" = (
 /obj/structure/cable,
-	icon_state = "16-0"
-	},
 /obj/effect/floor_decal/industrial/outline/yellow,
 /obj/structure/cable,
 /turf/simulated/floor/plating,
@@ -12984,7 +12978,7 @@
 	name = "south bump";
 	pixel_y = -24
 	},
-/obj/structure/cable/orange,
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/security/checkpoint)
 "axw" = (
@@ -13404,7 +13398,7 @@
 	nightshift_setting = 2;
 	pixel_y = -32
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/white,
 /area/medical/virologyaccess)
 "ayf" = (
@@ -15148,9 +15142,6 @@
 	dir = 1
 	},
 /obj/structure/cable,
-	icon_state = "16-0"
-	},
-/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/maintenance/lowmedbaymaint)
 "aAY" = (
@@ -16180,9 +16171,6 @@
 /turf/simulated/floor/tiled,
 /area/rnd/hallway)
 "aCW" = (
-/obj/structure/cable,
-	icon_state = "16-0"
-	},
 /obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/maintenance/asmaint2)
@@ -18027,7 +18015,7 @@
 	name = "west bump";
 	pixel_x = -30
 	},
-/obj/structure/cable/orange,
+/obj/structure/cable,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -18065,7 +18053,7 @@
 /turf/simulated/floor/tiled,
 /area/tether/surfacebase/tram)
 "aGB" = (
-/obj/structure/cable/orange,
+/obj/structure/cable,
 /obj/machinery/power/apc/high{
 	nightshift_setting = 2;
 	pixel_y = -28
@@ -20368,8 +20356,6 @@
 /area/engineering/atmos)
 "aKX" = (
 /obj/structure/cable,
-	icon_state = "16-0"
-	},
 /obj/machinery/atmospherics/pipe/zpipe/up,
 /obj/structure/cable,
 /turf/simulated/floor/plating,
@@ -26206,7 +26192,7 @@
 /obj/effect/floor_decal/borderfloor,
 /obj/effect/floor_decal/corner/blue/border,
 /obj/machinery/light,
-/obj/structure/cable/orange,
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	name = "south bump";
 	pixel_y = -32
@@ -27259,9 +27245,6 @@
 /obj/machinery/light,
 /obj/structure/ladder/up,
 /obj/structure/cable,
-	icon_state = "16-0"
-	},
-/obj/structure/cable/orange,
 /obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/plating,
 /area/vacant/vacant_bar)
@@ -27683,7 +27666,6 @@
 /turf/simulated/floor,
 /area/maintenance/substation/SurfMedsubstation)
 "bbs" = (
-/obj/structure/cable/green,
 /obj/structure/cable,
 /obj/machinery/power/smes{
 	RCon_tag = "Substation - Surface Services";
@@ -27772,7 +27754,6 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 1
 	},
-/obj/structure/cable/green,
 /obj/structure/cable,
 /obj/machinery/power/sensor{
 	name = "Powernet Sensor - Surface Services Subgrid";
@@ -27847,7 +27828,6 @@
 /turf/simulated/floor/tiled/white,
 /area/tether/surfacebase/medical/autoresleeving)
 "bbJ" = (
-/obj/structure/cable/green,
 /obj/structure/cable,
 /obj/machinery/power/smes{
 	RCon_tag = "Substation - Medical";
@@ -27976,7 +27956,6 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 1
 	},
-/obj/structure/cable/green,
 /obj/structure/cable,
 /obj/machinery/power/sensor{
 	name = "Powernet Sensor - Medical Subgrid";
@@ -30059,7 +30038,7 @@
 	dir = 8;
 	pixel_x = -25
 	},
-/obj/structure/cable/cyan,
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/maintenance/engineering/atmos/airlock)
 "fVv" = (
@@ -32948,7 +32927,7 @@
 	nightshift_setting = 2;
 	pixel_y = -32
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/effect/floor_decal/corner/lightorange{
 	dir = 6
 	},
@@ -33927,7 +33906,7 @@
 	name = "south bump";
 	pixel_y = -32
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
@@ -34462,7 +34441,6 @@
 	output_attempt = 0
 	},
 /obj/structure/cable,
-/obj/structure/cable/green,
 /turf/simulated/floor/plating,
 /area/maintenance/substation/civ_west)
 "sEz" = (
@@ -34502,9 +34480,6 @@
 /area/looking_glass/lg_1)
 "sJP" = (
 /obj/structure/cable,
-	icon_state = "16-0"
-	},
-/obj/structure/cable/orange,
 /obj/effect/floor_decal/industrial/outline/yellow,
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
@@ -35287,7 +35262,7 @@
 /obj/machinery/power/apc{
 	pixel_y = -25
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /turf/simulated/floor/carpet/bcarpet,
 /area/tether/surfacebase/funny/mimeoffice)
 "vlJ" = (

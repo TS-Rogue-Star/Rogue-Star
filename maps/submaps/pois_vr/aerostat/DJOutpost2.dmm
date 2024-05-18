@@ -73,7 +73,7 @@
 "q" = (
 /obj/structure/table/steel_reinforced,
 /obj/item/device/radio,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/simulated/floor/wood/broken,
 /area/submap/virgo2/DJOutpost1)
 "r" = (

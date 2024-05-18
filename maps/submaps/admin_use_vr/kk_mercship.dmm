@@ -1451,7 +1451,7 @@
 /obj/machinery/power/pointdefense{
 	id_tag = "mercenary_pd"
 	},
-/obj/structure/cable/orange,
+/obj/structure/cable,
 /turf/simulated/floor/reinforced/airless,
 /area/ship/manta/magazine)
 "fN" = (
@@ -4526,7 +4526,7 @@
 	name = "Merc APC - South";
 	pixel_y = -24
 	},
-/obj/structure/cable/orange,
+/obj/structure/cable,
 /obj/machinery/alarm/alarms_hidden{
 	dir = 8;
 	pixel_x = 26
@@ -4540,7 +4540,7 @@
 	name = "Merc APC - South";
 	pixel_y = -24
 	},
-/obj/structure/cable/orange,
+/obj/structure/cable,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -5017,7 +5017,7 @@
 	name = "Merc APC - West";
 	pixel_x = -24
 	},
-/obj/structure/cable/orange,
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/ship/manta/hallways_star)
 "xz" = (
@@ -5989,7 +5989,7 @@
 	name = "Merc APC - South";
 	pixel_y = -24
 	},
-/obj/structure/cable/orange,
+/obj/structure/cable,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -6771,7 +6771,7 @@
 /obj/machinery/power/pointdefense{
 	id_tag = "mercenary_pd"
 	},
-/obj/structure/cable/orange,
+/obj/structure/cable,
 /turf/simulated/floor/reinforced/airless,
 /area/ship/manta/engine)
 "Gd" = (
@@ -9983,7 +9983,7 @@
 	name = "Merc APC - South";
 	pixel_y = -24
 	},
-/obj/structure/cable/orange,
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/ship/manta/barracks)
 "Wx" = (

@@ -716,7 +716,6 @@
 	name = "east bump";
 	pixel_x = 24
 	},
-/obj/structure/cable/green,
 /obj/structure/cable,
 /obj/structure/handrail{
 	dir = 8
@@ -1551,7 +1550,7 @@
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering)
 "eP" = (
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/machinery/light/small,
 /obj/machinery/power/port_gen/pacman/super/potato,
 /turf/simulated/floor/plating,
@@ -1820,7 +1819,7 @@
 	name = "south bump";
 	pixel_y = -24
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/item/weapon/paper/talon_captain,
 /obj/structure/cable,
 /turf/simulated/floor/carpet/blucarpet,
@@ -1951,7 +1950,6 @@
 	name = "south bump";
 	pixel_y = -24
 	},
-/obj/structure/cable/green,
 /obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/talon_v2/crew_quarters/bar)
@@ -2047,7 +2045,7 @@
 /obj/machinery/power/pointdefense{
 	id_tag = "talon_pd"
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/effect/floor_decal/industrial/warning/dust{
 	dir = 6
 	},
@@ -3062,7 +3060,7 @@
 /obj/machinery/power/apc/talon/hyper{
 	pixel_y = -24
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/talonboat)
 "kP" = (
@@ -3236,7 +3234,7 @@
 /obj/machinery/power/pointdefense{
 	id_tag = "talon_pd"
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/effect/floor_decal/industrial/warning/dust{
 	dir = 10
 	},
@@ -3572,7 +3570,7 @@
 /obj/machinery/power/smes/offmap_spawn{
 	RCon_tag = "Talon Port SMES"
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/talonboat)
 "mV" = (
@@ -3684,7 +3682,6 @@
 /area/talon_v2/crew_quarters/med_room)
 "ns" = (
 /obj/effect/floor_decal/emblem/talon_big/center,
-/obj/structure/cable/green,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
@@ -4920,7 +4917,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 9
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/machinery/power/apc/talon{
 	dir = 4;
 	name = "east bump";
@@ -6421,7 +6418,7 @@
 	name = "south bump";
 	pixel_y = -24
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/armory)
 "xB" = (
@@ -8153,7 +8150,6 @@
 	name = "west bump";
 	pixel_x = -28
 	},
-/obj/structure/cable/green,
 /obj/structure/cable,
 /obj/structure/handrail{
 	dir = 4
@@ -10037,7 +10033,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/engineering/star_store)
 "Lv" = (
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/machinery/power/rtg/advanced,
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/generators)
@@ -10084,7 +10080,7 @@
 	name = "south bump";
 	pixel_y = -24
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway/star)
 "LA" = (
@@ -11527,7 +11523,6 @@
 	},
 /obj/effect/catwalk_plated/dark,
 /obj/structure/closet/walllocker_double/hydrant/west,
-/obj/structure/cable/green,
 /obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering)
@@ -11897,8 +11892,6 @@
 	name_tag = "TLN-PWR-GEN"
 	},
 /obj/structure/cable,
-/obj/structure/cable/yellow,
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
@@ -12203,7 +12196,6 @@
 	name_tag = "TLN-MAIN-GRID"
 	},
 /obj/structure/cable,
-/obj/structure/cable/green,
 /obj/effect/catwalk_plated/dark,
 /obj/structure/sign/department/eng{
 	name = "ENGINEER'S QUARTERS";

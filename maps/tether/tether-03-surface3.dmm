@@ -10686,7 +10686,7 @@
 	name = "west bump";
 	pixel_x = -30
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/crew_quarters/recreation_area)
 "asT" = (
@@ -15971,7 +15971,7 @@
 	nightshift_setting = 2;
 	pixel_y = -32
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /turf/simulated/floor/grass,
 /area/hydroponics/cafegarden)
 "aCk" = (
@@ -17338,7 +17338,6 @@
 /turf/simulated/floor/tiled,
 /area/tether/surfacebase/botanystorage)
 "aEO" = (
-/obj/structure/cable/orange,
 /obj/structure/cable,
 /obj/machinery/power/sensor{
 	name = "Powernet Sensor - Surface Civilian Subgrid";
@@ -18041,7 +18040,7 @@
 	nightshift_setting = 2;
 	pixel_y = -24
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/effect/floor_decal/borderfloor,
 /obj/effect/floor_decal/corner/lime/border,
 /turf/simulated/floor/tiled,
@@ -21617,7 +21616,7 @@
 	nightshift_setting = 2;
 	pixel_y = -24
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/steel_grid,
 /area/rnd/robotics/surgeryroom2)
 "aMQ" = (
@@ -22281,7 +22280,7 @@
 /turf/simulated/floor/grass,
 /area/hydroponics)
 "aOh" = (
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "west bump";
@@ -23524,7 +23523,7 @@
 	pixel_x = -28
 	},
 /obj/machinery/light,
-/obj/structure/cable/green,
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/rnd/outpost/xenobiology/outpost_breakroom)
 "aQW" = (
@@ -23735,7 +23734,7 @@
 	nightshift_setting = 2;
 	pixel_y = -24
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/white,
 /area/rnd/outpost/xenobiology/outpost_autopsy)
 "aRw" = (
@@ -24779,7 +24778,6 @@
 	dir = 4;
 	id = "hop_office"
 	},
-/obj/structure/cable/green,
 /obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/crew_quarters/heads/hop)
@@ -25447,7 +25445,7 @@
 /obj/effect/floor_decal/techfloor{
 	dir = 6
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "east bump";
@@ -27028,7 +27026,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
@@ -27112,7 +27110,7 @@
 	nightshift_setting = 2;
 	pixel_y = -24
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/white,
 /area/rnd/outpost/xenobiology/outpost_first_aid)
 "aXG" = (
@@ -28097,7 +28095,6 @@
 /obj/structure/window/reinforced/full,
 /obj/machinery/door/firedoor/glass,
 /obj/structure/cable,
-/obj/structure/cable/green,
 /obj/machinery/door/blast/shutters{
 	dir = 4;
 	id = "cap_office";
@@ -28467,7 +28464,7 @@
 	name = "south bump";
 	pixel_y = -32
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/heads/hop)
 "baq" = (
@@ -32516,7 +32513,7 @@
 	pixel_x = 12;
 	pixel_y = -24
 	},
-/obj/structure/cable/orange,
+/obj/structure/cable,
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 28
@@ -35981,7 +35978,7 @@
 	name = "west bump";
 	pixel_x = -28
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 1
 	},
@@ -36078,7 +36075,7 @@
 	dir = 4
 	},
 /obj/machinery/power/terminal,
-/obj/structure/cable/orange,
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/shuttle/tourbus/general)
 "fKi" = (
@@ -39041,7 +39038,7 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced,
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/machinery/door/blast/regular{
 	density = 0;
 	icon_state = "pdoor0";
@@ -40180,7 +40177,7 @@
 /area/tether/surfacebase/shuttle_pad)
 "rWx" = (
 /obj/structure/grille,
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/machinery/door/blast/regular{
 	density = 0;
 	icon_state = "pdoor0";
@@ -41462,7 +41459,7 @@
 	nightshift_setting = 2;
 	pixel_x = 28
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /turf/simulated/floor/grass,
 /area/hydroponics)
 "whN" = (

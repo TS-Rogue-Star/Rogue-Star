@@ -879,7 +879,7 @@
 	name = "south bump";
 	pixel_y = -32
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -2005,7 +2005,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	name = "south bump";
 	nightshift_setting = 0;
@@ -2024,7 +2024,7 @@
 /turf/simulated/floor,
 /area/maintenance/station/eng_lower)
 "adW" = (
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	name = "south bump";
 	pixel_y = -32
@@ -2668,7 +2668,7 @@
 	nightshift_setting = 2;
 	pixel_y = -32
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/structure/table/reinforced,
 /obj/machinery/microwave,
 /obj/effect/floor_decal/borderfloor{
@@ -3090,7 +3090,7 @@
 /area/maintenance/station/eng_lower)
 "agc" = (
 /obj/structure/grille,
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/machinery/door/firedoor/glass,
 /obj/structure/window/reinforced/polarized/full{
 	id = "ce_office"
@@ -4023,7 +4023,7 @@
 	nightshift_setting = 2;
 	pixel_x = 28
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/machinery/alarm{
 	dir = 1;
 	pixel_y = -22
@@ -6546,7 +6546,7 @@
 	nightshift_setting = 2;
 	pixel_y = -32
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/engineering/atmos/backup)
 "aql" = (
@@ -9512,7 +9512,6 @@
 /obj/effect/floor_decal/steeldecal/steel_decals7{
 	dir = 10
 	},
-/obj/structure/cable/green,
 /obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/engineering/hallway)
@@ -11225,7 +11224,7 @@
 	name = "south bump";
 	pixel_y = -32
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 25
@@ -11919,7 +11918,7 @@
 	req_access = list();
 	req_one_access = list(11,67)
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/heads/chief)
 "aVK" = (
@@ -13376,7 +13375,6 @@
 	output_attempt = 0
 	},
 /obj/structure/cable,
-/obj/structure/cable/green,
 /obj/machinery/camera/network/engineering{
 	dir = 4
 	},
@@ -13751,9 +13749,6 @@
 /area/tether/exploration)
 "bYK" = (
 /obj/structure/cable,
-	dir = 1;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/unary/vent_pump/on,
 /turf/simulated/floor/tiled,
 /area/tcommsat/computer)
@@ -14383,9 +14378,6 @@
 /obj/structure/window/reinforced/full,
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
-	dir = 1;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/tiled,
 /area/tcommsat/computer)
 "cCr" = (
@@ -14908,10 +14900,6 @@
 /turf/simulated/floor/tiled,
 /area/quartermaster/belterdock/refinery)
 "dfN" = (
-/obj/structure/cable,
-	dir = 1;
-	icon_state = "1-2"
-	},
 /obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/tcommsat/computer)
@@ -16407,7 +16395,6 @@
 	output_attempt = 0
 	},
 /obj/structure/cable,
-/obj/structure/cable/green,
 /obj/machinery/camera/network/engineering{
 	dir = 4
 	},
@@ -17822,7 +17809,6 @@
 /area/tcommsat/chamber)
 "gFT" = (
 /obj/structure/cable,
-/obj/structure/cable/cyan,
 /obj/machinery/power/apc/angled{
 	dir = 4;
 	req_access = null;
@@ -18192,7 +18178,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/monotile,
 /area/tether/exploration)
 "hbv" = (
@@ -19396,7 +19382,6 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
 /obj/machinery/door/firedoor,
-/obj/structure/cable/green,
 /obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/tcomsat{
@@ -19762,7 +19747,7 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
 /obj/machinery/door/firedoor,
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
@@ -20188,7 +20173,7 @@
 	name = "east bump";
 	pixel_x = 28
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/structure/catwalk,
 /obj/random/junk,
 /obj/effect/floor_decal/rust,
@@ -22083,7 +22068,6 @@
 	output_level = 1000
 	},
 /obj/structure/cable,
-/obj/structure/cable/green,
 /obj/machinery/camera/network/engineering{
 	dir = 8
 	},
@@ -24437,7 +24421,7 @@
 /turf/simulated/floor/tiled,
 /area/shuttle/medivac/engines)
 "nyL" = (
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	name = "south bump";
 	nightshift_setting = 2;
@@ -26329,9 +26313,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-	dir = 1;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/tiled/dark{
 	nitrogen = 100;
 	oxygen = 0;
@@ -26505,7 +26486,6 @@
 	name_tag = "Cargo Subgrid"
 	},
 /obj/structure/cable,
-/obj/structure/cable/green,
 /obj/effect/floor_decal/industrial/warning{
 	dir = 8
 	},
@@ -27153,9 +27133,6 @@
 /area/engineering/hallway)
 "rFu" = (
 /obj/structure/cable,
-	dir = 1;
-	icon_state = "1-2"
-	},
 /obj/machinery/hologram/holopad,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
@@ -27872,7 +27849,6 @@
 	name = "east bump";
 	pixel_x = 28
 	},
-/obj/structure/cable/green,
 /obj/structure/cable,
 /turf/simulated/floor,
 /area/maintenance/substation/cargo)
@@ -27970,7 +27946,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	alarms_hidden = 1;
 	name = "south bump";
@@ -31556,7 +31532,7 @@
 	name = "south bump";
 	pixel_y = -32
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/quartermaster/qm)
 "xgD" = (

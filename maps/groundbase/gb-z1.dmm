@@ -474,7 +474,7 @@
 /area/groundbase/security/detective)
 "bl" = (
 /obj/machinery/power/apc,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/medical/autoresleeving)
 "bm" = (
@@ -610,8 +610,6 @@
 /area/groundbase/engineering/workshop)
 "bE" = (
 /obj/structure/cable,
-	icon_state = "16-0"
-	},
 /obj/machinery/atmospherics/pipe/zpipe/up/supply{
 	dir = 4
 	},
@@ -4503,8 +4501,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-	icon_state = "16-0"
-	},
 /obj/machinery/atmospherics/pipe/zpipe/up/scrubbers{
 	dir = 4
 	},
@@ -7018,7 +7014,7 @@
 /area/maintenance/groundbase/substation/medcargo)
 "qT" = (
 /obj/machinery/power/apc,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/security/range)
 "qU" = (
@@ -8864,7 +8860,7 @@
 /obj/machinery/light,
 /obj/machinery/holoplant,
 /obj/machinery/power/apc,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/simulated/floor/bluegrid,
 /area/groundbase/command/ai/chamber)
 "vE" = (
@@ -9576,10 +9572,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/mining)
 "xp" = (
-/obj/structure/cable/yellow,
 /obj/structure/cable,
-	icon_state = "16-0"
-	},
 /obj/machinery/atmospherics/pipe/zpipe/up/supply{
 	dir = 1
 	},
@@ -10267,7 +10260,7 @@
 /obj/machinery/power/apc{
 	dir = 4
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/effect/floor_decal/corner/pink{
 	dir = 6
 	},
@@ -14146,7 +14139,7 @@
 "Js" = (
 /obj/machinery/power/rtg/reg/c,
 /obj/effect/floor_decal/industrial/outline/yellow,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/simulated/floor/reinforced,
 /area/groundbase/engineering/engine)
 "Jt" = (
@@ -17480,7 +17473,6 @@
 /area/groundbase/cargo/mining)
 "Sf" = (
 /obj/structure/cable,
-/obj/structure/cable/yellow,
 /obj/machinery/power/smes{
 	RCon_tag = "Substation - Science";
 	output_attempt = 0
@@ -18188,7 +18180,6 @@
 /area/groundbase/medical/or1)
 "TT" = (
 /obj/structure/cable,
-/obj/structure/cable/yellow,
 /obj/machinery/power/smes{
 	RCon_tag = "Substation - Security";
 	output_attempt = 0
@@ -18724,7 +18715,7 @@
 	dir = 8;
 	nightshift_setting = 2
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/toolstorage)
 "Vw" = (
@@ -19779,9 +19770,6 @@
 /area/groundbase/security/iaa1)
 "Yc" = (
 /obj/structure/cable,
-	icon_state = "16-0"
-	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/zpipe/up/scrubbers{
 	dir = 4
 	},
@@ -20005,7 +19993,7 @@
 /area/groundbase/level1/eastspur)
 "YH" = (
 /obj/effect/floor_decal/industrial/outline/yellow,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/simulated/floor/reinforced,
 /area/groundbase/engineering/engine)
 "YI" = (

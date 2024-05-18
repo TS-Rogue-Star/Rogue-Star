@@ -171,13 +171,13 @@
 	operating = 0;
 	pixel_x = 24
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/submap/virgo2/DJOutpost1)
 "C" = (
 /obj/effect/overlay/snow/floor,
 /obj/machinery/power/port_gen/pacman,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/simulated/floor{
 	outdoors = 1
 	},

@@ -68,7 +68,7 @@
 /area/tether/outpost/exploration_shed)
 "am" = (
 /obj/effect/floor_decal/rust,
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/machinery/power/port_gen/pacman,
 /turf/simulated/floor/tiled/steel_dirty/virgo3b,
 /area/tether/outpost/exploration_shed)

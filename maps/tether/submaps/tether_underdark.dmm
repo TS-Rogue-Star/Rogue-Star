@@ -44,8 +44,6 @@
 /area/mine/explored/underdark)
 "ak" = (
 /obj/structure/cable,
-	icon_state = "4-10"
-	},
 /obj/machinery/light/small{
 	icon_state = "bulb1";
 	dir = 1
@@ -77,14 +75,10 @@
 /area/mine/explored/underdark)
 "aq" = (
 /obj/structure/cable,
-	icon_state = "5-8"
-	},
 /turf/simulated/floor/outdoors/dirt/virgo3b,
 /area/mine/explored/underdark)
 "ar" = (
 /obj/structure/cable,
-	icon_state = "1-5"
-	},
 /turf/simulated/floor/outdoors/dirt/virgo3b,
 /area/mine/explored/underdark)
 "as" = (
@@ -105,14 +99,10 @@
 /area/mine/explored/underdark)
 "av" = (
 /obj/structure/cable,
-	icon_state = "4-10"
-	},
 /turf/simulated/floor/outdoors/dirt/virgo3b,
 /area/mine/explored/underdark)
 "aw" = (
 /obj/structure/cable,
-	icon_state = "0-10"
-	},
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "north bump";
@@ -139,8 +129,6 @@
 /area/mine/explored/underdark)
 "aA" = (
 /obj/structure/cable,
-	icon_state = "0-10"
-	},
 /turf/simulated/floor/outdoors/dirt/virgo3b,
 /area/mine/explored/underdark)
 "aB" = (
@@ -177,8 +165,6 @@
 /area/mine/explored/underdark)
 "aI" = (
 /obj/structure/cable,
-	icon_state = "5-8"
-	},
 /turf/simulated/mineral/floor/virgo3b{
 	ignore_mapgen = 1
 	},
@@ -235,8 +221,6 @@
 /area/mine/explored/underdark)
 "aU" = (
 /obj/structure/cable,
-	icon_state = "1-5"
-	},
 /turf/simulated/mineral/floor/virgo3b{
 	ignore_mapgen = 1
 	},

@@ -2734,7 +2734,7 @@
 /area/ship/aro/engineering)
 "gN" = (
 /obj/structure/table/alien/blue,
-/obj/structure/cable/cyan,
+/obj/structure/cable,
 /obj/machinery/power/apc/alarms_hidden{
 	name = "south bump";
 	pixel_y = -28

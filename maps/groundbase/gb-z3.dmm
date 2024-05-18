@@ -3051,7 +3051,7 @@
 /area/groundbase/civilian/kitchen)
 "YJ" = (
 /obj/machinery/power/port_gen/pacman,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/shuttle/groundbase/exploration)
 "YK" = (

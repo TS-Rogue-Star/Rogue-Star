@@ -442,7 +442,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/structure/cable/green,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/sdf_cutter)
 "Fz" = (

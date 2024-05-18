@@ -22,8 +22,6 @@
 /area/om_adventure/poi/shuttlewreck2)
 "g" = (
 /obj/structure/cable,
-	icon_state = "4-10"
-	},
 /turf/simulated/floor/plating,
 /area/om_adventure/poi/shuttlewreck2)
 "h" = (
@@ -79,7 +77,7 @@
 /turf/simulated/floor/plating,
 /area/om_adventure/poi/shuttlewreck2)
 "v" = (
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -112,8 +110,6 @@
 /area/om_adventure/poi/shuttlewreck2)
 "D" = (
 /obj/structure/cable,
-	icon_state = "2-5"
-	},
 /turf/simulated/shuttle/floor/white,
 /area/om_adventure/poi/shuttlewreck2)
 "E" = (

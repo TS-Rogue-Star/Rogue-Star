@@ -652,8 +652,6 @@
 /area/redgate/eggnogtown/arturoswolfden)
 "cF" = (
 /obj/structure/cable,
-	icon_state = "2-9"
-	},
 /turf/simulated/floor/plating{
 	temperature = 258.15
 	},
@@ -1769,8 +1767,6 @@
 "rz" = (
 /obj/item/trash/candle,
 /obj/structure/cable,
-	dir = 1
-	},
 /turf/simulated/floor/plating{
 	temperature = 258.15
 	},
@@ -2094,7 +2090,7 @@
 /area/redgate/eggnogtown/telecomms)
 "vE" = (
 /obj/item/trash/candle,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/simulated/floor/plating{
 	temperature = 258.15
 	},
@@ -2821,9 +2817,6 @@
 "GQ" = (
 /obj/structure/barricade/cutout,
 /obj/structure/cable,
-	dir = 1
-	},
-/obj/structure/cable,
 /obj/item/clothing/accessory/sweater/uglyxmas,
 /obj/effect/decal/cleanable/crayon,
 /turf/simulated/floor/plating{
@@ -3501,12 +3494,6 @@
 /area/redgate/eggnogtown/kitchihome/kitchen)
 "PP" = (
 /obj/structure/cable,
-	icon_state = "0-6"
-	},
-/obj/structure/cable,
-	icon_state = "0-10"
-	},
-/obj/structure/cable/yellow,
 /obj/item/weapon/paper{
 	info = "Dear Santa Talon. Please make this Christmas run with red. Because red is a real flappin nice colour. Like a strawberry. Or a cranberry river. From your biggest friendo, Xinxim! P.S. Please make those real spooky snow ghosts go away. They're scary! P.P.S. Here are some offerings to make sure I don't get haunted when I'm trying to roost!";
 	name = "Christmasacrifice"
@@ -3549,8 +3536,6 @@
 /area/redgate/eggnogtown/hall/south)
 "Qr" = (
 /obj/structure/cable,
-	icon_state = "2-5"
-	},
 /turf/simulated/floor/plating{
 	temperature = 258.15
 	},

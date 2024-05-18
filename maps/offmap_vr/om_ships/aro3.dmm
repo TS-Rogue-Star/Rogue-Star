@@ -340,8 +340,6 @@
 "cl" = (
 /obj/structure/lattice,
 /obj/structure/cable,
-	icon_state = "5-10"
-	},
 /obj/structure/hull_corner{
 	dir = 8
 	},
@@ -357,8 +355,6 @@
 /area/aro3/atmos)
 "cr" = (
 /obj/structure/cable,
-	icon_state = "6-8"
-	},
 /turf/simulated/floor/reinforced/airless,
 /area/space)
 "ct" = (
@@ -410,7 +406,7 @@
 /turf/simulated/floor/tiled/milspec,
 /area/aro3/repair_bay)
 "cK" = (
-/obj/structure/cable/cyan,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
@@ -689,8 +685,6 @@
 "ep" = (
 /obj/structure/lattice,
 /obj/structure/cable,
-	icon_state = "6-9"
-	},
 /obj/structure/hull_corner,
 /turf/space,
 /area/space)
@@ -996,7 +990,7 @@
 /turf/simulated/floor/tiled/milspec,
 /area/aro3/flight_deck)
 "gQ" = (
-/obj/structure/cable/cyan,
+/obj/structure/cable,
 /obj/machinery/power/apc/angled/hidden{
 	dir = 8
 	},
@@ -1327,7 +1321,7 @@
 /turf/simulated/floor/carpet/purcarpet,
 /area/aro3/bunkrooms)
 "iS" = (
-/obj/structure/cable/cyan,
+/obj/structure/cable,
 /obj/machinery/power/apc/angled/hidden,
 /turf/simulated/floor/wood,
 /area/aro3/suite_port)
@@ -1687,8 +1681,6 @@
 	id_tag = "aro3_pd"
 	},
 /obj/structure/cable,
-	icon_state = "0-9"
-	},
 /turf/simulated/floor/plating/eris/under/airless,
 /area/space)
 "lo" = (
@@ -1891,7 +1883,7 @@
 /turf/simulated/floor/tiled/eris/steel/bar_dance,
 /area/aro3/bar)
 "mI" = (
-/obj/structure/cable/cyan,
+/obj/structure/cable,
 /obj/machinery/power/apc/angled/hidden{
 	dir = 4
 	},
@@ -1906,7 +1898,7 @@
 	initial_shield_modes = 2113;
 	target_radius = 60
 	},
-/obj/structure/cable/cyan,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/milspec/raised,
 /area/aro3/surfluid)
 "mO" = (
@@ -2076,7 +2068,7 @@
 /turf/simulated/floor/tiled/milspec,
 /area/aro3/function)
 "od" = (
-/obj/structure/cable/cyan,
+/obj/structure/cable,
 /obj/machinery/power/apc/angled/hidden,
 /turf/simulated/floor/wood,
 /area/aro3/suite_starboard)
@@ -2565,8 +2557,6 @@
 /area/aro3/function)
 "rL" = (
 /obj/structure/cable,
-	icon_state = "5-10"
-	},
 /turf/simulated/floor/reinforced/airless,
 /area/space)
 "rN" = (
@@ -2702,8 +2692,6 @@
 /area/aro3/medical)
 "sK" = (
 /obj/structure/cable,
-	icon_state = "5-8"
-	},
 /turf/simulated/floor/reinforced/airless,
 /area/space)
 "sL" = (
@@ -3248,14 +3236,10 @@
 "wH" = (
 /obj/structure/lattice,
 /obj/structure/cable,
-	icon_state = "5-10"
-	},
 /turf/space,
 /area/space)
 "wN" = (
 /obj/structure/cable,
-	icon_state = "6-9"
-	},
 /turf/simulated/wall/rpshull,
 /area/space)
 "wP" = (
@@ -3277,8 +3261,6 @@
 /area/aro3/flight_deck)
 "wT" = (
 /obj/structure/cable,
-	icon_state = "4-9"
-	},
 /turf/simulated/wall/rpshull,
 /area/space)
 "wV" = (
@@ -3337,8 +3319,6 @@
 	id_tag = "aro3_pd"
 	},
 /obj/structure/cable,
-	icon_state = "0-10"
-	},
 /turf/simulated/floor/reinforced/airless,
 /area/space)
 "xo" = (
@@ -3847,14 +3827,10 @@
 /area/space)
 "Ag" = (
 /obj/structure/cable,
-	icon_state = "5-10"
-	},
 /turf/simulated/wall/rpshull,
 /area/space)
 "Ah" = (
 /obj/structure/cable,
-	icon_state = "4-10"
-	},
 /turf/simulated/floor/reinforced/airless,
 /area/space)
 "Ai" = (
@@ -4023,8 +3999,6 @@
 /area/aro3/flight_deck)
 "Bx" = (
 /obj/structure/cable,
-	icon_state = "5-8"
-	},
 /turf/simulated/wall/rpshull,
 /area/space)
 "BA" = (
@@ -4194,7 +4168,7 @@
 /area/aro3/suite_port_wc)
 "CW" = (
 /obj/structure/table/steel,
-/obj/structure/cable/cyan,
+/obj/structure/cable,
 /obj/machinery/power/apc/angled/hidden,
 /turf/simulated/floor/tiled/milspec,
 /area/aro3/repair_bay)
@@ -4256,7 +4230,7 @@
 	dir = 8;
 	req_one_access = list(777)
 	},
-/obj/structure/cable/cyan,
+/obj/structure/cable,
 /obj/machinery/alarm/angled/hidden{
 	dir = 8;
 	req_one_access = list(777)
@@ -4483,7 +4457,7 @@
 /obj/machinery/power/pointdefense{
 	id_tag = "aro3_pd"
 	},
-/obj/structure/cable/cyan,
+/obj/structure/cable,
 /obj/effect/floor_decal/industrial/warning/dust{
 	dir = 9
 	},
@@ -4676,8 +4650,6 @@
 	id_tag = "aro3_pd"
 	},
 /obj/structure/cable,
-	icon_state = "0-5"
-	},
 /turf/simulated/floor/plating/eris/under/airless,
 /area/space)
 "GC" = (
@@ -4921,8 +4893,6 @@
 /area/aro3/hallway_port)
 "IX" = (
 /obj/structure/cable,
-	icon_state = "4-9"
-	},
 /turf/simulated/floor/reinforced/airless,
 /area/space)
 "Je" = (
@@ -5091,7 +5061,7 @@
 /obj/machinery/power/pointdefense{
 	id_tag = "aro3_pd"
 	},
-/obj/structure/cable/cyan,
+/obj/structure/cable,
 /obj/effect/floor_decal/industrial/warning/dust{
 	dir = 5
 	},
@@ -5276,8 +5246,6 @@
 	id_tag = "aro3_pd"
 	},
 /obj/structure/cable,
-	icon_state = "0-6"
-	},
 /turf/simulated/floor/reinforced/airless,
 /area/space)
 "LS" = (
@@ -6201,7 +6169,7 @@
 /turf/simulated/floor/reinforced/airless,
 /area/aro3/eva_hall)
 "SK" = (
-/obj/structure/cable/cyan,
+/obj/structure/cable,
 /obj/structure/closet/crate,
 /obj/machinery/power/apc/angled/hidden{
 	dir = 4
@@ -6312,8 +6280,6 @@
 /area/aro3/power)
 "TK" = (
 /obj/structure/cable,
-	icon_state = "6-9"
-	},
 /obj/structure/lattice,
 /turf/space,
 /area/space)
@@ -6486,8 +6452,6 @@
 /area/aro3/hallway_bunkrooms)
 "Ve" = (
 /obj/structure/cable,
-	icon_state = "6-9"
-	},
 /turf/simulated/floor/reinforced/airless,
 /area/space)
 "Vg" = (
@@ -6516,7 +6480,7 @@
 	pixel_x = -25;
 	req_access = list(777)
 	},
-/obj/structure/cable/cyan,
+/obj/structure/cable,
 /obj/machinery/light,
 /obj/effect/floor_decal/milspec/cargo_arrow{
 	dir = 8

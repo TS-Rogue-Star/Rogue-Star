@@ -125,7 +125,7 @@
 	name = "VB APC - South";
 	pixel_y = -24
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/ert/eng_storage)
 "aE" = (
@@ -157,7 +157,7 @@
 	name = "VB APC - East";
 	pixel_x = 24
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/effect/floor_decal/industrial/outline/grey,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/ert/barracks)
@@ -213,9 +213,6 @@
 	id_tag = "vonbraun_pd"
 	},
 /obj/structure/cable,
-	dir = 4;
-	icon_state = "0-4"
-	},
 /turf/simulated/floor/reinforced/airless,
 /area/ship/ert/eng_storage)
 "aZ" = (
@@ -312,7 +309,7 @@
 	name = "VB APC - East";
 	pixel_x = 24
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/effect/floor_decal/industrial/outline/grey,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/ert/armoury_dl)
@@ -452,9 +449,6 @@
 	id_tag = "vonbraun_pd"
 	},
 /obj/structure/cable,
-	dir = 4;
-	icon_state = "0-4"
-	},
 /turf/simulated/floor/reinforced/airless,
 /area/ship/ert/hallways_aft)
 "cM" = (
@@ -789,9 +783,6 @@
 	id_tag = "vonbraun_pd"
 	},
 /obj/structure/cable,
-	dir = 4;
-	icon_state = "0-4"
-	},
 /turf/simulated/floor/reinforced/airless,
 /area/ship/ert/med)
 "fo" = (
@@ -1211,7 +1202,7 @@
 	name = "VB APC - East";
 	pixel_x = 24
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/machinery/embedded_controller/radio/docking_port_multi{
 	child_names_txt = "Port Airlock Control;Starboard Airlock Control";
 	child_tags_txt = "von_braun_port;von_braun_star";
@@ -1720,7 +1711,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/structure/cable/yellow,
 /obj/machinery/door/firedoor/glass,
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/ert/brig)
@@ -3026,7 +3016,6 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/ert/eng_storage)
 "qt" = (
-/obj/structure/cable/green,
 /obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/ert/engineering)
@@ -3723,7 +3712,7 @@
 "uG" = (
 /obj/structure/window/reinforced,
 /obj/effect/floor_decal/industrial/warning,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/machinery/shieldwallgen{
 	anchored = 1;
 	name = "secured shield generator";
@@ -3943,7 +3932,7 @@
 	name = "VB APC - South";
 	pixel_y = -24
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/white,
 /area/ship/ert/med_surg)
 "xc" = (
@@ -5001,7 +4990,7 @@
 	},
 /obj/structure/window/reinforced,
 /obj/effect/floor_decal/industrial/warning,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/effect/floor_decal/industrial/outline/blue,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/ert/teleporter)
@@ -5855,7 +5844,7 @@
 /obj/machinery/power/pointdefense{
 	id_tag = "vonbraun_pd"
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/simulated/floor/reinforced/airless,
 /area/ship/ert/engine)
 "Id" = (
@@ -5921,9 +5910,6 @@
 	id_tag = "vonbraun_pd"
 	},
 /obj/structure/cable,
-	dir = 4;
-	icon_state = "0-4"
-	},
 /turf/simulated/floor/reinforced/airless,
 /area/ship/ert/med_surg)
 "Ix" = (
@@ -7039,7 +7025,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/ert/eng_storage)
 "OH" = (
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/machinery/power/smes/point_of_interest,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/ert/engineering)
@@ -8084,7 +8070,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/structure/cable/yellow,
 /obj/machinery/door/firedoor/glass,
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/ert/brig)
@@ -8183,9 +8168,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable,
-	dir = 4;
-	icon_state = "0-4"
-	},
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/ert/hallways_aft)
 "UT" = (
@@ -8490,7 +8472,7 @@
 /area/ship/ert/med)
 "Xu" = (
 /obj/machinery/power/smes/point_of_interest,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/ert/engineering)
 "Xv" = (
@@ -8610,7 +8592,7 @@
 	name = "VB APC - South";
 	pixel_y = -24
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -8641,7 +8623,7 @@
 /area/ship/ert/hallways)
 "Yv" = (
 /obj/machinery/power/port_gen/pacman/super/potato,
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/machinery/light/no_nightshift,
 /obj/effect/decal/cleanable/greenglow,
 /turf/simulated/floor/tiled/techfloor,

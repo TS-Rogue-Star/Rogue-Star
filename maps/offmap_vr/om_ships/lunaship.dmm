@@ -66,7 +66,7 @@
 	pixel_x = -25;
 	req_access = list(777)
 	},
-/obj/structure/cable/cyan,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/milspec,
 /area/lunaship/robotics_bay)
 "aY" = (
@@ -482,7 +482,7 @@
 	pixel_x = 25;
 	req_access = list(777)
 	},
-/obj/structure/cable/cyan,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/milspec/sterile{
 	opacity = 1
 	},
@@ -652,7 +652,6 @@
 	req_one_access = 777;
 	target_radius = 18
 	},
-/obj/structure/cable/cyan,
 /obj/structure/cable,
 /obj/structure/railing/grey,
 /obj/effect/floor_decal/industrial/outline/grey,
@@ -1748,7 +1747,7 @@
 /obj/machinery/power/pointdefense{
 	id_tag = "luna_ship_pd"
 	},
-/obj/structure/cable/cyan,
+/obj/structure/cable,
 /turf/space,
 /area/space)
 "Ag" = (
@@ -2634,7 +2633,7 @@
 	pixel_x = -25;
 	req_access = list(777)
 	},
-/obj/structure/cable/cyan,
+/obj/structure/cable,
 /obj/machinery/power/quantumpad,
 /obj/structure/railing/grey,
 /obj/machinery/light{
@@ -2722,7 +2721,7 @@
 	range = 3.5
 	},
 /obj/effect/floor_decal/industrial/warning/full,
-/obj/structure/cable/cyan,
+/obj/structure/cable,
 /turf/simulated/floor/reinforced/airless,
 /area/lunaship/engineering)
 "QF" = (
@@ -3232,7 +3231,7 @@
 	pixel_x = -25;
 	req_access = list(777)
 	},
-/obj/structure/cable/cyan,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/milspec,
 /area/lunaship/engineering)
 "Yf" = (
