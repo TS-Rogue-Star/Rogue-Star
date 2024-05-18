@@ -74,11 +74,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/submap/DogBase)
 "cS" = (
-/obj/structure/cable/green{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /mob/living/simple_mob/mechanical/viscerator/mercenary,
 /turf/simulated/floor/plating,
 /area/submap/DogBase)
@@ -141,10 +137,7 @@
 /area/submap/DogBase)
 "hZ" = (
 /obj/machinery/power/smes/point_of_interest,
-/obj/structure/cable/green{
-	d2 = 2;
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/submap/DogBase)
 "ik" = (
@@ -211,10 +204,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /mob/living/simple_mob/mechanical/viscerator/mercenary,
 /turf/simulated/floor/plating,
 /area/submap/DogBase)
@@ -340,7 +330,7 @@
 /area/submap/DogBase)
 "tt" = (
 /obj/machinery/power/smes/point_of_interest,
-/obj/structure/cable/green,
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/submap/DogBase)
 "tz" = (
@@ -362,16 +352,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/submap/DogBase)
 "vX" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /mob/living/simple_mob/mechanical/viscerator/mercenary,
 /turf/simulated/floor/plating,
 /area/submap/DogBase)
@@ -398,16 +379,7 @@
 /turf/template_noop,
 /area/template_noop)
 "xc" = (
-/obj/structure/cable/green{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /mob/living/simple_mob/mechanical/viscerator/mercenary,
 /turf/simulated/floor/plating,
 /area/submap/DogBase)
@@ -612,23 +584,11 @@
 /area/submap/DogBase)
 "Ki" = (
 /obj/machinery/power/port_gen/pacman,
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/submap/DogBase)
 "Kt" = (
-/obj/structure/cable/green{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/structure/cable/green{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -636,11 +596,7 @@
 /turf/simulated/floor/plating,
 /area/submap/DogBase)
 "Le" = (
-/obj/structure/cable/green{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /mob/living/simple_mob/mechanical/viscerator/mercenary,
 /turf/simulated/floor/plating,
 /area/submap/DogBase)
@@ -723,11 +679,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/submap/DogBase)
 "PJ" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /mob/living/simple_mob/mechanical/viscerator/mercenary,
 /obj/structure/table/rack/shelf/steel,
 /obj/item/stack/material/phoron{
@@ -893,10 +845,7 @@
 	name = "Unknown APC";
 	pixel_x = -24
 	},
-/obj/structure/cable/green{
-	d2 = 2;
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /mob/living/simple_mob/mechanical/viscerator/mercenary,
 /turf/simulated/floor/plating,
 /area/submap/DogBase)

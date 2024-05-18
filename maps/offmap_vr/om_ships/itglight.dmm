@@ -485,7 +485,7 @@
 	cell_type = /obj/item/weapon/cell/hyper;
 	pixel_y = -25
 	},
-/obj/structure/cable,,
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/itglight/captain)
 "cU" = (
@@ -640,7 +640,7 @@
 	cell_type = /obj/item/weapon/cell/hyper;
 	pixel_y = -25
 	},
-/obj/structure/cable,,
+/obj/structure/cable,
 /turf/simulated/floor/carpet,
 /area/itglight/readyroom)
 "ei" = (
@@ -1395,7 +1395,7 @@
 	nightshift_setting = 3;
 	pixel_x = -25
 	},
-/obj/structure/cable,,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/dark/monofloor,
 /area/itglight/cockpit)
 "jF" = (
@@ -5275,7 +5275,7 @@
 	dir = 4;
 	pixel_x = 25
 	},
-/obj/structure/cable,,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/cafe,
 /area/itglight/kitchen)
 "Oc" = (
@@ -6388,7 +6388,7 @@
 	cell_type = /obj/item/weapon/cell/hyper;
 	pixel_y = -25
 	},
-/obj/structure/cable,,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/common)
 "WN" = (

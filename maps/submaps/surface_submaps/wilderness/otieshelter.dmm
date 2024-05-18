@@ -32,20 +32,14 @@
 /area/submap/OtieShelter)
 "cU" = (
 /obj/machinery/power/port_gen/pacman,
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/submap/OtieShelter)
 "eI" = (
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/submap/OtieShelter)
 "fw" = (
@@ -546,18 +540,12 @@
 	name = "PAPC";
 	pixel_y = 24
 	},
-/obj/structure/cable/green{
-	d2 = 4;
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/submap/OtieShelter)
 "TP" = (
 /obj/machinery/power/smes/point_of_interest,
-/obj/structure/cable/green{
-	d2 = 8;
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/submap/OtieShelter)
 "UF" = (

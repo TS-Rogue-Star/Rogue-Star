@@ -541,9 +541,6 @@
 /area/shuttle/sdf_corvette_wreck)
 "Eg" = (
 /obj/structure/cable,
-	d2 = 2;
-	icon_state = "0-2"
-	},
 /obj/effect/floor_decal/industrial/warning{
 	dir = 5
 	},
@@ -833,9 +830,6 @@
 /area/shuttle/sdf_corvette_wreck)
 "Tf" = (
 /obj/structure/cable,
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /obj/item/weapon/material/shard/shrapnel,
 /obj/item/frame/apc,
 /turf/simulated/floor/tiled/techfloor{
@@ -891,9 +885,6 @@
 /area/shuttle/sdf_corvette_wreck)
 "Wy" = (
 /obj/structure/cable,
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /obj/effect/floor_decal/industrial/warning{
 	dir = 4
 	},

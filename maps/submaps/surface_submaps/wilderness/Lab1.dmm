@@ -124,20 +124,14 @@
 	operating = 0;
 	pixel_x = -24
 	},
-/obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/submap/Lab1)
 "v" = (
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/submap/Lab1)
 "w" = (

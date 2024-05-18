@@ -418,9 +418,6 @@
 /area/shuttle/sdf_corvette)
 "Eg" = (
 /obj/structure/cable,
-	d2 = 2;
-	icon_state = "0-2"
-	},
 /obj/effect/floor_decal/industrial/warning{
 	dir = 5
 	},
@@ -644,9 +641,6 @@
 /area/shuttle/sdf_corvette)
 "Tf" = (
 /obj/structure/cable,
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /obj/machinery/power/apc/alarms_hidden{
 	pixel_y = -24
 	},
@@ -681,9 +675,6 @@
 /area/shuttle/sdf_corvette)
 "Wy" = (
 /obj/structure/cable,
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /obj/effect/floor_decal/industrial/warning{
 	dir = 4
 	},

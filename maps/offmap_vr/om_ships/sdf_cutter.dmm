@@ -391,9 +391,6 @@
 	pixel_y = -24
 	},
 /obj/structure/cable,
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/sdf_cutter)
 "CT" = (

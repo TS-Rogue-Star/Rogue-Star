@@ -3338,7 +3338,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/science/xenobot/storage)
 "dsE" = (
-/obj/structure/cable,,
+/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/zpipe/up/supply{
 	dir = 1
@@ -4077,7 +4077,7 @@
 /area/groundbase/civilian/kitchen)
 "egd" = (
 /obj/structure/stairs/spawner/south,
-/obj/structure/cable,,
+/obj/structure/cable,
 /obj/structure/cable,
 /turf/simulated/floor,
 /area/groundbase/cargo/mining)
@@ -4362,7 +4362,7 @@
 	pixel_x = -3;
 	pixel_y = 10
 	},
-/obj/structure/cable,,
+/obj/structure/cable,
 /turf/simulated/floor{
 	edge_blending_priority = -1;
 	outdoors = 0
@@ -9675,7 +9675,7 @@
 /area/groundbase/civilian/janitor)
 "jOH" = (
 /obj/effect/floor_decal/industrial/outline/yellow,
-/obj/structure/cable,,
+/obj/structure/cable,
 /turf/simulated/floor/reinforced,
 /area/groundbase/engineering/engine)
 "jON" = (
@@ -15520,7 +15520,7 @@
 "pIi" = (
 /obj/machinery/power/rtg/reg/c,
 /obj/effect/floor_decal/industrial/outline/yellow,
-/obj/structure/cable,,
+/obj/structure/cable,
 /turf/simulated/floor/reinforced,
 /area/groundbase/engineering/engine)
 "pII" = (
@@ -16714,7 +16714,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/workshop)
 "qMD" = (
-/obj/structure/cable,,
+/obj/structure/cable,
 /obj/machinery/power/smes{
 	RCon_tag = "Substation - Security";
 	output_attempt = 0
@@ -20381,7 +20381,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/ce)
 "ufH" = (
-/obj/structure/cable,,
+/obj/structure/cable,
 /turf/simulated/floor{
 	edge_blending_priority = -1;
 	outdoors = 0
@@ -22168,7 +22168,7 @@
 /obj/machinery/light,
 /obj/machinery/holoplant,
 /obj/machinery/power/apc,
-/obj/structure/cable,,
+/obj/structure/cable,
 /turf/simulated/floor/bluegrid,
 /area/groundbase/command/ai/chamber)
 "wiQ" = (
@@ -24078,7 +24078,7 @@
 /turf/simulated/floor/wood,
 /area/groundbase/civilian/gameroom)
 "xYo" = (
-/obj/structure/cable,,
+/obj/structure/cable,
 /obj/machinery/power/smes{
 	RCon_tag = "Substation - Science";
 	output_attempt = 0
@@ -24382,7 +24382,7 @@
 "ykJ" = (
 /obj/structure/table/standard,
 /obj/machinery/power/apc,
-/obj/structure/cable,,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/cafe,
 /area/groundbase/civilian/kitchen)
 "ykP" = (
