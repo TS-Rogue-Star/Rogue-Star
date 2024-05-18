@@ -627,6 +627,17 @@
 	for(var/mob/living/L in contents)
 		living_count++
 
+	//RSEdit Start || Ports fixes from VOREStation PR#15918
+	var/count_total = contents.len
+	for(var/mob/observer/C in contents)
+		count_total-- //Exclude any ghosts from %count
+
+	var/list/vore_contents = list()
+	for(var/G in contents)
+		if(!isobserver(G))
+			vore_contents += G //Exclude any ghosts from %prey
+	//RSEdit end
+
 	for(var/mob/living/P in contents)
 		if(!P.absorbed) //This is required first, in case there's a person absorbed and not absorbed in a stomach.
 			total_bulge += P.size_multiplier
@@ -636,9 +647,9 @@
 
 	formatted_message = replacetext(raw_message, "%belly", lowertext(name))
 	formatted_message = replacetext(formatted_message, "%pred", owner)
-	formatted_message = replacetext(formatted_message, "%prey", english_list(contents))
+	formatted_message = replacetext(formatted_message, "%prey", english_list(vore_contents))
 	formatted_message = replacetext(formatted_message, "%countprey", living_count)
-	formatted_message = replacetext(formatted_message, "%count", contents.len)
+	formatted_message = replacetext(formatted_message, "%count", count_total)
 
 	return("<span class='warning'>[formatted_message]</span>")
 
