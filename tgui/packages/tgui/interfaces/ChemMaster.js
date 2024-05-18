@@ -95,24 +95,25 @@ const ChemMasterBeaker = (props, context) => {
   const { act, data } = useBackend(context);
   const { beaker, beakerReagents, bufferNonEmpty } = props;
 
-  let headerButton = bufferNonEmpty ? (
-    <Button.Confirm
-      icon="eject"
-      disabled={!beaker}
-      content="Eject and Clear Buffer"
-      onClick={() => act('eject')}
-    />
-  ) : (
-    <Button
-      icon="eject"
-      disabled={!beaker}
-      content="Eject and Clear Buffer"
-      onClick={() => act('eject')}
-    />
-  );
-
   return (
-    <Section title="Beaker" buttons={headerButton}>
+    <Section
+      title="Beaker"
+      buttons={
+        <box>
+          <Button
+            icon="eject"
+            disabled={!beaker}
+            content="Eject Beaker And Keep Buffer"
+            onClick={() => act('eject')}
+          />
+          <Button.Confirm
+            icon="eject"
+            disabled={!beaker}
+            content="Eject and Clear Buffer"
+            onClick={() => act('ejectandclear')}
+          />
+        </box>
+      }>
       {beaker ? (
         <BeakerContents
           beakerLoaded
