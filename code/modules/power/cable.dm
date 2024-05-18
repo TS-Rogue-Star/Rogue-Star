@@ -557,10 +557,22 @@ GLOBAL_LIST(cable_radial_layer_list)
 	restraints_icon.maptext = "<span [amount >= CABLE_RESTRAINTS_COST ? "" : "style='color: red'"]>[CABLE_RESTRAINTS_COST]</span>"
 	restraints_icon.color = color
 
+	var/image/layerone = image(icon = 'icons/mob/radial.dmi', icon_state = "coil")
+	layerone.maptext = "<span>L1</span>"
+	layerone.color = CABLELAYERONECOLOR
+
+	var/image/layertwo = image(icon = 'icons/mob/radial.dmi', icon_state = "coil")
+	layertwo.maptext = "<span>L2</span>"
+	layertwo.color = CABLELAYERTWOCOLOR
+
+	var/image/layerthree = image(icon = 'icons/mob/radial.dmi', icon_state = "coil")
+	layerthree.maptext = "<span>L3</span>"
+	layerthree.color = CABLELAYERTHREECOLOR
+
 	var/list/radial_menu = list(
-	"Layer 1" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-red"),
-	"Layer 2" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-yellow"),
-	"Layer 3" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-blue"),
+	"Layer 1" = layerone,
+	"Layer 2" = layertwo,
+	"Layer 3" = layerthree,
 	"Multilayer cable hub" = image(icon = 'icons/obj/cables/structures.dmi', icon_state = "cable_bridge"),
 	"Multi Z layer cable hub" = image(icon = 'icons/obj/cables/structures.dmi', icon_state = "cablerelay-broken-cable"),
 	"Cable restraints" = restraints_icon

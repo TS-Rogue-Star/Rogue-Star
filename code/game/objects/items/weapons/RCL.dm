@@ -162,10 +162,22 @@
 
 /obj/item/weapon/material/twohanded/rcl/AltClick(mob/user)
 	if(!radial_menu)
+		var/image/layerone = image(icon = 'icons/mob/radial.dmi', icon_state = "coil")
+		layerone.maptext = "<span>L1</span>"
+		layerone.color = CABLELAYERONECOLOR
+
+		var/image/layertwo = image(icon = 'icons/mob/radial.dmi', icon_state = "coil")
+		layertwo.maptext = "<span>L2</span>"
+		layertwo.color = CABLELAYERTWOCOLOR
+
+		var/image/layerthree = image(icon = 'icons/mob/radial.dmi', icon_state = "coil")
+		layerthree.maptext = "<span>L3</span>"
+		layerthree.color = CABLELAYERTHREECOLOR
+
 		radial_menu = list(
-			"Layer 1" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-red"),
-			"Layer 2" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-yellow"),
-			"Layer 3" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-blue"),
+			"Layer 1" = layerone,
+			"Layer 2" = layertwo,
+			"Layer 3" = layerthree,
 			"Color Select" = image(icon = 'icons/mob/radial.dmi', icon_state = "rcl_rainbow")
 		)
 
