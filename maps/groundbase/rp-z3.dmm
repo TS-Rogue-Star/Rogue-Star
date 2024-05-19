@@ -187,7 +187,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/outdoors/sidewalk/side,
+/turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/exploration/shuttlepad)
 "cu" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -655,6 +655,10 @@
 /obj/effect/landmark/start/paramedic,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/paramedic)
+"ji" = (
+/obj/structure/railing,
+/turf/simulated/open,
+/area/groundbase/level3/se)
 "jl" = (
 /obj/machinery/alarm,
 /obj/structure/bed/chair/sofa/corp/left,
@@ -753,10 +757,7 @@
 /turf/simulated/floor/wood,
 /area/groundbase/hotspring)
 "kL" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/outdoors/sidewalk,
+/turf/simulated/floor/outdoors/sidewalk/side,
 /area/groundbase/exploration/shuttlepad)
 "kQ" = (
 /obj/structure/table/bench/marble,
@@ -1172,6 +1173,12 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/paramedic)
+"oZ" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/simulated/floor/outdoors/grass/seasonal,
+/area/groundbase/level3/se)
 "pa" = (
 /obj/structure/flora/pottedplant/minitree,
 /turf/simulated/floor/wood,
@@ -2083,7 +2090,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow,
-/area/groundbase/civilian/pilot)
+/area/groundbase/level3/se)
 "xM" = (
 /obj/structure/simple_door/wood,
 /turf/simulated/mineral/floor/cave,
@@ -2199,7 +2206,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/outdoors/sidewalk/side,
-/area/groundbase/civilian/pilot)
+/area/groundbase/level3/se)
 "yE" = (
 /turf/simulated/floor/tiled,
 /area/shuttle/groundbase/exploration)
@@ -3541,6 +3548,12 @@
 	outdoors = 1
 	},
 /area/groundbase/level3/ne)
+"MX" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/outdoors/sidewalk/slab,
+/area/groundbase/level3/se)
 "Na" = (
 /obj/effect/floor_decal/industrial/outline,
 /turf/simulated/floor/outdoors/sidewalk/slab,
@@ -3941,6 +3954,9 @@
 /obj/structure/cable/yellow,
 /turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/cargo/bay)
+"SH" = (
+/turf/simulated/floor/outdoors/sidewalk/slab,
+/area/groundbase/level3/se)
 "SI" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
@@ -16019,16 +16035,16 @@ rf
 rf
 rf
 rf
-rf
-rf
-rf
-rf
-rf
-rf
-rf
-rf
-rf
-rf
+nd
+nd
+nd
+nd
+nd
+nd
+nd
+nd
+nd
+nd
 YS
 YS
 YS
@@ -16161,16 +16177,16 @@ YS
 YS
 YS
 YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
 YS
 YS
 YS
@@ -16303,16 +16319,16 @@ YS
 YS
 YS
 YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
 YS
 YS
 YS
@@ -16445,16 +16461,16 @@ YS
 YS
 YS
 YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
 YS
 YS
 YS
@@ -16587,16 +16603,16 @@ YS
 YS
 YS
 YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
 YS
 YS
 YS
@@ -16729,16 +16745,16 @@ YS
 YS
 YS
 YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
 YS
 YS
 YS
@@ -16871,16 +16887,16 @@ YS
 YS
 YS
 YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
 YS
 YS
 YS
@@ -17013,16 +17029,16 @@ YS
 YS
 YS
 YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
 YS
 YS
 YS
@@ -17155,16 +17171,16 @@ YS
 YS
 YS
 YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
 YS
 YS
 YS
@@ -17297,16 +17313,16 @@ YS
 YS
 YS
 YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
 YS
 YS
 YS
@@ -17439,16 +17455,16 @@ YS
 YS
 YS
 YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
 YS
 YS
 YS
@@ -17581,16 +17597,16 @@ YS
 YS
 YS
 YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
-YS
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+bR
 YS
 YS
 YS
@@ -18861,8 +18877,8 @@ YS
 YS
 YS
 YS
-Wy
-Wy
+Gk
+Gk
 eG
 bT
 MQ
@@ -19004,7 +19020,7 @@ YS
 YS
 YS
 Wy
-Wy
+Gk
 eG
 ln
 lO
@@ -19146,7 +19162,7 @@ YS
 YS
 YS
 Wy
-Wy
+Gk
 eG
 kj
 ke
@@ -19285,10 +19301,10 @@ PJ
 Wy
 Wy
 Wy
+ji
 YS
-YS
-Wy
-Wy
+oZ
+Gk
 eG
 Nc
 VV
@@ -19428,9 +19444,9 @@ Wy
 Wy
 Wy
 Wy
+jx
 Wy
-Wy
-Wy
+Gk
 eG
 eG
 WZ
@@ -19560,7 +19576,7 @@ YS
 YS
 YS
 YS
-YS
+Wy
 Wy
 Wy
 PJ
@@ -19570,7 +19586,7 @@ Wy
 FC
 FC
 ng
-ng
+kL
 ng
 ng
 Gk
@@ -19713,9 +19729,9 @@ FC
 lS
 jm
 jm
-kL
+jm
 nU
-qS
+MX
 qS
 qS
 mJ
@@ -19855,9 +19871,9 @@ ng
 sc
 sc
 sc
-ng
+sc
 cq
-Wy
+SH
 Wy
 Wy
 Wy
@@ -21122,8 +21138,8 @@ YS
 YS
 YS
 YS
-YS
-YS
+Wy
+Wy
 Wy
 Wy
 MB
@@ -21264,7 +21280,7 @@ YS
 YS
 YS
 YS
-YS
+Wy
 Wy
 Wy
 Wy

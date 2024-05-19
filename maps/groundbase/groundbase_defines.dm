@@ -2,23 +2,24 @@
 #define Z_LEVEL_GB_BOTTOM  					1
 #define Z_LEVEL_GB_MIDDLE  					2
 #define Z_LEVEL_GB_TOP     					3
-#define Z_LEVEL_GB_WILD_N  					4
-#define Z_LEVEL_GB_WILD_S  					5
-#define Z_LEVEL_GB_WILD_E  					6
-#define Z_LEVEL_GB_WILD_W  					7
-#define Z_LEVEL_CENTCOM						8
-#define Z_LEVEL_MISC						9
-#define Z_LEVEL_MINING						10
-#define Z_LEVEL_BEACH						11
-#define Z_LEVEL_BEACH_CAVE					12
-#define Z_LEVEL_AEROSTAT					13
-#define Z_LEVEL_AEROSTAT_SURFACE			14
-#define Z_LEVEL_DEBRISFIELD					15
-#define Z_LEVEL_FUELDEPOT					16
-#define Z_LEVEL_OFFMAP1						17
-#define Z_LEVEL_GATEWAY						18
-#define Z_LEVEL_OM_ADVENTURE				19
-#define Z_LEVEL_REDGATE						20
+#define Z_LEVEL_GB_ENGINESAT				4
+#define Z_LEVEL_GB_WILD_N  					5
+#define Z_LEVEL_GB_WILD_S  					6
+#define Z_LEVEL_GB_WILD_E  					7
+#define Z_LEVEL_GB_WILD_W  					8
+#define Z_LEVEL_CENTCOM						9
+#define Z_LEVEL_MISC						10
+#define Z_LEVEL_MINING						11
+#define Z_LEVEL_BEACH						12
+#define Z_LEVEL_BEACH_CAVE					13
+#define Z_LEVEL_AEROSTAT					14
+#define Z_LEVEL_AEROSTAT_SURFACE			15
+#define Z_LEVEL_DEBRISFIELD					16
+#define Z_LEVEL_FUELDEPOT					17
+#define Z_LEVEL_OFFMAP1						18
+#define Z_LEVEL_GATEWAY						19
+#define Z_LEVEL_OM_ADVENTURE				20
+#define Z_LEVEL_REDGATE						21
 
 //Camera networks
 #define NETWORK_HALLS "Halls"
@@ -401,6 +402,19 @@
 		return
 
 	new associated_map_datum(using_map, z)
+
+/datum/map_template/gb_lateload/gb_enginesat
+	name = "Groundbase - Engine Satellite"
+	desc = "Small satellite station to power Rascal's Pass."
+	mappath = 'rp-z4.dmm'
+
+	associated_map_datum = /datum/map_z_level/gb_lateload/gb_enginesat
+
+/datum/map_z_level/gb_lateload/gb_enginesat
+	z = Z_LEVEL_GB_ENGINESAT
+	name = "Engine Satellite"
+	flags = MAP_LEVEL_PLAYER|MAP_LEVEL_CONTACT|MAP_LEVEL_CONSOLES
+	base_turf = /turf/space
 
 /datum/map_template/gb_lateload/gb_centcom
 	name = "Groundbase - Central Command"

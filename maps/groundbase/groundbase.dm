@@ -16,6 +16,7 @@
 		#include "rp-z1.dmm"
 		#include "rp-z2.dmm"
 		#include "rp-z3.dmm"
+		#include "rp-z4.dmm"//RP lateloads the 4 wilds Z-levels first no matter what, so the engine satellite needs to load here or things break
 	#endif
 
 	#define USING_MAP_DATUM /datum/map/groundbase
