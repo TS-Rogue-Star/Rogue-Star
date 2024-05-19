@@ -174,8 +174,9 @@
 		/area/groundbase/engineering/solarshed,
 		/area/groundbase/engineering/solarfield,
 		/area/groundbase/hotspring,
-		/area/groundbase/hotspring/water
-
+		/area/groundbase/hotspring/water,
+		/area/groundbase/medical/geneticslab,
+		/area/groundbase/engineering/pumpingstation
 		)
 
 	unit_test_exempt_from_atmos = list()

@@ -3424,7 +3424,6 @@
 /turf/simulated/shuttle/wall,
 /area/shuttle/groundbase/engineering)
 "lh" = (
-/obj/machinery/computer/transhuman/designer,
 /obj/machinery/atmospherics/unary/vent_pump/on,
 /obj/machinery/light{
 	dir = 4
@@ -3432,6 +3431,7 @@
 /obj/effect/floor_decal/corner/paleblue/full{
 	dir = 1
 	},
+/obj/machinery/medical_kiosk,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/lobby)
 "li" = (
@@ -4848,6 +4848,15 @@
 	},
 /turf/simulated/floor/tiled/eris/cafe,
 /area/groundbase/security/hall2)
+"qj" = (
+/obj/structure/railing,
+/obj/structure/bed/chair/backed_red{
+	dir = 8
+	},
+/turf/simulated/floor/bmarble{
+	outdoors = 1
+	},
+/area/groundbase/civilian/bar)
 "ql" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
@@ -9202,7 +9211,9 @@
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 6
 	},
-/obj/machinery/medical_kiosk,
+/obj/machinery/computer/transhuman/designer{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/lobby)
 "Fg" = (
@@ -22582,7 +22593,7 @@ rB
 mQ
 BE
 dF
-ai
+qj
 Wf
 TH
 TH
