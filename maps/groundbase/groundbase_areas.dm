@@ -346,6 +346,24 @@
 	sound_env = SOUND_ENVIRONMENT_MOUNTAINS
 /area/groundbase/engineering/pumpingstation
 	name = "Pumping Station"
+/area/groundbase/engineering/satellite/lobby
+	name = "Satellite Lobby"
+	lightswitch = 1
+/area/groundbase/engineering/satellite/engineroom
+	name = "Satellite Engine Room"
+	lightswitch = 1
+/area/groundbase/engineering/satellite/portstorage
+	name = "Satellite Port Storage"
+/area/groundbase/engineering/satellite/starboardstorage
+	name = "Satellite Starboard Storage"
+/area/groundbase/engineering/satellite/atmospherics
+	name = "Satellite Atmospherics"
+/area/groundbase/engineering/satellite/breakroom
+	name = "Satellite Break Room"
+	lightswitch = 1
+/area/groundbase/engineering/shuttlepad
+	name = "Engineering Shuttlepad"
+	lightswitch = 1
 
 /area/groundbase/cargo
 	name = "Cargo"
