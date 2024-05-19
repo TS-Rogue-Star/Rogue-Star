@@ -20,6 +20,10 @@
 /obj/effect/overmap/visitable/ship/snowglobe/Initialize()
 	. = ..()
 
+	startspot()
+
+/obj/effect/overmap/visitable/ship/snowglobe/proc/startspot()
+
 	var/list/startspots = list()
 	var/turf/simulated/startspot
 
@@ -37,6 +41,11 @@
 
 	forceMove(startspot)
 	log_and_message_admins("[src] placed itself at [x],[y],[z] - [src.loc]")
+
+/obj/effect/overmap/visitable/ship/snowglobe/Destroy()
+	log_and_message_admins("Somthing tried to destroy the [src]. It will instead sent to a new starting location.")
+
+	startspot()
 
 /obj/effect/overmap/visitable/ship/examine(mob/user, infix, suffix)
 	. = ..()
