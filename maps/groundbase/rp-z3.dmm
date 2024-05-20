@@ -450,6 +450,9 @@
 "gt" = (
 /obj/structure/table/glass,
 /obj/random/soap,
+/obj/machinery/alarm{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/medicalshowers)
 "gA" = (
@@ -2477,10 +2480,6 @@
 "Cy" = (
 /turf/simulated/open,
 /area/groundbase/cargo/office)
-"Cz" = (
-/obj/machinery/power/apc,
-/turf/simulated/wall,
-/area/groundbase/medical/medicalshowers)
 "CC" = (
 /obj/machinery/camera/network/medbay{
 	dir = 4
@@ -3608,12 +3607,6 @@
 	},
 /turf/simulated/floor/bmarble,
 /area/groundbase/cargo/office)
-"Op" = (
-/obj/machinery/alarm{
-	dir = 1
-	},
-/turf/simulated/wall,
-/area/groundbase/medical/medicalshowers)
 "Ot" = (
 /turf/simulated/floor/bmarble,
 /area/groundbase/cargo/office)
@@ -4593,6 +4586,7 @@
 /obj/item/weapon/towel/random,
 /obj/machinery/light,
 /obj/structure/cable/yellow,
+/obj/machinery/power/apc,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/medicalshowers)
 "YO" = (
@@ -20287,7 +20281,7 @@ op
 Vy
 kT
 YI
-Cz
+RM
 Wy
 Wy
 MB
@@ -20429,7 +20423,7 @@ DG
 CW
 pS
 gt
-Op
+RM
 Wy
 Wy
 MB

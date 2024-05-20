@@ -58,8 +58,11 @@
 /turf/simulated/floor/wood,
 /area/groundbase/cargo/qm)
 "an" = (
-/obj/structure/sign/department/engine,
-/turf/simulated/wall/r_wall,
+/obj/machinery/door/airlock/glass_engineering{
+	name = "Engineering Hangar"
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
 /area/groundbase/engineering/shuttlepad)
 "as" = (
 /obj/machinery/computer/prisoner{
@@ -1207,7 +1210,7 @@
 /area/groundbase/command/bridge)
 "dP" = (
 /obj/structure/stairs/spawner/east,
-/turf/simulated/floor/outdoors/grass/seasonal/dark,
+/turf/simulated/floor/outdoors/sidewalk/side,
 /area/groundbase/level2/se)
 "dQ" = (
 /obj/structure/railing,
@@ -1335,11 +1338,14 @@
 /turf/simulated/floor/wood,
 /area/groundbase/civilian/library)
 "ei" = (
-/obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 1
+/obj/structure/railing{
+	dir = 8
 	},
-/turf/simulated/floor/tiled/monotile,
-/area/groundbase/engineering/shuttlepad)
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/simulated/floor/outdoors/grass/seasonal,
+/area/groundbase/level2/ne)
 "ek" = (
 /obj/effect/floor_decal/chapel{
 	dir = 1
@@ -1752,14 +1758,10 @@
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/civilian/chapel)
 "fC" = (
-/obj/machinery/power/apc{
-	dir = 1
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
+/obj/machinery/embedded_controller/radio/simple_docking_controller{
+	id_tag = "engshuttle_dock";
+	pixel_y = 26;
+	tag_door = "eng_shuttle_airlock"
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/shuttlepad)
@@ -2457,10 +2459,8 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/dorms/bathroom)
 "ic" = (
-/obj/machinery/atmospherics/unary/vent_scrubber/on{
-	dir = 1
-	},
-/turf/simulated/floor/tiled/monotile,
+/obj/structure/sign/department/engine,
+/turf/simulated/wall/r_wall,
 /area/groundbase/engineering/shuttlepad)
 "ie" = (
 /obj/structure/table/standard,
@@ -8982,11 +8982,14 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/machinery/power/apc{
+	dir = 1
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/shuttlepad)
@@ -9129,8 +9132,10 @@
 /turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/level2/sw)
 "EM" = (
-/obj/structure/sign/department/eva,
-/turf/simulated/wall/r_wall,
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/shuttlepad)
 "EP" = (
 /obj/structure/table/reinforced,
@@ -9358,14 +9363,11 @@
 	pixel_y = 26;
 	tag_door = "eng_shuttle_airlock"
 	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/shuttlepad)
@@ -11477,7 +11479,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/simulated/open,
+/turf/simulated/floor/outdoors/grass/seasonal,
 /area/groundbase/level2/ne)
 "Mw" = (
 /obj/structure/cable/yellow{
@@ -13334,11 +13336,8 @@
 	},
 /area/groundbase/level2/nw)
 "Sf" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
+	dir = 6
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/shuttlepad)
@@ -14449,6 +14448,12 @@
 	},
 /turf/simulated/floor/reinforced,
 /area/rnd/xenobiology)
+"Vz" = (
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/groundbase/engineering/shuttlepad)
 "VA" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
@@ -14465,11 +14470,8 @@
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/civilian/chapel)
 "VH" = (
-/obj/machinery/door/airlock/glass_engineering{
-	name = "Engineering Hangar"
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
+/obj/structure/sign/department/eva,
+/turf/simulated/wall/r_wall,
 /area/groundbase/engineering/shuttlepad)
 "VI" = (
 /obj/machinery/light,
@@ -15490,14 +15492,8 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/security/processing)
 "Zu" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/shuttlepad)
@@ -27446,7 +27442,7 @@ zJ
 zJ
 zJ
 zJ
-zJ
+KF
 IO
 eJ
 OW
@@ -27587,11 +27583,11 @@ KF
 zJ
 zJ
 zJ
-zJ
-zJ
-EM
+KF
+KF
+IO
 fC
-ic
+OW
 lg
 ms
 Dp
@@ -27725,15 +27721,15 @@ VW
 VW
 VW
 IY
-jj
-jj
-Hu
-jj
-jj
-jj
+KF
+KF
+zJ
+zJ
+KF
+KF
 VH
 Sf
-OW
+EM
 lg
 oH
 sW
@@ -27867,15 +27863,15 @@ VW
 VW
 VW
 IY
-KF
-KF
-Sa
-zJ
-zJ
-zJ
+jj
+jj
+Hu
+jj
+jj
+jj
 an
 Zu
-ei
+OW
 Pl
 pm
 Bg
@@ -28013,11 +28009,11 @@ KF
 KF
 Sa
 zJ
-zJ
-zJ
-IO
+KF
+KF
+ic
 FI
-OW
+Vz
 lg
 ms
 Cc
@@ -28156,7 +28152,7 @@ KF
 Sa
 zJ
 zJ
-zJ
+KF
 IO
 Ej
 OW
@@ -29263,7 +29259,7 @@ Ng
 Ng
 pi
 Mv
-yI
+ei
 bR
 bR
 pp
@@ -29689,9 +29685,9 @@ ZF
 MR
 Jv
 pC
-of
-of
-of
+pC
+pC
+pC
 jj
 jj
 jj
@@ -30146,7 +30142,7 @@ kp
 KF
 KF
 bs
-KF
+Sa
 kp
 kp
 rh

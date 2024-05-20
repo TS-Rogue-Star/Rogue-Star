@@ -316,6 +316,7 @@
 	lightswitch = 1
 /area/groundbase/engineering/ce
 	name = "Chief Engineer's Office"
+	lightswitch = 1
 /area/groundbase/engineering/workshop
 	name = "Engineering Workshop"
 	lightswitch = 1
