@@ -18516,6 +18516,9 @@
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 5
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/lhallway)
 "qYL" = (
@@ -24086,19 +24089,10 @@
 /turf/simulated/floor/tiled/eris/cafe,
 /area/groundbase/civilian/kitchen)
 "vTh" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/effect/floor_decal/corner/paleblue{
+	dir = 10
 	},
 /obj/machinery/light,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/lhallway)
 "vTo" = (
@@ -42330,8 +42324,8 @@ tVb
 gFb
 pLB
 hkW
+ghg
 vTh
-tlg
 eam
 nbx
 dLD
@@ -42898,7 +42892,7 @@ wjd
 puM
 vBS
 qYr
-vTh
+ghg
 tlg
 eam
 eVT
