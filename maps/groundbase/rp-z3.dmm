@@ -260,6 +260,9 @@
 	},
 /turf/simulated/floor/wood,
 /area/groundbase/medical/cmo)
+"dp" = (
+/turf/simulated/wall/r_wall,
+/area/groundbase/level3/ne)
 "dy" = (
 /turf/simulated/floor/tiled{
 	edge_blending_priority = -1;
@@ -3109,6 +3112,9 @@
 "Io" = (
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/medical/uhallway)
+"Is" = (
+/turf/simulated/wall/r_wall,
+/area/groundbase/exploration/shuttlepad)
 "Ix" = (
 /obj/machinery/light{
 	dir = 4
@@ -3750,6 +3756,9 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/paramedic)
+"OC" = (
+/turf/simulated/wall/r_wall,
+/area/groundbase/level3/se)
 "OK" = (
 /obj/effect/floor_decal/milspec/color/red/half{
 	dir = 1
@@ -17785,20 +17794,20 @@ Em
 Em
 LW
 LW
-LW
-LW
-aD
-aD
-aD
-aD
-aD
-aD
-aD
-aD
-aD
-LW
-LW
-aD
+EL
+EL
+EL
+EL
+EL
+EL
+EL
+EL
+EL
+EL
+EL
+EL
+EL
+EL
 aD
 aD
 xF
@@ -18067,24 +18076,24 @@ Em
 LW
 LW
 LW
-LW
+dp
+dp
 EL
 EL
 EL
 EL
+dp
 EL
 EL
 EL
 EL
+dp
 EL
 EL
 EL
 EL
-EL
-EL
-EL
-EL
-aD
+dp
+dp
 xF
 xF
 xF
@@ -18209,7 +18218,7 @@ Em
 LW
 LW
 LW
-LW
+dp
 jr
 Mp
 Mp
@@ -18226,7 +18235,7 @@ Mp
 Mp
 Mp
 IJ
-aD
+dp
 xF
 xF
 xF
@@ -18777,7 +18786,7 @@ Em
 LW
 LW
 LW
-LW
+dp
 yy
 mS
 mS
@@ -19345,7 +19354,7 @@ Em
 Em
 LW
 LW
-aD
+dp
 SS
 Cx
 Cx
@@ -19362,7 +19371,7 @@ Cx
 Cx
 Cx
 XL
-Af
+dp
 Af
 xF
 xF
@@ -19487,24 +19496,24 @@ Em
 Em
 LW
 LW
+dp
+dp
 LW
-LW
-LW
+aD
+aD
+aD
+dp
 aD
 aD
 aD
 aD
+dp
 aD
 aD
 aD
 aD
-aD
-aD
-aD
-aD
-aD
-Af
-Af
+dp
+dp
 Af
 xF
 xF
@@ -19991,21 +20000,21 @@ RM
 JN
 RM
 Wy
-PJ
-Wy
+OC
+OC
 Wy
 Wy
 ng
 sc
 sc
-sc
+Is
 sc
 cq
 SH
 Wy
 Wy
-Wy
-Wy
+OC
+OC
 UQ
 Wy
 Wy
@@ -20133,7 +20142,7 @@ RM
 Un
 RM
 Wy
-Wy
+OC
 Az
 yG
 yG
@@ -20147,7 +20156,7 @@ yG
 yG
 yG
 LE
-Wy
+OC
 UQ
 Wy
 Wy
@@ -20843,7 +20852,7 @@ ye
 xh
 RM
 Wy
-Wy
+OC
 MB
 KU
 KU
@@ -20857,7 +20866,7 @@ KU
 KU
 qT
 LU
-Wy
+OC
 UQ
 Wy
 Wy
@@ -21695,7 +21704,7 @@ YS
 Wy
 Wy
 Wy
-Wy
+OC
 MB
 KU
 KU
@@ -21709,7 +21718,7 @@ KU
 KU
 UL
 LU
-Wy
+OC
 UQ
 Wy
 PJ
@@ -22405,7 +22414,7 @@ PJ
 PJ
 PJ
 Wy
-Wy
+OC
 wx
 cv
 cv
@@ -22419,7 +22428,7 @@ cv
 cv
 cv
 Wx
-Wy
+OC
 UQ
 Wy
 PJ
@@ -22547,21 +22556,21 @@ PJ
 PJ
 PJ
 PJ
+OC
+OC
 Wy
 Wy
 Wy
 Wy
 Wy
-Wy
-Wy
-Wy
+OC
 Wy
 jx
 Wy
 Wy
 Wy
-Wy
-Wy
+OC
+OC
 UQ
 Wy
 Wy
