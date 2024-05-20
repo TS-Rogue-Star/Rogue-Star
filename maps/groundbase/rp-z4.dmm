@@ -297,6 +297,7 @@
 /obj/fiftyspawner/glass,
 /obj/fiftyspawner/glass,
 /obj/fiftyspawner/glass,
+/obj/machinery/atmospherics/unary/vent_pump/on,
 /turf/simulated/floor/plating,
 /area/groundbase/engineering/satellite/portstorage)
 "jZ" = (
@@ -304,7 +305,6 @@
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/unary/vent_pump/on,
 /obj/structure/closet/crate,
 /obj/item/weapon/circuitboard/tesla_coil,
 /obj/item/weapon/circuitboard/tesla_coil,
@@ -327,13 +327,6 @@
 /turf/simulated/floor/plating,
 /area/groundbase/engineering/satellite/portstorage)
 "kw" = (
-/obj/machinery/power/apc{
-	cell_type = /obj/item/weapon/cell/super;
-	dir = 8
-	},
-/obj/structure/cable/cyan{
-	icon_state = "0-2"
-	},
 /obj/effect/floor_decal/milspec/color/orange/half{
 	dir = 8
 	},
@@ -419,10 +412,6 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/groundbase/engineering/satellite/engineroom)
-"nh" = (
-/obj/machinery/power/rad_collector,
-/turf/simulated/floor/plating,
-/area/groundbase/engineering/satellite/starboardstorage)
 "nq" = (
 /turf/simulated/floor/carpet/retro_red,
 /area/groundbase/engineering/satellite/breakroom)
@@ -439,6 +428,9 @@
 /obj/structure/cable/cyan{
 	icon_state = "2-4"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
 /turf/simulated/floor/plating,
 /area/groundbase/engineering/satellite/portstorage)
 "oz" = (
@@ -453,14 +445,14 @@
 /turf/simulated/floor/plating,
 /area/groundbase/engineering/satellite/atmospherics)
 "oD" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
-	},
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
 	},
 /obj/structure/cable/cyan{
 	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/groundbase/engineering/satellite/portstorage)
@@ -491,9 +483,6 @@
 /turf/simulated/floor/plating,
 /area/groundbase/engineering/satellite/engineroom)
 "oP" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-8"
-	},
 /obj/effect/floor_decal/milspec/color/orange/half{
 	dir = 8
 	},
@@ -566,10 +555,6 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/groundbase/engineering/satellite/engineroom)
-"qJ" = (
-/obj/machinery/the_singularitygen,
-/turf/simulated/floor/plating,
-/area/groundbase/engineering/satellite/starboardstorage)
 "rt" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/pwine,
@@ -610,6 +595,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/groundbase/engineering/satellite/portstorage)
+"sG" = (
+/obj/machinery/the_singularitygen,
+/turf/simulated/floor/plating,
+/area/groundbase/engineering/satellite/starboardstorage)
 "tf" = (
 /obj/machinery/light{
 	dir = 8
@@ -621,6 +610,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/cyan{
 	icon_state = "1-4"
+	},
+/obj/structure/cable/cyan{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/satellite/engineroom)
@@ -796,6 +788,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable/cyan{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/satellite/engineroom)
 "wR" = (
@@ -872,6 +867,11 @@
 /obj/effect/floor_decal/milspec/color/orange/half{
 	dir = 8
 	},
+/obj/machinery/power/apc{
+	cell_type = /obj/item/weapon/cell/super;
+	dir = 8
+	},
+/obj/structure/cable/cyan,
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/satellite/engineroom)
 "zs" = (
@@ -1315,6 +1315,10 @@
 	dir = 1
 	},
 /obj/machinery/camera/network/engineering,
+/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/meson,
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/satellite/lobby)
 "JP" = (
@@ -1341,6 +1345,7 @@
 	},
 /obj/effect/floor_decal/milspec/color/black,
 /obj/item/weapon/tank/oxygen,
+/obj/item/clothing/mask/breath,
 /obj/item/clothing/suit/space/void/engineering/construction,
 /obj/item/clothing/head/helmet/space/void/engineering/construction,
 /turf/simulated/floor/tiled,
@@ -1352,6 +1357,10 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /turf/simulated/wall/r_wall,
 /area/groundbase/engineering/satellite/lobby)
+"Kq" = (
+/obj/machinery/power/rad_collector,
+/turf/simulated/floor/plating,
+/area/groundbase/engineering/satellite/starboardstorage)
 "KA" = (
 /obj/structure/table/rack,
 /obj/item/clothing/shoes/magboots,
@@ -1364,6 +1373,7 @@
 	},
 /obj/effect/floor_decal/milspec/color/black,
 /obj/item/weapon/tank/oxygen,
+/obj/item/clothing/mask/breath,
 /obj/item/clothing/suit/space/void/engineering/construction,
 /obj/item/clothing/head/helmet/space/void/engineering/construction,
 /turf/simulated/floor/tiled,
@@ -1383,6 +1393,7 @@
 	},
 /obj/effect/floor_decal/milspec/color/black,
 /obj/item/weapon/tank/oxygen,
+/obj/item/clothing/mask/breath,
 /obj/item/clothing/suit/space/void/engineering/construction,
 /obj/item/clothing/head/helmet/space/void/engineering/construction,
 /turf/simulated/floor/tiled,
@@ -12810,8 +12821,8 @@ ak
 ak
 ak
 jc
-nh
-nh
+Kq
+Kq
 uz
 Zw
 Az
@@ -12952,8 +12963,8 @@ ah
 ah
 ah
 jc
-nh
-nh
+Kq
+Kq
 uI
 xw
 AG
@@ -13094,8 +13105,8 @@ TX
 TX
 TX
 jq
-nh
-nh
+Kq
+Kq
 uI
 Yl
 AK
@@ -13237,7 +13248,7 @@ TX
 TX
 jq
 jq
-qJ
+sG
 uU
 yh
 AP
