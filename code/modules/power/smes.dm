@@ -311,6 +311,7 @@
 
 	if(clev != chargedisplay() ) //if needed updates the icons overlay
 		update_icon()
+	return
 
 // create a terminal object pointing towards the SMES
 // wires will attach to this

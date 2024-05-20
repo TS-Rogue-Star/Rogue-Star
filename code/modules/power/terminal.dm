@@ -52,9 +52,6 @@
 	if(master)
 		master.overload(source)
 
-/obj/machinery/power/proc/can_terminal_dismantle()
-	. = FALSE
-
 /obj/machinery/power/terminal/examine(mob/user)
 	. = ..()
 	if(!QDELETED(powernet))
@@ -64,6 +61,19 @@
 
 /obj/machinery/power/terminal/should_have_node()
 	return TRUE
+
+/obj/machinery/power/proc/can_terminal_dismantle()
+	. = FALSE
+
+/obj/machinery/power/apc/can_terminal_dismantle()
+	. = FALSE
+	if(opened)
+		. = TRUE
+
+/obj/machinery/power/smes/can_terminal_dismantle()
+	. = FALSE
+	if(panel_open)
+		. = TRUE
 
 /obj/machinery/power/terminal/dismantle(mob/living/user, obj/item/I, cable_layer)
 	if(!istype(I))

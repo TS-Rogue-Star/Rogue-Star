@@ -9,8 +9,11 @@
 	layer = TABLE_LAYER
 	explosion_resistance = 1
 	var/health = 10
-	var/destroyed = 0
+	var/destroyed = FALSE
 
+/obj/structure/grille/Destroy()
+	update_cable_icons_on_turf(get_turf(src))
+	return ..()
 
 /obj/structure/grille/ex_act(severity)
 	qdel(src)
@@ -21,8 +24,11 @@
 	else
 		icon_state = initial(icon_state)
 
-/obj/structure/grille/Bumped(atom/user)
-	if(ismob(user)) shock(user, 70)
+/obj/structure/grille/Bumped(atom/movable/AM)
+	if(!ismob(AM))
+		return
+	var/mob/M = AM
+	shock(M, 70)
 
 /obj/structure/grille/attack_hand(mob/user as mob)
 
@@ -99,7 +105,7 @@
 			playsound(src, W.usesound, 100, 1)
 			new /obj/item/stack/rods(get_turf(src), destroyed ? 1 : 2)
 			qdel(src)
-	else if((W.is_screwdriver()) && (istype(loc, /turf/simulated) || anchored))
+	else if((W.has_tool_quality(TOOL_SCREWDRIVER)) && (istype(loc, /turf/simulated) || anchored))
 		if(!shock(user, 90))
 			playsound(src, W.usesound, 100, 1)
 			anchored = !anchored
@@ -184,14 +190,16 @@
 
 /obj/structure/grille/proc/shock(mob/user as mob, prb)
 
-	if(!anchored || destroyed)		// anchored/destroyed grilles are never connected
-		return 0
+	if(!anchored || destroyed)		// unanchored/destroyed grilles are never connected
+		return FALSE
 	if(!prob(prb))
-		return 0
+		return FALSE
 	if(!in_range(src, user))//To prevent TK and mech users from getting shocked
-		return 0
+		return FALSE
 	var/turf/T = get_turf(src)
 	var/obj/structure/cable/C = T.get_cable_node()
+	if(isnull(C))
+		return FALSE
 	if(C)
 		if(electrocute_mob(user, C, src))
 			if(C.powernet)
@@ -200,10 +208,10 @@
 			s.set_up(3, 1, src)
 			s.start()
 			if(user.stunned)
-				return 1
+				return TRUE
 		else
-			return 0
-	return 0
+			return FALSE
+	return FALSE
 
 /obj/structure/grille/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(!destroyed)
@@ -217,11 +225,11 @@
 	user.do_attack_animation(src)
 	health -= damage
 	spawn(1) healthcheck()
-	return 1
+	return TRUE
 
 // Used in mapping to avoid
 /obj/structure/grille/broken
-	destroyed = 1
+	destroyed = TRUE
 	icon_state = "grille-b"
 	density = FALSE
 
@@ -285,5 +293,4 @@
 /obj/structure/grille/take_damage(var/damage)
 	health -= damage
 	spawn(1) healthcheck()
-	return 1
-
+	return TRUE

@@ -131,8 +131,8 @@
 /obj/item/weapon/cell/infinite/check_charge()
 	return TRUE
 
-/obj/item/weapon/cell/infinite/use()
-	return TRUE
+/obj/item/weapon/cell/infinite/use(amount, force = FALSE)
+	return maxcharge
 
 /*
  * Potato

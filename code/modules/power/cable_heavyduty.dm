@@ -3,18 +3,23 @@
 	desc = "Extremely thick cable designed for durability with high power loads. Only recommended for power transmission to SMES connections."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "wire"
+	item_state = "wire"
 	target_layer = CABLE_LAYER_4
 	matter = list(MAT_STEEL = 200, MAT_GLASS = 200)
 	color = COLOR_WHITE
 	target_type = /obj/structure/cable/heavyduty
 	tool_qualities = list(TOOL_CABLE_COIL)
 
+/obj/item/stack/cable_coil/heavyduty/examine(mob/user)
+	. = ..()
+	. += "<b>Use it in hand</b> to construct a power transfer node. Rename its ID with your multitool."
+
 /obj/item/stack/cable_coil/heavyduty/attack_self(mob/living/user)
 	if(!user)
 		return
 
 	var/image/ender_icon = image(icon = 'icons/mob/radial.dmi', icon_state = "heavy-ender")
-	ender_icon.maptext = "<span [amount >= 20 ? "" : "style='color: red'"]>[20]</span>"
+	ender_icon.maptext = "<span [amount >= CABLE_CONSTRUCTIONS_COSTS ? "" : "style='color: red'"]>[CABLE_CONSTRUCTIONS_COSTS]</span>"
 
 	var/list/radial_menu = list(
 	"Regular H.Cable" = image(icon = 'icons/mob/radial.dmi', icon_state = "heavy"),
@@ -28,9 +33,10 @@
 			name = "heavy cable coil"
 			icon_state = "wire"
 			target_type = /obj/item/stack/cable_coil/heavyduty
+			target_layer = CABLE_LAYER_4
 		if("H.Cable 'ender'")
-			if (amount >= 20)
-				if(use(20))
+			if (amount >= CABLE_CONSTRUCTIONS_COSTS)
+				if(use(CABLE_CONSTRUCTIONS_COSTS))
 					var/obj/structure/cable/heavyduty/ender/emplace = new(user.loc)
 					emplace.Connect_cable()
 	update_icon()
@@ -66,19 +72,25 @@
 
 //if powernetless_only = TRUE, will only get connections without powernet
 /obj/structure/cable/heavyduty/ender
+	name = "large power transfer node"
+	desc = "This cable is tough. It cannot be cut with simple hand tools."
 	// Pretend to be heavy duty power cable //we ARE heavy power cables :)))
 	var/id = null
+
+/obj/structure/cable/heavyduty/ender/examine(mob/user)
+	. = ..()
+	if(id)
+		. += "It is registered to the id tag of: [id]."
+	. += "Use a multitool to set a new ID tag. The sender and reciever must be identical!"
 
 /obj/structure/cable/heavyduty/ender/attackby(obj/item/W, mob/user)
 	. = ..()
 	if(W.has_tool_quality(TOOL_MULTITOOL))
-		var/newid = sanitizeSafe(tgui_input_text(user, "Enter a Power transmission ID", "Transmission ID", id, MAX_NAME_LEN), MAX_NAME_LEN)
-		if(length(newid) > 50)
-			to_chat(user, "<span class='notice'>The id can be at most 50 characters long.</span>")
-			return
-		else
-			to_chat(user, "<span class='notice'>You set the communication id to \"[newid]\".</span>")
-			id = newid
+		var/new_ident = tgui_input_text(usr, "Enter a new ident tag.", "Power Transmitter", id, MAX_NAME_LEN)
+		new_ident = sanitize(new_ident,MAX_NAME_LEN)
+		if(new_ident && user.Adjacent(src))
+			id = new_ident
+		return
 
 /obj/structure/cable/heavyduty/ender/Connect_cable(var/powernetless_only = FALSE)
 	. = ..() // Do the normal stuff

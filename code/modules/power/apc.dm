@@ -209,7 +209,7 @@ GLOBAL_LIST_EMPTY(apcs)
 		offset_apc()
 
 	if(building)
-		area = get_area(src)
+		area = get_area(loc)
 		area.apc = src
 		opened = 1
 		operating = 0
@@ -268,14 +268,6 @@ GLOBAL_LIST_EMPTY(apcs)
 
 /obj/machinery/power/apc/proc/energy_fail(var/duration)
 	failure_timer = max(failure_timer, round(duration))
-
-/obj/machinery/power/apc/proc/make_terminal(terminal_cable_layer = cable_layer)
-	// create a terminal object at the same position as original turf loc
-	// wires will attach to this
-	terminal = new/obj/machinery/power/terminal(loc)
-	terminal.cable_layer = terminal_cable_layer
-	terminal.set_dir(dir)
-	terminal.master = src
 
 /obj/machinery/power/apc/proc/init()
 	has_electronics = APC_HAS_ELECTRONICS_SECURED //installed and secured
@@ -882,9 +874,9 @@ GLOBAL_LIST_EMPTY(apcs)
 		area.power_equip = (equipment >= POWERCHAN_ON)
 		area.power_environ = (environ >= POWERCHAN_ON)
 	else
-		area.power_light = 0
-		area.power_equip = 0
-		area.power_environ = 0
+		area.power_light = FALSE
+		area.power_equip = FALSE
+		area.power_environ = FALSE
 	area.power_change()
 
 /obj/machinery/power/apc/proc/can_use(mob/user as mob, var/loud = 0) //used by attack_hand() and Topic()
@@ -1004,6 +996,9 @@ GLOBAL_LIST_EMPTY(apcs)
 	update()
 	update_icon()
 
+/obj/machinery/power/apc/get_cell()
+	return cell
+
 //Returns 1 if the APC should attempt to charge
 /obj/machinery/power/apc/proc/attempt_charging()
 	return (chargemode && charging == 1 && operating)
@@ -1027,7 +1022,8 @@ GLOBAL_LIST_EMPTY(apcs)
 
 /// Returns the surplus energy from the terminal's grid and the cell.
 /obj/machinery/power/apc/proc/available_energy()
-	return cell?.charge + surplus()
+	if(get_cell())
+		return cell.charge() + surplus()
 
 /obj/machinery/power/apc/process()
 	if(!area.requires_power)
@@ -1246,6 +1242,15 @@ GLOBAL_LIST_EMPTY(apcs)
 				if(cell && prob(50))
 					cell.ex_act(3)
 	return
+
+
+/obj/machinery/power/apc/proc/make_terminal(terminal_cable_layer = cable_layer)
+	// create a terminal object at the same position as original turf loc
+	// wires will attach to this
+	terminal = new/obj/machinery/power/terminal(loc)
+	terminal.cable_layer = terminal_cable_layer
+	terminal.set_dir(dir)
+	terminal.master = src
 
 /obj/machinery/power/apc/disconnect_terminal(var/obj/machinery/power/terminal/term)
 	if(terminal)

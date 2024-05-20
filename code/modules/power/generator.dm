@@ -11,7 +11,7 @@ GLOBAL_LIST_EMPTY(all_turbines)
 	use_power = USE_POWER_IDLE
 	idle_power_usage = 100 //Watts, I hope.  Just enough to do the computer and display things.
 
-	var/max_power = 500000
+	var/max_power = 50 MEGAWATTS
 	var/thermal_efficiency = 0.65
 
 	var/obj/machinery/atmospherics/binary/circulator/circ1
@@ -41,6 +41,9 @@ GLOBAL_LIST_EMPTY(all_turbines)
 	QDEL_NULL(soundloop)
 	GLOB.all_turbines -= src
 	return ..()
+
+/obj/machinery/power/generator/should_have_node()
+	return TRUE
 
 //generators connect in dir and reverse_dir(dir) directions
 //mnemonic to determine circulator/generator directions: the cirulators orbit clockwise around the generator
@@ -289,4 +292,3 @@ GLOBAL_LIST_EMPTY(all_turbines)
 					sleep(1)
 				if(i >= limit)
 					break
-

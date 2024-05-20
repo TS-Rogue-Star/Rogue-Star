@@ -10,6 +10,7 @@
 
 /obj/structure/cable/multilayer/update_icon()
 	. = ..()
+	icon_state = "cable_bridge"	//uhg
 	underlays.Cut()
 	var/mutable_appearance/cable_node_3 = mutable_appearance('icons/obj/cables/layer_cable.dmi', "l4-1-2-4-8-node")
 	cable_node_3.color = CABLELAYERTHREECOLOR
@@ -37,9 +38,10 @@
 
 /obj/structure/cable/multilayer/examine(mob/user)
 	. += ..()
-	. += span_notice("L1:[cable_layer & CABLE_LAYER_1 ? "Connect" : "Disconnect"].")
-	. += span_notice("L2:[cable_layer & CABLE_LAYER_2 ? "Connect" : "Disconnect"].")
-	. += span_notice("L3:[cable_layer & CABLE_LAYER_3 ? "Connect" : "Disconnect"].")
+	. += "<span class='notice'>Click with an empty hand to set cable layers.</span>"
+	. += "<span class='notice'>L1:[cable_layer & CABLE_LAYER_1 ? "Connected" : "Disconnected"].</span>"
+	. += "<span class='notice'>L2:[cable_layer & CABLE_LAYER_2 ? "Connected" : "Disconnected"].</span>"
+	. += "<span class='notice'>L3:[cable_layer & CABLE_LAYER_3 ? "Connected" : "Disconnected"].</span>"
 
 GLOBAL_LIST(hub_radial_layer_list)
 

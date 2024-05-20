@@ -42,6 +42,12 @@ GLOBAL_LIST_INIT(cable_name_to_layer, list(
 
 var/global/defer_powernet_rebuild = 0      // True if net rebuild will be called manually after an event.
 
+#define EMITTER_DAMAGE_POWER_TRANSFER 450 //used to transfer power to containment field generators
+
+#define EMITTER_STATE_UNSECURED 0
+#define EMITTER_STATE_BOLTED	1
+#define EMITTER_STATE_WELDED	2
+
 GLOBAL_LIST_INIT(possible_cable_coil_colours, list(
 		"White" = COLOR_WHITE,
 		"Silver" = COLOR_SILVER,

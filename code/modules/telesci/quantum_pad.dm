@@ -5,10 +5,10 @@
 	icon_state = "qpad"
 	anchored = TRUE
 	use_power = USE_POWER_IDLE
-	idle_power_usage = 200
-	active_power_usage = 5000
+	idle_power_usage = 200 WATTS
+	active_power_usage = 5 KILOWATTS
 	circuit = /obj/item/weapon/circuitboard/quantumpad
-	var/teleport_cooldown = 400 //30 seconds base due to base parts
+	var/teleport_cooldown = 30 SECONDS //30 seconds base due to base parts
 	var/teleport_speed = 50
 	var/last_teleport //to handle the cooldown
 	var/teleporting = 0 //if it's in the process of teleporting
@@ -250,7 +250,7 @@
 		return TRUE
 
 	// Otherwise we'll need a powernet
-	var/power_to_use = 10000 / power_efficiency
+	var/power_to_use = 10 KILOWATTS / power_efficiency
 	if(boosted)
 		power_to_use *= 5
 	if(add_load(power_to_use) != power_to_use)

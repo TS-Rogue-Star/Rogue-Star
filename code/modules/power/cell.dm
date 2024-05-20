@@ -106,52 +106,66 @@
 /obj/item/weapon/cell/proc/fully_charged()
 	return (charge == maxcharge)
 
+/// checks if the power cell is able to provide the specified amount of charge
+/obj/item/weapon/cell/proc/max_charge()
+	return maxcharge
+//Todo: modernize all the cell calls. uhg
 // checks if the power cell is able to provide the specified amount of charge
 /obj/item/weapon/cell/proc/check_charge(var/amount)
 	return (charge >= amount)
+
+///Returns current charge of the cell
+/obj/item/weapon/cell/proc/charge()
+	return charge
 
 // Returns how much charge is missing from the cell, useful to make sure not overdraw from the grid when recharging.
 /obj/item/weapon/cell/proc/amount_missing()
 	return max(maxcharge - charge, 0)
 
+/obj/item/weapon/cell/proc/used_charge()
+	return maxcharge - charge
+
 // use power from a cell, returns the amount actually used
 /obj/item/weapon/cell/proc/use(used, force = FALSE)
-	if(rigged && used > 0)
+	var/power_used = min(used, charge)
+	if(rigged && power_used > 0)
 		explode()
-		return FALSE
+		return 0 // The cell decided to explode so we won't be able to use it.
 	if(!force && charge < used)
-		return FALSE
-	charge = max(charge - used, 0)
-	last_use = world.time
-	update_icon()
-	return TRUE
+		return 0
+	charge -= power_used
+	return power_used
 
 // Checks if the specified amount can be provided. If it can, it removes the amount
 // from the cell and returns 1. Otherwise does nothing and returns 0.
 /obj/item/weapon/cell/proc/checked_use(var/amount)
 	if(!check_charge(amount))
-		return 0
+		return FALSE
 	use(amount)
-	return 1
+	return TRUE
 
 // recharge the cell
 /obj/item/weapon/cell/proc/give(amount)
-	if(rigged && amount > 0)
-		explode()
-		return 0
-	if(maxcharge < amount)
-		amount = maxcharge
 	var/power_used = min(maxcharge-charge,amount)
 	charge += power_used
+	if(rigged && amount > 0)
+		explode()
 	return power_used
+
+/obj/item/weapon/cell/proc/change(amount)
+	var/energy_used = clamp(amount, -charge, maxcharge - charge)
+	charge += energy_used
+	if(rigged && energy_used)
+		explode()
+	return energy_used
 
 /obj/item/weapon/cell/examine(mob/user)
 	. = ..()
 	if(Adjacent(user))
-		if(corrupted)
+		if(rigged)
 			.+= "The casing doesn't seem quite right."
 		. += "It has a power rating of [maxcharge]."
-		. += "The charge meter reads [round(src.percent() )]%."
+		. += "The charge meter reads [CEILING(percent(), 0.1)]%."
 
 /obj/item/weapon/cell/attackby(obj/item/W, mob/user)
 	..()

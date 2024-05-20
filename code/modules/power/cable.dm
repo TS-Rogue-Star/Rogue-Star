@@ -40,27 +40,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 	layer = WIRES_LAYER + 0.01
 	icon_state = "l4-1-2-4-8-node"
 
-/obj/structure/cable/yellow
-	color = COLOR_YELLOW
-
-/obj/structure/cable/green
-	color = COLOR_LIME
-
-/obj/structure/cable/blue
-	color = COLOR_BLUE
-
-/obj/structure/cable/pink
-	color = COLOR_PINK
-
-/obj/structure/cable/orange
-	color = COLOR_ORANGE
-
-/obj/structure/cable/cyan
-	color = COLOR_CYAN
-
-/obj/structure/cable/white
-	color = COLOR_WHITE
-
 /obj/structure/cable/Initialize(mapload, param_color, layering) //extra vars to handle mapping_helpers
 	. = ..()
 	GLOB.cable_list += src //add it to the global cable list
@@ -461,43 +440,8 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 ////////////////////////////////
 // Definitions
 ////////////////////////////////
-
-/obj/item/stack/cable_coil
-	name = "cable coil"
-	icon = 'icons/obj/power.dmi'
-	icon_state = "coil"
-	amount = MAXCOIL
-	max_amount = MAXCOIL
-	color = COLOR_RED
-	gender = NEUTER
-	desc = "A coil of power cable."
-	throwforce = 10
-	w_class = ITEMSIZE_SMALL
-	throw_speed = 2
-	throw_range = 5
-	matter = list(MAT_STEEL = 50, MAT_GLASS = 20)
-	slot_flags = SLOT_BELT
-	item_state = "coil"
-	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
-	stacktype = /obj/item/stack/cable_coil
-	singular_name = "length"
-	drop_sound = 'sound/items/drop/accessory.ogg'
-	pickup_sound = 'sound/items/pickup/accessory.ogg'
-	tool_qualities = list(TOOL_CABLE_COIL)
-	singular_name = "cable"
-
-/obj/item/stack/cable_coil/cyborg
-	name = "cable coil synthesizer"
-	desc = "A device that makes cable."
-	gender = NEUTER
-	matter = null
-	uses_charge = 1
-	charge_costs = list(1)
-
-////////////////////////////////
-// Definitions
-////////////////////////////////
 #define CABLE_RESTRAINTS_COST 15
+#define CABLE_CONSTRUCTIONS_COSTS 20
 
 /obj/item/stack/cable_coil
 	name = "cable coil"
@@ -507,7 +451,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 	item_state = "coil"
 	max_amount = MAXCOIL
 	amount = MAXCOIL
-//	merge_type = /obj/item/stack/cable_coil // This is here to let its children merge between themselves
 	stacktype = /obj/item/stack/cable_coil
 	color = COLOR_RED
 	desc = "A coil of insulated power cable."
@@ -532,6 +475,14 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 	pixel_x = rand(-2,2)
 	pixel_y = rand(-2,2)
 	update_icon()
+
+/obj/item/stack/cable_coil/cyborg
+	name = "cable coil synthesizer"
+	desc = "A device that makes cable."
+	gender = NEUTER
+	matter = null
+	uses_charge = TRUE
+	charge_costs = list(1)
 
 /obj/item/stack/cable_coil/examine(mob/user)
 	. = ..()
@@ -609,20 +560,17 @@ GLOBAL_LIST(cable_radial_layer_list)
 			target_type = /obj/structure/cable/layer3
 			target_layer = CABLE_LAYER_3
 		if("Multilayer cable hub")
-			set_cable_color(COLOR_WHITE)
-			if(istype(src, /obj/item/stack/cable_coil/alien))
-				icon = 'icons/obj/cables/structures.dmi'
 			name = "multilayer cable hub"
 			desc = "A multilayer cable hub."
 			icon_state = "cable_bridge"
+			set_cable_color(COLOR_WHITE)
 			target_type = /obj/structure/cable/multilayer
 			target_layer = CABLE_LAYER_2
 		if("Multi Z layer cable hub")
-			set_cable_color(COLOR_WHITE)
-			if(istype(src, /obj/item/stack/cable_coil/alien))
-				icon = 'icons/obj/cables/structures.dmi'
 			name = "multi z layer cable hub"
+			desc = "A multi-z layer cable hub."
 			icon_state = "cablerelay-broken-cable"
+			set_cable_color(COLOR_WHITE)
 			target_type = /obj/structure/cable/multilayer/multiz
 			target_layer = CABLE_LAYER_2
 		if("Cable restraints")

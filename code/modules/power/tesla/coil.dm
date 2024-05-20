@@ -84,8 +84,7 @@
 	if(anchored && !panel_open)
 		being_shocked = TRUE
 		coil_act(power)
-		//addtimer(CALLBACK(src, PROC_REF(reset_shocked)), 10)
-		spawn(10) reset_shocked()
+		addtimer(CALLBACK(src, PROC_REF(reset_shocked)), 10)
 	else
 		..()
 

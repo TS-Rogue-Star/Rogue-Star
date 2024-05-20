@@ -29,7 +29,7 @@
 /obj/machinery/power/debug_items/infinite_generator
 	name = "fractal energy reactor"
 	desc = "An experimental power generator capable of generating massive amounts of energy from subspace vacuum."
-	var/power_generation_rate = 1000000
+	var/power_generation_rate = 1 GIGAWATTS
 
 /obj/machinery/power/debug_items/infinite_generator/process()
 	add_avail(power_generation_rate)
