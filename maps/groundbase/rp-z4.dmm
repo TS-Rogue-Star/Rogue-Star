@@ -993,9 +993,6 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/engineering/satellite/breakroom)
 "Ba" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/engineering/satellite/breakroom)
 "Bq" = (
@@ -1005,6 +1002,7 @@
 /obj/structure/mirror{
 	pixel_y = 37
 	},
+/obj/machinery/light/small,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/engineering/satellite/breakroom)
 "BR" = (
@@ -1229,7 +1227,6 @@
 	dir = 9
 	},
 /obj/item/device/radio/intercom{
-	broadcasting = 1;
 	dir = 8;
 	name = "Common Channel";
 	pixel_x = -21

@@ -1370,6 +1370,16 @@
 "bsJ" = (
 /turf/simulated/mineral/cave,
 /area/groundbase/level1/se)
+"bsO" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/effect/floor_decal/milspec/color/orange/half{
+	dir = 8
+	},
+/obj/structure/closet/secure_closet/atmos_personal,
+/turf/simulated/floor/tiled,
+/area/groundbase/engineering/workshop)
 "btM" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -7453,7 +7463,7 @@
 /obj/effect/floor_decal/milspec/color/orange/half{
 	dir = 8
 	},
-/obj/structure/closet/secure_closet/atmos_personal,
+/obj/machinery/vending/wardrobe/engidrobe,
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/workshop)
 "gYH" = (
@@ -22171,10 +22181,10 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/closet/secure_closet/atmos_personal,
 /obj/effect/floor_decal/milspec/color/orange/half{
 	dir = 10
 	},
+/obj/machinery/vending/wardrobe/atmosdrobe,
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/workshop)
 "uch" = (
@@ -38782,7 +38792,7 @@ wws
 pNE
 wSp
 wSp
-wSp
+bsO
 gYs
 uby
 wAO
