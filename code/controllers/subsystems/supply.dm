@@ -58,6 +58,8 @@ SUBSYSTEM_DEF(supply)
 		return 1										//VOREStation Addition: Translocator beacons
 	if(istype(A,/obj/machinery/power/quantumpad)) //	//VOREStation Add: Quantum pads
 		return 1					//VOREStation Add: Quantum pads
+	if(istype(A,/obj/effect/overmap/visitable/ship)) //Rogue Star add: Snowglobe shenanigans
+		return 1
 
 	for(var/atom/B in A.contents)
 		if(.(B))

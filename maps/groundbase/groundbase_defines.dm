@@ -174,8 +174,9 @@
 		/area/groundbase/engineering/solarshed,
 		/area/groundbase/engineering/solarfield,
 		/area/groundbase/hotspring,
-		/area/groundbase/hotspring/water
-
+		/area/groundbase/hotspring/water,
+		/area/groundbase/medical/geneticslab,
+		/area/groundbase/engineering/pumpingstation
 		)
 
 	unit_test_exempt_from_atmos = list()
@@ -225,6 +226,7 @@
 		"Fantasy Town" = list("Redgate - Fantasy Dungeon", "Redgate - Fantasy Town"),
 		"Snowglobe" = list("Redgate - Snowglobe"),
 		"Pet Island" = list("Redgate - Pet Island")
+//		"North Star" = list("Redgate - North Star") // Not ready yet
 		)
 
 	lateload_gb_north = list(

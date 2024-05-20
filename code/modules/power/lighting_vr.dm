@@ -246,3 +246,24 @@
 
 /obj/machinery/light/small/torch/attackby()
 	return
+
+//RS ADD START
+
+/obj/light_object/torch
+	icon = 'icons/obj/lighting_vr.dmi'
+	name = "wall torch"
+	icon_state = "torch1"
+	desc = "A small torch held in a wall sconce."
+	anchored = TRUE
+	density = FALSE
+
+	light_system = MOVABLE_LIGHT
+	light_range = 6 // Pretty bright.
+	light_power = 1
+	light_color = "#fabf87"
+
+/obj/light_object/torch/Initialize(mapload)
+	. = ..()
+	set_light_on(TRUE)
+
+//RS ADD END
