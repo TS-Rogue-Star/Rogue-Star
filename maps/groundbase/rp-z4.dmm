@@ -595,6 +595,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/groundbase/engineering/satellite/portstorage)
+"sG" = (
+/obj/machinery/the_singularitygen,
+/turf/simulated/floor/plating,
+/area/groundbase/engineering/satellite/starboardstorage)
 "tf" = (
 /obj/machinery/light{
 	dir = 8
@@ -1353,6 +1357,10 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /turf/simulated/wall/r_wall,
 /area/groundbase/engineering/satellite/lobby)
+"Kq" = (
+/obj/machinery/power/rad_collector,
+/turf/simulated/floor/plating,
+/area/groundbase/engineering/satellite/starboardstorage)
 "KA" = (
 /obj/structure/table/rack,
 /obj/item/clothing/shoes/magboots,
@@ -12813,8 +12821,8 @@ ak
 ak
 ak
 jc
-uI
-uI
+Kq
+Kq
 uz
 Zw
 Az
@@ -12955,8 +12963,8 @@ ah
 ah
 ah
 jc
-uI
-uI
+Kq
+Kq
 uI
 xw
 AG
@@ -13097,8 +13105,8 @@ TX
 TX
 TX
 jq
-uI
-uI
+Kq
+Kq
 uI
 Yl
 AK
@@ -13240,7 +13248,7 @@ TX
 TX
 jq
 jq
-uI
+sG
 uU
 yh
 AP
