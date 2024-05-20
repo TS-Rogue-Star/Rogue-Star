@@ -56,6 +56,8 @@
 		Z_LEVEL_GB_MIDDLE,
 		Z_LEVEL_GB_TOP))
 
+//	accessible_z_levels = list("4" = 100)
+
 	station_name  = "NSB Rascal's Pass"
 	station_short = "Rascal's Pass"
 	facility_type = "base"
@@ -348,6 +350,7 @@
 	initial_restricted_waypoints = list()
 
 	extra_z_levels = list(
+		Z_LEVEL_GB_ENGINESAT,
 		Z_LEVEL_MINING,
 		Z_LEVEL_GB_WILD_N,
 		Z_LEVEL_GB_WILD_S,
@@ -363,9 +366,10 @@
 
 // We have a bunch of stuff common to the station z levels
 /datum/map_z_level/groundbase
-	flags = MAP_LEVEL_STATION|MAP_LEVEL_CONTACT|MAP_LEVEL_PLAYER|MAP_LEVEL_CONSOLES|MAP_LEVEL_XENOARCH_EXEMPT|MAP_LEVEL_PERSIST
+	flags = MAP_LEVEL_STATION|MAP_LEVEL_CONTACT|MAP_LEVEL_PLAYER|MAP_LEVEL_CONSOLES|MAP_LEVEL_XENOARCH_EXEMPT|MAP_LEVEL_PERSIST|MAP_LEVEL_SEALED
 	holomap_legend_x = 220
 	holomap_legend_y = 160
+	transit_chance = 0
 
 /datum/map_z_level/groundbase/level_one
 	z = Z_LEVEL_GB_BOTTOM
@@ -391,6 +395,13 @@
 	holomap_offset_x = HOLOMAP_ICON_SIZE - SHIP_HOLOMAP_MARGIN_X - SHIP_MAP_SIZE
 	holomap_offset_y = SHIP_HOLOMAP_MARGIN_Y + SHIP_MAP_SIZE
 
+/datum/map_z_level/groundbase/gb_enginesat
+	z = Z_LEVEL_GB_ENGINESAT
+	name = "Engine Satellite"
+	flags = MAP_LEVEL_PLAYER|MAP_LEVEL_CONTACT|MAP_LEVEL_CONSOLES
+	base_turf = /turf/space
+	transit_chance = 100
+
 /datum/map_template/gb_lateload
 	allow_duplicates = FALSE
 	var/associated_map_datum
@@ -404,18 +415,14 @@
 
 	new associated_map_datum(using_map, z)
 
+/*
 /datum/map_template/gb_lateload/gb_enginesat
 	name = "Groundbase - Engine Satellite"
 	desc = "Small satellite station to power Rascal's Pass."
 	mappath = 'rp-z4.dmm'
 
 	associated_map_datum = /datum/map_z_level/gb_lateload/gb_enginesat
-
-/datum/map_z_level/gb_lateload/gb_enginesat
-	z = Z_LEVEL_GB_ENGINESAT
-	name = "Engine Satellite"
-	flags = MAP_LEVEL_PLAYER|MAP_LEVEL_CONTACT|MAP_LEVEL_CONSOLES
-	base_turf = /turf/space
+*/
 
 /datum/map_template/gb_lateload/gb_centcom
 	name = "Groundbase - Central Command"
@@ -483,22 +490,22 @@
 /datum/map_z_level/gb_lateload/gb_north_wilds
 	name = "GB North Wilderness"
 	z = Z_LEVEL_GB_WILD_N
-	flags = MAP_LEVEL_PLAYER|MAP_LEVEL_CONTACT|MAP_LEVEL_CONSOLES
+	flags = MAP_LEVEL_PLAYER|MAP_LEVEL_CONTACT|MAP_LEVEL_CONSOLES|MAP_LEVEL_SEALED
 
 /datum/map_z_level/gb_lateload/gb_south_wilds
 	name = "GB South Wilderness"
 	z = Z_LEVEL_GB_WILD_S
-	flags = MAP_LEVEL_PLAYER|MAP_LEVEL_CONTACT|MAP_LEVEL_CONSOLES
+	flags = MAP_LEVEL_PLAYER|MAP_LEVEL_CONTACT|MAP_LEVEL_CONSOLES|MAP_LEVEL_SEALED
 
 /datum/map_z_level/gb_lateload/gb_east_wilds
 	name = "GB East Wilderness"
 	z = Z_LEVEL_GB_WILD_E
-	flags = MAP_LEVEL_PLAYER|MAP_LEVEL_CONTACT|MAP_LEVEL_CONSOLES
+	flags = MAP_LEVEL_PLAYER|MAP_LEVEL_CONTACT|MAP_LEVEL_CONSOLES|MAP_LEVEL_SEALED
 
 /datum/map_z_level/gb_lateload/gb_west_wilds
 	name = "GB West Wilderness"
 	z = Z_LEVEL_GB_WILD_W
-	flags = MAP_LEVEL_PLAYER|MAP_LEVEL_CONTACT|MAP_LEVEL_CONSOLES
+	flags = MAP_LEVEL_PLAYER|MAP_LEVEL_CONTACT|MAP_LEVEL_CONSOLES|MAP_LEVEL_SEALED
 
 /datum/map_template/gb_lateload/wilds/north/on_map_loaded(z)
 	. = ..()
