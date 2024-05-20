@@ -341,8 +341,9 @@
 	icon = 'icons/obj/overmap.dmi'
 	icon_state = "lush"
 
-	skybox_icon = null
-	skybox_icon_state = null
+	skybox_icon = 'icons/skybox/virgo4.dmi'
+	skybox_icon_state = "v4"
+
 	skybox_pixel_x = 0
 	skybox_pixel_y = 0
 
@@ -357,6 +358,12 @@
 		Z_LEVEL_GB_WILD_E,
 		Z_LEVEL_GB_WILD_W
 		)
+
+	space_zs = list(Z_LEVEL_GB_ENGINESAT)
+
+/obj/effect/overmap/visitable/sector/virgo3c/generate_skybox(zlevel)
+	var/static/image/smallone = image(icon = 'icons/skybox/virgo4.dmi', icon_state = "v4")
+	return smallone
 
 // For making the 6-in-1 holomap, we calculate some offsets
 #define SHIP_MAP_SIZE 140 // Width and height of compiled in tether z levels.
