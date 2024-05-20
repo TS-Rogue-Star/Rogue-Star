@@ -1689,6 +1689,12 @@
 /obj/structure/curtain/open/shower,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/dorms/bathroom)
+"fq" = (
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/groundbase/engineering/shuttlepad)
 "fs" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -9358,11 +9364,6 @@
 /turf/simulated/floor/plating,
 /area/groundbase/command/bridge)
 "FI" = (
-/obj/machinery/embedded_controller/radio/simple_docking_controller{
-	id_tag = "engshuttle_dock";
-	pixel_y = 26;
-	tag_door = "eng_shuttle_airlock"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
@@ -14448,12 +14449,6 @@
 	},
 /turf/simulated/floor/reinforced,
 /area/rnd/xenobiology)
-"Vz" = (
-/obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 1
-	},
-/turf/simulated/floor/tiled/monotile,
-/area/groundbase/engineering/shuttlepad)
 "VA" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
@@ -28013,7 +28008,7 @@ KF
 KF
 ic
 FI
-Vz
+fq
 lg
 ms
 Cc
