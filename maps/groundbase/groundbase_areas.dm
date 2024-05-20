@@ -347,6 +347,8 @@
 	sound_env = SOUND_ENVIRONMENT_MOUNTAINS
 /area/groundbase/engineering/pumpingstation
 	name = "Pumping Station"
+/area/groundbase/engineering/satellite
+	base_turf = /turf/space
 /area/groundbase/engineering/satellite/lobby
 	name = "Satellite Lobby"
 	lightswitch = 1
