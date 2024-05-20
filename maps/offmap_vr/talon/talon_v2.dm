@@ -396,7 +396,7 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 	closet_appearance = /decl/closet_appearance/secure_closet/talon/guard
 
 	starts_with = list(
-		/obj/item/clothing/suit/storage/vest,
+		/obj/item/clothing/suit/armor/pcarrier/light,
 		/obj/item/clothing/head/helmet,
 		/obj/item/clothing/under/utility,
 		/obj/item/clothing/head/soft/talon,
