@@ -1370,16 +1370,6 @@
 "bsJ" = (
 /turf/simulated/mineral/cave,
 /area/groundbase/level1/se)
-"bsO" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/effect/floor_decal/milspec/color/orange/half{
-	dir = 8
-	},
-/obj/structure/closet/secure_closet/atmos_personal,
-/turf/simulated/floor/tiled,
-/area/groundbase/engineering/workshop)
 "btM" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -3198,14 +3188,14 @@
 /turf/simulated/floor/outdoors/grass/seasonal,
 /area/groundbase/level1/nw)
 "cZC" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/groundbase/engineering/storage)
@@ -3294,7 +3284,7 @@
 /obj/effect/floor_decal/milspec/color/orange/half{
 	dir = 1
 	},
-/obj/structure/closet/firecloset/full,
+/obj/structure/closet/firecloset/full/atmos,
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/atmos)
 "ddP" = (
@@ -3658,9 +3648,11 @@
 "dtZ" = (
 /obj/machinery/door/firedoor,
 /obj/structure/grille,
-/obj/structure/window/reinforced/polarized/full,
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/structure/window/reinforced/polarized/full{
+	id = "ce_office"
 	},
 /turf/simulated/floor,
 /area/groundbase/engineering/ce)
@@ -4056,7 +4048,7 @@
 /obj/effect/floor_decal/milspec/color/orange/half{
 	dir = 1
 	},
-/obj/structure/closet/firecloset/full,
+/obj/structure/closet/firecloset/full/atmos,
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/atmos)
 "dMt" = (
@@ -6600,7 +6592,9 @@
 "gkN" = (
 /obj/machinery/door/firedoor,
 /obj/structure/grille,
-/obj/structure/window/reinforced/polarized/full,
+/obj/structure/window/reinforced/polarized/full{
+	id = "ce_office"
+	},
 /turf/simulated/floor,
 /area/groundbase/engineering/ce)
 "gkU" = (
@@ -8725,6 +8719,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor,
 /area/groundbase/engineering/storage)
 "ilL" = (
@@ -9897,20 +9894,15 @@
 /turf/simulated/floor,
 /area/groundbase/engineering/storage)
 "jnI" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
+/obj/effect/floor_decal/milspec/color/orange/half{
+	dir = 8
 	},
-/turf/simulated/floor,
-/area/groundbase/engineering/storage)
+/obj/structure/closet/secure_closet/atmos_personal,
+/turf/simulated/floor/tiled,
+/area/groundbase/engineering/workshop)
 "jop" = (
 /obj/machinery/vending/security,
 /obj/effect/floor_decal/milspec/color/red/half,
@@ -10798,19 +10790,18 @@
 "kdL" = (
 /obj/structure/table/reinforced,
 /obj/random/mug{
-	pixel_y = 7
+	pixel_y = 5
 	},
 /obj/random/mug{
 	pixel_x = 7;
-	pixel_y = 5
+	pixel_y = 3
 	},
-/obj/random/mug,
 /obj/random/mug{
-	pixel_x = 6;
 	pixel_y = -2
 	},
-/obj/machinery/camera/network/engineering{
-	dir = 8
+/obj/random/mug{
+	pixel_x = 6;
+	pixel_y = -4
 	},
 /turf/simulated/floor/carpet/oracarpet,
 /area/groundbase/engineering/breakroom)
@@ -15245,6 +15236,9 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor,
 /area/groundbase/engineering/storage)
 "ooV" = (
@@ -16910,7 +16904,7 @@
 /turf/simulated/floor/water/seasonal{
 	outdoors = 0
 	},
-/area/groundbase/level1/se)
+/area/groundbase/engineering/pumpingstation)
 "pFX" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
@@ -20991,18 +20985,16 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/civilian/bar)
 "sXR" = (
-/obj/structure/closet/radiation,
-/obj/item/device/geiger,
-/obj/item/device/geiger,
-/obj/item/device/geiger,
-/obj/item/clothing/head/radiation,
-/obj/item/clothing/head/radiation,
-/obj/item/clothing/suit/radiation,
-/obj/item/clothing/suit/radiation,
-/obj/item/clothing/suit/radiation/teshari,
-/obj/item/clothing/head/radiation/teshari,
+/obj/machinery/door/firedoor,
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized/full{
+	id = "ce_office"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor,
-/area/groundbase/engineering/storage)
+/area/groundbase/engineering/ce)
 "sZc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/effect/floor_decal/milspec/color/orange/half{
@@ -21416,8 +21408,17 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/science/xenobot)
 "tuJ" = (
+/obj/structure/closet/radiation,
+/obj/item/device/geiger,
+/obj/item/device/geiger,
+/obj/item/device/geiger,
+/obj/item/clothing/head/radiation,
+/obj/item/clothing/head/radiation,
+/obj/item/clothing/suit/radiation,
+/obj/item/clothing/suit/radiation,
+/obj/item/clothing/suit/radiation/teshari,
+/obj/item/clothing/head/radiation/teshari,
 /obj/machinery/light,
-/obj/structure/closet/firecloset/full/atmos,
 /turf/simulated/floor,
 /area/groundbase/engineering/storage)
 "tuO" = (
@@ -25402,6 +25403,9 @@
 /obj/structure/noticeboard{
 	pixel_x = 32
 	},
+/obj/machinery/camera/network/engineering{
+	dir = 8
+	},
 /turf/simulated/floor/carpet/oracarpet,
 /area/groundbase/engineering/breakroom)
 "xgd" = (
@@ -25852,10 +25856,10 @@
 /area/groundbase/science/circuits)
 "xAS" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/towel/random,
-/obj/item/weapon/towel/random,
-/obj/item/weapon/towel/random,
 /obj/random/soap,
+/obj/item/weapon/towel/random,
+/obj/item/weapon/towel/random,
+/obj/item/weapon/towel/random,
 /obj/effect/floor_decal/steeldecal/steel_decals10{
 	dir = 8
 	},
@@ -38792,7 +38796,7 @@ wws
 pNE
 wSp
 wSp
-bsO
+jnI
 gYs
 uby
 wAO
@@ -39512,7 +39516,7 @@ lok
 ukd
 waD
 wPs
-jnI
+hfT
 cZC
 qGj
 tVT
@@ -39789,7 +39793,7 @@ aXg
 hMq
 gdO
 qhM
-dtZ
+sXR
 ukd
 vSz
 sPu
@@ -39797,7 +39801,7 @@ sPu
 sPu
 sPu
 eUW
-sXR
+sPu
 lyV
 bzN
 pVL
