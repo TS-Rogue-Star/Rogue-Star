@@ -716,7 +716,7 @@
 			to_chat(usr, "<span class='filter_notice'>You must access the borgs internals!</span>")
 		else if(!src.module && U.require_module)
 			to_chat(usr, "<span class='filter_notice'>The borg must choose a module before it can be upgraded!</span>")
-		else if(user == src) //RS edit: No self-unlocking.
+		else if(user == src) //RS edit: No self-upgrading.
 			to_chat(user, "<span class='warning'>You lack the reach to be able to upgrade yourself.</span>")
 		else if(U.locked)
 			to_chat(usr, "<span class='filter_notice'>The upgrade is locked and cannot be used yet!</span>")
