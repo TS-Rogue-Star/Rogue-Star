@@ -1788,9 +1788,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/office)
 "fP" = (
-/obj/structure/cable/yellow{
-	icon_state = "32-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/zpipe/down/scrubbers{
 	dir = 8
 	},
@@ -8476,9 +8474,7 @@
 /obj/machinery/power/apc{
 	dir = 1
 	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/shuttlepad)
 "Ek" = (
