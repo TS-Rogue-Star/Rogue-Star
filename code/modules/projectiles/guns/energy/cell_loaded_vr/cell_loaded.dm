@@ -65,8 +65,8 @@
 	chambered = new_batt
 	update_charge()
 	update_icon()
-	var/mob/living/M = loc // TGMC Ammo HUD 
-	if(istype(M)) // TGMC Ammo HUD 
+	var/mob/living/M = loc // TGMC Ammo HUD
+	if(istype(M)) // TGMC Ammo HUD
 		M?.hud_used.update_ammo_hud(M, src)
 
 /obj/item/weapon/gun/projectile/cell_loaded/attack_self(mob/user)
@@ -284,7 +284,7 @@
 	new /obj/item/ammo_casing/microbattery/medical/stabilize2(src)
 	new /obj/item/ammo_casing/microbattery/medical/haste(src)
 	new /obj/item/ammo_casing/microbattery/medical/resist(src)
-	
+
 // TGMC Ammo HUD: Custom handling for cell-loaded weaponry.
 /*
 /obj/item/weapon/gun/projectile/cell_loaded/get_ammo_type()
@@ -299,7 +299,7 @@
 		return 0 // We're not chambered, so we have 0 rounds loaded.
 
 	var/obj/item/ammo_casing/microbattery/batt = chambered
-	
+
 	var/shots
 	if(ammo_magazine) // Check how much ammo we have
 		for(var/obj/item/ammo_casing/microbattery/bullet as anything in ammo_magazine.stored_ammo)

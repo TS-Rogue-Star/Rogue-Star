@@ -9,6 +9,13 @@
 	description_fluff = "The Kitsuhana 'Nanotech Selectable Fire Weapon' allows one to customize their loadout in the field, or before deploying, to achieve various results in a weapon they are already familiar with wielding."
 	allowed_magazines = list(/obj/item/ammo_magazine/cell_mag/combat)
 
+/obj/item/weapon/gun/projectile/cell_loaded/combat/vehrune
+	name = "Vehrune's Custom 102b"
+	desc = "A customized version of the modular, cell-loaded KHI-102b energy revolver. It has an azure medallion set into the grip, and the hammer has been replaced with one from a pre-contact Tarranthi revolver."
+
+	icon = 'icons/vore/custom_guns_vr.dmi'
+	icon_state = "nsfw_vehrune"
+
 /obj/item/weapon/gun/projectile/cell_loaded/combat/prototype
 	name = "prototype cell-loaded revolver"
 	desc = "Variety is the spice of life! A prototype based on KHI-102b 'Nanotech Selectable-Fire Weapon', or NSFW for short, is an unholy hybrid of an ammo-driven  \
