@@ -22,6 +22,9 @@
 /obj/structure/firedoor_assembly/attackby(obj/item/C, mob/user as mob)
 	if(istype(C, /obj/item/stack/cable_coil) && !wired && anchored)
 		var/obj/item/stack/cable_coil/cable = C
+		if(istype(cable, /obj/structure/cable/heavyduty))
+			to_chat(user, "<span class='warning'>This cable is too bulky.</span>")
+			return
 		if (cable.get_amount() < 1)
 			to_chat(user, "<span class='warning'>You need one length of coil to wire \the [src].</span>")
 			return

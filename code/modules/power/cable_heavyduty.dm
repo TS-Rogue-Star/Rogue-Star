@@ -2,8 +2,8 @@
 	name = "heavy cable coil"
 	desc = "Extremely thick cable designed for durability with high power loads. Only recommended for power transmission to SMES connections."
 	icon = 'icons/obj/power.dmi'
-	icon_state = "wire"
-	item_state = "wire"
+	icon_state = "coil-wire"
+	item_state = "coil-wire"
 	target_layer = CABLE_LAYER_4
 	matter = list(MAT_STEEL = 200, MAT_GLASS = 200)
 	color = COLOR_WHITE
@@ -13,6 +13,17 @@
 /obj/item/stack/cable_coil/heavyduty/examine(mob/user)
 	. = ..()
 	. += "<b>Use it in hand</b> to construct a power transfer node. Rename its ID with your multitool."
+
+/obj/item/stack/cable_coil/heavyduty/update_icon()
+	if(amount == 1)
+		icon_state = "coil-wire1"
+		name = "heavy cable piece"
+	else if(amount == 2)
+		icon_state = "coil-wire2"
+		name = "heavy cable length"
+	else
+		icon_state = "coil-wire"
+		name = initial(name)
 
 /obj/item/stack/cable_coil/heavyduty/attack_self(mob/living/user)
 	if(!user)
@@ -50,7 +61,7 @@
 	plane = PLATING_PLANE
 	layer = PIPES_LAYER - 0.05 //Just below pipes
 	color = COLOR_WHITE	//so it doesn't get recolored to like, pink or something
-	///so it doesn't cross with normal powers. they'll only hook to SMES units
+	///so it doesn't cross with normal powers. they'll only hook to SMES units normally.
 	cable_layer = CABLE_LAYER_4 //bitflag 8
 
 /obj/structure/cable/heavyduty/attackby(obj/item/W, mob/user)
@@ -95,7 +106,7 @@
 /obj/structure/cable/heavyduty/ender/Connect_cable(var/powernetless_only = FALSE)
 	. = ..() // Do the normal stuff
 	if(id)
-		for(var/obj/structure/cable/heavyduty/ender/target in GLOB.cable_list)
+		for(var/obj/structure/cable/heavyduty/ender/target in cable_list)
 			if(target.id == id)
 				if (!powernetless_only || !target.powernet)
 					. |= target

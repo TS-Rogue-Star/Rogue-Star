@@ -77,7 +77,7 @@
 		turn_off()
 		return
 
-	if(add_load(idle_power_usage) < idle_power_usage)
+	if(draw_power(idle_power_usage) < idle_power_usage)
 		visible_message("<b>\The [src]</b> shuts down.")
 		turn_off()
 		return
@@ -98,7 +98,7 @@
 		change_mode(MODE_IDLE)
 	else if(heat_transfer > 0)
 		change_mode(MODE_HEATING)
-		power_avail = add_load(min(heat_transfer, active_power_usage))
+		power_avail = draw_power(min(heat_transfer, active_power_usage))
 		removed.add_thermal_energy(min(power_avail*5,heat_transfer))
 	else
 		change_mode(MODE_COOLING)
@@ -106,7 +106,7 @@
 		var/cop = removed.temperature/TN60C
 		var/actual_heat_transfer = heat_transfer
 		heat_transfer = min(heat_transfer, active_power_usage*cop)
-		power_avail = add_load(heat_transfer/cop)
+		power_avail = draw_power(heat_transfer/cop)
 		removed.add_thermal_energy(-min(power_avail*5*cop,actual_heat_transfer))
 	env.merge(removed)
 
@@ -141,7 +141,7 @@
 /obj/machinery/power/thermoregulator/overload(var/obj/machinery/power/source)
 	if(!anchored || !powernet)
 		return
-	var/power_avail = add_load(active_power_usage*10)
+	var/power_avail = draw_power(active_power_usage*10)
 	var/datum/gas_mixture/env = loc.return_air()
 	if(env)
 		var/datum/gas_mixture/removed = env.remove_ratio(0.99)

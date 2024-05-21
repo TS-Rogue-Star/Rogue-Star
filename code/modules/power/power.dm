@@ -32,8 +32,7 @@
 
 // common helper procs for all power machines
 // All power generation handled in add_avail()
-// Machines should use add_load(), surplus(), avail()
-// Non-machines should use add_delayedload(), delayed_surplus(), newavail()
+// Machines should use draw_power(), surplus(), avail()
 
 //override this if the machine needs special functionality for making wire nodes appear, ie emitters, generators, etc.
 /obj/machinery/power/proc/should_have_node()
@@ -47,16 +46,26 @@
 		else
 			. += span_warning("It's disconnected from the [LOWER_TEXT(GLOB.cable_layer_to_name["[cable_layer]"])].")
 
+// common helper procs for all power machines //Snowflake code, entirely.
+/obj/machinery/power/drain_power(var/drain_check, var/surge, var/amount = 0)
+	if(drain_check)
+		return TRUE
+
+	if(powernet && powernet.avail)
+		powernet.trigger_warning()
+		return powernet.draw_power(amount)
+
 /obj/machinery/power/proc/add_avail(amount)
 	if(powernet)
 		powernet.newavail += amount
 		return TRUE
 	else
-		return FALSE
+		return 0
 
-/obj/machinery/power/proc/add_load(amount)
+/obj/machinery/power/proc/draw_power(var/amount)
 	if(powernet)
-		powernet.load += amount
+		return powernet.draw_power(amount)
+	return 0
 
 /obj/machinery/power/proc/surplus()
 	if(powernet)
@@ -157,7 +166,7 @@
 		if(!take_any)
 			return FALSE
 		amount = surplus
-	local_apc.add_load(amount)
+	local_apc.draw_power(amount)
 	return amount
 
 /obj/machinery/proc/addStaticPower(value, powerchannel)

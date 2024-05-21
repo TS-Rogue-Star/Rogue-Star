@@ -175,6 +175,9 @@
 	if(seed)
 		if(seed.get_trait(TRAIT_PRODUCES_POWER) && istype(W, /obj/item/stack/cable_coil))
 			var/obj/item/stack/cable_coil/C = W
+			if(istype(C, /obj/structure/cable/heavyduty))
+				to_chat(user, "<span class='warning'>This cable is too bulky.</span>")
+				return
 			if(C.use(5))
 				//TODO: generalize this.
 				to_chat(user, "<span class='notice'>You add some cable to the [src.name] and slide it inside the battery casing.</span>")

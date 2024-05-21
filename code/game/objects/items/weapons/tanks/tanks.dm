@@ -125,6 +125,9 @@ var/list/global/tank_gauge_cache = list()
 
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = W
+		if(istype(C, /obj/structure/cable/heavyduty))
+			to_chat(user, "<span class='warning'>This cable is too bulky.</span>")
+			return
 		if(C.use(1))
 			wired = 1
 			to_chat(user, "<span class='notice'>You attach the wires to the tank.</span>")

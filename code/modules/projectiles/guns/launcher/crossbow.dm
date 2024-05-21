@@ -248,6 +248,9 @@
 		return
 	else if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = W
+		if(istype(C, /obj/structure/cable/heavyduty))
+			to_chat(user, "<span class='warning'>This cable is too bulky.</span>")
+			return
 		if(buildstate == 2)
 			if(C.use(5))
 				to_chat(user, "<span class='notice'>You wire a crude cell mount into the top of the crossbow.</span>")

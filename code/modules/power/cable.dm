@@ -42,7 +42,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 
 /obj/structure/cable/Initialize(mapload, param_color, layering) //extra vars to handle mapping_helpers
 	. = ..()
-	GLOB.cable_list += src //add it to the global cable list
+	cable_list += src //add it to the global cable list
 	Connect_cable()
 	var/turf/T = src.loc			// hide if turf is not intact
 	if(level==1) hide(!T.is_plating())
@@ -134,13 +134,13 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 
 	if(powernet)
 		cut_cable_from_powernet()				// update the powernets
-	GLOB.cable_list -= src							//remove it from global cable list
+	cable_list -= src							//remove it from global cable list
 
 	return ..()									// then go ahead and delete the cable
 
 /obj/structure/cable/proc/deconstruct()
 	var/obj/item/stack/cable_coil/cable = new(drop_location(), 1)
-	cable.set_cable_color(color)
+	cable.color = color
 	qdel(src)
 
 ///////////////////////////////////
@@ -233,7 +233,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 
 /obj/structure/cable/proc/get_power_info()
 	if(powernet?.avail > 0)
-		return "<span class='filter_notice'><span class='warning'>Total power: [DisplayPower(powernet.avail)]\nLoad: [DisplayPower(powernet.load)]\nExcess power: [DisplayPower(surplus())]</span></span>"
+		return "<span class='filter_notice'><span class='warning'>Total power: [DisplayPower(powernet.avail)]\nLoad: [DisplayPower(powernet.viewload)]\nExcess power: [DisplayPower(powernet.netexcess)]</span></span>"
 	else
 		return "<span class='filter_notice'><span class='warning'>The cable is not powered.</span></span>"
 
@@ -257,15 +257,13 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 // Power related
 ///////////////////////////////////////////
 
-// All power generation handled in add_avail()
-// Machines should use add_load(), surplus(), avail()
-// Non-machines should use add_delayedload(), delayed_surplus(), newavail()
+// All power generation handled in stuff, this is just here to ensure non-power machines have interactions too
 
 /obj/structure/cable/proc/add_avail(amount)
 	if(powernet)
 		powernet.newavail += amount
 
-/obj/structure/cable/proc/add_load(amount)
+/obj/structure/cable/proc/draw_power(amount)
 	if(powernet)
 		powernet.load += amount
 
@@ -601,11 +599,11 @@ GLOBAL_LIST(cable_radial_layer_list)
 		if(S.organ_tag == BP_HEAD)
 			if(H.head && istype(H.head,/obj/item/clothing/head/helmet/space))
 				to_chat(user, "<span class='warning'>You can't apply [src] through [H.head]!</span>")
-				return 1
+				return TRUE
 		else
 			if(H.wear_suit && istype(H.wear_suit,/obj/item/clothing/suit/space))
 				to_chat(user, "<span class='warning'>You can't apply [src] through [H.wear_suit]!</span>")
-				return 1
+				return TRUE
 
 		var/use_amt = min(src.amount, CEILING(S.burn_dam/5, 1), 5)
 		if(can_use(use_amt))
@@ -624,7 +622,7 @@ GLOBAL_LIST(cable_radial_layer_list)
 		name = "cable piece"
 	else if(amount == 2)
 		icon_state = "coil2"
-		name = "cable piece"
+		name = "cable length"
 	else
 		icon_state = "coil"
 		name = initial(name)
@@ -891,16 +889,16 @@ GLOBAL_LIST(cable_radial_layer_list)
 	icon_state = initial(icon_state)
 
 /obj/item/stack/cable_coil/alien/can_use(var/used)
-	return 1
+	return TRUE
 
 /obj/item/stack/cable_coil/alien/use()	//It's endless
-	return 1
+	return TRUE
 
 /obj/item/stack/cable_coil/alien/add()	//Still endless
-	return 0
+	return FALSE
 
 /obj/item/stack/cable_coil/alien/update_wclass()
-	return 0
+	return FALSE
 
 /obj/item/stack/cable_coil/alien/examine(mob/user)
 	. = ..()

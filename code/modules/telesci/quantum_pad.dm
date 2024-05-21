@@ -253,7 +253,7 @@
 	var/power_to_use = 10 KILOWATTS / power_efficiency
 	if(boosted)
 		power_to_use *= 5
-	if(add_load(power_to_use) != power_to_use)
+	if(draw_power(power_to_use) != power_to_use)
 		return FALSE
 	return TRUE
 

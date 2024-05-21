@@ -120,6 +120,9 @@
 	else if(istype(W, /obj/item/stack/cable_coil))
 		if (stage == FRAME_FASTENED)
 			var/obj/item/stack/cable_coil/coil = W
+			if(istype(coil, /obj/structure/cable/heavyduty))
+				to_chat(user, "<span class='warning'>This cable is too bulky.</span>")
+				return
 			if (coil.use(1))
 				stage = FRAME_WIRED
 				user.update_examine_panel(src)

@@ -104,6 +104,9 @@
 		return
 	else if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = W
+		if(istype(C, /obj/structure/cable/heavyduty))
+			to_chat(user, "<span class='warning'>This cable is too bulky.</span>")
+			return
 		if(rigged)
 			to_chat(user, "<span class='notice'>[src] is already rigged!</span>")
 			return
@@ -739,5 +742,6 @@
 	desc = "A mining car. This one doesn't work on rails, but has to be dragged."
 	icon = 'icons/obj/closets/miningcar.dmi'
 	closet_appearance = null
+
 	open_sound = 'sound/effects/wooden_closet_open.ogg'
 	close_sound = 'sound/effects/wooden_closet_close.ogg'

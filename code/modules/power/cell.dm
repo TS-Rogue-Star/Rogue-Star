@@ -71,7 +71,7 @@
 /obj/item/weapon/cell/drain_power(var/drain_check, var/surge, var/power = 0)
 
 	if(drain_check)
-		return 1
+		return TRUE
 
 	if(charge <= 0)
 		return 0

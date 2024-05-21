@@ -31,8 +31,8 @@
 /obj/machinery/power/terminal/Initialize()
 	. = ..()
 	var/turf/T = get_turf(src)
-	if(level == 1)
-		hide(T.is_plating())
+	if(level==1) hide(!T.is_plating())
+	return
 
 /obj/machinery/power/terminal/Destroy()
 	if(master)
@@ -47,6 +47,9 @@
 	else
 		invisibility = 0
 		icon_state = "term"
+
+/obj/machinery/power/terminal/hides_under_flooring()
+	return TRUE
 
 /obj/machinery/power/terminal/overload(var/obj/machinery/power/source)
 	if(master)

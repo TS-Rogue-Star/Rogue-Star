@@ -109,7 +109,7 @@
 			output_attempt = 1
 
 // Store charge in the power cells, instead of using the charge var. Amount is in joules.
-/obj/machinery/power/smes/batteryrack/proc/add_charge(var/amount)
+/obj/machinery/power/smes/batteryrack/add_charge(var/amount)
 	amount *= CELLRATE // Convert to CELLRATE first.
 	if(equalise)
 		// Now try to get least charged cell and use the power from it.
@@ -127,7 +127,7 @@
 			return
 
 
-/obj/machinery/power/smes/batteryrack/proc/remove_charge(var/amount)
+/obj/machinery/power/smes/batteryrack/remove_charge(var/amount)
 	amount *= CELLRATE // Convert to CELLRATE first.
 	if(equalise)
 		// Now try to get most charged cell and use the power from it.
@@ -162,10 +162,10 @@
 
 /obj/machinery/power/smes/batteryrack/proc/insert_cell(var/obj/item/weapon/cell/C, var/mob/user)
 	if(!istype(C))
-		return 0
+		return FALSE
 
 	if(internal_cells.len >= max_cells)
-		return 0
+		return FALSE
 
 	internal_cells.Add(C)
 	if(user)
@@ -225,7 +225,7 @@
 		else
 			to_chat(user, "<span class='filter_notice'>\The [src] has no empty slot for \the [W]</span>")
 	if(!..())
-		return 0
+		return FALSE
 	if(default_deconstruction_crowbar(user, W))
 		return
 	if(default_part_replacement(user, W))

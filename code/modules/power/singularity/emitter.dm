@@ -119,7 +119,7 @@
 
 
 /obj/machinery/power/emitter/emp_act(var/severity)//Emitters are hardened but still might have issues
-//	add_load(1000)
+//	draw_power(1000)
 /*	if((severity == 1)&&prob(1)&&prob(1))
 		if(src.active)
 			src.active = 0
@@ -142,7 +142,7 @@
 			log_game("EMITTER([x],[y],[z]) Lost power and was ON.")
 			investigate_log("lost power and turned <font color='red'>off</font>","singulo")
 		return
-	add_load(active_power_usage)
+	draw_power(active_power_usage)
 	if(!powered)
 		powered = TRUE
 		update_icon()
@@ -163,7 +163,7 @@
 	if(state != EMITTER_STATE_WELDED)
 		return FALSE
 	if(surplus() >= active_power_usage)
-		add_load(active_power_usage)
+		draw_power(active_power_usage)
 		fire_beam()
 
 /obj/machinery/power/emitter/proc/fire_beam()

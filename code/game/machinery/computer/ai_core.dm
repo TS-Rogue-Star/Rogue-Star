@@ -66,6 +66,9 @@
 				icon_state = "1"
 			if(istype(P, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/C = P
+				if(istype(C, /obj/structure/cable/heavyduty))
+					to_chat(user, "<span class='warning'>This cable is too bulky.</span>")
+					return
 				if (C.get_amount() < 5)
 					to_chat(user, "<span class='warning'>You need five coils of wire to add them to the frame.</span>")
 					return

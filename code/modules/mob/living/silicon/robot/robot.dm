@@ -571,6 +571,9 @@
 			to_chat(user, "<span class='filter_notice'>Nothing to fix here!</span>")
 			return
 		var/obj/item/stack/cable_coil/coil = W
+		if(istype(coil, /obj/structure/cable/heavyduty))
+			to_chat(user, "<span class='warning'>This cable is too bulky.</span>")
+			return
 		if (coil.use(1))
 			user.setClickCooldown(user.get_attack_speed(W))
 			adjustFireLoss(-30)

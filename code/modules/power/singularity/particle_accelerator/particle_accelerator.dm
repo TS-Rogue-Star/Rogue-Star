@@ -113,7 +113,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 
 /obj/structure/particle_accelerator/examine(mob/user)
 	. = ..()
-	
+
 	switch(construction_state)
 		if(0)
 			. += "Looks like it's not attached to the flooring."
@@ -218,6 +218,9 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 					"You remove the external bolts.")
 				temp_state--
 			else if(istype(O, /obj/item/stack/cable_coil))
+				if(istype(O, /obj/structure/cable/heavyduty))
+					to_chat(user, "<span class='warning'>This cable is too bulky.</span>")
+					return
 				if(O:use(1,user))
 					user.visible_message("[user.name] adds wires to the [src.name].", \
 						"You add some wires.")
@@ -292,7 +295,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 
 /obj/machinery/particle_accelerator/examine(mob/user)
 	. = ..()
-	
+
 	switch(construction_state)
 		if(0)
 			. += "Looks like it's not attached to the flooring."
@@ -352,6 +355,9 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 					"You remove the external bolts.")
 				temp_state--
 			else if(istype(O, /obj/item/stack/cable_coil))
+				if(istype(O, /obj/structure/cable/heavyduty))
+					to_chat(user, "<span class='warning'>This cable is too bulky.</span>")
+					return
 				if(O:use(1))
 					user.visible_message("[user.name] adds wires to the [src.name].", \
 						"You add some wires.")

@@ -172,6 +172,9 @@
 		if(5)
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/C = W
+				if(istype(C, /obj/structure/cable/heavyduty))
+					to_chat(user, "<span class='warning'>This cable is too bulky.</span>")
+					return
 				if (C.get_amount() < 1)
 					to_chat(user, "<span class='warning'>You need one coil of wire to wire \the [src].</span>")
 					return

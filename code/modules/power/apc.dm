@@ -1,4 +1,5 @@
-GLOBAL_LIST_EMPTY(apcs)
+/area/proc/get_apc()
+	return apc
 
 #define CRITICAL_APC_EMP_PROTECTION 10 // EMP effect duration is divided by this number if the APC has "critical" flag
 //update_state
@@ -39,13 +40,6 @@ GLOBAL_LIST_EMPTY(apcs)
 #define APC_HAS_ELECTRONICS_WIRED 1
 #define APC_HAS_ELECTRONICS_SECURED 2
 
-// APC cover status:
-/// The APCs cover is closed.
-#define APC_COVER_CLOSED 0
-/// The APCs cover is open.
-#define APC_COVER_OPENED 1
-/// The APCs cover is missing.
-#define APC_COVER_REMOVED 2
 
 // the Area Power Controller (APC), formerly Power Distribution Unit (PDU)
 // one per area, needs wire conection to power network through a terminal
@@ -97,7 +91,6 @@ GLOBAL_LIST_EMPTY(apcs)
 	desc = "A control terminal for the area electrical systems."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "apc0"
-
 	layer = ABOVE_WINDOW_LAYER
 	anchored = TRUE
 	unacidable = TRUE
@@ -106,14 +99,13 @@ GLOBAL_LIST_EMPTY(apcs)
 	req_access = list(access_engine_equip)
 	blocks_emissive = FALSE
 	vis_flags = VIS_HIDE // They have an emissive that looks bad in openspace due to their wall-mounted nature
-
 	var/area/area
 	var/areastring = null
 	var/obj/item/weapon/cell/cell
 	var/chargelevel = CELLRATE  // Cap for how fast APC cells charge, as a percentage-per-tick (0.01 means cellcharge is capped to 1% per second)
 	var/start_charge = 90				// initial cell charge %
 	var/cell_type = /obj/item/weapon/cell/apc
-	var/opened = APC_COVER_CLOSED //0=closed, 1=opened, 2=cover removed
+	var/opened = 0 //0=closed, 1=opened, 2=cover removed
 	var/shorted = FALSE
 	var/grid_check = FALSE
 	var/lighting = POWERCHAN_ON_AUTO
@@ -133,9 +125,9 @@ GLOBAL_LIST_EMPTY(apcs)
 	var/lastused_charging = 0
 	var/lastused_total = 0
 	var/main_status = APC_EXTERNAL_POWER_NOTCONNECTED
-	powernet = FALSE // set so that APCs aren't found as powernet nodes //Hackish, Horrible, was like this before I changed it :(
 	var/mob/living/silicon/ai/hacker = null // Malfunction var. If set AI hacked the APC and has full control.
 	var/wiresexposed = FALSE
+	powernet = 0		// set so that APCs aren't found as powernet nodes //Hackish, Horrible, was like this before I changed it :(
 	var/debug= FALSE
 	var/autoflag= 0		// 0 = off, 1= eqp and lights off, 2 = eqp off, 3 = all on.
 	var/has_electronics = APC_HAS_ELECTRONICS_NONE // 0 - none, 1 - plugged in, 2 - secured by screwdriver
@@ -173,7 +165,7 @@ GLOBAL_LIST_EMPTY(apcs)
 /obj/machinery/power/apc/drain_power(var/drain_check, var/surge, var/amount = 0)
 
 	if(drain_check)
-		return 1
+		return TRUE
 
 	//This makes sure fully draining an APC cell won't break the cell charging.
 	charging = 0
@@ -209,7 +201,7 @@ GLOBAL_LIST_EMPTY(apcs)
 		offset_apc()
 
 	if(building)
-		area = get_area(loc)
+		area = get_area(src)
 		area.apc = src
 		opened = 1
 		operating = 0
@@ -268,6 +260,13 @@ GLOBAL_LIST_EMPTY(apcs)
 
 /obj/machinery/power/apc/proc/energy_fail(var/duration)
 	failure_timer = max(failure_timer, round(duration))
+
+/obj/machinery/power/apc/proc/make_terminal()
+	// create a terminal object at the same position as original turf loc
+	// wires will attach to this
+	terminal = new/obj/machinery/power/terminal(loc)
+	terminal.set_dir(dir)
+	terminal.master = src
 
 /obj/machinery/power/apc/proc/init()
 	has_electronics = APC_HAS_ELECTRONICS_SECURED //installed and secured
@@ -496,7 +495,7 @@ GLOBAL_LIST_EMPTY(apcs)
 		else if(opened != 2) //cover isn't removed
 			opened = 0
 			update_icon()
-	else if((W.has_tool_quality(TOOL_CROWBAR)) && !(stat & BROKEN))
+	else if((W.has_tool_quality(TOOL_CROWBAR)) && !(stat & BROKEN) )
 		if(coverlocked && !(stat & MAINT))
 			to_chat(user, "<span class='warning'>The cover is locked and cannot be opened.</span>")
 			return
@@ -556,7 +555,12 @@ GLOBAL_LIST_EMPTY(apcs)
 		if(istype(T) && !T.is_plating())
 			to_chat(user, "<span class='warning'>You must remove the floor plating in front of the APC first.</span>")
 			return
+
 		var/obj/item/stack/cable_coil/C = W
+		if(istype(C, /obj/structure/cable/heavyduty))
+			to_chat(user, "<span class='warning'>This cable is too bulky for APC terminals.</span>")
+			return
+
 		if(C.get_amount() < 10)
 			to_chat(user, "<span class='warning'>You need ten lengths of cable for that.</span>")
 			return
@@ -584,7 +588,6 @@ GLOBAL_LIST_EMPTY(apcs)
 				user.visible_message(\
 					"<span class='warning'>[user.name] has added cables to the APC frame!</span>",\
 					"You add cables to the APC frame.")
-
 				make_terminal(terminal_cable_layer)
 				terminal.connect_to_network()
 				return
@@ -730,11 +733,11 @@ GLOBAL_LIST_EMPTY(apcs)
 		else
 			flick("apc-spark", src)
 			if(do_after(user,6))
-				emagged = 1
-				locked = 0
+				emagged = TRUE
+				locked = FALSE
 				to_chat(user, "<span class='notice'>You emag the APC interface.</span>")
 				update_icon()
-				return 1
+				return TRUE
 
 /obj/machinery/power/apc/blob_act()
 	if(!wires.is_all_cut())
@@ -873,13 +876,18 @@ GLOBAL_LIST_EMPTY(apcs)
 		area.power_light = (lighting >= POWERCHAN_ON)
 		area.power_equip = (equipment >= POWERCHAN_ON)
 		area.power_environ = (environ >= POWERCHAN_ON)
+//		if(area.name == "AI Chamber")
+//			spawn(10)
+//				to_world(" [area.name] [area.power_equip]")
 	else
 		area.power_light = FALSE
 		area.power_equip = FALSE
 		area.power_environ = FALSE
+//		if(area.name == "AI Chamber")
+//			to_world("[area.power_equip]")
 	area.power_change()
 
-/obj/machinery/power/apc/proc/can_use(mob/user as mob, var/loud = 0) //used by attack_hand() and Topic()
+/obj/machinery/power/apc/proc/can_use(mob/user as mob, var/loud = FALSE) //used by attack_hand() and Topic()
 	if(!user.client)
 		return FALSE
 	if(isobserver(user) && is_admin(user)) //This is to allow nanoUI interaction by ghost admins.
@@ -898,27 +906,27 @@ GLOBAL_LIST_EMPTY(apcs)
 		return FALSE
 	autoflag = 5
 	if(istype(user, /mob/living/silicon))
-		var/permit = FALSE // Malfunction variable. If AI hacks APC it can control it even without AI control wire.
+		var/permit = 0 // Malfunction variable. If AI hacks APC it can control it even without AI control wire.
 		var/mob/living/silicon/ai/AI = user
 		var/mob/living/silicon/robot/robot = user
 		if(hacker)
 			if(hacker == AI)
-				permit = TRUE
+				permit = 1
 			else if(istype(robot) && robot.connected_ai && robot.connected_ai == hacker) // Cyborgs can use APCs hacked by their AI
-				permit = TRUE
+				permit = 1
 
 		if(aidisabled && !permit)
 			if(!loud)
 				to_chat(user, "<span class='danger'>\The AI control for [src] has been disabled!</span>")
 			return FALSE
 	else
-		if(!in_range(src, user) || !isturf(loc))
-			return 0
+		if(!in_range(src, user) || !istype(loc, /turf))
+			return FALSE
 	var/mob/living/carbon/human/H = user
 	if(istype(H) && prob(H.getBrainLoss()))
 		to_chat(user, "<span class='danger'>You momentarily forget how to use [src].</span>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/machinery/power/apc/tgui_act(action, params)
 	if(..() || !can_use(usr, TRUE))
@@ -954,7 +962,7 @@ GLOBAL_LIST_EMPTY(apcs)
 		if("nightshift")
 			if(last_nightshift_switch > world.time - 10 SECONDS) // don't spam...
 				to_chat(usr, "<span class='warning'>[src]'s night lighting circuit breaker is still cycling!</span>")
-				return 0
+				return FALSE
 			last_nightshift_switch = world.time
 			nightshift_setting = params["nightshift"]
 			update_nightshift()
@@ -996,34 +1004,27 @@ GLOBAL_LIST_EMPTY(apcs)
 	update()
 	update_icon()
 
-/obj/machinery/power/apc/get_cell()
-	return cell
+/obj/machinery/power/apc/surplus()
+	if(terminal && terminal.powernet)
+		return terminal.surplus()
+	else
+		return 0
 
 //Returns 1 if the APC should attempt to charge
 /obj/machinery/power/apc/proc/attempt_charging()
 	return (chargemode && charging == 1 && operating)
 
-/// Returns the surplus energy from the terminal's grid.
-/obj/machinery/power/apc/surplus()
-	if(terminal)
-		return terminal.surplus()
+
+/obj/machinery/power/apc/draw_power(var/amount)
+	if(terminal && terminal.powernet)
+		return terminal.powernet.draw_power(amount)
 	return 0
 
-/// Adds load (energy) to the terminal's grid.
-/obj/machinery/power/apc/add_load(amount)
-	if(terminal?.powernet)
-		terminal.add_load(amount)
-
-/// Returns the amount of energy the terminal's grid has.
-/obj/machinery/power/apc/avail(amount)
+/obj/machinery/power/apc/avail()
 	if(terminal)
-		return terminal.avail(amount)
-	return 0
-
-/// Returns the surplus energy from the terminal's grid and the cell.
-/obj/machinery/power/apc/proc/available_energy()
-	if(get_cell())
-		return cell.charge() + surplus()
+		return terminal.avail()
+	else
+		return 0
 
 /obj/machinery/power/apc/process()
 	if(!area.requires_power)
@@ -1069,11 +1070,11 @@ GLOBAL_LIST_EMPTY(apcs)
 
 		if(excess > lastused_total)		// if power excess recharge the cell
 										// by the same amount just used
-			var/draw = add_load(cellused/CELLRATE) // draw the power needed to charge this cell
+			var/draw = draw_power(cellused/CELLRATE) // draw the power needed to charge this cell
 			cell.give(draw * CELLRATE)
 		else		// no excess, and not enough per-apc
 			if( (cell.charge/CELLRATE + excess) >= lastused_total)		// can we draw enough from cell+grid to cover last usage?
-				var/draw = add_load(excess)
+				var/draw = draw_power(excess)
 				cell.charge = min(cell.maxcharge, cell.charge + CELLRATE * draw)	//recharge with what we can
 				charging = 0
 			else	// not enough power available to run the last tick!
@@ -1096,7 +1097,7 @@ GLOBAL_LIST_EMPTY(apcs)
 				// Max charge is capped to % per second constant
 				var/ch = min(excess*CELLRATE, cell.maxcharge*chargelevel)
 
-				ch = add_load(ch/CELLRATE) // Removes the power we're taking from the grid
+				ch = draw_power(ch/CELLRATE) // Removes the power we're taking from the grid
 				cell.give(ch*CELLRATE) // actually recharge the cell
 				lastused_charging = ch
 				lastused_total += ch // Sensors need this to stop reporting APC charging as "Other" load
@@ -1243,15 +1244,6 @@ GLOBAL_LIST_EMPTY(apcs)
 					cell.ex_act(3)
 	return
 
-
-/obj/machinery/power/apc/proc/make_terminal(terminal_cable_layer = cable_layer)
-	// create a terminal object at the same position as original turf loc
-	// wires will attach to this
-	terminal = new/obj/machinery/power/terminal(loc)
-	terminal.cable_layer = terminal_cable_layer
-	terminal.set_dir(dir)
-	terminal.master = src
-
 /obj/machinery/power/apc/disconnect_terminal(var/obj/machinery/power/terminal/term)
 	if(terminal)
 		terminal.master = null
@@ -1291,12 +1283,12 @@ GLOBAL_LIST_EMPTY(apcs)
 // Malfunction: Transfers APC under AI's control
 /obj/machinery/power/apc/proc/ai_hack(var/mob/living/silicon/ai/A = null)
 	if(!A || !A.hacked_apcs || hacker || aidisabled || A.stat == DEAD)
-		return 0
+		return FALSE
 	hacker = A
 	A.hacked_apcs += src
 	locked = 1
 	update_icon()
-	return 1
+	return TRUE
 
 /obj/machinery/power/apc/proc/reboot()
 	//reset various counters so that process() will start fresh
@@ -1393,6 +1385,3 @@ GLOBAL_LIST_EMPTY(apcs)
 #undef APC_HAS_ELECTRONICS_NONE
 #undef APC_HAS_ELECTRONICS_WIRED
 #undef APC_HAS_ELECTRONICS_SECURED
-
-/area/proc/get_apc()
-	return apc

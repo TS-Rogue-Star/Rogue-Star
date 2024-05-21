@@ -1481,6 +1481,9 @@
 	else if(istype(W, /obj/item/stack/cable_coil))
 		if(state >= MECHA_CELL_OPEN && hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
 			var/obj/item/stack/cable_coil/CC = W
+			if(istype(CC, /obj/structure/cable/heavyduty))
+				to_chat(user, "<span class='warning'>This cable is too bulky.</span>")
+				return
 			if(CC.use(2))
 				clearInternalDamage(MECHA_INT_SHORT_CIRCUIT)
 				to_chat(user, "You replace the fused wires.")

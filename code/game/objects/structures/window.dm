@@ -301,6 +301,9 @@
 			qdel(src)
 	else if(istype(W, /obj/item/stack/cable_coil) && reinf && state == 0 && !istype(src, /obj/structure/window/reinforced/polarized))
 		var/obj/item/stack/cable_coil/C = W
+		if(istype(C, /obj/structure/cable/heavyduty))
+			to_chat(user, "<span class='warning'>This cable is too bulky.</span>")
+			return
 		if (C.use(1))
 			playsound(src, 'sound/effects/sparks1.ogg', 75, 1)
 			user.visible_message( \

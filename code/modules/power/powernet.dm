@@ -14,7 +14,8 @@
 
 
 /datum/powernet/New()
-	SSmachines.powernets += src
+	START_PROCESSING_POWERNET(src)
+	..()
 
 /datum/powernet/Destroy()
 	for(var/obj/structure/cable/C in cables)
@@ -24,7 +25,7 @@
 		nodes -= M
 		M.powernet = null
 
-	SSmachines.powernets -= src
+	STOP_PROCESSING_POWERNET(src)
 	. = ..()
 
 /datum/powernet/proc/is_empty()
@@ -108,9 +109,9 @@
 	//10MW = 88
 	//100MW = 110
 	//1GW = 132
-	if(avail >= 1000)
+	if(avail >= 1 KILOWATTS)
 		var/damage = log(1.1,avail)
 		damage = damage - (log(1.1,damage)*1.5)
 		return round(damage)
 	else
-		return 0
+		return FALSE

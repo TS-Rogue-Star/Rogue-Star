@@ -193,6 +193,9 @@
 		if(2)
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/C = W
+				if(istype(C, /obj/structure/cable/heavyduty))
+					to_chat(user, "<span class='warning'>This cable is too bulky.</span>")
+					return
 				if(!C.use(3))
 					to_chat(user, "<span class='notice'>You need six cable coils to wire the devices.</span>")
 					..()

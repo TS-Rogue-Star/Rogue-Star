@@ -256,6 +256,9 @@
 			return
 		else
 			var/obj/item/stack/cable_coil/coil = W
+			if(istype(coil, /obj/structure/cable/heavyduty))
+				to_chat(user, "<span class='warning'>This cable is too bulky.</span>")
+				return
 			coil.use(1)
 			src.wires = 1.0
 			to_chat(user, "<span class='notice'>You insert the wire!</span>")

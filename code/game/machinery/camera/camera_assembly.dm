@@ -59,6 +59,9 @@
 			// State 2
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/C = W
+				if(istype(C, /obj/structure/cable/heavyduty))
+					to_chat(user, "<span class='warning'>This cable is too bulky.</span>")
+					return
 				if(C.use(2))
 					to_chat(user, "<span class='notice'>You add wires to the assembly.</span>")
 					state = 3

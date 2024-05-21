@@ -135,6 +135,9 @@ var/global/list/light_type_cache = list()
 	if(istype(W, /obj/item/stack/cable_coil))
 		if (src.stage != 1) return
 		var/obj/item/stack/cable_coil/coil = W
+		if(istype(coil, /obj/structure/cable/heavyduty))
+			to_chat(user, "<span class='warning'>This cable is too bulky.</span>")
+			return
 		if (coil.use(1))
 			src.stage = 2
 			src.update_icon()

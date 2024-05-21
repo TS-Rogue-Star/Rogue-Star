@@ -132,6 +132,9 @@
 				user.visible_message("[user] wires the windoor assembly.", "You start to wire the windoor assembly.")
 
 				var/obj/item/stack/cable_coil/CC = W
+				if(istype(CC, /obj/structure/cable/heavyduty))
+					to_chat(user, "<span class='warning'>This cable is too bulky.</span>")
+					return
 				if(do_after(user, 40))
 					if (CC.use(1))
 						to_chat(user,"<span class='notice'>You wire the windoor!</span>")

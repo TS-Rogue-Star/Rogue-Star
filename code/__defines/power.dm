@@ -40,7 +40,7 @@ GLOBAL_LIST_INIT(cable_name_to_layer, list(
 
 #define	SOLARGRUBFATTENED 7 MEGAWATTS
 
-var/global/defer_powernet_rebuild = 0      // True if net rebuild will be called manually after an event.
+var/global/defer_powernet_rebuild = FALSE      // True if net rebuild will be called manually after an event.
 
 #define EMITTER_DAMAGE_POWER_TRANSFER 450 //used to transfer power to containment field generators
 
@@ -78,6 +78,9 @@ GLOBAL_LIST_INIT(possible_cable_coil_colours, list(
 #define SMESRATE			0.05	// rate of internal charge to external power
 #define SMESMAXCOIL			6		//Maxmimum Coil number
 #define SMESDEFAULTSTART	1		//Starting number of coils
+
+GLOBAL_LIST_EMPTY(smeses)
+GLOBAL_LIST_EMPTY(apcs)
 
 ///Power cell
 #define CELLRATE 0.002 // Multiplier for watts per tick <> cell storage (e.g., 0.02 means if there is a load of 1000 watts, 20 units will be taken from a cell per second)

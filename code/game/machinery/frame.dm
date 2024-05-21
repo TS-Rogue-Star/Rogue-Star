@@ -507,6 +507,9 @@
 	else if(istype(P, /obj/item/stack/cable_coil))
 		if(state == FRAME_FASTENED)
 			var/obj/item/stack/cable_coil/C = P
+			if(istype(C, /obj/structure/cable/heavyduty))
+				to_chat(user, "<span class='warning'>This cable is too bulky.</span>")
+				return
 			if(C.get_amount() < 5)
 				to_chat(user, "<span class='warning'>You need five coils of wire to add them to the frame.</span>")
 				return
@@ -525,6 +528,9 @@
 						playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 						if(istype(P, /obj/item/stack/cable_coil))
 							var/obj/item/stack/cable_coil/CP = P
+							if(istype(CP, /obj/structure/cable/heavyduty))
+								to_chat(user, "<span class='warning'>This cable is too bulky.</span>")
+								return
 							if(CP.get_amount() > 1)
 								var/camt = min(CP.get_amount(), req_components[I]) // amount of cable to take, idealy amount required, but limited by amount provided
 								var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src, camt)

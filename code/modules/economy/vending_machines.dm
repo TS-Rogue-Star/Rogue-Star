@@ -671,6 +671,7 @@
 	icon_state = "engivend"
 	req_access = list(access_engine_equip)
 	products = list(/obj/item/device/geiger = 4,
+					/obj/item/stack/cable_coil/heavyduty = 2,
 					/obj/item/clothing/glasses/meson = 2,
 					/obj/item/device/multitool = 4,
 					/obj/item/weapon/cell/high = 10,
