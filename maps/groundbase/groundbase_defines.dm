@@ -2,23 +2,24 @@
 #define Z_LEVEL_GB_BOTTOM  					1
 #define Z_LEVEL_GB_MIDDLE  					2
 #define Z_LEVEL_GB_TOP     					3
-#define Z_LEVEL_GB_WILD_N  					4
-#define Z_LEVEL_GB_WILD_S  					5
-#define Z_LEVEL_GB_WILD_E  					6
-#define Z_LEVEL_GB_WILD_W  					7
-#define Z_LEVEL_CENTCOM						8
-#define Z_LEVEL_MISC						9
-#define Z_LEVEL_MINING						10
-#define Z_LEVEL_BEACH						11
-#define Z_LEVEL_BEACH_CAVE					12
-#define Z_LEVEL_AEROSTAT					13
-#define Z_LEVEL_AEROSTAT_SURFACE			14
-#define Z_LEVEL_DEBRISFIELD					15
-#define Z_LEVEL_FUELDEPOT					16
-#define Z_LEVEL_OFFMAP1						17
-#define Z_LEVEL_GATEWAY						18
-#define Z_LEVEL_OM_ADVENTURE				19
-#define Z_LEVEL_REDGATE						20
+#define Z_LEVEL_GB_ENGINESAT				4
+#define Z_LEVEL_GB_WILD_N  					5
+#define Z_LEVEL_GB_WILD_S  					6
+#define Z_LEVEL_GB_WILD_E  					7
+#define Z_LEVEL_GB_WILD_W  					8
+#define Z_LEVEL_CENTCOM						9
+#define Z_LEVEL_MISC						10
+#define Z_LEVEL_MINING						11
+#define Z_LEVEL_BEACH						12
+#define Z_LEVEL_BEACH_CAVE					13
+#define Z_LEVEL_AEROSTAT					14
+#define Z_LEVEL_AEROSTAT_SURFACE			15
+#define Z_LEVEL_DEBRISFIELD					16
+#define Z_LEVEL_FUELDEPOT					17
+#define Z_LEVEL_OFFMAP1						18
+#define Z_LEVEL_GATEWAY						19
+#define Z_LEVEL_OM_ADVENTURE				20
+#define Z_LEVEL_REDGATE						21
 
 //Camera networks
 #define NETWORK_HALLS "Halls"
@@ -54,6 +55,8 @@
 		Z_LEVEL_GB_BOTTOM,
 		Z_LEVEL_GB_MIDDLE,
 		Z_LEVEL_GB_TOP))
+
+//	accessible_z_levels = list("4" = 100)
 
 	station_name  = "NSB Rascal's Pass"
 	station_short = "Rascal's Pass"
@@ -173,8 +176,9 @@
 		/area/groundbase/engineering/solarshed,
 		/area/groundbase/engineering/solarfield,
 		/area/groundbase/hotspring,
-		/area/groundbase/hotspring/water
-
+		/area/groundbase/hotspring/water,
+		/area/groundbase/medical/geneticslab,
+		/area/groundbase/engineering/pumpingstation
 		)
 
 	unit_test_exempt_from_atmos = list()
@@ -337,8 +341,9 @@
 	icon = 'icons/obj/overmap.dmi'
 	icon_state = "lush"
 
-	skybox_icon = null
-	skybox_icon_state = null
+	skybox_icon = 'icons/skybox/skybox_rs.dmi'
+	skybox_icon_state = "3c"
+
 	skybox_pixel_x = 0
 	skybox_pixel_y = 0
 
@@ -346,12 +351,19 @@
 	initial_restricted_waypoints = list()
 
 	extra_z_levels = list(
+		Z_LEVEL_GB_ENGINESAT,
 		Z_LEVEL_MINING,
 		Z_LEVEL_GB_WILD_N,
 		Z_LEVEL_GB_WILD_S,
 		Z_LEVEL_GB_WILD_E,
 		Z_LEVEL_GB_WILD_W
 		)
+
+	space_zs = list(Z_LEVEL_GB_ENGINESAT)
+
+/obj/effect/overmap/visitable/sector/virgo3c/generate_skybox(zlevel)
+	var/static/image/smallone = image(icon = 'icons/skybox/skybox_rs.dmi', icon_state = "3c")
+	return smallone
 
 // For making the 6-in-1 holomap, we calculate some offsets
 #define SHIP_MAP_SIZE 140 // Width and height of compiled in tether z levels.
@@ -361,9 +373,10 @@
 
 // We have a bunch of stuff common to the station z levels
 /datum/map_z_level/groundbase
-	flags = MAP_LEVEL_STATION|MAP_LEVEL_CONTACT|MAP_LEVEL_PLAYER|MAP_LEVEL_CONSOLES|MAP_LEVEL_XENOARCH_EXEMPT|MAP_LEVEL_PERSIST
+	flags = MAP_LEVEL_STATION|MAP_LEVEL_CONTACT|MAP_LEVEL_PLAYER|MAP_LEVEL_CONSOLES|MAP_LEVEL_XENOARCH_EXEMPT|MAP_LEVEL_PERSIST|MAP_LEVEL_SEALED
 	holomap_legend_x = 220
 	holomap_legend_y = 160
+	transit_chance = 0
 
 /datum/map_z_level/groundbase/level_one
 	z = Z_LEVEL_GB_BOTTOM
@@ -389,6 +402,13 @@
 	holomap_offset_x = HOLOMAP_ICON_SIZE - SHIP_HOLOMAP_MARGIN_X - SHIP_MAP_SIZE
 	holomap_offset_y = SHIP_HOLOMAP_MARGIN_Y + SHIP_MAP_SIZE
 
+/datum/map_z_level/groundbase/gb_enginesat
+	z = Z_LEVEL_GB_ENGINESAT
+	name = "Engine Satellite"
+	flags = MAP_LEVEL_PLAYER|MAP_LEVEL_CONTACT|MAP_LEVEL_CONSOLES
+	base_turf = /turf/space
+	transit_chance = 100
+
 /datum/map_template/gb_lateload
 	allow_duplicates = FALSE
 	var/associated_map_datum
@@ -401,6 +421,15 @@
 		return
 
 	new associated_map_datum(using_map, z)
+
+/*
+/datum/map_template/gb_lateload/gb_enginesat
+	name = "Groundbase - Engine Satellite"
+	desc = "Small satellite station to power Rascal's Pass."
+	mappath = 'rp-z4.dmm'
+
+	associated_map_datum = /datum/map_z_level/gb_lateload/gb_enginesat
+*/
 
 /datum/map_template/gb_lateload/gb_centcom
 	name = "Groundbase - Central Command"
@@ -468,22 +497,22 @@
 /datum/map_z_level/gb_lateload/gb_north_wilds
 	name = "GB North Wilderness"
 	z = Z_LEVEL_GB_WILD_N
-	flags = MAP_LEVEL_PLAYER|MAP_LEVEL_CONTACT|MAP_LEVEL_CONSOLES
+	flags = MAP_LEVEL_PLAYER|MAP_LEVEL_CONTACT|MAP_LEVEL_CONSOLES|MAP_LEVEL_SEALED
 
 /datum/map_z_level/gb_lateload/gb_south_wilds
 	name = "GB South Wilderness"
 	z = Z_LEVEL_GB_WILD_S
-	flags = MAP_LEVEL_PLAYER|MAP_LEVEL_CONTACT|MAP_LEVEL_CONSOLES
+	flags = MAP_LEVEL_PLAYER|MAP_LEVEL_CONTACT|MAP_LEVEL_CONSOLES|MAP_LEVEL_SEALED
 
 /datum/map_z_level/gb_lateload/gb_east_wilds
 	name = "GB East Wilderness"
 	z = Z_LEVEL_GB_WILD_E
-	flags = MAP_LEVEL_PLAYER|MAP_LEVEL_CONTACT|MAP_LEVEL_CONSOLES
+	flags = MAP_LEVEL_PLAYER|MAP_LEVEL_CONTACT|MAP_LEVEL_CONSOLES|MAP_LEVEL_SEALED
 
 /datum/map_z_level/gb_lateload/gb_west_wilds
 	name = "GB West Wilderness"
 	z = Z_LEVEL_GB_WILD_W
-	flags = MAP_LEVEL_PLAYER|MAP_LEVEL_CONTACT|MAP_LEVEL_CONSOLES
+	flags = MAP_LEVEL_PLAYER|MAP_LEVEL_CONTACT|MAP_LEVEL_CONSOLES|MAP_LEVEL_SEALED
 
 /datum/map_template/gb_lateload/wilds/north/on_map_loaded(z)
 	. = ..()

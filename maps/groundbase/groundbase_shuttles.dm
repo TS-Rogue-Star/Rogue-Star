@@ -29,6 +29,29 @@
 	name = "Exploration Shuttle"
 	requires_power = 1
 
+
+//////////////////////////////////////////////
+
+// Engine Satellite Shuttle
+/obj/machinery/computer/shuttle_control/enginesat_shuttle
+	name = "engine satellite shuttle control console"
+	shuttle_tag = "Engine Satellite Shuttle"
+
+/area/shuttle/groundbase/engineering
+	icon = 'icons/turf/areas_vr.dmi'
+	icon_state = "yelwhitri"
+	name = "Engine Satellite Shuttle"
+	requires_power = 0
+
+/datum/shuttle/autodock/ferry/engineering
+	name = "Engine Satellite Shuttle"
+	shuttle_area = /area/shuttle/groundbase/engineering
+	warmup_time = 10	//want some warmup time so people can cancel.
+	landmark_station = "eng_surface_pad"
+	landmark_offsite = "enginesat_dock"
+	docking_controller_tag = "engineeringshuttle_docker"
+
+
 //////////////////////////////////////////////
 
 // Supply shuttle
