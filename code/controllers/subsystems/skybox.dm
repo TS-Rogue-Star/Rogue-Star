@@ -133,7 +133,7 @@ SUBSYSTEM_DEF(skybox)
 					base.color = "#7c3131"
 			//VOREStation Add End
 			//RS ADD
-			else if(!(istype(O.loc,/turf/unsimulated/map) || istype(O.loc,/turf/space)))
+			else if(!(istype(O.loc,/turf/unsimulated/map) || istype(O.loc,/turf/space) || istype(O,/obj/effect/overmap/visitable/sector/temporary)))	//RS EDIT
 				if(istype(O,/obj/effect/overmap/visitable/ship/snowglobe))
 					base.icon = 'icons/skybox/skybox_rs.dmi'
 					base.icon_state = "snowglobe"
