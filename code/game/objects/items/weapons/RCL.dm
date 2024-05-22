@@ -1,6 +1,6 @@
 #define RCLMAXCAPACITY 90	//three full stacks
 
-/obj/item/weapon/material/twohanded/rcl //WHY IS YOUR TWO HANDED CODE MARKED 'MATERIAL', POLARIS?! WHAT IS MATERIAL ABOUT IT?!
+/obj/item/weapon/rcl
 	name = "rapid cable layer"
 	desc = "A device used to rapidly deploy cables. It has screws on the side which can be removed to slide off the cables. Do not use without insulation!"
 	icon = 'icons/obj/tools.dmi'
@@ -35,15 +35,15 @@
 	/// Allow people to directly build terminals and wire machines with it
 	tool_qualities = list(TOOL_CABLE_COIL)
 
-/obj/item/weapon/material/twohanded/rcl/Initialize(mapload)
+/obj/item/weapon/rcl/Initialize(mapload)
 	. = ..()
 
-/obj/item/weapon/material/twohanded/rcl/Destroy(force)
+/obj/item/weapon/rcl/Destroy(force)
 	. = ..()
 	if(!QDELETED(cable))
 		QDEL_NULL(cable)
 
-/obj/item/weapon/material/twohanded/rcl/examine(mob/user)
+/obj/item/weapon/rcl/examine(mob/user)
 	. = ..()
 	if(cable)
 		. += to_chat(user, "<span class='notice'>It contains [cable.amount]/[max_amount] cables.</span>")
@@ -51,7 +51,7 @@
 	. += to_chat(user, "<span class='notice'>Alt click to adjust layers.</span>")
 	. += to_chat(user, "<span class='notice'>Ctrl click to toggle the cable painting lock. It is currently [layercolorlock ? "locked." : "unlocked."]</span>")
 
-/obj/item/weapon/material/twohanded/rcl/attackby(obj/item/W, mob/user)
+/obj/item/weapon/rcl/attackby(obj/item/W, mob/user)
 	if(W.has_tool_quality(TOOL_CABLE_COIL))
 		var/obj/item/stack/cable_coil/C = W
 
@@ -93,7 +93,7 @@
 	else
 		..()
 
-/obj/item/weapon/material/twohanded/rcl/Destroy()
+/obj/item/weapon/rcl/Destroy()
 	QDEL_NULL(cable)
 	listeningTo = null
 	return ..()
@@ -111,7 +111,7 @@
 	update_icon()
 	..()
 
-/obj/item/weapon/material/twohanded/rcl/update_icon()
+/obj/item/weapon/rcl/update_icon()
 	. = ..()
 	if(!cable)
 		icon_state = "rcl0"
@@ -132,7 +132,7 @@
 	if(cable_amount)
 		add_overlay(cable_overlay)
 
-/obj/item/weapon/material/twohanded/rcl/equipped(mob/to_hook)
+/obj/item/weapon/rcl/equipped(mob/to_hook)
 	. = ..()
 	if(listeningTo == to_hook)
 		return .
@@ -141,12 +141,12 @@
 	RegisterSignal(to_hook, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	listeningTo = to_hook
 
-/obj/item/weapon/material/twohanded/rcl/dropped(mob/wearer)
+/obj/item/weapon/rcl/dropped(mob/wearer)
 	..()
 	UnregisterSignal(wearer, COMSIG_MOVABLE_MOVED)
 	listeningTo = null
 
-/obj/item/weapon/material/twohanded/rcl/attackby(obj/item/attacking_item, mob/living/user)
+/obj/item/weapon/rcl/attackby(obj/item/attacking_item, mob/living/user)
 	if(!istype(attacking_item, /obj/item/stack/cable_coil))
 		return
 	if ((istype(attacking_item, /obj/item/stack/cable_coil/alien)) || (istype(attacking_item, /obj/item/stack/cable_coil/heavyduty)))
@@ -156,11 +156,11 @@
 	add_cable(user, cable)
 	return TRUE
 
-/obj/item/weapon/material/twohanded/rcl/CtrlClick(mob/user)
+/obj/item/weapon/rcl/CtrlClick(mob/user)
 	layercolorlock = !layercolorlock
 	to_chat(user, "<span class='notice'>Wire colors are now [layercolorlock ? "locked." : "unlocked."] in. You will not replace the colors on [LOWER_TEXT(GLOB.cable_layer_to_name["[cable_layer]"])]</span>")
 
-/obj/item/weapon/material/twohanded/rcl/AltClick(mob/user)
+/obj/item/weapon/rcl/AltClick(mob/user)
 	if(!radial_menu)
 		var/image/layerone = image(icon = 'icons/mob/radial.dmi', icon_state = "coil")
 		layerone.maptext = "<span>L1</span>"
@@ -208,7 +208,7 @@
 	update_icon()
 	return TRUE
 
-/obj/item/weapon/material/twohanded/rcl/proc/check_menu(mob/living/user)
+/obj/item/weapon/rcl/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE
 	if(!user.IsAdvancedToolUser())
@@ -219,7 +219,7 @@
 	return TRUE
 
 /// insert cable into the rwd
-/obj/item/weapon/material/twohanded/rcl/proc/add_cable(mob/user, obj/item/stack/cable_coil/cable)
+/obj/item/weapon/rcl/proc/add_cable(mob/user, obj/item/stack/cable_coil/cable)
 	if(current_amount == max_amount)
 		to_chat(user, "<span class='warning'>The device is full!</span>")
 		return
@@ -233,7 +233,7 @@
 	to_chat(user, "<span class='notice'>Inserted [insert_amount] cable.</span>")
 
 /// modify cable properties according to its layer
-/obj/item/weapon/material/twohanded/rcl/proc/modify_cable(obj/item/stack/cable_coil/target_cable)
+/obj/item/weapon/rcl/proc/modify_cable(obj/item/stack/cable_coil/target_cable)
 	switch(cable_layer)
 		if(CABLE_LAYER_1)
 			if(!layercolorlock)
@@ -259,7 +259,7 @@
 	return target_cable
 
 /// get cached reference of cable which gets used over time
-/obj/item/weapon/material/twohanded/rcl/proc/get_cable()
+/obj/item/weapon/rcl/proc/get_cable()
 	if(QDELETED(cable))
 		var/create_amount = min(30, current_amount)
 		if(create_amount <= 0)
@@ -268,7 +268,7 @@
 	return modify_cable(cable)
 
 /// check if the turf has the same cable layer as this design. If it does don't put cable here
-/obj/item/weapon/material/twohanded/rcl/proc/cable_allowed_here(turf/the_turf)
+/obj/item/weapon/rcl/proc/cable_allowed_here(turf/the_turf)
 	// infer our intended cable design from the layer
 	var/obj/structure/cable/design_type
 	switch(cable_layer)
@@ -287,7 +287,7 @@
 	return TRUE
 
 /// extra safe modify just to be sure
-/obj/item/weapon/material/twohanded/rcl/proc/delta_cable(amount, decrement)
+/obj/item/weapon/rcl/proc/delta_cable(amount, decrement)
 	if(decrement)
 		current_amount -= amount
 	else
@@ -295,7 +295,7 @@
 	current_amount = clamp(current_amount, 0, max_amount)
 
 /// stuff to do when moving
-/obj/item/weapon/material/twohanded/rcl/proc/on_move(mob/user)
+/obj/item/weapon/rcl/proc/on_move(mob/user)
 	SIGNAL_HANDLER
 
 	if(!isturf(user.loc))
@@ -320,10 +320,10 @@
 	for(var/obj/item/stack/cable_coil/cable_piece in the_turf)
 		add_cable(user, cable_piece)
 
-/obj/item/weapon/material/twohanded/rcl/preloaded
+/obj/item/weapon/rcl/preloaded
 	current_amount = RCLMAXCAPACITY
 
-/obj/item/weapon/material/twohanded/rcl/admin
+/obj/item/weapon/rcl/admin
 	name = "admin RWD"
 	max_amount = INFINITY
 	current_amount = INFINITY

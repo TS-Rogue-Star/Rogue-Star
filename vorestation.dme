@@ -1319,7 +1319,6 @@
 #include "code\game\objects\items\weapons\policetape.dm"
 #include "code\game\objects\items\weapons\RCD.dm"
 #include "code\game\objects\items\weapons\RCD_vr.dm"
-#include "code\game\objects\items\weapons\RCL.dm"
 #include "code\game\objects\items\weapons\RMS_vr.dm"
 #include "code\game\objects\items\weapons\RPD_vr.dm"
 #include "code\game\objects\items\weapons\RSF.dm"

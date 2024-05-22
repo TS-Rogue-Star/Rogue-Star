@@ -27,7 +27,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	unacidable = TRUE
 	name = "pipe cleaner"
 	desc = "A flexible suspiciously familiar cabling that lacks any conduit."
-	icon = 'icons/obj/pipe_cleaners/power_cond_white.dmi'
+	icon = 'icons/obj/cables/pipe_cleaner.dmi'
 	icon_state = "0-1"
 	var/d1 = 0
 	var/d2 = 1
