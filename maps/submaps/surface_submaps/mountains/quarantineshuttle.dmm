@@ -22,8 +22,7 @@
 /area/submap/cave/qShuttle)
 "ag" = (
 /obj/structure/shuttle/engine/heater{
-	dir = 4;
-	icon_state = "heater"
+	dir = 4
 	},
 /turf/simulated/shuttle/plating,
 /area/submap/cave/qShuttle)

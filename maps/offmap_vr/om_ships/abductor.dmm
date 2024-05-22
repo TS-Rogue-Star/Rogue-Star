@@ -51,10 +51,6 @@
 /obj/machinery/vending/abductor,
 /turf/simulated/shuttle/floor/alienplating,
 /area/abductor/interior)
-"eV" = (
-/obj/structure/cable,
-/turf/simulated/shuttle/floor/alien,
-/area/abductor/interior)
 "fo" = (
 /turf/simulated/shuttle/floor/alienplating,
 /area/abductor/exterior)
@@ -215,10 +211,6 @@
 	},
 /turf/simulated/shuttle/floor/alienplating,
 /area/abductor/interior)
-"pC" = (
-/obj/structure/cable,
-/turf/simulated/shuttle/floor/alienplating,
-/area/abductor/interior)
 "pG" = (
 /obj/structure/fans/hardlight/colorable/abductor,
 /obj/machinery/door/airlock/alien{
@@ -252,10 +244,6 @@
 "qL" = (
 /obj/structure/prop/alien/power,
 /turf/simulated/shuttle/floor/alienplating,
-/area/abductor/interior)
-"rg" = (
-/obj/structure/cable,
-/turf/simulated/shuttle/floor/alien,
 /area/abductor/interior)
 "rB" = (
 /obj/structure/table/alien,
@@ -398,10 +386,6 @@
 /obj/item/device/flash,
 /turf/simulated/shuttle/floor/alienplating,
 /area/abductor/interior)
-"yB" = (
-/obj/structure/cable,
-/turf/simulated/shuttle/floor/alien,
-/area/abductor/interior)
 "zk" = (
 /obj/machinery/vending/abductor{
 	dir = 1
@@ -487,8 +471,7 @@
 /area/abductor/interior)
 "Ge" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/fuel{
-	dir = 1;
-	icon_state = "map-fuel"
+	dir = 1
 	},
 /turf/simulated/shuttle/floor/alienplating,
 /area/abductor/interior)
@@ -801,11 +784,6 @@
 /obj/item/weapon/storage/box/gloves,
 /turf/simulated/shuttle/floor/alienplating,
 /area/abductor/interior)
-"WB" = (
-/obj/structure/cable,
-/obj/machinery/power/rtg/abductor/built/abductor,
-/turf/simulated/shuttle/floor/alien,
-/area/abductor/interior)
 "WC" = (
 /obj/machinery/computer/security/abductor{
 	icon_screen = null
@@ -891,8 +869,7 @@
 /area/abductor/interior)
 "Zk" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
-	dir = 8;
-	icon_state = "intact-fuel"
+	dir = 8
 	},
 /turf/simulated/shuttle/floor/alienplating,
 /area/abductor/interior)
@@ -10071,15 +10048,15 @@ tl
 tl
 pV
 pV
-WB
+YA
 pV
 pV
 pV
-WB
+YA
 pV
 pV
 pV
-WB
+YA
 pV
 pV
 tl
@@ -10213,15 +10190,15 @@ fo
 pV
 pV
 SD
-pC
+EA
 SD
 dN
 SD
-pC
+EA
 SD
 fQ
 SD
-pC
+EA
 SD
 pV
 pV
@@ -10359,7 +10336,7 @@ kT
 SD
 JF
 SD
-pC
+EA
 SD
 JF
 SD
@@ -10497,15 +10474,15 @@ pV
 Kx
 SD
 SD
-pC
+EA
 AZ
 Ov
 Nq
-pC
+EA
 tQ
 GE
 qu
-pC
+EA
 SD
 SD
 Oz
@@ -10639,15 +10616,15 @@ pV
 fw
 SD
 SD
-rg
+zu
 SD
 SD
 SD
-pC
+EA
 SD
 SD
 SD
-rg
+zu
 tI
 SD
 Oz
@@ -10767,29 +10744,29 @@ SD
 JF
 JF
 VT
-yB
-yB
+zu
+zu
 EA
 EA
-yB
+zu
 Lg
-yB
+zu
 EA
 EA
-yB
+zu
 OG
-yB
+zu
 EA
 EA
 zu
 EA
 EA
-yB
 zu
-yB
+zu
+zu
 EA
 EA
-eV
+zu
 Bv
 SD
 pV
@@ -10923,15 +10900,15 @@ pV
 xg
 SD
 SD
-rg
+zu
 SD
 SD
 SD
-pC
+EA
 SD
 SD
 SD
-rg
+zu
 rB
 SD
 Oz
@@ -11065,15 +11042,15 @@ pV
 nv
 SD
 SD
-pC
+EA
 DG
 pc
 fz
-pC
+EA
 rL
 hj
 vS
-pC
+EA
 SD
 SD
 Oz
@@ -11211,7 +11188,7 @@ kT
 SD
 JF
 SD
-pC
+EA
 SD
 JF
 SD
@@ -11349,15 +11326,15 @@ fo
 pV
 pV
 SD
-pC
+EA
 SD
 YW
 SD
-pC
+EA
 SD
 Fq
 SD
-pC
+EA
 SD
 pV
 pV

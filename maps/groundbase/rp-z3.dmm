@@ -35,13 +35,6 @@
 	outdoors = 1
 	},
 /area/groundbase/medical/patio)
-"aK" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/effect/floor_decal/steeldecal/steel_decals5,
-/turf/simulated/floor/tiled,
-/area/groundbase/civilian/pilot)
 "aM" = (
 /obj/structure/table/bench/marble,
 /obj/effect/landmark/start/medical,
@@ -107,10 +100,6 @@
 /obj/effect/floor_decal/milspec/color/red/half,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hall3)
-"bQ" = (
-/obj/structure/cable,
-/turf/simulated/floor/tiled,
-/area/shuttle/groundbase/exploration)
 "bR" = (
 /turf/simulated/floor{
 	edge_blending_priority = -1;
@@ -167,10 +156,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/groundbase/medical/cmo)
-"cq" = (
-/obj/structure/cable,
-/turf/simulated/floor/outdoors/sidewalk/slab,
-/area/groundbase/exploration/shuttlepad)
 "cu" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -633,10 +618,6 @@
 /obj/structure/bed/chair/sofa/corp/left,
 /turf/simulated/floor/carpet/retro,
 /area/groundbase/dorms/bathroom)
-"jm" = (
-/obj/structure/cable,
-/turf/simulated/floor/outdoors/sidewalk/slab,
-/area/groundbase/exploration/shuttlepad)
 "jp" = (
 /obj/machinery/hologram/holopad,
 /obj/structure/cable,
@@ -751,10 +732,6 @@
 /obj/structure/cable,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/medicalshowers)
-"kV" = (
-/obj/structure/cable,
-/turf/simulated/floor/outdoors/sidewalk/slab/virgo3c,
-/area/groundbase/level3/nw)
 "kW" = (
 /obj/structure/bed/chair/shuttle{
 	dir = 1
@@ -1599,10 +1576,6 @@
 /obj/structure/cable,
 /turf/simulated/floor/tiled/eris/dark/panels,
 /area/shuttle/groundbase/exploration)
-"tV" = (
-/obj/structure/cable,
-/turf/simulated/floor/outdoors/sidewalk/slab/virgo3c,
-/area/groundbase/level3/nw)
 "tX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -2543,12 +2516,6 @@
 /obj/structure/cable,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/uhallway)
-"Ec" = (
-/obj/structure/cable,
-/turf/simulated/floor/outdoors/sidewalk/slab{
-	outdoors = 0
-	},
-/area/groundbase/cargo/office)
 "Ej" = (
 /obj/effect/landmark/start/pilot,
 /obj/machinery/button/remote/airlock{
@@ -2584,10 +2551,6 @@
 "Em" = (
 /turf/simulated/mineral/cave,
 /area/groundbase/level3/ne)
-"Et" = (
-/obj/structure/cable,
-/turf/simulated/floor/outdoors/sidewalk/slab/virgo3c,
-/area/groundbase/level3/nw)
 "Ey" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
@@ -3759,10 +3722,6 @@
 "RM" = (
 /turf/simulated/wall,
 /area/groundbase/medical/medicalshowers)
-"RP" = (
-/obj/structure/cable,
-/turf/simulated/floor/outdoors/sidewalk/slab/virgo3c,
-/area/groundbase/level3/nw)
 "RQ" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /obj/machinery/camera/network/medbay,
@@ -8402,7 +8361,7 @@ UV
 TH
 Ue
 Ue
-kV
+Xp
 na
 Mz
 Mz
@@ -8544,8 +8503,8 @@ Nj
 TH
 Ue
 Ue
-RP
-tV
+Xp
+Xp
 Xp
 sQ
 sQ
@@ -9398,9 +9357,9 @@ mv
 mv
 mv
 mv
-RP
+Xp
 nW
-Et
+Xp
 PZ
 PZ
 PZ
@@ -18517,7 +18476,7 @@ xF
 Af
 Ey
 vD
-Ec
+GV
 NY
 Sy
 gA
@@ -18995,7 +18954,7 @@ eG
 kj
 ke
 hE
-aK
+VO
 QH
 Ej
 Wt
@@ -19555,9 +19514,9 @@ Wy
 Wy
 FC
 lS
-jm
-jm
-jm
+nU
+nU
+nU
 nU
 MX
 qS
@@ -19700,7 +19659,7 @@ sc
 sc
 Is
 sc
-cq
+nU
 SH
 Wy
 Wy
@@ -21688,7 +21647,7 @@ KU
 Ki
 KU
 ZK
-bQ
+iZ
 ZE
 KU
 mE

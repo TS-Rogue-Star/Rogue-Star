@@ -91,14 +91,6 @@
 /obj/structure/bed/chair/sofa/right/purp,
 /turf/simulated/floor/tiled/eris/steel/bar_dance,
 /area/lunaship/bar)
-"by" = (
-/obj/structure/hull_corner/long_vert{
-	dir = 9
-	},
-/obj/structure/lattice,
-/obj/structure/cable,
-/turf/space,
-/area/space)
 "bD" = (
 /obj/structure/cable,
 /obj/effect/floor_decal/techfloor/corner{
@@ -132,20 +124,9 @@
 "bU" = (
 /turf/space/internal_edge/topright,
 /area/lunaship/cockpit)
-"cj" = (
-/obj/structure/cable,
-/obj/structure/hull_corner/long_vert{
-	dir = 6
-	},
-/turf/space,
-/area/space)
 "cx" = (
 /turf/space/internal_edge/left,
 /area/lunaship/park)
-"cB" = (
-/obj/structure/cable,
-/turf/space,
-/area/space)
 "cK" = (
 /obj/structure/bed/chair/sofa/purp,
 /obj/structure/disposalpipe/segment,
@@ -297,8 +278,7 @@
 /area/lunaship/bar)
 "fT" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/effect/floor_decal/industrial/warning{
 	dir = 6
@@ -337,8 +317,7 @@
 /area/lunaship/medical)
 "gp" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/simulated/floor/water/deep/indoors,
 /area/lunaship/park)
@@ -353,11 +332,6 @@
 	},
 /obj/structure/lattice,
 /obj/structure/cable,
-/turf/space,
-/area/space)
-"gQ" = (
-/obj/structure/cable,
-/obj/structure/lattice,
 /turf/space,
 /area/space)
 "gT" = (
@@ -375,8 +349,7 @@
 /area/lunaship/office)
 "gZ" = (
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /turf/simulated/floor/water/deep/indoors,
 /area/lunaship/park)
@@ -612,8 +585,7 @@
 	dir = 4
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/simulated/floor/tiled/milspec/sterile,
 /area/lunaship/medical)
@@ -670,8 +642,7 @@
 	req_access = list()
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
@@ -780,14 +751,6 @@
 /obj/structure/cable,
 /turf/space,
 /area/space)
-"mB" = (
-/obj/structure/cable,
-/obj/structure/hull_corner/long_vert{
-	dir = 6
-	},
-/obj/structure/lattice,
-/turf/space,
-/area/space)
 "mV" = (
 /obj/effect/shuttle_landmark/premade/luna_near_fore_star,
 /turf/space,
@@ -841,16 +804,6 @@
 	},
 /turf/simulated/wall/tgmc/durawall,
 /area/lunaship/bar)
-"ns" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor/plating/eris/under,
-/area/lunaship/engineering)
 "nx" = (
 /obj/effect/floor_decal/techfloor{
 	dir = 9
@@ -878,11 +831,6 @@
 /obj/machinery/r_n_d/destructive_analyzer,
 /turf/simulated/floor/tiled/milspec,
 /area/lunaship/robotics_bay)
-"nC" = (
-/obj/structure/lattice,
-/obj/structure/cable,
-/turf/space,
-/area/space)
 "nM" = (
 /obj/effect/floor_decal/milspec/color/blue/half{
 	dir = 4
@@ -921,11 +869,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/lunaship/office)
-"oj" = (
-/obj/structure/lattice,
-/obj/structure/cable,
-/turf/space,
-/area/space)
 "oD" = (
 /turf/space/internal_edge/left,
 /area/lunaship/cockpit)
@@ -934,8 +877,7 @@
 /area/lunaship/bar)
 "oS" = (
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /obj/item/modular_computer/laptop/preset/custom_loadout/elite,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -957,14 +899,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/milspec,
 /area/lunaship/office)
-"px" = (
-/obj/structure/lattice,
-/obj/machinery/power/pointdefense{
-	id_tag = "luna_ship_pd"
-	},
-/obj/structure/cable,
-/turf/space,
-/area/space)
 "pF" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -997,14 +931,6 @@
 /obj/structure/hull_corner/long_vert{
 	dir = 9
 	},
-/turf/space,
-/area/space)
-"pV" = (
-/obj/structure/cable,
-/obj/structure/hull_corner/long_vert{
-	dir = 10
-	},
-/obj/structure/lattice,
 /turf/space,
 /area/space)
 "qn" = (
@@ -1106,12 +1032,6 @@
 	name = "computer corium plating"
 	},
 /area/lunaship/park)
-"rD" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/carpet/turcarpet,
-/area/lunaship/office)
 "rK" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -1131,8 +1051,7 @@
 	},
 /obj/item/device/sleevemate,
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /turf/simulated/floor/tiled/milspec/sterile,
 /area/lunaship/medical)
@@ -1251,13 +1170,6 @@
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/lunaship/hallway_port)
-"tl" = (
-/obj/structure/hull_corner/long_vert{
-	dir = 10
-	},
-/obj/structure/cable,
-/turf/space,
-/area/space)
 "tm" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -1274,19 +1186,10 @@
 /area/lunaship/office)
 "tB" = (
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /turf/simulated/floor/water/indoors/surfluid,
 /area/lunaship/engineering)
-"tW" = (
-/obj/structure/cable,
-/obj/structure/hull_corner/long_vert{
-	dir = 5
-	},
-/obj/structure/lattice,
-/turf/space,
-/area/space)
 "ui" = (
 /obj/machinery/vending/medical{
 	dir = 4;
@@ -1297,11 +1200,6 @@
 	},
 /turf/simulated/floor/tiled/milspec/sterile,
 /area/lunaship/medical)
-"um" = (
-/obj/structure/cable,
-/obj/structure/lattice,
-/turf/space,
-/area/space)
 "uq" = (
 /turf/space/internal_edge/right,
 /area/lunaship/park)
@@ -1428,11 +1326,6 @@
 	},
 /turf/simulated/floor/tiled/milspec,
 /area/lunaship/robotics_bay)
-"vU" = (
-/obj/structure/lattice,
-/obj/structure/cable,
-/turf/space,
-/area/space)
 "vW" = (
 /obj/machinery/door/airlock/angled_tgmc/wide/generic_steel{
 	dir = 4;
@@ -1523,19 +1416,12 @@
 	},
 /turf/simulated/floor/tiled/eris/steel/bar_dance,
 /area/lunaship/bar)
-"xg" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/tiled/milspec,
-/area/lunaship/hallway_port)
 "xj" = (
 /obj/structure/undies_wardrobe{
 	anchored = 1
 	},
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /turf/simulated/floor/carpet/turcarpet,
 /area/lunaship/office)
@@ -1559,10 +1445,6 @@
 	},
 /turf/simulated/floor/carpet/turcarpet,
 /area/lunaship/office)
-"xR" = (
-/obj/structure/cable,
-/turf/simulated/floor/reinforced/airless,
-/area/space)
 "xV" = (
 /obj/structure/cable,
 /obj/structure/hull_corner/long_vert{
@@ -1580,22 +1462,13 @@
 /obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/bar_dance,
 /area/lunaship/bar)
-"yl" = (
-/obj/structure/cable,
-/obj/structure/hull_corner/long_vert{
-	dir = 9
-	},
-/obj/structure/lattice,
-/turf/space,
-/area/space)
 "yw" = (
 /obj/machinery/alarm/alarms_hidden{
 	dir = 4;
 	pixel_x = -26
 	},
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /obj/effect/floor_decal/techfloor{
 	dir = 1
@@ -1636,7 +1509,6 @@
 "yQ" = (
 /obj/machinery/atmospherics/binary/pump/on{
 	dir = 1;
-	icon_state = "map_on";
 	name = "gas pump - waste - scrubbers"
 	},
 /obj/structure/cable,
@@ -1880,10 +1752,6 @@
 	},
 /turf/simulated/floor/tiled/milspec,
 /area/lunaship/robotics_bay)
-"Cf" = (
-/obj/structure/cable,
-/turf/space,
-/area/space)
 "Cw" = (
 /obj/effect/floor_decal/milspec/color/blue/half{
 	dir = 9
@@ -1900,11 +1768,6 @@
 /obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/lunaship/hallway_port)
-"CJ" = (
-/obj/structure/cable,
-/obj/structure/lattice,
-/turf/space,
-/area/space)
 "Dm" = (
 /obj/machinery/mech_recharger{
 	icon = 'icons/turf/shuttle_alien_blue.dmi'
@@ -1945,8 +1808,7 @@
 /area/lunaship/office)
 "DP" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/effect/floor_decal/industrial/warning{
 	dir = 5
@@ -2022,15 +1884,6 @@
 	name = "computer corium plating"
 	},
 /area/lunaship/cockpit)
-"EQ" = (
-/obj/structure/cable,
-/turf/space,
-/area/space)
-"ER" = (
-/obj/structure/lattice,
-/obj/structure/cable,
-/turf/space,
-/area/space)
 "EZ" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 4
@@ -2071,11 +1924,6 @@
 	},
 /turf/simulated/floor/tiled/milspec,
 /area/lunaship/hallway_starboard)
-"Ge" = (
-/obj/structure/cable,
-/obj/structure/lattice,
-/turf/space,
-/area/space)
 "Gn" = (
 /obj/structure/hull_corner{
 	dir = 1
@@ -2089,10 +1937,6 @@
 	dir = 9
 	},
 /turf/space,
-/area/space)
-"GI" = (
-/obj/structure/cable,
-/turf/simulated/floor/reinforced/airless,
 /area/space)
 "GP" = (
 /obj/structure/railing/grey,
@@ -2139,11 +1983,6 @@
 	},
 /turf/simulated/wall/tgmc/durawall,
 /area/lunaship/medical)
-"Hf" = (
-/obj/structure/lattice,
-/obj/structure/cable,
-/turf/space,
-/area/space)
 "Hh" = (
 /obj/machinery/light,
 /turf/simulated/floor/tiled/milspec,
@@ -2225,11 +2064,6 @@
 	},
 /turf/simulated/floor/tiled/milspec,
 /area/lunaship/robotics_bay)
-"Iv" = (
-/obj/structure/lattice,
-/obj/structure/cable,
-/turf/space,
-/area/space)
 "Iz" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 9
@@ -2238,7 +2072,6 @@
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit, linked to an advanced looking generator..";
 	input_attempt = 1;
 	input_level = 250000;
-	input_level_max = 250000;
 	output_level = 190000
 	},
 /obj/structure/cable,
@@ -2250,10 +2083,6 @@
 	},
 /turf/simulated/floor/plating/eris/under,
 /area/lunaship/engineering)
-"IY" = (
-/obj/structure/cable,
-/turf/space,
-/area/space)
 "IZ" = (
 /obj/effect/floor_decal/techfloor/corner{
 	dir = 1
@@ -2360,10 +2189,6 @@
 	},
 /turf/simulated/floor/tiled/eris/steel/bar_dance,
 /area/lunaship/bar)
-"KY" = (
-/obj/structure/cable,
-/turf/simulated/floor/reinforced/airless,
-/area/space)
 "Lo" = (
 /obj/effect/floor_decal/milspec/color/orange/corner{
 	dir = 1
@@ -2412,11 +2237,6 @@
 	name = "computer corium plating"
 	},
 /area/lunaship/park)
-"Mx" = (
-/obj/structure/lattice,
-/obj/structure/cable,
-/turf/space,
-/area/space)
 "MM" = (
 /turf/space/internal_edge/bottomleft,
 /area/lunaship/cockpit)
@@ -2637,8 +2457,7 @@
 /obj/machinery/power/quantumpad,
 /obj/structure/railing/grey,
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /obj/effect/floor_decal/techfloor{
 	dir = 10
@@ -2661,10 +2480,6 @@
 	},
 /turf/simulated/floor/tiled/milspec/sterile,
 /area/lunaship/medical)
-"PS" = (
-/obj/structure/cable,
-/turf/simulated/floor/reinforced/airless,
-/area/space)
 "PT" = (
 /obj/structure/cable,
 /obj/structure/hull_corner/long_vert{
@@ -2823,11 +2638,6 @@
 "SF" = (
 /turf/simulated/floor/carpet/turcarpet,
 /area/lunaship/office)
-"SN" = (
-/obj/structure/cable,
-/obj/structure/lattice,
-/turf/space,
-/area/space)
 "Tb" = (
 /obj/effect/floor_decal/milspec/color/orange/half{
 	dir = 4
@@ -2858,10 +2668,6 @@
 	name = "computer corium plating"
 	},
 /area/lunaship/cockpit)
-"Tg" = (
-/obj/structure/cable,
-/turf/simulated/floor/reinforced/airless,
-/area/space)
 "Tr" = (
 /obj/structure/sign/directions/bar{
 	dir = 1
@@ -2883,14 +2689,6 @@
 	name = "computer corium plating"
 	},
 /area/lunaship/cockpit)
-"TA" = (
-/obj/structure/hull_corner/long_vert{
-	dir = 5
-	},
-/obj/structure/lattice,
-/obj/structure/cable,
-/turf/space,
-/area/space)
 "TF" = (
 /obj/effect/floor_decal/techfloor{
 	dir = 4
@@ -3127,8 +2925,7 @@
 /area/lunaship/office)
 "WN" = (
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /obj/effect/floor_decal/techfloor/orange,
 /turf/simulated/floor/plating/eris/under,
@@ -3215,7 +3012,6 @@
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit, linked to an advanced looking generator..";
 	input_attempt = 1;
 	input_level = 250000;
-	input_level_max = 250000;
 	output_level = 190000
 	},
 /turf/simulated/floor/tiled/eris/white/gray_platform,
@@ -3277,8 +3073,7 @@
 	pixel_x = -26
 	},
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /obj/effect/floor_decal/milspec/color/black/half{
 	dir = 8
@@ -3316,8 +3111,7 @@
 /area/space)
 "ZD" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/effect/floor_decal/techfloor{
 	dir = 1
@@ -3351,8 +3145,7 @@
 "ZN" = (
 /obj/structure/railing/grey,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/effect/floor_decal/techfloor{
 	dir = 6
@@ -4159,7 +3952,7 @@ si
 si
 si
 si
-px
+Ad
 Zm
 dl
 Bi
@@ -4167,7 +3960,7 @@ Bi
 Bi
 Bi
 LS
-TA
+UP
 Ad
 si
 si
@@ -4221,16 +4014,16 @@ si
 si
 si
 si
-cj
-um
+Xi
+ZM
 zG
-GI
-GI
-KY
-GI
-gQ
-pV
-Cf
+Xn
+Xn
+Xn
+Xn
+ZM
+HQ
+Rm
 Yf
 si
 si
@@ -4282,19 +4075,19 @@ si
 si
 si
 qx
-IY
+Rm
 Gu
 LS
 LS
 ZL
 ZL
-PS
+Xn
 ZL
 LS
 LS
 Rm
 Xe
-Cf
+Rm
 Yf
 si
 si
@@ -4338,11 +4131,11 @@ si
 si
 si
 si
-px
-ER
-ER
+Ad
+Zm
+Zm
 mx
-gQ
+ZM
 Gu
 si
 si
@@ -4350,7 +4143,7 @@ LS
 LS
 ZL
 ZL
-PS
+Xn
 ZL
 LS
 LS
@@ -4358,7 +4151,7 @@ si
 si
 Rm
 Xe
-Cf
+Rm
 Yf
 si
 si
@@ -4402,7 +4195,7 @@ si
 si
 si
 qx
-GI
+Xn
 Lt
 LS
 si
@@ -4422,7 +4215,7 @@ si
 si
 ZM
 kR
-nC
+Zm
 UP
 Ad
 si
@@ -4462,8 +4255,8 @@ si
 si
 si
 qx
-IY
-yl
+Rm
+zG
 Qu
 ZL
 LS
@@ -4486,7 +4279,7 @@ LS
 ZL
 ZM
 Xe
-Cf
+Rm
 Yf
 si
 si
@@ -4522,7 +4315,7 @@ si
 si
 si
 aF
-Ge
+ZM
 Gu
 si
 LS
@@ -4550,7 +4343,7 @@ LS
 si
 Rm
 HQ
-Cf
+Rm
 Yf
 si
 si
@@ -4584,7 +4377,7 @@ si
 si
 aF
 ZY
-CJ
+ZM
 si
 si
 LS
@@ -4612,7 +4405,7 @@ LS
 si
 si
 LS
-xR
+Xn
 kR
 Fs
 si
@@ -4646,7 +4439,7 @@ si
 aF
 ZY
 si
-Iv
+Zm
 si
 sC
 sC
@@ -4708,7 +4501,7 @@ rA
 Rc
 si
 si
-Iv
+Zm
 LS
 sC
 sC
@@ -4720,7 +4513,7 @@ tm
 iN
 vt
 JW
-xg
+OH
 ih
 rK
 OH
@@ -4738,7 +4531,7 @@ Ri
 Ri
 ZL
 ZL
-vU
+Zm
 Ad
 si
 si
@@ -4770,7 +4563,7 @@ si
 si
 si
 si
-Iv
+Zm
 LS
 sC
 ew
@@ -4791,7 +4584,7 @@ ts
 Oo
 NS
 mr
-rD
+Vz
 Vz
 xJ
 DJ
@@ -4827,12 +4620,12 @@ si
 si
 si
 si
-px
+Ad
 nR
-ER
-ER
-ER
-Hf
+Zm
+Zm
+Zm
+Zm
 sC
 sC
 Wz
@@ -5103,7 +4896,7 @@ jF
 cQ
 vO
 zE
-ns
+RA
 YU
 kI
 eE
@@ -5571,11 +5364,11 @@ si
 si
 si
 si
-px
+Ad
 wM
-ER
-ER
-ER
+Zm
+Zm
+Zm
 Zm
 ve
 sc
@@ -5638,7 +5431,7 @@ Jp
 mo
 si
 si
-Iv
+Zm
 hR
 nr
 cK
@@ -5700,7 +5493,7 @@ si
 si
 si
 si
-Iv
+Zm
 LS
 ve
 iq
@@ -5730,7 +5523,7 @@ EF
 EF
 ZL
 ZL
-oj
+Zm
 Ad
 si
 si
@@ -5762,7 +5555,7 @@ si
 iA
 VO
 si
-Iv
+Zm
 si
 ve
 ve
@@ -5824,7 +5617,7 @@ si
 si
 iA
 VO
-CJ
+ZM
 si
 si
 LS
@@ -5852,7 +5645,7 @@ LS
 si
 si
 LS
-Tg
+Xn
 wP
 Gn
 si
@@ -5912,9 +5705,9 @@ LS
 ZL
 LS
 si
-cB
-mB
-EQ
+Rm
+Jn
+Rm
 pT
 si
 si
@@ -5950,8 +5743,8 @@ si
 si
 si
 Dt
-IY
-tW
+Rm
+PT
 Qu
 ZL
 LS
@@ -5972,9 +5765,9 @@ si
 si
 LS
 ZL
-Ge
+ZM
 Xi
-EQ
+Rm
 pT
 si
 si
@@ -6014,7 +5807,7 @@ si
 si
 si
 gI
-GI
+Xn
 xV
 eh
 si
@@ -6032,10 +5825,10 @@ si
 si
 si
 si
-Ge
+ZM
 wP
-Mx
-by
+Zm
+YD
 Ad
 si
 si
@@ -6074,10 +5867,10 @@ si
 si
 si
 si
-px
-ER
-ER
-tl
+Ad
+Zm
+Zm
+Dt
 ZA
 rn
 si
@@ -6086,15 +5879,15 @@ LS
 LS
 ZL
 ZL
-PS
+Xn
 ZL
 LS
 LS
 si
 si
-cB
+Rm
 Xi
-EQ
+Rm
 pT
 si
 si
@@ -6142,19 +5935,19 @@ si
 si
 si
 Dt
-IY
+Rm
 rn
 LS
 LS
 ZL
 ZL
-PS
+Xn
 ZL
 LS
 LS
-cB
+Rm
 Xi
-EQ
+Rm
 pT
 si
 si
@@ -6206,15 +5999,15 @@ si
 si
 si
 Dt
-SN
+ZM
 PT
-GI
-GI
 Xn
-GI
-gQ
+Xn
+Xn
+Xn
+ZM
 Jn
-EQ
+Rm
 pT
 si
 si
@@ -6267,8 +6060,8 @@ si
 si
 si
 si
-px
-Hf
+Ad
+Zm
 JT
 Dp
 Dp

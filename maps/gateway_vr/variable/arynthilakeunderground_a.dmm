@@ -4,12 +4,8 @@
 /turf/simulated/floor/tiled/eris/steel/techfloor,
 /area/gateway/arynthilake/engine)
 "aO" = (
-/obj/structure/cable/green{
-	icon_state = "0-8"
-	},
-/obj/structure/cable/green{
-	icon_state = "16-0"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/danger,
 /area/gateway/arynthilake/engine)
 "bL" = (
@@ -147,9 +143,7 @@
 /area/gateway/arynthilake/engine)
 "qJ" = (
 /obj/machinery/power/rtg/abductor,
-/obj/structure/cable/green{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/danger,
 /area/gateway/arynthilake/engine)
 "qU" = (
@@ -270,9 +264,7 @@
 /turf/simulated/floor/tiled/eris/steel/orangecorner,
 /area/gateway/arynthilake/engine)
 "Hb" = (
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/danger,
 /area/gateway/arynthilake/engine)
 "Hk" = (

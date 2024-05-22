@@ -44,33 +44,6 @@
 "aj" = (
 /turf/simulated/floor/airless,
 /area/space)
-"ak" = (
-/obj/structure/cable/cyan{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/airless,
-/area/space)
-"al" = (
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/airless,
-/area/space)
-"am" = (
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/cyan{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/airless,
-/area/space)
-"an" = (
-/obj/structure/cable/cyan{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/airless,
-/area/space)
 "ao" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
@@ -105,13 +78,11 @@
 	anchored = 1;
 	state = 1
 	},
-/obj/structure/cable/cyan,
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/space)
 "as" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/rust/mono_rusted1,
 /turf/simulated/floor/airless,
 /area/space)
@@ -132,9 +103,7 @@
 	locked = 1;
 	name = "Engine North Airlock Exterior"
 	},
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/engineering/engine_room)
 "au" = (
@@ -148,9 +117,7 @@
 	id_tag = "eng_north_sensor";
 	pixel_y = -25
 	},
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/engineering/engine_room)
 "av" = (
@@ -164,9 +131,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/engineering/engine_room)
 "aw" = (
@@ -179,9 +144,7 @@
 	pixel_y = 26;
 	req_one_access = list(10,11)
 	},
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
 	icon_state = "space";
@@ -210,9 +173,7 @@
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "ax" = (
-/obj/structure/cable/cyan{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/borderfloor{
 	dir = 5
 	},
@@ -222,9 +183,7 @@
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "ay" = (
-/obj/structure/cable/cyan{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "west bump";
@@ -233,16 +192,12 @@
 /turf/simulated/floor,
 /area/engineering/engine_gas)
 "az" = (
-/obj/structure/cable/cyan{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/machinery/power/sensor{
 	name = "Powernet Sensor - Engine Power";
 	name_tag = "Engine Power"
 	},
-/obj/structure/cable/cyan{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/floor,
 /area/engineering/engine_gas)
@@ -277,9 +232,7 @@
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "aE" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/borderfloor{
 	dir = 4
 	},
@@ -289,9 +242,7 @@
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "aF" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/door/airlock/engineering,
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/floor,
@@ -307,26 +258,9 @@
 /area/engineering/engine_room)
 "aH" = (
 /obj/machinery/power/rad_collector,
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/light/small{
 	dir = 1
-	},
-/turf/simulated/floor,
-/area/engineering/engine_room)
-"aI" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
-/obj/machinery/door/blast/regular{
-	density = 0;
-	dir = 2;
-	icon_state = "pdoor0";
-	id = "SupermatterPort";
-	layer = 3.3;
-	name = "Reactor Blast Door";
-	opacity = 0
 	},
 /turf/simulated/floor,
 /area/engineering/engine_room)
@@ -338,12 +272,8 @@
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "aK" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/cyan{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /obj/effect/floor_decal/borderfloor/corner{
 	dir = 4
 	},
@@ -353,9 +283,6 @@
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "aL" = (
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
 /obj/machinery/light{
 	dir = 1
 	},
@@ -368,9 +295,6 @@
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "aM" = (
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
 /obj/machinery/light_switch{
 	pixel_y = 24
 	},
@@ -390,12 +314,8 @@
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "aN" = (
-/obj/structure/cable/cyan{
-	icon_state = "2-8"
-	},
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
@@ -405,9 +325,7 @@
 	name = "east bump";
 	pixel_x = 28
 	},
-/obj/structure/cable/cyan{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/borderfloor{
 	dir = 5
 	},
@@ -430,69 +348,36 @@
 /area/engineering/engine_room)
 "aP" = (
 /obj/machinery/power/rad_collector,
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor,
-/area/engineering/engine_room)
-"aQ" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-4"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "2-4"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/blast/regular{
-	density = 0;
-	dir = 2;
-	icon_state = "pdoor0";
-	id = "SupermatterPort";
-	layer = 3.3;
-	name = "Reactor Blast Door";
-	opacity = 0
-	},
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/engineering/engine_room)
 "aR" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 8
 	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 5
 	},
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "aS" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "aT" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "aU" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/steeldecal/steel_decals_central5{
 	dir = 8
 	},
@@ -508,12 +393,8 @@
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "aV" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
-/obj/structure/cable/cyan{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
@@ -526,14 +407,11 @@
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "aW" = (
-/obj/structure/cable/cyan{
-	icon_state = "2-4"
+/obj/effect/floor_decal/borderfloor{
+	dir = 4
 	},
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/cyan{
-	icon_state = "1-4"
+/obj/effect/floor_decal/corner/yellow/border{
+	dir = 4
 	},
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
@@ -545,9 +423,6 @@
 /turf/simulated/floor/airless,
 /area/space)
 "aY" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
 /obj/machinery/door/blast/regular{
 	density = 0;
 	dir = 2;
@@ -575,9 +450,7 @@
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "ba" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "bb" = (
@@ -596,12 +469,8 @@
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "bd" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden,
@@ -611,12 +480,10 @@
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "be" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 4
 	},
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "bf" = (
@@ -656,16 +523,12 @@
 /turf/simulated/wall/r_wall,
 /area/submap/pa_room)
 "bj" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/door/airlock/glass_engineering,
 /turf/simulated/floor/tiled,
 /area/submap/pa_room)
 "bk" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden,
@@ -675,9 +538,6 @@
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "bl" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -742,15 +602,11 @@
 /turf/simulated/floor/tiled,
 /area/submap/pa_room)
 "bs" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/submap/pa_room)
 "bt" = (
-/obj/structure/cable/cyan{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "east bump";
@@ -825,24 +681,18 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/submap/pa_room)
 "bD" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /obj/effect/floor_decal/borderfloor{
 	dir = 8
 	},
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "bE" = (
@@ -904,30 +754,21 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/submap/pa_room)
 "bM" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /obj/effect/floor_decal/borderfloor{
 	dir = 8
 	},
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "bN" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -940,6 +781,7 @@
 /obj/effect/floor_decal/corner/yellow/border{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "bO" = (
@@ -1052,9 +894,6 @@
 /turf/simulated/floor/tiled,
 /area/submap/pa_room)
 "cb" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -1107,9 +946,7 @@
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "cg" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden,
@@ -1119,15 +956,9 @@
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "ch" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "1-4"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
+/obj/structure/cable,
 /obj/machinery/door/blast/regular{
 	density = 0;
 	dir = 2;
@@ -1140,9 +971,7 @@
 /turf/simulated/floor,
 /area/engineering/engine_room)
 "ci" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/industrial/warning{
 	dir = 8
 	},
@@ -1152,9 +981,6 @@
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "cj" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
 /obj/effect/floor_decal/steeldecal/steel_decals_central5{
 	dir = 8
 	},
@@ -1167,12 +993,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "ck" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
@@ -1185,9 +1010,6 @@
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "cl" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
 /obj/effect/floor_decal/borderfloor{
 	dir = 4
 	},
@@ -1204,33 +1026,23 @@
 /area/engineering/engine_room)
 "cm" = (
 /obj/machinery/power/rad_collector,
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/light/small,
 /turf/simulated/floor,
 /area/engineering/engine_room)
 "cn" = (
-/obj/structure/cable/cyan{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/borderfloor/corner,
 /obj/effect/floor_decal/corner/yellow/bordercorner,
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "co" = (
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
 /obj/machinery/light,
 /obj/effect/floor_decal/borderfloor,
 /obj/effect/floor_decal/corner/yellow/border,
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "cp" = (
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
@@ -1239,9 +1051,6 @@
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "cq" = (
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
 /obj/machinery/alarm{
 	dir = 1;
 	icon_state = "alarm0";
@@ -1252,9 +1061,6 @@
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "cr" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-8"
-	},
 /obj/effect/floor_decal/borderfloor{
 	dir = 6
 	},
@@ -1271,9 +1077,7 @@
 	dir = 1;
 	state = 1
 	},
-/obj/structure/cable/cyan{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/space)
 "ct" = (
@@ -1293,9 +1097,7 @@
 	locked = 1;
 	name = "Engine South Airlock Exterior"
 	},
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/engineering/engine_room)
 "cu" = (
@@ -1308,9 +1110,7 @@
 	id_tag = "eng_south_sensor";
 	pixel_y = 25
 	},
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -1327,9 +1127,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/access_button{
 	command = "cycle_interior";
 	frequency = 1379;
@@ -1342,9 +1140,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/engineering/engine_room)
 "cw" = (
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
 	icon_state = "space";
@@ -1365,9 +1161,7 @@
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "cx" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/borderfloor{
 	dir = 6
 	},
@@ -1377,24 +1171,16 @@
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "cy" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/space)
 "cz" = (
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/cyan{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/space)
 "cA" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/rust,
 /turf/simulated/floor/airless,
 /area/space)
@@ -1415,7 +1201,7 @@
 /turf/simulated/wall/r_wall,
 /area/space)
 "cD" = (
-/obj/structure/cable/cyan,
+/obj/structure/cable,
 /obj/machinery/power/emitter{
 	anchored = 1;
 	state = 1
@@ -1432,9 +1218,6 @@
 /turf/space,
 /area/space)
 "cG" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
 /obj/machinery/door/blast/regular{
 	density = 0;
 	dir = 2;
@@ -1617,7 +1400,7 @@ ab
 ab
 ab
 ac
-ak
+cy
 ar
 ab
 cE
@@ -1649,7 +1432,7 @@ ab
 ab
 ab
 ac
-al
+cy
 aj
 ad
 ad
@@ -1667,7 +1450,7 @@ ad
 ad
 ad
 aj
-al
+cy
 cC
 ab
 aa
@@ -1681,7 +1464,7 @@ ab
 ab
 ab
 ac
-al
+cy
 aj
 ab
 ab
@@ -1699,7 +1482,7 @@ ad
 ab
 ab
 aj
-al
+cy
 cC
 ab
 aa
@@ -1713,7 +1496,7 @@ ab
 ab
 ab
 ac
-al
+cy
 aj
 ab
 ab
@@ -1731,7 +1514,7 @@ ad
 ab
 ab
 aj
-al
+cy
 cC
 ab
 aa
@@ -1745,7 +1528,7 @@ ab
 ab
 ab
 ac
-al
+cy
 aj
 ab
 ab
@@ -1763,7 +1546,7 @@ ad
 ab
 ab
 aj
-al
+cy
 cC
 ab
 aa
@@ -1777,7 +1560,7 @@ ab
 ab
 ab
 ac
-al
+cy
 aj
 ab
 ab
@@ -1795,7 +1578,7 @@ ad
 ab
 ab
 aj
-al
+cy
 cC
 aa
 aa
@@ -1809,7 +1592,7 @@ ab
 ab
 ab
 ac
-al
+cy
 aj
 ab
 ab
@@ -1827,7 +1610,7 @@ ad
 ab
 ab
 aj
-al
+cy
 cC
 aa
 aa
@@ -1841,7 +1624,7 @@ ab
 ab
 ab
 ac
-al
+cy
 aj
 ad
 ad
@@ -1859,7 +1642,7 @@ ad
 ad
 ad
 aj
-al
+cy
 cC
 aa
 aa
@@ -1873,7 +1656,7 @@ ab
 ab
 ab
 ac
-am
+cz
 cD
 ab
 ab
@@ -1905,7 +1688,7 @@ ab
 ab
 ab
 ac
-al
+cy
 ad
 ab
 ab
@@ -1923,7 +1706,7 @@ ad
 ab
 ab
 ad
-al
+cy
 cC
 aa
 aa
@@ -1937,7 +1720,7 @@ ab
 ab
 ab
 ac
-an
+cy
 as
 aB
 ab
@@ -1954,7 +1737,7 @@ ab
 ab
 ab
 aB
-ak
+cy
 cA
 cC
 aa
@@ -2036,8 +1819,8 @@ af
 af
 av
 aC
-aI
-aQ
+aY
+ch
 aY
 bh
 bq
@@ -2143,7 +1926,7 @@ bV
 bY
 bi
 ce
-aT
+be
 co
 af
 af
@@ -2229,16 +2012,16 @@ aq
 aA
 ae
 aO
-aW
-be
+cd
+cd
 bl
-aE
-aE
+aW
+aW
 bN
-aE
-aE
+aW
+aW
 cb
-ba
+cd
 cl
 cr
 af

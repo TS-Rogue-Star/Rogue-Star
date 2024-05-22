@@ -211,9 +211,12 @@
 /turf/simulated/floor/carpet/sblucarpet,
 /area/itglight/captain)
 "aH" = (
-/obj/structure/cable,
-/turf/simulated/floor/tiled/eris/white/cargo,
-/area/itglight/medbay)
+/obj/structure/catwalk,
+/obj/machinery/atmospherics/pipe/manifold/hidden{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/itglight/portengi)
 "aK" = (
 /obj/effect/map_helper/airlock/door/simple,
 /obj/structure/cable,
@@ -299,10 +302,6 @@
 /obj/machinery/chem_master/condimaster,
 /turf/simulated/floor/tiled/eris/cafe,
 /area/itglight/kitchen)
-"bp" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/itglight/captain)
 "bq" = (
 /obj/machinery/power/pointdefense{
 	id_tag = "dauntless_pd"
@@ -319,13 +318,6 @@
 "bv" = (
 /obj/structure/table/steel_reinforced,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
-	dir = 8
-	},
-/turf/simulated/floor/carpet,
-/area/itglight/readyroom)
-"by" = (
-/obj/structure/cable,
-/obj/structure/bed/chair/bay/chair/padded/brown{
 	dir = 8
 	},
 /turf/simulated/floor/carpet,
@@ -472,10 +464,6 @@
 /obj/structure/cable,
 /turf/simulated/floor/tiled/eris/cafe,
 /area/itglight/kitchen)
-"cM" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/itglight/readyroom)
 "cR" = (
 /obj/structure/bed/chair/bay/chair/padded/brown{
 	dir = 8
@@ -841,21 +829,6 @@
 	stripe_color = "#785134"
 	},
 /area/itglight/shuttlebay)
-"fE" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 8
-	},
-/obj/structure/cable,
-/turf/simulated/floor/tiled/eris/cafe,
-/area/itglight/kitchen)
-"fP" = (
-/obj/effect/floor_decal/industrial/outline/yellow,
-/obj/structure/cable,
-/turf/simulated/floor/tiled/eris/steel/brown_platform,
-/area/itglight/metingroom)
 "fX" = (
 /obj/effect/floor_decal/industrial/outline/yellow,
 /obj/structure/reagent_dispensers/fueltank/high,
@@ -887,12 +860,6 @@
 /obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/metingroom)
-"gk" = (
-/obj/structure/cable/heavyduty,
-/obj/machinery/atmospherics/pipe/manifold/hidden,
-/obj/structure/catwalk,
-/turf/simulated/floor,
-/area/itglight/portengi)
 "go" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -1163,11 +1130,6 @@
 /obj/structure/window/bay/reinforced,
 /turf/simulated/floor,
 /area/itglight/medbay)
-"ih" = (
-/obj/structure/cable,
-/obj/machinery/power/solar,
-/turf/simulated/floor/airless,
-/area/itglight/starboardsolars)
 "ii" = (
 /obj/structure/cable,
 /obj/machinery/button/remote/airlock{
@@ -1192,11 +1154,11 @@
 /turf/simulated/floor,
 /area/itglight/cockpit)
 "im" = (
-/obj/structure/cable/heavyduty,
 /obj/structure/catwalk,
 /obj/machinery/atmospherics/pipe/manifold/hidden{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/itglight/portengi)
 "ip" = (
@@ -1318,10 +1280,6 @@
 	},
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/metingroom)
-"iZ" = (
-/obj/structure/cable,
-/turf/simulated/floor/tiled/eris/steel/brown_platform,
-/area/itglight/shuttlebay)
 "jg" = (
 /obj/structure/table/rack/shelf/steel,
 /obj/item/weapon/storage/box/flashbangs,
@@ -1423,10 +1381,6 @@
 /obj/item/device/suit_cooling_unit,
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/starboardhighsec)
-"jQ" = (
-/obj/structure/cable,
-/turf/simulated/floor/tiled/eris/steel/brown_platform,
-/area/itglight/shuttlebay)
 "jV" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/external/glass{
@@ -1588,7 +1542,6 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/portengi)
 "lw" = (
@@ -1715,13 +1668,6 @@
 	},
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/starboardhighsec)
-"mo" = (
-/obj/machinery/power/pointdefense{
-	id_tag = "dauntless_pd"
-	},
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/itglight/shuttlebay)
 "mq" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
@@ -1735,10 +1681,6 @@
 /obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/metingroom)
-"mu" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/itglight/portsolars)
 "mF" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -1782,11 +1724,6 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/shuttle/itglightshuttle)
-"ne" = (
-/obj/structure/cable,
-/obj/machinery/power/solar,
-/turf/simulated/floor/airless,
-/area/itglight/starboardsolars)
 "nf" = (
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/fuel,
 /obj/structure/catwalk,
@@ -1932,10 +1869,6 @@
 	},
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/porthighsec)
-"oq" = (
-/obj/structure/cable,
-/turf/simulated/floor/tiled/eris/steel/brown_platform,
-/area/itglight/shuttlebay)
 "ov" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -2312,10 +2245,6 @@
 	stripe_color = "#785134"
 	},
 /area/itglight/restrooms)
-"rf" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/itglight/starboardsolars)
 "rg" = (
 /obj/structure/table/steel_reinforced,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -2357,14 +2286,6 @@
 /obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/monotile,
 /area/shuttle/itglightshuttle)
-"rF" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/itglight/starboardengi)
-"rJ" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/itglight/portsolars)
 "rM" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
@@ -2442,10 +2363,6 @@
 	},
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/starboardhighsec)
-"sX" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/itglight/portengi)
 "ta" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
@@ -2478,12 +2395,11 @@
 	dir = 8;
 	pixel_x = 32
 	},
-/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/portsolars)
 "to" = (
 /obj/machinery/power/solar_control,
-/obj/structure/cable/heavyduty,
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/itglight/portengi)
 "tq" = (
@@ -2592,13 +2508,6 @@
 /obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/afthall)
-"uk" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable,
-/turf/simulated/floor/tiled/eris/steel/brown_platform,
-/area/itglight/afthall)
 "ul" = (
 /obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
@@ -2626,15 +2535,6 @@
 	stripe_color = "#785134"
 	},
 /area/itglight/starboarddocking)
-"uv" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/itglight/portsolars)
-"uy" = (
-/obj/structure/cable,
-/obj/machinery/power/solar,
-/turf/simulated/floor/airless,
-/area/itglight/starboardsolars)
 "uz" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -2703,10 +2603,6 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/carpet/turcarpet,
 /area/itglight/crew4)
-"vO" = (
-/obj/structure/cable,
-/turf/simulated/floor/tiled/eris/steel/brown_platform,
-/area/itglight/shuttlebay)
 "vR" = (
 /obj/machinery/newscaster{
 	pixel_y = 28
@@ -2900,10 +2796,6 @@
 	},
 /turf/simulated/floor/glass/reinforced,
 /area/itglight/common)
-"wX" = (
-/obj/structure/cable,
-/turf/simulated/floor/tiled/eris/steel/brown_platform,
-/area/itglight/shuttlebay)
 "wY" = (
 /obj/machinery/light{
 	dir = 4
@@ -2959,12 +2851,6 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/itglight/forehall)
-"xr" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable,
-/turf/simulated/floor/tiled/eris/steel/gray_platform,
-/area/itglight/starboardcargo)
 "xw" = (
 /obj/structure/closet/secure_closet/personal{
 	req_access = list(778)
@@ -3102,7 +2988,6 @@
 /area/itglight/porthighsec)
 "yy" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable/heavyduty,
 /obj/effect/map_helper/airlock/door/int_door,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
@@ -3118,6 +3003,7 @@
 	dir = 4;
 	door_color = "#AA0000"
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/itglight/portengi)
 "yD" = (
@@ -3234,19 +3120,11 @@
 	},
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/starboardhighsec)
-"zj" = (
-/obj/structure/cable/heavyduty,
-/turf/simulated/floor/airless,
-/area/itglight/portsolars)
 "zm" = (
 /turf/simulated/wall/bay/r_wall{
 	stripe_color = "#785134"
 	},
 /area/itglight/starboardengi)
-"zn" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/itglight/portsolars)
 "zp" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden{
@@ -3255,16 +3133,15 @@
 /turf/simulated/floor,
 /area/itglight/starboardengi)
 "zq" = (
-/obj/structure/cable/heavyduty,
 /obj/structure/catwalk,
 /obj/machinery/atmospherics/pipe/manifold/hidden{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/itglight/starboardengi)
 "zr" = (
 /obj/machinery/power/terminal,
-/obj/structure/cable/heavyduty,
 /obj/structure/cable,
 /turf/simulated/floor,
 /area/itglight/starboardengi)
@@ -3300,7 +3177,6 @@
 	dir = 4;
 	pixel_x = -32
 	},
-/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/starboardsolars)
 "zG" = (
@@ -3327,7 +3203,6 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/starboardengi)
 "zQ" = (
@@ -3611,10 +3486,6 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/itglight/portdocking)
-"Cg" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/itglight/portsolars)
 "Cl" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable,
@@ -3675,7 +3546,6 @@
 /area/itglight/starboardhighsec)
 "CI" = (
 /obj/machinery/power/terminal,
-/obj/structure/cable/heavyduty,
 /obj/structure/cable,
 /turf/simulated/floor,
 /area/itglight/portengi)
@@ -3717,10 +3587,6 @@
 	},
 /turf/simulated/floor,
 /area/itglight/starboardengi)
-"CX" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/itglight/starboardsolars)
 "Db" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/cable,
@@ -3883,10 +3749,6 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/itglight/starboardcargo)
-"DZ" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/itglight/shuttlebay)
 "Ej" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -4025,7 +3887,6 @@
 /area/itglight/medbay)
 "EV" = (
 /obj/structure/cable,
-/obj/structure/cable/heavyduty,
 /turf/simulated/floor/airless,
 /area/itglight/portengi)
 "EX" = (
@@ -4070,7 +3931,7 @@
 /area/itglight/portengi)
 "Fu" = (
 /obj/machinery/power/solar_control,
-/obj/structure/cable/heavyduty,
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/itglight/starboardengi)
 "Fw" = (
@@ -4116,15 +3977,6 @@
 	stripe_color = "#785134"
 	},
 /area/itglight/lockers)
-"FH" = (
-/obj/structure/cable,
-/obj/machinery/power/solar,
-/turf/simulated/floor/airless,
-/area/itglight/portsolars)
-"FI" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/itglight/portsolars)
 "FQ" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
@@ -4165,7 +4017,6 @@
 /area/itglight/afthall)
 "Gb" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable/heavyduty,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
@@ -4181,6 +4032,7 @@
 	dir = 4;
 	door_color = "#AA0000"
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/itglight/starboardengi)
 "Gc" = (
@@ -4303,12 +4155,6 @@
 	},
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/shuttlebay)
-"GG" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable,
-/turf/simulated/floor/tiled/eris/steel/gray_platform,
-/area/itglight/portcargo)
 "GI" = (
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
 /obj/machinery/atmospherics/unary/vent_pump/high_volume{
@@ -4340,11 +4186,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/eris/cafe,
 /area/itglight/kitchen)
-"GU" = (
-/obj/structure/cable/heavyduty,
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/itglight/portsolars)
 "GV" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -4556,11 +4397,6 @@
 	stripe_color = "#785134"
 	},
 /area/itglight/portengi)
-"IF" = (
-/obj/structure/cable,
-/obj/machinery/power/solar,
-/turf/simulated/floor/airless,
-/area/itglight/portsolars)
 "IH" = (
 /turf/simulated/wall/bay{
 	stripe_color = "#785134"
@@ -4619,7 +4455,6 @@
 /area/itglight/portcargo)
 "Jg" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable/heavyduty,
 /obj/effect/map_helper/airlock/door/ext_door,
 /obj/machinery/access_button{
 	command = "cycle_exterior";
@@ -4700,11 +4535,6 @@
 /obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/gray_platform,
 /area/itglight/portcargo)
-"JI" = (
-/obj/structure/cable/heavyduty,
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/itglight/starboardsolars)
 "JJ" = (
 /obj/machinery/biogenerator,
 /turf/simulated/floor/tiled/eris/cafe,
@@ -4764,7 +4594,6 @@
 /turf/simulated/floor,
 /area/itglight/starboardengi)
 "Ka" = (
-/obj/structure/cable/heavyduty,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
@@ -4880,15 +4709,6 @@
 /obj/structure/cable,
 /turf/simulated/floor/reinforced,
 /area/itglight/shuttlebay)
-"Lg" = (
-/obj/structure/cable,
-/obj/machinery/power/solar,
-/turf/simulated/floor/airless,
-/area/itglight/portsolars)
-"Lh" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/itglight/portsolars)
 "Lk" = (
 /obj/machinery/light,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -5098,23 +4918,11 @@
 /obj/random/paicard,
 /turf/simulated/floor/glass/reinforced,
 /area/itglight/common)
-"MG" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/itglight/starboardsolars)
-"MI" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/itglight/starboardsolars)
 "ML" = (
 /obj/structure/closet/wardrobe/black,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/monotile,
 /area/itglight/lockers)
-"MO" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/itglight/starboardsolars)
 "MS" = (
 /obj/structure/undies_wardrobe,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -5809,11 +5617,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/itglight/showers)
-"Ry" = (
-/obj/structure/cable,
-/obj/structure/cable/heavyduty,
-/turf/simulated/floor/airless,
-/area/itglight/portsolars)
 "RL" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /obj/structure/catwalk,
@@ -5878,11 +5681,6 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/itglight/crew1)
-"SE" = (
-/obj/structure/cable/heavyduty,
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/itglight/starboardsolars)
 "SF" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -5958,10 +5756,6 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/itglight/lockers)
-"SY" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/itglight/portsolars)
 "Tb" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -5972,11 +5766,11 @@
 /turf/simulated/floor/tiled/white,
 /area/itglight/restrooms)
 "Td" = (
-/obj/structure/cable/heavyduty,
 /obj/structure/catwalk,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 10
 	},
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/itglight/portengi)
 "Tm" = (
@@ -6305,10 +6099,6 @@
 /obj/structure/catwalk,
 /turf/simulated/floor,
 /area/itglight/portengi)
-"Wb" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/itglight/starboardsolars)
 "Wc" = (
 /obj/machinery/atmospherics/unary/engine/bigger{
 	dir = 1
@@ -6322,10 +6112,6 @@
 /obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/portsolars)
-"Wf" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/itglight/starboardsolars)
 "Wh" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/reagent_containers/glass/beaker/large,
@@ -6365,10 +6151,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/itglight/passengersleeping)
-"WD" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/itglight/portsolars)
 "WE" = (
 /obj/structure/flora/pottedplant/minitree,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -6404,7 +6186,6 @@
 /turf/simulated/floor/tiled/monotile,
 /area/itglight/lockers)
 "WP" = (
-/obj/machinery/door/firedoor/glass,
 /obj/structure/cable/heavyduty,
 /obj/effect/map_helper/airlock/door/ext_door,
 /obj/machinery/access_button{
@@ -6419,6 +6200,7 @@
 	dir = 4;
 	door_color = "#AA0000"
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/itglight/portengi)
 "WQ" = (
@@ -6436,10 +6218,6 @@
 	},
 /turf/simulated/floor/tiled/eris/cafe,
 /area/itglight/kitchen)
-"WZ" = (
-/obj/structure/cable/heavyduty,
-/turf/simulated/floor/airless,
-/area/itglight/starboardsolars)
 "Xb" = (
 /obj/machinery/light,
 /turf/simulated/floor/tiled/monotile,
@@ -6513,7 +6291,6 @@
 /turf/simulated/floor/tiled/eris/white/techfloor_grid,
 /area/itglight/medbay)
 "XA" = (
-/obj/structure/cable/heavyduty,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 10
 	},
@@ -6527,15 +6304,6 @@
 /obj/structure/cable,
 /turf/simulated/floor/tiled/white,
 /area/itglight/restrooms)
-"XE" = (
-/obj/structure/cable,
-/obj/machinery/power/solar,
-/turf/simulated/floor/airless,
-/area/itglight/starboardsolars)
-"XF" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/itglight/portsolars)
 "XH" = (
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/shuttlebay)
@@ -6569,10 +6337,6 @@
 /obj/machinery/power/pointdefense{
 	id_tag = "dauntless_pd"
 	},
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/itglight/starboardsolars)
-"XP" = (
 /obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/starboardsolars)
@@ -6635,10 +6399,6 @@
 	},
 /turf/simulated/floor,
 /area/itglight/portengi)
-"Ys" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/itglight/starboardsolars)
 "Yt" = (
 /turf/simulated/wall/bay{
 	stripe_color = "#785134"
@@ -6652,15 +6412,6 @@
 /obj/machinery/power/solar,
 /turf/simulated/floor/airless,
 /area/itglight/starboardsolars)
-"Yy" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/itglight/starboardsolars)
-"Yz" = (
-/obj/structure/cable,
-/obj/machinery/power/solar,
-/turf/simulated/floor/airless,
-/area/itglight/portsolars)
 "YA" = (
 /obj/machinery/light{
 	dir = 8
@@ -6743,11 +6494,11 @@
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/itglight/afthall)
 "YX" = (
-/obj/structure/cable/heavyduty,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 6
 	},
 /obj/structure/catwalk,
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/itglight/starboardengi)
 "Za" = (
@@ -6876,7 +6627,6 @@
 /turf/simulated/floor/tiled/eris/white/cargo,
 /area/itglight/medbay)
 "ZM" = (
-/obj/structure/cable/heavyduty,
 /obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/itglight/starboardengi)
@@ -13708,8 +13458,8 @@ Zq
 Zq
 Zq
 Zq
-FH
-Yz
+Zq
+Zq
 Um
 Um
 Um
@@ -13826,31 +13576,31 @@ Um
 Um
 Um
 Um
-XF
-Cg
-Cg
-Cg
-Cg
-Cg
-Cg
-Cg
-Cg
-GU
-mu
-mu
-mu
-mu
-mu
-mu
-mu
-mu
-mu
-mu
-mu
-mu
-mu
-mu
-uv
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+XT
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
 Um
 Um
 Um
@@ -13968,30 +13718,30 @@ Um
 Um
 Um
 Zq
-IF
-IF
-IF
-IF
-IF
-IF
-IF
-IF
-IF
-zj
-IF
-IF
-IF
-IF
-IF
-IF
-IF
-IF
-IF
-IF
-IF
-IF
-IF
-Lg
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+XT
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
 Um
 Um
 Um
@@ -14108,31 +13858,31 @@ Um
 Um
 Um
 Um
-XF
-Cg
-Cg
-Cg
-Cg
-Cg
-Cg
-Cg
-Cg
-Cg
-Cg
-Ry
-mu
-mu
-mu
-mu
-mu
-mu
-mu
-mu
-mu
-mu
-mu
-mu
-uv
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+XT
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
 Um
 Um
 Um
@@ -14250,30 +14000,30 @@ Um
 Um
 Um
 Zq
-IF
-IF
-IF
-IF
-IF
-IF
-IF
-IF
-IF
-IF
-IF
-zj
-IF
-IF
-IF
-IF
-IF
-IF
-IF
-IF
-IF
-IF
-IF
-Lg
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+XT
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
 Um
 Um
 Um
@@ -14390,31 +14140,31 @@ Um
 Um
 Um
 Um
-XF
-FI
-FI
-FI
-FI
-FI
-FI
-FI
-FI
-FI
-FI
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
 tl
 lv
 EV
-sX
-rJ
-rJ
-rJ
-rJ
-rJ
-rJ
-rJ
-rJ
-rJ
-uv
+TC
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
 Um
 Um
 Um
@@ -14532,7 +14282,7 @@ Um
 Um
 Um
 We
-zn
+XT
 Np
 Np
 kH
@@ -14673,8 +14423,8 @@ Um
 Um
 Um
 Yu
-SY
-zn
+Yu
+XT
 Np
 rn
 YC
@@ -14815,7 +14565,7 @@ Um
 Yu
 Yu
 Yu
-Lh
+Yu
 XT
 Om
 YL
@@ -14954,11 +14704,11 @@ Um
 Um
 Yu
 Oj
-WD
-WD
-WD
-WD
-uv
+XT
+XT
+XT
+XT
+XT
 Np
 YO
 Pg
@@ -15113,7 +14863,7 @@ Pg
 WU
 Za
 pi
-im
+aH
 hm
 lK
 nW
@@ -15255,7 +15005,7 @@ Pg
 AK
 Za
 Fc
-gk
+gA
 CI
 Fh
 oR
@@ -15531,7 +15281,7 @@ Np
 Ct
 cx
 Vt
-fE
+QO
 Kx
 cA
 NY
@@ -15627,7 +15377,7 @@ Um
 Um
 sy
 sy
-bp
+cW
 cW
 em
 gL
@@ -15965,17 +15715,17 @@ BU
 XN
 Zr
 LU
-iZ
-iZ
+LU
+LU
 eq
-iZ
-iZ
-vO
+LU
+LU
+LU
 XH
 XH
 fC
 fC
-mo
+Kv
 tj
 Um
 Um
@@ -16077,8 +15827,8 @@ DH
 DH
 DH
 Dy
-GG
-GG
+JC
+JC
 JC
 KA
 KA
@@ -16112,10 +15862,10 @@ XH
 Ub
 XH
 XH
-jQ
-iZ
-iZ
-iZ
+LU
+LU
+LU
+LU
 EI
 JL
 tj
@@ -16346,7 +16096,7 @@ od
 jE
 lH
 eA
-fP
+ms
 ul
 ul
 ul
@@ -16807,7 +16557,7 @@ SO
 Oe
 YU
 pn
-uk
+YU
 pn
 Qs
 pn
@@ -17497,8 +17247,8 @@ Ff
 Ff
 Ff
 Ej
-xr
-xr
+Kn
+Kn
 Kn
 Ff
 Ff
@@ -17530,14 +17280,14 @@ HJ
 XH
 XH
 po
-iZ
-iZ
-wX
-iZ
-iZ
-iZ
+LU
+LU
+LU
+LU
+LU
+LU
 EI
-DZ
+JL
 tj
 tj
 Um
@@ -17668,9 +17418,9 @@ ic
 Au
 Lz
 Zr
-oq
-iZ
-iZ
+LU
+LU
+LU
 BM
 XH
 XH
@@ -17899,11 +17649,11 @@ Um
 Um
 lo
 lo
-cM
+dD
 dD
 HB
 hO
-by
+mR
 mR
 Tp
 VU
@@ -18646,11 +18396,11 @@ Um
 Um
 VN
 PN
-MG
-MG
-MG
-MG
-Wb
+Zh
+Zh
+Zh
+Zh
+Zh
 QY
 ZT
 QW
@@ -18791,11 +18541,11 @@ Um
 VN
 VN
 VN
-MI
-Wf
+VN
+Zh
 QY
 ZZ
-aH
+qt
 UI
 qt
 Gt
@@ -18933,8 +18683,8 @@ Um
 Um
 Um
 VN
-MO
-Ys
+VN
+Zh
 xx
 om
 LA
@@ -19076,7 +18826,7 @@ Um
 Um
 Um
 XO
-Ys
+Zh
 xx
 xx
 xx
@@ -19218,31 +18968,31 @@ Um
 Um
 Um
 Um
-XP
-Yy
-Yy
-Yy
-Yy
-Yy
-Yy
-Yy
-Yy
-Yy
-Yy
+VN
+VN
+VN
+VN
+VN
+VN
+VN
+VN
+VN
+VN
+VN
 zD
 zM
 ZM
-rF
-rf
-rf
-rf
-rf
-rf
-rf
-rf
-rf
-rf
-Wb
+kY
+VN
+VN
+VN
+VN
+VN
+VN
+VN
+VN
+VN
+VN
 Um
 Um
 Um
@@ -19362,30 +19112,30 @@ Um
 Um
 Um
 Yw
-XE
-XE
-XE
-XE
-XE
-XE
-XE
-XE
-XE
-XE
-XE
-WZ
-XE
-XE
-XE
-XE
-XE
-XE
-XE
-XE
-XE
-XE
-XE
-ne
+Yw
+Yw
+Yw
+Yw
+Yw
+Yw
+Yw
+Yw
+Yw
+Yw
+Yw
+Zh
+Yw
+Yw
+Yw
+Yw
+Yw
+Yw
+Yw
+Yw
+Yw
+Yw
+Yw
+Yw
 Um
 Um
 Um
@@ -19504,31 +19254,31 @@ Um
 Um
 Um
 Um
-XP
-CX
-CX
-CX
-CX
-CX
-CX
-CX
-CX
-CX
-CX
-JI
+VN
+VN
+VN
+VN
+VN
+VN
+VN
+VN
+VN
+VN
+VN
 Zh
-Zh
-Zh
-Zh
-Zh
-Zh
-Zh
-Zh
-Zh
-Zh
-Zh
-Zh
-Wb
+VN
+VN
+VN
+VN
+VN
+VN
+VN
+VN
+VN
+VN
+VN
+VN
+VN
 Um
 Um
 Um
@@ -19648,30 +19398,30 @@ Um
 Um
 Um
 Yw
-XE
-XE
-XE
-XE
-XE
-XE
-XE
-XE
-XE
-WZ
-XE
-XE
-XE
-XE
-XE
-XE
-XE
-XE
-XE
-XE
-XE
-XE
-XE
-ne
+Yw
+Yw
+Yw
+Yw
+Yw
+Yw
+Yw
+Yw
+Yw
+Zh
+Yw
+Yw
+Yw
+Yw
+Yw
+Yw
+Yw
+Yw
+Yw
+Yw
+Yw
+Yw
+Yw
+Yw
 Um
 Um
 Um
@@ -19790,31 +19540,31 @@ Um
 Um
 Um
 Um
-XP
-CX
-CX
-CX
-CX
-CX
-CX
-CX
-CX
-SE
+VN
+VN
+VN
+VN
+VN
+VN
+VN
+VN
+VN
 Zh
-Zh
-Zh
-Zh
-Zh
-Zh
-Zh
-Zh
-Zh
-Zh
-Zh
-Zh
-Zh
-Zh
-Wb
+VN
+VN
+VN
+VN
+VN
+VN
+VN
+VN
+VN
+VN
+VN
+VN
+VN
+VN
+VN
 Um
 Um
 Um
@@ -19956,8 +19706,8 @@ Yw
 Yw
 Yw
 Yw
-ih
-uy
+Yw
+Yw
 Um
 Um
 Um

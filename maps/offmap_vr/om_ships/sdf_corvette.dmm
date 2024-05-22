@@ -35,10 +35,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/sdf_corvette)
-"dv" = (
-/obj/structure/cable,
-/turf/simulated/wall/rshull,
-/area/shuttle/sdf_corvette)
 "dG" = (
 /obj/machinery/sleeper{
 	dir = 8
@@ -266,14 +262,6 @@
 	dir = 4;
 	pixel_x = -30
 	},
-/turf/simulated/floor/tiled/techfloor,
-/area/shuttle/sdf_corvette)
-"sG" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/unary/vent_pump{
-	dir = 4
-	},
-/obj/effect/map_helper/airlock/atmos/pump_out_internal,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/sdf_corvette)
 "tg" = (
@@ -755,7 +743,7 @@ IY
 UB
 UB
 UB
-dv
+Fb
 UB
 VN
 UB
@@ -816,7 +804,7 @@ xk
 en
 yA
 lW
-sG
+Cg
 Cg
 WA
 pG
@@ -850,7 +838,7 @@ Ly
 UB
 PO
 Fp
-dv
+Fb
 UB
 eT
 Kj

@@ -74,7 +74,6 @@
 /turf/simulated/floor/tiled/dark,
 /area/submap/DogBase)
 "cS" = (
-/obj/structure/cable,
 /mob/living/simple_mob/mechanical/viscerator/mercenary,
 /turf/simulated/floor/plating,
 /area/submap/DogBase)
@@ -134,11 +133,6 @@
 	dir = 1
 	},
 /turf/simulated/floor/tiled/dark,
-/area/submap/DogBase)
-"hZ" = (
-/obj/machinery/power/smes/point_of_interest,
-/obj/structure/cable,
-/turf/simulated/floor/plating,
 /area/submap/DogBase)
 "ik" = (
 /obj/random/mob/merc/all,
@@ -351,11 +345,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/submap/DogBase)
-"vX" = (
-/obj/structure/cable,
-/mob/living/simple_mob/mechanical/viscerator/mercenary,
-/turf/simulated/floor/plating,
-/area/submap/DogBase)
 "wI" = (
 /obj/structure/bed/chair{
 	dir = 1
@@ -378,11 +367,6 @@
 	},
 /turf/template_noop,
 /area/template_noop)
-"xc" = (
-/obj/structure/cable,
-/mob/living/simple_mob/mechanical/viscerator/mercenary,
-/turf/simulated/floor/plating,
-/area/submap/DogBase)
 "xe" = (
 /obj/structure/closet/secure_closet/guncabinet,
 /obj/random/projectile/scrapped_smg,
@@ -679,7 +663,6 @@
 /turf/simulated/floor/tiled/dark,
 /area/submap/DogBase)
 "PJ" = (
-/obj/structure/cable,
 /mob/living/simple_mob/mechanical/viscerator/mercenary,
 /obj/structure/table/rack/shelf/steel,
 /obj/item/stack/material/phoron{
@@ -1533,8 +1516,8 @@ Ez
 hp
 Bk
 PJ
-xc
-vX
+Le
+cS
 Bk
 hp
 hp
@@ -1565,7 +1548,7 @@ wS
 hp
 Bk
 lh
-cS
+Le
 lh
 Bk
 hp
@@ -1596,7 +1579,7 @@ ik
 hp
 hp
 Bk
-hZ
+tt
 Kt
 tt
 Bk

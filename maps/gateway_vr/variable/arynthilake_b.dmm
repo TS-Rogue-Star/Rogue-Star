@@ -242,9 +242,7 @@
 /area/gateway/arynthilake/caves)
 "eq" = (
 /obj/structure/lattice,
-/obj/structure/cable/green{
-	icon_state = "32-4"
-	},
+/obj/structure/cable,
 /turf/simulated/open,
 /area/gateway/arynthilake/engine)
 "eE" = (
@@ -472,9 +470,7 @@
 /turf/simulated/mineral/floor/ignore_cavegen/cave,
 /area/gateway/arynthilake)
 "jh" = (
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/light,
 /turf/simulated/floor/tiled/eris,
 /area/gateway/arynthilake/engine)
@@ -620,24 +616,12 @@
 /turf/simulated/floor/outdoors/grass,
 /area/gateway/arynthilake/dome)
 "mp" = (
-/obj/structure/cable/green{
-	icon_state = "2-4"
-	},
-/obj/structure/cable/green{
-	icon_state = "1-4"
-	},
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/green{
-	icon_state = "2-8"
-	},
-/obj/structure/cable/green{
-	icon_state = "1-8"
-	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
+/obj/structure/cable,
+/obj/structure/cable,
+/obj/structure/cable,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris,
 /area/gateway/arynthilake/engine)
 "mq" = (
@@ -685,22 +669,10 @@
 /turf/simulated/floor/tiled/eris,
 /area/gateway/arynthilake/engine)
 "nq" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/green{
-	icon_state = "1-8"
-	},
-/obj/structure/cable/green{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
+/obj/structure/cable,
 /obj/random/mob/semirandom_mob_spawner/humanoid/retaliate,
-/turf/simulated/floor/tiled/eris,
-/area/gateway/arynthilake/engine)
-"nB" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/tiled/eris,
 /area/gateway/arynthilake/engine)
 "nC" = (
@@ -777,9 +749,7 @@
 /turf/simulated/floor/plating/external,
 /area/gateway/arynthilake/caveruins)
 "oX" = (
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -1456,9 +1426,7 @@
 	req_access = list();
 	start_charge = 0
 	},
-/obj/structure/cable/green{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris,
 /area/gateway/arynthilake/gateway)
 "GO" = (
@@ -1649,9 +1617,7 @@
 	req_access = list();
 	start_charge = 0
 	},
-/obj/structure/cable/green{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris,
 /area/gateway/arynthilake/engine)
 "KI" = (
@@ -2060,7 +2026,7 @@
 /turf/simulated/open,
 /area/gateway/arynthilake/caves)
 "Sk" = (
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/machinery/power/apc/alarms_hidden{
 	locked = 0;
 	operating = 0;
@@ -2137,12 +2103,6 @@
 "TY" = (
 /turf/simulated/floor/tiled/eris/white/techfloor,
 /area/gateway/arynthilake/dome)
-"Ui" = (
-/obj/structure/cable/green{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/tiled/eris,
-/area/gateway/arynthilake/engine)
 "Uj" = (
 /obj/effect/landmark/mcguffin_spawner,
 /obj/structure/bed/chair/sofa/corner/brown,
@@ -2300,12 +2260,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/gateway/arynthilake/dome)
-"WA" = (
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/tiled/eris,
-/area/gateway/arynthilake/engine)
 "WL" = (
 /turf/simulated/floor/carpet/purcarpet,
 /area/gateway/arynthilake/dome)
@@ -2325,9 +2279,7 @@
 	},
 /area/gateway/arynthilake/dome)
 "Xx" = (
-/obj/structure/cable/green{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc/alarms_hidden{
 	dir = 1;
 	locked = 0;
@@ -2421,9 +2373,7 @@
 /turf/simulated/floor/wood,
 /area/gateway/arynthilake/dome)
 "ZE" = (
-/obj/structure/cable/green{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris,
 /area/gateway/arynthilake/engine)
 "ZN" = (
@@ -4320,7 +4270,7 @@ GO
 fs
 nk
 nk
-WA
+ZE
 nk
 nk
 fs
@@ -4460,10 +4410,10 @@ St
 nk
 nk
 mX
-Ui
-nB
+ZE
+ZE
 nq
-nB
+ZE
 ZE
 mX
 nk

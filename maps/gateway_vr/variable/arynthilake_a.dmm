@@ -408,9 +408,7 @@
 /turf/simulated/floor/carpet/purcarpet,
 /area/gateway/arynthilake/dome)
 "cl" = (
-/obj/structure/cable/green{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc/alarms_hidden{
 	dir = 1;
 	locked = 0;
@@ -484,15 +482,9 @@
 /turf/simulated/floor/tiled/eris/steel/techfloor,
 /area/gateway/arynthilake/dome)
 "ea" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/green{
-	icon_state = "2-4"
-	},
-/obj/structure/cable/green{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris,
 /area/gateway/arynthilake/engine)
 "ej" = (
@@ -783,7 +775,7 @@
 /turf/simulated/floor/wood,
 /area/gateway/arynthilake/dome)
 "kX" = (
-/obj/structure/cable/green,
+/obj/structure/cable,
 /obj/machinery/power/apc/alarms_hidden{
 	locked = 0;
 	operating = 0;
@@ -1041,9 +1033,7 @@
 	},
 /area/gateway/arynthilake/dome)
 "pW" = (
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/light,
 /turf/simulated/floor/tiled/eris,
 /area/gateway/arynthilake/engine)
@@ -1386,12 +1376,6 @@
 /obj/random/mob/semirandom_mob_spawner/humanoid/retaliate,
 /turf/simulated/floor/tiled/eris/white/techfloor,
 /area/gateway/arynthilake/dome)
-"yb" = (
-/obj/structure/cable/green{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/tiled/eris,
-/area/gateway/arynthilake/engine)
 "ye" = (
 /turf/simulated/floor/outdoors/newdirt,
 /area/gateway/arynthilake/dome)
@@ -1572,24 +1556,12 @@
 /turf/simulated/floor/tiled/eris/techmaint_cargo,
 /area/gateway/arynthilake/dome)
 "Ej" = (
-/obj/structure/cable/green{
-	icon_state = "2-4"
-	},
-/obj/structure/cable/green{
-	icon_state = "1-4"
-	},
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/green{
-	icon_state = "2-8"
-	},
-/obj/structure/cable/green{
-	icon_state = "1-8"
-	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
+/obj/structure/cable,
+/obj/structure/cable,
+/obj/structure/cable,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris,
 /area/gateway/arynthilake/engine)
 "Er" = (
@@ -1772,9 +1744,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/gateway/arynthilake/gateway)
 "Iz" = (
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -1849,9 +1819,7 @@
 /area/gateway/arynthilake/dome)
 "Lo" = (
 /obj/structure/lattice,
-/obj/structure/cable/green{
-	icon_state = "32-8"
-	},
+/obj/structure/cable,
 /turf/simulated/open,
 /area/gateway/arynthilake/engine)
 "Lq" = (
@@ -1956,9 +1924,7 @@
 /turf/simulated/floor/tiled/eris,
 /area/gateway/arynthilake/engine)
 "MX" = (
-/obj/structure/cable/green{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc/alarms_hidden{
 	dir = 1;
 	locked = 0;
@@ -1983,9 +1949,7 @@
 /turf/simulated/floor/outdoors/grass/forest,
 /area/gateway/arynthilake/dome)
 "No" = (
-/obj/structure/cable/green{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/machinery/power/apc/alarms_hidden{
 	locked = 0;
 	operating = 0;
@@ -2099,12 +2063,6 @@
 	},
 /turf/simulated/floor/tiled/eris/white,
 /area/gateway/arynthilake/dome)
-"PC" = (
-/obj/structure/cable/green{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/tiled/eris,
-/area/gateway/arynthilake/engine)
 "PS" = (
 /obj/machinery/light{
 	dir = 4
@@ -2147,12 +2105,6 @@
 "QH" = (
 /turf/simulated/floor/outdoors/sidewalk,
 /area/gateway/arynthilake)
-"QI" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/tiled/eris,
-/area/gateway/arynthilake/engine)
 "QK" = (
 /obj/structure/bed/pod,
 /obj/structure/curtain/black,
@@ -2386,9 +2338,7 @@
 /turf/simulated/floor/tiled/eris/white/brown_platform,
 /area/gateway/arynthilake/dome)
 "WV" = (
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris,
 /area/gateway/arynthilake/engine)
 "Xe" = (
@@ -20247,11 +20197,11 @@ An
 FW
 FW
 nx
-PC
-QI
+WV
+WV
 ea
-QI
-yb
+WV
+WV
 nx
 FW
 ek

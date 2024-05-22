@@ -10,7 +10,6 @@
 /area/submap/Excavation)
 "d" = (
 /obj/structure/cliff/automatic{
-	icon_state = "cliffbuilder";
 	dir = 9
 	},
 /turf/simulated/mineral/floor/ignore_mapgen/cave,
@@ -21,14 +20,12 @@
 /area/submap/Excavation)
 "f" = (
 /obj/structure/cliff/automatic{
-	icon_state = "cliffbuilder";
 	dir = 5
 	},
 /turf/simulated/mineral/floor/ignore_mapgen/cave,
 /area/submap/Excavation)
 "g" = (
 /obj/structure/cliff/automatic/corner{
-	icon_state = "cliffbuilder-corner";
 	dir = 9
 	},
 /turf/simulated/mineral/floor/ignore_mapgen/cave,
@@ -50,7 +47,6 @@
 /area/submap/Excavation)
 "l" = (
 /obj/structure/cliff/automatic{
-	icon_state = "cliffbuilder";
 	dir = 8
 	},
 /turf/simulated/mineral/floor/ignore_mapgen/cave,
@@ -72,7 +68,6 @@
 /area/submap/Excavation)
 "p" = (
 /obj/structure/cliff/automatic{
-	icon_state = "cliffbuilder";
 	dir = 4
 	},
 /turf/simulated/mineral/floor/ignore_mapgen/cave,
@@ -138,35 +133,30 @@
 /area/submap/Excavation)
 "C" = (
 /obj/structure/cliff/automatic{
-	icon_state = "cliffbuilder";
 	dir = 10
 	},
 /turf/simulated/mineral/floor/ignore_mapgen/cave,
 /area/submap/Excavation)
 "D" = (
 /obj/structure/cliff/automatic{
-	icon_state = "cliffbuilder";
 	dir = 2
 	},
 /turf/simulated/mineral/floor/ignore_mapgen/cave,
 /area/submap/Excavation)
 "E" = (
 /obj/structure/cliff/automatic/corner{
-	icon_state = "cliffbuilder-corner";
 	dir = 10
 	},
 /turf/simulated/mineral/floor/ignore_mapgen/cave,
 /area/submap/Excavation)
 "F" = (
 /obj/structure/cliff/automatic/corner{
-	icon_state = "cliffbuilder-corner";
 	dir = 6
 	},
 /turf/simulated/mineral/floor/ignore_mapgen/cave,
 /area/submap/Excavation)
 "G" = (
 /obj/structure/cliff/automatic{
-	icon_state = "cliffbuilder";
 	dir = 6
 	},
 /turf/simulated/mineral/floor/ignore_mapgen/cave,

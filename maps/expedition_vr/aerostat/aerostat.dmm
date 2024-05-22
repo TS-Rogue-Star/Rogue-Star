@@ -18,9 +18,7 @@
 /turf/simulated/floor/tiled/techfloor/virgo2,
 /area/tether_away/aerostat/inside)
 "ae" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/industrial/warning/dust{
 	dir = 9
 	},
@@ -28,9 +26,7 @@
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat/solars)
 "af" = (
-/obj/structure/cable/yellow{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/industrial/warning/dust{
 	dir = 1
 	},
@@ -39,9 +35,7 @@
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat/solars)
 "ag" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/industrial/warning/dust{
 	dir = 1
 	},
@@ -113,9 +107,7 @@
 /turf/simulated/floor/tiled/techfloor/virgo2,
 /area/tether_away/aerostat/inside)
 "aq" = (
-/obj/structure/cable/yellow{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/machinery/power/solar,
 /obj/effect/floor_decal/industrial/warning/dust{
 	dir = 1
@@ -163,9 +155,7 @@
 /obj/effect/floor_decal/industrial/warning/dust{
 	dir = 1
 	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/rust,
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat/solars)
@@ -173,25 +163,21 @@
 /obj/effect/floor_decal/industrial/warning/dust{
 	dir = 1
 	},
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/rust,
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat/solars)
 "az" = (
 /obj/machinery/atmospherics/binary/algae_farm,
 /obj/machinery/atmospherics/pipe/simple/hidden/black{
-	dir = 5;
-	icon_state = "intact"
+	dir = 5
 	},
 /turf/simulated/floor/tiled/techfloor/virgo2,
 /area/tether_away/aerostat/inside)
 "aA" = (
 /obj/machinery/atmospherics/binary/algae_farm,
 /obj/machinery/atmospherics/pipe/simple/hidden/black{
-	dir = 9;
-	icon_state = "intact"
+	dir = 9
 	},
 /turf/simulated/floor/tiled/techfloor/virgo2,
 /area/tether_away/aerostat/inside)
@@ -199,21 +185,17 @@
 /obj/effect/floor_decal/industrial/warning/dust{
 	dir = 5
 	},
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/rust,
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat/solars)
 "aC" = (
 /obj/machinery/atmospherics/binary/algae_farm,
 /obj/machinery/atmospherics/pipe/simple/hidden/black{
-	dir = 5;
-	icon_state = "intact"
+	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/black{
-	dir = 5;
-	icon_state = "intact"
+	dir = 5
 	},
 /turf/simulated/floor/tiled/techfloor/virgo2,
 /area/tether_away/aerostat/inside)
@@ -221,50 +203,23 @@
 /obj/effect/floor_decal/rust,
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat/solars)
-"aE" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "2-4"
-	},
-/obj/effect/floor_decal/industrial/warning/dust{
-	dir = 8
-	},
-/obj/effect/floor_decal/rust,
-/turf/simulated/floor/plating/virgo2,
-/area/tether_away/aerostat/solars)
 "aF" = (
 /obj/machinery/atmospherics/binary/algae_farm,
 /obj/machinery/atmospherics/pipe/simple/hidden/black{
-	dir = 6;
-	icon_state = "intact"
+	dir = 6
 	},
 /turf/simulated/floor/tiled/techfloor/virgo2,
 /area/tether_away/aerostat/inside)
 "aG" = (
-/obj/structure/cable/yellow{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/machinery/power/solar,
-/obj/effect/floor_decal/rust,
-/turf/simulated/floor/plating/virgo2,
-/area/tether_away/aerostat/solars)
-"aH" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "2-4"
-	},
 /obj/effect/floor_decal/rust,
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat/solars)
 "aI" = (
 /obj/machinery/atmospherics/binary/algae_farm,
 /obj/machinery/atmospherics/pipe/simple/hidden/black{
-	dir = 10;
-	icon_state = "intact"
+	dir = 10
 	},
 /turf/simulated/floor/tiled/techfloor/virgo2,
 /area/tether_away/aerostat/inside)
@@ -279,12 +234,6 @@
 /turf/simulated/floor/bluegrid/virgo2,
 /area/tether_away/aerostat/inside)
 "aL" = (
-/turf/simulated/floor/bluegrid/virgo2,
-/area/tether_away/aerostat/inside)
-"aM" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
 /turf/simulated/floor/bluegrid/virgo2,
 /area/tether_away/aerostat/inside)
 "aN" = (
@@ -343,19 +292,7 @@
 /area/tether_away/aerostat/solars)
 "aU" = (
 /obj/machinery/power/solar,
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
-/obj/effect/floor_decal/rust,
-/turf/simulated/floor/plating/virgo2,
-/area/tether_away/aerostat/solars)
-"aV" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/rust,
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat/solars)
@@ -374,56 +311,6 @@
 /obj/effect/floor_decal/rust,
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat/inside)
-"aY" = (
-/obj/effect/floor_decal/industrial/warning/dust{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
-/obj/effect/floor_decal/rust,
-/turf/simulated/floor/plating/virgo2,
-/area/tether_away/aerostat/solars)
-"aZ" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-4"
-	},
-/obj/effect/floor_decal/rust,
-/turf/simulated/floor/plating/virgo2,
-/area/tether_away/aerostat/solars)
-"ba" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-4"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/effect/floor_decal/rust,
-/turf/simulated/floor/plating/virgo2,
-/area/tether_away/aerostat/solars)
-"bb" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/effect/floor_decal/rust,
-/turf/simulated/floor/plating/virgo2,
-/area/tether_away/aerostat/solars)
-"bc" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-4"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/effect/floor_decal/industrial/warning/dust{
-	dir = 8
-	},
-/obj/effect/floor_decal/rust,
-/turf/simulated/floor/plating/virgo2,
-/area/tether_away/aerostat/solars)
 "bd" = (
 /turf/simulated/shuttle/wall,
 /area/shuttle/aerostat)
@@ -502,20 +389,8 @@
 	},
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat/inside)
-"bt" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-4"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/effect/floor_decal/rust,
-/turf/simulated/floor/plating/virgo2,
-/area/tether_away/aerostat/solars)
 "bu" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/industrial/warning/dust{
 	dir = 4
 	},
@@ -730,8 +605,7 @@
 /area/tether_away/aerostat/inside)
 "cg" = (
 /obj/machinery/door/airlock/multi_tile/metal{
-	dir = 1;
-	icon_state = "door_closed"
+	dir = 1
 	},
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat/inside)
@@ -750,8 +624,7 @@
 "cj" = (
 /obj/machinery/computer/shuttle_control/aerostat_shuttle,
 /obj/machinery/light{
-	dir = 1;
-	icon_state = "tube1"
+	dir = 1
 	},
 /turf/simulated/shuttle/floor/yellow,
 /area/shuttle/aerostat)
@@ -786,8 +659,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/multi_tile/metal{
-	dir = 1;
-	icon_state = "door_closed"
+	dir = 1
 	},
 /turf/simulated/floor/tiled/techfloor/virgo2,
 /area/tether_away/aerostat/inside)
@@ -835,13 +707,6 @@
 /obj/effect/floor_decal/rust,
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat/inside)
-"cx" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
-/obj/effect/floor_decal/rust,
-/turf/simulated/floor/plating/virgo2,
-/area/tether_away/aerostat/solars)
 "cy" = (
 /obj/effect/floor_decal/industrial/warning/dust{
 	dir = 4
@@ -1029,54 +894,19 @@
 /obj/effect/floor_decal/industrial/warning/dust{
 	dir = 8
 	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/effect/floor_decal/rust,
-/turf/simulated/floor/plating/virgo2,
-/area/tether_away/aerostat/solars)
-"dc" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
-/obj/effect/floor_decal/rust,
-/turf/simulated/floor/plating/virgo2,
-/area/tether_away/aerostat/solars)
-"dd" = (
-/obj/effect/floor_decal/industrial/warning/dust{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/effect/floor_decal/rust,
-/turf/simulated/floor/plating/virgo2,
-/area/tether_away/aerostat/solars)
-"de" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/rust,
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat/solars)
 "df" = (
 /obj/machinery/power/tracker,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/effect/floor_decal/rust,
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat/solars)
 "dg" = (
 /obj/machinery/power/solar_control,
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /obj/effect/floor_decal/rust,
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat/solars)
@@ -1088,13 +918,10 @@
 /area/tether_away/aerostat/inside)
 "di" = (
 /obj/structure/cable/heavyduty{
-	dir = 2;
 	icon_state = "0-4"
 	},
-/obj/structure/cable/yellow,
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /obj/effect/floor_decal/rust,
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat/solars)
@@ -1129,10 +956,8 @@
 /obj/structure/cable/heavyduty{
 	icon_state = "0-8"
 	},
-/obj/structure/cable/yellow,
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /obj/effect/floor_decal/rust,
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat/solars)
@@ -1149,28 +974,9 @@
 /turf/simulated/floor/bluegrid/virgo2,
 /area/tether_away/aerostat/inside)
 "do" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/industrial/warning/dust{
 	dir = 8
-	},
-/obj/effect/floor_decal/rust,
-/turf/simulated/floor/plating/virgo2,
-/area/tether_away/aerostat/solars)
-"dp" = (
-/obj/effect/floor_decal/industrial/warning/dust{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/effect/floor_decal/rust,
-/turf/simulated/floor/plating/virgo2,
-/area/tether_away/aerostat/solars)
-"dq" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
 	},
 /obj/effect/floor_decal/rust,
 /turf/simulated/floor/plating/virgo2,
@@ -1192,19 +998,7 @@
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat/inside)
 "dt" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-4"
-	},
-/obj/effect/floor_decal/rust,
-/turf/simulated/floor/plating/virgo2,
-/area/tether_away/aerostat/solars)
-"du" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/rust,
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat/solars)
@@ -1212,9 +1006,7 @@
 /obj/effect/floor_decal/industrial/warning/dust{
 	dir = 4
 	},
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/rust,
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat/solars)
@@ -1223,12 +1015,8 @@
 /turf/unsimulated/floor/sky/virgo2_sky,
 /area/tether_away/aerostat/solars)
 "dx" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /obj/effect/floor_decal/industrial/warning/dust{
 	dir = 8
 	},
@@ -1242,28 +1030,14 @@
 /obj/effect/floor_decal/rust,
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat/inside)
-"dz" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "1-4"
-	},
-/obj/effect/floor_decal/rust,
-/turf/simulated/floor/plating/virgo2,
-/area/tether_away/aerostat/solars)
 "dA" = (
 /obj/effect/floor_decal/rust,
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat/solars)
 "dB" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /obj/effect/floor_decal/rust,
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat/solars)
@@ -1271,12 +1045,8 @@
 /obj/effect/floor_decal/industrial/warning/dust{
 	dir = 4
 	},
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /obj/effect/floor_decal/rust,
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat/solars)
@@ -1296,9 +1066,7 @@
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat/solars)
 "dF" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/industrial/warning/dust{
 	dir = 10
 	},
@@ -1306,26 +1074,20 @@
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat/solars)
 "dG" = (
-/obj/structure/cable/yellow{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/industrial/warning/dust,
 /obj/machinery/power/solar,
 /obj/effect/floor_decal/rust,
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat/solars)
 "dH" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/industrial/warning/dust,
 /obj/effect/floor_decal/rust,
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat/solars)
 "dI" = (
-/obj/structure/cable/yellow{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /obj/machinery/power/solar,
 /obj/effect/floor_decal/industrial/warning/dust,
 /obj/effect/floor_decal/rust,
@@ -1348,7 +1110,6 @@
 	dir = 8
 	},
 /obj/structure/cable/heavyduty{
-	dir = 2;
 	icon_state = "0-4"
 	},
 /obj/structure/cable{
@@ -1395,17 +1156,13 @@
 "dR" = (
 /obj/machinery/power/solar,
 /obj/effect/floor_decal/industrial/warning/dust,
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/rust,
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat/solars)
 "dS" = (
 /obj/effect/floor_decal/industrial/warning/dust,
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/rust,
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat/solars)
@@ -1413,9 +1170,7 @@
 /obj/effect/floor_decal/industrial/warning/dust{
 	dir = 6
 	},
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/rust,
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat/solars)
@@ -1661,8 +1416,7 @@
 /area/tether_away/aerostat/inside)
 "ON" = (
 /obj/structure/railing{
-	dir = 1;
-	icon_state = "railing0"
+	dir = 1
 	},
 /turf/simulated/floor/plating/virgo2,
 /area/tether_away/aerostat)
@@ -5438,7 +5192,7 @@ aw
 aw
 aD
 aD
-aZ
+dt
 df
 aD
 aD
@@ -5580,7 +5334,7 @@ aw
 aD
 aD
 aD
-ba
+dB
 dg
 aD
 aD
@@ -5650,7 +5404,7 @@ aw
 aw
 aD
 aD
-aZ
+dt
 df
 aD
 aD
@@ -5722,7 +5476,7 @@ aD
 aD
 aD
 aD
-bb
+dt
 aD
 aD
 aD
@@ -5792,7 +5546,7 @@ aw
 aD
 aD
 aD
-ba
+dB
 dg
 aD
 aD
@@ -5860,11 +5614,11 @@ aw
 aw
 aw
 ae
-aE
-aE
-aE
-aE
-bc
+dx
+dx
+dx
+dx
+dx
 aT
 do
 dx
@@ -5934,7 +5688,7 @@ aD
 aD
 aD
 aD
-bb
+dt
 aD
 aD
 aD
@@ -6006,9 +5760,9 @@ aG
 aG
 aG
 aG
-bb
+dt
 aD
-bb
+dt
 aG
 aG
 aG
@@ -6072,11 +5826,11 @@ aw
 aw
 aw
 ae
-aE
-aE
-aE
-aE
-bc
+dx
+dx
+dx
+dx
+dx
 aT
 do
 dx
@@ -6144,17 +5898,17 @@ aw
 aw
 aw
 ag
-aH
-aH
-aH
-aH
-bt
+dB
+dB
+dB
+dB
+dB
 aD
-ba
-dz
-dz
-dz
-dz
+dB
+dB
+dB
+dB
+dB
 dH
 dw
 aw
@@ -6218,9 +5972,9 @@ aG
 aG
 aG
 aG
-bb
+dt
 aD
-bb
+dt
 aG
 aG
 aG
@@ -6290,9 +6044,9 @@ aG
 aG
 aG
 aG
-bb
+dt
 aD
-bb
+dt
 aG
 aG
 aG
@@ -6356,17 +6110,17 @@ aw
 aw
 aw
 ag
-aH
-aH
-aH
-aH
-bt
+dB
+dB
+dB
+dB
+dB
 aD
-ba
-dz
-dz
-dz
-dz
+dB
+dB
+dB
+dB
+dB
 dH
 dw
 aw
@@ -6428,17 +6182,17 @@ aw
 aw
 aw
 ag
-aH
-aH
-aH
-aH
-bt
+dB
+dB
+dB
+dB
+dB
 aD
-ba
-dz
-dz
-dz
-dz
+dB
+dB
+dB
+dB
+dB
 dH
 dw
 aw
@@ -6502,9 +6256,9 @@ aG
 aG
 aG
 aG
-bb
+dt
 aD
-bb
+dt
 aG
 aG
 aG
@@ -6574,9 +6328,9 @@ aG
 aG
 aG
 aG
-bb
+dt
 aD
-bb
+dt
 aG
 aG
 aG
@@ -6640,17 +6394,17 @@ aw
 aw
 aw
 ag
-aH
-aH
-aH
-aH
-bt
+dB
+dB
+dB
+dB
+dB
 aD
-ba
-dz
-dz
-dz
-dz
+dB
+dB
+dB
+dB
+dB
 dH
 dw
 aw
@@ -6712,17 +6466,17 @@ aw
 aw
 aw
 ag
-aH
-aH
-aH
-aH
-bt
+dB
+dB
+dB
+dB
+dB
 aD
-ba
-dz
-dz
-dz
-dz
+dB
+dB
+dB
+dB
+dB
 dH
 dw
 aw
@@ -6786,9 +6540,9 @@ aG
 aG
 aG
 aG
-bb
+dt
 aD
-bb
+dt
 aG
 aG
 aG
@@ -6858,9 +6612,9 @@ aG
 aG
 aG
 aG
-bb
+dt
 aD
-bb
+dt
 aG
 aG
 aG
@@ -6924,17 +6678,17 @@ aw
 aw
 aw
 ag
-aH
-aH
-aH
-aH
-bt
+dB
+dB
+dB
+dB
+dB
 aD
-ba
-dz
-dz
-dz
-dz
+dB
+dB
+dB
+dB
+dB
 dH
 dw
 aw
@@ -6996,17 +6750,17 @@ aw
 aw
 aw
 ag
-aH
-aH
-aH
-aH
-bt
+dB
+dB
+dB
+dB
+dB
 aD
-ba
-dz
-dz
-dz
-dz
+dB
+dB
+dB
+dB
+dB
 dH
 dw
 aw
@@ -7070,9 +6824,9 @@ aG
 aG
 aG
 aG
-bb
+dt
 aD
-bb
+dt
 aG
 aG
 aG
@@ -7142,9 +6896,9 @@ aG
 aG
 aG
 aG
-bb
+dt
 aD
-bb
+dt
 aG
 aG
 aG
@@ -7208,17 +6962,17 @@ aw
 aw
 aw
 ag
-aH
-aH
-aH
-aH
-bt
+dB
+dB
+dB
+dB
+dB
 aD
-ba
-dz
-dz
-dz
-dz
+dB
+dB
+dB
+dB
+dB
 dH
 dw
 aw
@@ -7280,17 +7034,17 @@ aw
 aw
 aw
 ag
-aH
-aH
-aH
-aH
-bt
+dB
+dB
+dB
+dB
+dB
 aD
-ba
-dz
-dz
-dz
-dz
+dB
+dB
+dB
+dB
+dB
 dH
 dw
 aw
@@ -7354,9 +7108,9 @@ aG
 aG
 aG
 aG
-bb
+dt
 aD
-bb
+dt
 aG
 aG
 aG
@@ -7426,9 +7180,9 @@ aG
 aG
 aG
 aG
-bb
+dt
 aD
-bb
+dt
 aG
 aG
 aG
@@ -7492,17 +7246,17 @@ aw
 aw
 aw
 ag
-aH
-aH
-aH
-aH
-bt
+dB
+dB
+dB
+dB
+dB
 aD
-ba
-dz
-dz
-dz
-dz
+dB
+dB
+dB
+dB
+dB
 dH
 dw
 aw
@@ -7564,17 +7318,17 @@ aw
 aw
 aw
 ag
-aH
-aH
-aH
-aH
-bt
+dB
+dB
+dB
+dB
+dB
 aD
-ba
-dz
-dz
-dz
-dz
+dB
+dB
+dB
+dB
+dB
 dH
 dw
 aw
@@ -7638,9 +7392,9 @@ aG
 aG
 aG
 aG
-bb
+dt
 aD
-bb
+dt
 aG
 aG
 aG
@@ -7710,9 +7464,9 @@ aG
 aG
 aG
 aG
-bb
+dt
 aD
-bb
+dt
 aG
 aG
 aG
@@ -7776,17 +7530,17 @@ aw
 aw
 aw
 ag
-aH
-aH
-aH
-aH
-bt
+dB
+dB
+dB
+dB
+dB
 aD
-ba
-dz
-dz
-dz
-dz
+dB
+dB
+dB
+dB
+dB
 dH
 dw
 aw
@@ -7848,17 +7602,17 @@ aw
 aw
 aw
 ag
-aH
-aH
-aH
-aH
-bt
+dB
+dB
+dB
+dB
+dB
 aD
-ba
-dz
-dz
-dz
-dz
+dB
+dB
+dB
+dB
+dB
 dH
 dw
 aw
@@ -7922,9 +7676,9 @@ aG
 aG
 aG
 aG
-bb
+dt
 aD
-bb
+dt
 aG
 aG
 aG
@@ -7994,9 +7748,9 @@ aG
 aG
 aG
 aG
-bb
+dt
 aD
-bb
+dt
 aG
 aG
 aG
@@ -8060,17 +7814,17 @@ aw
 aw
 aw
 ag
-aH
-aH
-aH
-aH
-bt
+dB
+dB
+dB
+dB
+dB
 aD
-ba
-dz
-dz
-dz
-dz
+dB
+dB
+dB
+dB
+dB
 dH
 dw
 aw
@@ -8138,7 +7892,7 @@ aS
 aS
 bu
 aS
-dp
+dv
 aS
 dD
 aS
@@ -8206,9 +7960,9 @@ aG
 aG
 aG
 aG
-bb
+dt
 aD
-bb
+dt
 aG
 aG
 aG
@@ -8278,9 +8032,9 @@ aD
 aD
 aD
 aD
-bb
+dt
 aD
-bb
+dt
 aD
 aD
 aD
@@ -8350,7 +8104,7 @@ aS
 aS
 bu
 aS
-dp
+dv
 aS
 aS
 aS
@@ -8420,9 +8174,9 @@ aw
 aD
 aD
 aD
-bb
+dt
 aD
-bb
+dt
 aD
 aD
 aD
@@ -8490,9 +8244,9 @@ aD
 aD
 aD
 aD
-bb
+dt
 aD
-bb
+dt
 aD
 aD
 aD
@@ -8562,9 +8316,9 @@ aw
 aw
 aD
 aD
-cx
+dt
 di
-dq
+dt
 aD
 aD
 dw
@@ -8632,9 +8386,9 @@ aw
 aD
 aD
 aD
-bb
+dt
 aD
-bb
+dt
 aD
 aD
 aD
@@ -8774,9 +8528,9 @@ aw
 aw
 aD
 aD
-cx
+dt
 di
-dq
+dt
 aD
 aD
 dw
@@ -11720,7 +11474,7 @@ aw
 bq
 be
 ac
-aM
+aQ
 cP
 dK
 dM
@@ -14596,7 +14350,7 @@ aw
 aw
 aD
 aD
-aZ
+dt
 dm
 dt
 aD
@@ -14668,7 +14422,7 @@ aw
 aw
 aD
 aD
-aZ
+dt
 dm
 dt
 dA
@@ -14738,9 +14492,9 @@ aw
 aD
 aD
 aD
-bb
+dt
 aD
-bb
+dt
 aD
 aD
 aD
@@ -14810,9 +14564,9 @@ aw
 aD
 aD
 aD
-bb
+dt
 aD
-bb
+dt
 aD
 aD
 dE
@@ -14880,9 +14634,9 @@ aD
 aD
 aD
 aD
-bb
+dt
 aD
-bb
+dt
 aD
 aD
 aD
@@ -14952,9 +14706,9 @@ aD
 aD
 aD
 aD
-bb
+dt
 aD
-bb
+dt
 aD
 aD
 aD
@@ -15164,9 +14918,9 @@ aU
 aU
 aU
 aU
-bb
+dt
 aD
-bb
+dt
 aU
 aU
 aU
@@ -15236,9 +14990,9 @@ aU
 aU
 aU
 aU
-bb
+dt
 aD
-bb
+dt
 aU
 aU
 aU
@@ -15302,13 +15056,13 @@ aw
 aw
 aw
 ay
-aV
-aV
-aV
-aV
-dc
+dB
+dB
+dB
+dB
+dB
 aD
-du
+dB
 dB
 dB
 dB
@@ -15374,13 +15128,13 @@ aw
 aw
 aw
 ay
-aV
-aV
-aV
-aV
-dc
+dB
+dB
+dB
+dB
+dB
 aD
-du
+dB
 dB
 dB
 dB
@@ -15448,9 +15202,9 @@ aU
 aU
 aU
 aU
-bb
+dt
 aD
-bb
+dt
 aU
 aU
 aU
@@ -15520,9 +15274,9 @@ aU
 aU
 aU
 aU
-bb
+dt
 aD
-bb
+dt
 aU
 aU
 aU
@@ -15586,13 +15340,13 @@ aw
 aw
 aw
 ay
-aV
-aV
-aV
-aV
-dc
+dB
+dB
+dB
+dB
+dB
 aD
-du
+dB
 dB
 dB
 dB
@@ -15658,13 +15412,13 @@ aw
 aw
 aw
 ay
-aV
-aV
-aV
-aV
-dc
+dB
+dB
+dB
+dB
+dB
 aD
-du
+dB
 dB
 dB
 dB
@@ -15732,9 +15486,9 @@ aU
 aU
 aU
 aU
-bb
+dt
 aD
-bb
+dt
 aU
 aU
 aU
@@ -15804,9 +15558,9 @@ aU
 aU
 aU
 aU
-bb
+dt
 aD
-bb
+dt
 aU
 aU
 aU
@@ -15870,13 +15624,13 @@ aw
 aw
 aw
 ay
-aV
-aV
-aV
-aV
-dc
+dB
+dB
+dB
+dB
+dB
 aD
-du
+dB
 dB
 dB
 dB
@@ -15942,13 +15696,13 @@ aw
 aw
 aw
 ay
-aV
-aV
-aV
-aV
-dc
+dB
+dB
+dB
+dB
+dB
 aD
-du
+dB
 dB
 dB
 dB
@@ -16016,9 +15770,9 @@ aU
 aU
 aU
 aU
-bb
+dt
 aD
-bb
+dt
 aU
 aU
 aU
@@ -16088,9 +15842,9 @@ aU
 aU
 aU
 aU
-bb
+dt
 aD
-bb
+dt
 aU
 aU
 aU
@@ -16154,13 +15908,13 @@ aw
 aw
 aw
 ay
-aV
-aV
-aV
-aV
-dc
+dB
+dB
+dB
+dB
+dB
 aD
-du
+dB
 dB
 dB
 dB
@@ -16226,13 +15980,13 @@ aw
 aw
 aw
 ay
-aV
-aV
-aV
-aV
-dc
+dB
+dB
+dB
+dB
+dB
 aD
-du
+dB
 dB
 dB
 dB
@@ -16300,9 +16054,9 @@ aU
 aU
 aU
 aU
-bb
+dt
 aD
-bb
+dt
 aU
 aU
 aU
@@ -16372,9 +16126,9 @@ aU
 aU
 aU
 aU
-bb
+dt
 aD
-bb
+dt
 aU
 aU
 aU
@@ -16438,13 +16192,13 @@ aw
 aw
 aw
 ay
-aV
-aV
-aV
-aV
-dc
+dB
+dB
+dB
+dB
+dB
 aD
-du
+dB
 dB
 dB
 dB
@@ -16510,13 +16264,13 @@ aw
 aw
 aw
 ay
-aV
-aV
-aV
-aV
-dc
+dB
+dB
+dB
+dB
+dB
 aD
-du
+dB
 dB
 dB
 dB
@@ -16584,9 +16338,9 @@ aU
 aU
 aU
 aU
-bb
+dt
 aD
-bb
+dt
 aU
 aU
 aU
@@ -16656,9 +16410,9 @@ aU
 aU
 aU
 aU
-bb
+dt
 aD
-bb
+dt
 aU
 aU
 aU
@@ -16722,13 +16476,13 @@ aw
 aw
 aw
 ay
-aV
-aV
-aV
-aV
-dc
+dB
+dB
+dB
+dB
+dB
 aD
-du
+dB
 dB
 dB
 dB
@@ -16794,13 +16548,13 @@ aw
 aw
 aw
 ay
-aV
-aV
-aV
-aV
-dc
+dB
+dB
+dB
+dB
+dB
 aD
-du
+dB
 dB
 dB
 dB
@@ -16868,9 +16622,9 @@ aU
 aU
 aU
 aU
-bb
+dt
 aD
-bb
+dt
 aU
 aU
 aU
@@ -16940,9 +16694,9 @@ aU
 aU
 aU
 aU
-bb
+dt
 aD
-bb
+dt
 aU
 aU
 aU
@@ -17006,13 +16760,13 @@ aw
 aw
 aw
 ay
-aV
-aV
-aV
-aV
-dc
+dB
+dB
+dB
+dB
+dB
 aD
-du
+dB
 dB
 dB
 dB
@@ -17078,13 +16832,13 @@ aw
 aw
 aw
 ay
-aV
-aV
-aV
-aV
-dc
+dB
+dB
+dB
+dB
+dB
 aD
-du
+dB
 dB
 dB
 dB
@@ -17152,9 +16906,9 @@ aU
 aU
 aU
 aU
-bb
+dt
 aD
-bb
+dt
 aU
 aU
 aU
@@ -17224,9 +16978,9 @@ aU
 aU
 aU
 aU
-bb
+dt
 aD
-bb
+dt
 aU
 aU
 aU
@@ -17290,11 +17044,11 @@ aw
 aw
 aw
 aB
-aY
-aY
-aY
-aY
-dd
+dC
+dC
+dC
+dC
+dC
 aS
 dv
 dC
@@ -17362,11 +17116,11 @@ aw
 aw
 aw
 aB
-aY
-aY
-aY
-aY
-dd
+dC
+dC
+dC
+dC
+dC
 aS
 dv
 dC
@@ -17436,7 +17190,7 @@ aD
 aD
 aD
 aD
-bb
+dt
 aD
 aD
 aD
@@ -17508,7 +17262,7 @@ aD
 aD
 aD
 aD
-bb
+dt
 aD
 aD
 aD
@@ -17578,7 +17332,7 @@ aw
 aD
 aD
 dU
-de
+dB
 dg
 aD
 aD
@@ -17650,7 +17404,7 @@ aw
 aD
 aD
 aD
-de
+dB
 dg
 aD
 aD
@@ -17720,7 +17474,7 @@ aw
 aw
 aD
 aD
-cx
+dt
 df
 aD
 aD
@@ -17792,7 +17546,7 @@ aw
 aw
 aD
 aD
-cx
+dt
 df
 aD
 aD

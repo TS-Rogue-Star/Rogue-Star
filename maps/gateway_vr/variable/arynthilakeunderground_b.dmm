@@ -127,9 +127,7 @@
 /area/gateway/arynthilake/engine)
 "mw" = (
 /obj/machinery/power/rtg/abductor,
-/obj/structure/cable/green{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/danger,
 /area/gateway/arynthilake/engine)
 "ng" = (
@@ -263,9 +261,7 @@
 /turf/simulated/floor/tiled/eris/steel/monofloor,
 /area/gateway/arynthilake/engine)
 "FH" = (
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/danger,
 /area/gateway/arynthilake/engine)
 "GB" = (
@@ -403,12 +399,8 @@
 /turf/simulated/floor/tiled/eris/steel/techfloor,
 /area/gateway/arynthilake/engine)
 "Zl" = (
-/obj/structure/cable/green{
-	icon_state = "16-0"
-	},
-/obj/structure/cable/green{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/danger,
 /area/gateway/arynthilake/engine)
 "Zz" = (

@@ -9,10 +9,6 @@
 "ac" = (
 /turf/simulated/floor/outdoors/grass/seasonal/dark/notrees,
 /area/groundbase/level2/nw)
-"ad" = (
-/obj/structure/cable,
-/turf/simulated/floor/wood,
-/area/groundbase/dorms/room8)
 "ae" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
@@ -631,12 +627,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/Chemistry)
-"cp" = (
-/obj/structure/table/hardwoodtable,
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor/tiled/dark,
-/area/groundbase/dorms)
 "cu" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/floor_decal/milspec/color/blue/half{
@@ -692,10 +682,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/dorms/room2)
-"cF" = (
-/obj/structure/cable,
-/turf/simulated/floor/lino,
-/area/groundbase/civilian/chapel/office)
 "cJ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
@@ -808,10 +794,6 @@
 	dir = 4
 	},
 /turf/simulated/floor/outdoors/sidewalk/side,
-/area/groundbase/level2/ne)
-"cV" = (
-/obj/structure/cable,
-/turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/level2/ne)
 "cZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -1537,10 +1519,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/triage)
-"fc" = (
-/obj/structure/cable,
-/turf/simulated/floor/tiled,
-/area/groundbase/command/hop)
 "fd" = (
 /obj/structure/table/woodentable,
 /obj/machinery/light/floortube{
@@ -1821,16 +1799,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/carpet,
 /area/groundbase/civilian/library)
-"gb" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
-	},
-/turf/simulated/floor/tiled,
-/area/groundbase/security/processing)
 "gc" = (
 /turf/simulated/mineral/cave,
 /area/groundbase/level2/nw)
@@ -2077,12 +2045,6 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/groundbase/security/hall2)
-"hb" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hall2)
 "hc" = (
 /obj/structure/cable,
@@ -2818,13 +2780,6 @@
 	},
 /turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/level2/ne)
-"jD" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/tiled/white,
-/area/groundbase/medical/triage)
 "jE" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/box/gloves{
@@ -3098,10 +3053,6 @@
 	},
 /turf/simulated/floor,
 /area/groundbase/security/warden)
-"kE" = (
-/obj/structure/cable,
-/turf/simulated/floor/outdoors/sidewalk/slab,
-/area/groundbase/level2/nw)
 "kF" = (
 /obj/effect/floor_decal/industrial/hatch/yellow,
 /obj/machinery/deployable/barrier,
@@ -3562,12 +3513,6 @@
 "mE" = (
 /turf/simulated/floor/tiled,
 /area/holodeck_control)
-"mG" = (
-/obj/structure/cable,
-/turf/simulated/floor/outdoors/sidewalk/slab{
-	outdoors = 0
-	},
-/area/groundbase/level3/escapepad)
 "mH" = (
 /obj/machinery/power/apc{
 	dir = 8
@@ -3789,10 +3734,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/groundbase/cargo/qm)
-"nA" = (
-/obj/structure/cable,
-/turf/simulated/floor/tiled/white,
-/area/groundbase/medical/triage)
 "nC" = (
 /obj/machinery/light,
 /obj/structure/undies_wardrobe,
@@ -3862,12 +3803,6 @@
 /obj/structure/window/reinforced,
 /turf/simulated/floor/reinforced,
 /area/rnd/xenobiology)
-"nJ" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/tiled/dark,
-/area/groundbase/security/hall2)
 "nN" = (
 /obj/machinery/hologram/holopad,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -4438,26 +4373,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/groundbase/civilian/library)
-"pM" = (
-/obj/machinery/door/blast/regular{
-	closed_layer = 10;
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "bridge blast";
-	layer = 1;
-	name = "Bridge Blast Doors";
-	opacity = 0;
-	open_layer = 1
-	},
-/obj/structure/cable,
-/obj/structure/grille,
-/obj/structure/window/reinforced/full,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/groundbase/command/bridge)
 "pN" = (
 /obj/machinery/disease2/diseaseanalyser,
 /turf/simulated/floor/tiled/white,
@@ -4564,10 +4479,6 @@
 /obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/civilian/chapel)
-"qi" = (
-/obj/structure/cable,
-/turf/simulated/floor/tiled/eris/cafe,
-/area/groundbase/security/hall2)
 "qj" = (
 /obj/structure/railing,
 /obj/structure/bed/chair/backed_red{
@@ -4643,10 +4554,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/dorms)
-"qx" = (
-/obj/structure/cable,
-/turf/simulated/floor/tiled/white,
-/area/groundbase/medical/triage)
 "qy" = (
 /obj/structure/railing{
 	dir = 1
@@ -5157,10 +5064,6 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor,
 /area/groundbase/cargo/qm)
-"sn" = (
-/obj/structure/cable,
-/turf/simulated/floor/tiled/white,
-/area/groundbase/medical/triage)
 "so" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/cyan,
 /turf/simulated/floor/tiled/dark,
@@ -5218,13 +5121,6 @@
 /obj/structure/railing,
 /turf/simulated/open,
 /area/groundbase/level2/se)
-"sA" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/hidden/universal{
-	dir = 8
-	},
-/turf/simulated/floor/tiled/dark,
-/area/groundbase/security/armory)
 "sB" = (
 /obj/machinery/computer/secure_data{
 	dir = 1;
@@ -6042,19 +5938,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/civilian/chapel)
-"ve" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/wood,
-/area/groundbase/civilian/library)
 "vh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
@@ -6638,10 +6521,6 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /turf/simulated/floor/wood,
 /area/groundbase/dorms/room5)
-"xd" = (
-/obj/structure/cable,
-/turf/simulated/floor/tiled/white,
-/area/groundbase/medical/lobby)
 "xe" = (
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -7058,10 +6937,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/security/processing)
-"yB" = (
-/obj/structure/cable,
-/turf/simulated/floor/wood,
-/area/groundbase/dorms/room7)
 "yD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -7154,10 +7029,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hall2)
-"yU" = (
-/obj/structure/cable,
-/turf/simulated/floor/wood,
-/area/groundbase/dorms/room8)
 "yV" = (
 /obj/structure/table/woodentable,
 /obj/machinery/microwave,
@@ -7428,26 +7299,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/security/processing)
-"Ap" = (
-/obj/machinery/door/blast/regular{
-	closed_layer = 10;
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "bridge blast";
-	layer = 1;
-	name = "Bridge Blast Doors";
-	opacity = 0;
-	open_layer = 1
-	},
-/obj/structure/cable,
-/obj/structure/grille,
-/obj/structure/window/reinforced/full,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/groundbase/command/bridge)
 "Aq" = (
 /obj/structure/closet/firecloset/full,
 /obj/machinery/camera/network/civilian{
@@ -7769,10 +7620,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/medical/virology)
-"BA" = (
-/obj/structure/cable,
-/turf/simulated/floor/tiled,
-/area/groundbase/cargo/office)
 "BC" = (
 /obj/machinery/door/blast/regular{
 	density = 0;
@@ -8199,10 +8046,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/groundbase/dorms/room4)
-"Db" = (
-/obj/structure/cable,
-/turf/simulated/floor/wood,
-/area/groundbase/dorms/room7)
 "Dc" = (
 /obj/machinery/status_display{
 	pixel_x = -32;
@@ -8580,11 +8423,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hall2)
-"EH" = (
-/obj/effect/floor_decal/steeldecal/steel_decals10,
-/obj/structure/cable,
-/turf/simulated/floor/tiled/white,
-/area/groundbase/medical/triage)
 "EI" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 8
@@ -10021,13 +9859,6 @@
 /area/groundbase/civilian/cafe)
 "JD" = (
 /obj/structure/bed/chair/comfy/brown,
-/turf/simulated/floor/wood,
-/area/groundbase/civilian/library)
-"JE" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/wood,
 /area/groundbase/civilian/library)
 "JF" = (
@@ -11718,10 +11549,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/bmarble,
 /area/groundbase/dorms)
-"Pu" = (
-/obj/structure/cable,
-/turf/simulated/floor/wood,
-/area/groundbase/civilian/library)
 "Pw" = (
 /obj/machinery/shower{
 	dir = 1;
@@ -18322,7 +18149,7 @@ YA
 Kw
 kl
 SU
-yB
+SU
 NU
 Xv
 gc
@@ -18463,7 +18290,7 @@ rd
 Kw
 Kw
 dT
-Db
+SU
 ey
 VI
 Xv
@@ -18640,7 +18467,7 @@ TH
 Xw
 Ii
 Fb
-gb
+yK
 hV
 Zt
 Zz
@@ -18792,7 +18619,7 @@ eo
 UK
 UK
 Ll
-sA
+Ll
 dK
 Qz
 Cw
@@ -19024,7 +18851,7 @@ On
 DK
 pW
 sq
-cp
+On
 On
 Zv
 XL
@@ -19354,7 +19181,7 @@ Si
 Le
 gD
 AN
-hb
+tY
 tY
 Vm
 lk
@@ -19492,9 +19319,9 @@ TH
 Iw
 gU
 rs
-hb
-nJ
-hb
+tY
+tY
+tY
 uR
 JX
 JX
@@ -19599,14 +19426,14 @@ Qm
 Ck
 Ck
 Rc
-ad
+Ez
 TX
 tn
 Ga
 gc
 gc
 Mp
-kE
+SG
 SG
 WB
 WB
@@ -19742,7 +19569,7 @@ BX
 Ck
 Qq
 Ez
-yU
+Ez
 cn
 Xv
 gc
@@ -19925,7 +19752,7 @@ Ki
 QQ
 dV
 dl
-qi
+ZS
 ZS
 NQ
 Lr
@@ -26982,7 +26809,7 @@ oM
 Rg
 UN
 WI
-cF
+WI
 LH
 Rg
 np
@@ -27145,7 +26972,7 @@ Vf
 Ng
 ow
 FH
-Ap
+FH
 Dd
 nT
 nT
@@ -27456,7 +27283,7 @@ Ng
 Ng
 rk
 rp
-mG
+uf
 rQ
 zs
 rQ
@@ -27848,7 +27675,7 @@ oM
 sJ
 NJ
 of
-cV
+Jv
 fm
 fm
 eZ
@@ -28280,7 +28107,7 @@ Ng
 Vf
 Ng
 tv
-pM
+Ih
 Ih
 oL
 nT
@@ -29132,7 +28959,7 @@ Ng
 Vf
 GB
 Sp
-fc
+hn
 jV
 fE
 gd
@@ -29148,7 +28975,7 @@ ZO
 dm
 Wa
 kj
-BA
+FQ
 zn
 rD
 Hw
@@ -29550,7 +29377,7 @@ zw
 HM
 vq
 sL
-JE
+LE
 LE
 SD
 bl
@@ -29691,7 +29518,7 @@ zw
 zw
 DN
 sa
-ve
+Sn
 Ss
 DN
 qv
@@ -29829,10 +29656,10 @@ Ng
 Ng
 gK
 eg
-Pu
-Pu
-Pu
-Pu
+Ss
+Ss
+Ss
+Ss
 Sn
 jX
 hS
@@ -30160,10 +29987,10 @@ Tf
 wm
 LL
 NL
-xd
+LL
 gN
 Iy
-sn
+RR
 sP
 Qi
 Qi
@@ -30453,7 +30280,7 @@ xy
 Kf
 Vs
 La
-qx
+RR
 UV
 Eg
 fw
@@ -30874,7 +30701,7 @@ NZ
 Lo
 nv
 CY
-nA
+RR
 Ks
 Ls
 TU
@@ -31016,9 +30843,9 @@ bc
 jT
 Nq
 Wr
-jD
+Wr
 Uh
-EH
+La
 LR
 Yc
 cB

@@ -53,11 +53,6 @@
 /obj/structure/table/borosilicate,
 /turf/simulated/floor/tiled/eris/steel/bar_dance,
 /area/awaymission/lucky7/loungeprivateroom)
-"ah" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor/carpet/brown,
-/area/awaymission/lucky7/casinofloor)
 "ai" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
@@ -346,10 +341,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/maint1)
-"aQ" = (
-/obj/structure/cable,
-/turf/simulated/floor/tiled/dark,
-/area/awaymission/lucky7/loungeprivateroom)
 "aR" = (
 /obj/machinery/door/airlock/maintenance/common,
 /obj/structure/disposalpipe/segment,
@@ -467,10 +458,6 @@
 /obj/structure/undies_wardrobe,
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/privateroom/four)
-"bo" = (
-/obj/structure/cable,
-/turf/simulated/floor/tiled/dark,
-/area/awaymission/lucky7/loungeprivateroom)
 "bp" = (
 /turf/simulated/wall,
 /area/awaymission/lucky7/privategameroom)
@@ -1401,11 +1388,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/entry)
-"gB" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor/carpet/brown,
-/area/awaymission/lucky7/hall2)
 "gD" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -1431,10 +1413,6 @@
 "gL" = (
 /turf/simulated/wall,
 /area/awaymission/lucky7/dock1)
-"gN" = (
-/obj/structure/cable,
-/turf/simulated/floor/carpet/brown,
-/area/awaymission/lucky7/hall2)
 "gS" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden{
 	dir = 4
@@ -1473,13 +1451,6 @@
 "hh" = (
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/maint2)
-"hi" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/simulated/floor/carpet/brown,
-/area/awaymission/lucky7/casinofloor)
 "hm" = (
 /obj/structure/bed/chair/comfy/black{
 	dir = 4
@@ -1600,10 +1571,6 @@
 /obj/structure/table/marble,
 /turf/simulated/floor/lino,
 /area/awaymission/lucky7/bar)
-"hU" = (
-/obj/structure/cable,
-/turf/simulated/floor/wood,
-/area/awaymission/lucky7/privateroom)
 "ia" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
@@ -1699,11 +1666,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/entry)
-"iB" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable,
-/turf/simulated/floor/carpet/brown,
-/area/awaymission/lucky7/hall2)
 "iE" = (
 /obj/effect/floor_decal/techfloor/orange{
 	dir = 4
@@ -1764,13 +1726,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/maint1)
-"jd" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 4
-	},
-/turf/simulated/floor/tiled,
-/area/awaymission/lucky7/entry)
 "je" = (
 /obj/structure/closet,
 /obj/random/junk,
@@ -2010,10 +1965,6 @@
 /obj/structure/window/reinforced/full,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/entry)
-"kp" = (
-/obj/structure/cable,
-/turf/simulated/floor/wood,
-/area/awaymission/lucky7/lounge)
 "ks" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -2099,24 +2050,12 @@
 /obj/machinery/disposal,
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/barbackroom)
-"kQ" = (
-/obj/structure/cable,
-/turf/simulated/floor/carpet/brown,
-/area/awaymission/lucky7/casinofloor)
 "kV" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/casinofloor)
-"lh" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/catwalk,
-/obj/structure/cable,
-/turf/simulated/floor/plating,
-/area/awaymission/lucky7/trash)
 "li" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -2229,11 +2168,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/lounge)
-"mp" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor/tiled,
-/area/awaymission/lucky7/security)
 "mq" = (
 /obj/effect/floor_decal/borderfloorwhite{
 	dir = 4
@@ -2325,11 +2259,6 @@
 /obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/trash)
-"mO" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable,
-/turf/simulated/floor/carpet/brown,
-/area/awaymission/lucky7/hall2)
 "mQ" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
@@ -2444,11 +2373,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/dock1)
-"nv" = (
-/obj/structure/table/gamblingtable,
-/obj/structure/cable,
-/turf/simulated/floor/carpet/green,
-/area/awaymission/lucky7/privategameroom/two)
 "nw" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 9
@@ -2461,10 +2385,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/awaymission/lucky7/dock1)
-"nz" = (
-/obj/structure/cable,
-/turf/simulated/floor/wood,
-/area/awaymission/lucky7/privateroom/three)
 "nA" = (
 /obj/effect/floor_decal/borderfloor{
 	dir = 8
@@ -2577,10 +2497,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/dock1)
-"nY" = (
-/obj/structure/cable,
-/turf/simulated/floor/wood,
-/area/awaymission/lucky7/privateroom/two)
 "ob" = (
 /obj/effect/floor_decal/borderfloor{
 	dir = 4
@@ -2606,10 +2522,6 @@
 /obj/structure/disposalpipe/trunk,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/laundry)
-"op" = (
-/obj/structure/cable,
-/turf/simulated/floor/carpet/brown,
-/area/awaymission/lucky7/hall2)
 "oq" = (
 /obj/effect/floor_decal/techfloor/orange{
 	dir = 1
@@ -2965,10 +2877,6 @@
 /obj/random/drinkbottle,
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/bar)
-"qH" = (
-/obj/structure/cable,
-/turf/simulated/floor/carpet/brown,
-/area/awaymission/lucky7/hall2)
 "qL" = (
 /obj/structure/table/borosilicate,
 /obj/structure/dancepole,
@@ -3279,10 +3187,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/awaymission/lucky7/gateway)
-"sV" = (
-/obj/structure/cable,
-/turf/simulated/floor/tiled,
-/area/awaymission/lucky7/entry)
 "sX" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/storage/fancy/cigar/havana{
@@ -3483,11 +3387,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/awaymission/lucky7/gateway)
-"tY" = (
-/obj/structure/table/gamblingtable,
-/obj/structure/cable,
-/turf/simulated/floor/carpet/blue2,
-/area/awaymission/lucky7/privategameroom/three)
 "tZ" = (
 /obj/structure/bed/chair/wood{
 	dir = 1
@@ -3693,20 +3592,6 @@
 /obj/item/weapon/dice,
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/casinofloor)
-"uZ" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/simulated/floor/wood,
-/area/awaymission/lucky7/bar)
-"va" = (
-/obj/effect/floor_decal/rust,
-/obj/structure/disposalpipe/segment,
-/obj/structure/catwalk,
-/obj/structure/cable,
-/turf/simulated/floor/plating,
-/area/awaymission/lucky7/maint2)
 "vb" = (
 /obj/machinery/light{
 	dir = 1
@@ -4075,10 +3960,6 @@
 /obj/machinery/light,
 /turf/simulated/floor/carpet/brown,
 /area/awaymission/lucky7/casinofloor)
-"xF" = (
-/obj/structure/cable,
-/turf/simulated/floor/wood,
-/area/awaymission/lucky7/privateroom/four)
 "xH" = (
 /obj/structure/casino_table/craps,
 /obj/machinery/light/floortube{
@@ -4532,11 +4413,6 @@
 /obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/awaymission/lucky7/maint2)
-"AG" = (
-/obj/structure/table/gamblingtable,
-/obj/structure/cable,
-/turf/simulated/floor/carpet/purple,
-/area/awaymission/lucky7/privategameroom)
 "AJ" = (
 /obj/random/trash_pile,
 /obj/random/junk,
@@ -5341,10 +5217,6 @@
 /obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/entry)
-"FF" = (
-/obj/structure/cable,
-/turf/simulated/floor/tiled,
-/area/awaymission/lucky7/hall1)
 "FG" = (
 /obj/effect/floor_decal/borderfloor,
 /obj/effect/floor_decal/corner/grey/border,
@@ -5591,13 +5463,6 @@
 /obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/awaymission/lucky7/entry)
-"GV" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 4
-	},
-/turf/simulated/floor/tiled,
-/area/awaymission/lucky7/entry)
 "GX" = (
 /obj/structure/table/woodentable,
 /turf/simulated/floor/carpet,
@@ -5786,13 +5651,6 @@
 /obj/item/weapon/spacecash/c1000,
 /turf/simulated/floor/tiled/techfloor,
 /area/awaymission/lucky7/security)
-"Ig" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/simulated/floor/carpet/brown,
-/area/awaymission/lucky7/hotelhall)
 "Ij" = (
 /obj/machinery/light{
 	dir = 1
@@ -5893,10 +5751,6 @@
 "IC" = (
 /obj/machinery/door/airlock,
 /turf/simulated/floor/tiled/white,
-/area/awaymission/lucky7/privateroom/five)
-"IF" = (
-/obj/structure/cable,
-/turf/simulated/floor/wood,
 /area/awaymission/lucky7/privateroom/five)
 "IJ" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
@@ -6008,10 +5862,6 @@
 "JB" = (
 /turf/simulated/wall,
 /area/awaymission/lucky7/barbackroom)
-"JC" = (
-/obj/structure/cable,
-/turf/simulated/floor/tiled,
-/area/awaymission/lucky7/hall1)
 "JE" = (
 /obj/effect/floor_decal/spline/plain{
 	dir = 4
@@ -6221,13 +6071,6 @@
 /obj/machinery/door/firedoor/glass,
 /turf/simulated/floor/wood,
 /area/awaymission/lucky7/barbackroom)
-"KH" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 4
-	},
-/turf/simulated/floor/tiled,
-/area/awaymission/lucky7/entry)
 "KI" = (
 /obj/structure/disposalpipe/segment{
 	dir = 8;
@@ -7724,13 +7567,6 @@
 	},
 /turf/simulated/floor/carpet,
 /area/awaymission/lucky7/hall1)
-"Ru" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/simulated/floor/carpet/brown,
-/area/awaymission/lucky7/hotelhall)
 "Rw" = (
 /obj/item/weapon/bikehorn/rubberducky,
 /turf/simulated/floor/water/pool,
@@ -8108,13 +7944,6 @@
 	},
 /turf/simulated/floor/carpet/turcarpet,
 /area/awaymission/lucky7/bar)
-"Tt" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/tiled,
-/area/awaymission/lucky7/entry)
 "Tu" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -8741,10 +8570,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/awaymission/lucky7/kitchen)
-"WE" = (
-/obj/structure/cable,
-/turf/simulated/floor/tiled,
-/area/awaymission/lucky7/hall1)
 "WG" = (
 /obj/effect/floor_decal/spline/plain{
 	dir = 9
@@ -14131,7 +13956,7 @@ vO
 Yy
 fX
 iv
-jd
+Nr
 kc
 mS
 nS
@@ -15547,11 +15372,11 @@ wo
 wo
 wo
 wo
-kp
+np
 np
 NC
-sV
-KH
+yk
+Nr
 ZE
 km
 rm
@@ -15835,7 +15660,7 @@ lu
 lu
 lu
 aS
-GV
+Nr
 ZE
 Yy
 rm
@@ -16103,7 +15928,7 @@ YX
 al
 Yk
 zQ
-JC
+YT
 ar
 Yy
 Oj
@@ -16374,12 +16199,12 @@ rm
 YX
 ZL
 Yk
-FF
-WE
-WE
-WE
-WE
-WE
+YT
+YT
+YT
+YT
+YT
+YT
 EB
 Jz
 MG
@@ -16387,8 +16212,8 @@ SE
 MG
 MG
 SP
-WE
-WE
+YT
+YT
 Fw
 yk
 TK
@@ -16533,7 +16358,7 @@ Yk
 Yk
 ua
 az
-Tt
+TK
 ZE
 lu
 AJ
@@ -16675,7 +16500,7 @@ ob
 MJ
 km
 PE
-Tt
+TK
 ZE
 lu
 pO
@@ -16817,7 +16642,7 @@ GX
 dC
 km
 Oj
-Tt
+TK
 ZE
 lu
 lu
@@ -16959,7 +16784,7 @@ RX
 Tj
 km
 Oj
-Tt
+TK
 ZE
 lu
 qw
@@ -17101,7 +16926,7 @@ Sn
 wY
 Yy
 cN
-Tt
+TK
 Zj
 lu
 Ar
@@ -17243,7 +17068,7 @@ YX
 YX
 Yy
 dd
-Tt
+TK
 ZE
 lu
 lu
@@ -17385,7 +17210,7 @@ xL
 Bi
 sT
 Oj
-Tt
+TK
 UD
 CE
 ET
@@ -17674,7 +17499,7 @@ eG
 Vz
 Pj
 az
-Tt
+TK
 az
 aN
 eG
@@ -17958,7 +17783,7 @@ nq
 LI
 kD
 TB
-Tt
+TK
 bL
 Yy
 vO
@@ -18100,7 +17925,7 @@ yO
 aF
 gi
 VC
-Tt
+TK
 ZE
 Yy
 vO
@@ -18242,7 +18067,7 @@ yO
 yO
 Tn
 VC
-Tt
+TK
 Zj
 Yy
 vO
@@ -18384,7 +18209,7 @@ Jw
 Ze
 kD
 Jg
-Tt
+TK
 ZE
 Yy
 rm
@@ -18526,7 +18351,7 @@ kD
 kD
 kD
 Oj
-Tt
+TK
 ZE
 Yy
 rm
@@ -18668,7 +18493,7 @@ TY
 FL
 kD
 yb
-Tt
+TK
 ZE
 Yy
 rm
@@ -18806,8 +18631,8 @@ Ls
 PI
 PI
 pM
-mp
-mp
+pM
+pM
 pe
 xz
 Hl
@@ -18952,7 +18777,7 @@ pX
 xU
 kD
 PE
-Tt
+TK
 Zj
 Yy
 rm
@@ -19076,7 +18901,7 @@ mN
 mN
 mN
 rA
-va
+Li
 AX
 Gi
 hh
@@ -19094,7 +18919,7 @@ yO
 Iq
 kD
 Oj
-Tt
+TK
 ZE
 Yy
 vO
@@ -19213,7 +19038,7 @@ rm
 rm
 UW
 jK
-lh
+li
 ke
 kJ
 qk
@@ -19236,7 +19061,7 @@ eL
 Wj
 kD
 Yj
-Tt
+TK
 UD
 Yy
 vO
@@ -19520,7 +19345,7 @@ jP
 FZ
 sT
 zx
-uZ
+Ng
 zx
 zx
 tD
@@ -19662,7 +19487,7 @@ hh
 hh
 md
 zx
-uZ
+Ng
 zx
 Gf
 XU
@@ -19946,7 +19771,7 @@ RW
 kP
 JB
 MA
-uZ
+Ng
 zx
 Gf
 fi
@@ -20088,7 +19913,7 @@ og
 rN
 JB
 sX
-uZ
+Ng
 zx
 zx
 zx
@@ -20230,7 +20055,7 @@ BA
 EF
 JB
 Ts
-uZ
+Ng
 zx
 Gf
 fi
@@ -20372,7 +20197,7 @@ JB
 JB
 JB
 YG
-uZ
+Ng
 zx
 Gf
 SK
@@ -20514,7 +20339,7 @@ ww
 hN
 Na
 Dm
-uZ
+Ng
 zx
 Gf
 XT
@@ -20656,7 +20481,7 @@ OA
 XZ
 wd
 Rx
-uZ
+Ng
 zx
 zx
 zx
@@ -20798,7 +20623,7 @@ da
 OA
 Hn
 Rx
-uZ
+Ng
 zx
 Gf
 fi
@@ -20940,7 +20765,7 @@ OA
 OA
 LN
 Rx
-uZ
+Ng
 zx
 Gf
 uH
@@ -21082,7 +20907,7 @@ tE
 hS
 hS
 Rx
-uZ
+Ng
 zx
 Gf
 qG
@@ -21100,7 +20925,7 @@ GO
 TD
 fD
 HQ
-hU
+Gg
 Gg
 cr
 cr
@@ -21238,7 +21063,7 @@ rm
 rm
 Gj
 eU
-Ig
+Sd
 eU
 hO
 Kt
@@ -21330,7 +21155,7 @@ cp
 cp
 ag
 aA
-aQ
+bN
 bK
 cD
 cF
@@ -21354,19 +21179,19 @@ yp
 mK
 QM
 Vk
-kQ
-kQ
-kQ
-kQ
-kQ
-kQ
-kQ
-kQ
-kQ
-kQ
-kQ
-kQ
-hi
+Vk
+Vk
+Vk
+Vk
+Vk
+Vk
+Vk
+Vk
+Vk
+Vk
+Vk
+Vk
+Wc
 mV
 mV
 mV
@@ -21380,7 +21205,7 @@ Sk
 OP
 Gj
 eU
-Ig
+Sd
 Vt
 uu
 uu
@@ -21472,7 +21297,7 @@ cp
 ag
 ay
 aB
-bo
+bN
 bN
 bN
 bN
@@ -21480,11 +21305,11 @@ bN
 bN
 dS
 fl
-gB
+hu
 hu
 Tu
-iB
-mO
+Tu
+Tu
 Tu
 Tu
 Tu
@@ -21495,7 +21320,7 @@ Tu
 Tu
 Ow
 Ow
-ah
+Ow
 si
 si
 VW
@@ -21522,7 +21347,7 @@ SI
 cO
 Gj
 eU
-Ig
+Sd
 eU
 uu
 Dw
@@ -21622,11 +21447,11 @@ bu
 bu
 ec
 fv
-gN
+MZ
 yp
 yp
 yp
-gN
+MZ
 yp
 yp
 yp
@@ -21669,7 +21494,7 @@ TD
 TI
 Vd
 oO
-nY
+oO
 cn
 cn
 uu
@@ -21764,11 +21589,11 @@ bu
 bu
 ec
 fv
-gN
+MZ
 yp
 yp
 yp
-gN
+MZ
 yp
 yp
 yp
@@ -21806,7 +21631,7 @@ os
 os
 FG
 CN
-Ru
+Sd
 eU
 uu
 yv
@@ -21906,11 +21731,11 @@ bu
 cY
 pV
 fv
-gN
+MZ
 yp
 gG
 yp
-gN
+MZ
 yp
 nh
 LE
@@ -22048,11 +21873,11 @@ cM
 pV
 pV
 fy
-gN
+MZ
 yp
 gG
 yp
-gN
+MZ
 yp
 nh
 Vw
@@ -22090,7 +21915,7 @@ IN
 rg
 Gj
 eU
-Ig
+Sd
 eU
 KK
 oS
@@ -22194,7 +22019,7 @@ gV
 yY
 gG
 yp
-gN
+MZ
 yp
 bp
 bp
@@ -22236,7 +22061,7 @@ CO
 TD
 eW
 PC
-nz
+tz
 tz
 vg
 vg
@@ -22336,7 +22161,7 @@ gZ
 eH
 gG
 yp
-gN
+MZ
 yp
 bp
 ps
@@ -22374,7 +22199,7 @@ eU
 eU
 eU
 eU
-Ig
+Sd
 eU
 KK
 IJ
@@ -22478,7 +22303,7 @@ eH
 hw
 gG
 yp
-gN
+MZ
 yp
 bp
 RM
@@ -22620,12 +22445,12 @@ eH
 af
 gG
 Tk
-op
+MZ
 MZ
 nE
 py
 pN
-AG
+CG
 Qa
 sc
 Hf
@@ -22658,7 +22483,7 @@ eU
 eU
 eU
 eU
-Ig
+Sd
 eU
 uR
 ai
@@ -22762,7 +22587,7 @@ eH
 hw
 gG
 yp
-gN
+MZ
 yp
 bp
 RM
@@ -22804,7 +22629,7 @@ TW
 TD
 KM
 wq
-xF
+ZV
 ZV
 NQ
 NQ
@@ -22904,7 +22729,7 @@ eH
 eH
 gG
 yp
-gN
+MZ
 yp
 bp
 RM
@@ -22942,7 +22767,7 @@ rm
 rm
 Gj
 eU
-Ig
+Sd
 eU
 uR
 wK
@@ -23046,7 +22871,7 @@ hm
 hm
 gG
 yp
-gN
+MZ
 yp
 GJ
 GJ
@@ -23084,7 +22909,7 @@ rm
 rm
 Gj
 eU
-Ig
+Sd
 eU
 DL
 DL
@@ -23188,7 +23013,7 @@ ho
 ir
 gG
 yp
-gN
+MZ
 yp
 GJ
 Me
@@ -23226,7 +23051,7 @@ rm
 rm
 Gj
 eU
-Ig
+Sd
 eU
 DL
 zH
@@ -23330,12 +23155,12 @@ ae
 ae
 gG
 yp
-gN
+MZ
 yp
 GJ
 fN
 Dn
-nv
+Wm
 xt
 xt
 NI
@@ -23373,7 +23198,7 @@ TD
 Sl
 ND
 Xa
-IF
+Xa
 UM
 UM
 DL
@@ -23472,7 +23297,7 @@ eH
 eH
 gG
 Tk
-op
+MZ
 MZ
 nM
 pB
@@ -23510,7 +23335,7 @@ rm
 rm
 Gj
 Yw
-Ig
+Sd
 eU
 DL
 Iu
@@ -23614,7 +23439,7 @@ pb
 yY
 gG
 yp
-gN
+MZ
 yp
 GJ
 fN
@@ -23652,7 +23477,7 @@ rm
 rm
 Gj
 eU
-Ig
+Sd
 Vt
 Lw
 Lw
@@ -23756,7 +23581,7 @@ rm
 rm
 gG
 yp
-gN
+MZ
 yp
 GJ
 fN
@@ -23898,7 +23723,7 @@ rm
 rm
 ge
 yp
-gN
+MZ
 yp
 fH
 fH
@@ -24040,7 +23865,7 @@ rm
 rm
 ge
 yp
-gN
+MZ
 yp
 fH
 Py
@@ -24182,7 +24007,7 @@ rm
 rm
 ge
 yp
-gN
+MZ
 yp
 fH
 Fr
@@ -24324,12 +24149,12 @@ rm
 rm
 gG
 yp
-qH
+MZ
 MZ
 oh
 qd
 LA
-tY
+Qt
 tZ
 lL
 HB

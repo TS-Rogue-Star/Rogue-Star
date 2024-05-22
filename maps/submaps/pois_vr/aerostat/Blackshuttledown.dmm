@@ -49,7 +49,6 @@
 /area/submap/virgo2/Blackshuttledown)
 "al" = (
 /obj/machinery/door/airlock/external{
-	density = 1;
 	frequency = 1331;
 	id_tag = "merc_shuttle_outer";
 	name = "Ship External Access";
@@ -59,7 +58,6 @@
 /area/submap/virgo2/Blackshuttledown)
 "am" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 4
 	},
 /turf/simulated/shuttle/wall/dark{
@@ -98,8 +96,7 @@
 /area/submap/virgo2/Blackshuttledown)
 "ar" = (
 /obj/machinery/light/small{
-	dir = 4;
-	pixel_y = 0
+	dir = 4
 	},
 /turf/simulated/floor/tiled/steel,
 /area/submap/virgo2/Blackshuttledown)
@@ -163,8 +160,7 @@
 /obj/structure/table/steel,
 /obj/item/weapon/gun/projectile/automatic/c20r,
 /obj/machinery/light/small{
-	dir = 4;
-	pixel_y = 0
+	dir = 4
 	},
 /turf/simulated/floor/tiled/steel,
 /area/submap/virgo2/Blackshuttledown)
@@ -174,9 +170,7 @@
 /area/submap/virgo2/Blackshuttledown)
 "aE" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1";
-	pixel_x = 0
+	dir = 4
 	},
 /turf/simulated/floor/tiled/steel,
 /area/submap/virgo2/Blackshuttledown)
@@ -213,7 +207,6 @@
 /area/submap/virgo2/Blackshuttledown)
 "aL" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/simulated/floor/tiled/steel,
@@ -266,8 +259,7 @@
 "aV" = (
 /obj/structure/table/steel,
 /obj/machinery/light/small{
-	dir = 4;
-	pixel_y = 0
+	dir = 4
 	},
 /turf/simulated/floor/tiled/steel,
 /area/submap/virgo2/Blackshuttledown)
@@ -346,8 +338,7 @@
 "bj" = (
 /obj/machinery/atmospherics/pipe/tank/oxygen,
 /obj/machinery/light/small{
-	dir = 4;
-	pixel_y = 0
+	dir = 4
 	},
 /turf/simulated/floor/tiled/steel,
 /area/submap/virgo2/Blackshuttledown)
@@ -373,8 +364,7 @@
 /obj/structure/table/steel,
 /obj/item/weapon/gun/projectile/pistol,
 /obj/machinery/light/small{
-	dir = 4;
-	pixel_y = 0
+	dir = 4
 	},
 /turf/simulated/floor/tiled/steel,
 /area/submap/virgo2/Blackshuttledown)

@@ -47,11 +47,6 @@
 	oxygen = 0
 	},
 /area/shuttle/sdf_corvette_wreck)
-"dv" = (
-/obj/structure/cable,
-/obj/structure/girder,
-/turf/simulated/floor/airless,
-/area/shuttle/sdf_corvette_wreck)
 "dG" = (
 /obj/machinery/sleeper{
 	dir = 8
@@ -964,7 +959,7 @@ IY
 Vq
 UB
 Vq
-dv
+Fb
 Vq
 VN
 Vq

@@ -47,7 +47,6 @@
 /obj/structure/bed/chair/bay/comfy{
 	dir = 4
 	},
-/obj/item/trash/spacercake_wrap,
 /turf/simulated/floor/tiled/techmaint,
 /area/tether_away/beach/resort)
 "cR" = (
@@ -222,10 +221,6 @@
 "lJ" = (
 /obj/structure/table/rack,
 /turf/simulated/floor/plating,
-/area/tether_away/beach/resort)
-"mp" = (
-/obj/structure/cable,
-/turf/simulated/floor/outdoors/grass/forest,
 /area/tether_away/beach/resort)
 "mr" = (
 /obj/structure/barricade,
@@ -936,10 +931,6 @@
 /area/tether_away/beach/resort)
 "Rs" = (
 /turf/simulated/wall/r_wall,
-/area/tether_away/beach/resort)
-"RJ" = (
-/obj/structure/cable,
-/turf/simulated/floor/outdoors/grass/forest,
 /area/tether_away/beach/resort)
 "Sk" = (
 /obj/structure/handrail{
@@ -17416,8 +17407,8 @@ KH
 Em
 sF
 TR
-RJ
-RJ
+Vs
+Vs
 Vs
 sF
 sF
@@ -17560,7 +17551,7 @@ sF
 sF
 sF
 sF
-mp
+Vs
 sF
 sF
 ET

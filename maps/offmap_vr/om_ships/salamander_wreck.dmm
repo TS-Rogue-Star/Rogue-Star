@@ -563,13 +563,6 @@
 	},
 /turf/simulated/floor/tiled/techmaint/airless,
 /area/shuttle/salamander_wreck_engineering)
-"iC" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor/tiled/techmaint/airless,
-/area/shuttle/salamander_wreck)
 "iJ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -2190,7 +2183,7 @@ bL
 eB
 fG
 FL
-iC
+qg
 fG
 mm
 oc
@@ -2226,7 +2219,7 @@ VT
 KX
 Lf
 FL
-iC
+qg
 ON
 mJ
 VT
@@ -2244,7 +2237,7 @@ VT
 Bf
 Lf
 FL
-iC
+qg
 ON
 mO
 VT
@@ -2262,7 +2255,7 @@ VT
 Rd
 fR
 FL
-iC
+qg
 lc
 jq
 VT
@@ -2316,7 +2309,7 @@ cX
 fX
 fX
 hh
-iC
+qg
 Qn
 Qn
 BE
@@ -2334,7 +2327,7 @@ oe
 eJ
 Qn
 IR
-iC
+qg
 Qn
 eJ
 BE

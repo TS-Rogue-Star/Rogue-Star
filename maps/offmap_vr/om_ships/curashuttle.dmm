@@ -99,10 +99,6 @@
 	},
 /turf/simulated/floor/carpet/bcarpet,
 /area/shuttle/curabitur/curashuttle/cockpit)
-"ao" = (
-/obj/structure/cable,
-/turf/simulated/floor/carpet/bcarpet,
-/area/shuttle/curabitur/curashuttle/cockpit)
 "ap" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
@@ -254,10 +250,6 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/simulated/floor/carpet/bcarpet,
-/area/shuttle/curabitur/curashuttle/cockpit)
-"aF" = (
-/obj/structure/cable,
 /turf/simulated/floor/carpet/bcarpet,
 /area/shuttle/curabitur/curashuttle/cockpit)
 "aG" = (
@@ -1616,9 +1608,9 @@ aa
 aa
 aa
 af
-ao
+aV
 aw
-aF
+aV
 aO
 aW
 bc

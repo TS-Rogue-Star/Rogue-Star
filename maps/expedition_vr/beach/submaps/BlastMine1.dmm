@@ -29,9 +29,7 @@
 /turf/simulated/mineral/floor/ignore_mapgen/cave,
 /area/submap/cave/BlastMine1)
 "h" = (
-/obj/item/device/gps/internal/poi{
-	gps_tag = "Unidentified Signal"
-	},
+/obj/item/device/gps/internal/poi,
 /turf/simulated/wall/sandstone,
 /area/submap/cave/BlastMine1)
 "i" = (

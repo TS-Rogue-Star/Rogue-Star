@@ -19,14 +19,12 @@
 /area/submap/ore_cliff)
 "f" = (
 /obj/structure/cliff/automatic{
-	icon_state = "cliffbuilder";
 	dir = 5
 	},
 /turf/simulated/mineral/floor/ignore_mapgen/cave,
 /area/submap/ore_cliff)
 "g" = (
 /obj/structure/cliff/automatic{
-	icon_state = "cliffbuilder";
 	dir = 9
 	},
 /turf/simulated/mineral/floor/ignore_mapgen/cave,
@@ -37,7 +35,6 @@
 /area/submap/ore_cliff)
 "i" = (
 /obj/structure/cliff/automatic/corner{
-	icon_state = "cliffbuilder-corner";
 	dir = 9
 	},
 /turf/simulated/mineral/floor/ignore_mapgen/cave,

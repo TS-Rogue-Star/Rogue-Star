@@ -76,33 +76,9 @@
 /obj/machinery/field_generator,
 /turf/simulated/floor/airless,
 /area/groundbase/engineering/satellite/engineroom)
-"cX" = (
-/obj/machinery/power/emitter{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/effect/floor_decal/industrial/warning/color{
-	dir = 4
-	},
-/turf/simulated/floor/airless,
-/area/groundbase/engineering/satellite/engineroom)
-"ds" = (
-/obj/machinery/power/tesla_coil,
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/groundbase/engineering/satellite/engineroom)
-"du" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/groundbase/engineering/satellite/engineroom)
 "dv" = (
 /obj/machinery/the_singularitygen/tesla,
 /obj/effect/floor_decal/industrial/warning/color/tile/yellow,
-/turf/simulated/floor/airless,
-/area/groundbase/engineering/satellite/engineroom)
-"dG" = (
-/obj/machinery/power/tesla_coil,
-/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/groundbase/engineering/satellite/engineroom)
 "dO" = (
@@ -122,23 +98,6 @@
 /obj/effect/floor_decal/industrial/warning/color{
 	dir = 4
 	},
-/turf/simulated/floor/airless,
-/area/groundbase/engineering/satellite/engineroom)
-"eM" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/groundbase/engineering/satellite/engineroom)
-"eY" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/groundbase/engineering/satellite/engineroom)
-"ff" = (
-/obj/machinery/power/tesla_coil,
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/groundbase/engineering/satellite/engineroom)
-"fh" = (
-/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/groundbase/engineering/satellite/engineroom)
 "fj" = (
@@ -193,10 +152,6 @@
 	dir = 9
 	},
 /turf/simulated/floor/tiled,
-/area/groundbase/engineering/satellite/engineroom)
-"hq" = (
-/obj/structure/cable,
-/turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/satellite/engineroom)
 "ia" = (
 /obj/machinery/door/airlock/glass_external,
@@ -494,10 +449,6 @@
 	},
 /turf/simulated/floor/carpet/retro_red,
 /area/groundbase/engineering/satellite/breakroom)
-"rN" = (
-/obj/structure/cable,
-/turf/simulated/floor/plating,
-/area/groundbase/engineering/satellite/portstorage)
 "rO" = (
 /turf/simulated/floor/plating,
 /area/groundbase/engineering/satellite/portstorage)
@@ -525,10 +476,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable,
-/turf/simulated/floor/tiled,
-/area/groundbase/engineering/satellite/engineroom)
-"ti" = (
 /obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/satellite/engineroom)
@@ -655,10 +602,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/groundbase/engineering/satellite/atmospherics)
-"wm" = (
-/obj/structure/cable,
-/turf/simulated/floor/plating,
-/area/groundbase/engineering/satellite/portstorage)
 "wq" = (
 /obj/machinery/door/airlock/glass_engineering{
 	name = "Port Storage"
@@ -744,10 +687,6 @@
 /obj/machinery/firealarm{
 	dir = 8
 	},
-/turf/simulated/floor/plating,
-/area/groundbase/engineering/satellite/portstorage)
-"zk" = (
-/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/groundbase/engineering/satellite/portstorage)
 "zn" = (
@@ -10781,7 +10720,7 @@ ak
 gJ
 jB
 os
-rN
+Cc
 vE
 gJ
 ZK
@@ -11066,8 +11005,8 @@ gJ
 kv
 oH
 sA
-wm
-zk
+Cc
+Cc
 Cc
 ZK
 HN
@@ -11196,11 +11135,11 @@ bl
 cm
 cn
 cn
-ds
-du
-dG
-du
-eM
+fj
+gx
+fj
+gx
+gx
 cm
 gG
 DE
@@ -11342,7 +11281,7 @@ cn
 cn
 cn
 cT
-eY
+gx
 cn
 bs
 JP
@@ -11484,14 +11423,14 @@ wu
 wu
 wu
 cn
-ff
+fj
 cn
 bs
 JP
 uR
 li
 zO
-ti
+zR
 zO
 zs
 CR
@@ -11626,11 +11565,11 @@ wu
 dv
 wu
 cn
-fh
-du
+gx
+gx
 ii
 gU
-hq
+PR
 lt
 pB
 tm
@@ -11910,7 +11849,7 @@ cn
 cn
 cn
 cT
-eY
+gx
 cn
 bs
 JP
@@ -12048,10 +11987,10 @@ bl
 cm
 cn
 cn
-ds
-du
-dG
-du
+fj
+gx
+fj
+gx
 gx
 cm
 gG
@@ -12331,7 +12270,7 @@ ak
 bv
 xI
 xI
-cX
+eF
 xI
 xI
 xI

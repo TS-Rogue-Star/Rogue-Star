@@ -8,7 +8,6 @@
 "c" = (
 /obj/effect/map_effect/portal/master/side_a{
 	dir = 4;
-	icon_state = "portal_side_a";
 	portal_id = "spatial_anomaly_5"
 	},
 /obj/effect/map_effect/perma_light/brighter{
@@ -19,7 +18,6 @@
 "d" = (
 /obj/effect/map_effect/portal/master/side_b{
 	dir = 8;
-	icon_state = "portal_side_b";
 	portal_id = "spatial_anomaly_5"
 	},
 /obj/effect/map_effect/perma_light/brighter{
@@ -45,7 +43,6 @@
 /area/submap/spatial_anomaly)
 "h" = (
 /obj/effect/map_effect/portal/line/side_a{
-	icon_state = "portal_line_side_a";
 	dir = 4
 	},
 /obj/effect/map_effect/perma_light/brighter{
@@ -55,7 +52,6 @@
 /area/submap/spatial_anomaly)
 "i" = (
 /obj/effect/map_effect/portal/line/side_b{
-	icon_state = "portal_line_side_b";
 	dir = 8
 	},
 /obj/effect/map_effect/perma_light/brighter{
@@ -85,7 +81,6 @@
 "n" = (
 /obj/effect/map_effect/portal/master/side_a{
 	dir = 4;
-	icon_state = "portal_side_a";
 	portal_id = "spatial_anomaly_3"
 	},
 /obj/effect/map_effect/perma_light/brighter{
@@ -96,7 +91,6 @@
 "o" = (
 /obj/effect/map_effect/portal/master/side_a{
 	dir = 1;
-	icon_state = "portal_side_a";
 	portal_id = "spatial_anomaly_4"
 	},
 /obj/effect/map_effect/perma_light/brighter{
@@ -107,7 +101,6 @@
 "p" = (
 /obj/effect/map_effect/portal/master/side_b{
 	dir = 8;
-	icon_state = "portal_side_b";
 	portal_id = "spatial_anomaly_3"
 	},
 /obj/effect/map_effect/perma_light/brighter{
@@ -197,7 +190,6 @@
 "F" = (
 /obj/effect/map_effect/portal/master/side_a{
 	dir = 1;
-	icon_state = "portal_side_a";
 	portal_id = "spatial_anomaly_2"
 	},
 /obj/effect/map_effect/perma_light/brighter{
@@ -207,7 +199,6 @@
 /area/submap/spatial_anomaly)
 "G" = (
 /obj/effect/map_effect/portal/line/side_a{
-	icon_state = "portal_line_side_a";
 	dir = 1
 	},
 /obj/effect/map_effect/perma_light/brighter{
@@ -221,7 +212,6 @@
 "I" = (
 /obj/effect/map_effect/portal/master/side_b{
 	dir = 1;
-	icon_state = "portal_side_b";
 	portal_id = "spatial_anomaly_1"
 	},
 /obj/effect/map_effect/perma_light/brighter{
@@ -231,7 +221,6 @@
 /area/submap/spatial_anomaly)
 "J" = (
 /obj/effect/map_effect/portal/line/side_b{
-	icon_state = "portal_line_side_b";
 	dir = 1
 	},
 /obj/effect/map_effect/perma_light/brighter{
