@@ -15,7 +15,6 @@
 	anchored = TRUE
 	unacidable = TRUE
 	circuit = /obj/item/weapon/circuitboard/breakerbox
-	var/obj/structure/cable/stored
 	var/on = FALSE
 	var/busy = FALSE
 	var/RCon_tag = "NO_TAG"
@@ -24,8 +23,6 @@
 /obj/machinery/power/breakerbox/Destroy()
 	for(var/obj/structure/cable/C in src.loc)
 		qdel(C)
-	if(stored)
-		stored = null
 	. = ..()
 	for(var/datum/tgui_module/rcon/R in world)
 		R.FindDevices()
@@ -70,7 +67,7 @@
 		set_state(!on)
 		to_chat(user, "<font color='green'>Update Completed. New setting:[on ? "on": "off"]</font>")
 		update_locked = TRUE
-		spawn(10 SECONDS)	//why was it 5 minutes cool down...
+		spawn(5 SECONDS)	//why was it 5 minutes cool down...
 			update_locked = FALSE
 	busy = FALSE
 
@@ -93,7 +90,7 @@
 		"<span class='notice'>[user.name] [on ? "enabled" : "disabled"] the breaker box!</span>",\
 		"<span class='notice'>You [on ? "enabled" : "disabled"] the breaker box!</span>")
 		update_locked = TRUE
-		spawn(10 SECONDS)
+		spawn(5 SECONDS)
 			update_locked = FALSE
 	busy = FALSE
 
@@ -105,7 +102,7 @@
 			RCon_tag = newtag
 			to_chat(user, "<span class='notice'>You changed the RCON tag to: [newtag]</span>")
 	if(on)
-		to_chat(user, "<font color='red'>Disable the breaker before performing maintenance.</font>")
+		to_chat(user, "<span class='notice'>Disable the breaker before performing maintenance.</span>")
 		return
 	if(default_deconstruction_screwdriver(user, W))
 		return
@@ -118,30 +115,25 @@
 	on = state
 	if(on)
 		icon_state = icon_state_on
-		var/list/connection_dirs = list()
 		for(var/direction in GLOB.cardinal)
 			for(var/obj/structure/cable/C in get_step(src,direction))
-				connection_dirs += direction
-				cable_layer = C.cable_layer //Ensure our cable layer matches the connections
-				break
+				if(cable_layer == C.cable_layer) //Ensure our cable layer matches the connections We probably should only be on Layer 2
+					break
 
-		if(stored) //let's try to preserve our wire to save on generations.
-			var/obj/structure/cable/C = stored
-			C.loc = loc
-			stored = null
-			if(!C.breaker_box)
-				C.breaker_box = src
-			C.Connect_cable()
-		else
-			var/obj/structure/cable/C = new/obj/structure/cable(src.loc)
-			C.cable_layer = cable_layer	//ensuring the new cable is, also, the correct layer.
-			if(!C.breaker_box)
-				C.breaker_box = src
+		var/obj/structure/cable/C = new/obj/structure/cable(src.loc)
+		C.cable_layer = cable_layer	//ensuring the new cable is, also, the correct layer.
+		if(!C.breaker_box)
+			C.breaker_box = src
+		var/datum/powernet/PN = new()
+		PN.add_cable(C)
+		for(var/dir_check in GLOB.cardinal)
+			C.mergeConnectedNetworks(dir_check) //merge the powernet with adjacents powernets
+		C.mergeConnectedNetworksOnTurf() //merge the powernet with on turf powernets
 
 	else
 		icon_state = icon_state_off
 		for(var/obj/structure/cable/C in src.loc)
-			if(!C) return
+			qdel(C)
 
 
 // Used by RCON to toggle the breaker box.
@@ -149,7 +141,7 @@
 	if(!update_locked)
 		set_state(!on)
 		update_locked = TRUE
-		spawn(600)
+		spawn(5 SECONDS)
 			update_locked = FALSE
 
 /obj/machinery/power/breakerbox/process()

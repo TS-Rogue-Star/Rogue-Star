@@ -231,7 +231,7 @@
 	if(!T || !istype(T))
 		return FALSE
 
-	var/obj/structure/cable/C = T.get_cable_node()
+	var/obj/structure/cable/C = T.get_cable_node(cable_layer)
 	if(!C || !C.powernet)
 		return FALSE
 

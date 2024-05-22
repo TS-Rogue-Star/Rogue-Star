@@ -5,7 +5,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 						/obj/machinery/shield_gen,
 						/obj/item/device/powersink,
 						/obj/machinery/shieldwallgen,
-						/obj/machinery/particle_accelerator/control_box
+						/obj/machinery/recharge_station
 						)))
 
 #define UNDER_SMES -1

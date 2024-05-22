@@ -291,7 +291,7 @@
 	if(!in_range(src, user))//To prevent TK and mech users from getting shocked
 		return 0
 	var/turf/T = get_turf(src)
-	var/obj/structure/cable/C = T.get_cable_node()
+	var/obj/structure/cable/C = T.get_cable_node(CABLE_LAYER_ALL)
 	if(C)
 		if(C.powernet)
 			var/datum/powernet/PN = C.powernet

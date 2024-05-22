@@ -14,13 +14,13 @@
 	var/charge = 1 MEGAWATTS		//Current amount of power it holds
 
 	var/input_attempt = FALSE //attempting to charge ?
-	var/inputting = FALSE
+	var/inputting = 0
 	var/input_level = SMESSTARTCHARGELVL //amount of power the SMES attempts to charge by, 50kW
 	var/input_level_max = SMESMAXCHARGELEVEL //cap on input level 250kW
 	var/input_available = 0 //amount of charge available from input last tick
 
 	var/output_attempt = TRUE //attempting to output ?
-	var/outputting = FALSE
+	var/outputting = 0
 	var/output_level = SMESSTARTOUTLVL //amount of power the SMES attempts to output, 50kW
 	var/output_level_max = SMESMAXOUTPUT // cap on output level 250kW
 	var/output_used = 0 //amount of power actually outputted. may be less than output_level if the powernet returns excess power
@@ -132,6 +132,7 @@
 	GLOB.smeses -= src
 	return ..()
 
+///let's ensure we also scoop up our pre-mapped friends.
 /obj/machinery/power/smes/proc/add_nearby_terminals()
 	for(var/d in GLOB.cardinal)
 		var/turf/T = get_step(src, d)
@@ -511,7 +512,7 @@
 			return
 		if(!C || C.get_amount() < 10)
 			return
-		var/obj/structure/cable/N = T.get_cable_node() //get the connecting node cable, if there's one
+		var/obj/structure/cable/N = T.get_cable_node(terminal_cable_layer) //get the connecting node cable, if there's one
 		if (prob(50))
 			electrocute_mob(usr, N, N, 1, TRUE)
 

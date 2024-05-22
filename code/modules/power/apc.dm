@@ -264,9 +264,17 @@
 /obj/machinery/power/apc/proc/make_terminal()
 	// create a terminal object at the same position as original turf loc
 	// wires will attach to this
-	terminal = new/obj/machinery/power/terminal(loc)
-	terminal.set_dir(dir)
-	terminal.master = src
+	var/turf/T = get_turf(src)
+	for(var/obj/structure/cable/C in T.contents)
+		cable_layer = C.cable_layer	//let's ensure we operate on the correct layer
+		if(cable_layer == CABLE_LAYER_1)
+			terminal = new/obj/machinery/power/terminal/layer1(T)
+		else if(cable_layer == CABLE_LAYER_2)
+			terminal = new/obj/machinery/power/terminal(T)
+		else if(cable_layer == CABLE_LAYER_3)
+			terminal = new/obj/machinery/power/terminal/layer3(T)
+		terminal.set_dir(get_dir(T,src))
+		terminal.master = src
 
 /obj/machinery/power/apc/proc/init()
 	has_electronics = APC_HAS_ELECTRONICS_SECURED //installed and secured
@@ -565,12 +573,7 @@
 			to_chat(user, "<span class='warning'>You need ten lengths of cable for that.</span>")
 			return
 
-		var/terminal_cable_layer = CABLE_LAYER_2
-		var/choice = tgui_input_list(user, "Select Power Input Cable Layer", "Select Cable Layer", GLOB.cable_name_to_layer)
-		if(isnull(choice))
-			return
-		terminal_cable_layer = GLOB.cable_name_to_layer[choice]
-
+		var/terminal_cable_layer = C.target_layer
 		user.visible_message("<span class='warning'>[user.name] adds cables to the APC frame.</span>", \
 							"You start adding cables to the APC frame...")
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)

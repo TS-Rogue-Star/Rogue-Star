@@ -27,9 +27,17 @@
 /turf/simulated/floor/tiled/monotile,
 /area/stellardelight/deck3/commandhall)
 "af" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
 /obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
+/obj/structure/cable/layer3,
+/turf/simulated/open,
+/area/stellardelight/deck2/fore)
 "ag" = (
 /turf/simulated/floor/tiled/monotile,
 /area/stellardelight/deck3/aft)
@@ -86,12 +94,15 @@
 /turf/simulated/floor/tiled/monotile,
 /area/stellardelight/deck3/aft)
 "al" = (
-/obj/machinery/power/terminal{
-	dir = 8
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
 	},
 /obj/structure/cable,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/substation/command)
+/obj/structure/cable/layer3,
+/turf/simulated/open,
+/area/stellardelight/deck2/fore)
 "am" = (
 /obj/machinery/door/airlock/angled_bay/hatch{
 	dir = 4;
@@ -169,9 +180,17 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/crew_quarters/heads/hor)
 "aw" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
 /obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
-/area/maintenance/stellardelight/deck3/aftstarroom)
+/area/stellardelight/deck2/fore)
 "ax" = (
 /obj/item/weapon/book/manual/command_guide,
 /obj/item/weapon/book/manual/command_guide,
@@ -270,29 +289,19 @@
 /turf/simulated/floor,
 /area/stellardelight/deck2/starboard)
 "aK" = (
-/obj/structure/cable,
 /obj/machinery/camera/network/command{
 	dir = 10
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/heads/hop)
 "aM" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/stellardelight/deck2/central)
-"aN" = (
-/obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/simulated/open,
-/area/stellardelight/deck2/starboard)
 "aP" = (
 /obj/structure/bed/chair/shuttle{
 	dir = 1
@@ -373,6 +382,7 @@
 	req_access = list(57);
 	stripe_color = "#a3d1d1"
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/heads/hop)
 "bh" = (
@@ -393,7 +403,6 @@
 /area/lawoffice)
 "bl" = (
 /obj/structure/lattice,
-/obj/structure/cable,
 /obj/machinery/door/firedoor/glass,
 /turf/simulated/open,
 /area/maintenance/stellardelight/deck3/portcent)
@@ -409,20 +418,18 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/simulated/open,
 /area/stellardelight/deck2/fore)
 "bp" = (
-/obj/effect/floor_decal/industrial/warning{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
+/obj/structure/cable/layer3,
+/turf/simulated/floor/tiled/monotile,
+/area/stellardelight/deck3/commandhall)
 "br" = (
 /obj/structure/lattice,
-/obj/structure/cable,
 /obj/structure/disposalpipe/down,
 /obj/machinery/door/firedoor/glass,
+/obj/structure/cable/multilayer/multiz,
 /turf/simulated/open,
 /area/maintenance/stellardelight/deck3/starboardcent)
 "bs" = (
@@ -439,11 +446,17 @@
 /turf/simulated/wall/bay/r_wall/steel,
 /area/maintenance/stellardelight/deck3/starboardaft)
 "bB" = (
+/obj/structure/lattice,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck3/starboardcent)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable/layer3,
+/turf/simulated/open,
+/area/stellardelight/deck2/starboard)
 "bC" = (
 /obj/structure/closet/crate,
 /obj/random/maintenance,
@@ -467,6 +480,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/open,
 /area/stellardelight/deck2/fore)
 "bJ" = (
@@ -505,13 +519,13 @@
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/portcent)
 "bQ" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_cyborg_station)
 "bS" = (
@@ -526,6 +540,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/starboardcent)
 "bT" = (
@@ -537,6 +552,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/stellardelight/deck2/central)
 "bU" = (
@@ -596,7 +612,6 @@
 /area/stellardelight/deck3/clownmimeoffice)
 "ci" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/secure{
 	dir = 4;
 	name = "Robotic Storage";
@@ -608,8 +623,22 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ai_cyborg_station)
+"cj" = (
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/turf/simulated/floor/tiled,
+/area/shuttle/sdboat/aft{
+	base_turf = /turf/simulated/floor/reinforced/airless
+	})
 "ck" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -642,13 +671,11 @@
 /area/tcommsat/chamber)
 "cn" = (
 /obj/structure/cable,
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+/obj/machinery/power/breakerbox/activated{
+	RCon_tag = "AI/Telecomms Substation Bypass"
 	},
-/turf/simulated/floor/tiled,
-/area/shuttle/sdboat/aft{
-	base_turf = /turf/simulated/floor/reinforced/airless
-	})
+/turf/simulated/floor,
+/area/ai_cyborg_station)
 "cp" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
@@ -676,7 +703,6 @@
 /area/stellardelight/deck3/aft)
 "ct" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/secure{
 	dir = 4;
 	name = "AI Storage";
@@ -688,6 +714,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ai_cyborg_station)
 "cu" = (
@@ -701,13 +728,13 @@
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/aft)
 "cw" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_upload)
 "cx" = (
@@ -725,9 +752,15 @@
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/starboarddock)
 "cz" = (
-/obj/structure/cable,
-/turf/simulated/wall/bay/r_wall/blue,
-/area/ai_cyborg_station)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable/layer3,
+/turf/simulated/floor/tiled/monotile,
+/area/stellardelight/deck3/commandhall)
 "cA" = (
 /obj/structure/bed/chair{
 	dir = 8
@@ -758,13 +791,13 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/stellardelight/deck3/cryo)
 "cK" = (
-/obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/simulated/floor,
-/area/maintenance/stellardelight/deck3/portfore)
+/area/ai_cyborg_station)
 "cL" = (
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck3/starboardfore)
+/obj/structure/cable/layer1,
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/ai)
 "cO" = (
 /obj/machinery/holoplant,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -782,6 +815,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/heads/hop)
 "cS" = (
@@ -821,9 +855,17 @@
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/foreportrooma)
 "da" = (
+/obj/machinery/door/firedoor/glass,
 /obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
+/obj/machinery/door/airlock/angled_bay/hatch{
+	door_color = "#323d80";
+	name = "maintenance access";
+	req_one_access = list(16);
+	stripe_color = "#323d80"
+	},
+/obj/structure/cable/layer1,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/ai_cyborg_station)
 "db" = (
 /obj/structure/lattice,
 /obj/structure/disposalpipe/segment,
@@ -914,20 +956,18 @@
 /area/maintenance/stellardelight/deck3/forestarroomb)
 "dy" = (
 /obj/effect/floor_decal/industrial/warning,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/tcommsat/computer)
 "dB" = (
-/obj/effect/floor_decal/industrial/warning/corner{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
+/obj/machinery/porta_turret/ai_defense,
+/obj/structure/cable/layer1,
+/turf/simulated/floor/bluegrid,
+/area/ai)
 "dD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
@@ -962,6 +1002,10 @@
 /obj/machinery/light,
 /turf/simulated/floor/tiled/dark,
 /area/crew_quarters/heads/hos)
+"dK" = (
+/obj/structure/cable/layer1,
+/turf/simulated/wall/bay/r_wall/blue,
+/area/ai)
 "dL" = (
 /obj/structure/cable,
 /obj/structure/table/steel,
@@ -1054,11 +1098,6 @@
 /obj/random/firstaid,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/portaft)
-"eg" = (
-/obj/machinery/porta_turret/ai_defense,
-/obj/structure/cable,
-/turf/simulated/floor/bluegrid,
-/area/ai)
 "eh" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -1094,7 +1133,6 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/portdock)
 "el" = (
@@ -1105,10 +1143,6 @@
 	temperature = 80
 	},
 /area/tcommsat/chamber)
-"em" = (
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck3/forestarrooma)
 "en" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -1132,10 +1166,6 @@
 	temperature = 80
 	},
 /area/tcommsat/chamber)
-"ep" = (
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/ai_cyborg_station)
 "et" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 8
@@ -1149,7 +1179,6 @@
 /area/ai)
 "ev" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
@@ -1165,12 +1194,9 @@
 	req_access = list(30);
 	stripe_color = "#5a19a8"
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/heads/hor)
-"ew" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "ex" = (
 /obj/structure/cable,
 /obj/machinery/light{
@@ -1188,10 +1214,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/starboarddock)
-"ey" = (
-/obj/structure/cable,
-/turf/simulated/floor/tiled/techfloor/grid,
-/area/maintenance/stellardelight/deck3/foreportroomb)
 "ez" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/angled_bay/double{
@@ -1237,10 +1259,6 @@
 /obj/random/maintenance/medical,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/portfore)
-"eI" = (
-/obj/structure/cable,
-/turf/simulated/wall/bay/r_wall/steel,
-/area/crew_quarters/bar)
 "eJ" = (
 /turf/simulated/wall/fancy_shuttle/nondense{
 	fancy_shuttle_tag = "sdboat"
@@ -1305,9 +1323,9 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/maintenance/stellardelight/deck3/forestarrooma)
 "eS" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_cyborg_station)
 "eU" = (
@@ -1328,28 +1346,18 @@
 /obj/structure/cable,
 /turf/simulated/open,
 /area/crew_quarters/bar)
-"eX" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
-"eY" = (
-/obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/open,
-/area/stellardelight/deck2/starboard)
 "fa" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/carpet/oracarpet,
 /area/crew_quarters/heads/chief)
 "fb" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_server_room)
 "fd" = (
@@ -1419,10 +1427,6 @@
 /area/shuttle/sdboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless
 	})
-"fh" = (
-/obj/structure/cable,
-/turf/simulated/floor/tiled/techfloor/grid,
-/area/maintenance/stellardelight/deck3/foreportroomb)
 "fj" = (
 /obj/structure/table/woodentable,
 /obj/item/toy/figure/clown,
@@ -1444,11 +1448,6 @@
 	temperature = 80
 	},
 /area/tcommsat/chamber)
-"fl" = (
-/obj/structure/cable,
-/obj/machinery/power/solar,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "fs" = (
 /obj/structure/cable,
 /turf/simulated/wall/bay/r_wall/steel,
@@ -1458,7 +1457,7 @@
 /obj/machinery/power/apc/angled{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_upload)
 "fz" = (
@@ -1497,15 +1496,7 @@
 	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/portcent)
-"fM" = (
-/obj/machinery/power/terminal{
-	dir = 8
-	},
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/ai_cyborg_station)
 "fO" = (
-/obj/structure/cable,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -1566,6 +1557,7 @@
 /area/crew_quarters/bar)
 "gh" = (
 /obj/machinery/telecomms/server/presets/command,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark{
 	nitrogen = 100;
 	oxygen = 0;
@@ -1613,11 +1605,6 @@
 /area/shuttle/sdboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless
 	})
-"gm" = (
-/obj/structure/lattice,
-/obj/structure/cable,
-/turf/simulated/open,
-/area/stellardelight/deck2/fore)
 "gq" = (
 /obj/effect/floor_decal/spline/plain{
 	dir = 4
@@ -1633,10 +1620,6 @@
 	},
 /turf/simulated/floor/carpet/purcarpet,
 /area/crew_quarters/heads/hor)
-"gw" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "gy" = (
 /obj/structure/closet/secure_closet/engineering_chief,
 /obj/item/device/radio/intercom{
@@ -1659,14 +1642,6 @@
 	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/portcent)
-"gB" = (
-/obj/machinery/power/pointdefense{
-	id_tag = "sd_pd"
-	},
-/obj/effect/floor_decal/industrial/warning/full,
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "gE" = (
 /obj/structure/table/darkglass,
 /obj/item/weapon/stamp/denied{
@@ -1676,24 +1651,9 @@
 /obj/item/weapon/stamp/internalaffairs,
 /turf/simulated/floor/carpet/blue2,
 /area/lawoffice)
-"gG" = (
-/obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/simulated/open,
-/area/stellardelight/deck2/fore)
 "gH" = (
 /turf/simulated/floor,
 /area/ai_cyborg_station)
-"gJ" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "gL" = (
 /obj/item/weapon/bedsheet/hosdouble,
 /obj/structure/bed/double/padded,
@@ -1710,7 +1670,6 @@
 /turf/simulated/wall/bay/r_wall/steel,
 /area/stellardelight/deck3/aft)
 "gN" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
@@ -1726,6 +1685,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/open,
 /area/stellardelight/deck2/fore)
 "gQ" = (
@@ -1741,10 +1701,10 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/simulated/floor/bluegrid,
 /area/ai)
 "gR" = (
@@ -1757,10 +1717,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/techfloor,
 /area/stellardelight/deck3/transitgateway)
-"gS" = (
-/obj/structure/cable,
-/turf/simulated/floor/tiled/techfloor/grid,
-/area/ai)
 "gU" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/black{
 	dir = 5
@@ -1777,7 +1733,6 @@
 /obj/machinery/door/airlock/angled_bay/double/glass{
 	name = "glass airlock"
 	},
-/obj/structure/cable,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/stellardelight/deck3/aft)
 "gW" = (
@@ -1791,19 +1746,6 @@
 	temperature = 80
 	},
 /area/tcommsat/chamber)
-"hb" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/turf/simulated/floor/wood,
-/area/stellardelight/deck3/cafe)
 "hc" = (
 /obj/machinery/requests_console/preset/hos{
 	pixel_x = -30
@@ -1873,6 +1815,9 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/power/terminal{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/substation/command)
 "ht" = (
@@ -1895,14 +1840,6 @@
 "hy" = (
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/floor/airless,
-/area/maintenance/stellardelight/deck3/starboardcent)
-"hz" = (
-/obj/structure/cable,
-/turf/simulated/floor/tiled/techfloor/grid,
-/area/maintenance/stellardelight/deck3/forestarroomb)
-"hB" = (
-/obj/structure/cable,
-/turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/starboardcent)
 "hC" = (
 /obj/machinery/light/small{
@@ -1958,9 +1895,11 @@
 /turf/simulated/floor,
 /area/stellardelight/deck3/portdock)
 "hO" = (
-/obj/machinery/power/breakerbox/activated{
-	RCon_tag = "Command Substation Bypass"
+/obj/machinery/power/smes{
+	RCon_tag = "Substation - Command";
+	output_attempt = 0
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/substation/command)
 "hP" = (
@@ -1968,20 +1907,12 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/structure/cable/layer3,
 /turf/simulated/open,
 /area/stellardelight/deck2/starboard)
 "hQ" = (
 /turf/simulated/wall/bay/r_wall/steel,
 /area/maintenance/stellardelight/deck3/aftstarroom)
-"hR" = (
-/obj/structure/cable,
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/turf/simulated/floor/tiled,
-/area/shuttle/sdboat/aft{
-	base_turf = /turf/simulated/floor/reinforced/airless
-	})
 "hT" = (
 /obj/structure/cable,
 /turf/simulated/wall/bay/r_wall/steel,
@@ -1996,7 +1927,6 @@
 /turf/simulated/floor/carpet/oracarpet,
 /area/crew_quarters/heads/chief)
 "hY" = (
-/obj/structure/cable,
 /turf/simulated/floor,
 /area/stellardelight/deck2/port)
 "hZ" = (
@@ -2009,6 +1939,13 @@
 	},
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/starboarddock)
+"ia" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/window/bay/reinforced,
+/obj/structure/low_wall/bay/reinforced/steel,
+/obj/structure/cable,
+/turf/simulated/floor,
+/area/maintenance/stellardelight/deck3/starboardcent)
 "ib" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/black{
 	dir = 9
@@ -2027,6 +1964,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/starboardaft)
+"ig" = (
+/obj/structure/cable/layer1,
+/turf/simulated/floor/airless,
+/area/stellardelight/deck3/exterior)
 "ii" = (
 /turf/simulated/floor,
 /area/maintenance/stellardelight/substation/command)
@@ -2055,10 +1996,6 @@
 "in" = (
 /turf/simulated/wall/bay/r_wall/blue,
 /area/crew_quarters/heads/hop)
-"ip" = (
-/obj/structure/cable,
-/turf/simulated/floor/carpet/gaycarpet,
-/area/stellardelight/deck3/clownmimeoffice)
 "ir" = (
 /obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -2082,18 +2019,6 @@
 	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/starboardaft)
-"iw" = (
-/obj/structure/cable,
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
-	dir = 4
-	},
-/turf/simulated/floor/tiled,
-/area/shuttle/sdboat/aft{
-	base_turf = /turf/simulated/floor/reinforced/airless
-	})
 "iy" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
@@ -2134,10 +2059,10 @@
 	req_one_access = list(11,24);
 	stripe_color = "#e6ab22"
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/stellardelight/deck3/commandhall)
 "iI" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
@@ -2148,6 +2073,7 @@
 	dir = 4;
 	pixel_x = 27
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/eris/dark/gray_platform,
 /area/stellardelight/deck3/commandhall)
 "iJ" = (
@@ -2158,10 +2084,6 @@
 /turf/simulated/floor/bluegrid,
 /area/ai_cyborg_station)
 "iK" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
@@ -2169,6 +2091,10 @@
 	dir = 8;
 	pixel_x = -24
 	},
+/obj/machinery/power/terminal/layer1{
+	dir = 1
+	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai)
 "iL" = (
@@ -2185,6 +2111,7 @@
 /area/crew_quarters/bar)
 "iP" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/heads/hop)
 "iQ" = (
@@ -2194,10 +2121,10 @@
 /turf/simulated/open,
 /area/stellardelight/deck2/fore)
 "iR" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai)
 "iS" = (
@@ -2222,14 +2149,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/aft)
-"iY" = (
-/obj/machinery/power/pointdefense{
-	id_tag = "sd_pd"
-	},
-/obj/effect/floor_decal/industrial/warning/full,
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "iZ" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 4
@@ -2291,7 +2210,6 @@
 /area/stellardelight/deck3/cafe)
 "jn" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
@@ -2307,6 +2225,7 @@
 	req_access = list(56);
 	stripe_color = "#e6ab22"
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/heads/chief)
 "jo" = (
@@ -2334,6 +2253,11 @@
 	},
 /turf/simulated/floor,
 /area/stellardelight/deck3/clownmimeoffice)
+"jB" = (
+/obj/machinery/holoplant,
+/obj/structure/cable/layer1,
+/turf/simulated/floor/bluegrid,
+/area/ai)
 "jC" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -2416,6 +2340,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/simulated/open,
 /area/stellardelight/deck2/port)
 "jV" = (
@@ -2440,6 +2365,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/simulated/open,
 /area/stellardelight/deck2/central)
 "ka" = (
@@ -2450,18 +2376,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/lawoffice)
-"kb" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/black{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/simulated/floor/bluegrid{
-	name = "Mainframe Base";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
-	},
-/area/tcommsat/chamber)
 "kc" = (
 /obj/machinery/telecomms/server/presets/medical,
 /turf/simulated/floor/tiled/dark{
@@ -2506,13 +2420,12 @@
 	},
 /turf/simulated/floor/tiled,
 /area/crew_quarters/heads/chief)
-"ko" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "kp" = (
 /obj/structure/cable,
 /obj/machinery/alarm/angled,
+/obj/machinery/power/breakerbox/activated{
+	RCon_tag = "Command Substation Bypass"
+	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/substation/command)
 "kr" = (
@@ -2589,10 +2502,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/tcommsat/computer)
-"kJ" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "kN" = (
 /obj/structure/sign/painting/library_secure{
 	pixel_x = 30
@@ -2608,15 +2517,12 @@
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/stellardelight/deck2/fore)
 "kP" = (
 /turf/simulated/wall/bay/r_wall/steel,
 /area/maintenance/stellardelight/deck3/portfore)
-"kQ" = (
-/obj/structure/cable,
-/turf/simulated/wall/bay/r_wall/steel,
-/area/maintenance/stellardelight/deck3/foreportrooma)
 "kT" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
@@ -2624,6 +2530,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/heads/hop)
 "kU" = (
@@ -2653,13 +2560,13 @@
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/starboarddock)
 "kX" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_cyborg_station)
 "kY" = (
@@ -2857,7 +2764,7 @@
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled,
 /area/shuttle/sdboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless
@@ -2873,7 +2780,6 @@
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/starboarddock)
 "lD" = (
-/obj/structure/cable,
 /obj/effect/landmark/start/bartender,
 /turf/simulated/floor/lino,
 /area/stellardelight/deck3/cafe)
@@ -2914,10 +2820,10 @@
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/aft)
 "lL" = (
-/obj/structure/cable,
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_cyborg_station)
 "lP" = (
@@ -3020,6 +2926,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/simulated/open,
 /area/stellardelight/deck2/central)
 "mh" = (
@@ -3093,15 +3000,6 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/stellardelight/deck3/starboarddock)
-"mp" = (
-/obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 1
-	},
-/obj/structure/cable,
-/turf/simulated/open,
-/area/stellardelight/deck2/fore)
 "mq" = (
 /obj/structure/bed/chair{
 	dir = 4
@@ -3159,7 +3057,6 @@
 /turf/simulated/floor/carpet/bcarpet,
 /area/stellardelight/deck3/clownmimeoffice)
 "mI" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
@@ -3171,6 +3068,7 @@
 	pixel_x = -24;
 	pixel_y = 24
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/eris/white/cargo,
 /area/crew_quarters/heads/cmo)
 "mK" = (
@@ -3185,10 +3083,6 @@
 	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/starboardaft)
-"mM" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "mO" = (
 /obj/structure/table/alien{
 	name = "fancy table"
@@ -3205,10 +3099,6 @@
 /obj/structure/low_wall/bay/reinforced/steel,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/portfore)
-"mR" = (
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck3/forestarrooma)
 "mS" = (
 /obj/structure/lattice,
 /obj/structure/disposalpipe/segment,
@@ -3227,25 +3117,11 @@
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/portdock)
-"na" = (
-/obj/machinery/door/firedoor/glass,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/stellardelight/deck2/fore)
 "nd" = (
-/obj/structure/cable,
-/obj/machinery/light,
-/turf/simulated/floor/tiled/techfloor/grid,
-/area/ai)
+/turf/space,
+/area/stellardelight/deck3/exterior)
 "ne" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -3264,16 +3140,8 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/stellardelight/deck3/starboardcent)
-"nh" = (
-/obj/effect/floor_decal/industrial/warning{
-	dir = 8
-	},
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "nj" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -3305,10 +3173,10 @@
 	},
 /area/tcommsat/chamber)
 "np" = (
-/obj/structure/cable,
 /obj/machinery/camera/network/command{
 	dir = 4
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai)
 "nr" = (
@@ -3431,13 +3299,6 @@
 /obj/random/maintenance/engineering,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/starboardaft)
-"nE" = (
-/obj/structure/cable,
-/obj/effect/wire_deleter{
-	wire_deletion_rate = 5
-	},
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "nF" = (
 /obj/structure/table/woodentable,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -3470,11 +3331,11 @@
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/aft)
 "nM" = (
-/obj/structure/cable,
 /obj/item/device/radio/intercom{
 	dir = 8;
 	pixel_x = -24
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai)
 "nN" = (
@@ -3512,10 +3373,6 @@
 "nW" = (
 /turf/simulated/wall/bay/steel,
 /area/stellardelight/deck3/cafe)
-"nX" = (
-/obj/structure/cable,
-/turf/simulated/floor/tiled/techfloor/grid,
-/area/maintenance/stellardelight/deck3/foreportroomb)
 "nZ" = (
 /obj/machinery/door/firedoor/glass/hidden/steel{
 	dir = 2
@@ -3534,6 +3391,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/structure/cable,
 /turf/simulated/open,
 /area/stellardelight/deck2/port)
 "od" = (
@@ -3547,10 +3405,6 @@
 	},
 /turf/simulated/floor/airless,
 /area/maintenance/stellardelight/deck3/starboardcent)
-"oe" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "og" = (
 /obj/structure/bed/chair{
 	dir = 4
@@ -3582,10 +3436,6 @@
 /obj/item/weapon/book/manual/sd_guide,
 /turf/simulated/floor/carpet/purcarpet,
 /area/crew_quarters/heads/hor)
-"op" = (
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck3/portcent)
 "oq" = (
 /obj/effect/landmark/arrivals,
 /turf/simulated/floor/glass/reinforced,
@@ -3675,12 +3525,12 @@
 	},
 /area/tcommsat/chamber)
 "oC" = (
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/starboardcent)
 "oD" = (
@@ -3697,6 +3547,12 @@
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor/wood,
 /area/stellardelight/deck3/readingroom)
+"oH" = (
+/obj/effect/wire_deleter{
+	wire_deletion_rate = 5
+	},
+/turf/simulated/floor/airless,
+/area/stellardelight/deck3/exterior)
 "oI" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/zpipe/down/scrubbers{
@@ -3724,7 +3580,6 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_cyborg_station)
 "oO" = (
-/obj/machinery/door/firedoor/glass,
 /obj/structure/cable,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/stellardelight/deck3/portdock)
@@ -3771,7 +3626,6 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/stellardelight/deck3/cryo)
 "oT" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
@@ -3780,6 +3634,7 @@
 	dir = 4;
 	pixel_x = 24
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_cyborg_station)
 "oU" = (
@@ -3810,18 +3665,18 @@
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/open,
 /area/stellardelight/deck2/fore)
 "oY" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/hatch{
 	name = "Telecoms Control Room";
 	req_access = list(61)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/tcommsat/computer)
 "oZ" = (
@@ -3849,14 +3704,10 @@
 /obj/machinery/power/apc/angled{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/eris/white/cargo,
 /area/crew_quarters/heads/cmo)
-"pf" = (
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck3/portfore)
 "pk" = (
 /obj/structure/table/steel,
 /obj/random/drinkbottle,
@@ -3906,7 +3757,6 @@
 /turf/simulated/floor/tiled/eris/dark/gray_platform,
 /area/stellardelight/deck3/commandhall)
 "pp" = (
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -3918,12 +3768,7 @@
 	},
 /turf/simulated/floor/wood,
 /area/stellardelight/deck3/cafe)
-"pq" = (
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck3/forestarrooma)
 "pt" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
@@ -4035,17 +3880,17 @@
 /obj/machinery/power/apc/angled{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/dark,
 /area/crew_quarters/heads/hos)
 "pS" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/alarm/angled{
 	dir = 8
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_cyborg_station)
 "pT" = (
@@ -4067,26 +3912,15 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/crew_quarters/heads/hor)
 "pW" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/tcommsat/computer)
-"pX" = (
-/obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
-/obj/machinery/door/airlock/angled_bay/hatch{
-	door_color = "#323d80";
-	name = "maintenance access";
-	req_one_access = list(16);
-	stripe_color = "#323d80"
-	},
-/turf/simulated/floor/tiled/steel_ridged,
-/area/ai_cyborg_station)
 "pY" = (
 /obj/machinery/telecomms/bus/preset_three,
 /turf/simulated/floor/tiled/dark{
@@ -4095,14 +3929,6 @@
 	temperature = 80
 	},
 /area/tcommsat/chamber)
-"qb" = (
-/obj/machinery/power/pointdefense{
-	id_tag = "sd_pd"
-	},
-/obj/effect/floor_decal/industrial/warning/full,
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "qc" = (
 /obj/structure/table/bench/padded,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -4139,7 +3965,6 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/stellardelight/deck3/portdock)
 "qf" = (
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -4150,6 +3975,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/starboardcent)
 "qg" = (
@@ -4165,6 +3991,7 @@
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable,
 /turf/simulated/open,
 /area/stellardelight/deck2/fore)
 "qn" = (
@@ -4195,7 +4022,6 @@
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/forestarrooma)
 "qv" = (
-/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/hatch{
 	dir = 4;
 	door_color = "#323d80";
@@ -4206,16 +4032,13 @@
 	req_one_access = list(16);
 	stripe_color = "#323d80"
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ai)
 "qx" = (
 /obj/structure/table/glass,
 /turf/simulated/floor/wood,
 /area/stellardelight/deck3/readingroom)
-"qy" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "qz" = (
 /turf/simulated/floor/reinforced{
 	name = "Holodeck Projector Floor"
@@ -4320,7 +4143,6 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/simulated/floor/bluegrid{
 	name = "Mainframe Base";
 	nitrogen = 100;
@@ -4357,7 +4179,7 @@
 /obj/machinery/power/apc/angled{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/heads/hop)
 "rb" = (
@@ -4399,10 +4221,6 @@
 /area/shuttle/sdboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless
 	})
-"rj" = (
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck3/foreportroomb)
 "rl" = (
 /obj/structure/sign/painting/library_secure{
 	pixel_x = -30
@@ -4501,6 +4319,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/computer/skills,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/heads/hop)
 "rB" = (
@@ -4518,7 +4337,6 @@
 /area/ai)
 "rH" = (
 /obj/structure/lattice,
-/obj/structure/cable,
 /obj/structure/disposalpipe/down{
 	dir = 8
 	},
@@ -4540,6 +4358,7 @@
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable,
 /turf/simulated/open,
 /area/stellardelight/deck2/port)
 "rW" = (
@@ -4555,7 +4374,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled,
 /area/shuttle/sdboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless
@@ -4583,13 +4402,13 @@
 	})
 "sb" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/secure{
 	name = "AI Storage";
 	req_access = list(16)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ai_cyborg_station)
 "sc" = (
@@ -4600,6 +4419,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/open,
 /area/stellardelight/deck2/fore)
 "sf" = (
@@ -4702,7 +4522,7 @@
 	cell_type = /obj/item/weapon/cell/hyper;
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/tcommsat/computer)
 "sx" = (
@@ -4722,6 +4542,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/stellardelight/deck2/central)
 "sA" = (
@@ -4797,10 +4618,6 @@
 	},
 /turf/simulated/floor/bluegrid,
 /area/ai_cyborg_station)
-"sR" = (
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck3/forestarroomb)
 "sU" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
@@ -4822,10 +4639,6 @@
 /obj/random/drinkbottle,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/portfore)
-"sZ" = (
-/obj/structure/cable,
-/turf/simulated/wall/bay/r_wall/blue,
-/area/maintenance/stellardelight/deck3/portaft)
 "tb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
@@ -4880,13 +4693,6 @@
 	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/starboardaft)
-"tl" = (
-/obj/structure/cable,
-/obj/effect/wire_deleter{
-	wire_deletion_rate = 5
-	},
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "tn" = (
 /obj/machinery/light_switch{
 	dir = 8;
@@ -4944,7 +4750,6 @@
 	dir = 1
 	},
 /obj/effect/floor_decal/steeldecal/steel_decals5,
-/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/aft)
 "tH" = (
@@ -4967,29 +4772,6 @@
 /obj/structure/flora/pottedplant/decorative,
 /turf/simulated/floor/tiled/eris/dark/gray_platform,
 /area/stellardelight/deck3/commandhall)
-"tK" = (
-/obj/effect/floor_decal/industrial/warning{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
-"tL" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/black{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/simulated/floor/bluegrid{
-	name = "Mainframe Base";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
-	},
-/area/tcommsat/chamber)
-"tM" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "tO" = (
 /obj/structure/table/steel_reinforced,
 /obj/item/device/taperecorder{
@@ -5030,12 +4812,6 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/stellardelight/deck3/portdock)
-"tT" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/tiled/eris/dark/gray_platform,
-/area/stellardelight/deck3/commandhall)
 "tV" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
@@ -5081,6 +4857,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable,
 /turf/simulated/open,
 /area/stellardelight/deck2/port)
 "ui" = (
@@ -5110,17 +4887,8 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/portdock)
-"ul" = (
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck3/starboardfore)
-"un" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "uq" = (
 /turf/simulated/wall/bay/r_wall/steel,
 /area/stellardelight/deck3/starboarddock)
@@ -5135,16 +4903,15 @@
 /turf/simulated/floor/bluegrid,
 /area/ai)
 "ut" = (
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/starboardcent)
 "uv" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/black,
-/obj/structure/cable,
 /turf/simulated/floor/bluegrid{
 	name = "Mainframe Base";
 	nitrogen = 100;
@@ -5156,7 +4923,6 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/tcommsat/computer)
 "uz" = (
@@ -5192,16 +4958,13 @@
 /obj/random/maintenance,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/forestarroomb)
-"uH" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "uI" = (
-/obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/bluegrid,
 /area/ai)
 "uJ" = (
 /obj/structure/closet/firecloset,
+/obj/structure/cable/multilayer/multiz,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/portcent)
 "uM" = (
@@ -5237,7 +5000,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor,
 /area/ai_cyborg_station)
 "uU" = (
@@ -5302,21 +5065,14 @@
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/starboardaft)
 "uZ" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/camera/network/command{
 	dir = 4
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_server_room)
-"va" = (
-/obj/effect/floor_decal/industrial/warning{
-	dir = 8
-	},
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "vb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
@@ -5375,6 +5131,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/stellardelight/deck2/central)
 "vv" = (
@@ -5432,7 +5189,6 @@
 /obj/effect/floor_decal/steeldecal/steel_decals4{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/aft)
 "vI" = (
@@ -5467,13 +5223,13 @@
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/hatch{
 	door_color = "#323d80";
 	name = "maintenance access";
 	req_one_access = list(19,38);
 	stripe_color = "#323d80"
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/stellardelight/deck3/commandhall)
 "vP" = (
@@ -5488,16 +5244,12 @@
 	},
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/starboarddock)
-"vQ" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "vS" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_cyborg_station)
 "vT" = (
@@ -5548,14 +5300,6 @@
 	},
 /turf/simulated/floor/bluegrid,
 /area/ai_cyborg_station)
-"we" = (
-/obj/machinery/power/pointdefense{
-	id_tag = "sd_pd"
-	},
-/obj/effect/floor_decal/industrial/warning/full,
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "wg" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -5597,10 +5341,10 @@
 /obj/item/weapon/aiModule/corp,
 /obj/item/weapon/aiModule/paladin,
 /obj/item/weapon/aiModule/robocop,
-/obj/structure/cable,
 /obj/machinery/power/apc/angled{
 	dir = 8
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/bluegrid,
 /area/ai_cyborg_station)
 "wq" = (
@@ -5648,6 +5392,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/open,
 /area/stellardelight/deck2/fore)
 "wA" = (
@@ -5688,16 +5433,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/aft)
-"wQ" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 4
-	},
-/turf/simulated/floor/tiled/eris/dark/gray_platform,
-/area/stellardelight/deck3/commandhall)
 "wR" = (
 /obj/structure/lattice,
 /obj/structure/cable,
@@ -5714,7 +5449,6 @@
 /turf/simulated/floor/bluegrid,
 /area/ai)
 "wV" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
@@ -5725,6 +5459,7 @@
 	dir = 8;
 	pixel_x = -27
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/eris/dark/gray_platform,
 /area/stellardelight/deck3/commandhall)
 "wW" = (
@@ -5754,6 +5489,15 @@
 /area/shuttle/sdboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless
 	})
+"xa" = (
+/obj/structure/cable/layer1,
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/turf/simulated/floor/tiled,
+/area/shuttle/sdboat/aft{
+	base_turf = /turf/simulated/floor/reinforced/airless
+	})
 "xb" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -5779,6 +5523,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/simulated/open,
 /area/stellardelight/deck2/port)
 "xe" = (
@@ -5840,17 +5585,6 @@
 	},
 /turf/simulated/floor/bluegrid,
 /area/ai_cyborg_station)
-"xk" = (
-/obj/structure/cable,
-/obj/effect/wire_deleter{
-	wire_deletion_rate = 5
-	},
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
-"xm" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "xo" = (
 /obj/structure/cable,
 /turf/simulated/floor/wood,
@@ -5887,7 +5621,7 @@
 "xw" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/eris/dark/gray_platform,
 /area/stellardelight/deck3/commandhall)
 "xy" = (
@@ -5917,7 +5651,6 @@
 	pixel_y = -32
 	},
 /obj/effect/floor_decal/steeldecal/steel_decals5,
-/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/aft)
 "xB" = (
@@ -5979,7 +5712,6 @@
 /obj/effect/floor_decal/steeldecal/steel_decals4{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/aft)
 "xP" = (
@@ -6003,13 +5735,13 @@
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/portaft)
 "xU" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/eris/dark/gray_platform,
 /area/stellardelight/deck3/commandhall)
 "xW" = (
@@ -6029,10 +5761,10 @@
 	pixel_x = 17;
 	pixel_y = 27
 	},
-/obj/structure/cable,
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled,
 /area/shuttle/sdboat/fore{
 	base_turf = /turf/simulated/floor/reinforced/airless
@@ -6044,17 +5776,13 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/monotile,
 /area/stellardelight/deck3/commandhall)
 "yc" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden,
-/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/tcommsat/computer)
-"yd" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "ye" = (
 /obj/structure/dogbed,
 /mob/living/simple_mob/animal/passive/dog/corgi/Lisa,
@@ -6070,14 +5798,15 @@
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/starboardcent)
 "yi" = (
-/obj/structure/cable,
 /obj/machinery/power/sensor{
+	cable_layer = 1;
 	name = "Powernet Sensor - Command Subgrid";
 	name_tag = "Command Subgrid"
 	},
 /obj/machinery/power/apc/angled{
 	dir = 8
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/substation/command)
 "yj" = (
@@ -6096,11 +5825,9 @@
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/starboardfore)
 "yo" = (
-/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/heads/hop)
 "yp" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
@@ -6110,6 +5837,7 @@
 /obj/machinery/computer/cryopod/robot{
 	pixel_x = 32
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_cyborg_station)
 "yq" = (
@@ -6164,7 +5892,7 @@
 /obj/machinery/power/apc/angled{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/dark,
 /area/lawoffice)
 "yE" = (
@@ -6186,10 +5914,6 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/stellardelight/deck3/portdock)
-"yH" = (
-/obj/structure/cable,
-/turf/simulated/wall/bay/r_wall/blue,
-/area/ai_cyborg_station)
 "yI" = (
 /obj/item/weapon/folder{
 	pixel_x = -4
@@ -6228,6 +5952,7 @@
 	req_access = list(57);
 	stripe_color = "#a3d1d1"
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/heads/hop)
 "yP" = (
@@ -6262,6 +5987,11 @@
 /obj/effect/map_helper/airlock/door/ext_door,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/stellardelight/deck3/starboarddock)
+"yU" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor,
+/area/maintenance/stellardelight/deck3/starboardcent)
 "yV" = (
 /obj/machinery/light{
 	dir = 8
@@ -6294,32 +6024,28 @@
 "zb" = (
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/eris/dark/gray_platform,
 /area/stellardelight/deck3/commandhall)
-"zf" = (
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck3/starboardfore)
 "zg" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_upload)
 "zi" = (
 /obj/effect/floor_decal/emblem/nt2,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_upload)
 "zk" = (
@@ -6329,7 +6055,6 @@
 /turf/space,
 /area/space)
 "zm" = (
-/obj/structure/cable,
 /obj/structure/table/reinforced,
 /obj/machinery/photocopier/faxmachine{
 	department = "Head of Personnel's Office"
@@ -6424,12 +6149,12 @@
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/starboardfore)
 "zB" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/landmark{
 	name = "lightsout"
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/eris/dark/gray_platform,
 /area/stellardelight/deck3/commandhall)
 "zC" = (
@@ -6443,7 +6168,6 @@
 /turf/simulated/floor/carpet/bcarpet,
 /area/stellardelight/deck3/clownmimeoffice)
 "zD" = (
-/obj/structure/cable,
 /obj/effect/floor_decal/industrial/warning{
 	dir = 1
 	},
@@ -6452,6 +6176,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_server_room)
 "zE" = (
@@ -6550,10 +6275,10 @@
 	req_access = null;
 	req_one_access = list(11,67)
 	},
-/obj/structure/cable,
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled,
 /area/shuttle/sdboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless
@@ -6582,10 +6307,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/tcommsat/computer)
-"Ae" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "Af" = (
 /obj/structure/closet/crate/bin{
 	anchored = 1
@@ -6638,6 +6359,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/carpet,
 /area/crew_quarters/heads/hop)
 "Ap" = (
@@ -6769,8 +6491,8 @@
 /obj/machinery/power/apc/angled{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/heads/chief)
 "AQ" = (
@@ -6852,10 +6574,10 @@
 	pixel_x = -29;
 	pixel_y = 30
 	},
-/obj/structure/cable,
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled,
 /area/shuttle/sdboat/fore{
 	base_turf = /turf/simulated/floor/reinforced/airless
@@ -6980,7 +6702,6 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_upload)
 "Bt" = (
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -6994,7 +6715,6 @@
 /area/stellardelight/deck3/cafe)
 "Bz" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
@@ -7010,6 +6730,7 @@
 	req_access = list(40);
 	stripe_color = "#ffffff"
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/heads/cmo)
 "BA" = (
@@ -7060,7 +6781,6 @@
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/aft)
 "BF" = (
-/obj/structure/cable,
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/angled_bay/hatch{
 	door_color = "#e6ab22";
@@ -7068,6 +6788,7 @@
 	req_one_access = list(10);
 	stripe_color = "#e6ab22"
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/stellardelight/substation/command)
 "BG" = (
@@ -7091,13 +6812,13 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/stellardelight/deck3/starboarddock)
 "BK" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/eris/dark/gray_platform,
 /area/stellardelight/deck3/commandhall)
 "BL" = (
@@ -7113,7 +6834,6 @@
 /turf/simulated/floor/carpet/oracarpet,
 /area/crew_quarters/heads/chief)
 "BQ" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
@@ -7125,6 +6845,7 @@
 	pixel_x = -24;
 	pixel_y = 24
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/techfloor,
 /area/crew_quarters/heads/hor)
 "BR" = (
@@ -7237,7 +6958,6 @@
 /area/ai)
 "Cf" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/hatch{
 	dir = 4;
 	name = "maintenance access";
@@ -7246,7 +6966,6 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/stellardelight/deck3/portcent)
 "Cn" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
@@ -7294,6 +7013,7 @@
 	dir = 10
 	},
 /obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/open,
 /area/stellardelight/deck2/fore)
 "Cx" = (
@@ -7328,6 +7048,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/structure/cable,
 /turf/simulated/open,
 /area/stellardelight/deck2/port)
 "CA" = (
@@ -7377,7 +7098,6 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/simulated/floor,
 /area/stellardelight/deck2/starboard)
 "CJ" = (
@@ -7435,11 +7155,11 @@
 /turf/simulated/open,
 /area/stellardelight/deck2/port)
 "CT" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_cyborg_station)
 "CU" = (
@@ -7478,15 +7198,12 @@
 /obj/structure/cable,
 /turf/simulated/open,
 /area/crew_quarters/bar)
-"De" = (
-/obj/structure/cable,
-/turf/simulated/wall/bay/r_wall/blue,
-/area/ai_cyborg_station)
 "Df" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/stellardelight/deck2/fore)
 "Dh" = (
@@ -7495,13 +7212,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_server_room)
-"Di" = (
-/obj/effect/floor_decal/industrial/warning{
-	dir = 1
-	},
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "Dk" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/reagent_dispensers/watertank,
@@ -7554,6 +7264,7 @@
 /obj/machinery/door/airlock/angled_bay/standard/glass{
 	name = "maintenance access"
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/stellardelight/deck2/port)
 "DE" = (
@@ -7572,18 +7283,18 @@
 /obj/machinery/power/apc/angled{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/techfloor,
 /area/crew_quarters/heads/hor)
 "DL" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_server_room)
 "DM" = (
@@ -7594,6 +7305,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/heads/hop)
 "DO" = (
@@ -7608,13 +7320,13 @@
 /area/stellardelight/deck3/readingroom)
 "DP" = (
 /obj/effect/floor_decal/industrial/warning/corner,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/tcommsat/computer)
 "DQ" = (
@@ -7628,13 +7340,13 @@
 /turf/simulated/open,
 /area/maintenance/stellardelight/deck3/portaft)
 "DV" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/wall/bay/blue,
 /area/lawoffice)
 "DW" = (
@@ -7654,16 +7366,18 @@
 	},
 /turf/simulated/floor/carpet/gaycarpet,
 /area/stellardelight/deck3/clownmimeoffice)
-"DY" = (
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck3/foreportrooma)
 "DZ" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
+	},
+/obj/machinery/power/apc/angled{
+	cell_type = /obj/item/weapon/cell/super;
+	dir = 4;
+	name = "night shift APC";
+	nightshift_setting = 2
 	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/starboardcent)
@@ -7715,26 +7429,12 @@
 /obj/random/trash_pile,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/portcent)
-"Ej" = (
-/obj/structure/cable,
-/obj/effect/wire_deleter{
-	wire_deletion_rate = 5
-	},
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "El" = (
 /obj/effect/landmark{
 	name = "carpspawn"
 	},
 /turf/space,
 /area/space)
-"En" = (
-/obj/effect/floor_decal/industrial/warning/corner{
-	dir = 1
-	},
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "Es" = (
 /obj/effect/shuttle_landmark/premade/sd/deck3/portlanding,
 /turf/space,
@@ -7755,11 +7455,11 @@
 /turf/simulated/wall/bay/r_wall/blue,
 /area/stellardelight/deck2/port)
 "Ev" = (
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/starboardcent)
 "Ex" = (
@@ -7822,7 +7522,6 @@
 	stripe_color = "#ffd863"
 	},
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
 /obj/machinery/access_button{
 	command = "cycle_exterior";
 	dir = 1;
@@ -7873,18 +7572,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/starboardaft)
-"EU" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
-"EV" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "EW" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/eris/dark/gray_platform,
 /area/stellardelight/deck3/commandhall)
 "EX" = (
@@ -7940,7 +7631,6 @@
 /area/stellardelight/deck3/aft)
 "Fg" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
@@ -7956,6 +7646,7 @@
 	req_access = list(58);
 	stripe_color = "#d27428"
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/heads/hos)
 "Fh" = (
@@ -7967,6 +7658,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/stellardelight/deck2/fore)
 "Fm" = (
@@ -7986,7 +7678,6 @@
 /turf/simulated/floor/tiled/monotile,
 /area/stellardelight/deck3/commandhall)
 "Ft" = (
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -7997,6 +7688,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/stellardelight/deck2/port)
 "Fv" = (
@@ -8011,13 +7703,13 @@
 /obj/machinery/alarm/angled{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/dark,
 /area/lawoffice)
 "FD" = (
@@ -8035,14 +7727,6 @@
 	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/portaft)
-"FH" = (
-/obj/machinery/power/pointdefense{
-	id_tag = "sd_pd"
-	},
-/obj/effect/floor_decal/industrial/warning/full,
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "FI" = (
 /obj/effect/floor_decal/industrial/warning/corner{
 	dir = 1
@@ -8050,16 +7734,12 @@
 /obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/stellardelight/deck3/exterior)
-"FK" = (
-/obj/structure/cable,
-/obj/machinery/power/solar,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "FL" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/open,
 /area/stellardelight/deck2/starboard)
 "FM" = (
@@ -8086,13 +7766,13 @@
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/portaft)
 "FU" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_cyborg_station)
 "FW" = (
@@ -8113,11 +7793,6 @@
 /obj/random/maintenance,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/foreportrooma)
-"Ga" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/bluegrid,
-/area/ai)
 "Gc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
@@ -8150,9 +7825,9 @@
 /turf/simulated/floor/lino,
 /area/stellardelight/deck3/cafe)
 "Gh" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_upload)
 "Gi" = (
@@ -8175,17 +7850,9 @@
 /turf/simulated/floor/carpet/tealcarpet,
 /area/crew_quarters/heads/cmo)
 "Gm" = (
-/obj/structure/cable,
-/obj/machinery/power/smes{
-	RCon_tag = "Substation - Command";
-	output_attempt = 0
-	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/substation/command)
-"Go" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "Gq" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -8220,13 +7887,13 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/maintenance/stellardelight/deck3/forestarroomb)
 "GD" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/tcommsat/computer)
 "GE" = (
@@ -8252,10 +7919,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/stellardelight/deck3/readingroom)
-"GJ" = (
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck3/forestarrooma)
 "GP" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/bluegrid,
@@ -8314,14 +7977,15 @@
 /turf/simulated/floor/carpet/oracarpet,
 /area/crew_quarters/heads/chief)
 "Hc" = (
-/obj/structure/cable,
 /obj/machinery/power/sensor{
+	cable_layer = 1;
 	name = "Powernet Sensor - AI/Telecomms Subgrid";
 	name_tag = "AI/Telecomms Subgrid"
 	},
 /obj/machinery/power/apc/angled{
 	dir = 8
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor,
 /area/ai_cyborg_station)
 "Hd" = (
@@ -8342,6 +8006,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/stellardelight/deck2/central)
 "Hf" = (
@@ -8356,7 +8021,6 @@
 	pixel_x = -32;
 	plane = -34
 	},
-/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/portdock)
 "Hh" = (
@@ -8454,12 +8118,7 @@
 	},
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/aft)
-"Hx" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "HA" = (
-/obj/structure/cable,
 /obj/machinery/button/remote/blast_door{
 	desc = "A remote control-switch for the AI core maintenance door.";
 	dir = 4;
@@ -8474,6 +8133,7 @@
 /obj/machinery/power/apc/angled{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/simulated/floor/bluegrid,
 /area/ai)
 "HB" = (
@@ -8505,12 +8165,12 @@
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/starboardcent)
 "HN" = (
-/obj/structure/cable,
 /obj/machinery/light{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_cyborg_station)
 "HO" = (
@@ -8556,7 +8216,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai)
 "HT" = (
-/obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_cyborg_station)
 "HV" = (
@@ -8573,7 +8233,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/eris/dark/gray_platform,
 /area/stellardelight/deck3/commandhall)
 "HX" = (
@@ -8599,6 +8259,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/open,
 /area/stellardelight/deck2/central)
 "Ia" = (
@@ -8628,6 +8289,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable,
 /turf/simulated/open,
 /area/stellardelight/deck2/port)
 "Ii" = (
@@ -8653,11 +8315,6 @@
 /obj/random/trash_pile,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/starboardcent)
-"Io" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck3/starboardcent)
 "Ir" = (
 /obj/structure/bed/chair/shuttle{
 	dir = 1
@@ -8676,23 +8333,12 @@
 /obj/effect/floor_decal/steeldecal/steel_decals4{
 	dir = 5
 	},
-/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/aft)
 "Iu" = (
 /obj/machinery/holoplant,
 /turf/simulated/floor/bluegrid,
 /area/ai_server_room)
-"Iw" = (
-/obj/structure/cable,
-/obj/machinery/power/solar,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
-"Iy" = (
-/obj/structure/cable,
-/obj/machinery/power/solar,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "Iz" = (
 /obj/effect/floor_decal/industrial/warning,
 /turf/simulated/floor/airless,
@@ -8712,13 +8358,13 @@
 /turf/simulated/open,
 /area/stellardelight/deck2/fore)
 "IG" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_cyborg_station)
 "IH" = (
@@ -8744,13 +8390,6 @@
 /obj/structure/flora/pottedplant/stoutbush,
 /turf/simulated/floor/tiled/monotile,
 /area/stellardelight/deck3/commandhall)
-"IK" = (
-/obj/effect/floor_decal/industrial/warning{
-	dir = 1
-	},
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "IN" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -8787,7 +8426,6 @@
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/portdock)
 "IS" = (
@@ -8834,10 +8472,6 @@
 	},
 /turf/simulated/floor/airless,
 /area/maintenance/stellardelight/deck3/portcent)
-"IZ" = (
-/obj/structure/cable,
-/turf/simulated/floor/tiled,
-/area/stellardelight/deck3/aft)
 "Ja" = (
 /obj/machinery/door/airlock/angled_bay/external/glass{
 	frequency = 1379;
@@ -8985,13 +8619,13 @@
 /area/maintenance/stellardelight/deck3/forestarrooma)
 "Jz" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/secure{
 	name = "AI Core";
 	req_access = list(16)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ai)
 "JA" = (
@@ -9016,7 +8650,6 @@
 /obj/machinery/power/apc/angled{
 	dir = 1
 	},
-/obj/structure/cable,
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/drinks/glass2/square{
 	pixel_x = 8;
@@ -9037,27 +8670,22 @@
 /obj/machinery/computer/aifixer,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_cyborg_station)
-"JK" = (
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/ai_cyborg_station)
 "JO" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_cyborg_station)
 "JP" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/secure{
 	name = "AI Upload";
 	req_access = list(16)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ai_upload)
 "JQ" = (
-/obj/structure/cable,
 /obj/machinery/turretid/stun{
 	control_area = /area/ai_upload;
 	name = "AI Upload turret control";
@@ -9066,6 +8694,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_upload)
 "JR" = (
@@ -9078,7 +8707,6 @@
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/portdock)
 "JS" = (
@@ -9149,7 +8777,6 @@
 /obj/machinery/camera/network/halls{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/aft)
 "Kg" = (
@@ -9184,10 +8811,10 @@
 	req_access = null;
 	req_one_access = list(11,67)
 	},
-/obj/structure/cable,
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled,
 /area/shuttle/sdboat/fore{
 	base_turf = /turf/simulated/floor/reinforced/airless
@@ -9211,10 +8838,6 @@
 /obj/random/maintenance/engineering,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/starboardfore)
-"Kr" = (
-/obj/structure/cable,
-/turf/simulated/wall/bay/r_wall/steel,
-/area/maintenance/stellardelight/deck3/forestarrooma)
 "Ks" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -9226,6 +8849,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/stellardelight/deck2/starboard)
 "Kt" = (
@@ -9252,9 +8876,9 @@
 /turf/simulated/floor/tiled/eris/dark/gray_platform,
 /area/stellardelight/deck3/commandhall)
 "Kx" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_cyborg_station)
 "Ky" = (
@@ -9305,11 +8929,11 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/crew_quarters/heads/hor)
 "KH" = (
-/obj/structure/cable,
 /obj/machinery/camera/network/command{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai)
 "KI" = (
@@ -9341,9 +8965,9 @@
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/portfore)
 "KS" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_upload)
 "KT" = (
@@ -9353,7 +8977,6 @@
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/portdock)
 "KU" = (
@@ -9370,16 +8993,12 @@
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/portfore)
 "KY" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai)
-"Lb" = (
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/ai_cyborg_station)
 "Ld" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 4
@@ -9390,7 +9009,6 @@
 "Le" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /obj/structure/flora/pottedplant/minitree,
-/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/aft)
 "Lf" = (
@@ -9401,7 +9019,6 @@
 /area/stellardelight/deck2/starboard)
 "Lh" = (
 /obj/machinery/hologram/holopad,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -9411,6 +9028,7 @@
 /obj/machinery/camera/network/telecom{
 	dir = 1
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/tcommsat/computer)
 "Li" = (
@@ -9429,10 +9047,6 @@
 /obj/random/coin/sometimes,
 /turf/simulated/floor/wood,
 /area/stellardelight/deck3/readingroom)
-"Ln" = (
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck3/starboardfore)
 "Lo" = (
 /obj/effect/mouse_hole_spawner{
 	dir = 4
@@ -9521,10 +9135,6 @@
 /obj/effect/floor_decal/shuttles,
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/starboarddock)
-"LJ" = (
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck3/foreportrooma)
 "LK" = (
 /obj/structure/table/bench/padded,
 /obj/structure/sign/painting/public{
@@ -9536,10 +9146,10 @@
 /turf/simulated/floor/wood,
 /area/stellardelight/deck3/cafe)
 "LO" = (
-/obj/structure/cable,
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled,
 /area/shuttle/sdboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless
@@ -9612,10 +9222,6 @@
 /obj/machinery/chemical_dispenser/bar_soft/full,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/forestarrooma)
-"LW" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "LY" = (
 /obj/structure/cable,
 /turf/simulated/floor,
@@ -9625,11 +9231,6 @@
 /obj/structure/ladder,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/forestarrooma)
-"Me" = (
-/obj/structure/cable,
-/obj/machinery/power/solar,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "Mg" = (
 /obj/item/device/camera,
 /obj/item/device/camera_film,
@@ -9662,6 +9263,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/simulated/open,
 /area/stellardelight/deck2/port)
 "Ml" = (
@@ -9695,9 +9297,8 @@
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/portdock)
 "Mp" = (
-/obj/machinery/power/breakerbox/activated{
-	RCon_tag = "AI/Telecomms Substation Bypass"
-	},
+/obj/machinery/power/terminal,
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/ai_cyborg_station)
 "Mr" = (
@@ -9721,6 +9322,7 @@
 	pixel_y = 18
 	},
 /obj/item/weapon/book/manual/sd_guide,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/carpet,
 /area/crew_quarters/heads/hop)
 "Mu" = (
@@ -9753,17 +9355,8 @@
 /area/maintenance/stellardelight/deck3/starboardcent)
 "Mx" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5,
-/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/aft)
-"My" = (
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck3/portcent)
-"MA" = (
-/obj/structure/cable,
-/turf/simulated/wall/bay/r_wall/blue,
-/area/maintenance/stellardelight/deck3/portaft)
 "MB" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 10
@@ -9799,6 +9392,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/stellardelight/deck2/central)
 "MG" = (
@@ -9821,6 +9415,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/heads/hop)
 "MJ" = (
@@ -9849,19 +9444,6 @@
 /obj/item/device/ticket_printer,
 /turf/simulated/floor/tiled/dark,
 /area/crew_quarters/heads/hos)
-"MO" = (
-/obj/structure/cable,
-/turf/simulated/floor/bluegrid{
-	name = "Mainframe Base";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
-	},
-/area/tcommsat/chamber)
-"MP" = (
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck3/foreportrooma)
 "MR" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -9959,10 +9541,10 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/monotile,
 /area/stellardelight/deck3/commandhall)
 "Nh" = (
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -9977,10 +9559,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/starboarddock)
-"Nj" = (
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck3/forestarrooma)
 "Nk" = (
 /obj/structure/bed/chair{
 	dir = 4
@@ -9991,7 +9569,6 @@
 /obj/structure/sign/nanotrasen{
 	pixel_x = -32
 	},
-/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/portdock)
 "Nm" = (
@@ -10011,8 +9588,8 @@
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/portdock)
 "Nr" = (
-/obj/structure/cable,
 /obj/machinery/power/solar,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/airless,
 /area/stellardelight/deck3/exterior)
 "Ns" = (
@@ -10312,14 +9889,6 @@
 	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/foreportrooma)
-"Op" = (
-/obj/machinery/power/pointdefense{
-	id_tag = "sd_pd"
-	},
-/obj/effect/floor_decal/industrial/warning/full,
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "Oq" = (
 /obj/structure/bed/chair{
 	dir = 4
@@ -10345,7 +9914,6 @@
 "Ou" = (
 /obj/item/device/radio/beacon,
 /obj/effect/floor_decal/steeldecal/steel_decals5,
-/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/aft)
 "Ov" = (
@@ -10357,7 +9925,6 @@
 /area/ai_server_room)
 "Ow" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/secure{
 	dir = 4;
 	name = "Telecoms Access";
@@ -10369,12 +9936,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ai_server_room)
-"Ox" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "Oy" = (
 /obj/machinery/light{
 	dir = 1
@@ -10390,10 +9954,6 @@
 /obj/structure/low_wall/bay/reinforced/steel,
 /turf/simulated/floor,
 /area/stellardelight/deck3/cafe)
-"OA" = (
-/obj/structure/cable,
-/turf/simulated/wall/bay/r_wall/blue,
-/area/ai_cyborg_station)
 "OC" = (
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /obj/machinery/door/airlock/angled_bay/hatch{
@@ -10405,7 +9965,6 @@
 	stripe_color = "#ffd863"
 	},
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
 /obj/machinery/access_button{
 	command = "cycle_interior";
 	frequency = 1380;
@@ -10471,12 +10030,9 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/stellardelight/deck2/starboard)
-"OJ" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "OK" = (
 /obj/structure/closet/lawcloset,
 /obj/structure/sign/poster{
@@ -10488,7 +10044,6 @@
 /turf/simulated/floor/tiled/dark,
 /area/lawoffice)
 "OM" = (
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -10594,6 +10149,7 @@
 	name = "maintenance access";
 	stripe_color = "#454545"
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/stellardelight/deck3/starboardcent)
 "Pe" = (
@@ -10609,10 +10165,10 @@
 /turf/simulated/floor/tiled/dark,
 /area/crew_quarters/heads/hos)
 "Pj" = (
-/obj/structure/cable,
 /obj/machinery/hologram/holopad,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_upload)
 "Pl" = (
@@ -10624,13 +10180,12 @@
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled,
 /area/shuttle/sdboat/fore{
 	base_turf = /turf/simulated/floor/reinforced/airless
 	})
 "Pm" = (
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -10685,7 +10240,6 @@
 /obj/machinery/camera/network/halls{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/aft)
 "PB" = (
@@ -10702,13 +10256,13 @@
 /obj/machinery/alarm/angled{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/dark,
 /area/lawoffice)
 "PD" = (
@@ -10773,10 +10327,6 @@
 	},
 /turf/simulated/floor/airless,
 /area/stellardelight/deck3/exterior)
-"PV" = (
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck3/foreportrooma)
 "PW" = (
 /obj/effect/landmark{
 	name = "JoinLateCyborg"
@@ -10839,13 +10389,13 @@
 /turf/simulated/floor/wood,
 /area/stellardelight/deck3/cafe)
 "Qm" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_server_room)
 "Qn" = (
@@ -10868,13 +10418,13 @@
 /turf/simulated/wall/bay/r_wall/steel,
 /area/crew_quarters/bar)
 "Qs" = (
-/obj/structure/cable,
 /obj/machinery/light{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
+/obj/structure/cable,
 /turf/simulated/floor/bluegrid,
 /area/ai)
 "Qu" = (
@@ -10903,7 +10453,6 @@
 	dir = 1
 	},
 /obj/effect/floor_decal/steeldecal/steel_decals5,
-/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/aft)
 "QB" = (
@@ -10973,15 +10522,14 @@
 /turf/simulated/floor/carpet,
 /area/stellardelight/deck3/readingroom)
 "QL" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_cyborg_station)
 "QP" = (
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -10993,15 +10541,9 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/starboardcent)
-"QQ" = (
-/obj/structure/cable,
-/obj/effect/wire_deleter{
-	wire_deletion_rate = 5
-	},
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "QS" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden,
@@ -11018,10 +10560,6 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/stellardelight/deck3/commandhall)
-"QV" = (
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck3/starboardfore)
 "QW" = (
 /obj/structure/cable,
 /turf/simulated/floor/carpet/gaycarpet,
@@ -11074,6 +10612,7 @@
 	name = "maintenance access"
 	},
 /obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/stellardelight/deck2/starboard)
 "Rl" = (
@@ -11150,10 +10689,6 @@
 /area/shuttle/sdboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless
 	})
-"Rx" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "Rz" = (
 /obj/structure/lattice,
 /obj/structure/disposalpipe/segment{
@@ -11172,10 +10707,6 @@
 /obj/structure/cable,
 /turf/simulated/open,
 /area/stellardelight/deck2/starboard)
-"RB" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "RE" = (
 /turf/simulated/wall/bay/r_wall/steel,
 /area/maintenance/stellardelight/deck3/starboardfore)
@@ -11207,7 +10738,6 @@
 /turf/simulated/wall/bay/r_wall/steel,
 /area/maintenance/stellardelight/deck3/foreportroomb)
 "RM" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
@@ -11247,6 +10777,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/stellardelight/deck2/central)
 "RW" = (
@@ -11283,7 +10814,6 @@
 	base_turf = /turf/simulated/floor/reinforced/airless
 	})
 "RZ" = (
-/obj/structure/cable,
 /obj/structure/sign/warning/caution{
 	desc = "This secure area is guarded by LETHAL LASER TURRETS. Authorized personnel ONLY.";
 	name = "\improper WARNING: LETHAL TURRETS AHEAD";
@@ -11293,18 +10823,12 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_server_room)
 "Sb" = (
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/maintenance/stellardelight/deck3/forestarrooma)
-"Sc" = (
-/obj/structure/cable,
-/obj/effect/wire_deleter{
-	wire_deletion_rate = 5
-	},
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "Se" = (
 /obj/effect/floor_decal/industrial/warning/corner,
 /turf/simulated/floor/airless,
@@ -11341,18 +10865,8 @@
 	pixel_y = -32
 	},
 /obj/effect/floor_decal/steeldecal/steel_decals5,
-/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/aft)
-"Sm" = (
-/obj/structure/cable,
-/turf/simulated/floor/bluegrid{
-	name = "Mainframe Base";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
-	},
-/area/tcommsat/chamber)
 "Sn" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
@@ -11470,6 +10984,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/monotile,
 /area/stellardelight/deck3/commandhall)
 "SR" = (
@@ -11502,7 +11017,7 @@
 /obj/machinery/power/apc/angled{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/eris/dark/gray_platform,
 /area/stellardelight/deck3/commandhall)
 "Ta" = (
@@ -11567,16 +11082,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/crew_quarters/heads/hop)
-"Tk" = (
-/obj/machinery/door/firedoor/glass,
-/obj/structure/window/bay/reinforced,
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/low_wall/bay/reinforced/blue,
-/turf/simulated/floor,
-/area/crew_quarters/heads/hop)
 "Tl" = (
 /obj/structure/bed/chair/office/dark{
 	dir = 8
@@ -11620,15 +11125,8 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_cyborg_station)
 "Ts" = (
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
-/obj/machinery/power/apc/angled{
-	cell_type = /obj/item/weapon/cell/super;
-	dir = 8;
-	name = "night shift APC";
-	nightshift_setting = 2
-	},
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/starboardcent)
 "Tv" = (
@@ -11674,17 +11172,8 @@
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/aft)
-"TE" = (
-/obj/machinery/power/pointdefense{
-	id_tag = "sd_pd"
-	},
-/obj/effect/floor_decal/industrial/warning/full,
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "TF" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -11695,13 +11184,14 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/monotile,
 /area/stellardelight/deck3/commandhall)
 "TG" = (
-/obj/structure/cable,
 /obj/effect/wire_deleter{
 	wire_deletion_rate = 5
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/airless,
 /area/stellardelight/deck3/exterior)
 "TI" = (
@@ -11720,8 +11210,8 @@
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/aft)
 "TK" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable,
 /turf/simulated/floor/bluegrid,
 /area/ai)
 "TL" = (
@@ -11745,20 +11235,13 @@
 "TO" = (
 /obj/machinery/atmospherics/unary/vent_pump/on,
 /obj/effect/landmark/vermin,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/monotile,
 /area/stellardelight/deck3/commandhall)
 "TP" = (
 /obj/structure/cable,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/starboardfore)
-"TS" = (
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck3/forestarroomb)
-"TV" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "TW" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -11775,12 +11258,12 @@
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/portdock)
 "TY" = (
-/obj/structure/cable,
 /obj/machinery/light{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_server_room)
 "Ub" = (
@@ -11810,8 +11293,8 @@
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/forestarroomb)
 "Uf" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/tcommsat/computer)
 "Ug" = (
@@ -11819,7 +11302,6 @@
 /turf/simulated/wall/bay/r_wall/steel,
 /area/maintenance/stellardelight/deck3/starboardcent)
 "Uj" = (
-/obj/structure/cable,
 /obj/machinery/power/smes{
 	RCon_tag = "Substation - AI/Telecomms";
 	charge = 5e+006;
@@ -11827,6 +11309,7 @@
 	input_level = 200000;
 	output_level = 200000
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor,
 /area/ai_cyborg_station)
 "Uk" = (
@@ -11836,10 +11319,6 @@
 "Uq" = (
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/maintenance/stellardelight/deck3/foreportrooma)
-"Uw" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "Uy" = (
 /obj/machinery/atmospherics/unary/vent_pump/on,
 /obj/effect/floor_decal/steeldecal/steel_decals5{
@@ -11855,7 +11334,6 @@
 /turf/simulated/floor,
 /area/stellardelight/deck2/fore)
 "UB" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
@@ -11867,6 +11345,7 @@
 	pixel_x = 24;
 	pixel_y = 24
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/dark,
 /area/crew_quarters/heads/hos)
 "UD" = (
@@ -11884,10 +11363,9 @@
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/forestarroomb)
 "UG" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/eris/dark/gray_platform,
 /area/stellardelight/deck3/commandhall)
 "UH" = (
@@ -12019,7 +11497,6 @@
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/portdock)
 "Ve" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
@@ -12031,6 +11508,7 @@
 	pixel_x = 24;
 	pixel_y = 24
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/heads/chief)
 "Vg" = (
@@ -12110,6 +11588,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/monotile,
 /area/stellardelight/deck3/commandhall)
 "Vr" = (
@@ -12156,14 +11635,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/maintenance/stellardelight/deck3/forestarroomb)
-"Vz" = (
-/obj/machinery/power/pointdefense{
-	id_tag = "sd_pd"
-	},
-/obj/effect/floor_decal/industrial/warning/full,
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "VB" = (
 /obj/item/weapon/bedsheet/double,
 /obj/structure/bed/double/padded,
@@ -12276,10 +11747,6 @@
 "Wa" = (
 /turf/simulated/floor/carpet,
 /area/crew_quarters/heads/hop)
-"Wb" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "Wd" = (
 /obj/structure/cable,
 /turf/simulated/floor/airless,
@@ -12337,7 +11804,7 @@
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled,
 /area/shuttle/sdboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless
@@ -12369,10 +11836,8 @@
 /area/maintenance/stellardelight/deck3/portfore)
 "Wt" = (
 /obj/structure/cable,
-/obj/effect/floor_decal/spline/plain,
-/obj/structure/table/bench/marble,
-/turf/simulated/floor/lino,
-/area/stellardelight/deck3/cafe)
+/turf/simulated/wall/bay/r_wall/blue,
+/area/ai)
 "Wu" = (
 /obj/structure/sign/warning/docking_area{
 	pixel_x = -32
@@ -12449,12 +11914,15 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
+/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/open,
 /area/stellardelight/deck2/starboard)
 "WH" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/monotile,
 /area/stellardelight/deck3/commandhall)
 "WI" = (
@@ -12585,6 +12053,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/simulated/open,
 /area/stellardelight/deck2/fore)
 "Xf" = (
@@ -12592,17 +12061,19 @@
 /turf/simulated/open,
 /area/stellardelight/deck2/port)
 "Xi" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/structure/cable,
+/turf/simulated/floor/bluegrid{
+	name = "Mainframe Base";
+	nitrogen = 100;
+	oxygen = 0;
+	temperature = 80
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/turf/simulated/floor/wood,
-/area/stellardelight/deck3/cafe)
+/area/tcommsat/chamber)
+"Xj" = (
+/obj/structure/cable,
+/obj/structure/cable/multilayer/multiz,
+/turf/simulated/floor,
+/area/maintenance/stellardelight/deck3/starboardcent)
 "Xl" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/window/bay/reinforced,
@@ -12635,17 +12106,16 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/crew_quarters/heads/hor)
 "Xo" = (
-/obj/structure/cable,
 /obj/machinery/power/apc/angled{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_server_room)
 "Xr" = (
@@ -12664,6 +12134,7 @@
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/structure/cable,
 /turf/simulated/open,
 /area/stellardelight/deck2/central)
 "XB" = (
@@ -12676,7 +12147,6 @@
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/portdock)
 "XD" = (
@@ -12720,6 +12190,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/open,
 /area/stellardelight/deck2/central)
 "XG" = (
@@ -12744,7 +12215,7 @@
 /obj/machinery/power/apc/angled{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/dark,
 /area/lawoffice)
 "XK" = (
@@ -12757,10 +12228,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/crew_quarters/heads/hos)
-"XT" = (
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck3/portfore)
 "XV" = (
 /obj/structure/cable,
 /turf/simulated/floor,
@@ -12770,6 +12237,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/tcommsat/computer)
 "XY" = (
@@ -12929,6 +12397,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
+/obj/structure/cable,
 /turf/simulated/open,
 /area/stellardelight/deck2/port)
 "Yx" = (
@@ -12952,7 +12421,6 @@
 /obj/effect/floor_decal/steeldecal/steel_decals4{
 	dir = 9
 	},
-/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/aft)
 "YB" = (
@@ -13026,6 +12494,7 @@
 /obj/item/weapon/folder/blue_hop,
 /obj/item/weapon/pen,
 /obj/machinery/light,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/heads/hop)
 "YN" = (
@@ -13051,7 +12520,6 @@
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/aft)
 "YS" = (
@@ -13064,8 +12532,8 @@
 /turf/simulated/open,
 /area/crew_quarters/bar)
 "YY" = (
-/obj/structure/cable,
 /obj/structure/lattice,
+/obj/structure/cable/multilayer/multiz,
 /turf/simulated/open/vacuum,
 /area/stellardelight/deck3/exterior)
 "Zd" = (
@@ -13099,7 +12567,6 @@
 	dir = 4
 	},
 /obj/effect/floor_decal/shuttles/right,
-/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/portdock)
 "Zj" = (
@@ -13128,10 +12595,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/simulated/open,
 /area/stellardelight/deck2/port)
 "Zm" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -13143,6 +12610,7 @@
 	pixel_x = -24;
 	pixel_y = 29
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ai_cyborg_station)
 "Zn" = (
@@ -13167,6 +12635,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/open,
 /area/stellardelight/deck2/central)
 "Zu" = (
@@ -18634,7 +18103,7 @@ NL
 NL
 NL
 NL
-TE
+VM
 NL
 NL
 NL
@@ -18768,15 +18237,7 @@ Jh
 Jh
 Jh
 Jh
-Jh
-Jh
-NL
-NL
-NL
-NL
-NL
-NL
-Ae
+nd
 NL
 NL
 NL
@@ -18784,18 +18245,26 @@ NL
 NL
 NL
 NL
-Jh
-Jh
-Jh
+Wd
+NL
+NL
+NL
+NL
+NL
+NL
+NL
 Jh
 Jh
 Jh
 Jh
+Jh
+Jh
+Jh
 NL
 NL
 NL
 NL
-TE
+VM
 NL
 NL
 NL
@@ -18803,7 +18272,7 @@ NL
 NL
 NL
 NL
-TE
+VM
 NL
 NL
 NL
@@ -18813,7 +18282,7 @@ SK
 SK
 NL
 NL
-TE
+VM
 NL
 NL
 NL
@@ -18903,59 +18372,59 @@ Jh
 Jh
 Jh
 Jh
-FH
-af
-af
-af
-yd
-NL
-NL
-NL
-un
-af
-af
-af
-af
-af
-af
-tM
-af
-af
-af
-af
-af
-yd
-NL
-NL
-NL
-NL
-Jh
-Jh
-Jh
-NL
-NL
-NL
-NL
-NL
-Ae
-NL
-NL
-NL
-NL
-NL
-NL
-NL
-Ae
-NL
-NL
+VM
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
 NL
 NL
 NL
 NL
 Jh
 Jh
+Jh
 NL
-Ae
+NL
+NL
+NL
+NL
+Wd
+NL
+NL
+NL
+NL
+NL
+NL
+NL
+Wd
+NL
+NL
+NL
+NL
+NL
+NL
+Jh
+Jh
+NL
+Wd
 NL
 NL
 NL
@@ -19049,26 +18518,26 @@ Jh
 Jh
 NL
 NL
-Ae
+Wd
 NL
-TE
+VM
 NL
-Ae
-FK
-FK
-FK
-FK
-FK
-FK
+Wd
+Nr
+Nr
+Nr
+Nr
+Nr
+Nr
 NL
-FK
-FK
-FK
-FK
-FK
-Ae
+Nr
+Nr
+Nr
+Nr
+Nr
+Wd
 NL
-TE
+VM
 NL
 SK
 SK
@@ -19079,7 +18548,7 @@ NL
 NL
 NL
 NL
-Ae
+Wd
 NL
 NL
 NL
@@ -19087,17 +18556,17 @@ NL
 NL
 NL
 NL
-Ae
+Wd
 NL
 NL
 NL
-un
-af
-af
-af
-af
-af
-eX
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
 NL
 Jh
 Jh
@@ -19191,48 +18660,48 @@ Jh
 Jh
 Jh
 Jh
-ko
-af
-ew
-af
-Wb
-Ej
-nE
-nE
-nE
-nE
-nE
-da
-xk
-xk
-xk
-xk
-tl
-ko
-af
-ew
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-ew
-af
-af
-af
-af
-af
-af
-af
-ew
-af
-af
-af
+Wd
+Wd
+Wd
+Wd
+Wd
+TG
+TG
+TG
+TG
+TG
+TG
+ig
+TG
+TG
+TG
+TG
+TG
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
 Wd
 NL
 NL
@@ -19308,15 +18777,15 @@ NL
 NL
 NL
 NL
-un
-af
-af
-af
-af
-af
-af
-af
-af
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
 VM
 Jh
 Jh
@@ -19337,19 +18806,19 @@ Jh
 Jh
 NL
 NL
-Ae
-fl
+Wd
 Nr
-Me
-Me
-Me
-Me
+Nr
+Nr
+Nr
+Nr
+Nr
 YY
-Me
-Me
-Me
-Me
-Me
+Nr
+Nr
+Nr
+Nr
+Nr
 NL
 NL
 Jh
@@ -19375,12 +18844,12 @@ pT
 pT
 pT
 pT
-bp
 yW
 yW
 yW
 yW
-dB
+yW
+kk
 Jh
 Jh
 Jh
@@ -19450,7 +18919,7 @@ NL
 NL
 NL
 NL
-Ae
+Wd
 NL
 NL
 NL
@@ -19479,19 +18948,19 @@ Jh
 Jh
 Jh
 Jh
-ko
-af
-yd
-QQ
-nE
-nE
-nE
-RB
-xk
-xk
-xk
-xk
-tl
+Wd
+Wd
+Wd
+oH
+TG
+TG
+TG
+ig
+TG
+TG
+TG
+TG
+TG
 NL
 SK
 SK
@@ -19522,7 +18991,7 @@ sM
 sM
 sM
 sM
-IK
+UR
 Jh
 NL
 NL
@@ -19591,8 +19060,8 @@ NL
 NL
 NL
 NL
-TE
-Ae
+VM
+Wd
 NL
 NL
 NL
@@ -19623,8 +19092,8 @@ Jh
 Jh
 Jh
 Jh
-ko
-yd
+Wd
+Wd
 Nr
 Nr
 Nr
@@ -19664,7 +19133,7 @@ sM
 sM
 sM
 sM
-IK
+UR
 SK
 NL
 NL
@@ -19733,8 +19202,8 @@ NL
 NL
 NL
 NL
-Uw
-eX
+Wd
+Wd
 NL
 NL
 NL
@@ -19766,8 +19235,8 @@ Jh
 Jh
 Jh
 Jh
-ko
-yd
+Wd
+Wd
 NL
 NL
 NL
@@ -19806,7 +19275,7 @@ gi
 Qh
 hg
 sM
-IK
+UR
 SK
 NL
 NL
@@ -19867,14 +19336,14 @@ Jh
 Jh
 Jh
 Jh
-FH
-gw
-af
-af
-af
-af
-af
-af
+VM
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
 Wd
 NL
 NL
@@ -19909,7 +19378,7 @@ Jh
 Jh
 Jh
 Jh
-Ae
+Wd
 SK
 NL
 NL
@@ -19948,7 +19417,7 @@ ui
 EX
 NS
 sM
-IK
+UR
 Jh
 NL
 NL
@@ -20010,14 +19479,14 @@ Jh
 Jh
 Jh
 Jh
-Ae
+Wd
 SK
 Jh
 Jh
 Jh
 Jh
 Jh
-Ae
+Wd
 SK
 Jh
 Jh
@@ -20051,7 +19520,7 @@ Jh
 Jh
 Jh
 SK
-Ae
+Wd
 Jh
 NL
 NL
@@ -20090,7 +19559,7 @@ Zd
 Zd
 Zd
 sM
-IK
+UR
 Jh
 NL
 NL
@@ -20179,7 +19648,7 @@ Yz
 Yz
 NL
 NL
-TE
+VM
 NL
 Yg
 Yg
@@ -20225,14 +19694,14 @@ Vw
 Vw
 Vw
 Rw
-cn
-iw
+LO
+cj
 zS
 Zd
 xL
 sM
 sM
-IK
+UR
 Jh
 NL
 NL
@@ -20295,33 +19764,33 @@ kP
 kP
 Dp
 KQ
-XT
+Yl
 Kg
 iz
 Ws
 Yu
 Zk
 Yl
-XT
-XT
-XT
-XT
-XT
-XT
-XT
+Yl
+Yl
+Yl
+Yl
+Yl
+Yl
+Yl
 Ji
-XT
-XT
-XT
-XT
-XT
+Yl
+Yl
+Yl
+Yl
+Yl
 UL
-My
+Sz
 Ei
 Yz
 NL
 NL
-Ae
+Wd
 NL
 Yg
 vA
@@ -20364,20 +19833,20 @@ Wj
 ya
 Pl
 LO
-LO
+xa
 LO
 lB
-hR
+LO
 MX
 kZ
 wZ
 mv
 sM
 sM
-IK
+UR
 Jh
 NL
-TE
+VM
 NL
 Jh
 Jh
@@ -20435,10 +19904,10 @@ Jh
 Jh
 mQ
 sX
-cK
-XT
-XT
-pf
+Yl
+Yl
+Yl
+Yl
 Ns
 Ns
 Ns
@@ -20516,10 +19985,10 @@ PB
 xL
 sM
 sM
-IK
+UR
 Jh
 NL
-Ae
+Wd
 NL
 Jh
 Jh
@@ -20568,14 +20037,14 @@ Jh
 Jh
 Jh
 NL
-un
+NL
 VM
-un
-af
-af
-af
-kQ
-kQ
+Wd
+Wd
+Wd
+Wd
+HO
+HO
 HO
 Jn
 hD
@@ -20658,10 +20127,10 @@ UD
 Zd
 Zd
 sM
-IK
+UR
 Jh
 NL
-Ae
+Wd
 NL
 Jh
 Jh
@@ -20710,16 +20179,16 @@ Jh
 Jh
 NL
 NL
-Uw
-af
-eX
+NL
+Wd
+Wd
 Jh
 Jh
 hD
 hD
 nO
-PV
-MP
+Sp
+Sp
 hD
 zt
 dL
@@ -20800,10 +20269,10 @@ RW
 Ke
 NS
 sM
-Di
-af
-af
-eX
+UR
+Wd
+Wd
+Wd
 NL
 Jh
 Jh
@@ -20852,8 +20321,8 @@ Jh
 NL
 NL
 NL
-Ae
 NL
+Wd
 Jh
 Jh
 hD
@@ -20869,7 +20338,7 @@ xP
 pN
 xP
 hj
-ey
+XI
 pN
 xP
 kV
@@ -20885,7 +20354,7 @@ he
 QK
 zX
 bl
-op
+Sz
 Yz
 Fm
 zw
@@ -20942,7 +20411,7 @@ gi
 vr
 Zd
 sM
-IK
+UR
 SK
 NL
 NL
@@ -20994,21 +20463,21 @@ NL
 NL
 NL
 NL
-Ae
-NL
+Wd
+Wd
 Jh
 hD
 hD
 FW
-DY
+Sp
 XY
 XY
-LJ
+Sp
 hD
 gj
-fh
-nX
-rj
+XI
+XI
+XV
 Jc
 Ij
 XI
@@ -21084,7 +20553,7 @@ Hu
 PT
 PT
 PT
-En
+FI
 Jh
 NL
 NL
@@ -21132,11 +20601,11 @@ Jh
 Jh
 Jh
 NL
-un
+NL
 VM
 NL
-un
-eX
+Wd
+Wd
 SK
 SK
 hD
@@ -21226,7 +20695,7 @@ qL
 NL
 NL
 NL
-Ae
+Wd
 Jh
 Jh
 Jh
@@ -21274,10 +20743,10 @@ Jh
 Jh
 Jh
 Jh
-Go
-af
-af
-eX
+Wd
+Wd
+Wd
+Wd
 Jh
 Jh
 Jh
@@ -21315,7 +20784,7 @@ Yk
 RM
 WQ
 OX
-Sz
+OX
 cS
 Hm
 SD
@@ -21368,7 +20837,7 @@ YN
 NL
 NL
 NL
-Ae
+Wd
 NL
 NL
 Jh
@@ -21416,7 +20885,7 @@ Jh
 Jh
 Jh
 Jh
-Ae
+Wd
 Jh
 SK
 Jh
@@ -21510,8 +20979,8 @@ YN
 NL
 NL
 NL
-Ae
-TE
+Wd
+VM
 NL
 Jh
 Jh
@@ -21558,8 +21027,8 @@ Jh
 Jh
 Jh
 NL
-ko
-yd
+Wd
+Wd
 NL
 Jh
 Jh
@@ -21652,15 +21121,15 @@ hN
 yW
 yW
 yW
-tK
-tK
 yW
 yW
 yW
 yW
 yW
 yW
-dB
+yW
+yW
+kk
 Jh
 Jh
 Jh
@@ -21701,7 +21170,7 @@ Jh
 Jh
 NL
 NL
-Ae
+Wd
 Jh
 Jh
 Jh
@@ -21802,7 +21271,7 @@ sM
 sM
 sM
 sM
-IK
+UR
 Jh
 Jh
 Jh
@@ -21843,7 +21312,7 @@ Jh
 Jh
 NL
 Jh
-Ae
+Wd
 Jh
 Jh
 SK
@@ -21944,7 +21413,7 @@ sM
 sM
 sM
 sM
-IK
+UR
 Jh
 Jh
 Jh
@@ -21985,7 +21454,7 @@ Jh
 Jh
 SK
 Jh
-Ae
+Wd
 Jh
 SK
 SK
@@ -22000,7 +21469,7 @@ Qp
 Qp
 Qp
 qF
-gG
+mj
 qF
 cb
 cb
@@ -22042,7 +21511,7 @@ Dy
 ib
 nm
 qn
-kb
+sK
 zn
 Bl
 zn
@@ -22086,7 +21555,7 @@ sM
 sM
 sM
 sM
-IK
+UR
 Jh
 Jh
 Jh
@@ -22127,11 +21596,11 @@ Jh
 Jh
 SK
 Jh
-gJ
-af
-af
-af
-eI
+Wd
+Wd
+Wd
+Wd
+fs
 Qp
 qp
 qp
@@ -22182,9 +21651,9 @@ eK
 ib
 lo
 qQ
-Sm
-Sm
-tL
+Ze
+Ze
+sK
 zn
 zn
 zn
@@ -22228,7 +21697,7 @@ sM
 sM
 sM
 sM
-IK
+UR
 Jh
 Jh
 Jh
@@ -22269,8 +21738,8 @@ Jh
 Jh
 SK
 NL
-Ae
-TE
+Wd
+VM
 NL
 Jh
 fs
@@ -22284,7 +21753,7 @@ OP
 ca
 Qp
 qF
-gG
+mj
 qF
 cb
 IC
@@ -22323,7 +21792,7 @@ jE
 fk
 Ze
 lw
-MO
+Ze
 nC
 px
 sK
@@ -22370,7 +21839,7 @@ sM
 sM
 sM
 sM
-IK
+UR
 Jh
 Jh
 Jh
@@ -22409,10 +21878,10 @@ Jh
 Jh
 Jh
 Jh
-un
-af
-Hx
-eX
+Wd
+Wd
+Wd
+Wd
 Jh
 Jh
 CA
@@ -22426,7 +21895,7 @@ NF
 qp
 Qp
 qF
-gG
+mj
 qF
 cb
 NO
@@ -22450,8 +21919,8 @@ WO
 JE
 lD
 jm
-Wt
-hb
+Lw
+Bt
 xZ
 xZ
 xZ
@@ -22463,7 +21932,7 @@ lY
 ad
 qn
 gh
-Ze
+Xi
 eo
 qU
 oA
@@ -22512,7 +21981,7 @@ sM
 sM
 sM
 sM
-IK
+UR
 Jh
 Jh
 Jh
@@ -22551,7 +22020,7 @@ Jh
 Jh
 Jh
 NL
-Ae
+Wd
 SK
 Jh
 Jh
@@ -22593,7 +22062,7 @@ Yp
 rL
 eU
 Lw
-Xi
+Bt
 xZ
 xZ
 xZ
@@ -22604,7 +22073,7 @@ jY
 nx
 sc
 sc
-sc
+Wt
 sc
 sc
 sc
@@ -22654,7 +22123,7 @@ sM
 sM
 sM
 sM
-IK
+UR
 Jh
 Jh
 Jh
@@ -22693,8 +22162,8 @@ Jh
 Jh
 NL
 NL
-ko
-yd
+Wd
+Wd
 NL
 Jh
 Jh
@@ -22710,7 +22179,7 @@ NF
 qp
 Qp
 qF
-gG
+mj
 qF
 cb
 kl
@@ -22735,7 +22204,7 @@ Oy
 bY
 eU
 Lw
-Xi
+Bt
 xZ
 zE
 WD
@@ -22750,14 +22219,14 @@ gQ
 iK
 KH
 KY
-QG
-eg
-QG
-QG
+cL
+dB
+cL
+cL
 np
 nM
 uI
-wS
+jB
 sc
 XK
 XK
@@ -22796,7 +22265,7 @@ sM
 sM
 sM
 sM
-IK
+UR
 Jh
 Jh
 Jh
@@ -22835,9 +22304,9 @@ Jh
 Jh
 NL
 NL
-FH
-ew
-yd
+VM
+Wd
+Wd
 NL
 SK
 SK
@@ -22888,18 +22357,18 @@ sz
 RX
 sc
 bK
-gS
+QG
 iR
 Rc
 Qs
 TK
-Ga
+TK
 eu
 xh
 kB
 rZ
-nd
-sc
+lQ
+dK
 sc
 Bk
 XK
@@ -22938,7 +22407,7 @@ sM
 sM
 sM
 sM
-Vz
+VM
 Jh
 Jh
 Jh
@@ -22979,7 +22448,7 @@ Jh
 NL
 NL
 NL
-Ae
+Wd
 Jh
 Jh
 Jh
@@ -23041,7 +22510,7 @@ Ol
 rN
 MV
 Cn
-sc
+dK
 AZ
 bM
 Ru
@@ -23080,7 +22549,7 @@ sM
 sM
 sM
 sM
-IK
+UR
 Jh
 Jh
 Jh
@@ -23121,7 +22590,7 @@ Jh
 Jh
 SK
 Jh
-Ae
+Wd
 Jh
 Jh
 Jh
@@ -23142,15 +22611,15 @@ vO
 HW
 xw
 zb
-tT
-tT
-tT
-tT
+UG
+UG
+UG
+UG
 zB
 zb
-tT
 UG
-wQ
+UG
+HW
 EW
 bE
 bE
@@ -23222,7 +22691,7 @@ sM
 sM
 sM
 sM
-IK
+UR
 Jh
 Jh
 Jh
@@ -23263,7 +22732,7 @@ Jh
 NL
 NL
 NL
-Ae
+Wd
 Jh
 Jh
 Jh
@@ -23300,11 +22769,11 @@ bE
 aQ
 QT
 nt
-iy
+cz
 Nf
 SQ
 TF
-Gj
+bp
 TO
 Vq
 WH
@@ -23364,7 +22833,7 @@ sM
 sM
 sM
 sM
-IK
+UR
 Jh
 Jh
 Jh
@@ -23403,9 +22872,9 @@ Jh
 Jh
 NL
 NL
-FH
-Rx
-eX
+VM
+Wd
+Wd
 NL
 SK
 SK
@@ -23506,7 +22975,7 @@ sM
 sM
 sM
 sM
-gB
+VM
 Jh
 Jh
 Jh
@@ -23545,8 +23014,8 @@ Jh
 Jh
 NL
 NL
-un
-eX
+Wd
+Wd
 NL
 Jh
 Jh
@@ -23562,7 +23031,7 @@ jC
 qp
 Qp
 qF
-mj
+af
 qF
 EJ
 To
@@ -23648,7 +23117,7 @@ sM
 sM
 sM
 sM
-IK
+UR
 Jh
 Jh
 Jh
@@ -23687,7 +23156,7 @@ Jh
 Jh
 Jh
 NL
-Ae
+Wd
 SK
 Jh
 Jh
@@ -23704,7 +23173,7 @@ jC
 qp
 Qp
 Hf
-mp
+al
 tV
 EJ
 Xa
@@ -23790,7 +23259,7 @@ sM
 sM
 sM
 sM
-IK
+UR
 Jh
 Jh
 Jh
@@ -23829,10 +23298,10 @@ Jh
 Jh
 Jh
 Jh
-ko
-af
-mM
-yd
+Wd
+Wd
+Wd
+NL
 Jh
 Jh
 CA
@@ -23846,7 +23315,7 @@ jC
 qp
 Qp
 qF
-mj
+af
 qF
 EJ
 VE
@@ -23932,7 +23401,7 @@ sM
 sM
 sM
 sM
-IK
+UR
 Jh
 Jh
 Jh
@@ -23973,8 +23442,8 @@ Jh
 Jh
 SK
 NL
-Ae
-Op
+Wd
+VM
 NL
 Jh
 Qp
@@ -23988,7 +23457,7 @@ jC
 qp
 Qp
 qF
-mj
+af
 qF
 EJ
 lk
@@ -24074,7 +23543,7 @@ sM
 sM
 sM
 sM
-IK
+UR
 Jh
 Jh
 Jh
@@ -24115,7 +23584,7 @@ Jh
 Jh
 SK
 Jh
-Ae
+Wd
 NL
 NL
 NL
@@ -24130,7 +23599,7 @@ gg
 qp
 Qp
 Cp
-na
+aw
 Cp
 EJ
 oD
@@ -24216,7 +23685,7 @@ sM
 sM
 sM
 sM
-IK
+UR
 Jh
 Jh
 Jh
@@ -24257,7 +23726,7 @@ Jh
 Jh
 SK
 Jh
-Ae
+Wd
 Jh
 SK
 SK
@@ -24272,7 +23741,7 @@ Jx
 Jx
 Jx
 qF
-mj
+af
 qF
 EJ
 EJ
@@ -24297,7 +23766,7 @@ in
 in
 in
 in
-Tk
+xg
 Rn
 Rn
 in
@@ -24358,7 +23827,7 @@ sM
 sM
 sM
 sM
-IK
+UR
 Jh
 Jh
 Jh
@@ -24399,14 +23868,14 @@ Jh
 Jh
 NL
 Jh
-Ae
+Wd
 Jh
 Jh
 SK
 SK
 SK
 Jx
-mR
+Ti
 aS
 pE
 Ib
@@ -24414,7 +23883,7 @@ Sb
 WF
 Jx
 Hf
-mp
+al
 tV
 qF
 qF
@@ -24446,15 +23915,15 @@ OE
 ow
 ow
 ow
-CJ
+bB
 ow
 th
-ep
+cn
 Mp
 Uj
 Hc
-Tn
-qO
+cK
+da
 HT
 lL
 HT
@@ -24500,7 +23969,7 @@ sM
 sM
 sM
 sM
-IK
+UR
 Jh
 Jh
 Jh
@@ -24541,14 +24010,14 @@ Jh
 Jh
 NL
 NL
-Ae
+Wd
 Jh
 Jh
 Jh
 SK
 SK
 ZQ
-mR
+Ti
 aS
 Sb
 eR
@@ -24578,22 +24047,22 @@ sd
 sd
 Rj
 FL
-aN
+WG
 FL
 FL
 OI
-eY
-eY
+FL
+FL
 WG
-eY
-eY
-eY
+FL
+FL
+FL
 hP
 sn
-pX
-Lb
-JK
-fM
+qO
+Tn
+gH
+gH
 Ty
 gH
 th
@@ -24602,13 +24071,13 @@ th
 th
 ct
 th
-De
+th
 Le
 TB
-IZ
-IZ
-IZ
-IZ
+pc
+pc
+pc
+pc
 YR
 YR
 xO
@@ -24642,7 +24111,7 @@ sM
 sM
 sM
 sM
-IK
+UR
 Jh
 Jh
 Jh
@@ -24682,15 +24151,15 @@ Jh
 Jh
 Jh
 NL
-un
-eX
+Wd
+Wd
 NL
 Jh
 Jh
 Jh
 SK
 ZQ
-mR
+Ti
 aS
 Sb
 bJ
@@ -24698,7 +24167,7 @@ Sb
 aD
 Jx
 ne
-gm
+vF
 qF
 qF
 qF
@@ -24744,7 +24213,7 @@ Gk
 sQ
 uT
 wo
-yH
+th
 jP
 BC
 en
@@ -24773,17 +24242,17 @@ ZH
 vo
 Nx
 HP
-nh
-nh
-nh
 GT
 GT
-nh
-nh
-nh
-nh
-nh
-nh
+GT
+GT
+GT
+GT
+GT
+GT
+GT
+GT
+GT
 FI
 Jh
 Jh
@@ -24824,7 +24293,7 @@ Jh
 Jh
 Jh
 Jh
-Ae
+Wd
 Jh
 SK
 Jh
@@ -24833,7 +24302,7 @@ Jh
 Jh
 ZQ
 Vi
-pq
+Ti
 Ai
 HV
 Sb
@@ -24886,7 +24355,7 @@ Gk
 Ge
 vb
 xj
-yH
+th
 WZ
 LP
 zy
@@ -24918,8 +24387,8 @@ uq
 NL
 NL
 NL
-Ae
-Op
+Wd
+VM
 NL
 Jh
 Jh
@@ -24966,10 +24435,10 @@ Jh
 Jh
 Jh
 Jh
-vQ
-af
-af
-yd
+Wd
+Wd
+Wd
+Wd
 Jh
 Jh
 Jh
@@ -24982,7 +24451,7 @@ Sb
 Nz
 Jx
 ap
-sR
+YB
 FE
 Ef
 Ub
@@ -25003,10 +24472,10 @@ Gm
 yi
 BF
 Ev
-Io
+Ts
 ut
 Ts
-Io
+Ts
 QP
 xH
 OG
@@ -25028,7 +24497,7 @@ Gk
 tQ
 Vt
 wd
-yH
+th
 Ed
 Cc
 Ed
@@ -25060,7 +24529,7 @@ uq
 NL
 NL
 NL
-Ae
+Wd
 NL
 NL
 Jh
@@ -25108,11 +24577,11 @@ Jh
 Jh
 Jh
 NL
-ko
+NL
 VM
 NL
-ko
-yd
+Wd
+Wd
 SK
 SK
 Jx
@@ -25124,7 +24593,7 @@ Sb
 AQ
 Jx
 FE
-sR
+YB
 FE
 Ef
 GB
@@ -25141,7 +24610,7 @@ Vk
 zC
 Ec
 hr
-al
+ii
 ii
 Bp
 OM
@@ -25164,13 +24633,13 @@ Gk
 Gk
 Gk
 Gk
-MA
-sZ
-sZ
-OA
-OA
-OA
-cz
+Gk
+Gk
+Gk
+th
+th
+th
+th
 ow
 ok
 ow
@@ -25202,7 +24671,7 @@ Wu
 NL
 NL
 NL
-Ae
+Wd
 Jh
 Jh
 Jh
@@ -25254,7 +24723,7 @@ NL
 NL
 NL
 NL
-Ae
+Wd
 NL
 Jh
 Jx
@@ -25266,10 +24735,10 @@ Sb
 aS
 Jx
 Td
-TS
 YB
-hz
-hz
+YB
+ir
+ir
 Vx
 ac
 Ef
@@ -25288,7 +24757,7 @@ ii
 Bp
 rH
 oC
-me
+Ug
 aB
 me
 Ug
@@ -25396,7 +24865,7 @@ Jh
 NL
 NL
 NL
-Ae
+Wd
 NL
 Jh
 Jh
@@ -25404,11 +24873,11 @@ Jx
 Jx
 sj
 Ti
-Nj
-GJ
+Ti
+Ti
 Jx
 fD
-sR
+YB
 FE
 Ef
 Ef
@@ -25421,7 +24890,7 @@ FE
 dx
 Mr
 Pp
-ip
+QW
 fj
 Ec
 RE
@@ -25430,7 +24899,7 @@ RE
 me
 br
 qf
-me
+Ug
 dk
 Ys
 Hh
@@ -25486,7 +24955,7 @@ sM
 sM
 sM
 sM
-IK
+UR
 SK
 NL
 NL
@@ -25538,19 +25007,19 @@ Jh
 Jh
 NL
 NL
-EV
-af
-yd
+Wd
+Wd
+Wd
 Jh
 Jh
 Jx
 Jx
 Mc
 aS
-em
+Ti
 Jx
 Ue
-sR
+YB
 FE
 Ef
 Yj
@@ -25566,13 +25035,13 @@ Xb
 QW
 DW
 IS
-bB
 HL
-bB
-bB
-bB
+HL
+HL
+HL
+yU
 pt
-aB
+ia
 Mw
 hy
 ON
@@ -25629,9 +25098,9 @@ sM
 sM
 sM
 UR
-af
-af
-yd
+Wd
+Wd
+Wd
 NL
 Jh
 Jh
@@ -25680,13 +25149,13 @@ Jh
 Jh
 Jh
 NL
-ko
+Wd
 VM
-ko
-af
-af
-af
-Kr
+Wd
+Wd
+Wd
+Wd
+Rh
 Rh
 Jx
 du
@@ -25711,10 +25180,10 @@ CC
 Vg
 Vg
 RE
-RE
-xH
+hT
+Xj
 DE
-me
+Ug
 od
 wM
 SV
@@ -25770,10 +25239,10 @@ sM
 sM
 sM
 sM
-IK
+UR
 Jh
 NL
-Ae
+Wd
 NL
 Jh
 Jh
@@ -25831,13 +25300,13 @@ Jh
 Jh
 Vg
 ym
-QV
-cL
-zf
-ul
-zf
-zf
-zf
+TP
+TP
+TP
+TP
+TP
+TP
+TP
 Ri
 tc
 DQ
@@ -25912,10 +25381,10 @@ sM
 sM
 sM
 sM
-IK
+UR
 Jh
 NL
-Ae
+Wd
 NL
 Jh
 Jh
@@ -25990,18 +25459,18 @@ DQ
 DQ
 Mu
 zA
-Ln
-Ln
-Ln
-Ln
-Ln
+TP
+TP
+TP
+TP
+TP
 RK
-hB
+DE
 In
 me
 NL
 NL
-qy
+Wd
 NL
 by
 Li
@@ -26027,8 +25496,8 @@ Wr
 MW
 LY
 pz
-aw
-aw
+rq
+rq
 zV
 jp
 OU
@@ -26054,10 +25523,10 @@ sM
 sM
 sM
 sM
-IK
+UR
 Jh
 NL
-Ae
+Wd
 NL
 Jh
 Jh
@@ -26143,7 +25612,7 @@ me
 me
 NL
 NL
-we
+VM
 NL
 by
 by
@@ -26196,10 +25665,10 @@ sM
 sM
 sM
 sM
-IK
+UR
 Jh
 NL
-Op
+VM
 NL
 Jh
 Jh
@@ -26258,14 +25727,14 @@ Jh
 Jh
 Jh
 Jh
-qy
+Wd
 SK
 Jh
 Jh
 Jh
 Jh
 Jh
-qy
+Wd
 SK
 Jh
 Jh
@@ -26299,7 +25768,7 @@ Jh
 Jh
 Jh
 SK
-Ae
+Wd
 Jh
 NL
 NL
@@ -26338,7 +25807,7 @@ sM
 sM
 sM
 sM
-IK
+UR
 Jh
 NL
 NL
@@ -26399,15 +25868,15 @@ Jh
 Jh
 Jh
 Jh
-qb
-Ox
-xm
-xm
-xm
-xm
-xm
-xm
-TV
+VM
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
 NL
 NL
 Jh
@@ -26441,7 +25910,7 @@ Jh
 Jh
 Jh
 Jh
-Ae
+Wd
 SK
 NL
 NL
@@ -26480,7 +25949,7 @@ sM
 sM
 sM
 sM
-IK
+UR
 Jh
 NL
 NL
@@ -26549,8 +26018,8 @@ NL
 NL
 NL
 NL
-uH
-OJ
+Wd
+Wd
 NL
 NL
 NL
@@ -26582,8 +26051,8 @@ Jh
 Jh
 Jh
 Jh
-un
-eX
+Wd
+Wd
 NL
 NL
 NL
@@ -26622,7 +26091,7 @@ sM
 sM
 sM
 sM
-IK
+UR
 SK
 NL
 NL
@@ -26691,8 +26160,8 @@ NL
 NL
 NL
 NL
-we
-qy
+VM
+Wd
 NL
 NL
 NL
@@ -26723,17 +26192,17 @@ Jh
 Jh
 Jh
 Jh
-un
-eX
-FK
-FK
-FK
+Wd
+Wd
+Nr
+Nr
+Nr
 NL
-FK
-FK
-FK
-FK
-FK
+Nr
+Nr
+Nr
+Nr
+Nr
 NL
 SK
 SK
@@ -26764,7 +26233,7 @@ sM
 sM
 sM
 sM
-IK
+UR
 SK
 NL
 NL
@@ -26834,7 +26303,7 @@ NL
 NL
 NL
 NL
-qy
+Wd
 NL
 NL
 NL
@@ -26863,19 +26332,19 @@ Jh
 Jh
 Jh
 Jh
-un
-af
-eX
+Wd
+Wd
+Wd
 NL
-Ej
-nE
-nE
-da
-xk
-xk
-xk
-xk
-tl
+TG
+TG
+TG
+ig
+TG
+TG
+TG
+TG
+TG
 NL
 SK
 SK
@@ -26906,7 +26375,7 @@ sM
 sM
 sM
 sM
-IK
+UR
 Jh
 NL
 NL
@@ -26976,16 +26445,16 @@ NL
 NL
 NL
 NL
-EU
-xm
-xm
-xm
-xm
-xm
-xm
-xm
-xm
-iY
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+VM
 Jh
 Jh
 Jh
@@ -27005,19 +26474,19 @@ Jh
 Jh
 NL
 NL
-Ae
-Iw
-FK
-Iy
-Iy
-Iy
-Iy
+Wd
+Nr
+Nr
+Nr
+Nr
+Nr
+Nr
 YY
-Iy
-Iy
-Iy
-Iy
-Iy
+Nr
+Nr
+Nr
+Nr
+Nr
 NL
 NL
 Jh
@@ -27043,11 +26512,11 @@ PT
 PT
 PT
 PT
-va
-nh
-nh
-nh
-nh
+GT
+GT
+GT
+GT
+GT
 FI
 Jh
 Jh
@@ -27143,49 +26612,49 @@ Jh
 Jh
 Jh
 Jh
-un
-af
-Rx
-af
-kJ
-Ej
-nE
-nE
-nE
-nE
-nE
-RB
+Wd
+Wd
+Wd
+Wd
+Wd
 TG
 TG
 TG
 TG
-Sc
-un
-af
-Rx
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-Rx
-af
-af
-af
-af
-af
-af
-af
-Rx
-af
-af
-af
-LW
+TG
+TG
+ig
+TG
+TG
+TG
+TG
+TG
+NL
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
 NL
 NL
 NL
@@ -27285,11 +26754,11 @@ Jh
 Jh
 NL
 NL
-Ae
+Wd
 NL
-Op
+VM
 NL
-Ae
+Wd
 Nr
 Nr
 Nr
@@ -27302,9 +26771,9 @@ Nr
 Nr
 Nr
 Nr
-Ae
 NL
-Op
+Wd
+VM
 NL
 SK
 SK
@@ -27315,7 +26784,7 @@ NL
 NL
 NL
 NL
-Ae
+Wd
 NL
 NL
 NL
@@ -27323,17 +26792,17 @@ NL
 NL
 NL
 NL
-Ae
+Wd
 NL
 NL
 NL
-ko
-af
-af
-af
-af
-af
-yd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
 NL
 Jh
 Jh
@@ -27423,59 +26892,59 @@ Jh
 Jh
 Jh
 Jh
-FH
-af
-af
-af
-eX
+VM
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
 NL
 NL
 NL
-ko
-af
-af
-af
-af
-af
-af
-oe
-af
-af
-af
-af
-af
-eX
+NL
+NL
+NL
+NL
+NL
+NL
+NL
+NL
+NL
+NL
+NL
+Wd
+NL
+NL
+NL
+Jh
+Jh
+Jh
+NL
+NL
+NL
+NL
+NL
+Wd
+NL
+NL
+NL
+NL
+NL
+NL
+NL
+Wd
+NL
+NL
 NL
 NL
 NL
 NL
 Jh
 Jh
-Jh
 NL
-NL
-NL
-NL
-NL
-Ae
-NL
-NL
-NL
-NL
-NL
-NL
-NL
-Ae
-NL
-NL
-NL
-NL
-NL
-NL
-Jh
-Jh
-NL
-Ae
+Wd
 NL
 NL
 NL
@@ -27572,34 +27041,34 @@ Jh
 Jh
 Jh
 Jh
-Jh
-Jh
-NL
-NL
-NL
-NL
-NL
-NL
-Ae
-NL
-NL
-NL
-NL
-NL
-NL
-NL
-Jh
-Jh
-Jh
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
+Wd
 Jh
 Jh
 Jh
 Jh
+Jh
+Jh
+Jh
 NL
 NL
 NL
 NL
-Op
+VM
 NL
 NL
 NL
@@ -27607,7 +27076,7 @@ NL
 NL
 NL
 NL
-Op
+VM
 NL
 NL
 NL
@@ -27617,7 +27086,7 @@ SK
 SK
 NL
 NL
-Op
+VM
 NL
 NL
 NL
@@ -27722,7 +27191,7 @@ NL
 NL
 NL
 NL
-Op
+VM
 NL
 NL
 NL

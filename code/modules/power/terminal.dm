@@ -12,6 +12,7 @@
 	anchored = TRUE
 	layer = WIRE_TERMINAL_LAYER
 	unacidable = TRUE
+	cable_layer = CABLE_LAYER_2
 	var/obj/machinery/power/master = null
 
 /obj/machinery/power/terminal/layer1
@@ -31,8 +32,10 @@
 /obj/machinery/power/terminal/Initialize()
 	. = ..()
 	var/turf/T = get_turf(src)
-	if(level==1) hide(!T.is_plating())
-	return
+	if(level==1)
+		hide(!T.is_plating())
+	if(!powernet)
+		connect_to_network()
 
 /obj/machinery/power/terminal/Destroy()
 	if(master)

@@ -222,7 +222,7 @@
 /obj/machinery/power/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = W
-		var/turf/T = get_turf(user.loc)
+		var/turf/T = user.loc
 		if(T && !T.is_plating())
 			return
 		if(get_dist(src, user) > 1)

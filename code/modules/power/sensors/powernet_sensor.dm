@@ -31,6 +31,7 @@
 /obj/machinery/power/sensor/New()
 	..()
 	auto_set_name()
+	adapt_to_cable_layer()
 /obj/machinery/power/sensor/Initialize()
 	. = ..()
 	history["supply"] = list()
@@ -41,6 +42,12 @@
 // Description: Sets name of this sensor according to the ID tag.
 /obj/machinery/power/sensor/proc/auto_set_name()
 	name = "[name_tag] - Powernet Sensor"
+
+///let's ensure we operate on the correct layer
+/obj/machinery/power/sensor/proc/adapt_to_cable_layer()
+	var/turf/T = get_turf(src)
+	for(var/obj/structure/cable/C in T.contents)
+		cable_layer = C.cable_layer
 
 /obj/machinery/power/sensor/Destroy()
 	. = ..()
