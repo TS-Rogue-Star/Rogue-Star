@@ -7,8 +7,7 @@
 /area/aisat)
 "c" = (
 /obj/machinery/atmospherics/pipe/zpipe/up{
-	dir = 4;
-	icon_state = "up"
+	dir = 4
 	},
 /obj/structure/disposalpipe/up,
 /turf/simulated/floor/plating,
@@ -36,8 +35,7 @@
 /area/aisat)
 "g" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 10;
-	icon_state = "intact"
+	dir = 10
 	},
 /obj/effect/floor_decal/corner/white/diagonal,
 /turf/simulated/floor/tiled/dark,
@@ -71,8 +69,7 @@
 /area/aisat)
 "m" = (
 /obj/machinery/atmospherics/pipe/manifold/visible{
-	dir = 4;
-	icon_state = "map"
+	dir = 4
 	},
 /obj/effect/floor_decal/corner/white/diagonal,
 /obj/machinery/meter,
@@ -93,24 +90,21 @@
 /area/aisat)
 "q" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 5;
-	icon_state = "intact"
+	dir = 5
 	},
 /obj/effect/floor_decal/corner/white/diagonal,
 /turf/simulated/floor/tiled/dark,
 /area/aisat)
 "r" = (
 /obj/machinery/atmospherics/binary/pump/high_power{
-	dir = 4;
-	icon_state = "map_off"
+	dir = 4
 	},
 /obj/effect/floor_decal/corner/white/diagonal,
 /turf/simulated/floor/tiled/dark,
 /area/aisat)
 "s" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 9;
-	icon_state = "intact"
+	dir = 9
 	},
 /obj/effect/floor_decal/corner/white/diagonal,
 /turf/simulated/floor/tiled/dark,
@@ -136,20 +130,17 @@
 	pixel_x = -22
 	},
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
-	dir = 1;
-	icon_state = "pipe-t"
+	dir = 1
 	},
 /turf/simulated/floor/tiled/dark,
 /area/aisat)
 "x" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
 /area/aisat)
@@ -159,24 +150,20 @@
 /area/aisat)
 "z" = (
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /turf/simulated/floor/tiled/dark,
 /area/aisat)
 "A" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "east bump";
 	pixel_x = 24
 	},
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/dark,
 /area/aisat)
 "B" = (
@@ -200,9 +187,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/aisat)
 "E" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/corner/white/diagonal,
 /turf/simulated/floor/tiled/dark,
 /area/aisat)
@@ -218,9 +203,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/aisat)
 "H" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /obj/effect/floor_decal/corner/white/diagonal,
 /obj/machinery/shield_gen,
 /turf/simulated/floor/tiled/dark,
@@ -242,55 +225,34 @@
 /obj/machinery/light,
 /obj/machinery/shield_capacitor{
 	anchored = 1;
-	dir = 4;
-	icon_state = "capacitor"
+	dir = 4
 	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/aisat)
 "M" = (
 /obj/machinery/shield_gen/external{
 	anchored = 1
 	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/aisat)
 "N" = (
 /obj/machinery/shield_capacitor{
 	anchored = 1;
-	dir = 8;
-	icon_state = "capacitor"
+	dir = 8
 	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/aisat)
 "O" = (
-/obj/structure/cable/yellow,
-/obj/structure/cable/yellow{
-	icon_state = "16-0"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
+/obj/structure/cable,
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/aisat)
 "P" = (
-/turf/simulated/floor/tiled/red,
-/area/aisat)
-"Q" = (
-/obj/turbolift_map_holder/example{
-	dir = 1;
-	icon = 'icons/obj/turbolift_preview_5x5.dmi'
-	},
 /turf/simulated/floor/tiled/red,
 /area/aisat)
 
@@ -765,7 +727,7 @@ P
 P
 P
 P
-Q
+P
 b
 a
 a

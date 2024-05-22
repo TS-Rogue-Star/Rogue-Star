@@ -177,28 +177,24 @@
 "aS" = (
 /obj/structure/table/steel,
 /obj/machinery/light_construct{
-	icon_state = "tube-construct-stage1";
 	dir = 1
 	},
 /turf/simulated/floor/tiled/steel_dirty/virgo3b,
 /area/mine/explored/underdark)
 "aT" = (
 /obj/machinery/light_construct{
-	icon_state = "tube-construct-stage1";
 	dir = 1
 	},
 /turf/simulated/floor/tiled/steel_dirty/virgo3b,
 /area/mine/explored/underdark)
 "aU" = (
 /obj/machinery/light_construct{
-	icon_state = "tube-construct-stage1";
 	dir = 8
 	},
 /turf/simulated/floor/tiled/steel_dirty/virgo3b,
 /area/mine/explored/underdark)
 "aV" = (
 /obj/machinery/light_construct{
-	icon_state = "tube-construct-stage1";
 	dir = 4
 	},
 /turf/simulated/floor/tiled/steel_dirty/virgo3b,

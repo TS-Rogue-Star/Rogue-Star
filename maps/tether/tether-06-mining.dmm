@@ -277,7 +277,7 @@
 /turf/simulated/floor/virgo3b,
 /area/mine/explored)
 "aO" = (
-/obj/structure/cable/ender{
+/obj/structure/cable/heavyduty/ender{
 	id = "surface-mining"
 	},
 /turf/simulated/floor/virgo3b,
@@ -537,18 +537,10 @@
 "bp" = (
 /turf/simulated/floor/plating,
 /area/outpost/mining_main/maintenance)
-"bq" = (
-/obj/structure/cable,
-/turf/simulated/floor/plating,
-/area/outpost/mining_main/maintenance)
 "br" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
-/turf/simulated/floor/plating,
-/area/outpost/mining_main/maintenance)
-"bs" = (
-/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/outpost/mining_main/maintenance)
 "bt" = (
@@ -569,10 +561,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/outpost/mining_main/break_room)
-"bu" = (
-/obj/structure/cable,
-/turf/simulated/floor/plating,
-/area/outpost/mining_main/maintenance)
 "bv" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 1
@@ -589,10 +577,6 @@
 "bw" = (
 /obj/structure/cable,
 /obj/machinery/power/terminal,
-/turf/simulated/floor/plating,
-/area/outpost/mining_main/maintenance)
-"bx" = (
-/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/outpost/mining_main/maintenance)
 "by" = (
@@ -3095,7 +3079,7 @@ aP
 aV
 aP
 bn
-bs
+bz
 bB
 bI
 aA
@@ -3237,7 +3221,7 @@ aQ
 ba
 bf
 bn
-bu
+bz
 bC
 SF
 ab
@@ -3521,7 +3505,7 @@ aS
 bc
 bk
 bp
-bx
+bz
 bF
 SF
 ab
@@ -3662,7 +3646,7 @@ ay
 aT
 bd
 bl
-bq
+bz
 bz
 bp
 SF

@@ -1,10 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"aa" = (
-/obj/structure/cable,
-/turf/simulated/mineral/floor/virgo3b{
-	ignore_mapgen = 1
-	},
-/area/mine/explored/underdark)
 "ab" = (
 /turf/simulated/mineral/floor/virgo3b,
 /area/mine/explored/underdark)
@@ -31,10 +25,6 @@
 "ah" = (
 /turf/simulated/wall/r_wall,
 /area/mine/explored/underdark)
-"ai" = (
-/obj/structure/cable,
-/turf/simulated/floor/outdoors/dirt/virgo3b,
-/area/mine/explored/underdark)
 "aj" = (
 /obj/machinery/power/port_gen/pacman,
 /obj/structure/cable,
@@ -45,40 +35,13 @@
 "ak" = (
 /obj/structure/cable,
 /obj/machinery/light/small{
-	icon_state = "bulb1";
 	dir = 1
 	},
 /turf/simulated/mineral/floor/virgo3b{
 	ignore_mapgen = 1
 	},
 /area/mine/explored/underdark)
-"al" = (
-/obj/structure/cable,
-/turf/simulated/floor/outdoors/dirt/virgo3b,
-/area/mine/explored/underdark)
-"am" = (
-/obj/structure/cable,
-/turf/simulated/floor/outdoors/dirt/virgo3b,
-/area/mine/explored/underdark)
-"an" = (
-/obj/structure/cable,
-/turf/simulated/mineral/floor/virgo3b{
-	ignore_mapgen = 1
-	},
-/area/mine/explored/underdark)
 "ao" = (
-/turf/simulated/floor/outdoors/dirt/virgo3b,
-/area/mine/explored/underdark)
-"ap" = (
-/obj/structure/cable,
-/turf/simulated/floor/outdoors/dirt/virgo3b,
-/area/mine/explored/underdark)
-"aq" = (
-/obj/structure/cable,
-/turf/simulated/floor/outdoors/dirt/virgo3b,
-/area/mine/explored/underdark)
-"ar" = (
-/obj/structure/cable,
 /turf/simulated/floor/outdoors/dirt/virgo3b,
 /area/mine/explored/underdark)
 "as" = (
@@ -97,18 +60,13 @@
 	},
 /turf/simulated/floor/tiled/steel_dirty/virgo3b,
 /area/mine/explored/underdark)
-"av" = (
-/obj/structure/cable,
-/turf/simulated/floor/outdoors/dirt/virgo3b,
-/area/mine/explored/underdark)
 "aw" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
+	alarms_hidden = 1;
 	dir = 1;
 	name = "north bump";
-	pixel_x = 0;
-	pixel_y = 24;
-	alarms_hidden = 1
+	pixel_y = 24
 	},
 /turf/simulated/mineral/floor/virgo3b{
 	ignore_mapgen = 1
@@ -131,19 +89,12 @@
 /obj/structure/cable,
 /turf/simulated/floor/outdoors/dirt/virgo3b,
 /area/mine/explored/underdark)
-"aB" = (
-/obj/structure/cable,
-/turf/simulated/mineral/floor/virgo3b{
-	ignore_mapgen = 1
-	},
-/area/mine/explored/underdark)
 "aC" = (
 /obj/machinery/door/airlock/maintenance/cargo,
 /turf/simulated/floor/virgo3b,
 /area/mine/explored/underdark)
 "aD" = (
 /obj/machinery/light/small{
-	icon_state = "bulb1";
 	dir = 4
 	},
 /turf/simulated/floor/tiled/steel_dirty/virgo3b,
@@ -162,12 +113,6 @@
 "aH" = (
 /obj/structure/girder,
 /turf/simulated/floor/virgo3b,
-/area/mine/explored/underdark)
-"aI" = (
-/obj/structure/cable,
-/turf/simulated/mineral/floor/virgo3b{
-	ignore_mapgen = 1
-	},
 /area/mine/explored/underdark)
 "aJ" = (
 /turf/simulated/mineral/floor/virgo3b,
@@ -227,7 +172,6 @@
 /area/mine/explored/underdark)
 "aV" = (
 /obj/machinery/light/small{
-	icon_state = "bulb1";
 	dir = 8
 	},
 /turf/simulated/mineral/floor/virgo3b{
@@ -242,7 +186,6 @@
 /area/mine/explored/underdark)
 "aX" = (
 /obj/machinery/light/small{
-	icon_state = "bulb1";
 	dir = 4
 	},
 /turf/simulated/mineral/floor/virgo3b{
@@ -252,7 +195,6 @@
 "aY" = (
 /obj/item/weapon/bone,
 /obj/machinery/light/small{
-	icon_state = "bulb1";
 	dir = 4
 	},
 /turf/simulated/mineral/floor/virgo3b{
@@ -279,7 +221,6 @@
 /area/mine/explored/underdark)
 "bc" = (
 /obj/structure/railing{
-	icon_state = "railing0";
 	dir = 8
 	},
 /turf/simulated/mineral/floor/virgo3b{
@@ -294,7 +235,6 @@
 /area/mine/explored/underdark)
 "be" = (
 /obj/structure/railing{
-	icon_state = "railing0";
 	dir = 1
 	},
 /turf/simulated/mineral/floor/virgo3b{
@@ -18175,8 +18115,8 @@ af
 ag
 ag
 ah
-aa
-aB
+aU
+aU
 ac
 ac
 ac
@@ -18202,8 +18142,8 @@ ag
 ag
 ag
 ah
-ai
-ap
+aA
+aA
 ao
 ao
 ao
@@ -18318,7 +18258,7 @@ ag
 ag
 ah
 aj
-aI
+aU
 ac
 ac
 ac
@@ -18344,8 +18284,8 @@ ag
 ag
 ag
 ah
-am
-aq
+aA
+aA
 ao
 ao
 ao
@@ -18486,7 +18426,7 @@ ag
 ag
 ag
 ah
-av
+aA
 ao
 ao
 ao
@@ -18601,7 +18541,7 @@ af
 ag
 ag
 ah
-an
+aU
 aU
 ac
 as
@@ -18628,8 +18568,8 @@ ag
 ag
 ag
 ah
-al
-ar
+aA
+aA
 ao
 ao
 ay
