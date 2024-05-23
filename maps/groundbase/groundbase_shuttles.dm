@@ -36,6 +36,7 @@
 /obj/machinery/computer/shuttle_control/enginesat_shuttle
 	name = "engine satellite shuttle control console"
 	shuttle_tag = "Engine Satellite Shuttle"
+	ai_control = 1
 
 /area/shuttle/groundbase/engineering
 	icon = 'icons/turf/areas_vr.dmi'
