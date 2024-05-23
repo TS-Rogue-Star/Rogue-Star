@@ -851,9 +851,9 @@
 		var/mob/living/silicon/robot/R = M
 		if(check_access(R.get_active_hand()) || istype(R.get_active_hand(), /obj/item/weapon/card/robot))
 			if(R == src) //RS edit: No self-unlocking.
-				return 0
+				return FALSE
 			else
-				return 1
+				return TRUE
 	return 0
 
 /mob/living/silicon/robot/proc/check_access(obj/item/I)
