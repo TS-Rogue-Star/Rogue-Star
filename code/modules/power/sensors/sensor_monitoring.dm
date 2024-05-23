@@ -36,9 +36,13 @@
 			icon_screen = "[initial(icon_screen)]_warn"
 	..()
 */
+/obj/machinery/computer/power_monitor/Initialize()
+	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
 // On creation automatically connects to active sensors. This is delayed to ensure sensors already exist.
-/obj/machinery/computer/power_monitor/New()
-	..()
+/obj/machinery/computer/power_monitor/LateInitialize()
+	. = ..()
 	power_monitor = new(src)
 
 // On user click opens the UI of this computer.

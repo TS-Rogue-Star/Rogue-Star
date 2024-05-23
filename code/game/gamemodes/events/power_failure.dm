@@ -13,8 +13,10 @@
 		S.last_output_attempt	= S.output_attempt
 		S.last_input_attempt 	= S.input_attempt
 		S.charge = 0
-		S.inputting(0)
-		S.outputting(0)
+		S.input_attempt = FALSE
+		S.output_attempt = FALSE
+		S.inputting = FALSE
+		S.outputting = FALSE
 		S.update_icon()
 		S.power_change()
 
@@ -49,8 +51,9 @@
 		if(isNotStationLevel(S.z))
 			continue
 		S.charge = S.capacity
+		S.input_level = S.input_level_max
 		S.output_level = S.output_level_max
-		S.output_attempt = 1
-		S.input_attempt = 1
+		S.output_attempt = TRUE
+		S.input_attempt = TRUE
 		S.update_icon()
 		S.power_change()

@@ -17,6 +17,7 @@
 	var/sun_angle = 0		// sun angle as set by sun datum
 	var/obj/machinery/power/solar_control/control = null
 	var/SOLAR_MAX_DIST = 40		//VOREStation Addition
+	can_change_cable_layer = TRUE
 
 
 /obj/machinery/power/tracker/Initialize(mapload, glass_type)

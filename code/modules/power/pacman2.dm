@@ -10,6 +10,7 @@
 	var/obj/item/weapon/tank/phoron/P = null
 	var/emagged = 0
 	var/heat = 0
+	can_change_cable_layer = TRUE
 /*
 	process()
 		if(P)

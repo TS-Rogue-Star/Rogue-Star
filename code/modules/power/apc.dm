@@ -1,8 +1,13 @@
 /area/proc/get_apc()
 	return apc
 
-#define CRITICAL_APC_EMP_PROTECTION 10 // EMP effect duration is divided by this number if the APC has "critical" flag
-//update_state
+/// EMP effect duration is divided by this number if the APC has "critical" flag
+#define CRITICAL_APC_EMP_PROTECTION 10
+
+///offsets
+#define APC_PIXEL_OFFSET 26
+
+///update_state
 #define UPDATE_CELL_IN 1
 #define UPDATE_OPENED1 2
 #define UPDATE_OPENED2 4
@@ -12,7 +17,7 @@
 #define UPDATE_WIREEXP 64
 #define UPDATE_ALLGOOD 128
 
-//update_overlay
+///update_overlay
 #define APC_UPOVERLAY_CHARGEING0 1
 #define APC_UPOVERLAY_CHARGEING1 2
 #define APC_UPOVERLAY_CHARGEING2 4
@@ -28,7 +33,7 @@
 #define APC_UPOVERLAY_LOCKED 4096
 #define APC_UPOVERLAY_OPERATING 8192
 
-#define APC_UPDATE_ICON_COOLDOWN 100 // 10 seconds
+#define APC_UPDATE_ICON_COOLDOWN 10 SECONDS
 
 // main_status var
 #define APC_EXTERNAL_POWER_NOTCONNECTED 0
@@ -40,6 +45,11 @@
 #define APC_HAS_ELECTRONICS_WIRED 1
 #define APC_HAS_ELECTRONICS_SECURED 2
 
+///Update States
+#define APC_STATE_UPDATE_NONE		0
+#define APC_STATE_UPDATE_ICON		1
+#define APC_STATE_UPDATE_OVERLAY	2
+#define APC_STATE_UPDATE_LIGHTGLOW	3
 
 // the Area Power Controller (APC), formerly Power Distribution Unit (PDU)
 // one per area, needs wire conection to power network through a terminal
@@ -79,12 +89,11 @@
 /obj/machinery/power/apc/angled
 	icon = 'icons/obj/wall_machines_angled.dmi'
 
+/obj/machinery/power/apc/angled/super
+	cell_type = /obj/item/weapon/cell/super
+
 /obj/machinery/power/apc/angled/hidden
 	alarms_hidden = TRUE
-
-/obj/machinery/power/apc/angled/offset_apc()
-	pixel_x = (dir & 3) ? 0 : (dir == 4 ? 24 : -24)
-	pixel_y = (dir & 3) ? (dir == 1 ? 20 : -20) : 0
 
 /obj/machinery/power/apc
 	name = "area power controller"
@@ -100,6 +109,7 @@
 	blocks_emissive = FALSE
 	vis_flags = VIS_HIDE // They have an emissive that looks bad in openspace due to their wall-mounted nature
 	var/area/area
+	var/auto_name = TRUE
 	var/areastring = null
 	var/obj/item/weapon/cell/cell
 	var/chargelevel = CELLRATE  // Cap for how fast APC cells charge, as a percentage-per-tick (0.01 means cellcharge is capped to 1% per second)
@@ -119,6 +129,7 @@
 	var/coverlocked = TRUE
 	var/aidisabled = 0
 	var/obj/machinery/power/terminal/terminal = null
+	can_change_cable_layer = TRUE
 	var/lastused_light = 0
 	var/lastused_equip = 0
 	var/lastused_environ = 0
@@ -148,6 +159,8 @@
 	var/nightshift_lights = FALSE
 	var/nightshift_setting = NIGHTSHIFT_AUTO
 	var/last_nightshift_switch = 0
+	/// Offsets the object by APC_PIXEL_OFFSET (defined in apc_defines.dm) pixels in the direction we want it placed in. This allows the APC to be embedded in a wall, yet still inside an area (like mapping).
+	var/offset_old
 
 /obj/machinery/power/apc/updateDialog()
 	if(stat & (BROKEN|MAINT))
@@ -157,8 +170,6 @@
 /obj/machinery/power/apc/connect_to_network()
 	//Override because the APC does not directly connect to the network; it goes through a terminal.
 	//The terminal is what the power computer looks for anyway.
-	if(!terminal)
-		make_terminal()
 	if(terminal)
 		terminal.connect_to_network()
 
@@ -187,81 +198,115 @@
 
 	return drained_energy
 
-/obj/machinery/power/apc/New(turf/loc, var/ndir, var/building=0)
-	..()
+/obj/machinery/power/apc/Initialize(mapload, ndir)
+	. = ..()
 	wires = new(src)
 	GLOB.apcs += src
 
-	// offset 24 pixels in direction of dir
-	// this allows the APC to be embedded in a wall, yet still inside an area
-	if(building)
-		set_dir(ndir)
+	//Pixel offset its appearance based on its direction
+	if(ndir)
+		dir = ndir
+	switch(dir)
+		if(NORTH)
+			offset_old = pixel_y
+			pixel_y = APC_PIXEL_OFFSET
+		if(SOUTH)
+			offset_old = pixel_y
+			pixel_y = -APC_PIXEL_OFFSET
+		if(EAST)
+			offset_old = pixel_x
+			pixel_x = APC_PIXEL_OFFSET
+		if(WEST)
+			offset_old = pixel_x
+			pixel_x = -APC_PIXEL_OFFSET
 
-	if(!pixel_x && !pixel_y)
-		offset_apc()
+	//Assign it to its area. If mappers already assigned an area string fast load the area from it else get the current area
+	var/area/our_area = get_area(loc)
+	//TODO: port better area stuff from /tg/
+	//like multi-area covering APCs, for shuttles for example!
+	if(areastring)
+		area = get_area_name(areastring)
+		if(!area)
+			area = our_area
+			log_adminwarn("Bad areastring path for [src], [areastring]")
 
-	if(building)
-		area = get_area(src)
+	if(isarea(our_area) && areastring == null)
+		area = our_area
+	if(area)
+		if(area.apc)
+			log_adminwarn("Duplicate APC created at [COORD(src)] [area.type]. Original at [COORD(area.apc)] [area.type].")
 		area.apc = src
-		opened = 1
-		operating = 0
-		name = "[area.name] APC"
-		stat |= MAINT
-		update_icon()
 
-/obj/machinery/power/apc/Initialize(mapload, ndir, building)
-	. = ..()
-	if(!building)
-		init()
-		return INITIALIZE_HINT_LATELOAD
+	if(mapload)
+		has_electronics = APC_HAS_ELECTRONICS_SECURED //installed and secured
+		// is starting with a power cell installed, create it and set its charge level
+		if(cell_type)
+			cell = new cell_type(src)
+			cell.charge = start_charge * cell.maxcharge / 100.0 		// (convert percentage to actual value)
+		if(istype(area, /area/submap))
+			alarms_hidden = TRUE
+		make_terminal(cable_layer)
+		///This is how we test to ensure that mappers use the directional subtypes of APCs, rather than use the parent and pixel-shift it themselves.
+		// Christ do you know the amount of effort this'll end up being, fuck me. TODO
+	//	if(abs(offset_old) != APC_PIXEL_OFFSET)
+	//		log_mapping("APC: ([src]) at [COORD(src)] with dir ([dir] | [uppertext(dir2text(dir))]) has pixel_[dir & (WEST|EAST) ? "x" : "y"] value [offset_old] - should be [dir & (SOUTH|EAST) ? "-" : ""][APC_PIXEL_OFFSET]. Use the directional/ helpers!")
 
-/obj/machinery/power/apc/LateInitialize()
-	. = ..()
-	update()
+	//Initialize name & access of the apc. Name requires area to be assigned first
+	if(!req_access)
+		req_access = list(access_engine_equip)
+	if(auto_name)
+		name = "\improper [get_area_name(area, TRUE)] APC"
+
+	addtimer(CALLBACK(src, PROC_REF(update)), 0.5 SECONDS)
+	update_icon()
 
 /obj/machinery/power/apc/Destroy()
 	GLOB.apcs -= src
-	update()
-	area.apc = null
-	area.power_light = 0
-	area.power_equip = 0
-	area.power_environ = 0
-	area.power_change()
-	qdel(wires)
-	wires = null
-	qdel(terminal)
-	terminal = null
+	disconnect_from_area()
+	if(wires)
+		QDEL_NULL(wires)
 	if(cell)
-		cell.forceMove(loc)
-		cell = null
-
+		QDEL_NULL(cell)
+	if(terminal)
+		disconnect_terminal()
 	// Malf AI, removes the APC from AI's hacked APCs list.
 	if((hacker) && (hacker.hacked_apcs) && (src in hacker.hacked_apcs))
 		hacker.hacked_apcs -= src
 
 	return ..()
 
+/obj/machinery/power/apc/proc/assign_to_area(area/target_area = get_area(src))
+	if(area == target_area)
+		return
+
+	disconnect_from_area()
+	area = target_area
+	area.power_light = TRUE
+	area.power_equip = TRUE
+	area.power_environ = TRUE
+	area.power_change()
+	area.apc = src
+	auto_name = TRUE
+	update_icon()
+
+/obj/machinery/power/apc/proc/disconnect_from_area()
+	if(isnull(area))
+		return
+
+	area.power_light = FALSE
+	area.power_equip = FALSE
+	area.power_environ = FALSE
+	area.power_change()
+	area.apc = null
+	area = null
+
 /obj/machinery/power/apc/should_have_node()
 	return TRUE
-
-/obj/machinery/power/apc/proc/offset_apc()
-	pixel_x = (dir & 3) ? 0 : (dir == 4 ? 26 : -26)
-	pixel_y = (dir & 3) ? (dir == 1 ? 26 : -26) : 0
-
-// APCs are pixel-shifted, so they need to be updated.
-/obj/machinery/power/apc/set_dir(new_dir)
-	..()
-	offset_apc()
-	if(terminal)
-		terminal.disconnect_from_network()
-		terminal.set_dir(dir) // Terminal has same dir as master
-		terminal.connect_to_network() // Refresh the network the terminal is connected to.
-	return
 
 /obj/machinery/power/apc/proc/energy_fail(var/duration)
 	failure_timer = max(failure_timer, round(duration))
 
-/obj/machinery/power/apc/proc/make_terminal()
+/obj/machinery/power/apc/proc/make_terminal(cable_layer)
 	// create a terminal object at the same position as original turf loc
 	// wires will attach to this
 	var/turf/T = get_turf(src)
@@ -269,37 +314,14 @@
 		cable_layer = C.cable_layer	//let's ensure we operate on the correct layer
 		if(cable_layer == CABLE_LAYER_1)
 			terminal = new/obj/machinery/power/terminal/layer1(T)
+
 		else if(cable_layer == CABLE_LAYER_2)
 			terminal = new/obj/machinery/power/terminal(T)
+
 		else if(cable_layer == CABLE_LAYER_3)
 			terminal = new/obj/machinery/power/terminal/layer3(T)
-		terminal.set_dir(get_dir(T,src))
 		terminal.master = src
-
-/obj/machinery/power/apc/proc/init()
-	has_electronics = APC_HAS_ELECTRONICS_SECURED //installed and secured
-	// is starting with a power cell installed, create it and set its charge level
-	if(cell_type)
-		cell = new cell_type(src)
-		cell.charge = start_charge * cell.maxcharge / 100.0 		// (convert percentage to actual value)
-
-	var/area/A = loc.loc
-
-	//if area isn't specified use current
-	if(isarea(A) && !areastring)
-		area = A
-		name = "\improper [area.name] APC"
-	else
-		area = get_area_name(areastring)
-		name = "\improper [area.name] APC"
-	area.apc = src
-
-	if(istype(area, /area/submap))
-		alarms_hidden = TRUE
-
-	update_icon()
-
-	make_terminal()
+		terminal.set_dir(src.dir)
 
 /obj/machinery/power/apc/examine(mob/user)
 	. = ..()
@@ -331,13 +353,15 @@
 // update the APC icon to show the three base states
 // also add overlays for indicator lights
 /obj/machinery/power/apc/update_icon()
-	var/update = check_updates() 		//returns 0 if no need to update icons.
-						// 1 if we need to update the icon_state
-						// 2 if we need to update the overlays
+	var/update = check_updates()
+						//returns APC_STATE_UPDATE_NONE if no need to update icons.
+						// APC_STATE_UPDATE_ICON		if we need to update the icon_state
+						// APC_STATE_UPDATE_OVERLAY		if we need to update the overlays
+						// APC_STATE_UPDATE_LIGHTGLOW	for lighting glows
 	if(!update)
 		return
 
-	if(update & 1) // Updating the icon state
+	if(update & APC_STATE_UPDATE_ICON) // Updating the icon state
 		if(update_state & UPDATE_ALLGOOD)
 			icon_state = "apc0"
 		else if(update_state & (UPDATE_OPENED1|UPDATE_OPENED2))
@@ -360,7 +384,7 @@
 		cut_overlays()
 		return
 
-	if(update & 2)
+	if(update & APC_STATE_UPDATE_OVERLAY)
 		cut_overlays()
 		if(!(stat & (BROKEN|MAINT)) && update_state & UPDATE_ALLGOOD)
 			var/list/new_overlays = list()
@@ -377,7 +401,7 @@
 				new_overlays += emissive_appearance(icon, "apco2-[environ]")
 			add_overlay(new_overlays)
 
-	if(update & 3)
+	if(update & APC_STATE_UPDATE_LIGHTGLOW)
 		if(update_state & UPDATE_BLUESCREEN)
 			set_light(l_range = 2, l_power = 0.25, l_color = "#0000FF")
 		else if(!(stat & (BROKEN|MAINT)) && update_state & UPDATE_ALLGOOD)
@@ -397,7 +421,7 @@
 
 	var/last_update_state = update_state
 	var/last_update_overlay = update_overlay
-	update_state = 0
+	update_state = APC_STATE_UPDATE_NONE
 	update_overlay = 0
 
 	if(cell)
@@ -879,6 +903,7 @@
 		area.power_light = (lighting >= POWERCHAN_ON)
 		area.power_equip = (equipment >= POWERCHAN_ON)
 		area.power_environ = (environ >= POWERCHAN_ON)
+		playsound(src.loc, 'sound/machines/terminal_on.ogg', 50, FALSE)
 //		if(area.name == "AI Chamber")
 //			spawn(10)
 //				to_world(" [area.name] [area.power_equip]")
@@ -886,6 +911,7 @@
 		area.power_light = FALSE
 		area.power_equip = FALSE
 		area.power_environ = FALSE
+		playsound(src.loc, 'sound/machines/terminal_off.ogg', 50, FALSE)
 //		if(area.name == "AI Chamber")
 //			to_world("[area.power_equip]")
 	area.power_change()

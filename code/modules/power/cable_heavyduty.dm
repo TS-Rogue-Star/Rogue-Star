@@ -88,6 +88,16 @@
 	// Pretend to be heavy duty power cable //we ARE heavy power cables :)))
 	var/id = null
 
+/obj/structure/cable/heavyduty/ender/Initialize(mapload)
+	. = ..()
+	cable_list += src
+	return INITIALIZE_HINT_LATELOAD
+
+//This is needed after all the powernet nonsense
+/obj/structure/cable/heavyduty/ender/LateInitialize()
+	. = ..()
+	Connect_cable(FALSE)
+
 /obj/structure/cable/heavyduty/ender/examine(mob/user)
 	. = ..()
 	if(id)

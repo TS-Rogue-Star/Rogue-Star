@@ -40,16 +40,12 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 	layer = WIRES_LAYER + 0.01
 	icon_state = "l4-1-2-4-8-node"
 
-/obj/structure/cable/Initialize(mapload, param_color, layering) //extra vars to handle mapping_helpers
+/obj/structure/cable/Initialize(mapload)
 	. = ..()
 	cable_list += src //add it to the global cable list
 	Connect_cable()
 	var/turf/T = src.loc			// hide if turf is not intact
 	if(level==1) hide(!T.is_plating())
-	if(param_color)
-		color = param_color
-	if(layering)
-		cable_layer = layering
 
 /obj/structure/cable/LateInitialize()
 	update_icon()
@@ -233,7 +229,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 
 /obj/structure/cable/proc/get_power_info()
 	if(powernet?.avail > 0)
-		return "<span class='filter_notice'><span class='warning'>Total power: [DisplayPower(powernet.avail)]\nLoad: [DisplayPower(powernet.viewload)]\nExcess power: [DisplayPower(powernet.netexcess)]</span></span>"
+		return "<span class='filter_notice'><span class='warning'>Total power: [DisplayPower(powernet.avail/2)]\nLoad: [DisplayPower(powernet.viewload)]\nExcess power: [DisplayPower(powernet.netexcess)]</span></span>"
 	else
 		return "<span class='filter_notice'><span class='warning'>The cable is not powered.</span></span>"
 
@@ -373,6 +369,16 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 				if(cable_layer & C.cable_layer)
 					. += C
 
+/obj/structure/cable/proc/get_cable_connections_zlevel(powernetless_only)
+	. = list()
+	var/turf/T = get_turf(src)
+	for(var/check_dir in GLOB.cardinalz)
+		if(linked_dirs & check_dir)
+			T = get_step(src, check_dir)
+			for(var/obj/structure/cable/C in T)
+				if(cable_layer & C.cable_layer)
+					. += C
+
 /obj/structure/cable/proc/get_all_cable_connections(powernetless_only)
 	. = list()
 	var/turf/T
@@ -414,7 +420,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 		P.disconnect_from_network()
 
 	var/list/P_list = list()
-	for(var/dir_check in GLOB.cardinal)
+	for(var/dir_check in GLOB.cardinalz)
 		if(linked_dirs & dir_check)
 			T1 = get_step(loc, dir_check)
 			P_list += locate(/obj/structure/cable) in T1
@@ -726,8 +732,12 @@ GLOBAL_LIST(cable_radial_layer_list)
 	var/datum/powernet/PN = new()
 	PN.add_cable(C)
 
-	for(var/dir_check in GLOB.cardinal)
-		C.mergeConnectedNetworks(dir_check) //merge the powernet with adjacents powernets
+	if(istype(C, /obj/structure/cable/multilayer/multiz))
+		for(var/dir_check in GLOB.cardinalz)
+			C.mergeConnectedNetworks(dir_check) //merge the powernet with adjacents powernets
+	else
+		for(var/dir_check in GLOB.cardinal)
+			C.mergeConnectedNetworks(dir_check) //merge the powernet with adjacents powernets
 	C.mergeConnectedNetworksOnTurf() //merge the powernet with on turf powernets
 
 	use(1)

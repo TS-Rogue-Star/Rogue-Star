@@ -771,7 +771,6 @@
 "cH" = (
 /obj/machinery/power/apc/angled{
 	dir = 8;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/cable,
@@ -1689,12 +1688,6 @@
 /turf/simulated/open,
 /area/stellardelight/deck2/fore)
 "gQ" = (
-/obj/machinery/power/smes{
-	charge = 5e+006;
-	input_attempt = 1;
-	input_level = 200000;
-	output_level = 200000
-	},
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -1705,6 +1698,9 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/power/smes/preset/ai_tcomm{
+	RCon_tag = null
+	},
 /turf/simulated/floor/bluegrid,
 /area/ai)
 "gR" = (
@@ -1895,11 +1891,11 @@
 /turf/simulated/floor,
 /area/stellardelight/deck3/portdock)
 "hO" = (
-/obj/machinery/power/smes{
-	RCon_tag = "Substation - Command";
-	output_attempt = 0
-	},
 /obj/structure/cable/layer3,
+/obj/machinery/power/smes/preset/substation{
+	RCon_tag = "Substation - Command";
+	name = "Substation - Command"
+	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/substation/command)
 "hP" = (
@@ -3287,7 +3283,6 @@
 "nD" = (
 /obj/machinery/power/apc/angled{
 	dir = 4;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/cable,
@@ -4209,13 +4204,17 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/stellardelight/deck3/cryo)
 "ri" = (
-/obj/structure/handrail,
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
+/obj/structure/handrail,
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
 	},
 /obj/machinery/atmospherics/unary/vent_pump/high_volume{
 	dir = 4
+	},
+/obj/machinery/light_switch{
+	dir = 8;
+	pixel_x = -20
 	},
 /turf/simulated/floor/tiled,
 /area/shuttle/sdboat/aft{
@@ -4441,7 +4440,6 @@
 "sj" = (
 /obj/machinery/power/apc/angled{
 	dir = 4;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/closet,
@@ -5164,7 +5162,6 @@
 "vA" = (
 /obj/machinery/power/apc/angled{
 	dir = 1;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/cable,
@@ -5767,7 +5764,8 @@
 /obj/structure/cable/layer1,
 /turf/simulated/floor/tiled,
 /area/shuttle/sdboat/fore{
-	base_turf = /turf/simulated/floor/reinforced/airless
+	base_turf = /turf/simulated/floor/reinforced/airless;
+	lightswitch = 0
 	})
 "yb" = (
 /obj/structure/sign/deck3{
@@ -6334,7 +6332,6 @@
 "Al" = (
 /obj/machinery/power/apc/angled{
 	dir = 4;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/cable,
@@ -6578,6 +6575,10 @@
 	fancy_shuttle_tag = "sdboat"
 	},
 /obj/structure/cable/layer1,
+/obj/machinery/light_switch{
+	dir = 1;
+	pixel_y = -21
+	},
 /turf/simulated/floor/tiled,
 /area/shuttle/sdboat/fore{
 	base_turf = /turf/simulated/floor/reinforced/airless
@@ -7373,10 +7374,8 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
-/obj/machinery/power/apc/angled{
-	cell_type = /obj/item/weapon/cell/super;
+/obj/machinery/power/apc/angled/super{
 	dir = 4;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /turf/simulated/floor,
@@ -7778,7 +7777,6 @@
 "FW" = (
 /obj/machinery/power/apc/angled{
 	dir = 8;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/cable,
@@ -8525,7 +8523,6 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/angled{
 	dir = 8;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /turf/simulated/floor,
@@ -9329,7 +9326,6 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/angled{
 	dir = 4;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/table/steel,
@@ -10084,7 +10080,6 @@
 "OR" = (
 /obj/machinery/power/apc/angled{
 	dir = 4;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/cable,
@@ -10347,6 +10342,19 @@
 	},
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/aft)
+"Qd" = (
+/obj/structure/cable,
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/shuttle/sdboat/aft{
+	base_turf = /turf/simulated/floor/reinforced/airless;
+	lightswitch = 0
+	})
 "Qe" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden{
@@ -11302,14 +11310,10 @@
 /turf/simulated/wall/bay/r_wall/steel,
 /area/maintenance/stellardelight/deck3/starboardcent)
 "Uj" = (
-/obj/machinery/power/smes{
-	RCon_tag = "Substation - AI/Telecomms";
-	charge = 5e+006;
-	input_attempt = 1;
-	input_level = 200000;
-	output_level = 200000
-	},
 /obj/structure/cable/layer1,
+/obj/machinery/power/smes/preset/ai_tcomm{
+	name = "Substation - AI/Telecomms"
+	},
 /turf/simulated/floor,
 /area/ai_cyborg_station)
 "Uk" = (
@@ -11798,13 +11802,13 @@
 /turf/simulated/open,
 /area/stellardelight/deck2/port)
 "Wn" = (
-/obj/machinery/power/smes{
-	charge = 500000
-	},
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
 	},
 /obj/structure/cable/layer1,
+/obj/machinery/power/smes/preset/shuttle{
+	name = "StarStuff Main SMES"
+	},
 /turf/simulated/floor/tiled,
 /area/shuttle/sdboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless
@@ -11968,10 +11972,8 @@
 /turf/simulated/wall/bay/r_wall/blue,
 /area/lawoffice)
 "WQ" = (
-/obj/machinery/power/apc/angled{
-	cell_type = /obj/item/weapon/cell/super;
+/obj/machinery/power/apc/angled/super{
 	dir = 4;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/cable,
@@ -19837,7 +19839,7 @@ xa
 LO
 lB
 LO
-MX
+Qd
 kZ
 wZ
 mv

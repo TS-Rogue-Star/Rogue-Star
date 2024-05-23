@@ -52,6 +52,7 @@
 	var/turf/simulated/outturf
 	var/lastgen
 	var/productivity = 1
+	can_change_cable_layer = TRUE
 
 /obj/machinery/computer/turbine_computer
 	name = "gas turbine control computer"

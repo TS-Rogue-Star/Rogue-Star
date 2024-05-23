@@ -952,15 +952,8 @@
 /turf/simulated/floor/carpet/sblucarpet,
 /area/stellardelight/deck2/briefingroom)
 "cc" = (
-/obj/machinery/power/smes{
-	RCon_tag = "Engine - Core";
-	charge = 2e+006;
-	input_attempt = 1;
-	input_level = 200000;
-	name = "Engine";
-	output_level = 250000
-	},
 /obj/structure/cable/layer1,
+/obj/machinery/power/smes/preset/engine,
 /turf/simulated/floor/plating,
 /area/engineering/storage)
 "cd" = (
@@ -1062,10 +1055,6 @@
 /obj/machinery/camera/network/engine,
 /turf/simulated/floor/reinforced/airless,
 /area/stellardelight/deck2/combustionworkshop)
-"cr" = (
-/obj/structure/cable/layer1,
-/turf/simulated/floor/tiled/eris/dark/orangecorner,
-/area/engineering/engineering_monitoring)
 "cs" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 1
@@ -1169,15 +1158,7 @@
 /area/space)
 "cG" = (
 /obj/structure/cable,
-/obj/machinery/power/smes{
-	RCon_tag = "Power - Main";
-	charge = 2e+007;
-	cur_coils = 4;
-	input_attempt = 1;
-	input_level = 500000;
-	name = "Main";
-	output_level = 1e+006
-	},
+/obj/machinery/power/smes/preset/mains,
 /turf/simulated/floor/plating,
 /area/engineering/storage)
 "cH" = (
@@ -1419,7 +1400,7 @@
 /obj/structure/cable,
 /obj/machinery/power/sensor{
 	name = "Powernet Sensor - Master Grid";
-	name_tag = "Master"
+	name_tag = "Main Power Grid"
 	},
 /turf/simulated/floor/plating,
 /area/engineering/storage)
@@ -1887,7 +1868,6 @@
 "ep" = (
 /obj/machinery/power/apc/angled{
 	dir = 4;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/cable,
@@ -5339,10 +5319,8 @@
 /area/stellardelight/deck2/port)
 "mj" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
-/obj/machinery/power/apc/angled{
-	cell_type = /obj/item/weapon/cell/super;
+/obj/machinery/power/apc/angled/super{
 	dir = 4;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/cable,
@@ -5519,7 +5497,6 @@
 /obj/item/weapon/folder/blue,
 /obj/machinery/power/apc/angled{
 	dir = 8;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/machinery/light{
@@ -5735,11 +5712,11 @@
 /turf/simulated/floor/tiled/eris/dark/orangecorner,
 /area/engineering/engine_eva)
 "np" = (
-/obj/machinery/power/smes{
-	RCon_tag = "Substation - Engineering";
-	output_attempt = 0
-	},
 /obj/structure/cable/layer1,
+/obj/machinery/power/smes/preset/substation{
+	RCon_tag = "Substation - Engineering";
+	name = "Substation - Engineering"
+	},
 /turf/simulated/floor/plating,
 /area/maintenance/stellardelight/substation/engineering)
 "nq" = (
@@ -6337,6 +6314,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/eris/dark/gray_platform,
 /area/engineering/workshop)
 "oX" = (
@@ -10003,6 +9981,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/eris/dark/orangecorner,
 /area/engineering/workshop)
 "yx" = (
@@ -10344,10 +10323,8 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/machinery/power/apc/angled{
-	cell_type = /obj/item/weapon/cell/super;
+/obj/machinery/power/apc/angled/super{
 	dir = 8;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/cable,
@@ -10797,10 +10774,6 @@
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck2/fore)
 "AK" = (
-/obj/machinery/power/sensor{
-	name = "Powernet Sensor - Master Grid";
-	name_tag = "Master"
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
@@ -11239,7 +11212,6 @@
 "BS" = (
 /obj/machinery/power/apc/angled{
 	dir = 1;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/machinery/light_switch{
@@ -12801,7 +12773,6 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/angled{
 	dir = 1;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /turf/simulated/floor,
@@ -13875,7 +13846,6 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/angled{
 	dir = 1;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /turf/simulated/floor,
@@ -14937,7 +14907,6 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/structure/cable,
 /obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/eris/steel/cargo,
 /area/quartermaster/storage)
@@ -16219,15 +16188,13 @@
 /turf/simulated/floor/tiled/white,
 /area/medical/surgery2)
 "Oq" = (
-/obj/machinery/power/apc/angled{
-	cell_type = /obj/item/weapon/cell/super;
+/obj/machinery/power/apc/angled/super{
 	dir = 8
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
 /obj/structure/cable/layer1,
-/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/dark/techfloor_grid,
 /area/engineering/engine_room)
 "Or" = (
@@ -16392,7 +16359,6 @@
 "OQ" = (
 /obj/machinery/power/apc/angled{
 	dir = 1;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/cable,
@@ -18117,10 +18083,11 @@
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck2/aftstarboard)
 "Te" = (
-/obj/machinery/power/smes/offmap_spawn/empty{
-	RCon_tag = "Solar Array - Port"
-	},
 /obj/structure/cable,
+/obj/machinery/power/smes/preset/substation{
+	RCon_tag = "Solar Array - Port";
+	name = "Solar Array - Port"
+	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck2/portsolars)
 "Tf" = (
@@ -18750,6 +18717,10 @@
 /obj/structure/plasticflaps,
 /turf/simulated/floor/tiled/eris/steel/cargo,
 /area/quartermaster/storage)
+"UP" = (
+/obj/structure/cable,
+/turf/simulated/floor/tiled/eris/dark/danger,
+/area/engineering/engine_room)
 "UQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/effect/floor_decal/steeldecal/steel_decals5{
@@ -20029,7 +20000,6 @@
 "XW" = (
 /obj/machinery/power/apc/angled{
 	dir = 4;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/cable/layer3,
@@ -20888,10 +20858,11 @@
 /turf/simulated/floor/tiled,
 /area/hydroponics)
 "ZX" = (
-/obj/machinery/power/smes/offmap_spawn/empty{
-	RCon_tag = "Solar Array - Starboard"
-	},
 /obj/structure/cable,
+/obj/machinery/power/smes/preset/substation{
+	RCon_tag = "Solar Array - Starboard";
+	name = "Solar Array - Starboard"
+	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck2/starboardsolars)
 "ZY" = (
@@ -33086,7 +33057,7 @@ Gp
 dE
 QU
 ns
-cr
+rq
 NZ
 Ku
 Re
@@ -33382,7 +33353,7 @@ Mv
 OZ
 tg
 xb
-Sb
+UP
 xz
 Mg
 dR

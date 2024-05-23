@@ -30,9 +30,9 @@
 		if(WIRE_SMES_OUTPUT)
 			S.output_cut = !mend
 		if(WIRE_SMES_GROUNDING)
-			S.grounding = mend
+			S.grounding = !mend
 		if(WIRE_SMES_FAILSAFES)
-			S.safeties_enabled = mend
+			S.safeties_enabled = !mend
 	..()
 
 /datum/wires/smes/on_pulse(wire)
@@ -40,18 +40,18 @@
 	switch(wire)
 		if(WIRE_SMES_RCON)
 			if(S.RCon)
-				S.RCon = 0
+				S.RCon = FALSE
 				spawn(10)
-					S.RCon = 1
+					S.RCon = TRUE
 		if(WIRE_SMES_INPUT)
-			S.toggle_input()
+			S.input_attempt = !S.input_attempt
 		if(WIRE_SMES_OUTPUT)
-			S.toggle_output()
+			S.output_attempt = !S.output_attempt
 		if(WIRE_SMES_GROUNDING)
-			S.grounding = 0
+			S.grounding = !S.grounding
 		if(WIRE_SMES_FAILSAFES)
 			if(S.safeties_enabled)
-				S.safeties_enabled = 0
+				S.safeties_enabled = FALSE
 				spawn(10)
-					S.safeties_enabled = 1
+					S.safeties_enabled = TRUE
 	..()

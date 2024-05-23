@@ -21,6 +21,11 @@
 	///Can the cable_layer be tweked with a multi tool
 	var/can_change_cable_layer = FALSE
 
+/obj/machinery/power/Initialize(mapload)
+	. = ..()
+	adapt_to_cable_layer()	//because apparently machines aren't allowed to work properly to update.
+	//Machines will call their connect_to_network() themselves after this
+
 /obj/machinery/power/Destroy()
 	disconnect_from_network()
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(update_cable_icons_on_turf), get_turf(src)), 0.3 SECONDS)
@@ -31,12 +36,22 @@
 //////////////////////////////
 
 // common helper procs for all power machines
-// All power generation handled in add_avail()
-// Machines should use draw_power(), surplus(), avail()
 
-//override this if the machine needs special functionality for making wire nodes appear, ie emitters, generators, etc.
+///override this if the machine needs special functionality for making wire nodes appear, ie emitters, generators, etc.
+///Non power machines need to be added to GLOB.wire_node_generating_types in cable.dm, ie grilles.
 /obj/machinery/power/proc/should_have_node()
 	return FALSE
+
+///Forcefully set power machines to their mapped cable layer
+/obj/machinery/power/proc/adapt_to_cable_layer()
+	var/turf/T = get_turf(src)
+	if(T)
+		for(var/obj/structure/cable/C in T.contents)
+			if(!C)
+				return
+			cable_layer = C.cable_layer
+	else
+		return
 
 /obj/machinery/power/examine(mob/user)
 	. = ..()
@@ -46,7 +61,7 @@
 		else
 			. += span_warning("It's disconnected from the [LOWER_TEXT(GLOB.cable_layer_to_name["[cable_layer]"])].")
 
-// common helper procs for all power machines //Snowflake code, entirely.
+/// common helper procs for all power machines //Snowflake code, entirely.
 /obj/machinery/power/drain_power(var/drain_check, var/surge, var/amount = 0)
 	if(drain_check)
 		return TRUE
@@ -293,7 +308,7 @@
 //////////////////////////////////////////
 
 ///remove the old powernet and replace it with a new one throughout the network.
-/proc/propagate_network(obj/structure/cable/C, datum/powernet/PN, skip_assigned_powernets = FALSE)
+/proc/propagate_network(obj/structure/cable/C, datum/powernet/PN, multiz = FALSE, skip_assigned_powernets = FALSE)
 	var/list/found_machines = list()
 	var/list/cables = list()
 	var/index = 1
@@ -305,7 +320,7 @@
 		working_cable = cables[index]
 		index++
 
-		var/list/connections = working_cable.get_cable_connections(skip_assigned_powernets)
+		var/list/connections = working_cable.get_cable_connections(skip_assigned_powernets, working_cable.cable_layer)
 
 		for(var/obj/structure/cable/cable_entry in connections)
 			if(!cables[cable_entry]) //Since it's an associated list, we can just do an access and check it's null before adding; prevents duplicate entries

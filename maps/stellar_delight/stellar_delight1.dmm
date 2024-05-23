@@ -12,10 +12,8 @@
 /area/security/security_cell_hallway)
 "ac" = (
 /obj/structure/table/steel_reinforced,
-/obj/machinery/power/apc/angled{
-	cell_type = /obj/item/weapon/cell/super;
+/obj/machinery/power/apc/angled/super{
 	dir = 1;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/cable/layer3,
@@ -77,7 +75,6 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/angled{
 	dir = 8;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /turf/simulated/floor,
@@ -689,7 +686,6 @@
 "bz" = (
 /obj/machinery/power/apc/angled{
 	dir = 8;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/cable,
@@ -1145,7 +1141,6 @@
 /obj/item/clothing/head/helmet/space/void/medical/emt,
 /obj/machinery/power/apc/angled{
 	dir = 1;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/cable/layer3,
@@ -2533,7 +2528,6 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/angled{
 	dir = 8;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /turf/simulated/floor/tiled/eris/white/gray_platform,
@@ -2819,11 +2813,11 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/stellardelight/substation/cargo)
 "fQ" = (
-/obj/machinery/power/smes{
-	RCon_tag = "Substation - Exploration";
-	output_attempt = 0
-	},
 /obj/structure/cable/layer3,
+/obj/machinery/power/smes/preset/substation{
+	RCon_tag = "Substation - Exploration";
+	name = "Substation - Exploration"
+	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/substation/exploration)
 "fR" = (
@@ -3183,8 +3177,7 @@
 /obj/structure/bed/chair/bay/shuttle{
 	dir = 4
 	},
-/obj/machinery/power/apc/angled{
-	cell_type = /obj/item/weapon/cell/super;
+/obj/machinery/power/apc/angled/super{
 	dir = 8;
 	req_access = list(31,5)
 	},
@@ -3793,7 +3786,6 @@
 "ik" = (
 /obj/machinery/power/apc/angled{
 	dir = 8;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/cable/layer3,
@@ -3823,7 +3815,6 @@
 "in" = (
 /obj/machinery/power/apc/angled{
 	dir = 1;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/undies_wardrobe,
@@ -5462,7 +5453,6 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/power/apc/angled{
 	dir = 1;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/cable/layer3,
@@ -5886,7 +5876,6 @@
 	},
 /obj/machinery/power/apc/angled{
 	dir = 4;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/cable/layer3,
@@ -6388,7 +6377,6 @@
 	},
 /obj/machinery/power/apc/angled{
 	dir = 4;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/closet/crate/bin{
@@ -6516,7 +6504,6 @@
 "oO" = (
 /obj/machinery/power/apc/angled{
 	dir = 1;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -6670,7 +6657,6 @@
 	},
 /obj/machinery/power/apc/angled{
 	dir = 8;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/closet/crate/bin{
@@ -7639,7 +7625,6 @@
 /obj/item/weapon/mining_scanner,
 /obj/machinery/power/apc/angled{
 	dir = 1;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/cable/layer1,
@@ -7734,7 +7719,6 @@
 	},
 /obj/machinery/power/apc/angled{
 	dir = 8;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/closet/crate/bin{
@@ -7898,7 +7882,6 @@
 "sp" = (
 /obj/machinery/power/apc/angled{
 	dir = 1;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/cable,
@@ -8135,11 +8118,11 @@
 /turf/simulated/floor/tiled/milspec,
 /area/stellardelight/deck1/exploequipment)
 "sP" = (
-/obj/machinery/power/smes{
-	RCon_tag = "Substation - Security";
-	output_attempt = 0
-	},
 /obj/structure/cable/layer3,
+/obj/machinery/power/smes/preset/substation{
+	RCon_tag = "Substation - Security";
+	name = "Substation - Security"
+	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/substation/security)
 "sQ" = (
@@ -8181,7 +8164,6 @@
 /obj/structure/closet/coffin,
 /obj/machinery/power/apc/angled{
 	dir = 1;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /turf/simulated/floor/tiled/dark,
@@ -9995,7 +9977,6 @@
 "xK" = (
 /obj/machinery/power/apc/angled{
 	dir = 1;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/cable,
@@ -10136,8 +10117,7 @@
 /obj/structure/bed/chair/bay/shuttle{
 	dir = 8
 	},
-/obj/machinery/power/apc/angled{
-	cell_type = /obj/item/weapon/cell/super;
+/obj/machinery/power/apc/angled/super{
 	dir = 4;
 	req_access = list(19,43,67,66,5)
 	},
@@ -10274,7 +10254,6 @@
 "yr" = (
 /obj/machinery/power/apc/angled{
 	dir = 4;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/cable,
@@ -11708,7 +11687,6 @@
 	},
 /obj/machinery/power/apc/angled{
 	dir = 4;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/cable/layer1,
@@ -11901,7 +11879,6 @@
 "Cp" = (
 /obj/machinery/power/apc/angled{
 	dir = 8;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/cable/layer3,
@@ -13138,7 +13115,6 @@
 "FB" = (
 /obj/machinery/power/apc/angled{
 	dir = 1;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/closet/crate/bin{
@@ -13280,7 +13256,6 @@
 /obj/random/contraband,
 /obj/machinery/power/apc/angled{
 	dir = 8;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/cable,
@@ -13489,11 +13464,11 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/stellardelight/deck1/researchserver)
 "GF" = (
-/obj/machinery/power/smes{
-	RCon_tag = "Substation - Research";
-	output_attempt = 0
-	},
 /obj/structure/cable/layer3,
+/obj/machinery/power/smes/preset/substation{
+	RCon_tag = "Substation - Research";
+	name = "Substation - Research"
+	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/substation/research)
 "GG" = (
@@ -14000,7 +13975,6 @@
 	},
 /obj/machinery/power/apc/angled{
 	dir = 4;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/closet/crate/bin{
@@ -14788,7 +14762,6 @@
 "JR" = (
 /obj/machinery/power/apc/angled{
 	dir = 8;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/effect/floor_decal/milspec/color/black,
@@ -15198,7 +15171,6 @@
 "KY" = (
 /obj/machinery/power/apc/angled{
 	dir = 4;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/cable,
@@ -15409,7 +15381,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/power/apc/angled{
 	dir = 4;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/cable,
@@ -15678,7 +15649,6 @@
 /obj/structure/curtain/open/privacy,
 /obj/machinery/power/apc/angled{
 	dir = 1;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/cable/layer3,
@@ -16306,7 +16276,6 @@
 "NL" = (
 /obj/machinery/power/apc/angled{
 	dir = 8;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/cable,
@@ -16519,11 +16488,11 @@
 /turf/simulated/floor/tiled/eris/white/bluecorner,
 /area/stellardelight/deck1/paramedic)
 "Om" = (
-/obj/machinery/power/smes{
-	RCon_tag = "Substation - Cargo";
-	output_attempt = 0
-	},
 /obj/structure/cable/layer1,
+/obj/machinery/power/smes/preset/substation{
+	RCon_tag = "Substation - Cargo";
+	name = "Substation - Cargo"
+	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/substation/cargo)
 "On" = (
@@ -16967,7 +16936,6 @@
 "Pw" = (
 /obj/machinery/power/apc/angled{
 	dir = 4;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /turf/simulated/floor/tiled/milspec,
@@ -17181,11 +17149,11 @@
 /turf/simulated/floor/reinforced,
 /area/stellardelight/deck1/shuttlebay)
 "PZ" = (
-/obj/machinery/power/smes{
-	RCon_tag = "Substation - Civilian";
-	output_attempt = 0
-	},
 /obj/structure/cable/layer1,
+/obj/machinery/power/smes/preset/substation{
+	RCon_tag = "Substation - Civilian";
+	name = "Substation - Civilian"
+	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/substation/civilian)
 "Qa" = (
@@ -17276,11 +17244,11 @@
 /turf/simulated/wall/bay/red,
 /area/prison/cell_block/C)
 "Ql" = (
-/obj/machinery/power/smes{
-	RCon_tag = "Substation - Atmospherics";
-	output_attempt = 0
-	},
 /obj/structure/cable/layer3,
+/obj/machinery/power/smes/preset/substation{
+	RCon_tag = "Substation - Atmospherics";
+	name = "Substation - Atmospherics"
+	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/substation/atmospherics)
 "Qm" = (
@@ -18373,7 +18341,6 @@
 	},
 /obj/machinery/power/apc/angled{
 	dir = 4;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/closet/crate/bin{
@@ -18609,11 +18576,11 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/rnd/xenobiology)
 "Tq" = (
-/obj/machinery/power/smes{
-	RCon_tag = "Substation - Medical";
-	output_attempt = 0
-	},
 /obj/structure/cable/layer3,
+/obj/machinery/power/smes/preset/substation{
+	RCon_tag = "Substation - Medical";
+	name = "Substation - Medical"
+	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/substation/medical)
 "Tr" = (
@@ -19103,10 +19070,8 @@
 /turf/simulated/floor/tiled/dark,
 /area/rnd/research)
 "UB" = (
-/obj/machinery/power/apc/angled{
-	cell_type = /obj/item/weapon/cell/super;
+/obj/machinery/power/apc/angled/super{
 	dir = 1;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/cable,
@@ -19518,7 +19483,6 @@
 	},
 /obj/machinery/power/apc/angled{
 	dir = 8;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/closet/crate/bin{
@@ -19629,7 +19593,6 @@
 	},
 /obj/machinery/power/apc/angled{
 	dir = 1;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/cable/layer1,
@@ -19762,7 +19725,6 @@
 /obj/structure/table/woodentable,
 /obj/machinery/power/apc/angled{
 	dir = 1;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/machinery/recharger{
@@ -19780,7 +19742,6 @@
 	},
 /obj/machinery/power/apc/angled{
 	dir = 4;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/closet/crate/bin{
@@ -20289,7 +20250,6 @@
 /obj/structure/table/steel_reinforced,
 /obj/machinery/power/apc/angled{
 	dir = 8;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/machinery/camera/network/research,
@@ -20767,7 +20727,6 @@
 	},
 /obj/machinery/power/apc/angled{
 	dir = 8;
-	name = "night shift APC";
 	nightshift_setting = 2
 	},
 /obj/structure/closet/crate/bin{

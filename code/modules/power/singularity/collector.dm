@@ -16,6 +16,7 @@ var/global/list/rad_collectors = list()
 	var/active = 0
 	var/locked = 0
 	var/drainratio = 1
+	can_change_cable_layer = TRUE
 
 /obj/machinery/power/rad_collector/New()
 	..()
@@ -160,4 +161,3 @@ var/global/list/rad_collectors = list()
 		flick("ca_deactive", src)
 	update_icons()
 	return
-

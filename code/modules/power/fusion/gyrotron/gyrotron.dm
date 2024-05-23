@@ -21,6 +21,7 @@ GLOBAL_LIST_EMPTY(gyrotrons)
 	maximum_fire_delay = 20 SECONDS
 	///Min delay before firing
 	minimum_fire_delay = 2 SECONDS
+	can_change_cable_layer = TRUE
 
 
 /obj/machinery/power/emitter/gyrotron/anchored

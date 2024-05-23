@@ -12,6 +12,10 @@
 	. = ..()
 	icon_state = "cable_bridge"	//uhg
 	underlays.Cut()
+	var/mutable_appearance/cable_node_4 = mutable_appearance('icons/obj/cables/power_cond_heavy.dmi', "l8-1-2-4-8-node")
+	cable_node_4.color = COLOR_WHITE
+	cable_node_4?.alpha = cable_layer & CABLE_LAYER_4 ? 255 : 0
+	underlays += cable_node_4
 	var/mutable_appearance/cable_node_3 = mutable_appearance('icons/obj/cables/layer_cable.dmi', "l4-1-2-4-8-node")
 	cable_node_3.color = CABLELAYERTHREECOLOR
 	cable_node_3?.alpha = cable_layer & CABLE_LAYER_3 ? 255 : 0
@@ -33,7 +37,6 @@
 			C.deconstruct() // remove adversary cable
 	if(!mapload)
 		auto_propagate_cut_cable(src)
-
 	update_icon()
 
 /obj/structure/cable/multilayer/examine(mob/user)
@@ -42,6 +45,7 @@
 	. += "<span class='notice'>L1:[cable_layer & CABLE_LAYER_1 ? "Connected" : "Disconnected"].</span>"
 	. += "<span class='notice'>L2:[cable_layer & CABLE_LAYER_2 ? "Connected" : "Disconnected"].</span>"
 	. += "<span class='notice'>L3:[cable_layer & CABLE_LAYER_3 ? "Connected" : "Disconnected"].</span>"
+	. += "<span class='notice'>L3:[cable_layer & CABLE_LAYER_4 ? "Connected" : "Disconnected"].</span>"
 
 GLOBAL_LIST(hub_radial_layer_list)
 
@@ -55,7 +59,8 @@ GLOBAL_LIST(hub_radial_layer_list)
 		GLOB.hub_radial_layer_list = list(
 			"Layer 1" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-red"),
 			"Layer 2" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-yellow"),
-			"Layer 3" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-blue")
+			"Layer 3" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-blue"),
+			"Layer 4" = image(icon = 'icons/mob/radial.dmi', icon_state = "heavy")
 			)
 
 	var/layer_result = show_radial_menu(user, src, GLOB.hub_radial_layer_list, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
@@ -72,6 +77,9 @@ GLOBAL_LIST(hub_radial_layer_list)
 		if("Layer 3")
 			CL = CABLE_LAYER_3
 			to_chat(user, span_warning("You toggle L3 connection."))
+		if("Layer 4")
+			CL = CABLE_LAYER_4
+			to_chat(user, span_warning("You toggle L4 connection."))
 
 	cut_cable_from_powernet(FALSE)
 	Disconnect_cable()
@@ -103,4 +111,4 @@ GLOBAL_LIST(hub_radial_layer_list)
 
 // This is a mapping aid. In order for this to be placed on a map and function, all three layers need to have their nodes active
 /obj/structure/cable/multilayer/connected
-		cable_layer = CABLE_LAYER_1 | CABLE_LAYER_2 | CABLE_LAYER_3
+		cable_layer = CABLE_LAYER_1 | CABLE_LAYER_2 | CABLE_LAYER_3 | CABLE_LAYER_4

@@ -10,6 +10,7 @@ GLOBAL_LIST_EMPTY(all_turbines)
 
 	use_power = USE_POWER_IDLE
 	idle_power_usage = 100 //Watts, I hope.  Just enough to do the computer and display things.
+	can_change_cable_layer = TRUE
 
 	var/max_power = 50 MEGAWATTS
 	var/thermal_efficiency = 0.65

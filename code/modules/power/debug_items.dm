@@ -4,6 +4,7 @@
 	anchored = TRUE
 	density = TRUE
 	var/show_extended_information = 1	// Set to 0 to disable extra information on examining (for example, when used on admin events)
+	can_change_cable_layer = TRUE
 
 /obj/machinery/power/debug_items/examine(mob/user)
 	. = ..()

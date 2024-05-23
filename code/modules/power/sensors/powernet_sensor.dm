@@ -24,16 +24,12 @@
 	var/record_interval = 50
 	var/next_record = 0
 	var/is_secret_monitor = FALSE
+	can_change_cable_layer = TRUE
 
-// Proc: New()
-// Parameters: None
 // Description: Automatically assigns name according to ID tag.
-/obj/machinery/power/sensor/New()
-	..()
-	auto_set_name()
-	adapt_to_cable_layer()
 /obj/machinery/power/sensor/Initialize()
 	. = ..()
+	auto_set_name()
 	history["supply"] = list()
 	history["demand"] = list()
 
@@ -42,12 +38,6 @@
 // Description: Sets name of this sensor according to the ID tag.
 /obj/machinery/power/sensor/proc/auto_set_name()
 	name = "[name_tag] - Powernet Sensor"
-
-///let's ensure we operate on the correct layer
-/obj/machinery/power/sensor/proc/adapt_to_cable_layer()
-	var/turf/T = get_turf(src)
-	for(var/obj/structure/cable/C in T.contents)
-		cable_layer = C.cable_layer
 
 /obj/machinery/power/sensor/Destroy()
 	. = ..()
@@ -111,7 +101,7 @@
 	data["areas"] = list()
 	if(powernet)
 		for(var/obj/machinery/power/terminal/term in powernet.nodes)
-			if(istype(term.master, /obj/machinery/power/apc))
+			if(isAPC(term.master))
 				var/obj/machinery/power/apc/A = term.master
 				if(istype(A))
 					var/cell_charge
@@ -137,10 +127,10 @@
 /obj/machinery/power/sensor/proc/reading_to_text(var/amount = 0)
 	var/units = ""
 	// 10kW and less - Watts
-	if(amount < 10000)
+	if(amount < 10 KILOWATTS)
 		units = "W"
 	// 10MW and less - KiloWatts
-	else if(amount < 10000000)
+	else if(amount < 10 MEGAWATTS)
 		units = "kW"
 		amount = (round(amount/100) / 10)
 	// More than 10MW - MegaWatts
@@ -150,7 +140,7 @@
 	if (units == "W")
 		return "[amount] W"
 	else
-		return "~[amount] [units]" //kW and MW are only approximate readings, therefore add "~"
+		return "~[amount] [units]" //kW, MW, and GW are only approximate readings, therefore add "~"
 
 // Proc: find_apcs()
 // Parameters: None
@@ -161,12 +151,24 @@
 
 	var/list/L = list()
 	for(var/obj/machinery/power/terminal/term in powernet.nodes)
-		if(istype(term.master, /obj/machinery/power/apc))
+		if(isAPC(term.master))
 			var/obj/machinery/power/apc/A = term.master
 			L += A
-
 	return L
 
+/// Same as prior but SMES units, due to solar grids and substations
+//TODO add this to the tgui
+/*
+/obj/machinery/power/sensor/proc/find_smes()
+	if(!powernet)
+		return
+
+	var/list/L = list()
+	for(var/obj/machinery/power/terminal/term in powernet.nodes)
+		if(isSMES(term.master))
+			var/obj/machinery/power/smes/S = term.master
+			L += S
+	return L */
 
 // Proc: return_reading_text()
 // Parameters: None
@@ -205,7 +207,6 @@
 			total_apc_load += load
 			load = reading_to_text(load)
 			out += "<td>[load]"
-
 	out += "<br><b>TOTAL AVAILABLE: [reading_to_text(powernet.avail)]</b>"
 	out += "<br><b>APC LOAD: [reading_to_text(total_apc_load)]</b>"
 	out += "<br><b>OTHER LOAD: [reading_to_text(max(powernet.load - total_apc_load, 0))]</b>"
@@ -226,7 +227,7 @@
 	data["name"] = name_tag
 	if(!powernet)
 		data["error"] = "# SYSTEM ERROR - NO POWERNET #"
-		data["alarm"] = 0 // Runtime Prevention
+		data["alarm"] = FALSE // Runtime Prevention
 		return data
 
 	var/list/L = find_apcs()
@@ -271,5 +272,5 @@
 		data["load_percentage"] = round((powernet.viewload / powernet.avail) * 100)
 	else
 		data["load_percentage"] = 100
-	data["alarm"] = powernet.problem ? 1 : 0
+	data["alarm"] = powernet.problem ? TRUE : FALSE
 	return data

@@ -14,6 +14,7 @@
 	unacidable = TRUE
 	cable_layer = CABLE_LAYER_2
 	var/obj/machinery/power/master = null
+	can_change_cable_layer = TRUE
 
 /obj/machinery/power/terminal/layer1
 	name = "terminal (L1)"
@@ -57,13 +58,6 @@
 /obj/machinery/power/terminal/overload(var/obj/machinery/power/source)
 	if(master)
 		master.overload(source)
-
-/obj/machinery/power/terminal/examine(mob/user)
-	. = ..()
-	if(!QDELETED(powernet))
-		. += span_notice("It's operating on the [LOWER_TEXT(GLOB.cable_layer_to_name["[cable_layer]"])].")
-	else
-		. += span_warning("It's disconnected from the [LOWER_TEXT(GLOB.cable_layer_to_name["[cable_layer]"])].")
 
 /obj/machinery/power/terminal/should_have_node()
 	return TRUE

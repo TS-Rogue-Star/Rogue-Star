@@ -6,6 +6,7 @@
 	var/icontype = "coil"
 	anchored = FALSE
 	density = TRUE
+	can_change_cable_layer = TRUE
 
 	// Executing a traitor caught releasing tesla was never this fun!
 	can_buckle = TRUE

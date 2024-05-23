@@ -19,6 +19,7 @@
 	var/busy = FALSE
 	var/RCon_tag = "NO_TAG"
 	var/update_locked = FALSE
+	can_change_cable_layer = TRUE
 
 /obj/machinery/power/breakerbox/Destroy()
 	for(var/obj/structure/cable/C in src.loc)

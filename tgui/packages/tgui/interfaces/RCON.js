@@ -310,7 +310,7 @@ const RCONBreakerList = (props, context) => {
               buttons={
                 <Button
                   icon="power-off"
-                  content={breaker.enabled ? 'Enabled' : 'Disabled'}
+                  content={breaker.enabled ? 'Connected' : 'ISOLATED'}
                   selected={breaker.enabled}
                   color={breaker.enabled ? null : 'bad'}
                   onClick={() =>

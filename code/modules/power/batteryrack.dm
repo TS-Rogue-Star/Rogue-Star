@@ -26,6 +26,7 @@
 	var/icon_update = 0									// Timer in ticks for icon update.
 	var/ui_tick = 0
 	should_be_mapped = TRUE
+	can_change_cable_layer = TRUE
 
 
 /obj/machinery/power/smes/batteryrack/Initialize(mapload)
@@ -63,7 +64,7 @@
 
 /obj/machinery/power/smes/batteryrack/update_icon()
 	cut_overlays()
-	icon_update = 0
+	icon_update = FALSE
 
 	var/cellcount = 0
 	var/charge_level = between(0, round(Percentage() / 12), 7)
@@ -96,17 +97,17 @@
 	mode = newmode
 	switch(mode)
 		if(PSU_OFFLINE)
-			input_attempt = 0
-			output_attempt = 0
+			input_attempt = FALSE
+			output_attempt = FALSE
 		if(PSU_INPUT)
-			input_attempt = 1
-			output_attempt = 0
+			input_attempt = TRUE
+			output_attempt = FALSE
 		if(PSU_OUTPUT)
-			input_attempt = 0
-			output_attempt = 1
+			input_attempt = FALSE
+			output_attempt = TRUE
 		if(PSU_AUTO)
-			input_attempt = 1
-			output_attempt = 1
+			input_attempt = TRUE
+			output_attempt = TRUE
 
 // Store charge in the power cells, instead of using the charge var. Amount is in joules.
 /obj/machinery/power/smes/batteryrack/add_charge(var/amount)
@@ -230,12 +231,6 @@
 		return
 	if(default_part_replacement(user, W))
 		return
-
-/obj/machinery/power/smes/batteryrack/inputting()
-	return
-
-/obj/machinery/power/smes/batteryrack/outputting()
-	return
 
 /obj/machinery/power/smes/batteryrack/attack_hand(var/mob/user)
 	tgui_interact(user)

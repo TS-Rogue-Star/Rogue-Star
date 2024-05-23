@@ -6,6 +6,7 @@
 	circuit = /obj/item/weapon/circuitboard/grid_checker
 	density = TRUE
 	anchored = TRUE
+	can_change_cable_layer = TRUE
 	var/power_failing = FALSE // Turns to TRUE when the grid check event is fired by the Game Master, or perhaps a cheeky antag.
 	// Wire stuff below.
 	var/datum/wires/grid_checker/wires

@@ -28,6 +28,8 @@
 
 	var/stored_power = 0//Power to deploy per tick
 
+	can_change_cable_layer = TRUE
+
 
 /obj/machinery/power/am_control_unit/New()
 	..()

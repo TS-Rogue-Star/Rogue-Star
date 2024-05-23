@@ -42,10 +42,58 @@
 
 
 // SMES SUBTYPES - THESE ARE MAPPED IN AND CONTAIN DIFFERENT TYPES OF COILS
-//Generics for Station Mapping
+// Generics for Station Mapping
 /obj/machinery/power/smes/preset
+	input_level = SMESSTARTCHARGELVL	//50kW
+	output_level = SMESSTARTOUTLVL		//50kW
+	charge = 0							//Give the engine reason to be started
+
+/obj/machinery/power/smes/preset/engine
+	name = "Engine Core SMES"
+	charge = 3 MEGAWATTS
+	RCon_tag = "Engine - Core"
+
+/obj/machinery/power/smes/preset/mains
+	name = "Main Power SMES"
+	input_attempt = FALSE
+	inputting = FALSE	//To prevent the mains from draining all of the engine power prior to engine setup
+	charge = 10 MEGAWATTS
+	RCon_tag = "Power - Main"
+	output_level = 1 MEGAWATTS
+
+// Mains gets a little extra snowflake to help early rounds when no engineers are around, mostly for outputting
+// This is about the same amount with previous dirty var editing.
+/obj/machinery/power/smes/preset/mains/Initialize()
+	. = ..()
+	component_parts += new /obj/item/weapon/smes_coil/super_io(src)
+	component_parts += new /obj/item/weapon/smes_coil(src)
+	component_parts += new /obj/item/weapon/smes_coil(src)
+	recalc_coils()
+
+/obj/machinery/power/smes/preset/ai_tcomm
+	name = "AI-TCOMM SMES"
+	charge = 24 MEGAWATTS	//maximum charge for AI/TComms to account for previous changes
+	cur_coils = 4
+	inputting = TRUE
 	input_level = SMESMAXCHARGELEVEL
-	output_level = SMESMAXOUTPUT / 2
+	outputting = TRUE
+	output_level = SMESMAXOUTPUT
+	RCon_tag = "Substation - AI/Telecomms"
+
+/obj/machinery/power/smes/preset/substation
+	input_attempt = FALSE
+	inputting = FALSE
+	output_attempt = FALSE
+	outputting = FALSE
+	max_coils = SMESDEFAULTSTART	// just the one coil allowed, so Mains are better
+
+//Generic Shuttle SMES
+/obj/machinery/power/smes/preset/shuttle
+	charge = 50 KILOWATTS	//enough to get started, but preflight should include topping off the reserves
+	input_attempt = FALSE
+	inputting = FALSE
+	output_attempt = FALSE
+	outputting = FALSE
 
 //Creative mode infinite memes
 /obj/machinery/power/smes/magical

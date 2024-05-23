@@ -13,6 +13,7 @@
 	var/power_gen = 5000
 	var/recent_fault = 0
 	var/power_output = 1
+	can_change_cable_layer = TRUE
 
 /obj/machinery/power/port_gen/proc/IsBroken()
 	return (stat & (BROKEN|EMPED))

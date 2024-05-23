@@ -27,6 +27,7 @@ GLOBAL_LIST_EMPTY(solars_list)
 	var/obj/machinery/power/solar_control/control = null
 	var/glass_type = /obj/item/stack/material/glass
 	var/SOLAR_MAX_DIST = 40		//VOREStation Addition
+	can_change_cable_layer = TRUE
 
 /obj/machinery/power/solar/drain_power()
 	return -1

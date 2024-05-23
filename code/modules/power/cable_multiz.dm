@@ -4,9 +4,19 @@
 	icon = 'icons/obj/cables/structures.dmi'
 	icon_state = "cablerelay-on"
 	layer = WIRES_LAYER
-	cable_layer = CABLE_LAYER_1|CABLE_LAYER_2|CABLE_LAYER_3
+	cable_layer = CABLE_LAYER_1|CABLE_LAYER_2|CABLE_LAYER_3|CABLE_LAYER_4
 	var/obj/structure/cable/multilayer/multiz/connectionup
 	var/obj/structure/cable/multilayer/multiz/connectiondown
+	/* //To Do: prevent powernet contamination between Z-levels
+	/// Do we mix our powernet connections?
+	var/mix_powernets = FALSE
+	/// All Cable layer powernet
+	var/datum/powernet/powernet
+	/// Powernet channels list
+	var/datum/powernet/powernet1
+	var/datum/powernet/powernet2
+	var/datum/powernet/powernet3
+	var/datum/powernet/powernet4 */
 
 /obj/structure/cable/multilayer/multiz/Destroy()
 	if(connectionup)
@@ -35,20 +45,20 @@
 	. = ..()
 	icon_state = "cablerelay-on"
 
-/obj/structure/cable/multilayer/multiz/get_cable_connections(powernetless_only)
+/obj/structure/cable/multilayer/multiz/get_cable_connections_zlevel(powernetless_only)
 	. = ..()
 	var/turf/above = GetAbove(src)
 	if(above)
 		for(var/obj/structure/cable/multilayer/multiz/targetup in above)
 			if(istype(targetup, /obj/structure/cable/multilayer/multiz))
 				connectionup = targetup
-				. += locate(targetup)
+				. += connectionup
 	var/turf/below = GetBelow(src)
 	if(below)
 		for(var/obj/structure/cable/multilayer/multiz/targetdown in below)
 			if(istype(targetdown, /obj/structure/cable/multilayer/multiz))
 				connectiondown = targetdown
-				. += locate(targetdown)
+				. += connectiondown
 
 /obj/structure/cable/multilayer/multiz/examine(mob/user)
 	. = ..()
