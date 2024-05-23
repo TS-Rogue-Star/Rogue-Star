@@ -8826,12 +8826,6 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/outdoors/newdirt,
 /area/groundbase/level2/ne)
-"Dt" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/full,
-/obj/machinery/door/firedoor,
-/turf/simulated/wall,
-/area/groundbase/civilian/chapel)
 "Du" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/brigdoor/southleft{
@@ -27010,7 +27004,7 @@ EU
 BD
 Sx
 dv
-Dt
+fi
 Ng
 Ng
 bR
@@ -27152,7 +27146,7 @@ WR
 Yu
 lM
 EU
-Dt
+fi
 Ng
 Ng
 cU
@@ -27862,7 +27856,7 @@ jz
 BU
 Xn
 wi
-Dt
+fi
 Ng
 Ng
 gs
@@ -28004,7 +27998,7 @@ wi
 VF
 ml
 vs
-Dt
+fi
 Ng
 Ng
 Vf
