@@ -164,7 +164,10 @@
 /area/aisat_interior)
 "B" = (
 /obj/structure/cable,
-/turf/simulated/floor/tiled/dark,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
 /area/aisat_interior)
 "C" = (
 /obj/machinery/power/apc{
@@ -172,17 +175,10 @@
 	name = "east bump";
 	pixel_x = 24
 	},
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/dark,
-/area/aisat_interior)
-"D" = (
-/obj/structure/cable,
-/obj/effect/floor_decal/corner/lime/diagonal,
-/turf/simulated/floor/tiled/dark,
+/turf/simulated/floor/plating,
 /area/aisat_interior)
 "E" = (
 /turf/simulated/floor/tiled/red,
@@ -198,8 +194,38 @@
 /area/aisat_interior)
 "H" = (
 /obj/structure/lattice,
-/obj/structure/cable,
+/obj/machinery/power/deck_relay{
+	name = "Upper Lattice"
+	},
 /turf/simulated/open,
+/area/aisat_interior)
+"I" = (
+/obj/machinery/power/deck_relay{
+	name = "Upper Solid"
+	},
+/obj/structure/cable/layer3,
+/turf/simulated/floor/plating,
+/area/aisat_interior)
+"K" = (
+/obj/structure/cable/layer1,
+/obj/structure/cable/layer3,
+/turf/simulated/floor/plating,
+/area/aisat_interior)
+"L" = (
+/obj/machinery/power/smes/preset,
+/obj/structure/cable/layer1,
+/turf/simulated/floor/tiled/dark,
+/area/aisat_interior)
+"O" = (
+/obj/machinery/power/deck_relay{
+	name = "Upper open"
+	},
+/obj/structure/cable/layer1,
+/obj/structure/cable/layer3,
+/turf/simulated/open,
+/area/aisat_interior)
+"Y" = (
+/turf/simulated/floor/plating,
 /area/aisat_interior)
 
 (1,1,1) = {"
@@ -792,11 +818,11 @@ a
 a
 c
 i
-i
-i
-i
-i
-i
+K
+K
+K
+K
+L
 B
 i
 i
@@ -826,12 +852,12 @@ a
 a
 c
 i
+O
 p
 p
-p
-i
-i
-B
+I
+Y
+Y
 i
 i
 i
@@ -864,8 +890,8 @@ p
 p
 p
 i
-i
-B
+Y
+Y
 i
 i
 i
@@ -898,14 +924,14 @@ p
 p
 p
 i
-i
-B
-i
-i
+Y
+Y
 i
 i
 i
 i
+o
+o
 c
 a
 a
@@ -934,11 +960,11 @@ i
 i
 i
 C
-D
-D
-D
-D
-D
+i
+i
+i
+i
+i
 H
 c
 a

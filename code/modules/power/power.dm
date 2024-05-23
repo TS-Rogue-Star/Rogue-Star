@@ -308,7 +308,7 @@
 //////////////////////////////////////////
 
 ///remove the old powernet and replace it with a new one throughout the network.
-/proc/propagate_network(obj/structure/cable/C, datum/powernet/PN, multiz = FALSE, skip_assigned_powernets = FALSE)
+/proc/propagate_network(obj/structure/cable/C, datum/powernet/PN, skip_assigned_powernets = FALSE)
 	var/list/found_machines = list()
 	var/list/cables = list()
 	var/index = 1

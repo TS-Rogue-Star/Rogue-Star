@@ -249,48 +249,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 	if(current_size >= STAGE_FIVE)
 		deconstruct()
 
-////////////////////////////////////////////
-// Power related
-///////////////////////////////////////////
-
-// All power generation handled in stuff, this is just here to ensure non-power machines have interactions too
-
-/obj/structure/cable/proc/add_avail(amount)
-	if(powernet)
-		powernet.newavail += amount
-
-/obj/structure/cable/proc/draw_power(amount)
-	if(powernet)
-		powernet.load += amount
-
-/obj/structure/cable/proc/surplus()
-	if(powernet)
-		return clamp(powernet.avail-powernet.load, 0, powernet.avail)
-	else
-		return 0
-
-/obj/structure/cable/proc/avail(amount)
-	if(powernet)
-		return amount ? powernet.avail >= amount : powernet.avail
-	else
-		return 0
-
-/obj/structure/cable/proc/add_delayedload(amount)
-	if(powernet)
-		powernet.delayedload += amount
-
-/obj/structure/cable/proc/delayed_surplus()
-	if(powernet)
-		return clamp(powernet.newavail - powernet.delayedload, 0, powernet.newavail)
-	else
-		return 0
-
-/obj/structure/cable/proc/newavail()
-	if(powernet)
-		return powernet.newavail
-	else
-		return 0
-
 /////////////////////////////////////////////////
 // Cable laying helpers
 ////////////////////////////////////////////////
@@ -331,22 +289,18 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 	//first let's add turf cables to our powernet
 	//then we'll connect machines on turf where a cable is present
 	for(var/atom/movable/AM in loc)
-		if(istype(AM, /obj/machinery/power/apc))
+		if(isAPC(AM))
 			var/obj/machinery/power/apc/N = AM
 			if(!N.terminal)
 				continue // APC are connected through their terminal
-
 			if(N.terminal.powernet == powernet) //already connected
 				continue
-
 			to_connect += N.terminal //we'll connect the machines after all cables are merged
 
-		else if(istype(AM, /obj/machinery/power)) //other power machines
+		else if(ispowermachinery(AM)) //other power machines
 			var/obj/machinery/power/M = AM
-
 			if(M.powernet == powernet)
 				continue
-
 			to_connect += M //we'll connect the machines after all cables are merged
 
 	//now that cables are done, let's connect found machines
@@ -369,20 +323,10 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 				if(cable_layer & C.cable_layer)
 					. += C
 
-/obj/structure/cable/proc/get_cable_connections_zlevel(powernetless_only)
-	. = list()
-	var/turf/T = get_turf(src)
-	for(var/check_dir in GLOB.cardinalz)
-		if(linked_dirs & check_dir)
-			T = get_step(src, check_dir)
-			for(var/obj/structure/cable/C in T)
-				if(cable_layer & C.cable_layer)
-					. += C
-
 /obj/structure/cable/proc/get_all_cable_connections(powernetless_only)
 	. = list()
 	var/turf/T
-	for(var/check_dir in GLOB.cardinal)
+	for(var/check_dir in GLOB.cardinalz)
 		T = get_step(src, check_dir)
 		for(var/obj/structure/cable/C in T.contents - src)
 			. += C
@@ -524,12 +468,20 @@ GLOBAL_LIST(cable_radial_layer_list)
 	layerthree.maptext = "<span>L3</span>"
 	layerthree.color = CABLELAYERTHREECOLOR
 
+	var/image/cablehub = image(icon = 'icons/obj/cables/structures.dmi', icon_state = "cable_bridge")
+	cablehub.maptext = "<span [amount >= CABLE_CONSTRUCTIONS_COSTS ? "" : "style='color: red'"]>[CABLE_CONSTRUCTIONS_COSTS]</span>"
+	cablehub.color = COLOR_WHITE
+
+	var/image/multizadaptor = image(icon = 'icons/obj/cables/structures.dmi', icon_state = "cablerelay-broken-cable")
+	multizadaptor.maptext = "<span [amount >= CABLE_CONSTRUCTIONS_COSTS ? "" : "style='color: red'"]>[CABLE_CONSTRUCTIONS_COSTS]</span>"
+	multizadaptor.color = COLOR_WHITE
+
 	var/list/radial_menu = list(
 	"Layer 1" = layerone,
 	"Layer 2" = layertwo,
 	"Layer 3" = layerthree,
-	"Multilayer cable hub" = image(icon = 'icons/obj/cables/structures.dmi', icon_state = "cable_bridge"),
-	"Multi Z layer cable hub" = image(icon = 'icons/obj/cables/structures.dmi', icon_state = "cablerelay-broken-cable"),
+	"Multilayer cable hub" = cablehub,
+	"Multi-deck power adapter" = multizadaptor,
 	"Cable restraints" = restraints_icon
 	)
 	var/layer_result = show_radial_menu(user, src, radial_menu, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
@@ -564,19 +516,15 @@ GLOBAL_LIST(cable_radial_layer_list)
 			target_type = /obj/structure/cable/layer3
 			target_layer = CABLE_LAYER_3
 		if("Multilayer cable hub")
-			name = "multilayer cable hub"
-			desc = "A multilayer cable hub."
-			icon_state = "cable_bridge"
-			set_cable_color(COLOR_WHITE)
-			target_type = /obj/structure/cable/multilayer
-			target_layer = CABLE_LAYER_2
-		if("Multi Z layer cable hub")
-			name = "multi z layer cable hub"
-			desc = "A multi-z layer cable hub."
-			icon_state = "cablerelay-broken-cable"
-			set_cable_color(COLOR_WHITE)
-			target_type = /obj/structure/cable/multilayer/multiz
-			target_layer = CABLE_LAYER_2
+			if (amount >= CABLE_CONSTRUCTIONS_COSTS)
+				if(use(CABLE_CONSTRUCTIONS_COSTS))
+					var/obj/structure/cable/multilayer/connected/bridger = new(loc)
+					bridger.Reload()
+		if("Multi-deck power adapter")
+			if (amount >= CABLE_CONSTRUCTIONS_COSTS)
+				if(use(CABLE_CONSTRUCTIONS_COSTS))
+					var/obj/machinery/power/deck_relay/relay = new(loc)
+					relay.find_and_connect()
 		if("Cable restraints")
 			if (amount >= CABLE_RESTRAINTS_COST)
 				if(use(CABLE_RESTRAINTS_COST))
@@ -732,12 +680,8 @@ GLOBAL_LIST(cable_radial_layer_list)
 	var/datum/powernet/PN = new()
 	PN.add_cable(C)
 
-	if(istype(C, /obj/structure/cable/multilayer/multiz))
-		for(var/dir_check in GLOB.cardinalz)
-			C.mergeConnectedNetworks(dir_check) //merge the powernet with adjacents powernets
-	else
-		for(var/dir_check in GLOB.cardinal)
-			C.mergeConnectedNetworks(dir_check) //merge the powernet with adjacents powernets
+	for(var/dir_check in GLOB.cardinal)
+		C.mergeConnectedNetworks(dir_check) //merge the powernet with adjacents powernets
 	C.mergeConnectedNetworksOnTurf() //merge the powernet with on turf powernets
 
 	use(1)

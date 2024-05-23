@@ -163,8 +163,8 @@
 	name = "east bump";
 	pixel_x = 24
 	},
-/obj/structure/cable,
-/turf/simulated/floor/tiled/dark,
+/obj/structure/cable/layer1,
+/turf/simulated/floor/plating,
 /area/aisat)
 "B" = (
 /obj/effect/floor_decal/corner/white/diagonal,
@@ -189,6 +189,7 @@
 "E" = (
 /obj/structure/cable,
 /obj/effect/floor_decal/corner/white/diagonal,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/dark,
 /area/aisat)
 "F" = (
@@ -206,6 +207,7 @@
 /obj/structure/cable,
 /obj/effect/floor_decal/corner/white/diagonal,
 /obj/machinery/shield_gen,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/dark,
 /area/aisat)
 "I" = (
@@ -247,13 +249,74 @@
 /turf/simulated/floor/plating,
 /area/aisat)
 "O" = (
+/obj/machinery/power/deck_relay{
+	name = "Lower Lattice"
+	},
 /obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
+/obj/structure/cable/layer3,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/plating,
 /area/aisat)
 "P" = (
 /turf/simulated/floor/tiled/red,
+/area/aisat)
+"Q" = (
+/obj/structure/cable,
+/obj/structure/cable/layer3,
+/obj/structure/cable/layer1,
+/turf/simulated/floor/plating,
+/area/aisat)
+"R" = (
+/obj/effect/floor_decal/corner/white/diagonal,
+/obj/structure/cable/layer3,
+/obj/structure/cable,
+/turf/simulated/floor/tiled/dark,
+/area/aisat)
+"S" = (
+/obj/structure/cable,
+/turf/simulated/floor/plating,
+/area/aisat)
+"T" = (
+/obj/machinery/power/deck_relay{
+	name = "Lower plating"
+	},
+/obj/structure/cable/layer3,
+/obj/structure/cable/layer1,
+/obj/structure/cable,
+/turf/simulated/floor/plating,
+/area/aisat)
+"U" = (
+/obj/machinery/power/deck_relay{
+	name = "Lower Open"
+	},
+/obj/structure/cable/layer1,
+/obj/structure/cable,
+/turf/simulated/floor/plating,
+/area/aisat)
+"V" = (
+/obj/structure/cable/layer1,
+/turf/simulated/floor/plating,
+/area/aisat)
+"W" = (
+/obj/effect/floor_decal/corner/white/diagonal,
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/turf/simulated/floor/tiled/dark,
+/area/aisat)
+"X" = (
+/obj/effect/floor_decal/corner/white/diagonal,
+/obj/structure/cable/layer3,
+/turf/simulated/floor/tiled/dark,
+/area/aisat)
+"Y" = (
+/obj/effect/floor_decal/corner/white/diagonal,
+/obj/structure/cable/layer1,
+/turf/simulated/floor/tiled/dark,
+/area/aisat)
+"Z" = (
+/obj/structure/cable/layer3,
+/obj/structure/cable,
+/turf/simulated/floor/plating,
 /area/aisat)
 
 (1,1,1) = {"
@@ -846,10 +909,10 @@ a
 a
 b
 h
-h
-h
-h
-h
+V
+V
+V
+V
 h
 n
 h
@@ -880,17 +943,17 @@ a
 a
 b
 h
-o
-o
-o
+U
+S
+S
+T
+Z
+Z
 h
 h
-n
 h
 h
-h
-h
-h
+S
 L
 b
 b
@@ -917,14 +980,14 @@ h
 o
 o
 o
+Y
+h
+Z
 h
 h
-n
 h
 h
-h
-h
-h
+S
 M
 b
 a
@@ -951,14 +1014,14 @@ h
 o
 o
 o
+Y
 h
-h
-n
-h
-h
-h
-h
-h
+Z
+R
+X
+X
+X
+Z
 N
 b
 a
@@ -985,14 +1048,14 @@ h
 h
 h
 h
-h
-h
+Y
+Y
 A
-E
-E
+W
+W
 H
 E
-E
+Q
 O
 b
 a

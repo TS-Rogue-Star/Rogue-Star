@@ -80,6 +80,38 @@
 	M.powernet = src
 	nodes[M] = M
 
+/datum/powernet/proc/add_relays_together(obj/machinery/power/M, cable_layer = CABLE_LAYER_ALL)
+	if(!istype(M))
+		return
+	if(!M)
+		return
+	if(M && istype(M, /obj/machinery/power/deck_relay))
+		var/obj/machinery/power/deck_relay/connector
+		if(cable_layer == CABLE_LAYER_1)
+			if(connector.powernet1)
+				if(connector.powernet1 == src)
+					return
+				connector.powernet1 = src
+				nodes[connector] = connector
+		else if(cable_layer == CABLE_LAYER_2)
+			if(connector.powernet2)
+				if(connector.powernet2 == src)
+					return
+				connector.powernet2 = src
+				nodes[connector] = connector
+		else if(cable_layer == CABLE_LAYER_3)
+			if(connector.powernet3)
+				if(connector.powernet3 == src)
+					return
+				connector.powernet3 = src
+				nodes[connector] = connector
+		else if(cable_layer == CABLE_LAYER_4)
+			if(connector.powernet)
+				if(connector.powernet == src)
+					return
+				connector.powernet = src
+				nodes[connector] = connector
+
 //handles the power changes in the powernet
 //called every ticks by the powernet controller
 /datum/powernet/proc/reset()
