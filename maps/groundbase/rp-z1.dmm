@@ -7103,6 +7103,7 @@
 /area/groundbase/civilian/apparel)
 "gKh" = (
 /obj/machinery/atmospherics/pipe/tank/nitrous_oxide,
+/obj/effect/floor_decal/industrial/warning/color/tile,
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/atmos)
 "gKv" = (
@@ -7378,6 +7379,7 @@
 /obj/machinery/atmospherics/pipe/tank/phoron{
 	dir = 1
 	},
+/obj/effect/floor_decal/industrial/warning/color/tile,
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/atmos)
 "gXo" = (
@@ -8951,6 +8953,7 @@
 /area/groundbase/science/robotics)
 "iuw" = (
 /obj/machinery/atmospherics/pipe/tank/oxygen,
+/obj/effect/floor_decal/industrial/warning/color/tile,
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/atmos)
 "iuy" = (
@@ -12654,6 +12657,7 @@
 /obj/machinery/atmospherics/pipe/tank/nitrogen{
 	dir = 1
 	},
+/obj/effect/floor_decal/industrial/warning/color/tile,
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/atmos)
 "lNy" = (
@@ -13139,6 +13143,7 @@
 /area/groundbase/science/rd)
 "meI" = (
 /obj/machinery/atmospherics/pipe/tank/carbon_dioxide,
+/obj/effect/floor_decal/industrial/warning/color/tile,
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/atmos)
 "meT" = (
@@ -14365,8 +14370,9 @@
 	},
 /area/groundbase/command/tcomms/chamber)
 "nvj" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/book/manual/rotary_electric_generator,
+/obj/effect/floor_decal/milspec/color/orange/half{
+	dir = 8
+	},
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/engine)
 "nvk" = (
@@ -15055,6 +15061,7 @@
 /obj/machinery/atmospherics/pipe/tank/nitrous_oxide{
 	dir = 1
 	},
+/obj/effect/floor_decal/industrial/warning/color/tile,
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/atmos)
 "ogA" = (
@@ -15158,6 +15165,7 @@
 /obj/machinery/atmospherics/pipe/tank/oxygen{
 	dir = 1
 	},
+/obj/effect/floor_decal/industrial/warning/color/tile,
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/atmos)
 "ona" = (
@@ -15456,6 +15464,7 @@
 /area/maintenance/groundbase/trashpit)
 "oAQ" = (
 /obj/machinery/atmospherics/pipe/tank/phoron,
+/obj/effect/floor_decal/industrial/warning/color/tile,
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/atmos)
 "oBq" = (
@@ -19413,9 +19422,9 @@
 "rIm" = (
 /obj/structure/table/rack/shelf,
 /obj/effect/floor_decal/industrial/outline,
-/obj/random/tool/power,
-/obj/random/tool/power,
-/obj/random/tool/power,
+/obj/random/tool/powermaint,
+/obj/random/tool/powermaint,
+/obj/random/tool/powermaint,
 /obj/item/weapon/pipe_dispenser,
 /turf/simulated/floor,
 /area/groundbase/engineering/storage)
@@ -20814,6 +20823,7 @@
 /obj/machinery/atmospherics/pipe/tank/air{
 	dir = 1
 	},
+/obj/effect/floor_decal/industrial/warning/color/tile,
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/atmos)
 "sQP" = (
@@ -21321,6 +21331,7 @@
 /obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
 	dir = 1
 	},
+/obj/effect/floor_decal/industrial/warning/color/tile,
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/atmos)
 "tsS" = (
@@ -21564,6 +21575,7 @@
 /obj/machinery/atmospherics/pipe/manifold/visible/black{
 	dir = 4
 	},
+/obj/effect/floor_decal/industrial/warning/color/tile,
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/atmos)
 "tIO" = (
@@ -22291,6 +22303,7 @@
 /area/groundbase/engineering/showers)
 "ugV" = (
 /obj/machinery/atmospherics/pipe/tank/air,
+/obj/effect/floor_decal/industrial/warning/color/tile,
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/atmos)
 "uht" = (
@@ -23234,6 +23247,7 @@
 /area/groundbase/level1/sw)
 "vfZ" = (
 /obj/machinery/atmospherics/pipe/tank/nitrogen,
+/obj/effect/floor_decal/industrial/warning/color/tile,
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/atmos)
 "vgg" = (
@@ -25594,6 +25608,7 @@
 /area/groundbase/science/robotics)
 "xtq" = (
 /obj/machinery/atmospherics/pipe/manifold4w/visible/black,
+/obj/effect/floor_decal/industrial/warning/color/tile,
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/atmos)
 "xtw" = (
@@ -26134,6 +26149,7 @@
 /obj/machinery/atmospherics/pipe/manifold/visible/black{
 	dir = 8
 	},
+/obj/effect/floor_decal/industrial/warning/color/tile,
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/atmos)
 "xQc" = (
