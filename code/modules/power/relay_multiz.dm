@@ -97,13 +97,13 @@
 		if(C.cable_layer == CABLE_LAYER_1)
 			C.powernet.add_relays_together(src, CABLE_LAYER_1)
 			powernet1 = C.powernet
-		else if(C.cable_layer == CABLE_LAYER_2)
+		if(C.cable_layer == CABLE_LAYER_2)
 			C.powernet.add_relays_together(src, CABLE_LAYER_2)
 			powernet2 = C.powernet
-		else if(C.cable_layer == CABLE_LAYER_3)
+		if(C.cable_layer == CABLE_LAYER_3)
 			C.powernet.add_relays_together(src, CABLE_LAYER_3)
 			powernet3 = C.powernet
-		else if(C.cable_layer == CABLE_LAYER_4)
+		if(C.cable_layer == CABLE_LAYER_4)
 			C.powernet.add_relays_together(src, CABLE_LAYER_4)
 			powernet = C.powernet
 	for(var/direction in list(DOWN, UP))

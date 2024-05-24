@@ -209,7 +209,7 @@
 
 // connect the machine to a powernet if a node cable or a terminal is present on the turf
 /obj/machinery/power/proc/connect_to_network()
-	var/turf/T = src.loc
+	var/turf/T = get_turf(loc)
 	if(!T || !istype(T))
 		return FALSE
 
@@ -222,8 +222,13 @@
 			term.powernet.add_machine(src)
 			return TRUE
 
-	C.powernet.add_machine(src)
-	return TRUE
+	var/obj/machinery/power/deck_relay/connector = locate(/obj/machinery/power/deck_relay) in T
+	if(connector && connector.powernet)
+		C.powernet.add_relays_together(connector, C.cable_layer)
+		return TRUE
+	else
+		C.powernet.add_machine(src)
+		return TRUE
 
 // remove and disconnect the machine from its current powernet
 /obj/machinery/power/proc/disconnect_from_network()

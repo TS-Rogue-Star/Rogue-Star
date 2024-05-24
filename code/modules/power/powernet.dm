@@ -87,30 +87,41 @@
 		return
 	if(M && istype(M, /obj/machinery/power/deck_relay))
 		var/obj/machinery/power/deck_relay/connector
-		if(cable_layer == CABLE_LAYER_1)
-			if(connector.powernet1)
-				if(connector.powernet1 == src)
-					return
+		if(connector)
+			if(cable_layer == CABLE_LAYER_1)
+				if(connector.powernet1)
+					if(connector.powernet1 == src)
+						return
+					else
+						connector.disconnect_from_network()
 				connector.powernet1 = src
 				nodes[connector] = connector
-		else if(cable_layer == CABLE_LAYER_2)
-			if(connector.powernet2)
-				if(connector.powernet2 == src)
-					return
+			else if(cable_layer == CABLE_LAYER_2)
+				if(connector.powernet2)
+					if(connector.powernet2 == src)
+						return
+					else
+						connector.disconnect_from_network()
 				connector.powernet2 = src
 				nodes[connector] = connector
-		else if(cable_layer == CABLE_LAYER_3)
-			if(connector.powernet3)
-				if(connector.powernet3 == src)
-					return
+			else if(cable_layer == CABLE_LAYER_3)
+				if(connector.powernet3)
+					if(connector.powernet3 == src)
+						return
+					else
+						connector.disconnect_from_network()
 				connector.powernet3 = src
 				nodes[connector] = connector
-		else if(cable_layer == CABLE_LAYER_4)
-			if(connector.powernet)
-				if(connector.powernet == src)
-					return
+			else if(cable_layer == CABLE_LAYER_4)
+				if(connector.powernet)
+					if(connector.powernet == src)
+						return
+					else
+						connector.disconnect_from_network()
 				connector.powernet = src
 				nodes[connector] = connector
+		else
+			return
 
 //handles the power changes in the powernet
 //called every ticks by the powernet controller
