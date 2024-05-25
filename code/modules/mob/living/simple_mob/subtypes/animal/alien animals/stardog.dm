@@ -359,7 +359,7 @@
 	glide_size = 2
 	parent_mob_type = /mob/living/simple_mob/vore/overmap/stardog
 	scanner_desc = "CONFIGURE ME"
-	var/image/cached_skybox_image_sipp
+	var/image/cached_skybox_image_sipp	//RS ADD START
 
 /obj/effect/overmap/visitable/ship/simplemob/stardog/build_skybox_representation(zlevel)
 	. = ..()
@@ -378,6 +378,8 @@
 			return cached_skybox_image_sipp
 
 	return cached_skybox_image
+
+	//RS ADD END
 
 /datum/ai_holder/simple_mob/woof/stardog
 	hostile = FALSE
