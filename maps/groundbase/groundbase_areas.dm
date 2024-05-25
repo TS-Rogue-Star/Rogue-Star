@@ -630,4 +630,5 @@
 	excluded |= /area/groundbase/hotspring/water
 	excluded |= /area/groundbase/medical/geneticslab
 	excluded |= /area/groundbase/engineering/pumpingstation
+	excluded |= /area/prison/cell_block/gb/abandonedbrig
 	..()

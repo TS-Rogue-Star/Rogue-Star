@@ -335,6 +335,7 @@
 	icon_state = "1-8"
 	},
 /obj/effect/floor_decal/milspec/monotile,
+/obj/effect/floor_decal/rust,
 /turf/simulated/floor/tiled/dark,
 /area/prison/cell_block/gb/abandonedbrig)
 "bc" = (
@@ -3824,6 +3825,7 @@
 /area/shuttle/groundbase/engineering)
 "mt" = (
 /obj/effect/floor_decal/milspec/monotile,
+/obj/effect/floor_decal/rust,
 /turf/simulated/floor/tiled/dark,
 /area/prison/cell_block/gb/abandonedbrig)
 "mu" = (
@@ -6114,6 +6116,7 @@
 /obj/effect/floor_decal/milspec/color/red/half{
 	dir = 9
 	},
+/obj/effect/floor_decal/rust,
 /turf/simulated/floor/tiled/milspec,
 /area/prison/cell_block/gb/abandonedbrig)
 "tK" = (
@@ -6716,6 +6719,7 @@
 /obj/effect/floor_decal/milspec/color/red/half{
 	dir = 1
 	},
+/obj/effect/floor_decal/rust,
 /turf/simulated/floor/tiled/milspec,
 /area/prison/cell_block/gb/abandonedbrig)
 "vA" = (
@@ -7396,9 +7400,6 @@
 /area/rnd/xenobiology)
 "xE" = (
 /obj/structure/table/bench/marble,
-/obj/structure/railing{
-	dir = 8
-	},
 /turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/level2/se)
 "xH" = (
@@ -7570,6 +7571,7 @@
 /obj/effect/floor_decal/milspec/color/red/half{
 	dir = 5
 	},
+/obj/effect/floor_decal/rust,
 /turf/simulated/floor/tiled/milspec,
 /area/prison/cell_block/gb/abandonedbrig)
 "ya" = (
@@ -7979,6 +7981,7 @@
 "zx" = (
 /obj/machinery/door/airlock/glass_security,
 /obj/structure/barricade,
+/obj/effect/floor_decal/rust,
 /turf/simulated/floor/tiled/dark,
 /area/prison/cell_block/gb/abandonedbrig)
 "zy" = (
@@ -8068,6 +8071,7 @@
 	icon_state = "4-8"
 	},
 /obj/structure/barricade,
+/obj/effect/floor_decal/rust,
 /turf/simulated/floor/tiled/dark,
 /area/prison/cell_block/gb/abandonedbrig)
 "zZ" = (
@@ -10365,9 +10369,9 @@
 /area/groundbase/cargo/office)
 "HT" = (
 /obj/structure/railing{
-	dir = 8
+	dir = 4
 	},
-/turf/simulated/floor/outdoors/sidewalk/slab,
+/turf/simulated/floor/outdoors/sidewalk,
 /area/groundbase/level2/ne)
 "HU" = (
 /obj/structure/cable/yellow{
@@ -11735,6 +11739,7 @@
 /obj/effect/floor_decal/milspec/color/red/half{
 	dir = 10
 	},
+/obj/effect/floor_decal/rust,
 /turf/simulated/floor/tiled/milspec,
 /area/prison/cell_block/gb/abandonedbrig)
 "LU" = (
@@ -11869,12 +11874,6 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/shuttlepad)
-"Mv" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/simulated/floor/outdoors/grass/seasonal,
-/area/groundbase/level2/ne)
 "Mw" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -13767,6 +13766,7 @@
 /obj/effect/floor_decal/milspec/color/red/half{
 	dir = 6
 	},
+/obj/effect/floor_decal/rust,
 /turf/simulated/floor/tiled/milspec,
 /area/prison/cell_block/gb/abandonedbrig)
 "RZ" = (
@@ -14487,12 +14487,6 @@
 /obj/structure/bed/double/padded,
 /turf/simulated/floor/wood,
 /area/groundbase/dorms/room8)
-"TY" = (
-/obj/structure/railing{
-	dir = 8
-	},
-/turf/simulated/floor/outdoors/sidewalk/slab,
-/area/groundbase/level2/se)
 "TZ" = (
 /obj/effect/landmark/start/xenobio,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -14815,6 +14809,7 @@
 "UR" = (
 /obj/structure/bed/chair/office/dark,
 /obj/effect/floor_decal/milspec/color/red/half,
+/obj/effect/floor_decal/rust,
 /turf/simulated/floor/tiled/milspec,
 /area/prison/cell_block/gb/abandonedbrig)
 "UT" = (
@@ -16905,9 +16900,9 @@ rh
 rh
 rh
 rh
-rh
-rh
-rh
+bG
+bG
+bG
 bG
 bG
 bG
@@ -17046,8 +17041,8 @@ rh
 rh
 rh
 rh
-rh
-rh
+bG
+bG
 iX
 bG
 bG
@@ -17188,11 +17183,11 @@ rh
 rh
 rh
 rh
+bG
+bG
 rh
 rh
-bG
-bG
-bG
+rh
 rh
 rh
 rh
@@ -17329,10 +17324,10 @@ rh
 rh
 rh
 rh
-rh
+hZ
 wR
 wR
-bG
+hZ
 rh
 rh
 rh
@@ -17471,10 +17466,10 @@ rh
 rh
 rh
 rh
-rh
+hZ
 wR
 wR
-bG
+hZ
 rh
 rh
 rh
@@ -17613,10 +17608,10 @@ rh
 rh
 rh
 rh
-rh
+hZ
 wR
 wR
-rh
+hZ
 rh
 rh
 rh
@@ -29869,8 +29864,8 @@ Ie
 Ng
 Ng
 pi
-Mv
-Mv
+Ng
+Ng
 bR
 bR
 pp
@@ -30011,8 +30006,8 @@ Ie
 Ng
 Ng
 Jv
-of
-bR
+pC
+yI
 bR
 bR
 pp
@@ -30153,15 +30148,15 @@ Ng
 Ng
 Ng
 Jv
-of
-bR
-bR
-bR
-pp
-pp
-pp
-pp
-pp
+HT
+Cs
+Cs
+Cs
+jM
+jM
+jM
+jM
+jM
 KF
 KF
 Hu
@@ -30295,15 +30290,15 @@ Yk
 ZF
 MR
 Jv
-pC
-pC
-HT
-HT
+of
+of
+GB
+GB
 xE
 xE
 xE
-TY
-TY
+Hu
+Hu
 jj
 jj
 Hu

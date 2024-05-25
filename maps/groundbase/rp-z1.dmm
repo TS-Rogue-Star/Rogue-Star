@@ -384,6 +384,12 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/security/showers)
 "atn" = (
@@ -4781,6 +4787,12 @@
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 8
 	},
 /turf/simulated/floor/bmarble,
 /area/groundbase/security/lobby)
@@ -10008,6 +10020,16 @@
 	},
 /turf/simulated/floor/outdoors/sidewalk/side,
 /area/groundbase/level1/nw)
+"jmq" = (
+/obj/structure/mirror{
+	pixel_y = 37
+	},
+/obj/structure/sink{
+	pixel_y = 20
+	},
+/obj/machinery/atmospherics/unary/vent_scrubber/on,
+/turf/simulated/floor/tiled/white,
+/area/groundbase/security/showers)
 "jnu" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
@@ -11114,6 +11136,9 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/security/showers)
 "kkY" = (
@@ -11772,6 +11797,12 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/lobby)
@@ -13457,6 +13488,16 @@
 	},
 /turf/simulated/floor,
 /area/groundbase/level1/se)
+"msc" = (
+/obj/structure/mirror{
+	pixel_y = 37
+	},
+/obj/structure/sink{
+	pixel_y = 20
+	},
+/obj/machinery/atmospherics/unary/vent_pump/on,
+/turf/simulated/floor/tiled/white,
+/area/groundbase/security/showers)
 "msi" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
@@ -18545,6 +18586,18 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/command/meeting)
+"qTG" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/turf/simulated/floor/tiled/white,
+/area/groundbase/security/showers)
 "qUf" = (
 /obj/structure/table/rack{
 	dir = 8;
@@ -19341,9 +19394,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 8
-	},
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/lobby)
 "ryq" = (
@@ -23223,9 +23274,6 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/engineering/workshop)
 "uPO" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
-	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
@@ -23233,6 +23281,13 @@
 	dir = 8;
 	name = "package tagger - Resleeving";
 	sort_tag = "Resleeving"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/lobby)
@@ -25024,6 +25079,9 @@
 	},
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/security/showers)
@@ -29953,7 +30011,7 @@ egG
 egG
 egG
 xMF
-ktd
+msc
 wCs
 fil
 nac
@@ -30237,8 +30295,8 @@ oeu
 egG
 egG
 xMF
-ktd
-kkR
+jmq
+qTG
 kYo
 lNr
 xMF
