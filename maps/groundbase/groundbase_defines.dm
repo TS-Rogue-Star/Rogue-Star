@@ -178,7 +178,7 @@
 		/area/groundbase/hotspring,
 		/area/groundbase/hotspring/water,
 		/area/groundbase/medical/geneticslab,
-		/area/groundbase/engineering/pumpingstation
+		/area/groundbase/engineering/pumpingstation,
 		/area/prison/cell_block/gb/abandonedbrig
 		)
 
