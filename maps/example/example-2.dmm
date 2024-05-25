@@ -195,20 +195,11 @@
 /area/aisat_interior)
 "H" = (
 /obj/structure/lattice,
-/obj/machinery/power/deck_relay{
-	name = "Upper Lattice"
-	},
-/obj/structure/cable/layer3,
 /turf/simulated/open,
-/area/aisat_interior)
-"I" = (
-/obj/structure/cable/multilayer,
-/turf/simulated/floor/plating,
 /area/aisat_interior)
 "K" = (
 /obj/structure/cable/layer1,
 /obj/structure/cable/layer3,
-/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/aisat_interior)
 "L" = (
@@ -216,13 +207,17 @@
 /obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/dark,
 /area/aisat_interior)
+"N" = (
+/obj/machinery/power/smes/preset,
+/obj/structure/cable/layer3,
+/turf/simulated/floor/plating,
+/area/aisat_interior)
 "O" = (
 /obj/machinery/power/deck_relay{
 	name = "Upper open"
 	},
 /obj/structure/cable/layer1,
 /obj/structure/cable/layer3,
-/obj/structure/cable,
 /turf/simulated/open,
 /area/aisat_interior)
 "Y" = (
@@ -826,7 +821,7 @@ i
 K
 K
 K
-I
+K
 L
 B
 i
@@ -860,9 +855,9 @@ i
 O
 p
 p
-Y
-Y
-Y
+Z
+N
+B
 i
 i
 i
@@ -894,7 +889,7 @@ i
 p
 p
 p
-i
+Z
 Y
 Y
 i
@@ -928,7 +923,7 @@ i
 p
 p
 p
-i
+Z
 Y
 Y
 i
@@ -962,14 +957,14 @@ i
 i
 i
 i
-i
-i
+Z
+Z
 C
-Z
-Z
-Z
-Z
-Z
+Y
+Y
+Y
+Y
+Y
 H
 c
 a

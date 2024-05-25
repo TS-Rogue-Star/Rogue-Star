@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 	anchored =TRUE
 	unacidable = TRUE
 	var/datum/powernet/powernet
-	name = "power cable"
+	name = "power cable L2"
 	desc = "A flexible superconducting cable for heavy-duty power transfer."
 	icon = 'icons/obj/cables/layer_cable.dmi'
 	icon_state = "l2-1-2-4-8-node"
@@ -29,12 +29,14 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 	var/obj/machinery/power/breakerbox/breaker_box
 
 /obj/structure/cable/layer1
+	name = "power cable L1"
 	color = CABLELAYERONECOLOR
 	cable_layer = CABLE_LAYER_1
 	layer = WIRES_LAYER - 0.01
 	icon_state = "l1-1-2-4-8-node"
 
 /obj/structure/cable/layer3
+	name = "power cable L3"
 	color = CABLELAYERTHREECOLOR
 	cable_layer = CABLE_LAYER_3
 	layer = WIRES_LAYER + 0.01

@@ -364,6 +364,6 @@
 		return null
 	for(var/obj/structure/cable/C in src)
 		if(C.cable_layer & cable_layer)
-			C.update_icon() // I hate this. it's here because update_icon_state SCANS nearby turfs for objects to connect to. Wastes cpu time
+			C.update_icon()
 			return C
 	return null

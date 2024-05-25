@@ -198,8 +198,8 @@
 /turf/simulated/floor/tiled/dark,
 /area/aisat)
 "H" = (
-/obj/structure/cable,
 /obj/machinery/shield_gen,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/plating,
 /area/aisat)
 "I" = (
@@ -221,14 +221,14 @@
 	anchored = 1;
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/plating,
 /area/aisat)
 "M" = (
 /obj/machinery/shield_gen/external{
 	anchored = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/plating,
 /area/aisat)
 "N" = (
@@ -236,38 +236,15 @@
 	anchored = 1;
 	dir = 8
 	},
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/simulated/floor/plating,
-/area/aisat)
-"O" = (
-/obj/machinery/power/deck_relay{
-	name = "Lower Lattice"
-	},
 /obj/structure/cable/layer3,
 /turf/simulated/floor/plating,
 /area/aisat)
 "P" = (
 /turf/simulated/floor/tiled/red,
 /area/aisat)
-"Q" = (
-/obj/structure/cable/layer3,
-/turf/simulated/floor/plating,
-/area/aisat)
-"R" = (
-/obj/structure/cable/layer3,
-/obj/structure/cable/layer1,
-/obj/structure/cable,
-/turf/simulated/floor/plating,
-/area/aisat)
-"S" = (
-/obj/structure/cable,
-/turf/simulated/floor/plating,
-/area/aisat)
 "T" = (
 /obj/structure/cable/layer1,
 /obj/structure/cable/layer3,
-/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/aisat)
 "U" = (
@@ -276,7 +253,6 @@
 	},
 /obj/structure/cable/layer1,
 /obj/structure/cable/layer3,
-/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/aisat)
 "W" = (
@@ -284,13 +260,11 @@
 /area/aisat)
 "X" = (
 /obj/structure/cable/layer3,
-/obj/structure/cable,
 /obj/structure/cable/layer1,
 /turf/simulated/floor/plating,
 /area/aisat)
 "Z" = (
 /obj/structure/cable/layer3,
-/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/aisat)
 
@@ -922,13 +896,13 @@ U
 T
 T
 T
-R
-R
+X
+X
 h
 h
 h
 h
-S
+W
 L
 b
 b
@@ -962,7 +936,7 @@ h
 h
 h
 h
-S
+W
 M
 b
 a
@@ -1030,8 +1004,8 @@ W
 W
 H
 W
-Q
-O
+W
+W
 b
 a
 a
