@@ -80,48 +80,52 @@
 	M.powernet = src
 	nodes[M] = M
 
-/datum/powernet/proc/add_relays_together(obj/machinery/power/M, cable_layer = CABLE_LAYER_ALL)
-	if(!istype(M))
+//snowflake handling for multi-z's powernet 'channels'
+/datum/powernet/proc/add_relays_together(obj/machinery/power/deck_relay/connector, datum/powernet/PN, cable_layer = CABLE_LAYER_ALL)
+	if(!istype(connector) || !istype(PN))
+		stack_trace("add_relays_together doesn't like [connector] or [PN]")
 		return
-	if(!M)
+	if(!connector)
+		stack_trace("add_relays_together doesn't have a connector!")
 		return
-	if(M && istype(M, /obj/machinery/power/deck_relay))
-		var/obj/machinery/power/deck_relay/connector
-		if(connector)
-			if(cable_layer == CABLE_LAYER_1)
-				if(connector.powernet1)
-					if(connector.powernet1 == src)
-						return
-					else
-						connector.disconnect_from_network()
-				connector.powernet1 = src
-				nodes[connector] = connector
-			else if(cable_layer == CABLE_LAYER_2)
-				if(connector.powernet2)
-					if(connector.powernet2 == src)
-						return
-					else
-						connector.disconnect_from_network()
-				connector.powernet2 = src
-				nodes[connector] = connector
-			else if(cable_layer == CABLE_LAYER_3)
-				if(connector.powernet3)
-					if(connector.powernet3 == src)
-						return
-					else
-						connector.disconnect_from_network()
-				connector.powernet3 = src
-				nodes[connector] = connector
-			else if(cable_layer == CABLE_LAYER_4)
-				if(connector.powernet)
-					if(connector.powernet == src)
-						return
-					else
-						connector.disconnect_from_network()
-				connector.powernet = src
-				nodes[connector] = connector
-		else
-			return
+	if(!PN)
+		stack_trace("add_relays_together doesn't have a powernet!")
+		return
+
+	if(cable_layer == CABLE_LAYER_1)
+		if(connector.powernet1)
+			if(connector.powernet1 == PN)
+				return
+			else
+				connector.disconnect_from_network()
+		connector.powernet1 = PN
+		nodes[connector] = connector
+	else if(cable_layer == CABLE_LAYER_2)
+		if(connector.powernet2)
+			if(connector.powernet2 == PN)
+				return
+			else
+				connector.disconnect_from_network()
+		connector.powernet2 = PN
+		nodes[connector] = connector
+	else if(cable_layer == CABLE_LAYER_3)
+		if(connector.powernet3)
+			if(connector.powernet3 == PN)
+				return
+			else
+				connector.disconnect_from_network()
+		connector.powernet3 = PN
+		nodes[connector] = connector
+	else if(cable_layer == CABLE_LAYER_4)
+		if(connector.powernet4)
+			if(connector.powernet4 == PN)
+				return
+			else
+				connector.disconnect_from_network()
+		connector.powernet4 = PN
+		nodes[connector] = connector
+	else
+		return FALSE
 
 //handles the power changes in the powernet
 //called every ticks by the powernet controller

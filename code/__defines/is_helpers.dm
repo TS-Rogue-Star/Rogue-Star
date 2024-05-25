@@ -27,6 +27,8 @@
 
 #define iscable(A) (istype(A, /obj/structure/cable))
 
+#define ispowernet(A) (istype(A, /datum/powernet))
+
 #define ismachinery(A) (istype(A, /obj/machinery))
 
 #define ispowermachinery(A) (istype(A, /obj/machinery/power))
@@ -34,6 +36,8 @@
 #define isAPC(A) (istype(A, /obj/machinery/power/apc))
 
 #define isSMES(A) (istype(A, /obj/machinery/power/smes))
+
+#define isPowerCell(A) (istype(A, /obj/item/weapon/cell))
 
 //---------------
 //#define isarea(D)		istype(D, /area)	//Built in

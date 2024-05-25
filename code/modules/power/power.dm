@@ -18,7 +18,7 @@
 	var/datum/powernet/powernet
 	///Cable layer to which the machine is connected.
 	var/cable_layer = CABLE_LAYER_2
-	///Can the cable_layer be tweked with a multi tool
+	///Can the cable_layer be tweaked with a multi tool?
 	var/can_change_cable_layer = FALSE
 
 /obj/machinery/power/Initialize(mapload)
@@ -94,6 +94,12 @@
 	else
 		return 0
 
+/obj/machinery/power/proc/viewload()
+	if(powernet)
+		return powernet.viewload
+	else
+		return 0
+
 /obj/machinery/power/proc/add_delayedload(amount)
 	if(powernet)
 		powernet.delayedload += amount
@@ -113,100 +119,6 @@
 /obj/machinery/power/proc/disconnect_terminal() // machines without a terminal will just return, no harm no fowl.
 	return
 
-// returns true if the area has power on given channel (or doesn't require power).
-// defaults to power_channel
-/obj/machinery/proc/powered(chan = power_channel, ignore_use_power = FALSE)
-	if(!loc)
-		return FALSE
-	if(!use_power && !ignore_use_power)
-		return TRUE
-
-	var/area/A = get_area(src) // make sure it's in an area
-	if(!A)
-		return FALSE // if not, then not powered
-
-	return A.powered(chan) // return power status of the area
-
-// increment the power usage stats for an area
-/obj/machinery/proc/use_power(amount, chan = power_channel)
-	amount = max(amount * machine_power_rectifier, 0) // make sure we don't use negative power
-	var/area/A = get_area(src) // make sure it's in an area
-	A?.use_power_oneoff(amount, chan)
-
-/**
- * An alternative to 'use_power', this proc directly costs the APC in direct charge, as opposed to being calculated periodically.
- * - Amount: How much power the APC's cell is to be costed.
- */
-/obj/machinery/proc/directly_use_power(amount)
-	var/area/my_area = get_area(src)
-	if(isnull(my_area))
-		stack_trace("machinery is somehow not in an area, nullspace?")
-		return FALSE
-	if(!my_area.requires_power)
-		return TRUE
-
-	var/obj/machinery/power/apc/my_apc = my_area.apc
-	if(isnull(my_apc))
-		return FALSE
-	return my_apc.cell.use(amount)
-
-/**
- * Attempts to draw power directly from the APC's Powernet rather than the APC's battery. For high-draw machines, like the cell charger
- *
- * Checks the surplus power on the APC's powernet, and compares to the requested amount. If the requested amount is available, this proc
- * will add the amount to the APC's usage and return that amount. Otherwise, this proc will return FALSE.
- * If the take_any var arg is set to true, this proc will use and return any surplus that is under the requested amount, assuming that
- * the surplus is above zero.
- * Args:
- * - amount, the amount of power requested from the Powernet. In standard loosely-defined SS13 power units.
- * - take_any, a bool of whether any amount of power is acceptable, instead of all or nothing. Defaults to FALSE
- */
-/obj/machinery/proc/use_power_from_net(amount, take_any = FALSE)
-	if(amount <= 0) //just in case
-		return FALSE
-	var/area/home = get_area(src)
-
-	if(!home)
-		return FALSE //apparently space isn't an area
-	if(!home.requires_power)
-		return amount //Shuttles get free power, don't ask why
-
-	var/obj/machinery/power/apc/local_apc = home.apc
-	if(!local_apc)
-		return FALSE
-	var/surplus = local_apc.surplus()
-	if(surplus <= 0) //I don't know if powernet surplus can ever end up negative, but I'm just gonna failsafe it
-		return FALSE
-	if(surplus < amount)
-		if(!take_any)
-			return FALSE
-		amount = surplus
-	local_apc.draw_power(amount)
-	return amount
-
-/obj/machinery/proc/addStaticPower(value, powerchannel)
-	var/area/A = get_area(src)
-	A?.use_power_oneoff(value, powerchannel)
-
-/obj/machinery/proc/removeStaticPower(value, powerchannel)
-	addStaticPower(-value, powerchannel)
-
-/**
- * Called whenever the power settings of the containing area change
- *
- * by default, check equipment channel & set flag, can override if needed
- *
- * Returns TRUE if the NOPOWER flag was toggled
- */
-/obj/machinery/proc/power_change()		// called whenever the power settings of the containing area change
-										// by default, check equipment channel & set flag
-										// can override if needed
-	if(powered(power_channel))
-		stat &= ~NOPOWER
-	else
-		stat |= NOPOWER
-	return
-
 // connect the machine to a powernet if a node cable or a terminal is present on the turf
 /obj/machinery/power/proc/connect_to_network()
 	var/turf/T = get_turf(loc)
@@ -222,13 +134,8 @@
 			term.powernet.add_machine(src)
 			return TRUE
 
-	var/obj/machinery/power/deck_relay/connector = locate(/obj/machinery/power/deck_relay) in T
-	if(connector && connector.powernet)
-		C.powernet.add_relays_together(connector, C.cable_layer)
-		return TRUE
-	else
-		C.powernet.add_machine(src)
-		return TRUE
+	C.powernet.add_machine(src)
+	return TRUE
 
 // remove and disconnect the machine from its current powernet
 /obj/machinery/power/proc/disconnect_from_network()
@@ -359,47 +266,12 @@
 	for(var/obj/structure/cable/Cable in net2.cables) //merge cables
 		net1.add_cable(Cable)
 
+	if(!net2) return net1
 	for(var/obj/machinery/power/Node in net2.nodes) //merge power machines
 		if(!Node.connect_to_network())
 			Node.disconnect_from_network() //if somehow we can't connect the machine to the new powernet, disconnect it from the old nonetheless
 
 	return net1
-
-/// Extracts the powernet and cell of the provided power source
-/proc/get_powernet_info_from_source(power_source)
-	var/area/source_area
-	if (isarea(power_source))
-		source_area = power_source
-		power_source = source_area.apc
-	else if (istype(power_source, /obj/structure/cable))
-		var/obj/structure/cable/Cable = power_source
-		power_source = Cable.powernet
-
-	var/datum/powernet/PN
-	var/obj/item/weapon/cell/cell
-
-	if (istype(power_source, /datum/powernet))
-		PN = power_source
-	else if (istype(power_source, /obj/item/weapon/cell))
-		cell = power_source
-	else if (istype(power_source, /obj/machinery/power/apc))
-		var/obj/machinery/power/apc/apc = power_source
-		cell = apc.cell
-		if (apc.terminal)
-			PN = apc.terminal.powernet
-	else
-		return FALSE
-
-	if (!cell && !PN)
-		return
-
-	return list("powernet" = PN, "cell" = cell)
-
-/obj/machinery/power/proc/viewload()
-	if(powernet)
-		return powernet.viewload
-	else
-		return FALSE
 
 //Determines how strong could be shock, deals damage to mob, uses power.
 //M is a mob who touched wire/whatever
@@ -409,26 +281,26 @@
 //dist_check - set to only shock mobs within 1 of source (vendors, airlocks, etc.)
 //No animations will be performed by this proc.
 /proc/electrocute_mob(mob/living/M as mob, var/power_source, var/obj/source, var/siemens_coeff = 1.0)
-	if(istype(M.loc,/obj/mecha))
+	if(ismecha(M.loc))
 		return FALSE	//feckin mechs are dumb
 	if(issilicon(M))
 		return FALSE	//No more robot shocks from machinery
 	var/area/source_area
-	if(istype(power_source,/area))
+	if(isarea(power_source))
 		source_area = power_source
 		power_source = source_area.get_apc()
-	if(istype(power_source,/obj/structure/cable))
+	if(iscable(power_source))
 		var/obj/structure/cable/Cable = power_source
 		power_source = Cable.powernet
 
 	var/datum/powernet/PN
 	var/obj/item/weapon/cell/cell
 
-	if(istype(power_source,/datum/powernet))
+	if(ispowernet(power_source))
 		PN = power_source
-	else if(istype(power_source,/obj/item/weapon/cell))
+	else if(isPowerCell(power_source))
 		cell = power_source
-	else if(istype(power_source,/obj/machinery/power/apc))
+	else if(isAPC(power_source))
 		var/obj/machinery/power/apc/apc = power_source
 		cell = apc.cell
 		if (apc.terminal)
@@ -442,7 +314,7 @@
 	//If following checks determine user is protected we won't alarm for long.
 	if(PN)
 		PN.trigger_warning(5)
-	if(istype(M,/mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.species.siemens_coefficient <= 0)
 			return
@@ -475,10 +347,10 @@
 
 	if (source_area)
 		source_area.use_power_oneoff(drained_energy/CELLRATE, EQUIP)
-	else if (istype(power_source,/datum/powernet))
+	else if (ispowernet(power_source))
 		var/drained_power = drained_energy/CELLRATE
 		drained_power = PN.draw_power(drained_power)
-	else if (istype(power_source, /obj/item/weapon/cell))
+	else if (isPowerCell(power_source))
 		cell.use(drained_energy)
 	return drained_energy
 

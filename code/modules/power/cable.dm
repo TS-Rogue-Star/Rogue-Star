@@ -518,12 +518,12 @@ GLOBAL_LIST(cable_radial_layer_list)
 		if("Multilayer cable hub")
 			if (amount >= CABLE_CONSTRUCTIONS_COSTS)
 				if(use(CABLE_CONSTRUCTIONS_COSTS))
-					var/obj/structure/cable/multilayer/connected/bridger = new(loc)
+					var/obj/structure/cable/multilayer/connected/bridger = new /obj/structure/cable/multilayer/connected(user.loc)
 					bridger.Reload()
 		if("Multi-deck power adapter")
 			if (amount >= CABLE_CONSTRUCTIONS_COSTS)
 				if(use(CABLE_CONSTRUCTIONS_COSTS))
-					var/obj/machinery/power/deck_relay/relay = new(loc)
+					var/obj/machinery/power/deck_relay/relay = new /obj/machinery/power/deck_relay(user.loc)
 					relay.find_and_connect()
 		if("Cable restraints")
 			if (amount >= CABLE_RESTRAINTS_COST)
@@ -611,14 +611,14 @@ GLOBAL_LIST(cable_radial_layer_list)
 	var/mob/M = usr
 
 	if(ishuman(M) && !M.restrained() && !M.stat && !M.paralysis && ! M.stunned)
-		if(!istype(usr.loc,/turf)) return
-		if(src.amount <= 14)
+		if(!isturf(usr.loc)) return
+		if(src.amount < CABLE_RESTRAINTS_COST)
 			to_chat(usr, "<span class='warning'>You need at least 15 lengths to make restraints!</span>")
 			return
 		var/obj/item/weapon/handcuffs/cable/B = new /obj/item/weapon/handcuffs/cable(usr.loc)
 		B.color = color
 		to_chat(usr, "<span class='notice'>You wind some cable together to make some restraints.</span>")
-		src.use(15)
+		src.use(CABLE_RESTRAINTS_COST)
 	else
 		to_chat(usr, "<span class='notice'>You cannot do that.</span>")
 

@@ -1,4 +1,4 @@
-///multilayer cable to connect different layers
+///multilayer cable to connect different layers into one powernet
 /obj/structure/cable/multilayer
 	name = "multilayer cable hub"
 	desc = "A flexible, superconducting insulated multilayer hub for heavy-duty multilayer power transfer."

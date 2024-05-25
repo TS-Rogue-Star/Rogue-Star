@@ -389,7 +389,7 @@
 
 
 /obj/machinery/power/smes/attackby(var/obj/item/weapon/W, var/mob/user)
-	if (failing)	//TODO: Allow engineering to fix failing SMES units. Maybe with a Tesla grounding rod and a stick? because fuck you for hardcoding this
+	if(failing)	//TODO: Allow engineering to fix failing SMES units. Maybe with a Tesla grounding rod and a stick? because fuck you for hardcoding this
 		to_chat(user, "<span class='warning'>The [src]'s indicator lights are flashing wildly. It seems to be overloaded! Touching it now is probably not a good idea.</span>")
 		return
 	//opening using screwdriver
@@ -432,25 +432,6 @@
 			to_chat(user, "<font color='red'>You have disassembled the SMES cell!</font>")
 			dismantle()
 			return
-
-	//changing direction using wrench
-	if(W.has_tool_quality(TOOL_WRENCH))
-		disconnect_terminal(terminalconnections)	//clear 'em all.
-		set_dir(turn(dir, 270)) //flip it turnways
-		var/turf/turf = get_step(src, dir)
-		for(var/obj/machinery/power/terminal/term in turf)
-			if(term)
-				add_nearby_terminals() //reconnect things. You silly bean.
-				to_chat(user, span_notice("Terminal found."))
-				break	//we attempt a connection in all directions, of all layers. and handle adding it. so let's just keep going.
-			else if(!terminalconnections.len) //sanity in case they got destroyed.
-				to_chat(user, span_alert("No power terminals found."))
-				stat |= BROKEN
-				update_icon()
-				return
-
-		update_icon()
-		return
 
 	if (!panel_open)
 		to_chat(user, "<span class='filter_notice'><span class='warning'>You need to open access hatch on [src] first!</span></span>")

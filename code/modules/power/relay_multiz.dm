@@ -1,4 +1,5 @@
-/obj/machinery/power/deck_relay //This bridges powernets betwen Z levels
+///This bridges powernets betwen Z levels
+/obj/machinery/power/deck_relay
 	name = "Multi-deck power adapter"
 	desc = "A huge bundle of double insulated cabling which seems to run up into the ceiling."
 	icon = 'icons/obj/cables/structures.dmi'
@@ -9,16 +10,40 @@
 	var/obj/machinery/power/deck_relay/connectiondown
 	anchored = TRUE
 	density = FALSE
+	can_change_cable_layer = FALSE
 	/// Powernet channels list
 	var/datum/powernet/powernet1
 	var/datum/powernet/powernet2
 	var/datum/powernet/powernet3
-	var/list/powernets
+	var/datum/powernet/powernet4
+	var/list/powernets = list()
 
 /obj/machinery/power/deck_relay/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(find_and_connect)), 30)
 	addtimer(CALLBACK(src, PROC_REF(refresh)), 50) //Wait a bit so we can find the one below, then get powering
+
+//don't override our layering for this, since we omni-connect.
+/obj/machinery/power/deck_relay/adapt_to_cable_layer()
+	cable_layer = CABLE_LAYER_1|CABLE_LAYER_2|CABLE_LAYER_3|CABLE_LAYER_4
+	return
+
+/obj/machinery/power/deck_relay/Destroy()
+	. = ..()
+	if(connectionup) //Lose connections
+		connectionup.connectiondown = null
+	if(connectiondown)
+		connectiondown.connectionup = null
+	if(powernet1)
+		powernet1 = null
+	if(powernet2)
+		powernet2 = null
+	if(powernet3)
+		powernet3 = null
+	if(powernet4)
+		powernet4 = null
+	powernets.Cut()
+	return TRUE
 
 /obj/machinery/power/deck_relay/process()
 	if(!anchored)
@@ -27,10 +52,24 @@
 			connectionup.connectiondown = null
 		if(connectiondown)
 			connectiondown.connectionup = null
+		if(powernet1)
+			powernet1 = null
+		if(powernet2)
+			powernet2 = null
+		if(powernet3)
+			powernet3 = null
+		if(powernet4)
+			powernet4 = null
+		powernets.Cut()
 		return
 	refresh() //Sometimes the powernets get lost, so we need to keep checking.
 	if(!powernets)
 		icon_state = "cablerelay-off"
+
+	if(!connectiondown || QDELETED(connectiondown) || !connectionup || QDELETED(connectionup))
+		icon_state = "cablerelay-off"
+		find_and_connect()
+
 	for(var/datum/powernet/connections in powernets)
 		var/missingnet = 0
 		if(connections && (connections.avail > 0))
@@ -43,10 +82,6 @@
 			icon_state = "cablerelay-off"
 		else
 			icon_state = "cablerelay-on"
-
-	if(!connectiondown || QDELETED(connectiondown) || !connectionup || QDELETED(connectionup))
-		icon_state = "cablerelay-off"
-		find_and_connect()
 
 /obj/machinery/power/deck_relay/hides_under_flooring()
 	return TRUE
@@ -79,7 +114,7 @@
 		var/obj/structure/cable/XR = merge_to.get_cable_node(CABLE_LAYER_3)
 		if(C && XR)
 			merge_powernets(XR.powernet,C.powernet)
-	else if(powernet && MZ.powernet)
+	else if(powernet4 && MZ.powernet4)
 		var/obj/structure/cable/C = merge_from.get_cable_node(CABLE_LAYER_4)
 		var/obj/structure/cable/XR = merge_to.get_cable_node(CABLE_LAYER_4)
 		if(C && XR)
@@ -92,20 +127,33 @@
 		return FALSE
 	connectiondown = null //in case we're re-establishing
 	connectionup = null
-	var/obj/structure/cable/C = T.get_cable_node() //check if we have a node cable on the machine turf.
-	if(C && C.powernet)
-		if(C.cable_layer == CABLE_LAYER_1)
-			C.powernet.add_relays_together(src, CABLE_LAYER_1)
-			powernet1 = C.powernet
-		if(C.cable_layer == CABLE_LAYER_2)
-			C.powernet.add_relays_together(src, CABLE_LAYER_2)
-			powernet2 = C.powernet
-		if(C.cable_layer == CABLE_LAYER_3)
-			C.powernet.add_relays_together(src, CABLE_LAYER_3)
-			powernet3 = C.powernet
-		if(C.cable_layer == CABLE_LAYER_4)
-			C.powernet.add_relays_together(src, CABLE_LAYER_4)
-			powernet = C.powernet
+	powernets.Cut()
+	//Find our local cable nodes first, we'll connect to th
+	for(var/obj/structure/cable/C in T)
+		if(!C)
+			break
+		C = T.get_cable_node() //check if we have a node cable on the machine turf.
+		if(C && C.powernet)
+			if(C.cable_layer == CABLE_LAYER_1)
+				C.powernet.add_relays_together(src, C.powernet, CABLE_LAYER_1)
+				powernet1 = C.powernet
+				if(powernet1)
+					powernets |= powernet1
+			if(C.cable_layer == CABLE_LAYER_2)
+				C.powernet.add_relays_together(src, C.powernet, CABLE_LAYER_2)
+				powernet2 = C.powernet
+				if(powernet2)
+					powernets |= powernet2
+			if(C.cable_layer == CABLE_LAYER_3)
+				C.powernet.add_relays_together(src, C.powernet, CABLE_LAYER_3)
+				powernet3 = C.powernet
+				if(powernet3)
+					powernets |= powernet3
+			if(C.cable_layer == CABLE_LAYER_4)
+				C.powernet.add_relays_together(src, C.powernet, CABLE_LAYER_4)
+				powernet4 = C.powernet
+				if(powernet4)
+					powernets |= powernet4
 	for(var/direction in list(DOWN, UP))
 		var/turf/TD = get_zstep(src, direction)
 		if(!TD) continue
@@ -126,3 +174,22 @@
 	. = ..()
 	. += span_notice("[connectionup ? "Detected" : "Undetected"] hub UP.")
 	. += span_notice("[connectiondown ? "Detected" : "Undetected"] hub DOWN.")
+	if(powernet1)
+		. += span_notice("The [LOWER_TEXT(GLOB.cable_layer_to_name["[CABLE_LAYER_1]"])] is connected.")
+	if(powernet2)
+		. += span_notice("The [LOWER_TEXT(GLOB.cable_layer_to_name["[CABLE_LAYER_2]"])] is connected.")
+	if(powernet3)
+		. += span_notice("The [LOWER_TEXT(GLOB.cable_layer_to_name["[CABLE_LAYER_3]"])] is connected.")
+	if(powernet4)
+		. += span_notice("The [LOWER_TEXT(GLOB.cable_layer_to_name["[CABLE_LAYER_4]"])] is connected.")
+
+/obj/machinery/power/deck_relay/CtrlClick(mob/living/user)
+	to_chat(user, span_warning("You push the reset button."))
+	addtimer(CALLBACK(src, PROC_REF(find_and_connect)), 30, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(refresh)), 50, TIMER_UNIQUE)
+
+/obj/machinery/power/deck_relay/attackby(obj/item/O, mob/user)
+	if(default_unfasten_wrench(user, O, 40))
+		process()	//this'll clear the info
+		return FALSE
+	. = ..()
