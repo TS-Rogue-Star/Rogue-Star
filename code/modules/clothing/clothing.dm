@@ -1117,3 +1117,11 @@
 /obj/item/clothing/under/equipped(var/mob/user, var/slot)
 	. = ..()
 	handle_digitigrade(user)
+
+//RS ADD START
+/obj/item/clothing/get_worn_icon_file(body_type, slot_name, default_icon, inhands)
+	if(fit_for_digi && update_icon_define)
+		return update_icon_define
+
+	return ..()
+//RS ADD END
