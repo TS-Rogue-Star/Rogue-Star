@@ -872,6 +872,11 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 
 	//4: item's default icon
 	if(default_worn_icon)
+		//RS ADD START - Let's just do it here, why not, I'm sure nothing bad will happen
+		if(istype(src, /obj/item/clothing))
+			var/obj/item/clothing/ourclothes = src
+			if(ourclothes.fit_for_digi && ourclothes.update_icon_define)
+				return ourclothes.update_icon_define	//RS ADD END
 		return default_worn_icon
 
 	//5: provided default_icon
