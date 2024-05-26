@@ -1693,6 +1693,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/effect/floor_decal/industrial/warning/color/yellow,
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/shuttlepad)
 "fs" = (
@@ -2306,6 +2307,12 @@
 	},
 /turf/simulated/floor/lino,
 /area/groundbase/civilian/chapel/office)
+"hs" = (
+/obj/effect/floor_decal/industrial/warning/color/yellow{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/groundbase/engineering/shuttlepad)
 "hu" = (
 /turf/simulated/open,
 /area/groundbase/engineering/shuttlepad)
@@ -3574,6 +3581,10 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/warden)
+"lD" = (
+/obj/effect/floor_decal/industrial/warning/color/yellow,
+/turf/simulated/floor/tiled/monotile,
+/area/groundbase/engineering/shuttlepad)
 "lE" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -3957,6 +3968,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
+/obj/effect/floor_decal/industrial/warning/color/yellow,
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/shuttlepad)
 "nu" = (
@@ -5842,6 +5854,12 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/Chemistry)
+"ts" = (
+/obj/effect/floor_decal/industrial/warning/color/corner/yellow{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/groundbase/engineering/shuttlepad)
 "tu" = (
 /obj/effect/landmark{
 	name = "maint_pred"
@@ -7076,6 +7094,9 @@
 /area/groundbase/medical/Chemistry)
 "xf" = (
 /obj/machinery/light,
+/obj/effect/floor_decal/industrial/warning/color/yellow{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/shuttlepad)
 "xg" = (
@@ -8805,12 +8826,6 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/outdoors/newdirt,
 /area/groundbase/level2/ne)
-"Dt" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/full,
-/obj/machinery/door/firedoor,
-/turf/simulated/wall,
-/area/groundbase/civilian/chapel)
 "Du" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/brigdoor/southleft{
@@ -9150,6 +9165,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/effect/floor_decal/industrial/warning/color/yellow,
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/shuttlepad)
 "EP" = (
@@ -11481,6 +11497,12 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/Chemistry)
+"Mt" = (
+/obj/effect/floor_decal/industrial/warning/color/yellow{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/groundbase/engineering/shuttlepad)
 "Mv" = (
 /obj/structure/railing{
 	dir = 8
@@ -12307,6 +12329,10 @@
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/security/processing)
+"OS" = (
+/obj/effect/floor_decal/industrial/warning/color/corner/yellow,
+/turf/simulated/floor/tiled/monotile,
+/area/groundbase/engineering/shuttlepad)
 "OT" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/segment{
@@ -13238,6 +13264,12 @@
 "RL" = (
 /turf/simulated/floor/carpet/blue,
 /area/groundbase/medical/psych)
+"RM" = (
+/obj/effect/floor_decal/industrial/warning/color/yellow{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/groundbase/engineering/shuttlepad)
 "RO" = (
 /obj/structure/railing{
 	dir = 4
@@ -13660,6 +13692,12 @@
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/office)
+"Te" = (
+/obj/effect/floor_decal/industrial/warning/color/corner/yellow{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/groundbase/engineering/shuttlepad)
 "Tf" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
@@ -14190,6 +14228,15 @@
 "UF" = (
 /turf/simulated/floor/bmarble,
 /area/holodeck_control)
+"UG" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/floor_decal/industrial/warning/color/corner/yellow{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/groundbase/engineering/shuttlepad)
 "UH" = (
 /obj/machinery/door/blast/regular{
 	id = "xenobiodiv5";
@@ -26957,7 +27004,7 @@ EU
 BD
 Sx
 dv
-Dt
+fi
 Ng
 Ng
 bR
@@ -27099,7 +27146,7 @@ WR
 Yu
 lM
 EU
-Dt
+fi
 Ng
 Ng
 cU
@@ -27309,13 +27356,13 @@ zJ
 zJ
 IO
 OW
-OW
-OW
-OW
-OW
-OW
-OW
-OW
+OS
+RM
+RM
+RM
+RM
+RM
+ts
 IO
 zJ
 zJ
@@ -27451,7 +27498,7 @@ zJ
 KF
 IO
 eJ
-OW
+lD
 lg
 lA
 lA
@@ -27593,13 +27640,13 @@ KF
 KF
 IO
 fC
-OW
+lD
 lg
 ms
 Dp
 Eh
 lg
-OW
+Mt
 IO
 zJ
 GR
@@ -27741,7 +27788,7 @@ oH
 sW
 Eh
 lg
-OW
+Mt
 IO
 zJ
 GR
@@ -27809,7 +27856,7 @@ jz
 BU
 Xn
 wi
-Dt
+fi
 Ng
 Ng
 gs
@@ -27877,13 +27924,13 @@ jj
 jj
 an
 Zu
-OW
+lD
 Pl
 pm
 Bg
 Eh
 lg
-OW
+Mt
 IO
 zJ
 GR
@@ -27951,7 +27998,7 @@ wi
 VF
 ml
 vs
-Dt
+fi
 Ng
 Ng
 Vf
@@ -28025,7 +28072,7 @@ ms
 Cc
 Eh
 lg
-OW
+Mt
 IO
 KF
 tP
@@ -28161,13 +28208,13 @@ zJ
 KF
 IO
 Ej
-OW
+lD
 lg
 lA
 lA
 lA
 lg
-OW
+Mt
 IO
 KF
 tP
@@ -28445,13 +28492,13 @@ zJ
 zJ
 IO
 hu
-nr
-OW
-OW
-OW
-OW
-OW
-OW
+UG
+hs
+hs
+hs
+hs
+hs
+Te
 IO
 KF
 tP
