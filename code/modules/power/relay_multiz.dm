@@ -132,62 +132,64 @@
 	connectionup = null
 	powernets.Cut()
 	//Find our local cable nodes first
-	var/obj/structure/cable/C
-	for(C in T.contents)
+	for(var/obj/structure/cable/C in T.contents)
 		if(!C)
 			return
 		var/list/foundcables = list()
-		foundcables |= C
+		C = T.get_cable_node() //check if we have a node cable on the machine turf.
+		//we only have four layers of cable, and they *shouldn't* have more than one per tile.
+		foundcables.Add(C)
+		to_world_log("[name] has found [C] for foundcables: [foundcables]")
 		for(C in foundcables)
-			C = T.get_cable_node() //check if we have a node cable on the machine turf.
 			if(!C)
-				continue
+				return
 			var/list/foundnodes = list()
-			foundnodes |= C
+			foundnodes.Add(C)
 			to_world_log("[name] has found [C] in [foundnodes]")
 			powernet = null	//because apparently I can't have nice things.
-			if(C && C.powernet)
-				to_world_log("[C] has a powernet, it's [C.powernet] on layer [C.cable_layer]")
-				switch(C.cable_layer)
-					if(CABLE_LAYER_1)
-						if(powernet1)
-							continue //we've already checked here, try the next one.
-						powernet1 = C.powernet
-						powernet = null
-						C.powernet.add_relays_together(src, C.powernet, CABLE_LAYER_1)
-						powernets |= powernet1
-						return
-
-					if(CABLE_LAYER_2)
-						if(powernet2)
+			for(C in foundnodes[C])
+				if(C.powernet)
+					to_world_log("[C] has a powernet, it's [C.powernet] on layer [C.cable_layer]")
+					switch(C.cable_layer)
+						if(CABLE_LAYER_1)
+							if(powernet1)
+								continue //we've already checked here, try the next one.
+							powernet1 = C.powernet
+							powernet = null
+							C.powernet.add_relays_together(src, C.powernet, CABLE_LAYER_1)
+							powernets |= powernet1
 							return
-						powernet2 = C.powernet
-						powernet = null
-						C.powernet.add_relays_together(src, C.powernet, CABLE_LAYER_2)
-						powernets |= powernet2
-						return
 
-					if(CABLE_LAYER_3)
-						if(powernet3)
+						if(CABLE_LAYER_2)
+							if(powernet2)
+								return
+							powernet2 = C.powernet
+							powernet = null
+							C.powernet.add_relays_together(src, C.powernet, CABLE_LAYER_2)
+							powernets |= powernet2
 							return
-						powernet3 = C.powernet
-						powernet = null
-						C.powernet.add_relays_together(src, C.powernet, CABLE_LAYER_3)
-						powernets |= powernet3
-						return
 
-					if(CABLE_LAYER_4)
-						if(powernet4)
+						if(CABLE_LAYER_3)
+							if(powernet3)
+								return
+							powernet3 = C.powernet
+							powernet = null
+							C.powernet.add_relays_together(src, C.powernet, CABLE_LAYER_3)
+							powernets |= powernet3
 							return
-						powernet4 = C.powernet
-						powernet = null
-						C.powernet.add_relays_together(src, C.powernet, CABLE_LAYER_4)
-						powernets |= powernet4
-						return
-					else
-						return
-			else
-				return
+
+						if(CABLE_LAYER_4)
+							if(powernet4)
+								return
+							powernet4 = C.powernet
+							powernet = null
+							C.powernet.add_relays_together(src, C.powernet, CABLE_LAYER_4)
+							powernets |= powernet4
+							return
+						else
+							return
+				else
+					return
 
 	for(var/direction in list(DOWN, UP))
 		var/turf/TD = get_zstep(src, direction)
