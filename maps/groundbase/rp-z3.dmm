@@ -4299,6 +4299,9 @@
 	},
 /obj/machinery/light,
 /obj/structure/closet/secure_closet/hos,
+/obj/machinery/newscaster/security_unit{
+	pixel_x = -27
+	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hos)
 "RX" = (
@@ -5168,8 +5171,9 @@
 /turf/simulated/floor/tiled,
 /area/shuttle/groundbase/exploration)
 "ZU" = (
-/obj/machinery/newscaster/security_unit{
-	pixel_x = -27
+/obj/machinery/light_switch{
+	dir = 4;
+	pixel_x = -30
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hos)
