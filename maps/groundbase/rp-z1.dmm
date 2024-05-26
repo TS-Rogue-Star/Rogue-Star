@@ -2278,6 +2278,10 @@
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/mining)
+"cgZ" = (
+/obj/structure/table/wooden_reinforced,
+/turf/simulated/floor/outdoors/newdirt,
+/area/groundbase/level1/nw)
 "chC" = (
 /obj/effect/floor_decal/industrial/danger,
 /obj/structure/cable/yellow{
@@ -11836,6 +11840,10 @@
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/science/circuits)
+"kQn" = (
+/obj/structure/table/bench/wooden,
+/turf/simulated/floor/outdoors/newdirt,
+/area/groundbase/level1/nw)
 "kQq" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/green{
 	dir = 10
@@ -30843,9 +30851,9 @@ kyu
 kyu
 kyu
 bat
-bat
-bat
-bat
+cgZ
+cgZ
+cgZ
 bat
 bat
 oeu
@@ -30985,9 +30993,9 @@ kyu
 bat
 bat
 bat
-bat
-bat
-bat
+kQn
+kQn
+kQn
 bat
 bat
 oeu
@@ -31128,7 +31136,7 @@ bat
 bat
 bat
 bat
-bat
+xhI
 bat
 bat
 bat
@@ -31270,7 +31278,7 @@ oeu
 oeu
 oeu
 bat
-oeu
+xhI
 oeu
 oeu
 oeu
