@@ -4330,6 +4330,9 @@
 	owner = 1
 	},
 /obj/item/device/megaphone,
+/obj/machinery/newscaster/security_unit{
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hos)
 "Sh" = (
