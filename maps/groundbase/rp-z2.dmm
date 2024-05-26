@@ -16266,6 +16266,10 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
+/obj/machinery/light_switch{
+	dir = 4;
+	pixel_x = -30
+	},
 /turf/simulated/floor/tiled/eris/cafe,
 /area/groundbase/security/hall2)
 "ZU" = (

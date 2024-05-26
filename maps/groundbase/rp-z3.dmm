@@ -4336,6 +4336,16 @@
 /obj/structure/table/woodentable,
 /turf/simulated/floor/wood,
 /area/groundbase/hotspring)
+"Sn" = (
+/obj/effect/floor_decal/milspec/color/red/half{
+	dir = 8
+	},
+/obj/machinery/light_switch{
+	dir = 4;
+	pixel_x = -30
+	},
+/turf/simulated/floor/tiled/dark,
+/area/groundbase/security/hall3)
 "So" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -9509,7 +9519,7 @@ tN
 tN
 fQ
 Gh
-Bw
+Sn
 Xz
 Xz
 sH
