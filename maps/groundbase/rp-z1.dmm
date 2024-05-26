@@ -13719,9 +13719,6 @@
 	snow_chance = 0
 	},
 /area/groundbase/civilian/bar)
-"mDR" = (
-/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow,
-/area/groundbase/civilian/bar)
 "mEs" = (
 /obj/machinery/door/airlock{
 	name = "Custodial Closet";
@@ -15289,6 +15286,15 @@
 /obj/item/device/personal_shield_generator/belt/mining/loaded,
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/mining)
+"oha" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/outdoors/sidewalk/slab,
+/area/groundbase/level1/nw)
 "oiy" = (
 /obj/structure/closet/secure_closet/medical2,
 /obj/machinery/light_switch{
@@ -19898,8 +19904,8 @@
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/atmos)
 "rOV" = (
-/obj/effect/landmark/start/entertainer,
 /obj/structure/table/bench/padded,
+/obj/effect/landmark/start/intern,
 /turf/simulated/floor/outdoors/newdirt{
 	outdoors = 0
 	},
@@ -20842,13 +20848,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/outdoors/sidewalk,
 /area/groundbase/level1/sw)
-"sJE" = (
-/obj/effect/landmark/start/intern,
-/obj/structure/table/bench/padded,
-/turf/simulated/floor/outdoors/newdirt{
-	outdoors = 0
-	},
-/area/groundbase/civilian/bar)
 "sJG" = (
 /obj/machinery/mineral/output,
 /obj/effect/floor_decal/industrial/outline/red,
@@ -33404,8 +33403,8 @@ oeu
 oeu
 ydP
 cLi
-sJE
 mDC
+rOV
 dVI
 dVI
 hkB
@@ -33546,8 +33545,8 @@ oeu
 oeu
 dVI
 cLi
-rOV
 mDC
+rQn
 dVI
 dVI
 dVI
@@ -33688,8 +33687,8 @@ egG
 oeu
 guU
 cLi
-rQn
 mDC
+dfP
 dVI
 dVI
 dVI
@@ -35535,13 +35534,13 @@ oeu
 dVI
 neL
 dVI
-mDR
-mDR
-mDR
-mDR
-mDR
-mDR
-mDR
+dVI
+dVI
+dVI
+dVI
+dVI
+dVI
+dVI
 eYS
 pDQ
 pDQ
@@ -36255,8 +36254,8 @@ fYG
 fYG
 fYG
 fYG
-fYG
-fYG
+oha
+oha
 jiO
 jiO
 jiO

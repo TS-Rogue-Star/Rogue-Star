@@ -7979,9 +7979,11 @@
 /turf/simulated/floor/carpet,
 /area/groundbase/civilian/library)
 "zx" = (
-/obj/machinery/door/airlock/glass_security,
-/obj/structure/barricade,
+/obj/machinery/door/airlock/glass_security{
+	req_one_access = null
+	},
 /obj/effect/floor_decal/rust,
+/obj/item/tape/police,
 /turf/simulated/floor/tiled/dark,
 /area/prison/cell_block/gb/abandonedbrig)
 "zy" = (
@@ -8066,12 +8068,14 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/office)
 "zY" = (
-/obj/machinery/door/airlock/glass_security,
+/obj/machinery/door/airlock/glass_security{
+	req_one_access = null
+	},
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/structure/barricade,
 /obj/effect/floor_decal/rust,
+/obj/item/tape/police,
 /turf/simulated/floor/tiled/dark,
 /area/prison/cell_block/gb/abandonedbrig)
 "zZ" = (
@@ -16261,6 +16265,10 @@
 "ZS" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
+	},
+/obj/machinery/light_switch{
+	dir = 4;
+	pixel_x = -30
 	},
 /turf/simulated/floor/tiled/eris/cafe,
 /area/groundbase/security/hall2)
