@@ -100,6 +100,7 @@
 	w_class = ITEMSIZE_SMALL
 	var/pred_ckey
 	var/pred_name
+	var/mob/living/pred
 
 /obj/item/weapon/digestion_remains/synth
 	name = "ruined component"
@@ -108,11 +109,38 @@
 	drop_sound = 'sound/items/drop/device.ogg'   //not organic bones, so they get different sounds
 	pickup_sound = 'sound/items/pickup/device.ogg'
 
-/obj/item/weapon/digestion_remains/Initialize(var/mapload, var/mob/living/pred)
+/obj/item/weapon/digestion_remains/Initialize(var/mapload, var/mob/living/ourpred)	//RS EDIT START - bone time
 	. = ..()
-	if(!mapload)
-		pred_ckey = pred?.ckey
-		pred_name = pred?.name
+	if(!mapload && ourpred)
+		pred = ourpred
+		pred_ckey = ourpred?.ckey
+		pred_name = ourpred?.name
+		if(pred)
+			RegisterSignal(pred, COMSIG_MOVABLE_MOVED, PROC_REF(on_pred_move))
+			RegisterSignal(pred, COMSIG_PARENT_QDELETING, PROC_REF(destroy_self_woah), TRUE)
+
+/obj/item/weapon/digestion_remains/proc/on_pred_move()
+	if(isturf(loc))
+		var/delet = FALSE
+		if(pred.x > x + 7)
+			delet = TRUE
+		else if(pred.x < x - 7)
+			delet = TRUE
+		else if(pred.y > y + 7)
+			delet = TRUE
+		else if(pred.y < y - 7)
+			delet = TRUE
+
+		if(delet)
+			destroy_self_woah()
+
+/obj/item/weapon/digestion_remains/proc/destroy_self_woah()
+	UnregisterSignal(pred, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(pred, COMSIG_PARENT_QDELETING)
+	pred = null
+	qdel(src)
+
+	//RS EDIT END
 
 /obj/item/weapon/digestion_remains/attack_self(var/mob/user)
 	if(user.a_intent == I_HURT)
