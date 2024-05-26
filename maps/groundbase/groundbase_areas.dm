@@ -213,12 +213,6 @@
 	lightswitch = 1
 /area/groundbase/security/processing
 	name = "Security Processing"
-/area/groundbase/security/halls
-	name = "Security South Hallway"
-	lightswitch = 1
-/area/groundbase/security/halle
-	name = "Security East Hallway"
-	lightswitch = 1
 /area/groundbase/security/hall2
 	name = "Security Second Floor Hallway"
 	lightswitch = 1
@@ -242,10 +236,18 @@
 	name = "Internal Affairs East Office"
 /area/groundbase/security/detective
 	name = "Detective's Office"
+/area/groundbase/security/showers
+	name = "Security Showers"
+/area/groundbase/security/breakroom
+	name = "Security Break Room"
+	lightswitch = 1
 /area/groundbase/security/hos
 	name = "Head of Security's Office"
 /area/prison/cell_block/gb
 	name = "Brig"
+/area/prison/cell_block/gb/abandonedbrig
+	name = "Derelict GenPop"
+	lightswitch = 0
 
 /area/groundbase/medical
 	name = "Medical"
@@ -628,4 +630,5 @@
 	excluded |= /area/groundbase/hotspring/water
 	excluded |= /area/groundbase/medical/geneticslab
 	excluded |= /area/groundbase/engineering/pumpingstation
+	excluded |= /area/prison/cell_block/gb/abandonedbrig
 	..()
