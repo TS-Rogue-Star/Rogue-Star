@@ -15286,6 +15286,15 @@
 /obj/item/device/personal_shield_generator/belt/mining/loaded,
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/mining)
+"oha" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/outdoors/sidewalk/slab,
+/area/groundbase/level1/nw)
 "oiy" = (
 /obj/structure/closet/secure_closet/medical2,
 /obj/machinery/light_switch{
@@ -36245,8 +36254,8 @@ fYG
 fYG
 fYG
 fYG
-fYG
-fYG
+oha
+oha
 jiO
 jiO
 jiO
