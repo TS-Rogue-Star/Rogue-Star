@@ -119,6 +119,16 @@
 			RegisterSignal(pred, COMSIG_MOVABLE_MOVED, PROC_REF(on_pred_move))
 			RegisterSignal(pred, COMSIG_PARENT_QDELETING, PROC_REF(destroy_self_woah), TRUE)
 
+/obj/item/weapon/digestion_remains/pickup(mob/user)
+	. = ..()
+
+	if(pred && user != pred)
+		UnregisterSignal(pred, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(pred, COMSIG_PARENT_QDELETING)
+		pred = user
+		RegisterSignal(pred, COMSIG_MOVABLE_MOVED, PROC_REF(on_pred_move))
+		RegisterSignal(pred, COMSIG_PARENT_QDELETING, PROC_REF(destroy_self_woah), TRUE)
+
 /obj/item/weapon/digestion_remains/proc/on_pred_move()
 	if(isturf(loc))
 		var/delet = FALSE
