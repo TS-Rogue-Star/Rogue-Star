@@ -168,3 +168,16 @@
 	custom_only = FALSE
 	varchange_type = TRAIT_VARCHANGE_MORE_BETTER
 
+//RS ADD START
+
+/datum/trait/negative/clumsy
+	name = "Clumsy"
+	desc = "You have a way of injuring yourself when falling from basically any height!"
+	cost = -1
+	var_changes = list("clumsy" = 1)
+	custom_only = FALSE
+	excludes = list(
+		/datum/trait/positive/soft_landing
+		)
+
+//RS ADD END

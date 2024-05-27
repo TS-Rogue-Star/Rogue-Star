@@ -1286,12 +1286,12 @@ Departamental Swimsuits, for general use
 
 /obj/item/clothing/under/rank/trek/command/ds9
 	desc = "The uniform worn by command officers of the 2380s."
-	icon_state = "trek_command" // no unique state for this one
+	icon_state = "trek_engsec" // Command/Tac is red
 	item_state = "trek_ds9_command"
 
 /obj/item/clothing/under/rank/trek/engsec/ds9
 	desc = "The uniform worn by operations officers of the 2380s."
-	icon_state = "trek_engsec" // no unique state for this one
+	icon_state = "trek_command" //Ops is Yellow
 	item_state = "trek_ds9_engsec"
 
 /obj/item/clothing/under/rank/trek/medsci/ds9

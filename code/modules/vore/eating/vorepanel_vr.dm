@@ -350,7 +350,10 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 		"weight_message_visible" = host.weight_message_visible,
 		"weight_messages" = host.weight_messages,
 		"eating_privacy_global" = host.eating_privacy_global,
-		"vore_sprite_color" = istype(host, /mob/living/carbon/human) ? host:vore_sprite_color : "#FFFFFF" // RS edit
+		"vore_sprite_color" = istype(host, /mob/living/carbon/human) ? host:vore_sprite_color : "#FFFFFF", // RS edit
+		"allowcontamination" = istype(host, /mob/living/carbon/human) ? host:allow_contaminate : TRUE, // RS edit
+		"allowstripping" = istype(host, /mob/living/carbon/human) ? host:allow_stripping : TRUE, // RS edit
+		"allowssdvore" = host.ssd_vore, // RS edit
 	)
 
 	return data
@@ -643,6 +646,28 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 					hhost.vore_sprite_color[belly_choice] = newcolor
 					hhost.update_icons_body()
 				return TRUE
+		if("toggle_allowcontamination")
+			if (istype(host, /mob/living/carbon/human))
+				var/mob/living/carbon/human/hhost = host
+				hhost.allow_contaminate = !hhost.allow_contaminate
+				if(host.client.prefs_vr)
+					host.client.prefs_vr.allow_contaminate = hhost.allow_contaminate
+				unsaved_changes = TRUE
+				return TRUE
+		if("toggle_allowstripping")
+			if (istype(host, /mob/living/carbon/human))
+				var/mob/living/carbon/human/hhost = host
+				hhost.allow_stripping = !hhost.allow_stripping
+				if(host.client.prefs_vr)
+					host.client.prefs_vr.allow_stripping = hhost.allow_stripping
+				unsaved_changes = TRUE
+				return TRUE
+		if("toggle_allowssdvore")
+			host.ssd_vore = !host.ssd_vore
+			if(host.client.prefs_vr)
+				host.client.prefs_vr.ssd_vore = host.ssd_vore
+			unsaved_changes = TRUE
+			return TRUE
 		// End RS edit
 
 /datum/vore_look/proc/pick_from_inside(mob/user, params)
@@ -727,9 +752,8 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 /datum/vore_look/proc/pick_from_outside(mob/user, params)
 	var/intent
 
-	//Handle the [All] choice. Ugh inelegant. Someone make this pretty.
 	if(params["pickall"])
-		intent = tgui_alert(user, "Eject all, Move all?","Query",list("Eject all","Cancel","Move all"))
+		intent = tgui_alert(user, "You are affecting all [lowertext(host.vore_selected)] contents with this choice.","[uppertext(host.vore_selected)] contents management",list("Eject all","Move all","Advance all","Cancel"))
 		switch(intent)
 			if("Cancel")
 				return TRUE
@@ -738,8 +762,19 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 				if(host.stat)
 					to_chat(user,"<span class='warning'>You can't do that in your state!</span>")
 					return TRUE
+				//RS ADD START
+				var/bones_detected = FALSE
+				var/bone_time = FALSE
+				for(var/thing in host.vore_selected.contents)
+					if(istype(thing, /obj/item/weapon/digestion_remains))
+						bones_detected = TRUE
+						break
+				if(bones_detected)
+					if(tgui_alert(user, "Do you want to include the remains that are inside your [lowertext(host.vore_selected)]?","",list("Yes","No")) == "Yes")
+						bone_time = TRUE
+				//RS ADD END
 
-				host.vore_selected.release_all_contents()
+				host.vore_selected.release_all_contents(include_bones = bone_time)	//RS EDIT
 				return TRUE
 
 			if("Move all")
@@ -752,15 +787,38 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 					return FALSE
 
 				for(var/atom/movable/target in host.vore_selected)
+					to_chat(target,"<span class='warning'>You're squished from [host]'s [host.vore_selected] to their [lowertext(choice.name)]!</span>")
+					host.vore_selected.transfer_contents(target, choice, 1)
+				return TRUE
+			//RS ADD START
+			if("Advance all")
+				if(host.stat)
+					to_chat(user,"<span class='warning'>You can't do that in your state!</span>")
+					return TRUE
+				var/list/choices = list()
+				var/obj/belly/choice
+				for(var/obj/belly/b in host.vore_organs)
+					if(b.name == host.vore_selected.transferlocation || b.name == host.vore_selected.transferlocation_secondary)
+						choices += b
+				if(!choices.len)
+					to_chat(user,"<span class='warning'>You haven't configured any transfer locations for your [lowertext(host.vore_selected)]. Please configure at least one transfer location in order to advance your [lowertext(host.vore_selected)]'s contents.</span>")
+				else
+					choice = tgui_input_list(user, "Advance your [lowertext(host.vore_selected)]'s contents to which belly?","Select Belly", choices)
+
+				if(!choice)
+					return TRUE
+
+				for(var/atom/movable/target in host.vore_selected)
 					to_chat(target,"<span class='warning'>You're squished from [host]'s [lowertext(host.vore_selected)] to their [lowertext(choice.name)]!</span>")
 					host.vore_selected.transfer_contents(target, choice, 1)
 				return TRUE
+			//RS ADD END
 		return
 
 	var/atom/movable/target = locate(params["pick"])
 	if(!(target in host.vore_selected))
 		return TRUE // Not in our X anymore, update UI
-	var/list/available_options = list("Examine", "Eject", "Move", "Transfer")
+	var/list/available_options = list("Examine", "Eject", "Move", "Advance", "Transfer")
 	if(ishuman(target))
 		available_options += "Transform"
 	if(isliving(target))
@@ -802,6 +860,10 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			if(host.stat)
 				to_chat(user,"<span class='warning'>You can't do that in your state!</span>")
 				return TRUE
+			if(isliving(target))
+				var/mob/living/p = target
+				if(!p.ssd_vore_check(host))
+					return
 
 			var/mob/living/belly_owner = host
 
@@ -913,6 +975,26 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 					b.absorb_living(ourtarget)
 				if("Cancel")
 					return
+		//RS ADD START
+		if("Advance")
+			if(host.stat)
+				to_chat(user,"<span class='warning'>You can't do that in your state!</span>")
+				return TRUE
+			var/list/choices = list()
+			var/obj/belly/choice
+			for(var/obj/belly/b in host.vore_organs)
+				if(b.name == host.vore_selected.transferlocation || b.name == host.vore_selected.transferlocation_secondary)
+					choices += b
+			if(!choices.len)
+				to_chat(user,"<span class='warning'>You haven't configured any transfer locations for your [lowertext(host.vore_selected)]. Please configure at least one transfer location in order to advance your [lowertext(host.vore_selected)]'s contents.</span>")
+			else
+				choice = tgui_input_list(user, "Advance your [lowertext(host.vore_selected)]'s contents to which belly?","Select Belly", choices)
+
+			if(!choice || !(target in host.vore_selected))
+				return TRUE
+			to_chat(target,"<span class='warning'>You're squished from [host]'s [lowertext(host.vore_selected.name)] to their [lowertext(choice.name)]!</span>")
+			host.vore_selected.transfer_contents(target, choice)
+		//RS ADD END
 
 /datum/vore_look/proc/set_attr(mob/user, params)
 	if(!host.vore_selected)

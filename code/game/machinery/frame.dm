@@ -25,6 +25,8 @@
 	var/x_offset				// For wall frames: pixel_x
 	var/y_offset				// For wall frames: pixel_y
 
+	var/is_dense = TRUE			//RS add lazy workaround for wall-mounted, upgradable machines.
+
 // Get the icon state to use at a given state.  Default implementation is based on the frame's name
 /datum/frame/frame_types/proc/get_icon_state(var/state)
 	var/type = lowertext(name)
@@ -216,6 +218,22 @@
 	x_offset = 24
 	y_offset = 24
 
+/datum/frame/frame_types/foodsynthesizer
+	name = "Food Synthesizer"
+	icon_override = 'icons/obj/machines/foodsynthesizer.dmi'
+	frame_class = FRAME_CLASS_MACHINE
+	frame_size = 5
+	frame_style = FRAME_STYLE_WALL
+	x_offset = 24
+	y_offset = 30
+	is_dense = FALSE
+
+/datum/frame/frame_types/foodsynthesizer/mini
+	name = "Mini Food Synthesizer"
+	frame_class = FRAME_CLASS_MACHINE
+	frame_size = 3 // smaller, so slightly fewer sheets
+	frame_style = FRAME_STYLE_WALL
+
 //////////////////////////////
 // Frame Object (Structure)
 //////////////////////////////
@@ -294,7 +312,7 @@
 	if(frame_type.name == "Computer")
 		density = TRUE
 
-	if(frame_type.frame_class == FRAME_CLASS_MACHINE)
+	if(frame_type.frame_class == FRAME_CLASS_MACHINE && frame_type.is_dense)
 		density = TRUE
 
 	update_icon()

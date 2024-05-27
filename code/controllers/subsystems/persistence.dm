@@ -9,7 +9,9 @@ SUBSYSTEM_DEF(persistence)
 	var/list/obj/structure/sign/painting/painting_frames = list()
 	var/list/all_paintings = list()
 	var/list/unpicked_paintings = list()
-	var/list/stored_pets = list()
+	var/list/stored_pets = list()		//RS ADD
+	var/redgate = null					//RS ADD
+	var/gateway = null					//RS ADD
 
 /datum/controller/subsystem/persistence/Initialize()
 	. = ..()

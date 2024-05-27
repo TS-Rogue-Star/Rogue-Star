@@ -5,6 +5,24 @@
 #define ORGANICS	1
 #define SYNTHETICS	2
 
+//RS EDIT START - MOVED FROM _traits.dm
+#define TRAIT_TYPE_NEGATIVE	-1
+#define TRAIT_TYPE_NEUTRAL	0
+#define TRAIT_TYPE_POSITIVE	1
+
+#define TRAIT_VARCHANGE_LESS_BETTER		-1
+#define TRAIT_VARCHANGE_ALWAYS_OVERRIDE	0
+#define TRAIT_VARCHANGE_MORE_BETTER		1
+
+#define TRAIT_PREF_TYPE_BOOLEAN 1
+#define TRAIT_PREF_TYPE_COLOR 2
+#define TRAIT_PREF_TYPE_STRING 3
+
+#define TRAIT_NO_VAREDIT_TARGET 0
+#define TRAIT_VAREDIT_TARGET_SPECIES 1
+#define TRAIT_VAREDIT_TARGET_MOB 2
+//RS EDIT END
+
 var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","gold","slimejelly")	//allowlist-based so people don't make their blood restored by alcohol or something really silly. use reagent IDs!
 
 /datum/preferences
@@ -29,6 +47,8 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 	var/max_traits = MAX_SPECIES_TRAITS
 	var/dirty_synth = 0		//Are you a synth
 	var/gross_meatbag = 0		//Where'd I leave my Voight-Kampff test kit?
+
+	var/trait_injection_verb = "bites"	//RS EDIT
 
 /datum/preferences/proc/get_custom_bases_for_species(var/new_species)
 	if (!new_species)
@@ -62,10 +82,12 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 			. += "<li>- [pref_list[2]]:"
 			var/link = " <a href='?src=\ref[src];clicked_trait_pref=[trait.type];pref=[identifier]'>"
 			switch (pref_list[1])
-				if (1) //TRAIT_PREF_TYPE_BOOLEAN
+				if (TRAIT_PREF_TYPE_BOOLEAN) //TRAIT_PREF_TYPE_BOOLEAN
 					. += link + (trait_prefs[identifier] ? "Enabled" : "Disabled")
-				if (2) //TRAIT_PREF_TYPE_COLOR
+				if (TRAIT_PREF_TYPE_COLOR) //TRAIT_PREF_TYPE_COLOR
 					. += " " + color_square(hex = trait_prefs[identifier]) + link + "Change"
+				if (TRAIT_PREF_TYPE_STRING)	//RS ADD
+					. += link + "[trait_prefs[identifier]]"	//RS ADD
 			. += "</a></li>"
 	. += "</ul>"
 	if (altered)
@@ -98,12 +120,25 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 	if (!(preference in trait_prefs))
 		trait_prefs[preference] = instance.default_value_for_pref(preference) //won't be called at all often
 	switch(instance.has_preferences[preference][1])
-		if (1) //TRAIT_PREF_TYPE_BOOLEAN
+		if (TRAIT_PREF_TYPE_BOOLEAN) //TRAIT_PREF_TYPE_BOOLEAN
 			trait_prefs[preference] = !trait_prefs[preference]
-		if (2) //TRAIT_PREF_TYPE_COLOR
+		if (TRAIT_PREF_TYPE_COLOR) //TRAIT_PREF_TYPE_COLOR
 			var/new_color = input(user, "Choose the color for this trait preference:", "Trait Preference", trait_prefs[preference]) as color|null
 			if (new_color)
 				trait_prefs[preference] = new_color
+		//RS ADD START
+		if (TRAIT_PREF_TYPE_STRING)
+			var/new_verb = html_encode(tgui_input_text(user,"Enter text for this trait preference:","Trait Text Entry"))
+
+			if(!new_verb)
+				to_chat(user, "<span class = 'warning'>No text entered.</span>")
+				return
+
+			if(length(new_verb) > 40 || length(new_verb) < 3)
+				to_chat(user, "<span class = 'warning'>Entered text length invalid (must be longer than 2, no more than than 40).</span>")
+				return
+			trait_prefs[preference] = new_verb
+		//RS ADD END
 
 // Definition of the stuff for Ears
 /datum/category_item/player_setup_item/vore/traits
@@ -130,6 +165,7 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 
 	S["custom_heat"]	>> pref.custom_heat
 	S["custom_cold"]	>> pref.custom_cold
+	S["trait_injection_verb"] >> pref.trait_injection_verb	//RS ADD
 
 /datum/category_item/player_setup_item/vore/traits/save_character(var/savefile/S)
 	S["custom_species"]	<< pref.custom_species
@@ -151,6 +187,7 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 
 	S["custom_heat"]	<< pref.custom_heat
 	S["custom_cold"]	<< pref.custom_cold
+	S["trait_injection_verb"] << pref.trait_injection_verb	//RS ADD
 
 /datum/category_item/player_setup_item/vore/traits/sanitize_character()
 	if(!pref.pos_traits) pref.pos_traits = list()

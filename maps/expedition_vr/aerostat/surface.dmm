@@ -550,7 +550,9 @@
 "ql" = (
 /obj/effect/floor_decal/rust,
 /obj/effect/floor_decal/rust,
-/obj/machinery/computer/shuttle_control/aerostat_shuttle,
+/obj/machinery/computer/shuttle_control/aerostat_shuttle{
+	ai_control = 1
+	},
 /turf/simulated/floor/tiled/techfloor/virgo2,
 /area/offmap/aerostat/surface/shuttleconsole)
 "qs" = (

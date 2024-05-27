@@ -130,6 +130,20 @@
 	if(has_taser_sprite && istype(ourborg.module_active, /obj/item/weapon/gun/energy/taser/mounted/cyborg))
 		ourborg.add_overlay("[sprite_icon_state]-taser")
 
+/datum/robot_sprite/dogborg/security/do_equipment_glamour(var/obj/item/weapon/robot_module/module)
+	if(!has_custom_equipment_sprites)
+		return
+	..()
+
+	var/obj/item/weapon/dogborg/pounce/SA = locate() in module.modules
+	if(SA)
+		SA.name = "pounce"
+		SA.icon_state = "pounce"
+
+	var/obj/item/device/dogborg/sleeper/K9/SB = locate() in module.modules
+	if(SB)
+		SB.icon_state = "sleeperb"
+
 /datum/robot_sprite/dogborg/security/k9
 	name = "K9"
 	sprite_icon_state = "k9"
@@ -190,6 +204,20 @@
 		ourborg.add_overlay("[sprite_icon_state]-laser")
 	if(has_taser_sprite && istype(ourborg.module_active, /obj/item/weapon/gun/energy/taser/mounted/cyborg))
 		ourborg.add_overlay("[sprite_icon_state]-taser")
+
+/datum/robot_sprite/dogborg/tall/security/do_equipment_glamour(var/obj/item/weapon/robot_module/module)
+	if(!has_custom_equipment_sprites)
+		return
+	..()
+
+	var/obj/item/weapon/dogborg/pounce/SA = locate() in module.modules
+	if(SA)
+		SA.name = "pounce"
+		SA.icon_state = "pounce"
+
+	var/obj/item/device/dogborg/sleeper/K9/SB = locate() in module.modules
+	if(SB)
+		SB.icon_state = "sleeperb"
 
 /datum/robot_sprite/dogborg/tall/security/raptor
 	name = "Raptor V-4"

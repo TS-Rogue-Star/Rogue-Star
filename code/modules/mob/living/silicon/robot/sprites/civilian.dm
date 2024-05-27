@@ -170,6 +170,16 @@
 	module_type = "Service"
 	sprite_icon = 'icons/mob/robot/service_wide.dmi'
 
+/datum/robot_sprite/dogborg/service/do_equipment_glamour(var/obj/item/weapon/robot_module/module)
+	if(!has_custom_equipment_sprites)
+		return
+
+	..()
+
+	var/obj/item/device/dogborg/sleeper/compactor/brewer/DB = locate() in module.modules
+	if(DB)
+		DB.icon_state = "brewer"
+
 /datum/robot_sprite/dogborg/service/hound
 	name = "Blackhound"
 	sprite_icon_state = "hound"
@@ -250,6 +260,16 @@
 /datum/robot_sprite/dogborg/tall/service
 	module_type = "Service"
 	sprite_icon = 'icons/mob/robot/service_large.dmi'
+
+/datum/robot_sprite/dogborg/tall/service/do_equipment_glamour(var/obj/item/weapon/robot_module/module)
+	if(!has_custom_equipment_sprites)
+		return
+
+	..()
+
+	var/obj/item/device/dogborg/sleeper/compactor/brewer/DB = locate() in module.modules
+	if(DB)
+		DB.icon_state = "brewer"
 
 /datum/robot_sprite/dogborg/tall/service/raptor
 	name = "Raptor V-4"
@@ -368,6 +388,16 @@
 /datum/robot_sprite/dogborg/clerical
 	module_type = "Clerical"
 	sprite_icon = 'icons/mob/robot/clerical_wide.dmi'
+
+/datum/robot_sprite/dogborg/clerical/do_equipment_glamour(var/obj/item/weapon/robot_module/module)
+	if(!has_custom_equipment_sprites)
+		return
+
+	..()
+
+	var/obj/item/device/dogborg/sleeper/compactor/generic/DG = locate() in module.modules
+	if(DG)
+		DG.icon_state = "sleeperd"
 
 /datum/robot_sprite/dogborg/clerical/vale
 	name = "Hound V2"

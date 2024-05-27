@@ -888,6 +888,18 @@
 	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/foreportrooma)
+"da" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless,
+/area/stellardelight/deck3/exterior)
 "db" = (
 /obj/structure/lattice,
 /obj/structure/disposalpipe/segment,
@@ -1211,6 +1223,7 @@
 /area/stellardelight/deck3/aft)
 "eo" = (
 /obj/machinery/power/apc/angled{
+	cell_type = /obj/item/weapon/cell/hyper;
 	dir = 4
 	},
 /obj/structure/cable/blue{
@@ -1567,6 +1580,16 @@
 	temperature = 80
 	},
 /area/tcommsat/chamber)
+"fl" = (
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/power/solar,
+/turf/simulated/floor/airless,
+/area/stellardelight/deck3/exterior)
 "fs" = (
 /obj/structure/cable/green{
 	icon_state = "2-8"
@@ -2834,6 +2857,18 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/tcommsat/computer)
+"kJ" = (
+/obj/structure/cable/green{
+	icon_state = "1-8"
+	},
+/obj/structure/cable/green{
+	icon_state = "1-4"
+	},
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless,
+/area/stellardelight/deck3/exterior)
 "kN" = (
 /obj/structure/sign/painting/library_secure{
 	pixel_x = 30
@@ -3746,6 +3781,21 @@
 /obj/random/maintenance/engineering,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/starboardaft)
+"nE" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/effect/wire_deleter{
+	wire_deletion_rate = 5
+	},
+/turf/simulated/floor/airless,
+/area/stellardelight/deck3/exterior)
 "nF" = (
 /obj/structure/table/woodentable,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -3859,6 +3909,18 @@
 	},
 /turf/simulated/floor/airless,
 /area/maintenance/stellardelight/deck3/starboardcent)
+"oe" = (
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/green{
+	icon_state = "1-4"
+	},
+/obj/structure/cable/green{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/airless,
+/area/stellardelight/deck3/exterior)
 "og" = (
 /obj/structure/bed/chair{
 	dir = 4
@@ -5116,6 +5178,7 @@
 /area/ai)
 "su" = (
 /obj/machinery/power/apc/angled{
+	cell_type = /obj/item/weapon/cell/hyper;
 	dir = 8
 	},
 /obj/structure/cable/blue{
@@ -5316,6 +5379,18 @@
 	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/starboardaft)
+"tl" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/effect/wire_deleter{
+	wire_deletion_rate = 5
+	},
+/turf/simulated/floor/airless,
+/area/stellardelight/deck3/exterior)
 "tn" = (
 /obj/machinery/light_switch{
 	dir = 8;
@@ -5428,6 +5503,18 @@
 	temperature = 80
 	},
 /area/tcommsat/chamber)
+"tM" = (
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/green{
+	icon_state = "1-8"
+	},
+/obj/structure/cable/green{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/airless,
+/area/stellardelight/deck3/exterior)
 "tO" = (
 /obj/structure/table/steel_reinforced,
 /obj/item/device/taperecorder{
@@ -6360,6 +6447,21 @@
 	},
 /turf/simulated/floor/bluegrid,
 /area/ai_cyborg_station)
+"xk" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/effect/wire_deleter{
+	wire_deletion_rate = 5
+	},
+/turf/simulated/floor/airless,
+/area/stellardelight/deck3/exterior)
 "xm" = (
 /obj/structure/cable/blue{
 	icon_state = "1-2"
@@ -8429,6 +8531,18 @@
 /obj/random/trash_pile,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/portcent)
+"Ej" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/effect/wire_deleter{
+	wire_deletion_rate = 5
+	},
+/turf/simulated/floor/airless,
+/area/stellardelight/deck3/exterior)
 "El" = (
 /obj/effect/landmark{
 	name = "carpspawn"
@@ -8796,6 +8910,13 @@
 /obj/structure/cable/green{
 	icon_state = "1-8"
 	},
+/turf/simulated/floor/airless,
+/area/stellardelight/deck3/exterior)
+"FK" = (
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/solar,
 /turf/simulated/floor/airless,
 /area/stellardelight/deck3/exterior)
 "FL" = (
@@ -9515,6 +9636,26 @@
 /obj/machinery/holoplant,
 /turf/simulated/floor/bluegrid,
 /area/ai_server_room)
+"Iw" = (
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/power/solar,
+/turf/simulated/floor/airless,
+/area/stellardelight/deck3/exterior)
+"Iy" = (
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/solar,
+/turf/simulated/floor/airless,
+/area/stellardelight/deck3/exterior)
 "Iz" = (
 /obj/effect/floor_decal/industrial/warning,
 /turf/simulated/floor/airless,
@@ -10566,6 +10707,16 @@
 /obj/structure/ladder,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/forestarrooma)
+"Me" = (
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/solar,
+/turf/simulated/floor/airless,
+/area/stellardelight/deck3/exterior)
 "Mg" = (
 /obj/item/device/camera,
 /obj/item/device/camera_film,
@@ -10993,6 +11144,13 @@
 	},
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/portdock)
+"Nr" = (
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/solar,
+/turf/simulated/floor/airless,
+/area/stellardelight/deck3/exterior)
 "Ns" = (
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/portfore)
@@ -12050,6 +12208,15 @@
 	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/starboardcent)
+"QQ" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/effect/wire_deleter{
+	wire_deletion_rate = 5
+	},
+/turf/simulated/floor/airless,
+/area/stellardelight/deck3/exterior)
 "QS" = (
 /obj/structure/cable/green{
 	icon_state = "1-2"
@@ -12249,6 +12416,18 @@
 	},
 /turf/simulated/open,
 /area/stellardelight/deck2/starboard)
+"RB" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless,
+/area/stellardelight/deck3/exterior)
 "RE" = (
 /turf/simulated/wall/bay/r_wall/steel,
 /area/maintenance/stellardelight/deck3/starboardfore)
@@ -12381,6 +12560,18 @@
 "Sb" = (
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/maintenance/stellardelight/deck3/forestarrooma)
+"Sc" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/effect/wire_deleter{
+	wire_deletion_rate = 5
+	},
+/turf/simulated/floor/airless,
+/area/stellardelight/deck3/exterior)
 "Se" = (
 /obj/effect/floor_decal/industrial/warning/corner,
 /turf/simulated/floor/airless,
@@ -12812,6 +13003,21 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/stellardelight/deck3/commandhall)
+"TG" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/effect/wire_deleter{
+	wire_deletion_rate = 5
+	},
+/turf/simulated/floor/airless,
+/area/stellardelight/deck3/exterior)
 "TI" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
@@ -12955,7 +13161,10 @@
 	},
 /obj/machinery/power/smes/buildable{
 	RCon_tag = "Substation - AI/Telecomms";
-	output_attempt = 0
+	charge = 5e+006;
+	input_attempt = 1;
+	input_level = 200000;
+	output_level = 200000
 	},
 /turf/simulated/floor,
 /area/ai_cyborg_station)
@@ -13454,6 +13663,18 @@
 "Wa" = (
 /turf/simulated/floor/carpet,
 /area/crew_quarters/heads/hop)
+"Wb" = (
+/obj/structure/cable/green{
+	icon_state = "1-4"
+	},
+/obj/structure/cable/green{
+	icon_state = "1-8"
+	},
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless,
+/area/stellardelight/deck3/exterior)
 "Wd" = (
 /obj/structure/cable/green{
 	icon_state = "4-8"
@@ -14311,6 +14532,16 @@
 /obj/structure/lattice,
 /turf/simulated/open,
 /area/crew_quarters/bar)
+"YY" = (
+/obj/structure/cable{
+	icon_state = "32-4"
+	},
+/obj/structure/cable{
+	icon_state = "32-8"
+	},
+/obj/structure/lattice,
+/turf/simulated/open/vacuum,
+/area/stellardelight/deck3/exterior)
 "Zd" = (
 /turf/simulated/wall/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
@@ -19897,7 +20128,7 @@ NL
 NL
 NL
 NL
-NL
+TE
 NL
 NL
 NL
@@ -20039,7 +20270,7 @@ NL
 NL
 NL
 NL
-NL
+Ae
 NL
 NL
 NL
@@ -20174,20 +20405,20 @@ yd
 NL
 NL
 NL
-NL
-NL
-NL
-NL
-NL
-NL
-NL
-NL
-NL
-NL
-NL
-NL
-NL
-NL
+un
+af
+af
+af
+af
+af
+af
+tM
+af
+af
+af
+af
+af
+yd
 NL
 NL
 NL
@@ -20316,20 +20547,20 @@ Ae
 NL
 TE
 NL
+Ae
+FK
+FK
+FK
+FK
+FK
+FK
 NL
-NL
-NL
-NL
-NL
-NL
-TE
-NL
-NL
-NL
-NL
-NL
-NL
-NL
+FK
+FK
+FK
+FK
+FK
+Ae
 NL
 TE
 NL
@@ -20458,20 +20689,20 @@ ko
 af
 ew
 af
-af
-af
-af
-af
-Rx
-af
-ew
-af
-af
-af
-af
-af
-af
-af
+Wb
+Ej
+nE
+nE
+nE
+nE
+nE
+da
+xk
+xk
+xk
+xk
+tl
+ko
 af
 ew
 af
@@ -20600,19 +20831,19 @@ Jh
 Jh
 NL
 NL
-NL
-NL
-NL
-NL
 Ae
-NL
-NL
-NL
-NL
-NL
-NL
-NL
-NL
+fl
+Nr
+Me
+Me
+Me
+Me
+YY
+Me
+Me
+Me
+Me
+Me
 NL
 NL
 Jh
@@ -20742,19 +20973,19 @@ Jh
 Jh
 Jh
 Jh
-NL
-NL
-NL
-NL
-Ae
-NL
-NL
-NL
-NL
-NL
-NL
-NL
-NL
+ko
+af
+yd
+QQ
+nE
+nE
+nE
+RB
+xk
+xk
+xk
+xk
+tl
 NL
 SK
 SK
@@ -20886,17 +21117,17 @@ Jh
 Jh
 Jh
 Jh
+ko
+yd
+Nr
+Nr
+Nr
 NL
-NL
-Ae
-NL
-NL
-NL
-NL
-NL
-NL
-NL
-NL
+Nr
+Nr
+Nr
+Nr
+Nr
 NL
 SK
 SK
@@ -21029,8 +21260,8 @@ Jh
 Jh
 Jh
 Jh
-NL
-Ae
+ko
+yd
 NL
 NL
 NL
@@ -27845,8 +28076,8 @@ Jh
 Jh
 Jh
 Jh
-NL
-Ae
+un
+eX
 NL
 NL
 NL
@@ -27986,17 +28217,17 @@ Jh
 Jh
 Jh
 Jh
+un
+eX
+FK
+FK
+FK
 NL
-NL
-Ae
-NL
-NL
-NL
-NL
-NL
-NL
-NL
-NL
+FK
+FK
+FK
+FK
+FK
 NL
 SK
 SK
@@ -28126,19 +28357,19 @@ Jh
 Jh
 Jh
 Jh
+un
+af
+eX
 NL
-NL
-NL
-NL
-Ae
-NL
-NL
-NL
-NL
-NL
-NL
-NL
-NL
+Ej
+nE
+nE
+da
+xk
+xk
+xk
+xk
+tl
 NL
 SK
 SK
@@ -28268,19 +28499,19 @@ Jh
 Jh
 NL
 NL
-NL
-NL
-NL
-NL
 Ae
-NL
-NL
-NL
-NL
-NL
-NL
-NL
-NL
+Iw
+FK
+Iy
+Iy
+Iy
+Iy
+YY
+Iy
+Iy
+Iy
+Iy
+Iy
 NL
 NL
 Jh
@@ -28410,20 +28641,20 @@ un
 af
 Rx
 af
-af
-af
-af
-af
-ew
-af
-Rx
-af
-af
-af
-af
-af
-af
-af
+kJ
+Ej
+nE
+nE
+nE
+nE
+nE
+RB
+TG
+TG
+TG
+TG
+Sc
+un
 af
 Rx
 af
@@ -28552,20 +28783,20 @@ Ae
 NL
 Op
 NL
+Ae
+Nr
+Nr
+Nr
+Nr
+Nr
+Nr
 NL
-NL
-NL
-NL
-NL
-NL
-Op
-NL
-NL
-NL
-NL
-NL
-NL
-NL
+Nr
+Nr
+Nr
+Nr
+Nr
+Ae
 NL
 Op
 NL
@@ -28694,20 +28925,20 @@ eX
 NL
 NL
 NL
-NL
-NL
-NL
-NL
-NL
-NL
-NL
-NL
-NL
-NL
-NL
-NL
-NL
-NL
+ko
+af
+af
+af
+af
+af
+af
+oe
+af
+af
+af
+af
+af
+eX
 NL
 NL
 NL
@@ -28843,7 +29074,7 @@ NL
 NL
 NL
 NL
-NL
+Ae
 NL
 NL
 NL
@@ -28985,7 +29216,7 @@ NL
 NL
 NL
 NL
-NL
+Op
 NL
 NL
 NL

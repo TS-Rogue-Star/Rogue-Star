@@ -26,7 +26,11 @@
 	var/vis_height = 32					// Sprite height used for resize features.
 	var/appendage_color = "#e03997" //Default pink. Used for the 'long_vore' trait.
 	var/appendage_alt_setting = FALSE	// Dictates if 'long_vore' user pulls prey to them or not. 1 = user thrown towards target.
-	var/trash_catching = FALSE //RSEdit: Toggle for trash throw vore || Ports trash eater throw vore from CHOMPStation PR#5987
+	var/trash_catching = FALSE 			//RSEdit: Toggle for trash throw vore || Ports trash eater throw vore from CHOMPStation PR#5987
+	var/list/trait_injection_reagents = list() 	//RSEdit: Reagents available from injection traits
+	var/trait_injection_selected = null			//RSEdit: What trait reagent you're injecting.
+	var/trait_injection_amount = 5				//RSEdit: How much you're injecting with traits.
+	var/trait_injection_verb = "bites"			//RSEdit: Which fluffy manner you're doing the injecting.
 	var/regen_sounds = list(
 		'sound/effects/mob_effects/xenochimera/regen_1.ogg',
 		'sound/effects/mob_effects/xenochimera/regen_2.ogg',
@@ -34,6 +38,8 @@
 		'sound/effects/mob_effects/xenochimera/regen_3.ogg',
 		'sound/effects/mob_effects/xenochimera/regen_5.ogg'
 	)
+
+	var/player_login_key_log			//RS ADD: keeps track of a ckey if we join with one to help determine if we're a PC
 
 //
 // Hook for generic creation of stuff on new creatures
@@ -105,6 +111,9 @@
 
 			///// If user clicked on themselves
 			if(src == G.assailant && is_vore_predator(src))
+				if(!G.affecting.ssd_vore_check(user))
+					return FALSE
+
 				if(feed_grabbed_to_self(src, G.affecting))
 					qdel(G)
 					return TRUE
@@ -117,7 +126,8 @@
 					to_chat(user, "<span class='notice'>[G.affecting] isn't willing to be fed.</span>")
 					log_and_message_admins("[key_name_admin(src)] attempted to feed themselves to [key_name_admin(G.affecting)] against their prefs ([G.affecting ? ADMIN_JMP(G.affecting) : "null"])")
 					return FALSE
-
+				if(!G.affecting.ssd_vore_check(user))
+					return FALSE
 				if(attacker.feed_self_to_grabbed(attacker, G.affecting))
 					qdel(G)
 					return TRUE
@@ -249,6 +259,9 @@
 	P.weight_messages = src.weight_messages
 
 	P.vore_sprite_color = istype(src, /mob/living/carbon/human) ? src:vore_sprite_color : null //RS edit
+	if(isliving(src))
+		var/mob/living/coolguy = src
+		P.ssd_vore = coolguy.ssd_vore	//RS ADD
 
 	var/list/serialized = list()
 	for(var/obj/belly/B as anything in src.vore_organs)
@@ -301,6 +314,10 @@
 
 	if (istype(src, /mob/living/carbon/human)) //RS edit
 		src:vore_sprite_color = P.vore_sprite_color //RS edit
+		src:allow_contaminate = P.allow_contaminate //RS edit
+		src:allow_stripping = P.allow_stripping //RS edit
+	if(isliving(src))	//RS ADD
+		src:ssd_vore = P.ssd_vore	//RS ADD
 
 	if(bellies)
 		if(isliving(src))
@@ -317,7 +334,7 @@
 //
 /mob/living/proc/release_vore_contents(var/include_absorbed = TRUE, var/silent = FALSE)
 	for(var/obj/belly/B as anything in vore_organs)
-		B.release_all_contents(include_absorbed, silent)
+		B.release_all_contents(include_absorbed, silent, TRUE)	//RS EDIT
 
 //
 // Returns examine messages for bellies
@@ -520,16 +537,27 @@
 /mob/living/proc/eat_held_mob(mob/living/user, mob/living/prey, mob/living/pred)
 	var/belly
 	if(user != pred)
+		if(!pred.ssd_vore_check(user))	//RS ADD
+			return FALSE				//RS ADD
 		belly = tgui_input_list(usr, "Choose Belly", "Belly Choice", pred.vore_organs)
 	else
+		if(!prey.ssd_vore_check(user))	//RS ADD
+			return FALSE				//RS ADD
 		belly = pred.vore_selected
 	return perform_the_nom(user, prey, pred, belly)
 
 /mob/living/proc/feed_self_to_grabbed(mob/living/user, mob/living/pred)
+	if(!pred.ssd_vore_check(user))	//RS ADD
+		return FALSE				//RS ADD
 	var/belly = tgui_input_list(usr, "Choose Belly", "Belly Choice", pred.vore_organs)
 	return perform_the_nom(user, user, pred, belly)
 
 /mob/living/proc/feed_grabbed_to_other(mob/living/user, mob/living/prey, mob/living/pred)
+	if(!pred.ssd_vore_check(user))	//RS ADD
+		return FALSE				//RS ADD
+	if(!prey.ssd_vore_check(user))	//RS ADD
+		return FALSE				//RS ADD
+
 	var/belly = tgui_input_list(usr, "Choose Belly", "Belly Choice", pred.vore_organs)
 	return perform_the_nom(user, prey, pred, belly)
 
@@ -559,10 +587,13 @@
 		to_chat(user, "<span class='notice'>They aren't able to be devoured.</span>")
 		log_and_message_admins("[key_name_admin(src)] attempted to devour [key_name_admin(prey)] against their prefs ([prey ? ADMIN_JMP(prey) : "null"])")
 		return FALSE
+	if(!prey.ssd_vore_check(user))	//RS ADD
+		return FALSE				//RS ADD
+	if(!pred.ssd_vore_check(user))	//RS ADD
+		return FALSE				//RS ADD
 	if(prey.absorbed || pred.absorbed)
 		to_chat(user, "<span class='warning'>They aren't aren't in a state to be devoured.</span>")
 		return FALSE
-
 	//Determining vore attempt privacy
 	var/message_range = world.view
 	if(!pred.is_slipping && !prey.is_slipping) //We only care about privacy preference if it's NOT a spontaneous vore.
@@ -1067,33 +1098,43 @@
 /mob/living/proc/display_voreprefs(mob/user)	//Called by Topic() calls on instances of /mob/living (and subtypes) containing vore_prefs as an argument
 	if(!user)
 		CRASH("display_voreprefs() was called without an associated user.")
-	var/dispvoreprefs = "<b>[src]'s vore preferences</b><br><br><br>"
+	var/dispvoreprefs = "<b>[src]'s mechanical preferences</b><br><br><br>"
 	if(client && client.prefs)
 		if("CHAT_OOC" in client.prefs.preferences_disabled)
 			dispvoreprefs += "<font color='red'><b>OOC DISABLED</b></font><br>"
 		if("CHAT_LOOC" in client.prefs.preferences_disabled)
 			dispvoreprefs += "<font color='red'><b>LOOC DISABLED</b></font><br>"
-	dispvoreprefs += "<b>Digestable:</b> [digestable ? "Enabled" : "Disabled"]<br>"
-	dispvoreprefs += "<b>Devourable:</b> [devourable ? "Enabled" : "Disabled"]<br>"
-	dispvoreprefs += "<b>Feedable:</b> [feeding ? "Enabled" : "Disabled"]<br>"
-	dispvoreprefs += "<b>Absorption Permission:</b> [absorbable ? "Allowed" : "Disallowed"]<br>"
-	dispvoreprefs += "<b>Leaves Remains:</b> [digest_leave_remains ? "Enabled" : "Disabled"]<br>"
-	dispvoreprefs += "<b>Mob Vore:</b> [allowmobvore ? "Enabled" : "Disabled"]<br>"
-	dispvoreprefs += "<b>Healbelly permission:</b> [permit_healbelly ? "Allowed" : "Disallowed"]<br>"
+	dispvoreprefs += "<u><b>-VORE PREFERENCES-</b></u><br>"
+	dispvoreprefs += "<b>Devourable:</b> [devourable ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Healbelly permission:</b> [permit_healbelly ? "<font color='green'>Allowed</font>" : "<font color='red'>Disallowed</font>"]<br>"
+	if(player_login_key_log)
+		dispvoreprefs += "<b>SSD Vore:</b> [ssd_vore ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Digestable:</b> [digestable ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Feedable:</b> [feeding ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Absorption Permission:</b> [absorbable ? "<font color='green'>Allowed</font>" : "<font color='red'>Disallowed</font>"]<br>"
+	dispvoreprefs += "<b>Leaves Remains:</b> [digest_leave_remains ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Mob Vore:</b> [allowmobvore ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
 	dispvoreprefs += "<b>Selective Mode Pref:</b> [src.selective_preference]<br>"
-	dispvoreprefs += "<b>Spontaneous vore prey:</b> [can_be_drop_prey ? "Enabled" : "Disabled"]<br>"
-	dispvoreprefs += "<b>Spontaneous vore pred:</b> [can_be_drop_pred ? "Enabled" : "Disabled"]<br>"
-	dispvoreprefs += "<b>Drop Vore:</b> [drop_vore ? "Enabled" : "Disabled"]<br>"
-	dispvoreprefs += "<b>Slip Vore:</b> [slip_vore ? "Enabled" : "Disabled"]<br>"
-	dispvoreprefs += "<b>Throw vore:</b> [throw_vore ? "Enabled" : "Disabled"]<br>"
-	dispvoreprefs += "<b>Stumble Vore:</b> [stumble_vore ? "Enabled" : "Disabled"]<br>"
-	dispvoreprefs += "<b>Food Vore:</b> [food_vore ? "Enabled" : "Disabled"]<br>"
-	dispvoreprefs += "<b>Inbelly Spawning:</b> [allow_inbelly_spawning ? "Allowed" : "Disallowed"]<br>"
-	dispvoreprefs += "<b>Spontaneous transformation:</b> [allow_spontaneous_tf ? "Enabled" : "Disabled"]<br>"
-	dispvoreprefs += "<b>Can be stepped on/over:</b> [step_mechanics_pref ? "Allowed" : "Disallowed"]<br>"
-	dispvoreprefs += "<b>Can be picked up:</b> [pickup_pref ? "Allowed" : "Disallowed"]<br>"
+	if(ishuman(src))	//RS ADD START
+		var/mob/living/carbon/human/H = src
+		dispvoreprefs += "<b>Stripping:</b> [H.allow_stripping ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+		dispvoreprefs += "<b>Contamination:</b> [H.allow_contaminate ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"	//RS ADD END
+	dispvoreprefs += "<u><b>-SPONTANEOUS PREFERENCES-</b></u><br>"
+	dispvoreprefs += "<b>Spontaneous vore prey:</b> [can_be_drop_prey ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Spontaneous vore pred:</b> [can_be_drop_pred ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Drop Vore:</b> [drop_vore ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Slip Vore:</b> [slip_vore ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Throw vore:</b> [throw_vore ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Stumble Vore:</b> [stumble_vore ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Food Vore:</b> [food_vore ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<u><b>-OTHER PREFERENCES-</b></u><br>"
+	dispvoreprefs += "<b>Size changing:</b> [resizable ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Inbelly Spawning:</b> [allow_inbelly_spawning ? "<font color='green'>Allowed</font>" : "<font color='red'>Disallowed</font>"]<br>"
+	dispvoreprefs += "<b>Spontaneous transformation:</b> [allow_spontaneous_tf ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Can be stepped on/over:</b> [step_mechanics_pref ? "<font color='green'>Allowed</font>" : "<font color='red'>Disallowed</font>"]<br>"
+	dispvoreprefs += "<b>Can be picked up:</b> [pickup_pref ? "<font color='green'>Allowed</font>" : "<font color='red'>Disallowed</font>"]<br>"
 	dispvoreprefs += "<b>Global Vore Privacy is:</b> [eating_privacy_global ? "Subtle" : "Loud"]<br>"
-	user << browse("<html><head><title>Vore prefs: [src]</title></head><body><center>[dispvoreprefs]</center></body></html>", "window=[name]mvp;size=300x400;can_resize=1;can_minimize=0")
+	user << browse("<html><head><title>Vore prefs: [src]</title></head><body><center>[dispvoreprefs]</center></body></html>", "window=[name]mvp;size=300x600;can_resize=1;can_minimize=0")
 	onclose(user, "[name]")
 	return
 
@@ -1237,3 +1278,12 @@
 	icon = 'icons/mob/screen/midnight.dmi'
 	icon_state = "vore"
 	screen_loc = ui_smallquad
+
+//RS ADD START
+/mob/living/proc/ssd_vore_check(var/mob/living/the_other_guy)
+	if(!client && !ssd_vore && player_login_key_log)
+		to_chat(the_other_guy, "<span class='danger'>[src] doesn't allow vore actions while SSD!</span>")
+		log_and_message_admins("[key_name_admin(the_other_guy)] attempted to perform a vore action against [key_name_admin(src)] against their SSD prefs ([src ? ADMIN_JMP(src) : "null"])")
+		return FALSE
+	return TRUE
+//RS ADD END

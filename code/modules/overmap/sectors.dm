@@ -25,6 +25,8 @@
 	var/list/map_z = list()
 	var/list/extra_z_levels //if you need to manually insist that these z-levels are part of this sector, for things like edge-of-map step trigger transitions rather than multi-z complexes
 
+	var/list/space_zs = list()	//RS ADD - Z levels that are in space
+
 	var/list/initial_generic_waypoints //store landmark_tag of landmarks that should be added to the actual lists below on init.
 	var/list/initial_restricted_waypoints //For use with non-automatic landmarks (automatic ones add themselves).
 
@@ -164,7 +166,9 @@
 	return ..()
 
 /obj/effect/overmap/visitable/proc/get_space_zlevels()
-	if(in_space)
+	if(space_zs.len)		//RS EDIT START
+		return space_zs
+	else if(in_space)		//RS EDIT END
 		return map_z
 	else
 		return list()

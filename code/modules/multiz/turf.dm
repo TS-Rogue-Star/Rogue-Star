@@ -88,10 +88,15 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 /turf/simulated/open/examine(mob/user, distance, infix, suffix)
 	. = ..()
 	if(Adjacent(user))
-		var/depth = 1
-		for(var/T = GetBelow(src); isopenspace(T); T = GetBelow(T))
-			depth += 1
-		. += "It is about [depth] levels deep."
+//RS EDIT START
+		. += "It is about [get_depth()] levels deep."
+
+/turf/simulated/open/proc/get_depth()
+	var/depth = 1
+	for(var/T = GetBelow(src); isopenspace(T); T = GetBelow(T))
+		depth += 1
+	return depth
+//RS EDIT END
 
 /turf/simulated/open/update_icon()
 	cut_overlays()

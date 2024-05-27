@@ -63,3 +63,11 @@
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
 	sorting_group = MARKINGS_HEAD
+
+/datum/sprite_accessory/marking/ch/sylveonheadribbons1
+	name = "Sylveon Head Ribbons"
+	icon_state = "sylveon-bowribbons1"
+	icon = 'icons/mob/human_races/markings_vr.dmi'
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD

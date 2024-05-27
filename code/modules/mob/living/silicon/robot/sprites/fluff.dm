@@ -1,24 +1,10 @@
 #define CUSTOM_BORGSPRITE(x) "Custom - " + (x)
 
-/datum/robot_sprite/fluff/get_rest_sprite(var/mob/living/silicon/robot/ourborg)
-	if(!(ourborg.rest_style in rest_sprite_options))
-		ourborg.rest_style = "Default"
-	switch(ourborg.rest_style)
-		if("Sit")
-			return "[sprite_icon_state]-sit"
-		if("Bellyup")
-			return "[sprite_icon_state]-bellyup"
-		else
-			return "[sprite_icon_state]-rest"
-
-// All whitelisted dogborg sprites go here.
-
-/datum/robot_sprite/fluff
-	is_whitelisted = TRUE
+// All whitelisted cyborg sprites go here.
 
 // A
 
-/datum/robot_sprite/fluff/argonne
+/datum/robot_sprite/dogborg/security/fluff/argonne
 	name = CUSTOM_BORGSPRITE("RUSS")
 
 	sprite_icon = 'icons/mob/robot/fluff_wide.dmi'
@@ -31,54 +17,173 @@
 	has_dead_sprite_overlay = TRUE
 	pixel_x = -16
 
-	whitelist_ckey = "argonne"
-	whitelist_charname = "RUSS"
-
-/datum/robot_sprite/fluff/argonne/security
-	module_type = "Security"
-
 	sprite_icon_state = "argonne-russ-sec"
-	sprite_hud_icon_state = "k9"
 
-/datum/robot_sprite/fluff/argonne/crisis
-	module_type = "Crisis"
+	is_whitelisted = TRUE
+	whitelist_ckey = "argonne"
+
+/datum/robot_sprite/dogborg/crisis/fluff/argonne
+	name = CUSTOM_BORGSPRITE("RUSS")
+
+	sprite_icon = 'icons/mob/robot/fluff_wide.dmi'
+
+	has_eye_light_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	has_rest_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit", "Bellyup")
+	has_dead_sprite = TRUE
+	has_dead_sprite_overlay = TRUE
+	pixel_x = -16
 
 	sprite_icon_state = "argonne-russ-crisis"
-	sprite_hud_icon_state = "medihound"
 
-/datum/robot_sprite/fluff/argonne/surgical
-	module_type = "Surgeon"
+	is_whitelisted = TRUE
+	whitelist_ckey = "argonne"
+
+/datum/robot_sprite/dogborg/surgical/fluff/argonne
+	name = CUSTOM_BORGSPRITE("RUSS")
+
+	sprite_icon = 'icons/mob/robot/fluff_wide.dmi'
+
+	has_eye_light_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	has_rest_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit", "Bellyup")
+	has_dead_sprite = TRUE
+	has_dead_sprite_overlay = TRUE
+	pixel_x = -16
 
 	sprite_icon_state = "argonne-russ-surg"
-	sprite_hud_icon_state = "medihound"
 
-/datum/robot_sprite/fluff/argonne/engineering
-	module_type = "Engineering"
+	is_whitelisted = TRUE
+	whitelist_ckey = "argonne"
+
+/datum/robot_sprite/dogborg/engineering/fluff/argonne
+	name = CUSTOM_BORGSPRITE("RUSS")
+
+	sprite_icon = 'icons/mob/robot/fluff_wide.dmi'
+
+	has_eye_light_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	has_rest_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit", "Bellyup")
+	has_dead_sprite = TRUE
+	has_dead_sprite_overlay = TRUE
+	pixel_x = -16
 
 	sprite_icon_state = "argonne-russ-eng"
-	sprite_hud_icon_state = "pupdozer"
 
-/datum/robot_sprite/fluff/argonne/science
-	module_type = "Research"
+	is_whitelisted = TRUE
+	whitelist_ckey = "argonne"
+
+/datum/robot_sprite/dogborg/science/fluff/argonne
+	name = CUSTOM_BORGSPRITE("RUSS")
+
+	sprite_icon = 'icons/mob/robot/fluff_wide.dmi'
+
+	has_eye_light_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	has_rest_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit", "Bellyup")
+	has_dead_sprite = TRUE
+	has_dead_sprite_overlay = TRUE
+	pixel_x = -16
 
 	sprite_icon_state = "argonne-russ-sci"
-	sprite_hud_icon_state = "sci-borg"
 
-/datum/robot_sprite/fluff/argonne/mining
-	module_type = "Miner"
+	is_whitelisted = TRUE
+	whitelist_ckey = "argonne"
+
+/datum/robot_sprite/dogborg/mining/fluff/argonne
+	name = CUSTOM_BORGSPRITE("RUSS")
+
+	sprite_icon = 'icons/mob/robot/fluff_wide.dmi'
+
+	has_eye_light_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	has_rest_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit", "Bellyup")
+	has_dead_sprite = TRUE
+	has_dead_sprite_overlay = TRUE
+	pixel_x = -16
 
 	sprite_icon_state = "argonne-russ-mine"
 
-/datum/robot_sprite/fluff/argonne/service
-	module_type = "Service"
+	is_whitelisted = TRUE
+	whitelist_ckey = "argonne"
+
+/datum/robot_sprite/dogborg/service/fluff/argonne
+	name = CUSTOM_BORGSPRITE("RUSS")
+
+	sprite_icon = 'icons/mob/robot/fluff_wide.dmi'
+
+	has_eye_light_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	has_rest_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit", "Bellyup")
+	has_dead_sprite = TRUE
+	has_dead_sprite_overlay = TRUE
+	pixel_x = -16
 
 	sprite_icon_state = "argonne-russ-serv"
 
+	is_whitelisted = TRUE
+	whitelist_ckey = "argonne"
+
+// F
+
+/datum/robot_sprite/security/fluff/foopwotch
+	name = CUSTOM_BORGSPRITE("NDF") //For: GAEL
+
+	sprite_icon = 'icons/mob/robot/fluff.dmi'
+	sprite_icon_state = "foopwotch-ndfsec"
+
+	has_eye_light_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	has_custom_open_sprites = TRUE
+	has_dead_sprite = TRUE
+	has_dead_sprite_overlay = FALSE
+
+	is_whitelisted = TRUE
+	whitelist_ckey = "foopwotch"
+
+/datum/robot_sprite/security/fluff/foopwotch/handle_extra_icon_updates(var/mob/living/silicon/robot/ourborg)
+	if(istype(ourborg.module_active, /obj/item/weapon/gun/energy/laser/mounted))
+		ourborg.add_overlay("[sprite_icon_state]-laser")
+	if(istype(ourborg.module_active, /obj/item/weapon/gun/energy/taser/mounted/cyborg))
+		ourborg.add_overlay("[sprite_icon_state]-taser")
+
+/datum/robot_sprite/combat/fluff/foopwotch
+	name = CUSTOM_BORGSPRITE("NDF") //For: GAEL
+
+	sprite_icon = 'icons/mob/robot/fluff.dmi'
+	sprite_icon_state = "foopwotch-ndfcmb"
+
+	has_eye_light_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	has_custom_open_sprites = TRUE
+	has_dead_sprite = TRUE
+	has_dead_sprite_overlay = FALSE
+	has_speed_sprite = TRUE
+	has_shield_sprite = TRUE
+
+	is_whitelisted = TRUE
+	whitelist_ckey = "foopwotch"
+
+/datum/robot_sprite/combat/fluff/foopwotch/handle_extra_icon_updates(var/mob/living/silicon/robot/ourborg)
+
+	..()
+	if(istype(ourborg.module_active, /obj/item/weapon/gun/energy/laser/mounted) || istype(ourborg.module_active, /obj/item/weapon/gun/energy/lasercannon/mounted))
+		ourborg.add_overlay("[sprite_icon_state]-laser")
+	if(istype(ourborg.module_active, /obj/item/weapon/combat_borgblade))
+		ourborg.add_overlay("[sprite_icon_state]-dagger")
+	if(istype(ourborg.module_active, /obj/item/weapon/gun/energy/taser/mounted/cyborg/ertgun))
+		ourborg.add_overlay("[sprite_icon_state]-disabler")
+
 // J
 
-/datum/robot_sprite/fluff/jademanique
+/datum/robot_sprite/dogborg/security/fluff/jademanique
 	name = CUSTOM_BORGSPRITE("B.A.U-Kingside")
-	module_type = "Security"
 
 	sprite_icon = 'icons/mob/robot/fluff_wide.dmi'
 	sprite_icon_state = "jademanique-kingside"
@@ -92,10 +197,10 @@
 	has_dead_sprite_overlay = TRUE
 	pixel_x = -16
 
+	is_whitelisted = TRUE
 	whitelist_ckey = "jademanique"
-	whitelist_charname = "B.A.U-Kingside"
 
-/datum/robot_sprite/fluff/jademanique/handle_extra_icon_updates(var/mob/living/silicon/robot/ourborg)
+/datum/robot_sprite/dogborg/security/fluff/jademanique/handle_extra_icon_updates(var/mob/living/silicon/robot/ourborg)
 	if(istype(ourborg.module_active, /obj/item/weapon/gun/energy/laser/mounted))
 		ourborg.add_overlay("[sprite_icon_state]-laser")
 	if(istype(ourborg.module_active, /obj/item/weapon/gun/energy/taser/mounted/cyborg))
@@ -103,13 +208,11 @@
 
 // L
 
-/datum/robot_sprite/fluff/lunarfleet
+/datum/robot_sprite/dogborg/engineering/fluff/lunarfleet
 	name = CUSTOM_BORGSPRITE("Clea-Nor")
-	module_type = "Engineering"
 
 	sprite_icon = 'icons/mob/robot/fluff_wide.dmi'
 	sprite_icon_state = "lunarfleet-cleanor"
-	sprite_hud_icon_state = "pupdozer"
 
 	has_eye_light_sprites = TRUE
 	has_vore_belly_sprites = TRUE
@@ -119,5 +222,5 @@
 	has_dead_sprite_overlay = TRUE
 	pixel_x = -16
 
+	is_whitelisted = TRUE
 	whitelist_ckey = "lunarfleet"
-	whitelist_charname = "Clea-Nor"

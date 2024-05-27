@@ -120,6 +120,16 @@
 	module_type = "Engineering"
 	sprite_icon = 'icons/mob/robot/engineering_wide.dmi'
 
+/datum/robot_sprite/dogborg/engineering/do_equipment_glamour(var/obj/item/weapon/robot_module/module)
+	if(!has_custom_equipment_sprites)
+		return
+
+	..()
+
+	var/obj/item/device/dogborg/sleeper/compactor/decompiler/DC = locate() in module.modules
+	if(DC)
+		DC.icon_state = "decompiler"
+
 /datum/robot_sprite/dogborg/engineering/pupdozer
 	name = "Pupdozer"
 	sprite_icon_state = "pupdozer"
@@ -162,6 +172,16 @@
 /datum/robot_sprite/dogborg/tall/engineering
 	module_type = "Engineering"
 	sprite_icon = 'icons/mob/robot/engineering_large.dmi'
+
+/datum/robot_sprite/dogborg/tall/engineering/do_equipment_glamour(var/obj/item/weapon/robot_module/module)
+	if(!has_custom_equipment_sprites)
+		return
+
+	..()
+
+	var/obj/item/device/dogborg/sleeper/compactor/decompiler/DC = locate() in module.modules
+	if(DC)
+		DC.icon_state = "decompiler"
 
 /datum/robot_sprite/dogborg/tall/engineering/raptor
 	name = "Raptor V-4"

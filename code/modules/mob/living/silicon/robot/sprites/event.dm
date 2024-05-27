@@ -42,6 +42,15 @@
 		SP.icon_state = "defibpaddles0"
 		SP.attack_verb = list("batted", "pawed", "bopped", "whapped")
 
+	var/obj/item/device/dogborg/sleeper/lost/DL = locate() in module.modules
+	if(DL)
+		DL.icon_state = "sleeperlost"
+
+	var/obj/item/weapon/dogborg/pounce/SA = locate() in module.modules
+	if(SA)
+		SA.name = "pounce"
+		SA.icon_state = "pounce"
+
 /datum/robot_sprite/dogborg/lost/stray
 	name = "Stray"
 	sprite_icon_state = "stray"
@@ -56,6 +65,29 @@
 
 	var/has_shield_sprite = FALSE
 	var/has_laser_sprite = FALSE
+
+/datum/robot_sprite/dogborg/tall/lost/do_equipment_glamour(var/obj/item/weapon/robot_module/module)
+	if(!has_custom_equipment_sprites)
+		return
+
+	..()
+
+	var/obj/item/weapon/shockpaddles/robot/SP = locate() in module.modules
+	if(SP)
+		SP.name = "paws of life"
+		SP.desc = "Zappy paws. For fixing cardiac arrest."
+		SP.icon = 'icons/mob/dogborg_vr.dmi'
+		SP.icon_state = "defibpaddles0"
+		SP.attack_verb = list("batted", "pawed", "bopped", "whapped")
+
+	var/obj/item/device/dogborg/sleeper/lost/DL = locate() in module.modules
+	if(DL)
+		DL.icon_state = "sleeperlost"
+
+	var/obj/item/weapon/dogborg/pounce/SA = locate() in module.modules
+	if(SA)
+		SA.name = "pounce"
+		SA.icon_state = "pounce"
 
 /datum/robot_sprite/dogborg/tall/lost/handle_extra_icon_updates(var/mob/living/silicon/robot/ourborg)
 	if(has_laser_sprite && istype(ourborg.module_active, /obj/item/weapon/gun/energy/retro/mounted))
@@ -111,6 +143,16 @@
 
 	var/has_shield_sprite = FALSE
 	var/has_laser_sprite = FALSE
+
+/datum/robot_sprite/dogborg/tall/gravekeeper/do_equipment_glamour(var/obj/item/weapon/robot_module/module)
+	if(!has_custom_equipment_sprites)
+		return
+
+	..()
+
+	var/obj/item/device/dogborg/sleeper/compactor/generic/DCS = locate() in module.modules
+	if(DCS)
+		DCS.icon_state = "sleeperd"
 
 /datum/robot_sprite/dogborg/tall/gravekeeper/handle_extra_icon_updates(var/mob/living/silicon/robot/ourborg)
 	if(has_laser_sprite && istype(ourborg.module_active, /obj/item/weapon/gun/energy/retro/mounted))

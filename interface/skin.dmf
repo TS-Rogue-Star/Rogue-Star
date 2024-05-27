@@ -261,6 +261,9 @@ macro "borghotkeymode"
 		name = "F8"
 		command = "Invisimin"
 	elem
+		name = "F9"
+		command = "msay"
+	elem
 		name = "F12"
 		command = "F12"
 	elem
@@ -490,6 +493,9 @@ macro "macro"
 	elem
 		name = "F8"
 		command = "Invisimin"
+	elem
+		name = "F9"
+		command = "msay"
 	elem
 		name = "F12"
 		command = "F12"
@@ -778,6 +784,9 @@ macro "hotkeymode"
 		name = "F8"
 		command = "Invisimin"
 	elem
+		name = "F9"
+		command = "msay"
+	elem
 		name = "F12"
 		command = "F12"
 	elem
@@ -1002,6 +1011,9 @@ macro "borgmacro"
 		name = "F8"
 		command = "Invisimin"
 	elem
+		name = "F9"
+		command = "msay"
+	elem
 		name = "F12"
 		command = "F12"
 	elem
@@ -1153,7 +1165,7 @@ window "mainwindow"
 		anchor2 = -1,-1
 		is-default = true
 		saved-params = "pos;size;is-minimized;is-maximized"
-		title = "TS: Rogue Star"
+		title = "Rogue Star"
 		is-maximized = true
 		icon = 'icons\\tsicon 16x16.png'
 		macro = "macro"
