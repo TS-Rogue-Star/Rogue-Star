@@ -76,5 +76,10 @@
 	input.assembly = src
 	output.assembly = src
 
+/obj/item/device/electronic_assembly/device/check_interactivity(mob/user)
+	if(!CanInteract(user, state = GLOB.tgui_deep_inventory_state))
+		return 0
+	return 1
+
 /obj/item/device/electronic_assembly/device/tgui_host()
 	return holder.tgui_host()
