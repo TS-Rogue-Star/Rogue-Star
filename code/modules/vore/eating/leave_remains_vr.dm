@@ -141,8 +141,11 @@
 		else if(pred.y < y - 7)
 			delet = TRUE
 
+		var/turf/ourturf = loc
+
 		if(delet)
-			destroy_self_woah()
+			if(ourturf.get_lumcount() > 0.25)
+				destroy_self_woah()
 
 /obj/item/weapon/digestion_remains/proc/destroy_self_woah()
 	UnregisterSignal(pred, COMSIG_MOVABLE_MOVED)
