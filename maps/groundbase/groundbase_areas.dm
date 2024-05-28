@@ -100,6 +100,9 @@
 /area/groundbase/level3/escapepad
 	name = "Escape Shuttle Landing Pad"
 
+/area/groundbase/level3/greenhouse
+	name = "Sif Greenhouse"
+
 /area/groundbase/science
 	name = "Science"
 	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
@@ -132,6 +135,11 @@
 /area/groundbase/science/lockerroom
 	name = "Science Locker Room"
 	lightswitch = 1
+/area/groundbase/science/xenoautopsy
+	name = "Xenobiology Autopsy"
+/area/groundbase/science/abandoned
+	name = "Unused Laboratory"
+
 
 /area/groundbase/science/outpost
 	name = "Science Outpost"
@@ -631,4 +639,5 @@
 	excluded |= /area/groundbase/medical/geneticslab
 	excluded |= /area/groundbase/engineering/pumpingstation
 	excluded |= /area/prison/cell_block/gb/abandonedbrig
+	excluded |= /area/groundbase/level3/greenhouse
 	..()
