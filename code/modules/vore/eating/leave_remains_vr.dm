@@ -130,22 +130,22 @@
 		RegisterSignal(pred, COMSIG_PARENT_QDELETING, PROC_REF(destroy_self_woah), TRUE)
 
 /obj/item/weapon/digestion_remains/proc/on_pred_move()
-	if(isturf(loc))
+	if(isturf(loc))		//Only think about stuff if we're on the floor
 		var/delet = FALSE
-		if(pred.x > x + 7)
+		if(pred.x > x + 7)	//Right
 			delet = TRUE
-		else if(pred.x < x - 7)
+		else if(pred.x < x - 7)	//Left
 			delet = TRUE
-		else if(pred.y > y + 7)
+		else if(pred.y > y + 7)	//North
 			delet = TRUE
-		else if(pred.y < y - 7)
+		else if(pred.y < y - 7)	//South
 			delet = TRUE
 
 		var/turf/ourturf = loc
 
-		if(delet)
-			if(ourturf.get_lumcount() > 0.25)
-				destroy_self_woah()
+		if(delet)	//Only think about the lighting if everything else clears
+			if(ourturf.get_lumcount() > 0.25)	//0 is dark, 1 is pure light
+				destroy_self_woah()		//RIP
 
 /obj/item/weapon/digestion_remains/proc/destroy_self_woah()
 	UnregisterSignal(pred, COMSIG_MOVABLE_MOVED)
