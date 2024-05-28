@@ -29,9 +29,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/bmarble{
-	outdoors = 1
-	},
+/turf/simulated/floor/bmarble,
 /area/groundbase/level3/greenhouse)
 "aD" = (
 /turf/simulated/floor/outdoors/grass/seasonal,
@@ -102,6 +100,7 @@
 	},
 /obj/item/device/ticket_printer,
 /obj/random/paicard,
+/obj/effect/floor_decal/milspec/color/blue/half,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hos)
 "bj" = (
@@ -219,9 +218,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/bmarble{
-	outdoors = 1
-	},
+/turf/simulated/floor/bmarble,
 /area/groundbase/level3/greenhouse)
 "cq" = (
 /obj/structure/cable/yellow{
@@ -310,9 +307,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
 	},
-/turf/simulated/floor/bmarble{
-	outdoors = 1
-	},
+/turf/simulated/floor/bmarble,
 /area/groundbase/level3/greenhouse)
 "dy" = (
 /turf/simulated/floor/tiled{
@@ -391,7 +386,9 @@
 /area/groundbase/medical/uhallway)
 "et" = (
 /obj/structure/table/sifwoodentable,
-/turf/simulated/floor/outdoors/grass/sif,
+/turf/simulated/floor/outdoors/grass/sif{
+	outdoors = 0
+	},
 /area/groundbase/level3/greenhouse)
 "eG" = (
 /turf/simulated/wall,
@@ -412,6 +409,9 @@
 /area/groundbase/security/hall3)
 "fi" = (
 /obj/machinery/firealarm{
+	dir = 8
+	},
+/obj/effect/floor_decal/milspec/color/blue/half{
 	dir = 8
 	},
 /turf/simulated/floor/tiled/dark,
@@ -445,6 +445,16 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/paramedic)
+"fD" = (
+/obj/effect/floor_decal/milspec/color/red/half{
+	dir = 8
+	},
+/obj/machinery/light_switch{
+	dir = 4;
+	pixel_x = -30
+	},
+/turf/simulated/floor/tiled/dark,
+/area/groundbase/security/hall3)
 "fL" = (
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 4
@@ -636,6 +646,7 @@
 	dir = 5
 	},
 /obj/structure/cable/yellow,
+/obj/effect/floor_decal/milspec/color/blue/half,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hos)
 "hu" = (
@@ -828,6 +839,14 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/paramedic)
+"jq" = (
+/obj/machinery/light/floortube{
+	dir = 4
+	},
+/turf/simulated/floor/outdoors/grass/sif/forest{
+	outdoors = 0
+	},
+/area/groundbase/level3/greenhouse)
 "jr" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 9
@@ -856,6 +875,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/effect/floor_decal/milspec/color/blue/half,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hos)
 "jx" = (
@@ -1030,7 +1050,9 @@
 /area/groundbase/security/hall3)
 "lJ" = (
 /obj/structure/table/bench/sifwooden,
-/turf/simulated/floor/outdoors/grass/sif,
+/turf/simulated/floor/outdoors/grass/sif{
+	outdoors = 0
+	},
 /area/groundbase/level3/greenhouse)
 "lN" = (
 /obj/structure/table/bench/marble,
@@ -1237,7 +1259,9 @@
 /turf/simulated/open,
 /area/groundbase/medical/uhallway)
 "nn" = (
-/turf/simulated/floor/outdoors/grass/sif/forest,
+/turf/simulated/floor/outdoors/grass/sif/forest{
+	outdoors = 0
+	},
 /area/groundbase/level3/greenhouse)
 "nu" = (
 /obj/structure/lattice,
@@ -1486,7 +1510,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/outdoors/grass/sif,
+/turf/simulated/floor/outdoors/grass/sif{
+	outdoors = 0
+	},
 /area/groundbase/level3/greenhouse)
 "pD" = (
 /obj/machinery/atmospherics/pipe/zpipe/down/scrubbers{
@@ -1900,7 +1926,17 @@
 "sS" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/outdoors/grass/sif,
+/turf/simulated/floor/outdoors/grass/sif{
+	outdoors = 0
+	},
+/area/groundbase/level3/greenhouse)
+"sT" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/turf/simulated/floor{
+	edge_blending_priority = -1;
+	outdoors = 1
+	},
 /area/groundbase/level3/greenhouse)
 "sX" = (
 /obj/structure/mirror{
@@ -1926,6 +1962,9 @@
 	dir = 8
 	},
 /obj/machinery/light,
+/obj/effect/floor_decal/milspec/color/blue/half{
+	dir = 6
+	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hos)
 "tb" = (
@@ -2155,14 +2194,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/iaa2)
-"uA" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/full,
-/turf/simulated/floor{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
-/area/groundbase/level3/greenhouse)
 "uB" = (
 /obj/structure/bed/double/padded,
 /obj/item/weapon/bedsheet/cosmosdouble{
@@ -2458,9 +2489,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
-/turf/simulated/floor/bmarble{
-	outdoors = 1
-	},
+/turf/simulated/floor/bmarble,
 /area/groundbase/level3/greenhouse)
 "xt" = (
 /obj/structure/table/woodentable,
@@ -3005,6 +3034,9 @@
 	pixel_y = 24
 	},
 /obj/machinery/suit_cycler/prototype,
+/obj/effect/floor_decal/milspec/color/blue/half{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hos)
 "Di" = (
@@ -3281,10 +3313,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/bmarble,
 /area/groundbase/level3/greenhouse)
 "Fo" = (
 /obj/machinery/light/small{
@@ -3470,7 +3499,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable/yellow,
-/turf/simulated/floor/outdoors/grass/sif,
+/turf/simulated/floor/outdoors/grass/sif{
+	outdoors = 0
+	},
 /area/groundbase/level3/greenhouse)
 "HF" = (
 /obj/structure/filingcabinet,
@@ -3580,8 +3611,8 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/medical/uhallway)
 "Iq" = (
-/obj/structure/window/reinforced/full,
 /obj/structure/grille,
+/obj/structure/window/reinforced/tinted/full,
 /turf/simulated/floor{
 	edge_blending_priority = -1;
 	outdoors = 1
@@ -3688,8 +3719,8 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/paramedic)
 "IS" = (
-/obj/structure/window/reinforced/full,
 /obj/structure/grille,
+/obj/structure/window/reinforced/tinted/full,
 /turf/simulated/floor{
 	edge_blending_priority = -1;
 	outdoors = 1
@@ -3726,6 +3757,9 @@
 /obj/structure/table/woodentable,
 /obj/machinery/computer/skills{
 	pixel_y = 6
+	},
+/obj/effect/floor_decal/milspec/color/blue/half{
+	dir = 1
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hos)
@@ -4273,9 +4307,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/turf/simulated/floor/bmarble{
-	outdoors = 1
-	},
+/turf/simulated/floor/bmarble,
 /area/groundbase/level3/greenhouse)
 "Ot" = (
 /turf/simulated/floor/bmarble,
@@ -4464,6 +4496,9 @@
 	dir = 1;
 	pixel_y = 24
 	},
+/obj/effect/floor_decal/milspec/color/blue/half{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hos)
 "QH" = (
@@ -4586,6 +4621,9 @@
 /obj/machinery/newscaster/security_unit{
 	pixel_x = -27
 	},
+/obj/effect/floor_decal/milspec/color/blue/half{
+	dir = 10
+	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hos)
 "RX" = (
@@ -4617,6 +4655,9 @@
 	owner = 1
 	},
 /obj/item/device/megaphone,
+/obj/effect/floor_decal/milspec/color/blue/half{
+	dir = 5
+	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hos)
 "Sh" = (
@@ -4630,7 +4671,9 @@
 /turf/simulated/open,
 /area/groundbase/level3/sw/open)
 "Sm" = (
-/turf/simulated/floor/outdoors/grass/sif,
+/turf/simulated/floor/outdoors/grass/sif{
+	outdoors = 0
+	},
 /area/groundbase/level3/greenhouse)
 "So" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -5003,6 +5046,15 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/medicalshowers)
+"VG" = (
+/obj/machinery/light/floortube{
+	dir = 8;
+	pixel_x = 1
+	},
+/turf/simulated/floor/outdoors/grass/sif/forest{
+	outdoors = 0
+	},
+/area/groundbase/level3/greenhouse)
 "VK" = (
 /obj/structure/table/bench/marble,
 /obj/effect/landmark/start/medical,
@@ -5317,9 +5369,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
-/turf/simulated/floor/bmarble{
-	outdoors = 1
-	},
+/turf/simulated/floor/bmarble,
 /area/groundbase/level3/greenhouse)
 "Yp" = (
 /turf/simulated/floor/carpet/sblucarpet,
@@ -5491,6 +5541,9 @@
 /obj/machinery/light_switch{
 	dir = 4;
 	pixel_x = -30
+	},
+/obj/effect/floor_decal/milspec/color/blue/half{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hos)
@@ -9830,7 +9883,7 @@ tN
 tN
 fQ
 Gh
-Bw
+fD
 Xz
 Xz
 sH
@@ -12234,6 +12287,7 @@ bE
 yx
 Iq
 nn
+VG
 nn
 nn
 nn
@@ -12241,8 +12295,7 @@ nn
 nn
 nn
 nn
-nn
-nn
+VG
 nn
 Iq
 PZ
@@ -12521,9 +12574,9 @@ nn
 nn
 nn
 nn
+Sm
+Sm
 nn
-Sm
-Sm
 nn
 nn
 nn
@@ -13654,7 +13707,7 @@ bE
 yx
 Iq
 nn
-nn
+jq
 nn
 nn
 Sm
@@ -13662,7 +13715,7 @@ Sm
 nn
 nn
 nn
-nn
+jq
 nn
 Iq
 PZ
@@ -13795,10 +13848,10 @@ bE
 bE
 yx
 Iq
-uA
-uA
-uA
-uA
+sT
+sT
+sT
+sT
 Sm
 Sm
 Sm
