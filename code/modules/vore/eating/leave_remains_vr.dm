@@ -116,18 +116,24 @@
 		pred_ckey = ourpred?.ckey
 		pred_name = ourpred?.name
 		if(pred)
-			RegisterSignal(pred, COMSIG_MOVABLE_MOVED, PROC_REF(on_pred_move))
-			RegisterSignal(pred, COMSIG_PARENT_QDELETING, PROC_REF(destroy_self_woah), TRUE)
+			RegisterSignal(pred, COMSIG_MOVABLE_MOVED, PROC_REF(on_pred_move))		//Listen for the pred's move proc, that way instead of doing processing or whatever, it only checks when the pred moves. This should hopefully be less expensive than adding a bunch of bones to processing or timers.
+			RegisterSignal(pred, COMSIG_PARENT_QDELETING, PROC_REF(destroy_self_woah), TRUE)	//Clean up the pred (and ourself) if the pred tries to delete
 
 /obj/item/weapon/digestion_remains/pickup(mob/user)
 	. = ..()
 
-	if(pred && user != pred)
-		UnregisterSignal(pred, COMSIG_MOVABLE_MOVED)
+	if(pred && user != pred)	//Only do it if there is a pred, and only change the pred over, since the pred_ckey and pred_name aren't really important, and so can just mark who generated the thing. This should make it so you can tell who made it, and who last touched/moved it. Might help with investigating issues.
+		UnregisterSignal(pred, COMSIG_MOVABLE_MOVED)	//Clean up our signals
 		UnregisterSignal(pred, COMSIG_PARENT_QDELETING)
-		pred = user
-		RegisterSignal(pred, COMSIG_MOVABLE_MOVED, PROC_REF(on_pred_move))
+		pred = user		//Replace the pred
+		RegisterSignal(pred, COMSIG_MOVABLE_MOVED, PROC_REF(on_pred_move))		//Re-establish the signals
 		RegisterSignal(pred, COMSIG_PARENT_QDELETING, PROC_REF(destroy_self_woah), TRUE)
+
+/obj/item/weapon/digestion_remains/Destroy()
+	. = ..()
+	UnregisterSignal(pred, COMSIG_MOVABLE_MOVED)	//Clean up the signals
+	UnregisterSignal(pred, COMSIG_PARENT_QDELETING)
+	pred = null		//Remove the reference
 
 /obj/item/weapon/digestion_remains/proc/on_pred_move()
 	if(isturf(loc))		//Only think about stuff if we're on the floor
@@ -148,10 +154,10 @@
 				destroy_self_woah()		//RIP
 
 /obj/item/weapon/digestion_remains/proc/destroy_self_woah()
-	UnregisterSignal(pred, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(pred, COMSIG_MOVABLE_MOVED)	//Clean up the signals
 	UnregisterSignal(pred, COMSIG_PARENT_QDELETING)
-	pred = null
-	qdel(src)
+	pred = null		//Remove the reference
+	qdel(src)		//RIP
 
 	//RS EDIT END
 
