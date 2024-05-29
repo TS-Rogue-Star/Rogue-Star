@@ -4465,6 +4465,7 @@
 	dir = 1
 	},
 /obj/machinery/alarm,
+/obj/item/weapon/folder/blue,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/command/secretary)
 "edl" = (
@@ -13849,7 +13850,6 @@
 /area/groundbase/engineering/atmos)
 "mtP" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/folder/blue,
 /obj/machinery/firealarm{
 	dir = 4
 	},
