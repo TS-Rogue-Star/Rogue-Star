@@ -110,11 +110,6 @@
 		SYJ.icon_state = "defibpaddles0"
 		SYJ.attack_verb = list("batted", "pawed", "bopped", "whapped")
 
-/datum/robot_sprite/dogborg/tall/syndie/raptor
-	name = "Raptor V-4"
-	sprite_icon_state = "raptor"
-	rest_sprite_options = list("Default", "Bellyup")
-
 /datum/robot_sprite/dogborg/tall/syndie/meka
 	name = "MEKA"
 	sprite_icon_state = "meka"
@@ -190,6 +185,16 @@
 	sprite_icon_state = "k9"
 	has_eye_light_sprites = TRUE
 
+// Tall sprites
+
+/datum/robot_sprite/dogborg/tall/syndie/protector/
+	module_type = "Protector"
+
+/datum/robot_sprite/dogborg/tall/syndie/protector/syndiprotraptor
+	name = "Raptor V-4"
+	sprite_icon_state = "syndiprotraptor"
+	has_eye_light_sprites = TRUE
+	rest_sprite_options = list("Default", "Bellyup")
 
 // Mechanist
 
@@ -223,12 +228,10 @@
 
 // Tall sprites
 
-/datum/robot_sprite/dogborg/tall/mechanist
+/datum/robot_sprite/dogborg/tall/syndie/mechanist
 	module_type = "Mechanist"
-	sprite_icon = 'icons/mob/robot/syndie_large.dmi'
-	sprite_hud_icon_state = "malf"
 
-/datum/robot_sprite/dogborg/tall/mechanist/syndimechraptor
+/datum/robot_sprite/dogborg/tall/syndie/mechanist/syndimechraptor
 	name = "Raptor V-4"
 	sprite_icon_state = "syndimechraptor"
 	has_eye_light_sprites = TRUE
@@ -254,6 +257,17 @@
 	sprite_icon = 'icons/mob/robot/combat_medic_wide.dmi'
 
 	has_sleeper_light_indicator = FALSE
+
+// Tall sprites
+
+/datum/robot_sprite/dogborg/tall/syndie/combat_medic
+	module_type = "Combat Medic"
+
+/datum/robot_sprite/dogborg/tall/syndie/combat_medic/syndimediraptor
+	name = "Raptor V-4"
+	sprite_icon_state = "syndimediraptor"
+	has_eye_light_sprites = TRUE
+	rest_sprite_options = list("Default", "Bellyup")
 
 /* //RS REMOVAL
 /datum/robot_sprite/dogborg/crisis/get_belly_overlay(var/mob/living/silicon/robot/ourborg)
