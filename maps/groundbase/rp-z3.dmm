@@ -133,11 +133,6 @@
 /obj/structure/catwalk,
 /turf/simulated/open,
 /area/groundbase/level3/nw)
-"bE" = (
-/turf/simulated/floor/glass/reinforced{
-	outdoors = 1
-	},
-/area/groundbase/level3/nw)
 "bG" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
@@ -1510,9 +1505,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/outdoors/grass/sif{
-	outdoors = 0
-	},
+/turf/simulated/floor/bmarble,
 /area/groundbase/level3/greenhouse)
 "pD" = (
 /obj/machinery/atmospherics/pipe/zpipe/down/scrubbers{
@@ -1926,17 +1919,11 @@
 "sS" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/outdoors/grass/sif{
-	outdoors = 0
+/obj/machinery/light_switch{
+	dir = 8;
+	pixel_x = 30
 	},
-/area/groundbase/level3/greenhouse)
-"sT" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/full,
-/turf/simulated/floor{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/bmarble,
 /area/groundbase/level3/greenhouse)
 "sX" = (
 /obj/structure/mirror{
@@ -2792,6 +2779,15 @@
 	},
 /turf/simulated/floor/wood,
 /area/groundbase/command/hop)
+"zZ" = (
+/obj/structure/table/sifwoodentable,
+/obj/item/device/flashlight/lantern{
+	pixel_y = 7
+	},
+/turf/simulated/floor/outdoors/grass/sif{
+	outdoors = 0
+	},
+/area/groundbase/level3/greenhouse)
 "Af" = (
 /turf/simulated/floor{
 	edge_blending_priority = -1;
@@ -3502,9 +3498,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable/yellow,
-/turf/simulated/floor/outdoors/grass/sif{
-	outdoors = 0
-	},
+/turf/simulated/floor/bmarble,
 /area/groundbase/level3/greenhouse)
 "HF" = (
 /obj/structure/filingcabinet,
@@ -3615,11 +3609,8 @@
 /area/groundbase/medical/uhallway)
 "Iq" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/tinted/full,
-/turf/simulated/floor{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/obj/structure/window/reinforced/full,
+/turf/simulated/floor,
 /area/groundbase/level3/greenhouse)
 "Is" = (
 /turf/simulated/wall/r_wall,
@@ -3723,11 +3714,8 @@
 /area/groundbase/medical/paramedic)
 "IS" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/tinted/full,
-/turf/simulated/floor{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/obj/structure/window/reinforced/full,
+/turf/simulated/floor,
 /area/groundbase/level3/nw)
 "IT" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -12135,16 +12123,16 @@ PZ
 PZ
 PZ
 yx
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
 yx
 Iq
 nn
@@ -12277,16 +12265,16 @@ PZ
 PZ
 PZ
 yx
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
 yx
 Iq
 nn
@@ -12419,16 +12407,16 @@ PZ
 PZ
 PZ
 yx
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
 yx
 Iq
 nn
@@ -12561,16 +12549,16 @@ PZ
 PZ
 PZ
 yx
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
 yx
 Iq
 nn
@@ -12703,16 +12691,16 @@ PZ
 PZ
 PZ
 yx
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
 yx
 Iq
 nn
@@ -12845,16 +12833,16 @@ PZ
 PZ
 PZ
 yx
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
 yx
 Iq
 nn
@@ -12987,16 +12975,16 @@ PZ
 PZ
 PZ
 yx
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
 yx
 Iq
 nn
@@ -13004,7 +12992,7 @@ nn
 nn
 Sm
 lJ
-et
+zZ
 lJ
 Sm
 nn
@@ -13129,16 +13117,16 @@ PZ
 PZ
 PZ
 yx
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
 yx
 Iq
 nn
@@ -13271,16 +13259,16 @@ PZ
 PZ
 PZ
 yx
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
 yx
 Iq
 nn
@@ -13413,16 +13401,16 @@ PZ
 PZ
 PZ
 yx
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
 yx
 Iq
 nn
@@ -13555,16 +13543,16 @@ PZ
 PZ
 PZ
 yx
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
 yx
 Iq
 nn
@@ -13697,16 +13685,16 @@ PZ
 PZ
 PZ
 yx
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
 yx
 Iq
 nn
@@ -13839,22 +13827,22 @@ PZ
 PZ
 PZ
 yx
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
-bE
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
 yx
 Iq
-sT
-sT
-sT
-sT
+Iq
+Iq
+Iq
+Iq
 Sm
 Sm
 Sm

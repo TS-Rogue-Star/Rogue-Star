@@ -101,7 +101,7 @@
 	name = "Escape Shuttle Landing Pad"
 
 /area/groundbase/level3/greenhouse
-	name = "Sif Greenhouse"
+	name = "Sif Garden"
 
 /area/groundbase/science
 	name = "Science"
@@ -193,6 +193,9 @@
 	name = "Command Hallway"
 /area/groundbase/command/meeting
 	name = "Command Meeting Room"
+	lightswitch = 0
+/area/groundbase/command/secretary
+	name = "Command Secretary's Office"
 	lightswitch = 0
 /area/groundbase/command/ai
 	name = "AI Core"
