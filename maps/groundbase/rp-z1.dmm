@@ -10310,9 +10310,7 @@
 /turf/simulated/floor/outdoors/grass/seasonal,
 /area/groundbase/level1/nw)
 "jlk" = (
-/obj/item/device/aicard,
 /obj/structure/table/reinforced,
-/obj/item/device/multitool,
 /obj/machinery/recharger,
 /obj/machinery/atmospherics/unary/vent_pump/on,
 /obj/effect/floor_decal/milspec/color/blue/half{
@@ -22007,14 +22005,13 @@
 /turf/simulated/floor,
 /area/groundbase/engineering/storage)
 "tuO" = (
-/obj/structure/table/woodentable,
-/obj/machinery/photocopier/faxmachine{
-	department = "Command Conf Room"
-	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /obj/effect/floor_decal/milspec/color/blue/half{
 	dir = 9
 	},
+/obj/structure/table/reinforced,
+/obj/item/device/aicard,
+/obj/item/device/multitool,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/command/hall)
 "tvB" = (
