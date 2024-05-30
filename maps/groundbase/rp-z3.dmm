@@ -245,9 +245,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/groundbase/hotspring)
-"cx" = (
-/turf/simulated/floor/carpet/retro,
-/area/groundbase/science/abandoned)
 "cE" = (
 /turf/simulated/floor/wood,
 /area/groundbase/command/hop)
@@ -322,10 +319,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/uhallway)
-"dJ" = (
-/obj/structure/bed/chair/office/light,
-/turf/simulated/floor/tiled,
-/area/groundbase/science/abandoned)
 "dO" = (
 /turf/simulated/floor/outdoors/newdirt,
 /area/groundbase/level3/nw)
@@ -514,12 +507,6 @@
 	},
 /turf/simulated/floor/bmarble,
 /area/groundbase/civilian/pilot)
-"gb" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/tiled,
-/area/groundbase/science/abandoned)
 "gh" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -717,19 +704,6 @@
 /obj/effect/floor_decal/corner/paleblue/full,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/patient1)
-"hY" = (
-/obj/structure/prop/machine/tgmc_console3/starts_on,
-/obj/effect/floor_decal/rust,
-/turf/simulated/floor/tiled,
-/area/groundbase/science/abandoned)
-"ic" = (
-/obj/structure/prop/machine/tgmc_console5/starts_on,
-/obj/effect/floor_decal/rust,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/simulated/floor/tiled,
-/area/groundbase/science/abandoned)
 "ig" = (
 /turf/simulated/floor/reinforced{
 	edge_blending_priority = -1
@@ -763,10 +737,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/paramedic)
-"iw" = (
-/obj/structure/prop/machine/tgmc_console1/starts_on,
-/turf/simulated/floor/tiled,
-/area/groundbase/science/abandoned)
 "iD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -801,12 +771,6 @@
 /obj/structure/railing,
 /turf/simulated/open,
 /area/groundbase/level3/se)
-"jk" = (
-/obj/structure/plushie/carp{
-	dir = 4
-	},
-/turf/simulated/floor/carpet/retro,
-/area/groundbase/science/abandoned)
 "jl" = (
 /obj/machinery/alarm,
 /obj/structure/bed/chair/sofa/corp/left,
@@ -890,15 +854,6 @@
 /obj/structure/table/glass,
 /turf/simulated/floor/carpet,
 /area/groundbase/medical/cmo)
-"jP" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
-/area/groundbase/level3/sw/open)
 "jY" = (
 /obj/machinery/power/apc{
 	dir = 1
@@ -930,11 +885,6 @@
 "kk" = (
 /turf/simulated/floor/wood,
 /area/groundbase/dorms/bathroom)
-"kn" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/full,
-/turf/simulated/floor/plating,
-/area/groundbase/science/abandoned)
 "ko" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -950,14 +900,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/uhallway)
-"kv" = (
-/obj/machinery/door/airlock/multi_tile/metal{
-	name = "Unused Laboratory"
-	},
-/turf/simulated/floor/tiled/steel_ridged{
-	outdoors = 0
-	},
-/area/groundbase/science/abandoned)
 "kB" = (
 /turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/command/hop)
@@ -1103,9 +1045,6 @@
 /obj/machinery/light,
 /turf/simulated/floor/wood,
 /area/groundbase/hotspring)
-"mg" = (
-/turf/simulated/wall,
-/area/groundbase/science/abandoned)
 "mh" = (
 /obj/structure/table/reinforced,
 /obj/item/device/flashlight/lamp/green{
@@ -1166,11 +1105,6 @@
 	},
 /turf/simulated/open,
 /area/groundbase/medical/uhallway)
-"mx" = (
-/obj/structure/table/steel,
-/obj/random/maintenance/research,
-/turf/simulated/floor/tiled,
-/area/groundbase/science/abandoned)
 "mz" = (
 /obj/machinery/light{
 	dir = 1
@@ -1383,19 +1317,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/paramedic)
-"oi" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
-/area/groundbase/level3/sw/open)
-"oj" = (
-/obj/structure/reagent_dispensers/watertank,
-/turf/simulated/floor/tiled,
-/area/groundbase/science/abandoned)
 "on" = (
 /obj/effect/floor_decal/milspec/color/green/half{
 	dir = 1
@@ -1427,9 +1348,6 @@
 	outdoors = 1
 	},
 /area/groundbase/medical/patio)
-"oD" = (
-/turf/simulated/floor/tiled,
-/area/groundbase/science/abandoned)
 "oI" = (
 /obj/structure/closet/secure_closet/hop,
 /obj/item/clothing/glasses/omnihud,
@@ -1664,10 +1582,6 @@
 	edge_blending_priority = -1
 	},
 /area/shuttle/groundbase/exploration)
-"qK" = (
-/obj/structure/plushie/carp,
-/turf/simulated/floor/carpet/retro,
-/area/groundbase/science/abandoned)
 "qQ" = (
 /obj/machinery/light/floortube{
 	dir = 4
@@ -1879,10 +1793,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/wood,
 /area/groundbase/medical/cmo)
-"sF" = (
-/obj/machinery/light/small,
-/turf/simulated/floor/carpet/retro,
-/area/groundbase/science/abandoned)
 "sH" = (
 /obj/effect/floor_decal/milspec/color/red/half{
 	dir = 10
@@ -2005,15 +1915,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/shuttle/groundbase/exploration)
-"tE" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
-/area/groundbase/level3/sw/open)
 "tH" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
@@ -2310,12 +2211,6 @@
 /obj/structure/bed/chair/wood,
 /turf/simulated/floor/wood,
 /area/groundbase/hotspring)
-"vU" = (
-/obj/machinery/light_switch{
-	pixel_y = 30
-	},
-/turf/simulated/floor/tiled,
-/area/groundbase/science/abandoned)
 "vX" = (
 /obj/effect/floor_decal/milspec/color/red/half,
 /turf/simulated/floor/tiled/dark,
@@ -2573,11 +2468,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/groundbase/medical/medicalshowers)
-"yf" = (
-/obj/structure/prop/machine/tgmc_console4/starts_on,
-/obj/effect/floor_decal/rust,
-/turf/simulated/floor/tiled,
-/area/groundbase/science/abandoned)
 "yg" = (
 /obj/structure/bed/chair/shuttle{
 	dir = 1
@@ -2931,15 +2821,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/shuttle/groundbase/exploration)
-"BG" = (
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc{
-	dir = 1
-	},
-/turf/simulated/floor/tiled,
-/area/groundbase/science/abandoned)
 "BH" = (
 /obj/machinery/firealarm,
 /obj/structure/disposalpipe/trunk,
@@ -2972,15 +2853,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/patient4)
-"Cq" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
-/area/groundbase/level3/sw/open)
 "Cr" = (
 /obj/structure/bed/chair/comfy/blue{
 	dir = 1
@@ -3038,12 +2910,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hos)
-"Di" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/tiled,
-/area/groundbase/science/abandoned)
 "Dk" = (
 /obj/machinery/door/airlock/command{
 	id_tag = "cmodoor";
@@ -3323,11 +3189,6 @@
 "Fs" = (
 /turf/simulated/mineral/cave,
 /area/groundbase/hotspring)
-"Fx" = (
-/obj/structure/table/steel,
-/obj/item/weapon/digestion_remains/synth/variant1,
-/turf/simulated/floor/tiled,
-/area/groundbase/science/abandoned)
 "FC" = (
 /turf/simulated/wall,
 /area/groundbase/exploration/shuttlepad)
@@ -3595,15 +3456,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/patient2)
-"Im" = (
-/obj/structure/cable/yellow{
-	icon_state = "32-1"
-	},
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
-/area/groundbase/level3/sw/open)
 "Io" = (
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/medical/uhallway)
@@ -3772,12 +3624,6 @@
 "JA" = (
 /turf/simulated/wall/r_wall,
 /area/groundbase/hotspring)
-"JF" = (
-/obj/structure/plushie/carp{
-	dir = 8
-	},
-/turf/simulated/floor/carpet/retro,
-/area/groundbase/science/abandoned)
 "JG" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/effect/floor_decal/milspec/color/red/half{
@@ -3785,11 +3631,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/iaa2)
-"JL" = (
-/obj/structure/reagent_dispensers/fueltank,
-/obj/machinery/light/small,
-/turf/simulated/floor/tiled,
-/area/groundbase/science/abandoned)
 "JN" = (
 /obj/structure/toilet{
 	dir = 4
@@ -4190,11 +4031,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/iaa1)
-"MG" = (
-/turf/simulated/floor/tiled/steel_ridged{
-	outdoors = 0
-	},
-/area/groundbase/science/abandoned)
 "MN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
@@ -4984,11 +4820,6 @@
 	},
 /turf/simulated/floor/outdoors/sidewalk/side,
 /area/groundbase/level3/se)
-"UR" = (
-/obj/structure/table/steel,
-/obj/item/weapon/digestion_remains/synth/variant3,
-/turf/simulated/floor/tiled,
-/area/groundbase/science/abandoned)
 "UV" = (
 /turf/simulated/floor/wood,
 /area/groundbase/hotspring)
@@ -5249,10 +5080,6 @@
 "Xz" = (
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hall3)
-"XC" = (
-/obj/structure/table/steel,
-/turf/simulated/floor/tiled,
-/area/groundbase/science/abandoned)
 "XE" = (
 /obj/machinery/door/airlock{
 	name = "Swimsuits and Lockers"
@@ -5416,12 +5243,6 @@
 /obj/machinery/power/apc,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/medicalshowers)
-"YL" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/simulated/floor/tiled,
-/area/groundbase/science/abandoned)
 "YO" = (
 /turf/simulated/wall/r_wall,
 /area/groundbase/dorms/bathroom)
@@ -12898,13 +12719,13 @@ dy
 dy
 nd
 nd
-mg
-mg
-mg
-mg
-mg
-mg
-mg
+nd
+nd
+nd
+nd
+nd
+nd
+nd
 rf
 rf
 rf
@@ -13040,13 +12861,13 @@ dy
 dy
 dy
 dy
-mg
-mx
-mx
-kn
-cx
-qK
-mg
+dy
+dy
+dy
+dy
+dy
+dy
+nd
 rf
 rf
 rf
@@ -13182,13 +13003,13 @@ dy
 dy
 dy
 dy
-mg
-YL
-oD
-kn
-jk
-sF
-mg
+dy
+dy
+dy
+dy
+dy
+dy
+nd
 rf
 rf
 rf
@@ -13324,13 +13145,13 @@ dy
 dy
 dy
 dy
-mg
-BG
-oD
-kn
-cx
-JF
-mg
+dy
+dy
+dy
+dy
+dy
+dy
+nd
 rf
 rf
 rf
@@ -13466,13 +13287,13 @@ dy
 dy
 dy
 dy
-mg
-gb
-oD
-kn
-kn
-kn
-mg
+dy
+dy
+dy
+dy
+dy
+dy
+nd
 rf
 rf
 rf
@@ -13608,13 +13429,13 @@ dy
 dy
 dy
 dy
-mg
-gb
-oD
-oD
-UR
-mx
-mg
+dy
+dy
+dy
+dy
+dy
+dy
+nd
 rf
 rf
 rf
@@ -13750,13 +13571,13 @@ dy
 dy
 dy
 dy
-kv
-gb
-oD
-oD
-dJ
-mx
-mg
+dy
+dy
+dy
+dy
+dy
+dy
+nd
 rf
 rf
 rf
@@ -13891,14 +13712,14 @@ dy
 dy
 dy
 dy
-jP
-MG
-Di
-oD
-oD
-oD
-Fx
-mg
+dy
+dy
+dy
+dy
+dy
+dy
+dy
+nd
 rf
 rf
 rf
@@ -14033,14 +13854,14 @@ dy
 dy
 dy
 dy
-tE
-mg
-vU
-oD
-oD
-oD
-oj
-mg
+dy
+dy
+dy
+dy
+dy
+dy
+dy
+nd
 rf
 rf
 rf
@@ -14175,14 +13996,14 @@ dy
 dy
 dy
 dy
-tE
-mg
-iw
-oD
-oD
-oD
-JL
-mg
+dy
+dy
+dy
+dy
+dy
+dy
+dy
+nd
 rf
 rf
 rf
@@ -14317,14 +14138,14 @@ dy
 dy
 dy
 dy
-tE
-mg
-ic
-oD
-oD
-oD
-mx
-mg
+dy
+dy
+dy
+dy
+dy
+dy
+dy
+nd
 rf
 rf
 rf
@@ -14459,14 +14280,14 @@ dy
 dy
 dy
 dy
-tE
-mg
-yf
-oD
-oD
-dJ
-XC
-mg
+dy
+dy
+dy
+dy
+dy
+dy
+dy
+nd
 rf
 rf
 rf
@@ -14601,14 +14422,14 @@ dy
 dy
 dy
 dy
-tE
-mg
-hY
-oD
-oD
-mx
-mx
-mg
+dy
+dy
+dy
+dy
+dy
+dy
+dy
+nd
 rf
 rf
 rf
@@ -14743,14 +14564,14 @@ dy
 dy
 dy
 dy
-tE
-mg
-mg
-mg
-mg
-mg
-mg
-mg
+dy
+nd
+nd
+nd
+nd
+nd
+nd
+nd
 rf
 rf
 rf
@@ -14885,9 +14706,9 @@ dy
 dy
 dy
 dy
-oi
-Cq
-Im
+dy
+nd
+nd
 rf
 rf
 rf

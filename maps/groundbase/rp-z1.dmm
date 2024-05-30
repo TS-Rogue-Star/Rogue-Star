@@ -3201,6 +3201,7 @@
 "cXF" = (
 /obj/effect/floor_decal/rust,
 /obj/structure/reagent_dispensers/watertank/high,
+/obj/effect/decal/cleanable/cobweb,
 /turf/simulated/floor/tiled,
 /area/prison/cell_block/gb/abandonedbrig)
 "cYE" = (
@@ -6789,6 +6790,13 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/lhallway)
+"ghm" = (
+/obj/effect/floor_decal/rust,
+/obj/structure/bed/padded,
+/obj/item/weapon/bedsheet/orange,
+/obj/effect/decal/cleanable/cobweb2,
+/turf/simulated/floor/tiled,
+/area/prison/cell_block/gb/abandonedbrig)
 "ghR" = (
 /obj/structure/mopbucket,
 /obj/item/weapon/mop,
@@ -7634,6 +7642,10 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/or1)
+"gVe" = (
+/obj/effect/decal/cleanable/cobweb2,
+/turf/simulated/floor/tiled,
+/area/prison/cell_block/gb/abandonedbrig)
 "gWe" = (
 /obj/structure/bed/chair/bay/chair/padded/blue{
 	dir = 8
@@ -30545,11 +30557,11 @@ awx
 awx
 awx
 uPu
-crU
+ghm
 crU
 rDd
 uPu
-tUS
+gVe
 uWe
 tUS
 mAe
