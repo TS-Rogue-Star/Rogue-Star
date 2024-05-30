@@ -58,3 +58,11 @@
 			if(PN.cables && (PN.cables.len > 1))
 				var/obj/structure/cable/C = PN.cables[1]
 				to_chat(usr, "<span class='filter_adminlog'>Powernet with fewer than 10 cables! (number [PN.number]) - example cable at [C.x], [C.y], [C.z] in area [get_area(C.loc)]</span>")
+
+	for(var/obj/machinery/power/apc/power in GLOB.apcs)
+		if(!power.terminal)
+			to_chat(usr, "<span class='filter_adminlog'>APC with no terminals! at [power.x], [power.y], [power.z] in area [get_area(power.loc)]</span>")
+
+	for(var/obj/machinery/power/smes/power in GLOB.smeses)
+		if(!power.terminalconnections)
+			to_chat(usr, "<span class='filter_adminlog'>SMES with no terminals! at [power.x], [power.y], [power.z] in area [get_area(power.loc)]</span>")

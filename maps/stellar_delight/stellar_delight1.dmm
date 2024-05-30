@@ -102,7 +102,7 @@
 	dir = 9
 	},
 /turf/simulated/floor/tiled/dark,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "al" = (
 /obj/structure/table/standard,
 /obj/structure/extinguisher_cabinet{
@@ -238,6 +238,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/exploration)
 "aB" = (
@@ -469,9 +470,6 @@
 "bb" = (
 /obj/machinery/light{
 	dir = 4
-	},
-/obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 1
 	},
 /obj/machinery/botany/editor,
 /turf/simulated/floor/tiled/eris,
@@ -1689,8 +1687,9 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/machinery/power/deck_relay,
 /obj/structure/stairs/spawner/north,
-/obj/structure/cable/multilayer/multiz,
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/stellardelight/deck1/lowermed)
 "dx" = (
@@ -1922,7 +1921,7 @@
 	},
 /obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/dark,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "dS" = (
 /obj/structure/table/rack,
 /obj/random/maintenance,
@@ -1938,7 +1937,7 @@
 	},
 /obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/dark,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "dU" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
@@ -2640,7 +2639,7 @@
 	},
 /obj/structure/low_wall/bay/reinforced/steel,
 /turf/simulated/floor,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "fx" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -3140,7 +3139,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
-/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/white,
 /area/stellardelight/deck1/shower)
 "gK" = (
@@ -3218,7 +3216,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/steel_grid,
 /area/assembly/robotics)
 "gV" = (
@@ -3291,7 +3288,6 @@
 /area/stellardelight/deck1/researchserver)
 "hb" = (
 /obj/machinery/power/sensor{
-	cable_layer = 4;
 	name = "Powernet Sensor - Security Subgrid";
 	name_tag = "Security Subgrid"
 	},
@@ -4858,7 +4854,6 @@
 /turf/simulated/floor,
 /area/rnd/xenobiology/xenoflora_storage)
 "kY" = (
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
@@ -5163,7 +5158,6 @@
 /area/stellardelight/deck1/researchequip)
 "lI" = (
 /obj/machinery/power/sensor{
-	cable_layer = 1;
 	name = "Powernet Sensor - Atmospherics Subgrid";
 	name_tag = "Atmospherics Subgrid"
 	},
@@ -5662,8 +5656,8 @@
 /area/security/security_lockerroom)
 "mH" = (
 /obj/structure/cable,
-/turf/simulated/wall/bay/steel,
-/area/maintenance/stellardelight/substation/medical)
+/turf/simulated/wall/bay/r_wall/steel,
+/area/chapel/chapel_morgue)
 "mI" = (
 /obj/machinery/door/firedoor/glass/hidden/steel{
 	dir = 1
@@ -5685,6 +5679,14 @@
 /obj/item/weapon/storage/box/nifsofts_pilot,
 /turf/simulated/floor/tiled/eris/steel/panels,
 /area/stellardelight/deck1/pilot)
+"mL" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/layer3,
+/turf/simulated/floor,
+/area/maintenance/stellardelight/deck1/exploration)
 "mM" = (
 /turf/simulated/wall/bay/steel,
 /area/janitor)
@@ -5821,6 +5823,16 @@
 	},
 /turf/simulated/floor/reinforced,
 /area/rnd/xenobiology)
+"nc" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 8
+	},
+/obj/structure/cable/layer3,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/eris,
+/area/rnd/xenobiology/xenoflora)
 "nd" = (
 /obj/structure/table/rack/shelf,
 /obj/item/weapon/tank/oxygen,
@@ -6199,7 +6211,6 @@
 /area/stellardelight/deck1/aft)
 "od" = (
 /obj/machinery/power/sensor{
-	cable_layer = 4;
 	name = "Powernet Sensor - Civilian Subgrid";
 	name_tag = "Civilian Subgrid"
 	},
@@ -6253,7 +6264,9 @@
 	name = "Exploration";
 	sortType = "Exploration"
 	},
-/obj/structure/cable/multilayer/multiz,
+/obj/machinery/power/deck_relay,
+/obj/structure/cable/layer3,
+/obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/portcent)
 "ol" = (
@@ -6688,7 +6701,7 @@
 /obj/effect/floor_decal/milspec/color/orange/half,
 /obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/dark,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "ps" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/cable,
@@ -6856,7 +6869,6 @@
 /turf/simulated/floor/carpet/purcarpet,
 /area/stellardelight/deck1/dorms/dorm2)
 "pK" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/purple,
 /obj/machinery/atmospherics/pipe/simple/hidden/cyan{
 	dir = 4
@@ -6917,6 +6929,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/exploration)
 "pQ" = (
@@ -6938,7 +6951,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
-/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/white,
 /area/stellardelight/deck1/shower)
 "pT" = (
@@ -7142,7 +7154,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/tiled/dark,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "qu" = (
 /obj/effect/landmark{
 	name = "lightsout"
@@ -7305,7 +7317,7 @@
 	},
 /obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/dark,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "qQ" = (
 /obj/machinery/light_switch{
 	pixel_y = 25
@@ -7378,7 +7390,7 @@
 "qY" = (
 /obj/effect/floor_decal/milspec/color/orange/half,
 /turf/simulated/floor/tiled/dark,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "qZ" = (
 /obj/structure/table/steel,
 /obj/item/device/retail_scanner/security,
@@ -7528,7 +7540,6 @@
 /obj/effect/floor_decal/steeldecal/steel_decals4{
 	dir = 6
 	},
-/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/assembly/robotics)
 "rv" = (
@@ -7894,6 +7905,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/steel,
 /area/assembly/robotics)
 "sr" = (
@@ -7943,7 +7955,6 @@
 	dir = 1
 	},
 /obj/effect/floor_decal/milspec/color/black,
-/obj/structure/cable/layer3,
 /obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/dark,
 /area/security/security_cell_hallway)
@@ -8025,6 +8036,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/exploration)
 "sG" = (
@@ -8137,6 +8149,7 @@
 	dir = 4
 	},
 /obj/structure/cable/layer3,
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/portcent)
 "sR" = (
@@ -8166,6 +8179,7 @@
 	dir = 1;
 	nightshift_setting = 2
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/dark,
 /area/chapel/main)
 "sV" = (
@@ -8291,7 +8305,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/tiled/dark,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "tp" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/access_button{
@@ -8477,7 +8491,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "tN" = (
 /obj/structure/table/steel,
 /obj/random/maintenance/security,
@@ -9178,7 +9192,6 @@
 /obj/machinery/atmospherics/pipe/zpipe/up/supply,
 /obj/machinery/atmospherics/pipe/zpipe/up/scrubbers,
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable/multilayer/multiz,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/portcent)
 "vH" = (
@@ -9259,6 +9272,12 @@
 /obj/structure/cable,
 /turf/simulated/floor/tiled/steel_grid,
 /area/rnd/xenobiology)
+"vO" = (
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/eris,
+/area/rnd/xenobiology/xenoflora)
 "vP" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -10048,7 +10067,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
-/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/white,
 /area/stellardelight/deck1/shower)
 "xT" = (
@@ -10141,7 +10159,7 @@
 /obj/structure/window/bay/reinforced,
 /obj/structure/low_wall/bay/reinforced/red,
 /turf/simulated/floor,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "yf" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
@@ -10322,8 +10340,8 @@
 /area/prison/cell_block/C)
 "yC" = (
 /obj/effect/floor_decal/industrial/outline/yellow,
-/obj/machinery/door/firedoor/glass,
-/obj/structure/cable/multilayer/multiz,
+/obj/machinery/power/deck_relay,
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/starboardcent)
 "yD" = (
@@ -11067,9 +11085,6 @@
 /turf/simulated/floor/carpet/purcarpet,
 /area/stellardelight/deck1/dorms/dorm6)
 "As" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
@@ -11078,6 +11093,9 @@
 	dir = 10
 	},
 /obj/structure/cable/layer3,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/eris,
 /area/rnd/xenobiology/xenoflora)
 "At" = (
@@ -11589,6 +11607,9 @@
 	dir = 6
 	},
 /obj/structure/cable/layer3,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
 /turf/simulated/floor/tiled/milspec,
 /area/stellardelight/deck1/exploration)
 "BD" = (
@@ -11681,7 +11702,6 @@
 /area/security/security_equiptment_storage)
 "BN" = (
 /obj/machinery/power/sensor{
-	cable_layer = 4;
 	name = "Powernet Sensor - Cargo Subgrid";
 	name_tag = "Cargo Subgrid"
 	},
@@ -11763,7 +11783,7 @@
 	dir = 6
 	},
 /turf/simulated/floor/tiled/dark,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "BZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -12468,7 +12488,7 @@
 /area/maintenance/stellardelight/deck1/exploration)
 "DS" = (
 /turf/simulated/wall/bay/red,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "DV" = (
 /obj/machinery/suit_cycler/pilot,
 /obj/machinery/light,
@@ -12524,6 +12544,10 @@
 	},
 /turf/simulated/floor/wood,
 /area/library)
+"Ec" = (
+/obj/structure/cable,
+/turf/simulated/wall/bay/r_wall/steel,
+/area/security/tactical)
 "Ee" = (
 /obj/effect/floor_decal/milspec/color/red/half{
 	dir = 9
@@ -13144,7 +13168,6 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden{
 	dir = 4
 	},
-/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/exploration)
 "FG" = (
@@ -13208,10 +13231,10 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/medical/patient_wing)
 "FO" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/firealarm/angled{
 	dir = 8
 	},
+/obj/machinery/atmospherics/unary/vent_pump/on,
 /turf/simulated/floor/tiled/eris,
 /area/rnd/xenobiology/xenoflora)
 "FQ" = (
@@ -13375,7 +13398,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/steel_ridged,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "Gn" = (
 /obj/machinery/disease2/diseaseanalyser,
 /obj/machinery/light/floortube{
@@ -14125,9 +14148,9 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/assembly/robotics)
 "Ii" = (
-/obj/structure/cable,
 /obj/effect/floor_decal/milspec/color/black,
 /obj/structure/cable/layer3,
+/obj/machinery/atmospherics/pipe/simple/hidden/purple,
 /turf/simulated/floor/tiled/dark,
 /area/security/armoury)
 "Il" = (
@@ -14191,7 +14214,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
-/obj/structure/cable/layer1,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/starboardcent)
 "Iq" = (
@@ -14256,7 +14278,6 @@
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/portcent)
 "Iy" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/cyan,
 /obj/effect/floor_decal/milspec/color/black,
 /turf/simulated/floor/tiled/dark,
@@ -14314,7 +14335,9 @@
 /obj/effect/mouse_hole_spawner{
 	dir = 1
 	},
-/obj/structure/cable/multilayer/multiz,
+/obj/machinery/power/deck_relay,
+/obj/structure/cable/layer1,
+/obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/starboardcent)
 "IH" = (
@@ -14366,7 +14389,7 @@
 	dir = 5
 	},
 /turf/simulated/floor/tiled/dark,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "IN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -14633,7 +14656,6 @@
 /turf/simulated/floor,
 /area/stellardelight/deck1/port)
 "Jw" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/tiled/eris,
 /area/rnd/xenobiology/xenoflora)
@@ -15250,14 +15272,12 @@
 "Lk" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
-	},
 /obj/effect/floor_decal/steeldecal/steel_decals4,
 /obj/effect/floor_decal/steeldecal/steel_decals4{
 	dir = 10
 	},
 /obj/structure/cable/layer3,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor/tiled/eris,
 /area/stellardelight/deck1/researchhall)
 "Ll" = (
@@ -15270,7 +15290,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
-/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/exploration)
 "Lo" = (
@@ -15301,7 +15320,6 @@
 /area/maintenance/stellardelight/deck1/exploration)
 "Lq" = (
 /obj/machinery/power/sensor{
-	cable_layer = 1;
 	name = "Powernet Sensor - Research Subgrid";
 	name_tag = "Research Subgrid"
 	},
@@ -15375,7 +15393,6 @@
 /turf/simulated/floor/tiled/eris/steel/cargo,
 /area/stellardelight/deck1/shuttlebay)
 "Ly" = (
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -16140,6 +16157,9 @@
 	stripe_color = "#3b2b1a"
 	},
 /obj/structure/cable/layer1,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/stellardelight/deck1/miningequipment)
 "Nt" = (
@@ -16319,10 +16339,11 @@
 /area/gateway)
 "NS" = (
 /obj/structure/stairs/spawner/west,
+/obj/machinery/power/deck_relay,
 /obj/structure/railing/grey{
 	dir = 1
 	},
-/obj/structure/cable/multilayer/multiz,
+/obj/structure/cable/layer1,
 /turf/simulated/floor,
 /area/stellardelight/deck1/mining)
 "NT" = (
@@ -16835,7 +16856,6 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/effect/floor_decal/milspec/color/black,
 /obj/structure/cable/layer3,
-/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/dark,
 /area/security/security_cell_hallway)
 "Pj" = (
@@ -16938,6 +16958,7 @@
 	dir = 4;
 	nightshift_setting = 2
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/milspec,
 /area/stellardelight/deck1/exploration)
 "Py" = (
@@ -16991,6 +17012,7 @@
 /obj/item/clothing/under/bathrobe,
 /obj/item/clothing/under/bathrobe,
 /obj/structure/table/standard,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/white,
 /area/stellardelight/deck1/shower)
 "PG" = (
@@ -17296,7 +17318,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
-/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/steel,
 /area/assembly/robotics)
 "Qr" = (
@@ -17582,7 +17603,8 @@
 /area/security/security_lockerroom)
 "Rf" = (
 /obj/effect/floor_decal/industrial/outline/yellow,
-/obj/machinery/door/firedoor/glass,
+/obj/machinery/power/deck_relay,
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/portcent)
 "Rg" = (
@@ -17591,7 +17613,6 @@
 /area/maintenance/stellardelight/deck1/portaft)
 "Rh" = (
 /obj/machinery/power/sensor{
-	cable_layer = 1;
 	name = "Powernet Sensor - Medical Subgrid";
 	name_tag = "Medical Subgrid"
 	},
@@ -18037,7 +18058,6 @@
 /area/stellardelight/deck1/fore)
 "RY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden,
-/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/exploration)
 "RZ" = (
@@ -19317,7 +19337,7 @@
 /area/stellardelight/deck1/pilot)
 "Ve" = (
 /turf/simulated/wall/bay/r_wall/steel,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "Vf" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 8
@@ -20177,7 +20197,6 @@
 /obj/structure/sign/vacuum{
 	pixel_x = -32
 	},
-/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/exploration)
 "Xh" = (
@@ -20253,6 +20272,7 @@
 	nightshift_setting = 2
 	},
 /obj/machinery/camera/network/research,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/eris,
 /area/stellardelight/deck1/researchequip)
 "Xo" = (
@@ -20279,6 +20299,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/techfloor,
 /area/rnd/workshop)
 "Xq" = (
@@ -20454,7 +20475,7 @@
 	dir = 10
 	},
 /turf/simulated/floor/tiled/dark,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "XM" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -20664,6 +20685,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/exploration)
 "Ym" = (
@@ -20704,7 +20726,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "Yq" = (
 /obj/structure/bed/chair/bay/shuttle{
 	dir = 8
@@ -21029,6 +21051,7 @@
 	pixel_y = -5
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/white,
 /area/security/detectives_office)
 "Za" = (
@@ -21335,7 +21358,6 @@
 /area/maintenance/stellardelight/deck1/portfore)
 "ZM" = (
 /obj/machinery/seed_extractor,
-/obj/machinery/atmospherics/unary/vent_pump/on,
 /turf/simulated/floor/tiled/eris,
 /area/rnd/xenobiology/xenoflora)
 "ZN" = (
@@ -21382,9 +21404,8 @@
 /area/security/lobby)
 "ZS" = (
 /obj/effect/floor_decal/industrial/outline/yellow,
-/obj/machinery/door/firedoor/glass,
 /obj/structure/cable/layer3,
-/obj/structure/cable/multilayer/multiz,
+/obj/machinery/power/deck_relay,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/exploration)
 "ZT" = (
@@ -27107,8 +27128,8 @@ uq
 uq
 uq
 Xw
-XA
-XA
+RF
+RF
 XA
 RF
 RF
@@ -27230,8 +27251,8 @@ uq
 uq
 uq
 uq
-ea
-ea
+gV
+gV
 XA
 XA
 RF
@@ -27242,15 +27263,15 @@ uq
 XA
 XA
 XA
-RF
-bD
-bD
-bD
-bD
-RF
-RF
-RF
-RF
+XA
+gV
+gV
+gV
+gV
+XA
+XA
+XA
+XA
 XA
 RF
 RF
@@ -27367,8 +27388,8 @@ RF
 RF
 RF
 Xw
-ea
-ea
+gV
+gV
 YP
 sW
 Kk
@@ -28164,14 +28185,14 @@ uq
 uq
 Xw
 XA
-ea
-ea
-ea
-ea
-ea
-ea
-ea
-ea
+gV
+gV
+gV
+gV
+gV
+gV
+gV
+gV
 XA
 XA
 uq
@@ -28221,10 +28242,10 @@ ra
 yn
 UQ
 aA
-UQ
+mL
 sF
-UQ
-UQ
+mL
+mL
 Yk
 pP
 UQ
@@ -28305,7 +28326,7 @@ uq
 uq
 XA
 XA
-Lg
+mH
 TW
 tL
 tL
@@ -29183,7 +29204,7 @@ zY
 AY
 ok
 sQ
-mH
+Vb
 Vb
 Vb
 Vb
@@ -29325,7 +29346,7 @@ yo
 fc
 eC
 yw
-eE
+gY
 hh
 km
 QB
@@ -31372,7 +31393,7 @@ cn
 CP
 JI
 Vn
-ea
+gV
 Xw
 uq
 uq
@@ -31798,7 +31819,7 @@ nK
 nK
 PY
 Vn
-ea
+gV
 uq
 uq
 uq
@@ -31940,7 +31961,7 @@ yH
 nK
 PY
 Vn
-ea
+gV
 uq
 uq
 uq
@@ -32082,7 +32103,7 @@ yH
 nK
 PY
 Vn
-ea
+gV
 uq
 uq
 uq
@@ -32224,7 +32245,7 @@ nK
 nK
 PY
 Vn
-ea
+gV
 uq
 uq
 uq
@@ -32366,7 +32387,7 @@ nK
 VQ
 PY
 Vn
-ea
+gV
 uq
 uq
 uq
@@ -34269,7 +34290,7 @@ uq
 uq
 XA
 XA
-ni
+Ec
 ni
 ni
 ni
@@ -34412,14 +34433,14 @@ uq
 uq
 Xw
 XA
-ea
-ea
-ea
-ea
-ea
-ea
-ea
-ea
+gV
+gV
+gV
+gV
+gV
+gV
+gV
+gV
 XA
 XA
 uq
@@ -34488,8 +34509,8 @@ St
 XT
 XT
 XT
-IR
-sj
+nc
+vO
 Oo
 LG
 uq
@@ -35486,7 +35507,7 @@ gV
 XA
 XA
 XA
-RF
+XA
 XA
 RF
 RF
@@ -35627,8 +35648,8 @@ uq
 uq
 uq
 Xw
-XA
-XA
+RF
+RF
 XA
 RF
 RF

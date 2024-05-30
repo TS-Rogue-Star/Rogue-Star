@@ -184,7 +184,6 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable/multilayer/multiz,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck2/starboardfore)
 "au" = (
@@ -270,6 +269,7 @@
 	req_access = list(24);
 	stripe_color = "#2ebfbd"
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/stellardelight/deck2/combustionworkshop)
 "aE" = (
@@ -583,10 +583,11 @@
 /turf/simulated/floor/tiled/monotile,
 /area/stellardelight/deck2/aftport)
 "bn" = (
+/obj/machinery/power/deck_relay,
 /obj/structure/railing/grey{
 	dir = 8
 	},
-/obj/structure/cable/multilayer/multiz,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/monotile,
 /area/stellardelight/deck2/triage)
 "bo" = (
@@ -673,6 +674,7 @@
 /obj/machinery/power/apc/angled{
 	dir = 8
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/eris/white/bluecorner,
 /area/stellardelight/deck2/triage)
 "bv" = (
@@ -743,7 +745,8 @@
 /obj/structure/sign/department/miner_dock{
 	pixel_y = 32
 	},
-/obj/structure/cable/multilayer/multiz,
+/obj/machinery/power/deck_relay,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/monotile,
 /area/quartermaster/storage)
 "bH" = (
@@ -825,6 +828,7 @@
 	},
 /mob/living/simple_mob/animal/passive/opossum/poppy,
 /obj/structure/cable/layer1,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/eris/dark/gray_platform,
 /area/engineering/workshop)
 "bN" = (
@@ -2588,10 +2592,9 @@
 /turf/simulated/floor/tiled/eris/white/cargo,
 /area/stellardelight/deck2/triage)
 "fQ" = (
-/obj/structure/lattice,
-/obj/machinery/door/firedoor/glass,
-/obj/structure/cable/multilayer/multiz,
-/turf/simulated/open,
+/obj/structure/cable/layer3,
+/obj/machinery/power/deck_relay,
+/turf/simulated/floor,
 /area/maintenance/stellardelight/deck2/atmos)
 "fR" = (
 /obj/structure/cable,
@@ -2874,10 +2877,10 @@
 /turf/simulated/floor/tiled/eris/white/bluecorner,
 /area/medical/cmostore)
 "gv" = (
-/obj/structure/lattice,
-/obj/machinery/door/firedoor/glass,
-/obj/structure/cable/multilayer/multiz,
-/turf/simulated/open,
+/obj/machinery/power/deck_relay,
+/obj/structure/cable,
+/obj/effect/floor_decal/industrial/outline/yellow,
+/turf/simulated/floor,
 /area/maintenance/stellardelight/deck2/starboardfore)
 "gw" = (
 /obj/effect/landmark{
@@ -4365,7 +4368,6 @@
 	stripe_color = "#454545"
 	},
 /obj/structure/cable,
-/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/stellardelight/deck2/starboard)
 "kk" = (
@@ -7607,7 +7609,7 @@
 /obj/machinery/atmospherics/pipe/zpipe/down/scrubbers,
 /obj/machinery/atmospherics/pipe/zpipe/down/supply,
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable/multilayer/multiz,
+/obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/open,
 /area/maintenance/stellardelight/deck2/portfore)
 "sj" = (
@@ -8541,10 +8543,11 @@
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck2/central)
 "uH" = (
-/obj/structure/cable/layer3,
-/obj/structure/cable,
-/turf/simulated/wall/bay/r_wall/steel,
-/area/stellardelight/deck2/starboard)
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/maintenance/stellardelight/deck2/portfore)
 "uI" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 8
@@ -9997,7 +10000,6 @@
 /turf/simulated/floor/airless,
 /area/stellardelight/deck2/exterior)
 "yz" = (
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
@@ -11137,6 +11139,7 @@
 	dir = 4
 	},
 /obj/machinery/meter,
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/stellardelight/deck2/combustionworkshop)
 "BH" = (
@@ -11844,10 +11847,11 @@
 /turf/simulated/floor,
 /area/medical/cryo)
 "DK" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/structure/cable,
-/obj/structure/cable/layer3,
-/turf/simulated/wall/bay/r_wall/steel,
-/area/stellardelight/deck2/starboard)
+/turf/simulated/floor,
+/area/maintenance/stellardelight/deck2/starboardfore)
 "DL" = (
 /turf/simulated/floor/carpet/turcarpet,
 /area/crew_quarters/recreation_area)
@@ -12329,13 +12333,10 @@
 /turf/simulated/floor/wood,
 /area/crew_quarters/captain)
 "EP" = (
-/obj/machinery/door/firedoor/glass,
-/obj/structure/window/bay/reinforced,
-/obj/structure/low_wall/bay/reinforced/steel,
-/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/hidden/yellow,
 /obj/structure/cable/layer3,
 /turf/simulated/floor,
-/area/maintenance/stellardelight/deck2/starboardfore)
+/area/stellardelight/deck2/combustionworkshop)
 "EQ" = (
 /obj/machinery/atmospherics/pipe/tank/phoron/full{
 	dir = 4
@@ -12401,11 +12402,6 @@
 /obj/machinery/camera/network/civilian,
 /turf/simulated/floor/tiled/techmaint,
 /area/storage/primary)
-"Fa" = (
-/obj/structure/cable,
-/obj/structure/cable/layer3,
-/turf/simulated/wall/bay/r_wall/steel,
-/area/maintenance/stellardelight/deck2/starboardfore)
 "Fc" = (
 /obj/structure/cable,
 /obj/machinery/light/small,
@@ -12963,9 +12959,11 @@
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck2/starboard)
 "Gq" = (
-/obj/structure/lattice,
 /obj/machinery/door/firedoor/glass,
-/turf/simulated/open,
+/obj/machinery/power/deck_relay,
+/obj/structure/cable,
+/obj/effect/floor_decal/industrial/outline/yellow,
+/turf/simulated/floor,
 /area/maintenance/stellardelight/deck2/portfore)
 "Gr" = (
 /obj/machinery/light{
@@ -13169,7 +13167,8 @@
 	},
 /obj/structure/closet/firecloset,
 /obj/random/snack,
-/obj/structure/cable/multilayer/multiz,
+/obj/machinery/power/deck_relay,
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck2/starboardfore)
 "GS" = (
@@ -13889,6 +13888,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/structure/cable/layer3,
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck2/portfore)
 "Ix" = (
@@ -14321,11 +14321,10 @@
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck2/starboard)
 "JH" = (
-/obj/effect/floor_decal/industrial/outline/yellow,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/glass,
+/obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck2/portfore)
 "JI" = (
@@ -14479,6 +14478,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/yellow{
 	dir = 8
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/stellardelight/deck2/combustionworkshop)
 "Ke" = (
@@ -15588,6 +15588,7 @@
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/phoron,
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/stellardelight/deck2/combustionworkshop)
 "MR" = (
@@ -15691,6 +15692,7 @@
 /obj/machinery/atmospherics/pipe/zpipe/down/scrubbers,
 /obj/machinery/atmospherics/pipe/zpipe/down/supply,
 /obj/machinery/door/firedoor/glass,
+/obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/open,
 /area/maintenance/stellardelight/deck2/starboardfore)
 "Nf" = (
@@ -15837,7 +15839,7 @@
 	sortType = "Kitchen/Botany"
 	},
 /obj/structure/cable/layer3,
-/obj/structure/cable/multilayer/multiz,
+/obj/machinery/power/deck_relay,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck2/portfore)
 "Nx" = (
@@ -16215,6 +16217,9 @@
 "Ot" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/structure/cable/layer3,
+/obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck2/starboardfore)
 "Ou" = (
@@ -17536,13 +17541,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hydroponics)
-"RB" = (
-/obj/machinery/door/firedoor/glass,
-/obj/structure/window/bay/reinforced,
-/obj/structure/low_wall/bay/reinforced/steel,
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck2/starboardfore)
 "RD" = (
 /obj/structure/sign/directions/kitchen{
 	dir = 1;
@@ -18028,6 +18026,8 @@
 	sortType = "Bridge"
 	},
 /obj/structure/cable/layer1,
+/obj/structure/cable/layer3,
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck2/starboardfore)
 "SW" = (
@@ -18105,6 +18105,8 @@
 /obj/machinery/atmospherics/pipe/zpipe/up/scrubbers,
 /obj/machinery/atmospherics/pipe/zpipe/up/supply,
 /obj/machinery/door/firedoor/glass,
+/obj/structure/cable/layer1,
+/obj/machinery/power/deck_relay,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck2/starboardfore)
 "Th" = (
@@ -18782,7 +18784,8 @@
 /area/storage/tech)
 "UW" = (
 /obj/effect/floor_decal/shuttle/loading,
-/obj/structure/cable/multilayer/multiz,
+/obj/machinery/power/deck_relay,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/airless,
 /area/stellardelight/deck2/exterior)
 "UX" = (
@@ -19409,7 +19412,6 @@
 	req_access = list(24);
 	stripe_color = "#2ebfbd"
 	},
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -20054,7 +20056,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/structure/cable/layer3,
+/obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck2/starboardfore)
 "Yc" = (
@@ -26821,7 +26824,7 @@ wp
 wp
 wp
 Fx
-VI
+EP
 BG
 Kd
 VI
@@ -28056,7 +28059,7 @@ kR
 KK
 KK
 OQ
-Ev
+uH
 KL
 WP
 yp
@@ -28483,7 +28486,7 @@ Jp
 KK
 JH
 Fc
-SE
+KL
 wn
 sW
 sW
@@ -28625,7 +28628,7 @@ rP
 hf
 Nw
 Iw
-SE
+KL
 Bw
 BW
 BW
@@ -29923,7 +29926,7 @@ Dk
 ds
 hx
 hx
-hx
+LZ
 hx
 bJ
 Ll
@@ -32601,7 +32604,7 @@ YF
 JY
 zK
 RS
-uH
+Hd
 rM
 Bq
 Bq
@@ -32885,7 +32888,7 @@ cI
 JY
 Tg
 Ot
-DK
+Hd
 Hd
 ST
 Po
@@ -33027,7 +33030,7 @@ cI
 JY
 at
 Yb
-Fa
+iQ
 fe
 KJ
 KJ
@@ -33168,8 +33171,8 @@ mT
 cI
 JY
 Ne
-Ot
-EP
+DK
+Bu
 Ts
 Ah
 rD
@@ -33311,7 +33314,7 @@ Cg
 JY
 gv
 UJ
-RB
+Bu
 Ts
 GN
 pQ

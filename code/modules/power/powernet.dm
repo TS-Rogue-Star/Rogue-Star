@@ -81,6 +81,8 @@
 	nodes[M] = M
 
 //snowflake handling for multi-z's powernet 'channels'
+// when they actually work anyway. Really just need to get that list...
+/*
 /datum/powernet/proc/add_relays_together(obj/machinery/power/deck_relay/connector, datum/powernet/PN, cable_layer = CABLE_LAYER_ALL)
 	if(!istype(connector) || !istype(PN))
 		stack_trace("add_relays_together doesn't like [connector] or [PN]")
@@ -125,7 +127,7 @@
 		connector.powernet4 = PN
 		nodes[connector] = connector
 	else
-		return FALSE
+		return FALSE */
 
 //handles the power changes in the powernet
 //called every ticks by the powernet controller

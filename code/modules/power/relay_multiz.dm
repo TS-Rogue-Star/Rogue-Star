@@ -1,7 +1,7 @@
 ///This bridges powernets betwen Z levels
 /obj/machinery/power/deck_relay
 	name = "Multi-deck power adapter"
-	desc = "A huge bundle of double insulated cabling which seems to run up into the ceiling."
+	desc = "A huge bundle of double insulated cabling which seems to run up into the ceiling. There is no way to seperate power channels!"
 	icon = 'icons/obj/cables/structures.dmi'
 	icon_state = "cablerelay-off"
 	layer = WIRES_LAYER
@@ -10,24 +10,25 @@
 	var/obj/machinery/power/deck_relay/connectiondown
 	anchored = TRUE
 	density = FALSE
-	can_change_cable_layer = FALSE
+	can_change_cable_layer = TRUE	//This should be false when power channel code works
 	/// Powernet channels list
+	/*	//TODO: Actually making these channels a thing.
 	var/datum/powernet/powernet1
 	var/datum/powernet/powernet2
 	var/datum/powernet/powernet3
 	var/datum/powernet/powernet4
-	var/list/powernets = list()
+	var/list/powernets = list()*/
 
 /obj/machinery/power/deck_relay/Initialize(mapload)
 	. = ..()
-	to_world_log("[name] has initialized")
 	addtimer(CALLBACK(src, PROC_REF(find_and_connect)), 30)
 	addtimer(CALLBACK(src, PROC_REF(refresh)), 50) //Wait a bit so we can find the one below, then get powering
 
+/*	//Until we have clean power channels, we only have the one connection
 //don't override our layering for this, since we omni-connect.
 /obj/machinery/power/deck_relay/adapt_to_cable_layer()
 	cable_layer = CABLE_LAYER_1|CABLE_LAYER_2|CABLE_LAYER_3|CABLE_LAYER_4
-	return
+	return */
 
 /obj/machinery/power/deck_relay/Destroy()
 	. = ..()
@@ -35,7 +36,9 @@
 		connectionup.connectiondown = null
 	if(connectiondown)
 		connectiondown.connectionup = null
-	if(powernet1)
+	if(powernet)
+		powernet = null
+/*	if(powernet1)
 		powernet1 = null
 	if(powernet2)
 		powernet2 = null
@@ -43,7 +46,7 @@
 		powernet3 = null
 	if(powernet4)
 		powernet4 = null
-	powernets.Cut()
+	powernets.Cut()*/
 	return TRUE
 
 /obj/machinery/power/deck_relay/process()
@@ -53,25 +56,33 @@
 			connectionup.connectiondown = null
 		if(connectiondown)
 			connectiondown.connectionup = null
-		if(powernet1)
-			powernet1 = null
-		if(powernet2)
+		if(powernet)
+			powernet = null
+	/*	if(powernet2)
 			powernet2 = null
 		if(powernet3)
 			powernet3 = null
 		if(powernet4)
 			powernet4 = null
-		powernets.Cut()
+		powernets.Cut() */
 		return
 	refresh() //Sometimes the powernets get lost, so we need to keep checking.
-	if(!powernets)
+	if(powernet && (powernet.avail <= 0))		// is it powered?
+		icon_state = "cablerelay-off"
+	else
+		icon_state = "cablerelay-on"
+	if(!connectiondown || QDELETED(connectiondown) || !connectionup || QDELETED(connectionup))
+		icon_state = "cablerelay-off"
+		find_and_connect()
+
+	/* if(!powernets)
 		icon_state = "cablerelay-off"
 
 	if(!connectiondown || QDELETED(connectiondown) || !connectionup || QDELETED(connectionup))
 		icon_state = "cablerelay-off"
 		find_and_connect()
 
-	for(var/datum/powernet/connections in powernets)
+	for(var/datum/powernet/connections in powernets) //this was a dumb plan, todo: overlays and blinky light overlays for each power channel connection & status
 		var/missingnet = 0
 		if(connections && (connections.avail > 0))
 			continue
@@ -82,14 +93,13 @@
 		else if(missingnet == 4)
 			icon_state = "cablerelay-off"
 		else
-			icon_state = "cablerelay-on"
+			icon_state = "cablerelay-on" */
 
-/obj/machinery/power/deck_relay/hides_under_flooring()
+/obj/machinery/power/deck_relay/hides_under_flooring()	//Some routing is just painful
 	return TRUE
 
 ///Handles re-acquiring + merging powernets found by find_and_connect()
 /obj/machinery/power/deck_relay/proc/refresh()
-	to_world_log("[name] has called refresh()")
 	if(connectiondown)
 		connectiondown.merge(src)
 	if(connectionup)
@@ -100,7 +110,15 @@
 		return
 	var/turf/merge_from = get_turf(MZ)
 	var/turf/merge_to = get_turf(src)
+
+	var/obj/structure/cable/C = merge_from.get_cable_node()
+	var/obj/structure/cable/XR = merge_to.get_cable_node()
+	if(C && XR)
+		merge_powernets(XR.powernet,C.powernet)//Bridge the powernets.
+
+	/*
 	//Let's try to match up each other's powernets, without just mixing willy-nilly.
+	// probably better as a seperate proc when channels are figured out.
 	if(powernet1 && MZ.powernet1)
 		var/obj/structure/cable/C = merge_from.get_cable_node(CABLE_LAYER_1)
 		var/obj/structure/cable/XR = merge_to.get_cable_node(CABLE_LAYER_1)
@@ -120,17 +138,21 @@
 		var/obj/structure/cable/C = merge_from.get_cable_node(CABLE_LAYER_4)
 		var/obj/structure/cable/XR = merge_to.get_cable_node(CABLE_LAYER_4)
 		if(C && XR)
-			merge_powernets(XR.powernet,C.powernet)
+			merge_powernets(XR.powernet,C.powernet) */
 
 ///Locates relays that are above and below this object
 /obj/machinery/power/deck_relay/proc/find_and_connect()
-	to_world_log("[name] find_and_connect() called")
 	var/turf/T = get_turf(src)
 	if(!T || !istype(T))
 		return FALSE
 	connectiondown = null //in case we're re-establishing
 	connectionup = null
-	powernets.Cut()
+//	powernets.Cut()
+	var/obj/structure/cable/C = T.get_cable_node() //check if we have a node cable on the machine turf, the first found is picked
+	if(C && C.powernet)
+		C.powernet.add_machine(src) //Nice we're in.
+		powernet = C.powernet
+/* // Commented out until someone helps me figure out how to search all nodes lol
 	//Find our local cable nodes first
 	for(var/obj/structure/cable/C in T.contents)
 		if(!C)
@@ -139,7 +161,7 @@
 		C = T.get_cable_node() //check if we have a node cable on the machine turf.
 		//we only have four layers of cable, and they *shouldn't* have more than one per tile.
 		foundcables.Add(C)
-		to_world_log("[name] has found [C] for foundcables: [foundcables]")
+		to_world_log("[name] has found [C] for foundcables: [foundcables.len]")
 		for(C in foundcables)
 			if(!C)
 				return
@@ -189,7 +211,7 @@
 						else
 							return
 				else
-					return
+					return */
 
 	for(var/direction in list(DOWN, UP))
 		var/turf/TD = get_zstep(src, direction)
@@ -211,6 +233,9 @@
 	. = ..()
 	. += span_notice("[connectionup ? "Detected" : "Undetected"] hub UP.")
 	. += span_notice("[connectiondown ? "Detected" : "Undetected"] hub DOWN.")
+	if(powernet)
+		. += span_notice("The [LOWER_TEXT(GLOB.cable_layer_to_name["[cable_layer]"])] is connected.")
+	/*
 	if(powernet1)
 		. += span_notice("The [LOWER_TEXT(GLOB.cable_layer_to_name["[CABLE_LAYER_1]"])] is connected.")
 	if(powernet2)
@@ -218,7 +243,7 @@
 	if(powernet3)
 		. += span_notice("The [LOWER_TEXT(GLOB.cable_layer_to_name["[CABLE_LAYER_3]"])] is connected.")
 	if(powernet4)
-		. += span_notice("The [LOWER_TEXT(GLOB.cable_layer_to_name["[CABLE_LAYER_4]"])] is connected.")
+		. += span_notice("The [LOWER_TEXT(GLOB.cable_layer_to_name["[CABLE_LAYER_4]"])] is connected.") */
 
 /obj/machinery/power/deck_relay/CtrlClick(mob/living/user)
 	to_chat(user, span_warning("You push the reset button."))
