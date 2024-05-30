@@ -1134,7 +1134,7 @@ var/datum/announcement/minor/admin_min_announcer = new
 		//	A.flags_1 |= ADMIN_SPAWNED_1	//ain't got flags, sadly.
 
 
-	log_and_message_admins("[key_name(usr)] spawned [amount] x [chosen] at [ADMIN_COORDJMP(usr)]")
+	log_and_message_admins("spawned [amount] x [chosen] at [ADMIN_COORDJMP(usr)]")
 	feedback_add_details("admin_verb","SA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
