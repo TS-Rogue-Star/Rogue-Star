@@ -1395,10 +1395,11 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/groundbase/civilian/arrivals)
 "bCD" = (
-/obj/machinery/power/terminal{
+/obj/structure/cable,
+/obj/structure/cable/heavyduty,
+/obj/machinery/power/terminal/layer3{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/simulated/floor,
 /area/groundbase/engineering/storage)
 "bCZ" = (
@@ -2644,7 +2645,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/obj/structure/cable/heavyduty/ender{
+/obj/machinery/power/power_transmitter/preset{
 	id = "westwilds"
 	},
 /turf/simulated/floor,
@@ -6500,10 +6501,8 @@
 /turf/simulated/floor/carpet/oracarpet,
 /area/groundbase/engineering/breakroom)
 "gRT" = (
-/obj/structure/cable,
-/obj/structure/cable/heavyduty/ender{
-	id = "enginesat"
-	},
+/obj/machinery/power/power_transmitter/preset/engine,
+/obj/structure/cable/heavyduty,
 /turf/simulated/floor,
 /area/groundbase/engineering/storage)
 "gRZ" = (
@@ -7856,6 +7855,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/command/meeting)
+"ilR" = (
+/obj/structure/cable,
+/obj/structure/cable/heavyduty,
+/turf/simulated/floor,
+/area/groundbase/engineering/storage)
 "imG" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -16533,19 +16537,11 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/groundbase/command/ai/upload)
 "qOq" = (
-/obj/machinery/power/smes{
-	RCon_tag = "Power - Main";
-	charge = 2e+007;
-	cur_coils = 4;
-	input_attempt = 1;
-	input_level = 500000;
-	name = "Main";
-	output_level = 1e+006
-	},
 /obj/structure/cable,
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/machinery/power/smes/preset/mains,
 /turf/simulated/floor,
 /area/groundbase/engineering/storage)
 "qPh" = (
@@ -19347,7 +19343,6 @@
 	},
 /obj/machinery/power/smes{
 	charge = 5e+006;
-	input_attempt = 1;
 	input_level = 200000;
 	output_level = 200000
 	},
@@ -35795,7 +35790,7 @@ lTi
 lsj
 bir
 qOq
-sPu
+gRT
 lyV
 qyS
 nvj
@@ -35935,9 +35930,9 @@ lBz
 jvb
 lBz
 fkX
-gRT
-bCD
 lBz
+bCD
+ilR
 gUN
 kkY
 gqd

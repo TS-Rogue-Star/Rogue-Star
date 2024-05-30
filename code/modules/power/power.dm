@@ -49,7 +49,10 @@
 		for(var/obj/structure/cable/C in T.contents)
 			if(!C)
 				return
-			cable_layer = C.cable_layer
+			if(can_change_cable_layer)
+				cable_layer = C.cable_layer
+			else
+				return
 	else
 		return
 

@@ -115,7 +115,7 @@
 /obj/machinery/power/smes/Destroy()
 	if(SSticker.IsRoundInProgress())
 		var/turf/turf = get_turf(src)
-		message_admins("[src] deleted at [ADMIN_COORDJMP(src)]")
+		message_admins("[src] deleted at [COORD(turf)], [ADMIN_COORDJMP(src)]")
 		log_game("[src] deleted at [COORD(turf)]")
 		investigate_log("deleted at [COORD(turf)]")
 	if(terminal1)
@@ -731,7 +731,7 @@
 		if(G.siemens_coefficient == 0)
 			user_protected = TRUE
 	log_game("SMES FAILURE: <b>[COORD(loc)]</b> User: [usr.ckey], Intensity: [intensity]/100 ")
-	message_admins("SMES FAILURE: <b>[COORD(loc)]</b> User: [usr.ckey], Intensity: [intensity]/100 - <A HREF='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;[ADMIN_COORDJMP(src)]'>JMP</a>")
+	message_admins("SMES FAILURE: <b>[COORD(loc)]</b> User: [usr.ckey], Intensity: [intensity]/100 - [ADMIN_COORDJMP(src)]")
 
 	var/used_hand = h_user.hand?"l_hand":"r_hand"
 

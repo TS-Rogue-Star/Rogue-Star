@@ -32,6 +32,7 @@
 
 /obj/machinery/power/deck_relay/Destroy()
 	. = ..()
+	investigate_log("<font color='red'>deleted</font> at [COORD(src)]","powernet")
 	if(connectionup) //Lose connections
 		connectionup.connectiondown = null
 	if(connectiondown)
@@ -233,8 +234,6 @@
 	. = ..()
 	. += span_notice("[connectionup ? "Detected" : "Undetected"] hub UP.")
 	. += span_notice("[connectiondown ? "Detected" : "Undetected"] hub DOWN.")
-	if(powernet)
-		. += span_notice("The [LOWER_TEXT(GLOB.cable_layer_to_name["[cable_layer]"])] is connected.")
 	/*
 	if(powernet1)
 		. += span_notice("The [LOWER_TEXT(GLOB.cable_layer_to_name["[CABLE_LAYER_1]"])] is connected.")
@@ -245,7 +244,7 @@
 	if(powernet4)
 		. += span_notice("The [LOWER_TEXT(GLOB.cable_layer_to_name["[CABLE_LAYER_4]"])] is connected.") */
 
-/obj/machinery/power/deck_relay/CtrlClick(mob/living/user)
+/obj/machinery/power/deck_relay/AltClick(mob/living/user)	//Ctrl click is pull and it was annoying me
 	to_chat(user, span_warning("You push the reset button."))
 	addtimer(CALLBACK(src, PROC_REF(find_and_connect)), 30, TIMER_UNIQUE)
 	addtimer(CALLBACK(src, PROC_REF(refresh)), 50, TIMER_UNIQUE)

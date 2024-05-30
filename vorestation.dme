@@ -3593,6 +3593,7 @@
 #include "code\modules\power\port_gen.dm"
 #include "code\modules\power\port_gen_vr.dm"
 #include "code\modules\power\power.dm"
+#include "code\modules\power\power_transmitter.dm"
 #include "code\modules\power\powernet.dm"
 #include "code\modules\power\relay_multiz.dm"
 #include "code\modules\power\smes.dm"

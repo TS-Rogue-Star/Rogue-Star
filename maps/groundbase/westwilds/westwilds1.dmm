@@ -4956,7 +4956,7 @@
 /turf/simulated/wall,
 /area/groundbase/science/outpost/atmos)
 "Tj" = (
-/obj/structure/cable/heavyduty/ender{
+/obj/machinery/power/power_transmitter/preset{
 	id = "westwilds"
 	},
 /obj/structure/railing{

@@ -77,9 +77,9 @@
 		connect_to_network()
 
 /obj/machinery/power/emitter/Destroy()
-	message_admins("Emitter deleted at ([x],[y],[z] - <A HREF='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-	log_game("EMITTER([x],[y],[z]) Destroyed/deleted.")
-	investigate_log("<font color='red'>deleted</font> at ([x],[y],[z])","singulo")
+	message_admins("Emitter deleted at [COORD(src)] - [ADMIN_JMP(loc)]",0,1)
+	log_game("EMITTER [COORD(src)] Destroyed/deleted.")
+	investigate_log("<font color='red'>deleted</font> at [COORD(src)]","singulo")
 	..()
 
 /obj/machinery/power/emitter/update_icon()
@@ -101,15 +101,15 @@
 			active = !active
 			if(!active)
 				to_chat(user, "You turn off [src].")
-				message_admins("Emitter turned off by [key_name(user, user.client)](<A HREF='?_src_=holder;[HrefToken()];adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-				log_game("EMITTER([x],[y],[z]) OFF by [key_name(user)]")
-				investigate_log("turned <font color='red'>off</font> by [user.key]","singulo")
+				message_admins("Emitter turned off by [key_name(user, user.client)] [ADMIN_QUE(user)], [ADMIN_JMP(src)]",0,1)
+				log_game("EMITTER [COORD(src)] OFF by [key_name(user)]")
+				investigate_log("turned <font color='red'>off</font> by [user.key] at [COORD(src)]","singulo")
 			else
 				to_chat(user, "You turn on [src].")
 				shot_number = 0
-				message_admins("Emitter turned on by [key_name(user, user.client)](<A HREF='?_src_=holder;[HrefToken()];adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-				log_game("EMITTER([x],[y],[z]) ON by [key_name(user)]")
-				investigate_log("turned <font color='green'>on</font> by [user.key]","singulo")
+				message_admins("Emitter turned on by [key_name(user, user.client)] [ADMIN_QUE(user)], [ADMIN_JMP(src)]",0,1)
+				log_game("EMITTER [COORD(src)] ON by [key_name(user)]")
+				investigate_log("turned <font color='green'>on</font> by [user.key] at [COORD(src)]","singulo")
 			update_icon()
 		else
 			to_chat(user, "<span class='warning'>The controls are locked!</span>")
@@ -139,14 +139,14 @@
 		if(powered)
 			powered = FALSE
 			update_icon()
-			log_game("EMITTER([x],[y],[z]) Lost power and was ON.")
+			log_game("EMITTER [COORD(src)] Lost power and was ON.")
 			investigate_log("lost power and turned <font color='red'>off</font>","singulo")
 		return
 	draw_power(active_power_usage)
 	if(!powered)
 		powered = TRUE
 		update_icon()
-		log_game("EMITTER([x],[y],[z]) Regained power and is ON.")
+		log_game("EMITTER [COORD(src)] Regained power and is ON.")
 		investigate_log("regained power and turned <font color='green'>on</font>","singulo")
 	if(!check_delay())
 		return FALSE
@@ -188,7 +188,7 @@
 /obj/machinery/power/emitter/attackby(obj/item/W, mob/user)
 	if(W.has_tool_quality(TOOL_WRENCH))
 		if(active)
-			to_chat(user, "Turn off [src] first.")
+			to_chat(user, "<span class='notice'>Turn off [src] first.</span>")
 			return
 		switch(state)
 			if(EMITTER_STATE_UNSECURED)
@@ -214,7 +214,7 @@
 	if(W.has_tool_quality(TOOL_WELDER))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(active)
-			to_chat(user, "Turn off [src] first.")
+			to_chat(user, "<span class='notice'>Turn off [src] first.</span>")
 			return
 		switch(state)
 			if(EMITTER_STATE_UNSECURED)
@@ -241,7 +241,7 @@
 					if (do_after(user,20 * WT.toolspeed))
 						if(!src || !WT.isOn()) return
 						state = EMITTER_STATE_BOLTED
-						to_chat(user, "You cut [src] free from the floor.")
+						to_chat(user, "<span class='notice'>You cut [src] free from the floor.</span>")
 						disconnect_from_network()
 				else
 					to_chat(user, "<span class='warning'>You need more welding fuel to complete this task.</span>")
@@ -273,7 +273,7 @@
 			return
 		if(allowed(user))
 			locked = !locked
-			to_chat(user, "The controls are now [locked ? "locked." : "unlocked."]")
+			to_chat(user, "<span class='notice'>The controls are now [locked ? "locked." : "unlocked."]</span>")
 			update_icon() // VOREStation Add
 		else
 			to_chat(user, "<span class='warning'>Access denied.</span>")
