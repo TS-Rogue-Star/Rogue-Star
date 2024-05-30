@@ -494,7 +494,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/techmaint,
+/turf/simulated/floor/tiled/dark,
 /area/groundbase/science/hall)
 "azM" = (
 /obj/machinery/door/firedoor,
@@ -1239,7 +1239,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/tiled/techmaint,
+/turf/simulated/floor/tiled/dark,
 /area/groundbase/science/hall)
 "blP" = (
 /obj/machinery/door/blast/angled_shutter/open{
@@ -3948,7 +3948,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/techmaint,
+/turf/simulated/floor/tiled/dark,
 /area/groundbase/science/hall)
 "dDV" = (
 /obj/structure/cable/yellow{
@@ -6995,7 +6995,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/techmaint,
+/turf/simulated/floor/tiled/dark,
 /area/groundbase/science/hall)
 "gqI" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -7276,7 +7276,7 @@
 	icon_state = "4-8"
 	},
 /obj/effect/landmark/start/xenobio,
-/turf/simulated/floor/tiled/techmaint,
+/turf/simulated/floor/tiled/dark,
 /area/groundbase/science/hall)
 "gEs" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -8148,7 +8148,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/techmaint,
+/turf/simulated/floor/tiled/dark,
 /area/groundbase/science/hall)
 "hoO" = (
 /obj/machinery/hologram/holopad,
@@ -10068,7 +10068,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/techmaint,
+/turf/simulated/floor/tiled/dark,
 /area/groundbase/science/hall)
 "jcW" = (
 /obj/structure/cable/yellow{
@@ -10093,7 +10093,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/techmaint,
+/turf/simulated/floor/tiled/dark,
 /area/groundbase/science/hall)
 "jdw" = (
 /obj/item/weapon/folder/red,
@@ -10760,7 +10760,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/tiled/techmaint,
+/turf/simulated/floor/tiled/dark,
 /area/groundbase/science/hall)
 "jIV" = (
 /obj/machinery/alarm,
@@ -14540,7 +14540,7 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/tiled/techmaint,
+/turf/simulated/floor/tiled/dark,
 /area/groundbase/science/hall)
 "nfV" = (
 /obj/machinery/portable_atmospherics/canister/phoron,
@@ -14591,7 +14591,7 @@
 /area/groundbase/civilian/bar)
 "nhY" = (
 /obj/effect/landmark/start/xenobio,
-/turf/simulated/floor/tiled/techmaint,
+/turf/simulated/floor/tiled/dark,
 /area/groundbase/science/hall)
 "niH" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
@@ -15116,7 +15116,7 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/tiled/techmaint,
+/turf/simulated/floor/tiled/dark,
 /area/groundbase/science/hall)
 "nGu" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5,
@@ -15768,7 +15768,7 @@
 /obj/effect/landmark{
 	name = "lightsout"
 	},
-/turf/simulated/floor/tiled/techmaint,
+/turf/simulated/floor/tiled/dark,
 /area/groundbase/science/hall)
 "oqO" = (
 /obj/structure/disposalpipe/segment,
@@ -18116,7 +18116,7 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/tiled/techmaint,
+/turf/simulated/floor/tiled/dark,
 /area/groundbase/science/hall)
 "qcM" = (
 /obj/structure/cable/yellow{
@@ -18395,7 +18395,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/tiled/techmaint,
+/turf/simulated/floor/tiled/dark,
 /area/groundbase/science/hall)
 "qsm" = (
 /obj/structure/table/standard,
@@ -20413,9 +20413,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/hydroponics)
-"rWD" = (
-/turf/simulated/floor/tiled/techmaint,
-/area/groundbase/science/hall)
 "rWL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -22810,7 +22807,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/hologram/holopad,
-/turf/simulated/floor/tiled/techmaint,
+/turf/simulated/floor/tiled/dark,
 /area/groundbase/science/hall)
 "ucm" = (
 /obj/structure/cable{
@@ -24701,7 +24698,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/techmaint,
+/turf/simulated/floor/tiled/dark,
 /area/groundbase/science/hall)
 "vNK" = (
 /obj/structure/table/reinforced,
@@ -26092,7 +26089,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/tiled/techmaint,
+/turf/simulated/floor/tiled/dark,
 /area/groundbase/science/hall)
 "xdX" = (
 /obj/machinery/firealarm,
@@ -36583,14 +36580,14 @@ kNr
 awP
 vNh
 jdv
-rWD
+xxo
 azv
 nhY
 nhY
 dDF
 ble
-rWD
-rWD
+xxo
+xxo
 hoA
 tfX
 meE
@@ -36865,17 +36862,17 @@ mdL
 kFe
 kNr
 kYC
-rWD
+xxo
 dDF
 vNh
-rWD
+xxo
 nhY
 gEe
 jdv
 nhY
-rWD
-rWD
-rWD
+xxo
+xxo
+xxo
 ioh
 meE
 uut
@@ -38937,8 +38934,8 @@ amy
 khe
 ref
 khe
-jUi
-eiI
+amy
+amy
 eiI
 jUi
 jUi

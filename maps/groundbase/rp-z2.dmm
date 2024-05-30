@@ -94,10 +94,7 @@
 /area/groundbase/security/warden)
 "at" = (
 /obj/structure/table/steel,
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/tiled,
 /area/groundbase/science/abandoned)
 "av" = (
 /turf/simulated/open,
@@ -2698,10 +2695,7 @@
 /obj/structure/table/steel,
 /obj/random/maintenance/research,
 /obj/item/clothing/glasses/science,
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/tiled,
 /area/groundbase/science/abandoned)
 "iN" = (
 /obj/machinery/door/blast/regular{
@@ -3901,10 +3895,8 @@
 "mM" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/table/steel,
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/obj/machinery/reagentgrinder,
+/turf/simulated/floor/tiled,
 /area/groundbase/science/abandoned)
 "mN" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
@@ -5863,10 +5855,7 @@
 	dir = 1;
 	pixel_y = -30
 	},
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/tiled,
 /area/groundbase/science/abandoned)
 "sO" = (
 /obj/structure/table/woodentable,
@@ -8072,10 +8061,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/tiled,
 /area/groundbase/science/abandoned)
 "zq" = (
 /obj/structure/toilet{
@@ -8359,10 +8345,7 @@
 "Ar" = (
 /obj/structure/table/steel,
 /obj/item/weapon/reagent_containers/glass/beaker,
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/tiled,
 /area/groundbase/science/abandoned)
 "As" = (
 /obj/structure/cable/yellow{
@@ -8605,10 +8588,7 @@
 	pixel_y = 4
 	},
 /obj/item/weapon/pen,
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/tiled,
 /area/groundbase/science/abandoned)
 "AY" = (
 /obj/structure/railing{
@@ -9719,10 +9699,7 @@
 /obj/structure/prop/rock/crystal_dust{
 	pixel_y = 5
 	},
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/tiled,
 /area/groundbase/science/abandoned)
 "EK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -11085,14 +11062,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/dorms/bathroom)
-"IU" = (
-/obj/structure/table/steel,
-/obj/random/maintenance/research,
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
-/area/groundbase/science/abandoned)
 "IV" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -11294,10 +11263,7 @@
 /turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/level2/ne)
 "Jx" = (
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/tiled,
 /area/groundbase/science/abandoned)
 "Jy" = (
 /obj/structure/sign/painting/public{
@@ -11661,10 +11627,7 @@
 /obj/structure/bed/chair/office/light{
 	dir = 1
 	},
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/tiled,
 /area/groundbase/science/abandoned)
 "KF" = (
 /turf/simulated/floor/outdoors/grass/seasonal/dark,
@@ -12446,11 +12409,8 @@
 /area/groundbase/level2/ne)
 "Nf" = (
 /obj/structure/table/steel,
-/obj/machinery/reagentgrinder,
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/obj/random/maintenance/research,
+/turf/simulated/floor/tiled,
 /area/groundbase/science/abandoned)
 "Ng" = (
 /turf/simulated/floor/outdoors/grass/seasonal,
@@ -12661,10 +12621,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/tiled,
 /area/groundbase/science/abandoned)
 "NG" = (
 /obj/machinery/door/airlock{
@@ -13582,10 +13539,7 @@
 /obj/structure/bed/chair/office/light{
 	dir = 8
 	},
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/tiled,
 /area/groundbase/science/abandoned)
 "Qi" = (
 /turf/simulated/wall,
@@ -14105,6 +14059,12 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/command/bridge)
+"RH" = (
+/obj/effect/landmark{
+	name = "maint_pred"
+	},
+/turf/simulated/floor/tiled,
+/area/groundbase/science/abandoned)
 "RI" = (
 /obj/structure/bed/chair/comfy/brown{
 	dir = 1
@@ -23469,7 +23429,7 @@ EZ
 dE
 mM
 AW
-IU
+Nf
 Ar
 at
 iL
@@ -23753,7 +23713,7 @@ JI
 dE
 Nf
 Jx
-Jx
+RH
 Jx
 Jx
 sN
@@ -28236,8 +28196,8 @@ Ng
 Ng
 cU
 Ng
-bR
-bR
+Ng
+Ng
 bR
 bR
 bR
@@ -28381,7 +28341,7 @@ Ng
 Ng
 Ng
 Ng
-bR
+Ng
 bR
 bR
 bR
@@ -28523,7 +28483,7 @@ Ng
 Ie
 Ie
 Ng
-bR
+Ng
 bR
 bR
 bR
@@ -28665,12 +28625,12 @@ Ng
 Ng
 Ie
 Ng
-bR
-bR
-bR
-bR
-bR
-bR
+Ng
+Ng
+Ng
+Ng
+Ng
+Ng
 bR
 bR
 bR
@@ -28808,11 +28768,11 @@ Ng
 Ng
 Ng
 Ng
-bR
-bR
-bR
-bR
-bR
+Ng
+Ng
+Ng
+Ng
+Ng
 bR
 bR
 bR
@@ -28951,10 +28911,10 @@ of
 of
 GB
 Ng
-bR
-bR
-bR
-bR
+Ng
+Ng
+Ng
+Ng
 bR
 bR
 bR
