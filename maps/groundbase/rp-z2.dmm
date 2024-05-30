@@ -381,12 +381,6 @@
 /turf/simulated/wall,
 /area/groundbase/cargo/office)
 "bh" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/structure/railing{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
@@ -475,7 +469,7 @@
 	edge_blending_priority = -1;
 	outdoors = 1
 	},
-/area/groundbase/level2/sw)
+/area/groundbase/science/hall)
 "bw" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/alarm{
@@ -627,6 +621,10 @@
 	},
 /turf/simulated/floor/carpet/blue,
 /area/groundbase/medical/psych)
+"ca" = (
+/obj/structure/stairs/spawner/north,
+/turf/simulated/floor/bmarble,
+/area/groundbase/civilian/bar)
 "cb" = (
 /obj/structure/railing,
 /obj/structure/railing{
@@ -773,7 +771,7 @@
 	edge_blending_priority = -1;
 	outdoors = 1
 	},
-/area/groundbase/level2/sw)
+/area/groundbase/science/hall)
 "cD" = (
 /obj/effect/floor_decal/steeldecal/steel_decals10{
 	dir = 9
@@ -1877,10 +1875,7 @@
 /area/groundbase/cargo/office)
 "fL" = (
 /obj/structure/prop/machine/tgmc_console1,
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/tiled,
 /area/groundbase/science/abandoned)
 "fM" = (
 /obj/structure/railing{
@@ -1926,9 +1921,6 @@
 /turf/simulated/floor/lino,
 /area/groundbase/civilian/chapel/office)
 "fT" = (
-/obj/structure/railing{
-	dir = 4
-	},
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -2465,6 +2457,12 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/medical/virology)
+"hY" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/simulated/open,
+/area/groundbase/level2/nw)
 "hZ" = (
 /turf/simulated/wall,
 /area/groundbase/level2/nw)
@@ -5433,6 +5431,13 @@
 	outdoors = 1
 	},
 /area/groundbase/science/hall)
+"rz" = (
+/obj/structure/table/bench/steel,
+/turf/simulated/floor/tiled{
+	edge_blending_priority = -1;
+	outdoors = 1
+	},
+/area/groundbase/science/hall)
 "rB" = (
 /turf/simulated/floor/reinforced{
 	name = "Holodeck Projector Floor"
@@ -7266,6 +7271,9 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
 /turf/simulated/floor/tiled,
 /area/groundbase/science/xenoautopsy)
 "wJ" = (
@@ -8029,10 +8037,7 @@
 "zm" = (
 /obj/effect/decal/cleanable/cobweb2,
 /obj/structure/prop/machine/tgmc_console3,
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/tiled,
 /area/groundbase/science/abandoned)
 "zn" = (
 /obj/structure/disposalpipe/tagger{
@@ -8535,6 +8540,24 @@
 	},
 /turf/simulated/floor/bmarble,
 /area/groundbase/civilian/bar)
+"AP" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/bmarble,
+/area/holodeck_control)
 "AQ" = (
 /turf/simulated/floor/tiled/white,
 /area/groundbase/dorms/bathroom)
@@ -8712,7 +8735,7 @@
 	edge_blending_priority = -1;
 	outdoors = 1
 	},
-/area/groundbase/level2/sw)
+/area/groundbase/science/hall)
 "Bt" = (
 /obj/machinery/bookbinder,
 /obj/machinery/light{
@@ -8785,14 +8808,8 @@
 	},
 /area/groundbase/civilian/bar)
 "BF" = (
-/obj/effect/floor_decal/milspec/color/purple/half{
-	dir = 8
-	},
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
-/area/groundbase/level2/sw)
+/turf/simulated/wall,
+/area/groundbase/civilian/bar)
 "BG" = (
 /obj/machinery/computer/security{
 	dir = 8
@@ -9356,16 +9373,14 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/prison/cell_block/gb)
 "Dz" = (
-/obj/machinery/light/small{
-	dir = 8
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 1
 	},
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
+/turf/simulated/floor/tiled{
+	edge_blending_priority = -1;
+	outdoors = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/bmarble,
-/area/groundbase/civilian/bar)
+/area/groundbase/science/hall)
 "DA" = (
 /obj/structure/bed/chair{
 	dir = 4
@@ -10676,9 +10691,6 @@
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hall2)
 "HW" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
 	},
@@ -11696,13 +11708,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hall2)
-"KL" = (
-/obj/structure/railing,
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/simulated/floor/bmarble,
-/area/groundbase/civilian/bar)
 "KO" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -12359,7 +12364,7 @@
 	edge_blending_priority = -1;
 	outdoors = 1
 	},
-/area/groundbase/level2/sw)
+/area/groundbase/science/hall)
 "MW" = (
 /obj/structure/table/woodentable,
 /obj/machinery/photocopier/faxmachine{
@@ -12712,24 +12717,6 @@
 /obj/structure/railing/grey,
 /turf/simulated/open,
 /area/prison/cell_block/gb/abandonedbrig)
-"NY" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/bmarble,
-/area/holodeck_control)
 "NZ" = (
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/Chemistry)
@@ -13471,7 +13458,7 @@
 	edge_blending_priority = -1;
 	outdoors = 1
 	},
-/area/groundbase/level2/sw)
+/area/groundbase/science/hall)
 "PV" = (
 /obj/structure/railing{
 	dir = 1
@@ -14161,25 +14148,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/groundbase/medical/psych)
-"RW" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	icon_state = "16-0"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
-/obj/machinery/atmospherics/pipe/zpipe/up/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/zpipe/up/scrubbers{
-	dir = 4
-	},
-/obj/structure/stairs/spawner/south,
-/turf/simulated/floor/bmarble,
-/area/holodeck_control)
 "RX" = (
 /obj/machinery/computer{
 	dir = 8
@@ -14519,6 +14487,22 @@
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/office)
+"SX" = (
+/obj/structure/stairs/spawner/south,
+/obj/machinery/atmospherics/pipe/zpipe/up/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/zpipe/up/scrubbers{
+	dir = 8
+	},
+/obj/structure/cable/yellow{
+	icon_state = "16-0"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/bmarble,
+/area/groundbase/civilian/bar)
 "SY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -14579,15 +14563,6 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor,
 /area/groundbase/medical/lobby)
-"Tg" = (
-/obj/structure/railing{
-	dir = 1
-	},
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/simulated/floor/bmarble,
-/area/groundbase/civilian/bar)
 "Th" = (
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
@@ -15315,7 +15290,7 @@
 	edge_blending_priority = -1;
 	outdoors = 1
 	},
-/area/groundbase/level2/sw)
+/area/groundbase/science/hall)
 "Ve" = (
 /obj/structure/cable/yellow{
 	icon_state = "32-8"
@@ -15914,7 +15889,7 @@
 	edge_blending_priority = -1;
 	outdoors = 1
 	},
-/area/groundbase/level2/sw)
+/area/groundbase/science/hall)
 "Xl" = (
 /obj/structure/table/reinforced,
 /obj/item/device/flashlight/lamp/green{
@@ -16205,7 +16180,7 @@
 	edge_blending_priority = -1;
 	outdoors = 1
 	},
-/area/groundbase/level2/sw)
+/area/groundbase/science/hall)
 "Yo" = (
 /obj/structure/table/reinforced,
 /obj/item/device/megaphone,
@@ -16462,7 +16437,7 @@
 	edge_blending_priority = -1;
 	outdoors = 1
 	},
-/area/groundbase/level2/sw)
+/area/groundbase/science/hall)
 "Za" = (
 /obj/structure/curtain/black{
 	color = "#361447"
@@ -22944,14 +22919,14 @@ Wf
 Wf
 Wf
 Wf
-Tg
+qy
 Vn
 Ax
-Dz
+Dq
 Dq
 HW
 VK
-KL
+WF
 SI
 TH
 TH
@@ -23719,8 +23694,8 @@ Jx
 sN
 rj
 Bq
-BF
-BF
+cv
+cv
 YZ
 PT
 fu
@@ -23860,10 +23835,10 @@ fL
 Jx
 Jx
 nm
-fv
-fv
-fv
-Zo
+Dz
+mV
+mV
+rz
 Xk
 fu
 av
@@ -25225,9 +25200,9 @@ Ax
 Dq
 xH
 UF
-it
-RW
-mQ
+UF
+Ea
+UF
 UF
 UF
 wF
@@ -25363,12 +25338,12 @@ kq
 Hl
 Zn
 gO
-kq
-kq
+Vn
+Vn
 bh
 fT
-fT
-NY
+AP
+RJ
 RJ
 RJ
 RJ
@@ -25503,14 +25478,14 @@ Wf
 Wf
 Wf
 Wf
-Wf
-Wf
-Wf
-Wf
-Wf
-Wf
-Wf
-Wf
+BF
+ca
+Vn
+Vn
+Vn
+Vn
+SX
+BF
 Wf
 Wf
 CU
@@ -25646,12 +25621,12 @@ TH
 TH
 TH
 TH
-TH
-TH
-TH
-TH
-TH
-TH
+hY
+hY
+hY
+hY
+hY
+hY
 TH
 TH
 TH
@@ -28196,8 +28171,8 @@ Ng
 Ng
 cU
 Ng
-Ng
-Ng
+bR
+bR
 bR
 bR
 bR

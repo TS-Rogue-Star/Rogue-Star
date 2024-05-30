@@ -24,16 +24,15 @@
 	name = "impassable rock"
 	},
 /area/groundbase/level3/ne)
-"ay" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/bmarble,
-/area/groundbase/level3/greenhouse)
 "aD" = (
 /turf/simulated/floor/outdoors/grass/seasonal,
 /area/groundbase/level3/ne)
+"aE" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/simulated/open,
+/area/groundbase/level3/nw)
 "aJ" = (
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 10
@@ -210,11 +209,12 @@
 /turf/simulated/floor/wood,
 /area/groundbase/medical/cmo)
 "cj" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 4
+/obj/structure/railing,
+/turf/simulated/floor{
+	edge_blending_priority = -1;
+	outdoors = 1
 	},
-/turf/simulated/floor/bmarble,
-/area/groundbase/level3/greenhouse)
+/area/groundbase/level3/nw)
 "cq" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -296,11 +296,9 @@
 /turf/simulated/wall/r_wall,
 /area/groundbase/level3/ne)
 "ds" = (
-/obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 4
-	},
-/turf/simulated/floor/bmarble,
-/area/groundbase/level3/greenhouse)
+/obj/structure/railing,
+/turf/simulated/open,
+/area/groundbase/level3/nw)
 "dy" = (
 /turf/simulated/floor/tiled{
 	edge_blending_priority = -1;
@@ -372,12 +370,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/uhallway)
-"et" = (
-/obj/structure/table/sifwoodentable,
-/turf/simulated/floor/outdoors/grass/sif{
-	outdoors = 0
-	},
-/area/groundbase/level3/greenhouse)
 "eG" = (
 /turf/simulated/wall,
 /area/groundbase/civilian/pilot)
@@ -507,6 +499,12 @@
 	},
 /turf/simulated/floor/bmarble,
 /area/groundbase/civilian/pilot)
+"ge" = (
+/obj/structure/table/bench/sifwooden,
+/turf/simulated/floor/outdoors/grass/sif{
+	outdoors = 0
+	},
+/area/groundbase/civilian/bar/garden)
 "gh" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -704,6 +702,18 @@
 /obj/effect/floor_decal/corner/paleblue/full,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/patient1)
+"hV" = (
+/obj/structure/table/sifwooden_reinforced,
+/turf/simulated/floor/outdoors/grass/sif{
+	outdoors = 0
+	},
+/area/groundbase/civilian/bar/garden)
+"ic" = (
+/obj/machinery/light/flamp/noshade,
+/turf/simulated/floor/outdoors/grass/sif{
+	outdoors = 0
+	},
+/area/groundbase/civilian/bar/garden)
 "ig" = (
 /turf/simulated/floor/reinforced{
 	edge_blending_priority = -1
@@ -798,14 +808,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/paramedic)
-"jq" = (
-/obj/machinery/light/floortube{
-	dir = 4
-	},
-/turf/simulated/floor/outdoors/grass/sif/forest{
-	outdoors = 0
-	},
-/area/groundbase/level3/greenhouse)
 "jr" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 9
@@ -985,12 +987,6 @@
 /obj/structure/window/reinforced/full,
 /turf/simulated/floor,
 /area/groundbase/security/hall3)
-"lJ" = (
-/obj/structure/table/bench/sifwooden,
-/turf/simulated/floor/outdoors/grass/sif{
-	outdoors = 0
-	},
-/area/groundbase/level3/greenhouse)
 "lN" = (
 /obj/structure/table/bench/marble,
 /obj/effect/floor_decal/corner/paleblue/full{
@@ -1187,11 +1183,6 @@
 	},
 /turf/simulated/open,
 /area/groundbase/medical/uhallway)
-"nn" = (
-/turf/simulated/floor/outdoors/grass/sif/forest{
-	outdoors = 0
-	},
-/area/groundbase/level3/greenhouse)
 "nu" = (
 /obj/structure/lattice,
 /turf/simulated/open,
@@ -1417,14 +1408,22 @@
 /obj/structure/flora/pottedplant/minitree,
 /turf/simulated/floor/wood,
 /area/groundbase/medical/cmo)
-"pA" = (
-/obj/machinery/alarm{
-	dir = 8
+"pk" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/multi_tile/glass{
+	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/bmarble,
-/area/groundbase/level3/greenhouse)
+/area/groundbase/civilian/bar/garden)
+"pm" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/simulated/floor{
+	edge_blending_priority = -1;
+	outdoors = 1
+	},
+/area/groundbase/level3/nw)
 "pD" = (
 /obj/machinery/atmospherics/pipe/zpipe/down/scrubbers{
 	dir = 1
@@ -1826,15 +1825,6 @@
 "sQ" = (
 /turf/simulated/floor/outdoors/sidewalk/slab/virgo3c,
 /area/groundbase/level3/nw)
-"sS" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/light_switch{
-	dir = 8;
-	pixel_x = 30
-	},
-/turf/simulated/floor/bmarble,
-/area/groundbase/level3/greenhouse)
 "sX" = (
 /obj/structure/mirror{
 	dir = 4;
@@ -2027,6 +2017,14 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/patient2)
+"um" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/outdoors/grass/sif/forest{
+	outdoors = 0
+	},
+/area/groundbase/civilian/bar/garden)
 "un" = (
 /obj/structure/table/glass,
 /obj/machinery/computer/med_data/laptop{
@@ -2247,16 +2245,18 @@
 /turf/simulated/wall,
 /area/groundbase/medical/patient4)
 "wo" = (
+/obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
-	icon_state = "32-2"
+	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/zpipe/down/supply,
-/obj/machinery/atmospherics/pipe/zpipe/down/scrubbers,
-/obj/structure/railing{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
 	},
 /turf/simulated/floor/bmarble,
-/area/groundbase/level3/nw)
+/area/groundbase/civilian/bar/garden)
 "wp" = (
 /obj/structure/bed/padded,
 /obj/item/weapon/bedsheet/medical,
@@ -2314,6 +2314,17 @@
 /obj/machinery/atmospherics/unary/vent_pump/on,
 /turf/simulated/floor/carpet/sblucarpet,
 /area/groundbase/command/hop)
+"wG" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/turf/simulated/floor{
+	edge_blending_priority = -1;
+	outdoors = 0
+	},
+/area/groundbase/civilian/bar/garden)
 "wH" = (
 /obj/machinery/door/airlock{
 	id_tag = null;
@@ -2369,11 +2380,10 @@
 /turf/simulated/wall,
 /area/groundbase/medical/patient2)
 "xp" = (
-/obj/machinery/atmospherics/unary/vent_scrubber/on{
-	dir = 4
+/turf/simulated/floor/outdoors/grass/sif{
+	outdoors = 0
 	},
-/turf/simulated/floor/bmarble,
-/area/groundbase/level3/greenhouse)
+/area/groundbase/civilian/bar/garden)
 "xt" = (
 /obj/structure/table/woodentable,
 /obj/machinery/microwave,
@@ -2441,6 +2451,19 @@
 "xT" = (
 /turf/simulated/floor/carpet/sblucarpet,
 /area/groundbase/security/iaa1)
+"xU" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 4
+	},
+/obj/machinery/light_switch{
+	dir = 8;
+	pixel_x = 30
+	},
+/turf/simulated/floor/bmarble,
+/area/groundbase/civilian/bar/garden)
 "xZ" = (
 /obj/machinery/light,
 /obj/structure/table/woodentable,
@@ -2599,6 +2622,20 @@
 	outdoors = 1
 	},
 /area/groundbase/exploration/shuttlepad)
+"yI" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/bmarble{
+	outdoors = 1
+	},
+/area/groundbase/level3/nw)
 "yN" = (
 /obj/machinery/light{
 	dir = 1
@@ -2613,6 +2650,15 @@
 	name = "hotspring"
 	},
 /area/groundbase/dorms/bathroom)
+"yW" = (
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/machinery/firealarm{
+	dir = 4
+	},
+/turf/simulated/floor/bmarble,
+/area/groundbase/civilian/bar/garden)
 "zd" = (
 /obj/machinery/button/remote/airlock{
 	id = "hotspring1";
@@ -2622,6 +2668,14 @@
 	},
 /turf/simulated/floor/wood,
 /area/groundbase/hotspring)
+"zp" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/outdoors/grass/sif{
+	outdoors = 0
+	},
+/area/groundbase/civilian/bar/garden)
 "zu" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-8"
@@ -2667,15 +2721,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/groundbase/command/hop)
-"zZ" = (
-/obj/structure/table/sifwoodentable,
-/obj/item/device/flashlight/lantern{
-	pixel_y = 7
-	},
-/turf/simulated/floor/outdoors/grass/sif{
-	outdoors = 0
-	},
-/area/groundbase/level3/greenhouse)
 "Af" = (
 /turf/simulated/floor{
 	edge_blending_priority = -1;
@@ -2880,6 +2925,18 @@
 	outdoors = 1
 	},
 /area/groundbase/medical/patio)
+"CK" = (
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	dir = 4
+	},
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/simulated/floor/bmarble,
+/area/groundbase/civilian/bar/garden)
 "CW" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
@@ -2908,6 +2965,16 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hos)
+"Dj" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/turf/simulated/floor{
+	edge_blending_priority = -1;
+	outdoors = 0
+	},
+/area/groundbase/civilian/bar/garden)
 "Dk" = (
 /obj/machinery/door/airlock/command{
 	id_tag = "cmodoor";
@@ -3110,6 +3177,15 @@
 "EL" = (
 /turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/level3/ne)
+"EO" = (
+/obj/machinery/alarm{
+	dir = 8
+	},
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/simulated/floor/bmarble,
+/area/groundbase/civilian/bar/garden)
 "EP" = (
 /obj/machinery/photocopier/faxmachine{
 	department = "CMO's Office"
@@ -3169,15 +3245,12 @@
 /turf/simulated/floor/carpet/sblucarpet,
 /area/groundbase/security/iaa1)
 "Fn" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
+/obj/machinery/door/airlock/multi_tile/glass{
+	dir = 1
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/bmarble,
-/area/groundbase/level3/greenhouse)
+/area/groundbase/civilian/bar/garden)
 "Fo" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -3350,15 +3423,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/paramedic)
-"HC" = (
-/obj/machinery/power/apc{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/yellow,
-/turf/simulated/floor/bmarble,
-/area/groundbase/level3/greenhouse)
 "HF" = (
 /obj/structure/filingcabinet,
 /obj/machinery/requests_console{
@@ -3457,11 +3521,6 @@
 "Io" = (
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/medical/uhallway)
-"Iq" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/full,
-/turf/simulated/floor,
-/area/groundbase/level3/greenhouse)
 "Is" = (
 /turf/simulated/wall/r_wall,
 /area/groundbase/exploration/shuttlepad)
@@ -3565,8 +3624,11 @@
 "IS" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
-/turf/simulated/floor,
-/area/groundbase/level3/nw)
+/turf/simulated/floor{
+	edge_blending_priority = -1;
+	outdoors = 0
+	},
+/area/groundbase/civilian/bar/garden)
 "IT" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
@@ -3577,6 +3639,17 @@
 /obj/effect/landmark/start/cmo,
 /turf/simulated/floor/wood,
 /area/groundbase/medical/cmo)
+"Jj" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/turf/simulated/floor{
+	edge_blending_priority = -1;
+	outdoors = 0
+	},
+/area/groundbase/civilian/bar/garden)
 "Jm" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/wood,
@@ -3756,6 +3829,12 @@
 	},
 /turf/simulated/open,
 /area/groundbase/medical/uhallway)
+"KS" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/simulated/open,
+/area/groundbase/level3/nw)
 "KT" = (
 /obj/machinery/door/airlock{
 	id_tag = "hotspring1";
@@ -4129,11 +4208,9 @@
 /turf/simulated/floor/bmarble,
 /area/groundbase/cargo/office)
 "Or" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
-	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/bmarble,
-/area/groundbase/level3/greenhouse)
+/area/groundbase/civilian/bar/garden)
 "Ot" = (
 /turf/simulated/floor/bmarble,
 /area/groundbase/cargo/office)
@@ -4248,6 +4325,16 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/patient1)
+"PB" = (
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/simulated/floor{
+	edge_blending_priority = -1;
+	outdoors = 1
+	},
+/area/groundbase/level3/nw)
 "PE" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -4326,6 +4413,18 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hos)
+"Qs" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/turf/simulated/floor{
+	edge_blending_priority = -1;
+	outdoors = 0
+	},
+/area/groundbase/civilian/bar/garden)
 "QH" = (
 /obj/machinery/door/airlock{
 	id_tag = "pilotB";
@@ -4391,6 +4490,18 @@
 	outdoors = 1
 	},
 /area/groundbase/medical/patio)
+"Rw" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/turf/simulated/floor{
+	edge_blending_priority = -1;
+	outdoors = 0
+	},
+/area/groundbase/civilian/bar/garden)
 "Rx" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin{
@@ -4495,11 +4606,6 @@
 	},
 /turf/simulated/open,
 /area/groundbase/level3/sw/open)
-"Sm" = (
-/turf/simulated/floor/outdoors/grass/sif{
-	outdoors = 0
-	},
-/area/groundbase/level3/greenhouse)
 "So" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -4867,14 +4973,10 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/medicalshowers)
 "VG" = (
-/obj/machinery/light/floortube{
-	dir = 8;
-	pixel_x = 1
-	},
 /turf/simulated/floor/outdoors/grass/sif/forest{
 	outdoors = 0
 	},
-/area/groundbase/level3/greenhouse)
+/area/groundbase/civilian/bar/garden)
 "VK" = (
 /obj/structure/table/bench/marble,
 /obj/effect/landmark/start/medical,
@@ -4979,6 +5081,18 @@
 "Wy" = (
 /turf/simulated/floor/outdoors/grass/seasonal,
 /area/groundbase/level3/se)
+"Wz" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/simulated/floor{
+	edge_blending_priority = -1;
+	outdoors = 1
+	},
+/area/groundbase/level3/nw)
 "WB" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/polarized/full{
@@ -5078,6 +5192,20 @@
 "Xz" = (
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hall3)
+"XD" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/bmarble{
+	outdoors = 1
+	},
+/area/groundbase/level3/nw)
 "XE" = (
 /obj/machinery/door/airlock{
 	name = "Swimsuits and Lockers"
@@ -5181,12 +5309,10 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/security/hos)
 "Yo" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
+/turf/simulated/floor/bmarble{
+	outdoors = 1
 	},
-/turf/simulated/floor/bmarble,
-/area/groundbase/level3/greenhouse)
+/area/groundbase/level3/nw)
 "Yp" = (
 /turf/simulated/floor/carpet/sblucarpet,
 /area/groundbase/security/iaa2)
@@ -5280,6 +5406,16 @@
 /obj/effect/floor_decal/milspec/color/red/half,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/iaa1)
+"Zi" = (
+/obj/machinery/atmospherics/pipe/zpipe/down/supply,
+/obj/machinery/atmospherics/pipe/zpipe/down/scrubbers,
+/obj/structure/cable/yellow{
+	icon_state = "32-2"
+	},
+/turf/simulated/floor/bmarble{
+	outdoors = 1
+	},
+/area/groundbase/level3/nw)
 "Zq" = (
 /obj/structure/railing/grey{
 	dir = 4
@@ -11811,19 +11947,19 @@ yx
 yx
 yx
 yx
-Iq
-Iq
-Iq
-Iq
-Iq
-Iq
-Iq
-Iq
-Iq
-Iq
-Iq
-Iq
-Iq
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
+yx
 PZ
 PZ
 PZ
@@ -11945,27 +12081,27 @@ yx
 yx
 yx
 yx
+IS
+IS
+IS
+IS
+IS
+IS
+IS
+IS
+IS
+IS
+IS
+IS
+IS
+IS
+IS
+IS
 yx
 yx
 yx
 yx
 yx
-yx
-yx
-yx
-Iq
-nn
-nn
-nn
-nn
-nn
-nn
-nn
-nn
-nn
-nn
-nn
-Iq
 PZ
 PZ
 PZ
@@ -12087,27 +12223,27 @@ yx
 yx
 yx
 yx
-yx
-yx
-yx
-yx
-yx
-yx
-yx
-yx
-Iq
-nn
+IS
 VG
-nn
-nn
-nn
-nn
-nn
-nn
-nn
 VG
-nn
-Iq
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+IS
+yx
+yx
+yx
+yx
+yx
 PZ
 PZ
 PZ
@@ -12229,27 +12365,27 @@ yx
 yx
 yx
 yx
+IS
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+IS
 yx
 yx
 yx
 yx
 yx
-yx
-yx
-yx
-Iq
-nn
-nn
-nn
-nn
-nn
-nn
-nn
-nn
-nn
-nn
-nn
-Iq
 PZ
 PZ
 PZ
@@ -12371,27 +12507,27 @@ yx
 yx
 yx
 yx
+IS
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+IS
 yx
 yx
 yx
 yx
 yx
-yx
-yx
-yx
-Iq
-nn
-nn
-nn
-nn
-Sm
-Sm
-nn
-nn
-nn
-nn
-nn
-Iq
 PZ
 PZ
 PZ
@@ -12513,27 +12649,27 @@ yx
 yx
 yx
 yx
+IS
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+IS
 yx
 yx
 yx
 yx
 yx
-yx
-yx
-yx
-Iq
-nn
-nn
-nn
-Sm
-Sm
-Sm
-Sm
-Sm
-nn
-nn
-nn
-Iq
 PZ
 PZ
 PZ
@@ -12655,27 +12791,27 @@ yx
 yx
 yx
 yx
+IS
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+IS
 yx
 yx
 yx
 yx
 yx
-yx
-yx
-yx
-Iq
-nn
-nn
-nn
-Sm
-lJ
-et
-lJ
-Sm
-nn
-nn
-nn
-Iq
 PZ
 PZ
 PZ
@@ -12797,27 +12933,27 @@ yx
 yx
 yx
 yx
+IS
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+VG
+IS
 yx
 yx
 yx
 yx
 yx
-yx
-yx
-yx
-Iq
-nn
-nn
-nn
-Sm
-lJ
-zZ
-lJ
-Sm
-nn
-nn
-nn
-Iq
 PZ
 PZ
 PZ
@@ -12939,27 +13075,27 @@ yx
 yx
 yx
 yx
+IS
+VG
+VG
+VG
+VG
+ic
+hV
+hV
+hV
+hV
+ic
+VG
+VG
+VG
+VG
+IS
 yx
 yx
 yx
 yx
 yx
-yx
-yx
-yx
-Iq
-nn
-nn
-nn
-Sm
-lJ
-et
-lJ
-Sm
-nn
-nn
-nn
-Iq
 PZ
 PZ
 PZ
@@ -13081,27 +13217,27 @@ yx
 yx
 yx
 yx
+IS
+VG
+VG
+VG
+VG
+xp
+ge
+ge
+ge
+ge
+xp
+VG
+VG
+VG
+VG
+IS
 yx
 yx
 yx
 yx
 yx
-yx
-yx
-yx
-Iq
-nn
-nn
-nn
-Sm
-Sm
-Sm
-Sm
-Sm
-nn
-nn
-nn
-Iq
 PZ
 PZ
 PZ
@@ -13223,27 +13359,27 @@ yx
 yx
 yx
 yx
+IS
+VG
+VG
+VG
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+xp
+VG
+VG
+VG
+IS
 yx
 yx
 yx
 yx
 yx
-yx
-yx
-yx
-Iq
-nn
-nn
-nn
-nn
-Sm
-Sm
-Sm
-nn
-nn
-nn
-nn
-Iq
 PZ
 PZ
 PZ
@@ -13365,27 +13501,27 @@ yx
 yx
 yx
 yx
+IS
+VG
+VG
+VG
+xp
+VG
+VG
+VG
+VG
+VG
+VG
+xp
+VG
+VG
+VG
+IS
 yx
 yx
 yx
 yx
 yx
-yx
-yx
-yx
-Iq
-nn
-nn
-nn
-nn
-Sm
-Sm
-nn
-nn
-nn
-nn
-nn
-Iq
 PZ
 PZ
 PZ
@@ -13507,27 +13643,27 @@ yx
 yx
 yx
 yx
+IS
+VG
+VG
+xp
+xp
+VG
+VG
+VG
+VG
+VG
+VG
+xp
+xp
+VG
+VG
+IS
 yx
 yx
 yx
 yx
 yx
-yx
-yx
-yx
-Iq
-nn
-jq
-nn
-nn
-Sm
-Sm
-nn
-nn
-nn
-jq
-nn
-Iq
 PZ
 PZ
 PZ
@@ -13649,27 +13785,27 @@ yx
 yx
 yx
 yx
-yx
-yx
-yx
-yx
-yx
-yx
-yx
-yx
-Iq
-Iq
-Iq
-Iq
-Iq
-Sm
-Sm
-Sm
-ds
-ds
+IS
+VG
+VG
 xp
 xp
-Iq
+VG
+yW
+EO
+CK
+xU
+um
+zp
+xp
+VG
+VG
+IS
+yx
+yx
+yx
+yx
+yx
 PZ
 PZ
 PZ
@@ -13791,27 +13927,27 @@ yx
 yx
 yx
 yx
-yx
-yx
-yx
-yx
-yx
-yx
-yx
-yx
 IS
-PZ
-PZ
-wo
-Fn
-HC
-sS
-pA
-ay
-Yo
-cj
+IS
+IS
 Or
-Iq
+Fn
+IS
+wG
+Jj
+Rw
+Qs
+Dj
+wo
+pk
+IS
+IS
+IS
+yx
+yx
+yx
+yx
+yx
 PZ
 PZ
 PZ
@@ -13935,25 +14071,25 @@ yx
 yx
 yx
 yx
+cj
+Yo
+Yo
+Wz
+yx
+yx
+yx
+yx
+PB
+XD
+Yo
+pm
 yx
 yx
 yx
 yx
 yx
 yx
-IS
-IS
-IS
-IS
-Iq
-Iq
-Iq
-Iq
-Iq
-Iq
-Iq
-Iq
-Iq
+yx
 PZ
 PZ
 PZ
@@ -14077,18 +14213,18 @@ PZ
 PZ
 PZ
 PZ
+ds
+Yo
+Yo
+Yo
 PZ
 PZ
 PZ
 PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
+Zi
+yI
+Yo
+KS
 PZ
 PZ
 PZ
@@ -14220,16 +14356,16 @@ PZ
 PZ
 PZ
 PZ
+aE
+aE
+aE
 PZ
 PZ
 PZ
 PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
+aE
+aE
+aE
 PZ
 PZ
 PZ

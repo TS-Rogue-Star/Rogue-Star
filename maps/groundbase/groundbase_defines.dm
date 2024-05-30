@@ -181,7 +181,7 @@
 		/area/groundbase/engineering/pumpingstation,
 		/area/prison/cell_block/gb/abandonedbrig,
 		/area/groundbase/science/abandoned,
-		/area/groundbase/level3/greenhouse
+		/area/groundbase/civilian/bar/garden
 		)
 
 	unit_test_exempt_from_atmos = list()

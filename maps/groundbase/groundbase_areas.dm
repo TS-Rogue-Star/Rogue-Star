@@ -100,9 +100,6 @@
 /area/groundbase/level3/escapepad
 	name = "Escape Shuttle Landing Pad"
 
-/area/groundbase/level3/greenhouse
-	name = "Sif Garden"
-
 /area/groundbase/science
 	name = "Science"
 	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
@@ -427,6 +424,9 @@
 /area/groundbase/civilian/bar/upper
 	name = "Bar Balcony"
 	base_turf = /turf/simulated/open/virgo3c
+/area/groundbase/civilian/bar/garden
+	name = "Sif Garden"
+	lightswitch = 0
 
 /area/groundbase/civilian/cafe
 	name = "Cafe"
@@ -642,5 +642,5 @@
 	excluded |= /area/groundbase/medical/geneticslab
 	excluded |= /area/groundbase/engineering/pumpingstation
 	excluded |= /area/prison/cell_block/gb/abandonedbrig
-	excluded |= /area/groundbase/level3/greenhouse
+	excluded |= /area/groundbase/civilian/bar/garden
 	..()
