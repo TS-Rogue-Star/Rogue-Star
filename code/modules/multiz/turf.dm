@@ -134,6 +134,11 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 		var/obj/item/stack/cable_coil/coil = C
 		coil.place_turf(src, user)
 		return
+
+	if(istype(C, /obj/item/stack/pipe_cleaner_coil))
+		var/obj/item/stack/pipe_cleaner_coil/pipedeco = C
+		pipedeco.place_turf(src, user)
+		return
 	return
 
 //Most things use is_plating to test if there is a cover tile on top (like regular floors)

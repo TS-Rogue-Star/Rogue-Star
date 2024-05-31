@@ -71,6 +71,10 @@
 		else if(istype(C, /obj/item/stack/cable_coil))
 			to_chat(user, "<span class='warning'>You must remove the [flooring.descriptor] first.</span>")
 			return
+		else if(istype(C, /obj/item/stack/pipe_cleaner_coil))	//We can put our decorative art anywhere.
+			var/obj/item/stack/pipe_cleaner_coil/pipedeco = C
+			pipedeco.place_turf(src, user)
+			return
 		else if(istype(C, /obj/item/stack/tile))
 			if(try_replace_tile(C, user))
 				return
@@ -98,6 +102,14 @@
 				return
 			var/obj/item/stack/cable_coil/coil = C
 			coil.place_turf(src, user)
+			return
+		// Placing art wires
+		if(istype(C, /obj/item/stack/pipe_cleaner_coil))
+			if(broken || burnt)
+				to_chat(user, "<span class='warning'>This section is too damaged to support anything. Use a welder to fix the damage.</span>")
+				return
+			var/obj/item/stack/pipe_cleaner_coil/pipedeco = C
+			pipedeco.place_turf(src, user)
 			return
 		// Placing flooring on plating
 		else if(istype(C, /obj/item/stack))
