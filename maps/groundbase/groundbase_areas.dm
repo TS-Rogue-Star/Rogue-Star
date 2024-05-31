@@ -296,6 +296,7 @@
 	name = "Chief Medical Officer's Office"
 /area/groundbase/medical/paramedic
 	name = "Paramedic Equipment Room"
+	lightswitch = 1
 /area/groundbase/medical/patio
 	name = "Medical Break Room"
 	lightswitch = 1
