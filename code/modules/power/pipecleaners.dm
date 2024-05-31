@@ -308,6 +308,8 @@ By design, d1 is the smallest direction and d2 is the highest
 			to_chat(user, "<span class='warning'>There's already a pipe_cleaner at that position.</span>")
 			return
 
+	use(1)
+
 	put_pipe_cleaner(F, user, end_dir, dirn)
 
 /obj/item/stack/pipe_cleaner_coil/proc/put_pipe_cleaner(turf/simulated/F, mob/user, d1, d2)
