@@ -94,6 +94,9 @@
 /area/groundbase/security/warden)
 "at" = (
 /obj/structure/table/steel,
+/obj/machinery/alarm{
+	dir = 4
+	},
 /turf/simulated/floor/tiled,
 /area/groundbase/science/abandoned)
 "av" = (
@@ -9711,9 +9714,6 @@
 /area/groundbase/cargo/office)
 "EJ" = (
 /obj/structure/table/steel,
-/obj/structure/prop/rock/crystal_dust{
-	pixel_y = 5
-	},
 /turf/simulated/floor/tiled,
 /area/groundbase/science/abandoned)
 "EK" = (
@@ -14046,12 +14046,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/command/bridge)
-"RH" = (
-/obj/effect/landmark{
-	name = "maint_pred"
-	},
-/turf/simulated/floor/tiled,
-/area/groundbase/science/abandoned)
 "RI" = (
 /obj/structure/bed/chair/comfy/brown{
 	dir = 1
@@ -20684,7 +20678,6 @@ av
 av
 av
 av
-tL
 MX
 MX
 MX
@@ -20695,7 +20688,8 @@ MX
 MX
 MX
 MX
-tL
+MX
+MX
 av
 av
 av
@@ -20968,7 +20962,7 @@ av
 av
 av
 av
-tL
+MX
 MX
 MX
 MX
@@ -20979,7 +20973,7 @@ MX
 MX
 MX
 MX
-tL
+MX
 av
 av
 av
@@ -21264,13 +21258,13 @@ MX
 av
 av
 av
-tL
-tL
-tL
-tL
-tL
-tL
-tL
+av
+av
+av
+av
+av
+av
+av
 av
 av
 av
@@ -21403,16 +21397,16 @@ MX
 ZU
 MX
 MX
-av
-av
-av
 tL
-fv
-fv
-fv
-fv
-fv
 tL
+tL
+tL
+tL
+av
+av
+av
+av
+av
 av
 av
 av
@@ -21545,16 +21539,16 @@ MX
 ZU
 MX
 MX
-av
-av
-av
-tL
-fv
 fv
 fv
 fv
 fv
 tL
+av
+av
+av
+av
+av
 av
 av
 av
@@ -21687,16 +21681,16 @@ Gu
 IN
 MX
 MX
-av
-av
-av
-tL
-fv
 fv
 fv
 fv
 fv
 tL
+av
+av
+av
+av
+av
 av
 av
 av
@@ -21829,16 +21823,16 @@ MX
 ZU
 MX
 MX
-av
-av
-av
-tL
-fv
 fv
 fv
 fv
 fv
 tL
+av
+av
+av
+av
+av
 av
 av
 av
@@ -21970,17 +21964,17 @@ pl
 MX
 IN
 MX
-MX
+fv
+fv
+fv
+fv
+fv
+tL
 av
 av
 av
-tL
-tL
-tL
-tL
-tL
-tL
-tL
+av
+av
 av
 av
 av
@@ -22109,15 +22103,15 @@ OO
 OO
 OO
 av
+MX
+av
+MX
 tL
-av
 tL
-av
-av
-av
-av
-av
-av
+tL
+tL
+tL
+tL
 av
 av
 av
@@ -23688,7 +23682,7 @@ JI
 dE
 Nf
 Jx
-RH
+Jx
 Jx
 Jx
 sN

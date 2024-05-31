@@ -709,7 +709,9 @@
 	},
 /area/groundbase/civilian/bar/garden)
 "ic" = (
-/obj/machinery/light/flamp/noshade,
+/obj/machinery/light/floortube{
+	pixel_y = -5
+	},
 /turf/simulated/floor/outdoors/grass/sif{
 	outdoors = 0
 	},
@@ -3829,6 +3831,15 @@
 	},
 /turf/simulated/open,
 /area/groundbase/medical/uhallway)
+"KR" = (
+/obj/machinery/light/floortube{
+	dir = 1;
+	pixel_y = 5
+	},
+/turf/simulated/floor/outdoors/grass/sif{
+	outdoors = 0
+	},
+/area/groundbase/civilian/bar/garden)
 "KS" = (
 /obj/structure/railing{
 	dir = 1
@@ -13085,7 +13096,7 @@ hV
 hV
 hV
 hV
-ic
+KR
 VG
 VG
 VG

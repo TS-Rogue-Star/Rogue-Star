@@ -1026,9 +1026,6 @@
 /area/groundbase/level1/nw)
 "baX" = (
 /obj/effect/floor_decal/milspec/color/purple/half,
-/obj/machinery/alarm{
-	dir = 1
-	},
 /obj/structure/table/standard,
 /obj/random/soap,
 /turf/simulated/floor/tiled/white,
@@ -1497,6 +1494,13 @@
 /area/groundbase/engineering/showers)
 "bzx" = (
 /obj/machinery/lapvend,
+/obj/machinery/power/apc{
+	dir = 8;
+	nightshift_setting = 2
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/toolstorage)
 "bzN" = (
@@ -1563,6 +1567,9 @@
 /obj/machinery/vending/tool,
 /obj/machinery/status_display{
 	pixel_y = 32
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/toolstorage)
@@ -3950,6 +3957,9 @@
 /obj/random/tech_supply,
 /obj/random/tech_supply,
 /obj/random/paicard,
+/obj/machinery/alarm{
+	dir = 8
+	},
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/toolstorage)
 "dDr" = (
@@ -4581,6 +4591,10 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
+	},
+/obj/machinery/light_switch{
+	dir = 8;
+	pixel_x = 30
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/command/meeting)
@@ -7750,16 +7764,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/janitor)
-"gXb" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	nightshift_setting = 2
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/tiled,
-/area/groundbase/civilian/toolstorage)
 "gXi" = (
 /obj/machinery/atmospherics/pipe/tank/phoron{
 	dir = 1
@@ -8720,12 +8724,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/science/circuits)
-"hQB" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/tiled,
-/area/groundbase/civilian/toolstorage)
 "hQE" = (
 /obj/machinery/door/blast/angled_shutter/open{
 	dir = 4;
@@ -10362,12 +10360,12 @@
 /turf/simulated/floor/outdoors/grass/seasonal,
 /area/groundbase/level1/nw)
 "jlk" = (
-/obj/structure/table/reinforced,
 /obj/machinery/recharger,
 /obj/machinery/atmospherics/unary/vent_pump/on,
 /obj/effect/floor_decal/milspec/color/blue/half{
 	dir = 5
 	},
+/obj/structure/table/woodentable,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/command/hall)
 "jlU" = (
@@ -10748,9 +10746,6 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/science/xenohall)
 "jGM" = (
-/obj/structure/sign/painting/library_secure{
-	pixel_x = 30
-	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
@@ -15953,6 +15948,9 @@
 	},
 /obj/effect/floor_decal/milspec/color/blue/half{
 	dir = 6
+	},
+/obj/structure/sign/painting/library_secure{
+	pixel_x = 30
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/command/meeting)
@@ -22149,9 +22147,9 @@
 /obj/effect/floor_decal/milspec/color/blue/half{
 	dir = 9
 	},
-/obj/structure/table/reinforced,
 /obj/item/device/aicard,
 /obj/item/device/multitool,
+/obj/structure/table/woodentable,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/command/hall)
 "tvB" = (
@@ -23110,7 +23108,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/outdoors/sidewalk,
+/turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/level1/sw)
 "ugm" = (
 /obj/structure/sink{
@@ -24835,11 +24833,6 @@
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
-	},
-/obj/machinery/light_switch{
-	dir = 4;
-	pixel_x = -30;
-	pixel_y = 10
 	},
 /obj/effect/floor_decal/milspec/color/blue/half{
 	dir = 8
@@ -30519,7 +30512,7 @@ awx
 eHi
 cpz
 llq
-dgI
+coW
 coW
 coW
 coW
@@ -31345,7 +31338,7 @@ aEL
 sfb
 sfb
 sfb
-yhG
+oww
 iUR
 sfb
 sfb
@@ -31487,7 +31480,7 @@ aEL
 sfb
 sfb
 sfb
-oww
+sfb
 iUR
 sfb
 sfb
@@ -32475,7 +32468,7 @@ awx
 awx
 nlf
 bzx
-gXb
+iyi
 mvp
 qRb
 rVv
@@ -32617,7 +32610,7 @@ rOt
 rOt
 nlf
 bBK
-hQB
+nEi
 nEi
 rel
 uHV
