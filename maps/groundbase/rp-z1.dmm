@@ -2540,7 +2540,8 @@
 	dir = 1;
 	pixel_y = -2
 	},
-/turf/simulated/floor/bmarble,
+/obj/structure/curtain/open/shower/security,
+/turf/simulated/floor/tiled/techmaint,
 /area/groundbase/security/showers)
 "cqP" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -2729,21 +2730,6 @@
 	},
 /turf/simulated/floor/reinforced,
 /area/groundbase/civilian/redgate)
-"cze" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/effect/floor_decal/steeldecal/steel_decals10{
-	dir = 1
-	},
-/obj/effect/floor_decal/steeldecal/steel_decals10{
-	dir = 8
-	},
-/obj/machinery/door/window/eastright{
-	dir = 1
-	},
-/turf/simulated/floor/bmarble,
-/area/groundbase/security/showers)
 "czm" = (
 /obj/structure/disposalpipe/junction/yjunction,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -3931,18 +3917,6 @@
 	},
 /turf/simulated/floor/water/seasonal,
 /area/groundbase/level1/ne)
-"dCb" = (
-/obj/effect/floor_decal/steeldecal/steel_decals10{
-	dir = 5
-	},
-/obj/effect/floor_decal/steeldecal/steel_decals10{
-	dir = 6
-	},
-/obj/machinery/door/window/eastright{
-	dir = 2
-	},
-/turf/simulated/floor/tiled/white,
-/area/groundbase/engineering/showers)
 "dCD" = (
 /obj/effect/floor_decal/milspec/color/red/half{
 	dir = 1
@@ -6941,13 +6915,17 @@
 /turf/simulated/floor,
 /area/groundbase/engineering/ce)
 "gls" = (
-/obj/machinery/door/window/eastright{
-	dir = 1
-	},
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/bmarble,
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 5
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 6
+	},
+/obj/machinery/door/window/southleft,
+/turf/simulated/floor/tiled/white,
 /area/groundbase/security/showers)
 "gmm" = (
 /obj/structure/cable/yellow{
@@ -9799,7 +9777,16 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/lobby)
 "iHI" = (
-/turf/simulated/floor/tiled/techfloor,
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 5
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 6
+	},
+/obj/machinery/door/window/eastright{
+	dir = 2
+	},
+/turf/simulated/floor/tiled/white,
 /area/groundbase/engineering/showers)
 "iIq" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -9949,15 +9936,6 @@
 /turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/level1/ne)
 "iTp" = (
-/obj/machinery/door/window/eastleft{
-	dir = 2
-	},
-/obj/effect/floor_decal/steeldecal/steel_decals10{
-	dir = 5
-	},
-/obj/effect/floor_decal/steeldecal/steel_decals10{
-	dir = 6
-	},
 /obj/machinery/light{
 	dir = 8
 	},
@@ -12423,10 +12401,14 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/mining)
 "kYo" = (
-/obj/machinery/door/window/eastright{
-	dir = 1
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 5
 	},
-/turf/simulated/floor/bmarble,
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 6
+	},
+/obj/machinery/door/window/southleft,
+/turf/simulated/floor/tiled/white,
 /area/groundbase/security/showers)
 "kYy" = (
 /obj/effect/floor_decal/industrial/outline/red,
@@ -13278,7 +13260,8 @@
 	dir = 1;
 	pixel_y = -2
 	},
-/turf/simulated/floor/bmarble,
+/obj/structure/curtain/open/shower/security,
+/turf/simulated/floor/tiled/techmaint,
 /area/groundbase/security/showers)
 "lNy" = (
 /obj/machinery/r_n_d/protolathe{
@@ -21140,9 +21123,7 @@
 /obj/machinery/door/window{
 	dir = 2
 	},
-/turf/simulated/floor/tiled{
-	icon_state = "techmaint"
-	},
+/turf/simulated/floor/tiled/techmaint,
 /area/groundbase/science/lockerroom)
 "sAk" = (
 /obj/machinery/power/apc{
@@ -24292,6 +24273,14 @@
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/science/robotics)
+"vlp" = (
+/obj/machinery/shower{
+	dir = 1;
+	pixel_y = -2
+	},
+/obj/structure/curtain/open/shower/engineering,
+/turf/simulated/floor/tiled/techmaint,
+/area/groundbase/engineering/showers)
 "vlA" = (
 /obj/effect/floor_decal/milspec/color/orange/half,
 /obj/machinery/firealarm{
@@ -25104,10 +25093,16 @@
 /turf/simulated/floor,
 /area/groundbase/engineering/storage)
 "waT" = (
-/obj/machinery/shower{
-	dir = 4
+/obj/machinery/door/window/eastleft{
+	dir = 2
 	},
-/turf/simulated/floor/tiled/techfloor,
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 5
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 6
+	},
+/turf/simulated/floor/tiled/white,
 /area/groundbase/engineering/showers)
 "wbe" = (
 /obj/machinery/mineral/processing_unit_console{
@@ -25678,6 +25673,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
+	},
+/obj/machinery/firealarm{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/security/showers)
@@ -26752,15 +26750,6 @@
 /obj/item/weapon/towel/random,
 /obj/item/weapon/towel/random,
 /obj/item/weapon/towel/random,
-/obj/effect/floor_decal/steeldecal/steel_decals10{
-	dir = 8
-	},
-/obj/effect/floor_decal/steeldecal/steel_decals10{
-	dir = 1
-	},
-/obj/structure/window/basic{
-	dir = 8
-	},
 /obj/machinery/firealarm{
 	dir = 1
 	},
@@ -30740,7 +30729,7 @@ egG
 xMF
 ktd
 kkR
-cze
+kYo
 cqm
 xMF
 tNT
@@ -41135,7 +41124,7 @@ iFQ
 nPk
 iTp
 waT
-waT
+vlp
 lyV
 rIm
 vSz
@@ -41275,9 +41264,9 @@ uBu
 jpF
 tzP
 fmp
-dCb
+sxQ
 iHI
-iHI
+vlp
 lyV
 xwj
 vSz

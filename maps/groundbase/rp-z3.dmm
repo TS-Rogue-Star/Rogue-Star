@@ -408,18 +408,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/patient3)
-"fy" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
-	},
-/turf/simulated/floor/tiled/white,
-/area/groundbase/medical/medicalshowers)
 "fD" = (
 /obj/effect/floor_decal/milspec/color/red/half{
 	dir = 8
@@ -536,12 +524,17 @@
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 1
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
 	},
 /obj/structure/cable/yellow{
-	icon_state = "2-4"
+	icon_state = "1-2"
+	},
+/obj/effect/floor_decal/corner/paleblue{
+	dir = 6
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/uhallway)
@@ -718,10 +711,6 @@
 /obj/structure/railing/grey,
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
 /area/groundbase/medical/patio)
-"iv" = (
-/obj/machinery/light,
-/turf/simulated/floor/tiled/techfloor,
-/area/groundbase/medical/medicalshowers)
 "iD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -798,8 +787,9 @@
 /turf/simulated/floor/outdoors/sidewalk/side,
 /area/groundbase/level3/se)
 "jG" = (
-/obj/machinery/light{
-	dir = 8
+/obj/machinery/door/airlock{
+	id_tag = "z2medstall1";
+	name = "Restroom Stall"
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/medicalshowers)
@@ -859,6 +849,13 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/uhallway)
+"kr" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/wall,
+/area/groundbase/medical/medicalshowers)
 "kB" = (
 /turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/command/hop)
@@ -954,8 +951,14 @@
 /area/groundbase/hotspring)
 "lR" = (
 /obj/structure/table/glass,
-/obj/item/weapon/bikehorn/rubberducky,
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
+/obj/item/weapon/towel/random,
+/obj/item/weapon/towel/random,
+/obj/item/weapon/towel/random,
+/obj/machinery/firealarm,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/medicalshowers)
 "lS" = (
@@ -1109,6 +1112,10 @@
 	outdoors = 1
 	},
 /area/groundbase/level3/ne)
+"mV" = (
+/obj/structure/disposalpipe/segment,
+/turf/simulated/wall,
+/area/groundbase/medical/medicalshowers)
 "na" = (
 /obj/effect/map_effect/interval/effect_emitter/steam/less_frequent,
 /turf/simulated/floor/water/atoll{
@@ -1287,6 +1294,19 @@
 /area/groundbase/security/iaa1)
 "oN" = (
 /obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/medical{
+	name = "Medical Showers";
+	req_one_access = null
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/medical/medicalshowers)
 "oT" = (
@@ -1305,19 +1325,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hall3)
-"oW" = (
-/obj/machinery/button/remote/airlock{
-	id = "z2medstall2";
-	pixel_x = 25;
-	pixel_y = 27;
-	specialfunctions = 4
-	},
-/obj/structure/toilet{
-	dir = 8
-	},
-/obj/machinery/light/small,
-/turf/simulated/floor/tiled/white,
-/area/groundbase/medical/medicalshowers)
 "oZ" = (
 /obj/structure/railing{
 	dir = 1
@@ -1464,12 +1471,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/patient2)
-"qy" = (
-/obj/machinery/shower{
-	dir = 4
-	},
-/turf/simulated/floor/tiled/techfloor,
-/area/groundbase/medical/medicalshowers)
 "qB" = (
 /obj/effect/floor_decal/milspec/color/red/half{
 	dir = 6
@@ -1542,9 +1543,11 @@
 /turf/simulated/open,
 /area/groundbase/level3/sw/open)
 "rq" = (
-/obj/machinery/hologram/holopad,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
+/obj/structure/disposalpipe/trunk,
+/obj/machinery/disposal/wall/cleaner{
+	desc = "Automatically cleans and transports items to the local auto-resleeving facilities.";
+	dir = 1;
+	name = "auto-resleeving equipment deposit"
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/medicalshowers)
@@ -1888,9 +1891,6 @@
 	},
 /area/groundbase/dorms/bathroom)
 "uc" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
-	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/medicalshowers)
 "ud" = (
@@ -2163,7 +2163,11 @@
 /turf/simulated/floor/tiled,
 /area/shuttle/groundbase/exploration)
 "wk" = (
-/turf/simulated/floor/tiled/techfloor,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 8
+	},
+/obj/machinery/hologram/holopad,
+/turf/simulated/floor/tiled/white,
 /area/groundbase/medical/medicalshowers)
 "wl" = (
 /turf/simulated/wall,
@@ -2326,13 +2330,10 @@
 /area/groundbase/cargo/bay)
 "xE" = (
 /obj/structure/table/glass,
-/obj/item/weapon/towel/random,
-/obj/item/weapon/towel/random,
-/obj/item/weapon/towel/random,
-/obj/machinery/light{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/item/weapon/bikehorn/rubberducky,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/medicalshowers)
 "xF" = (
@@ -2404,18 +2405,6 @@
 	},
 /turf/simulated/floor/tiled/eris/dark/panels,
 /area/shuttle/groundbase/exploration)
-"yh" = (
-/obj/structure/window/basic{
-	dir = 1
-	},
-/obj/effect/floor_decal/steeldecal/steel_decals10{
-	dir = 9
-	},
-/obj/effect/floor_decal/steeldecal/steel_decals10{
-	dir = 10
-	},
-/turf/simulated/floor/tiled/techfloor,
-/area/groundbase/medical/medicalshowers)
 "ym" = (
 /obj/structure/closet/lawcloset,
 /obj/item/weapon/storage/secure/briefcase,
@@ -2626,10 +2615,16 @@
 	},
 /area/groundbase/level3/ne)
 "Am" = (
-/obj/machinery/door/airlock{
-	id_tag = "z2medstall2";
-	name = "Restroom Stall"
+/obj/machinery/button/remote/airlock{
+	id = "z2medstall2";
+	pixel_x = 25;
+	pixel_y = 27;
+	specialfunctions = 4
 	},
+/obj/structure/toilet{
+	dir = 8
+	},
+/obj/machinery/light/small,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/medicalshowers)
 "An" = (
@@ -2787,6 +2782,9 @@
 	},
 /obj/machinery/washing_machine,
 /obj/machinery/atmospherics/unary/vent_pump/on,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/medicalshowers)
 "Cb" = (
@@ -2804,8 +2802,8 @@
 "Cm" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/table/bench/marble,
 /obj/effect/landmark/start/paramedic,
+/obj/structure/table/bench/glass,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/paramedic)
 "Cr" = (
@@ -2926,10 +2924,15 @@
 /turf/simulated/floor/wood,
 /area/groundbase/medical/cmo)
 "DA" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 8
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/medicalshowers)
 "DE" = (
@@ -3050,6 +3053,13 @@
 "Em" = (
 /turf/simulated/mineral/cave,
 /area/groundbase/level3/ne)
+"En" = (
+/obj/machinery/door/airlock{
+	id_tag = "z2medstall2";
+	name = "Restroom Stall"
+	},
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/medicalshowers)
 "Et" = (
 /obj/structure/cable/yellow{
 	icon_state = "32-1"
@@ -3363,14 +3373,11 @@
 /turf/simulated/floor/carpet,
 /area/groundbase/medical/cmo)
 "Ic" = (
-/obj/effect/floor_decal/steeldecal/steel_decals10{
-	dir = 10
+/obj/machinery/shower{
+	dir = 1;
+	pixel_y = -2
 	},
-/obj/effect/floor_decal/steeldecal/steel_decals10{
-	dir = 9
-	},
-/obj/machinery/door/window/northleft,
-/turf/simulated/floor/tiled/techfloor,
+/turf/simulated/floor/tiled/techmaint,
 /area/groundbase/medical/medicalshowers)
 "Ig" = (
 /obj/structure/railing/grey,
@@ -3779,6 +3786,10 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/patient3)
+"Li" = (
+/obj/machinery/hologram/holopad,
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/paramedic)
 "Lm" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -3839,6 +3850,9 @@
 	},
 /obj/machinery/atmospherics/pipe/zpipe/down/supply{
 	dir = 8
+	},
+/obj/structure/disposalpipe/down{
+	dir = 1
 	},
 /turf/simulated/wall,
 /area/groundbase/medical/medicalshowers)
@@ -4181,8 +4195,12 @@
 "Pf" = (
 /obj/structure/table/glass,
 /obj/random/soap,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
+/obj/structure/window/basic,
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 5
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 6
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/medicalshowers)
@@ -4211,17 +4229,10 @@
 /turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/cargo/bay)
 "Pv" = (
-/obj/machinery/button/remote/airlock{
-	id = "z2medstall1";
-	pixel_x = 25;
-	pixel_y = 27;
-	specialfunctions = 4
-	},
-/obj/structure/toilet{
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/light/small,
-/turf/simulated/floor/tiled/white,
+/turf/simulated/wall,
 /area/groundbase/medical/medicalshowers)
 "Px" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -4377,9 +4388,15 @@
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
 /area/groundbase/security/hall3)
 "Rk" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/window/basic,
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 5
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 6
+	},
 /turf/simulated/floor/tiled/white,
-/area/groundbase/medical/uhallway)
+/area/groundbase/medical/medicalshowers)
 "Rl" = (
 /obj/machinery/light{
 	dir = 4
@@ -4446,14 +4463,8 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/patient2)
 "RJ" = (
-/obj/effect/floor_decal/steeldecal/steel_decals10{
-	dir = 10
-	},
-/obj/effect/floor_decal/steeldecal/steel_decals10{
-	dir = 9
-	},
-/obj/machinery/door/window/northright,
-/turf/simulated/floor/tiled/techfloor,
+/obj/machinery/light,
+/turf/simulated/floor/tiled/techmaint,
 /area/groundbase/medical/medicalshowers)
 "RP" = (
 /obj/structure/cable/yellow{
@@ -4517,6 +4528,13 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hos)
+"Sf" = (
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/wall,
+/area/groundbase/medical/medicalshowers)
 "Sh" = (
 /obj/structure/table/woodentable,
 /turf/simulated/floor/wood,
@@ -4537,10 +4555,16 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/patient4)
 "Sq" = (
-/obj/machinery/door/airlock{
-	id_tag = "z2medstall1";
-	name = "Restroom Stall"
+/obj/machinery/button/remote/airlock{
+	id = "z2medstall1";
+	pixel_x = 25;
+	pixel_y = 27;
+	specialfunctions = 4
 	},
+/obj/structure/toilet{
+	dir = 4
+	},
+/obj/machinery/light/small,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/medicalshowers)
 "Sv" = (
@@ -4761,21 +4785,14 @@
 	},
 /area/groundbase/level3/nw)
 "Uh" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/machinery/door/window/southleft,
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 5
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 6
 	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/multi_tile/metal{
-	dir = 1;
-	req_one_access = list(38,63)
-	},
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/white,
 /area/groundbase/medical/medicalshowers)
 "Un" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
@@ -4939,6 +4956,9 @@
 /turf/simulated/floor/wood,
 /area/groundbase/command/hop)
 "VU" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/medicalshowers)
 "VV" = (
@@ -5148,10 +5168,10 @@
 /turf/simulated/floor/bmarble,
 /area/groundbase/hotspring)
 "XG" = (
-/obj/machinery/shower{
-	dir = 8
+/turf/simulated/floor{
+	edge_blending_priority = -1;
+	outdoors = 1
 	},
-/turf/simulated/floor/tiled/techfloor,
 /area/groundbase/medical/medicalshowers)
 "XJ" = (
 /turf/simulated/wall/r_wall,
@@ -21011,7 +21031,7 @@ Ii
 mk
 NQ
 YI
-YI
+Li
 YI
 YI
 NQ
@@ -21285,7 +21305,7 @@ Rv
 aJ
 QQ
 RQ
-Rk
+TU
 gY
 SI
 ko
@@ -21428,10 +21448,10 @@ UM
 FW
 FW
 oN
-Uh
 FW
 FW
 FW
+kr
 LF
 QQ
 Dc
@@ -21570,11 +21590,11 @@ Xa
 FW
 BU
 DA
-fy
+uc
 jG
 Sq
 Pv
-FW
+XG
 YS
 Dc
 Dc
@@ -21713,10 +21733,10 @@ FW
 Oz
 VU
 uc
-VU
 FW
 FW
-FW
+Pv
+XG
 YS
 YS
 YS
@@ -21855,10 +21875,10 @@ FW
 Oz
 VU
 uc
-VU
+En
 Am
-oW
-FW
+Pv
+XG
 YS
 YS
 YS
@@ -21995,12 +22015,12 @@ Wr
 wl
 FW
 Oz
-VU
+wk
 rq
-FW
-FW
-FW
-FW
+mV
+mV
+Sf
+XG
 YS
 YS
 YS
@@ -22138,11 +22158,11 @@ qn
 FW
 oT
 VU
-uc
+Rk
 Ic
-qy
-qy
 FW
+XG
+XG
 YS
 YS
 YS
@@ -22280,11 +22300,11 @@ KK
 FW
 og
 VU
-uc
+Uh
 RJ
-wk
-iv
 FW
+XG
+XG
 YS
 YS
 YS
@@ -22423,10 +22443,10 @@ FW
 lR
 xE
 Pf
-yh
-XG
-XG
+Ic
 FW
+XG
+XG
 YS
 YS
 YS
@@ -22567,8 +22587,8 @@ FW
 FW
 FW
 FW
-FW
-FW
+XG
+XG
 YS
 YS
 bR

@@ -312,7 +312,6 @@
 	name = "Morgue"
 /area/groundbase/medical/medicalshowers
 	name = "Medical Showers"
-	lightswitch = 1
 /area/groundbase/medical/geneticslab
 	name = "Genetics Lab"
 

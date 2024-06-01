@@ -1198,7 +1198,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
-/obj/structure/disposalpipe/segment{
+/obj/structure/disposalpipe/junction{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/white,
@@ -1279,6 +1279,7 @@
 /obj/machinery/sleep_console,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/triage)
 "ea" = (
@@ -1375,6 +1376,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/triage)
 "er" = (
@@ -5993,6 +5995,7 @@
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 10
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/triage)
 "tg" = (
@@ -11846,6 +11849,9 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/zpipe/up/scrubbers{
+	dir = 1
+	},
+/obj/structure/disposalpipe/up{
 	dir = 1
 	},
 /turf/simulated/wall,
