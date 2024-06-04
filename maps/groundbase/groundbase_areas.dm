@@ -132,6 +132,11 @@
 /area/groundbase/science/lockerroom
 	name = "Science Locker Room"
 	lightswitch = 1
+/area/groundbase/science/xenoautopsy
+	name = "Xenobiology Autopsy"
+/area/groundbase/science/abandoned
+	name = "Unused Laboratory"
+
 
 /area/groundbase/science/outpost
 	name = "Science Outpost"
@@ -185,6 +190,9 @@
 	name = "Command Hallway"
 /area/groundbase/command/meeting
 	name = "Command Meeting Room"
+	lightswitch = 0
+/area/groundbase/command/secretary
+	name = "Command Secretary's Office"
 	lightswitch = 0
 /area/groundbase/command/ai
 	name = "AI Core"
@@ -288,6 +296,7 @@
 	name = "Chief Medical Officer's Office"
 /area/groundbase/medical/paramedic
 	name = "Paramedic Equipment Room"
+	lightswitch = 1
 /area/groundbase/medical/patio
 	name = "Medical Break Room"
 	lightswitch = 1
@@ -303,7 +312,6 @@
 	name = "Morgue"
 /area/groundbase/medical/medicalshowers
 	name = "Medical Showers"
-	lightswitch = 1
 /area/groundbase/medical/geneticslab
 	name = "Genetics Lab"
 
@@ -416,6 +424,9 @@
 /area/groundbase/civilian/bar/upper
 	name = "Bar Balcony"
 	base_turf = /turf/simulated/open/virgo3c
+/area/groundbase/civilian/bar/garden
+	name = "Sif Garden"
+	lightswitch = 0
 
 /area/groundbase/civilian/cafe
 	name = "Cafe"
@@ -631,4 +642,5 @@
 	excluded |= /area/groundbase/medical/geneticslab
 	excluded |= /area/groundbase/engineering/pumpingstation
 	excluded |= /area/prison/cell_block/gb/abandonedbrig
+	excluded |= /area/groundbase/civilian/bar/garden
 	..()
