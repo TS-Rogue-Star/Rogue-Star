@@ -90,6 +90,7 @@
 		user.visible_message(\
 		"<span class='notice'>[user.name] [on ? "enabled" : "disabled"] the breaker box!</span>",\
 		"<span class='notice'>You [on ? "enabled" : "disabled"] the breaker box!</span>")
+		investigate_log("[user.name] [on ? "enabled" : "disabled"] the breaker box at [COORD(src)]", "powernet")
 		update_locked = TRUE
 		spawn(5 SECONDS)
 			update_locked = FALSE

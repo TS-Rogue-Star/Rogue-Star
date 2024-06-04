@@ -277,6 +277,7 @@ GLOBAL_LIST_EMPTY(solars_list)
 	var/connected_power		// Sum of power supplied by connected panels.
 	VAR_PRIVATE/list/connected_panels = list()
 	var/auto_start = SOLAR_AUTO_START_NO
+	can_change_cable_layer = TRUE
 
 // Used for mapping in solar arrays which automatically start itself.
 // Generally intended for far away and remote locations, where player intervention is rare.
@@ -328,6 +329,9 @@ GLOBAL_LIST_EMPTY(solars_list)
 
 /obj/machinery/power/solar_control/drain_power()
 	return -1
+
+/obj/machinery/power/solar_control/should_have_node()
+	return TRUE
 
 /obj/machinery/power/solar_control/disconnect_from_network()
 	. = ..()

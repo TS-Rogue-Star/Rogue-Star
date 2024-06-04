@@ -1,11 +1,6 @@
 ///////////////////////////////
-//pipe_cleaner STRUCTURE
+// Old Wire code for wire art usages
 ///////////////////////////////
-
-
-////////////////////////////////
-// Definitions
-////////////////////////////////
 
 /* pipe_cleaner directions (d1 and d2)
 
@@ -160,7 +155,7 @@ By design, d1 is the smallest direction and d2 is the highest
 ////////////////////////////////
 
 /obj/item/stack/pipe_cleaner_coil
-	name = "pipe_cleaner coil"
+	name = "pipe cleaner coil"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "coil"
 	amount = MAXCOIL
@@ -184,7 +179,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	singular_name = "pipe_cleaner"
 
 /obj/item/stack/pipe_cleaner_coil/cyborg
-	name = "pipe_cleaner coil synthesizer"
+	name = "pipe cleaner coil synthesizer"
 	desc = "A device that makes pipe_cleaner."
 	gender = NEUTER
 	matter = null
@@ -459,8 +454,8 @@ By design, d1 is the smallest direction and d2 is the highest
 /datum/category_item/catalogue/anomalous/precursor_a/alien_pipe_cleaner
 	name = "Precursor Alpha Object - Recursive Spool"
 	desc = "Upon visual inspection, this merely appears to be a \
-	spool for silver-colored pipe_cleaner. If one were to use this for \
-	some time, however, it would become apparent that the pipe_cleaners \
+	spool for silver-colored pipe cleaner. If one were to use this for \
+	some time, however, it would become apparent that the pipe cleaners \
 	inside the spool appear to coil around the spool endlessly, \
 	suggesting an infinite length of useless pipe cleaner.\
 	<br><br>\
@@ -473,7 +468,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/item/stack/pipe_cleaner_coil/alien
 	name = "alien spool"
-	desc = "A spool of pipe_cleaner. No matter how hard you try, you can never seem to get to the end."
+	desc = "A spool of pipe cleaner. No matter how hard you try, you can never seem to get to the end."
 	catalogue_data = list(/datum/category_item/catalogue/anomalous/precursor_a/alien_pipe_cleaner)
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "coil"

@@ -79,9 +79,9 @@ GLOBAL_LIST_INIT(possible_cable_coil_colours, list(
 #define SMESMAXCOIL			6		//Maxmimum Coil number
 #define SMESDEFAULTSTART	1		//Starting number of coils
 
-#define SMESINPUTTINGOFF	(1<<0)
-#define SMESINPUTTINGCHARGE	(1<<1)
-#define SMESINPUTTINGFULL	(1<<2)
+#define SMESINPUTTINGOFF	0
+#define SMESINPUTTINGCHARGE	1
+#define SMESINPUTTINGFULL	2
 
 GLOBAL_LIST_EMPTY(smeses)
 GLOBAL_LIST_EMPTY(apcs)

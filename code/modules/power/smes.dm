@@ -18,7 +18,7 @@
 	var/inputting = SMESINPUTTINGCHARGE
 	var/input_level = SMESSTARTCHARGELVL //amount of power the SMES attempts to charge by, 50kW
 	var/input_level_max = SMESMAXCHARGELEVEL //cap on input level 250kW
-	var/input_available = 0 //amount of charge available from input last tick
+	var/available_charge = 0 //amount of charge available from input last tick
 
 	var/output_attempt = TRUE // TRUE = attempting to output, FALSE = not attempting to output
 	var/outputting = TRUE // TRUE = actually outputting, FALSE = not outputting
@@ -58,6 +58,7 @@
 	var/obj/machinery/power/terminal/terminal3	//max of three extras 'cuz this is very silly.
 	var/list/terminalconnections = list()
 	can_change_cable_layer = TRUE
+	var/target_load = 0
 		//Three layers of cables = one terminal per layer, but each direction is on a different layer to make powernets less shit. Shouldn't be stackable.
 	//Buildable Vars
 	var/max_coils = SMESMAXCOIL			//30M capacity, 1.5MW input/output when fully upgraded /w default coils
@@ -80,9 +81,9 @@
 	for(var/obj/machinery/power/terminal/connected in terminalconnections)
 		if(connected == terminal1)
 			. += "<span class='notice'>Terminal 1 is connected.</span>"
-		else if(connected == terminal2)
+		if(connected == terminal2)
 			. += "<span class='notice'>Terminal 2 is connected.</span>"
-		else if(connected == terminal3)
+		if(connected == terminal3)
 			. += "<span class='notice'>Terminal 3 is connected.</span>"
 
 /obj/machinery/power/smes/Initialize(mapload)
@@ -117,7 +118,7 @@
 		var/turf/turf = get_turf(src)
 		message_admins("[src] deleted at [COORD(turf)], [ADMIN_COORDJMP(src)]")
 		log_game("[src] deleted at [COORD(turf)]")
-		investigate_log("deleted at [COORD(turf)]")
+		investigate_log("deleted at [COORD(turf)]", "powernet")
 	if(terminal1)
 		disconnect_terminal(terminal1)
 	if(terminal2)
@@ -137,13 +138,14 @@
 	for(var/d in GLOB.cardinal)
 		var/turf/T = get_step(src, d)
 		for(var/obj/machinery/power/terminal/term in T)
-			if(term && term.dir == turn(d, 180) && !term.master && term.cable_layer)
-				if(term.cable_layer == CABLE_LAYER_1)
-					terminal1 = term
-				else if(term.cable_layer == CABLE_LAYER_2)
-					terminal2 = term
-				else if(term.cable_layer == CABLE_LAYER_3 || term.cable_layer == CABLE_LAYER_4)
-					terminal3 = term
+			if(term && term.dir == REVERSE_DIR(d) && !term.master && term.cable_layer)
+				switch(term.cable_layer)
+					if(CABLE_LAYER_1)
+						terminal1 = term
+					if(CABLE_LAYER_2)
+						terminal2 = term
+					else if(CABLE_LAYER_3 || CABLE_LAYER_4)
+						terminal3 = term
 				terminalconnections |= term
 				term.master = src
 				term.connect_to_network()
@@ -153,9 +155,29 @@
 		return FALSE
 	return TRUE
 
+/obj/machinery/power/smes/drain_power(var/drain_check, var/surge, var/amount = 0)
+	if(drain_check)
+		return 1
+
+	var/smes_amt = min((amount * SMESRATE), charge)
+	charge -= smes_amt
+	return smes_amt / SMESRATE
+
+/obj/machinery/power/smes/proc/input_power(var/percentage, var/obj/machinery/power/terminal/term)
+	var/to_input = target_load * (percentage/100)
+	to_input = between(0, to_input, target_load)
+	if(percentage == 100)
+		inputting = SMESINPUTTINGFULL
+	else if(percentage)
+		inputting = SMESINPUTTINGCHARGE
+
+	var/inputted = term.powernet.draw_power(min(to_input, input_level - available_charge))
+	add_charge(inputted)
+	available_charge += inputted
+
 /obj/machinery/power/smes/add_avail(var/amount)
 	if(..(amount))
-		powernet.newavail += amount
+		powernet.smes_newavail += amount
 		return TRUE
 	return 0
 
@@ -175,14 +197,7 @@
 		return	//It's off, so don't draw any icons
 
 	add_overlay("[initial(icon_state)]-op[outputting]")
-
-	if(inputting == 2)
-		add_overlay("[initial(icon_state)]-oc2")
-	else if (inputting == 1)
-		add_overlay("[initial(icon_state)]-oc1")
-	else
-		if(input_attempt)
-			add_overlay("[initial(icon_state)]-oc0")
+	add_overlay("[initial(icon_state)]-oc[inputting]")
 
 	var/clevel = chargedisplay()
 	if(clevel>0)
@@ -206,11 +221,13 @@
 		return TRUE
 	return FALSE
 
+///Get our capacity fullness
 /obj/machinery/power/smes/proc/Percentage()
 	if(!capacity)
 		return 0
 	return round(100.0*charge/capacity, 0.1)
 
+// stored Charge overlay math
 /obj/machinery/power/smes/proc/chargedisplay()
 	return round(5.5*charge/(capacity ? capacity : 5e6))
 
@@ -234,18 +251,23 @@
 		if(prob(1)) // Small chance of overload occuring since grounding is disabled.
 			apcs_overload(0,10)
 
+	// only update icon if state changed
+	if(last_disp != chargedisplay() || last_chrg != inputting || last_onln != outputting)
+		update_icon()
+
 	//store machine state to see if we need to update the icon overlays
-	var/last_disp = chargedisplay()
-	var/last_chrg = input_available
-	var/last_onln = outputting
+	last_disp = chargedisplay()
+	last_chrg = inputting
+	last_onln = outputting
+	available_charge = 0
 
 	lastused_total = output_used
 
 	//outputting
 	if(output_attempt && (!output_pulsed && !output_cut) && powernet && charge && !grid_check)
 		if(outputting)
-			output_used = min(charge, output_level)	//limit output to that stored
-			if (add_avail(output_used))				// add output to powernet if it exists (smes side)
+			output_used = min(charge/SMESRATE, output_level)	//limit output to that stored
+			if(add_avail(output_used))				// add output to powernet if it exists (smes side)
 				remove_charge(output_used)			// reduce the storage (may be recovered in /restore() if excessive)
 			else
 				outputting = FALSE
@@ -259,27 +281,34 @@
 			output_used = 0
 	else
 		outputting = FALSE
+		output_used = 0
 
 	//inputting
-	if(terminalconnections && input_attempt && (!input_pulsed && !input_cut) && !grid_check)
-		for(var/obj/machinery/power/terminal/connected in terminalconnections)
-			if(connected)
-				if(!connected.powernet)
-					continue
-				input_available = connected.surplus()
-				if(inputting)
-					if(input_available > 0) // if there's power available, try to charge
-						var/target_load = min((capacity-charge)/SMESRATE, input_level, input_available)	// Amount we will request from the powernet.
-						add_charge(target_load) // increase the charge
-						connected.powernet.load += target_load // add the load to the terminal side network
-				else if(input_attempt && input_available > 0)
-					inputting = TRUE
-	else // no terminals? No input ability
-		inputting = FALSE // stop inputting
+	if(terminalconnections)
+		if(input_attempt && (!input_pulsed && !input_cut) && !grid_check)
+			if(Percentage() == 100)
+				inputting = SMESINPUTTINGFULL
+			else
+				for(var/obj/machinery/power/terminal/connected in terminalconnections)
+					if(connected)
+						if(!connected.powernet)
+							continue
+						available_charge += connected.surplus()
+						target_load = CLAMP((capacity-charge)/SMESRATE, 0, input_level)	// Amount we will request from the powernet.
+						if(inputting)
+							if(available_charge > 0) // if there's power available, try to charge
+								add_charge(target_load) // increase the charge
+								connected.powernet.load += target_load // add the load to the terminal side network
+								connected.powernet.inputting.Add(connected)
+								inputting = SMESINPUTTINGCHARGE
+							else	//wasn't anything to charge off from, so
+								inputting = SMESINPUTTINGOFF
+						else if(input_attempt && available_charge > 0)
+							inputting = SMESINPUTTINGCHARGE
 
-	// only update icon if state changed
-	if(last_disp != chargedisplay() || last_chrg != inputting || last_onln != outputting)
-		update_icon()
+	else // no terminals? No input ability
+		input_attempt = FALSE
+		inputting = SMESINPUTTINGOFF // stop inputting
 
 // called after all power processes are finished
 // restores charge level to smes if there was excess this ptick
@@ -342,7 +371,7 @@
 		return terminal1
 	else if(terminalslot == CABLE_LAYER_2)
 		return terminal2
-	else if(terminalslot == CABLE_LAYER_3 || terminalslot == CABLE_LAYER_3)
+	else if(terminalslot == CABLE_LAYER_3)
 		return terminal3
 
 /obj/machinery/power/smes/disconnect_terminal(terminalslot)
@@ -510,9 +539,9 @@
 
 	else if(istype(W, /obj/item/weapon/smes_coil))
 		if(cur_coils < max_coils)
-			if(failure_probability && prob(failure_probability))
-				total_system_failure(failure_probability, user)
-				return
+			//if(failure_probability && prob(failure_probability))	//I personally don't think this is a fun mechanic
+			//	total_system_failure(failure_probability, user)
+			//	return
 
 			to_chat(user, "You install the coil into the SMES unit!")
 			user.drop_from_inventory(W, src)
@@ -534,14 +563,14 @@
 /obj/machinery/power/smes/tgui_data()
 	var/list/data = list(
 		"capacity" = capacity,
-		"capacityPercent" = round(100*charge/capacity, 0.1),
+		"capacityPercent" = Percentage(),
 		"charge" = charge,
 		"inputAttempt" = input_attempt,
 		"inputting" = inputting,
 		"inputLevel" = input_level,
-		"inputLevel_text" = DisplayPower(input_level/2),
+		"inputLevel_text" = DisplayPower(input_level),
 		"inputLevelMax" = input_level_max,
-		"inputAvailable" = input_available,
+		"inputAvailable" = round(available_charge),
 		"outputAttempt" = output_attempt,
 		"outputting" = outputting,
 		"outputLevel" = output_level,
@@ -558,50 +587,18 @@
 	switch(action)
 		if("tryinput")
 			toggle_input()
-			log_smes(usr)
 			update_icon()
+			log_smes(usr)
 			. = TRUE
 		if("tryoutput")
 			toggle_output()
-			log_smes(usr)
 			update_icon()
+			log_smes(usr)
 			. = TRUE
 		if("input")
-			var/target = params["target"]
-			var/adjust = text2num(params["adjust"])
-			if(target == "min")
-				target = 0
-				. = TRUE
-			else if(target == "max")
-				target = input_level_max
-				. = TRUE
-			else if(adjust)
-				target = input_level + adjust
-				. = TRUE
-			else if(text2num(target) != null)
-				target = text2num(target)
-				. = TRUE
-			if(.)
-				input_level = clamp(target, 0, input_level_max)
-				log_smes(usr)
+			tgui_set_io(SMES_TGUI_INPUT, params["target"], text2num(params["adjust"]))
 		if("output")
-			var/target = params["target"]
-			var/adjust = text2num(params["adjust"])
-			if(target == "min")
-				target = 0
-				. = TRUE
-			else if(target == "max")
-				target = output_level_max
-				. = TRUE
-			else if(adjust)
-				target = output_level + adjust
-				. = TRUE
-			else if(text2num(target) != null)
-				target = text2num(target)
-				. = TRUE
-			if(.)
-				output_level = clamp(target, 0, output_level_max)
-				log_smes(usr)
+			tgui_set_io(SMES_TGUI_OUTPUT, params["target"], text2num(params["adjust"]))
 
 /obj/machinery/power/smes/proc/log_smes(mob/user)
 	investigate_log("Input/Output: [input_level]/[output_level] | Charge: [charge] | Output-mode: [output_attempt?"ON":"OFF"] | Input-mode: [input_attempt?"AUTO":"OFF"] by [user ? key_name(user) : "outside forces"] | At [COORD(src)]", "powernet")
@@ -622,9 +619,11 @@
 	if(.)
 		switch(io)
 			if(SMES_TGUI_INPUT)
-				inputting = !inputting
+				set_input(target)
+				log_smes(usr)
 			if(SMES_TGUI_OUTPUT)
-				outputting = !outputting
+				set_output(target)
+				log_smes(usr)
 
 /obj/machinery/power/smes/take_damage(var/amount)
 	amount = max(0, round(amount))
@@ -661,13 +660,6 @@
 	// Two strong explosions will destroy a SMES.
 	// Given the SMES creates another explosion on it's destruction it sounds fairly reasonable.
 	take_damage(250 / severity)
-
-/proc/rate_control(var/S, var/V, var/C, var/Min=1, var/Max=5, var/Limit=null)
-	var/href = "<A href='?src=\ref[S];rate control=1;[V]"
-	var/rate = "[href]=-[Max]'>-</A>[href]=-[Min]'>-</A> [(C?C : 0)] [href]=[Min]'>+</A>[href]=[Max]'>+</A>"
-	if(Limit) return "[href]=-[Limit]'>-</A>"+rate+"[href]=[Limit]'>+</A>"
-	return rate
-
 
 /obj/machinery/power/smes/can_terminal_dismantle()
 	. = panel_open ? TRUE : FALSE

@@ -47,22 +47,37 @@
 		return
 
 	feedback_add_details("admin_verb","CPOW") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	var/list/results = list()
 
 	for (var/datum/powernet/PN in powernets)
-		if (!PN.nodes || !PN.nodes.len)
+		if(!length(PN.nodes))
 			if(PN.cables && (PN.cables.len > 1))
 				var/obj/structure/cable/C = PN.cables[1]
-				to_chat(usr, "<span class='filter_adminlog'>Powernet with no nodes! (number [PN.number]) - example cable at [C.x], [C.y], [C.z] in area [get_area(C.loc)]</span>")
+				results += "Powernet with no nodes! (number [PN.number]) - example cable at [COORD(C)], [get_area(C.loc)] [ADMIN_COORDJMP(C)]"
 
 		if (!PN.cables || (PN.cables.len < 10))
 			if(PN.cables && (PN.cables.len > 1))
 				var/obj/structure/cable/C = PN.cables[1]
-				to_chat(usr, "<span class='filter_adminlog'>Powernet with fewer than 10 cables! (number [PN.number]) - example cable at [C.x], [C.y], [C.z] in area [get_area(C.loc)]</span>")
+				results += "Powernet with fewer than 10 cables! (number [PN.number]) - example cable at [COORD(C)], [get_area(C.loc)][ADMIN_COORDJMP(C)]"
+
+	for(var/turf/T in world.contents)
+		var/cable_layers //cache all cable layers (which are bitflags) present
+		for(var/obj/structure/cable/C in T.contents)
+			if(cable_layers & C.cable_layer)
+				results += "Doubled wire at [COORD(C)], [get_area(C.loc)] [ADMIN_COORDJMP(C)]"
+			else
+				cable_layers |= C.cable_layer
+		var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in T.contents
+		if(term)
+			var/obj/structure/cable/C = locate(/obj/structure/cable) in T.contents
+			if(!C)
+				results += "Unwired terminal at [COORD(term)], [get_area(term.loc)] [ADMIN_COORDJMP(term)]"
 
 	for(var/obj/machinery/power/apc/power in GLOB.apcs)
 		if(!power.terminal)
-			to_chat(usr, "<span class='filter_adminlog'>APC with no terminals! at [power.x], [power.y], [power.z] in area [get_area(power.loc)]</span>")
+			results += "APC with no terminals! at [COORD(power)], [get_area(power.loc)][ADMIN_COORDJMP(power)]"
 
 	for(var/obj/machinery/power/smes/power in GLOB.smeses)
 		if(!power.terminalconnections)
-			to_chat(usr, "<span class='filter_adminlog'>SMES with no terminals! at [power.x], [power.y], [power.z] in area [get_area(power.loc)]</span>")
+			results += "SMES with no terminals! at [COORD(power)], [get_area(power.loc)][ADMIN_COORDJMP(power)]"
+	to_chat(usr, "[results.Join("\n")]")

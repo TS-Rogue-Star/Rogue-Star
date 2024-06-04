@@ -248,7 +248,7 @@
 	data["mode"] = mode
 	data["transfer_max"] = max_transfer_rate
 	data["output_load"] = round(output_used)
-	data["input_load"] = round(input_available)
+	data["input_load"] = round(available_charge)
 	data["equalise"] = equalise
 	data["blink_tick"] = ui_tick
 	data["cells_max"] = max_cells

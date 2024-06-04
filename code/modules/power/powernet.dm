@@ -9,9 +9,15 @@
 	var/viewavail = 0			// the available power as it appears on the power console (gradually updated)
 	var/viewload = 0			// the load as it appears on the power console (gradually updated)
 	var/netexcess = 0			// excess power on the powernet (typically avail-load)
-	var/delayedload = 0			// load applied to powernet between power ticks.
-	var/problem = FALSE			// power events or something
+	var/problem = 0				// power events or something
 
+	var/smes_demand = 0			// Amount of power demanded by all SMESs from this network. Needed for load balancing.
+	var/list/inputting = list()	// List of SMESs that are demanding power from this network. Needed for load balancing.
+	var/smes_avail = 0			// Amount of power (avail) from SMESes. Used by SMES load balancing
+	var/smes_newavail = 0		// As above, just for newavail
+
+	var/perapc = 0			// per-apc avilability
+	var/perapc_excess = 0
 
 /datum/powernet/New()
 	START_PROCESSING_POWERNET(src)
@@ -30,6 +36,11 @@
 
 /datum/powernet/proc/is_empty()
 	return !cables.len && !nodes.len
+
+//Returns the amount of excess power (before refunding to SMESs) from last tick.
+//This is for machines that might adjust their power consumption using this data.
+/datum/powernet/proc/last_surplus()
+	return max(avail - load, 0)
 
 /datum/powernet/proc/draw_power(var/amount)
 	var/draw = between(0, amount, avail - load)
@@ -132,22 +143,66 @@
 //handles the power changes in the powernet
 //called every ticks by the powernet controller
 /datum/powernet/proc/reset()
-	//see if there's a surplus of power remaining in the powernet and stores unused power in the SMES
+	if(problem > 0)
+		problem = max(problem - 1, 0)
+
+	var/numapc = 0
+	if(length(nodes))
+		for(var/obj/machinery/power/terminal/term in nodes)
+			if( isAPC(term.master) )
+				numapc++
+
+	//see if there's a surplus of power remaining in the powernet
 	netexcess = avail - load
 
-	if(netexcess > 100 && nodes && nodes.len)		// if there was excess power last cycle
+	if(numapc)
+		//very simple load balancing. If there was a net excess this tick then it must have been that some APCs used less than perapc, since perapc*numapc = avail
+		//Therefore we can raise the amount of power rationed out to APCs on the assumption that those APCs that used less than perapc will continue to do so.
+		//If that assumption fails, then some APCs will miss out on power next tick, however it will be rebalanced for the tick after.
+		if (netexcess >= 0)
+			perapc_excess += min(netexcess/numapc, (avail - perapc) - perapc_excess)
+		else
+			perapc_excess = 0
+
+		perapc = avail/numapc + perapc_excess
+
+	// At this point, all other machines have finished using power. Anything left over may be used up to charge SMESs.
+	if(inputting.len && smes_demand)
+		var/smes_input_percentage = between(0, (netexcess / smes_demand) * 100, 100)
+		for(var/obj/machinery/power/terminal/T in inputting)
+			var/obj/machinery/power/smes/S = T.master
+			if(istype(S))
+				S.input_power(smes_input_percentage, T)
+
+	netexcess = avail - load //why this is done twice I have no idea but whatever I guess
+	if(netexcess)
+		var/perc = get_percent_load(TRUE)
 		for(var/obj/machinery/power/smes/S in nodes)	// find the SMESes in the network
-			S.restore()				// and restore some of the power that was used
+			S.restore(perc)				// and restore some of the power that was used
 
 	// update power consoles
 	viewavail = round(0.8 * viewavail + 0.2 * avail)
 	viewload = round(0.8 * viewload + 0.2 * load)
 
-	// reset the powernet
-	load = delayedload
-	delayedload = 0
+	//reset the powernet
+	load = 0
 	avail = newavail
+	smes_avail = smes_newavail
+	inputting.Cut()
+	smes_demand = 0
 	newavail = 0
+	smes_newavail = 0
+
+/datum/powernet/proc/get_percent_load(var/smes_only = FALSE)
+	if(smes_only)
+		var/smes_used = load - (avail - smes_avail) 			// SMESs are always last to provide power
+		if(!smes_used || smes_used < 0 || !smes_avail)			// SMES power isn't available or being used at all, SMES load is therefore 0%
+			return 0
+		return between(0, (smes_used / smes_avail) * 100, 100)	// Otherwise return percentage load of SMESs.
+	else
+		if(!load)
+			return 0
+		return between(0, (load / avail) * 100, 100)
 
 /datum/powernet/proc/get_electrocute_damage()
 	//1kW = 5

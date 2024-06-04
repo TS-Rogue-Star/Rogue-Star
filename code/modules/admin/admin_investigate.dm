@@ -26,12 +26,12 @@
 	to_file(F, "<span class='filter_adminlog'><small>[time2text(world.timeofday,"hh:mm")] \ref[src] ([x],[y],[z])</small> || [src] [message]<br></span>")
 
 //ADMINVERBS
-/client/proc/investigate_show( subject in list("hrefs","notes","singulo","telesci") )
+/client/proc/investigate_show( subject in list("hrefs","notes","singulo","telesci","powernet") )
 	set name = "Investigate"
 	set category = "Admin"
 	if(!holder)	return
 	switch(subject)
-		if("singulo", "telesci")			//general one-round-only stuff
+		if("singulo", "telesci", "powernet")			//general one-round-only stuff
 			var/F = investigate_subject2file(subject)
 			if(!F)
 				to_chat(src, "<span class='filter_adminlog warning'>Error: admin_investigate: [INVESTIGATE_DIR][subject] is an invalid path or cannot be accessed.</span>")

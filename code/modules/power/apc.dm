@@ -272,7 +272,7 @@
 	// Malf AI, removes the APC from AI's hacked APCs list.
 	if((hacker) && (hacker.hacked_apcs) && (src in hacker.hacked_apcs))
 		hacker.hacked_apcs -= src
-
+	investigate_log("[src] was destroyed at [COORD(src)]", "powernet")
 	return ..()
 
 /obj/machinery/power/apc/proc/assign_to_area(area/target_area = get_area(src))
@@ -299,6 +299,16 @@
 	area.power_change()
 	area.apc = null
 	area = null
+
+/obj/machinery/power/apc/proc/update_area()
+	var/area/NA = get_area(src)
+	if(!(NA == area))
+		if(area.apc == src)
+			area.apc = null
+		NA.apc = src
+		area = NA
+		name = "[area.name] APC"
+	update()
 
 /obj/machinery/power/apc/should_have_node()
 	return TRUE
@@ -764,6 +774,7 @@
 				locked = FALSE
 				to_chat(user, "<span class='notice'>You emag the APC interface.</span>")
 				update_icon()
+				investigate_log("[user] emagged [name]", "powernet")
 				return TRUE
 
 /obj/machinery/power/apc/blob_act()
@@ -1034,8 +1045,14 @@
 	update_icon()
 
 /obj/machinery/power/apc/surplus()
-	if(terminal && terminal.powernet)
+	if(terminal)
 		return terminal.surplus()
+	else
+		return 0
+
+/obj/machinery/power/apc/proc/last_surplus()
+	if(terminal && terminal.powernet)
+		return terminal.powernet.last_surplus()
 	else
 		return 0
 

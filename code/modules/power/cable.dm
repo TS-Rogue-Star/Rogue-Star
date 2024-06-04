@@ -46,7 +46,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 	. = ..()
 	cable_list += src //add it to the global cable list
 	Connect_cable()
-	var/turf/T = src.loc			// hide if turf is not intact
+	var/turf/T = get_turf(src)			// hide if turf is not intact
 	if(level==1) hide(!T.is_plating())
 
 /obj/structure/cable/LateInitialize()
@@ -187,7 +187,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 		if (shock(user, 50))
 			return
 		user.visible_message("<span class='notice'>[user] cuts the cable.</span>", "<span class='notice'>You cut the cable.</span>")
-		investigate_log("was cut by [key_name(usr, usr.client)] in [user.loc.loc]","wires")
+		investigate_log("was cut by [key_name(usr, usr.client)] in [COORD(T)]","powernet")
 		deconstruct()
 		return
 
@@ -231,7 +231,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 
 /obj/structure/cable/proc/get_power_info()
 	if(powernet?.avail > 0)
-		return "<span class='filter_notice'><span class='warning'>Total power: [DisplayPower(powernet.avail/2)]\nLoad: [DisplayPower(powernet.viewload)]\nExcess power: [DisplayPower(powernet.netexcess)]</span></span>"
+		return "<span class='filter_notice'><span class='warning'>Total power: [DisplayPower(powernet.viewavail)]\nLoad: [DisplayPower(powernet.viewload)]\nExcess power: [DisplayPower(powernet.netexcess)]</span></span>"
 	else
 		return "<span class='filter_notice'><span class='warning'>The cable is not powered.</span></span>"
 
