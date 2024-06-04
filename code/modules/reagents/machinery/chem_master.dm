@@ -447,14 +447,28 @@
 			var/amount = text2num(params["amount"])
 			if(!id || !amount)
 				return
-			R.trans_id_to(src, id, amount)
+			if(reagents && !reagents.get_free_space())
+				to_chat(usr, span_warning("The reagent buffer is too full!"))
+				return
+			var/remaining = amount - reagents.get_free_space()
+			if(remaining <= 0)
+				R.trans_id_to(src, id, amount)
+			else
+				R.trans_id_to(src, id, reagents.get_free_space())
 		if("remove")
 			var/id = params["id"]
 			var/amount = text2num(params["amount"])
 			if(!id || !amount)
 				return
 			if(mode)
-				reagents.trans_id_to(beaker, id, amount)
+				if(R && !R.get_free_space())
+					to_chat(usr, span_warning("\the [beaker.name] is too full!"))
+					return
+				var/remaining = amount - R.get_free_space()	//figure out if we'd have leftovers
+				if(remaining <= 0)	//No leftovers means we can fill the whole thing
+					reagents.trans_id_to(beaker, id, amount)
+				else
+					reagents.trans_id_to(beaker, id, R.get_free_space())
 			else
 				reagents.remove_reagent(id, amount)
 		if("eject")
