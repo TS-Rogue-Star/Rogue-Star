@@ -15,7 +15,7 @@
 	if(M.eye_blurry)
 		M.eye_blurry = max(M.eye_blurry - 25*removed, 0)
 	if(M.jitteriness)
-		M.make_jittery(max(M.jitteriness - 25*removed,0))
+		M.make_jittery(min(-25*removed,0)) //RSEdit: Ports VOREStation PR16015, makes Adranol function properly
 
 /datum/reagent/numbing_enzyme
 	name = "Numbing Enzyme"
