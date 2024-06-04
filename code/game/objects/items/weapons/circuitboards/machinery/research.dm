@@ -94,3 +94,16 @@
 	origin_tech = list(TECH_DATA = 4)
 	req_components = list(
 							/obj/item/stack/cable_coil = 15)
+
+//RSEdit start || Ports VOREStation PR15545
+/obj/item/weapon/circuitboard/protean_reconstitutor
+	name = T_BOARD("protean reconstitutor")
+	board_type = new /datum/frame/frame_types/machine
+	build_path = /obj/machinery/protean_reconstitutor
+	origin_tech = list(TECH_MAGNET = 5, TECH_BLUESPACE = 5, TECH_MATERIAL = 5, TECH_ENGINEERING = 5, TECH_DATA = 5)
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1,
+							/obj/item/stack/cable_coil = 5)
+//RSEdit end
