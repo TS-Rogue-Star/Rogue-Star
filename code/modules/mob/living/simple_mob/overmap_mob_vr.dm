@@ -134,6 +134,8 @@
 		"rad" = 1000
 		)
 
+	load_owner = "seriouslydontsavethis"
+
 	var/scanner_desc
 	var/obj/effect/overmap/visitable/simplemob/child_om_marker
 	var/om_child_type

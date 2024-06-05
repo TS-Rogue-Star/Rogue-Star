@@ -887,6 +887,14 @@
 	character_name = list("Bogen Kellogg")
 
 //  P CKEYS
+
+/datum/gear/fluff/vehrune_gunkit
+	path = /obj/item/device/modkit_conversion/fluff/vehrune_gunkit
+	display_name = "Vehrune's HoS gunkit"
+	ckeywhitelist = list("pyrophile")
+	character_name = list("Vehrune Antiqua")
+	allowed_roles = list("Head of Security")
+
 /datum/gear/fluff/evelyn_medal
     path = /obj/item/clothing/accessory/medal/conduct
     display_name = "Evelyn's Medal of Conduct"

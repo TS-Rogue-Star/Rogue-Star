@@ -1112,33 +1112,29 @@ var/datum/announcement/minor/admin_min_announcer = new
 	set category = "Debug"
 	set desc = "(atom path) Spawn an atom"
 
-	if(!check_rights(R_SPAWN))	return
-
-	var/list/types = typesof(/atom)
-	var/list/matches = new()
-
-	for(var/path in types)
-		if(findtext("[path]", object))
-			matches += path
-
-	if(matches.len==0)
+	if(!check_rights(R_SPAWN) || !object)
 		return
 
-	var/chosen
-	if(matches.len==1)
-		chosen = matches[1]
-	else
-		chosen = tgui_input_list(usr, "Select an atom type", "Spawn Atom", matches)
-		if(!chosen)
-			return
+	var/list/preparsed = splittext(object,":")
+	var/path = preparsed[1]
+	var/amount = 1
+	if(preparsed.len > 1)
+		amount = clamp(text2num(preparsed[2]),1,ADMIN_SPAWN_CAP)
 
-	if(ispath(chosen,/turf))
-		var/turf/T = get_turf(usr.loc)
+	var/chosen = pick_closest_path(path)
+	if(!chosen)
+		return
+	var/turf/T = get_turf(usr)
+
+	if(ispath(chosen, /turf))
 		T.ChangeTurf(chosen)
 	else
-		new chosen(usr.loc)
+		for(var/i in 1 to amount)
+			new chosen(T)
+		//	A.flags_1 |= ADMIN_SPAWNED_1	//ain't got flags, sadly.
 
-	log_and_message_admins("spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
+
+	log_and_message_admins("spawned [amount] x [chosen] at [ADMIN_COORDJMP(usr)]")
 	feedback_add_details("admin_verb","SA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 

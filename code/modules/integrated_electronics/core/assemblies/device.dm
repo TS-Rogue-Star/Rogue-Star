@@ -48,8 +48,7 @@
 /obj/item/device/assembly/electronic_assembly/examine(mob/user)
 	. = ..()
 	if(EA)
-		for(var/obj/item/integrated_circuit/IC in EA.contents)
-			. += IC.external_examine(user)
+		. += EA.examine(user)
 
 /obj/item/device/assembly/electronic_assembly/verb/toggle()
 	set src in usr
@@ -82,3 +81,5 @@
 		return 0
 	return 1
 
+/obj/item/device/electronic_assembly/device/tgui_host()
+	return holder.tgui_host()
