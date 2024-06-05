@@ -73,10 +73,10 @@
 	name = "MAP: Cable Test (Defined Z-Levels)"
 
 /datum/unit_test/wire_test/start_test()
-	//set background=1
+	set background=1
 	var/list/zs_to_test = using_map.unit_test_z_levels || list(1) //Either you set it, or you just get z1
 
-	for(var/datum/powernet/powernets as anything in powernets)
+	for(var/datum/powernet/powernets as anything in global.powernets)
 
 		//nodes (machines, which includes APCs and SMES)
 		if(!length(powernets.nodes))
