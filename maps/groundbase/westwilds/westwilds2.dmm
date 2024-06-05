@@ -89,9 +89,9 @@
 	},
 /area/submap/groundbase/wilderness/west/unexplored)
 "at" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/anomaly_lab)
 "au" = (
@@ -154,20 +154,19 @@
 	},
 /area/submap/groundbase/wilderness/west)
 "bd" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/axolotl_cockpit)
 "be" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/axolotl_galley)
 "bf" = (
@@ -178,7 +177,7 @@
 /obj/machinery/power/apc{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost)
 "bp" = (
@@ -237,10 +236,10 @@
 	req_access = null;
 	req_one_access = list(11,67)
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/axolotl_head)
 "bQ" = (
@@ -389,6 +388,7 @@
 /obj/structure/closet/walllocker_double/north{
 	name = "Uniform Locker"
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/axolotl)
 "do" = (
@@ -398,7 +398,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/science/outpost/anomaly_storage)
 "dq" = (
@@ -408,7 +408,6 @@
 /turf/simulated/floor/plating,
 /area/shuttle/axolotl_engineering)
 "dw" = (
-/obj/structure/cable,
 /obj/machinery/door/airlock/multi_tile/metal{
 	dir = 2;
 	name = "Axolotl Engineering Bay";
@@ -441,7 +440,6 @@
 /area/groundbase/science/outpost/toxins_mixing)
 "dD" = (
 /obj/machinery/door/firedoor/border_only,
-/obj/structure/cable,
 /obj/machinery/door/airlock/glass_science{
 	name = "Anomaly Testing"
 	},
@@ -451,6 +449,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/science/outpost/anomaly_lab)
 "dI" = (
@@ -463,7 +462,7 @@
 /obj/machinery/power/apc{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/groundbase/science/outpost/atmos)
 "dT" = (
@@ -482,11 +481,14 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost)
 "ed" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/structure/cable/layer3,
+/obj/machinery/power/apc{
 	dir = 1
 	},
 /turf/simulated/floor/tiled,
@@ -501,12 +503,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/axolotl_head)
-"eo" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 8
-	},
-/turf/simulated/floor/tiled/techmaint,
-/area/shuttle/axolotl_cockpit)
 "eq" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -588,6 +584,7 @@
 	dir = 9
 	},
 /obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/axolotl)
 "eS" = (
@@ -629,7 +626,6 @@
 /turf/simulated/floor/plating,
 /area/shuttle/axolotl_engineering)
 "fo" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -637,6 +633,7 @@
 	dir = 8
 	},
 /obj/machinery/firealarm,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/toxins_hallway)
 "fw" = (
@@ -649,13 +646,14 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/science/outpost/toxins_mixing)
 "fB" = (
-/obj/structure/cable/heavyduty/ender{
-	id = "westwilds"
-	},
 /obj/structure/railing{
 	dir = 1
 	},
 /obj/structure/railing,
+/obj/structure/cable/heavyduty,
+/obj/machinery/power/power_transmitter/preset/solar{
+	name = "Colony Power Tap"
+	},
 /turf/simulated/floor{
 	edge_blending_priority = -1
 	},
@@ -690,7 +688,6 @@
 /area/groundbase/science/outpost/anomaly_lab)
 "gl" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
@@ -698,10 +695,12 @@
 /obj/machinery/door/airlock/voidcraft{
 	req_one_access = null
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/axolotl_head)
 "go" = (
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/axolotl)
 "gw" = (
@@ -735,7 +734,6 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost)
 "gO" = (
-/obj/structure/cable,
 /obj/structure/handrail{
 	dir = 1
 	},
@@ -779,13 +777,13 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/science/outpost/toxing_gasworks)
 "gX" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/toxins_hallway)
 "gZ" = (
@@ -826,19 +824,13 @@
 /turf/simulated/floor,
 /area/groundbase/science/outpost/atmos)
 "hm" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/anomaly_lab)
-"hp" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/tiled,
-/area/groundbase/science/outpost/toxins_storage)
 "hA" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
@@ -916,7 +908,6 @@
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/science/outpost/anomaly_testing)
 "it" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -931,13 +922,13 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/axolotl)
 "iy" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/toxins_hallway)
 "iB" = (
@@ -956,11 +947,11 @@
 	req_access = null;
 	req_one_access = list(11,67)
 	},
-/obj/structure/cable,
 /obj/machinery/light,
 /obj/structure/railing/grey{
 	dir = 8
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/axolotl)
 "iD" = (
@@ -970,7 +961,7 @@
 /turf/simulated/floor/tiled/asteroid_steel/outdoors{
 	edge_blending_priority = -1
 	},
-/area/submap/groundbase/wilderness/west)
+/area/groundbase/engineering/solarfield)
 "iJ" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/red{
 	dir = 1
@@ -1012,11 +1003,11 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/science/outpost/toxing_gasworks)
 "je" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost)
 "jj" = (
@@ -1044,11 +1035,11 @@
 /obj/machinery/power/apc{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/effect/floor_decal/corner/purple/full{
 	dir = 4
 	},
 /obj/effect/floor_decal/industrial/outline/red,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/science/outpost/toxins_mixing)
 "jx" = (
@@ -1067,13 +1058,13 @@
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow,
 /area/groundbase/engineering/solarfield)
 "jB" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/toxins_hallway)
 "jD" = (
@@ -1083,15 +1074,14 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/axolotl_q2)
 "jH" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/anomaly_lab)
 "jJ" = (
-/obj/structure/cable,
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -1099,6 +1089,7 @@
 	name = "Science Outpost Atmospherics";
 	req_one_access = list(10,47)
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/science/outpost/atmos)
 "jL" = (
@@ -1138,6 +1129,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/science/outpost)
 "jV" = (
@@ -1148,7 +1140,6 @@
 /area/shuttle/axolotl_engineering)
 "jW" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
@@ -1156,6 +1147,7 @@
 /obj/machinery/door/airlock/voidcraft{
 	req_one_access = null
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/axolotl_q2)
 "kc" = (
@@ -1181,7 +1173,6 @@
 	req_access = null;
 	req_one_access = list(11,67)
 	},
-/obj/structure/cable,
 /obj/structure/handrail,
 /obj/machinery/light{
 	dir = 8
@@ -1192,6 +1183,7 @@
 /obj/structure/bed/chair/bay/comfy{
 	dir = 4
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/axolotl_cockpit)
 "ki" = (
@@ -1242,9 +1234,8 @@
 /area/groundbase/science/outpost/toxing_gasworks)
 "kE" = (
 /obj/structure/cable,
-/obj/machinery/power/smes{
-	RCon_tag = "Substation - Science Outpost";
-	output_attempt = 0
+/obj/machinery/power/terminal{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/groundbase/science/outpost/substation)
@@ -1275,12 +1266,6 @@
 /obj/structure/table/steel,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/axolotl_cockpit)
-"kT" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable,
-/turf/simulated/floor/tiled,
-/area/groundbase/science/outpost/anomaly_lab)
 "kY" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction{
 	dir = 1
@@ -1294,14 +1279,16 @@
 /turf/simulated/floor/reinforced/airless,
 /area/groundbase/science/outpost/toxins_mixing)
 "la" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/toxins_storage)
 "le" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/machinery/firealarm{
 	dir = 1
 	},
 /turf/simulated/floor,
@@ -1319,12 +1306,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/toxins_lab)
-"lw" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/tiled,
-/area/groundbase/science/outpost/toxins_hallway)
 "lz" = (
 /obj/machinery/door/airlock/glass_external/public,
 /obj/effect/map_helper/airlock/door/int_door,
@@ -1362,7 +1343,7 @@
 /turf/simulated/floor/plating,
 /area/shuttle/axolotl_engineering)
 "lS" = (
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/science/outpost/toxing_gasworks)
 "lW" = (
@@ -1417,11 +1398,11 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost)
 "ms" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/toxins_storage)
 "mC" = (
@@ -1474,13 +1455,13 @@
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/science/outpost/anomaly_testing)
 "mY" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/anomaly_lab)
 "na" = (
@@ -1591,6 +1572,7 @@
 	req_one_access = list(10,47)
 	},
 /obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/science/outpost/substation)
 "oE" = (
@@ -1612,10 +1594,10 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/science/outpost/toxins_mixing)
 "oO" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/axolotl_engineering)
 "oW" = (
@@ -1681,7 +1663,11 @@
 /obj/machinery/power/apc{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/machinery/power/sensor{
+	name = "Powernet Sensor - Science Outpost Subgrid";
+	name_tag = "Science Outpost Subgrid"
+	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/groundbase/science/outpost/substation)
 "pq" = (
@@ -1748,15 +1734,17 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/anomaly_testing)
 "pR" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/toxins_hallway)
 "pV" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
+	},
+/obj/machinery/alarm{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/groundbase/science/outpost/substation)
@@ -1811,11 +1799,11 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/anomaly_lab)
 "qj" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost)
 "qm" = (
@@ -1855,6 +1843,7 @@
 "qw" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost)
 "qy" = (
@@ -1930,13 +1919,13 @@
 /turf/simulated/wall/shull,
 /area/shuttle/axolotl_head)
 "rj" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/axolotl_q2)
 "rn" = (
@@ -1997,7 +1986,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable,
-/turf/simulated/floor/tiled/techmaint,
+/obj/effect/catwalk_plated,
+/obj/structure/cable/layer1,
+/turf/simulated/floor/plating,
 /area/shuttle/axolotl)
 "rK" = (
 /obj/machinery/atmospherics/pipe/simple/visible/blue{
@@ -2009,7 +2000,6 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/science/outpost/toxing_gasworks)
 "rL" = (
-/obj/structure/cable,
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "east bump";
@@ -2020,6 +2010,7 @@
 /obj/structure/handrail{
 	dir = 8
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/axolotl_engineering)
 "rS" = (
@@ -2032,13 +2023,6 @@
 /obj/item/stack/cable_coil/random,
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow,
 /area/groundbase/engineering/solarfield)
-"sb" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable,
-/turf/simulated/floor/tiled,
-/area/groundbase/science/outpost/anomaly_lab)
 "sc" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow,
@@ -2080,6 +2064,10 @@
 /area/groundbase/science/outpost/toxins_mixing)
 "sz" = (
 /obj/structure/cable,
+/obj/machinery/power/sensor{
+	name = "Powernet Sensor - Solar Farm Input";
+	name_tag = "Solar Farm Input"
+	},
 /turf/simulated/floor{
 	edge_blending_priority = -1
 	},
@@ -2112,9 +2100,9 @@
 /turf/simulated/floor/plating,
 /area/shuttle/axolotl)
 "te" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/toxins_lab)
 "tg" = (
@@ -2168,10 +2156,10 @@
 	req_access = null;
 	req_one_access = list(11,67)
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/axolotl_q2)
 "tM" = (
@@ -2254,7 +2242,6 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/axolotl_galley)
 "up" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -2264,11 +2251,6 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/axolotl)
 "us" = (
-/obj/structure/cable,
-/obj/machinery/power/sensor{
-	name = "Powernet Sensor - Solar Farm Input";
-	name_tag = "Solar Farm Input"
-	},
 /turf/simulated/floor{
 	edge_blending_priority = -1
 	},
@@ -2290,7 +2272,6 @@
 /turf/simulated/floor/plating,
 /area/shuttle/axolotl)
 "uw" = (
-/obj/structure/cable,
 /turf/simulated/floor{
 	edge_blending_priority = -1
 	},
@@ -2329,11 +2310,11 @@
 	},
 /obj/structure/table/standard,
 /obj/item/stack/nanopaste{
-	pixel_x = 5;
+	pixel_x = 7;
 	pixel_y = 5
 	},
 /obj/item/weapon/reagent_containers/glass/bucket{
-	pixel_x = -6
+	pixel_x = -3
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/science/outpost/anomaly_lab)
@@ -2346,7 +2327,6 @@
 /obj/machinery/door/firedoor/multi_tile{
 	dir = 1
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -2484,25 +2464,19 @@
 /turf/simulated/floor/reinforced/airless,
 /area/groundbase/science/outpost/toxins_mixing)
 "vO" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/toxins_storage)
-"vP" = (
-/obj/machinery/door/airlock/glass_external/public,
-/obj/effect/map_helper/airlock/door/int_door,
-/obj/structure/cable,
-/turf/simulated/floor/tiled/techmaint,
-/area/shuttle/axolotl)
 "vQ" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
-/turf/simulated/floor/tiled/techmaint,
+/obj/effect/catwalk_plated,
+/turf/simulated/floor/plating,
 /area/shuttle/axolotl)
 "vS" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -2512,6 +2486,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost)
 "vY" = (
@@ -2520,16 +2495,8 @@
 	},
 /turf/simulated/floor,
 /area/groundbase/engineering/solarshed)
-"wd" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor/tiled/techmaint,
-/area/shuttle/axolotl)
 "wg" = (
 /obj/machinery/door/firedoor/border_only,
-/obj/structure/cable,
 /obj/machinery/door/airlock/glass_science{
 	name = "General Gasworks"
 	},
@@ -2539,6 +2506,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/science/outpost/toxing_gasworks)
 "wh" = (
@@ -2585,10 +2553,10 @@
 /obj/machinery/atmospherics/binary/pump{
 	dir = 1
 	},
-/obj/structure/cable,
 /obj/effect/floor_decal/industrial/danger{
 	dir = 8
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/anomaly_testing)
 "wN" = (
@@ -2685,7 +2653,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/axolotl)
 "xK" = (
@@ -2724,10 +2691,10 @@
 /turf/simulated/floor/reinforced/airless,
 /area/groundbase/science/outpost/toxins_mixing)
 "xU" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/axolotl_cockpit)
 "yc" = (
@@ -2765,6 +2732,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/groundbase/science/outpost/substation)
 "yu" = (
@@ -2796,19 +2764,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
 /turf/simulated/floor/plating,
 /area/shuttle/axolotl_engineering)
-"yH" = (
-/obj/effect/map_helper/airlock/sensor/int_sensor,
-/obj/machinery/airlock_sensor{
-	dir = 8;
-	pixel_x = 21;
-	req_one_access = null
-	},
-/obj/structure/handrail{
-	dir = 8
-	},
-/obj/structure/cable,
-/turf/simulated/floor/tiled/techmaint,
-/area/shuttle/axolotl)
 "yI" = (
 /obj/machinery/door/airlock/glass_external/public,
 /obj/effect/map_helper/airlock/door/ext_door,
@@ -2915,8 +2870,17 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost)
+"zL" = (
+/obj/structure/cable/heavyduty,
+/obj/structure/catwalk,
+/obj/structure/cable,
+/turf/simulated/floor{
+	edge_blending_priority = -1
+	},
+/area/submap/groundbase/wilderness/west)
 "zN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/binary/pump{
@@ -2926,24 +2890,20 @@
 /area/groundbase/science/outpost/toxing_gasworks)
 "zO" = (
 /obj/structure/cable,
-/obj/machinery/power/sensor{
-	name = "Powernet Sensor - Science Outpost Subgrid";
-	name_tag = "Science Outpost Subgrid"
+/obj/machinery/power/smes{
+	RCon_tag = "Substation - Science Outpost";
+	output_attempt = 0
 	},
-/obj/machinery/firealarm{
-	dir = 4
-	},
-/obj/machinery/alarm,
 /turf/simulated/floor,
 /area/groundbase/science/outpost/substation)
 "zP" = (
-/obj/structure/cable,
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/glass_science{
 	name = "Toxins Storage"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/science/outpost/toxins_storage)
 "zT" = (
@@ -2962,18 +2922,18 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/toxins_storage)
 "zY" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
 /obj/effect/catwalk_plated,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/plating,
 /area/shuttle/axolotl)
 "Ac" = (
 /obj/machinery/atmospherics/pipe/simple/visible/supply,
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers,
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/groundbase/science/outpost/atmos)
 "Ai" = (
@@ -2999,7 +2959,7 @@
 /obj/machinery/power/apc{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/toxins_storage)
 "Ao" = (
@@ -3009,10 +2969,16 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/science/outpost/toxing_gasworks)
 "At" = (
-/obj/structure/cable,
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/glass_science{
 	name = "Toxins Mixing"
+	},
+/obj/structure/cable/layer3,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/science/outpost/toxins_mixing)
@@ -3090,6 +3056,7 @@
 /obj/machinery/power/smes{
 	RCon_tag = "Power - Solar Array";
 	cur_coils = 3;
+	name = "Solar Array Buffer";
 	output_attempt = 0
 	},
 /turf/simulated/floor,
@@ -3149,7 +3116,6 @@
 /area/groundbase/science/outpost/toxins_storage)
 "BH" = (
 /obj/machinery/door/firedoor/border_only,
-/obj/structure/cable,
 /obj/machinery/door/airlock/science{
 	name = "Toxins Workroom"
 	},
@@ -3159,6 +3125,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/science/outpost/toxins_lab)
 "BJ" = (
@@ -3171,7 +3138,6 @@
 /turf/simulated/floor,
 /area/groundbase/science/outpost/anomaly_storage)
 "BL" = (
-/obj/structure/cable,
 /obj/structure/handrail{
 	dir = 8
 	},
@@ -3179,6 +3145,7 @@
 	pixel_x = 32;
 	pixel_y = -32
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/axolotl_engineering)
 "BN" = (
@@ -3331,6 +3298,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/simulated/floor{
 	edge_blending_priority = -1
 	},
@@ -3342,10 +3310,10 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/structure/cable,
 /obj/machinery/power/apc{
 	dir = 4
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/anomaly_testing)
 "Dr" = (
@@ -3358,10 +3326,10 @@
 	req_access = null;
 	req_one_access = list(11,67)
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/axolotl_q1)
 "DA" = (
@@ -3406,23 +3374,26 @@
 /turf/simulated/floor,
 /area/groundbase/science/outpost/atmos)
 "DV" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/axolotl_head)
 "DW" = (
 /obj/machinery/door/firedoor/border_only,
-/obj/structure/cable,
 /obj/machinery/door/airlock/science{
 	name = "Anomalous Materials"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable/layer3,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/science/outpost)
@@ -3451,6 +3422,7 @@
 /obj/machinery/door/airlock/voidcraft{
 	req_one_access = null
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/axolotl_q1)
 "Eh" = (
@@ -3611,11 +3583,11 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/science/outpost/toxing_gasworks)
 "FL" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/toxins_storage)
 "FN" = (
@@ -3670,12 +3642,12 @@
 /area/groundbase/science/outpost)
 "Gc" = (
 /obj/machinery/door/firedoor/border_only,
-/obj/structure/cable,
 /obj/machinery/door/airlock/glass_science{
 	name = "Toxins Storage"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/science/outpost/toxins_lab)
 "Gd" = (
@@ -3683,7 +3655,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/science/outpost/toxing_gasworks)
 "Gg" = (
@@ -3733,13 +3705,10 @@
 /turf/simulated/floor/outdoors/sidewalk/slab,
 /area/submap/groundbase/wilderness/west)
 "GH" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/groundbase/science/outpost/substation)
 "GK" = (
@@ -3759,6 +3728,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/axolotl_engineering)
 "GP" = (
@@ -3825,6 +3795,7 @@
 /obj/machinery/light_switch{
 	pixel_y = 23
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/axolotl)
 "Hv" = (
@@ -3843,9 +3814,9 @@
 /area/groundbase/engineering/solarshed)
 "Hz" = (
 /obj/machinery/power/apc,
-/obj/structure/cable,
 /obj/structure/table/standard,
 /obj/fiftyspawner/steel,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/science/outpost/toxing_gasworks)
 "HB" = (
@@ -3859,13 +3830,13 @@
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/science/outpost/anomaly_lab)
 "HH" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/anomaly_lab)
 "HI" = (
@@ -3911,23 +3882,24 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost)
 "Ia" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/toxins_storage)
 "Id" = (
-/obj/structure/cable,
 /obj/machinery/power/apc{
 	dir = 4
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/toxins_lab)
 "If" = (
@@ -3942,13 +3914,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/science/outpost/toxing_gasworks)
-"In" = (
-/obj/machinery/power/apc{
-	dir = 8
-	},
-/obj/structure/cable,
-/turf/simulated/floor/tiled,
-/area/groundbase/science/outpost/toxins_hallway)
 "Io" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -3997,9 +3962,9 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/science/outpost/toxing_gasworks)
 "Iw" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/toxins_lab)
 "IA" = (
@@ -4085,6 +4050,21 @@
 /obj/machinery/atmospherics/valve,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/science/outpost/toxing_gasworks)
+"Je" = (
+/obj/structure/cable/heavyduty,
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing,
+/obj/structure/cable,
+/turf/simulated/floor{
+	edge_blending_priority = -1
+	},
+/area/submap/groundbase/wilderness/west)
+"Jf" = (
+/obj/structure/cable,
+/turf/simulated/wall,
+/area/groundbase/engineering/solarshed)
 "Jn" = (
 /obj/machinery/atmospherics/pipe/simple/visible/blue,
 /turf/simulated/floor/tiled/white,
@@ -4157,11 +4137,11 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/axolotl_cockpit)
 "Kl" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/axolotl)
 "Km" = (
@@ -4184,15 +4164,6 @@
 	},
 /turf/simulated/floor/reinforced/airless,
 /area/groundbase/science/outpost/toxins_mixing)
-"Kx" = (
-/obj/machinery/atmospherics/unary/vent_pump{
-	dir = 8
-	},
-/obj/effect/map_helper/airlock/atmos/chamber_pump,
-/obj/structure/closet/walllocker/emerglocker/east,
-/obj/structure/cable,
-/turf/simulated/floor/tiled/techmaint,
-/area/shuttle/axolotl)
 "KA" = (
 /turf/simulated/wall,
 /area/groundbase/science/outpost/toxins_mixing)
@@ -4307,7 +4278,7 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/science/outpost/toxing_gasworks)
 "LA" = (
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/anomaly_lab)
 "LD" = (
@@ -4382,7 +4353,6 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost)
 "Mn" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -4476,7 +4446,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/axolotl_cockpit)
 "NC" = (
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/toxins_lab)
 "NG" = (
@@ -4514,9 +4484,9 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/anomaly_testing)
 "NL" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/anomaly_lab)
 "NT" = (
@@ -4541,13 +4511,13 @@
 /area/groundbase/science/outpost/toxins_mixing)
 "NW" = (
 /obj/machinery/hologram/holopad,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/science/outpost/toxins_lab)
 "NX" = (
@@ -4621,7 +4591,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/axolotl_engineering)
 "OV" = (
@@ -4664,20 +4633,20 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/science/outpost/toxing_gasworks)
 "Pw" = (
-/obj/structure/cable,
 /obj/machinery/power/smes{
 	charge = 500000
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/axolotl_engineering)
 "Pz" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/toxins_lab)
 "PB" = (
@@ -4780,6 +4749,7 @@
 /obj/machinery/door/airlock/voidcraft{
 	req_one_access = null
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/axolotl_galley)
 "Qm" = (
@@ -4820,10 +4790,11 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/toxins_storage)
 "QI" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/tiled/techmaint,
+/obj/effect/catwalk_plated,
+/obj/structure/cable/layer1,
+/turf/simulated/floor/plating,
 /area/shuttle/axolotl)
 "QM" = (
 /obj/machinery/atmospherics/binary/pump{
@@ -4832,12 +4803,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/black,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/science/outpost/toxing_gasworks)
-"Rb" = (
-/obj/structure/cable/heavyduty,
-/obj/structure/catwalk,
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/groundbase/engineering/solarshed)
 "Rc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
@@ -4845,13 +4810,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/anomaly_storage)
 "Rq" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/toxins_storage)
 "Rv" = (
@@ -4883,10 +4848,10 @@
 	req_access = null;
 	req_one_access = list(11,67)
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/axolotl_galley)
 "RM" = (
@@ -4929,12 +4894,12 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/toxins_lab)
 "Sb" = (
-/obj/structure/cable,
 /obj/machinery/power/emitter{
 	anchored = 1;
 	dir = 1;
 	state = 2
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/anomaly_testing)
 "Sf" = (
@@ -4957,7 +4922,7 @@
 /obj/machinery/power/apc{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/anomaly_storage)
 "Sk" = (
@@ -4994,6 +4959,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/axolotl)
 "Sw" = (
@@ -5117,12 +5083,6 @@
 "UB" = (
 /turf/simulated/wall,
 /area/groundbase/science/outpost/toxins_storage)
-"UD" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 8
-	},
-/turf/simulated/floor/tiled/techmaint,
-/area/shuttle/axolotl)
 "UI" = (
 /obj/structure/table/rack,
 /obj/item/clothing/suit/space/anomaly,
@@ -5176,8 +5136,8 @@
 /obj/machinery/power/apc{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/anomaly_lab)
 "Vl" = (
@@ -5192,6 +5152,7 @@
 /obj/structure/closet/walllocker_double/north{
 	name = "Uniform Locker"
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/axolotl)
 "Vm" = (
@@ -5231,13 +5192,13 @@
 /turf/simulated/floor/outdoors/newdirt,
 /area/submap/groundbase/wilderness/west)
 "VG" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/toxins_hallway)
 "VR" = (
@@ -5264,9 +5225,9 @@
 /turf/simulated/floor/plating,
 /area/shuttle/axolotl)
 "VZ" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost)
 "Wc" = (
@@ -5290,7 +5251,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/axolotl)
 "Wl" = (
@@ -5318,10 +5279,6 @@
 /obj/machinery/atmospherics/binary/pump/fuel,
 /turf/simulated/floor/plating,
 /area/shuttle/axolotl_engineering)
-"Ws" = (
-/obj/structure/cable,
-/turf/simulated/wall,
-/area/groundbase/science/outpost/toxins_lab)
 "Wz" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 5
@@ -5416,7 +5373,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/science/outpost/toxing_gasworks)
 "Xl" = (
@@ -5464,12 +5421,11 @@
 /turf/simulated/floor,
 /area/groundbase/science/outpost/atmos)
 "Yb" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/anomaly_testing)
 "Ye" = (
@@ -5481,6 +5437,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/axolotl_engineering)
 "Yk" = (
@@ -5504,17 +5461,16 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/axolotl_cockpit)
 "Yu" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/anomaly_testing)
 "Yw" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -5527,6 +5483,7 @@
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/science/outpost/toxins_mixing)
 "YI" = (
@@ -5640,10 +5597,6 @@
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/shuttle/axolotl_engineering)
-"ZG" = (
-/obj/structure/cable,
-/turf/simulated/floor/tiled/techmaint,
-/area/shuttle/axolotl)
 "ZL" = (
 /obj/machinery/atmospherics/pipe/vent{
 	dir = 4
@@ -5653,7 +5606,6 @@
 	},
 /area/groundbase/science/outpost/atmos)
 "ZN" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -5661,6 +5613,7 @@
 	dir = 8
 	},
 /obj/machinery/alarm,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/toxins_hallway)
 "ZO" = (
@@ -5668,23 +5621,23 @@
 /turf/simulated/floor,
 /area/groundbase/science/outpost/atmos)
 "ZQ" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/axolotl_q1)
 "ZX" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost)
 
@@ -8164,25 +8117,25 @@ nr
 jA
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 dT
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 er
@@ -8306,25 +8259,25 @@ nr
 jA
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 dT
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 er
@@ -8448,25 +8401,25 @@ nr
 jA
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 dT
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 er
@@ -8590,25 +8543,25 @@ nr
 jA
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 dT
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 er
@@ -9442,25 +9395,25 @@ nr
 jA
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 IV
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 er
@@ -9584,25 +9537,25 @@ nr
 jA
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 IV
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 er
@@ -9726,25 +9679,25 @@ nr
 jA
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 IV
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 er
@@ -9868,25 +9821,25 @@ nr
 jA
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 IV
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 er
@@ -10436,25 +10389,25 @@ nr
 jA
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 IV
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 er
@@ -10578,25 +10531,25 @@ nr
 jA
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 IV
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 er
@@ -10720,25 +10673,25 @@ nr
 jA
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 IV
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 er
@@ -10862,25 +10815,25 @@ nr
 jA
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 IV
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 er
@@ -11590,7 +11543,7 @@ IV
 GK
 IV
 GK
-IV
+iI
 GK
 dT
 er
@@ -11714,25 +11667,25 @@ nr
 jA
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 IV
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 er
@@ -11856,25 +11809,25 @@ nr
 jA
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 IV
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 er
@@ -11998,25 +11951,25 @@ nr
 jA
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 IV
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 er
@@ -12140,25 +12093,25 @@ nr
 jA
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 IV
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 er
@@ -12708,25 +12661,25 @@ nr
 jA
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 IV
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 er
@@ -12850,25 +12803,25 @@ nr
 jA
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 IV
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 er
@@ -12992,25 +12945,25 @@ nr
 jA
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 IV
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 er
@@ -13134,25 +13087,25 @@ nr
 jA
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 IV
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 er
@@ -13986,25 +13939,25 @@ nr
 jA
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 IV
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 er
@@ -14128,25 +14081,25 @@ nr
 jA
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 IV
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 er
@@ -14270,25 +14223,25 @@ nr
 jA
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 IV
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 er
@@ -14412,25 +14365,25 @@ nr
 jA
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 IV
 dT
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
-IV
+iI
 GK
 dT
 er
@@ -19386,11 +19339,11 @@ Wl
 Wl
 Wl
 Wl
-iI
+SS
 us
 zz
-Ak
-Ak
+JU
+JU
 Hy
 Be
 zA
@@ -19528,14 +19481,14 @@ Wl
 Wl
 Wl
 Wl
-iI
+SS
 sz
 jQ
 Fe
 Ak
 Ak
 VT
-Rb
+zA
 Sx
 Bp
 nr
@@ -19670,7 +19623,7 @@ an
 an
 an
 AR
-iI
+SS
 nr
 zz
 ev
@@ -19678,8 +19631,8 @@ JU
 Mr
 DH
 DH
-zz
-wh
+Jf
+Je
 nr
 nr
 YK
@@ -19694,9 +19647,9 @@ kv
 qn
 Rc
 do
-kT
-kT
-sb
+NL
+NL
+NL
 NL
 at
 LA
@@ -19812,7 +19765,7 @@ AO
 yC
 Cv
 WD
-iI
+SS
 nr
 zz
 zz
@@ -19821,7 +19774,7 @@ zz
 NT
 zz
 zz
-wh
+Je
 nr
 nr
 YK
@@ -19963,7 +19916,7 @@ hD
 SS
 nr
 nr
-wh
+Je
 nr
 nr
 YK
@@ -20105,7 +20058,7 @@ XS
 nr
 nr
 nr
-wh
+Je
 nr
 nr
 nr
@@ -20247,7 +20200,7 @@ XS
 nr
 nr
 nr
-wh
+Je
 nr
 nr
 YK
@@ -20389,7 +20342,7 @@ XS
 nr
 nr
 nr
-wh
+Je
 nr
 nr
 YK
@@ -20531,7 +20484,7 @@ XS
 nr
 nr
 nr
-wh
+Je
 nr
 YK
 YK
@@ -20548,8 +20501,8 @@ cE
 gN
 Uq
 bk
-AV
-AV
+Fh
+Fh
 ZX
 Fh
 jj
@@ -20673,7 +20626,7 @@ XS
 nr
 nr
 nr
-wh
+Je
 nr
 nr
 YK
@@ -20815,7 +20768,7 @@ XS
 XS
 nr
 nr
-wh
+Je
 nr
 YK
 YK
@@ -20957,7 +20910,7 @@ XS
 XS
 nr
 nr
-wh
+Je
 nr
 YK
 YK
@@ -21099,7 +21052,7 @@ XS
 XS
 nr
 nr
-wh
+Je
 nr
 YK
 YK
@@ -21226,7 +21179,7 @@ jn
 gy
 ZC
 Sr
-wd
+xE
 ZC
 nK
 DM
@@ -21241,7 +21194,7 @@ XS
 XS
 nr
 nr
-wh
+Je
 nr
 YK
 YK
@@ -21368,7 +21321,7 @@ tX
 AB
 uQ
 Sr
-wd
+xE
 uQ
 yP
 tX
@@ -21383,7 +21336,7 @@ XS
 XS
 nr
 nr
-wh
+Je
 nr
 YK
 YK
@@ -21397,11 +21350,11 @@ Wl
 aE
 zO
 pj
-Ws
-Ws
-Ws
-Ws
-Ws
+hg
+hg
+hg
+hg
+hg
 BH
 hg
 hg
@@ -21525,7 +21478,7 @@ XS
 XS
 nr
 nr
-wh
+Je
 nr
 YK
 YK
@@ -21561,7 +21514,7 @@ WV
 WV
 WV
 ed
-lw
+pR
 jJ
 Ac
 Ac
@@ -21667,7 +21620,7 @@ XS
 XS
 nr
 nr
-wh
+Je
 nr
 YK
 YK
@@ -21701,7 +21654,7 @@ Np
 vO
 Tp
 UB
-In
+WS
 gX
 hU
 PJ
@@ -21794,7 +21747,7 @@ Vd
 Oc
 Oc
 eN
-wd
+xE
 PR
 PR
 lz
@@ -21834,12 +21787,12 @@ Iw
 te
 Gc
 ms
-hp
 la
-hp
-hp
+la
+la
+la
 FL
-hp
+la
 Ia
 Rq
 zP
@@ -21930,13 +21883,13 @@ Wl
 Wl
 zm
 Ln
-Kx
-Kx
-vP
-yH
-ZG
+dW
+dW
+lz
+FU
+PR
 Wk
-wd
+xE
 PR
 FU
 lz
@@ -21951,7 +21904,7 @@ XS
 XS
 nr
 nr
-Vg
+zL
 nr
 YK
 nr
@@ -22077,8 +22030,8 @@ tX
 tX
 tX
 qm
-UD
-wd
+Wk
+xE
 Zb
 tX
 tX
@@ -22093,7 +22046,7 @@ XS
 XS
 XS
 nr
-Vg
+zL
 nr
 nr
 nr
@@ -22503,8 +22456,8 @@ Ch
 eh
 rb
 It
-UD
-wd
+Wk
+xE
 iB
 jx
 BU
@@ -23213,7 +23166,7 @@ rD
 rD
 rD
 rD
-eo
+xU
 uD
 gw
 gw
