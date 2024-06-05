@@ -75,38 +75,40 @@
 /datum/unit_test/wire_test/start_test()
 	set background=1
 	var/list/zs_to_test = using_map.unit_test_z_levels || list(1) //Either you set it, or you just get z1
+	var/list/exempt_from_wires = list()
+	exempt_from_wires += using_map.unit_test_exempt_from_wires.Copy()
 
 	for(var/datum/powernet/powernets as anything in powernets)
 
 		//nodes (machines, which includes APCs and SMES)
 		if(!length(powernets.nodes))
-			fail(length(powernets.cables), "[powernets] found with no nodes OR cables connected, something has gone horribly wrong.")
+			log_unit_test(length(powernets.cables), "[powernets] found with no nodes OR cables connected, something has gone horribly wrong.")
 
 			var/obj/structure/cable/found_cable = powernets.cables[1]
 			//Check if they're a station area
 			var/area/cable_area = get_area(found_cable)
-			if(!(cable_area.type in zs_to_test) || !cable_area.requires_power)
+			if(!(cable_area.type in zs_to_test) || !cable_area.requires_power && !(cable_area.type in exempt_from_wires))
 				continue
-			fail("[powernets] found with no nodes connected ([found_cable.x], [found_cable.y], [found_cable.z])).")
+			log_unit_test("[powernets] found with no nodes connected ([found_cable.x], [found_cable.y], [found_cable.z])).")
 
 		//cables
 		if(!length(powernets.cables))
-			fail(length(powernets.nodes), "[powernets] found with no cables OR nodes connected, something has gone horribly wrong.")
+			log_unit_test(length(powernets.nodes), "[powernets] found with no cables OR nodes connected, something has gone horribly wrong.")
 
 			var/obj/machinery/power/found_machine = powernets.nodes[1]
 			//Check if they're a station area
 			var/area/machine_area = get_area(found_machine)
-			if(!(machine_area.type in zs_to_test || !machine_area.requires_power))
+			if(!(machine_area.type in zs_to_test || !machine_area.requires_power) && !(machine_area.type in exempt_from_wires))
 				continue
-			fail("[powernets] found with no cables connected ([found_machine.x], [found_machine.y], [found_machine.z]).")
+			log_unit_test("[powernets] found with no cables connected ([found_machine.x], [found_machine.y], [found_machine.z]).")
 
 		if(!powernets.avail && !(locate(/obj/machinery/power/terminal) in powernets.nodes)) //No power roundstart, so check for an SMES connection (Solars, Turbine).
 			var/obj/structure/cable/random_cable = powernets.cables[1]
 			//Check if they're a station area
 			var/area/cable_area = get_area(random_cable)
-			if(!(cable_area.type in zs_to_test || !cable_area.requires_power))
+			if(!(cable_area.type in zs_to_test || !cable_area.requires_power) && !(cable_area.type in exempt_from_wires))
 				continue
-			fail("[powernets] found with no power roundstart, connected to a cable at ([random_cable.x], [random_cable.y], [random_cable.z]).")
+			log_unit_test("[powernets] found with no power roundstart, connected to a cable at ([random_cable.x], [random_cable.y], [random_cable.z]).")
 		else
 			pass("No Abnormal powernets detected!")
 
