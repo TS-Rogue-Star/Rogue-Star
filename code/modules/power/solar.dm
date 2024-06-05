@@ -39,6 +39,10 @@ GLOBAL_LIST_EMPTY(solars_list)
 	update_icon()
 	connect_to_network()
 
+/obj/machinery/power/solar/examine(mob/user)
+	. = ..()
+	. += span_notice("You can use a multitool to change the connected layer.")
+
 /obj/machinery/power/solar/Destroy()
 	unset_control() //remove from control computer
 	. = ..()
@@ -62,7 +66,7 @@ GLOBAL_LIST_EMPTY(solars_list)
 
 /obj/machinery/power/solar/attackby(obj/item/weapon/W, mob/user)
 
-	if(W.is_crowbar())
+	if(W.has_tool_quality(TOOL_CROWBAR))
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
 		user.visible_message("<span class='notice'>[user] begins to take the glass off the solar panel.</span>")
 		if(do_after(user, 50))
@@ -72,6 +76,10 @@ GLOBAL_LIST_EMPTY(solars_list)
 			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 			user.visible_message("<span class='notice'>[user] takes the glass off the solar panel.</span>")
 			qdel(src)
+		return
+	if(W.has_tool_quality(TOOL_MULTITOOL))
+		user.visible_message("<span class='notice'>[user] adjusts the plugged in cable layer.</span>")
+		adapt_to_cable_layer()
 		return
 	else if (W)
 		src.add_fingerprint(user)
@@ -201,7 +209,7 @@ GLOBAL_LIST_EMPTY(solars_list)
 	item_state = "camera"
 	w_class = ITEMSIZE_LARGE // Pretty big!
 	anchored = FALSE
-	var/tracker = 0
+	var/tracker = FALSE
 
 /obj/item/solar_assembly/attack_hand(var/mob/user)
 	if(!anchored || !isturf(loc)) // You can't pick it up
@@ -209,19 +217,19 @@ GLOBAL_LIST_EMPTY(solars_list)
 
 /obj/item/solar_assembly/attackby(var/obj/item/weapon/W, var/mob/user)
 	if (!isturf(loc))
-		return 0
+		return FALSE
 	if(!anchored)
-		if(W.is_wrench())
+		if(W.has_tool_quality(TOOL_WRENCH))
 			anchored = TRUE
 			user.visible_message("<span class='notice'>[user] wrenches the solar assembly into place.</span>")
 			playsound(src, W.usesound, 75, 1)
-			return 1
+			return TRUE
 	else
-		if(W.is_wrench())
+		if(W.has_tool_quality(TOOL_WRENCH))
 			anchored = FALSE
 			user.visible_message("<span class='notice'>[user] unwrenches the solar assembly from it's place.</span>")
 			playsound(src, W.usesound, 75, 1)
-			return 1
+			return TRUE
 
 		if(istype(W, /obj/item/stack/material) && (W.get_material_name() == "glass" || W.get_material_name() == "rglass"))
 			var/obj/item/stack/material/S = W
@@ -236,21 +244,21 @@ GLOBAL_LIST_EMPTY(solars_list)
 			else
 				to_chat(user, "<span class='warning'>You need two sheets of glass to put them into a solar panel.</span>")
 				return
-			return 1
+			return TRUE
 
 	if(!tracker)
 		if(istype(W, /obj/item/weapon/tracker_electronics))
-			tracker = 1
+			tracker = TRUE
 			user.drop_item()
 			qdel(W)
 			user.visible_message("<span class='notice'>[user] inserts the electronics into the solar assembly.</span>")
-			return 1
+			return TRUE
 	else
-		if(W.is_crowbar())
+		if(W.has_tool_quality(TOOL_CROWBAR))
 			new /obj/item/weapon/tracker_electronics(src.loc)
 			tracker = 0
 			user.visible_message("<span class='notice'>[user] takes out the electronics from the solar assembly.</span>")
-			return 1
+			return TRUE
 	..()
 
 //
@@ -294,6 +302,10 @@ GLOBAL_LIST_EMPTY(solars_list)
 	. = ..()
 	connect_to_network()
 	set_panels(cdir)
+
+/obj/machinery/power/solar_control/examine(mob/user)
+	. = ..()
+	. += span_notice("You can use a multitool to change the connected layer.")
 
 /obj/machinery/power/solar_control/Destroy()
 	for(var/obj/machinery/power/solar/M in connected_panels)
@@ -420,7 +432,7 @@ GLOBAL_LIST_EMPTY(solars_list)
 	return data
 
 /obj/machinery/power/solar_control/attackby(obj/item/I, user as mob)
-	if(I.is_screwdriver())
+	if(I.has_tool_quality(TOOL_SCREWDRIVER))
 		playsound(src, I.usesound, 50, 1)
 		if(do_after(user, 20))
 			if (src.stat & BROKEN)
@@ -446,6 +458,10 @@ GLOBAL_LIST_EMPTY(solars_list)
 				A.icon_state = "computer_4"
 				A.anchored = TRUE
 				qdel(src)
+	if(I.has_tool_quality(TOOL_MULTITOOL))
+		visible_message("<span class='notice'>[user] adjusts the plugged in cable layer.</span>")
+		adapt_to_cable_layer()
+		return
 	else
 		src.attack_hand(user)
 	return

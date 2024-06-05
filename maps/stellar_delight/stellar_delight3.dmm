@@ -677,7 +677,6 @@
 	},
 /area/tcommsat/chamber)
 "cn" = (
-/obj/structure/cable,
 /obj/machinery/power/breakerbox/activated{
 	RCon_tag = "AI/Telecomms Substation Bypass"
 	},
@@ -955,14 +954,12 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/stellardelight/deck3/forestarrooma)
 "dw" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 1
+/obj/effect/wire_deleter{
+	wire_deletion_rate = 5
 	},
-/obj/structure/cable,
-/turf/simulated/floor/tiled,
-/area/stellardelight/deck3/portdock)
+/obj/structure/cable/layer1,
+/turf/simulated/floor/airless,
+/area/stellardelight/deck3/exterior)
 "dx" = (
 /turf/simulated/wall/bay/steel,
 /area/maintenance/stellardelight/deck3/forestarroomb)
@@ -1667,7 +1664,6 @@
 "gA" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
@@ -2004,6 +2000,9 @@
 /area/maintenance/stellardelight/deck3/starboardaft)
 "ig" = (
 /obj/structure/cable/layer1,
+/obj/effect/wire_deleter{
+	wire_deletion_rate = 5
+	},
 /turf/simulated/floor/airless,
 /area/stellardelight/deck3/exterior)
 "ii" = (
@@ -2244,7 +2243,6 @@
 	layer = 3.1;
 	name = "Cafe Shutters"
 	},
-/obj/structure/cable,
 /turf/simulated/floor/lino,
 /area/stellardelight/deck3/cafe)
 "jn" = (
@@ -2460,7 +2458,6 @@
 /turf/simulated/floor/tiled,
 /area/crew_quarters/heads/chief)
 "kp" = (
-/obj/structure/cable,
 /obj/machinery/alarm/angled,
 /obj/machinery/power/breakerbox/activated{
 	RCon_tag = "Command Substation Bypass"
@@ -2862,7 +2859,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/aft)
 "lL" = (
@@ -3278,7 +3274,6 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/machinery/alarm/angled{
 	dir = 8
 	},
@@ -3611,12 +3606,6 @@
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor/wood,
 /area/stellardelight/deck3/readingroom)
-"oH" = (
-/obj/effect/wire_deleter{
-	wire_deletion_rate = 5
-	},
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "oI" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/zpipe/down/scrubbers{
@@ -4676,25 +4665,9 @@
 "sM" = (
 /turf/simulated/floor/reinforced/airless,
 /area/stellardelight/deck3/exterior)
-"sN" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck3/portcent)
 "sO" = (
 /turf/simulated/floor,
 /area/stellardelight/deck2/fore)
-"sP" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 1
-	},
-/obj/structure/cable,
-/turf/simulated/floor/tiled,
-/area/stellardelight/deck3/starboarddock)
 "sQ" = (
 /obj/structure/table/standard,
 /obj/item/weapon/aiModule/reset,
@@ -6486,7 +6459,6 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/simulated/floor,
 /area/stellardelight/deck2/starboard)
 "Aq" = (
@@ -8161,7 +8133,6 @@
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/portdock)
 "Hh" = (
-/obj/structure/cable,
 /obj/machinery/airlock_sensor{
 	dir = 4;
 	id_tag = "starmaint_sensor";
@@ -8535,13 +8506,6 @@
 /obj/structure/flora/pottedplant/stoutbush,
 /turf/simulated/floor/tiled/monotile,
 /area/stellardelight/deck3/commandhall)
-"IN" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck3/portaft)
 "IO" = (
 /obj/structure/lattice,
 /obj/structure/cable,
@@ -8635,6 +8599,7 @@
 	req_one_access = list(13)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/stellardelight/deck3/starboardcent)
 "Jc" = (
@@ -8929,7 +8894,6 @@
 /obj/structure/bed/chair/sofa/corp/left{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/move_trader_landmark{
 	dir = 4;
 	trader_type = /obj/trader/general
@@ -9095,7 +9059,6 @@
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/portdock)
 "KM" = (
@@ -9264,7 +9227,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 5
 	},
@@ -9611,7 +9573,6 @@
 	dir = 4
 	},
 /obj/effect/floor_decal/arrivals,
-/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/aft)
 "MV" = (
@@ -9736,6 +9697,9 @@
 "Nr" = (
 /obj/machinery/power/solar,
 /obj/structure/cable/layer1,
+/obj/effect/wire_deleter{
+	wire_deletion_rate = 5
+	},
 /turf/simulated/floor/airless,
 /area/stellardelight/deck3/exterior)
 "Ns" = (
@@ -10180,7 +10144,6 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/stellardelight/deck2/starboard)
@@ -11365,13 +11328,6 @@
 /obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/monotile,
 /area/stellardelight/deck3/commandhall)
-"TG" = (
-/obj/effect/wire_deleter{
-	wire_deletion_rate = 5
-	},
-/obj/structure/cable/layer1,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck3/exterior)
 "TI" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
@@ -11475,10 +11431,6 @@
 /obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/tcommsat/computer)
-"Ug" = (
-/obj/structure/cable,
-/turf/simulated/wall/bay/r_wall/steel,
-/area/maintenance/stellardelight/deck3/starboardcent)
 "Uj" = (
 /obj/structure/cable/layer1,
 /obj/machinery/power/smes/preset/ai_tcomm{
@@ -11669,7 +11621,6 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck3/portdock)
 "Ve" = (
@@ -12221,6 +12172,7 @@
 /area/crew_quarters/bar)
 "Xd" = (
 /obj/machinery/atmospherics/pipe/manifold4w/hidden,
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/maintenance/stellardelight/deck3/starboardcent)
 "Xe" = (
@@ -18709,7 +18661,7 @@ Nr
 Nr
 Nr
 Nr
-NL
+dw
 Nr
 Nr
 Nr
@@ -18845,18 +18797,18 @@ NL
 NL
 NL
 Wd
-TG
-TG
-TG
-TG
-TG
-TG
+NL
+NL
+NL
+NL
+NL
+NL
 ig
-TG
-TG
-TG
-TG
-TG
+NL
+NL
+NL
+NL
+NL
 Wd
 Wd
 Wd
@@ -19131,16 +19083,16 @@ Jh
 Wd
 Wd
 Wd
-oH
-TG
-TG
-TG
+NL
+NL
+NL
+NL
 ig
-TG
-TG
-TG
-TG
-TG
+NL
+NL
+NL
+NL
+NL
 NL
 SK
 SK
@@ -19277,7 +19229,7 @@ Wd
 Nr
 Nr
 Nr
-NL
+ig
 Nr
 Nr
 Nr
@@ -20086,7 +20038,7 @@ mQ
 sX
 Yl
 Yl
-Yl
+Ns
 Yl
 Ns
 Ns
@@ -20126,7 +20078,7 @@ oM
 xT
 BZ
 xT
-IN
+xT
 xi
 dE
 dE
@@ -20367,7 +20319,7 @@ Jh
 hD
 hD
 nO
-Sp
+il
 Sp
 hD
 zt
@@ -20820,7 +20772,7 @@ zX
 tp
 eh
 gA
-sN
+MR
 MR
 VK
 Zf
@@ -21293,7 +21245,7 @@ jV
 TW
 pC
 PD
-dw
+PD
 Or
 mb
 Eg
@@ -24417,7 +24369,7 @@ ex
 Ny
 XD
 df
-sP
+df
 ZH
 vo
 Nx
@@ -24940,7 +24892,7 @@ oC
 me
 aB
 me
-Ug
+me
 aB
 me
 hE
@@ -26377,7 +26329,7 @@ Wd
 Nr
 Nr
 Nr
-NL
+ig
 Nr
 Nr
 Nr
@@ -26516,15 +26468,15 @@ Wd
 Wd
 Wd
 NL
-TG
-TG
-TG
+NL
+NL
+NL
 ig
-TG
-TG
-TG
-TG
-TG
+NL
+NL
+NL
+NL
+NL
 NL
 SK
 SK
@@ -26797,18 +26749,18 @@ NL
 NL
 NL
 Wd
-TG
-TG
-TG
-TG
-TG
-TG
+NL
+NL
+NL
+NL
+NL
+NL
 ig
-TG
-TG
-TG
-TG
-TG
+NL
+NL
+NL
+NL
+NL
 NL
 Wd
 Wd
@@ -26945,7 +26897,7 @@ Nr
 Nr
 Nr
 Nr
-NL
+ig
 Nr
 Nr
 Nr

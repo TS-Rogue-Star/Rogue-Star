@@ -24,10 +24,6 @@
 /obj/structure/lattice,
 /turf/space,
 /area/space)
-"h" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/tether_away/debrisfield/shuttle_buffer)
 "i" = (
 /obj/structure/lattice,
 /obj/item/stack/cable_coil/cut,
@@ -74,8 +70,8 @@ a
 a
 a
 f
-h
-h
+e
+e
 i
 j
 a

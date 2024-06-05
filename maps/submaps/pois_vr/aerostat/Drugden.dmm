@@ -73,8 +73,8 @@
 /area/submap/virgo2/Drugd)
 "s" = (
 /obj/structure/bed/chair/comfy/beige{
-	icon_state = "armchair_preview";
-	dir = 1
+	dir = 1;
+	icon_state = "armchair_preview"
 	},
 /turf/simulated/floor/carpet,
 /area/submap/virgo2/Drugd)

@@ -105,7 +105,6 @@
 /area/submap/virgo2/DecoupledEngine)
 "az" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/effect/floor_decal/rust,
@@ -120,7 +119,6 @@
 /area/submap/virgo2/DecoupledEngine)
 "aB" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 4
 	},
 /obj/effect/floor_decal/rust,
@@ -176,7 +174,6 @@
 /obj/machinery/power/rad_collector,
 /obj/effect/floor_decal/rust,
 /obj/effect/floor_decal/industrial/warning{
-	icon_state = "warning";
 	dir = 9
 	},
 /turf/simulated/floor,
@@ -184,7 +181,6 @@
 "aK" = (
 /obj/effect/floor_decal/rust,
 /obj/effect/floor_decal/industrial/warning{
-	icon_state = "warning";
 	dir = 5
 	},
 /turf/simulated/floor,
@@ -192,7 +188,6 @@
 "aL" = (
 /obj/structure/grille/broken,
 /obj/structure/window/phoronreinforced{
-	icon_state = "phoronrwindow";
 	dir = 4
 	},
 /obj/item/weapon/material/shard/phoron,
@@ -206,7 +201,6 @@
 /area/submap/virgo2/DecoupledEngine)
 "aN" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 4
 	},
 /obj/effect/floor_decal/rust,
@@ -217,8 +211,8 @@
 /area/submap/virgo2/DecoupledEngine)
 "aO" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r";
-	dir = 4
+	dir = 4;
+	icon_state = "propulsion_r"
 	},
 /turf/simulated/floor/lava,
 /area/submap/virgo2/DecoupledEngine)
@@ -228,8 +222,6 @@
 /area/submap/virgo2/DecoupledEngine)
 "aQ" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	icon_state = "door_closed";
-	locked = 0;
 	name = "Engine Access";
 	req_one_access = list(11)
 	},
@@ -241,7 +233,6 @@
 	},
 /obj/effect/floor_decal/rust,
 /obj/effect/floor_decal/industrial/warning{
-	icon_state = "warning";
 	dir = 8
 	},
 /turf/simulated/floor,
@@ -259,7 +250,6 @@
 	},
 /obj/effect/floor_decal/rust,
 /obj/effect/floor_decal/industrial/warning{
-	icon_state = "warning";
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -272,18 +262,15 @@
 "aV" = (
 /obj/structure/grille,
 /obj/structure/window/phoronreinforced{
-	icon_state = "phoronrwindow";
 	dir = 4
 	},
 /obj/structure/window/phoronreinforced{
-	icon_state = "phoronrwindow";
 	dir = 8
 	},
 /turf/simulated/floor,
 /area/submap/virgo2/DecoupledEngine)
 "aW" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/effect/floor_decal/rust,
@@ -311,7 +298,6 @@
 /obj/structure/lattice,
 /obj/structure/grille,
 /obj/structure/window/reinforced{
-	dir = 2;
 	health = 1e+006
 	},
 /turf/template_noop,
@@ -320,7 +306,6 @@
 /obj/structure/lattice,
 /obj/structure/grille,
 /obj/structure/window/reinforced{
-	dir = 2;
 	health = 1e+006
 	},
 /obj/structure/window/reinforced{
@@ -341,7 +326,6 @@
 /obj/machinery/power/rad_collector,
 /obj/structure/window/phoronreinforced,
 /obj/structure/window/phoronreinforced{
-	icon_state = "phoronrwindow";
 	dir = 8
 	},
 /obj/effect/floor_decal/rust,
@@ -360,7 +344,6 @@
 "bh" = (
 /obj/machinery/power/rad_collector,
 /obj/structure/window/phoronreinforced{
-	icon_state = "phoronrwindow";
 	dir = 4
 	},
 /obj/structure/window/phoronreinforced,
@@ -401,20 +384,18 @@
 	},
 /obj/structure/grille,
 /obj/structure/window/phoronreinforced{
-	icon_state = "phoronrwindow";
 	dir = 4
 	},
 /obj/structure/window/phoronreinforced,
 /obj/structure/window/phoronreinforced{
-	icon_state = "phoronrwindow";
 	dir = 8
 	},
 /turf/simulated/floor,
 /area/submap/virgo2/DecoupledEngine)
 "bn" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l";
-	dir = 4
+	dir = 4;
+	icon_state = "propulsion_l"
 	},
 /turf/simulated/floor/outdoors/rocks,
 /area/submap/virgo2/DecoupledEngine)
@@ -441,11 +422,9 @@
 "bs" = (
 /obj/structure/grille,
 /obj/structure/window/phoronreinforced{
-	icon_state = "phoronrwindow";
 	dir = 1
 	},
 /obj/structure/window/phoronreinforced{
-	icon_state = "phoronrwindow";
 	dir = 8
 	},
 /obj/structure/window/phoronreinforced,
@@ -454,7 +433,6 @@
 "bt" = (
 /obj/structure/grille,
 /obj/structure/window/phoronreinforced{
-	icon_state = "phoronrwindow";
 	dir = 1
 	},
 /obj/structure/window/phoronreinforced,
@@ -463,11 +441,9 @@
 "bu" = (
 /obj/structure/grille,
 /obj/structure/window/phoronreinforced{
-	icon_state = "phoronrwindow";
 	dir = 1
 	},
 /obj/structure/window/phoronreinforced{
-	icon_state = "phoronrwindow";
 	dir = 4
 	},
 /obj/structure/window/phoronreinforced,
@@ -514,7 +490,6 @@
 /area/submap/virgo2/DecoupledEngine)
 "SB" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/effect/floor_decal/rust,

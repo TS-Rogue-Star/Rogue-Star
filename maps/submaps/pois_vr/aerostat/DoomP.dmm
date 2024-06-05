@@ -116,11 +116,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/submap/virgo2/DoomP)
-"aE" = (
-/obj/machinery/power/smes/point_of_interest,
-/obj/structure/cable,
-/turf/simulated/floor/plating,
-/area/submap/virgo2/DoomP)
 "aF" = (
 /obj/machinery/power/smes/point_of_interest,
 /obj/structure/cable,
@@ -130,7 +125,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "PAPC";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/structure/cable,
@@ -189,17 +183,8 @@
 	},
 /turf/simulated/floor/tiled,
 /area/submap/virgo2/DoomP)
-"aR" = (
-/obj/machinery/power/terminal{
-	icon_state = "term";
-	dir = 1
-	},
-/obj/structure/cable,
-/turf/simulated/floor/tiled/techfloor/grid,
-/area/submap/virgo2/DoomP)
 "aS" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/structure/cable,
@@ -385,9 +370,7 @@
 "bA" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -412,8 +395,7 @@
 /area/submap/virgo2/DoomP)
 "bE" = (
 /obj/machinery/light/small{
-	dir = 4;
-	pixel_y = 0
+	dir = 4
 	},
 /obj/effect/floor_decal/corner/lime{
 	dir = 10
@@ -1660,8 +1642,8 @@ ad
 ad
 au
 at
-aE
-aR
+aF
+aS
 at
 bi
 at

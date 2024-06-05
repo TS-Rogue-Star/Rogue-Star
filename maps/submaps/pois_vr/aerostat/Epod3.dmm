@@ -49,13 +49,10 @@
 /area/submap/virgo2/Epod3)
 "j" = (
 /obj/machinery/status_display{
-	density = 0;
 	layer = 4;
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /obj/structure/bed/chair{
-	icon_state = "chair_preview";
 	dir = 8
 	},
 /obj/effect/decal/remains,
@@ -70,7 +67,6 @@
 /area/submap/virgo2/Epod3)
 "k" = (
 /obj/structure/shuttle/engine/propulsion/burst{
-	icon_state = "propulsion";
 	dir = 8
 	},
 /turf/simulated/shuttle/wall,

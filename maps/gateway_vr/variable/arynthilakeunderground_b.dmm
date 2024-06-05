@@ -400,7 +400,7 @@
 /area/gateway/arynthilake/engine)
 "Zl" = (
 /obj/structure/cable,
-/obj/structure/cable,
+/obj/machinery/power/deck_relay,
 /turf/simulated/floor/tiled/eris/steel/danger,
 /area/gateway/arynthilake/engine)
 "Zz" = (

@@ -530,12 +530,10 @@
 	},
 /area/tether_away/beach/cavebase)
 "hR" = (
-/obj/machinery/power/terminal{
+/obj/machinery/power/terminal/layer1{
 	dir = 8
 	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/asteroid_steel,
 /area/tether_away/beach/powershed)
 "hS" = (
@@ -567,14 +565,6 @@
 /obj/structure/mopbucket,
 /turf/simulated/floor/tiled/asteroid_steel,
 /area/tether_away/beach/resort/janibar)
-"jc" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/tiled/asteroid_steel{
-	outdoors = 1
-	},
-/area/tether_away/beach/resort)
 "jH" = (
 /obj/effect/floor_decal/spline/plain,
 /turf/simulated/floor/water/pool{
@@ -599,8 +589,7 @@
 /area/tether_away/beach/resort/lockermed)
 "kk" = (
 /obj/machinery/power/apc/alarms_hidden{
-	dir = 8;
-	pixel_x = -27
+	dir = 8
 	},
 /obj/structure/cable,
 /turf/simulated/floor/tiled/kafel_full/white,
@@ -618,12 +607,6 @@
 	outdoors = 1
 	},
 /area/tether_away/beach/resort)
-"kO" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/tiled/asteroid_steel,
-/area/tether_away/beach/powershed)
 "kP" = (
 /obj/structure/table/woodentable,
 /obj/random/drinkbottle,
@@ -648,8 +631,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc/alarms_hidden{
-	dir = 8;
-	pixel_x = -27
+	dir = 8
 	},
 /turf/simulated/floor/wood,
 /area/tether_away/beach/resort/dorm2)
@@ -675,8 +657,7 @@
 	wall_mounted = 1
 	},
 /obj/machinery/power/apc/alarms_hidden{
-	dir = 8;
-	pixel_x = -27
+	dir = 8
 	},
 /obj/structure/cable,
 /turf/simulated/floor/wood,
@@ -694,8 +675,7 @@
 /area/tether_away/beach/water)
 "mb" = (
 /obj/machinery/power/apc/alarms_hidden{
-	dir = 1;
-	pixel_y = 26
+	dir = 1
 	},
 /obj/structure/cable,
 /turf/simulated/floor/wood,
@@ -730,28 +710,12 @@
 /area/tether_away/beach/resort/kitchen)
 "mM" = (
 /obj/machinery/power/solar_control,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/asteroid_steel,
 /area/tether_away/beach/powershed)
-"mS" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/tiled/asteroid_steel{
-	outdoors = 1
-	},
-/area/tether_away/beach/resort)
 "mW" = (
 /obj/structure/mirror{
 	dir = 8;
@@ -760,10 +724,8 @@
 /turf/simulated/floor/wood,
 /area/tether_away/beach/resort/dorm4)
 "nm" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
 /obj/machinery/power/tracker,
+/obj/structure/cable/layer1,
 /turf/simulated/floor{
 	outdoors = 1
 	},
@@ -825,18 +787,7 @@
 /turf/simulated/floor/water/ocean,
 /area/tether_away/beach/cavebase)
 "py" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/asteroid_steel,
 /area/tether_away/beach/powershed)
 "pA" = (
@@ -857,20 +808,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/tether_away/beach/resort/dorm4)
-"pF" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/tiled/asteroid_steel{
-	outdoors = 1
-	},
-/area/tether_away/beach/resort)
 "pM" = (
 /obj/item/weapon/stool/padded{
 	dir = 1
@@ -969,20 +906,6 @@
 "tr" = (
 /turf/simulated/floor/beach/sand/desert/outdoors,
 /area/tether_away/beach)
-"ts" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/tiled/asteroid_steel{
-	outdoors = 1
-	},
-/area/tether_away/beach/resort)
 "tG" = (
 /obj/machinery/appliance/cooker/fryer,
 /turf/simulated/floor/tiled/eris/cafe,
@@ -1302,10 +1225,8 @@
 /turf/simulated/floor/beach/sand/desert/outdoors,
 /area/tether_away/beach/jungle)
 "DA" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
 /obj/item/solar_assembly,
+/obj/structure/cable/layer1,
 /turf/simulated/floor{
 	outdoors = 1
 	},
@@ -1349,8 +1270,7 @@
 	wall_mounted = 1
 	},
 /obj/machinery/power/apc/alarms_hidden{
-	dir = 4;
-	pixel_x = 22
+	dir = 4
 	},
 /obj/structure/cable,
 /turf/simulated/floor/wood,
@@ -1374,14 +1294,6 @@
 	trader_type = /obj/trader/general
 	},
 /turf/simulated/floor/beach/sand/outdoors,
-/area/tether_away/beach/resort)
-"Fm" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/tiled/asteroid_steel{
-	outdoors = 1
-	},
 /area/tether_away/beach/resort)
 "FB" = (
 /obj/tether_away_spawner/beach_outside,
@@ -1557,31 +1469,6 @@
 	outdoors = 1
 	},
 /area/tether_away/beach/water)
-"Mp" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/tiled/asteroid_steel{
-	outdoors = 1
-	},
-/area/tether_away/beach/resort)
-"ME" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/tiled/asteroid_steel{
-	outdoors = 1
-	},
-/area/tether_away/beach/resort)
 "MZ" = (
 /obj/item/weapon/bedsheet/brown,
 /obj/machinery/button/remote/airlock{
@@ -1593,14 +1480,6 @@
 /obj/structure/bed/padded,
 /turf/simulated/floor/wood,
 /area/tether_away/beach/resort/dorm2)
-"Nt" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/tiled/asteroid_steel{
-	outdoors = 1
-	},
-/area/tether_away/beach/resort)
 "Nv" = (
 /turf/simulated/floor/beach/sand/outdoors,
 /area/tether_away/beach/resort)
@@ -1690,19 +1569,10 @@
 	},
 /turf/simulated/floor/wood,
 /area/tether_away/beach/resort/dorm2)
-"Rh" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/tiled/asteroid_steel{
-	outdoors = 1
-	},
-/area/tether_away/beach/resort)
 "Rm" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/alarms_hidden{
-	dir = 1;
-	pixel_y = 26
+	dir = 1
 	},
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/small/beer,
@@ -1734,8 +1604,7 @@
 	wall_mounted = 1
 	},
 /obj/machinery/power/apc/alarms_hidden{
-	dir = 4;
-	pixel_x = 22
+	dir = 4
 	},
 /obj/structure/cable,
 /turf/simulated/floor/wood,
@@ -1746,9 +1615,7 @@
 	},
 /area/tether_away/beach/water)
 "RX" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/asteroid_steel{
 	outdoors = 1
 	},
@@ -1793,8 +1660,7 @@
 /area/tether_away/beach/cavebase)
 "Tp" = (
 /obj/machinery/power/apc/alarms_hidden{
-	dir = 4;
-	pixel_x = 22
+	dir = 4
 	},
 /obj/structure/cable,
 /turf/simulated/floor/tiled/asteroid_steel,
@@ -1819,21 +1685,11 @@
 	},
 /area/tether_away/beach/resort)
 "Uk" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
 /turf/simulated/floor/tiled/asteroid_steel,
 /area/tether_away/beach/powershed)
 "Um" = (
 /turf/simulated/wall/sandstone,
 /area/tether_away/beach/powershed)
-"Uo" = (
-/obj/structure/cable,
-/obj/item/solar_assembly,
-/turf/simulated/floor{
-	outdoors = 1
-	},
-/area/tether_away/beach/resort)
 "UN" = (
 /turf/simulated/wall/sandstone,
 /area/tether_away/beach/resort/janibar)
@@ -1925,9 +1781,7 @@
 /turf/simulated/floor/tiled/eris/cafe,
 /area/tether_away/beach/resort/kitchen)
 "XZ" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor{
 	outdoors = 1
 	},
@@ -1987,30 +1841,9 @@
 	name = "dirt"
 	},
 /area/tether_away/beach/cavebase)
-"ZA" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/tiled/asteroid_steel{
-	outdoors = 1
-	},
-/area/tether_away/beach/resort)
 "ZC" = (
 /turf/simulated/mineral/ignore_mapgen/cave,
 /area/tether_away/beach/cavebase)
-"ZX" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/simulated/floor/tiled/asteroid_steel{
-	outdoors = 1
-	},
-/area/tether_away/beach/resort)
 
 (1,1,1) = {"
 bq
@@ -12040,9 +11873,7 @@ hR
 Uk
 qI
 zD
-Yq
-ZX
-Yq
+zw
 Yq
 Yq
 Yq
@@ -12050,7 +11881,9 @@ Yq
 Yq
 Yq
 Yq
-ZX
+Yq
+Yq
+Yq
 Yq
 Yq
 Yq
@@ -12321,7 +12154,7 @@ lI
 Nv
 Um
 Um
-kO
+py
 Um
 Um
 zw
@@ -12463,7 +12296,7 @@ lI
 Nv
 zw
 zw
-Fm
+RX
 mi
 zw
 zw
@@ -12605,7 +12438,7 @@ lI
 lI
 Nv
 Nv
-Fm
+RX
 Nv
 Nv
 Nv
@@ -12747,7 +12580,7 @@ lI
 lI
 lI
 Nv
-Fm
+RX
 Nv
 pP
 lI
@@ -12889,7 +12722,7 @@ lI
 lI
 lI
 Nv
-Fm
+RX
 Nv
 lI
 lI
@@ -13031,7 +12864,7 @@ lI
 lI
 lI
 Nv
-Fm
+RX
 Nv
 lI
 lI
@@ -13173,7 +13006,7 @@ lI
 lI
 lI
 Nv
-Fm
+RX
 Nv
 lI
 lI
@@ -13315,7 +13148,7 @@ Nv
 Nv
 Nv
 Nv
-Fm
+RX
 Nv
 lI
 lI
@@ -13450,14 +13283,14 @@ lI
 lI
 lI
 Nv
-Nt
 RX
 RX
 RX
 RX
 RX
 RX
-Rh
+RX
+RX
 Nv
 lI
 pP
@@ -13470,7 +13303,7 @@ RA
 RA
 Gr
 ST
-ZX
+Yq
 zw
 UN
 UN
@@ -13592,7 +13425,7 @@ lI
 lI
 lI
 Nv
-Fm
+RX
 Nv
 Nv
 Nv
@@ -13734,7 +13567,7 @@ lI
 lI
 lI
 Nv
-Fm
+RX
 Nv
 lI
 lI
@@ -13876,7 +13709,7 @@ lI
 pP
 lI
 Nv
-Fm
+RX
 Nv
 pP
 lI
@@ -14018,7 +13851,7 @@ lI
 lI
 lI
 Nv
-Fm
+RX
 Nv
 lI
 pP
@@ -14160,7 +13993,7 @@ lI
 lI
 lI
 Nv
-Fm
+RX
 Nv
 lI
 lI
@@ -14302,7 +14135,7 @@ lI
 lI
 lI
 Nv
-Fm
+RX
 Nv
 lI
 lI
@@ -14315,7 +14148,7 @@ rJ
 to
 IY
 Yq
-ZX
+Yq
 zw
 Yi
 CC
@@ -14444,7 +14277,7 @@ lI
 lI
 lI
 Nv
-Fm
+RX
 Nv
 lI
 lI
@@ -14586,7 +14419,7 @@ lI
 lI
 lI
 Nv
-Fm
+RX
 Nv
 lI
 lI
@@ -14728,7 +14561,7 @@ lI
 lI
 lI
 Nv
-Fm
+RX
 Nv
 lI
 lI
@@ -14870,7 +14703,7 @@ Nv
 Nv
 Nv
 Nv
-Fm
+RX
 Nv
 lI
 lI
@@ -14883,7 +14716,7 @@ kR
 YR
 DK
 Yq
-ZX
+Yq
 zw
 dd
 kK
@@ -14984,7 +14817,6 @@ lI
 lI
 Nv
 Nv
-Nt
 RX
 RX
 RX
@@ -15012,7 +14844,8 @@ RX
 RX
 RX
 RX
-Rh
+RX
+RX
 Nv
 lI
 lI
@@ -15126,7 +14959,7 @@ lI
 Nv
 Nv
 Nv
-Fm
+RX
 Nv
 Nv
 sT
@@ -15168,7 +15001,7 @@ zs
 zs
 Nv
 Yq
-ZX
+Yq
 Yq
 Yq
 Yq
@@ -15268,7 +15101,7 @@ lI
 lI
 lI
 Nv
-Fm
+RX
 Ff
 lI
 pP
@@ -15410,7 +15243,7 @@ lI
 lI
 lI
 Nv
-Fm
+RX
 Nv
 Nv
 lI
@@ -15550,11 +15383,11 @@ lI
 lI
 lI
 Nv
-Nt
+zw
 RX
-ts
 RX
-jc
+zw
+zw
 Nv
 lI
 lI
@@ -15692,12 +15525,12 @@ lI
 lI
 Nv
 DA
-pF
-Uo
+zw
+DA
 Nv
 DA
-pF
-Uo
+zw
+DA
 Nv
 lI
 lI
@@ -15834,12 +15667,12 @@ lI
 pP
 Nv
 DA
-pF
-Uo
+zw
+DA
 Nv
 DA
-pF
-Uo
+zw
+DA
 Nv
 lI
 lI
@@ -15976,12 +15809,12 @@ lI
 lI
 Nv
 DA
-pF
-Uo
+zw
+DA
 Nv
 DA
-pF
-Uo
+zw
+DA
 Nv
 lI
 lI
@@ -16118,12 +15951,12 @@ lI
 lI
 Nv
 nm
-mS
+RX
 XZ
 XZ
 XZ
-Mp
-Uo
+RX
+DA
 Nv
 lI
 lI
@@ -16260,12 +16093,12 @@ lI
 lI
 Nv
 DA
-ZA
-Uo
+zw
+DA
 Nv
 DA
-ZA
-Uo
+zw
+DA
 Nv
 lI
 lI
@@ -16402,12 +16235,12 @@ lI
 lI
 Nv
 DA
-ZA
-Uo
+zw
+DA
 Nv
 DA
-ZA
-Uo
+zw
+DA
 Nv
 lI
 lI
@@ -16544,12 +16377,12 @@ lI
 lI
 Nv
 DA
-ME
-Uo
+zw
+DA
 Nv
 DA
-ME
-Uo
+zw
+DA
 Nv
 lI
 lI

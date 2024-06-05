@@ -42,6 +42,7 @@
 	dir = 4
 	},
 /obj/structure/catwalk,
+/obj/structure/cable,
 /turf/simulated/floor/plating/eris/under,
 /area/offmap/aerostat/surface/outpost/hallway)
 "aU" = (
@@ -123,15 +124,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/offmap/aerostat/surface/outpost/barracks)
-"ex" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
-	dir = 4
-	},
-/obj/structure/catwalk,
-/turf/simulated/floor/plating/eris/under,
-/area/offmap/aerostat/surface/outpost/hallway)
 "eD" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
@@ -224,9 +216,6 @@
 /obj/item/device/flashlight/lamp/green,
 /turf/simulated/floor/wood,
 /area/offmap/aerostat/surface/outpost/officertwo)
-"he" = (
-/turf/simulated/wall/r_wall,
-/area/offmap/aerostat/surface/unexplored)
 "hi" = (
 /obj/structure/prop/dominator,
 /turf/simulated/floor/tiled/eris/bcircuit,
@@ -251,8 +240,8 @@
 /turf/simulated/floor/wood,
 /area/offmap/aerostat/surface/outpost/officertwo)
 "hB" = (
-/obj/structure/cable,
 /obj/machinery/light,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/dark,
 /area/offmap/aerostat/surface/outpost/cafe)
 "hI" = (
@@ -307,12 +296,10 @@
 /turf/simulated/wall/r_wall,
 /area/offmap/aerostat/surface/outpost/officertwo)
 "kp" = (
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/alarm/alarms_hidden{
 	pixel_y = 28
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/plating/eris/under,
 /area/offmap/aerostat/surface/outpost/powerroom)
 "kz" = (
@@ -353,7 +340,6 @@
 /turf/simulated/floor/tiled/eris/steel,
 /area/offmap/aerostat/surface/outpost/hallway)
 "nk" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/visible/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/visible/supply{
@@ -608,7 +594,6 @@
 /area/offmap/aerostat/surface/outpost/officertwo)
 "ts" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor/tiled/eris/dark,
@@ -761,11 +746,6 @@
 /obj/machinery/atmospherics/pipe/simple/visible/red,
 /turf/simulated/floor/tiled/techfloor/virgo2,
 /area/offmap/aerostat/surface/outpost/airlock)
-"yJ" = (
-/obj/structure/table/woodentable,
-/obj/structure/cable,
-/turf/simulated/floor/tiled/eris/dark,
-/area/offmap/aerostat/surface/outpost/cafe)
 "yK" = (
 /obj/structure/closet/crate/bin,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -778,17 +758,11 @@
 /area/offmap/aerostat/surface/outpost/guardpost)
 "yL" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/visible/supply,
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers,
 /obj/structure/catwalk,
 /turf/simulated/floor/plating/eris/under,
 /area/offmap/aerostat/surface/outpost/hallway)
-"zl" = (
-/obj/structure/bed/chair/wood,
-/obj/structure/cable,
-/turf/simulated/floor/tiled/eris/dark,
-/area/offmap/aerostat/surface/outpost/cafe)
 "zr" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /turf/simulated/floor/tiled/eris/steel/techfloor_grid,
@@ -812,7 +786,6 @@
 /turf/simulated/floor/wood,
 /area/offmap/aerostat/surface/outpost/officertwo)
 "Ao" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -848,17 +821,6 @@
 /obj/structure/table/rack/shelf/steel,
 /turf/simulated/floor/tiled/eris/dark/monofloor,
 /area/offmap/aerostat/surface/outpost/officerone)
-"CF" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 8
-	},
-/turf/simulated/floor/tiled/eris/dark,
-/area/offmap/aerostat/surface/outpost/cafe)
 "CN" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
 	dir = 6
@@ -876,13 +838,6 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
-/turf/simulated/floor/tiled/eris/dark,
-/area/offmap/aerostat/surface/outpost/cafe)
-"Do" = (
-/obj/structure/bed/chair/wood{
-	dir = 1
-	},
-/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/dark,
 /area/offmap/aerostat/surface/outpost/cafe)
 "DN" = (
@@ -960,8 +915,7 @@
 /turf/simulated/floor/tiled/eris/steel,
 /area/offmap/aerostat/surface/outpost/hallway)
 "FW" = (
-/obj/structure/cable,
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/plating/eris/under,
 /area/offmap/aerostat/surface/outpost/powerroom)
 "Ge" = (
@@ -980,7 +934,7 @@
 /area/offmap/aerostat/surface/outpost/airlock)
 "Gr" = (
 /obj/machinery/power/rtg/advanced,
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/simulated/floor/plating/eris/under,
 /area/offmap/aerostat/surface/outpost/powerroom)
 "Gv" = (
@@ -1461,14 +1415,6 @@
 /obj/structure/salvageable/machine,
 /turf/simulated/floor/tiled/eris/bcircuit,
 /area/offmap/aerostat/surface/outpost/backroom)
-"Tc" = (
-/obj/effect/map_helper/airlock/door/ext_door,
-/obj/machinery/door/airlock/glass_external,
-/obj/machinery/atmospherics/pipe/simple/hidden/aux{
-	dir = 4
-	},
-/turf/simulated/floor/plating/eris/under,
-/area/offmap/aerostat/surface/outpost/airlock)
 "TM" = (
 /obj/structure/bed/chair/bay/chair/padded/red{
 	dir = 4
@@ -1492,8 +1438,8 @@
 /turf/simulated/floor/tiled/techfloor/virgo2,
 /area/offmap/aerostat/surface/outpost/airlock)
 "UE" = (
-/obj/machinery/power/terminal,
-/obj/structure/cable,
+/obj/structure/cable/layer3,
+/obj/machinery/power/terminal/layer3,
 /turf/simulated/floor/plating/eris/under,
 /area/offmap/aerostat/surface/outpost/powerroom)
 "UJ" = (
@@ -1519,11 +1465,6 @@
 	},
 /turf/simulated/floor/tiled/eris/dark/danger,
 /area/offmap/aerostat/surface/outpost/airlock)
-"Vr" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/simulated/floor/tiled/eris/dark,
-/area/offmap/aerostat/surface/outpost/cafe)
 "VE" = (
 /obj/machinery/button/remote/blast_door{
 	dir = 1;
@@ -1542,7 +1483,6 @@
 /turf/simulated/floor/tiled/eris/dark/monofloor,
 /area/offmap/aerostat/surface/outpost/officerone)
 "VJ" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
@@ -1623,16 +1563,10 @@
 /obj/effect/map_helper/airlock/door/ext_door,
 /obj/machinery/door/airlock/glass_external,
 /obj/machinery/atmospherics/pipe/simple/hidden/red{
-	dir = 10
+	dir = 4
 	},
 /turf/simulated/floor/plating/eris/under,
 /area/offmap/aerostat/surface/outpost/airlock)
-"Xh" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/manifold/visible/supply,
-/obj/structure/catwalk,
-/turf/simulated/floor/plating/eris/under,
-/area/offmap/aerostat/surface/outpost/hallway)
 "Xq" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
@@ -3814,7 +3748,7 @@ ZQ
 ZQ
 dE
 bT
-Xh
+II
 eG
 gq
 dE
@@ -3957,7 +3891,7 @@ ZQ
 dE
 mC
 PH
-ex
+Xq
 PZ
 dE
 ZJ
@@ -4382,7 +4316,7 @@ kz
 tL
 dE
 Pn
-PH
+xQ
 aK
 PZ
 Ot
@@ -4518,7 +4452,7 @@ ZQ
 EL
 FW
 FL
-FW
+Lr
 uJ
 VJ
 MJ
@@ -4671,11 +4605,11 @@ Xq
 PZ
 PZ
 Cj
-CF
-zl
-yJ
-Do
-Vr
+WC
+XN
+Ra
+Jf
+MR
 RP
 wN
 Ah
@@ -4808,7 +4742,7 @@ Nn
 xv
 wi
 PZ
-PH
+xQ
 aK
 PZ
 Ot
@@ -4950,15 +4884,15 @@ Bb
 yK
 Ot
 PZ
-PH
+xQ
 aK
 PZ
 Ot
 Cj
 WC
-Cj
-Cj
-Cj
+MR
+MR
+MR
 hB
 jF
 jF
@@ -5945,7 +5879,7 @@ uQ
 rS
 rS
 WX
-Tc
+WX
 rS
 sA
 Zv
@@ -6364,7 +6298,7 @@ HR
 HR
 HR
 HR
-he
+rS
 sl
 Ox
 UC
@@ -6506,7 +6440,7 @@ HR
 HR
 HR
 HR
-he
+rS
 sl
 Ow
 ov
@@ -6648,7 +6582,7 @@ HR
 HR
 HR
 HR
-he
+rS
 rS
 rS
 rS

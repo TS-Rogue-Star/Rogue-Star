@@ -189,7 +189,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/item/space_spider_egg,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/luxury_boat/engine)
@@ -215,6 +214,7 @@
 /area/submap/debrisfield/luxury_boat/engine)
 "fH" = (
 /obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/luxury_boat/engine)
 "fI" = (
@@ -249,7 +249,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/luxury_boat/engine)
 "gY" = (
@@ -291,7 +291,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/luxury_boat/engine)
 "ih" = (
@@ -658,10 +657,6 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/luxury_boat/engine)
-"sN" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/submap/debrisfield/luxury_boat/engine)
 "sO" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 6
@@ -875,7 +870,7 @@
 /area/submap/debrisfield/luxury_boat/engine)
 "zh" = (
 /obj/machinery/power/port_gen/pacman/super,
-/obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/luxury_boat/engine)
 "zr" = (
@@ -1074,6 +1069,7 @@
 "Fo" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/luxury_boat/engine)
 "Fs" = (
@@ -1186,14 +1182,14 @@
 "JS" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/light/small,
-/obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/luxury_boat/engine)
 "JV" = (
-/obj/machinery/power/terminal{
+/obj/machinery/power/terminal/layer1{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/luxury_boat/engine)
 "Kg" = (
@@ -1305,8 +1301,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/item/space_spider_egg,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/luxury_boat/engine)
 "OP" = (
@@ -1404,7 +1400,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/luxury_boat/engine)
 "Ts" = (
@@ -2006,7 +2001,7 @@ FB
 Eb
 zh
 Ox
-Ts
+fH
 ch
 Eb
 bh
@@ -2027,7 +2022,7 @@ FB
 Eb
 zh
 Tm
-fH
+Ts
 cg
 Eb
 rG
@@ -2048,7 +2043,7 @@ FB
 Eb
 zh
 eL
-fH
+Ts
 Eb
 VG
 Eb
@@ -2069,7 +2064,7 @@ MY
 Vq
 gP
 id
-fH
+Ts
 Eb
 Mh
 wz
@@ -2090,7 +2085,7 @@ yX
 Vq
 sB
 BT
-sN
+Ts
 wq
 wy
 fE

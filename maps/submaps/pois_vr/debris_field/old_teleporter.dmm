@@ -49,20 +49,12 @@
 /obj/structure/lattice,
 /turf/space,
 /area/space)
-"k" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/submap/debrisfield/old_tele)
 "l" = (
 /obj/machinery/door/airlock/external,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/old_tele)
 "m" = (
 /obj/item/weapon/storage/toolbox/mechanical,
-/turf/simulated/floor/airless,
-/area/submap/debrisfield/old_tele)
-"n" = (
-/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/old_tele)
 "o" = (
@@ -168,9 +160,9 @@ a
 b
 b
 f
-k
-k
-n
+o
+o
+o
 h
 b
 b

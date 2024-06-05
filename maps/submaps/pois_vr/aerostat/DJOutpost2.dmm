@@ -8,9 +8,7 @@
 "c" = (
 /obj/structure/grille/broken,
 /obj/item/weapon/material/shard,
-/obj/item/weapon/material/shard{
-	 icon_state = "shardmedium"
-	},
+/obj/item/weapon/material/shard,
 /obj/item/stack/rods,
 /turf/simulated/floor,
 /area/submap/virgo2/DJOutpost1)
@@ -81,6 +79,8 @@
 /area/submap/virgo2/DJOutpost1)
 "s" = (
 /obj/effect/overlay/snow/floor,
+/obj/machinery/power/deck_relay,
+/obj/structure/cable,
 /turf/simulated/floor{
 	outdoors = 1
 	},
@@ -91,9 +91,7 @@
 /area/submap/virgo2/DJOutpost1)
 "w" = (
 /obj/structure/grille/broken,
-/obj/item/weapon/material/shard{
-	 icon_state = "shardmedium"
-	},
+/obj/item/weapon/material/shard,
 /turf/simulated/floor,
 /area/submap/virgo2/DJOutpost1)
 "x" = (
@@ -118,16 +116,12 @@
 /area/submap/virgo2/DJOutpost1)
 "C" = (
 /obj/structure/grille/broken,
-/obj/item/weapon/material/shard{
-	icon_state = "medium"
-	},
+/obj/item/weapon/material/shard,
 /obj/structure/cable,
 /turf/simulated/floor,
 /area/submap/virgo2/DJOutpost1)
 "D" = (
-/obj/item/weapon/material/shard{
-	 icon_state = "shardmedium"
-	},
+/obj/item/weapon/material/shard,
 /turf/template_noop,
 /area/template_noop)
 "F" = (
@@ -136,15 +130,11 @@
 /area/submap/virgo2/DJOutpost1)
 "G" = (
 /obj/structure/grille/broken,
-/obj/item/weapon/material/shard{
-	icon_state = "medium"
-	},
+/obj/item/weapon/material/shard,
 /turf/simulated/floor,
 /area/submap/virgo2/DJOutpost1)
 "H" = (
-/obj/item/weapon/material/shard{
-	icon_state = "medium"
-	},
+/obj/item/weapon/material/shard,
 /turf/template_noop,
 /area/template_noop)
 "I" = (
@@ -158,7 +148,6 @@
 "K" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 15
 	},
 /turf/simulated/floor/wood/broken,
@@ -169,9 +158,7 @@
 /area/submap/virgo2/DJOutpost1)
 "M" = (
 /obj/structure/grille/broken,
-/obj/item/weapon/material/shard{
-	icon_state = "medium"
-	},
+/obj/item/weapon/material/shard,
 /obj/item/stack/rods,
 /turf/simulated/floor,
 /area/submap/virgo2/DJOutpost1)

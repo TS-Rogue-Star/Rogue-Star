@@ -1157,9 +1157,12 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/engineering/atmos/storage)
 "cF" = (
-/obj/structure/cable,
+/obj/structure/cable/layer1,
+/obj/effect/wire_deleter{
+	wire_deletion_rate = 5
+	},
 /turf/simulated/floor/airless,
-/area/space)
+/area/stellardelight/deck2/exterior)
 "cG" = (
 /obj/structure/cable,
 /obj/machinery/power/smes/preset/mains,
@@ -1492,11 +1495,6 @@
 	},
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/quartermaster/storage)
-"dr" = (
-/obj/structure/cable,
-/obj/structure/lattice,
-/turf/space,
-/area/space)
 "ds" = (
 /obj/effect/floor_decal/steeldecal/steel_decals4{
 	dir = 9
@@ -4346,7 +4344,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
-/obj/structure/cable,
 /obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/eris/dark/orangecorner,
 /area/engineering/engineering_monitoring)
@@ -6599,7 +6596,6 @@
 	stripe_color = "#e6ab22"
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/engineering/atmos/monitoring)
 "pL" = (
@@ -6801,7 +6797,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck2/starboardsolars)
 "qj" = (
@@ -7140,7 +7135,6 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck2/portsolars)
@@ -9045,15 +9039,6 @@
 	},
 /turf/simulated/floor/carpet/turcarpet,
 /area/crew_quarters/recreation_area)
-"wg" = (
-/obj/effect/floor_decal/industrial/warning/full,
-/obj/structure/cable,
-/obj/machinery/power/pointdefense{
-	id_tag = "sd_pd"
-	},
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck2/exterior)
 "wh" = (
 /obj/structure/filingcabinet/chestdrawer{
 	name = "Scan Records"
@@ -9348,7 +9333,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 10
 	},
@@ -11293,7 +11277,6 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/structure/disposalpipe/junction,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck2/starboardsolars)
@@ -11825,7 +11808,6 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
-/obj/structure/cable,
 /obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck2/portsolars)
@@ -12830,7 +12812,6 @@
 /obj/machinery/alarm/angled{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck2/starboardfore)
 "Ga" = (
@@ -13842,7 +13823,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
-/obj/structure/cable,
 /obj/machinery/power/apc/angled{
 	dir = 1;
 	nightshift_setting = 2
@@ -14681,7 +14661,6 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable,
 /obj/machinery/alarm/angled{
 	dir = 4
 	},
@@ -15470,6 +15449,9 @@
 "Mx" = (
 /obj/machinery/power/solar,
 /obj/structure/cable/layer1,
+/obj/effect/wire_deleter{
+	wire_deletion_rate = 5
+	},
 /turf/simulated/floor/airless,
 /area/stellardelight/deck2/exterior)
 "My" = (
@@ -16678,7 +16660,6 @@
 	},
 /obj/machinery/door/firedoor/glass,
 /obj/structure/cable/layer1,
-/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/stellardelight/deck2/portsolars)
 "Py" = (
@@ -17112,12 +17093,6 @@
 	},
 /turf/simulated/floor/airless,
 /area/stellardelight/deck2/exterior)
-"Qx" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck2/portfore)
 "Qy" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 1
@@ -18475,15 +18450,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hydroponics)
-"Uf" = (
-/obj/structure/cable,
-/obj/effect/floor_decal/industrial/warning/full,
-/obj/machinery/power/pointdefense{
-	id_tag = "sd_pd"
-	},
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/stellardelight/deck2/exterior)
 "Ug" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /obj/structure/cable/layer1,
@@ -18817,7 +18783,6 @@
 "Vc" = (
 /obj/structure/cable,
 /obj/effect/floor_decal/industrial/warning/full,
-/obj/structure/cable,
 /obj/machinery/power/pointdefense{
 	id_tag = "sd_pd"
 	},
@@ -18911,7 +18876,6 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/simulated/floor/tiled/eris/steel/cargo,
 /area/quartermaster/storage)
 "Vm" = (
@@ -19344,7 +19308,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/obj/structure/cable,
 /obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck2/portaft)
@@ -26108,7 +26071,7 @@ Jh
 Jh
 Jh
 Jh
-cF
+ZG
 Wn
 ZG
 ZG
@@ -26369,21 +26332,21 @@ Jh
 Jh
 Jh
 Jh
-dr
-dr
+Jh
+Jh
 ZG
 ZG
 ZG
 ZG
-wg
+NU
 ZG
 ZG
 ZG
 ZG
 ZG
 ZG
-dB
-dB
+ZG
+ZG
 Jh
 Jh
 Jh
@@ -26391,7 +26354,7 @@ Jh
 Jh
 Jh
 Jh
-ZG
+Jh
 ZG
 ov
 ub
@@ -26512,8 +26475,8 @@ ZG
 Vc
 ZG
 ZG
-NL
-NL
+ZG
+ZG
 NL
 NL
 NL
@@ -26532,9 +26495,9 @@ Jh
 Jh
 Jh
 Jh
-NL
+Jh
 ZG
-NL
+ZG
 ov
 cq
 ub
@@ -26660,7 +26623,7 @@ Mx
 Mx
 Mx
 Mx
-NL
+WD
 Mx
 Mx
 Mx
@@ -26671,8 +26634,8 @@ ZG
 Wb
 Wb
 Wb
-cF
-cF
+ZG
+ZG
 ZG
 ZG
 ZG
@@ -26796,18 +26759,18 @@ NL
 NL
 NL
 NL
+NL
+NL
+NL
+NL
+NL
+NL
 WD
-WD
-WD
-WD
-WD
-WD
-WD
-WD
-WD
-WD
-WD
-WD
+NL
+NL
+NL
+NL
+NL
 NL
 ZG
 ZG
@@ -27082,16 +27045,16 @@ Jh
 NL
 NL
 NL
+NL
+NL
+NL
+NL
 WD
-WD
-WD
-WD
-WD
-WD
-WD
-WD
-WD
-WD
+NL
+NL
+NL
+NL
+NL
 Wb
 Wb
 Jh
@@ -27894,7 +27857,7 @@ Jh
 KL
 KL
 Md
-Qx
+Gv
 Gv
 Gv
 Gv
@@ -34466,16 +34429,16 @@ Jh
 NL
 NL
 NL
+NL
+NL
+NL
+NL
 WD
-WD
-WD
-WD
-WD
-WD
-WD
-WD
-WD
-WD
+NL
+NL
+NL
+NL
+NL
 Wb
 Wb
 Jh
@@ -34748,18 +34711,18 @@ NL
 NL
 NL
 NL
+NL
+NL
+NL
+NL
+NL
+NL
 WD
-WD
-WD
-WD
-WD
-WD
-WD
-WD
-WD
-WD
-WD
-WD
+NL
+NL
+NL
+NL
+NL
 NL
 ZG
 ZG
@@ -34896,7 +34859,7 @@ Mx
 Mx
 Mx
 Mx
-aM
+cF
 Mx
 Mx
 Mx
@@ -35029,11 +34992,11 @@ ZG
 ZG
 ZG
 ZG
-Uf
+Vc
 ZG
 ZG
-NL
-NL
+ZG
+ZG
 NL
 NL
 NL
@@ -35052,7 +35015,7 @@ Jh
 Jh
 Jh
 Jh
-tc
+Wb
 ZG
 ZG
 ni
@@ -35173,8 +35136,8 @@ Jh
 Jh
 Jh
 Jh
-dB
-dB
+Jh
+Jh
 ZG
 ZG
 ZG
@@ -35186,7 +35149,7 @@ ZG
 ZG
 ZG
 ZG
-dB
+ZG
 Jh
 Jh
 Jh
@@ -35195,7 +35158,7 @@ Jh
 Jh
 Jh
 Jh
-tc
+Wb
 ZG
 ni
 KP
@@ -35480,7 +35443,7 @@ Jh
 Jh
 Jh
 Jh
-cF
+ZG
 Jx
 ZG
 ZG

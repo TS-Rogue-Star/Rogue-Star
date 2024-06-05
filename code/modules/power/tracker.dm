@@ -25,6 +25,10 @@
 	update_icon()
 	connect_to_network()
 
+/obj/machinery/power/tracker/examine(mob/user)
+	. = ..()
+	. += span_notice("You can use a multitool to change the layer.")
+
 /obj/machinery/power/tracker/Destroy()
 	unset_control() //remove from control computer
 	..()
@@ -35,9 +39,9 @@
 //set the control of the tracker to a given computer if closer than SOLAR_MAX_DIST
 /obj/machinery/power/tracker/proc/set_control(var/obj/machinery/power/solar_control/SC)
 	if(SC && (get_dist(src, SC) > SOLAR_MAX_DIST))
-		return 0
+		return FALSE
 	control = SC
-	return 1
+	return TRUE
 
 //set the control of the tracker to null and removes it from the previous control computer if needed
 /obj/machinery/power/tracker/proc/unset_control()
@@ -56,8 +60,7 @@
 		control.cdir = angle
 
 /obj/machinery/power/tracker/attackby(var/obj/item/weapon/W, var/mob/user)
-
-	if(W.is_crowbar())
+	if(W.has_tool_quality(TOOL_CROWBAR))
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
 		user.visible_message("<span class='notice'>[user] begins to take the glass off the solar tracker.</span>")
 		if(do_after(user, 50))
@@ -68,6 +71,10 @@
 			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 			user.visible_message("<span class='notice'>[user] takes the glass off the tracker.</span>")
 			qdel(src)
+		return
+	if(W.has_tool_quality(TOOL_MULTITOOL))
+		user.visible_message("<span class='notice'>[user] adjusts the plugged in cable layer.</span>")
+		adapt_to_cable_layer()
 		return
 	..()
 

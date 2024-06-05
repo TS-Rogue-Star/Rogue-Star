@@ -1522,7 +1522,6 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/gecko_sh)
 "Ez" = (
-/obj/structure/cable,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -26
@@ -1534,6 +1533,7 @@
 /obj/effect/floor_decal/industrial/warning/corner{
 	dir = 8
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/gecko_sh_engineering)
 "ER" = (
@@ -1924,8 +1924,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
-/obj/structure/cable,
 /obj/structure/catwalk,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/plating,
 /area/shuttle/gecko_sh_engineering)
 "NE" = (
@@ -1967,13 +1967,13 @@
 /area/shuttle/gecko_sh_engineering)
 "NN" = (
 /obj/effect/floor_decal/industrial/warning/corner,
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/structure/cable,
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/machinery/power/terminal/layer1{
+	dir = 1
+	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/gecko_sh_engineering)
 "NR" = (
@@ -2068,9 +2068,9 @@
 /obj/effect/floor_decal/industrial/warning,
 /obj/structure/closet/crate/engineering,
 /obj/item/weapon/storage/toolbox/mechanical,
-/obj/structure/cable,
 /obj/item/weapon/storage/toolbox/electrical,
 /obj/effect/floor_decal/industrial/outline/grey,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/gecko_sh_engineering)
 "PJ" = (
@@ -2334,7 +2334,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/gecko_sh_engineering)
 "UY" = (
@@ -2357,7 +2357,6 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/gecko_sh_cockpit)
 "Vs" = (
-/obj/structure/cable,
 /obj/effect/floor_decal/industrial/outline/red,
 /obj/structure/window/reinforced{
 	dir = 8
@@ -2372,6 +2371,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/plating,
 /area/shuttle/gecko_sh_engineering)
 "VT" = (
@@ -2440,13 +2440,12 @@
 /area/template_noop)
 "WW" = (
 /obj/effect/floor_decal/industrial/warning,
-/obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/gecko_sh_engineering)
 "Xn" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable,
 /obj/machinery/door/blast/regular{
 	density = 0;
 	dir = 4;
@@ -2462,6 +2461,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/plating,
 /area/shuttle/gecko_sh_engineering)
 "Xr" = (

@@ -30,10 +30,6 @@
 /obj/item/stack/rods,
 /turf/space,
 /area/tether_away/debrisfield/shuttle_buffer)
-"h" = (
-/obj/structure/lattice,
-/turf/space,
-/area/tether_away/debrisfield/shuttle_buffer)
 "i" = (
 /obj/item/weapon/material/shard/shrapnel,
 /turf/simulated/floor/airless,
@@ -74,6 +70,6 @@ k
 k
 j
 g
-h
+j
 k
 "}

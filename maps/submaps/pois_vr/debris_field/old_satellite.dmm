@@ -41,13 +41,6 @@
 /obj/item/weapon/material/shard,
 /turf/template_noop,
 /area/space)
-"h" = (
-/obj/structure/cable,
-/obj/machinery/power/solar/fake{
-	adir = 135
-	},
-/turf/simulated/floor/airless,
-/area/submap/debrisfield/old_sat)
 "i" = (
 /obj/structure/cable,
 /obj/machinery/power/solar/fake{
@@ -125,7 +118,7 @@
 a
 a
 a
-h
+i
 a
 a
 "}

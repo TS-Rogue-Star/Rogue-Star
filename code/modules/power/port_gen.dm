@@ -10,10 +10,13 @@
 	interact_offline = TRUE
 
 	var/active = 0
-	var/power_gen = 5000
+	var/power_gen = 5 KILOWATTS
 	var/recent_fault = 0
 	var/power_output = 1
 	can_change_cable_layer = TRUE
+
+/obj/machinery/power/port_gen/should_have_node()
+	return anchored
 
 /obj/machinery/power/port_gen/proc/IsBroken()
 	return (stat & (BROKEN|EMPED))
@@ -114,7 +117,7 @@
 		temperature_gain and max_temperature are set so that the max safe power level is 4.
 		Setting to 5 or higher can only be done temporarily before the generator overheats.
 	*/
-	power_gen = 20000			//Watts output per power_output level
+	power_gen = 20 KILOWATTS	//Watts output per power_output level
 	var/max_power_output = 5	//The maximum power setting without emagging.
 	var/max_safe_output = 4		// For UI use, maximal output that won't cause overheat.
 	var/time_per_sheet = 96		//fuel efficiency - how long 1 sheet lasts at power level 1
@@ -406,7 +409,7 @@
 
 	//I don't think tritium has any other use, so we might as well make this rewarding for players
 	//max safe power output (power level = 8) is 200 kW and lasts for 1 hour - 3 or 4 of these could power the station
-	power_gen = 25000 //watts
+	power_gen = 25 KILOWATTS //watts
 	max_power_output = 10
 	max_safe_output = 8
 	time_per_sheet = 576
@@ -418,3 +421,99 @@
 	//no special effects, but the explosion is pretty big (same as a supermatter shard).
 	explosion(src.loc, 3, 6, 12, 16, 1)
 	qdel(src)
+
+
+//Nuclear reactor for Talon and other small ships
+/obj/machinery/power/port_gen/pacman/super/potato
+	name = "nuclear reactor"
+	desc = "PTTO-3, an industrial all-in-one nuclear power plant by Neo-Chernobyl GmbH. It uses uranium as a fuel source. Rated for 200 kW max safe output."
+	icon = 'icons/obj/power.dmi'
+	icon_state = "potato"
+	time_per_sheet = 1152 //same power output, but a 50 sheet stack will last 4 hours at max safe power
+	power_gen = 50 KILOWATTS //watts
+	anchored = TRUE
+
+// Big altevian version of pacman. has a lot of copypaste from regular kind, but less flexible.
+/obj/machinery/power/port_gen/large_altevian
+	name = "Converted High Energy Exchange Supplier Extractor"
+	desc = "A take on the classic PACMAN reactors that are seen throughout the galaxy. The altevians have ripped apart the tech and seemed to of found a way to maximize the fuel usage one would see with this kind of process. \
+			However, it is a lot bulkier and nearly impossible to break apart, but still can be moved if need be with special tools."
+	icon = 'icons/obj/props/decor64x64.dmi'
+	icon_state = "alteviangen"
+	bound_width = 64
+	bound_height = 64
+	anchored = TRUE
+	power_gen = 200 KILOWATTS
+
+	var/sheet_name = "Phoron Sheets"
+	var/sheet_path = /obj/item/stack/material/phoron
+	var/sheets = 0			//How many sheets of material are loaded in the generator
+	var/sheet_left = 0		//How much is left of the current sheet
+	var/time_per_sheet = 120		//fuel efficiency - how long 1 sheet lasts at power level 1
+	var/max_sheets = 100 		//max capacity of the hopper
+
+/obj/machinery/power/port_gen/large_altevian/Initialize()
+	.=..()
+	if(anchored)
+		connect_to_network()
+
+/obj/machinery/power/port_gen/large_altevian/Destroy()
+	DropFuel()
+	return ..()
+
+/obj/machinery/power/port_gen/large_altevian/examine(mob/user)
+	. = ..()
+	. += "There [sheets == 1 ? "is" : "are"] [sheets] sheet\s left in the hopper."
+
+/obj/machinery/power/port_gen/large_altevian/HasFuel()
+	var/needed_sheets = power_output / time_per_sheet
+	if(sheets >= needed_sheets - sheet_left)
+		return 1
+	return 0
+
+/obj/machinery/power/port_gen/large_altevian/DropFuel()
+	if(sheets)
+		var/obj/item/stack/material/S = new sheet_path(loc, sheets)
+		sheets -= S.get_amount()
+
+/obj/machinery/power/port_gen/large_altevian/UseFuel()
+	var/needed_sheets = power_output / time_per_sheet
+	if (needed_sheets > sheet_left)
+		sheets--
+		sheet_left = (1 + sheet_left) - needed_sheets
+	else
+		sheet_left -= needed_sheets
+
+/obj/machinery/power/port_gen/large_altevian/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if(istype(O, sheet_path))
+		var/obj/item/stack/addstack = O
+		var/amount = min((max_sheets - sheets), addstack.get_amount())
+		if(amount < 1)
+			to_chat(user, "<span class='warning'>The [src.name] is full!</span>")
+			return
+		to_chat(user, "<span class='notice'>You add [amount] sheet\s to the [src.name].</span>")
+		sheets += amount
+		addstack.use(amount)
+		update_icon()
+		return
+	return ..()
+
+/obj/machinery/power/port_gen/large_altevian/attack_hand(mob/user as mob)
+	..()
+	if (!anchored)
+		return
+	TogglePower()
+
+/obj/machinery/power/port_gen/large_altevian/attack_ai(mob/user as mob)
+	TogglePower()
+
+/obj/machinery/power/port_gen/large_altevian/update_icon()
+	..()
+
+	cut_overlays()
+	if(sheets > 75)
+		add_overlay("alteviangen-fuel-100")
+	else if(sheets > 25)
+		add_overlay("alteviangen-fuel-66")
+	else if(sheets > 0)
+		add_overlay("alteviangen-fuel-33")

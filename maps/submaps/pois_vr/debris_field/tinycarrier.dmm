@@ -298,6 +298,7 @@
 	dir = 4;
 	req_one_access = list()
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/airless,
 /area/submap/debrisfield/tinyshuttle/bridge)
 "aI" = (
@@ -322,7 +323,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
@@ -532,7 +532,6 @@
 /turf/simulated/floor/tiled,
 /area/submap/debrisfield/tinyshuttle/crew)
 "be" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 8
 	},
@@ -556,7 +555,6 @@
 /turf/simulated/floor/tiled,
 /area/submap/debrisfield/tinyshuttle/crew)
 "bg" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 8
 	},
@@ -592,7 +590,6 @@
 /turf/simulated/wall/thull,
 /area/submap/debrisfield/tinyshuttle/engine)
 "bl" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 8
 	},
@@ -702,7 +699,6 @@
 "bu" = (
 /obj/machinery/power/smes/outpost_substation{
 	charge = 3e+006;
-	input_attempt = 1;
 	input_level = 200000
 	},
 /obj/structure/cable,

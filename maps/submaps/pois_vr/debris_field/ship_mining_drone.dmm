@@ -29,10 +29,6 @@
 "ae" = (
 /turf/simulated/mineral/vacuum,
 /area/submap/debrisfield/mining_drone_ship)
-"af" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/submap/debrisfield/mining_drone_ship)
 "ag" = (
 /obj/structure/girder/reinforced,
 /turf/simulated/floor/airless,
@@ -44,10 +40,6 @@
 	icon_state = "gridchecker_off";
 	name = "capacitor bank"
 	},
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/submap/debrisfield/mining_drone_ship)
-"ai" = (
 /obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/mining_drone_ship)
@@ -111,14 +103,6 @@
 	name = "capacitor bank";
 	power_gen = 12000
 	},
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/submap/debrisfield/mining_drone_ship)
-"as" = (
-/obj/structure/cable,
-/turf/simulated/floor/airless,
-/area/submap/debrisfield/mining_drone_ship)
-"at" = (
 /obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/submap/debrisfield/mining_drone_ship)
@@ -565,10 +549,10 @@ aa
 aa
 ac
 ad
-af
-ai
-ai
-as
+aw
+aw
+aw
+aw
 ab
 aB
 aJ
@@ -583,7 +567,7 @@ ab
 ab
 ab
 an
-at
+aw
 ab
 aC
 aK

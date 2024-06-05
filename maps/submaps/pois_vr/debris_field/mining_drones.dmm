@@ -170,7 +170,6 @@
 /obj/random/unidentified_medicine/old_medicine,
 /obj/random/unidentified_medicine/old_medicine,
 /obj/structure/closet/medical_wall{
-	dir = 2;
 	pixel_y = -24
 	},
 /obj/item/stack/medical/bruise_pack,

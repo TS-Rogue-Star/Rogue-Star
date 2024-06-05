@@ -11,7 +11,6 @@
 /area/submap/virgo2/Manor1)
 "ad" = (
 /obj/structure/bed/chair/wood{
-	icon_state = "wooden_chair";
 	dir = 4
 	},
 /turf/simulated/floor/holofloor/wood,
@@ -23,7 +22,6 @@
 /area/submap/virgo2/Manor1)
 "af" = (
 /obj/structure/bed/chair/wood{
-	icon_state = "wooden_chair";
 	dir = 8
 	},
 /turf/simulated/floor/holofloor/wood,
@@ -267,7 +265,6 @@
 /area/submap/virgo2/Manor1)
 "bh" = (
 /obj/structure/bed/chair/wood{
-	icon_state = "wooden_chair";
 	dir = 1
 	},
 /turf/simulated/floor/holofloor/wood,
@@ -313,8 +310,8 @@
 /area/submap/virgo2/Manor1)
 "br" = (
 /obj/structure/bed/chair/comfy/purp{
-	icon_state = "comfychair_preview";
-	dir = 4
+	dir = 4;
+	icon_state = "comfychair_preview"
 	},
 /turf/simulated/floor/holofloor/wood{
 	icon_state = "wood_broken5"
@@ -326,7 +323,6 @@
 /area/submap/virgo2/Manor1)
 "bt" = (
 /obj/structure/bed/chair/wood{
-	icon_state = "wooden_chair";
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -334,7 +330,6 @@
 /area/submap/virgo2/Manor1)
 "bu" = (
 /obj/structure/bed/chair/wood{
-	icon_state = "wooden_chair";
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -351,8 +346,8 @@
 /area/submap/virgo2/Manor1)
 "bx" = (
 /obj/structure/bed/chair/comfy/purp{
-	icon_state = "comfychair_preview";
-	dir = 4
+	dir = 4;
+	icon_state = "comfychair_preview"
 	},
 /turf/simulated/floor/holofloor/wood,
 /area/submap/virgo2/Manor1)
@@ -386,7 +381,6 @@
 /area/submap/virgo2/Manor1)
 "bD" = (
 /obj/structure/bed/chair/wood{
-	icon_state = "wooden_chair";
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -565,8 +559,8 @@
 "cm" = (
 /obj/effect/decal/cleanable/blood,
 /obj/structure/bed/chair/comfy/purp{
-	icon_state = "comfychair_preview";
-	dir = 4
+	dir = 4;
+	icon_state = "comfychair_preview"
 	},
 /turf/simulated/floor/holofloor/wood,
 /area/submap/virgo2/Manor1)
@@ -665,14 +659,13 @@
 /area/submap/virgo2/Manor1)
 "cG" = (
 /obj/structure/toilet{
-	icon_state = "toilet00";
-	dir = 8
+	dir = 8;
+	icon_state = "toilet00"
 	},
 /turf/simulated/floor/tiled/hydro,
 /area/submap/virgo2/Manor1)
 "cH" = (
 /obj/machinery/shower{
-	icon_state = "shower";
 	dir = 8
 	},
 /obj/structure/curtain/open/shower,
@@ -684,7 +677,6 @@
 /area/submap/virgo2/Manor1)
 "cJ" = (
 /obj/machinery/shower{
-	icon_state = "shower";
 	dir = 8
 	},
 /obj/structure/curtain/open/shower,
@@ -697,8 +689,8 @@
 /area/submap/virgo2/Manor1)
 "cL" = (
 /obj/structure/toilet{
-	icon_state = "toilet00";
-	dir = 1
+	dir = 1;
+	icon_state = "toilet00"
 	},
 /turf/simulated/floor/tiled/hydro,
 /area/submap/virgo2/Manor1)

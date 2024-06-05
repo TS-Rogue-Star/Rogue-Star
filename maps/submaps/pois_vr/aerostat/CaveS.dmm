@@ -90,10 +90,6 @@
 /obj/item/weapon/storage/firstaid/combat,
 /turf/simulated/floor,
 /area/submap/virgo2/CaveS)
-"B" = (
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/submap/virgo2/CaveS)
 "C" = (
 /obj/structure/closet/crate,
 /obj/random/contraband,
@@ -105,10 +101,6 @@
 /obj/item/weapon/material/star,
 /obj/item/weapon/material/star,
 /obj/item/weapon/material/star,
-/turf/simulated/floor,
-/area/submap/virgo2/CaveS)
-"E" = (
-/obj/structure/cable,
 /turf/simulated/floor,
 /area/submap/virgo2/CaveS)
 "F" = (
@@ -1287,8 +1279,8 @@ r
 r
 u
 y
-B
-E
+F
+F
 u
 f
 r

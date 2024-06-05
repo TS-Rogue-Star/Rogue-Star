@@ -74,8 +74,7 @@
 "n" = (
 /obj/machinery/vending/tool,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/simulated/floor/tiled/steel_dirty,
 /area/submap/Lab1)
@@ -84,7 +83,6 @@
 /obj/item/clothing/suit/storage/hooded/wintercoat,
 /obj/item/clothing/shoes/boots/winter,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/simulated/floor/tiled/steel_dirty,
@@ -103,6 +101,7 @@
 /area/submap/Lab1)
 "r" = (
 /obj/structure/closet/toolcloset,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/submap/Lab1)
 "s" = (
@@ -120,9 +119,7 @@
 /obj/machinery/power/apc{
 	cell_type = /obj/item/weapon/cell/hyper;
 	dir = 8;
-	name = "Unknown APC";
-	operating = 0;
-	pixel_x = -24
+	operating = 0
 	},
 /obj/structure/cable,
 /turf/simulated/floor/tiled/steel_dirty,
@@ -136,6 +133,7 @@
 /area/submap/Lab1)
 "w" = (
 /obj/machinery/power/smes/point_of_interest,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/submap/Lab1)
 "x" = (
@@ -191,15 +189,12 @@
 "H" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /turf/simulated/floor/tiled/steel_dirty,
 /area/submap/Lab1)
 "I" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/simulated/floor/tiled/steel_dirty,
@@ -215,15 +210,13 @@
 "L" = (
 /obj/machinery/portable_atmospherics/hydroponics,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/simulated/floor/tiled/steel_dirty,
 /area/submap/Lab1)
 "M" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/simulated/floor/tiled/steel_dirty,
 /area/submap/Lab1)
@@ -268,6 +261,10 @@
 /area/submap/Lab1)
 "V" = (
 /obj/machinery/optable,
+/turf/simulated/floor/tiled/steel_dirty,
+/area/submap/Lab1)
+"Z" = (
+/obj/structure/cable,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/submap/Lab1)
 
@@ -344,7 +341,7 @@ e
 h
 h
 h
-h
+Z
 v
 e
 b

@@ -72,7 +72,6 @@
 /obj/random/maintenance/security,
 /obj/random/maintenance/research,
 /obj/random/contraband,
-/obj/structure/cable,
 /obj/machinery/power/apc/angled{
 	dir = 8;
 	nightshift_setting = 2
@@ -1834,7 +1833,6 @@
 	stripe_color = "#e6ab22"
 	},
 /obj/structure/cable/layer3,
-/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/stellardelight/substation/research)
 "dK" = (
@@ -3390,7 +3388,6 @@
 	pixel_x = -25;
 	pixel_y = -24
 	},
-/obj/structure/cable,
 /obj/effect/floor_decal/steeldecal/steel_decals4{
 	dir = 1
 	},
@@ -3859,15 +3856,6 @@
 /obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/eris/white/bluecorner,
 /area/stellardelight/deck1/resleeving)
-"is" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable,
-/obj/structure/cable/layer3,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck1/portfore)
 "it" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock{
@@ -4186,20 +4174,6 @@
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/stellardelight/deck1/aft)
-"ji" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/simulated/floor/tiled/milspec,
-/area/stellardelight/deck1/explobriefing)
 "jj" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 4;
@@ -4285,7 +4259,6 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
-/obj/structure/cable,
 /obj/effect/floor_decal/steeldecal/steel_decals4{
 	dir = 8
 	},
@@ -4591,7 +4564,6 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/portfore)
@@ -10871,7 +10843,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable,
 /obj/machinery/firealarm/angled{
 	dir = 4
 	},
@@ -11014,17 +10985,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/dark,
 /area/rnd/xenobiology)
-"Ag" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable,
-/obj/effect/mouse_hole_spawner{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck1/exploration)
 "Ai" = (
 /obj/structure/window/reinforced/full,
 /obj/structure/window/reinforced{
@@ -11263,7 +11223,6 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
-/obj/structure/cable,
 /obj/effect/floor_decal/steeldecal/steel_decals4{
 	dir = 6
 	},
@@ -14024,14 +13983,6 @@
 /obj/effect/floor_decal/milspec/color/red/half,
 /turf/simulated/floor/tiled/dark,
 /area/security/tactical)
-"Ib" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck1/portaft)
 "Ic" = (
 /obj/structure/table/standard,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -14196,7 +14147,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
-/obj/structure/cable,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/exploration)
 "Io" = (
@@ -14650,7 +14600,6 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/effect/catwalk_plated/dark,
 /obj/structure/cable/layer1,
 /turf/simulated/floor,
@@ -16753,7 +16702,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable,
 /obj/structure/closet/crate,
 /obj/random/maintenance/security,
 /obj/random/maintenance/clean,
@@ -17384,7 +17332,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable,
 /obj/effect/landmark/stardog,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/starboardaft)
@@ -19062,7 +19009,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable,
 /obj/effect/mouse_hole_spawner{
 	dir = 8
 	},
@@ -19224,15 +19170,6 @@
 /obj/item/clothing/glasses/hud/security,
 /turf/simulated/floor/tiled/dark,
 /area/security/security_equiptment_storage)
-"UT" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable,
-/obj/structure/cable/layer3,
-/turf/simulated/floor/tiled/milspec,
-/area/stellardelight/deck1/exploration)
 "UU" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 8
@@ -27688,7 +27625,7 @@ um
 um
 In
 UQ
-Ag
+Mn
 UQ
 Ly
 UQ
@@ -28622,7 +28559,7 @@ xP
 js
 Fo
 ZK
-is
+ZK
 ZK
 ZK
 kh
@@ -28651,12 +28588,12 @@ CB
 CB
 CB
 RL
-Ib
+To
 To
 bQ
 Dr
 aO
-Ib
+To
 To
 Xz
 To
@@ -28830,7 +28767,7 @@ Uo
 kg
 kg
 kg
-ji
+sN
 kO
 He
 XA
@@ -29819,7 +29756,7 @@ Pr
 YB
 Pr
 Pr
-UT
+Pr
 Md
 Qt
 Qt

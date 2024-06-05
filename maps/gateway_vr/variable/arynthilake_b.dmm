@@ -241,9 +241,9 @@
 /turf/simulated/mineral/ignore_cavegen/cave,
 /area/gateway/arynthilake/caves)
 "eq" = (
-/obj/structure/lattice,
 /obj/structure/cable,
-/turf/simulated/open,
+/obj/machinery/power/deck_relay,
+/turf/simulated/floor/tiled/eris,
 /area/gateway/arynthilake/engine)
 "eE" = (
 /obj/structure/flora/pottedplant/minitree,
@@ -615,15 +615,6 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/outdoors/grass,
 /area/gateway/arynthilake/dome)
-"mp" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/simulated/floor/tiled/eris,
-/area/gateway/arynthilake/engine)
 "mq" = (
 /obj/random/mre,
 /obj/random/mre,
@@ -669,8 +660,6 @@
 /turf/simulated/floor/tiled/eris,
 /area/gateway/arynthilake/engine)
 "nq" = (
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/random/mob/semirandom_mob_spawner/humanoid/retaliate,
 /turf/simulated/floor/tiled/eris,
@@ -4128,7 +4117,7 @@ fs
 fs
 fs
 Xx
-mp
+ZE
 Sk
 fs
 fs

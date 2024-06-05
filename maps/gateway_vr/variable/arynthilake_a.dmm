@@ -481,12 +481,6 @@
 	},
 /turf/simulated/floor/tiled/eris/steel/techfloor,
 /area/gateway/arynthilake/dome)
-"ea" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/simulated/floor/tiled/eris,
-/area/gateway/arynthilake/engine)
 "ej" = (
 /turf/simulated/floor/tiled/eris/cafe,
 /area/gateway/arynthilake/dome)
@@ -1555,15 +1549,6 @@
 	},
 /turf/simulated/floor/tiled/eris/techmaint_cargo,
 /area/gateway/arynthilake/dome)
-"Ej" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/simulated/floor/tiled/eris,
-/area/gateway/arynthilake/engine)
 "Er" = (
 /obj/structure/bed/chair/wood/wings{
 	dir = 1
@@ -1818,9 +1803,9 @@
 /turf/simulated/floor/carpet/sblucarpet,
 /area/gateway/arynthilake/dome)
 "Lo" = (
-/obj/structure/lattice,
 /obj/structure/cable,
-/turf/simulated/open,
+/obj/machinery/power/deck_relay,
+/turf/simulated/floor/tiled/eris,
 /area/gateway/arynthilake/engine)
 "Lq" = (
 /obj/structure/table/marble,
@@ -20199,7 +20184,7 @@ FW
 nx
 WV
 WV
-ea
+WV
 WV
 WV
 nx
@@ -20483,7 +20468,7 @@ ag
 ag
 ag
 MX
-Ej
+WV
 kX
 ag
 ag
