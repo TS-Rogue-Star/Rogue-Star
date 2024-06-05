@@ -631,6 +631,7 @@
 	},
 /obj/machinery/door/firedoor/glass,
 /obj/structure/cable/layer1,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/engineering/satellite/engineroom)
 "ws" = (

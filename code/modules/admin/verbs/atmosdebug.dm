@@ -14,17 +14,17 @@
 	//all plumbing - yes, some things might get stated twice, doesn't matter.
 	for (var/obj/machinery/atmospherics/plumbing in machines)
 		if (plumbing.nodealert)
-			to_chat(usr, "<span class='filter_adminlog warning'>Unconnected [plumbing.name] located at [plumbing.x],[plumbing.y],[plumbing.z] ([get_area(plumbing.loc)])</span>")
+			to_chat(usr, "<span class='filter_adminlog warning'>Unconnected [plumbing.name] located at [COORD(plumbing)], [get_area(plumbing.loc)] [ADMIN_COORDJMP(plumbing)]</span>")
 
 	//Manifolds
 	for (var/obj/machinery/atmospherics/pipe/manifold/pipe in machines)
 		if (!pipe.node1 || !pipe.node2 || !pipe.node3)
-			to_chat(usr, "<span class='filter_adminlog warning'>Unconnected [pipe.name] located at [pipe.x],[pipe.y],[pipe.z] ([get_area(pipe.loc)])</span>")
+			to_chat(usr, "<span class='filter_adminlog warning'>Unconnected [pipe.name] located at [COORD(pipe)], [get_area(pipe.loc)] [ADMIN_COORDJMP(pipe)]</span>")
 
 	//Pipes
 	for (var/obj/machinery/atmospherics/pipe/simple/pipe in machines)
 		if (!pipe.node1 || !pipe.node2)
-			to_chat(usr, "<span class='filter_adminlog warning'>Unconnected [pipe.name] located at [pipe.x],[pipe.y],[pipe.z] ([get_area(pipe.loc)])</span>")
+			to_chat(usr, "<span class='filter_adminlog warning'>Unconnected [pipe.name] located at [COORD(pipe)], [get_area(pipe.loc)] [ADMIN_COORDJMP(pipe)]</span>")
 
 	to_chat(usr, "Checking for overlapping pipes...")
 	next_turf:
@@ -36,7 +36,7 @@
 						for(var/connect_type in pipe.connect_types)
 							connect_types[connect_type] += 1
 						if(connect_types[1] > 1 || connect_types[2] > 1 || connect_types[3] > 1)
-							to_chat(usr, "<span class='filter_adminlog warning'>Overlapping pipe ([pipe.name]) located at [T.x],[T.y],[T.z] ([get_area(T)])</span>")
+							to_chat(usr, "<span class='filter_adminlog warning'>Overlapping pipe ([pipe.name]) located at [COORD(T)], [get_area(T.loc)] [ADMIN_COORDJMP(T)]</span>")
 							continue next_turf
 	to_chat(usr, "Done")
 
@@ -53,12 +53,12 @@
 		if(!length(PN.nodes))
 			if(PN.cables && (PN.cables.len > 1))
 				var/obj/structure/cable/C = PN.cables[1]
-				results += "Powernet with no nodes! (number [PN.number]) - example cable at [COORD(C)], [get_area(C.loc)] [ADMIN_COORDJMP(C)]"
+				results += "Powernet with no nodes! Example cable at [COORD(C)], [get_area(C.loc)] [ADMIN_COORDJMP(C)]"
 
-		if (!PN.cables || (PN.cables.len < 10))
+		if (!PN.cables || (PN.cables.len < 5))
 			if(PN.cables && (PN.cables.len > 1))
 				var/obj/structure/cable/C = PN.cables[1]
-				results += "Powernet with fewer than 10 cables! (number [PN.number]) - example cable at [COORD(C)], [get_area(C.loc)][ADMIN_COORDJMP(C)]"
+				results += "Powernet with fewer than 5 cables! Example cable at [COORD(C)], [get_area(C.loc)][ADMIN_COORDJMP(C)]"
 
 	for(var/turf/T in world.contents)
 		var/cable_layers //cache all cable layers (which are bitflags) present

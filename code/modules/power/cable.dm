@@ -592,7 +592,8 @@ GLOBAL_LIST(cable_radial_layer_list)
 		final_color = GLOB.possible_cable_coil_colours["Red"]
 		selected_color = "red"
 	color = final_color
-	to_chat(user, "<span class='notice'>You change \the [src]'s color to [lowertext(selected_color)].</span>")
+	if(usr)	//debug runtimes? I guess?
+		to_chat(usr, "<span class='notice'>You change \the [src]'s color to [lowertext(selected_color)].</span>")
 
 /obj/item/stack/cable_coil/proc/update_wclass()
 	if(amount == 1)

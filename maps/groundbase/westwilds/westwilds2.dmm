@@ -5174,7 +5174,6 @@
 /obj/item/stack/material/tritium{
 	amount = 25
 	},
-/obj/structure/cable,
 /obj/item/weapon/tool/wrench,
 /obj/item/stack/material/tritium{
 	amount = 25
@@ -5436,7 +5435,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/axolotl_engineering)

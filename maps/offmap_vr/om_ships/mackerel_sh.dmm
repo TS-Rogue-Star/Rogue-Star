@@ -203,6 +203,7 @@
 	pixel_x = 8;
 	pixel_y = 22
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/mackerel_sh)
 "nD" = (
@@ -232,6 +233,7 @@
 	pixel_x = -8;
 	pixel_y = 26
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/mackerel_sh)
 "rc" = (
@@ -381,6 +383,7 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/mackerel_sh)
 "xB" = (
@@ -515,6 +518,7 @@
 	pixel_x = 7;
 	pixel_y = 26
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/mackerel_sh)
 "FN" = (
@@ -631,6 +635,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/shuttle/mackerel_sh)
 "NN" = (
@@ -644,6 +649,13 @@
 	dir = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
+/area/shuttle/mackerel_sh)
+"OO" = (
+/obj/structure/symbol/maint,
+/obj/structure/cable,
+/turf/simulated/wall/rshull{
+	can_open = 1
+	},
 /area/shuttle/mackerel_sh)
 "Pc" = (
 /obj/structure/bed/chair/bay/shuttle{
@@ -671,6 +683,7 @@
 /obj/machinery/door/airlock/hatch,
 /obj/machinery/door/firedoor/glass,
 /obj/effect/map_helper/airlock/door/int_door,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/mackerel_sh)
 "Qu" = (
@@ -777,6 +790,7 @@
 	pixel_x = -8;
 	pixel_y = 22
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/mackerel_sh)
 "Wj" = (
@@ -862,6 +876,7 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/mackerel_sh)
 
@@ -1051,7 +1066,7 @@ EL
 Ko
 Ko
 zq
-EL
+OO
 Ko
 Ko
 PL

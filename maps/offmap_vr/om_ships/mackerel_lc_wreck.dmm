@@ -187,6 +187,7 @@
 	pixel_x = 8;
 	pixel_y = 22
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/mackerel_lc_wreck)
 "nu" = (
@@ -229,6 +230,7 @@
 	pixel_y = 26
 	},
 /obj/machinery/door/firedoor/glass,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/mackerel_lc_wreck)
 "rc" = (
@@ -385,7 +387,15 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
+/area/shuttle/mackerel_lc_wreck)
+"xv" = (
+/obj/structure/symbol/maint,
+/obj/structure/cable,
+/turf/simulated/wall/rshull{
+	can_open = 1
+	},
 /area/shuttle/mackerel_lc_wreck)
 "xB" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -531,6 +541,7 @@
 	icon_state = "door_open";
 	opacity = 0
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint/airless,
 /area/shuttle/mackerel_lc_wreck)
 "FS" = (
@@ -584,6 +595,7 @@
 "Ib" = (
 /obj/effect/map_helper/airlock/door/int_door,
 /obj/machinery/door/airlock/hatch,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/mackerel_lc_wreck)
 "Iu" = (
@@ -657,6 +669,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/simulated/floor/airless,
 /area/shuttle/mackerel_lc_wreck)
 "NI" = (
@@ -698,6 +711,7 @@
 	icon_state = "door_open";
 	opacity = 0
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/mackerel_lc_wreck)
 "Qq" = (
@@ -805,6 +819,7 @@
 	pixel_x = -8;
 	pixel_y = 22
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint/airless,
 /area/shuttle/mackerel_lc_wreck)
 "Wj" = (
@@ -879,6 +894,7 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/mackerel_lc_wreck)
 
@@ -1068,7 +1084,7 @@ EL
 Ko
 Ko
 zq
-EL
+xv
 Ko
 Ko
 PL

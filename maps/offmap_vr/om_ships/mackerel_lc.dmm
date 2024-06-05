@@ -97,6 +97,13 @@
 	},
 /turf/simulated/floor/airless,
 /area/shuttle/mackerel_lc)
+"if" = (
+/obj/structure/symbol/maint,
+/obj/structure/cable,
+/turf/simulated/wall/rshull{
+	can_open = 1
+	},
+/area/shuttle/mackerel_lc)
 "iP" = (
 /obj/structure/bed/chair/bay/shuttle{
 	dir = 1
@@ -200,6 +207,7 @@
 	pixel_x = -8;
 	pixel_y = 21
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/mackerel_lc)
 "nD" = (
@@ -229,6 +237,7 @@
 	pixel_x = -8;
 	pixel_y = 26
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/mackerel_lc)
 "rc" = (
@@ -366,6 +375,7 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/mackerel_lc)
 "xB" = (
@@ -496,6 +506,7 @@
 	pixel_x = 7;
 	pixel_y = 26
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/mackerel_lc)
 "FN" = (
@@ -596,6 +607,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/shuttle/mackerel_lc)
 "NN" = (
@@ -630,6 +642,7 @@
 /obj/machinery/door/airlock/hatch,
 /obj/machinery/door/firedoor/glass,
 /obj/effect/map_helper/airlock/door/int_door,
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/mackerel_lc)
 "Qu" = (
@@ -727,6 +740,7 @@
 	pixel_x = 7;
 	pixel_y = 21
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/mackerel_lc)
 "Wj" = (
@@ -802,6 +816,7 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/mackerel_lc)
 
@@ -991,7 +1006,7 @@ EL
 Ko
 Ko
 zq
-EL
+if
 Ko
 Ko
 PL
