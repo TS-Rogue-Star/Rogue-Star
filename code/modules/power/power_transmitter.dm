@@ -33,6 +33,11 @@
 /obj/machinery/power/power_transmitter/preset
 	anchored = TRUE
 
+/obj/machinery/power/power_transmitter/preset/poi
+	anchored = TRUE
+	active = TRUE
+	locked = TRUE
+
 /obj/machinery/power/power_transmitter/preset/engine
 	id = "EngineToStation"
 

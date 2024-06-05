@@ -595,7 +595,8 @@
 /obj/structure/lattice,
 /obj/structure/disposalpipe/down,
 /obj/machinery/door/firedoor/glass,
-/turf/simulated/open,
+/obj/machinery/power/deck_relay,
+/turf/simulated/floor/plating,
 /area/maintenance/tether_midpoint)
 "Or" = (
 /obj/structure/disposalpipe/segment{

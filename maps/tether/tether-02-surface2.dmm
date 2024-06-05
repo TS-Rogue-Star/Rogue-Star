@@ -18388,7 +18388,7 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/down,
 /obj/machinery/door/firedoor/glass,
-/turf/simulated/open,
+/turf/simulated/floor/plating,
 /area/maintenance/lower/rnd)
 "aJO" = (
 /turf/simulated/shuttle/wall/voidcraft/green{
@@ -31017,7 +31017,6 @@
 "rRj" = (
 /obj/machinery/power/smes{
 	charge = 5e+006;
-	input_attempt = 1;
 	input_level = 200000;
 	output_level = 200000
 	},
@@ -31143,6 +31142,14 @@
 /obj/machinery/recharge_station,
 /turf/simulated/floor/tiled/techfloor,
 /area/ai_cyborg_station)
+"sTl" = (
+/obj/structure/sign/warning/caution{
+	name = "\improper CAUTION - DANGEROUS EQUIPMENT AND DROPS"
+	},
+/obj/machinery/power/deck_relay,
+/obj/structure/cable,
+/turf/simulated/wall/r_wall,
+/area/maintenance/lower/rnd)
 "sVf" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -40487,7 +40494,7 @@ aEc
 aJq
 aJM
 aKm
-aJM
+sTl
 aLG
 aMq
 aMY

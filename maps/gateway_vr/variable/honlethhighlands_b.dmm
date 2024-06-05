@@ -368,6 +368,11 @@
 	temperature = 253.15
 	},
 /area/gateway/honlethhighlands/town/engineering)
+"cn" = (
+/obj/structure/cable,
+/obj/structure/cable/heavyduty,
+/turf/simulated/floor/tiled,
+/area/gateway/honlethhighlands/town/engineering)
 "cD" = (
 /obj/machinery/door/airlock/hatch,
 /obj/structure/cable,
@@ -1081,6 +1086,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/structure/cable/multilayer/connected,
 /turf/simulated/floor/tiled,
 /area/gateway/honlethhighlands/town/engineering)
 "qM" = (
@@ -1127,12 +1133,10 @@
 /turf/simulated/floor/lino,
 /area/gateway/honlethhighlands/town/kitchen)
 "rB" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/gateway/honlethhighlands/town/engineering)
 "rC" = (
@@ -1289,13 +1293,11 @@
 /turf/simulated/floor/lino,
 /area/gateway/honlethhighlands/town/bar)
 "uQ" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
 /obj/machinery/alarm/alarms_hidden{
 	dir = 1;
 	pixel_y = -20
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/gateway/honlethhighlands/town/engineering)
 "vd" = (
@@ -1400,6 +1402,14 @@
 /obj/structure/cable,
 /turf/simulated/floor/lino,
 /area/gateway/honlethhighlands/town/kitchen)
+"wW" = (
+/obj/structure/cable/multilayer/connected,
+/turf/simulated/floor/plating{
+	edge_blending_priority = 1;
+	outdoors = 1;
+	temperature = 253.15
+	},
+/area/gateway/honlethhighlands)
 "wY" = (
 /obj/structure/table/steel_reinforced,
 /obj/item/weapon/reagent_containers/glass/rag,
@@ -1993,9 +2003,10 @@
 /turf/simulated/floor/tiled,
 /area/gateway/honlethhighlands/town/supply)
 "Kk" = (
-/obj/structure/cable/heavyduty/ender{
+/obj/machinery/power/power_transmitter/preset/poi{
 	id = "togateway"
 	},
+/obj/structure/cable/heavyduty,
 /turf/simulated/floor/plating{
 	edge_blending_priority = 1;
 	outdoors = 1;
@@ -2084,9 +2095,10 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/gateway/honlethhighlands/gate)
 "MR" = (
-/obj/structure/cable/heavyduty/ender{
+/obj/machinery/power/power_transmitter/preset/poi{
 	id = "togateway"
 	},
+/obj/structure/cable/heavyduty,
 /turf/simulated/floor/plating{
 	edge_blending_priority = 1;
 	outdoors = 1;
@@ -2121,6 +2133,7 @@
 "NS" = (
 /obj/machinery/door/airlock/hatch,
 /obj/structure/cable,
+/obj/structure/cable/heavyduty,
 /turf/simulated/floor/plating,
 /area/gateway/honlethhighlands/town/engineering)
 "NV" = (
@@ -2134,17 +2147,6 @@
 /obj/random/crate,
 /obj/effect/landmark/mcguffin_spawner,
 /turf/simulated/floor/wood,
-/area/gateway/honlethhighlands)
-"On" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "0-4"
-	},
-/obj/structure/cable,
-/turf/simulated/floor/plating{
-	edge_blending_priority = 1;
-	outdoors = 1;
-	temperature = 253.15
-	},
 /area/gateway/honlethhighlands)
 "Ov" = (
 /obj/effect/floor_decal/techfloor{
@@ -2256,9 +2258,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/gateway/honlethhighlands/town/engineering)
 "QB" = (
@@ -2392,6 +2392,13 @@
 	temperature = 253.15
 	},
 /area/gateway/honlethhighlands/beach)
+"Um" = (
+/obj/structure/cable,
+/obj/structure/cable/heavyduty,
+/turf/simulated/floor/tiled/asteroid_steel/outdoors{
+	temperature = 253.15
+	},
+/area/gateway/honlethhighlands/town)
 "Uo" = (
 /obj/random/mob/semirandom_mob_spawner/humanoid/d,
 /turf/simulated/floor/outdoors/newdirt{
@@ -2426,6 +2433,7 @@
 "US" = (
 /obj/structure/cable,
 /obj/structure/cable,
+/obj/structure/cable/heavyduty,
 /turf/simulated/floor/tiled/asteroid_steel/outdoors{
 	temperature = 253.15
 	},
@@ -2499,9 +2507,7 @@
 /turf/simulated/floor/lino,
 /area/gateway/honlethhighlands/town/kitchen)
 "Vw" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating{
 	edge_blending_priority = 1;
 	outdoors = 1;
@@ -4843,7 +4849,7 @@ kx
 ak
 ad
 aj
-On
+Vw
 mv
 aj
 aj
@@ -5127,7 +5133,7 @@ NV
 ak
 ad
 ad
-Vw
+wW
 XA
 hD
 aj
@@ -20523,9 +20529,9 @@ aI
 Kk
 Kt
 US
-XS
+Um
 NS
-gm
+cn
 CM
 QA
 uQ

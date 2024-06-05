@@ -1017,9 +1017,10 @@
 /turf/simulated/floor/tiled,
 /area/rnd/outpost/airlock)
 "dd" = (
-/obj/structure/cable/heavyduty/ender{
+/obj/machinery/power/power_transmitter/preset/solar{
 	id = "surface-solars"
 	},
+/obj/structure/cable/heavyduty,
 /turf/simulated/floor/virgo3b,
 /area/mine/explored)
 "de" = (
@@ -2017,10 +2018,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/rnd/outpost)
-"fe" = (
-/obj/structure/cable,
-/turf/simulated/floor,
-/area/maintenance/substation/outpost)
 "ff" = (
 /obj/machinery/power/smes{
 	RCon_tag = "Substation - Science Outpost";
@@ -2031,7 +2028,6 @@
 /area/maintenance/substation/outpost)
 "fg" = (
 /obj/structure/cable/heavyduty,
-/obj/structure/cable,
 /turf/simulated/floor,
 /area/maintenance/substation/outpost)
 "fh" = (
@@ -5036,10 +5032,10 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
+/obj/structure/cable/heavyduty,
 /turf/simulated/floor,
 /area/maintenance/substation/outpost)
 "kZ" = (
@@ -5211,6 +5207,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
 	},
+/obj/structure/cable/heavyduty,
 /turf/simulated/floor,
 /area/maintenance/substation/outpost)
 "lo" = (
@@ -23858,7 +23855,7 @@ mw
 ll
 me
 kr
-fe
+ed
 kY
 fz
 fR

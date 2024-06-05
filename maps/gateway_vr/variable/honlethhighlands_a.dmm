@@ -387,6 +387,11 @@
 	temperature = 253.15
 	},
 /area/gateway/honlethhighlands/town/engineering)
+"cC" = (
+/turf/simulated/floor/outdoors/grass{
+	temperature = 253.15
+	},
+/area/gateway/honlethhighlands/gate)
 "cD" = (
 /obj/machinery/door/airlock/hatch,
 /obj/structure/cable,
@@ -530,6 +535,14 @@
 	temperature = 253.15
 	},
 /area/gateway/honlethhighlands/caves)
+"fr" = (
+/obj/structure/cable,
+/obj/structure/cable,
+/obj/structure/cable/heavyduty,
+/turf/simulated/floor/tiled/asteroid_steel/outdoors{
+	temperature = 253.15
+	},
+/area/gateway/honlethhighlands/town)
 "fN" = (
 /obj/machinery/gateway/brass{
 	dir = 10;
@@ -537,6 +550,11 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/gateway/honlethhighlands/gate)
+"gb" = (
+/obj/structure/cable,
+/obj/structure/cable/heavyduty,
+/turf/simulated/floor/tiled,
+/area/gateway/honlethhighlands/town/engineering)
 "gm" = (
 /obj/structure/cable,
 /turf/simulated/floor/tiled,
@@ -633,6 +651,14 @@
 	temperature = 253.15
 	},
 /area/gateway/honlethhighlands/caves)
+"iv" = (
+/obj/structure/cable/multilayer/connected,
+/turf/simulated/floor/plating{
+	edge_blending_priority = 1;
+	outdoors = 1;
+	temperature = 253.15
+	},
+/area/gateway/honlethhighlands)
 "jk" = (
 /obj/random/mob/semirandom_mob_spawner/vore/retaliate,
 /turf/simulated/floor/outdoors/snow{
@@ -820,6 +846,11 @@
 /obj/machinery/portable_atmospherics/hydroponics/soil,
 /turf/simulated/floor/outdoors/grass/forest,
 /area/gateway/honlethhighlands/town/garden)
+"ng" = (
+/turf/simulated/floor/outdoors/snow{
+	temperature = 253.15
+	},
+/area/gateway/honlethhighlands/gate)
 "nh" = (
 /turf/simulated/floor/carpet/purcarpet,
 /area/gateway/honlethhighlands)
@@ -1029,6 +1060,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/structure/cable/multilayer/connected,
 /turf/simulated/floor/tiled,
 /area/gateway/honlethhighlands/town/engineering)
 "qM" = (
@@ -1069,12 +1101,10 @@
 /turf/simulated/floor/lino,
 /area/gateway/honlethhighlands/town/kitchen)
 "rB" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/gateway/honlethhighlands/town/engineering)
 "rC" = (
@@ -1226,6 +1256,13 @@
 /obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/gateway/honlethhighlands/town/command)
+"uf" = (
+/obj/structure/cable,
+/obj/structure/cable/heavyduty,
+/turf/simulated/floor/tiled/asteroid_steel/outdoors{
+	temperature = 253.15
+	},
+/area/gateway/honlethhighlands/town)
 "uu" = (
 /obj/item/weapon/stool/padded{
 	dir = 8
@@ -1243,13 +1280,11 @@
 /turf/simulated/floor/lino,
 /area/gateway/honlethhighlands/town/kitchen)
 "uQ" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
 /obj/machinery/alarm/alarms_hidden{
 	dir = 1;
 	pixel_y = -20
 	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/gateway/honlethhighlands/town/engineering)
 "vd" = (
@@ -1982,9 +2017,10 @@
 /turf/simulated/floor/tiled,
 /area/gateway/honlethhighlands/town/supply)
 "Kk" = (
-/obj/structure/cable/heavyduty/ender{
+/obj/machinery/power/power_transmitter/preset/poi{
 	id = "togateway"
 	},
+/obj/structure/cable/heavyduty,
 /turf/simulated/floor/plating{
 	edge_blending_priority = 1;
 	outdoors = 1;
@@ -2086,9 +2122,10 @@
 	},
 /area/gateway/honlethhighlands/beach)
 "MR" = (
-/obj/structure/cable/heavyduty/ender{
+/obj/machinery/power/power_transmitter/preset/poi{
 	id = "togateway"
 	},
+/obj/structure/cable/heavyduty,
 /turf/simulated/floor/plating{
 	edge_blending_priority = 1;
 	outdoors = 1;
@@ -2116,6 +2153,7 @@
 "NS" = (
 /obj/machinery/door/airlock/hatch,
 /obj/structure/cable,
+/obj/structure/cable/heavyduty,
 /turf/simulated/floor/plating,
 /area/gateway/honlethhighlands/town/engineering)
 "NV" = (
@@ -2129,17 +2167,6 @@
 /obj/random/crate,
 /obj/effect/landmark/mcguffin_spawner,
 /turf/simulated/floor/wood,
-/area/gateway/honlethhighlands)
-"On" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "0-4"
-	},
-/obj/structure/cable,
-/turf/simulated/floor/plating{
-	edge_blending_priority = 1;
-	outdoors = 1;
-	temperature = 253.15
-	},
 /area/gateway/honlethhighlands)
 "Ov" = (
 /obj/effect/floor_decal/techfloor{
@@ -2231,9 +2258,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/gateway/honlethhighlands/town/engineering)
 "QB" = (
@@ -2441,9 +2466,7 @@
 /turf/simulated/floor/lino,
 /area/gateway/honlethhighlands/town/kitchen)
 "Vw" = (
-/obj/structure/cable/heavyduty{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/simulated/floor/plating{
 	edge_blending_priority = 1;
 	outdoors = 1;
@@ -4789,9 +4812,9 @@ yu
 sF
 kx
 ak
-ad
-aj
-On
+ng
+cC
+Vw
 XA
 aj
 aj
@@ -4932,7 +4955,7 @@ pI
 yC
 ak
 ad
-aj
+cC
 Vw
 XA
 hD
@@ -5074,8 +5097,8 @@ Bf
 NV
 ak
 ad
-ad
-Vw
+ng
+iv
 XA
 hD
 aj
@@ -20470,10 +20493,10 @@ aI
 aI
 Kk
 Kt
-US
-XS
+fr
+uf
 NS
-gm
+gb
 CM
 QA
 uQ

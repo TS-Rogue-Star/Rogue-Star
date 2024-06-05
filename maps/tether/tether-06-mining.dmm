@@ -277,9 +277,10 @@
 /turf/simulated/floor/virgo3b,
 /area/mine/explored)
 "aO" = (
-/obj/structure/cable/heavyduty/ender{
+/obj/machinery/power/power_transmitter/preset/mining{
 	id = "surface-mining"
 	},
+/obj/structure/cable/heavyduty,
 /turf/simulated/floor/virgo3b,
 /area/mine/explored)
 "aP" = (
@@ -575,8 +576,8 @@
 /turf/simulated/floor/tiled,
 /area/outpost/mining_main/hangar)
 "bw" = (
-/obj/structure/cable,
 /obj/machinery/power/terminal,
+/obj/structure/cable/heavyduty,
 /turf/simulated/floor/plating,
 /area/outpost/mining_main/maintenance)
 "by" = (
@@ -597,7 +598,6 @@
 /area/outpost/mining_main/maintenance)
 "bB" = (
 /obj/structure/cable/heavyduty,
-/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/outpost/mining_main/maintenance)
 "bC" = (
@@ -3079,7 +3079,7 @@ aP
 aV
 aP
 bn
-bz
+bB
 bB
 bI
 aA
@@ -3221,7 +3221,7 @@ aQ
 ba
 bf
 bn
-bz
+bB
 bC
 SF
 ab

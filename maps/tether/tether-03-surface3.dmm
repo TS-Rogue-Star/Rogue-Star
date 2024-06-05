@@ -4108,7 +4108,7 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/down,
 /obj/machinery/door/firedoor/glass,
-/turf/simulated/open,
+/turf/simulated/floor/plating,
 /area/rnd/research_storage)
 "agD" = (
 /obj/effect/floor_decal/rust,
@@ -26976,6 +26976,8 @@
 /obj/structure/disposalpipe/up{
 	dir = 8
 	},
+/obj/machinery/power/deck_relay,
+/obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/rnd/research_storage)
 "aXQ" = (
