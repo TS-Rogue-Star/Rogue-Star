@@ -1625,7 +1625,8 @@
 "tc" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/multi_tile/metal{
-	name = "EMT Bay"
+	name = "EMT Bay";
+	req_one_access = list(5)
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/medical/paramedic)
@@ -11573,7 +11574,7 @@ rf
 rf
 rf
 rf
-rf
+nd
 nd
 nd
 nd
@@ -11715,8 +11716,8 @@ rf
 rf
 rf
 rf
-rf
 nd
+dy
 dy
 dy
 dy
@@ -11857,8 +11858,8 @@ rf
 rf
 rf
 rf
-rf
 nd
+dy
 dy
 dy
 dy
@@ -11999,8 +12000,8 @@ rf
 rf
 rf
 rf
-rf
 nd
+dy
 dy
 dy
 dy
@@ -12142,7 +12143,7 @@ nd
 nd
 nd
 nd
-nd
+dy
 dy
 dy
 dy
