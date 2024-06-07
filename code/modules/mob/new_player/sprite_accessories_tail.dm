@@ -46,10 +46,19 @@
 	var/list/lower_layer_dirs = list(SOUTH)
 	var/icon_loaf = null
 
+	//taur specific offsets for their bodies
 	var/offset_x = 0
+	//For taurs of unnatural scales (Teppi)
 	var/offset_y = 0
 	var/mob_offset_x = 0
 	var/mob_offset_y = 0
+	//what taur butt specific offsets there are (drake vs wolf, etc)
+	var/taur_butt_x = 0
+	var/taur_butt_y = 0
+	//what it will take to align human-scaled tails to Tauric butts (Wolf is default)
+	var/taur_tail_offset_Y = 0
+	var/taur_tail_offset_E = 0
+	var/taur_tail_offset_W = 32
 
 	//Taur Belly overlay handling
 	//Reduces headache from update_icons code by being above taurs. No 32x32 belly sprites exist tho, so...
@@ -68,6 +77,14 @@
 		tailsock = icon_state
 	if(ani_state)
 		tailsock_w = ani_state
+
+/datum/sprite_accessory/tail/proc/get_taur_tail_offsets(pass_index) // list(dir = x, y, layer)
+	var/list/values = list(
+		"[NORTH]" = list(offset_x, taur_tail_offset_Y + taur_butt_y, TAIL_UPPER_LAYER),
+		"[SOUTH]" = list(offset_x, taur_tail_offset_Y + taur_butt_y, TAIL_LOWER_LAYER),
+		"[EAST]" = list(taur_tail_offset_E + taur_butt_x, taur_tail_offset_Y + taur_butt_y, TAIL_UPPER_LAYER),
+		"[WEST]" = list(taur_tail_offset_W - taur_butt_x, taur_tail_offset_Y + taur_butt_y, TAIL_UPPER_LAYER))
+	return values
 
 /***		Tails are listed in order of placement in the tail listing			***/
 
@@ -497,7 +514,7 @@
 /datum/sprite_accessory/tail/doublekitsune
 	name = "Kitsune 2 tails"
 	icon_state = "doublekitsune"
-	extra_overlay = "doublekitsune_tips"
+	extra_overlay = "doublekitsune-tips"
 	backup_name = list(
 		"Kitsune 2 tails, colorable"
 	)
@@ -515,11 +532,16 @@
 /datum/sprite_accessory/tail/triplekitsune_colorable
 	name = "Kitsune 3 tails"
 	icon_state = "triplekitsune"
-	extra_overlay = "triplekitsune_tips"
+	extra_overlay = "triplekitsune-tips"
 	tailsock = "triplekitsunealtsock"
 	backup_name = list(
 		"Kitsune 3 tails, colorable"
 	)
+
+/datum/sprite_accessory/tail/fivekitsune_colorable
+	name = "Kitsune 5 tails"
+	icon_state = "fivekitsune"
+	extra_overlay = "fivekitsune-tips"
 
 /datum/sprite_accessory/tail/sevenkitsune_colorable
 	name = "Kitsune 7 tails"

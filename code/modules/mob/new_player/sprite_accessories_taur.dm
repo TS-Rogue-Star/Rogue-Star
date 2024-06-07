@@ -139,6 +139,17 @@
 	can_ride = TRUE			//whether we're real rideable taur or just in that category
 	offset_x = -16
 
+	///for our additional, custom tail stuff
+	var/has_custom_tails = FALSE
+	// will be the default tail
+	var/custom_tail
+	//What's the general offset for most tails to connect to?
+	taur_butt_x = 0
+	taur_butt_y = 0
+	//0'd out because this only applies to the humanoid tails
+	taur_tail_offset_E = 0
+	taur_tail_offset_W = 0
+
 	style = TAIL_TAURIC		//Sorting var
 
 	//Could do nested lists but it started becoming a nightmare. It'd be more fun for lookups of a_intent and m_intent, but then subtypes need to
@@ -168,8 +179,29 @@
 	var/msg_owner_stepunder		= "%owner runs between your legs." //Weird becuase in the case this is used, %owner is the 'bumper' (src)
 	var/msg_prey_stepunder		= "You run between %prey's legs." //Same, inverse
 
+//default tails so people can have the tails they're used to
+/datum/sprite_accessory/tail/special/taur
+	name = "default wolf taur"
+	icon = 'icons/mob/vore/taurs.dmi'
+	icon_state = "wolf_tail"
+	extra_overlay = "wolf_tail_markings"
+	offset_x = -16
 
-// Tails/taurhalves for everyone
+/datum/sprite_accessory/tail/special/taur/fox
+	name = "default fox taur"
+	icon_state = "fox_tail"
+	extra_overlay = "fox_tail_markings"
+
+/datum/sprite_accessory/tail/special/taur/kitsune
+	name = "default kitsune taur"
+	icon_state = "kitsune_tail"
+	extra_overlay = "kitsune_tail_markings"
+
+/datum/sprite_accessory/tail/special/taur/feline
+	name = "default feline taur"
+	icon_state = "feline_tail"
+	extra_overlay = "feline_tail_markings"
+	ani_state = "feline_w_tail"
 
 /***		Fluffy Paw Critters		***/
 /datum/sprite_accessory/tail/taur/wolf
@@ -182,7 +214,10 @@
 	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
 	loaf_offset = 4
 	vore_tail_sprite_variant = "Wolf"
-	tailsock = "wolf_sock"
+	has_custom_tails = TRUE
+	tailsock = "wolf_tail"
+	custom_tail	= "wolf_tail"
+	taur_butt_x = 2
 	fullness_icons = 3
 	struggle_anim = TRUE
 	backup_name = list("Wolf (Taur)")
@@ -212,7 +247,7 @@
 	extra_overlay = "fatwolf_markings"
 	backup_name = list("Fat Wolf dual-color (Taur)")
 
-/datum/sprite_accessory/tail/taur/wolf/wolf_wag
+/datum/sprite_accessory/tail/taur/wolf/wolf_2c_wag
 	name = "Wolf, 2-color Fat vwag"
 	icon_state = "wolf_s"
 	extra_overlay = "wolf_markings"
@@ -273,7 +308,9 @@
 	suit_sprites = 'icons/inventory/suit/taursuits_fox.dmi'
 	extra_overlay = "fox_markings"
 	extra_overlay2 = "fox_markings2"
-	tailsock = "fox_sock"
+	has_custom_tails = TRUE
+	tailsock = "fox_tail"
+	custom_tail	= "fox_tail"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
 	loaf_offset = 4
@@ -284,7 +321,9 @@
 	icon_state = "kitsune"
 	extra_overlay = "kitsune_markings"
 	extra_overlay2 = "kitsune_markings2"
-	tailsock = "kitsune_sock"
+	has_custom_tails = TRUE
+	tailsock = "kitsune_tail"
+	custom_tail	= "kitsune_tail"
 	backup_name = list("Kitsune (Taur)")
 
 /datum/sprite_accessory/tail/taur/feline
@@ -292,12 +331,14 @@
 	icon_state = "feline_s"
 	suit_sprites = 'icons/inventory/suit/taursuits_feline.dmi'
 	icon_sprite_tag = "feline"
-	tailsock = "feline_sock"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
 	loaf_offset = 5
-
 	vore_tail_sprite_variant = "Feline"
+	has_custom_tails = TRUE
+	tailsock = "feline_tail"
+	tailsock_w = "feline_w_tail"
+	custom_tail	= "feline_tail"
 	belly_variant_when_loaf = TRUE
 	fullness_icons = 1
 	struggle_anim = TRUE
@@ -382,11 +423,13 @@
 	extra_overlay = "skunk_markings"
 	extra_overlay2 = "skunk_markings_2"
 	icon_sprite_tag = "skunk"
-	tailsock = "skunk_sock"
+	has_custom_tails = TRUE
+	tailsock = "skunk_tail"
+	custom_tail	= "skunk_tail"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
 	loaf_offset = 3
-	vore_tail_sprite_variant = "Skunk"
+	vore_tail_sprite_variant = "Wolf"
 	belly_variant_when_loaf = TRUE
 	fullness_icons = 1
 	struggle_anim = TRUE
@@ -402,6 +445,24 @@
 	icon_sprite_tag = "rat"
 	backup_name = list("Rat (Taur)")
 
+/datum/sprite_accessory/tail/taur/redpanda
+	name = "Red Panda"
+	icon_state = "wah_s"
+	suit_sprites = 'icons/inventory/suit/taursuits_wah.dmi'
+	extra_overlay = "wah_markings"
+	extra_overlay2 = "wah_markings_2"
+	icon_sprite_tag = "wah"
+	has_custom_tails = TRUE
+	tailsock = "wah_tail"
+	custom_tail	= "wah_tail"
+	can_loaf = TRUE
+	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
+	loaf_offset = 3
+	vore_tail_sprite_variant = "Wah"
+	belly_variant_when_loaf = TRUE
+	fullness_icons = 1
+	struggle_anim = TRUE
+
 /datum/sprite_accessory/tail/taur/otie
 	name = "Otie"
 	icon_state = "otie_s"
@@ -409,7 +470,9 @@
 	extra_overlay2 = "otie_markings_2"
 	suit_sprites = 'icons/inventory/suit/taursuits_otie.dmi'
 	icon_sprite_tag = "otie"
-	tailsock = "otie_sock"
+	has_custom_tails = TRUE
+	tailsock = "otie_tail"
+	custom_tail	= "otie_tail"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
 	loaf_offset = 5
@@ -430,7 +493,10 @@
 	icon_state = "sergal_s"
 	icon_sprite_tag = "sergal"
 	extra_overlay = "sergal_markings"
-	tailsock = "sergal_sock"
+	has_custom_tails = TRUE
+	tailsock = "sergal_tail"
+	custom_tail	= "sergal_tail"
+	vore_tail_sprite_variant = "Wolf"
 
 /datum/sprite_accessory/tail/taur/sergal/fat
 	name = "Fat Sergal"
@@ -443,7 +509,9 @@
 	icon_state = "zorgoia"
 	suit_sprites = 'icons/inventory/suit/taursuits_zorgoia.dmi'
 	extra_overlay = "zorgoia_fluff"
-	tailsock = "zorgoia_sock"
+	has_custom_tails = TRUE
+	tailsock = "zorgoia_tail"
+	custom_tail	= "zorgoia_tail"
 	backup_name = list("Zorgoia (Taur)")
 
 /datum/sprite_accessory/tail/taur/zorgoia/fat
@@ -457,7 +525,9 @@
 	icon_state = "cow_s"
 	suit_sprites = 'icons/inventory/suit/taursuits_cow.dmi'
 	icon_sprite_tag = "cow"
-	tailsock = "cow_sock"
+	has_custom_tails = TRUE
+	tailsock = "cow_tail"
+	custom_tail	= "cow_tail"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
 	loaf_offset = 3
@@ -510,7 +580,9 @@
 	extra_overlay = "deer_markings"
 	suit_sprites = 'icons/inventory/suit/taursuits_deer.dmi'
 	icon_sprite_tag = "deer"
-	tailsock = "deer_sock"
+	has_custom_tails = TRUE
+	tailsock = "deer_tail"
+	custom_tail	= "deer_tail"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
 	loaf_offset = 7
@@ -555,7 +627,9 @@
 	under_sprites = 'icons/inventory/suit/taursuits_horse.dmi'
 	suit_sprites = 'icons/inventory/suit/taursuits_horse.dmi'
 	icon_sprite_tag = "horse"
-	tailsock = "horse_sock"
+	has_custom_tails = TRUE
+	tailsock = "horse_tail"
+	custom_tail	= "horse_tail"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
 	loaf_offset = 4
@@ -601,7 +675,9 @@
 	extra_overlay = "drake_markings"
 	suit_sprites = 'icons/inventory/suit/taursuits_drake.dmi'
 	icon_sprite_tag = "drake"
-	tailsock = "drake_sock"
+	has_custom_tails = TRUE
+	tailsock = "drake_tail"
+	custom_tail	= "drake_tail"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
 	loaf_offset = 6
@@ -641,7 +717,9 @@
 	icon_state = "lizard_s"
 	suit_sprites = 'icons/inventory/suit/taursuits_lizard.dmi'
 	icon_sprite_tag = "lizard"
-	tailsock = "lizard_sock"
+	has_custom_tails = TRUE
+	tailsock = "lizard_tail"
+	custom_tail	= "lizard_tail"
 	can_loaf = TRUE
 	icon_loaf = 'icons/mob/vore/taurs_loaf.dmi'
 	loaf_offset = 5
