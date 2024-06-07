@@ -134,3 +134,7 @@
 	name = "legcuffs"
 	path =/obj/item/weapon/handcuffs/legcuffs
 	hidden = 1
+
+/datum/category_item/autolathe/general/pipecleaner
+	name = "pipe cleaner coil"
+	path =/obj/item/stack/pipe_cleaner_coil
