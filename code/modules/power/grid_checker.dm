@@ -39,10 +39,13 @@
 /obj/machinery/power/grid_checker/attackby(obj/item/W, mob/user)
 	if(!user)
 		return
-	if(W.is_screwdriver())
+	if(default_unfasten_wrench(user, W, 40))
+		update_cable_icons_on_turf(get_turf(src))
+		return FALSE
+	if(W.has_tool_quality(TOOL_SCREWDRIVER))
 		default_deconstruction_screwdriver(user, W)
 		opened = !opened
-	else if(W.is_crowbar())
+	else if(W.has_tool_quality(TOOL_CROWBAR))
 		default_deconstruction_crowbar(user, W)
 	else if(istype(W, /obj/item/device/multitool) || W.is_wirecutter())
 		attack_hand(user)

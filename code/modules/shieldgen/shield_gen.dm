@@ -45,6 +45,7 @@
 
 /obj/machinery/shield_gen/Destroy()
 	QDEL_LIST_NULL(field)
+	update_cable_icons_on_turf(get_turf(src))
 	return ..()
 
 /obj/machinery/shield_gen/emag_act(var/remaining_charges, var/mob/user)
@@ -66,10 +67,11 @@
 			updateDialog()
 		else
 			to_chat(user, "<font color='red'>Access denied.</font>")
-	else if(W.is_wrench())
+	else if(W.has_tool_quality(TOOL_WRENCH))
 		src.anchored = !src.anchored
 		playsound(src, W.usesound, 75, 1)
 		src.visible_message("<font color='blue'>\icon[src][bicon(src)] [src] has been [anchored?"bolted to the floor":"unbolted from the floor"] by [user].</font>")
+		update_cable_icons_on_turf(get_turf(src))
 
 		if(active)
 			toggle()

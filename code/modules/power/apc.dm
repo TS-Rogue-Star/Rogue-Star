@@ -332,6 +332,7 @@
 			terminal = new/obj/machinery/power/terminal/layer3(T)
 		terminal.master = src
 		terminal.set_dir(src.dir)
+	update_cable_icons_on_turf(get_turf(src))
 
 /obj/machinery/power/apc/examine(mob/user)
 	. = ..()
@@ -646,6 +647,7 @@
 						return
 				new /obj/item/stack/cable_coil(loc,10)
 				to_chat(user, "<span class='notice'>You cut the cables and dismantle the power terminal.</span>")
+				disconnect_terminal(terminal)
 				qdel(terminal)
 	else if(istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics == APC_HAS_ELECTRONICS_NONE && !((stat & BROKEN)))
 		user.visible_message("<span class='warning'>[user.name] inserts the power control board into [src].</span>", \
@@ -1294,6 +1296,7 @@
 	if(terminal)
 		terminal.master = null
 		terminal = null
+	update_cable_icons_on_turf(get_turf(src))
 
 /obj/machinery/power/apc/proc/set_broken()
 	// Aesthetically much better!

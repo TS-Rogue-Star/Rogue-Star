@@ -2889,11 +2889,11 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/science/outpost/toxing_gasworks)
 "zO" = (
-/obj/structure/cable,
 /obj/machinery/power/smes{
 	RCon_tag = "Substation - Science Outpost";
 	output_attempt = 0
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/groundbase/science/outpost/substation)
 "zP" = (
@@ -4741,7 +4741,6 @@
 /area/groundbase/science/outpost/toxins_mixing)
 "Qk" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},

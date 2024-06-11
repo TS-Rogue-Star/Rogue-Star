@@ -128,6 +128,7 @@
 			return TRUE
 
 	C.powernet.add_machine(src)
+	update_cable_icons_on_turf(get_turf(src))
 	return TRUE
 
 // remove and disconnect the machine from its current powernet
@@ -135,6 +136,7 @@
 	if(!powernet)
 		return FALSE
 	powernet.remove_machine(src)
+	update_cable_icons_on_turf(get_turf(src))
 	return TRUE
 
 // attach a wire to a power machine - leads from the turf you are standing on
@@ -148,9 +150,15 @@
 		if(get_dist(src, user) > 1)
 			return
 		coil.place_turf(T, user)
-	else
+	else	
 		return ..()
 
+/obj/machinery/power/default_unfasten_wrench(mob/user, obj/item/W, time = 0)
+	. = ..()
+	if(anchored)
+		connect_to_network()
+	else
+		disconnect_from_network()
 
 ///////////////////////////////////////////
 // Powernet handling helpers

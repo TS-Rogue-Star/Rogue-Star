@@ -361,7 +361,7 @@ Class Procs:
 
 // Default behavior for wrenching down machines.  Supports both delay and instant modes.
 /obj/machinery/proc/default_unfasten_wrench(var/mob/user, var/obj/item/W, var/time = 0)
-	if(!W.is_wrench())
+	if(!W.has_tool_quality(TOOL_WRENCH))
 		return FALSE
 	if(panel_open)
 		return FALSE // Close panel first!
@@ -381,14 +381,14 @@ Class Procs:
 	return TRUE
 
 /obj/machinery/proc/default_deconstruction_crowbar(var/mob/user, var/obj/item/C)
-	if(!C.is_crowbar())
+	if(!C.has_tool_quality(TOOL_CROWBAR))
 		return 0
 	if(!panel_open)
 		return 0
 	. = dismantle()
 
 /obj/machinery/proc/default_deconstruction_screwdriver(var/mob/user, var/obj/item/S)
-	if(!S.is_screwdriver())
+	if(!S.has_tool_quality(TOOL_SCREWDRIVER))
 		return 0
 	playsound(src, S.usesound, 50, 1)
 	panel_open = !panel_open
@@ -397,7 +397,7 @@ Class Procs:
 	return 1
 
 /obj/machinery/proc/computer_deconstruction_screwdriver(var/mob/user, var/obj/item/S)
-	if(!S.is_screwdriver())
+	if(!S.has_tool_quality(TOOL_SCREWDRIVER))
 		return 0
 	if(!circuit)
 		return 0
@@ -412,7 +412,7 @@ Class Procs:
 		. = dismantle()
 
 /obj/machinery/proc/alarm_deconstruction_screwdriver(var/mob/user, var/obj/item/S)
-	if(!S.is_screwdriver())
+	if(!S.has_tool_quality(TOOL_SCREWDRIVER))
 		return 0
 	playsound(src, S.usesound, 50, 1)
 	panel_open = !panel_open
@@ -421,7 +421,7 @@ Class Procs:
 	return 1
 
 /obj/machinery/proc/alarm_deconstruction_wirecutters(var/mob/user, var/obj/item/W)
-	if(!W.is_wirecutter())
+	if(!W.has_tool_quality(TOOL_WIRECUTTER))
 		return 0
 	if(!panel_open)
 		return 0

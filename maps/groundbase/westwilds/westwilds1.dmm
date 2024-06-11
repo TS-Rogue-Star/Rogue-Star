@@ -2085,11 +2085,11 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/toxins_hallway)
 "uB" = (
-/obj/structure/cable,
 /obj/machinery/power/smes{
 	RCon_tag = "Substation - Science Outpost";
 	output_attempt = 0
 	},
+/obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/groundbase/science/outpost/substation)
 "uC" = (

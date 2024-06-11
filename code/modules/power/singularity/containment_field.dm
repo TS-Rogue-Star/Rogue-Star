@@ -16,7 +16,7 @@
 	var/obj/machinery/field_generator/FG1 = null
 	var/obj/machinery/field_generator/FG2 = null
 	var/list/shockdirs
-	var/hasShocked = 0 //Used to add a delay between shocks. In some cases this used to crash servers by spawning hundreds of sparks every second.
+	var/hasShocked = FALSE //Used to add a delay between shocks. In some cases this used to crash servers by spawning hundreds of sparks every second.
 	plane = PLANE_LIGHTING_ABOVE
 
 /obj/machinery/containment_field/Initialize()
@@ -39,14 +39,14 @@
 
 /obj/machinery/containment_field/attack_hand(mob/user as mob)
 	if(get_dist(src, user) > 1)
-		return 0
+		return FALSE
 	else
 		shock(user)
-		return 1
+		return TRUE
 
 
 /obj/machinery/containment_field/ex_act(severity)
-	return 0
+	return FALSE
 
 /obj/machinery/containment_field/Crossed(mob/living/L)
 	if(!istype(L) || L.incorporeal_move)
@@ -55,22 +55,22 @@
 
 /obj/machinery/containment_field/HasProximity(turf/T, atom/movable/AM, old_loc)
 	if(!istype(AM, /mob/living) || AM:incorporeal_move)
-		return 0
+		return FALSE
 	if(!(get_dir(src,AM) in shockdirs))
-		return 0
+		return FALSE
 	if(issilicon(AM) ? prob(40) : prob(50))
 		shock(AM)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/containment_field/shock(mob/living/user as mob)
 	if(hasShocked)
-		return 0
+		return FALSE
 	if(!FG1 || !FG2)
 		qdel(src)
-		return 0
+		return FALSE
 	if(isliving(user))
-		hasShocked = 1
+		hasShocked = TRUE
 		var/shock_damage = min(rand(30,40),rand(30,40))
 		user.electrocute_act(shock_damage, src, 1, BP_TORSO)
 
@@ -79,11 +79,11 @@
 
 		sleep(20)
 
-		hasShocked = 0
+		hasShocked = FALSE
 
 /obj/machinery/containment_field/proc/set_master(var/master1,var/master2)
 	if(!master1 || !master2)
-		return 0
+		return FALSE
 	FG1 = master1
 	FG2 = master2
-	return 1
+	return TRUE

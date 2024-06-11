@@ -44,7 +44,7 @@ GLOBAL_LIST_EMPTY(all_turbines)
 	return ..()
 
 /obj/machinery/power/generator/should_have_node()
-	return TRUE
+	return anchored
 
 //generators connect in dir and reverse_dir(dir) directions
 //mnemonic to determine circulator/generator directions: the cirulators orbit clockwise around the generator
@@ -174,7 +174,7 @@ GLOBAL_LIST_EMPTY(all_turbines)
 	attack_hand(user)
 
 /obj/machinery/power/generator/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(W.is_wrench())
+	if(W.has_tool_quality(TOOL_WRENCH))
 		playsound(src, W.usesound, 75, 1)
 		anchored = !anchored
 		user.visible_message("[user.name] [anchored ? "secures" : "unsecures"] the bolts holding [src.name] to the floor.", \

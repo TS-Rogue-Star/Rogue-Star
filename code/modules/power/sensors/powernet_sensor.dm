@@ -48,6 +48,12 @@
 	history.Cut()
 	history = null
 
+/obj/machinery/power/sensor/attackby(obj/item/W, mob/user, params)
+	. = ..()
+	if(default_unfasten_wrench(user, W, 40))
+		update_cable_icons_on_turf(get_turf(src))
+		return
+
 // Proc: check_grid_warning()
 // Parameters: None
 // Description: Checks connected powernet for warnings. If warning is found returns 1

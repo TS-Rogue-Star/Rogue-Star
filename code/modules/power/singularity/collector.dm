@@ -13,8 +13,8 @@ var/global/list/rad_collectors = list()
 	var/obj/item/weapon/tank/phoron/P = null
 	var/last_power = 0
 	var/last_power_new = 0
-	var/active = 0
-	var/locked = 0
+	var/active = FALSE
+	var/locked = FALSE
 	var/drainratio = 1
 	can_change_cable_layer = TRUE
 
@@ -27,7 +27,7 @@ var/global/list/rad_collectors = list()
 	return ..()
 
 /obj/machinery/power/rad_collector/should_have_node()
-	return TRUE
+	return anchored
 
 /obj/machinery/power/rad_collector/process()
 	//so that we don't zero out the meter if the SM is processed first.
@@ -51,10 +51,10 @@ var/global/list/rad_collectors = list()
 
 /obj/machinery/power/rad_collector/attack_hand(mob/user as mob)
 	if(anchored)
-		if(!src.locked)
+		if(!locked)
 			toggle_power()
-			user.visible_message("[user.name] turns the [src.name] [active? "on":"off"].", \
-			"You turn the [src.name] [active? "on":"off"].")
+			user.visible_message("[user.name] turns the [name] [active? "on":"off"].", \
+			"You turn the [name] [active? "on":"off"].")
 			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [P?"Fuel: [round(P.air_contents.gas["phoron"]/0.29)]%":"<font color='red'>It is empty</font>"].","singulo")
 			return
 		else
@@ -64,46 +64,46 @@ var/global/list/rad_collectors = list()
 
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/tank/phoron))
-		if(!src.anchored)
+		if(!anchored)
 			to_chat(user, "<font color='red'>The [src] needs to be secured to the floor first.</font>")
-			return 1
-		if(src.P)
+			return TRUE
+		if(P)
 			to_chat(user, "<font color='red'>There's already a phoron tank loaded.</font>")
-			return 1
+			return TRUE
 		user.drop_item()
-		src.P = W
+		P = W
 		W.loc = src
 		update_icons()
-		return 1
-	else if(W.is_crowbar())
-		if(P && !src.locked)
+		return TRUE
+	else if(W.has_tool_quality(TOOL_CROWBAR))
+		if(P && !locked)
 			eject()
-			return 1
-	else if(W.is_wrench())
+			return TRUE
+	else if(W.has_tool_quality(TOOL_WRENCH))
 		if(P)
 			to_chat(user, "<font color='blue'>Remove the phoron tank first.</font>")
-			return 1
+			return TRUE
 		playsound(src, W.usesound, 75, 1)
-		src.anchored = !src.anchored
-		user.visible_message("[user.name] [anchored? "secures":"unsecures"] the [src.name].", \
+		anchored = !anchored
+		user.visible_message("[user.name] [anchored? "secures":"unsecures"] the [name].", \
 			"You [anchored? "secure":"undo"] the external bolts.", \
 			"You hear a ratchet.")
 		if(anchored)
 			connect_to_network()
 		else
 			disconnect_from_network()
-		return 1
+		return TRUE
 	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if (src.allowed(user))
+		if (allowed(user))
 			if(active)
-				src.locked = !src.locked
-				to_chat(user, "The controls are now [src.locked ? "locked." : "unlocked."]")
+				locked = !locked
+				to_chat(user, "The controls are now [locked ? "locked." : "unlocked."]")
 			else
-				src.locked = 0 //just in case it somehow gets locked
+				locked = FALSE //just in case it somehow gets locked
 				to_chat(user, "<font color='red'>The controls can only be locked when the [src] is active.</font>")
 		else
 			to_chat(user, "<font color='red'>Access denied!</font>")
-		return 1
+		return TRUE
 	return ..()
 
 /obj/machinery/power/rad_collector/examine(mob/user)
@@ -120,12 +120,12 @@ var/global/list/rad_collectors = list()
 
 /obj/machinery/power/rad_collector/proc/eject()
 	locked = 0
-	var/obj/item/weapon/tank/phoron/Z = src.P
+	var/obj/item/weapon/tank/phoron/Z = P
 	if (!Z)
 		return
 	Z.loc = get_turf(src)
 	Z.layer = initial(Z.layer)
-	src.P = null
+	P = null
 	if(active)
 		toggle_power()
 	else

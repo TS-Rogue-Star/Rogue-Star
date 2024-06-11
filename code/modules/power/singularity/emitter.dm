@@ -74,7 +74,7 @@
 	if(state == EMITTER_STATE_WELDED)
 		if(!anchored)
 			anchored = TRUE
-		connect_to_network()
+			connect_to_network()
 
 /obj/machinery/power/emitter/Destroy()
 	message_admins("Emitter deleted at [COORD(src)] - [ADMIN_JMP(loc)]",0,1)
@@ -87,6 +87,7 @@
 		icon_state = "emitter_+a"
 	else
 		icon_state = "emitter"
+	update_cable_icons_on_turf(get_turf(src))
 
 /obj/machinery/power/emitter/attack_hand(mob/user as mob)
 	add_fingerprint(user)

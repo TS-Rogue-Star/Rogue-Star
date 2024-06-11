@@ -87,6 +87,11 @@ GLOBAL_LIST(hub_radial_layer_list)
 	Connect_cable(TRUE)
 	Reload()
 
+/obj/structure/cable/multilayer/deconstruct()
+	var/obj/item/stack/cable_coil/cable = new(drop_location(), CABLE_CONSTRUCTIONS_COSTS)
+	cable.color = color
+	qdel(src)
+
 /obj/structure/cable/multilayer/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE

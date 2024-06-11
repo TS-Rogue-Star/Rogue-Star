@@ -39,7 +39,7 @@
 	default_apply_parts()
 
 /obj/machinery/power/tesla_coil/should_have_node()
-	return TRUE
+	return anchored
 
 /obj/machinery/power/tesla_coil/Destroy()
 	QDEL_NULL(wires)

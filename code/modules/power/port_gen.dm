@@ -57,6 +57,7 @@
 		icon_state = "[initial(icon_state)]on"
 	else
 		icon_state = initial(icon_state)
+	update_cable_icons_on_turf(get_turf(src))
 
 /obj/machinery/power/powered()
 	return 1 //doesn't require an external power source
@@ -283,7 +284,7 @@
 		updateUsrDialog()
 		return
 	else if(!active)
-		if(O.is_wrench())
+		if(O.has_tool_quality(TOOL_WRENCH))
 			if(!anchored)
 				connect_to_network()
 				to_chat(user, "<span class='notice'>You secure the generator to the floor.</span>")
@@ -292,6 +293,7 @@
 				to_chat(user, "<span class='notice'>You unsecure the generator from the floor.</span>")
 			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 			anchored = !anchored
+			update_cable_icons_on_turf(get_turf(src))
 			return
 		else if(default_deconstruction_screwdriver(user, O))
 			return

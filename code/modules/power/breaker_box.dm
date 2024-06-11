@@ -97,7 +97,7 @@
 	busy = FALSE
 
 /obj/machinery/power/breakerbox/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-	if(istype(W, /obj/item/device/multitool))
+	if(W.has_tool_quality(TOOL_MULTITOOL))
 		var/newtag = tgui_input_text(user, "Enter new RCON tag. Use \"NO_TAG\" to disable RCON or leave empty to cancel.", "SMES RCON system", "", MAX_NAME_LEN)
 		newtag = sanitize(newtag,MAX_NAME_LEN)
 		if(newtag)
@@ -105,6 +105,9 @@
 			to_chat(user, "<span class='notice'>You changed the RCON tag to: [newtag]</span>")
 	if(on)
 		to_chat(user, "<span class='notice'>Disable the breaker before performing maintenance.</span>")
+		return
+	if(default_unfasten_wrench(user, W, 40))
+		update_cable_icons_on_turf(get_turf(src))
 		return
 	if(default_deconstruction_screwdriver(user, W))
 		return

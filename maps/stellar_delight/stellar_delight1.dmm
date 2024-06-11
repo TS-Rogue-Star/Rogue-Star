@@ -3861,7 +3861,6 @@
 /obj/machinery/door/airlock{
 	name = "Unisex Showers"
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable/layer1,
@@ -3898,7 +3897,6 @@
 /area/maintenance/stellardelight/deck1/starboardcent)
 "iz" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -5696,7 +5694,6 @@
 /area/stellardelight/deck1/starboard)
 "mR" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -5873,7 +5870,6 @@
 /area/janitor)
 "nq" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/airlock/angled_bay/standard/glass{
@@ -7887,7 +7883,6 @@
 /obj/machinery/power/apc/angled{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
@@ -8882,7 +8877,6 @@
 	name = "Virology Emergency Quarantine Blast Doors"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/firedoor/glass,
@@ -11016,7 +11010,6 @@
 /area/stellardelight/deck1/explobriefing)
 "Ao" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/standard/glass{
 	dir = 4;
 	door_color = "#8c1d11";
@@ -14843,7 +14836,6 @@
 /area/chapel/main)
 "Kg" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/airlock/angled_bay/standard/color{
@@ -16094,7 +16086,6 @@
 /area/janitor)
 "Ns" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
@@ -17514,7 +17505,6 @@
 /turf/simulated/floor/tiled/eris/white/cargo,
 /area/medical/virology)
 "Rc" = (
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -17942,7 +17932,6 @@
 /area/maintenance/stellardelight/deck1/exploration)
 "RT" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
@@ -20790,7 +20779,6 @@
 /area/stellardelight/deck1/dorms/dorm7)
 "YG" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},

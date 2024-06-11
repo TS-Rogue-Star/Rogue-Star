@@ -4,7 +4,9 @@
 	desc = "A huge bundle of double insulated cabling which seems to run up into the ceiling. There is no way to seperate power channels!"
 	icon = 'icons/obj/cables/structures.dmi'
 	icon_state = "cablerelay-off"
-	layer = WIRES_LAYER
+	level = 1
+	plane = PLATING_PLANE
+	layer = WIRE_MULTIZ_LAYER
 	cable_layer = CABLE_LAYER_1|CABLE_LAYER_2|CABLE_LAYER_3|CABLE_LAYER_4
 	var/obj/machinery/power/deck_relay/connectionup
 	var/obj/machinery/power/deck_relay/connectiondown
@@ -23,6 +25,15 @@
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(find_and_connect)), 30)
 	addtimer(CALLBACK(src, PROC_REF(refresh)), 50) //Wait a bit so we can find the one below, then get powering
+	if(level==1)
+		var/turf/T = loc
+		hide(!T.is_plating())
+
+/obj/machinery/deck_relay/terminal/hide(i)
+	if(i)
+		invisibility = INVISIBILITY_MAXIMUM
+	else
+		invisibility = 0
 
 /*	//Until we have clean power channels, we only have the one connection
 //don't override our layering for this, since we omni-connect.
@@ -249,8 +260,19 @@
 	addtimer(CALLBACK(src, PROC_REF(find_and_connect)), 30, TIMER_UNIQUE)
 	addtimer(CALLBACK(src, PROC_REF(refresh)), 50, TIMER_UNIQUE)
 
+/obj/machinery/power/deck_relay/proc/deconstruct()
+	new /obj/item/stack/cable_coil/random(drop_location(), CABLE_CONSTRUCTIONS_COSTS)
+	qdel(src)
+
 /obj/machinery/power/deck_relay/attackby(obj/item/O, mob/user)
 	if(default_unfasten_wrench(user, O, 40))
+		update_cable_icons_on_turf(get_turf(src))
 		process()	//this'll clear the info
 		return FALSE
+	if(O.has_tool_quality(TOOL_WIRECUTTER))
+		user.visible_message("<span class='warning'>[user] is cutting up \the [src]!</span>", "You start to cut \the [src].")
+		playsound(src, O.usesound, 50, 1)
+		if(do_after(user, 20 * O.toolspeed))
+			user.visible_message("<span class='warning'>[user] removes \the [src].</span>", "You finish cutting \the [src] out.")
+			deconstruct()
 	. = ..()

@@ -875,7 +875,6 @@
 /area/quartermaster/qm)
 "bR" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/hatch{
 	door_color = "#e6ab22";
 	name = "maintenance access";
@@ -5432,13 +5431,10 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/engineering/atmos/storage)
 "mC" = (
-/obj/machinery/power/emitter{
-	anchored = 1;
-	dir = 1;
-	icon_state = "emitter1";
-	state = 1
-	},
 /obj/structure/cable/layer1,
+/obj/machinery/power/emitter{
+	dir = 1
+	},
 /turf/simulated/floor/airless,
 /area/engineering/engine_room)
 "mD" = (
@@ -6390,7 +6386,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/cyan{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/hatch{
 	dir = 4;
 	door_color = "#ffffff";
@@ -10570,15 +10565,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/atmos/monitoring)
-"Ah" = (
-/obj/structure/cable,
-/obj/machinery/door/firedoor/glass,
-/obj/machinery/door/airlock/angled_bay/external/glass{
-	dir = 4
-	},
-/obj/effect/map_helper/airlock/door/simple,
-/turf/simulated/floor/tiled/steel_ridged,
-/area/stellardelight/deck2/starboardescape)
 "Ai" = (
 /obj/machinery/atmospherics/pipe/simple/visible/black{
 	dir = 9
@@ -14418,18 +14404,6 @@
 "JY" = (
 /turf/simulated/wall/bay/r_wall/steel,
 /area/storage/art)
-"JZ" = (
-/obj/machinery/door/firedoor/glass,
-/obj/structure/window/bay/reinforced,
-/obj/structure/cable,
-/obj/machinery/door/blast/angled/open{
-	dir = 2;
-	id = "qmwindows";
-	name = "Privacy Shutters"
-	},
-/obj/structure/low_wall/bay/reinforced/brown,
-/turf/simulated/floor,
-/area/quartermaster/qm)
 "Ka" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5,
 /turf/simulated/floor/tiled,
@@ -14765,7 +14739,6 @@
 /area/quartermaster/storage)
 "KS" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/standard/glass{
 	dir = 4;
 	door_color = "#ffffff";
@@ -14906,7 +14879,6 @@
 "Lo" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/window/bay/reinforced,
-/obj/structure/cable,
 /obj/structure/low_wall/bay/reinforced/orange,
 /obj/structure/cable/layer1,
 /turf/simulated/floor,
@@ -16199,7 +16171,6 @@
 "Ot" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
-/obj/structure/cable/layer3,
 /obj/structure/cable,
 /obj/structure/cable/layer1,
 /turf/simulated/floor,
@@ -17449,12 +17420,8 @@
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/crew_quarters/bar)
 "Rs" = (
-/obj/machinery/power/emitter{
-	anchored = 1;
-	icon_state = "emitter1";
-	state = 1
-	},
 /obj/structure/cable/layer1,
+/obj/machinery/power/emitter,
 /turf/simulated/floor/airless,
 /area/engineering/engine_room)
 "Ru" = (
@@ -17968,14 +17935,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/atmos/monitoring)
-"ST" = (
-/obj/structure/cable,
-/obj/machinery/door/firedoor/glass,
-/obj/machinery/door/airlock/angled_bay/external/glass{
-	dir = 4
-	},
-/turf/simulated/floor/tiled/steel_ridged,
-/area/stellardelight/deck2/starboard)
 "SU" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -20020,7 +19979,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/structure/cable/layer1,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck2/starboardfore)
 "Yc" = (
@@ -20162,18 +20120,6 @@
 	},
 /turf/simulated/floor/tiled/eris/white/bluecorner,
 /area/medical/chemistry)
-"Yu" = (
-/obj/structure/table/steel_reinforced,
-/obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
-/obj/machinery/door/blast/angled_shutter{
-	dir = 4;
-	id = "kitchen";
-	layer = 3.3;
-	name = "Kitchen Shutters"
-	},
-/turf/simulated/floor/tiled/eris/cafe,
-/area/crew_quarters/kitchen)
 "Yv" = (
 /obj/machinery/atmospherics/pipe/simple/visible/black{
 	dir = 6
@@ -29558,7 +29504,7 @@ iF
 Pn
 Pn
 Pn
-Yu
+Pn
 nU
 Pn
 HJ
@@ -31753,7 +31699,7 @@ hn
 Oz
 KA
 XQ
-JZ
+cX
 Hp
 Sq
 XX
@@ -32853,7 +32799,7 @@ Tg
 Ot
 Hd
 Hd
-ST
+Po
 Po
 Hd
 Hd
@@ -33137,7 +33083,7 @@ Ne
 DK
 Bu
 Ts
-Ah
+rD
 rD
 Ts
 XT

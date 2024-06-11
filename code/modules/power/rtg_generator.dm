@@ -102,6 +102,7 @@
 		icon_state = "[initial(icon_state)]-open"
 	else
 		icon_state = initial(icon_state)
+	update_cable_icons_on_turf(get_turf(src))
 
 /obj/machinery/power/rtg/advanced
 	desc = "An advanced RTG capable of moderating isotope decay, increasing power output but reducing lifetime. It uses plasma-fueled radiation collectors to increase output even further."
@@ -409,5 +410,3 @@
 	circuit = /obj/item/weapon/circuitboard/machine/reg_c
 	default_power_gen = 500 KILOWATTS //Half power
 	nutrition_drain = 0.5	//for half cost - EQUIVALENT EXCHANGE >:O
-
-

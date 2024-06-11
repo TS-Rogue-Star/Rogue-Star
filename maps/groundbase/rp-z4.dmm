@@ -1089,7 +1089,7 @@
 	frequency = 1443;
 	level = 3;
 	name = "Distribution and Waste Monitor";
-	sensors = list("dist_main_meter" = "Surface - Distribution Loop", "scrub_main_meter" = "Surface - Scrubbers Loop", "mair_main_meter" = "Surface - Mixed Air Tank", "n2_tank" = "Nitrogen Reserves", "o2_tank" = "Oxygen Reserves","n2o_tank" = "Nitrous Oxide Reserves","co2_tank" = "Carbon Dioxide Reserves","phoron_tank" = "Phoron Fuel Reserves","dist_aux_meter" = "Power Sat - Distribution Loop", "scrub_aux_meter" = "Power Sat - Scrubbers Loop", "mair_aux_meter" = "Station - Mixed Air Tank", "sat_air_mix" = "Power Sat - Mixed Air Reserves")
+	sensors = list("dist_main_meter" = "Surface - Distribution Loop", "scrub_main_meter" = "Surface - Scrubbers Loop", "mair_main_meter" = "Surface - Mixed Air Tank", "n2_tank" = "Nitrogen Reserves", "o2_tank" = "Oxygen Reserves","n2o_tank" = "Nitrous Oxide Reserves","co2_tank" = "Carbon Dioxide Reserves","phoron_tank" = "Phoron Fuel Reserves","dist_aux_meter" = "Power Sat - Distribution Loop", "scrub_aux_meter" = "Power Sat - Scrubbers Loop", "sat_air_mix" = "Power Sat - Mixed Air Reserves")
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/satellite/lobby)
@@ -1569,7 +1569,7 @@
 	},
 /obj/machinery/meter{
 	frequency = 1443;
-	id = "mair_aux_meter";
+	id = "sat_air_mix";
 	name = "Air Reserves"
 	},
 /turf/simulated/floor/plating,

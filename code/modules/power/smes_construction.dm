@@ -52,6 +52,14 @@
 	name = "Engine Core SMES"
 	charge = 3 MEGAWATTS
 	RCon_tag = "Engine - Core"
+	input_level = SMESMAXCHARGELEVEL
+	output_level = SMESMAXOUTPUT
+
+/obj/machinery/power/smes/preset/engine/Initialize()
+	. = ..()
+	component_parts += new /obj/item/weapon/smes_coil/super_io(src)
+	component_parts += new /obj/item/weapon/smes_coil/super_capacity(src)
+	recalc_coils()
 
 /obj/machinery/power/smes/preset/mains
 	name = "Main Power SMES"
@@ -66,8 +74,7 @@
 /obj/machinery/power/smes/preset/mains/Initialize()
 	. = ..()
 	component_parts += new /obj/item/weapon/smes_coil/super_io(src)
-	component_parts += new /obj/item/weapon/smes_coil(src)
-	component_parts += new /obj/item/weapon/smes_coil(src)
+	component_parts += new /obj/item/weapon/smes_coil/super_capacity(src)
 	recalc_coils()
 
 /obj/machinery/power/smes/preset/ai_tcomm

@@ -340,31 +340,32 @@
 // We've done our sanity checks in the attackby, and nothing else should call it.
 /obj/machinery/power/smes/proc/make_terminal(mob/user, turf/turf, terminal_cable_layer = cable_layer)
 	to_chat(user, "<span class='filter_notice'><span class='notice'>You start adding cable to the [src] on [LOWER_TEXT(GLOB.cable_layer_to_name["[terminal_cable_layer]"])].</span></span>")
-	if(terminal_cable_layer)
-		if(terminal_cable_layer == CABLE_LAYER_1)
+	switch(terminal_cable_layer)
+		if(CABLE_LAYER_1)
 			terminal1 = new/obj/machinery/power/terminal/layer1(turf)
 			terminal1.master = src
 			terminal1.set_dir(get_dir(get_turf(terminal1.loc),src))
 			terminalconnections += terminal1
-		else if(terminal_cable_layer == CABLE_LAYER_2)
+		if(CABLE_LAYER_2)
 			terminal2 = new/obj/machinery/power/terminal(turf)
 			terminal2.master = src
 			terminal2.set_dir(get_dir(get_turf(terminal2.loc),src))
 			terminalconnections += terminal2
-		else if(terminal_cable_layer == CABLE_LAYER_3 || terminal_cable_layer == CABLE_LAYER_4 )
+		if(CABLE_LAYER_3, CABLE_LAYER_4 )
 			terminal3 = new/obj/machinery/power/terminal/layer3(turf)
 			terminal3.master = src
 			terminal3.set_dir(get_dir(get_turf(terminal3.loc),src))
 			terminalconnections += terminal3
+	if(check_terminals())
 		if(stat && BROKEN)
 			stat &= ~BROKEN
 		visible_message(\
-			"[user.name] has built a power terminal.",\
-			"<span class='notice'>You build the power terminal.</span>")
-		return TRUE
-	else if(!terminalconnections.len) //no more terminals? Broken machine, clearly.
+		"[user.name] has built a power terminal.",\
+		"<span class='notice'>You build the power terminal.</span>")
+	else //no more terminals? Broken machine, clearly.
 		stat |= BROKEN
 		return FALSE
+	return TRUE
 
 /obj/machinery/power/smes/proc/get_terminal_slot(terminalslot)
 	if(terminalslot == CABLE_LAYER_1)
@@ -379,8 +380,9 @@
 	if(terminalplace)
 		terminalconnections -= terminalplace
 		terminalplace = null
-	if(!terminalconnections.len) //no more terminals? Broken machine, clearly.
+	if(!check_terminals()) //no more terminals? Broken machine, clearly.
 		stat |= BROKEN
+	update_cable_icons_on_turf(get_turf(terminalplace))
 
 /obj/machinery/power/smes/draw_power(var/amount)
 	var/drained = 0

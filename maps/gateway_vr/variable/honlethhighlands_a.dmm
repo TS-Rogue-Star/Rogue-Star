@@ -535,14 +535,6 @@
 	temperature = 253.15
 	},
 /area/gateway/honlethhighlands/caves)
-"fr" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable/heavyduty,
-/turf/simulated/floor/tiled/asteroid_steel/outdoors{
-	temperature = 253.15
-	},
-/area/gateway/honlethhighlands/town)
 "fN" = (
 /obj/machinery/gateway/brass{
 	dir = 10;
@@ -551,8 +543,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/gateway/honlethhighlands/gate)
 "gb" = (
-/obj/structure/cable,
-/obj/structure/cable/heavyduty,
+/obj/structure/cable/multilayer/connected,
 /turf/simulated/floor/tiled,
 /area/gateway/honlethhighlands/town/engineering)
 "gm" = (
@@ -811,8 +802,6 @@
 /area/gateway/honlethhighlands/town/kitchen)
 "mY" = (
 /obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
 /obj/random/mob/semirandom_mob_spawner/humanoid/retaliate,
 /turf/simulated/floor/tiled/asteroid_steel/outdoors{
 	temperature = 253.15
@@ -1060,7 +1049,6 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/cable/multilayer/connected,
 /turf/simulated/floor/tiled,
 /area/gateway/honlethhighlands/town/engineering)
 "qM" = (
@@ -1685,12 +1673,6 @@
 /obj/random/maintenance/security,
 /turf/simulated/floor/tiled/techfloor,
 /area/gateway/honlethhighlands/gate)
-"CM" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/simulated/floor/tiled,
-/area/gateway/honlethhighlands/town/engineering)
 "CS" = (
 /obj/machinery/gateway/brass{
 	dir = 4;
@@ -1892,14 +1874,6 @@
 	temperature = 253.15
 	},
 /area/gateway/honlethhighlands/caves)
-"GY" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/simulated/floor/tiled/asteroid_steel/outdoors{
-	temperature = 253.15
-	},
-/area/gateway/honlethhighlands/town)
 "Hh" = (
 /obj/structure/table/steel_reinforced,
 /obj/random/maintenance/research,
@@ -2029,7 +2003,6 @@
 /area/gateway/honlethhighlands/town)
 "Kt" = (
 /obj/structure/cable/heavyduty,
-/obj/structure/cable,
 /turf/simulated/floor/plating{
 	edge_blending_priority = 1;
 	outdoors = 1;
@@ -2389,13 +2362,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/gateway/honlethhighlands/town/bar)
-"US" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/simulated/floor/tiled/asteroid_steel/outdoors{
-	temperature = 253.15
-	},
-/area/gateway/honlethhighlands/town)
 "UZ" = (
 /obj/effect/floor_decal/techfloor{
 	dir = 4
@@ -17509,7 +17475,7 @@ uI
 tX
 Pb
 XS
-GY
+XS
 XS
 XS
 Lx
@@ -17659,12 +17625,12 @@ Lx
 Lx
 Lx
 Lx
-GY
 XS
 XS
 XS
 XS
-US
+XS
+XS
 aI
 Dk
 bY
@@ -17937,7 +17903,7 @@ aI
 aI
 aI
 XS
-GY
+XS
 XS
 XS
 XS
@@ -20493,11 +20459,11 @@ aI
 aI
 Kk
 Kt
-fr
+uf
 uf
 NS
 gb
-CM
+gm
 QA
 uQ
 aO

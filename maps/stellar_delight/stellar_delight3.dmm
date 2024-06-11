@@ -865,7 +865,6 @@
 /area/maintenance/stellardelight/deck3/foreportrooma)
 "da" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
 /obj/machinery/door/airlock/angled_bay/hatch{
 	door_color = "#323d80";
 	name = "maintenance access";
@@ -4194,16 +4193,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/open,
 /area/stellardelight/deck2/port)
-"qQ" = (
-/obj/machinery/porta_turret/stationary,
-/obj/structure/cable,
-/turf/simulated/floor/bluegrid{
-	name = "Mainframe Base";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
-	},
-/area/tcommsat/chamber)
 "qS" = (
 /obj/machinery/light/small,
 /turf/simulated/floor,
@@ -7377,7 +7366,6 @@
 /area/crew_quarters/heads/hor)
 "DJ" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
@@ -7533,7 +7521,6 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/stellardelight/deck3/cryo)
 "Ei" = (
-/obj/structure/cable,
 /obj/random/trash_pile,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/portcent)
@@ -8427,7 +8414,6 @@
 /turf/simulated/floor/glass/reinforced,
 /area/stellardelight/deck3/aft)
 "In" = (
-/obj/structure/cable,
 /obj/random/trash_pile,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/starboardcent)
@@ -10415,7 +10401,6 @@
 	name = "Head of Personnel's Desk";
 	req_access = list(57)
 	},
-/obj/structure/cable,
 /obj/machinery/door/blast/shutters{
 	dir = 8;
 	id = "hop_office_desk";
@@ -11270,7 +11255,6 @@
 /area/maintenance/stellardelight/deck3/starboardcent)
 "Tv" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
@@ -12369,7 +12353,6 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/tcommsat/computer)
 "XY" = (
@@ -20059,8 +20042,8 @@ Ns
 Ns
 Ns
 KW
-OX
 Sz
+OX
 Yz
 Yz
 NQ
@@ -21782,7 +21765,7 @@ Ze
 eK
 ib
 lo
-qQ
+qn
 Ze
 Ze
 sK
@@ -25314,7 +25297,7 @@ Vg
 RE
 RE
 Xj
-DE
+xH
 me
 od
 wM
@@ -25455,8 +25438,8 @@ DQ
 DQ
 DQ
 ez
-xH
 DE
+xH
 me
 me
 xu

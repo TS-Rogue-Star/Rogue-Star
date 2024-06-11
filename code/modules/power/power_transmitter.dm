@@ -128,7 +128,7 @@
 		else if(active && connection_buddy && connection_buddy.active)
 			icon_state = "transmitter_connected"
 
-	if(active && !connection_buddy || QDELETED(connection_buddy))
+	if(active && !connection_buddy || QDELETED(connection_buddy) || !connection_buddy.active)
 		icon_state = "transmitter_error"
 		find_buddy()
 
@@ -185,6 +185,7 @@
 /obj/machinery/power/power_transmitter/attackby(obj/item/W, mob/user)
 	. = ..()
 	if(default_unfasten_wrench(user, W, 40))
+		update_cable_icons_on_turf(get_turf(src))
 		return FALSE
 
 	if(W.has_tool_quality(TOOL_MULTITOOL))

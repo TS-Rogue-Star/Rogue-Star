@@ -155,7 +155,7 @@
 	return
 
 /obj/proc/hides_under_flooring()
-	return 0
+	return FALSE
 
 /obj/proc/hear_talk(mob/M, list/message_pieces, verb)
 	if(talking_atom)

@@ -56,7 +56,7 @@
 				results += "Powernet with no nodes! Example cable at [COORD(C)], [get_area(C.loc)] [ADMIN_COORDJMP(C)]"
 
 		if (!PN.cables || (PN.cables.len < 5))
-			if(PN.cables && (PN.cables.len > 1))
+			if(PN.cables && (PN.cables.len >= 1))
 				var/obj/structure/cable/C = PN.cables[1]
 				results += "Powernet with fewer than 5 cables! Example cable at [COORD(C)], [get_area(C.loc)][ADMIN_COORDJMP(C)]"
 

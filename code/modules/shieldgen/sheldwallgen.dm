@@ -156,7 +156,7 @@
 
 
 /obj/machinery/shieldwallgen/attackby(obj/item/W, mob/user)
-	if(W.is_wrench())
+	if(W.has_tool_quality(TOOL_WRENCH))
 		if(active)
 			to_chat(user, "Turn off the field generator first.")
 			return
@@ -166,6 +166,7 @@
 			playsound(src, W.usesound, 75, 1)
 			to_chat(user, "You secure the external reinforcing bolts to the floor.")
 			src.anchored = TRUE
+			update_cable_icons_on_turf(get_turf(src))
 			return
 
 		else if(state == 1)
@@ -173,6 +174,7 @@
 			playsound(src, W.usesound, 75, 1)
 			to_chat(user, "You undo the external reinforcing bolts.")
 			src.anchored = FALSE
+			update_cable_icons_on_turf(get_turf(src))
 			return
 
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))

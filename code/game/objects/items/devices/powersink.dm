@@ -46,6 +46,7 @@
 					mode = CLAMPED_OFF
 					src.visible_message("<span class='notice'>[user] attaches [src] to the cable!</span>")
 					playsound(src, I.usesound, 50, 1)
+					update_cable_icons_on_turf(get_turf(src))
 					return
 			else
 				to_chat(user, "Device must be placed over an exposed cable to attach to it.")
@@ -60,7 +61,7 @@
 			set_light(0)
 			playsound(src, I.usesound, 50, 1)
 			icon_state = "powersink0"
-
+			update_cable_icons_on_turf(get_turf(src))
 			return
 	else
 		..()

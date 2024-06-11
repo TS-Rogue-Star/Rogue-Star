@@ -69,7 +69,6 @@
 /obj/machinery/power/apc{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
 	},
@@ -1755,7 +1754,9 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/simulated/open,
+/obj/machinery/power/deck_relay,
+/obj/structure/cable/layer1,
+/turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/shuttlepad)
 "fR" = (
 /obj/machinery/firealarm{
@@ -4543,7 +4544,6 @@
 /obj/effect/floor_decal/milspec/color/red/half{
 	dir = 10
 	},
-/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hall2)
 "pT" = (
@@ -4668,7 +4668,6 @@
 /obj/machinery/door/airlock/medical{
 	name = "Virology"
 	},
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -6385,7 +6384,6 @@
 	dir = 8
 	},
 /obj/item/weapon/bananapeel,
-/obj/structure/cable,
 /obj/structure/cable/layer1,
 /turf/simulated/floor/bmarble,
 /area/groundbase/civilian/clown)
@@ -6423,7 +6421,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hall2)
 "vQ" = (
@@ -9236,8 +9233,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
-/obj/machinery/power/deck_relay,
-/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/shuttlepad)
 "FK" = (
@@ -9488,7 +9483,7 @@
 	frequency = 1443;
 	level = 3;
 	name = "Distribution and Waste Monitor";
-	sensors = list("dist_main_meter" = "Surface - Distribution Loop", "scrub_main_meter" = "Surface - Scrubbers Loop", "mair_main_meter" = "Surface - Mixed Air Tank", "n2_tank" = "Nitrogen Reserves", "o2_tank" = "Oxygen Reserves","n2o_tank" = "Nitrous Oxide Reserves","co2_tank" = "Carbon Dioxide Reserves","phoron_tank" = "Phoron Fuel Reserves","dist_aux_meter" = "Power Sat - Distribution Loop", "scrub_aux_meter" = "Power Sat - Scrubbers Loop", "mair_aux_meter" = "Station - Mixed Air Tank", "sat_air_mix" = "Power Sat - Mixed Air Reserves")
+	sensors = list("dist_main_meter" = "Surface - Distribution Loop", "scrub_main_meter" = "Surface - Scrubbers Loop", "mair_main_meter" = "Surface - Mixed Air Tank", "n2_tank" = "Nitrogen Reserves", "o2_tank" = "Oxygen Reserves","n2o_tank" = "Nitrous Oxide Reserves","co2_tank" = "Carbon Dioxide Reserves","phoron_tank" = "Phoron Fuel Reserves","dist_aux_meter" = "Power Sat - Distribution Loop", "scrub_aux_meter" = "Power Sat - Scrubbers Loop", "sat_air_mix" = "Power Sat - Mixed Air Reserves")
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/command/bridge)
@@ -10792,7 +10787,6 @@
 /obj/structure/disposalpipe/junction{
 	dir = 1
 	},
-/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hall2)
 "KO" = (
@@ -11512,7 +11506,6 @@
 	name = "Chemistry";
 	req_one_access = list(33)
 	},
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -12335,6 +12328,7 @@
 /obj/structure/railing/grey{
 	dir = 4
 	},
+/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hall2)
 "PJ" = (
@@ -12799,11 +12793,8 @@
 /turf/simulated/floor/tiled/white,
 /area/medical/virology)
 "Ri" = (
-/obj/effect/floor_decal/milspec/color/purple/half{
-	dir = 8
-	},
-/turf/simulated/floor/tiled,
-/area/groundbase/science/hall)
+/turf/simulated/floor/tiled/monotile,
+/area/groundbase/level2/se)
 "Rj" = (
 /obj/effect/floor_decal/milspec/color/purple/half{
 	dir = 1
@@ -12896,7 +12887,6 @@
 /obj/effect/floor_decal/milspec/color/red/corner{
 	dir = 8
 	},
-/obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hall2)
 "Rw" = (
@@ -13110,6 +13100,8 @@
 /obj/structure/disposalpipe/down{
 	dir = 1
 	},
+/obj/structure/cable/layer1,
+/obj/machinery/power/deck_relay,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hall2)
 "Sj" = (
@@ -14535,6 +14527,12 @@
 /obj/machinery/alarm,
 /turf/simulated/floor/wood,
 /area/groundbase/dorms/room4)
+"WV" = (
+/obj/effect/floor_decal/milspec/color/purple/half{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/groundbase/science/hall)
 "WW" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
@@ -23542,7 +23540,7 @@ mY
 pr
 jf
 QS
-Ri
+WV
 zR
 zi
 By
@@ -26656,14 +26654,14 @@ pp
 pp
 pp
 pp
-pp
-pp
-pp
-pp
-pp
-pp
-pp
-pp
+zJ
+zJ
+zJ
+zJ
+zJ
+zJ
+Ke
+Ri
 pp
 pp
 pp
