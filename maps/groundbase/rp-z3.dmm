@@ -2933,13 +2933,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/patient2)
-"FF" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/full,
-/obj/machinery/door/airlock/glass,
-/obj/machinery/door/firedoor/glass,
-/turf/simulated/floor/plating,
-/area/groundbase/civilian/pilot)
 "FL" = (
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 9
@@ -9425,7 +9418,7 @@ YE
 YE
 hL
 PZ
-yx
+nd
 nd
 nd
 nd
@@ -9567,7 +9560,7 @@ YE
 YE
 hL
 PZ
-yx
+nd
 dy
 dy
 dy
@@ -9709,7 +9702,7 @@ YE
 YE
 hL
 PZ
-yx
+nd
 dy
 dy
 dy
@@ -9851,7 +9844,7 @@ Ix
 fh
 hL
 PZ
-yx
+nd
 dy
 dy
 dy
@@ -9993,7 +9986,7 @@ YE
 YE
 hL
 PZ
-yx
+nd
 dy
 dy
 dy
@@ -10135,7 +10128,7 @@ YE
 YE
 hL
 PZ
-yx
+nd
 dy
 dy
 dy
@@ -10277,7 +10270,7 @@ YE
 YE
 hL
 PZ
-yx
+nd
 dy
 dy
 dy
@@ -10419,7 +10412,7 @@ YE
 YE
 hL
 PZ
-yx
+nd
 nd
 nd
 nd
@@ -18973,7 +18966,7 @@ YS
 Wy
 eG
 eG
-FF
+WZ
 WZ
 eG
 eG

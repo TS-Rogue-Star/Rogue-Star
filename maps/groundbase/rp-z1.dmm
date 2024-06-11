@@ -2041,6 +2041,15 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/groundbase/command/ai/chamber)
+"ccm" = (
+/obj/machinery/atmospherics/pipe/manifold4w/visible/black,
+/obj/machinery/meter{
+	frequency = 1443;
+	id = "n2_tank";
+	name = "Nitrogen Reserves"
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/groundbase/engineering/atmos)
 "ccv" = (
 /obj/structure/table/standard,
 /obj/item/weapon/aiModule/consuming_eradicator,
@@ -3823,6 +3832,15 @@
 	outdoors = 0
 	},
 /area/groundbase/unexplored/rock)
+"dMx" = (
+/obj/machinery/atmospherics/pipe/manifold4w/visible/black,
+/obj/machinery/meter{
+	frequency = 1443;
+	id = "mair_main_meter";
+	name = "Mixed Air Storage"
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/groundbase/engineering/atmos)
 "dMU" = (
 /obj/effect/floor_decal/milspec/color/green/half,
 /turf/simulated/floor/tiled,
@@ -9204,6 +9222,15 @@
 /obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/science/hall)
+"jcQ" = (
+/obj/machinery/atmospherics/pipe/manifold4w/visible/black,
+/obj/machinery/meter{
+	frequency = 1443;
+	id = "fuel_tank";
+	name = "Phoron Fuel Reserves"
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/groundbase/engineering/atmos)
 "jcW" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -10055,9 +10082,6 @@
 /obj/random/tech_supply,
 /obj/machinery/recharger{
 	pixel_y = 5
-	},
-/obj/machinery/alarm{
-	dir = 8
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/toolstorage)
@@ -11917,6 +11941,10 @@
 /obj/structure/cable/layer1,
 /turf/simulated/floor/bmarble,
 /area/groundbase/civilian/apparel)
+"lEH" = (
+/obj/machinery/atmospherics/pipe/manifold4w/visible/green,
+/turf/simulated/floor/tiled/monotile,
+/area/groundbase/engineering/atmos)
 "lFG" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -13002,7 +13030,11 @@
 /area/groundbase/science/robotics)
 "mMD" = (
 /obj/machinery/atmospherics/pipe/manifold4w/visible/black,
-/obj/machinery/meter,
+/obj/machinery/meter{
+	frequency = 1443;
+	id = "co2_tank";
+	name = "Carbon Dioxide Reserves"
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/atmos)
 "mNG" = (
@@ -13679,7 +13711,6 @@
 /area/groundbase/engineering/breakroom)
 "nwF" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/green,
-/obj/machinery/meter,
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/atmos)
 "nwP" = (
@@ -16121,7 +16152,9 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/green{
 	dir = 1
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	name = "Aux Mixer"
+	},
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/atmos)
 "pLx" = (
@@ -16699,6 +16732,15 @@
 /obj/structure/cable/layer3,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/lhallway)
+"qil" = (
+/obj/machinery/atmospherics/pipe/manifold4w/visible/black,
+/obj/machinery/meter{
+	frequency = 1443;
+	id = "o2_tank";
+	name = "Oxygen Reserves"
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/groundbase/engineering/atmos)
 "qiv" = (
 /obj/structure/bed/chair/sofa/bench{
 	dir = 8
@@ -18107,6 +18149,15 @@
 /obj/structure/cable/layer1,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/lobby)
+"ryf" = (
+/obj/machinery/atmospherics/pipe/simple/visible/red,
+/obj/machinery/meter{
+	frequency = 1443;
+	id = "scrub_main_meter";
+	name = "Waste In Scrubbers"
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/groundbase/engineering/atmos)
 "ryq" = (
 /obj/effect/floor_decal/rust,
 /obj/structure/table/steel,
@@ -22604,7 +22655,7 @@
 	frequency = 1443;
 	level = 3;
 	name = "Distribution and Waste Monitor";
-	sensors = list("dist_main_meter" = "Surface - Distribution Loop", "scrub_main_meter" = "Surface - Scrubbers Loop", "mair_main_meter" = "Surface - Mixed Air Tank", "dist_aux_meter" = "Station - Distribution Loop", "scrub_aux_meter" = "Station - Scrubbers Loop", "mair_aux_meter" = "Station - Mixed Air Tank", "mair_mining_meter" = "Mining Outpost - Mixed Air Tank")
+	sensors = list("dist_main_meter" = "Surface - Distribution Loop", "scrub_main_meter" = "Surface - Scrubbers Loop", "mair_main_meter" = "Surface - Mixed Air Tank", "n2_tank" = "Nitrogen Reserves", "o2_tank" = "Oxygen Reserves","n2o_tank" = "Nitrous Oxide Reserves","co2_tank" = "Carbon Dioxide Reserves","phoron_tank" = "Phoron Fuel Reserves","dist_aux_meter" = "Power Sat - Distribution Loop", "scrub_aux_meter" = "Power Sat - Scrubbers Loop", "mair_aux_meter" = "Station - Mixed Air Tank", "sat_air_mix" = "Power Sat - Mixed Air Reserves")
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
@@ -24270,6 +24321,11 @@
 /obj/machinery/atmospherics/pipe/manifold/visible/supply{
 	dir = 4
 	},
+/obj/machinery/meter{
+	frequency = 1443;
+	id = "dist_main_meter";
+	name = "Distribution Meter"
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/atmos)
 "xrY" = (
@@ -25228,6 +25284,15 @@
 	},
 /turf/simulated/floor/bluegrid,
 /area/groundbase/command/ai/chamber)
+"yhL" = (
+/obj/machinery/atmospherics/pipe/manifold4w/visible/black,
+/obj/machinery/meter{
+	frequency = 1443;
+	id = "n2o_tank";
+	name = "Nitrous oxide Reserves"
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/groundbase/engineering/atmos)
 "yig" = (
 /obj/structure/table/standard,
 /obj/item/device/healthanalyzer,
@@ -39800,11 +39865,11 @@ mMD
 rXD
 oFw
 mFL
-mMD
+yhL
 rXD
 oFw
 mFL
-mMD
+jcQ
 rXD
 bSq
 awx
@@ -40076,7 +40141,7 @@ ioG
 ioG
 bGf
 kHM
-uhY
+ryf
 iyG
 wVZ
 fDN
@@ -40510,7 +40575,7 @@ gpN
 sQP
 sQP
 sQP
-gpN
+lEH
 sQP
 sQP
 sQP
@@ -41216,15 +41281,15 @@ wos
 daq
 aeI
 iJg
-mMD
+dMx
 ahR
 aeI
 iJg
-mMD
+qil
 abf
 lVW
 iJg
-mMD
+ccm
 ahR
 bSq
 bsJ

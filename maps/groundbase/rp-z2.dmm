@@ -3651,6 +3651,10 @@
 /obj/effect/floor_decal/steeldecal/steel_decals10{
 	dir = 9
 	},
+/obj/machinery/light_switch{
+	dir = 8;
+	pixel_x = 24
+	},
 /turf/simulated/floor/tiled,
 /area/groundbase/science/xenoautopsy)
 "mU" = (
@@ -3722,10 +3726,10 @@
 /turf/simulated/floor/carpet/blue,
 /area/groundbase/medical/psych)
 "nj" = (
-/obj/machinery/computer/station_alert/all,
 /obj/effect/floor_decal/milspec/color/blue/half{
 	dir = 1
 	},
+/obj/item/modular_computer/console/preset/engineering,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/command/bridge)
 "nk" = (
@@ -4135,7 +4139,6 @@
 /area/rnd/xenobiology)
 "oL" = (
 /obj/machinery/door/firedoor,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
@@ -4146,6 +4149,21 @@
 	dir = 4
 	},
 /obj/structure/cable/layer3,
+/obj/machinery/door/airlock/glass_command{
+	name = "Bridge";
+	req_access = list(19)
+	},
+/obj/machinery/door/blast/regular{
+	closed_layer = 10;
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "bridge blast";
+	layer = 1;
+	name = "Bridge Blast Doors";
+	opacity = 0;
+	open_layer = 1
+	},
 /turf/simulated/floor/bmarble,
 /area/groundbase/command/bridge)
 "oM" = (
@@ -5000,10 +5018,7 @@
 /obj/effect/floor_decal/milspec/color/purple/half{
 	dir = 4
 	},
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/tiled,
 /area/groundbase/science/hall)
 "rz" = (
 /obj/structure/table/bench/steel,
@@ -5305,10 +5320,6 @@
 /turf/simulated/floor/bmarble,
 /area/groundbase/civilian/bar)
 "sB" = (
-/obj/machinery/computer/secure_data{
-	dir = 1;
-	pixel_y = -4
-	},
 /obj/machinery/light,
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
@@ -7577,10 +7588,7 @@
 	dir = 1
 	},
 /obj/structure/cable/layer3,
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/tiled,
 /area/groundbase/science/hall)
 "zV" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
@@ -8459,7 +8467,7 @@
 	dir = 4
 	},
 /obj/structure/cable/layer3,
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled,
 /area/rnd/xenobiology)
 "CS" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -8525,6 +8533,17 @@
 	req_access = list(19)
 	},
 /obj/structure/cable/layer3,
+/obj/machinery/door/blast/regular{
+	closed_layer = 10;
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "bridge blast";
+	layer = 1;
+	name = "Bridge Blast Doors";
+	opacity = 0;
+	open_layer = 1
+	},
 /turf/simulated/floor/bmarble,
 /area/groundbase/command/bridge)
 "De" = (
@@ -9038,16 +9057,10 @@
 /obj/effect/floor_decal/milspec/color/purple/half{
 	dir = 10
 	},
-/obj/machinery/alarm{
-	dir = 1
-	},
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/tiled,
 /area/groundbase/science/xenoautopsy)
 "Fb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/universal{
@@ -9467,10 +9480,15 @@
 	},
 /area/groundbase/level2/se)
 "GI" = (
-/obj/machinery/computer/power_monitor,
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /obj/effect/floor_decal/milspec/color/blue/half{
 	dir = 9
+	},
+/obj/machinery/computer/general_air_control{
+	frequency = 1443;
+	level = 3;
+	name = "Distribution and Waste Monitor";
+	sensors = list("dist_main_meter" = "Surface - Distribution Loop", "scrub_main_meter" = "Surface - Scrubbers Loop", "mair_main_meter" = "Surface - Mixed Air Tank", "n2_tank" = "Nitrogen Reserves", "o2_tank" = "Oxygen Reserves","n2o_tank" = "Nitrous Oxide Reserves","co2_tank" = "Carbon Dioxide Reserves","phoron_tank" = "Phoron Fuel Reserves","dist_aux_meter" = "Power Sat - Distribution Loop", "scrub_aux_meter" = "Power Sat - Scrubbers Loop", "mair_aux_meter" = "Station - Mixed Air Tank", "sat_air_mix" = "Power Sat - Mixed Air Reserves")
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/command/bridge)
@@ -10101,10 +10119,7 @@
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/tiled,
 /area/groundbase/science/xenoautopsy)
 "ID" = (
 /obj/structure/bed/chair/backed_red{
@@ -10178,10 +10193,7 @@
 	dir = 4
 	},
 /obj/structure/cable/layer3,
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/tiled,
 /area/groundbase/science/hall)
 "IQ" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
@@ -10499,10 +10511,7 @@
 	dir = 1
 	},
 /obj/structure/cable/layer3,
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/tiled,
 /area/groundbase/science/xenoautopsy)
 "JJ" = (
 /obj/machinery/light/small{
@@ -10884,7 +10893,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/techfloor/grid,
+/turf/simulated/floor/tiled,
 /area/groundbase/science/server)
 "Lg" = (
 /obj/machinery/firealarm{
@@ -11490,11 +11499,11 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/triage)
 "Np" = (
-/obj/machinery/computer/med_data,
 /obj/machinery/atmospherics/unary/vent_pump/on,
 /obj/effect/floor_decal/milspec/color/blue/half{
 	dir = 5
 	},
+/obj/item/modular_computer/console/preset/security,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/command/bridge)
 "Nq" = (
@@ -12716,10 +12725,7 @@
 /obj/effect/floor_decal/milspec/color/purple/half{
 	dir = 9
 	},
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/tiled,
 /area/groundbase/science/hall)
 "QU" = (
 /obj/structure/table/bench/standard,
@@ -12793,30 +12799,17 @@
 /turf/simulated/floor/tiled/white,
 /area/medical/virology)
 "Ri" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /obj/effect/floor_decal/milspec/color/purple/half{
-	dir = 1
+	dir = 8
 	},
-/obj/structure/cable/layer3,
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/tiled,
 /area/groundbase/science/hall)
 "Rj" = (
 /obj/effect/floor_decal/milspec/color/purple/half{
 	dir = 1
 	},
 /obj/machinery/vending/coffee,
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/tiled,
 /area/groundbase/science/hall)
 "Rl" = (
 /obj/machinery/firealarm,
@@ -14138,10 +14131,10 @@
 /turf/simulated/floor/outdoors/sidewalk/side,
 /area/groundbase/level2/ne)
 "Vg" = (
-/obj/machinery/computer/security,
 /obj/effect/floor_decal/milspec/color/blue/half{
 	dir = 1
 	},
+/obj/item/modular_computer/console/preset/command,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/command/bridge)
 "Vh" = (
@@ -14444,10 +14437,10 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/command/hop)
 "Ww" = (
-/obj/machinery/computer/crew,
 /obj/effect/floor_decal/milspec/color/blue/half{
 	dir = 1
 	},
+/obj/item/modular_computer/console/preset/medical,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/command/bridge)
 "Wx" = (
@@ -23408,7 +23401,7 @@ jf
 jf
 jf
 jf
-Ri
+Xs
 zi
 Ve
 HA
@@ -23549,7 +23542,7 @@ mY
 pr
 jf
 QS
-cv
+Ri
 zR
 zi
 By
@@ -23691,7 +23684,7 @@ mY
 Jd
 jf
 Rj
-mV
+ZN
 IP
 zi
 By

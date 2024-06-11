@@ -983,6 +983,11 @@
 /obj/machinery/atmospherics/pipe/simple/visible/supply{
 	dir = 10
 	},
+/obj/machinery/meter{
+	frequency = 1443;
+	id = dist_aux_meter;
+	name = "Sat Distro"
+	},
 /turf/simulated/floor/plating,
 /area/groundbase/engineering/satellite/atmospherics)
 "Gs" = (
@@ -1076,10 +1081,15 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/satellite/lobby)
 "Iu" = (
-/obj/structure/flora/pottedplant/subterranean,
 /obj/machinery/alarm,
 /obj/effect/floor_decal/milspec/color/orange/half{
 	dir = 1
+	},
+/obj/machinery/computer/general_air_control{
+	frequency = 1443;
+	level = 3;
+	name = "Distribution and Waste Monitor";
+	sensors = list("dist_main_meter" = "Surface - Distribution Loop", "scrub_main_meter" = "Surface - Scrubbers Loop", "mair_main_meter" = "Surface - Mixed Air Tank", "n2_tank" = "Nitrogen Reserves", "o2_tank" = "Oxygen Reserves","n2o_tank" = "Nitrous Oxide Reserves","co2_tank" = "Carbon Dioxide Reserves","phoron_tank" = "Phoron Fuel Reserves","dist_aux_meter" = "Power Sat - Distribution Loop", "scrub_aux_meter" = "Power Sat - Scrubbers Loop", "mair_aux_meter" = "Station - Mixed Air Tank", "sat_air_mix" = "Power Sat - Mixed Air Reserves")
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/satellite/lobby)
@@ -1507,6 +1517,9 @@
 /area/groundbase/engineering/satellite/breakroom)
 "Uk" = (
 /obj/effect/floor_decal/milspec/color/orange/half,
+/obj/structure/flora/pottedplant/subterranean{
+	name = "Audrey"
+	},
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/satellite/lobby)
 "Uw" = (
@@ -1543,14 +1556,22 @@
 /obj/machinery/atmospherics/pipe/manifold/visible/black{
 	dir = 4
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	frequency = 1443;
+	id = scrub_aux_meter;
+	name = "Waste Tanks"
+	},
 /turf/simulated/floor/plating,
 /area/groundbase/engineering/satellite/atmospherics)
 "Wb" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/cyan{
 	dir = 8
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	frequency = 1443;
+	id = mair_aux_meter;
+	name = "Air Reserves"
+	},
 /turf/simulated/floor/plating,
 /area/groundbase/engineering/satellite/atmospherics)
 "Wf" = (
