@@ -224,7 +224,10 @@ Class Procs:
 		erase()
 		return
 
-	var/equiv = A.air.share_space(air)
+	var/is_planet = 0 // RS edit
+	if(istype(B,/turf/unsimulated/wall/planetary))
+		is_planet = 1
+	var/equiv = A.air.share_space(air, planetary = is_planet)
 
 	var/differential = A.air.return_pressure() - air.return_pressure()
 	if(abs(differential) >= vsc.airflow_lightest_pressure)
