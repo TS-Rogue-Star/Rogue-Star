@@ -985,7 +985,7 @@
 	},
 /obj/machinery/meter{
 	frequency = 1443;
-	id = dist_aux_meter;
+	id = "dist_aux_meter";
 	name = "Sat Distro"
 	},
 /turf/simulated/floor/plating,
@@ -1558,7 +1558,7 @@
 	},
 /obj/machinery/meter{
 	frequency = 1443;
-	id = scrub_aux_meter;
+	id = "scrub_aux_meter";
 	name = "Waste Tanks"
 	},
 /turf/simulated/floor/plating,
@@ -1569,7 +1569,7 @@
 	},
 /obj/machinery/meter{
 	frequency = 1443;
-	id = mair_aux_meter;
+	id = "mair_aux_meter";
 	name = "Air Reserves"
 	},
 /turf/simulated/floor/plating,
