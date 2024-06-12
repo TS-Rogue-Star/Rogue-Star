@@ -20,6 +20,7 @@
 #define Z_LEVEL_GATEWAY						19
 #define Z_LEVEL_OM_ADVENTURE				20
 #define Z_LEVEL_REDGATE						21
+#define Z_LEVEL_SNOWBASE					22
 
 //Camera networks
 #define NETWORK_HALLS "Halls"

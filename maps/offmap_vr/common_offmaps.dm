@@ -110,11 +110,11 @@
 ///////////////////////////////////////////////////////////////////////////////////////
 //Snowbase
 
-#include "../offmap_vr/snowbase/snowbase.dmm"
-/datum/map_template/common_lateload/away_snowdrift
+#include "../expedition_vr/snowbase/snowbase.dm"
+/datum/map_template/common_lateload/away_snowbase
 	name = "Snowdrift Base"
 	desc = "A small research outpost owned by NT."
-	mappath = 'maps/offmap_vr/snowbase/snowbase.dmm'
+	mappath = 'maps/expedition_vr/snowbase/snowbase.dmm'
 	associated_map_datum = /datum/map_z_level/common_lateload/away_snowbase
 
 /datum/map_z_level/common_lateload/away_snowbase

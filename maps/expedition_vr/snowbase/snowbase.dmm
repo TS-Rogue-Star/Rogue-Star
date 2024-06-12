@@ -7,18 +7,29 @@
 /area/space)
 "ai" = (
 /obj/structure/table/standard,
-/obj/machinery/recharger{
-	pixel_y = 4
-	},
+/obj/item/clothing/gloves/sterile/nitrile,
+/obj/item/clothing/mask/surgical,
+/obj/item/clothing/suit/surgicalapron,
+/obj/structure/table/standard,
 /turf/simulated/floor/tiled/white,
 /area/space)
 "ax" = (
-/obj/structure/table/standard,
-/obj/machinery/chemical_dispenser/biochemistry/full,
 /turf/simulated/floor/tiled/white,
 /area/space)
 "aO" = (
-/obj/machinery/vending/medical_talon,
+/obj/structure/table/standard,
+/obj/item/weapon/storage/firstaid/surgery,
+/obj/item/stack/nanopaste{
+	pixel_x = -7;
+	pixel_y = -4
+	},
+/obj/item/stack/nanopaste{
+	pixel_x = 9;
+	pixel_y = -4
+	},
+/obj/item/device/robotanalyzer{
+	pixel_y = -8
+	},
 /turf/simulated/floor/tiled/white,
 /area/space)
 "bB" = (
@@ -51,10 +62,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/space)
 "bZ" = (
-/obj/machinery/vending/blood{
-	req_access = list(301);
-	req_log_access = 301
-	},
+/obj/machinery/optable,
 /turf/simulated/floor/tiled/white,
 /area/space)
 "cR" = (
@@ -63,13 +71,10 @@
 /turf/simulated/floor/tiled/dark,
 /area/space)
 "ds" = (
-/obj/structure/table/standard,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/storage/firstaid/adv{
-	pixel_x = 2;
-	pixel_y = 5
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = 11
 	},
-/obj/structure/closet/walllocker_double/medical/north,
 /turf/simulated/floor/tiled/white,
 /area/space)
 "dF" = (
@@ -99,12 +104,8 @@
 /turf/simulated/floor/tiled,
 /area/space)
 "eV" = (
-/obj/structure/table/standard,
-/obj/item/clothing/gloves/sterile/nitrile,
-/obj/item/clothing/mask/surgical,
-/obj/item/clothing/suit/surgicalapron,
-/obj/structure/table/standard,
-/turf/simulated/floor/tiled/white,
+/obj/machinery/oxygen_pump/anesthetic,
+/turf/simulated/wall/r_wall,
 /area/space)
 "fp" = (
 /obj/machinery/telecomms/allinone/talon{
@@ -147,23 +148,24 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/space)
 "gh" = (
+/obj/item/weapon/storage/firstaid/toxin,
+/obj/item/weapon/storage/firstaid/toxin,
+/obj/item/weapon/storage/firstaid/o2,
+/obj/item/weapon/storage/firstaid/o2,
+/obj/item/weapon/storage/firstaid/fire,
+/obj/item/weapon/storage/firstaid/fire,
+/obj/item/weapon/storage/firstaid/adv,
+/obj/item/weapon/storage/firstaid/adv,
+/obj/structure/closet/walllocker_double/medical/east,
 /turf/simulated/floor/tiled/white,
 /area/space)
 "gz" = (
-/obj/structure/table/standard,
-/obj/item/weapon/storage/firstaid/surgery,
-/obj/item/stack/nanopaste{
-	pixel_x = -7;
-	pixel_y = -4
+/obj/machinery/smartfridge/chemistry{
+	req_access = list(301);
+	req_one_access = list(301)
 	},
-/obj/item/stack/nanopaste{
-	pixel_x = 9;
-	pixel_y = -4
-	},
-/obj/item/device/robotanalyzer{
-	pixel_y = -8
-	},
-/turf/simulated/floor/tiled/white,
+/obj/machinery/door/firedoor/glass/talon,
+/turf/simulated/floor/tiled/monotile,
 /area/space)
 "hc" = (
 /obj/structure/closet/secure_closet/engineering_personal,
@@ -179,19 +181,25 @@
 /turf/simulated/floor/tiled,
 /area/space)
 "hz" = (
-/obj/machinery/optable,
+/obj/machinery/sleep_console{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/white,
 /area/space)
 "hC" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = 11
+/obj/machinery/sleeper{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/white,
 /area/space)
 "hJ" = (
-/obj/machinery/oxygen_pump/anesthetic,
-/turf/simulated/wall/r_wall,
+/obj/structure/closet/walllocker_double/medical/east,
+/obj/random/medical,
+/obj/random/medical,
+/obj/random/medical,
+/obj/random/medical,
+/obj/item/device/healthanalyzer,
+/turf/simulated/floor/tiled/white,
 /area/space)
 "hU" = (
 /obj/structure/catwalk,
@@ -204,15 +212,8 @@
 /turf/simulated/floor/plating,
 /area/space)
 "iG" = (
-/obj/item/weapon/storage/firstaid/toxin,
-/obj/item/weapon/storage/firstaid/toxin,
-/obj/item/weapon/storage/firstaid/o2,
-/obj/item/weapon/storage/firstaid/o2,
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/adv,
-/obj/item/weapon/storage/firstaid/adv,
-/obj/structure/closet/walllocker_double/medical/east,
+/obj/structure/table/standard,
+/obj/item/device/mass_spectrometer/adv,
 /turf/simulated/floor/tiled/white,
 /area/space)
 "jt" = (
@@ -235,12 +236,8 @@
 /turf/simulated/floor/tiled,
 /area/space)
 "ke" = (
-/obj/machinery/smartfridge/chemistry{
-	req_access = list(301);
-	req_one_access = list(301)
-	},
-/obj/machinery/door/firedoor/glass/talon,
-/turf/simulated/floor/tiled/monotile,
+/obj/structure/bed/chair/office/dark,
+/turf/simulated/floor/tiled/white,
 /area/space)
 "kK" = (
 /obj/structure/catwalk,
@@ -256,9 +253,10 @@
 /turf/simulated/floor/tiled/monotile,
 /area/space)
 "lz" = (
-/obj/machinery/sleep_console{
-	dir = 4
-	},
+/obj/structure/closet/walllocker_double/medical/east,
+/obj/item/bodybag/cryobag,
+/obj/item/bodybag/cryobag,
+/obj/item/bodybag/cryobag,
 /turf/simulated/floor/tiled/white,
 /area/space)
 "lD" = (
@@ -274,23 +272,19 @@
 /turf/simulated/floor/plating,
 /area/space)
 "lG" = (
-/obj/machinery/sleeper{
-	dir = 4
+/obj/structure/table/standard,
+/obj/machinery/reagentgrinder{
+	pixel_y = 10
 	},
 /turf/simulated/floor/tiled/white,
 /area/space)
 "lO" = (
-/obj/structure/closet/walllocker_double/medical/east,
-/obj/random/medical,
-/obj/random/medical,
-/obj/random/medical,
-/obj/random/medical,
-/obj/item/device/healthanalyzer,
+/obj/machinery/chem_master,
 /turf/simulated/floor/tiled/white,
 /area/space)
 "mn" = (
 /obj/structure/table/standard,
-/obj/item/device/mass_spectrometer/adv,
+/obj/machinery/chemical_dispenser/full,
 /turf/simulated/floor/tiled/white,
 /area/space)
 "mL" = (
@@ -307,21 +301,30 @@
 /turf/simulated/floor/plating,
 /area/space)
 "nr" = (
-/obj/structure/bed/chair/office/dark,
+/obj/structure/closet/secure_closet/chemical{
+	req_access = list(301)
+	},
+/obj/item/weapon/reagent_containers/spray/cleaner{
+	desc = "Someone has crossed out the 'Space' from Space Cleaner and written in Chemistry. Scrawled on the back is, 'Okay, whoever filled this with polytrinic acid, it was only funny the first time. It was hard enough replacing the CMO's first cat!'";
+	name = "Chemistry Cleaner"
+	},
 /turf/simulated/floor/tiled/white,
 /area/space)
 "nW" = (
-/obj/structure/closet/walllocker_double/medical/east,
-/obj/item/bodybag/cryobag,
-/obj/item/bodybag/cryobag,
-/obj/item/bodybag/cryobag,
+/obj/structure/table/standard,
+/obj/item/device/defib_kit/jumper_kit/loaded,
+/obj/item/device/defib_kit/loaded,
+/obj/item/weapon/storage/belt/medical/emt,
+/obj/item/device/sleevemate,
 /turf/simulated/floor/tiled/white,
 /area/space)
 "oK" = (
-/obj/structure/table/standard,
-/obj/machinery/reagentgrinder{
-	pixel_y = 10
+/obj/item/weapon/storage/box/bodybags,
+/obj/item/roller,
+/obj/item/roller{
+	pixel_y = 8
 	},
+/obj/structure/table/standard,
 /turf/simulated/floor/tiled/white,
 /area/space)
 "oP" = (
@@ -348,12 +351,15 @@
 /turf/simulated/floor/tiled,
 /area/space)
 "qc" = (
-/obj/machinery/chem_master,
+/obj/structure/table/standard,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
 /turf/simulated/floor/tiled/white,
 /area/space)
 "qw" = (
 /obj/structure/table/standard,
-/obj/machinery/chemical_dispenser/full,
+/obj/machinery/chemical_dispenser/biochemistry/full,
 /turf/simulated/floor/tiled/white,
 /area/space)
 "qC" = (
@@ -363,13 +369,7 @@
 /turf/simulated/floor/tiled/monotile,
 /area/space)
 "qU" = (
-/obj/structure/closet/secure_closet/chemical{
-	req_access = list(301)
-	},
-/obj/item/weapon/reagent_containers/spray/cleaner{
-	desc = "Someone has crossed out the 'Space' from Space Cleaner and written in Chemistry. Scrawled on the back is, 'Okay, whoever filled this with polytrinic acid, it was only funny the first time. It was hard enough replacing the CMO's first cat!'";
-	name = "Chemistry Cleaner"
-	},
+/obj/machinery/vending/medical_talon,
 /turf/simulated/floor/tiled/white,
 /area/space)
 "rs" = (
@@ -385,11 +385,10 @@
 /turf/simulated/floor/tiled/monotile,
 /area/space)
 "rK" = (
-/obj/structure/table/standard,
-/obj/item/device/defib_kit/jumper_kit/loaded,
-/obj/item/device/defib_kit/loaded,
-/obj/item/weapon/storage/belt/medical/emt,
-/obj/item/device/sleevemate,
+/obj/machinery/vending/blood{
+	req_access = list(301);
+	req_log_access = 301
+	},
 /turf/simulated/floor/tiled/white,
 /area/space)
 "rO" = (
@@ -401,12 +400,13 @@
 /turf/simulated/floor/tiled/monotile,
 /area/space)
 "sj" = (
-/obj/item/weapon/storage/box/bodybags,
-/obj/item/roller,
-/obj/item/roller{
-	pixel_y = 8
-	},
 /obj/structure/table/standard,
+/obj/item/weapon/storage/firstaid/regular,
+/obj/item/weapon/storage/firstaid/adv{
+	pixel_x = 2;
+	pixel_y = 5
+	},
+/obj/structure/closet/walllocker_double/medical/north,
 /turf/simulated/floor/tiled/white,
 /area/space)
 "sz" = (
@@ -10577,10 +10577,10 @@ dF
 dF
 dF
 dF
-dF
-dF
-dF
-dF
+Xa
+hi
+hi
+hi
 Xa
 dF
 dF
@@ -10719,10 +10719,10 @@ dF
 dF
 dF
 dF
-dF
-dF
-dF
-dF
+Xa
+hi
+hi
+hi
 Xa
 dF
 dF
@@ -10861,10 +10861,10 @@ dF
 dF
 dF
 dF
-dF
-dF
-dF
-dF
+Xa
+hi
+hi
+hi
 Xa
 dF
 dF
@@ -11003,10 +11003,10 @@ dF
 dF
 dF
 dF
-dF
-dF
-dF
-dF
+Xa
+hi
+hi
+hi
 Xa
 dF
 dF
@@ -11145,10 +11145,10 @@ dF
 dF
 dF
 dF
-dF
-dF
-dF
-dF
+Xa
+hi
+hi
+hi
 Xa
 dF
 dF
@@ -11287,10 +11287,10 @@ dF
 dF
 dF
 dF
-dF
-dF
-dF
-dF
+Xa
+hi
+hi
+hi
 Xa
 uw
 uw
@@ -11429,10 +11429,10 @@ dF
 dF
 dF
 dF
-dF
-dF
-dF
-dF
+Xa
+hi
+hi
+hi
 Xa
 uE
 uE
@@ -11571,10 +11571,10 @@ dF
 dF
 dF
 dF
-dF
-dF
-dF
-dF
+Xa
+hi
+hi
+hi
 tJ
 uQ
 uQ
@@ -11713,10 +11713,10 @@ dF
 dF
 dF
 dF
-dF
-dF
-dF
-dF
+Xa
+hi
+hi
+hi
 ti
 hi
 hi
@@ -11855,10 +11855,10 @@ dF
 dF
 dF
 dF
-dF
-dF
-dF
-dF
+Xa
+hi
+hi
+hi
 tX
 vz
 vz
@@ -11997,10 +11997,10 @@ dF
 dF
 dF
 dF
-dF
-dF
-dF
-dF
+Xa
+hi
+hi
+hi
 Xa
 vV
 vV
@@ -12139,10 +12139,10 @@ dF
 dF
 dF
 dF
-dF
-dF
-dF
-dF
+Xa
+hi
+hi
+hi
 Xa
 uw
 uw
@@ -12281,10 +12281,10 @@ dF
 dF
 dF
 dF
-dF
-dF
-dF
-dF
+Xa
+hi
+hi
+hi
 Xa
 dF
 dF
@@ -12416,17 +12416,17 @@ dF
 dF
 dF
 dF
-dF
-dF
-dF
-dF
-dF
-dF
-dF
-dF
-dF
-dF
-dF
+Xa
+Xa
+Xa
+Xa
+Xa
+Xa
+Xa
+Xa
+hi
+hi
+hi
 Xa
 dF
 dF
@@ -12559,16 +12559,16 @@ dF
 dF
 dF
 dF
-dF
-dF
-dF
-dF
-dF
-dF
-dF
-dF
-dF
-dF
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
 Xa
 dF
 dF
@@ -12701,16 +12701,16 @@ dF
 dF
 dF
 dF
-dF
-dF
-dF
-dF
-dF
-dF
-dF
-dF
-dF
-dF
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
 Xa
 dF
 dF
@@ -12839,20 +12839,20 @@ dF
 dF
 dF
 dF
-Xa
-Xa
-Xa
-yq
-Xa
-ke
-Xa
-Xa
-Xa
 dF
 dF
 dF
 dF
-dF
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
 Xa
 dF
 dF
@@ -12981,20 +12981,20 @@ dF
 dF
 dF
 dF
+dF
+dF
+dF
 Xa
-ai
-gh
-gh
-gh
-gh
-mn
-oK
 Xa
-dF
-dF
-dF
-dF
-dF
+Xa
+Xa
+Xa
+Xa
+yq
+Xa
+gz
+Xa
+Xa
 Xa
 dF
 dF
@@ -13123,21 +13123,21 @@ dF
 dF
 dF
 dF
+dF
+dF
+dF
+dF
+dF
+dF
 Xa
-ax
-gh
-gh
-gh
-gh
-nr
 qc
+ax
+ax
+ax
+ax
+iG
+lG
 Xa
-dF
-dF
-dF
-dF
-dF
-dF
 dF
 dF
 dF
@@ -13265,21 +13265,21 @@ dF
 dF
 dF
 dF
+dF
+dF
+dF
+dF
+dF
+dF
 Xa
-aO
-gh
-gh
-gh
-gh
-gh
 qw
+ax
+ax
+ax
+ax
+ke
+lO
 Xa
-dF
-dF
-dF
-dF
-dF
-dF
 dF
 dF
 dF
@@ -13407,21 +13407,21 @@ dF
 dF
 dF
 dF
+dF
+dF
+dF
+dF
+dF
+dF
 Xa
-bZ
-gh
-hz
-gh
-lz
-gh
 qU
+ax
+ax
+ax
+ax
+ax
+mn
 Xa
-dF
-dF
-dF
-dF
-dF
-dF
 dF
 dF
 dF
@@ -13549,21 +13549,21 @@ dF
 dF
 dF
 dF
+dF
+dF
+dF
+dF
+dF
+dF
 Xa
-ds
-gh
-gh
-gh
-lG
-gh
 rK
+ax
+bZ
+ax
+hz
+ax
+nr
 Xa
-dF
-dF
-dF
-dF
-dF
-dF
 dF
 dF
 dF
@@ -13691,21 +13691,21 @@ dF
 dF
 dF
 dF
+dF
+dF
+dF
+dF
+dF
+dF
 Xa
-eV
-gz
-hC
-iG
-lO
-nW
 sj
+ax
+ax
+ax
+hC
+ax
+nW
 Xa
-dF
-dF
-dF
-dF
-dF
-dF
 dF
 dF
 dF
@@ -13833,21 +13833,21 @@ dF
 dF
 dF
 dF
+dF
+dF
+dF
+dF
+dF
+dF
 Xa
-Xa
-Xa
+ai
+aO
+ds
+gh
 hJ
+lz
+oK
 Xa
-Xa
-Xa
-Xa
-Xa
-dF
-dF
-dF
-dF
-dF
-dF
 dF
 dF
 dF
@@ -13981,15 +13981,15 @@ dF
 dF
 dF
 dF
-dF
-dF
-dF
-dF
-dF
-dF
-dF
-dF
-dF
+Xa
+Xa
+Xa
+eV
+Xa
+Xa
+Xa
+Xa
+Xa
 dF
 dF
 dF
