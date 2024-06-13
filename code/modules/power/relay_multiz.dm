@@ -13,6 +13,7 @@
 	anchored = TRUE
 	density = FALSE
 	can_change_cable_layer = TRUE	//This should be false when power channel code works
+	var/patched = FALSE
 	/// Powernet channels list
 	/*	//TODO: Actually making these channels a thing.
 	var/datum/powernet/powernet1
@@ -41,6 +42,19 @@
 	cable_layer = CABLE_LAYER_1|CABLE_LAYER_2|CABLE_LAYER_3|CABLE_LAYER_4
 	return */
 
+/obj/machinery/power/deck_relay/update_icon()
+	if(stat & BROKEN)
+		icon_state = "cablerelay-broken"
+		return
+	if(!connectiondown || QDELETED(connectiondown) || !connectionup || QDELETED(connectionup) || (powernet && (powernet.avail <= 0)))
+		icon_state = "cablerelay-off"
+		if(patched)
+			icon_state = "cablerelay-off-patched"
+	else
+		icon_state = "cablerelay-on"
+		if(patched)
+			icon_state = "cablerelay-on-patched"
+
 /obj/machinery/power/deck_relay/Destroy()
 	. = ..()
 	investigate_log("<font color='red'>deleted</font> at [COORD(src)]","powernet")
@@ -63,7 +77,12 @@
 
 /obj/machinery/power/deck_relay/process()
 	if(!anchored)
-		icon_state = "cablerelay-off"
+		if(stat & BROKEN)
+			icon_state = "cablerelay-broken"
+		else
+			icon_state = "cablerelay-off"
+			if(patched)
+				icon_state = "cablerelay-off-patched"
 		if(connectionup) //Lose connections
 			connectionup.connectiondown = null
 		if(connectiondown)
@@ -78,14 +97,24 @@
 			powernet4 = null
 		powernets.Cut() */
 		return
+	if(stat & BROKEN)
+		if(connectionup) //Lose connections here too
+			connectionup.connectiondown = null
+		if(connectiondown)
+			connectiondown.connectionup = null
+		if(powernet)
+			powernet = null
+		icon_state = "cablerelay-broken"
+		return
 	refresh() //Sometimes the powernets get lost, so we need to keep checking.
 	if(powernet && (powernet.avail <= 0))		// is it powered?
 		icon_state = "cablerelay-off"
-	else
-		icon_state = "cablerelay-on"
-	if(!connectiondown || QDELETED(connectiondown) || !connectionup || QDELETED(connectionup))
-		icon_state = "cablerelay-off"
-		find_and_connect()
+		if(patched)
+			icon_state = "cablerelay-off-patched"
+
+	icon_state = "cablerelay-on"
+	if(patched)
+		icon_state = "cablerelay-on-patched"
 
 	/* if(!powernets)
 		icon_state = "cablerelay-off"
@@ -154,6 +183,10 @@
 
 ///Locates relays that are above and below this object
 /obj/machinery/power/deck_relay/proc/find_and_connect()
+	if(stat & BROKEN)
+		//don't even bother, we're broken after all.
+		return
+
 	var/turf/T = get_turf(src)
 	if(!T || !istype(T))
 		return FALSE
@@ -236,15 +269,13 @@
 			connectionup = MZ
 		if(direction == DOWN)
 			connectiondown = MZ
-
-	if(connectiondown || connectionup)
-		icon_state = "cablerelay-on"
 	return TRUE
 
 /obj/machinery/power/deck_relay/examine(mob/user)
 	. = ..()
 	. += span_notice("[connectionup ? "Detected" : "Undetected"] hub UP.")
 	. += span_notice("[connectiondown ? "Detected" : "Undetected"] hub DOWN.")
+	. += span_notice("Alt Click to initiate a power cycle and reconnect grids between decks.")
 	/*
 	if(powernet1)
 		. += span_notice("The [LOWER_TEXT(GLOB.cable_layer_to_name["[CABLE_LAYER_1]"])] is connected.")
@@ -267,12 +298,40 @@
 /obj/machinery/power/deck_relay/attackby(obj/item/O, mob/user)
 	if(default_unfasten_wrench(user, O, 40))
 		update_cable_icons_on_turf(get_turf(src))
-		process()	//this'll clear the info
+		if(anchored)
+			find_and_connect()
 		return FALSE
+
 	if(O.has_tool_quality(TOOL_WIRECUTTER))
-		user.visible_message("<span class='warning'>[user] is cutting up \the [src]!</span>", "You start to cut \the [src].")
-		playsound(src, O.usesound, 50, 1)
-		if(do_after(user, 20 * O.toolspeed))
-			user.visible_message("<span class='warning'>[user] removes \the [src].</span>", "You finish cutting \the [src] out.")
-			deconstruct()
+		if(stat & BROKEN)
+			user.visible_message(span_warning("[user] is cutting out \the [src]!"), span_notice("You start to cut \the [src] completely out."))
+			playsound(src, O.usesound, 50, 1)
+			if(do_after(user, 20 * O.toolspeed))
+				user.visible_message(span_warning("[user] removes \the [src]."), span_notice("You finish removing \the [src] entirely."))
+				deconstruct()
+		else
+			user.visible_message(span_warning("[user] is cutting up \the [src]!"), span_notice("You start to cut \the [src]."))
+			playsound(src, O.usesound, 50, 1)
+			if(do_after(user, 20 * O.toolspeed))
+				user.visible_message(span_notice("[user] mangles the wiring in \the [src]."), span_notice("You mangle the wires of \the [src]."))
+				stat |= BROKEN
+				patched = FALSE
+				return
+
+	if(O.has_tool_quality(TOOL_CABLE_COIL))	//the rare heavy cable repair permitted, too.
+		var/obj/item/stack/cable_coil/cables = O
+		if(stat & BROKEN)
+			if(cables.apply_wiring(5))
+				stat &= ~BROKEN
+				patched = TRUE
+				user.visible_message(span_notice("[user.name] has patched the wiring of \the [src]."), span_notice("You patch \the [src] wires."))
+				return
+			else
+				to_chat(user, span_warning("You need at least five lengths of cable to repair this relay."))
+				return
+
+	if(O.has_tool_quality(TOOL_MULTITOOL))
+		visible_message(span_notice("[user] adjusts the plugged in cable layer."))
+		adapt_to_cable_layer()
+		return
 	. = ..()

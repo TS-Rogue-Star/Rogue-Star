@@ -5,6 +5,7 @@
 
 /obj/machinery/power/terminal
 	name = "terminal (L2)"
+	icon = 'icons/obj/cables/structures.dmi'
 	icon_state = "term"
 	desc = "It's an underfloor wiring terminal for power equipment."
 	level = 1
@@ -13,16 +14,19 @@
 	layer = WIRE_TERMINAL_LAYER
 	unacidable = TRUE
 	cable_layer = CABLE_LAYER_2
+	var/wirecolors = CABLELAYERTWOCOLOR
 	var/obj/machinery/power/master = null
 	can_change_cable_layer = TRUE
 
 /obj/machinery/power/terminal/layer1
 	name = "terminal (L1)"
 	cable_layer = CABLE_LAYER_1
+	wirecolors = CABLELAYERONECOLOR
 
 /obj/machinery/power/terminal/layer3
 	name = "terminal (L3)"
 	cable_layer = CABLE_LAYER_3
+	wirecolors = CABLELAYERTHREECOLOR
 
 
 // Needed so terminals are not removed from machines list.
@@ -48,9 +52,15 @@
 	if(i)
 		invisibility = INVISIBILITY_MAXIMUM
 		icon_state = "term-f"
+		var/image/I = image(icon, icon_state = "termcables-f", layer = layer)
+		I.color = wirecolors
+		add_overlay(I)
 	else
 		invisibility = 0
 		icon_state = "term"
+		var/image/I = image(icon, icon_state = "termcables", layer = layer)
+		I.color = wirecolors
+		add_overlay(I)
 
 /obj/machinery/power/terminal/hides_under_flooring()
 	return TRUE

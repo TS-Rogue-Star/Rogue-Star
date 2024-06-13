@@ -390,8 +390,8 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 ////////////////////////////////
 // Definitions
 ////////////////////////////////
-#define CABLE_RESTRAINTS_COST 15
-#define CABLE_CONSTRUCTIONS_COSTS 20
+#define CABLE_RESTRAINTS_COST		15
+#define CABLE_CONSTRUCTIONS_COSTS	20
 
 /obj/item/stack/cable_coil
 	name = "cable coil"
@@ -600,6 +600,14 @@ GLOBAL_LIST(cable_radial_layer_list)
 		w_class = ITEMSIZE_TINY
 	else
 		w_class = ITEMSIZE_SMALL
+
+///Since cable_coil is a tool quality now, it should contain checks like these, like welder fuel checks I guess. try not use double dip!
+/obj/item/stack/cable_coil/proc/apply_wiring(var/repaircost)
+	if(amount >= repaircost)
+		use(repaircost)
+		return TRUE
+	else
+		return FALSE
 
 /obj/item/stack/cable_coil/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/multitool))

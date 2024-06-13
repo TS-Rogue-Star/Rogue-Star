@@ -100,9 +100,9 @@
 				investigate_log("turned <font color='green'>on</font> by [user.key] At [COORD(src)]", "powernet")
 			refresh()
 		else
-			to_chat(user, "<span class='warning'>The controls are locked!</span>")
+			to_chat(user, span_warning("The controls are locked!"))
 	else
-		to_chat(user, "<span class='warning'>\The [src] needs to be firmly secured to the floor first.</span>")
+		to_chat(user, span_warning("\The [src] needs to be firmly secured to the floor first."))
 		return FALSE
 
 /obj/machinery/power/power_transmitter/process()
@@ -125,10 +125,10 @@
 	if(active)
 		if(powernet && (powernet.avail <= 0))
 			icon_state = "transmitter_error"
-		else if(active && connection_buddy && connection_buddy.active)
+		else if(connection_buddy && connection_buddy.active && powernet && (powernet.avail > 0))
 			icon_state = "transmitter_connected"
 
-	if(active && !connection_buddy || QDELETED(connection_buddy) || !connection_buddy.active)
+	if(active && (!connection_buddy || QDELETED(connection_buddy) || !connection_buddy.active))
 		icon_state = "transmitter_error"
 		find_buddy()
 
@@ -194,19 +194,19 @@
 			new_ident = sanitize(new_ident,MAX_NAME_LEN)
 			if(new_ident && user.Adjacent(src))
 				id = new_ident
-			to_chat(user, "<span class='notice'>The id is now set to [id]</span>")
+			to_chat(user, span_notice("The id is now set to [id]"))
 			return
 		else
-			to_chat(user, "<span class='warning'>Access denied.</span>")
+			to_chat(user, span_warning("Access denied."))
 		return
 
 
 	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
 		if(allowed(user))
 			locked = !locked
-			to_chat(user, "<span class='notice'>The controls are now [locked ? "locked." : "unlocked."]</span>")
+			to_chat(user, span_notice("The controls are now [locked ? "locked." : "unlocked."]"))
 		else
-			to_chat(user, "<span class='warning'>Access denied.</span>")
+			to_chat(user, span_warning("Access denied."))
 		return
 
 /datum/design/circuit/power_transmitter

@@ -518,8 +518,7 @@
 
 		if(!do_after(user, 50))
 			return
-		if(!C || C.get_amount() < 10)
-			return
+
 		var/obj/structure/cable/N = T.get_cable_node(terminal_cable_layer) //get the connecting node cable, if there's one
 		if (prob(50))
 			electrocute_mob(usr, N, N, 1, TRUE)
