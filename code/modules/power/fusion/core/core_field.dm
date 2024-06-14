@@ -6,7 +6,7 @@
 /obj/effect/fusion_em_field
 	name = "electromagnetic field"
 	desc = "A coruscating, barely visible field of energy. It is shaped like a slightly flattened torus."
-	icon = 'icons/obj/machines/power/fusion.dmi'
+	icon = 'icons/obj/machines/power/fusion/fusion.dmi'
 	icon_state = "emfield_s1"
 	alpha = 50
 	plane = MOB_PLANE
@@ -325,7 +325,7 @@
 					var/obj/S = new Mat.stack_type
 					dormant_reactant_quantities[particle] -= 20
 					S.throw_at_random(FALSE, 7, 3)
-				
+
 				else
 					dormant_reactant_quantities[particle] = 0
 
@@ -362,7 +362,7 @@
 	switch(newsize)
 		if(1)
 			size = 1
-			icon = 'icons/obj/machines/power/fusion.dmi'
+			icon = 'icons/obj/machines/power/fusion/fusion.dmi'
 			icon_state = "emfield_s1"
 			pixel_x = 0
 			pixel_y = 0

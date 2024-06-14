@@ -107,7 +107,7 @@
 /obj/effect/overlay/energy_ball
 	name = "energy ball"
 	desc = "An energy ball."
-	icon = 'icons/obj/tesla_engine/energy_ball.dmi'
+	icon = 'icons/obj/machines/power/tesla_engine/energy_ball.dmi'
 	icon_state = "energy_ball"
 	plane = PLANE_LIGHTING_ABOVE
 	pixel_x = -32

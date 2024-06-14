@@ -10,7 +10,7 @@ GLOBAL_LIST_EMPTY(fusion_cores)
 /obj/machinery/power/fusion_core
 	name = "\improper R-UST Mk. 9 Tokamak core"
 	desc = "An enormous solenoid for generating extremely high power electromagnetic fields. It includes a kinetic energy harvester."
-	icon = 'icons/obj/machines/power/fusion.dmi'
+	icon = 'icons/obj/machines/power/fusion/fusion.dmi'
 	icon_state = "core0"
 	density = TRUE
 	use_power = USE_POWER_IDLE

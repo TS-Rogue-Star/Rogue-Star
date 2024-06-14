@@ -68,7 +68,7 @@
 /obj/random/powercell
 	name = "random powercell"
 	desc = "This is a random powercell."
-	icon = 'icons/obj/power_cells.dmi'
+	icon = 'icons/obj/machines/power/power_cells.dmi'
 	icon_state = "random"
 
 /obj/random/powercell/item_to_spawn()
@@ -135,7 +135,7 @@
 /obj/random/tech_supply
 	name = "random tech supply"
 	desc = "This is a random piece of technology supplies."
-	icon = 'icons/obj/power_cells.dmi'
+	icon = 'icons/obj/machines/power/power_cells.dmi'
 	icon_state = "random"
 	spawn_nothing_percentage = 25
 

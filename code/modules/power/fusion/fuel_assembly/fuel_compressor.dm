@@ -1,7 +1,7 @@
 #define FUSION_ROD_SHEET_AMT 15
 /obj/machinery/fusion_fuel_compressor
 	name = "fuel compressor"
-	icon = 'icons/obj/machines/power/fusion.dmi'
+	icon = 'icons/obj/machines/power/fusion/fusion.dmi'
 	icon_state = "fuel_compressor1"
 	density = TRUE
 	anchored = TRUE
