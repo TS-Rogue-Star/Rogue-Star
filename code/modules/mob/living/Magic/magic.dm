@@ -87,10 +87,11 @@
 	try
 		content = file2text(save_path)
 	catch(var/exception/E_content)
-		error("Exception when loading etching content - [save_path] - [content]: [E_content]")
+		error("Exception when loading etching content - Path: [save_path] - Content: [content]: [E_content]")
 
 	if(!content)
-		error("Etching failed to load for [ourmob.real_name], aborting.")
+		log_debug("<span class = 'danger'>Etching failed to load for [ourmob.real_name], aborting and clearing save_path.</span>")
+		save_path = null
 		return
 
 	var/list/load
@@ -98,10 +99,11 @@
 	try
 		load = json_decode(file2text(save_path))
 	catch(var/exception/E_json_decode)
-		error("Exception decoding etching content - [save_path] - [load]: [E_json_decode]")
+		error("Exception decoding etching content - Path: [save_path] - Content: [content] - Load: [load]: [E_json_decode]")
 
 	if(!load)
-		log_debug("<span class = 'danger'>Etching json_decode failed! File path: '[save_path]'. Load contents: [] </span>")
+		log_debug("<span class = 'danger'>Etching json_decode failed! File path: '[save_path]'. Load contents: '[content]'. Aborting and clearing save_path.</span>")
+		save_path = null
 		return
 
 	true_name = load["true_name"]
@@ -116,8 +118,6 @@
 
 /datum/etching/proc/save(delet = FALSE)
 	if(IsGuestKey(ourmob.key))
-		return
-	if(!ourmob.ckey)
 		return
 
 	if(shutting_down)	//Don't try to save more than once if we're already saving and shutting down.
@@ -138,13 +138,23 @@
 		"xp" = xp
 		)
 
-	var/json_to_file = json_encode(to_save)
+	var/json_to_file
+	try
+		throw EXCEPTION("Load stage 1 fail")
+		json_to_file = json_encode(to_save)
+	catch
+		error("Etching failed to encode to json for [ourmob.real_name]")
+
 	if(!json_to_file)
-		log_debug("Saving: [save_path] failed jsonencode")
+		log_debug("Saving: [save_path] failed json encode.")
 		return
 
 	//Write it out
-	rustg_file_write(json_to_file, save_path)
+	try
+		throw EXCEPTION("Saving stage 2 fail")
+		rustg_file_write(json_to_file, save_path)
+	catch
+		error("Etching failed to write to file for [ourmob.real_name]: [json_to_file] - [save_path]")
 
 	if(!fexists(save_path))
 		log_debug("Saving: [save_path] failed file write")
