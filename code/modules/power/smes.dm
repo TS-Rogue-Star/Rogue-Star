@@ -433,7 +433,7 @@
 
 	if(W.has_tool_quality(TOOL_MULTITOOL))
 		if (!panel_open)
-			to_chat(user, span_warning("You need to open access hatch on [src] first!</span>"))
+			to_chat(user, span_warning("You need to open access hatch on [src] first!"))
 			return FALSE
 		var/newtag = tgui_input_text(user, "Enter new RCON tag. Use \"NO_TAG\" to disable RCON or leave empty to cancel.", "SMES RCON system", "", MAX_NAME_LEN)
 		newtag = sanitize(newtag,MAX_NAME_LEN)
@@ -456,7 +456,7 @@
 
 	if(W.has_tool_quality(TOOL_CROWBAR))
 		if (!panel_open)
-			to_chat(user, span_warning("You need to open access hatch on [src] first!</span>"))
+			to_chat(user, span_warning("You need to open access hatch on [src] first!"))
 			return FALSE
 		if (terminalconnections.len)
 			to_chat(user, span_warning("You have to disassemble the connections first!"))
@@ -545,7 +545,7 @@
 
 	else if(istype(W, /obj/item/weapon/smes_coil))
 		if (!panel_open)
-			to_chat(user, span_notice("<span class='warning'>You need to open access hatch on [src] first!</span>"))
+			to_chat(user, span_warning("You need to open access hatch on [src] first!"))
 			return FALSE
 		if(cur_coils < max_coils)
 			//if(failure_probability && prob(failure_probability))	//I personally don't think this is a fun mechanic
@@ -559,7 +559,7 @@
 			W.loc = src
 			recalc_coils()
 		else
-			to_chat(user, span_notice("<span class='notice'>You can't insert more coils into this SMES unit!</span>"))
+			to_chat(user, span_notice("You can't insert more coils into this SMES unit!"))
 
 	return ..()
 
@@ -638,7 +638,7 @@
 	amount = max(0, round(amount))
 	damage += amount
 	if(damage > maxdamage)
-		visible_message(span_danger("\The [src] explodes in large shower of sparks and smoke!</span>"))
+		visible_message(span_danger("\The [src] explodes in large shower of sparks and smoke!"))
 		// Depending on stored charge percentage cause damage.
 		switch(Percentage())
 			if(75 to INFINITY)

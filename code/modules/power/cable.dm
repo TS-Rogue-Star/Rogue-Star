@@ -187,7 +187,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 			return
 		if (shock(user, 50))
 			return
-		user.visible_message(span_notice("[user] cuts the cable.</span>"), span_notice("You cut the cable."))
+		user.visible_message(span_notice("[user] cuts the cable."), span_notice("You cut the cable."))
 		investigate_log("was cut by [key_name(usr, usr.client)] in [COORD(T)]","powernet")
 		deconstruct()
 		return
