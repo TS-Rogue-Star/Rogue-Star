@@ -61,7 +61,7 @@
 /obj/machinery/button/holosign
 	name = "holosign switch"
 	desc = "A remote control switch for holosign."
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machines/power/power.dmi'
 	icon_state = "crema_switch"
 
 /obj/machinery/button/holosign/attack_hand(mob/user as mob)

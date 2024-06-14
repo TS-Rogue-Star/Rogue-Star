@@ -2,7 +2,7 @@
 /obj/machinery/power/port_gen
 	name = "Placeholder Generator"	//seriously, don't use this. It can't be anchored without VV magic.
 	desc = "A portable generator for emergency backup power"
-	icon = 'icons/obj/power_vr.dmi' //VOREStation Edit
+	icon = 'icons/obj/machines/power/power_vr.dmi' //VOREStation Edit
 	icon_state = "portgen0" //VOREStation Edit
 	density = TRUE
 	anchored = FALSE
@@ -158,7 +158,7 @@
 
 /obj/machinery/power/port_gen/pacman/examine(mob/user)
 	. = ..()
-	. += "It appears to be producing [power_gen*power_output] W."
+	. += "It appears to be set to produce [DisplayPower(power_gen*power_output)]."
 	. += "There [sheets == 1 ? "is" : "are"] [sheets] sheet\s left in the hopper."
 	if(IsBroken())
 		. += "<span class='warning'>It seems to have broken down.</span>"
@@ -429,11 +429,26 @@
 /obj/machinery/power/port_gen/pacman/super/potato
 	name = "nuclear reactor"
 	desc = "PTTO-3, an industrial all-in-one nuclear power plant by Neo-Chernobyl GmbH. It uses uranium as a fuel source. Rated for 200 kW max safe output."
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machines/power/rtg/rtgs.dmi'
 	icon_state = "potato"
 	time_per_sheet = 1152 //same power output, but a 50 sheet stack will last 4 hours at max safe power
 	power_gen = 50 KILOWATTS //watts
 	anchored = TRUE
+
+/obj/machinery/power/port_gen/pacman/super/potato/update_icon()
+	cut_overlays()
+	if(!overheating)
+		set_light(0)
+	if(active)
+		icon_state = "potatoon"
+	if(overheating)
+		icon_state = "potatodanger"
+		var/mutable_appearance/reactorglow = mutable_appearance(icon, "eggrad", alpha = 190)
+		add_overlay(reactorglow)
+		set_light(l_range = 2, l_power = 2, l_color = "#A8B0F8")
+	else
+		icon_state = initial(icon_state)
+	update_cable_icons_on_turf(get_turf(src))
 
 // Big altevian version of pacman. has a lot of copypaste from regular kind, but less flexible.
 /obj/machinery/power/port_gen/large_altevian

@@ -4,7 +4,7 @@
 /obj/machinery/light_switch
 	name = "light switch"
 	desc = "It turns lights on and off. What are you, simple?"
-	icon = 'icons/obj/power_vr.dmi' // VOREStation Edit
+	icon = 'icons/obj/machines/power/power_vr.dmi' // VOREStation Edit
 	icon_state = "light1"
 	layer = ABOVE_WINDOW_LAYER
 	anchored = TRUE

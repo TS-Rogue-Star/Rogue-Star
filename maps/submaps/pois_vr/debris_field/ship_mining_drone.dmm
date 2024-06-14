@@ -36,7 +36,7 @@
 "ah" = (
 /obj/structure/prop{
 	desc = "An array of conventional power storage units, for when the added charge longivity and cost of a SMES unit is unneded or impractical.";
-	icon = 'icons/obj/power.dmi';
+	icon = 'icons/obj/machines/power/power.dmi';
 	icon_state = "gridchecker_off";
 	name = "capacitor bank"
 	},
@@ -98,7 +98,7 @@
 "ar" = (
 /obj/machinery/power/rtg/fake_gen{
 	desc = "An array of conventional power storage units, for when the added charge longivity and cost of a SMES unit is unneded or impractical.";
-	icon = 'icons/obj/power.dmi';
+	icon = 'icons/obj/machines/power/power.dmi';
 	icon_state = "gridchecker_off";
 	name = "capacitor bank";
 	power_gen = 12000
@@ -498,7 +498,7 @@
 "ba" = (
 /obj/structure/prop{
 	desc = "An array of conventional power storage units, for when the added charge longivity and cost of a SMES unit is unneded or impractical.";
-	icon = 'icons/obj/power.dmi';
+	icon = 'icons/obj/machines/power/power.dmi';
 	icon_state = "gridchecker_off";
 	name = "capacitor bank"
 	},

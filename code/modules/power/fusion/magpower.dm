@@ -4,7 +4,7 @@
 /obj/machinery/power/hydromagnetic_trap
 	name = "\improper hydromagnetic trap"
 	desc = "A device for extracting power from high-energy plasma in toroidal fields."
-	icon = 'icons/obj/machines/power/fusion.dmi'
+	icon = 'icons/obj/machines/power/fusion/fusion.dmi'
 	icon_state = "mag_trap0"
 	anchored = TRUE
 	var/list/things_in_range = list()//what is in a radius of us?

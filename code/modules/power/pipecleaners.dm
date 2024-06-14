@@ -156,7 +156,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/item/stack/pipe_cleaner_coil
 	name = "pipe cleaner coil"
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machines/power/power.dmi'
 	icon_state = "coil"
 	amount = MAXCOIL
 	max_amount = MAXCOIL

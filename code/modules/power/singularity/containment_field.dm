@@ -3,7 +3,7 @@
 /obj/machinery/containment_field
 	name = "Containment Field"
 	desc = "An energy field."
-	icon = 'icons/obj/machines/field_generator.dmi'
+	icon = 'icons/obj/machines/power/singularity/field_generator.dmi'
 	icon_state = "Contain_F"
 	anchored = TRUE
 	density = FALSE

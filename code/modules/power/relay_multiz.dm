@@ -42,19 +42,6 @@
 	cable_layer = CABLE_LAYER_1|CABLE_LAYER_2|CABLE_LAYER_3|CABLE_LAYER_4
 	return */
 
-/obj/machinery/power/deck_relay/update_icon()
-	if(stat & BROKEN)
-		icon_state = "cablerelay-broken"
-		return
-	if(!connectiondown || QDELETED(connectiondown) || !connectionup || QDELETED(connectionup) || (powernet && (powernet.avail <= 0)))
-		icon_state = "cablerelay-off"
-		if(patched)
-			icon_state = "cablerelay-off-patched"
-	else
-		icon_state = "cablerelay-on"
-		if(patched)
-			icon_state = "cablerelay-on-patched"
-
 /obj/machinery/power/deck_relay/Destroy()
 	. = ..()
 	investigate_log("<font color='red'>deleted</font> at [COORD(src)]","powernet")
@@ -112,9 +99,10 @@
 		if(patched)
 			icon_state = "cablerelay-off-patched"
 
-	icon_state = "cablerelay-on"
-	if(patched)
-		icon_state = "cablerelay-on-patched"
+	else if(powernet && (powernet.avail > 0))
+		icon_state = "cablerelay-on"
+		if(patched)
+			icon_state = "cablerelay-on-patched"
 
 	/* if(!powernets)
 		icon_state = "cablerelay-off"
@@ -300,6 +288,7 @@
 		update_cable_icons_on_turf(get_turf(src))
 		if(anchored)
 			find_and_connect()
+		process()	//calling this updates the sprite as well as makes the powernet go brr. too many conditionals to update_icon()
 		return FALSE
 
 	if(O.has_tool_quality(TOOL_WIRECUTTER))
@@ -316,6 +305,7 @@
 				user.visible_message(span_notice("[user] mangles the wiring in \the [src]."), span_notice("You mangle the wires of \the [src]."))
 				stat |= BROKEN
 				patched = FALSE
+				process()
 				return
 
 	if(O.has_tool_quality(TOOL_CABLE_COIL))	//the rare heavy cable repair permitted, too.
@@ -325,6 +315,9 @@
 				stat &= ~BROKEN
 				patched = TRUE
 				user.visible_message(span_notice("[user.name] has patched the wiring of \the [src]."), span_notice("You patch \the [src] wires."))
+				if(anchored)
+					find_and_connect()
+				process()
 				return
 			else
 				to_chat(user, span_warning("You need at least five lengths of cable to repair this relay."))

@@ -46,7 +46,7 @@
 /obj/machinery/power/rtg
 	name = "radioisotope thermoelectric generator"
 	desc = "A simple nuclear power generator, used in small outposts to reliably provide power for decades."
-	icon = 'icons/obj/power_vr.dmi'
+	icon = 'icons/obj/machines/power/rtg/rtgs.dmi'
 	icon_state = "rtg"
 	density = TRUE
 	use_power = USE_POWER_OFF
@@ -285,7 +285,7 @@
 /obj/machinery/power/rtg/reg
 	name = "d-type rotary electric generator"
 	desc = "It looks kind of like a large hamster wheel."
-	icon = 'icons/obj/power_vrx96.dmi'
+	icon = 'icons/obj/machines/power/rtg/power_vrx96.dmi'
 	icon_state = "reg"
 	circuit = /obj/item/weapon/circuitboard/machine/reg_d
 	irradiate = FALSE

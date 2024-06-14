@@ -14,7 +14,6 @@
 	var/wire_allow_manual_1 = FALSE
 	var/wire_allow_manual_2 = FALSE
 	var/wire_allow_manual_3 = FALSE
-	var/opened = FALSE
 
 /obj/machinery/power/grid_checker/Initialize()
 	. = ..()
@@ -42,12 +41,18 @@
 	if(default_unfasten_wrench(user, W, 40))
 		update_cable_icons_on_turf(get_turf(src))
 		return FALSE
-	if(W.has_tool_quality(TOOL_SCREWDRIVER))
-		default_deconstruction_screwdriver(user, W)
-		opened = !opened
-	else if(W.has_tool_quality(TOOL_CROWBAR))
-		default_deconstruction_crowbar(user, W)
-	else if(istype(W, /obj/item/device/multitool) || W.is_wirecutter())
+
+	if(default_deconstruction_screwdriver(user, W))
+		if(panel_open)
+			add_overlay("bbox_panel")
+		else
+			cut_overlays()
+		return
+
+	if(default_deconstruction_crowbar(user, W))
+		return
+
+	if(W.has_tool_quality(TOOL_MULTITOOL) || W.has_tool_quality(TOOL_WIRECUTTER))
 		attack_hand(user)
 
 /obj/machinery/power/grid_checker/attack_hand(mob/user)
@@ -60,7 +65,7 @@
 	if(!user)
 		return
 
-	if(opened)
+	if(panel_open)
 		wires.Interact(user)
 
 	return tgui_interact(user)

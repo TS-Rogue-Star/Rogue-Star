@@ -8,7 +8,7 @@
 
 /obj/machinery/power
 	name = null
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machines/power/power.dmi'
 	anchored = TRUE
 	use_power = USE_POWER_OFF
 	idle_power_usage = 0
@@ -59,6 +59,8 @@
 /obj/machinery/power/examine(mob/user)
 	. = ..()
 	if(can_change_cable_layer)
+		if(powernet == FALSE) //the only way I can think of to not double-examine APCs... No powernet = null
+			return
 		if(!QDELETED(powernet))
 			. += span_notice("It's operating on the [LOWER_TEXT(GLOB.cable_layer_to_name["[cable_layer]"])].")
 		else
@@ -150,7 +152,7 @@
 		if(get_dist(src, user) > 1)
 			return
 		coil.place_turf(T, user)
-	else	
+	else
 		return ..()
 
 /obj/machinery/power/default_unfasten_wrench(mob/user, obj/item/W, time = 0)

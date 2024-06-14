@@ -673,7 +673,7 @@ var/list/ai_verbs_default = list(
 							if("floating face")
 								holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo2"))
 							if("singularity")
-								holo_icon = getHologramIcon(icon('icons/obj/singularity.dmi',"singularity_s1"))
+								holo_icon = getHologramIcon(icon('icons/obj/machines/power/singularity/singularity.dmi',"singularity_s1"))
 							if("drone")
 								holo_icon = getHologramIcon(icon('icons/mob/animal.dmi',"drone"))
 							if("carp")

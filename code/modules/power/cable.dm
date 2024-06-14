@@ -3,6 +3,7 @@
 GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 						/obj/structure/grille,
 						/obj/machinery/shield_gen,
+						/obj/machinery/shield_capacitor,
 						/obj/item/device/powersink,
 						/obj/machinery/shieldwallgen,
 						/obj/machinery/recharge_station
@@ -182,11 +183,11 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 		return
 	if(W.has_tool_quality(TOOL_WIRECUTTER))
 		if(breaker_box)
-			to_chat(user, "<span class='warning'>This cable is connected to nearby breaker box. Use breaker box to interact with it.</span>")
+			to_chat(user, span_warning("This cable is connected to nearby breaker box. Use breaker box to interact with it."))
 			return
 		if (shock(user, 50))
 			return
-		user.visible_message("<span class='notice'>[user] cuts the cable.</span>", "<span class='notice'>You cut the cable.</span>")
+		user.visible_message(span_notice("[user] cuts the cable.</span>"), span_notice("You cut the cable."))
 		investigate_log("was cut by [key_name(usr, usr.client)] in [COORD(T)]","powernet")
 		deconstruct()
 		return
@@ -231,9 +232,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 
 /obj/structure/cable/proc/get_power_info()
 	if(powernet?.avail > 0)
-		return "<span class='filter_notice'><span class='warning'>Total power: [DisplayPower(powernet.viewavail)]\nLoad: [DisplayPower(powernet.viewload)]\nExcess power: [DisplayPower(powernet.netexcess)]</span></span>"
+		return span_warning("Total power: [DisplayPower(powernet.viewavail)]\nLoad: [DisplayPower(powernet.viewload)]\nExcess power: [DisplayPower(powernet.netexcess)]")
 	else
-		return "<span class='filter_notice'><span class='warning'>The cable is not powered.</span></span>"
+		return span_warning("The cable is not powered.")
 
 // Items usable on a cable :
 //   - Wirecutters : cut it duh !
@@ -396,7 +397,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 /obj/item/stack/cable_coil
 	name = "cable coil"
 	gender = NEUTER //That's a cable coil sounds better than that's some cable coils
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machines/power/power.dmi'
 	icon_state = "coil"
 	item_state = "coil"
 	max_amount = MAXCOIL
@@ -554,11 +555,11 @@ GLOBAL_LIST(cable_radial_layer_list)
 
 		if(S.organ_tag == BP_HEAD)
 			if(H.head && istype(H.head,/obj/item/clothing/head/helmet/space))
-				to_chat(user, "<span class='warning'>You can't apply [src] through [H.head]!</span>")
+				to_chat(user, span_warning("You can't apply [src] through [H.head]!"))
 				return TRUE
 		else
 			if(H.wear_suit && istype(H.wear_suit,/obj/item/clothing/suit/space))
-				to_chat(user, "<span class='warning'>You can't apply [src] through [H.wear_suit]!</span>")
+				to_chat(user, span_warning("You can't apply [src] through [H.wear_suit]!"))
 				return TRUE
 
 		var/use_amt = min(src.amount, CEILING(S.burn_dam/5, 1), 5)
@@ -593,7 +594,7 @@ GLOBAL_LIST(cable_radial_layer_list)
 		selected_color = "red"
 	color = final_color
 	if(usr)	//debug runtimes? I guess?
-		to_chat(usr, "<span class='notice'>You change \the [src]'s color to [lowertext(selected_color)].</span>")
+		to_chat(usr, span_notice("You change \the [src]'s color to [lowertext(selected_color)]."))
 
 /obj/item/stack/cable_coil/proc/update_wclass()
 	if(amount == 1)
@@ -624,14 +625,14 @@ GLOBAL_LIST(cable_radial_layer_list)
 	if(ishuman(M) && !M.restrained() && !M.stat && !M.paralysis && ! M.stunned)
 		if(!isturf(usr.loc)) return
 		if(src.amount < CABLE_RESTRAINTS_COST)
-			to_chat(usr, "<span class='warning'>You need at least 15 lengths to make restraints!</span>")
+			to_chat(usr, span_warning("You need at least 15 lengths to make restraints!"))
 			return
 		var/obj/item/weapon/handcuffs/cable/B = new /obj/item/weapon/handcuffs/cable(usr.loc)
 		B.color = color
-		to_chat(usr, "<span class='notice'>You wind some cable together to make some restraints.</span>")
+		to_chat(usr, span_notice("You wind some cable together to make some restraints."))
 		src.use(CABLE_RESTRAINTS_COST)
 	else
-		to_chat(usr, "<span class='notice'>You cannot do that.</span>")
+		to_chat(usr, span_notice("You cannot do that."))
 
 /obj/item/stack/cable_coil/cyborg/verb/set_colour()
 	set name = "Change Colour"
@@ -669,20 +670,20 @@ GLOBAL_LIST(cable_radial_layer_list)
 		return
 
 	if(!isturf(T) || !T.is_plating() || !T.can_have_cabling())
-		to_chat(user, "<span class='warning'>You can only lay cables on catwalks and plating!</span>")
+		to_chat(user, span_warning("You can only lay cables on catwalks and plating!"))
 		return
 
 	if(get_amount() < 1) // Out of cable
-		to_chat(user, "<span class='warning'>There is no cable left!</span>")
+		to_chat(user, span_warning("There is no cable left!"))
 		return
 
 	if(get_dist(T,user) > 1) // Too far
-		to_chat(user, "<span class='warning'>You can't lay cable at a place that far away!</span>")
+		to_chat(user, span_warning("You can't lay cable at a place that far away!"))
 		return
 
 	for(var/obj/structure/cable/C in T)
 		if(C.cable_layer & target_layer)
-			to_chat(user, "<span class='warning'>There's already a cable at that position and layer!</span>")
+			to_chat(user, span_warning("There's already a cable at that position and layer!"))
 			return
 
 	var/obj/structure/cable/C = new target_type(T)
@@ -859,7 +860,7 @@ GLOBAL_LIST(cable_radial_layer_list)
 			var/obj/item/stack/cable_coil/CC = new/obj/item/stack/cable_coil(user.loc)
 			CC.amount = N
 			CC.update_icon()
-			to_chat(user,"<font color='blue'>You take [N] units of wire from the [src].</font>")
+			to_chat(user,span_notice("You take [N] units of wire from the [src]."))
 			if (CC)
 				user.put_in_hands(CC)
 				src.add_fingerprint(user)

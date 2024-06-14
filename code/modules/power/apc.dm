@@ -98,7 +98,6 @@
 /obj/machinery/power/apc
 	name = "area power controller"
 	desc = "A control terminal for the area electrical systems."
-	icon = 'icons/obj/power.dmi'
 	icon_state = "apc0"
 	layer = ABOVE_WINDOW_LAYER
 	anchored = TRUE
@@ -138,7 +137,7 @@
 	var/main_status = APC_EXTERNAL_POWER_NOTCONNECTED
 	var/mob/living/silicon/ai/hacker = null // Malfunction var. If set AI hacked the APC and has full control.
 	var/wiresexposed = FALSE
-	powernet = 0		// set so that APCs aren't found as powernet nodes //Hackish, Horrible, was like this before I changed it :(
+	powernet = FALSE		// set so that APCs aren't found as powernet nodes //Hackish, Horrible, was like this before I changed it :(
 	var/debug= FALSE
 	var/autoflag= 0		// 0 = off, 1= eqp and lights off, 2 = eqp off, 3 = all on.
 	var/has_electronics = APC_HAS_ELECTRONICS_NONE // 0 - none, 1 - plugged in, 2 - secured by screwdriver
@@ -336,6 +335,12 @@
 
 /obj/machinery/power/apc/examine(mob/user)
 	. = ..()
+	if(terminal)
+		if(!QDELETED(terminal.powernet))
+			. += span_notice("It's operating on the [LOWER_TEXT(GLOB.cable_layer_to_name["[terminal.cable_layer]"])].")
+		else
+			. += span_warning("It's disconnected from the [LOWER_TEXT(GLOB.cable_layer_to_name["[terminal.cable_layer]"])].")
+
 	if(Adjacent(user))
 		if(stat & BROKEN)
 			. += "This APC is broken."

@@ -1,7 +1,7 @@
 /obj/item/stack/cable_coil/heavyduty
 	name = "heavy cable coil"
 	desc = "Extremely thick cable designed for durability with high power loads. Only recommended for power transmission to SMES connections."
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machines/power/power.dmi'
 	icon_state = "coil-wire"
 	item_state = "coil-wire"
 	target_layer = CABLE_LAYER_4
@@ -9,10 +9,6 @@
 	color = COLOR_WHITE
 	target_type = /obj/structure/cable/heavyduty
 	tool_qualities = list(TOOL_CABLE_COIL)
-
-/obj/item/stack/cable_coil/heavyduty/examine(mob/user)
-	. = ..()
-	. += "<b>Use it in hand</b> to construct a power transfer node. Rename its ID with your multitool."
 
 /obj/item/stack/cable_coil/heavyduty/update_icon()
 	if(amount == 1)
@@ -42,10 +38,10 @@
 	if(!T.is_plating())
 		return
 	if(istype(W, /obj/item/stack/cable_coil/heavyduty))
-		to_chat(user, "<span class='notice'>There is already heavy cabling here.</span>")
+		to_chat(user, span_notice("There is already heavy cabling here."))
 		return
 	if(W.has_tool_quality(TOOL_CABLE_COIL))
-		to_chat(user, "<span class='notice'>You will need heavier cables to connect to these.</span>")
+		to_chat(user, span_notice("You will need heavier cables to connect to these."))
 		return
 	else
 		..()

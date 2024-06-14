@@ -3,7 +3,7 @@
 /obj/machinery/atmospherics/binary/circulator
 	name = "circulator"
 	desc = "A gas circulator turbine and heat exchanger."
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machines/power/power.dmi'
 	icon_state = "circ-unassembled"
 	anchored = FALSE
 	unacidable = TRUE

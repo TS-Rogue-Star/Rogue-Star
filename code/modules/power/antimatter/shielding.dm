@@ -11,7 +11,7 @@
 	name = "antimatter reactor section"
 	desc = "This device was built using a phoron life-form that seems to increase phoron's natural ability to react with neutrinos while reducing the combustibility."
 
-	icon = 'icons/obj/machines/antimatter.dmi'
+	icon = 'icons/obj/machines/power/antimatter/antimatter.dmi'
 	icon_state = "shield"
 	anchored = TRUE
 	density = TRUE
@@ -187,7 +187,7 @@
 /obj/item/device/am_shielding_container
 	name = "packaged antimatter reactor section"
 	desc = "A small storage unit containing an antimatter reactor section.  To use place near an antimatter control unit or deployed antimatter reactor section and use a multitool to activate this package."
-	icon = 'icons/obj/machines/antimatter.dmi'
+	icon = 'icons/obj/machines/power/antimatter/antimatter.dmi'
 	icon_state = "box"
 	item_state = "electronic"
 	w_class = ITEMSIZE_LARGE

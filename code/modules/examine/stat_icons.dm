@@ -16,7 +16,7 @@ var/global/list/description_icons = list(
 	"wrench" = image(icon='icons/obj/tools.dmi',icon_state="wrench"),
 	"crowbar" = image(icon='icons/obj/tools.dmi',icon_state="crowbar"),
 	"multitool" = image(icon='icons/obj/device.dmi',icon_state="multitool"),
-	"cable coil" = image(icon='icons/obj/power.dmi',icon_state="coil"), // VOREStation Edit
+	"cable coil" = image(icon='icons/obj/machines/power/power.dmi',icon_state="coil"), // VOREStation Edit
 
 	"metal sheet" = image(icon='icons/obj/items.dmi',icon_state="sheet-metal"),
 	"plasteel sheet" = image(icon='icons/obj/items.dmi',icon_state="sheet-plasteel"),
@@ -27,9 +27,9 @@ var/global/list/description_icons = list(
 	"stunbaton" = image(icon='icons/obj/weapons.dmi',icon_state="stunbaton_active"),
 	"slimebaton" = image(icon='icons/obj/weapons.dmi',icon_state="slimebaton_active"),
 
-	"power cell" = image(icon='icons/obj/power.dmi',icon_state="hcell"),
-	"device cell" = image(icon='icons/obj/power.dmi',icon_state="dcell"),
-	"weapon cell" = image(icon='icons/obj/power.dmi',icon_state="wcell"),
+	"power cell" = image(icon='icons/obj/machines/power/power_cells.dmi',icon_state="standard"),
+	"device cell" = image(icon='icons/obj/machines/power/power_cells.dmi',icon_state="device_cell"),
+	"weapon cell" = image(icon='icons/obj/machines/power/power_cells.dmi',icon_state="weapon_cell"),
 
 	"hatchet" = image(icon='icons/obj/weapons.dmi',icon_state="hatchet"),
 	)

@@ -59,6 +59,14 @@
 		var/turf/position = get_turf(src)
 		ranging_level = position.z
 
+	component_parts = list()
+	component_parts += new	/obj/item/weapon/circuitboard/power_transmitter(src)
+	component_parts += new	/obj/item/weapon/stock_parts/subspace/ansible(src)
+	component_parts += new	/obj/item/weapon/smes_coil/super_io(src)
+	component_parts += new	/obj/item/weapon/stock_parts/capacitor(src, 5)
+	component_parts += new	/obj/item/weapon/stock_parts/console_screen(src)
+	component_parts += new	/obj/item/stack/cable_coil/heavyduty(src, 20)
+
 	addtimer(CALLBACK(src, PROC_REF(find_buddy)), 30)
 	addtimer(CALLBACK(src, PROC_REF(refresh)), 50) //Wait a bit so we can find a valid partner, then get powering
 
@@ -188,7 +196,20 @@
 		update_cable_icons_on_turf(get_turf(src))
 		return FALSE
 
+	if(default_deconstruction_screwdriver(user, W))
+		if(panel_open)
+			add_overlay("transmitter_panel")
+		else
+			cut_overlays()
+		return
+
+	if(default_deconstruction_crowbar(user, W))
+		return
+
 	if(W.has_tool_quality(TOOL_MULTITOOL))
+		if (!panel_open)
+			to_chat(user, span_warning("You need to open access hatch on [src] first!"))
+			return FALSE
 		if(!locked)
 			var/new_ident = tgui_input_text(usr, "Enter a new ident tag.", "Power Transmitter", id, MAX_NAME_LEN)
 			new_ident = sanitize(new_ident,MAX_NAME_LEN)
@@ -208,22 +229,3 @@
 		else
 			to_chat(user, span_warning("Access denied."))
 		return
-
-/datum/design/circuit/power_transmitter
-	name = "Power Transmittor"
-	id = "power_transmitter"
-	req_tech = list(TECH_DATA = 3, TECH_POWER = 5, TECH_ENGINEERING = 5, TECH_BLUESPACE = 4)
-	build_path = /obj/item/weapon/circuitboard/power_transmitter
-	sort_string = "PWTM"
-
-/obj/item/weapon/circuitboard/power_transmitter
-	name = T_BOARD("power transmitter")
-	build_path = /obj/machinery/power/power_transmitter
-	origin_tech = list(TECH_DATA = 3, TECH_ENGINEERING = 5, TECH_POWER = 5, TECH_BLUESPACE = 4)
-	req_components = list(
-							/obj/item/weapon/stock_parts/subspace/ansible = 1,
-							/obj/item/weapon/smes_coil/super_io = 1,
-							/obj/item/weapon/stock_parts/capacitor = 5,
-							/obj/item/weapon/stock_parts/console_screen = 1,
-							/obj/item/stack/cable_coil/heavyduty = 20
-						)

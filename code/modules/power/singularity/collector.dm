@@ -4,7 +4,7 @@ var/global/list/rad_collectors = list()
 /obj/machinery/power/rad_collector
 	name = "Radiation Collector Array"
 	desc = "A device which uses Hawking Radiation and phoron to produce power."
-	icon = 'icons/obj/singularity.dmi'
+	icon = 'icons/obj/machines/power/singularity/singularity.dmi'
 	icon_state = "ca"
 	anchored = FALSE
 	density = TRUE

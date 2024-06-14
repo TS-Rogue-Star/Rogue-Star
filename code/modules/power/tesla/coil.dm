@@ -1,7 +1,7 @@
 /obj/machinery/power/tesla_coil
 	name = "tesla coil"
 	desc = "For the union!"
-	icon = 'icons/obj/tesla_engine/tesla_coil.dmi'
+	icon = 'icons/obj/machines/power/tesla_engine/tesla_coil.dmi'
 	icon_state = "coil0"
 	var/icontype = "coil"
 	anchored = FALSE

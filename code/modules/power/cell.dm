@@ -5,7 +5,7 @@
 /obj/item/weapon/cell
 	name = "power cell"
 	desc = "A rechargable electrochemical power cell."
-	icon = 'icons/obj/power_cells.dmi'
+	icon = 'icons/obj/machines/power/power_cells.dmi'
 	icon_state = "standard"
 	item_state = "cell"
 	origin_tech = list(TECH_POWER = 1)

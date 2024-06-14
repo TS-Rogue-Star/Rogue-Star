@@ -193,7 +193,7 @@
 /turf/simulated/floor/reinforced,
 /area/shuttle/tabiranth)
 "af" = (
-/obj/machinery/portable_atmospherics/powered/scrubber/huge/stationary/tram{
+/obj/machinery/portable_atmospherics/powered/scrubber/huge/stationary{
 	desc = "A large machine releasing a constant gust of air.";
 	icon = 'icons/obj/survival_pod.dmi';
 	icon_state = "fans";
@@ -381,7 +381,6 @@
 	dir = 8
 	},
 /obj/effect/floor_decal/industrial/warning{
-	icon_state = "warning";
 	dir = 8
 	},
 /obj/machinery/button/remote/blast_door{
@@ -393,8 +392,7 @@
 /area/shuttle/tabiranth)
 "al" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden{
-	dir = 1;
-	icon_state = "map"
+	dir = 1
 	},
 /obj/machinery/suit_cycler{
 	density = 0;
@@ -407,7 +405,6 @@
 	dir = 4
 	},
 /obj/effect/floor_decal/industrial/warning{
-	icon_state = "warning";
 	dir = 4
 	},
 /obj/machinery/button/remote/blast_door{
@@ -430,8 +427,7 @@
 "ao" = (
 /obj/effect/floor_decal/industrial/hatch/yellow,
 /obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 10;
-	icon_state = "intact"
+	dir = 10
 	},
 /turf/simulated/floor/reinforced,
 /area/shuttle/tabiranth)
@@ -459,7 +455,6 @@
 	dir = 4
 	},
 /obj/effect/floor_decal/industrial/warning{
-	icon_state = "warning";
 	dir = 8
 	},
 /turf/simulated/floor/reinforced,
@@ -473,7 +468,6 @@
 	dir = 8
 	},
 /obj/effect/floor_decal/industrial/warning{
-	icon_state = "warning";
 	dir = 4
 	},
 /turf/simulated/floor/reinforced,
@@ -548,8 +542,7 @@
 	start_pressure = 15000
 	},
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /turf/simulated/floor/reinforced,
 /area/shuttle/tabiranth)
@@ -569,7 +562,6 @@
 	dir = 1
 	},
 /obj/effect/floor_decal/industrial/warning{
-	icon_state = "warning";
 	dir = 8
 	},
 /obj/machinery/recharger/wallcharger{
@@ -662,7 +654,6 @@
 	dir = 1
 	},
 /obj/effect/floor_decal/industrial/warning{
-	icon_state = "warning";
 	dir = 4
 	},
 /obj/machinery/recharger/wallcharger{
@@ -688,7 +679,6 @@
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
 /obj/effect/map_helper/airlock/sensor/chamber_sensor,
 /obj/machinery/light/small{
-	icon_state = "bulb1";
 	dir = 1
 	},
 /obj/structure/handrail{
@@ -750,7 +740,6 @@
 	frequency = 1380
 	},
 /obj/machinery/light/small{
-	icon_state = "bulb1";
 	dir = 1
 	},
 /obj/machinery/airlock_sensor{
@@ -954,10 +943,6 @@
 /obj/machinery/chem_master,
 /turf/simulated/floor/tiled/white,
 /area/shuttle/tabiranth)
-"aW" = (
-/obj/structure/cable,
-/turf/simulated/floor/tiled/white,
-/area/shuttle/tabiranth)
 "aX" = (
 /obj/machinery/power/apc{
 	alarms_hidden = 1;
@@ -993,9 +978,7 @@
 /turf/simulated/floor/tiled/white,
 /area/shuttle/tabiranth)
 "bc" = (
-/obj/machinery/sleep_console{
-	dir = 8
-	},
+/obj/machinery/sleep_console,
 /turf/simulated/floor/tiled/white,
 /area/shuttle/tabiranth)
 "bd" = (
@@ -1147,8 +1130,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small{
-	dir = 4;
-	pixel_y = 0
+	dir = 4
 	},
 /obj/machinery/atm,
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -1161,8 +1143,7 @@
 	req_access = list(101)
 	},
 /obj/machinery/light/small{
-	dir = 8;
-	pixel_x = 0
+	dir = 8
 	},
 /obj/machinery/recharger,
 /obj/item/modular_computer/laptop/preset/custom_loadout/elite,
@@ -1178,20 +1159,17 @@
 /area/shuttle/tabiranth)
 "bu" = (
 /obj/machinery/computer/ship/engines{
-	dir = 8;
-	icon_state = "computer"
+	dir = 8
 	},
 /obj/machinery/light/small{
-	dir = 4;
-	pixel_y = 0
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/shuttle/tabiranth)
 "bv" = (
 /obj/structure/medical_stand,
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/shuttle/tabiranth)
@@ -1215,14 +1193,12 @@
 	density = 0
 	},
 /obj/effect/floor_decal/techfloor{
-	icon_state = "techfloor_edges";
 	dir = 6
 	},
 /obj/machinery/vending/nifsoft_shop{
 	categories = 111;
 	emagged = 1;
-	name = "Hacked NIFSoft Shop";
-	prices = list()
+	name = "Hacked NIFSoft Shop"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/shuttle/tabiranth)
@@ -1248,8 +1224,8 @@
 "bC" = (
 /obj/machinery/organ_printer/flesh/full,
 /obj/structure/sink/kitchen{
-	icon_state = "sink_alt";
 	dir = 4;
+	icon_state = "sink_alt";
 	pixel_x = -13
 	},
 /turf/simulated/floor/tiled/white,
@@ -1528,11 +1504,11 @@
 	icon = 'icons/turf/shuttle_alien_blue.dmi'
 	},
 /obj/mecha/combat/fighter/baron/loaded{
+	desc = "A heavily modified Baron-class fighter from the commonwealth. It has been retrofitted with heavier armor and additional maneuvering thrusters. Can be used in atmospheric operations.";
 	ground_capable = 1;
 	health = 600;
 	maxhealth = 600;
 	name = "Duke";
-	desc = "A heavily modified Baron-class fighter from the commonwealth. It has been retrofitted with heavier armor and additional maneuvering thrusters. Can be used in atmospheric operations.";
 	starting_components = list(/obj/item/mecha_parts/component/hull/lightweight,/obj/item/mecha_parts/component/actuator/hispeed,/obj/item/mecha_parts/component/armor/military,/obj/item/mecha_parts/component/gas/reinforced,/obj/item/mecha_parts/component/electrical)
 	},
 /turf/simulated/floor/reinforced,
@@ -1608,34 +1584,10 @@
 /obj/item/weapon/storage/secure/briefcase/nsfw_pack_hybrid,
 /obj/item/ammo_casing/microbattery/medical/corpse_mend,
 /obj/item/ammo_casing/microbattery/medical/corpse_mend,
-/obj/item/weapon/cell/slime{
-	description_info = "This 'cell' holds a max charge of 20k and self recharges over time.";
-	icon = 'icons/obj/power.dmi';
-	icon_state = "icell";
-	maxcharge = 20000;
-	name = "slime core cell"
-	},
-/obj/item/weapon/cell/slime{
-	description_info = "This 'cell' holds a max charge of 20k and self recharges over time.";
-	icon = 'icons/obj/power.dmi';
-	icon_state = "icell";
-	maxcharge = 20000;
-	name = "slime core cell"
-	},
-/obj/item/weapon/cell/slime{
-	description_info = "This 'cell' holds a max charge of 20k and self recharges over time.";
-	icon = 'icons/obj/power.dmi';
-	icon_state = "icell";
-	maxcharge = 20000;
-	name = "slime core cell"
-	},
-/obj/item/weapon/cell/slime{
-	description_info = "This 'cell' holds a max charge of 20k and self recharges over time.";
-	icon = 'icons/obj/power.dmi';
-	icon_state = "icell";
-	maxcharge = 20000;
-	name = "slime core cell"
-	},
+/obj/item/weapon/cell/slime,
+/obj/item/weapon/cell/slime,
+/obj/item/weapon/cell/slime,
+/obj/item/weapon/cell/slime,
 /obj/item/slime_extract/pink,
 /obj/item/slime_extract/pink,
 /obj/item/slime_extract/pink,
@@ -1930,7 +1882,7 @@ as
 aR
 bh
 ap
-aW
+aZ
 bd
 bA
 bm

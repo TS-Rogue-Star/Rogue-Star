@@ -5,7 +5,7 @@
 	name = "power storage unit"
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit."
 	icon_state = "smes"
-	icon = 'icons/obj/power_vr.dmi'
+	icon = 'icons/obj/machines/power/power_vr.dmi'
 	density = TRUE
 	anchored = TRUE
 	unacidable = TRUE
@@ -52,7 +52,6 @@
 	var/is_critical = FALSE
 
 	//Multi-terminal support
-	var/building_terminal = FALSE //Potential duplicate mitigator.
 	var/obj/machinery/power/terminal/terminal1
 	var/obj/machinery/power/terminal/terminal2
 	var/obj/machinery/power/terminal/terminal3	//max of three extras 'cuz this is very silly.
@@ -75,16 +74,16 @@
 /obj/machinery/power/smes/examine(user)
 	. = ..()
 	if(panel_open)
-		. += "<span class='notice'>The maintenance hatch is open.</span>"
+		. += span_notice("The maintenance hatch is open.")
 	if(!terminalconnections.len)
-		. += "<span class='warning'>This SMES has no power terminals!</span>"
+		. += span_warning("This SMES has no power terminals!")
 	for(var/obj/machinery/power/terminal/connected in terminalconnections)
 		if(connected == terminal1)
-			. += "<span class='notice'>Terminal 1 is connected.</span>"
+			. += span_notice("Terminal 1 is connected.")
 		if(connected == terminal2)
-			. += "<span class='notice'>Terminal 2 is connected.</span>"
+			. += span_notice("Terminal 2 is connected.")
 		if(connected == terminal3)
-			. += "<span class='notice'>Terminal 3 is connected.</span>"
+			. += span_notice("Terminal 3 is connected.")
 
 /obj/machinery/power/smes/Initialize(mapload)
 	. = ..()
@@ -144,7 +143,7 @@
 						terminal1 = term
 					if(CABLE_LAYER_2)
 						terminal2 = term
-					else if(CABLE_LAYER_3 || CABLE_LAYER_4)
+					if(CABLE_LAYER_3, CABLE_LAYER_4)
 						terminal3 = term
 				terminalconnections |= term
 				term.master = src
@@ -339,7 +338,7 @@
 // wires will attach to this
 // We've done our sanity checks in the attackby, and nothing else should call it.
 /obj/machinery/power/smes/proc/make_terminal(mob/user, turf/turf, terminal_cable_layer = cable_layer)
-	to_chat(user, "<span class='filter_notice'><span class='notice'>You start adding cable to the [src] on [LOWER_TEXT(GLOB.cable_layer_to_name["[terminal_cable_layer]"])].</span></span>")
+	to_chat(user, span_notice("You start adding cable to the [src] on [LOWER_TEXT(GLOB.cable_layer_to_name["[terminal_cable_layer]"])]"))
 	switch(terminal_cable_layer)
 		if(CABLE_LAYER_1)
 			terminal1 = new/obj/machinery/power/terminal/layer1(turf)
@@ -359,9 +358,7 @@
 	if(check_terminals())
 		if(stat && BROKEN)
 			stat &= ~BROKEN
-		visible_message(\
-		"[user.name] has built a power terminal.",\
-		"<span class='notice'>You build the power terminal.</span>")
+		user.visible_message("[user.name] has built a power terminal.", span_notice("You build the power terminal."))
 	else //no more terminals? Broken machine, clearly.
 		stat |= BROKEN
 		return FALSE
@@ -405,7 +402,7 @@
 	if(RCon)
 		tgui_interact(user)
 	else // RCON wire cut
-		to_chat(usr, "<span class='warning'>Connection error: Destination Unreachable.</span>")
+		to_chat(usr, span_warning("Connection error: Destination Unreachable."))
 
 	// Cyborgs standing next to the SMES can play with the wiring.
 	if(isrobot(usr) && Adjacent(usr) && panel_open)
@@ -420,25 +417,34 @@
 
 
 /obj/machinery/power/smes/attackby(var/obj/item/weapon/W, var/mob/user)
-	if(failing)	//TODO: Allow engineering to fix failing SMES units. Maybe with a Tesla grounding rod and a stick? because fuck you for hardcoding this
-		to_chat(user, "<span class='warning'>The [src]'s indicator lights are flashing wildly. It seems to be overloaded! Touching it now is probably not a good idea.</span>")
-		return
+	if(failing)	//Allow engineering to fix failing SMES units, because fuck you for hardcoding this previously
+		if(istype(W, /obj/item/stack/rods))
+			to_chat(user, span_critical("The [src]'s is shorted upon contact with [W]!"))
+			tesla_zap(src, 5, charge)
+			failing = FALSE
+		else
+			to_chat(user, span_critical("The [src]'s indicator lights are flashing wildly. It seems to be overloaded! Touching it now is probably not a good idea."))
+			return
+
 	//opening using screwdriver
 	if(default_deconstruction_screwdriver(user, W))
 		update_icon()
 		return
 
 	if(W.has_tool_quality(TOOL_MULTITOOL))
+		if (!panel_open)
+			to_chat(user, span_warning("You need to open access hatch on [src] first!</span>"))
+			return FALSE
 		var/newtag = tgui_input_text(user, "Enter new RCON tag. Use \"NO_TAG\" to disable RCON or leave empty to cancel.", "SMES RCON system", "", MAX_NAME_LEN)
 		newtag = sanitize(newtag,MAX_NAME_LEN)
 		if(newtag)
 			RCon_tag = newtag
-			to_chat(user, "<span class='notice'>You changed the RCON tag to: [newtag]</span>")
+			to_chat(user, span_notice("You changed the RCON tag to: [newtag]"))
 			return
 		//software updates shouldn't risk a SMES explosion, tf is with you people
 
 		if (output_attempt || input_attempt)
-			to_chat(user, "<span class='warning'>Turn off the [src] first!</span>")
+			to_chat(user, span_warning("Turn off the [src] first!"))
 			return
 
 	// Probability of failure if safety circuit is disabled (in %)
@@ -449,39 +455,38 @@
 		failure_probability = 0
 
 	if(W.has_tool_quality(TOOL_CROWBAR))
+		if (!panel_open)
+			to_chat(user, span_warning("You need to open access hatch on [src] first!</span>"))
+			return FALSE
 		if (terminalconnections.len)
-			to_chat(user, "<span class='warning'>You have to disassemble the connections first!</span>")
+			to_chat(user, span_warning("You have to disassemble the connections first!"))
 			return
 
 		playsound(src, W.usesound, 50, 1)
-		to_chat(user, "<span class='warning'>You begin to disassemble the [src]!</span>")
+		to_chat(user, span_warning("You begin to disassemble the [src]!"))
 		if (do_after(usr, (100 * cur_coils) * W.toolspeed)) // More coils = takes longer to disassemble. It's complex so largest one with 5 coils will take 50s with a normal crowbar
 			if (failure_probability && prob(failure_probability))
 				total_system_failure(failure_probability, user)
 				return
 
-			to_chat(user, "<font color='red'>You have disassembled the SMES cell!</font>")
+			to_chat(user, span_warning("You have disassembled the SMES cell!"))
 			dismantle()
 			return
-
-	if (!panel_open)
-		to_chat(user, "<span class='filter_notice'><span class='warning'>You need to open access hatch on [src] first!</span></span>")
-		return FALSE
 
 	if(W.has_tool_quality(TOOL_WELDER))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(!WT.isOn())
-			to_chat(user, "<span class='filter_notice'>Turn on \the [WT] first!</span>")
+			to_chat(user, span_notice("Turn on \the [WT] first!"))
 			return FALSE
 		if(!damage)
-			to_chat(user, "<span class='filter_notice'>\The [src] is already fully repaired.</span>")
+			to_chat(user, span_notice("\The [src] is already fully repaired."))
 			return FALSE
 		if(WT.remove_fuel(0,user) && do_after(user, damage, src))
-			to_chat(user, "<span class='filter_notice'>You repair all structural damage to \the [src]</span>")
+			to_chat(user, span_notice("You repair all structural damage to \the [src]"))
 			damage = 0
 		return FALSE
 
-	else if(W.has_tool_quality(TOOL_CABLE_COIL) && !building_terminal)
+	if(W.has_tool_quality(TOOL_CABLE_COIL))
 		var/obj/item/stack/cable_coil/C = W
 		var/dir = get_dir(user,src)
 		if(ISDIAGONALDIR(dir))//we don't want diagonal click
@@ -489,31 +494,31 @@
 
 		var/turf/T = get_turf(user)
 		if(isspace(T))
-			to_chat(user, "<span class='warning'>You can't secure this item in open space!</span>")
+			to_chat(user, span_warning("You can't secure this item in open space!"))
 
 		if (!T.is_plating()) //is the floor plating removed ?
-			to_chat(user, "<span class='warning'>You must first remove the floor plating!</span>")
+			to_chat(user, span_warning("You must first remove the floor plating!"))
 			return
 
 		if(!panel_open)
-			to_chat(user, "<span class='warning'>You must open the maintenance panel first!</span>")
+			to_chat(user, span_warning("You must open the maintenance panel first!"))
 			return
 
 		if(C && C.target_layer)
 			if(get_terminal_slot(C.target_layer))
-				to_chat(user, "<span class='warning'>This SMES already has a power terminal on this layer!</span>")
+				to_chat(user, span_warning("This SMES already has a power terminal on this layer!"))
 				return
 
 		if(C.get_amount() < 10)
-			to_chat(user, "<span class='warning'>You need more wires!</span>")
+			to_chat(user, span_warning("You need more wires!"))
 			return
 
 		if(get_terminal_slot(C.target_layer))
-			to_chat(user, "<span class='warning'>There is already a terminal plugged into this layer!</span>")
+			to_chat(user, span_warning("There is already a terminal plugged into this layer!"))
 			return
 		var/terminal_cable_layer = GLOB.cable_name_to_layer[C.target_layer]
 
-		to_chat(user, "<span class='notice'>You start building the power terminal...</span>")
+		to_chat(user, span_notice("You start building the power terminal..."))
 		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 
 		if(!do_after(user, 50))
@@ -535,10 +540,13 @@
 			if(term)
 				term.dismantle(user, W, term.cable_layer)
 			else
-				to_chat(user, "<span class='notice'>You must stand on top of the power terminal you wish to remove.</span>")
+				to_chat(user, span_notice("You must stand on top of the power terminal you wish to remove."))
 				return FALSE
 
 	else if(istype(W, /obj/item/weapon/smes_coil))
+		if (!panel_open)
+			to_chat(user, span_notice("<span class='warning'>You need to open access hatch on [src] first!</span>"))
+			return FALSE
 		if(cur_coils < max_coils)
 			//if(failure_probability && prob(failure_probability))	//I personally don't think this is a fun mechanic
 			//	total_system_failure(failure_probability, user)
@@ -551,7 +559,7 @@
 			W.loc = src
 			recalc_coils()
 		else
-			to_chat(user, "<span class='filter_notice'><span class='notice'>You can't insert more coils into this SMES unit!</span></span>")
+			to_chat(user, span_notice("<span class='notice'>You can't insert more coils into this SMES unit!</span>"))
 
 	return ..()
 
@@ -630,7 +638,7 @@
 	amount = max(0, round(amount))
 	damage += amount
 	if(damage > maxdamage)
-		visible_message("<span class='filter_notice'><span class='danger'>\The [src] explodes in large shower of sparks and smoke!</span></span>")
+		visible_message(span_danger("\The [src] explodes in large shower of sparks and smoke!</span>"))
 		// Depending on stored charge percentage cause damage.
 		switch(Percentage())
 			if(75 to INFINITY)
@@ -734,9 +742,9 @@
 			// Sparks, Weak shock
 			s.set_up(2, 1, src)
 			if (user_protected && prob(80))
-				to_chat(h_user, "A small electrical arc almost burns your hand. Luckily you had your gloves on!")
+				to_chat(h_user, span_danger("A small electrical arc almost burns your hand. Luckily you had your gloves on!"))
 			else
-				to_chat(h_user, "A small electrical arc sparks and burns your hand as you touch the [src]!")
+				to_chat(h_user, span_danger("A small electrical arc sparks and burns your hand as you touch the [src]!"))
 				h_user.adjustFireLossByPart(rand(5,10), used_hand)
 				h_user.Weaken(2)
 
@@ -745,9 +753,9 @@
 			// Sparks, Medium shock, Weak EMP
 			s.set_up(4,1,src)
 			if (user_protected && prob(25))
-				to_chat(h_user, "A medium electrical arc sparks and almost burns your hand. Luckily you had your gloves on!")
+				to_chat(h_user, span_danger("A medium electrical arc sparks and almost burns your hand. Luckily you had your gloves on!"))
 			else
-				to_chat(h_user, "A medium electrical arc sparks as you touch the [src], severely burning your hand!")
+				to_chat(h_user, span_danger("A medium electrical arc sparks as you touch the [src], severely burning your hand!"))
 				h_user.adjustFireLossByPart(rand(10,25), used_hand)
 				h_user.Weaken(5)
 			spawn()
@@ -758,11 +766,11 @@
 			// Sparks, Strong shock, Strong EMP, 10% light overload. 1% APC failure
 			s.set_up(7,1,src)
 			if (user_protected)
-				to_chat(h_user, "A strong electrical arc sparks between you and [src], ignoring your gloves and burning your hand!")
+				to_chat(h_user, span_danger("A strong electrical arc sparks between you and [src], ignoring your gloves and burning your hand!"))
 				h_user.adjustFireLossByPart(rand(25,60), used_hand)
 				h_user.Weaken(8)
 			else
-				to_chat(h_user, "A strong electrical arc sparks between you and [src], knocking you out for a while!")
+				to_chat(h_user, span_danger("A strong electrical arc sparks between you and [src], knocking you out for a while!"))
 				h_user.electrocute_act(rand(35,75), src, def_zone = BP_TORSO)
 			spawn()
 				empulse(get_turf(src), 6, 8, 12, 16)
@@ -773,7 +781,7 @@
 			// Massive overcharge
 			// Sparks, Near - instantkill shock, Strong EMP, 25% light overload, 5% APC failure. 50% of SMES explosion. This is bad.
 			s.set_up(10,1,src)
-			to_chat(h_user, "A massive electrical arc sparks between you and [src]. The last thing you can think about is \"Oh shit...\"")
+			to_chat(h_user, span_danger("A massive electrical arc sparks between you and [src]. The last thing you can think about is \"Oh shit...\""))
 			// Remember, we have few gigajoules of electricity here.. Turn them into crispy toast.
 			h_user.electrocute_act(rand(150,195), src, def_zone = BP_TORSO)
 			spawn()

@@ -5,7 +5,7 @@ GLOBAL_LIST_BOILERPLATE(all_singularities, /obj/singularity)
 /obj/singularity/
 	name = "gravitational singularity"
 	desc = "A gravitational singularity."
-	icon = 'icons/obj/singularity.dmi'
+	icon = 'icons/obj/machines/power/singularity/singularity.dmi'
 	icon_state = "singularity_s1"
 	anchored = TRUE
 	density = TRUE
@@ -123,7 +123,7 @@ GLOBAL_LIST_BOILERPLATE(all_singularities, /obj/singularity)
 			name = "gravitational singularity"
 			desc = "A gravitational singularity."
 			current_size = STAGE_ONE
-			icon = 'icons/obj/singularity.dmi'
+			icon = 'icons/obj/machines/power/singularity/singularity.dmi'
 			icon_state = "singularity_s1"
 			pixel_x = 0
 			pixel_y = 0
@@ -465,7 +465,7 @@ GLOBAL_LIST_BOILERPLATE(all_singularities, /obj/singularity)
 	move_self = 0
 	switch (current_size)
 		if(STAGE_ONE)
-			add_overlay(image('icons/obj/singularity.dmi',"chain_s1"))
+			add_overlay(image('icons/obj/machines/power/singularity/singularity.dmi',"chain_s1"))
 		if(STAGE_TWO)
 			add_overlay(image('icons/effects/96x96.dmi',"chain_s3"))
 		if(STAGE_THREE)

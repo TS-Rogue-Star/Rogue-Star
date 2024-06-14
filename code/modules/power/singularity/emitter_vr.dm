@@ -1,5 +1,5 @@
 /obj/machinery/power/emitter
-	icon = 'icons/obj/singularity_vr.dmi' // New emitter sprite
+	icon = 'icons/obj/machines/power/singularity/singularity_vr.dmi' // New emitter sprite
 	icon_state = "emitter0"
 	var/previous_state = 0
 
@@ -35,4 +35,3 @@
 		icon_state = "emitter_+a"
 	else
 		icon_state = "emitter"
-

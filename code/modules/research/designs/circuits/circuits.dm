@@ -360,6 +360,14 @@ CIRCUITS BELOW
 	build_path = /obj/item/weapon/circuitboard/breakerbox
 	sort_string = "JBABD"
 
+/datum/design/circuit/power_transmitter
+	name = "Power Transmitter"
+	desc = "Allows for the construction of circuit boards used to build an 'Ender' power transmission tap."
+	id = "power_transmitter"
+	req_tech = list(TECH_DATA = 3, TECH_POWER = 7, TECH_ENGINEERING = 5, TECH_BLUESPACE = 4)
+	build_path = /obj/item/weapon/circuitboard/power_transmitter
+	sort_string = "JBABE"
+
 /datum/design/circuit/gas_heater
 	name = "gas heating system"
 	id = "gasheater"

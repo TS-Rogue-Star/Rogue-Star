@@ -42,11 +42,11 @@
 
 // Bloo friendlier hybrid tech
 /obj/item/weapon/cell/device/weapon/recharge/alien/hybrid
-	icon = 'icons/obj/power_vr.dmi'
+	icon = 'icons/obj/machines/power/rtg/rtgs.dmi'
 	icon_state = "cellb"
 	swaps_to = /obj/item/weapon/cell/void/hybrid
 
 /obj/item/weapon/cell/void/hybrid
-	icon = 'icons/obj/power_vr.dmi'
+	icon = 'icons/obj/machines/power/rtg/rtgs.dmi'
 	icon_state = "cellb"
 	swaps_to = /obj/item/weapon/cell/device/weapon/recharge/alien/hybrid

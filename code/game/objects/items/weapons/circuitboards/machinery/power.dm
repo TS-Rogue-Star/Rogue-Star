@@ -36,3 +36,16 @@
 		/obj/item/weapon/stock_parts/spring = 1,
 		/obj/item/weapon/stock_parts/manipulator = 1,
 		/obj/item/stack/cable_coil = 10)
+
+/obj/item/weapon/circuitboard/power_transmitter
+	name = T_BOARD("Power Transmitter")
+	build_path = /obj/machinery/power/power_transmitter
+	board_type = new /datum/frame/frame_types/machine
+	origin_tech = list(TECH_DATA = 3, TECH_ENGINEERING = 5, TECH_POWER = 5, TECH_BLUESPACE = 4)
+	req_components = list(
+							/obj/item/weapon/stock_parts/subspace/ansible = 1,
+							/obj/item/weapon/smes_coil/super_io = 1,
+							/obj/item/weapon/stock_parts/capacitor = 5,
+							/obj/item/weapon/stock_parts/console_screen = 1,
+							/obj/item/stack/cable_coil/heavyduty = 20
+						)

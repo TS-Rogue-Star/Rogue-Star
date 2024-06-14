@@ -52,7 +52,7 @@
 /obj/machinery/button/neonsign
 	name = "sign switch"
 	desc = "A remote control switch for neon sign."
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machines/power/power.dmi'
 	icon_state = "crema_switch"
 
 /obj/machinery/button/neonsign/attack_hand(mob/user as mob)

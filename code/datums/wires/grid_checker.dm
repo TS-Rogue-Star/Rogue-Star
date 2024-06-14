@@ -12,7 +12,7 @@
 
 /datum/wires/grid_checker/interactable(mob/user)
 	var/obj/machinery/power/grid_checker/G = holder
-	if(G.opened)
+	if(G.panel_open)
 		return TRUE
 	return FALSE
 

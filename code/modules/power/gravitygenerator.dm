@@ -12,7 +12,7 @@
 /obj/machinery/gravity_generator/
 	name = "gravitational generator"
 	desc = "A device which produces a gravaton field when set up."
-	icon = 'icons/obj/singularity.dmi'
+	icon = 'icons/obj/machines/power/singularity/singularity.dmi'
 	icon_state = "TheSingGen"
 	anchored = TRUE
 	density = TRUE
@@ -31,7 +31,7 @@
 /obj/machinery/gravity_generator/Initialize()
 	. = ..()
 	locatelocalareas()
-	
+
 /obj/machinery/computer/gravity_control_computer/proc/updatemodules()
 	src.gravity_generator = findgenerator()
 
