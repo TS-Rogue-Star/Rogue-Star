@@ -1,15 +1,15 @@
 #define HYPO_SPRAY 0
 #define HYPO_INJECT 1
 
-#define WAIT_SPRAY 5 SECONDS
-#define WAIT_INJECT 5 SECONDS
-#define SELF_SPRAY 3 SECONDS
-#define SELF_INJECT 3 SECONDS
+#define WAIT_SPRAY 2 SECONDS
+#define WAIT_INJECT 2 SECONDS
+#define SELF_SPRAY 1 SECONDS
+#define SELF_INJECT 1 SECONDS
 
-#define DELUXE_WAIT_SPRAY 4 SECONDS
-#define DELUXE_WAIT_INJECT 4 SECONDS
-#define DELUXE_SELF_SPRAY 2 SECONDS
-#define DELUXE_SELF_INJECT 2 SECONDS
+#define DELUXE_WAIT_SPRAY 1 SECONDS
+#define DELUXE_WAIT_INJECT 1 SECONDS
+#define DELUXE_SELF_SPRAY 1 SECONDS
+#define DELUXE_SELF_INJECT 1 SECONDS
 
 #define COMBAT_WAIT_SPRAY 0
 #define COMBAT_WAIT_INJECT 0
@@ -277,6 +277,7 @@
 	w_class = ITEMSIZE_SMALL //Why would it be the same size as a beaker?
 	flags = OPENCONTAINER | NOCONDUCT
 	unacidable = TRUE
+	matter = list(MAT_GLASS = 250)
 	var/bluespaced = FALSE
 	var/comes_with = list() //Easy way of doing this.
 	var/fillingsize = "hypovial"
@@ -406,6 +407,7 @@
 	icon_state = "hypoviallarge"
 	fillingsize = "hypoviallarge"
 	volume = 60
+	matter = list(MAT_GLASS = 500)
 	possible_transfer_amounts = list(5,10,15,25,30)
 
 	unique_reskin = list("large hypovial" = "hypoviallarge",
