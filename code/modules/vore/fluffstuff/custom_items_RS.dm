@@ -30,3 +30,48 @@
 	throwforce = 1
 	throw_speed = 4
 	throw_range = 20
+
+/obj/item/toy/plushie/snakeplushie/fluff/river
+	name = "Vivid's River"
+	desc = "An aquatic noodle that Vivid uses to showcase the actions of their blue wyrm"
+	icon = 'icons/rogue-star/misc.dmi'
+	icon_state = "river"
+	drop_sound = "generic_drop"
+
+/obj/item/toy/plushie/snakeplushie/fluff/jyen
+	name = "Vivid's Jyen"
+	desc = "A fluffy noodle that Vivid uses to showcase the actions of their white wyrm"
+	icon = 'icons/rogue-star/misc.dmi'
+	icon_state = "jyen"
+	drop_sound = "generic_drop"
+
+/obj/item/toy/plushie/snakeplushie/fluff/raye
+	name = "Vivid's Raye"
+	desc = "An acid noodle that Vivid uses to showcase the actions of their green wyrm"
+	icon = 'icons/rogue-star/misc.dmi'
+	icon_state = "raye"
+	drop_sound = "generic_drop"
+
+/obj/item/toy/plushie/snakeplushie/fluff/zoey
+	name = "Vivid's Zoey"
+	desc = "A hypnotic noodle that Vivid uses to showcase the actions of their yellow wyrm"
+	icon = 'icons/rogue-star/misc.dmi'
+	icon_state = "zoey"
+	drop_sound = "generic_drop"
+
+/obj/item/clothing/under/permit/fluff/tracking_implant
+	name = "embedded tracker implant"
+	desc = "A small, spherical black device. Emblazoned with a crimson Y-like logo on one side and the numbers 53799 stamped on the back."
+	icon = 'icons/vore/custom_items_rs.dmi'
+	icon_state = "anoscetiaImplant"
+	var/obj/item/device/gps/gps_tracker
+
+/obj/item/clothing/under/permit/fluff/tracking_implant/Initialize()
+	. = ..()
+	gps_tracker = new(src)
+	gps_tracker.gps_tag = "Syne"
+	gps_tracker.tracking = TRUE
+
+/obj/item/clothing/under/permit/fluff/tracking_implant/Destroy()
+	gps_tracker = null
+	return ..()
