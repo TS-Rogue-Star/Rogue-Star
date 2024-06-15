@@ -1,5 +1,6 @@
 /obj/machinery/chemical_dispenser/xenoflora
 	name = "xenoflora chem dispenser"
+	icon_state = "minidispenser"
 	ui_title = "Xenoflora Chemical Dispenser"
 	dispense_reagents = list(
 		"water", "sugar", "ethanol", "radium", "ammonia", "diethylamine", "plantbgone", "mutagen", "calcium"
@@ -20,6 +21,7 @@
 
 /obj/machinery/chemical_dispenser/biochemistry
 	name = "bioproduct dispenser"
+	icon_state = "minidispenser"
 	ui_title = "Bioproduct Dispenser"
 	dispense_reagents = list(
 		"nutriment", "protein", "milk"
