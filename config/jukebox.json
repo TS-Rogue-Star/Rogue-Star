@@ -4916,7 +4916,7 @@
 "duration": 570,
 "artist": "Andrew Prahlow",
 "genre": "Video Game",
-"secret": false,
+"secret": true,
 "lobby": false,
 "jukebox": true
 },
