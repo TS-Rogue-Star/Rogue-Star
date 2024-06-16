@@ -1959,6 +1959,7 @@
 #include "code\modules\client\preference_setup\loadout\loadout_eyes_vr.dm"
 #include "code\modules\client\preference_setup\loadout\loadout_fluffitems_RS.dm"
 #include "code\modules\client\preference_setup\loadout\loadout_fluffitems_vr.dm"
+#include "code\modules\client\preference_setup\loadout\loadout_questitems_rs.dm"
 #include "code\modules\client\preference_setup\loadout\loadout_general.dm"
 #include "code\modules\client\preference_setup\loadout\loadout_general_vr.dm"
 #include "code\modules\client\preference_setup\loadout\loadout_gloves.dm"
