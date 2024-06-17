@@ -346,6 +346,13 @@
 
 		handle_organs() // Update everything
 
+		for(var/obj/item/organ/external/O in src.bad_external_organs)
+			for(var/datum/wound/W in O.wounds)
+				if(W.internal)
+					W.damage = 0
+					O.wounds -= W
+					to_chat(src, "<span class='notice'>You feel a tightening sensation as [O.name] clots.</span>")
+
 		update_icons_body()
 		active_regen = FALSE
 	else
