@@ -39,9 +39,8 @@
 /turf/simulated/floor/plating,
 /area/shuttle/screebarge/fore)
 "ah" = (
-/obj/machinery/power/emitter{
-	dir = 1;
-	icon_state = "emitter"
+/obj/machinery/power/emitter/antique{
+	dir = 1
 	},
 /obj/structure/cable,
 /obj/machinery/light/small{
@@ -201,9 +200,8 @@
 /turf/simulated/floor/reinforced,
 /area/shuttle/screebarge/fore)
 "aJ" = (
-/obj/machinery/power/emitter{
-	dir = 1;
-	icon_state = "emitter"
+/obj/machinery/power/emitter/antique{
+	dir = 1
 	},
 /obj/structure/cable,
 /obj/machinery/light/small{

@@ -4885,10 +4885,8 @@
 /turf/simulated/floor,
 /area/groundbase/science/outpost/atmos)
 "Tf" = (
-/obj/machinery/power/emitter{
-	anchored = 1;
-	dir = 1;
-	state = 2
+/obj/machinery/power/emitter/preset{
+	dir = 1
 	},
 /obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,

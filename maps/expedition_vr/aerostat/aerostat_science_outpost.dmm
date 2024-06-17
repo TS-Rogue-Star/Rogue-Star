@@ -5190,12 +5190,10 @@
 /turf/simulated/floor/tiled/dark,
 /area/offmap/aerostat/inside/lobby)
 "wp" = (
-/obj/machinery/power/emitter{
-	anchored = 1;
-	dir = 1;
-	state = 2
-	},
 /obj/structure/cable,
+/obj/machinery/power/emitter/preset{
+	dir = 1
+	},
 /turf/simulated/floor/tiled,
 /area/offmap/aerostat/inside/xenoarch)
 "wr" = (

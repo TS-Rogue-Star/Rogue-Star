@@ -5430,13 +5430,6 @@
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/engineering/atmos/storage)
-"mC" = (
-/obj/structure/cable/layer1,
-/obj/machinery/power/emitter{
-	dir = 1
-	},
-/turf/simulated/floor/airless,
-/area/engineering/engine_room)
 "mD" = (
 /obj/machinery/atmospherics/binary/pump,
 /obj/structure/disposalpipe/segment{
@@ -13138,6 +13131,13 @@
 /obj/structure/cable/layer3,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck2/starboardfore)
+"GR" = (
+/obj/structure/cable/layer1,
+/obj/machinery/power/emitter{
+	dir = 1
+	},
+/turf/simulated/floor/airless,
+/area/engineering/engine_room)
 "GS" = (
 /obj/effect/floor_decal/emblem/stellardelight{
 	dir = 10
@@ -15355,7 +15355,6 @@
 "Mr" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/window/bay/reinforced,
-/obj/structure/cable,
 /obj/structure/low_wall/bay/reinforced/orange,
 /turf/simulated/floor,
 /area/engineering/storage)
@@ -34407,7 +34406,7 @@ Vf
 Bs
 dk
 Vf
-mC
+GR
 OF
 gh
 kH
@@ -34975,7 +34974,7 @@ Vf
 Bs
 Vf
 Vf
-mC
+GR
 ni
 NL
 NL

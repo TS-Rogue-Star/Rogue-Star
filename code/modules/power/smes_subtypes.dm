@@ -58,6 +58,7 @@
 /obj/machinery/power/smes/preset/engine/Initialize()
 	. = ..()
 	component_parts += new /obj/item/weapon/smes_coil/super_io(src)
+	component_parts += new /obj/item/weapon/smes_coil/super_io(src)
 	component_parts += new /obj/item/weapon/smes_coil/super_capacity(src)
 	recalc_coils()
 
@@ -65,7 +66,7 @@
 	name = "Main Power SMES"
 	input_attempt = FALSE
 	inputting = FALSE	//To prevent the mains from draining all of the engine power prior to engine setup
-	charge = 10 MEGAWATTS
+	charge = 20 MEGAWATTS
 	RCon_tag = "Power - Main"
 	output_level = 1 MEGAWATTS
 
@@ -79,24 +80,31 @@
 
 /obj/machinery/power/smes/preset/ai_tcomm
 	name = "AI-TCOMM SMES"
-	charge = 24 MEGAWATTS	//maximum charge for AI/TComms to account for previous changes
-	cur_coils = 4
+	charge = 50 MEGAWATTS	//maximum charge for AI/TComms to account for previous changes
 	inputting = TRUE
 	input_level = SMESMAXCHARGELEVEL
 	outputting = TRUE
 	output_level = SMESMAXOUTPUT
 	RCon_tag = "Substation - AI/Telecomms"
 
+/obj/machinery/power/smes/preset/ai_tcomm/Initialize()
+	. = ..()
+	component_parts += new /obj/item/weapon/smes_coil/super_capacity(src)
+	component_parts += new /obj/item/weapon/smes_coil(src)
+	component_parts += new /obj/item/weapon/smes_coil(src)
+	component_parts += new /obj/item/weapon/smes_coil(src)
+	recalc_coils()
+
 /obj/machinery/power/smes/preset/substation
 	input_attempt = FALSE
 	inputting = FALSE
 	output_attempt = FALSE
 	outputting = FALSE
-	max_coils = SMESDEFAULTSTART	// just the one coil allowed, so Mains are better
+	max_coils = 3	//half as many as a regular SMES, so people can upgrade them but the mains are still better.
 
 //Generic Shuttle SMES
 /obj/machinery/power/smes/preset/shuttle
-	charge = 50 KILOWATTS	//enough to get started, but preflight should include topping off the reserves
+	charge = 1 MEGAWATTS	//enough to get started, but preflight should include topping off the reserves
 	input_attempt = FALSE
 	inputting = FALSE
 	output_attempt = FALSE
@@ -104,7 +112,7 @@
 
 //Creative mode infinite memes
 /obj/machinery/power/smes/magical
-	name = "magical power storage unit"
+	name = "Redspace Conductive SMES"
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit. Magically produces power."
 	capacity = 9 MEGAWATTS
 	output_level = SMESMAXOUTPUT
@@ -146,6 +154,19 @@
 	output_level = output_level_max
 	input_attempt = TRUE
 
+//snowflake SMES that could do with actual alien sprites
+/obj/machinery/power/smes/hybrid
+	name = "Redspace Conductive SMES"
+	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit, modified with alien technology to generate small amounts of power from seemingly nowhere."
+	var/recharge_rate = 10 KILOWATTS
 
+/obj/machinery/power/smes/hybrid/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+	if(W.is_screwdriver() || W.is_wirecutter())
+		to_chat(user,"<span class='warning'>\The [src] full of weird alien technology that's best not messed with.</span>")
+		return FALSE
+
+/obj/machinery/power/smes/hybrid/process()
+	charge += min(recharge_rate, capacity - charge)
+	..()
 
 // END SMES SUBTYPES

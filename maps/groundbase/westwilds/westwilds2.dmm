@@ -4893,10 +4893,8 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/science/outpost/toxins_lab)
 "Sb" = (
-/obj/machinery/power/emitter{
-	anchored = 1;
-	dir = 1;
-	state = 2
+/obj/machinery/power/emitter/preset{
+	dir = 1
 	},
 /obj/structure/cable/layer3,
 /turf/simulated/floor/tiled,
