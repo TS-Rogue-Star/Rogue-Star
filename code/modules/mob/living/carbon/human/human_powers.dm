@@ -351,7 +351,7 @@
 				if(W.internal)
 					W.damage = 0
 					O.wounds -= W
-					to_chat(src, "<span class='notice'>You feel a tightening sensation as [O.name] clots.</span>")
+					to_chat(src, "<span class='notice'>You feel a tightening sensation as your [O.name] clots internal damage.</span>")
 
 		update_icons_body()
 		active_regen = FALSE
