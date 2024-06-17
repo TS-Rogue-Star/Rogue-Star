@@ -177,7 +177,7 @@
 	desc = "Contains a Mk II Hypospray and its hypovials. It can only hold mk.II related items."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "firstaid-mini"
-	max_storage_space = ITEMSIZE_COST_NORMAL * 7 // 4*7 = 28 / 2 = 14 vials total 
+	max_storage_space = ITEMSIZE_COST_NORMAL * 7 // 4*7 = 28 / 2 = 14 vials total
 	starts_with = list(/obj/item/weapon/hypospray_mkii, /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small = 3)
 	can_hold = list(/obj/item/weapon/hypospray_mkii, /obj/item/weapon/reagent_containers/glass/bottle/hypovial)
 	//can fit large and small vials, and any of the mkiis. but that's it. No free Analyzer either.
@@ -203,11 +203,11 @@
 	starts_with = list(/obj/item/weapon/hypospray_mkii/burn, /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/preloaded/kelotane = 3)
 	item_state_slots = list(slot_r_hand_str = "firstaid-ointment", slot_l_hand_str = "firstaid-ointment")
 
-/obj/item/weapon/storage/firstaid/hypokit/toxin
-	name = "hypospray mk.II toxin kit"
+/obj/item/weapon/storage/firstaid/hypokit/antitoxin
+	name = "hypospray mk.II antitoxin kit"
 	icon_state = "firstaid-toxin-mini"
 	desc = "Contains a Mk II Hypospray and its hypovials. It can only hold mk.II related items. This one is prefilled with Dylovene."
-	starts_with = list(/obj/item/weapon/hypospray_mkii/toxin, /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/preloaded/antitoxin = 3)
+	starts_with = list(/obj/item/weapon/hypospray_mkii/antitoxin, /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/preloaded/antitoxin = 3)
 	item_state_slots = list(slot_r_hand_str = "firstaid-toxin", slot_l_hand_str = "firstaid-toxin")
 
 /obj/item/weapon/storage/firstaid/hypokit/oxy
@@ -218,7 +218,7 @@
 	item_state_slots = list(slot_r_hand_str = "firstaid-o2", slot_l_hand_str = "firstaid-o2")
 
 /obj/item/weapon/storage/firstaid/hypokit/cmo
-	name = "CMO's mk.II Kit"
+	name = "CMO's mk.II kit"
 	desc = "Contains a large Deluxe Mk II Hypospray and its hypovials. It can only hold mk.II related items."
 	icon_state = "firstaid-tactical-mini"
 	starts_with = list(/obj/item/weapon/hypospray_mkii/CMO,

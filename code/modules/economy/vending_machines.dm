@@ -413,7 +413,7 @@
 					/obj/item/weapon/storage/firstaid/hypokit/empty = 10,
 					/obj/item/weapon/storage/firstaid/hypokit/brute = 2,
 					/obj/item/weapon/storage/firstaid/hypokit/burn = 2,
-					/obj/item/weapon/storage/firstaid/hypokit/toxin = 2,
+					/obj/item/weapon/storage/firstaid/hypokit/antitoxin = 2,
 					/obj/item/weapon/storage/firstaid/hypokit/oxy = 2,
 					/obj/item/device/healthanalyzer = 5,
 					/obj/item/weapon/reagent_containers/glass/beaker = 4,
