@@ -138,7 +138,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 	return ..()									// then go ahead and delete the cable
 
 /obj/structure/cable/proc/deconstruct()
-	var/obj/item/stack/cable_coil/cable = new(drop_location(), 1)
+	var/obj/item/stack/cable_coil/cut/cable = new(drop_location(), 1)
 	cable.color = color
 	qdel(src)
 

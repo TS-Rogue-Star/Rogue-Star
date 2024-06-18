@@ -42,7 +42,8 @@ GLOBAL_LIST_INIT(cable_name_to_layer, list(
 
 var/global/defer_powernet_rebuild = FALSE      // True if net rebuild will be called manually after an event.
 
-#define EMITTER_DAMAGE_POWER_TRANSFER 450 //used to transfer power to containment field generators
+///used to transfer power to containment field generators //Not really anymore, but it's still 67 damage after its math
+#define EMITTER_DAMAGE_POWER_TRANSFER 450
 
 #define EMITTER_STATE_UNSECURED 0
 #define EMITTER_STATE_BOLTED	1

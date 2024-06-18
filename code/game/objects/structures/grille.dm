@@ -200,6 +200,8 @@
 	var/obj/structure/cable/C = T.get_cable_node()
 	if(isnull(C))
 		return FALSE
+	if(!T.is_plating())	//ensure that for whatever reason someone not wanting electrified grilles have an option to put cables under it.
+		return FALSE
 	if(C)
 		if(electrocute_mob(user, C, src))
 			if(C.powernet)

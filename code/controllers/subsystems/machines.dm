@@ -41,9 +41,9 @@ SUBSYSTEM_DEF(machines)
 // rebuild all power networks from scratch - only called at world creation or by the admin verb
 // The above is a lie. Turbolifts also call this proc.
 /datum/controller/subsystem/machines/proc/makepowernets()
-	for(var/datum/powernet/power_network as anything in powernets)
+	for(var/datum/powernet/power_network as anything in global.powernets)
 		qdel(power_network)
-	powernets.Cut()
+	global.powernets.Cut()
 	setup_powernets_for_cables(cable_list)
 
 /datum/controller/subsystem/machines/proc/setup_powernets_for_cables(list/cables)
@@ -167,7 +167,7 @@ SUBSYSTEM_DEF(machines)
 	for(var/datum/D as anything in global.powernets)
 		if(!istype(D, /datum/powernet))
 			error("Found wrong type during SSmachinery recovery: list=global.powernets, item=[D], type=[D?.type]")
-			powernets -= D
+			global.powernets -= D
 	for(var/datum/D as anything in global.processing_power_items)
 		if(!istype(D, /obj/item))
 			error("Found wrong type during SSmachinery recovery: list=global.processing_power_items, item=[D], type=[D?.type]")
