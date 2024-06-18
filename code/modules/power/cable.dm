@@ -687,6 +687,7 @@ GLOBAL_LIST(cable_radial_layer_list)
 			return
 
 	var/obj/structure/cable/C = new target_type(T)
+	C.color = color
 
 	//create a new powernet with the cable, if needed it will be merged later
 	var/datum/powernet/PN = new()
