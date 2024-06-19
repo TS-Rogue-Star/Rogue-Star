@@ -1684,6 +1684,18 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/atmos)
+"bGt" = (
+/obj/fiftyspawner/rglass,
+/obj/fiftyspawner/rods,
+/obj/fiftyspawner/steel,
+/obj/fiftyspawner/steel,
+/obj/fiftyspawner/steel,
+/obj/item/stack/material/plasteel{
+	amount = 10
+	},
+/obj/structure/closet/walllocker_double/cargo/north,
+/turf/simulated/floor/tiled,
+/area/ai_monitored/storage/eva)
 "bGu" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -3848,18 +3860,6 @@
 /turf/simulated/floor/tiled,
 /area/ai_monitored/storage/eva)
 "dyu" = (
-/obj/fiftyspawner/rglass,
-/obj/fiftyspawner/rods,
-/obj/structure/closet/walllocker_double/cargo,
-/obj/fiftyspawner/steel,
-/obj/fiftyspawner/steel,
-/obj/fiftyspawner/steel,
-/obj/item/stack/material/plasteel{
-	amount = 10
-	},
-/obj/machinery/atmospherics/unary/vent_scrubber/on,
-/obj/structure/closet/walllocker_double/cargo,
-/obj/machinery/atmospherics/unary/vent_scrubber/on,
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /turf/simulated/floor/tiled,
 /area/ai_monitored/storage/eva)
@@ -31185,7 +31185,7 @@ raF
 raF
 raF
 aEL
-cIf
+bGt
 cIf
 cIf
 cIf
