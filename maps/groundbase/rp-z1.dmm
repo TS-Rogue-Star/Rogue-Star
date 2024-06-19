@@ -427,6 +427,12 @@
 /obj/machinery/light,
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/techstorage)
+"awp" = (
+/obj/machinery/camera/network/security{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/dark,
+/area/groundbase/security/lobby)
 "awx" = (
 /turf/simulated/mineral/cave,
 /area/groundbase/unexplored/rock)
@@ -3446,6 +3452,7 @@
 "dfK" = (
 /obj/machinery/vending/assist,
 /obj/machinery/camera/network/civilian,
+/obj/machinery/firealarm,
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/toolstorage)
 "dfP" = (
@@ -6701,6 +6708,9 @@
 	dir = 4
 	},
 /obj/machinery/papershredder,
+/obj/machinery/camera/network/security{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/lobby)
 "gfi" = (
@@ -11049,9 +11059,6 @@
 /obj/machinery/recharger{
 	pixel_y = 5
 	},
-/obj/machinery/alarm{
-	dir = 8
-	},
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/toolstorage)
 "jUi" = (
@@ -12289,6 +12296,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/machinery/camera/network/security,
 /turf/simulated/floor/carpet/retro_red,
 /area/groundbase/security/breakroom)
 "kTx" = (
@@ -16156,6 +16164,7 @@
 /obj/effect/floor_decal/milspec/color/orange/half{
 	dir = 8
 	},
+/obj/structure/frame,
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/workshop)
 "oEM" = (
@@ -17007,7 +17016,15 @@
 /obj/effect/floor_decal/milspec/color/orange/half{
 	dir = 8
 	},
-/obj/structure/frame,
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/toolbox/electrical{
+	pixel_x = 1;
+	pixel_y = 6
+	},
+/obj/item/weapon/storage/toolbox/mechanical{
+	pixel_x = -2;
+	pixel_y = -1
+	},
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/workshop)
 "pjY" = (
@@ -20293,9 +20310,6 @@
 /obj/random/tech_supply,
 /obj/structure/symbol/sa{
 	pixel_y = 32
-	},
-/obj/machinery/firealarm{
-	dir = 4
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
@@ -32143,7 +32157,7 @@ pjZ
 tLw
 gjX
 tLw
-tLw
+awp
 kLB
 ycp
 ycp
