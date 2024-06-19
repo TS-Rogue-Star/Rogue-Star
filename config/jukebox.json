@@ -4769,5 +4769,315 @@
 "secret": true,
 "lobby": false,
 "jukebox": true
+},
+{
+"url": "https://files.catbox.moe/rn8s1q.mp3",
+"title": "Vanir’s Legacy",
+"duration": 2710,
+"artist": "Guillaume David",
+"genre": "Video Game",
+"secret": false,
+"lobby": false,
+"jukebox": true
+},
+{
+"url": "https://files.catbox.moe/wnl6hs.mp3",
+"title": "IXION",
+"duration": 3200,
+"artist": "Guillaume David",
+"genre": "Video Game",
+"secret": false,
+"lobby": false,
+"jukebox": true
+},
+{
+"url": "https://files.catbox.moe/62fvt6.mp3",
+"title": "Surrounded By The Stars",
+"duration": 2990,
+"artist": "Guillaume David",
+"genre": "Video Game",
+"secret": false,
+"lobby": false,
+"jukebox": true
+},
+{
+"url": "https://files.catbox.moe/4syxvx.mp3",
+"title": "Minus 273 Degrees",
+"duration": 2430,
+"artist": "Guillaume David",
+"genre": "Video Game",
+"secret": false,
+"lobby": false,
+"jukebox": true
+},
+{
+"url": "https://files.catbox.moe/xao7z5.mp3",
+"title": "Inside The Station",
+"duration": 3110,
+"artist": "Guillaume David",
+"genre": "Video Game",
+"secret": false,
+"lobby": false,
+"jukebox": true
+},
+{
+"url": "https://files.catbox.moe/iz1t7j.mp3",
+"title": "Warning",
+"duration": 3360,
+"artist": "Danny Baranowsky",
+"genre": "Video Game",
+"secret": false,
+"lobby": false,
+"jukebox": true
+},
+{
+"url": "https://files.catbox.moe/6pe7vc.mp3",
+"title": "Flagship",
+"duration": 3300,
+"artist": "Danny Baranowsky",
+"genre": "Video Game",
+"secret": false,
+"lobby": false,
+"jukebox": true
+},
+{
+"url": "https://files.catbox.moe/bsjztc.mp3",
+"title": "Doppler",
+"duration": 3360,
+"artist": "Danny Baranowsky",
+"genre": "Video Game",
+"secret": false,
+"lobby": false,
+"jukebox": true
+},
+{
+"url": "https://files.catbox.moe/3sl3cx.mp3",
+"title": "What Will You Leave Behind",
+"duration": 1680,
+"artist": "Max LL",
+"genre": "Video Game",
+"secret": false,
+"lobby": false,
+"jukebox": true
+},
+{
+"url": "https://files.catbox.moe/n9zg9u.mp3",
+"title": "My Friends",
+"duration": 4350,
+"artist": "Max LL",
+"genre": "Video Game",
+"secret": false,
+"lobby": false,
+"jukebox": true
+},
+{
+"url": "https://files.catbox.moe/3gj4l5.mp3",
+"title": "More Friends",
+"duration": 2370,
+"artist": "Max LL",
+"genre": "Video Game",
+"secret": false,
+"lobby": false,
+"jukebox": true
+},
+{
+"url": "https://files.catbox.moe/xnr9ch.mp3",
+"title": "Timber Hearth",
+"duration": 2050,
+"artist": "Andrew Prahlow",
+"genre": "Video Game",
+"secret": false,
+"lobby": false,
+"jukebox": true
+},
+{
+"url": "https://files.catbox.moe/a337ru.mp3",
+"title": "Outer Wilds",
+"duration": 1460,
+"artist": "Andrew Prahlow",
+"genre": "Video Game",
+"secret": false,
+"lobby": false,
+"jukebox": true
+},
+{
+"url": "https://files.catbox.moe/yayk0i.mp3",
+"title": "Travelers' Encore",
+"duration": 2290,
+"artist": "Andrew Prahlow",
+"genre": "Video Game",
+"secret": false,
+"lobby": true,
+"jukebox": true
+},
+{
+"url": "https://files.catbox.moe/hbon9j.mp3",
+"title": "A Terrible Fate",
+"duration": 570,
+"artist": "Andrew Prahlow",
+"genre": "Video Game",
+"secret": true,
+"lobby": false,
+"jukebox": true
+},
+{
+"url": "https://files.catbox.moe/0nvo91.mp3",
+"title": "End Times",
+"duration": 1180,
+"artist": "Andrew Prahlow",
+"genre": "Video Game",
+"secret": false,
+"lobby": false,
+"jukebox": true
+},
+{
+"url": "https://files.catbox.moe/hpvtnu.mp3",
+"title": "The Prettiest Weed",
+"duration": 1390,
+"artist": "Superbrothers Swords & Sorcery",
+"genre": "Video Game",
+"secret": false,
+"lobby": false,
+"jukebox": true
+},
+{
+"url": "https://files.catbox.moe/9r6ab4.mp3",
+"title": "Get Ready, Everyone!",
+"duration": 1290,
+"artist": "In Stars & Time",
+"genre": "Video Game",
+"secret": false,
+"lobby": false,
+"jukebox": true
+},
+{
+"url": "https://files.catbox.moe/ph7htp.mp3",
+"title": "Be Careful, Everyone!",
+"duration": 1450,
+"artist": "In Stars & Time",
+"genre": "Video Game",
+"secret": false,
+"lobby": false,
+"jukebox": true
+},
+{
+"url": "https://files.catbox.moe/xy4n40.mp3",
+"title": "Power of Love",
+"duration": 2680,
+"artist": "In Stars & Time",
+"genre": "Video Game",
+"secret": false,
+"lobby": false,
+"jukebox": true
+},
+{
+"url": "https://files.catbox.moe/38a4hp.mp3",
+"title": "I WON'T LET YOU GO HOME",
+"duration": 2880,
+"artist": "In Stars & Time",
+"genre": "Video Game",
+"secret": false,
+"lobby": false,
+"jukebox": true
+},
+{
+"url": "https://files.catbox.moe/zifntt.mp3",
+"title": "We All Become One",
+"duration": 1490,
+"artist": "Darren Korb",
+"genre": "Video Game",
+"secret": false,
+"lobby": false,
+"jukebox": true
+},
+{
+"url": "https://files.catbox.moe/3z52bm.mp3",
+"title": "Paper Boats",
+"duration": 2400,
+"artist": "Darren Korb",
+"genre": "Video Game",
+"secret": false,
+"lobby": false,
+"jukebox": true
+},
+{
+"url": "https://files.catbox.moe/wqr8h6.mp3",
+"title": "Purging of Sin",
+"duration": 2280,
+"artist": "Occam's Laser",
+"genre": "Video Game",
+"secret": false,
+"lobby": false,
+"jukebox": true
+},
+{
+"url": "https://files.catbox.moe/dq2q7j.mp3",
+"title": "The Lovers",
+"duration": 2520,
+"artist": "Occam's Laser",
+"genre": "Video Game",
+"secret": false,
+"lobby": false,
+"jukebox": true
+},
+{
+"url": "https://files.catbox.moe/hw1kns.mp3",
+"title": "To Far Shores",
+"duration": 1860,
+"artist": "Lifeformed × Janice Kwan",
+"genre": "Video Game",
+"secret": false,
+"lobby": false,
+"jukebox": true
+},
+{
+"url": "https://files.catbox.moe/4kocce.mp3",
+"title": "The Siege",
+"duration": 2630,
+"artist": "Lifeformed × Janice Kwan",
+"genre": "Video Game",
+"secret": false,
+"lobby": false,
+"jukebox": true
+},
+{
+"url": "https://files.catbox.moe/7rc81i.mp3",
+"title": "Ocean Glaze",
+"duration": 1810,
+"artist": "Lifeformed × Janice Kwan",
+"genre": "Video Game",
+"secret": false,
+"lobby": false,
+"jukebox": true
+},
+{
+"url": "https://files.catbox.moe/ymch5h.mp3",
+"title": "Forget to Forget",
+"duration": 2840,
+"artist": "Lifeformed × Janice Kwan",
+"genre": "Video Game",
+"secret": false,
+"lobby": false,
+"jukebox": true
+},
+{
+"url": "https://files.catbox.moe/ocll8t.mp3",
+"title": "The Heir",
+"duration": 3560,
+"artist": "Lifeformed × Janice Kwan",
+"genre": "Video Game",
+"secret": false,
+"lobby": false,
+"jukebox": true
+},
+{
+"url": "https://files.catbox.moe/ejnz6b.mp3",
+"title": "Remember to Remember",
+"duration": 2850,
+"artist": "Lifeformed × Janice Kwan",
+"genre": "Video Game",
+"secret": false,
+"lobby": false,
+"jukebox": true
 }
 ]
