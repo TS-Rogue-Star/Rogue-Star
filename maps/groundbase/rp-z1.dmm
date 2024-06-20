@@ -427,6 +427,12 @@
 /obj/machinery/light,
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/techstorage)
+"awp" = (
+/obj/machinery/camera/network/security{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/dark,
+/area/groundbase/security/lobby)
 "awx" = (
 /turf/simulated/mineral/cave,
 /area/groundbase/unexplored/rock)
@@ -1678,6 +1684,18 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/atmos)
+"bGt" = (
+/obj/fiftyspawner/rglass,
+/obj/fiftyspawner/rods,
+/obj/fiftyspawner/steel,
+/obj/fiftyspawner/steel,
+/obj/fiftyspawner/steel,
+/obj/item/stack/material/plasteel{
+	amount = 10
+	},
+/obj/structure/closet/walllocker_double/cargo/north,
+/turf/simulated/floor/tiled,
+/area/ai_monitored/storage/eva)
 "bGu" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -3446,6 +3464,7 @@
 "dfK" = (
 /obj/machinery/vending/assist,
 /obj/machinery/camera/network/civilian,
+/obj/machinery/firealarm,
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/toolstorage)
 "dfP" = (
@@ -3841,18 +3860,6 @@
 /turf/simulated/floor/tiled,
 /area/ai_monitored/storage/eva)
 "dyu" = (
-/obj/fiftyspawner/rglass,
-/obj/fiftyspawner/rods,
-/obj/structure/closet/walllocker_double/cargo,
-/obj/fiftyspawner/steel,
-/obj/fiftyspawner/steel,
-/obj/fiftyspawner/steel,
-/obj/item/stack/material/plasteel{
-	amount = 10
-	},
-/obj/machinery/atmospherics/unary/vent_scrubber/on,
-/obj/structure/closet/walllocker_double/cargo,
-/obj/machinery/atmospherics/unary/vent_scrubber/on,
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /turf/simulated/floor/tiled,
 /area/ai_monitored/storage/eva)
@@ -6701,6 +6708,9 @@
 	dir = 4
 	},
 /obj/machinery/papershredder,
+/obj/machinery/camera/network/security{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/lobby)
 "gfi" = (
@@ -9143,7 +9153,11 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow,
+/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow{
+	grass_chance = 0;
+	outdoors = 0;
+	snow_chance = 0
+	},
 /area/groundbase/civilian/bar)
 "imG" = (
 /obj/structure/cable/yellow{
@@ -11049,9 +11063,6 @@
 /obj/machinery/recharger{
 	pixel_y = 5
 	},
-/obj/machinery/alarm{
-	dir = 8
-	},
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/toolstorage)
 "jUi" = (
@@ -12289,6 +12300,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/machinery/camera/network/security,
 /turf/simulated/floor/carpet/retro_red,
 /area/groundbase/security/breakroom)
 "kTx" = (
@@ -16156,6 +16168,7 @@
 /obj/effect/floor_decal/milspec/color/orange/half{
 	dir = 8
 	},
+/obj/structure/frame,
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/workshop)
 "oEM" = (
@@ -17007,7 +17020,15 @@
 /obj/effect/floor_decal/milspec/color/orange/half{
 	dir = 8
 	},
-/obj/structure/frame,
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/toolbox/electrical{
+	pixel_x = 1;
+	pixel_y = 6
+	},
+/obj/item/weapon/storage/toolbox/mechanical{
+	pixel_x = -2;
+	pixel_y = -1
+	},
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/workshop)
 "pjY" = (
@@ -20294,9 +20315,6 @@
 /obj/structure/symbol/sa{
 	pixel_y = 32
 	},
-/obj/machinery/firealarm{
-	dir = 4
-	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
@@ -21774,7 +21792,11 @@
 "tbD" = (
 /obj/structure/table/glass,
 /obj/machinery/light,
-/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow,
+/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow{
+	grass_chance = 0;
+	outdoors = 0;
+	snow_chance = 0
+	},
 /area/groundbase/civilian/bar)
 "tbL" = (
 /obj/structure/cable/yellow{
@@ -26445,10 +26467,6 @@
 	},
 /turf/simulated/floor/tiled/freezer/cold,
 /area/groundbase/civilian/kitchen/freezer)
-"xoT" = (
-/obj/structure/table/glass,
-/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow,
-/area/groundbase/civilian/bar)
 "xpn" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8
@@ -31171,7 +31189,7 @@ raF
 raF
 raF
 aEL
-cIf
+bGt
 cIf
 cIf
 cIf
@@ -32143,7 +32161,7 @@ pjZ
 tLw
 gjX
 tLw
-tLw
+awp
 kLB
 ycp
 ycp
@@ -36385,13 +36403,13 @@ oeu
 bum
 neL
 dVI
-xoT
-xoT
+mDC
+mDC
 tbD
 bum
 imA
-xoT
-xoT
+mDC
+mDC
 bum
 pDQ
 inR

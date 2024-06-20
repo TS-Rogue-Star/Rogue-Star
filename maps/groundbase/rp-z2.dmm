@@ -2097,6 +2097,9 @@
 	dir = 4
 	},
 /obj/structure/railing/grey,
+/obj/machinery/camera/network/security{
+	dir = 4
+	},
 /turf/simulated/open,
 /area/groundbase/security/hall2)
 "gE" = (
@@ -2405,13 +2408,10 @@
 /turf/simulated/floor/outdoors/grass/seasonal/notrees,
 /area/groundbase/level2/ne)
 "hO" = (
-/obj/machinery/computer/guestpass{
-	dir = 1;
-	pixel_y = -22
-	},
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 10
 	},
+/obj/machinery/iv_drip,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/triage)
 "hP" = (
@@ -3947,6 +3947,10 @@
 /obj/effect/floor_decal/steeldecal/steel_decals10{
 	dir = 9
 	},
+/obj/machinery/light_switch{
+	dir = 8;
+	pixel_x = 30
+	},
 /turf/simulated/floor/tiled,
 /area/groundbase/science/xenoautopsy)
 "mU" = (
@@ -4072,9 +4076,11 @@
 /area/groundbase/civilian/chapel)
 "nq" = (
 /obj/machinery/light,
-/obj/machinery/iv_drip,
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 10
+	},
+/obj/structure/filingcabinet/chestdrawer{
+	name = "Body Scans"
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/triage)
@@ -5431,10 +5437,7 @@
 /obj/effect/floor_decal/milspec/color/purple/half{
 	dir = 4
 	},
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/tiled,
 /area/groundbase/science/hall)
 "rz" = (
 /obj/structure/table/bench/steel,
@@ -5608,9 +5611,6 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
-/obj/machinery/alarm{
-	dir = 4
-	},
 /turf/simulated/floor/tiled,
 /area/groundbase/science/xenoautopsy)
 "se" = (
@@ -5638,6 +5638,12 @@
 /obj/item/weapon/bedsheet/browndouble,
 /turf/simulated/floor/wood,
 /area/groundbase/dorms/room6)
+"sh" = (
+/obj/effect/floor_decal/milspec/color/purple/half{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/groundbase/science/hall)
 "si" = (
 /turf/simulated/floor/outdoors/newdirt{
 	outdoors = 0
@@ -5991,11 +5997,11 @@
 /obj/machinery/camera/network/medbay{
 	dir = 1
 	},
-/obj/machinery/iv_drip,
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 10
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/iv_drip,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/triage)
 "tg" = (
@@ -8216,10 +8222,7 @@
 /obj/effect/floor_decal/milspec/color/purple/corner{
 	dir = 1
 	},
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/tiled,
 /area/groundbase/science/hall)
 "zV" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
@@ -9288,6 +9291,10 @@
 /obj/effect/floor_decal/corner/paleblue/full{
 	dir = 4
 	},
+/obj/machinery/computer/guestpass{
+	dir = 8;
+	pixel_x = 25
+	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/triage)
 "Dj" = (
@@ -9816,10 +9823,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/tiled,
 /area/groundbase/science/xenoautopsy)
 "Fb" = (
 /obj/structure/cable/yellow{
@@ -10103,6 +10107,12 @@
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/simulated/floor/outdoors/grass/seasonal/notrees,
 /area/groundbase/level2/ne)
+"Gd" = (
+/obj/machinery/camera/network/security{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/eris/cafe,
+/area/groundbase/security/hall2)
 "Gg" = (
 /obj/machinery/alarm,
 /obj/structure/bed/double/padded,
@@ -10956,10 +10966,7 @@
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/tiled,
 /area/groundbase/science/xenoautopsy)
 "ID" = (
 /obj/structure/bed/chair/backed_red{
@@ -11037,10 +11044,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/tiled,
 /area/groundbase/science/hall)
 "IQ" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
@@ -11385,10 +11389,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/tiled,
 /area/groundbase/science/xenoautopsy)
 "JJ" = (
 /obj/machinery/light/small{
@@ -13778,10 +13779,7 @@
 /obj/effect/floor_decal/milspec/color/purple/half{
 	dir = 9
 	},
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/tiled,
 /area/groundbase/science/hall)
 "QU" = (
 /obj/structure/table/bench/standard,
@@ -13885,10 +13883,7 @@
 	dir = 1
 	},
 /obj/machinery/vending/coffee,
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
+/turf/simulated/floor/tiled,
 /area/groundbase/science/hall)
 "Rl" = (
 /obj/structure/cable/yellow{
@@ -21946,7 +21941,7 @@ dl
 qi
 ZS
 NQ
-Lr
+Gd
 PM
 ob
 jP
@@ -24824,7 +24819,7 @@ mY
 pr
 jf
 QS
-cv
+sh
 zR
 zi
 By
@@ -24966,7 +24961,7 @@ mY
 Jd
 jf
 Rj
-mV
+ZN
 IP
 zi
 By
