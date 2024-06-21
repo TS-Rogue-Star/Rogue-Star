@@ -209,8 +209,6 @@
 /turf/simulated/floor/tiled/dark,
 /area/security/tactical)
 "av" = (
-/obj/structure/table/standard,
-/obj/machinery/cell_charger,
 /obj/machinery/power/apc/angled{
 	dir = 8
 	},
@@ -218,7 +216,7 @@
 	color = "#42038a";
 	icon_state = "0-4"
 	},
-/obj/item/weapon/storage/box/backup_kit,
+/obj/machinery/protean_reconstitutor,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/assembly/robotics)
 "aw" = (
@@ -8985,6 +8983,9 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/item/stack/nanopaste,
+/obj/item/stack/nanopaste,
+/obj/item/stack/nanopaste,
 /turf/simulated/floor/tiled/steel,
 /area/assembly/robotics)
 "sr" = (
@@ -13057,6 +13058,7 @@
 	},
 /obj/item/device/mmi/digital/posibrain,
 /obj/item/device/mmi,
+/obj/item/weapon/storage/box/backup_kit,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/assembly/robotics)
 "Br" = (
