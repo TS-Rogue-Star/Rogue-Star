@@ -3,11 +3,11 @@
 /turf/unsimulated/mineral{
 	temperature = 253.15
 	},
-/area/space)
+/area/tether_away/snowbase)
 "ae" = (
 /obj/machinery/atmospherics/pipe/manifold/visible,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "ai" = (
 /obj/structure/catwalk,
 /turf/simulated/floor/outdoors/snow{
@@ -15,16 +15,16 @@
 	oxygen = 20.7263;
 	temperature = 243.15
 	},
-/area/space)
+/area/tether_away/snowbase)
 "ax" = (
 /turf/simulated/floor/tiled/white,
-/area/space)
+/area/tether_away/snowbase)
 "aJ" = (
 /obj/machinery/floodlight,
 /turf/simulated/floor/plating{
 	temperature = 253.15
 	},
-/area/space)
+/area/tether_away/snowbase)
 "aN" = (
 /obj/machinery/door/firedoor/glass/talon,
 /obj/structure/grille,
@@ -41,22 +41,22 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/tether_away/snowbase)
 "aO" = (
 /turf/simulated/floor/outdoors/sidewalk/slab{
 	temperature = 243.15
 	},
-/area/space)
+/area/tether_away/snowbase)
 "bi" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "bB" = (
 /obj/structure/bonfire/permanent,
 /turf/simulated/floor/tiled/dark,
-/area/space)
+/area/tether_away/snowbase)
 "bC" = (
 /obj/item/weapon/storage/box/bodybags{
 	pixel_x = -1;
@@ -68,7 +68,7 @@
 	},
 /obj/structure/table/standard,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "bK" = (
 /obj/structure/table/steel_reinforced,
 /obj/item/device/geiger{
@@ -78,58 +78,62 @@
 	pixel_y = 28
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/tether_away/snowbase)
 "bY" = (
 /obj/structure/bed/chair/sofa/left/beige{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/brown,
-/area/space)
+/area/tether_away/snowbase)
 "bZ" = (
 /obj/structure/table/standard,
 /turf/simulated/floor/tiled/white,
-/area/space)
+/area/tether_away/snowbase)
 "cB" = (
 /obj/effect/floor_decal/industrial/warning/color/corner/yellow{
 	dir = 1
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "cC" = (
 /obj/structure/bed/chair/backed_red{
 	dir = 4
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "cF" = (
 /obj/machinery/power/thermoregulator,
 /turf/simulated/floor/plating{
 	temperature = 253.15
 	},
-/area/space)
+/area/tether_away/snowbase)
 "cR" = (
 /obj/machinery/mineral/processing_unit,
 /turf/simulated/floor/tiled/dark,
-/area/space)
+/area/tether_away/snowbase)
 "da" = (
 /obj/structure/cable/green{
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/tether_away/snowbase)
 "do" = (
 /obj/structure/closet/walllocker_double/west,
-/obj/item/clothing/shoes/boots/winter,
-/obj/item/clothing/suit/storage/hooded/wintercoat,
+/obj/item/weapon/tank/emergency/oxygen/double,
+/obj/item/weapon/tank/emergency/oxygen/double,
+/obj/item/weapon/tank/emergency/oxygen/double,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "dr" = (
 /obj/machinery/portable_atmospherics/canister/phoron,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "ds" = (
 /turf/simulated/floor/carpet/brown,
-/area/space)
+/area/tether_away/snowbase)
 "dx" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -137,24 +141,24 @@
 	},
 /obj/machinery/mineral/input,
 /turf/simulated/floor/tiled/dark,
-/area/space)
+/area/tether_away/snowbase)
 "dF" = (
 /turf/simulated/floor/outdoors/snow{
 	nitrogen = 93.7835;
 	oxygen = 20.7263;
 	temperature = 243.15
 	},
-/area/space)
+/area/tether_away/snowbase)
 "dM" = (
 /obj/effect/catwalk_plated,
 /turf/simulated/floor/plating,
-/area/space)
+/area/tether_away/snowbase)
 "ek" = (
 /obj/effect/floor_decal/borderfloorblack/corner{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/brown,
-/area/space)
+/area/tether_away/snowbase)
 "em" = (
 /obj/structure/catwalk,
 /obj/structure/cable/green{
@@ -164,7 +168,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/tether_away/snowbase)
 "ev" = (
 /obj/structure/closet/crate,
 /obj/structure/window/reinforced{
@@ -172,73 +176,69 @@
 	},
 /obj/structure/window/reinforced,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "eV" = (
 /obj/effect/floor_decal/borderfloorblack{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/brown,
-/area/space)
+/area/tether_away/snowbase)
 "fp" = (
 /obj/effect/floor_decal/borderfloorblack/corner{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/brown,
-/area/space)
+/area/tether_away/snowbase)
 "fz" = (
 /obj/structure/bed/chair/sofa/right/beige{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/brown,
-/area/space)
+/area/tether_away/snowbase)
 "gb" = (
 /obj/structure/bed/chair/sofa/right/beige{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/brown,
-/area/space)
+/area/tether_away/snowbase)
 "gh" = (
 /obj/structure/table/bench/wooden,
 /turf/simulated/floor/carpet/brown,
-/area/space)
+/area/tether_away/snowbase)
 "gl" = (
-/obj/structure/table/rack,
 /obj/item/clothing/shoes/boots/winter/engineering,
 /obj/item/clothing/suit/storage/hooded/wintercoat/engineering,
 /obj/item/clothing/shoes/boots/winter/engineering,
 /obj/item/clothing/suit/storage/hooded/wintercoat/engineering,
-/obj/item/clothing/suit/storage/snowsuit/engineering,
-/obj/item/clothing/suit/storage/snowsuit/engineering,
+/obj/structure/closet,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "gr" = (
 /obj/structure/table/steel_reinforced,
 /obj/item/weapon/storage/box/donut,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "gz" = (
 /obj/structure/bed/chair/sofa/left/beige{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/brown,
-/area/space)
+/area/tether_away/snowbase)
 "hc" = (
 /obj/machinery/vending/dinnerware,
 /turf/simulated/floor/tiled/eris/cafe,
-/area/space)
+/area/tether_away/snowbase)
 "hi" = (
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "hl" = (
-/obj/structure/table/rack,
 /obj/item/clothing/shoes/boots/winter/science,
 /obj/item/clothing/suit/storage/hooded/wintercoat/science,
 /obj/item/clothing/shoes/boots/winter/science,
 /obj/item/clothing/suit/storage/hooded/wintercoat/science,
-/obj/item/clothing/suit/storage/snowsuit/science,
-/obj/item/clothing/suit/storage/snowsuit/science,
+/obj/structure/closet,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "ht" = (
 /obj/structure/closet/walllocker_double/south,
 /obj/item/clothing/suit/radiation,
@@ -250,16 +250,16 @@
 	dir = 8
 	},
 /turf/simulated/floor/tiled/dark,
-/area/space)
+/area/tether_away/snowbase)
 "hz" = (
 /obj/machinery/vending/boozeomat,
 /turf/simulated/floor/tiled/eris/cafe,
-/area/space)
+/area/tether_away/snowbase)
 "hC" = (
 /obj/structure/table/standard,
 /obj/machinery/chemical_dispenser/bar_alc/full,
 /turf/simulated/floor/tiled/eris/cafe,
-/area/space)
+/area/tether_away/snowbase)
 "hD" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -269,7 +269,7 @@
 	oxygen = 20.7263;
 	temperature = 243.15
 	},
-/area/space)
+/area/tether_away/snowbase)
 "hF" = (
 /obj/machinery/power/terminal{
 	dir = 4
@@ -281,11 +281,11 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/tether_away/snowbase)
 "hJ" = (
 /obj/machinery/appliance/cooker/fryer,
 /turf/simulated/floor/tiled/eris/cafe,
-/area/space)
+/area/tether_away/snowbase)
 "hU" = (
 /obj/structure/cable/green{
 	icon_state = "1-2"
@@ -297,7 +297,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/tether_away/snowbase)
 "ii" = (
 /obj/structure/table/steel_reinforced,
 /obj/item/weapon/paper_bin{
@@ -306,35 +306,46 @@
 	},
 /obj/item/weapon/pen,
 /turf/simulated/floor/carpet,
-/area/space)
+/area/tether_away/snowbase)
 "iF" = (
 /obj/structure/bed/chair/backed_red{
 	dir = 8
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "iG" = (
 /turf/simulated/floor/tiled/eris/cafe,
-/area/space)
+/area/tether_away/snowbase)
 "iJ" = (
 /obj/structure/table/bench/steel,
 /turf/simulated/floor/tiled/dark,
-/area/space)
+/area/tether_away/snowbase)
 "iP" = (
 /obj/machinery/power/thermoregulator,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "js" = (
 /obj/structure/table/steel_reinforced,
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
+"jv" = (
+/turf/simulated/mineral/crystal,
+/area/tether_away/snowbase)
 "jG" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/simulated/floor/tiled/monotile,
-/area/space)
+/area/tether_away/snowbase)
+"jN" = (
+/obj/structure/closet/walllocker_double/west,
+/obj/item/clothing/shoes/boots/winter,
+/obj/item/clothing/suit/storage/hooded/wintercoat,
+/obj/item/clothing/shoes/boots/winter,
+/obj/item/clothing/suit/storage/hooded/wintercoat,
+/turf/simulated/floor/tiled,
+/area/tether_away/snowbase)
 "jS" = (
 /obj/machinery/door/firedoor/glass/talon,
 /obj/structure/table/reinforced,
@@ -343,22 +354,22 @@
 	pixel_y = 11
 	},
 /turf/simulated/floor,
-/area/space)
+/area/tether_away/snowbase)
 "jU" = (
 /obj/machinery/mineral/stacking_machine,
 /turf/simulated/floor/tiled/dark,
-/area/space)
+/area/tether_away/snowbase)
 "kd" = (
 /obj/structure/table/steel_reinforced,
 /obj/item/weapon/storage/box/lights/mixed,
 /obj/item/weapon/hand_labeler,
 /obj/item/weapon/storage/box/mousetraps,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "ke" = (
 /obj/machinery/atmospherics/pipe/tank/phoron,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "kK" = (
 /obj/structure/cable/green{
 	icon_state = "1-2"
@@ -367,61 +378,77 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/tether_away/snowbase)
 "kP" = (
 /obj/machinery/atmospherics/pipe/simple/visible/black{
 	dir = 5
 	},
 /turf/simulated/floor/tiled/monotile,
-/area/space)
+/area/tether_away/snowbase)
+"kU" = (
+/obj/structure/prop/rock/crystal_dust,
+/turf/simulated/floor/outdoors/snow{
+	nitrogen = 93.7835;
+	oxygen = 20.7263;
+	temperature = 243.15
+	},
+/area/tether_away/snowbase)
 "lz" = (
 /obj/structure/table/bench/wooden,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "lD" = (
 /obj/machinery/chem_master/condimaster,
 /turf/simulated/floor/tiled/eris/cafe,
-/area/space)
+/area/tether_away/snowbase)
 "lG" = (
 /obj/structure/table/standard,
 /obj/item/weapon/material/kitchen/rollingpin,
 /obj/item/weapon/material/knife,
 /turf/simulated/floor/tiled/eris/cafe,
-/area/space)
+/area/tether_away/snowbase)
 "lN" = (
 /obj/structure/cable/green{
 	icon_state = "2-4"
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
-/area/space)
+/area/tether_away/snowbase)
 "lO" = (
 /obj/machinery/door/firedoor/glass/talon,
 /obj/structure/table/reinforced,
 /turf/simulated/floor,
-/area/space)
+/area/tether_away/snowbase)
 "lS" = (
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_y = 32
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "mn" = (
 /obj/structure/morgue{
 	dir = 1
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
+"mE" = (
+/obj/structure/closet/walllocker_double/south,
+/obj/item/weapon/tank/emergency/oxygen/double,
+/obj/item/weapon/tank/emergency/oxygen/double,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/turf/simulated/floor/tiled,
+/area/tether_away/snowbase)
 "mL" = (
 /obj/machinery/door/firedoor/glass/talon,
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
 /turf/simulated/floor/plating,
-/area/space)
+/area/tether_away/snowbase)
 "mM" = (
 /obj/structure/table/wooden_reinforced,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "nj" = (
 /obj/item/device/radio/off{
 	pixel_y = 6
@@ -437,16 +464,16 @@
 /obj/item/device/radio/off,
 /obj/structure/table/steel_reinforced,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "nk" = (
 /obj/machinery/vending/security,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "nr" = (
 /obj/structure/table/wooden_reinforced,
 /obj/item/pizzavoucher,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "nW" = (
 /obj/structure/sink/countertop{
 	dir = 4;
@@ -454,7 +481,7 @@
 	pixel_y = 2
 	},
 /turf/simulated/floor/tiled/eris/cafe,
-/area/space)
+/area/tether_away/snowbase)
 "oE" = (
 /obj/structure/closet/secure_closet/guncabinet/fancy/shotgun,
 /obj/item/weapon/gun/projectile/shotgun/pump{
@@ -468,11 +495,11 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor/tiled/dark,
-/area/space)
+/area/tether_away/snowbase)
 "oK" = (
 /obj/structure/table/standard,
 /turf/simulated/floor/tiled/eris/cafe,
-/area/space)
+/area/tether_away/snowbase)
 "oP" = (
 /obj/machinery/door/firedoor/glass/talon,
 /obj/structure/table/reinforced,
@@ -483,23 +510,21 @@
 	pixel_x = 3
 	},
 /turf/simulated/floor,
-/area/space)
+/area/tether_away/snowbase)
 "oY" = (
-/obj/structure/table/rack,
 /obj/item/clothing/shoes/boots/winter/security,
 /obj/item/clothing/suit/storage/hooded/wintercoat/security,
 /obj/item/clothing/shoes/boots/winter/security,
 /obj/item/clothing/suit/storage/hooded/wintercoat/security,
-/obj/item/clothing/suit/storage/snowsuit/security,
-/obj/item/clothing/suit/storage/snowsuit/security,
+/obj/structure/closet,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "pi" = (
 /obj/structure/cable/green{
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/tether_away/snowbase)
 "pm" = (
 /obj/machinery/recharger/wallcharger{
 	pixel_x = 4;
@@ -514,7 +539,7 @@
 	pixel_y = 36
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "pq" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 1
@@ -523,16 +548,16 @@
 	dir = 1
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "pr" = (
 /obj/structure/table/standard,
 /obj/item/weapon/autopsy_scanner,
 /turf/simulated/floor/tiled/white,
-/area/space)
+/area/tether_away/snowbase)
 "pA" = (
 /obj/effect/floor_decal/industrial/warning/color/yellow,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "pC" = (
 /obj/machinery/door/firedoor/glass/talon,
 /obj/structure/grille,
@@ -549,40 +574,40 @@
 	},
 /obj/structure/window/reinforced,
 /turf/simulated/floor/plating,
-/area/space)
+/area/tether_away/snowbase)
 "pO" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating{
 	temperature = 253.15
 	},
-/area/space)
+/area/tether_away/snowbase)
 "pV" = (
 /obj/machinery/appliance/cooker/oven,
 /turf/simulated/floor/tiled/eris/cafe,
-/area/space)
+/area/tether_away/snowbase)
 "qc" = (
 /obj/machinery/computer/operating,
 /turf/simulated/floor/tiled/white,
-/area/space)
+/area/tether_away/snowbase)
 "qw" = (
 /obj/machinery/optable,
 /turf/simulated/floor/tiled/white,
-/area/space)
+/area/tether_away/snowbase)
 "qC" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/simulated/floor/tiled/monotile,
-/area/space)
+/area/tether_away/snowbase)
 "qU" = (
 /obj/structure/table/standard,
 /obj/item/weapon/reagent_containers/glass/beaker,
 /obj/item/weapon/reagent_containers/dropper,
 /obj/item/weapon/reagent_containers/food/condiment/enzyme,
 /turf/simulated/floor/tiled/eris/cafe,
-/area/space)
+/area/tether_away/snowbase)
 "rs" = (
 /obj/machinery/appliance/cooker/grill,
 /turf/simulated/floor/tiled/eris/cafe,
-/area/space)
+/area/tether_away/snowbase)
 "rA" = (
 /obj/structure/table/steel_reinforced,
 /obj/item/clothing/glasses/meson{
@@ -590,7 +615,7 @@
 	},
 /obj/item/clothing/glasses/meson,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "rK" = (
 /obj/structure/table/standard,
 /obj/item/weapon/storage/firstaid/surgery,
@@ -606,14 +631,14 @@
 	pixel_y = -8
 	},
 /turf/simulated/floor/tiled/white,
-/area/space)
+/area/tether_away/snowbase)
 "rO" = (
 /obj/structure/table/steel_reinforced,
 /obj/item/weapon/storage/backpack/dufflebag/talon,
 /obj/item/weapon/storage/belt/utility,
 /obj/item/clothing/head/welding,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "rR" = (
 /obj/machinery/vending/engineering{
 	products = list(/obj/item/clothing/under/rank/chief_engineer = 4, /obj/item/clothing/under/rank/engineer = 4, /obj/item/clothing/shoes/orange = 4, /obj/item/clothing/head/hardhat = 4, /obj/item/weapon/storage/belt/utility = 4, /obj/item/clothing/glasses/meson = 4, /obj/item/clothing/gloves/yellow = 4, /obj/item/weapon/tool/screwdriver = 12, /obj/item/weapon/tool/crowbar = 12, /obj/item/weapon/tool/wirecutters = 12, /obj/item/device/multitool = 12, /obj/item/weapon/tool/wrench = 12, /obj/item/device/t_scanner = 12, /obj/item/stack/cable_coil/heavyduty = 8, /obj/item/weapon/cell = 8, /obj/item/weapon/weldingtool = 8, /obj/item/clothing/head/welding = 8, /obj/item/weapon/light/tube = 10, /obj/item/clothing/head/hardhat/red = 4, /obj/item/clothing/suit/fire = 4, /obj/item/weapon/stock_parts/scanning_module = 5, /obj/item/weapon/stock_parts/micro_laser = 5, /obj/item/weapon/stock_parts/matter_bin = 5, /obj/item/weapon/stock_parts/manipulator = 5, /obj/item/weapon/stock_parts/console_screen = 5);
@@ -622,25 +647,25 @@
 	req_one_access = list(301)
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "rX" = (
 /obj/structure/table/steel_reinforced,
 /obj/item/weapon/storage/box/lights/mixed,
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "sj" = (
 /obj/machinery/oxygen_pump/anesthetic,
 /turf/simulated/wall/r_wall,
-/area/space)
+/area/tether_away/snowbase)
 "sz" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /turf/simulated/floor/tiled/eris/cafe,
-/area/space)
+/area/tether_away/snowbase)
 "sP" = (
 /obj/structure/closet/secure_closet/freezer/meat,
 /turf/simulated/floor/tiled/eris/cafe,
-/area/space)
+/area/tether_away/snowbase)
 "te" = (
 /obj/item/weapon/reagent_containers/food/condiment/carton/flour,
 /obj/item/weapon/reagent_containers/food/condiment/carton/flour,
@@ -667,24 +692,24 @@
 	starts_with = list(/obj/item/weapon/reagent_containers/glass/beaker/measuring_cup = 7)
 	},
 /turf/simulated/floor/tiled/eris/cafe,
-/area/space)
+/area/tether_away/snowbase)
 "ti" = (
 /obj/machinery/door/firedoor/glass/talon/hidden{
 	dir = 1
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "tD" = (
 /obj/structure/table/standard,
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
 /turf/simulated/floor/tiled/white,
-/area/space)
+/area/tether_away/snowbase)
 "tJ" = (
 /obj/machinery/door/firedoor/glass/talon/hidden,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "tM" = (
 /obj/item/weapon/storage/box/bodybags,
 /obj/item/roller,
@@ -693,7 +718,7 @@
 	},
 /obj/structure/table/standard,
 /turf/simulated/floor/tiled/white,
-/area/space)
+/area/tether_away/snowbase)
 "tO" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -701,17 +726,17 @@
 	},
 /obj/machinery/mineral/output,
 /turf/simulated/floor/tiled/dark,
-/area/space)
+/area/tether_away/snowbase)
 "tX" = (
 /obj/machinery/door/firedoor/glass/talon/hidden{
 	dir = 8
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "uc" = (
 /obj/structure/closet/secure_closet/guncabinet/fancy/rifle,
 /turf/simulated/floor/tiled/dark,
-/area/space)
+/area/tether_away/snowbase)
 "un" = (
 /obj/item/device/gps{
 	pixel_x = -4;
@@ -724,14 +749,14 @@
 	},
 /obj/structure/table/reinforced,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "uw" = (
 /turf/simulated/floor/outdoors/ice{
 	nitrogen = 93.7835;
 	oxygen = 20.7263;
 	temperature = 243.15
 	},
-/area/space)
+/area/tether_away/snowbase)
 "uE" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -741,25 +766,25 @@
 	oxygen = 20.7263;
 	temperature = 243.15
 	},
-/area/space)
+/area/tether_away/snowbase)
 "uQ" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "vp" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "vz" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "vB" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5,
 /obj/effect/floor_decal/industrial/warning/color/yellow,
@@ -770,7 +795,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "vV" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -780,7 +805,7 @@
 	oxygen = 20.7263;
 	temperature = 243.15
 	},
-/area/space)
+/area/tether_away/snowbase)
 "vY" = (
 /obj/structure/table/standard,
 /obj/item/device/defib_kit/jumper_kit/loaded,
@@ -788,38 +813,40 @@
 /obj/item/weapon/storage/belt/medical/emt,
 /obj/item/device/sleevemate,
 /turf/simulated/floor/tiled/white,
-/area/space)
-"wd" = (
-/obj/structure/table/rack,
-/obj/item/clothing/suit/storage/snowsuit/cargo,
-/obj/item/clothing/suit/storage/snowsuit/cargo,
-/turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
+"vZ" = (
+/obj/machinery/crystal/ice,
+/turf/simulated/floor/outdoors/snow{
+	nitrogen = 93.7835;
+	oxygen = 20.7263;
+	temperature = 243.15
+	},
+/area/tether_away/snowbase)
 "wl" = (
 /obj/structure/closet/walllocker/medical/north,
 /obj/item/weapon/storage/firstaid/fire,
 /obj/item/weapon/storage/firstaid,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "wm" = (
 /obj/machinery/atmospherics/portables_connector,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "wn" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "ws" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5,
 /obj/effect/floor_decal/industrial/warning/color/yellow,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "wE" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
 	dir = 5
 	},
 /turf/simulated/floor/tiled/monotile,
-/area/space)
+/area/tether_away/snowbase)
 "wQ" = (
 /obj/machinery/vending/engivend{
 	products = list(/obj/item/device/geiger = 4, /obj/item/clothing/glasses/meson = 2, /obj/item/device/multitool = 4, /obj/item/weapon/cell/high = 10, /obj/item/weapon/airlock_electronics = 10, /obj/item/weapon/module/power_control = 10, /obj/item/weapon/circuitboard/airalarm = 10, /obj/item/weapon/circuitboard/firealarm = 10, /obj/item/weapon/circuitboard/status_display = 2, /obj/item/weapon/circuitboard/ai_status_display = 2, /obj/item/weapon/circuitboard/newscaster = 2, /obj/item/weapon/circuitboard/holopad = 2, /obj/item/weapon/circuitboard/intercom = 4, /obj/item/weapon/circuitboard/security/telescreen/entertainment = 4, /obj/item/weapon/stock_parts/motor = 2, /obj/item/weapon/stock_parts/spring = 2, /obj/item/weapon/stock_parts/gear = 2, /obj/item/weapon/circuitboard/atm, /obj/item/weapon/circuitboard/guestpass, /obj/item/weapon/circuitboard/keycard_auth, /obj/item/weapon/circuitboard/photocopier, /obj/item/weapon/circuitboard/fax, /obj/item/weapon/circuitboard/request, /obj/item/weapon/circuitboard/microwave, /obj/item/weapon/circuitboard/washing, /obj/item/weapon/circuitboard/scanner_console, /obj/item/weapon/circuitboard/sleeper_console, /obj/item/weapon/circuitboard/body_scanner, /obj/item/weapon/circuitboard/sleeper, /obj/item/weapon/circuitboard/dna_analyzer, /obj/item/weapon/circuitboard/partslathe);
@@ -827,48 +854,48 @@
 	req_log_access = 301
 	},
 /turf/simulated/floor/tiled/monotile,
-/area/space)
+/area/tether_away/snowbase)
 "xl" = (
 /obj/machinery/computer/security{
 	dir = 4
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "xn" = (
 /obj/machinery/vending/medical_talon,
 /turf/simulated/floor/tiled/white,
-/area/space)
+/area/tether_away/snowbase)
 "xo" = (
 /obj/machinery/computer/med_data/laptop{
 	dir = 4
 	},
 /obj/structure/table/standard,
 /turf/simulated/floor/tiled/white,
-/area/space)
+/area/tether_away/snowbase)
 "xs" = (
 /obj/structure/bed/chair/office/dark{
 	dir = 8
 	},
 /turf/simulated/floor/tiled/white,
-/area/space)
+/area/tether_away/snowbase)
 "xx" = (
 /obj/structure/sink{
 	dir = 4;
 	pixel_x = 11
 	},
 /turf/simulated/floor/tiled/white,
-/area/space)
+/area/tether_away/snowbase)
 "xQ" = (
 /obj/structure/table/reinforced,
 /obj/machinery/photocopier/faxmachine{
 	department = "Snowbase"
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "xS" = (
 /obj/structure/table/reinforced,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "yc" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin{
@@ -876,7 +903,7 @@
 	},
 /obj/item/weapon/pen,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "yo" = (
 /obj/item/weapon/storage/excavation,
 /obj/item/stack/flag/yellow,
@@ -885,18 +912,18 @@
 /obj/item/weapon/tool/wrench,
 /obj/structure/table/rack/steel,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "yq" = (
 /turf/simulated/floor/carpet,
-/area/space)
+/area/tether_away/snowbase)
 "yB" = (
 /obj/effect/floor_decal/industrial/rad_floor,
 /turf/simulated/floor/tiled/dark,
-/area/space)
+/area/tether_away/snowbase)
 "yX" = (
 /obj/machinery/mineral/unloading_machine,
 /turf/simulated/floor/tiled/dark,
-/area/space)
+/area/tether_away/snowbase)
 "zr" = (
 /obj/item/weapon/paper_bin{
 	pixel_x = -1;
@@ -905,7 +932,7 @@
 /obj/item/weapon/pen,
 /obj/structure/table/reinforced,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "zC" = (
 /obj/machinery/mineral/output,
 /obj/machinery/conveyor{
@@ -914,30 +941,28 @@
 	},
 /obj/machinery/light,
 /turf/simulated/floor/tiled/dark,
-/area/space)
+/area/tether_away/snowbase)
 "zM" = (
-/obj/structure/table/rack,
 /obj/item/clothing/shoes/boots/winter/medical,
 /obj/item/clothing/suit/storage/hooded/wintercoat/medical,
 /obj/item/clothing/shoes/boots/winter/medical,
 /obj/item/clothing/suit/storage/hooded/wintercoat/medical,
-/obj/item/clothing/suit/storage/snowsuit/medical,
-/obj/item/clothing/suit/storage/snowsuit/medical,
+/obj/structure/closet,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "zX" = (
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
 	dir = 5
 	},
 /turf/simulated/floor/tiled/monotile,
-/area/space)
+/area/tether_away/snowbase)
 "Af" = (
 /turf/simulated/floor/reinforced,
-/area/space)
+/area/tether_away/snowbase)
 "Ah" = (
 /obj/effect/floor_decal/industrial/rad_floor/yellow,
 /turf/simulated/wall/r_wall,
-/area/space)
+/area/tether_away/snowbase)
 "AE" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/folder/blue{
@@ -948,20 +973,20 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "Bs" = (
 /obj/structure/anomaly_container,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "Bv" = (
 /turf/simulated/floor/tiled/dark,
-/area/space)
+/area/tether_away/snowbase)
 "BE" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 5
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "BK" = (
 /obj/item/device/radio/off{
 	pixel_y = 6
@@ -977,19 +1002,27 @@
 /obj/item/device/radio/off,
 /obj/structure/table/reinforced,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
+"Cg" = (
+/obj/effect/overmap/visitable/sector/centaur944november,
+/turf/simulated/floor/outdoors/snow{
+	nitrogen = 93.7835;
+	oxygen = 20.7263;
+	temperature = 243.15
+	},
+/area/tether_away/snowbase)
 "Ci" = (
 /obj/machinery/sleep_console{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/white,
-/area/space)
+/area/tether_away/snowbase)
 "Cm" = (
 /obj/machinery/sleeper{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/white,
-/area/space)
+/area/tether_away/snowbase)
 "Cx" = (
 /obj/structure/table/rack/shelf/steel,
 /obj/item/ammo_magazine/ammo_box/b12g/stunshell{
@@ -1005,13 +1038,13 @@
 	pixel_y = 7
 	},
 /turf/simulated/floor/tiled/dark,
-/area/space)
+/area/tether_away/snowbase)
 "CO" = (
 /obj/structure/sink/kitchen{
 	pixel_y = 20
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "CY" = (
 /obj/item/weapon/storage/firstaid/toxin,
 /obj/item/weapon/storage/firstaid/toxin,
@@ -1023,31 +1056,31 @@
 /obj/item/weapon/storage/firstaid/adv,
 /obj/structure/closet/walllocker_double/medical/east,
 /turf/simulated/floor/tiled/white,
-/area/space)
+/area/tether_away/snowbase)
 "DA" = (
 /turf/simulated/floor/plating{
 	temperature = 253.15
 	},
-/area/space)
+/area/tether_away/snowbase)
 "Ea" = (
 /obj/structure/closet/crate,
 /obj/structure/window/reinforced,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "Eb" = (
 /obj/structure/cable/green{
 	icon_state = "1-2"
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
-/area/space)
+/area/tether_away/snowbase)
 "Eq" = (
 /obj/machinery/vending/blood{
 	req_access = list(301);
 	req_log_access = 301
 	},
 /turf/simulated/floor/tiled/white,
-/area/space)
+/area/tether_away/snowbase)
 "Ew" = (
 /obj/effect/floor_decal/industrial/warning/color/corner/yellow{
 	dir = 1
@@ -1056,14 +1089,14 @@
 	dir = 8
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "EL" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/black{
 	dir = 1
 	},
 /obj/machinery/meter,
 /turf/simulated/floor/tiled/monotile,
-/area/space)
+/area/tether_away/snowbase)
 "EP" = (
 /obj/structure/table/standard,
 /obj/item/clothing/gloves/sterile/nitrile,
@@ -1071,29 +1104,39 @@
 /obj/item/clothing/suit/surgicalapron,
 /obj/structure/table/standard,
 /turf/simulated/floor/tiled/white,
-/area/space)
+/area/tether_away/snowbase)
 "Fr" = (
 /turf/simulated/mineral/ignore_cavegen{
 	nitrogen = 93.7835;
 	oxygen = 20.7263;
 	temperature = 243.15
 	},
-/area/space)
+/area/tether_away/snowbase)
 "Fs" = (
 /obj/structure/table/steel_reinforced,
 /obj/item/weapon/folder/yellow,
 /turf/simulated/floor/carpet,
-/area/space)
+/area/tether_away/snowbase)
 "FA" = (
 /obj/structure/bed/chair/office/dark,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
+"FT" = (
+/obj/item/weapon/tank/oxygen/yellow,
+/obj/item/weapon/tank/oxygen/yellow,
+/obj/item/weapon/tank/oxygen/yellow,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/structure/closet,
+/turf/simulated/floor/tiled,
+/area/tether_away/snowbase)
 "Gg" = (
 /obj/machinery/door/firedoor/glass/talon/hidden{
 	dir = 2
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "GF" = (
 /obj/structure/table/standard,
 /obj/item/weapon/storage/firstaid/regular,
@@ -1102,68 +1145,80 @@
 	pixel_y = 5
 	},
 /turf/simulated/floor/tiled/white,
-/area/space)
+/area/tether_away/snowbase)
 "GM" = (
 /obj/structure/table/steel_reinforced,
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
 /turf/simulated/floor/carpet,
-/area/space)
+/area/tether_away/snowbase)
 "GO" = (
-/obj/structure/table/rack,
-/obj/item/clothing/suit/storage/snowsuit/command,
-/obj/item/clothing/suit/storage/snowsuit/command,
+/obj/item/clothing/shoes/boots/winter,
+/obj/item/clothing/suit/storage/hooded/wintercoat,
+/obj/item/clothing/shoes/boots/winter,
+/obj/item/clothing/suit/storage/hooded/wintercoat,
+/obj/structure/closet,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "GX" = (
 /obj/item/modular_computer/console{
 	dir = 4
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "Hg" = (
 /obj/structure/bed/chair/office/dark{
 	dir = 8
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "Hk" = (
 /obj/machinery/computer/station_alert,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "Ht" = (
 /obj/structure/closet/walllocker_double/south,
 /obj/item/clothing/shoes/boots/winter/mining,
 /obj/item/clothing/suit/storage/hooded/wintercoat/miner,
+/obj/item/clothing/shoes/boots/winter/mining,
+/obj/item/clothing/suit/storage/hooded/wintercoat/miner,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
+"Hz" = (
+/obj/structure/prop/rock/crystal,
+/turf/simulated/floor/outdoors/snow{
+	nitrogen = 93.7835;
+	oxygen = 20.7263;
+	temperature = 243.15
+	},
+/area/tether_away/snowbase)
 "HB" = (
 /obj/structure/bed/chair/backed_red,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "HQ" = (
 /obj/structure/catwalk,
 /turf/simulated/floor/plating{
 	temperature = 253.15
 	},
-/area/space)
+/area/tether_away/snowbase)
 "Ia" = (
 /obj/item/weapon/pipe_dispenser,
 /obj/item/weapon/tool/wrench/pipe,
 /obj/structure/table/steel_reinforced,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "Ic" = (
 /obj/machinery/vending/cola,
 /turf/simulated/floor/carpet,
-/area/space)
+/area/tether_away/snowbase)
 "IB" = (
 /obj/effect/floor_decal/industrial/warning/color/corner/yellow{
 	dir = 8
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "IN" = (
 /obj/structure/table/rack/shelf/steel,
 /obj/item/ammo_magazine/ammo_box/b12g/pellet{
@@ -1179,22 +1234,22 @@
 	pixel_y = 7
 	},
 /turf/simulated/floor/tiled/dark,
-/area/space)
+/area/tether_away/snowbase)
 "IU" = (
 /obj/item/modular_computer/console/preset/engineering,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "Jb" = (
 /obj/structure/dispenser,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "Jo" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/tiled/monotile,
-/area/space)
+/area/tether_away/snowbase)
 "Jq" = (
 /obj/structure/cable/green{
 	icon_state = "4-8"
@@ -1204,13 +1259,13 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/tether_away/snowbase)
 "Jv" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 8
 	},
 /turf/simulated/floor/tiled/monotile,
-/area/space)
+/area/tether_away/snowbase)
 "Jx" = (
 /obj/machinery/mineral/input,
 /obj/machinery/conveyor{
@@ -1219,28 +1274,28 @@
 	},
 /obj/machinery/light,
 /turf/simulated/floor/tiled/dark,
-/area/space)
+/area/tether_away/snowbase)
 "JA" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
 	dir = 10
 	},
 /turf/simulated/floor/tiled/monotile,
-/area/space)
+/area/tether_away/snowbase)
 "JC" = (
 /obj/machinery/computer/rcon,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "Kc" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
 	dir = 6
 	},
 /turf/simulated/floor/tiled/monotile,
-/area/space)
+/area/tether_away/snowbase)
 "KA" = (
 /obj/structure/table/steel_reinforced,
 /obj/item/weapon/folder/yellow,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "KF" = (
 /obj/structure/table/rack/shelf/steel,
 /obj/item/weapon/storage/box/handcuffs{
@@ -1251,13 +1306,13 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "KG" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 4
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "Lp" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -1267,7 +1322,7 @@
 	oxygen = 20.7263;
 	temperature = 243.15
 	},
-/area/space)
+/area/tether_away/snowbase)
 "Ls" = (
 /obj/structure/closet/walllocker_double/south,
 /obj/item/clothing/suit/radiation,
@@ -1279,7 +1334,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
-/area/space)
+/area/tether_away/snowbase)
 "LJ" = (
 /obj/structure/closet/walllocker_double/medical/east,
 /obj/random/medical,
@@ -1288,41 +1343,41 @@
 /obj/random/medical,
 /obj/item/device/healthanalyzer,
 /turf/simulated/floor/tiled/white,
-/area/space)
+/area/tether_away/snowbase)
 "LK" = (
 /obj/structure/table/steel_reinforced,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "LO" = (
 /obj/item/modular_computer/console/preset/command{
 	dir = 4
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "LW" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "MH" = (
 /obj/structure/closet/excavation,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "MI" = (
 /obj/structure/bed/chair/office/dark{
 	dir = 1
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "MM" = (
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
-/area/space)
+/area/tether_away/snowbase)
 "Nr" = (
 /obj/machinery/smartfridge/chemistry{
 	req_access = list(301);
@@ -1330,31 +1385,31 @@
 	},
 /obj/machinery/door/firedoor/glass/talon,
 /turf/simulated/floor/tiled/monotile,
-/area/space)
+/area/tether_away/snowbase)
 "Nu" = (
 /obj/structure/closet/walllocker_double/medical/east,
 /obj/item/bodybag/cryobag,
 /obj/item/bodybag/cryobag,
 /obj/item/bodybag/cryobag,
 /turf/simulated/floor/tiled/white,
-/area/space)
+/area/tether_away/snowbase)
 "NG" = (
 /obj/machinery/computer/secure_data{
 	dir = 4
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "NH" = (
 /obj/structure/cable/green{
 	icon_state = "4-8"
 	},
 /turf/simulated/wall/r_wall,
-/area/space)
+/area/tether_away/snowbase)
 "Oa" = (
 /obj/machinery/atmospherics/pipe/manifold/visible,
 /obj/machinery/meter,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "On" = (
 /obj/structure/table/reinforced,
 /obj/item/device/tape/random,
@@ -1362,53 +1417,53 @@
 /obj/item/device/tape/random,
 /obj/item/device/taperecorder,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "Ox" = (
 /obj/structure/bed/chair/backed_red{
 	dir = 1
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "OD" = (
 /obj/machinery/atmospherics/unary/vent_pump/on,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "Po" = (
 /obj/machinery/autolathe,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "Pu" = (
 /obj/machinery/atmospherics/pipe/tank/air{
 	dir = 8
 	},
 /turf/simulated/floor/tiled/monotile,
-/area/space)
+/area/tether_away/snowbase)
 "Px" = (
 /obj/structure/closet/toolcloset,
 /obj/item/weapon/chainsaw,
 /obj/item/weapon/pickaxe,
 /obj/item/weapon/shovel,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "PI" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/scrubbers{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold/visible/supply,
 /turf/simulated/floor/tiled/monotile,
-/area/space)
+/area/tether_away/snowbase)
 "PM" = (
 /obj/machinery/chem_master,
 /turf/simulated/floor/tiled/white,
-/area/space)
+/area/tether_away/snowbase)
 "PX" = (
 /obj/structure/bed/chair/office/dark,
 /turf/simulated/floor/tiled/white,
-/area/space)
+/area/tether_away/snowbase)
 "Qp" = (
 /obj/structure/bed/chair/backed_red,
 /turf/simulated/floor/carpet,
-/area/space)
+/area/tether_away/snowbase)
 "Qw" = (
 /obj/structure/table/rack/steel,
 /obj/item/clothing/suit/space/anomaly,
@@ -1416,17 +1471,17 @@
 /obj/item/clothing/mask/breath,
 /obj/item/weapon/storage/belt/archaeology,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "Qz" = (
 /obj/structure/table/reinforced,
 /obj/item/device/multitool,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "QB" = (
 /obj/machinery/power/rtg/advanced,
 /obj/structure/cable/green,
 /turf/simulated/floor/plating,
-/area/space)
+/area/tether_away/snowbase)
 "QL" = (
 /obj/fiftyspawner/uranium,
 /obj/structure/table/steel_reinforced,
@@ -1438,22 +1493,22 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/tether_away/snowbase)
 "Rl" = (
 /turf/simulated/floor/tiled/monotile,
-/area/space)
+/area/tether_away/snowbase)
 "Rv" = (
 /obj/machinery/telecomms/allinone/talon{
 	id = "talon_aio";
 	network = "Talon"
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "RE" = (
 /obj/machinery/power/port_gen/pacman/super/potato,
 /obj/structure/cable/green,
 /turf/simulated/floor/plating,
-/area/space)
+/area/tether_away/snowbase)
 "RF" = (
 /obj/structure/table/rack/shelf/steel,
 /obj/item/weapon/cell/device/weapon{
@@ -1473,20 +1528,20 @@
 	pixel_y = 6
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "RO" = (
 /obj/machinery/atmospherics/pipe/simple/visible/black{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/monotile,
-/area/space)
+/area/tether_away/snowbase)
 "RQ" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/empty,
 /turf/simulated/floor/tiled/monotile,
-/area/space)
+/area/tether_away/snowbase)
 "RR" = (
 /obj/structure/table/steel_reinforced,
 /obj/item/weapon/paper_bin{
@@ -1495,7 +1550,7 @@
 	},
 /obj/item/weapon/pen,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "RX" = (
 /obj/structure/table/steel_reinforced,
 /obj/machinery/cell_charger{
@@ -1505,11 +1560,11 @@
 	pixel_y = 7
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "Su" = (
 /obj/machinery/ntnet_relay,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "Sv" = (
 /obj/machinery/door/firedoor/glass/talon,
 /obj/machinery/door/window/brigdoor/southleft{
@@ -1519,22 +1574,22 @@
 	req_access = list(2)
 	},
 /turf/simulated/floor/tiled/steel_ridged,
-/area/space)
+/area/tether_away/snowbase)
 "Sy" = (
 /obj/structure/table/steel_reinforced,
 /obj/item/weapon/pickaxe/drill,
 /obj/item/weapon/pickaxe/drill,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "SA" = (
 /obj/machinery/drone_fabricator/talon,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "SY" = (
 /obj/machinery/door/airlock/hatch,
 /obj/machinery/door/firedoor/glass/talon,
 /turf/simulated/floor/plating,
-/area/space)
+/area/tether_away/snowbase)
 "Ti" = (
 /obj/effect/shuttle_landmark/premade/groundbase{
 	name = "Rascal's Pass Shuttlepad"
@@ -1542,7 +1597,7 @@
 /turf/simulated/floor/outdoors/sidewalk/slab{
 	temperature = 243.15
 	},
-/area/space)
+/area/tether_away/snowbase)
 "Tp" = (
 /obj/machinery/power/terminal{
 	dir = 4
@@ -1551,37 +1606,37 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/tether_away/snowbase)
 "TB" = (
 /obj/structure/table/reinforced,
 /obj/item/device/camera,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "TF" = (
 /obj/structure/table/standard,
 /obj/item/device/mass_spectrometer/adv,
 /turf/simulated/floor/tiled/white,
-/area/space)
+/area/tether_away/snowbase)
 "TP" = (
 /obj/structure/closet/firecloset,
 /turf/simulated/floor/plating{
 	temperature = 253.15
 	},
-/area/space)
+/area/tether_away/snowbase)
 "TQ" = (
 /obj/machinery/power/smes/buildable/offmap_spawn,
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/tether_away/snowbase)
 "Uh" = (
 /obj/structure/table/standard,
 /obj/machinery/reagentgrinder{
 	pixel_y = 10
 	},
 /turf/simulated/floor/tiled/white,
-/area/space)
+/area/tether_away/snowbase)
 "Ui" = (
 /obj/structure/cable{
 	icon_state = "1-8"
@@ -1591,7 +1646,7 @@
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
-/area/space)
+/area/tether_away/snowbase)
 "Up" = (
 /obj/fiftyspawner/glass,
 /obj/fiftyspawner/glass,
@@ -1602,28 +1657,28 @@
 /obj/fiftyspawner/steel,
 /obj/structure/closet/crate,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "Ur" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "Ut" = (
 /obj/machinery/vending/tool{
 	req_log_access = 301
 	},
 /turf/simulated/floor/tiled/monotile,
-/area/space)
+/area/tether_away/snowbase)
 "UA" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/monotile,
-/area/space)
+/area/tether_away/snowbase)
 "UK" = (
 /obj/structure/table/standard,
 /obj/machinery/chemical_dispenser/full,
 /turf/simulated/floor/tiled/white,
-/area/space)
+/area/tether_away/snowbase)
 "UY" = (
 /obj/structure/closet/secure_closet/chemical{
 	req_access = list(301)
@@ -1633,11 +1688,11 @@
 	name = "Chemistry Cleaner"
 	},
 /turf/simulated/floor/tiled/white,
-/area/space)
+/area/tether_away/snowbase)
 "Vd" = (
 /obj/structure/closet/secure_closet/medical3,
 /turf/simulated/floor/tiled/white,
-/area/space)
+/area/tether_away/snowbase)
 "VA" = (
 /obj/machinery/mineral/output,
 /obj/effect/floor_decal/industrial/outline/red,
@@ -1647,71 +1702,74 @@
 	pixel_y = -3
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "VI" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor/tiled/white,
-/area/space)
+/area/tether_away/snowbase)
 "Wb" = (
 /obj/structure/dispenser/phoron,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "Wi" = (
 /obj/structure/mopbucket,
 /obj/item/weapon/mop,
 /obj/item/weapon/reagent_containers/glass/bucket,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "Wr" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "Wt" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/carpet,
-/area/space)
+/area/tether_away/snowbase)
 "Wu" = (
 /obj/effect/floor_decal/industrial/warning/color/corner/yellow,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "Wv" = (
 /obj/structure/table/steel_reinforced,
 /turf/simulated/floor/carpet,
-/area/space)
+/area/tether_away/snowbase)
 "WG" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "WP" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 9
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
+"WU" = (
+/turf/simulated/mineral/crystal_shiny,
+/area/tether_away/snowbase)
 "WX" = (
 /obj/structure/closet/secure_closet/guncabinet/fancy/pistol,
 /turf/simulated/floor/tiled/dark,
-/area/space)
+/area/tether_away/snowbase)
 "Xa" = (
 /turf/simulated/wall/r_wall,
-/area/space)
+/area/tether_away/snowbase)
 "Xc" = (
 /obj/structure/closet/secure_closet/miner{
 	anchored = 1
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "Xr" = (
 /obj/structure/bed/chair/backed_red{
 	dir = 4
 	},
 /turf/simulated/floor/carpet,
-/area/space)
+/area/tether_away/snowbase)
 "Xv" = (
 /obj/machinery/portable_atmospherics/canister/phoron,
 /turf/simulated/floor/tiled/monotile,
-/area/space)
+/area/tether_away/snowbase)
 "XI" = (
 /obj/item/device/gps{
 	pixel_x = -4;
@@ -1724,21 +1782,29 @@
 	},
 /obj/structure/table/steel_reinforced,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "XM" = (
-/obj/structure/table/rack,
-/obj/item/clothing/shoes/boots/winter,
-/obj/item/clothing/suit/storage/hooded/wintercoat,
-/obj/item/clothing/shoes/boots/winter,
-/obj/item/clothing/suit/storage/hooded/wintercoat,
+/obj/structure/closet,
 /obj/item/clothing/suit/storage/snowsuit,
 /obj/item/clothing/suit/storage/snowsuit,
+/obj/item/clothing/suit/storage/snowsuit/cargo,
+/obj/item/clothing/suit/storage/snowsuit/cargo,
+/obj/item/clothing/suit/storage/snowsuit/command,
+/obj/item/clothing/suit/storage/snowsuit/command,
+/obj/item/clothing/suit/storage/snowsuit/engineering,
+/obj/item/clothing/suit/storage/snowsuit/engineering,
+/obj/item/clothing/suit/storage/snowsuit/medical,
+/obj/item/clothing/suit/storage/snowsuit/medical,
+/obj/item/clothing/suit/storage/snowsuit/science,
+/obj/item/clothing/suit/storage/snowsuit/science,
+/obj/item/clothing/suit/storage/snowsuit/security,
+/obj/item/clothing/suit/storage/snowsuit/security,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "XY" = (
 /obj/structure/closet/secure_closet/engineering_electrical,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "Yd" = (
 /obj/structure/table/steel_reinforced,
 /obj/item/weapon/storage/toolbox/electrical{
@@ -1750,13 +1816,13 @@
 	pixel_y = -1
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "Yh" = (
 /obj/machinery/suspension_gen{
 	req_access = list(301)
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "Yk" = (
 /obj/machinery/door/firedoor/glass/talon,
 /obj/machinery/door/window/brigdoor/eastleft{
@@ -1775,7 +1841,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/tiled/steel_ridged,
-/area/space)
+/area/tether_away/snowbase)
 "Yo" = (
 /obj/item/stack/cable_coil/random,
 /obj/item/stack/cable_coil/random,
@@ -1792,7 +1858,7 @@
 /obj/item/weapon/cell/device,
 /obj/structure/closet/crate,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "Yp" = (
 /obj/machinery/mineral/input,
 /obj/effect/floor_decal/industrial/outline/yellow,
@@ -1805,7 +1871,7 @@
 	pixel_y = -3
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "YD" = (
 /obj/machinery/conveyor_switch/oneway{
 	id = "snowbaserefinery";
@@ -1819,7 +1885,7 @@
 	},
 /obj/structure/window/reinforced,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "YO" = (
 /obj/item/weapon/storage/briefcase/inflatable{
 	pixel_x = 3;
@@ -1833,7 +1899,7 @@
 	},
 /obj/structure/table/steel_reinforced,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "YP" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 8
@@ -1842,40 +1908,40 @@
 	dir = 8
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "YZ" = (
 /obj/structure/catwalk,
 /obj/structure/cable/green{
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/tether_away/snowbase)
 "Zg" = (
 /obj/machinery/photocopier,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "Zp" = (
 /obj/machinery/atmospherics/pipe/simple/visible/supply{
 	dir = 6
 	},
 /turf/simulated/floor/tiled/monotile,
-/area/space)
+/area/tether_away/snowbase)
 "Zz" = (
 /obj/machinery/atmospherics/pipe/simple/visible/universal{
 	dir = 8;
 	name = "Air to Distro"
 	},
 /turf/simulated/floor/tiled/monotile,
-/area/space)
+/area/tether_away/snowbase)
 "ZC" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/cyan,
 /turf/simulated/floor/tiled/monotile,
-/area/space)
+/area/tether_away/snowbase)
 "ZE" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/manifold4w/visible/cyan,
 /turf/simulated/floor/tiled/monotile,
-/area/space)
+/area/tether_away/snowbase)
 "ZJ" = (
 /obj/structure/table/steel_reinforced,
 /obj/item/weapon/grenade/chem_grenade/cleaner,
@@ -1886,15 +1952,15 @@
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "ZV" = (
 /obj/structure/closet/crate/science,
 /turf/simulated/floor/tiled,
-/area/space)
+/area/tether_away/snowbase)
 "ZX" = (
 /obj/machinery/door/firedoor/glass/talon,
 /turf/simulated/floor/tiled/steel_ridged,
-/area/space)
+/area/tether_away/snowbase)
 "ZZ" = (
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
 	dir = 10
@@ -1903,7 +1969,7 @@
 	dir = 9
 	},
 /turf/simulated/floor/tiled/monotile,
-/area/space)
+/area/tether_away/snowbase)
 
 (1,1,1) = {"
 ab
@@ -2327,7 +2393,7 @@ dF
 dF
 dF
 dF
-dF
+Cg
 dF
 ab
 "}
@@ -8517,10 +8583,10 @@ dF
 dF
 dF
 dF
-dF
-dF
-dF
-dF
+jv
+jv
+jv
+jv
 dF
 dF
 dF
@@ -8650,19 +8716,19 @@ dF
 dF
 dF
 dF
-uw
-uw
-uw
 dF
 dF
 dF
 dF
 dF
 dF
+Hz
+kU
 dF
-dF
-dF
-dF
+jv
+jv
+jv
+jv
 dF
 dF
 dF
@@ -8792,19 +8858,19 @@ dF
 dF
 dF
 dF
-uw
-uw
-uw
 dF
 dF
 dF
 dF
 dF
 dF
+Hz
+kU
 dF
-dF
-dF
-dF
+jv
+jv
+jv
+jv
 dF
 dF
 dF
@@ -8934,9 +9000,6 @@ dF
 dF
 dF
 dF
-uw
-uw
-uw
 dF
 dF
 dF
@@ -8946,7 +9009,10 @@ dF
 dF
 dF
 dF
-dF
+jv
+jv
+jv
+jv
 dF
 dF
 dF
@@ -9075,10 +9141,10 @@ dF
 dF
 dF
 dF
-uw
-uw
-uw
-uw
+dF
+dF
+dF
+dF
 dF
 dF
 dF
@@ -9216,9 +9282,6 @@ dF
 dF
 dF
 dF
-dF
-uw
-uw
 uw
 uw
 dF
@@ -9230,7 +9293,10 @@ dF
 dF
 dF
 dF
-dF
+WU
+WU
+WU
+WU
 dF
 dF
 dF
@@ -9358,11 +9424,9 @@ dF
 dF
 dF
 dF
-dF
 uw
 uw
 uw
-uw
 dF
 dF
 dF
@@ -9371,8 +9435,10 @@ dF
 dF
 dF
 dF
-dF
-dF
+WU
+WU
+WU
+WU
 dF
 dF
 dF
@@ -9500,11 +9566,9 @@ dF
 dF
 dF
 dF
-dF
 uw
 uw
 uw
-uw
 dF
 dF
 dF
@@ -9513,8 +9577,10 @@ dF
 dF
 dF
 dF
-dF
-dF
+WU
+WU
+WU
+WU
 dF
 dF
 dF
@@ -9642,11 +9708,9 @@ dF
 dF
 dF
 dF
-dF
 uw
 uw
 uw
-uw
 dF
 dF
 dF
@@ -9655,8 +9719,10 @@ dF
 dF
 dF
 dF
-dF
-dF
+WU
+WU
+WU
+WU
 dF
 dF
 dF
@@ -9787,7 +9853,7 @@ dF
 uw
 uw
 uw
-uw
+dF
 dF
 dF
 dF
@@ -9925,11 +9991,11 @@ dF
 dF
 dF
 dF
+uw
+uw
+uw
+uw
 dF
-uw
-uw
-uw
-uw
 dF
 dF
 dF
@@ -10067,11 +10133,11 @@ dF
 dF
 dF
 dF
+uw
+uw
+uw
+uw
 dF
-uw
-uw
-uw
-uw
 dF
 dF
 dF
@@ -10209,11 +10275,11 @@ Xa
 dF
 dF
 dF
+uw
+uw
+uw
+uw
 dF
-uw
-uw
-uw
-uw
 dF
 dF
 dF
@@ -10350,12 +10416,12 @@ Qz
 Xa
 dF
 dF
+uw
+uw
+uw
+uw
 dF
 dF
-uw
-uw
-uw
-uw
 dF
 dF
 dF
@@ -10492,11 +10558,11 @@ Rv
 Xa
 dF
 dF
+uw
+uw
+uw
 dF
-uw
-uw
-uw
-uw
+dF
 dF
 dF
 dF
@@ -10634,11 +10700,11 @@ Su
 Xa
 dF
 dF
+uw
+uw
+uw
 dF
-uw
-uw
-uw
-uw
+dF
 dF
 dF
 dF
@@ -10775,12 +10841,12 @@ Xa
 Xa
 Xa
 dF
+uw
+uw
+uw
+uw
 dF
 dF
-uw
-uw
-uw
-uw
 dF
 dF
 dF
@@ -10788,7 +10854,7 @@ dF
 dF
 Xa
 hi
-Ht
+mE
 Xa
 dF
 dF
@@ -10917,12 +10983,12 @@ On
 TB
 Xa
 dF
+uw
+uw
+uw
+uw
 dF
-uw
-uw
-uw
-uw
-uw
+dF
 dF
 dF
 dF
@@ -11059,11 +11125,11 @@ hi
 hi
 Xa
 dF
+uw
+uw
+uw
 dF
-uw
-uw
-uw
-uw
+dF
 Xa
 Xa
 Xa
@@ -11201,10 +11267,10 @@ hi
 hi
 mL
 dF
+uw
+uw
+uw
 dF
-uw
-uw
-uw
 Xa
 Xa
 LK
@@ -11343,10 +11409,10 @@ Ox
 hi
 mL
 dF
+uw
+uw
+uw
 dF
-uw
-uw
-uw
 Xa
 Wi
 hi
@@ -11485,10 +11551,10 @@ Ox
 hi
 mL
 dF
+uw
+uw
+uw
 dF
-uw
-uw
-uw
 Xa
 CO
 hi
@@ -11627,10 +11693,10 @@ Ox
 hi
 mL
 dF
+uw
+uw
+uw
 dF
-uw
-uw
-uw
 Xa
 Wr
 hi
@@ -11769,10 +11835,10 @@ Ox
 hi
 mL
 dF
+uw
+uw
+uw
 dF
-uw
-uw
-uw
 Xa
 Xa
 Xa
@@ -11911,10 +11977,10 @@ hi
 hi
 Xa
 dF
+uw
+uw
+uw
 dF
-uw
-uw
-uw
 Xa
 GM
 Xr
@@ -12053,10 +12119,10 @@ hi
 Ur
 Xa
 dF
-dF
 uw
 uw
 uw
+vZ
 Xa
 Ic
 yq
@@ -12195,10 +12261,10 @@ Xa
 Xa
 Xa
 hD
+uE
+uE
+uE
 hD
-uE
-uE
-uE
 Xa
 Wt
 yq
@@ -12315,8 +12381,8 @@ ai
 ai
 ZX
 do
-do
-do
+jN
+jN
 ZX
 hi
 hi
@@ -12467,7 +12533,7 @@ hi
 hi
 hi
 hi
-hi
+dM
 dM
 hi
 hi
@@ -12763,10 +12829,10 @@ Xa
 Xa
 Xa
 Lp
+vV
+vV
+vV
 Lp
-vV
-vV
-vV
 Xa
 Xa
 Xa
@@ -12904,11 +12970,11 @@ ax
 PM
 TF
 Xa
+vZ
+uw
+uw
+uw
 dF
-dF
-uw
-uw
-uw
 Xa
 Jb
 OD
@@ -13047,10 +13113,10 @@ PX
 Uh
 mL
 dF
+uw
+uw
+uw
 dF
-uw
-uw
-uw
 Xa
 WG
 Zp
@@ -13192,7 +13258,7 @@ dF
 uw
 uw
 uw
-uw
+dF
 Xa
 Jo
 Zz
@@ -13334,7 +13400,7 @@ dF
 uw
 uw
 uw
-uw
+dF
 Xa
 Jv
 Jv
@@ -13476,7 +13542,7 @@ dF
 uw
 uw
 uw
-uw
+dF
 Xa
 JA
 ZC
@@ -13618,7 +13684,7 @@ dF
 uw
 uw
 uw
-uw
+dF
 Xa
 Kc
 ZE
@@ -13760,7 +13826,7 @@ dF
 uw
 uw
 uw
-uw
+dF
 Xa
 Pu
 Pu
@@ -13883,9 +13949,9 @@ Xa
 Bv
 Bv
 Xa
-Xa
+mL
 Sv
-Xa
+mL
 Xa
 hi
 hi
@@ -15588,8 +15654,8 @@ dF
 Xa
 Xa
 XM
-XM
-wd
+FT
+GO
 GO
 hi
 hi

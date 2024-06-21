@@ -7,6 +7,7 @@
 #include "../expedition_vr/aerostat/surface.dmm"
 #include "../expedition_vr/space/debrisfield.dmm"
 #include "../expedition_vr/space/fueldepot.dmm"
+#include "../expedition_vr/snowbase/snowbase.dmm"
 #endif
 
 #include "../expedition_vr/beach/_beach.dm"
