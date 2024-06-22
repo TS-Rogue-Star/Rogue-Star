@@ -17,10 +17,10 @@
 #define Z_LEVEL_DEBRISFIELD					16
 #define Z_LEVEL_FUELDEPOT					17
 #define Z_LEVEL_OFFMAP1						18
-#define Z_LEVEL_GATEWAY						19
-#define Z_LEVEL_OM_ADVENTURE				20
-#define Z_LEVEL_REDGATE						21
-#define Z_LEVEL_SNOWBASE					22
+#define Z_LEVEL_SNOWBASE					19
+#define Z_LEVEL_GATEWAY						20
+#define Z_LEVEL_OM_ADVENTURE				21
+#define Z_LEVEL_REDGATE						22
 
 //Camera networks
 #define NETWORK_HALLS "Halls"

@@ -5,7 +5,7 @@
 	desc = "Home to ice, snow, and more ice."
 	scanner_desc = @{"[i]Stellar Body[/i]: 944 November
 [i]Class[/i]: Centaur
-[i]Habitability[/i]: Low (Low Temperature)
+[i]Habitability[/i]: Low (Extreme Low Temperature)
 [b]Notice[/b]: Arctic survival gear is recommended. Contact traffic control for weather advisories."}
 	icon_state = "frozen"
 	in_space = 0
@@ -28,6 +28,12 @@
 	temperature = "243.15"
 
 /turf/simulated/floor/outdoors/ice/snowbase
+	temperature = "243.15"
+
+/turf/simulated/mineral/crystal/snowbase
+	temperature = "243.15"
+
+/turf/simulated/mineral/crystal_shiny/snowbase
 	temperature = "243.15"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
