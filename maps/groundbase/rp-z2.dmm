@@ -16537,6 +16537,9 @@
 "Zp" = (
 /obj/structure/bed/chair/backed_red,
 /obj/machinery/camera/network/civilian,
+/obj/machinery/status_display{
+	pixel_y = 32
+	},
 /turf/simulated/floor/outdoors/sidewalk/slab{
 	outdoors = 0
 	},
