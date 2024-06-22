@@ -10,11 +10,20 @@
 	icon_state = "frozen"
 	in_space = 0
 	initial_generic_waypoints = list("november_surface_e", "november_surface_e")
-//	extra_z_levels = list("NOVEMBER_FOREST", "NOVEMBER_GLACIER")
+//	extra_z_levels = list("NOVEMBER_GLACIER")
 	known = TRUE
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-//turfs
+//oregen
+//This is a special subtype of the thing that generates ores on a map
+//It will generate more rich ores because of the lower numbers than the normal one
+/datum/random_map/noise/ore/snowbasemine
+	descriptor = "snowbase mine ore distribution map"
+	deep_val = 0.6 //More riches, normal is 0.7 and 0.8
+	rare_val = 0.5
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//cold turfs
 /turf/simulated/floor/outdoors/snow/snowbase
 	temperature = "243.15"
 
@@ -27,8 +36,13 @@
 	name = "Away Mission - Snowbase"
 	icon_state = "away"
 	lightswitch = FALSE
-	ambience = list('sound/music/main.ogg', 'sound/ambience/maintenance/maintenance4.ogg', 'sound/ambience/sif/sif1.ogg', 'sound/ambience/ruins/ruins1.ogg')
 	base_turf = /turf/simulated/floor/outdoors/snow/snowbase
+
+/area/tether_away/snowbase/outside
+	name = "Snowbase - Outside"
+	ambience = list('sound/music/main.ogg', 'sound/ambience/maintenance/maintenance4.ogg', 'sound/ambience/sif/sif1.ogg', 'sound/ambience/ruins/ruins1.ogg')
+
+/area/tether_away/snowbase/outside/unexplored
 
 /area/tether_away/snowbase/hall
 	name = "Snowbase - Hallway"
@@ -87,5 +101,5 @@
 /area/tether_away/snowbase/mining
 	name = "Snowbase - Refinery"
 
-/area/tether_away/snowbase/outside
-	ambience = list('sound/music/main.ogg', 'sound/ambience/maintenance/maintenance4.ogg', 'sound/ambience/sif/sif1.ogg', 'sound/ambience/ruins/ruins1.ogg')
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//oregen

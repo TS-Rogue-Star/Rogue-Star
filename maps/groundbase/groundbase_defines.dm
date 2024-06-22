@@ -201,7 +201,8 @@
 		list("Remmi Aerostat - Z1 Aerostat","Remmi Aerostat - Z2 Surface"),
 		list("Debris Field - Z1 Space"),
 		list("Fuel Depot - Z1 Space"),
-		list("Offmap Ship - Talon V2")
+		list("Offmap Ship - Talon V2"),
+		list("Snowdrift Base")
 		)
 	//List associations used in admin load selection feature
 	lateload_gateway = list(
