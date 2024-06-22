@@ -3494,6 +3494,7 @@
 	dir = 8;
 	pixel_x = 32
 	},
+/obj/machinery/medical_kiosk,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/lobby)
 "li" = (
@@ -9842,7 +9843,9 @@
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 6
 	},
-/obj/machinery/medical_kiosk,
+/obj/machinery/computer/transhuman/designer{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/lobby)
 "Fg" = (
