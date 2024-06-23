@@ -54,3 +54,40 @@
 **Title:** Spaceship starup and shutdown<br>
 **Creator:** viznoman (https://freesound.org/people/viznoman/sounds/267308/)<br>
 **License:** [CC BY 3.0](http://creativecommons.org/licenses/by/3.0/)<br>
+<br>
+### ROGUE STAR SPECIFIC ATTRIBUTIONS
+**File**: `icons/mob/screen_full_vore.dmi`<br>
+**Icon-States:** `anibelly`, `totally_mawful`, and `further_mawful`<br>
+**Creator:** VerySoft<br>
+**License:** Licensed for use by Rogue Star; unlicensed for further use without permission of copyright holder<br>
+<br>
+**File**: `icons/mob/screen_full_colorized_vore.dmi`<br>
+**Icon-States:** `anibelly`, `totally_mawful`, and `further_mawful`<br>
+**Creator:** VerySoft<br>
+**License:** Licensed for use by Rogue Star; unlicensed for further use without permission of copyright holder<br>
+<br>
+**File**: `icons/mob/screen_full_colorized_vore_overlays.dmi`<br>
+**Icon-States:** `totally_mawful_nc`, `further_mawful_nc`<br>
+**Creator:** VerySoft<br>
+**License:** Licensed for use by Rogue Star; unlicensed for further use without permission of copyright holder<br>
+<br>
+**File**: `icons/skybox/skybox_rs.dmi`<br>
+**Icon-States:** `snowglobe`, `ground`, `internal`, `3c`<br>
+**Creator:** VerySoft<br>
+**License:** Licensed for use by Rogue Star; unlicensed for further use without permission of copyright holder<br>
+<br>
+**File**: `icons/skybox/anomaly.dmi`<br>
+**Icon-States:** `space_dog_sip`<br>
+**Creator:** VerySoft<br>
+**License:** Licensed for use by Rogue Star; unlicensed for further use without permission of copyright holder<br>
+<br>
+**File**: `icons/rogue-star`<br>
+**Creator:** VerySoft<br>
+**License:** Licensed for use by Rogue Star; unlicensed for further use without permission of copyright holder<br>
+**Notes:** All files and icon-states within this folder are covered under the above license, as per the included attribution.txt file
+<br>
+**File**: `sound/rogue-star`<br>
+**Creator:** VerySoft<br>
+**License:** Licensed for use by Rogue Star; unlicensed for further use without permission of copyright holder<br>
+**Notes:** All files within this folder are covered under the above license, as per the included attribution.txt file
+<br>

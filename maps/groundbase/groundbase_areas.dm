@@ -132,6 +132,11 @@
 /area/groundbase/science/lockerroom
 	name = "Science Locker Room"
 	lightswitch = 1
+/area/groundbase/science/xenoautopsy
+	name = "Xenobiology Autopsy"
+/area/groundbase/science/abandoned
+	name = "Unused Laboratory"
+
 
 /area/groundbase/science/outpost
 	name = "Science Outpost"
@@ -186,6 +191,9 @@
 /area/groundbase/command/meeting
 	name = "Command Meeting Room"
 	lightswitch = 0
+/area/groundbase/command/secretary
+	name = "Command Secretary's Office"
+	lightswitch = 0
 /area/groundbase/command/ai
 	name = "AI Core"
 	ambience = AMBIENCE_AI
@@ -213,12 +221,6 @@
 	lightswitch = 1
 /area/groundbase/security/processing
 	name = "Security Processing"
-/area/groundbase/security/halls
-	name = "Security South Hallway"
-	lightswitch = 1
-/area/groundbase/security/halle
-	name = "Security East Hallway"
-	lightswitch = 1
 /area/groundbase/security/hall2
 	name = "Security Second Floor Hallway"
 	lightswitch = 1
@@ -242,10 +244,18 @@
 	name = "Internal Affairs East Office"
 /area/groundbase/security/detective
 	name = "Detective's Office"
+/area/groundbase/security/showers
+	name = "Security Showers"
+/area/groundbase/security/breakroom
+	name = "Security Break Room"
+	lightswitch = 1
 /area/groundbase/security/hos
 	name = "Head of Security's Office"
 /area/prison/cell_block/gb
 	name = "Brig"
+/area/prison/cell_block/gb/abandonedbrig
+	name = "Derelict GenPop"
+	lightswitch = 0
 
 /area/groundbase/medical
 	name = "Medical"
@@ -286,6 +296,7 @@
 	name = "Chief Medical Officer's Office"
 /area/groundbase/medical/paramedic
 	name = "Paramedic Equipment Room"
+	lightswitch = 1
 /area/groundbase/medical/patio
 	name = "Medical Break Room"
 	lightswitch = 1
@@ -301,7 +312,6 @@
 	name = "Morgue"
 /area/groundbase/medical/medicalshowers
 	name = "Medical Showers"
-	lightswitch = 1
 /area/groundbase/medical/geneticslab
 	name = "Genetics Lab"
 
@@ -316,11 +326,15 @@
 	lightswitch = 1
 /area/groundbase/engineering/ce
 	name = "Chief Engineer's Office"
+	lightswitch = 1
 /area/groundbase/engineering/workshop
 	name = "Engineering Workshop"
 	lightswitch = 1
-/area/groundbase/engineering/eva
-	name = "Engineering EVA"
+/area/groundbase/engineering/showers
+	name = "Engineering Showers"
+/area/groundbase/engineering/breakroom
+	name = "Engineering Break Room"
+	lightswitch = 1
 /area/groundbase/engineering/storage
 	name = "Engineering Storage"
 	lightswitch = 1
@@ -341,6 +355,28 @@
 	name = "Solar Field"
 	lightswitch = 1
 	sound_env = SOUND_ENVIRONMENT_MOUNTAINS
+/area/groundbase/engineering/pumpingstation
+	name = "Pumping Station"
+/area/groundbase/engineering/satellite
+	base_turf = /turf/space
+/area/groundbase/engineering/satellite/lobby
+	name = "Satellite Lobby"
+	lightswitch = 1
+/area/groundbase/engineering/satellite/engineroom
+	name = "Satellite Engine Room"
+	lightswitch = 1
+/area/groundbase/engineering/satellite/portstorage
+	name = "Satellite Port Storage"
+/area/groundbase/engineering/satellite/starboardstorage
+	name = "Satellite Starboard Storage"
+/area/groundbase/engineering/satellite/atmospherics
+	name = "Satellite Atmospherics"
+/area/groundbase/engineering/satellite/breakroom
+	name = "Satellite Break Room"
+	lightswitch = 1
+/area/groundbase/engineering/shuttlepad
+	name = "Engineering Shuttlepad"
+	lightswitch = 1
 
 /area/groundbase/cargo
 	name = "Cargo"
@@ -388,6 +424,9 @@
 /area/groundbase/civilian/bar/upper
 	name = "Bar Balcony"
 	base_turf = /turf/simulated/open/virgo3c
+/area/groundbase/civilian/bar/garden
+	name = "Sif Garden"
+	lightswitch = 0
 
 /area/groundbase/civilian/cafe
 	name = "Cafe"
@@ -600,4 +639,8 @@
 	excluded |= /area/groundbase/level3/escapepad
 	excluded |= /area/groundbase/hotspring
 	excluded |= /area/groundbase/hotspring/water
+	excluded |= /area/groundbase/medical/geneticslab
+	excluded |= /area/groundbase/engineering/pumpingstation
+	excluded |= /area/prison/cell_block/gb/abandonedbrig
+	excluded |= /area/groundbase/civilian/bar/garden
 	..()

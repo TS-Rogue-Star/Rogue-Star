@@ -1579,3 +1579,21 @@
 
 	icon = 'icons/inventory/accessory/item.dmi'
 	icon_state = "silver"
+
+// Pyrophile - Autumn
+/obj/item/weapon/gun/projectile/cell_loaded/combat/vehrune
+	name = "custom cell-loaded revolver"
+	desc = "A hand-customized model of the modular, cell-loaded KHI-102b energy revolver. It has a sapphire medallion set into the grip, and the hammer has been replaced with one from a pre-contact Tarranthi revolver."
+	icon_state = "nsfw_vehrune"
+
+/obj/item/device/modkit_conversion/fluff/vehrune_gunkit
+	name = "Vehrune's Gun Transformation Kit"
+	desc = "A kit containing all the needed tools and fabric to modify one sidearm to another."
+	skip_content_check = FALSE
+	transfer_contents = FALSE
+
+	icon = 'icons/vore/custom_items_vr.dmi'
+	icon_state = "harmony_kit"
+
+	from_helmet = /obj/item/weapon/gun/projectile/cell_loaded/combat
+	to_helmet = /obj/item/weapon/gun/projectile/cell_loaded/combat/vehrune

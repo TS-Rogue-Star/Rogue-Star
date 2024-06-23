@@ -45,6 +45,8 @@ digi5 - Black-Eyed Shadekin
 digitalsquirrel95 - Black-Eyed Shadekin
 digitalsquirrel95 - Protean
 draycu - Vox
+draykenthedragon - Protean
+draykenthedragon - Xenochimera
 dustyumbry - Xenochimera
 durandaal - Teppi
 essbie - Black-Eyed Shadekin
@@ -52,9 +54,11 @@ exgame - Vox
 falloutdog3 - Black-Eyed Shadekin
 flaktual - Vox
 flurriee - Protean
+foxfire53 - Xenochimera
 foxglovepurpur - Diona
 funnyman2003 - Xenochimera
 fuzlet - Protean
+glerm - Xenochimera
 grallstonefist - Black-Eyed Shadekin
 greennyy - Protean
 h0lysquirr3l - Protean
@@ -180,6 +184,7 @@ tastypred - Xenochimera
 terrestris - Common Skrellian
 terrestris - Vox
 thedavestdave - Protean
+thexdkidoflol - Xenochimera
 timidvi - Diona
 torquegstc - Protean
 trifireblade - Protean

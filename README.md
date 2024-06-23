@@ -20,6 +20,7 @@ See [here](https://www.gnu.org/licenses/why-affero-gpl.html) for more informatio
 
 All assets including but not limited to icons and sounds files located in the following locations are only to be used with permission of their creator, VerySoft, and may not be used for any purpose without permission.
 `rogue-star/icons/rogue-star`
+`rogue-star/sound/rogue-star`
 
 Any files located in the
 `rogue-star/goon`,

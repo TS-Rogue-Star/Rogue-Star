@@ -135,15 +135,21 @@
 
 	var/turf/map = locate(M.x,M.y,global.using_map.overmap_z)
 	var/obj/effect/overmap/visitable/TM
-	for(var/obj/effect/overmap/visitable/O in map)
-		if(O != M && O.in_space && prob(50))
-			TM = O
-			break
-	if(!istype(TM))
+	var/list/our_options = list()		//RS EDIT START
+	if(!prob(25))
+		for(var/obj/effect/overmap/visitable/O in map)
+			if(O != M)
+				our_options |= O.get_space_zlevels()
+
+	if(!our_options.len)
 		TM = get_deepspace(M.x,M.y)
+		nz = pick(TM.get_space_zlevels())
+	else
+		nz = pick(our_options)
+		TM = get_overmap_sector(nz)
+										//RS EDIT END
 	if(!istype(TM))
 		return
-	nz = pick(TM.get_space_zlevels())
 
 	testing("spacetravel chose [nz],[ny],[nz] in sector [TM] @ ([TM.x],[TM.y],[TM.z])")
 

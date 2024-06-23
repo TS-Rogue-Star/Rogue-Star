@@ -25,7 +25,6 @@
 
 	var/is_whitelisted = FALSE
 	var/whitelist_ckey
-	var/whitelist_charname
 
 /datum/robot_sprite/proc/handle_extra_icon_updates(var/mob/living/silicon/robot/ourborg)
 	return

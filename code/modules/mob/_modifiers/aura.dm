@@ -12,7 +12,7 @@ making it not expire ever, which is likely not what you want.
 		expire()
 	var/atom/A = origin.resolve()
 	if(istype(A)) // Make sure we're not null.
-		if(get_dist(holder, A) > aura_max_distance)
+		if(!(A in view(aura_max_distance, holder)))
 			expire()
 	else
 		expire() // Source got deleted or something.
