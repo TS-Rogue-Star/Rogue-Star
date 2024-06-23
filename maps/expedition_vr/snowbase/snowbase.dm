@@ -10,7 +10,7 @@
 	icon_state = "frozen"
 	in_space = 0
 	initial_generic_waypoints = list("november_surface_e", "november_surface_e")
-//	extra_z_levels = list("Z_LEVEL_GLACIER")
+	extra_z_levels = list("Z_LEVEL_GLACIER")
 	known = TRUE
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -31,12 +31,18 @@
 
 /turf/simulated/floor/outdoors/ice/snowbase
 	temperature = "243.15"
+	oxygen = "21.8366"
+	nitrogen = "82.1472"
 
 /turf/simulated/mineral/crystal/snowbase
 	temperature = "243.15"
+	oxygen = "21.8366"
+	nitrogen = "82.1472"
 
 /turf/simulated/mineral/crystal_shiny/snowbase
 	temperature = "243.15"
+	oxygen = "21.8366"
+	nitrogen = "82.1472"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //areas
@@ -50,7 +56,11 @@
 	name = "Snowbase - Outside"
 	ambience = list('sound/music/main.ogg', 'sound/ambience/maintenance/maintenance4.ogg', 'sound/ambience/sif/sif1.ogg', 'sound/ambience/ruins/ruins1.ogg')
 
-/area/tether_away/snowbase/outside/unexplored
+/area/tether_away/snowbase/outside/glacier
+	name = "Snowbase - Glacier"
+
+/area/tether_away/snowbase/outside/glacier/unexplored
+	name = "Snowbase - Unexplored Glacier"
 
 /area/tether_away/snowbase/hall
 	name = "Snowbase - Hallway"

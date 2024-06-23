@@ -8,6 +8,7 @@
 #include "../expedition_vr/space/debrisfield.dmm"
 #include "../expedition_vr/space/fueldepot.dmm"
 #include "../expedition_vr/snowbase/snowbase.dmm"
+#include "../expedition_vr/snowbase/snowbase_glacier.dmm"
 #endif
 
 #include "../expedition_vr/beach/_beach.dm"
@@ -124,12 +125,28 @@
 
 /datum/map_template/common_lateload/away_snowbase/on_map_loaded(z)
 	. = ..()
-	//seed_submaps(list(Z_LEVEL_SNOWBASE), 120, /area/tether_away/snowbase/outside/unexplored, /datum/map_template/surface/mountains/normal)
 
 	// Now for the tunnels.
 	new /datum/random_map/automata/cave_system/no_cracks(null, 3, 3, Z_LEVEL_SNOWBASE, world.maxx - 4, world.maxy - 4)
 	new /datum/random_map/noise/ore/snowbasemine(null, 1, 1, Z_LEVEL_SNOWBASE, 64, 64)
 
+/datum/map_template/common_lateload/away_snowbase_glacier
+	name = "Snowdrift Glacier"
+	desc = "A strange glacier near the NT outpost."
+	mappath = 'maps/expedition_vr/snowbase/snowbase_glacier.dmm'
+	associated_map_datum = /datum/map_z_level/common_lateload/away_snowbase_glacier
+
+/datum/map_z_level/common_lateload/away_snowbase_glacier
+	name = "Snowdrift Glacier"
+	z = Z_LEVEL_GLACIER
+
+/datum/map_template/common_lateload/away_snowbase_glacier/on_map_loaded(z)
+	. = ..()
+	//seed_submaps(list(Z_LEVEL_GLACIER), 120, /area/tether_away/snowbase/outside/glacier/unexplored, /datum/map_template/surface/mountains/normal)
+
+	// Now for the tunnels.
+	new /datum/random_map/automata/cave_system/no_cracks(null, 3, 3, Z_LEVEL_GLACIER, world.maxx - 4, world.maxy - 4)
+	new /datum/random_map/noise/ore/snowbasemine(null, 1, 1, Z_LEVEL_GLACIER, 64, 64)
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Gateway submaps go here
