@@ -10,7 +10,7 @@
 	icon_state = "frozen"
 	in_space = 0
 	initial_generic_waypoints = list("november_surface_e", "november_surface_e")
-//	extra_z_levels = list("NOVEMBER_GLACIER")
+//	extra_z_levels = list("Z_LEVEL_GLACIER")
 	known = TRUE
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

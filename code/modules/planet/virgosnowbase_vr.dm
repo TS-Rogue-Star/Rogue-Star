@@ -5,7 +5,7 @@ var/datum/planet/snowbase/planet_snowbase = null
 
 /datum/planet/snowbase
 	name = "944 November"
-	desc = "A Rogue exoplanet that entered the Virgo-Erigone system several thousand of years ago. Extremely cold and barely habitable." //rewrite me
+	desc = "A Rogue exoplanet that entered the Virgo-Erigone system several thousand years ago. Extremely cold and barely habitable." //rewrite me
 	current_time = new /datum/time/snowbase()
 //	expected_z_levels = list(1) // This is defined elsewhere.
 	planetary_wall_type = /turf/unsimulated/wall/planetary/normal/snowbase
@@ -103,12 +103,10 @@ var/datum/planet/snowbase/planet_snowbase = null
 		WEATHER_LIGHT_SNOW		= new /datum/weather/snowbase/light_snow(),
 		WEATHER_SNOW			= new /datum/weather/snowbase/snow(),
 		WEATHER_BLIZZARD		= new /datum/weather/snowbase/blizzard(),
-		WEATHER_RAIN			= new /datum/weather/snowbase/rain(),
 		)
 	roundstart_weather_chances = list(
 		WEATHER_SNOW		= 50,
-		WEATHER_CLEAR		= 40,
-		WEATHER_BLIZZARD	= 1
+		WEATHER_CLEAR		= 40
 		)
 
 /datum/weather/snowbase
