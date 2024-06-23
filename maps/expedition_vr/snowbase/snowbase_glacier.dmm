@@ -1,23 +1,26 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/simulated/mineral/crystal_shiny/snowbase,
-/area/space)
-"u" = (
-/obj/effect/map_effect/portal/line/side_b{
-	dir = 4
-	},
-/turf/simulated/floor/outdoors/snow/snowbase,
-/area/space)
+/area/tether_away/snowbase/outside/glacier)
 "x" = (
+/turf/unsimulated/wall/planetary/snowbase,
+/area/tether_away/snowbase/outside/glacier)
+"L" = (
+/turf/simulated/floor/outdoors/snow/snowbase,
+/area/tether_away/snowbase/outside/glacier)
+"R" = (
 /obj/effect/map_effect/portal/master/side_b{
 	dir = 4;
 	portal_id = "glacier"
 	},
 /turf/simulated/floor/outdoors/snow/snowbase,
-/area/space)
-"L" = (
+/area/tether_away/snowbase/outside/glacier)
+"S" = (
+/obj/effect/map_effect/portal/line/side_b{
+	dir = 4
+	},
 /turf/simulated/floor/outdoors/snow/snowbase,
-/area/space)
+/area/tether_away/snowbase/outside/glacier)
 
 (1,1,1) = {"
 a
@@ -95,11 +98,11 @@ a
 a
 a
 a
-a
 x
-u
-u
-a
+x
+x
+x
+x
 a
 a
 a
@@ -237,11 +240,11 @@ a
 a
 a
 a
-L
-L
-L
-L
-L
+x
+R
+S
+S
+x
 a
 a
 a
@@ -377,15 +380,15 @@ a
 a
 a
 a
+a
+a
+x
 L
 L
 L
-L
-L
-L
-L
-L
-L
+x
+a
+a
 a
 a
 a
@@ -518,17 +521,17 @@ a
 a
 a
 a
+a
+a
+a
+x
 L
 L
 L
-L
-L
-L
-L
-L
-L
-L
-L
+x
+a
+a
+a
 a
 a
 a
@@ -660,6 +663,7 @@ a
 a
 a
 a
+a
 L
 L
 L
@@ -669,8 +673,7 @@ L
 L
 L
 L
-L
-L
+a
 a
 a
 a

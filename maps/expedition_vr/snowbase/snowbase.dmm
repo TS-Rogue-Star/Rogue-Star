@@ -1,11 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"ab" = (
-/obj/effect/map_effect/portal/master/side_a{
-	dir = 8;
-	portal_id = "glacier"
-	},
-/turf/simulated/floor/outdoors/snow/snowbase,
-/area/tether_away/snowbase/outside)
 "af" = (
 /obj/structure/bed/chair/office/dark{
 	dir = 8
@@ -2854,10 +2847,7 @@
 /turf/simulated/floor/plating,
 /area/tether_away/snowbase/research)
 "HB" = (
-/obj/effect/map_effect/portal/line/side_a{
-	dir = 8
-	},
-/turf/simulated/floor/outdoors/snow/snowbase,
+/turf/unsimulated/wall/planetary/snowbase,
 /area/tether_away/snowbase/outside)
 "HD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -3547,6 +3537,12 @@
 /obj/machinery/light,
 /turf/simulated/floor/tiled/dark,
 /area/tether_away/snowbase/mining)
+"PY" = (
+/obj/effect/map_effect/portal/line/side_a{
+	dir = 8
+	},
+/turf/simulated/floor/outdoors/snow/snowbase,
+/area/tether_away/snowbase/outside)
 "Qc" = (
 /obj/structure/bed/chair/backed_red,
 /turf/simulated/floor/carpet,
@@ -4319,6 +4315,13 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor/tiled,
 /area/tether_away/snowbase/engineering)
+"Yl" = (
+/obj/effect/map_effect/portal/master/side_a{
+	dir = 8;
+	portal_id = "glacier"
+	},
+/turf/simulated/floor/outdoors/snow/snowbase,
+/area/tether_away/snowbase/outside)
 "Yo" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -23889,11 +23892,11 @@ Aq
 Aq
 Aq
 Aq
-Aq
+HB
 XV
 XV
 XV
-Aq
+HB
 Aq
 Aq
 Aq
@@ -24031,11 +24034,11 @@ Aq
 Aq
 Aq
 Aq
-Aq
+HB
 XV
 XV
 XV
-Aq
+HB
 Aq
 Aq
 Aq
@@ -24173,11 +24176,11 @@ Aq
 Aq
 Aq
 Aq
-Aq
-XV
-XV
-XV
-Aq
+HB
+Yl
+PY
+PY
+HB
 Aq
 Aq
 Aq
@@ -24315,11 +24318,11 @@ Aq
 Aq
 Aq
 Aq
-Aq
-ab
 HB
 HB
-Aq
+HB
+HB
+HB
 Aq
 Aq
 Aq

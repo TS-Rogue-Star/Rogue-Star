@@ -9,8 +9,8 @@
 [b]Notice[/b]: Arctic survival gear is recommended. Contact traffic control for weather advisories."}
 	icon_state = "frozen"
 	in_space = 0
-	initial_generic_waypoints = list("november_surface_e", "november_surface_e")
-	extra_z_levels = list("Z_LEVEL_GLACIER")
+	initial_generic_waypoints = list("november_surface_e", "november_surface_w")
+//	extra_z_levels = list(Z_LEVEL_GLACIER)
 	known = TRUE
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -118,6 +118,3 @@
 
 /area/tether_away/snowbase/mining
 	name = "Snowbase - Refinery"
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//oregen

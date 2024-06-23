@@ -203,7 +203,8 @@
 		list("Debris Field - Z1 Space"),
 		list("Fuel Depot - Z1 Space"),
 		list("Offmap Ship - Talon V2"),
-		list("Snowdrift Base")
+		list("Snowdrift Base"),
+		list("Snowdrift Glacier")
 		)
 	//List associations used in admin load selection feature
 	lateload_gateway = list(
@@ -310,7 +311,8 @@
 	)
 /datum/planet/snowbase
 	expected_z_levels = list(
-		Z_LEVEL_SNOWBASE
+		Z_LEVEL_SNOWBASE,
+		Z_LEVEL_GLACIER
 	)
 
 /obj/effect/landmark/map_data/groundbase
