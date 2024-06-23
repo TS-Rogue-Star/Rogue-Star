@@ -269,7 +269,8 @@
 	planet_datums_to_make = list(
 		/datum/planet/virgo3b,
 		/datum/planet/virgo3c,
-		/datum/planet/virgo4)
+		/datum/planet/virgo4,
+		/datum/planet/snowbase)
 
 /datum/map/groundbase/get_map_info()
 	. = list()
@@ -305,6 +306,10 @@
 /datum/planet/virgo4
 	expected_z_levels = list(
 		Z_LEVEL_BEACH
+	)
+/datum/planet/snowbase
+	expected_z_levels = list(
+		Z_LEVEL_SNOWBASE
 	)
 
 /obj/effect/landmark/map_data/groundbase
