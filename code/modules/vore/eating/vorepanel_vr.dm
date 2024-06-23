@@ -860,9 +860,11 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 
 				if(istext(belly_data["belly_sprite_to_affect"]))
 					var/new_belly_sprite_to_affect = sanitize(belly_data["belly_sprite_to_affect"],MAX_MESSAGE_LEN,0,0,0)
-					if(new_belly_sprite_to_affect)
-						if (new_belly_sprite_to_affect in host.vore_icon_bellies)
-							new_belly.belly_sprite_to_affect = new_belly_sprite_to_affect
+					if(istype(host, /mob/living/carbon/human)) //workaround for vore belly sprites
+						var/mob/living/carbon/human/hhost = host
+						if(new_belly_sprite_to_affect)
+							if(new_belly_sprite_to_affect in hhost.vore_icon_bellies)
+								new_belly.belly_sprite_to_affect = new_belly_sprite_to_affect
 
 				if(isnum(belly_data["disable_hud"]))
 					var/new_disable_hud = belly_data["disable_hud"]
@@ -871,7 +873,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 					if(new_disable_hud == 1)
 						new_belly.disable_hud = TRUE
 
-				var/possible_fullscreens = icon_states('icons/mob/screen_full_vore.dmi')
+				var/possible_fullscreens = icon_states('icons/mob/screen_full_colorized_vore.dmi')
 				if(!new_belly.colorization_enabled)
 					possible_fullscreens = icon_states('icons/mob/screen_full_vore.dmi')
 					possible_fullscreens -= "a_synth_flesh_mono"
@@ -939,7 +941,9 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 				// After import updates
 				new_belly.items_preserved.Cut()
 
-			host.update_fullness()
+			if(istype(host, /mob/living/carbon/human))
+				var/mob/living/carbon/human/hhost = host
+				hhost.update_fullness()
 			host.updateVRPanel()
 			unsaved_changes = TRUE
 			return TRUE
