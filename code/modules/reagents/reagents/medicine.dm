@@ -711,11 +711,11 @@
 	overdose_mod = 1.5
 	scannable = 1
 
-/datum/reagent/osteodaxon/proc/FixBones(var/mob/living/carbon/human/H)
+/datum/reagent/osteodaxon/proc/FixBones(var/mob/living/carbon/human/H) // Pushed off to it's own proc since we'll need to use it both for ingest and blood.
 	for(var/obj/item/organ/external/O in H.bad_external_organs)
 		if(O.status & ORGAN_BROKEN)
 			O.mend_fracture()		//Only works if the bone won't rebreak, as usual
-			H.custom_pain("You feel a terrible agony tear through your bones!",150)
+			H.custom_pain("You feel a terrible agony tear through your bones!",80)
 			H.adjustHalLoss(15) // Fixing bones hurts like fuck
 			H.AdjustWeakened(1)		//Bones being regrown will knock you over
 
@@ -730,16 +730,16 @@
 		if(rand(1,3) == 3)	// We don't want to spam pain messages
 			switch(rand(1,5))
 				if(1)
-					H.custom_pain("It feels like your bones are on fire!", 120)
+					H.custom_pain("It feels like your bones are on fire!", 120) // While more efficient, we get a LOT more pain.
 				if(2)
-					H.custom_pain("You feel your bones shifting under your skin!", 120)
+					H.custom_pain("You feel your bones shifting under your skin!", 120) // This pain is enough that Oxycodone or anesthetic will be required.
 				if(3)
 					H.custom_pain("Your bones ripple and contort agonizingly!", 120)
 				if(4)
 					H.custom_pain("Every bone in your body is screaming for help!", 120)
 				if(5)
 					H.custom_pain("Your bones feel as if they're fighting against your every movement!", 120)
-		if(dose >= 4) // We need four units for repairs to happen.
+		if(dose >= 4) // In blood osteo is more efficient
 			M.heal_organ_damage(3 * removed, 0)	//Gives the bones a chance to set properly even without other meds
 			FixBones(H)
 
@@ -757,7 +757,7 @@
 				if(2)
 					H.custom_pain("Your bones are hardening painfully beneath your skin.", 80)
 				if(3)
-					H.custom_pain("You feel an uncomftorble shifting in your bones.", 80)
+					H.custom_pain("You feel an uncomfortable shifting in your bones.", 80)
 				if(4)
 					H.custom_pain("Your bones ache!", 80)
 				if(5)
