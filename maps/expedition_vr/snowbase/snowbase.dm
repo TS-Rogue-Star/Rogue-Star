@@ -26,6 +26,8 @@
 //cold turfs
 /turf/simulated/floor/outdoors/snow/snowbase
 	temperature = "243.15"
+	oxygen = "21.8366"
+	nitrogen = "82.1472"
 
 /turf/simulated/floor/outdoors/ice/snowbase
 	temperature = "243.15"
