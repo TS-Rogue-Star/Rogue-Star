@@ -717,7 +717,7 @@
 			O.mend_fracture()		//Only works if the bone won't rebreak, as usual
 			H.adjustHalLoss(15) // Fixing bones hurts like fuck
 			H.adjustBruteLoss(0.5) // Your bones are rapidly mending, that may cause some tissue damage.
-			H.custom_pain("You feel a terrible agony tear through your bones!",60)
+			H.custom_pain("You feel a terrible agony tear through your bones!",150)
 			H.AdjustWeakened(1)		//Bones being regrown will knock you over
 
 /datum/reagent/osteodaxon/affect_blood(var/mob/living/carbon/M, var/alien, var/removed)
@@ -731,16 +731,16 @@
 		if(rand(1,3) == 3)	// We don't want to spam pain messages
 			switch(rand(1,5))
 				if(1)
-					H.custom_pain("It feels like your bones are on fire!", 90)
+					H.custom_pain("It feels like your bones are on fire!", 120)
 				if(2)
-					H.custom_pain("You feel your bones shifting under your skin!", 90)
+					H.custom_pain("You feel your bones shifting under your skin!", 120)
 				if(3)
-					H.custom_pain("Your bones ripple and contort agonizingly!", 90)
+					H.custom_pain("Your bones ripple and contort agonizingly!", 120)
 				if(4)
-					H.custom_pain("Every bone in your body is screaming for help!", 90)
+					H.custom_pain("Every bone in your body is screaming for help!", 120)
 				if(5)
-					H.custom_pain("Your bones feel as if they're fighting against your every movement!", 90)
-		if(dose >= 4) // We need four units for repairs to happen.
+					H.custom_pain("Your bones feel as if they're fighting against your every movement!", 120)
+		if(dose >= 5) // We need four units for repairs to happen.
 			M.heal_organ_damage(3 * removed, 0)	//Gives the bones a chance to set properly even without other meds
 			FixBones(H)
 
@@ -763,7 +763,7 @@
 					H.custom_pain("Your bones ache!", 80)
 				if(5)
 					H.custom_pain("A light pain shoots through your bones.", 80)
-		if(dose >= 8)
+		if(dose >= 10)
 			M.heal_organ_damage(3 * removed, 0)	//Gives the bones a chance to set properly even without other meds
 			FixBones(H)
 
