@@ -2847,7 +2847,11 @@
 /turf/simulated/floor/plating,
 /area/tether_away/snowbase/research)
 "HB" = (
-/turf/unsimulated/wall/planetary/snowbase,
+/obj/effect/map_effect/portal/master/side_a{
+	dir = 8;
+	portal_id = "glacier"
+	},
+/turf/simulated/floor/outdoors/snow/snowbase,
 /area/tether_away/snowbase/outside)
 "HD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -4315,13 +4319,6 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor/tiled,
 /area/tether_away/snowbase/engineering)
-"Yl" = (
-/obj/effect/map_effect/portal/master/side_a{
-	dir = 8;
-	portal_id = "glacier"
-	},
-/turf/simulated/floor/outdoors/snow/snowbase,
-/area/tether_away/snowbase/outside)
 "Yo" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -7114,7 +7111,7 @@ XV
 XV
 XV
 XV
-Aq
+XV
 Aq
 Aq
 Aq
@@ -7255,8 +7252,8 @@ XV
 XV
 XV
 XV
-Aq
-Aq
+XV
+XV
 Aq
 Aq
 Aq
@@ -7397,9 +7394,9 @@ XV
 XV
 XV
 XV
-Aq
-Aq
-Aq
+XV
+XV
+XV
 Aq
 Aq
 Aq
@@ -7540,8 +7537,8 @@ XV
 XV
 XV
 XV
-Aq
-Aq
+XV
+XV
 Aq
 Aq
 XV
@@ -10132,7 +10129,7 @@ XV
 XV
 XV
 XV
-Aq
+XV
 Aq
 Aq
 Aq
@@ -10274,10 +10271,10 @@ XV
 XV
 XV
 XV
-Aq
-Aq
-Aq
-Aq
+XV
+XV
+XV
+XV
 XV
 XV
 XV
@@ -10417,8 +10414,8 @@ XV
 XV
 XV
 XV
-Aq
-Aq
+XV
+XV
 XV
 XV
 XV
@@ -20222,8 +20219,8 @@ XV
 XV
 XV
 XV
-XV
-XV
+Aq
+Aq
 Aq
 Aq
 Aq
@@ -20363,9 +20360,9 @@ XV
 XV
 XV
 XV
-XV
-XV
-XV
+Aq
+Aq
+Aq
 Aq
 Aq
 Aq
@@ -20504,10 +20501,10 @@ XV
 XV
 XV
 XV
-XV
-XV
-XV
-XV
+Aq
+Aq
+Aq
+Aq
 Aq
 Aq
 Aq
@@ -20646,10 +20643,10 @@ XV
 XV
 XV
 XV
-XV
-XV
-XV
-XV
+Aq
+Aq
+Aq
+Aq
 Aq
 Aq
 Aq
@@ -20788,8 +20785,8 @@ XV
 XV
 XV
 XV
-XV
-XV
+Aq
+Aq
 Aq
 Aq
 Aq
@@ -23754,7 +23751,7 @@ XV
 XV
 XV
 XV
-XV
+Aq
 Aq
 Aq
 Aq
@@ -23892,11 +23889,11 @@ Aq
 Aq
 Aq
 Aq
-HB
+Aq
 XV
 XV
 XV
-HB
+Aq
 Aq
 Aq
 Aq
@@ -24034,11 +24031,11 @@ Aq
 Aq
 Aq
 Aq
-HB
+Aq
 XV
 XV
 XV
-HB
+Aq
 Aq
 Aq
 Aq
@@ -24176,11 +24173,11 @@ Aq
 Aq
 Aq
 Aq
-HB
-Yl
-PY
-PY
-HB
+Aq
+XV
+XV
+XV
+Aq
 Aq
 Aq
 Aq
@@ -24318,11 +24315,11 @@ Aq
 Aq
 Aq
 Aq
+Aq
 HB
-HB
-HB
-HB
-HB
+PY
+PY
+Aq
 Aq
 Aq
 Aq
