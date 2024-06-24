@@ -8,11 +8,34 @@
 	var/failchance = 0
 	anchored = TRUE
 	var/obj/structure/portal_event/target
+	var/portal_id		//RS ADD START
+	var/portal_enabled = FALSE
+	var/static/list/event_portal_list = list()
+
+/obj/structure/portal_event/Initialize()
+	. = ..()
+	event_portal_list += src
+
+	if(portal_id && !target)
+		for(var/obj/structure/portal_event/P in event_portal_list)
+			if(P == src)
+				continue
+			if(!P.target && P.portal_id == portal_id)
+				target = P
+				target.target = src
+				toggle_portal()			//RS ADD END
 
 /obj/structure/portal_event/Destroy()
+	event_portal_list -= src			//RS EDIT
+
 	if(target)
 		target.target = null
 		target = null
+
+	for(var/obj/structure/portal_event/P in event_portal_list)	//RS EDIT
+		if(P.target == src)		//RS EDIT
+			P.target = null		//RS EDIT
+
 	return ..()
 
 /obj/structure/portal_event/Bumped(mob/M as mob|obj)
@@ -48,30 +71,30 @@
 		to_chat(user, "<span class='notice'>Selecting 'Portal Here' will create and link a portal at your location, while 'Target Here' will create an object that is only visible to ghosts which will act as the target, again at your location. Each option will give you the ability to change portal types, but for all options except 'Select Type' you only get one shot at it, so be sure to experiment with 'Select Type' first if you're not familiar with them.</span>")
 		var/response = tgui_alert(user, "You appear to be staff. This portal has no exit point. If you want to make one, move to where you want it to go, and click the appropriate option, see chat for more info, otherwise click 'Cancel'", "Unbound Portal", list("Cancel","Portal Here","Target Here", "Select Type"))
 		if(response == "Portal Here")
-			target = new type(get_turf(user), src)
-			target.target = src
-			target.icon_state = icon_state
-			var/letsportal = tgui_alert(user, "Would you like to select a different portal type for these portals?", "Change portal", list("No","Yes"))
-			if(letsportal == "Yes")
-				var/portal_icon_selection = select_portal_subtype(user)
-				icon_state = portal_icon_selection
-				target.icon_state = portal_icon_selection
+			create_paired_portal(user)		//RS EDIT
 		if(response == "Target Here")
-			var/obj/structure/portal_target/newtarg = new(get_turf(user))
-			target = newtarg
-			newtarg.target = src
-			var/letsportal = tgui_alert(user, "Would you like to select a different portal type?", "Change portal", list("No","Yes"))
-			if(letsportal == "Yes")
-				user.forceMove(src)
-				icon_state = select_portal_subtype(user)
+			create_paired_portal(user, FALSE)		//RS EDIT
 		if(response == "Select Type")
-			icon_state = select_portal_subtype(user)
+			select_portal_subtype(user)		//RS EDIT
 			return
-		if(target)
-			message_admins("The [src]([x],[y],[z]) was given [target]([target.x],[target.y],[target.z]) as a target, and should be ready to use.")
+
 	else if(user?.client?.holder)
 		src.teleport(user)
 	else return
+
+/obj/structure/portal_event/proc/create_paired_portal(user, make_portal = TRUE)	//RS EDIT START
+	if(make_portal)
+		target = new type(get_turf(user), src)
+		target.toggle_portal()
+	else
+		target = new /obj/structure/portal_target(get_turf(user), src)
+	target.target = src
+	target.icon_state = icon_state
+	toggle_portal()
+	message_admins("The [src]([x],[y],[z]) was given [target]([target.x],[target.y],[target.z]) as a target, and should be ready to use.")
+
+	if(tgui_alert(user, "Would you like to select a different portal type for the portal?", "Change portal", list("No","Yes")) == "Yes")
+		select_portal_subtype(user)		//RS EDIT END
 
 /obj/structure/portal_event/proc/select_portal_subtype(user)
 	var/portal_type = tgui_alert(user, "What kind of portal would you like it to be?", "Type Selection", list("Tech (Default)","Star","Weird Green","Pulsing"))
@@ -102,9 +125,15 @@
 			portal_icon_selection = "type-c-mix-portal"
 		if(portal_subtype == "Yellow")
 			portal_icon_selection = "type-c-yellow-portal"
-	return portal_icon_selection
+
+	icon_state = portal_icon_selection	//RS EDIT
+	if(target && istype(target, /obj/structure/portal_event) && tgui_alert(user, "Would you like portal's target portal to match this style?", "Both?", list("Yes", "No")) == "Yes")	//RS EDIT
+		target.icon_state = portal_icon_selection	//RS EDIT
 
 /obj/structure/portal_event/proc/teleport(atom/movable/M as mob|obj)
+	if(!portal_enabled && isliving(M))	//RS EDIT
+		to_chat(M, "<span class='notice'>\The [src] wavers as you pass through it... it seems to not accept you through... for now...</span>")	//RS EDIT
+		return	//RS EDIT
 	if(istype(M, /obj/effect)) //sparks don't teleport
 		return
 	if (M.anchored&&istype(M, /obj/mecha))
@@ -115,27 +144,21 @@
 		return
 	if (!istype(M, /atom/movable))
 		return
-	var/turf/place
-	if(isturf(target))
-		place = src
-	else
-		place = target.loc
-	var/portalfind = FALSE
-	for(var/obj/structure/S in place.contents)
-		if(istype(S, /obj/structure/portal_event))
-			portalfind = TRUE
-		else if (S.density)
-			portalfind = TRUE
-	var/temptarg
-	if(portalfind)
-		var/possible_turfs = place.AdjacentTurfs()
-		if(isemptylist(possible_turfs))
-			to_chat(M, "<span class='notice'>Something blocks your way.</span>")
-			return
-		temptarg = pick(possible_turfs)
-		do_safe_teleport(M, temptarg, 0)
-	else if (istype(M, /atom/movable))
-		do_safe_teleport(M, target, 0)
+	var/turf/ourturf = find_our_turf(M)	//RS EDIT START
+	if(!ourturf.check_density(TRUE,TRUE))	//Make sure there isn't a wall there
+		M.unbuckle_all_mobs(TRUE)
+		if(isliving(M))
+			var/mob/living/ourmob = M
+			ourmob.stop_pulling()
+		do_safe_teleport(M, ourturf, 0)
+
+/obj/structure/portal_event/proc/find_our_turf(var/atom/movable/AM)
+	var/offset_x = x - AM.x
+	var/offset_y = y - AM.y
+
+	var/turf/temptarg = locate((target.x + offset_x),(target.y + offset_y),target.z)
+
+	return temptarg		//RS EDIT END
 
 /obj/structure/portal_event/Destroy()
 	if(target)
@@ -226,3 +249,47 @@
 			L << 'sound/effects/bamf.ogg'
 			to_chat(L,"<span class='warning'>You're starting to come to. You feel like you've been out for a few minutes, at least...</span>")
 	return
+
+/obj/structure/portal_event/autolink	//RS ADD START
+	portal_id = "autolink"
+
+/obj/structure/portal_event/proc/toggle_portal()
+	portal_enabled = !portal_enabled
+	if(portal_enabled)
+		density = TRUE
+		set_light(3, 0.75, "#ffffff")
+	else
+		density = FALSE
+		set_light(0)
+
+/obj/structure/portal_event/proc/configure_portal()
+	set category = "Object"
+	set name = "Configure Portal"
+
+	if(!usr.client.holder)
+		return
+
+	var/list/ourlist = list("Cancel")
+
+	if(!target)
+		ourlist += "Portal Here"
+		ourlist += "Target Here"
+
+	ourlist += "Select Type"
+	ourlist += "Enable/Disable"
+
+	var/response = tgui_alert(usr, "Configure the portal's settings!", "Configure Portal", ourlist)
+
+	switch(response)
+		if("Portal Here")
+			create_paired_portal(usr)
+		if("Target Here")
+			create_paired_portal(usr, FALSE)
+		if("Select Type")
+			select_portal_subtype(usr)
+		if("Enable/Disable")
+			toggle_portal()
+		else
+			return
+
+//RS ADD END
