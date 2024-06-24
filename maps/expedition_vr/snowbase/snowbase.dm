@@ -23,28 +23,6 @@
 	rare_val = 0.5
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-//cold turfs
-/turf/simulated/floor/outdoors/snow/snowbase
-	temperature = "243.15"
-	oxygen = "21.8366"
-	nitrogen = "82.1472"
-
-/turf/simulated/floor/outdoors/ice/snowbase
-	temperature = "243.15"
-	oxygen = "21.8366"
-	nitrogen = "82.1472"
-
-/turf/simulated/mineral/crystal/snowbase
-	temperature = "243.15"
-	oxygen = "21.8366"
-	nitrogen = "82.1472"
-
-/turf/simulated/mineral/crystal_shiny/snowbase
-	temperature = "243.15"
-	oxygen = "21.8366"
-	nitrogen = "82.1472"
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
 //areas
 /area/tether_away/snowbase/
 	name = "Away Mission - Snowbase"
@@ -118,3 +96,43 @@
 
 /area/tether_away/snowbase/mining
 	name = "Snowbase - Refinery"
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//This is either a hacky workaround or an elegant solution to the atmosphere problems - code credit to Aronai
+//Atmosphere properties
+#define SNOWBASE_ONE_ATMOSPHERE		101.3 //kPa
+#define SNOWBASE_AVG_TEMP			243.15 //kelvin
+
+#define SNOWBASE_PER_N2			0.80 //percent
+#define SNOWBASE_PER_O2			0.20
+#define SNOWBASE_PER_N2O		0.00 //Currently no capacity to 'start' a turf with this. See turf.dm
+#define SNOWBASE_PER_CO2		0.00
+#define SNOWBASE_PER_PHORON		0.00
+
+//Math only beyond this point
+#define SNOWBASE_MOL_PER_TURF		(SNOWBASE_ONE_ATMOSPHERE*CELL_VOLUME/(SNOWBASE_AVG_TEMP*R_IDEAL_GAS_EQUATION))
+#define SNOWBASE_MOL_N2				(SNOWBASE_MOL_PER_TURF * SNOWBASE_PER_N2)
+#define SNOWBASE_MOL_O2				(SNOWBASE_MOL_PER_TURF * SNOWBASE_PER_O2)
+#define SNOWBASE_MOL_N2O			(SNOWBASE_MOL_PER_TURF * SNOWBASE_PER_N2O)
+#define SNOWBASE_MOL_CO2			(SNOWBASE_MOL_PER_TURF * SNOWBASE_PER_CO2)
+#define SNOWBASE_MOL_PHORON			(SNOWBASE_MOL_PER_TURF * SNOWBASE_PER_PHORON)
+
+//Turfmakers
+#define SNOWBASE_SET_ATMOS	nitrogen=SNOWBASE_MOL_N2;oxygen=SNOWBASE_MOL_O2;carbon_dioxide=SNOWBASE_MOL_CO2;phoron=SNOWBASE_MOL_PHORON;temperature=SNOWBASE_AVG_TEMP
+#define SNOWBASE_TURF_CREATE(x)	x/snowbase/nitrogen=SNOWBASE_MOL_N2;x/snowbase/oxygen=SNOWBASE_MOL_O2;x/snowbase/carbon_dioxide=SNOWBASE_MOL_CO2;x/snowbase/phoron=SNOWBASE_MOL_PHORON;x/snowbase/temperature=SNOWBASE_AVG_TEMP
+
+SNOWBASE_TURF_CREATE(/turf/unsimulated/wall/planetary)
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//cold turfs
+/turf/simulated/floor/outdoors/snow/snowbase
+	SNOWBASE_SET_ATMOS
+
+/turf/simulated/floor/outdoors/ice/snowbase
+	SNOWBASE_SET_ATMOS
+
+/turf/simulated/mineral/crystal/snowbase
+	SNOWBASE_SET_ATMOS
+
+/turf/simulated/mineral/crystal_shiny/snowbase
+	SNOWBASE_SET_ATMOS

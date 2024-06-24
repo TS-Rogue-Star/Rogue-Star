@@ -130,6 +130,7 @@
 	new /datum/random_map/automata/cave_system/no_cracks(null, 3, 3, Z_LEVEL_SNOWBASE, world.maxx - 4, world.maxy - 4)
 	new /datum/random_map/noise/ore/snowbasemine(null, 1, 1, Z_LEVEL_SNOWBASE, 64, 64)
 
+//The glacier, which is mostly POIs and mining
 /datum/map_template/common_lateload/away_snowbase_glacier
 	name = "Snowdrift Glacier"
 	desc = "A strange glacier near the NT outpost."
@@ -142,7 +143,7 @@
 
 /datum/map_template/common_lateload/away_snowbase_glacier/on_map_loaded(z)
 	. = ..()
-	//seed_submaps(list(Z_LEVEL_GLACIER), 120, /area/tether_away/snowbase/outside/glacier/unexplored, /datum/map_template/surface/mountains/normal)
+	seed_submaps(list(Z_LEVEL_GLACIER), 120, /area/tether_away/snowbase/outside/glacier/unexplored, /datum/map_template/surface/mountains/normal)
 
 	// Now for the tunnels.
 	new /datum/random_map/automata/cave_system/no_cracks(null, 3, 3, Z_LEVEL_GLACIER, world.maxx - 4, world.maxy - 4)
