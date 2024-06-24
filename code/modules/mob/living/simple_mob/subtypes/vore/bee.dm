@@ -25,7 +25,7 @@
 	ai_holder_type = /datum/ai_holder/simple_mob/retaliate
 
 	meat_amount = 5
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/xenomeat/spidermeat
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
 
 	//Space bees aren't affected by atmos.
 	min_oxy = 0
@@ -40,7 +40,7 @@
 
 	faction = "bee"
 
-	var/poison_type = "spidertoxin"	// The reagent that gets injected when it attacks, can be changed to different toxin.
+	var/poison_type = "toxin"	// The reagent that gets injected when it attacks, can be changed to different toxin.
 	var/poison_chance = 10			// Chance for injection to occur.
 	var/poison_per_bite = 1			// Amount added per injection.
 
