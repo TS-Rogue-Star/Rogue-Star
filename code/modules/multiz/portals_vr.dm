@@ -8,6 +8,11 @@
 	var/failchance = 0
 	anchored = TRUE
 	var/obj/structure/portal_event/target
+	// RS Add
+	var/notify_ckey_once // Send a message to this person on next use
+	var/open = TRUE // If it's currently usable
+	var/close_after_uses // Will autoclose after this many uses
+	// RS Add End
 
 /obj/structure/portal_event/Destroy()
 	if(target)
@@ -115,6 +120,11 @@
 		return
 	if (!istype(M, /atom/movable))
 		return
+	//RS Add
+	if (!open)
+		to_chat(M, "<span class='notice'>\The [src] seems inert for now...</span>")
+		return
+	//RS Add End
 	var/turf/place
 	if(isturf(target))
 		place = src
@@ -134,8 +144,28 @@
 			return
 		temptarg = pick(possible_turfs)
 		do_safe_teleport(M, temptarg, 0)
+		post_crossed(M) //RS Add
 	else if (istype(M, /atom/movable))
 		do_safe_teleport(M, target, 0)
+		post_crossed(M) //RS Add
+
+// RS Add
+/obj/structure/portal_event/post_crossed(atom/movable/M)
+	if(notify_ckey_once)
+		tgui_alert(notify_ckey_once, "Portal at [x],[y],[z] crossed by [M]", "Portal Crossed")
+		notify_ckey_once = null
+	if(isnum(close_after_uses))
+		if(--close_after_uses <= 0)
+			close()
+			close_after_uses = null
+
+/obj/structure/portal_event/close()
+	open = FALSE
+	alpha = 100
+/obj/structure/portal_event/open()
+	open = TRUE
+	alpha = intiial(alpha)
+// RS Add End
 
 /obj/structure/portal_event/Destroy()
 	if(target)
