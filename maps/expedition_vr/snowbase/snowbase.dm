@@ -131,8 +131,16 @@ SNOWBASE_TURF_CREATE(/turf/unsimulated/wall/planetary)
 /turf/simulated/floor/outdoors/ice/snowbase
 	SNOWBASE_SET_ATMOS
 
-/turf/simulated/mineral/crystal/snowbase
+/turf/simulated/mineral/floor/icey/snowbase
 	SNOWBASE_SET_ATMOS
 
 /turf/simulated/mineral/crystal_shiny/snowbase
+	SNOWBASE_SET_ATMOS
+
+/turf/simulated/mineral/crystal_shiny/snowbase/ignore_mapgen
+	ignore_mapgen = 1
+	SNOWBASE_SET_ATMOS
+
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen
+	ignore_mapgen = 1
 	SNOWBASE_SET_ATMOS
