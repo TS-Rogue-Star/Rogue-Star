@@ -278,7 +278,7 @@
 	name = "exercise mat"
 	desc = "A thick, flexible but tough mat designed for people to exercise on."
 	icon = 'icons/obj/rogue-star/misc.dmi'	//RS EDIT
-	icon_state = "mat"						//RS EDIT
+	icon_state = "exercise_mat"
 
 /obj/item/weapon/bedsheet/pillow/exercise/attackby(var/obj/item/component, mob/user as mob)
 	return
