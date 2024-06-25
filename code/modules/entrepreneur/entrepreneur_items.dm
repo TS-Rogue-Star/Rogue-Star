@@ -277,8 +277,32 @@
 /obj/item/weapon/bedsheet/pillow/exercise
 	name = "exercise mat"
 	desc = "A thick, flexible but tough mat designed for people to exercise on."
-	icon = 'icons/obj/rogue-star/misc.dmi'	//RS EDIT
+	icon = 'icons/rogue-star/misc.dmi'	//RS EDIT
 	icon_state = "exercise_mat"
+
+/obj/item/weapon/bedsheet/pillow/exercise/Initialize()	//RS ADD START
+	. = ..()
+	if(!color)
+		color = random_color(TRUE)
+
+/obj/item/weapon/bedsheet/pillow/exercise/blue
+	color = "#5868f3"
+/obj/item/weapon/bedsheet/pillow/exercise/red
+	color = "#b43a3a"
+/obj/item/weapon/bedsheet/pillow/exercise/yellow
+	color = "#fcec5d"
+/obj/item/weapon/bedsheet/pillow/exercise/cyan
+	color = "#49f7ee"
+/obj/item/weapon/bedsheet/pillow/exercise/orange
+	color = "#ffa114"
+/obj/item/weapon/bedsheet/pillow/exercise/purple
+	color = "#8223b9"
+/obj/item/weapon/bedsheet/pillow/exercise/white
+	color = "#FFFFFF"
+/obj/item/weapon/bedsheet/pillow/exercise/black
+	color = "#383838"
+
+//RS ADD END
 
 /obj/item/weapon/bedsheet/pillow/exercise/attackby(var/obj/item/component, mob/user as mob)
 	return
@@ -392,15 +416,16 @@
 /obj/item/weapon/entrepreneur/crystal
 	name = "healing crystal"
 	desc = "A crystal with a powerful energy, apparantly, and is capable of healing the soul, apparantly."
-	icon = 'icons/obj/rogue-star/misc.dmi'
-	icon_state = "crystal_pink"
+	icon = 'icons/rogue-star/misc.dmi'	//RS EDIT
+	icon_state = "crystal"	//RS EDIT
 	w_class = ITEMSIZE_TINY
 
 /obj/item/weapon/entrepreneur/crystal/Initialize()
 	. = ..()
-	var/list/colour_choice = list("crystal_pink","crystal_blue","crystal_green","crystal_orange","crystal_dblue","crystal_purple")
-	icon_state = pick(colour_choice)
-	update_icon()
+	color = random_color(TRUE)		//RS EDIT
+//	var/list/colour_choice = list("crystal_pink","crystal_blue","crystal_green","crystal_orange","crystal_dblue","crystal_purple")
+//	icon_state = pick(colour_choice)
+//	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/bottle/essential_oil
 	name = "essential oils"
@@ -490,14 +515,14 @@
 	desc = "A kit containing everything that a fitness trainer needs."
 	icon = 'icons/obj/entrepreneur.dmi'
 	icon_state = "fitness_trainer"
-	starts_with = list(/obj/item/weapon/bedsheet/pillow/exercise, /obj/item/weapon/entrepreneur/dumbbell, /obj/item/weapon/entrepreneur/dumbbell, /obj/item/weapon/reagent_containers/food/snacks/candy/proteinbar, /obj/item/device/ticket_printer/train)
+	starts_with = list(/obj/item/weapon/bedsheet/pillow/exercise/blue, /obj/item/weapon/entrepreneur/dumbbell, /obj/item/weapon/entrepreneur/dumbbell, /obj/item/weapon/reagent_containers/food/snacks/candy/proteinbar, /obj/item/device/ticket_printer/train)	//RS EDIT
 
 /obj/item/weapon/storage/box/yoga_teacher
 	name = "yoga kit"
 	desc = "A kit containing everything that a yoga teacher needs."
 	icon = 'icons/obj/entrepreneur.dmi'
 	icon_state = "yoga_teacher"
-	starts_with = list(/obj/item/weapon/bedsheet/pillow/exercise, /obj/item/weapon/bedsheet/pillow/exercise, /obj/item/weapon/reagent_containers/food/snacks/fruitbar, /obj/item/device/ticket_printer/train)
+	starts_with = list(/obj/item/weapon/bedsheet/pillow/exercise/purple, /obj/item/weapon/bedsheet/pillow/exercise/purple, /obj/item/weapon/reagent_containers/food/snacks/fruitbar, /obj/item/device/ticket_printer/train)	//RS EDIT
 
 /obj/item/weapon/storage/box/paranormal_investigator
 	name = "ghost hunting kit"
@@ -507,7 +532,7 @@
 	starts_with = list(/obj/item/weapon/entrepreneur/emf, /obj/item/weapon/entrepreneur/spirit_board, /obj/item/weapon/reagent_containers/food/drinks/glass2/shot, /obj/item/device/ticket_printer/train)
 
 /obj/item/weapon/storage/box/spirit_healer
-	name = "exercise kit"
+	name = "spiritual healing kit"	//RS EDIT
 	desc = "A kit containing everything that a spirit healer needs."
 	icon = 'icons/obj/entrepreneur.dmi'
 	icon_state = "spirit_healer"
