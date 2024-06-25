@@ -277,8 +277,8 @@
 /obj/item/weapon/bedsheet/pillow/exercise
 	name = "exercise mat"
 	desc = "A thick, flexible but tough mat designed for people to exercise on."
-	icon = 'icons/obj/entrepreneur.dmi'
-	icon_state = "exercise_mat"
+	icon = 'icons/obj/rogue-star/misc.dmi'	//RS EDIT
+	icon_state = "mat"						//RS EDIT
 
 /obj/item/weapon/bedsheet/pillow/exercise/attackby(var/obj/item/component, mob/user as mob)
 	return
@@ -392,7 +392,7 @@
 /obj/item/weapon/entrepreneur/crystal
 	name = "healing crystal"
 	desc = "A crystal with a powerful energy, apparantly, and is capable of healing the soul, apparantly."
-	icon = 'icons/obj/entrepreneur.dmi'
+	icon = 'icons/obj/rogue-star/misc.dmi'
 	icon_state = "crystal_pink"
 	w_class = ITEMSIZE_TINY
 
@@ -526,4 +526,3 @@
 	icon = 'icons/obj/entrepreneur.dmi'
 	icon_state = "stylist"
 	starts_with = list(/obj/item/weapon/makeover, /obj/item/weapon/lipstick/random, /obj/item/weapon/nailpolish,  /obj/item/weapon/nailpolish_remover, /obj/item/weapon/haircomb, /obj/item/clothing/head/hairnet, /obj/item/device/ticket_printer/train)
-
