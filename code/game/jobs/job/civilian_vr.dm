@@ -418,3 +418,9 @@
 	title = "Spirit Healer"
 	title_blurb = "A Spirit Healer offers alternative forms of medicine. Rituals, magic rocks, seances... It totally works. What's that about placebo?"
 	title_outfit = /decl/hierarchy/outfit/job/assistant/entrepreneur/spirit_healer
+
+//RS ADD START
+/datum/alt_title/taxi
+	title = "Taxi"
+	title_blurb = "A Taxi is someone who brings people from here to there."
+//RS ADD END
