@@ -1,5 +1,11 @@
+#define BASE_MAGIC_COOLDOWN = 15
+#define BASE_MAGIC_COST = 33
+
+#define HEALING_MAGIC = "healing"
+
 /mob/living
 	var/datum/etching/etching
+	var/admin_magic = FALSE
 
 /mob/living/Initialize()
 	. = ..()
@@ -38,6 +44,29 @@
 	if(etching)
 		etching.report_status()
 
+/mob/living/proc/consider_magic(cost,spell_class,spell_lv,req_standing,req_corporeal,req_visible)
+	if(!etching.consider_magic(cost,spell_class,spell_lv))
+		return FALSE
+	if(req_standing && (resting||weakened||buckled))	//Buckled is assuming that we might be restrained. Not bothering with checking carbon handcuffs, since nets exist and I am pretty sure that's just a buckle
+		to_chat(src, "<span class='warning'>You need to be standing and free to move around to do that!</span>")
+		return FALSE
+	if(req_corporeal && incorporeal_move)
+		to_chat(src, "<span class='warning'>Can't do that while phased out!</span>")
+		return FALSE
+	if(req_visible && invisibility)
+		to_chat(src, "<span class='warning'>Can't do that without revealing yourself!</span>")
+		return FALSE
+	return TRUE
+
+/mob/living/proc/consume_mana(cost,spell_lv)
+	if(cost <= 0)
+		return
+	etching.mana -= cost
+
+	if(etching.mana < 0)
+		etching.mana = 0
+	etching.mana_cooldown = BASE_MAGIC_COOLDOWN * spell_lv	//life tick * lv = about 30 seconds per level
+
 /datum/etching
 	var/mob/living/ourmob			//Reference to the mob we are working with
 	var/event_character = FALSE		//If true, saves to an alternative path and allows editing
@@ -46,6 +75,7 @@
 	var/max_mana = 0				//How much you could have
 	var/mana_regen = 0				//How fast it comes back
 	var/mana_cooldown = 0			//How soon you can do it again
+	var/mana_efficiency = 1			//Multiplier for how efficiently you use your mana
 	var/core						//Head/body
 	var/l_arm
 	var/r_arm
@@ -283,3 +313,21 @@
 
 /datum/etching/vv_edit_var(var_name, var_value)
 	return FALSE
+
+/datum/etching/proc/consider_magic(cost,spell_class,spell_lv)
+	if(admin_magic)
+		return TRUE
+	if(mana_cooldown)
+		to_chat(ourmob, "<span class='warning'>You are still recovering! (([mana_cooldown]))</span>")
+		return FALSE
+	if(cost > mana)
+		to_chat(ourmob, "<span class='warning'>You haven't got enough mana! (([mana]/[cost]))</span>")
+		return FALSE
+
+//	if(not some_kind_of_level_check())
+//		return FALSE
+
+	return TRUE
+
+/datum/etching/proc/calculate_magic_cost(spell_class,spell_lv)
+	return (BASE_MAGIC_COST * spell_lv) * mana_efficiency
