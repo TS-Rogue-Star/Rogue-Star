@@ -3494,6 +3494,7 @@
 	dir = 8;
 	pixel_x = 32
 	},
+/obj/machinery/medical_kiosk,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/lobby)
 "li" = (
@@ -9842,7 +9843,9 @@
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 6
 	},
-/obj/machinery/medical_kiosk,
+/obj/machinery/computer/transhuman/designer{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/lobby)
 "Fg" = (
@@ -16537,6 +16540,9 @@
 "Zp" = (
 /obj/structure/bed/chair/backed_red,
 /obj/machinery/camera/network/civilian,
+/obj/machinery/status_display{
+	pixel_y = 32
+	},
 /turf/simulated/floor/outdoors/sidewalk/slab{
 	outdoors = 0
 	},
@@ -26948,7 +26954,7 @@ jf
 jf
 jf
 jf
-tL
+fv
 tL
 av
 av
@@ -27090,8 +27096,8 @@ fv
 fv
 fv
 fv
+fv
 tL
-av
 av
 av
 av
@@ -27232,8 +27238,8 @@ fv
 fv
 fv
 fv
+fv
 tL
-av
 av
 av
 av
@@ -27374,8 +27380,8 @@ fv
 fv
 fv
 fv
+fv
 tL
-av
 av
 av
 av
@@ -27517,7 +27523,7 @@ tL
 tL
 tL
 tL
-av
+tL
 av
 av
 av

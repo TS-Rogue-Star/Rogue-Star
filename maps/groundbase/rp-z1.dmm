@@ -1267,7 +1267,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass{
 	name = "EVA Access";
-	req_one_access = list(13)
+	req_one_access = list(18,19,67)
 	},
 /turf/simulated/floor/bmarble,
 /area/ai_monitored/storage/eva)
@@ -3799,10 +3799,10 @@
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
 /area/groundbase/level1/se)
 "dve" = (
-/obj/machinery/transhuman/synthprinter,
 /obj/effect/floor_decal/milspec/color/purple/half{
 	dir = 5
 	},
+/obj/machinery/protean_reconstitutor,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/robotics)
 "dvp" = (
@@ -6145,22 +6145,13 @@
 	},
 /area/groundbase/science/hall)
 "fAP" = (
-/obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 1
-	},
-/obj/machinery/light{
+/obj/effect/floor_decal/milspec/color/purple/half{
 	dir = 8
 	},
-/obj/machinery/camera/network/research{
-	dir = 1
-	},
 /obj/structure/table/standard,
-/obj/machinery/computer/med_data/laptop{
-	dir = 4
-	},
-/obj/effect/floor_decal/milspec/color/purple/half{
-	dir = 10
-	},
+/obj/item/stack/nanopaste,
+/obj/item/stack/nanopaste,
+/obj/item/stack/nanopaste,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/robotics)
 "fBu" = (
@@ -9670,16 +9661,7 @@
 /turf/simulated/floor,
 /area/groundbase/engineering/storage)
 "iDf" = (
-/obj/machinery/atmospherics/unary/vent_scrubber/on{
-	dir = 1
-	},
-/obj/machinery/alarm{
-	dir = 1
-	},
-/obj/structure/bed/chair/office/light{
-	dir = 4
-	},
-/obj/effect/floor_decal/milspec/color/purple/half,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/robotics)
 "iDh" = (
@@ -12486,6 +12468,15 @@
 /obj/machinery/vending/wardrobe/secdrobe,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/lobby)
+"lbN" = (
+/obj/machinery/computer/transhuman/resleeving{
+	dir = 8
+	},
+/obj/effect/floor_decal/milspec/color/purple/half{
+	dir = 6
+	},
+/turf/simulated/floor/tiled,
+/area/groundbase/science/robotics)
 "ldc" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/highsecurity{
@@ -14328,10 +14319,10 @@
 /turf/simulated/floor/wood,
 /area/groundbase/civilian/gameroom)
 "mQF" = (
-/obj/machinery/transhuman/resleever,
 /obj/effect/floor_decal/milspec/color/purple/half{
 	dir = 4
 	},
+/obj/machinery/transhuman/synthprinter,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/robotics)
 "mQY" = (
@@ -16003,12 +15994,10 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/groundbase/command/ai/foyer)
 "oyP" = (
-/obj/machinery/computer/transhuman/resleeving{
-	dir = 8
-	},
 /obj/effect/floor_decal/milspec/color/purple/half{
-	dir = 6
+	dir = 4
 	},
+/obj/machinery/transhuman/resleever,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/robotics)
 "oyZ" = (
@@ -17126,6 +17115,25 @@
 /obj/effect/catwalk_plated,
 /turf/simulated/floor,
 /area/groundbase/engineering/workshop)
+"poU" = (
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/camera/network/research{
+	dir = 1
+	},
+/obj/structure/table/standard,
+/obj/machinery/computer/med_data/laptop{
+	dir = 4
+	},
+/obj/effect/floor_decal/milspec/color/purple/half{
+	dir = 10
+	},
+/turf/simulated/floor/tiled,
+/area/groundbase/science/robotics)
 "poY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -20019,6 +20027,19 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/equipment)
+"rBS" = (
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 1
+	},
+/obj/machinery/alarm{
+	dir = 1
+	},
+/obj/structure/bed/chair/office/light{
+	dir = 4
+	},
+/obj/effect/floor_decal/milspec/color/purple/half,
+/turf/simulated/floor/tiled,
+/area/groundbase/science/robotics)
 "rBT" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5,
 /turf/simulated/floor/tiled,
@@ -21430,7 +21451,7 @@
 /obj/item/clothing/suit/space/void/exploration,
 /obj/item/clothing/head/helmet/space/void/exploration,
 /obj/machinery/door/window/brigdoor/eastright{
-	req_access = list(43)
+	req_access = list(18,19,67)
 	},
 /obj/item/device/bluespaceradio/groundbase_prelinked,
 /obj/item/device/mapping_unit,
@@ -23768,7 +23789,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass{
 	name = "EVA Access";
-	req_one_access = list(13)
+	req_one_access = list(18,19,67)
 	},
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -38029,8 +38050,8 @@ tbQ
 fYC
 ePH
 fAP
+poU
 tbQ
-sfQ
 sfQ
 jMh
 sfQ
@@ -38171,8 +38192,8 @@ vzM
 kPQ
 sOl
 iDf
+rBS
 tbQ
-sfQ
 sfQ
 jMh
 sfQ
@@ -38313,8 +38334,8 @@ tbQ
 dve
 mQF
 oyP
+lbN
 tbQ
-sfQ
 sfQ
 jMh
 sfQ
@@ -38456,7 +38477,7 @@ tbQ
 tbQ
 tbQ
 tbQ
-sfQ
+tbQ
 sfQ
 jMh
 sfQ

@@ -209,8 +209,6 @@
 /turf/simulated/floor/tiled/dark,
 /area/security/tactical)
 "av" = (
-/obj/structure/table/standard,
-/obj/machinery/cell_charger,
 /obj/machinery/power/apc/angled{
 	dir = 8
 	},
@@ -218,7 +216,7 @@
 	color = "#42038a";
 	icon_state = "0-4"
 	},
-/obj/item/weapon/storage/box/backup_kit,
+/obj/machinery/protean_reconstitutor,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/assembly/robotics)
 "aw" = (
@@ -5912,7 +5910,7 @@
 	dir = 4;
 	door_color = "#333333";
 	name = "Auxiliary EVA Equipment Room";
-	req_one_access = list(18,19,43);
+	req_one_access = list(18,19,67);
 	stripe_color = "#5a19a8"
 	},
 /turf/simulated/floor/tiled/steel_ridged,
@@ -8985,6 +8983,9 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/item/stack/nanopaste,
+/obj/item/stack/nanopaste,
+/obj/item/stack/nanopaste,
 /turf/simulated/floor/tiled/steel,
 /area/assembly/robotics)
 "sr" = (
@@ -9777,7 +9778,7 @@
 /obj/item/clothing/suit/space/void/exploration,
 /obj/item/clothing/head/helmet/space/void/exploration,
 /obj/machinery/door/window/brigdoor/eastright{
-	req_access = list(43)
+	req_access = list(18,19,67)
 	},
 /obj/item/device/bluespaceradio/sd_prelinked,
 /obj/item/device/cataloguer/compact,
@@ -13057,6 +13058,7 @@
 	},
 /obj/item/device/mmi/digital/posibrain,
 /obj/item/device/mmi,
+/obj/item/weapon/storage/box/backup_kit,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/assembly/robotics)
 "Br" = (
@@ -16967,7 +16969,7 @@
 /obj/item/clothing/suit/space/void/exploration,
 /obj/item/clothing/head/helmet/space/void/exploration,
 /obj/machinery/door/window/brigdoor/eastleft{
-	req_access = list(43)
+	req_access = list(18,19,67)
 	},
 /obj/item/device/mapping_unit,
 /obj/item/device/cataloguer,

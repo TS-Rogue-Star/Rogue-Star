@@ -10,8 +10,8 @@ GLOBAL_VAR(special_station_name)
 		return
 	var/list/possible_verbs = list(
 		/mob/living/proc/blue_shift,
-		/mob/living/proc/vore_leap_attack
-
+		/mob/living/proc/vore_leap_attack,
+		/mob/living/proc/set_size
 		)
 
 	var/choice = tgui_input_list(usr, "Which verb would you like to add/remove?", "Event Verb", possible_verbs)
