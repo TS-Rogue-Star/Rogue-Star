@@ -55,6 +55,11 @@
 **Creator:** viznoman (https://freesound.org/people/viznoman/sounds/267308/)<br>
 **License:** [CC BY 3.0](http://creativecommons.org/licenses/by/3.0/)<br>
 <br>
+**File:** `icons/obj/pillows.dmi`<br>
+**Title:** pillows.dmi<br>
+**Creator:** Lamella-0587 (https://github.com/Skyrat-SS13/Skyrat-tg/pull/6740)<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
 ### ROGUE STAR SPECIFIC ATTRIBUTIONS
 **File**: `icons/mob/screen_full_vore.dmi`<br>
 **Icon-States:** `anibelly`, `totally_mawful`, and `further_mawful`<br>
