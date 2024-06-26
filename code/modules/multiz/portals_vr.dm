@@ -11,6 +11,9 @@
 	var/portal_id		//RS ADD START
 	var/portal_enabled = FALSE
 	var/static/list/event_portal_list = list()
+	var/notify_ckey_once // Send a message to this person on next use
+	var/open = TRUE // If it's currently usable
+	var/close_after_uses // Will autoclose after this many uses
 
 /obj/structure/portal_event/Initialize()
 	. = ..()
@@ -144,13 +147,17 @@
 		return
 	if (!istype(M, /atom/movable))
 		return
-	var/turf/ourturf = find_our_turf(M)	//RS EDIT START
+	if (!open) //RS EDIT START
+		to_chat(M, "<span class='notice'>\The [src] seems inert for now...</span>")
+		return
+	var/turf/ourturf = find_our_turf(M)
 	if(!ourturf.check_density(TRUE,TRUE))	//Make sure there isn't a wall there
 		M.unbuckle_all_mobs(TRUE)
 		if(isliving(M))
 			var/mob/living/ourmob = M
 			ourmob.stop_pulling()
 		do_safe_teleport(M, ourturf, 0)
+		post_crossed(M)
 
 /obj/structure/portal_event/proc/find_our_turf(var/atom/movable/AM)
 	var/offset_x = x - AM.x
@@ -158,7 +165,25 @@
 
 	var/turf/temptarg = locate((target.x + offset_x),(target.y + offset_y),target.z)
 
-	return temptarg		//RS EDIT END
+	return temptarg
+
+/obj/structure/portal_event/proc/close()
+	open = FALSE
+	alpha = 100
+
+/obj/structure/portal_event/proc/open()
+	open = TRUE
+	alpha = initial(alpha)
+
+/obj/structure/portal_event/proc/post_crossed(atom/movable/M)
+	if(notify_ckey_once)
+		tgui_alert(notify_ckey_once, "Portal at [x],[y],[z] crossed by [M]", "Portal Crossed")
+		notify_ckey_once = null
+	if(isnum(close_after_uses))
+		if(--close_after_uses <= 0)
+			close()
+			close_after_uses = null
+// RS EDIT END
 
 /obj/structure/portal_event/Destroy()
 	if(target)
