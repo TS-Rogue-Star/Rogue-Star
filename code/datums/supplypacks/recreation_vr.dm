@@ -107,7 +107,7 @@
 	containertype = /obj/structure/closet/crate
 	containername = "Snack planets crate"
 
-/datum/supply_pack/recreation/pinkpillows
+/datum/supply_pack/recreation/pinkpillows	//RS EDIT //Ported from VOREStation 15807	- START
 	name = "Pink Pillow Crate"
 	contains = list(
 		/obj/item/weapon/bedsheet/pillow = 6
@@ -169,5 +169,4 @@
 		/obj/item/weapon/bedsheet/pillow/yellow = 6
 	)
 	cost = 10
-	containertype = /obj/structure/closet/crate
-
+	containertype = /obj/structure/closet/crate		//RS EDIT //Ported from VOREStation 15807 - END
