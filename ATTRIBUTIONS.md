@@ -60,6 +60,11 @@
 **Creator:** Lamella-0587 (https://github.com/Skyrat-SS13/Skyrat-tg/pull/6740)<br>
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
+**File:** `icons/obj/entrepreneur.dmi`<br>
+**Title:** entrepreneur.dmi<br>
+**Creator:** SatinIsle (https://github.com/VOREStation/VOREStation/pull/15933)<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
 ### ROGUE STAR SPECIFIC ATTRIBUTIONS
 **File**: `icons/mob/screen_full_vore.dmi`<br>
 **Icon-States:** `anibelly`, `totally_mawful`, and `further_mawful`<br>
