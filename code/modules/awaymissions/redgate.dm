@@ -18,7 +18,9 @@
 		)	//made it a var so that GMs or map makers can selectively allow things to pass through
 	var/list/restrictions = list(
 		/mob/living/simple_mob/vore/overmap/stardog,
-		/mob/living/simple_mob/vore/bigdragon
+		/mob/living/simple_mob/vore/bigdragon,
+		/mob/living/silicon/ai,	//RS EDIT
+		/mob/observer/eye	//RS EDIT
 		)	//There are some things we don't want to come through no matter what.
 
 	announce_leaving = FALSE
@@ -112,6 +114,9 @@
 
 	if(target)
 		if(!(secret || target.secret) || user?.client?.holder)
+			if(user.type in restrictions)	//Some stuff we don't want to bring EVEN IF it has a key.	//RS EDIT
+				return	//RS EDIT
+
 			user.forceMove(get_turf(target))
 	else
 		return ..()
