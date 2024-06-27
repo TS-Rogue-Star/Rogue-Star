@@ -393,7 +393,7 @@
 	glass_name = "Giant Beer"
 	glass_desc = "The Neo Detroit beer and ale cocktail, perfect for your average drunk."
 
-/datum/reagent/ethanol/manager_summoner
+/datum/reagent/ethanol/manager_summoner		//RS EDIT //Ported from VOREStation 15933
 	name = "Manager Summoner"
 	id = "manager_summoner"
 	description = "A horrifying cocktail for those who desperately want feel above their peers."

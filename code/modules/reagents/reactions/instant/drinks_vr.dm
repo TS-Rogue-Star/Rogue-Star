@@ -233,7 +233,7 @@
 	required_reagents = list("water" = 5, "strawberry_protein_powder" = 1)
 	result_amount = 5
 
-/decl/chemical_reaction/instant/drinks/manager_summoner
+/decl/chemical_reaction/instant/drinks/manager_summoner		//RS EDIT //Ported from VOREStation 15933
 	name = "Manager Summoner"
 	id = "manager_summoner"
 	result = "manager_summoner"

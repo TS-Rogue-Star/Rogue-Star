@@ -1,3 +1,5 @@
+//RS EDIT //Ported from VOREStation 15807
+
 //Pillows with sprites ported from skyrat
 
 /obj/item/weapon/bedsheet/pillow

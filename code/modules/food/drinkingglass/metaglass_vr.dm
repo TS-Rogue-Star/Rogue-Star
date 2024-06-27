@@ -240,6 +240,6 @@
 	glass_center_of_mass = list("x"=16, "y"=8)
 	glass_icon_file = 'icons/obj/drinks_vr.dmi'
 
-/datum/reagent/ethanol/manager_summoner
+/datum/reagent/ethanol/manager_summoner		//RS EDIT //Ported from VOREStation 15933
 	glass_icon_state = "manager_summoner"
 	glass_icon_file = 'icons/obj/drinks_vr.dmi'

@@ -22,7 +22,7 @@
 
 /decl/hierarchy/outfit/job/assistant/entrepreneur
 	id_type = /obj/item/weapon/card/id/civilian/entrepreneur
-	l_hand = /obj/item/device/ticket_printer/train
+	l_hand = /obj/item/device/ticket_printer/train		//RS EDIT //Ported from VOREStation 15933 - START
 	uniform = /obj/item/clothing/under/tropical/pink
 
 /decl/hierarchy/outfit/job/assistant/entrepreneur/lawyer
@@ -89,4 +89,4 @@
 	l_hand = /obj/item/weapon/storage/box/fortune_teller
 
 /decl/hierarchy/outfit/job/assistant/entrepreneur/spirit_healer
-	l_hand = /obj/item/weapon/storage/box/spirit_healer
+	l_hand = /obj/item/weapon/storage/box/spirit_healer		//RS EDIT //Ported from VOREStation 15933 - END

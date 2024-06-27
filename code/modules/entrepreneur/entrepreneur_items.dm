@@ -1,3 +1,5 @@
+//RS EDIT //Ported from VOREStation 15933
+
 //Items for the entrepreneurs
 
 /obj/item/weapon/entrepreneur

@@ -719,7 +719,7 @@
 	color = "#f16e16"
 	taste_description = "extremely overengineered carpet"
 
-/datum/reagent/essential_oil
+/datum/reagent/essential_oil		//RS EDIT //Ported from VOREStation 15933
 	name = "Essential Oils"
 	id = "essential_oil"
 	description = "A slurry of compounds that contains the basic requirements for life."
