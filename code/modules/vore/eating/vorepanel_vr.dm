@@ -432,24 +432,31 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			var/list/updated = list()
 
 			for(var/list/raw_list in input_data)
-				if(length(valid_names) >= BELLIES_MAX) break
-				if(!islist(raw_list)) continue
-				if(!istext(raw_list["name"])) continue
-				if(length(raw_list["name"]) > BELLIES_NAME_MAX || length(raw_list["name"]) < BELLIES_NAME_MIN) continue
-				if(raw_list["name"] in valid_names) continue
+				if(length(valid_names) >= BELLIES_MAX) //check if there are too many bellies in this list
+					tgui_alert_async(usr, "The supplied VRDB file contains TOO MANY bellies.", "Error!") //Supply error message to the user
+					break
+				if(!islist(raw_list)) //Verify the list is not empty, or initialized correctly
+					continue
+				if(!istext(raw_list["name"])) //Verify the list has a name to set the vorebelly as
+					continue
+				if(length(raw_list["name"]) > BELLIES_NAME_MAX || length(raw_list["name"]) < BELLIES_NAME_MIN) //Ensure each belly's name fits the length limits
+					continue
+				if(raw_list["name"] in valid_names)
+					continue
 				for(var/obj/belly/B in host.vore_organs)
 					if(lowertext(B.name) == lowertext(raw_list["name"]))
 						updated += raw_list["name"]
 						break
-				if(!pickOne && length(host.vore_organs)+length(valid_names)-length(updated) >= BELLIES_MAX) continue
+				if(!pickOne && length(host.vore_organs)+length(valid_names)-length(updated) >= BELLIES_MAX)
+					continue
 				valid_names += raw_list["name"]
 				valid_lists += list(raw_list)
 
-			if(length(valid_names) == 0)
+			if(length(valid_names) <= 0)
 				tgui_alert_async(usr, "The supplied VRDB file does not contain any valid bellies.", "Error!")
 				return FALSE
 
-			if(pickOne)
+			if(pickOne) //Choose one vorebelly in the list
 				var/picked = tgui_input_list(usr, "Belly Import", "Which belly?", valid_names)
 				if(!picked) return
 				for(var/B in valid_lists)
@@ -512,6 +519,8 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 						new_desc = readd_quotes(new_desc)
 					if(length(new_desc) > 0 && length(new_desc) <= BELLIES_DESC_MAX)
 						new_belly.desc = new_desc
+					else
+						tgui_alert_async(usr, "Invalid description for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				if(istext(belly_data["absorbed_desc"]))
 					var/new_absorbed_desc = html_encode(belly_data["absorbed_desc"])
@@ -519,6 +528,8 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 						new_absorbed_desc = readd_quotes(new_absorbed_desc)
 					if(length(new_absorbed_desc) > 0 && length(new_absorbed_desc) <= BELLIES_DESC_MAX)
 						new_belly.absorbed_desc = new_absorbed_desc
+					else
+						tgui_alert_async(usr, "Invalid absorbed description for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				if(istext(belly_data["vore_verb"]))
 					var/new_vore_verb = html_encode(belly_data["vore_verb"])
@@ -526,6 +537,8 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 						new_vore_verb = readd_quotes(new_vore_verb)
 					if(length(new_vore_verb) >= BELLIES_NAME_MIN && length(new_vore_verb) <= BELLIES_NAME_MAX)
 						new_belly.vore_verb = new_vore_verb
+					else
+						tgui_alert_async(usr, "Invalid vore verb for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				if(istext(belly_data["release_verb"]))
 					var/new_release_verb = html_encode(belly_data["release_verb"])
@@ -533,121 +546,169 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 						new_release_verb = readd_quotes(new_release_verb)
 					if(length(new_release_verb) >= BELLIES_NAME_MIN && length(new_release_verb) <= BELLIES_NAME_MAX)
 						new_belly.release_verb = new_release_verb
+					else
+						tgui_alert_async(usr, "Invalid release verb for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["digest_messages_prey"]))
 					var/new_digest_messages_prey = sanitize(jointext(belly_data["digest_messages_prey"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_digest_messages_prey)
 						new_belly.set_messages(new_digest_messages_prey,"dmp")
+					else
+						tgui_alert_async(usr, "Invalid prey digest messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["digest_messages_owner"]))
 					var/new_digest_messages_owner = sanitize(jointext(belly_data["digest_messages_owner"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_digest_messages_owner)
 						new_belly.set_messages(new_digest_messages_owner,"dmo")
+					else
+						tgui_alert_async(usr, "Invalid pred digest messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["absorb_messages_prey"]))
 					var/new_absorb_messages_prey = sanitize(jointext(belly_data["absorb_messages_prey"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_absorb_messages_prey)
 						new_belly.set_messages(new_absorb_messages_prey,"amp")
+					else
+						tgui_alert_async(usr, "Invalid prey absorbed messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["absorb_messages_owner"]))
 					var/new_absorb_messages_owner = sanitize(jointext(belly_data["absorb_messages_owner"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_absorb_messages_owner)
 						new_belly.set_messages(new_absorb_messages_owner,"amo")
+					else
+						tgui_alert_async(usr, "Invalid pred absorb messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["unabsorb_messages_prey"]))
 					var/new_unabsorb_messages_prey = sanitize(jointext(belly_data["unabsorb_messages_prey"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_unabsorb_messages_prey)
 						new_belly.set_messages(new_unabsorb_messages_prey,"uamp")
+					else
+						tgui_alert_async(usr, "Invalid prey unabsorb messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["unabsorb_messages_owner"]))
 					var/new_unabsorb_messages_owner = sanitize(jointext(belly_data["unabsorb_messages_owner"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_unabsorb_messages_owner)
 						new_belly.set_messages(new_unabsorb_messages_owner,"uamo")
+					else
+						tgui_alert_async(usr, "Invalid pred unabsorb messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["struggle_messages_outside"]))
 					var/new_struggle_messages_outside = sanitize(jointext(belly_data["struggle_messages_outside"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_struggle_messages_outside)
 						new_belly.set_messages(new_struggle_messages_outside,"smo")
+					else
+						tgui_alert_async(usr, "Invalid outside struggle messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["struggle_messages_inside"]))
 					var/new_struggle_messages_inside = sanitize(jointext(belly_data["struggle_messages_inside"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_struggle_messages_inside)
 						new_belly.set_messages(new_struggle_messages_inside,"smi")
+					else
+						tgui_alert_async(usr, "Invalid inside struggle messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["absorbed_struggle_messages_outside"]))
 					var/new_absorbed_struggle_messages_outside = sanitize(jointext(belly_data["absorbed_struggle_messages_outside"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_absorbed_struggle_messages_outside)
 						new_belly.set_messages(new_absorbed_struggle_messages_outside,"asmo")
+					else
+						tgui_alert_async(usr, "Invalid outside absorbed struggle messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["absorbed_struggle_messages_inside"]))
 					var/new_absorbed_struggle_messages_inside = sanitize(jointext(belly_data["absorbed_struggle_messages_inside"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_absorbed_struggle_messages_inside)
 						new_belly.set_messages(new_absorbed_struggle_messages_inside,"asmi")
+					else
+						tgui_alert_async(usr, "Invalid inside absorbed struggle messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["examine_messages"]))
 					var/new_examine_messages = sanitize(jointext(belly_data["examine_messages"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_examine_messages)
 						new_belly.set_messages(new_examine_messages,"em")
+					else
+						tgui_alert_async(usr, "Invalid examine messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["examine_messages_absorbed"]))
 					var/new_examine_messages_absorbed = sanitize(jointext(belly_data["examine_messages_absorbed"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_examine_messages_absorbed)
 						new_belly.set_messages(new_examine_messages_absorbed,"ema")
+					else
+						tgui_alert_async(usr, "Invalid absorbed examine for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["emotes_digest"]))
 					var/new_emotes_digest = sanitize(jointext(belly_data["emotes_digest"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_emotes_digest)
 						new_belly.set_messages(new_emotes_digest,"im_digest")
+					else
+						tgui_alert_async(usr, "Invalid digest messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["emotes_hold"]))
 					var/new_emotes_hold = sanitize(jointext(belly_data["emotes_hold"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_emotes_hold)
 						new_belly.set_messages(new_emotes_hold,"im_hold")
+					else
+						tgui_alert_async(usr, "Invalid holding emotes for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["emotes_holdabsorbed"]))
 					var/new_emotes_holdabsorbed = sanitize(jointext(belly_data["emotes_holdabsorbed"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_emotes_holdabsorbed)
 						new_belly.set_messages(new_emotes_holdabsorbed,"im_holdabsorbed")
+					else
+						tgui_alert_async(usr, "Invalid absorbed-holding messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["emotes_absorb"]))
 					var/new_emotes_absorb = sanitize(jointext(belly_data["emotes_absorb"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_emotes_absorb)
 						new_belly.set_messages(new_emotes_absorb,"im_absorb")
+					else
+						tgui_alert_async(usr, "Invalid absorbing messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["emotes_heal"]))
 					var/new_emotes_heal = sanitize(jointext(belly_data["emotes_heal"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_emotes_heal)
 						new_belly.set_messages(new_emotes_heal,"im_heal")
+					else
+						tgui_alert_async(usr, "Invalid healing messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["emotes_drain"]))
 					var/new_emotes_drain = sanitize(jointext(belly_data["emotes_drain"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_emotes_drain)
 						new_belly.set_messages(new_emotes_drain,"im_drain")
+					else
+						tgui_alert_async(usr, "Invalid draining messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["emotes_steal"]))
 					var/new_emotes_steal = sanitize(jointext(belly_data["emotes_steal"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_emotes_steal)
 						new_belly.set_messages(new_emotes_steal,"im_steal")
+					else
+						tgui_alert_async(usr, "Invalid stealing messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["emotes_egg"]))
 					var/new_emotes_egg = sanitize(jointext(belly_data["emotes_egg"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_emotes_egg)
 						new_belly.set_messages(new_emotes_egg,"im_egg")
+					else
+						tgui_alert_async(usr, "Invalid egg messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["emotes_shrink"]))
 					var/new_emotes_shrink = sanitize(jointext(belly_data["emotes_shrink"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_emotes_shrink)
 						new_belly.set_messages(new_emotes_shrink,"im_shrink")
+					else
+						tgui_alert_async(usr, "Invalid shrink messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["emotes_grow"]))
 					var/new_emotes_grow = sanitize(jointext(belly_data["emotes_grow"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_emotes_grow)
 						new_belly.set_messages(new_emotes_grow,"im_grow")
+					else
+						tgui_alert_async(usr, "Invalid grow messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["emotes_unabsorb"]))
 					var/new_emotes_unabsorb = sanitize(jointext(belly_data["emotes_unabsorb"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_emotes_unabsorb)
 						new_belly.set_messages(new_emotes_unabsorb,"im_unabsorb")
+					else
+						tgui_alert_async(usr, "Invalid unabsorb messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				// Options
 				if(isnum(belly_data["can_taste"]))
@@ -669,12 +730,16 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 					if(new_contamination_flavor)
 						if(new_contamination_flavor in contamination_flavors)
 							new_belly.contamination_flavor = new_contamination_flavor
+						else
+						tgui_alert_async(usr, "Invalid contamination flavor for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				if(istext(belly_data["contamination_color"]))
 					var/new_contamination_color = sanitize(belly_data["contamination_color"],MAX_MESSAGE_LEN,0,0,0)
 					if(new_contamination_color)
 						if(new_contamination_color in contamination_colors)
 							new_belly.contamination_color = new_contamination_color
+						else
+						tgui_alert_async(usr, "Invalid contamination color for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				if(isnum(belly_data["nutrition_percent"]))
 					var/new_nutrition_percent = belly_data["nutrition_percent"]
@@ -797,7 +862,6 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 							new_belly.release_sound = new_release_sound
 						if (!new_belly.fancy_vore && (new_release_sound in classic_release_sounds))
 							new_belly.release_sound = new_release_sound
-
 
 				// Visuals
 				if(isnum(belly_data["affects_vore_sprites"]))
