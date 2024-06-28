@@ -1,7 +1,7 @@
 /* SURGERY STEPS */
 
 /obj/
-	var/surgery_mult = 0 // Used for tables/etc which can have surgery done of them.
+	var/surgery_mult = 0 // Defining this as anything above zero allows us to preform surgery on a surface and devides the time taken to preform a surgery. Leave at 1 for normal speed, 3 for Operating table speed, ect
 
 /datum/surgery_step
 	var/priority = 0	//steps with higher priority would be attempted first
@@ -210,7 +210,7 @@
 	// Not staying still fails you too.
 	if(success)
 		var/calc_duration = rand(selected_surgery.min_duration, selected_surgery.max_duration)
-		calc_duration /= surface.surgery_mult
+		calc_duration /= surface.surgery_mult // Deviding by the surface's surgery multiplier to get our speed.
 		if(!do_mob(user, M, calc_duration * toolspeed, zone, exclusive = TRUE))
 			success = FALSE
 			to_chat(user, "<span class='warning'>You must remain close to and keep focused on your patient to conduct surgery.</span>")
