@@ -205,7 +205,7 @@
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "rollerbed"
 	anchored = FALSE
-	surgery_odds = 1 //Rogue Star Edit, odds now effect speed.
+	surgery_mult = 0.75 // Operating on a roller bed is less than ideal, it'll be slower.
 	var/bedtype = /obj/structure/bed/roller
 	var/rollertype = /obj/item/roller
 
@@ -214,7 +214,7 @@
 	icon_state = "rollerbedadv"
 	bedtype = /obj/structure/bed/roller/adv
 	rollertype = /obj/item/roller/adv
-	surgery_odds = 1.5
+	surgery_mult = 1.2 // Advanced tech stabilizes the bed allowing us to preform surgery faster!
 
 /obj/structure/bed/roller/update_icon()
 	return

@@ -9,7 +9,7 @@
 	use_power = USE_POWER_IDLE
 	idle_power_usage = 1
 	active_power_usage = 5
-	surgery_odds = 3 // RS Edit, surgery_odds now effects speed.
+	surgery_mult = 3 // RS Edit, this makes surgery move at 3x base speed.
 	throwpass = 1
 	var/mob/living/carbon/human/victim = null
 	var/strapped = 0.0
