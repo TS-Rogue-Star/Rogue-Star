@@ -137,6 +137,8 @@
 	if(!portal_enabled && isliving(M))	//RS EDIT
 		to_chat(M, "<span class='notice'>\The [src] wavers as you pass through it... it seems to not accept you through... for now...</span>")	//RS EDIT
 		return	//RS EDIT
+	if(isAI(M) || istype(M,/mob/observer/eye))	//RS EDIT
+		return	//RS EDIT
 	if(istype(M, /obj/effect)) //sparks don't teleport
 		return
 	if (M.anchored&&istype(M, /obj/mecha))
