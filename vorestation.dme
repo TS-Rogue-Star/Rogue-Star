@@ -2984,6 +2984,7 @@
 #include "code\modules\mob\living\carbon\human\species\xenomorphs\alien_powers.dm"
 #include "code\modules\mob\living\carbon\human\species\xenomorphs\alien_species.dm"
 #include "code\modules\mob\living\carbon\human\species\xenomorphs\xenomorphs.dm"
+#include "code\modules\mob\living\Magic\magic.dm"
 #include "code\modules\mob\living\silicon\death.dm"
 #include "code\modules\mob\living\silicon\emote.dm"
 #include "code\modules\mob\living\silicon\laws.dm"
