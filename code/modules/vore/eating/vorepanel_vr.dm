@@ -731,7 +731,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 						if(new_contamination_flavor in contamination_flavors)
 							new_belly.contamination_flavor = new_contamination_flavor
 						else
-						tgui_alert_async(usr, "Invalid contamination flavor for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
+							tgui_alert_async(usr, "Invalid contamination flavor for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				if(istext(belly_data["contamination_color"]))
 					var/new_contamination_color = sanitize(belly_data["contamination_color"],MAX_MESSAGE_LEN,0,0,0)
@@ -739,7 +739,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 						if(new_contamination_color in contamination_colors)
 							new_belly.contamination_color = new_contamination_color
 						else
-						tgui_alert_async(usr, "Invalid contamination color for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
+							tgui_alert_async(usr, "Invalid contamination color for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				if(isnum(belly_data["nutrition_percent"]))
 					var/new_nutrition_percent = belly_data["nutrition_percent"]
