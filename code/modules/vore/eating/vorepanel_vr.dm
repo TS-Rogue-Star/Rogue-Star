@@ -490,12 +490,12 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 				if(!new_belly) continue
 
 				// Controls
-				if(istext(belly_data["mode"]))
+				if(istext(belly_data["mode"])) //Set the mode of the vorebelly
 					var/new_mode = html_encode(belly_data["mode"])
 					if(new_mode in new_belly.digest_modes)
 						new_belly.digest_mode = new_mode
 
-				if(istext(belly_data["item_mode"]))
+				if(istext(belly_data["item_mode"])) //set the item mode of the vorebelly
 					var/new_item_mode = html_encode(belly_data["item_mode"])
 					if(new_item_mode in new_belly.item_digest_modes)
 						new_belly.item_digest_mode = new_item_mode
@@ -519,17 +519,17 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 						new_desc = readd_quotes(new_desc)
 					if(length(new_desc) > 0 && length(new_desc) <= BELLIES_DESC_MAX)
 						new_belly.desc = new_desc
-					else
-						tgui_alert_async(usr, "Invalid description for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
+					else if(length(new_desc) > 0 && length(new_desc) >= BELLIES_DESC_MAX)
+						tgui_alert_async(usr, "Invalid description for the " + belly_data["name"] + " vorebelly! It is likely too long. The limit is 4096 characters.", "Error!") //Supply error message to the user
 
 				if(istext(belly_data["absorbed_desc"]))
 					var/new_absorbed_desc = html_encode(belly_data["absorbed_desc"])
 					if(new_absorbed_desc)
 						new_absorbed_desc = readd_quotes(new_absorbed_desc)
-					if(length(new_absorbed_desc) > 0 && length(new_absorbed_desc) <= BELLIES_DESC_MAX)
+					if(length(new_absorbed_desc) > 0 && length(new_absorbed_desc) <= BELLIES_DESC_MAX) //ensure belly description is within a valid length
 						new_belly.absorbed_desc = new_absorbed_desc
-					else
-						tgui_alert_async(usr, "Invalid absorbed description for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
+					else if(length(new_absorbed_desc) > 0 && length(new_absorbed_desc) >= BELLIES_DESC_MAX) //if the description is too long and likely got truncated
+						tgui_alert_async(usr, "Invalid absorbed description. It is likely too long for the " + belly_data["name"] + " vorebelly! The limit is 4096 characters.", "Error!") //Supply error message to the user
 
 				if(istext(belly_data["vore_verb"]))
 					var/new_vore_verb = html_encode(belly_data["vore_verb"])
@@ -537,8 +537,8 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 						new_vore_verb = readd_quotes(new_vore_verb)
 					if(length(new_vore_verb) >= BELLIES_NAME_MIN && length(new_vore_verb) <= BELLIES_NAME_MAX)
 						new_belly.vore_verb = new_vore_verb
-					else
-						tgui_alert_async(usr, "Invalid vore verb for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
+					else if(length(new_vore_verb) >= BELLIES_NAME_MIN && length(new_vore_verb) >= BELLIES_NAME_MAX) //if it's too long
+						tgui_alert_async(usr, "Invalid vore verb for the " + belly_data["name"] + " vorebelly! It is likely too long. The limit is 4096 characters.", "Error!") //Supply error message to the user
 
 				if(istext(belly_data["release_verb"]))
 					var/new_release_verb = html_encode(belly_data["release_verb"])
@@ -546,169 +546,169 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 						new_release_verb = readd_quotes(new_release_verb)
 					if(length(new_release_verb) >= BELLIES_NAME_MIN && length(new_release_verb) <= BELLIES_NAME_MAX)
 						new_belly.release_verb = new_release_verb
-					else
-						tgui_alert_async(usr, "Invalid release verb for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
+					else if(length(new_release_verb) >= BELLIES_NAME_MIN && length(new_release_verb) >= BELLIES_NAME_MAX) //if it it's too long
+						tgui_alert_async(usr, "Invalid release verb for the " + belly_data["name"] + " vorebelly! It is likely too long. The limit is 4096 characters.", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["digest_messages_prey"]))
 					var/new_digest_messages_prey = sanitize(jointext(belly_data["digest_messages_prey"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_digest_messages_prey)
 						new_belly.set_messages(new_digest_messages_prey,"dmp")
-					else
-						tgui_alert_async(usr, "Invalid prey digest messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
+					else if(length(new_digest_messages_prey) == MAX_MESSAGE_LEN) //if it's too long and likely got truncated
+						tgui_alert_async(usr, "Invalid prey digest messages. They are likely are too long for the " + belly_data["name"] + " vorebelly! The limit is 4096 characters.", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["digest_messages_owner"]))
 					var/new_digest_messages_owner = sanitize(jointext(belly_data["digest_messages_owner"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_digest_messages_owner)
 						new_belly.set_messages(new_digest_messages_owner,"dmo")
-					else
-						tgui_alert_async(usr, "Invalid pred digest messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
+					else if(length(new_digest_messages_owner) == MAX_MESSAGE_LEN) //if it's too long and likely got truncated
+						tgui_alert_async(usr, "Invalid pred digest messages. They are likely are too long for the " + belly_data["name"] + " vorebelly! The limit is 4096 characters.", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["absorb_messages_prey"]))
 					var/new_absorb_messages_prey = sanitize(jointext(belly_data["absorb_messages_prey"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_absorb_messages_prey)
 						new_belly.set_messages(new_absorb_messages_prey,"amp")
-					else
-						tgui_alert_async(usr, "Invalid prey absorbed messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
+					else if(length(new_absorb_messages_prey) == MAX_MESSAGE_LEN) //if it's too long and likely got truncated
+						tgui_alert_async(usr, "Invalid prey absorb messages. They are likely are too long for the " + belly_data["name"] + " vorebelly! The limit is 4096 characters.", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["absorb_messages_owner"]))
 					var/new_absorb_messages_owner = sanitize(jointext(belly_data["absorb_messages_owner"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_absorb_messages_owner)
 						new_belly.set_messages(new_absorb_messages_owner,"amo")
-					else
-						tgui_alert_async(usr, "Invalid pred absorb messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
+					else if(length(new_absorb_messages_owner) == MAX_MESSAGE_LEN) //if it's too long and likely got truncated
+						tgui_alert_async(usr, "Invalid prey absorb messages. They are likely are too long for the " + belly_data["name"] + " vorebelly! The limit is 4096 characters.", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["unabsorb_messages_prey"]))
 					var/new_unabsorb_messages_prey = sanitize(jointext(belly_data["unabsorb_messages_prey"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_unabsorb_messages_prey)
 						new_belly.set_messages(new_unabsorb_messages_prey,"uamp")
-					else
-						tgui_alert_async(usr, "Invalid prey unabsorb messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
+					else if(length(new_unabsorb_messages_prey) == MAX_MESSAGE_LEN) //if it's too long and likely got truncated
+						tgui_alert_async(usr, "Invalid prey unabsorb messages. They are likely are too long for the " + belly_data["name"] + " vorebelly! The limit is 4096 characters.", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["unabsorb_messages_owner"]))
 					var/new_unabsorb_messages_owner = sanitize(jointext(belly_data["unabsorb_messages_owner"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_unabsorb_messages_owner)
 						new_belly.set_messages(new_unabsorb_messages_owner,"uamo")
-					else
-						tgui_alert_async(usr, "Invalid pred unabsorb messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
+					else if(length(new_unabsorb_messages_owner) == MAX_MESSAGE_LEN) //if it's too long and likely got truncated
+						tgui_alert_async(usr, "Invalid pred unabsorb messages. They are likely are too long for the " + belly_data["name"] + " vorebelly! The limit is 4096 characters.", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["struggle_messages_outside"]))
 					var/new_struggle_messages_outside = sanitize(jointext(belly_data["struggle_messages_outside"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_struggle_messages_outside)
 						new_belly.set_messages(new_struggle_messages_outside,"smo")
-					else
-						tgui_alert_async(usr, "Invalid outside struggle messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
+					else if(length(new_struggle_messages_outside) == MAX_MESSAGE_LEN) //if it's too long and likely got truncated
+						tgui_alert_async(usr, "Invalid outside struggle messages. They are likely are too long for the " + belly_data["name"] + " vorebelly! The limit is 4096 characters.", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["struggle_messages_inside"]))
 					var/new_struggle_messages_inside = sanitize(jointext(belly_data["struggle_messages_inside"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_struggle_messages_inside)
 						new_belly.set_messages(new_struggle_messages_inside,"smi")
-					else
-						tgui_alert_async(usr, "Invalid inside struggle messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
+					else if(length(new_struggle_messages_inside) == MAX_MESSAGE_LEN) //if it's too long and likely got truncated
+						tgui_alert_async(usr, "Invalid inside struggle messages. They are likely are too long for the " + belly_data["name"] + " vorebelly! The limit is 4096 characters.", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["absorbed_struggle_messages_outside"]))
 					var/new_absorbed_struggle_messages_outside = sanitize(jointext(belly_data["absorbed_struggle_messages_outside"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_absorbed_struggle_messages_outside)
 						new_belly.set_messages(new_absorbed_struggle_messages_outside,"asmo")
-					else
-						tgui_alert_async(usr, "Invalid outside absorbed struggle messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
+					else if(length(new_absorbed_struggle_messages_outside) == MAX_MESSAGE_LEN) //if it's too long and likely got truncated
+						tgui_alert_async(usr, "Invalid outside absorbed struggle messages. They are likely are too long for the " + belly_data["name"] + " vorebelly! The limit is 4096 characters.", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["absorbed_struggle_messages_inside"]))
 					var/new_absorbed_struggle_messages_inside = sanitize(jointext(belly_data["absorbed_struggle_messages_inside"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_absorbed_struggle_messages_inside)
 						new_belly.set_messages(new_absorbed_struggle_messages_inside,"asmi")
-					else
-						tgui_alert_async(usr, "Invalid inside absorbed struggle messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
+					else if(length(new_absorbed_struggle_messages_inside) == MAX_MESSAGE_LEN) //if it's too long and likely got truncated
+						tgui_alert_async(usr, "Invalid inside absorbed struggle messages. They are likely are too long for the " + belly_data["name"] + " vorebelly! The limit is 4096 characters.", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["examine_messages"]))
 					var/new_examine_messages = sanitize(jointext(belly_data["examine_messages"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_examine_messages)
 						new_belly.set_messages(new_examine_messages,"em")
-					else
-						tgui_alert_async(usr, "Invalid examine messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
+					else if(length(new_examine_messages) == MAX_MESSAGE_LEN) //if it's too long and likely got truncated
+						tgui_alert_async(usr, "Invalid examine messages. They are likely are too long for the " + belly_data["name"] + " vorebelly! The limit is 4096 characters.", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["examine_messages_absorbed"]))
 					var/new_examine_messages_absorbed = sanitize(jointext(belly_data["examine_messages_absorbed"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_examine_messages_absorbed)
 						new_belly.set_messages(new_examine_messages_absorbed,"ema")
-					else
-						tgui_alert_async(usr, "Invalid absorbed examine for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
+					else if(length(new_examine_messages_absorbed) == MAX_MESSAGE_LEN) //if it's too long and likely got truncated
+						tgui_alert_async(usr, "Invalid absorbed examine messages. They are likely are too long for the " + belly_data["name"] + " vorebelly! The limit is 4096 characters.", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["emotes_digest"]))
 					var/new_emotes_digest = sanitize(jointext(belly_data["emotes_digest"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_emotes_digest)
 						new_belly.set_messages(new_emotes_digest,"im_digest")
-					else
-						tgui_alert_async(usr, "Invalid digest messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
+					else if(length(new_emotes_digest) == MAX_MESSAGE_LEN) //if it's too long and likely got truncated
+						tgui_alert_async(usr, "Invalid digestion messages. They are likely are too long for the " + belly_data["name"] + " vorebelly! The limit is 4096 characters.", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["emotes_hold"]))
 					var/new_emotes_hold = sanitize(jointext(belly_data["emotes_hold"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_emotes_hold)
 						new_belly.set_messages(new_emotes_hold,"im_hold")
-					else
-						tgui_alert_async(usr, "Invalid holding emotes for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
+					else if(length(new_emotes_hold) == MAX_MESSAGE_LEN) //if it's too long and likely got truncated
+						tgui_alert_async(usr, "Invalid holding messages. They are likely are too long for the " + belly_data["name"] + " vorebelly! The limit is 4096 characters.", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["emotes_holdabsorbed"]))
 					var/new_emotes_holdabsorbed = sanitize(jointext(belly_data["emotes_holdabsorbed"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_emotes_holdabsorbed)
 						new_belly.set_messages(new_emotes_holdabsorbed,"im_holdabsorbed")
-					else
-						tgui_alert_async(usr, "Invalid absorbed-holding messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
+					else if(length(new_emotes_holdabsorbed) == MAX_MESSAGE_LEN) //if it's too long and likely got truncated
+						tgui_alert_async(usr, "Invalid absorbed-holding messages. They are likely are too long for the " + belly_data["name"] + " vorebelly! The limit is 4096 characters.", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["emotes_absorb"]))
 					var/new_emotes_absorb = sanitize(jointext(belly_data["emotes_absorb"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_emotes_absorb)
 						new_belly.set_messages(new_emotes_absorb,"im_absorb")
-					else
-						tgui_alert_async(usr, "Invalid absorbing messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
+					else if(length(new_emotes_absorb) == MAX_MESSAGE_LEN) //if it's too long and likely got truncated
+						tgui_alert_async(usr, "Invalid absorbing messages. They are likely are too long for the " + belly_data["name"] + " vorebelly! The limit is 4096 characters.", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["emotes_heal"]))
 					var/new_emotes_heal = sanitize(jointext(belly_data["emotes_heal"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_emotes_heal)
 						new_belly.set_messages(new_emotes_heal,"im_heal")
-					else
-						tgui_alert_async(usr, "Invalid healing messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
+					else if(length(new_emotes_heal) == MAX_MESSAGE_LEN) //if it's too long and likely got truncated
+						tgui_alert_async(usr, "Invalid healing messages. They are likely are too long for the " + belly_data["name"] + " vorebelly! The limit is 4096 characters.", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["emotes_drain"]))
 					var/new_emotes_drain = sanitize(jointext(belly_data["emotes_drain"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_emotes_drain)
 						new_belly.set_messages(new_emotes_drain,"im_drain")
-					else
-						tgui_alert_async(usr, "Invalid draining messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
+					else if(length(new_emotes_drain) == MAX_MESSAGE_LEN) //if it's too long and likely got truncated
+						tgui_alert_async(usr, "Invalid draining messages. They are likely are too long for the " + belly_data["name"] + " vorebelly! The limit is 4096 characters.", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["emotes_steal"]))
 					var/new_emotes_steal = sanitize(jointext(belly_data["emotes_steal"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_emotes_steal)
 						new_belly.set_messages(new_emotes_steal,"im_steal")
-					else
-						tgui_alert_async(usr, "Invalid stealing messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
+					else if(length(new_emotes_steal) == MAX_MESSAGE_LEN) //if it's too long and likely got truncated
+						tgui_alert_async(usr, "Invalid size stealing messages. They are likely are too long for the " + belly_data["name"] + " vorebelly! The limit is 4096 characters.", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["emotes_egg"]))
 					var/new_emotes_egg = sanitize(jointext(belly_data["emotes_egg"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_emotes_egg)
 						new_belly.set_messages(new_emotes_egg,"im_egg")
-					else
-						tgui_alert_async(usr, "Invalid egg messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
+					else if(length(new_emotes_egg) == MAX_MESSAGE_LEN) //if it's too long and likely got truncated
+						tgui_alert_async(usr, "Invalid egg messages. They are likely are too long for the " + belly_data["name"] + " vorebelly! The limit is 4096 characters.", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["emotes_shrink"]))
 					var/new_emotes_shrink = sanitize(jointext(belly_data["emotes_shrink"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_emotes_shrink)
 						new_belly.set_messages(new_emotes_shrink,"im_shrink")
-					else
-						tgui_alert_async(usr, "Invalid shrink messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
+					else if(length(new_emotes_shrink) == MAX_MESSAGE_LEN) //if it's too long and likely got truncated
+						tgui_alert_async(usr, "Invalid shrinking messages. They are likely are too long for the " + belly_data["name"] + " vorebelly! The limit is 4096 characters.", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["emotes_grow"]))
 					var/new_emotes_grow = sanitize(jointext(belly_data["emotes_grow"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_emotes_grow)
 						new_belly.set_messages(new_emotes_grow,"im_grow")
-					else
-						tgui_alert_async(usr, "Invalid grow messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
+					else if(length(new_emotes_grow) == MAX_MESSAGE_LEN) //if it's too long and likely got truncated
+						tgui_alert_async(usr, "Invalid growing messages. They are likely are too long for the " + belly_data["name"] + " vorebelly! The limit is 4096 characters.", "Error!") //Supply error message to the user
 
 				if(islist(belly_data["emotes_unabsorb"]))
 					var/new_emotes_unabsorb = sanitize(jointext(belly_data["emotes_unabsorb"],"\n\n"),MAX_MESSAGE_LEN,0,0,0)
 					if(new_emotes_unabsorb)
 						new_belly.set_messages(new_emotes_unabsorb,"im_unabsorb")
-					else
-						tgui_alert_async(usr, "Invalid unabsorb messages for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
+					else if(length(new_emotes_unabsorb) == MAX_MESSAGE_LEN) //if it's too long and likely got truncated
+						tgui_alert_async(usr, "Invalid unabsorb messages. They are likely are too long for the " + belly_data["name"] + " vorebelly! The limit is 4096 characters.", "Error!") //Supply error message to the user
 
 				// Options
 				if(isnum(belly_data["can_taste"]))
@@ -730,16 +730,12 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 					if(new_contamination_flavor)
 						if(new_contamination_flavor in contamination_flavors)
 							new_belly.contamination_flavor = new_contamination_flavor
-						else
-							tgui_alert_async(usr, "Invalid contamination flavor for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				if(istext(belly_data["contamination_color"]))
 					var/new_contamination_color = sanitize(belly_data["contamination_color"],MAX_MESSAGE_LEN,0,0,0)
 					if(new_contamination_color)
 						if(new_contamination_color in contamination_colors)
 							new_belly.contamination_color = new_contamination_color
-						else
-							tgui_alert_async(usr, "Invalid contamination color for the" + belly_data["name"] + "vorebelly!", "Error!") //Supply error message to the user
 
 				if(isnum(belly_data["nutrition_percent"]))
 					var/new_nutrition_percent = belly_data["nutrition_percent"]
@@ -836,6 +832,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 					if(new_fancy_vore == 1)
 						new_belly.fancy_vore = TRUE
 
+				//Set vore sounds, if they exist. Otherwise set to default gulp/splatter for insert/release
 				if(new_belly.fancy_vore)
 					if(!(new_belly.vore_sound in fancy_vore_sounds))
 						new_belly.vore_sound = "Gulp"
@@ -918,7 +915,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 					if(new_resist_triggers_animation == 1)
 						new_belly.resist_triggers_animation = TRUE
 
-				if(isnum(belly_data["size_factor_for_sprite"]))
+				if(isnum(belly_data["size_factor_for_sprite"])) //how large the vore-sprite is
 					var/new_size_factor_for_sprite = belly_data["size_factor_for_sprite"]
 					new_belly.size_factor_for_sprite = CLAMP(new_size_factor_for_sprite, 0.1, 3)
 
@@ -927,9 +924,10 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 					if(istype(host, /mob/living/carbon/human)) //workaround for vore belly sprites
 						var/mob/living/carbon/human/hhost = host
 						if(new_belly_sprite_to_affect)
-							if(new_belly_sprite_to_affect in hhost.vore_icon_bellies)
+							if(new_belly_sprite_to_affect in hhost.vore_icon_bellies) //determine if it is normal or taur belly
 								new_belly.belly_sprite_to_affect = new_belly_sprite_to_affect
 
+				//determine if the HUD is to be disabled for the person inside or not
 				if(isnum(belly_data["disable_hud"]))
 					var/new_disable_hud = belly_data["disable_hud"]
 					if(new_disable_hud == 0)
@@ -937,6 +935,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 					if(new_disable_hud == 1)
 						new_belly.disable_hud = TRUE
 
+				//set the vore belly overlay
 				var/possible_fullscreens = icon_states('icons/mob/screen_full_colorized_vore.dmi')
 				if(!new_belly.colorization_enabled)
 					possible_fullscreens = icon_states('icons/mob/screen_full_vore.dmi')
@@ -945,6 +944,8 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 					possible_fullscreens -= "a_anim_belly"
 				if(!(new_belly.belly_fullscreen in possible_fullscreens))
 					new_belly.belly_fullscreen = ""
+				else
+					tgui_alert_async(usr, "Invalid vorebelly overlay for the " + belly_data["name"] + " vorebelly!", "Error!") //Supply error message to the us
 
 				// Interactions
 				if(isnum(belly_data["escapable"]))
@@ -969,13 +970,13 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 				if(istext(belly_data["transferlocation"]))
 					var/new_transferlocation = sanitize(belly_data["transferlocation"],MAX_MESSAGE_LEN,0,0,0)
 					if(new_transferlocation)
-						for(var/obj/belly/existing_belly in host.vore_organs)
+						for(var/obj/belly/existing_belly in host.vore_organs) //if the transfer location currently exists
 							if(existing_belly.name == new_transferlocation)
 								new_belly.transferlocation = new_transferlocation
 								break
 						if(new_transferlocation in valid_names)
 							new_belly.transferlocation = new_transferlocation
-						if(new_transferlocation == new_belly.name)
+						if(new_transferlocation == new_belly.name) //if the transfer location is to this belly
 							new_belly.transferlocation = null
 
 				if(isnum(belly_data["transferchance_secondary"]))
