@@ -263,7 +263,7 @@
 	build_path = /obj/item/weapon/grenade/chem_grenade/large
 	sort_string = "MCAAA"
 
-/datum/design/item/weapon/gun/launcher/confetti_cannon
+/datum/design/item/weapon/gun/launcher/confetti_cannon //RS Edit || Ports confetti cannon, CHOMPStation PR#530
 	desc = "Stuff it with paper and shoot! You'll be a hit at every party."
 	id = "confetti_cannon"
 	req_tech = list(TECH_COMBAT = 2, TECH_MATERIAL = 2)
