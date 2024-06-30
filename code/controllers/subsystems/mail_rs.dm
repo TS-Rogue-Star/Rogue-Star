@@ -28,6 +28,8 @@ SUBSYSTEM_DEF(mail)
 
 	// Creates mail for all the mail waiting to arrive, if there's nobody to receive it, it will be junkmail.
 	for(var/mail_iterator in 1 to mail_waiting)
+		if(!mail_recipients.len && prob(40)) // Oh, no mail for our Employees? Well don't just sent them all the junk. || CHOMPStation PR7059
+			continue
 		var/obj/item/mail/new_mail
 		if(prob(70))
 			new_mail = new /obj/item/mail(mailcrate)
