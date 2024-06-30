@@ -56,16 +56,16 @@
 /obj/item/mail/Initialize()
 	. = ..()
 	RegisterSignal(src, COMSIG_MOVABLE_DISPOSING, .proc/disposal_handling)
-	if(isnull(department_colors))
+	if(isnull(department_colors)) //CHOMPStation PR7051
 		department_colors = list(
-			DEPARTMENT_COMMAND = COLOR_CYAN_BLUE,
-			DEPARTMENT_CIVILIAN = COLOR_WHITE,
-			DEPARTMENT_ENGINEERING = COLOR_PALE_ORANGE,
-			DEPARTMENT_RESEARCH = COLOR_PALE_PURPLE_GRAY,
-			DEPARTMENT_MEDICAL = COLOR_PALE_BLUE_GRAY,
-			DEPARTMENT_PLANET = COLOR_PALE_GREEN_GRAY,
-			DEPARTMENT_CARGO = COLOR_BEIGE,
-			DEPARTMENT_SECURITY = COLOR_PALE_RED_GRAY,
+			COLOR_CYAN_BLUE = DEPARTMENT_COMMAND,
+			COLOR_GREEN_GRAY = DEPARTMENT_CIVILIAN,
+			COLOR_PALE_ORANGE = DEPARTMENT_ENGINEERING,
+			COLOR_PALE_PURPLE_GRAY = DEPARTMENT_RESEARCH,
+			COLOR_PALE_BLUE_GRAY = DEPARTMENT_MEDICAL,
+			COLOR_PALE_GREEN_GRAY = DEPARTMENT_PLANET,
+			COLOR_BEIGE = DEPARTMENT_CARGO,
+			COLOR_PALE_RED_GRAY = DEPARTMENT_SECURITY,
 		)
 
 	// Icons
@@ -156,7 +156,7 @@
 				goodies += job_goodies
 
 	for(var/iterator in 1 to goodie_count)
-		var/target_good = pick(goodies)
+		var/target_good = pickweight(goodies)
 		if(ispath(target_good, /datum/reagent))
 			var/obj/item/weapon/reagent_containers/target_container = new /obj/item/weapon/reagent_containers/glass/bottle(src)
 			target_container.reagents.add_reagent(target_good, target_container.volume)
@@ -257,7 +257,9 @@
 	icon_state = "mailbag"
 	slot_flags = SLOT_BELT | SLOT_POCKET
 	w_class = ITEMSIZE_NORMAL
-	storage_slots = 20
+	storage_slots = 21
+	max_storage_space = 50 //CHOMPStation PR7051
+	allow_quick_gather = 1
 	allow_quick_empty = 1
 	max_w_class = ITEMSIZE_NORMAL
 	can_hold = list(
