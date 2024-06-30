@@ -71,10 +71,8 @@
 	mail_goodies = list(
 		/obj/item/weapon/reagent_containers/food/drinks/metaglass/metapint = 320,
 		"gelatin" = 300,
-		/obj/item/stack/material/uranium = 250,
+		/obj/item/stack/material/uranium = 280,
 		/obj/item/clothing/accessory/bowtie/black = 100,
-		/obj/item/weapon/reagent_containers/chem_disp_cartridge/nothing = 15,
-		/obj/item/weapon/reagent_containers/chem_disp_cartridge/gelatin = 15,
 	)
 
 /datum/job/chef
