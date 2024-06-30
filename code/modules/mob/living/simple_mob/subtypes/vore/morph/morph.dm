@@ -173,8 +173,7 @@
 
 	density = initial(density)
 
-	cut_overlays(TRUE) //ALL of zem
-
+	cut_overlays() // Remove all overlays.
 	maptext = null
 
 	size_multiplier = our_size_multiplier
