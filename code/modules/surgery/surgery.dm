@@ -1,7 +1,7 @@
 /* SURGERY STEPS */
 
 /obj/
-	var/surgery_odds = 0 // Used for tables/etc which can have surgery done of them.
+	var/surgery_mult = 0 // Defining this as anything above zero allows us to preform surgery on a surface and devides the time taken to preform a surgery. Leave at 1 for normal speed, 3 for Operating table speed, ect
 
 /datum/surgery_step
 	var/priority = 0	//steps with higher priority would be attempted first
@@ -146,7 +146,7 @@
 		to_chat(user, "<span class='warning'>You can't operate on this area while surgery is already in progress.</span>")
 		return 1
 	var/obj/surface = M.get_surgery_surface(user)
-	if(!surface || !surface.surgery_odds) 	// If the surface has a chance of 0% surgery odds (ground), don't even bother trying to do surgery.
+	if(!surface || !surface.surgery_mult) 	// If the surface has a 0% surgery multiplier (ground), don't even bother trying to do surgery.
 		return 0 							// This is meant to prevent the 'glass shard mouth 60 damage click' exploit. Also saves CPU by doing it here!
 
 	var/list/datum/surgery_step/available_surgeries = list()
@@ -202,12 +202,15 @@
 		success = FALSE
 
 	// Bad surface may mean failure as well.
+	// RS Edit, lets not gamble.
+	/*
 	if(!prob(surface.surgery_odds))
 		success = FALSE
-
+	*/
 	// Not staying still fails you too.
 	if(success)
 		var/calc_duration = rand(selected_surgery.min_duration, selected_surgery.max_duration)
+		calc_duration /= surface.surgery_mult // Deviding by the surface's surgery multiplier to get our speed.
 		if(!do_mob(user, M, calc_duration * toolspeed, zone, exclusive = TRUE))
 			success = FALSE
 			to_chat(user, "<span class='warning'>You must remain close to and keep focused on your patient to conduct surgery.</span>")

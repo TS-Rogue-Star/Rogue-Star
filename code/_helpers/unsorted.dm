@@ -1132,8 +1132,8 @@ var/global/list/common_tools = list(
 		return null // Not lying down means no surface.
 	var/obj/surface = null
 	for(var/obj/O in loc) // Looks for the best surface.
-		if(O.surgery_odds)
-			if(!surface || surface.surgery_odds < O.surgery_odds)
+		if(O.surgery_mult)
+			if(!surface || surface.surgery_mult < O.surgery_mult)
 				surface = O
 	if(surface)
 		return surface
