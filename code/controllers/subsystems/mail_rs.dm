@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(mail)
 	flags = SS_NO_TICK_CHECK
 
 	var/mail_waiting = 0					// Pending mail
-	var/mail_per_process = 0.75				// Mail to be generated
+	var/mail_per_process = 0.45				// Mail to be generated
 
 /datum/controller/subsystem/mail/fire()
 	mail_waiting += mail_per_process
@@ -23,12 +23,12 @@ SUBSYSTEM_DEF(mail)
 	// Collect recipients
 	var/list/mail_recipients = list()
 	for(var/mob/living/carbon/human/player_human in player_list)
-		if(player_human.stat != DEAD && player_human.client && player_human.client.inactivity <= 10 MINUTES)
+		if(player_human.stat != DEAD && player_human.client && player_human.client.inactivity <= 10 MINUTES && !player_is_antag(player_human.mind))
 			mail_recipients += player_human
 
 	// Creates mail for all the mail waiting to arrive, if there's nobody to receive it, it will be junkmail.
 	for(var/mail_iterator in 1 to mail_waiting)
-		if(!mail_recipients.len && prob(40)) // Oh, no mail for our Employees? Well don't just sent them all the junk. || CHOMPStation PR7059
+		if(!mail_recipients.len && prob(60)) // Oh, no mail for our Employees? Well don't just sent them all the junk. || CHOMPStation PR7059
 			continue
 		var/obj/item/mail/new_mail
 		if(prob(70))

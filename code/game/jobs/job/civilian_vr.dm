@@ -88,6 +88,11 @@
 	title = "Disposals Sorter"
 	title_blurb = "A Disposals Sorter is usually tasked with operating disposals delivery system, sorting the trash and tagging parcels for delivery."
 
+/datum/alt_title/mailman
+	title = "Mailman"
+	title_blurb = "A Mailman is tasked with delivering packages or mail to whoever it might address."
+	title_outfit = /decl/hierarchy/outfit/job/cargo/cargo_tech/mailman
+
 
 /datum/job/mining
 	total_positions = 4
