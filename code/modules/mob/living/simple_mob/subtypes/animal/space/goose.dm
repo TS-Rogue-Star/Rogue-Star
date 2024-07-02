@@ -56,3 +56,29 @@
 	icon_dead = "whitegoose_dead"
 	name = "white goose"
 	desc = "And just when you thought it was a lovely day..."
+/mob/living/simple_mob/animal/space/goose/buff
+	icon = 'icons/mob/specialgeese128x128.dmi'
+	icon_state = "buffgoose"
+	icon_living = "buffgoose"
+	icon_dead = "buffgoose_dead"
+	name = "buff goose"
+	desc = "It's big and very angry!"
+
+	maxHealth = 250
+	health = 250
+	melee_damage_lower = 7
+	melee_damage_upper = 7
+	movement_cooldown = 1
+/mob/living/simple_mob/animal/space/goose/elite
+	icon = 'icons/mob/specialgeese128x128.dmi'
+	icon_state = "elitegoose"
+	icon_living = "elitegoose"
+	icon_dead = "elitegoose_dead"
+	name = "elite goose"
+	desc = "A seasoned and stylish soldier"
+
+	maxHealth = 500
+	health = 500
+	melee_damage_lower = 10
+	melee_damage_upper = 10
+	movement_cooldown = 2
