@@ -42,6 +42,7 @@
 	var/stamp_offset_x = 0
 	// Physical offset of stamps on the object. Y direction.
 	var/stamp_offset_y = 2
+	var/opening = FALSE
 
 /obj/item/mail/envelope
 	name = "envelope"
@@ -109,7 +110,13 @@
 		to_chat(user, "<span class='notice'>You can't open somebody's mail! That's <em>illegal</em></span>")
 		return FALSE
 
+	if(opening)
+		to_chat(user, "<span class='notice'>You are already opening that!</span>")
+		return FALSE
+
+	opening = TRUE
 	if(!do_after(user, 1.5 SECONDS, target = user))
+		opening = FALSE
 		return FALSE
 	return TRUE
 
@@ -142,14 +149,8 @@
 
 	for(var/iterator in 1 to goodie_count)
 		var/target_good = pickweight(goodies)
-		if(ispath(target_good, /datum/reagent))
-			var/obj/item/weapon/reagent_containers/target_container = new /obj/item/weapon/reagent_containers/glass/beaker(src)
-			target_container.reagents.add_reagent(target_good, target_container.volume)
-			target_container.name = "[target_container.reagents.reagent_list[1].name] bottle"
-			log_game("[key_name(new_recipient)] received reagent container [target_container.name] in the mail ([target_good])")
-		else
-			var/atom/movable/target_atom = new target_good(src)
-			log_game("[key_name(new_recipient)] received [target_atom.name] in the mail ([target_good])")
+		var/atom/movable/target_atom = new target_good(src)
+		log_game("[key_name(new_recipient)] received [target_atom.name] in the mail ([target_good])")
 	update_icon()
 	return TRUE
 
