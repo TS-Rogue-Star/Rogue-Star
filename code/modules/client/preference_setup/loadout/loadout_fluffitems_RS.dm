@@ -46,4 +46,4 @@
 	slot = slot_w_uniform
 	display_name = "Embedded Tracker Implant"
 	ckeywhitelist = list("draykenthedragon")
-	character_name = list("Anoscetia")
+	character_name = null

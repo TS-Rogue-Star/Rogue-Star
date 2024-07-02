@@ -427,6 +427,12 @@
 /obj/machinery/light,
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/techstorage)
+"awp" = (
+/obj/machinery/camera/network/security{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/dark,
+/area/groundbase/security/lobby)
 "awx" = (
 /turf/simulated/mineral/cave,
 /area/groundbase/unexplored/rock)
@@ -1261,7 +1267,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass{
 	name = "EVA Access";
-	req_one_access = list(13)
+	req_one_access = list(18,19,67)
 	},
 /turf/simulated/floor/bmarble,
 /area/ai_monitored/storage/eva)
@@ -1678,6 +1684,18 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/engineering/atmos)
+"bGt" = (
+/obj/fiftyspawner/rglass,
+/obj/fiftyspawner/rods,
+/obj/fiftyspawner/steel,
+/obj/fiftyspawner/steel,
+/obj/fiftyspawner/steel,
+/obj/item/stack/material/plasteel{
+	amount = 10
+	},
+/obj/structure/closet/walllocker_double/cargo/north,
+/turf/simulated/floor/tiled,
+/area/ai_monitored/storage/eva)
 "bGu" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -3446,6 +3464,7 @@
 "dfK" = (
 /obj/machinery/vending/assist,
 /obj/machinery/camera/network/civilian,
+/obj/machinery/firealarm,
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/toolstorage)
 "dfP" = (
@@ -3780,10 +3799,10 @@
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
 /area/groundbase/level1/se)
 "dve" = (
-/obj/machinery/transhuman/synthprinter,
 /obj/effect/floor_decal/milspec/color/purple/half{
 	dir = 5
 	},
+/obj/machinery/protean_reconstitutor,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/robotics)
 "dvp" = (
@@ -3841,18 +3860,6 @@
 /turf/simulated/floor/tiled,
 /area/ai_monitored/storage/eva)
 "dyu" = (
-/obj/fiftyspawner/rglass,
-/obj/fiftyspawner/rods,
-/obj/structure/closet/walllocker_double/cargo,
-/obj/fiftyspawner/steel,
-/obj/fiftyspawner/steel,
-/obj/fiftyspawner/steel,
-/obj/item/stack/material/plasteel{
-	amount = 10
-	},
-/obj/machinery/atmospherics/unary/vent_scrubber/on,
-/obj/structure/closet/walllocker_double/cargo,
-/obj/machinery/atmospherics/unary/vent_scrubber/on,
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /turf/simulated/floor/tiled,
 /area/ai_monitored/storage/eva)
@@ -6138,22 +6145,13 @@
 	},
 /area/groundbase/science/hall)
 "fAP" = (
-/obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 1
-	},
-/obj/machinery/light{
+/obj/effect/floor_decal/milspec/color/purple/half{
 	dir = 8
 	},
-/obj/machinery/camera/network/research{
-	dir = 1
-	},
 /obj/structure/table/standard,
-/obj/machinery/computer/med_data/laptop{
-	dir = 4
-	},
-/obj/effect/floor_decal/milspec/color/purple/half{
-	dir = 10
-	},
+/obj/item/stack/nanopaste,
+/obj/item/stack/nanopaste,
+/obj/item/stack/nanopaste,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/robotics)
 "fBu" = (
@@ -6701,6 +6699,9 @@
 	dir = 4
 	},
 /obj/machinery/papershredder,
+/obj/machinery/camera/network/security{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/lobby)
 "gfi" = (
@@ -9143,7 +9144,11 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow,
+/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow{
+	grass_chance = 0;
+	outdoors = 0;
+	snow_chance = 0
+	},
 /area/groundbase/civilian/bar)
 "imG" = (
 /obj/structure/cable/yellow{
@@ -9656,16 +9661,7 @@
 /turf/simulated/floor,
 /area/groundbase/engineering/storage)
 "iDf" = (
-/obj/machinery/atmospherics/unary/vent_scrubber/on{
-	dir = 1
-	},
-/obj/machinery/alarm{
-	dir = 1
-	},
-/obj/structure/bed/chair/office/light{
-	dir = 4
-	},
-/obj/effect/floor_decal/milspec/color/purple/half,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/robotics)
 "iDh" = (
@@ -11049,9 +11045,6 @@
 /obj/machinery/recharger{
 	pixel_y = 5
 	},
-/obj/machinery/alarm{
-	dir = 8
-	},
 /turf/simulated/floor/tiled,
 /area/groundbase/civilian/toolstorage)
 "jUi" = (
@@ -12289,6 +12282,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/machinery/camera/network/security,
 /turf/simulated/floor/carpet/retro_red,
 /area/groundbase/security/breakroom)
 "kTx" = (
@@ -12474,6 +12468,15 @@
 /obj/machinery/vending/wardrobe/secdrobe,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/lobby)
+"lbN" = (
+/obj/machinery/computer/transhuman/resleeving{
+	dir = 8
+	},
+/obj/effect/floor_decal/milspec/color/purple/half{
+	dir = 6
+	},
+/turf/simulated/floor/tiled,
+/area/groundbase/science/robotics)
 "ldc" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/highsecurity{
@@ -14316,10 +14319,10 @@
 /turf/simulated/floor/wood,
 /area/groundbase/civilian/gameroom)
 "mQF" = (
-/obj/machinery/transhuman/resleever,
 /obj/effect/floor_decal/milspec/color/purple/half{
 	dir = 4
 	},
+/obj/machinery/transhuman/synthprinter,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/robotics)
 "mQY" = (
@@ -15991,12 +15994,10 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/groundbase/command/ai/foyer)
 "oyP" = (
-/obj/machinery/computer/transhuman/resleeving{
-	dir = 8
-	},
 /obj/effect/floor_decal/milspec/color/purple/half{
-	dir = 6
+	dir = 4
 	},
+/obj/machinery/transhuman/resleever,
 /turf/simulated/floor/tiled,
 /area/groundbase/science/robotics)
 "oyZ" = (
@@ -16156,6 +16157,7 @@
 /obj/effect/floor_decal/milspec/color/orange/half{
 	dir = 8
 	},
+/obj/structure/frame,
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/workshop)
 "oEM" = (
@@ -17007,7 +17009,15 @@
 /obj/effect/floor_decal/milspec/color/orange/half{
 	dir = 8
 	},
-/obj/structure/frame,
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/toolbox/electrical{
+	pixel_x = 1;
+	pixel_y = 6
+	},
+/obj/item/weapon/storage/toolbox/mechanical{
+	pixel_x = -2;
+	pixel_y = -1
+	},
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/workshop)
 "pjY" = (
@@ -17105,6 +17115,25 @@
 /obj/effect/catwalk_plated,
 /turf/simulated/floor,
 /area/groundbase/engineering/workshop)
+"poU" = (
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/camera/network/research{
+	dir = 1
+	},
+/obj/structure/table/standard,
+/obj/machinery/computer/med_data/laptop{
+	dir = 4
+	},
+/obj/effect/floor_decal/milspec/color/purple/half{
+	dir = 10
+	},
+/turf/simulated/floor/tiled,
+/area/groundbase/science/robotics)
 "poY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -19998,6 +20027,19 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/equipment)
+"rBS" = (
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 1
+	},
+/obj/machinery/alarm{
+	dir = 1
+	},
+/obj/structure/bed/chair/office/light{
+	dir = 4
+	},
+/obj/effect/floor_decal/milspec/color/purple/half,
+/turf/simulated/floor/tiled,
+/area/groundbase/science/robotics)
 "rBT" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5,
 /turf/simulated/floor/tiled,
@@ -20293,9 +20335,6 @@
 /obj/random/tech_supply,
 /obj/structure/symbol/sa{
 	pixel_y = 32
-	},
-/obj/machinery/firealarm{
-	dir = 4
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
@@ -21412,7 +21451,7 @@
 /obj/item/clothing/suit/space/void/exploration,
 /obj/item/clothing/head/helmet/space/void/exploration,
 /obj/machinery/door/window/brigdoor/eastright{
-	req_access = list(43)
+	req_access = list(18,19,67)
 	},
 /obj/item/device/bluespaceradio/groundbase_prelinked,
 /obj/item/device/mapping_unit,
@@ -21774,7 +21813,11 @@
 "tbD" = (
 /obj/structure/table/glass,
 /obj/machinery/light,
-/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow,
+/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow{
+	grass_chance = 0;
+	outdoors = 0;
+	snow_chance = 0
+	},
 /area/groundbase/civilian/bar)
 "tbL" = (
 /obj/structure/cable/yellow{
@@ -23746,7 +23789,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass{
 	name = "EVA Access";
-	req_one_access = list(13)
+	req_one_access = list(18,19,67)
 	},
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -26445,10 +26488,6 @@
 	},
 /turf/simulated/floor/tiled/freezer/cold,
 /area/groundbase/civilian/kitchen/freezer)
-"xoT" = (
-/obj/structure/table/glass,
-/turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs_lowsnow,
-/area/groundbase/civilian/bar)
 "xpn" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8
@@ -31171,7 +31210,7 @@ raF
 raF
 raF
 aEL
-cIf
+bGt
 cIf
 cIf
 cIf
@@ -32143,7 +32182,7 @@ pjZ
 tLw
 gjX
 tLw
-tLw
+awp
 kLB
 ycp
 ycp
@@ -36385,13 +36424,13 @@ oeu
 bum
 neL
 dVI
-xoT
-xoT
+mDC
+mDC
 tbD
 bum
 imA
-xoT
-xoT
+mDC
+mDC
 bum
 pDQ
 inR
@@ -38011,8 +38050,8 @@ tbQ
 fYC
 ePH
 fAP
+poU
 tbQ
-sfQ
 sfQ
 jMh
 sfQ
@@ -38153,8 +38192,8 @@ vzM
 kPQ
 sOl
 iDf
+rBS
 tbQ
-sfQ
 sfQ
 jMh
 sfQ
@@ -38295,8 +38334,8 @@ tbQ
 dve
 mQF
 oyP
+lbN
 tbQ
-sfQ
 sfQ
 jMh
 sfQ
@@ -38438,7 +38477,7 @@ tbQ
 tbQ
 tbQ
 tbQ
-sfQ
+tbQ
 sfQ
 jMh
 sfQ

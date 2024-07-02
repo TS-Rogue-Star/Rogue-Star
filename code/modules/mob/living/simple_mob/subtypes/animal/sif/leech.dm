@@ -242,6 +242,9 @@
 	do_infest(usr)
 
 /mob/living/simple_mob/animal/sif/leech/proc/do_infest(var/mob/living/user, var/mob/living/target = null)
+	if(docile) //RS Add
+		return
+
 	if(host)
 		to_chat(user, span("alien", "We are already within a host."))
 		return
@@ -341,6 +344,11 @@
 
 	host = null
 
+	// RS Add
+	if(docile)
+		VARSET_IN(src, docile, FALSE, 60 SECONDS)
+	// RS Add End
+
 /mob/living/simple_mob/animal/sif/leech/verb/inject_victim()
 	set category = "Abilities"
 	set name = "Incapacitate Potential Host"
@@ -369,7 +377,7 @@
 	poison_inject(usr, M)
 
 /mob/living/simple_mob/animal/sif/leech/proc/poison_inject(var/mob/living/user, var/mob/living/carbon/L)
-	if(!L || !Adjacent(L) || stat)
+	if(!L || !Adjacent(L) || stat || docile) //RS Edit
 		return
 
 	var/mob/living/carbon/human/H = L
@@ -407,7 +415,7 @@
 		inject_meds(chem)
 
 /mob/living/simple_mob/animal/sif/leech/proc/inject_meds(var/chem)
-	if(host)
+	if(host && !docile) // RS Edit
 		chemicals = max(1, chemicals - 50)
 		host.reagents.add_reagent(chem, 5)
 		to_chat(src, span("alien","We injected \the [host] with five units of [chem]."))
@@ -445,6 +453,9 @@
 		to_chat(src, span("warning","We cannot feed now."))
 
 /mob/living/simple_mob/animal/sif/leech/proc/bite_organ(var/obj/item/organ/internal/O)
+	if(docile) //RS Add
+		return
+
 	last_feeding = world.time
 
 	if(O)

@@ -247,6 +247,11 @@
 				target.release_control()
 			worm.detatch()
 			worm.leave_host()
+		// RS Add - Handle river leeches (this should probably get generalized)
+		else if(istype(obj,/mob/living/simple_mob/animal/sif/leech))
+			var/mob/living/simple_mob/animal/sif/leech/leech = obj
+			leech.leave_host()
+		// RS Add End
 		else
 			obj.loc = get_turf(target)
 			obj.add_blood(target)

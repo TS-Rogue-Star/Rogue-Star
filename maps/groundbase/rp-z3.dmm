@@ -418,6 +418,10 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/hall3)
+"fH" = (
+/obj/machinery/camera/network/security,
+/turf/simulated/floor/outdoors/sidewalk/slab,
+/area/groundbase/security/hall3)
 "fP" = (
 /obj/effect/floor_decal/spline/plain{
 	dir = 1
@@ -737,6 +741,13 @@
 	},
 /turf/simulated/floor/tiled,
 /area/shuttle/groundbase/exploration)
+"jg" = (
+/obj/machinery/light_switch{
+	dir = 4;
+	pixel_x = -30
+	},
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/medicalshowers)
 "ji" = (
 /obj/structure/railing,
 /turf/simulated/open,
@@ -803,6 +814,12 @@
 	},
 /turf/simulated/floor/carpet,
 /area/groundbase/medical/cmo)
+"jO" = (
+/obj/machinery/camera/network/security{
+	dir = 8
+	},
+/turf/simulated/floor/outdoors/sidewalk/slab,
+/area/groundbase/security/hall3)
 "jY" = (
 /obj/machinery/power/apc{
 	dir = 1
@@ -1759,7 +1776,8 @@
 "tc" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/multi_tile/metal{
-	name = "EMT Bay"
+	name = "EMT Bay";
+	req_one_access = list(5)
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/medical/paramedic)
@@ -3181,12 +3199,14 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/patient2)
 "FF" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/full,
-/obj/machinery/door/airlock/glass,
-/obj/machinery/door/firedoor/glass,
-/turf/simulated/floor/plating,
-/area/groundbase/civilian/pilot)
+/obj/effect/floor_decal/milspec/color/red/half{
+	dir = 4
+	},
+/obj/machinery/camera/network/security{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/dark,
+/area/groundbase/security/hall3)
 "FL" = (
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 9
@@ -5293,6 +5313,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/uhallway)
@@ -9502,7 +9525,7 @@ XJ
 YE
 YE
 YE
-YE
+jO
 YE
 YE
 YE
@@ -10347,7 +10370,7 @@ PZ
 SD
 en
 Kj
-Xe
+FF
 Xe
 qB
 TQ
@@ -10641,7 +10664,7 @@ gh
 qj
 aZ
 TQ
-YE
+fH
 YE
 YE
 YE
@@ -11944,7 +11967,7 @@ rf
 rf
 rf
 rf
-rf
+nd
 nd
 nd
 nd
@@ -12086,8 +12109,8 @@ rf
 rf
 rf
 rf
-rf
 nd
+dy
 dy
 dy
 dy
@@ -12228,8 +12251,8 @@ rf
 rf
 rf
 rf
-rf
 nd
+dy
 dy
 dy
 dy
@@ -12370,8 +12393,8 @@ rf
 rf
 rf
 rf
-rf
 nd
+dy
 dy
 dy
 dy
@@ -12513,7 +12536,7 @@ nd
 nd
 nd
 nd
-nd
+dy
 dy
 dy
 dy
@@ -19343,7 +19366,7 @@ YS
 Wy
 eG
 eG
-FF
+WZ
 WZ
 eG
 eG
@@ -21590,7 +21613,7 @@ Xa
 FW
 BU
 DA
-uc
+jg
 jG
 Sq
 Pv
