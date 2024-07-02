@@ -148,10 +148,14 @@
 			torso.robotize(manu_choice) //Will cascade to all other organs.
 			// RS Add - Reapply lost markings
 			for(var/organname in organs_by_name)
+				to_chat(blob, "Checking for [organname] in dna")
 				var/list/dna_markings = dna.body_markings[organname]
 				if(dna_markings)
+					to_chat(blob, "Found [dna_markings.len] markings for [organname]")
 					var/obj/item/organ/external/EO = organs_by_name[organname]
 					EO.markings = dna_markings.Copy()
+				else
+					to_chat(blob, "No markings for [organname] in dna")
 			// RS Add End
 			regenerate_icons()
 			visible_message("<B>[src]</B>'s form reshapes into a new one...")
