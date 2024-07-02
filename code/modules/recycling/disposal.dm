@@ -638,6 +638,13 @@
 			if(drone.client)	// if a client mob, update eye to follow this holder
 				drone.client.eye = src
 			src.destinationTag = drone.mail_destination
+
+		//RS Add start || ports mail system, CHOMPStation PR7024
+		if(istype(AM, /obj/item/mail) && !hasmob)
+			var/obj/item/mail/T = AM
+			src.destinationTag = T.sortTag
+		//RS Add end
+
 		//RS ADD START
 		else if(isliving(AM))
 			var/mob/living/L = AM
