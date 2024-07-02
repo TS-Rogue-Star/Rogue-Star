@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////
+a////////////////////////////////////////////////////////////////////////////////////////////////////
 //overmap node
 /obj/effect/overmap/visitable/sector/centaur944november
 	name = "944 November"
@@ -90,12 +90,17 @@
 
 /area/tether_away/snowbase/atmospherics
 	name = "Snowbase - Atmospherics"
+	lightswitch = 1
 
 /area/tether_away/snowbase/janitor
 	name = "Snowbase - Janitorial"
 
 /area/tether_away/snowbase/mining
 	name = "Snowbase - Refinery"
+
+/area/tether_away/snowbase/shelter
+	name = "Snowbase - Warming Shelter"
+	lightswitch = 1
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //This is either a hacky workaround or an elegant solution to the atmosphere problems - code credit to Aronai
@@ -143,4 +148,7 @@ SNOWBASE_TURF_CREATE(/turf/unsimulated/wall/planetary)
 
 /turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen
 	ignore_mapgen = 1
+	SNOWBASE_SET_ATMOS
+
+/turf/simulated/floor/plating/snowbase
 	SNOWBASE_SET_ATMOS
