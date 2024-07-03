@@ -70,6 +70,9 @@
 	fullness_icons = 1
 	struggle_anim = TRUE
 
+/datum/sprite_accessory/tail/taur/ch
+	icon = 'icons/mob/vore/taurs_ch.dmi'//Parent which allows us to not need to set icon every time.
+
 /datum/sprite_accessory/tail/taur/ch/bigleggy
 	name = "Big Leggies"
 	icon_state = "bigleggy"
