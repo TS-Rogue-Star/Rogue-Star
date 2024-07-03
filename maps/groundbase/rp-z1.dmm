@@ -21451,7 +21451,8 @@
 /obj/item/clothing/suit/space/void/exploration,
 /obj/item/clothing/head/helmet/space/void/exploration,
 /obj/machinery/door/window/brigdoor/eastright{
-	req_access = list(18,19,67)
+	req_access = null;
+	req_one_access = list(18,19,67)
 	},
 /obj/item/device/bluespaceradio/groundbase_prelinked,
 /obj/item/device/mapping_unit,
