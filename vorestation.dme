@@ -1947,6 +1947,7 @@
 #include "code\modules\client\preference_setup\global\04_ooc.dm"
 #include "code\modules\client\preference_setup\global\setting_datums.dm"
 #include "code\modules\client\preference_setup\loadout\gear_tweaks.dm"
+#include "code\modules\client\preference_setup\loadout\gear_tweaks_rs.dm"
 #include "code\modules\client\preference_setup\loadout\gear_tweaks_vr.dm"
 #include "code\modules\client\preference_setup\loadout\loadout.dm"
 #include "code\modules\client\preference_setup\loadout\loadout_accessories.dm"

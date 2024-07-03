@@ -18,6 +18,8 @@
 
 /datum/gear/collar/New()
 	..()
+	gear_tweaks -= gear_tweak_free_desc // RS Edit
+	gear_tweaks += gear_tweak_collar_desc // RS Edit
 	gear_tweaks += gear_tweak_collar_tag
 
 /datum/gear/collar/golden
