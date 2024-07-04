@@ -70,7 +70,7 @@
 	spawn_positions = 3
 	pto_type = PTO_CARGO
 	alt_titles = list("Cargo Loader" = /datum/alt_title/cargo_loader, "Cargo Handler" = /datum/alt_title/cargo_handler, "Supply Courier" = /datum/alt_title/supply_courier,
-					"Disposals Sorter" = /datum/alt_title/disposal_sorter)
+					"Disposals Sorter" = /datum/alt_title/disposal_sorter, "Mailman" = /datum/alt_title/mailman)
 
 /datum/alt_title/supply_courier
 	title = "Supply Courier"
@@ -91,7 +91,7 @@
 /datum/alt_title/mailman
 	title = "Mailman"
 	title_blurb = "A Mailman is tasked with delivering packages or mail to whoever it might address."
-	title_outfit = /decl/hierarchy/outfit/job/cargo/cargo_tech/mailman
+	title_outfit = /decl/hierarchy/outfit/job/cargo/cargo_tech
 
 
 /datum/job/mining

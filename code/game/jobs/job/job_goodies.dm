@@ -1,4 +1,4 @@
-// Mail goodies
+// Mail goodies, port from CHOMPStation PR7024, 7051, 7059, 7105, 7286, 7337, 7558
 /datum/job/
 	var/list/mail_goodies = list()		  // Goodies that can be received via the mail system
 	var/exclusive_mail_goodies = FALSE	  // If this job's mail goodies compete with generic goodies.
@@ -176,7 +176,7 @@
 	mail_color = COMMS_COLOR_COMMAND
 
 /datum/job/hop
-	mail_goodies = list( // Currently only 350, less chance for their fance stuff. What could they get?
+	mail_goodies = list( // Currently only 350, less chance for their fancy stuff. What could they get?
 		/obj/item/weapon/pen/fountain6 = 250,
 		/obj/item/toy/figure/corgi = 100,
 	)

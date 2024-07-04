@@ -1,4 +1,4 @@
-//Ports mail system from CHOMPStation PR7024
+//Port from CHOMPStation PR7024, 7051, 7059, 7105, 7286, 7337, 7558
 SUBSYSTEM_DEF(mail)
 	name = "Mail"
 	wait = 60 SECONDS
