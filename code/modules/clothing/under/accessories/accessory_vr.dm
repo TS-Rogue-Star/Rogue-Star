@@ -176,7 +176,8 @@
 			else
 				to_chat(usr,"<span class='notice'>You set the [name]'s tag to '[str]'.</span>")
 				name = initial(name) + " ([str])"
-				desc = custom_desc || initial(desc) + " The tag says \"[str]\"." // RS Edit
+				desc = custom_desc || initial(desc) // RS Edit
+				desc += " The tag says \"[str]\"." // RS Edit
 		else
 			if(href_list["code"])
 				code += text2num(href_list["code"])
@@ -313,12 +314,14 @@
 
 /obj/item/clothing/accessory/collar/proc/initialize_tag(var/tag)
 		name = initial(name) + " ([tag])"
-		desc = custom_desc || initial(desc) + " \"[tag]\" has been engraved on the tag." // RS Edit
+		desc = custom_desc || initial(desc) // RS Edit
+		desc += " \"[tag]\" has been engraved on the tag." // RS Edit
 		writtenon = 1
 
 /obj/item/clothing/accessory/collar/holo/initialize_tag(var/tag)
 		..()
-		desc = custom_desc || initial(desc) + " The tag says \"[tag]\"." // RS Edit
+		desc = custom_desc || initial(desc) // RS Edit
+		desc += " The tag says \"[tag]\"." // RS Edit
 
 /obj/item/clothing/accessory/collar/attackby(obj/item/I, mob/user)
 	if(istype(src,/obj/item/clothing/accessory/collar/holo))
@@ -346,17 +349,20 @@
 		else
 			to_chat(user,"<span class='notice'>You [erasing] the words with the [I].</span>")
 			name = initial(name)
-			desc = custom_desc || initial(desc) + " The tag has had the words [erasemethod]." // RS Edit
+			desc = custom_desc || initial(desc) // RS Edit
+			desc += " The tag has had the words [erasemethod]." // RS Edit
 	else
 		if(!writtenon)
 			to_chat(user,"<span class='notice'>You write '[str]' on the tag with the [I].</span>")
 			name = initial(name) + " ([str])"
-			desc = custom_desc || initial(desc) + " \"[str]\" has been [writemethod] on the tag." // RS Edit
+			desc = custom_desc || initial(desc) // RS Edit
+			desc += " \"[str]\" has been [writemethod] on the tag." // RS Edit
 			writtenon = 1
 		else
 			to_chat(user,"<span class='notice'>You [erasing] the words on the tag with the [I], and write '[str]'.</span>")
 			name = initial(name) + " ([str])"
-			desc = custom_desc || initial(desc) + " Something has been [erasemethod] on the tag, and it now has \"[str]\" [writemethod] on it." // RS Edit
+			desc = custom_desc || initial(desc) // RS Edit
+			desc += " Something has been [erasemethod] on the tag, and it now has \"[str]\" [writemethod] on it." // RS Edit
 
 //Size collar remote
 
@@ -388,7 +394,8 @@
 			else
 				to_chat(usr,"<span class='notice'>You set the [name]'s tag to '[str]'.</span>")
 				name = initial(name) + " ([str])"
-				desc = custom_desc || initial(desc) + " The tag says \"[str]\"." // RS Edit
+				desc = custom_desc || initial(desc) // RS Edit
+				desc += " The tag says \"[str]\"." // RS Edit
 		else
 			if(href_list["code"])
 				code += text2num(href_list["code"])
