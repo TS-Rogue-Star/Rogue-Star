@@ -33,13 +33,17 @@ var/global/const/HOLOPAD_MODE = RANGE_BASED
 
 /mob/living/silicon/ai
 	var/icon/holo_icon_longrange //Yellow hologram.
-	var/holo_icon_malf = FALSE
+	//var/holo_icon_malf = FALSE
+
+/obj/effect/overlay/aiholo
+	var/mob/living/carbon/human/callerID // A varient on the AI master var, so we can reference our players
 
 /obj/machinery/hologram/holopad
 	name = "holopad"
 	desc = "It's a floor-mounted device for projecting holographic images."
-	icon_state = "holopad-B0"
-	icon = 'icons/obj/machines/holopads.dmi'
+	//icon_state = "holopad-B0"
+	//icon = 'icons/obj/machines/holopads.dmi'
+	icon_state = "holopad0"
 	layer = ABOVE_TURF_LAYER
 
 	var/power_per_hologram = 500 //per usage per hologram
@@ -58,7 +62,7 @@ var/global/const/HOLOPAD_MODE = RANGE_BASED
 	var/list/recent_calls = list()
 
 	var/holopadType = HOLOPAD_SHORT_RANGE //Whether the holopad is short-range or long-range.
-	var/base_icon = "holopad-B"
+	var/base_icon = "holopad"
 
 	var/allow_ai = TRUE
 
@@ -363,18 +367,23 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 /obj/machinery/hologram/holopad/proc/create_holo(mob/living/silicon/ai/A, mob/living/carbon/caller_id, turf/T = loc)
 	var/obj/effect/overlay/aiholo/hologram = new(T)//Spawn a blank effect at the location. // Changed to an effect/aiholo -Enem
 	if(caller_id)
-		hologram.add_overlay(getHologramIcon(getFlatIcon(caller_id), hologram_color = holopadType))
-		hologram.icon = getFlatIcon(caller_id)
+		hologram.add_overlay(getHologramIcon(getCompoundIcon(caller_id), hologram_color = holopadType))
+		hologram.icon = getCompoundIcon(caller_id)
+		hologram.callerID = caller_id
+		hologram.loc = loc
 	else if(A)
+		hologram.master = A
+		hologram.icon = A.holo_icon
+		to_chat(A, "Setting icon to [A.holo_icon]")
+		hologram.pixel_x = 16 - round(A.holo_icon.Width() / 2) // Originally a vorestation edit, carried over to preserve functionality with custom sprites
 		if(holopadType == HOLOPAD_LONG_RANGE)
 			hologram.add_overlay(A.holo_icon_longrange)
 		else
 			hologram.add_overlay(A.holo_icon)
-		hologram.icon = A.holo_icon
-		hologram.pixel_x = 16 - round(A.holo_icon.Width() / 2) // Originally a vorestation edit, carried over to preserve functionality with custom sprites
-	if(A)
+	/**if(A)
 		if(A.holo_icon_malf == TRUE)
 			hologram.add_overlay(icon("icons/effects/effects.dmi", "malf-scanline"))
+			*/
 	//hologram.mouse_opacity = 0//So you can't click on it. -This was removed in the vorecode, so I'll do the same here.
 	hologram.layer = FLY_LAYER //Above all the other objects/mobs. Or the vast majority of them.
 	hologram.anchored = TRUE//So space wind cannot drag it.
@@ -563,14 +572,25 @@ Holographic project of everything else.
 /obj/machinery/hologram/holopad/longrange
 	name = "long range holopad"
 	desc = "It's a floor-mounted device for projecting holographic images. This one utilizes bluespace transmitter to communicate with far away locations."
-	icon_state = "holopad-Y0"
+	//icon_state = "holopad-Y0"
 	power_per_hologram = 1000 //per usage per hologram
 	holopadType = HOLOPAD_LONG_RANGE
-	base_icon = "holopad-Y"
+	//base_icon = "holopad-Y"
 
 // Used for overmap capable ships that should have communications, but not be AI accessible
 /obj/machinery/hologram/holopad/longrange/remoteship
 	allow_ai = FALSE
+
+//This can go here with all the references.
+/obj/effect/overlay/aiholo/examine(mob/user)
+	. = ..()
+	if(callerID)
+		var/flavor_text = callerID.print_flavor_text()
+		if(flavor_text)
+			. += "[flavor_text]"
+
+		if(callerID.ooc_notes)
+			. += "<span class = 'deptradio'>OOC Notes:</span> <a href='?src=\ref[master];ooc_notes=1'>\[View\]</a> - <a href='?src=\ref[master];print_ooc_notes_to_chat=1'>\[Print\]</a>"
 
 #undef RANGE_BASED
 #undef AREA_BASED
