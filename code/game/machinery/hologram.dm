@@ -79,9 +79,10 @@ var/global/const/HOLOPAD_MODE = RANGE_BASED
 	to_chat(user, callstring)
 
 // /obj/machinery/hologram/holopad/interface_interact(mob/living/carbon/human/user) //Carn: Hologram requests.
-/obj/machinery/hologram/holopad/interact(mob/living/carbon/human/user)
-	if(!CanInteract(user, GLOB.tgui_physical_state))
-		return FALSE
+/obj/machinery/hologram/holopad/attack_hand(mob/living/carbon/human/user) // Attack hand is what we want here.
+	to_chat(user, SPAN_NOTICE("Running the attack hand proc."))
+	//if(!CanInteract(user, GLOB.tgui_physical_state))
+	//	return FALSE
 	if(incoming_connection && caller_id)
 		if(QDELETED(sourcepad)) // If the sourcepad was deleted, most likely.
 			incoming_connection = 0
@@ -108,7 +109,7 @@ var/global/const/HOLOPAD_MODE = RANGE_BASED
 		break
 
 	if(allow_ai && ai_exists)
-		handle_type = alert(user,"Would you like to request an AI's presence or establish communications with another pad?", "Holopad","AI","Holocomms","Cancel")
+		handle_type = tgui_alert(user,"Would you like to request an AI's presence or establish communications with another pad?", "Holopad",list("AI","Holocomms","Cancel"))
 
 	switch(handle_type)
 		if("AI")
@@ -145,6 +146,7 @@ var/global/const/HOLOPAD_MODE = RANGE_BASED
 							holopadlist["[H.loc.loc.name]"] = H
 				holopadlist = sortAssoc(holopadlist)
 				var/temppad = input(user, "Which holopad would you like to contact?", "holopad list") as null|anything in holopadlist
+				//var/temppad = tgui_input_list(user, "Which holopad would you like to contact?", holopadlist)
 				targetpad = holopadlist["[temppad]"]
 				if(targetpad==src)
 					to_chat(user,span("info","Using such sophisticated technology, just to talk to yourself seems a bit silly."))
@@ -361,15 +363,18 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	var/obj/effect/overlay/aiholo/hologram = new(T)//Spawn a blank effect at the location. // Changed to an effect/aiholo -Enem
 	if(caller_id)
 		hologram.add_overlay(getHologramIcon(getFlatIcon(caller_id), hologram_color = holopadType))
+		hologram.icon = getFlatIcon(caller_id)
 	else if(A)
 		if(holopadType == HOLOPAD_LONG_RANGE)
 			hologram.add_overlay(A.holo_icon_longrange)
 		else
 			hologram.add_overlay(A.holo_icon)
+		hologram.icon = A.holo_icon
+		hologram.pixel_x = 16 - round(A.holo_icon.Width() / 2) // Originally a vorestation edit, carried over to preserve functionality with custom sprites
 	if(A)
 		if(A.holo_icon_malf == TRUE)
 			hologram.add_overlay(icon("icons/effects/effects.dmi", "malf-scanline"))
-	hologram.mouse_opacity = 0//So you can't click on it.
+	//hologram.mouse_opacity = 0//So you can't click on it. -This was removed in the vorecode, so I'll do the same here.
 	hologram.layer = FLY_LAYER //Above all the other objects/mobs. Or the vast majority of them.
 	hologram.anchored = TRUE//So space wind cannot drag it.
 	if(caller_id)
@@ -385,6 +390,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	hologram.set_light(2, 0.1)	//hologram lighting
 	hologram.color = color //painted holopad gives coloured holograms
 	set_light(2, 0.1)			//pad lighting
+	flick("holopadload", src) //VOREStation Add
 	icon_state = "[base_icon]1"
 	return 1
 
@@ -432,6 +438,35 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 
 /obj/machinery/hologram/holopad/proc/move_hologram(mob/living/silicon/ai/user)
 	if(masters[user])
+		/*VOREStation Removal, using our own code
+		step_to(masters[user], user.eyeobj) // So it turns.
+		var/obj/effect/overlay/H = masters[user]
+		H.loc = get_turf(user.eyeobj)
+		masters[user] = H
+		*/
+		//VOREStation Add - Solid mass holovore tracking stuff
+		var/obj/effect/overlay/aiholo/H = masters[user]
+		if(H.bellied)
+			walk_to(H, user.eyeobj) //Walk-to respects obstacles
+		else
+			walk_towards(H, user.eyeobj) //Walk-towards does not
+		//Hologram left the screen (got stuck on a wall or something)
+		if(get_dist(H, user.eyeobj) > world.view)
+			clear_holo(user)
+		//VOREStation Add End
+		if((HOLOPAD_MODE == RANGE_BASED && (get_dist(H, src) > holo_range)))
+			clear_holo(user)
+
+		if(HOLOPAD_MODE == AREA_BASED)
+			var/area/holopad_area = get_area(src)
+			var/area/hologram_area = get_area(H)
+
+			if(!(hologram_area in holopad_area))
+				clear_holo(user)
+
+	return 1
+	/* Porting the VoreCode movment.
+	if(masters[user])
 		step_to(masters[user], user.eyeobj) // So it turns.
 		var/obj/effect/overlay/aiholo/H = masters[user]
 		H.dropInto(user.eyeobj)
@@ -450,6 +485,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 			if(hologram_area != holo_area)
 				clear_holo(user)
 	return 1
+	*/
 
 
 /obj/machinery/hologram/holopad/proc/set_dir_hologram(new_dir, mob/living/silicon/ai/user)
