@@ -289,15 +289,16 @@ var/global/const/HOLOPAD_MODE = RANGE_BASED
 /*This is the proc for special two-way communication between AI and holopad/people talking near holopad.
 For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 // Note that speaking may be null here, presumably due to echo effects/non-mob transmission.
-/obj/machinery/hologram/holopad/hear_talk(mob/living/M, text, verb, datum/language/speaking)
+/obj/machinery/hologram/holopad/hear_talk(mob/living/M, text, verb, datum/language/speaking) // Our problem child, should compare RS's deffinition with Bay's -Enem
+	var/trans_text = multilingual_to_message(text) // Translation Pride -Enem
 	if(M)
 		for(var/mob/living/silicon/ai/master in masters)
-			var/ai_text = text
+			var/ai_text = trans_text
 			if(!master.say_understands(M, speaking))//The AI will be able to understand most mobs talking through the holopad.
 				if(speaking)
-					ai_text = speaking.scramble(text)
+					ai_text = speaking.scramble(trans_text)
 				else
-					ai_text = stars(text)
+					ai_text = stars(trans_text)
 			if(isanimal(M) && !M.universal_speak)
 				var/datum/say_list/SA = M.say_list
 				if (SA)
@@ -316,12 +317,12 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		if (SA && length(SA.speak))
 			message = get_hear_message(name_used, pick(SA.speak), verb, speaking)
 	else
-		message = get_hear_message(name_used, text, verb, speaking)
+		message = get_hear_message(name_used, trans_text, verb, speaking)
 	if(targetpad && !targetpad.incoming_connection) //If this is the pad you're making the call from and the call is accepted
 		targetpad.audible_message(message)
 		targetpad.last_message = message
 	if(sourcepad && sourcepad.targetpad && !sourcepad.targetpad.incoming_connection) //If this is a pad receiving a call and the call is accepted
-		if(name_used==caller_id||text==last_message||findtext(text, "Holopad received")) //prevent echoes
+		if(name_used==caller_id||trans_text==last_message||findtext(text, "Holopad received")) //prevent echoes
 			return
 		sourcepad.audible_message(message)
 
