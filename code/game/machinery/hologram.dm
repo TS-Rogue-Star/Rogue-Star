@@ -31,6 +31,10 @@ Possible to do for anyone motivated enough:
 
 var/global/const/HOLOPAD_MODE = RANGE_BASED
 
+/mob/living/silicon/ai
+	var/icon/holo_icon_longrange //Yellow hologram.
+	var/holo_icon_malf = FALSE
+
 /obj/machinery/hologram/holopad
 	name = "holopad"
 	desc = "It's a floor-mounted device for projecting holographic images."
@@ -402,7 +406,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	return 1
 
 
-/obj/machinery/hologram/holopad/Process()
+/obj/machinery/hologram/holopad/process() // For some reasono our codebase is lowercase -Enem
 	for (var/mob/living/silicon/ai/master in masters)
 		var/active_ai = (master && !master.incapacitated() && master.client && master.eyeobj)//If there is an AI with an eye attached, it's not incapacitated, and it has a client
 		if(!powered() || !active_ai)
