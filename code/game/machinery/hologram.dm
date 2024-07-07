@@ -74,8 +74,9 @@ var/global/const/HOLOPAD_MODE = RANGE_BASED
 	callstring = SPAN_NOTICE(callstring)
 	to_chat(user, callstring)
 
-/obj/machinery/hologram/holopad/interface_interact(mob/living/carbon/human/user) //Carn: Hologram requests.
-	if(!CanInteract(user, DefaultTopicState()))
+// /obj/machinery/hologram/holopad/interface_interact(mob/living/carbon/human/user) //Carn: Hologram requests.
+/obj/machinery/hologram/holopad/interact(mob/living/carbon/human/user)
+	if(!CanInteract(user, GLOB.tgui_physical_state))
 		return FALSE
 	if(incoming_connection && caller_id)
 		if(QDELETED(sourcepad)) // If the sourcepad was deleted, most likely.
@@ -97,7 +98,7 @@ var/global/const/HOLOPAD_MODE = RANGE_BASED
 	var/handle_type = "Holocomms"
 	var/ai_exists = FALSE
 
-	for(var/mob/living/silicon/ai/AI in global.ai_list) // Player_list instead of alive Mob - Enem
+	for(var/mob/living/silicon/ai/AI in global.ai_list) // ai_list instead of alive Mob - Enem
 		if(!AI.client)	continue
 		ai_exists = TRUE
 		break
@@ -132,7 +133,7 @@ var/global/const/HOLOPAD_MODE = RANGE_BASED
 						var/obj/effect/overmap/visitable/O = map_sectors["[zlevel]"]
 						if(!isnull(O))
 							zlevels_long |= O.map_z
-				for(var/obj/machinery/hologram/holopad/H in SSmachines.machinery)
+				for(var/obj/machinery/hologram/holopad/H in global.machines)
 					if (H.operable())
 						if(H.z in zlevels)
 							holopadlist["[H.loc.loc.name]"] = H	//Define a list and fill it with the area of every holopad in the world
@@ -168,7 +169,9 @@ var/global/const/HOLOPAD_MODE = RANGE_BASED
 		for (var/obj/item/device/pda/pda as anything in targetpad.linked_pdas)
 			if (!AreConnectedZLevels(get_z(targetpad), get_z(pda)))
 				continue
-			pda.receive_notification("Call at [targetpad.loc.loc] holopad.")
+			//pda.receive_notification("Call at [targetpad.loc.loc] holopad.")
+			var/datum/data/pda/app/messenger/PM = pda.find_program(/datum/data/pda/app/messenger) // RS Edit, converts the alert to our PDA system -Enem
+			PM.notify("Call at [targetpad.loc.loc] holopad.", 0) // Ditto -Enem
 	to_chat(user, SPAN_NOTICE("Trying to establish a connection to the holopad in [targetpad.loc.loc]... Please await confirmation from recipient."))
 	targetpad.addrecentcall(get_area(src))
 
@@ -233,7 +236,7 @@ var/global/const/HOLOPAD_MODE = RANGE_BASED
 	else
 		to_chat(caller_id, "[SPAN_DANGER("ERROR:")] Unable to project hologram.")
 	return
-
+/*
 /obj/machinery/hologram/holopad/use_tool(obj/item/O, mob/user)
 	if (istype(O, /obj/item/device/pda))
 		//if (LAZYISIN(linked_pdas, O)) // We have no LAZYISIN here, so just a standard check. Also, does this macro even save any time? wtf bay -Enem
@@ -246,6 +249,21 @@ var/global/const/HOLOPAD_MODE = RANGE_BASED
 		return TRUE
 
 	return ..()
+*/
+/obj/machinery/hologram/holopad/attackby(obj/item/I as obj, user as mob)
+	if(computer_deconstruction_screwdriver(user, I))
+		return
+	else if (istype(I, /obj/item/device/pda))
+		if (I in linked_pdas)
+			unlink_pda(I)
+			to_chat(user, SPAN_NOTICE("You remove \the [I] from \the [src]'s notifications list."))
+			return TRUE
+		link_pda(I)
+		to_chat(user, SPAN_NOTICE("You add \the [I] to \the [src]'s notifications list. It will now be pinged whenever a call is received."))
+		return TRUE
+	else
+		attack_hand(user)
+	return
 
 /**
  * Proc to link/unlink PDAs
@@ -338,24 +356,26 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 /obj/machinery/hologram/holopad/proc/create_holo(mob/living/silicon/ai/A, mob/living/carbon/caller_id, turf/T = loc)
 	var/obj/effect/overlay/aiholo/hologram = new(T)//Spawn a blank effect at the location. // Changed to an effect/aiholo -Enem
 	if(caller_id)
-		hologram.AddOverlays(getHologramIcon(getFlatIcon(caller_id), hologram_color = holopadType))
+		hologram.add_overlay(getHologramIcon(getFlatIcon(caller_id), hologram_color = holopadType))
 	else if(A)
 		if(holopadType == HOLOPAD_LONG_RANGE)
-			hologram.AddOverlays(A.holo_icon_longrange)
+			hologram.add_overlay(A.holo_icon_longrange)
 		else
-			hologram.AddOverlays(A.holo_icon)
+			hologram.add_overlay(A.holo_icon)
 	if(A)
 		if(A.holo_icon_malf == TRUE)
-			hologram.AddOverlays(icon("icons/effects/effects.dmi", "malf-scanline"))
+			hologram.add_overlay(icon("icons/effects/effects.dmi", "malf-scanline"))
 	hologram.mouse_opacity = 0//So you can't click on it.
 	hologram.layer = FLY_LAYER //Above all the other objects/mobs. Or the vast majority of them.
 	hologram.anchored = TRUE//So space wind cannot drag it.
 	if(caller_id)
-		hologram.SetName("[caller_id.name] (Hologram)")
+		//hologram.SetName("[caller_id.name] (Hologram)")
+		hologram.name = "[caller_id.name] (Hologram)"
 		hologram.forceMove(get_step(src,1))
 		masters[caller_id] = hologram
 	else
-		hologram.SetName("[A.name] (Hologram)") //If someone decides to right click.
+		//hologram.SetName("[A.name] (Hologram)") //If someone decides to right click.
+		hologram.name = "[A.name] (Hologram)"
 		A.holo = src
 		masters[A] = hologram
 	hologram.set_light(2, 0.1)	//hologram lighting
@@ -447,12 +467,12 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 //Destruction procs.
 /obj/machinery/hologram/ex_act(severity)
 	switch(severity)
-		if(EX_ACT_DEVASTATING)
+		if(1.0)
 			qdel(src)
-		if(EX_ACT_HEAVY)
+		if(2.0)
 			if (prob(50))
 				qdel(src)
-		if(EX_ACT_LIGHT)
+		if(3.0)
 			if (prob(5))
 				qdel(src)
 	return
