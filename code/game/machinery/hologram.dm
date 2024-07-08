@@ -43,6 +43,7 @@ var/global/const/HOLOPAD_MODE = RANGE_BASED
 	desc = "It's a floor-mounted device for projecting holographic images."
 	//icon_state = "holopad-B0"
 	//icon = 'icons/obj/machines/holopads.dmi'
+	icon = 'icons/obj/stationobjs_vr.dmi' //VOREStation Edit
 	icon_state = "holopad0"
 	layer = ABOVE_TURF_LAYER
 
@@ -372,6 +373,25 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		hologram.callerID = caller_id
 		hologram.loc = loc
 	else if(A)
+		hologram.master = A //VOREStation Edit: So you can reference the master AI from in the hologram procs
+		hologram.icon = A.holo_icon
+		hologram.pixel_x = 16 - round(A.holo_icon.Width() / 2) //VOREStation Edit: centers the hologram on the tile
+		//hologram.mouse_opacity = 0//So you can't click on it. //VOREStation Removal
+		//hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
+		//hologram.anchored = TRUE//So space wind cannot drag it.
+		//hologram.name = "[A.name] (Hologram)"//If someone decides to right click.
+		if(!isnull(color))
+			hologram.color = color
+		else
+			hologram.color = A.holo_color
+
+		if(hologram.color)	//hologram lighting
+			hologram.set_light(2,1,hologram.color)
+		else
+			hologram.set_light(2)
+
+	/*
+	else if(A)
 		hologram.master = A
 		hologram.icon = A.holo_icon
 		to_chat(A, "Setting icon to [A.holo_icon]")
@@ -380,6 +400,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 			hologram.add_overlay(A.holo_icon_longrange)
 		else
 			hologram.add_overlay(A.holo_icon)
+		*/
 	/**if(A)
 		if(A.holo_icon_malf == TRUE)
 			hologram.add_overlay(icon("icons/effects/effects.dmi", "malf-scanline"))
@@ -392,13 +413,15 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		hologram.name = "[caller_id.name] (Hologram)"
 		hologram.forceMove(get_step(src,1))
 		masters[caller_id] = hologram
+		hologram.set_light(2, 0.1)	//hologram lighting
+		//hologram.color = color //painted holopad gives coloured holograms
 	else
 		//hologram.SetName("[A.name] (Hologram)") //If someone decides to right click.
 		hologram.name = "[A.name] (Hologram)"
 		A.holo = src
 		masters[A] = hologram
-	hologram.set_light(2, 0.1)	//hologram lighting
-	hologram.color = color //painted holopad gives coloured holograms
+	//hologram.set_light(2, 0.1)	//hologram lighting
+	//hologram.color = color //painted holopad gives coloured holograms
 	set_light(2, 0.1)			//pad lighting
 	flick("holopadload", src) //VOREStation Add
 	icon_state = "[base_icon]1"
