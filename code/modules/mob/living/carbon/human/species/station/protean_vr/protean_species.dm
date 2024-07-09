@@ -154,7 +154,7 @@
 
 	// Heal remaining damage.
 	if(prot_healing_allowed)
-		//to_chat(H,"<span class='notice'> Healing Proc")
+		//to_chat(H,"<span class='notice'> Healing Proc</span>")
 		if(H.getActualBruteLoss() || H.getActualFireLoss())
 			var/nutrition_cost = 0		// The total amount of nutrition drained every tick, when healing
 			var/nutrition_debt = 0		// Holder variable used to store previous damage values prior to healing for use in the nutrition_cost equation.
@@ -183,7 +183,7 @@
 
 						nutrition_cost += to_pay
 					else
-						to_chat(H,"<span class='notice'> Damage Taken, Deactivating Regeneration.")
+						to_chat(H,"<span class='notice'> Damage Taken, Deactivating Regeneration.</span>")
 						prot_healing_allowed = FALSE
 						stored_brute = 0
 						stored_burn = 0
@@ -196,7 +196,7 @@
 						stored_burn = current_burn
 						nutrition_cost += to_pay
 					else
-						to_chat(H,"<span class='notice'> Damage Taken, Deactivating Regeneration.")
+						to_chat(H,"<span class='notice'> Damage Taken, Deactivating Regeneration.</span>")
 						prot_healing_allowed = FALSE
 						stored_brute = 0
 						stored_burn = 0
@@ -205,12 +205,12 @@
 						return
 					H.adjust_nutrition(-(3 * nutrition_cost)) // Costs Nutrition when damage is being repaired, corresponding to the amount of damage being repaired.
 				else
-					to_chat(H,"<span class='notice'> Not enough power remaining, Deactivating Regeneration.")
+					to_chat(H,"<span class='notice'> Not enough power remaining, Deactivating Regeneration.</span>")
 					prot_healing_allowed = FALSE
 					stored_brute = 0
 					stored_burn = 0
 		else
-			to_chat(H,"<span class='notice'> Healing Completed, Deactivating Regeneration.")
+			to_chat(H,"<span class='notice'> Healing Completed, Deactivating Regeneration.</span>")
 			prot_healing_allowed = FALSE
 			stored_brute = 0
 			stored_burn = 0
