@@ -345,6 +345,11 @@
 				Int.rejuvenate(TRUE)
 
 		handle_organs() // Update everything
+		for(var/organname in organs_by_name)
+			var/list/dna_markings = dna.body_markings[organname]
+			if(dna_markings)
+				var/obj/item/organ/external/EO = organs_by_name[organname]
+				EO.markings = dna_markings.Copy()
 
 		update_icons_body()
 		active_regen = FALSE
