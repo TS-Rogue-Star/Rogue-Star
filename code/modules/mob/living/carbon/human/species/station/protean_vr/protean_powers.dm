@@ -2,7 +2,7 @@
 ////
 //  One-part Refactor
 ////
-/mob/living/carbon/human/proc/nano_partswap()
+/mob/living/carbon/human/proc/nano_partswap()//RS Edit (Ability changed to not require blobbing)
 	set name = "Ref - Single Limb"
 	set desc = "Allows you to replace and reshape your limbs as you see fit."
 	set category = "Abilities"
@@ -34,16 +34,19 @@
 		var/regen = tgui_alert(src,"That limb is missing, do you want to regenerate it in exchange for [PER_LIMB_STEEL_COST] steel?","Regenerate limb?",list("Yes","No"))
 		if(regen != "Yes")
 			return
-		if(!refactory.use_stored_material(MAT_STEEL,PER_LIMB_STEEL_COST))
-			return
+
 		if(organs_by_name[choice])
 			var/obj/item/organ/external/oldlimb = organs_by_name[choice]
 			oldlimb.removed()
 			qdel(oldlimb)
 
-		var/mob/living/simple_mob/protean_blob/blob = nano_intoblob()
+		//var/mob/living/simple_mob/protean_blob/blob = nano_intoblob() ////RS Edit (Ability changed to not require blobbing)
 		active_regen = TRUE
-		if(do_after(blob,5 SECONDS))
+		//RS Add
+		to_chat(src, "<span class='danger'>Remain still while the process takes place! It will take 10 seconds.</span>")
+		visible_message("<B>[src]</B>'s form begins to shift and ripple as if made of oil...")
+		if(do_after(src,10 SECONDS))
+		//RS Add End
 			var/list/limblist = species.has_limbs[choice]
 			var/limbpath = limblist["path"]
 			var/obj/item/organ/external/new_eo = new limbpath(src)
@@ -56,8 +59,10 @@
 				new_eo.markings = dna_markings.Copy()
 			// RS Add End
 			regenerate_icons()
+			if(!refactory.use_stored_material(MAT_STEEL,PER_LIMB_STEEL_COST))
+				return
 		active_regen = FALSE
-		nano_outofblob(blob)
+		//nano_outofblob(blob) //RS Edit (Ability changed to not require blobbing)
 		return
 
 	//Organ exists, let's reshape it
@@ -141,9 +146,9 @@
 		to_chat(src, "<span class='danger'>Remain still while the process takes place! It will take 5 seconds.</span>")
 		visible_message("<B>[src]</B>'s form collapses into an amorphous blob of black ichor...")
 
-		var/mob/living/simple_mob/protean_blob/blob = nano_intoblob()
+		//var/mob/living/simple_mob/protean_blob/blob = nano_intoblob() //RS Edit (Ability changed to not require blobbing)
 		active_regen = TRUE
-		if(do_after(blob,5 SECONDS))
+		if(do_after(src,5 SECONDS))
 			synthetic = usable_manufacturers[manu_choice]
 			torso.robotize(manu_choice) //Will cascade to all other organs.
 			// RS Add - Reapply lost markings
@@ -157,11 +162,11 @@
 			shapeshifter_set_colour(rgb(r_skin,g_skin,b_skin)) // RS Add
 			visible_message("<B>[src]</B>'s form reshapes into a new one...")
 		active_regen = FALSE
-		nano_outofblob(blob)
+		//nano_outofblob(blob) //RS Edit (Ability changed to not require blobbing)
 		return
 
 	//Not enough resources (AND spends the resources, should be the last check)
-	if(!refactory.use_stored_material(MAT_STEEL,refactory.max_storage))
+	if(refactory.get_stored_material(MAT_STEEL) < refactory.max_storage) //RS Edit changed to not take steel untill operation completed
 		to_chat(src, "<span class='warning'>You need to be maxed out on normal metal to do this!</span>")
 		return
 
@@ -170,11 +175,41 @@
 	visible_message("<B>[src]</B>'s form begins to shift and ripple as if made of oil...")
 	active_regen = TRUE
 
-	var/mob/living/simple_mob/protean_blob/blob = nano_intoblob()
-	if(do_after(blob, delay_length, null, 0))
+	//var/mob/living/simple_mob/protean_blob/blob = nano_intoblob() //RS Edit (Ability changed to not require blobbing)
+	if(do_after(src, delay_length, null, 0))
 		if(stat != DEAD && refactory)
 			var/list/holder = refactory.materials
-			species.create_organs(src)
+			//RS Edit (Changed ability to not heal all damage (code taken from Organic 'Regenerate' Ability))
+			// Replace completely missing limbs.
+			for(var/limb_type in src.species.has_limbs)
+				var/obj/item/organ/external/E = src.organs_by_name[limb_type]
+
+				if(E && E.disfigured)
+					E.disfigured = 0
+				if(E && (E.is_stump() || (E.status & (ORGAN_DESTROYED|ORGAN_DEAD|ORGAN_MUTATED))))
+					E.removed()
+					qdel(E)
+					E = null
+				if(!E)
+					var/list/organ_data = src.species.has_limbs[limb_type]
+					var/limb_path = organ_data["path"]
+					var/obj/item/organ/O = new limb_path(src)
+					organ_data["descriptor"] = O.name
+					to_chat(src, "<span class='notice'>You feel a slithering sensation as your [O.name] reform.</span>")
+
+
+
+			var/mob/living/carbon/human/H = src
+			for(var/obj/item/organ/O as anything in H.internal_organs)
+				// Fix internal damage
+				if(O.damage > 0)
+					O.damage = 0
+				// If not damaged, but dead, fix it
+				else if(O.status & ORGAN_DEAD)
+					O.status &= ~ORGAN_DEAD //Unset dead if we repaired it entirely
+			handle_organs() // Update everything
+			//RS Edit End
+			update_icons_body()
 			var/obj/item/organ/external/torso = organs_by_name[BP_TORSO]
 			torso.robotize(synthetic?.company) // RS Edit: Keep synth manufacturer if we can
 			LAZYCLEARLIST(blood_DNA)
@@ -195,16 +230,18 @@
 				log_debug("[src] protean-regen'd but lacked a refactory when done.")
 			else
 				new_refactory.materials = holder
-			to_chat(src, "<span class='notice'>Your refactoring is complete.</span>") //Guarantees the message shows no matter how bad the timing.
-			to_chat(blob, "<span class='notice'>Your refactoring is complete!</span>")
+
+			if(!refactory.use_stored_material(MAT_STEEL,refactory.max_storage)) //RS Edit (Changed ability to only take steel when operation complete)
+				to_chat(src, "<span class='notice'>Your refactoring is complete.</span>") //Guarantees the message shows no matter how bad the timing.
+				to_chat(src, "<span class='notice'>Your refactoring is complete!</span>")
 		else
 			to_chat(src,  "<span class='critical'>Your refactoring has failed.</span>")
-			to_chat(blob, "<span class='critical'>Your refactoring has failed!</span>")
+			to_chat(src, "<span class='critical'>Your refactoring has failed!</span>")
 	else
 		to_chat(src,  "<span class='critical'>Your refactoring is interrupted.</span>")
-		to_chat(blob, "<span class='critical'>Your refactoring is interrupted!</span>")
+		to_chat(src, "<span class='critical'>Your refactoring is interrupted!</span>")
 	active_regen = FALSE
-	nano_outofblob(blob)
+	//nano_outofblob(blob)
 
 
 ////
@@ -267,18 +304,29 @@
 
 	//Blob form
 	if(temporary_form)
-		if(health < maxHealth*0.5)
+		//RS Edit (removed un-blob health requirement)
+		/*if(health < maxHealth*0.5)
 			to_chat(temporary_form,"<span class='warning'>You need to regenerate more nanites first!</span>")
-		else if(temporary_form.stat)
+		else */
+		//RS Edit End
+		if(temporary_form.stat)
 			to_chat(temporary_form,"<span class='warning'>You can only do this while not stunned.</span>")
 		else
 			nano_outofblob(temporary_form)
 
+
 	//Human form
-	else if(stat)
+	else if(stat || paralysis || stunned || restrained()) //RS Edit (no blobbing while arrested/unconcious)
 		to_chat(src,"<span class='warning'>You can only do this while not stunned.</span>")
 		return
 	else
+		//RS Edit (no blobbing while arrested/unconcious)
+		visible_message("<b>[src.name]</b> starts to collapse into a gooey blob!")
+		if(do_after(src,10 SECONDS))
+			if(stat || paralysis || stunned || restrained()) //Double check to make sure we didnt get KO'd during our do_after()
+				to_chat(src,"<span class='warning'>Blobbing interrupted.</span>")
+				return
+		//RS Edit End
 		nano_intoblob()
 
 ////
@@ -289,7 +337,7 @@
 	set desc = "Tweak your shape to change what suits you fit into (and their sprites!)."
 	set category = "Abilities"
 
-	if(stat)
+	if(stat || paralysis || stunned || restrained()) //RS Edit (no Abilities while unconcious/arrested)
 		to_chat(src,"<span class='warning'>You must be awake and standing to perform this action!</span>")
 		return
 
@@ -297,6 +345,50 @@
 	if(new_species)
 		species?.base_species = new_species // Really though you better have a species
 		regenerate_icons() //Expensive, but we need to recrunch all the icons we're wearing
+///// RS Addition/Edit (ability toggle for healing)
+//	Passive Heal
+////
+/mob/living/carbon/human/proc/nano_healing()
+	set name = "Powered Healing"
+	set category = "Abilities"
+	set hidden = TRUE
+	var/mob/living/user = temporary_form || src
+
+	if(!istype(species,/datum/species/protean)) // ???
+		return
+	var/datum/species/protean/S = species
+	//to_chat(user,"<span class='warning'>Ability Activated...</span>")
+	var/obj/item/organ/internal/nano/refactory/refactory = nano_get_refactory()
+	if(!istype(refactory))
+		to_chat(user,"<span class='warning'>You don't have a working refactory module!</span>")
+		return
+	//else
+		//to_chat(user,"<span class='warning'>Refactory Detected...</span>")
+	//if(!temporary_form)
+		//to_chat(user,"<span class='warning'>Is human form...</span>")
+	if(!active_regen)
+		if(S.prot_healing_allowed == FALSE)
+			if(refactory.get_stored_material(MAT_STEEL) < 100)
+				to_chat(user,"<span class='warning'>You do not have enough stored steel to do this.</span>")
+				return
+			if(user.nutrition <= 150)
+				to_chat(user,"<span class='warning'>Not enough power to enable healing routines...</span>")
+				return
+			if(!src.getActualBruteLoss() && !src.getActualFireLoss())
+				to_chat(user,"<span class='warning'>You're not injured...</span>")
+				return
+			if(!do_after(user,5 SECONDS))
+				to_chat(user,"<span class='warning'>You need to stand still while diagnosing...</span>")
+				return
+			to_chat(user, "<span class='notice'>Regeneration Enabled.</span>")
+			S.prot_healing_allowed = TRUE
+		else
+			to_chat(user, "<span class='notice'>Regeneration Disabled.</span>")
+			S.prot_healing_allowed = FALSE
+	else
+		to_chat(user,"<span class='warning'>You Are already performing a regeneration action.</span>")
+
+// RS Addition/Edit End
 
 ////
 //  Change size
@@ -314,35 +406,14 @@
 		to_chat(user,"<span class='warning'>You don't have a working refactory module!</span>")
 		return
 
-	var/nagmessage = "Adjust your mass to be a size between 25 to 200% (or between 1 to 600% in dorms area). Up-sizing consumes metal, downsizing returns metal."
+	var/nagmessage = "Adjust your mass to be a size between 25 to 200% (or between 1 to 600% in dorms area)." //RS Edit Removed reference to steel requirement
 	var/new_size = tgui_input_number(user, nagmessage, "Pick a Size", user.size_multiplier*100, 600, 1)
 	if(!new_size || !size_range_check(new_size))
 		return
 
 	var/size_factor = new_size/100
-
-	//Will be: -1.75 for 200->25, and 1.75 for 25->200
-	var/sizediff = size_factor - user.size_multiplier
-
-	//Negative if shrinking, positive if growing
-	//Will be (PLSC*2)*-1.75 to 1.75
-	//For 2000 PLSC that's -7000 to 7000
-	var/cost = (PER_LIMB_STEEL_COST*2)*sizediff
-
-	//Sizing up
-	if(cost > 0)
-		if(refactory.use_stored_material(MAT_STEEL,cost))
-			user.resize(size_factor, ignore_prefs = TRUE)
-		else
-			to_chat(user,"<span class='warning'>That size change would cost [cost] steel, which you don't have.</span>")
-	//Sizing down (or not at all)
-	else if(cost <= 0)
-		cost = abs(cost)
-		var/actually_added = refactory.add_stored_material(MAT_STEEL,cost)
-		user.resize(size_factor, ignore_prefs = TRUE)
-		if(actually_added != cost)
-			to_chat(user,"<span class='warning'>Unfortunately, [cost-actually_added] steel was lost due to lack of storage space.</span>")
-
+	//RS Removed (steel requirement/refund for scaling, was abuseable)
+	user.resize(size_factor, ignore_prefs = TRUE)
 	user.visible_message("<span class='notice'>Black mist swirls around [user] as they change size.</span>")
 
 /// /// /// A helper to reuse
@@ -395,33 +466,46 @@
 	return FALSE
 
 /// The actual abilities
+//RS Add (passive heal toggle ability)
+/obj/effect/protean_ability/passive_heal
+	ability_name = "Toggle Regeneration"
+	desc = "Consume steel and energy to heal yourself slowly."
+	icon = 'icons/mob/radial_vr.dmi'
+	icon_state = "tl_plus"
+	to_call = /mob/living/carbon/human/proc/nano_healing
+//RS Add End
 /obj/effect/protean_ability/into_blob
 	ability_name = "Toggle Blobform"
 	desc = "Discard your shape entirely, changing to a low-energy blob that can fit into small spaces. You'll consume steel to repair yourself in this form."
+	icon = 'icons/mob/species/protean/protean_powers.dmi' //RS Add
 	icon_state = "blob"
 	to_call = /mob/living/carbon/human/proc/nano_blobform
 
 /obj/effect/protean_ability/change_volume
 	ability_name = "Change Volume"
 	desc = "Alter your size by consuming steel to produce additional nanites, or regain steel by reducing your size and reclaiming them."
+	icon = 'icons/mob/species/protean/protean_powers.dmi' //RS Add
 	icon_state = "volume"
 	to_call = /mob/living/carbon/human/proc/nano_set_size
 
 /obj/effect/protean_ability/reform_limb
 	ability_name = "Ref - Single Limb"
 	desc = "Rebuild or replace a single limb, assuming you have 2000 steel."
+	icon = 'icons/mob/species/protean/protean_powers.dmi' //RS Add
 	icon_state = "limb"
 	to_call = /mob/living/carbon/human/proc/nano_partswap
 
 /obj/effect/protean_ability/reform_body
 	ability_name = "Ref - Whole Body"
 	desc = "Rebuild your entire body into whatever design you want, assuming you have 10,000 metal."
+	icon = 'icons/mob/species/protean/protean_powers.dmi' //RS Add
 	icon_state = "body"
 	to_call = /mob/living/carbon/human/proc/nano_regenerate
 
 /obj/effect/protean_ability/metal_nom
 	ability_name = "Ref - Store Metals"
 	desc = "Store the metal you're holding. Your refactory can only store steel, and all other metals will be converted into nanites ASAP for various effects."
+	icon = 'icons/mob/species/protean/protean_powers.dmi' //RS Add
 	icon_state = "metal"
 	to_call = /mob/living/carbon/human/proc/nano_metalnom
 

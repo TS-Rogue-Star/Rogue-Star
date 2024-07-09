@@ -30,7 +30,12 @@
 
 	breath_type = null
 	poison_type = null
-
+	//RS add (for healing ability)
+	var/heal_rate = 0.5 // Temp. Regen per tick.
+	var/prot_healing_allowed = FALSE	// Switches to FALSE if healing is not possible at all.
+	var/stored_brute = 0
+	var/stored_burn = 0
+	//RS add end (for healing ability)
 	virus_immune =	1
 	blood_volume =	0
 	min_age =		18
@@ -39,25 +44,27 @@
 	burn_mod =		1.5
 	oxy_mod =		0
 	item_slowdown_mod = 1.33
+	//RS Edit (why defining temp twice?)
+	cold_level_1 = -INFINITY //Default 260 - Lower is better
+	cold_level_2 = -INFINITY//Default 200
+	cold_level_3 = -INFINITY //Default 120
 
-	cold_level_1 = 280 //Default 260 - Lower is better
-	cold_level_2 = 220 //Default 200
-	cold_level_3 = 130 //Default 120
-
-	heat_level_1 = 320 //Default 360
-	heat_level_2 = 370 //Default 400
-	heat_level_3 = 600 //Default 1000
-
+	heat_level_1 = INFINITY //Default 360
+	heat_level_2 = INFINITY //Default 400
+	heat_level_3 = INFINITY //Default 1000
+	//RS edit end
 	hazard_low_pressure = -1 //Space doesn't bother them
 	hazard_high_pressure = 200 //They can cope with slightly higher pressure
 
 	//Cold/heat does affect them, but it's done in special ways below
+	/*
 	cold_level_1 = -INFINITY
 	cold_level_2 = -INFINITY
 	cold_level_3 = -INFINITY
 	heat_level_1 = INFINITY
 	heat_level_2 = INFINITY
 	heat_level_3 = INFINITY
+	*/
 
 	body_temperature =      290
 
@@ -90,6 +97,7 @@
 
 	//These verbs are hidden, for hotkey use only
 	inherent_verbs = list(
+		/mob/living/carbon/human/proc/nano_healing, //RS Add (regen toggle)
 		/mob/living/carbon/human/proc/nano_regenerate, //These verbs are hidden so you can macro them,
 		/mob/living/carbon/human/proc/nano_partswap,
 		/mob/living/carbon/human/proc/nano_metalnom,
@@ -137,7 +145,76 @@
 /datum/species/protean/handle_post_spawn(var/mob/living/carbon/human/H)
 	..()
 	H.synth_color = TRUE
+//rs Add (Healing ability non blob)
+/datum/species/protean/handle_environment_special(var/mob/living/carbon/human/H)
 
+	var/current_brute = TRUE
+	var/current_burn = TRUE
+
+
+	// Heal remaining damage.
+	if(prot_healing_allowed)
+		//to_chat(H,"<span class='notice'> Healing Proc")
+		if(H.getActualBruteLoss() || H.getActualFireLoss())
+			var/nutrition_cost = 0		// The total amount of nutrition drained every tick, when healing
+			var/nutrition_debt = 0		// Holder variable used to store previous damage values prior to healing for use in the nutrition_cost equation.
+			var/obj/item/organ/internal/nano/refactory/refactory = locate() in H.internal_organs
+			if(refactory && !(refactory.status & ORGAN_DEAD))
+
+				if(refactory.get_stored_material(MAT_STEEL) < 100)
+					to_chat(H,"<span class='warning'>Not enough Steel stored, Deactivating Regeneration.</span>")
+					prot_healing_allowed = FALSE
+					return
+				current_brute = H.getActualBruteLoss()
+				current_burn = H.getActualBruteLoss()
+				if(stored_brute == 0)
+					stored_brute = current_brute
+				if(stored_burn == 0)
+					stored_burn = current_burn
+
+				if(H.nutrition >= 150)		// This is when the icon goes red
+					var/to_pay = 0
+					if(current_brute <= stored_brute)
+						nutrition_debt = current_brute
+						H.adjustBruteLoss(-1,include_robo = TRUE) //Modified by species resistances
+						stored_brute = current_brute
+
+						to_pay = nutrition_debt - current_brute
+
+						nutrition_cost += to_pay
+					else
+						to_chat(H,"<span class='notice'> Damage Taken, Deactivating Regeneration.")
+						prot_healing_allowed = FALSE
+						stored_brute = 0
+						stored_burn = 0
+						return
+					if(current_burn <= stored_burn)
+						nutrition_debt = current_burn
+						H.adjustFireLoss(-0.5,include_robo = TRUE) //Modified by species resistances
+
+						to_pay = nutrition_debt - current_burn
+						stored_burn = current_burn
+						nutrition_cost += to_pay
+					else
+						to_chat(H,"<span class='notice'> Damage Taken, Deactivating Regeneration.")
+						prot_healing_allowed = FALSE
+						stored_brute = 0
+						stored_burn = 0
+						return
+					if(!refactory.use_stored_material(MAT_STEEL,100))
+						return
+					H.adjust_nutrition(-(3 * nutrition_cost)) // Costs Nutrition when damage is being repaired, corresponding to the amount of damage being repaired.
+				else
+					to_chat(H,"<span class='notice'> Not enough power remaining, Deactivating Regeneration.")
+					prot_healing_allowed = FALSE
+					stored_brute = 0
+					stored_burn = 0
+		else
+			to_chat(H,"<span class='notice'> Healing Completed, Deactivating Regeneration.")
+			prot_healing_allowed = FALSE
+			stored_brute = 0
+			stored_burn = 0
+//rs Add End (Healing ability non blob)
 /datum/species/protean/equip_survival_gear(var/mob/living/carbon/human/H)
 	var/obj/item/stack/material/steel/metal_stack = new(null, 3)
 
@@ -177,8 +254,8 @@
 		H.forceMove(H.temporary_form.drop_location())
 		H.ckey = H.temporary_form.ckey
 		QDEL_NULL(H.temporary_form)
-
-	to_chat(H, "<span class='warning'>You died as a Protean. Please sit out of the round for at least 60 minutes before respawning, to represent the time it would take to ship a new-you to the station.</span>")
+	//RS Change (we have reconstituters)
+	to_chat(H, "<span class='warning'>You died as a Protean. Please wait for Robotics to notice your death or sit out of the round for at least 60 minutes before respawning, to represent the time it would take to ship a new-you to the station.</span>")
 
 	spawn(1)
 		if(H)
@@ -316,6 +393,8 @@
 /datum/modifier/protean/steel/tick()
 	holder.adjustBruteLoss(-1,include_robo = TRUE) //Modified by species resistances
 	holder.adjustFireLoss(-0.5,include_robo = TRUE) //Modified by species resistances
+	//RS Edit Removed Internal organ healing while blobbed
+	/*
 	var/mob/living/carbon/human/H = holder
 	for(var/obj/item/organ/O as anything in H.internal_organs)
 		// Fix internal damage
@@ -324,7 +403,8 @@
 		// If not damaged, but dead, fix it
 		else if(O.status & ORGAN_DEAD)
 			O.status &= ~ORGAN_DEAD //Unset dead if we repaired it entirely
-
+	*/
+	//RS Edit End
 // PAN Card
 /obj/item/clothing/accessory/permit/nanotech
 	name = "\improper P.A.N. card"
