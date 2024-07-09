@@ -195,7 +195,7 @@
 					var/limb_path = organ_data["path"]
 					var/obj/item/organ/O = new limb_path(src)
 					organ_data["descriptor"] = O.name
-					to_chat(src, "<span class='notice'>You feel a slithering sensation as your [O.name] reform.</span>")
+					to_chat(src, "<span class='notice'>You feel a shifting sensation as your [O.name] reconsitutes.</span>")
 
 
 
