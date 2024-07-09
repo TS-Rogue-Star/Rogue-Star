@@ -34,9 +34,11 @@
 /obj/random/powercell,
 /obj/random/powercell,
 /obj/random/powercell,
-/obj/random/powercell,
 /turf/simulated/floor/plating/snowbase,
 /area/tether_away/snowbase/shelter)
+"bB" = (
+/turf/simulated/mineral/crystal_shiny/snowbase/ignore_mapgen,
+/area/tether_away/snowbase/outside/glacier)
 "cL" = (
 /obj/item/clothing/shoes/boots/winter,
 /obj/item/clothing/suit/storage/hooded/wintercoat,
@@ -195,7 +197,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
-	id_tag = "shelterint";
+	id_tag = "shelterext";
 	locked = 1
 	},
 /turf/simulated/floor/tiled/steel_ridged,
@@ -314,6 +316,9 @@
 /obj/machinery/sleep_console,
 /turf/simulated/floor/tiled,
 /area/tether_away/snowbase/shelter)
+"Jf" = (
+/turf/simulated/wall,
+/area/tether_away/snowbase/outside/glacier)
 "Jn" = (
 /obj/structure/table/woodentable,
 /obj/structure/closet/walllocker_double/generic_civ/west{
@@ -396,6 +401,12 @@
 /obj/structure/table/woodentable,
 /turf/simulated/floor/tiled,
 /area/tether_away/snowbase/shelter)
+"WP" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/tether_away/snowbase/outside/glacier)
 "XF" = (
 /turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
 /area/tether_away/snowbase/shelter)
@@ -635,15 +646,15 @@ tI
 tI
 tI
 tI
-tI
-tI
+bB
+bB
 Ap
 Ye
 Ye
 Ye
 Ap
-tI
-tI
+bB
+bB
 tI
 tI
 tI
@@ -777,15 +788,15 @@ tI
 tI
 tI
 tI
-tI
-tI
+bB
+bB
 Ap
 Ye
 Ye
 Ye
 Ap
-tI
-tI
+bB
+bB
 tI
 tI
 tI
@@ -919,15 +930,15 @@ tI
 tI
 tI
 tI
-tI
-tI
-tI
+bB
+bB
+bB
 Ye
 Ye
 Ye
-tI
-tI
-tI
+bB
+bB
+bB
 tI
 tI
 tI
@@ -14270,11 +14281,11 @@ jv
 jv
 jv
 jv
-uP
+Jf
 Ye
 Ye
 Ye
-uP
+Jf
 jv
 jv
 jv
@@ -14412,11 +14423,11 @@ jv
 jv
 jv
 jv
+WP
 Ye
 Ye
 Ye
-Ye
-Ye
+WP
 jv
 jv
 jv

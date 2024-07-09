@@ -1,15 +1,15 @@
 a////////////////////////////////////////////////////////////////////////////////////////////////////
 //overmap node
-/obj/effect/overmap/visitable/sector/centaur944november
+/obj/effect/overmap/visitable/sector/snowbaseplanet
 	name = "944 November"
 	desc = "Home to ice, snow, and more ice."
 	scanner_desc = @{"[i]Stellar Body[/i]: 944 November
-[i]Class[/i]: Centaur
+[i]Class[/i]: Captured Exoplanet
 [i]Habitability[/i]: Low (Extreme Low Temperature)
 [b]Notice[/b]: Arctic survival gear is recommended. Contact traffic control for weather advisories."}
 	icon_state = "frozen"
 	in_space = 0
-	initial_generic_waypoints = list("november_surface_e", "november_surface_w")
+	initial_generic_waypoints = list("snowbase_surface_e", "snowbase_surface_w")
 //	extra_z_levels = list(Z_LEVEL_GLACIER)
 	known = TRUE
 
@@ -102,6 +102,10 @@ a///////////////////////////////////////////////////////////////////////////////
 	name = "Snowbase - Warming Shelter"
 	lightswitch = 1
 
+/area/tether_away/snowbase/garage
+	name = "Snowbase - Garage"
+	lightswitch = 1
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //This is either a hacky workaround or an elegant solution to the atmosphere problems - code credit to Aronai
 //Atmosphere properties
@@ -151,4 +155,5 @@ SNOWBASE_TURF_CREATE(/turf/unsimulated/wall/planetary)
 	SNOWBASE_SET_ATMOS
 
 /turf/simulated/floor/plating/snowbase
+	name = "plating"
 	SNOWBASE_SET_ATMOS
