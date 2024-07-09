@@ -176,3 +176,23 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle-3"
 	prefill = list("biomass" = 60)
+
+//RS Edit: Adds some bottles from CHOMPStation PR7337
+/obj/item/weapon/reagent_containers/glass/bottle/cakebatter
+	name = "cake batter bottle"
+	desc = "A bottle of pre-made cake batter."
+	icon_state = "bottle-1"
+	prefill = list("cakebatter" = 60)
+
+/obj/item/weapon/reagent_containers/glass/bottle/cinnamonpowder
+	name = "cake batter bottle"
+	desc = "A bottle with expensive cinnamon powder."
+	icon_state = "bottle-1"
+	prefill = list("cinnamonpowder" = 30) // Expensive!
+
+/obj/item/weapon/reagent_containers/glass/bottle/nothing
+	name = "empty bottle?"
+	desc = "An apparently empty bottle."
+	icon_state = "bottle-1"
+	prefill = list("nothing" = 60)
+//RS Edit end
