@@ -6,6 +6,7 @@
 	density = TRUE
 	anchored = TRUE
 	unacidable = TRUE
+	circuit = /obj/item/weapon/circuitboard/op_table //RS Add (make optable buildable)
 	use_power = USE_POWER_IDLE
 	idle_power_usage = 1
 	active_power_usage = 5
@@ -15,6 +16,13 @@
 	var/strapped = 0.0
 	var/obj/machinery/computer/operating/computer = null
 
+//RS add (make optable buildable)
+/obj/machinery/optable/Initialize()
+    . = ..()
+    if(ispath(circuit))
+        circuit = new circuit(src)
+    default_apply_parts()
+//RS add End (make optable buildable)
 /obj/machinery/optable/New()
 	..()
 	for(var/direction in list(NORTH,EAST,SOUTH,WEST))
@@ -124,6 +132,13 @@
 			take_victim(G.affecting, user)
 			qdel(W)
 			return
+	//RS Add (buildable optable)
+	if(!victim)
+		if(default_deconstruction_screwdriver(user, W))
+			return
+		if(default_deconstruction_crowbar(user, W))
+			return
+	//RS Add End (buildable optable)
 
 /obj/machinery/optable/proc/check_table(mob/living/carbon/patient, mob/living/user)
 	check_victim()

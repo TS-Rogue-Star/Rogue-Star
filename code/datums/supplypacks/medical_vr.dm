@@ -51,3 +51,17 @@
 	containertype = /obj/structure/closet/crate/secure
 	containername = "Compact Defibrillator crate"
 	access = access_medical_equip
+
+	/datum/supply_pack/med/bloodpack
+	containertype = /obj/structure/closet/crate/medical/blood
+
+/datum/supply_pack/med/optable
+	name = "Operating Table Circuit crate"
+	contains = list(
+				/obj/item/weapon/circuitboard/op_table = 2,
+				/obj/item/weapon/circuitboard/operating  = 2
+				)
+	cost = 50
+	containertype = /obj/structure/closet/crate/secure
+	containername = "Operating Table Circuit crate"
+	access = access_medical_equip
