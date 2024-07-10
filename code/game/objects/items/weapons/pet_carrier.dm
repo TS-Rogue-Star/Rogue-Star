@@ -1,5 +1,10 @@
 #define pet_carrier_full(carrier) carrier.occupants.len >= carrier.max_occupants || carrier.occupant_weight >= carrier.max_occupant_weight
 
+/*
+	Ported from TGStation
+	Original PR: https://github.com/tgstation/tgstation/pull/33231
+*/
+
 //Used to transport little animals without having to drag them across the station.
 //Comes with a handy lock to prevent them from running off.
 /obj/item/weapon/pet_carrier
