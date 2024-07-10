@@ -5,6 +5,6 @@
 */
 
 #define SURGERY_MULT_BEST 	2 		// For Surgery Tables
-#define SURGERY_MULT_BETTER 1.2 	// This is used for Advanced Roller Beds
-#define SURGERY_MULT_GOOD 	0.75	// This is used for Regular Roller Beds
+#define SURGERY_MULT_BETTER 0.75	// This is used for Advanced Roller Beds
+#define SURGERY_MULT_GOOD 	0.5		// This is used for Regular Roller Beds
 #define SURGERY_MULT_BAD 	0.25	// This is used for tables
