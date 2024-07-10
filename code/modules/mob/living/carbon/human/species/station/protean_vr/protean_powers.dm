@@ -321,6 +321,7 @@
 		return
 	else
 		//RS Edit (no blobbing while arrested/unconcious)
+		to_chat(src,"<span class='notice'>Your form starts to shift as you begin to collapse into a gooey blob.</span>")
 		visible_message("<b>[src.name]</b> starts to collapse into a gooey blob!")
 		if(do_after(src,10 SECONDS))
 			if(stat || paralysis || stunned || restrained()) //Double check to make sure we didnt get KO'd during our do_after()

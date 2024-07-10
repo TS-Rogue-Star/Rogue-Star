@@ -36,7 +36,17 @@
 	minbodytemp = 0
 	maxbodytemp = 900
 	movement_cooldown = -0.5 // Should mean that the little blurb about being quicker in blobform rings true. May need further adjusting.
-
+	//RS Add (Squish emotes!)
+	var/list/default_emotes = list(
+		/decl/emote/audible/squish,
+		/decl/emote/visible/bounce,
+		/decl/emote/visible/jiggle,
+		/decl/emote/visible/vibrate,
+		/decl/emote/visible/flip,
+		/decl/emote/visible/spin,
+		/decl/emote/visible/floorspin
+	)
+	//RS Add End
 	var/mob/living/carbon/human/humanform
 	var/obj/item/organ/internal/nano/refactory/refactory
 	var/datum/modifier/healing
@@ -93,7 +103,11 @@
 	return "synthetic"
 
 /mob/living/simple_mob/protean_blob/get_available_emotes()
-	return global._robot_default_emotes.Copy()
+	var/list/fulllist = global._robot_default_emotes.Copy() //RS Edit (var/list/fulllist Formerly return)
+	//RS Add (Squish emotes!)
+	fulllist += default_emotes
+	return fulllist
+	//RS Add End
 
 /mob/living/simple_mob/protean_blob/init_vore()
 	return //Don't make a random belly, don't waste your time
