@@ -6,11 +6,11 @@ a///////////////////////////////////////////////////////////////////////////////
 	scanner_desc = @{"[i]Stellar Body[/i]: 944 November
 [i]Class[/i]: Captured Exoplanet
 [i]Habitability[/i]: Low (Extreme Low Temperature)
-[b]Notice[/b]: Arctic survival gear is recommended. Contact traffic control for weather advisories."}
+[b]Notice[/b]: Arctic survival gear is required. Contact traffic control for weather advisories."}
 	icon_state = "frozen"
 	in_space = 0
 	initial_generic_waypoints = list("snowbase_surface_e", "snowbase_surface_w")
-//	extra_z_levels = list(Z_LEVEL_GLACIER)
+	extra_z_levels = list(Z_LEVEL_GLACIER)
 	known = TRUE
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
