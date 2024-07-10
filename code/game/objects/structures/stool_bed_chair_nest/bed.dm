@@ -205,7 +205,7 @@
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "rollerbed"
 	anchored = FALSE
-	surgery_mult = 0.5 // Operating on a roller bed is less than ideal, it'll be slower.
+	surgery_mult = SURGERY_MULT_GOOD // Operating on a roller bed is less than ideal, it'll be slower.
 	var/bedtype = /obj/structure/bed/roller
 	var/rollertype = /obj/item/roller
 
@@ -214,7 +214,7 @@
 	icon_state = "rollerbedadv"
 	bedtype = /obj/structure/bed/roller/adv
 	rollertype = /obj/item/roller/adv
-	surgery_mult = 0.75 // Advanced tech stabilizes the bed allowing us to preform surgery faster!
+	surgery_mult = SURGERY_MULT_BETTER // Advanced tech stabilizes the bed allowing us to preform surgery faster!
 
 /obj/structure/bed/roller/update_icon()
 	return
