@@ -64,6 +64,7 @@
 #include "code\__defines\math.dm"
 #include "code\__defines\math_physics.dm"
 #include "code\__defines\MC.dm"
+#include "code\__defines\medical_RS.dm"
 #include "code\__defines\misc.dm"
 #include "code\__defines\misc_vr.dm"
 #include "code\__defines\mobs.dm"
