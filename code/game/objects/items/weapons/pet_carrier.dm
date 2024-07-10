@@ -4,7 +4,7 @@
 //Comes with a handy lock to prevent them from running off.
 /obj/item/weapon/pet_carrier
 	name = "pet carrier"
-	desc = "A big white-and-blue pet carrier. Good for carrying <s>meat to the chef</s> cute animals around."
+	desc = "A big white-and-blue pet carrier. Good for carrying cute animals around."
 	icon = 'icons/obj/pet_carrier.dmi'
 	icon_state = "pet_carrier_open"
 	var/base_icon = "pet_carrier"
@@ -15,7 +15,6 @@
 	item_state_slots = list(slot_r_hand_str = "pet_carrier", slot_l_hand_str = "pet_carrier")
 	force = 0.2
 	attack_verb = list("bashed", "carried")
-	//attack_verb_simple = list("bash", "carry")
 	w_class = ITEMSIZE_LARGE
 	throw_speed = 2
 	throw_range = 3
@@ -42,14 +41,7 @@
 		var/mob/living/L = gone
 		occupants -= gone
 		occupant_weight -= L.mob_size
-/*
-/obj/item/pet_carrier/Destroy(atom/A)
-	if(A in occupants && isliving(A))
-		var/mob/living/L = A
-		occupants -= L
-		occupant_weight -= L.mob_size
-	..()
-*/
+
 /obj/item/weapon/pet_carrier/examine(mob/user)
 	. = ..()
 	if(occupants.len)
@@ -66,7 +58,6 @@
 /obj/item/weapon/pet_carrier/attack_self(mob/living/user)
 	if(open)
 		to_chat(user, SPAN_NOTICE("You close [src]'s door."))
-		//playsound(user, 'sound/effects/bin_close.ogg', 50, TRUE)
 		playsound(user, 'sound/effects/crate_close.ogg', 50, TRUE)
 		open = FALSE
 	else
@@ -74,7 +65,6 @@
 			to_chat(user, SPAN_WARNING("[src] is locked!"))
 			return
 		to_chat(user, SPAN_NOTICE("You open [src]'s door."))
-		//playsound(user, 'sound/effects/bin_open.ogg', 50, TRUE)
 		playsound(user, 'sound/effects/crate_open.ogg', 50, TRUE)
 		open = TRUE
 	update_icon()
@@ -88,7 +78,6 @@
 		playsound(user, 'sound/machines/door/boltsdown.ogg', 30, TRUE)
 	else
 		playsound(user, 'sound/machines/door/boltsup.ogg', 30, TRUE)
-	//update_appearance()
 	update_icon()
 
 /obj/item/weapon/pet_carrier/attack(mob/living/target as mob, mob/living/user as mob)
@@ -98,7 +87,6 @@
 		to_chat(user, SPAN_WARNING("You need to open [src]'s door!"))
 		return
 	var/size_diff = user.get_effective_size() - target.get_effective_size()
-	//if(target.mob_size > max_occupant_weight)
 	if(ishuman(target) && size_diff < 0.19)
 		to_chat(user, SPAN_WARNING("You get the feeling [target] is a tad too large for a [name]."))
 		return
@@ -110,7 +98,6 @@
 		return
 	if(!ishuman(target) && target.mob_size > MOB_SMALL)
 		if(target.buckled && istype(target.buckled, /obj/effect/energy_net))
-			//target.buckled.forceMove(target.loc)
 			load_occupant(user, target)
 			target.buckled.forceMove(target.loc)
 			return
@@ -138,15 +125,12 @@
 		loc.visible_message(SPAN_NOTICE("[user] pushes open the door to [src]!"), \
 		SPAN_WARNING("[user] pushes open the door of [src]!"))
 		open = TRUE
-		//update_appearance()
 		update_icon()
 		return
 	else if(user.client)
 		container_resist(user)
 
 /obj/item/weapon/pet_carrier/container_resist(mob/living/user)
-	//user.changeNext_move(100)
-	//user.last_special = world.time + 100
 	if(user.mob_size <= MOB_SMALL)
 		to_chat(user, SPAN_NOTICE("You poke a limb through [src]'s bars and start fumbling for the lock switch... (This will take some time.)"))
 		to_chat(loc, SPAN_WARNING("You see [user] reach through the bars and fumble for the lock switch!"))
@@ -156,7 +140,6 @@
 		to_chat(user, FONT_LARGE("Bingo! The lock pops open!"))
 		locked = FALSE
 		playsound(src, 'sound/machines/door/boltsup.ogg', 30, TRUE)
-		//update_appearance()
 		update_icon()
 	else
 		loc.visible_message(SPAN_WARNING("[src] starts rattling as something pushes against the door!"))
@@ -167,7 +150,6 @@
 		to_chat(user, SPAN_NOTICE("You shove open [src]'s door against the lock's resistance and fall out!"))
 		locked = FALSE
 		open = TRUE
-		//update_appearance()
 		update_icon()
 		remove_occupant(user)
 
