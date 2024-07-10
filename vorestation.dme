@@ -359,6 +359,7 @@
 #include "code\datums\autolathe\materials.dm"
 #include "code\datums\autolathe\medical.dm"
 #include "code\datums\autolathe\medical_vr.dm"
+#include "code\datums\autolathe\pets_rs.dm"
 #include "code\datums\autolathe\tools.dm"
 #include "code\datums\autolathe\tools_vr.dm"
 #include "code\datums\components\_component.dm"
