@@ -50,6 +50,11 @@
 			organs_by_name[choice] = new_eo
 			new_eo.robotize(synthetic ? synthetic.company : null) //Use the base we started with
 			new_eo.sync_colour_to_human(src)
+			// RS Add - Reapply lost markings
+			var/list/dna_markings = dna.body_markings[choice]
+			if(dna_markings)
+				new_eo.markings = dna_markings.Copy()
+			// RS Add End
 			regenerate_icons()
 		active_regen = FALSE
 		nano_outofblob(blob)
@@ -141,7 +146,15 @@
 		if(do_after(blob,5 SECONDS))
 			synthetic = usable_manufacturers[manu_choice]
 			torso.robotize(manu_choice) //Will cascade to all other organs.
-			regenerate_icons()
+			// RS Add - Reapply lost markings
+			for(var/organname in organs_by_name)
+				var/list/dna_markings = dna.body_markings[organname]
+				if(dna_markings)
+					var/obj/item/organ/external/EO = organs_by_name[organname]
+					EO.markings = dna_markings.Copy()
+			// RS Add End
+			//regenerate_icons() // RS Remove - Included as part of set color below
+			shapeshifter_set_colour(rgb(r_skin,g_skin,b_skin)) // RS Add
 			visible_message("<B>[src]</B>'s form reshapes into a new one...")
 		active_regen = FALSE
 		nano_outofblob(blob)
@@ -163,12 +176,20 @@
 			var/list/holder = refactory.materials
 			species.create_organs(src)
 			var/obj/item/organ/external/torso = organs_by_name[BP_TORSO]
-			torso.robotize() //synthetic wasn't defined here.
+			torso.robotize(synthetic?.company) // RS Edit: Keep synth manufacturer if we can
 			LAZYCLEARLIST(blood_DNA)
 			LAZYCLEARLIST(feet_blood_DNA)
 			blood_color = null
 			feet_blood_color = null
-			regenerate_icons() //Probably worth it, yeah.
+			// RS Add - Reapply lost markings
+			for(var/organname in organs_by_name)
+				var/list/dna_markings = dna.body_markings[organname]
+				if(dna_markings)
+					var/obj/item/organ/external/EO = organs_by_name[organname]
+					EO.markings = dna_markings.Copy()
+			// RS Add End
+			//regenerate_icons() // RS Remove - Included as part of set color below
+			shapeshifter_set_colour(rgb(r_skin,g_skin,b_skin)) // RS Add
 			var/obj/item/organ/internal/nano/refactory/new_refactory = locate() in internal_organs
 			if(!new_refactory)
 				log_debug("[src] protean-regen'd but lacked a refactory when done.")

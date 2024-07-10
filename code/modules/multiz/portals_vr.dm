@@ -164,6 +164,10 @@
 /obj/structure/portal_event/proc/find_our_turf(var/atom/movable/AM)
 	var/offset_x = x - AM.x
 	var/offset_y = y - AM.y
+	// RS Add - Avoid infinite teleport loops
+	if(!offset_x && !offset_y)
+		offset_y = 1 // Just go this way.
+	// RS Add End
 
 	var/turf/temptarg = locate((target.x + offset_x),(target.y + offset_y),target.z)
 
