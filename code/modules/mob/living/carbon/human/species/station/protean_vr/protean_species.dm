@@ -45,13 +45,12 @@
 	oxy_mod =		0
 	item_slowdown_mod = 1.33
 	//RS Edit (why defining temp twice?)
-	cold_level_1 = -INFINITY //Default 260 - Lower is better
-	cold_level_2 = -INFINITY//Default 200
-	cold_level_3 = -INFINITY //Default 120
-
-	heat_level_1 = INFINITY //Default 360
-	heat_level_2 = INFINITY //Default 400
-	heat_level_3 = INFINITY //Default 1000
+	cold_level_1 = -INFINITY
+	cold_level_2 = -INFINITY
+	cold_level_3 = -INFINITY
+	heat_level_1 = 420 //Proper temperatures
+	heat_level_2 = 480
+	heat_level_3 = 1100
 	//RS edit end
 	hazard_low_pressure = -1 //Space doesn't bother them
 	hazard_high_pressure = 200 //They can cope with slightly higher pressure
@@ -92,7 +91,7 @@
 		BP_R_FOOT = list("path" = /obj/item/organ/external/foot/right/unbreakable/nano)
 		)
 
-	heat_discomfort_strings = list("You feel too warm.")
+	heat_discomfort_strings = list("WARNING: Temperature exceeding acceptable thresholds!.")//Hot message more robotic
 	cold_discomfort_strings = list("You feel too cool.")
 
 	//These verbs are hidden, for hotkey use only
