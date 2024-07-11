@@ -101,3 +101,8 @@
 **License:** Licensed for use by Rogue Star; unlicensed for further use without permission of copyright holder<br>
 **Notes:** All files within this folder are covered under the above license, as per the included attribution.txt file
 <br>
+**File:** `icons/obj/taurs_rs.dmi`<br>
+**Title:** new_zorgoia, new_zorgoia_s, new_zorgoia_fat, new_zorgoia_fat_s<br>
+**Creator:** radiantAurora (https://github.com/radiantAurora)<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
