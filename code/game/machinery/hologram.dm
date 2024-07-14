@@ -28,13 +28,14 @@ Possible to do for anyone motivated enough:
 #define HOLOGRAM_POWER_USAGE 2
 #define RANGE_BASED 4
 #define AREA_BASED 6
-
+#define HOLOPAD_SHORT_RANGE 1
+#define HOLOPAD_LONG_RANGE 2
 var/global/const/HOLOPAD_MODE = RANGE_BASED
-
+/*
 /mob/living/silicon/ai
 	var/icon/holo_icon_longrange //Yellow hologram.
 	//var/holo_icon_malf = FALSE
-
+*/
 /obj/effect/overlay/aiholo
 	var/mob/living/carbon/human/callerID // A varient on the AI master var, so we can reference our players
 
@@ -45,6 +46,7 @@ var/global/const/HOLOPAD_MODE = RANGE_BASED
 	//icon = 'icons/obj/machines/holopads.dmi'
 	icon = 'icons/obj/stationobjs_vr.dmi' //VOREStation Edit
 	icon_state = "holopad0"
+	plane = TURF_PLANE
 	layer = ABOVE_TURF_LAYER
 
 	var/power_per_hologram = 500 //per usage per hologram
@@ -368,7 +370,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 /obj/machinery/hologram/holopad/proc/create_holo(mob/living/silicon/ai/A, mob/living/carbon/caller_id, turf/T = loc)
 	var/obj/effect/overlay/aiholo/hologram = new(T)//Spawn a blank effect at the location. // Changed to an effect/aiholo -Enem
 	if(caller_id)
-		hologram.add_overlay(getHologramIcon(getCompoundIcon(caller_id), hologram_color = holopadType))
+		hologram.add_overlay(getHologramIcon(getCompoundIcon(caller_id)))
 		hologram.icon = getCompoundIcon(caller_id)
 		hologram.callerID = caller_id
 		hologram.loc = loc

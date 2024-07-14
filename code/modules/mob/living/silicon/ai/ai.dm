@@ -713,7 +713,6 @@ var/list/ai_verbs_default = list(
 								holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holoskrm"))
 							if("female skrell")
 								holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holoskrf"))
-			holo_icon_longrange = getHologramIcon(holo_icon, hologram_color = HOLOPAD_LONG_RANGE)
 
 //Toggles the luminosity and applies it by re-entereing the camera.
 /mob/living/silicon/ai/proc/toggle_camera_light()
