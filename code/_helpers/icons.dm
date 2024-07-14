@@ -345,7 +345,6 @@
 			if(4)	I.pixel_y++
 		overlays += I//And finally add the overlay.
 
-
 /proc/getHologramIcon(icon/A, safety=1, no_color = FALSE)//If safety is on, a new icon is not created.
 	var/icon/flat_icon = safety ? A : new(A)//Has to be a new icon to not constantly change the same icon.
 	/* VOREStation Removal - For AI Vore effects

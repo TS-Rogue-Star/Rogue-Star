@@ -639,7 +639,6 @@ var/list/ai_verbs_default = list(
 					qdel(dummy)
 					holo_icon = new_holo
 
-
 				else //A premade from the dmi
 					var/icon_list[] = list(
 						"default",
