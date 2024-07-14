@@ -298,6 +298,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 // Note that speaking may be null here, presumably due to echo effects/non-mob transmission.
 /obj/machinery/hologram/holopad/hear_talk(mob/living/M, text, verb, datum/language/speaking) // Our problem child, should compare RS's deffinition with Bay's -Enem
 	var/trans_text = multilingual_to_message(text) // Translation Pride -Enem
+	//var/trans_text = combine_message(text, verb, M)
 	if(M)
 		for(var/mob/living/silicon/ai/master in masters)
 			var/ai_text = trans_text
