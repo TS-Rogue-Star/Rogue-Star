@@ -22,11 +22,9 @@ SUBSYSTEM_DEF(mail)
 	var/obj/structure/closet/crate/mail/mailcrate = new(pick(SSsupply.get_clear_turfs()))
 	// Collect recipients
 	var/list/mail_recipients = list()
-	if(data_core)
-		var/list/manifest = data_core.get_manifest()
-		for(var/mob/living/carbon/human/player_human in manifest)
-			if(player_human.stat != DEAD && player_human.client && player_human.client.inactivity <= 10 MINUTES)
-				mail_recipients += player_human
+	for(var/mob/living/carbon/human/player_human in player_list)
+		if(player_human.stat != DEAD && player_human.client && player_human.client.inactivity <= 10 MINUTES)
+			mail_recipients += player_human
 
 	// Creates mail for all the mail waiting to arrive, if there's nobody to receive it, it will be junkmail.
 	for(var/mail_iterator in 1 to mail_waiting)
