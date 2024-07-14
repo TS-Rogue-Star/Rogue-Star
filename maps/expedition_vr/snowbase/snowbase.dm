@@ -1,10 +1,10 @@
-a////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 //overmap node
 /obj/effect/overmap/visitable/sector/snowbaseplanet
-	name = "944 November"
+	name = "Virgo 5"
 	desc = "Home to ice, snow, and more ice."
-	scanner_desc = @{"[i]Stellar Body[/i]: 944 November
-[i]Class[/i]: Captured Exoplanet
+	scanner_desc = @{"[i]Stellar Body[/i]: Virgo 5
+[i]Class[/i]: Planet
 [i]Habitability[/i]: Low (Extreme Low Temperature)
 [b]Notice[/b]: Arctic survival gear is required. Contact traffic control for weather advisories."}
 	icon_state = "frozen"
