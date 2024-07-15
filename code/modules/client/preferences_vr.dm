@@ -121,7 +121,7 @@
 	SScharacter_setup.queue_preferences_save(prefs)
 
 	feedback_add_details("admin_verb", "TSoundMentorhelps")
-
+/* RS Removal
 /client/verb/toggle_player_tips()
 	set name = "Toggle Receiving Player Tips"
 	set category = "Preferences"
@@ -136,7 +136,7 @@
 	SScharacter_setup.queue_preferences_save(prefs)
 
 	feedback_add_details("admin_verb", "TReceivePlayerTips")
-
+*/ //RS removal End
 /client/verb/toggle_pain_frequency()
 	set name = "Toggle Pain Frequency"
 	set category = "Preferences"

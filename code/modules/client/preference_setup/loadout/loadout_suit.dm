@@ -623,7 +623,7 @@
 /datum/gear/suit/snowsuit/science
 	display_name = "snowsuit, science"
 	path = /obj/item/clothing/suit/storage/snowsuit/science
-	allowed_roles = list("Research Director","Scientist", "Roboticist", "Xenobiologist")
+	allowed_roles = list("Research Director","Scientist", "Roboticist", "Xenobiologist", "Xenobotanist")
 
 /datum/gear/suit/snowsuit/engineering
 	display_name = "snowsuit, engineering"
