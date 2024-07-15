@@ -114,30 +114,30 @@
 
 #include "../expedition_vr/snowbase/snowbase.dm"
 /datum/map_template/common_lateload/away_snowbase
-	name = "Snowdrift Base"
-	desc = "A small research outpost owned by NT."
+	name = "Virgo 5"
+	desc = "A small research outpost owned by NT on Virgo 5."
 	mappath = 'maps/expedition_vr/snowbase/snowbase.dmm'
 	associated_map_datum = /datum/map_z_level/common_lateload/away_snowbase
 
 /datum/map_z_level/common_lateload/away_snowbase
-	name = "Snowdrift Base"
+	name = "Virgo 5"
 	z = Z_LEVEL_SNOWBASE
 
 /datum/map_template/common_lateload/away_snowbase/on_map_loaded(z)
 	. = ..()
 	// Now for the tunnels.
-//	new /datum/random_map/automata/cave_system/no_cracks(null, 3, 3, Z_LEVEL_SNOWBASE, world.maxx - 4, world.maxy - 4)
+	new /datum/random_map/automata/cave_system/no_cracks(null, 3, 3, Z_LEVEL_SNOWBASE, world.maxx - 4, world.maxy - 4)
 	new /datum/random_map/noise/ore/snowbasemine(null, 1, 1, Z_LEVEL_SNOWBASE, 64, 64)
 
 //The glacier, which is mostly POIs and mining
 /datum/map_template/common_lateload/away_snowbase_glacier
-	name = "Snowdrift Glacier"
+	name = "Virgo 5 Glacier"
 	desc = "A strange glacier near the NT outpost."
 	mappath = 'maps/expedition_vr/snowbase/snowbase_glacier.dmm'
 	associated_map_datum = /datum/map_z_level/common_lateload/away_snowbase_glacier
 
 /datum/map_z_level/common_lateload/away_snowbase_glacier
-	name = "Snowdrift Glacier"
+	name = "Virgo 5 Glacier"
 	z = Z_LEVEL_GLACIER
 
 /datum/map_template/common_lateload/away_snowbase_glacier/on_map_loaded(z)

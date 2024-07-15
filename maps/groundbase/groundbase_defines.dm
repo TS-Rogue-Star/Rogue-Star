@@ -203,7 +203,7 @@
 		list("Debris Field - Z1 Space"),
 		list("Fuel Depot - Z1 Space"),
 		list("Offmap Ship - Talon V2"),
-		list("Snowdrift Base","Snowdrift Glacier")
+		list("Virgo 5 Base","Virgo 5 Glacier")
 		)
 	//List associations used in admin load selection feature
 	lateload_gateway = list(
