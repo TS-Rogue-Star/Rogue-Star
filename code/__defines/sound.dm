@@ -272,7 +272,3 @@
 #define AMBIENCE_DETECTIVE list(\
 	'sound/ambience/security/detective_1.ogg'\
 	)
-
-#define AMBIENCE_BRIDGE list(\
-	'sound/ambience/command/bridge_1.ogg'\
-	)
