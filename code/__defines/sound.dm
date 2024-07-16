@@ -149,6 +149,27 @@
 	'sound/ambience/engineering/engineering3.ogg'\
 	)
 
+// Peace of mind in a calm medbay
+#define AMBIENCE_MEDBAY list(\
+	'sound/ambience/medbay/medbay_1.ogg',\
+	'sound/ambience/medbay/medbay_2.ogg',\
+	'sound/ambience/medbay/medbay_3.ogg',\
+	'sound/ambience/medbay/medbay_4.ogg',\
+	'sound/ambience/medbay/medbay_5.ogg'\
+	)
+
+// A calm ambient for the preparation of medicines
+#define AMBIENCE_CHEMISTRY list(\
+	'sound/ambience/medbay/chemistry_2.ogg',\
+	'sound/ambience/medbay/chemistry_2.ogg'\
+	)
+
+// Disturbing music for surgery, where life is on the edge
+#define AMBIENCE_SURGERY list(\
+	'sound/ambience/medbay/surgery_1.ogg',\
+	'sound/ambience/medbay/surgery_2.ogg'\
+	)
+
 // Creepy AI/borg stuff.
 #define AMBIENCE_AI list(\
 	'sound/ambience/ai/ai1.ogg',\
@@ -159,7 +180,16 @@
 // Peaceful sounds when floating in the void.
 #define AMBIENCE_SPACE list(\
 	'sound/ambience/space/space_serithi.ogg',\
-	'sound/ambience/space/space1.ogg'\
+	'sound/ambience/space/space1.ogg',\
+	'sound/ambience/space/space2.ogg',\
+	'sound/ambience/space/space3.ogg',\
+	'sound/ambience/space/space4.ogg',\
+	'sound/ambience/space/space5.ogg',\
+	'sound/ambience/space/space6.ogg',\
+	'sound/ambience/space/space7.ogg',\
+	'sound/ambience/space/space8.ogg',\
+	'sound/ambience/space/space9.ogg',\
+	'sound/ambience/space/space10.ogg'\
 	)
 
 // Vaguely spooky sounds when around dead things.
@@ -197,19 +227,19 @@
 #define AMBIENCE_AESTHETIC list(\
 	'sound/ambience/vaporwave.ogg'\
 	)
-	
+
 #define AMBIENCE_OUTPOST list(\
 	'sound/ambience/expoutpost/expoutpost1.ogg',\
 	'sound/ambience/expoutpost/expoutpost2.ogg',\
 	'sound/ambience/expoutpost/expoutpost3.ogg',\
 	'sound/ambience/expoutpost/expoutpost4.ogg'\
 	)
-	
+
 #define AMBIENCE_SUBSTATION list(\
 	'sound/ambience/substation/substation1.ogg',\
 	'sound/ambience/substation/substation2.ogg'\
 	)
-	
+
 #define AMBIENCE_HANGAR list(\
 	'sound/ambience/hangar/hangar1.ogg',\
 	'sound/ambience/hangar/hangar2.ogg',\
@@ -218,10 +248,31 @@
 	'sound/ambience/hangar/hangar5.ogg',\
 	'sound/ambience/hangar/hangar6.ogg'\
 	)
-	
+
 #define AMBIENCE_ATMOS list(\
-	'sound/ambience/engineering/engineering1.ogg',\
-	'sound/ambience/engineering/engineering2.ogg',\
-	'sound/ambience/engineering/engineering3.ogg',\
-	'sound/ambience/atmospherics/atmospherics1.ogg'\
+	'sound/ambience/atmospherics/atmospherics1.ogg',\
+	'sound/ambience/atmospherics/atmospherics2.ogg',\
+	'sound/ambience/atmospherics/atmospherics3.ogg'\
+	)
+
+#define AMBIENCE_RND list(\
+	'sound/ambience/rnd/rnd_1.ogg',\
+	'sound/ambience/rnd/rnd_2.ogg'\
+	)
+
+#define AMBIENCE_ROBOTICS list(\
+	'sound/ambience/rnd/robotics_1.ogg',\
+	'sound/ambience/rnd/robotics_2.ogg'\
+	)
+
+#define AMBIENCE_BRIDGE list(\
+	'sound/ambience/command/bridge_1.ogg'\
+	)
+
+#define AMBIENCE_DETECTIVE list(\
+	'sound/ambience/security/detective_1.ogg'\
+	)
+
+#define AMBIENCE_BRIDGE list(\
+	'sound/ambience/command/bridge_1.ogg'\
 	)
