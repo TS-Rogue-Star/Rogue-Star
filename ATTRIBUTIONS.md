@@ -101,3 +101,18 @@
 **License:** Licensed for use by Rogue Star; unlicensed for further use without permission of copyright holder<br>
 **Notes:** All files within this folder are covered under the above license, as per the included attribution.txt file
 <br>
+**File:** `icons/obj/pet_carrier.dmi`<br>
+**Title:** pet_carrier.dmi<br>
+**Creator:** WalterJe (https://github.com/tgstation/tgstation/pull/33231)<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/items/lefthand_melee_rs.dmi`<br>
+**Icon-States:** `pet_carrier`<br>
+**Creator:** WalterJe (https://github.com/tgstation/tgstation/pull/33231)<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/items/righthand_melee_rs.dmi`<br>
+**Icon-States:** `pet_carrier`<br>
+**Creator:** WalterJe (https://github.com/tgstation/tgstation/pull/33231)<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>

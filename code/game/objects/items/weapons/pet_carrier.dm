@@ -1,8 +1,11 @@
 #define pet_carrier_full(carrier) carrier.occupants.len >= carrier.max_occupants || carrier.occupant_weight >= carrier.max_occupant_weight
 
 /*
+	~~RS Add~~
 	Ported from TGStation
-	Original PR: https://github.com/tgstation/tgstation/pull/33231
+	Created by: Xhuis, https://github.com/tgstation/tgstation/pull/33231
+	Ported by Fartmaster69, https://github.com/TS-Rogue-Star/Rogue-Star/pull/432
+	Licsense: GNU AGPL V3, https://www.gnu.org/licenses/agpl-3.0.html
 */
 
 //Used to transport little animals without having to drag them across the station.
