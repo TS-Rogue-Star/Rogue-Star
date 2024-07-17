@@ -311,6 +311,8 @@ var/list/goon_speak_pugg_sound = list('sound/talksounds/goon/pugg.ogg', 'sound/t
 var/list/goon_speak_roach_sound = list('sound/talksounds/goon/roach.ogg', 'sound/talksounds/goon/roach_ask.ogg', 'sound/talksounds/goon/roach_exclaim.ogg')
 var/list/goon_speak_skelly_sound = list('sound/talksounds/goon/skelly.ogg', 'sound/talksounds/goon/skelly_ask.ogg', 'sound/talksounds/goon/skelly_exclaim.ogg')
 
+//RS ADD START
+
 var/list/welcome_sound = list('sound/voice/welcome/0.ogg' = 50,'sound/voice/welcome/1.ogg' = 50,'sound/voice/welcome/2.ogg' = 50,
 'sound/voice/welcome/3.ogg' = 50,'sound/voice/welcome/4.ogg' = 50,'sound/voice/welcome/5.ogg' = 50,'sound/voice/welcome/6.ogg' = 50,
 'sound/voice/welcome/7.ogg' = 50,'sound/voice/welcome/8.ogg' = 50,'sound/voice/welcome/9.ogg' = 50,'sound/voice/welcome/10.ogg' = 50,
@@ -318,4 +320,7 @@ var/list/welcome_sound = list('sound/voice/welcome/0.ogg' = 50,'sound/voice/welc
 'sound/voice/welcome/15.ogg' = 50, 'sound/voice/welcome/16-SatinIsle.ogg' = 50, 'sound/voice/welcome/17-seashell.ogg' = 50,
 'sound/voice/welcome/18-seashell.ogg' = 50, 'sound/voice/welcome/19-seashell.ogg' = 50, 'sound/voice/welcome/20-seashell.ogg' = 50,
 'sound/voice/welcome/21-seashell.ogg' = 50, 'sound/voice/welcome/22-seashell.ogg' = 50, 'sound/voice/welcome/23-seashell.ogg' = 50,
-'sound/voice/welcome/24-seashell.ogg' = 50, 'sound/voice/welcome/25-hazard.ogg' = 50, 'sound/voice/welcome/26-hazard.ogg' = 50, 'sound/voice/welcome/27.ogg' = 10)
+'sound/voice/welcome/24-seashell.ogg' = 50, 'sound/voice/welcome/25-hazard.ogg' = 50, 'sound/voice/welcome/26-hazard.ogg' = 50,
+'sound/voice/welcome/27.ogg' = 10, 'sound/voice/welcome/28-snowbell.ogg' = 50)
+
+//RS ADD END

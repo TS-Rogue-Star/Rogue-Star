@@ -116,3 +116,8 @@
 **Creator:** WalterJe (https://github.com/tgstation/tgstation/pull/33231)<br>
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
+**File:** `icons/obj/taurs_rs.dmi`<br>
+**Title:** new_zorgoia, new_zorgoia_s, new_zorgoia_fat, new_zorgoia_fat_s<br>
+**Creator:** radiantAurora (https://github.com/radiantAurora)<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
