@@ -343,7 +343,7 @@
 					to_chat(src,"<span class='warning'>Blobbing interrupted.</span>")
 					active_regen = FALSE //Global Protean Ability active chec
 					return
-					nano_intoblob()
+				nano_intoblob()
 			active_regen = FALSE
 			//RS Edit End
 
