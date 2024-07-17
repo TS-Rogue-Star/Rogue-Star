@@ -9,7 +9,6 @@
 /obj/item/organ/external/groin/unbreakable/nano
 	robotic = ORGAN_NANOFORM
 	encased = FALSE
-	cannot_gib = 0
 	max_damage = 30 // <-- This is different from the rest
 	min_broken_damage = 1000 //Multiple
 	vital = TRUE //RS Edit (counts towards dying now)

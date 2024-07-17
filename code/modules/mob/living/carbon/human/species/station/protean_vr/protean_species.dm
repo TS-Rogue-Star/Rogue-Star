@@ -31,7 +31,6 @@
 	breath_type = null
 	poison_type = null
 	//RS add (for healing ability)
-	var/heal_rate = 0.5 // Temp. Regen per tick.
 	var/prot_healing_allowed = FALSE	// Switches to FALSE if healing is not possible at all.
 	var/stored_brute = 0
 	var/stored_burn = 0
@@ -144,76 +143,63 @@
 /datum/species/protean/handle_post_spawn(var/mob/living/carbon/human/H)
 	..()
 	H.synth_color = TRUE
-//rs Add (Healing ability non blob)
-/datum/species/protean/handle_environment_special(var/mob/living/carbon/human/H)
+//rs Add (proc for heal fail reason)
+/datum/species/protean/proc/stop_protean_healing(var/mob/living/carbon/human/H, var/reason)
+  // Clean up all our stuff
+	prot_healing_allowed = FALSE
+	stored_brute = 0
+	stored_burn = 0
+  // If a reason was passed in, show that
+	if(reason)
+		to_chat(H, "<span class='notice'>[reason]</span>")
 
-	var/current_brute = TRUE
-	var/current_burn = TRUE
-
-
-	// Heal remaining damage.
-	if(prot_healing_allowed)
-		//to_chat(H,"<span class='notice'> Healing Proc</span>")
-		if(H.getActualBruteLoss() || H.getActualFireLoss())
-			var/nutrition_cost = 0		// The total amount of nutrition drained every tick, when healing
-			var/nutrition_debt = 0		// Holder variable used to store previous damage values prior to healing for use in the nutrition_cost equation.
-			var/obj/item/organ/internal/nano/refactory/refactory = locate() in H.internal_organs
-			if(refactory && !(refactory.status & ORGAN_DEAD))
-
-				if(refactory.get_stored_material(MAT_STEEL) < 100)
-					to_chat(H,"<span class='warning'>Not enough Steel stored, Deactivating Regeneration.</span>")
-					prot_healing_allowed = FALSE
-					return
-				current_brute = H.getActualBruteLoss()
-				current_burn = H.getActualBruteLoss()
-				if(stored_brute == 0)
-					stored_brute = current_brute
-				if(stored_burn == 0)
-					stored_burn = current_burn
-
-				if(H.nutrition >= 150)		// This is when the icon goes red
-					var/to_pay = 0
-					if(current_brute <= stored_brute)
-						nutrition_debt = current_brute
-						H.adjustBruteLoss(-1,include_robo = TRUE) //Modified by species resistances
-						stored_brute = current_brute
-
-						to_pay = nutrition_debt - current_brute
-
-						nutrition_cost += to_pay
-					else
-						to_chat(H,"<span class='notice'> Damage Taken, Deactivating Regeneration.</span>")
-						prot_healing_allowed = FALSE
-						stored_brute = 0
-						stored_burn = 0
-						return
-					if(current_burn <= stored_burn)
-						nutrition_debt = current_burn
-						H.adjustFireLoss(-0.5,include_robo = TRUE) //Modified by species resistances
-
-						to_pay = nutrition_debt - current_burn
-						stored_burn = current_burn
-						nutrition_cost += to_pay
-					else
-						to_chat(H,"<span class='notice'> Damage Taken, Deactivating Regeneration.</span>")
-						prot_healing_allowed = FALSE
-						stored_brute = 0
-						stored_burn = 0
-						return
-					if(!refactory.use_stored_material(MAT_STEEL,100))
-						return
-					H.adjust_nutrition(-(3 * nutrition_cost)) // Costs Nutrition when damage is being repaired, corresponding to the amount of damage being repaired.
-				else
-					to_chat(H,"<span class='notice'> Not enough power remaining, Deactivating Regeneration.</span>")
-					prot_healing_allowed = FALSE
-					stored_brute = 0
-					stored_burn = 0
+//RS add (healing ability)
+/datum/species/protean/proc/handle_protean_healing(var/mob/living/carbon/human/H)
+	var/current_brute = H.getActualBruteLoss()
+	var/current_burn = H.getActualFireLoss()
+	if(!prot_healing_allowed)
+		return
+	if(!current_brute && !current_burn)
+		stop_protean_healing(H, "Healing Completed, Deactivating Regeneration.")
+		return
+	var/nutrition_cost = 0		// The total amount of nutrition drained every tick, when healing
+	var/obj/item/organ/internal/nano/refactory/refactory = locate() in H.internal_organs
+	if(!refactory || (refactory.status & ORGAN_DEAD))
+		stop_protean_healing(H, "Refactory missing or dead.")
+		return
+	if(stored_brute == 0)
+		stored_brute = current_brute
+	if(stored_burn == 0)
+		stored_burn = current_burn
+	if(H.nutrition < 150)// This is when the icon goes red
+		stop_protean_healing(H, "Not enough power remaining, Deactivating Regeneration.")
+		return
+	if(!refactory.use_stored_material(MAT_STEEL,100))
+		stop_protean_healing(H, "Not enough Steel stored, Deactivating Regeneration.")
+		return
+	if(current_brute)
+		if(current_brute <= stored_brute)
+			H.adjustBruteLoss(-1,include_robo = TRUE) //Modified by species resistances
+			stored_brute = current_brute
+			nutrition_cost += 1
 		else
-			to_chat(H,"<span class='notice'> Healing Completed, Deactivating Regeneration.</span>")
-			prot_healing_allowed = FALSE
-			stored_brute = 0
-			stored_burn = 0
+			stop_protean_healing(H, "Damage Taken, Deactivating Regeneration.")
+			return
+	if(current_burn)
+		if(current_burn <= stored_burn)
+			H.adjustFireLoss(-0.5,include_robo = TRUE) //Modified by species resistances
+			stored_burn = current_burn
+			nutrition_cost += 1
+		else
+			stop_protean_healing(H, "Damage Taken, Deactivating Regeneration.")
+			return
+	//to_chat(H, "<span class='notice'>[nutrition_cost]</span>") //debug
+	H.adjust_nutrition(-(nutrition_cost)) // Costs Nutrition when damage is being repaired, corresponding to the amount of damage being repaired.
 //rs Add End (Healing ability non blob)
+
+/datum/species/protean/handle_environment_special(var/mob/living/carbon/human/H)
+	handle_protean_healing(H)//RS Add (non blob healing)
+
 /datum/species/protean/equip_survival_gear(var/mob/living/carbon/human/H)
 	var/obj/item/stack/material/steel/metal_stack = new(null, 3)
 

@@ -2,7 +2,7 @@
 ////
 //  One-part Refactor
 ////
-/mob/living/carbon/human/proc/nano_partswap()//RS Edit (Ability changed to not require blobbing)
+/mob/living/carbon/human/proc/nano_partswap()
 	set name = "Ref - Single Limb"
 	set desc = "Allows you to replace and reshape your limbs as you see fit."
 	set category = "Abilities"
@@ -22,10 +22,14 @@
 		to_chat(src,"<span class='warning'>You don't have a working refactory module!</span>")
 		return
 
+	//Already regenerating (RS Add)
+	if(active_regen) //Global Protean Ability active check
+		to_chat(src, "<span class='warning'>You are already refactoring!</span>")
+		return
+	//RS add end
 	var/choice = tgui_input_list(src,"Pick the bodypart to change:", "Refactor - One Bodypart", species.has_limbs)
 	if(!choice)
 		return
-
 	//Organ is missing, needs restoring
 	if(!organs_by_name[choice] || istype(organs_by_name[choice], /obj/item/organ/external/stump)) //allows limb stumps to regenerate like removed limbs.
 		if(refactory.get_stored_material(MAT_STEEL) < PER_LIMB_STEEL_COST)
@@ -34,19 +38,26 @@
 		var/regen = tgui_alert(src,"That limb is missing, do you want to regenerate it in exchange for [PER_LIMB_STEEL_COST] steel?","Regenerate limb?",list("Yes","No"))
 		if(regen != "Yes")
 			return
-
+		//if(!refactory.use_stored_material(MAT_STEEL,PER_LIMB_STEEL_COST)) //RS Moved See line 56
+		//	return //RS Moved
 		if(organs_by_name[choice])
 			var/obj/item/organ/external/oldlimb = organs_by_name[choice]
 			oldlimb.removed()
 			qdel(oldlimb)
 
 		//var/mob/living/simple_mob/protean_blob/blob = nano_intoblob() ////RS Edit (Ability changed to not require blobbing)
-		active_regen = TRUE
 		//RS Add
+		active_regen = TRUE //Global Protean Ability active check
 		to_chat(src, "<span class='danger'>Remain still while the process takes place! It will take 10 seconds.</span>")
 		visible_message("<B>[src]</B>'s form begins to shift and ripple as if made of oil...")
 		if(do_after(src,10 SECONDS))
 		//RS Add End
+			//RS edit (moved steel usage)
+			if(!refactory.use_stored_material(MAT_STEEL,PER_LIMB_STEEL_COST))
+				to_chat(src,"<span class='warning'>You do not have enough stored steel to do this.</span>")
+				active_regen = FALSE //Global Protean Ability active chec
+				return
+			//RS Edit End (moved steel usage)
 			var/list/limblist = species.has_limbs[choice]
 			var/limbpath = limblist["path"]
 			var/obj/item/organ/external/new_eo = new limbpath(src)
@@ -59,9 +70,7 @@
 				new_eo.markings = dna_markings.Copy()
 			// RS Add End
 			regenerate_icons()
-			if(!refactory.use_stored_material(MAT_STEEL,PER_LIMB_STEEL_COST))
-				return
-		active_regen = FALSE
+		active_regen = FALSE //Global Protean Ability active check
 		//nano_outofblob(blob) //RS Edit (Ability changed to not require blobbing)
 		return
 
@@ -115,7 +124,7 @@
 		return
 
 	//Already regenerating
-	if(active_regen)
+	if(active_regen) //Global Protean Ability active check
 		to_chat(src, "<span class='warning'>You are already refactoring!</span>")
 		return
 
@@ -147,8 +156,12 @@
 		visible_message("<B>[src]</B>'s form collapses into an amorphous blob of black ichor...")
 
 		//var/mob/living/simple_mob/protean_blob/blob = nano_intoblob() //RS Edit (Ability changed to not require blobbing)
-		active_regen = TRUE
+		active_regen = TRUE //Global Protean Ability active check
 		if(do_after(src,5 SECONDS))
+			if(refactory.get_stored_material(MAT_STEEL) < refactory.max_storage) //RS Edit changed to not take steel untill operation completed
+				to_chat(src, "<span class='warning'>You need to be maxed out on normal metal to do this!</span>")
+				active_regen = FALSE //global protean ability active check
+				return
 			synthetic = usable_manufacturers[manu_choice]
 			torso.robotize(manu_choice) //Will cascade to all other organs.
 			// RS Add - Reapply lost markings
@@ -165,20 +178,21 @@
 		//nano_outofblob(blob) //RS Edit (Ability changed to not require blobbing)
 		return
 
-	//Not enough resources (AND spends the resources, should be the last check)
-	if(refactory.get_stored_material(MAT_STEEL) < refactory.max_storage) //RS Edit changed to not take steel untill operation completed
-		to_chat(src, "<span class='warning'>You need to be maxed out on normal metal to do this!</span>")
-		return
+
 
 	var/delay_length = round(active_regen_delay * species.active_regen_mult)
 	to_chat(src, "<span class='danger'>Remain still while the process takes place! It will take [delay_length/10] seconds.</span>")
 	visible_message("<B>[src]</B>'s form begins to shift and ripple as if made of oil...")
-	active_regen = TRUE
+	active_regen = TRUE //Global Protean Ability active check
 
 	//var/mob/living/simple_mob/protean_blob/blob = nano_intoblob() //RS Edit (Ability changed to not require blobbing)
 	if(do_after(src, delay_length, null, 0))
 		if(stat != DEAD && refactory)
 			var/list/holder = refactory.materials
+			if(!refactory.use_stored_material(MAT_STEEL,refactory.max_storage)) //RS Edit (Changed ability to only take steel when operation complete)
+				to_chat(src,"<span class='warning'>You do not have enough stored steel to do this.</span>")
+				active_regen = FALSE //Global Protean Ability active check
+				return
 			//RS Edit (Changed ability to not heal all damage (code taken from Organic 'Regenerate' Ability))
 			// Replace completely missing limbs.
 			for(var/limb_type in src.species.has_limbs)
@@ -231,16 +245,15 @@
 			else
 				new_refactory.materials = holder
 
-			if(!refactory.use_stored_material(MAT_STEEL,refactory.max_storage)) //RS Edit (Changed ability to only take steel when operation complete)
-				to_chat(src, "<span class='notice'>Your refactoring is complete.</span>") //Guarantees the message shows no matter how bad the timing.
-				to_chat(src, "<span class='notice'>Your refactoring is complete!</span>")
+			to_chat(src, "<span class='notice'>Your refactoring is complete.</span>") //Guarantees the message shows no matter how bad the timing.
+			to_chat(src, "<span class='notice'>Your refactoring is complete!</span>")
 		else
 			to_chat(src,  "<span class='critical'>Your refactoring has failed.</span>")
 			to_chat(src, "<span class='critical'>Your refactoring has failed!</span>")
 	else
 		to_chat(src,  "<span class='critical'>Your refactoring is interrupted.</span>")
 		to_chat(src, "<span class='critical'>Your refactoring is interrupted!</span>")
-	active_regen = FALSE
+	active_regen = FALSE //Global Protean Ability active check
 	//nano_outofblob(blob)
 
 
@@ -321,14 +334,19 @@
 		return
 	else
 		//RS Edit (no blobbing while arrested/unconcious)
-		to_chat(src,"<span class='notice'>Your form starts to shift as you begin to collapse into a gooey blob.</span>")
-		visible_message("<b>[src.name]</b> starts to collapse into a gooey blob!")
-		if(do_after(src,10 SECONDS))
-			if(stat || paralysis || stunned || restrained()) //Double check to make sure we didnt get KO'd during our do_after()
-				to_chat(src,"<span class='warning'>Blobbing interrupted.</span>")
-				return
-		//RS Edit End
-		nano_intoblob()
+		if(active_regen == FALSE) // Prevents you from accidently blobbing while an ability is running
+			active_regen = TRUE;
+			to_chat(src,"<span class='notice'>Your form starts to shift as you begin to collapse into a gooey blob.</span>")
+			visible_message("<b>[src.name]</b> starts to collapse into a gooey blob!")
+			if(do_after(src,10 SECONDS))
+				if(stat || paralysis || stunned || restrained()) //Double check to make sure we didnt get KO'd during our do_after()
+					to_chat(src,"<span class='warning'>Blobbing interrupted.</span>")
+					active_regen = FALSE //Global Protean Ability active chec
+					return
+					nano_intoblob()
+			active_regen = FALSE
+			//RS Edit End
+
 
 ////
 //  Change fitting
@@ -367,7 +385,7 @@
 		//to_chat(user,"<span class='warning'>Refactory Detected...</span>")
 	//if(!temporary_form)
 		//to_chat(user,"<span class='warning'>Is human form...</span>")
-	if(!active_regen)
+	if(!active_regen) //Global Protean Ability active check
 		if(S.prot_healing_allowed == FALSE)
 			if(refactory.get_stored_material(MAT_STEEL) < 100)
 				to_chat(user,"<span class='warning'>You do not have enough stored steel to do this.</span>")

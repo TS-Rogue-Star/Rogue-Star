@@ -267,17 +267,17 @@
 	if(!istype(humanform.species,/datum/species/protean)) // ???
 		return
 	var/datum/species/protean/S = humanform.species
-	if(S.prot_healing_allowed)
-		if(. && istype(refactory) && humanform)
-			if(!healing && (human_brute || human_burn) && refactory.get_stored_material(MAT_STEEL) >= 100)
-				healing = humanform.add_modifier(/datum/modifier/protean/steel, origin = refactory)
-			else if(healing && !(human_brute || human_burn))
-				healing.expire()
-				healing = null
-				S.prot_healing_allowed = FALSE
-	else if(!S.prot_healing_allowed && healing)
+	if(!S.prot_healing_allowed && healing)
 		healing.expire()
 		healing = null
+		return
+	if(. && istype(refactory) && humanform)
+		if(!healing && (human_brute || human_burn) && refactory.get_stored_material(MAT_STEEL) >= 100)
+			healing = humanform.add_modifier(/datum/modifier/protean/steel, origin = refactory)
+		else if(healing && !(human_brute || human_burn))
+			healing.expire()
+			healing = null
+			S.prot_healing_allowed = FALSE
 	//RS Edit End
 /mob/living/simple_mob/protean_blob/lay_down()
 	..()
