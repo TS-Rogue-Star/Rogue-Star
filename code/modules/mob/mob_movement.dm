@@ -10,6 +10,13 @@
 	. = 0
 	if(locate(/obj/item/weapon/grab) in src)
 		. += 5
+	// CHOMPAdd Start - When crawling, move slow.
+	if(lying)
+		if(weakened >= 1)
+			. += 14			// Very slow when weakened.
+		else
+			. += 8
+	// CHOMPAdd End
 
 	// Movespeed delay based on movement mode
 	switch(m_intent)
