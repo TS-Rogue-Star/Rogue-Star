@@ -19,12 +19,12 @@
 	response_help = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm = "hits"
-
-	harm_intent_damage = 2
-	melee_damage_lower = 5
-	melee_damage_upper = 5
-	attacktext = list("slashed")
-
+	//RS Edit (removed blob damage, Crates, Airlocks, Lockers, Tanking Mobs)
+	harm_intent_damage = 0
+	melee_damage_lower = 0
+	melee_damage_upper = 0
+	//attacktext = list("slashed")
+	//RS Edit End
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0
@@ -36,7 +36,17 @@
 	minbodytemp = 0
 	maxbodytemp = 900
 	movement_cooldown = -0.5 // Should mean that the little blurb about being quicker in blobform rings true. May need further adjusting.
-
+	//RS Add (Squish emotes!)
+	var/list/default_emotes = list(
+		/decl/emote/audible/squish,
+		/decl/emote/visible/bounce,
+		/decl/emote/visible/jiggle,
+		/decl/emote/visible/vibrate,
+		/decl/emote/visible/flip,
+		/decl/emote/visible/spin,
+		/decl/emote/visible/floorspin
+	)
+	//RS Add End
 	var/mob/living/carbon/human/humanform
 	var/obj/item/organ/internal/nano/refactory/refactory
 	var/datum/modifier/healing
@@ -44,10 +54,12 @@
 	var/obj/prev_left_hand
 	var/obj/prev_right_hand
 
+	var/stored_brute = 0
+	var/stored_burn = 0
 	var/human_brute = 0
 	var/human_burn = 0
-
-	player_msg = "In this form, you can move a little faster, your health will regenerate as long as you have metal in you, and you can ventcrawl!"
+	//RS Edit (blob message adjust)
+	player_msg = "In this form, you can move a little faster, healing does not require power, and you can ventcrawl!"
 
 	can_buckle = TRUE //Blobsurfing
 
@@ -91,7 +103,11 @@
 	return "synthetic"
 
 /mob/living/simple_mob/protean_blob/get_available_emotes()
-	return global._robot_default_emotes.Copy()
+	var/list/fulllist = global._robot_default_emotes.Copy() //RS Edit (var/list/fulllist Formerly return)
+	//RS Add (Squish emotes!)
+	fulllist += default_emotes
+	return fulllist
+	//RS Add End
 
 /mob/living/simple_mob/protean_blob/init_vore()
 	return //Don't make a random belly, don't waste your time
@@ -247,13 +263,22 @@
 
 /mob/living/simple_mob/protean_blob/Life()
 	. = ..()
+	//RS Edit Toggling of blob healing with ability
+	if(!istype(humanform.species,/datum/species/protean)) // ???
+		return
+	var/datum/species/protean/S = humanform.species
+	if(!S.prot_healing_allowed && healing)
+		healing.expire()
+		healing = null
+		return
 	if(. && istype(refactory) && humanform)
 		if(!healing && (human_brute || human_burn) && refactory.get_stored_material(MAT_STEEL) >= 100)
 			healing = humanform.add_modifier(/datum/modifier/protean/steel, origin = refactory)
 		else if(healing && !(human_brute || human_burn))
 			healing.expire()
 			healing = null
-
+			S.prot_healing_allowed = FALSE
+	//RS Edit End
 /mob/living/simple_mob/protean_blob/lay_down()
 	..()
 	if(resting)

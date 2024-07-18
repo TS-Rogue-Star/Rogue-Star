@@ -11,11 +11,12 @@
 	encased = FALSE
 	max_damage = 30 // <-- This is different from the rest
 	min_broken_damage = 1000 //Multiple
-	vital = FALSE
+	vital = TRUE //RS Edit (counts towards dying now)
 	model = "protean"
 /obj/item/organ/external/head/unbreakable/nano
 	robotic = ORGAN_NANOFORM
 	encased = FALSE
+	cannot_gib = 0 //RS Edit (Can be destroyed, if not desired set vital to 1 to count towards death)
 	max_damage = 30
 	min_broken_damage = 1000 //Inheritance
 	vital = FALSE
