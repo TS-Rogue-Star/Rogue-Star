@@ -121,3 +121,8 @@
 **Creator:** radiantAurora (https://github.com/radiantAurora)<br>
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
+**File:** `icons/mob/vore64x32.dmi`<br>
+**Title:** otie, cotie, sotie, photie, secotie, secphotie, badboi, prettyboi, rous, hotie, sechotie, fotie, fcotie, fsotie, photiec, hotiec, direwolf, diredog, direwolfs, diredogs, andrews, rykka, caotie<br>
+**Creator:** Verkister (https://github.com/Verkister)<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
