@@ -499,6 +499,7 @@
 	icon_state = "una_skull"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_unathi_blocky_head
 	name = "Unathi alt head (Blocky)"
@@ -524,6 +525,7 @@
 	icon_state = "vulp_skull"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_vulp_nose
 	name = "nose (Vulp)"
