@@ -989,7 +989,7 @@ I think I covered everything.
 				//Alternatively bully a coder (me) to make a unique digest_mode for mob healbellies that prevents death, or something.
 				if(istype(A, /mob/living/carbon/human))
 					var/mob/living/carbon/human/P = L
-					var/list/to_inject = list("myelamine","spaceacillin","peridaxon", "iron", "hyronalin") // RS Edit, removing Osteo since healbellies already fix broken bones.
+					var/list/to_inject = list("myelamine","spaceacillin","peridaxon", "iron", "hyronalin") // RS Edit, removing Osteo as bone breaks won't kill you.
 					//Lets not OD them...
 					for(var/RG in to_inject)
 						if(!P.reagents.has_reagent(RG))
