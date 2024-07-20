@@ -115,6 +115,8 @@ var/world_topic_spam_protect_time = world.timeofday
 		s["stationtime"] = stationtime2text()
 		s["roundduration"] = roundduration2text()
 		s["map"] = strip_improper(using_map.full_name) //Done to remove the non-UTF-8 text macros
+		s["ingame-players"] = 0;
+
 
 		if(input["status"] == "2") // Shiny new hip status.
 			var/active = 0
@@ -152,6 +154,13 @@ var/world_topic_spam_protect_time = world.timeofday
 
 			s["players"] = n
 			s["admins"] = admins
+
+		var/ingame_players = 0
+		for (var/client/C in GLOB.clients)
+			if (!(isobserver(C.mob) || istype(C.mob,/mob/new_player)))
+				ingame_players++
+
+		s["ingame-players"] = ingame_players
 
 		return list2params(s)
 

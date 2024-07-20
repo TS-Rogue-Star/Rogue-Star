@@ -6994,7 +6994,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/canned/caviar/true
 	name = "\improper Classic Terran Caviar"
 	icon_state = "carpeggs"
-	desc = "Terran caviar, or space carp eggs. Banned by the Vir Food Health Administration for exceeding the legally set amount of carpotoxins in food stuffs."
+	desc = "Terran caviar, or space carp eggs. Banned by the Vir Food Health Administration for exceeding the legally set amount of seafood based toxins in food stuffs."
 	trash = /obj/item/trash/carpegg
 	canned_open_state = "carpeggs-open"
 	filling_color = "#330066"
@@ -7005,7 +7005,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/canned/caviar/true/Initialize()
 	. = ..()
 	reagents.add_reagent("seafood", 4)
-	reagents.add_reagent("carpotoxin", 1)
+	reagents.add_reagent("toxin", 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/canned/maps
 	name = "\improper MAPS"
