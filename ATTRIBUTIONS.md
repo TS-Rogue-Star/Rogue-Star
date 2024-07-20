@@ -121,3 +121,21 @@
 **Creator:** radiantAurora (https://github.com/radiantAurora)<br>
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
+<br>
+**File:** `icons/mob/human_races/markings_alt.dmi`<br>
+**Title:** vulp_skull-head, una_skull-head, bellyspiral, fluffy_cuffs, chubby_belly, chubby_belly_s, belly_fluff, chest_fluff, teshari_skull-head, shoulder_markings<br>
+**Creator:** radiantAurora (https://github.com/radiantAurora)<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+<br>
+**File:** `icons/mob/human_races/markings_vr.dmi`<br>
+**Title:** beestripes<br>
+**Creator:** radiantAurora (https://github.com/radiantAurora)<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+<br>
+**File:** `icons/mob/human_races/sprite_accessories/ears.dmi`<br>
+**Title:** wild_dog<br>
+**Creator:** radiantAurora (https://github.com/radiantAurora)<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
