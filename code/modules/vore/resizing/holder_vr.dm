@@ -1,5 +1,6 @@
 /*
 	RS Edit Start, Fix ported from ChompStation for mob holders floppin.
+	Code for this Edit was written by Verkister
 /obj/item/weapon/holder/dropped(mob/user)
 	if (held_mob?.loc != src || isturf(loc))
 		var/held = held_mob
