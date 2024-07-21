@@ -1,9 +1,18 @@
+/*
+	RS Edit Start, Fix ported from ChompStation for mob holders floppin.
 /obj/item/weapon/holder/dropped(mob/user)
 	if (held_mob?.loc != src || isturf(loc))
 		var/held = held_mob
+		log_and_message_admins("Dropping holder!")
 		dump_mob()
 		held_mob = held
-
+*/
+/obj/item/weapon/holder/dropped(mob/user)
+	..()
+	spawn(1)
+		if(!throwing && isturf(loc))
+			qdel(src)
+// RS Edit/ChompPort End
 /obj/item/weapon/holder/attack_hand(mob/living/user as mob) //straight up just copypasted from objects/items.dm with a few things changed (doesn't called dropped unless +actually dropped+)
 	if (!user) return
 	if(anchored)
