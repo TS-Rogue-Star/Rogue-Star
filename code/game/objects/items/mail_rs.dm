@@ -89,7 +89,7 @@
 			set_content = FALSE
 		user.drop_item()
 		W.forceMove(src)
-		balloon_alert(user, "Placed the [W] into the [src]")
+		to_chat(user, "<span class='notice'>Placed the [W] into the [src]</span>")
 		set_content = TRUE
 		description_info = "Click with an empty hand to seal it, or Alt-Click to retrieve the object out."
 		return
@@ -128,7 +128,7 @@
 
 /obj/item/mail/blank/attack_self(mob/user)
 	if(!sealed)
-		balloon_alert(user, "Sealing the envelope...")
+		to_chat(user, "<span class='notice'>Sealing the envelope...</span>")
 		if(!do_after(user, 1.5 SECONDS, target = user))
 			sealed = FALSE
 		sealed = TRUE
@@ -210,13 +210,18 @@
 	var/current_title = new_recipient.mind.role_alt_title ? new_recipient.mind.role_alt_title : new_recipient.mind.assigned_role
 	name = "[initial(name)] for [new_recipient.real_name] ([current_title])"
 	var/datum/job/this_job = SSjob.name_occupations[new_recipient.job]
+	var/list/goodies = generic_goodies
+	if(this_job)
+		var/image/envelope = image(icon, icon_state)
+		envelope.color = this_job.get_mail_color()
+		add_overlay(envelope)
 	if(!preset_goodies)
-			var/list/job_goodies = this_job.get_mail_goodies(new_recipient, current_title)
-			if(LAZYLEN(job_goodies))
-				if(this_job.exclusive_mail_goodies)
-					goodies = job_goodies
-				else
-					goodies += job_goodies
+		var/list/job_goodies = this_job.get_mail_goodies(new_recipient, current_title)
+		if(LAZYLEN(job_goodies))
+			if(this_job.exclusive_mail_goodies)
+				goodies = job_goodies
+			else
+				goodies += job_goodies
 
 	if(!preset_goodies)
 		for(var/iterator in 1 to goodie_count)
@@ -236,8 +241,8 @@
 // Mail spawn for events
 /datum/admins/proc/spawn_mail(var/object as text)
 	set name = "Spawn Mail"
-	set category = "Fun.Event Kit"
-	set desc = "Spawn mail for a specific player, with a specific item."
+	set category = "Fun"
+	set desc = "Type in partial name of item to put in mail."
 
 	if(!check_rights(R_SPAWN)) return
 
