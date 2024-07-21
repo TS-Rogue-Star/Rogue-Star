@@ -1459,3 +1459,20 @@
 	name = "heart-bolt-shaped tail, dual color"
 	icon_state = "zaprat_heart_s"
 	extra_overlay = "zaprat_heart_markings"
+
+//RS ADD START
+
+/datum/sprite_accessory/tail/longtail/flagtail
+	name = "Flagtail"
+	icon = 'icons/rogue-star/tails_64x32_rs.dmi'
+	icon_state = "flagtail"
+	extra_overlay = "flagtail-1"
+
+/datum/sprite_accessory/tail/longtail/chonksqrl
+	name = "Squirrel (Big)"
+	icon = 'icons/rogue-star/tails_64x32_rs.dmi'
+	icon_state = "chonksqrl"
+	extra_overlay = "chonksqrl-m1"
+	extra_overlay2 = "chonksqrl-m2"
+
+//RS ADD END
