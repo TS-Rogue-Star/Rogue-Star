@@ -355,7 +355,7 @@
 	icon_state = "teshlarge_eyes_het"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
-	sorting_group = MARKINGS_HEAD //RS add
+	sorting_group = MARKINGS_TESHARI //RS add
 
 // Nightstalker Body Markings
 /datum/sprite_accessory/marking/ch/desert_nightstalker
