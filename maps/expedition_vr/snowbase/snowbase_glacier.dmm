@@ -276,10 +276,6 @@
 /obj/effect/floor_decal/steeldecal/steel_decals9,
 /turf/simulated/floor/tiled,
 /area/tether_away/snowbase/shelter)
-"zT" = (
-/obj/machinery/mech_recharger,
-/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
-/area/tether_away/snowbase/shelter)
 "Ap" = (
 /turf/unsimulated/wall,
 /area/tether_away/snowbase/outside/glacier)
@@ -15726,8 +15722,8 @@ eI
 nt
 QZ
 GT
-zT
-zT
+XF
+XF
 XF
 Pu
 XF
