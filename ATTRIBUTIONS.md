@@ -137,7 +137,7 @@
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
 **File:** `icons/mob/robot/clown_wide.dmi`<br>
-**Icon-States:** honkborg, honkborg-wreck, eyes-honkborg, honkborg-lights, honkborg-sleeper-1, honkborg-rest, honkborg-sit, honkborg-bellyup<br>
+**Icon-States:** honkborg, honkborg-wreck, honkborg-eyes, honkborg-lights, honkborg-sleeper-1, honkborg-rest, honkborg-sit, honkborg-bellyup<br>
 **Creator:** Valekin<br>
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
