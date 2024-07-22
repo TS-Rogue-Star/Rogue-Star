@@ -1467,6 +1467,7 @@
 	icon = 'icons/rogue-star/tails_64x32_rs.dmi'
 	icon_state = "flagtail"
 	extra_overlay = "flagtail-1"
+	extra_overlay2 = "flagtail-2"
 
 /datum/sprite_accessory/tail/longtail/chonksqrl
 	name = "Squirrel (Big)"
