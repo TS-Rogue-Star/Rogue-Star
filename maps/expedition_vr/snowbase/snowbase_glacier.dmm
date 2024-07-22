@@ -19,6 +19,7 @@
 /obj/machinery/suspension_gen{
 	req_access = list(301)
 	},
+/obj/effect/overlay/snow/floor,
 /turf/simulated/floor/plating/snowbase,
 /area/tether_away/snowbase/shelter)
 "aY" = (
@@ -34,6 +35,7 @@
 /obj/random/powercell,
 /obj/random/powercell,
 /obj/random/powercell,
+/obj/effect/overlay/snow/floor,
 /turf/simulated/floor/plating/snowbase,
 /area/tether_away/snowbase/shelter)
 "bB" = (
@@ -113,12 +115,15 @@
 /obj/effect/floor_decal/industrial/warning/color{
 	dir = 8
 	},
+/obj/effect/overlay/snow/floor,
 /turf/simulated/floor/plating/snowbase,
 /area/tether_away/snowbase/shelter)
 "gO" = (
 /obj/effect/floor_decal/industrial/warning/color{
 	dir = 4
 	},
+/obj/effect/overlay/snow/floor,
+/obj/structure/anomaly_container,
 /turf/simulated/floor/plating/snowbase,
 /area/tether_away/snowbase/shelter)
 "ja" = (
@@ -183,6 +188,7 @@
 "oy" = (
 /obj/effect/floor_decal/industrial/warning/color,
 /obj/machinery/floodlight,
+/obj/effect/overlay/snow/floor,
 /turf/simulated/floor/plating/snowbase,
 /area/tether_away/snowbase/shelter)
 "qx" = (
@@ -220,12 +226,12 @@
 /area/tether_away/snowbase/outside/glacier)
 "uP" = (
 /obj/structure/girder,
+/obj/effect/overlay/snow/floor,
 /turf/simulated/floor/plating/snowbase,
 /area/tether_away/snowbase/outside/glacier)
 "vv" = (
 /obj/structure/table/woodentable,
-/obj/item/device/flashlight,
-/obj/item/device/flashlight,
+/obj/machinery/recharger,
 /turf/simulated/floor/tiled,
 /area/tether_away/snowbase/shelter)
 "vC" = (
@@ -233,7 +239,8 @@
 /area/tether_away/snowbase/outside/glacier)
 "xn" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/storage/box/flare,
+/obj/item/device/flashlight,
+/obj/item/device/flashlight,
 /turf/simulated/floor/tiled,
 /area/tether_away/snowbase/shelter)
 "xt" = (
@@ -269,6 +276,10 @@
 /obj/effect/floor_decal/steeldecal/steel_decals9,
 /turf/simulated/floor/tiled,
 /area/tether_away/snowbase/shelter)
+"zT" = (
+/obj/machinery/mech_recharger,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/tether_away/snowbase/shelter)
 "Ap" = (
 /turf/unsimulated/wall,
 /area/tether_away/snowbase/outside/glacier)
@@ -286,6 +297,11 @@
 /obj/item/weapon/pickaxe/drill,
 /obj/structure/table/steel,
 /turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/tether_away/snowbase/shelter)
+"Cw" = (
+/obj/structure/anomaly_container,
+/obj/effect/overlay/snow/floor,
+/turf/simulated/floor/plating/snowbase,
 /area/tether_away/snowbase/shelter)
 "Du" = (
 /obj/machinery/power/terminal{
@@ -338,6 +354,10 @@
 /obj/item/weapon/storage/mre/random,
 /turf/simulated/floor/tiled,
 /area/tether_away/snowbase/shelter)
+"Lf" = (
+/obj/effect/overlay/snow/floor,
+/turf/simulated/floor/plating/snowbase,
+/area/tether_away/snowbase/shelter)
 "Pg" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor/tiled,
@@ -349,6 +369,7 @@
 /obj/machinery/suspension_gen{
 	req_access = list(301)
 	},
+/obj/effect/overlay/snow/floor,
 /turf/simulated/floor/plating/snowbase,
 /area/tether_away/snowbase/shelter)
 "Pu" = (
@@ -363,10 +384,6 @@
 /area/tether_away/snowbase/shelter)
 "QZ" = (
 /turf/simulated/wall/r_wall,
-/area/tether_away/snowbase/shelter)
-"Rs" = (
-/obj/structure/anomaly_container,
-/turf/simulated/floor/plating/snowbase,
 /area/tether_away/snowbase/shelter)
 "SB" = (
 /obj/effect/map_effect/portal/master/side_b{
@@ -383,6 +400,10 @@
 /turf/simulated/floor/plating,
 /area/tether_away/snowbase/shelter)
 "Ur" = (
+/obj/effect/overlay/snow/floor,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/simulated/floor/plating/snowbase,
 /area/tether_away/snowbase/shelter)
 "UW" = (
@@ -401,9 +422,8 @@
 /turf/simulated/floor/plating,
 /area/tether_away/snowbase/shelter)
 "Vv" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/mech_recharger,
+/obj/effect/overlay/snow/floor,
 /turf/simulated/floor/plating/snowbase,
 /area/tether_away/snowbase/shelter)
 "Wl" = (
@@ -420,6 +440,7 @@
 /obj/effect/floor_decal/industrial/warning/color{
 	dir = 10
 	},
+/obj/effect/overlay/snow/floor,
 /turf/simulated/floor/plating/snowbase,
 /area/tether_away/snowbase/shelter)
 "ZO" = (
@@ -430,6 +451,7 @@
 /area/tether_away/snowbase/outside/glacier)
 "ZQ" = (
 /obj/effect/floor_decal/industrial/warning/color,
+/obj/effect/overlay/snow/floor,
 /turf/simulated/floor/plating/snowbase,
 /area/tether_away/snowbase/shelter)
 
@@ -10452,7 +10474,7 @@ jv
 Ye
 Ye
 Ye
-jv
+Ye
 jv
 jv
 jv
@@ -10594,7 +10616,7 @@ jv
 Ye
 Ye
 Ye
-jv
+Ye
 jv
 jv
 jv
@@ -15704,8 +15726,8 @@ eI
 nt
 QZ
 GT
-XF
-XF
+zT
+zT
 XF
 Pu
 XF
@@ -15992,8 +16014,8 @@ xn
 Wl
 Jn
 QZ
-Rs
-Ur
+Vv
+Lf
 ZQ
 XF
 XF
@@ -16135,7 +16157,7 @@ QD
 Jj
 QZ
 Vv
-Ur
+Lf
 oy
 XF
 XF
@@ -16277,7 +16299,7 @@ ja
 Pg
 QZ
 Ur
-Ur
+Lf
 oy
 XF
 XF
@@ -16418,8 +16440,8 @@ ja
 ja
 ja
 QZ
-Rs
-Ur
+Cw
+Lf
 bh
 XF
 te
@@ -16560,8 +16582,8 @@ ja
 sv
 sv
 QZ
-Rs
-Ur
+Cw
+Lf
 ZQ
 XF
 XF

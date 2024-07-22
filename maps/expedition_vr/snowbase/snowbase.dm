@@ -102,6 +102,12 @@
 	name = "Snowbase - Warming Shelter"
 	lightswitch = 1
 
+/area/tether_away/snowbase/bunkroomone
+	name = "Snowbase - Bunk Room 1"
+
+/area/tether_away/snowbase/bunkroomtwo
+	name = "Snowbase - Bunk Room 2"
+
 /area/tether_away/snowbase/garage
 	name = "Snowbase - Garage"
 	lightswitch = 1
