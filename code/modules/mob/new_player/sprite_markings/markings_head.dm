@@ -495,9 +495,11 @@
 
 /datum/sprite_accessory/marking/vr/una_skull
 	name = "Unathi Skull Face"
+	icon = 'icons/mob/human_races/markings_alt.dmi'
 	icon_state = "una_skull"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_unathi_blocky_head
 	name = "Unathi alt head (Blocky)"
@@ -519,9 +521,11 @@
 /***	Vulp based	***/
 /datum/sprite_accessory/marking/vr/vulp_skull
 	name = "Vulpkanin Skull Face"
+	icon = 'icons/mob/human_races/markings_alt.dmi'
 	icon_state = "vulp_skull"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
 
 /datum/sprite_accessory/marking/vr_vulp_nose
 	name = "nose (Vulp)"
