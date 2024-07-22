@@ -759,6 +759,15 @@
 	stabilizer = TRUE
 	medsensor = FALSE
 
+//RS Add Start || Ports Chomp #3512
+/obj/item/device/dogborg/sleeper/compactor/honkborg
+	name = "Jiggles Von Hungertron"
+	desc = "You've heard of Giggles Von Honkerton for the back, now get ready for Jiggles Von Hungertron for the front."
+	icon_state = "clowngut"
+	recycles = FALSE
+	max_item_count = 25 //RS Edit; didn't have a max_count, so set to default
+//RS Add End || Ports Chomp #3512
+
 /obj/item/device/dogborg/sleeper/compactor/generic
 	name = "Internal Cache"
 	desc = "An internal storage of no particularly specific purpose.."
