@@ -24,7 +24,7 @@
 /obj/effect/shuttle_landmark{
 	base_area = /area/tether_away/snowbase/outside;
 	base_turf = /turf/simulated/floor/outdoors/snow;
-	landmark_tag = snowbase_surface_w";
+	landmark_tag = "snowbase_surface_w";
 	name = "NT Outpost - Northwest"
 	},
 /turf/simulated/floor/outdoors/snow/snowbase,
@@ -33,7 +33,7 @@
 /obj/effect/shuttle_landmark{
 	base_area = /area/tether_away/snowbase/outside;
 	base_turf = /turf/simulated/floor/outdoors/snow;
-	landmark_tag = snowbase_surface_e";
+	landmark_tag = "snowbase_surface_e";
 	name = "NT Outpost - Northeast"
 	},
 /turf/simulated/floor/outdoors/snow/snowbase,
@@ -789,6 +789,15 @@
 /obj/effect/overlay/snow/floor,
 /turf/simulated/floor/plating/snowbase,
 /area/tether_away/snowbase/outside)
+"iv" = (
+/obj/effect/overlay/snow/floor,
+/obj/effect/floor_decal/industrial/warning/color{
+	dir = 8
+	},
+/turf/simulated/floor/plating/snowbase{
+	outdoors = 1
+	},
+/area/tether_away/snowbase/outside)
 "iz" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -901,6 +910,15 @@
 	},
 /turf/simulated/floor/tiled,
 /area/tether_away/snowbase/engineering)
+"js" = (
+/obj/effect/overlay/snow/floor,
+/obj/effect/floor_decal/industrial/warning/color{
+	dir = 9
+	},
+/turf/simulated/floor/plating/snowbase{
+	outdoors = 1
+	},
+/area/tether_away/snowbase/outside)
 "jy" = (
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
@@ -3537,6 +3555,15 @@
 	},
 /turf/simulated/floor/tiled,
 /area/tether_away/snowbase/hall)
+"JX" = (
+/obj/effect/overlay/snow/floor,
+/obj/effect/floor_decal/industrial/warning/color{
+	dir = 5
+	},
+/turf/simulated/floor/plating/snowbase{
+	outdoors = 1
+	},
+/area/tether_away/snowbase/outside)
 "Kf" = (
 /obj/effect/catwalk_plated,
 /obj/structure/cable{
@@ -3747,6 +3774,15 @@
 	},
 /turf/simulated/floor/carpet,
 /area/tether_away/snowbase/bunkroomone)
+"Mh" = (
+/obj/effect/overlay/snow/floor,
+/obj/effect/floor_decal/industrial/warning/color{
+	dir = 1
+	},
+/turf/simulated/floor/plating/snowbase{
+	outdoors = 1
+	},
+/area/tether_away/snowbase/outside)
 "My" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -5358,6 +5394,15 @@
 	},
 /turf/simulated/floor/tiled,
 /area/tether_away/snowbase/atmospherics)
+"Zc" = (
+/obj/effect/overlay/snow/floor,
+/obj/effect/floor_decal/industrial/warning/color{
+	dir = 4
+	},
+/turf/simulated/floor/plating/snowbase{
+	outdoors = 1
+	},
+/area/tether_away/snowbase/outside)
 "Zj" = (
 /obj/machinery/atmospherics/pipe/simple/visible/supply{
 	dir = 6
@@ -15453,27 +15498,27 @@ XV
 XV
 XV
 XV
-IZ
-IZ
-IZ
-IZ
-IZ
-IZ
-IZ
-IZ
-IZ
-IZ
-IZ
-IZ
-IZ
-IZ
-IZ
-IZ
-IZ
-IZ
-IZ
-IZ
-IZ
+js
+iv
+iv
+iv
+iv
+iv
+iv
+iv
+iv
+iv
+iv
+iv
+iv
+iv
+iv
+iv
+iv
+iv
+iv
+iv
+iv
 bb
 bZ
 cS
@@ -15595,7 +15640,7 @@ XV
 XV
 XV
 XV
-IZ
+Mh
 IZ
 IZ
 IZ
@@ -15737,27 +15782,27 @@ XV
 XV
 XV
 XV
+JX
+Zc
+Zc
+Zc
+Zc
+Zc
+Zc
+Zc
+Zc
+Zc
+Zc
+Zc
+Zc
+Zc
+Zc
+Zc
+Zc
+Zc
+Zc
 IZ
-IZ
-IZ
-IZ
-IZ
-IZ
-IZ
-IZ
-IZ
-IZ
-IZ
-IZ
-IZ
-IZ
-IZ
-IZ
-IZ
-IZ
-IZ
-IZ
-IZ
+Zc
 bq
 cr
 kG
