@@ -15,6 +15,26 @@
 	do_colouration = 1
 	color_blend_mode = ICON_MULTIPLY
 */
+//RS moved
+/datum/sprite_accessory/ears/mizutsune
+	name = "Mizutsune Ears"
+	desc = ""
+	icon = 'icons/mob/human_races/sprite_accessories/ears_ch.dmi'
+	icon_state = "mizutsune_ears"
+	extra_overlay = "mizutsune_ears_inner"
+	do_colouration = 1
+	color_blend_mode = ICON_MULTIPLY
+
+/datum/sprite_accessory/ears/protogen_horns
+	name = "Protogen (Horns)"
+	desc = ""
+	icon = 'icons/mob/human_races/sprite_accessories/ears_ch.dmi'
+	icon_state = "protogen_horny"
+	extra_overlay = "protogen_horny_fluff"
+	extra_overlay2 = "protogen_horny_horns"
+	do_colouration = 1
+	color_blend_mode = ICON_MULTIPLY
+
 /datum/sprite_accessory/ears/protogen
 	name = "Protogen"
 	desc = ""

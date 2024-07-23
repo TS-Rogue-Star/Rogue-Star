@@ -45,7 +45,7 @@ GLOBAL_LIST_INIT(dsi_to_species, list(SPECIES_TAJARAN = "DSI - Tajaran", SPECIES
 	species_cannot_use -= SPECIES_PROTEAN
 
 
-/datum/robolimb/dsi_other
+/*/datum/robolimb/dsi_other //RS remove (dont have the backend for it)
 	company = "DSI - Adaptive"
 	desc = "This limb has a  realistic design and squish. By Darkside Incorperated."
 	blood_color = "#ffe2ff"
@@ -53,7 +53,7 @@ GLOBAL_LIST_INIT(dsi_to_species, list(SPECIES_TAJARAN = "DSI - Tajaran", SPECIES
 	unavailable_to_build = 1
 	skin_tone = 1
 	no_icon = TRUE
-
+*/
 /datum/robolimb/hellscout
 	company = "Erebus - Hellscout"
 	desc = "Sleek and lightweight aluminum casings, accented with dark silicone."
