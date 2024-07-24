@@ -427,6 +427,9 @@
 
 /////STATIC LATELOAD/////
 
+#include "../expedition_vr/snowbase/submaps/glacier.dm"
+#include "../expedition_vr/snowbase/submaps/glacier_areas.dm"
+
 /datum/map_template/gb_lateload/on_map_loaded(z)
 	if(!associated_map_datum || !ispath(associated_map_datum))
 		log_game("Extra z-level [src] has no associated map datum")

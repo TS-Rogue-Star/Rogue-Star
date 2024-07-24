@@ -4308,8 +4308,6 @@
 #include "maps\atoll\atoll_turfs.dm"
 #include "maps\expedition_vr\beach\submaps\mountains.dm"
 #include "maps\expedition_vr\beach\submaps\mountains_areas.dm"
-#include "maps\expedition_vr\snowbase\submaps\glacier.dm"
-#include "maps\expedition_vr\snowbase\submaps\glacier_areas.dm"
 #include "maps\gateway_archive_vr\blackmarketpackers.dm"
 #include "maps\redgate\fantasy_items.dm"
 #include "maps\redgate\code\snowglobe_rs.dm"
