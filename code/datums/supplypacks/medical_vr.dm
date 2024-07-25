@@ -52,6 +52,7 @@
 	containername = "Compact Defibrillator crate"
 	access = access_medical_equip
 
+//RS add Buildable Optable
 /datum/supply_pack/med/optable
 	name = "Operating Table Circuit crate"
 	contains = list(
@@ -62,3 +63,4 @@
 	containertype = /obj/structure/closet/crate/secure
 	containername = "Operating Table Circuit crate"
 	access = access_medical_equip
+//Rs add end
