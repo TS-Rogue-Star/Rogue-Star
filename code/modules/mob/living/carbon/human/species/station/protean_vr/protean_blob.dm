@@ -271,7 +271,7 @@
 		healing.expire()
 		healing = null
 		return
-	if(. && istype(refactory) && humanform)
+	if(. && istype(refactory) && humanform && S.prot_healing_allowed)
 		if(!healing && (human_brute || human_burn) && refactory.get_stored_material(MAT_STEEL) >= 100)
 			healing = humanform.add_modifier(/datum/modifier/protean/steel, origin = refactory)
 		else if(healing && !(human_brute || human_burn))
