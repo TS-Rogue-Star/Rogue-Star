@@ -736,7 +736,7 @@
 		return TURRET_NOT_TARGET
 
 	if(check_synth || check_all)	//If it's set to attack all non-silicons or everything, target them!
-		if(L.lying && (L.incapacitated(INCAPACITATION_KNOCKOUT) || L.incapacitated(INCAPACITATION_STUNNED))) // CHOMPEdit - Crawling targets are dangerous, if they are able.
+		if(L.lying && (L.incapacitated(INCAPACITATION_KNOCKOUT) || L.incapacitated(INCAPACITATION_STUNNED))) //RS Port Chomp PR 7822 || CHOMPEdit - Crawling targets are dangerous, if they are able.
 			return check_down ? TURRET_SECONDARY_TARGET : TURRET_NOT_TARGET
 		return TURRET_PRIORITY_TARGET
 

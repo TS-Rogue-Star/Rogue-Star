@@ -544,7 +544,7 @@
 	if (AM.anchored)
 		to_chat(src, "<span class='warning'>It won't budge!</span>")
 		return
-	if(lying) // CHOMPAdd - No pulling while we crawl.
+	if(lying) //RS Port Chomp PR 7822 || CHOMPAdd - No pulling while we crawl.
 		return
 	var/mob/M = AM
 	if(ismob(AM))
