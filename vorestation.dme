@@ -3341,6 +3341,7 @@
 #include "code\modules\mob\new_player\sprite_accessories_extra_ch.dm"
 #include "code\modules\mob\new_player\sprite_accessories_hair.dm"
 #include "code\modules\mob\new_player\sprite_accessories_tail.dm"
+#include "code\modules\mob\new_player\sprite_accessories_tail_ch.dm"
 #include "code\modules\mob\new_player\sprite_accessories_tail_snowflake.dm"
 #include "code\modules\mob\new_player\sprite_accessories_taur.dm"
 #include "code\modules\mob\new_player\sprite_accessories_taur_rs.dm"
