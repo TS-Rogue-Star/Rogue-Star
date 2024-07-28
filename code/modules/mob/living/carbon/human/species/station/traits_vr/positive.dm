@@ -74,7 +74,7 @@
 */
 
 //RS ADD START
-
+/*
 /datum/trait/positive/shrinkinject
 	name = "Venom: Microcillin"
 	desc = "Provides the ability to inject a shrinking chemical into others, through a bite, or sting, or however else."
@@ -171,6 +171,7 @@
 	H.trait_injection_reagents += "normalcillin"
 
 //RS ADD END
+*/
 
 /datum/trait/positive/minor_brute_resist
 	name = "Brute Resist, Minor"
