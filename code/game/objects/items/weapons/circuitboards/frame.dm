@@ -209,7 +209,16 @@
 	req_components = list(
 							/obj/item/weapon/stock_parts/scanning_module = 3,
 							/obj/item/stack/material/glass/reinforced = 2)
-
+//RS Add (buildable optable)
+/obj/item/weapon/circuitboard/op_table
+	name = T_BOARD("operating table")
+	build_path = /obj/machinery/optable
+	board_type = new /datum/frame/frame_types/medical_pod
+	origin_tech = list(TECH_MAGNET = 2, TECH_BIO = 2)
+	req_components = list(
+							/obj/item/stack/material/titanium = 5,
+							/obj/item/stack/material/silver = 5)
+//RS Add End (buildable optable)
 /obj/item/weapon/circuitboard/medical_kiosk
 	name = T_BOARD("medical kiosk")
 	build_path = /obj/machinery/medical_kiosk
