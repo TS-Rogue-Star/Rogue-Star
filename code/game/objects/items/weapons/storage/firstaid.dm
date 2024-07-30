@@ -199,11 +199,11 @@
 	starts_with = list(/obj/item/weapon/hypospray_mkii/burn, /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/preloaded/kelotane = 3)
 	item_state_slots = list(slot_r_hand_str = "firstaid-ointment", slot_l_hand_str = "firstaid-ointment")
 
-/obj/item/weapon/storage/firstaid/hypokit/toxin
-	name = "hypospray mk.II toxin kit"
+/obj/item/weapon/storage/firstaid/hypokit/antitoxin
+	name = "hypospray mk.II antitoxin kit"
 	icon_state = "firstaid-toxin-mini"
 	desc = "Contains a Mk II Hypospray and its hypovials. It can only hold mk.II related items. This one is prefilled with Dylovene."
-	starts_with = list(/obj/item/weapon/hypospray_mkii/toxin, /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/preloaded/antitoxin = 3)
+	starts_with = list(/obj/item/weapon/hypospray_mkii/antitoxin, /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/preloaded/antitoxin = 3)
 	item_state_slots = list(slot_r_hand_str = "firstaid-toxin", slot_l_hand_str = "firstaid-toxin")
 
 /obj/item/weapon/storage/firstaid/hypokit/oxy
@@ -214,7 +214,7 @@
 	item_state_slots = list(slot_r_hand_str = "firstaid-o2", slot_l_hand_str = "firstaid-o2")
 
 /obj/item/weapon/storage/firstaid/hypokit/cmo
-	name = "CMO's mk.II Kit"
+	name = "CMO's mk.II kit"
 	desc = "Contains a large Deluxe Mk II Hypospray and its hypovials. It can only hold mk.II related items."
 	icon_state = "firstaid-tactical-mini"
 	starts_with = list(/obj/item/weapon/hypospray_mkii/CMO,

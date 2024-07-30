@@ -1,15 +1,15 @@
 #define HYPO_SPRAY 0
 #define HYPO_INJECT 1
 
-#define WAIT_SPRAY 5 SECONDS
-#define WAIT_INJECT 5 SECONDS
-#define SELF_SPRAY 3 SECONDS
-#define SELF_INJECT 3 SECONDS
+#define WAIT_SPRAY 2 SECONDS
+#define WAIT_INJECT 2 SECONDS
+#define SELF_SPRAY 1 SECONDS
+#define SELF_INJECT 1 SECONDS
 
-#define DELUXE_WAIT_SPRAY 4 SECONDS
-#define DELUXE_WAIT_INJECT 4 SECONDS
-#define DELUXE_SELF_SPRAY 2 SECONDS
-#define DELUXE_SELF_INJECT 2 SECONDS
+#define DELUXE_WAIT_SPRAY 1 SECONDS
+#define DELUXE_WAIT_INJECT 1 SECONDS
+#define DELUXE_SELF_SPRAY 1 SECONDS
+#define DELUXE_SELF_INJECT 1 SECONDS
 
 #define COMBAT_WAIT_SPRAY 0
 #define COMBAT_WAIT_INJECT 0
@@ -49,7 +49,7 @@
 /obj/item/weapon/hypospray_mkii/brute
 	start_vial = /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/preloaded/bicaridine
 
-/obj/item/weapon/hypospray_mkii/toxin
+/obj/item/weapon/hypospray_mkii/antitoxin
 	start_vial = /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/preloaded/antitoxin
 
 /obj/item/weapon/hypospray_mkii/oxygen
@@ -104,8 +104,8 @@
 
 /obj/item/weapon/hypospray_mkii/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'><b>Alt-Click</b> it to toggle its mode from spraying to injecting and vice versa.</span>"
-	. += "<span class='notice'><b>Ctrl-Click</b> it to unload a vial.</span>"
+	. += span_notice("<b>Alt-Click</b> it to toggle its mode from spraying to injecting and vice versa.")
+	. += span_notice("<b>Ctrl-Click</b> it to unload a vial.")
 	if(vial)
 		. += "[vial] has [vial.reagents.total_volume]u remaining."
 	else
@@ -117,46 +117,46 @@
 		var/obj/item/weapon/reagent_containers/glass/bottle/hypovial/V = I
 		V.forceMove(user.loc)
 		user.put_in_hands(V)
-		to_chat(user, "<span class='notice'>You remove [vial] from [src].</span>")
+		to_chat(user, span_notice("You remove [vial] from [src]."))
 		vial = null
 		update_icon()
 		playsound(loc, 'sound/weapons/empty.ogg', 50, 1)
 	else
-		to_chat(user, "<span class='notice'>This hypo isn't loaded!</span>")
+		to_chat(user, span_notice("This hypo isn't loaded!"))
 		return
 
 /obj/item/weapon/hypospray_mkii/attackby(obj/item/I, mob/living/user)
 	if(istype(I, /obj/item/weapon/reagent_containers/glass/bottle/hypovial) && vial != null)
 		if(!quickload)
-			to_chat(user, "<span class='warning'>[src] can not hold more than one vial!</span>")
+			to_chat(user, span_warning("[src] can not hold more than one vial!"))
 			return FALSE
 		unload_hypo(vial, user)
 
 	else if(istype(I, /obj/item/weapon/reagent_containers/glass/bottle/hypovial))
 		var/obj/item/weapon/reagent_containers/glass/bottle/hypovial/V = I
 		if(!is_type_in_list(V, allowed_containers))
-			to_chat(user, "<span class='notice'>[src] doesn't accept this type of vial.</span>")
+			to_chat(user, span_notice("[src] doesn't accept this type of vial."))
 			return FALSE
 		user.drop_from_inventory(V,src)
 		vial = V
-		user.visible_message("<span class='notice'>[user] has loaded a vial into [src].</span>","<span class='notice'>You have loaded [vial] into [src].</span>")
+		user.visible_message(span_notice("[user] has loaded a vial into [src]."),span_notice("You have loaded [vial] into [src]."))
 		update_icon()
 		playsound(loc, 'sound/weapons/empty.ogg', 35, 1)
 		return TRUE
 	else
-		to_chat(user, "<span class='notice'>This doesn't fit in [src].</span>")
+		to_chat(user, span_notice("This doesn't fit in [src]."))
 		return FALSE
 
 /obj/item/weapon/hypospray_mkii/emag_act(mob/user)
 	. = ..()
 	if(emagged)
-		to_chat(user, "[src] happens to be already overcharged.")
+		to_chat(user, span_warning("[src] happens to be already overcharged."))
 		return
 	inject_wait = COMBAT_WAIT_INJECT
 	spray_wait = COMBAT_WAIT_SPRAY
 	spray_self = COMBAT_SELF_INJECT
 	inject_self = COMBAT_SELF_SPRAY
-	to_chat(user, "You overcharge [src]'s control circuit.")
+	to_chat(user, span_warning("You overcharge [src]'s control circuit."))
 	emagged = TRUE
 	return TRUE
 
@@ -177,26 +177,26 @@
 	if(iscarbon(L))
 		var/obj/item/organ/external/affected = L.get_organ(user.zone_sel.selecting)
 		if(!affected)
-			to_chat(user, "<span class='warning'>The limb is missing!</span>")
+			to_chat(user, span_warning("The limb is missing!"))
 			return
 		if(affected.status != ORGAN_FLESH)
-			to_chat(user, "<span class='notice'>Medicine won't work on a robotic limb!</span>")
+			to_chat(user, span_notice("Medicine won't work on a robotic limb!"))
 			return
 
 	//Always log attemped injections for admins
 	var/contained = vial.reagentlist()
 	if(!vial)
-		to_chat(user, "<span class='notice'>[src] doesn't have any vial installed!</span>")
+		to_chat(user, span_notice("[src] doesn't have any vial installed!"))
 		return
 	if(!vial.reagents.total_volume)
-		to_chat(user, "<span class='notice'>[src]'s vial is empty!</span>")
+		to_chat(user, span_notice("[src]'s vial is empty!"))
 		return
 
 	var/fp_verb = mode == HYPO_SPRAY ? "spray" : "inject"
 
 	if(L != user)
-		L.visible_message("<span class='danger'>\The [user] is trying to [fp_verb] \the [L] with \the [src]!</span>", \
-						"<span class='userdanger'>\The [user] is trying to [fp_verb] you with \the [src]!</span>")
+		L.visible_message(span_danger("\The [user] is trying to [fp_verb] \the [L] with \the [src]!"), \
+						span_danger("\The [user] is trying to [fp_verb] you with \the [src]!"))
 	add_attack_logs(user, L, "[user] attemped to use [src] on [L] which had [contained]")
 
 	if(!do_mob(user, L, inject_wait))
@@ -206,8 +206,8 @@
 		return
 	add_attack_logs(user, L, "[user] applied [src] to [L], which had [contained] (INTENT: [uppertext(user.a_intent)]) (MODE: [fp_verb])")
 	if(L != user)
-		L.visible_message("<span class='danger'>\The [user] [fp_verb]s \the [L] with \the [src]!</span>", \
-						"<span class='userdanger'>\The [user] [fp_verb]s you with \the [src]!</span>")
+		L.visible_message(span_danger("\The [user] [fp_verb]s \the [L] with \the [src]!"), \
+						span_danger("\The [user] [fp_verb]s you with \the [src]!"))
 	else
 		add_attack_logs(user, L, "[user] applied [src] on [L] with [src] which had [contained]")
 
@@ -218,7 +218,7 @@
 
 	playsound(loc, 'sound/effects/hypospray.ogg', 50)
 	playsound(loc, 'sound/effects/refill.ogg', 50)
-	to_chat(user, "<span class='notice'>You [fp_verb] [vial.amount_per_transfer_from_this] units of the solution. The hypospray's cartridge now contains [vial.reagents.total_volume] units.</span>")
+	to_chat(user, span_notice("You [fp_verb] [vial.amount_per_transfer_from_this] units of the solution. The hypospray's cartridge now contains [vial.reagents.total_volume] units."))
 
 /obj/item/weapon/hypospray_mkii/attack_self(mob/living/user)
 	if(user)
@@ -277,6 +277,7 @@
 	w_class = ITEMSIZE_SMALL //Why would it be the same size as a beaker?
 	flags = OPENCONTAINER | NOCONDUCT
 	unacidable = TRUE
+	matter = list(MAT_GLASS = 250)
 	var/bluespaced = FALSE
 	var/comes_with = list() //Easy way of doing this.
 	var/fillingsize = "hypovial"
@@ -310,10 +311,10 @@
 
 /obj/item/weapon/reagent_containers/glass/bottle/hypovial/attack(mob/M as mob, mob/user as mob)
 	if(M == user)
-		to_chat(user, "<span class='notice'>This is a sealed container, you cannot drink from it.</span>")
+		to_chat(user, span_notice("This is a sealed container, you cannot drink from it."))
 		return
 	else if(istype(M, /mob/living/carbon/human))
-		to_chat(user, "<span class='notice'>This is a sealed container, [M] cannot drink from it.</span>")
+		to_chat(user, span_notice("This is a sealed container, [M] cannot drink from it."))
 		return
 
 /obj/item/weapon/reagent_containers/glass/bottle/hypovial/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -327,13 +328,13 @@
 			if("Label")
 				var/tmp_label = sanitizeSafe(tgui_input_text(user, "Enter a label for [name]", "Label", label_text, MAX_NAME_LEN), MAX_NAME_LEN)
 				if(length(tmp_label) > 50)
-					to_chat(user, "<span class='notice'>The label can be at most 50 characters long.</span>")
+					to_chat(user, span_notice("The label can be at most 50 characters long."))
 				else if(length(tmp_label) > 10)
-					to_chat(user, "<span class='notice'>You set the label.</span>")
+					to_chat(user, span_notice("You set the label."))
 					label_text = tmp_label
 					update_name_label()
 				else
-					to_chat(user, "<span class='notice'>You set the label to \"[tmp_label]\".</span>")
+					to_chat(user, span_notice("You set the label to \"[tmp_label]\"."))
 					label_text = tmp_label
 					update_name_label()
 			if("Recolor")
@@ -406,6 +407,7 @@
 	icon_state = "hypoviallarge"
 	fillingsize = "hypoviallarge"
 	volume = 60
+	matter = list(MAT_GLASS = 500)
 	possible_transfer_amounts = list(5,10,15,25,30)
 
 	unique_reskin = list("large hypovial" = "hypoviallarge",
@@ -432,7 +434,7 @@
 	comes_with = list("bicaridine" = 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/preloaded/antitoxin
-	name = "vial (Anti-Tox)"
+	name = "vial (Dylovene)"
 	icon_state = "hypovial-a"
 	comes_with = list("anti_toxin" = 30)
 
@@ -467,7 +469,7 @@
 	comes_with = list("bicaridine" = 60)
 
 /obj/item/weapon/reagent_containers/glass/bottle/hypovial/large/preloaded/antitoxin
-	name = "large vial (Anti-Tox)"
+	name = "large vial (Dylovene)"
 	icon_state = "hypoviallarge-a"
 	comes_with = list("anti_toxin" = 60)
 

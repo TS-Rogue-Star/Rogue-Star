@@ -156,8 +156,10 @@
 		/obj/item/taperoll/medical,
 		/obj/item/clothing/suit/bio_suit/cmo,
 		/obj/item/clothing/head/bio_hood/cmo,
-		/obj/item/clothing/shoes/white,
-		/obj/item/weapon/reagent_containers/glass/beaker/vial, //VOREStation Add
+		// RS Removed /obj/item/clothing/shoes/white,
+		//RS Removed /obj/item/weapon/reagent_containers/glass/beaker/vial, //VOREStation Add
+		/obj/item/weapon/storage/belt/medical,//RS Add
+		/obj/item/weapon/storage/firstaid/hypokit/cmo,//RS Add
 		/obj/item/weapon/storage/belt/medical) //VOREStation Add
 
 /obj/structure/closet/secure_closet/CMO/Initialize()
