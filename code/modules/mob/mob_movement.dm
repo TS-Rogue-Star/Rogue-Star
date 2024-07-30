@@ -15,7 +15,7 @@
 		if(weakened >= 1)
 			. += 14			// Very slow when weakened.
 		else
-			. += 8
+			. += 5 //slowed down on maintainer request
 	//RS Port Chomp PR 7822 || CHOMPAdd End
 
 	// Movespeed delay based on movement mode

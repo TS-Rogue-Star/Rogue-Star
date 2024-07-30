@@ -963,22 +963,24 @@
 		//RS Port Chomp PR 7822 || CHOMPAdd Start - For crawling.
 		stop_pulling()
 
-		if(!passtable_crawl_checked)
+		/*if(!passtable_crawl_checked)
 			passtable_crawl_checked = TRUE
 			if(pass_flags & PASSTABLE)
 				passtable_reset = FALSE
 			else
 				passtable_reset = TRUE
 				pass_flags |= PASSTABLE
-
+		*/ //Commented out on request by maintainers
 		//RS Port Chomp PR 7822 || CHOMPEdit End
 	else
 		density = initial(density)
 	//RS Port Chomp PR 7822 || CHOMPEdit Start - Rest passtable when crawling
+	/*
 		if(passtable_reset)
 			passtable_reset = TRUE
 			pass_flags &= ~PASSTABLE
 		passtable_crawl_checked = FALSE
+	*/ //Commented out on request by maintainers
 	//RS Port Chomp PR 7822 || CHOMPEdit End
 
 	for(var/obj/item/weapon/grab/G in grabbed_by)
