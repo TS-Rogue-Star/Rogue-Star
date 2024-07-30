@@ -9,7 +9,7 @@
 	set desc = "Spend energy to heal physical wounds in another creature."
 	set category = "Shadekin"
 
-	var/ability_cost = 50
+	var/ability_cost = 25
 
 	var/datum/species/shadekin/SK = species
 	if(!istype(SK))

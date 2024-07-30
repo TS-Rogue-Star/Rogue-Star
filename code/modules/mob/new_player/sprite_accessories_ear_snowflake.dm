@@ -107,6 +107,12 @@
 	icon_state = "sari_ears"
 	ckeys_allowed = list("crossexonar")
 
+/datum/sprite_accessory/ears/kiriga
+	name = "kiriga ears/head (kiriga)"
+	icon = 'icons/mob/vore/ears_snowflake.dmi'
+	icon_state = "kiri_ears"
+	ckeys_allowed = list("smdytb1")
+
 /datum/sprite_accessory/ears/kara
 	name = "Pterokara horn"
 	icon = 'icons/mob/vore/ears_snowflake.dmi'
