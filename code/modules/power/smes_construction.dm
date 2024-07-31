@@ -287,6 +287,16 @@
 			if (prob(failure_chance))
 				A.set_broken()
 
+// Proc: update_icon()
+// Parameters: None
+// Description: Allows us to use special icon overlay for critical SMESs
+/obj/machinery/power/smes/buildable/update_icon()
+	if (failing)
+		cut_overlays()
+		add_overlay("smes-crit")
+	else
+		..()
+
 // Proc: attackby()
 // Parameters: 2 (W - object that was used on this machine, user - person which used the object)
 // Description: Handles tool interaction. Allows deconstruction/upgrading/fixing.

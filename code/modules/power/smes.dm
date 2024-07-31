@@ -134,10 +134,6 @@ GLOBAL_LIST_EMPTY(smeses)
 	var/clevel = chargedisplay()
 	if(clevel>0)
 		add_overlay("smes-og[clevel]")
-	//moving this update here, because both SMES sprites have overload overlays anyway
-	if(failing)
-		cut_overlays()
-		add_overlay("smes-crit")
 	return
 
 
