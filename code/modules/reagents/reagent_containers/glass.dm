@@ -249,7 +249,6 @@
 	center_of_mass = list("x" = 15,"y" = 9)
 	matter = list(MAT_GLASS = 250)
 	volume = 30
-	//var/comes_with = list() //Easy way of doing this. //RS Add?
 	w_class = ITEMSIZE_TINY
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,30)

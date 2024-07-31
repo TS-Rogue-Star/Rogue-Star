@@ -89,7 +89,7 @@
 			/obj/item/weapon/reagent_containers = "REAGENT_CONTAINERS",
 			/obj/item/weapon/reagent_containers/glass = "GLASS",
 			/obj/item/weapon/reagent_containers/glass/bottle = "BOTTLE",
-			///obj/item/weapon/reagent_containers/glass/bottle/hypovial = "HYPOVIAL",
+			/obj/item/weapon/reagent_containers/glass/bottle/hypovial = "HYPOVIAL",
 			/obj/item/weapon/reagent_containers/pill = "PILL",
 			/obj/item/weapon/reagent_containers/pill/patch = "MEDPATCH",
 			/obj/item/weapon/reagent_containers/hypospray/autoinjector = "AUTOINJECT",
