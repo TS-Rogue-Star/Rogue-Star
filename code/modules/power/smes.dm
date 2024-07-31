@@ -112,7 +112,14 @@ GLOBAL_LIST_EMPTY(smeses)
 
 /obj/machinery/power/smes/update_icon()
 	cut_overlays()
-	if(stat & BROKEN)	return
+	icon_state = "smes"	//more sanity than anything else.
+
+	if(stat & BROKEN)
+		icon_state = "smes-off"	//for the "hybrid"/fancy SMES units mostly since they have a working screen animation
+		return
+	if(panel_open)
+		icon_state = "smes-o"
+		return	//effectively off, but visually update.
 
 	add_overlay("smes-op[outputting]")
 
@@ -127,6 +134,10 @@ GLOBAL_LIST_EMPTY(smeses)
 	var/clevel = chargedisplay()
 	if(clevel>0)
 		add_overlay("smes-og[clevel]")
+	//moving this update here, because both SMES sprites have overload overlays anyway
+	if(failing)
+		cut_overlays()
+		add_overlay("smes-crit")
 	return
 
 
