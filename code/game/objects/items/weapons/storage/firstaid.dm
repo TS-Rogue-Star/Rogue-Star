@@ -168,18 +168,31 @@
 	starts_with = list(/obj/item/weapon/reagent_containers/hypospray/autoinjector/bonemed = 8)
 
 /*
- * Hypospray MK II kits
+ * Hypospray MK II kits (RS Add)
  */
 
+//RS Add MkII Hypo Revision
+/obj/item/weapon/storage/firstaid/hypokitmk1
+	name = "mk I hypospray kit"
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "firstaid-tactical-mini"
+	max_storage_space = ITEMSIZE_COST_NORMAL * 7
+	desc = "Contains the classic MKI hypospray kit and a selection of empty vials."
+	starts_with = list(/obj/item/weapon/reagent_containers/hypospray/vial, /obj/item/weapon/reagent_containers/glass/beaker/vial = 5)
+	can_hold = list(/obj/item/weapon/reagent_containers/hypospray/vial, /obj/item/weapon/reagent_containers/glass/beaker/vial)
 
 /obj/item/weapon/storage/firstaid/hypokit
 	name = "hypospray mk.II kit"
 	desc = "Contains a Mk II Hypospray and its hypovials. It can only hold mk.II related items."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "firstaid-mini"
+	max_storage_space = ITEMSIZE_COST_NORMAL * 7 // 4*7 = 28 / 2 = 14 vials total
 	starts_with = list(/obj/item/weapon/hypospray_mkii, /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small = 3)
 	can_hold = list(/obj/item/weapon/hypospray_mkii, /obj/item/weapon/reagent_containers/glass/bottle/hypovial)
 	//can fit large and small vials, and any of the mkiis. but that's it. No free Analyzer either.
+
+/obj/item/weapon/storage/firstaid/hypokit/empty
+	starts_with = list()
 
 /obj/item/weapon/storage/firstaid/hypokit/tricord
 	desc = "Contains a Mk II Hypospray and its hypovials. It can only hold mk.II related items. This one is prefilled with Tricordazine."

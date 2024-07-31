@@ -89,9 +89,10 @@
 //A vial-loaded hypospray. Cartridge-based!
 /obj/item/weapon/reagent_containers/hypospray/vial
 	//name = "advanced hypospray"
-	name = "MKI Vial hypospray"
+	name = "MKI Vial hypospray" //RS Edit
 	icon_state = "advhypo"
-	desc = "A new development from DeForest Medical, this new hypospray takes 30-unit vials as the drug supply for easy swapping."
+	//desc = "A new development from DeForest Medical, this new hypospray takes 30-unit vials as the drug supply for easy swapping."
+	desc = "A development from DeForest Medical, this hypospray takes 30-unit vials as the drug supply for easy swapping." //RS Edit
 	var/obj/item/weapon/reagent_containers/glass/beaker/vial/loaded_vial //Wow, what a name.
 	volume = 0
 

@@ -381,12 +381,6 @@
 	icon_state = "auto"
 	starts_with = list(/obj/item/weapon/reagent_containers/hypospray/autoinjector = 7)
 
-//RS Add MkII Hypo Revision
-/obj/item/weapon/storage/box/hypokitmk1
-	name = "mk I hypospray kit"
-	desc = "Contains the classic MKI hypospray kit and a selection of empty vials."
-	icon_state = "auto"
-	starts_with = list(/obj/item/weapon/reagent_containers/hypospray/vial, /obj/item/weapon/reagent_containers/glass/beaker/vial = 5)
 
 /obj/item/weapon/storage/box/lights
 	name = "box of replacement bulbs"

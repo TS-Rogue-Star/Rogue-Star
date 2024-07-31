@@ -26,7 +26,7 @@
 		slot_l_hand_str = 'icons/mob/items/lefthand.dmi',
 		slot_r_hand_str = 'icons/mob/items/righthand.dmi',
 		)
-	desc = "A refined development from DeForest Medical, this hypospray takes 30-unit vials as the drug supply for easy swapping. It is more ergonomic for humanoids!"
+	desc = "A refined development from DeForest Medical, altered construction materials enable wider availability, this hypospray takes 30-unit vials as the drug supply for easy swapping."
 	w_class = ITEMSIZE_SMALL
 	var/list/allowed_containers = list(/obj/item/weapon/reagent_containers/glass/bottle/hypovial/small)
 	var/mode = HYPO_INJECT
