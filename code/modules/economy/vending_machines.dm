@@ -415,6 +415,7 @@
 					///obj/item/weapon/storage/firstaid/hypokit/burn = 2, //RS Add (removed on request)
 					///obj/item/weapon/storage/firstaid/hypokit/antitoxin = 2, //RS Add (removed on request)
 					///obj/item/weapon/storage/firstaid/hypokit/oxy = 2, //RS Add (removed on request)
+					/obj/item/weapon/reagent_containers/glass/beaker/vial = 10, //RS Add
 					/obj/item/device/healthanalyzer = 5,
 					/obj/item/weapon/reagent_containers/glass/beaker = 4,
 					/obj/item/weapon/reagent_containers/dropper = 2,

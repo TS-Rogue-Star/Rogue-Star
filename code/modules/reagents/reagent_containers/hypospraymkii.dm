@@ -41,7 +41,8 @@
 	var/inject_self = SELF_INJECT
 	var/quickload = FALSE
 	var/emagged = FALSE
-
+	var/amount_per_transfer_from_this = 5
+	var/possible_transfer_amounts = list(1,5,10,15)
 	slot_flags = SLOT_BELT
 	unacidable = TRUE
 	drop_sound = 'sound/items/drop/gun.ogg'
@@ -110,7 +111,8 @@
 
 /obj/item/weapon/hypospray_mkii/examine(mob/user)
 	. = ..()
-	. += span_notice("<b>Alt-Click</b> it to toggle its mode from spraying to injecting and vice versa.")
+	//. += span_notice("<b>Alt-Click</b> it to toggle its mode from spraying to injecting and vice versa.")
+	. += span_notice("<b>Alt-Click</b> it to Adjust injection ammount.")
 	. += span_notice("<b>Ctrl-Click</b> it to unload a vial.")
 	if(loadedvial)
 		. += "[loadedvial] has [loadedvial.reagents.total_volume]u remaining."
@@ -218,13 +220,13 @@
 		add_attack_logs(user, L, "[user] applied [src] on [L] with [src] which had [contained]")
 
 	if(mode == HYPO_SPRAY)
-		loadedvial.reagents.trans_to_mob(target, loadedvial.amount_per_transfer_from_this, CHEM_TOUCH)
+		loadedvial.reagents.trans_to_mob(target, amount_per_transfer_from_this, CHEM_BLOOD)//CHEM_TOUCH) Changed to just be flavor
 	else if(mode == HYPO_INJECT)
-		loadedvial.reagents.trans_to_mob(target, loadedvial.amount_per_transfer_from_this, CHEM_BLOOD)
+		loadedvial.reagents.trans_to_mob(target, amount_per_transfer_from_this, CHEM_BLOOD)
 
 	playsound(loc, 'sound/effects/hypospray.ogg', 50)
 	playsound(loc, 'sound/effects/refill.ogg', 50)
-	to_chat(user, span_notice("You [fp_verb] [loadedvial.amount_per_transfer_from_this] units of the solution. The hypospray's cartridge now contains [loadedvial.reagents.total_volume] units."))
+	to_chat(user, span_notice("You [fp_verb] [amount_per_transfer_from_this] units of the solution. The hypospray's cartridge now contains [loadedvial.reagents.total_volume] units."))
 
 /obj/item/weapon/hypospray_mkii/attack_self(mob/living/user)
 	if(user)
@@ -236,16 +238,40 @@
 		else
 			unload_hypo(loadedvial,user)
 
+/obj/item/weapon/hypospray_mkii/verb/set_APTFT() //set amount_per_transfer_from_this
+	set name = "Set transfer amount"
+	set category = "Object"
+	set src in range(0)
+	var/N = tgui_input_list(usr, "Amount per transfer from this:","[src]", possible_transfer_amounts)
+	if(N)
+		amount_per_transfer_from_this = N
+
+/obj/item/weapon/hypospray_mkii/verb/swap_mode() //set amount_per_transfer_from_this
+	set name = "Swap spray mode"
+	set category = "Object"
+	set src in range(0)
+	switch(mode)
+		if(HYPO_SPRAY)
+			mode = HYPO_INJECT
+			to_chat(usr, "[src] is now set to inject contents on application.")
+		if(HYPO_INJECT)
+			mode = HYPO_SPRAY
+			to_chat(usr, "[src] is now set to spray contents on application.")
+
 /obj/item/weapon/hypospray_mkii/AltClick(mob/living/user)
 	. = ..()
 	if(user.CanUseTopic(src, FALSE))
-		switch(mode)
+		if(possible_transfer_amounts && user.Adjacent(src))
+			set_APTFT()
+		/*switch(mode)
 			if(HYPO_SPRAY)
 				mode = HYPO_INJECT
 				to_chat(user, "[src] is now set to inject contents on application.")
 			if(HYPO_INJECT)
 				mode = HYPO_SPRAY
 				to_chat(user, "[src] is now set to spray contents on application.")
+		*/ //Moved to a verb
+
 		return TRUE
 
 /obj/item/weapon/hypospray_mkii/CtrlClick(mob/living/user)
