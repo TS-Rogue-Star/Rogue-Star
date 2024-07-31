@@ -808,6 +808,15 @@
 /mob/living/proc/slip(var/slipped_on,stun_duration=8)
 	return 0
 
+//RS Port Chomp PR 7822 || CHOMPAdd - Drop both things on hands
+/mob/living/proc/drop_both_hands()
+	if(l_hand)
+		unEquip(l_hand)
+	if(r_hand)
+		unEquip(r_hand)
+	return
+//RS Port Chomp PR 7822 || CHOMPEnd
+
 /mob/living/carbon/drop_from_inventory(var/obj/item/W, var/atom/target = null)
 	return !(W in internal_organs) && ..()
 
@@ -935,17 +944,44 @@
 			lying = incapacitated(INCAPACITATION_KNOCKDOWN)
 			canmove = !incapacitated(INCAPACITATION_DISABLED)
 
+	if(lying && (incapacitated(INCAPACITATION_KNOCKOUT) || incapacitated(INCAPACITATION_STUNNED))) //RS Port Chomp PR 7822 || CHOMPAdd - Making sure we're in good condition to crawl
+		canmove = 0
+		//RS Port Chomp PR 8154 || drop_both_hands() CHOMPremove, purple stuns dont drop items, this makes space EVA less frustrating and slips/shoves are already coded to drop your stuff.
+	else
+		canmove = 1
 	if(lying)
 		density = FALSE
+		/* //RS Port Chomp PR 7822 || CHOMPEdit - Allow us to hold stuff while laying down.
 		if(l_hand)
 			unEquip(l_hand)
 		if(r_hand)
 			unEquip(r_hand)
 		for(var/obj/item/weapon/holder/holder in get_mob_riding_slots())
 			unEquip(holder)
+		*/
 		update_water() // Submerges the mob.
+		//RS Port Chomp PR 7822 || CHOMPAdd Start - For crawling.
+		stop_pulling()
+
+		/*if(!passtable_crawl_checked)
+			passtable_crawl_checked = TRUE
+			if(pass_flags & PASSTABLE)
+				passtable_reset = FALSE
+			else
+				passtable_reset = TRUE
+				pass_flags |= PASSTABLE
+		*/ //Commented out on request by maintainers
+		//RS Port Chomp PR 7822 || CHOMPEdit End
 	else
 		density = initial(density)
+	//RS Port Chomp PR 7822 || CHOMPEdit Start - Rest passtable when crawling
+	/*
+		if(passtable_reset)
+			passtable_reset = TRUE
+			pass_flags &= ~PASSTABLE
+		passtable_crawl_checked = FALSE
+	*/ //Commented out on request by maintainers
+	//RS Port Chomp PR 7822 || CHOMPEdit End
 
 	for(var/obj/item/weapon/grab/G in grabbed_by)
 		if(G.state >= GRAB_AGGRESSIVE)

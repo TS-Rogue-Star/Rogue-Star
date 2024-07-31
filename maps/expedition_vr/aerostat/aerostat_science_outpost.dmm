@@ -8175,7 +8175,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating/virgo2,
+/turf/simulated/floor,
 /area/offmap/aerostat/inside/arm/sw)
 "Ew" = (
 /obj/machinery/light{
@@ -12151,7 +12151,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/aux{
 	dir = 6
 	},
-/turf/simulated/floor/plating/virgo2,
+/turf/simulated/floor,
 /area/offmap/aerostat/inside/arm/sw)
 "UG" = (
 /obj/structure/cable/heavyduty{
