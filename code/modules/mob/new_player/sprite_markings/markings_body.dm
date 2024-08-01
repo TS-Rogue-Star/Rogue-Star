@@ -52,6 +52,7 @@
 
 /datum/sprite_accessory/marking/vr_bellyspiral
 	name = "Belly Spiral"
+	icon = 'icons/mob/human_races/markings_alt.dmi'
 	icon_state = "bellyspiral"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_TORSO,BP_GROIN)
@@ -59,6 +60,7 @@
 
 /datum/sprite_accessory/marking/vr_fluffy_cuffs
 	name = "Wrist Fluff"
+	icon = 'icons/mob/human_races/markings_alt.dmi'
 	icon_state = "fluffy_cuffs"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_L_ARM,BP_R_ARM,BP_L_HAND,BP_R_HAND)
@@ -66,6 +68,7 @@
 
 /datum/sprite_accessory/marking/vr_chubby_belly
 	name = "Chubby Belly"
+	icon = 'icons/mob/human_races/markings_alt.dmi'
 	icon_state = "chubby_belly"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_TORSO,BP_GROIN)
@@ -73,6 +76,7 @@
 
 /datum/sprite_accessory/marking/vr_chubby_belly_s
 	name = "Smooth Chubby Belly"
+	icon = 'icons/mob/human_races/markings_alt.dmi'
 	icon_state = "chubby_belly_s"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_TORSO,BP_GROIN)
@@ -80,6 +84,7 @@
 
 /datum/sprite_accessory/marking/vr_r_belly_fluff
 	name = "Belly Fluff"
+	icon = 'icons/mob/human_races/markings_alt.dmi'
 	icon_state = "belly_fluff"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_TORSO)
@@ -87,6 +92,7 @@
 
 /datum/sprite_accessory/marking/vr_r_chest_fluff
 	name = "Chest Fluff"
+	icon = 'icons/mob/human_races/markings_alt.dmi'
 	icon_state = "chest_fluff"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_TORSO)
@@ -94,6 +100,7 @@
 
 /datum/sprite_accessory/marking/vr_shoulder_fluff
 	name = "Shoulder Fluff"
+	icon = 'icons/mob/human_races/markings_alt.dmi'
 	icon_state = "shoulder_markings"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_L_ARM,BP_R_ARM)

@@ -306,7 +306,8 @@
 				playsound(src, 'sound/effects/attackblob.ogg', 50, 1)
 			var/mob/living/carbon/human/H = target
 			if(H.species.lightweight == 1)
-				H.Weaken(3)
+				H.Stun(3) //RS Port Chomp PR 8154 || CHOMPEdit - Crawling made this useless. Changing to stun instead.
+				H.drop_both_hands() //RS Port Chomp PR 8154 || Chopmedit - Stuns no longer drop items, so were forcing it >:3
 	return
 
 /obj/item/pupscrubber
@@ -462,10 +463,13 @@
 	if(ishuman(T))
 		var/mob/living/carbon/human/H = T
 		if(H.species.lightweight == 1)
-			H.Weaken(3)
+			//H.Weaken(3)
+			H.Stun(3) //RS Port Chomp PR 8047 || CHOMPEdit - Crawling made this useless. Changing to stun instead.
+			H.drop_both_hands() //Chopmedit - Stuns no longer drop items, so were forcing it >:3
 			return
 	var/armor_block = run_armor_check(T, "melee")
 	var/armor_soak = get_armor_soak(T, "melee")
 	T.apply_damage(20, HALLOSS,, armor_block, armor_soak)
 	if(prob(75)) //75% chance to stun for 5 seconds, really only going to be 4 bcus click cooldown+animation.
-		T.apply_effect(5, WEAKEN, armor_block)
+		//T.apply_effect(5, WEAKEN, armor_block) //RS Port Chomp PR 8047 || Chomp edit
+		T.apply_effect(5, STUN, armor_block)

@@ -1555,8 +1555,9 @@
 
 	choices += "Change amount"
 	choices += "Change verb"
+	choices += "Chemical refresher"
 
-	var/choice = tgui_alert(src, "Do you wish to inject somebody, or adjust settings?", "Selection List", choices)
+	var/choice = tgui_alert(src, "Do you wish to inject somebody or adjust settings?", "Selection List", choices)
 
 	if(choice == "Change reagent")
 		var/reagent_choice = tgui_input_list(usr, "Choose which reagent to inject!", "Select reagent", trait_injection_reagents)
@@ -1576,15 +1577,48 @@
 			trait_injection_verb = verb_choice
 		to_chat(src, "<span class='notice'>You will [trait_injection_verb] your targets.</span>")
 		return
+	if(choice == "Chemical Refresher")
+		var/output = {"<B>Chemical Refresher!</B><HR>
+					<B>Options for venoms</B><BR>
+					<BR>
+					<B>Size Chemicals</B><BR>
+					Microcillin: Will make someone shrink. <br>
+					Macrocillin: Will make someone grow. <br>
+					Normalcillin: Will make someone normal size. <br>
+					Note: 1 unit = 100% size diff. 0.01 unit = 1% size diff. <br>
+					Note: Normacillin stops at 100%  size. <br>
+					<br>
+					<B>Gender Chemicals</B><BR>
+					Androrovir: Will transform someone's sex to male. <br>
+					Gynorovir: Will transform someone's sex to female. <br>
+					Androgynorovir: Will transform someone's sex to plural. <br>
+					<br>
+					<B>Special Chemicals</B><BR>
+					Stoxin: Will make someone drowsy. <br>
+					Rainbow Toxin: Will make someone see rainbows. <br>
+					Paralysis Toxin: Will make someone paralyzed. <br>
+					Numbing Enzyme: Will make someone unable to feel pain. <br>
+					Pain Enzyme: Will make someone feel amplified pain. <br>
+					<br>
+					<B>Side Notes</B><BR>
+					You can select a value of 0 to inject nothing! <br>
+					Overdose threshold for most chemicals is 30 units. <br>
+					Exceptions to OD is: (Numbing Enzyme:20)<br>
+					You can also bite synthetics, but due to how synths work, they won't have anything injected into them.
+					<br>
+					"}
+		usr << browse(output,"window=chemicalrefresher")
+		return
 	else
 		var/list/targets = list() //IF IT IS NOT BROKEN. DO NOT FIX IT. AND KEEP COPYPASTING IT
-
 		for(var/mob/living/carbon/L in living_mobs(1, TRUE)) //Noncarbons don't even process reagents so don't bother listing others.
 			if(!istype(L, /mob/living/carbon))
 				continue
 			if(L == src) //no getting high off your own supply, get a nif or something, nerd.
 				continue
 			if(!L.resizable && (trait_injection_selected == "macrocillin" || trait_injection_selected == "microcillin" || trait_injection_selected == "normalcillin")) // If you're using a size reagent, ignore those with pref conflicts.
+				continue
+			if(!L.allow_spontaneous_tf && (trait_injection_selected == "androrovir" || trait_injection_selected == "gynorovir" || trait_injection_selected == "androgynorovir")) // If you're using a TF reagent, ignore those with pref conflicts. || Ports VOREStation PR16060
 				continue
 			targets += L
 
@@ -1613,7 +1647,7 @@
 			to_chat(src, "<span class='notice'>Somehow, you forgot your means of injecting. (Select a verb!)</span>")
 			return
 
-		if(do_after(src, 5, target))
+		if(do_after(src, 50, target))
 			add_attack_logs(src,target,"Injection trait ([trait_injection_selected], [trait_injection_amount])")
 			if(target.reagents)
 				target.reagents.add_reagent(trait_injection_selected, trait_injection_amount)

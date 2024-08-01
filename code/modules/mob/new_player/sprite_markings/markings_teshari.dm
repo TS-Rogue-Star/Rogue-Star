@@ -532,6 +532,7 @@
 /***	Markings	***/
 /datum/sprite_accessory/marking/vr_tesh_skull
 	name = "Teshari Skull Face"
+	icon = 'icons/mob/human_races/markings_alt.dmi'
 	icon_state = "teshari_skull"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)

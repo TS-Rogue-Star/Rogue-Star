@@ -101,8 +101,51 @@
 **License:** Licensed for use by Rogue Star; unlicensed for further use without permission of copyright holder<br>
 **Notes:** All files within this folder are covered under the above license, as per the included attribution.txt file
 <br>
+**File:** `icons/obj/pet_carrier.dmi`<br>
+**Title:** pet_carrier.dmi<br>
+**Creator:** WalterJe (https://github.com/tgstation/tgstation/pull/33231)<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/items/lefthand_melee_rs.dmi`<br>
+**Icon-States:** `pet_carrier`<br>
+**Creator:** WalterJe (https://github.com/tgstation/tgstation/pull/33231)<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/items/righthand_melee_rs.dmi`<br>
+**Icon-States:** `pet_carrier`<br>
+**Creator:** WalterJe (https://github.com/tgstation/tgstation/pull/33231)<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
 **File:** `icons/obj/taurs_rs.dmi`<br>
 **Title:** new_zorgoia, new_zorgoia_s, new_zorgoia_fat, new_zorgoia_fat_s<br>
 **Creator:** radiantAurora (https://github.com/radiantAurora)<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/vore64x32.dmi`<br>
+**Title:** otie, cotie, sotie, photie, secotie, secphotie, badboi, prettyboi, rous, hotie, sechotie, fotie, fcotie, fsotie, photiec, hotiec, direwolf, diredog, direwolfs, diredogs, andrews, rykka, caotie<br>
+**Creator:** Verkister (https://github.com/Verkister)<br>
+**File:** `icons/mob/human_races/markings_alt.dmi`<br>
+**Title:** vulp_skull-head, una_skull-head, bellyspiral, fluffy_cuffs, chubby_belly, chubby_belly_s, belly_fluff, chest_fluff, teshari_skull-head, shoulder_markings<br>
+**Creator:** radiantAurora (https://github.com/radiantAurora)<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/markings_vr.dmi`<br>
+**Title:** beestripes<br>
+**Creator:** radiantAurora (https://github.com/radiantAurora)<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/sprite_accessories/ears.dmi`<br>
+**Title:** wild_dog<br>
+**Creator:** radiantAurora (https://github.com/radiantAurora)<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/robot/clown_wide.dmi`<br>
+**Icon-States:** honkborg, honkborg-wreck, honkborg-eyes, honkborg-lights, honkborg-sleeper-1, honkborg-rest, honkborg-sit, honkborg-bellyup<br>
+**Creator:** Valekin<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/dogborg_vr.dmi`<br>
+**Icon-States:** clowngut<br>
+**Creator:** Verkele<br>
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>

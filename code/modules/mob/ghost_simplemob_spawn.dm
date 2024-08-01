@@ -31,6 +31,7 @@ GLOBAL_LIST_INIT(ghost_spawnable_mobs,list(
 		"Chubby Otie" = /mob/living/simple_mob/vore/otie/friendly/chubby,
 		"Tamed Otie" = /mob/living/simple_mob/vore/otie/cotie,
 		"Chubby Tamed Otie" = /mob/living/simple_mob/vore/otie/cotie/chubby,
+		"Cargo Otie" = /mob/living/simple_mob/vore/otie/cargo, //RS Add (cargo otie)
 		"Guard Otie" = /mob/living/simple_mob/vore/otie/security,
 		"Chubby Guard Otie" = /mob/living/simple_mob/vore/otie/security/chubby,
 		"Mutated Otie" =/mob/living/simple_mob/vore/otie/feral,
