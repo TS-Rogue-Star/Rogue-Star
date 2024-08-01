@@ -1801,6 +1801,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/interrogation
 	name = "\improper Security - Interrogation"
 	icon_state = "interrogation"
+	forced_ambience = 'sound/ambience/security/loop_interrogation.ogg'
 
 /area/security/riot_control
 	name = "\improper Security - Riot Control"

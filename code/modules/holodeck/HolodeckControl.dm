@@ -56,6 +56,7 @@
 														'sound/music/main.ogg',
 														'sound/music/space.ogg',
 														'sound/music/traitor.ogg',
+														'sound/ambience/space/space9.ogg'
 														)
 													),
 	"Picnic Area" 		= new/datum/holodeck_program(/area/holodeck/source_picnicarea, list('sound/music/title2.ogg')),
