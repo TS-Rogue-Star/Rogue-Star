@@ -54,9 +54,13 @@ SUBSYSTEM_DEF(chat)
 
 			if(!C || !C.chatOutput)
 				continue // No client? No care.
+
+			// Originally we didn't send it to oldchat because why? But, turns out that's
+			// really the only way to log-as-a-stream to a file in byond, so, we send it both ways.
+			DIRECT_OUTPUT(C, original_message)
+
 			else if(C.chatOutput.broken)
-				DIRECT_OUTPUT(C, original_message)
-				continue
+				continue // No vchat instance to queue it for, why bother.
 			else if(!C.chatOutput.loaded)
 				continue // If not loaded yet, do nothing and history-sending on load will get it.
 
@@ -67,8 +71,10 @@ SUBSYSTEM_DEF(chat)
 
 		if(!C || !C.chatOutput)
 			return // No client? No care.
+
+		DIRECT_OUTPUT(C, original_message)
+
 		else if(C.chatOutput.broken)
-			DIRECT_OUTPUT(C, original_message)
 			return
 		else if(!C.chatOutput.loaded)
 			return // If not loaded yet, do nothing and history-sending on load will get it.
