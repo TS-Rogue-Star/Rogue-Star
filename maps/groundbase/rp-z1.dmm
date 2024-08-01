@@ -11106,12 +11106,6 @@
 	req_access = list(11)
 	},
 /obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
