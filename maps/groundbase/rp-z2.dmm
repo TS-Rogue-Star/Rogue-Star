@@ -2364,10 +2364,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
-/obj/item/mail/envelope,
-/obj/item/mail/envelope,
-/obj/item/mail/envelope,
-/obj/item/mail/envelope,
 /obj/item/device/retail_scanner/cargo,
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/office)
