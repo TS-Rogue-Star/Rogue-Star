@@ -59,10 +59,8 @@ SUBSYSTEM_DEF(chat)
 			// really the only way to log-as-a-stream to a file in byond, so, we send it both ways.
 			DIRECT_OUTPUT(C, original_message)
 
-			else if(C.chatOutput.broken)
+			if(C.chatOutput.broken || !C.chatOutput.loaded)
 				continue // No vchat instance to queue it for, why bother.
-			else if(!C.chatOutput.loaded)
-				continue // If not loaded yet, do nothing and history-sending on load will get it.
 
 			LAZYINITLIST(msg_queue[C])
 			msg_queue[C][++msg_queue[C].len] = messageStruct
@@ -74,9 +72,7 @@ SUBSYSTEM_DEF(chat)
 
 		DIRECT_OUTPUT(C, original_message)
 
-		else if(C.chatOutput.broken)
-			return
-		else if(!C.chatOutput.loaded)
+		if(C.chatOutput.broken || !C.chatOutput.loaded)
 			return // If not loaded yet, do nothing and history-sending on load will get it.
 
 		LAZYINITLIST(msg_queue[C])
