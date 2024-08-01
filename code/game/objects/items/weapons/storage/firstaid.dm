@@ -176,9 +176,17 @@
 	name = "CMO's hypospray mk.I kit"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "firstaid-tactical-mini"
-	max_storage_space = ITEMSIZE_COST_NORMAL * 7
+	max_storage_space = ITEMSIZE_COST_SMALL * 10
 	desc = "Contains the classic MKI hypospray kit and a selection of empty vials."
-	starts_with = list(/obj/item/weapon/reagent_containers/hypospray/vial, /obj/item/weapon/reagent_containers/glass/beaker/vial = 10)
+	starts_with = list(
+		/obj/item/weapon/reagent_containers/hypospray/vial,
+		/obj/item/weapon/reagent_containers/glass/beaker/vial = 8,
+		/obj/item/weapon/reagent_containers/glass/beaker/vial/preloaded/tricordrazine = 2,
+		/obj/item/weapon/reagent_containers/glass/beaker/vial/preloaded/bicaridine = 2,
+		/obj/item/weapon/reagent_containers/glass/beaker/vial/preloaded/antitoxin = 2,
+		/obj/item/weapon/reagent_containers/glass/beaker/vial/preloaded/kelotane = 2,
+		/obj/item/weapon/reagent_containers/glass/beaker/vial/preloaded/dexalin = 2
+		)
 	can_hold = list(/obj/item/weapon/reagent_containers/hypospray/vial, /obj/item/weapon/reagent_containers/glass/beaker/vial)
 
 /obj/item/weapon/storage/firstaid/hypokit
@@ -186,8 +194,8 @@
 	desc = "Contains a Mk II Hypospray and its hypovials. It can only hold mk.II related items."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "firstaid-mini"
-	max_storage_space = ITEMSIZE_COST_TINY * 5 // 4*5 = 28 / 2 = 14 vials total
-	starts_with = list(/obj/item/weapon/hypospray_mkii, /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small = 10)
+	max_storage_space = ITEMSIZE_COST_SMALL * 7
+	starts_with = list(/obj/item/weapon/hypospray_mkii, /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small = 5)
 	can_hold = list(/obj/item/weapon/hypospray_mkii, /obj/item/weapon/reagent_containers/glass/beaker/vial, /obj/item/weapon/reagent_containers/glass/bottle/hypovial)
 	//can fit large and small vials, and any of the mkiis. but that's it. No free Analyzer either.
 
@@ -230,11 +238,13 @@
 	name = "CMO's hypospray mk.II kit"
 	desc = "Contains a large Deluxe Mk II Hypospray and its hypovials."
 	icon_state = "firstaid-tactical-mini"
-	starts_with = list(/obj/item/weapon/hypospray_mkii/CMO, /obj/item/weapon/reagent_containers/glass/bottle/hypovial/large = 5
-	///obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/preloaded/bicaridine,
-	///obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/preloaded/antitoxin,
-	///obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/preloaded/kelotane,
-	///obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/preloaded/dexalin //Go make chems silly
+	max_storage_space = ITEMSIZE_COST_SMALL * 10
+	starts_with = list(/obj/item/weapon/hypospray_mkii/CMO, /obj/item/weapon/reagent_containers/glass/bottle/hypovial/large = 4,
+	/obj/item/weapon/reagent_containers/glass/bottle/hypovial/large/preloaded/tricordrazine,
+	/obj/item/weapon/reagent_containers/glass/bottle/hypovial/large/preloaded/bicaridine,
+	/obj/item/weapon/reagent_containers/glass/bottle/hypovial/large/preloaded/antitoxin,
+	/obj/item/weapon/reagent_containers/glass/bottle/hypovial/large/preloaded/kelotane,
+	/obj/item/weapon/reagent_containers/glass/bottle/hypovial/large/preloaded/dexalin
 	)
 
 	item_state_slots = list(slot_r_hand_str = "firstaid-surgery", slot_l_hand_str = "firstaid-surgery")

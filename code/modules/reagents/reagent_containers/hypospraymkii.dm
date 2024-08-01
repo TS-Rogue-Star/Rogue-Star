@@ -39,7 +39,7 @@
 	var/spray_wait = WAIT_SPRAY
 	var/spray_self = SELF_SPRAY
 	var/inject_self = SELF_INJECT
-	var/quickload = FALSE
+	var/quickload = TRUE
 	var/emagged = FALSE
 	var/amount_per_transfer_from_this = 0
 	var/possible_transfer_amounts = list(0,1,5,10,15)
@@ -66,7 +66,7 @@
 
 /obj/item/weapon/hypospray_mkii/CMO
 	name = "hypospray mk.II deluxe"
-	allowed_containers = list(/obj/item/weapon/reagent_containers/glass/bottle/hypovial, /obj/item/weapon/reagent_containers/glass/beaker/vial, /obj/item/weapon/reagent_containers/glass/bottle)
+	allowed_containers = list(/obj/item/weapon/reagent_containers/glass/bottle/hypovial, /obj/item/weapon/reagent_containers/glass/beaker/vial)
 	icon_state = "cmo2"
 	item_state = "cmo2"
 	desc = "The Deluxe Hypospray can take larger-size vials. It also acts faster and delivers more reagents per spray."
@@ -77,6 +77,7 @@
 	spray_wait = DELUXE_WAIT_SPRAY
 	spray_self = DELUXE_SELF_SPRAY
 	inject_self = DELUXE_SELF_INJECT
+	quickload = TRUE
 
 /obj/item/weapon/hypospray_mkii/CMO/combat
 	name = "combat hypospray mk.II"
@@ -138,7 +139,15 @@
 		if(!quickload)
 			to_chat(user, span_warning("[src] can not hold more than one vial!"))
 			return FALSE
+
+		var/obj/item/weapon/reagent_containers/glass/beaker/vial/V = I
+		user.drop_from_inventory(V,src)
 		unload_hypo(vial, user)
+		vial = V
+		user.visible_message(span_notice("[user] has loaded a vial into [src]."),span_notice("You have loaded [vial] into [src]."))
+		update_icon()
+		playsound(loc, 'sound/weapons/empty.ogg', 35, 1)
+		return TRUE
 
 	else if(is_type_in_list(I, allowed_containers))
 		var/obj/item/weapon/reagent_containers/glass/beaker/vial/V = I
@@ -558,3 +567,8 @@
 	name = "large vial (Dexalin Plus)"
 	icon_state = "hypoviallarge-d"
 	prefill = list("dexalinp" = 60)
+
+/obj/item/weapon/reagent_containers/glass/bottle/hypovial/large/preloaded/tricordrazine
+	name = "large vial (Tricordrazine)"
+	icon_state = "hypoviallarge"
+	prefill = list("tricordrazine" = 60)
