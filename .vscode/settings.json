@@ -9,7 +9,7 @@
         "**/.pnp.*": true
     },
     "workbench.editorAssociations": {
-        "*.dmi": "imagePreview.previewEditor"
+        "*.dmi": "dmiEditor.dmiEditor"
     },
     "files.eol": "\n",
     "files.encoding": "utf8",
