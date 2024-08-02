@@ -493,8 +493,8 @@
 	set category = "OOC"
 
 	//Timing
-	if(src.chatOutputLoadedAt > (world.time - 10 SECONDS))
-		tgui_alert_async(src, "You can only try to reload VChat every 10 seconds at most.")
+	if(src.chatOutputLoadedAt > (world.time - 5 SECONDS))
+		tgui_alert_async(src, "You cann't reload the chat more than once within 5 seconds.")
 		return
 
 	verbs -= /client/proc/vchat_export_log
