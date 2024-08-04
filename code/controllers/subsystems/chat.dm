@@ -55,7 +55,7 @@ SUBSYSTEM_DEF(chat)
 			if(!C || !C.chatOutput)
 				continue // No client? No care.
 
-			// Originally we didn't send it to oldchat because why? But, turns out that's
+			// RSEdit: Originally we didn't send it to oldchat because why? But, turns out that's
 			// really the only way to log-as-a-stream to a file in byond, so, we send it both ways.
 			DIRECT_OUTPUT(C, original_message)
 
@@ -70,7 +70,7 @@ SUBSYSTEM_DEF(chat)
 		if(!C || !C.chatOutput)
 			return // No client? No care.
 
-		DIRECT_OUTPUT(C, original_message)
+		DIRECT_OUTPUT(C, original_message) // RSEdit - Moved this up from the branch below
 
 		if(C.chatOutput.broken || !C.chatOutput.loaded)
 			return // If not loaded yet, do nothing and history-sending on load will get it.

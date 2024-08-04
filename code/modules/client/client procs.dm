@@ -492,7 +492,7 @@
 	set name = "Reload VChat"
 	set category = "OOC"
 
-	//Timing
+	//RSEdit: Timing reduced to 5s and wording nicer
 	if(src.chatOutputLoadedAt > (world.time - 5 SECONDS))
 		tgui_alert_async(src, "You cann't reload the chat more than once within 5 seconds.")
 		return
