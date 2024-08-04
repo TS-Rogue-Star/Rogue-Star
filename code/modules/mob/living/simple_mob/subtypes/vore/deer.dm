@@ -173,6 +173,7 @@
 	reticulum.digestchance = 0
 	reticulum.absorbchance = 0
 	reticulum.escapechance = 0
+	reticulum.escapable = TRUE
 	reticulum.transferchance = 20
 	reticulum.transferlocation = "omasum"
 	reticulum.transferchance_secondary = 10
@@ -208,6 +209,7 @@
 	O.digestchance = 0
 	O.absorbchance = 0
 	O.escapechance = 0
+	O.escapable = TRUE
 	O.transferchance = 20
 	O.transferlocation = "abomasum"
 	O.transferchance_secondary = 10
@@ -248,6 +250,7 @@
 	A.digestchance = 0
 	A.absorbchance = 0
 	A.escapechance = 10
+	A.escapable = TRUE
 	A.transferchance = 10
 	A.transferlocation = "omasum"
 

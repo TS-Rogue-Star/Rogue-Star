@@ -172,6 +172,16 @@
 	max_n2 = 0
 	has_eye_glow = TRUE
 
+/mob/living/simple_mob/vore/otie/cargo //RS Add (cargo otie! wow!)
+	name = "chubby cargo otie"
+	desc = "The VARMAcorp bioengineering division flagship product for refuse disposal. This one seems to have a vest that barely fits its rotund frame."
+	icon_state = "caotie"
+	icon_living = "caotie"
+	icon_rest = "caotie_rest"
+	icon_dead = "caotie-dead"
+	ID_provided = TRUE
+	myid_access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_mining, access_mining_station) //RS add (dogs with jobs)
+
 /mob/living/simple_mob/vore/otie/security //tame by default unless you're a marked crimester. can be befriended to follow with pets tho.
 	name = "guard otie"
 	desc = "The VARMAcorp bioengineering division flagship product on big mean guard dogs."
@@ -180,6 +190,8 @@
 	icon_rest = "sotie_rest"
 	icon_dead = "sotie-dead"
 	faction = "neutral"
+	ID_provided = TRUE
+	myid_access = list(access_security, access_sec_doors, access_forensics_lockers, access_maint_tunnels) //RS add (dogs with jobs)
 	maxHealth = 200 //armored or something
 	health = 200
 	tamed = 1
