@@ -16965,7 +16965,9 @@
 /obj/item/weapon/storage/firstaid/regular,
 /obj/item/bodybag/cryobag,
 /obj/item/bodybag/cryobag,
-/obj/structure/closet/walllocker_double/command/south,
+/obj/structure/closet/walllocker_double/command/south{
+	name = "emergency supplies"
+	},
 /turf/simulated/floor/tiled/eris/dark/gray_platform,
 /area/bridge)
 "La" = (
