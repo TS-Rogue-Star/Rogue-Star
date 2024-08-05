@@ -2364,7 +2364,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
-/obj/item/device/retail_scanner/cargo,
+/obj/item/weapon/storage/bag/mail,
+/obj/item/mail/blank,
+/obj/item/mail/blank,
+/obj/item/mail/blank,
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/office)
 "hD" = (
@@ -4443,6 +4446,7 @@
 /obj/effect/floor_decal/corner/beige{
 	dir = 6
 	},
+/obj/item/weapon/storage/bag/mail,
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/storage)
 "oF" = (
@@ -5904,6 +5908,7 @@
 /obj/effect/floor_decal/corner/beige{
 	dir = 6
 	},
+/obj/item/weapon/storage/bag/mail,
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/storage)
 "sU" = (
@@ -13260,6 +13265,7 @@
 /obj/effect/floor_decal/corner/beige{
 	dir = 6
 	},
+/obj/item/device/retail_scanner/cargo,
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/office)
 "Pt" = (
@@ -15189,6 +15195,10 @@
 /obj/effect/floor_decal/corner/beige{
 	dir = 9
 	},
+/obj/item/mail/blank,
+/obj/item/mail/blank,
+/obj/item/mail/blank,
+/obj/item/mail/blank,
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/office)
 "UQ" = (
