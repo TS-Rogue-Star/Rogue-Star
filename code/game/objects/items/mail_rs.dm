@@ -160,7 +160,7 @@
 		add_overlay(postmark_image)
 
 /obj/item/mail/attackby(obj/item/W as obj, mob/user as mob)
-	. = ..() // RS Edit, overwritting the proc was causing issues with mail bags.
+	. = ..() // RS Edit, allows the mail bag to grab the mail.
 
 	// Destination tagging
 	if(istype(W, /obj/item/device/destTagger))
