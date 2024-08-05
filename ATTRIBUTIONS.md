@@ -149,3 +149,8 @@
 **Creator:** Verkele<br>
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
+**File:** `sound/effects/alert_levels`<br>
+**Voice-sounds:** blue.ogg, downtoBLUE.ogg, red.ogg, downtoRED.ogg, delta.ogg, downtoGREEN.ogg<br>
+**Creator:** Lizurt (https://github.com/TauCetiStation/TauCetiClassic/pull/3367)<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
