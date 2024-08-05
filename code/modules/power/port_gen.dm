@@ -222,6 +222,7 @@
 		overheat()
 	else if (overheating > 0)
 		overheating--
+	update_icon()	//for machines with overheat sprites (Talon reactor) to update the fact that they're overheating.
 
 /obj/machinery/power/port_gen/pacman/handleInactive()
 	var/cooling_temperature = 20
@@ -239,6 +240,7 @@
 
 	if(overheating)
 		overheating--
+		update_icon()	//same as UseFuel()'s reason, except if it's inactive it wouldn't be called. this just makes sure it's updated.
 
 /obj/machinery/power/port_gen/pacman/proc/overheat()
 	overheating++
