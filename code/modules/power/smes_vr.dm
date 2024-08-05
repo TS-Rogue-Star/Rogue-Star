@@ -10,27 +10,8 @@
 		to_chat(user,"<span class='warning'>\The [src] full of weird alien technology that's best not messed with.</span>")
 		return 0
 
-/obj/machinery/power/smes/buildable/hybrid/update_icon()
-	cut_overlays()
-	if(stat & BROKEN)	return
-
-	add_overlay("smes-op[outputting]")
-
-	if(inputting == 2)
-		add_overlay("smes-oc2")
-	else if (inputting == 1)
-		add_overlay("smes-oc1")
-	else
-		if(input_attempt)
-			add_overlay("smes-oc0")
-
-	var/clevel = chargedisplay()
-	if(clevel>0)
-		add_overlay("smes-og[clevel]")
-	return
+//removed update icon process, due to redundant code.
 
 /obj/machinery/power/smes/buildable/hybrid/process()
 	charge += min(recharge_rate, capacity - charge)
 	..()
-
-//hey travis wake up
