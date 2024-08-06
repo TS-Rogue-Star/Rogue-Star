@@ -10,7 +10,7 @@
 	icon = 'icons/mob/Human_face_m.dmi'	  // default icon for all hairs
 	var/icon_add = 'icons/mob/human_face.dmi'
 	var/flags
-	species_allowed = list(SPECIES_HUMAN, SPECIES_SKRELL, SPECIES_UNATHI, SPECIES_TAJ, SPECIES_TESHARI, SPECIES_NEVREAN, SPECIES_AKULA, SPECIES_SERGAL, SPECIES_FENNEC, SPECIES_ZORREN_HIGH, SPECIES_VULPKANIN, SPECIES_XENOCHIMERA, SPECIES_XENOHYBRID, SPECIES_VASILISSAN, SPECIES_RAPALA, SPECIES_PROTEAN, SPECIES_ALRAUNE, SPECIES_WEREBEAST, SPECIES_SHADEKIN, SPECIES_SHADEKIN_CREW,  SPECIES_ALTEVIAN) //ChompEDIT: allow for all
+	species_allowed = list(SPECIES_HUMAN, SPECIES_SKRELL, SPECIES_UNATHI, SPECIES_TAJ, SPECIES_TESHARI, SPECIES_NEVREAN, SPECIES_AKULA, SPECIES_SERGAL, SPECIES_FENNEC, SPECIES_ZORREN_HIGH, SPECIES_VULPKANIN, SPECIES_XENOCHIMERA, SPECIES_XENOHYBRID, SPECIES_VASILISSAN, SPECIES_RAPALA, SPECIES_PROTEAN, SPECIES_ALRAUNE, SPECIES_WEREBEAST, SPECIES_SHADEKIN, SPECIES_SHADEKIN_CREW,  SPECIES_ALTEVIAN) //ChompEDIT: allow for all	//RS EDIT
 /datum/sprite_accessory/hair/eighties
 	name = "80s"
 	icon_state = "hair_80s"
@@ -90,7 +90,7 @@
 	name = "Bald"
 	icon_state = "bald"
 	flags = HAIR_VERY_SHORT
-	//species_allowed = list(SPECIES_HUMAN,SPECIES_UNATHI,SPECIES_PROMETHEAN,SPECIES_HUMAN_VATBORN,SPECIES_VOX,SPECIES_TESHARI)
+	//species_allowed = list(SPECIES_HUMAN,SPECIES_UNATHI,SPECIES_PROMETHEAN,SPECIES_HUMAN_VATBORN,SPECIES_VOX,SPECIES_TESHARI)		//RS EDIT
 
 /datum/sprite_accessory/hair/baldfade
 	name = "Balding Fade"
@@ -169,7 +169,7 @@
 /datum/sprite_accessory/hair/bob
 	name = "Bob"
 	icon_state = "hair_bobcut"
-	//species_allowed = list(SPECIES_HUMAN,SPECIES_PROMETHEAN,SPECIES_HUMAN_VATBORN,SPECIES_UNATHI)
+	//species_allowed = list(SPECIES_HUMAN,SPECIES_PROMETHEAN,SPECIES_HUMAN_VATBORN,SPECIES_UNATHI)		//RS EDIT
 	flags = HAIR_TIEABLE
 
 /datum/sprite_accessory/hair/bobcutalt
@@ -185,7 +185,7 @@
 /datum/sprite_accessory/hair/bobcurl
 	name = "Bobcurl"
 	icon_state = "hair_bobcurl"
-	//species_allowed = list(SPECIES_HUMAN,SPECIES_PROMETHEAN,SPECIES_HUMAN_VATBORN,SPECIES_UNATHI)
+	//species_allowed = list(SPECIES_HUMAN,SPECIES_PROMETHEAN,SPECIES_HUMAN_VATBORN,SPECIES_UNATHI)		//RS EDIT
 	flags = HAIR_TIEABLE
 
 /datum/sprite_accessory/hair/bobcutovereye
@@ -336,7 +336,7 @@
 	name = "Buzzcut"
 	icon_state = "hair_buzzcut"
 	flags = HAIR_VERY_SHORT
-	//species_allowed = list(SPECIES_HUMAN,SPECIES_PROMETHEAN,SPECIES_HUMAN_VATBORN,SPECIES_UNATHI)
+	//species_allowed = list(SPECIES_HUMAN,SPECIES_PROMETHEAN,SPECIES_HUMAN_VATBORN,SPECIES_UNATHI)		//RS EDIT
 
 /datum/sprite_accessory/hair/celebcurls
 	name = "Celeb Curls"
@@ -784,7 +784,7 @@
 /datum/sprite_accessory/hair/mohawk
 	name = "Mohawk"
 	icon_state = "hair_d"
-	//species_allowed = list(SPECIES_HUMAN,SPECIES_PROMETHEAN,SPECIES_HUMAN_VATBORN,SPECIES_UNATHI)
+	//species_allowed = list(SPECIES_HUMAN,SPECIES_PROMETHEAN,SPECIES_HUMAN_VATBORN,SPECIES_UNATHI)		//RS EDIT
 
 /datum/sprite_accessory/hair/regulationmohawk
 	name = "Mohawk Regulation"
@@ -1131,7 +1131,7 @@
 /datum/sprite_accessory/hair/spiky
 	name = "Spiky"
 	icon_state = "hair_spikey"
-	//species_allowed = list(SPECIES_HUMAN,SPECIES_PROMETHEAN,SPECIES_HUMAN_VATBORN,SPECIES_UNATHI)
+	//species_allowed = list(SPECIES_HUMAN,SPECIES_PROMETHEAN,SPECIES_HUMAN_VATBORN,SPECIES_UNATHI)		//RS EDIT
 
 /datum/sprite_accessory/hair/starling
 	name = "Starling"
@@ -1314,49 +1314,49 @@
 	icon = 'icons/mob/human_face_alt.dmi'
 	icon_add = 'icons/mob/human_face_alt_add.dmi'
 	icon_state = "soghun_hood"
-	//species_allowed = list(SPECIES_UNATHI, SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_UNATHI, SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 
 /datum/sprite_accessory/hair/una_doublehorns
 	name = "Double Unathi Horns"
 	icon = 'icons/mob/human_face_alt.dmi'
 	icon_add = 'icons/mob/human_face_alt_add.dmi'
 	icon_state = "soghun_dubhorns"
-	//species_allowed = list(SPECIES_UNATHI, SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_UNATHI, SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 
 /datum/sprite_accessory/hair/sergal_plain
 	name = "Sergal Plain"
 	icon = 'icons/mob/human_face_alt.dmi'
 	icon_add = 'icons/mob/human_face_alt_add.dmi'
 	icon_state = "serg_plain"
-	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 
 /datum/sprite_accessory/hair/sergal_medicore
 	name = "Sergal Medicore"
 	icon = 'icons/mob/human_face_alt.dmi'
 	icon_add = 'icons/mob/human_face_alt_add.dmi'
 	icon_state = "serg_medicore"
-	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 
 /datum/sprite_accessory/hair/sergal_tapered
 	name = "Sergal Tapered"
 	icon = 'icons/mob/human_face_alt.dmi'
 	icon_add = 'icons/mob/human_face_alt_add.dmi'
 	icon_state = "serg_tapered"
-	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 
 /datum/sprite_accessory/hair/sergal_fairytail
 	name = "Sergal Fairytail"
 	icon = 'icons/mob/human_face_alt.dmi'
 	icon_add = 'icons/mob/human_face_alt_add.dmi'
 	icon_state = "serg_fairytail"
-	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 
 // Vulpa stuffs
 
 /datum/sprite_accessory/hair/vulp_hair_none
 	name = "None"
 	icon_state = "bald"
-	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 	gender = NEUTER
 
 /datum/sprite_accessory/hair/vulp_hair_kajam
@@ -1364,7 +1364,7 @@
 	icon = 'icons/mob/human_face_alt.dmi'
 	icon_add = 'icons/mob/human_face_alt_add.dmi'
 	icon_state = "kajam"
-	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 	gender = NEUTER
 
 /datum/sprite_accessory/hair/vulp_hair_keid
@@ -1372,7 +1372,7 @@
 	icon = 'icons/mob/human_face_alt.dmi'
 	icon_add = 'icons/mob/human_face_alt_add.dmi'
 	icon_state = "keid"
-	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 	gender = NEUTER
 
 /datum/sprite_accessory/hair/vulp_hair_adhara
@@ -1380,7 +1380,7 @@
 	icon = 'icons/mob/human_face_alt.dmi'
 	icon_add = 'icons/mob/human_face_alt_add.dmi'
 	icon_state = "adhara"
-	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 	gender = NEUTER
 
 /datum/sprite_accessory/hair/vulp_hair_kleeia
@@ -1388,7 +1388,7 @@
 	icon = 'icons/mob/human_face_alt.dmi'
 	icon_add = 'icons/mob/human_face_alt_add.dmi'
 	icon_state = "kleeia"
-	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 	gender = NEUTER
 
 /datum/sprite_accessory/hair/vulp_hair_mizar
@@ -1396,7 +1396,7 @@
 	icon = 'icons/mob/human_face_alt.dmi'
 	icon_add = 'icons/mob/human_face_alt_add.dmi'
 	icon_state = "mizar"
-	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 	gender = NEUTER
 
 /datum/sprite_accessory/hair/vulp_hair_apollo
@@ -1404,7 +1404,7 @@
 	icon = 'icons/mob/human_face_alt.dmi'
 	icon_add = 'icons/mob/human_face_alt_add.dmi'
 	icon_state = "apollo"
-	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 	gender = NEUTER
 
 /datum/sprite_accessory/hair/vulp_hair_belle
@@ -1412,7 +1412,7 @@
 	icon = 'icons/mob/human_face_alt.dmi'
 	icon_add = 'icons/mob/human_face_alt_add.dmi'
 	icon_state = "belle"
-	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 	gender = NEUTER
 
 /datum/sprite_accessory/hair/vulp_hair_bun
@@ -1420,7 +1420,7 @@
 	icon = 'icons/mob/human_face_alt.dmi'
 	icon_add = 'icons/mob/human_face_alt_add.dmi'
 	icon_state = "bun"
-	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 	gender = NEUTER
 
 /datum/sprite_accessory/hair/vulp_hair_jagged
@@ -1428,7 +1428,7 @@
 	icon = 'icons/mob/human_face_alt.dmi'
 	icon_add = 'icons/mob/human_face_alt_add.dmi'
 	icon_state = "jagged"
-	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 	gender = NEUTER
 
 /datum/sprite_accessory/hair/vulp_hair_curl
@@ -1436,7 +1436,7 @@
 	icon = 'icons/mob/human_face_alt.dmi'
 	icon_add = 'icons/mob/human_face_alt_add.dmi'
 	icon_state = "curl"
-	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 	gender = NEUTER
 
 /datum/sprite_accessory/hair/vulp_hair_hawk
@@ -1444,7 +1444,7 @@
 	icon = 'icons/mob/human_face_alt.dmi'
 	icon_add = 'icons/mob/human_face_alt_add.dmi'
 	icon_state = "hawk"
-	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 	gender = NEUTER
 
 /datum/sprite_accessory/hair/vulp_hair_anita
@@ -1452,7 +1452,7 @@
 	icon = 'icons/mob/human_face_alt.dmi'
 	icon_add = 'icons/mob/human_face_alt_add.dmi'
 	icon_state = "anita"
-	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 	gender = NEUTER
 
 /datum/sprite_accessory/hair/vulp_hair_short
@@ -1460,7 +1460,7 @@
 	icon = 'icons/mob/human_face_alt.dmi'
 	icon_add = 'icons/mob/human_face_alt_add.dmi'
 	icon_state = "short"
-	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 	gender = NEUTER
 
 /datum/sprite_accessory/hair/vulp_hair_spike
@@ -1468,7 +1468,7 @@
 	icon = 'icons/mob/human_face_alt.dmi'
 	icon_add = 'icons/mob/human_face_alt_add.dmi'
 	icon_state = "spike"
-	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 	gender = NEUTER
 
 //xeno stuffs
@@ -1580,21 +1580,21 @@ shaved
 	name = "Shaved"
 	icon_state = "bald"
 	gender = NEUTER
-	//species_allowed = list(SPECIES_HUMAN, SPECIES_UNATHI, SPECIES_TAJ, SPECIES_TESHARI, SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_HUMAN, SPECIES_UNATHI, SPECIES_TAJ, SPECIES_TESHARI, SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 */
 /datum/sprite_accessory/facial_hair/neck_fluff
 	name = "Neck Fluff"
 	icon = 'icons/mob/human_face_or_alt.dmi'
 	icon_state = "facial_neckfluff"
 	gender = NEUTER
-	//species_allowed = list(SPECIES_TAJ, SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_TAJ, SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 	color_blend_mode = ICON_MULTIPLY
 
 /datum/sprite_accessory/facial_hair/vulp_none
 	name = "None"
 	icon = 'icons/mob/human_face_alt.dmi'
 	icon_state = "none"
-	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 	gender = NEUTER
 	color_blend_mode = ICON_MULTIPLY
 
@@ -1602,7 +1602,7 @@ shaved
 	name = "Blaze"
 	icon = 'icons/mob/human_face_alt.dmi'
 	icon_state = "vulp_facial_blaze"
-	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 	gender = NEUTER
 	color_blend_mode = ICON_MULTIPLY
 
@@ -1610,7 +1610,7 @@ shaved
 	name = "Vulpine"
 	icon = 'icons/mob/human_face_alt.dmi'
 	icon_state = "vulp_facial_vulpine"
-	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 	gender = NEUTER
 	color_blend_mode = ICON_MULTIPLY
 
@@ -1618,7 +1618,7 @@ shaved
 	name = "Earfluff"
 	icon = 'icons/mob/human_face_alt.dmi'
 	icon_state = "vulp_facial_earfluff"
-	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 	gender = NEUTER
 	color_blend_mode = ICON_MULTIPLY
 
@@ -1626,7 +1626,7 @@ shaved
 	name = "Mask"
 	icon = 'icons/mob/human_face_alt.dmi'
 	icon_state = "vulp_facial_mask"
-	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 	gender = NEUTER
 	color_blend_mode = ICON_MULTIPLY
 
@@ -1634,7 +1634,7 @@ shaved
 	name = "Patch"
 	icon = 'icons/mob/human_face_alt.dmi'
 	icon_state = "vulp_facial_patch"
-	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 	gender = NEUTER
 	color_blend_mode = ICON_MULTIPLY
 
@@ -1642,7 +1642,7 @@ shaved
 	name = "Ruff"
 	icon = 'icons/mob/human_face_alt.dmi'
 	icon_state = "vulp_facial_ruff"
-	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 	gender = NEUTER
 	color_blend_mode = ICON_MULTIPLY
 
@@ -1650,7 +1650,7 @@ shaved
 	name = "Kita"
 	icon = 'icons/mob/human_face_alt.dmi'
 	icon_state = "vulp_facial_kita"
-	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 	gender = NEUTER
 	color_blend_mode = ICON_MULTIPLY
 
@@ -1658,7 +1658,7 @@ shaved
 	name = "Swift"
 	icon = 'icons/mob/human_face_alt.dmi'
 	icon_state = "vulp_facial_swift"
-	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 	gender = NEUTER
 	color_blend_mode = ICON_MULTIPLY
 
@@ -1672,15 +1672,20 @@ shaved
 
 /datum/sprite_accessory/facial_hair
 	icon = 'icons/mob/Human_face.dmi'
+	name = "Shaved"	//RS ADD
+	icon_state = "bald"	//RS ADD
+	gender = NEUTER	//RS ADD
 	color_blend_mode = ICON_ADD
 	em_block = TRUE
+	species_allowed = list(SPECIES_HUMAN, SPECIES_SKRELL, SPECIES_UNATHI, SPECIES_TAJ, SPECIES_TESHARI, SPECIES_NEVREAN, SPECIES_AKULA, SPECIES_SERGAL, SPECIES_FENNEC, SPECIES_ZORREN_HIGH, SPECIES_VULPKANIN, SPECIES_XENOCHIMERA, SPECIES_XENOHYBRID, SPECIES_VASILISSAN, SPECIES_RAPALA, SPECIES_PROTEAN, SPECIES_ALRAUNE, SPECIES_WEREBEAST, SPECIES_SHADEKIN, SPECIES_SHADEKIN_CREW,  SPECIES_ALTEVIAN) //RS EDIT: allow for all
 
+/*	// RS REMOVE - just making the default state be this, I bet that won't cause any problems :)
 /datum/sprite_accessory/facial_hair/shaved
 	name = "Shaved"
 	icon_state = "bald"
 	gender = NEUTER
 	//species_allowed = list(SPECIES_HUMAN,SPECIES_HUMAN_VATBORN,SPECIES_UNATHI,SPECIES_TAJ,SPECIES_SKRELL, "Machine", SPECIES_TESHARI, SPECIES_TESHARI,SPECIES_PROMETHEAN)
-
+*/
 /datum/sprite_accessory/facial_hair/watson
 	name = "Watson Mustache"
 	icon_state = "facial_watson"
@@ -1720,7 +1725,7 @@ shaved
 /datum/sprite_accessory/facial_hair/elvis
 	name = "Elvis Sideburns"
 	icon_state = "facial_elvis"
-	//species_allowed = list(SPECIES_HUMAN,SPECIES_PROMETHEAN,SPECIES_HUMAN_VATBORN,SPECIES_UNATHI)
+	//species_allowed = list(SPECIES_HUMAN,SPECIES_PROMETHEAN,SPECIES_HUMAN_VATBORN,SPECIES_UNATHI)		//RS EDIT
 
 /datum/sprite_accessory/facial_hair/abe
 	name = "Abraham Lincoln Beard"
@@ -1818,7 +1823,7 @@ shaved
 /datum/sprite_accessory/hair/una
 	name = "Long Unathi Spines"
 	icon_state = "soghun_longspines"
-	//species_allowed = list(SPECIES_UNATHI)
+	//species_allowed = list(SPECIES_UNATHI)		//RS EDIT
 
 /datum/sprite_accessory/hair/una/spines_short
 	name = "Short Unathi Spines"
@@ -1856,7 +1861,7 @@ shaved
 /datum/sprite_accessory/hair/skr
 	name = "Skrell Average Tentacles"
 	icon_state = "skrell_hair_average"
-	//species_allowed = list(SPECIES_SKRELL, SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)
+	//species_allowed = list(SPECIES_SKRELL, SPECIES_EVENT1, SPECIES_EVENT2, SPECIES_EVENT3)		//RS EDIT
 
 /datum/sprite_accessory/hair/skr/tentacle_veryshort
 	name = "Skrell Short Tentacles"
@@ -1875,7 +1880,7 @@ shaved
 /datum/sprite_accessory/hair/taj
 	name = "Tajaran Ears"
 	icon_state = "ears_plain"
-	//species_allowed = list(SPECIES_TAJ)
+	//species_allowed = list(SPECIES_TAJ)		//RS EDIT
 
 /datum/sprite_accessory/hair/taj/bangs
 	name = "Tajaran Bangs"
@@ -2037,7 +2042,7 @@ shaved
 /datum/sprite_accessory/facial_hair/taj
 	name = "Tajaran Sideburns"
 	icon_state = "facial_sideburns"
-	//species_allowed = list(SPECIES_TAJ)
+	//species_allowed = list(SPECIES_TAJ)		//RS EDIT
 
 /datum/sprite_accessory/facial_hair/taj/mutton
 	name = "Tajaran Mutton"
@@ -2064,7 +2069,7 @@ shaved
 /datum/sprite_accessory/facial_hair/una
 	name = "Unathi Chin Horn"
 	icon_state = "facial_chinhorns"
-	//species_allowed = list(SPECIES_UNATHI)
+	//species_allowed = list(SPECIES_UNATHI)		//RS EDIT
 
 /datum/sprite_accessory/facial_hair/una/hornadorns
 	name = "Unathi Horn Adorns"

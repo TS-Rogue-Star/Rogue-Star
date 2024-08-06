@@ -4653,7 +4653,7 @@
 /area/redgate/city/streets)
 "gpw" = (
 /obj/structure/table/rack,
-/obj/item/clothing/under/psyche,
+/obj/item/clothing/under/mbill,
 /turf/simulated/floor/tiled/white,
 /area/redgate/city/clotheshop)
 "gpI" = (
@@ -8256,7 +8256,6 @@
 /obj/structure/closet/crate/secure{
 	req_one_access = list(101)
 	},
-/obj/item/weapon/tool/transforming/altevian,
 /obj/random/junk,
 /obj/random/grenade/less_lethal,
 /obj/item/clothing/mask/altevian_breath,
