@@ -147,7 +147,9 @@
 		split_count += C.rating
 
 /obj/machinery/power/tesla_coil/splitter/coil_act(var/power)
-	var/power_per_bolt = power / (split_count + 1)
+	var/power_per_bolt = power / ((split_count + 1) - (0.1 * split_count))
+	// increasing split count also increases power output, making prisms worthwhile at the cost of extra effort and space
+	// with typical tier 3 setups, that's 3 bolts with a 30% discount each, totalling at +90% power output for that bolt
 	var/power_produced = power_per_bolt / power_loss
 	add_avail(power_produced*input_power_multiplier)
 	flick("[icontype]hit", src)
@@ -167,13 +169,13 @@
 
 /obj/machinery/power/tesla_coil/amplifier/RefreshParts()
 	..()
-	var/amp_eff = 1
+	var/amp_eff = 0.1
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
 		amp_eff += C.rating
 
 /obj/machinery/power/tesla_coil/amplifier/coil_act(var/power)
-	var/power_produced = power / power_loss
-	add_avail(power_produced*input_power_multiplier)
+	var/power_produced = power + (power * amp_eff)
+	// just a 10% power boost per tier. Easier to work with than prisms but less potential.
 	flick("[icontype]hit", src)
 	playsound(src, 'sound/effects/lightningshock.ogg', 100, 1, extrarange = 5)
 	tesla_zap(src, 5, power_produced)
