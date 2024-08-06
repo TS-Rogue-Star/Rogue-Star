@@ -1672,15 +1672,20 @@ shaved
 
 /datum/sprite_accessory/facial_hair
 	icon = 'icons/mob/Human_face.dmi'
+	name = "Shaved"	//RS ADD
+	icon_state = "bald"	//RS ADD
+	gender = NEUTER	//RS ADD
 	color_blend_mode = ICON_ADD
 	em_block = TRUE
+	species_allowed = list(SPECIES_HUMAN, SPECIES_SKRELL, SPECIES_UNATHI, SPECIES_TAJ, SPECIES_TESHARI, SPECIES_NEVREAN, SPECIES_AKULA, SPECIES_SERGAL, SPECIES_FENNEC, SPECIES_ZORREN_HIGH, SPECIES_VULPKANIN, SPECIES_XENOCHIMERA, SPECIES_XENOHYBRID, SPECIES_VASILISSAN, SPECIES_RAPALA, SPECIES_PROTEAN, SPECIES_ALRAUNE, SPECIES_WEREBEAST, SPECIES_SHADEKIN, SPECIES_SHADEKIN_CREW,  SPECIES_ALTEVIAN) //RS EDIT: allow for all
 
+/*
 /datum/sprite_accessory/facial_hair/shaved
 	name = "Shaved"
 	icon_state = "bald"
 	gender = NEUTER
 	//species_allowed = list(SPECIES_HUMAN,SPECIES_HUMAN_VATBORN,SPECIES_UNATHI,SPECIES_TAJ,SPECIES_SKRELL, "Machine", SPECIES_TESHARI, SPECIES_TESHARI,SPECIES_PROMETHEAN)		//RS EDIT
-
+*/
 /datum/sprite_accessory/facial_hair/watson
 	name = "Watson Mustache"
 	icon_state = "facial_watson"
