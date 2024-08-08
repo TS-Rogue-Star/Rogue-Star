@@ -64,3 +64,18 @@
 	containername = "Operating Table Circuit crate"
 	access = access_medical_equip
 //Rs add end
+//RS Add MKII Hypokits
+/datum/supply_pack/med/mkiihypokits
+	name = "mk.II Hypospray Kits"
+	contains = list(
+				/obj/item/weapon/storage/firstaid/hypokit = 2, //RS Add
+				/obj/item/weapon/storage/firstaid/hypokit/brute = 2,
+				/obj/item/weapon/storage/firstaid/hypokit/burn = 2,
+				/obj/item/weapon/storage/firstaid/hypokit/antitoxin = 2,
+				/obj/item/weapon/storage/firstaid/hypokit/oxy = 2
+				)
+	cost = 25
+	containertype = /obj/structure/closet/crate/secure
+	containername = "mk.II Hypospray Kit Crate"
+	access = access_medical_equip
+//MkII Hypokits end

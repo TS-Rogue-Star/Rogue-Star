@@ -1,15 +1,15 @@
 #define HYPO_SPRAY 0
 #define HYPO_INJECT 1
 
-#define WAIT_SPRAY 5 SECONDS
-#define WAIT_INJECT 5 SECONDS
-#define SELF_SPRAY 3 SECONDS
-#define SELF_INJECT 3 SECONDS
+#define WAIT_SPRAY 2 SECONDS
+#define WAIT_INJECT 2 SECONDS
+#define SELF_SPRAY 1 SECONDS
+#define SELF_INJECT 1 SECONDS
 
-#define DELUXE_WAIT_SPRAY 4 SECONDS
-#define DELUXE_WAIT_INJECT 4 SECONDS
-#define DELUXE_SELF_SPRAY 2 SECONDS
-#define DELUXE_SELF_INJECT 2 SECONDS
+#define DELUXE_WAIT_SPRAY 1 SECONDS
+#define DELUXE_WAIT_INJECT 1 SECONDS
+#define DELUXE_SELF_SPRAY 1 SECONDS
+#define DELUXE_SELF_INJECT 1 SECONDS
 
 #define COMBAT_WAIT_SPRAY 0
 #define COMBAT_WAIT_INJECT 0
@@ -26,20 +26,23 @@
 		slot_l_hand_str = 'icons/mob/items/lefthand.dmi',
 		slot_r_hand_str = 'icons/mob/items/righthand.dmi',
 		)
-	desc = "A refined development from DeForest Medical, this hypospray takes 30-unit vials as the drug supply for easy swapping. It is more ergonomic for humanoids!"
+	desc = "A refined development from DeForest Medical, altered construction materials enable wider availability, this hypospray takes 30-unit vials as the drug supply for easy swapping."
 	w_class = ITEMSIZE_SMALL
-	var/list/allowed_containers = list(/obj/item/weapon/reagent_containers/glass/bottle/hypovial/small)
+	var/list/allowed_containers = list(/obj/item/weapon/reagent_containers/glass/beaker/vial, /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small)
 	var/mode = HYPO_INJECT
 	var/obj/item/weapon/reagent_containers/glass/bottle/hypovial/vial
+	//var/obj/item/weapon/reagent_containers/glass/beaker/vial/vial
 	var/start_vial = /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small
+	//var/start_vial = /obj/item/weapon/reagent_containers/glass/beaker/vial
 	var/spawnwithvial = TRUE
 	var/inject_wait = WAIT_INJECT
 	var/spray_wait = WAIT_SPRAY
 	var/spray_self = SELF_SPRAY
 	var/inject_self = SELF_INJECT
-	var/quickload = FALSE
+	var/quickload = TRUE
 	var/emagged = FALSE
-
+	var/amount_per_transfer_from_this = 0
+	var/possible_transfer_amounts = list(0,1,5,10,15)
 	slot_flags = SLOT_BELT
 	unacidable = TRUE
 	drop_sound = 'sound/items/drop/gun.ogg'
@@ -49,7 +52,7 @@
 /obj/item/weapon/hypospray_mkii/brute
 	start_vial = /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/preloaded/bicaridine
 
-/obj/item/weapon/hypospray_mkii/toxin
+/obj/item/weapon/hypospray_mkii/antitoxin
 	start_vial = /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/preloaded/antitoxin
 
 /obj/item/weapon/hypospray_mkii/oxygen
@@ -63,15 +66,18 @@
 
 /obj/item/weapon/hypospray_mkii/CMO
 	name = "hypospray mk.II deluxe"
-	allowed_containers = list(/obj/item/weapon/reagent_containers/glass/bottle/hypovial/small, /obj/item/weapon/reagent_containers/glass/bottle/hypovial/large)
+	allowed_containers = list(/obj/item/weapon/reagent_containers/glass/bottle/hypovial, /obj/item/weapon/reagent_containers/glass/beaker/vial)
 	icon_state = "cmo2"
 	item_state = "cmo2"
 	desc = "The Deluxe Hypospray can take larger-size vials. It also acts faster and delivers more reagents per spray."
-	start_vial = /obj/item/weapon/reagent_containers/glass/bottle/hypovial/large/preloaded/CMO
+	possible_transfer_amounts = list(0,1,5,10,15,25,30)
+	//start_vial = /obj/item/weapon/reagent_containers/glass/bottle
+	start_vial = /obj/item/weapon/reagent_containers/glass/bottle/hypovial/large
 	inject_wait = DELUXE_WAIT_INJECT
 	spray_wait = DELUXE_WAIT_SPRAY
 	spray_self = DELUXE_SELF_SPRAY
 	inject_self = DELUXE_SELF_INJECT
+	quickload = TRUE
 
 /obj/item/weapon/hypospray_mkii/CMO/combat
 	name = "combat hypospray mk.II"
@@ -79,6 +85,8 @@
 	icon_state = "combat2"
 	item_state = "combat2"
 	start_vial = /obj/item/weapon/reagent_containers/glass/bottle/hypovial/large/preloaded/combat
+	//start_vial = /obj/item/weapon/reagent_containers/glass/bottle
+	//var/obj/item/weapon/reagent_containers/glass/beaker/vial
 	inject_wait = COMBAT_WAIT_INJECT
 	spray_wait = COMBAT_WAIT_SPRAY
 	spray_self = COMBAT_SELF_SPRAY
@@ -104,8 +112,9 @@
 
 /obj/item/weapon/hypospray_mkii/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'><b>Alt-Click</b> it to toggle its mode from spraying to injecting and vice versa.</span>"
-	. += "<span class='notice'><b>Ctrl-Click</b> it to unload a vial.</span>"
+	//. += span_notice("<b>Alt-Click</b> it to toggle its mode from spraying to injecting and vice versa.")
+	. += span_notice("<b>Alt-Click</b> it to Adjust injection ammount.")
+	. += span_notice("<b>Ctrl-Click</b> it to unload a vial.")
 	if(vial)
 		. += "[vial] has [vial.reagents.total_volume]u remaining."
 	else
@@ -113,50 +122,58 @@
 	. += "[src] is set to [mode ? "Inject" : "Spray"] contents on application."
 
 /obj/item/weapon/hypospray_mkii/proc/unload_hypo(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/reagent_containers/glass/bottle/hypovial))
-		var/obj/item/weapon/reagent_containers/glass/bottle/hypovial/V = I
+	if(is_type_in_list(I, allowed_containers))
+		var/obj/item/weapon/reagent_containers/glass/beaker/vial/V = I
 		V.forceMove(user.loc)
 		user.put_in_hands(V)
-		to_chat(user, "<span class='notice'>You remove [vial] from [src].</span>")
+		to_chat(user, span_notice("You remove [vial] from [src]."))
 		vial = null
 		update_icon()
 		playsound(loc, 'sound/weapons/empty.ogg', 50, 1)
 	else
-		to_chat(user, "<span class='notice'>This hypo isn't loaded!</span>")
+		to_chat(user, span_notice("This hypo isn't loaded!"))
 		return
 
 /obj/item/weapon/hypospray_mkii/attackby(obj/item/I, mob/living/user)
-	if(istype(I, /obj/item/weapon/reagent_containers/glass/bottle/hypovial) && vial != null)
+	if(is_type_in_list(I, allowed_containers) && vial != null)
 		if(!quickload)
-			to_chat(user, "<span class='warning'>[src] can not hold more than one vial!</span>")
+			to_chat(user, span_warning("[src] can not hold more than one vial!"))
 			return FALSE
-		unload_hypo(vial, user)
 
-	else if(istype(I, /obj/item/weapon/reagent_containers/glass/bottle/hypovial))
-		var/obj/item/weapon/reagent_containers/glass/bottle/hypovial/V = I
-		if(!is_type_in_list(V, allowed_containers))
-			to_chat(user, "<span class='notice'>[src] doesn't accept this type of vial.</span>")
-			return FALSE
+		var/obj/item/weapon/reagent_containers/glass/beaker/vial/V = I
+		user.drop_from_inventory(V,src)
+		unload_hypo(vial, user)
+		vial = V
+		user.visible_message(span_notice("[user] has loaded a vial into [src]."),span_notice("You have loaded [vial] into [src]."))
+		update_icon()
+		playsound(loc, 'sound/weapons/empty.ogg', 35, 1)
+		return TRUE
+
+	else if(is_type_in_list(I, allowed_containers))
+		var/obj/item/weapon/reagent_containers/glass/beaker/vial/V = I
+		//if(!is_type_in_list(V, allowed_containers))
+		//	to_chat(user, span_notice("[src] doesn't accept this type of vial."))
+		//	return FALSE
 		user.drop_from_inventory(V,src)
 		vial = V
-		user.visible_message("<span class='notice'>[user] has loaded a vial into [src].</span>","<span class='notice'>You have loaded [vial] into [src].</span>")
+		user.visible_message(span_notice("[user] has loaded a vial into [src]."),span_notice("You have loaded [vial] into [src]."))
 		update_icon()
 		playsound(loc, 'sound/weapons/empty.ogg', 35, 1)
 		return TRUE
 	else
-		to_chat(user, "<span class='notice'>This doesn't fit in [src].</span>")
+		to_chat(user, span_notice("This doesn't fit in [src]."))
 		return FALSE
 
 /obj/item/weapon/hypospray_mkii/emag_act(mob/user)
 	. = ..()
 	if(emagged)
-		to_chat(user, "[src] happens to be already overcharged.")
+		to_chat(user, span_warning("[src] happens to be already overcharged."))
 		return
 	inject_wait = COMBAT_WAIT_INJECT
 	spray_wait = COMBAT_WAIT_SPRAY
 	spray_self = COMBAT_SELF_INJECT
 	inject_self = COMBAT_SELF_SPRAY
-	to_chat(user, "You overcharge [src]'s control circuit.")
+	to_chat(user, span_warning("You overcharge [src]'s control circuit."))
 	emagged = TRUE
 	return TRUE
 
@@ -177,26 +194,26 @@
 	if(iscarbon(L))
 		var/obj/item/organ/external/affected = L.get_organ(user.zone_sel.selecting)
 		if(!affected)
-			to_chat(user, "<span class='warning'>The limb is missing!</span>")
+			to_chat(user, span_warning("The limb is missing!"))
 			return
 		if(affected.status != ORGAN_FLESH)
-			to_chat(user, "<span class='notice'>Medicine won't work on a robotic limb!</span>")
+			to_chat(user, span_notice("Medicine won't work on a robotic limb!"))
 			return
 
 	//Always log attemped injections for admins
 	var/contained = vial.reagentlist()
 	if(!vial)
-		to_chat(user, "<span class='notice'>[src] doesn't have any vial installed!</span>")
+		to_chat(user, span_notice("[src] doesn't have any vial installed!"))
 		return
 	if(!vial.reagents.total_volume)
-		to_chat(user, "<span class='notice'>[src]'s vial is empty!</span>")
+		to_chat(user, span_notice("[src]'s vial is empty!"))
 		return
 
 	var/fp_verb = mode == HYPO_SPRAY ? "spray" : "inject"
 
 	if(L != user)
-		L.visible_message("<span class='danger'>\The [user] is trying to [fp_verb] \the [L] with \the [src]!</span>", \
-						"<span class='userdanger'>\The [user] is trying to [fp_verb] you with \the [src]!</span>")
+		L.visible_message(span_danger("\The [user] is trying to [fp_verb] \the [L] with \the [src]!"), \
+						span_danger("\The [user] is trying to [fp_verb] you with \the [src]!"))
 	add_attack_logs(user, L, "[user] attemped to use [src] on [L] which had [contained]")
 
 	if(!do_mob(user, L, inject_wait))
@@ -206,19 +223,26 @@
 		return
 	add_attack_logs(user, L, "[user] applied [src] to [L], which had [contained] (INTENT: [uppertext(user.a_intent)]) (MODE: [fp_verb])")
 	if(L != user)
-		L.visible_message("<span class='danger'>\The [user] [fp_verb]s \the [L] with \the [src]!</span>", \
-						"<span class='userdanger'>\The [user] [fp_verb]s you with \the [src]!</span>")
+		L.visible_message(span_danger("\The [user] [fp_verb]s \the [L] with \the [src]!"), \
+						span_danger("\The [user] [fp_verb]s you with \the [src]!"))
 	else
 		add_attack_logs(user, L, "[user] applied [src] on [L] with [src] which had [contained]")
-
-	if(mode == HYPO_SPRAY)
-		vial.reagents.trans_to_mob(target, vial.amount_per_transfer_from_this, CHEM_TOUCH)
-	else if(mode == HYPO_INJECT)
-		vial.reagents.trans_to_mob(target, vial.amount_per_transfer_from_this, CHEM_BLOOD)
+	if(amount_per_transfer_from_this == 0) //use beaker transfer rate
+		if(mode == HYPO_SPRAY)
+			vial.reagents.trans_to_mob(target, vial.amount_per_transfer_from_this,CHEM_TOUCH)
+		else if(mode == HYPO_INJECT)
+			vial.reagents.trans_to_mob(target, vial.amount_per_transfer_from_this, CHEM_BLOOD)
+		to_chat(user, span_notice("You [fp_verb] [vial.amount_per_transfer_from_this] units of the solution. The hypospray's cartridge now contains [vial.reagents.total_volume] units."))
+	else //Use hypo transfer rate
+		if(mode == HYPO_SPRAY)
+			vial.reagents.trans_to_mob(target, amount_per_transfer_from_this,CHEM_TOUCH)
+		else if(mode == HYPO_INJECT)
+			vial.reagents.trans_to_mob(target, amount_per_transfer_from_this, CHEM_BLOOD)
+		to_chat(user, span_notice("You [fp_verb] [amount_per_transfer_from_this] units of the solution. The hypospray's cartridge now contains [vial.reagents.total_volume] units."))
 
 	playsound(loc, 'sound/effects/hypospray.ogg', 50)
 	playsound(loc, 'sound/effects/refill.ogg', 50)
-	to_chat(user, "<span class='notice'>You [fp_verb] [vial.amount_per_transfer_from_this] units of the solution. The hypospray's cartridge now contains [vial.reagents.total_volume] units.</span>")
+
 
 /obj/item/weapon/hypospray_mkii/attack_self(mob/living/user)
 	if(user)
@@ -230,16 +254,44 @@
 		else
 			unload_hypo(vial,user)
 
+/obj/item/weapon/hypospray_mkii/verb/set_APTFT() //set amount_per_transfer_from_this
+	set name = "Set transfer amount"
+	set category = "Object"
+	set src in range(0)
+	var/N = tgui_input_list(usr, "Amount per transfer from this:","[src]", possible_transfer_amounts)
+	//if(N)
+	if(N == 0)
+		to_chat(usr, "[src] Defaulting to beaker transfer amount.")
+	else
+		to_chat(usr, "[src] Setting injection amount to [N].")
+	amount_per_transfer_from_this = N
+
+/obj/item/weapon/hypospray_mkii/verb/swap_mode() //set amount_per_transfer_from_this
+	set name = "Swap spray mode"
+	set category = "Object"
+	set src in range(0)
+	switch(mode)
+		if(HYPO_SPRAY)
+			mode = HYPO_INJECT
+			to_chat(usr, "[src] is now set to inject contents on application.")
+		if(HYPO_INJECT)
+			mode = HYPO_SPRAY
+			to_chat(usr, "[src] is now set to spray contents on application.")
+
 /obj/item/weapon/hypospray_mkii/AltClick(mob/living/user)
 	. = ..()
 	if(user.CanUseTopic(src, FALSE))
-		switch(mode)
+		if(possible_transfer_amounts && user.Adjacent(src))
+			set_APTFT()
+		/*switch(mode)
 			if(HYPO_SPRAY)
 				mode = HYPO_INJECT
 				to_chat(user, "[src] is now set to inject contents on application.")
 			if(HYPO_INJECT)
 				mode = HYPO_SPRAY
 				to_chat(user, "[src] is now set to spray contents on application.")
+		*/ //Moved to a verb
+
 		return TRUE
 
 /obj/item/weapon/hypospray_mkii/CtrlClick(mob/living/user)
@@ -268,17 +320,19 @@
 #undef COMBAT_SELF_SPRAY
 #undef COMBAT_SELF_INJECT
 
+
 //MK II hypovials to avoid cross contamination with base
 /obj/item/weapon/reagent_containers/glass/bottle/hypovial
 	name = "hypospray vial"
 	desc = "This is a vial suitable for loading into mk II hyposprays."
 	icon_state = "hypovial"
 	item_state = "hypovial"
-	w_class = ITEMSIZE_SMALL //Why would it be the same size as a beaker?
+	w_class = ITEMSIZE_TINY //Why would it be the same size as a beaker? (itemsize_small was the same size as a beaker)
 	flags = OPENCONTAINER | NOCONDUCT
 	unacidable = TRUE
+	matter = list(MAT_GLASS = 250)
 	var/bluespaced = FALSE
-	var/comes_with = list() //Easy way of doing this.
+	//var/comes_with = list() //Easy way of doing this.
 	var/fillingsize = "hypovial"
 	volume = 10
 	can_be_placed_into = list(
@@ -310,10 +364,10 @@
 
 /obj/item/weapon/reagent_containers/glass/bottle/hypovial/attack(mob/M as mob, mob/user as mob)
 	if(M == user)
-		to_chat(user, "<span class='notice'>This is a sealed container, you cannot drink from it.</span>")
+		to_chat(user, span_notice("This is a sealed container, you cannot drink from it."))
 		return
 	else if(istype(M, /mob/living/carbon/human))
-		to_chat(user, "<span class='notice'>This is a sealed container, [M] cannot drink from it.</span>")
+		to_chat(user, span_notice("This is a sealed container, [M] cannot drink from it."))
 		return
 
 /obj/item/weapon/reagent_containers/glass/bottle/hypovial/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -327,13 +381,13 @@
 			if("Label")
 				var/tmp_label = sanitizeSafe(tgui_input_text(user, "Enter a label for [name]", "Label", label_text, MAX_NAME_LEN), MAX_NAME_LEN)
 				if(length(tmp_label) > 50)
-					to_chat(user, "<span class='notice'>The label can be at most 50 characters long.</span>")
+					to_chat(user, span_notice("The label can be at most 50 characters long."))
 				else if(length(tmp_label) > 10)
-					to_chat(user, "<span class='notice'>You set the label.</span>")
+					to_chat(user, span_notice("You set the label."))
 					label_text = tmp_label
 					update_name_label()
 				else
-					to_chat(user, "<span class='notice'>You set the label to \"[tmp_label]\".</span>")
+					to_chat(user, span_notice("You set the label to \"[tmp_label]\"."))
 					label_text = tmp_label
 					update_name_label()
 			if("Recolor")
@@ -366,6 +420,7 @@
 		name = choice
 		to_chat(M, "[src] is now skinned as '[choice].'")
 
+
 /obj/item/weapon/reagent_containers/glass/bottle/hypovial/on_reagent_change()
 	update_icon()
 
@@ -392,20 +447,24 @@
 	if(bluespaced)
 		add_overlay("[fillingsize]bs")
 
-/obj/item/weapon/reagent_containers/glass/bottle/hypovial/small
+
+/obj/item/weapon/reagent_containers/glass/bottle/hypovial
 	volume = 30
 	possible_transfer_amounts = list(5,10,15)
 
-/obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/bluespace
+/obj/item/weapon/reagent_containers/glass/bottle/hypovial/bluespace
 	volume = 60
 	bluespaced = TRUE
+
 
 /obj/item/weapon/reagent_containers/glass/bottle/hypovial/large
 	name = "large hypospray vial"
 	desc = "This is a vial suitable for loading into the Chief Medical Officer's Hypospray mk II."
 	icon_state = "hypoviallarge"
+	w_class = ITEMSIZE_SMALL
 	fillingsize = "hypoviallarge"
 	volume = 60
+	matter = list(MAT_GLASS = 500)
 	possible_transfer_amounts = list(5,10,15,25,30)
 
 	unique_reskin = list("large hypovial" = "hypoviallarge",
@@ -421,62 +480,95 @@
 	volume = 120
 	bluespaced = TRUE
 
-/obj/item/weapon/reagent_containers/glass/bottle/hypovial/New()
+
+/*/obj/item/weapon/reagent_containers/glass/bottle/hypovial/New()
 	..()
 	for(var/R in comes_with)
 		reagents.add_reagent(R,comes_with[R])
+*/
+//Hypo mkI vials, will be moved later
+/obj/item/weapon/reagent_containers/glass/beaker/vial/preloaded/bicaridine
+	name = "vial (bicaridine)"
+	icon_state = "vial"
+	prefill = list("bicaridine" = 30)
 
+/obj/item/weapon/reagent_containers/glass/beaker/vial/preloaded/antitoxin
+	name = "vial (Dylovene)"
+	icon_state = "vial"
+	prefill = list("anti_toxin" = 30)
+
+/obj/item/weapon/reagent_containers/glass/beaker/vial/preloaded/kelotane
+	name = "vial (kelotane)"
+	icon_state = "vial"
+	prefill = list("kelotane" = 30)
+
+/obj/item/weapon/reagent_containers/glass/beaker/vial/preloaded/dexalin
+	name = "vial (dexalin)"
+	icon_state = "vial"
+	prefill = list("dexalin" = 30)
+
+/obj/item/weapon/reagent_containers/glass/beaker/vial/preloaded/tricordrazine
+	name = "vial (tricord)"
+	icon_state = "vial"
+	prefill = list("tricordrazine" = 30)
+
+//MkII Hypovials below
 /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/preloaded/bicaridine
 	name = "vial (bicaridine)"
 	icon_state = "hypovial-b"
-	comes_with = list("bicaridine" = 30)
+	prefill = list("bicaridine" = 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/preloaded/antitoxin
-	name = "vial (Anti-Tox)"
+	name = "vial (Dylovene)"
 	icon_state = "hypovial-a"
-	comes_with = list("anti_toxin" = 30)
+	prefill = list("anti_toxin" = 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/preloaded/kelotane
 	name = "vial (kelotane)"
 	icon_state = "hypovial-k"
-	comes_with = list("kelotane" = 30)
+	prefill = list("kelotane" = 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/preloaded/dexalin
 	name = "vial (dexalin)"
 	icon_state = "hypovial-d"
-	comes_with = list("dexalin" = 30)
+	prefill = list("dexalin" = 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/preloaded/tricordrazine
 	name = "vial (tricord)"
 	icon_state = "hypovial"
-	comes_with = list("tricordrazine" = 30)
+	prefill = list("tricordrazine" = 30)
 
-/obj/item/weapon/reagent_containers/glass/bottle/hypovial/large/preloaded/CMO
+/obj/item/weapon/reagent_containers/glass/bottle/hypovial/small/large/preloaded/CMO
 	name = "large vial (CMO Special)"
 	icon_state = "hypoviallarge-cmos"
-	comes_with = list("inaprovaline" = 10, "dermaline" = 10, "anti_toxin" = 10, "tramadol" = 10, "bicaridine" = 10, "dexalinp" = 10)
+	prefill = list("inaprovaline" = 10, "kelotane" = 10, "anti_toxin" = 10, "tramadol" = 10, "bicaridine" = 10, "dexalinp" = 10)
 
 /obj/item/weapon/reagent_containers/glass/bottle/hypovial/large/preloaded/combat
 	name = "large vial (Combat Mix)"
 	icon_state = "hypoviallarge-cmos"
-	comes_with = list("bicaridine" = 10, "kelotane" = 10, "dermaline" = 10, "oxycodone" = 10, "inaprovaline" = 10, "tricordrazine" = 10)
+	prefill = list("bicaridine" = 10, "kelotane" = 10, "kelotane" = 10, "oxycodone" = 10, "inaprovaline" = 10, "tricordrazine" = 10)
 
 /obj/item/weapon/reagent_containers/glass/bottle/hypovial/large/preloaded/bicaridine
 	name = "large vial (Bicaridine)"
 	icon_state = "hypoviallarge-b"
-	comes_with = list("bicaridine" = 60)
+	prefill = list("bicaridine" = 60)
 
 /obj/item/weapon/reagent_containers/glass/bottle/hypovial/large/preloaded/antitoxin
-	name = "large vial (Anti-Tox)"
+	name = "large vial (Dylovene)"
 	icon_state = "hypoviallarge-a"
-	comes_with = list("anti_toxin" = 60)
+	prefill = list("anti_toxin" = 60)
 
-/obj/item/weapon/reagent_containers/glass/bottle/hypovial/large/preloaded/dermaline
-	name = "large vial (Dermaline)"
+/obj/item/weapon/reagent_containers/glass/bottle/hypovial/large/preloaded/kelotane
+	name = "large vial (kelotane)"
 	icon_state = "hypoviallarge-k"
-	comes_with = list("dermaline" = 60)
+	prefill = list("kelotane" = 60)
 
 /obj/item/weapon/reagent_containers/glass/bottle/hypovial/large/preloaded/dexalin
 	name = "large vial (Dexalin Plus)"
 	icon_state = "hypoviallarge-d"
-	comes_with = list("dexalinp" = 60)
+	prefill = list("dexalinp" = 60)
+
+/obj/item/weapon/reagent_containers/glass/bottle/hypovial/large/preloaded/tricordrazine
+	name = "large vial (Tricordrazine)"
+	icon_state = "hypoviallarge"
+	prefill = list("tricordrazine" = 60)
