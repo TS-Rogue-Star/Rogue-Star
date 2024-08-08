@@ -451,6 +451,12 @@
 			pose = addtext(pose,".") //Makes sure all emotes end with a period.
 		msg += "<br>[T.He] [pose]" //<br> intentional, extra gap.
 
+	//RS ADD START
+	if(GLOB.vore_game)
+		if(ckey && mind && !is_preference_enabled(/datum/client_preference/game_toggle))
+			msg += "<span class = 'warning'>They are not participating in the game!</span>"
+	//RS ADD END
+
 	return msg
 
 //Helper procedure. Called by /mob/living/carbon/human/examine() and /mob/living/carbon/human/Topic() to determine HUD access to security and medical records.

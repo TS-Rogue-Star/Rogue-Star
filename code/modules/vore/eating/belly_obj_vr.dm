@@ -611,6 +611,11 @@
 		if(owner.mind)
 			owner.mind.vore_prey_eaten++
 
+	//RS ADD START
+	if(GLOB.vore_game)
+		vore_game(owner,prey)
+	//RS ADD END
+
 // Get the line that should show up in Examine message if the owner of this belly
 // is examined.   By making this a proc, we not only take advantage of polymorphism,
 // but can easily make the message vary based on how many people are inside, etc.

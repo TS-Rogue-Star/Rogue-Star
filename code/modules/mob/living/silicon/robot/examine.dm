@@ -43,4 +43,10 @@
 			pose = addtext(pose,".") //Makes sure all emotes end with a period.
 		. += "<br>It is [pose]" //Extra <br> intentional
 
+	//RS ADD START
+	if(GLOB.vore_game)
+		if(ckey && mind && !is_preference_enabled(/datum/client_preference/game_toggle))
+			. += "<span class = 'warning'>They are not participating in the game!</span>"
+	//RS ADD END
+
 	user.showLaws(src)
