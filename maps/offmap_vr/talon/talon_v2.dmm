@@ -2164,6 +2164,15 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/maintenance/wing_port)
+"gw" = (
+/obj/structure/table/rack/shelf/steel,
+/obj/machinery/recharger/wallcharger{
+	pixel_x = 5;
+	pixel_y = 24
+	},
+/obj/item/clothing/accessory/holster/waist,
+/turf/simulated/floor/tiled/techfloor,
+/area/talon_v2/armory)
 "gx" = (
 /obj/effect/floor_decal/industrial/warning/dust{
 	dir = 1
@@ -11935,6 +11944,11 @@
 	},
 /turf/simulated/floor/reinforced/airless,
 /area/talon_v2/engineering/starboard)
+"Ox" = (
+/obj/structure/table/rack/shelf/steel,
+/obj/item/gunbox/talon,
+/turf/simulated/floor/tiled/techfloor,
+/area/talon_v2/armory)
 "Oy" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
@@ -12314,6 +12328,8 @@
 	pixel_x = 5;
 	pixel_y = 24
 	},
+/obj/item/clothing/accessory/holster/waist,
+/obj/item/clothing/accessory/holster/waist,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/armory)
 "PD" = (
@@ -23328,7 +23344,7 @@ Dd
 FO
 Si
 Oj
-PC
+gw
 OP
 OP
 OP
@@ -24038,7 +24054,7 @@ Dd
 Ew
 eS
 Oj
-Qu
+Ox
 SN
 aY
 XW
