@@ -305,6 +305,10 @@ var/list/gamemode_cache = list()
 	var/static/suggested_byond_version
 	var/static/suggested_byond_build
 
+//Enables/Disables the appropriate mob type from obtaining the verb on spawn. Still allows admins to manually give it to them. || RS Add || Port Virgo PR 15836
+	var/static/allow_robot_recolor = FALSE
+	var/static/allow_simple_mob_recolor = FALSE
+
 	var/static/job_camp_time_limit = 10 MINUTES		//RS ADD
 	var/static/do_funny_names = TRUE				//RS ADD
 
@@ -1054,6 +1058,14 @@ var/list/gamemode_cache = list()
 
 				if("loadout_whitelist")
 					config.loadout_whitelist = text2num(value)
+
+				//RS Add Start || Port Virgo PR 15836
+				if("allow_robot_recolor")
+					config.allow_robot_recolor = 1
+				if("allow_simple_mob_recolor")
+					config.allow_simple_mob_recolor = 1
+				//RS Add End || Port Virgo PR 15836
+
 				//RS ADD START
 				if("job_camp_time_limit")
 					config.job_camp_time_limit = value MINUTES
