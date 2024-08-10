@@ -34,15 +34,16 @@
 	//var/obj/item/weapon/reagent_containers/glass/beaker/vial/vial
 	var/start_vial = /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small
 	//var/start_vial = /obj/item/weapon/reagent_containers/glass/beaker/vial
+	var/injecting //Added to stop you from queuing up a bunch of injections at once
 	var/spawnwithvial = TRUE
 	var/inject_wait = WAIT_INJECT
-	var/spray_wait = WAIT_SPRAY
-	var/spray_self = SELF_SPRAY
-	var/inject_self = SELF_INJECT
+	//var/spray_wait = WAIT_SPRAY
+	//var/spray_self = SELF_SPRAY
+	//var/inject_self = SELF_INJECT
 	var/quickload = TRUE
 	var/emagged = FALSE
-	var/amount_per_transfer_from_this = 0
-	var/possible_transfer_amounts = list(0,1,5,10,15)
+	var/amount_per_transfer_from_this = "vial"
+	var/possible_transfer_amounts = list("vial",1,5,10,15)
 	slot_flags = SLOT_BELT
 	unacidable = TRUE
 	drop_sound = 'sound/items/drop/gun.ogg'
@@ -70,13 +71,13 @@
 	icon_state = "cmo2"
 	item_state = "cmo2"
 	desc = "The Deluxe Hypospray can take larger-size vials. It also acts faster and delivers more reagents per spray."
-	possible_transfer_amounts = list(0,1,5,10,15,25,30)
+	possible_transfer_amounts = list("vial",1,5,10,15,25,30)
 	//start_vial = /obj/item/weapon/reagent_containers/glass/bottle
 	start_vial = /obj/item/weapon/reagent_containers/glass/bottle/hypovial/large
 	inject_wait = DELUXE_WAIT_INJECT
-	spray_wait = DELUXE_WAIT_SPRAY
-	spray_self = DELUXE_SELF_SPRAY
-	inject_self = DELUXE_SELF_INJECT
+	//spray_wait = DELUXE_WAIT_SPRAY
+	//spray_self = DELUXE_SELF_SPRAY
+	//inject_self = DELUXE_SELF_INJECT
 	quickload = TRUE
 
 /obj/item/weapon/hypospray_mkii/CMO/combat
@@ -88,9 +89,9 @@
 	//start_vial = /obj/item/weapon/reagent_containers/glass/bottle
 	//var/obj/item/weapon/reagent_containers/glass/beaker/vial
 	inject_wait = COMBAT_WAIT_INJECT
-	spray_wait = COMBAT_WAIT_SPRAY
-	spray_self = COMBAT_SELF_SPRAY
-	inject_self = COMBAT_SELF_INJECT
+	//spray_wait = COMBAT_WAIT_SPRAY
+	//spray_self = COMBAT_SELF_SPRAY
+	//inject_self = COMBAT_SELF_INJECT
 	quickload = TRUE
 
 /obj/item/weapon/hypospray_mkii/Initialize()
@@ -170,9 +171,9 @@
 		to_chat(user, span_warning("[src] happens to be already overcharged."))
 		return
 	inject_wait = COMBAT_WAIT_INJECT
-	spray_wait = COMBAT_WAIT_SPRAY
-	spray_self = COMBAT_SELF_INJECT
-	inject_self = COMBAT_SELF_SPRAY
+	//spray_wait = COMBAT_WAIT_SPRAY
+	//spray_self = COMBAT_SELF_INJECT
+	//inject_self = COMBAT_SELF_SPRAY
 	to_chat(user, span_warning("You overcharge [src]'s control circuit."))
 	emagged = TRUE
 	return TRUE
@@ -184,7 +185,7 @@
 	return
 
 /obj/item/weapon/hypospray_mkii/afterattack(atom/target, mob/user, proximity)
-	if(!vial || !proximity || !isliving(target))
+	if(!vial || !proximity || !isliving(target) || injecting == 1)
 		return
 	var/mob/living/L = target
 
@@ -215,11 +216,19 @@
 		L.visible_message(span_danger("\The [user] is trying to [fp_verb] \the [L] with \the [src]!"), \
 						span_danger("\The [user] is trying to [fp_verb] you with \the [src]!"))
 	add_attack_logs(user, L, "[user] attemped to use [src] on [L] which had [contained]")
-
-	if(!do_mob(user, L, inject_wait))
-		return
+	injecting = 1
+	if(!emagged)
+		var/inject_wait_me = inject_wait
+		if(amount_per_transfer_from_this == "vial") //use vial transfer rate
+			inject_wait_me = 5 + vial.amount_per_transfer_from_this
+		else
+			inject_wait_me = 5 + amount_per_transfer_from_this
+		if(!do_mob(user, L, inject_wait_me, 0, 0, 1, 0, 1))
+			injecting = 0
+			return
 
 	if(!vial.reagents.total_volume)
+		injecting = 0
 		return
 	add_attack_logs(user, L, "[user] applied [src] to [L], which had [contained] (INTENT: [uppertext(user.a_intent)]) (MODE: [fp_verb])")
 	if(L != user)
@@ -227,7 +236,7 @@
 						span_danger("\The [user] [fp_verb]s you with \the [src]!"))
 	else
 		add_attack_logs(user, L, "[user] applied [src] on [L] with [src] which had [contained]")
-	if(amount_per_transfer_from_this == 0) //use beaker transfer rate
+	if(amount_per_transfer_from_this == "vial") //use vial transfer rate
 		if(mode == HYPO_SPRAY)
 			vial.reagents.trans_to_mob(target, vial.amount_per_transfer_from_this,CHEM_TOUCH)
 		else if(mode == HYPO_INJECT)
@@ -239,7 +248,7 @@
 		else if(mode == HYPO_INJECT)
 			vial.reagents.trans_to_mob(target, amount_per_transfer_from_this, CHEM_BLOOD)
 		to_chat(user, span_notice("You [fp_verb] [amount_per_transfer_from_this] units of the solution. The hypospray's cartridge now contains [vial.reagents.total_volume] units."))
-
+	injecting = 0
 	playsound(loc, 'sound/effects/hypospray.ogg', 50)
 	playsound(loc, 'sound/effects/refill.ogg', 50)
 
@@ -260,7 +269,7 @@
 	set src in range(0)
 	var/N = tgui_input_list(usr, "Amount per transfer from this:","[src]", possible_transfer_amounts)
 	//if(N)
-	if(N == 0)
+	if(N == "vial")
 		to_chat(usr, "[src] Defaulting to beaker transfer amount.")
 	else
 		to_chat(usr, "[src] Setting injection amount to [N].")
@@ -450,7 +459,7 @@
 
 /obj/item/weapon/reagent_containers/glass/bottle/hypovial
 	volume = 30
-	possible_transfer_amounts = list(5,10,15)
+	possible_transfer_amounts = list(1,5,10,15)
 
 /obj/item/weapon/reagent_containers/glass/bottle/hypovial/bluespace
 	volume = 60
@@ -465,7 +474,7 @@
 	fillingsize = "hypoviallarge"
 	volume = 60
 	matter = list(MAT_GLASS = 500)
-	possible_transfer_amounts = list(5,10,15,25,30)
+	possible_transfer_amounts = list(1,5,10,15,25,30)
 
 	unique_reskin = list("large hypovial" = "hypoviallarge",
 						"large red hypovial" = "hypoviallarge-b",
