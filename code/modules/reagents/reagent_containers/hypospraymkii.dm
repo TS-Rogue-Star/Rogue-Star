@@ -1,20 +1,20 @@
 #define HYPO_SPRAY 0
 #define HYPO_INJECT 1
 
-#define WAIT_SPRAY 2 SECONDS
+//#define WAIT_SPRAY 2 SECONDS
 #define WAIT_INJECT 2 SECONDS
-#define SELF_SPRAY 1 SECONDS
-#define SELF_INJECT 1 SECONDS
+//#define SELF_SPRAY 1 SECONDS
+//#define SELF_INJECT 1 SECONDS
 
-#define DELUXE_WAIT_SPRAY 1 SECONDS
+//#define DELUXE_WAIT_SPRAY 1 SECONDS
 #define DELUXE_WAIT_INJECT 1 SECONDS
-#define DELUXE_SELF_SPRAY 1 SECONDS
-#define DELUXE_SELF_INJECT 1 SECONDS
+//#define DELUXE_SELF_SPRAY 1 SECONDS
+//#define DELUXE_SELF_INJECT 1 SECONDS
 
-#define COMBAT_WAIT_SPRAY 0
+//#define COMBAT_WAIT_SPRAY 0
 #define COMBAT_WAIT_INJECT 0
-#define COMBAT_SELF_SPRAY 0
-#define COMBAT_SELF_INJECT 0
+//#define COMBAT_SELF_SPRAY 0
+//#define COMBAT_SELF_INJECT 0
 
 //A vial-loaded hypospray. Cartridge-based! But betterer!
 /obj/item/weapon/hypospray_mkii
@@ -217,7 +217,7 @@
 						span_danger("\The [user] is trying to [fp_verb] you with \the [src]!"))
 	add_attack_logs(user, L, "[user] attemped to use [src] on [L] which had [contained]")
 	injecting = 1
-	if(!emagged)
+	if(!emagged && inject_wait != COMBAT_WAIT_INJECT)
 		var/inject_wait_me = inject_wait
 		if(amount_per_transfer_from_this == "vial") //use vial transfer rate
 			inject_wait_me = 5 + vial.amount_per_transfer_from_this
@@ -270,7 +270,7 @@
 	var/N = tgui_input_list(usr, "Amount per transfer from this:","[src]", possible_transfer_amounts)
 	//if(N)
 	if(N == "vial")
-		to_chat(usr, "[src] Defaulting to beaker transfer amount.")
+		to_chat(usr, "[src] Defaulting to hypovial transfer amount.")
 	else
 		to_chat(usr, "[src] Setting injection amount to [N].")
 	amount_per_transfer_from_this = N
@@ -316,18 +316,18 @@
 
 #undef HYPO_SPRAY
 #undef HYPO_INJECT
-#undef WAIT_SPRAY
+//#undef WAIT_SPRAY
 #undef WAIT_INJECT
-#undef SELF_SPRAY
-#undef SELF_INJECT
-#undef DELUXE_WAIT_SPRAY
+//#undef SELF_SPRAY
+//#undef SELF_INJECT
+//#undef DELUXE_WAIT_SPRAY
 #undef DELUXE_WAIT_INJECT
-#undef DELUXE_SELF_SPRAY
-#undef DELUXE_SELF_INJECT
-#undef COMBAT_WAIT_SPRAY
+//#undef DELUXE_SELF_SPRAY
+//#undef DELUXE_SELF_INJECT
+//#undef COMBAT_WAIT_SPRAY
 #undef COMBAT_WAIT_INJECT
-#undef COMBAT_SELF_SPRAY
-#undef COMBAT_SELF_INJECT
+//#undef COMBAT_SELF_SPRAY
+//#undef COMBAT_SELF_INJECT
 
 
 //MK II hypovials to avoid cross contamination with base
