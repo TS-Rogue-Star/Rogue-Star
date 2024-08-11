@@ -52,7 +52,7 @@
 	icon_state = "firstaid-tactical-mini"
 /obj/item/gunbox/cmo/attack_self(mob/living/user)
 	var/list/options = list()
-	options["MKI"] = list(/obj/item/weapon/storage/firstaid/hypokitmk1)
+	options["MKI"] = list(/obj/item/weapon/storage/firstaid/hypokit/mk1)
 	options["MKII"] = list(/obj/item/weapon/storage/firstaid/hypokit/cmo)
 	var/choice = tgui_input_list(user,"Would you prefer a MkI or MKII?", "Hypospray!!", options)
 	if(src && choice)

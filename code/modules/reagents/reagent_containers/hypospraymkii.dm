@@ -196,11 +196,12 @@
 			if(!quickload)
 				to_chat(user, span_warning("[src] can not hold more than one vial!"))
 				return FALSE
-
 			user.drop_from_inventory(V,src)
-
-			storedloc.handle_item_insertion(vial)
-			unload_hypo(vial, user, 0)
+			if(isobj(storedloc))
+				storedloc.handle_item_insertion(vial)
+				unload_hypo(vial, user, 0)
+			else
+				unload_hypo(vial, user, 1)
 			vial = V
 			user.visible_message(span_notice("[user] has loaded a vial into [src]."),span_notice("You have loaded [vial] into [src]."))
 			update_icon()
@@ -208,7 +209,8 @@
 			return TRUE
 
 		else if(is_type_in_list(I, allowed_containers))
-			storedloc.remove_from_storage(I, src)
+			if(isobj(storedloc))
+				storedloc.remove_from_storage(I, src)
 			user.drop_from_inventory(V,src)
 			vial = V
 			user.visible_message(span_notice("[user] has loaded a vial into [src]."),span_notice("You have loaded [vial] into [src]."))

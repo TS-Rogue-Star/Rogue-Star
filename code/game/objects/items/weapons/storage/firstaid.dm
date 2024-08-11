@@ -172,7 +172,7 @@
  */
 
 //RS Add MkII Hypo Revision
-/obj/item/weapon/storage/firstaid/hypokitmk1
+/obj/item/weapon/storage/firstaid/hypokit/mk1
 	name = "CMO's hypospray mk.I kit"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "firstaid-tactical-mini"
@@ -194,6 +194,7 @@
 	desc = "Contains a Mk II Hypospray and its hypovials. It can only hold mk.II related items."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "firstaid-mini"
+	slot_flags = SLOT_BELT
 	max_storage_space = ITEMSIZE_COST_SMALL * 7
 	starts_with = list(/obj/item/weapon/hypospray_mkii, /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small = 5)
 	can_hold = list(/obj/item/weapon/hypospray_mkii, /obj/item/weapon/reagent_containers/glass/beaker/vial, /obj/item/weapon/reagent_containers/glass/bottle/hypovial)
