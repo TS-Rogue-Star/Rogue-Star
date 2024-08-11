@@ -185,6 +185,38 @@
 	return
 
 /obj/item/weapon/hypospray_mkii/afterattack(atom/target, mob/user, proximity)
+	var/obj/item/weapon/I = target
+	if(!proximity || !isliving(target) || injecting == 1)
+
+		if(is_type_in_list(I, allowed_containers) && vial != null)
+			if(!quickload)
+				to_chat(user, span_warning("[src] can not hold more than one vial!"))
+				return FALSE
+
+			var/obj/item/weapon/reagent_containers/glass/beaker/vial/V = I
+			user.drop_from_inventory(V,src)
+			unload_hypo(vial, user)
+			vial = V
+			user.visible_message(span_notice("[user] has loaded a vial into [src]."),span_notice("You have loaded [vial] into [src]."))
+			update_icon()
+			playsound(loc, 'sound/weapons/empty.ogg', 35, 1)
+			return TRUE
+
+		else if(is_type_in_list(I, allowed_containers))
+			var/obj/item/weapon/reagent_containers/glass/beaker/vial/V = I
+			//if(!is_type_in_list(V, allowed_containers))
+			//	to_chat(user, span_notice("[src] doesn't accept this type of vial."))
+			//	return FALSE
+			user.drop_from_inventory(V,src)
+			vial = V
+			user.visible_message(span_notice("[user] has loaded a vial into [src]."),span_notice("You have loaded [vial] into [src]."))
+			update_icon()
+			playsound(loc, 'sound/weapons/empty.ogg', 35, 1)
+			return TRUE
+		else
+			to_chat(user, span_notice("This doesn't fit in [src]."))
+			return FALSE
+
 	if(!vial || !proximity || !isliving(target) || injecting == 1)
 		return
 	var/mob/living/L = target
