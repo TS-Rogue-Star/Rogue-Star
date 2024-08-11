@@ -108,7 +108,7 @@
 	ckeys_allowed = list("crossexonar")
 
 /datum/sprite_accessory/ears/kiriga
-	name = "kiriga ears/head (kiriga)"
+	name = "kiriga ears/head (Kiriga Yato)"
 	icon = 'icons/mob/vore/ears_snowflake.dmi'
 	icon_state = "kiri_ears"
 	ckeys_allowed = list("smdytb1")
