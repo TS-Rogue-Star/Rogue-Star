@@ -122,11 +122,12 @@
 		. += "It has no vial loaded in."
 	. += "[src] is set to [mode ? "Inject" : "Spray"] contents on application."
 
-/obj/item/weapon/hypospray_mkii/proc/unload_hypo(obj/item/I, mob/user)
+/obj/item/weapon/hypospray_mkii/proc/unload_hypo(obj/item/I, mob/user, var/drop)
 	if(is_type_in_list(I, allowed_containers))
 		var/obj/item/weapon/reagent_containers/glass/beaker/vial/V = I
-		V.forceMove(user.loc)
-		user.put_in_hands(V)
+		if(drop)
+			V.forceMove(user.loc)
+			user.put_in_hands(V)
 		to_chat(user, span_notice("You remove [vial] from [src]."))
 		vial = null
 		update_icon()
@@ -143,7 +144,7 @@
 
 		var/obj/item/weapon/reagent_containers/glass/beaker/vial/V = I
 		user.drop_from_inventory(V,src)
-		unload_hypo(vial, user)
+		unload_hypo(vial, user, 1)
 		vial = V
 		user.visible_message(span_notice("[user] has loaded a vial into [src]."),span_notice("You have loaded [vial] into [src]."))
 		update_icon()
@@ -187,15 +188,19 @@
 /obj/item/weapon/hypospray_mkii/afterattack(atom/target, mob/user, proximity)
 	var/obj/item/weapon/I = target
 	if(!proximity || !isliving(target) || injecting == 1)
-
+		if(!istype(I, /obj/item/weapon/reagent_containers))
+			return
+		var/obj/item/weapon/storage/storedloc = I.loc
+		var/obj/item/weapon/reagent_containers/glass/beaker/vial/V = I
 		if(is_type_in_list(I, allowed_containers) && vial != null)
 			if(!quickload)
 				to_chat(user, span_warning("[src] can not hold more than one vial!"))
 				return FALSE
 
-			var/obj/item/weapon/reagent_containers/glass/beaker/vial/V = I
 			user.drop_from_inventory(V,src)
-			unload_hypo(vial, user)
+
+			storedloc.handle_item_insertion(vial)
+			unload_hypo(vial, user, 0)
 			vial = V
 			user.visible_message(span_notice("[user] has loaded a vial into [src]."),span_notice("You have loaded [vial] into [src]."))
 			update_icon()
@@ -203,10 +208,7 @@
 			return TRUE
 
 		else if(is_type_in_list(I, allowed_containers))
-			var/obj/item/weapon/reagent_containers/glass/beaker/vial/V = I
-			//if(!is_type_in_list(V, allowed_containers))
-			//	to_chat(user, span_notice("[src] doesn't accept this type of vial."))
-			//	return FALSE
+			storedloc.remove_from_storage(I, src)
 			user.drop_from_inventory(V,src)
 			vial = V
 			user.visible_message(span_notice("[user] has loaded a vial into [src]."),span_notice("You have loaded [vial] into [src]."))
@@ -293,7 +295,7 @@
 			to_chat(user, "\The [src] needs to be loaded first!")
 			return
 		else
-			unload_hypo(vial,user)
+			unload_hypo(vial,user,1)
 
 /obj/item/weapon/hypospray_mkii/verb/set_APTFT() //set amount_per_transfer_from_this
 	set name = "Set transfer amount"
@@ -340,7 +342,7 @@
 		if(user.incapacitated())
 			return
 		else if(vial)
-			unload_hypo(vial, user)
+			unload_hypo(vial, user, 1)
 			return TRUE
 		else
 			to_chat(user, "This Hypo needs to be loaded first!")
