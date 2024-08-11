@@ -510,6 +510,10 @@
 	spawn()
 		chatOutput.start()
 
+// RSAdd: For debug purposes
+/client/proc/client_winset(control, params)
+	winset(src, control, params)
+// RSAdd End
 
 //This is for getipintel.net.
 //You're welcome to replace this proc with your own that does your own cool stuff.
