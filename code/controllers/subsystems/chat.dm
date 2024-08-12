@@ -54,11 +54,13 @@ SUBSYSTEM_DEF(chat)
 
 			if(!C || !C.chatOutput)
 				continue // No client? No care.
-			else if(C.chatOutput.broken)
-				DIRECT_OUTPUT(C, original_message)
-				continue
-			else if(!C.chatOutput.loaded)
-				continue // If not loaded yet, do nothing and history-sending on load will get it.
+
+			// RSEdit: Originally we didn't send it to oldchat because why? But, turns out that's
+			// really the only way to log-as-a-stream to a file in byond, so, we send it both ways.
+			DIRECT_OUTPUT(C, original_message)
+
+			if(C.chatOutput.broken || !C.chatOutput.loaded)
+				continue // No vchat instance to queue it for, why bother.
 
 			LAZYINITLIST(msg_queue[C])
 			msg_queue[C][++msg_queue[C].len] = messageStruct
@@ -67,10 +69,10 @@ SUBSYSTEM_DEF(chat)
 
 		if(!C || !C.chatOutput)
 			return // No client? No care.
-		else if(C.chatOutput.broken)
-			DIRECT_OUTPUT(C, original_message)
-			return
-		else if(!C.chatOutput.loaded)
+
+		DIRECT_OUTPUT(C, original_message) // RSEdit - Moved this up from the branch below
+
+		if(C.chatOutput.broken || !C.chatOutput.loaded)
 			return // If not loaded yet, do nothing and history-sending on load will get it.
 
 		LAZYINITLIST(msg_queue[C])

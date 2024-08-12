@@ -1,0 +1,1146 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/template_noop,
+/area/submap/glacier/crashedcontainmentshuttle)
+"ab" = (
+/obj/structure/grille,
+/obj/item/weapon/material/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/crashedcontainmentshuttle)
+"ac" = (
+/obj/random/landmine,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/crashedcontainmentshuttle)
+"ad" = (
+/obj/structure/girder,
+/turf/simulated/floor/plating,
+/area/submap/glacier/crashedcontainmentshuttle)
+"ae" = (
+/obj/item/weapon/material/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/crashedcontainmentshuttle)
+"af" = (
+/turf/simulated/shuttle/wall/dark/hard_corner,
+/area/submap/glacier/crashedcontainmentshuttle)
+"ag" = (
+/turf/simulated/shuttle/wall/dark,
+/area/submap/glacier/crashedcontainmentshuttle)
+"ah" = (
+/obj/structure/lattice,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/crashedcontainmentshuttle)
+"aj" = (
+/obj/item/weapon/material/shard,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/crashedcontainmentshuttle)
+"ak" = (
+/turf/simulated/shuttle/floor/black,
+/area/submap/glacier/crashedcontainmentshuttle)
+"al" = (
+/obj/item/stack/rods,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/crashedcontainmentshuttle)
+"am" = (
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/crashedcontainmentshuttle)
+"an" = (
+/obj/item/stack/rods,
+/turf/simulated/shuttle/floor/black,
+/area/submap/glacier/crashedcontainmentshuttle)
+"ao" = (
+/obj/structure/door_assembly/door_assembly_ext,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/crashedcontainmentshuttle)
+"ap" = (
+/obj/structure/door_assembly/door_assembly_ext{
+	anchored = 1
+	},
+/turf/simulated/floor/plating,
+/area/submap/glacier/crashedcontainmentshuttle)
+"aq" = (
+/obj/structure/grille,
+/obj/item/weapon/material/shard,
+/turf/simulated/floor/plating,
+/area/submap/glacier/crashedcontainmentshuttle)
+"ar" = (
+/obj/structure/loot_pile/maint/technical,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/crashedcontainmentshuttle)
+"as" = (
+/obj/structure/grille{
+	density = 0;
+	icon_state = "brokengrille"
+	},
+/obj/structure/lattice,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/crashedcontainmentshuttle)
+"at" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8
+	},
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/crashedcontainmentshuttle)
+"au" = (
+/obj/item/weapon/circuitboard/broken,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/crashedcontainmentshuttle)
+"av" = (
+/turf/simulated/floor/plating,
+/area/submap/glacier/crashedcontainmentshuttle)
+"aw" = (
+/obj/structure/closet/crate{
+	name = "landmines crate";
+	opened = 1
+	},
+/turf/simulated/shuttle/floor/black,
+/area/submap/glacier/crashedcontainmentshuttle)
+"ax" = (
+/obj/random/landmine,
+/obj/random/landmine,
+/turf/simulated/shuttle/floor/black,
+/area/submap/glacier/crashedcontainmentshuttle)
+"ay" = (
+/obj/effect/decal/mecha_wreckage/gygax{
+	anchored = 1
+	},
+/turf/simulated/shuttle/floor/black,
+/area/submap/glacier/crashedcontainmentshuttle)
+"az" = (
+/obj/structure/loot_pile/maint/technical,
+/turf/simulated/shuttle/floor/black,
+/area/submap/glacier/crashedcontainmentshuttle)
+"aA" = (
+/obj/item/clothing/suit/space/cult,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/crashedcontainmentshuttle)
+"aB" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4;
+	health = 1e+006
+	},
+/turf/template_noop,
+/area/submap/glacier/crashedcontainmentshuttle)
+"aC" = (
+/obj/effect/decal/remains/robot,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/crashedcontainmentshuttle)
+"aD" = (
+/obj/random/landmine,
+/turf/simulated/shuttle/floor/black,
+/area/submap/glacier/crashedcontainmentshuttle)
+"aE" = (
+/obj/effect/gibspawner/generic,
+/turf/simulated/shuttle/floor/black,
+/area/submap/glacier/crashedcontainmentshuttle)
+"aF" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/simulated/shuttle/floor/black,
+/area/submap/glacier/crashedcontainmentshuttle)
+"aG" = (
+/obj/structure/table/steel_reinforced,
+/turf/simulated/shuttle/floor/black,
+/area/submap/glacier/crashedcontainmentshuttle)
+"aH" = (
+/obj/random/landmine,
+/turf/simulated/floor/plating,
+/area/submap/glacier/crashedcontainmentshuttle)
+"aI" = (
+/obj/effect/decal/remains/human,
+/obj/effect/gibspawner/human,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/crashedcontainmentshuttle)
+"aJ" = (
+/obj/item/clothing/head/helmet/space/cult,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/crashedcontainmentshuttle)
+"aK" = (
+/obj/item/weapon/material/knife/ritual,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/crashedcontainmentshuttle)
+"aL" = (
+/obj/structure/closet/medical_wall,
+/turf/simulated/shuttle/wall/dark,
+/area/submap/glacier/crashedcontainmentshuttle)
+"aM" = (
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/glacier/crashedcontainmentshuttle)
+"aN" = (
+/obj/structure/loot_pile/maint/technical,
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/glacier/crashedcontainmentshuttle)
+"aO" = (
+/obj/structure/door_assembly/door_assembly_highsecurity{
+	anchored = 1
+	},
+/turf/simulated/shuttle/floor/black,
+/area/submap/glacier/crashedcontainmentshuttle)
+"aP" = (
+/obj/structure/closet/walllocker/emerglocker/east,
+/turf/simulated/shuttle/floor/black,
+/area/submap/glacier/crashedcontainmentshuttle)
+"aQ" = (
+/obj/effect/decal/remains/human,
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/glacier/crashedcontainmentshuttle)
+"aR" = (
+/obj/structure/grille,
+/obj/item/weapon/material/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/floor/plating,
+/area/submap/glacier/crashedcontainmentshuttle)
+"aS" = (
+/obj/item/weapon/circuitboard/broken,
+/obj/effect/decal/remains/human,
+/obj/item/weapon/gun/energy/laser,
+/turf/simulated/shuttle/floor/black,
+/area/submap/glacier/crashedcontainmentshuttle)
+"aT" = (
+/obj/item/device/gps/internal/poi,
+/turf/simulated/shuttle/floor/red,
+/area/submap/glacier/crashedcontainmentshuttle)
+"aU" = (
+/turf/simulated/shuttle/floor/red,
+/area/submap/glacier/crashedcontainmentshuttle)
+"aV" = (
+/obj/random/landmine,
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/glacier/crashedcontainmentshuttle)
+"aW" = (
+/obj/structure/bed/chair/office/dark{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/glacier/crashedcontainmentshuttle)
+"aX" = (
+/obj/structure/frame/computer,
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/glacier/crashedcontainmentshuttle)
+"aY" = (
+/obj/structure/frame,
+/obj/item/weapon/circuitboard/broken,
+/turf/simulated/shuttle/floor/black,
+/area/submap/glacier/crashedcontainmentshuttle)
+"aZ" = (
+/obj/effect/decal/cleanable/vomit,
+/turf/simulated/shuttle/floor/black,
+/area/submap/glacier/crashedcontainmentshuttle)
+"ba" = (
+/obj/effect/decal/cleanable/blood/oil,
+/turf/simulated/shuttle/floor/red,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bb" = (
+/obj/item/weapon/material/knife/ritual,
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/shuttle/floor/red,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bc" = (
+/obj/item/weapon/circuitboard/broken,
+/turf/simulated/shuttle/floor/black,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bd" = (
+/obj/item/weapon/circuitboard/broken,
+/obj/structure/bed/chair/office/dark{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/glacier/crashedcontainmentshuttle)
+"be" = (
+/turf/simulated/shuttle/wall/dark/no_join,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bf" = (
+/obj/effect/decal/remains/robot,
+/turf/simulated/shuttle/floor/red,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bg" = (
+/obj/effect/decal/cleanable/blood,
+/obj/random/landmine,
+/turf/simulated/shuttle/floor/red,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bh" = (
+/obj/effect/decal/remains/human,
+/obj/item/clothing/head/helmet/space/cult,
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/shuttle/floor/red,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bi" = (
+/obj/item/weapon/material/shard,
+/turf/simulated/floor/plating,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bj" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/blood/drip,
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bk" = (
+/obj/machinery/computer,
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bl" = (
+/obj/structure/grille{
+	density = 0;
+	icon_state = "brokengrille"
+	},
+/obj/item/stack/rods,
+/turf/simulated/floor/plating,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bm" = (
+/obj/structure/bed/chair/office/dark{
+	dir = 8
+	},
+/obj/effect/decal/remains/human,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bn" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/blood/drip,
+/turf/simulated/shuttle/floor/black,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bo" = (
+/obj/structure/extinguisher_cabinet,
+/turf/simulated/shuttle/wall/dark,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bp" = (
+/obj/item/stack/rods,
+/turf/simulated/floor/plating,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bq" = (
+/obj/structure/door_assembly,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/crashedcontainmentshuttle)
+"br" = (
+/obj/structure/table/steel_reinforced,
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bs" = (
+/obj/item/weapon/material/shard,
+/turf/template_noop,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bt" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/blood/drip,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bu" = (
+/obj/structure/loot_pile/maint/technical,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bv" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bw" = (
+/obj/structure/closet/walllocker/emerglocker/north,
+/obj/structure/frame,
+/obj/item/weapon/circuitboard/broken,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bx" = (
+/obj/structure/ghost_pod/manual/lost_drone/dogborg,
+/turf/simulated/shuttle/floor/black,
+/area/submap/glacier/crashedcontainmentshuttle)
+"by" = (
+/obj/structure/frame,
+/turf/simulated/shuttle/floor/black,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bz" = (
+/obj/item/frame/mirror,
+/obj/item/weapon/material/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/shuttle/wall/dark,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bA" = (
+/obj/structure/sink{
+	dir = 8;
+	icon_state = "sink";
+	pixel_x = -12;
+	pixel_y = 2
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/blood/drip,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bB" = (
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bC" = (
+/obj/effect/decal/cleanable/vomit,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bD" = (
+/obj/structure/toilet{
+	dir = 8
+	},
+/obj/effect/gibspawner/generic,
+/obj/effect/decal/remains/human,
+/obj/item/weapon/card/id/syndicate{
+	age = "\\42";
+	blood_type = "\\O+";
+	desc = "A strange ID card.";
+	dna_hash = "\[REDACTED]";
+	fingerprint_hash = "\\------";
+	name = "Aaron Presley's ID Card(Delivery Service) ";
+	registered_name = "Aaron Presley";
+	sex = "\\Male"
+	},
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bE" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4;
+	health = 1e+006
+	},
+/turf/simulated/mineral/floor/ignore_mapgen/cave,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bF" = (
+/obj/structure/door_assembly/door_assembly_ext{
+	anchored = 1
+	},
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bG" = (
+/obj/structure/grille{
+	density = 0;
+	icon_state = "brokengrille"
+	},
+/obj/item/weapon/material/shard{
+	icon_state = "medium"
+	},
+/obj/item/stack/rods,
+/turf/simulated/floor/plating,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bH" = (
+/obj/effect/gibspawner/generic,
+/turf/template_noop,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bI" = (
+/obj/effect/decal/cleanable/liquid_fuel,
+/turf/template_noop,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bJ" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/template_noop,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bK" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "burst_r"
+	},
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bL" = (
+/obj/effect/decal/cleanable/liquid_fuel,
+/obj/random/landmine,
+/turf/simulated/mineral/floor/ignore_mapgen/cave,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bM" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/simulated/mineral/floor/ignore_mapgen/cave,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bN" = (
+/obj/effect/decal/cleanable/liquid_fuel,
+/obj/effect/decal/remains/human,
+/obj/item/weapon/flame/lighter/random,
+/turf/simulated/mineral/floor/ignore_mapgen/cave,
+/area/submap/glacier/crashedcontainmentshuttle)
+"bO" = (
+/obj/effect/decal/cleanable/liquid_fuel,
+/turf/simulated/shuttle/floor/black,
+/area/submap/glacier/crashedcontainmentshuttle)
+"rI" = (
+/obj/random/landmine,
+/turf/simulated/mineral/floor/ignore_mapgen/cave,
+/area/submap/glacier/crashedcontainmentshuttle)
+"Zk" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8
+	},
+/turf/simulated/mineral/floor/ignore_mapgen/cave,
+/area/submap/glacier/crashedcontainmentshuttle)
+
+(1,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ag
+am
+aa
+am
+am
+am
+ak
+am
+am
+aa
+ag
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+am
+at
+aA
+aa
+aa
+ak
+am
+be
+am
+am
+aa
+ag
+am
+aa
+aa
+au
+bK
+aa
+aa
+aa
+"}
+(3,1,1) = {"
+aa
+aa
+aa
+af
+ag
+aa
+au
+aa
+aI
+aa
+Zk
+ak
+Zk
+aa
+ak
+aa
+aa
+aa
+au
+aa
+aa
+aa
+aa
+ak
+aa
+"}
+(4,1,1) = {"
+aa
+aa
+aa
+ag
+aa
+aa
+aa
+aB
+aJ
+aa
+aB
+aa
+aB
+aa
+aa
+aa
+aa
+am
+bE
+aa
+aa
+bH
+aa
+ak
+ak
+"}
+(5,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+an
+ak
+ag
+aK
+ah
+ag
+ag
+ag
+aa
+bp
+aa
+bs
+ag
+aa
+am
+aa
+aa
+aa
+aa
+aa
+"}
+(6,1,1) = {"
+aa
+aa
+aa
+aa
+ak
+ao
+av
+aa
+ah
+ak
+ak
+aY
+az
+aa
+ah
+av
+ah
+bx
+ag
+am
+ag
+ar
+aa
+aa
+aa
+"}
+(7,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ap
+aa
+ak
+ah
+an
+ak
+ak
+ak
+bn
+aD
+ak
+ak
+ak
+bF
+aa
+aa
+aa
+ak
+aa
+aa
+"}
+(8,1,1) = {"
+aa
+aa
+ab
+aa
+aa
+aq
+ak
+ak
+ah
+ak
+ak
+aZ
+aF
+aE
+ak
+ak
+az
+ak
+ah
+av
+aa
+aa
+bc
+ag
+am
+"}
+(9,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ag
+ak
+aC
+ak
+ak
+aS
+ak
+ak
+ak
+ak
+am
+am
+ak
+av
+aa
+ak
+aa
+aa
+am
+am
+"}
+(10,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ag
+ac
+ah
+ak
+ak
+ak
+aF
+aF
+ak
+am
+am
+am
+ak
+bG
+aa
+aa
+aa
+aa
+bO
+aa
+"}
+(11,1,1) = {"
+aa
+aa
+aa
+aa
+ac
+ar
+au
+aD
+ak
+ag
+ag
+ag
+ad
+ad
+am
+am
+aF
+ak
+ad
+ah
+aa
+bL
+bI
+bI
+aa
+"}
+(12,1,1) = {"
+aa
+aa
+ac
+aa
+ah
+as
+aw
+ax
+aD
+ag
+aT
+ba
+bf
+ag
+ak
+ak
+ak
+by
+ad
+ah
+bI
+bI
+bM
+bI
+aa
+"}
+(13,1,1) = {"
+aa
+aa
+ad
+ah
+am
+ag
+ax
+aD
+ak
+aO
+aU
+aU
+bg
+ag
+ak
+ag
+aL
+bz
+ad
+am
+aa
+bJ
+bN
+bI
+bI
+"}
+(14,1,1) = {"
+aa
+aa
+aa
+aa
+am
+ag
+ay
+aE
+ak
+ag
+aU
+bb
+bh
+ag
+ak
+ad
+bt
+bA
+ag
+am
+bJ
+aa
+bI
+aa
+aa
+"}
+(15,1,1) = {"
+aa
+aa
+aa
+am
+am
+ad
+ak
+aF
+an
+ad
+ag
+ag
+ad
+bo
+ak
+ag
+bu
+bB
+ag
+am
+aa
+bI
+bI
+rI
+aa
+"}
+(16,1,1) = {"
+aa
+aa
+aa
+am
+ak
+ad
+ak
+ak
+ak
+ak
+ak
+bc
+ak
+ak
+ak
+bq
+bv
+bC
+aq
+ah
+aa
+bH
+aa
+aa
+aa
+"}
+(17,1,1) = {"
+aa
+aa
+aa
+aa
+am
+ag
+az
+aG
+aG
+aP
+ak
+ak
+aF
+ak
+ak
+ag
+bw
+bD
+ad
+am
+aa
+aa
+aa
+aa
+aa
+"}
+(18,1,1) = {"
+aa
+aa
+aa
+aj
+aa
+af
+ag
+ag
+aL
+ag
+ak
+aO
+bi
+aR
+ag
+ag
+ag
+ad
+af
+am
+aa
+aa
+aa
+aa
+aa
+"}
+(19,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+af
+ad
+aM
+aQ
+aV
+aV
+aM
+aM
+aM
+aN
+ag
+af
+am
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(20,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aH
+aN
+aM
+aW
+bd
+bj
+aW
+aM
+br
+ag
+am
+am
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(21,1,1) = {"
+aa
+aa
+ae
+aa
+al
+aa
+aa
+aa
+ad
+aM
+aX
+aX
+bk
+aX
+aM
+ag
+af
+am
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(22,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aR
+aq
+av
+bl
+av
+aR
+ag
+am
+aa
+bH
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(23,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ah
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(24,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+al
+aa
+aa
+aa
+bm
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(25,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}

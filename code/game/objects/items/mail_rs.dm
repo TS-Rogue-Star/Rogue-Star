@@ -160,6 +160,8 @@
 		add_overlay(postmark_image)
 
 /obj/item/mail/attackby(obj/item/W as obj, mob/user as mob)
+	. = ..() // RS Edit, allows the mail bag to grab the mail.
+
 	// Destination tagging
 	if(istype(W, /obj/item/device/destTagger))
 		var/obj/item/device/destTagger/O = W

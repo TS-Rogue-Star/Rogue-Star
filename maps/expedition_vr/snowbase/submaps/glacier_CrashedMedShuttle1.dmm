@@ -1,0 +1,1026 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ac" = (
+/obj/structure/lattice,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/CrashedMedShuttle)
+"ad" = (
+/obj/effect/spider/stickyweb,
+/turf/simulated/shuttle/plating,
+/area/submap/glacier/CrashedMedShuttle)
+"ae" = (
+/obj/structure/sign/greencross{
+	desc = "White cross in a green field, you can get medical aid here.";
+	name = "First-Aid"
+	},
+/turf/simulated/shuttle/wall/no_join,
+/area/submap/glacier/CrashedMedShuttle)
+"af" = (
+/obj/structure/grille,
+/obj/structure/shuttle/window,
+/turf/simulated/shuttle/plating,
+/area/submap/glacier/CrashedMedShuttle)
+"ag" = (
+/turf/simulated/shuttle/wall,
+/area/submap/glacier/CrashedMedShuttle)
+"ai" = (
+/obj/item/weapon/material/shard{
+	icon_state = "medium"
+	},
+/obj/effect/decal/cleanable/blood/oil,
+/obj/structure/lattice,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/CrashedMedShuttle)
+"aj" = (
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_y = 0
+	},
+/obj/structure/sign/warning/airlock{
+	pixel_x = 32
+	},
+/obj/effect/spider/stickyweb,
+/turf/simulated/shuttle/plating,
+/area/submap/glacier/CrashedMedShuttle)
+"ak" = (
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"al" = (
+/obj/item/weapon/storage/toolbox/mechanical,
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/table/standard,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"am" = (
+/obj/structure/table/standard,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"an" = (
+/obj/structure/window/reinforced,
+/obj/effect/decal/cleanable/blood/oil,
+/obj/structure/loot_pile/surface/bones,
+/obj/structure/lattice,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/CrashedMedShuttle)
+"ao" = (
+/obj/item/weapon/circuitboard/broken,
+/obj/structure/door_assembly/door_assembly_ext,
+/turf/simulated/shuttle/plating,
+/area/submap/glacier/CrashedMedShuttle)
+"ap" = (
+/obj/structure/door_assembly/door_assembly_ext,
+/turf/simulated/shuttle/plating,
+/area/submap/glacier/CrashedMedShuttle)
+"aq" = (
+/obj/effect/decal/cleanable/liquid_fuel,
+/mob/living/simple_mob/animal/giant_spider/webslinger,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"ar" = (
+/obj/structure/closet/crate/medical,
+/obj/random/medical,
+/obj/random/medical,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"as" = (
+/obj/structure/table/standard,
+/obj/machinery/cell_charger,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"at" = (
+/obj/item/weapon/material/shard,
+/obj/structure/lattice,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/CrashedMedShuttle)
+"au" = (
+/obj/structure/closet/secure_closet/personal/patient,
+/obj/effect/spider/stickyweb,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"av" = (
+/obj/random/mob/spider/mutant,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"aw" = (
+/obj/machinery/door/airlock/glass,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"ax" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/liquid_fuel,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"ay" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/liquid_fuel,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"az" = (
+/obj/effect/decal/cleanable/blood/gibs/robot,
+/obj/item/weapon/firstaid_arm_assembly,
+/mob/living/simple_mob/animal/giant_spider/frost,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"aB" = (
+/obj/structure/lattice,
+/obj/item/stack/rods,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/CrashedMedShuttle)
+"aC" = (
+/obj/effect/decal/cleanable/blood/oil,
+/obj/item/weapon/firstaid_arm_assembly,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"aD" = (
+/obj/structure/closet/secure_closet/personal/patient,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"aE" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"aF" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/effect/decal/cleanable/liquid_fuel,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"aG" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/effect/decal/cleanable/liquid_fuel,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"aH" = (
+/obj/effect/decal/cleanable/liquid_fuel,
+/obj/structure/ghost_pod/manual/lost_drone/dogborg,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"aI" = (
+/obj/structure/table/standard,
+/obj/effect/spider/stickyweb,
+/obj/machinery/light,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"aJ" = (
+/obj/structure/table/standard,
+/obj/effect/spider/stickyweb,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"aK" = (
+/obj/structure/table/standard,
+/obj/item/weapon/material/shard{
+	icon_state = "medium"
+	},
+/obj/effect/spider/stickyweb,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"aL" = (
+/obj/structure/grille/broken,
+/obj/item/weapon/material/shard{
+	icon_state = "medium"
+	},
+/obj/item/stack/rods,
+/turf/simulated/shuttle/plating,
+/area/submap/glacier/CrashedMedShuttle)
+"aM" = (
+/obj/item/weapon/material/shard,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/CrashedMedShuttle)
+"aN" = (
+/obj/effect/decal/cleanable/blood/oil,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/CrashedMedShuttle)
+"aO" = (
+/obj/item/weapon/material/shard{
+	icon_state = "medium"
+	},
+/obj/effect/spider/stickyweb,
+/mob/living/simple_mob/animal/giant_spider/carrier,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"aP" = (
+/obj/effect/decal/cleanable/blood/gibs/robot,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"aQ" = (
+/obj/effect/spider/stickyweb,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"aR" = (
+/turf/simulated/shuttle/wall/no_join,
+/area/submap/glacier/CrashedMedShuttle)
+"aS" = (
+/obj/effect/decal/cleanable/blood/oil,
+/obj/structure/loot_pile/surface/bones,
+/obj/structure/lattice,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/CrashedMedShuttle)
+"aT" = (
+/obj/machinery/light,
+/obj/structure/table/standard,
+/obj/effect/spider/stickyweb,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"aU" = (
+/obj/structure/table/standard,
+/obj/item/weapon/material/shard{
+	icon_state = "medium"
+	},
+/obj/random/medical,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"aX" = (
+/obj/machinery/computer,
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/glacier/CrashedMedShuttle)
+"aY" = (
+/obj/structure/prop/blackbox/crashed_med_shuttle,
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/glacier/CrashedMedShuttle)
+"aZ" = (
+/obj/effect/spider/stickyweb,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/CrashedMedShuttle)
+"ba" = (
+/obj/random/mob/spider/mutant,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/CrashedMedShuttle)
+"bb" = (
+/obj/effect/spider/cocoon,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/CrashedMedShuttle)
+"bc" = (
+/obj/item/weapon/material/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/CrashedMedShuttle)
+"bd" = (
+/obj/item/stack/rods,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/CrashedMedShuttle)
+"be" = (
+/obj/effect/spider/stickyweb,
+/obj/structure/girder/displaced,
+/obj/structure/lattice,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/CrashedMedShuttle)
+"bf" = (
+/obj/machinery/light{
+	dir = 8;
+	icon_state = "tube1";
+	pixel_y = 0
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -32
+	},
+/obj/structure/lattice,
+/obj/item/device/gps/internal/poi,
+/obj/structure/flora/tree/sif,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/CrashedMedShuttle)
+"bg" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/structure/loot_pile/surface/bones,
+/obj/effect/decal/cleanable/blood/drip,
+/obj/structure/lattice,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/CrashedMedShuttle)
+"bh" = (
+/obj/structure/grille/broken,
+/obj/item/weapon/material/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/CrashedMedShuttle)
+"bi" = (
+/obj/effect/decal/mecha_wreckage/odysseus,
+/obj/effect/decal/cleanable/blood/oil,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/CrashedMedShuttle)
+"bj" = (
+/obj/item/weapon/material/shard,
+/obj/effect/spider/stickyweb,
+/obj/item/weapon/beartrap{
+	anchored = 1;
+	deployed = 1;
+	icon_state = "beartrap1"
+	},
+/obj/random/trash,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/CrashedMedShuttle)
+"bk" = (
+/obj/effect/decal/cleanable/blood/oil,
+/obj/structure/lattice,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/CrashedMedShuttle)
+"bl" = (
+/obj/effect/spider/stickyweb,
+/obj/item/weapon/material/shard,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"bm" = (
+/obj/random/medical,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"bn" = (
+/mob/living/simple_mob/animal/giant_spider/webslinger,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/CrashedMedShuttle)
+"bo" = (
+/obj/effect/spider/cocoon,
+/obj/structure/lattice,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/CrashedMedShuttle)
+"bp" = (
+/obj/structure/prop/fake_ai/dead/crashed_med_shuttle,
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/glacier/CrashedMedShuttle)
+"bq" = (
+/obj/structure/flora/tree/sif,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/CrashedMedShuttle)
+"br" = (
+/obj/structure/grille/broken,
+/obj/item/weapon/material/shard,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/CrashedMedShuttle)
+"bs" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/spider/stickyweb,
+/mob/living/simple_mob/animal/giant_spider/webslinger,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/CrashedMedShuttle)
+"bt" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/CrashedMedShuttle)
+"bu" = (
+/obj/effect/decal/remains/tajaran,
+/obj/item/weapon/surgical/circular_saw,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/CrashedMedShuttle)
+"bv" = (
+/obj/effect/decal/cleanable/blood/oil,
+/obj/effect/spider/stickyweb,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/CrashedMedShuttle)
+"bw" = (
+/obj/item/weapon/material/shard,
+/obj/structure/loot_pile/maint/technical,
+/obj/structure/lattice,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/CrashedMedShuttle)
+"bx" = (
+/obj/structure/bed/chair/office/light{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor/purple,
+/area/submap/glacier/CrashedMedShuttle)
+"by" = (
+/obj/item/weapon/circuitboard/broken,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"bz" = (
+/obj/structure/girder,
+/turf/template_noop,
+/area/submap/glacier/CrashedMedShuttle)
+"bA" = (
+/obj/structure/girder/displaced,
+/turf/template_noop,
+/area/submap/glacier/CrashedMedShuttle)
+"bB" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "propulsion_r"
+	},
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/CrashedMedShuttle)
+"bC" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "heater"
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/CrashedMedShuttle)
+"bD" = (
+/obj/structure/table/standard,
+/obj/item/weapon/storage/firstaid/adv,
+/turf/simulated/shuttle/floor/purple,
+/area/submap/glacier/CrashedMedShuttle)
+"bE" = (
+/obj/structure/table/standard,
+/turf/simulated/shuttle/floor/purple,
+/area/submap/glacier/CrashedMedShuttle)
+"bF" = (
+/obj/random/medical/pillbottle,
+/mob/living/simple_mob/animal/giant_spider/webslinger,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"bG" = (
+/obj/structure/table/standard,
+/obj/item/device/defib_kit/loaded,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"bH" = (
+/obj/structure/table/standard,
+/obj/item/bodybag/cryobag,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"bI" = (
+/obj/structure/table/standard,
+/obj/item/weapon/storage/box/bodybags,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"bJ" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"bK" = (
+/obj/structure/table/standard,
+/obj/item/weapon/surgical/retractor,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"bL" = (
+/obj/item/weapon/material/shard,
+/obj/structure/grille,
+/turf/simulated/shuttle/plating,
+/area/submap/glacier/CrashedMedShuttle)
+"bM" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/table/standard,
+/obj/structure/loot_pile/maint/technical,
+/turf/simulated/shuttle/floor/purple,
+/area/submap/glacier/CrashedMedShuttle)
+"bN" = (
+/obj/effect/decal/cleanable/blood/gibs/robot,
+/obj/effect/spider/cocoon,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"bO" = (
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/obj/structure/closet/secure_closet/medical_wall/anesthetics{
+	pixel_x = 32
+	},
+/obj/item/weapon/material/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"bP" = (
+/obj/machinery/light{
+	dir = 8;
+	icon_state = "tube1";
+	pixel_y = 0
+	},
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"bQ" = (
+/obj/effect/spider/cocoon,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"bR" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/structure/loot_pile/surface/bones,
+/obj/item/weapon/surgical/surgicaldrill,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"bS" = (
+/obj/item/weapon/material/shard{
+	icon_state = "medium"
+	},
+/obj/structure/grille,
+/turf/simulated/shuttle/plating,
+/area/submap/glacier/CrashedMedShuttle)
+"bT" = (
+/obj/structure/table/standard,
+/obj/item/device/reagent_scanner/adv,
+/turf/simulated/shuttle/floor/purple,
+/area/submap/glacier/CrashedMedShuttle)
+"bU" = (
+/obj/machinery/iv_drip,
+/obj/item/weapon/reagent_containers/blood/empty,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"bV" = (
+/mob/living/simple_mob/animal/giant_spider/carrier,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"bW" = (
+/obj/structure/table/standard,
+/obj/item/weapon/storage/box/masks,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"bX" = (
+/obj/structure/table/standard,
+/obj/random/firstaid,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"bY" = (
+/obj/structure/table/standard,
+/obj/item/weapon/storage/backpack/medic,
+/obj/random/medical/lite,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"bZ" = (
+/obj/structure/table/standard,
+/obj/effect/spider/stickyweb,
+/obj/random/medical,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"ca" = (
+/obj/structure/girder,
+/turf/simulated/shuttle/plating,
+/area/submap/glacier/CrashedMedShuttle)
+"cb" = (
+/obj/structure/frame,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"cc" = (
+/obj/structure/table/standard,
+/obj/structure/sign/periodic{
+	pixel_y = -32
+	},
+/obj/item/weapon/surgical/bonesetter,
+/obj/item/weapon/surgical/scalpel,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"cd" = (
+/obj/machinery/optable,
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/structure/loot_pile/surface/bones,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"ce" = (
+/obj/structure/table/standard,
+/obj/item/weapon/surgical/bonegel,
+/obj/item/weapon/surgical/FixOVein,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"cf" = (
+/obj/machinery/embedded_controller/radio/simple_docking_controller{
+	frequency = 1380;
+	id_tag = "admin_shuttle";
+	pixel_x = -25;
+	pixel_y = 0;
+	req_one_access = list(101);
+	tag_door = "admin_shuttle_hatch"
+	},
+/obj/random/mob/spider/mutant,
+/turf/simulated/shuttle/plating,
+/area/submap/glacier/CrashedMedShuttle)
+"cg" = (
+/obj/structure/table/standard,
+/obj/item/weapon/storage/belt/medical/emt,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"ch" = (
+/obj/structure/table/standard,
+/obj/item/weapon/storage/box/syringes,
+/obj/effect/spider/stickyweb,
+/obj/machinery/light,
+/turf/simulated/shuttle/floor/white,
+/area/submap/glacier/CrashedMedShuttle)
+"ci" = (
+/obj/machinery/door/airlock/external{
+	frequency = 1380;
+	icon_state = "door_locked";
+	id_tag = "admin_shuttle_hatch";
+	locked = 1;
+	name = "Shuttle Hatch";
+	req_access = null
+	},
+/turf/simulated/shuttle/plating,
+/area/submap/glacier/CrashedMedShuttle)
+"Vx" = (
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/CrashedMedShuttle)
+
+(1,1,1) = {"
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+bd
+Vx
+Vx
+Vx
+Vx
+Vx
+"}
+(2,1,1) = {"
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+"}
+(3,1,1) = {"
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+bB
+ag
+Vx
+Vx
+Vx
+Vx
+"}
+(4,1,1) = {"
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+bc
+Vx
+bv
+bC
+ag
+ag
+Vx
+Vx
+Vx
+"}
+(5,1,1) = {"
+Vx
+Vx
+Vx
+Vx
+bc
+bd
+aM
+Vx
+bd
+bj
+bw
+bD
+bM
+ag
+ag
+ag
+Vx
+"}
+(6,1,1) = {"
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+aN
+Vx
+be
+bk
+bx
+bE
+bx
+bT
+cb
+ag
+Vx
+"}
+(7,1,1) = {"
+Vx
+Vx
+Vx
+Vx
+Vx
+aB
+ac
+aS
+ag
+ak
+ak
+bF
+bN
+bU
+cc
+ag
+Vx
+"}
+(8,1,1) = {"
+Vx
+Vx
+bc
+Vx
+at
+aC
+aO
+aT
+ag
+bl
+ak
+ak
+ak
+bV
+cd
+ag
+Vx
+"}
+(9,1,1) = {"
+Vx
+Vx
+Vx
+an
+au
+aD
+aP
+aU
+ag
+bm
+ak
+ak
+bO
+bW
+ce
+ag
+Vx
+"}
+(10,1,1) = {"
+Vx
+Vx
+ai
+ag
+ag
+af
+aw
+af
+ag
+af
+by
+af
+ag
+ag
+ag
+ae
+Vx
+"}
+(11,1,1) = {"
+Vx
+ac
+ad
+ao
+av
+ak
+ak
+aZ
+bf
+bn
+ak
+aQ
+bP
+ad
+cf
+ci
+Vx
+"}
+(12,1,1) = {"
+Vx
+ad
+aj
+ap
+ak
+aE
+aQ
+bt
+Vx
+bo
+ak
+av
+bQ
+ao
+aj
+ci
+Vx
+"}
+(13,1,1) = {"
+Vx
+ae
+ag
+ag
+aw
+ag
+aR
+aX
+Vx
+bp
+ag
+ag
+by
+ag
+ag
+ae
+Vx
+"}
+(14,1,1) = {"
+Vx
+af
+ak
+aq
+ax
+aF
+ag
+aY
+bg
+bq
+bz
+bG
+ak
+bX
+cg
+af
+Vx
+"}
+(15,1,1) = {"
+Vx
+ag
+al
+ak
+ay
+aG
+ag
+af
+bh
+br
+bz
+bH
+ak
+ak
+ch
+ag
+Vx
+"}
+(16,1,1) = {"
+Vx
+ag
+am
+ak
+av
+aH
+ag
+Vx
+aZ
+bs
+bA
+bI
+ak
+bY
+am
+ag
+Vx
+"}
+(17,1,1) = {"
+Vx
+ag
+ag
+ar
+ak
+aI
+ag
+aZ
+aZ
+bt
+ag
+bJ
+av
+am
+ag
+ca
+Vx
+"}
+(18,1,1) = {"
+Vx
+Vx
+ag
+as
+az
+aJ
+ag
+ba
+bi
+bu
+ag
+ak
+bR
+bZ
+ca
+Vx
+Vx
+"}
+(19,1,1) = {"
+Vx
+Vx
+ag
+ag
+ak
+aK
+ag
+bb
+Vx
+Vx
+ag
+bK
+am
+ca
+ca
+Vx
+Vx
+"}
+(20,1,1) = {"
+Vx
+Vx
+Vx
+ag
+af
+aL
+ag
+Vx
+Vx
+Vx
+ag
+bL
+bS
+ca
+Vx
+Vx
+Vx
+"}
+(21,1,1) = {"
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+"}
+(22,1,1) = {"
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+"}
