@@ -60,44 +60,32 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 /datum/chatOutput/proc/update_vis()
 	if(!loaded && !broken)
 		// Only show loading
-		output_winset(FALSE, TRUE, FALSE)
+		output_winset(html = FALSE, loading = TRUE, oldchat = FALSE)
 	else if(broken)
 		// Only show oldchat, as 'broken' is overloaded as an oldchat-enable toggle
-		output_winset(FALSE, FALSE, TRUE)
+		output_winset(html = FALSE, loading = FALSE, oldchat = TRUE)
 	else if(loaded)
 		// Only show htmloutput
-		output_winset(TRUE, FALSE, FALSE)
+		output_winset(html = TRUE, loading = FALSE, oldchat = FALSE)
 
 // Redid all these to fix stupid client bug in ~515.1642
 // Seems like the bug is that controls refuse to accept is-visible and many other settings 'sometimes'
 // But seem to accept 'some' other settings like pos and size which can be used to hide them
 /datum/chatOutput/proc/output_winset(html, loading, oldchat)
 	if(html)
-		winset(owner, "htmloutput", "is-visible=true")
-		winset(owner, "htmloutput", "pos=0,0")
-		winset(owner, "htmloutput", "size=640,480") // Pretty sure this can just be 0,0 which is "use all space"
+		winset(owner, "htmloutput", "is-visible=true;pos=0,0;size=0,0")
 	else
-		winset(owner, "htmloutput", "is-visible=false")
-		winset(owner, "htmloutput", "pos=999,999")
-		winset(owner, "htmloutput", "size=1,1")
+		winset(owner, "htmloutput", "is-visible=false;pos=999,999;size=1,1")
 
 	if(loading)
-		winset(owner, "chatloadlabel", "is-visible=true")
-		winset(owner, "chatloadlabel", "pos=0,0")
-		winset(owner, "chatloadlabel", "size=640,480") // Pretty sure this can just be 0,0 which is "use all space"
+		winset(owner, "chatloadlabel", "is-visible=true;pos=0,0;size=0,0")
 	else
-		winset(owner, "chatloadlabel", "is-visible=false")
-		winset(owner, "chatloadlabel", "pos=999,999")
-		winset(owner, "chatloadlabel", "size=1,1")
+		winset(owner, "chatloadlabel", "is-visible=false;pos=999,999;size=1,1")
 
 	if(oldchat)
-		winset(owner, "oldoutput", "is-visible=true")
-		winset(owner, "oldoutput", "pos=0,0")
-		winset(owner, "oldoutput", "size=640,480") // Pretty sure this can just be 0,0 which is "use all space"
+		winset(owner, "oldoutput", "is-visible=true;pos=0,0;size=0,0")
 	else
-		winset(owner, "oldoutput", "is-visible=false")
-		winset(owner, "oldoutput", "pos=999,999")
-		winset(owner, "oldoutput", "size=1,1")
+		winset(owner, "oldoutput", "is-visible=false;pos=999,999;size=1,1")
 // RSEdit End
 
 //Shove all the assets at them
