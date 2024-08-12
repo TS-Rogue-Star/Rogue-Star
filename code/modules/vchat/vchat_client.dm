@@ -62,7 +62,9 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	else if(broken)
 		winset(owner, null, "outputwindow.htmloutput.is-visible=false;outputwindow.oldoutput.is-visible=true;outputwindow.chatloadlabel.is-visible=false")
 	else if(loaded)
-		return //It can do it's own winsets from inside the JS if it's working.
+		//RSEdit: Usually it does its own winset from the JS but it seems to be intermittenly failing in byond 515.1642
+		winset(owner, null, "outputwindow.htmloutput.is-visible=true;outputwindow.oldoutput.is-visible=false;outputwindow.chatloadlabel.is-visible=false")
+
 
 //Shove all the assets at them
 /datum/chatOutput/proc/send_resources()

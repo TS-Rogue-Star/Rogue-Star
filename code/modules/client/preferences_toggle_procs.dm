@@ -371,13 +371,17 @@
 	set category = "Preferences"
 	set desc = "Toggles VChat. Reloading VChat and/or reconnecting required to affect changes."
 
+	// RSAdd - Reloading can only happen every 5 seconds
+	if(src.chatOutputLoadedAt > (world.time - 5 SECONDS))
+		tgui_alert_async(src, "You can't swap chats more than once within 5 seconds.")
+		return
+	// RSAdd End
+
 	var/pref_path = /datum/client_preference/vchat_enable
 	toggle_preference(pref_path)
 	SScharacter_setup.queue_preferences_save(prefs)
 
-	to_chat(src, "You have toggled VChat [is_preference_enabled(pref_path) ? "on" : "off"]. \
-		You will have to reload VChat and/or reconnect to the server for these changes to take place. \
-		VChat message persistence is not guaranteed if you change this again before the start of the next round.")
+	reload_vchat() // RSAdd - Reload the chat for you
 
 /client/verb/toggle_tgui_inputlock()
 	set name = "Toggle TGUI Input Lock"

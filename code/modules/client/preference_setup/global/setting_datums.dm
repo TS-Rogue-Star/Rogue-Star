@@ -402,6 +402,14 @@ var/list/_client_preferences_by_type
 	enabled_description = "Extended"
 	disabled_description = "Default"
 
+//RS ADD START
+/datum/client_preference/game_toggle
+	description = "Game Participation"
+	key = "GAME_PARTICIPATION"
+	enabled_by_default = TRUE
+	enabled_description = "Participate"
+	disabled_description = "Sit out"
+//RS ADD END
 
 /********************
 * Staff Preferences *

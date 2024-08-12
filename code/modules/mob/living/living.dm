@@ -944,7 +944,7 @@
 			lying = incapacitated(INCAPACITATION_KNOCKDOWN)
 			canmove = !incapacitated(INCAPACITATION_DISABLED)
 
-	if(lying && (incapacitated(INCAPACITATION_KNOCKOUT) || incapacitated(INCAPACITATION_STUNNED))) //RS Port Chomp PR 7822 || CHOMPAdd - Making sure we're in good condition to crawl
+	if(incapacitated(INCAPACITATION_KNOCKOUT) || incapacitated(INCAPACITATION_STUNNED)) //RS Port Chomp PR 7949 Fix || CHOMPAdd - Making sure we're in good condition to crawl
 		canmove = 0
 		//RS Port Chomp PR 8154 || drop_both_hands() CHOMPremove, purple stuns dont drop items, this makes space EVA less frustrating and slips/shoves are already coded to drop your stuff.
 	else

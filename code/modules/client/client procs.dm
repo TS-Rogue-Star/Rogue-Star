@@ -492,9 +492,9 @@
 	set name = "Reload VChat"
 	set category = "OOC"
 
-	//Timing
-	if(src.chatOutputLoadedAt > (world.time - 10 SECONDS))
-		tgui_alert_async(src, "You can only try to reload VChat every 10 seconds at most.")
+	//RSEdit: Timing reduced to 5s and wording nicer
+	if(src.chatOutputLoadedAt > (world.time - 5 SECONDS))
+		tgui_alert_async(src, "You cann't reload the chat more than once within 5 seconds.")
 		return
 
 	verbs -= /client/proc/vchat_export_log
@@ -510,6 +510,10 @@
 	spawn()
 		chatOutput.start()
 
+// RSAdd: For debug purposes
+/client/proc/client_winset(control, params)
+	winset(src, control, params)
+// RSAdd End
 
 //This is for getipintel.net.
 //You're welcome to replace this proc with your own that does your own cool stuff.

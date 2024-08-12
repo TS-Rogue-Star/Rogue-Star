@@ -31,6 +31,11 @@
 	set desc = "Shift yourself out of alignment with realspace to travel quickly to different areas."
 	set category = "Shadekin"
 
+	var/area/A = get_area(src)	//RS ADD START
+	if(A.magic_damp)
+		to_chat(src, "<span class='warning'>You can't do that here!</span>")
+		return					//RS ADD END
+
 	var/ability_cost = 100
 
 	var/darkness = 1
@@ -183,6 +188,11 @@
 	set desc = "Spend energy to heal physical wounds in another creature."
 	set category = "Shadekin"
 
+	var/area/A = get_area(src)	//RS ADD START
+	if(A.magic_damp)
+		to_chat(src, "<span class='warning'>You can't do that here!</span>")
+		return					//RS ADD END
+
 	var/ability_cost = 50
 
 	var/datum/species/shadekin/SK = species
@@ -251,6 +261,11 @@
 	set name = "Create Shade (25)"
 	set desc = "Create a field of darkness that follows you."
 	set category = "Shadekin"
+
+	var/area/A = get_area(src)	//RS ADD START
+	if(A.magic_damp)
+		to_chat(src, "<span class='warning'>You can't do that here!</span>")
+		return					//RS ADD END
 
 	var/ability_cost = 25
 
