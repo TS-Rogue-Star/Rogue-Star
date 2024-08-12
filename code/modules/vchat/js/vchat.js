@@ -105,9 +105,9 @@ function start_vchat() {
 	doWinset("chatloadlabel", {"is-visible": false});
 
 	// RS Add: Workaround for client bug in 515.1642, hide using these methods too
-	doWinset("htmloutput", {"size": "0,0"}); // 0,0 is 'take up all space'
-	doWinset("oldoutput", {"size": "1,1"});
-	doWinset("chatloadlabel", {"size": "1,1"});
+	doWinset("htmloutput", {"size": "0x0"}); // 0,0 is 'take up all space'
+	doWinset("oldoutput", {"size": "1x1"});
+	doWinset("chatloadlabel", {"size": "1x1"});
 
 	doWinset("htmloutput", {"pos": "0,0"});
 	doWinset("oldoutput", {"pos": "999,999"});

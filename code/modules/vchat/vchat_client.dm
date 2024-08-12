@@ -73,19 +73,19 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 // But seem to accept 'some' other settings like pos and size which can be used to hide them
 /datum/chatOutput/proc/output_winset(html, loading, oldchat)
 	if(html)
-		winset(owner, "htmloutput", "is-visible=true;pos=0,0;size=0,0")
+		winset(owner, "htmloutput", "is-visible=true;pos=0,0;size=0x0")
 	else
-		winset(owner, "htmloutput", "is-visible=false;pos=999,999;size=1,1")
+		winset(owner, "htmloutput", "is-visible=false;pos=999,999;size=1x1")
 
 	if(loading)
-		winset(owner, "chatloadlabel", "is-visible=true;pos=0,0;size=0,0")
+		winset(owner, "chatloadlabel", "is-visible=true;pos=0,0;size=0x0")
 	else
-		winset(owner, "chatloadlabel", "is-visible=false;pos=999,999;size=1,1")
+		winset(owner, "chatloadlabel", "is-visible=false;pos=999,999;size=1x1")
 
 	if(oldchat)
-		winset(owner, "oldoutput", "is-visible=true;pos=0,0;size=0,0")
+		winset(owner, "oldoutput", "is-visible=true;pos=0,0;size=0x0")
 	else
-		winset(owner, "oldoutput", "is-visible=false;pos=999,999;size=1,1")
+		winset(owner, "oldoutput", "is-visible=false;pos=999,999;size=1x1")
 // RSEdit End
 
 //Shove all the assets at them
@@ -151,7 +151,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	broken = FALSE
 	owner.chatOutputLoadedAt = world.time
 
-	//update_vis() //It does it's own winsets
+	update_vis() //It does it's own winsets //RS Edit: Well, sometimes it does.
 	ping_cycle()
 	send_playerinfo()
 	load_database()
