@@ -128,7 +128,7 @@
 		if(drop)
 			V.forceMove(user.loc)
 			user.put_in_hands(V)
-		to_chat(user, span_notice("You remove [vial] from [src]."))
+			to_chat(user, span_notice("You remove [vial] from [src]."))
 		vial = null
 		update_icon()
 		playsound(loc, 'sound/weapons/empty.ogg', 50, 1)
@@ -198,7 +198,7 @@
 				return FALSE
 			user.drop_from_inventory(V,src)
 			if(isobj(storedloc))
-				storedloc.handle_item_insertion(vial)
+				storedloc.handle_item_insertion(vial,1)
 				unload_hypo(vial, user, 0)
 			else
 				unload_hypo(vial, user, 1)
