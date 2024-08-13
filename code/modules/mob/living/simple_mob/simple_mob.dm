@@ -174,6 +174,8 @@
 	var/injury_enrages = FALSE				// Do injuries enrage (aka strengthen) our mob? If yes, we'll interpret how hurt we are differently.
 	// VOREStation Add End
 
+	var/has_recoloured = FALSE  //RS Add || Port Virgo PR 15836
+
 /mob/living/simple_mob/Initialize()
 	verbs -= /mob/verb/observe
 	health = maxHealth
@@ -192,6 +194,9 @@
 
 	if(organ_names)
 		organ_names = GET_DECL(organ_names)
+
+	if(config.allow_simple_mob_recolor) //RS Add || Port Virgo PR 15836
+		verbs |= /mob/living/simple_mob/proc/ColorMate
 
 	return ..()
 
@@ -337,3 +342,16 @@
 	. = ..() 							// Calling parent here, actually updating our mob on how hurt we are.
 
 // VOREStation Add End
+
+//RS Add Start || Port Virgo PR 15836
+/mob/living/simple_mob/proc/ColorMate()
+	set name = "Recolour"
+	set category = "Abilities"
+	set desc = "Allows to recolour once."
+
+	if(!has_recoloured)
+		var/datum/ColorMate/recolour = new /datum/ColorMate(usr)
+		recolour.tgui_interact(usr)
+		return
+	to_chat(usr, "You've already recoloured yourself once. You are only allowed to recolour yourself once during a around.")
+//RS Add End || Port Virgo PR 15836
