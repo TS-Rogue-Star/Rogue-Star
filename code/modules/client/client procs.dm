@@ -512,7 +512,11 @@
 
 // RSAdd: For debug purposes
 /client/proc/client_winset(control, params)
+	to_chat(usr, "Before: [winget(src, control, params)]")
 	winset(src, control, params)
+	to_chat(usr, "After: [winget(src, control, params)]")
+/client/proc/client_winget(control, params)
+	return winget(src, control, params)
 // RSAdd End
 
 //This is for getipintel.net.
