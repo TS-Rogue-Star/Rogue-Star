@@ -165,13 +165,13 @@
 
 	circuit = /obj/item/weapon/circuitboard/tesla_coil
 
-	var/amp_eff = 2
+	var/amp_eff = 0.2
 
 /obj/machinery/power/tesla_coil/amplifier/RefreshParts()
 	..()
-	var/amp_eff = 0.1
+	var/amp_eff = 0.2
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
-		amp_eff += C.rating
+		amp_eff += 0.2 * C.rating
 
 /obj/machinery/power/tesla_coil/amplifier/coil_act(var/power)
 	var/power_produced = power + (power * amp_eff)
