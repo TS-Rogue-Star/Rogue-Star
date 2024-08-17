@@ -755,6 +755,13 @@
 	},
 /turf/simulated/floor/outdoors/sidewalk/side,
 /area/groundbase/level1/ne)
+"aMn" = (
+/obj/effect/floor_decal/corner/white{
+	dir = 5
+	},
+/obj/machinery/camera/network/command,
+/turf/simulated/floor/tiled,
+/area/groundbase/command/ai/foyer)
 "aMA" = (
 /obj/structure/table/rack{
 	dir = 8;
@@ -2005,6 +2012,15 @@
 	},
 /turf/simulated/floor/tiled,
 /area/groundbase/science/rd)
+"bRa" = (
+/obj/effect/floor_decal/corner/white{
+	dir = 10
+	},
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/groundbase/command/ai/foyer)
 "bRe" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -2580,7 +2596,6 @@
 /turf/simulated/floor,
 /area/groundbase/engineering/storage)
 "crH" = (
-/obj/machinery/alarm,
 /obj/machinery/atmospherics/unary/vent_pump/on,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/groundbase/command/ai/foyer)
@@ -3708,11 +3723,11 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
 	},
 /obj/effect/catwalk_plated,
 /turf/simulated/floor,
@@ -8773,6 +8788,9 @@
 	dir = 9
 	},
 /obj/structure/table/glass,
+/obj/machinery/alarm{
+	dir = 4
+	},
 /turf/simulated/floor/tiled,
 /area/groundbase/command/ai/foyer)
 "hSJ" = (
@@ -9738,6 +9756,9 @@
 /area/groundbase/civilian/kitchen)
 "iCU" = (
 /obj/effect/floor_decal/corner/white/full,
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 4
+	},
 /turf/simulated/floor/tiled,
 /area/groundbase/command/ai/foyer)
 "iDa" = (
@@ -10245,6 +10266,9 @@
 "jeS" = (
 /obj/structure/cable{
 	icon_state = "2-8"
+	},
+/obj/machinery/camera/network/civilian{
+	dir = 8
 	},
 /turf/simulated/floor/outdoors/sidewalk/side,
 /area/groundbase/level1/se)
@@ -14714,6 +14738,9 @@
 /obj/effect/floor_decal/corner/white/full{
 	dir = 8
 	},
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 4
+	},
 /turf/simulated/floor/tiled,
 /area/groundbase/command/ai/foyer)
 "nfp" = (
@@ -16043,6 +16070,12 @@
 	dir = 10
 	},
 /obj/machinery/holoplant,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
 /turf/simulated/floor/tiled,
 /area/groundbase/command/ai/foyer)
 "ovG" = (
@@ -18411,6 +18444,24 @@
 	},
 /turf/simulated/floor/tiled/eris/cafe,
 /area/groundbase/civilian/kitchen)
+"qfd" = (
+/obj/effect/floor_decal/corner/black{
+	dir = 5
+	},
+/obj/effect/floor_decal/industrial/warning{
+	dir = 1
+	},
+/obj/machinery/light/floortube{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/turf/simulated/floor/tiled,
+/area/groundbase/command/ai/foyer)
 "qfe" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -20134,6 +20185,15 @@
 	},
 /turf/simulated/floor/carpet/oracarpet,
 /area/groundbase/engineering/breakroom)
+"rBc" = (
+/obj/effect/floor_decal/corner/white{
+	dir = 6
+	},
+/obj/machinery/camera/network/command{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/groundbase/command/ai/foyer)
 "rBs" = (
 /obj/effect/decal/cleanable/cobweb,
 /turf/simulated/floor/water/deep/seasonal{
@@ -22190,6 +22250,15 @@
 	},
 /turf/simulated/floor/bluegrid,
 /area/groundbase/command/ai/upload)
+"tjg" = (
+/obj/effect/floor_decal/corner/white/full{
+	dir = 1
+	},
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/groundbase/command/ai/foyer)
 "tla" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -23449,6 +23518,12 @@
 "ukS" = (
 /turf/simulated/floor/outdoors/grass/seasonal/dark,
 /area/groundbase/science/picnic)
+"ulk" = (
+/obj/machinery/camera/network/engineering,
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
+/area/groundbase/level1/se)
 "ulz" = (
 /obj/effect/floor_decal/milspec/color/red/half{
 	dir = 1
@@ -24354,11 +24429,11 @@
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
 /area/groundbase/level1/sw)
 "vfR" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
 	},
 /obj/effect/catwalk_plated,
 /turf/simulated/floor,
@@ -41388,7 +41463,7 @@ lVD
 jIV
 qUf
 lVD
-sLR
+ulk
 sLR
 bsJ
 bsJ
@@ -43234,7 +43309,7 @@ upB
 rOT
 eXk
 bSq
-bsJ
+ulk
 sLR
 sLR
 sLR
@@ -45367,7 +45442,7 @@ awx
 awx
 awx
 txG
-igi
+qfd
 vfR
 xCY
 xCY
@@ -45509,8 +45584,8 @@ bsJ
 bsJ
 bsJ
 txG
-rTZ
-iyv
+tjg
+rBc
 sys
 iyv
 ePc
@@ -45523,7 +45598,7 @@ iyv
 iyv
 wen
 eiZ
-tMh
+bRa
 txG
 awx
 awx
@@ -45663,7 +45738,7 @@ nKJ
 mIB
 pIe
 txG
-myA
+aMn
 eiZ
 tBY
 txG
