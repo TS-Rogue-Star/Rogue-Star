@@ -176,7 +176,8 @@ var/list/_human_default_emotes = list(
 	//VOREStation Add End
 	//RS ADD START
 	/decl/emote/audible/yip,
-	/decl/emote/audible/yip/yap
+	/decl/emote/audible/yip/yap,
+	/decl/emote/audible/awawa
 )
 
 	//VOREStation Add Start
@@ -319,7 +320,8 @@ var/list/_simple_mob_default_emotes = list(
 	/decl/emote/audible/purrlong,
 	/decl/emote/audible/dook,
 	/decl/emote/audible/yip,
-	/decl/emote/audible/yip/yap
+	/decl/emote/audible/yip/yap,
+	/decl/emote/audible/awawa // RS Add
 
 	)
 	//VOREStation Add End

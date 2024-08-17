@@ -1553,9 +1553,7 @@
 /area/tether_away/snowbase/armory)
 "rB" = (
 /obj/machinery/power/thermoregulator,
-/turf/simulated/floor/plating{
-	temperature = 253.15
-	},
+/turf/simulated/floor/plating,
 /area/tether_away/snowbase/closet)
 "rK" = (
 /obj/structure/cable{
@@ -1571,9 +1569,7 @@
 /area/tether_away/snowbase/hall)
 "rN" = (
 /obj/machinery/space_heater,
-/turf/simulated/floor/plating{
-	temperature = 253.15
-	},
+/turf/simulated/floor/plating,
 /area/tether_away/snowbase/closet)
 "rO" = (
 /obj/structure/cable{
@@ -1617,9 +1613,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/plating{
-	temperature = 253.15
-	},
+/turf/simulated/floor/plating,
 /area/tether_away/snowbase/closet)
 "sj" = (
 /obj/item/clothing/shoes/boots/winter/engineering,
@@ -1976,14 +1970,10 @@
 /obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle,
 /obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle,
 /obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle,
-/turf/simulated/floor/plating{
-	temperature = 253.15
-	},
+/turf/simulated/floor/plating,
 /area/tether_away/snowbase/closet)
 "wi" = (
-/turf/simulated/floor/plating{
-	temperature = 253.15
-	},
+/turf/simulated/floor/plating,
 /area/tether_away/snowbase/closet)
 "wp" = (
 /obj/structure/table/steel_reinforced,
@@ -2026,9 +2016,7 @@
 /obj/structure/closet/walllocker_double/generic_civ/east,
 /obj/item/weapon/storage/briefcase/inflatable,
 /obj/item/weapon/storage/briefcase/inflatable,
-/turf/simulated/floor/plating{
-	temperature = 253.15
-	},
+/turf/simulated/floor/plating,
 /area/tether_away/snowbase/closet)
 "wQ" = (
 /obj/item/clothing/shoes/boots/winter/security,
@@ -2330,9 +2318,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/simulated/floor/plating{
-	temperature = 253.15
-	},
+/turf/simulated/floor/plating,
 /area/tether_away/snowbase/closet)
 "zZ" = (
 /obj/machinery/door/firedoor/glass/talon,
@@ -2353,9 +2339,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
-/turf/simulated/floor/plating{
-	temperature = 253.15
-	},
+/turf/simulated/floor/plating,
 /area/tether_away/snowbase/closet)
 "An" = (
 /obj/machinery/floodlight,
@@ -2370,9 +2354,7 @@
 	dir = 8;
 	pixel_x = 30
 	},
-/turf/simulated/floor/plating{
-	temperature = 253.15
-	},
+/turf/simulated/floor/plating,
 /area/tether_away/snowbase/closet)
 "Aq" = (
 /turf/simulated/mineral/crystal_shiny/snowbase,
@@ -2403,14 +2385,18 @@
 /turf/simulated/floor/tiled/monotile,
 /area/tether_away/snowbase/hall)
 "AF" = (
-/obj/machinery/button/remote/blast_door{
-	id = "snowbasecontainment";
-	name = "Containment Cell Lockdown";
-	pixel_x = -32;
-	pixel_y = 29
+/obj/machinery/door/blast/regular{
+	dir = 4;
+	id = "snowbase_garage"
 	},
-/turf/simulated/floor/outdoors/snow/snowbase,
-/area/tether_away/snowbase/outside)
+/obj/machinery/button/remote/blast_door{
+	id = "snowbase_garage";
+	name = "garage door";
+	pixel_x = -32;
+	pixel_y = -3
+	},
+/turf/simulated/floor/plating/snowbase,
+/area/tether_away/snowbase/garage)
 "AK" = (
 /turf/simulated/wall/r_wall,
 /area/tether_away/snowbase/surgery)
@@ -20071,8 +20057,8 @@ gO
 jB
 oK
 jB
-xl
 AF
+XV
 XV
 XV
 XV
