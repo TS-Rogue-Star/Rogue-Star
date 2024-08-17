@@ -13556,7 +13556,6 @@
 /obj/structure/table/standard,
 /obj/item/weapon/stock_parts/subspace/transmitter,
 /obj/item/weapon/stock_parts/subspace/transmitter,
-/obj/machinery/light,
 /obj/machinery/power/apc{
 	dir = 4
 	},
@@ -18917,10 +18916,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/lobby)
-"qGj" = (
-/obj/machinery/camera/network/engine,
-/turf/simulated/wall/r_wall,
-/area/groundbase/engineering/storage)
 "qGF" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 1
@@ -40672,7 +40667,7 @@ waD
 wPs
 hfT
 cZC
-qGj
+lyV
 tVT
 pVL
 pMn
