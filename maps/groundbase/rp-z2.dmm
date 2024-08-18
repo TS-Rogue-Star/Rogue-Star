@@ -13869,24 +13869,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/medical/virology)
-"Ri" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/effect/floor_decal/milspec/color/purple/half{
-	dir = 1
-	},
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
-/area/groundbase/science/hall)
 "Rj" = (
 /obj/effect/floor_decal/milspec/color/purple/half{
 	dir = 1
@@ -24694,7 +24676,7 @@ jf
 jf
 jf
 jf
-Ri
+Xs
 zi
 Ve
 HA
