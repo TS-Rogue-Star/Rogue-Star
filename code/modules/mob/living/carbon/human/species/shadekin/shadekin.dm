@@ -76,6 +76,7 @@
 
 	vision_flags = SEE_SELF|SEE_MOBS
 	appearance_flags = HAS_HAIR_COLOR | HAS_LIPS | HAS_SKIN_COLOR | HAS_EYE_COLOR | HAS_UNDERWEAR
+	digi_allowed = TRUE
 
 	move_trail = /obj/effect/decal/cleanable/blood/tracks/paw
 
