@@ -28,9 +28,11 @@
 	var/immutable = FALSE					// Prevents this belly from being deleted
 	var/escapable = FALSE					// Belly can be resisted out of at any time
 	var/escapetime = 20 SECONDS				// Deciseconds, how long to escape this belly
+	var/selectchance = 0					// % Chance of stomach switching to selective mode if prey struggles // RS add
 	var/digestchance = 0					// % Chance of stomach beginning to digest if prey struggles
 	var/absorbchance = 0					// % Chance of stomach beginning to absorb if prey struggles
 	var/escapechance = 0 					// % Chance of prey beginning to escape if prey struggles.
+	var/escapechance_absorbed = 0			// % Chance of absorbed prey finishing an escape. Requires a successful escape roll against the above as well.  //RS edit - copy from virgo
 	var/escape_stun = 0						// AI controlled mobs with a number here will be weakened by the provided var when someone escapes, to prevent endless nom loops
 	var/transferchance = 0 					// % Chance of prey being trasnsfered, goes from 0-100%
 	var/transferchance_secondary = 0 		// % Chance of prey being transfered to transferchance_secondary, also goes 0-100%
@@ -42,6 +44,7 @@
 	var/shrink_grow_size = 1				// This horribly named variable determines the minimum/maximum size it will shrink/grow prey to.
 	var/transferlocation					// Location that the prey is released if they struggle and get dropped off.
 	var/transferlocation_secondary			// Secondary location that prey is released to.
+	var/transferlocation_absorb				// Location that prey is moved to if they get absorbed. //RS add
 	var/release_sound = "Splatter"			// Sound for letting someone out. Replaced from True/false
 	var/mode_flags = 0						// Stripping, numbing, etc.
 	var/fancy_vore = FALSE					// Using the new sounds?
@@ -113,6 +116,14 @@
 		"You try and resist %pred's %belly, but only cause it to jiggle slightly.",
 		"Your fruitless mental struggles only shift %pred's %belly a tiny bit.",
 		"You can't make any progress freeing yourself from %pred's %belly.")
+
+	//RS edit start
+	var/list/select_chance_messages_owner = list(
+		"You feel your %belly beginning to become active!")
+
+	var/list/select_chance_messages_prey = list(
+		"In response to your struggling, %pred's %belly begins to get more active...")
+	//RS edit end
 
 	var/list/digest_messages_owner = list(
 		"You feel %prey's body succumb to your digestive system, which breaks it apart into soft slurry.",
@@ -942,6 +953,21 @@
 	owner.updateVRPanel()
 	if(isanimal(owner))
 		owner.update_icon()
+	//RS edit start
+	// Finally, if they're to be sent to a special pudge belly, send them there
+	if(transferlocation_absorb)
+		var/obj/belly/dest_belly
+		for(var/obj/belly/B as anything in owner.vore_organs)
+			if(B.name == transferlocation_absorb)
+				dest_belly = B
+				break
+		if(!dest_belly)
+			to_chat(owner, "<span class='vwarning'>Something went wrong with your belly transfer settings. Your <b>[lowertext(name)]</b> has had its transfer location cleared as a precaution.</span>")
+			transferlocation_absorb = null
+			return
+
+		transfer_contents(M, dest_belly)
+	//RS edit end
 
 // Handle a mob being unabsorbed
 /obj/belly/proc/unabsorb_living(mob/living/M)
@@ -1069,7 +1095,7 @@
 
 	for(var/mob/M in hearers(4, owner))
 		M.show_message(struggle_outer_message, 2) // hearable
-	to_chat(R, struggle_user_message)
+	//to_chat(R, struggle_user_message)  RS remove - moved to bottom of proc
 
 	var/sound/struggle_snuggle
 	var/sound/struggle_rustle = sound(get_sfx("rustle"))
@@ -1164,17 +1190,40 @@
 			digest_mode = DM_ABSORB
 			return
 
-		else if(prob(digestchance) && digest_mode != DM_DIGEST) //Finally, let's see if it should run the digest chance.
+		else if(prob(digestchance) && digest_mode != DM_DIGEST) //Next, let's see if it should run the digest chance.
 			to_chat(R, "<span class='warning'>In response to your struggling, \the [lowertext(name)] begins to get more active...</span>")
 			to_chat(owner, "<span class='warning'>You feel your [lowertext(name)] beginning to become active!</span>")
 			digest_mode = DM_DIGEST
 			return
+		//RS edit start
+		else if(prob(selectchance) && digest_mode != DM_SELECT) //Finally, let's see if it should run the selective mode chance.
+			var/select_chance_owner_message = pick(select_chance_messages_owner)
+			var/select_chance_prey_message = pick(select_chance_messages_prey)
 
+			select_chance_owner_message = replacetext(select_chance_owner_message, "%pred", owner)
+			select_chance_owner_message = replacetext(select_chance_owner_message, "%prey", R)
+			select_chance_owner_message = replacetext(select_chance_owner_message, "%belly", lowertext(name))
+			select_chance_owner_message = replacetext(select_chance_owner_message, "%countprey", living_count)
+			select_chance_owner_message = replacetext(select_chance_owner_message, "%count", contents.len)
+
+			select_chance_prey_message = replacetext(select_chance_prey_message, "%pred", owner)
+			select_chance_prey_message = replacetext(select_chance_prey_message, "%prey", R)
+			select_chance_prey_message = replacetext(select_chance_prey_message, "%belly", lowertext(name))
+			select_chance_prey_message = replacetext(select_chance_prey_message, "%countprey", living_count)
+			select_chance_prey_message = replacetext(select_chance_prey_message, "%count", contents.len)
+
+			select_chance_owner_message = "<span class='vwarning'>[select_chance_owner_message]</span>"
+			select_chance_prey_message = "<span class='vwarning'>[select_chance_prey_message]</span>"
+
+			to_chat(R, select_chance_prey_message)
+			to_chat(owner, select_chance_owner_message)
+			digest_mode = DM_SELECT
+		//RS edit end
 		else //Nothing interesting happened.
-			to_chat(R, "<span class='warning'>You make no progress in escaping [owner]'s [lowertext(name)].</span>")
+			to_chat(R, struggle_user_message) //RS edit
 			to_chat(owner, "<span class='warning'>Your prey appears to be unable to make any progress in escaping your [lowertext(name)].</span>")
 			return
-
+	to_chat(R, struggle_user_message) //RS add
 
 /obj/belly/proc/relay_absorbed_resist(mob/living/R)
 	if (!(R in contents) || !R.absorbed)
@@ -1205,7 +1254,7 @@
 
 	for(var/mob/M in hearers(4, owner))
 		M.show_message(struggle_outer_message, 2) // hearable
-	to_chat(R, struggle_user_message)
+	//to_chat(R, struggle_user_message) RS remove - moved to bottom of proc
 
 	var/sound/struggle_snuggle
 	var/sound/struggle_rustle = sound(get_sfx("rustle"))
@@ -1218,6 +1267,30 @@
 		playsound(src, struggle_snuggle, vary = 1, vol = 75, falloff = VORE_SOUND_FALLOFF, preference = /datum/client_preference/digestion_noises, volume_channel = VOLUME_CHANNEL_VORE)
 	else
 		playsound(src, struggle_rustle, vary = 1, vol = 75, falloff = VORE_SOUND_FALLOFF, preference = /datum/client_preference/digestion_noises, volume_channel = VOLUME_CHANNEL_VORE)
+
+	//RS Edit Start - virgo port
+	//absorb resists
+	if(escapable || owner.stat) //If the stomach has escapable enabled or the owner is dead/unconscious
+		if(prob(escapechance) || owner.stat) //Let's have it check to see if the prey's escape attempt starts.
+			to_chat(R, "<span class='warning'>You try to force yourself out of \the [lowertext(name)].</span>")
+			to_chat(owner, "<span class='warning'>Someone is attempting to free themselves from your [lowertext(name)]!</span>")
+			if(do_after(R, escapetime))
+				if((escapable || owner.stat) && (R.loc == src) && prob(escapechance_absorbed)) //Does the escape attempt succeed?
+					release_specific_contents(R)
+					to_chat(R,"<span class='warning'>You manage to free yourself from \the [lowertext(name)].</span>")
+					to_chat(owner,"<span class='warning'>[R] forces themselves free of your [lowertext(name)]!</span>")
+					for(var/mob/M in hearers(4, owner))
+						M.show_message("<span class='warning'>[R] climbs out of [owner]'s [lowertext(name)]!</span>", 2)
+					return
+				else if(!(R.loc == src)) //Aren't even in the belly. Quietly fail.
+					return
+				else //Belly became inescapable or you failed your roll.
+					to_chat(R,"<span class='warning'>Before you manage to reach freedom, you feel yourself getting dragged back into \the [lowertext(name)]!</span>")
+					to_chat(owner,"<span class='notice'>The attempt to escape from your [lowertext(name)] has failed!</span>")
+					return
+	to_chat(R, struggle_user_message)
+	//RS edit end
+
 
 /obj/belly/proc/get_mobs_and_objs_in_belly()
 	var/list/see = list()
