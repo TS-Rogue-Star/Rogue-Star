@@ -3861,6 +3861,13 @@
 	},
 /turf/simulated/floor,
 /area/engineering/workshop)
+"pW" = (
+/obj/machinery/camera/network/civilian{
+	dir = 4
+	},
+/obj/structure/closet/secure_closet/hos2,
+/turf/simulated/floor/tiled,
+/area/medical/medbay)
 "pY" = (
 /obj/machinery/atmospherics/pipe/manifold4w/visible/black,
 /obj/structure/lattice,
@@ -4696,6 +4703,10 @@
 /obj/structure/window/reinforced,
 /turf/simulated/floor/tiled,
 /area/engineering/engine_monitoring)
+"yM" = (
+/obj/structure/closet/secure_closet/captains,
+/turf/simulated/floor/tiled,
+/area/medical/medbay)
 "yN" = (
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
@@ -4942,6 +4953,10 @@
 	},
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
+"AT" = (
+/obj/structure/closet/secure_closet/RD,
+/turf/simulated/floor/tiled,
+/area/medical/medbay)
 "AW" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 4
@@ -5295,6 +5310,13 @@
 	},
 /turf/simulated/floor,
 /area/engineering/workshop)
+"FE" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/closet/secure_closet/engineering_chief,
+/turf/simulated/floor/tiled,
+/area/medical/medbay)
 "FF" = (
 /obj/structure/closet/secure_closet/engineering_personal,
 /turf/simulated/floor/tiled/techmaint,
@@ -6637,6 +6659,10 @@
 	},
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
+"UF" = (
+/obj/structure/closet/secure_closet/CMO,
+/turf/simulated/floor/tiled,
+/area/medical/medbay)
 "UH" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
@@ -6911,6 +6937,10 @@
 	},
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
+"Yr" = (
+/obj/structure/closet/secure_closet/quartermaster,
+/turf/simulated/floor/tiled,
+/area/medical/medbay)
 "Yu" = (
 /obj/machinery/camera/network/engine{
 	dir = 8
@@ -10241,12 +10271,12 @@ aa
 aa
 aa
 cF
-cM
-cM
-xX
-dd
-cM
-cM
+Yr
+yM
+pW
+FE
+AT
+UF
 cM
 cM
 cM
