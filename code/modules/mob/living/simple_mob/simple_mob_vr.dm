@@ -31,6 +31,7 @@
 	var/vore_digest_chance = 25			// Chance to switch to digest mode if resisted
 	var/vore_absorb_chance = 0			// Chance to switch to absorb mode if resisted
 	var/vore_escape_chance = 25			// Chance of resisting out of mob
+	var/vore_escape_chance_absorbed = 20// Chance of absorbed prey finishing an escape. Requires a successful escape roll against the above as well. //RS add - copy from virgo
 
 	var/vore_stomach_name				// The name for the first belly if not "stomach"
 	var/vore_stomach_flavor				// The flavortext for the first belly if not the default
@@ -74,7 +75,10 @@
 	var/new_fullness = 0
 	for(var/obj/belly/B as anything in vore_organs)
 		for(var/mob/living/M in B)
-			new_fullness += M.size_multiplier
+			//RS edit start
+			if(!M.absorbed || B.count_absorbed_prey_for_sprite)
+				new_fullness += M.size_multiplier
+			//RS edit end
 	new_fullness = new_fullness / size_multiplier //Divided by pred's size so a macro mob won't get macro belly from a regular prey.
 	new_fullness = new_fullness * belly_size_multiplier // Some mobs are small even at 100% size. Let's account for that.
 	new_fullness = round(new_fullness, 1) // Because intervals of 0.25 are going to make sprite artists cry.
@@ -239,6 +243,7 @@
 	B.contamination_color = vore_default_contamination_color
 	B.escapable = vore_escape_chance > 0
 	B.escapechance = vore_escape_chance
+	B.escapechance_absorbed = vore_escape_chance_absorbed // RS add
 	B.digestchance = vore_digest_chance
 	B.absorbchance = vore_absorb_chance
 	B.human_prey_swallow_time = swallowTime

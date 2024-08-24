@@ -106,7 +106,7 @@ export const SpecialMachineInteraction = (_properties, context) => {
         icon="share-square"
         onClick={() => act('send_automated_staff_request')}
         tooltip={
-          "Automated Fax Requests do not require staff to post on discord, but won't ping the related roles."
+          'Automated Fax Requests do not require staff to post and will automatically ping the requested roles on Discord.'
         }
       />
     );

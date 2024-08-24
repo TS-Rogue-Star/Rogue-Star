@@ -110,6 +110,8 @@
 //		/mob/living/proc/shred_limb - RS REMOVE
 	)
 
+	var/has_recoloured = FALSE  //RS Add || Port Virgo PR 15836
+
 /mob/living/silicon/robot/New(loc, var/unfinished = 0)
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
@@ -766,6 +768,18 @@
 	qdel(module)
 	module = null
 	updatename("Default")
+	has_recoloured = FALSE  //RS Add || Port Virgo PR 15836
+
+/mob/living/silicon/robot/proc/ColorMate() //RS Add Start|| Port Virgo PR 15836
+	set name = "Recolour Module"
+	set category = "Robot Commands"
+	set desc = "Allows to recolour once."
+
+	if(!has_recoloured)
+		var/datum/ColorMate/recolour = new /datum/ColorMate(usr)
+		recolour.tgui_interact(usr)
+		return
+	to_chat(usr, "You've already recoloured yourself once. Ask for a module reset for another.") //RS Add End || Port Virgo PR 15836
 
 /mob/living/silicon/robot/attack_hand(mob/user)
 
@@ -1172,10 +1186,14 @@
 /mob/living/silicon/robot/proc/add_robot_verbs()
 	src.verbs |= robot_verbs_default
 	src.verbs |= silicon_subsystems
+	if(config.allow_robot_recolor) //RS Add || Port Virgo PR 15836
+		src.verbs |= /mob/living/silicon/robot/proc/ColorMate
 
 /mob/living/silicon/robot/proc/remove_robot_verbs()
 	src.verbs -= robot_verbs_default
 	src.verbs -= silicon_subsystems
+	if(config.allow_robot_recolor) //RS Add || Port Virgo PR 15836
+		src.verbs |= /mob/living/silicon/robot/proc/ColorMate
 
 // Uses power from cyborg's cell. Returns 1 on success or 0 on failure.
 // Properly converts using CELLRATE now! Amount is in Joules.
