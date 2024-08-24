@@ -42,23 +42,3 @@
 			if(istype(AM, /obj/item/weapon/gun))
 				to_chat(user, "You have chosen \the [AM]. Say hello to your new friend.")
 		qdel(src)
-/*
- * CMO's hypokit box //RS Add
- */
-/obj/item/gunbox/cmo
-	name = "CMO's hypokit box"
-	desc = "A secure box containing a hypokit befitting of the Chief medical officer. Includes both MKI and MKII variants"
-	icon = 'icons/obj/storage.dmi'
-	icon_state = "firstaid-tactical-mini"
-/obj/item/gunbox/cmo/attack_self(mob/living/user)
-	var/list/options = list()
-	options["MKI"] = list(/obj/item/weapon/storage/firstaid/hypokit/mk1)
-	options["MKII"] = list(/obj/item/weapon/storage/firstaid/hypokit/cmo)
-	var/choice = tgui_input_list(user,"Would you prefer a MkI or MKII?", "Hypospray!!", options)
-	if(src && choice)
-		var/list/things_to_spawn = options[choice]
-		for(var/new_type in things_to_spawn) // Spawn all the things, the gun and the ammo.
-			var/atom/movable/AM = new new_type(get_turf(src))
-			if(istype(AM, /obj/item/weapon/gun))
-				to_chat(user, "You have chosen \the [AM]. Say hello to your new friend.")
-		qdel(src)

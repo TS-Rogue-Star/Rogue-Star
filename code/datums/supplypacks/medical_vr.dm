@@ -68,11 +68,7 @@
 /datum/supply_pack/med/mkiihypokits
 	name = "mk.II Hypospray Kits"
 	contains = list(
-				/obj/item/weapon/storage/firstaid/hypokit = 2, //RS Add
-				/obj/item/weapon/storage/firstaid/hypokit/brute = 2,
-				/obj/item/weapon/storage/firstaid/hypokit/burn = 2,
-				/obj/item/weapon/storage/firstaid/hypokit/antitoxin = 2,
-				/obj/item/weapon/storage/firstaid/hypokit/oxy = 2
+				/obj/item/weapon/storage/firstaid/hypokit = 4, //RS Add
 				)
 	cost = 25
 	containertype = /obj/structure/closet/crate/secure

@@ -408,7 +408,7 @@
 					/obj/item/weapon/reagent_containers/glass/bottle/toxin = 4,
 					/obj/item/weapon/reagent_containers/syringe/antiviral = 4,
 					/obj/item/weapon/reagent_containers/syringe = 12,
-					/obj/item/weapon/reagent_containers/glass/bottle/hypovial/small = 12,
+					/obj/item/weapon/reagent_containers/glass/beaker/vial = 12,
 					///obj/item/weapon/hypospray_mkii = 4, //RS add (removed on request)
 					/obj/item/weapon/storage/firstaid/hypokit = 4, //RS Add
 					///obj/item/weapon/storage/firstaid/hypokit/brute = 2, //RS Add (removed on request)

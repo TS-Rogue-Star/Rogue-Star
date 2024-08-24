@@ -41,12 +41,3 @@
 /datum/category_item/autolathe/medical/implanter
 	name = "implanter"
 	path =/obj/item/weapon/implanter
-
-//RS Add mkII Hypo revision
-/datum/category_item/autolathe/medical/hypovial
-	name = "small mkII hypovial"
-	path = /obj/item/weapon/reagent_containers/glass/bottle/hypovial/small
-
-/datum/category_item/autolathe/medical/hypovial/large
-	name = "large mkII hypovial"
-	path = /obj/item/weapon/reagent_containers/glass/bottle/hypovial/large
