@@ -1297,6 +1297,7 @@
 #include "code\game\objects\items\toys\godfigures.dm"
 #include "code\game\objects\items\toys\mech_toys.dm"
 #include "code\game\objects\items\toys\toys.dm"
+#include "code\game\objects\items\toys\toys_rs.dm"
 #include "code\game\objects\items\toys\toys_vr.dm"
 #include "code\game\objects\items\weapons\AI_modules.dm"
 #include "code\game\objects\items\weapons\AI_modules_vr.dm"
