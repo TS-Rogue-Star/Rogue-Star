@@ -187,6 +187,7 @@
 	if(target_size < 0.1)
 		target_size = 0.1
 
+//RS Edit Start
 /obj/item/clothing/gloves/bluespace/deluxe
 	name = "deluxe size standardization bracelet"
 	desc = "A somewhat bulky metal bracelet featuring a crystal, glowing blue. The outer side of the bracelet has an elongated case that one might imagine \
@@ -251,7 +252,7 @@
 			last_activated = world.time
 		else //They chose their current size.
 			return
-
+//RS Edit End
 
 //Same as Nanotrasen Security Uniforms
 /obj/item/clothing/under/ert
