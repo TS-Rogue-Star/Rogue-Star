@@ -75,3 +75,34 @@
 /obj/item/clothing/under/permit/fluff/tracking_implant/Destroy()
 	gps_tracker = null
 	return ..()
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing/fluff/fiddle
+    name = "Infinite Bottle of Nothing"
+    desc = "A bottle filled with nothing. It seems infinitely empty."
+    icon_state = "bottleofnothing"
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing/fluff/fiddle/Initialize()
+    . = ..()
+    START_PROCESSING(SSobj, src) // 1/sec
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing/fluff/fiddle/Destroy()
+	STOP_PROCESSING(SSobj, src) // It sorta handles this itself but save it the trouble
+	return ..()
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing/fluff/fiddle/process()
+    reagents.add_reagent("nothing", 0.5) // Full bottle refill in ~3.3 minutes
+
+/obj/item/weapon/tool/screwdriver/fluff/fiddle
+    name = "Mimedriver"
+    desc = "A black and white tool used for screwing. This one seems to be made of some alien material which doesn't make any sounds..."
+    catalogue_data = list(/datum/category_item/catalogue/anomalous/precursor_a/alien_screwdriver) //it's made of tranquillite
+    icon = 'icons/vore/custom_items_rs.dmi'
+    icon_state = "mimedriver"
+    force = 0
+    throwforce = 0
+    hitsound = null
+    usesound = null
+    drop_sound = null
+    pickup_sound = null
+    matter = null
+    random_color = FALSE
