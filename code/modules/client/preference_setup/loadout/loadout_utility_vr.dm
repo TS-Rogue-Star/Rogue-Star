@@ -72,7 +72,12 @@
 /datum/gear/utility/bs_bracelet
 	display_name = "bluespace bracelet"
 	path = /obj/item/clothing/gloves/bluespace
-	cost = 5
+	cost = 1
+
+/datum/gear/utility/delux_bs_bracelet
+	display_name = "deluxe bluespace bracelet"
+	path = /obj/item/clothing/gloves/bluespace/deluxe
+	cost = 3
 
 /datum/gear/utility/walkpod
 	display_name = "podzu music player"
