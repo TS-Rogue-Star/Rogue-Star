@@ -306,8 +306,8 @@ var/list/gamemode_cache = list()
 	var/static/suggested_byond_build
 
 //Enables/Disables the appropriate mob type from obtaining the verb on spawn. Still allows admins to manually give it to them. || RS Add || Port Virgo PR 15836
-	var/static/allow_robot_recolor = FALSE
-	var/static/allow_simple_mob_recolor = FALSE
+	var/static/allow_robot_recolor = TRUE
+	var/static/allow_simple_mob_recolor = TRUE
 
 	var/static/job_camp_time_limit = 10 MINUTES		//RS ADD
 	var/static/do_funny_names = TRUE				//RS ADD
