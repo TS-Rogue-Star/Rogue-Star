@@ -1034,7 +1034,7 @@
 			qdel(I)
 
 			if(nom["WTF"]) //Bites back.
-				H.Weaken(2)
+				H.Stun(2)
 				H.Confuse(nom["WTF"])
 				H.apply_effect(nom["WTF"], STUTTER)
 				H.make_jittery(nom["WTF"])
