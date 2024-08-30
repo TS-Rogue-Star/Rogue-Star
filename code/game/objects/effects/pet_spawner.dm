@@ -6,6 +6,7 @@
 	possible_mob_types = list()
 
 /obj/random/mob/semirandom_mob_spawner/pet/all_themes/Initialize()
+	//rs redit start - remove leech
 	possible_mob_types = list(
 		theme_farm,
 		theme_bird,
@@ -13,9 +14,10 @@
 		theme_jungle,
 		theme_domestic,
 		theme_lizard,
-		theme_sif,
+		theme_sif - /mob/living/simple_mob/animal/sif/leech,
 		theme_space
 		)
+	//rs edit end
 	. = ..()
 
 /obj/random/mob/semirandom_mob_spawner/pet/farm
@@ -49,7 +51,7 @@
 	. = ..()
 
 /obj/random/mob/semirandom_mob_spawner/pet/sif/Initialize()
-	possible_mob_types = list(theme_sif)
+	possible_mob_types = list(theme_sif - /mob/living/simple_mob/animal/sif/leech) //rs edit - remove leech
 	. = ..()
 
 /obj/random/mob/semirandom_mob_spawner/pet/space/Initialize()
