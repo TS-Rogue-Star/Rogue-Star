@@ -47,3 +47,15 @@
 	display_name = "Embedded Tracker Implant"
 	ckeywhitelist = list("draykenthedragon")
 	character_name = null
+
+/datum/gear/fluff/infbottlenothing
+	path = /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing/fluff/fiddle
+	display_name = "Infinite Bottle of Nothing"
+	ckeywhitelist = list("murchant")
+	character_name = list("Fiddle")
+
+/datum/gear/fluff/mimedriver
+	path = /obj/item/weapon/tool/screwdriver/fluff/fiddle
+	display_name = "Mimedriver"
+	ckeywhitelist = list("murchant")
+	character_name = list("Fiddle")

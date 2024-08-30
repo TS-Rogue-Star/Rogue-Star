@@ -29,7 +29,7 @@
 	var/mob/living/carbon/human/S = src
 
 	playsound(src, "punch", 25, 1, -1)
-	M.Weaken(4)
+	M.Stun(4)
 	M.stop_flying()
 	if(CanStumbleVore(M))
 		visible_message("<span class='warning'>[M] flops carelessly into [src]!</span>")
@@ -41,7 +41,7 @@
 		visible_message("<span class='warning'>[M] carelessly bowls [src] over!</span>")
 		M.forceMove(get_turf(src))
 		M.apply_damage(0.5, BRUTE)
-		Weaken(4)
+		Stun(4)
 		stop_flying()
 		apply_damage(0.5, BRUTE)
 	else if(round(weight) > 474)

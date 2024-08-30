@@ -762,6 +762,7 @@
 				/obj/item/toy/plushie/otter,
 				/obj/item/toy/plushie/vox,
 				/obj/item/toy/plushie/shark,
+				/obj/item/toy/plushie/teppi, //RS Add || Ports CHOMPStation PR 8816
 				pick(list(/obj/item/toy/plushie/borgplushie/drake/sec,
 							/obj/item/toy/plushie/borgplushie/drake/med,
 							/obj/item/toy/plushie/borgplushie/drake/sci,
