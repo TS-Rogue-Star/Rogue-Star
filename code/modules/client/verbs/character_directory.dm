@@ -70,11 +70,12 @@ GLOBAL_DATUM(character_directory, /datum/character_directory)
 
 		if(ishuman(C.mob))
 			var/mob/living/carbon/human/H = C.mob
+			var/strangername = H.real_name //RS Edit || Chomp Port
 			if(data_core && data_core.general)
 				if(!find_general_record("name", H.real_name))
 					if(!find_record("name", H.real_name, data_core.hidden_general))
-						continue
-			name = H.real_name
+						strangername = "unknown" //RS Edit || Chomp Port
+			name = strangername //RS Edit || Chomp Port
 			species = "[H.custom_species ? H.custom_species : H.species.name]"
 			ooc_notes = H.ooc_notes
 			if(H.ooc_notes_likes)
@@ -108,6 +109,31 @@ GLOBAL_DATUM(character_directory, /datum/character_directory)
 				ooc_notes += "\n\nDISLIKES\n\n[R.ooc_notes_dislikes]"
 
 			flavor_text = R.flavor_text
+
+		//RS Add Start  || Chomp Port
+		if(istype(C.mob, /mob/living/silicon/pai))
+			var/mob/living/silicon/pai/P = C.mob
+			name = P.name
+			species = "pAI"
+			ooc_notes = P.ooc_notes
+			if(P.ooc_notes_likes)
+				ooc_notes += "\n\nLIKES\n\n[P.ooc_notes_likes]"
+			if(P.ooc_notes_dislikes)
+				ooc_notes += "\n\nDISLIKES\n\n[P.ooc_notes_dislikes]"
+
+			flavor_text = P.flavor_text
+
+		if(istype(C.mob, /mob/living/simple_mob))
+			var/mob/living/simple_mob/S = C.mob
+			name = S.name
+			species = initial(S.name)  //RS Edit
+			if(S.ooc_notes_likes)
+				ooc_notes += "\n\nLIKES\n\n[S.ooc_notes_likes]"
+			if(S.ooc_notes_dislikes)
+				ooc_notes += "\n\nDISLIKES\n\n[S.ooc_notes_dislikes]"
+
+			flavor_text = S.desc
+		//RS Add End  || Chomp Port
 
 		// It's okay if we fail to find OOC notes and flavor text
 		// But if we can't find the name, they must be using a non-compatible mob type currently.
