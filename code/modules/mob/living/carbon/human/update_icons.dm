@@ -547,9 +547,10 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 		if(ears_s.Height() > face_standing.Height()) // Tol ears
 			face_standing.Crop(1, 1, face_standing.Width(), ears_s.Height())
 		else if(ears_s.Width() > face_standing.Width())	// Wide ears	//RS EDIT START
-			var/ourwidth = ears_s.Width()
-			face_standing.Crop(1, 1, ourwidth, face_standing.Height())
 			offset_x = -16
+			face_standing.Crop(1, 1, ears_s.Width(), face_standing.Height())
+//			ears_s.Shift(WEST,32)
+//			face_standing.Shift(WEST,16)
 		face_standing.Blend(ears_s, ICON_OVERLAY,offset_x)				//RS EDIT END
 		if(ear_style?.em_block)
 			em_block_ears = em_block_image_generic(image(ears_s))
