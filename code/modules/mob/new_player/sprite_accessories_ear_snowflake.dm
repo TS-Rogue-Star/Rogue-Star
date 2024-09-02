@@ -253,3 +253,16 @@
 	extra_overlay2 = "party_plume-2"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+
+//RS EDIT START
+
+/datum/sprite_accessory/ears/bunalien
+	name = "Bunalien ears"
+	icon = 'icons/rogue-star/ears_64x32.dmi'
+	icon_state = "bunalien"
+	extra_overlay = "bunalien-1"
+	extra_overlay2 = "bunalien-2"
+	do_colouration = TRUE
+	color_blend_mode = ICON_MULTIPLY
+
+//RS EDIT END
