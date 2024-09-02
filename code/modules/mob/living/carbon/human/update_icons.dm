@@ -511,8 +511,8 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 				facial_s.Blend(rgb(r_facial, g_facial, b_facial), facial_hair_style.color_blend_mode)
 
 			face_standing.Blend(facial_s, ICON_OVERLAY)
-	var/icon/ears_s = get_ears_overlay()
-	var/xl_ears = FALSE
+	var/icon/ears_s = get_ears_overlay()	//RS EDIT
+	var/xl_ears = FALSE		//RS ADD
 
 	if(h_style)
 		var/datum/sprite_accessory/hair/hair_style = hair_styles_list[h_style]
