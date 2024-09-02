@@ -851,8 +851,10 @@
 					/obj/item/toy/plushie/otter = 50,
 					/obj/item/toy/plushie/vox = 50,
 					/obj/item/toy/plushie/shark = 50,
-					/obj/item/toy/mistletoe = 50)
+					/obj/item/toy/mistletoe = 50,
 					//VOREStation Add End
+					/obj/item/toy/plushie/teppi = 50 //RS Edit || Ports CHOMPStation PR 8822
+					)
 
 
 /obj/machinery/vending/fishing
