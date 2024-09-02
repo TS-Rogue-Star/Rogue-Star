@@ -552,8 +552,9 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 	var/ear_offset = 0	//How much will we move the ears over?	//RS EDIT
 	if(ears_s)
 		if(xl_ears)	//Our ears are oversized	//RS EDIT START
+			var/ourwidth = ears_s.Width()
 			ears_s.Crop(1,1,64,64)		// Increase the sprite size to compensate for ear
-			if(ears_s.Width() == 32)	// Our ears are wide
+			if(ourwidth == 32)	// Our ears are wide
 				ears_s.Shift(EAST,16)	//So let's move the ears over more than the others
 			face_standing.Blend(ears_s,ICON_OVERLAY)	// add the ears
 			ear_offset = -16	//our ears are big, so move them over
