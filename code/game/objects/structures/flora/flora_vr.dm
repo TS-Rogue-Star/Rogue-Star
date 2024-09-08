@@ -16,6 +16,21 @@
 	icon = 'icons/obj/flora/pumpkins.dmi'
 	icon_state = "spawner-jackolantern"
 
+/obj/effect/landmark/carved_pumpkin_spawn/New()
+	. = ..()
+
+	new /obj/structure/flora/pumpkin/carved(src.loc)	//RS EDIT
+
+/obj/effect/landmark/lit_carved_pumpkin_spawn	//RS ADD START
+	name = "lit jack o'lantern spawn"
+	icon = 'icons/obj/flora/pumpkins.dmi'
+	icon_state = "spawner-jackolantern"
+
+/obj/effect/landmark/lit_carved_pumpkin_spawn/New()
+	. = ..()
+
+	new /obj/structure/flora/pumpkin/carved(src.loc,null,TRUE)//RS ADD END
+
 /obj/structure/flora/pumpkin/carved
 	name = "jack o'lantern"
 	desc = null		//RS EDIT
@@ -147,28 +162,35 @@
 		"teeth"
 	)
 	var/ourchoice
+	var/light_it = FALSE
 	if(!user)
 		ourchoice = pick(carvings)
+		if(istype(src,/obj/structure/flora/pumpkin/carved))
+			var/obj/structure/flora/pumpkin/carved/pump = src
+			light_it = pump.candle_lit
 	else
 		if(istype(src,/obj/structure/flora/pumpkin/carved))
 			var/obj/structure/flora/pumpkin/carved/pump = src
 			if(pump.carve_state)
 				to_chat(user,"<span class = 'warning'>\The [src] is already carved.</span>")
 				return
+			light_it = pump.candle_lit
 		ourchoice = tgui_input_list(user,"What will you carve?","Carve",carvings)
 
 	if(!ourchoice || QDELETED(src))
 		return
-	new /obj/structure/flora/pumpkin/carved(src.loc,ourchoice)
+	new /obj/structure/flora/pumpkin/carved(src.loc,ourchoice,light_it)
 	if(user)
 		user.visible_message("<span class = 'notice'>\The [user] carves \the [src]!</span>")
 	qdel(src)
 
-/obj/structure/flora/pumpkin/carved/New(newloc,new_carv)
+/obj/structure/flora/pumpkin/carved/New(newloc,new_carv,light_it)
 	if(newloc)
 		loc = newloc
 	if(new_carv)
 		carve_state = new_carv
+	if(light_it)
+		candle_lit = TRUE
 	..()
 
 /obj/structure/flora/pumpkin/carved/Initialize()
