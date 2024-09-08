@@ -149,3 +149,8 @@
 **Creator:** Verkele<br>
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
+**File:** `icons/obj/flora/pumpkins.dmi`<br>
+**Icon-States:** All except for decor-pumpkin, decor-jackolantern, decor-jackolantern-girly, decor-jackolantern-scream, and decor-jackolantern-owo<br>
+**Creator:** Community project<br>
+**License:** Designs developed by players and translated to sprites by VerySoft; not for further use without consent of developing player<br>
+<br>
