@@ -17,7 +17,7 @@
 /obj/item/clothing/shoes/mech_shoes/heftyjackboots  //RS Add
 	name = "hefty jackboots"
 	desc = "Now with one hundred percent more stomp."
-	squeak_sound = list('sound/mob/boots.ogg'=1)
+	squeak_sound = list('sound/effects/footstep/shoes/boots.ogg'=1)
 	step_volume_mod = 5
 	icon_state = "jackboots"
 

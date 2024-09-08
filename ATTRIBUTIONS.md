@@ -149,7 +149,7 @@
 **Creator:** Verkele<br>
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
-**File:** `sound/effects/footstep/shoes/boots.dmi`<br>
+**File:** `sound/effects/footstep/shoes/boots.ogg`<br>
 **Creator:** gpag1<br>
 **License:** Pixabay - Free for use<br>
 **Link:** https://pixabay.com/sound-effects/footsteps-boots-101657/<br>
