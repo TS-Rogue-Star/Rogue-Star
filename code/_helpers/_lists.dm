@@ -937,3 +937,20 @@ var/global/list/json_cache = list()
 	else
 		used_key_list[input_key] = 1
 	return input_key
+
+//RS Add || Chomp Port
+/proc/pick_weight(list/list_to_pick)
+	var/total = 0
+	var/item
+	for(item in list_to_pick)
+		if(!list_to_pick[item])
+			list_to_pick[item] = 0
+		total += list_to_pick[item]
+
+	total = rand(1, total)
+	for(item in list_to_pick)
+		total -= list_to_pick[item]
+		if(total <= 0 && list_to_pick[item])
+			return item
+
+	return null

@@ -27,3 +27,25 @@
 	emote_message_1p_target = "You yap at TARGET! Yap yap!!!"
 	emote_message_3p_target = "yaps at TARGET!"
 	soundlist = list('sound/rogue-star/yap/yap1.ogg', 'sound/rogue-star/yap/yap2.ogg', 'sound/rogue-star/yap/yap4.ogg', 'sound/rogue-star/yap/yap5.ogg', 'sound/rogue-star/yap/yap6.ogg', 'sound/rogue-star/yap/yap7.ogg', 'sound/rogue-star/yap/yap8.ogg', 'sound/rogue-star/yap/yap9.ogg', 'sound/rogue-star/yap/yap10.ogg', 'sound/rogue-star/yap/yap11.ogg', 'sound/rogue-star/yap/yap12.ogg', 'sound/rogue-star/yap/yap13.ogg', 'sound/rogue-star/yap/yap14.ogg')
+
+/decl/emote/audible/awawa
+	key = "awawa"
+	emote_message_1p = "You awawa!"
+	emote_message_3p = "awawas!"
+
+	emote_message_impaired = "makes a sound but you can't hear it."
+
+	emote_message_1p_target = "You awawa at TARGET."
+	emote_message_3p_target = "awawas at TARGET."
+
+	emote_sound = null
+	var/list/soundlist = list(
+			'sound/voice/awawa1.ogg',
+			'sound/voice/awawa2.ogg',
+			'sound/voice/awawa3.ogg'
+			)
+	sound_vary = TRUE
+
+/decl/emote/audible/awawa/get_emote_sound(var/mob/living/user)
+	emote_sound = pick(soundlist)
+	. = ..()

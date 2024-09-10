@@ -110,6 +110,8 @@
 //		/mob/living/proc/shred_limb - RS REMOVE
 	)
 
+	var/has_recoloured = FALSE  //RS Add || Port Virgo PR 15836
+
 /mob/living/silicon/robot/New(loc, var/unfinished = 0)
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
@@ -766,6 +768,18 @@
 	qdel(module)
 	module = null
 	updatename("Default")
+	has_recoloured = FALSE  //RS Add || Port Virgo PR 15836
+
+/mob/living/silicon/robot/proc/ColorMate() //RS Add Start|| Port Virgo PR 15836
+	set name = "Recolour Module"
+	set category = "Robot Commands"
+	set desc = "Allows to recolour once."
+
+	if(!has_recoloured)
+		var/datum/ColorMate/recolour = new /datum/ColorMate(usr)
+		recolour.tgui_interact(usr)
+		return
+	to_chat(usr, "You've already recoloured yourself once. Ask for a module reset for another.") //RS Add End || Port Virgo PR 15836
 
 /mob/living/silicon/robot/attack_hand(mob/user)
 
@@ -1172,10 +1186,14 @@
 /mob/living/silicon/robot/proc/add_robot_verbs()
 	src.verbs |= robot_verbs_default
 	src.verbs |= silicon_subsystems
+	if(config.allow_robot_recolor) //RS Add || Port Virgo PR 15836
+		src.verbs |= /mob/living/silicon/robot/proc/ColorMate
 
 /mob/living/silicon/robot/proc/remove_robot_verbs()
 	src.verbs -= robot_verbs_default
 	src.verbs -= silicon_subsystems
+	if(config.allow_robot_recolor) //RS Add || Port Virgo PR 15836
+		src.verbs |= /mob/living/silicon/robot/proc/ColorMate
 
 // Uses power from cyborg's cell. Returns 1 on success or 0 on failure.
 // Properly converts using CELLRATE now! Amount is in Joules.
@@ -1362,3 +1380,90 @@
 	rest_style = tgui_alert(src, "Select resting pose", "Resting Pose", sprite_datum.rest_sprite_options)
 	if(!rest_style)
 		rest_style = "Default"
+
+//RS Port Chomp PR 8077 | ChompAdd
+
+/obj/machinery/door/airlock/BorgCtrlShiftClick(var/mob/living/silicon/robot/user)
+	if(check_access(user.idcard))
+		..()
+
+/obj/machinery/door/airlock/BorgShiftClick(var/mob/living/silicon/robot/user)  // Opens and closes doors! Forwards to AI code.
+	if(check_access(user.idcard))
+		..()
+
+/obj/machinery/door/airlock/BorgCtrlClick(var/mob/living/silicon/robot/user) // Bolts doors. Forwards to AI code.
+	if(check_access(user.idcard))
+		..()
+
+/obj/machinery/power/apc/BorgCtrlClick(var/mob/living/silicon/robot/user) // turns off/on APCs. Forwards to AI code.
+	if(allowed(user))
+		..()
+
+/obj/machinery/turretid/BorgCtrlClick(var/mob/living/silicon/robot/user) //turret control on/off. Forwards to AI code.
+	if(allowed(user))
+		..()
+
+/obj/machinery/door/airlock/BorgAltClick(var/mob/living/silicon/robot/user) // Eletrifies doors. Forwards to AI code.
+	if(check_access(user.idcard))
+		..()
+
+/obj/machinery/turretid/BorgAltClick(var/mob/living/silicon/robot/user) //turret lethal on/off. Forwards to AI code.
+	if(allowed(user))
+		..()
+
+/obj/machinery/door/airlock/user_allowed(mob/user)
+	var/mob/living/silicon/robot/R = user
+	if(istype(R) && !check_access(R.idcard))
+		return FALSE
+	. = ..()
+
+/obj/machinery/computer/atmoscontrol/attack_robot(var/mob/user)
+	if(allowed(user))
+		..()
+	else if(Adjacent(user))
+		attack_hand(user)
+
+/obj/machinery/computer/robotics/attack_robot(var/mob/user)
+	if(allowed(user))
+		..()
+	else if(Adjacent(user))
+		attack_hand(user)
+
+/obj/machinery/turretid/attack_robot(var/mob/user)
+	if(allowed(user))
+		..()
+	else if(Adjacent(user))
+		attack_hand(user)
+
+/obj/machinery/door/airlock/attack_robot(var/mob/user)
+	var/mob/living/silicon/robot/R = user
+	if(!istype(R))
+		return //why are you here
+	if(check_access(R.idcard))
+		..()
+	else if(Adjacent(user))
+		attack_hand(user)
+
+/obj/machinery/porta_turret/attack_robot(var/mob/user)
+	if(allowed(user))
+		..()
+	else if(Adjacent(user))
+		attack_hand(user)
+
+/obj/machinery/porta_turret/isLocked(mob/user)
+	var/mob/living/silicon/robot/R = user
+	if(!istype(R))
+		return ..()
+	if(!locked)
+		return FALSE
+	if(!check_access(R.idcard))
+		return TRUE
+	return FALSE
+
+/obj/proc/siliconaccess(mob/user)
+	var/mob/living/silicon/robot/R = user
+	if(istype(R))
+		return check_access(R.idcard)
+	if(issilicon(user))
+		return TRUE
+	return FALSE

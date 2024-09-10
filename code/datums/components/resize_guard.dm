@@ -15,5 +15,5 @@
 	var/area/A = get_area(parent)
 	if(A?.limit_mob_size)
 		var/mob/living/L = parent
-		L.resize(L.size_multiplier)
+		L.resize(L.size_multiplier, ignore_prefs = TRUE) // RS Edit, we need this to ignore prefs so people can't exploit unrestricted areas to maintain massive sizes.
 		qdel(src)

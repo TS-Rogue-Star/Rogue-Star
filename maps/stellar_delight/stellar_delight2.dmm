@@ -408,6 +408,7 @@
 /obj/structure/table/reinforced,
 /obj/random/tech_supply,
 /obj/random/tech_supply,
+/obj/random/tech_supply,
 /turf/simulated/floor/tiled/eris/dark/orangecorner,
 /area/engineering/engine_eva)
 "aP" = (
@@ -1930,12 +1931,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/wall/bay/r_wall/steel,
 /area/stellardelight/deck2/o2production)
-"dW" = (
-/obj/structure/closet/secure_closet/engineering_electrical/double{
-	anchored = 1
-	},
-/turf/simulated/floor/tiled/eris/dark/orangecorner,
-/area/engineering/locker_room)
 "dX" = (
 /obj/machinery/light{
 	dir = 8
@@ -2629,24 +2624,11 @@
 /turf/simulated/floor/tiled/eris/white/cargo,
 /area/stellardelight/deck2/triage)
 "fy" = (
-/obj/item/device/radio,
-/obj/item/device/radio,
-/obj/item/device/radio,
-/obj/item/weapon/tank/emergency/oxygen/engi,
-/obj/item/weapon/tank/emergency/oxygen/engi,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/structure/closet/crate/medical{
-	desc = "A crate full of emergency supplies to help with response and rescue operations. A logo of NanoTrasen with a checkmark is stamped on the crate.";
-	name = "NanoTrasen Emergency Supply Crate"
-	},
-/obj/item/weapon/storage/briefcase/inflatable,
-/obj/item/weapon/storage/firstaid/adv,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/bodybag/cryobag,
-/obj/item/bodybag/cryobag,
-/turf/simulated/floor/tiled/eris/dark/monofloor,
-/area/bridge)
+/obj/structure/table/wooden_reinforced,
+/obj/item/mail/blank,
+/obj/item/mail/blank,
+/turf/simulated/floor/tiled/eris/dark/cargo,
+/area/crew_quarters/recreation_area)
 "fz" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
@@ -4332,6 +4314,7 @@
 /obj/structure/table/reinforced,
 /obj/random/tech_supply,
 /obj/random/tech_supply,
+/obj/random/tech_supply,
 /turf/simulated/floor/tiled/eris/dark/orangecorner,
 /area/engineering/engine_eva)
 "ji" = (
@@ -4888,6 +4871,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/item/weapon/storage/bag/mail,
 /turf/simulated/floor/tiled/eris/steel/cargo,
 /area/quartermaster/storage)
 "kr" = (
@@ -4959,6 +4943,14 @@
 	},
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck2/aftstarboard)
+"kw" = (
+/obj/structure/table/steel_reinforced,
+/obj/item/weapon/folder/blue,
+/obj/item/weapon/folder/blue{
+	pixel_x = 5
+	},
+/turf/simulated/floor/tiled/eris/dark/monofloor,
+/area/bridge)
 "kx" = (
 /obj/structure/disposalpipe/sortjunction/wildcard/flipped{
 	dir = 1
@@ -6192,6 +6184,9 @@
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 1
 	},
+/obj/item/mail/blank,
+/obj/item/mail/blank,
+/obj/item/mail/blank,
 /turf/simulated/floor/tiled,
 /area/storage/art)
 "mR" = (
@@ -9127,8 +9122,7 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced,
-/obj/random/tech_supply,
-/obj/random/tech_supply,
+/obj/item/device/suit_cooling_unit,
 /turf/simulated/floor/tiled/eris/dark/orangecorner,
 /area/engineering/engine_eva)
 "tF" = (
@@ -14643,9 +14637,8 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/structure/closet/crate/bin{
-	anchored = 1
-	},
+/obj/structure/closet/toolcloset,
+/obj/item/weapon/pickaxe,
 /turf/simulated/floor/tiled/eris/dark/orangecorner,
 /area/engineering/engine_eva)
 "FZ" = (
@@ -16005,6 +15998,10 @@
 	},
 /turf/simulated/floor/tiled/eris/dark/gray_platform,
 /area/bridge)
+"IM" = (
+/obj/structure/table/steel_reinforced,
+/turf/simulated/floor/tiled/eris/dark/monofloor,
+/area/bridge)
 "IN" = (
 /obj/machinery/atmospherics/binary/pump/on{
 	name = "Air to Distro"
@@ -16955,6 +16952,24 @@
 /obj/effect/landmark/vermin,
 /turf/simulated/floor/tiled/eris/white/bluecorner,
 /area/medical/chemistry)
+"KZ" = (
+/obj/item/device/radio,
+/obj/item/device/radio,
+/obj/item/device/radio,
+/obj/item/weapon/tank/emergency/oxygen/engi,
+/obj/item/weapon/tank/emergency/oxygen/engi,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/weapon/storage/briefcase/inflatable,
+/obj/item/weapon/storage/firstaid/adv,
+/obj/item/weapon/storage/firstaid/regular,
+/obj/item/bodybag/cryobag,
+/obj/item/bodybag/cryobag,
+/obj/structure/closet/walllocker_double/command/south{
+	name = "emergency supplies"
+	},
+/turf/simulated/floor/tiled/eris/dark/gray_platform,
+/area/bridge)
 "La" = (
 /obj/machinery/light,
 /turf/simulated/floor/tiled/eris/white/cargo,
@@ -17212,6 +17227,11 @@
 /obj/item/weapon/packageWrap,
 /obj/fiftyspawner/cardboard,
 /obj/machinery/atmospherics/unary/vent_pump/on,
+/obj/item/weapon/storage/bag/mail,
+/obj/item/mail/blank,
+/obj/item/mail/blank,
+/obj/item/mail/blank,
+/obj/item/mail/blank,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/quartermaster/storage)
 "LG" = (
@@ -18805,8 +18825,9 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/atmos/monitoring)
 "OZ" = (
-/obj/structure/closet/toolcloset,
-/obj/item/weapon/pickaxe,
+/obj/structure/closet/secure_closet/engineering_electrical/double{
+	anchored = 1
+	},
 /turf/simulated/floor/tiled/eris/dark/orangecorner,
 /area/engineering/locker_room)
 "Pb" = (
@@ -20875,6 +20896,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
+/obj/item/weapon/storage/bag/mail,
 /turf/simulated/floor/tiled/eris/steel/cargo,
 /area/quartermaster/storage)
 "TL" = (
@@ -22837,9 +22859,9 @@
 /turf/simulated/floor/tiled/eris/dark/cargo,
 /area/crew_quarters/recreation_area)
 "Yd" = (
-/obj/item/device/suit_cooling_unit,
-/obj/item/device/suit_cooling_unit,
-/obj/structure/table/reinforced,
+/obj/structure/closet/crate/bin{
+	anchored = 1
+	},
 /turf/simulated/floor/tiled/eris/dark/orangecorner,
 /area/engineering/engine_eva)
 "Ye" = (
@@ -33445,7 +33467,7 @@ Rf
 Uj
 ZU
 JQ
-nK
+kw
 nK
 bL
 wi
@@ -33587,7 +33609,7 @@ HL
 nD
 CG
 wo
-nK
+IM
 nK
 uQ
 xy
@@ -33728,7 +33750,7 @@ Mw
 IL
 Uj
 Nn
-JQ
+KZ
 rN
 rN
 rN
@@ -33869,7 +33891,7 @@ jU
 TP
 Ld
 Uj
-fy
+Zj
 Zj
 rN
 ry
@@ -34424,7 +34446,7 @@ iO
 mt
 lO
 id
-sH
+fy
 nt
 Rq
 Rq
@@ -35893,7 +35915,7 @@ Re
 OI
 da
 iw
-dW
+vb
 To
 To
 Vo

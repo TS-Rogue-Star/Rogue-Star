@@ -147,3 +147,16 @@
 	toggle_preference(pref_path)
 
 	to_chat(src, "The cooldown between pain messages for minor (under 20/5 injury. Multi-limb injuries are still faster) is now [ (is_preference_enabled(pref_path)) ? "extended" : "default"].")
+
+//RS ADD START
+/client/verb/toggle_game_participation()
+	set name = "Toggle Game Participation"
+	set category = "Preferences"
+	set desc = "When toggled on, you will participate in a game, and may collect or count for points!"
+
+	var/pref_path = /datum/client_preference/game_toggle
+
+	toggle_preference(pref_path)
+
+	to_chat(src, "You [ (is_preference_enabled(pref_path)) ? "will" : "will not"] participate in mechanical games.")
+//RS ADD END

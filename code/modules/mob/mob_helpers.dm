@@ -85,9 +85,12 @@
 /proc/is_admin(var/mob/user)
 	return check_rights(R_ADMIN|R_EVENT, 0, user) != 0
 
-
+/** //RS Comment out Code Block || Port Virgo PR 15836
+ * Moved into its own file as part of port from CHOMP.
+ *
 /proc/hsl2rgb(h, s, l)
 	return //TODO: Implement
+*/
 
 /*
 	Miss Chance

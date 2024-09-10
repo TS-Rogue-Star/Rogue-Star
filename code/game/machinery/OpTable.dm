@@ -92,8 +92,12 @@
 		C.client.eye = src
 	C.resting = 1
 	C.loc = src.loc
+	/*	RS Edit, commenting this out as it breaks buildable tables.
+		For the life of me, I cannot think of a reason why this loop was run.
 	for(var/obj/O in src)
 		O.loc = src.loc
+		RS Edit End
+	*/
 	add_fingerprint(user)
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C

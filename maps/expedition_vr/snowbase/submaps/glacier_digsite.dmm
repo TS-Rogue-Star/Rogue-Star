@@ -1,0 +1,608 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/simulated/mineral/crystal_shiny/snowbase/ignore_mapgen,
+/area/submap/glacier/digsite)
+"c" = (
+/turf/simulated/wall/snowbrick,
+/area/submap/glacier/digsite)
+"g" = (
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/digsite)
+"i" = (
+/obj/structure/bed/alien,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/digsite)
+"j" = (
+/obj/structure/cult/talisman,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/digsite)
+"k" = (
+/obj/machinery/artifact,
+/obj/structure/anomaly_container,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/digsite)
+"l" = (
+/obj/structure/simple_door/sandstone,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/digsite)
+"m" = (
+/obj/structure/loot_pile/surface/alien,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/digsite)
+"n" = (
+/mob/living/simple_mob/animal/passive/tindalos,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/digsite)
+"o" = (
+/obj/structure/closet/crate/secure/loot,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/digsite)
+"p" = (
+/obj/item/weapon/ore,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/digsite)
+"q" = (
+/obj/effect/floor_decal/asteroid,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/digsite)
+"r" = (
+/obj/structure/anomaly_container,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/digsite)
+"s" = (
+/turf/simulated/wall,
+/area/submap/glacier/digsite)
+"t" = (
+/obj/item/frame/apc,
+/obj/item/weapon/module/power_control,
+/turf/simulated/floor/plating/external,
+/area/submap/glacier/digsite)
+"u" = (
+/obj/structure/table/steel,
+/obj/machinery/cell_charger,
+/obj/random/powercell,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/digsite)
+"v" = (
+/obj/structure/table/steel,
+/obj/item/weapon/storage/excavation,
+/obj/item/device/measuring_tape,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/digsite)
+"w" = (
+/obj/machinery/power/port_gen/pacman/super,
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating/external,
+/area/submap/glacier/digsite)
+"x" = (
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating/external,
+/area/submap/glacier/digsite)
+"y" = (
+/obj/structure/bed/chair{
+	dir = 4
+	},
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/digsite)
+"z" = (
+/obj/structure/table/steel,
+/obj/item/weapon/folder,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/digsite)
+"A" = (
+/obj/structure/table/rack,
+/obj/item/weapon/pickaxe,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/digsite)
+"B" = (
+/obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/digsite)
+"C" = (
+/obj/structure/loot_pile/maint/technical,
+/turf/simulated/floor/plating/external,
+/area/submap/glacier/digsite)
+"D" = (
+/obj/structure/table/steel,
+/obj/random/tech_supply,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/digsite)
+"E" = (
+/obj/structure/table/rack,
+/obj/item/weapon/shovel,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/digsite)
+"F" = (
+/obj/structure/boulder,
+/obj/effect/decal/mecha_wreckage/ripley,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/digsite)
+"G" = (
+/obj/structure/boulder,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/digsite)
+"H" = (
+/obj/structure/loot_pile/maint/junk,
+/turf/simulated/floor/plating/external,
+/area/submap/glacier/digsite)
+"I" = (
+/obj/structure/table/steel,
+/obj/item/weapon/tool/wrench,
+/obj/item/weapon/storage/box/samplebags,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/digsite)
+"J" = (
+/obj/structure/table/steel,
+/obj/item/stack/flag/yellow,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/digsite)
+"K" = (
+/obj/random/toolbox,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/digsite)
+"L" = (
+/obj/structure/closet/crate,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/digsite)
+"M" = (
+/obj/machinery/floodlight,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/digsite)
+"N" = (
+/obj/structure/ore_box,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/glacier/digsite)
+"T" = (
+/turf/simulated/floor/plating/external,
+/area/submap/glacier/digsite)
+"Y" = (
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/submap/cave/digsite)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+g
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+b
+c
+c
+c
+c
+c
+b
+b
+b
+b
+b
+b
+b
+g
+g
+g
+a
+a
+"}
+(4,1,1) = {"
+a
+b
+c
+c
+g
+g
+g
+c
+c
+b
+b
+b
+b
+b
+b
+g
+g
+g
+a
+a
+"}
+(5,1,1) = {"
+a
+b
+c
+g
+g
+k
+g
+g
+c
+b
+b
+b
+b
+b
+b
+G
+K
+g
+a
+a
+"}
+(6,1,1) = {"
+a
+b
+c
+g
+g
+g
+g
+g
+c
+b
+b
+b
+s
+w
+C
+H
+g
+g
+g
+a
+"}
+(7,1,1) = {"
+a
+b
+c
+c
+c
+l
+c
+c
+c
+o
+b
+b
+t
+x
+T
+T
+g
+g
+g
+a
+"}
+(8,1,1) = {"
+a
+b
+c
+g
+g
+g
+g
+g
+c
+g
+g
+p
+g
+g
+g
+g
+g
+g
+g
+a
+"}
+(9,1,1) = {"
+a
+b
+c
+g
+g
+g
+g
+g
+l
+g
+g
+g
+g
+y
+y
+q
+g
+g
+g
+a
+"}
+(10,1,1) = {"
+a
+b
+c
+g
+j
+g
+g
+g
+c
+g
+g
+g
+u
+z
+D
+I
+L
+g
+g
+a
+"}
+(11,1,1) = {"
+a
+b
+c
+g
+g
+g
+g
+g
+c
+g
+g
+g
+v
+A
+E
+J
+M
+g
+g
+a
+"}
+(12,1,1) = {"
+a
+b
+G
+p
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+a
+"}
+(13,1,1) = {"
+a
+b
+c
+g
+g
+g
+g
+g
+p
+g
+g
+g
+g
+q
+g
+g
+g
+g
+g
+a
+"}
+(14,1,1) = {"
+a
+b
+c
+c
+c
+g
+g
+g
+c
+p
+g
+q
+g
+g
+g
+g
+g
+g
+g
+a
+"}
+(15,1,1) = {"
+a
+b
+c
+g
+g
+g
+g
+n
+c
+q
+g
+g
+g
+B
+g
+q
+N
+N
+g
+a
+"}
+(16,1,1) = {"
+a
+b
+c
+i
+g
+g
+g
+g
+g
+g
+g
+r
+r
+b
+F
+b
+b
+g
+g
+a
+"}
+(17,1,1) = {"
+a
+b
+c
+c
+g
+m
+g
+c
+g
+g
+g
+g
+b
+b
+b
+b
+b
+g
+Y
+a
+"}
+(18,1,1) = {"
+a
+b
+g
+c
+c
+c
+c
+c
+g
+g
+g
+g
+g
+b
+b
+b
+g
+g
+a
+a
+"}
+(19,1,1) = {"
+a
+a
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+b
+b
+a
+a
+a
+a
+"}
+(20,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

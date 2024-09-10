@@ -17,9 +17,11 @@
 #define Z_LEVEL_DEBRISFIELD					16
 #define Z_LEVEL_FUELDEPOT					17
 #define Z_LEVEL_OFFMAP1						18
-#define Z_LEVEL_GATEWAY						19
-#define Z_LEVEL_OM_ADVENTURE				20
-#define Z_LEVEL_REDGATE						21
+#define Z_LEVEL_SNOWBASE					19
+#define Z_LEVEL_GLACIER						20
+#define Z_LEVEL_GATEWAY						21
+#define Z_LEVEL_OM_ADVENTURE				22
+#define Z_LEVEL_REDGATE						23
 
 //Camera networks
 #define NETWORK_HALLS "Halls"
@@ -200,7 +202,8 @@
 		list("Remmi Aerostat - Z1 Aerostat","Remmi Aerostat - Z2 Surface"),
 		list("Debris Field - Z1 Space"),
 		list("Fuel Depot - Z1 Space"),
-		list("Offmap Ship - Talon V2")
+		list("Offmap Ship - Talon V2"),
+		list("Virgo 5","Virgo 5 Glacier")
 		)
 	//List associations used in admin load selection feature
 	lateload_gateway = list(
@@ -267,7 +270,8 @@
 	planet_datums_to_make = list(
 		/datum/planet/virgo3b,
 		/datum/planet/virgo3c,
-		/datum/planet/virgo4)
+		/datum/planet/virgo4,
+		/datum/planet/snowbase)
 
 /datum/map/groundbase/get_map_info()
 	. = list()
@@ -303,6 +307,11 @@
 /datum/planet/virgo4
 	expected_z_levels = list(
 		Z_LEVEL_BEACH
+	)
+/datum/planet/snowbase
+	expected_z_levels = list(
+		Z_LEVEL_SNOWBASE,
+		Z_LEVEL_GLACIER
 	)
 
 /obj/effect/landmark/map_data/groundbase
@@ -417,6 +426,9 @@
 	var/associated_map_datum
 
 /////STATIC LATELOAD/////
+
+#include "../expedition_vr/snowbase/submaps/glacier.dm"
+#include "../expedition_vr/snowbase/submaps/glacier_areas.dm"
 
 /datum/map_template/gb_lateload/on_map_loaded(z)
 	if(!associated_map_datum || !ispath(associated_map_datum))

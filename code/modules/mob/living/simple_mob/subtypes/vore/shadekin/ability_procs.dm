@@ -22,7 +22,7 @@
 		mouse_opacity = 1
 		name = real_name
 		for(var/obj/belly/B as anything in vore_organs)
-			B.escapable = initial(B.escapable)
+			B.escapable = TRUE // RS edit
 
 		cut_overlays()
 		alpha = initial(alpha)
