@@ -309,7 +309,7 @@ var/list/goon_speak_lizard_sound = list('sound/talksounds/goon/lizard.ogg', 'sou
 var/list/goon_speak_pug_sound = list('sound/talksounds/goon/pug.ogg', 'sound/talksounds/goon/pug_ask.ogg', 'sound/talksounds/goon/pug_exclaim.ogg')
 var/list/goon_speak_pugg_sound = list('sound/talksounds/goon/pugg.ogg', 'sound/talksounds/goon/pugg_ask.ogg', 'sound/talksounds/goon/pugg_exclaim.ogg')
 var/list/goon_speak_roach_sound = list('sound/talksounds/goon/roach.ogg', 'sound/talksounds/goon/roach_ask.ogg', 'sound/talksounds/goon/roach_exclaim.ogg')
-var/list/goon_speak_skelly_sound = list('sound/talksounds/goon/skelly.ogg', 'sound/talksounds/goon/skelly_ask.ogg', 'sound/talksounds/goon/skelly_exclaim.ogg')
+var/list/goon_speak_skelly_sound = list('sound/talksounds/goon/skellyfixed.ogg', 'sound/talksounds/goon/skelly_ask.ogg', 'sound/talksounds/goon/skelly_exclaimfixed.ogg')
 
 //RS ADD START
 
