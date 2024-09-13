@@ -381,6 +381,7 @@
 	icon_state = "auto"
 	starts_with = list(/obj/item/weapon/reagent_containers/hypospray/autoinjector = 7)
 
+
 /obj/item/weapon/storage/box/lights
 	name = "box of replacement bulbs"
 	icon = 'icons/obj/boxes.dmi'

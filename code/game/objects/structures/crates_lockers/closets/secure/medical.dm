@@ -145,7 +145,8 @@
 		/obj/item/device/radio/headset/heads/cmo,
 		/obj/item/device/radio/headset/heads/cmo/alt,
 		/obj/item/device/flash,
-		/obj/item/weapon/reagent_containers/hypospray/vial,
+		///obj/item/weapon/reagent_containers/hypospray/vial, //RS Removed
+		///obj/item/weapon/storage/firstaid/hypokit/mk1, //RS Add
 		/obj/item/clothing/suit/storage/hooded/wintercoat/medical,
 		/obj/item/clothing/suit/storage/hooded/wintercoat/medical/cmo,
 		/obj/item/clothing/shoes/boots/winter/medical,
@@ -157,7 +158,10 @@
 		/obj/item/clothing/suit/bio_suit/cmo,
 		/obj/item/clothing/head/bio_hood/cmo,
 		/obj/item/clothing/shoes/white,
-		/obj/item/weapon/reagent_containers/glass/beaker/vial, //VOREStation Add
+		//RS Removed /obj/item/weapon/reagent_containers/glass/beaker/vial, //VOREStation Add
+		/obj/item/weapon/storage/belt/medical,//RS Add
+		/obj/item/weapon/storage/firstaid/hypokit/cmo,//RS Add
+		///obj/item/gunbox/cmo, //RS Add
 		/obj/item/weapon/storage/belt/medical) //VOREStation Add
 
 /obj/structure/closet/secure_closet/CMO/Initialize()
