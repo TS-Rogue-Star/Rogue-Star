@@ -765,3 +765,44 @@
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
 	sorting_group = MARKINGS_HEAD
+
+/datum/sprite_accessory/marking/vale_eyes //RS Add || Chomp Port 535
+	name = "VALE Eyes"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "vale_eyes"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
+
+
+/datum/sprite_accessory/marking/lizard_snout_sharp //RS Add || Chomp Port
+	name = "Lizard snout (sharp)"
+	icon = 'icons/mob/human_races/markings_yw.dmi'
+	icon_state = "lizard_snout_sharp"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
+
+/datum/sprite_accessory/marking/lizard_snout_sharp_light //RS Add || Chomp Port
+	name = "Lizard Snout (Sharp Light)"
+	icon = 'icons/mob/human_races/markings_yw.dmi'
+	icon_state = "lizard_snout_sharp_light"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
+
+/datum/sprite_accessory/marking/lizard_snout_round //RS Add || Chomp Port
+	name = "Lizard Snout (Round)"
+	icon = 'icons/mob/human_races/markings_yw.dmi'
+	icon_state = "lizard_snout_round"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
+
+/datum/sprite_accessory/marking/lizard_snout_round_light //RS Add || Chomp Port
+	name = "Lizard Snout (Round Light)"
+	icon = 'icons/mob/human_races/markings_yw.dmi'
+	icon_state = "lizard_snout_round_light"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD

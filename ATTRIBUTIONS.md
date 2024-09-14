@@ -159,5 +159,47 @@
 **Creator:** Community project<br>
 **License:** Designs developed by players and translated to sprites by VerySoft; not for further use without consent of developing player
 <br>
-
+**File:** `icons/mob/vore/wings_vr.dmi`<br>
+**Icon-States:** kaiju_spikes_a, kaiju_spikes_a_glow<br>
+**Creator:** Hauki<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/vore/taur_vr.dmi`<br>
+**Icon-States:** kaiju_long_a, kaiju_long_a_spikes, kaiju_spikes_a_glow<br>
+**Creator:** Hauki<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/sprite_accessories/ears.dmi`<br>
+**Icon-States:** dangleantennae_robot<br>
+**Creator:** Hauki<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/vore/ears_32x64.dmi`<br>
+**Icon-States:** mizutsune_ears, mizutsune_ears_inner<br>
+**Creator:** Ocelot<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/markings_ch.dmi`<br>
+**Icon-States:** vale_eyes-head, vale_belly-torso, vale_belly-groin, vale_back-torso<br>
+**Creator:** Skits<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/cyberlimbs/vale/vale_head.dmi`<br>
+**Creator:** Skits<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/sprite_accessories/ears.dmi`<br>
+**Icon-States:** valeears<br>
+**Creator:** Skits<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/vore/tails_ch.dmi`<br>
+**Icon-States:** valetail_mark_w, valetail_mark, valetail, valetail_w<br>
+**Creator:** Skits<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/markings_yw.dmi`<br>
+**Icon-States:** lizard_snout_sharp, lizard_snout_sharp_light, lizard_snout_round, lizard_snout_round_light<br>
+**Creator:** Repede<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>

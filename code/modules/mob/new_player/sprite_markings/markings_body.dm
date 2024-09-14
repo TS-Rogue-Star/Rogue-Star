@@ -346,3 +346,19 @@
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_TORSO)
 	sorting_group = MARKINGS_BODY
+
+/datum/sprite_accessory/marking/vale_belly //RS Add || Chomp Port 535
+	name = "VALE Belly"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "vale_belly"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_TORSO, BP_GROIN)
+	sorting_group = MARKINGS_BODY
+
+/datum/sprite_accessory/marking/vale_back //RS Add || Chomp Port 535
+	name = "VALE Back"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "vale_back"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_TORSO)
+	sorting_group = MARKINGS_BODY
