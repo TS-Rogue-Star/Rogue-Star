@@ -555,6 +555,7 @@ const VoreSelectedBellyOptions = (props, context) => {
     overlay_min_prey_size,
     override_min_prey_size,
     override_min_prey_num,
+    drainmode,
   } = belly;
 
   return (
@@ -700,6 +701,12 @@ const VoreSelectedBellyOptions = (props, context) => {
             <Button
               onClick={() => act('set_attribute', { attribute: 'b_clone_dmg' })}
               content={digest_clone}
+            />
+          </LabeledList.Item>
+          <LabeledList.Item label="Drain Finishing Mode">
+            <Button
+              onClick={() => act('set_attribute', { attribute: 'b_drainmode' })}
+              content={drainmode}
             />
           </LabeledList.Item>
           <LabeledList.Item label="Shrink/Grow Size">
