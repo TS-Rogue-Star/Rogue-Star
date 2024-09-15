@@ -64,6 +64,10 @@
 	var/overlay_min_prey_size	= 0 	//Minimum prey size for belly overlay to show. 0 to disable
 	var/override_min_prey_size = FALSE	//If true, exceeding override prey number will override minimum size requirements
 	var/override_min_prey_num	= 1		//We check belly contents against this to override min size
+	//RS Edit: Ports Slow Body Digestion, CHOMPStation PR 5161
+	var/slow_digestion = FALSE
+	var/slow_brutal = FALSE
+	//RS Edit end
 
 	// Generally just used by AI
 	var/autotransferchance = 0 				// % Chance of prey being autotransferred to transfer location
@@ -73,8 +77,10 @@
 	//I don't think we've ever altered these lists. making them static until someone actually overrides them somewhere.
 	//Actual full digest modes
 	var/tmp/static/list/digest_modes = list(DM_HOLD,DM_DIGEST,DM_ABSORB,DM_DRAIN,DM_SELECT,DM_UNABSORB,DM_HEAL,DM_SHRINK,DM_GROW,DM_SIZE_STEAL,DM_EGG)
+	//drain modes // RS Edit: Ports VOREStation PR15876
+	var/tmp/static/list/drainmodes = list(DR_NORMAL,DR_SLEEP,DR_FAKE,DR_WEIGHT)
 	//Digest mode addon flags
-	var/tmp/static/list/mode_flag_list = list("Numbing" = DM_FLAG_NUMBING, "Stripping" = DM_FLAG_STRIPPING, "Leave Remains" = DM_FLAG_LEAVEREMAINS, "Muffles" = DM_FLAG_THICKBELLY, "Affect Worn Items" = DM_FLAG_AFFECTWORN, "Jams Sensors" = DM_FLAG_JAMSENSORS, "Complete Absorb" = DM_FLAG_FORCEPSAY)
+	var/tmp/static/list/mode_flag_list = list("Numbing" = DM_FLAG_NUMBING, "Stripping" = DM_FLAG_STRIPPING, "Leave Remains" = DM_FLAG_LEAVEREMAINS, "Muffles" = DM_FLAG_THICKBELLY, "Affect Worn Items" = DM_FLAG_AFFECTWORN, "Jams Sensors" = DM_FLAG_JAMSENSORS, "Complete Absorb" = DM_FLAG_FORCEPSAY, "Slow Body Digestion" = DM_FLAG_SLOWBODY, "Gradual Body Digestion" = DM_FLAG_SLOWBRUTAL)
 	//Item related modes
 	var/tmp/static/list/item_digest_modes = list(IM_HOLD,IM_DIGEST_FOOD,IM_DIGEST)
 
@@ -85,6 +91,7 @@
 	var/tmp/digest_mode = DM_HOLD				// Current mode the belly is set to from digest_modes (+transform_modes if human)
 	var/tmp/list/items_preserved = list()		// Stuff that wont digest so we shouldn't process it again.
 	var/tmp/recent_sound = FALSE				// Prevent audio spam
+	var/tmp/drainmode = DR_NORMAL				// Simply drains the prey and does nothing // RS Edit || VOREStation PR15876
 
 	// Don't forget to watch your commas at the end of each line if you change these.
 	var/list/struggle_messages_outside = list(
@@ -253,15 +260,19 @@
 	"overlay_min_prey_size",
 	"override_min_prey_size",
 	"override_min_prey_num",
-	"vore_sprite_flags", //RS edit
-	"affects_vore_sprites", //RS edit
-	"count_absorbed_prey_for_sprite", //RS edit
-	"resist_triggers_animation", //RS edit
-	"size_factor_for_sprite", //RS edit
-	"belly_sprite_to_affect", //RS edit
-	"health_impacts_size", //RS edit
-	"count_items_for_sprite", //RS edit
-	"item_multiplier" //RS edit
+	"vore_sprite_flags", 						//RS edit
+	"affects_vore_sprites", 					//RS edit
+	"count_absorbed_prey_for_sprite", 			//RS edit
+	"resist_triggers_animation", 				//RS edit
+	"size_factor_for_sprite", 					//RS edit
+	"belly_sprite_to_affect", 					//RS edit
+	"health_impacts_size", 						//RS edit
+	"count_items_for_sprite", 					//RS edit
+	"item_multiplier", 							//RS edit
+	"drainmode",								//RS edit || Ports VOREStation PR15876
+	"slow_digestion",							//RS Edit || Ports CHOMPStation PR 5161
+	"slow_brutal",								//RS Edit || Ports CHOMPStation Pr 5161
+
 	)
 
 	if (save_digest_mode == 1)
@@ -472,6 +483,8 @@
 	for(var/atom/movable/AM as anything in contents)
 		if(isliving(AM))
 			var/mob/living/L = AM
+			if(L.stat) //RS Edit || Ports VOREStation PR 15876
+				L.SetSleeping(min(L.sleeping,20)) //RS Edit End
 			if(L.absorbed && !include_absorbed)
 				continue
 		if(istype(AM, /obj/item/weapon/digestion_remains) && !include_bones)	// RS ADD
@@ -558,6 +571,14 @@
 					if(P.absorbed)
 						absorbed_count++
 				Pred.bloodstr.trans_to(Prey, Pred.reagents.total_volume / absorbed_count)
+
+	//RS Edit || Ports VOREStation PR15876
+	//Makes it so that if prey are heavily asleep, they will wake up shortly after release
+	if(isliving(M))
+		var/mob/living/ML = M
+		if(ML.stat)
+			ML.SetSleeping(min(ML.sleeping,20))
+	//RS Edit End
 
 	//Clean up our own business
 	if(!ishuman(owner))
@@ -1414,7 +1435,10 @@
 	dupe.health_impacts_size = health_impacts_size
 	dupe.count_items_for_sprite = count_items_for_sprite
 	dupe.item_multiplier = item_multiplier
-	// End RS edit
+	//RS Edit || Ports CHOMPStation PR 5161
+	dupe.slow_digestion = slow_digestion
+	dupe.slow_brutal = slow_brutal
+	//RS Edit End
 
 	//// Object-holding variables
 	//struggle_messages_outside - strings
