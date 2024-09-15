@@ -790,5 +790,16 @@
 	name = "Orange Mushroom Cap"
 	icon_state = "syrishroom"
 
+/datum/sprite_accessory/ears/dangles_robot  //RS Add || Virgo Port 15785
+	name = "synth dangle antennae, colorable"
+	icon_state = "dangleantennae_robot"
+	do_colouration = 1
+	color_blend_mode = ICON_MULTIPLY
+
+/datum/sprite_accessory/ears/vale //RS Add || Chomp Port 535
+	name = "VALE Model Ear Coloring"
+	icon_state = "valeears"
+	do_colouration = 1
+	color_blend_mode = ICON_MULTIPLY
 
 // Special snowflake ears go below here.

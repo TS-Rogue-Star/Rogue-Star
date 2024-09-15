@@ -109,7 +109,10 @@
 		/mob/living/carbon/human/proc/shapeshifter_select_gender,
 		/mob/living/carbon/human/proc/shapeshifter_select_wings,
 		/mob/living/carbon/human/proc/shapeshifter_select_tail,
-		/mob/living/carbon/human/proc/shapeshifter_select_ears
+		/mob/living/carbon/human/proc/shapeshifter_select_ears, //RS EDIT START
+		/mob/living/proc/flying_toggle,
+		/mob/living/proc/flying_vore_toggle,
+		/mob/living/proc/start_wings_hovering, //RS EDIT END
 		)
 
 	var/global/list/abilities = list()
