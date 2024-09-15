@@ -1651,7 +1651,12 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 				return FALSE
 			host.vore_selected.mode_flags ^= host.vore_selected.mode_flag_list[toggle_addon]
 			host.vore_selected.items_preserved.Cut() //Re-evaltuate all items in belly on
-			if(host.vore_selected.mode_flags & DM_FLAG_SLOWBODY) //RS edit || Ports CHOMPStation PR 5184
+			host.vore_selected.slow_digestion = FALSE //RS edit start
+			host.vore_selected.slow_brutal = FALSE
+			if(host.vore_selected.mode_flags & DM_FLAG_SLOWBODY) //Ports CHOMPStation PR 5184
+				host.vore_selected.slow_digestion = TRUE //CHOMPStation PR 5184 port end
+			if(host.vore_selected.mode_flags & DM_FLAG_SLOWBRUTAL)
+				host.vore_selected.slow_brutal = TRUE
 				host.vore_selected.slow_digestion = TRUE //RS edit end
 			. = TRUE
 		if("b_item_mode")
