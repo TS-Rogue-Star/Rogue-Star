@@ -230,3 +230,9 @@
 **Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/5715
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
+**File:** `icons/mob/vore/wings_ch.dmi`<br>
+**Icon-States:** mothwings_clockwork, mothwings_monarch, mothwings_luna, mothwings_atlas, mothwings_plain, mothwings_redish, mothwings_royal, mothwings_gothic, mothwings_lovers, mothwings_whitefly, mothwings_burntoff, mothwings_firewatch, mothwings_deathhead, mothwings_poison, mothwings_ragged, mothwings_moonfly, mothwings_snow<br>
+**Creator:** Original PR by theXDkidoflol<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/7890
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
