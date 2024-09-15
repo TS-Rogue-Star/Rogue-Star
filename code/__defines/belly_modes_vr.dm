@@ -21,6 +21,8 @@
 #define DM_FLAG_AFFECTWORN		0x10
 #define DM_FLAG_JAMSENSORS		0x20
 #define DM_FLAG_FORCEPSAY		0x40
+#define DM_FLAG_SLOWBODY		0x80  //RS Edit || Ports CHOMPStation Pr 5161
+#define DM_FLAG_SLOWBRUTAL		0x100 //RS Edit
 
 //Item related modes
 #define IM_HOLD									"Hold"
