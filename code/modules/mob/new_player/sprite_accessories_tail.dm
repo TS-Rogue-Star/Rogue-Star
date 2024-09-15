@@ -1487,6 +1487,22 @@
 	do_colouration = 1
 	color_blend_mode = ICON_MULTIPLY
 
+/datum/sprite_accessory/tail/longtail/desert_nightstalker //RS Add || Chomp Port 4619
+    name = "Desert Nightstalker Tail (vwag)"
+    icon = 'icons/mob/vore/taurs_ch.dmi'
+    icon_state = "nightstalker_desert"
+    ani_state = "nightstalker_desert_w"
+    do_colouration = 0 // We're not coloring this, these are pre-colored
+    color_blend_mode = ICON_ADD
+
+/datum/sprite_accessory/tail/longtail/diamondback_nightstalker //RS Add || Chomp Port 4619
+    name = "Diamondback Nightstalker Tail (dual-color, vwag)"
+    icon = 'icons/mob/vore/taurs_ch.dmi'
+    icon_state = "nightstalker_diamondback"
+    ani_state = "nightstalker_diamondback_w"
+    extra_overlay = "nightstalker_diamondback_markings"
+    extra_overlay_w = "nightstalker_diamondback_markings_w"
+
 //RS ADD START
 
 /datum/sprite_accessory/tail/longtail/flagtail

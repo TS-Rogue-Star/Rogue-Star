@@ -774,7 +774,6 @@
 	body_parts = list(BP_HEAD)
 	sorting_group = MARKINGS_HEAD
 
-
 /datum/sprite_accessory/marking/lizard_snout_sharp //RS Add || Chomp Port
 	name = "Lizard snout (sharp)"
 	icon = 'icons/mob/human_races/markings_yw.dmi'
@@ -803,6 +802,63 @@
 	name = "Lizard Snout (Round Light)"
 	icon = 'icons/mob/human_races/markings_yw.dmi'
 	icon_state = "lizard_snout_round_light"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
+
+// Nightstalker Head Markings
+/datum/sprite_accessory/marking/ch/desert_nightstalker_head //RS Add || Chomp Port 4619
+	name = "Nightstalker Head (Desert Coloration)"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "nightstalker_desert"
+	body_parts = list(BP_HEAD)
+	do_colouration = 0 // Don't color, these are pre-colored markings
+	sorting_group = MARKINGS_HEAD
+
+/datum/sprite_accessory/marking/ch/nightstalker_head_center //RS Add || Chomp Port 4619
+	name = "Nightstalker Head, Tricolor (Center)"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "nightstalker_1"
+	body_parts = list(BP_HEAD)
+	color_blend_mode = ICON_MULTIPLY
+	sorting_group = MARKINGS_HEAD
+
+/datum/sprite_accessory/marking/ch/nightstalker_head_left //RS Add || Chomp Port 4619
+	name = "Nightstalker Head, Tricolor (Left)"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "nightstalker_2"
+	body_parts = list(BP_HEAD)
+	color_blend_mode = ICON_MULTIPLY
+	sorting_group = MARKINGS_HEAD
+
+/datum/sprite_accessory/marking/ch/nightstalker_head_right //RS Add || Chomp Port 4619
+	name = "Nightstalker Head, Tricolor (Right)"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "nightstalker_3"
+	body_parts = list(BP_HEAD)
+	color_blend_mode = ICON_MULTIPLY
+	sorting_group = MARKINGS_HEAD
+
+/datum/sprite_accessory/marking/ch/frills_simple //RS Add || Chomp Port 5715
+	name = "Frills (Simple)"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "frills_simple"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
+
+/datum/sprite_accessory/marking/ch/frills_short  //RS Add || Chomp Port 5715
+	name = "Frills (Short)"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "frills_short"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
+
+/datum/sprite_accessory/marking/ch/frills_aquatic  //RS Add || Chomp Port 5715
+	name = "Frills (Aquatic)"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "frills_aqua"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
 	sorting_group = MARKINGS_HEAD

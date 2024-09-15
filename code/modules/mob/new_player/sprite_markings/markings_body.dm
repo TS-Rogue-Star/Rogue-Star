@@ -362,3 +362,36 @@
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_TORSO)
 	sorting_group = MARKINGS_BODY
+
+// Nightstalker Body Markings
+/datum/sprite_accessory/marking/ch/desert_nightstalker //RS Add || Chomp Port 4619
+	name = "Nightstalker Scales (Desert Coloration)"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "nightstalker_desert"
+	body_parts = list(BP_R_ARM,BP_L_ARM,BP_R_HAND,BP_L_HAND,BP_R_LEG,BP_L_LEG,BP_R_FOOT,BP_L_FOOT,BP_TORSO,BP_GROIN) // Fullbody markings, save head
+	do_colouration = 0 // Don't color, these are pre-colored markings
+	sorting_group = MARKINGS_BODY
+
+/datum/sprite_accessory/marking/ch/diamondback_nightstalker_outer //RS Add || Chomp Port 4619
+	name = "Nightstalker Scales, Outer"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "nightstalker_1"
+	body_parts = list(BP_R_ARM,BP_L_ARM,BP_R_HAND,BP_L_HAND,BP_R_LEG,BP_L_LEG,BP_R_FOOT,BP_L_FOOT,BP_TORSO,BP_GROIN) // Fullbody markings, save head
+	color_blend_mode = ICON_MULTIPLY
+	sorting_group = MARKINGS_BODY
+
+/datum/sprite_accessory/marking/ch/diamondback_nightstalker_inner //RS Add || Chomp Port 4619
+	name = "Nightstalker Scales, Inner"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "nightstalker_2"
+	body_parts = list(BP_R_ARM,BP_L_ARM,BP_R_LEG,BP_L_LEG,BP_TORSO,BP_GROIN) // Fullbody markings, save head
+	color_blend_mode = ICON_MULTIPLY
+	sorting_group = MARKINGS_BODY
+
+/datum/sprite_accessory/marking/ch/outer_spots //RS Add || Chomp Port 4619
+	name = "Spots, Outer"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "spots_extremities"
+	body_parts = list(BP_R_ARM,BP_L_ARM,BP_R_LEG,BP_L_LEG,BP_R_FOOT,BP_L_FOOT)
+	color_blend_mode = ICON_MULTIPLY
+	sorting_group = MARKINGS_BODY

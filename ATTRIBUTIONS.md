@@ -200,6 +200,21 @@
 <br>
 **File:** `icons/mob/human_races/markings_yw.dmi`<br>
 **Icon-States:** lizard_snout_sharp, lizard_snout_sharp_light, lizard_snout_round, lizard_snout_round_light<br>
-**Creator:** Repede<br>
+**Creator:** Uploaded by Repede<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/markings_body.dmi`<br>
+**Icon-States:** nightstalker_desert, nightstalker_1, nightstalker_2, nightstalker_3, spots_extremities<br>
+**Creator:** Comissioned by Rykka<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/vore/taurs_ch.dmi`<br>
+**Icon-States:** nightstalker_desert, nightstalker_desert_w, nightstalker_diamondback, nightstalker_diamondback_w, nightstalker_diamondback_markings, nightstalker_diamondback_markings_w<br>
+**Creator:** Comissioned by Rykka<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/markings_body.dmi`<br>
+**Icon-States:** frills_simple, frills_short, frills_aqua<br>
+**Creator:** Original PR by Seris02<br>
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
