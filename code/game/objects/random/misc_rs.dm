@@ -7,7 +7,7 @@
 	icon_state = "lasagna"
 	spawn_nothing_percentage = 0
 
-/obj/random/roundend_lasagna/item_to_spawn()
+/obj/random/round_end_lasagna/item_to_spawn()
 	return pick(
 			prob(90);/obj/item/weapon/reagent_containers/food/snacks/lasagna,
 			prob(10);/obj/item/toy/plushie/lasagna
