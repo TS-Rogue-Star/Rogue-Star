@@ -1148,7 +1148,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			force_icon = R.icon
 			brute_mod *= R.robo_brute_mod
 			burn_mod *= R.robo_burn_mod
-			prosthetic_digi = R.can_be_digitigrade //RS Edit || Ports CHOMPStation PR 5565
+			digi_prosthetic = R.can_be_digitigrade //RS Edit || Ports CHOMPStation PR 5565
 			if(R.lifelike)
 				robotic = ORGAN_LIFELIKE
 				name = "[initial(name)]"
@@ -1428,7 +1428,3 @@ Note that amputating the affected organ does in fact remove the infection from t
 			var/datum/sprite_accessory/marking/mark = markings[M]["datum"]
 			if(mark.hide_body_parts && (organ_tag in mark.hide_body_parts))
 				return 1
-
-//RS Edit || Ports CHOMPStation PR 5565
-/obj/item/organ/external
-	var/prosthetic_digi = FALSE

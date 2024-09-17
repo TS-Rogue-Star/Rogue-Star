@@ -99,7 +99,7 @@ var/const/cyberbeast_monitor_styles = "blank=cyber_blank;\
 	unavailable_to_build = 1
 	parts = list(BP_HEAD)
 
-//RS Edit Start || Ports CHOMPStation PR5565
+//RS Edit Start || Ports CHOMPStation PR 5565
 /datum/robolimb
 	var/can_be_digitigrade = FALSE //maybe move this over into more of a "does this have a custom digitigrade sprite, and if so, what is its icon file/icon name in the limb's file" when someone can be bothered making them
 
