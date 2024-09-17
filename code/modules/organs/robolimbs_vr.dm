@@ -98,3 +98,39 @@ var/const/cyberbeast_monitor_styles = "blank=cyber_blank;\
 	icon = 'icons/mob/human_races/cyberlimbs/zenghu/zenghu_glacier_taj.dmi'
 	unavailable_to_build = 1
 	parts = list(BP_HEAD)
+
+//RS Edit Start || Ports CHOMPStation PR5565
+/datum/robolimb
+	var/can_be_digitigrade = FALSE //maybe move this over into more of a "does this have a custom digitigrade sprite, and if so, what is its icon file/icon name in the limb's file" when someone can be bothered making them
+
+/datum/robolimb/dsi_tajaran
+	can_be_digitigrade = TRUE
+
+/datum/robolimb/dsi_lizard
+	can_be_digitigrade = TRUE
+
+/datum/robolimb/dsi_sergal
+	can_be_digitigrade = TRUE
+
+/datum/robolimb/dsi_nevrean
+	can_be_digitigrade = TRUE
+
+/datum/robolimb/dsi_vulpkanin
+	can_be_digitigrade = TRUE
+
+/datum/robolimb/dsi_akula
+	can_be_digitigrade = TRUE
+
+/datum/robolimb/dsi_spider
+	can_be_digitigrade = TRUE
+
+/datum/robolimb/dsi_zorren
+	can_be_digitigrade = TRUE
+
+/datum/robolimb/dsi_fennec
+	can_be_digitigrade = TRUE
+
+/datum/robolimb/dsi_teshari/New()
+	. = ..()
+	species_cannot_use -= SPECIES_PROTEAN
+//RS Edit end
