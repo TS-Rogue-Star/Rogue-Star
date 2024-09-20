@@ -511,13 +511,14 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 				facial_s.Blend(rgb(r_facial, g_facial, b_facial), facial_hair_style.color_blend_mode)
 
 			face_standing.Blend(facial_s, ICON_OVERLAY)
+	var/icon/ears_s = get_ears_overlay()	//RS EDIT
+	var/xl_ears = FALSE		//RS ADD
 
 	if(h_style)
 		var/datum/sprite_accessory/hair/hair_style = hair_styles_list[h_style]
 		if(head && (head.flags_inv & BLOCKHEADHAIR))
 			if(!(hair_style.flags & HAIR_VERY_SHORT))
 				hair_style = hair_styles_list["Short Hair"]
-
 		if(hair_style && (src.species.get_bodytype(src) in hair_style.species_allowed))
 			var/icon/grad_s = null
 			var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
@@ -531,10 +532,16 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 				hair_s.Blend(hair_s_add, ICON_ADD)
 				if(!isnull(grad_s))
 					hair_s.Blend(grad_s, ICON_OVERLAY)
-
-			face_standing.Blend(hair_s, ICON_OVERLAY)
-
-	var/icon/ears_s = get_ears_overlay()
+			if(ears_s)	//Checking to see if we have oversized ears so that we can line the sprites up	//RS EDIT START
+				if(ears_s.Width() > face_standing.Width() || ears_s.Height() > face_standing.Height())	//are you big?
+					xl_ears = TRUE	//yes
+					face_standing.Crop(1,1,64,64)	//increase the dimensions of the sprite
+					face_standing.Shift(EAST,16)	//move what we have so far over (facial hair)
+					face_standing.Blend(hair_s, ICON_OVERLAY,17)	//add the hair
+				else
+					face_standing.Blend(hair_s, ICON_OVERLAY)	// we have ears but they are normal
+			else
+				face_standing.Blend(hair_s, ICON_OVERLAY)	// we don't have ears	//RS EDIT END
 
 	if(head_organ.transparent) //VORESTATION EDIT: transparent instead of nonsolid
 		face_standing += rgb(,,,120)
@@ -542,14 +549,21 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 			ears_s += rgb(,,,180)
 
 	var/image/em_block_ears
+	var/ear_offset = 0	//How much will we move the ears over?	//RS EDIT
 	if(ears_s)
-		if(ears_s.Height() > face_standing.Height()) // Tol ears
-			face_standing.Crop(1, 1, face_standing.Width(), ears_s.Height())
-		face_standing.Blend(ears_s, ICON_OVERLAY)
+		if(xl_ears)	//Our ears are oversized	//RS EDIT START
+			var/ourwidth = ears_s.Width()
+			ears_s.Crop(1,1,64,64)		// Increase the sprite size to compensate for ear
+			if(ourwidth == 32)	// Our ears are wide
+				ears_s.Shift(EAST,16)	//So let's move the ears over more than the others
+			face_standing.Blend(ears_s,ICON_OVERLAY)	// add the ears
+			ear_offset = -16	//our ears are big, so move them over
+		else
+			face_standing.Blend(ears_s,ICON_OVERLAY)	//our ears are not big, we have small little cringe ears	//RS EDIT END
 		if(ear_style?.em_block)
 			em_block_ears = em_block_image_generic(image(ears_s))
 
-	var/image/semifinal = image(face_standing, layer = BODY_LAYER+HAIR_LAYER, "pixel_y" = head_organ.head_offset)
+	var/image/semifinal = image(face_standing, layer = BODY_LAYER+HAIR_LAYER,"pixel_x" = ear_offset,"pixel_y" = head_organ.head_offset)	//now we are a family	//RS EDIT
 	if(em_block_ears)
 		semifinal.overlays += em_block_ears // Leaving this as overlays +=
 

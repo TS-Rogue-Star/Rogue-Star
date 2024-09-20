@@ -848,6 +848,16 @@
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "narrowtail_2color-1"
 
+/datum/sprite_accessory/tail/vale_tail //RS Add || Chomp Port 535
+	name = "Vale Tail, dual color (vwag)"
+	icon = 'icons/mob/vore/tails_ch.dmi'
+	icon_state = "valetail"
+	ani_state = "valetail_w"
+	do_colouration = 1
+	color_blend_mode = ICON_MULTIPLY
+	extra_overlay = "valetail_mark"
+	extra_overlay_w = "valetail_mark_w"
+
 // Dino Tails
 
 /datum/sprite_accessory/tail/clubtail
@@ -1459,6 +1469,39 @@
 	name = "heart-bolt-shaped tail, dual color"
 	icon_state = "zaprat_heart_s"
 	extra_overlay = "zaprat_heart_markings"
+
+/datum/sprite_accessory/tail/longtail/kaiju_tail_a_long  //RS Add || Port Virgo 15785
+	name = "Kaiju tail A, dual color"
+	icon = 'icons/mob/vore/taurs_vr.dmi'
+	icon_state = "kaiju_long_a"
+	extra_overlay = "kaiju_long_a_spikes"
+	do_colouration = 1
+	color_blend_mode = ICON_MULTIPLY
+
+/datum/sprite_accessory/tail/longtail/kaiju_tail_a_long_glow  //RS Add || Port Virgo 15785
+	name = "Kaiju tail A, dual color, glow"
+	icon = 'icons/mob/vore/taurs_vr.dmi'
+	icon_state = "kaiju_long_a"
+	extra_overlay = "kaiju_long_a_spikes"
+	extra_overlay2 = "kaiju_long_a_spikes_glow"
+	do_colouration = 1
+	color_blend_mode = ICON_MULTIPLY
+
+/datum/sprite_accessory/tail/longtail/desert_nightstalker //RS Add || Chomp Port 4619
+    name = "Desert Nightstalker Tail (vwag)"
+    icon = 'icons/mob/vore/taurs_ch.dmi'
+    icon_state = "nightstalker_desert"
+    ani_state = "nightstalker_desert_w"
+    do_colouration = 0 // We're not coloring this, these are pre-colored
+    color_blend_mode = ICON_ADD
+
+/datum/sprite_accessory/tail/longtail/diamondback_nightstalker //RS Add || Chomp Port 4619
+    name = "Diamondback Nightstalker Tail (dual-color, vwag)"
+    icon = 'icons/mob/vore/taurs_ch.dmi'
+    icon_state = "nightstalker_diamondback"
+    ani_state = "nightstalker_diamondback_w"
+    extra_overlay = "nightstalker_diamondback_markings"
+    extra_overlay_w = "nightstalker_diamondback_markings_w"
 
 //RS ADD START
 

@@ -30,7 +30,11 @@
 
 	breath_type = null
 	poison_type = null
-
+	//RS add (for healing ability)
+	var/prot_healing_allowed = FALSE	// Switches to FALSE if healing is not possible at all.
+	var/stored_brute = 0
+	var/stored_burn = 0
+	//RS add end (for healing ability)
 	virus_immune =	1
 	blood_volume =	0
 	min_age =		18
@@ -39,25 +43,26 @@
 	burn_mod =		1.5
 	oxy_mod =		0
 	item_slowdown_mod = 1.33
-
-	cold_level_1 = 280 //Default 260 - Lower is better
-	cold_level_2 = 220 //Default 200
-	cold_level_3 = 130 //Default 120
-
-	heat_level_1 = 320 //Default 360
-	heat_level_2 = 370 //Default 400
-	heat_level_3 = 600 //Default 1000
-
+	//RS Edit (why defining temp twice?)
+	cold_level_1 = -INFINITY
+	cold_level_2 = -INFINITY
+	cold_level_3 = -INFINITY
+	heat_level_1 = 420 //Proper temperatures
+	heat_level_2 = 480
+	heat_level_3 = 1100
+	//RS edit end
 	hazard_low_pressure = -1 //Space doesn't bother them
 	hazard_high_pressure = 200 //They can cope with slightly higher pressure
 
 	//Cold/heat does affect them, but it's done in special ways below
+	/*
 	cold_level_1 = -INFINITY
 	cold_level_2 = -INFINITY
 	cold_level_3 = -INFINITY
 	heat_level_1 = INFINITY
 	heat_level_2 = INFINITY
 	heat_level_3 = INFINITY
+	*/
 
 	body_temperature =      290
 
@@ -85,11 +90,12 @@
 		BP_R_FOOT = list("path" = /obj/item/organ/external/foot/right/unbreakable/nano)
 		)
 
-	heat_discomfort_strings = list("You feel too warm.")
+	heat_discomfort_strings = list("WARNING: Temperature exceeding acceptable thresholds!.")//Hot message more robotic
 	cold_discomfort_strings = list("You feel too cool.")
 
 	//These verbs are hidden, for hotkey use only
 	inherent_verbs = list(
+		/mob/living/carbon/human/proc/nano_healing, //RS Add (regen toggle)
 		/mob/living/carbon/human/proc/nano_regenerate, //These verbs are hidden so you can macro them,
 		/mob/living/carbon/human/proc/nano_partswap,
 		/mob/living/carbon/human/proc/nano_metalnom,
@@ -103,7 +109,10 @@
 		/mob/living/carbon/human/proc/shapeshifter_select_gender,
 		/mob/living/carbon/human/proc/shapeshifter_select_wings,
 		/mob/living/carbon/human/proc/shapeshifter_select_tail,
-		/mob/living/carbon/human/proc/shapeshifter_select_ears
+		/mob/living/carbon/human/proc/shapeshifter_select_ears, //RS EDIT START
+		/mob/living/proc/flying_toggle,
+		/mob/living/proc/flying_vore_toggle,
+		/mob/living/proc/start_wings_hovering, //RS EDIT END
 		)
 
 	var/global/list/abilities = list()
@@ -137,6 +146,62 @@
 /datum/species/protean/handle_post_spawn(var/mob/living/carbon/human/H)
 	..()
 	H.synth_color = TRUE
+//rs Add (proc for heal fail reason)
+/datum/species/protean/proc/stop_protean_healing(var/mob/living/carbon/human/H, var/reason)
+  // Clean up all our stuff
+	prot_healing_allowed = FALSE
+	stored_brute = 0
+	stored_burn = 0
+  // If a reason was passed in, show that
+	if(reason)
+		to_chat(H, "<span class='notice'>[reason]</span>")
+
+//RS add (healing ability)
+/datum/species/protean/proc/handle_protean_healing(var/mob/living/carbon/human/H)
+	var/current_brute = H.getActualBruteLoss()
+	var/current_burn = H.getActualFireLoss()
+	if(!prot_healing_allowed)
+		return
+	if(!current_brute && !current_burn)
+		stop_protean_healing(H, "Healing Completed, Deactivating Regeneration.")
+		return
+	var/nutrition_cost = 0		// The total amount of nutrition drained every tick, when healing
+	var/obj/item/organ/internal/nano/refactory/refactory = locate() in H.internal_organs
+	if(!refactory || (refactory.status & ORGAN_DEAD))
+		stop_protean_healing(H, "Refactory missing or dead.")
+		return
+	if(stored_brute == 0)
+		stored_brute = current_brute
+	if(stored_burn == 0)
+		stored_burn = current_burn
+	if(H.nutrition < 150)// This is when the icon goes red
+		stop_protean_healing(H, "Not enough power remaining, Deactivating Regeneration.")
+		return
+	if(!refactory.use_stored_material(MAT_STEEL,100))
+		stop_protean_healing(H, "Not enough Steel stored, Deactivating Regeneration.")
+		return
+	if(current_brute)
+		if(current_brute <= stored_brute)
+			H.adjustBruteLoss(-1,include_robo = TRUE) //Modified by species resistances
+			stored_brute = current_brute
+			nutrition_cost += 1
+		else
+			stop_protean_healing(H, "Damage Taken, Deactivating Regeneration.")
+			return
+	if(current_burn)
+		if(current_burn <= stored_burn)
+			H.adjustFireLoss(-0.5,include_robo = TRUE) //Modified by species resistances
+			stored_burn = current_burn
+			nutrition_cost += 1
+		else
+			stop_protean_healing(H, "Damage Taken, Deactivating Regeneration.")
+			return
+	//to_chat(H, "<span class='notice'>[nutrition_cost]</span>") //debug
+	H.adjust_nutrition(-(nutrition_cost)) // Costs Nutrition when damage is being repaired, corresponding to the amount of damage being repaired.
+//rs Add End (Healing ability non blob)
+
+/datum/species/protean/handle_environment_special(var/mob/living/carbon/human/H)
+	handle_protean_healing(H)//RS Add (non blob healing)
 
 /datum/species/protean/equip_survival_gear(var/mob/living/carbon/human/H)
 	var/obj/item/stack/material/steel/metal_stack = new(null, 3)
@@ -177,8 +242,8 @@
 		H.forceMove(H.temporary_form.drop_location())
 		H.ckey = H.temporary_form.ckey
 		QDEL_NULL(H.temporary_form)
-
-	to_chat(H, "<span class='warning'>You died as a Protean. Please sit out of the round for at least 60 minutes before respawning, to represent the time it would take to ship a new-you to the station.</span>")
+	//RS Change (we have reconstituters)
+	to_chat(H, "<span class='warning'>You died as a Protean. Please wait for Robotics to notice your death or sit out of the round for at least 60 minutes before respawning, to represent the time it would take to ship a new-you to the station.</span>")
 
 	spawn(1)
 		if(H)
@@ -316,6 +381,8 @@
 /datum/modifier/protean/steel/tick()
 	holder.adjustBruteLoss(-1,include_robo = TRUE) //Modified by species resistances
 	holder.adjustFireLoss(-0.5,include_robo = TRUE) //Modified by species resistances
+	//RS Edit Removed Internal organ healing while blobbed
+	/*
 	var/mob/living/carbon/human/H = holder
 	for(var/obj/item/organ/O as anything in H.internal_organs)
 		// Fix internal damage
@@ -324,7 +391,8 @@
 		// If not damaged, but dead, fix it
 		else if(O.status & ORGAN_DEAD)
 			O.status &= ~ORGAN_DEAD //Unset dead if we repaired it entirely
-
+	*/
+	//RS Edit End
 // PAN Card
 /obj/item/clothing/accessory/permit/nanotech
 	name = "\improper P.A.N. card"

@@ -76,6 +76,7 @@
 
 	vision_flags = SEE_SELF|SEE_MOBS
 	appearance_flags = HAS_HAIR_COLOR | HAS_LIPS | HAS_SKIN_COLOR | HAS_EYE_COLOR | HAS_UNDERWEAR
+	digi_allowed = TRUE
 
 	move_trail = /obj/effect/decal/cleanable/blood/tracks/paw
 
@@ -164,6 +165,12 @@
 		dark_gains = 0
 		return
 
+	var/area/A = get_area(H)	//RS ADD START
+	if(A.magic_damp)
+		set_energy(H,0)
+		update_shadekin_hud(H)
+		return					//RS ADD END
+
 	var/brightness = T.get_lumcount() //Brightness in 0.0 to 1.0
 	darkness = 1-brightness //Invert
 	var/is_dark = (darkness >= 0.5)
@@ -192,6 +199,9 @@
 
 	if(!istype(shade_organ))
 		return 0
+	var/area/A = get_area(H)	//RS ADD START
+	if(A.magic_damp)
+		return 0				//RS ADD END
 	if(shade_organ.dark_energy_infinite)
 		return shade_organ.max_dark_energy
 

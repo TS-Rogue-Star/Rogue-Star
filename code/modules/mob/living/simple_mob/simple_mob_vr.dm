@@ -31,6 +31,7 @@
 	var/vore_digest_chance = 25			// Chance to switch to digest mode if resisted
 	var/vore_absorb_chance = 0			// Chance to switch to absorb mode if resisted
 	var/vore_escape_chance = 25			// Chance of resisting out of mob
+	var/vore_escape_chance_absorbed = 20// Chance of absorbed prey finishing an escape. Requires a successful escape roll against the above as well. //RS add - copy from virgo
 
 	var/vore_stomach_name				// The name for the first belly if not "stomach"
 	var/vore_stomach_flavor				// The flavortext for the first belly if not the default
@@ -74,7 +75,10 @@
 	var/new_fullness = 0
 	for(var/obj/belly/B as anything in vore_organs)
 		for(var/mob/living/M in B)
-			new_fullness += M.size_multiplier
+			//RS edit start
+			if(!M.absorbed || B.count_absorbed_prey_for_sprite)
+				new_fullness += M.size_multiplier
+			//RS edit end
 	new_fullness = new_fullness / size_multiplier //Divided by pred's size so a macro mob won't get macro belly from a regular prey.
 	new_fullness = new_fullness * belly_size_multiplier // Some mobs are small even at 100% size. Let's account for that.
 	new_fullness = round(new_fullness, 1) // Because intervals of 0.25 are going to make sprite artists cry.
@@ -143,7 +147,8 @@
 			return PounceTarget(L, pouncechance)
 
 		// We're not attempting a pounce, if they're down or we can eat standing, do it as long as they're edible. Otherwise, hit normally.
-		if(will_eat(L) && (!L.canmove || vore_standing_too))
+		//if(will_eat(L) && (!L.canmove || vore_standing_too))
+		if(will_eat(L) && (L.lying || vore_standing_too)) //RS Port Chomp PR 7900 || CHOMPEdit
 			return EatTarget(L)
 		else
 			return ..()
@@ -174,7 +179,8 @@
 		M.visible_message("<span class='danger'>\The [src] attempts to pounce \the [M] but misses!</span>!")
 		playsound(src, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 
-	if(will_eat(M) && (!M.canmove || vore_standing_too)) //if they're edible then eat them too
+	//if(will_eat(M) && (!M.canmove || vore_standing_too)) //if they're edible then eat them too
+	if(will_eat(M) && (M.lying || vore_standing_too)) //if they're edible then eat them too //RS Port Chomp PR 7900 || CHOMPEdit Crawling compat
 		return EatTarget(M)
 	else
 		return //just leave them
@@ -186,6 +192,7 @@
 	//stop_automated_movement = 1 //VORESTATION AI TEMPORARY REMOVAL
 	var/old_target = M
 	set_AI_busy(1) //VORESTATION AI TEMPORARY EDIT
+	M.Stun(3) //RSEdit - Crawling made this useless. added stun instead.
 	. = animal_nom(M)
 	playsound(src, swallowsound, 50, 1)
 	update_icon()
@@ -236,6 +243,7 @@
 	B.contamination_color = vore_default_contamination_color
 	B.escapable = vore_escape_chance > 0
 	B.escapechance = vore_escape_chance
+	B.escapechance_absorbed = vore_escape_chance_absorbed // RS add
 	B.digestchance = vore_digest_chance
 	B.absorbchance = vore_absorb_chance
 	B.human_prey_swallow_time = swallowTime
@@ -275,7 +283,7 @@
 		if(!faction_bump_vore && faction == tmob.faction)
 			return FALSE
 		if(tmob.canmove && prob(vore_pounce_chance)) //if they'd pounce for other noms, pounce for these too, otherwise still try and eat them if they hold still
-			tmob.Weaken(5)
+			tmob.Stun(5)
 		tmob.visible_message("<span class='danger'>\The [src] [vore_bump_emote] \the [tmob]!</span>!")
 		set_AI_busy(TRUE)
 		spawn()

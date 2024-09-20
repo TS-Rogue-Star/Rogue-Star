@@ -838,9 +838,12 @@
 /obj/item/weapon/reagent_containers/food/snacks/egg/afterattack(obj/O as obj, mob/user as mob, proximity)
 	if(istype(O,/obj/machinery/microwave))
 		return . = ..()
+	if((istype(O,/obj/machinery/chem_master)) || (istype(O,/obj/machinery/chemical_dispenser)))
+		to_chat(user, span_warning("You can't find a good place to crack it into this machine, maybe try a beaker?"))
+		return
 	if(!(proximity && O.is_open_container()))
 		return
-	to_chat(user, "You crack \the [src] into \the [O].")
+	to_chat(user, span_notice("You crack \the [src] into \the [O]."))
 	reagents.trans_to(O, reagents.total_volume)
 	user.drop_from_inventory(src)
 	qdel(src)
@@ -4617,9 +4620,12 @@
 /obj/item/weapon/reagent_containers/food/snacks/siffruit/afterattack(obj/O as obj, mob/user as mob, proximity)
 	if(istype(O,/obj/machinery/microwave))
 		return ..()
+	if((istype(O,/obj/machinery/chem_master)) || (istype(O, /obj/machinery/chemical_dispenser)))
+		to_chat(user, span_warning("You can't find a good place to crack it into this machine, maybe try a beaker?"))
+		return
 	if(!(proximity && O.is_open_container()))
 		return
-	to_chat(user, "<span class='notice'>You tear \the [src]'s sac open, pouring it into \the [O].</span>")
+	to_chat(user, span_notice("You tear \the [src]'s sac open, pouring it into \the [O]."))
 	reagents.trans_to(O, reagents.total_volume)
 	user.drop_from_inventory(src)
 	qdel(src)

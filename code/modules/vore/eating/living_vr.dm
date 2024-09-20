@@ -27,10 +27,15 @@
 	var/appendage_color = "#e03997" //Default pink. Used for the 'long_vore' trait.
 	var/appendage_alt_setting = FALSE	// Dictates if 'long_vore' user pulls prey to them or not. 1 = user thrown towards target.
 	var/trash_catching = FALSE 			//RSEdit: Toggle for trash throw vore || Ports trash eater throw vore from CHOMPStation PR#5987
+	//Commented out by maintainer request
+	//var/passtable_reset					//RS Port Chomp PR 7822 || CHOMPEDIT For crawling
+	//var/passtable_crawl_checked = FALSE //RS Port Chomp PR 7822 || CHOMPEDIT For Crawling
+
 	var/list/trait_injection_reagents = list() 	//RSEdit: Reagents available from injection traits
 	var/trait_injection_selected = null			//RSEdit: What trait reagent you're injecting.
 	var/trait_injection_amount = 5				//RSEdit: How much you're injecting with traits.
 	var/trait_injection_verb = "bites"			//RSEdit: Which fluffy manner you're doing the injecting.
+	var/digestion_in_progress = FALSE			//RS Edit || Ports CHOMPStation PR5161
 	var/regen_sounds = list(
 		'sound/effects/mob_effects/xenochimera/regen_1.ogg',
 		'sound/effects/mob_effects/xenochimera/regen_2.ogg',
@@ -473,6 +478,7 @@
 		absorbed = FALSE	//Make sure we're not absorbed
 		muffled = FALSE		//Removes Muffling
 		forceMove(get_turf(src)) //Just move me up to the turf, let's not cascade through bellies, there's been a problem, let's just leave.
+		SetSleeping(0) //Wake up instantly if asleep // RS Edit || Ports VOREStation PR15876
 		for(var/mob/living/simple_mob/SA in range(10))
 			LAZYSET(SA.prey_excludes, src, world.time)
 		log_and_message_admins("[key_name(src)] used the OOC escape button to get out of [key_name(B.owner)] ([B.owner ? "<a href='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[B.owner.x];Y=[B.owner.y];Z=[B.owner.z]'>JMP</a>" : "null"])")
@@ -1030,7 +1036,7 @@
 			qdel(I)
 
 			if(nom["WTF"]) //Bites back.
-				H.Weaken(2)
+				H.Stun(2)
 				H.Confuse(nom["WTF"])
 				H.apply_effect(nom["WTF"], STUTTER)
 				H.make_jittery(nom["WTF"])

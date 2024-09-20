@@ -65,3 +65,7 @@
 //other set - for map building
 /turf/unsimulated/wall2/planetary/virgo3b_better
 	icon_state = "riveted2"
+
+// This should look like the crystal walls but idfk how to do that
+/turf/unsimulated/wall/planetary/snowbase
+	temperature	= 243.15 // Roughly -30C / -22F
