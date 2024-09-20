@@ -99,7 +99,7 @@
 	// Passed the tests, we're allowed to flicker
 
 	var/list/viewed = view(1)
-	var/list/targets = list()
+	var/list/obj/machinery/light/targets = list()
 	for(var/obj/machinery/light/L in viewed)
 		targets += L
 	if(!targets.len)
