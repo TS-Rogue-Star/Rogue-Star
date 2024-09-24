@@ -87,10 +87,13 @@ var/global/list/limb_icon_cache = list()
 	// this allows limbs to be set properly when being printed in the bioprinter without an owner
 	// this also allows the preview mannequin to update properly because customisation topic calls don't call a DNA check
 	var/check_digi = istype(src,/obj/item/organ/external/leg) || istype(src,/obj/item/organ/external/foot)
+	//RS Edit || Ports CHOMPStation PR 5565
 	if(owner)
-		digitigrade = check_digi && owner.digitigrade
+		digitigrade = check_digi && owner.digitigrade && (istype(src,/obj/item/organ/external/leg) || istype(src,/obj/item/organ/external/foot))
 	else if(dna)
-		digitigrade = check_digi && dna.digitigrade
+		digitigrade = check_digi && dna.digitigrade && (istype(src,/obj/item/organ/external/leg) || istype(src,/obj/item/organ/external/foot))
+	var/robotic_digi = digi_prosthetic && digitigrade //could make it so the prosthetic digi var is more of a "does this limb have a custom digitigrade sprite for its robospriting" but this is fine for now
+	//RS Edit end
 
 	for(var/M in markings)
 		if (!markings[M]["on"])
@@ -129,7 +132,7 @@ var/global/list/limb_icon_cache = list()
 	else
 		icon_cache_key = "[icon_name]_[force_icon_key]"
 
-	if(force_icon)
+	if(force_icon && !robotic_digi)
 		mob_icon = new /icon(force_icon, "[icon_name][gendered_icon ? "_[gender]" : ""]")
 	else
 		if(!dna)
@@ -146,7 +149,7 @@ var/global/list/limb_icon_cache = list()
 
 			if(skeletal)
 				mob_icon = new /icon('icons/mob/human_races/r_skeleton.dmi', "[icon_name][gender ? "_[gender]" : ""]")
-			else if (robotic >= ORGAN_ROBOT)
+			else if (robotic >= ORGAN_ROBOT && !robotic_digi) //RS Edit || Ports CHOMPStation PR 5565
 				mob_icon = new /icon('icons/mob/human_races/robotic.dmi', "[icon_name][gender ? "_[gender]" : ""]")
 				should_apply_transparency = TRUE
 				apply_colouration(mob_icon)
@@ -158,9 +161,14 @@ var/global/list/limb_icon_cache = list()
 				mob_icon = new /icon(digitigrade ? species.icodigi : species.get_icobase(owner, (status & ORGAN_MUTATED)), "[icon_name][gender ? "_[gender]" : ""]")
 				should_apply_transparency = TRUE
 				apply_colouration(mob_icon)
+		//RS Edit || Ports CHOMPStation PR 5565
+		if (model && !robotic_digi)
+			icon_cache_key += "_model_[model]"
+			apply_colouration(mob_icon)
+		//RS Edit end
 
 			//Body markings, actually does not include head this time. Done separately above.
-			if(!istype(src,/obj/item/organ/external/head))
+			if((!istype(src,/obj/item/organ/external/head) && !(force_icon && !robotic_digi)) || (model && owner && owner.synth_markings))
 				for(var/M in markings)
 					if (!markings[M]["on"])
 						continue
@@ -180,7 +188,7 @@ var/global/list/limb_icon_cache = list()
 				mob_icon.Blend(limb_icon_cache[cache_key], ICON_OVERLAY)
 
 			// VOREStation edit start
-			if(nail_polish)
+			if(nail_polish && (force_icon && !robotic_digi)) //RS Edit || Ports CHOMPStation PR 5565
 				var/icon/I = new(nail_polish.icon, nail_polish.icon_state)
 				I.Blend(nail_polish.color, ICON_MULTIPLY)
 				add_overlay(I)
@@ -188,7 +196,7 @@ var/global/list/limb_icon_cache = list()
 				icon_cache_key += "_[nail_polish.icon]_[nail_polish.icon_state]_[nail_polish.color]"
 			// VOREStation edit end
 
-	if(model)
+	if(model && !robotic_digi) //RS Edit || !robotic_digi is to prevent synthetic digi-leg colorings from being applied twice
 		icon_cache_key += "_model_[model]"
 		should_apply_transparency = TRUE
 		apply_colouration(mob_icon)

@@ -17,3 +17,9 @@
 		src.visible_message(SPAN_NOTICE("Gyooooooooh!"))
 	return ..()
 //RS add end || Ports CHOMPStation PR 8816
+
+/obj/item/toy/plushie/lasagna
+	name = "lasagna plushie"
+	desc = "Cuddly, soft-y, and probably not so ready to eat-y."
+	icon = 'icons/obj/toy_rs.dmi'
+	icon_state = "lasagna"
