@@ -91,7 +91,7 @@
 		"You try and push free from %pred's %belly, but can't seem to will yourself to move.",
 		"Your fruitless mental struggles only cause %pred to chuckle lightly.",
 		"You can't make any progress freeing yourself from %pred's %belly.")
-	/* copied from upstream - uncomment these if escape/struggle customisation PR is ported
+
 	curves.escape_attempt_absorbed_messages_owner = list(
 		"%prey is attempting to free themselves from your %belly!")
 
@@ -120,6 +120,5 @@
 		"Try as you might, you barely make an impression before %pred simply clenches with the most minimal effort, binding you back into her %belly.",
 		"Unfortunately, %pred seems to have absolutely no intention of letting you go, and your futile effort goes nowhere.",
 		"Strain as you might, you can't keep up the effort long enough before you sink back into %pred's %belly.")
-	*/
 
 	//RS edit end
