@@ -862,3 +862,53 @@
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
 	sorting_group = MARKINGS_HEAD
+
+/datum/sprite_accessory/marking/ch/thickneck  //RS Add || Chomp Port 5246
+	name = "Thick Neck"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "thickneck"
+	body_parts = list(BP_HEAD)
+	color_blend_mode = ICON_MULTIPLY
+	sorting_group = MARKINGS_HEAD
+
+/datum/sprite_accessory/marking/ch/thickerneck  //RS Add || Chomp Port 5246
+	name = "Thicker Neck"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "thickerneck"
+	body_parts = list(BP_HEAD)
+	color_blend_mode = ICON_MULTIPLY
+	sorting_group = MARKINGS_HEAD
+
+/datum/sprite_accessory/marking/ch/thickthroat  //RS Add || Chomp Port 5246
+	name = "Thick Throat"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "thickthroat"
+	body_parts = list(BP_HEAD)
+	color_blend_mode = ICON_MULTIPLY
+	sorting_group = MARKINGS_HEAD
+
+/datum/sprite_accessory/marking/ch/tyranid_head  //RS Add || Chomp Port 6093
+	name = "Tyranid Head (Use with Armor)"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "tyranid"
+	color_blend_mode = ICON_MULTIPLY
+	hide_body_parts = list(BP_HEAD)
+	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
+
+/datum/sprite_accessory/marking/ch/tyranid_head_armor  //RS Add || Chomp Port 6093
+	name = "Tyranid Head (Armor)"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "tyranidarmor"
+	color_blend_mode = ICON_MULTIPLY
+	hide_body_parts = list(BP_HEAD)
+	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
+
+/datum/sprite_accessory/marking/ch/extraeyes //RS Add || Chomp Port 7542
+	name = "Extra Eyes"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "extra_eyes"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD

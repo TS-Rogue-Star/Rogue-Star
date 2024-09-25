@@ -99,3 +99,12 @@
 	desc = ""
 	icon = 'icons/mob/vore/wings_ch.dmi'
 	icon_state = "mothwings_snow"
+
+/datum/sprite_accessory/wing/cloakwings //RS Add || Chomp Port 7542
+	name = "Cloaking Moth Wings with Eyes (Colorable)"
+	desc = ""
+	icon = 'icons/mob/vore/wings_ch.dmi'
+	icon_state = "cloakmoth"
+	do_colouration = 1
+	color_blend_mode = ICON_MULTIPLY
+	extra_overlay = "cloakmoth_eyes"
