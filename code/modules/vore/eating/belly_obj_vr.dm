@@ -1720,6 +1720,7 @@
 	dupe.can_taste = can_taste
 	dupe.escapable = escapable
 	dupe.escapetime = escapetime
+	dupe.selectchance = selectchance // RS add
 	dupe.digestchance = digestchance
 	dupe.absorbchance = absorbchance
 	dupe.escapechance = escapechance
@@ -1916,6 +1917,16 @@
 	dupe.absorb_chance_messages_prey.Cut()
 	for(var/I in absorb_chance_messages_prey)
 		dupe.absorb_chance_messages_prey += I
+
+	//select_chance_messages_owner - strings
+	dupe.select_chance_messages_owner.Cut()
+	for(var/I in select_chance_messages_owner)
+		dupe.select_chance_messages_owner += I
+
+	//select_chance_messages_prey - strings
+	dupe.select_chance_messages_prey.Cut()
+	for(var/I in select_chance_messages_prey)
+		dupe.select_chance_messages_prey += I
 	//RS edit end
 
 	//digest_messages_owner - strings
