@@ -215,6 +215,7 @@ var/list/channel_to_radio_key = new
 	var/w_not_heard				//The message for people in watching range
 
 	var/datum/multilingual_say_piece/first_piece = message_pieces[1]
+	var/ourlan = first_piece.speaking	//RS ADD
 	var/verb = ""
 	//Handle language-specific verbs and adverb setup if necessary
 	if(!whispering) //Just doing normal 'say' (for now, may change below)
@@ -404,22 +405,97 @@ var/list/channel_to_radio_key = new
 					C.images -= I
 			qdel(I)
 
-	var/ourfreq = null
-	if(voice_freq > 0 )
-		ourfreq = voice_freq
 	//Log the message to file
 	if(message_mode)
 		message = "([message_mode == "headset" ? "Common" : capitalize(message_mode)]) [message]" //Adds radio keys used if available
 	if(whispering)
 		if(do_sound && message)
-			playsound(T, pick(voice_sounds_list), 25, TRUE, extrarange = -6, falloff = 1 , is_global = TRUE, frequency = ourfreq, ignore_walls = FALSE, preference = /datum/client_preference/whisper_sounds)
+			say_sound(whispering,ending,ourlan)	//RS EDIT
 
 		log_whisper(message, src)
 	else
 		if(do_sound && message)
-			playsound(T, pick(voice_sounds_list), 75, TRUE, falloff = 1 , is_global = TRUE, frequency = ourfreq, ignore_walls = FALSE, preference = /datum/client_preference/say_sounds)
+			say_sound(whispering,ending,ourlan)	//RS EDIT
 		log_say(message, src)
 	return 1
+
+//RS ADD START
+/mob/living/proc/say_sound(whispering,our_ending,var/datum/language/our_language)
+	var/list/say_sounds
+	if(say_sound_lang_override(our_language,whispering))
+		return
+
+	else if(voice_sounds_list == talk_sound)
+		say_sounds = voice_sounds_list
+	else if(voice_sounds_list== goon_speak_bottalk_sound)
+		say_sounds = voice_sounds_list
+	else if(our_ending == "?")
+		say_sounds = list(voice_sounds_list[2])
+	else if(our_ending == "!")
+		say_sounds = list(voice_sounds_list[3])
+	else
+		say_sounds = list(voice_sounds_list[1])
+
+	post_say_sound(say_sounds,1,whispering)
+
+
+/mob/living/proc/say_sound_lang_override(var/datum/language/our_language,whispering)
+	if(!our_language)
+		return FALSE
+	var/list/say_sounds
+	var/ourvolume = 1
+	switch(our_language.name)
+		if(LANGUAGE_TEPPI)
+			if(size_multiplier >= 1.5)
+				say_sounds = teppi_sound
+			else if(istype(src, /mob/living/silicon/pai) && size_multiplier >= 1)
+				var/mob/living/silicon/pai/me = src
+				if(me.chassis == "teppi")
+					say_sounds = teppi_sound
+			else
+				say_sounds = list('sound/voice/teppi/whine1.ogg', 'sound/voice/teppi/whine2.ogg')
+
+			ourvolume = 0.3
+
+		if(LANGUAGE_EAL)
+			say_sounds = goon_speak_bottalk_sound
+		if(LANGUAGE_PROMETHEAN)
+			say_sounds = list('sound/effects/slime_squish.ogg')
+			ourvolume = 0.3
+		if(LANGUAGE_SCHECHI)
+			say_sounds = list('sound/voice/teshchirp.ogg','sound/voice/teshtrill.ogg')
+			ourvolume = 0.3
+		if(LANGUAGE_VESPINAE)
+			say_sounds = list('sound/voice/spiderchitter.ogg','sound/voice/spiderpurr.ogg')
+			ourvolume = 0.3
+		if(LANGUAGE_VOX)
+			say_sounds = list('sound/voice/shriek1.ogg')
+			ourvolume = 0.1
+
+	if(!say_sounds)
+		if(istype(src,/mob/living/simple_mob/vore/doglin))
+			say_sounds = yipyap
+			ourvolume = 0.3
+
+	if(say_sounds)
+		post_say_sound(say_sounds,ourvolume,whispering)
+		return TRUE
+	return FALSE
+
+/mob/living/proc/post_say_sound(var/list/say_sounds,ourvolume = 1,whispering)
+	var/ourfreq = null
+	if(voice_freq > 0)
+		ourfreq = voice_freq
+
+	var/turf/T = get_turf(src)
+
+	if(whispering)
+		playsound(T, pick(say_sounds), 25*ourvolume, TRUE, extrarange = -6, falloff = 1 , is_global = TRUE, frequency = ourfreq, ignore_walls = FALSE, preference = /datum/client_preference/whisper_sounds)
+	else
+		playsound(T, pick(say_sounds), 75*ourvolume, TRUE, falloff = 1 , is_global = TRUE, frequency = ourfreq, ignore_walls = FALSE, preference = /datum/client_preference/say_sounds)
+
+
+//RS ADD END
 
 /mob/living/proc/say_signlang(var/message, var/verb="gestures", var/verb_understood="gestures", var/datum/language/language, var/type = 1)
 	var/turf/T = get_turf(src)
