@@ -395,3 +395,101 @@
 	body_parts = list(BP_R_ARM,BP_L_ARM,BP_R_LEG,BP_L_LEG,BP_R_FOOT,BP_L_FOOT)
 	color_blend_mode = ICON_MULTIPLY
 	sorting_group = MARKINGS_BODY
+
+/datum/sprite_accessory/marking/ch/breasts  //RS Add || Chomp Port 7918
+	name = "Breasts"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "breasts"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_TORSO)
+	sorting_group = MARKINGS_BODY
+
+/datum/sprite_accessory/marking/ch/breasts/smooth  //RS Add || Chomp Port 7918
+	name = "Smooth Breasts"
+	icon_state = "breasts_smooth"
+
+/datum/sprite_accessory/marking/ch/breasts/reptile  //RS Add || Chomp Port 7918
+	name = "Reptile Breasts"
+	icon_state = "breasts_reptile"
+
+/datum/sprite_accessory/marking/yw/roundhumanoid  //RS Add || Chomp Port 5246
+	name = "Round (Humanoid)"
+	icon = 'icons/mob/human_races/markings_yw.dmi'
+	icon_state = "preg_tummy_humanoid"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_TORSO,BP_GROIN,BP_L_HAND,BP_R_HAND,BP_L_LEG,BP_R_LEG)
+	sorting_group = MARKINGS_BODY
+
+/datum/sprite_accessory/marking/ch/tyranid  //RS Add || Chomp Port 4722
+	name = "Tyranid Bodytype (Use with Armor)"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "tyranid"
+	color_blend_mode = ICON_MULTIPLY
+	hide_body_parts = list(BP_L_FOOT,BP_R_FOOT,BP_L_LEG,BP_R_LEG,BP_L_ARM,BP_R_ARM,BP_L_HAND,BP_R_HAND,BP_GROIN,BP_TORSO,BP_HEAD)
+	body_parts = list(BP_L_FOOT,BP_R_FOOT,BP_L_LEG,BP_R_LEG,BP_L_ARM,BP_R_ARM,BP_L_HAND,BP_R_HAND,BP_GROIN,BP_TORSO,BP_HEAD)
+	sorting_group = MARKINGS_BODY
+
+/datum/sprite_accessory/marking/ch/tyranid_armor  //RS Add || Chomp Port 4722
+	name = "Tyranid Bodytype (Armor)"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "tyranidarmor"
+	color_blend_mode = ICON_MULTIPLY
+	hide_body_parts = list(BP_L_FOOT,BP_R_FOOT,BP_L_LEG,BP_R_LEG,BP_L_ARM,BP_R_ARM,BP_L_HAND,BP_R_HAND,BP_GROIN,BP_TORSO,BP_HEAD)
+	body_parts = list(BP_L_FOOT,BP_R_FOOT,BP_L_LEG,BP_R_LEG,BP_L_ARM,BP_R_ARM,BP_L_HAND,BP_R_HAND,BP_GROIN,BP_TORSO,BP_HEAD)
+	sorting_group = MARKINGS_BODY
+
+/datum/sprite_accessory/marking/ch/chestfluff_big //RS Add || Chomp Port 7542
+	name = "Chest Fluff, Big"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "chestfluff_big"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_TORSO)
+	sorting_group = MARKINGS_BODY
+
+/datum/sprite_accessory/marking/ch/softbelly //RS Add || Chomp Port 7542
+	name = "Belly Fur, Soft"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "softbelly"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_TORSO, BP_GROIN)
+	sorting_group = MARKINGS_BODY
+
+/datum/sprite_accessory/marking/ch/softbelly_navel //RS Add || Chomp Port 7542
+	name = "Belly Fur, Soft With Navel"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "softbelly_navel"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_TORSO, BP_GROIN)
+	sorting_group = MARKINGS_BODY
+
+/datum/sprite_accessory/marking/ch/softbelly_fem //RS Add || Chomp Port 7542
+	name = "Belly Fur, Soft (Female)"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "softbelly_fem"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_TORSO, BP_GROIN)
+	sorting_group = MARKINGS_BODY
+
+/datum/sprite_accessory/marking/ch/softbelly_fem_navel //RS Add || Chomp Port 7542
+	name = "Belly Fur, Soft With Navel (Female)"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "softbelly_fem_navel"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_TORSO, BP_GROIN)
+	sorting_group = MARKINGS_BODY
+
+/datum/sprite_accessory/marking/ch/chitinbelly //RS Add || Chomp Port 7542
+	name = "Chitinous Scutes"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "chitin_belly"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_TORSO, BP_GROIN)
+	sorting_group = MARKINGS_BODY
+
+/datum/sprite_accessory/marking/ch/chitinbelly_fem //RS Add || Chomp Port 7542
+	name = "Chitinous Scutes (Female)"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "chitinbelly_fem"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_TORSO, BP_GROIN)
+	sorting_group = MARKINGS_BODY

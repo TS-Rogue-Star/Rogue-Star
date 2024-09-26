@@ -175,6 +175,24 @@
 	body_parts = list(BP_R_LEG, BP_L_LEG, BP_GROIN)
 	sorting_group = MARKINGS_LIMBS
 
+/datum/sprite_accessory/marking/ch/tyranid_legs  //RS Add || Chomp Port 4722
+	name = "Tyranid Legs (Use with Armor)"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "tyranid"
+	color_blend_mode = ICON_MULTIPLY
+	hide_body_parts = list(BP_L_FOOT,BP_R_FOOT,BP_L_LEG,BP_R_LEG)
+	body_parts = list(BP_L_FOOT,BP_R_FOOT,BP_L_LEG,BP_R_LEG,BP_GROIN)
+	sorting_group = MARKINGS_LIMBS
+
+/datum/sprite_accessory/marking/ch/tyranid_legs_armor  //RS Add || Chomp Port 4722
+	name = "Tyranid Legs (Armor)"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "tyranidarmor"
+	color_blend_mode = ICON_MULTIPLY
+	hide_body_parts = list(BP_L_FOOT,BP_R_FOOT,BP_L_LEG,BP_R_LEG)
+	body_parts = list(BP_L_FOOT,BP_R_FOOT,BP_L_LEG,BP_R_LEG,BP_GROIN)
+	sorting_group = MARKINGS_LIMBS
+
 //Digitigrade markings
 /datum/sprite_accessory/marking/digi
 	name = "Digitigrade Full Both Legs"	//added to make this stop putting an ERROR-FIXME in the list. uhg
