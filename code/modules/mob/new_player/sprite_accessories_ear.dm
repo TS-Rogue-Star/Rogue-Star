@@ -802,4 +802,21 @@
 	do_colouration = 1
 	color_blend_mode = ICON_MULTIPLY
 
+/datum/sprite_accessory/ears/antennae_alt //RS Add || Chomp Port 7542
+	name = "thin antennae, colorable"
+	desc = ""
+	icon_state = "antennae_alt"
+	do_colouration = 1
+	color_blend_mode = ICON_MULTIPLY
+
+/datum/sprite_accessory/ears/kittybug //RS Add || Chomp Port 7542
+	name = "kitty, with antennae"
+	desc = ""
+	icon = 'icons/mob/human_races/sprite_accessories/ears.dmi'
+	icon_state = "antennae_alt"
+	do_colouration = 1
+	color_blend_mode = ICON_MULTIPLY
+	extra_overlay = "kitty"
+	extra_overlay2 = "kittyinner"
+
 // Special snowflake ears go below here.

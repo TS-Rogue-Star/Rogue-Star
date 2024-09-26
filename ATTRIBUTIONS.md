@@ -212,7 +212,7 @@
 **Link:** https://github.com/Yawn-Wider/YWPolarisVore/commit/8cc10470237a15be93f1dbef4ee960aad4cb9f84
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
-**File:** `icons/mob/human_races/markings_body.dmi`<br>
+**File:** `icons/mob/human_races/markings_ch.dmi`<br>
 **Icon-States:** nightstalker_desert, nightstalker_1, nightstalker_2, nightstalker_3, spots_extremities<br>
 **Creator:** Comissioned by Rykka<br>
 **Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/4619
@@ -224,7 +224,7 @@
 **Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/4619
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
-**File:** `icons/mob/human_races/markings_body.dmi`<br>
+**File:** `icons/mob/human_races/markings_ch.dmi`<br>
 **Icon-States:** frills_simple, frills_short, frills_aqua<br>
 **Creator:** Original PR by Seris02<br>
 **Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/5715
@@ -236,3 +236,50 @@
 **Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/7890
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
+**File:** `icons/mob/human_races/markings_ch.dmi`<br>
+**Icon-States:** breasts, breasts_smooth, breasts_reptile<br>
+**Creator:** Base human sprite breasts with additional modifications by Aroliacue<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/7918
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/markings_yw.dmi`<br>
+**Icon-States:** preg_tummy_humanoid<br>
+**Creator:** Uploaded by Repede with additional modifications by Verkister<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/5246
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/markings_ch.dmi`<br>
+**Icon-States:** tyranidarmor, tyranid<br>
+**Creator:** Uploaded by AnymousUnknow<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/4722
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/vore/tails_ch.dmi`<br>
+**Icon-States:** tyranid<br>
+**Creator:** Uploaded by AnymousUnknow<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/4722
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/markings_ch.dmi`<br>
+**Icon-States:** thickneck, thickerneck, thickthroat<br>
+**Creator:** Verkister<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/5246
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/markings_ch.dmi`<br>
+**Icon-States:** softbelly_fem, softbelly, softbelly_fem_navel, softbelly_navel, chitin_belly, chitinbelly_fem, chestfluff_big, extra_eyes<br>
+**Creator:** Zeskorion<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/7542
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/sprite_accessories/ears.dmi`<br>
+**Icon-States:** antennae_alt<br>
+**Creator:** Zeskorion<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/7542<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/vore/wings_ch.dmi`<br>
+**Icon-States:** cloakmoth<br>
+**Creator:** Zeskorion<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/7542
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
