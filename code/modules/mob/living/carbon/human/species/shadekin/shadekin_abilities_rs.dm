@@ -90,25 +90,27 @@
 	else if(shadekin_get_energy() < ability_cost)
 		to_chat(src, "<span class='warning'>Not enough energy for that ability!</span>")
 		return FALSE
-	else if(ability_flags & !AB_PHASE_SHIFTED)
-		to_chat(src, "<span class='warning'>You can't use that unless phase shifted!</span>")
-		return FALSE
-	if(world.time < flicker_cooldown)
+	else if(world.time < flicker_cooldown)
 		to_chat(src, "<span class='warning'>You can't flicker lights that quickly.</span>")
 		return FALSE
-	// Passed the tests, we're allowed to flicker
+	// Passed most of the tests, we might be allowed to flicker
 
-	var/list/viewed = view(1)
-	var/list/obj/machinery/light/targets = list()
-	for(var/obj/machinery/light/L in viewed)
-		targets += L
-	if(!targets.len)
-		to_chat(src,"<span class='warning'>No light to flicker!</span>")
+	if(ability_flags & AB_PHASE_SHIFTED) // Checking if !AB_PHASE_SHIFTED didn't work for some reason, so we do this instead.
+		var/list/viewed = view(1)
+		var/list/obj/machinery/light/targets = list()
+		for(var/obj/machinery/light/L in viewed)
+			targets += L
+		if(!targets.len)
+			to_chat(src,"<span class='warning'>No light to flicker!</span>")
+			return FALSE
+		targets[rand(1, targets.len)].flicker(flicker_count)
+		flicker_cooldown = world.time + FLICKER_SPAM_COOLDOWN
+		//shadekin_adjust_energy(-ability_cost)
+		// Not really needed unless this is adjusted to have an actual cost. The internal cooldown should suffice.
+		return TRUE
+	else
+		to_chat(src, "<span class='warning'>You can't use that unless phase shifted!</span>")
 		return FALSE
-	targets[rand(1, targets.len)].flicker(flicker_count)
-	flicker_cooldown = world.time + FLICKER_SPAM_COOLDOWN
-	//shadekin_adjust_energy(-ability_cost)
-	// Not really needed unless this is adjusted to have an actual cost. The internal cooldown should suffice.
-	return TRUE
+
 
 #undef FLICKER_SPAM_COOLDOWN
