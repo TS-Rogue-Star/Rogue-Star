@@ -493,3 +493,27 @@
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_TORSO, BP_GROIN)
 	sorting_group = MARKINGS_BODY
+
+/datum/sprite_accessory/marking/ch/husky_chest  //RS Add || Chomp Port 5715
+	name = "Husky Chest"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "husky"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_TORSO, BP_GROIN)
+	sorting_group = MARKINGS_BODY
+
+/datum/sprite_accessory/marking/ch/fox_chest  //RS Add || Chomp Port 5715
+	name = "Fox Chest"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "fox"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_TORSO, BP_GROIN)
+	sorting_group = MARKINGS_BODY
+
+/datum/sprite_accessory/marking/ch/tiger_chest  //RS Add || Chomp Port 5715
+	name = "Tiger Chest"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "tiger"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_TORSO, BP_GROIN)
+	sorting_group = MARKINGS_BODY
