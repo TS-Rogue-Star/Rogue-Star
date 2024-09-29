@@ -40,7 +40,7 @@
 
 	load_owner = "seriouslydontsavethis"	//they smort
 
-	holder_type = /obj/item/weapon/holder/catslug
+	holder_type = /obj/item/weapon/holder/doglin
 
 	var/static/list/overlays_cache = list()
 	var/yip_cooldown = 0
@@ -638,3 +638,15 @@
 
 	else
 		to_chat(user, "<span class = 'warning'>There isn't a tunnel in that direction.</span>")
+
+/obj/item/weapon/holder/doglin
+	slot_flags = SLOT_HOLSTER
+	icon_state = "doglin"
+	item_icons = list(
+		slot_l_hand_str = 'icons/rogue-star/lefthand_holder_rs.dmi',
+		slot_r_hand_str = 'icons/rogue-star/righthand_holder_rs.dmi',
+		)
+
+/obj/item/weapon/holder/doglin/Initialize(mapload, mob/held)
+	. = ..()
+	color = held_mob.color
