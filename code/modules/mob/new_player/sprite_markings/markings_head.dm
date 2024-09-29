@@ -912,3 +912,59 @@
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
 	sorting_group = MARKINGS_HEAD
+
+/datum/sprite_accessory/marking/ch/protogen_snout  //RS Add || Chomp Port 5715
+	name = "Protogen Snout"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "protogen_snout"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
+
+/datum/sprite_accessory/marking/ch/hshark_snout  //RS Add || Chomp Port 5715
+	name = "HShark Snout"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "hshark_snout"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
+
+/datum/sprite_accessory/marking/ch/hshark_head  //RS Add || Chomp Port 5715
+	name = "HShark Head"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "hshark"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
+
+/datum/sprite_accessory/marking/ch/ram_horns  //RS Add || Chomp Port 5715
+	name = "Ram Horns"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "ram_horns"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
+
+/datum/sprite_accessory/marking/ch/neckfluff  //RS Add || Chomp Port 5715
+	name = "Neck Fluff"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "neckfluff"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
+
+/datum/sprite_accessory/marking/ch/fox_head  //RS Add || Chomp Port 5715
+	name = "Fox Head"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "fox"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD
+
+/datum/sprite_accessory/marking/ch/tiger_head  //RS Add || Chomp Port 5715
+	name = "Tiger Head"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "tiger"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_HEAD)
+	sorting_group = MARKINGS_HEAD

@@ -225,7 +225,7 @@
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
 **File:** `icons/mob/human_races/markings_ch.dmi`<br>
-**Icon-States:** frills_simple, frills_short, frills_aqua<br>
+**Icon-States:** frills_simple, frills_short, frills_aqua, gradient, neckfluff, protogen_snout, husky, ram_horns, hawktalon, deerhoof, fox, hshark, hshark_snout, tiger<br>
 **Creator:** Original PR by Seris02<br>
 **Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/5715
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
@@ -282,6 +282,24 @@
 **Icon-States:** cloakmoth<br>
 **Creator:** Zeskorion<br>
 **Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/7542
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/sprite_accessories/ears.dmi`<br>
+**Icon-States:** fourears<br>
+**Creator:** Original PR by Seris02<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/5771<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/sprite_accessories/ears.dmi`<br>
+**Icon-States:** protogen, miqote<br>
+**Creator:** Original PR by Seris02<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/5715<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/vore/tails_ch.dmi`<br>
+**Icon-States:** leopard, leopard_w, leopard_spots, leopard_spots_w<br>
+**Creator:** Original PR by Seris02<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/5715
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
 **File:** `sound/voice/glub.ogg`<br>

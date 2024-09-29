@@ -865,6 +865,16 @@
 	do_colouration = 1
 	color_blend_mode = ICON_MULTIPLY
 
+/datum/sprite_accessory/tail/leopard  //RS Add || Chomp Port 5715
+	name = "Leopard tail, dual-color (vwag)"
+	icon = 'icons/mob/vore/tails_ch.dmi'
+	icon_state = "leopard"
+	ani_state = "leopard_w"
+	extra_overlay = "leopard_spots"
+	extra_overlay_w = "leopard_spots_w"
+	do_colouration = 1
+	color_blend_mode = ICON_MULTIPLY
+
 // Dino Tails
 
 /datum/sprite_accessory/tail/clubtail
