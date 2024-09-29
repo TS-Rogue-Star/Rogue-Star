@@ -302,3 +302,8 @@
 **Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/5715
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
+**File:** `sound/voice/glub.ogg`<br>
+**Creator:** Free Gaming Sound Effects<br>
+**Link:** https://www.youtube.com/watch?v=Xiyq3Ax3Jbc
+**License:** Permission to use provided by creator<br>
+<br>
