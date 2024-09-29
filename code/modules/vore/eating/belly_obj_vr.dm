@@ -199,7 +199,7 @@
 
 	var/list/absorb_chance_messages_prey = list(
 		"In response to your struggling, %owner's %belly begins to cling more tightly...")
-
+	//RS EDIT END
 	var/list/select_chance_messages_owner = list(
 		"You feel your %belly beginning to become active!")
 
@@ -1058,7 +1058,7 @@
 				dest_belly = B
 				break
 		if(!dest_belly)
-			to_chat(owner, "<span class='warning'>Something went wrong with your belly transfer settings. Your <b>[lowertext(name)]</b> has had its transfer location cleared as a precaution.</span>")
+			to_chat(owner, "<span class='warning'>Something went wrong with your belly transfer settings. Your <b>[lowertext(name)]</b> has had its transfer location cleared as a precaution.</span>")	//RS EDIT
 			transferlocation_absorb = null
 			return
 
@@ -1491,8 +1491,8 @@
 			select_chance_prey_message = replacetext(select_chance_prey_message, "%countprey", living_count)
 			select_chance_prey_message = replacetext(select_chance_prey_message, "%count", contents.len)
 
-			select_chance_owner_message = "<span class='warning'>[select_chance_owner_message]</span>"
-			select_chance_prey_message = "<span class='warning'>[select_chance_prey_message]</span>"
+			select_chance_owner_message = "<span class='warning'>[select_chance_owner_message]</span>"	//RS EDIT
+			select_chance_prey_message = "<span class='warning'>[select_chance_prey_message]</span>"	//RS EDIT
 
 			to_chat(R, select_chance_prey_message)
 			to_chat(owner, select_chance_owner_message)
