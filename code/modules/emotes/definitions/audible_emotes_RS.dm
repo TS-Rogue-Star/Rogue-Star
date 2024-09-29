@@ -49,3 +49,23 @@
 /decl/emote/audible/awawa/get_emote_sound(var/mob/living/user)
 	emote_sound = pick(soundlist)
 	. = ..()
+
+/decl/emote/audible/glub
+	key = "glub"
+	emote_message_1p = "You glub."
+	emote_message_3p = "glubs."
+
+	emote_message_impaired = "makes a sound but you can't hear it."
+
+	emote_message_1p_target = "You glub at TARGET."
+	emote_message_3p_target = "glubs at TARGET."
+
+	emote_sound = null
+	var/list/soundlist = list(
+			'sound/voice/glub.ogg',
+			)
+	sound_vary = TRUE
+
+/decl/emote/audible/glub/get_emote_sound(var/mob/living/user)
+	emote_sound = pick(soundlist)
+	. = ..()

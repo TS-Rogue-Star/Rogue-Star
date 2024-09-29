@@ -812,11 +812,34 @@
 /datum/sprite_accessory/ears/kittybug //RS Add || Chomp Port 7542
 	name = "kitty, with antennae"
 	desc = ""
-	icon = 'icons/mob/human_races/sprite_accessories/ears.dmi'
 	icon_state = "antennae_alt"
 	do_colouration = 1
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "kitty"
 	extra_overlay2 = "kittyinner"
+
+/datum/sprite_accessory/ears/fourears //RS Add || Chomp Port 5771
+	name = "Four Ears"
+	desc = ""
+	icon_state = "fourears"
+	extra_overlay = "fourears_fluff"
+	do_colouration = 1
+	color_blend_mode = ICON_MULTIPLY
+
+/datum/sprite_accessory/ears/protogen  //RS Add || Chomp Port 5715
+	name = "Protogen"
+	desc = ""
+	icon_state = "protogen"
+	extra_overlay = "protogen_fluff"
+	do_colouration = 1
+	color_blend_mode = ICON_MULTIPLY
+
+/datum/sprite_accessory/ears/miqote  //RS Add || Chomp Port 5715
+	name = "Miqo'te"
+	desc = ""
+	icon_state = "miqote"
+	extra_overlay = "miqote_inner"
+	do_colouration = 1
+	color_blend_mode = ICON_MULTIPLY
 
 // Special snowflake ears go below here.
