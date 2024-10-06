@@ -1536,4 +1536,24 @@
 	extra_overlay = "chonksqrl-m1"
 	extra_overlay2 = "chonksqrl-m2"
 
+/datum/sprite_accessory/tail/longtail/teppi
+	name = "Teppi (Vwag)"
+	icon = 'icons/rogue-star/tails_64x32_rs.dmi'
+	icon_state = "teppi"
+	extra_overlay = "teppi-1"
+	extra_overlay2 = "teppi-2"
+	ani_state = "teppi-f"
+	extra_overlay_w = "teppi-f-1"
+	extra_overlay2_w = "teppi-2"
+
+/datum/sprite_accessory/tail/longtail/teppi_r
+	name = "Teppi (Vwag)(Reversed markings)"
+	icon = 'icons/rogue-star/tails_64x32_rs.dmi'
+	icon_state = "teppi"
+	extra_overlay = "teppi-2"
+	extra_overlay2 = "teppi-1"
+	ani_state = "teppi-f"
+	extra_overlay_w = "teppi-f-2"
+	extra_overlay2_w = "teppi-1"
+
 //RS ADD END

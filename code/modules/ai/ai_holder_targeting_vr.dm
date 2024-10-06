@@ -27,6 +27,8 @@
 	if(!isanimal(holder))	//Only simplemobs have the vars we need
 		return ..()
 	var/mob/living/simple_mob/H = holder
+	if(H.resting)
+		return
 	if(H.vore_fullness >= H.vore_capacity)	//Don't beat people up if we're full
 		return ..()
 	ai_log("find_target() : Entered.", AI_LOG_TRACE)
