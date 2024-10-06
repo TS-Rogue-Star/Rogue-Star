@@ -74,7 +74,7 @@
 	busy_bank = TRUE
 	var/I = persist_item_savefile_load(user, "type")
 	var/Iname = persist_item_savefile_load(user, "name")
-	var/choice = tgui_alert(user, "What would you like to do [src]?", "[src]", list("Check contents", "Retrieve item", "Info", "Cancel"), timeout = 10 SECONDS)
+	var/choice = tgui_alert(user, "What would you like to do [src]?", "[src]", list("Check contents", "Retrieve item","Retrieve Coin", "Info", "Cancel"), timeout = 10 SECONDS)
 	if(!choice || choice == "Cancel" || !Adjacent(user) || inoperable() || panel_open)
 		busy_bank = FALSE
 		return
@@ -117,6 +117,40 @@
 		to_chat(user, "<span class='notice'>\The [src] can store a single item for you between shifts! Anything that has been retrieved from the bank cannot be stored again in the same shift. Anyone can withdraw from the bank one time per shift. Some items are not able to be accepted by the bank.</span>")
 		busy_bank = FALSE
 		return
+	else if(choice == "Retrieve Coin")
+		if(user.etching)
+			var/datum/etching/E = user.etching
+			if(E.triangles <= 0)
+				to_chat(user, "<span class='warning'>You haven't got any coins banked...</span>")
+				return
+			else
+				var/ourtris = tgui_input_number(user, "How much would you like to withdraw? You have ◬:[E.triangles] banked.", "Withdraw", timeout = 10 SECONDS)
+				if(ourtris <= 0)
+					busy_bank = FALSE
+					return
+				if(ourtris > E.triangles)
+					to_chat(user, "<span class='warning'>\The [src] buzzes at you and flashes red. You do not have ◬:[ourtris] banked. You have a balance of ◬:[E.triangles]...</span>")
+					busy_bank = FALSE
+					return
+				ourtris = round(ourtris)
+				E.triangles -= ourtris
+				visible_message("<span class='notice'>\The [src] rattles as it dispenses coins!</span>")
+				busy_bank = FALSE
+				var/turf/here = get_turf(src)
+				while(ourtris > 0)
+					if(ourtris >= 20)
+						new /obj/item/weapon/aliencoin/phoron(here)
+						ourtris -= 20
+					else if(ourtris >= 10)
+						new /obj/item/weapon/aliencoin/gold(here)
+						ourtris -= 10
+					else if(ourtris >= 5)
+						new /obj/item/weapon/aliencoin/silver(here)
+						ourtris -= 5
+					else
+						new /obj/item/weapon/aliencoin/basic(here)
+						ourtris --
+
 	else if(!I)
 		to_chat(user, "<span class='warning'>\The [src] doesn't seem to have anything for you...</span>")
 		busy_bank = FALSE
@@ -128,6 +162,17 @@
 		to_chat(user, "<span class='warning'>\The [src] is already in use.</span>")
 		return
 	busy_bank = TRUE
+	//RS EDIT BEGIN
+	if(istype(O, /obj/item/weapon/aliencoin))
+		if(user.etching)
+			var/obj/item/weapon/aliencoin/coin = O
+			user.update_etching("triangles", coin.value)
+			user.drop_item()
+			to_chat(user, "<span class='warning'>\The [src] SCHLORPS up \the [O]!!!</span>")
+			qdel(O)
+			busy_bank = FALSE
+			return
+	//RS EDIT END
 	var/I = persist_item_savefile_load(user, "type")
 	if(!istool(O) && O.persist_storable)
 		if(ispath(I))
