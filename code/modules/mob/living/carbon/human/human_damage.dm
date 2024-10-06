@@ -422,6 +422,12 @@ In most cases it makes more sense to use apply_damage() instead! And make sure t
 		burn	-= (picked.burn_dam - burn_was)
 
 		parts -= picked
+
+		//Bone fractures
+		if(health < maxHealth / 2)	//Let's make people a little more tanky! If our overall health is above 50%, don't break bones
+			if(config.bones_can_break && picked.brute_dam > picked.min_broken_damage * config.organ_health_multiplier && !(picked.robotic >= ORGAN_ROBOT))	//Otherwise break it as normal
+				picked.fracture()
+
 	updatehealth()
 	BITSET(hud_updateflag, HEALTH_HUD)
 	if(update)	UpdateDamageIcon()
