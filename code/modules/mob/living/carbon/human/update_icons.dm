@@ -874,7 +874,11 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 	if(!head)
 		return //No head item, why bother.
 
-	overlays_standing[HEAD_LAYER] = head.make_worn_icon(body_type = species.get_bodytype(src), slot_name = slot_head_str, default_icon = INV_HEAD_DEF_ICON, default_layer = HEAD_LAYER)
+	var/ouricon = INV_HEAD_DEF_ICON		//RS ADD
+	if(head.icon_override)				//RS ADD
+		ouricon = head.icon_override	//RS ADD
+
+	overlays_standing[HEAD_LAYER] = head.make_worn_icon(body_type = species.get_bodytype(src), slot_name = slot_head_str, default_icon = ouricon, default_layer = HEAD_LAYER)	//RS EDIT
 
 	apply_layer(HEAD_LAYER)
 
