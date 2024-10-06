@@ -640,11 +640,11 @@
 		to_chat(user, "<span class = 'warning'>There isn't a tunnel in that direction.</span>")
 
 /obj/item/weapon/holder/doglin
-	slot_flags = SLOT_HOLSTER
 	icon_state = "doglin"
 	item_icons = list(
+		slot_head_str = 'icons/rogue-star/hat32x64.dmi',
 		slot_l_hand_str = 'icons/rogue-star/lefthand_holder_rs.dmi',
-		slot_r_hand_str = 'icons/rogue-star/righthand_holder_rs.dmi',
+		slot_r_hand_str = 'icons/rogue-star/righthand_holder_rs.dmi'
 		)
 
 /obj/item/weapon/holder/doglin/Initialize(mapload, mob/held)
