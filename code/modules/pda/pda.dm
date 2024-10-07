@@ -66,6 +66,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/list/notifying_programs = list()
 	var/retro_mode = 0
 
+	var/gunshot_residue //Fixes runtime when firing projectile weapons || Port from VOREStation PR 16424
 /obj/item/device/pda/examine(mob/user)
 	. = ..()
 	if(Adjacent(user))
