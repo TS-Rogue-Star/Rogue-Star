@@ -181,6 +181,7 @@ shirosenshi - Xenochimera
 shoanaeackeye - Xenochimera
 silenrea - Protean
 silenrea - Xenochimera
+sigholtstarsong - Protean
 silvertalismen - Diona
 silvertalismen - Vox
 silvertalismen - Xenochimera
@@ -201,6 +202,7 @@ tastypred - Xenochimera
 terrestris - Common Skrellian
 terrestris - Vox
 thedavestdave - Protean
+themostamazingbird - Xenochimera
 thexdkidoflol - Xenochimera
 timidvi - Diona
 torquegstc - Protean
@@ -220,6 +222,7 @@ voidalynx - Protean
 wickedtemp - Shadekin Empathy
 whooshboom - Black-Eyed Shadekin
 wolfmeme - Protean
+woofbun - Protean
 xioen - Diona
 xioen - Protean
 xioen - Xenochimera
