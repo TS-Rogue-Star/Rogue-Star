@@ -5,6 +5,7 @@
 
 /datum/gear/quest
 	path = /obj/item
+	customize = 0
 	sort_category = "Quest Items"
 	display_name = "If this item can be chosen or seen, ping a coder immediately!"
 	ckeywhitelist = list("This entry should never be choosable with this variable set.") //If it does, then that means somebody fucked up the whitelist system pretty hard
@@ -27,10 +28,10 @@
 	..()
 	gear_tweaks += gear_tweak_collar_tag
 
-//  0-9 CKEYS
 
-//  A CKEYS
 
-//  B CKEYS
-
-//  L CKEYS
+/datum/gear/quest/ManaSword
+	path = /obj/item/weapon/melee/ancientkatana
+	display_name = "Ancient Katana"
+	ckeywhitelist = list("lira13")
+	character_name = list("Lira")
