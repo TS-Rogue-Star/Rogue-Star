@@ -221,14 +221,14 @@
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 
-/datum/sprite_accessory/ears/antlers_wide
+/datum/sprite_accessory/ears/antlers_wide //RS Add
 	name = "Antlers (wide)"
 	icon = 'icons/mob/vore/ears_32x64.dmi'
 	icon_state = "antlers-wide"
 	do_colouration = 1
 	color_blend_mode = ICON_MULTIPLY
 
-/datum/sprite_accessory/ears/antlers_wide_e
+/datum/sprite_accessory/ears/antlers_wide_e //RS Add
 	name = "Antlers (wide) with ears"
 	icon = 'icons/mob/vore/ears_32x64.dmi'
 	icon_state = "antlers-wide"
