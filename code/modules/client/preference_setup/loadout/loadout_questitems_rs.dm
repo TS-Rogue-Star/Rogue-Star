@@ -30,8 +30,8 @@
 
 
 
-/datum/gear/quest/ManaSword
-	path = /obj/item/weapon/melee/ancientkatana
+/datum/gear/quest/AncientKatana
+	path = /obj/item/weapon/melee/QuestAncientKatana
 	display_name = "Ancient Katana"
-	ckeywhitelist = list("lira13")
-	character_name = list("Lira")
+	ckeywhitelist = list("marlowmouser")
+	character_name = list("Aspen Winters")
