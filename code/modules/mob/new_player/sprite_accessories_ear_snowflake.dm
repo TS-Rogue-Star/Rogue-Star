@@ -217,7 +217,7 @@
 /datum/sprite_accessory/ears/antlers_large
 	name = "Antlers (large)"
 	icon = 'icons/mob/vore/ears_32x64.dmi'
-	icon_state = "antlers_large"
+	icon_state = "antlers-large"  //RS Edit: Typo Fix
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
 
