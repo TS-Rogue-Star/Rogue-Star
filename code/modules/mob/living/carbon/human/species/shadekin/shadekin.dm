@@ -108,7 +108,8 @@
 	//SHADEKIN-UNIQUE STUFF GOES HERE
 	var/list/shadekin_abilities = list(/datum/power/shadekin/phase_shift,
 									   /datum/power/shadekin/regenerate_other,
-									   /datum/power/shadekin/create_shade)
+									   /datum/power/shadekin/create_shade,
+									   /datum/power/shadekin/phase_flicker) //RS Edit
 	var/list/shadekin_ability_datums = list()
 	var/kin_type
 	var/energy_light = 0.25

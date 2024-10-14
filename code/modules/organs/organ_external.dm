@@ -821,10 +821,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if (open && !clamped && (H && H.should_have_organ(O_HEART)))
 		status |= ORGAN_BLEEDING
 
-	//Bone fractures
+
+	//RS EDIT - MOVED TO human_damage.dm, so that broken bones can only happen when they actually take damage, rather than potentially any life proc
+/*	//Bone fractures
 	if(config.bones_can_break && brute_dam > min_broken_damage * config.organ_health_multiplier && !(robotic >= ORGAN_ROBOT))
 		src.fracture()
-
+*/
 	update_health()
 
 // new damage icon system
