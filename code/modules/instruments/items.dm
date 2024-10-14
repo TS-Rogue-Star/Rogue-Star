@@ -1,6 +1,7 @@
 //copy pasta of the space piano, don't hurt me -Pete
 /obj/item/instrument
 	name = "generic instrument"
+	desc = "For playing music."
 	force = 10
 	health = 100
 	//resistance_flags = FLAMMABLE
