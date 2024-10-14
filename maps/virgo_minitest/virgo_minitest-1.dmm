@@ -1310,9 +1310,7 @@
 /turf/simulated/floor/tiled,
 /area/medical/medbay)
 "cP" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/machinery/chem_master,
 /turf/simulated/floor/tiled,
 /area/medical/medbay)
 "cQ" = (
@@ -1415,15 +1413,8 @@
 /turf/simulated/floor/tiled,
 /area/medical/medbay)
 "df" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
+/obj/machinery/chemical_dispenser/full,
+/obj/structure/table/reinforced,
 /turf/simulated/floor/tiled,
 /area/medical/medbay)
 "dg" = (
@@ -3560,6 +3551,12 @@
 /obj/effect/floor_decal/industrial/outline/red,
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/engine_gas)
+"mM" = (
+/obj/structure/bed/chair/office/light{
+	dir = 1
+	},
+/turf/simulated/floor/tiled,
+/area/medical/medbay)
 "mP" = (
 /obj/effect/floor_decal/industrial/warning/corner,
 /turf/simulated/floor,
@@ -3603,6 +3600,11 @@
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/engineering/engine_monitoring)
+"ni" = (
+/obj/machinery/chemical_dispenser/biochemistry/full,
+/obj/structure/table/reinforced,
+/turf/simulated/floor/tiled,
+/area/medical/medbay)
 "nk" = (
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
@@ -3859,6 +3861,13 @@
 	},
 /turf/simulated/floor,
 /area/engineering/workshop)
+"pW" = (
+/obj/machinery/camera/network/civilian{
+	dir = 4
+	},
+/obj/structure/closet/secure_closet/hos2,
+/turf/simulated/floor/tiled,
+/area/medical/medbay)
 "pY" = (
 /obj/machinery/atmospherics/pipe/manifold4w/visible/black,
 /obj/structure/lattice,
@@ -4694,6 +4703,10 @@
 /obj/structure/window/reinforced,
 /turf/simulated/floor/tiled,
 /area/engineering/engine_monitoring)
+"yM" = (
+/obj/structure/closet/secure_closet/captains,
+/turf/simulated/floor/tiled,
+/area/medical/medbay)
 "yN" = (
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
@@ -4940,6 +4953,10 @@
 	},
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
+"AT" = (
+/obj/structure/closet/secure_closet/RD,
+/turf/simulated/floor/tiled,
+/area/medical/medbay)
 "AW" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 4
@@ -5276,12 +5293,30 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/engineering/engine_room)
+"Fg" = (
+/obj/structure/table/reinforced,
+/obj/machinery/reagentgrinder,
+/obj/item/stack/material/phoron,
+/obj/item/stack/material/phoron,
+/obj/item/stack/material/phoron,
+/obj/item/stack/material/phoron,
+/obj/item/stack/material/phoron,
+/obj/item/stack/material/phoron,
+/turf/simulated/floor/tiled,
+/area/medical/medbay)
 "FA" = (
 /obj/machinery/atmospherics/unary/heat_exchanger{
 	dir = 8
 	},
 /turf/simulated/floor,
 /area/engineering/workshop)
+"FE" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/closet/secure_closet/engineering_chief,
+/turf/simulated/floor/tiled,
+/area/medical/medbay)
 "FF" = (
 /obj/structure/closet/secure_closet/engineering_personal,
 /turf/simulated/floor/tiled/techmaint,
@@ -6624,6 +6659,10 @@
 	},
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
+"UF" = (
+/obj/structure/closet/secure_closet/CMO,
+/turf/simulated/floor/tiled,
+/area/medical/medbay)
 "UH" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
@@ -6898,6 +6937,10 @@
 	},
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
+"Yr" = (
+/obj/structure/closet/secure_closet/quartermaster,
+/turf/simulated/floor/tiled,
+/area/medical/medbay)
 "Yu" = (
 /obj/machinery/camera/network/engine{
 	dir = 8
@@ -7007,6 +7050,14 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/engine_gas)
+"ZH" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/box/syringes,
+/obj/item/weapon/reagent_containers/dropper,
+/obj/item/weapon/reagent_containers/glass/beaker/large,
+/obj/item/weapon/reagent_containers/dropper,
+/turf/simulated/floor/tiled,
+/area/medical/medbay)
 "ZI" = (
 /obj/item/device/radio/intercom{
 	pixel_y = -24
@@ -10220,12 +10271,12 @@ aa
 aa
 aa
 cF
-cM
-cM
-xX
-dd
-cM
-cM
+Yr
+yM
+pW
+FE
+AT
+UF
 cM
 cM
 cM
@@ -10433,7 +10484,7 @@ cM
 cM
 cM
 du
-cM
+cP
 cM
 cM
 cM
@@ -10535,8 +10586,8 @@ cM
 cM
 OA
 du
-cM
-cM
+df
+mM
 cM
 cM
 cF
@@ -10637,7 +10688,7 @@ cM
 cM
 cM
 du
-cM
+ni
 cM
 cM
 eC
@@ -10736,11 +10787,11 @@ cO
 de
 dr
 dF
-cP
+et
 eb
 du
-cM
-cM
+Fg
+ZH
 ez
 cO
 eF
@@ -10832,10 +10883,10 @@ cz
 cA
 cc
 cH
-cP
-cP
-cP
-df
+et
+et
+et
+eA
 ds
 du
 cM
@@ -11451,7 +11502,7 @@ dh
 cM
 dG
 dF
-cP
+et
 en
 cM
 cM
