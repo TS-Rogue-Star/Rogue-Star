@@ -76,6 +76,20 @@ GLOBAL_LIST_INIT(digest_modes, list())
 		if (istype(B.owner, /mob/living/carbon/human))
 			var/mob/living/carbon/human/howner = B.owner
 			howner.update_fullness()
+
+			//Shadekin energy calculation start!
+			var/datum/species/shadekin/SK = howner.species
+			if(istype(SK))
+				switch(SK.get_shadekin_eyecolor(howner))
+					if(RED_EYES)
+						howner.shadekin_adjust_energy(damage_gain) 	//1dmg to 1 energy, more or less.
+					if(ORANGE_EYES)
+						howner.shadekin_adjust_energy(damage_gain/1.5)
+					if(PURPLE_EYES)
+						howner.shadekin_adjust_energy(damage_gain/1.5)
+					else //Anybody else!
+						howner.shadekin_adjust_energy(damage_gain/2)
+			//Shadekin energy calculation end!
 	consider_healthbar(L, old_health, B.owner)
 	// End RS edit
 	if(isrobot(B.owner))
