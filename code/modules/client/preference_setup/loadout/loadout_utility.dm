@@ -34,6 +34,29 @@
 	path = /obj/item/weapon/book/codex //VOREStation Edit
 	cost = 0
 
+/datum/gear/utility/instrument
+	display_name = "instrument selection"
+	path = /obj/item/instrument
+	cost = 3
+
+/datum/gear/utility/instrument/New()
+	..()
+	var/instruments = list(
+		"Violin" = /obj/item/instrument/violin,
+		"Banjo" = /obj/item/instrument/banjo,
+		"Guitar" = /obj/item/instrument/guitar,
+		"Electric Guitar"= /obj/item/instrument/eguitar,
+		"Accordion" = /obj/item/instrument/accordion,
+		"Trumpet" = /obj/item/instrument/trumpet,
+		"Saxophone" = /obj/item/instrument/saxophone,
+		"Recorder" = /obj/item/instrument/recorder,
+		"Harmonica" = /obj/item/instrument/harmonica,
+		"Piano Synth" = /obj/item/instrument/piano_synth,
+		"Glockenspiel" = /obj/item/instrument/glockenspiel,
+		"Trombone"= /obj/item/instrument/trombone
+	)
+	gear_tweaks += new/datum/gear_tweak/path(instruments)
+
 /datum/gear/utility/news
 	display_name = "daedalus pocket newscaster"
 	path = /obj/item/weapon/book/codex/lore/news
