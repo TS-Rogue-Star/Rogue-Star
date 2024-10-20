@@ -357,6 +357,24 @@
 		var/oldnutrition = (L.nutrition * 0.05)
 		L.nutrition = (L.nutrition * 0.95)
 		owner.adjust_nutrition(oldnutrition)
+		if (istype(owner, /mob/living/carbon/human)) //RS Edit Start Is our owner a human?
+			var/mob/living/carbon/human/howner = owner
+			var/datum/species/shadekin/SK = howner.species
+			if(istype(SK))
+				howner.shadekin_adjust_energy(oldnutrition/10)
+			/*
+			||----------------------------------------------------------------------------------------------||
+			||                                    Let's do some M A T H!					||
+			||----------------------------------------------------------------------------------------------||
+			||Let's imagine the prey didn't overeat to an insane degree(cap is 50000 after all)		||
+			||450 gives you the 'fat' warning when it comes to nurtition. Let's use that as our baseline.	||
+			||Let's say that absorbing an ENTIRE person that's full of food should give you 50 energy	||
+			||That 9 nutrition per 1 energy. Not too bad. 							||
+			||Let's assume the average person that just spawned in has 300 nutrition.			||
+			||That's equivalent to 33 energy. Let's just round it to 10 because we like even numbers here.	||
+			||Not doing eye_color specific here because it's already a small amount that it's not an issue.	||
+			||----------------------------------------------------------------------------------------------||
+			*/ //RS Edit End
 
 /obj/belly/proc/updateVRPanels()
 	for(var/mob/living/M in contents)
