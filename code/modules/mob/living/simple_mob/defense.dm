@@ -117,6 +117,9 @@
 			to_chat(user, "<span class='notice'>\The [src] can't be [harvest_verb] so soon.</span>")
 			return
 
+	if(user.a_intent == I_HELP && istype(O, /obj/item/weapon/reagent_containers/food/snacks))
+		handle_food(O,user)
+
 	if(can_tame(O, user))
 		to_chat(user, "<span class='notice'>You offer \the [src] \the [O].</span>")
 		if(tame_prob(O, user))
