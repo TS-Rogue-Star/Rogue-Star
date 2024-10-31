@@ -842,7 +842,7 @@
 	do_colouration = 1
 	color_blend_mode = ICON_MULTIPLY
 
-/datum/sprite_accessory/ears/goatearshorns //RS Add || Chomp Port 7542
+/datum/sprite_accessory/ears/goatearshorns //RS Add
 	name = "Goat Ears and Horns"
 	desc = ""
 	icon_state = "goatears_outer"
