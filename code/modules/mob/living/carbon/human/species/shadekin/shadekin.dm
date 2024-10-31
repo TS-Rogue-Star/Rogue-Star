@@ -108,7 +108,8 @@
 	//SHADEKIN-UNIQUE STUFF GOES HERE
 	var/list/shadekin_abilities = list(/datum/power/shadekin/phase_shift,
 									   /datum/power/shadekin/regenerate_other,
-									   /datum/power/shadekin/create_shade)
+									   /datum/power/shadekin/create_shade,
+									   /datum/power/shadekin/phase_flicker) //RS Edit
 	var/list/shadekin_ability_datums = list()
 	var/kin_type
 	var/energy_light = 0.25
@@ -310,16 +311,20 @@
 	.=..()
 
 	var/eyecolor_type = get_shadekin_eyecolor(H)
+	//RS Edit Start Adjustments for better feeling shadekin.
+
+	//Former(in the dark): BESK: 50 in 200 ||RESK: 50 in 1000 ||PESK: 50 in 100 ||YESK: 50 in 33.3|| GESK: 50 in 50 ||OESK: 50 in 400
+	//Current(in the dark): BESK: 50 in 133 ||RESK: 50 in 200 ||PESK: 50 in 100 ||YESK: 50 in 33.3|| GESK: 50 in 50 ||OESK: 50 in 133
 
 	switch(eyecolor_type)
 		if(BLUE_EYES)
 			total_health = 100
-			energy_light = 0.5
-			energy_dark = 0.5
+			energy_light = 0.75
+			energy_dark = 0.75
 		if(RED_EYES)
 			total_health = 200
-			energy_light = -1
-			energy_dark = 0.1
+			energy_light = -0.5
+			energy_dark = 0.5
 		if(PURPLE_EYES)
 			total_health = 150
 			energy_light = -0.5
@@ -334,8 +339,9 @@
 			energy_dark = 2
 		if(ORANGE_EYES)
 			total_health = 175
-			energy_light = -0.5
-			energy_dark = 0.25
+			energy_light = -0.25
+			energy_dark = 0.75
+	//RS Edit End
 
 	H.maxHealth = total_health
 
