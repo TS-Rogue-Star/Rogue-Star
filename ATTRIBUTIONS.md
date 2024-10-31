@@ -312,3 +312,9 @@
 **Link:** https://www.youtube.com/watch?v=Xiyq3Ax3Jbc
 **License:** Permission to use provided by creator<br>
 <br>
+**File:** `icons/mob/human_races/sprite_accessories/ears.dmi`<br>
+**Icon-States:** goatears_outer, goatears_inner, goatears_horns<br>
+**Creator:** Snowbell<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/5715<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
