@@ -425,6 +425,7 @@
 		if(STANCE_FLEE)
 			ai_log("handle_stance_tactical() : STANCE_FLEE, going to flee_from_target().", AI_LOG_TRACE)
 			flee_from_target()
+			request_help() // Call our allies.	//RS ADD
 
 		if(STANCE_DISABLED)
 			ai_log("handle_stance_tactical() : STANCE_DISABLED.", AI_LOG_TRACE)

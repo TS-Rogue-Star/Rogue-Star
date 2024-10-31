@@ -26,7 +26,7 @@
 
 	swallowTime = 1 SECONDS
 	vore_active = 1
-	vore_capacity = 2
+	vore_capacity = 1
 	vore_bump_chance = 75
 	vore_bump_emote	= "wraps up"
 	vore_ignores_undigestable = 0
@@ -69,12 +69,14 @@
 	. = ..()
 	if(stat == DEAD)
 		glow_toggle = FALSE
+		icon_state = icon_dead
 		return
 	var/offset = 0
 	if(resting)
 		icon_state = null
 	else
 		offset = 32
+		update_fullness()
 		if(vore_fullness)
 			icon_state = "[icon_living]-[vore_fullness]"
 		else

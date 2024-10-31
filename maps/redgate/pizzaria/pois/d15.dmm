@@ -1,0 +1,44 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"g" = (
+/turf/template_noop,
+/area/redgate/structure/powered)
+"Y" = (
+/mob/living/simple_mob/vore/scarybot/quad_bot,
+/turf/template_noop,
+/area/redgate/structure/powered)
+
+(1,1,1) = {"
+g
+g
+g
+g
+g
+"}
+(2,1,1) = {"
+g
+g
+Y
+g
+g
+"}
+(3,1,1) = {"
+g
+g
+g
+g
+g
+"}
+(4,1,1) = {"
+g
+g
+Y
+g
+g
+"}
+(5,1,1) = {"
+g
+g
+g
+g
+g
+"}

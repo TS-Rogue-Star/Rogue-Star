@@ -1,0 +1,67 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"b" = (
+/obj/structure/prop/machine/alien_tank,
+/turf/template_noop,
+/area/redgate/structure/powered)
+"f" = (
+/obj/structure/prop/machine/nt_biocan,
+/turf/template_noop,
+/area/redgate/structure/powered)
+"g" = (
+/turf/template_noop,
+/area/redgate/structure/powered)
+"u" = (
+/obj/random/mob/semirandom_mob_spawner/scarybot,
+/turf/template_noop,
+/area/redgate/structure/powered)
+"z" = (
+/obj/structure/prop/machine/nt_optable,
+/obj/random/awayloot/looseloot{
+	spawn_nothing_percentage = 75
+	},
+/turf/template_noop,
+/area/redgate/structure/powered)
+"I" = (
+/obj/structure/prop/machine/biosyphon,
+/turf/template_noop,
+/area/redgate/structure/powered)
+"X" = (
+/obj/structure/prop/machine/core,
+/turf/template_noop,
+/area/redgate/structure/powered)
+
+(1,1,1) = {"
+b
+g
+g
+g
+b
+"}
+(2,1,1) = {"
+I
+g
+u
+g
+z
+"}
+(3,1,1) = {"
+g
+g
+X
+g
+g
+"}
+(4,1,1) = {"
+I
+g
+u
+g
+f
+"}
+(5,1,1) = {"
+b
+g
+g
+g
+b
+"}

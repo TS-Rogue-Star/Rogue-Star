@@ -1,0 +1,90 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"e" = (
+/obj/structure/table/darkglass,
+/obj/structure/theonepizza,
+/turf/template_noop,
+/area/redgate/structure/powered)
+"g" = (
+/turf/template_noop,
+/area/redgate/structure/powered)
+"h" = (
+/obj/structure/bed/chair/sofa/corp{
+	dir = 1
+	},
+/turf/template_noop,
+/area/redgate/structure/powered)
+"w" = (
+/obj/structure/bed/chair/sofa/corp/corner,
+/turf/template_noop,
+/area/redgate/structure/powered)
+"z" = (
+/obj/structure/bed/chair/sofa/corp{
+	dir = 4
+	},
+/turf/template_noop,
+/area/redgate/structure/powered)
+"H" = (
+/obj/structure/bed/chair/sofa/corp/corner{
+	dir = 1
+	},
+/turf/template_noop,
+/area/redgate/structure/powered)
+"J" = (
+/obj/structure/bed/chair/sofa/corp,
+/obj/random/mob/semirandom_mob_spawner/scarybot,
+/turf/template_noop,
+/area/redgate/structure/powered)
+"L" = (
+/obj/structure/bed/chair/sofa/corp/corner{
+	dir = 4
+	},
+/turf/template_noop,
+/area/redgate/structure/powered)
+"P" = (
+/obj/structure/bed/chair/sofa/corp/corner{
+	dir = 8
+	},
+/turf/template_noop,
+/area/redgate/structure/powered)
+"U" = (
+/obj/structure/bed/chair/sofa/corp{
+	dir = 8
+	},
+/turf/template_noop,
+/area/redgate/structure/powered)
+
+(1,1,1) = {"
+g
+g
+g
+g
+g
+"}
+(2,1,1) = {"
+g
+H
+z
+L
+g
+"}
+(3,1,1) = {"
+g
+J
+e
+h
+g
+"}
+(4,1,1) = {"
+g
+w
+U
+P
+g
+"}
+(5,1,1) = {"
+g
+g
+g
+g
+g
+"}
