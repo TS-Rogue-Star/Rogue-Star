@@ -4332,6 +4332,7 @@
 #include "maps\groundbase\groundbase.dm"
 #include "maps\redgate\fantasy_items.dm"
 #include "maps\redgate\code\snowglobe_rs.dm"
+#include "maps\redgate\pizzaria\pizzaria_pois.dm"
 #include "maps\southern_cross\items\clothing\sc_accessory.dm"
 #include "maps\southern_cross\items\clothing\sc_suit.dm"
 #include "maps\southern_cross\items\clothing\sc_under.dm"
