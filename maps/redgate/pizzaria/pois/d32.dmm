@@ -1,0 +1,149 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/item/weapon/material/knife/butch,
+/obj/item/weapon/material/kitchen/rollingpin,
+/obj/structure/table/marble,
+/turf/simulated/floor/tiled/eris/cafe,
+/area/redgate/structure/powered)
+"d" = (
+/obj/item/weapon/reagent_containers/food/snacks/mint,
+/obj/item/weapon/reagent_containers/food/condiment/small/peppermill{
+	pixel_x = 3;
+	pixel_y = 13
+	},
+/obj/item/weapon/reagent_containers/food/condiment/small/saltshaker{
+	pixel_x = -1;
+	pixel_y = 10
+	},
+/obj/structure/table/marble,
+/turf/simulated/floor/tiled/eris/cafe,
+/area/redgate/structure/powered)
+"e" = (
+/obj/structure/closet/secure_closet/freezer/meat,
+/turf/simulated/floor/tiled/eris/cafe,
+/area/redgate/structure/powered)
+"g" = (
+/turf/template_noop,
+/area/redgate/structure/powered)
+"i" = (
+/obj/machinery/appliance/cooker/oven,
+/turf/simulated/floor/tiled/eris/cafe,
+/area/redgate/structure/powered)
+"n" = (
+/obj/structure/table/marble,
+/turf/simulated/floor/tiled/eris/cafe,
+/area/redgate/structure/powered)
+"w" = (
+/obj/structure/closet/secure_closet/freezer/fridge,
+/turf/simulated/floor/tiled/eris/cafe,
+/area/redgate/structure/powered)
+"D" = (
+/obj/random/mob/semirandom_mob_spawner/scarybot,
+/turf/simulated/floor/tiled/eris/cafe,
+/area/redgate/structure/powered)
+"F" = (
+/obj/structure/table/marble,
+/obj/random/pizzabox,
+/obj/random/pizzabox,
+/obj/random/pizzabox,
+/obj/random/pizzabox,
+/obj/random/pizzabox,
+/turf/simulated/floor/tiled/eris/cafe,
+/area/redgate/structure/powered)
+"I" = (
+/turf/simulated/floor/tiled/eris/cafe,
+/area/redgate/structure/powered)
+"N" = (
+/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
+/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
+/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
+/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
+/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
+/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
+/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
+/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
+/obj/item/weapon/reagent_containers/food/condiment/spacespice,
+/obj/item/weapon/reagent_containers/food/condiment/spacespice,
+/obj/item/weapon/reagent_containers/food/condiment/carton/sugar,
+/obj/item/weapon/reagent_containers/food/condiment/carton/sugar,
+/obj/item/weapon/reagent_containers/food/condiment/small/saltshaker,
+/obj/item/weapon/reagent_containers/food/condiment/small/saltshaker,
+/obj/item/weapon/reagent_containers/food/condiment/small/peppermill,
+/obj/item/weapon/reagent_containers/food/condiment/small/peppermill,
+/obj/structure/closet,
+/obj/random/donkpocketbox,
+/obj/item/weapon/book/manual/cook_guide,
+/turf/simulated/floor/tiled/eris/cafe,
+/area/redgate/structure/powered)
+"P" = (
+/obj/item/weapon/reagent_containers/dropper,
+/obj/item/weapon/reagent_containers/glass/beaker{
+	pixel_x = 5
+	},
+/obj/item/weapon/reagent_containers/food/condiment/enzyme{
+	layer = 5
+	},
+/obj/item/weapon/reagent_containers/food/condiment/enzyme{
+	layer = 5
+	},
+/obj/structure/table/marble,
+/turf/simulated/floor/tiled/eris/cafe,
+/area/redgate/structure/powered)
+"Q" = (
+/obj/structure/table/marble,
+/obj/item/weapon/storage/box/beakers{
+	name = "box of measuring cups";
+	pixel_x = 2;
+	pixel_y = 3;
+	starts_with = list(/obj/item/weapon/reagent_containers/glass/beaker/measuring_cup = 7)
+	},
+/turf/simulated/floor/tiled/eris/cafe,
+/area/redgate/structure/powered)
+"T" = (
+/obj/structure/table/marble,
+/obj/machinery/microwave/advanced,
+/turf/simulated/floor/tiled/eris/cafe,
+/area/redgate/structure/powered)
+"W" = (
+/obj/structure/table/marble,
+/obj/machinery/reagentgrinder{
+	pixel_y = 10
+	},
+/turf/simulated/floor/tiled/eris/cafe,
+/area/redgate/structure/powered)
+
+(1,1,1) = {"
+e
+I
+g
+d
+P
+"}
+(2,1,1) = {"
+w
+I
+I
+I
+N
+"}
+(3,1,1) = {"
+g
+D
+F
+I
+g
+"}
+(4,1,1) = {"
+W
+I
+I
+I
+a
+"}
+(5,1,1) = {"
+T
+Q
+g
+i
+n
+"}

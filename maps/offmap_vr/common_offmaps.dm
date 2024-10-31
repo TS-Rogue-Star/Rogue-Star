@@ -383,6 +383,11 @@
 	desc = "A mysterious gloomy land."
 	mappath = 'maps/redgate/da2ns.dmm'
 
+/datum/map_template/common_lateload/redgate/pizzaria
+	name = "Redgate - Pizzaria"
+	desc = "It doesn't look anything like a pizzaria..."
+	mappath = 'maps/redgate/pizzaria/spooky2.dmm'
+
 // RS EDIT END
 
 //////////////////////////////////////////////////////////////////////////////////////

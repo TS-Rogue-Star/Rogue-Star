@@ -243,7 +243,7 @@
 	if(load_owner == "STATION")
 		to_chat(user, "<span class = 'warning'>\The [src] is registered as a station pet, and as such can not be registered again.</span>")
 		return FALSE
-	if(load_owner == "seriouslydontsavethis")
+	if(initial(load_owner) == "seriouslydontsavethis")
 		to_chat(user,"<span class = 'warning'>\The [src] is too complicated to be able to be registered.</span>")
 		return FALSE
 	if(load_owner && load_owner != user.ckey)
