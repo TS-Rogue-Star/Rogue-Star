@@ -4,8 +4,8 @@ var/datum/planet/snowbase/planet_snowbase = null
 	seconds_in_day = 24 HOURS
 
 /datum/planet/snowbase
-	name = "944 November"
-	desc = "A Rogue exoplanet that entered the Virgo-Erigone system several thousand years ago. Extremely cold and barely habitable." //rewrite me
+	name = "Virgo 5"
+	desc = "The outermost planet of the Virgo-Erigone system. While just outside the goldilocks zone and covered in miles of ice, it is technically habitable."
 	current_time = new /datum/time/snowbase()
 //	expected_z_levels = list(1) // This is defined elsewhere.
 	planetary_wall_type = /turf/unsimulated/wall/planetary/snowbase
