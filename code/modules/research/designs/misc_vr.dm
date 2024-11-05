@@ -84,3 +84,12 @@
 	materials = list(MAT_STEEL = 4000, MAT_GLASS = 4000, MAT_URANIUM = 2000)
 	build_path = /obj/item/device/juke_remote
 	sort_string = "TCVAE"
+
+
+/datum/design/item/general/mindbinder
+	name = "Mind Binder"
+	id = "mindbinder"
+	req_tech = list(TECH_MAGNET = 3, TECH_BIO = 3, TECH_ILLEGAL = 2)
+	materials = list(MAT_STEEL = 4000, MAT_GLASS = 4000, MAT_URANIUM = 2000)
+	build_path = /obj/item/mindbinder
+	sort_string = "TBVAB"

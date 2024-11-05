@@ -31,6 +31,12 @@
 
 		var/choice = tgui_alert(usr,"This will swap your mind with the target's mind. This will result in them controlling your body, and you controlling their body. Continue?","Confirmation",list("Continue","Cancel"))
 		if(choice == "Continue" && usr.get_active_hand() == src && usr.Adjacent(M))
+			//RS Edit Start - Admin logging for Body Snatcher usage
+			if(M.ckey && !M.client)
+				log_and_message_admins("attempted to body swap with [key_name(M)] while they were SSD!")
+			else
+				log_and_message_admins("attempted to body swap with [key_name(M)].")
+			//RS Edit End
 
 			usr.visible_message("<span class='warning'>[usr] pushes the device up their forehead and [M]'s head, the device beginning to let out a series of light beeps!</span>","<span class='notice'>You begin swap minds with [M]!</span>")
 			if(do_after(usr,35 SECONDS,M))

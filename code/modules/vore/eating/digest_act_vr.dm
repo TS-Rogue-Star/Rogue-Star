@@ -11,6 +11,8 @@
 				P.id = null
 
 		for(var/mob/living/voice/V in possessed_voice) // Delete voices.
+			V.ghostize(0) //RS Edit - Prevent Reenter Corpse sending observers to the shadow realm
+			V.stat = DEAD //RS Edit - Helps with autosleeving
 			V.Destroy() //Destroy the voice.
 		for(var/mob/living/M in contents)//Drop mobs from objects(shoes) before deletion
 			M.forceMove(item_storage)
@@ -45,6 +47,7 @@
 				P.id = null
 		for(var/mob/living/voice/V in possessed_voice) // Delete voices.
 			V.Destroy() //Destroy the voice.
+			V.stat = DEAD //RS Edit - Helps with autosleeving
 		for(var/mob/living/M in contents)//Drop mobs from objects(shoes) before deletion
 			M.forceMove(item_storage)
 		for(var/obj/item/O in contents)
