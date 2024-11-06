@@ -97,6 +97,11 @@
 	//Found their record, they were spawned previously
 	if(record_found)
 		charjob = record_found.fields["real_rank"]
+	//RS ADD START
+	else if(ghost.mind)		//Ghosts have minds if they spawned and died, so we can just get their job from that if they don't have records
+		var/datum/mind/ourmind = ghost.mind
+		charjob = ourmind.assigned_role
+	//RS ADD END
 	else if(equip_body || ghost_spawns)
 		charjob = default_job
 	else
