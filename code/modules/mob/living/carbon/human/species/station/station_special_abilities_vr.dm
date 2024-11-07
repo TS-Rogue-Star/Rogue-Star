@@ -1577,8 +1577,15 @@
 			target.Weaken(2)	//get knocked down, idiot
 
 //RS ADD START
-/mob/living/proc/injection() // Allows the user to inject reagents into others somehow, like stinging, or biting.
+/mob/living/proc/injection()
 	set name = "Injection"
+	set category = "Abilities"
+	set desc = "Inject another being with something!"
+
+	do_injection()
+
+/mob/living/proc/injection_setup() // Allows the user to inject reagents into others somehow, like stinging, or biting.
+	set name = "Injection Setup"
 	set category = "Abilities"
 	set desc = "Inject another being with something!"
 
@@ -1656,68 +1663,71 @@
 		usr << browse(output,"window=chemicalrefresher")
 		return
 	else
-		var/list/targets = list() //IF IT IS NOT BROKEN. DO NOT FIX IT. AND KEEP COPYPASTING IT
-		for(var/mob/living/carbon/L in living_mobs(1, TRUE)) //Noncarbons don't even process reagents so don't bother listing others.
-			if(!istype(L, /mob/living/carbon))
-				continue
-			if(L == src) //no getting high off your own supply, get a nif or something, nerd.
-				continue
-			if(!L.resizable && (trait_injection_selected == "macrocillin" || trait_injection_selected == "microcillin" || trait_injection_selected == "normalcillin")) // If you're using a size reagent, ignore those with pref conflicts.
-				continue
-			if(!L.allow_spontaneous_tf && (trait_injection_selected == "androrovir" || trait_injection_selected == "gynorovir" || trait_injection_selected == "androgynorovir")) // If you're using a TF reagent, ignore those with pref conflicts. || Ports VOREStation PR16060
-				continue
-			targets += L
+		do_injection()
 
-		if(!(targets.len))
-			to_chat(src, "<span class='notice'>No eligible targets found.</span>")
-			return
+/mob/living/proc/do_injection()
+	var/list/targets = list() //IF IT IS NOT BROKEN. DO NOT FIX IT. AND KEEP COPYPASTING IT
+	for(var/mob/living/carbon/L in living_mobs(1, TRUE)) //Noncarbons don't even process reagents so don't bother listing others.
+		if(!istype(L, /mob/living/carbon))
+			continue
+		if(L == src) //no getting high off your own supply, get a nif or something, nerd.
+			continue
+		if(!L.resizable && (trait_injection_selected == "macrocillin" || trait_injection_selected == "microcillin" || trait_injection_selected == "normalcillin")) // If you're using a size reagent, ignore those with pref conflicts.
+			continue
+		if(!L.allow_spontaneous_tf && (trait_injection_selected == "androrovir" || trait_injection_selected == "gynorovir" || trait_injection_selected == "androgynorovir")) // If you're using a TF reagent, ignore those with pref conflicts. || Ports VOREStation PR16060
+			continue
+		targets += L
 
-		var/mob/living/target = tgui_input_list(src, "Please select a target.", "Victim", targets)
+	if(!(targets.len))
+		to_chat(src, "<span class='notice'>No eligible targets found.</span>")
+		return
 
-		if(!target)
-			return
+	var/mob/living/target = tgui_input_list(src, "Please select a target.", "Victim", targets)
 
-		if(!istype(target, /mob/living/carbon)) //Safety.
-			to_chat(src, "<span class='warning'>That won't work on that kind of creature! (Only works on crew/monkeys)</span>")
-			return
+	if(!target)
+		return
 
-		if(target.isSynthetic())
-			to_chat(src, "<span class='notice'>There's no getting past that outer shell.</span>")
-			return
+	if(!istype(target, /mob/living/carbon)) //Safety.
+		to_chat(src, "<span class='warning'>That won't work on that kind of creature! (Only works on crew/monkeys)</span>")
+		return
 
-		if(!trait_injection_selected)
-			to_chat(src, "<span class='notice'>You need to select a reagent.</span>")
-			return
+	if(target.isSynthetic())
+		to_chat(src, "<span class='notice'>There's no getting past that outer shell.</span>")
+		return
 
-		if(!trait_injection_verb)
-			to_chat(src, "<span class='notice'>Somehow, you forgot your means of injecting. (Select a verb!)</span>")
-			return
+	if(!trait_injection_selected)
+		to_chat(src, "<span class='notice'>You need to select a reagent.</span>")
+		return
 
-		if(do_after(src, 50, target))
-			add_attack_logs(src,target,"Injection trait ([trait_injection_selected], [trait_injection_amount])")
-			if(target.reagents)
-				target.reagents.add_reagent(trait_injection_selected, trait_injection_amount)
-			var/ourmsg = "<span class='warning'>[usr] [trait_injection_verb] [target] "
-			switch(zone_sel.selecting)
-				if(BP_HEAD)
-					ourmsg += "on the head!"
-				if(BP_TORSO)
-					ourmsg += "on the chest!"
-				if(BP_GROIN)
-					ourmsg += "on the groin!"
-				if(BP_R_ARM, BP_L_ARM)
-					ourmsg += "on the arm!"
-				if(BP_R_HAND, BP_L_HAND)
-					ourmsg += "on the hand!"
-				if(BP_R_LEG, BP_L_LEG)
-					ourmsg += "on the leg!"
-				if(BP_R_FOOT, BP_L_FOOT)
-					ourmsg += "on the foot!"
-				if("mouth")
-					ourmsg += "on the mouth!"
-				if("eyes")
-					ourmsg += "on the eyes!"
-			ourmsg += "</span>"
-			visible_message(ourmsg)
+	if(!trait_injection_verb)
+		to_chat(src, "<span class='notice'>Somehow, you forgot your means of injecting. (Select a verb!)</span>")
+		return
+
+	if(do_after(src, 50, target))
+		add_attack_logs(src,target,"Injection trait ([trait_injection_selected], [trait_injection_amount])")
+		if(target.reagents)
+			target.reagents.add_reagent(trait_injection_selected, trait_injection_amount)
+		var/ourmsg = "<span class='warning'>[usr] [trait_injection_verb] [target] "
+		switch(zone_sel.selecting)
+			if(BP_HEAD)
+				ourmsg += "on the head!"
+			if(BP_TORSO)
+				ourmsg += "on the chest!"
+			if(BP_GROIN)
+				ourmsg += "on the groin!"
+			if(BP_R_ARM, BP_L_ARM)
+				ourmsg += "on the arm!"
+			if(BP_R_HAND, BP_L_HAND)
+				ourmsg += "on the hand!"
+			if(BP_R_LEG, BP_L_LEG)
+				ourmsg += "on the leg!"
+			if(BP_R_FOOT, BP_L_FOOT)
+				ourmsg += "on the foot!"
+			if("mouth")
+				ourmsg += "on the mouth!"
+			if("eyes")
+				ourmsg += "on the eyes!"
+		ourmsg += "</span>"
+		visible_message(ourmsg)
 
 //RS ADD END

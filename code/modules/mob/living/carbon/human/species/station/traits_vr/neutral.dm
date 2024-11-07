@@ -1041,10 +1041,30 @@
 		You aren't required to inject anything if you prefer to just use it as a normal bite!"
 	cost = 0
 	custom_only = FALSE
+	has_preferences = list(
+		"trait_injection_verb" = list(TRAIT_PREF_TYPE_STRING, "Verb",TRAIT_VAREDIT_TARGET_MOB,"bite"),
+		"trait_injection_selected" = list(TRAIT_PREF_TYPE_LIST, "Reagent",TRAIT_VAREDIT_TARGET_MOB,"microcillin"),
+		"trait_injection_amount" = list(TRAIT_PREF_TYPE_INT, "Amount",TRAIT_VAREDIT_TARGET_MOB,1)
+		)
+	var/list/inject_chems = list(
+		"microcillin",
+		"macrocillin",
+		"normalcillin",
+		"numbenzyme",
+		"androrovir",
+		"gynorovir",
+		"androgynorovir",
+		"stoxin",
+		"rainbowtoxin",
+		"paralysistoxin",
+		"painenzyme"
+		)
+//RS ADD END
 
 /datum/trait/neutral/venom_bite/apply(var/datum/species/S,var/mob/living/carbon/human/H)
 	..()
 	H.verbs |= /mob/living/proc/injection
+	H.verbs |= /mob/living/proc/injection_setup
 	H.trait_injection_reagents += "microcillin"		// get small
 	H.trait_injection_reagents += "macrocillin"		// get BIG
 	H.trait_injection_reagents += "normalcillin"	// normal
@@ -1056,4 +1076,13 @@
 	H.trait_injection_reagents += "rainbowtoxin" 	// Funny flashing lights.
 	H.trait_injection_reagents += "paralysistoxin" 	// Paralysis!
 	H.trait_injection_reagents += "painenzyme"		// Pain INCREASER
+
+	if(H.trait_injection_amount > 5)
+		H.trait_injection_amount = 5
+	if(H.trait_injection_amount < 0)
+		H.trait_injection_amount = 0
+
+	if(H?.client?.prefs)
+		var/datum/preferences/P = H.client.prefs
+		P.trait_injection_amount = H.trait_injection_amount
 //RS Edit end

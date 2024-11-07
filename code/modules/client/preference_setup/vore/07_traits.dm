@@ -17,6 +17,8 @@
 #define TRAIT_PREF_TYPE_BOOLEAN 1
 #define TRAIT_PREF_TYPE_COLOR 2
 #define TRAIT_PREF_TYPE_STRING 3
+#define TRAIT_PREF_TYPE_INT 4
+#define TRAIT_PREF_TYPE_LIST 5
 
 #define TRAIT_NO_VAREDIT_TARGET 0
 #define TRAIT_VAREDIT_TARGET_SPECIES 1
@@ -48,7 +50,9 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 	var/dirty_synth = 0		//Are you a synth
 	var/gross_meatbag = 0		//Where'd I leave my Voight-Kampff test kit?
 
-	var/trait_injection_verb = "bites"	//RS EDIT
+	var/trait_injection_verb = "bites"	//RS ADD
+	var/trait_injection_selected = "microcillin"	//RS ADD
+	var/trait_injection_amount = 1	//RS ADD
 
 /datum/preferences/proc/get_custom_bases_for_species(var/new_species)
 	if (!new_species)
@@ -88,6 +92,10 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 					. += " " + color_square(hex = trait_prefs[identifier]) + link + "Change"
 				if (TRAIT_PREF_TYPE_STRING)	//RS ADD
 					. += link + "[trait_prefs[identifier]]"	//RS ADD
+				if(TRAIT_PREF_TYPE_LIST)
+					. += link + "[trait_prefs[identifier]]"
+				if (TRAIT_PREF_TYPE_INT)
+					. += link + "[trait_prefs[identifier]]"
 			. += "</a></li>"
 	. += "</ul>"
 	if (altered)
@@ -138,6 +146,21 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 				to_chat(user, "<span class = 'warning'>Entered text length invalid (must be longer than 2, no more than than 40).</span>")
 				return
 			trait_prefs[preference] = new_verb
+
+		if(TRAIT_PREF_TYPE_INT)
+			var/new_int = 0
+			if(instance.name == "Venomous Injection")
+				new_int = tgui_input_number(user,"Enter a number value for this trait preference:", "Trait Number Entry",max_value = 5, min_value = 0)
+				if(new_int > 5)
+					new_int = 5
+				if(new_int < 0)
+					new_int = 0
+			trait_prefs[preference] = new_int
+		if(TRAIT_PREF_TYPE_LIST)
+			if(instance.name == "Venomous Injection")
+				var/datum/trait/neutral/venom_bite/V = instance
+				var/new_thing = tgui_input_list(user,"Which one would you like to pick?", "Trait List Entry",V.inject_chems)
+				trait_prefs[preference] = new_thing
 		//RS ADD END
 
 // Definition of the stuff for Ears
@@ -166,6 +189,8 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 	S["custom_heat"]	>> pref.custom_heat
 	S["custom_cold"]	>> pref.custom_cold
 	S["trait_injection_verb"] >> pref.trait_injection_verb	//RS ADD
+	S["trait_injection_amount"] >> pref.trait_injection_amount //RS ADD
+	S["trait_injection_selected"] >> pref.trait_injection_selected	//RS ADD
 
 /datum/category_item/player_setup_item/vore/traits/save_character(var/savefile/S)
 	S["custom_species"]	<< pref.custom_species
@@ -188,6 +213,8 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 	S["custom_heat"]	<< pref.custom_heat
 	S["custom_cold"]	<< pref.custom_cold
 	S["trait_injection_verb"] << pref.trait_injection_verb	//RS ADD
+	S["trait_injection_amount"] << pref.trait_injection_amount //RS ADD
+	S["trait_injection_selected"] << pref.trait_injection_selected	//RS ADD
 
 /datum/category_item/player_setup_item/vore/traits/sanitize_character()
 	if(!pref.pos_traits) pref.pos_traits = list()
