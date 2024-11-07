@@ -1041,6 +1041,7 @@
 		You aren't required to inject anything if you prefer to just use it as a normal bite!"
 	cost = 0
 	custom_only = FALSE
+//RS ADD START
 	has_preferences = list(
 		"trait_injection_verb" = list(TRAIT_PREF_TYPE_STRING, "Verb",TRAIT_VAREDIT_TARGET_MOB,"bite"),
 		"trait_injection_selected" = list(TRAIT_PREF_TYPE_LIST, "Reagent",TRAIT_VAREDIT_TARGET_MOB,"microcillin"),
@@ -1064,7 +1065,7 @@
 /datum/trait/neutral/venom_bite/apply(var/datum/species/S,var/mob/living/carbon/human/H)
 	..()
 	H.verbs |= /mob/living/proc/injection
-	H.verbs |= /mob/living/proc/injection_setup
+	H.verbs |= /mob/living/proc/injection_setup		//RS ADD
 	H.trait_injection_reagents += "microcillin"		// get small
 	H.trait_injection_reagents += "macrocillin"		// get BIG
 	H.trait_injection_reagents += "normalcillin"	// normal

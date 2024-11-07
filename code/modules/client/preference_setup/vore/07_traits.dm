@@ -90,12 +90,12 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 					. += link + (trait_prefs[identifier] ? "Enabled" : "Disabled")
 				if (TRAIT_PREF_TYPE_COLOR) //TRAIT_PREF_TYPE_COLOR
 					. += " " + color_square(hex = trait_prefs[identifier]) + link + "Change"
-				if (TRAIT_PREF_TYPE_STRING)	//RS ADD
-					. += link + "[trait_prefs[identifier]]"	//RS ADD
+				if (TRAIT_PREF_TYPE_STRING)						//RS ADD START
+					. += link + "[trait_prefs[identifier]]"
 				if(TRAIT_PREF_TYPE_LIST)
 					. += link + "[trait_prefs[identifier]]"
 				if (TRAIT_PREF_TYPE_INT)
-					. += link + "[trait_prefs[identifier]]"
+					. += link + "[trait_prefs[identifier]]"		//RS ADD END
 			. += "</a></li>"
 	. += "</ul>"
 	if (altered)

@@ -1583,9 +1583,10 @@
 	set desc = "Inject another being with something!"
 
 	do_injection()
+//RS ADD END
 
-/mob/living/proc/injection_setup() // Allows the user to inject reagents into others somehow, like stinging, or biting.
-	set name = "Injection Setup"
+/mob/living/proc/injection_setup() // Allows the user to inject reagents into others somehow, like stinging, or biting.	//RS EDIT
+	set name = "Injection Setup"	//RS EDIT
 	set category = "Abilities"
 	set desc = "Inject another being with something!"
 
@@ -1663,8 +1664,9 @@
 		usr << browse(output,"window=chemicalrefresher")
 		return
 	else
-		do_injection()
+		do_injection()	//RS ADD
 
+//RS EDIT
 /mob/living/proc/do_injection()
 	var/list/targets = list() //IF IT IS NOT BROKEN. DO NOT FIX IT. AND KEEP COPYPASTING IT
 	for(var/mob/living/carbon/L in living_mobs(1, TRUE)) //Noncarbons don't even process reagents so don't bother listing others.
