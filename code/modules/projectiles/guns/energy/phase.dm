@@ -54,10 +54,6 @@
 	accuracy = 15
 	one_handed_penalty = 30
 
-/obj/item/weapon/gun/energy/phasegun/rifle/talon
-	name = "talon's phase rifle"
-	desc = "The RayZar EW31 Orion is a specialist energy weapon, intended for use against hostile wildlife. This one has 'Property of the ITV Talon' inscribed on the stock."
-
 /obj/item/weapon/gun/energy/phasegun/cannon
 	name = "phase cannon"
 	desc = "The RayZar EW50 Gaia is a massive energy weapon, purpose-built for clearing land. You feel dirty just looking at it."

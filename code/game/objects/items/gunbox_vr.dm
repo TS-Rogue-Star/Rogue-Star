@@ -20,29 +20,6 @@
 				to_chat(user, "You have chosen \the [AM]. Say hello to your new best friend.")
 		qdel(src)
 
-
-/*
- * Talon Captain's Box
- */
-/obj/item/gunbox/talon
-	name = "Talon's rifle case"
-	desc = "A secure guncase containing the talon captain's beloved rifle."
-	icon = 'icons/obj/storage_vr.dmi'
-	icon_state = "gunboxw"
-
-/obj/item/gunbox/talon/attack_self(mob/living/user)
-	var/list/options = list()
-	options["Talon's combat shotgun"] = list(/obj/item/weapon/gun/projectile/shotgun/pump/combat/talon, /obj/item/ammo_magazine/ammo_box/b12g/beanbag)
-	options["Talon's phase rifle"] = list(/obj/item/weapon/gun/energy/phasegun/rifle/talon, /obj/item/weapon/cell/device/weapon, /obj/item/weapon/cell/device/weapon)
-	var/choice = tgui_input_list(user,"Choose your favorite rifle for today!", "Talon Rifle!", options)
-	if(src && choice)
-		var/list/things_to_spawn = options[choice]
-		for(var/new_type in things_to_spawn) // Spawn all the things, the gun and the ammo.
-			var/atom/movable/AM = new new_type(get_turf(src))
-			if(istype(AM, /obj/item/weapon/gun))
-				to_chat(user, "You have chosen \the [AM]. Say hello to your new best Talon friend.")
-		qdel(src)
-
 /*
  * Site Manager's Box
  */
