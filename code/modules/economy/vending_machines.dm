@@ -808,8 +808,12 @@
 					/obj/item/toy/plushie/otter = 1,
 					/obj/item/toy/plushie/vox = 1,
 					/obj/item/toy/plushie/shark = 1,
-					/obj/item/toy/mistletoe = 1)
+					/obj/item/toy/mistletoe = 1,
 					//VOREStation Add End
+					/obj/item/toy/plushie/teppi = 1, //RS Edit || Ports CHOMPStation PR 8822
+					/obj/item/toy/plushie/lasagna = 1	//RS ADD
+					)
+
 	premium = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/champagne = 1,
 					/obj/item/weapon/storage/trinketbox = 2)
 	prices = list(/obj/item/weapon/storage/fancy/heartbox = 15,
@@ -853,7 +857,8 @@
 					/obj/item/toy/plushie/shark = 50,
 					/obj/item/toy/mistletoe = 50,
 					//VOREStation Add End
-					/obj/item/toy/plushie/teppi = 50 //RS Edit || Ports CHOMPStation PR 8822
+					/obj/item/toy/plushie/teppi = 50, //RS Edit || Ports CHOMPStation PR 8822
+					/obj/item/toy/plushie/lasagna = 50	//RS ADD
 					)
 
 

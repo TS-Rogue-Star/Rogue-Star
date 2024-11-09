@@ -790,5 +790,65 @@
 	name = "Orange Mushroom Cap"
 	icon_state = "syrishroom"
 
+/datum/sprite_accessory/ears/dangles_robot  //RS Add || Virgo Port 15785
+	name = "synth dangle antennae, colorable"
+	icon_state = "dangleantennae_robot"
+	do_colouration = 1
+	color_blend_mode = ICON_MULTIPLY
+
+/datum/sprite_accessory/ears/vale //RS Add || Chomp Port 535
+	name = "VALE Model Ear Coloring"
+	icon_state = "valeears"
+	do_colouration = 1
+	color_blend_mode = ICON_MULTIPLY
+
+/datum/sprite_accessory/ears/antennae_alt //RS Add || Chomp Port 7542
+	name = "thin antennae, colorable"
+	desc = ""
+	icon_state = "antennae_alt"
+	do_colouration = 1
+	color_blend_mode = ICON_MULTIPLY
+
+/datum/sprite_accessory/ears/kittybug //RS Add || Chomp Port 7542
+	name = "kitty, with antennae"
+	desc = ""
+	icon_state = "antennae_alt"
+	do_colouration = 1
+	color_blend_mode = ICON_MULTIPLY
+	extra_overlay = "kitty"
+	extra_overlay2 = "kittyinner"
+
+/datum/sprite_accessory/ears/fourears //RS Add || Chomp Port 5771
+	name = "Four Ears"
+	desc = ""
+	icon_state = "fourears"
+	extra_overlay = "fourears_fluff"
+	do_colouration = 1
+	color_blend_mode = ICON_MULTIPLY
+
+/datum/sprite_accessory/ears/protogen  //RS Add || Chomp Port 5715
+	name = "Protogen"
+	desc = ""
+	icon_state = "protogen"
+	extra_overlay = "protogen_fluff"
+	do_colouration = 1
+	color_blend_mode = ICON_MULTIPLY
+
+/datum/sprite_accessory/ears/miqote  //RS Add || Chomp Port 5715
+	name = "Miqo'te"
+	desc = ""
+	icon_state = "miqote"
+	extra_overlay = "miqote_inner"
+	do_colouration = 1
+	color_blend_mode = ICON_MULTIPLY
+
+/datum/sprite_accessory/ears/goatearshorns //RS Add
+	name = "Goat Ears and Horns"
+	desc = ""
+	icon_state = "goatears_outer"
+	do_colouration = 1
+	color_blend_mode = ICON_MULTIPLY
+	extra_overlay = "goatears_inner"
+	extra_overlay2 = "goatears_horns"
 
 // Special snowflake ears go below here.

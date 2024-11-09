@@ -1,0 +1,65 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"g" = (
+/turf/template_noop,
+/area/redgate/structure/powered)
+"p" = (
+/obj/random/mob/semirandom_mob_spawner/scarybot,
+/turf/template_noop,
+/area/redgate/structure/powered)
+"w" = (
+/obj/structure/table/rack/steel,
+/obj/random/maintenance,
+/obj/random/maintenance,
+/turf/template_noop,
+/area/redgate/structure/powered)
+"B" = (
+/obj/structure/table/steel,
+/obj/random/maintenance,
+/obj/random/maintenance,
+/turf/template_noop,
+/area/redgate/structure/powered)
+"R" = (
+/obj/structure/table/steel,
+/obj/random/maintenance,
+/obj/random/maintenance,
+/obj/random/awayloot/looseloot{
+	spawn_nothing_percentage = 75
+	},
+/turf/template_noop,
+/area/redgate/structure/powered)
+
+(1,1,1) = {"
+w
+g
+g
+g
+w
+"}
+(2,1,1) = {"
+g
+p
+B
+g
+g
+"}
+(3,1,1) = {"
+g
+B
+R
+B
+g
+"}
+(4,1,1) = {"
+g
+g
+B
+p
+g
+"}
+(5,1,1) = {"
+w
+g
+g
+g
+w
+"}

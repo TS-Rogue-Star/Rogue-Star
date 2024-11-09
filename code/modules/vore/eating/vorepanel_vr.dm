@@ -247,7 +247,8 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			"tail_to_change_to" = selected.tail_to_change_to,
 			"tail_colouration" = selected.tail_colouration,
 			"tail_extra_overlay" = selected.tail_extra_overlay,
-			"tail_extra_overlay2" = selected.tail_extra_overlay2
+			"tail_extra_overlay2" = selected.tail_extra_overlay2,
+			"drainmode" = selected.drainmode, //RS Edit || Ports VOREStation PR15876
 			// End RS edit
 		)
 
@@ -1530,8 +1531,11 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			if(ourtarget.absorbable)
 				process_options += "Absorb"
 
+			process_options += "Knockout" //Can't think of any mechanical prefs that would restrict this. // RS Edit || Ports VOREStation PR15876
+
 			if(process_options.len)
 				process_options += "Cancel"
+
 			else
 				to_chat(usr, "<span class= 'warning'>You cannot instantly process [ourtarget].</span>")
 				return
@@ -1564,8 +1568,10 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 						l.adjust_nutrition(thismuch)
 					ourtarget.mind?.vore_death = TRUE
 					ourtarget.death()		// To make sure all on-death procs get properly called
-					if(ourtarget)
-						b.handle_digestion_death(ourtarget)
+					if(ourtarget) //RS Edit start || Ports CHOMPStation 7158
+						if(ourtarget.is_preference_enabled(/datum/client_preference/digestion_noises))
+							SEND_SOUND(ourtarget, sound(get_sfx("fancy_death_prey")))
+						b.handle_digestion_death(ourtarget) // RS Edit end
 				if("Absorb")
 					if(tgui_alert(ourtarget, "\The [usr] is attempting to instantly absorb you. Is this something you are okay with happening to you?","Instant Absorb", list("No", "Yes")) != "Yes")
 						to_chat(usr, "<span class= 'warning'>\The [ourtarget] declined your absorb attempt.</span>")
@@ -1580,8 +1586,20 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 						var/n = 0 - ourtarget.nutrition
 						ourtarget.adjust_nutrition(n)
 					b.absorb_living(ourtarget)
+				//RS Edit || Ports VOREStation PR15876
+				if("Knockout")
+					if(tgui_alert(ourtarget, "\The [usr] is attempting to instantly make you unconscious, you will be unable until ejected from the pred. Is this something you are okay with happening to you?","Instant Knockout", list("No", "Yes")) != "Yes")
+						to_chat(usr, "<span class= 'vwarning'>\The [ourtarget] declined your knockout attempt.</span>")
+						to_chat(ourtarget, "<span class= 'vwarning'>You declined the knockout attempt.</span>")
+						return
+					if(ourtarget.loc != b)
+						to_chat(usr, "<span class= 'vwarning'>\The [ourtarget] is no longer in \the [b].</span>")
+						return
+					ourtarget.AdjustSleeping(500000)
+					to_chat(ourtarget, "<span class= 'vwarning'>\The [usr] has put you to sleep, you will remain unconscious until ejected from the belly.</span>")
 				if("Cancel")
 					return
+				//RS Edit || Ports VOREStation PR15876
 		//RS ADD START
 		if("Advance")
 			if(host.stat)
@@ -1651,6 +1669,13 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 				return FALSE
 			host.vore_selected.mode_flags ^= host.vore_selected.mode_flag_list[toggle_addon]
 			host.vore_selected.items_preserved.Cut() //Re-evaltuate all items in belly on
+			host.vore_selected.slow_digestion = FALSE //RS edit start
+			host.vore_selected.slow_brutal = FALSE
+			if(host.vore_selected.mode_flags & DM_FLAG_SLOWBODY) //Ports CHOMPStation PR 5184
+				host.vore_selected.slow_digestion = TRUE //CHOMPStation PR 5184 port end
+			if(host.vore_selected.mode_flags & DM_FLAG_SLOWBRUTAL)
+				host.vore_selected.slow_brutal = TRUE
+				host.vore_selected.slow_digestion = TRUE //RS edit end
 			. = TRUE
 		if("b_item_mode")
 			var/list/menu_list = host.vore_selected.item_digest_modes.Copy()
@@ -2058,6 +2083,17 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			var/new_new_damage = CLAMP(new_damage, 0, 6)
 			host.vore_selected.digest_clone = new_new_damage
 			. = TRUE
+		//RS Edit || Ports VOREStation PR15876
+		if("b_drainmode")
+			var/list/menu_list = host.vore_selected.drainmodes.Copy()
+			var/new_drainmode = tgui_input_list(usr, "Choose Mode (currently [host.vore_selected.digest_mode])", "Mode Choice", menu_list)
+			if(!new_drainmode)
+				return FALSE
+		//RS Edit || Ports VOREStation PR15876
+
+			host.vore_selected.drainmode = new_drainmode
+			host.vore_selected.updateVRPanels()
+
 		if("b_emoteactive")
 			host.vore_selected.emote_active = !host.vore_selected.emote_active
 			. = TRUE

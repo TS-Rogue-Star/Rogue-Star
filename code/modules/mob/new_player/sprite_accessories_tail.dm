@@ -848,6 +848,33 @@
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "narrowtail_2color-1"
 
+/datum/sprite_accessory/tail/vale_tail //RS Add || Chomp Port 535
+	name = "Vale Tail, dual color (vwag)"
+	icon = 'icons/mob/vore/tails_ch.dmi'
+	icon_state = "valetail"
+	ani_state = "valetail_w"
+	do_colouration = 1
+	color_blend_mode = ICON_MULTIPLY
+	extra_overlay = "valetail_mark"
+	extra_overlay_w = "valetail_mark_w"
+
+/datum/sprite_accessory/tail/tyranid_tail //RS Add || Chomp Port 4722
+	name = "Tyranid"
+	icon = 'icons/mob/vore/tails_ch.dmi'
+	icon_state = "tyranid"
+	do_colouration = 1
+	color_blend_mode = ICON_MULTIPLY
+
+/datum/sprite_accessory/tail/leopard  //RS Add || Chomp Port 5715
+	name = "Leopard tail, dual-color (vwag)"
+	icon = 'icons/mob/vore/tails_ch.dmi'
+	icon_state = "leopard"
+	ani_state = "leopard_w"
+	extra_overlay = "leopard_spots"
+	extra_overlay_w = "leopard_spots_w"
+	do_colouration = 1
+	color_blend_mode = ICON_MULTIPLY
+
 // Dino Tails
 
 /datum/sprite_accessory/tail/clubtail
@@ -1460,6 +1487,39 @@
 	icon_state = "zaprat_heart_s"
 	extra_overlay = "zaprat_heart_markings"
 
+/datum/sprite_accessory/tail/longtail/kaiju_tail_a_long  //RS Add || Port Virgo 15785
+	name = "Kaiju tail A, dual color"
+	icon = 'icons/mob/vore/taurs_vr.dmi'
+	icon_state = "kaiju_long_a"
+	extra_overlay = "kaiju_long_a_spikes"
+	do_colouration = 1
+	color_blend_mode = ICON_MULTIPLY
+
+/datum/sprite_accessory/tail/longtail/kaiju_tail_a_long_glow  //RS Add || Port Virgo 15785
+	name = "Kaiju tail A, dual color, glow"
+	icon = 'icons/mob/vore/taurs_vr.dmi'
+	icon_state = "kaiju_long_a"
+	extra_overlay = "kaiju_long_a_spikes"
+	extra_overlay2 = "kaiju_long_a_spikes_glow"
+	do_colouration = 1
+	color_blend_mode = ICON_MULTIPLY
+
+/datum/sprite_accessory/tail/longtail/desert_nightstalker //RS Add || Chomp Port 4619
+    name = "Desert Nightstalker Tail (vwag)"
+    icon = 'icons/mob/vore/taurs_ch.dmi'
+    icon_state = "nightstalker_desert"
+    ani_state = "nightstalker_desert_w"
+    do_colouration = 0 // We're not coloring this, these are pre-colored
+    color_blend_mode = ICON_ADD
+
+/datum/sprite_accessory/tail/longtail/diamondback_nightstalker //RS Add || Chomp Port 4619
+    name = "Diamondback Nightstalker Tail (dual-color, vwag)"
+    icon = 'icons/mob/vore/taurs_ch.dmi'
+    icon_state = "nightstalker_diamondback"
+    ani_state = "nightstalker_diamondback_w"
+    extra_overlay = "nightstalker_diamondback_markings"
+    extra_overlay_w = "nightstalker_diamondback_markings_w"
+
 //RS ADD START
 
 /datum/sprite_accessory/tail/longtail/flagtail
@@ -1475,5 +1535,25 @@
 	icon_state = "chonksqrl"
 	extra_overlay = "chonksqrl-m1"
 	extra_overlay2 = "chonksqrl-m2"
+
+/datum/sprite_accessory/tail/longtail/teppi
+	name = "Teppi (Vwag)"
+	icon = 'icons/rogue-star/tails_64x32_rs.dmi'
+	icon_state = "teppi"
+	extra_overlay = "teppi-1"
+	extra_overlay2 = "teppi-2"
+	ani_state = "teppi-f"
+	extra_overlay_w = "teppi-f-1"
+	extra_overlay2_w = "teppi-2"
+
+/datum/sprite_accessory/tail/longtail/teppi_r
+	name = "Teppi (Vwag)(Reversed markings)"
+	icon = 'icons/rogue-star/tails_64x32_rs.dmi'
+	icon_state = "teppi"
+	extra_overlay = "teppi-2"
+	extra_overlay2 = "teppi-1"
+	ani_state = "teppi-f"
+	extra_overlay_w = "teppi-f-2"
+	extra_overlay2_w = "teppi-1"
 
 //RS ADD END

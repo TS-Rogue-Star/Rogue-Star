@@ -1,0 +1,55 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"b" = (
+/obj/structure/prop/machine/tgmc_console5,
+/turf/template_noop,
+/area/redgate/structure/powered)
+"g" = (
+/turf/template_noop,
+/area/redgate/structure/powered)
+"o" = (
+/obj/structure/prop/machine/tube,
+/obj/random/awayloot/looseloot{
+	spawn_nothing_percentage = 75
+	},
+/turf/template_noop,
+/area/redgate/structure/powered)
+"A" = (
+/obj/random/mob/semirandom_mob_spawner/scarybot,
+/turf/template_noop,
+/area/redgate/structure/powered)
+
+(1,1,1) = {"
+g
+g
+g
+g
+g
+"}
+(2,1,1) = {"
+g
+g
+b
+A
+g
+"}
+(3,1,1) = {"
+g
+g
+o
+g
+g
+"}
+(4,1,1) = {"
+g
+A
+b
+g
+g
+"}
+(5,1,1) = {"
+g
+g
+g
+g
+g
+"}

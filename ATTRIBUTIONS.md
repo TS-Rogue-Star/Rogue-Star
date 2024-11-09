@@ -159,5 +159,162 @@
 **Creator:** Community project<br>
 **License:** Designs developed by players and translated to sprites by VerySoft; not for further use without consent of developing player
 <br>
-
+**File:** `icons/mob/vore/wings_vr.dmi`<br>
+**Icon-States:** kaiju_spikes_a, kaiju_spikes_a_glow<br>
+**Creator:** Hauki<br>
+**Link:** https://github.com/VOREStation/VOREStation/pull/15785<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/vore/taur_vr.dmi`<br>
+**Icon-States:** kaiju_long_a, kaiju_long_a_spikes, kaiju_spikes_a_glow<br>
+**Creator:** Hauki<br>
+**Link:** https://github.com/VOREStation/VOREStation/pull/15785<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/sprite_accessories/ears.dmi`<br>
+**Icon-States:** dangleantennae_robot<br>
+**Creator:** Hauki<br>
+**Link:** https://github.com/VOREStation/VOREStation/pull/15785<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/vore/ears_32x64.dmi`<br>
+**Icon-States:** mizutsune_ears, mizutsune_ears_inner<br>
+**Creator:** Ocelot<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/7517<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/markings_ch.dmi`<br>
+**Icon-States:** vale_eyes-head, vale_belly-torso, vale_belly-groin, vale_back-torso<br>
+**Creator:** Skits<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/535<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/cyberlimbs/vale/vale_head.dmi`<br>
+**Creator:** Skits<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/535<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/sprite_accessories/ears.dmi`<br>
+**Icon-States:** valeears<br>
+**Creator:** Skits<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/535<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/vore/tails_ch.dmi`<br>
+**Icon-States:** valetail_mark_w, valetail_mark, valetail, valetail_w<br>
+**Creator:** Skits<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/535<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/markings_yw.dmi`<br>
+**Icon-States:** lizard_snout_sharp, lizard_snout_sharp_light, lizard_snout_round, lizard_snout_round_light<br>
+**Creator:** Uploaded by Repede<br>
+**Link:** https://github.com/Yawn-Wider/YWPolarisVore/commit/8cc10470237a15be93f1dbef4ee960aad4cb9f84
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/markings_ch.dmi`<br>
+**Icon-States:** nightstalker_desert, nightstalker_1, nightstalker_2, nightstalker_3, spots_extremities<br>
+**Creator:** Comissioned by Rykka<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/4619
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/vore/taurs_ch.dmi`<br>
+**Icon-States:** nightstalker_desert, nightstalker_desert_w, nightstalker_diamondback, nightstalker_diamondback_w, nightstalker_diamondback_markings, nightstalker_diamondback_markings_w<br>
+**Creator:** Comissioned by Rykka<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/4619
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/markings_ch.dmi`<br>
+**Icon-States:** frills_simple, frills_short, frills_aqua, gradient, neckfluff, protogen_snout, husky, ram_horns, hawktalon, deerhoof, fox, hshark, hshark_snout, tiger<br>
+**Creator:** Original PR by Seris02<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/5715
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/vore/wings_ch.dmi`<br>
+**Icon-States:** mothwings_clockwork, mothwings_monarch, mothwings_luna, mothwings_atlas, mothwings_plain, mothwings_redish, mothwings_royal, mothwings_gothic, mothwings_lovers, mothwings_whitefly, mothwings_burntoff, mothwings_firewatch, mothwings_deathhead, mothwings_poison, mothwings_ragged, mothwings_moonfly, mothwings_snow<br>
+**Creator:** Original PR by theXDkidoflol<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/7890
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/markings_ch.dmi`<br>
+**Icon-States:** breasts, breasts_smooth, breasts_reptile<br>
+**Creator:** Base human sprite breasts with additional modifications by Aroliacue<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/7918
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/markings_yw.dmi`<br>
+**Icon-States:** preg_tummy_humanoid<br>
+**Creator:** Uploaded by Repede with additional modifications by Verkister<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/5246
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/markings_ch.dmi`<br>
+**Icon-States:** tyranidarmor, tyranid<br>
+**Creator:** Uploaded by AnymousUnknow<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/4722
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/vore/tails_ch.dmi`<br>
+**Icon-States:** tyranid<br>
+**Creator:** Uploaded by AnymousUnknow<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/4722
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/markings_ch.dmi`<br>
+**Icon-States:** thickneck, thickerneck, thickthroat<br>
+**Creator:** Verkister<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/5246
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/markings_ch.dmi`<br>
+**Icon-States:** softbelly_fem, softbelly, softbelly_fem_navel, softbelly_navel, chitin_belly, chitinbelly_fem, chestfluff_big, extra_eyes<br>
+**Creator:** Zeskorion<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/7542
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/sprite_accessories/ears.dmi`<br>
+**Icon-States:** antennae_alt<br>
+**Creator:** Zeskorion<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/7542<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/vore/wings_ch.dmi`<br>
+**Icon-States:** cloakmoth<br>
+**Creator:** Zeskorion<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/7542
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/sprite_accessories/ears.dmi`<br>
+**Icon-States:** fourears<br>
+**Creator:** Original PR by Seris02<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/5771<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/sprite_accessories/ears.dmi`<br>
+**Icon-States:** protogen, miqote<br>
+**Creator:** Original PR by Seris02<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/5715<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/vore/tails_ch.dmi`<br>
+**Icon-States:** leopard, leopard_w, leopard_spots, leopard_spots_w<br>
+**Creator:** Original PR by Seris02<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/5715
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/vore/ears_32x64.dmi`<br>
+**Icon-States:** antlers-wide<br>
+**Creator:** Original PR by Probbrie<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `sound/voice/glub.ogg`<br>
+**Creator:** Free Gaming Sound Effects<br>
+**Link:** https://www.youtube.com/watch?v=Xiyq3Ax3Jbc
+**License:** Permission to use provided by creator<br>
+<br>
+**File:** `icons/mob/human_races/sprite_accessories/ears.dmi`<br>
+**Icon-States:** goatears_outer, goatears_inner, goatears_horns<br>
+**Creator:** Snowbell<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/5715<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>

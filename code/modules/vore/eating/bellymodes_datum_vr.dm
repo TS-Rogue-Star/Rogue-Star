@@ -29,21 +29,26 @@ GLOBAL_LIST_INIT(digest_modes, list())
 
 	//Person just died in guts!
 	if(L.stat == DEAD)
-		if(L.is_preference_enabled(/datum/client_preference/digestion_noises))
-			if(!B.fancy_vore)
-				SEND_SOUND(L, sound(get_sfx("classic_death_sounds")))
-			else
-				SEND_SOUND(L, sound(get_sfx("fancy_death_prey")))
-		B.handle_digestion_death(L)
+		if(!L.digestion_in_progress) //RS Edit start || Ports CHOMPStation PR 5161
+			if(L.is_preference_enabled(/datum/client_preference/digestion_noises))
+				if(!B.fancy_vore)
+					SEND_SOUND(L, sound(get_sfx("classic_death_sounds")))
+				else
+					SEND_SOUND(L, sound(get_sfx("fancy_death_prey"))) //RS edit end
+			B.handle_digestion_death(L)
 		// Begin RS edit
 		if(!L)
 			if (istype(B.owner, /mob/living/carbon/human))
 				var/mob/living/carbon/human/howner = B.owner
 				howner.update_fullness()
 		// End RS edit
-		if(!B.fancy_vore)
-			return list("to_update" = TRUE, "soundToPlay" = sound(get_sfx("classic_death_sounds")))
-		return list("to_update" = TRUE, "soundToPlay" = sound(get_sfx("fancy_death_pred")))
+			if(!B.fancy_vore) //RS Edit start || Ports CHOMPStation PR 5161
+				return list("to_update" = TRUE, "soundToPlay" = sound(get_sfx("classic_death_sounds")))
+			return list("to_update" = TRUE, "soundToPlay" = sound(get_sfx("fancy_death_pred")))
+		else
+			B.handle_digestion_death(L)//RS edit end
+	if(!L)
+		return
 
 	// Deal digestion damage (and feed the pred)
 	var/old_health = L.health	// RS ADD
@@ -71,6 +76,20 @@ GLOBAL_LIST_INIT(digest_modes, list())
 		if (istype(B.owner, /mob/living/carbon/human))
 			var/mob/living/carbon/human/howner = B.owner
 			howner.update_fullness()
+
+			//Shadekin energy calculation start!
+			var/datum/species/shadekin/SK = howner.species
+			if(istype(SK))
+				switch(SK.get_shadekin_eyecolor(howner))
+					if(RED_EYES)
+						howner.shadekin_adjust_energy(damage_gain) 	//1dmg to 1 energy, more or less.
+					if(ORANGE_EYES)
+						howner.shadekin_adjust_energy(damage_gain/1.5)
+					if(PURPLE_EYES)
+						howner.shadekin_adjust_energy(damage_gain/1.5)
+					else //Anybody else!
+						howner.shadekin_adjust_energy(damage_gain/2)
+			//Shadekin energy calculation end!
 	consider_healthbar(L, old_health, B.owner)
 	// End RS edit
 	if(isrobot(B.owner))

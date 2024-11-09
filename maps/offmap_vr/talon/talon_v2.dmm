@@ -13478,9 +13478,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/smartfridge/sheets/persistent_lossy{
-	layer = 3.3
-	},
+/obj/machinery/smartfridge/sheets/mining/persistent,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/refining)
 "TF" = (

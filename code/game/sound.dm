@@ -309,7 +309,7 @@ var/list/goon_speak_lizard_sound = list('sound/talksounds/goon/lizard.ogg', 'sou
 var/list/goon_speak_pug_sound = list('sound/talksounds/goon/pug.ogg', 'sound/talksounds/goon/pug_ask.ogg', 'sound/talksounds/goon/pug_exclaim.ogg')
 var/list/goon_speak_pugg_sound = list('sound/talksounds/goon/pugg.ogg', 'sound/talksounds/goon/pugg_ask.ogg', 'sound/talksounds/goon/pugg_exclaim.ogg')
 var/list/goon_speak_roach_sound = list('sound/talksounds/goon/roach.ogg', 'sound/talksounds/goon/roach_ask.ogg', 'sound/talksounds/goon/roach_exclaim.ogg')
-var/list/goon_speak_skelly_sound = list('sound/talksounds/goon/skelly.ogg', 'sound/talksounds/goon/skelly_ask.ogg', 'sound/talksounds/goon/skelly_exclaim.ogg')
+var/list/goon_speak_skelly_sound = list('sound/talksounds/goon/skellyfixed.ogg', 'sound/talksounds/goon/skelly_ask.ogg', 'sound/talksounds/goon/skelly_exclaimfixed.ogg')
 
 //RS ADD START
 
@@ -322,5 +322,12 @@ var/list/welcome_sound = list('sound/voice/welcome/0.ogg' = 50,'sound/voice/welc
 'sound/voice/welcome/21-seashell.ogg' = 50, 'sound/voice/welcome/22-seashell.ogg' = 50, 'sound/voice/welcome/23-seashell.ogg' = 50,
 'sound/voice/welcome/24-seashell.ogg' = 50, 'sound/voice/welcome/25-hazard.ogg' = 50, 'sound/voice/welcome/26-hazard.ogg' = 50,
 'sound/voice/welcome/27.ogg' = 10, 'sound/voice/welcome/28-snowbell.ogg' = 50)
+
+var/list/yipyap = list('sound/rogue-star/yip/yip1.ogg', 'sound/rogue-star/yip/yip2.ogg', 'sound/rogue-star/yip/yip3.ogg', 'sound/rogue-star/yip/yip4.ogg',
+'sound/rogue-star/yip/yip5.ogg', 'sound/rogue-star/yip/yip6.ogg', 'sound/rogue-star/yip/yip7.ogg', 'sound/rogue-star/yip/yip8.ogg', 'sound/rogue-star/yip/yip9.ogg',
+'sound/rogue-star/yip/yip10.ogg', 'sound/rogue-star/yip/yip11.ogg', 'sound/rogue-star/yip/yip12.ogg', 'sound/rogue-star/yip/yip13.ogg', 'sound/rogue-star/yip/yip14.ogg',
+'sound/rogue-star/yip/yip15.ogg','sound/rogue-star/yap/yap1.ogg', 'sound/rogue-star/yap/yap2.ogg', 'sound/rogue-star/yap/yap4.ogg', 'sound/rogue-star/yap/yap5.ogg',
+'sound/rogue-star/yap/yap6.ogg', 'sound/rogue-star/yap/yap7.ogg', 'sound/rogue-star/yap/yap8.ogg', 'sound/rogue-star/yap/yap9.ogg', 'sound/rogue-star/yap/yap10.ogg',
+'sound/rogue-star/yap/yap11.ogg', 'sound/rogue-star/yap/yap12.ogg', 'sound/rogue-star/yap/yap13.ogg', 'sound/rogue-star/yap/yap14.ogg')
 
 //RS ADD END

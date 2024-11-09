@@ -135,7 +135,8 @@ var/world_time_day
 				/mob/living/simple_mob/vore/wolf/direwolf = 1,
 				/mob/living/simple_mob/vore/wolf/direwolf/dog = 1,
 				/mob/living/simple_mob/vore/squirrel = 20,
-				/mob/living/simple_mob/vore/deer = 10
+				/mob/living/simple_mob/vore/deer = 10,
+				/mob/living/simple_mob/vore/jackolanturn = 1
 			)
 			grass_types = list(
 				/obj/structure/flora/ausbushes/sparsegrass,

@@ -233,8 +233,9 @@
 		"Moving Train" = list("Redgate - Moving Train", "Redgate - Moving Train Upper Level"),
 		"Fantasy Town" = list("Redgate - Fantasy Dungeon", "Redgate - Fantasy Town"),
 		"Snowglobe" = list("Redgate - Snowglobe"),
-		"Pet Island" = list("Redgate - Pet Island")
-//		"North Star" = list("Redgate - North Star") // Not ready yet
+		"Pet Island" = list("Redgate - Pet Island"),
+//		"North Star" = list("Redgate - North Star"), // Not ready yet
+		"Pizzaria" = list("Redgate - Pizzaria"),
 		)
 
 	lateload_gb_north = list(

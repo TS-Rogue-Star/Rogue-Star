@@ -64,6 +64,15 @@
 				digest_stage = w_class
 		else
 			GLOB.items_digested_roundstat++
+			if(isbelly(item_storage)) //RS Edit start: Ports item digestion sounds || CHOMPStation PR 5858
+				var/soundfile
+				if(w_class >= 4)
+					soundfile = pick('sound/vore/shortgurgles/gurgle_L1.ogg', 'sound/vore/shortgurgles/gurgle_L2.ogg', 'sound/vore/shortgurgles/gurgle_L3.ogg')
+				else if(w_class >= 3)
+					soundfile = pick('sound/vore/shortgurgles/gurgle_M1.ogg', 'sound/vore/shortgurgles/gurgle_M2.ogg', 'sound/vore/shortgurgles/gurgle_M3.ogg')
+				else
+					soundfile = pick('sound/vore/shortgurgles/gurgle_S1.ogg', 'sound/vore/shortgurgles/gurgle_S2.ogg', 'sound/vore/shortgurgles/gurgle_S3.ogg')
+				playsound(src, soundfile, vary = 1, vol=75, falloff = VORE_SOUND_FALLOFF, preference = /datum/client_preference/digestion_noises, volume_channel = VOLUME_CHANNEL_VORE) //RS edit end
 			qdel(src)
 	if(g_damage > w_class)
 		return w_class

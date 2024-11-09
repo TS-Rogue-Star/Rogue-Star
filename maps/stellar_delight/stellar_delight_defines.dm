@@ -179,7 +179,8 @@
 		"Moving Train" = list("Redgate - Moving Train", "Redgate - Moving Train Upper Level"),
 		"Fantasy Town" = list("Redgate - Fantasy Dungeon", "Redgate - Fantasy Town"),
 		"Snowglobe" = list("Redgate - Snowglobe"),
-		"Pet Island" = list("Redgate - Pet Island")
+		"Pet Island" = list("Redgate - Pet Island"),
+		"Pizzaria" = list("Redgate - Pizzaria"),
 		)
 
 	ai_shell_restricted = TRUE

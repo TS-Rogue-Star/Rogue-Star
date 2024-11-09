@@ -5684,6 +5684,7 @@
 /obj/machinery/light/small/torch{
 	dir = 8
 	},
+/obj/item/weapon/book/bundle/custom_library/reference/AlchemyGuide,
 /turf/simulated/floor/wood/alt/panel,
 /area/redgate/fantasy/castle)
 "Jo" = (

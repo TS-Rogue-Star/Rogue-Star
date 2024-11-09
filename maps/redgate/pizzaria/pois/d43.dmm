@@ -1,0 +1,71 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"g" = (
+/turf/template_noop,
+/area/redgate/structure/powered)
+"h" = (
+/obj/random/mob/semirandom_mob_spawner/scarybot,
+/turf/template_noop,
+/area/redgate/structure/powered)
+"n" = (
+/obj/structure/prop/machine/solifier,
+/turf/template_noop,
+/area/redgate/structure/powered)
+"q" = (
+/obj/structure/prop/machine/sorter,
+/turf/template_noop,
+/area/redgate/structure/powered)
+"s" = (
+/obj/structure/prop/machine/random_radio,
+/turf/template_noop,
+/area/redgate/structure/powered)
+"E" = (
+/obj/structure/prop/machine/stamper,
+/turf/template_noop,
+/area/redgate/structure/powered)
+"J" = (
+/obj/structure/prop/machine/tgmc_console1,
+/turf/template_noop,
+/area/redgate/structure/powered)
+"V" = (
+/obj/structure/prop/machine/smelter,
+/obj/random/awayloot/looseloot{
+	spawn_nothing_percentage = 75
+	},
+/turf/template_noop,
+/area/redgate/structure/powered)
+
+(1,1,1) = {"
+s
+g
+g
+V
+q
+"}
+(2,1,1) = {"
+g
+g
+n
+g
+E
+"}
+(3,1,1) = {"
+g
+h
+n
+h
+g
+"}
+(4,1,1) = {"
+g
+g
+n
+g
+g
+"}
+(5,1,1) = {"
+J
+g
+g
+g
+g
+"}

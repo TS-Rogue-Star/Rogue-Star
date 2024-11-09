@@ -1309,12 +1309,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled,
 /area/medical/medbay)
-"cP" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/tiled,
-/area/medical/medbay)
 "cQ" = (
 /obj/machinery/alarm{
 	pixel_y = 22
@@ -1411,18 +1405,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
-	},
-/turf/simulated/floor/tiled,
-/area/medical/medbay)
-"df" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
 	},
 /turf/simulated/floor/tiled,
 /area/medical/medbay)
@@ -10736,7 +10718,7 @@ cO
 de
 dr
 dF
-cP
+et
 eb
 du
 cM
@@ -10832,10 +10814,10 @@ cz
 cA
 cc
 cH
-cP
-cP
-cP
-df
+et
+et
+et
+eA
 ds
 du
 cM
@@ -11451,7 +11433,7 @@ dh
 cM
 dG
 dF
-cP
+et
 en
 cM
 cM
