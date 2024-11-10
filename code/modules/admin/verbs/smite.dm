@@ -9,7 +9,7 @@
 		return
 
 	var/list/smite_types = list(SMITE_BREAKLEGS,SMITE_BLUESPACEARTILLERY,SMITE_SPONTANEOUSCOMBUSTION,SMITE_LIGHTNINGBOLT,
-								SMITE_SHADEKIN_ATTACK,SMITE_SHADEKIN_NOMF,SMITE_AD_SPAM,SMITE_REDSPACE_ABDUCT,SMITE_AUTOSAVE,SMITE_AUTOSAVE_WIDE)
+								SMITE_SHADEKIN_ATTACK,SMITE_SHADEKIN_NOMF,SMITE_AD_SPAM,SMITE_REDSPACE_ABDUCT,SMITE_AUTOSAVE,SMITE_AUTOSAVE_WIDE,SMITE_GIVECHEM,SMITE_PURGECHEM)
 
 	var/smite_choice = tgui_input_list(usr, "Select the type of SMITE for [target]","SMITE Type Choice", smite_types)
 	if(!smite_choice)
@@ -157,6 +157,12 @@
 		if(SMITE_AD_SPAM)
 			if(target.client)
 				target.client.create_fake_ad_popup_multiple(/obj/screen/popup/default, 15)
+
+		if(SMITE_GIVECHEM)
+			give_chems(target, src)
+
+		if(SMITE_PURGECHEM)
+			purge_chems(target, src)
 
 		else
 			return //Injection? Don't print any messages.
@@ -315,3 +321,43 @@ var/redspace_abduction_z
 			to_chat(target, "<span class='notice' style='font: small-caps bold large monospace!important'>Autosave complete!</span>")
 			if(target.client)
 				target.client.screen -= loader
+
+
+//RS Add
+/client/proc/purge_chems(var/mob/living/carbon/human/target, var/client/user)
+	//RS Add || VOREStation PR 16414
+	if(!istype(target))
+		to_chat(user, "<span class='warning'>Skipping [target] because they are not a /mob/living.</span>")
+		return
+	target.bloodstr.clear_reagents()
+	target.ingested.clear_reagents()
+	target.touching.clear_reagents()
+
+
+/client/proc/give_chems(var/mob/living/carbon/human/target, var/client/user)
+	//RS Add || VOREStation PR 16414
+	if(!istype(target))
+		to_chat(user, "<span class='warning'>Skipping [target] because they are not a /mob/living.</span>")
+		return
+	var/list/chem_list = typesof(/datum/reagent)
+	var/datum/reagent/chemical = tgui_input_list(user, "Which chemical would you like to add?", "Chemicals", chem_list)
+	if(!chemical)
+		return
+
+	var/chem = initial(chemical.id)
+	var/amount = tgui_input_number(user, "How much of the chemical would you like to add?", "Amount", 5)
+	if(!amount)
+		return
+	var/location = tgui_alert(user, "Where do you want to add the chemical?", "Location", list("Blood", "Stomach", "Skin", "Cancel"))
+
+	if(!location || location == "Cancel")
+		return
+	if(location == "Blood")
+		target.bloodstr.add_reagent(chem, amount)
+	if(location == "Stomach")
+		target.ingested.add_reagent(chem, amount)
+	if(location == "Skin")
+		target.touching.add_reagent(chem, amount)
+	log_and_message_admins("[key_name(src)] has given [amount] units of [chem] to [target]'s [location]")
+
+//RS Add End
