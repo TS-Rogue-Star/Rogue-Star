@@ -25,7 +25,7 @@ var/const/access_pilot = 67
 
 /var/const/access_talon_bridge = 302
 /datum/access/bridge
-	id = access_bridge
+	id = access_heads
 	desc = "Talon Bridge"
 	access_type = ACCESS_TYPE_PRIVATE
 
@@ -37,7 +37,7 @@ var/const/access_pilot = 67
 
 /var/const/access_talon_engineer = 304
 /datum/access/engineer
-	id = access_engineer
+	id = access_engine
 	desc = "Talon Engineering"
 	access_type = ACCESS_TYPE_PRIVATE
 
