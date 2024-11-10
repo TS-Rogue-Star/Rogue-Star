@@ -1309,12 +1309,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled,
 /area/medical/medbay)
-"cP" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/mob/living/simple_mob/vore/scarybot/quad_bot,
-/turf/simulated/floor/tiled,
-/area/hallway/secondary/engineering_hallway)
 "cQ" = (
 /obj/machinery/alarm{
 	pixel_y = 22
@@ -1412,10 +1406,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
-/turf/simulated/floor/tiled,
-/area/medical/medbay)
-"df" = (
-/mob/living/simple_mob/vore/scarybot/watcher_bot,
 /turf/simulated/floor/tiled,
 /area/medical/medbay)
 "dg" = (
@@ -3309,13 +3299,6 @@
 	},
 /turf/simulated/floor/airless,
 /area/space)
-"jH" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/mob/living/simple_mob/vore/scarybot/tall_bot,
-/turf/simulated/floor/tiled,
-/area/medical/medbay)
 "jQ" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -3559,10 +3542,6 @@
 /obj/effect/floor_decal/industrial/outline/red,
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/engine_gas)
-"mO" = (
-/mob/living/simple_mob/vore/scarybot/quad_bot,
-/turf/simulated/floor/tiled,
-/area/bridge)
 "mP" = (
 /obj/effect/floor_decal/industrial/warning/corner,
 /turf/simulated/floor,
@@ -3695,10 +3674,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/submap/pa_room)
-"ok" = (
-/mob/living/simple_mob/vore/scarybot/tall_bot,
-/turf/simulated/floor/tiled,
-/area/bridge)
 "ov" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
@@ -5976,10 +5951,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/submap/pa_room)
-"Oa" = (
-/mob/living/simple_mob/vore/scarybot/watcher_bot,
-/turf/simulated/floor/tiled,
-/area/bridge)
 "Oc" = (
 /obj/machinery/light,
 /obj/machinery/embedded_controller/radio/simple_docking_controller{
@@ -6535,10 +6506,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/submap/pa_room)
-"TH" = (
-/mob/living/simple_mob/vore/scarybot,
-/turf/simulated/floor/tiled,
-/area/bridge)
 "TI" = (
 /obj/machinery/the_singularitygen/tesla{
 	anchored = 1
@@ -8945,7 +8912,7 @@ fY
 gi
 gf
 gr
-TH
+gf
 gf
 gf
 gf
@@ -9047,7 +9014,7 @@ fY
 GC
 gf
 gr
-mO
+gf
 gf
 gz
 gf
@@ -9149,7 +9116,7 @@ fY
 gj
 gf
 gr
-ok
+gf
 gf
 gz
 gf
@@ -9251,7 +9218,7 @@ fY
 gk
 gf
 gr
-Oa
+gf
 gf
 gf
 gf
@@ -10743,7 +10710,7 @@ cj
 cu
 cy
 cu
-cP
+cu
 cG
 cO
 cO
@@ -10859,7 +10826,7 @@ ek
 et
 et
 eA
-jH
+et
 eG
 eO
 eO
@@ -11055,7 +11022,7 @@ cM
 cM
 cM
 dh
-df
+cM
 du
 qZ
 cM

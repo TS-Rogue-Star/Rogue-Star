@@ -157,6 +157,25 @@
 	desc = "It's magic. We don't have to explain it."
 	starts_with = list(/obj/item/weapon/reagent_containers/pill/adminordrazine = 21)
 
+//RS ADD START
+
+/obj/item/weapon/storage/pill_bottle/adminordrazine/bean
+	name = "bag of magic beans"
+	desc = "They're so full of magic!"
+	starts_with = list(/obj/item/weapon/reagent_containers/pill/adminordrazine/bean = 21)
+	icon = 'icons/obj/dice.dmi'
+	icon_state = "magicdicebag"
+	drop_sound = 'sound/items/drop/hat.ogg'
+	pickup_sound = 'sound/items/pickup/hat.ogg'
+
+/obj/item/weapon/reagent_containers/pill/adminordrazine/bean
+	name = "magic bean"
+	desc = "It's full of magic!"
+	icon = 'icons/rogue-star/misc.dmi'
+	icon_state = "bean"
+
+//RS ADD END
+
 /obj/item/weapon/storage/pill_bottle/nutriment
 	name = "pill bottle (Food)"
 	desc = "Contains pills used to feed people."

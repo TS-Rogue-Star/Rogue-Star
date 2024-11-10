@@ -2164,6 +2164,15 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/maintenance/wing_port)
+"gw" = (
+/obj/structure/table/rack/shelf/steel,
+/obj/machinery/recharger/wallcharger{
+	pixel_x = 5;
+	pixel_y = 24
+	},
+/obj/item/clothing/accessory/holster/waist,
+/turf/simulated/floor/tiled/techfloor,
+/area/talon_v2/armory)
 "gx" = (
 /obj/effect/floor_decal/industrial/warning/dust{
 	dir = 1
@@ -8440,13 +8449,10 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/hangar)
 "Dk" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/holoposter{
-	dir = 1;
-	pixel_y = 32
-	},
+/obj/structure/closet/walllocker_double/science/north,
+/obj/item/instrument/guitar,
+/obj/random/instrument,
+/obj/random/instrument,
 /turf/simulated/floor/wood,
 /area/talon_v2/crew_quarters/bar)
 "Dl" = (
@@ -12314,6 +12320,8 @@
 	pixel_x = 5;
 	pixel_y = 24
 	},
+/obj/item/clothing/accessory/holster/waist,
+/obj/item/clothing/accessory/holster/waist,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/armory)
 "PD" = (
@@ -14764,6 +14772,7 @@
 /obj/structure/bed/chair/bay/chair{
 	dir = 4
 	},
+/obj/machinery/light,
 /turf/simulated/floor/wood,
 /area/talon_v2/crew_quarters/bar)
 "XW" = (
@@ -23326,7 +23335,7 @@ Dd
 FO
 Si
 Oj
-PC
+gw
 OP
 OP
 OP
