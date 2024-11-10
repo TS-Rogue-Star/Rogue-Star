@@ -61,7 +61,7 @@ var/global/list/latejoin_talon = list()
 /obj/machinery/computer/shuttle_control/explore/talonboat
 	name = "shuttle control console"
 	shuttle_tag = "Talon's Shuttle"
-	req_one_access = list(access_talon)
+	req_one_access = list(access_talon_bridge)
 
 /obj/effect/overmap/visitable/ship/landable/talon_boat
 	name = "ITV Talon Shuttle"
@@ -282,7 +282,7 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 
 /obj/item/weapon/card/id/synthetic/talon/Initialize()
 	. = ..()
-	access = list(access_talon, access_synth)
+	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_sec, access_synth)
 
 /obj/machinery/power/smes/buildable/offmap_spawn/New()
 	..(1)
@@ -294,18 +294,18 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 
 /obj/machinery/power/apc/talon
 	req_access = list()
-	req_one_access = list(access_talon)
+	req_one_access = list(access_talon_engineer)
 
 /obj/machinery/power/apc/talon/hyper
 	cell_type = /obj/item/weapon/cell/hyper
 
 /obj/machinery/alarm/talon
 	req_access = list()
-	req_one_access = list(access_talon)
+	req_one_access = list(access_talon_engineer)
 
 /obj/machinery/door/firedoor/glass/talon
 	req_access = list()
-	req_one_access = list(access_talon)
+	req_one_access = list(access_talon_engineer)
 
 /obj/machinery/door/firedoor/glass/talon/hidden
 	name = "\improper Emergency Shutter System"
@@ -370,7 +370,7 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 
 /obj/structure/closet/secure_closet/talon_captain
 	name = "talon captain's locker"
-	req_access = list(access_talon)
+	req_access = list(access_talon_bridge)
 	closet_appearance = /decl/closet_appearance/secure_closet/talon/captain
 
 	starts_with = list(
@@ -392,7 +392,7 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 
 /obj/structure/closet/secure_closet/talon_guard
 	name = "talon guard's locker"
-	req_access = list(access_talon)
+	req_access = list(access_talon_sec)
 	closet_appearance = /decl/closet_appearance/secure_closet/talon/guard
 
 	starts_with = list(
@@ -423,7 +423,7 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 
 /obj/structure/closet/secure_closet/talon_doctor
 	name = "talon doctor's locker"
-	req_access = list(access_talon)
+	req_access = list(access_talon_medical)
 	closet_appearance = /decl/closet_appearance/secure_closet/talon/doctor
 
 	starts_with = list(
@@ -445,7 +445,7 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 
 /obj/structure/closet/secure_closet/talon_engineer
 	name = "talon engineer's locker"
-	req_access = list(access_talon)
+	req_access = list(access_talon_engineer)
 	closet_appearance = /decl/closet_appearance/secure_closet/talon/engineer
 
 	starts_with = list(
@@ -499,7 +499,7 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 
 /obj/structure/closet/secure_closet/talon_miner
 	name = "talon miner's locker"
-	req_access = list(access_talon)
+	req_access = list(access_talon_cargo)
 	closet_appearance = /decl/closet_appearance/secure_closet/talon/miner
 
 	starts_with = list(
@@ -572,11 +572,11 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 /datum/computer_file/program/power_monitor/talon
 	filename = "tpowermonitor"
 	filedesc = "Power Monitoring (Talon)"
-	required_access = access_talon
+	required_access = access_talon_engineer
 /datum/computer_file/program/alarm_monitor/talon
 	filename = "talarmmonitoreng"
 	filedesc = "Alarm Monitoring (Talon)"
-	required_access = access_talon
+	required_access = access_talon_engineer
 /datum/computer_file/program/rcon_console/talon
 	filename = "trconconsole"
 	filedesc = "RCON Remote Control (Talon)"
@@ -584,11 +584,11 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 /datum/computer_file/program/atmos_control/talon
 	filename = "tatmoscontrol"
 	filedesc = "Atmosphere Control (Talon)"
-	required_access = access_talon
+	required_access = access_talon_engineer
 /datum/computer_file/program/suit_sensors/talon
 	filename = "tsensormonitor"
 	filedesc = "Suit Sensors Monitoring (Talon)"
-	required_access = access_talon
+	required_access = access_talon_medical
 
 // Modular computer/console presets
 /obj/item/modular_computer/laptop/preset/custom_loadout/standard/talon/pilot
