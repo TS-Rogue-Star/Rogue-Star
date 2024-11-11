@@ -67,17 +67,17 @@
 <br>
 ### ROGUE STAR SPECIFIC ATTRIBUTIONS
 **File**: `icons/mob/screen_full_vore.dmi`<br>
-**Icon-States:** `anibelly`, `totally_mawful`, and `further_mawful`<br>
+**Icon-States:** `anibelly`, `totally_mawful`, `further_mawful`, `robot`, and `beak`<br>
 **Creator:** VerySoft<br>
 **License:** Licensed for use by Rogue Star; unlicensed for further use without permission of copyright holder<br>
 <br>
 **File**: `icons/mob/screen_full_colorized_vore.dmi`<br>
-**Icon-States:** `anibelly`, `totally_mawful`, and `further_mawful`<br>
+**Icon-States:** `anibelly`, `totally_mawful`, `robot`, and `beak`<br>
 **Creator:** VerySoft<br>
 **License:** Licensed for use by Rogue Star; unlicensed for further use without permission of copyright holder<br>
 <br>
 **File**: `icons/mob/screen_full_colorized_vore_overlays.dmi`<br>
-**Icon-States:** `totally_mawful_nc`, `further_mawful_nc`<br>
+**Icon-States:** `totally_mawful_nc`, `further_mawful_nc`, `robot_l1`, `robot_l2` `beak_l1`,`beak_l2`, and `beak_nc`<br>
 **Creator:** VerySoft<br>
 **License:** Licensed for use by Rogue Star; unlicensed for further use without permission of copyright holder<br>
 <br>
