@@ -6,7 +6,7 @@
 
 	matter = list(MAT_STEEL = 50,MAT_GLASS = 50)
 
-	req_one_access = list(access_engine, access_talon) // Access to unlock the device, ignored if emagged //VOREStation Edit - Add talon
+	req_one_access = list(access_engine, access_talon_engineer) // Access to unlock the device, ignored if emagged //VOREStation Edit - Add talon
 	var/list/apply_any_access = list(access_engine) // Can apply any access, not just their own
 
 	var/secure = 0 //if set, then wires will be randomized and bolts will drop if the door is broken
@@ -133,11 +133,11 @@
 	// Nothing
 	if(!id || !id.access)
 		return list()
-	
+
 	// Has engineer access, can put any access
 	else if(has_access(null, apply_any_access, id.access))
 		return get_all_station_access()
-	
+
 	// Not an engineer, can only pick your own accesses to program
 	else
 		return id.access
