@@ -39,33 +39,33 @@
 	name = "Talon engineer suit cycler"
 	model_text = "Talon engineer"
 	icon_state = "dark_cycler"
-	req_access = list(access_talon)
+	req_access = list(access_talon_engineer)
 	departments = list(/datum/suit_cycler_choice/department/talon/eng)
 
 /obj/machinery/suit_cycler/vintage/tguard
 	name = "Talon guard suit cycler"
 	model_text = "Talon guard"
 	icon_state = "dark_cycler"
-	req_access = list(access_talon)
+	req_access = list(access_talon_security)
 	departments = list(/datum/suit_cycler_choice/department/talon/marine)
 
 /obj/machinery/suit_cycler/vintage/tmedic
 	name = "Talon doctor suit cycler"
 	model_text = "Talon doctor"
 	icon_state = "dark_cycler"
-	req_access = list(access_talon)
+	req_access = list(access_talon_medical)
 	departments = list(/datum/suit_cycler_choice/department/talon/med)
 
 /obj/machinery/suit_cycler/vintage/tcaptain
 	name = "Talon captain suit cycler"
 	model_text = "Talon captain"
 	icon_state = "dark_cycler"
-	req_access = list(access_talon)
+	req_access = list(access_talon_bridge)
 	departments = list(/datum/suit_cycler_choice/department/talon/officer)
 
 /obj/machinery/suit_cycler/vintage/tminer
 	name = "Talon miner suit cycler"
 	model_text = "Talon miner"
 	icon_state = "dark_cycler"
-	req_access = list(access_talon)
+	req_access = list(access_talon_cargo)
 	departments = list(/datum/suit_cycler_choice/department/talon/miner)
