@@ -159,6 +159,8 @@
 	flags = 0
 /datum/language/human
 	flags = 0
+/datum/language/tajaranakhani
+	flags = 0
 /datum/language/gutter
 	machine_understands = FALSE
 	desc = "A dialect of Tradeband not uncommon amongst traders in the Free Trade Union. The language is often difficult to translate due to changing frequently and being highly colloquial."
