@@ -13,7 +13,6 @@
 
 /obj/item/paint_brush/organic/Initialize(location)
 	..()
-	START_PROCESSING(SSobj, src)
 	if(ismob(loc))
 		visible_message("[loc.name] pulls out an organic paintbrush of some sort!")
 		creator = loc
@@ -27,25 +26,6 @@
 			qdel(src)
 
 /obj/item/paint_brush/organic/Destroy()
-	STOP_PROCESSING(SSobj, src)
 	creator.linked_brush = null
 	creator = null
 	..()
-
-/obj/item/paint_brush/organic/process()
-	if(!creator || loc != creator || !creator.item_is_in_hands(src))
-		// Tidy up a bit.
-		if(istype(loc,/mob/living/carbon/human))
-			var/mob/living/carbon/human/host = loc
-			if(istype(host))
-				for(var/obj/item/organ/external/organ in host.organs)
-					for(var/obj/item/O in organ.implants)
-						if(O == src)
-							organ.implants -= src
-			host.pinned -= src
-			host.embedded -= src
-			host.drop_from_inventory(src)
-		creator.linked_brush = null
-		spawn(1)
-			if(src)
-				qdel(src)
