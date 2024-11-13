@@ -81,6 +81,33 @@
 		expire(silent = FALSE)
 
 
+//RS Edit Start
+/datum/modifier/underwater_dive
+	name = "Underwater Dive"
+	desc = "You are currently diving at someone while under water, your quick speed and depth resulting in it being impossible to see you."
+
+	on_created_text = "<span class='warning'>You dive through the water.</span>"
+	on_expired_text = "<span class='notice'>You have finished diving.</span>"
+
+	stacks = MODIFIER_STACK_FORBID
+
+	slowdown = -5 //VROOM
+
+/datum/modifier/underwater_dive/on_applied()
+	holder.alpha = 0
+	return
+
+/datum/modifier/underwater_dive/on_expire()
+	holder.alpha = 255
+	if(istype(holder.loc, /turf/simulated/floor/water))//Still in the water? Let's get your normal stealth back.
+		var/turf/simulated/floor/water/water_floor = holder.loc
+		if(water_floor.depth > 1)
+			holder.add_modifier(/datum/modifier/underwater_stealth) //In case they lost it!
+	return
+
+/datum/modifier/underwater_dive/tick()
+	expire(silent = TRUE) //You only get one tick of this! This is ~2-3 seconds if you hit a tick perfectly. It might expire sooner, but it lasts long enough!
+//RS Edit End
 
 
 
