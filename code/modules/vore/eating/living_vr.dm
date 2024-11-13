@@ -27,6 +27,7 @@
 	var/appendage_color = "#e03997" //Default pink. Used for the 'long_vore' trait.
 	var/appendage_alt_setting = FALSE	// Dictates if 'long_vore' user pulls prey to them or not. 1 = user thrown towards target.
 	var/trash_catching = FALSE 			//RSEdit: Toggle for trash throw vore || Ports trash eater throw vore from CHOMPStation PR#5987
+	var/obj/item/paint_brush/organic/linked_brush 	//RSAddition: Allows for natural painters. This is the paintbrush.
 	//Commented out by maintainer request
 	//var/passtable_reset					//RS Port Chomp PR 7822 || CHOMPEDIT For crawling
 	//var/passtable_crawl_checked = FALSE //RS Port Chomp PR 7822 || CHOMPEDIT For Crawling

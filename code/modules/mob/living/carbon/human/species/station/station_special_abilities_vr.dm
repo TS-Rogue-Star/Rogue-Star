@@ -1733,3 +1733,49 @@
 		visible_message(ourmsg)
 
 //RS ADD END
+
+//RS ADD
+/mob/living/carbon/human/proc/adjust_art_color()
+	set name = "Adjust Artistic Color"
+	set category = "Abilities"
+	set desc = "Adjust what color you are currently painting with!"
+
+	if(world.time < last_special)
+		to_chat(src, "<span class='warning'>You can't do that in your current state.</span>")
+		return
+
+	last_special = world.time + 10
+
+	var/set_new_color = input(src,"Select a new color","Artistic Color",species.artist_color) as color
+	if(set_new_color)
+		species.artist_color = set_new_color
+		if(linked_brush) //Do we have a paintbrush already?
+			linked_brush.update_paint(species.artist_color)
+			linked_brush.hud_layerise()
+			linked_brush.color = species.artist_color
+
+/mob/living/carbon/human/proc/extend_retract_brush()
+	set name = "Conjure Natural Brush"
+	set category = "Abilities"
+	set desc = "Pull out or retract your natural paintbrush!"
+
+
+	if(stat || paralysis || weakened || stunned || world.time < last_special)
+		to_chat(src, "<span class='warning'>You can't do that in your current state.</span>")
+		return
+
+	last_special = world.time + 20 //Anti-spam.
+
+	if(linked_brush)
+		linked_brush.Destroy()
+		visible_message("[src] retracts their organic paintbrush!")
+
+	else
+		var/obj/item/paint_brush/organic/B = new /obj/item/paint_brush/organic(src)
+		linked_brush = B
+		B.color = species.artist_color //Makes the ITEM ITSELF colored to be what is selected.
+		put_in_hands(B)
+		linked_brush.update_paint(species.artist_color)
+		B.hud_layerise()
+
+//RS END
