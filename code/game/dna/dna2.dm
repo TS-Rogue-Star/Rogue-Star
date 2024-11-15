@@ -34,37 +34,53 @@
 #define DNA_UI_BEARD_STYLE 15
 #define DNA_UI_HAIR_STYLE  16
 #define DNA_UI_EAR_STYLE   17 // VOREStation snippet.
-#define DNA_UI_TAIL_STYLE  18
-#define DNA_UI_PLAYERSCALE 19
-#define DNA_UI_TAIL_R      20
-#define DNA_UI_TAIL_G      21
-#define DNA_UI_TAIL_B      22
-#define DNA_UI_TAIL2_R     23
-#define DNA_UI_TAIL2_G     24
-#define DNA_UI_TAIL2_B     25
-#define DNA_UI_TAIL3_R     26
-#define DNA_UI_TAIL3_G     27
-#define DNA_UI_TAIL3_B     28
-#define DNA_UI_EARS_R      29
-#define DNA_UI_EARS_G      30
-#define DNA_UI_EARS_B      31
-#define DNA_UI_EARS2_R     32
-#define DNA_UI_EARS2_G     33
-#define DNA_UI_EARS2_B     34
-#define DNA_UI_EARS3_R     35
-#define DNA_UI_EARS3_G     36
-#define DNA_UI_EARS3_B     37
-#define DNA_UI_WING_STYLE  38
-#define DNA_UI_WING_R      39
-#define DNA_UI_WING_G      40
-#define DNA_UI_WING_B      41
-#define DNA_UI_WING2_R     42
-#define DNA_UI_WING2_G     43
-#define DNA_UI_WING2_B     44
-#define DNA_UI_WING3_R     45
-#define DNA_UI_WING3_G     46
-#define DNA_UI_WING3_B     47 // VOREStation snippet end.
-#define DNA_UI_LENGTH      47 // VOREStation Edit - Needs to match the highest number above.
+#define DNA_UI_EAR_SECONDARY_STYLE   18 //RS EDIT START (Port of VS PR#16513 'Adds a second ear slot.')
+#define DNA_UI_TAIL_STYLE  19
+#define DNA_UI_PLAYERSCALE 20
+#define DNA_UI_TAIL_R      21
+#define DNA_UI_TAIL_G      22
+#define DNA_UI_TAIL_B      23
+#define DNA_UI_TAIL2_R     24
+#define DNA_UI_TAIL2_G     25
+#define DNA_UI_TAIL2_B     26
+#define DNA_UI_TAIL3_R     27
+#define DNA_UI_TAIL3_G     28
+#define DNA_UI_TAIL3_B     29
+
+#define DNA_UI_EARS_R      30
+#define DNA_UI_EARS_G      31
+#define DNA_UI_EARS_B      32
+#define DNA_UI_EARS2_R     33
+#define DNA_UI_EARS2_G     34
+#define DNA_UI_EARS2_B     35
+#define DNA_UI_EARS3_R     36
+#define DNA_UI_EARS3_G     37
+#define DNA_UI_EARS3_B     38
+
+#define DNA_UI_EARS_SECONDARY_START 39
+#define DNA_UI_EARS_SECONDARY_COLOR_CHANNEL_COUNT 3
+
+#define DNA_UI_EARS_SECONDARY_R      39
+#define DNA_UI_EARS_SECONDARY_G      40
+#define DNA_UI_EARS_SECONDARY_B      41
+#define DNA_UI_EARS_SECONDARY2_R     42
+#define DNA_UI_EARS_SECONDARY2_G     43
+#define DNA_UI_EARS_SECONDARY2_B     44
+#define DNA_UI_EARS_SECONDARY3_R     45
+#define DNA_UI_EARS_SECONDARY3_G     46
+#define DNA_UI_EARS_SECONDARY3_B     47
+
+#define DNA_UI_WING_STYLE  48
+#define DNA_UI_WING_R      49
+#define DNA_UI_WING_G      50
+#define DNA_UI_WING_B      51
+#define DNA_UI_WING2_R     52
+#define DNA_UI_WING2_G     53
+#define DNA_UI_WING2_B     54
+#define DNA_UI_WING3_R     55
+#define DNA_UI_WING3_G     56
+#define DNA_UI_WING3_B     57 // RS EDIT END (Port of VS PR#16513 'Adds a second ear slot.')
+#define DNA_UI_LENGTH      57 // VOREStation Edit - Needs to match the highest number above.
 
 #define DNA_SE_LENGTH 49 // VOREStation Edit (original was UI+11)
 // For later:
@@ -196,6 +212,10 @@ var/global/list/datum/dna/gene/dna_genes[0]
 	if(character.ear_style)
 		ear_style = ear_styles_list.Find(character.ear_style.type)
 
+	var/ear_secondary_style = 0 // RS EDIT START (Port of VS PR#16513 'Adds a second ear slot.')
+	if(character.ear_secondary_style)
+		ear_secondary_style = ear_styles_list.Find(character.ear_secondary_style.type) // RS EDIT END (Port of VS PR#16513 'Adds a second ear slot.')
+
 	// Demi Tails
 	var/tail_style = 0
 	if(character.tail_style)
@@ -227,10 +247,11 @@ var/global/list/datum/dna/gene/dna_genes[0]
 	src.digitigrade = character.digitigrade
 
 	// +1 to account for the none-of-the-above possibility
-	SetUIValueRange(DNA_UI_EAR_STYLE,	ear_style + 1,     ear_styles_list.len  + 1,  1)
-	SetUIValueRange(DNA_UI_TAIL_STYLE,	tail_style + 1,    tail_styles_list.len + 1,  1)
-	SetUIValueRange(DNA_UI_PLAYERSCALE,	size_multiplier,   player_sizes_list.len,     1)
-	SetUIValueRange(DNA_UI_WING_STYLE,	wing_style + 1,    wing_styles_list.len + 1,  1)
+	SetUIValueRange(DNA_UI_EAR_STYLE,             ear_style + 1,               ear_styles_list.len  + 1,  1) // RS EDIT START (Port of VS PR#16513 'Adds a second ear slot.')
+	SetUIValueRange(DNA_UI_EAR_SECONDARY_STYLE,	  ear_secondary_style + 1,     ear_styles_list.len  + 1,  1)
+	SetUIValueRange(DNA_UI_TAIL_STYLE,	          tail_style + 1,              tail_styles_list.len + 1,  1)
+	SetUIValueRange(DNA_UI_PLAYERSCALE,           size_multiplier,             player_sizes_list.len,     1)
+	SetUIValueRange(DNA_UI_WING_STYLE,            wing_style + 1,              wing_styles_list.len + 1,  1) // RS EDIT END (Port of VS PR#16513 'Adds a second ear slot.')
 
 	SetUIValueRange(DNA_UI_TAIL_R,    character.r_tail,    255,    1)
 	SetUIValueRange(DNA_UI_TAIL_G,    character.g_tail,    255,    1)
@@ -267,6 +288,17 @@ var/global/list/datum/dna/gene/dna_genes[0]
 	SetUIValueRange(DNA_UI_EARS3_R,   character.r_ears3,   255,    1)
 	SetUIValueRange(DNA_UI_EARS3_G,   character.g_ears3,   255,    1)
 	SetUIValueRange(DNA_UI_EARS3_B,   character.b_ears3,   255,    1)
+
+
+	for(var/channel in 1 to DNA_UI_EARS_SECONDARY_COLOR_CHANNEL_COUNT) // RS EDIT START (Port of VS PR#16513 'Adds a second ear slot.')
+		var/offset = DNA_UI_EARS_SECONDARY_START + (channel - 1) * 3
+		var/list/read_rgb = ReadRGB(LAZYACCESS(character.ear_secondary_colors, channel) || "#ffffff")
+		var/red = read_rgb[1]
+		var/green = read_rgb[2]
+		var/blue = read_rgb[3]
+		SetUIValueRange(offset, red, 255, 1)
+		SetUIValueRange(offset + 1, green, 255, 1)
+		SetUIValueRange(offset + 2, blue, 255, 1) // RS EDIT END (Port of VS PR#16513 'Adds a second ear slot.')
 
 	// VORE Station Edit End
 
