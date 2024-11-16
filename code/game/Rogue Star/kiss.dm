@@ -9,7 +9,7 @@
 	. = ..()
 	QDEL_IN(src, 15 SECONDS)
 
-/obj/effect/effect/kiss/proc/set_up(var/mob/living/target, var/step_count = 7, var/delay = 5)
+/obj/effect/effect/kiss/proc/set_up(var/mob/living/target, var/mob/living/user, var/vore_smooch, var/step_count = 7, var/delay = 5)
 	if(!target)
 		return
 	for(var/i = 1 to step_count)
@@ -18,9 +18,16 @@
 		step_towards(src, target) //IT CHASES YOU. YOU WILL NOT ESCAPE LOVE.
 		var/turf/T = get_turf(src)
 		if(T == get_turf(target))
-			visible_message("[src] leaves a smooch mark on [target]'s cheek!")
-			target.adjustBruteLoss(-0.25)
-			//TODO: Add a smooch sound here.
+			if(!vore_smooch)
+				visible_message("[src] leaves a smooch mark on [target]'s cheek!")
+				target.adjustBruteLoss(-0.25)
+				qdel(src)
+			else //vorny version
+				visible_message("[src] suddenly opens its lips wide, engulfing [target]")
+				//icon_state = "kissy_vore" //Add a sprite change to an animated 'lips opening to engulf the tile' sprite
+				user.perform_the_nom(user,target,user,user.vore_selected,1, TRUE) //VORE Variant
+				//Add a sleep(30) here of a few seconds to let the sprite go through
+				qdel(src)
 			break
 		sleep(delay)
 	sleep(10)

@@ -255,16 +255,14 @@
 	emote_message_3p_target = "blows a kiss at TARGET."
 	sound_preferences = list(/datum/client_preference/emote_noises,/datum/client_preference/smooch_noises)
 
-/* //TODO: Add smooch sound
 /decl/emote/audible/blowkiss/get_emote_sound(var/atom/user)
 	return list(
 			"sound" = sound(get_sfx("smooches")),
 			"vol" = emote_volume / 2
 		)
-*/
 
 /decl/emote/audible/blowkiss/do_extra(var/mob/living/user, var/mob/living/target)
 	. = ..()
 	if(isliving(target) && target.allow_smooches && (target != user))
 		var/obj/effect/effect/kiss/kissy = new /obj/effect/effect/kiss(get_turf(user))
-		kissy.set_up(target)
+		kissy.set_up(target, user) //Add a ", TRUE" if you want it to eat people!
