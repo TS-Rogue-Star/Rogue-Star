@@ -964,6 +964,7 @@
 
 /mob/living/
 	var/flight_vore = FALSE
+	var/allow_smooches = TRUE // RS EDIT
 
 /mob/living/proc/flying_vore_toggle()
 	set name = "Toggle Flight Vore"
@@ -975,6 +976,32 @@
 		to_chat(src, "You have allowed for flight vore! Bumping into characters while flying will now trigger dropnoms! Unless prefs don't match.. then you will take a tumble!")
 	else
 		to_chat(src, "Flight vore disabled! You will no longer engage dropnoms while in flight.")
+
+/mob/living/verb/toggle_smooches() // RS EDIT START
+	set name = "Toggle Smooch Target"
+	set desc = "Allows you to toggle if you wish to be targetable with smooches or not"
+	set category = "Preferences"
+
+	allow_smooches = !allow_smooches
+	if(allow_smooches)
+		to_chat(src, "You have enabled it so someone can *blowkiss at you!")
+	else
+		to_chat(src, "You have disabled smooches. People can no longer *blowkiss at you!")
+
+/client/verb/toggle_smooch_noises()
+	set name = "Toggle Smooch Sounds"
+	set category = "Preferences"
+	set desc = "Toggles hearing audible smooches."
+
+	var/pref_path = /datum/client_preference/smooch_noises
+
+	toggle_preference(pref_path)
+
+	to_chat(src, "You will [ (is_preference_enabled(pref_path)) ? "now" : "no longer"] hear smooches.")
+
+	SScharacter_setup.queue_preferences_save(prefs)
+
+	feedback_add_details("admin_verb","TSmoochNoise") // RS EDIT END
 
 //Proc to stop inertial_drift. Exchange nutrition in order to stop gliding around.
 /mob/living/proc/start_wings_hovering()
