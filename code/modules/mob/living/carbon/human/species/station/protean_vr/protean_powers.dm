@@ -182,20 +182,22 @@
 
 
 	var/delay_length = round(active_regen_delay * species.active_regen_mult)
-	to_chat(src, "<span class='danger'>Remain still while the process takes place! It will take [delay_length/10] seconds.</span>")
-	visible_message("<B>[src]</B>'s form begins to shift and ripple as if made of oil...")
 	active_regen = TRUE //Global Protean Ability active check
 
 	//var/mob/living/simple_mob/protean_blob/blob = nano_intoblob() //RS Edit (Ability changed to not require blobbing)
 	if(stat != DEAD && refactory)
 		var/list/holder = refactory.materials
-		if(!refactory.use_stored_material(MAT_STEEL,refactory.max_storage)) //RS Edit
+		if(refactory.get_stored_material(MAT_STEEL) < refactory.max_storage) //RS Edit
 			to_chat(src,"<span class='warning'>You do not have enough stored steel to do this.</span>")
 			active_regen = FALSE //Global Protean Ability active check
 			return
+		to_chat(src, "<span class='danger'>Remain still while the process takes place! It will take [delay_length/10] seconds.</span>")
+		visible_message("<B>[src]</B>'s form begins to shift and ripple as if made of oil...")
 		if(do_after(src, delay_length, null, 0))
 			//RS Edit (Changed ability to not heal all damage (code taken from Organic 'Regenerate' Ability))
 			// Replace completely missing limbs.
+			if(!refactory.use_stored_material(MAT_STEEL,refactory.max_storage))
+				return
 			for(var/limb_type in src.species.has_limbs)
 				var/obj/item/organ/external/E = src.organs_by_name[limb_type]
 
@@ -246,14 +248,11 @@
 			else
 				new_refactory.materials = holder
 
-			to_chat(src, "<span class='notice'>Your refactoring is complete.</span>") //Guarantees the message shows no matter how bad the timing.
 			to_chat(src, "<span class='notice'>Your refactoring is complete!</span>")
 		else
-			to_chat(src,  "<span class='critical'>Your refactoring is interrupted.</span>")
 			to_chat(src, "<span class='critical'>Your refactoring is interrupted!</span>")
 
 	else
-		to_chat(src,  "<span class='critical'>Your refactoring has failed.</span>")
 		to_chat(src, "<span class='critical'>Your refactoring has failed!</span>")
 	active_regen = FALSE //Global Protean Ability active check
 	//nano_outofblob(blob)
