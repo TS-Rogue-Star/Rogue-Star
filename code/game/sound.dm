@@ -269,6 +269,8 @@
 					'sound/vore/belches/belch5.ogg','sound/vore/belches/belch6.ogg','sound/vore/belches/belch7.ogg','sound/vore/belches/belch8.ogg',
 					'sound/vore/belches/belch9.ogg','sound/vore/belches/belch10.ogg','sound/vore/belches/belch11.ogg','sound/vore/belches/belch12.ogg',
 					'sound/vore/belches/belch13.ogg','sound/vore/belches/belch14.ogg','sound/vore/belches/belch15.ogg')
+			if ("smooches") soundin = pick(
+					'sound/rogue-star/smooches/smooch1.ogg','sound/rogue-star/smooches/smooch2.ogg') //Smooch1, Smooch2 source: freesound_community from Pixabay
 			//END VORESTATION EDIT
 			if ("terminal_type")
 				soundin = pick('sound/machines/terminal_button01.ogg', 'sound/machines/terminal_button02.ogg', 'sound/machines/terminal_button03.ogg', \
