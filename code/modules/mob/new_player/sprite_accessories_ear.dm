@@ -27,6 +27,18 @@
 	var/extra_overlay2
 	em_block = TRUE
 
+/** // RS EDIT START (Port of VS PR#16513 'Adds a second ear slot.')
+ * Gets the number of color channels we have.
+ */
+/datum/sprite_accessory/ears/get_color_channel_count()
+	if(!do_colouration)
+		return 0
+	. = 1
+	if(extra_overlay)
+		. += 1
+	if(extra_overlay2)
+		. += 1 // RS EDIT END (Port of VS PR#16513 'Adds a second ear slot.')
+
 /***	Mundane Critters	***/
 /datum/sprite_accessory/ears/taj_ears
 	name = "Tajaran Ears"

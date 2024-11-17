@@ -276,6 +276,7 @@
 	..()
 	H.verbs |= /mob/living/carbon/human/proc/water_stealth
 	H.verbs |= /mob/living/carbon/human/proc/underwater_devour
+	H.verbs |= /mob/living/carbon/human/proc/rushdown //RS Edit
 
 /datum/trait/positive/cocoon_tf
 	name = "Cocoon Spinner"

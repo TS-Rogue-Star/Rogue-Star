@@ -1149,6 +1149,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			force_icon = R.icon
 			brute_mod *= R.robo_brute_mod
 			burn_mod *= R.robo_burn_mod
+			digi_prosthetic = R.can_be_digitigrade //RS EDIT (CS PR #5565)
 			if(R.lifelike)
 				robotic = ORGAN_LIFELIKE
 				name = "[initial(name)]"

@@ -17,6 +17,15 @@
 	conversion in savefile.dm
 */
 
+
+/** // RS EDIT START (Port of VS PR#16513 'Adds a second ear slot.')
+ * Color channel names; this is used in things like character setup, editors, etc.
+ *
+ * * The length of this is also used to sanitize color channel list lengths. This should never be longer than the
+ *   maximum number of color channels possible across all sprite accessories.
+ */
+GLOBAL_LIST_INIT(fancy_sprite_accessory_color_channel_names, list("Primary", "Secondary", "Tertiary", "Quaternary")) // RS EDIT END (Port of VS PR#16513 'Adds a second ear slot.')
+
 /datum/sprite_accessory
 
 	var/icon			// the icon file the accessory is located in
@@ -50,6 +59,15 @@
 	var/sorting_group //For use in the Preference menu
 
 	var/list/backup_name = null		//RS ADD - compat
+
+
+/** // RS EDIT START (Port of VS PR#16513 'Adds a second ear slot.')
+ * Gets the number of color channels we have.
+ */
+/datum/sprite_accessory/proc/get_color_channel_count()
+	return do_colouration ? 1 : 0 // RS EDIT END (Port of VS PR#16513 'Adds a second ear slot.')
+
+
 
 /*
 ////////////////////////////

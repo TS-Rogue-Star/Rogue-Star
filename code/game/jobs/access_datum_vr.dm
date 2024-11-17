@@ -20,7 +20,37 @@ var/const/access_pilot = 67
 /var/const/access_talon = 301
 /datum/access/talon
 	id = access_talon
-	desc = "Talon"
+	desc = "Talon General"
+	access_type = ACCESS_TYPE_PRIVATE
+
+/var/const/access_talon_bridge = 302
+/datum/access/talon_bridge
+	id = access_talon_bridge
+	desc = "Talon Bridge"
+	access_type = ACCESS_TYPE_PRIVATE
+
+/var/const/access_talon_medical = 303
+/datum/access/talon_medical
+	id = access_talon_medical
+	desc = "Talon Medical"
+	access_type = ACCESS_TYPE_PRIVATE
+
+/var/const/access_talon_engineer = 304
+/datum/access/talon_engineer
+	id = access_talon_engineer
+	desc = "Talon Engineering"
+	access_type = ACCESS_TYPE_PRIVATE
+
+/var/const/access_talon_cargo = 305
+/datum/access/talon_cargo
+	id = access_talon_cargo
+	desc = "Talon Cargo"
+	access_type = ACCESS_TYPE_PRIVATE
+
+/var/const/access_talon_security = 306
+/datum/access/talon_security
+	id = access_talon_security
+	desc = "Talon Security"
 	access_type = ACCESS_TYPE_PRIVATE
 
 /var/const/access_xenobotany = 77

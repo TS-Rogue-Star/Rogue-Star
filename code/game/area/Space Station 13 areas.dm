@@ -536,14 +536,17 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/prison/cell_block/A
 	name = "Prison Cell Block A"
 	icon_state = "brig"
+	block_phase_shift = TRUE	//RS ADD
 
 /area/prison/cell_block/B
 	name = "Prison Cell Block B"
 	icon_state = "brig"
+	block_phase_shift = TRUE	//RS ADD
 
 /area/prison/cell_block/C
 	name = "Prison Cell Block C"
 	icon_state = "brig"
+	block_phase_shift = TRUE	//RS ADD
 
 ////////////////////
 //SPACE STATION 13//
@@ -962,29 +965,35 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Command - Site Manager's Office"
 	icon_state = "captain"
 	sound_env = MEDIUM_SOFTFLOOR
+	block_phase_shift = TRUE	//RS ADD
 
 /area/crew_quarters/heads/hop
 	name = "\improper Command - HoP's Office"
 	icon_state = "head_quarters"
 	flags = AREA_FLAG_IS_NOT_PERSISTENT
+	block_phase_shift = TRUE	//RS ADD
 
 /area/crew_quarters/heads/hor
 	name = "\improper Research - RD's Office"
 	icon_state = "head_quarters"
 	flags = AREA_FLAG_IS_NOT_PERSISTENT
+	block_phase_shift = TRUE	//RS ADD
 
 /area/crew_quarters/heads/chief
 	name = "\improper Engineering - CE's Office"
 	icon_state = "head_quarters"
+	block_phase_shift = TRUE	//RS ADD
 
 /area/crew_quarters/heads/hos
 	name = "\improper Security - HoS' Office"
 	icon_state = "head_quarters"
+	block_phase_shift = TRUE	//RS ADD
 
 /area/crew_quarters/heads/cmo
 	name = "\improper Medbay - CMO's Office"
 	icon_state = "head_quarters"
 	flags = AREA_FLAG_IS_NOT_PERSISTENT
+	block_phase_shift = TRUE	//RS ADD
 
 /area/crew_quarters/courtroom
 	name = "\improper Courtroom"
@@ -1252,26 +1261,26 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	sound_env = LARGE_SOFTFLOOR
 
 /area/crew_quarters/visitor_lodging
- 	name = "\improper Visitor Lodging"
- 	icon_state = "visitor_lodging"
+	name = "\improper Visitor Lodging"
+	icon_state = "visitor_lodging"
 
 /area/crew_quarters/visitor_dining
- 	name = "\improper Visitor Dining"
- 	icon_state = "visitor_dinning"
+	name = "\improper Visitor Dining"
+	icon_state = "visitor_dinning"
 
 /area/crew_quarters/visitor_laundry
- 	name = "\improper Visitor Laundry"
- 	icon_state = "visitor_laundry"
+	name = "\improper Visitor Laundry"
+	icon_state = "visitor_laundry"
 
 /area/library
- 	name = "\improper Library"
- 	icon_state = "library"
- 	sound_env = LARGE_SOFTFLOOR
- 	lightswitch = 0 // VOREStation Edit - We like dark libraries
+	name = "\improper Library"
+	icon_state = "library"
+	sound_env = LARGE_SOFTFLOOR
+	lightswitch = 0 // VOREStation Edit - We like dark libraries
 
 /area/library_conference_room
- 	name = "\improper Library Conference Room"
- 	icon_state = "library_conference_room"
+	name = "\improper Library Conference Room"
+	icon_state = "library_conference_room"
 
 /area/chapel
 	ambience = AMBIENCE_CHAPEL
@@ -1284,6 +1293,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/chapel/office
 	name = "\improper Chapel Office"
 	icon_state = "chapeloffice"
+	block_phase_shift = TRUE	//RS ADD
 
 /area/chapel/chapel_morgue
 	name = "\improper Chapel Morgue"
@@ -1292,6 +1302,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/lawoffice
 	name = "\improper Internal Affairs"
 	icon_state = "law"
+	block_phase_shift = TRUE	//RS ADD
 
 /area/holodeck_control
 	name = "\improper Holodeck Control"
@@ -1391,10 +1402,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	ambience = AMBIENCE_ENGINEERING
 
 /area/engineering/atmos
- 	name = "\improper Atmospherics"
- 	icon_state = "atmos"
- 	sound_env = LARGE_ENCLOSED
-	 ambience = AMBIENCE_ATMOS
+	name = "\improper Atmospherics"
+	icon_state = "atmos"
+	sound_env = LARGE_ENCLOSED
+	ambience = AMBIENCE_ATMOS
 
 /area/engineering/atmos/monitoring
 	name = "\improper Atmospherics Monitoring Room"
@@ -1608,6 +1619,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Psych Room"
 	icon_state = "medbay3"
 	music = 'sound/ambience/signal.ogg'
+	block_phase_shift = TRUE	//RS ADD
 
 /area/crew_quarters/medbreak
 	name = "\improper Break Room"
@@ -1769,11 +1781,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/warden
 	name = "\improper Security - Warden's Office"
 	icon_state = "Warden"
+	block_phase_shift = TRUE	//RS ADD
 
 /area/security/armoury
 	name = "\improper Security - Armory"
 	icon_state = "armory"
 	ambience = AMBIENCE_HIGHSEC
+	block_phase_shift = TRUE	//RS ADD
 
 /area/security/briefing_room
 	name = "\improper Security - Briefing Room"
@@ -1816,6 +1830,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/security_cell_hallway
 	name = "\improper Security - Cell Hallway"
 	icon_state = "security_cell_hallway"
+	block_phase_shift = TRUE	//RS ADD
 
 /area/security/security_equiptment_storage
 	name = "\improper Security - Equipment Storage"
@@ -1824,15 +1839,18 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/security_lockerroom
 	name = "\improper Security - Locker Room"
 	icon_state = "security_lockerroom"
+	block_phase_shift = TRUE	//RS ADD
 
 /area/security/security_processing
 	name = "\improper Security - Security Processing"
 	icon_state = "security_processing"
+	block_phase_shift = TRUE	//RS ADD
 
 /area/security/tactical
 	name = "\improper Security - Tactical Equipment"
 	icon_state = "Tactical"
 	ambience = AMBIENCE_HIGHSEC
+	block_phase_shift = TRUE	//RS ADD
 
 
 /*
@@ -1932,6 +1950,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/quartermaster/qm
 	name = "\improper Cargo - Quartermaster's Office"
 	icon_state = "quart"
+	block_phase_shift = TRUE	//RS ADD
 
 /area/quartermaster/delivery
 	name = "\improper Cargo - Delivery Office"
@@ -2076,6 +2095,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/storage/tech
 	name = "Technical Storage"
 	icon_state = "auxstorage"
+	block_phase_shift = TRUE //RS ADD
 
 /area/storage/testroom
 	requires_power = 0
@@ -2116,6 +2136,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/derelict/storage/equipment
 	name = "Derelict Equipment Storage"
+	block_phase_shift = TRUE	//RS ADD
 
 /area/derelict/storage/storage_access
 	name = "Derelict Storage Access"
@@ -2314,34 +2335,40 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper AI Upload Chamber"
 	icon_state = "ai_upload"
 	ambience = AMBIENCE_AI
+	block_phase_shift = TRUE //RS ADD
 
 /area/ai_upload_foyer
 	name = "AI Upload Access"
 	icon_state = "ai_foyer"
 	sound_env = SMALL_ENCLOSED
 	ambience = AMBIENCE_AI
+	block_phase_shift = TRUE //RS ADD
 
 /area/ai_server_room
 	name = "Messaging Server Room"
 	icon_state = "ai_server"
 	sound_env = SMALL_ENCLOSED
 	ambience = AMBIENCE_AI
+	block_phase_shift = TRUE //RS ADD
 
 /area/ai
 	name = "\improper AI Chamber"
 	icon_state = "ai_chamber"
 	ambience = AMBIENCE_AI
+	block_phase_shift = TRUE //RS ADD
 
 /area/ai_cyborg_station
 	name = "\improper Cyborg Station"
 	icon_state = "ai_cyborg"
 	sound_env = SMALL_ENCLOSED
 	ambience = AMBIENCE_AI
+	block_phase_shift = TRUE //RS ADD
 
 /area/aisat
 	name = "\improper AI Satellite"
 	icon_state = "ai"
 	ambience = AMBIENCE_AI
+	block_phase_shift = TRUE //RS ADD
 
 /area/aisat_interior
 	name = "\improper AI Satellite"
@@ -2417,6 +2444,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 // Telecommunications Satellite
 /area/tcommsat/
 	ambience = AMBIENCE_ENGINEERING
+	block_phase_shift = TRUE //RS ADD
 
 /area/tcommsat/entrance
 	name = "\improper Telecomms Teleporter"

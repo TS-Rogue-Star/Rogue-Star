@@ -964,6 +964,7 @@
 
 /mob/living/
 	var/flight_vore = FALSE
+	var/allow_smooches = TRUE // RS EDIT
 
 /mob/living/proc/flying_vore_toggle()
 	set name = "Toggle Flight Vore"
@@ -975,6 +976,32 @@
 		to_chat(src, "You have allowed for flight vore! Bumping into characters while flying will now trigger dropnoms! Unless prefs don't match.. then you will take a tumble!")
 	else
 		to_chat(src, "Flight vore disabled! You will no longer engage dropnoms while in flight.")
+
+/mob/living/verb/toggle_smooches() // RS EDIT START
+	set name = "Toggle Smooch Target"
+	set desc = "Allows you to toggle if you wish to be targetable with smooches or not"
+	set category = "Preferences"
+
+	allow_smooches = !allow_smooches
+	if(allow_smooches)
+		to_chat(src, "You have enabled it so someone can *blowkiss at you!")
+	else
+		to_chat(src, "You have disabled smooches. People can no longer *blowkiss at you!")
+
+/client/verb/toggle_smooch_noises()
+	set name = "Toggle Smooch Sounds"
+	set category = "Preferences"
+	set desc = "Toggles hearing audible smooches."
+
+	var/pref_path = /datum/client_preference/smooch_noises
+
+	toggle_preference(pref_path)
+
+	to_chat(src, "You will [ (is_preference_enabled(pref_path)) ? "now" : "no longer"] hear smooches.")
+
+	SScharacter_setup.queue_preferences_save(prefs)
+
+	feedback_add_details("admin_verb","TSmoochNoise") // RS EDIT END
 
 //Proc to stop inertial_drift. Exchange nutrition in order to stop gliding around.
 /mob/living/proc/start_wings_hovering()
@@ -1282,6 +1309,74 @@
 			"<span class='danger'>You are dragged below the water and feel yourself slipping directly into \the [src]'s [vore_selected]!</span>")
 		to_chat(src, "<span class='notice'>You successfully drag \the [target] into the water, slipping them into your [vore_selected].</span>")
 		target.forceMove(src.vore_selected)
+
+//RS Edit Start
+/mob/living/carbon/human/proc/rushdown()
+	set name = "Rush Down Prey"
+	set desc = "Rush down someone in the water, putting you into your selected stomach (or being put in their stomach if prefs align)."
+	set category = "Abilities"
+
+	if(last_special > world.time)
+		to_chat(src, "<span class='notice'>You recently used a special ability. Please wait a few seconds!</span>")
+		return
+	last_special = world.time + 50 //No spamming! This one does some big searching, so big delay!
+
+	if(stat == DEAD || paralysis || weakened || stunned)
+		to_chat(src, "<span class='notice'>You cannot do that while in your current state.</span>")
+		return
+
+	if(!(src.vore_selected))
+		to_chat(src, "<span class='notice'>No selected belly found. Please select one, even if you expect to be prey!</span>")
+		return
+
+
+	if(!has_modifier_of_type(/datum/modifier/underwater_stealth))
+		to_chat(src, "You must be underwater to do this!!")
+		return
+
+	var/list/targets = list() //Shameless copy and paste. If it ain't broke don't fix it!
+
+	for(var/turf/T in range(8, src)) //Check around us in an 8 tile radius.
+		if(istype(T, /turf/simulated/floor/water))
+			for(var/mob/living/L in T)
+				if(L == src) //no eating yourself. 1984.
+					continue
+				if(L.devourable && L.throw_vore && (L.can_be_drop_pred || L.can_be_drop_prey))
+					targets += L
+				//With the current throw-vore logic:
+				//If both have pred&prey enabled, person being hit eats the person being thrown. Aka the diver gets eaten.
+				//If one has pred and the other have prey, works as expected.
+				//If both are pred/both are prey, it results in them rushing up and awkwardly staring at them. This is funny.
+
+	if(!(targets.len))
+		to_chat(src, "<span class='notice'>No eligible targets found.</span>")
+		return
+
+	var/mob/living/target = tgui_input_list(src, "Please select a target.", "Victim...Or pred?", targets)
+
+	if(!target) //Cancelled
+		return
+
+	to_chat(target, "<span class='critical'>You feel a shiver run down your spine...Something has it's eyes on you. You should MOVE if you don't want to befall whatever fate is about to occur!</span>")
+	var/starting_loc = target.loc
+
+	if(do_after(src, 50))
+		if(target.loc != starting_loc)
+			to_chat(target, "<span class='warning'>You got away from whatever that was...</span>")
+			to_chat(src, "<span class='notice'>They got away.</span>")
+			return
+		remove_modifiers_of_type(/datum/modifier/underwater_stealth) //Remove your stealth
+		add_modifier(/datum/modifier/underwater_dive) //Replace it with your dive!
+		if(target.buckled)
+			target.buckled.unbuckle_mob()
+		var/throw_range = get_dist(src,target)
+		throw_range += 3 //Yes, this looks weird, but it's required for non-straight lines.
+		throw_at(target, throw_range, throw_speed, src, FALSE)
+		target.visible_message("<span class='warning'>Something under the water suddenly dives at \The [target]!</span>",\
+			"<span class='danger'>You are dove at by something below the water!</span>")
+		to_chat(src, "<span class='notice'>You successfully dive at \the [target]!</span>")
+		return
+//RS Edit End
 
 /mob/living/carbon/human/proc/toggle_pain_module()
 	set name = "Toggle pain simulation."
@@ -1733,3 +1828,49 @@
 		visible_message(ourmsg)
 
 //RS ADD END
+
+//RS ADD
+/mob/living/carbon/human/proc/adjust_art_color()
+	set name = "Adjust Artistic Color"
+	set category = "Abilities"
+	set desc = "Adjust what color you are currently painting with!"
+
+	if(world.time < last_special)
+		to_chat(src, "<span class='warning'>You can't do that in your current state.</span>")
+		return
+
+	last_special = world.time + 10
+
+	var/set_new_color = input(src,"Select a new color","Artistic Color",species.artist_color) as color
+	if(set_new_color)
+		species.artist_color = set_new_color
+		if(linked_brush) //Do we have a paintbrush already?
+			linked_brush.update_paint(species.artist_color)
+			linked_brush.hud_layerise()
+			linked_brush.color = species.artist_color
+
+/mob/living/carbon/human/proc/extend_retract_brush()
+	set name = "Conjure Natural Brush"
+	set category = "Abilities"
+	set desc = "Pull out or retract your natural paintbrush!"
+
+
+	if(stat || paralysis || weakened || stunned || world.time < last_special)
+		to_chat(src, "<span class='warning'>You can't do that in your current state.</span>")
+		return
+
+	last_special = world.time + 20 //Anti-spam.
+
+	if(linked_brush)
+		linked_brush.Destroy()
+		visible_message("[src] retracts their organic paintbrush!")
+
+	else
+		var/obj/item/paint_brush/organic/B = new /obj/item/paint_brush/organic(src)
+		linked_brush = B
+		B.color = species.artist_color //Makes the ITEM ITSELF colored to be what is selected.
+		put_in_hands(B)
+		linked_brush.update_paint(species.artist_color)
+		B.hud_layerise()
+
+//RS END

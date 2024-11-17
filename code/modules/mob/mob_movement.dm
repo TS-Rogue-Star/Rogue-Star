@@ -357,14 +357,25 @@
 	switch(mob.incorporeal_move)
 		if(1)
 			var/turf/T = get_step(mob, direct)
+			var/area/A = T.loc	//RS ADD
 			if(!T)
 				return
 			if(mob.check_holy(T))
 				to_chat(mob, "<span class='warning'>You cannot get past holy grounds while you are in this plane of existence!</span>")
 				return
-			else
-				mob.forceMove(get_step(mob, direct))
-				mob.dir = direct
+			if(!holder)		//RS EDIT START
+				if(isliving(mob) && A.block_phase_shift)
+					to_chat(mob, "<span class='warning'>Something blocks you from entering this location while phased out.</span>")
+					return
+				if(isobserver(mob) && A.block_ghosts)
+					to_chat(mob, "<span class='warning'>Ghosts can't enter this location.</span>")
+					var/area/our_area = mobloc.loc
+					if(our_area.block_ghosts)
+						var/mob/observer/dead/D = mob
+						D.return_to_spawn()
+					return
+			mob.forceMove(get_step(mob, direct))
+			mob.dir = direct	//RS EDIT END
 		if(2)
 			if(prob(50))
 				var/locx
