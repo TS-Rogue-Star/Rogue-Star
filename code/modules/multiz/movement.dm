@@ -34,6 +34,10 @@
 		return 0
 
 	if(is_incorporeal())
+		var/area/our_area = get_area(destination)	//RS ADD - Stops shadekin from going where they shouldn't
+		if(our_area.block_phase_shift && isliving(src))
+			to_chat(src, "<span class='warning'>Something blocks you from entering this location while phased out.</span>")
+			return 0	//RS ADD END
 		forceMove(destination)
 		return 1
 

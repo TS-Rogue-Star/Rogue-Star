@@ -563,6 +563,8 @@ GLOBAL_DATUM(spoiler_obfuscation_image, /image)
 		return
 	if(!isliving(ourmob))
 		return
+	if(ourmob.client?.holder)	//RS EDIT
+		return					//RS EDIT
 	if(isanimal(ourmob))
 		var/mob/living/simple_mob/shadekin/SK = ourmob
 		if(SK.ability_flags & AB_PHASE_SHIFTED)

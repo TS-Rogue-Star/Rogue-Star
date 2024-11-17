@@ -35,6 +35,7 @@
 /area/groundbase/command/tcomms
 	name = "\improper Telecomms"
 	ambience = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg')
+	block_phase_shift = TRUE	//RS ADD
 
 /area/groundbase/command/tcomms/entrance
 	name = "\improper Telecomms Teleporter"
