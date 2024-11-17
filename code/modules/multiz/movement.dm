@@ -72,6 +72,7 @@
 			var/obj/structure/lattice/lattice = locate() in destination.contents
 			var/obj/structure/catwalk/catwalk = locate() in destination.contents
 			var/turf/simulated/floor/water/deep/ocean/diving/surface = destination
+			var/turf/simulated/open/openspace = destination //RS Edit - Prevents noclipping
 
 			if(lattice)
 				var/pull_up_time = max(5 SECONDS + (src.movement_delay() * 10), 1)
@@ -107,6 +108,10 @@
 				else
 					to_chat(src, "<span class='warning'>You gave up on pulling yourself up.</span>")
 					return 0
+
+			else if(!istype(openspace)) //RS Edit Start - Prevents noclipping
+				to_chat(src, "<span class='warning'>Something solid above stops you from passing.</span>")
+				return 0 //RS Edit End - Prevents noclipping
 
 			else if(isliving(src)) //VOREStation Edit Start. Are they a mob, and are they currently flying??
 				var/mob/living/H = src
