@@ -1499,6 +1499,7 @@
 #include "code\game\objects\random\spacesuits.dm"
 #include "code\game\objects\random\unidentified\medicine.dm"
 #include "code\game\objects\structures\artstuff.dm"
+#include "code\game\objects\structures\artstuff_rs.dm"
 #include "code\game\objects\structures\barricades.dm"
 #include "code\game\objects\structures\barsign.dm"
 #include "code\game\objects\structures\bedsheet_bin.dm"
