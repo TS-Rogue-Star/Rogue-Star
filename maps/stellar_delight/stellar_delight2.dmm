@@ -5196,7 +5196,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled/steel_ridged,
-/area/engineering/engine_eva)
+/area/storage/tech)
 "kU" = (
 /obj/structure/disposalpipe/segment,
 /mob/living/simple_mob/vore/alienanimals/teppi/baby,
@@ -6573,8 +6573,8 @@
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck2/aftstarboard)
 "nO" = (
-/turf/simulated/wall/bay/r_wall/orange,
-/area/engineering/engine_eva)
+/turf/simulated/wall/bay/steel,
+/area/stellardelight/deck2/barbackroom)
 "nP" = (
 /obj/structure/cable/green{
 	icon_state = "1-8"
@@ -21532,7 +21532,7 @@
 	stripe_color = "#89bd66"
 	},
 /turf/simulated/floor/tiled/steel_ridged,
-/area/crew_quarters/bar)
+/area/stellardelight/deck2/barbackroom)
 "Vi" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 4
@@ -34922,13 +34922,13 @@ ON
 ON
 Jn
 Vu
-ta
-ta
-ta
-ta
-ta
-ta
-ta
+YY
+YY
+YY
+YY
+YY
+YY
+YY
 ta
 LY
 LY
@@ -35137,14 +35137,14 @@ nP
 Jh
 Jh
 Jh
-HQ
-Sx
-Sx
-Sx
+Yi
+nO
+nO
+nO
 Vh
-Sx
-Sx
-Sx
+nO
+nO
+nO
 FA
 Zr
 sj
@@ -35286,7 +35286,7 @@ LN
 KG
 Rn
 FC
-fl
+nO
 fl
 HW
 fl
@@ -35428,7 +35428,7 @@ Og
 FB
 UC
 JT
-fl
+nO
 Ae
 Rm
 WZ
@@ -35570,7 +35570,7 @@ yM
 Ly
 NY
 YM
-fl
+nO
 CV
 Wm
 tW
@@ -35712,7 +35712,7 @@ Kx
 Ez
 gP
 pR
-fl
+nO
 FR
 Wm
 HV
@@ -35854,7 +35854,7 @@ Yi
 Yi
 cQ
 Yi
-aN
+Yi
 xI
 Wm
 HV
@@ -36353,12 +36353,12 @@ cL
 Qz
 tm
 az
-nO
-nO
+ow
+ow
 kT
-nO
-nO
-nq
+ow
+ow
+rT
 VJ
 VJ
 Wb
@@ -36495,7 +36495,7 @@ hX
 OF
 OF
 lV
-OF
+ow
 il
 Qt
 on
@@ -36637,7 +36637,7 @@ sw
 OF
 sm
 bz
-OF
+ow
 Ql
 zq
 NC
@@ -36779,7 +36779,7 @@ Lp
 OF
 cN
 Yq
-OF
+ow
 Ij
 sl
 Jg
@@ -36921,7 +36921,7 @@ fN
 OF
 OF
 Sw
-OF
+ow
 qX
 eK
 li
@@ -37063,7 +37063,7 @@ Vf
 Xo
 pu
 UE
-OF
+ow
 ow
 ow
 ow
@@ -37205,7 +37205,7 @@ UF
 Vx
 Vf
 Gu
-OF
+ow
 MW
 Cr
 ow
@@ -37347,7 +37347,7 @@ Bs
 EP
 Vf
 mC
-OF
+ow
 gh
 kH
 Mz
@@ -37489,7 +37489,7 @@ Vf
 gW
 Vf
 Gu
-OF
+ow
 XB
 Tx
 ow
@@ -37631,7 +37631,7 @@ Vf
 EP
 Vf
 Ix
-ni
+rT
 Ra
 Ra
 rT

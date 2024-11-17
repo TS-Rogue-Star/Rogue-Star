@@ -74,7 +74,7 @@
 	poison_type = null
 	water_breather = TRUE	//They don't quite breathe
 
-	vision_flags = SEE_SELF|SEE_MOBS
+//	vision_flags = SEE_SELF|SEE_MOBS	//RS REMOVE
 	appearance_flags = HAS_HAIR_COLOR | HAS_LIPS | HAS_SKIN_COLOR | HAS_EYE_COLOR | HAS_UNDERWEAR
 	digi_allowed = TRUE
 
