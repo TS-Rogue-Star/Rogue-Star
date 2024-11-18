@@ -74,11 +74,11 @@
 		return
 	waddle_z = Z_height
 
-	var/min = tgui_input_number(usr, "Put the desired waddle backwards lean. (-4 is default. -12 min, 0 max)", "Set Back Lean", -4, 0, -12)
-	if(min < -12 || min > 0 )
+	var/min = tgui_input_number(usr, "Put the desired waddle backwards lean. (4 is default. 0 min, 12 max)", "Set Back Lean", 4, 12, 0)
+	if(min > 12 || min < 0 )
 		to_chat(usr, "<span class='notice'>Invalid number!</span>")
 		return
-	waddle_min = min
+	waddle_min = -min
 
 	var/max = tgui_input_number(usr, "Put the desired waddle forwards lean. (4 is default. 0 min, 12 max)", "Set Forwards Lean", 4, 12, 0)
 	if(max > 12 || max < 0 )
@@ -91,7 +91,7 @@
 		to_chat(usr, "<span class='notice'>Invalid number!</span>")
 		return
 	waddle_time = time
-	to_chat(usr, "You have set your waddle height to [waddle_z], your back lean to [waddle_min], your forward lean to [waddle_max] and your waddle time to [waddle_time]")
+	to_chat(usr, "You have set your waddle height to [waddle_z], your back lean to [waddle_min], your forward lean to [waddle_max] and your waddle time to [waddle_time]! You will now waddle!")
 	waddler = 1 //Activate it!
 
 /mob/living/proc/waddling_animation(atom/movable/target) //Waddling code done here to cause less potential conflicts with base code.
