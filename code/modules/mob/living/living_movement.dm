@@ -263,7 +263,7 @@ default behaviour is:
 		s_active.close(src)
 
 
-	if(client && client.is_preference_enabled(/datum/client_preference/waddling)) //Rs Edit Start - Adds Waddling from BubberStation
+	if(waddler) //Rs Edit Start - Adds Waddling from BubberStation
 		waddling_animation(src) //Rs Edit End - Adds Waddling from BubberStation
 
 /mob/living/proc/dragged(var/mob/living/dragger, var/oldloc)
