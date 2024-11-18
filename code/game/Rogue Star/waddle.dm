@@ -66,6 +66,9 @@
 			min -= 10
 			max += 10
 			wad_time -= 1
+		for(var/datum/reagent/R in reagents.reagent_list)
+			if(R.id in tachycardics)
+				waddle_z += 3
 
 	animate(target, pixel_z = target.pixel_z + waddle_z, time = 0)
 	var/prev_transform = target.transform //The person's default state.
