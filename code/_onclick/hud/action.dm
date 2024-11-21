@@ -23,6 +23,7 @@
 	var/button_icon_state = "default"
 	var/background_icon_state = "bg_default"
 	var/mob/living/owner
+	var/cooldown_time //RS Edit - Adds ability to have cooldowns innately with abilities...Why wasn't this here before?
 
 /datum/action/New(var/Target)
 	target = Target
@@ -109,6 +110,8 @@
 	if(check_flags & AB_CHECK_INSIDE)
 		if(!(target in owner))
 			return 0
+	if(cooldown_time && owner.last_special > world.time) //RS Edit
+		return 0 //RS Edit
 	return 1
 
 /datum/action/proc/UpdateName()
