@@ -318,3 +318,8 @@
 **Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/5715<br>
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
+**File:** `icons/mob/turkey.dmi`
+**Title:** Turkey<br>
+**Creator:** VerySoft (https://github.com/TS-Rogue-Star/Rogue-Star/pull/669)<br>
+**URL:** [Website](https://rogue-star.net/)<br>
+**License:** Permission granted in writing for use by Virgo and Chomp with proper attribution
