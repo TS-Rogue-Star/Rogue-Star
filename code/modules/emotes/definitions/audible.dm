@@ -88,6 +88,10 @@
 /decl/emote/audible/clap
 	key = "clap"
 	emote_message_3p = "claps."
+	emote_sound = list('sound/misc/clap1.ogg', //RS Edit start || Ports CHOMPStation PR8082
+						'sound/misc/clap2.ogg',
+						'sound/misc/clap3.ogg',
+						'sound/misc/clap4.ogg') //RS Edit end
 
 /decl/emote/audible/chuckle
 	key = "chuckle"
