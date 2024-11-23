@@ -452,7 +452,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			stop_following()
 		return
 	var/area/A = get_area(destination)	//RS EDIT START
-	if(A.block_ghosts)
+	if(A && A.block_ghosts) //RS Edit - Was causing runtitmes if called on an non-existant area. (Like the lobby menu!) Fixed.
 		to_chat(src,SPAN_WARNING("Sorry, that area does not allow ghosts."))
 		if(following)
 			stop_following()
