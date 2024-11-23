@@ -143,7 +143,7 @@
 	vore_sound = "Stomach Move"
 
 // Goliaths can summon tentacles more frequently as they take damage, scary.
-/mob/living/simple_mob/hostile/goliath/apply_damage(damage, damagetype, def_zone, blocked, forced, spread_damage, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
+/mob/living/simple_mob/hostile/goliath/apply_damage(damage, damagetype, def_zone, blocked, soaked, used_weapon, sharp, edge, used_weapon)
 	. = ..()
 	if (. <= 0)
 		return
@@ -483,7 +483,8 @@
 
 /datum/modifier/incapacitating/stun/goliath_tentacled/tick()
 	if(holder.buckled && istype(holder.buckled, /obj/effect/goliath_tentacle)) //We're buckled to a tentacle!
-		holder.restrained(1)
+		holder.Stun(1)
+		holder.Weaken(1)
 	else
 		expire()
 	return
