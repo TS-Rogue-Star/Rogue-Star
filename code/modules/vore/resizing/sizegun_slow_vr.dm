@@ -3,7 +3,7 @@
 
 /obj/item/device/slow_sizegun
 	name = "gradual size gun"
-	desc = "A highly advanced ray gun, designed for progressive and gradual changing of size."
+	desc = "A highly advanced ray gun, designed for progressive and gradual changing of size, along with theft of nutrition." //RS edit: adds functionality for nutrient drain mode and size_shift
 	icon = 'icons/obj/gun_vr.dmi'
 	icon_state = "sizegun-old-0"
 	var/base_icon_state = "sizegun-old"
@@ -17,6 +17,8 @@
 	var/dorm_size = TRUE
 	var/size_increment = 0.01
 	var/current_target
+	var/size_shift = FALSE //RS Edit - Allows gradiaul size gun to do do the opposite to the user. Shrink victim = grow user.
+	var/nutrition_steal = FALSE //RS Edit - Allow theft of nutrition
 
 /obj/item/device/slow_sizegun/update_icon()
 	icon_state = "[base_icon_state]-[sizeshift_mode]"
@@ -62,9 +64,14 @@
 	if(target.size_multiplier <= RESIZE_MINIMUM_DORMS && sizeshift_mode == SIZE_SHRINK)
 		return TRUE
 
+	//RS Edit Start - Nutrition Stuff
+	if(nutrition_steal && (target.nutrition <= 0 || user.nutrition <= 0))
+		return TRUE
+	//RS Edit End
+
 	return FALSE
 
-/obj/item/device/slow_sizegun/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/device/slow_sizegun/afterattack(atom/target, mob/living/user, proximity_flag) //RS Edit
 	// Things that invalidate the scan immediately.
 	if(isturf(target))
 		for(var/atom/A as anything in target) // If we can't scan the turf, see if we can scan anything on it, to help with aiming.
@@ -121,11 +128,26 @@
 
 	while(!should_stop(target, user, active_hand))
 		stoplag(3)
+		if(!nutrition_steal) //RS EDIT START - Size Transfer & Nutrition Steal
+			if(sizeshift_mode == SIZE_SHRINK)
+				L.resize((L.size_multiplier - size_increment), uncapped = L.has_large_resize_bounds(), aura_animation = FALSE)
+			else if(sizeshift_mode == SIZE_GROW)
+				L.resize((L.size_multiplier + size_increment), uncapped = L.has_large_resize_bounds(), aura_animation = FALSE)
 
-		if(sizeshift_mode == SIZE_SHRINK)
-			L.resize((L.size_multiplier - size_increment), uncapped = L.has_large_resize_bounds(), aura_animation = FALSE)
-		else if(sizeshift_mode == SIZE_GROW)
-			L.resize((L.size_multiplier + size_increment), uncapped = L.has_large_resize_bounds(), aura_animation = FALSE)
+			//Size Transfer
+			if(isliving(user) && size_shift)
+				if(sizeshift_mode == SIZE_SHRINK)
+					user.resize((user.size_multiplier + size_increment), uncapped = L.has_large_resize_bounds(), aura_animation = FALSE)
+				else if(sizeshift_mode == SIZE_GROW)
+					user.resize((user.size_multiplier - size_increment), uncapped = L.has_large_resize_bounds(), aura_animation = FALSE)
+		else
+			if(sizeshift_mode == SIZE_SHRINK) //Steal nutrition from target!
+				L.nutrition -= 10 //Drain a base 10 nutrition per tick.
+				user.nutrition += 10
+			else //Give nutrition to target!
+				L.nutrition += 10
+				user.nutrition -= 10
+		//RS EDIT END
 
 	busy = FALSE
 	current_target = null
@@ -219,3 +241,46 @@
 /obj/item/device/slow_sizegun/proc/color_box(list/box_segments, new_color, new_time)
 	for(var/i in box_segments)
 		animate(i, color = new_color, time = new_time)
+
+
+
+
+//RS Edit Start
+/obj/item/device/slow_sizegun/verb/size_shift()
+	set name = "Toggle Size Shift"
+	set desc = "Toggle if you want to shift size while the gun is in use! (If you shrink the target, you grow. Vice versa!)"
+	set category = "Object"
+	set src in usr
+
+	size_shift = !size_shift
+	if(size_shift)
+		to_chat(usr, "<span class='warning'>You will now grow if you shrink the target, or shrink if you grow the target!</span>")
+	else
+		to_chat(usr, "<span class='warning'>Special size shifting operations have been disabled. The gun now functions like normal!</span>")
+	return
+
+/obj/item/device/slow_sizegun/verb/nutrition_shift()
+	set name = "Toggle Nutrition Shift"
+	set desc = "Toggle if you want to steal nutrition/transfer your nutrtion to the target!"
+	set category = "Object"
+	set src in usr
+
+	nutrition_steal = !nutrition_steal
+	if(nutrition_steal)
+		to_chat(usr, "<span class='warning'>The ray will now steal nutrition or transfer nutrition to/from the target instead of size! This disables the size modulator on the ray!</span>")
+	else
+		to_chat(usr, "<span class='warning'>Special nutrition stealing operations have been disabled. The gun now functions like normal!</span>")
+	return
+
+/obj/item/device/slow_sizegun/examine(mob/user)
+	. = ..()
+	if(Adjacent(user))
+		if(nutrition_steal && size_shift)
+			. += "The gun has both 'nutrition shift' and 'size shift' mode enabled, although there is a warning on the display that nutrition steal mode takes priority."
+		else
+			if(nutrition_steal)
+				. += "The gun seems to be set to 'nutrition steal' mode."
+			if(size_shift)
+				. += "The gun seems to be set to 'size shift' mode."
+	return
+//RS Edit End
