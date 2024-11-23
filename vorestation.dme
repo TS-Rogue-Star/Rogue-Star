@@ -827,6 +827,7 @@
 #include "code\game\jobs\job\security_vr.dm"
 #include "code\game\jobs\job\silicon.dm"
 #include "code\game\jobs\job\silicon_vr.dm"
+#include "code\game\jobs\job\special_rs.dm"
 #include "code\game\jobs\job\special_vr.dm"
 #include "code\game\machinery\adv_med.dm"
 #include "code\game\machinery\adv_med_vr.dm"
