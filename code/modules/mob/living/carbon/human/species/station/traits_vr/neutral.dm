@@ -1099,4 +1099,13 @@
 	..()
 	H.verbs |= /mob/living/carbon/human/proc/adjust_art_color
 	H.verbs |= /mob/living/carbon/human/proc/extend_retract_brush
+
+/datum/trait/neutral/waddle
+	name = "Waddle / Animated Movement"
+	desc = "You move in either an animated way or with a quite visible waddle!"
+	cost = 0
+
+/datum/trait/neutral/waddle/apply(var/datum/species/S,var/mob/living/carbon/human/H)
+	..()
+	H.verbs |= /mob/living/proc/waddle_adjust
 //RS Edit End
