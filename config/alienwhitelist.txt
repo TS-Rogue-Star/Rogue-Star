@@ -64,6 +64,7 @@ drvulpotnic - Shadekin
 dustyumbry - Diona
 dustyumbry - Xenochimera
 durandaal - Teppi
+dyrmun - Shadekin
 eekasqueak - Shadekin
 essbie - Black-Eyed Shadekin
 everfire - Shadekin
@@ -128,6 +129,7 @@ kyrendragon - Black-Eyed Shadekin
 lambsie11 - Black-Eyed Shadekin
 lavenderrs - Teppi
 lazzar - Black-Eyed Shadekin
+lazzar - Shadekin
 lianvee - Black-Eyed Shadekin
 lillianfyre - Xenochimera
 lira13 - Shadekin
@@ -256,6 +258,7 @@ verysoft - Teppi
 vitoras - Protean
 voidalynx - Black-Eyed Shadekin
 voidalynx - Protean
+voidastra - Shadekin
 wickedtemp - Shadekin Empathy
 whooshboom - Black-Eyed Shadekin
 wolfmeme - Protean
