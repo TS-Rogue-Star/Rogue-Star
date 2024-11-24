@@ -90,7 +90,7 @@
 		Unbuckle(user)
 		return
 
-	if(only_one_driver && ridden.buckled_mobs.len)
+	if(only_one_driver && ridden.buckled_mobs && ridden.buckled_mobs.len) //RS Edit - Fixes a runtime by buckled_mobs not being inheriently a list.
 		var/mob/living/driver = ridden.buckled_mobs[1]
 		if(driver != user)
 			to_chat(user, "<span class='warning'>\The [ridden] can only be controlled by one person at a time, and is currently being controlled by \the [driver].</span>")

@@ -357,9 +357,9 @@
 	switch(mob.incorporeal_move)
 		if(1)
 			var/turf/T = get_step(mob, direct)
-			var/area/A = T.loc	//RS ADD
 			if(!T)
 				return
+			var/area/A = T.loc	//RS ADD
 			if(mob.check_holy(T))
 				to_chat(mob, "<span class='warning'>You cannot get past holy grounds while you are in this plane of existence!</span>")
 				return
