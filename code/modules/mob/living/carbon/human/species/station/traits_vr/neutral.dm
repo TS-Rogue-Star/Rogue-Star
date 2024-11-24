@@ -550,6 +550,19 @@
 	H.add_modifier(/datum/modifier/trait/colorblind_taj)
 
 // Body shape traits
+/datum/trait/neutral/tallest //RS ADD || Virgo Port 15949
+	name = "Tall, Major"
+	desc = "Your body is way taller than average."
+	sort = TRAIT_SORT_BODYTYPE
+	cost = 0
+	custom_only = FALSE
+	var_changes = list("icon_scale_y" = 1.15)
+	excludes = list(/datum/trait/neutral/tall, /datum/trait/neutral/taller, /datum/trait/neutral/short, /datum/trait/neutral/shorter, /datum/trait/neutral/shortest) //RS Edit
+
+/datum/trait/neutral/tallest/apply(var/datum/species/S,var/mob/living/carbon/human/H) //RS ADD || Virgo Port 15949
+	..()
+	H.update_transform()
+
 /datum/trait/neutral/taller
 	name = "Tall"
 	desc = "Your body is taller than average."
@@ -557,7 +570,7 @@
 	cost = 0
 	custom_only = FALSE
 	var_changes = list("icon_scale_y" = 1.09)
-	excludes = list(/datum/trait/neutral/tall, /datum/trait/neutral/short, /datum/trait/neutral/shorter)
+	excludes = list(/datum/trait/neutral/tall, /datum/trait/neutral/tallest, /datum/trait/neutral/short, /datum/trait/neutral/shorter, /datum/trait/neutral/shortest) //RS Edit
 
 /datum/trait/neutral/taller/apply(var/datum/species/S,var/mob/living/carbon/human/H)
 	..()
@@ -570,7 +583,7 @@
 	cost = 0
 	custom_only = FALSE
 	var_changes = list("icon_scale_y" = 1.05)
-	excludes = list(/datum/trait/neutral/taller, /datum/trait/neutral/short, /datum/trait/neutral/shorter)
+	excludes = list(/datum/trait/neutral/taller, /datum/trait/neutral/tallest, /datum/trait/neutral/short, /datum/trait/neutral/shorter, /datum/trait/neutral/shortest) //RS Edit
 
 /datum/trait/neutral/tall/apply(var/datum/species/S,var/mob/living/carbon/human/H)
 	..()
@@ -583,7 +596,7 @@
 	cost = 0
 	custom_only = FALSE
 	var_changes = list("icon_scale_y" = 0.95)
-	excludes = list(/datum/trait/neutral/taller, /datum/trait/neutral/tall, /datum/trait/neutral/shorter)
+	excludes = list(/datum/trait/neutral/tallest, /datum/trait/neutral/taller, /datum/trait/neutral/tall, /datum/trait/neutral/shorter, /datum/trait/neutral/shortest) //RS Edit
 
 /datum/trait/neutral/short/apply(var/datum/species/S,var/mob/living/carbon/human/H)
 	..()
@@ -596,9 +609,22 @@
 	cost = 0
 	custom_only = FALSE
 	var_changes = list("icon_scale_y" = 0.915)
-	excludes = list(/datum/trait/neutral/taller, /datum/trait/neutral/tall, /datum/trait/neutral/short)
+	excludes = list(/datum/trait/neutral/tallest, /datum/trait/neutral/taller, /datum/trait/neutral/tall, /datum/trait/neutral/short, /datum/trait/neutral/shortest) //RS Edit
 
 /datum/trait/neutral/shorter/apply(var/datum/species/S,var/mob/living/carbon/human/H)
+	..()
+	H.update_transform()
+
+/datum/trait/neutral/shortest //RS ADD || Virgo Port 15949
+	name = "Short, Major"
+	desc = "Your body is way shorter than average."
+	sort = TRAIT_SORT_BODYTYPE
+	cost = 0
+	custom_only = FALSE
+	var_changes = list("icon_scale_y" = 0.85)
+	excludes = list(/datum/trait/neutral/tallest, /datum/trait/neutral/taller, /datum/trait/neutral/tall, /datum/trait/neutral/short, /datum/trait/neutral/shorter) //RS Edit
+
+/datum/trait/neutral/shortest/apply(var/datum/species/S,var/mob/living/carbon/human/H) //RS ADD || Virgo Port 15949
 	..()
 	H.update_transform()
 
@@ -1099,4 +1125,13 @@
 	..()
 	H.verbs |= /mob/living/carbon/human/proc/adjust_art_color
 	H.verbs |= /mob/living/carbon/human/proc/extend_retract_brush
+
+/datum/trait/neutral/waddle
+	name = "Waddle / Animated Movement"
+	desc = "You move in either an animated way or with a quite visible waddle!"
+	cost = 0
+
+/datum/trait/neutral/waddle/apply(var/datum/species/S,var/mob/living/carbon/human/H)
+	..()
+	H.verbs |= /mob/living/proc/waddle_adjust
 //RS Edit End

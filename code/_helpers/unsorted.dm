@@ -608,11 +608,13 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	return 1
 
-/proc/is_blocked_turf(var/turf/T)
+/proc/is_blocked_turf(var/turf/T, var/exclude_mobs = 0) //RS Edit. Allows for mobs to block tiles.
 	var/cant_pass = 0
 	if(T.density) cant_pass = 1
 	for(var/atom/A in T)
 		if(A.density)//&&A.anchored
+			cant_pass = 1
+		if(exclude_mobs && istype(A, /mob/living)) //RS Edit. Allows for mobs to block tiles.
 			cant_pass = 1
 	return cant_pass
 

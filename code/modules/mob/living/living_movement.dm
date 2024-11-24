@@ -262,6 +262,10 @@ default behaviour is:
 	if(s_active && !(s_active in contents) && get_turf(s_active) != get_turf(src))	//check !( s_active in contents ) first so we hopefully don't have to call get_turf() so much.
 		s_active.close(src)
 
+
+	if(waddler) //Rs Edit Start - Adds Waddling from BubberStation
+		waddling_animation(src) //Rs Edit End - Adds Waddling from BubberStation
+
 /mob/living/proc/dragged(var/mob/living/dragger, var/oldloc)
 	var/area/A = get_area(src)
 	if(lying && !buckled && pull_damage() && A.has_gravity() && (prob(getBruteLoss() * 200 / maxHealth)))
