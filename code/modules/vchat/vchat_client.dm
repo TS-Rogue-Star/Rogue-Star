@@ -56,13 +56,37 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	owner = null
 	. = ..()
 
+// RSEdit Start
 /datum/chatOutput/proc/update_vis()
 	if(!loaded && !broken)
-		winset(owner, null, "outputwindow.htmloutput.is-visible=false;outputwindow.oldoutput.is-visible=false;outputwindow.chatloadlabel.is-visible=true")
+		// Only show loading
+		output_winset(html = FALSE, loading = TRUE, oldchat = FALSE)
 	else if(broken)
-		winset(owner, null, "outputwindow.htmloutput.is-visible=false;outputwindow.oldoutput.is-visible=true;outputwindow.chatloadlabel.is-visible=false")
+		// Only show oldchat, as 'broken' is overloaded as an oldchat-enable toggle
+		output_winset(html = FALSE, loading = FALSE, oldchat = TRUE)
 	else if(loaded)
-		return //It can do it's own winsets from inside the JS if it's working.
+		// Only show htmloutput
+		output_winset(html = TRUE, loading = FALSE, oldchat = FALSE)
+
+// Redid all these to fix stupid client bug in ~515.1642
+// Seems like the bug is that controls refuse to accept is-visible and many other settings 'sometimes'
+// But seem to accept 'some' other settings like pos and size which can be used to hide them
+/datum/chatOutput/proc/output_winset(html, loading, oldchat)
+	if(html)
+		winset(owner, "htmloutput", "is-visible=true;pos=0,0;size=0x0")
+	else
+		winset(owner, "htmloutput", "is-visible=false;pos=999,999;size=1x1")
+
+	if(loading)
+		winset(owner, "chatloadlabel", "is-visible=true;pos=0,0;size=0x0")
+	else
+		winset(owner, "chatloadlabel", "is-visible=false;pos=999,999;size=1x1")
+
+	if(oldchat)
+		winset(owner, "oldoutput", "is-visible=true;pos=0,0;size=0x0")
+	else
+		winset(owner, "oldoutput", "is-visible=false;pos=999,999;size=1x1")
+// RSEdit End
 
 //Shove all the assets at them
 /datum/chatOutput/proc/send_resources()
@@ -127,7 +151,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	broken = FALSE
 	owner.chatOutputLoadedAt = world.time
 
-	//update_vis() //It does it's own winsets
+	update_vis() //It does it's own winsets //RS Edit: Well, sometimes it does.
 	ping_cycle()
 	send_playerinfo()
 	load_database()

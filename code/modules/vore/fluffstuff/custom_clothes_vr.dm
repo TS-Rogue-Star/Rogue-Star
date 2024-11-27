@@ -668,7 +668,10 @@
 
 /obj/item/clothing/head/fluff/avida/mob_can_equip(var/mob/living/carbon/human/H, slot, disable_warning = 0)
 	if(..())
-		if(H.ear_style && (H.ear_style.name == "Bnnuy Ears" || H.ear_style.name == "Bnnuy Ears 2")) //check if wearer's ear sprite is compatible with trimmed icon
+
+		var/static/list/allowed_ear_names = list("Bnnuy Ears", "Bnnuy Ears 2") // RS EDIT START (Port of VS PR#16513 'Adds a second ear slot.')
+		//check if wearer's ear sprite is compatible with trimmed icon
+		if((H.ear_style?.name in allowed_ear_names) || (H.ear_secondary_style?.name in allowed_ear_names)) // RS EDIT END (Port of VS PR#16513 'Adds a second ear slot.')
 			item_state = initial(src.item_state)
 		else //if not, just use a generic icon
 			item_state = "avidahatnoears"

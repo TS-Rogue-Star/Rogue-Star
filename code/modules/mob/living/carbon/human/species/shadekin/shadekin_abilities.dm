@@ -31,6 +31,12 @@
 	set desc = "Shift yourself out of alignment with realspace to travel quickly to different areas."
 	set category = "Shadekin"
 
+	var/area/A = get_area(src)	//RS ADD START
+	if(!client?.holder)
+		if(A.magic_damp || A.block_phase_shift)
+			to_chat(src, "<span class='warning'>You can't do that here!</span>")
+			return					//RS ADD END
+
 	var/ability_cost = 100
 
 	var/darkness = 1
@@ -88,6 +94,40 @@
 	canmove = FALSE
 
 	//Shifting in
+	if(ability_flags & AB_PHASE_SHIFTED)	//RS EDIT START
+		phase_in()
+	//Shifting out
+	else
+		ability_flags |= AB_PHASE_SHIFTED
+		ability_flags |= AB_PHASE_SHIFTING
+		mouse_opacity = 0
+		custom_emote(1,"phases out!")
+		name = get_visible_name()
+
+		for(var/obj/belly/B as anything in vore_organs)
+			B.escapable = FALSE
+
+		var/obj/effect/temp_visual/shadekin/phase_out/phaseanim = new /obj/effect/temp_visual/shadekin/phase_out(src.loc)
+		phaseanim.dir = dir
+		alpha = 0
+		add_modifier(/datum/modifier/shadekin_phase_vision)
+		sleep(5)
+		invisibility = INVISIBILITY_LEVEL_TWO
+		see_invisible = INVISIBILITY_LEVEL_TWO
+		//cut_overlays()
+		update_icon()
+		alpha = 127
+
+		canmove = original_canmove
+		incorporeal_move = TRUE
+		density = FALSE
+		force_max_speed = TRUE
+		ability_flags &= ~AB_PHASE_SHIFTING
+
+//RS EDIT START - Breaking up phase shift so areas can tell shadekin to phase in
+/mob/living/carbon/human/proc/phase_in()
+	var/original_canmove = canmove			//RS EDIT END
+
 	if(ability_flags & AB_PHASE_SHIFTED)
 		ability_flags &= ~AB_PHASE_SHIFTED
 		ability_flags |= AB_PHASE_SHIFTING
@@ -137,33 +177,7 @@
 					L.broken()
 			else
 				L.flicker(10)
-	//Shifting out
-	else
-		ability_flags |= AB_PHASE_SHIFTED
-		ability_flags |= AB_PHASE_SHIFTING
-		mouse_opacity = 0
-		custom_emote(1,"phases out!")
-		name = get_visible_name()
-
-		for(var/obj/belly/B as anything in vore_organs)
-			B.escapable = FALSE
-
-		var/obj/effect/temp_visual/shadekin/phase_out/phaseanim = new /obj/effect/temp_visual/shadekin/phase_out(src.loc)
-		phaseanim.dir = dir
-		alpha = 0
-		add_modifier(/datum/modifier/shadekin_phase_vision)
-		sleep(5)
-		invisibility = INVISIBILITY_LEVEL_TWO
-		see_invisible = INVISIBILITY_LEVEL_TWO
-		//cut_overlays()
-		update_icon()
-		alpha = 127
-
-		canmove = original_canmove
-		incorporeal_move = TRUE
-		density = FALSE
-		force_max_speed = TRUE
-		ability_flags &= ~AB_PHASE_SHIFTING
+//RS EDIT END
 
 /datum/modifier/shadekin_phase_vision
 	name = "Shadekin Phase Vision"
@@ -182,6 +196,11 @@
 	set name = "Regenerate Other (50)"
 	set desc = "Spend energy to heal physical wounds in another creature."
 	set category = "Shadekin"
+
+	var/area/A = get_area(src)	//RS ADD START
+	if(A.magic_damp)
+		to_chat(src, "<span class='warning'>You can't do that here!</span>")
+		return					//RS ADD END
 
 	var/ability_cost = 50
 
@@ -251,6 +270,11 @@
 	set name = "Create Shade (25)"
 	set desc = "Create a field of darkness that follows you."
 	set category = "Shadekin"
+
+	var/area/A = get_area(src)	//RS ADD START
+	if(A.magic_damp)
+		to_chat(src, "<span class='warning'>You can't do that here!</span>")
+		return					//RS ADD END
 
 	var/ability_cost = 25
 

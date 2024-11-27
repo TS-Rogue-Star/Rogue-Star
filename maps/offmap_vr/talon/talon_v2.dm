@@ -61,7 +61,7 @@ var/global/list/latejoin_talon = list()
 /obj/machinery/computer/shuttle_control/explore/talonboat
 	name = "shuttle control console"
 	shuttle_tag = "Talon's Shuttle"
-	req_one_access = list(access_talon)
+	req_one_access = list(access_talon_bridge)
 
 /obj/effect/overmap/visitable/ship/landable/talon_boat
 	name = "ITV Talon Shuttle"
@@ -282,7 +282,7 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 
 /obj/item/weapon/card/id/synthetic/talon/Initialize()
 	. = ..()
-	access = list(access_talon, access_synth)
+	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, access_synth)
 
 /obj/machinery/power/smes/buildable/offmap_spawn/New()
 	..(1)
@@ -294,18 +294,18 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 
 /obj/machinery/power/apc/talon
 	req_access = list()
-	req_one_access = list(access_talon)
+	req_one_access = list(access_talon_engineer)
 
 /obj/machinery/power/apc/talon/hyper
 	cell_type = /obj/item/weapon/cell/hyper
 
 /obj/machinery/alarm/talon
 	req_access = list()
-	req_one_access = list(access_talon)
+	req_one_access = list(access_talon_engineer)
 
 /obj/machinery/door/firedoor/glass/talon
 	req_access = list()
-	req_one_access = list(access_talon)
+	req_one_access = list(access_talon_engineer)
 
 /obj/machinery/door/firedoor/glass/talon/hidden
 	name = "\improper Emergency Shutter System"
@@ -370,12 +370,16 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 
 /obj/structure/closet/secure_closet/talon_captain
 	name = "talon captain's locker"
-	req_access = list(access_talon)
+	req_access = list(access_talon_bridge)
 	closet_appearance = /decl/closet_appearance/secure_closet/talon/captain
 
 	starts_with = list(
 		/obj/item/weapon/storage/backpack/dufflebag/captain,
+		/obj/item/clothing/head/beret/talon/command,
 		/obj/item/clothing/suit/storage/vest,
+		/obj/item/clothing/head/helmet,
+		/obj/item/clothing/accessory/solgov/department/command/army,
+		/obj/item/clothing/glasses/omnihud/all,
 		/obj/item/weapon/melee/telebaton,
 		/obj/item/device/flash,
 		/obj/item/device/radio/headset/talon,
@@ -388,12 +392,14 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 
 /obj/structure/closet/secure_closet/talon_guard
 	name = "talon guard's locker"
-	req_access = list(access_talon)
+	req_access = list(access_talon_security)
 	closet_appearance = /decl/closet_appearance/secure_closet/talon/guard
 
 	starts_with = list(
 		/obj/item/clothing/suit/armor/pcarrier/light,
+		/obj/item/clothing/head/helmet,
 		/obj/item/clothing/under/utility,
+		/obj/item/clothing/head/soft/talon,
 		/obj/item/clothing/shoes/boots/jackboots,
 		/obj/item/clothing/shoes/boots/jackboots/toeless,
 		/obj/item/weapon/handcuffs = 2,
@@ -402,8 +408,10 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 		/obj/item/device/flash,
 		/obj/item/device/flashlight/maglight,
 		/obj/item/clothing/glasses/sunglasses,
+		/obj/item/clothing/accessory/holster/waist,
 		/obj/item/weapon/storage/belt/security,
 		/obj/item/device/radio/headset/talon,
+		/obj/item/clothing/head/beret/talon/command,
 		/obj/item/clothing/accessory/solgov/department/security/army,
 		/obj/item/clothing/head/helmet/space/void/refurb/marine/talon,
 		/obj/item/clothing/suit/space/void/refurb/marine/talon,
@@ -415,13 +423,15 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 
 /obj/structure/closet/secure_closet/talon_doctor
 	name = "talon doctor's locker"
-	req_access = list(access_talon)
+	req_access = list(access_talon_medical)
 	closet_appearance = /decl/closet_appearance/secure_closet/talon/doctor
 
 	starts_with = list(
 		/obj/item/clothing/under/rank/medical,
 		/obj/item/clothing/under/rank/nurse,
+		/obj/item/clothing/head/soft/talon,
 		/obj/item/clothing/under/rank/orderly,
+		/obj/item/clothing/accessory/solgov/department/medical/army,
 		/obj/item/clothing/suit/storage/toggle/labcoat/modern,
 		/obj/item/clothing/suit/storage/toggle/fr_jacket,
 		/obj/item/clothing/shoes/white,
@@ -435,13 +445,16 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 
 /obj/structure/closet/secure_closet/talon_engineer
 	name = "talon engineer's locker"
-	req_access = list(access_talon)
+	req_access = list(access_talon_engineer)
 	closet_appearance = /decl/closet_appearance/secure_closet/talon/engineer
 
 	starts_with = list(
 		/obj/item/clothing/accessory/storage/brown_vest,
+		/obj/item/clothing/accessory/solgov/department/engineering/army,
+		/obj/item/clothing/glasses/omnihud/eng/meson,
 		/obj/item/device/flashlight,
 		/obj/item/weapon/extinguisher,
+		/obj/item/clothing/head/soft/talon,
 		/obj/item/clamp,
 		/obj/item/device/radio/headset/talon,
 		/obj/item/clothing/suit/storage/hazardvest,
@@ -462,6 +475,7 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 
 	starts_with = list(
 		/obj/item/weapon/material/knife/tacknife/survival,
+		/obj/item/clothing/accessory/solgov/department/service/army,
 		/obj/item/clothing/head/pilot,
 		/obj/item/clothing/under/rank/pilot1,
 		/obj/item/clothing/suit/storage/toggle/bomber/pilot,
@@ -469,6 +483,7 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 		/obj/item/weapon/reagent_containers/food/snacks/liquidfood,
 		/obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle,
 		/obj/item/device/radio,
+		/obj/item/clothing/head/soft/talon,
 		/obj/item/clothing/under/utility/blue,
 		/obj/item/clothing/accessory/solgov/specialty/pilot,
 		/obj/item/clothing/shoes/boots/jackboots,
@@ -484,11 +499,12 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 
 /obj/structure/closet/secure_closet/talon_miner
 	name = "talon miner's locker"
-	req_access = list(access_talon)
+	req_access = list(access_talon_cargo)
 	closet_appearance = /decl/closet_appearance/secure_closet/talon/miner
 
 	starts_with = list(
 		/obj/item/device/radio/headset/talon,
+		/obj/item/clothing/head/soft/talon,
 		/obj/item/clothing/head/helmet/space/void/refurb/mining/talon,
 		/obj/item/clothing/suit/space/void/refurb/mining/talon,
 		/obj/item/weapon/tank/oxygen,
@@ -556,11 +572,11 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 /datum/computer_file/program/power_monitor/talon
 	filename = "tpowermonitor"
 	filedesc = "Power Monitoring (Talon)"
-	required_access = access_talon
+	required_access = access_talon_engineer
 /datum/computer_file/program/alarm_monitor/talon
 	filename = "talarmmonitoreng"
 	filedesc = "Alarm Monitoring (Talon)"
-	required_access = access_talon
+	required_access = access_talon_engineer
 /datum/computer_file/program/rcon_console/talon
 	filename = "trconconsole"
 	filedesc = "RCON Remote Control (Talon)"
@@ -568,11 +584,11 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 /datum/computer_file/program/atmos_control/talon
 	filename = "tatmoscontrol"
 	filedesc = "Atmosphere Control (Talon)"
-	required_access = access_talon
+	required_access = access_talon_engineer
 /datum/computer_file/program/suit_sensors/talon
 	filename = "tsensormonitor"
 	filedesc = "Suit Sensors Monitoring (Talon)"
-	required_access = access_talon
+	required_access = access_talon_medical
 
 // Modular computer/console presets
 /obj/item/modular_computer/laptop/preset/custom_loadout/standard/talon/pilot

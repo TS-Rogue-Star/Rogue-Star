@@ -124,7 +124,7 @@
 	dir = 9
 	},
 /turf/simulated/floor/tiled/dark,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "al" = (
 /obj/structure/table/standard,
 /obj/structure/extinguisher_cabinet{
@@ -1582,7 +1582,7 @@
 	stripe_color = "#d27428"
 	},
 /turf/simulated/floor/tiled/steel_ridged,
-/area/security/detectives_office)
+/area/security/security_lockerroom)
 "cZ" = (
 /obj/machinery/light{
 	dir = 1
@@ -2099,7 +2099,7 @@
 	dir = 9
 	},
 /turf/simulated/floor/tiled/dark,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "dS" = (
 /obj/structure/table/rack,
 /obj/random/maintenance,
@@ -2117,7 +2117,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/tiled/dark,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "dU" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
@@ -2908,7 +2908,7 @@
 	},
 /obj/structure/low_wall/bay/reinforced/steel,
 /turf/simulated/floor,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "fx" = (
 /obj/structure/cable/green{
 	color = "#42038a";
@@ -7574,7 +7574,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/floor_decal/milspec/color/orange/half,
 /turf/simulated/floor/tiled/dark,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "ps" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/cable/green{
@@ -8091,7 +8091,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/tiled/dark,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "qu" = (
 /obj/structure/cable/green{
 	icon_state = "4-8"
@@ -8271,7 +8271,7 @@
 	dir = 6
 	},
 /turf/simulated/floor/tiled/dark,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "qQ" = (
 /obj/machinery/light_switch{
 	pixel_y = 25
@@ -8348,7 +8348,7 @@
 "qY" = (
 /obj/effect/floor_decal/milspec/color/orange/half,
 /turf/simulated/floor/tiled/dark,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "qZ" = (
 /obj/structure/table/steel,
 /obj/item/device/retail_scanner/security,
@@ -9437,7 +9437,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/tiled/dark,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "tp" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/access_button{
@@ -9642,7 +9642,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "tN" = (
 /obj/structure/table/steel,
 /obj/random/maintenance/security,
@@ -9897,7 +9897,7 @@
 	stripe_color = "#d27428"
 	},
 /turf/simulated/floor/tiled/steel_ridged,
-/area/security/lobby)
+/area/security/security_cell_hallway)
 "us" = (
 /turf/simulated/wall/bay/r_wall/steel,
 /area/maintenance/stellardelight/substation/medical)
@@ -11564,7 +11564,7 @@
 /obj/structure/window/bay/reinforced,
 /obj/structure/low_wall/bay/reinforced/red,
 /turf/simulated/floor,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "yf" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
@@ -13395,7 +13395,7 @@
 	dir = 6
 	},
 /turf/simulated/floor/tiled/dark,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "BZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -14201,7 +14201,7 @@
 /area/maintenance/stellardelight/deck1/exploration)
 "DS" = (
 /turf/simulated/wall/bay/red,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "DV" = (
 /obj/machinery/suit_cycler/pilot,
 /obj/machinery/light,
@@ -15226,7 +15226,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/steel_ridged,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "Gn" = (
 /obj/machinery/disease2/diseaseanalyser,
 /obj/machinery/light/floortube{
@@ -16381,7 +16381,7 @@
 	dir = 5
 	},
 /turf/simulated/floor/tiled/dark,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "IN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -17393,7 +17393,7 @@
 	stripe_color = "#d27428"
 	},
 /turf/simulated/floor/tiled/steel_ridged,
-/area/security/lobby)
+/area/security/security_cell_hallway)
 "Lf" = (
 /obj/structure/cable/green{
 	color = "#42038a";
@@ -21229,7 +21229,7 @@
 	stripe_color = "#d27428"
 	},
 /turf/simulated/floor/tiled/steel_ridged,
-/area/security/detectives_office)
+/area/security/security_cell_hallway)
 "Tn" = (
 /obj/structure/table/steel_reinforced,
 /obj/machinery/light{
@@ -22124,7 +22124,7 @@
 /area/stellardelight/deck1/pilot)
 "Ve" = (
 /turf/simulated/wall/bay/r_wall/steel,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "Vf" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 8
@@ -23412,7 +23412,7 @@
 	dir = 10
 	},
 /turf/simulated/floor/tiled/dark,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "XM" = (
 /obj/structure/cable/green{
 	color = "#42038a";
@@ -23693,7 +23693,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
-/area/prison/cell_block)
+/area/prison/cell_block/A)
 "Yq" = (
 /obj/structure/bed/chair/bay/shuttle{
 	dir = 8
@@ -24209,8 +24209,8 @@
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/starboardcent)
 "Zv" = (
-/turf/simulated/wall/bay/r_wall/red,
-/area/security/detectives_office)
+/turf/simulated/wall/bay/red,
+/area/security/security_cell_hallway)
 "Zw" = (
 /obj/effect/floor_decal/milspec/color/black,
 /turf/simulated/floor/tiled/dark,
@@ -34050,7 +34050,7 @@ wT
 bC
 yR
 wT
-QC
+Zv
 vA
 hT
 qp
@@ -34192,7 +34192,7 @@ Ne
 Qu
 xm
 wT
-QC
+Zv
 lB
 GD
 mu
@@ -34334,7 +34334,7 @@ xd
 Qu
 cy
 oB
-QC
+Zv
 GT
 ya
 mu
@@ -34476,7 +34476,7 @@ eH
 Qu
 io
 wT
-QC
+Zv
 CQ
 ah
 mu
@@ -34618,7 +34618,7 @@ FH
 Qu
 kS
 wT
-QC
+Zv
 tS
 hT
 Bt
@@ -34902,7 +34902,7 @@ cE
 Qu
 LN
 jv
-QC
+Zv
 zq
 he
 mu
@@ -35044,7 +35044,7 @@ Ne
 Qu
 aa
 wT
-QC
+Zv
 Iq
 HN
 Tg
@@ -35186,7 +35186,7 @@ wT
 QQ
 Nj
 wT
-Fe
+Zv
 Fe
 Me
 Fe
@@ -35470,7 +35470,7 @@ ZG
 ZG
 ZG
 ZG
-Zv
+ZG
 Bd
 Ya
 xI
@@ -35612,7 +35612,7 @@ jc
 ae
 sL
 Zb
-Zv
+ZG
 Bk
 HA
 Fh
@@ -35754,7 +35754,7 @@ LH
 vo
 vo
 IN
-Zv
+ZG
 Fi
 fd
 YZ
@@ -35896,7 +35896,7 @@ BJ
 bq
 bq
 Gp
-Zv
+ZG
 Xd
 QX
 Fh
@@ -36180,7 +36180,7 @@ dm
 YX
 VF
 Is
-Zv
+ZG
 Gi
 JM
 ZF
@@ -36322,7 +36322,7 @@ ZG
 ZG
 ZG
 ZG
-Zv
+ZG
 Fe
 MS
 Fe

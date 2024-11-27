@@ -133,6 +133,8 @@
 	forbid_singulo = TRUE
 	emotes_from_beyond = FALSE	//RS ADD
 
+/area/stellardelight/deck1/dorms
+	block_phase_shift = TRUE	//RS ADD
 /area/stellardelight/deck1/dorms/dorm1
 	name = "Dormitory One"
 	icon_state = "dorm1"
@@ -235,6 +237,7 @@
 /area/stellardelight/deck2/barbackroom
 	name = "Bar Backroom"
 	sound_env = SMALL_SOFTFLOOR
+	block_phase_shift = TRUE	//RS ADD
 
 /area/stellardelight/deck2/portescape
 	name = "Port Escape Pod"

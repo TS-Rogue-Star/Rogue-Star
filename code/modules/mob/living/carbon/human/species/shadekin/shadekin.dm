@@ -74,8 +74,9 @@
 	poison_type = null
 	water_breather = TRUE	//They don't quite breathe
 
-	vision_flags = SEE_SELF|SEE_MOBS
+//	vision_flags = SEE_SELF|SEE_MOBS	//RS REMOVE
 	appearance_flags = HAS_HAIR_COLOR | HAS_LIPS | HAS_SKIN_COLOR | HAS_EYE_COLOR | HAS_UNDERWEAR
+	digi_allowed = TRUE
 
 	move_trail = /obj/effect/decal/cleanable/blood/tracks/paw
 
@@ -107,7 +108,8 @@
 	//SHADEKIN-UNIQUE STUFF GOES HERE
 	var/list/shadekin_abilities = list(/datum/power/shadekin/phase_shift,
 									   /datum/power/shadekin/regenerate_other,
-									   /datum/power/shadekin/create_shade)
+									   /datum/power/shadekin/create_shade,
+									   /datum/power/shadekin/phase_flicker) //RS Edit
 	var/list/shadekin_ability_datums = list()
 	var/kin_type
 	var/energy_light = 0.25
@@ -163,6 +165,12 @@
 		dark_gains = 0
 		return
 
+	var/area/A = get_area(H)	//RS ADD START
+	if(A.magic_damp)
+		set_energy(H,0)
+		update_shadekin_hud(H)
+		return					//RS ADD END
+
 	var/brightness = T.get_lumcount() //Brightness in 0.0 to 1.0
 	darkness = 1-brightness //Invert
 	var/is_dark = (darkness >= 0.5)
@@ -191,6 +199,9 @@
 
 	if(!istype(shade_organ))
 		return 0
+	var/area/A = get_area(H)	//RS ADD START
+	if(A.magic_damp)
+		return 0				//RS ADD END
 	if(shade_organ.dark_energy_infinite)
 		return shade_organ.max_dark_energy
 
@@ -300,16 +311,20 @@
 	.=..()
 
 	var/eyecolor_type = get_shadekin_eyecolor(H)
+	//RS Edit Start Adjustments for better feeling shadekin.
+
+	//Former(in the dark): BESK: 50 in 200 ||RESK: 50 in 1000 ||PESK: 50 in 100 ||YESK: 50 in 33.3|| GESK: 50 in 50 ||OESK: 50 in 400
+	//Current(in the dark): BESK: 50 in 133 ||RESK: 50 in 200 ||PESK: 50 in 100 ||YESK: 50 in 33.3|| GESK: 50 in 50 ||OESK: 50 in 133
 
 	switch(eyecolor_type)
 		if(BLUE_EYES)
 			total_health = 100
-			energy_light = 0.5
-			energy_dark = 0.5
+			energy_light = 0.75
+			energy_dark = 0.75
 		if(RED_EYES)
 			total_health = 200
-			energy_light = -1
-			energy_dark = 0.1
+			energy_light = -0.5
+			energy_dark = 0.5
 		if(PURPLE_EYES)
 			total_health = 150
 			energy_light = -0.5
@@ -324,8 +339,9 @@
 			energy_dark = 2
 		if(ORANGE_EYES)
 			total_health = 175
-			energy_light = -0.5
-			energy_dark = 0.25
+			energy_light = -0.25
+			energy_dark = 0.75
+	//RS Edit End
 
 	H.maxHealth = total_health
 

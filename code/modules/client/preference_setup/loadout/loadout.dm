@@ -257,13 +257,14 @@ var/list/gear_datums = list()
 	var/list/gear_tweaks = list() //List of datums which will alter the item after it has been spawned.
 	var/exploitable = 0		//Does it go on the exploitable information list?
 	var/type_category = null
+	var/customize = 1		//Can the item be customized; RS Add
 
 /datum/gear/New()
-	..()
 	if(!description)
 		var/obj/O = path
 		description = initial(O.desc)
-	gear_tweaks = list(gear_tweak_free_name, gear_tweak_free_desc)
+	if (customize == 1) //RS Add
+		gear_tweaks = list(gear_tweak_free_name, gear_tweak_free_desc, GLOB.gear_tweak_free_matrix_recolor) //RS Edit - Port Chomp 6159
 
 /datum/gear_data
 	var/path

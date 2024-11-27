@@ -86,8 +86,11 @@
 			/obj/item/toy/plushie/nukeplushie,
 			/obj/item/toy/plushie/otter,
 			/obj/item/toy/plushie/vox,
-			/obj/item/toy/plushie/shark)
+			/obj/item/toy/plushie/shark,
 			//VOREStation Add End
+			/obj/item/toy/plushie/teppi, //RS Add Start || Ports CHOMPStation PR 8816
+			/obj/item/toy/plushie/lasagna	//RS ADD
+			)
 	name = "Plushies Crate"
 	cost = 15
 	containertype = /obj/structure/closet/crate/allico

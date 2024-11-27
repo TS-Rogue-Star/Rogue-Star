@@ -24,6 +24,15 @@
 	name = "impassable rock"
 	},
 /area/groundbase/level3/ne)
+"au" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/retro,
+/area/groundbase/dorms/room9)
 "aD" = (
 /turf/simulated/floor/outdoors/grass/seasonal,
 /area/groundbase/level3/ne)
@@ -524,6 +533,12 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/shuttle/groundbase/exploration)
+"gF" = (
+/turf/simulated/floor/outdoors/grass/seasonal/preset/spring{
+	animal_chance = 0.1;
+	tree_chance = 0
+	},
+/area/groundbase/unexplored/outdoors)
 "gY" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
@@ -610,7 +625,7 @@
 /turf/simulated/floor/tiled{
 	icon_state = "techmaint"
 	},
-/area/groundbase/dorms/bathroom)
+/area/groundbase/dorms/room9)
 "hw" = (
 /obj/machinery/computer/ship/helm,
 /turf/simulated/floor/tiled/eris/dark/panels,
@@ -652,7 +667,7 @@
 "hQ" = (
 /obj/structure/bed/chair/sofa/corp/right,
 /turf/simulated/floor/carpet/retro,
-/area/groundbase/dorms/bathroom)
+/area/groundbase/dorms/room9)
 "hR" = (
 /obj/structure/bed/chair{
 	dir = 8
@@ -709,8 +724,9 @@
 /area/shuttle/groundbase/exploration)
 "im" = (
 /obj/structure/bed/chair/sofa/corp,
+/obj/machinery/atmospherics/unary/vent_pump/on,
 /turf/simulated/floor/carpet/retro,
-/area/groundbase/dorms/bathroom)
+/area/groundbase/dorms/room9)
 "io" = (
 /obj/structure/railing/grey,
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
@@ -752,11 +768,15 @@
 /obj/structure/railing,
 /turf/simulated/open,
 /area/groundbase/level3/se)
+"jk" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/carpet/retro,
+/area/groundbase/dorms/room9)
 "jl" = (
 /obj/machinery/alarm,
 /obj/structure/bed/chair/sofa/corp/left,
 /turf/simulated/floor/carpet/retro,
-/area/groundbase/dorms/bathroom)
+/area/groundbase/dorms/room9)
 "jm" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -850,7 +870,7 @@
 /area/groundbase/civilian/pilot)
 "kk" = (
 /turf/simulated/floor/wood,
-/area/groundbase/dorms/bathroom)
+/area/groundbase/dorms/room9)
 "ko" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -1084,7 +1104,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/wood,
-/area/groundbase/dorms/bathroom)
+/area/groundbase/dorms/room9)
 "mA" = (
 /obj/machinery/door/airlock/multi_tile/glass/polarized{
 	id_tag = null;
@@ -1102,6 +1122,13 @@
 "mC" = (
 /turf/simulated/wall,
 /area/groundbase/cargo/office)
+"mD" = (
+/obj/machinery/light_switch{
+	dir = 8;
+	pixel_x = 30
+	},
+/turf/simulated/floor/wood,
+/area/groundbase/dorms/room9)
 "mE" = (
 /obj/machinery/ion_engine{
 	dir = 1
@@ -1167,8 +1194,17 @@
 /area/groundbase/medical/uhallway)
 "nu" = (
 /obj/structure/lattice,
+/obj/structure/cable/yellow{
+	icon_state = "32-8"
+	},
+/obj/machinery/atmospherics/pipe/zpipe/down/scrubbers{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/zpipe/down/supply{
+	dir = 8
+	},
 /turf/simulated/open,
-/area/groundbase/dorms/bathroom)
+/area/groundbase/dorms/room9)
 "nM" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -1198,7 +1234,7 @@
 	dir = 9
 	},
 /turf/simulated/floor/tiled/white,
-/area/groundbase/dorms/bathroom)
+/area/groundbase/dorms/room9)
 "nP" = (
 /obj/structure/closet/secure_closet/hop2,
 /turf/simulated/floor/wood,
@@ -1368,6 +1404,15 @@
 	outdoors = 1
 	},
 /area/groundbase/level3/nw)
+"pn" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/turf/simulated/floor/wood,
+/area/groundbase/dorms/room9)
 "pq" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
@@ -1441,7 +1486,7 @@
 	dir = 9
 	},
 /turf/simulated/floor/tiled/white,
-/area/groundbase/dorms/bathroom)
+/area/groundbase/dorms/room9)
 "qa" = (
 /obj/effect/overmap/visitable/sector/virgo3c,
 /turf/unsimulated/wall/planetary/normal{
@@ -1622,7 +1667,7 @@
 /area/groundbase/security/hall3)
 "rT" = (
 /turf/simulated/floor/carpet/retro,
-/area/groundbase/dorms/bathroom)
+/area/groundbase/dorms/room9)
 "rX" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/multi_tile/glass/polarized{
@@ -1749,10 +1794,22 @@
 	pixel_y = 2
 	},
 /turf/simulated/floor/tiled/white,
-/area/groundbase/dorms/bathroom)
+/area/groundbase/dorms/room9)
 "sY" = (
 /turf/simulated/floor/tiled/white,
-/area/groundbase/dorms/bathroom)
+/area/groundbase/dorms/room9)
+"sZ" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/white,
+/area/groundbase/medical/uhallway)
 "ta" = (
 /obj/structure/bookcase,
 /obj/item/weapon/book/manual/security_space_law,
@@ -1907,7 +1964,7 @@
 	desc = "This water looks pretty shallow and calm. You'd almost feel bad for hopping in and disturbing its serene flatness. Steam wafts off of the surface!";
 	name = "hotspring"
 	},
-/area/groundbase/dorms/bathroom)
+/area/groundbase/dorms/room9)
 "uc" = (
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/medicalshowers)
@@ -1917,7 +1974,7 @@
 	name = "Bathroom"
 	},
 /turf/simulated/floor/tiled/steel_ridged,
-/area/groundbase/dorms/bathroom)
+/area/groundbase/dorms/room9)
 "ug" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /obj/effect/floor_decal/milspec/color/red/half{
@@ -2023,7 +2080,7 @@
 	icon_state = "dobulesheetcosmos"
 	},
 /turf/simulated/floor/wood,
-/area/groundbase/dorms/bathroom)
+/area/groundbase/dorms/room9)
 "uC" = (
 /obj/machinery/computer/ship/sensors{
 	dir = 8
@@ -2115,7 +2172,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood,
-/area/groundbase/dorms/bathroom)
+/area/groundbase/dorms/room9)
 "vn" = (
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 6
@@ -2219,7 +2276,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/tiled/white,
-/area/groundbase/dorms/bathroom)
+/area/groundbase/dorms/room9)
 "wx" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 5
@@ -2249,7 +2306,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/tiled/white,
-/area/groundbase/dorms/bathroom)
+/area/groundbase/dorms/room9)
 "wF" = (
 /obj/item/weapon/bedsheet/hop,
 /obj/structure/bed/padded,
@@ -2277,7 +2334,7 @@
 	name = "Bathroom"
 	},
 /turf/simulated/floor/bmarble,
-/area/groundbase/dorms/bathroom)
+/area/groundbase/dorms/room9)
 "wI" = (
 /obj/machinery/power/apc{
 	dir = 4
@@ -2321,7 +2378,7 @@
 /obj/structure/table/woodentable,
 /obj/machinery/microwave,
 /turf/simulated/floor/carpet/retro,
-/area/groundbase/dorms/bathroom)
+/area/groundbase/dorms/room9)
 "xu" = (
 /obj/machinery/door/airlock{
 	id_tag = "pilotA";
@@ -2403,14 +2460,17 @@
 /obj/structure/table/woodentable,
 /obj/random/donkpocketbox,
 /turf/simulated/floor/carpet/retro,
-/area/groundbase/dorms/bathroom)
+/area/groundbase/dorms/room9)
 "yc" = (
 /obj/structure/table/woodentable,
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_y = -32
 	},
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 1
+	},
 /turf/simulated/floor/carpet/retro,
-/area/groundbase/dorms/bathroom)
+/area/groundbase/dorms/room9)
 "yg" = (
 /obj/structure/bed/chair/shuttle{
 	dir = 1
@@ -2546,7 +2606,7 @@
 	desc = "This water looks pretty shallow and calm. You'd almost feel bad for hopping in and disturbing its serene flatness. Steam wafts off of the surface!";
 	name = "hotspring"
 	},
-/area/groundbase/dorms/bathroom)
+/area/groundbase/dorms/room9)
 "yW" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
@@ -2791,6 +2851,18 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/iaa2)
+"BQ" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/turf/simulated/floor/wood,
+/area/groundbase/dorms/room9)
 "BU" = (
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
@@ -3168,6 +3240,12 @@
 /obj/effect/landmark/start/iaa,
 /turf/simulated/floor/carpet/sblucarpet,
 /area/groundbase/security/iaa1)
+"Fh" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/turf/simulated/floor/carpet/retro,
+/area/groundbase/dorms/room9)
 "Fn" = (
 /obj/machinery/door/airlock/multi_tile/glass{
 	dir = 1
@@ -3369,6 +3447,21 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/outdoors/sidewalk/slab,
 /area/groundbase/level3/se)
+"HR" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/power/apc{
+	dir = 1
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/wood,
+/area/groundbase/dorms/room9)
 "HW" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/stamp/internalaffairs,
@@ -4363,6 +4456,15 @@
 	outdoors = 0
 	},
 /area/groundbase/civilian/bar/garden)
+"Qu" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/groundbase/dorms/room9)
 "QH" = (
 /obj/machinery/door/airlock{
 	id_tag = "pilotB";
@@ -5327,7 +5429,7 @@
 /area/groundbase/medical/paramedic)
 "YO" = (
 /turf/simulated/wall/r_wall,
-/area/groundbase/dorms/bathroom)
+/area/groundbase/dorms/room9)
 "YR" = (
 /obj/structure/handrail,
 /obj/machinery/embedded_controller/radio/simple_docking_controller{
@@ -7090,13 +7192,13 @@ Ue
 Ue
 Ue
 Ue
-Ue
-Ue
-Ue
-Ue
-Ue
-Ue
-Ue
+gF
+gF
+gF
+gF
+gF
+gF
+gF
 Ue
 mv
 mv
@@ -7232,13 +7334,13 @@ Ue
 Ue
 Ue
 Ue
-Ue
-Ue
-Ue
-Ue
-Ue
-Ue
-Ue
+gF
+gF
+gF
+gF
+gF
+gF
+gF
 Ue
 Ue
 PZ
@@ -7374,13 +7476,13 @@ Ue
 Ue
 Ue
 Ue
-Ue
-Ue
-Ue
-Ue
-Ue
-Ue
-Ue
+gF
+gF
+gF
+gF
+gF
+gF
+gF
 Ue
 Ue
 PZ
@@ -7516,13 +7618,13 @@ Ue
 Ue
 Ue
 Ue
-Ue
-Ue
-Ue
-Ue
-Ue
-Ue
-Ue
+gF
+gF
+gF
+gF
+gF
+gF
+gF
 Ue
 Ue
 PZ
@@ -7658,13 +7760,13 @@ Ue
 Ue
 nX
 Ue
-Ue
-Ue
-Ue
-Ue
-Ue
-Ue
-Ue
+gF
+gF
+gF
+gF
+gF
+gF
+gF
 Ue
 Ue
 PZ
@@ -7800,13 +7902,13 @@ Ue
 nX
 nX
 Ue
-Ue
-Ue
-Ue
-Ue
-Ue
-Ue
-Ue
+gF
+gF
+gF
+gF
+gF
+gF
+gF
 Ue
 Ue
 PZ
@@ -7942,13 +8044,13 @@ nX
 nX
 nX
 Ue
-Ue
-Ue
-Ue
-Ue
-Ue
-Ue
-Ue
+gF
+gF
+gF
+gF
+gF
+gF
+gF
 Ue
 PZ
 PZ
@@ -8084,13 +8186,13 @@ nX
 nX
 Ue
 Ue
-Ue
-Ue
-Ue
-Ue
-Ue
-Ue
-Ue
+gF
+gF
+gF
+gF
+gF
+gF
+gF
 Ue
 PZ
 PZ
@@ -8226,13 +8328,13 @@ nX
 Ue
 Ue
 Ue
-Ue
-Ue
-Ue
-Ue
-Ue
-Ue
-Ue
+gF
+gF
+gF
+gF
+gF
+gF
+gF
 PZ
 PZ
 PZ
@@ -8368,11 +8470,11 @@ Ue
 Ue
 Ue
 Ue
-Ue
-Ue
-Ue
-Ue
-Ue
+gF
+gF
+gF
+gF
+gF
 Ue
 PZ
 PZ
@@ -8510,11 +8612,11 @@ Ue
 Ue
 Ue
 Ue
-Ue
-Ue
-Ue
-Ue
-Ue
+gF
+gF
+gF
+gF
+gF
 Ue
 PZ
 PZ
@@ -9183,7 +9285,7 @@ Ax
 cf
 YO
 im
-rT
+Fh
 rT
 xZ
 YO
@@ -9325,8 +9427,8 @@ Ax
 cf
 YO
 jl
-rT
-rT
+au
+jk
 yc
 YO
 nX
@@ -9467,7 +9569,7 @@ Ax
 cf
 YO
 kk
-kk
+Qu
 kk
 YO
 YO
@@ -9608,8 +9710,8 @@ Ax
 (30,1,1) = {"
 cf
 YO
-mz
-kk
+BQ
+pn
 uB
 YO
 nX
@@ -9750,8 +9852,8 @@ Ax
 (31,1,1) = {"
 cf
 YO
-kk
-kk
+HR
+mD
 vk
 YO
 nX
@@ -21328,7 +21430,7 @@ Rv
 aJ
 QQ
 RQ
-TU
+sZ
 gY
 SI
 ko

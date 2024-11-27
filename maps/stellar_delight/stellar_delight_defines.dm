@@ -13,9 +13,11 @@
 #define Z_LEVEL_FUELDEPOT					12
 #define Z_LEVEL_OVERMAP						13
 #define Z_LEVEL_OFFMAP1						14
-#define Z_LEVEL_GATEWAY						15
-#define Z_LEVEL_OM_ADVENTURE				16
-#define Z_LEVEL_REDGATE						17
+#define Z_LEVEL_SNOWBASE					15
+#define Z_LEVEL_GLACIER						16
+#define Z_LEVEL_GATEWAY						17
+#define Z_LEVEL_OM_ADVENTURE				18
+#define Z_LEVEL_REDGATE						19
 
 //Camera networks
 #define NETWORK_HALLS "Halls"
@@ -146,7 +148,8 @@
 		list("Debris Field - Z1 Space"),
 		list("Fuel Depot - Z1 Space"),
 		list("Overmap"),
-		list("Offmap Ship - Talon V2")
+		list("Offmap Ship - Talon V2"),
+		list("Virgo 5","Virgo 5 Glacier")
 		)
 	//List associations used in admin load selection feature
 	lateload_gateway = list(
@@ -176,7 +179,8 @@
 		"Moving Train" = list("Redgate - Moving Train", "Redgate - Moving Train Upper Level"),
 		"Fantasy Town" = list("Redgate - Fantasy Dungeon", "Redgate - Fantasy Town"),
 		"Snowglobe" = list("Redgate - Snowglobe"),
-		"Pet Island" = list("Redgate - Pet Island")
+		"Pet Island" = list("Redgate - Pet Island"),
+		"Pizzaria" = list("Redgate - Pizzaria"),
 		)
 
 	ai_shell_restricted = TRUE
@@ -199,7 +203,8 @@
 	mining_outpost_z =		list(Z_LEVEL_SURFACE_MINE)
 */
 	planet_datums_to_make = list(/datum/planet/virgo3b,
-								/datum/planet/virgo4)
+								/datum/planet/virgo4,
+								/datum/planet/snowbase)
 
 /datum/map/stellar_delight/get_map_info()
 	. = list()
@@ -226,6 +231,11 @@
 /datum/planet/virgo4
 	expected_z_levels = list(
 		Z_LEVEL_BEACH
+	)
+/datum/planet/snowbase
+	expected_z_levels = list(
+		Z_LEVEL_SNOWBASE,
+		Z_LEVEL_GLACIER
 	)
 
 /obj/effect/landmark/map_data/stellar_delight
@@ -304,6 +314,9 @@
 	var/associated_map_datum
 
 /////STATIC LATELOAD/////
+
+#include "../expedition_vr/snowbase/submaps/glacier.dm"
+#include "../expedition_vr/snowbase/submaps/glacier_areas.dm"
 
 /datum/map_template/ship_lateload/on_map_loaded(z)
 	if(!associated_map_datum || !ispath(associated_map_datum))

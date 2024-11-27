@@ -176,7 +176,11 @@ var/list/_human_default_emotes = list(
 	//VOREStation Add End
 	//RS ADD START
 	/decl/emote/audible/yip,
-	/decl/emote/audible/yip/yap
+	/decl/emote/audible/yip/yap,
+	/decl/emote/audible/awawa,
+	/decl/emote/audible/glub,
+	/decl/emote/audible/blowkiss
+	//RS ADD END
 )
 
 	//VOREStation Add Start
@@ -318,11 +322,15 @@ var/list/_simple_mob_default_emotes = list(
 	/decl/emote/audible/purr,
 	/decl/emote/audible/purrlong,
 	/decl/emote/audible/dook,
-	/decl/emote/audible/yip,
-	/decl/emote/audible/yip/yap
-
-	)
 	//VOREStation Add End
+	//RS ADD START
+	/decl/emote/audible/yip,
+	/decl/emote/audible/yip/yap,
+	/decl/emote/audible/awawa,
+	/decl/emote/audible/glub
+	//RS ADD END
+	)
+
 
 /mob/living/carbon/human/get_available_emotes()
 	. = global._human_default_emotes.Copy()

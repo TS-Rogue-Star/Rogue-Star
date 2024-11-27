@@ -187,6 +187,27 @@ Works together with spawning an observer, noted above.
 
 	handle_regular_hud_updates()
 	handle_vision()
+	check_area()	//RS ADD
+
+//RS ADD START
+/mob/observer/dead/proc/check_area()
+	if(client?.holder)
+		return
+	if(!isturf(loc))
+		return
+	var/area/A = get_area(src)
+	if(A.block_ghosts)
+		to_chat(src, "<span class='warning'>Ghosts can't enter this location.</span>")
+		return_to_spawn()
+
+/mob/observer/dead/proc/return_to_spawn()
+	if(following)
+		stop_following()
+	var/obj/O = locate("landmark*Observer-Start")
+	if(istype(O))
+		to_chat(src, "<span class='notice'>Now teleporting.</span>")
+		forceMove(O.loc)
+//RS ADD END
 
 /mob/proc/ghostize(var/can_reenter_corpse = 1)
 	if(key)
@@ -430,7 +451,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(following)
 			stop_following()
 		return
-
+	var/area/A = get_area(destination)	//RS EDIT START
+	if(A && A.block_ghosts) //RS Edit - Was causing runtitmes if called on an non-existant area. (Like the lobby menu!) Fixed.
+		to_chat(src,SPAN_WARNING("Sorry, that area does not allow ghosts."))
+		if(following)
+			stop_following()
+		return							//RS EDIT END
 	return ..()
 
 /mob/observer/dead/Move(atom/newloc, direct = 0, movetime)

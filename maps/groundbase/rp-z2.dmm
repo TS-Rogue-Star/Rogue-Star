@@ -2364,7 +2364,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
-/obj/item/device/retail_scanner/cargo,
+/obj/item/weapon/storage/bag/mail,
+/obj/item/mail/blank,
+/obj/item/mail/blank,
+/obj/item/mail/blank,
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/office)
 "hD" = (
@@ -2478,6 +2481,14 @@
 	},
 /obj/machinery/light/small{
 	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/machinery/atmospherics/pipe/zpipe/up/supply,
+/obj/machinery/atmospherics/pipe/zpipe/up/scrubbers,
+/obj/structure/cable/yellow{
+	icon_state = "16-0"
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/dorms/bathroom)
@@ -4443,6 +4454,7 @@
 /obj/effect/floor_decal/corner/beige{
 	dir = 6
 	},
+/obj/item/weapon/storage/bag/mail,
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/storage)
 "oF" = (
@@ -4549,7 +4561,7 @@
 	icon_state = "16-0"
 	},
 /turf/simulated/floor/tiled/dark,
-/area/space)
+/area/groundbase/security/hall2)
 "oQ" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable/yellow{
@@ -5904,6 +5916,7 @@
 /obj/effect/floor_decal/corner/beige{
 	dir = 6
 	},
+/obj/item/weapon/storage/bag/mail,
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/storage)
 "sU" = (
@@ -9311,6 +9324,11 @@
 	id_tag = "toilet1";
 	name = "Room 9"
 	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/dorms/bathroom)
 "Dp" = (
@@ -13260,6 +13278,7 @@
 /obj/effect/floor_decal/corner/beige{
 	dir = 6
 	},
+/obj/item/device/retail_scanner/cargo,
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/office)
 "Pt" = (
@@ -13863,24 +13882,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/medical/virology)
-"Ri" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/effect/floor_decal/milspec/color/purple/half{
-	dir = 1
-	},
-/turf/simulated/floor/tiled{
-	edge_blending_priority = -1;
-	outdoors = 1
-	},
-/area/groundbase/science/hall)
 "Rj" = (
 /obj/effect/floor_decal/milspec/color/purple/half{
 	dir = 1
@@ -13896,8 +13897,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -14714,13 +14715,17 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
-	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/structure/disposalpipe/tagger{
 	dir = 8;
 	name = "package tagger - Resleeving";
 	sort_tag = "Resleeving"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/dorms/bathroom)
@@ -15189,6 +15194,10 @@
 /obj/effect/floor_decal/corner/beige{
 	dir = 9
 	},
+/obj/item/mail/blank,
+/obj/item/mail/blank,
+/obj/item/mail/blank,
+/obj/item/mail/blank,
 /turf/simulated/floor/tiled,
 /area/groundbase/cargo/office)
 "UQ" = (
@@ -17575,11 +17584,11 @@ cj
 cj
 cj
 cj
-cj
-cj
-cj
-cj
-cj
+tP
+tP
+tP
+tP
+tP
 tP
 tP
 tP
@@ -17711,17 +17720,17 @@ wQ
 cj
 cj
 cj
-cj
-cj
-MX
-cj
-cj
-cj
-cj
-cj
-cj
-cj
-cj
+tP
+tP
+GR
+tP
+tP
+tP
+tP
+tP
+tP
+tP
+tP
 tP
 tP
 tP
@@ -17851,19 +17860,19 @@ wQ
 wQ
 cj
 cj
-cj
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-cj
-cj
-cj
-cj
-cj
+tP
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+tP
+tP
+tP
+tP
+tP
 tP
 tP
 tP
@@ -17992,20 +18001,20 @@ wQ
 wQ
 cj
 MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-cj
-cj
-cj
-cj
-cj
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+tP
+tP
+tP
+tP
+tP
 tP
 tP
 tP
@@ -18133,21 +18142,21 @@ wQ
 wQ
 MX
 MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-cj
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+tP
 tP
 tP
 tP
@@ -18277,19 +18286,19 @@ MX
 GR
 GR
 GR
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-cj
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+tP
 tP
 tP
 tP
@@ -18419,19 +18428,19 @@ GR
 GR
 GR
 GR
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
 tP
 tP
 tP
@@ -18561,19 +18570,19 @@ GR
 GR
 GR
 GR
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
 GR
 tP
 tP
@@ -18703,19 +18712,19 @@ GR
 GR
 GR
 GR
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
 GR
 tP
 tP
@@ -18845,19 +18854,19 @@ GR
 GR
 GR
 GR
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
-MX
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
+GR
 GR
 GR
 tP
@@ -19128,7 +19137,7 @@ GR
 GR
 GR
 GR
-MX
+GR
 MX
 av
 av
@@ -19270,7 +19279,7 @@ GR
 GR
 GR
 GR
-MX
+GR
 MX
 av
 av
@@ -19412,7 +19421,7 @@ GR
 GR
 GR
 GR
-MX
+GR
 MX
 MX
 av
@@ -19553,9 +19562,9 @@ GR
 GR
 GR
 GR
-MX
-MX
-MX
+GR
+GR
+GR
 MX
 av
 av
@@ -19695,9 +19704,9 @@ GR
 GR
 GR
 GR
-MX
-MX
-MX
+GR
+GR
+GR
 MX
 av
 av
@@ -19837,9 +19846,9 @@ GR
 GR
 GR
 GR
-MX
-MX
-MX
+GR
+GR
+GR
 MX
 av
 av
@@ -19979,9 +19988,9 @@ GR
 GR
 GR
 GR
-MX
-MX
-MX
+GR
+GR
+GR
 MX
 av
 av
@@ -20121,9 +20130,9 @@ GR
 GR
 GR
 GR
-MX
-MX
-MX
+GR
+GR
+GR
 MX
 av
 av
@@ -20263,9 +20272,9 @@ GR
 GR
 GR
 GR
-MX
-MX
-MX
+GR
+GR
+GR
 MX
 av
 av
@@ -20405,9 +20414,9 @@ GR
 GR
 GR
 GR
-MX
-MX
-MX
+GR
+GR
+GR
 MX
 av
 av
@@ -21763,7 +21772,7 @@ Qq
 Ez
 yU
 cn
-Xv
+Ga
 gc
 gc
 gc
@@ -24684,7 +24693,7 @@ jf
 jf
 jf
 jf
-Ri
+Xs
 zi
 Ve
 HA

@@ -920,6 +920,10 @@
 /obj/random/multiple/underdark/treasure,
 /turf/simulated/mineral/floor/ignore_cavegen/cave,
 /area/redgate/fantasy/caves)
+"ut" = (
+/mob/living/simple_mob/vore/cryptdrake,
+/turf/simulated/floor/wmarble,
+/area/redgate/fantasy/dungeon)
 "uu" = (
 /obj/structure/table/rack/shelf/wood,
 /obj/effect/decal/cleanable/dirt,
@@ -2099,8 +2103,7 @@
 /turf/simulated/floor/wmarble,
 /area/redgate/fantasy/dungeon)
 "Rk" = (
-/mob/living/simple_mob/vore/cryptdrake,
-/turf/simulated/floor/wmarble,
+/turf/simulated/mineral/crystal_shiny,
 /area/redgate/fantasy/dungeon)
 "Ry" = (
 /obj/machinery/door/airlock/alien/blue/public,
@@ -15180,7 +15183,7 @@ kn
 cK
 cK
 cK
-cK
+ut
 cK
 cK
 bj

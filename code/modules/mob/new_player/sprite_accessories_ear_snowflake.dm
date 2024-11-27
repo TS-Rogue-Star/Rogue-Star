@@ -108,7 +108,7 @@
 	ckeys_allowed = list("crossexonar")
 
 /datum/sprite_accessory/ears/kiriga
-	name = "kiriga ears/head (kiriga)"
+	name = "kiriga ears/head (Kiriga Yato)"
 	icon = 'icons/mob/vore/ears_snowflake.dmi'
 	icon_state = "kiri_ears"
 	ckeys_allowed = list("smdytb1")
@@ -217,8 +217,23 @@
 /datum/sprite_accessory/ears/antlers_large
 	name = "Antlers (large)"
 	icon = 'icons/mob/vore/ears_32x64.dmi'
-	icon_state = "antlers_large"
+	icon_state = "antlers-large"  //RS Edit: Typo Fix
 	do_colouration = TRUE
+	color_blend_mode = ICON_MULTIPLY
+
+/datum/sprite_accessory/ears/antlers_wide //RS Add
+	name = "Antlers (wide)"
+	icon = 'icons/mob/vore/ears_32x64.dmi'
+	icon_state = "antlers-wide"
+	do_colouration = 1
+	color_blend_mode = ICON_MULTIPLY
+
+/datum/sprite_accessory/ears/antlers_wide_e //RS Add
+	name = "Antlers (wide) with ears"
+	icon = 'icons/mob/vore/ears_32x64.dmi'
+	icon_state = "antlers-wide"
+	extra_overlay = "deer"
+	do_colouration = 1
 	color_blend_mode = ICON_MULTIPLY
 
 /datum/sprite_accessory/ears/bunny_tall
@@ -253,3 +268,24 @@
 	extra_overlay2 = "party_plume-2"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
+
+/datum/sprite_accessory/ears/mizutsune //RS Add || Chomp Port 7517
+	name = "Mizutsune Ears"
+	icon = 'icons/mob/vore/ears_32x64.dmi'
+	icon_state = "mizutsune_ears"
+	extra_overlay = "mizutsune_ears_inner"
+	do_colouration = 1
+	color_blend_mode = ICON_MULTIPLY
+
+//RS EDIT START
+
+/datum/sprite_accessory/ears/bunalien
+	name = "Bunalien ears"
+	icon = 'icons/rogue-star/ears_64x32.dmi'
+	icon_state = "bunalien"
+	extra_overlay = "bunalien-1"
+	extra_overlay2 = "bunalien-2"
+	do_colouration = TRUE
+	color_blend_mode = ICON_MULTIPLY
+
+//RS EDIT END

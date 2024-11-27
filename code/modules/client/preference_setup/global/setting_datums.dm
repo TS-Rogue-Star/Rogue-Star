@@ -102,6 +102,12 @@ var/list/_client_preferences_by_type
 	enabled_description = "Noisy"
 	disabled_description = "Silent"
 
+/datum/client_preference/smooch_noises // Smooching noises - pref toggle for 'em //RS Edit Start
+	description = "Smooches"
+	key = "SMOOCH_NOISES"
+	enabled_description = "Noisy"
+	disabled_description = "Silent" //RS Edit End
+
 /datum/client_preference/emote_noises
 	description = "Emote Noises" //MERP
 	key = "EMOTE_NOISES"
@@ -402,6 +408,14 @@ var/list/_client_preferences_by_type
 	enabled_description = "Extended"
 	disabled_description = "Default"
 
+//RS ADD START
+/datum/client_preference/game_toggle
+	description = "Game Participation"
+	key = "GAME_PARTICIPATION"
+	enabled_by_default = TRUE
+	enabled_description = "Participate"
+	disabled_description = "Sit out"
+//RS ADD END
 
 /********************
 * Staff Preferences *

@@ -1,3 +1,4 @@
+//RS FILE
 /mob/living/simple_mob/vore/doglin
 	name = "doglin"
 	desc = "A fluffy beastie. It looks something like a dog, or maybe a goblin. Who can say!"
@@ -38,6 +39,8 @@
 	humanoid_hands = TRUE
 
 	load_owner = "seriouslydontsavethis"	//they smort
+
+	holder_type = /obj/item/weapon/holder/doglin
 
 	var/static/list/overlays_cache = list()
 	var/yip_cooldown = 0
@@ -264,9 +267,9 @@
 	hole.name = "[src.name] hole"
 
 /datum/say_list/doglin
-	speak = list("*yip", "*yap")
+	speak = list("yip", "yap")
 	emote_hear = list("barks", "woofs", "yaps", "yips", "pants", "sniffs","snoofs")
-	emote_see = list("wags its tail", "stretches", "yawns", "swivels its ears", "wiggles around", "does a little dance")
+	emote_see = list("wags their tail", "stretches", "yawns", "swivels their ears", "wiggles around", "does a little dance")
 	say_maybe_target = list("*growl")
 	say_got_target = list("*roarbark")
 
@@ -635,3 +638,15 @@
 
 	else
 		to_chat(user, "<span class = 'warning'>There isn't a tunnel in that direction.</span>")
+
+/obj/item/weapon/holder/doglin
+	icon_state = "doglin"
+	item_icons = list(
+		slot_head_str = 'icons/rogue-star/hat32x64.dmi',
+		slot_l_hand_str = 'icons/rogue-star/lefthand_holder_rs.dmi',
+		slot_r_hand_str = 'icons/rogue-star/righthand_holder_rs.dmi'
+		)
+
+/obj/item/weapon/holder/doglin/Initialize(mapload, mob/held)
+	. = ..()
+	color = held_mob.color

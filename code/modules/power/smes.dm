@@ -112,7 +112,14 @@ GLOBAL_LIST_EMPTY(smeses)
 
 /obj/machinery/power/smes/update_icon()
 	cut_overlays()
-	if(stat & BROKEN)	return
+	icon_state = "smes"	//more sanity than anything else.
+
+	if(stat & BROKEN)
+		icon_state = "smes-off"	//for the "hybrid"/fancy SMES units mostly since they have a working screen animation
+		return
+	if(panel_open)
+		icon_state = "smes-o"
+		return	//effectively off, but visually update.
 
 	add_overlay("smes-op[outputting]")
 
@@ -408,10 +415,18 @@ GLOBAL_LIST_EMPTY(smeses)
 		target = 0
 		. = TRUE
 	else if(target == "max")
-		target = output_level_max
+		switch(io)  //RS Add Start
+			if(SMES_TGUI_INPUT)
+				target = input_level_max
+			if(SMES_TGUI_OUTPUT)  //RS Add End
+				target = output_level_max
 		. = TRUE
 	else if(adjust)
-		target = output_level + adjust
+		switch(io)  //RS Add Start
+			if(SMES_TGUI_INPUT)
+				target = input_level + adjust
+			if(SMES_TGUI_OUTPUT)  //RS Add End
+				target = output_level + adjust
 		. = TRUE
 	else if(text2num(target) != null)
 		target = text2num(target)

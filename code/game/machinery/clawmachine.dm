@@ -66,7 +66,9 @@
 						/obj/item/toy/plushie/borgplushie/drake/jani,
 						/obj/item/toy/plushie/borgplushie/drake/trauma,
 						/obj/item/toy/plushie/otter,
-						/obj/item/toy/plushie/shark
+						/obj/item/toy/plushie/shark,
+						/obj/item/toy/plushie/teppi, //RS Edit || Ports CHOMPStation PR 8816
+						/obj/item/toy/plushie/lasagna	//RS ADD
 						)
 
 /obj/machinery/clawmachine/update_icon()

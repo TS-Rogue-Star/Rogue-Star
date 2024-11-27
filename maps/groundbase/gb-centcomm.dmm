@@ -8433,7 +8433,7 @@
 /area/shuttle/centcom/ccbay)
 "Cz" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/snacks/lasagna,
+/obj/random/round_end_lasagna,
 /turf/simulated/floor/wood,
 /area/centcom/restaurant)
 "CA" = (

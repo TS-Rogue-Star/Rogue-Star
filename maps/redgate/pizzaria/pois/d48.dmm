@@ -1,0 +1,47 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"g" = (
+/turf/template_noop,
+/area/redgate/structure/powered)
+"P" = (
+/turf/unsimulated/floor/dark,
+/area/redgate/structure/powered)
+"Z" = (
+/obj/random/mob/semirandom_mob_spawner/scarybot,
+/turf/template_noop,
+/area/redgate/structure/powered)
+
+(1,1,1) = {"
+g
+g
+g
+g
+g
+"}
+(2,1,1) = {"
+g
+P
+Z
+g
+g
+"}
+(3,1,1) = {"
+g
+P
+P
+P
+g
+"}
+(4,1,1) = {"
+g
+g
+Z
+P
+P
+"}
+(5,1,1) = {"
+g
+g
+g
+g
+g
+"}
