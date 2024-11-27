@@ -120,7 +120,7 @@
 		return TOPIC_REFRESH
 	*/
 	else if(href_list["select_ambience_chance"])
-		var/ambience_chance_new = tgui_input_number(user, "Input the chance you'd like to hear ambience played to you (On area change, or by random ambience). 35 means a 35% chance to play ambience. This is a range from 0-100. 0 disables ambience playing entirely. This is also affected by Ambience Frequency.", "Global Preference", pref.ambience_freq, 100, 0)
+		var/ambience_chance_new = tgui_input_number(user, "Input the chance you'd like to hear ambience played to you (On area change, or by random ambience). 35 means a 35% chance to play ambience. This is a range from 0-100. 0 disables ambience playing entirely. This is also affected by Ambience Frequency.", "Global Preference", pref.ambience_chance, 100, 0) //RS Edit: Fixes what it defaults to.
 		if(isnull(ambience_chance_new) || !CanUseTopic(user)) return TOPIC_NOACTION
 		if(ambience_chance_new < 0 || ambience_chance_new > 100) return TOPIC_NOACTION
 		pref.ambience_chance = ambience_chance_new
