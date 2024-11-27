@@ -33,6 +33,7 @@
 	var/cell_type = /obj/item/weapon/cell/device
 	var/power_usage = 1
 	var/power_use = 1
+	var/flickering = 0 //RS Edit
 
 /obj/item/device/flashlight/Initialize()
 	. = ..()
@@ -491,3 +492,26 @@
 	light_range = 8
 	light_power = 0.1
 	light_color = "#49F37C"
+
+// RS Edit Start
+/obj/item/device/flashlight/proc/flicker(var/amount = rand(10, 20), var/flicker_color, var/forced)
+	if(flickering) return
+	if(power_usage && !forced) return //No energy :(
+	flickering = 1
+	spawn(0)
+		var/original_color = light_color
+		var/original_on = on
+		for(var/i = 0; i < amount; i++)
+			if(flicker_color && light_color != flicker_color)
+				set_light_color(flicker_color)
+			on = !on
+			update_brightness()
+			if(!on) // Only play when the light turns off.
+				playsound(src, 'sound/effects/light_flicker.ogg', 50, 1)
+			sleep(rand(5, 15))
+		set_light_color(original_color)
+		on = original_on
+		update_brightness()
+		flickering = 0
+		update_brightness()
+// RS Edit End

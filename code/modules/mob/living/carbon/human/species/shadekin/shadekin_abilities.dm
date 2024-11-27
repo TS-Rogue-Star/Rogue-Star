@@ -177,6 +177,21 @@
 			else
 				if(flicker_time)
 					L.flicker(flicker_time, flicker_color) //RS edit - Variable Flicker!
+
+		//Yes. I could do a 'for(var/atom/movable/AM in range(effectrange, turf))' but that would take so much processing power the old gods would come down and smite me. So instead we will check for specific things.
+
+		for(var/obj/item/device/flashlight/flashlights in range(7, src)) //Find any flashlights near us and make them flicker too!
+			if(istype(flashlights,/obj/item/device/flashlight/glowstick) ||istype(flashlights,/obj/item/device/flashlight/flare)) //No affecting glowsticks or flares...As funny as that is
+				continue
+			flashlights.flicker(flicker_time, flicker_color, TRUE)
+
+		for(var/mob/living/creatures in range(7, src))
+			for(var/obj/item/device/flashlight/held_lights in creatures.contents)
+				if(istype(held_lights,/obj/item/device/flashlight/glowstick) ||istype(held_lights,/obj/item/device/flashlight/flare) ) //No affecting glowsticks or flares...As funny as that is
+					continue
+				held_lights.flicker(flicker_time, flicker_color, TRUE)
+
+				//do the flicker here
 //RS EDIT END
 
 /datum/modifier/shadekin_phase_vision
