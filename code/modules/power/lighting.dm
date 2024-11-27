@@ -731,21 +731,26 @@ var/global/list/light_type_cache = list()
 	set_light(brightness_range * bulb_emergency_brightness_mul, max(bulb_emergency_pow_min, bulb_emergency_pow_mul * (cell.charge / cell.maxcharge)), bulb_emergency_colour)
 	return TRUE
 
-/obj/machinery/light/proc/flicker(var/amount = rand(10, 20))
+/obj/machinery/light/proc/flicker(var/amount = rand(10, 20), var/color) //RS Edit: Allows users to flicker lights!
 	if(flickering) return
 	flickering = 1
 	spawn(0)
+		var/original_color = brightness_color //RS Edit - Colorful flickers!
 		if(on && status == LIGHT_OK)
 			for(var/i = 0; i < amount; i++)
 				if(status != LIGHT_OK) break
+				if(color && brightness_color != color) //RS Edit - Colorful flickers!
+					brightness_color = color //RS Edit - Colorful flickers!
 				on = !on
 				update(0)
 				if(!on) // Only play when the light turns off.
 					playsound(src, 'sound/effects/light_flicker.ogg', 50, 1)
 				sleep(rand(5, 15))
+			brightness_color = original_color //RS Edit - Colorful flickers!
 			on = (status == LIGHT_OK)
 			update(0)
 		flickering = 0
+		update(0) //RS Edit - Colorful flickers!
 
 // ai attack - turn on/off emergency lighting for a specific fixture
 /obj/machinery/light/attack_ai(mob/user)
