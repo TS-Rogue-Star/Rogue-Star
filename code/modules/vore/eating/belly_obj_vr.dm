@@ -348,6 +348,7 @@
 	"slow_digestion",							//RS Edit || Ports CHOMPStation PR 5161
 	"slow_brutal",								//RS Edit || Ports CHOMPStation Pr 5161
 	"reagent_mode_flags",	// Begin reagent bellies
+	"reagentbellymode",
 	"liquid_fullness1_messages",
 	"liquid_fullness2_messages",
 	"liquid_fullness3_messages",
@@ -355,10 +356,15 @@
 	"liquid_fullness5_messages",
 	"reagent_name",
 	"reagent_chosen",
+	"reagentid",
+	"reagentcolor",
 	"gen_cost",
 	"gen_amount",
 	"gen_time",
+	"gen_time_display",
+	"custom_max_volume",
 	"generated_reagents",
+	"vorefootsteps_sounds",
 	"fullness1_messages",
 	"fullness2_messages",
 	"fullness3_messages",
@@ -1792,6 +1798,8 @@
 
 	// Begin reagent bellies
 	dupe.reagent_mode_flags = reagent_mode_flags
+	dupe.reagentid = reagentid
+	dupe.reagentcolor = reagentcolor
 	dupe.liquid_fullness1_messages = liquid_fullness1_messages
 	dupe.liquid_fullness2_messages = liquid_fullness2_messages
 	dupe.liquid_fullness3_messages = liquid_fullness3_messages
@@ -1802,6 +1810,9 @@
 	dupe.gen_cost = gen_cost
 	dupe.gen_amount = gen_amount
 	dupe.gen_time = gen_time
+	dupe.gen_time_display = gen_time_display
+	dupe.reagent_transfer_verb = reagent_transfer_verb
+	dupe.custom_max_volume = custom_max_volume
 	// End reagent bellies
 
 	//// Object-holding variables

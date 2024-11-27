@@ -334,13 +334,13 @@
 		owner.update_icons()
 	if(isrobot(owner))
 		var/mob/living/silicon/robot/R = owner
-		if(reagent_mode_flags & DM_FLAG_REAGENTSDIGEST && reagents.total_volume < reagents.maximum_volume) // Reagent bellies
+		if(reagentbellymode == TRUE && reagent_mode_flags & DM_FLAG_REAGENTSDIGEST && reagents.total_volume < custom_max_volume) // Reagent bellies
 			R.cell.charge += (nutrition_percent / 100) * compensation * 15 * personal_nutrition_modifier
 			GenerateBellyReagents_digested()
 		else
 			R.cell.charge += (nutrition_percent / 100) * compensation * 25 * personal_nutrition_modifier
 	else
-		if(reagent_mode_flags & DM_FLAG_REAGENTSDIGEST && reagents.total_volume < reagents.maximum_volume) // Reagent bellies
+		if(reagentbellymode == TRUE && reagent_mode_flags & DM_FLAG_REAGENTSDIGEST && reagents.total_volume < custom_max_volume)// Reagent bellies
 			owner.adjust_nutrition((nutrition_percent / 100) * compensation * 3.0 * personal_nutrition_modifier * pred_digestion_efficiency)
 			GenerateBellyReagents_digested()
 		else
@@ -365,9 +365,9 @@
 	if(L.nutrition >= 100)
 		var/oldnutrition = (L.nutrition * 0.05)
 		L.nutrition = (L.nutrition * 0.95)
-		if(reagent_mode_flags & DM_FLAG_REAGENTSABSORB && reagents.total_volume < reagents.maximum_volume) // Reagent bellies
+		if(reagentbellymode == TRUE && reagent_mode_flags & DM_FLAG_REAGENTSDIGEST && reagents.total_volume < custom_max_volume) // Reagent bellies
 			oldnutrition = oldnutrition * 0.75 //keeping the price static, due to how much nutrition can flunctuate
-			GenerateBellyReagents_absorbing()
+			GenerateBellyReagents_digesting()
 		owner.adjust_nutrition(oldnutrition)
 		if (istype(owner, /mob/living/carbon/human)) //RS Edit Start Is our owner a human?
 			var/mob/living/carbon/human/howner = owner
