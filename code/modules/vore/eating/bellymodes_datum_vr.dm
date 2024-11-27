@@ -94,11 +94,20 @@ GLOBAL_LIST_INIT(digest_modes, list())
 	// End RS edit
 	if(isrobot(B.owner))
 		var/mob/living/silicon/robot/R = B.owner
-		R.cell.charge += 25 * damage_gain
+		if(B.reagent_mode_flags & DM_FLAG_REAGENTSDIGEST && B.reagents.total_volume < B.reagents.maximum_volume) // Reagent bellies
+			R.cell.charge += 15 * damage_gain
+		else
+			R.cell.charge += 25 * damage_gain
 	if(offset) // If any different than default weight, multiply the % of offset.
-		B.owner.adjust_nutrition(offset*(14 * (damage_gain) / difference)*L.get_digestion_nutrition_modifier()*B.owner.get_digestion_efficiency_modifier()) //4.5 nutrition points per health point. Normal same size 100+100 health prey with average weight would give 900 points if the digestion was instant. With all the size/weight offset taxes plus over time oxyloss+hunger taxes deducted with non-instant digestion, this should be enough to not leave the pred starved.
+		if(B.reagent_mode_flags & DM_FLAG_REAGENTSDIGEST && B.reagents.total_volume < B.reagents.maximum_volume) // Reagent bellies
+			B.owner.adjust_nutrition(offset*(9 * (damage_gain) / difference)*L.get_digestion_nutrition_modifier()*B.owner.get_digestion_efficiency_modifier())
+		else
+			B.owner.adjust_nutrition(offset*(14 * (damage_gain) / difference)*L.get_digestion_nutrition_modifier()*B.owner.get_digestion_efficiency_modifier()) //4.5 nutrition points per health point. Normal same size 100+100 health prey with average weight would give 900 points if the digestion was instant. With all the size/weight offset taxes plus over time oxyloss+hunger taxes deducted with non-instant digestion, this should be enough to not leave the pred starved.
 	else
-		B.owner.adjust_nutrition((14 * (damage_gain) / difference)*L.get_digestion_nutrition_modifier()*B.owner.get_digestion_efficiency_modifier())
+		if(B.reagent_mode_flags & DM_FLAG_REAGENTSDIGEST && B.reagents.total_volume < B.reagents.maximum_volume) // Reagent bellies
+			B.owner.adjust_nutrition((9 * (damage_gain) / difference)*L.get_digestion_nutrition_modifier()*B.owner.get_digestion_efficiency_modifier())
+		else
+			B.owner.adjust_nutrition((14 * (damage_gain) / difference)*L.get_digestion_nutrition_modifier()*B.owner.get_digestion_efficiency_modifier())
 	if(L.stat != oldstat)
 		return list("to_update" = TRUE)
 

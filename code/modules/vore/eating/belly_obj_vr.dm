@@ -347,7 +347,23 @@
 	"drainmode",								//RS edit || Ports VOREStation PR15876
 	"slow_digestion",							//RS Edit || Ports CHOMPStation PR 5161
 	"slow_brutal",								//RS Edit || Ports CHOMPStation Pr 5161
-
+	"reagent_mode_flags",	// Begin reagent bellies
+	"liquid_fullness1_messages",
+	"liquid_fullness2_messages",
+	"liquid_fullness3_messages",
+	"liquid_fullness4_messages",
+	"liquid_fullness5_messages",
+	"reagent_name",
+	"reagent_chosen",
+	"gen_cost",
+	"gen_amount",
+	"gen_time",
+	"generated_reagents",
+	"fullness1_messages",
+	"fullness2_messages",
+	"fullness3_messages",
+	"fullness4_messages",
+	"fullness5_messages"	// End reagent bellies
 	)
 
 	if (save_digest_mode == 1)
@@ -363,6 +379,8 @@
 		owner.vore_organs |= src
 		if(isliving(loc))
 			START_PROCESSING(SSbellies, src)
+	create_reagents(100)	// Begin reagent bellies
+	flags |= NOREACT	// End reagent bellies
 
 /obj/belly/Destroy()
 	STOP_PROCESSING(SSbellies, src)
@@ -1772,6 +1790,20 @@
 	dupe.slow_brutal = slow_brutal
 	//RS Edit End
 
+	// Begin reagent bellies
+	dupe.reagent_mode_flags = reagent_mode_flags
+	dupe.liquid_fullness1_messages = liquid_fullness1_messages
+	dupe.liquid_fullness2_messages = liquid_fullness2_messages
+	dupe.liquid_fullness3_messages = liquid_fullness3_messages
+	dupe.liquid_fullness4_messages = liquid_fullness4_messages
+	dupe.liquid_fullness5_messages = liquid_fullness5_messages
+	dupe.reagent_name = reagent_name
+	dupe.reagent_chosen = reagent_chosen
+	dupe.gen_cost = gen_cost
+	dupe.gen_amount = gen_amount
+	dupe.gen_time = gen_time
+	// End reagent bellies
+
 	//// Object-holding variables
 	//struggle_messages_outside - strings
 	dupe.struggle_messages_outside.Cut()
@@ -1968,6 +2000,43 @@
 	dupe.examine_messages_absorbed.Cut()
 	for(var/I in examine_messages_absorbed)
 		dupe.examine_messages_absorbed += I
+
+	// Begin reagent bellies
+	//generated_reagents - strings
+	dupe.generated_reagents.Cut()
+	for(var/I in generated_reagents)
+		dupe.generated_reagents += I
+
+	// CHOMP fullness messages stage 1
+	//fullness1_messages - strings
+	dupe.fullness1_messages.Cut()
+	for(var/I in fullness1_messages)
+		dupe.fullness1_messages += I
+
+	// CHOMP fullness messages stage 2
+	//fullness2_messages - strings
+	dupe.fullness2_messages.Cut()
+	for(var/I in fullness2_messages)
+		dupe.fullness2_messages += I
+
+	// CHOMP fullness messages stage 3
+	//fullness3_messages - strings
+	dupe.fullness3_messages.Cut()
+	for(var/I in fullness3_messages)
+		dupe.fullness3_messages += I
+
+	// CHOMP fullness messages stage 4
+	//fullness4_messages - strings
+	dupe.fullness4_messages.Cut()
+	for(var/I in fullness4_messages)
+		dupe.fullness4_messages += I
+
+	// CHOMP fullness messages stage 5
+	//generated_reagents - strings
+	dupe.fullness5_messages.Cut()
+	for(var/I in fullness5_messages)
+		dupe.fullness5_messages += I
+	// End reagent bellies
 
 	//emote_lists - index: digest mode, key: list of strings
 	dupe.emote_lists.Cut()
