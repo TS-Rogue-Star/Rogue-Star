@@ -14,7 +14,7 @@
 
 /mob/living/carbon/human/proc/get_vore_belly_image()
 	for(var/obj/item/clothing/C in list(wear_suit, w_uniform))
-		if(istype(C) && (C.body_parts_covered & UPPER_TORSO))
+		if(istype(C) && (C.item_flags & THICKMATERIAL))
 			return null
 
 	if(!(wear_suit && wear_suit.flags_inv & HIDETAIL))
