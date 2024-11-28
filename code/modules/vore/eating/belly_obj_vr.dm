@@ -367,6 +367,15 @@
 	"custom_max_volume",
 	"generated_reagents",
 	"vorefootsteps_sounds",
+	"liquid_overlay",
+	"max_liquid_level",
+	"mush_overlay",
+	"mush_color",
+	"mush_alpha",
+	"max_mush",
+	"min_mush",
+	"custom_reagentcolor",
+	"custom_reagentalpha",
 	"fullness1_messages",
 	"fullness2_messages",
 	"fullness3_messages",
@@ -513,6 +522,7 @@
 		return
 
 	if(belly_fullscreen)
+		/var/image/I
 		if(colorization_enabled)
 			var/obj/screen/fullscreen/F = L.overlay_fullscreen("belly", /obj/screen/fullscreen/belly/colorized)
 			F.icon_state = belly_fullscreen
@@ -534,28 +544,54 @@
 				F4.icon_state = "[belly_fullscreen]_nc"
 			else
 				L.clear_fullscreen("belly4")
-			if(L.liquidbelly_visuals && reagents.total_volume) // Reagent bellies
-				var/image/I
+			if(L.liquidbelly_visuals && mush_overlay && (owner.nutrition > 0 || max_mush == 0 || min_mush > 0)) // Reagent bellies
+				I = image('icons/mob/vore/bubbles.dmi', "mush")
+				I.color = mush_color
+				I.alpha = mush_alpha
+				I.pixel_y = -450 + (450 / max(max_mush, 1) * max(min(max_mush, owner.nutrition), 1))
+				if(I.pixel_y < -450 + (450 / 100 * min_mush))
+					I.pixel_y = -450 + (450 / 100 * min_mush)
+				F.add_overlay(I)
+			if(L.liquidbelly_visuals && liquid_overlay && reagents.total_volume)
 				if(digest_mode == DM_HOLD && item_digest_mode == IM_HOLD)
 					I = image('icons/mob/vore/bubbles.dmi', "calm")
 				else
 					I = image('icons/mob/vore/bubbles.dmi', "bubbles")
-				I.color = reagentcolor
-				I.alpha = max(150, min(custom_max_volume, 255)) - (255 - belly_fullscreen_alpha)
-				I.pixel_y = -450 + (450 / custom_max_volume * reagents.total_volume)
+				if(custom_reagentcolor)
+					I.color = custom_reagentcolor
+				else
+					I.color = reagentcolor
+				if(custom_reagentalpha)
+					I.alpha = custom_reagentalpha
+				else
+					I.alpha = max(150, min(custom_max_volume, 255)) - (255 - belly_fullscreen_alpha)
+				I.pixel_y = -450 + min((450 / custom_max_volume * reagents.total_volume), 450 / 100 * max_liquid_level)
 				F.add_overlay(I) // End reagent bellies
 		else
 			var/obj/screen/fullscreen/F = L.overlay_fullscreen("belly", /obj/screen/fullscreen/belly)
 			F.icon_state = belly_fullscreen
-			if(L.liquidbelly_visuals && reagents.total_volume) // Reagent bellies
-				var/image/I
+			if(L.liquidbelly_visuals && mush_overlay && (owner.nutrition > 0 || max_mush == 0 || min_mush > 0)) // Reagent bellies
+				I = image('icons/mob/vore/bubbles.dmi', "mush")
+				I.color = mush_color
+				I.alpha = mush_alpha
+				I.pixel_y = -450 + (450 / max(max_mush, 1) * max(min(max_mush, owner.nutrition), 1))
+				if(I.pixel_y < -450 + (450 / 100 * min_mush))
+					I.pixel_y = -450 + (450 / 100 * min_mush)
+				F.add_overlay(I)
+			if(L.liquidbelly_visuals && liquid_overlay && reagents.total_volume)
 				if(digest_mode == DM_HOLD && item_digest_mode == IM_HOLD)
 					I = image('icons/mob/vore/bubbles.dmi', "calm")
 				else
 					I = image('icons/mob/vore/bubbles.dmi', "bubbles")
-				I.color = reagentcolor
-				I.alpha = max(150, min(custom_max_volume, 255)) - (255 - belly_fullscreen_alpha)
-				I.pixel_y = -450 + (450 / custom_max_volume * reagents.total_volume)
+				if(custom_reagentcolor)
+					I.color = custom_reagentcolor
+				else
+					I.color = reagentcolor
+				if(custom_reagentalpha)
+					I.alpha = custom_reagentalpha
+				else
+					I.alpha = max(150, min(custom_max_volume, 255)) - (255 - belly_fullscreen_alpha)
+				I.pixel_y = -450 + min((450 / custom_max_volume * reagents.total_volume), 450 / 100 * max_liquid_level)
 				F.add_overlay(I) // End reagent bellies
 	else
 		L.clear_fullscreen("belly")
@@ -590,28 +626,54 @@
 			if("[belly_fullscreen]_nc" in icon_states('icons/mob/screen_full_colorized_vore_overlays.dmi'))
 				var/obj/screen/fullscreen/F4 = L.overlay_fullscreen("belly4", /obj/screen/fullscreen/belly/colorized/overlay)
 				F4.icon_state = "[belly_fullscreen]_nc"
-			if(L.liquidbelly_visuals && reagents.total_volume) // Reagent bellies
-				var/image/I
+			if(L.liquidbelly_visuals && mush_overlay && (owner.nutrition > 0 || max_mush == 0 || min_mush > 0)) // Reagent bellies
+				I = image('icons/mob/vore/bubbles.dmi', "mush")
+				I.color = mush_color
+				I.alpha = mush_alpha
+				I.pixel_y = -450 + (450 / max(max_mush, 1) * max(min(max_mush, owner.nutrition), 1))
+				if(I.pixel_y < -450 + (450 / 100 * min_mush))
+					I.pixel_y = -450 + (450 / 100 * min_mush)
+				F.add_overlay(I)
+			if(L.liquidbelly_visuals && liquid_overlay && reagents.total_volume)
 				if(digest_mode == DM_HOLD && item_digest_mode == IM_HOLD)
 					I = image('icons/mob/vore/bubbles.dmi', "calm")
 				else
 					I = image('icons/mob/vore/bubbles.dmi', "bubbles")
-				I.color = reagentcolor
-				I.alpha = max(150, min(custom_max_volume, 255)) - (255 - belly_fullscreen_alpha)
-				I.pixel_y = -450 + (450 / custom_max_volume * reagents.total_volume)
+				if(custom_reagentcolor)
+					I.color = custom_reagentcolor
+				else
+					I.color = reagentcolor
+				if(custom_reagentalpha)
+					I.alpha = custom_reagentalpha
+				else
+					I.alpha = max(150, min(custom_max_volume, 255)) - (255 - belly_fullscreen_alpha)
+				I.pixel_y = -450 + min((450 / custom_max_volume * reagents.total_volume), 450 / 100 * max_liquid_level)
 				F.add_overlay(I) // End reagent bellies
 		else
 			var/obj/screen/fullscreen/F = L.overlay_fullscreen("belly", /obj/screen/fullscreen/belly)
 			F.icon_state = belly_fullscreen
-			if(L.liquidbelly_visuals && reagents.total_volume) // Reagent bellies
-				var/image/I
+			if(L.liquidbelly_visuals && mush_overlay && (owner.nutrition > 0 || max_mush == 0 || min_mush > 0)) // Reagent bellies
+				I = image('icons/mob/vore/bubbles.dmi', "mush")
+				I.color = mush_color
+				I.alpha = mush_alpha
+				I.pixel_y = -450 + (450 / max(max_mush, 1) * max(min(max_mush, owner.nutrition), 1))
+				if(I.pixel_y < -450 + (450 / 100 * min_mush))
+					I.pixel_y = -450 + (450 / 100 * min_mush)
+				F.add_overlay(I)
+			if(L.liquidbelly_visuals && liquid_overlay && reagents.total_volume)
 				if(digest_mode == DM_HOLD && item_digest_mode == IM_HOLD)
 					I = image('icons/mob/vore/bubbles.dmi', "calm")
 				else
 					I = image('icons/mob/vore/bubbles.dmi', "bubbles")
-				I.color = reagentcolor
-				I.alpha = max(150, min(custom_max_volume, 255)) - (255 - belly_fullscreen_alpha)
-				I.pixel_y = -450 + (450 / custom_max_volume * reagents.total_volume)
+				if(custom_reagentcolor)
+					I.color = custom_reagentcolor
+				else
+					I.color = reagentcolor
+				if(custom_reagentalpha)
+					I.alpha = custom_reagentalpha
+				else
+					I.alpha = max(150, min(custom_max_volume, 255)) - (255 - belly_fullscreen_alpha)
+				I.pixel_y = -450 + min((450 / custom_max_volume * reagents.total_volume), 450 / 100 * max_liquid_level)
 				F.add_overlay(I) // End reagent bellies
 	else
 		L.clear_fullscreen("belly")
@@ -1861,6 +1923,15 @@
 	// Reagent bellies
 	dupe.count_liquid_for_sprite = count_liquid_for_sprite
 	dupe.liquid_multiplier = liquid_multiplier
+	dupe.liquid_overlay = liquid_overlay
+	dupe.max_liquid_level = max_liquid_level
+	dupe.mush_overlay = mush_overlay
+	dupe.mush_color = mush_color
+	dupe.mush_alpha = mush_alpha
+	dupe.max_mush = max_mush
+	dupe.min_mush = min_mush
+	dupe.custom_reagentcolor = custom_reagentcolor
+	dupe.custom_reagentalpha = custom_reagentalpha
 	// End reagent bellies
 	//RS Edit || Ports CHOMPStation PR 5161
 	dupe.slow_digestion = slow_digestion

@@ -19,6 +19,9 @@
 	var/reagentcolor = "#0064C877"					//Selected reagent's color, for use in puddle system currently
 	var/gen_cost = 0.1 								//amount of nutrient taken from the host everytime nutrition is used to make reagents
 	var/gen_amount = 0.1							//Does not actually influence amount produced, but is used as a way to tell the system how much total reagent it has to take into account when filling a belly
+	var/custom_reagentcolor							//Custom reagent color. Blank for normal reagent color
+	var/custom_reagentalpha							//Custom reagent alpha. Blank for capacity based alpha
+
 
 	var/gen_interval = 0							//Interval in seconds for generating fluids, once it reaches the value of gen_time one cycle of reagents generation will occur
 	var/gen_time = 3								//Time it takes in seconds to produce one cycle of reagents, technically add 1 second to it for the tick where the fluid is produced
@@ -36,6 +39,14 @@
 	var/liquid_fullness5_messages = FALSE
 
 	var/cycle_sloshed = FALSE
+
+	var/liquid_overlay = TRUE						//Belly-specific liquid overlay toggle
+	var/max_liquid_level = 100						//Custom max level for liquid overlay
+	var/mush_overlay = FALSE						//Toggle for nutrition mush overlay
+	var/mush_color = "#664330"						//Nutrition mush overlay color
+	var/mush_alpha = 255							//Mush overlay transparency.
+	var/max_mush = 500								//How much nutrition for full mush overlay
+	var/min_mush = 0								//Manual setting for lowest mush level
 
 	var/list/fullness1_messages = list(
 		"%pred's %belly looks empty"

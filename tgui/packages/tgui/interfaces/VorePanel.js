@@ -1368,16 +1368,19 @@ const VoreSelectedBellyLiquidOptions = (props, context) => {
     liq_reagent_addons,
     show_liq_fullness,
     liq_messages,
-    liq_msg_toggle1,
-    liq_msg_toggle2,
-    liq_msg_toggle3,
-    liq_msg_toggle4,
-    liq_msg_toggle5,
     liq_msg1,
     liq_msg2,
     liq_msg3,
     liq_msg4,
     liq_msg5,
+    custom_reagentcolor,
+    custom_reagentalpha,
+    liquid_overlay,
+    mush_overlay,
+    mush_color,
+    mush_alpha,
+    max_mush,
+    min_mush,
   } = belly;
 
   return (
@@ -1488,13 +1491,111 @@ const VoreSelectedBellyLiquidOptions = (props, context) => {
               icon="plus"
             />
           </LabeledList.Item>
+          <LabeledList.Item label="Custom Liquid Color">
+            <Box
+              backgroundColor={custom_reagentcolor}
+              width="20px"
+              height="20px"
+            />
+            <Button
+              icon="eye-dropper"
+              onClick={() =>
+                act('liq_set_attribute', {
+                  liq_attribute: 'b_custom_reagentcolor',
+                })
+              }>
+              Select Reagent Color
+            </Button>
+          </LabeledList.Item>
+          <LabeledList.Item label="Liquid Overlay">
+            <Button
+              onClick={() =>
+                act('liq_set_attribute', { liq_attribute: 'b_liquid_overlay' })
+              }
+              icon={liq_interacts.liquid_overlay ? 'toggle-on' : 'toggle-off'}
+              selected={liq_interacts.liquid_overlay}
+              content={liq_interacts.liquid_overlay ? 'On' : 'Off'}
+            />
+          </LabeledList.Item>
+          <LabeledList.Item label="Max Liquid Level">
+            <Button
+              onClick={() =>
+                act('liq_set_attribute', {
+                  liq_attribute: 'b_max_liquid_level',
+                })
+              }
+              content={liq_interacts.max_liquid_level + '%'}
+            />
+          </LabeledList.Item>
+          <LabeledList.Item label="Custom Liquid Alpha">
+            <Button
+              onClick={() =>
+                act('liq_set_attribute', {
+                  liq_attribute: 'b_custom_reagentalpha',
+                })
+              }
+              content={liq_interacts.custom_reagentalpha}
+            />
+          </LabeledList.Item>
+          <LabeledList.Item label="Fullness Overlay">
+            <Button
+              onClick={() =>
+                act('liq_set_attribute', { liq_attribute: 'b_mush_overlay' })
+              }
+              icon={liq_interacts.mush_overlay ? 'toggle-on' : 'toggle-off'}
+              selected={liq_interacts.mush_overlay}
+              content={liq_interacts.mush_overlay ? 'On' : 'Off'}
+            />
+          </LabeledList.Item>
+          <LabeledList.Item label="Mush Overlay Color">
+            <Box backgroundColor={mush_color} width="20px" height="20px" />
+            <Button
+              icon="eye-dropper"
+              onClick={() =>
+                act('liq_set_attribute', {
+                  liq_attribute: 'b_mush_color',
+                })
+              }>
+              Select Mush Color
+            </Button>
+          </LabeledList.Item>
+          <LabeledList.Item label="Mush Overlay Alpha">
+            <Button
+              onClick={() =>
+                act('liq_set_attribute', {
+                  liq_attribute: 'b_mush_alpha',
+                })
+              }
+              content={liq_interacts.mush_alpha}
+            />
+          </LabeledList.Item>
+          <LabeledList.Item label="Mush Overlay Scaling">
+            <Button
+              onClick={() =>
+                act('liq_set_attribute', {
+                  liq_attribute: 'b_max_mush',
+                })
+              }
+              content={liq_interacts.max_mush}
+            />
+          </LabeledList.Item>
+          <LabeledList.Item label="Minimum Mush Level">
+            <Button
+              onClick={() =>
+                act('liq_set_attribute', {
+                  liq_attribute: 'b_min_mush',
+                })
+              }
+              content={liq_interacts.min_mush + '%'}
+            />
+          </LabeledList.Item>
           <LabeledList.Item label="Purge Liquids">
             <Button
               color="red"
               onClick={() =>
                 act('liq_set_attribute', { liq_attribute: 'b_liq_purge' })
               }
-              content={'Purge Liquids'}
+              content="Purge Liquids"
             />
           </LabeledList.Item>
         </LabeledList>
@@ -1532,6 +1633,15 @@ const VoreSelectedBellyLiquidMessages = (props, context) => {
     liq_msg3,
     liq_msg4,
     liq_msg5,
+    custom_reagentcolor,
+    custom_reagentalpha,
+    liquid_overlay,
+    max_liquid_level,
+    mush_overlay,
+    mush_color,
+    mush_alpha,
+    max_mush,
+    min_mush,
   } = belly;
 
   return (
