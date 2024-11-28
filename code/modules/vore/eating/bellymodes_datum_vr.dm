@@ -95,9 +95,10 @@ GLOBAL_LIST_INIT(digest_modes, list())
 	if(isrobot(B.owner))
 		var/mob/living/silicon/robot/R = B.owner
 		if(B.reagent_mode_flags & DM_FLAG_REAGENTSDIGEST && B.reagents.total_volume < B.reagents.maximum_volume) // Reagent bellies
-			R.cell.charge += 15 * damage_gain
+			R.cell.charge += 20*damage_gain
+			B.GenerateBellyReagents_digesting()
 		else
-			R.cell.charge += 25 * damage_gain
+			R.cell.charge += 25*damage_gain
 	if(offset) // If any different than default weight, multiply the % of offset.
 		if(B.reagent_mode_flags & DM_FLAG_REAGENTSDIGEST && B.reagents.total_volume < B.reagents.maximum_volume) // Reagent bellies
 			B.owner.adjust_nutrition(offset*(9 * (damage_gain) / difference)*L.get_digestion_nutrition_modifier()*B.owner.get_digestion_efficiency_modifier())

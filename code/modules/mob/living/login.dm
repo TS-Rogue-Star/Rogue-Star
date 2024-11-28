@@ -20,6 +20,7 @@
 	verbs |= /mob/living/proc/smell
 	verbs |= /mob/living/proc/switch_scaling
 	verbs |= /mob/living/proc/center_offset
+	verbs |= /mob/living/proc/liquidbelly_visuals // Reagent bellies
 
 	if(!no_vore)
 		verbs |= /mob/living/proc/vorebelly_printout

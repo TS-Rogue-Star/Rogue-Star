@@ -407,6 +407,19 @@
 		if(removed <= 0)
 			return
 
+	if(isbelly(M.loc))
+		var/obj/belly/B = M.loc
+		if(!M.digestable || B.digest_mode != DM_DIGEST)
+			remove_self(volume)
+			return
+		if(B.owner)
+			if(B.reagent_mode_flags & DM_FLAG_REAGENTSDIGEST && B.reagents.total_volume < B.custom_max_volume)
+				B.owner.adjust_nutrition((B.nutrition_percent / 100) * (power * 0.6) * removed)
+				B.digest_nutri_gain = B.nutrition_percent / 100 * (power * 0.4) * removed
+				B.GenerateBellyReagents_digesting()
+			else
+				B.owner.adjust_nutrition((B.nutrition_percent / 100) * power * removed) // End reagent bellies
+
 	if(volume < meltdose) // Not enough to melt anything
 		M.take_organ_damage(0, removed * power * 0.2) //burn damage, since it causes chemical burns. Acid doesn't make bones shatter, like brute trauma would.
 		return
@@ -424,22 +437,43 @@
 		else
 			M.take_organ_damage(0, removed * power * 0.1) // Balance. The damage is instant, so it's weaker. 10 units -> 5 damage, double for pacid. 120 units beaker could deal 60, but a) it's burn, which is not as dangerous, b) it's a one-use weapon, c) missing with it will splash it over the ground and d) clothes give some protection, so not everything will hit
 
-/datum/reagent/acid/touch_obj(var/obj/O)
-	..()
-	var/item_digestion = TRUE //CHOMPEdit Start
+/datum/reagent/acid/touch_obj(var/obj/O, var/amount)
 	if(isbelly(O.loc))
 		var/obj/belly/B = O.loc
 		if(B.item_digest_mode == IM_HOLD || B.item_digest_mode == IM_DIGEST_FOOD)
-			item_digestion = FALSE
-	if(O.unacidable || !item_digestion || (istype(O, /obj/item) && !O:digest_act()))
+			return
+		var/obj/item/I = O
+		var/spent_amt = I.digest_act(I.loc, 1, amount / (meltdose / 3))
+		if(B.owner)
+			B.owner.adjust_nutrition((B.nutrition_percent / 100) * 5 * spent_amt)
+		remove_self(spent_amt) //10u stomacid per w_class, less if stronger acid.
+		return
+	..()
+	if(O.unacidable || (istype(O, /obj/item) && !O:digest_act())) // End reagent bellies
 		return
 	if((istype(O, /obj/item) || istype(O, /obj/effect/plant)) && (volume > meltdose))
-		var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
+		var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/clean\able/molten_item(O.loc)
 		I.desc = "Looks like this was \an [O] some time ago."
 		for(var/mob/M in viewers(5, O))
 			to_chat(M, "<span class='warning'>\The [O] melts.</span>")
 		qdel(O)
 		remove_self(meltdose) // 10 units of acid will not melt EVERYTHING on the tile
+
+/datum/reagent/acid/touch_mob(var/mob/living/L) // Reagent bellies
+	if(isbelly(L.loc))
+		var/obj/belly/B = L.loc
+		if(B.digest_mode != DM_DIGEST || !L.digestable)
+			remove_self(volume)
+			return
+		if(B.owner)
+			if(B.reagent_mode_flags & DM_FLAG_REAGENTSDIGEST && B.reagents.total_volume < B.custom_max_volume)
+				B.owner.adjust_nutrition((B.nutrition_percent / 100) * (power * 0.6) * volume)
+				B.digest_nutri_gain = B.nutrition_percent / 100 * (power * 0.4) * volume
+				B.GenerateBellyReagents_digesting()
+			else
+				B.owner.adjust_nutrition((B.nutrition_percent / 100) * power * volume)
+	L.adjustFireLoss(volume * power * 0.2)
+	remove_self(volume) // End reagent bellies
 
 /datum/reagent/silicon
 	name = "Silicon"

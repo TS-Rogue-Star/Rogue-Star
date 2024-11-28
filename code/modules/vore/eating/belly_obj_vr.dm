@@ -410,10 +410,9 @@
 			formatted_desc = replacetext(formatted_desc, "%prey", thing) //replace with whatever mob entered into this belly
 			to_chat(thing, "<span class='notice'><B>[formatted_desc]</B></span>")
 
-	if(istype(owner.loc,/turf/simulated) && !cycle_sloshed && reagents.total_volume > 0) // Begin reagent bellies
+	if(owner && istype(owner.loc,/turf/simulated) && !cycle_sloshed && reagents.total_volume > 0) // Begin reagent bellies
 		var/turf/simulated/T = owner.loc
-		var/list/slosh_sounds = T.vorefootstep_sounds["human"]
-		var/S = pick(slosh_sounds)
+		var/S = pick(T.vorefootstep_sounds["human"])
 		if(S)
 			playsound(T, S, 50 * (reagents.total_volume / custom_max_volume), FALSE, preference = /datum/client_preference/digestion_noises)
 			cycle_sloshed = TRUE // End reagent bellies
@@ -436,9 +435,8 @@
 			recent_sound = TRUE
 
 	if(reagents.total_volume > 0 && !isliving(thing)) // Reagent bellies
-		if(!istype(thing,/obj/item/weapon/reagent_containers)) //Don't fill containers with free juice. Splashing only.
-			reagents.trans_to(thing, reagents.total_volume, 1 / (LAZYLEN(contents) ? LAZYLEN(contents) : 1), TRUE)
-			to_chat(thing, "<span class='warning'><B>You splash into a pool of [reagent_name]!</B></span>") // End reagent bellies
+		reagents.trans_to(thing, reagents.total_volume, 0.1 / (LAZYLEN(contents) ? LAZYLEN(contents) : 1), FALSE)
+		to_chat(thing, "<span class='warning'><B>You splash into a pool of [reagent_name]!</B></span>") // End reagent bellies
 
 	//Messages if it's a mob
 	if(isliving(thing))
@@ -468,12 +466,13 @@
 			M.ai_holder.handle_eaten()
 
 		if(reagents.total_volume > 0 && M.digestable) // Reagent bellies
-			reagents.trans_to(M, reagents.total_volume, 1 / (LAZYLEN(contents) ? LAZYLEN(contents) : 1), TRUE) // End reagent bellies
+			if(digest_mode == DM_DIGEST)
+				reagents.trans_to(M, reagents.total_volume, 0.1 / (LAZYLEN(contents) ? LAZYLEN(contents) : 1), FALSE)
+			to_chat(M, "<span class='warning'><B>You splash into a pool of [reagent_name]!</B></span>") // End reagent bellies
 
 		// Begin RS edit
 		if (istype(owner, /mob/living/carbon/human))
-			var/mob/living/carbon/human/hum = owner
-			hum.update_fullness()
+			owner:update_fullness()
 		// End RS edit
 
 	// Intended for simple mobs
@@ -500,6 +499,9 @@
 		var/mob/living/carbon/human/hum = owner
 		hum.update_fullness()
 	// End RS edit
+
+// KENZIE TODO FIX THIS
+#define belly_fullscreen_alpha 100
 
 /obj/belly/proc/vore_fx(mob/living/L)
 	if(!istype(L))
@@ -532,9 +534,29 @@
 				F4.icon_state = "[belly_fullscreen]_nc"
 			else
 				L.clear_fullscreen("belly4")
+			if(L.liquidbelly_visuals && reagents.total_volume) // Reagent bellies
+				var/image/I
+				if(digest_mode == DM_HOLD && item_digest_mode == IM_HOLD)
+					I = image('icons/mob/vore/bubbles.dmi', "calm")
+				else
+					I = image('icons/mob/vore/bubbles.dmi', "bubbles")
+				I.color = reagentcolor
+				I.alpha = max(150, min(custom_max_volume, 255)) - (255 - belly_fullscreen_alpha)
+				I.pixel_y = -450 + (450 / custom_max_volume * reagents.total_volume)
+				F.add_overlay(I) // End reagent bellies
 		else
 			var/obj/screen/fullscreen/F = L.overlay_fullscreen("belly", /obj/screen/fullscreen/belly)
 			F.icon_state = belly_fullscreen
+			if(L.liquidbelly_visuals && reagents.total_volume) // Reagent bellies
+				var/image/I
+				if(digest_mode == DM_HOLD && item_digest_mode == IM_HOLD)
+					I = image('icons/mob/vore/bubbles.dmi', "calm")
+				else
+					I = image('icons/mob/vore/bubbles.dmi', "bubbles")
+				I.color = reagentcolor
+				I.alpha = max(150, min(custom_max_volume, 255)) - (255 - belly_fullscreen_alpha)
+				I.pixel_y = -450 + (450 / custom_max_volume * reagents.total_volume)
+				F.add_overlay(I) // End reagent bellies
 	else
 		L.clear_fullscreen("belly")
 		L.clear_fullscreen("belly2")
@@ -568,9 +590,29 @@
 			if("[belly_fullscreen]_nc" in icon_states('icons/mob/screen_full_colorized_vore_overlays.dmi'))
 				var/obj/screen/fullscreen/F4 = L.overlay_fullscreen("belly4", /obj/screen/fullscreen/belly/colorized/overlay)
 				F4.icon_state = "[belly_fullscreen]_nc"
+			if(L.liquidbelly_visuals && reagents.total_volume) // Reagent bellies
+				var/image/I
+				if(digest_mode == DM_HOLD && item_digest_mode == IM_HOLD)
+					I = image('icons/mob/vore/bubbles.dmi', "calm")
+				else
+					I = image('icons/mob/vore/bubbles.dmi', "bubbles")
+				I.color = reagentcolor
+				I.alpha = max(150, min(custom_max_volume, 255)) - (255 - belly_fullscreen_alpha)
+				I.pixel_y = -450 + (450 / custom_max_volume * reagents.total_volume)
+				F.add_overlay(I) // End reagent bellies
 		else
 			var/obj/screen/fullscreen/F = L.overlay_fullscreen("belly", /obj/screen/fullscreen/belly)
 			F.icon_state = belly_fullscreen
+			if(L.liquidbelly_visuals && reagents.total_volume) // Reagent bellies
+				var/image/I
+				if(digest_mode == DM_HOLD && item_digest_mode == IM_HOLD)
+					I = image('icons/mob/vore/bubbles.dmi', "calm")
+				else
+					I = image('icons/mob/vore/bubbles.dmi', "bubbles")
+				I.color = reagentcolor
+				I.alpha = max(150, min(custom_max_volume, 255)) - (255 - belly_fullscreen_alpha)
+				I.pixel_y = -450 + (450 / custom_max_volume * reagents.total_volume)
+				F.add_overlay(I) // End reagent bellies
 	else
 		L.clear_fullscreen("belly")
 		L.clear_fullscreen("belly2")

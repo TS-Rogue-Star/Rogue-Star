@@ -1,5 +1,4 @@
 /turf/simulated
-
 	// Reagent belly sloshing sounds
 	var/static/list/base_vorefootstep_sounds = list("human" = list(
 		'sound/vore/walkslosh1.ogg',

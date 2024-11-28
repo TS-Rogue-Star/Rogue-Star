@@ -41,7 +41,7 @@
 				fullness_to_add *= M.health / M.getMaxHealth()
 			belly_fullness += fullness_to_add
 	if(count_liquid_for_sprite)
-		belly_fullness += (reagents.total_volume / custom_max_volume) * liquid_multiplier
+		belly_fullness += (reagents.total_volume / 100) * liquid_multiplier
 	if(count_items_for_sprite)
 		for(var/obj/item/I in src)
 			var/fullness_to_add = 0

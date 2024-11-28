@@ -44,6 +44,7 @@
 		'sound/effects/mob_effects/xenochimera/regen_3.ogg',
 		'sound/effects/mob_effects/xenochimera/regen_5.ogg'
 	)
+	var/liquidbelly_visuals = TRUE
 
 	var/player_login_key_log			//RS ADD: keeps track of a ckey if we join with one to help determine if we're a PC
 
@@ -1304,3 +1305,10 @@
 		return FALSE
 	return TRUE
 //RS ADD END
+
+/mob/living/proc/liquidbelly_visuals() // Reagent bellies
+	set name = "Toggle Liquidbelly Visuals"
+	set category = "Preferences"
+	set desc = "Toggle liquidbelly fullscreen visual effect."
+	liquidbelly_visuals = !liquidbelly_visuals
+	to_chat(src, "<span class='warning'>Liquidbelly overlays [liquidbelly_visuals ? "enabled" : "disabled"].</span>")
