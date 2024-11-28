@@ -521,7 +521,7 @@
 		return
 
 	if(belly_fullscreen)
-		/var/image/I
+		var/image/I
 		if(colorization_enabled)
 			var/obj/screen/fullscreen/F = L.overlay_fullscreen("belly", /obj/screen/fullscreen/belly/colorized)
 			F.icon_state = belly_fullscreen
