@@ -501,15 +501,18 @@
 	spawn(0)
 		var/original_color = light_color
 		var/original_on = on
+		var/datum/component/overlay_lighting/OL = GetComponent(/datum/component/overlay_lighting) //BEWARE, ESOTERIC BULLSHIT HERE.
 		for(var/i = 0; i < amount; i++)
 			if(flicker_color && light_color != flicker_color)
 				set_light_color(flicker_color)
+				OL.directional_atom.color = flicker_color
 			on = !on
 			update_brightness()
 			if(!on) // Only play when the light turns off.
 				playsound(src, 'sound/effects/light_flicker.ogg', 50, 1)
 			sleep(rand(5, 15))
 		set_light_color(original_color)
+		OL.directional_atom.color = original_color
 		on = original_on
 		update_brightness()
 		flickering = 0
