@@ -164,6 +164,7 @@ obengrad - Diona
 obengrad - Protean
 obengrad - Xenochimera
 omegamech - Black-Eyed Shadekin
+omegamech - Xenochimera
 oneofmanynames385 - Protean
 ontejbjoav - Black-Eyed Shadekin
 ontejbjoav - Diona
@@ -216,6 +217,7 @@ sigholtstarsong - Protean
 silvertalismen - Diona
 silvertalismen - Vox
 silvertalismen - Xenochimera
+sinisterevil - Xenochimera
 sirlionfur - Black-Eyed Shadekin
 skylarks - Black-Eyed Shadekin
 slovakiani - Black-Eyed Shadekin
