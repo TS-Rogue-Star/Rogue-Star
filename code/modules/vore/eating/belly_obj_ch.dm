@@ -35,6 +35,8 @@
 	var/liquid_fullness4_messages = FALSE
 	var/liquid_fullness5_messages = FALSE
 
+	var/cycle_sloshed = FALSE
+
 	var/list/fullness1_messages = list(
 		"%pred's %belly looks empty"
 		)
@@ -66,7 +68,10 @@
 	"Milk",
 	"Cream",
 	"Honey",
-	"Cherry Jelly"
+	"Cherry Jelly",
+	"Digestive acid",
+	"Lube",
+	"Biomass"
 	)
 
 
@@ -97,6 +102,8 @@
 		owner.nutrition -= gen_cost
 	for(var/reagent in generated_reagents)
 		reagents.add_reagent(reagent, generated_reagents[reagent])
+	if (istype(owner, /mob/living/carbon/human))
+		owner:update_fullness()
 
 //////////////////////////// REAGENT_DIGEST ////////////////////////
 
@@ -179,6 +186,34 @@
 			gen_cost = 10
 			reagentid = "cherryjelly"
 			reagentcolor = "#801E28"
+		if("Digestive acid")
+			generated_reagents = list("stomacid" = 1)
+			reagent_name = "digestive acid"
+			gen_amount = 1
+			gen_cost = 5
+			reagentid = "stomacid"
+			reagentcolor = "#664330"
+		if("Space cleaner")
+			generated_reagents = list("cleaner" = 1)
+			reagent_name = "space cleaner"
+			gen_amount = 1
+			gen_cost = 10
+			reagentid = "cleaner"
+			reagentcolor = "#A5F0EE"
+		if("Lube")
+			generated_reagents = list("lube" = 1)
+			reagent_name = "lube"
+			gen_amount = 1
+			gen_cost = 10
+			reagentid = "lube"
+			reagentcolor = "#009CA8"
+		if("Biomass")
+			generated_reagents = list("biomass" = 1)
+			reagent_name = "biomass"
+			gen_amount = 1
+			gen_cost = 10
+			reagentid = "biomass"
+			reagentcolor = "#DF9FBF"
 
 /////////////////////// FULLNESS MESSAGES //////////////////////
 

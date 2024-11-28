@@ -361,9 +361,14 @@
 
 /datum/reagent/acid/affect_touch(var/mob/living/carbon/M, var/alien, var/removed) // This is the most interesting
 	if(ishuman(M))
+		var/item_digestion = TRUE // Reagent bellies
+		if(isbelly(M.loc))
+			var/obj/belly/B = M.loc
+			if(B.item_digest_mode == IM_HOLD || B.item_digest_mode == IM_DIGEST_FOOD)
+				item_digestion = FALSE
 		var/mob/living/carbon/human/H = M
 		if(H.head)
-			if(H.head.unacidable)
+			if(H.head.unacidable || !item_digestion || !H.head.digest_act())
 				to_chat(H, "<span class='danger'>Your [H.head] protects you from the acid.</span>")
 				remove_self(volume)
 				return
@@ -377,7 +382,7 @@
 			return
 
 		if(H.wear_mask)
-			if(H.wear_mask.unacidable)
+			if(H.wear_mask.unacidable || !item_digestion || !H.wear_mask.digest_act())
 				to_chat(H, "<span class='danger'>Your [H.wear_mask] protects you from the acid.</span>")
 				remove_self(volume)
 				return
@@ -391,7 +396,7 @@
 			return
 
 		if(H.glasses)
-			if(H.glasses.unacidable)
+			if(H.glasses.unacidable || !item_digestion || !H.glasses.digest_act())
 				to_chat(H, "<span class='danger'>Your [H.glasses] partially protect you from the acid!</span>")
 				removed /= 2
 			else if(removed > meltdose)
@@ -421,7 +426,12 @@
 
 /datum/reagent/acid/touch_obj(var/obj/O)
 	..()
-	if(O.unacidable)
+	var/item_digestion = TRUE //CHOMPEdit Start
+	if(isbelly(O.loc))
+		var/obj/belly/B = O.loc
+		if(B.item_digest_mode == IM_HOLD || B.item_digest_mode == IM_DIGEST_FOOD)
+			item_digestion = FALSE
+	if(O.unacidable || !item_digestion || (istype(O, /obj/item) && !O:digest_act()))
 		return
 	if((istype(O, /obj/item) || istype(O, /obj/effect/plant)) && (volume > meltdose))
 		var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
