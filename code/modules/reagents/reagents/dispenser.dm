@@ -438,7 +438,7 @@
 			M.take_organ_damage(0, removed * power * 0.1) // Balance. The damage is instant, so it's weaker. 10 units -> 5 damage, double for pacid. 120 units beaker could deal 60, but a) it's burn, which is not as dangerous, b) it's a one-use weapon, c) missing with it will splash it over the ground and d) clothes give some protection, so not everything will hit
 
 /datum/reagent/acid/touch_obj(var/obj/O, var/amount)
-	if(isbelly(O.loc))
+	if(isbelly(O.loc) || isbelly(O.loc.loc))
 		var/obj/belly/B = O.loc
 		if(B.item_digest_mode == IM_HOLD || B.item_digest_mode == IM_DIGEST_FOOD)
 			return

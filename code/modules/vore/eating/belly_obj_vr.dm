@@ -369,6 +369,7 @@
 	"vorefootsteps_sounds",
 	"liquid_overlay",
 	"max_liquid_level",
+	"reagent_touches",
 	"mush_overlay",
 	"mush_color",
 	"mush_alpha",
@@ -443,7 +444,7 @@
 			playsound(src, soundfile, vol = 100, vary = 1, falloff = VORE_SOUND_FALLOFF, preference = /datum/client_preference/eating_noises, volume_channel = VOLUME_CHANNEL_VORE)
 			recent_sound = TRUE
 
-	if(reagents.total_volume > 0 && !isliving(thing)) // Reagent bellies
+	if(reagents.total_volume >= 5 && !isliving(thing)) // Reagent bellies
 		reagents.trans_to(thing, reagents.total_volume, 0.1 / (LAZYLEN(contents) ? LAZYLEN(contents) : 1), FALSE)
 		to_chat(thing, "<span class='warning'><B>You splash into a pool of [reagent_name]!</B></span>") // End reagent bellies
 
@@ -474,9 +475,9 @@
 		if(M.ai_holder)
 			M.ai_holder.handle_eaten()
 
-		if(reagents.total_volume > 0 && M.digestable) // Reagent bellies
+		if(reagents.total_volume >= 5 && M.digestable) // Reagent bellies
 			if(digest_mode == DM_DIGEST)
-				reagents.trans_to(M, reagents.total_volume, 0.1 / (LAZYLEN(contents) ? LAZYLEN(contents) : 1), FALSE)
+				reagents.trans_to(M, reagents.total_volume * 0.1, 1 / max(LAZYLEN(contents), 1), FALSE)
 			to_chat(M, "<span class='warning'><B>You splash into a pool of [reagent_name]!</B></span>") // End reagent bellies
 
 		// Begin RS edit
@@ -1925,6 +1926,7 @@
 	dupe.liquid_multiplier = liquid_multiplier
 	dupe.liquid_overlay = liquid_overlay
 	dupe.max_liquid_level = max_liquid_level
+	dupe.reagent_touches = reagent_touches
 	dupe.mush_overlay = mush_overlay
 	dupe.mush_color = mush_color
 	dupe.mush_alpha = mush_alpha

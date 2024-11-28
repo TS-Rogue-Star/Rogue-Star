@@ -258,6 +258,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			"custom_reagentalpha" = selected.custom_reagentalpha,
 			"liquid_overlay" = selected.liquid_overlay,
 			"max_liquid_level" = selected.max_liquid_level,
+			"reagent_touches" = selected.reagent_touches,
 			"mush_overlay" = selected.mush_overlay,
 			"mush_color" = selected.mush_color,
 			"mush_alpha" = selected.mush_alpha,
@@ -294,6 +295,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			liq_interacts["custom_reagentalpha"] = selected.custom_reagentalpha ? selected.custom_reagentalpha : "Default"
 			liq_interacts["liquid_overlay"] = selected.liquid_overlay
 			liq_interacts["max_liquid_level"] = selected.max_liquid_level
+			liq_interacts["reagent_touches"] = selected.reagent_touches
 			liq_interacts["mush_overlay"] = selected.mush_overlay
 			liq_interacts["mush_color"] = selected.mush_color
 			liq_interacts["mush_alpha"] = selected.mush_alpha
@@ -945,6 +947,13 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 				if(isnum(belly_data["liquid_multiplier"]))
 					var/new_liquid_multiplier = belly_data["liquid_multiplier"]
 					new_belly.liquid_multiplier = CLAMP(new_liquid_multiplier, 0.1, 10)
+
+				if(isnum(belly_data["reagent_touches"]))
+					var/new_reagent_touches = belly_data["reagent_touches"]
+					if(new_reagent_touches == 0)
+						new_belly.reagent_touches = FALSE
+					if(new_reagent_touches == 1)
+						new_belly.reagent_touches = TRUE
 
 				if(isnum(belly_data["count_items_for_sprite"]))
 					var/new_count_items_for_sprite = belly_data["count_items_for_sprite"]
@@ -2375,6 +2384,14 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 					host.vore_selected.liquid_multiplier = CLAMP(liquid_multiplier_input, 0.1, 10)
 					host:update_fullness()
 				. = TRUE
+		if("b_reagent_touches")
+			if(!host.vore_selected.reagent_touches)
+				host.vore_selected.reagent_touches = 1
+				to_chat(usr,"<span class='warning'>Your [lowertext(host.vore_selected.name)] will now apply reagents to creatures when digesting.</span>")
+			else
+				host.vore_selected.reagent_touches = 0
+				to_chat(usr,"<span class='warning'>Your [lowertext(host.vore_selected.name)] will no longer apply reagents to creatures when digesting.</span>")
+			. = TRUE
 		if("b_count_items_for_sprites")
 			if (istype(host, /mob/living/carbon/human))
 				host.vore_selected.count_items_for_sprite = !host.vore_selected.count_items_for_sprite

@@ -1491,6 +1491,16 @@ const VoreSelectedBellyLiquidOptions = (props, context) => {
               icon="plus"
             />
           </LabeledList.Item>
+          <LabeledList.Item label="Liquid Application to Prey">
+            <Button
+              onClick={() =>
+                act('liq_set_attribute', { liq_attribute: 'b_reagent_touches' })
+              }
+              icon={liq_interacts.reagent_touches ? 'toggle-on' : 'toggle-off'}
+              selected={liq_interacts.reagent_touches}
+              content={liq_interacts.reagent_touches ? 'On' : 'Off'}
+            />
+          </LabeledList.Item>
           <LabeledList.Item label="Custom Liquid Color">
             <Box
               backgroundColor={custom_reagentcolor}
@@ -1637,6 +1647,7 @@ const VoreSelectedBellyLiquidMessages = (props, context) => {
     custom_reagentalpha,
     liquid_overlay,
     max_liquid_level,
+    reagent_touches,
     mush_overlay,
     mush_color,
     mush_alpha,

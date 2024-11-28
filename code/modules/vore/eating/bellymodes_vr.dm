@@ -24,6 +24,8 @@
 	if(!length(touchable_atoms))
 		return
 
+	HandleBellyReagentEffects(touchable_atoms) // Reagent bellies
+
 /////////////////////////// Sound Selections ///////////////////////////
 	var/digestion_noise_chance = 0
 	var/sound/prey_digest
