@@ -7,7 +7,7 @@
 	var/vore_footstep_chance = 0
 	var/vore_footstep_volume_cooldown = 0	//goes up each time a step isnt heard, and will proc update of list of viable bellies to determine the most filled and loudest one to base audio on.
 
-mob/living/proc/check_vorefootstep(var/m_intent, var/turf/T)
+/mob/living/proc/check_vorefootstep(var/m_intent, var/turf/T)
 	if(vore_footstep_volume_cooldown++ >= 5) //updating the 'dominating' belly, the one that has most liquid and is loudest.
 		choose_vorefootstep()
 		vore_footstep_volume_cooldown = 0
