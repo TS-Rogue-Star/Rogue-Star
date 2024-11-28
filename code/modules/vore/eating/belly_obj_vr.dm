@@ -376,6 +376,7 @@
 	"mush_alpha",
 	"max_mush",
 	"min_mush",
+	"show_fullness_messages",
 	"custom_reagentcolor",
 	"custom_reagentalpha",
 	"fullness1_messages",
@@ -1957,6 +1958,7 @@
 	dupe.gen_time = gen_time
 	dupe.gen_time_display = gen_time_display
 	dupe.custom_max_volume = custom_max_volume
+	dupe.show_fullness_messages = show_fullness_messages
 	// End reagent bellies
 
 	//// Object-holding variables

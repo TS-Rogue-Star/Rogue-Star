@@ -1433,16 +1433,6 @@ const VoreSelectedBellyLiquidOptions = (props, context) => {
               content={liq_interacts.liq_reagent_name}
             />
           </LabeledList.Item>
-          <LabeledList.Item label="Transfer Verb">
-            <Button
-              onClick={() =>
-                act('liq_set_attribute', {
-                  liq_attribute: 'b_liq_reagent_transfer_verb',
-                })
-              }
-              content={liq_interacts.liq_reagent_transfer_verb}
-            />
-          </LabeledList.Item>
           <LabeledList.Item label="Generation Time">
             <Button
               onClick={() =>
@@ -1626,7 +1616,6 @@ const VoreSelectedBellyLiquidMessages = (props, context) => {
     liq_reagent_gen,
     liq_reagent_type,
     liq_reagent_name,
-    liq_reagent_transfer_verb,
     liq_reagent_nutri_rate,
     liq_reagent_capacity,
     liq_sloshing,

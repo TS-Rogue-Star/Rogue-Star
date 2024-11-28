@@ -60,15 +60,17 @@
 	for (var/belly in vore_organs)
 		var/obj/belly/B = belly
 
-		if(0 <= B.reagents.total_volume && B.reagents.total_volume <= 20 && B.liquid_fullness1_messages)
+		var/fill_percentage = B.reagents.maximum_volume > 0 ? B.reagents.total_volume / B.reagents.maximum_volume : 0
+
+		if(0 <= fill_percentage && fill_percentage <= 0.2 && B.show_fullness_messages)
 			message += B.get_reagent_examine_msg1()
-		if(20 < B.reagents.total_volume && B.reagents.total_volume <= 40 && B.liquid_fullness2_messages)
+		if(0.2 < fill_percentage && fill_percentage <= 0.4 && B.show_fullness_messages)
 			message += B.get_reagent_examine_msg2()
-		if(40 < B.reagents.total_volume && B.reagents.total_volume <= 60 && B.liquid_fullness3_messages)
+		if(0.4 < fill_percentage && fill_percentage <= 0.6 && B.show_fullness_messages)
 			message += B.get_reagent_examine_msg3()
-		if(60 < B.reagents.total_volume && B.reagents.total_volume <= 80 && B.liquid_fullness4_messages)
+		if(0.6 < fill_percentage && fill_percentage <= 0.8 && B.show_fullness_messages)
 			message += B.get_reagent_examine_msg4()
-		if(80 < B.reagents.total_volume && B.reagents.total_volume <= 100 && B.liquid_fullness5_messages)
+		if(0.8 < fill_percentage && fill_percentage <= 1 && B.show_fullness_messages)
 			message += B.get_reagent_examine_msg5()
 
 	return message
