@@ -9,6 +9,8 @@
 			qdel(src)
 			return
 
+	HandleBellyReagents()	// Reagent bellies
+
 	// VERY early exit
 	if(!contents.len)
 		return
@@ -145,8 +147,6 @@
 
 	if(to_update)
 		updateVRPanels()
-
-	HandleBellyReagents()	// Reagent bellies
 
 /obj/belly/proc/handle_touchable_atoms(list/touchable_atoms)
 	var/did_an_item = FALSE // Only do one item per cycle.

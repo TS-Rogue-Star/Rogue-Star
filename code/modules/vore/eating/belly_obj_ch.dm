@@ -25,7 +25,8 @@
 	var/gen_time_display = "1 hour"					//The displayed time it takes from a belly to go from 0 to 100
 	var/custom_max_volume = 100						//Variable for people to limit amount of liquid they can receive/produce in a belly
 	var/digest_nutri_gain = 0						//variable to store temporary nutrition gain from digestion and allow a seperate proc to ease up on the wall of code
-	var/reagent_transfer_verb = "injects"			//verb for transfer of reagent from a vore belly
+	var/show_liquids = FALSE //Moved from vorepanel_ch to be a belly var
+	var/show_fullness_messages = FALSE //Moved from vorepanel_ch to be a belly var
 
 	var/vorefootsteps_sounds = FALSE				//If this belly can make sounds when someone walks around
 	var/liquid_fullness1_messages = FALSE
@@ -73,7 +74,7 @@
 ///////////////////// NUTRITION REAGENT PRODUCTION /////////////////
 
 /obj/belly/proc/HandleBellyReagents()
-	if(reagentbellymode == TRUE && reagent_mode_flags & DM_FLAG_REAGENTSNUTRI && reagents.total_volume < custom_max_volume)
+	if(reagentbellymode && reagent_mode_flags & DM_FLAG_REAGENTSNUTRI && reagents.total_volume < custom_max_volume)
 		if(owner.nutrition >= gen_cost && gen_interval >= gen_time)
 			GenerateBellyReagents()
 			gen_interval = 0

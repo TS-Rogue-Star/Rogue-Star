@@ -1811,7 +1811,6 @@
 	dupe.gen_amount = gen_amount
 	dupe.gen_time = gen_time
 	dupe.gen_time_display = gen_time_display
-	dupe.reagent_transfer_verb = reagent_transfer_verb
 	dupe.custom_max_volume = custom_max_volume
 	// End reagent bellies
 
