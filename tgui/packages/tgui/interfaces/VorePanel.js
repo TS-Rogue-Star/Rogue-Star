@@ -916,6 +916,8 @@ const VoreSelectedBellyVisuals = (props, context) => {
     affects_voresprite,
     absorbed_voresprite,
     absorbed_multiplier,
+    liquid_voresprite,
+    liquid_multiplier,
     item_voresprite,
     item_multiplier,
     health_voresprite,
@@ -981,6 +983,26 @@ const VoreSelectedBellyVisuals = (props, context) => {
                       })
                     }
                     content={absorbed_multiplier}
+                  />
+                </LabeledList.Item>
+                <LabeledList.Item label="Count liquid reagents for vore sprites">
+                  <Button
+                    onClick={() =>
+                      act('set_attribute', {
+                        attribute: 'b_count_liquid_for_sprites',
+                      })
+                    }
+                    icon={liquid_voresprite ? 'toggle-on' : 'toggle-off'}
+                    selected={liquid_voresprite}
+                    content={liquid_voresprite ? 'Yes' : 'No'}
+                  />
+                </LabeledList.Item>
+                <LabeledList.Item label="Liquid Multiplier">
+                  <Button
+                    onClick={() =>
+                      act('set_attribute', { attribute: 'b_liquid_multiplier' })
+                    }
+                    content={liquid_multiplier}
                   />
                 </LabeledList.Item>
                 <LabeledList.Item label="Count items for vore sprites">

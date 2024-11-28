@@ -74,15 +74,27 @@
 ///////////////////// NUTRITION REAGENT PRODUCTION /////////////////
 
 /obj/belly/proc/HandleBellyReagents()
-	if(reagentbellymode && reagent_mode_flags & DM_FLAG_REAGENTSNUTRI && reagents.total_volume < custom_max_volume)
-		if(owner.nutrition >= gen_cost && gen_interval >= gen_time)
-			GenerateBellyReagents()
-			gen_interval = 0
+	if(reagentbellymode && reagent_mode_flags & DM_FLAG_REAGENTSNUTRI && reagents.total_volume < custom_max_volume) //Removed if(reagentbellymode == TRUE) since that's less optimized
+		if(isrobot(owner))
+			var/mob/living/silicon/robot/R = owner
+			if(R.cell.charge >= gen_cost*10 && gen_interval >= gen_time)
+				GenerateBellyReagents()
+				gen_interval = 0
+			else
+				gen_interval++
 		else
-			gen_interval++
+			if(owner.nutrition >= gen_cost && gen_interval >= gen_time)
+				GenerateBellyReagents()
+				gen_interval = 0
+			else
+				gen_interval++
 
 /obj/belly/proc/GenerateBellyReagents()
-	owner.nutrition -= gen_cost
+	if(isrobot(owner))
+		var/mob/living/silicon/robot/R = owner
+		R.cell.charge -= gen_cost*10
+	else
+		owner.nutrition -= gen_cost
 	for(var/reagent in generated_reagents)
 		reagents.add_reagent(reagent, generated_reagents[reagent])
 
@@ -133,38 +145,38 @@
 /obj/belly/proc/ReagentSwitch()
 	switch(reagent_chosen)
 		if("Water")
-			generated_reagents = list("water" = 0.1)
+			generated_reagents = list("water" = 1)
 			reagent_name = "water"
-			gen_amount = 0.1
-			gen_cost = 0.1
+			gen_amount = 1
+			gen_cost = 1
 			reagentid = "water"
 			reagentcolor = "#0064C877"
 		if("Milk")
-			generated_reagents = list("milk" = 0.1)
+			generated_reagents = list("milk" = 1)
 			reagent_name = "milk"
-			gen_amount = 0.1
-			gen_cost = 0.15
+			gen_amount = 1
+			gen_cost = 15
 			reagentid = "milk"
 			reagentcolor = "#DFDFDF"
 		if("Cream")
-			generated_reagents = list("cream" = 0.1)
+			generated_reagents = list("cream" = 1)
 			reagent_name = "cream"
-			gen_amount = 0.1
-			gen_cost = 0.15
+			gen_amount = 1
+			gen_cost = 15
 			reagentid = "cream"
 			reagentcolor = "#DFD7AF"
 		if("Honey")
-			generated_reagents = list("honey" = 0.1)
+			generated_reagents = list("honey" = 1)
 			reagent_name = "honey"
-			gen_amount = 0.1
-			gen_cost = 0.15
+			gen_amount = 1
+			gen_cost = 15
 			reagentid = "honey"
 			reagentcolor = "#FFFF00"
 		if("Cherry Jelly")	//Kinda WIP, allows slime like folks something to stuff others with, should make a generic jelly in future
-			generated_reagents = list("cherryjelly" = 0.1)
+			generated_reagents = list("cherryjelly" = 1)
 			reagent_name = "cherry jelly"
-			gen_amount = 0.1
-			gen_cost = 0.15
+			gen_amount = 1
+			gen_cost = 10
 			reagentid = "cherryjelly"
 			reagentcolor = "#801E28"
 

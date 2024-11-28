@@ -1253,6 +1253,7 @@
 	if(owner.client)
 		create_mob_button(parent)
 	owner.verbs |= /mob/proc/insidePanel
+	owner.verbs |= /mob/living/proc/vore_check_reagents // Liquid bellies
 	owner.vorePanel = new(owner)
 
 /datum/component/vore_panel/UnregisterFromParent()

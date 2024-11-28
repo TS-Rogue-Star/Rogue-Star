@@ -251,7 +251,10 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			"drainmode" = selected.drainmode, //RS Edit || Ports VOREStation PR15876
 			// End RS edit
 			"show_liq" = selected.show_liquids, // Begin reagent bellies
-			"show_liq_fullness" = selected.show_fullness_messages // End reagent bellies
+			"show_liq_fullness" = selected.show_fullness_messages,
+			"liquid_voresprite" = selected.count_liquid_for_sprite,
+			"liquid_multiplier" = selected.liquid_multiplier
+			 // End reagent bellies
 		)
 
 		var/list/addons = list()
@@ -2280,96 +2283,95 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 		// Begin RS edit
 		if("b_belly_sprite_to_affect")
 			if (istype(host, /mob/living/carbon/human))
-				var/mob/living/carbon/human/hhost = host
-				var/belly_choice = tgui_input_list(usr, "Which belly sprite do you want your [lowertext(hhost.vore_selected.name)] to affect?","Select Region", hhost.vore_icon_bellies)
+				var/belly_choice = tgui_input_list(usr, "Which belly sprite do you want your [lowertext(host.vore_selected.name)] to affect?","Select Region", host:vore_icon_bellies)
 				if(!belly_choice) //They cancelled, no changes
 					return FALSE
 				else
-					hhost.vore_selected.belly_sprite_to_affect = belly_choice
-					hhost.update_fullness()
+					host.vore_selected.belly_sprite_to_affect = belly_choice
+					host:update_fullness()
 				. = TRUE
 		if("b_affects_vore_sprites")
 			if (istype(host, /mob/living/carbon/human))
-				var/mob/living/carbon/human/hhost = host
-				hhost.vore_selected.affects_vore_sprites = !hhost.vore_selected.affects_vore_sprites
-				hhost.update_fullness()
+				host.vore_selected.affects_vore_sprites = !host.vore_selected.affects_vore_sprites
+				host:update_fullness()
 				. = TRUE
 		if("b_count_absorbed_prey_for_sprites")
 			if (istype(host, /mob/living/carbon/human))
-				var/mob/living/carbon/human/hhost = host
-				hhost.vore_selected.count_absorbed_prey_for_sprite = !hhost.vore_selected.count_absorbed_prey_for_sprite
-				hhost.update_fullness()
+				host.vore_selected.count_absorbed_prey_for_sprite = !host.vore_selected.count_absorbed_prey_for_sprite
+				host:update_fullness()
 				. = TRUE
 		if("b_absorbed_multiplier")
 			if (istype(host, /mob/living/carbon/human))
-				var/mob/living/carbon/human/hhost = host
 				var/absorbed_multiplier_input = input(user, "Set the impact absorbed prey's size have on your vore sprite. 1 means no scaling, 0.5 means absorbed prey count half as much, 2 means absorbed prey count double. (Range from 0.1 - 3)", "Absorbed Multiplier") as num|null
 				if(!isnull(absorbed_multiplier_input))
-					hhost.vore_selected.absorbed_multiplier = CLAMP(absorbed_multiplier_input, 0.1, 3)
-					hhost.update_fullness()
+					host.vore_selected.absorbed_multiplier = CLAMP(absorbed_multiplier_input, 0.1, 3)
+					host:update_fullness()
+				. = TRUE
+		if("b_count_liquid_for_sprites")
+			if (istype(host, /mob/living/carbon/human))
+				host.vore_selected.count_liquid_for_sprite = !host.vore_selected.count_liquid_for_sprite
+				host:update_fullness()
+				. = TRUE
+		if("b_liquid_multiplier")
+			if (istype(host, /mob/living/carbon/human))
+				var/liquid_multiplier_input = input(user, "Set the impact amount of liquid reagents will have on your vore sprite. 1 means a belly with 100 reagents of fluid will count as 1 normal sized prey-thing's worth, 0.5 means liquid counts half as much, 2 means liquid counts double. (Range from 0.1 - 10)", "Liquid Multiplier") as num|null
+				if(!isnull(liquid_multiplier_input))
+					host.vore_selected.liquid_multiplier = CLAMP(liquid_multiplier_input, 0.1, 10)
+					host:update_fullness()
 				. = TRUE
 		if("b_count_items_for_sprites")
 			if (istype(host, /mob/living/carbon/human))
-				var/mob/living/carbon/human/hhost = host
-				hhost.vore_selected.count_items_for_sprite = !hhost.vore_selected.count_items_for_sprite
-				hhost.update_fullness()
+				host.vore_selected.count_items_for_sprite = !host.vore_selected.count_items_for_sprite
+				host:update_fullness()
 				. = TRUE
 		if("b_item_multiplier")
 			if (istype(host, /mob/living/carbon/human))
-				var/mob/living/carbon/human/hhost = host
 				var/item_multiplier_input = input(user, "Set the impact items will have on your vore sprite. 1 means a belly with 8 normal-sized items will count as 1 normal sized prey-thing's worth, 0.5 means items count half as much, 2 means items count double. (Range from 0.1 - 10)", "Item Multiplier") as num|null
 				if(!isnull(item_multiplier_input))
-					hhost.vore_selected.item_multiplier = CLAMP(item_multiplier_input, 0.1, 10)
-					hhost.update_fullness()
+					host.vore_selected.item_multiplier = CLAMP(item_multiplier_input, 0.1, 10)
+					host:update_fullness()
 				. = TRUE
 		if("b_health_impacts_size")
 			if (istype(host, /mob/living/carbon/human))
-				var/mob/living/carbon/human/hhost = host
-				hhost.vore_selected.health_impacts_size = !hhost.vore_selected.health_impacts_size
-				hhost.update_fullness()
+				host.vore_selected.health_impacts_size = !host.vore_selected.health_impacts_size
+				host:update_fullness()
 				. = TRUE
 		if("b_resist_animation")
 			if (istype(host, /mob/living/carbon/human))
-				var/mob/living/carbon/human/hhost = host
-				hhost.vore_selected.resist_triggers_animation = !hhost.vore_selected.resist_triggers_animation
+				host.vore_selected.resist_triggers_animation = !host.vore_selected.resist_triggers_animation
 				. = TRUE
 		if("b_size_factor_sprites")
 			if (istype(host, /mob/living/carbon/human))
-				var/mob/living/carbon/human/hhost = host
 				var/size_factor_input = input(user, "Set the impact all belly content's collective size has on your vore sprite. 1 means no scaling, 0.5 means content counts half as much, 2 means contents count double. (Range from 0.1 - 3)", "Size Factor") as num|null
 				if(!isnull(size_factor_input))
-					hhost.vore_selected.size_factor_for_sprite = CLAMP(size_factor_input, 0.1, 3)
-					hhost.update_fullness()
+					host.vore_selected.size_factor_for_sprite = CLAMP(size_factor_input, 0.1, 3)
+					host:update_fullness()
 				. = TRUE
 		if("b_tail_to_change_to")
 			if (istype(host, /mob/living/carbon/human))
-				var/mob/living/carbon/human/hhost = host
 				var/tail_choice = tgui_input_list(usr, "Which tail sprite do you want to use when your [lowertext(host.vore_selected.name)] is filled?","Select Sprite", global.tail_styles_list)
 				if(!tail_choice) //They cancelled, no changes
 					return FALSE
 				else
-					hhost.vore_selected.tail_to_change_to = tail_choice
+					host.vore_selected.tail_to_change_to = tail_choice
 				. = TRUE
 		if("b_tail_color")
 			if (istype(host, /mob/living/carbon/human))
-				var/mob/living/carbon/human/hhost = host
-				var/newcolor = input(usr, "Choose tail color.", "", hhost.vore_selected.tail_colouration) as color|null
+				var/newcolor = input(usr, "Choose tail color.", "", host.vore_selected.tail_colouration) as color|null
 				if(newcolor)
-					hhost.vore_selected.tail_colouration = newcolor
+					host.vore_selected.tail_colouration = newcolor
 				. = TRUE
 		if("b_tail_color2")
 			if (istype(host, /mob/living/carbon/human))
-				var/mob/living/carbon/human/hhost = host
-				var/newcolor = input(usr, "Choose tail secondary color.", "", hhost.vore_selected.tail_extra_overlay) as color|null
+				var/newcolor = input(usr, "Choose tail secondary color.", "", host.vore_selected.tail_extra_overlay) as color|null
 				if(newcolor)
-					hhost.vore_selected.tail_extra_overlay = newcolor
+					host.vore_selected.tail_extra_overlay = newcolor
 				. = TRUE
 		if("b_tail_color3")
 			if (istype(host, /mob/living/carbon/human))
-				var/mob/living/carbon/human/hhost = host
-				var/newcolor = input(usr, "Choose tail tertiary color.", "", hhost.vore_selected.tail_extra_overlay2) as color|null
+				var/newcolor = input(usr, "Choose tail tertiary color.", "", host.vore_selected.tail_extra_overlay2) as color|null
 				if(newcolor)
-					hhost.vore_selected.tail_extra_overlay2 = newcolor
+					host.vore_selected.tail_extra_overlay2 = newcolor
 				. = TRUE
 		// End RS edit
 	if(.)
@@ -2438,10 +2440,10 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 					return FALSE
 			. = TRUE
 		if("b_liq_reagent_capacity")
-			var/new_custom_vol = input(user, "Choose the amount of liquid the belly can contain at most. Ranges from 0 to 100.", "Set Custom Belly Capacity.", host.vore_selected.custom_max_volume) as num|null
+			var/new_custom_vol = input(user, "Choose the amount of liquid the belly can contain at most. Ranges from 0 to 300.", "Set Custom Belly Capacity.", host.vore_selected.custom_max_volume) as num|null
 			if(new_custom_vol == null)
 				return FALSE
-			var/new_new_custom_vol = CLAMP(new_custom_vol, 10, 100)
+			var/new_new_custom_vol = CLAMP(new_custom_vol, 10, 300)
 			host.vore_selected.custom_max_volume = new_new_custom_vol
 			. = TRUE
 		if("b_liq_sloshing")
@@ -2465,6 +2467,8 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 				return FALSE
 			else
 				host.vore_selected.reagents.clear_reagents()
+			if (istype(host, /mob/living/carbon/human))
+				host:update_fullness()
 			. = TRUE
 
 /datum/vore_look/proc/liq_set_msg(mob/user, params)

@@ -38,6 +38,16 @@ mob/living/proc/check_vorefootstep(var/m_intent, var/turf/T)
 		vore_footstep_volume = 20 + highest_vol * 4/5
 		vore_footstep_chance = highest_vol/4
 
+/mob/living/proc/vore_check_reagents()
+	set name = "Check Belly Liquid (Vore)"
+	set category = "Abilities"
+	set desc = "Check the amount of liquid in your belly."
+
+	var/obj/belly/RTB = input("Choose which vore belly to check") as null|anything in src.vore_organs
+	if(!RTB)
+		return FALSE
+
+	to_chat(src, "<span class='notice'>[RTB] has [RTB.reagents.total_volume] units of liquid.</span>")
 
 //
 // Returns examine messages for how much reagents are in bellies

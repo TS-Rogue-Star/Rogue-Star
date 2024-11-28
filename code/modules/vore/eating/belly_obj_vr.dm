@@ -349,6 +349,8 @@
 	"slow_brutal",								//RS Edit || Ports CHOMPStation Pr 5161
 	"reagent_mode_flags",	// Begin reagent bellies
 	"reagentbellymode",
+	"count_liquid_for_sprite",
+	"liquid_multiplier",
 	"liquid_fullness1_messages",
 	"liquid_fullness2_messages",
 	"liquid_fullness3_messages",
@@ -385,7 +387,7 @@
 		owner.vore_organs |= src
 		if(isliving(loc))
 			START_PROCESSING(SSbellies, src)
-	create_reagents(100)	// Begin reagent bellies
+	create_reagents(300)	// Begin reagent bellies
 	flags |= NOREACT	// End reagent bellies
 
 /obj/belly/Destroy()
@@ -1791,6 +1793,10 @@
 	dupe.health_impacts_size = health_impacts_size
 	dupe.count_items_for_sprite = count_items_for_sprite
 	dupe.item_multiplier = item_multiplier
+	// Reagent bellies
+	dupe.count_liquid_for_sprite = count_liquid_for_sprite
+	dupe.liquid_multiplier = liquid_multiplier
+	// End reagent bellies
 	//RS Edit || Ports CHOMPStation PR 5161
 	dupe.slow_digestion = slow_digestion
 	dupe.slow_brutal = slow_brutal
