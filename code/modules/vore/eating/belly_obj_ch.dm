@@ -84,7 +84,8 @@
 	"Digestive acid",
 	"Diluted digestive acid",
 	"Lube",
-	"Biomass"
+	"Biomass",
+	"Tricordrazine"
 	)
 
 
@@ -264,6 +265,14 @@
 			gen_cost = 10
 			reagentid = "biomass"
 			reagentcolor = "#DF9FBF"
+		if("Tricordrazine")
+			generated_reagents = list("tricordrazine" = 1)
+			reagent_name = "tricordrazine"
+			gen_amount = 1
+			gen_cost = 10
+			reagentid = "tricordrazine"
+			reagentcolor = "#8040FF"
+
 
 /////////////////////// FULLNESS MESSAGES //////////////////////
 
