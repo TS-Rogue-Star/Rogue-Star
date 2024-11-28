@@ -1,5 +1,6 @@
 #define VORE_SOUND_FALLOFF 0.1
 #define VORE_SOUND_RANGE 3
+#define belly_fullscreen_alpha 100 // KH We don't have an ability to set this at the moment but it's outside the scope of what I'm doing
 
 //
 //  Belly system 2.0, now using objects instead of datums because EH at datums.
@@ -509,9 +510,6 @@
 		var/mob/living/carbon/human/hum = owner
 		hum.update_fullness()
 	// End RS edit
-
-// KENZIE TODO FIX THIS
-#define belly_fullscreen_alpha 100
 
 /obj/belly/proc/vore_fx(mob/living/L)
 	if(!istype(L))

@@ -2384,14 +2384,6 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 					host.vore_selected.liquid_multiplier = CLAMP(liquid_multiplier_input, 0.1, 10)
 					host:update_fullness()
 				. = TRUE
-		if("b_reagent_touches")
-			if(!host.vore_selected.reagent_touches)
-				host.vore_selected.reagent_touches = 1
-				to_chat(usr,"<span class='warning'>Your [lowertext(host.vore_selected.name)] will now apply reagents to creatures when digesting.</span>")
-			else
-				host.vore_selected.reagent_touches = 0
-				to_chat(usr,"<span class='warning'>Your [lowertext(host.vore_selected.name)] will no longer apply reagents to creatures when digesting.</span>")
-			. = TRUE
 		if("b_count_items_for_sprites")
 			if (istype(host, /mob/living/carbon/human))
 				host.vore_selected.count_items_for_sprite = !host.vore_selected.count_items_for_sprite
@@ -2543,7 +2535,14 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			if (istype(host, /mob/living/carbon/human))
 				host:update_fullness()
 			. = TRUE
-
+		if("b_reagent_touches")
+			if(!host.vore_selected.reagent_touches)
+				host.vore_selected.reagent_touches = 1
+				to_chat(usr,"<span class='warning'>Your [lowertext(host.vore_selected.name)] will now apply reagents to creatures when digesting.</span>")
+			else
+				host.vore_selected.reagent_touches = 0
+				to_chat(usr,"<span class='warning'>Your [lowertext(host.vore_selected.name)] will no longer apply reagents to creatures when digesting.</span>")
+			. = TRUE
 		if("b_liquid_overlay")
 			if(!host.vore_selected.liquid_overlay)
 				host.vore_selected.liquid_overlay = 1
@@ -2566,7 +2565,6 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 				host.vore_selected.custom_reagentcolor = newcolor
 			else
 				host.vore_selected.custom_reagentcolor = null
-			// host.vore_selected.update_internal_overlay() // KENZIE TODO FIX THIS
 			. = TRUE
 		if("b_custom_reagentalpha")
 			var/newalpha = tgui_input_number(usr, "Set alpha transparency between 0-255. Leave blank to use capacity based alpha.", "Custom Liquid Alpha",255,255,0,0,1)
@@ -2574,7 +2572,6 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 				host.vore_selected.custom_reagentalpha = newalpha
 			else
 				host.vore_selected.custom_reagentalpha = null
-			// host.vore_selected.update_internal_overlay()
 			. = TRUE
 		if("b_mush_overlay")
 			if(!host.vore_selected.mush_overlay)
@@ -2583,19 +2580,16 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			else
 				host.vore_selected.mush_overlay = 0
 				to_chat(usr,"<span class='warning'>Your [lowertext(host.vore_selected.name)] no longer has fullness overlay enabled.</span>")
-			// host.vore_selected.update_internal_overlay()
 			. = TRUE
 		if("b_mush_color")
 			var/newcolor = input(usr, "Choose custom color for mush overlay.", "", host.vore_selected.mush_color) as color|null
 			if(newcolor)
 				host.vore_selected.mush_color = newcolor
-				// host.vore_selected.update_internal_overlay()
 			. = TRUE
 		if("b_mush_alpha")
 			var/newalpha = tgui_input_number(usr, "Set alpha transparency between 0-255", "Mush Alpha",255,255,0,0,1)
 			if(newalpha != null)
 				host.vore_selected.mush_alpha = newalpha
-				// host.vore_selected.update_internal_overlay()
 			. = TRUE
 		if("b_max_mush")
 			var/new_max_mush = input(user, "Choose the amount of nutrition required for full mush overlay. Ranges from 0 to 6000. Default 500.", "Set Fullness Overlay Scaling.", host.vore_selected.max_mush) as num|null
@@ -2603,7 +2597,6 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 				return FALSE
 			var/new_new_max_mush = CLAMP(new_max_mush, 0, 6000)
 			host.vore_selected.max_mush = new_new_max_mush
-			// host.vore_selected.update_internal_overlay()
 			. = TRUE
 		if("b_min_mush")
 			var/new_min_mush = input(user, "Set custom minimum mush level. 0-100%", "Set Custom Minimum.", host.vore_selected.min_mush) as num|null
@@ -2611,7 +2604,6 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 				return FALSE
 			var/new_new_min_mush = CLAMP(new_min_mush, 0, 100)
 			host.vore_selected.min_mush = new_new_min_mush
-			// host.vore_selected.update_internal_overlay()
 			. = TRUE
 
 /datum/vore_look/proc/liq_set_msg(mob/user, params)
