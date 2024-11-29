@@ -301,9 +301,11 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			liq_interacts["mush_alpha"] = selected.mush_alpha
 			liq_interacts["max_mush"] = selected.max_mush
 			liq_interacts["min_mush"] = selected.min_mush
+			var/list/liq_regs = list()
 			for(var/flag_name in selected.reagent_mode_flag_list)
 				if(selected.reagent_mode_flags & selected.reagent_mode_flag_list[flag_name])
-					liq_interacts["liq_reagent_addons"].Add(flag_name)
+					liq_regs.Add(flag_name)
+			liq_interacts["liq_reagent_addons"] = liq_regs
 
 		selected_list["liq_interacts"] = liq_interacts
 
