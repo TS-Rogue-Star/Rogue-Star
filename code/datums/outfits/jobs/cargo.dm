@@ -26,5 +26,5 @@
 	satchel_one  = /obj/item/weapon/storage/backpack/satchel/eng
 	id_type = /obj/item/weapon/card/id/cargo/miner
 	pda_type = /obj/item/device/pda/shaftminer
-	backpack_contents = list(/obj/item/weapon/tool/crowbar = 1, /obj/item/weapon/storage/bag/ore = 1)
+	backpack_contents = list(/obj/item/weapon/tool/crowbar = 1, /obj/item/weapon/storage/bag/ore = 1, /obj/item/mining_voucher = 1) //RS Edit: Adds back mining vouchers.
 	flags = OUTFIT_HAS_BACKPACK|OUTFIT_EXTENDED_SURVIVAL
