@@ -1553,6 +1553,7 @@
 			clear_fullscreen("belly2")
 			clear_fullscreen("belly3")
 			clear_fullscreen("belly4")
+			clear_fullscreen("belly5") // Reagent bellies
 
 		if(config.welder_vision)
 			var/found_welder

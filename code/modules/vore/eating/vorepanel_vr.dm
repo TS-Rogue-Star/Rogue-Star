@@ -1304,6 +1304,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 				host.clear_fullscreen("belly2")
 				host.clear_fullscreen("belly3")
 				host.clear_fullscreen("belly4")
+				host.clear_fullscreen("belly5") // Reagent bellies
 				if(!host.hud_used.hud_shown)
 					host.toggle_hud_vis()
 			unsaved_changes = TRUE
