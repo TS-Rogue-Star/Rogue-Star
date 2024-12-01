@@ -466,6 +466,9 @@
 		if(B.digest_mode != DM_DIGEST || !L.digestable)
 			remove_self(volume)
 			return
+		if (!L.digestable)
+			remove_self(volume)
+			return
 		if(B.owner)
 			if(B.reagent_mode_flags & DM_FLAG_REAGENTSDIGEST && B.reagents.total_volume < B.custom_max_volume)
 				B.owner.adjust_nutrition((B.nutrition_percent / 100) * (power * 0.6) * volume)
