@@ -166,17 +166,32 @@
 		ability_flags &= ~AB_PHASE_SHIFTING
 
 		//Affect nearby lights
-		var/destroy_lights = 0
 
 		for(var/obj/machinery/light/L in machines)
 			if(L.z != z || get_dist(src,L) > 10)
 				continue
 
-			if(prob(destroy_lights))
+			if(prob(flicker_break_chance))
 				spawn(rand(5,25))
 					L.broken()
 			else
-				L.flicker(10)
+				if(flicker_time)
+					L.flicker(flicker_time, flicker_color) //RS edit - Variable Flicker!
+
+		//Yes. I could do a 'for(var/atom/movable/AM in range(effectrange, turf))' but that would take so much processing power the old gods would come down and smite me. So instead we will check for specific things.
+
+		for(var/obj/item/device/flashlight/flashlights in range(7, src)) //Find any flashlights near us and make them flicker too!
+			if(istype(flashlights,/obj/item/device/flashlight/glowstick) ||istype(flashlights,/obj/item/device/flashlight/flare)) //No affecting glowsticks or flares...As funny as that is
+				continue
+			flashlights.flicker(flicker_time, flicker_color, TRUE)
+
+		for(var/mob/living/creatures in range(7, src))
+			for(var/obj/item/device/flashlight/held_lights in creatures.contents)
+				if(istype(held_lights,/obj/item/device/flashlight/glowstick) ||istype(held_lights,/obj/item/device/flashlight/flare) ) //No affecting glowsticks or flares...As funny as that is
+					continue
+				held_lights.flicker(flicker_time, flicker_color, TRUE)
+
+				//do the flicker here
 //RS EDIT END
 
 /datum/modifier/shadekin_phase_vision
@@ -327,3 +342,31 @@
 	holder.glow_color = initial(holder.glow_color)
 	holder.set_light(0)
 	my_kin = null
+
+/// Light flicker adjusments! Allows you to change three things:
+/// Flicker Length || Flicker Light Break Chance || Flicker colors
+/mob/living/carbon/human/proc/adjust_flicker()
+	set name = "Adjust Light Flicker"
+	set desc = "Allows you to adjust the settings of the light flicker when you phase in!"
+	set category = "Shadekin"
+
+	var/flicker_timer = tgui_input_number(usr, "Adjust how long lights flicker when you phase in! (Min 10 Max 15 in seconds!)", "Set Flicker", 10, 15, 10)
+	if(flicker_timer > 15 || flicker_timer < 10)
+		to_chat(usr,"<span class='warning'>You must choose a number between 10 and 15</span>")
+		return
+	flicker_time = flicker_timer
+	to_chat(usr,"<span class='warning'>Flicker timer set to [flicker_time] seconds!</span>")
+
+	var/set_new_color = input(src,"Select a color you wish the lights to flicker as (Default is #E0EFF0)","Flicker Color",flicker_color) as color
+	if(set_new_color)
+		flicker_color = set_new_color
+	to_chat(usr,"<span class='warning'>Flicker color set to [flicker_color]!</span>")
+
+	var/break_chance = tgui_input_number(usr, "Adjust the % chance for lights to break when you phase in! (Default 0. Min 0. Max 25)", "Set Break Chance", 0, 25, 0)
+	if(break_chance > 25 || break_chance < 0)
+		to_chat(usr,"<span class='warning'>You must choose a number between 0 and 25</span>")
+		return
+	flicker_break_chance = break_chance
+	to_chat(usr,"<span class='warning'>Break chance set to [flicker_break_chance]%</span>")
+
+//RS Edit End
