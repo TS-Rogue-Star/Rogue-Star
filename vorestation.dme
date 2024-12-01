@@ -4339,7 +4339,7 @@
 #include "maps\expedition_vr\beach\submaps\mountains_areas.dm"
 #include "maps\redgate\pizzaria\pizzaria_pois.dm"
 #include "maps\gateway_archive_vr\blackmarketpackers.dm"
-#include "maps\stellar_delight\stellar_delight.dm"
+#include "maps\groundbase\groundbase.dm"
 #include "maps\redgate\fantasy_items.dm"
 #include "maps\redgate\code\snowglobe_rs.dm"
 #include "maps\southern_cross\items\clothing\sc_accessory.dm"
