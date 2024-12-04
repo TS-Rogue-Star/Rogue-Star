@@ -1,4 +1,4 @@
-///////////////////// Mob Living /////////////////////
+///////////////////// Mob Living ///////////////////// //RS Add || Chomp Port
 /mob/living
 	var/list/vore_organs_reagents = list()	//Reagent datums in vore bellies in a mob
 	var/receive_reagents = FALSE			//Pref for people to avoid others transfering reagents into them.

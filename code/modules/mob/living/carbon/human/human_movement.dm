@@ -276,12 +276,12 @@
 
 	// Play every 20 steps while walking, for the sneak
 	if(m_intent == "walk" && step_count++ % 20 != 0)
-		check_vorefootstep(m_intent, T) // Reagent bellies
+		check_vorefootstep(m_intent, T) // Reagent bellies || RS Add || Chomp Port
 		return
 
 	// Play every other step while running
 	if(m_intent == "run" && step_count++ % 2 != 0)
-		check_vorefootstep(m_intent, T) // Reagent bellies
+		check_vorefootstep(m_intent, T) // Reagent bellies || RS Add || Chomp Port
 		return
 
 	var/volume = config.footstep_volume

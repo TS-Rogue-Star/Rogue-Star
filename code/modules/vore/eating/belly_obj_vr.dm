@@ -1,6 +1,6 @@
 #define VORE_SOUND_FALLOFF 0.1
 #define VORE_SOUND_RANGE 3
-#define belly_fullscreen_alpha 100 // KH We don't have an ability to set this at the moment but it's outside the scope of what I'm doing
+#define belly_fullscreen_alpha 100 // RS Add || Chomp Port || KH We don't have an ability to set this at the moment but it's outside the scope of what I'm doing
 
 //
 //  Belly system 2.0, now using objects instead of datums because EH at datums.
@@ -348,7 +348,7 @@
 	"drainmode",								//RS edit || Ports VOREStation PR15876
 	"slow_digestion",							//RS Edit || Ports CHOMPStation PR 5161
 	"slow_brutal",								//RS Edit || Ports CHOMPStation Pr 5161
-	"reagent_mode_flags",	// Begin reagent bellies
+	"reagent_mode_flags",	// Begin reagent bellies || RS Add || Chomp Port
 	"show_liquids",
 	"reagentbellymode",
 	"count_liquid_for_sprite",
@@ -400,7 +400,7 @@
 		owner.vore_organs |= src
 		if(isliving(loc))
 			START_PROCESSING(SSbellies, src)
-	create_reagents(300)	// Begin reagent bellies
+	create_reagents(300)	// Begin reagent bellies || RS Add || Chomp Port
 	flags |= NOREACT	// End reagent bellies
 
 /obj/belly/Destroy()
@@ -423,7 +423,7 @@
 			formatted_desc = replacetext(formatted_desc, "%prey", thing) //replace with whatever mob entered into this belly
 			to_chat(thing, "<span class='notice'><B>[formatted_desc]</B></span>")
 
-	if(owner && istype(owner.loc,/turf/simulated) && !cycle_sloshed && reagents.total_volume > 0) // Begin reagent bellies
+	if(owner && istype(owner.loc,/turf/simulated) && !cycle_sloshed && reagents.total_volume > 0) // Begin reagent bellies || RS Add || Chomp Port
 		var/turf/simulated/T = owner.loc
 		var/S = pick(T.vorefootstep_sounds["human"])
 		if(S)
@@ -447,7 +447,7 @@
 			playsound(src, soundfile, vol = 100, vary = 1, falloff = VORE_SOUND_FALLOFF, preference = /datum/client_preference/eating_noises, volume_channel = VOLUME_CHANNEL_VORE)
 			recent_sound = TRUE
 
-	if(reagents.total_volume >= 5 && !isliving(thing)) // Reagent bellies
+	if(reagents.total_volume >= 5 && !isliving(thing)) // Reagent bellies || RS Add || Chomp Port
 		reagents.trans_to(thing, reagents.total_volume, 0.1 / (LAZYLEN(contents) ? LAZYLEN(contents) : 1), FALSE)
 		to_chat(thing, "<span class='warning'><B>You splash into a pool of [reagent_name]!</B></span>") // End reagent bellies
 
@@ -478,7 +478,7 @@
 		if(M.ai_holder)
 			M.ai_holder.handle_eaten()
 
-		if(reagents.total_volume >= 5 && M.digestable) // Reagent bellies
+		if(reagents.total_volume >= 5 && M.digestable) // Reagent bellies || RS Add || Chomp Port
 			if(digest_mode == DM_DIGEST)
 				reagents.trans_to(M, reagents.total_volume * 0.1, 1 / max(LAZYLEN(contents), 1), FALSE)
 			to_chat(M, "<span class='warning'><B>You splash into a pool of [reagent_name]!</B></span>") // End reagent bellies
@@ -501,7 +501,7 @@
 		L.clear_fullscreen("belly2")
 		L.clear_fullscreen("belly3")
 		L.clear_fullscreen("belly4")
-		L.clear_fullscreen("belly5") // Reagent bellies
+		L.clear_fullscreen("belly5") // Reagent bellies || RS Add || Chomp Port
 		if(L.hud_used)
 			if(!L.hud_used.hud_shown)
 				L.toggle_hud_vis()
@@ -523,7 +523,7 @@
 		L.clear_fullscreen("belly")
 		return
 
-	var/image/ReagentImages = null
+	var/image/ReagentImages = null //Reagent bellies || RS Add || Chomp Port
 
 	if(belly_fullscreen)
 		if(colorization_enabled)
@@ -547,9 +547,9 @@
 				F4.icon_state = "[belly_fullscreen]_nc"
 			else
 				L.clear_fullscreen("belly4")
-			var/obj/screen/fullscreen/F5 = L.overlay_fullscreen("belly5", /obj/screen/fullscreen/belly/colorized/overlay)
-			F5.icon_state = belly_fullscreen
-			if(L.liquidbelly_visuals && mush_overlay && (owner.nutrition > 0 || max_mush == 0 || min_mush > 0)) // Reagent bellies
+			var/obj/screen/fullscreen/F5 = L.overlay_fullscreen("belly5", /obj/screen/fullscreen/belly/colorized/overlay) // Reagent bellies || RS Add || Chomp Port
+			F5.icon_state = belly_fullscreen //Reagent bellies || RS Add || Chomp Port
+			if(L.liquidbelly_visuals && mush_overlay && (owner.nutrition > 0 || max_mush == 0 || min_mush > 0)) // Reagent bellies start || RS Add || Chomp Port
 				ReagentImages = image('icons/mob/vore/bubbles.dmi', "mush")
 				ReagentImages.color = mush_color
 				ReagentImages.alpha = mush_alpha
@@ -574,10 +574,10 @@
 				F5.add_overlay(ReagentImages) // End reagent bellies
 		else
 			var/obj/screen/fullscreen/F = L.overlay_fullscreen("belly", /obj/screen/fullscreen/belly)
-			var/obj/screen/fullscreen/F5 = L.overlay_fullscreen("belly5", /obj/screen/fullscreen/belly/colorized/overlay)
+			var/obj/screen/fullscreen/F5 = L.overlay_fullscreen("belly5", /obj/screen/fullscreen/belly/colorized/overlay) //Reagent bellies || RS Add || Chomp Port
 			F.icon_state = belly_fullscreen
-			F5.icon_state = belly_fullscreen
-			if(L.liquidbelly_visuals && mush_overlay && (owner.nutrition > 0 || max_mush == 0 || min_mush > 0)) // Reagent bellies
+			F5.icon_state = belly_fullscreen //Reagent bellies || RS Add || Chomp Port
+			if(L.liquidbelly_visuals && mush_overlay && (owner.nutrition > 0 || max_mush == 0 || min_mush > 0)) // Reagent bellies start || RS Add || Chomp Port
 				ReagentImages = image('icons/mob/vore/bubbles.dmi', "mush")
 				ReagentImages.color = mush_color
 				ReagentImages.alpha = mush_alpha
@@ -605,7 +605,7 @@
 		L.clear_fullscreen("belly2")
 		L.clear_fullscreen("belly3")
 		L.clear_fullscreen("belly4")
-		L.clear_fullscreen("belly5") // Reagent bellies
+		L.clear_fullscreen("belly5") // Reagent bellies || RS Add || Chomp Port
 
 	if(disable_hud)
 		if(L?.hud_used?.hud_shown)
@@ -618,7 +618,7 @@
 	if(!L.client)
 		return
 
-	var/image/ReagentImages = null
+	var/image/ReagentImages = null //Reagent bellies || RS Add || Chomp Port
 
 	if(belly_fullscreen)
 		if(colorization_enabled)
@@ -636,9 +636,9 @@
 			if("[belly_fullscreen]_nc" in icon_states('icons/mob/screen_full_colorized_vore_overlays.dmi'))
 				var/obj/screen/fullscreen/F4 = L.overlay_fullscreen("belly4", /obj/screen/fullscreen/belly/colorized/overlay)
 				F4.icon_state = "[belly_fullscreen]_nc"
-			var/obj/screen/fullscreen/F5 = L.overlay_fullscreen("belly5", /obj/screen/fullscreen/belly/colorized/overlay)
-			F5.icon_state = belly_fullscreen
-			if(L.liquidbelly_visuals && mush_overlay && (owner.nutrition > 0 || max_mush == 0 || min_mush > 0)) // Reagent bellies
+			var/obj/screen/fullscreen/F5 = L.overlay_fullscreen("belly5", /obj/screen/fullscreen/belly/colorized/overlay)  //Reagent bellies || RS Add || Chomp Port
+			F5.icon_state = belly_fullscreen //Reagent bellies || RS Add || Chomp Port
+			if(L.liquidbelly_visuals && mush_overlay && (owner.nutrition > 0 || max_mush == 0 || min_mush > 0)) // Reagent bellies start || RS Add || Chomp Port
 				ReagentImages = image('icons/mob/vore/bubbles.dmi', "mush")
 				ReagentImages.color = mush_color
 				ReagentImages.alpha = mush_alpha
@@ -663,10 +663,10 @@
 				F5.add_overlay(ReagentImages) // End reagent bellies
 		else
 			var/obj/screen/fullscreen/F = L.overlay_fullscreen("belly", /obj/screen/fullscreen/belly)
-			var/obj/screen/fullscreen/F5 = L.overlay_fullscreen("belly5", /obj/screen/fullscreen/belly/colorized/overlay)
+			var/obj/screen/fullscreen/F5 = L.overlay_fullscreen("belly5", /obj/screen/fullscreen/belly/colorized/overlay) //Reagent bellies || RS Add || Chomp Port
 			F.icon_state = belly_fullscreen
-			F5.icon_state = belly_fullscreen
-			if(L.liquidbelly_visuals && mush_overlay && (owner.nutrition > 0 || max_mush == 0 || min_mush > 0)) // Reagent bellies
+			F5.icon_state = belly_fullscreen //Reagent bellies || RS Add || Chomp Port
+			if(L.liquidbelly_visuals && mush_overlay && (owner.nutrition > 0 || max_mush == 0 || min_mush > 0)) // Reagent bellies start || RS Add || Chomp Port
 				ReagentImages = image('icons/mob/vore/bubbles.dmi', "mush")
 				ReagentImages.color = mush_color
 				ReagentImages.alpha = mush_alpha
@@ -694,14 +694,14 @@
 		L.clear_fullscreen("belly2")
 		L.clear_fullscreen("belly3")
 		L.clear_fullscreen("belly4")
-		L.clear_fullscreen("belly5") // Reagent bellies
+		L.clear_fullscreen("belly5") // Reagent bellies || RS Add || Chomp Port
 
 /obj/belly/proc/clear_preview(mob/living/L)
 	L.clear_fullscreen("belly")
 	L.clear_fullscreen("belly2")
 	L.clear_fullscreen("belly3")
 	L.clear_fullscreen("belly4")
-	L.clear_fullscreen("belly5") // Reagent bellies
+	L.clear_fullscreen("belly5") // Reagent bellies || RS Add || Chomp Port
 
 
 
@@ -1124,7 +1124,7 @@
 		if(ishuman(M))
 			var/mob/living/carbon/human/Prey = M
 			Prey.bloodstr.del_reagent("numbenzyme")
-			// Begin reagent bellies
+			// Begin reagent bellies || RS Add || Chomp Port
 			Prey.bloodstr.trans_to_holder(Pred.ingested, Prey.bloodstr.total_volume, 0.5, TRUE) // Copy=TRUE because we're deleted anyway //CHOMPEdit Start
 			Prey.ingested.trans_to_holder(Pred.ingested, Prey.ingested.total_volume, 0.5, TRUE) // Therefore don't bother spending cpu
 			Prey.touching.del_reagent("stomacid") //Don't need this stuff in our bloodstream.
@@ -1182,8 +1182,8 @@
 		Prey.bloodstr.trans_to_holder(Pred.ingested, Prey.bloodstr.total_volume, copy = TRUE)
 		Prey.ingested.trans_to_holder(Pred.ingested, Prey.ingested.total_volume, copy = TRUE)
 		Prey.touching.trans_to_holder(Pred.ingested, Prey.touching.total_volume, copy = TRUE)
-		Prey.touching.del_reagent("stomacid") // Reagent bellies
-		Prey.touching.del_reagent("cleaner") // Reagent bellies
+		Prey.touching.del_reagent("stomacid") // Reagent bellies || RS Add || Chomp Port
+		Prey.touching.del_reagent("cleaner") // Reagent bellies || RS Add || Chomp Port
 		// TODO - Find a way to make the absorbed prey share the effects with the pred.
 		// Currently this is infeasible because reagent containers are designed to have a single my_atom, and we get
 		// problems when A absorbs B, and then C absorbs A,  resulting in B holding onto an invalid reagent container.
@@ -1936,7 +1936,7 @@
 	dupe.health_impacts_size = health_impacts_size
 	dupe.count_items_for_sprite = count_items_for_sprite
 	dupe.item_multiplier = item_multiplier
-	// Reagent bellies
+	// Reagent bellies || RS Add || Chomp Port
 	dupe.count_liquid_for_sprite = count_liquid_for_sprite
 	dupe.liquid_multiplier = liquid_multiplier
 	dupe.liquid_overlay = liquid_overlay
@@ -1955,7 +1955,7 @@
 	dupe.slow_brutal = slow_brutal
 	//RS Edit End
 
-	// Begin reagent bellies
+	// Begin reagent bellies || RS Add || Chomp Port
 	dupe.show_liquids = show_liquids
 	dupe.reagent_mode_flags = reagent_mode_flags
 	dupe.reagentid = reagentid
@@ -2172,7 +2172,7 @@
 	for(var/I in examine_messages_absorbed)
 		dupe.examine_messages_absorbed += I
 
-	// Begin reagent bellies
+	// Begin reagent bellies || RS Add || Chomp Port
 	//generated_reagents - strings
 	dupe.generated_reagents.Cut()
 	for(var/I in generated_reagents)

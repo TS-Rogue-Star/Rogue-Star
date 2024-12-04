@@ -272,7 +272,7 @@
 	vorestrings += examine_weight()
 	vorestrings += examine_nutrition()
 	vorestrings += examine_bellies()
-	vorestrings += examine_reagent_bellies() // Reagent bellies
+	vorestrings += examine_reagent_bellies() // Reagent bellies || RS Add || Chomp Port
 	vorestrings += examine_pickup_size()
 	vorestrings += examine_step_size()
 	vorestrings += examine_nif()

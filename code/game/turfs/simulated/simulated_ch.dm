@@ -1,5 +1,5 @@
 /turf/simulated
-	// Reagent belly sloshing sounds
+	// Reagent belly sloshing sounds || RS Add || Chomp Port
 	var/static/list/base_vorefootstep_sounds = list("human" = list(
 		'sound/vore/walkslosh1.ogg',
 		'sound/vore/walkslosh2.ogg',

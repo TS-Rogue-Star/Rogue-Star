@@ -1,4 +1,4 @@
-//CHOMP reagent vore belly sloshing
+//CHOMP reagent vore belly sloshing || RS Add || Chomp Port
 
 // Handle footstep sounds
 /mob/living/carbon/human/handle_vorefootstep(var/m_intent, var/turf/T)

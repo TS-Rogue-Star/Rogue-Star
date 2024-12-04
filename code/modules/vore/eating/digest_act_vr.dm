@@ -3,7 +3,7 @@
 //return non-negative integer: Amount of nutrition/charge gained (scaled to nutrition, other end can multiply for charge scale).
 
 // Ye default implementation.
-/obj/item/proc/digest_act(atom/movable/item_storage = null, splashing=0)
+/obj/item/proc/digest_act(atom/movable/item_storage = null, splashing=0) // RS Edit || Chomp Port
 	if(istype(item_storage, /obj/item/device/dogborg/sleeper))
 		if(istype(src, /obj/item/device/pda))
 			var/obj/item/device/pda/P = src
@@ -32,11 +32,11 @@
 
 	if(isbelly(item_storage))
 		var/obj/belly/B = item_storage
-		if(splashing > 0) // Reagent bellies
+		if(splashing > 0) // Reagent bellies || RS Add || Chomp Port
 			g_damage = 0.25 * splashing
 		else
 			g_damage = 0.25 * (B.digest_brute + B.digest_burn)
-		if(g_damage <= 0)
+		if(g_damage <= 0) // Reagent bellies || RS Add || Chomp Port
 			return FALSE
 	if(digest_stage > 0)
 		if(g_damage > digest_stage)
