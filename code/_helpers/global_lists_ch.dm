@@ -1,4 +1,4 @@
-// Reagent bellies
+// Reagent bellies || RS Add || Chomp Port
 var/global/list/vore_reagent_sounds = list(
 		'sound/vore/walkslosh1.ogg',
 		'sound/vore/walkslosh2.ogg',

@@ -1,4 +1,4 @@
-/decl/flooring
+/decl/flooring  //RS Add || Chomp Port
 	var/list/vorefootstep_sounds = list() // key=species name, value = list of sounds, used for reagent sloshing in vore belly
 
 	vorefootstep_sounds = list("human" = list(

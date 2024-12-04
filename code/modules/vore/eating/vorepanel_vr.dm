@@ -250,7 +250,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			"tail_extra_overlay2" = selected.tail_extra_overlay2,
 			"drainmode" = selected.drainmode, //RS Edit || Ports VOREStation PR15876
 			// End RS edit
-			"show_liq" = selected.show_liquids, // Begin reagent bellies
+			"show_liq" = selected.show_liquids, // Begin reagent bellies || RS Add || Chomp Port
 			"show_liq_fullness" = selected.show_fullness_messages,
 			"liquid_voresprite" = selected.count_liquid_for_sprite,
 			"liquid_multiplier" = selected.liquid_multiplier,
@@ -281,7 +281,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 		selected_list["vore_sprite_flags"] = vs_flags
 		// End RS edit
 
-		// Reagent bellies
+		// Reagent bellies || RS Add || Chomp Port
 		var/list/liq_interacts = list()
 		if(selected.show_liquids)
 			liq_interacts["liq_reagent_gen"] = selected.reagentbellymode
@@ -950,7 +950,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 					var/new_liquid_multiplier = belly_data["liquid_multiplier"]
 					new_belly.liquid_multiplier = CLAMP(new_liquid_multiplier, 0.1, 10)
 
-				if(isnum(belly_data["reagent_touches"]))
+				if(isnum(belly_data["reagent_touches"])) //Reagent bellies || RS Add || Chomp Port
 					var/new_reagent_touches = belly_data["reagent_touches"]
 					if(new_reagent_touches == 0)
 						new_belly.reagent_touches = FALSE
@@ -1070,7 +1070,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 					var/new_digestchance = belly_data["digestchance"]
 					new_belly.digestchance = sanitize_integer(new_digestchance, 0, 100, initial(new_belly.digestchance))
 
-				if(istext(belly_data["custom_reagentcolor"])) // Liquid bellies
+				if(istext(belly_data["custom_reagentcolor"])) // Liquid bellies || RS Add || Chomp Port
 					var/custom_reagentcolor = sanitize_hexcolor(belly_data["custom_reagentcolor"],new_belly.custom_reagentcolor)
 					new_belly.custom_reagentcolor = custom_reagentcolor
 
@@ -1304,7 +1304,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 				host.clear_fullscreen("belly2")
 				host.clear_fullscreen("belly3")
 				host.clear_fullscreen("belly4")
-				host.clear_fullscreen("belly5") // Reagent bellies
+				host.clear_fullscreen("belly5") // Reagent bellies || RS Add || Chomp Port
 				if(!host.hud_used.hud_shown)
 					host.toggle_hud_vis()
 			unsaved_changes = TRUE
@@ -1313,7 +1313,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			host.noisy = !host.noisy
 			unsaved_changes = TRUE
 			return TRUE
-		// Begin reagent bellies
+		// Begin reagent bellies || RS Add || Chomp Port
 		if("liq_set_attribute")
 			return liq_set_attr(usr, params)
 		if("liq_set_messages")
@@ -2375,12 +2375,12 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 					host.vore_selected.absorbed_multiplier = CLAMP(absorbed_multiplier_input, 0.1, 3)
 					host:update_fullness()
 				. = TRUE
-		if("b_count_liquid_for_sprites")
+		if("b_count_liquid_for_sprites") //Reagent bellies || Chomp Port
 			if (istype(host, /mob/living/carbon/human))
 				host.vore_selected.count_liquid_for_sprite = !host.vore_selected.count_liquid_for_sprite
 				host:update_fullness()
 				. = TRUE
-		if("b_liquid_multiplier")
+		if("b_liquid_multiplier") //Reagent bellies || Chomp Port
 			if (istype(host, /mob/living/carbon/human))
 				var/liquid_multiplier_input = input(user, "Set the impact amount of liquid reagents will have on your vore sprite. 1 means a belly with 100 reagents of fluid will count as 1 normal sized prey-thing's worth, 0.5 means liquid counts half as much, 2 means liquid counts double. (Range from 0.1 - 10)", "Liquid Multiplier") as num|null
 				if(!isnull(liquid_multiplier_input))
@@ -2445,7 +2445,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 	if(.)
 		unsaved_changes = TRUE
 
-// Begin reagent bellies
+// Begin reagent bellies || RS Add || Chomp Port
 /datum/vore_look/proc/liq_set_attr(mob/user, params)
 	if(!host.vore_selected)
 		alert("No belly selected to modify.")

@@ -11,7 +11,7 @@
 	var/static/require_flavor = FALSE
 	var/static/ipqualityscore_apikey //API key for ipqualityscore.com
 	var/static/use_playtime_restriction_for_jobs = FALSE
-	var/static/vorefootstep_volume = 75	// Reagent bellies
+	var/static/vorefootstep_volume = 75	// Reagent bellies || RS Add || Chomp Port
 
 /hook/startup/proc/read_vs_config()
 	var/list/Lines = file2list("config/config.txt")

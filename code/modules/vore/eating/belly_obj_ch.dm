@@ -1,4 +1,4 @@
-//CHOMP vore additions, currently only consists of reagent stuff - Jack
+//CHOMP vore additions, currently only consists of reagent stuff - Jack || RS Add || Chomp Port
 
 /obj/belly
 	//CHOMP - liquid bellies

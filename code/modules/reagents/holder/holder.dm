@@ -268,12 +268,12 @@
 //If for some reason touch effects are bypassed (e.g. injecting stuff directly into a reagent container or person),
 //call the appropriate trans_to_*() proc.
 /datum/reagents/proc/trans_to(var/atom/target, var/amount = 1, var/multiplier = 1, var/copy = 0)
-	if(iscarbon(target) || ismob(target))  // Reagent bellies
+	if(iscarbon(target) || ismob(target))  // Reagent bellies || RS Edit || Chomp Port
 		return splash_mob(target, amount * multiplier, copy) //Touch effects handled by splash_mob
-	touch(target, amount * multiplier) //First, handle mere touch effects
+	touch(target, amount * multiplier) //First, handle mere touch effects ||RS Edit || Chomp Port
 	if(isturf(target))
 		return trans_to_turf(target, amount, multiplier, copy)
-	if(isobj(target) && target.is_open_container() && !isbelly(target.loc))
+	if(isobj(target) && target.is_open_container() && !isbelly(target.loc)) // RS Edit || Chomp Port
 		return trans_to_obj(target, amount, multiplier, copy)
 	return 0
 
@@ -391,7 +391,7 @@
 	if(!target || !istype(target))
 		return
 	if(iscarbon(target))
-		if(isbelly(target.loc) && target.stat == DEAD) // Reagent bellies
+		if(isbelly(target.loc) && target.stat == DEAD) // Reagent bellies || RS Add || Chomp Port
 			var/datum/reagents/R = new /datum/reagents(amount)
 			. = trans_to_holder(R, amount, multiplier, copy)
 			R.touch_mob(target)
