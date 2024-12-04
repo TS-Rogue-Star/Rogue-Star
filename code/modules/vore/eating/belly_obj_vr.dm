@@ -349,6 +349,7 @@
 	"slow_digestion",							//RS Edit || Ports CHOMPStation PR 5161
 	"slow_brutal",								//RS Edit || Ports CHOMPStation Pr 5161
 	"reagent_mode_flags",	// Begin reagent bellies
+	"show_liquids",
 	"reagentbellymode",
 	"count_liquid_for_sprite",
 	"liquid_multiplier",
@@ -1955,6 +1956,7 @@
 	//RS Edit End
 
 	// Begin reagent bellies
+	dupe.show_liquids = show_liquids
 	dupe.reagent_mode_flags = reagent_mode_flags
 	dupe.reagentid = reagentid
 	dupe.reagentcolor = reagentcolor

@@ -124,6 +124,8 @@ GLOBAL_LIST_INIT(digest_modes, list())
 		return null
 	var/old_nutrition = L.nutrition
 	B.steal_nutrition(L)
+	if (B.reagent_mode_flags & DM_FLAG_REAGENTSABSORB && B.reagents.total_volume < B.reagents.maximum_volume) // Reagent bellies
+		B.GenerateBellyReagents_absorbing()
 	if(L.nutrition < 100)
 		B.absorb_living(L)
 		consider_healthbar(L, old_nutrition, B.owner)

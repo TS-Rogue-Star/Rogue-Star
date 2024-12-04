@@ -287,7 +287,7 @@
 		formatted_message = replacetext(raw_message,"%belly",lowertext(name))
 		formatted_message = replacetext(formatted_message,"%pred",owner)
 
-		return("<span class='warning'>[formatted_message]</span><BR>")
+		return("<span class='warning'>[formatted_message]</span>")
 
 /obj/belly/proc/get_reagent_examine_msg2()
 	if(fullness1_messages.len)
@@ -297,7 +297,7 @@
 		formatted_message = replacetext(raw_message,"%belly",lowertext(name))
 		formatted_message = replacetext(formatted_message,"%pred",owner)
 
-		return("<span class='warning'>[formatted_message]</span><BR>")
+		return("<span class='warning'>[formatted_message]</span>")
 
 /obj/belly/proc/get_reagent_examine_msg3()
 	if(fullness1_messages.len)
@@ -307,7 +307,7 @@
 		formatted_message = replacetext(raw_message,"%belly",lowertext(name))
 		formatted_message = replacetext(formatted_message,"%pred",owner)
 
-		return("<span class='warning'>[formatted_message]</span><BR>")
+		return("<span class='warning'>[formatted_message]</span>")
 
 /obj/belly/proc/get_reagent_examine_msg4()
 	if(fullness1_messages.len)
@@ -317,7 +317,7 @@
 		formatted_message = replacetext(raw_message,"%belly",lowertext(name))
 		formatted_message = replacetext(formatted_message,"%pred",owner)
 
-		return("<span class='warning'>[formatted_message]</span><BR>")
+		return("<span class='warning'>[formatted_message]</span>")
 
 /obj/belly/proc/get_reagent_examine_msg5()
 	if(fullness1_messages.len)
@@ -327,7 +327,7 @@
 		formatted_message = replacetext(raw_message,"%belly",lowertext(name))
 		formatted_message = replacetext(formatted_message,"%pred",owner)
 
-		return("<span class='warning'>[formatted_message]</span><BR>")
+		return("<span class='warning'>[formatted_message]</span>")
 
 
 // The next function gets the messages set on the belly, in human-readable format.
