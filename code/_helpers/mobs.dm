@@ -37,12 +37,12 @@
 
 		return f_style
 
-/proc/sanitize_name(name, species = SPECIES_HUMAN, robot = 0)
+/proc/sanitize_name(name, species = SPECIES_HUMAN, robot = 0, nickname = FALSE)
 	var/datum/species/current_species
 	if(species)
 		current_species = GLOB.all_species[species]
 
-	return current_species ? current_species.sanitize_name(name, robot) : sanitizeName(name, MAX_NAME_LEN, robot)
+	return current_species ? current_species.sanitize_name(name, robot, nickname) : sanitizeName(name, MAX_NAME_LEN, robot, nickname)
 
 /proc/random_name(gender, species = SPECIES_HUMAN)
 

@@ -81,7 +81,7 @@
 	return sanitize(replace_characters(input, list(">"=" ","<"=" ", "\""="'")), max_length, encode, trim, extra)
 
 //Filters out undesirable characters from names
-/proc/sanitizeName(var/input, var/max_length = MAX_NAME_LEN, var/allow_numbers = 0)
+/proc/sanitizeName(var/input, var/max_length = MAX_NAME_LEN, var/allow_numbers = 0, var/nickname = FALSE)
 	if(!input || length(input) > max_length)
 		return //Rejects the input if it is null or if it is longer then the max length allowed
 
@@ -138,8 +138,9 @@
 	if(last_char_group == 1)
 		output = copytext(output,1,length(output))	//removes the last character (in this case a space)
 
-	for(var/bad_name in list("space","floor","wall","r-wall","monkey","unknown","inactive ai","plating"))	//prevents these common metagamey names
-		if(cmptext(output,bad_name))	return	//(not case sensitive)
+	if (!nickname)
+		for(var/bad_name in list("space","floor","wall","r-wall","monkey","unknown","inactive ai","plating"))	//prevents these common metagamey names
+			if(cmptext(output,bad_name))	return	//(not case sensitive)
 
 	return output
 
