@@ -82,6 +82,7 @@ grallstonefist - Black-Eyed Shadekin
 greennyy - Protean
 h0lysquirr3l - Protean
 harubean - Black-Eyed Shadekin
+harubean - Shadekin
 harubean - Xenochimera
 haloren - Black-Eyed Shadekin
 haloren - Shadekin
@@ -223,6 +224,7 @@ skylarks - Black-Eyed Shadekin
 slovakiani - Black-Eyed Shadekin
 slysilentclaw - Black-Eyed Shadekin
 smdytb1 - Black-Eyed Shadekin
+solazius - Diona
 solazius - Shadekin
 somekamidragon - Protean
 spirit1299 - Black-Eyed Shadekin
