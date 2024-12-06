@@ -329,3 +329,26 @@
 **Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/9466<br>
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
+**File:** `icons/mob/vore/bubbles.dmi`<br>
+**Icon-States:** calm<br>
+**Creator:** Verkister<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/6125<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/vore/bubbles.dmi`<br>
+**Icon-States:** bubbles<br>
+**Creator:** Verkister<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/6174<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/vore/bubbles.dmi`<br>
+**Icon-States:** mush<br>
+**Creator:** Verkister<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/6669<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `sound/vore/walkslosh[1-10].ogg`<br>
+**Creator:** Wheatley<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/262<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>

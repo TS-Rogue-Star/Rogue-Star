@@ -361,9 +361,14 @@
 
 /datum/reagent/acid/affect_touch(var/mob/living/carbon/M, var/alien, var/removed) // This is the most interesting
 	if(ishuman(M))
+		var/item_digestion = TRUE // Reagent bellies || RS Add || Chomp Port
+		if(isbelly(M.loc)) // Reagent bellies || RS Add || Chomp Port
+			var/obj/belly/B = M.loc
+			if(B.item_digest_mode == IM_HOLD || B.item_digest_mode == IM_DIGEST_FOOD)
+				item_digestion = FALSE
 		var/mob/living/carbon/human/H = M
 		if(H.head)
-			if(H.head.unacidable)
+			if(H.head.unacidable || !item_digestion || !H.head.digest_act()) // RS Edit || Chomp Port
 				to_chat(H, "<span class='danger'>Your [H.head] protects you from the acid.</span>")
 				remove_self(volume)
 				return
@@ -377,7 +382,7 @@
 			return
 
 		if(H.wear_mask)
-			if(H.wear_mask.unacidable)
+			if(H.wear_mask.unacidable || !item_digestion || !H.wear_mask.digest_act()) // RS Edit || Chomp Port
 				to_chat(H, "<span class='danger'>Your [H.wear_mask] protects you from the acid.</span>")
 				remove_self(volume)
 				return
@@ -391,7 +396,7 @@
 			return
 
 		if(H.glasses)
-			if(H.glasses.unacidable)
+			if(H.glasses.unacidable || !item_digestion || !H.glasses.digest_act()) //RS Edit || Chomp Port
 				to_chat(H, "<span class='danger'>Your [H.glasses] partially protect you from the acid!</span>")
 				removed /= 2
 			else if(removed > meltdose)
@@ -401,6 +406,19 @@
 				removed -= meltdose / 2
 		if(removed <= 0)
 			return
+
+	if(isbelly(M.loc)) //RS Add || Chomp Port
+		var/obj/belly/B = M.loc
+		if(!M.digestable || B.digest_mode != DM_DIGEST)
+			remove_self(volume)
+			return
+		if(B.owner)
+			if(B.reagent_mode_flags & DM_FLAG_REAGENTSDIGEST && B.reagents.total_volume < B.custom_max_volume)
+				B.owner.adjust_nutrition((B.nutrition_percent / 100) * (power * 0.6) * removed)
+				B.digest_nutri_gain = B.nutrition_percent / 100 * (power * 0.4) * removed
+				B.GenerateBellyReagents_digesting()
+			else
+				B.owner.adjust_nutrition((B.nutrition_percent / 100) * power * removed) // End reagent bellies
 
 	if(volume < meltdose) // Not enough to melt anything
 		M.take_organ_damage(0, removed * power * 0.2) //burn damage, since it causes chemical burns. Acid doesn't make bones shatter, like brute trauma would.
@@ -419,9 +437,20 @@
 		else
 			M.take_organ_damage(0, removed * power * 0.1) // Balance. The damage is instant, so it's weaker. 10 units -> 5 damage, double for pacid. 120 units beaker could deal 60, but a) it's burn, which is not as dangerous, b) it's a one-use weapon, c) missing with it will splash it over the ground and d) clothes give some protection, so not everything will hit
 
-/datum/reagent/acid/touch_obj(var/obj/O)
+/datum/reagent/acid/touch_obj(var/obj/O, var/amount) //RS Edit || Chomp Port
+	if(istype(O, /obj/item) && O.loc) //RS Add || Chomp Port
+		if(isbelly(O.loc) || isbelly(O.loc.loc))
+			var/obj/belly/B = O.loc
+			if(B.item_digest_mode == IM_HOLD)
+				return
+			var/obj/item/I = O
+			var/spent_amt = I.digest_act(I.loc, 1, amount / (meltdose / 3))
+			remove_self(spent_amt) //10u stomacid per w_class, less if stronger acid.
+			if(B.owner)
+				B.owner.adjust_nutrition((B.nutrition_percent / 100) * 5 * spent_amt)
+			return
 	..()
-	if(O.unacidable)
+	if(O.unacidable || (istype(O, /obj/item) && !O:digest_act())) // End reagent bellies || RS Edit || Chomp Port
 		return
 	if((istype(O, /obj/item) || istype(O, /obj/effect/plant)) && (volume > meltdose))
 		var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
@@ -430,6 +459,25 @@
 			to_chat(M, "<span class='warning'>\The [O] melts.</span>")
 		qdel(O)
 		remove_self(meltdose) // 10 units of acid will not melt EVERYTHING on the tile
+
+/datum/reagent/acid/touch_mob(var/mob/living/L) // Reagent bellies || RS Add || Chomp Port
+	if(isbelly(L.loc))
+		var/obj/belly/B = L.loc
+		if(B.digest_mode != DM_DIGEST || !L.digestable)
+			remove_self(volume)
+			return
+		if (!L.digestable)
+			remove_self(volume)
+			return
+		if(B.owner)
+			if(B.reagent_mode_flags & DM_FLAG_REAGENTSDIGEST && B.reagents.total_volume < B.custom_max_volume)
+				B.owner.adjust_nutrition((B.nutrition_percent / 100) * (power * 0.6) * volume)
+				B.digest_nutri_gain = B.nutrition_percent / 100 * (power * 0.4) * volume
+				B.GenerateBellyReagents_digesting()
+			else
+				B.owner.adjust_nutrition((B.nutrition_percent / 100) * power * volume)
+	L.adjustFireLoss(volume * power * 0.2)
+	remove_self(volume) // End reagent bellies
 
 /datum/reagent/silicon
 	name = "Silicon"
