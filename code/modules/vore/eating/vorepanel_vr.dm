@@ -424,6 +424,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 		"allowcontamination" = istype(host, /mob/living/carbon/human) ? host:allow_contaminate : TRUE, // RS edit
 		"allowstripping" = istype(host, /mob/living/carbon/human) ? host:allow_stripping : TRUE, // RS edit
 		"allowssdvore" = host.ssd_vore, // RS edit
+		"autotransferable" = host.autotransferable, //RS Add || Port Chomp 3200
 	)
 
 	return data
@@ -1329,6 +1330,12 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 		if("liq_set_messages")
 			return liq_set_msg(usr, params)
 		// End reagent bellies
+		if("toggle_autotransferable") //RS Add Start || Port Chomp 3200
+			host.autotransferable = !host.autotransferable
+			if(host.client.prefs_vr)
+				host.client.prefs_vr.autotransferable = host.autotransferable
+			unsaved_changes = TRUE
+			return TRUE //RS Add End
 		if("toggle_drop_vore")
 			host.drop_vore = !host.drop_vore
 			unsaved_changes = TRUE

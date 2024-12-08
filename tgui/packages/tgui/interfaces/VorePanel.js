@@ -1348,7 +1348,7 @@ const VoreSelectedBellyInteractions = (props, context) => {
       ) : (
         'These options only display while interactions are turned on.'
       )}
-      <Section // RS Add Start || Port Chomp 2821
+      <Section // RS Add Start || Port Chomp 2821, 3194
         title="Auto-Transfer Options"
         buttons={
           <Button
@@ -1934,6 +1934,7 @@ const VoreUserPreferences = (props, context) => {
     allowstripping,
     allowcontamination,
     allowssdvore,
+    autotransferable,
   } = data.prefs;
 
   const { show_pictures } = data;
@@ -2267,6 +2268,19 @@ const VoreUserPreferences = (props, context) => {
         disabled: 'Disallow SSD Vore',
       },
     },
+    autotransferable: {
+      action: 'toggle_autotransferable',
+      test: autotransferable,
+      tooltip: {
+        main: 'This button is for allowing or preventing belly auto-transfer mechanics from moving you.',
+        enable: 'Click here to allow autotransfer.',
+        disable: 'Click here to prevent autotransfer.',
+      },
+      content: {
+        enabled: 'Auto-Transfer Allowed',
+        disabled: 'Do Not Allow Auto-Transfer',
+      },
+    },
     pickuppref: {
       action: 'toggle_pickuppref',
       test: pickup_mechanics_active,
@@ -2443,13 +2457,16 @@ const VoreUserPreferences = (props, context) => {
           <VoreUserPreferenceItem spec={preferences.allow_ssdvore} />
         </Flex.Item>
         <Flex.Item basis="32%">
+          <VoreUserPreferenceItem spec={preferences.autotransferable} />
+        </Flex.Item>
+        <Flex.Item basis="32%" grow={3}>
           <Button
             fluid
             content="Selective Mode Preference"
             onClick={() => act('switch_selective_mode_pref')}
           />
         </Flex.Item>
-        <Flex.Item basis="32%" grow={3}>
+        <Flex.Item basis="32%">
           <VoreUserPreferenceItem spec={preferences.eating_privacy_global} />
         </Flex.Item>
       </Flex>

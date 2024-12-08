@@ -30,6 +30,7 @@
 	var/cloaked = FALSE //If we're cloaked or not
 	var/image/cloaked_selfimage //The image we use for our client to let them see where we are
 	var/belly_cycles = 0 //RS Add || Chomp Port 2934 || Counting current belly process cycles for autotransfer.
+	var/autotransferable = TRUE //RS Add || Chomp Port 3200 || Toggle for autotransfer mechanics.
 
 /atom/movable/Initialize(mapload)
 	. = ..()

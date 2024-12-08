@@ -16,7 +16,7 @@
 	if(!contents.len)
 		return
 
-	//RS Add || Chomp Port 2934, 2979 || Autotransfer count moved here.
+	//RS Add || Chomp Port 2934, 2979, 3200 || Autotransfer count moved here.
 	if((!owner.client || autotransfer_enabled) && autotransferlocation && autotransferchance > 0)
 		var/list/autotransferables = contents - autotransfer_queue
 		if(LAZYLEN(autotransfer_queue) >= autotransfer_min_amount)
@@ -27,10 +27,16 @@
 					break
 			if(dest_belly)
 				for(var/atom/movable/M in autotransfer_queue)
+					if(!M.autotransferable)
+						autotransfer_queue -= M
+						continue
 					transfer_contents(M, dest_belly)
 				autotransfer_queue.Cut()
 		var/tally = 0
 		for(var/atom/movable/M in autotransferables)
+			if(!M.autotransferable)
+				autotransferables -= M
+				continue
 			if(isliving(M))
 				var/mob/living/L = M
 				if(L.absorbed)

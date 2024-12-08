@@ -72,6 +72,8 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	var/step_mechanics_pref = FALSE
 	var/pickup_pref = TRUE
 
+	var/autotransferable = TRUE //RS Add || Chomp Port 3200
+
 	var/vore_sprite_color = list("stomach" = "#000", "taur belly" = "#000") // RS edit
 	var/allow_contaminate = TRUE	//RS EDIT
 	var/allow_stripping = TRUE		//RS EDIT
@@ -207,6 +209,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	ssd_vore = json_from_file["ssd_vore"] // RS edit
 	allow_contaminate = json_from_file["allow_contaminate"] // RS edit
 	allow_stripping = json_from_file["allow_stripping"] // RS edit
+	autotransferable = json_from_file["autotransferable"] //RS Add || Chomp Port 3200
 
 	//Quick sanitize
 	if(isnull(digestable))
@@ -255,6 +258,8 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 		stumble_vore = TRUE
 	if(isnull(food_vore))
 		food_vore = TRUE
+	if(isnull(autotransferable)) //RS Add || Port Chomp 3200
+		autotransferable = TRUE
 	if(isnull(nutrition_message_visible))
 		nutrition_message_visible = TRUE
 	if(isnull(weight_message_visible))
@@ -343,7 +348,8 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 			"vore_sprite_color"		= vore_sprite_color, //RS edit
 			"ssd_vore"				= ssd_vore,	//RS ADD
 			"allow_contaminate" 	= allow_contaminate, // RS edit
-			"allow_stripping" 		= allow_stripping // RS edit
+			"allow_stripping" 		= allow_stripping, // RS edit
+			"autotransferable"		= autotransferable //RS Add || Port Chomp 3200
 
 		)
 
