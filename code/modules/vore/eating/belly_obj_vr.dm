@@ -74,7 +74,10 @@
 	var/autotransferchance = 0 				// % Chance of prey being autotransferred to transfer location
 	var/autotransferwait = 10 				// Time between trying to transfer.
 	var/autotransferlocation				// Place to send them
-	var/autotransfer_enabled = FALSE			//RS ADD || Port Chomp 2821
+	var/autotransfer_enabled = FALSE		//RS Add Start || Port Chomp 2821, 2979
+	var/autotransfer_min_amount = 0			// Minimum amount of things to pass at once.
+	var/autotransfer_max_amount = 0			// Maximum amount of things to pass at once.
+	var/tmp/list/autotransfer_queue = list()// RS Add End || Reserve for above things.
 
 	//I don't think we've ever altered these lists. making them static until someone actually overrides them somewhere.
 	//Actual full digest modes
@@ -386,10 +389,12 @@
 	"fullness3_messages",
 	"fullness4_messages",
 	"fullness5_messages",	// End reagent bellies
-	"autotransferchance",  //RS Add Start || Port Chop 2821
+	"autotransferchance",  //RS Add Start || Port Chop 2821, 2979
 	"autotransferwait",
 	"autotransferlocation",
-	"autotransfer_enabled" //RS Add End
+	"autotransfer_enabled",
+	"autotransfer_min_amount",
+	"autotransfer_max_amount" //RS Add End
 	)
 
 	if (save_digest_mode == 1)
@@ -418,6 +423,8 @@
 
 // Called whenever an atom enters this belly
 /obj/belly/Entered(atom/movable/thing, atom/OldLoc)
+
+	thing.belly_cycles = 0 //RS Add || Chomp port 2934 || reset cycle count
 
 	if(istype(thing, /mob/observer)) //RSEdit: Ports keeping a ghost in a vorebelly, CHOMPStation PR#3072
 		if(desc) //RSEdit: Ports letting ghosts see belly descriptions on transfer, CHOMPStation PR#4772
@@ -493,9 +500,9 @@
 			owner:update_fullness()
 		// End RS edit
 
-	// Intended for simple mobs
+	/*/ Intended for simple mobs  //RS Add || Chomp Port 2934 || Counting belly cycles now.
 	if(!owner.client || autotransfer_enabled && autotransferlocation && autotransferchance > 0)
-		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/belly, check_autotransfer), thing, autotransferlocation), autotransferwait)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/belly, check_autotransfer), thing, autotransferlocation), autotransferwait) */
 
 // Called whenever an atom leaves this belly
 /obj/belly/Exited(atom/movable/thing, atom/OldLoc)
@@ -1854,7 +1861,7 @@
 	owner.update_icon()
 
 //Autotransfer callback
-/obj/belly/proc/check_autotransfer(var/prey, var/autotransferlocation)
+/obj/belly/proc/check_autotransfer(var/atom/movable/prey, var/autotransferlocation) //RS Edit || Port Chomp 2934
 	if(autotransferlocation && (autotransferchance > 0) && (prey in contents))
 		if(prob(autotransferchance))
 			var/obj/belly/dest_belly
@@ -1863,11 +1870,14 @@
 					dest_belly = B
 					break
 			if(dest_belly)
-				transfer_contents(prey, dest_belly)
+				if(autotransfer_min_amount > 1) //RS Add Start|| Port Chomp 2979
+					autotransfer_queue += prey
+				else
+					transfer_contents(prey, dest_belly) //RS Add End
 		else
 			// Didn't transfer, so wait before retrying
 			// I feel like there's a way to make this timer looping using the normal looping thing, but pass in the ID and cancel it if we aren't looping again
-			addtimer(CALLBACK(src, PROC_REF(check_autotransfer), prey, autotransferlocation), autotransferwait)
+			prey.belly_cycles = 0 //RS Add || Port Chomp 2934
 
 // Belly copies and then returns the copy
 // Needs to be updated for any var changes
@@ -1980,10 +1990,12 @@
 	dupe.show_fullness_messages = show_fullness_messages
 	// End reagent bellies
 
-	dupe.autotransferchance = autotransferchance  //RS ADD Start || Port Chomp 2821
+	dupe.autotransferchance = autotransferchance  //RS ADD Start || Port Chomp 2821, 2979
 	dupe.autotransferwait = autotransferwait
 	dupe.autotransferlocation = autotransferlocation
-	dupe.autotransfer_enabled = autotransfer_enabled  //RS Add End
+	dupe.autotransfer_enabled = autotransfer_enabled
+	dupe.autotransfer_min_amount = autotransfer_min_amount
+	dupe.autotransfer_max_amount = autotransfer_max_amount  //RS Add End
 
 
 	//// Object-holding variables

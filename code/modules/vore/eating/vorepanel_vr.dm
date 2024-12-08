@@ -2290,13 +2290,13 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			if(!isnull(digest_chance_input))
 				host.vore_selected.digestchance = sanitize_integer(digest_chance_input, 0, 100, initial(host.vore_selected.digestchance))
 			. = TRUE
-		if("b_autotransferchance") //RS Add Start || Port Chomp 2821
+		if("b_autotransferchance") //RS Add Start || Port Chomp 2821, 2934
 			var/autotransferchance_input = input(user, "Set belly auto-transfer chance (as %). You must also set the location for this to have any effect.", "Auto-Transfer Chance") as num|null
 			if(!isnull(autotransferchance_input))
 				host.vore_selected.autotransferchance = sanitize_integer(autotransferchance_input, 0, 100, initial(host.vore_selected.autotransferchance))
 			. = TRUE
 		if("b_autotransferwait")
-			var/autotransferwait_input = input(user, "Set number of seconds for auto-transfer wait delay.", "Auto-Transfer Time") as num|null
+			var/autotransferwait_input = input(user, "Set minimum number of seconds for auto-transfer wait delay.", "Auto-Transfer Time") as num|null //Wiggle room for rougher time resolution in process cycles.
 			if(!isnull(autotransferwait_input))
 				host.vore_selected.autotransferwait = sanitize_integer(autotransferwait_input*10, 10, 18000, initial(host.vore_selected.autotransferwait))
 			. = TRUE
