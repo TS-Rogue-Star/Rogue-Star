@@ -250,6 +250,21 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			"tail_extra_overlay2" = selected.tail_extra_overlay2,
 			"drainmode" = selected.drainmode, //RS Edit || Ports VOREStation PR15876
 			// End RS edit
+			"show_liq" = selected.show_liquids, // Begin reagent bellies || RS Add || Chomp Port
+			"show_liq_fullness" = selected.show_fullness_messages,
+			"liquid_voresprite" = selected.count_liquid_for_sprite,
+			"liquid_multiplier" = selected.liquid_multiplier,
+			"custom_reagentcolor" = selected.custom_reagentcolor,
+			"custom_reagentalpha" = selected.custom_reagentalpha,
+			"liquid_overlay" = selected.liquid_overlay,
+			"max_liquid_level" = selected.max_liquid_level,
+			"reagent_touches" = selected.reagent_touches,
+			"mush_overlay" = selected.mush_overlay,
+			"mush_color" = selected.mush_color,
+			"mush_alpha" = selected.mush_alpha,
+			"max_mush" = selected.max_mush,
+			"min_mush" = selected.min_mush,
+			 // End reagent bellies
 		)
 
 		var/list/addons = list()
@@ -265,6 +280,50 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 				vs_flags.Add(flag_name)
 		selected_list["vore_sprite_flags"] = vs_flags
 		// End RS edit
+
+		// Reagent bellies || RS Add || Chomp Port
+		var/list/liq_interacts = list()
+		if(selected.show_liquids)
+			liq_interacts["liq_reagent_gen"] = selected.reagentbellymode
+			liq_interacts["liq_reagent_type"] = selected.reagent_chosen
+			liq_interacts["liq_reagent_name"] = selected.reagent_name
+			liq_interacts["liq_reagent_nutri_rate"] = selected.gen_time
+			liq_interacts["liq_reagent_capacity"] = selected.custom_max_volume
+			liq_interacts["liq_sloshing"] = selected.vorefootsteps_sounds
+			liq_interacts["liq_reagent_addons"] = list()
+			liq_interacts["custom_reagentcolor"] = selected.custom_reagentcolor ? selected.custom_reagentcolor : selected.reagentcolor
+			liq_interacts["custom_reagentalpha"] = selected.custom_reagentalpha ? selected.custom_reagentalpha : "Default"
+			liq_interacts["liquid_overlay"] = selected.liquid_overlay
+			liq_interacts["max_liquid_level"] = selected.max_liquid_level
+			liq_interacts["reagent_touches"] = selected.reagent_touches
+			liq_interacts["mush_overlay"] = selected.mush_overlay
+			liq_interacts["mush_color"] = selected.mush_color
+			liq_interacts["mush_alpha"] = selected.mush_alpha
+			liq_interacts["max_mush"] = selected.max_mush
+			liq_interacts["min_mush"] = selected.min_mush
+			var/list/liq_regs = list()
+			for(var/flag_name in selected.reagent_mode_flag_list)
+				if(selected.reagent_mode_flags & selected.reagent_mode_flag_list[flag_name])
+					liq_regs.Add(flag_name)
+			liq_interacts["liq_reagent_addons"] = liq_regs
+
+		selected_list["liq_interacts"] = liq_interacts
+
+		var/list/liq_messages = list()
+		if(selected.show_fullness_messages)
+			liq_messages["liq_msg_toggle1"] = selected.liquid_fullness1_messages
+			liq_messages["liq_msg_toggle2"] = selected.liquid_fullness2_messages
+			liq_messages["liq_msg_toggle3"] = selected.liquid_fullness3_messages
+			liq_messages["liq_msg_toggle4"] = selected.liquid_fullness4_messages
+			liq_messages["liq_msg_toggle5"] = selected.liquid_fullness5_messages
+
+			liq_messages["liq_msg1"] = selected.liquid_fullness1_messages
+			liq_messages["liq_msg2"] = selected.liquid_fullness2_messages
+			liq_messages["liq_msg3"] = selected.liquid_fullness3_messages
+			liq_messages["liq_msg4"] = selected.liquid_fullness4_messages
+			liq_messages["liq_msg5"] = selected.liquid_fullness5_messages // End reagent bellies
+
+		selected_list["liq_messages"] = liq_messages
 
 		selected_list["egg_type"] = selected.egg_type
 		selected_list["contaminates"] = selected.contaminates
@@ -891,6 +950,13 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 					var/new_liquid_multiplier = belly_data["liquid_multiplier"]
 					new_belly.liquid_multiplier = CLAMP(new_liquid_multiplier, 0.1, 10)
 
+				if(isnum(belly_data["reagent_touches"])) //Reagent bellies || RS Add || Chomp Port
+					var/new_reagent_touches = belly_data["reagent_touches"]
+					if(new_reagent_touches == 0)
+						new_belly.reagent_touches = FALSE
+					if(new_reagent_touches == 1)
+						new_belly.reagent_touches = TRUE
+
 				if(isnum(belly_data["count_items_for_sprite"]))
 					var/new_count_items_for_sprite = belly_data["count_items_for_sprite"]
 					if(new_count_items_for_sprite == 0)
@@ -1003,6 +1069,44 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 				if(isnum(belly_data["digestchance"]))
 					var/new_digestchance = belly_data["digestchance"]
 					new_belly.digestchance = sanitize_integer(new_digestchance, 0, 100, initial(new_belly.digestchance))
+
+				if(istext(belly_data["custom_reagentcolor"])) // Liquid bellies || RS Add || Chomp Port
+					var/custom_reagentcolor = sanitize_hexcolor(belly_data["custom_reagentcolor"],new_belly.custom_reagentcolor)
+					new_belly.custom_reagentcolor = custom_reagentcolor
+
+				if(istext(belly_data["mush_color"]))
+					var/mush_color = sanitize_hexcolor(belly_data["mush_color"],new_belly.mush_color)
+					new_belly.mush_color = mush_color
+
+				if(istext(belly_data["mush_alpha"]))
+					var/new_mush_alpha = sanitize_integer(belly_data["mush_alpha"],0,255,initial(new_belly.mush_alpha))
+					new_belly.mush_alpha = new_mush_alpha
+
+				if(isnum(belly_data["max_mush"]))
+					var/max_mush = belly_data["max_mush"]
+					new_belly.max_mush = CLAMP(max_mush, 0, 6000)
+
+				if(isnum(belly_data["min_mush"]))
+					var/min_mush = belly_data["min_mush"]
+					new_belly.min_mush = CLAMP(min_mush, 0, 100)
+
+				if(isnum(belly_data["liquid_overlay"]))
+					var/new_liquid_overlay = belly_data["liquid_overlay"]
+					if(new_liquid_overlay == 0)
+						new_belly.liquid_overlay = FALSE
+					if(new_liquid_overlay == 1)
+						new_belly.liquid_overlay = TRUE
+
+				if(isnum(belly_data["max_liquid_level"]))
+					var/max_liquid_level = belly_data["max_liquid_level"]
+					new_belly.max_liquid_level = CLAMP(max_liquid_level, 0, 100)
+
+				if(isnum(belly_data["mush_overlay"]))
+					var/new_mush_overlay = belly_data["mush_overlay"]
+					if(new_mush_overlay == 0)
+						new_belly.mush_overlay = FALSE
+					if(new_mush_overlay == 1)
+						new_belly.mush_overlay = TRUE // End liquid bellies
 
 				// After import updates
 				new_belly.items_preserved.Cut()
@@ -1200,6 +1304,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 				host.clear_fullscreen("belly2")
 				host.clear_fullscreen("belly3")
 				host.clear_fullscreen("belly4")
+				host.clear_fullscreen("belly5") // Reagent bellies || RS Add || Chomp Port
 				if(!host.hud_used.hud_shown)
 					host.toggle_hud_vis()
 			unsaved_changes = TRUE
@@ -1208,6 +1313,12 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			host.noisy = !host.noisy
 			unsaved_changes = TRUE
 			return TRUE
+		// Begin reagent bellies || RS Add || Chomp Port
+		if("liq_set_attribute")
+			return liq_set_attr(usr, params)
+		if("liq_set_messages")
+			return liq_set_msg(usr, params)
+		// End reagent bellies
 		if("toggle_drop_vore")
 			host.drop_vore = !host.drop_vore
 			unsaved_changes = TRUE
@@ -2240,97 +2351,332 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 		// Begin RS edit
 		if("b_belly_sprite_to_affect")
 			if (istype(host, /mob/living/carbon/human))
-				var/mob/living/carbon/human/hhost = host
-				var/belly_choice = tgui_input_list(usr, "Which belly sprite do you want your [lowertext(hhost.vore_selected.name)] to affect?","Select Region", hhost.vore_icon_bellies)
+				var/belly_choice = tgui_input_list(usr, "Which belly sprite do you want your [lowertext(host.vore_selected.name)] to affect?","Select Region", host:vore_icon_bellies)
 				if(!belly_choice) //They cancelled, no changes
 					return FALSE
 				else
-					hhost.vore_selected.belly_sprite_to_affect = belly_choice
-					hhost.update_fullness()
+					host.vore_selected.belly_sprite_to_affect = belly_choice
+					host:update_fullness()
 				. = TRUE
 		if("b_affects_vore_sprites")
 			if (istype(host, /mob/living/carbon/human))
-				var/mob/living/carbon/human/hhost = host
-				hhost.vore_selected.affects_vore_sprites = !hhost.vore_selected.affects_vore_sprites
-				hhost.update_fullness()
+				host.vore_selected.affects_vore_sprites = !host.vore_selected.affects_vore_sprites
+				host:update_fullness()
 				. = TRUE
 		if("b_count_absorbed_prey_for_sprites")
 			if (istype(host, /mob/living/carbon/human))
-				var/mob/living/carbon/human/hhost = host
-				hhost.vore_selected.count_absorbed_prey_for_sprite = !hhost.vore_selected.count_absorbed_prey_for_sprite
-				hhost.update_fullness()
+				host.vore_selected.count_absorbed_prey_for_sprite = !host.vore_selected.count_absorbed_prey_for_sprite
+				host:update_fullness()
 				. = TRUE
 		if("b_absorbed_multiplier")
 			if (istype(host, /mob/living/carbon/human))
-				var/mob/living/carbon/human/hhost = host
 				var/absorbed_multiplier_input = input(user, "Set the impact absorbed prey's size have on your vore sprite. 1 means no scaling, 0.5 means absorbed prey count half as much, 2 means absorbed prey count double. (Range from 0.1 - 3)", "Absorbed Multiplier") as num|null
 				if(!isnull(absorbed_multiplier_input))
-					hhost.vore_selected.absorbed_multiplier = CLAMP(absorbed_multiplier_input, 0.1, 3)
-					hhost.update_fullness()
+					host.vore_selected.absorbed_multiplier = CLAMP(absorbed_multiplier_input, 0.1, 3)
+					host:update_fullness()
+				. = TRUE
+		if("b_count_liquid_for_sprites") //Reagent bellies || Chomp Port
+			if (istype(host, /mob/living/carbon/human))
+				host.vore_selected.count_liquid_for_sprite = !host.vore_selected.count_liquid_for_sprite
+				host:update_fullness()
+				. = TRUE
+		if("b_liquid_multiplier") //Reagent bellies || Chomp Port
+			if (istype(host, /mob/living/carbon/human))
+				var/liquid_multiplier_input = input(user, "Set the impact amount of liquid reagents will have on your vore sprite. 1 means a belly with 100 reagents of fluid will count as 1 normal sized prey-thing's worth, 0.5 means liquid counts half as much, 2 means liquid counts double. (Range from 0.1 - 10)", "Liquid Multiplier") as num|null
+				if(!isnull(liquid_multiplier_input))
+					host.vore_selected.liquid_multiplier = CLAMP(liquid_multiplier_input, 0.1, 10)
+					host:update_fullness()
 				. = TRUE
 		if("b_count_items_for_sprites")
 			if (istype(host, /mob/living/carbon/human))
-				var/mob/living/carbon/human/hhost = host
-				hhost.vore_selected.count_items_for_sprite = !hhost.vore_selected.count_items_for_sprite
-				hhost.update_fullness()
+				host.vore_selected.count_items_for_sprite = !host.vore_selected.count_items_for_sprite
+				host:update_fullness()
 				. = TRUE
 		if("b_item_multiplier")
 			if (istype(host, /mob/living/carbon/human))
-				var/mob/living/carbon/human/hhost = host
 				var/item_multiplier_input = input(user, "Set the impact items will have on your vore sprite. 1 means a belly with 8 normal-sized items will count as 1 normal sized prey-thing's worth, 0.5 means items count half as much, 2 means items count double. (Range from 0.1 - 10)", "Item Multiplier") as num|null
 				if(!isnull(item_multiplier_input))
-					hhost.vore_selected.item_multiplier = CLAMP(item_multiplier_input, 0.1, 10)
-					hhost.update_fullness()
+					host.vore_selected.item_multiplier = CLAMP(item_multiplier_input, 0.1, 10)
+					host:update_fullness()
 				. = TRUE
 		if("b_health_impacts_size")
 			if (istype(host, /mob/living/carbon/human))
-				var/mob/living/carbon/human/hhost = host
-				hhost.vore_selected.health_impacts_size = !hhost.vore_selected.health_impacts_size
-				hhost.update_fullness()
+				host.vore_selected.health_impacts_size = !host.vore_selected.health_impacts_size
+				host:update_fullness()
 				. = TRUE
 		if("b_resist_animation")
 			if (istype(host, /mob/living/carbon/human))
-				var/mob/living/carbon/human/hhost = host
-				hhost.vore_selected.resist_triggers_animation = !hhost.vore_selected.resist_triggers_animation
+				host.vore_selected.resist_triggers_animation = !host.vore_selected.resist_triggers_animation
 				. = TRUE
 		if("b_size_factor_sprites")
 			if (istype(host, /mob/living/carbon/human))
-				var/mob/living/carbon/human/hhost = host
 				var/size_factor_input = input(user, "Set the impact all belly content's collective size has on your vore sprite. 1 means no scaling, 0.5 means content counts half as much, 2 means contents count double. (Range from 0.1 - 3)", "Size Factor") as num|null
 				if(!isnull(size_factor_input))
-					hhost.vore_selected.size_factor_for_sprite = CLAMP(size_factor_input, 0.1, 3)
-					hhost.update_fullness()
+					host.vore_selected.size_factor_for_sprite = CLAMP(size_factor_input, 0.1, 3)
+					host:update_fullness()
 				. = TRUE
 		if("b_tail_to_change_to")
 			if (istype(host, /mob/living/carbon/human))
-				var/mob/living/carbon/human/hhost = host
 				var/tail_choice = tgui_input_list(usr, "Which tail sprite do you want to use when your [lowertext(host.vore_selected.name)] is filled?","Select Sprite", global.tail_styles_list)
 				if(!tail_choice) //They cancelled, no changes
 					return FALSE
 				else
-					hhost.vore_selected.tail_to_change_to = tail_choice
+					host.vore_selected.tail_to_change_to = tail_choice
 				. = TRUE
 		if("b_tail_color")
 			if (istype(host, /mob/living/carbon/human))
-				var/mob/living/carbon/human/hhost = host
-				var/newcolor = input(usr, "Choose tail color.", "", hhost.vore_selected.tail_colouration) as color|null
+				var/newcolor = input(usr, "Choose tail color.", "", host.vore_selected.tail_colouration) as color|null
 				if(newcolor)
-					hhost.vore_selected.tail_colouration = newcolor
+					host.vore_selected.tail_colouration = newcolor
 				. = TRUE
 		if("b_tail_color2")
 			if (istype(host, /mob/living/carbon/human))
-				var/mob/living/carbon/human/hhost = host
-				var/newcolor = input(usr, "Choose tail secondary color.", "", hhost.vore_selected.tail_extra_overlay) as color|null
+				var/newcolor = input(usr, "Choose tail secondary color.", "", host.vore_selected.tail_extra_overlay) as color|null
 				if(newcolor)
-					hhost.vore_selected.tail_extra_overlay = newcolor
+					host.vore_selected.tail_extra_overlay = newcolor
 				. = TRUE
 		if("b_tail_color3")
 			if (istype(host, /mob/living/carbon/human))
-				var/mob/living/carbon/human/hhost = host
-				var/newcolor = input(usr, "Choose tail tertiary color.", "", hhost.vore_selected.tail_extra_overlay2) as color|null
+				var/newcolor = input(usr, "Choose tail tertiary color.", "", host.vore_selected.tail_extra_overlay2) as color|null
 				if(newcolor)
-					hhost.vore_selected.tail_extra_overlay2 = newcolor
+					host.vore_selected.tail_extra_overlay2 = newcolor
 				. = TRUE
 		// End RS edit
 	if(.)
 		unsaved_changes = TRUE
+
+// Begin reagent bellies || RS Add || Chomp Port
+/datum/vore_look/proc/liq_set_attr(mob/user, params)
+	if(!host.vore_selected)
+		alert("No belly selected to modify.")
+		return FALSE
+
+	var/attr = params["liq_attribute"]
+	switch(attr)
+		if("b_show_liq")
+			if(!host.vore_selected.show_liquids)
+				host.vore_selected.show_liquids = 1
+				to_chat(usr,"<span class='warning'>Your [lowertext(host.vore_selected.name)] now has liquid options.</span>")
+			else
+				host.vore_selected.show_liquids = 0
+				to_chat(usr,"<span class='warning'>Your [lowertext(host.vore_selected.name)] no longer has liquid options.</span>")
+			. = TRUE
+		if("b_liq_reagent_gen")
+			if(!host.vore_selected.reagentbellymode) //liquid container adjustments and interactions.
+				host.vore_selected.reagentbellymode = 1
+				to_chat(usr,"<span class='warning'>Your [lowertext(host.vore_selected.name)] now has interactions which can produce liquids.</span>")
+			else //Doesnt produce liquids
+				host.vore_selected.reagentbellymode = 0
+				to_chat(usr,"<span class='warning'>Your [lowertext(host.vore_selected.name)] wont produce liquids, liquids already in your [lowertext(host.vore_selected.name)] must be emptied out or removed with purge.</span>")
+			. = TRUE
+		if("b_liq_reagent_type")
+			var/list/menu_list = host.vore_selected.reagent_choices.Copy() //Useful if we want to make certain races, synths, borgs, and other things result in additional reagents to produce - Jack
+			var/new_reagent = input("Choose Reagent (currently [host.vore_selected.reagent_chosen])") as null|anything in menu_list
+			if(!new_reagent)
+				return FALSE
+
+			host.vore_selected.reagent_chosen = new_reagent
+			host.vore_selected.ReagentSwitch() // For changing variables when a new reagent is chosen
+			. = TRUE
+		if("b_liq_reagent_name")
+			var/new_name = html_encode(input(usr,"New name for liquid shown when transfering and dumping on floor (The actual liquid's name is still the same):","New Name") as text|null)
+
+			if(length(new_name) > BELLIES_NAME_MAX || length(new_name) < BELLIES_NAME_MIN)
+				alert("Entered name length invalid (must be longer than [BELLIES_NAME_MIN], no longer than [BELLIES_NAME_MAX]).","Error")
+				return FALSE
+
+			host.vore_selected.reagent_name = new_name
+			. = TRUE
+		if("b_liq_reagent_nutri_rate")
+			host.vore_selected.gen_time_display = input(user, "Choose the time it takes to fill the belly from empty state using nutrition.", "Set Liquid Production Time.")  in list("10 minutes","30 minutes","1 hour","3 hours","6 hours","12 hours","24 hours")|null
+			switch(host.vore_selected.gen_time_display)
+				if("10 minutes")
+					host.vore_selected.gen_time = 0
+				if("30 minutes")
+					host.vore_selected.gen_time = 2
+				if("1 hour")
+					host.vore_selected.gen_time = 5
+				if("3 hours")
+					host.vore_selected.gen_time = 17
+				if("6 hours")
+					host.vore_selected.gen_time = 35
+				if("12 hours")
+					host.vore_selected.gen_time = 71
+				if("24 hours")
+					host.vore_selected.gen_time = 143
+				if(null)
+					return FALSE
+			. = TRUE
+		if("b_liq_reagent_capacity")
+			var/new_custom_vol = input(user, "Choose the amount of liquid the belly can contain at most. Ranges from 0 to 300.", "Set Custom Belly Capacity.", host.vore_selected.custom_max_volume) as num|null
+			if(new_custom_vol == null)
+				return FALSE
+			var/new_new_custom_vol = CLAMP(new_custom_vol, 10, 300)
+			host.vore_selected.custom_max_volume = new_new_custom_vol
+			. = TRUE
+		if("b_liq_sloshing")
+			if(!host.vore_selected.vorefootsteps_sounds)
+				host.vore_selected.vorefootsteps_sounds = 1
+				to_chat(usr,"<span class='warning'>Your [lowertext(host.vore_selected.name)] can now make sounds when you walk around depending on how full you are.</span>")
+			else
+				host.vore_selected.vorefootsteps_sounds = 0
+				to_chat(usr,"<span class='warning'>Your [lowertext(host.vore_selected.name)] wont make any liquid sounds no matter how full it is.</span>")
+			. = TRUE
+		if("b_liq_reagent_addons")
+			var/list/menu_list = host.vore_selected.reagent_mode_flag_list.Copy()
+			var/reagent_toggle_addon = input("Toggle Addon") as null|anything in menu_list
+			if(!reagent_toggle_addon)
+				return FALSE
+			host.vore_selected.reagent_mode_flags ^= host.vore_selected.reagent_mode_flag_list[reagent_toggle_addon]
+			. = TRUE
+		if("b_liq_purge")
+			var/alert = alert("Are you sure you want to delete the liquids in your [lowertext(host.vore_selected.name)]?","Confirmation","Delete","Cancel")
+			if(!(alert == "Delete"))
+				return FALSE
+			else
+				host.vore_selected.reagents.clear_reagents()
+			if (istype(host, /mob/living/carbon/human))
+				host:update_fullness()
+			. = TRUE
+		if("b_reagent_touches")
+			if(!host.vore_selected.reagent_touches)
+				host.vore_selected.reagent_touches = 1
+				to_chat(usr,"<span class='warning'>Your [lowertext(host.vore_selected.name)] will now apply reagents to creatures when digesting.</span>")
+			else
+				host.vore_selected.reagent_touches = 0
+				to_chat(usr,"<span class='warning'>Your [lowertext(host.vore_selected.name)] will no longer apply reagents to creatures when digesting.</span>")
+			. = TRUE
+		if("b_liquid_overlay")
+			if(!host.vore_selected.liquid_overlay)
+				host.vore_selected.liquid_overlay = 1
+				to_chat(usr,"<span class='warning'>Your [lowertext(host.vore_selected.name)] now has liquid overlay enabled.</span>")
+			else
+				host.vore_selected.liquid_overlay = 0
+				to_chat(usr,"<span class='warning'>Your [lowertext(host.vore_selected.name)] no longer has liquid overlay enabled.</span>")
+			. = TRUE
+		if("b_max_liquid_level")
+			var/new_max_liquid_level = input(user, "Set custom maximum liquid level. 0-100%", "Set Custom Max Level.", host.vore_selected.max_liquid_level) as num|null
+			if(new_max_liquid_level == null)
+				return FALSE
+			var/new_new_max_liquid_level = CLAMP(new_max_liquid_level, 0, 100)
+			host.vore_selected.max_liquid_level = new_new_max_liquid_level
+			// host.vore_selected.update_internal_overlay()
+			. = TRUE
+		if("b_custom_reagentcolor")
+			var/newcolor = input(usr, "Choose custom color for liquid overlay. Cancel for normal reagent color.", "", host.vore_selected.custom_reagentcolor) as color|null
+			if(newcolor)
+				host.vore_selected.custom_reagentcolor = newcolor
+			else
+				host.vore_selected.custom_reagentcolor = null
+			. = TRUE
+		if("b_custom_reagentalpha")
+			var/newalpha = tgui_input_number(usr, "Set alpha transparency between 0-255. Leave blank to use capacity based alpha.", "Custom Liquid Alpha",255,255,0,0,1)
+			if(newalpha != null)
+				host.vore_selected.custom_reagentalpha = newalpha
+			else
+				host.vore_selected.custom_reagentalpha = null
+			. = TRUE
+		if("b_mush_overlay")
+			if(!host.vore_selected.mush_overlay)
+				host.vore_selected.mush_overlay = 1
+				to_chat(usr,"<span class='warning'>Your [lowertext(host.vore_selected.name)] now has fullness overlay enabled.</span>")
+			else
+				host.vore_selected.mush_overlay = 0
+				to_chat(usr,"<span class='warning'>Your [lowertext(host.vore_selected.name)] no longer has fullness overlay enabled.</span>")
+			. = TRUE
+		if("b_mush_color")
+			var/newcolor = input(usr, "Choose custom color for mush overlay.", "", host.vore_selected.mush_color) as color|null
+			if(newcolor)
+				host.vore_selected.mush_color = newcolor
+			. = TRUE
+		if("b_mush_alpha")
+			var/newalpha = tgui_input_number(usr, "Set alpha transparency between 0-255", "Mush Alpha",255,255,0,0,1)
+			if(newalpha != null)
+				host.vore_selected.mush_alpha = newalpha
+			. = TRUE
+		if("b_max_mush")
+			var/new_max_mush = input(user, "Choose the amount of nutrition required for full mush overlay. Ranges from 0 to 6000. Default 500.", "Set Fullness Overlay Scaling.", host.vore_selected.max_mush) as num|null
+			if(new_max_mush == null)
+				return FALSE
+			var/new_new_max_mush = CLAMP(new_max_mush, 0, 6000)
+			host.vore_selected.max_mush = new_new_max_mush
+			. = TRUE
+		if("b_min_mush")
+			var/new_min_mush = input(user, "Set custom minimum mush level. 0-100%", "Set Custom Minimum.", host.vore_selected.min_mush) as num|null
+			if(new_min_mush == null)
+				return FALSE
+			var/new_new_min_mush = CLAMP(new_min_mush, 0, 100)
+			host.vore_selected.min_mush = new_new_min_mush
+			. = TRUE
+
+/datum/vore_look/proc/liq_set_msg(mob/user, params)
+	if(!host.vore_selected)
+		alert("No belly selected to modify.")
+		return FALSE
+
+	var/attr = params["liq_messages"]
+	switch(attr)
+		if("b_show_liq_fullness")
+			if(!host.vore_selected.show_fullness_messages)
+				host.vore_selected.show_fullness_messages = 1
+				to_chat(usr,"<span class='warning'>Your [lowertext(host.vore_selected.name)] now has liquid examination options.</span>")
+			else
+				host.vore_selected.show_fullness_messages = 0
+				to_chat(usr,"<span class='warning'>Your [lowertext(host.vore_selected.name)] no longer has liquid examination options.</span>")
+			. = TRUE
+		if("b_liq_msg_toggle1")
+			host.vore_selected.liquid_fullness1_messages = !host.vore_selected.liquid_fullness1_messages
+			. = TRUE
+		if("b_liq_msg_toggle2")
+			host.vore_selected.liquid_fullness2_messages = !host.vore_selected.liquid_fullness2_messages
+			. = TRUE
+		if("b_liq_msg_toggle3")
+			host.vore_selected.liquid_fullness3_messages = !host.vore_selected.liquid_fullness3_messages
+			. = TRUE
+		if("b_liq_msg_toggle4")
+			host.vore_selected.liquid_fullness4_messages = !host.vore_selected.liquid_fullness4_messages
+			. = TRUE
+		if("b_liq_msg_toggle5")
+			host.vore_selected.liquid_fullness5_messages = !host.vore_selected.liquid_fullness5_messages
+			. = TRUE
+		if("b_liq_msg1")
+			alert(user,"Setting abusive or deceptive messages will result in a ban. Consider this your warning. Max 150 characters per message, max 10 messages per topic.","Really, don't.")
+			var/help = " Press enter twice to separate messages. '%pred' will be replaced with your name. '%prey' will be replaced with the prey's name. '%belly' will be replaced with your belly's name."
+
+			var/new_message = input(user,"These are sent to people who examine you when this belly is 0 to 20% full. Write them in 3rd person ('Their %belly is bulging')."+help,"Liquid Examine Message (0 - 20%)",host.vore_selected.get_reagent_messages("full1")) as message
+			if(new_message)
+				host.vore_selected.set_reagent_messages(new_message,"full1")
+			. = TRUE
+		if("b_liq_msg2")
+			alert(user,"Setting abusive or deceptive messages will result in a ban. Consider this your warning. Max 150 characters per message, max 10 messages per topic.","Really, don't.")
+			var/help = " Press enter twice to separate messages. '%pred' will be replaced with your name. '%prey' will be replaced with the prey's name. '%belly' will be replaced with your belly's name."
+
+			var/new_message = input(user,"These are sent to people who examine you when this belly is 20 to 40% full. Write them in 3rd person ('Their %belly is bulging')."+help,"Liquid Examine Message (20 - 40%)",host.vore_selected.get_reagent_messages("full2")) as message
+			if(new_message)
+				host.vore_selected.set_reagent_messages(new_message,"full2")
+			. = TRUE
+		if("b_liq_msg3")
+			alert(user,"Setting abusive or deceptive messages will result in a ban. Consider this your warning. Max 150 characters per message, max 10 messages per topic.","Really, don't.")
+			var/help = " Press enter twice to separate messages. '%pred' will be replaced with your name. '%prey' will be replaced with the prey's name. '%belly' will be replaced with your belly's name."
+
+			var/new_message = input(user,"These are sent to people who examine you when this belly is 40 to 60% full. Write them in 3rd person ('Their %belly is bulging')."+help,"Liquid Examine Message (40 - 60%)",host.vore_selected.get_reagent_messages("full3")) as message
+			if(new_message)
+				host.vore_selected.set_reagent_messages(new_message,"full3")
+			. = TRUE
+		if("b_liq_msg4")
+			alert(user,"Setting abusive or deceptive messages will result in a ban. Consider this your warning. Max 150 characters per message, max 10 messages per topic.","Really, don't.")
+			var/help = " Press enter twice to separate messages. '%pred' will be replaced with your name. '%prey' will be replaced with the prey's name. '%belly' will be replaced with your belly's name."
+
+			var/new_message = input(user,"These are sent to people who examine you when this belly is 60 to 80% full. Write them in 3rd person ('Their %belly is bulging')."+help,"Liquid Examine Message (60 - 80%)",host.vore_selected.get_reagent_messages("full4")) as message
+			if(new_message)
+				host.vore_selected.set_reagent_messages(new_message,"full4")
+			. = TRUE
+		if("b_liq_msg5")
+			alert(user,"Setting abusive or deceptive messages will result in a ban. Consider this your warning. Max 150 characters per message, max 10 messages per topic.","Really, don't.")
+			var/help = " Press enter twice to separate messages. '%pred' will be replaced with your name. '%prey' will be replaced with the prey's name. '%belly' will be replaced with your belly's name."
+
+			var/new_message = input(user,"These are sent to people who examine you when this belly is 80 to 100% full. Write them in 3rd person ('Their %belly is bulging')."+help,"Liquid Examine Message (80 - 100%)",host.vore_selected.get_reagent_messages("full5")) as message
+			if(new_message)
+				host.vore_selected.set_reagent_messages(new_message,"full5")
+			. = TRUE
+// End reagent bellies

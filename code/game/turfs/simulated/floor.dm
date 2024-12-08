@@ -43,6 +43,7 @@
 		set_flooring(get_flooring_data(floortype), TRUE)
 		. = INITIALIZE_HINT_LATELOAD // We'll update our icons after everyone is ready
 	else
+		vorefootstep_sounds = base_vorefootstep_sounds // Reagent bellies || RS Add || Chomp Port
 		footstep_sounds = base_footstep_sounds
 	if(can_dirty && can_start_dirty)
 		if(prob(dirty_prob))
@@ -64,6 +65,7 @@
 		swap_decals()
 	flooring = newflooring
 	footstep_sounds = newflooring.footstep_sounds
+	vorefootstep_sounds = newflooring.vorefootstep_sounds // Reagent bellies || RS Add || Chomp Port
 	if(!initializing)
 		update_icon(1)
 	levelupdate()
@@ -81,6 +83,7 @@
 	icon = base_icon
 	icon_state = base_icon_state
 	footstep_sounds = base_footstep_sounds
+	vorefootstep_sounds = base_vorefootstep_sounds	 // Reagent bellies || RS Add || Chomp Port
 
 	if(!is_plating()) // Flooring -> Plating
 		swap_decals()
