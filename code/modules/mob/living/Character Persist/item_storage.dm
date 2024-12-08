@@ -38,6 +38,7 @@ var/global/list/permanent_unlockables = list(
 		bank.unlockable_takers += "[ourmob.real_name] - [item]"
 		bank.busy_bank = FALSE
 		O.persist_storable = FALSE
+		log_admin("[key_name_admin(ourmob)] has unlocked [O]/[O.type] for [ourmob].")
 		return
 
 	if(!istool(O))
@@ -62,7 +63,7 @@ var/global/list/permanent_unlockables = list(
 			return
 		save_item(O)
 		ourmob.visible_message("<span class='notice'>\The [ourmob] stores \the [O] in \the [bank].</span>","<span class='notice'>You stored \the [O] in \the [bank].</span>")
-		log_admin("[key_name_admin(ourmob)] stored [O] in the item bank.")
+		log_admin("[key_name_admin(ourmob)] stored [O]/[O.type] in the item bank for [ourmob].")
 		qdel(O)
 		bank.busy_bank = FALSE
 		bank.icon_state = "item_bank"
@@ -84,6 +85,7 @@ var/global/list/permanent_unlockables = list(
 	switch(mode)
 		if("triangles")
 			triangles += value
+	needs_saving = TRUE
 
 /datum/etching/proc/report_money()
 	. = "<span class='boldnotice'>◬</span>: [triangles]\n\n"
@@ -109,7 +111,6 @@ var/global/list/permanent_unlockables = list(
 	return to_save
 
 /datum/etching/report_status()
-	to_world("Hello from item")
 	. = ..()
 
 	var/our_money = report_money()

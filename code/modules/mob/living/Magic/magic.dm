@@ -127,7 +127,6 @@ make sure multiple instances of grant xp are additive, and don't overwrite
 	return to_save
 
 /datum/etching/report_status()
-	to_world("Hello from magic")
 	. = ..()
 
 	var/our_magic = report_magic()

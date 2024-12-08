@@ -11,6 +11,7 @@
 /mob/living/Login()
 	. = ..()
 	if(etching)
+		log_debug("<span class = 'danger'>Etching started: Registered to [ckey]</span>")
 		etching.load()
 
 /mob/living/Destroy()
@@ -98,7 +99,6 @@
 	var/save_cooldown = 0
 
 /datum/etching/New(var/L)
-	log_debug("<span class = 'danger'>ETCHING STARTED</span>")
 	if(!L)
 		log_debug("<span class = 'danger'>Etching: No target, delete self</span>")
 		qdel(src)
@@ -108,7 +108,6 @@
 		qdel(src)
 		return
 	ourmob = L
-	log_debug("<span class = 'danger'>Etching: Registered to [ourmob.ckey]</span>")
 	save_cooldown = rand(200,350)	//Make the number be random so that there's less chance it tries to autosave everyone at the same time.
 	return ..()
 
@@ -135,7 +134,7 @@
 	if(IsGuestKey(ourmob.key))
 		return
 	if(!ourmob.ckey)
-		log_debug("<span class = 'danger'>Aborting etching load for [ourmob.real_name], no ckey</span>")
+		log_debug("<span class = 'danger'>Etching load failed: Aborting etching load for [ourmob.real_name], no ckey</span>")
 		savable = FALSE
 		return
 
@@ -179,7 +178,6 @@
 	xp = load["xp"]
 
 	item_load(load)
-
 	log_debug("<span class = 'rose'>Etching load complete for [ourmob.real_name].</span>")
 
 /datum/etching/proc/save(delet = FALSE)
@@ -232,18 +230,20 @@
 		qdel(src)
 
 /datum/etching/proc/setup()
-
-	log_debug("<span class = 'danger'>setup</span>")
-
 	return
 
 /datum/etching/proc/update_etching(mode,value)
 	needs_saving = TRUE
 
-/datum/etching/proc/grant_xp(kind,value)
+/datum/etching/proc/grant_xp(kind,value,quiet = FALSE,source)
 	xp["[kind]"] += value
-	to_chat(ourmob,"<span class = 'notice'>You earned [value] [kind]!</span>")
+	if(!quiet)
+		to_chat(ourmob,"<span class = 'notice'>You earned [value] [kind]! New total: ([xp["[kind]"]])</span>")
 	needs_saving = TRUE
+	if(source)
+		log_admin("earned [value] [kind] XP from [source]. Total: ([xp["[kind]"]])")
+	else
+		log_and_message_admins("granted [value] [kind] XP to [ourmob]/[ourmob.ckey]. Total: ([xp["[kind]"]])")
 
 /datum/etching/proc/report_status()
 	if(!save_path)
@@ -260,7 +260,6 @@
 		. += "<span class='boldnotice'>[capitalize(thing)]</span>: [xp[thing]]\n"
 
 /datum/etching/vv_edit_var(var_name, var_value)
-	to_world("[var_name]")
 	if(var_name == "event_character")
 		enable_event_character()
 		return
@@ -298,8 +297,8 @@
 		if(!L.etching)
 			to_chat(usr, "\The [L] has no etching.")
 			return
-		if(tgui_alert(usr, "Enable event mode for [L]'s etching? This will disable normal saving, but enable variable editing.","Confirm",list("Enable","Cancel")) != "Enable")	return
-
+		if(tgui_alert(usr, "Enable event mode for [L]'s etching? This will disable normal saving, but enable variable editing.","Confirm",list("Enable","Cancel")) != "Enable")
+			return
 		if(!L)
 			to_chat(usr, "\The [L] no longer exists.")
 			return
@@ -307,6 +306,7 @@
 			to_chat(usr, "\The [L] has no etching.")
 			return
 		L.etching.enable_event_character()
+		log_and_message_admins(" has enabled [L]'s etching event mode.")
 	if(href_list["save_etching"])
 		if(!check_rights(R_FUN))	return
 
@@ -322,6 +322,7 @@
 		else
 			to_chat(usr, "Saving [L]'s etching.")
 		L.etching.save()
+		log_and_message_admins(" saved [L]'s etching.")
 	if(href_list["load_etching"])
 		if(!check_rights(R_FUN))	return
 
@@ -334,3 +335,22 @@
 		else
 			to_chat(usr, "Loading [L]'s etching.")
 		L.etching.load()
+		log_and_message_admins(" has loaded [L]'s etching.")
+
+/* //Just for fun. UwU
+/obj/belly/proc/xp(mob/living/ourprey)
+	if(!isliving(ourprey))
+		return
+
+	var/Pred = 0.01
+	var/Prey = 0.01
+
+	if(owner.ckey)
+		Pred = 1
+	if(ourprey.ckey)
+		Prey = 1
+	if(Pred == 1)
+		owner.etching.grant_xp("Pred points",Prey,source = "eating [ourprey]")
+	if(Prey == 1)
+		ourprey.etching.grant_xp("Prey points",Pred,source = "being eaten by [owner]")
+*/
