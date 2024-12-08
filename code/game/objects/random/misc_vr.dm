@@ -18,10 +18,10 @@
 	spawn_nothing_percentage = 50
 
 /obj/random/awayloot/item_to_spawn()
-	return pick(prob(50);/obj/item/weapon/aliencoin/basic,
-				prob(40);/obj/item/weapon/aliencoin/silver,
-				prob(30);/obj/item/weapon/aliencoin/gold,
-				prob(20);/obj/item/weapon/aliencoin/phoron,
+	return pick(//prob(50);/obj/item/weapon/aliencoin/basic,	//RS TEMP REMOVAL
+				//prob(40);/obj/item/weapon/aliencoin/silver,
+				//prob(30);/obj/item/weapon/aliencoin/gold,
+				//prob(20);/obj/item/weapon/aliencoin/phoron,
 				prob(10);/obj/item/device/denecrotizer,
 				prob(5);/obj/item/capture_crystal,
 				prob(5);/obj/item/device/perfect_tele,
@@ -54,10 +54,10 @@
 
 /obj/random/awayloot/looseloot
 /obj/random/awayloot/looseloot/item_to_spawn()
-	return pick(prob(50);/obj/item/weapon/aliencoin,
-				prob(40);/obj/item/weapon/aliencoin/silver,
-				prob(30);/obj/item/weapon/aliencoin/gold,
-				prob(20);/obj/item/weapon/aliencoin/phoron,
+	return pick(//prob(50);/obj/item/weapon/aliencoin,	//RS TEMP REMOVAL
+				//prob(40);/obj/item/weapon/aliencoin/silver,
+				//prob(30);/obj/item/weapon/aliencoin/gold,
+				//prob(20);/obj/item/weapon/aliencoin/phoron,
 				prob(10);/obj/item/device/denecrotizer,
 				prob(5);/obj/item/capture_crystal,
 				prob(3);/obj/item/capture_crystal/great,
@@ -109,10 +109,10 @@
 	spawn_nothing_percentage = 50
 
 /obj/random/mainttoyloot/item_to_spawn()
-	return pick(prob(50);/obj/item/weapon/aliencoin/basic,
-				prob(40);/obj/item/weapon/aliencoin/silver,
-				prob(30);/obj/item/weapon/aliencoin/gold,
-				prob(20);/obj/item/weapon/aliencoin/phoron,
+	return pick(//prob(50);/obj/item/weapon/aliencoin/basic,	//RS TEMP REMOVAL
+				//prob(40);/obj/item/weapon/aliencoin/silver,
+				//prob(30);/obj/item/weapon/aliencoin/gold,
+				//prob(20);/obj/item/weapon/aliencoin/phoron,
 				prob(5);/obj/item/capture_crystal,
 				prob(5);/obj/random/mouseray,
 				prob(5);/obj/item/device/perfect_tele,
