@@ -1394,6 +1394,26 @@ const VoreSelectedBellyInteractions = (props, context) => {
                 }
               />
             </LabeledList.Item>
+            <LabeledList.Item label="Auto-Transfer Min Amount">
+              <Button
+                content={autotransfer.autotransfer_min_amount}
+                onClick={() =>
+                  act('set_attribute', {
+                    attribute: 'b_autotransfer_min_amount',
+                  })
+                }
+              />
+            </LabeledList.Item>
+            <LabeledList.Item label="Auto-Transfer Max Amount">
+              <Button
+                content={autotransfer.autotransfer_max_amount}
+                onClick={() =>
+                  act('set_attribute', {
+                    attribute: 'b_autotransfer_max_amount',
+                  })
+                }
+              />
+            </LabeledList.Item>
           </LabeledList>
         ) : (
           'These options only display while Auto-Transfer is enabled.'
