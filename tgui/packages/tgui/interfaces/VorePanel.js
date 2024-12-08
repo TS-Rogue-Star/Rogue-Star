@@ -566,8 +566,6 @@ const VoreSelectedBellyOptions = (props, context) => {
     override_min_prey_size,
     override_min_prey_num,
     drainmode, // RS Edit || ports VOREStation PR 15876
-    autotransfer_enabled, // RS Edit || Ports Chomp 2821
-    autotransfer, // RS Edit || Ports Chomp 2821
   } = belly;
 
   return (
@@ -1251,7 +1249,7 @@ const VoreSelectedBellyInteractions = (props, context) => {
   const { act } = useBackend(context);
 
   const { belly } = props;
-  const { escapable, interacts } = belly;
+  const { escapable, interacts, autotransfer_enabled, autotransfer } = belly;
 
   return (
     <Section

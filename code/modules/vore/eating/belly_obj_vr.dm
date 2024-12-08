@@ -494,7 +494,7 @@
 		// End RS edit
 
 	// Intended for simple mobs
-	if(!owner.client && autotransferlocation && autotransferchance > 0)
+	if(!owner.client || autotransfer_enabled && autotransferlocation && autotransferchance > 0)
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/belly, check_autotransfer), thing, autotransferlocation), autotransferwait)
 
 // Called whenever an atom leaves this belly
