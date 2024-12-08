@@ -16,7 +16,7 @@
 	if(!contents.len)
 		return
 
-	//RS Add || Chomp Port 2934, 2979, 3200 || Autotransfer count moved here.
+	//RS Add || Chomp Port 2934, 2979, 2989, 3200 || Autotransfer count moved here.
 	if((!owner.client || autotransfer_enabled) && autotransferlocation && autotransferchance > 0)
 		var/list/autotransferables = contents - autotransfer_queue
 		if(LAZYLEN(autotransfer_queue) >= autotransfer_min_amount)
@@ -43,7 +43,7 @@
 					continue
 			tally++
 			M.belly_cycles++
-			if(autotransfer_max_amount > 0 && tally >= autotransfer_max_amount)
+			if(autotransfer_max_amount > 0 && tally > autotransfer_max_amount)
 				continue
 			if(M.belly_cycles >= autotransferwait / 60)
 				check_autotransfer(M, autotransferlocation)
