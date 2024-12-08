@@ -329,3 +329,8 @@
 **Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/9466<br>
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
+**File**: `icons/obj/aliencoins.dmi`<br>
+**Creator:** VerySoft<br>
+**Link:** https://github.com/VOREStation/VOREStation/pull/10476 - <br>
+**License:** Licensed for use by VOREStation, Rogue Star, and their downstreams; unlicensed for further use without permission of copyright holder<br>
+<br>
