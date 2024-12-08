@@ -1,8 +1,4 @@
 //RS FILE
-/*
-TO DO:
-Figure out how often the time codes get updated, to make sure multiple store instances won't duplicate the code
-*/
 
 #define item_storage_maximum 50
 
@@ -73,11 +69,11 @@ var/global/list/permanent_unlockables = list(
 		bank.busy_bank = FALSE
 
 /datum/etching/proc/save_item(var/obj/O)
-	item_storage += list("[initial(O.name)] - [time2text(world.realtime, "YYYYMMDDhhmmss")]" = O.type)
+	item_storage += list("[initial(O.name)] - [time2text(world.timeofday, "YYYYMMDDhhmmss")]" = O.type)
 	needs_saving = TRUE
 
 /datum/etching/proc/legacy_conversion(I_name,I_type)
-	item_storage += list("[I_name] - [time2text(world.realtime, "YYYYMMDDhhmmss")]" = I_type)
+	item_storage += list("[I_name] - [time2text(world.timeofday, "YYYYMMDDhhmmss")]" = I_type)
 	needs_saving = TRUE
 
 /datum/etching/update_etching(mode, value)
