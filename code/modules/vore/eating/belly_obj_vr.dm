@@ -74,6 +74,7 @@
 	var/autotransferchance = 0 				// % Chance of prey being autotransferred to transfer location
 	var/autotransferwait = 10 				// Time between trying to transfer.
 	var/autotransferlocation				// Place to send them
+	var/autotransfer_enabled = FALSE			//RS ADD || Port Chomp 2821
 
 	//I don't think we've ever altered these lists. making them static until someone actually overrides them somewhere.
 	//Actual full digest modes
@@ -384,7 +385,11 @@
 	"fullness2_messages",
 	"fullness3_messages",
 	"fullness4_messages",
-	"fullness5_messages"	// End reagent bellies
+	"fullness5_messages",	// End reagent bellies
+	"autotransferchance",  //RS Add Start || Port Chop 2821
+	"autotransferwait",
+	"autotransferlocation",
+	"autotransfer_enabled" //RS Add End
 	)
 
 	if (save_digest_mode == 1)
@@ -1974,6 +1979,12 @@
 	dupe.custom_max_volume = custom_max_volume
 	dupe.show_fullness_messages = show_fullness_messages
 	// End reagent bellies
+
+	dupe.autotransferchance = autotransferchance  //RS ADD Start || Port Chomp 2821
+	dupe.autotransferwait = autotransferwait
+	dupe.autotransferlocation = autotransferlocation
+	dupe.autotransfer_enabled = autotransfer_enabled  //RS Add End
+
 
 	//// Object-holding variables
 	//struggle_messages_outside - strings

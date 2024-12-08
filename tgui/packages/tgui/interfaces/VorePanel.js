@@ -566,6 +566,8 @@ const VoreSelectedBellyOptions = (props, context) => {
     override_min_prey_size,
     override_min_prey_num,
     drainmode, // RS Edit || ports VOREStation PR 15876
+    autotransfer_enabled, // RS Edit || Ports Chomp 2821
+    autotransfer, // RS Edit || Ports Chomp 2821
   } = belly;
 
   return (
@@ -1343,11 +1345,63 @@ const VoreSelectedBellyInteractions = (props, context) => {
               }
             />
           </LabeledList.Item>
+          <LabeledList.Divider />
         </LabeledList>
       ) : (
         'These options only display while interactions are turned on.'
       )}
-    </Section>
+      <Section // RS Add Start || Port Chomp 2821
+        title="Auto-Transfer Options"
+        buttons={
+          <Button
+            onClick={() =>
+              act('set_attribute', { attribute: 'b_autotransfer_enabled' })
+            }
+            icon={autotransfer_enabled ? 'toggle-on' : 'toggle-off'}
+            selected={autotransfer_enabled}
+            content={
+              autotransfer_enabled
+                ? 'Auto-Transfer Enabled'
+                : 'Auto-Transfer Disabled'
+            }
+          />
+        }>
+        {autotransfer_enabled ? (
+          <LabeledList>
+            <LabeledList.Item label="Auto-Transfer Chance">
+              <Button
+                content={autotransfer.autotransferchance + '%'}
+                onClick={() =>
+                  act('set_attribute', { attribute: 'b_autotransferchance' })
+                }
+              />
+            </LabeledList.Item>
+            <LabeledList.Item label="Auto-Transfer Time">
+              <Button
+                content={autotransfer.autotransferwait / 10 + 's'}
+                onClick={() =>
+                  act('set_attribute', { attribute: 'b_autotransferwait' })
+                }
+              />
+            </LabeledList.Item>
+            <LabeledList.Item label="Auto-Transfer Location">
+              <Button
+                content={
+                  autotransfer.autotransferlocation
+                    ? autotransfer.autotransferlocation
+                    : 'Disabled'
+                }
+                onClick={() =>
+                  act('set_attribute', { attribute: 'b_autotransferlocation' })
+                }
+              />
+            </LabeledList.Item>
+          </LabeledList>
+        ) : (
+          'These options only display while Auto-Transfer is enabled.'
+        )}
+      </Section>
+    </Section> // RS Add End
   );
 };
 
