@@ -107,7 +107,7 @@
 				gen_interval = 0
 			else
 				gen_interval++
-	if(reagents.total_volume >= 5 && LAZYLEN(contents))
+	if(reagent_touches && reagents.total_volume >= 5 && LAZYLEN(contents))
 		var/affecting_amt = reagents.total_volume / max(LAZYLEN(contents), 1)
 		if(affecting_amt > 5)
 			affecting_amt = 5
