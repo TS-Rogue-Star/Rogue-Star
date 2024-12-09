@@ -3,10 +3,42 @@
 #define item_storage_maximum 50
 
 var/global/list/permanent_unlockables = list(
-	/obj/item/weapon/disk/nifsoft/compliance,
+	//SIZE STUFF
 	/obj/item/weapon/gun/energy/sizegun,
 	/obj/item/device/slow_sizegun,
+	/obj/item/weapon/implanter/sizecontrol,
+	/obj/item/clothing/under/hyperfiber,
+	/obj/item/clothing/under/hyperfiber/bluespace,
+	/obj/item/selectable_item/chemistrykit/size,
+	//TF RAYS
 	/obj/item/weapon/gun/energy/mouseray,
+	/obj/item/weapon/gun/energy/mouseray/woof,
+	/obj/item/weapon/gun/energy/mouseray/corgi,
+	/obj/item/weapon/gun/energy/mouseray/cat,
+	/obj/item/weapon/gun/energy/mouseray/chicken,
+	/obj/item/weapon/gun/energy/mouseray/lizard,
+	/obj/item/weapon/gun/energy/mouseray/rabbit,
+	/obj/item/weapon/gun/energy/mouseray/fennec,
+	/obj/item/weapon/gun/energy/mouseray/monkey,
+	/obj/item/weapon/gun/energy/mouseray/wolpin,
+	/obj/item/weapon/gun/energy/mouseray/otie,
+	/obj/item/weapon/gun/energy/mouseray/direwolf,
+	/obj/item/weapon/gun/energy/mouseray/giantrat,
+	/obj/item/weapon/gun/energy/mouseray/redpanda,
+	/obj/item/weapon/gun/energy/mouseray/catslug,
+	/obj/item/weapon/gun/energy/mouseray/teppi,
+	//OTHER
+	/obj/item/weapon/disk/nifsoft/compliance,
+	/obj/item/weapon/implanter/compliance,
+	/obj/item/device/bodysnatcher,
+	/obj/item/device/sleevemate,
+	/obj/item/weapon/handcuffs/fuzzy,
+	/obj/item/weapon/handcuffs/legcuffs/fuzzy,
+	/obj/item/clothing/mask/muzzle/ballgag,
+	/obj/item/clothing/mask/muzzle/ballgag/ringgag,
+	/obj/item/clothing/glasses/sunglasses/blindfold,
+	/obj/item/capture_crystal,
+	/obj/item/selectable_item/chemistrykit/gender
 )
 
 /datum/etching
