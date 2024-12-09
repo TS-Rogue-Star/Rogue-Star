@@ -1279,7 +1279,7 @@
 //Receives a return value from digest_act that's how much nutrition
 //the item should be worth
 /obj/belly/proc/digest_item(obj/item/item)
-	var/digested = item.digest_act(src, owner)
+	var/digested = item.digest_act(src)
 	if(!digested)
 		items_preserved |= item
 	else
