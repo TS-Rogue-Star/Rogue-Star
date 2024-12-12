@@ -90,7 +90,7 @@
 		SA.icon_state = "pounce"
 
 /datum/robot_sprite/dogborg/tall/lost/handle_extra_icon_updates(var/mob/living/silicon/robot/ourborg)
-	if(has_laser_sprite && istype(ourborg.module_active, /obj/item/weapon/gun/energy/retro/mounted))
+	if(has_laser_sprite && ourborg.has_active_type(/obj/item/weapon/gun/energy/retro/mounted)) //RS Edit
 		ourborg.add_overlay("[sprite_icon_state]-laser")
 	if(has_shield_sprite)
 		if(ourborg.has_active_type(/obj/item/borg/combat/shield))
@@ -155,7 +155,7 @@
 		DCS.icon_state = "sleeperd"
 
 /datum/robot_sprite/dogborg/tall/gravekeeper/handle_extra_icon_updates(var/mob/living/silicon/robot/ourborg)
-	if(has_laser_sprite && istype(ourborg.module_active, /obj/item/weapon/gun/energy/retro/mounted))
+	if(has_laser_sprite && ourborg.has_active_type(/obj/item/weapon/gun/energy/retro/mounted)) //RS Edit
 		ourborg.add_overlay("[sprite_icon_state]-laser")
 	if(has_shield_sprite)
 		if(ourborg.has_active_type(/obj/item/borg/combat/shield))

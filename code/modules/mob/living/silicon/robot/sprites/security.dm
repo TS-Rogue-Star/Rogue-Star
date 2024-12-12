@@ -125,9 +125,9 @@
 	var/has_taser_sprite = FALSE
 
 /datum/robot_sprite/dogborg/security/handle_extra_icon_updates(var/mob/living/silicon/robot/ourborg)
-	if(has_laser_sprite && istype(ourborg.module_active, /obj/item/weapon/gun/energy/laser/mounted))
+	if(has_laser_sprite && ourborg.has_active_type(/obj/item/weapon/gun/energy/laser/mounted)) //RS Edit
 		ourborg.add_overlay("[sprite_icon_state]-laser")
-	if(has_taser_sprite && istype(ourborg.module_active, /obj/item/weapon/gun/energy/taser/mounted/cyborg))
+	if(has_taser_sprite && ourborg.has_active_type(/obj/item/weapon/gun/energy/taser/mounted/cyborg)) //RS Edit
 		ourborg.add_overlay("[sprite_icon_state]-taser")
 
 /datum/robot_sprite/dogborg/security/do_equipment_glamour(var/obj/item/weapon/robot_module/module)
@@ -200,9 +200,9 @@
 	var/has_taser_sprite = FALSE
 
 /datum/robot_sprite/dogborg/tall/security/handle_extra_icon_updates(var/mob/living/silicon/robot/ourborg)
-	if(has_laser_sprite && istype(ourborg.module_active, /obj/item/weapon/gun/energy/laser/mounted))
+	if(has_laser_sprite && ourborg.has_active_type(/obj/item/weapon/gun/energy/laser/mounted)) //RS Edit
 		ourborg.add_overlay("[sprite_icon_state]-laser")
-	if(has_taser_sprite && istype(ourborg.module_active, /obj/item/weapon/gun/energy/taser/mounted/cyborg))
+	if(has_taser_sprite && ourborg.has_active_type(/obj/item/weapon/gun/energy/taser/mounted/cyborg)) //RS Edit
 		ourborg.add_overlay("[sprite_icon_state]-taser")
 
 /datum/robot_sprite/dogborg/tall/security/do_equipment_glamour(var/obj/item/weapon/robot_module/module)
