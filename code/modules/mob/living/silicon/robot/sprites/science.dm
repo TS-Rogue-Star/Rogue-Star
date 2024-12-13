@@ -152,12 +152,6 @@
 	module_type = "Research"
 	sprite_icon = 'icons/mob/robot/science_large.dmi'
 
-	var/has_taser_sprite = FALSE
-
-/datum/robot_sprite/dogborg/tall/science/handle_extra_icon_updates(var/mob/living/silicon/robot/ourborg)
-	if(has_taser_sprite && ourborg.has_active_type(/obj/item/weapon/gun/energy/taser/xeno/robot)) //RS Edit
-		ourborg.add_overlay("[sprite_icon_state]-taser")
-
 /datum/robot_sprite/dogborg/tall/science/do_equipment_glamour(var/obj/item/weapon/robot_module/module)
 	if(!has_custom_equipment_sprites)
 		return
@@ -180,7 +174,7 @@
 	name = "Raptor V-4"
 	sprite_icon_state = "raptor"
 	has_custom_equipment_sprites = TRUE
-	has_taser_sprite = TRUE
+	sprite_flags = ROBOT_HAS_TASER_SPRITE //RS EDIT
 	rest_sprite_options = list("Default", "Bellyup")
 
 /datum/robot_sprite/dogborg/tall/science/meka

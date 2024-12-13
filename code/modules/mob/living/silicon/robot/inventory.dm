@@ -97,10 +97,29 @@
 		return 0
 
 // This one takes an object's type instead of an instance, as above.
-/mob/living/silicon/robot/proc/has_active_type(var/type_to_compare)
+/mob/living/silicon/robot/proc/has_active_type(var/type_to_compare, var/explicit = FALSE)
 	var/list/active_modules = list(module_state_1, module_state_2, module_state_3)
-	if(is_path_in_list(type_to_compare, active_modules))
+	if(is_type_in_modules(type_to_compare, active_modules, explicit)) //RS Edit. Changes from is_type_in_list to is_type_in_modules
 		return TRUE
+	return FALSE
+
+///Searches through a provided list to see if we have a module that is in that list.  (RS Edit Start)
+/mob/living/silicon/robot/proc/has_active_type_list(var/list/type_to_compare, var/explicit = FALSE)
+	var/list/active_modules = list(module_state_1, module_state_2, module_state_3)
+	if(islist(type_to_compare))
+		for(var/object_to_compare in type_to_compare)
+			if(is_type_in_modules(object_to_compare, active_modules, explicit))
+				return TRUE
+	return FALSE
+// RS Edit End
+
+/mob/living/silicon/robot/proc/is_type_in_modules(var/type, var/list/modules, var/explicit = FALSE)
+	for(var/atom/module in modules)
+		if(explicit && isatom(module))
+			if(module.type == type)
+				return TRUE
+		else if(istype(module, type))
+			return TRUE
 	return FALSE
 
 //Helper procs for cyborg modules on the UI.

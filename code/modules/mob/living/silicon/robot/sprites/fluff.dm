@@ -143,15 +143,10 @@
 	has_custom_open_sprites = TRUE
 	has_dead_sprite = TRUE
 	has_dead_sprite_overlay = FALSE
+	sprite_flags = ROBOT_HAS_LASER_SPRITE | ROBOT_HAS_TASER_SPRITE
 
 	is_whitelisted = TRUE
 	whitelist_ckey = "foopwotch"
-
-/datum/robot_sprite/security/fluff/foopwotch/handle_extra_icon_updates(var/mob/living/silicon/robot/ourborg)
-	if(ourborg.has_active_type(/obj/item/weapon/gun/energy/laser/mounted)) //RS Edit
-		ourborg.add_overlay("[sprite_icon_state]-laser")
-	if(ourborg.has_active_type(/obj/item/weapon/gun/energy/taser/mounted/cyborg)) //RS Edit
-		ourborg.add_overlay("[sprite_icon_state]-taser")
 
 /datum/robot_sprite/combat/fluff/foopwotch
 	name = CUSTOM_BORGSPRITE("NDF") //For: GAEL
@@ -164,17 +159,15 @@
 	has_custom_open_sprites = TRUE
 	has_dead_sprite = TRUE
 	has_dead_sprite_overlay = FALSE
-	has_speed_sprite = TRUE
-	has_shield_sprite = TRUE
+	sprite_flags = ROBOT_HAS_SHIELD_SPRITE | ROBOT_HAS_SPEED_SPRITE | ROBOT_HAS_LASER_SPRITE //RS EDIT
 
 	is_whitelisted = TRUE
 	whitelist_ckey = "foopwotch"
 
+//RS Edit Note: The above still exists as it has two special icon_states: Dagger & Disabler. While I could add extra flags to _sprite_datum.dm, this is such an edge case it gets to keep existing.
 /datum/robot_sprite/combat/fluff/foopwotch/handle_extra_icon_updates(var/mob/living/silicon/robot/ourborg)
 
 	..()
-	if(ourborg.has_active_type(/obj/item/weapon/gun/energy/laser/mounted) || ourborg.has_active_type(/obj/item/weapon/gun/energy/lasercannon/mounted)) //RS Edit
-		ourborg.add_overlay("[sprite_icon_state]-laser")
 	if(ourborg.has_active_type(/obj/item/weapon/combat_borgblade)) //RS Edit
 		ourborg.add_overlay("[sprite_icon_state]-dagger")
 	if(ourborg.has_active_type(/obj/item/weapon/gun/energy/taser/mounted/cyborg/ertgun)) //RS Edit
@@ -199,12 +192,6 @@
 
 	is_whitelisted = TRUE
 	whitelist_ckey = "jademanique"
-
-/datum/robot_sprite/dogborg/security/fluff/jademanique/handle_extra_icon_updates(var/mob/living/silicon/robot/ourborg)
-	if(has_laser_sprite && ourborg.has_active_type(/obj/item/weapon/gun/energy/laser/mounted)) //RS Edit
-		ourborg.add_overlay("[sprite_icon_state]-laser")
-	if(has_taser_sprite && ourborg.has_active_type(/obj/item/weapon/gun/energy/taser/mounted/cyborg)) //RS Edit
-		ourborg.add_overlay("[sprite_icon_state]-taser")
 
 // L
 
