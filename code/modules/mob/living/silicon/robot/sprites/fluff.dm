@@ -159,7 +159,7 @@
 	has_custom_open_sprites = TRUE
 	has_dead_sprite = TRUE
 	has_dead_sprite_overlay = FALSE
-	sprite_flags = ROBOT_HAS_SHIELD_SPRITE | ROBOT_HAS_SPEED_SPRITE | ROBOT_HAS_LASER_SPRITE //RS EDIT
+	sprite_flags = ROBOT_HAS_SHIELD_SPRITE | ROBOT_HAS_SPEED_SPRITE | ROBOT_HAS_LASER_SPRITE | ROBOT_HAS_DISABLER_SPRITE//RS EDIT
 
 	is_whitelisted = TRUE
 	whitelist_ckey = "foopwotch"
@@ -170,8 +170,6 @@
 	..()
 	if(ourborg.has_active_type(/obj/item/weapon/combat_borgblade)) //RS Edit
 		ourborg.add_overlay("[sprite_icon_state]-dagger")
-	if(ourborg.has_active_type(/obj/item/weapon/gun/energy/robotic/disabler)) //RS Edit
-		ourborg.add_overlay("[sprite_icon_state]-disabler")
 
 // J
 
