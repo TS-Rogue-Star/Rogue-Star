@@ -170,7 +170,7 @@
 	..()
 	if(ourborg.has_active_type(/obj/item/weapon/combat_borgblade)) //RS Edit
 		ourborg.add_overlay("[sprite_icon_state]-dagger")
-	if(ourborg.has_active_type(/obj/item/weapon/gun/energy/taser/mounted/cyborg/ertgun)) //RS Edit
+	if(ourborg.has_active_type(/obj/item/weapon/gun/energy/robotic/disabler)) //RS Edit
 		ourborg.add_overlay("[sprite_icon_state]-disabler")
 
 // J

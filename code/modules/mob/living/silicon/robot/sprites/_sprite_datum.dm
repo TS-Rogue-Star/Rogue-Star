@@ -1,22 +1,3 @@
-//RS Edit Start
-#define ROBOT_HAS_SPEED_SPRITE 0x1	//Ex:	/obj/item/borg/combat/mobility Replaces old has_speed_sprite
-#define ROBOT_HAS_SHIELD_SPRITE 0x2	//Ex:	/obj/item/borg/combat/shield Replaces old has_shield_sprite
-#define ROBOT_HAS_SHIELD_SPEED_SPRITE 0x4	//Ex: Has a sprite for when both is activated AND has /obj/item/borg/combat/mobility
-#define ROBOT_HAS_LASER_SPRITE 0x8	//Ex:	/obj/item/weapon/gun/energy/retro/mounted Replaces old has_laser_sprite
-#define ROBOT_HAS_TASER_SPRITE 0x10	//Ex:	/obj/item/weapon/gun/energy/taser/mounted/cyborg Replaces old has_taser_sprite
-#define ROBOT_HAS_GUN_SPRITE 0x20	//Ex:	Has a general gun sprite. Replaces old has_gun_sprite
-/// USE THESE SPARINGLY, ADDING TO THESE LISTS EXTENSIVELY AND PILING ON MORE TO LISTS /CAN/ BE RESOURCE INTENSIVE.
-/// The only reason it's used here is for two reasons.
-/// 1: Borg code was an abomination. A bunch of borgs used fancy snowflake code for what gun they all used instead of having a standardized gun.
-/// 2: If I made the below code when it checks for what gun you have to add the overlay, it looks absolutely AWFUL (see the commented out ourborg.has_active_type below for example of how bad it looks)
-/// Borg code when it comes to laser/taser/gun overlays needs to be revamped sometime in the future to make it even LESS resource intensive, but I don't feel like modularizing every single borg gun in the game.
-/// So if you come across this and want to make it better, you can. And I implore you to do exactly that. Maybe one day we can have a gun/energy/borg that has a bunch of different effects and variable damage types and whatnot.
-/// But that's outside the scope of the PR this was built for.
-var/list/borg_lasers = list(/obj/item/weapon/gun/energy/retro/mounted,/obj/item/weapon/gun/energy/laser/mounted)
-var/list/borg_tasers = list(/obj/item/weapon/gun/energy/taser/mounted/cyborg,/obj/item/weapon/gun/energy/taser/xeno/robot)
-var/list/borg_guns = list(/obj/item/weapon/gun/energy/laser/mounted,/obj/item/weapon/gun/energy/taser/mounted/cyborg/ertgun,/obj/item/weapon/gun/energy/lasercannon/mounted,/obj/item/weapon/gun/energy/dakkalaser)
-//RS Edit End
-
 /datum/robot_sprite
 	var/name
 	var/module_type
@@ -51,7 +32,7 @@ var/list/borg_guns = list(/obj/item/weapon/gun/energy/laser/mounted,/obj/item/we
 	return (sprite_flags & flag_to_check)
 
 /datum/robot_sprite/proc/handle_extra_icon_updates(var/mob/living/silicon/robot/ourborg)
-	if(ourborg.resting) //If we're resting
+	if(ourborg.resting) //Don't do ANY of the overlay code if we're resting. It just won't look right!
 		return
 	if(sprite_flag_check(ROBOT_HAS_SHIELD_SPEED_SPRITE))
 		if(ourborg.has_active_type(/obj/item/borg/combat/shield) && ourborg.has_active_type(/obj/item/borg/combat/mobility))
@@ -68,12 +49,19 @@ var/list/borg_guns = list(/obj/item/weapon/gun/energy/laser/mounted,/obj/item/we
 			if(shield && shield.active)
 				ourborg.add_overlay("[sprite_icon_state]-shield")
 
-	if(sprite_flag_check(ROBOT_HAS_GUN_SPRITE) && (ourborg.has_active_type_list(borg_guns)))
-		ourborg.add_overlay("[sprite_icon_state]-gun")
-	if(sprite_flag_check(ROBOT_HAS_LASER_SPRITE) && (ourborg.has_active_type_list(borg_lasers)))
-		ourborg.add_overlay("[sprite_icon_state]-laser")
-	if(sprite_flag_check(ROBOT_HAS_TASER_SPRITE) && (ourborg.has_active_type_list(borg_tasers)))
-		ourborg.add_overlay("[sprite_icon_state]-taser")
+	if(ourborg.has_active_type(/obj/item/weapon/gun/energy/robotic)) //We have a gun in our modules.
+		var/obj/item/weapon/gun/energy/robotic/gun = locate() in ourborg
+		for(gun)
+			if(!ourborg.has_active_type(gun)) //The gun we're checking is NOT selected. Pass over it.
+				continue
+			if(sprite_flag_check(ROBOT_HAS_GUN_SPRITE) && gun.gun_flag_check(COUNTS_AS_ROBOT_GUN))
+				ourborg.add_overlay("[sprite_icon_state]-gun")
+			if(sprite_flag_check(ROBOT_HAS_LASER_SPRITE) && gun.gun_flag_check(COUNTS_AS_ROBOT_LASER))
+				ourborg.add_overlay("[sprite_icon_state]-laser")
+			if(sprite_flag_check(ROBOT_HAS_TASER_SPRITE) && gun.gun_flag_check(COUNTS_AS_ROBOT_TASER))
+				ourborg.add_overlay("[sprite_icon_state]-taser")
+			if(sprite_flag_check(ROBOT_HAS_DISABLER_SPRITE) && gun.gun_flag_check(COUNTS_AS_ROBOT_DISABLER))
+				ourborg.add_overlay("[sprite_icon_state]-disabler")
 	return //RS Edit End
 
 /datum/robot_sprite/proc/get_belly_overlay(var/mob/living/silicon/robot/ourborg, var/size = 1)
