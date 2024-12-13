@@ -46,11 +46,13 @@ var/list/borg_guns = list(/obj/item/weapon/gun/energy/laser/mounted,/obj/item/we
 	var/is_whitelisted = FALSE
 	var/whitelist_ckey
 
-/// Determines if the borg has the proper flags to show an overlay.
+/// Determines if the borg has the proper flags to show an overlay. RS Edit Start
 /datum/robot_sprite/proc/sprite_flag_check(var/flag_to_check)
 	return (sprite_flags & flag_to_check)
 
 /datum/robot_sprite/proc/handle_extra_icon_updates(var/mob/living/silicon/robot/ourborg)
+	if(ourborg.resting) //If we're resting
+		return
 	if(sprite_flag_check(ROBOT_HAS_SHIELD_SPEED_SPRITE))
 		if(ourborg.has_active_type(/obj/item/borg/combat/shield) && ourborg.has_active_type(/obj/item/borg/combat/mobility))
 			ourborg.add_overlay("[sprite_icon_state]-speed_shield")
@@ -72,7 +74,7 @@ var/list/borg_guns = list(/obj/item/weapon/gun/energy/laser/mounted,/obj/item/we
 		ourborg.add_overlay("[sprite_icon_state]-laser")
 	if(sprite_flag_check(ROBOT_HAS_TASER_SPRITE) && (ourborg.has_active_type_list(borg_tasers)))
 		ourborg.add_overlay("[sprite_icon_state]-taser")
-	return
+	return //RS Edit End
 
 /datum/robot_sprite/proc/get_belly_overlay(var/mob/living/silicon/robot/ourborg, var/size = 1)
 	//Size
