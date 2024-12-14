@@ -49,6 +49,18 @@
 			if(shield && shield.active)
 				ourborg.add_overlay("[sprite_icon_state]-shield")
 
+	if(ourborg.has_active_type(/obj/item/weapon/melee/robotic)) //We have a weapon in our ACTIVE modules.
+		var/obj/item/weapon/melee/robotic/melee = locate() in ourborg
+		for(melee)
+			if(!ourborg.has_active_type(melee)) //The melee weapon we're checking is NOT selected. Pass over it.
+				continue
+			if(sprite_flag_check(ROBOT_HAS_MELEE_SPRITE) && melee.weapon_flag_check(COUNTS_AS_ROBOTIC_MELEE))
+				ourborg.add_overlay("[sprite_icon_state]-melee")
+			if(sprite_flag_check(ROBOT_HAS_DAGGER_SPRITE) && melee.weapon_flag_check(COUNTS_AS_ROBOT_DAGGER))
+				ourborg.add_overlay("[sprite_icon_state]-dagger")
+			if(sprite_flag_check(ROBOT_HAS_BLADE_SPRITE) && melee.weapon_flag_check(COUNTS_AS_ROBOT_BLADE))
+				ourborg.add_overlay("[sprite_icon_state]-blade")
+
 	if(ourborg.has_active_type(/obj/item/weapon/gun/energy/robotic)) //We have a gun in our modules.
 		var/obj/item/weapon/gun/energy/robotic/gun = locate() in ourborg
 		for(gun)

@@ -159,17 +159,10 @@
 	has_custom_open_sprites = TRUE
 	has_dead_sprite = TRUE
 	has_dead_sprite_overlay = FALSE
-	sprite_flags = ROBOT_HAS_SHIELD_SPRITE | ROBOT_HAS_SPEED_SPRITE | ROBOT_HAS_LASER_SPRITE | ROBOT_HAS_DISABLER_SPRITE//RS EDIT
+	sprite_flags = ROBOT_HAS_SHIELD_SPRITE | ROBOT_HAS_SPEED_SPRITE | ROBOT_HAS_LASER_SPRITE | ROBOT_HAS_DISABLER_SPRITE | ROBOT_HAS_DAGGER_SPRITE//RS EDIT
 
 	is_whitelisted = TRUE
 	whitelist_ckey = "foopwotch"
-
-//RS Edit Note: The above still exists as it has two special icon_states: Dagger & Disabler. While I could add extra flags to _sprite_datum.dm, this is such an edge case it gets to keep existing.
-/datum/robot_sprite/combat/fluff/foopwotch/handle_extra_icon_updates(var/mob/living/silicon/robot/ourborg)
-
-	..()
-	if(ourborg.has_active_type(/obj/item/weapon/combat_borgblade)) //RS Edit
-		ourborg.add_overlay("[sprite_icon_state]-dagger")
 
 // J
 
