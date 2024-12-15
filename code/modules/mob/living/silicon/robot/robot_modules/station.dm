@@ -478,12 +478,12 @@ var/global/list/robot_modules = list(
 	..()
 	src.modules += new /obj/item/weapon/handcuffs/cyborg(src)
 	src.modules += new /obj/item/weapon/melee/baton/robot(src)
-	src.modules += new /obj/item/weapon/gun/energy/taser/mounted/cyborg(src)
+	src.modules += new /obj/item/weapon/gun/energy/robotic/taser(src)
 	src.modules += new /obj/item/taperoll/police(src)
 	src.modules += new /obj/item/weapon/reagent_containers/spray/pepper(src)
 	src.modules += new /obj/item/weapon/gripper/security(src)
 	src.modules += new /obj/item/device/ticket_printer(src)	//VOREStation Add
-	src.emag += new /obj/item/weapon/gun/energy/laser/mounted(src)
+	src.emag += new /obj/item/weapon/gun/energy/robotic/laser/rifle(src)
 
 	src.modules += new /obj/item/device/dogborg/sleeper/K9(src) //Eat criminals. Bring them to the brig.
 	src.modules += new /obj/item/weapon/dogborg/pounce(src) //Pounce
@@ -496,7 +496,7 @@ var/global/list/robot_modules = list(
 		F.icon_state = "flash"
 	else if(F.times_used)
 		F.times_used--
-	var/obj/item/weapon/gun/energy/taser/mounted/cyborg/T = locate() in src.modules
+	var/obj/item/weapon/gun/energy/robotic/taser/T = locate() in src.modules
 	if(T.power_supply.charge < T.power_supply.maxcharge)
 		T.power_supply.give(T.charge_cost * amount)
 		T.update_icon()
@@ -712,7 +712,7 @@ var/global/list/robot_modules = list(
 	src.modules += new /obj/item/weapon/storage/part_replacer(src)
 	src.modules += new /obj/item/weapon/shockpaddles/robot/jumper(src)
 	src.modules += new /obj/item/weapon/melee/baton/slime/robot(src)
-	src.modules += new /obj/item/weapon/gun/energy/taser/xeno/robot(src)
+	src.modules += new /obj/item/weapon/gun/energy/robotic/taser/xeno(src)
 	src.modules += new /obj/item/device/xenoarch_multi_tool(src)
 	src.modules += new /obj/item/weapon/pickaxe/excavationdrill(src)
 
@@ -755,15 +755,15 @@ var/global/list/robot_modules = list(
 	..()
 	src.modules += new /obj/item/weapon/handcuffs/cyborg(src)
 	src.modules += new /obj/item/taperoll/police(src)
-	src.modules += new /obj/item/weapon/gun/energy/laser/mounted(src)
-	src.modules += new /obj/item/weapon/gun/energy/taser/mounted/cyborg/ertgun(src)
+	src.modules += new /obj/item/weapon/gun/energy/robotic/laser/rifle(src)
+	src.modules += new /obj/item/weapon/gun/energy/robotic/disabler(src)
 	src.modules += new /obj/item/weapon/pickaxe/plasmacutter/borg(src)
-	src.modules += new /obj/item/weapon/combat_borgblade(src)
+	src.modules += new /obj/item/weapon/melee/robotic/dagger(src)
 	src.modules += new /obj/item/borg/combat/shield(src)
 	src.modules += new /obj/item/borg/combat/mobility(src)
-	src.modules += new /obj/item/weapon/borg_combat_shocker(src)
+	src.modules += new /obj/item/weapon/melee/robotic/borg_combat_shocker(src)
 	src.modules += new /obj/item/device/ticket_printer(src)
-	src.emag += new /obj/item/weapon/gun/energy/lasercannon/mounted(src)
+	src.emag += new /obj/item/weapon/gun/energy/robotic/laser/heavy(src)
 
 	src.modules += new /obj/item/device/dogborg/sleeper/K9/ert(src)
 	src.modules += new /obj/item/weapon/dogborg/pounce(src)

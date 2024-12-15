@@ -121,15 +121,6 @@
 	module_type = "Security"
 	sprite_icon = 'icons/mob/robot/security_wide.dmi'
 
-	var/has_laser_sprite = FALSE
-	var/has_taser_sprite = FALSE
-
-/datum/robot_sprite/dogborg/security/handle_extra_icon_updates(var/mob/living/silicon/robot/ourborg)
-	if(has_laser_sprite && istype(ourborg.module_active, /obj/item/weapon/gun/energy/laser/mounted))
-		ourborg.add_overlay("[sprite_icon_state]-laser")
-	if(has_taser_sprite && istype(ourborg.module_active, /obj/item/weapon/gun/energy/taser/mounted/cyborg))
-		ourborg.add_overlay("[sprite_icon_state]-taser")
-
 /datum/robot_sprite/dogborg/security/do_equipment_glamour(var/obj/item/weapon/robot_module/module)
 	if(!has_custom_equipment_sprites)
 		return
@@ -149,24 +140,20 @@
 	sprite_icon_state = "k9"
 	sprite_hud_icon_state = "k9"
 	has_eye_light_sprites = TRUE
-	has_laser_sprite = TRUE
-	has_taser_sprite = TRUE
+	sprite_flags = ROBOT_HAS_LASER_SPRITE | ROBOT_HAS_TASER_SPRITE //RS EDIT
 
 /datum/robot_sprite/dogborg/security/k92
 	name = "K9 Alt"
 	sprite_icon_state = "k92"
 	sprite_hud_icon_state = "k9"
 	has_eye_sprites = FALSE
-	has_laser_sprite = TRUE
-	has_taser_sprite = TRUE
-
+	sprite_flags = ROBOT_HAS_LASER_SPRITE | ROBOT_HAS_TASER_SPRITE //RS EDIT
 /datum/robot_sprite/dogborg/security/vale
 	name = "Hound V2"
 	sprite_icon_state = "vale"
 	sprite_hud_icon_state = "k9"
 	has_eye_light_sprites = TRUE
-	has_laser_sprite = TRUE
-	has_taser_sprite = TRUE
+	sprite_flags = ROBOT_HAS_LASER_SPRITE | ROBOT_HAS_TASER_SPRITE //RS EDIT
 
 /datum/robot_sprite/dogborg/security/borgi
 	name = "Borgi"
@@ -181,29 +168,18 @@
 	sprite_icon_state = "otie"
 	sprite_hud_icon_state = "k9"
 	has_eye_light_sprites = TRUE
-	has_laser_sprite = TRUE
-	has_taser_sprite = TRUE
+	sprite_flags = ROBOT_HAS_LASER_SPRITE | ROBOT_HAS_TASER_SPRITE //RS EDIT
 
 /datum/robot_sprite/dogborg/security/drake
 	name = "Drake"
 	sprite_icon_state = "drake"
-	has_laser_sprite = TRUE
-	has_taser_sprite = TRUE
+	sprite_flags = ROBOT_HAS_LASER_SPRITE | ROBOT_HAS_TASER_SPRITE //RS EDIT
 
 // Tall sprites
 
 /datum/robot_sprite/dogborg/tall/security
 	module_type = "Security"
 	sprite_icon = 'icons/mob/robot/security_large.dmi'
-
-	var/has_laser_sprite = FALSE
-	var/has_taser_sprite = FALSE
-
-/datum/robot_sprite/dogborg/tall/security/handle_extra_icon_updates(var/mob/living/silicon/robot/ourborg)
-	if(has_laser_sprite && istype(ourborg.module_active, /obj/item/weapon/gun/energy/laser/mounted))
-		ourborg.add_overlay("[sprite_icon_state]-laser")
-	if(has_taser_sprite && istype(ourborg.module_active, /obj/item/weapon/gun/energy/taser/mounted/cyborg))
-		ourborg.add_overlay("[sprite_icon_state]-taser")
 
 /datum/robot_sprite/dogborg/tall/security/do_equipment_glamour(var/obj/item/weapon/robot_module/module)
 	if(!has_custom_equipment_sprites)
@@ -223,8 +199,7 @@
 	name = "Raptor V-4"
 	sprite_icon_state = "raptor"
 	has_custom_equipment_sprites = TRUE
-	has_laser_sprite = TRUE
-	has_taser_sprite = TRUE
+	sprite_flags = ROBOT_HAS_LASER_SPRITE | ROBOT_HAS_TASER_SPRITE //RS EDIT
 	rest_sprite_options = list("Default", "Bellyup")
 
 /datum/robot_sprite/dogborg/tall/security/meka
