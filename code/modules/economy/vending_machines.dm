@@ -408,12 +408,14 @@
 					/obj/item/weapon/reagent_containers/glass/bottle/toxin = 4,
 					/obj/item/weapon/reagent_containers/syringe/antiviral = 4,
 					/obj/item/weapon/reagent_containers/syringe = 12,
-					/obj/item/weapon/reagent_containers/glass/bottle/hypovial/small = 12,
-					/obj/item/weapon/hypospray_mkii = 4,
-					/obj/item/weapon/storage/firstaid/hypokit/brute = 2,
-					/obj/item/weapon/storage/firstaid/hypokit/burn = 2,
-					/obj/item/weapon/storage/firstaid/hypokit/toxin = 2,
-					/obj/item/weapon/storage/firstaid/hypokit/oxy = 2,
+					/obj/item/weapon/reagent_containers/glass/beaker/vial = 12,
+					///obj/item/weapon/hypospray_mkii = 4, //RS add (removed on request)
+					/obj/item/weapon/storage/firstaid/hypokit = 4, //RS Add
+					///obj/item/weapon/storage/firstaid/hypokit/brute = 2, //RS Add (removed on request)
+					///obj/item/weapon/storage/firstaid/hypokit/burn = 2, //RS Add (removed on request)
+					///obj/item/weapon/storage/firstaid/hypokit/antitoxin = 2, //RS Add (removed on request)
+					///obj/item/weapon/storage/firstaid/hypokit/oxy = 2, //RS Add (removed on request)
+					///obj/item/weapon/reagent_containers/glass/beaker/vial = 10, //RS Add
 					/obj/item/device/healthanalyzer = 5,
 					/obj/item/weapon/reagent_containers/glass/beaker = 4,
 					/obj/item/weapon/reagent_containers/dropper = 2,
@@ -808,12 +810,8 @@
 					/obj/item/toy/plushie/otter = 1,
 					/obj/item/toy/plushie/vox = 1,
 					/obj/item/toy/plushie/shark = 1,
-					/obj/item/toy/mistletoe = 1,
+					/obj/item/toy/mistletoe = 1)
 					//VOREStation Add End
-					/obj/item/toy/plushie/teppi = 1, //RS Edit || Ports CHOMPStation PR 8822
-					/obj/item/toy/plushie/lasagna = 1	//RS ADD
-					)
-
 	premium = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/champagne = 1,
 					/obj/item/weapon/storage/trinketbox = 2)
 	prices = list(/obj/item/weapon/storage/fancy/heartbox = 15,
@@ -855,11 +853,8 @@
 					/obj/item/toy/plushie/otter = 50,
 					/obj/item/toy/plushie/vox = 50,
 					/obj/item/toy/plushie/shark = 50,
-					/obj/item/toy/mistletoe = 50,
+					/obj/item/toy/mistletoe = 50)
 					//VOREStation Add End
-					/obj/item/toy/plushie/teppi = 50, //RS Edit || Ports CHOMPStation PR 8822
-					/obj/item/toy/plushie/lasagna = 50	//RS ADD
-					)
 
 
 /obj/machinery/vending/fishing
