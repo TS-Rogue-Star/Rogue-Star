@@ -45,6 +45,9 @@ var/global/list/permanent_unlockables = list(
 	var/triangles = 0							//Triangle money
 	var/list/item_storage = list()				//Various items that are stored in the bank, these can only be stored and pulled out once
 	var/list/unlockables = list()				//Scene items that, once stored, can be pulled once per round forever.
+	var/nif_type = null							//The type of nif you have
+	var/nif_durability = 0						//The durability of your nif
+	var/nif_savedata = list()
 
 /datum/etching/proc/store_item(item,var/obj/machinery/item_bank/bank)
 	if(!isobj(item))
@@ -128,12 +131,18 @@ var/global/list/permanent_unlockables = list(
 	item_storage = null
 	item_storage = load["item_storage"]
 	unlockables = load["unlockables"]
+	nif_type = load["nif_type"]
+	nif_durability = load["nif_durability"]
+	nif_savedata = load["nif_savedata"]
 
 /datum/etching/proc/item_save()
 	var/list/to_save = list(
 		"triangles" = triangles,
 		"item_storage" = item_storage,
-		"unlockables" = unlockables
+		"unlockables" = unlockables,
+		"nif_type" = nif_type,
+		"nif_durability" = nif_durability,
+		"nif_savedata" = nif_savedata
 	)
 
 	return to_save
@@ -146,3 +155,27 @@ var/global/list/permanent_unlockables = list(
 		if(.)
 			. += "\n"
 		. += our_money
+
+/datum/etching/proc/update_nif(var/mob/living/carbon/human/H)
+	if(H.nif)		//We have a nif, let's see if it needs to be updated
+		if(H.nif.owner != ourmob.real_name)		//Is this nif ours? If not, we shouldn't save it
+			nif_type = null
+			nif_durability = 0
+			needs_saving = TRUE
+		if(H.nif.type != nif_type)	//Our nif types don't match, we either just got a nif, or we got an upgrade, nice, let's record it!
+			nif_type = H.nif.type
+			nif_durability = H.nif.durability
+			needs_saving = TRUE
+	else if(nif_type)		//We don't have a nif, but we do have a record of one, so we probably got ours removed, let's clear the data.
+		nif_type = null
+		nif_durability = 0
+		needs_saving = TRUE
+
+/proc/persist_nif_data(var/mob/living/carbon/human/H)
+	to_world("persist_nif_data")
+	if(!ishuman(H))		//We are not a human, don't bother!
+		stack_trace("Persist (NIF): Given a nonhuman: [H]")
+		return
+	if(!H.etching)		//We do not have the ability to save character persist data, don't bother!
+		return
+	H.etching.update_nif(H)
