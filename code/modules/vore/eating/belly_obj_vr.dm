@@ -65,6 +65,7 @@
 	var/overlay_min_prey_size	= 0 	//Minimum prey size for belly overlay to show. 0 to disable
 	var/override_min_prey_size = FALSE	//If true, exceeding override prey number will override minimum size requirements
 	var/override_min_prey_num	= 1		//We check belly contents against this to override min size
+	var/belly_overall_mult = 1	//Multiplier applied ontop of any other specific multipliers //RS Edit. Added from VS.
 	//RS Edit: Ports Slow Body Digestion, CHOMPStation PR 5161
 	var/slow_digestion = FALSE
 	var/slow_brutal = FALSE
