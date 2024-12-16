@@ -62,6 +62,6 @@
 	var/vore_sprite_multiply = list("stomach" = FALSE, "taur belly" = FALSE)
 	var/vore_sprite_color = list("stomach" = "#000", "taur belly" = "#000")
 	var/updating_fullness = FALSE
-	var/glowy_bellies = FALSE //Glowy belly!
+	var/glowy_belly = FALSE //Glowy belly!
 	var/obj/belly/previewing_belly
 	//RS Add End

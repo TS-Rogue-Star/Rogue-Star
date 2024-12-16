@@ -821,6 +821,7 @@
 	vore_capacity_ex = list()
 	vore_fullness_ex = list()
 	vore_light_states = list()
+	update_multibelly()
 	//RS Edit End
 
 /mob/living/silicon/robot/proc/ColorMate() //RS Add Start|| Port Virgo PR 15836
@@ -968,7 +969,7 @@
 					continue
 
 
-				if(glowy_bellies)
+				if(glowy_belly)
 					var/image/belly_sprite = image(icon, sprite_datum.get_belly_resting_overlay(src, vs_fullness, belly_class))
 					belly_sprite.plane = PLANE_LIGHTING_ABOVE
 					add_overlay(belly_sprite)
@@ -976,7 +977,7 @@
 					add_overlay(sprite_datum.get_belly_resting_overlay(src, vs_fullness, belly_class))
 			else
 				update_belly_lights(belly_class)
-				if(glowy_bellies)
+				if(glowy_belly)
 					var/image/belly_sprite = image(icon, sprite_datum.get_belly_overlay(src, vs_fullness, belly_class))
 					belly_sprite.plane = PLANE_LIGHTING_ABOVE
 					add_overlay(belly_sprite)
@@ -1567,29 +1568,8 @@
 	set desc = "Select your belly sprite."
 	set category = "Abilities"
 
-	if(!vore_selected)
-		to_chat(src, "<span class='notice'>You need to select a stomach!</span>")
-		return
-
-	var/list/size_choices = list("Sleeper", "Vorebelly", "Both")
-	var/size_choice = tgui_input_list(src, "Choose your belly overlay preference:", "Belly Overlay", size_choices)
-	if(!size_choice)
-		return
-	vore_selected.silicon_belly_overlay_preference = size_choice
-
-	var/mult_size = tgui_input_number(src, "Choose your stomach mult (0.25 to 2)", "Belly Mult", 1,2,0.25)
-	if(!mult_size)
-		return
-	vore_selected.size_factor_for_sprite = mult_size
-
-
-	if(!vore_selected.affects_vore_sprites)
-		var/enable = tgui_alert(src, "Wanna enable prey causing vore size on this gut?", "size?", list("Yes", "No"))
-		if(enable == "Yes")
-			vore_selected.affects_vore_sprites = TRUE
-
 	update_multibelly() //Clear it all and let's reselect.
-	var/list/belly_icons = vore_icon_bellies //TODO: Make this a list that checks if said borg sprite has multi bellies.
+	var/list/belly_icons = vore_icon_bellies
 	var/belly_type = tgui_input_list(src, "Choose your belly TYPE:", "Belly Overlay", belly_icons)
 	if(!belly_type)
 		return
@@ -1597,6 +1577,6 @@
 
 	var/belly_glow = tgui_alert(src, "Do you  want your belly to glow?(show over darkness)?", "Belly glow", list("Yes", "No"))
 	if(!belly_glow || belly_glow == "No")
-		glowy_bellies = FALSE
+		glowy_belly = FALSE
 	else
-		glowy_bellies = TRUE
+		glowy_belly = TRUE
