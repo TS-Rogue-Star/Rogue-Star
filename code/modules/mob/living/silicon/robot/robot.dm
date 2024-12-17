@@ -1196,6 +1196,7 @@
 	if(module_sprites.len == 1 || !client)
 		if(!(sprite_datum in module_sprites))
 			sprite_datum = module_sprites[1]
+			update_multibelly()
 	else
 		var/selection = tgui_input_list(src, "Select an icon! [triesleft ? "You have [triesleft] more chance\s." : "This is your last try."]", "Robot Icon", module_sprites)
 		sprite_datum = selection
