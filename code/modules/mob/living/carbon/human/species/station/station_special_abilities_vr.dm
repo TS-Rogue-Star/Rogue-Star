@@ -1704,7 +1704,7 @@
 
 	choices += "Change amount"
 	choices += "Change verb"
-	choices += "Chemical refresher"
+	choices += "Chemical Refresher"
 
 	var/choice = tgui_alert(src, "Do you wish to inject somebody or adjust settings?", "Selection List", choices)
 

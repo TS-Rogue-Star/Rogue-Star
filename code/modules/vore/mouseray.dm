@@ -237,6 +237,7 @@
 	new_mob.appendage_alt_setting = appendage_alt_setting
 	new_mob.drop_vore = drop_vore
 	new_mob.stumble_vore = stumble_vore
+	new_mob.glowy_belly = glowy_belly
 	new_mob.slip_vore = slip_vore
 	new_mob.throw_vore = throw_vore
 	new_mob.food_vore = food_vore
