@@ -1394,6 +1394,10 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 				host.client.prefs_vr.glowy_belly = host.client.prefs_vr.glowy_belly
 			unsaved_changes = TRUE
 			host.update_icon()
+			if(istype(host, /mob/living/carbon/human))
+				var/mob/living/carbon/human/our_owner = host
+				our_owner.update_vore_belly_sprite()
+				our_owner.update_vore_tail_sprite()
 			return TRUE
 		// End RS edit
 
