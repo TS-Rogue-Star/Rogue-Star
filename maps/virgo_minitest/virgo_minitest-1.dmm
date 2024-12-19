@@ -2733,6 +2733,7 @@
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
+/obj/item/weapon/backup_implanter,
 /turf/simulated/floor/tiled,
 /area/bridge)
 "gk" = (
@@ -3198,6 +3199,13 @@
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/engineering/engine_monitoring)
+"iI" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/item/weapon/backup_implanter,
+/turf/simulated/floor/tiled,
+/area/bridge)
 "iJ" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
@@ -3216,6 +3224,10 @@
 	},
 /turf/simulated/floor/airless,
 /area/space)
+"iR" = (
+/obj/machinery/computer/transhuman/resleeving,
+/turf/simulated/floor/tiled,
+/area/bridge)
 "iT" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/machinery/button/remote/blast_door{
@@ -4002,6 +4014,10 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/engineering/workshop)
+"rG" = (
+/obj/machinery/clonepod/transhuman,
+/turf/simulated/floor/tiled,
+/area/bridge)
 "rJ" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 8
@@ -4218,6 +4234,10 @@
 	},
 /turf/simulated/floor/airless,
 /area/space)
+"tY" = (
+/obj/machinery/transhuman/resleever,
+/turf/simulated/floor/tiled,
+/area/bridge)
 "uc" = (
 /obj/machinery/atmospherics/unary/heat_exchanger{
 	dir = 4
@@ -5218,6 +5238,13 @@
 	},
 /turf/simulated/floor/airless,
 /area/space)
+"EP" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/item/weapon/backup_implanter,
+/turf/simulated/floor/tiled,
+/area/bridge)
 "ES" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /obj/effect/floor_decal/borderfloor{
@@ -6159,6 +6186,10 @@
 	},
 /turf/simulated/floor,
 /area/engineering/engine_monitoring)
+"PM" = (
+/obj/item/weapon/backup_implanter,
+/turf/simulated/floor/tiled,
+/area/bridge)
 "PO" = (
 /obj/machinery/power/tesla_coil,
 /turf/simulated/floor/tiled/techfloor,
@@ -8808,7 +8839,7 @@ aa
 aa
 fY
 gh
-gf
+rG
 gq
 gf
 gf
@@ -8910,7 +8941,7 @@ aa
 aa
 fY
 gi
-gf
+tY
 gr
 gf
 gf
@@ -9012,7 +9043,7 @@ Pg
 aa
 fY
 GC
-gf
+iR
 gr
 gf
 gf
@@ -9114,9 +9145,9 @@ aa
 aa
 fY
 gj
-gf
-gr
-gf
+PM
+iI
+PM
 gf
 gz
 gf
@@ -9215,9 +9246,9 @@ aa
 aa
 aa
 fY
-gk
-gf
-gr
+EP
+PM
+iI
 gf
 gf
 gf

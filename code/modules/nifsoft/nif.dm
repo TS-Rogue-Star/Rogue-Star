@@ -699,3 +699,4 @@ You can also set the stat of a NIF to NIF_TEMPFAIL without any issues to disable
 	else
 		nif.examine_msg = new_flavor
 		nif.save_data["examine_msg"] = new_flavor
+	etching.needs_saving = TRUE	//RS ADD

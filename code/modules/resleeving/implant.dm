@@ -17,6 +17,7 @@
 	// Needs a matching /datum/transcore_db with key defined in code
 	var/db_key
 	var/datum/transcore_db/our_db // These persist all round and are never destroyed, just keep a hard ref
+	var/our_mob_name	//RS EDIT START
 
 /obj/item/weapon/implant/backup/get_data()
 	var/dat = {"
@@ -37,7 +38,29 @@
 
 /obj/item/weapon/implant/backup/Initialize()
 	. = ..()
+	RegisterSignal(SStranscore,COMSIG_BACKUP_IMPLANT,PROC_REF(check_backup), TRUE)		//RS ADD - Listen for transcore to fire so we can update now and then
+
 	our_db = SStranscore.db_by_key(db_key)
+
+/obj/item/weapon/implant/backup/proc/check_backup()		//RS ADD START
+	if(!our_db)	//Something is wrong, let's not
+		return
+	if(!imp_in)	//We haven't been implanted
+		return
+	if(!isorgan(src.loc))	//We are probably still in the implanter, don't do anything
+		return
+	var/obj/item/organ/O = src.loc
+	if(!ishuman(O.owner))	//We are in an organ, but that organ isn't in a human mob, something bad probably happened...
+		return
+
+	var/mob/living/carbon/human/H = O.owner
+
+	BITSET(H.hud_updateflag, BACKUP_HUD)
+	////BODY BACKUP////
+	if(H == imp_in && H.mind && H.stat < DEAD)
+		our_db.m_backup(H.mind,H.nif)
+
+//RS ADD END
 
 /obj/item/weapon/implant/backup/Destroy()
 	our_db.implants -= src
@@ -47,8 +70,29 @@
 	if(istype(H))
 		BITSET(H.hud_updateflag, BACKUP_HUD)
 		our_db.implants |= src
-
+		//RS ADD START
+		RegisterSignal(H, COMSIG_MOB_DEATH, PROC_REF(mob_death), TRUE)	//Listen for our mob to die
+		RegisterSignal(H, COMSIG_PARENT_QDELETING, PROC_REF(mob_death), TRUE)	//Listen for our mob to be deleted (gurgles)
+		check_backup()	//Let's get backed up right now
+		our_mob_name = H.real_name	//To prevent race conditions, let's write down our mob's name in case the mob no longer exists when we need to update the db
+		//RS ADD END
 		return 1
+
+//RS ADD START
+/obj/item/weapon/implant/backup/proc/mob_death()
+	if(!our_mob_name)	//Our implant never got set up right, so we can't get updated about death
+		return
+
+	var/datum/transhuman/mind_record/curr_MR = our_db.backed_up[our_mob_name]	//Using our name to get our mind record from the DB
+
+	if(!curr_MR)	//We couldn't find a mind record
+		return
+
+	//Onetimes do not get processing or notifications
+	if(curr_MR.one_time)
+		return
+	curr_MR.dead_state = MR_DEAD	//Tell the mind record we died
+//RS ADD END
 
 //New, modern implanter instead of old style implanter.
 /obj/item/weapon/backup_implanter
