@@ -1,6 +1,6 @@
 //RS FILE
 
-/mob/living
+/mob
 	var/datum/etching/etching
 	var/admin_magic = FALSE
 
@@ -85,9 +85,24 @@
 		log_debug("Saving: [old_path] failed to delete on rename function")
 		return
 
+/client
+	var/datum/etching/etching
+
+/client/New()
+	. = ..()
+	load_etching()
+
+/client/proc/load_etching()
+	if(etching)
+		var/datum/etching/oldetch = etching
+		etching = null
+		qdel(oldetch)
+	etching = new /datum/etching(src)
+	etching.load()
 
 /datum/etching
 	var/mob/living/ourmob			//Reference to the mob we are working with
+	var/client/ourclient			//Reference to the client, which may not represent the mob
 	var/event_character = FALSE		//If true, saves to an alternative path and allows editing
 
 	var/shutting_down = FALSE		//If true it won't try to save again
@@ -103,38 +118,51 @@
 		log_debug("<span class = 'danger'>Etching: No target, delete self</span>")
 		qdel(src)
 		return
-	if(!isliving(L))
-		log_debug("<span class = 'danger'>Etching: Target [L] is not living, delete self</span>")
-		qdel(src)
-		return
-	ourmob = L
-	save_cooldown = rand(200,350)	//Make the number be random so that there's less chance it tries to autosave everyone at the same time.
-	return ..()
+	if(isliving(L))
+		ourmob = L
+		save_cooldown = rand(5,10)	//Make the number be random so that there's less chance it tries to autosave everyone at the same time.
+		return ..()
+	if(isclient(L))
+		ourclient = L
+		savable = FALSE
+		return ..()
+
+	log_debug("<span class = 'danger'>Etching: Target [L] is invalid, delete self</span>")
+	qdel(src)
 
 /datum/etching/Destroy()
 	. = ..()
 	ourmob = null
+	ourclient = null
 
 /datum/etching/proc/process_etching()
 	if(savable)
 		if(save_cooldown <= 0)
 			save()
-			save_cooldown = rand(200,350)	//Make the number be random so that there's less chance it tries to autosave everyone at the same time.
+			save_cooldown = rand(5,10)	//Make the number be random so that there's less chance it tries to autosave everyone at the same time.
 		else
 			save_cooldown --
 
 /datum/etching/proc/get_save_path()
-
-	if(event_character)
-		save_path = "data/player_saves/[copytext(ourmob.ckey, 1, 2)]/[ourmob.ckey]/magic/[ourmob.real_name]-EVENT-etching.json"
-	else
-		save_path = "data/player_saves/[copytext(ourmob.ckey, 1, 2)]/[ourmob.ckey]/magic/[ourmob.real_name]-etching.json"
+	if(isliving(ourmob))
+		if(event_character)
+			save_path = "data/player_saves/[copytext(ourmob.ckey, 1, 2)]/[ourmob.ckey]/magic/[ourmob.real_name]-EVENT-etching.json"
+		else
+			save_path = "data/player_saves/[copytext(ourmob.ckey, 1, 2)]/[ourmob.ckey]/magic/[ourmob.real_name]-etching.json"
+	else if(isclient(ourclient))
+		save_path = "data/player_saves/[copytext(ourclient.ckey, 1, 2)]/[ourclient.ckey]/magic/[ourclient.prefs.real_name]-etching.json"
 
 /datum/etching/proc/load()
-	if(IsGuestKey(ourmob.key))
-		return
-	if(!ourmob.ckey)
+	if(ourmob)
+		if(IsGuestKey(ourmob.key))
+			return
+	if(ourmob && !ourmob.ckey)
 		log_debug("<span class = 'danger'>Etching load failed: Aborting etching load for [ourmob.real_name], no ckey</span>")
+		savable = FALSE
+		return
+
+	if(ourclient && !ourclient.ckey)
+		log_debug("<span class = 'danger'>Etching load failed: Aborting etching load for [ourclient.prefs.real_name], no ckey</span>")
 		savable = FALSE
 		return
 
@@ -178,11 +206,15 @@
 	xp = load["xp"]
 
 	item_load(load)
-	log_debug("<span class = 'rose'>Etching load complete for [ourmob.real_name].</span>")
+	if(ourmob)
+		log_debug("<span class = 'rose'>Etching load complete for [ourmob.real_name].</span>")
+	if(ourclient)
+		log_debug("<span class = 'rose'>Etching load complete for [ourclient.prefs.real_name].</span>")
 
 /datum/etching/proc/save(delet = FALSE)
-	if(IsGuestKey(ourmob.key))
-		return
+	if(ourmob)
+		if(IsGuestKey(ourmob.key))
+			return
 
 	if((!savable && !event_character) || !needs_saving)
 		return
@@ -192,7 +224,7 @@
 	if(delet)	//Our mob got deleted, so we're saving and quitting.
 		shutting_down = TRUE
 
-	if(!save_path || !ishuman(ourmob) || istype(ourmob, /mob/living/carbon/human/dummy))
+	if(!save_path)
 		if(shutting_down)
 			ourmob = null
 			qdel(src)
@@ -230,7 +262,7 @@
 		qdel(src)
 
 /datum/etching/proc/setup()
-	return
+	needs_saving = TRUE
 
 /datum/etching/proc/update_etching(mode,value)
 	needs_saving = TRUE

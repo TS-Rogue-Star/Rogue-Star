@@ -135,15 +135,21 @@ var/global/list/permanent_unlockables = list(
 	nif_durability = load["nif_durability"]
 	nif_savedata = load["nif_savedata"]
 
+	load_nif()
+
 /datum/etching/proc/item_save()
 	var/list/to_save = list(
 		"triangles" = triangles,
 		"item_storage" = item_storage,
-		"unlockables" = unlockables,
-		"nif_type" = nif_type,
-		"nif_durability" = nif_durability,
-		"nif_savedata" = nif_savedata
+		"unlockables" = unlockables
 	)
+
+	if(ishuman(ourmob))
+		var/mob/living/carbon/human/H = ourmob
+		if(H.nif)
+			to_save["nif_type"] = H.nif.type
+			to_save["nif_durability"] = H.nif.durability
+			to_save["nif_savedata"] = H.nif.save_data
 
 	return to_save
 
@@ -172,10 +178,47 @@ var/global/list/permanent_unlockables = list(
 		needs_saving = TRUE
 
 /proc/persist_nif_data(var/mob/living/carbon/human/H)
-	to_world("persist_nif_data")
 	if(!ishuman(H))		//We are not a human, don't bother!
 		stack_trace("Persist (NIF): Given a nonhuman: [H]")
 		return
 	if(!H.etching)		//We do not have the ability to save character persist data, don't bother!
 		return
 	H.etching.update_nif(H)
+
+/datum/etching/setup()
+	if(ourmob)
+		if(!nif_type && ourmob.client.prefs.nif_path)
+			convert_nif(ourmob.client)
+		load_nif()
+	if(ourclient)
+		if(!nif_type && ourclient.prefs.nif_path)
+			convert_nif(ourclient)
+
+/datum/etching/proc/convert_nif(var/client/thissun)
+	if(event_character)
+		return
+	var/orig = savable
+	savable = TRUE
+	log_debug("ETCHING: Converting legacy NIF data: [thissun.prefs.nif_path] - [thissun.prefs.nif_durability] - [thissun.prefs.nif_savedata]")
+	nif_type = thissun.prefs.nif_path
+	nif_durability = thissun.prefs.nif_durability
+	nif_savedata = thissun.prefs.nif_savedata
+	needs_saving = TRUE
+	thissun.prefs.nif_path = null
+	log_debug("ETCHING: Legacy NIF data conversion complete.")
+	save()
+	savable = orig
+
+/datum/etching/proc/load_nif()
+	if(!nif_type || !ourmob)
+		return
+	var/backup
+	if(!ispath(nif_type))
+		backup = nif_type
+		nif_type = text2path(nif_type)
+	if(!nif_type)
+		log_debug("ETCHING: Attempted to load nif, but had invalid type: [backup], aborting")
+		nif_type = backup
+		return
+
+	new nif_type(ourmob,nif_durability,nif_savedata)
