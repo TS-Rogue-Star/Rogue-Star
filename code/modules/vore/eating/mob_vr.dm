@@ -50,3 +50,18 @@
 							"They are incredibly obese. Their massive potbelly sags over their waistline while their fat ass would probably require two chairs to sit down comfortably!",
 							"They are so morbidly obese, you wonder how they can even stand, let alone waddle around the station. They can't get any fatter without being immobilized.")
 	var/ssd_vore = FALSE				//RS ADD: if false, makes mob undevourable if player_login_key_log is set
+
+	//RS Add Start
+	// CHOMP vore icons refactor (Now on mob)
+	var/vore_capacity = 0				// Maximum capacity, -1 for unlimited
+	var/vore_capacity_ex = list("stomach" = 0) //expanded list of capacities
+	var/vore_fullness = 0				// How "full" the belly is (controls icons)
+	var/list/vore_icon_bellies = list("stomach")
+	var/list/vore_fullness_ex = list("stomach" = 0) // Expanded list of fullness
+	var/belly_size_multiplier = 1
+	var/vore_sprite_multiply = list("stomach" = FALSE, "taur belly" = FALSE)
+	var/vore_sprite_color = list("stomach" = "#000", "taur belly" = "#000")
+	var/updating_fullness = FALSE
+	var/glowy_belly = FALSE //Glowy belly!
+	var/obj/belly/previewing_belly
+	//RS Add End

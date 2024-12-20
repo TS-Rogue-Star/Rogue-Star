@@ -22,6 +22,8 @@
 		var/icon/vorebelly_s = new/icon(icon = 'icons/mob/vore/Bellies.dmi', icon_state = "[species.vore_belly_default_variant]Belly[vs_fullness][struggle_anim_stomach ? "" : " idle"]")
 		vorebelly_s.Blend(vore_sprite_color["stomach"], vore_sprite_multiply["stomach"] ? ICON_MULTIPLY : ICON_ADD)
 		var/image/working = image(vorebelly_s)
+		if(glowy_belly)
+			working.plane = PLANE_LIGHTING_ABOVE
 		working.overlays += em_block_image_generic(working)
 		return working
 	return null
@@ -58,6 +60,8 @@
 		working.pixel_x = -16
 		if(tail_style.em_block)
 			working.overlays += em_block_image_generic(working)
+		if(glowy_belly)
+			working.plane = PLANE_LIGHTING_ABOVE
 		return working
 	return null
 

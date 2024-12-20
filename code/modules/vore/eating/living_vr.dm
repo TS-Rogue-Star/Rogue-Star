@@ -258,6 +258,7 @@
 	P.throw_vore = src.throw_vore
 	P.food_vore = src.food_vore
 	P.stumble_vore = src.stumble_vore
+	P.glowy_belly = src.glowy_belly
 	P.eating_privacy_global = src.eating_privacy_global
 
 	P.nutrition_message_visible = src.nutrition_message_visible
@@ -311,6 +312,7 @@
 	slip_vore = P.slip_vore
 	throw_vore = P.throw_vore
 	stumble_vore = P.stumble_vore
+	glowy_belly = P.glowy_belly
 	food_vore = P.food_vore
 	eating_privacy_global = P.eating_privacy_global
 
