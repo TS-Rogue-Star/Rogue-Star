@@ -1559,11 +1559,9 @@
 			sprite_datum.belly_light_list = list("sleeper")
 	update_fullness() //Set how full the newly defined bellies are, if they're already full
 
-// RS EDIT !! DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG !! REMOVE AND MOVE TO TGUI BEFORE FINAL COMMIT
-// THIS IS DEBUGGING STUFF BECUASE THE 'VISUALS' TAB IN THE VORE PANEL IS BROKEN FOR BORGS.
-// LIKE SERIOUSLY THIS IS GENUINELY AWFUL AND NEEDS TO BE IMPLEMENTED IN THE TGUI PANEL FULLY. This should NOT be hard for someone that knows TGUI.
-// I am personally going to have to implement this into the vore panel but for now, we have a nice debug tool while this PR is a WIP.
-
+// RS EDIT !! DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG
+// Debug tool to swap the belly type and glowy belly
+/*
 /mob/living/silicon/robot/verb/belly_selection()
 	set name = "Switch selected belly sprite (Vore)"
 	set desc = "Select your belly sprite."
@@ -1581,3 +1579,4 @@
 		glowy_belly = FALSE
 	else
 		glowy_belly = TRUE
+*/
