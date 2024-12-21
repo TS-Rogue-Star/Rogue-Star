@@ -62,4 +62,4 @@
 	*/
 
 /datum/category_item/player_setup_item/vore/nif/content(var/mob/user)
-	. += "<b>NIF:</b> [ispath(pref.client.etching.nif_type) ? "Present" : "None"]"
+	. += "<b>NIF:</b> [ispath(text2path("[pref.client.etching.nif_type]")) ? "Present" : "None"]"	//RS EDIT

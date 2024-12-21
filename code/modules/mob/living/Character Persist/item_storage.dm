@@ -150,6 +150,10 @@ var/global/list/permanent_unlockables = list(
 			to_save["nif_type"] = H.nif.type
 			to_save["nif_durability"] = H.nif.durability
 			to_save["nif_savedata"] = H.nif.save_data
+	else if(ourclient)	//For nif conversion
+		to_save["nif_type"] = nif_type
+		to_save["nif_durability"] = nif_durability
+		to_save["nif_savedata"] = nif_savedata
 
 	return to_save
 
@@ -185,27 +189,27 @@ var/global/list/permanent_unlockables = list(
 		return
 	H.etching.update_nif(H)
 
-/datum/etching/setup()
+/datum/etching/setup(var/datum/preferences/P)
+	. = ..()
 	if(ourmob)
 		if(!nif_type && ourmob.client.prefs.nif_path)
-			convert_nif(ourmob.client)
+			convert_nif(ourmob.client, P)
 		load_nif()
 	if(ourclient)
-		if(!nif_type && ourclient.prefs.nif_path)
-			convert_nif(ourclient)
+		if(!nif_type && P.nif_path)
+			convert_nif(ourclient,P)
 
-/datum/etching/proc/convert_nif(var/client/thissun)
+/datum/etching/proc/convert_nif(var/client/thissun,var/datum/preferences/P)
 	if(event_character)
 		return
 	var/orig = savable
 	savable = TRUE
-	log_debug("ETCHING: Converting legacy NIF data: [thissun.prefs.nif_path] - [thissun.prefs.nif_durability] - [thissun.prefs.nif_savedata]")
-	nif_type = thissun.prefs.nif_path
-	nif_durability = thissun.prefs.nif_durability
-	nif_savedata = thissun.prefs.nif_savedata
+	log_debug("ETCHING: Converting legacy NIF data: [P.nif_path] - [P.nif_durability] - [P.nif_savedata]")
+	nif_type = P.nif_path
+	nif_durability = P.nif_durability
+	nif_savedata = P.nif_savedata
 	needs_saving = TRUE
-	thissun.prefs.nif_path = null
-	log_debug("ETCHING: Legacy NIF data conversion complete.")
+	log_debug("ETCHING: Legacy NIF data conversion complete - [nif_type] - [nif_durability] - [nif_savedata]")
 	save()
 	savable = orig
 
