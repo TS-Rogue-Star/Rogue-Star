@@ -212,7 +212,7 @@
 	if(ourmob)
 		log_debug("<span class = 'rose'>Mob etching load complete for [ourmob.real_name].</span>")
 	if(ourclient)
-		log_debug("<span class = 'rose'>Client etching load complete for [ourclient.prefs.real_name].</span>")
+		log_debug("<span class = 'rose'>Client etching load complete for [P.real_name].</span>")
 
 /datum/etching/proc/save(delet = FALSE)
 	if(ourmob)

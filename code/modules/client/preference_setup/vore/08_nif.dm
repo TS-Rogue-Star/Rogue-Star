@@ -62,4 +62,9 @@
 	*/
 
 /datum/category_item/player_setup_item/vore/nif/content(var/mob/user)
+
+	if(!pref.client.etching)
+		log_debug("[user] etching data to populate")
+		return
+
 	. += "<b>NIF:</b> [ispath(text2path("[pref.client.etching.nif_type]")) ? "Present" : "None"]"	//RS EDIT
