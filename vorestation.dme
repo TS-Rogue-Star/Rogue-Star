@@ -5,7 +5,7 @@
 // END_INTERNALS
 // BEGIN_FILE_DIR
 #define FILE_DIR .
-// END_FILE_DIRFste
+// END_FILE_DIR
 // BEGIN_PREFERENCES
 #define DEBUG
 // END_PREFERENCES
@@ -4361,7 +4361,7 @@
 #include "maps\southern_cross\loadout\loadout_suit.dm"
 #include "maps\southern_cross\loadout\loadout_uniform.dm"
 #include "maps\southern_cross\loadout\loadout_vr.dm"
-#include "maps\groundbase\groundbase.dm"
+#include "maps\stellar_delight\stellar_delight.dm"
 #include "maps\submaps\_helpers.dm"
 #include "maps\submaps\_readme.dm"
 #include "maps\submaps\admin_use_vr\event_autonomous_drone.dm"
