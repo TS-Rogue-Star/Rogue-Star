@@ -9,7 +9,7 @@
 SUBSYSTEM_DEF(transcore)
 	name = "Transcore"
 	priority = 20
-	wait = 3 MINUTES
+	wait = 10 SECONDS		//RS edit - reduced from 3 minutes, because not firing at all means the MC panel will never update
 	flags = SS_BACKGROUND
 	runlevels = RUNLEVEL_GAME
 	init_order = INIT_ORDER_TRANSCORE
@@ -27,6 +27,8 @@ SUBSYSTEM_DEF(transcore)
 
 	var/list/current_run = list()
 
+	var/cooldown = 18		//RS ADD - A countdown used with wait. While cooldown is 0, fire will signal, otherwise it only counts down
+
 /datum/controller/subsystem/transcore/Initialize()
 	default_db = new()
 	databases["default"] = default_db
@@ -39,10 +41,19 @@ SUBSYSTEM_DEF(transcore)
 	return ..()
 
 /datum/controller/subsystem/transcore/fire(resumed = 0)
-	var/timer = TICK_USAGE
+	cooldown --		//RS ADD - countdown to send the signal
+
+	if(cooldown == 0)
+		SEND_SIGNAL(src, COMSIG_BACKUP_IMPLANT)		//Rather than doing a bunch of for or whiles, just signal every implant to update itself.
+		cooldown = 18
+
+//RS EDIT START
+/*	var/timer = TICK_USAGE
 
 	INTERNAL_PROCESS_STEP(SSTRANSCORE_IMPLANTS,TRUE,process_implants,cost_implants,SSTRANSCORE_BACKUPS)
 	INTERNAL_PROCESS_STEP(SSTRANSCORE_BACKUPS,FALSE,process_backups,cost_backups,SSTRANSCORE_IMPLANTS)
+*/
+//RS EDIT END
 
 /datum/controller/subsystem/transcore/proc/process_implants(resumed = 0)
 	if (!resumed)

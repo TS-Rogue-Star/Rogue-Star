@@ -31,10 +31,13 @@
 	dept_time_required = 60
 	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security)
 	minimal_access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security)
-	alt_titles = list("Talon Commander" = /datum/alt_title/talon_commander)
+	alt_titles = list("Talon Commander" = /datum/alt_title/talon_commander, "Rogue Trader" = /datum/alt_title/rogue_trader)
 
 /datum/alt_title/talon_commander
 	title = "Talon Commander"
+
+/datum/alt_title/rogue_trader
+	title = "Rogue Trader"
 
 /datum/job/talon_doctor
 	title = "Talon Doctor"
