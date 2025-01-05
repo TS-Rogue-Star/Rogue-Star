@@ -103,6 +103,7 @@ idcaboutaname - Black-Eyed Shadekin
 inuzari - Diona
 iivoracious - Black-Eyed Shadekin
 irkallaepsilon - Protean
+ironicleo - Shadekin
 itsgigglez - Black-Eyed Shadekin
 itsgigglez - Promethean Biolinguistics
 itsgigglez - Shadekin
@@ -114,6 +115,7 @@ jademanique - Xenochimera
 joltze - Black-Eyed Shadekin
 joltze - Shadekin
 karamell - Xenochimera
+keane0tts - Black-Eyed Shadekin
 kered2 - Protean
 khanivore - Protean
 killjaden - Protean
