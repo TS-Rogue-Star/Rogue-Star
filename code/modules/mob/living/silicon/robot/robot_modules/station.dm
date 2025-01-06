@@ -5,7 +5,7 @@ var/global/list/robot_modules = list(
 	"Research" 		= /obj/item/weapon/robot_module/robot/research,
 	"Miner" 		= /obj/item/weapon/robot_module/robot/miner,
 	"Crisis" 		= /obj/item/weapon/robot_module/robot/medical/crisis,
-	"Surgeon" 		= /obj/item/weapon/robot_module/robot/medical/surgeon,
+	//"Surgeon" 		= /obj/item/weapon/robot_module/robot/medical/surgeon, // RS Edit || Ports CHOMPStation 6626
 	"Security" 		= /obj/item/weapon/robot_module/robot/security/general,
 	"Combat" 		= /obj/item/weapon/robot_module/robot/security/combat,
 	"Engineering"	= /obj/item/weapon/robot_module/robot/engineering,
@@ -232,9 +232,10 @@ var/global/list/robot_modules = list(
 	subsystems = list(/mob/living/silicon/proc/subsystem_crew_monitor)
 	pto_type = PTO_MEDICAL
 
+//RS Edit || Ports CHOMPStation 6626
+/*
 /obj/item/weapon/robot_module/robot/medical/surgeon
 	name = "surgeon robot module"
-
 
 /obj/item/weapon/robot_module/robot/medical/surgeon/create_equipment(var/mob/living/silicon/robot/robot)
 	..()
@@ -299,7 +300,7 @@ var/global/list/robot_modules = list(
 		PS.reagents.add_reagent("pacid", 2 * amount)
 
 	..()
-
+*/
 /obj/item/weapon/robot_module/robot/medical/crisis
 	name = "crisis robot module"
 
@@ -317,17 +318,37 @@ var/global/list/robot_modules = list(
 	src.modules += new /obj/item/weapon/gripper/medical(src)
 	src.modules += new /obj/item/weapon/shockpaddles/robot(src)
 	src.modules += new /obj/item/weapon/inflatable_dispenser/robot(src)
+	//RS Edit start || Ports CHOMPStation 6626 Combining Surgeon and Crisis.
+	src.modules += new /obj/item/weapon/autopsy_scanner(src)
+	src.modules += new /obj/item/weapon/surgical/scalpel/cyborg(src)
+	src.modules += new /obj/item/weapon/surgical/hemostat/cyborg(src)
+	src.modules += new /obj/item/weapon/surgical/retractor/cyborg(src)
+	src.modules += new /obj/item/weapon/surgical/cautery/cyborg(src)
+	src.modules += new /obj/item/weapon/surgical/bonegel/cyborg(src)
+	src.modules += new /obj/item/weapon/surgical/FixOVein/cyborg(src)
+	src.modules += new /obj/item/weapon/surgical/bonesetter/cyborg(src)
+	src.modules += new /obj/item/weapon/surgical/circular_saw/cyborg(src)
+	src.modules += new /obj/item/weapon/surgical/surgicaldrill/cyborg(src)
+	src.modules += new /obj/item/weapon/surgical/bioregen/cyborg(src)
+	src.modules += new /obj/item/borg/sight/hud/med(src)
+	// RS Edit end
 	var/obj/item/weapon/reagent_containers/spray/PS = new /obj/item/weapon/reagent_containers/spray(src)
 	src.emag += PS
 	PS.reagents.add_reagent("pacid", 250)
 	PS.name = "Polyacid spray"
 
-	var/datum/matter_synth/medicine = new /datum/matter_synth/medicine(15000)
+	var/datum/matter_synth/medicine = new /datum/matter_synth/medicine(30000) //RS Edit || Ports CHOMPStation 6626
 	synths += medicine
 
+	var/obj/item/stack/medical/advanced/clotting/C = new (src) //RS Edit || ports CHOMPStation 6626
 	var/obj/item/stack/medical/advanced/ointment/O = new /obj/item/stack/medical/advanced/ointment(src)
 	var/obj/item/stack/medical/advanced/bruise_pack/B = new /obj/item/stack/medical/advanced/bruise_pack(src)
 	var/obj/item/stack/medical/splint/S = new /obj/item/stack/medical/splint(src)
+	//RS Edit start || ports CHOMPStation 6626
+	C.uses_charge = 1
+	C.charge_costs = list(5000)
+	C.synths = list(medicine)
+	//RS Edit end
 	O.uses_charge = 1
 	O.charge_costs = list(1000)
 	O.synths = list(medicine)

@@ -18,11 +18,14 @@
 	var/list/reagent_volumes = list()
 	var/list/reagent_names = list()
 
+//RS Edit Start || Ports CHOMPStation PR6626
+/*
 /obj/item/weapon/reagent_containers/borghypo/surgeon
 	reagent_ids = list("inaprovaline", "dexalin", "tricordrazine", "spaceacillin", "oxycodone")
-
+*/
 /obj/item/weapon/reagent_containers/borghypo/crisis
-	reagent_ids = list("inaprovaline", "bicaridine", "kelotane", "anti_toxin", "dexalin", "tricordrazine", "spaceacillin", "tramadol")
+	reagent_ids = list("inaprovaline", "tricordrazine", "dexalin", "bicaridine", "kelotane", "anti_toxin", "spaceacillin", "tramadol", "adranol")
+//RS Edit End
 
 /obj/item/weapon/reagent_containers/borghypo/lost
 	reagent_ids = list("tricordrazine", "bicaridine", "dexalin", "anti_toxin", "tramadol", "spaceacillin")
