@@ -330,7 +330,6 @@ var/global/list/robot_modules = list(
 	src.modules += new /obj/item/weapon/surgical/circular_saw/cyborg(src)
 	src.modules += new /obj/item/weapon/surgical/surgicaldrill/cyborg(src)
 	src.modules += new /obj/item/weapon/surgical/bioregen/cyborg(src)
-	src.modules += new /obj/item/borg/sight/hud/med(src)
 	// RS Edit end
 	var/obj/item/weapon/reagent_containers/spray/PS = new /obj/item/weapon/reagent_containers/spray(src)
 	src.emag += PS
