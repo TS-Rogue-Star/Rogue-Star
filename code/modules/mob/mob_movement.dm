@@ -351,7 +351,24 @@
 ///Process_Incorpmove
 ///Called by client/Move()
 ///Allows mobs to run though walls
+
+//RS Edit start || Ports VOREStation PR 16726
+/client
+	var/is_leaving_belly = FALSE
+
 /client/proc/Process_Incorpmove(direct)
+
+	//Prompts users before they leave a vorebelly
+	if(isbelly(mob.loc) && isobserver(mob))
+		if(is_leaving_belly)
+			return
+		is_leaving_belly = TRUE
+		if(tgui_alert(mob, "Do you want to leave your predator's belly?", "Leave belly?", list("Yes", "No")) != "Yes")
+			is_leaving_belly = FALSE
+			return
+		is_leaving_belly = FALSE
+//RS Edit end
+
 	var/turf/mobloc = get_turf(mob)
 
 	switch(mob.incorporeal_move)
