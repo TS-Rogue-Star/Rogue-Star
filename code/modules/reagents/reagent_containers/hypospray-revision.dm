@@ -34,13 +34,6 @@
 	possible_transfer_amounts = list("vial",1,5,10,15,25,30)
 	start_vial = /obj/item/weapon/reagent_containers/glass/bottle/preloaded/tricordrazine
 
-/obj/item/weapon/revised_hypospray/CMO/combat
-	name = "revised Upgraded hypospray"
-	desc = "A Upgraded CMO hypospray that acts almost instantly. It can be tactically reloaded by using a vial on it."
-	icon_state = "ncadvhypo"
-	item_state = "ncadvhypo"
-	start_vial = /obj/item/weapon/reagent_containers/glass/beaker
-
 /obj/item/weapon/revised_hypospray/Initialize()
 	. = ..()
 	if(!spawnwithvial)
