@@ -84,6 +84,9 @@
 		player_setup.save_character(S)
 
 	clear_character_previews() // VOREStation Edit
+
+	client.load_etching(src)	//RS ADD - Let's reload our character persist data
+
 	return 1
 
 /datum/preferences/proc/save_character()

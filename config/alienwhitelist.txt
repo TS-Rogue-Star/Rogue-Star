@@ -1,4 +1,5 @@
 1062aphelion - Protean
+123mango321 - Shadekin
 abyssalamphithere - Vox
 abyssaru - Xenochimera
 admiraldragon - Vox
@@ -43,6 +44,7 @@ cgr - Protean
 chaosdoomsday - Black-Eyed Shadekin
 chaosdoomsday - Protean
 chargae - Protean
+chargae - Shadekin
 chemlight - Xenochimera
 chillyfang - Black-Eyed Shadekin
 chloeplayer - Protean
@@ -101,6 +103,7 @@ idcaboutaname - Black-Eyed Shadekin
 inuzari - Diona
 iivoracious - Black-Eyed Shadekin
 irkallaepsilon - Protean
+ironicleo - Shadekin
 itsgigglez - Black-Eyed Shadekin
 itsgigglez - Promethean Biolinguistics
 itsgigglez - Shadekin
@@ -112,6 +115,7 @@ jademanique - Xenochimera
 joltze - Black-Eyed Shadekin
 joltze - Shadekin
 karamell - Xenochimera
+keane0tts - Black-Eyed Shadekin
 kered2 - Protean
 khanivore - Protean
 killjaden - Protean
@@ -141,6 +145,7 @@ lorgenz - Protean
 losstinspess - Protean
 losstinspess - Xenochimera
 lotionabuse - Shadekin
+lpsuchtie - Shadekin
 lykojeyot - Black-Eyed Shadekin
 negatist - Protean
 magpiemayhem - Vox
