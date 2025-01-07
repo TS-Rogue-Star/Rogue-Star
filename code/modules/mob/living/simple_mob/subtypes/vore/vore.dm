@@ -49,6 +49,7 @@
 	pickup_pref = client.prefs_vr.pickup_pref
 
 	ssd_vore = client.prefs_vr.ssd_vore	//RS ADD
+	glowy_belly = client.prefs_vr.glowy_belly //RS ADD
 
 
 /mob/living/carbon/human/login_prefs()	//RS ADD START

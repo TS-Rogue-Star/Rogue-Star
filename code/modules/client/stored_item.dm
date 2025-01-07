@@ -123,8 +123,18 @@
 			busy_bank = FALSE
 			icon_state = "item_bank"
 			return
-		var/ourtype = user.etching.item_storage[our_item]	//RS EDIT
-		var/obj/N = new ourtype(get_turf(src))				//RS EDIT
+		var/ourtype = user.etching.item_storage[our_item]	//RS EDIT START
+		var/backup
+		if(!ispath(ourtype))
+			backup = ourtype
+			ourtype = text2path(ourtype)
+
+		if(!ourtype)
+			user.etching.item_storage -= our_item
+			log_and_message_admins("<span class = 'danger'>[user]/[user.ckey] attempted to retrieve an invalid item: [our_item] - [backup]</span>")
+
+			return
+		var/obj/N = new ourtype(get_turf(src))				//RS EDIT END
 		log_admin("[key_name_admin(user)] retrieved [N] from the item bank.")
 		visible_message("<span class='notice'>\The [src] dispenses the [N] to \the [user].</span>")
 		user.put_in_hands(N)
@@ -165,6 +175,17 @@
 			icon_state = "item_bank"
 			return
 		var/ourtype = user.etching.unlockables[our_item]
+		//RS EDIT START
+		var/backup
+		if(!ispath(ourtype))
+			backup = ourtype
+			ourtype = text2path(ourtype)
+
+		if(!ourtype)
+			user.etching.unlockables -= our_item
+			log_and_message_admins("<span class = 'danger'>[user]/[user.ckey] attempted to retrieve an invalid unlockable item: [our_item] - [backup]</span>")
+			return
+		//RS EDIT END
 		var/obj/N = new ourtype(get_turf(src))
 		log_admin("[key_name_admin(user)] retrieved [N] from the item bank.")
 		visible_message("<span class='notice'>\The [src] dispenses the [N] to \the [user].</span>")
