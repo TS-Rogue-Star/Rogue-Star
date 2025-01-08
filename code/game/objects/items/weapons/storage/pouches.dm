@@ -146,7 +146,7 @@
 		/obj/item/weapon/storage/pill_bottle,
 		/obj/item/stack/medical,
 		//RS Edit /obj/item/weapon/reagent_containers/hypospray,
-		/obj/item/weapon/revised_hypospray/CMO,
+		/obj/item/weapon/revised_hypospray,
 		/obj/item/weapon/storage/quickdraw/syringe_case,
 		/obj/item/weapon/syringe_cartridge,
 		/obj/item/clothing/gloves/sterile,

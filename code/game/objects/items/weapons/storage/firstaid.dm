@@ -250,7 +250,7 @@
 	can_hold = list(/obj/item/weapon/revised_hypospray, /obj/item/weapon/reagent_containers/glass/beaker/vial)
 	//can fit vials, and the mk.I hyospray.
 
-/obj/item/weapon/storage/firstaid/hypokit/mkIcmo
+/obj/item/weapon/storage/firstaid/mkIhypokit/cmo
 	name = "CMO's mk.I hypospray  kit"
 	desc = "Contains a revised mk.I Deluxe Hypospray and its hypovials, can hold bottles."
 	icon_state = "vialcasedark"
