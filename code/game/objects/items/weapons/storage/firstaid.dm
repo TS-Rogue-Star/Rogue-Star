@@ -238,7 +238,7 @@
  * revised hypo kits (RS Add)
  */
 
-//RS Add MkII Hypo Revision
+//RS Add MkI Hypo Rework
 /obj/item/weapon/storage/firstaid/mkIhypokit
 	name = "mk.I hypospray kit"
 	desc = "Contains a revised MK.I Hypospray and its hypovials. It can only hold hypospray related items."
