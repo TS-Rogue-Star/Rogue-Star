@@ -1,5 +1,5 @@
 /obj/item/weapon/revised_hypospray
-	name = "hypospray"
+	name = "iHypo"
 	icon_state = "nhypo"
 	icon = 'icons/obj/syringe.dmi'
 	item_state = "nhypo"
@@ -7,7 +7,7 @@
 		slot_l_hand_str = 'icons/mob/items/lefthand.dmi',
 		slot_r_hand_str = 'icons/mob/items/righthand.dmi',
 		)
-	desc = "A refined development from DeForest Medical, altered construction materials enable wider availability, this hypospray takes 30-unit vials as the drug supply for easy swapping."
+	desc = "The premier in hypospray technology brought to you by WolfApple technologies, WolfApple: Be the wolf among sheep. This premium hypospray takes 30-unit vials as the drug supply for easy swapping, even compatible with your existing hardware."
 	w_class = ITEMSIZE_SMALL
 	var/list/allowed_containers = list(/obj/item/weapon/reagent_containers/glass/beaker/vial)
 	var/obj/item/weapon/reagent_containers/glass/beaker/vial/vial
@@ -26,11 +26,11 @@
 	preserve_item = TRUE
 
 /obj/item/weapon/revised_hypospray/CMO
-	name = "revised hypospray CMO"
+	name = "iHypo Deluxe"
 	allowed_containers = list(/obj/item/weapon/reagent_containers/glass/bottle, /obj/item/weapon/reagent_containers/glass/beaker/vial)
 	icon_state = "nadvhypo"
 	item_state = "nadvhypo"
-	desc = "The CMO Hypospray can take larger-size vials. It also acts faster and delivers more reagents per spray."
+	desc = "The premier in hypospray technology brought to you by WolfApple technologies, WolfApple: Be the wolf among sheep. This Deluxe hypospray takes 60-unit Bottles, while retaining compatability with the 30u vials."
 	possible_transfer_amounts = list("vial",1,5,10,15,25,30)
 	start_vial = /obj/item/weapon/reagent_containers/glass/bottle/preloaded/tricordrazine
 
@@ -300,7 +300,7 @@
 	icon_state = "vial"
 	prefill = list("anti_toxin" = 30)
 
-/obj/item/weapon/reagent_containers/glass/beaker/vial/preloaded/kelotane
+/obj/item/weapon/reagent_containers/glass/beaker/vial/preloaded/keloderma
 	name = "KeloDerma vial"
 	icon_state = "vial"
 	prefill = list("kelotane" = 15, "dermaline" = 15)

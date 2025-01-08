@@ -409,7 +409,7 @@
 					/obj/item/weapon/reagent_containers/syringe/antiviral = 4,
 					/obj/item/weapon/reagent_containers/syringe = 12,
 					//Sari Mk1's
-					/obj/item/weapon/storage/firstaid/mkIhypokit = 8,
+					/obj/item/weapon/storage/firstaid/mkIhypokit = 2,
 					//No vials included as they can be printed in the chem-master
 					//Pooj Mk2's
 					/obj/item/weapon/reagent_containers/glass/bottle/hypovial/small = 12,

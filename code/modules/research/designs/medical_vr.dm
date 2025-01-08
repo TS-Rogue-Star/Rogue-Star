@@ -31,8 +31,8 @@
 	sort_string = "KCAVB"
 */// Replaced with printable hypo as they are REBALANCED NOW, wowwww
 /datum/design/item/medical/hypospray
-	name = "mk.i hypospray"
-	desc = "A refined development from DeForest Medical, altered construction materials enable wider availability, this hypospray takes 30-unit vials as the drug supply for easy swapping."
+	name = "iHypo"
+	desc = "The premier in hypospray technology brought to you by WolfApple technologies, WolfApple: Be the wolf among sheep. This premium hypospray takes 30-unit vials as the drug supply for easy swapping, even compatible with your existing hardware."
 	id = "hypospray"
 	req_tech = list(TECH_MATERIAL = 4, TECH_ENGINEERING = 3, TECH_POWER = 2, TECH_BIO = 4, TECH_ILLEGAL = 2)
 	materials = list(MAT_STEEL = 500, MAT_GLASS = 1500, MAT_SILVER = 2000, MAT_GOLD = 1500, MAT_URANIUM = 1000)
