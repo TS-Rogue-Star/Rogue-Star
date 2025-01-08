@@ -171,7 +171,7 @@
 
 	if(!vial || !proximity || !isliving(target) || ((swapping || injecting)))
 		return
-	var/mob/living/L = target
+	var/mob/living/carbon/human/L = target
 
 	if(!L.reagents)
 		return
@@ -204,6 +204,10 @@
 	add_attack_logs(user, L, "[user] attemped to use [src] on [L] which had [contained]")
 	injecting = 1
 	if(!upgraded)
+		if(L.wear_suit)
+			if(istype(L.wear_suit, /obj/item/clothing/suit/space))
+				to_chat(user, "<span class='notice'>[L] is wearing a voidsuit, searching for an injection port.</span>")
+				inject_wait_me += 60
 		if(amount_per_transfer_from_this == "vial") //use vial transfer rate
 			inject_wait_me += vial.amount_per_transfer_from_this * 1.5
 		else
@@ -289,7 +293,7 @@
 */
 
 
-//Hypo mkI vials, will be moved later
+//preloaded vials
 /obj/item/weapon/reagent_containers/glass/beaker/vial/preloaded/bicaridine
 	name = "Bicaridine bottle"
 	icon_state = "vial"
