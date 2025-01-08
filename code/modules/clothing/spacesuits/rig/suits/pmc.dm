@@ -29,6 +29,7 @@
 		/obj/item/weapon/gun,
 		/obj/item/weapon/storage,
 		/obj/item/weapon/reagent_containers/hypospray,
+		/obj/item/weapon/revised_hypospray/CMO,
 		/obj/item/roller
 		)
 
