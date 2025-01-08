@@ -30,7 +30,8 @@
 	build_path = /obj/item/weapon/reagent_containers/hypospray/science
 	sort_string = "KCAVB"
 */// Replaced with printable hypo as they are REBALANCED NOW, wowwww
-	name = "mk.I hypospray"
+/datum/design/item/medical/hypospray
+	name = "mk.i hypospray"
 	desc = "A refined development from DeForest Medical, altered construction materials enable wider availability, this hypospray takes 30-unit vials as the drug supply for easy swapping."
 	id = "hypospray"
 	req_tech = list(TECH_MATERIAL = 4, TECH_ENGINEERING = 3, TECH_POWER = 2, TECH_BIO = 4, TECH_ILLEGAL = 2)
