@@ -14,12 +14,10 @@
 	S["nif_durability"]	>> pref.nif_durability
 	S["nif_savedata"]	>> pref.nif_savedata
 
-/*	//RS REMOVE
 /datum/category_item/player_setup_item/vore/nif/save_character(var/savefile/S)
 	S["nif_path"]		<< pref.nif_path
 	S["nif_durability"]	<< pref.nif_durability
 	S["nif_savedata"]	<< pref.nif_savedata
-*/
 
 /datum/category_item/player_setup_item/vore/nif/sanitize_character()
 	if(pref.nif_path && !ispath(pref.nif_path))		//We have at least a text string that should be a path.
