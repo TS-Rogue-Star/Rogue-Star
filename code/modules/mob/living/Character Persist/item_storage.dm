@@ -192,17 +192,19 @@ var/global/list/permanent_unlockables = list(
 /datum/etching/setup(var/datum/preferences/P)
 	. = ..()
 	if(ourmob)
-		if(!nif_type && ourmob.client.prefs.nif_path)
+		if(ourmob.client.prefs.nif_path)
 			convert_nif(ourmob.client, P)
-		load_nif()
+		load_nif()	//We're spawning in!!!
 	if(ourclient)
-		if(!nif_type && P.nif_path)
+		if(P.nif_path)	//Clean dat shit up
 			convert_nif(ourclient,P)
 
 /datum/etching/proc/convert_nif(var/client/thissun,var/datum/preferences/P)
 	if(event_character)
 		return
-	var/orig = savable
+	if(!P.nif_path)	//Let's double check
+		return	//What are you trying to convert?!
+	var/orig = savable	//TBH it is basically impossible that this will ever be relevant but one of you will find a way so let's store this in case somehow you are converting the nif data of an unsavable character
 	savable = TRUE
 	log_debug("ETCHING: Converting legacy NIF data: [P.nif_path] - [P.nif_durability] - [P.nif_savedata]")
 	nif_type = P.nif_path
@@ -210,19 +212,29 @@ var/global/list/permanent_unlockables = list(
 	nif_savedata = P.nif_savedata
 	needs_saving = TRUE
 	log_debug("ETCHING: Legacy NIF data conversion complete - [nif_type] - [nif_durability] - [nif_savedata]")
-	save()
-	savable = orig
+	save()	//Save the etching data so we don't lose anything
+	savable = orig	//Return our savable status to what it was
+
+	P.nif_path = null	//Clear the old data, so we don't try to convert it again later
+	P.nif_durability = null
+	P.nif_savedata = null
+
+	P.save_character()	//Save our character. This SHOULD ONLY HAPPEN when someone is opening character setup, loading a character, or spawning in. If you make it happen at any other times, I don't know what will happen, and it's possible it will mess up the person's save file so don't fuck up.
 
 /datum/etching/proc/load_nif()
-	if(!nif_type || !ourmob)
+	if(!ourmob)	//The product of this proc is the creation of a nif, so if we don't have a mob, then let's not
+		return
+	if(ourmob.client.prefs.nif_path)	//Hey we have old style nif data saved that wasn't caught, let's convert it
+		convert_nif(ourmob.client,ourmob.client.prefs)
+	if(!nif_type)	//No nif type, no nif mister!!!
 		return
 	var/backup
-	if(!ispath(nif_type))
-		backup = nif_type
-		nif_type = text2path(nif_type)
-	if(!nif_type)
+	if(!ispath(nif_type))	//Let's double check and make sure the nif we have is a valid type, in case of type paths changing or whatever. You can put conversion stuff in here.
+		backup = nif_type	//Let's hold on to this in case it isn't a type.
+		nif_type = text2path(nif_type)	//Convert the string to a path!
+	if(!nif_type)	//Was it a valid path?
 		log_debug("ETCHING: Attempted to load nif, but had invalid type: [backup], aborting")
-		nif_type = backup
+		nif_type = backup	//It wasn't, so let's put the data back here, and abort. Someone will need to convert the old type to a new type!
 		return
 
-	new nif_type(ourmob,nif_durability,nif_savedata)
+	new nif_type(ourmob,nif_durability,nif_savedata)	//Nice nif bud you go, look how handsome you are with that twinkle in your eye wow
