@@ -5,7 +5,7 @@ var/global/list/robot_modules = list(
 	"Research" 		= /obj/item/weapon/robot_module/robot/research,
 	"Miner" 		= /obj/item/weapon/robot_module/robot/miner,
 	"Crisis" 		= /obj/item/weapon/robot_module/robot/medical/crisis,
-	//"Surgeon" 		= /obj/item/weapon/robot_module/robot/medical/surgeon, // RS Edit || Ports CHOMPStation 6626
+	"Surgeon" 		= /obj/item/weapon/robot_module/robot/medical/surgeon,
 	"Security" 		= /obj/item/weapon/robot_module/robot/security/general,
 	"Combat" 		= /obj/item/weapon/robot_module/robot/security/combat,
 	"Engineering"	= /obj/item/weapon/robot_module/robot/engineering,
@@ -233,15 +233,25 @@ var/global/list/robot_modules = list(
 	pto_type = PTO_MEDICAL
 
 //RS Edit || Ports CHOMPStation 6626
-/*
+
 /obj/item/weapon/robot_module/robot/medical/surgeon
 	name = "surgeon robot module"
 
 /obj/item/weapon/robot_module/robot/medical/surgeon/create_equipment(var/mob/living/silicon/robot/robot)
 	..()
+	//RS Edit start || Ports CHOMPStation 6626 Combining Surgeon and Crisis.
 	src.modules += new /obj/item/device/healthanalyzer(src)
 	src.modules += new /obj/item/device/sleevemate(src)
+	src.modules += new /obj/item/device/reagent_scanner/adv(src)
+	src.modules += new /obj/item/roller_holder(src)
 	src.modules += new /obj/item/weapon/reagent_containers/borghypo/surgeon(src)
+	src.modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
+	src.modules += new /obj/item/weapon/reagent_containers/dropper/industrial(src)
+	src.modules += new /obj/item/weapon/reagent_containers/syringe(src)
+	src.modules += new /obj/item/weapon/gripper/no_use/organ(src)
+	src.modules += new /obj/item/weapon/gripper/medical(src)
+	src.modules += new /obj/item/weapon/shockpaddles/robot(src)
+	src.modules += new /obj/item/weapon/inflatable_dispenser/robot(src)
 	src.modules += new /obj/item/weapon/autopsy_scanner(src)
 	src.modules += new /obj/item/weapon/surgical/scalpel/cyborg(src)
 	src.modules += new /obj/item/weapon/surgical/hemostat/cyborg(src)
@@ -253,11 +263,7 @@ var/global/list/robot_modules = list(
 	src.modules += new /obj/item/weapon/surgical/circular_saw/cyborg(src)
 	src.modules += new /obj/item/weapon/surgical/surgicaldrill/cyborg(src)
 	src.modules += new /obj/item/weapon/surgical/bioregen/cyborg(src)
-	src.modules += new /obj/item/weapon/gripper/no_use/organ(src)
-	src.modules += new /obj/item/weapon/gripper/medical(src)
-	src.modules += new /obj/item/weapon/shockpaddles/robot(src)
 	src.modules += new /obj/item/weapon/reagent_containers/dropper(src) // Allows surgeon borg to fix necrosis
-	src.modules += new /obj/item/weapon/reagent_containers/syringe(src)
 
 	var/obj/item/weapon/reagent_containers/spray/PS = new /obj/item/weapon/reagent_containers/spray(src)
 	src.emag += PS
@@ -267,9 +273,15 @@ var/global/list/robot_modules = list(
 	var/datum/matter_synth/medicine = new /datum/matter_synth/medicine(10000)
 	synths += medicine
 
+	var/obj/item/stack/medical/advanced/clotting/C = new (src) //RS Edit || ports CHOMPStation 6626
 	var/obj/item/stack/nanopaste/N = new /obj/item/stack/nanopaste(src)
 	var/obj/item/stack/medical/advanced/bruise_pack/B = new /obj/item/stack/medical/advanced/bruise_pack(src)
 	var/obj/item/stack/medical/advanced/ointment/O = new /obj/item/stack/medical/advanced/ointment(src) //VoreStation edit: we have burn surgeries so they should be able to do them
+	//RS Edit start || ports CHOMPStation 6626
+	C.uses_charge = 1
+	C.charge_costs = list(5000)
+	C.synths = list(medicine)
+	//RS Edit end
 	N.uses_charge = 1
 	N.charge_costs = list(1000)
 	N.synths = list(medicine)
@@ -279,6 +291,7 @@ var/global/list/robot_modules = list(
 	O.uses_charge = 1
 	O.charge_costs = list(1000)
 	O.synths = list(medicine)
+	src.modules += C
 	src.modules += N
 	src.modules += B
 	src.modules += O
@@ -300,7 +313,7 @@ var/global/list/robot_modules = list(
 		PS.reagents.add_reagent("pacid", 2 * amount)
 
 	..()
-*/
+
 /obj/item/weapon/robot_module/robot/medical/crisis
 	name = "crisis robot module"
 
@@ -330,6 +343,7 @@ var/global/list/robot_modules = list(
 	src.modules += new /obj/item/weapon/surgical/circular_saw/cyborg(src)
 	src.modules += new /obj/item/weapon/surgical/surgicaldrill/cyborg(src)
 	src.modules += new /obj/item/weapon/surgical/bioregen/cyborg(src)
+	src.modules += new /obj/item/weapon/reagent_containers/dropper(src) // Allows surgeon borg to fix necrosis
 	// RS Edit end
 	var/obj/item/weapon/reagent_containers/spray/PS = new /obj/item/weapon/reagent_containers/spray(src)
 	src.emag += PS
@@ -357,6 +371,7 @@ var/global/list/robot_modules = list(
 	S.uses_charge = 1
 	S.charge_costs = list(1000)
 	S.synths = list(medicine)
+	src.modules += C
 	src.modules += O
 	src.modules += B
 	src.modules += S
