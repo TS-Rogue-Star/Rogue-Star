@@ -364,18 +364,17 @@
 				new /obj/item/weapon/paper(T, content[1], content[2])
 
 /obj/item/weapon/form_printer/proc/print_form()
-	var/list/paper_forms = list("Empty", "Command", "Security", "Supply", "Science", "Medical", "Engineering", "Service", "Exploration", "Event", "Other", "Mercenary")
+	var/list/paper_forms = list("Empty", "Command", "Security", "Supply", "Science", "Medical", "Engineering", "Service", "Exploration", "Event", "Other")
 	var/list/command_paper_forms = list("COM-0002: Dismissal Order", "COM-0003: Job Change Request", "COM-0004: ID Replacement Request", "COM-0005: Access Change Order", "COM-0006: Formal Complaint", "COM-0009: Visitor Permit", "COM-0012: Personnel Request Form", "COM-0013: Employee of the Month Nomination Form")
 	var/list/security_paper_forms = list("SEC-1001: Shift-Start Checklist", "SEC-1002: Patrol Assignment Sheet", "SEC-1003: Incident Report", "SEC-1004: Arrest Report", "SEC-1005: Arrest Warrant", "SEC-1006: Search Warrant", "SEC-1007: Forensics Investigation Report", "SEC-1008: Interrogation Report", "SEC-1009: Witness Statement", "SEC-1010: Armory Inventory", "SEC-1011: Armory Equipment Request", "SEC-1012: Armory Equipment Deployment", "SEC-1013: Weapon Permit", "SEC-1014: Injunction")
 	var/list/supply_paper_forms = list("SUP-2001: Delivery of Goods", "SUP-2002: Delivery of Resources", "SUP-2003: Material Stock")
 	var/list/science_paper_forms = list("SCI-3003: Cyborg / Robot Inspection", "SCI-3004: Cyborg / Robot Upgrades", "SCI-3009: Xenoflora Genetics Report")
 	var/list/medical_paper_forms = list("MED-4001: Death Certificate", "MED-4002: Prescription", "MED-4003: Against Medical Advice", "MED-4004: Cyborgification Contract", "MED-4005: Mental Health Patient Intake", "MED-4006: NIF Surgery", "MED-4007: Psychiatric Evaluation")
 	var/list/engineering_paper_forms = list("ENG-5001: Building Permit")
-	var/list/service_paper_forms = list("SER-6005: Certificate of Marriage")
+	var/list/service_paper_forms = list("SER-6001: Certificate of Marriage")
 	var/list/exploration_paper_forms = list()
 	var/list/event_paper_forms = list()
-	var/list/other_paper_forms = list("OTHR-9001: Emergency Transmission", "OTHR-9032: Ownership Transfer")
-	var/list/mercenary_paper_forms = list("MERC-?071: Mercenary Request")
+	var/list/other_paper_forms = list("OTHR-9001: Emergency Transmission")
 
 	var/list/split = list()
 	var/papertype = tgui_input_list(usr, "What kind of form do you want to print?", "Department", paper_forms)
@@ -434,11 +433,6 @@
 			if(!other_paper || other_paper == "Cancel")
 				return
 			split = splittext(other_paper, ": ")
-		if("Mercenary")
-			var/mercenary_paper = tgui_input_list(usr, "What kind of mercenary form do you want to print?", "Form", mercenary_paper_forms)
-			if(!mercenary_paper || mercenary_paper == "Cancel")
-				return
-			split = splittext(mercenary_paper, ": ")
 		else
 			return
 	return list(select_form(split[1], split[2]), split[1] + ": " + split[2])
@@ -571,13 +565,6 @@
 		if("OTHR-9001")
 			content = @{"[grid][row][cell][b]Sender:[/b] [cell][field][br][row][cell][b]Position:[/b] [cell][field][/grid][br][hr][br][b]Message:[/b] [field][br][br][hr][grid][row][cell][list][b]Signed:[/b][/list][cell][br][row][cell][list] - [large][field][/large][/list][cell][/grid]"}
 			revision = "Revision: 1.0"
-		if("OTHR-9032")
-			content = @{"[b]Requested Owner:[/b] [field][br][br][hr][br][b]Hereby, I [[/b][field][b]] agree to transfer my full ownsership, including all my rights to [[/b][field][b]].[br]This contract is binding immediately after both parties have signed and valid until [[/b][field][b]].[/b][br][br]Additional Agreements: [field][br][br][hr][grid][row][cell][list][b]Property Signature:[/b][/list][cell][list][list][list][list][list][b]Owner Signature:[/b][/list][cell][br][row][cell][list]- [field][/list][cell][list][list][list][list][list]- [field][/list][cell][/grid][hr][br]The contract can only be cancelled if both parties agree.[br]At no time, a single party can revert or void this contract.[br]All changes to this form after the contract was stamped are invalidated.[br][br]"}
-			revision = "Revision: 1.0"
-		//Mercenary forms, MERC-?
-		if("MERC-?071")
-			content = @{"[b]Requested Mercenary:[/b] [field][br][br][hr][br][grid][row][cell][b]Target:[/b] [cell][field][br][row][cell][b]Reason:[/b] [cell][field][/grid][br][grid][row][cell][list][b]Vore Type:[/b][/list][cell][list][field][/list][cell][list][list][list][b]Offered Bounty:[/b][/list][/list][/list][cell][list][field][/list][cell][br][row][cell][list][b]Extra Modules:[/b][/list][cell][list][field][/list][cell][list][list][list][b]Added Module Costs:[/b][/list][/list][/list][cell][list][field][/list][cell][br][row][cell][list][b]Special Requests:[/b][/list][cell][list][field][/list][cell][list][list][list][b]Added Request Fees:[/b][/list][/list][/list][cell][list][field][/list][cell][br][row][cell][cell][cell][cell][cell][br][row][cell][cell][cell][list][list][list][b]Total Bounty:[/b][/list][cell][list][field][/list][cell][/grid][br][hr][br]All payments are to be made in full before contract fulfilment.[br]Please be aware that signed contracts can [u]not[/u] be cancelled.[br][br][hr][grid][row][cell][list][b]Commissioner signature:[/b][/list][cell][list][list][list][list][list][b]Contractor signature:[/b][/list][/list][/list][/list][/list][cell][br][row][cell][list][large] - [field][/large][/list][cell][large][list][list][list][list][list]- [field][/large][cell][/list][/list][/list][/list][/list][cell][/grid]"}
-			revision = "Revision: ?.?"
 		else
 			paperid = @{"[field]"}
 			name = @{"[field]"}
