@@ -94,10 +94,14 @@
 /obj/item/weapon/reagent_containers/borghypo/hound
 	name = "MediHound hypospray"
 	desc = "An advanced chemical synthesizer and injection system utilizing carrier's reserves, designed for heavy-duty medical equipment."
-	charge_cost = 10
-	reagent_ids = list("inaprovaline", "dexalin", "bicaridine", "kelotane", "anti_toxin", "spaceacillin", "paracetamol")
+	//RS Edit Start || Ports CHOMPStation PR6626
+	//charge_cost = 10
+	reagent_ids = list("inaprovaline", "dexalin", "bicaridine", "kelotane", "anti_toxin", "spaceacillin", "tramadol", "adranol")
+	//RS Edit End
 	var/datum/matter_synth/water = null
 
+// RS Edit || Ports CHOMPStation PR6626
+/*
 /obj/item/weapon/reagent_containers/borghypo/hound/process() //Recharges in smaller steps and uses the water reserves as well.
 	if(isrobot(loc))
 		var/mob/living/silicon/robot/R = loc
@@ -108,7 +112,7 @@
 					water.use_charge(charge_cost)
 					reagent_volumes[T] = min(reagent_volumes[T] + 1, volume)
 	return 1
-
+*/
 /obj/item/weapon/reagent_containers/borghypo/hound/lost
 	name = "Hound hypospray"
 	desc = "An advanced chemical synthesizer and injection system utilizing carrier's reserves."
