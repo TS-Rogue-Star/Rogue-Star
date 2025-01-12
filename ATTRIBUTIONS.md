@@ -357,3 +357,7 @@
 **Link:** https://github.com/VOREStation/VOREStation/pull/10476 - https://github.com/TS-Rogue-Star/Rogue-Star/pull/702<br>
 **License:** Licensed for use by VOREStation, Rogue Star, and their downstreams; unlicensed for further use without permission of copyright holder<br>
 <br>
+**File:** icons/mob/human_races.dmi
+**Creator:** SpringSkipper
+**Link:** https://github.com/VOREStation/VOREStation/pull/16881
+**License:** Licensed for use by VOREStation, Rogue Star, and their downstreams; unlicensed for further use without permission of copyright holder<br>
