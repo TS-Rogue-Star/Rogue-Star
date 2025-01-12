@@ -357,7 +357,7 @@
 **Link:** https://github.com/VOREStation/VOREStation/pull/10476 - https://github.com/TS-Rogue-Star/Rogue-Star/pull/702<br>
 **License:** Licensed for use by VOREStation, Rogue Star, and their downstreams; unlicensed for further use without permission of copyright holder<br>
 <br>
-**File:** `icons/obj/bureaucracy.dmi`<br>
+**File:** `icons/obj/doc_printer_mod_[pre / _post / printing / ejecting].dmi`<br>
 **Creator:** spacemanjim (AKA: MAK) <br>
 **Link:** https://github.com/VOREStation/VOREStation/pull/15552<br>
 **License:** Licensed for use by VOREStation, Rogue Star, and their downstreams; unlicensed for further use without permission of copyright holder<br>
