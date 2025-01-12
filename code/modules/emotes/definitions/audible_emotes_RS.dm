@@ -1,4 +1,5 @@
 /decl/emote/audible/multisound
+	key = "0000000000000"
 
 	var/list/soundlist = list()
 
