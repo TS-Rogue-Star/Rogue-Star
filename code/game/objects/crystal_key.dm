@@ -15,6 +15,7 @@ var/global/list/event_obstical_keys = list()
 	var/spent_state = "gold_tri"
 	var/mob/living/link
 	var/reusable = FALSE
+	var/closed_icon = 'icons/rogue-star/misc.dmi'
 	var/closed_state = "crystal_key_spent"
 
 /obj/event_key/reusable
@@ -71,6 +72,7 @@ var/global/list/event_obstical_keys = list()
 		unregister_mob()
 		if(closed_state)
 			ourturf.visible_message("<span class = 'warning'>\The [src] shimmers as it closes up!!!</span>",runemessage = "clink")
+			icon = closed_icon
 			icon_state = closed_state
 		else
 			ourturf.visible_message("<span class = 'warning'>\The [src] crumbles to dust!!!</span>",runemessage = "crumble crumble")
@@ -114,7 +116,9 @@ var/global/list/event_obstical_keys = list()
 	pixel_x = -16
 	pixel_y = -16
 	var/trigger_mode = DELETE_OBSTICAL
+	var/closed_icon = 'icons/turf/x64.dmi'
 	var/closed_state = null
+	var/open_icon = 'icons/turf/x64.dmi'
 	var/open_state = null
 
 /obj/event_obstical/Initialize()
@@ -125,11 +129,13 @@ var/global/list/event_obstical_keys = list()
 		opacity = density
 		if(density)
 			if(closed_state)
+				icon = closed_icon
 				icon_state = closed_state
 			else
 				closed_state = icon_state
 		else
 			if(open_state)
+				icon = open_icon
 				icon_state = open_state
 
 /obj/event_obstical/Destroy()
@@ -148,8 +154,10 @@ var/global/list/event_obstical_keys = list()
 			density = !density
 			opacity = density
 			if(density)
+				icon = closed_icon
 				icon_state = closed_state
 			else
+				icon = open_icon
 				icon_state = open_state
 			ourturf.visible_message("<span class = 'warning'>\The [src] rumbles as it moves!!!</span>",runemessage = "rumble rumble")
 
@@ -161,10 +169,17 @@ var/global/list/event_obstical_keys = list()
 	pixel_x = 0
 	pixel_y = 0
 
+	closed_icon = 'icons/rogue-star/misc.dmi'
+	open_icon = 'icons/rogue-star/misc.dmi'
+
+
 /obj/event_obstical/disguised/wall
 	icon = 'icons/turf/wall_masks.dmi'
 	icon_state = "generic"
 	desc = "It seems to be a section of wall plated with steel."
+
+	closed_icon = 'icons/turf/wall_masks.dmi'
+	open_icon = 'icons/turf/wall_masks.dmi'
 
 /obj/event_obstical/disguised/wall/reinforced
 	icon_state = "rgeneric"
