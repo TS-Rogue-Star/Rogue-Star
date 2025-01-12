@@ -1130,6 +1130,7 @@
 	name = "Waddle / Animated Movement"
 	desc = "You move in either an animated way or with a quite visible waddle!"
 	cost = 0
+	custom_only = FALSE
 
 /datum/trait/neutral/waddle/apply(var/datum/species/S,var/mob/living/carbon/human/H)
 	..()
