@@ -66,7 +66,7 @@
 		/obj/item/weapon/gun,
 		/obj/item/weapon/storage,
 		/obj/item/weapon/reagent_containers/hypospray,
-		/obj/item/weapon/revised_hypospray,
+		/obj/item/weapon/revised_hypospray, //RS add
 		/obj/item/roller,
 		/obj/item/device/suit_cooling_unit
 		)

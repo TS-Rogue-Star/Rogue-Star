@@ -408,7 +408,7 @@
 					/obj/item/weapon/reagent_containers/glass/bottle/toxin = 4,
 					/obj/item/weapon/reagent_containers/syringe/antiviral = 4,
 					/obj/item/weapon/reagent_containers/syringe = 12,
-					//Sari Mk1's
+					//Sari Mk1's RS Add
 					/obj/item/weapon/storage/firstaid/mkIhypokit = 2,
 					//No vials included as they can be printed in the chem-master
 					//Pooj Mk2's

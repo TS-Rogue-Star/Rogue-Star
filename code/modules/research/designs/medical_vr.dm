@@ -29,7 +29,7 @@
 	materials = list(MAT_STEEL = 500, MAT_GLASS = 1500, MAT_SILVER = 2000, MAT_GOLD = 1500, MAT_URANIUM = 1000)
 	build_path = /obj/item/weapon/reagent_containers/hypospray/science
 	sort_string = "KCAVB"
-*/// Replaced with printable hypo as they are REBALANCED NOW, wowwww
+*/// RS Edit Replaced with printable hypo as they are REBALANCED NOW, wowwww
 /datum/design/item/medical/hypospray
 	name = "iHypo"
 	desc = "The premier in hypospray technology brought to you by WolfApple technologies, WolfApple: Be the wolf among sheep. This premium hypospray takes 30-unit vials as the drug supply for easy swapping, even compatible with your existing hardware."

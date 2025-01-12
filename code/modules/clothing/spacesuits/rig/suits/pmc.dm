@@ -29,7 +29,7 @@
 		/obj/item/weapon/gun,
 		/obj/item/weapon/storage,
 		/obj/item/weapon/reagent_containers/hypospray,
-		/obj/item/weapon/revised_hypospray,
+		/obj/item/weapon/revised_hypospray, //RS Add
 		/obj/item/roller
 		)
 
