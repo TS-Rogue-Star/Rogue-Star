@@ -247,10 +247,7 @@
 	slot_flags = SLOT_BELT
 	max_storage_space = ITEMSIZE_COST_SMALL * 7
 	starts_with = list(/obj/item/weapon/revised_hypospray,
-	/obj/item/weapon/reagent_containers/glass/beaker/vial/preloaded/bicaridine = 2,
-	/obj/item/weapon/reagent_containers/glass/beaker/vial/preloaded/antitoxin = 2,
-	/obj/item/weapon/reagent_containers/glass/beaker/vial/preloaded/keloderma = 2,
-	/obj/item/weapon/reagent_containers/glass/beaker/vial/preloaded/dexalin = 2)
+	/obj/item/weapon/reagent_containers/glass/beaker/vial = 5)
 	can_hold = list(/obj/item/weapon/revised_hypospray, /obj/item/weapon/reagent_containers/glass/beaker/vial)
 	//can fit vials, and the mk.I hyospray.
 
