@@ -357,3 +357,28 @@
 **Link:** https://github.com/VOREStation/VOREStation/pull/10476 - https://github.com/TS-Rogue-Star/Rogue-Star/pull/702<br>
 **License:** Licensed for use by VOREStation, Rogue Star, and their downstreams; unlicensed for further use without permission of copyright holder<br>
 <br>
+**File**: `sound/screams` - `f1.ogg - f15.ogg`<br>
+**Creator:** Volonda<br>
+**Link:** https://freesound.org/people/Volonda/sounds/439517/<br>
+**License:** [Creative Commons 0](https://creativecommons.org/publicdomain/zero/1.0/)<br>
+<br>
+**File**: `sound/screams` - `m1.ogg - m6.ogg`<br>
+**Creator:** marc3122<br>
+**Link:** https://freesound.org/people/marc3122/sounds/556976/<br>
+**License:** [Creative Commons 0](https://creativecommons.org/publicdomain/zero/1.0/)<br>
+<br>
+**File**: `sound/screams` - `m7.ogg - m10.ogg`<br>
+**Creator:** JohnsonBrandEditing<br>
+**Link:** https://freesound.org/people/JohnsonBrandEditing/sounds/173944/<br>
+**License:** [Creative Commons 0](https://creativecommons.org/publicdomain/zero/1.0/)<br>
+<br>
+**File**: `sound/screams` - `m11.ogg - m14.ogg`<br>
+**Creator:** Moulaythami<br>
+**Link:** https://freesound.org/people/Moulaythami/sounds/548377/<br>
+**License:** [Attribution 4.0](https://creativecommons.org/licenses/by/4.0/)<br>
+<br>
+**File**: `sound/screams` - `m15.ogg - m17.ogg`<br>
+**Creator:** Mafon2<br>
+**Link:** https://freesound.org/people/Mafon2/sounds/635281/<br>
+**License:** [Creative Commons 0](https://creativecommons.org/publicdomain/zero/1.0/)<br>
+<br>
