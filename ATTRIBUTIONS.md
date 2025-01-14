@@ -357,6 +357,17 @@
 **Link:** https://github.com/VOREStation/VOREStation/pull/10476 - https://github.com/TS-Rogue-Star/Rogue-Star/pull/702<br>
 **License:** Licensed for use by VOREStation, Rogue Star, and their downstreams; unlicensed for further use without permission of copyright holder<br>
 <br>
+**File:** `icons/obj/syringe.dmi`<br>
+**Icon-States:**nchypo, nchypo_empty, nyhpo, nhypo_empty, ncadvhypo, ncadvhypo_empty, nadvhypo, nadvhypo_empty<br>
+**Creator:** Legacy sprites recolored by Andy/Kligor<br>
+**Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/730<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/obj/storage.dmi`<br>
+**Icon-States:**vialcase, vialcaselight, vialcasedark<br>
+**Creator:** Andy/Kligor<br>
+**Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/730<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 **File**: `sound/screams` - `f1.ogg - f15.ogg`<br>
 **Creator:** Volonda<br>
 **Link:** https://freesound.org/people/Volonda/sounds/439517/<br>

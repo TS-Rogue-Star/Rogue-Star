@@ -145,7 +145,7 @@
 		/obj/item/device/radio/headset/heads/cmo,
 		/obj/item/device/radio/headset/heads/cmo/alt,
 		/obj/item/device/flash,
-		/obj/item/weapon/reagent_containers/hypospray/vial,
+		/obj/item/weapon/storage/firstaid/mkIhypokit/cmo, //RS Add
 		/obj/item/clothing/suit/storage/hooded/wintercoat/medical,
 		/obj/item/clothing/suit/storage/hooded/wintercoat/medical/cmo,
 		/obj/item/clothing/shoes/boots/winter/medical,

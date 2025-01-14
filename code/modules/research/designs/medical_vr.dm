@@ -21,13 +21,22 @@
 	build_path = /obj/item/device/sleevemate
 	sort_string = "KCAVA"
 
-/datum/design/item/medical/protohypospray
+/* /datum/design/item/medical/protohypospray
 	name = "prototype hypospray"
 	desc = "This prototype hypospray is a sterile, air-needle autoinjector for rapid administration of drugs to patients."
 	id = "protohypospray"
 	req_tech = list(TECH_MATERIAL = 4, TECH_ENGINEERING = 3, TECH_POWER = 2, TECH_BIO = 4, TECH_ILLEGAL = 2)
 	materials = list(MAT_STEEL = 500, MAT_GLASS = 1500, MAT_SILVER = 2000, MAT_GOLD = 1500, MAT_URANIUM = 1000)
 	build_path = /obj/item/weapon/reagent_containers/hypospray/science
+	sort_string = "KCAVB"
+*/// RS Edit Replaced with printable hypo as they are REBALANCED NOW, wowwww
+/datum/design/item/medical/hypospray
+	name = "iHypo"
+	desc = "The premier in hypospray technology brought to you by WolfApple technologies, WolfApple: Be the wolf among sheep. This premium hypospray takes 30-unit vials as the drug supply for easy swapping, even compatible with your existing hardware."
+	id = "hypospray"
+	req_tech = list(TECH_MATERIAL = 4, TECH_ENGINEERING = 3, TECH_POWER = 2, TECH_BIO = 4, TECH_ILLEGAL = 2)
+	materials = list(MAT_STEEL = 500, MAT_GLASS = 1500, MAT_SILVER = 2000, MAT_GOLD = 1500, MAT_URANIUM = 1000)
+	build_path = /obj/item/weapon/revised_hypospray
 	sort_string = "KCAVB"
 
 /datum/design/item/medical/recombobray

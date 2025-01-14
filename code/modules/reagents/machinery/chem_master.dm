@@ -15,6 +15,7 @@
 	var/condi = 0
 	var/useramount = 15 // Last used amount
 	var/pillamount = 10
+	var/vialamount = 10
 	var/list/bottle_styles
 	var/bottlesprite = 1
 	var/pillsprite = 1
@@ -226,6 +227,22 @@
 					if(condi || !reagents.total_volume)
 						return
 					tgui_modal_input(src, id, "Please enter the amount of patches to make (max [MAX_MULTI_AMOUNT] at a time):", null, arguments, pillamount, 5)
+				if("create_vial") //RS Add
+					if(condi || !reagents.total_volume)
+						return
+					var/num = round(text2num(arguments["num"] || 1))
+					if(!num)
+						return
+					arguments["num"] = num
+					var/amount_per_vial = CLAMP(reagents.total_volume / num, 0, MAX_UNITS_PER_VIAL)
+					var/default_name = "[reagents.get_master_reagent_name()]"
+					var/vials_text = num == 1 ? "new vial" : "[num] new vials"
+					tgui_modal_input(src, id, "Please name your [vials_text] ([amount_per_vial]u in vial):", null, arguments, default_name, MAX_CUSTOM_NAME_LEN)
+				if("create_vials_multiple") //RS Add
+					if(condi || !reagents.total_volume)
+						return
+					tgui_modal_input(src, id, "Please enter the amount of vials to make (max [MAX_MULTI_AMOUNT] at a time):", null, arguments, vialamount / 5, 5)
+
 				if("create_bottle")
 					if(condi || !reagents.total_volume)
 						return
@@ -349,6 +366,31 @@
 					if(condi || !reagents.total_volume)
 						return
 					tgui_act("modal_open", list("id" = "create_patch", "arguments" = list("num" = answer)), ui, state)
+				if("create_vial") //RS Add
+					if(condi || !reagents.total_volume)
+						return
+					var/count = CLAMP(round(text2num(arguments["num"]) || 0), 0, MAX_MULTI_AMOUNT)
+					if(!count)
+						return
+
+					if(!length(answer))
+						answer = reagents.get_master_reagent_name()
+					var/amount_per_vial = CLAMP(reagents.total_volume / count, 0, MAX_UNITS_PER_VIAL)
+					while(count--)
+						if(reagents.total_volume <= 0)
+							to_chat(usr, "<span class='notice'>Not enough reagents to create these vials!</span>")
+							return
+						var/obj/item/weapon/reagent_containers/glass/beaker/vial/P = new(loc)
+						P.name = "[answer] vial"
+						P.pixel_x = rand(-7, 7) // random position
+						P.pixel_y = rand(-7, 7)
+						//P.icon_state = "vial-[bottlesprite]" || "bottle-1"
+						reagents.trans_to_obj(P, amount_per_vial)
+						P.update_icon()
+				if("create_vials_multiple") //RS Add
+					if(condi || !reagents.total_volume)
+						return
+					tgui_act("modal_open", list("id" = "create_vial", "arguments" = list("num" = answer)), ui, state)
 				if("create_bottle")
 					if(condi || !reagents.total_volume)
 						return
