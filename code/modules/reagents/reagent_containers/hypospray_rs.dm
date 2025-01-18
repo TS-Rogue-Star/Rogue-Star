@@ -55,6 +55,10 @@
 	. = ..()
 	if(vial)
 		. += "[vial] has [vial.reagents.total_volume]u remaining."
+		if(amount_per_transfer_from_this == "vial") //use vial transfer rate
+			. += "Transfer rate set to [vial.amount_per_transfer_from_this]u. (Vial)"
+		else
+			. += "Transfer rate set to [amount_per_transfer_from_this]u."
 	else
 		. += "It has no vial loaded in."
 
@@ -77,7 +81,7 @@
 		if(swapping || injecting)
 			return
 		swapping = 1
-		user.visible_message("<span class='notice'>[user] begins swapping [I] into \the [src].</span>","<span class='notice'>You start swapping [I] into \the [src].</span>")
+		user.visible_message("<span class='notice'>[user] begins swapping [vial] For [I] into \the [src].</span>","<span class='notice'>You start swapping [vial] For [I] into \the [src].</span>")
 		if(!do_after(user,30))
 			swapping = 0
 			return 0
@@ -131,7 +135,7 @@
 			if(swapping || injecting)
 				return
 			swapping = 1
-			user.visible_message("<span class='notice'>[user] begins swapping [I] into \the [src].</span>","<span class='notice'>You start swapping [I] into \the [src].</span>")
+			user.visible_message("<span class='notice'>[user] begins swapping [vial] For [I] into \the [src].</span>","<span class='notice'>You start swapping [vial] For [I] into \the [src].</span>")
 			if(!do_after(user,30))
 				swapping = 0
 				return 0
@@ -152,7 +156,7 @@
 			if(swapping || injecting)
 				return
 			swapping = 1
-			user.visible_message("<span class='notice'>[user] begins swapping [I] into \the [src].</span>","<span class='notice'>You start swapping [I] into \the [src].</span>")
+			user.visible_message("<span class='notice'>[user] begins loading [I] into \the [src].</span>","<span class='notice'>You start loading [I] into \the [src].</span>")
 			if(!do_after(user,30))
 				swapping = 0
 				return 0
@@ -370,7 +374,7 @@
 	<p>Prototype designs purchased from DeForest Medical, the newly updated BORK Medispray contains many new features to improve experience for the end user.</p>
 	<p></p>
 	<br />
-	<h5>Usage</h5>
+	<h5>Usage (Note this is currently OOC instructions)</h5>
 	<ol>
 		<li>Shift click on the medispray to see what reagents are loaded in the vial</li>
 		<li>Click the medispray while in hand to set reagent transfer amount.</li>
