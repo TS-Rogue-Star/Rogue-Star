@@ -1,5 +1,5 @@
 /obj/item/weapon/revised_hypospray
-	name = "iHypo"
+	name = "B.O.R.K. Medispray"
 	icon_state = "nhypo"
 	icon = 'icons/obj/syringe.dmi'
 	item_state = "nhypo"
@@ -7,7 +7,7 @@
 		slot_l_hand_str = 'icons/mob/items/lefthand.dmi',
 		slot_r_hand_str = 'icons/mob/items/righthand.dmi',
 		)
-	desc = "The premier in hypospray technology brought to you by WolfApple technologies, WolfApple: Be the wolf among sheep. This premium hypospray takes 30-unit vials as the drug supply for easy swapping, even compatible with your existing hardware."
+	desc = "The premier in medispray technology brought to you by Bork technologies. This premium medispray takes 30-unit vials as the drug supply for easy swapping, even compatible with your existing hardware."
 	w_class = ITEMSIZE_SMALL
 	var/list/allowed_containers = list(/obj/item/weapon/reagent_containers/glass/beaker/vial)
 	var/obj/item/weapon/reagent_containers/glass/beaker/vial/vial
@@ -17,7 +17,7 @@
 	var/swapping //stops you from queuing up a bunch of swap operations at once
 	var/spawnwithvial = TRUE
 	var/upgraded = FALSE
-	var/amount_per_transfer_from_this = "vial"
+	var/amount_per_transfer_from_this = "5"
 	var/possible_transfer_amounts = list("vial",1,5,10,15)
 	slot_flags = SLOT_BELT
 	unacidable = TRUE
@@ -26,11 +26,11 @@
 	preserve_item = TRUE
 
 /obj/item/weapon/revised_hypospray/CMO
-	name = "iHypo Deluxe"
+	name = "B.O.R.K. Medispray Deluxe"
 	allowed_containers = list(/obj/item/weapon/reagent_containers/glass/bottle, /obj/item/weapon/reagent_containers/glass/beaker/vial)
 	icon_state = "nadvhypo"
 	item_state = "nadvhypo"
-	desc = "The premier in hypospray technology brought to you by WolfApple technologies, WolfApple: Be the wolf among sheep. This Deluxe hypospray takes 60-unit Bottles, while retaining compatability with the 30u vials."
+	desc = "The premier in medispray technology brought to you by Bork technologies. This Deluxe medispray takes 60-unit Bottles, while retaining compatability with the 30u vials."
 	possible_transfer_amounts = list("vial",1,5,10,15,25,30)
 	start_vial = /obj/item/weapon/reagent_containers/glass/bottle/preloaded/tricordrazine
 
@@ -360,3 +360,24 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle-1"
 	prefill = list("tramadol" = 60)
+
+
+/obj/item/weapon/paper/medispray_manual
+	name = "B.O.R.K. Medispray manual"
+	info = {"<h4>Bio-Officinal Reagent Kinaesthetic Medispray</h4>
+	<h5>History</h5>
+	<p></p>
+	<p>Prototype designs purchased from DeForest Medical, the newly updated BORK Medispray contains many new features to improve experience for the end user.</p>
+	<p></p>
+	<br />
+	<h5>Usage</h5>
+	<ol>
+		<li>Shift click on the medispray to see what reagents are loaded in the vial</li>
+		<li>Click the medispray while in hand to set reagent transfer amount.</li>
+		<li>"Vial" defaults to the vials transfer amount, any number amount overrides this with the number chosen</li>
+		<li>You may set the vial transfer amounts using the normal reagent container methods.</li>
+		<li>Click on with an empty hand to unload medispray.</li>
+		<li>Click on medispray with a vial to load a new vial.</li>
+		<li>You may also click on the medispray without it being empty, or clicking the medispray onto a vial, even one that is within a container.</li>
+		<li>The medispray kit may be worn on your belt slot to convieniently contain all your needed chems (More space efficient than a medical belt for holding the vials)</li>
+	</ol>"}
