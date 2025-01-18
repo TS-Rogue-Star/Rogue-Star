@@ -71,3 +71,11 @@
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_HEAD)
 	sorting_group = MARKINGS_HEAD
+
+//RS Edit start || Ports VOREStation PR16881, digitigrade inner thighs
+/datum/sprite_accessory/marking/digi/inner_thigh
+	name = "inner thighs (digitigrade)"
+	icon_state = "digi_inner"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_L_LEG,BP_R_LEG)
+//RS Edit end
