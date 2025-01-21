@@ -392,3 +392,10 @@ digi-inner-thighs
 **Link:** https://github.com/VOREStation/VOREStation/pull/15552<br>
 **License:** Licensed for use by VOREStation, Rogue Star, and their downstreams; unlicensed for further use without permission of copyright holder<br>
 <br>
+**File:** `code/game/Rogue Star/catborgs`<br>
+**Creator:** Toriate <br>
+**License Holders:** Matica, Cameron The Raven, Spotteh<br>
+**Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/744<br>
+**License:** [CC BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/)<br>
+**Notes:** All files within this folder are covered under the above license, as per the included attribution.txt file 
+<br>
