@@ -28,6 +28,7 @@ beardedsnake - Xenochimera
 beebor - Xenochimera
 belwhix - Shadekin
 beyondmylife - Protean
+bladebloodrose - Shadekin
 bothnevarbackwards - Diona
 briargarden - Black-Eyed Shadekin
 briargarden - Shadekin Empathy
@@ -195,6 +196,7 @@ pugly43 - Protean
 qrocakes - Black-Eyed Shadekin
 qrocakes - Shadekin
 radiantaurora - Protean
+rainy12 - Shadekin
 residentcody - Black-Eyed Shadekin
 residentcody - Protean
 revolvereloise - Protean

@@ -10,6 +10,7 @@
 
 	var/has_eye_sprites = TRUE
 	var/has_eye_light_sprites = FALSE
+	var/has_robotdecal_sprites = FALSE	//RS ADD
 	var/has_custom_open_sprites = FALSE
 	var/has_vore_belly_sprites = FALSE
 	var/has_vore_belly_resting_sprites = FALSE
@@ -135,6 +136,12 @@
 	else
 		return
 
+/datum/robot_sprite/proc/get_robotdecal_overlay(var/mob/living/silicon/robot/ourborg)	//RS ADD START
+	if(!(ourborg.resting && has_robotdecal_sprites))
+		return "[sprite_icon_state]-decals"
+	else
+		return
+											//RS ADD END
 /datum/robot_sprite/proc/get_rest_sprite(var/mob/living/silicon/robot/ourborg)
 	if(!(ourborg.rest_style in rest_sprite_options))
 		ourborg.rest_style = "Default"
