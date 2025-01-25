@@ -408,18 +408,6 @@
 					/obj/item/weapon/reagent_containers/glass/bottle/toxin = 4,
 					/obj/item/weapon/reagent_containers/syringe/antiviral = 4,
 					/obj/item/weapon/reagent_containers/syringe = 12,
-					//RS edit remove hypos from vendor
-					//sari mk1s
-					///obj/item/weapon/storage/firstaid/mkIhypokit = 2,
-					//No vials included as they can be printed in the chem-master
-					//Pooj Mk2's
-					///obj/item/weapon/reagent_containers/glass/bottle/hypovial/small = 12,
-					///obj/item/weapon/hypospray_mkii = 4,
-					///obj/item/weapon/storage/firstaid/hypokit/brute = 2,
-					///obj/item/weapon/storage/firstaid/hypokit/burn = 2,
-					///obj/item/weapon/storage/firstaid/hypokit/toxin = 2,
-					///obj/item/weapon/storage/firstaid/hypokit/oxy = 2,
-					//Hypospray ends
 					/obj/item/device/healthanalyzer = 5,
 					/obj/item/weapon/reagent_containers/glass/beaker = 4,
 					/obj/item/weapon/reagent_containers/dropper = 2,

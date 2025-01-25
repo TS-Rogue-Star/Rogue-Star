@@ -275,26 +275,6 @@
 		to_chat(usr, "[src] Setting injection amount to [N].")
 	amount_per_transfer_from_this = N
 
-/*/obj/item/weapon/revised_hypospray/AltClick(mob/living/user)
-	. = ..()
-	if(user.CanUseTopic(src, FALSE))
-		if(possible_transfer_amounts && user.Adjacent(src))
-			set_APTFT()
-
-
-		return TRUE*/
-
-/*/obj/item/weapon/revised_hypospray/CtrlClick(mob/living/user)
-	if(user)
-		if(user.incapacitated())
-			return
-		else if(vial)
-			unload_hypo(vial, user, 1)
-			return TRUE
-		else
-			to_chat(user, "This Hypo needs to be loaded first!")
-			return
-*/
 
 
 //preloaded vials
