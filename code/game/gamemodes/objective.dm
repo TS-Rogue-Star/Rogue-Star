@@ -441,7 +441,7 @@ var/global/list/all_objectives = list()
 		"a chief medical officer's jumpsuit" = /obj/item/clothing/under/rank/chief_medical_officer,
 		"a head of security's jumpsuit" = /obj/item/clothing/under/rank/head_of_security,
 		"a head of personnel's jumpsuit" = /obj/item/clothing/under/rank/head_of_personnel,
-		"the hypospray" = /obj/item/weapon/reagent_containers/hypospray/vial,
+		"the hypospray" = /obj/item/weapon/revised_hypospray/CMO,//RS Edit /obj/item/weapon/reagent_containers/hypospray/vial,
 		"the site manager's pinpointer" = /obj/item/weapon/pinpointer,
 		"an ablative armor vest" = /obj/item/clothing/suit/armor/laserproof,
 	)
@@ -903,4 +903,3 @@ var/global/list/all_objectives = list()
 			rval = 2
 		return 0
 	return rval
-

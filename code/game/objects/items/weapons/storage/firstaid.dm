@@ -232,6 +232,42 @@
 	starts_with = list(/obj/item/weapon/hypospray_mkii/CMO/combat, /obj/item/weapon/reagent_containers/glass/bottle/hypovial/large/preloaded/combat = 4)
 	item_state_slots = list(slot_r_hand_str = "firstaid-surgery", slot_l_hand_str = "firstaid-surgery")
 
+
+
+/*
+ * revised hypo kits (RS Add)
+ */
+
+//RS Add MkI Hypo Rework
+/obj/item/weapon/storage/firstaid/mkIhypokit
+	name = "B.O.R.K. Medispray Kit"
+	desc = "Contains a B.O.R.K. Medispray and its vials. It can only hold B.O.R.K. Medispray related items."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "vialcaselight"
+	slot_flags = SLOT_BELT
+	max_storage_space = ITEMSIZE_COST_SMALL * 7
+	starts_with = list(/obj/item/weapon/revised_hypospray,
+	/obj/item/weapon/paper/medispray_manual,
+	/obj/item/weapon/reagent_containers/glass/beaker/vial = 5)
+	can_hold = list(/obj/item/weapon/revised_hypospray, /obj/item/weapon/reagent_containers/glass/beaker/vial,/obj/item/weapon/paper)
+	//can fit vials, and the mk.I hyospray.
+
+/obj/item/weapon/storage/firstaid/mkIhypokit/cmo
+	name = "Deluxe B.O.R.K. Medispray Kit"
+	desc = "Contains a Deluxe B.O.R.K. Medispray and its vials and its hypovials, can hold bottles."
+	icon_state = "vialcaselight"
+	max_storage_space = ITEMSIZE_COST_SMALL * 10
+	starts_with = list(/obj/item/weapon/revised_hypospray/CMO,
+	/obj/item/weapon/paper/medispray_manual,
+	/obj/item/weapon/reagent_containers/glass/bottle/preloaded/tramadol,
+	/obj/item/weapon/reagent_containers/glass/bottle/preloaded/bicaridine,
+	/obj/item/weapon/reagent_containers/glass/bottle/preloaded/antitoxin,
+	/obj/item/weapon/reagent_containers/glass/bottle/preloaded/keloderma,
+	/obj/item/weapon/reagent_containers/glass/bottle/preloaded/dexalin
+	)
+	can_hold = list(/obj/item/weapon/revised_hypospray, /obj/item/weapon/reagent_containers/glass/bottle, /obj/item/weapon/reagent_containers/glass/beaker/vial,/obj/item/weapon/paper)
+	item_state_slots = list(slot_r_hand_str = "firstaid-surgery", slot_l_hand_str = "firstaid-surgery")
+	//can fit vials, bottles, and any of the revised hypos.
 /*
  * Pill Bottles
  */
