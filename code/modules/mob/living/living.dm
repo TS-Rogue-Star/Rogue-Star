@@ -1342,5 +1342,5 @@
 
 /mob/living/set_dir(var/new_dir)
 	. = ..()
-	if(size_multiplier != 1 || icon_scale_x != 1 && center_offset > 0)
+	if((dir != new_dir) && (size_multiplier != 1 || icon_scale_x != 1 && center_offset > 0))
 		update_transform(TRUE)

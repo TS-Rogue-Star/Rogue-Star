@@ -23,6 +23,7 @@
 	var/crisis //Admin-settable for combat module use.
 	var/crisis_override = 0
 	var/integrated_light_power = 6
+	var/robotdecal_on = 0	//RS ADD
 	var/datum/wires/robot/wires
 
 	can_be_antagged = TRUE
@@ -415,6 +416,14 @@
 	to_chat(usr, "<span class='filter_notice'>You [lights_on ? "enable" : "disable"] your integrated light.</span>")
 	handle_light()
 	update_icon()
+
+/mob/living/silicon/robot/verb/toggle_robot_decals() // loads overlay UNDER lights.	//RS ADD START
+	set category = "Abilities.Silicon"
+	set name = "Toggle extras"
+	robotdecal_on = !robotdecal_on
+	to_chat(usr, span_notice("You [robotdecal_on ? "enable" : "disable"] your extra apperances."))
+	update_icon()
+											//RS ADD END
 
 //RS Edit Start: Allows robots to also have a 'glow' if they have a naturally glowing belly or something of the sort.
 //Instead of turning this ON / OFF EVERY SINGLE TICK like robot's update_icon does (it destroys the overlays and rebuilds them)
@@ -994,6 +1003,13 @@
 				var/eyes_overlay = sprite_datum.get_eyes_overlay(src)
 				if(eyes_overlay)
 					add_overlay(eyes_overlay)
+
+		if(robotdecal_on && sprite_datum.has_robotdecal_sprites)	//RS ADD START
+			if(!shell || deployed) // Shell borgs that are not deployed will have no eyes.
+				var/robotdecal_overlay = sprite_datum.get_robotdecal_overlay(src)
+				if(robotdecal_overlay)
+					add_overlay(robotdecal_overlay)
+										//RS ADD END
 
 		if(lights_on && sprite_datum.has_eye_light_sprites)
 			if(!shell || deployed) // Shell borgs that are not deployed will have no eyes.
