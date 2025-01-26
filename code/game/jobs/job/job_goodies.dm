@@ -253,7 +253,8 @@
 /datum/job/cmo
 	mail_goodies = list(
 		/obj/item/device/healthanalyzer/advanced = 250,
-		/obj/item/weapon/reagent_containers/hypospray = 250,
+		//RS Edit /obj/item/weapon/reagent_containers/hypospray = 250,
+		/obj/item/weapon/revised_hypospray/CMO = 250,
 		/obj/item/weapon/storage/firstaid/adv = 200,
 		/obj/item/weapon/reagent_containers/blood/OMinus = 150,
 		/obj/item/weapon/pen/fountain6 = 50,

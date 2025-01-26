@@ -4846,8 +4846,37 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/atmos/monitoring)
 "ko" = (
-/obj/item/weapon/storage/secure/briefcase/ml3m_pack_med,
 /obj/structure/table/reinforced,
+/obj/item/weapon/storage/firstaid/hypokit/brute{
+	pixel_x = -6;
+	pixel_y = 10
+	},
+/obj/item/weapon/storage/firstaid/hypokit/brute{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/obj/item/weapon/storage/firstaid/hypokit/burn{
+	pixel_x = 7;
+	pixel_y = 10
+	},
+/obj/item/weapon/storage/firstaid/hypokit/burn{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/item/weapon/storage/firstaid/hypokit/toxin{
+	pixel_x = -6
+	},
+/obj/item/weapon/storage/firstaid/hypokit/toxin{
+	pixel_x = -6;
+	pixel_y = -5
+	},
+/obj/item/weapon/storage/firstaid/hypokit/oxy{
+	pixel_x = 7
+	},
+/obj/item/weapon/storage/firstaid/hypokit/oxy{
+	pixel_x = 7;
+	pixel_y = -5
+	},
 /obj/machinery/alarm/angled{
 	dir = 4
 	},
@@ -8853,6 +8882,11 @@
 /obj/item/weapon/tool/screwdriver,
 /obj/structure/table/reinforced,
 /obj/machinery/light,
+/obj/item/weapon/storage/box/nifsofts_medical{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/obj/item/weapon/storage/box/nifsofts_medical,
 /turf/simulated/floor/tiled/eris/white/bluecorner,
 /area/medical/cmostore)
 "ta" = (
@@ -9235,27 +9269,10 @@
 /turf/simulated/floor/tiled,
 /area/stellardelight/deck2/port)
 "tV" = (
-/obj/item/weapon/storage/box/nifsofts_medical{
-	pixel_x = 7;
-	pixel_y = 7
-	},
-/obj/item/weapon/storage/box/nifsofts_medical,
-/obj/structure/table/reinforced,
-/obj/item/device/radio{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/device/radio{
-	pixel_x = 4;
-	pixel_y = -4
-	},
-/obj/item/device/radio{
-	pixel_x = 7;
-	pixel_y = 8
-	},
 /obj/machinery/light_switch{
 	pixel_y = 24
 	},
+/obj/machinery/vending/medical,
 /turf/simulated/floor/tiled/eris/white/bluecorner,
 /area/medical/cmostore)
 "tW" = (
@@ -21160,12 +21177,22 @@
 /turf/simulated/floor/airless,
 /area/stellardelight/deck2/exterior)
 "Uq" = (
-/obj/machinery/vending/medical,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/firstaid/mkIhypokit{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/obj/item/weapon/storage/firstaid/mkIhypokit{
+	pixel_x = -3
+	},
+/obj/item/weapon/storage/secure/briefcase/ml3m_pack_med{
+	pixel_y = -5
 	},
 /turf/simulated/floor/tiled/eris/white/bluecorner,
 /area/medical/cmostore)
@@ -23372,6 +23399,18 @@
 	},
 /obj/machinery/light{
 	dir = 8
+	},
+/obj/item/device/radio{
+	pixel_x = 7;
+	pixel_y = 8
+	},
+/obj/item/device/radio{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/device/radio{
+	pixel_x = 4;
+	pixel_y = -4
 	},
 /turf/simulated/floor/tiled/eris/white/bluecorner,
 /area/medical/cmostore)

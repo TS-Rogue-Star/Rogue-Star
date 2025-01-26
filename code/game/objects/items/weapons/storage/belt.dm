@@ -233,6 +233,7 @@
 		/obj/item/clothing/head/surgery,
 		/obj/item/clothing/gloves,
 		/obj/item/weapon/reagent_containers/hypospray,
+		/obj/item/weapon/revised_hypospray, //RS Add
 		/obj/item/weapon/hypospray_mkii,
 		/obj/item/weapon/reagent_containers/glass/bottle/hypovial,
 		/obj/item/clothing/glasses,
