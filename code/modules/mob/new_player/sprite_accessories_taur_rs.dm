@@ -144,21 +144,6 @@
 	icon_state = "new_zorgoia_fat"
 	extra_overlay = "new_zorgoia_fat_s"
 
-
-/datum/sprite_accessory/tail/taur/bunny
-	name = "Bunny (Taur, Fat vwag)"
-	icon = 'icons/rogue-star/tails_64x32_rs.dmi'
-	icon_state = "bnytr"
-	extra_overlay = "bnytr-m1"
-	extra_overlay2 = "bnytr-m2"
-	ani_state = "bnytr-f"
-	extra_overlay_w = "bnytr-m1"
-	extra_overlay2_w = "bnytr-f-m2"
-
-	can_loaf = TRUE
-	icon_loaf = 'icons/rogue-star/loafs_64x32.dmi'
-	loaf_offset = 4
-
 //Added 1/26/2025 fat sergs
 
 /datum/sprite_accessory/tail/taur/ch/sergal/wheaties
