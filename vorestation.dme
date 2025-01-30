@@ -1654,6 +1654,7 @@
 #include "code\game\Rogue Star\special_persist.dm"
 #include "code\game\Rogue Star\waddle.dm"
 #include "code\game\Rogue Star\catborgs\catborgs.dm"
+#include "code\game\Rogue Star\fluff\sari-outfit-fluff.dm"
 #include "code\game\turfs\simulated.dm"
 #include "code\game\turfs\simulated_vr.dm"
 #include "code\game\turfs\turf.dm"

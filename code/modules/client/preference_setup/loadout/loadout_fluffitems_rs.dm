@@ -59,3 +59,17 @@
 	display_name = "Mimedriver"
 	ckeywhitelist = list("murchant")
 	character_name = list("Fiddle")
+
+/datum/gear/fluff/sarihat
+	path = /obj/item/clothing/head/fluff/sari
+	slot = slot_head
+	display_name = "Sari's hat"
+	ckeywhitelist = list("crossexonar")
+	character_name = null
+
+/datum/gear/fluff/sarioutfit
+	path = /obj/item/clothing/under/fluff/sari
+	slot = slot_w_uniform
+	display_name = "Sari's jacket and clothes"
+	ckeywhitelist = list("crossexonar")
+	character_name = null
