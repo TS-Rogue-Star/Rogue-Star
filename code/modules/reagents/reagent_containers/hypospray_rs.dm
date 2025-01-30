@@ -185,9 +185,6 @@
 		if(!affected)
 			to_chat(user, span_warning("The limb is missing!"))
 			return
-		if(affected.status != ORGAN_FLESH)
-			to_chat(user, span_notice("Medicine won't work on a robotic limb!"))
-			return
 
 	//Always log attemped injections for admins
 	var/contained = vial.reagentlist()
