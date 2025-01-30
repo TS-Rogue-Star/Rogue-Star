@@ -17,7 +17,7 @@
 	var/swapping //stops you from queuing up a bunch of swap operations at once
 	var/spawnwithvial = TRUE
 	var/upgraded = FALSE
-	var/amount_per_transfer_from_this = "5"
+	var/amount_per_transfer_from_this = 5
 	var/possible_transfer_amounts = list("vial",1,5,10,15)
 	slot_flags = SLOT_BELT
 	unacidable = TRUE
