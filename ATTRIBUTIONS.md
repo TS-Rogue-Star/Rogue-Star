@@ -412,7 +412,7 @@ digi-inner-thighs
 <br>
 **File:** `code/game/Rogue Star/icons/fluff/sari_adjusted.dmi`<br>
 **Creator:** Toriate <br>
-**License Holders:** Sari Bork<br>
+**Exclusive License Holder:** Sari Bork<br>
 **Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/758<br>
-**License:** Licensed for use by Rogue Star; unlicensed for further use without permission of copyright holder<br>
+**License:** Licensed for use by Rogue Star; unlicensed for further use without permission of license  holder<br>
 <br>
