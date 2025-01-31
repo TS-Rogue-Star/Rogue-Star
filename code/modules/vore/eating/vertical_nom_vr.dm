@@ -19,7 +19,7 @@
 				T = GetBelow(T)
 			if(T)
 				for(var/mob/living/L in T)
-					if(L.devourable && L.can_be_drop_prey)
+					if(spont_pref_check(src,L,SPONT_PRED))
 						targets += L
 
 	if(!(targets.len))

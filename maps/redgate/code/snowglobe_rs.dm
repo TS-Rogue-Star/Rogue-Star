@@ -93,7 +93,7 @@
 			continue
 		if(!(isliving(player) && player.client))
 			continue
-		if(!(player.resizable && player.pickup_pref))
+		if(!((player.resizable && check_vore_whitelist_pair(user,player,RESIZING)) && (player.pickup_pref && check_vore_whitelist_pair(user,player,MICRO_PICKUP))))
 			continue
 		var/area/ourarea = get_area(player)
 		if(!ourarea.grab_zone)

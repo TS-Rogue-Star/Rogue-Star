@@ -179,7 +179,7 @@
  * @return false if normal code should continue, 1 to prevent normal code.
  */
 /mob/living/proc/attempt_to_scoop(mob/living/M, mob/living/G, ignore_size = FALSE) //second one is for the Grabber, only exists for animals to self-grab
-	if(!(pickup_pref && M.pickup_pref && M.pickup_active))
+	if(!(pickup_pref && M.pickup_pref && M.pickup_active && check_vore_whitelist_pair(M,src,MICRO_PICKUP)))	//RS EDIT
 		return 0
 	if(!(M.a_intent == I_HELP))
 		return 0
@@ -341,7 +341,7 @@
 
 	if(a_intent == I_GRAB)
 		// You can only grab prey if you have no shoes on. And both of you are cool with it.
-		if(pred.shoes || !(pred.pickup_pref && prey.pickup_pref))
+		if(pred.shoes || !(spont_pref_check(pred,prey,MICRO_PICKUP)))	//RS EDIT END
 			message_pred = "You step down onto [prey], squishing them and forcing them down to the ground!"
 			message_prey = "[pred] steps down and squishes you with their foot, forcing you down to the ground!"
 			if(tail)

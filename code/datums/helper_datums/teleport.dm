@@ -221,7 +221,7 @@ var/bluespace_item_types = newlist(/obj/item/weapon/storage/backpack/holding,
 				return 1
 			else
 				var/mob/living/telemob = teleatom
-				if(telemob.can_be_drop_prey && telenommer.can_be_drop_pred)
+				if(spont_pref_check(telenommer,telemob,SPONT_PRED))		//RS EDIT
 					return 1
 		obstructed = 1
 	else if(!((isturf(destination) && !destination.density) || (isturf(destination.loc) && !destination.loc.density)) || !destination.x || !destination.y || !destination.z)	//If we're inside something or outside universe

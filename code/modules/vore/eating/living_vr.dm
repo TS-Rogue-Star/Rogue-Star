@@ -1112,6 +1112,17 @@
 			save_ooc_panel()
 	if(href_list["print_ooc_notes_to_chat"])
 		print_ooc_notes_to_chat()
+	//RS ADD START
+	if(href_list["toggle_vore_trustlist"])
+		toggle_vore_trustlist(href_list["toggle_vore_trustlist"])
+		vore_trustlist()
+	if(href_list["edit_vore_trustlist"])
+		toggle_vore_whitelist()
+	if(href_list["print_vore_trustlist"])
+		print_vore_whitelist()
+	if(href_list["toggle_vore_trustlist_mode"])
+		toggle_vore_trustlist_mode()
+	//RS ADD END
 	return ..()
 
 /mob/living/proc/display_voreprefs(mob/user)	//Called by Topic() calls on instances of /mob/living (and subtypes) containing vore_prefs as an argument
@@ -1139,19 +1150,19 @@
 		dispvoreprefs += "<b>Stripping:</b> [H.allow_stripping ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
 		dispvoreprefs += "<b>Contamination:</b> [H.allow_contaminate ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"	//RS ADD END
 	dispvoreprefs += "<u><b>-SPONTANEOUS PREFERENCES-</b></u><br>"
-	dispvoreprefs += "<b>Spontaneous vore prey:</b> [can_be_drop_prey ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
-	dispvoreprefs += "<b>Spontaneous vore pred:</b> [can_be_drop_pred ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
-	dispvoreprefs += "<b>Drop Vore:</b> [drop_vore ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
-	dispvoreprefs += "<b>Slip Vore:</b> [slip_vore ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
-	dispvoreprefs += "<b>Throw vore:</b> [throw_vore ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
-	dispvoreprefs += "<b>Stumble Vore:</b> [stumble_vore ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
-	dispvoreprefs += "<b>Food Vore:</b> [food_vore ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Spontaneous vore prey:</b> [(check_vore_whitelist_pair(src,user,SPONT_PREY) && can_be_drop_prey) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"	//ADD EXAMINE WHITELIST STUFF HERE
+	dispvoreprefs += "<b>Spontaneous vore pred:</b> [(check_vore_whitelist_pair(user,src,SPONT_PRED) && can_be_drop_pred) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Drop Vore:</b> [(check_vore_whitelist_pair(user,src,DROP_VORE) && drop_vore) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Slip Vore:</b> [(check_vore_whitelist_pair(user,src,SLIP_VORE) && slip_vore) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Throw vore:</b> [(check_vore_whitelist_pair(user,src,THROW_VORE) && throw_vore) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Stumble Vore:</b> [(check_vore_whitelist_pair(user,src,STUMBLE_VORE) && stumble_vore) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Food Vore:</b> [(check_vore_whitelist_pair(user,src,FOOD_VORE) && food_vore) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
 	dispvoreprefs += "<u><b>-OTHER PREFERENCES-</b></u><br>"
-	dispvoreprefs += "<b>Size changing:</b> [resizable ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Size changing:</b> [(check_vore_whitelist_pair(user,src,RESIZING) && resizable) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
 	dispvoreprefs += "<b>Inbelly Spawning:</b> [allow_inbelly_spawning ? "<font color='green'>Allowed</font>" : "<font color='red'>Disallowed</font>"]<br>"
-	dispvoreprefs += "<b>Spontaneous transformation:</b> [allow_spontaneous_tf ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Spontaneous transformation:</b> [(check_vore_whitelist_pair(user,src,SPONT_TF) && allow_spontaneous_tf) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
 	dispvoreprefs += "<b>Can be stepped on/over:</b> [step_mechanics_pref ? "<font color='green'>Allowed</font>" : "<font color='red'>Disallowed</font>"]<br>"
-	dispvoreprefs += "<b>Can be picked up:</b> [pickup_pref ? "<font color='green'>Allowed</font>" : "<font color='red'>Disallowed</font>"]<br>"
+	dispvoreprefs += "<b>Can be picked up:</b> [(check_vore_whitelist_pair(user,src,MICRO_PICKUP) && pickup_pref) ? "<font color='green'>Allowed</font>" : "<font color='red'>Disallowed</font>"]<br>"
 	dispvoreprefs += "<b>Global Vore Privacy is:</b> [eating_privacy_global ? "Subtle" : "Loud"]<br>"
 	user << browse("<html><head><title>Vore prefs: [src]</title></head><body><center>[dispvoreprefs]</center></body></html>", "window=[name]mvp;size=300x600;can_resize=1;can_minimize=0")
 	onclose(user, "[name]")

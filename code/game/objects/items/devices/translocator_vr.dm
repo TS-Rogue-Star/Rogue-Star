@@ -300,7 +300,7 @@ This device records all warnings given and teleport events for admin review in c
 	var/televored = FALSE
 	if(isbelly(real_dest))
 		var/obj/belly/B = real_dest
-		if(!(target.can_be_drop_prey) && B.owner != user)
+		if(!(spont_pref_check(B.owner,target,SPONT_PRED)) && B.owner != user)	//RS EDIT
 			to_chat(target,"<span class='warning'>\The [src] narrowly avoids teleporting you right into \a [lowertext(real_dest.name)]!</span>")
 			real_dest = dT //Nevermind!
 		else

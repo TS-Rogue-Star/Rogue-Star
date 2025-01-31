@@ -1283,7 +1283,7 @@
 			for(var/mob/living/L in T)
 				if(L == src) //no eating yourself. 1984.
 					continue
-				if(L.devourable && L.can_be_drop_prey)
+				if(spont_pref_check(src,L,SPONT_PRED)) //RS EDIT
 					targets += L
 
 	if(!(targets.len))
@@ -1341,7 +1341,7 @@
 			for(var/mob/living/L in T)
 				if(L == src) //no eating yourself. 1984.
 					continue
-				if(L.devourable && L.throw_vore && (L.can_be_drop_pred || L.can_be_drop_prey))
+				if(spont_pref_check(src,L,SPONT_PRED))	//RS EDIT
 					targets += L
 				//With the current throw-vore logic:
 				//If both have pred&prey enabled, person being hit eats the person being thrown. Aka the diver gets eaten.
@@ -1429,7 +1429,7 @@
 				continue
 			if(L == src) //no eating yourself. 1984.
 				continue
-			if(L.devourable && L.throw_vore && (L.can_be_drop_pred || L.can_be_drop_prey))
+			if(spont_pref_check(src,L,THROW_VORE) || spont_pref_check(L,src,THROW_VORE))	//RS EDIT
 				targets += L
 
 		if(!(targets.len))
@@ -1628,7 +1628,7 @@
 				continue
 			if(L == src) //no eating yourself. 1984.
 				continue
-			if(L.devourable && L.throw_vore && (L.can_be_drop_pred || L.can_be_drop_prey))
+			if(spont_pref_check(src,L,THROW_VORE) || spont_pref_check(L,src,THROW_VORE))	//RS EDIT
 				targets += L
 
 		if(!(targets.len))
@@ -1769,9 +1769,9 @@
 			continue
 		if(L == src) //no getting high off your own supply, get a nif or something, nerd.
 			continue
-		if(!L.resizable && (trait_injection_selected == "macrocillin" || trait_injection_selected == "microcillin" || trait_injection_selected == "normalcillin")) // If you're using a size reagent, ignore those with pref conflicts.
+		if((!L.resizable || check_vore_whitelist_pair(src,L,RESIZING)) && (trait_injection_selected == "macrocillin" || trait_injection_selected == "microcillin" || trait_injection_selected == "normalcillin")) // If you're using a size reagent, ignore those with pref conflicts.	//RS EDIT
 			continue
-		if(!L.allow_spontaneous_tf && (trait_injection_selected == "androrovir" || trait_injection_selected == "gynorovir" || trait_injection_selected == "androgynorovir")) // If you're using a TF reagent, ignore those with pref conflicts. || Ports VOREStation PR16060
+		if(!(L.allow_spontaneous_tf && check_vore_whitelist_pair(src,L,SPONT_TF)) && (trait_injection_selected == "androrovir" || trait_injection_selected == "gynorovir" || trait_injection_selected == "androgynorovir")) // If you're using a TF reagent, ignore those with pref conflicts. || Ports VOREStation PR16060	//RS EDIT
 			continue
 		targets += L
 

@@ -44,3 +44,16 @@
 #define DR_SLEEP 								"Sleep"
 #define DR_FAKE									"False Sleep"
 #define DR_WEIGHT								"Weight Drain"
+
+//RS ADD START
+#define SPONT_PREY "Spontaneous Prey"
+#define SPONT_PRED "Spontaneous Pred"
+#define DROP_VORE "Drop Vore"
+#define STUMBLE_VORE "Stumble Vore"
+#define SLIP_VORE "Slip Vore"
+#define THROW_VORE "Throw Vore"
+#define FOOD_VORE "Food Vore"
+#define MICRO_PICKUP "Micro Pickup"
+#define SPONT_TF "Spontaneous TF"
+#define RESIZING "Resizing"
+//RS ADD END

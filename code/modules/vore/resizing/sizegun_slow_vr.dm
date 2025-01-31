@@ -46,7 +46,7 @@
 			unresizable = TRUE
 			return
 
-	if(!(target.resizable))
+	if(!(target.resizable || check_vore_whitelist_pair(user,target,RESIZING)))	//RS EDIT
 		unresizable = TRUE
 
 	if(unresizable)
@@ -104,7 +104,7 @@
 			unresizable = TRUE
 			return
 
-	if(!(L.resizable))
+	if(!(L.resizable || check_vore_whitelist_pair(user,target,RESIZING)))	//RS EDIT
 		unresizable = TRUE
 
 	if(unresizable)
