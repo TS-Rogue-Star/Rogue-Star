@@ -1649,6 +1649,7 @@
 #include "code\game\objects\structures\stool_bed_chair_nest\wheelchair.dm"
 #include "code\game\objects\structures\stool_bed_chair_nest\wheelchair_item.dm"
 #include "code\game\Rogue Star\effect_trail.dm"
+#include "code\game\Rogue Star\event_tally.dm"
 #include "code\game\Rogue Star\Goliath.dm"
 #include "code\game\Rogue Star\kiss.dm"
 #include "code\game\Rogue Star\special_persist.dm"

@@ -680,3 +680,9 @@
 				P.update_appearance()
 		loaded = FALSE
 		log_and_message_admins("<span class='notice'>[key_name_admin(user)] has deleted persistent painting made by [author].</span>")
+
+/obj/structure/sign/painting/unfasten(mob/user)
+	if(current_canvas)
+		to_chat(user,SPAN_WARNING("You have to remove the painting before you can take down the frame!"))
+		return
+	. = ..()
