@@ -198,7 +198,7 @@
 		return TRUE
 
 	if(preftype == RESIZING)
-		if(!pred.resizable || prey.resizable)
+		if(!pred.resizable || !prey.resizable)
 			return FALSE
 		if(!check_vore_whitelist_pair(pred,prey,RESIZING))
 			return FALSE
