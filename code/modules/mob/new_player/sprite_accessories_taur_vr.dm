@@ -1051,21 +1051,6 @@
 /datum/sprite_accessory/tail/taur/kitsune
 	name = "Kitsune (Taur)"
 	icon_state = "kitsune"
-//RS add (new goia sprites)
-/datum/sprite_accessory/tail/taur/newzorgoia
-	name = "New Zorgoia (Taur)"
-	icon = 'icons/mob/human_races/sprite_accessories/taurs_rs.dmi'
-	icon_state = "new_zorgoia"
-	extra_overlay = "new_zorgoia_s"
-	ani_state = "new_zorgoia_fat"
-	extra_overlay_w = "new_zorgoia_fat_s"
-
-/datum/sprite_accessory/tail/taur/newzorgoia/fat
-	name = "New Zorgoia (Fat Taur)"
-	icon = 'icons/mob/human_races/sprite_accessories/taurs_rs.dmi'
-	icon_state = "new_zorgoia_fat"
-	extra_overlay = "new_zorgoia_fat_s"
-//RS add end
 /*
 /datum/sprite_accessory/tail/taur/teppi			// Mostly used as example/template/test subject as to how you use the 'big' taur sprites. Pls give it better icons before uncommenting...
 	name = "Teppi (Taur)"
