@@ -10,13 +10,11 @@
 		return FALSE
 	if(world.time <= target.slip_protect)
 		return FALSE
-	if(!(src.can_be_drop_pred && target.devourable && target.can_be_drop_prey))	//Make sure both of their prefs align with what we're gonna do.
+	if(!(spont_pref_check(src,target,SLIP_VORE)))	//Make sure both of their prefs align with what we're gonna do.	//RS EDIT
 		return FALSE
 	if(!is_vore_predator(src))	//Check their bellies and stuff
 		return FALSE
 	if(!src.vore_selected)	//Gotta have one selected as well.
-		return FALSE
-	if(!slip_vore || !target.slip_vore)
 		return FALSE
 	return TRUE
 
@@ -25,13 +23,11 @@
 		return FALSE
 	if(world.time <= target.slip_protect)
 		return FALSE
-	if(!(target.can_be_drop_pred && src.devourable && src.can_be_drop_prey))	//Make sure both of their prefs align with what we're gonna do.
+	if(!(spont_pref_check(target,src,SLIP_VORE)))	//Make sure both of their prefs align with what we're gonna do.	//RS EDIT
 		return FALSE
 	if(!is_vore_predator(target))	//Check their bellies and stuff
 		return FALSE
 	if(!target.vore_selected)	//Gotta have one selected as well.
-		return FALSE
-	if(!slip_vore || !target.slip_vore)
 		return FALSE
 	return TRUE
 

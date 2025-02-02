@@ -101,7 +101,7 @@
 	if(!isliving(A))
 		return FALSE
 	var/mob/living/L = A
-	if(!L.devourable || !L.allowmobvore || !L.can_be_drop_prey || !L.throw_vore || L.unacidable)
+	if(!L.allowmobvore || !spont_pref_check(src,L,THROW_VORE))	//RS EDIT
 		return FALSE
 
 	set_AI_busy(TRUE)

@@ -117,6 +117,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	var/client_ckey
 
 	var/ssd_vore = FALSE	//RS ADD
+	var/list/vore_whitelist_toggles = list()	//RS ADD - A list of the prefs that are dictated by whitelist
 
 /datum/vore_preferences/New(client/C)
 	if(istype(C))
@@ -209,6 +210,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	glowy_belly = json_from_file["glowy_belly"] //RS ADD
 	allow_contaminate = json_from_file["allow_contaminate"] // RS edit
 	allow_stripping = json_from_file["allow_stripping"] // RS edit
+	vore_whitelist_toggles = json_from_file["vore_whitelist_toggles"]	//RS ADD
 
 	//Quick sanitize
 	if(isnull(digestable))
@@ -304,7 +306,8 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 		allow_stripping = TRUE	//RS ADD
 	if(isnull(glowy_belly)) //RS ADD
 		glowy_belly =  FALSE //RS ADD
-
+	if(isnull(vore_whitelist_toggles))	//RS ADD
+		vore_whitelist_toggles = list()	//RS ADD
 	return TRUE
 
 /datum/vore_preferences/proc/save_vore()
@@ -349,6 +352,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 			"glowy_belly"			= glowy_belly, //RS ADD
 			"allow_contaminate" 	= allow_contaminate, // RS edit
 			"allow_stripping" 		= allow_stripping, // RS edit
+			"vore_whitelist_toggles" = vore_whitelist_toggles, //RS ADD
 		)
 
 	//List to JSON

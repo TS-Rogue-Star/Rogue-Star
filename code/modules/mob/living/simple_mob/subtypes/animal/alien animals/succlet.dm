@@ -150,7 +150,7 @@
 
 	if(isliving(target))
 		l = target
-		if(l.devourable && l.allowmobvore && l.can_be_drop_prey)
+		if(l.allowmobvore && spont_pref_check(src,l,SPONT_PRED))
 			target_turf = get_turf(l)
 		else
 			to_chat(src, "<span class='warning'>You can't move on to [l], they are watching...</span>")

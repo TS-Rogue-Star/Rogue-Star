@@ -88,7 +88,7 @@
 
 	if(client || !user.client || !ai_holder || !isliving(user))
 		return ..()
-	if(!user.devourable || !user.allowmobvore || !user.can_be_drop_prey)
+	if(!spont_pref_check(src,user,SPONT_PRED))	//RS EDIT
 		return ..()
 	ai_holder.give_target(user, TRUE)
 	ai_holder.track_target_position()
@@ -103,7 +103,7 @@
 	. = ..()
 	if(holder.client || !speaker.client)
 		return
-	if(!speaker.devourable || !speaker.allowmobvore || !speaker.can_be_drop_prey)
+	if(!spont_pref_check(holder,speaker,SPONT_PRED))	//RS EDIT
 		return
 	if(speaker.z != holder.z)
 		return
@@ -210,7 +210,7 @@
 	if(!isliving(A))
 		return FALSE
 	var/mob/living/L = A
-	if(!L.devourable || !L.allowmobvore || !L.can_be_drop_prey || !L.throw_vore || L.unacidable)
+	if(!spont_pref_check(src,L,THROW_VORE))	//RS EDIT
 		return FALSE
 
 	set_AI_busy(TRUE)

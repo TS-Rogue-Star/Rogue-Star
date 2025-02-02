@@ -212,7 +212,7 @@
 	if(istype(W, /obj/item/weapon/holder/micro)) //Are you putting a micro in it?
 		var/obj/item/weapon/holder/micro/micro_holder = W
 		var/mob/living/inserted_mob = micro_holder.held_mob //Get the actual mob.
-		if(!inserted_mob.allow_spontaneous_tf) //Do they allow TF?
+		if(!(inserted_mob.allow_spontaneous_tf && spont_pref_check(user,inserted_mob,SPONT_TF))) //Do they allow TF?	//RS EDIT
 			to_chat(user, "<span class='notice'>You cannot put \the [W] into the machine. ((The prefs of the micro forbid this action.))</span>")
 			return
 		if(inserted_mob.stat == DEAD) //Hey medical...
@@ -241,7 +241,7 @@
 	else if(istype(W,/obj/item/weapon/grab)) //Is someone being shoved into the machine?
 		var/obj/item/weapon/grab/the_grab = W
 		var/mob/living/inserted_mob = the_grab.affecting //Get the mob that is grabbed.
-		if(!inserted_mob.allow_spontaneous_tf)
+		if(!(inserted_mob.allow_spontaneous_tf && spont_pref_check(user,inserted_mob,SPONT_TF)))	//RS EDIT
 			to_chat(user, "<span class='notice'>You cannot put \the [W] into the machine. ((The prefs of the micro forbid this action.))</span>")
 			return
 		if(inserted_mob.stat == DEAD)
@@ -480,7 +480,7 @@
 	if(istype(W, /obj/item/weapon/holder/micro) || istype(W, /obj/item/weapon/holder/mouse)) //Are you putting a micro/mouse in it?
 		var/obj/item/weapon/holder/micro/micro_holder = W
 		var/mob/living/inserted_mob = micro_holder.held_mob //Get the actual mob.
-		if(!inserted_mob.allow_spontaneous_tf) //Do they allow TF?
+		if(!(inserted_mob.allow_spontaneous_tf && spont_pref_check(user,inserted_mob,SPONT_TF))) //Do they allow TF?	//RS EDIT
 			to_chat(user, "<span class='notice'>You cannot put \the [W] into the machine. ((The prefs of the micro forbid this action.))</span>")
 			return
 		if(inserted_mob.stat == DEAD) //Hey medical...
@@ -509,7 +509,7 @@
 	else if(istype(W,/obj/item/weapon/grab)) //Is someone being shoved into the machine?
 		var/obj/item/weapon/grab/the_grab = W
 		var/mob/living/inserted_mob = the_grab.affecting //Get the mob that is grabbed.
-		if(!inserted_mob.allow_spontaneous_tf)
+		if(!(inserted_mob.allow_spontaneous_tf && spont_pref_check(user,inserted_mob,SPONT_TF)))	//RS EDIT
 			to_chat(user, "<span class='notice'>You cannot put \the [W] into the machine. ((The prefs of the micro forbid this action.))</span>")
 			return
 		if(inserted_mob.stat == DEAD)
