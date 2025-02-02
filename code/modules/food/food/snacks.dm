@@ -61,9 +61,9 @@
 		usr = M
 
 	if(food_inserted_micros && food_inserted_micros.len)
-		if(M.can_be_drop_pred && M.food_vore && M.vore_selected)
+		if(M.vore_selected)	//RS EDIT
 			for(var/mob/living/F in food_inserted_micros)
-				if(!F.can_be_drop_prey || !F.food_vore)
+				if(!spont_pref_check(M,F,FOOD_VORE))	//RS EDIT
 					continue
 
 				var/do_nom = FALSE

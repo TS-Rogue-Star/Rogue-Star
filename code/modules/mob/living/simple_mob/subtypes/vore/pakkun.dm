@@ -110,7 +110,7 @@
 			our_targets -= list_target
 			continue
 		var/mob/living/L = list_target
-		if(!(L.can_be_drop_prey && L.throw_vore && L.allowmobvore && !L.buckled))
+		if(!L.allowmobvore || L.buckled || !spont_pref_check(holder,L,THROW_VORE))	//RS EDIT
 			our_targets -= list_target
 			continue
 		if((L.dir == 1 && holder.y >= L.y) || (L.dir == 2 && holder.y <= L.y) || (L.dir == 4 && holder.x >= L.x) || (L.dir == 8 && holder.x <= L.x)) //eliminate targets facing the pakkun's direction
@@ -128,7 +128,7 @@
 	.=..()
 	if(isliving(the_target))
 		var/mob/living/L = the_target
-		if(!(L.can_be_drop_prey && L.throw_vore && L.allowmobvore))
+		if(!L.allowmobvore || !spont_pref_check(holder,L,THROW_VORE))	//RS EDIT
 			return FALSE
 		if(istype(holder, /mob/living/simple_mob))
 			var/mob/living/simple_mob/SM = holder

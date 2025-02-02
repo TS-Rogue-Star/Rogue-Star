@@ -382,7 +382,7 @@
 			continue
 		if(thing.faction == faction)
 			continue
-		if(!thing.devourable || !thing.allowmobvore || !thing.can_be_drop_prey || !thing.throw_vore)
+		if(!spont_pref_check(src,thing,THROW_VORE))
 			continue
 
 		thing.throw_at(src,1,1,src)
