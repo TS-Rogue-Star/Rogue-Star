@@ -296,60 +296,60 @@
 
 /obj/item/clothing/under/rank/talon/basic
 	name = "Talon jumpsuit"
-	desc = "A expertly made and stretchy jumpsuit that was made for manueverability in mind. It has a belt with a silver belt buckle on the uniform. There is also a ITV Talon patch on the right shoulder, and an empty velcro spot for another patch on the left shoulder. Snazzy and beneficial."
+	desc = "A basic jumpsuit that bares the ITV Talon logo on the breast."
 	icon = 'icons/inventory/uniform/item_vr.dmi'
 	rolled_down_icon = 'icons/inventory/uniform/mob_vr_rolled_down.dmi'
 	icon_override = 'icons/inventory/uniform/mob_vr.dmi'
-	icon_state = "talon_basic_refreshed"
-	item_state = "talon_basic_refreshed"
+	icon_state = "talon_basic"
+	item_state = "talon_basic"
 	rolled_sleeves = 0
 	rolled_down_icon_override = FALSE
 	rolled_sleeves_icon_override = FALSE
 
 /obj/item/clothing/under/rank/talon/proper
-	name = "Talon medical jumpsuit"
-	desc = "A expertly made and stretchy jumpsuit that was made for manueverability in mind. It has a belt with a silver belt buckle on the uniform. There is also a ITV Talon patch on the right shoulder, and a white medical ensignia patch on the left shoulder. Snazzy and beneficial."
+	name = "Talon proper jumpsuit"
+	desc = "A neat and proper uniform for a proper private ship."
 	icon = 'icons/inventory/uniform/item_vr.dmi'
 	rolled_down_icon = 'icons/inventory/uniform/mob_vr_rolled_down.dmi'
 	icon_override = 'icons/inventory/uniform/mob_vr.dmi'
-	icon_state = "talon_jumpsuit_refreshed"
-	item_state = "talon_jumpsuit_refreshed"
+	icon_state = "talon_jumpsuit"
+	item_state = "talon_jumpsuit"
 	rolled_sleeves = 0
 	rolled_down_icon_override = FALSE
 	rolled_sleeves_icon_override = FALSE
 
 /obj/item/clothing/under/rank/talon/security
 	name = "Talon security jumpsuit"
-	desc = "A expertly made and stretchy jumpsuit that was made for manueverability in mind. It has a belt with a silver belt buckle on the uniform. There is also a ITV Talon patch on the right shoulder, and a red security ensignia patch on the left shoulder. Snazzy and beneficial."
+	desc = "A sleek, streamlined version of ITV Talon's standard jumpsuit that bares security markings."
 	icon = 'icons/inventory/uniform/item_vr.dmi'
 	rolled_down_icon = 'icons/inventory/uniform/mob_vr_rolled_down.dmi'
 	icon_override = 'icons/inventory/uniform/mob_vr.dmi'
-	icon_state = "talon_security_refreshed"
-	item_state = "talon_security_refreshed"
+	icon_state = "talon_security"
+	item_state = "talon_security"
 	rolled_sleeves = 0
 	rolled_down_icon_override = FALSE
 	rolled_sleeves_icon_override = FALSE
 
 /obj/item/clothing/under/rank/talon/pilot
-	name = "Talon pilot uniform"
-	desc = "A formal uniform woven with luscious fabric to make a excellent uniform for the ITV Talon piloting personnel, it's comfortable for all occasions. It has a silver nametag on the chest."
+	name = "Talon pilot jumpsuit"
+	desc = "A sleek, streamlined version of ITV Talon's standard jumpsuit. Made from cushioned fabric to handle intense flight."
 	icon = 'icons/inventory/uniform/item_vr.dmi'
 	rolled_down_icon = 'icons/inventory/uniform/mob_vr_rolled_down.dmi'
 	icon_override = 'icons/inventory/uniform/mob_vr.dmi'
-	icon_state = "talon_pilot_refreshed"
-	item_state = "talon_pilot_refreshed"
+	icon_state = "talon_pilot"
+	item_state = "talon_pilot"
 	rolled_sleeves = 0
 	rolled_down_icon_override = FALSE
 	rolled_sleeves_icon_override = FALSE
 
 /obj/item/clothing/under/rank/talon/command
-	name = "Talon command uniform"
-	desc = "A luxurious formal uniform woven with exotic fabric to make a excellent uniform for an ITV Talon commanding officer, it's comfortable for all occasions. It displays golden patterns and designs along the uniform to designate their stature, it has a golden nametag on the chest."
+	name = "Talon command jumpsuit"
+	desc = "A commanding jumpsuit fit for a commanding officer."
 	icon = 'icons/inventory/uniform/item_vr.dmi'
 	rolled_down_icon = 'icons/inventory/uniform/mob_vr_rolled_down.dmi'
 	icon_override = 'icons/inventory/uniform/mob_vr.dmi'
-	icon_state = "talon_captain_refreshed"
-	item_state = "talon_captain_refreshed"
+	icon_state = "talon_captain"
+	item_state = "talon_captain"
 	rolled_sleeves = 0
 	rolled_down_icon_override = FALSE
 	rolled_sleeves_icon_override = FALSE

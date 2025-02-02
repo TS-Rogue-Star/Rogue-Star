@@ -23,3 +23,17 @@
 	default_worn_icon = 'icons/inventory/suit/mob_vr.dmi'
 	icon_state = "talon_labcoat"
 	item_state_slots = list(slot_r_hand_str = "talon_labcoat", slot_l_hand_str = "talon_labcoat")
+
+/obj/item/clothing/suit/storage/hooded/wintercoat/talon/refreshed
+	name = "Talon winter coat"
+	desc = "A cozy winter coat, covered in thick fur and baring the colors of ITV Talon."
+	icon = 'icons/inventory/suit/item_rs.dmi'
+	default_worn_icon = 'icons/inventory/suit/mob_rs.dmi'
+	hoodtype = /obj/item/clothing/head/hood/winter/talon/refreshed
+
+/obj/item/clothing/head/hood/winter/talon/refreshed
+	name = "Talon winter hood"
+	desc = "A cozy winter hood attached to a heavy winter jacket."
+	icon = 'icons/inventory/head/item_rs.dmi'
+	default_worn_icon = 'icons/inventory/head/mob_rs.dmi'
+	icon_state = "winterhood_talon"

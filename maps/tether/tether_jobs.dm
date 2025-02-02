@@ -183,10 +183,10 @@
 
 	l_ear = /obj/item/device/radio/headset/talon
 	glasses = /obj/item/clothing/glasses/sunglasses
-	head = /obj/item/clothing/head/caphat/talon
-	uniform = /obj/item/clothing/under/rank/talon/command
-	suit = /obj/item/clothing/suit/talon/capcoat
-	shoes = /obj/item/clothing/shoes/brown
+	head = /obj/item/clothing/head/caphat/talon // RS Edit
+	uniform = /obj/item/clothing/under/rank/talon/command/refreshed // RS Edit
+	suit = /obj/item/clothing/suit/talon/capcoat // RS Edit
+	shoes = /obj/item/clothing/shoes/laceup // RS Edit
 	backpack = /obj/item/weapon/storage/backpack/talon
 	satchel_one = /obj/item/weapon/storage/backpack/satchel/talon
 	messenger_bag = /obj/item/weapon/storage/backpack/messenger/talon
@@ -200,10 +200,10 @@
 	flags = OUTFIT_HAS_BACKPACK|OUTFIT_COMPREHENSIVE_SURVIVAL
 
 	l_ear = /obj/item/device/radio/headset/talon
-	shoes = /obj/item/clothing/shoes/black
+	shoes = /obj/item/clothing/shoes/boots/jackboots // RS Edit
 	head = /obj/item/clothing/head/pilot_vr/talon
-	uniform = /obj/item/clothing/under/rank/talon/pilot
-	suit = /obj/item/clothing/suit/storage/toggle/bomber/pilot/talon
+	uniform = /obj/item/clothing/under/rank/talon/pilot/refreshed // RS Edit
+	suit = /obj/item/clothing/suit/storage/toggle/bomber/pilot/talon // RS Edit
 	gloves = /obj/item/clothing/gloves/fingerless
 	glasses = /obj/item/clothing/glasses/fakesunglasses/aviator
 	uniform_accessories = list(/obj/item/clothing/accessory/storage/webbing/pilot1 = 1)
@@ -220,12 +220,12 @@
 	pda_type = null
 
 	l_ear = /obj/item/device/radio/headset/talon
-	shoes = /obj/item/clothing/shoes/white
+	shoes = /obj/item/clothing/shoes/boots/jackboots // RS Edit
 	backpack = /obj/item/weapon/storage/backpack/medic
 	satchel_one = /obj/item/weapon/storage/backpack/satchel/med
 	messenger_bag = /obj/item/weapon/storage/backpack/messenger/med
-	uniform = /obj/item/clothing/under/rank/talon/proper
-	suit = /obj/item/clothing/suit/storage/toggle/labcoat/talon
+	uniform = /obj/item/clothing/under/rank/talon/proper/refreshed // RS Edit
+	suit = /obj/item/clothing/suit/storage/toggle/labcoat/talon // RS Edit
 	l_hand = /obj/item/weapon/storage/firstaid/regular
 	r_pocket = /obj/item/device/flashlight/pen
 	backpack = /obj/item/weapon/storage/backpack/talon
@@ -247,7 +247,7 @@
 	backpack = /obj/item/weapon/storage/backpack/security
 	satchel_one = /obj/item/weapon/storage/backpack/satchel/sec
 	messenger_bag = /obj/item/weapon/storage/backpack/messenger/sec
-	uniform = /obj/item/clothing/under/rank/talon/security
+	uniform = /obj/item/clothing/under/rank/talon/security/refreshed // RS Edit
 	l_pocket = /obj/item/device/flash
 	backpack = /obj/item/weapon/storage/backpack/talon
 	satchel_one = /obj/item/weapon/storage/backpack/satchel/talon
@@ -269,7 +269,7 @@
 	backpack = /obj/item/weapon/storage/backpack/industrial
 	satchel_one = /obj/item/weapon/storage/backpack/satchel/eng
 	messenger_bag = /obj/item/weapon/storage/backpack/messenger/engi
-	uniform = /obj/item/clothing/under/rank/talon/basic
+	uniform = /obj/item/clothing/under/rank/talon/basic/refreshed // RS Edit
 	belt = /obj/item/weapon/storage/belt/utility/atmostech
 	backpack = /obj/item/weapon/storage/backpack/talon
 	satchel_one = /obj/item/weapon/storage/backpack/satchel/talon
@@ -288,7 +288,7 @@
 	shoes = /obj/item/clothing/shoes/boots/workboots
 	r_pocket = /obj/item/weapon/storage/bag/ore
 	l_pocket = /obj/item/weapon/tool/crowbar
-	uniform = /obj/item/clothing/under/rank/talon/basic
+	uniform = /obj/item/clothing/under/rank/talon/basic/refreshed // RS Edit
 	backpack = /obj/item/weapon/storage/backpack/talon
 	satchel_one = /obj/item/weapon/storage/backpack/satchel/talon
 	messenger_bag = /obj/item/weapon/storage/backpack/messenger/talon
