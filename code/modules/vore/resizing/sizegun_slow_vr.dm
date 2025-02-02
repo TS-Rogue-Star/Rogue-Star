@@ -46,8 +46,9 @@
 			unresizable = TRUE
 			return
 
-	if(!(target.resizable || check_vore_whitelist_pair(user,target,RESIZING)))	//RS EDIT
-		unresizable = TRUE
+	if(target != user)	//RS EDIT
+		if(!(target.resizable && spont_pref_check(user,target,RESIZING)))	//RS EDIT
+			unresizable = TRUE	//RS EDIT
 
 	if(unresizable)
 		return TRUE
@@ -98,17 +99,21 @@
 		return
 
 	var/unresizable = FALSE
+	var/shot_self = FALSE
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(istype(H.gloves, /obj/item/clothing/gloves/bluespace))
 			unresizable = TRUE
-			return
 
-	if(!(L.resizable || check_vore_whitelist_pair(user,target,RESIZING)))	//RS EDIT
-		unresizable = TRUE
+	if(target != user)
+		if(!(L.resizable && spont_pref_check(user,target,RESIZING)))	//RS EDIT
+			unresizable = TRUE	//RS EDIT
+	else
+		shot_self = TRUE
 
 	if(unresizable)
 		to_chat(user, span("warning", "\the [target] is immune to resizing."))
+		return	//RS EDIT
 
 	// Start the effects
 	current_target = target
@@ -130,16 +135,16 @@
 		stoplag(3)
 		if(!nutrition_steal) //RS EDIT START - Size Transfer & Nutrition Steal
 			if(sizeshift_mode == SIZE_SHRINK)
-				L.resize((L.size_multiplier - size_increment), uncapped = L.has_large_resize_bounds(), aura_animation = FALSE)
+				L.resize((L.size_multiplier - size_increment), uncapped = L.has_large_resize_bounds(), ignore_prefs = shot_self, aura_animation = FALSE)
 			else if(sizeshift_mode == SIZE_GROW)
-				L.resize((L.size_multiplier + size_increment), uncapped = L.has_large_resize_bounds(), aura_animation = FALSE)
+				L.resize((L.size_multiplier + size_increment), uncapped = L.has_large_resize_bounds(), ignore_prefs = shot_self, aura_animation = FALSE)
 
 			//Size Transfer
 			if(isliving(user) && size_shift)
 				if(sizeshift_mode == SIZE_SHRINK)
-					user.resize((user.size_multiplier + size_increment), uncapped = L.has_large_resize_bounds(), aura_animation = FALSE)
+					user.resize((user.size_multiplier + size_increment), uncapped = L.has_large_resize_bounds(), ignore_prefs = shot_self, aura_animation = FALSE)
 				else if(sizeshift_mode == SIZE_GROW)
-					user.resize((user.size_multiplier - size_increment), uncapped = L.has_large_resize_bounds(), aura_animation = FALSE)
+					user.resize((user.size_multiplier - size_increment), uncapped = L.has_large_resize_bounds(), ignore_prefs = shot_self, aura_animation = FALSE)
 		else
 			if(sizeshift_mode == SIZE_SHRINK) //Steal nutrition from target!
 				L.nutrition -= 10 //Drain a base 10 nutrition per tick.

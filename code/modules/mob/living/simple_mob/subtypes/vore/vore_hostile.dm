@@ -210,7 +210,7 @@
 	if(!isliving(A))
 		return FALSE
 	var/mob/living/L = A
-	if(spont_pref_check(src,L,THROW_VORE))	//RS EDIT
+	if(!spont_pref_check(src,L,THROW_VORE))	//RS EDIT
 		return FALSE
 
 	set_AI_busy(TRUE)

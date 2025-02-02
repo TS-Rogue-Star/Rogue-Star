@@ -56,4 +56,9 @@
 #define MICRO_PICKUP "Micro Pickup"
 #define SPONT_TF "Spontaneous TF"
 #define RESIZING "Resizing"
+
+#define WL_PREY "Prey"
+#define WL_PRED "Predator"
+#define WL_BOTH "Both"
+
 //RS ADD END

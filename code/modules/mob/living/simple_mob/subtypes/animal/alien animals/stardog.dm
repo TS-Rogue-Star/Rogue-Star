@@ -82,7 +82,7 @@
 			continue
 		if(!(isliving(player) && istype(player.loc,/turf/simulated/floor/outdoors/fur) && player.client))
 			continue
-		if((player.resizable && check_vore_whitelist_pair(user,player,RESIZING)) && (player.pickup_pref && check_vore_whitelist_pair(user,player,MICRO_PICKUP)))	//RS EDIT
+		if((player.resizable && spont_pref_check(user,player,RESIZING)) && (player.pickup_pref && spont_pref_check(user,player,MICRO_PICKUP)))	//RS EDIT
 			possible_targets |= player
 
 	if(!possible_targets.len)

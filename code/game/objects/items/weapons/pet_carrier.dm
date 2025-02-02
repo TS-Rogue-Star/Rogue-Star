@@ -98,7 +98,7 @@
 	if(ishuman(target) && size_diff < 0.19)
 		to_chat(user, SPAN_WARNING("You get the feeling [target] is a tad too large for a [name]."))
 		return
-	if(!(target.pickup_pref && user.pickup_pref && target.pickup_active && check_vore_whitelist_pair(user,target,MICRO_PICKUP)))	//RS EDIT
+	if(!(target.pickup_pref && user.pickup_pref && target.pickup_active && target.check_vore_whitelist(user,MICRO_PICKUP,WL_PREY)))	//RS EDIT
 		to_chat(user, SPAN_WARNING("Pickup mechanics disabled!"))
 		return
 	if(target.mob_size > max_occupant_weight && !ishuman(target))

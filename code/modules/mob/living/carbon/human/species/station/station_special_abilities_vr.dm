@@ -1769,9 +1769,9 @@
 			continue
 		if(L == src) //no getting high off your own supply, get a nif or something, nerd.
 			continue
-		if((!L.resizable || check_vore_whitelist_pair(src,L,RESIZING)) && (trait_injection_selected == "macrocillin" || trait_injection_selected == "microcillin" || trait_injection_selected == "normalcillin")) // If you're using a size reagent, ignore those with pref conflicts.	//RS EDIT
+		if(!(L.resizable && spont_pref_check(src,L,RESIZING)) && (trait_injection_selected == "macrocillin" || trait_injection_selected == "microcillin" || trait_injection_selected == "normalcillin")) // If you're using a size reagent, ignore those with pref conflicts.	//RS EDIT
 			continue
-		if(!(L.allow_spontaneous_tf && check_vore_whitelist_pair(src,L,SPONT_TF)) && (trait_injection_selected == "androrovir" || trait_injection_selected == "gynorovir" || trait_injection_selected == "androgynorovir")) // If you're using a TF reagent, ignore those with pref conflicts. || Ports VOREStation PR16060	//RS EDIT
+		if(!(L.allow_spontaneous_tf && spont_pref_check(src,L,SPONT_TF)) && (trait_injection_selected == "androrovir" || trait_injection_selected == "gynorovir" || trait_injection_selected == "androgynorovir")) // If you're using a TF reagent, ignore those with pref conflicts. || Ports VOREStation PR16060	//RS EDIT
 			continue
 		targets += L
 

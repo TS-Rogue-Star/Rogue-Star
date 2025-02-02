@@ -1,9 +1,4 @@
 //RS FILE
-
-#define WL_PREY "Prey"
-#define WL_PRED "Predator"
-#define WL_BOTH "Both"
-
 /datum/preferences
 	var/list/vore_whitelist = list()	//A list of people we are fine with doing the vorny
 	var/vore_whitelist_preference = "Accept Both"
@@ -144,6 +139,8 @@
 	return FALSE
 
 /proc/check_vore_whitelist_pair(var/mob/living/pred,var/mob/living/prey,var/preftype)
+	if(!pred || !prey)
+		return TRUE
 	if(preftype == SPONT_PRED || preftype == SPONT_PREY)
 		if(prey.check_vore_whitelist(pred,SPONT_PREY,WL_PREY) && pred.check_vore_whitelist(prey,SPONT_PRED,WL_PRED))
 			return TRUE
@@ -192,10 +189,28 @@
 /proc/spont_pref_check(var/mob/living/pred,var/mob/living/prey,var/preftype)
 	if(!preftype)
 		return FALSE
+
 	if(preftype == MICRO_PICKUP)
 		if(!pred.pickup_pref || !pred.pickup_active || !prey.pickup_pref || !prey.pickup_active)
 			return FALSE
+		if(!check_vore_whitelist_pair(pred,prey,MICRO_PICKUP))
+			return FALSE
 		return TRUE
+
+	if(preftype == RESIZING)
+		if(!pred.resizable || prey.resizable)
+			return FALSE
+		if(!check_vore_whitelist_pair(pred,prey,RESIZING))
+			return FALSE
+		return TRUE
+
+	if(preftype == SPONT_TF)
+		if(!pred.allow_spontaneous_tf || !prey.allow_spontaneous_tf)
+			return FALSE
+		if(!check_vore_whitelist_pair(pred,prey,SPONT_TF))
+			return FALSE
+		return TRUE
+
 	if(!pred.vore_selected)
 		return FALSE
 
@@ -210,7 +225,7 @@
 	if(preftype != SPONT_PREY && preftype != SPONT_PRED)
 		if(!check_vore_whitelist_pair(pred,prey,SPONT_PRED))	//Let's check this since all the vore prefs need it
 			return FALSE
-	if(!check_vore_whitelist_pair(pred,prey,preftype,WL_PREY))	//Let's check the whitelist for it all too.
+	if(!check_vore_whitelist_pair(pred,prey,preftype))	//Let's check the whitelist for it all too.
 		return FALSE
 
 	switch(preftype)
@@ -292,6 +307,9 @@
 /mob/living/verb/vore_trustlist()
 	set name = "Vore Trustlist"
 	set category = "Preferences"
+
+	if(!client)
+		return
 
 	var/dat = {"
 	<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
@@ -451,6 +469,10 @@
 /mob/living/proc/toggle_vore_trustlist(var/ourpref)
 	if(!ourpref) return
 
+	if(!client)
+		to_chat(usr,SPAN_DANGER("Please close and reopen this window to refresh."))
+		return
+
 	if(ourpref in client.prefs_vr.vore_whitelist_toggles)
 		client.prefs_vr.vore_whitelist_toggles -= ourpref
 		to_chat(src,SPAN_WARNING("Toggled [ourpref] trustlist mode: Disabled"))
@@ -459,6 +481,8 @@
 		client.prefs_vr.vore_whitelist_toggles |= ourpref
 		to_chat(src,SPAN_NOTICE("Toggled [ourpref] trustlist mode: Enabled"))
 
+	to_chat(src,SPAN_NOTICE("Remember to save your changes in the vore panel to have them stick!"))
+	vorePanel.unsaved_changes = TRUE
 
 /mob/living/proc/toggle_vore_trustlist_mode()
 	var/choice = tgui_alert(src,"For preferences that the trust list is enabled for, setting this will allow trusted users to engage only with the selected mode, and will restrict all users from interacting with the opposite mode, if applicable. Which will you choose?","Trust List Mode",list("[WL_BOTH]","[WL_PREY]","[WL_PRED]"))
@@ -468,52 +492,3 @@
 	client.prefs.vore_whitelist_preference = choice
 	client.prefs.extra_global_save()
 	vore_trustlist()
-
-/*
-	if(SPONT_PREY in client.prefs_vr.vore_whitelist_toggles)
-		dat += {"<a href='?src=\ref[src];toggle_vore_trustlist=[SPONT_PREY]'>[active] - [SPONT_PREY]</a>[client.prefs_vr.can_be_drop_prey ? "" : "< <span style='color: ["#ff0000"]'>Disabled in vore panel</span>"] - "}
-	else
-		dat += {"<a href='?src=\ref[src];toggle_vore_trustlist=[SPONT_PREY]'>[inactive] - [SPONT_PREY]</a>[client.prefs_vr.can_be_drop_prey ? "" : "< <span style='color: ["#ff0000"]'>Disabled in vore panel</span>"] - "}
-
-	if(SPONT_PRED in client.prefs_vr.vore_whitelist_toggles)
-		dat += {"<a href='?src=\ref[src];toggle_vore_trustlist=[SPONT_PRED]'>[active] - [SPONT_PRED]</a>[client.prefs_vr.can_be_drop_pred ? "" : "< <span style='color: ["#ff0000"]'>Disabled in vore panel</span>"]<br><br>"}
-	else
-		dat += {"<a href='?src=\ref[src];toggle_vore_trustlist=[SPONT_PRED]'>[inactive] - [SPONT_PRED]</a>[client.prefs_vr.can_be_drop_pred ? "" : "< <span style='color: ["#ff0000"]'>Disabled in vore panel</span>"]<br><br>"}
-	if(DROP_VORE in client.prefs_vr.vore_whitelist_toggles)
-		dat += {"<a href='?src=\ref[src];toggle_vore_trustlist=[DROP_VORE]'>[active] - [DROP_VORE]</a>[client.prefs_vr.drop_vore ? "" : "< <span style='color: ["#ff0000"]'>Disabled in vore panel</span>"] - "}
-	else
-		dat += {"<a href='?src=\ref[src];toggle_vore_trustlist=[DROP_VORE]'>[inactive] - [DROP_VORE]</a>[client.prefs_vr.drop_vore ? "" : "< <span style='color: ["#ff0000"]'>Disabled in vore panel</span>"] - "}
-
-	if(STUMBLE_VORE in client.prefs_vr.vore_whitelist_toggles)
-		dat += {"<a href='?src=\ref[src];toggle_vore_trustlist=[STUMBLE_VORE]'>[active] - [STUMBLE_VORE]</a>[client.prefs_vr.stumble_vore ? "" : "< <span style='color: ["#ff0000"]'>Disabled in vore panel</span>"]<br><br>"}
-	else
-		dat += {"<a href='?src=\ref[src];toggle_vore_trustlist=[STUMBLE_VORE]'>[inactive] - [STUMBLE_VORE]</a>[client.prefs_vr.stumble_vore ? "" : "< <span style='color: ["#ff0000"]'>Disabled in vore panel</span>"]<br><br>"}
-	if(SLIP_VORE in client.prefs_vr.vore_whitelist_toggles)
-		dat += {"<a href='?src=\ref[src];toggle_vore_trustlist=[SLIP_VORE]'>[active] - [SLIP_VORE]</a>[client.prefs_vr.slip_vore ? "" : "< <span style='color: ["#ff0000"]'>Disabled in vore panel</span>"] - "}
-	else
-		dat += {"<a href='?src=\ref[src];toggle_vore_trustlist=[SLIP_VORE]'>[inactive] - [SLIP_VORE]</a>[client.prefs_vr.slip_vore ? "" : "< <span style='color: ["#ff0000"]'>Disabled in vore panel</span>"] - "}
-
-	if(THROW_VORE in client.prefs_vr.vore_whitelist_toggles)
-		dat += {"<a href='?src=\ref[src];toggle_vore_trustlist=[THROW_VORE]'>[active] - [THROW_VORE]</a>[client.prefs_vr.throw_vore ? "" : "< <span style='color: ["#ff0000"]'>Disabled in vore panel</span>"]<br><br>"}
-	else
-		dat += {"<a href='?src=\ref[src];toggle_vore_trustlist=[THROW_VORE]'>[inactive] - [THROW_VORE]</a>[client.prefs_vr.throw_vore ? "" : "< <span style='color: ["#ff0000"]'>Disabled in vore panel</span>"]<br><br>"}
-	if(FOOD_VORE in client.prefs_vr.vore_whitelist_toggles)
-		dat += {"<a href='?src=\ref[src];toggle_vore_trustlist=[FOOD_VORE]'>[active] - [FOOD_VORE]</a>[client.prefs_vr.food_vore ? "" : "< <span style='color: ["#ff0000"]'>Disabled in vore panel</span>"] - "}
-	else
-		dat += {"<a href='?src=\ref[src];toggle_vore_trustlist=[FOOD_VORE]'>[inactive] - [FOOD_VORE]</a>[client.prefs_vr.food_vore ? "" : "< <span style='color: ["#ff0000"]'>Disabled in vore panel</span>"] - "}
-
-	if(MICRO_PICKUP in client.prefs_vr.vore_whitelist_toggles)
-		dat += {"<a href='?src=\ref[src];toggle_vore_trustlist=[MICRO_PICKUP]'>[active] - [MICRO_PICKUP]</a>[(pickup_pref && pickup_active) ? "" : "< <span style='color: ["#ff0000"]'>Disabled in vore panel</span>"]<br><br>"}
-	else
-		dat += {"<a href='?src=\ref[src];toggle_vore_trustlist=[MICRO_PICKUP]'>[inactive] - [MICRO_PICKUP]</a>[(pickup_pref && pickup_active) ? "" : "< <span style='color: ["#ff0000"]'>Disabled in vore panel</span>"]<br><br>"}
-
-	if(SPONT_TF in client.prefs_vr.vore_whitelist_toggles)
-		dat += {"<a href='?src=\ref[src];toggle_vore_trustlist=[SPONT_TF]'>[active] - [SPONT_TF]</a>[client.prefs_vr.allow_spontaneous_tf ? "" : "< <span style='color: ["#ff0000"]'>Disabled in vore panel</span>"] - "}
-	else
-		dat += {"<a href='?src=\ref[src];toggle_vore_trustlist=[SPONT_TF]'>[inactive] - [SPONT_TF]</a>[client.prefs_vr.allow_spontaneous_tf ? "" : "< <span style='color: ["#ff0000"]'>Disabled in vore panel</span>"] - "}
-
-	if(RESIZING in client.prefs_vr.vore_whitelist_toggles)
-		dat += {"<a href='?src=\ref[src];toggle_vore_trustlist=[RESIZING]'>[active] - [RESIZING]</a>[(client.prefs_vr.resizable) ? "" : "< <span style='color: ["#ff0000"]'>Disabled in vore panel</span>"]"}
-	else
-		dat += {"<a href='?src=\ref[src];toggle_vore_trustlist=[RESIZING]'>[inactive] - [RESIZING]</a>[(client.prefs_vr.resizable) ? "" : "< <span style='color: ["#ff0000"]'>Disabled in vore panel</span>"]"}
-*/

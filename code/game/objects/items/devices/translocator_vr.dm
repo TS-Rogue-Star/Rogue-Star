@@ -300,7 +300,15 @@ This device records all warnings given and teleport events for admin review in c
 	var/televored = FALSE
 	if(isbelly(real_dest))
 		var/obj/belly/B = real_dest
-		if(!(spont_pref_check(B.owner,target,SPONT_PRED)) && B.owner != user)	//RS EDIT
+		if(B.owner == target)	//RS EDIT START
+			to_chat(user,"<span class='warning'>You feel a very dangerous sensation as you attempt to telleport inside of your own [lowertext(B.name)]! Fortunately, \the [src]'s safeties kick in, and it refuses to complete the teleport.</span>")
+			ready = TRUE
+			return
+		if(user != B.owner)	//Is the person using the thing the person the belly belongs to?
+			if(!spont_pref_check(B.owner,target,SPONT_PRED))	//They are not, okay! Let's check both party's prefs
+				to_chat(target,"<span class='warning'>\The [src] narrowly avoids teleporting you right into \a [lowertext(real_dest.name)]!</span>")
+				real_dest = dT //Nevermind!
+		else if(!target.check_vore_whitelist(B.owner,SPONT_PREY,WL_PREY))	//They are, since they made the choice to do this, let's skip their pref check and only check the target	//RS EDIT END
 			to_chat(target,"<span class='warning'>\The [src] narrowly avoids teleporting you right into \a [lowertext(real_dest.name)]!</span>")
 			real_dest = dT //Nevermind!
 		else

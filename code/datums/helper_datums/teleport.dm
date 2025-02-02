@@ -211,7 +211,7 @@ var/bluespace_item_types = newlist(/obj/item/weapon/storage/backpack/holding,
 		if(istype(teleatom, /mob/living))
 			to_chat(teleatom, "<span class='warning'>The portal refuses to carry you that far away!</span>")
 		return 0
-	else if(istype(destination.loc, /obj/belly))
+	else if(isbelly(destination.loc))	//RS EDIT
 		var/obj/belly/destination_belly = destination.loc
 		var/mob/living/telenommer = destination_belly.owner
 		if(istype(telenommer))
@@ -221,13 +221,13 @@ var/bluespace_item_types = newlist(/obj/item/weapon/storage/backpack/holding,
 				return 1
 			else
 				var/mob/living/telemob = teleatom
-				if(spont_pref_check(telenommer,telemob,SPONT_PRED))		//RS EDIT
+				if(spont_pref_check(telenommer,telemob,SPONT_PRED))	//RS EDIT
 					return 1
 		obstructed = 1
 	else if(!((isturf(destination) && !destination.density) || (isturf(destination.loc) && !destination.loc.density)) || !destination.x || !destination.y || !destination.z)	//If we're inside something or outside universe
 		obstructed = 1
-		to_chat(teleatom, "<span class='warning'>Something is blocking way on the other side!</span>")
 	if(obstructed)
+		to_chat(teleatom, "<span class='warning'>Something is blocking way on the other side!</span>")	//RS EDIT
 		return 0
 	else
 		return 1
