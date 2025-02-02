@@ -410,9 +410,14 @@ digi-inner-thighs
 **License:** [CC BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/)<br>
 **Notes:** All files within this folder are covered under the above license, as per the included attribution.txt file 
 <br>
+**File:** `code/game/Rogue Star/icons/fluff/sari_adjusted.dmi`<br>
+**Creator:** Toriate <br>
+**Exclusive License Holder:** Sari Bork<br>
+**Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/758<br>
+**License:** Licensed for use by Rogue Star; unlicensed for further use without permission of license  holder<br>
+<br>
 **File:** `icons/mob/human_races/sprite_accessories/taurs_rs.dmi`<br>
 **Creator:** Radiant Aurora <br>
 **Icon-States:** sergwheat, sergwheat_markings, fatsergal<br>
 **Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/5546
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
-<br>
