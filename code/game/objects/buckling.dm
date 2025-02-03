@@ -137,7 +137,7 @@
 				if(M == user)
 					M.visible_message("<span class='warning'>[M.name] sits down on [L.name]!</span>")
 				else
-					M.visible_message("<span class='warning'>[M.name] is forced to sit down on [L.name] by [user.name]!")
+					M.visible_message("<span class='warning'>[M.name] is forced to sit down on [L.name] by [user.name]!</span>")
 				M.perform_the_nom(user, L, M, M.vore_selected, 1)
 	//RSEdit End
 
