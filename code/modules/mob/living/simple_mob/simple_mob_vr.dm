@@ -101,6 +101,8 @@
 	if(src == M) //Don't eat YOURSELF dork
 		//ai_log("vr/won't eat [M] because it's me!", 3) //VORESTATION AI TEMPORARY REMOVAL
 		return 0
+	if(M.is_incorporeal()) //RS Edit Chomp port #7484 | CHOMPADD - No eating the phased ones
+		return 0
 	if(vore_ignores_undigestable && !M.digestable) //Don't eat people with nogurgle prefs
 		//ai_log("vr/wont eat [M] because I am picky", 3) //VORESTATION AI TEMPORARY REMOVAL
 		return 0
@@ -144,6 +146,8 @@
 
 /mob/living/simple_mob/proc/CanPounceTarget(var/mob/living/M) //returns either FALSE or a %chance of success
 	if(!M.canmove || issilicon(M) || world.time < vore_pounce_cooldown) //eliminate situations where pouncing CANNOT happen
+		return FALSE
+	if(M.is_incorporeal()) //RS Add Chomp port #7484 | CHOMPADD - No pouncing on the shades
 		return FALSE
 	if(!prob(vore_pounce_chance) || !will_eat(M)) //mob doesn't want to pounce
 		return FALSE

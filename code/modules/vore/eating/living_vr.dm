@@ -386,7 +386,7 @@
 //
 // Clearly super important. Obviously.
 //
-/mob/living/proc/lick(mob/living/tasted in living_mobs(1,TRUE))	//RS EDIT
+/mob/living/proc/lick(mob/living/tasted in living_mobs_in_view(1, TRUE)) //RS Add Chomp port #7484 | no cross dimensional licking
 	set name = "Lick"
 	set category = "IC"
 	set desc = "Lick someone nearby!"
@@ -427,7 +427,7 @@
 
 
 //This is just the above proc but switched about.
-/mob/living/proc/smell(mob/living/smelled in living_mobs(1, TRUE))	//RS EDIT
+/mob/living/proc/smell(mob/living/smelled  in living_mobs_in_view(1, TRUE)) //RS Add Chomp port #7484 | no cross dimensional Sniffing <- I kinda like the sniffing tho it funny
 	set name = "Smell"
 	set category = "IC"
 	set desc = "Smell someone nearby!"
