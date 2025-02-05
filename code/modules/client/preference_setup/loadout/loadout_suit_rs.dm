@@ -20,5 +20,5 @@
 /datum/gear/suit/refreshedtalonpilotcoat
 	display_name = "Refreshed Talon Pilot Bomber Jacket"
 	description = "An expertly manufacted coat that was specifically made for the piloting personnel of ITV Talon vessels."
-	path = /obj/item/clothing/suit/storage/toggle/bomber/pilot/talon
-	allowed_roles = list("Talon Captain","Talon Pilot")
+	path = /obj/item/clothing/suit/storage/talonbomberjacket
+	allowed_roles = list("Talon Pilot")
