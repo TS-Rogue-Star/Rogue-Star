@@ -105,7 +105,7 @@ Talon winter coat
 */
 /datum/gear/suit/wintercoat/talon
 	display_name = "winter coat, Talon"
-	path = /obj/item/clothing/suit/storage/hooded/wintercoat/talon/refreshed // RS Edit
+	path = /obj/item/clothing/suit/storage/hooded/wintercoat/talon
 
 /datum/gear/suit/armor/combat/crusader_explo
 	display_name = "knight, explo"

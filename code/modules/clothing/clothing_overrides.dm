@@ -64,7 +64,7 @@
 	item_state = "talon_beret"
 
 /obj/item/clothing/head/beret/talon/command/refreshed
-	name = "Talon command beret"
+	name = "Talon officer beret"
 	desc = "It's a standard dark blue beret with the ITV Talon logo on the front proudly displayed."
 	icon = 'icons/inventory/head/item_rs.dmi'
 	icon_override = 'icons/inventory/head/mob_rs.dmi'
