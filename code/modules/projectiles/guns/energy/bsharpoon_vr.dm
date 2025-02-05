@@ -141,7 +141,7 @@
 						belly_dest = pick(living_user.vore_organs)
 					if(belly_dest)
 						for(var/mob/living/prey in ToTurf)
-							if(prey != user && prey.can_be_drop_prey)
+							if(prey != user && spont_pref_check(living_user,prey,SPONT_PRED))	//RS EDIT
 								prey.forceMove(belly_dest)
 								vore_happened = TRUE
 								to_chat(prey, "<span class='danger'>[living_user] materializes around you, as you end up in their [belly_dest]!</span>")
@@ -149,7 +149,7 @@
 				if(can_dropnom && !vore_happened && living_user.can_be_drop_prey)
 					var/mob/living/pred
 					for(var/mob/living/potential_pred in ToTurf)
-						if(potential_pred != user && potential_pred.can_be_drop_pred)
+						if(potential_pred != user && spont_pref_check(potential_pred,living_user,SPONT_PRED))	//RS EDIT
 							pred = potential_pred
 					if(pred)
 						var/obj/belly/belly_dest
@@ -177,7 +177,7 @@
 				M.forceMove(pick(trange(24,user)))
 			else
 				M.forceMove(ToTurf)
-				if(can_dropnom && living_user.can_be_drop_pred && M.can_be_drop_prey)
+				if(can_dropnom && spont_pref_check(living_user,M,SPONT_PRED))	//RS EDIT
 					var/obj/belly/belly_dest
 					if(living_user.vore_selected)
 						belly_dest = living_user.vore_selected
@@ -187,7 +187,7 @@
 						M.forceMove(belly_dest)
 						to_chat(living_user, "<span class='notice'>[M] materializes inside you as they end up in your [belly_dest]!</span>")
 						to_chat(M, "<span class='danger'>You materialize inside [living_user] as you end up in their [belly_dest]!</span>")
-				else if(can_dropnom && living_user.can_be_drop_prey && M.can_be_drop_pred && !user_vored)
+				else if(can_dropnom && spont_pref_check(M,living_user,SPONT_PRED) && !user_vored)	//RS EDIT
 					var/obj/belly/belly_dest
 					if(M.vore_selected)
 						belly_dest = M.vore_selected

@@ -147,13 +147,18 @@
 
 /obj/item/projectile/beam/sizelaser/on_hit(var/atom/target)
 	var/mob/living/M = target
-	var/ignoring_prefs = (target == firer ? TRUE : FALSE) // Resizing yourself
+	var/ignoring_prefs = FALSE // Resizing yourself	//RS EDIT
 	if(istype(M))
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(istype(H.gloves, /obj/item/clothing/gloves/bluespace))
 				M.visible_message("<span class='warning'>\The [H]'s bracelet flashes and absorbs the beam!</span>","<span class='notice'>Your bracelet flashes and absorbs the beam!</span>")
 				return
+		if(target == firer)	//RS EDIT START
+			ignoring_prefs = TRUE
+		if(!ignoring_prefs)
+			if(!spont_pref_check(firer,target,RESIZING))
+				return	//RS EDIT END
 		if(!M.resize(set_size, uncapped = M.has_large_resize_bounds(), ignore_prefs = ignoring_prefs))
 			to_chat(M, "<font color='blue'>The beam fires into your body, changing your size!</font>")
 		M.update_icon()
@@ -162,6 +167,7 @@
 
 /obj/item/projectile/beam/sizelaser/admin/on_hit(var/atom/target)
 	var/mob/living/M = target
+	var/ignoring_prefs = FALSE // Resizing yourself	//RS EDIT
 
 	if(istype(M))
 
@@ -173,7 +179,13 @@
 		else if(very_big) // made an extreme size in an area that doesn't allow it, assume adminbuse
 			to_chat(firer, "<span class='warning'>[M] will retain this normally unallowed size outside this area.</span>")
 
-		M.resize(set_size, uncapped = TRUE, ignore_prefs = TRUE) // Always ignores prefs, caution is advisable
+		if(target == firer)	//RS EDIT START
+			ignoring_prefs = TRUE
+		if(!ignoring_prefs)
+			if(!spont_pref_check(firer,target,RESIZING))
+				return
+		if(!M.resize(set_size, uncapped = TRUE, ignore_prefs = ignoring_prefs))	//RS EDIT END
+			to_chat(M, "<font color='blue'>The beam fires into your body, changing your size!</font>")
 
 		to_chat(M, "<font color='blue'>The beam fires into your body, changing your size!</font>")
 		M.update_icon()
