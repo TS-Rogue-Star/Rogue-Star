@@ -123,11 +123,23 @@
 	if(M in buckled_mobs)
 		to_chat(user, "<span class='warning'>\The [M] is already buckled to \the [src].</span>")
 		return FALSE
-	if(!can_buckle_check(M, forced))
+	if(!can_buckle_check(M, forced, TRUE)) // RSEdit - adds buckling spont vore
 		return FALSE
 
 	add_fingerprint(user)
 //	unbuckle_mob()
+
+	//RSEdit Begin - Adds buckling spont vore
+	if(has_buckled_mobs() && buckled_mobs.len >= max_buckled_mobs)
+		for(var/mob/living/L in buckled_mobs)
+			if(istype(L) && spont_pref_check(M, L, STUMBLE_VORE))
+				unbuckle_mob(L, TRUE)
+				if(M == user)
+					M.visible_message("<span class='warning'>[M.name] sits down on [L.name]!</span>")
+				else
+					M.visible_message("<span class='warning'>[M.name] is forced to sit down on [L.name] by [user.name]!</span>")
+				M.perform_the_nom(user, L, M, M.vore_selected, 1)
+	//RSEdit End
 
 	//can't buckle unless you share locs so try to move M to the obj.
 	if(M.loc != src.loc)
@@ -191,18 +203,25 @@
 		else
 			L.set_dir(buckle_dir)
 
-/atom/movable/proc/can_buckle_check(mob/living/M, forced = FALSE)
+/atom/movable/proc/can_buckle_check(mob/living/M, forced = FALSE, can_do_spont_vore = FALSE) //RSEdit - Add buckling spont vore
 	if(!buckled_mobs)
 		buckled_mobs = list()
 
 	if(!istype(M))
 		return FALSE
 
-	if((!can_buckle && !forced) || M.buckled || M.pinned.len || (buckled_mobs.len >= max_buckled_mobs) || (buckle_require_restraints && !M.restrained()))
+	//RSEdit - Fixes max buckle check
+	if((!can_buckle && !forced) || M.buckled || M.pinned.len || (max_buckled_mobs == 0) || (buckle_require_restraints && !M.restrained()))
 		return FALSE
 
 	if(has_buckled_mobs() && buckled_mobs.len >= max_buckled_mobs) //Handles trying to buckle yourself to the chair when someone is on it
-		to_chat(M, "<span class='notice'>\The [src] can't buckle anymore people.</span>")
+		//RSEdit Start - Add buckling spont vore
+		if(can_do_spont_vore && is_vore_predator(M) && M.vore_selected)
+			for(var/mob/living/buckled in buckled_mobs)
+				if(spont_pref_check(M, buckled, STUMBLE_VORE))
+					return TRUE
+		//RSEdit End
+		to_chat(M, "<span class='notice'>\The [src] can't buckle any more people.</span>")
 		return FALSE
 
 	return TRUE
