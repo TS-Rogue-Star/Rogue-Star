@@ -32,7 +32,8 @@
 	pto_type = PTO_SCIENCE
 	alt_titles = list("Researcher" = /datum/alt_title/researcher, "Lab Assistant" = /datum/alt_title/lab_assistant, "Xenoarchaeologist" = /datum/alt_title/xenoarch,
 						"Xenopaleontologist" = /datum/alt_title/xenopaleontologist, "Anomalist" = /datum/alt_title/anomalist, "Phoron Researcher" = /datum/alt_title/phoron_research,
-						"Gas Physicist" = /datum/alt_title/gas_physicist, "Circuit Designer" = /datum/alt_title/circuit_designer, "Circuit Programmer" = /datum/alt_title/circuit_programmer)
+						"Gas Physicist" = /datum/alt_title/gas_physicist, "Circuit Designer" = /datum/alt_title/circuit_designer, "Circuit Programmer" = /datum/alt_title/circuit_programmer,
+						"Telescientist" = /datum/alt_title/telescientist)
 
 
 	access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology, access_xenoarch, access_xenobotany)
@@ -67,6 +68,12 @@
 	title_blurb = "A Circuit Programmer is a Scientist whose expertise is working with integrated circuits. They are familar with the workings and programming of those devices. \
 				   They work to create various useful devices using the capabilities of integrated circuitry."
 
+// Rogue Star edit
+/datum/alt_title/telescientist
+	title = "Telescientist"
+	title_blurb = "A Telescientis is a specialist in teleportation and bluespace related technologies. They are familiar with constructing quantum pads, and the telepad. \
+				   They are responsible for distributing translocators to those that need them, and may be interested in bluespace storage equipment."
+// End of Rogue Star edit
 
 /datum/job/xenobiologist
 	spawn_positions = 3
