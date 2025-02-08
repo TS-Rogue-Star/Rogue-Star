@@ -2998,11 +2998,6 @@
 /obj/structure/cable/green{
 	icon_state = "4-8"
 	},
-/obj/machinery/airlock_sensor{
-	pixel_y = 24;
-	req_one_access = list(301)
-	},
-/obj/effect/map_helper/airlock/sensor/ext_sensor,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/maintenance/wing_port)
 "jn" = (
@@ -13542,7 +13537,7 @@
 "TL" = (
 /obj/machinery/suit_cycler/vintage/tpilot,
 /obj/machinery/button/remote/airlock{
-	id = "talon_minerdoor";
+	id = "talon_pilotdoor";
 	name = "Door Bolts";
 	pixel_y = 28;
 	specialfunctions = 4
@@ -14414,10 +14409,11 @@
 /obj/structure/cable/green{
 	icon_state = "4-8"
 	},
-/obj/effect/map_helper/airlock/sensor/ext_sensor,
-/obj/machinery/airlock_sensor{
+/obj/machinery/access_button{
+	req_one_access = list(301);
 	pixel_y = 24;
-	req_one_access = list(301)
+	frequency = null;
+	tag = "talon_starboard_exterior_button"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/maintenance/wing_starboard)
@@ -15409,6 +15405,13 @@
 	req_one_access = list(301)
 	},
 /obj/effect/map_helper/airlock/door/ext_door,
+/obj/machinery/access_button{
+	req_one_access = list(301);
+	pixel_y = -24;
+	frequency = null;
+	dir = 1;
+	tag = "talon_port_exterior_button"
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/maintenance/wing_port)
 "ZK" = (
