@@ -249,7 +249,7 @@
 	starts_with = list(/obj/item/weapon/revised_hypospray,
 	/obj/item/weapon/paper/medispray_manual,
 	/obj/item/weapon/reagent_containers/glass/beaker/vial = 5)
-	can_hold = list(/obj/item/weapon/revised_hypospray, /obj/item/weapon/reagent_containers/glass/beaker/vial,/obj/item/weapon/paper)
+	can_hold = list(/obj/item/weapon/revised_hypospray, /obj/item/weapon/reagent_containers/glass/beaker/vial,/obj/item/weapon/paper,/obj/item/device/healthanalyzer,/obj/item/weapon/reagent_containers/dropper)
 	//can fit vials, and the mk.I hyospray.
 
 /obj/item/weapon/storage/firstaid/mkIhypokit/cmo
@@ -265,7 +265,7 @@
 	/obj/item/weapon/reagent_containers/glass/bottle/preloaded/keloderma,
 	/obj/item/weapon/reagent_containers/glass/bottle/preloaded/dexalin
 	)
-	can_hold = list(/obj/item/weapon/revised_hypospray, /obj/item/weapon/reagent_containers/glass/bottle, /obj/item/weapon/reagent_containers/glass/beaker/vial,/obj/item/weapon/paper)
+	can_hold = list(/obj/item/weapon/revised_hypospray, /obj/item/weapon/reagent_containers/glass/bottle, /obj/item/weapon/reagent_containers/glass/beaker/vial,/obj/item/weapon/paper,/obj/item/device/healthanalyzer,/obj/item/weapon/reagent_containers/dropper)
 	item_state_slots = list(slot_r_hand_str = "firstaid-surgery", slot_l_hand_str = "firstaid-surgery")
 	//can fit vials, bottles, and any of the revised hypos.
 /*

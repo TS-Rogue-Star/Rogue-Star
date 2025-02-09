@@ -73,3 +73,9 @@
 	display_name = "Sari's jacket and clothes"
 	ckeywhitelist = list("crossexonar")
 	character_name = null
+
+/datum/gear/fluff/zara_medal
+	path = /obj/item/clothing/accessory/medal/silver/security
+	display_name = "Zara's Robust Security Award"
+	ckeywhitelist = list("hunterbirk")
+	character_name = list("Zara Aistulf")
