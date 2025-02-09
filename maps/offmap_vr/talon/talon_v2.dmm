@@ -14413,7 +14413,8 @@
 	dir = 4;
 	pixel_y = 28;
 	pixel_x = 4;
-	name = "airlock sensor"
+	name = "airlock sensor";
+	req_one_access = list(301)
 	},
 /obj/effect/map_helper/airlock/sensor/ext_sensor,
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -15410,7 +15411,8 @@
 	dir = 8;
 	pixel_y = -28;
 	pixel_x = -4;
-	name = "airlock sensor"
+	name = "airlock sensor";
+	req_one_access = list(301)
 	},
 /obj/effect/map_helper/airlock/sensor/ext_sensor,
 /turf/simulated/floor/tiled/techfloor/grid,
