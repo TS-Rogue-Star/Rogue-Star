@@ -95,7 +95,7 @@
 
 	if (istype(A,/mob/living))
 		var/mob/living/M = A
-		if(M.lying || M.flying) //VOREStation Edit
+		if(M.lying || M.flying || M.is_incorporeal())  //RS add Chomp port #7484 | CHOMPADD - Don't forget the phased ones.)
 			return ..()
 
 		if(M.dirties_floor())

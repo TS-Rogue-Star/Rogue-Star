@@ -6,6 +6,8 @@
 	var/mob/living/M = AM
 	if(!istype(M))
 		return
+	if(M.is_incorporeal()) //RS add Chomp port #7484 | CHOMPEdit - Don't buckle phased entities.
+		return
 
 	if(!has_buckled_mobs() && !M.buckled && !M.anchored && (issmall(M) || prob(round(seed.get_trait(TRAIT_POTENCY)/3))))
 		//wait a tick for the Entered() proc that called HasProximity() to finish (and thus the moving animation),
