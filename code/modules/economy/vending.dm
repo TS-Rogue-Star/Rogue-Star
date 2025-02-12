@@ -768,6 +768,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 	var/mob/living/target = locate() in view(7,src)
 	if(!target)
 		return 0
+	if(target.is_incorporeal()) //RS add Chomp port #7484 | CHOMPADD - Don't shoot at things that aren't there.
+		return 0
 
 	for(var/datum/stored_item/vending_product/R in shuffle(product_records))
 		throw_item = R.get_product(loc)

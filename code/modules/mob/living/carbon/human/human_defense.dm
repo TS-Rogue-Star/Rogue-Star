@@ -432,13 +432,15 @@ emp_act
 				I.forceMove(vore_selected)
 				return //RSEdit End
 		if(in_throw_mode && speed <= THROWFORCE_SPEED_DIVISOR)	//empty active hand and we're in throw mode
-			if(canmove && !restrained())
+			if(canmove && !restrained()&& !src.is_incorporeal()) //RS Edit Chomp port #7484 | CHOMPADD - No hands for the phased ones.
 				if(isturf(O.loc))
 					if(can_catch(O))
 						put_in_active_hand(O)
 						visible_message("<span class='warning'>[src] catches [O]!</span>")
 						throw_mode_off()
 						return
+		if(src.is_incorporeal()) //RS Add Chomp port #7484 | CHOMPADD - Don't hit what's not there.
+			return
 
 		var/dtype = O.damtype
 		var/throw_damage = O.throwforce*(speed/THROWFORCE_SPEED_DIVISOR)
