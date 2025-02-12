@@ -153,7 +153,7 @@
 				B.owner = new_mob
 				M.vore_organs -= B
 				new_mob.vore_organs += B
-			M.drop_both_hands()
+			M.drop_both_hands()//RS Add (crawling port broke dropping items when tf'd)
 			new_mob.ckey = M.ckey
 			if(M.ai_holder && new_mob.ai_holder)
 				var/datum/ai_holder/old_AI = M.ai_holder
