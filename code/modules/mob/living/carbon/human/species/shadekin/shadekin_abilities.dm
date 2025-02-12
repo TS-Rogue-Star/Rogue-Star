@@ -91,6 +91,8 @@
 	if(pulledby)
 		pulledby.stop_pulling()
 	stop_pulling()
+	stop_aiming(no_message=1)	//RS ADD - no shooting guns while phased out
+	emp_act(5)	//RS ADD - do a mostly harmless EMP to turn any communicators and radios off
 	canmove = FALSE
 
 	//Shifting in

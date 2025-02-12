@@ -83,6 +83,7 @@
 	set category = "Object"
 
 	if(AM.Adjacent(src))
+		if(isobj(AM) && is_incorporeal()) return	//RS ADD - Prevent shadekin from pulling objects while phased out
 		src.start_pulling(AM)
 
 	return

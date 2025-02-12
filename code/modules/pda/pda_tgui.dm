@@ -66,6 +66,11 @@
 	add_fingerprint(usr)
 	usr.set_machine(src)
 
+	if(usr.is_incorporeal())	//RS ADD START - prevent ranged communication while phased out
+		to_chat(usr, SPAN_DANGER("Your [src] is not responding correctly!"))
+		emp_act(1)	//Hang up the call
+		return TRUE	//RS ADD END
+
 	if(!touch_silent)
 		playsound(src, 'sound/machines/pda_click.ogg', 20)
 

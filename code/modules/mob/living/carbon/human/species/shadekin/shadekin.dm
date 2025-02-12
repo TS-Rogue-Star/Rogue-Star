@@ -114,6 +114,7 @@
 	var/kin_type
 	var/energy_light = 0.25
 	var/energy_dark = 0.75
+	var/energy_drain = 0.5	//RS ADD
 
 /datum/species/shadekin/New()
 	..()
@@ -322,13 +323,15 @@
 			energy_light = 0.75
 			energy_dark = 0.75
 		if(RED_EYES)
-			total_health = 200
-			energy_light = -0.5
-			energy_dark = 0.5
+			total_health = 150		//RS EDIT
+			energy_light = 0		//RS EDIT - Don't take their energy while they are trying to grab people
+			energy_dark = 0.25		//RS EDIT - Smol energy gain, as they can gain energy in other ways
+			energy_drain = 1		//RS ADD
 		if(PURPLE_EYES)
-			total_health = 150
-			energy_light = -0.5
-			energy_dark = 1
+			total_health = 115		//RS EDIT
+			energy_light = 0.25		//RS EDIT - Part blue, regens in the light
+			energy_dark = 0.35		//RS EDIT - Part red, plus part blue, regens a little faster in the dark
+			energy_drain = 0.75		//RS ADD
 		if(YELLOW_EYES)
 			total_health = 100
 			energy_light = -2
@@ -336,11 +339,22 @@
 		if(GREEN_EYES)
 			total_health = 100
 			energy_light = 0.125
-			energy_dark = 2
+			energy_dark = 1.5		//RS EDIT	//Make this be half of yellow eyes
 		if(ORANGE_EYES)
-			total_health = 175
-			energy_light = -0.25
-			energy_dark = 0.75
+			total_health = 115		//RS EDIT
+			energy_light = 0		//RS EDIT	//Half red, so let's not take their energy away while they hunt
+			energy_dark = 1.5		//RS EDIT	//Make this be half of yellow eyes
+			energy_drain = 0.75		//RS ADD
+
+	if(H.size_multiplier <= 0.75)
+		total_health -= 25
+		item_slowdown_mod = 2
+
+	else if(H.size_multiplier >= 1.25)
+		total_health += 50
+		slowdown = 0
+		item_slowdown_mod = 0.5
+
 	//RS Edit End
 
 	H.maxHealth = total_health
