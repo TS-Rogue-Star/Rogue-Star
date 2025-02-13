@@ -214,7 +214,7 @@
 //////////////////////////
 /datum/power/shadekin/regenerate_other
 	name = "Regenerate Other (50)"
-	desc = "Spend energy to heal physical wounds in another creature."
+	desc = "Spend energy to heal physical wounds in another creature. Only works while they are alive."	//RS EDIT
 	verbpath = /mob/living/carbon/human/proc/regenerate_other
 	ability_icon_state = "tech_biomedaura"
 
@@ -247,7 +247,8 @@
 	var/list/viewed = oview(1)
 	var/list/targets = list()
 	for(var/mob/living/L in viewed)
-		targets += L
+		if(L.stat != DEAD)	//RS ADD - This was modelled after healbelly in its ability originally, and healbelly can't heal corpses, so, this probably shouldn't either.
+			targets += L	//RS ADD
 	if(!targets.len)
 		to_chat(src,"<span class='warning'>Nobody nearby to mend!</span>")
 		return FALSE
