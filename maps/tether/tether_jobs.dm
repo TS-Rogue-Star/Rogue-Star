@@ -184,7 +184,7 @@
 	l_ear = /obj/item/device/radio/headset/talon
 	glasses = /obj/item/clothing/glasses/sunglasses
 	uniform = /obj/item/clothing/under/rank/talon/command
-	shoes = /obj/item/clothing/shoes/brown
+	shoes = /obj/item/clothing/shoes/laceup // RS Edit
 	backpack = /obj/item/weapon/storage/backpack/talon
 	satchel_one = /obj/item/weapon/storage/backpack/satchel/talon
 	messenger_bag = /obj/item/weapon/storage/backpack/messenger/talon
@@ -198,7 +198,7 @@
 	flags = OUTFIT_HAS_BACKPACK|OUTFIT_COMPREHENSIVE_SURVIVAL
 
 	l_ear = /obj/item/device/radio/headset/talon
-	shoes = /obj/item/clothing/shoes/black
+	shoes = /obj/item/clothing/shoes/boots/jackboots // RS Edit
 	head = /obj/item/clothing/head/pilot_vr/talon
 	uniform = /obj/item/clothing/under/rank/talon/pilot
 	suit = /obj/item/clothing/suit/storage/toggle/bomber/pilot
@@ -218,7 +218,7 @@
 	pda_type = null
 
 	l_ear = /obj/item/device/radio/headset/talon
-	shoes = /obj/item/clothing/shoes/white
+	shoes = /obj/item/clothing/shoes/boots/jackboots // RS Edit
 	backpack = /obj/item/weapon/storage/backpack/medic
 	satchel_one = /obj/item/weapon/storage/backpack/satchel/med
 	messenger_bag = /obj/item/weapon/storage/backpack/messenger/med
