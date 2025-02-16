@@ -236,6 +236,8 @@
 				var/datum/sprite_accessory/tail/taur/tail = H.tail_style
 				src_message = tail.msg_owner_help_run
 				tmob_message = tail.msg_prey_help_run
+			if(tmob.is_incorporeal())	//RS Add Chomp port #7484 | CHOMPEdit - Nothing to step over. (dont step over phased kin)
+				return TRUE
 
 		//Smaller person stepping under larger person
 		else if(get_effective_size(TRUE) < tmob.get_effective_size(TRUE) && ishuman(tmob))
@@ -246,6 +248,8 @@
 				var/datum/sprite_accessory/tail/taur/tail = H.tail_style
 				src_message = tail.msg_prey_stepunder
 				tmob_message = tail.msg_owner_stepunder
+			if(tmob.is_incorporeal())	//RS Add Chomp port #7366 | CHOMPEdit - Nothing to step under. (dont step under phased kin)
+				return TRUE
 
 		if(src_message)
 			to_chat(src, "<span class='filter_notice'>[STEP_TEXT_OWNER(src_message)]</span>")
