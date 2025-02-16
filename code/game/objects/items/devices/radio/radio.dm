@@ -244,6 +244,11 @@ var/global/list/default_medbay_channels = list(
 	if(..())
 		return TRUE
 
+	if(usr.is_incorporeal())	//RS ADD START - prevent ranged communication while phased out
+		to_chat(usr, SPAN_DANGER("Your [src] is not responding correctly!"))
+		emp_act(1)	//Stop broadcasting the open mic
+		return TRUE	//RS ADD END
+
 	switch(action)
 		if("setFrequency")
 			var/new_frequency = (text2num(params["freq"]))

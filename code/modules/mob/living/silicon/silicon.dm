@@ -73,7 +73,8 @@
 		if(4)
 			src.take_organ_damage(0,5,emp=1)
 			Confuse(2)
-	flash_eyes(affect_silicon = 1)
+	if(severity != 5)	//RS ADD - this one is harmless, so let's not flash them
+		flash_eyes(affect_silicon = 1)	//RS ADD
 	to_chat(src, "<span class='danger'><B>*BZZZT*</B></span>")
 	to_chat(src, "<span class='danger'>Warning: Electromagnetic pulse detected.</span>")
 	..()

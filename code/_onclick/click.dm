@@ -48,6 +48,10 @@
 		build_click(src, client.buildmode, params, A)
 		return
 
+	if(is_incorporeal())	//RS ADD START - don't shoot at or attack people while you are intangible
+		face_atom(A)
+		return				//RS ADD END
+
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["ctrl"])
 		CtrlShiftClickOn(A)
