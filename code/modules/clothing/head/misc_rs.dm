@@ -11,11 +11,3 @@
 	icon = 'icons/rogue-star/flame_halo.dmi'
 	default_worn_icon = 'icons/rogue-star/flame_halo.dmi'
 	icon_state = "flame_halo"
-
-/obj/item/clothing/head/caphat/talon/pilot
-	name = "Talon pilot's cap"
-	desc = "It's a formal cap worn usually by ITV Talon's piloting personnel, embezzled with the ITV Talon's logo on the front of the cap."
-	icon = 'icons/inventory/head/item_rs.dmi'
-	icon_override = 'icons/inventory/head/mob_rs.dmi'
-	icon_state = "talon_pilothat"
-	item_state = "talon_pilothat"
