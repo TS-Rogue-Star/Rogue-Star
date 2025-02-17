@@ -31,6 +31,7 @@
 	minbodytemp = 0
 	maxbodytemp = 700
 
+	load_owner = "seriouslydontsavethis"	//RS ADD - Do not make clowns your pet
 
 /datum/ai_holder/simple_mob/melee/clowns
 	can_breakthrough = FALSE
