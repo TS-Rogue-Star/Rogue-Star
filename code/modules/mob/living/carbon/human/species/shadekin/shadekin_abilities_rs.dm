@@ -6,7 +6,7 @@
 
 /mob/living/carbon/human/proc/regenerate_other_lesser()
 	set name = "Lesser Regenerate Other (25)"
-	set desc = "Spend energy to heal physical wounds in another creature."
+	set desc = "Spend energy to heal physical wounds in another creature. Only works while they are alive."
 	set category = "Shadekin"
 
 	var/ability_cost = 25
@@ -28,7 +28,8 @@
 	var/list/viewed = oview(1)
 	var/list/targets = list()
 	for(var/mob/living/L in viewed)
-		targets += L
+		if(L.stat != DEAD)	//This was modelled after healbelly in its ability originally, and healbelly can't heal corpses, so, this probably shouldn't either.
+			targets += L
 	if(!targets.len)
 		to_chat(src,"<span class='warning'>Nobody nearby to mend!</span>")
 		return FALSE

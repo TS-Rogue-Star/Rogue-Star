@@ -230,6 +230,8 @@
 		else if(isliving(A))
 			var/dist = get_dist(source, A)
 			var/mob/living/L = A
+			if(L.is_incorporeal())	//RS ADD - Don't shock phased shadekin
+				continue			//RS ADD
 			if(dist <= zap_range && (dist < closest_dist || !closest_mob) && L.stat != DEAD && !(L.status_flags & GODMODE))
 				closest_mob = L
 				closest_atom = A

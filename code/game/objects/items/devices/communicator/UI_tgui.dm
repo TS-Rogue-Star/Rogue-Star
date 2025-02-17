@@ -319,6 +319,12 @@
 		return TRUE
 
 	add_fingerprint(usr)
+
+	if(usr.is_incorporeal())	//RS ADD START - prevent ranged communication while phased out
+		to_chat(usr, SPAN_DANGER("Your [src] is not responding correctly!"))
+		emp_act(1)	//Hang up the call
+		return TRUE	//RS ADD END
+
 	. = TRUE
 	switch(action)
 		if("rename")

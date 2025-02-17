@@ -413,6 +413,7 @@
 			if(A == src) continue
 			if(istype(A,/mob/living))
 				if(A:lying) continue
+				if(A.is_incorporeal()) continue // RS Add Chomp port #8267 | CHOMPEdit - CHOMPEdit - For phased entities
 				src.throw_impact(A,speed)
 			if(isobj(A))
 				if(!A.density || A.throwpass)

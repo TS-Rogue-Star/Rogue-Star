@@ -161,7 +161,7 @@
 
 // UI
 /obj/item/device/walkpod/proc/getTracksList()
-	return SSmedia_tracks.jukebox_tracks
+	return SSmedia_tracks.all_tracks
 
 /obj/item/device/walkpod/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

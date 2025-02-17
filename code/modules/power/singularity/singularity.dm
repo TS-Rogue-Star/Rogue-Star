@@ -268,6 +268,9 @@ GLOBAL_LIST_BOILERPLATE(all_singularities, /obj/singularity)
 	for(var/atom/X as anything in orange(grav_pull, src))
 		if(!X.simulated)
 			continue
+		if(isliving(X))	//RS ADD START - do not pull phased out shadekin
+			var/mob/living/L = X
+			if(L.is_incorporeal()) continue	//RS ADD END
 		var/dist = get_dist(X, src)
 		if(dist > consume_range)
 			X.singularity_pull(src, current_size)
@@ -276,6 +279,9 @@ GLOBAL_LIST_BOILERPLATE(all_singularities, /obj/singularity)
 	return
 
 /obj/singularity/proc/consume(const/atom/A)
+	if(isliving(A))	//RS ADD START - do not consume phased out shadekin
+		var/mob/living/L = A
+		if(L.is_incorporeal()) return //RS ADD END
 	src.energy += A.singularity_act(src, current_size)
 	return
 
@@ -426,6 +432,7 @@ GLOBAL_LIST_BOILERPLATE(all_singularities, /obj/singularity)
 		if(M.stat == CONSCIOUS)
 			if (istype(M,/mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
+				if(H.is_incorporeal()) continue	//RS ADD - Do not bother phased out shadekin
 				if(istype(H.glasses,/obj/item/clothing/glasses/meson) && current_size != STAGE_SUPER)
 					to_chat(H, "<span class=\"notice\">You look directly into The [src.name], good thing you had your protective eyewear on!</span>")
 					return
@@ -444,6 +451,8 @@ GLOBAL_LIST_BOILERPLATE(all_singularities, /obj/singularity)
 
 /obj/singularity/proc/smwave()
 	for(var/mob/living/M in view(10, src.loc))
+		if(isliving(M))
+			if(M.is_incorporeal()) continue	//RS ADD - Do not dust phased out shadekin
 		if(prob(67))
 			to_chat(M, "<span class=\"warning\">You hear an uneartly ringing, then what sounds like a shrilling kettle as you are washed with a wave of heat.</span>")
 			to_chat(M, "<span class=\"notice\">Miraculously, it fails to kill you.</span>")
