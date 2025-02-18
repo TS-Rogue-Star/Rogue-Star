@@ -421,3 +421,9 @@ digi-inner-thighs
 **Icon-States:** sergwheat, sergwheat_markings, fatsergal<br>
 **Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/5546
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/inventory/head/item_rs.dmi, icons/inventory/head/mob_rs.dmi, icons/inventory/uniform/item_rs.dmi, icons/inventory/uniform/mob_rs.dmi, icons/inventory/suit/item_rs.dmi, icons/inventory/suit/mob_rs.dmi`<br>
+**Icon-States:** talon_basic_refreshed, talon_security_refreshed, talon_jumpsuit_refreshed, talon_pilot_refreshed, talon_captain_refreshed, talon_capcoat, talon_pilotjacket, talon_labcoat, taloncoat, talon_caphat, talon_pilothat, talonnewsoft, talon_beret, talon_officer_beret, winterhood_talon<br>
+**Creator:** Comissioned by axietheaxolotl, Imaginos16<br>
+**Link:** https://github.com/tgstation/tgstation/pull/70226, https://github.com/tgstation/tgstation/pull/67286, https://github.com/tgstation/tgstation/pull/69842, https://github.com/tgstation/tgstation/pull/66355, https://github.com/tgstation/tgstation/pull/73795
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
