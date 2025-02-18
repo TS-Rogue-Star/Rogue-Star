@@ -13,6 +13,7 @@
 	. = ..()
 	verbs |= /mob/living/simple_mob/proc/set_name
 	verbs |= /mob/living/simple_mob/proc/set_desc
+	verbs |= /mob/living/simple_mob/proc/set_gender //RS Add - Make a set gender button for simplemobs
 
 	if(copy_prefs_to_mob)
 		login_prefs()
@@ -127,4 +128,11 @@
 	allow_contaminate = client.prefs_vr.allow_contaminate
 	to_chat(src, "<span class='notice'>Contamination is now [allow_contaminate ? "<font color='green'>allowed</font>" : "<font color='red'>disallowed</font>"].</span>")
 
+/mob/living/simple_mob/proc/set_gender()
+	set name = "Set Gender"
+	set desc = "Set your gender."
+	set category = "Abilities"
+
+	var/new_gender = tgui_input_list(usr, "Please select a gender:", "Set Gender", list(FEMALE, MALE, NEUTER, PLURAL))
+	src.gender = new_gender
 //RS ADD END
