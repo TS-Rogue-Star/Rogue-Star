@@ -134,5 +134,6 @@
 	set category = "Abilities"
 
 	var/new_gender = tgui_input_list(usr, "Please select a gender:", "Set Gender", list(FEMALE, MALE, NEUTER, PLURAL))
-	src.gender = new_gender
+	if(new_gender)
+		src.gender = new_gender
 //RS ADD END
