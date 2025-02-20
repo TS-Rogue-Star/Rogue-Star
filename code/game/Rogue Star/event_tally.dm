@@ -286,3 +286,62 @@
 			continue
 
 	return greatest
+
+/////DISPENSER/////
+
+/obj/dispenser
+	name = "Dispenser"
+	desc = "It holds so many things!"
+	icon = 'icons/rogue-star/misc.dmi'
+	icon_state = "dispenser"
+
+	anchored = TRUE
+	density = TRUE
+
+	var/dispense_type							//When clicked, it will give you one of these.
+	var/list/dispensed = list()				//If you're on the list you can't take another right now.
+	var/dispense_restrict = TRUE				//If true, the dispenser will only allow you to take one until the dispensed list is cleared.
+
+/obj/dispenser/attack_hand(mob/living/user)
+	. = ..()
+
+	if(!dispense_type)
+		to_chat(user, SPAN_WARNING("\The [src] is not configured! Please contact the event organizer."))
+		return
+
+	if(!isliving(user)) return
+
+
+	if(dispense_restrict)
+		if(user.client.holder)
+			var/choice = tgui_alert(user,"Would you like to take an item, or reset the round?","[src]",list("Dispense","Reset"))
+			if(!choice) return
+			if(choice == "Reset")
+				dispensed = list()
+				to_chat(user, SPAN_NOTICE("The dispensed list has been cleared. Players will be able to collect new items."))
+				return
+
+		if(user.ckey in dispensed)
+			to_chat(user, SPAN_WARNING("You have taken one too recently, wait until the event runner starts a new round to take another!"))
+			return
+		dispensed |= user.ckey
+
+	var/obj/N = new dispense_type(get_turf(src))
+	if(!user.get_active_hand())
+		user.put_in_hands(N)
+
+/obj/dispenser/attackby(obj/item/O, mob/user)
+	. = ..()
+
+	if(!isliving(user))
+		return
+
+	if(user.client.holder)
+		if(tgui_alert(user,"Would you like \the [O] to be what is dispensed?","[src] configuration",list("Yes","No")) != "Yes") return
+
+		dispense_type = O.type
+		to_chat(user, SPAN_NOTICE("\The [src] will now dispense [O] - [dispense_type]"))
+		return
+
+/obj/dispenser/blue
+	icon_state = "dispenser-b"
