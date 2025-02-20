@@ -24,6 +24,9 @@
 						message_admins("<font color='red'><B>Notice: </B></font><font color='blue'>[key_name_admin(src)] has the same [matches] as [key_name_admin(M)] (no longer logged in). </font>", 1)
 						log_adminwarn("Notice: [key_name(src)] has the same [matches] as [key_name(M)] (no longer logged in).")
 
+		if (usr.client.byond_version > 515)
+			tgui_alert_async(usr, "You are running a beta client. There WILL be bugs. To avoid them, downgrade to the latest stable version, otherwise you are proceeding at your own risk. - Love, Kenzie", "WARNING!! WARNING!! WARNING!!", list("Don't tell me what to do I love bugs"))
+
 /mob/Login()
 
 	player_list |= src
