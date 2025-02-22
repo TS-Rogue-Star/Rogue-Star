@@ -173,10 +173,12 @@
 
 //this is largely hacky and bad :(	-Pete //less hacky and bad now :) -Ghost
 /obj/item/weapon/gun/projectile/shotgun/doublebarrel/attackby(var/obj/item/A as obj, mob/user as mob)
-	if(sawn_off)
-		to_chat(user, "<span class='warning'>The [src] is already shortened!</span>")
-		return
+	//RSEdit Start - Fix reloading of sawn off shotguns.
 	if(istype(A, /obj/item/weapon/surgical/circular_saw) || istype(A, /obj/item/weapon/melee/energy) || istype(A, /obj/item/weapon/pickaxe/plasmacutter))
+		if(sawn_off)
+			to_chat(user, "<span class='warning'>The [src] is already shortened!</span>")
+			return
+		//RSEdit End
 		to_chat(user, "<span class='notice'>You begin to shorten the barrel of \the [src].</span>")
 		if(loaded.len)
 			var/burstsetting = burst
@@ -233,4 +235,3 @@
 	load_method = SINGLE_CASING
 	max_shells = 5
 	ammo_type = /obj/item/ammo_casing/a12g/beanbag
-
