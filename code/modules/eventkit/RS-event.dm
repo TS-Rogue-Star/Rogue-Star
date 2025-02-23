@@ -162,8 +162,6 @@ GLOBAL_VAR(special_station_name)
 
 	if(!choice || choice == "Cancel") return
 
-	var/turf/T = get_turf(usr)
-
 	playsound(mob, 'sound/effects/genetics.ogg', 75, 1)
 	for(var/mob/living/L in player_list)
 		if(!isliving(L))
@@ -173,11 +171,18 @@ GLOBAL_VAR(special_station_name)
 		if(choice == "This Z" && L.z != usr.z)
 			continue
 
-		SEND_SOUND(L, sound('sound/misc/server-ready.ogg'))
-		if(tgui_alert(L,"\The [usr] is summoning you to their location. Would you like to join them?","Summoning",list("Yes","No")) != "Yes")
-			return
+		L.do_summoning(usr)
 
-		L.forceMove(T)
+/mob/living/proc/do_summoning(var/mob/target)
+	if(!target) return
+
+	var/turf/T = get_turf(target)
+
+	SEND_SOUND(src, sound('sound/misc/server-ready.ogg'))
+	if(tgui_alert(src,"\The [target] is summoning you to their location. Would you like to join them?","Summoning",list("Yes","No")) != "Yes")
+		return
+
+	forceMove(T)
 
 /obj/item/weapon/material/sword/wind_blade
 	name = "wind blade"
