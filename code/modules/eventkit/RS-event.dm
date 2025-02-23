@@ -155,34 +155,40 @@ GLOBAL_VAR(special_station_name)
 	if(!check_rights(R_ADMIN|R_MOD|R_DEBUG|R_EVENT))
 		return
 	if(!config.allow_admin_jump)
-		tgui_alert_async(usr, "Admin jumping disabled")
-
+		to_chat(usr, "Admin jumping disabled")
+		return
 
 	var/choice = tgui_alert(usr, "What range do you want to summon people at?","Summoning",list("This Z","Global","Cancel"))
 
 	if(!choice || choice == "Cancel") return
 
+	var/turf/T = get_turf(usr)
 	playsound(mob, 'sound/effects/genetics.ogg', 75, 1)
 	for(var/mob/living/L in player_list)
-		if(!isliving(L))
+		if(!isliving(L))	//Don't summon ghosts or whatever
 			continue
-		if(L == usr)
+		if(L == usr)		//Don't summon yourself
 			continue
-		if(choice == "This Z" && L.z != usr.z)
+		if(isbelly(L.loc))	//their pred will get asked instead
 			continue
+		if(choice == "This Z")	//Extra logic for only affecting people on the same Z
+			var/turf/ourturf = get_turf(L)	//In case someone is hidden in a state where they are not technically on a turf, such as closets, reagent containers, etc
+			if(T.z != ourturf.z)
+				continue
 
-		L.do_summoning(usr)
+		L.do_summoning(usr,T)
 
-/mob/living/proc/do_summoning(var/mob/target)
+/mob/living/proc/do_summoning(var/mob/target,var/turf/targ_turf)	//Split this into its own proc so it can happen independently
 	if(!target) return
 
-	var/turf/T = get_turf(target)
+	if(!targ_turf)
+		targ_turf = get_turf(target)
 
 	SEND_SOUND(src, sound('sound/misc/server-ready.ogg'))
 	if(tgui_alert(src,"\The [target] is summoning you to their location. Would you like to join them?","Summoning",list("Yes","No")) != "Yes")
 		return
 
-	forceMove(T)
+	forceMove(targ_turf)
 
 /obj/item/weapon/material/sword/wind_blade
 	name = "wind blade"
