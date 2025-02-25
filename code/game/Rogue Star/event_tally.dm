@@ -205,26 +205,75 @@
 	if(!isliving(user))
 		return
 
-	if(!(O.type in score_type_paths))
+	var/atom/check = submit_check(O,user)
+
+	if(!check)
+		return
+
+	if(!(check.type in score_type_paths))
 		if(user.client.holder && !score_stock_locked)
 			if(tgui_alert(user,"Would you like to add this type of item as an item that can be scored with?","[src] configuration",list("Yes","No")) != "Yes") return
 
 			var/score_val = tgui_input_number(user,"What score value would you like to associate with this type?","Change score value",1)
 
-			score_type_paths[O.type] = score_val
-			to_chat(user, SPAN_NOTICE("Added [O.type] with a score value of [score_type_paths[O.type]] as a valid scoring option."))
+			score_type_paths[check.type] = score_val
+			to_chat(user, SPAN_NOTICE("Added [check.type] with a score value of [score_type_paths[check.type]] as a valid scoring option."))
 		return
 
 	var/ourscore = scoreboard[user]
 
-	ourscore += score_type_paths[O.type]
+	ourscore += score_type_paths[check.type]
 
 	scoreboard[user] = ourscore
 
 	var/yup = pick(list("schlorps up", "nyomps", "licks", "inhales", "vores", "eats", "ingests", "accepts", "devours", "evaporates"))
 
-	to_chat(user, "[SPAN_WARNING("\The [src] [yup] \the [O]!!!")] - [SPAN_NOTICE("Your score is now [scoreboard[user]].")]")
-	qdel(O)
+	to_chat(user, "[SPAN_WARNING("\The [src] [yup] \the [check]!!!")] - [SPAN_NOTICE("Your score is now [scoreboard[user]].")]")
+
+	if(check != O)
+		qdel(O)
+	qdel(check)
+
+/obj/score_keeper/proc/submit_check(obj/item/O,mob/user)
+
+	if(istype(O,/obj/item/weapon/grab))
+		var/obj/item/weapon/grab/G = O
+
+		if(!isliving(G.affecting))	//Make sure that your grab has a mob and that it's the right kind
+			return FALSE	//How did you even get here
+
+		if(G.affecting.ckey)	//Let's only submit NPCs
+			to_chat(user,SPAN_WARNING("\The [G.affecting] can not be submitted."))
+			return FALSE
+
+		return G.affecting
+
+	if(istype(O,/obj/item/weapon/holder))
+		var/obj/item/weapon/holder/H = O
+
+		if(!H.held_mob)	//Let's make sure the holder has a mob
+			return FALSE
+
+		if(H.held_mob.ckey)	//Let's only submit NPCs
+			to_chat(user,SPAN_WARNING("\The [H.held_mob] can not be submitted."))
+			return FALSE
+
+		return H.held_mob
+
+	return O
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /obj/score_keeper/verb/report_score()
 	set name = "Report Score"
