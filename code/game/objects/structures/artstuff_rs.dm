@@ -20,6 +20,8 @@
 	if(newcolor)
 		P.update_paint(newcolor)
 		P.color = newcolor
+		if(istype(user, /mob/living/carbon/human))
+			user:species.artist_color = newcolor //Unsafe way to modify this, please only do with the above safety check if you copy this method.
 		//to_chat(user, span_notice("[P] is now [newcolor]")) //debug
 	else
 		return ..()

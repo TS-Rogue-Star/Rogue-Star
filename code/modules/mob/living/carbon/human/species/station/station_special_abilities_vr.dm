@@ -1813,8 +1813,8 @@
 		if(linked_brush) //Do we have a paintbrush already?
 			linked_brush.update_paint(species.artist_color)
 			linked_brush.hud_layerise()
-			//linked_brush.color = species.artist_color
-*/
+			linked_brush.color = species.artist_color
+*/ //Removed and simplified to just click the brush
 /mob/living/carbon/human/proc/extend_retract_brush()
 	set name = "Conjure Natural Brush"
 	set category = "Abilities"
