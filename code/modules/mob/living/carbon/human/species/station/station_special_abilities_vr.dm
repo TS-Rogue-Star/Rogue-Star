@@ -1796,7 +1796,7 @@
 //RS ADD END
 
 //RS ADD
-/mob/living/carbon/human/proc/adjust_art_color()
+/*/mob/living/carbon/human/proc/adjust_art_color()
 	set name = "Adjust Artistic Color"
 	set category = "Abilities"
 	set desc = "Adjust what color you are currently painting with!"
@@ -1814,7 +1814,7 @@
 			linked_brush.update_paint(species.artist_color)
 			linked_brush.hud_layerise()
 			linked_brush.color = species.artist_color
-
+*/ //Removed and simplified to just click the brush
 /mob/living/carbon/human/proc/extend_retract_brush()
 	set name = "Conjure Natural Brush"
 	set category = "Abilities"
