@@ -458,7 +458,15 @@
 			return
 		else
 			H.verbs -= verb
-
+	//RS Edit || Add smite to verb panel
+	else if(href_list["give_smite"])
+		if(!check_rights(R_DEBUG|R_ADMIN|R_EVENT))
+			return
+		var/mob/living/carbon/human/H = locate(href_list["give_smite"])
+		if(!ishuman(H)) //check if it is a human mob
+			return 		//If not, return
+		src.smite(H)
+	//RS Edit end
 	else if(href_list["addorgan"])
 		if(!check_rights(R_SPAWN))	return
 
