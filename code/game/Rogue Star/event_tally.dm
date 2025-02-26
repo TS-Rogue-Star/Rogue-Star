@@ -220,15 +220,15 @@
 			to_chat(user, SPAN_NOTICE("Added [check.type] with a score value of [score_type_paths[check.type]] as a valid scoring option."))
 		return
 
-	var/ourscore = scoreboard[user]
+	var/ourscore = scoreboard[user.real_name]
 
 	ourscore += score_type_paths[check.type]
 
-	scoreboard[user] = ourscore
+	scoreboard[user.real_name] = ourscore
 
 	var/yup = pick(list("schlorps up", "nyomps", "licks", "inhales", "vores", "eats", "ingests", "accepts", "devours", "evaporates"))
 
-	to_chat(user, "[SPAN_WARNING("\The [src] [yup] \the [check]!!!")] - [SPAN_NOTICE("Your score is now [scoreboard[user]].")]")
+	to_chat(user, "[SPAN_WARNING("\The [src] [yup] \the [check]!!!")] - [SPAN_NOTICE("Your score is now [scoreboard[user.real_name]].")]")
 
 	if(check != O)
 		qdel(O)
