@@ -45,6 +45,16 @@ if (!Array.prototype.find) {
   });
 }
 
+if (!HTMLSpanElement.prototype.matches) {
+  Object.defineProperty(HTMLSpanElement.prototype, 'matches', {
+    value: function(predicate) {
+      return this.msMatchesSelector(predicate);
+    },
+    configurable: true,
+    writable: true
+  });
+}
+
 if (!Date.now) {
   Date.now = function now() {
     return new Date().getTime();
@@ -58,6 +68,7 @@ function storageAvailable(type) {
         storage = window[type];
         var x = '__storage_test__';
         storage.setItem(x, x);
+        storage.getItem(x);
         storage.removeItem(x);
         return true;
     }

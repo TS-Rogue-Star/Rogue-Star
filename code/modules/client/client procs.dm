@@ -172,6 +172,9 @@
 		del(src)
 		return
 
+	if(byond_version >= 516) // Enable 516 compat browser storage mechanisms
+		winset(src, "", "browser-options=byondstorage")
+
 	chatOutput = new /datum/chatOutput(src) //veechat
 	chatOutput.send_resources()
 	spawn()
