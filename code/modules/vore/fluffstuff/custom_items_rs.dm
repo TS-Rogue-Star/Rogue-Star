@@ -106,3 +106,15 @@
 	pickup_sound = null
 	matter = null
 	random_color = FALSE
+
+/obj/item/clothing/suit/cultrobes/alt/fluff
+	desc = "A set of common robes designed in imitation of a particular occult style."
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	origin_tech = list(TECH_MATERIAL = 3)
+	siemens_coefficient = 0.9
+
+/obj/item/clothing/head/culthood/alt/fluff
+	desc = "A common hood designed in imitation of a particular occult style."
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	origin_tech = list(TECH_MATERIAL = 3)
+	siemens_coefficient = 0.9
