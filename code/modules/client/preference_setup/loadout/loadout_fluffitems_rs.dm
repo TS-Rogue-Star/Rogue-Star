@@ -79,3 +79,15 @@
 	display_name = "Zara's Robust Security Award"
 	ckeywhitelist = list("hunterbirk")
 	character_name = list("Zara Aistulf")
+
+/datum/gear/fluff/baele_robe
+	path = /obj/item/clothing/suit/cultrobes/alt/fluff
+	display_name = "Baele's Robe"
+	ckeywhitelist = list("malderg")
+	character_name = list("Baele")
+
+/datum/gear/fluff/baele_hood
+	path = /obj/item/clothing/head/culthood/alt/fluff
+	display_name = "Baele's Robe"
+	ckeywhitelist = list("malderg")
+	character_name = list("Baele")

@@ -1,26 +1,72 @@
 //The 'V' is for 'VORE' but you can pretend it's for Vue.js if you really want.
 
 (function(){
-    var oldLog = console.log;
-    console.log = function (message) {
-        send_debug(message);
-        oldLog.apply(console, arguments);
-    };
-    var oldError = console.error;
-    console.error = function (message) {
-        send_debug(message);
-        oldError.apply(console, arguments);
-    }
-    window.onerror = function (message, url, line, col, error) {
-	var stacktrace = "";
-	if(error && error.stack) {
-		stacktrace = error.stack;
+	// On 516 this is fairly pointless because we can use devtools if we want
+	if(navigator.userAgent.indexOf("Trident") >= 0){
+		let oldLog = console.log;
+		console.log = function (message) {
+			send_debug(message);
+			oldLog.apply(console, arguments);
+		};
+		let oldError = console.error;
+		console.error = function (message) {
+			send_debug(message);
+			oldError.apply(console, arguments);
+		}
+		window.onerror = function (message, url, line, col, error) {
+		let stacktrace = "";
+		if(error && error.stack) {
+			stacktrace = error.stack;
+		}
+			send_debug(message+" ("+url+"@"+line+":"+col+") "+error+"|UA: "+navigator.userAgent+"|Stack: "+stacktrace);
+		return true;
+		}
 	}
-        send_debug(message+" ("+url+"@"+line+":"+col+") "+error+"|UA: "+navigator.userAgent+"|Stack: "+stacktrace);
-	return true;
-    }
 })();
 
+// Button Controls that need background-color and text-color set.
+var SKIN_BUTTONS = [
+	/* Rpane */ "rpane.textb", "rpane.infob", "rpane.wikib", "rpane.forumb", "rpane.rulesb", "rpane.github", "rpane.discord", "rpane.mapb", "rpane.changelog",
+	/* Mainwindow */ "mainwindow.saybutton", "mainwindow.mebutton", "mainwindow.hotkey_toggle"
+
+];
+// Windows or controls that need background-color set.
+var SKIN_ELEMENTS = [
+	/* Mainwindow */ "mainwindow", "mainwindow.mainvsplit", "mainwindow.tooltip",
+	/* Rpane */ "rpane", "rpane.rpanewindow", "rpane.mediapanel",
+];
+
+function switch_ui_mode(options) {
+	doWinset(SKIN_BUTTONS.reduce(function(params, ctl) {params[ctl + ".background-color"] = options.buttonBgColor; return params;}, {}));
+	doWinset(SKIN_BUTTONS.reduce(function(params, ctl) {params[ctl + ".text-color"] = options.buttonTextColor; return params;}, {}));
+	doWinset(SKIN_ELEMENTS.reduce(function(params, ctl) {params[ctl + ".background-color"] = options.windowBgColor; return params;}, {}));
+	doWinset("infowindow", {
+		"background-color": options.tabBackgroundColor,
+		"text-color": options.tabTextColor
+	});
+	doWinset("infowindow.info", {
+		"background-color": options.tabBackgroundColor,
+		"text-color": options.tabTextColor,
+		"highlight-color": options.highlightColor,
+		"tab-text-color": options.tabTextColor,
+		"tab-background-color": options.tabBackgroundColor
+	});
+}
+
+function doWinset(control_id, params) {
+	if (typeof params === 'undefined') {
+		params = control_id;  // Handle single-argument use case.
+		control_id = null;
+	}
+	let url = "byond://winset?";
+	if (control_id) {
+		url += ("id=" + control_id + "&");
+	}
+	url += Object.keys(params).map(function(ctl) {
+		return ctl + "=" + encodeURIComponent(params[ctl]);
+	}).join("&");
+	window.location = url;
+}
 
 //Options for vchat
 var vchat_opts = {
@@ -56,21 +102,22 @@ var LIGHTMODE_COLORS = {
 	tabBackgroundColor: "none"
 };
 
-
 /***********
 *
 * Setup Methods
 *
 ************/
 
-var set_storage = set_cookie;
-var get_storage = get_cookie;
 var domparser = new DOMParser();
+var storage_system = undefined;
 
-//Upgrade to LS
-if (storageAvailable('localStorage')) {
-	set_storage = set_localstorage;
-	get_storage = get_localstorage;
+// LS only works in 515, and 516 adds a proprietary storage system
+if(storageAvailable('serverStorage')){ // >= 516
+	storage_system = window.serverStorage;
+} else if (storageAvailable('localStorage')) { // <= 515
+	storage_system = window.localStorage;
+} else {
+	send_debug("No storage system available, using cookies. Sad!");
 }
 
 //State-tracking variables
@@ -90,6 +137,7 @@ var vchat_state = {
 	lastId: 0
 }
 
+/* eslint-disable-next-line no-unused-vars */ // Invoked directly by byond
 function start_vchat() {
 	//Instantiate Vue.js
 	start_vue();
@@ -126,6 +174,7 @@ function start_vchat() {
 //Loads vue for chat usage
 var vueapp;
 function start_vue() {
+	/* eslint-disable-next-line no-undef */ // Present in vue.min.js, imported in HTML
 	vueapp = new Vue({
 		el: '#app',
 		data: {
@@ -328,7 +377,7 @@ function start_vue() {
 			//Load our settings
 			this.load_settings();
 
-			var xhr = new XMLHttpRequest();
+			let xhr = new XMLHttpRequest();
 			xhr.open('GET', 'ss13styles.css');
 			xhr.onreadystatechange = (function() {
 				this.ext_styles = xhr.responseText;
@@ -406,7 +455,7 @@ function start_vue() {
 				push_Topic_showingnum(this.showingnum); // Send the buffer length back to byond so we have it in case of reconnect
 				this.attempt_archive();
 			},
-			current_categories: function(newSetting, oldSetting) {
+			current_categories: function(newSetting) {
 				if(newSetting.length) {
 					this.apply_filter(newSetting);
 				}
@@ -457,10 +506,10 @@ function start_vue() {
 				this.load_tabs();
 			},
 			load_tabs: function() {
-				var loadstring = get_storage("tabs")
+				let loadstring = get_storage("tabs")
 				if(!loadstring)
 					return;
-				var loadfile = JSON.parse(loadstring);
+				let loadfile = JSON.parse(loadstring);
 				//Malformed somehow.
 				if(!loadfile.version || !loadfile.tabs) {
 					this.internal_message("There was a problem loading your tabs. Any new ones you make will be saved, however.");
@@ -475,7 +524,7 @@ function start_vue() {
 				this.tabs.push.apply(this.tabs, loadfile.tabs);
 			},
 			save_tabs: function() {
-				var savefile = {
+				let savefile = {
 					version: vchat_opts.vchatTabsVer,
 					tabs: []
 				}
@@ -485,17 +534,17 @@ function start_vue() {
 					if(tab.immutable)
 						return;
 
-					var name = tab.name;
+					let name = tab.name;
 
-					var categories = [];
+					let categories = [];
 					tab.categories.forEach(function(category){categories.push(category);});
 
-					var cleantab = {name: name, categories: categories, immutable: false, active: false}
+					let cleantab = {name: name, categories: categories, immutable: false, active: false}
 
 					savefile.tabs.push(cleantab);
 				});
 
-				var savestring = JSON.stringify(savefile);
+				let savestring = JSON.stringify(savefile);
 				set_storage("tabs", savestring);
 			},
 			//Change to another tab
@@ -534,8 +583,8 @@ function start_vue() {
 				if(this.active_tab.immutable) {
 					return;
 				}
-				var tabtorename = this.active_tab;
-				var newname = window.prompt("Type the desired tab name:", tabtorename.name);
+				let tabtorename = this.active_tab;
+				let newname = window.prompt("Type the desired tab name:", tabtorename.name);
 				if(newname === null || newname === "" || tabtorename === null) {
 					return;
 				}
@@ -556,13 +605,13 @@ function start_vue() {
 				if(!tab || tab.immutable) {
 					return;
 				}
-				var at = this.tabs.indexOf(tab);
-				var to = at + shift;
+				let at = this.tabs.indexOf(tab);
+				let to = at + shift;
 				this.tabs.splice(to, 0, this.tabs.splice(at, 1)[0]);
 			},
 			tab_unread_count: function(tab) {
-				var unreads = 0;
-				var thisum = this.unread_messages;
+				let unreads = 0;
+				let thisum = this.unread_messages;
 				tab.categories.find( function(cls){
 					if(thisum[cls]) {
 						unreads += thisum[cls];
@@ -571,8 +620,8 @@ function start_vue() {
 				return unreads;
 			},
 			tab_unread_categories: function(tab) {
-				var unreads = false;
-				var thisum = this.unread_messages;
+				let unreads = false;
+				let thisum = this.unread_messages;
 				tab.categories.find( function(cls){
 					if(thisum[cls]) {
 						unreads = true;
@@ -583,15 +632,15 @@ function start_vue() {
 				return { red: unreads, grey: !unreads};
 			},
 			attempt_archive: function() {
-				var wiggle = 20; //Wiggle room to prevent hysterisis effects. Slice off 20 at a time.
+				let wiggle = 20; //Wiggle room to prevent hysterisis effects. Slice off 20 at a time.
 				//Pushing out old messages
 				if(this.messages.length > this.showingnum) {//Time to slice off old messages
-					var too_old = this.messages.splice(0,wiggle); //We do a few at a time to avoid doing it too often
+					let too_old = this.messages.splice(0,wiggle); //We do a few at a time to avoid doing it too often
 					Array.prototype.push.apply(this.archived_messages, too_old); //ES6 adds spread operator. I'd use it if I could.
 				}/*
 				//Pulling back old messages
 				} else if(this.messages.length < (this.showingnum - wiggle)) { //Sigh, repopulate old messages
-					var too_new = this.archived_messages.splice(this.messages.length - (this.showingnum - wiggle));
+					let too_new = this.archived_messages.splice(this.messages.length - (this.showingnum - wiggle));
 					Array.prototype.shift.apply(this.messages, too_new);
 				}
 				*/
@@ -646,7 +695,7 @@ function start_vue() {
 				}
 
 				newmessage.content = newmessage.content.replace(
-					/(\b(https?):\/\/[\-A-Z0-9+&@#\/%?=~_|!:,.;]*[\-A-Z0-9+&@#\/%=~_|])/img, //Honestly good luck with this regex ~Gear
+					/(\b(https?):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/img, //Honestly good luck with this regex ~Gear
 					'<a href="$1">$1</a>');
 
 				//Unread indicator and insertion into current tab shown messages if sensible
@@ -680,9 +729,11 @@ function start_vue() {
 				let textSelected = ('getSelection' in window) && window.getSelection().isCollapsed === false;
 				if (!textSelected && !(ele && (ele.tagName === 'INPUT' || ele.tagName === 'TEXTAREA'))) {
 					focusMapWindow();
-					// Okay focusing map window appears to prevent click event from being fired.  So lets do it ourselves.
-					event.preventDefault();
-					event.target.click();
+					if(navigator.userAgent.indexOf("Trident") >= 0){
+						// Okay focusing map window appears to prevent click event from being fired.  So lets do it ourselves.
+						event.preventDefault();
+						event.target.click();
+					}
 				}
 			},
 			click_message: function(event) {
@@ -691,7 +742,7 @@ function start_vue() {
 					event.stopPropagation();
 					event.preventDefault ? event.preventDefault() : (event.returnValue = false); //The second one is the weird IE method.
 
-					var href = ele.getAttribute('href'); // Gets actual href without transformation into fully qualified URL
+					let href = ele.getAttribute('href'); // Gets actual href without transformation into fully qualified URL
 
 					if (href[0] == '?' || (href.length >= 8 && href.substring(0,8) == "byond://")) {
 						window.location = href; //Internal byond link
@@ -713,7 +764,7 @@ function start_vue() {
 				let category = "vc_unsorted"; //What we use if the classes aren't anything we know.
 				if(!evaluating) return category;
 				this.type_table.find( function(type) {
-					if(evaluating.msMatchesSelector(type.matches)) {
+					if(evaluating.matches(type.matches)) {
 						category = type.becomes;
 						return true;
 					}
@@ -722,10 +773,10 @@ function start_vue() {
 				return category;
 			},
 			save_chatlog: function() {
-				var textToSave = "<html><head><style>"+this.ext_styles+"</style></head><body>";
+				let textToSave = "<html><head><style>"+this.ext_styles+"</style></head><body>";
 
-				var messagesToSave = this.archived_messages.concat(this.messages);
-				var cats = this.current_categories;
+				let messagesToSave = this.archived_messages.concat(this.messages);
+				let cats = this.current_categories;
 
 				messagesToSave.forEach( function(message) {
 					if(cats.length == 0 || (cats.indexOf(message.category) >= 0)) { //only in the active tab
@@ -738,43 +789,33 @@ function start_vue() {
 				});
 				textToSave += "</body></html>";
 
-				var fileprefix = "log";
-				var extension =".html";
+				let fileprefix = "log";
+				let extension =".html";
 
-				var now = new Date();
-				var hours = String(now.getHours());
+				let now = new Date();
+				let hours = String(now.getHours());
 				if(hours.length < 2) {
 					hours = "0" + hours;
 				}
-				var minutes = String(now.getMinutes());
+				let minutes = String(now.getMinutes());
 				if(minutes.length < 2) {
 					minutes = "0" + minutes;
 				}
-				var dayofmonth = String(now.getDate());
+				let dayofmonth = String(now.getDate());
 				if(dayofmonth.length < 2) {
 					dayofmonth = "0" + dayofmonth;
 				}
-				var month = String(now.getMonth()+1); //0-11
+				let month = String(now.getMonth()+1); //0-11
 				if(month.length < 2) {
 					month = "0" + month;
 				}
-				var year = String(now.getFullYear());
-				var datesegment = " "+year+"-"+month+"-"+dayofmonth+" ("+hours+" "+minutes+")";
+				let year = String(now.getFullYear());
+				let datesegment = " "+year+"-"+month+"-"+dayofmonth+" ("+hours+" "+minutes+")";
 
-				var filename = fileprefix+datesegment+extension;
+				let filename = fileprefix+datesegment+extension;
 
-				//Unlikely to work unfortunately, not supported in any version of IE, only Edge
-				var hiddenElement = document.createElement('a');
-				if (hiddenElement.download !== undefined) {
-					hiddenElement.href = 'data:attachment/text,' + encodeURI(textToSave); //Has a problem in byond 512 due to weird unicode handling
-					hiddenElement.target = '_blank';
-					hiddenElement.download = filename;
-					hiddenElement.click();
-				//Probably what will end up getting used
-				} else {
-					var blob = new Blob([textToSave], {type: 'text/html;charset=utf8;'});
-					saved = window.navigator.msSaveOrOpenBlob(blob, filename);
-				}
+				let blob = new Blob([textToSave], {type: 'text/html;charset=utf8;'});
+				downloadBlob(blob, filename);
 			},
 			do_latency_test: function() {
 				send_latency_check();
@@ -792,7 +833,7 @@ function start_vue() {
 *
 ************/
 function check_ping() {
-	var time_ago = Date.now() - vchat_state.lastPingReceived;
+	let time_ago = Date.now() - vchat_state.lastPingReceived;
 	if(time_ago > vchat_opts.msBeforeDropped)
 		vueapp.reconnecting = true;
 }
@@ -832,12 +873,13 @@ function byondDecode(message) {
 	try {
 		message = decodeURIComponent(message);
 	} catch (err) {
-		message = unescape(message);
+		message = unescape(message+JSON.stringify(err));
 	}
 	return JSON.parse(message);
 }
 
 //This is the function byond actually communicates with using byond's client << output() method.
+/* eslint-disable-next-line no-unused-vars */ // Called directly by byond
 function putmessage(messages) {
 	messages = byondDecode(messages);
 	if (Array.isArray(messages)) {
@@ -875,13 +917,14 @@ function send_debug(message) {
 }
 
 //A side-channel to send events over that aren't just chat messages, if necessary.
+/* eslint-disable-next-line no-unused-vars */ // Called directly by byond
 function get_event(event) {
 	if(!vchat_state.ready) {
 		push_Topic("not_ready");
 		return;
 	}
 
-	var parsed_event = {evttype: 'internal_error', event: event};
+	let parsed_event = {evttype: 'internal_error', event: event};
 	parsed_event = byondDecode(event);
 
 	switch(parsed_event.evttype) {
@@ -933,19 +976,19 @@ function send_client_data() {
 	push_Topic("ident&param[clientdata]="+JSON.stringify(client_data));
 }
 
-//Newer localstorage methods
-function set_localstorage(key, value) {
-	let localstorage = window.localStorage;
-	localstorage.setItem(vchat_opts.cookiePrefix+key,value);
+// The abstract methods.
+function set_storage(key, value){
+	if(!storage_system) return;
+	storage_system.setItem(vchat_opts.cookiePrefix+key,value);
 }
 
-function get_localstorage(key, deffo) {
-	let localstorage = window.localStorage;
-	let value = localstorage.getItem(vchat_opts.cookiePrefix+key);
+function get_storage(key, default_value){
+	if(!storage_system) return default_value;
+	let value = storage_system.getItem(vchat_opts.cookiePrefix+key);
 
 	//localstorage only stores strings.
 	if(value === "null" || value === null) {
-		value = deffo;
+		value = default_value;
 	//Coerce bools back into their native forms
 	} else if(value === "true") {
 		value = true;
@@ -958,78 +1001,52 @@ function get_localstorage(key, deffo) {
 	return value;
 }
 
-//Older cookie methods
-function set_cookie(key, value) {
-	let now = new Date();
-	now.setFullYear(now.getFullYear() + 1);
-	let then = now.toUTCString();
-	document.cookie = vchat_opts.cookiePrefix+key+"="+value+";expires="+then+";path=/";
-}
-
-function get_cookie(key, deffo) {
-	var candidates = {cookie: null, localstorage: null, indexeddb: null};
-	let cookie_array = document.cookie.split(';');
-	let cookie_object = {};
-	cookie_array.forEach( function(element) {
-		let clean = element.replace(vchat_opts.cookiePrefix,"").trim(); //Strip the prefix, trim whitespace
-		let equals = clean.search("="); //Find the equals
-		let left = decodeURIComponent(clean.substring(0,equals)); //From start to one char before equals
-		let right = decodeURIComponent(clean.substring(equals+1)); //From one char after equals to end
-		//cookies only stores strings.
-		if(right == "null" || right === null) {
-			right = deffo;
-		} else if(right === "true") {
-			right = true;
-		} else if(right === "false") {
-			right = false;
-		} else if(!isNaN(right)) {
-			right = +right;
-		}
-		cookie_object[left] = right; //Stick into object
-	});
-	candidates.cookie = cookie_object[key]; //Return value of that key in our object (or undefined)
-}
-
-// Button Controls that need background-color and text-color set.
-var SKIN_BUTTONS = [
-	/* Rpane */ "rpane.textb", "rpane.infob", "rpane.wikib", "rpane.forumb", "rpane.rulesb", "rpane.github", "rpane.discord", "rpane.mapb", "rpane.changelog",
-	/* Mainwindow */ "mainwindow.saybutton", "mainwindow.mebutton", "mainwindow.hotkey_toggle"
-
-];
-// Windows or controls that need background-color set.
-var SKIN_ELEMENTS = [
-	/* Mainwindow */ "mainwindow", "mainwindow.mainvsplit", "mainwindow.tooltip",
-	/* Rpane */ "rpane", "rpane.rpanewindow", "rpane.mediapanel",
-];
-
-function switch_ui_mode(options) {
-	doWinset(SKIN_BUTTONS.reduce(function(params, ctl) {params[ctl + ".background-color"] = options.buttonBgColor; return params;}, {}));
-	doWinset(SKIN_BUTTONS.reduce(function(params, ctl) {params[ctl + ".text-color"] = options.buttonTextColor; return params;}, {}));
-	doWinset(SKIN_ELEMENTS.reduce(function(params, ctl) {params[ctl + ".background-color"] = options.windowBgColor; return params;}, {}));
-	doWinset("infowindow", {
-		"background-color": options.tabBackgroundColor,
-		"text-color": options.tabTextColor
-	});
-	doWinset("infowindow.info", {
-		"background-color": options.tabBackgroundColor,
-		"text-color": options.tabTextColor,
-		"highlight-color": options.highlightColor,
-		"tab-text-color": options.tabTextColor,
-		"tab-background-color": options.tabBackgroundColor
-	});
-}
-
-function doWinset(control_id, params) {
-	if (typeof params === 'undefined') {
-		params = control_id;  // Handle single-argument use case.
-		control_id = null;
+function storageAvailable(type) {
+	var storage;
+	try {
+		storage = window[type];
+		var x = '__storage_test__';
+		storage.setItem(x, x);
+		storage.getItem(x);
+		storage.removeItem(x);
+		return true;
 	}
-	var url = "byond://winset?";
-	if (control_id) {
-		url += ("id=" + control_id + "&");
+	catch(e) {
+		return e instanceof DOMException && (
+			// everything except Firefox
+			e.code === 22 ||
+			// Firefox
+			e.code === 1014 ||
+			// test name field too, because code might not be present
+			// everything except Firefox
+			e.name === 'QuotaExceededError' ||
+			// Firefox
+			e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+			// acknowledge QuotaExceededError only if there's something already stored
+			(storage && storage.length !== 0);
 	}
-	url += Object.keys(params).map(function(ctl) {
-		return ctl + "=" + encodeURIComponent(params[ctl]);
-	}).join("&");
-	window.location = url;
+}
+
+function downloadBlob(blob, fileName) {
+	if (
+		(navigator.userAgent.indexOf("Trident") >= 0)
+		&& navigator.msSaveOrOpenBlob
+	) {
+		// For old IE/Trident browsers
+		navigator.msSaveOrOpenBlob(blob, fileName);
+	} else {
+		// For modern browsers
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement('a');
+		a.href = url;
+		a.download = fileName
+		// Append to document to work in Firefox
+		document.body.appendChild(a)
+		a.click()
+		// Clean up
+		setTimeout(function() {
+		document.body.removeChild(a);
+		URL.revokeObjectURL(url);
+		}, 0);
+	}
 }
