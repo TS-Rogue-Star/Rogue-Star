@@ -137,7 +137,7 @@ var vchat_state = {
 	lastId: 0
 }
 
-// Called from byond
+/* eslint-disable-next-line no-unused-vars */ // Invoked directly by byond
 function start_vchat() {
 	//Instantiate Vue.js
 	start_vue();
@@ -174,6 +174,7 @@ function start_vchat() {
 //Loads vue for chat usage
 var vueapp;
 function start_vue() {
+	/* eslint-disable-next-line no-undef */ // Present in vue.min.js, imported in HTML
 	vueapp = new Vue({
 		el: '#app',
 		data: {
@@ -813,18 +814,8 @@ function start_vue() {
 
 				let filename = fileprefix+datesegment+extension;
 
-				//Unlikely to work unfortunately, not supported in any version of IE, only Edge
-				let hiddenElement = document.createElement('a');
-				if (hiddenElement.download !== undefined) {
-					hiddenElement.href = 'data:attachment/text,' + encodeURI(textToSave); //Has a problem in byond 512 due to weird unicode handling
-					hiddenElement.target = '_blank';
-					hiddenElement.download = filename;
-					hiddenElement.click();
-				//Probably what will end up getting used
-				} else {
-					let blob = new Blob([textToSave], {type: 'text/html;charset=utf8;'});
-					window.navigator.msSaveOrOpenBlob(blob, filename);
-				}
+				let blob = new Blob([textToSave], {type: 'text/html;charset=utf8;'});
+				downloadBlob(blob, filename);
 			},
 			do_latency_test: function() {
 				send_latency_check();
@@ -882,12 +873,13 @@ function byondDecode(message) {
 	try {
 		message = decodeURIComponent(message);
 	} catch (err) {
-		message = unescape(message);
+		message = unescape(message+JSON.stringify(err));
 	}
 	return JSON.parse(message);
 }
 
 //This is the function byond actually communicates with using byond's client << output() method.
+/* eslint-disable-next-line no-unused-vars */ // Called directly by byond
 function putmessage(messages) {
 	messages = byondDecode(messages);
 	if (Array.isArray(messages)) {
@@ -925,6 +917,7 @@ function send_debug(message) {
 }
 
 //A side-channel to send events over that aren't just chat messages, if necessary.
+/* eslint-disable-next-line no-unused-vars */ // Called directly by byond
 function get_event(event) {
 	if(!vchat_state.ready) {
 		push_Topic("not_ready");
@@ -1008,34 +1001,52 @@ function get_storage(key, default_value){
 	return value;
 }
 
-//Older cookie methods (this may not work > 516)
-function set_cookie(key, value) {
-	let now = new Date();
-	now.setFullYear(now.getFullYear() + 1);
-	let then = now.toUTCString();
-	document.cookie = vchat_opts.cookiePrefix+key+"="+value+";expires="+then+";path=/";
+function storageAvailable(type) {
+	var storage;
+	try {
+		storage = window[type];
+		var x = '__storage_test__';
+		storage.setItem(x, x);
+		storage.getItem(x);
+		storage.removeItem(x);
+		return true;
+	}
+	catch(e) {
+		return e instanceof DOMException && (
+			// everything except Firefox
+			e.code === 22 ||
+			// Firefox
+			e.code === 1014 ||
+			// test name field too, because code might not be present
+			// everything except Firefox
+			e.name === 'QuotaExceededError' ||
+			// Firefox
+			e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+			// acknowledge QuotaExceededError only if there's something already stored
+			(storage && storage.length !== 0);
+	}
 }
 
-function get_cookie(key, deffo) {
-	let candidates = {cookie: null, localstorage: null, indexeddb: null};
-	let cookie_array = document.cookie.split(';');
-	let cookie_object = {};
-	cookie_array.forEach( function(element) {
-		let clean = element.replace(vchat_opts.cookiePrefix,"").trim(); //Strip the prefix, trim whitespace
-		let equals = clean.search("="); //Find the equals
-		let left = decodeURIComponent(clean.substring(0,equals)); //From start to one char before equals
-		let right = decodeURIComponent(clean.substring(equals+1)); //From one char after equals to end
-		//cookies only stores strings.
-		if(right == "null" || right === null) {
-			right = deffo;
-		} else if(right === "true") {
-			right = true;
-		} else if(right === "false") {
-			right = false;
-		} else if(!isNaN(right)) {
-			right = +right;
-		}
-		cookie_object[left] = right; //Stick into object
-	});
-	candidates.cookie = cookie_object[key]; //Return value of that key in our object (or undefined)
+function downloadBlob(blob, fileName) {
+	if (
+		(navigator.userAgent.indexOf("Trident") >= 0)
+		&& navigator.msSaveOrOpenBlob
+	) {
+		// For old IE/Trident browsers
+		navigator.msSaveOrOpenBlob(blob, fileName);
+	} else {
+		// For modern browsers
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement('a');
+		a.href = url;
+		a.download = fileName
+		// Append to document to work in Firefox
+		document.body.appendChild(a)
+		a.click()
+		// Clean up
+		setTimeout(function() {
+		document.body.removeChild(a);
+		URL.revokeObjectURL(url);
+		}, 0);
+	}
 }
