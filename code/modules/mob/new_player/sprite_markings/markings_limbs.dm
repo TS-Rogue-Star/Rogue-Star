@@ -68,6 +68,14 @@
 	body_parts = list(BP_L_HAND,BP_R_HAND)
 	sorting_group = MARKINGS_LIMBS
 
+/datum/sprite_accessory/marking/ch/guilmonarms
+	name = "Guilmon Arms"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "guilmon"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_R_ARM,BP_L_ARM,BP_R_HAND,BP_L_HAND)
+	sorting_group = MARKINGS_LIMBS
+
 /***	Leg Specifics	***/
 /datum/sprite_accessory/marking/vr_harpy_feathers
 	name = "Rapala leg Feather"
@@ -262,6 +270,15 @@
 	digitigrade_acceptance = MARKING_ALL_LEGS
 	sorting_group = MARKINGS_LIMBS
 
+/datum/sprite_accessory/marking/ch/guilmonlegs
+	name = "Guilmon Legs"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "guilmon"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_R_LEG,BP_R_FOOT,BP_L_LEG,BP_L_FOOT)
+	digitigrade_acceptance = MARKING_ALL_LEGS
+	sorting_group = MARKINGS_LIMBS
+
 //Digitigrade markings
 /datum/sprite_accessory/marking/digi
 	name = "Digitigrade Full Both Legs"	//added to make this stop putting an ERROR-FIXME in the list. uhg
@@ -409,3 +426,10 @@
 	icon_state = "bigspots"
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_R_LEG,BP_R_FOOT)
+
+/datum/sprite_accessory/marking/ch/guilmonlegs
+	name = "Guilmon Legs"
+	icon_state = "guilmon"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_R_LEG,BP_R_FOOT,BP_L_LEG,BP_L_FOOT)
+

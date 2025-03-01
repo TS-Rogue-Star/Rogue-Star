@@ -517,3 +517,19 @@
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_TORSO, BP_GROIN)
 	sorting_group = MARKINGS_BODY
+
+/datum/sprite_accessory/marking/ch/guilmonchest
+	name = "Guilmon Chest"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "guilmon_chest"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_TORSO)
+	sorting_group = MARKINGS_BODY
+
+/datum/sprite_accessory/marking/ch/guilmonchestmarking
+	name = "Guilmon Chest Markings"
+	icon = 'icons/mob/human_races/markings_ch.dmi'
+	icon_state = "guilmon_marking"
+	color_blend_mode = ICON_MULTIPLY
+	body_parts = list(BP_TORSO)
+	sorting_group = MARKINGS_BODY
