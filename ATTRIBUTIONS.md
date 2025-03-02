@@ -421,3 +421,15 @@ digi-inner-thighs
 **Icon-States:** sergwheat, sergwheat_markings, fatsergal<br>
 **Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/5546
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/markings_ch.dmi`<br>
+**Icon-States:** guilmon_head, guilmon_chest, guilmon_chest_markings, guilmon_arms, guilmon_legs<br>
+**Creator:** Echopsychotic<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/3083
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `/icons/mob/human_races/sprite_accessories/ears.dmi`<br>
+**Icon-States:** guilmon_ears<br>
+**Creator:** Echopsychotic<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/3083
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
