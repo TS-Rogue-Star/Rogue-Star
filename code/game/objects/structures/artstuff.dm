@@ -310,6 +310,10 @@
 		var/newcolor = input(user, "Select a new paint color:", "Paint Palette", P.selected_color) as null|color
 		if(newcolor && Adjacent(user, P) && Adjacent(user, src))
 			P.update_paint(newcolor)
+			if(istype(W, /obj/item/paint_brush/organic) && istype(user, /mob/living/carbon/human)) //RS Add, accounts for organic paintbrushes being used on palettes.
+				var/mob/living/carbon/human/H = user
+				P.color = newcolor
+				H.species.artist_color = newcolor //RS add End
 	else
 		return ..()
 
