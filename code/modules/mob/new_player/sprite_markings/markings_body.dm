@@ -518,7 +518,7 @@
 	body_parts = list(BP_TORSO, BP_GROIN)
 	sorting_group = MARKINGS_BODY
 
-/datum/sprite_accessory/marking/ch/guilmonchest
+/datum/sprite_accessory/marking/ch/guilmonchest //RS Add || Chomp Port 5771
 	name = "Guilmon Chest"
 	icon = 'icons/mob/human_races/markings_ch.dmi'
 	icon_state = "guilmon_chest"
@@ -526,7 +526,7 @@
 	body_parts = list(BP_TORSO)
 	sorting_group = MARKINGS_BODY
 
-/datum/sprite_accessory/marking/ch/guilmonchestmarking
+/datum/sprite_accessory/marking/ch/guilmonchestmarking //RS Add || Chomp Port 5771
 	name = "Guilmon Chest Markings"
 	icon = 'icons/mob/human_races/markings_ch.dmi'
 	icon_state = "guilmon_marking"

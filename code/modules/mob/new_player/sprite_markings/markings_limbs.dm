@@ -68,7 +68,7 @@
 	body_parts = list(BP_L_HAND,BP_R_HAND)
 	sorting_group = MARKINGS_LIMBS
 
-/datum/sprite_accessory/marking/ch/guilmonarms
+/datum/sprite_accessory/marking/ch/guilmonarms //RS Add || Chomp Port 5771
 	name = "Guilmon Arms"
 	icon = 'icons/mob/human_races/markings_ch.dmi'
 	icon_state = "guilmon"
@@ -270,7 +270,7 @@
 	digitigrade_acceptance = MARKING_ALL_LEGS
 	sorting_group = MARKINGS_LIMBS
 
-/datum/sprite_accessory/marking/ch/guilmonlegs
+/datum/sprite_accessory/marking/ch/guilmonlegs //RS Add || Chomp Port 5771
 	name = "Guilmon Legs"
 	icon = 'icons/mob/human_races/markings_ch.dmi'
 	icon_state = "guilmon"

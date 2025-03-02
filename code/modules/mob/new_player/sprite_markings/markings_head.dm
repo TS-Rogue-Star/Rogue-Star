@@ -969,7 +969,7 @@
 	body_parts = list(BP_HEAD)
 	sorting_group = MARKINGS_HEAD
 
-/datum/sprite_accessory/marking/ch/guilmonhead
+/datum/sprite_accessory/marking/ch/guilmonhead //RS Add || Chomp Port 5771
 	name = "Guilmon Head"
 	icon = 'icons/mob/human_races/markings_ch.dmi'
 	icon_state = "guilmon_head"
