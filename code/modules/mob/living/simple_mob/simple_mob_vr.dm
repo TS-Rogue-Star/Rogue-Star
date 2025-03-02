@@ -72,7 +72,6 @@
 
 // Update fullness based on size & quantity of belly contents
 /mob/living/simple_mob/update_fullness(returning)
-	to_world("[src] update_fullness")
 	var/new_fullness = 0
 	for(var/obj/belly/B as anything in vore_organs)
 		for(var/mob/living/M in B)
