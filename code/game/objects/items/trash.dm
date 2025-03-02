@@ -485,3 +485,11 @@
 /obj/item/trash/candy/cb10
 	name = "\improper Shantak Bar wrapper"
 	icon_state = "cb10"
+
+//RS Edit || Adds VOREStation PR16650
+/obj/item/trash/turkeybones
+	name = "turkey bones"
+	icon_state	= "turkeybones"
+	drop_sound = 'sound/items/drop/food.ogg'
+	pickup_sound = 'sound/items/pickup/food.ogg'
+//RS Edit end
