@@ -10,7 +10,6 @@
 	icon_rest = "turkeyrest"
 	icon = 'icons/mob/vore.dmi'
 
-	//faction = FACTION_TURKEY
 	maxHealth = 25
 	health = 25
 
@@ -29,8 +28,6 @@
 
 	say_list_type = /datum/say_list/turkey
 	ai_holder_type = /datum/ai_holder/simple_mob/passive
-
-	//allow_mind_transfer = TRUE
 
 	vore_active = 1
 	vore_bump_chance = 10
