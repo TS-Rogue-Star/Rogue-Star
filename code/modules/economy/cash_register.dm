@@ -64,7 +64,7 @@
 
 
 /obj/machinery/cash_register/interact(mob/user as mob)
-	var/dat = "<h2>Cash Register<hr></h2>"
+	var/dat = "<html><h2>Cash Register<hr></h2>" //RS Edit
 	if (locked)
 		dat += "<a href='?src=\ref[src];choice=toggle_lock'>Unlock</a><br>"
 		dat += "Linked account: <b>[linked_account ? linked_account.owner_name : "None"]</b><br>"

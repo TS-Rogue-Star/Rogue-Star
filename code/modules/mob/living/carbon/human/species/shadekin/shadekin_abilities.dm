@@ -146,6 +146,7 @@
 		//cut_overlays()
 		invisibility = initial(invisibility)
 		see_invisible = initial(see_invisible)
+		see_invisible_default = initial(see_invisible_default)	//RS EDIT
 		incorporeal_move = initial(incorporeal_move)
 		density = initial(density)
 		force_max_speed = initial(force_max_speed)
