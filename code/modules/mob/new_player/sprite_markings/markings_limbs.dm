@@ -427,7 +427,7 @@
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list(BP_R_LEG,BP_R_FOOT)
 
-/datum/sprite_accessory/marking/ch/guilmonlegs
+/datum/sprite_accessory/marking/ch/guilmonlegs //RS Add || Chomp Port 5771
 	name = "Guilmon Legs"
 	icon_state = "guilmon"
 	color_blend_mode = ICON_MULTIPLY
