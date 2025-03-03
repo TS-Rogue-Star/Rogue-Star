@@ -190,14 +190,11 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/medical/morgue)
 "as" = (
-/obj/machinery/door/firedoor/glass,
-/obj/structure/window/bay/reinforced,
 /obj/structure/cable/pink{
 	icon_state = "4-8"
 	},
-/obj/structure/low_wall/bay/reinforced/steel,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck1/portfore)
+/turf/simulated/wall/bay/r_wall/steel,
+/area/maintenance/stellardelight/deck1/starboardfore)
 "at" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
@@ -969,8 +966,8 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/portaft)
 "bR" = (
@@ -1812,11 +1809,7 @@
 /turf/simulated/floor/tiled/eris/white/bluecorner,
 /area/stellardelight/deck1/paramedic)
 "ds" = (
-/obj/fiftyspawner/steel,
-/obj/fiftyspawner/steel,
-/obj/structure/closet/walllocker_double/science/north{
-	name = "material sheets"
-	},
+/obj/machinery/alarm/angled,
 /turf/simulated/floor/tiled/techfloor,
 /area/rnd/workshop)
 "dt" = (
@@ -2370,9 +2363,6 @@
 	dir = 8
 	},
 /obj/structure/low_wall/bay/reinforced/purple,
-/obj/structure/sign/xenobio{
-	plane = -34
-	},
 /turf/simulated/floor,
 /area/rnd/xenobiology)
 "ep" = (
@@ -3316,6 +3306,11 @@
 /obj/effect/floor_decal/steeldecal/steel_decals4{
 	dir = 5
 	},
+/obj/machinery/light_switch{
+	dir = 1;
+	pixel_x = 25;
+	pixel_y = -24
+	},
 /turf/simulated/floor/tiled/dark,
 /area/security/security_cell_hallway)
 "gp" = (
@@ -3357,16 +3352,10 @@
 "gu" = (
 /obj/structure/table/steel,
 /obj/machinery/recharger,
+/obj/fiftyspawner/steel,
+/obj/fiftyspawner/steel,
 /turf/simulated/floor/tiled/techfloor,
 /area/rnd/workshop)
-"gw" = (
-/obj/structure/closet/crate,
-/obj/random/maintenance,
-/obj/random/maintenance/cargo,
-/obj/random/maintenance/clean,
-/obj/random/mre,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck1/exploration)
 "gx" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/eris/white/gray_platform,
@@ -3740,6 +3729,15 @@
 /obj/machinery/firealarm/angled,
 /turf/simulated/floor/tiled/steel_grid,
 /area/rnd/research)
+"hn" = (
+/obj/machinery/atmospherics/pipe/zpipe/down/supply{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/zpipe/down/scrubbers{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/maintenance/stellardelight/deck1/starboardaft)
 "ho" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
@@ -4325,14 +4323,11 @@
 /turf/simulated/floor/tiled/eris/white/bluecorner,
 /area/stellardelight/deck1/resleeving)
 "is" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/window/bay/reinforced,
+/obj/structure/low_wall/bay/reinforced/steel,
 /obj/structure/cable/pink{
-	icon_state = "1-2"
-	},
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/pink{
-	icon_state = "2-8"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/portfore)
@@ -4879,6 +4874,9 @@
 /obj/effect/mouse_hole_spawner{
 	dir = 8
 	},
+/obj/structure/cable/pink{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/starboardfore)
 "jx" = (
@@ -5137,9 +5135,7 @@
 /turf/simulated/floor,
 /area/maintenance/stellardelight/substation/civilian)
 "kd" = (
-/obj/structure/flora/pottedplant/stoutbush,
-/obj/machinery/alarm/angled,
-/turf/simulated/floor/tiled/techfloor,
+/turf/simulated/open,
 /area/rnd/workshop)
 "ke" = (
 /obj/structure/cable/white{
@@ -5521,14 +5517,6 @@
 /obj/effect/floor_decal/steeldecal/steel_decals4,
 /turf/simulated/floor/tiled/techfloor,
 /area/stellardelight/deck1/starboard)
-"ld" = (
-/obj/structure/table/steel,
-/obj/random/maintenance/research,
-/obj/random/maintenance/research,
-/obj/random/maintenance,
-/obj/random/contraband,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck1/portaft)
 "le" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -5544,7 +5532,7 @@
 	dir = 9
 	},
 /obj/structure/cable/yellow{
-	icon_state = "1-4"
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/tiled/eris/steel/cargo,
 /area/stellardelight/deck1/mining)
@@ -5959,8 +5947,8 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/starboardaft)
 "lU" = (
@@ -7903,11 +7891,9 @@
 /turf/simulated/floor,
 /area/stellardelight/deck1/aft)
 "pV" = (
+/obj/structure/railing/grey,
 /obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
+	icon_state = "32-4"
 	},
 /turf/simulated/floor/tiled/eris/steel/cargo,
 /area/stellardelight/deck1/mining)
@@ -8932,6 +8918,20 @@
 "sj" = (
 /turf/simulated/floor/tiled/eris,
 /area/rnd/xenobiology/xenoflora)
+"sk" = (
+/obj/structure/cable/green{
+	color = "#42038a";
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/maintenance/stellardelight/deck1/starboardaft)
 "sl" = (
 /obj/structure/bed/padded,
 /obj/item/weapon/bedsheet/medical,
@@ -9263,14 +9263,17 @@
 /obj/machinery/status_display{
 	pixel_y = 32
 	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/stellardelight/deck1/mining)
 "sS" = (
-/obj/machinery/recharge_station,
-/obj/machinery/atmospherics/unary/vent_scrubber/on{
-	dir = 4
-	},
-/turf/simulated/floor/tiled/eris/steel/cargo,
+/obj/structure/railing/grey,
+/turf/simulated/open,
 /area/stellardelight/deck1/mining)
 "sT" = (
 /obj/structure/cable/green{
@@ -9544,6 +9547,11 @@
 /turf/simulated/floor/reinforced,
 /area/rnd/xenobiology)
 "tB" = (
+/obj/structure/table/steel,
+/obj/random/maintenance/research,
+/obj/random/maintenance/research,
+/obj/random/maintenance,
+/obj/random/contraband,
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
 	},
@@ -10961,12 +10969,11 @@
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/starboardcent)
 "wQ" = (
-/obj/structure/table/rack,
-/obj/random/maintenance/research,
-/obj/random/maintenance,
-/obj/random/maintenance,
+/obj/structure/cable/pink{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
-/area/maintenance/stellardelight/deck1/portaft)
+/area/maintenance/stellardelight/deck1/portfore)
 "wR" = (
 /obj/machinery/computer/diseasesplicer{
 	dir = 1
@@ -11244,14 +11251,13 @@
 /turf/simulated/floor/lino,
 /area/chapel/office)
 "xw" = (
-/obj/structure/closet/crate,
-/obj/random/maintenance,
-/obj/random/maintenance,
-/obj/random/maintenance,
-/obj/random/maintenance/cargo,
-/obj/random/maintenance/clean,
-/obj/item/weapon/disk/nifsoft/compliance,
-/turf/simulated/floor,
+/obj/structure/railing/grey{
+	dir = 4
+	},
+/obj/structure/railing/grey{
+	dir = 1
+	},
+/turf/simulated/open,
 /area/maintenance/stellardelight/deck1/exploration)
 "xx" = (
 /obj/machinery/door/firedoor/glass,
@@ -11857,8 +11863,11 @@
 /turf/simulated/floor/tiled/dark,
 /area/security/armoury)
 "yN" = (
-/obj/structure/bed/chair,
-/turf/simulated/floor,
+/obj/structure/railing/grey{
+	dir = 4
+	},
+/obj/structure/railing/grey,
+/turf/simulated/open,
 /area/maintenance/stellardelight/deck1/portaft)
 "yO" = (
 /obj/structure/cable/yellow{
@@ -12145,6 +12154,15 @@
 "zt" = (
 /turf/simulated/floor,
 /area/maintenance/stellardelight/substation/research)
+"zu" = (
+/obj/structure/table/steel,
+/obj/random/maintenance/security,
+/obj/random/maintenance/security,
+/obj/random/maintenance,
+/obj/random/medical,
+/obj/random/drinkbottle,
+/turf/simulated/floor,
+/area/maintenance/stellardelight/deck1/starboardfore)
 "zv" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
@@ -12190,13 +12208,8 @@
 	dir = 1;
 	pixel_y = 4
 	},
-/obj/structure/cable/yellow{
-	icon_state = "1-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
-	},
-/turf/simulated/floor/tiled/eris/steel/cargo,
+/obj/structure/railing/grey,
+/turf/simulated/open,
 /area/stellardelight/deck1/mining)
 "zB" = (
 /obj/machinery/door/firedoor/glass,
@@ -12569,6 +12582,10 @@
 "Ak" = (
 /turf/simulated/wall/bay/r_wall/black,
 /area/chapel/chapel_morgue)
+"Al" = (
+/obj/structure/bed/chair,
+/turf/simulated/floor,
+/area/maintenance/stellardelight/deck1/portaft)
 "Am" = (
 /obj/structure/cable/green{
 	icon_state = "1-2"
@@ -12762,16 +12779,6 @@
 /obj/item/weapon/book/manual/synthetic_life,
 /turf/simulated/floor/wood,
 /area/library)
-"AI" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
-/obj/structure/table/steel,
-/obj/random/maintenance,
-/obj/random/maintenance,
-/obj/random/contraband,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck1/starboardfore)
 "AJ" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/cable/green{
@@ -12955,13 +12962,10 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/eris/steel/cargo,
 /area/stellardelight/deck1/mining)
 "Bf" = (
@@ -13316,10 +13320,9 @@
 /turf/simulated/floor/tiled/white,
 /area/security/detectives_office)
 "BP" = (
-/obj/structure/table/steel,
-/obj/random/maintenance/clean,
-/obj/random/maintenance,
-/obj/random/contraband,
+/obj/structure/bed/chair{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/exploration)
 "BQ" = (
@@ -13430,11 +13433,17 @@
 /turf/simulated/floor/carpet/purcarpet,
 /area/stellardelight/deck1/dorms/dorm3)
 "Cc" = (
-/obj/structure/bed/chair{
-	dir = 1
+/obj/structure/cable/pink{
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/pink{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor,
-/area/maintenance/stellardelight/deck1/exploration)
+/area/maintenance/stellardelight/deck1/portfore)
 "Cf" = (
 /obj/structure/cable/pink{
 	icon_state = "4-8"
@@ -13542,6 +13551,22 @@
 	},
 /turf/simulated/floor/tiled/eris,
 /area/stellardelight/deck1/researchhall)
+"Cq" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor,
+/area/maintenance/stellardelight/deck1/portaft)
 "Cr" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/floor,
@@ -14487,6 +14512,9 @@
 	name = "lightsout"
 	},
 /obj/structure/ore_box,
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/eris/steel/cargo,
 /area/stellardelight/deck1/mining)
 "ED" = (
@@ -14499,6 +14527,12 @@
 /obj/effect/station_pet,
 /turf/simulated/floor/wood,
 /area/library)
+"EF" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/tiled/steel_grid,
+/area/stellardelight/deck1/mining)
 "EG" = (
 /obj/structure/cable/green{
 	color = "#42038a";
@@ -15562,6 +15596,7 @@
 /obj/structure/table/rack/shelf,
 /obj/random/maintenance/research,
 /obj/random/maintenance,
+/obj/random/maintenance,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/exploration)
 "Hg" = (
@@ -15911,10 +15946,11 @@
 /turf/simulated/floor/tiled/milspec,
 /area/stellardelight/deck1/explobriefing)
 "HV" = (
-/obj/machinery/alarm/angled{
+/obj/structure/railing/grey{
 	dir = 8
 	},
-/turf/simulated/floor,
+/obj/structure/railing/grey,
+/turf/simulated/open,
 /area/maintenance/stellardelight/deck1/starboardaft)
 "HW" = (
 /turf/simulated/floor/tiled/techfloor,
@@ -16624,8 +16660,9 @@
 /area/stellardelight/deck1/fore)
 "Jo" = (
 /obj/structure/table/steel,
-/obj/random/maintenance/research,
+/obj/random/contraband,
 /obj/random/medical,
+/obj/random/maintenance/research,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/exploration)
 "Jp" = (
@@ -16722,6 +16759,10 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled/techmaint,
 /area/stellardelight/deck1/port)
+"JB" = (
+/obj/effect/landmark/stardog,
+/turf/simulated/floor,
+/area/maintenance/stellardelight/deck1/exploration)
 "JC" = (
 /obj/structure/table/rack{
 	dir = 8;
@@ -17784,6 +17825,16 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/toilet)
+"LS" = (
+/obj/structure/cable/pink{
+	icon_state = "4-8"
+	},
+/obj/structure/table/steel,
+/obj/random/maintenance,
+/obj/random/maintenance,
+/obj/random/contraband,
+/turf/simulated/floor,
+/area/maintenance/stellardelight/deck1/starboardfore)
 "LT" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/cable{
@@ -18070,6 +18121,18 @@
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/rnd/research)
+"Mz" = (
+/obj/machinery/alarm/angled{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/turf/simulated/floor,
+/area/maintenance/stellardelight/deck1/starboardaft)
 "MA" = (
 /turf/simulated/floor/tiled/steel_grid,
 /area/stellardelight/deck1/fore)
@@ -18652,6 +18715,15 @@
 	nightshift_setting = 2
 	},
 /obj/structure/cable/green,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/portaft)
 "NM" = (
@@ -18671,9 +18743,11 @@
 /turf/simulated/floor/tiled/dark,
 /area/security/lobby)
 "NO" = (
-/obj/effect/landmark/stardog,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck1/exploration)
+/obj/structure/sign/xenobio{
+	plane = -34
+	},
+/turf/simulated/wall/bay/r_wall/purple,
+/area/rnd/xenobiology)
 "NP" = (
 /turf/simulated/wall/bay/r_wall/steel,
 /area/maintenance/stellardelight/deck1/portaft)
@@ -18696,10 +18770,10 @@
 	dir = 1
 	},
 /obj/structure/cable/yellow{
-	icon_state = "0-2"
+	icon_state = "16-0"
 	},
 /obj/structure/cable/yellow{
-	icon_state = "16-0"
+	icon_state = "0-4"
 	},
 /turf/simulated/floor,
 /area/stellardelight/deck1/mining)
@@ -18717,12 +18791,6 @@
 	},
 /turf/simulated/floor/tiled/eris,
 /area/rnd/xenobiology/xenoflora)
-"NW" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck1/portfore)
 "NX" = (
 /obj/machinery/button/remote/blast_door{
 	dir = 1;
@@ -18982,8 +19050,10 @@
 /turf/simulated/floor/tiled/eris/white/gray_platform,
 /area/gateway)
 "Ox" = (
-/obj/structure/closet,
-/turf/simulated/floor,
+/obj/structure/railing/grey{
+	dir = 4
+	},
+/turf/simulated/open,
 /area/maintenance/stellardelight/deck1/portfore)
 "Oy" = (
 /obj/structure/morgue/crematorium{
@@ -19140,6 +19210,15 @@
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/stellardelight/deck1/starboard)
+"OP" = (
+/obj/structure/cable/pink{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/maintenance/stellardelight/deck1/starboardfore)
 "OQ" = (
 /turf/simulated/wall/bay/brown,
 /area/security/detectives_office)
@@ -19386,6 +19465,12 @@
 	},
 /turf/simulated/floor/tiled/milspec,
 /area/stellardelight/deck1/exploration)
+"Px" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/tiled/eris/steel/cargo,
+/area/stellardelight/deck1/mining)
 "Py" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
@@ -19596,9 +19681,6 @@
 /turf/simulated/floor/tiled/dark,
 /area/stellardelight/deck1/resleeving)
 "PW" = (
-/obj/structure/cable/pink{
-	icon_state = "4-8"
-	},
 /obj/structure/cable/pink{
 	icon_state = "2-8"
 	},
@@ -19950,6 +20032,9 @@
 "QK" = (
 /obj/structure/railing/grey{
 	dir = 1
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/stellardelight/deck1/mining)
@@ -22150,6 +22235,13 @@
 /obj/structure/low_wall/bay/reinforced/steel,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/exploration)
+"Vj" = (
+/obj/structure/table/rack,
+/obj/random/maintenance/research,
+/obj/random/maintenance,
+/obj/random/maintenance,
+/turf/simulated/floor,
+/area/maintenance/stellardelight/deck1/portaft)
 "Vl" = (
 /obj/machinery/door/window/brigdoor/eastleft{
 	name = "Slime Pen 6";
@@ -22479,13 +22571,10 @@
 /turf/simulated/floor/tiled/dark,
 /area/security/armoury)
 "VK" = (
-/obj/structure/table/steel,
-/obj/random/maintenance/security,
-/obj/random/maintenance/security,
-/obj/random/maintenance,
-/obj/random/medical,
-/obj/random/drinkbottle,
-/turf/simulated/floor,
+/obj/structure/railing/grey{
+	dir = 8
+	},
+/turf/simulated/open,
 /area/maintenance/stellardelight/deck1/starboardfore)
 "VL" = (
 /obj/effect/floor_decal/chapel{
@@ -23824,6 +23913,18 @@
 /obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/tiled/eris,
 /area/rnd/xenobiology/xenoflora_storage)
+"YD" = (
+/obj/machinery/atmospherics/pipe/zpipe/down/supply{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/zpipe/down/scrubbers{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "32-1"
+	},
+/turf/simulated/floor,
+/area/maintenance/stellardelight/deck1/portaft)
 "YE" = (
 /turf/simulated/floor,
 /area/maintenance/stellardelight/substation/cargo)
@@ -23957,12 +24058,6 @@
 /turf/simulated/wall/bay/r_wall/steel,
 /area/maintenance/stellardelight/deck1/exploration)
 "YQ" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
-	},
 /obj/machinery/camera/network/mining{
 	dir = 1
 	},
@@ -24287,6 +24382,9 @@
 /obj/machinery/recharger/wallcharger{
 	pixel_x = 4;
 	pixel_y = 29
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/tiled/eris/steel/cargo,
 /area/stellardelight/deck1/mining)
@@ -30568,10 +30666,10 @@ mP
 tE
 Jo
 BP
-Cc
-gw
+vT
 xw
-NO
+vT
+vT
 DX
 ra
 bD
@@ -30714,7 +30812,7 @@ wm
 wm
 wm
 Np
-vT
+JB
 ra
 RF
 vF
@@ -31215,8 +31313,8 @@ bD
 nn
 yE
 uq
-gH
-RF
+Sy
+ag
 bD
 bD
 uq
@@ -31357,8 +31455,8 @@ iN
 SA
 xy
 xy
-as
 Vu
+is
 Vu
 xy
 Vu
@@ -31499,8 +31597,8 @@ mU
 OG
 xy
 Ox
-NW
 cB
+wQ
 cB
 FV
 dS
@@ -31530,13 +31628,13 @@ Ra
 bV
 Ml
 NL
+YD
 yN
-ld
-wQ
+nm
 Rg
-nm
+Al
 tB
-nm
+Vj
 nm
 nm
 nm
@@ -31641,8 +31739,8 @@ xP
 js
 Fo
 ZK
-is
 ZK
+Cc
 ZK
 kh
 ZK
@@ -31671,7 +31769,7 @@ CB
 CB
 RL
 Ib
-To
+Cq
 bQ
 Dr
 aO
@@ -33683,7 +33781,7 @@ yO
 hg
 dl
 sR
-pV
+EF
 xf
 qV
 MG
@@ -33966,8 +34064,8 @@ CG
 cA
 hg
 on
+Px
 wp
-pV
 pR
 rI
 SS
@@ -34108,8 +34206,8 @@ CG
 ck
 os
 dl
+Px
 wp
-pV
 pR
 pR
 Ns
@@ -36942,7 +37040,7 @@ Dx
 Dx
 be
 Dx
-Dx
+NO
 Dx
 Dx
 Dx
@@ -37067,7 +37165,7 @@ Dv
 Dv
 Dv
 Uv
-Dv
+sk
 lT
 Dv
 il
@@ -37176,8 +37274,8 @@ Gr
 Gr
 Gr
 VK
-AI
 yy
+OP
 yy
 bx
 yy
@@ -37186,8 +37284,8 @@ xq
 yy
 yy
 tP
-yy
-yy
+zu
+LS
 yy
 yy
 AW
@@ -37209,9 +37307,9 @@ aw
 mB
 oe
 Lu
-oe
+Mz
+hn
 HV
-oe
 oe
 Lu
 oe
@@ -37318,8 +37416,8 @@ ni
 ni
 ni
 ge
-aW
-wG
+ge
+as
 wG
 aW
 ge
@@ -37460,8 +37558,8 @@ uq
 uq
 bD
 bD
-Sy
-ag
+RF
+gH
 uq
 gH
 RF
