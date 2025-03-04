@@ -748,7 +748,8 @@
 	if(!istype(T))
 		return
 	if(volume >= 1)
-		new /obj/effect/glue/(T).upgrade()
+		var obj/effect/glue/new_glue = new /obj/effect/glue/(T)
+		new_glue.upgrade()
 
 // Based off of CHOMP's slug mob @ https://github.com/CHOMPStation2/CHOMPStation2/blob/master/code/modules/mob/living/simple_mob/subtypes/vore/slug_ch.dm
 /obj/effect/glue
