@@ -1025,6 +1025,17 @@
 	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck0/mailroom)
+"gD" = (
+/obj/structure/closet/crate,
+/obj/random/mainttoyloot,
+/obj/random/mainttoyloot,
+/obj/random/mainttoyloot,
+/obj/random/mainttoyloot,
+/obj/random/maintenance,
+/obj/random/maintenance,
+/obj/random/maintenance,
+/turf/simulated/floor/tiled/eris/steel/brown_perforated,
+/area/maintenance/stellardelight/deck0/auxcargobay)
 "gG" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -2232,7 +2243,12 @@
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck0/nexus)
 "oO" = (
-/obj/structure/largecrate/donksoftvendor,
+/obj/structure/closet/crate,
+/obj/random/mainttoyloot,
+/obj/random/maintenance,
+/obj/random/maintenance,
+/obj/random/maintenance,
+/obj/random/maintenance,
 /turf/simulated/floor/tiled/eris/steel/brown_perforated,
 /area/maintenance/stellardelight/deck0/auxcargobay)
 "oS" = (
@@ -2733,7 +2749,7 @@
 /turf/simulated/floor/tiled/old_tile,
 /area/maintenance/stellardelight/deck0/resleeving)
 "sC" = (
-/obj/structure/largecrate/vehicle/quadbike,
+/obj/structure/largecrate/donksoftvendor,
 /turf/simulated/floor/tiled/eris/steel/brown_perforated,
 /area/maintenance/stellardelight/deck0/auxcargobay)
 "sD" = (
@@ -3472,6 +3488,10 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/rnd/stellardelight/office)
+"xC" = (
+/obj/structure/ore_box,
+/turf/simulated/floor/tiled/eris/steel/brown_perforated,
+/area/maintenance/stellardelight/deck0/auxcargobay)
 "xF" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/floor,
@@ -16962,7 +16982,7 @@ pT
 HB
 Fa
 Fa
-Fa
+xC
 Fa
 LK
 vk
@@ -17528,9 +17548,9 @@ bv
 Vo
 pT
 HB
-Fa
-Yn
 oO
+Yn
+Fa
 Fa
 kc
 vk
@@ -17670,7 +17690,7 @@ bv
 Vo
 pT
 HB
-Fa
+sC
 Fa
 Fa
 Fa
@@ -17812,8 +17832,8 @@ bv
 Vo
 pT
 HB
-sC
 Fa
+gD
 Fa
 Fa
 kc
