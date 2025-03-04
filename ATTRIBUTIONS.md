@@ -451,3 +451,4 @@ digi-inner-thighs
 **Creator:** Kligor <br>
 **Icon-States:** turkey,turkey-1,turkeyrest,turkeydead<br>
 **Link:** https://github.com/VOREStation/VOREStation/pull/16650<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
