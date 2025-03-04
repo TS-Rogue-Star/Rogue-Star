@@ -1242,3 +1242,11 @@
 	result = "protein"
 	required_reagents = list("enzyme" = 1, "spidertoxin" = 1, "sifsap" = 1)
 	result_amount = 1
+
+// Begin Rogue Star Edit - Shoa'naea
+/decl/chemical_reaction/instant/glucose
+    name = "Glucose"
+    id = "glucose"
+    result = "glucose"
+    required_reagents = list("water" = 1, "sodiumchloride" = 1, "sugar" = 1)
+    result_amount = 1
