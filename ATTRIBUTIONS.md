@@ -421,3 +421,21 @@ digi-inner-thighs
 **Icon-States:** sergwheat, sergwheat_markings, fatsergal<br>
 **Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/5546
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/obj/vore.dmi`<br>
+**Creator:** Kligor <br>
+**Icon-States:** rawturkey, roasturkey, roastturkeynmash, roastturkeydrumstick<br>
+**Link:** https://github.com/VOREStation/VOREStation/pull/16650<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/obj/trash.dmi`<br>
+**Creator:** Kligor <br>
+**Icon-States:** turkeybones<br>
+**Link:** https://github.com/VOREStation/VOREStation/pull/16650<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/obj/vore.dmi`<br>
+**Creator:** Kligor <br>
+**Icon-States:** turkey,turkey-1,turkeyrest,turkeydead<br>
+**Link:** https://github.com/VOREStation/VOREStation/pull/16650<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
