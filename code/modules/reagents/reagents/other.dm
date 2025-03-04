@@ -582,13 +582,6 @@
 	else
 		..()
 
-/datum/reagent/ultraglue
-	name = "Ultra Glue"
-	id = "glue"
-	description = "An extremely powerful bonding agent."
-	taste_description = "a special education class"
-	color = "#FFFFCC"
-
 /datum/reagent/woodpulp
 	name = "Wood Pulp"
 	id = "woodpulp"
@@ -726,3 +719,144 @@
 	taste_description = "a mixture of thick, sweet, salty, salty and spicy flavours that all blend together to not be very nice at all"
 	reagent_state = LIQUID
 	color = "#e8e2b0"
+
+/datum/reagent/spaceglue
+	name = "Space Glue"
+	id = "glue"
+	description = "A strong adhesive." //TODO: Add some hints as to its uses once there are uses
+	taste_description = "Scrumptious."
+	reagent_state = LIQUID
+	color = "#dbca9a"
+
+/datum/reagent/spaceglue/touch_turf(var/turf/simulated/T)
+	..()
+	if(!istype(T))
+		return
+	if(volume >= 1)
+		new /obj/effect/glue/(T)
+
+/datum/reagent/ultraglue // Unused reagent previously, now serves as upgraded space glue
+	name = "Ultra Glue"
+	id = "ultraglue"
+	description = "An extremely powerful bonding agent."
+	taste_description = "Ultra scrumptious."
+	reagent_state = LIQUID
+	color = "#afa077"
+
+/datum/reagent/ultraglue/touch_turf(var/turf/simulated/T)
+	..()
+	if(!istype(T))
+		return
+	if(volume >= 1)
+		new /obj/effect/glue/(T).upgrade()
+
+// Based off of CHOMP's slug mob @ https://github.com/CHOMPStation2/CHOMPStation2/blob/master/code/modules/mob/living/simple_mob/subtypes/vore/slug_ch.dm
+/obj/effect/glue
+	name = "liquid"
+	desc = "This looks wet."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "glue_floor"
+	opacity = 0
+	mouse_opacity = 0 //Unclickable
+	anchored = 1
+	density = 0
+	can_buckle = 1
+	buckle_lying = TRUE
+
+	var/persist_time = 5 MINUTES //How long until we cease existing.
+	var/turf/my_turf = null //The turf we spawn on.
+	var/base_escape_time = 100 //How long does it take to struggle free? Affected by the victim's size_multiplier.
+	var/is_upgraded = FALSE
+
+/obj/effect/glue/New()
+	..()
+	dissipate()
+	my_turf = get_turf(src)
+	if(istype(my_turf, /turf/simulated/floor/water)) //Aside from not making sense in water, this prevents drowning.
+		qdel(src)
+
+/obj/effect/glue/proc/upgrade()
+	base_escape_time = 300
+	is_upgraded = TRUE
+
+/obj/effect/glue/proc/dissipate() //When spawned, set a timer to despawn.
+	if(!persist_time)
+		qdel(src)
+		return
+	else
+		spawn(persist_time) //I used sleep() here first and it made the slug sleep for 5 minutes when spawning glue. Byond.
+		qdel(src)
+		return
+
+/obj/effect/glue/Destroy()
+	. = ..()
+
+/obj/effect/glue/Uncross(atom/movable/AM, atom/newloc)
+	if(istype(AM, /mob/living))
+		var/stuck_chance = 50
+		if(is_upgraded)
+			stuck_chance = 75 // this is not behaving right
+		if(prob(stuck_chance))
+			to_chat(AM, span_warning("You stick to \the [my_turf]!"))
+			return FALSE
+	return ..()
+
+
+/obj/effect/glue/Crossed(atom/movable/AM as mob|obj)
+	if(AM.is_incorporeal())
+		return
+
+	if(istype(AM, /mob/living/simple_mob))
+		var/mob/living/L = AM
+		if(is_upgraded)
+			L.Weaken(30)
+		else
+			L.Weaken(10)
+		playsound(src, 'sound/effects/slime_squish.ogg', 100, 1)
+
+	if(istype(AM, /mob/living/carbon) || istype(AM, /mob/living/silicon))
+		var/mob/living/L = AM
+
+		if(L.m_intent == "run" && !L.buckled)
+			if(has_buckled_mobs())
+				return
+			buckle_mob(L)
+			L.stop_pulling()
+			L.Weaken(2)
+			if(is_upgraded)
+				to_chat(L, span_warning("You tripped in the sticky glue, sticking to [my_turf]! It feels more stubborn than normal..."))
+			else
+				to_chat(L, span_warning("You tripped in the sticky glue, sticking to [my_turf]!"))
+			playsound(src, 'sound/effects/slime_squish.ogg', 100, 1)
+
+
+/obj/effect/glue/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
+	user.setClickCooldown(user.get_attack_speed())
+	if(is_upgraded)
+		to_chat(user, "You tug and strain against the stretchy, rubbery glue...")
+	else
+		to_chat(user, "You tug and strain against the sticky glue...")
+	var/escape_time
+	switch(buckled_mob.size_multiplier)
+		if(RESIZE_TINY - 1 to RESIZE_A_NORMALSMALL) //24% to 75% size scale, 1% below 25% is to account for microcillin sometimes going slightly below 25%
+			escape_time = 2 * base_escape_time
+		if(RESIZE_A_NORMALSMALL to RESIZE_A_BIGNORMAL) //75% to 125% size scale
+			escape_time = base_escape_time
+		if(RESIZE_A_BIGNORMAL to RESIZE_HUGE + 1) //125% to 201% size scale, 1% above 200% is to acount for macrocillin sometimes going slightly above 200%
+			escape_time = 0.5 * base_escape_time
+		else
+			escape_time = base_escape_time //Admeme size scale
+	if(do_after(user, escape_time, src, incapacitation_flags = INCAPACITATION_DEFAULT & ~(INCAPACITATION_RESTRAINED | INCAPACITATION_BUCKLED_FULLY)))
+		if(!has_buckled_mobs())
+			return
+		if(is_upgraded)
+			to_chat(user, "You tug free of the stubborn, rubbery strands!")
+		else
+			to_chat(user, "You tug free of the tacky, rubbery strands!")
+		unbuckle_mob(buckled_mob)
+
+/obj/effect/glue/clean_blood(var/ignore = 0) //Remove with space cleaner.
+	if(!ignore)
+		qdel(src)
+		return
+	..()
