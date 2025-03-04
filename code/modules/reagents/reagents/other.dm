@@ -795,7 +795,7 @@
 	if(istype(AM, /mob/living))
 		var/stuck_chance = 50
 		if(is_upgraded)
-			stuck_chance = 75 // this is not behaving right
+			stuck_chance = 65
 		if(prob(stuck_chance))
 			to_chat(AM, span_warning("You stick to \the [my_turf]!"))
 			return FALSE
@@ -808,15 +808,18 @@
 
 	if(istype(AM, /mob/living/simple_mob))
 		var/mob/living/L = AM
+		if(L.m_intent == "walk")
+			return
 		if(is_upgraded)
 			L.Weaken(30)
 		else
 			L.Weaken(10)
 		playsound(src, 'sound/effects/slime_squish.ogg', 100, 1)
 
-	if(istype(AM, /mob/living/carbon) || istype(AM, /mob/living/silicon))
-		var/mob/living/L = AM
-
+	if(istype(AM, /mob/living/carbon))//|| istype(AM, /mob/living/)
+		var/mob/living/carbon/human/L = AM
+		if(L.species.flags & NO_SLIP || ( L.shoes && (L.shoes.item_flags & NOSLIP)))
+			return
 		if(L.m_intent == "run" && !L.buckled)
 			if(has_buckled_mobs())
 				return
@@ -837,7 +840,8 @@
 	else
 		to_chat(user, "You tug and strain against the sticky glue...")
 	var/escape_time
-	switch(buckled_mob.size_multiplier)
+	var/mob/living/carbon/human/victim = buckled_mob
+	switch(buckled_mob.size_multiplier + victim.species.micro_size_mod + victim.species.macro_size_mod)// Makes sure micro / macro mechanic traits apply here
 		if(RESIZE_TINY - 1 to RESIZE_A_NORMALSMALL) //24% to 75% size scale, 1% below 25% is to account for microcillin sometimes going slightly below 25%
 			escape_time = 2 * base_escape_time
 		if(RESIZE_A_NORMALSMALL to RESIZE_A_BIGNORMAL) //75% to 125% size scale
