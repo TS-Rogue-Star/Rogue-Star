@@ -22,6 +22,9 @@
 	if(batterylicker.a_intent == I_HURT)
 		user.show_message("<span class='warning'>Sparks fly from \the [src] as you drain energy from it!</span>")
 		user.visible_message("<font color='red'>[user] causes sparks to emit from \the [src] as it loses its charge!</font>")
+		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		s.set_up(3, 0, src)
+		s.start()
 		var/totransfer = min(charge,1500)
 		batterylicker.adjust_nutrition((totransfer / 15) * coefficient)
 		use(totransfer)
