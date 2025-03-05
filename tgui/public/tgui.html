@@ -365,6 +365,37 @@
   Byond.loadCss = function (url, sync) {
     loadAsset({ url: url, sync: sync, type: 'css' });
   };
+
+  Byond.saveBlob = function (blob, filename, ext) {  // RS Add || Virgo Port PR16713
+    if (window.navigator.msSaveBlob) {
+      window.navigator.msSaveBlob(blob, filename)
+    } else if (window.showSaveFilePicker) {
+      var accept = {};
+      accept[blob.type] = [ext];
+
+      var opts = {
+        suggestedName: filename,
+        types: [
+          {
+            description: "SS13 file",
+            accept: accept,
+          }
+        ]
+      }
+
+      try {
+        window.showSaveFilePicker(opts).then(function (fileHandle) {
+          fileHandle.createWritable().then(function (writeableFileHandle) {
+            writeableFileHandle.write(blob).then(function () {
+              writeableFileHandle.close()
+            }).catch(function (e) { console.error(e) });
+          }).catch(function (e) { console.error(e) });
+        }).catch(function (e) { console.error(e) });
+      } catch (e) { console.error(e) }
+
+    }
+  };
+
 })();
 
 // Error handling
