@@ -142,7 +142,8 @@
 		// If we're not hungry, call the sideways "parent" to do normal punching
 		if(!vore_active)
 			return ..()
-
+		if(is_incorporeal()) //RS EDIT Stops phase shifted simples from attacking in phase?
+			return
 		// If target is standing we might pounce and knock them down instead of attacking
 		var/pouncechance = CanPounceTarget(L)
 		if(pouncechance)
