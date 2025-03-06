@@ -437,6 +437,15 @@ BLIND     // can't see anything
 	flash_protection = FLASH_PROTECTION_MODERATE //not as thick, only offers some protection
 	tint = TINT_HEAVY
 
+//RS ADD START
+/obj/item/clothing/glasses/sunglasses/extrathinblindfold
+	name = "thin white blindfold"
+	desc = "A thin blindfold to help protect sensitive eyes while still allowing some sight"
+	icon_state = "blindfoldwhite"
+	flash_protection = FLASH_PROTECTION_NONE //this one is just for the aesthetics, so no protection
+	tint = TINT_NONE
+//RS ADD END
+
 /obj/item/clothing/glasses/sunglasses/blindfold/tape
 	name = "length of tape"
 	desc = "It's a robust DIY blindfold!"
@@ -623,4 +632,3 @@ BLIND     // can't see anything
 			to_chat(usr, "You push \the [src] up from in front of your eyes.")
 		update_clothing_icon()
 		usr.update_action_buttons()
-
