@@ -422,6 +422,19 @@ digi-inner-thighs
 **Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/5546
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
+
+**File:** `icons/mob/human_races/markings_ch.dmi`<br>
+**Icon-States:** guilmon_head, guilmon_chest, guilmon_chest_markings, guilmon_arms, guilmon_legs<br>
+**Creator:**  Original graphics by LetterJay, ported from Skyrat by Echopsychotic<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/3083 https://github.com/Citadel-Station-13/Citadel-Station-13/pull/1597
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `/icons/mob/human_races/sprite_accessories/ears.dmi`<br>
+**Icon-States:** guilmon_ears<br>
+**Creator:** Original graphics by LetterJay, ported from Skyrat by Echopsychotic<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/3083 https://github.com/Citadel-Station-13/Citadel-Station-13/pull/1597
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+
 **File:** `icons/obj/vore.dmi`<br>
 **Creator:** Kligor <br>
 **Icon-States:** rawturkey, roasturkey, roastturkeynmash, roastturkeydrumstick<br>
