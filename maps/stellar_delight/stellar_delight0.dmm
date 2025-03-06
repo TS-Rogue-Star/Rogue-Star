@@ -1029,8 +1029,6 @@
 /obj/structure/closet/crate,
 /obj/random/mainttoyloot,
 /obj/random/mainttoyloot,
-/obj/random/mainttoyloot,
-/obj/random/mainttoyloot,
 /obj/random/maintenance,
 /obj/random/maintenance,
 /obj/random/maintenance,
@@ -3721,7 +3719,7 @@
 	name = "morphspawn"
 	},
 /turf/simulated/floor,
-/area/space)
+/area/maintenance/stellardelight/deck0/dorm1)
 "yW" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/low_wall/bay/reinforced/steel,
@@ -6908,6 +6906,7 @@
 /area/maintenance/stellardelight/deck0/core)
 "VN" = (
 /obj/structure/closet/radiation,
+/obj/item/weapon/storage/firstaid/toxin,
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/stellardelight/gravgen)
 "VO" = (
@@ -13447,7 +13446,7 @@ eL
 eL
 eL
 sI
-dS
+sI
 pT
 pT
 pT
@@ -13589,7 +13588,7 @@ eL
 eL
 eL
 sI
-dS
+pT
 pT
 pT
 pT
@@ -13731,7 +13730,7 @@ Ge
 So
 eL
 sI
-dS
+pT
 pT
 pT
 pT
@@ -13873,7 +13872,7 @@ Yk
 Yk
 eL
 sI
-dS
+pT
 pT
 pT
 pT
@@ -14015,7 +14014,7 @@ PW
 PW
 eL
 sI
-dS
+pT
 pT
 pT
 pT
@@ -14157,7 +14156,7 @@ WR
 WR
 uL
 sI
-dS
+pT
 pT
 pT
 pT
@@ -14299,7 +14298,7 @@ xr
 yI
 Gv
 sI
-dS
+pT
 pT
 pT
 pT
@@ -14441,7 +14440,7 @@ yV
 tZ
 Gv
 sI
-dS
+pT
 pT
 pT
 pT
@@ -14583,7 +14582,7 @@ na
 NS
 Gv
 sI
-dS
+pT
 pT
 pT
 pT
@@ -14725,7 +14724,7 @@ AD
 WR
 uL
 sI
-dS
+pT
 pT
 pT
 pT
@@ -14867,7 +14866,7 @@ te
 Fn
 uL
 sI
-dS
+pT
 pT
 pT
 pT
@@ -15009,7 +15008,7 @@ RI
 yh
 uL
 sI
-dS
+pT
 pT
 pT
 pT
@@ -15151,7 +15150,7 @@ WR
 WR
 uL
 sI
-dS
+pT
 pT
 pT
 pT
@@ -15293,7 +15292,7 @@ lZ
 pI
 Ds
 sI
-dS
+pT
 pT
 pT
 pT
@@ -15435,7 +15434,7 @@ lZ
 mK
 Ds
 sI
-dS
+pT
 pT
 pT
 pT
@@ -15577,7 +15576,7 @@ mK
 TX
 Ds
 sI
-dS
+pT
 pT
 pT
 pT
@@ -15719,7 +15718,7 @@ Xt
 uq
 BH
 sI
-dS
+pT
 pT
 pT
 pT
@@ -15861,7 +15860,7 @@ eK
 dJ
 BH
 sI
-dS
+pT
 pT
 pT
 pT
@@ -16003,7 +16002,7 @@ eK
 hJ
 BH
 sI
-dS
+pT
 pT
 pT
 pT
@@ -18843,7 +18842,7 @@ zN
 zN
 Rh
 sI
-dS
+pT
 pT
 pT
 pT
@@ -18985,7 +18984,7 @@ aN
 zN
 Rh
 sI
-dS
+pT
 pT
 pT
 pT
@@ -19127,7 +19126,7 @@ MZ
 ug
 Rh
 sI
-dS
+pT
 pT
 pT
 pT
@@ -19269,7 +19268,7 @@ EV
 zN
 Rh
 sI
-dS
+pT
 pT
 pT
 pT
@@ -19411,7 +19410,7 @@ ah
 aN
 Rh
 sI
-dS
+pT
 pT
 pT
 pT
@@ -19553,7 +19552,7 @@ aq
 aN
 Rh
 sI
-dS
+pT
 pT
 pT
 pT
@@ -19695,7 +19694,7 @@ zN
 zN
 Rh
 sI
-dS
+pT
 pT
 pT
 pT
@@ -19837,7 +19836,7 @@ zN
 zN
 Rh
 sI
-dS
+pT
 pT
 pT
 pT
@@ -19979,7 +19978,7 @@ aN
 aN
 Rh
 sI
-dS
+pT
 pT
 pT
 pT
@@ -20121,7 +20120,7 @@ PH
 vZ
 vZ
 sI
-dS
+pT
 pT
 pT
 pT
@@ -20263,7 +20262,7 @@ YH
 Pi
 Dx
 sI
-dS
+pT
 pT
 pT
 pT
@@ -20405,7 +20404,7 @@ YH
 Jq
 Dx
 sI
-dS
+pT
 pT
 pT
 pT
@@ -20547,7 +20546,7 @@ zt
 uU
 HT
 sI
-dS
+pT
 pT
 pT
 pT
@@ -20689,7 +20688,7 @@ mI
 Nd
 HT
 sI
-dS
+pT
 pT
 pT
 pT
@@ -20831,7 +20830,7 @@ mI
 Lf
 HT
 sI
-dS
+pT
 pT
 pT
 pT
@@ -20973,7 +20972,7 @@ ot
 ou
 HT
 sI
-dS
+pT
 pT
 pT
 pT
@@ -21115,7 +21114,7 @@ JI
 PQ
 HT
 sI
-dS
+pT
 pT
 pT
 pT
@@ -21257,7 +21256,7 @@ lE
 gg
 HT
 sI
-dS
+pT
 pT
 pT
 pT
@@ -21399,7 +21398,7 @@ HT
 HT
 HT
 sI
-dS
+sI
 pT
 pT
 pT
@@ -21682,7 +21681,7 @@ pT
 pT
 pT
 pT
-sI
+pT
 dS
 dS
 dS
