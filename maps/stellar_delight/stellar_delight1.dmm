@@ -3384,6 +3384,10 @@
 	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/starboardcent)
+"gA" = (
+/obj/machinery/space_heater,
+/turf/simulated/floor,
+/area/maintenance/stellardelight/deck1/starboardaft)
 "gC" = (
 /obj/structure/table/steel,
 /obj/item/device/sleevemate,
@@ -4244,22 +4248,15 @@
 /turf/simulated/floor/tiled/eris/white/bluecorner,
 /area/stellardelight/deck1/lowermed)
 "il" = (
-/obj/structure/cable/green{
-	color = "#42038a";
-	icon_state = "1-2"
-	},
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/table/rack,
-/obj/random/maintenance,
-/obj/random/maintenance,
-/obj/random/maintenance,
-/obj/random/maintenance/research,
-/obj/random/maintenance/research,
-/obj/random/maintenance/research,
-/obj/random/maintenance/clean,
 /obj/random/contraband,
+/obj/random/maintenance/clean,
+/obj/random/maintenance/research,
+/obj/random/maintenance/research,
+/obj/random/maintenance/research,
+/obj/random/maintenance,
+/obj/random/maintenance,
+/obj/random/maintenance,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/starboardaft)
 "im" = (
@@ -13835,21 +13832,17 @@
 "CY" = (
 /obj/structure/cable/green{
 	color = "#42038a";
-	icon_state = "1-2"
+	icon_state = "4-8"
 	},
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/table/rack,
-/obj/random/drinkbottle,
-/obj/random/maintenance,
-/obj/random/maintenance,
-/obj/random/maintenance,
-/obj/random/maintenance/research,
-/obj/random/maintenance/research,
+/obj/structure/closet/crate,
+/obj/random/maintenance/security,
 /obj/random/maintenance/clean,
 /obj/random/maintenance/clean,
-/obj/random/contraband,
+/obj/random/maintenance/engineering,
+/obj/random/maintenance,
+/obj/random/maintenance,
+/obj/random/mre,
+/obj/random/snack,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/starboardaft)
 "CZ" = (
@@ -17388,6 +17381,7 @@
 	color = "#42038a";
 	icon_state = "0-8"
 	},
+/obj/effect/landmark/stardog,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/starboardaft)
 "KZ" = (
@@ -17436,14 +17430,16 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/security/security_cell_hallway)
 "Lf" = (
-/obj/structure/cable/green{
-	color = "#42038a";
-	icon_state = "1-2"
-	},
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/space_heater,
+/obj/structure/table/rack,
+/obj/random/maintenance,
+/obj/random/maintenance,
+/obj/random/maintenance,
+/obj/random/maintenance/research,
+/obj/random/maintenance/research,
+/obj/random/maintenance/clean,
+/obj/random/maintenance/clean,
+/obj/random/contraband,
+/obj/random/drinkbottle,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/starboardaft)
 "Lg" = (
@@ -19222,29 +19218,6 @@
 "OQ" = (
 /turf/simulated/wall/bay/brown,
 /area/security/detectives_office)
-"OR" = (
-/obj/structure/cable/green{
-	color = "#42038a";
-	icon_state = "1-2"
-	},
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/green{
-	color = "#42038a";
-	icon_state = "1-4"
-	},
-/obj/structure/closet/crate,
-/obj/random/maintenance/security,
-/obj/random/maintenance/clean,
-/obj/random/maintenance/clean,
-/obj/random/maintenance/engineering,
-/obj/random/maintenance,
-/obj/random/maintenance,
-/obj/random/snack,
-/obj/random/mre,
-/turf/simulated/floor,
-/area/maintenance/stellardelight/deck1/starboardaft)
 "OT" = (
 /turf/simulated/wall/rshull,
 /area/stellardelight/deck1/exploshuttle)
@@ -19932,7 +19905,6 @@
 	color = "#42038a";
 	icon_state = "1-4"
 	},
-/obj/effect/landmark/stardog,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/starboardaft)
 "QA" = (
@@ -37168,10 +37140,10 @@ Uv
 sk
 lT
 Dv
-il
-OR
-CY
-Lf
+Dv
+Qz
+Dv
+Dv
 Qz
 Dv
 Dv
@@ -37310,10 +37282,10 @@ Lu
 Mz
 hn
 HV
-oe
-Lu
-oe
-oe
+il
+CY
+Lf
+gA
 KY
 oe
 oe
