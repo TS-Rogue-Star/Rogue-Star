@@ -5202,11 +5202,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/maintenance/stellardelight/deck0/abandonedbarroom)
-"JT" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/space,
-/area/space)
 "JU" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/angled_bay/double{
@@ -17939,7 +17934,6 @@ Xj
 hj
 ci
 Xj
-JT
 sI
 sI
 sI
@@ -17947,7 +17941,8 @@ sI
 sI
 sI
 sI
-JT
+sI
+sI
 Cd
 KS
 Tt
