@@ -12,12 +12,15 @@
 		// Charge the battery
 		user.show_message("<span class='warning'>Power surges from your fingertips and flows into \the [src], increasing its charge!</span>")
 		user.visible_message("<font color='white'>[user] squeezes \the [src] tightly, and charges it!</font>")
-		var/totransfer = batterylicker.adjust_nutrition(-(min(max(100, (batterylicker.nutrition * 0.2)), ((maxcharge - charge) / 15))))
-		give(min(abs(totransfer * 15), maxcharge))
+		var/totransfer = min(max(100, (batterylicker.nutrition * 0.2)), ((maxcharge - charge) / 15))
+		// Takes 20% of normal nutrition (100 of a total of 500 for normal characters) or 20% of current nutrition if above the normal cap
+		// Minimum hardcaps at remaining space in the battery, converted to the nutrition equivalent for comparison
+		batterylicker.adjust_nutrition(-totransfer)
+		give(min((totransfer * 15), (maxcharge - charge))) // Compares against remaining space in case of a rounding error
 		update_icon()
 		return
 
-	if(!charge) // May need conditionals for low power situations
+	if(!charge)
 		batterylicker.show_message("<span class='warning'>You take a look at \the [src] and notice it has nothing in it!</span>")
 		return
 	if(batterylicker.a_intent == I_HURT)
