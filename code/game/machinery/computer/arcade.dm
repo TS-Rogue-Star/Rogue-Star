@@ -393,7 +393,7 @@
 	var/dat = ""
 	if(gameStatus == ORION_STATUS_GAMEOVER)
 		playsound(src, 'sound/arcade/Ori_fail.ogg', 50, 1, extrarange = -3, falloff = 0.1, ignore_walls = FALSE)
-		dat = "<center><h1>Game Over</h1></center>"
+		dat = "<html><center><h1>Game Over</h1></center>"
 		dat += "Like many before you, your crew never made it to Orion, lost to space... <br><b>forever</b>."
 		if(settlers.len == 0)
 			dat += "<br>Your entire crew died, and your ship joins the fleet of ghost-ships littering the galaxy."
@@ -425,7 +425,7 @@
 	else if(gameStatus == ORION_STATUS_NORMAL)
 		var/title = stops[turns]
 		var/subtext = stopblurbs[turns]
-		dat = "<center><h1>[title]</h1></center>"
+		dat = "<html><center><h1>[title]</h1></center>"
 		dat += "[subtext]"
 		dat += "<h3><b>Crew:</b></h3>"
 		dat += english_list(settlers)
@@ -438,7 +438,7 @@
 		dat += "<P ALIGN=Right><a href='byond://?src=\ref[src];killcrew=1'>Kill a crewmember</a></P>"
 		dat += "<P ALIGN=Right><a href='byond://?src=\ref[src];close=1'>Close</a></P>"
 	else
-		dat = "<center><h2>The Orion Trail</h2></center>"
+		dat = "<html><center><h2>The Orion Trail</h2></center>"
 		dat += "<br><center><h3>Experience the journey of your ancestors!</h3></center><br><br>"
 		dat += "<center><b><a href='byond://?src=\ref[src];newgame=1'>New Game</a></b></center>"
 		dat += "<P ALIGN=Right><a href='byond://?src=\ref[src];close=1'>Close</a></P>"
@@ -731,7 +731,7 @@
 
 
 /obj/machinery/computer/arcade/orion_trail/proc/event()
-	eventdat = "<center><h1>[event]</h1></center>"
+	eventdat = "<html><center><h1>[event]</h1></center>"
 	canContinueEvent = 0
 	switch(event)
 		if(ORION_TRAIL_RAIDERS)
