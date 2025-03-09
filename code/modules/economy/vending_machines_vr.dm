@@ -232,7 +232,7 @@
 	desc = "Is... is it just full of stuffing? No wait, there's turkey in there too."
 	icon_state = "hotfood"
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/stuffing = 50,
-					/obj/item/weapon/reagent_containers/food/snacks/sliceable/turkey= 20
+					/obj/item/weapon/reagent_containers/food/snacks/sliceable/turkey = 20
 					)
 	contraband = list(/obj/item/weapon/reagent_containers/food/snacks/tofurkey = 10)
 	vend_delay = 10

@@ -33,6 +33,8 @@
 	reagent_mix = RECIPE_REAGENT_REPLACE
 	result = /obj/item/weapon/reagent_containers/food/snacks/ribplate
 
+//RS Edit || Ports VOREStation PR16650
+/*
 /datum/recipe/turkey
 	appliance = OVEN
 	reagents = list("sodiumchloride" = 1, "blackpepper" = 1)
@@ -41,6 +43,17 @@
 		/obj/item/weapon/reagent_containers/food/snacks/stuffing
 		)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/turkey
+*/
+/datum/recipe/turkey
+	appliance = OVEN
+	fruit = list("potato" = 1)
+	reagents = list("sodiumchloride" = 1, "blackpepper" = 1)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/rawturkey,
+		/obj/item/weapon/reagent_containers/food/snacks/stuffing
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/turkey
+//RS Edit end
 
 /datum/recipe/tofurkey
 	appliance = OVEN

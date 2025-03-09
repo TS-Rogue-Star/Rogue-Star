@@ -608,12 +608,12 @@ const downloadPrefs = (context, extension: string) => {
           '</p><div class="accordion" id="accordionBellies">',
       ],
       {
-        type: 'text/html;charset=utf8',
+        type: 'text/html', // RS Edit || Virgo Port PR16922
       }
     );
     bellies.forEach((belly, i) => {
       blob = new Blob([blob, generateBellyString(belly, i)], {
-        type: 'text/html;charset=utf8',
+        type: 'text/html', // RS Edit || Virgo Port PR16922
       });
     });
     blob = new Blob(
@@ -623,7 +623,7 @@ const downloadPrefs = (context, extension: string) => {
         '<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>',
         '</div></main></body></html>',
       ],
-      { type: 'text/html;charset=utf8' }
+      { type: 'text/html' } // RS Edit || Virgo Port PR16922
     );
   }
 
@@ -631,7 +631,7 @@ const downloadPrefs = (context, extension: string) => {
     blob = new Blob([JSON.stringify(bellies)], { type: 'application/json' });
   }
 
-  (window.navigator as any).msSaveOrOpenBlob(blob, filename);
+  Byond.saveBlob(blob, filename, extension); // RS Edit || Virgo Port PR16922
 };
 
 export const VorePanelExport = () => {
