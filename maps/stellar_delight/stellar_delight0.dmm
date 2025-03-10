@@ -3357,8 +3357,8 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/power/sensor{
-	name = "Powernet Sensor - Medical Subgrid";
-	name_tag = "Medical Subgrid"
+	name = "Powernet Sensor - GravGen Subgrid";
+	name_tag = "GravGen Subgrid"
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-2"
@@ -3743,7 +3743,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/rnd/stellardelight/office)
 "zi" = (
-/obj/machinery/computer/atmos_alert{
+/obj/machinery/computer/rcon{
 	dir = 1
 	},
 /turf/simulated/floor/tiled/techfloor,

@@ -1018,6 +1018,14 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
+/obj/machinery/power/apc/angled{
+	dir = 8;
+	name = "night shift APC";
+	nightshift_setting = 2
+	},
+/obj/structure/cable/green{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/portaft)
 "bW" = (
@@ -18026,7 +18034,7 @@
 	icon_state = "4-8"
 	},
 /obj/structure/cable/green{
-	icon_state = "2-4"
+	icon_state = "1-4"
 	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck1/portaft)
@@ -18705,12 +18713,6 @@
 /turf/simulated/floor/tiled/dark,
 /area/security/tactical)
 "NL" = (
-/obj/machinery/power/apc/angled{
-	dir = 8;
-	name = "night shift APC";
-	nightshift_setting = 2
-	},
-/obj/structure/cable/green,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
