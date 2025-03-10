@@ -720,6 +720,7 @@
 	reagent_state = LIQUID
 	color = "#e8e2b0"
 
+
 // Beginning of Rogue Star edits - Zayah
 /datum/reagent/spaceglue
 	name = "Space Glue"
@@ -735,6 +736,7 @@
 		return
 	if(volume >= 1)
 		new /obj/effect/glue/(T)
+
 /datum/reagent/ultraglue // Unused reagent previously, now serves as upgraded space glue
 	name = "Ultra Glue"
 	id = "ultraglue"
@@ -866,3 +868,4 @@
 		return
 	..()
 // End of Rogue Star edits - Zayah
+
