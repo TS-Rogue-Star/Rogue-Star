@@ -720,6 +720,8 @@
 	reagent_state = LIQUID
 	color = "#e8e2b0"
 
+
+// Beginning of Rogue Star edits - Zayah
 /datum/reagent/spaceglue
 	name = "Space Glue"
 	id = "glue"
@@ -865,3 +867,5 @@
 		qdel(src)
 		return
 	..()
+// End of Rogue Star edits - Zayah
+
