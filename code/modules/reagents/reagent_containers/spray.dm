@@ -51,6 +51,15 @@
 	if(reagents.has_reagent("lube"))
 		message_admins("[key_name_admin(user)] fired Space lube from \a [src].")
 		log_game("[key_name(user)] fired Space lube from \a [src].")
+	// Begin Rogue Star edit - Zayah
+	// Glue is as capable of being annoying as lube if abused. Requires logging.
+	if(reagents.has_reagent("glue"))
+		message_admins("[key_name_admin(user)] fired Space glue from \a [src].")
+		log_game("[key_name(user)] fired Space glue from \a [src].")
+	if(reagents.has_reagent("ultraglue"))
+		message_admins("[key_name_admin(user)] fired Ultra glue from \a [src].")
+		log_game("[key_name(user)] fired Ultra glue from \a [src].")
+	// End Rogue Star edit - Zayah
 	return
 
 /obj/item/weapon/reagent_containers/spray/proc/Spray_at(atom/A as mob|obj, mob/user as mob, proximity)
