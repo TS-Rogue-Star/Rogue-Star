@@ -51,7 +51,7 @@
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas,
 /obj/structure/closet/walllocker_double/cargo/west,
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/wood/alt/panel,
 /area/tether_away/snowbase/shelter)
 "eI" = (
 /obj/effect/floor_decal/steeldecal/steel_decals9{
@@ -75,7 +75,7 @@
 /obj/item/weapon/storage/firstaid/fire{
 	pixel_y = -1
 	},
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/wood/alt/panel,
 /area/tether_away/snowbase/shelter)
 "fh" = (
 /turf/unsimulated/wall/planetary/snowbase,
@@ -109,7 +109,7 @@
 /obj/machinery/power/apc{
 	dir = 1
 	},
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/wood/alt/panel,
 /area/tether_away/snowbase/shelter)
 "fX" = (
 /obj/effect/floor_decal/industrial/warning/color{
@@ -126,9 +126,6 @@
 /obj/structure/anomaly_container,
 /turf/simulated/floor/plating/snowbase,
 /area/tether_away/snowbase/shelter)
-"ja" = (
-/turf/simulated/floor/tiled,
-/area/tether_away/snowbase/shelter)
 "jd" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance,
@@ -141,7 +138,7 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/wood/alt/panel,
 /area/tether_away/snowbase/shelter)
 "jv" = (
 /turf/simulated/mineral/crystal_shiny/snowbase,
@@ -154,7 +151,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/wood/alt/panel,
 /area/tether_away/snowbase/shelter)
 "ls" = (
 /obj/structure/cable{
@@ -166,6 +163,9 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/structure/table/rack/shelf/steel,
+/obj/item/ammo_magazine/ammo_box/b12g,
+/obj/item/ammo_magazine/ammo_box/b12g/pellet,
 /turf/simulated/floor/plating,
 /area/tether_away/snowbase/shelter)
 "nt" = (
@@ -179,7 +179,7 @@
 	dir = 8
 	},
 /obj/machinery/alarm,
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/wood/alt/panel,
 /area/tether_away/snowbase/shelter)
 "oh" = (
 /obj/structure/prop/rock/crystal_dust,
@@ -215,7 +215,7 @@
 "sv" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/brown,
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/wood/alt/panel,
 /area/tether_away/snowbase/shelter)
 "te" = (
 /obj/structure/prop/rock/crystal,
@@ -232,7 +232,7 @@
 "vv" = (
 /obj/structure/table/woodentable,
 /obj/machinery/recharger,
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/wood/alt/panel,
 /area/tether_away/snowbase/shelter)
 "vC" = (
 /turf/simulated/wall,
@@ -241,7 +241,7 @@
 /obj/structure/table/woodentable,
 /obj/item/device/flashlight,
 /obj/item/device/flashlight,
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/wood/alt/panel,
 /area/tether_away/snowbase/shelter)
 "xt" = (
 /obj/structure/table/standard,
@@ -251,12 +251,11 @@
 /obj/item/weapon/storage/firstaid/o2{
 	pixel_y = -6
 	},
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/wood/alt/panel,
 /area/tether_away/snowbase/shelter)
 "xK" = (
 /obj/item/weapon/storage/pouch/flares/full_flare,
 /obj/item/weapon/storage/pouch/flares/full_flare,
-/obj/item/weapon/storage/pouch/flares/full_glow,
 /obj/item/weapon/storage/pouch/flares/full_glow,
 /obj/structure/table/steel,
 /turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
@@ -285,7 +284,7 @@
 /obj/item/bodybag/cryobag,
 /obj/item/bodybag/cryobag,
 /obj/item/device/healthanalyzer,
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/wood/alt/panel,
 /area/tether_away/snowbase/shelter)
 "Bn" = (
 /obj/item/weapon/tool/wrench,
@@ -299,6 +298,9 @@
 /obj/effect/overlay/snow/floor,
 /turf/simulated/floor/plating/snowbase,
 /area/tether_away/snowbase/shelter)
+"Dp" = (
+/turf/simulated/wall,
+/area/tether_away/snowbase/shelter)
 "Du" = (
 /obj/machinery/power/terminal{
 	dir = 8
@@ -306,12 +308,20 @@
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
+/obj/structure/table/rack/shelf/steel,
+/obj/random/powercell,
+/obj/random/powercell/device,
+/obj/item/weapon/cell/device/weapon,
 /turf/simulated/floor/plating,
 /area/tether_away/snowbase/shelter)
 "DM" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/tether_away/snowbase/shelter)
+"Fk" = (
+/obj/machinery/light/small,
 /turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
 /area/tether_away/snowbase/shelter)
 "FJ" = (
@@ -324,20 +334,13 @@
 /obj/structure/prop/rock/crystal_dust,
 /turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
 /area/tether_away/snowbase/shelter)
-"HK" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
-/turf/simulated/floor/tiled,
-/area/tether_away/snowbase/shelter)
 "Jd" = (
-/obj/machinery/sleep_console,
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/wood/alt/panel,
 /area/tether_away/snowbase/shelter)
 "Jj" = (
 /obj/structure/table/bench/wooden,
 /obj/machinery/light,
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/wood/alt/panel,
 /area/tether_away/snowbase/shelter)
 "Jn" = (
 /obj/structure/table/woodentable,
@@ -348,7 +351,10 @@
 /obj/item/weapon/storage/mre/random,
 /obj/item/weapon/storage/mre/random,
 /obj/item/weapon/storage/mre/random,
-/turf/simulated/floor/tiled,
+/obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle,
+/obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle,
+/obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle,
+/turf/simulated/floor/wood/alt/panel,
 /area/tether_away/snowbase/shelter)
 "Lf" = (
 /obj/effect/overlay/snow/floor,
@@ -356,7 +362,7 @@
 /area/tether_away/snowbase/shelter)
 "Pg" = (
 /obj/machinery/space_heater,
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/wood/alt/panel,
 /area/tether_away/snowbase/shelter)
 "Ph" = (
 /obj/effect/floor_decal/industrial/warning/color{
@@ -376,7 +382,7 @@
 /area/tether_away/snowbase/shelter)
 "QD" = (
 /obj/structure/table/bench/wooden,
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/wood/alt/panel,
 /area/tether_away/snowbase/shelter)
 "QZ" = (
 /turf/simulated/wall/r_wall,
@@ -424,7 +430,7 @@
 /area/tether_away/snowbase/shelter)
 "Wl" = (
 /obj/structure/table/woodentable,
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/wood/alt/panel,
 /area/tether_away/snowbase/shelter)
 "XF" = (
 /turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
@@ -15303,8 +15309,8 @@ XF
 XF
 XF
 XF
-XF
-jv
+Fk
+Dp
 jv
 jv
 jv
@@ -16145,8 +16151,8 @@ UW
 eO
 QZ
 fM
-ja
-ja
+Jd
+Jd
 QD
 QD
 QD
@@ -16287,11 +16293,11 @@ Du
 aY
 jd
 jh
-ja
-ja
-ja
-ja
-ja
+Jd
+Jd
+Jd
+Jd
+Jd
 Pg
 QZ
 Ur
@@ -16429,12 +16435,12 @@ ls
 fo
 QZ
 kb
-ja
-ja
-HK
-ja
-ja
-ja
+Jd
+Jd
+Jd
+Jd
+Jd
+Jd
 QZ
 Cw
 Lf
@@ -16574,7 +16580,7 @@ AD
 eP
 xt
 Jd
-ja
+sv
 sv
 sv
 QZ
