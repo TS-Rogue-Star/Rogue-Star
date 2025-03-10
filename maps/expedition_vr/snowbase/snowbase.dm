@@ -9,7 +9,7 @@
 [b]Notice[/b]: Arctic survival gear is required. Contact traffic control for weather advisories."}
 	icon_state = "frozen"
 	in_space = 0
-	initial_generic_waypoints = list("snowbase_surface_e", "snowbase_surface_w")
+	initial_generic_waypoints = list("snowbase_surface_e", "snowbase_surface_w", "snowbase_surface_n")
 	extra_z_levels = list(Z_LEVEL_GLACIER)
 	known = TRUE
 
