@@ -163,3 +163,11 @@
 	contains = list(/obj/machinery/portable_atmospherics/hydroponics{anchored = FALSE} = 3)
 	access = access_hydroponics
 
+//RS Edit || Ports VOREStation PR16650
+/datum/supply_pack/hydro/turkey
+	name = "Turkey crate"
+	cost = 25
+	containertype = /obj/structure/largecrate/animal/turkey
+	containername = "Turkey crate"
+	access = access_hydroponics
+//RS Edit End

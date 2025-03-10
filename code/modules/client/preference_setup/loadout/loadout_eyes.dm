@@ -35,6 +35,16 @@
 	..()
 	gear_tweaks += gear_tweak_free_color_choice
 
+//RS ADD START
+/datum/gear/eyes/xtrathinblindfold
+	display_name = "blindfold, extra thin white (recolorable)"
+	path = /obj/item/clothing/glasses/sunglasses/extrathinblindfold
+
+/datum/gear/eyes/xtrathinblindfold/New()
+	..()
+	gear_tweaks += gear_tweak_free_color_choice
+//RS ADD END
+
 /datum/gear/eyes/glasses
 	display_name = "Glasses, prescription"
 	path = /obj/item/clothing/glasses/regular

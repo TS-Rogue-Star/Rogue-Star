@@ -863,4 +863,10 @@
 	extra_overlay = "goatears_inner"
 	extra_overlay2 = "goatears_horns"
 
+/datum/sprite_accessory/ears/guilmonhorns //RS Add || Chomp Port 5771
+	name = "Guilmon Winghorns"
+	icon_state = "Guilmon_Horns"
+	do_colouration = 1
+	color_blend_mode = ICON_MULTIPLY
+
 // Special snowflake ears go below here.
