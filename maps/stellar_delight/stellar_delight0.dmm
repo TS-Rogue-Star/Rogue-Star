@@ -213,14 +213,16 @@
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc/angled{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/machinery/power/apc/angled{
+	dir = 1;
+	name = "night shift APC";
+	nightshift_setting = 2
 	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck0/core)
@@ -266,11 +268,13 @@
 /area/maintenance/stellardelight/deck0/mailroom)
 "bp" = (
 /obj/structure/reagent_dispensers/foam,
-/obj/machinery/power/apc/angled{
-	dir = 1
-	},
 /obj/structure/cable{
 	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/angled{
+	dir = 1;
+	name = "night shift APC";
+	nightshift_setting = 2
 	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck0/starboardfore)
@@ -677,7 +681,9 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/angled{
-	dir = 1
+	dir = 1;
+	name = "night shift APC";
+	nightshift_setting = 2
 	},
 /turf/simulated/floor/smole/megablocks,
 /area/maintenance/stellardelight/deck0/miniroom)
@@ -914,7 +920,9 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/angled{
-	dir = 1
+	dir = 1;
+	name = "night shift APC";
+	nightshift_setting = 2
 	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck0/oldmechbay)
@@ -1858,11 +1866,13 @@
 /turf/simulated/floor/tiled/milspec,
 /area/maintenance/stellardelight/deck0/starboardbunkroom)
 "mm" = (
-/obj/machinery/power/apc/angled{
-	dir = 1
-	},
 /obj/structure/cable{
 	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/angled{
+	dir = 1;
+	name = "night shift APC";
+	nightshift_setting = 2
 	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck0/constructionarea)
@@ -2305,13 +2315,15 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/power/apc/angled{
-	dir = 1
-	},
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
 /obj/structure/closet/crate/laundry,
+/obj/machinery/power/apc/angled{
+	dir = 1;
+	name = "night shift APC";
+	nightshift_setting = 2
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/maintenance/stellardelight/deck0/laundromat)
 "pt" = (
@@ -2602,11 +2614,13 @@
 /area/maintenance/stellardelight/deck0/portaft)
 "rI" = (
 /obj/structure/closet/firecloset/full,
-/obj/machinery/power/apc/angled{
-	dir = 1
-	},
 /obj/structure/cable{
 	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/angled{
+	dir = 1;
+	name = "night shift APC";
+	nightshift_setting = 2
 	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck0/portfore)
@@ -2714,11 +2728,13 @@
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck0/core)
 "sl" = (
-/obj/machinery/power/apc/angled{
-	dir = 1
-	},
 /obj/structure/cable{
 	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/angled{
+	dir = 1;
+	name = "night shift APC";
+	nightshift_setting = 2
 	},
 /turf/simulated/floor/wood,
 /area/maintenance/stellardelight/deck0/abandonedbarroom)
@@ -3104,6 +3120,18 @@
 "uU" = (
 /turf/simulated/wall/bay/steel,
 /area/maintenance/stellardelight/deck0/laundromat)
+"uW" = (
+/obj/structure/catwalk,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/maintenance/stellardelight/deck0/starboardfore)
 "va" = (
 /obj/effect/mouse_hole_spawner{
 	dir = 1
@@ -3332,11 +3360,13 @@
 /turf/simulated/floor/glass/reinforced,
 /area/maintenance/stellardelight/deck0/core)
 "wv" = (
-/obj/machinery/power/apc/angled{
-	dir = 1
-	},
 /obj/structure/cable{
 	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/angled{
+	dir = 1;
+	name = "night shift APC";
+	nightshift_setting = 2
 	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck0/emergencystorage)
@@ -3377,7 +3407,9 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/angled{
-	dir = 1
+	dir = 1;
+	name = "night shift APC";
+	nightshift_setting = 2
 	},
 /turf/simulated/floor/tiled/milspec,
 /area/maintenance/stellardelight/deck0/starboardbunkroom)
@@ -3808,7 +3840,9 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/angled{
-	dir = 4
+	dir = 4;
+	name = "night shift APC";
+	nightshift_setting = 2
 	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck0/shootingrange)
@@ -4015,7 +4049,9 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/angled{
-	dir = 1
+	dir = 1;
+	name = "night shift APC";
+	nightshift_setting = 2
 	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck0/abandonedbarstorage)
@@ -4071,7 +4107,9 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/angled{
-	dir = 1
+	dir = 1;
+	name = "night shift APC";
+	nightshift_setting = 2
 	},
 /turf/simulated/floor/carpet,
 /area/maintenance/stellardelight/deck0/archive)
@@ -4148,11 +4186,13 @@
 /area/maintenance/stellardelight/deck0/auxcargobay)
 "Cj" = (
 /obj/structure/flora/pottedplant/dead,
-/obj/machinery/power/apc/angled{
-	dir = 1
-	},
 /obj/structure/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/angled{
+	dir = 1;
+	name = "night shift APC";
+	nightshift_setting = 2
 	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck0/dorm2)
@@ -4797,7 +4837,9 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/angled{
-	dir = 1
+	dir = 1;
+	name = "night shift APC";
+	nightshift_setting = 2
 	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck0/starboardaft)
@@ -4921,7 +4963,9 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/angled{
-	dir = 1
+	dir = 1;
+	name = "night shift APC";
+	nightshift_setting = 2
 	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck0/constructionstorage)
@@ -5028,11 +5072,13 @@
 /area/maintenance/stellardelight/deck0/auxcargobay)
 "ID" = (
 /obj/structure/table/steel,
-/obj/machinery/power/apc/angled{
-	dir = 1
-	},
 /obj/structure/cable{
 	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/angled{
+	dir = 1;
+	name = "night shift APC";
+	nightshift_setting = 2
 	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck0/mailroom)
@@ -5180,10 +5226,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/light/small{
-	dir = 4
+	dir = 8
 	},
 /turf/simulated/floor,
-/area/maintenance/stellardelight/deck0/starboardfore)
+/area/maintenance/stellardelight/deck0/portfore)
 "JK" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/angled_bay/hatch{
@@ -5480,11 +5526,13 @@
 /turf/simulated/floor/tiled/milspec,
 /area/maintenance/stellardelight/deck0/portbunkroom)
 "LB" = (
-/obj/machinery/power/apc/angled{
-	dir = 1
-	},
 /obj/structure/cable{
 	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/angled{
+	dir = 1;
+	name = "night shift APC";
+	nightshift_setting = 2
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/maintenance/stellardelight/deck0/nexus)
@@ -6064,7 +6112,9 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/angled{
-	dir = 8
+	dir = 8;
+	name = "night shift APC";
+	nightshift_setting = 2
 	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck0/bathroom)
@@ -6158,11 +6208,13 @@
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck0/abandonedbarstorage)
 "Qy" = (
-/obj/machinery/power/apc/angled{
-	dir = 1
-	},
 /obj/structure/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/angled{
+	dir = 1;
+	name = "night shift APC";
+	nightshift_setting = 2
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/maintenance/stellardelight/deck0/abandonedbar)
@@ -6226,7 +6278,9 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/angled{
-	dir = 1
+	dir = 1;
+	name = "night shift APC";
+	nightshift_setting = 2
 	},
 /turf/simulated/floor/tiled/milspec,
 /area/maintenance/stellardelight/deck0/portbunkroom)
@@ -6516,11 +6570,13 @@
 /area/maintenance/stellardelight/deck0/portfore)
 "Tc" = (
 /obj/structure/bed/chair,
-/obj/machinery/power/apc/angled{
-	dir = 1
-	},
 /obj/structure/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/angled{
+	dir = 1;
+	name = "night shift APC";
+	nightshift_setting = 2
 	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck0/dorm1)
@@ -6687,7 +6743,9 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/angled{
-	dir = 8
+	dir = 8;
+	name = "night shift APC";
+	nightshift_setting = 2
 	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck0/gym)
@@ -6704,11 +6762,13 @@
 /turf/simulated/wall/bay/r_wall/brown,
 /area/maintenance/stellardelight/deck0/starboardaft)
 "UD" = (
-/obj/machinery/power/apc/angled{
-	dir = 1
-	},
 /obj/structure/cable{
 	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/angled{
+	dir = 1;
+	name = "night shift APC";
+	nightshift_setting = 2
 	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck0/portaft)
@@ -6855,7 +6915,9 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/angled{
-	dir = 1
+	dir = 1;
+	name = "night shift APC";
+	nightshift_setting = 2
 	},
 /turf/simulated/floor/tiled/old_tile,
 /area/maintenance/stellardelight/deck0/resleeving)
@@ -7390,11 +7452,13 @@
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck0/gym)
 "Zi" = (
-/obj/machinery/power/apc/angled{
-	dir = 1
-	},
 /obj/structure/cable{
 	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/angled{
+	dir = 1;
+	name = "night shift APC";
+	nightshift_setting = 2
 	},
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck0/assemblyline)
@@ -14652,8 +14716,8 @@ fq
 fq
 Td
 fq
-Kb
 fq
+JJ
 fq
 fq
 fq
@@ -20047,9 +20111,9 @@ rU
 fs
 fs
 fs
-JJ
 fs
 fs
+uW
 fs
 fs
 fs
