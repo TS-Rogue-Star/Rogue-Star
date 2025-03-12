@@ -209,6 +209,7 @@
 	var/mob/living/simple_mob/M = new ourtype(get_turf(src))
 	M.mob_bank_load(user, load)
 	M.faction = user.faction
+	M.devourable = FALSE
 	M.desc += " It has a PET tag: \"[M.real_name]\", if lost, return to [user.real_name]."
 	M.revivedby = user.real_name
 	to_chat(user,"<span class = 'notice'>\The [M] appears from \the [src]!</span>")
@@ -401,6 +402,7 @@
 		var/mob/living/simple_mob/M = new ourtype(get_turf(src))
 		M.mob_bank_load(load = ourmob)
 		M.desc += " It has a PET tag: \"[M.real_name]\", it is registered as a station pet!"
+		M.devourable = FALSE
 		M.faction = "neutral"
 		M.ai_holder.hostile = FALSE
 		M.ai_holder.vore_hostile = FALSE
