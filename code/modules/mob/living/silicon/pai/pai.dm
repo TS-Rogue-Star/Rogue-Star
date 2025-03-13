@@ -185,6 +185,10 @@
 		// 33% chance to change prime directive (based on severity)
 		// 33% chance of no additional effect
 
+	if(severity == 5)	//RS ADD START - allow for certain very light EMP to be harmless - shadekin related
+		to_chat(src, SPAN_WARNING("Your circuits feel SPICY!!! Whatever you are doing feels dangerous!"))
+		return			//RS ADD END
+
 	src.silence_time = world.timeofday + 120 * 10		// Silence for 2 minutes
 	to_chat(src, "<font color=green><b>Communication circuit overload. Shutting down and reloading communication circuits - speech and messaging functionality will be unavailable until the reboot is complete.</b></font>")
 	if(prob(20))

@@ -422,8 +422,38 @@ digi-inner-thighs
 **Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/5546
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
+**File:** `icons/mob/human_races/markings_ch.dmi`<br>
+**Icon-States:** guilmon_head, guilmon_chest, guilmon_chest_markings, guilmon_arms, guilmon_legs<br>
+**Creator:**  Original graphics by LetterJay, ported from Skyrat by Echopsychotic<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/3083 https://github.com/Citadel-Station-13/Citadel-Station-13/pull/1597
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `/icons/mob/human_races/sprite_accessories/ears.dmi`<br>
+**Icon-States:** guilmon_ears<br>
+**Creator:** Original graphics by LetterJay, ported from Skyrat by Echopsychotic<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/3083 https://github.com/Citadel-Station-13/Citadel-Station-13/pull/1597
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/obj/vore.dmi`<br>
+**Creator:** Kligor <br>
+**Icon-States:** rawturkey, roasturkey, roastturkeynmash, roastturkeydrumstick<br>
+**Link:** https://github.com/VOREStation/VOREStation/pull/16650<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/obj/trash.dmi`<br>
+**Creator:** Kligor <br>
+**Icon-States:** turkeybones<br>
+**Link:** https://github.com/VOREStation/VOREStation/pull/16650<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/obj/vore.dmi`<br>
+**Creator:** Kligor <br>
+**Icon-States:** turkey,turkey-1,turkeyrest,turkeydead<br>
+**Link:** https://github.com/VOREStation/VOREStation/pull/16650<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
 **File:** `icons/inventory/head/item_rs.dmi, icons/inventory/head/mob_rs.dmi, icons/inventory/uniform/item_rs.dmi, icons/inventory/uniform/mob_rs.dmi, icons/inventory/suit/item_rs.dmi, icons/inventory/suit/mob_rs.dmi`<br>
 **Icon-States:** talon_basic_refreshed, talon_security_refreshed, talon_jumpsuit_refreshed, talon_pilot_refreshed, talon_captain_refreshed, talon_capcoat, talon_pilotjacket, talon_labcoat, taloncoat, talon_caphat, talon_pilothat, talonnewsoft, talon_beret, talon_officer_beret, winterhood_talon<br>
 **Creator:** Comissioned by axietheaxolotl, Imaginos16<br>
 **Link:** https://github.com/tgstation/tgstation/pull/70226, https://github.com/tgstation/tgstation/pull/67286, https://github.com/tgstation/tgstation/pull/69842, https://github.com/tgstation/tgstation/pull/66355, https://github.com/tgstation/tgstation/pull/73795, https://github.com/tgstation/tgstation/pull/71479
-**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+

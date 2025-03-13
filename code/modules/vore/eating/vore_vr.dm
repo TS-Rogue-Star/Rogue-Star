@@ -131,6 +131,8 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 //
 /proc/is_vore_predator(mob/living/O)
 	if(istype(O,/mob/living))
+		if(!O.vore_organs)	//RS ADD - it will runtime
+			return FALSE	//RS ADD
 		if(O.vore_organs.len > 0)
 			return TRUE
 
