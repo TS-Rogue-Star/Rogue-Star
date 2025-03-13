@@ -55,6 +55,7 @@ crossexonar - Protean
 cryohydra - Protean
 cubejackal - Black-Eyed Shadekin
 dameonowen - Protean
+dawolfguy - Shadekin
 deerwithnoname - Shadekin
 detectivegoogle - Protean
 digi5 - Protean
@@ -118,6 +119,7 @@ joltze - Black-Eyed Shadekin
 joltze - Shadekin
 karamell - Xenochimera
 keane0tts - Black-Eyed Shadekin
+keane0tts - Shadekin
 kered2 - Protean
 khanivore - Protean
 killjaden - Protean
@@ -219,6 +221,7 @@ sepulchre - Vox
 shindari - Shadekin
 shirosenshi - Xenochimera
 shoanaeackeye - Xenochimera
+shoanaeackeye - Diona
 silencedmp5a5 - Shadekin
 silencedmp5a5 - Teppi
 silenrea - Protean
