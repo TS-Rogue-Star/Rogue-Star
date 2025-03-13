@@ -218,6 +218,9 @@
 /mob/living/carbon/human/GetIdCard()
 	if(get_active_hand())
 		var/obj/item/I = get_active_hand()
+
+		if(!istype(I, /obj/item/weapon/card/id/))//RS Edit Removes simple mobs & Micros from being used as ID cards.
+			return null
 		var/id = I.GetID()
 		if(id)
 			return id
