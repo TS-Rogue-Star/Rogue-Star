@@ -4,6 +4,8 @@
 
 	if(!A.Adjacent(src))
 		return ATTACK_FAILED
+	if(is_incorporeal()) //RS EDIT Stops phase shifted simples from attacking in phase?
+		return ATTACK_FAILED
 	var/turf/their_T = get_turf(A)
 
 	face_atom(A)
