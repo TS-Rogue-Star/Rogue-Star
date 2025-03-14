@@ -96,7 +96,7 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 /obj/machinery/gravity_generator/main/station/Initialize()
 	. = ..()
 	setup_parts()
-	middle.add_overlay("activated")	
+	middle.add_overlay("activated")
 
 //
 // Generator an admin can spawn
@@ -406,9 +406,10 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 	return FALSE
 
 /obj/machinery/gravity_generator/main/proc/update_list()
-	levels.Cut()
+	// levels.Cut() // RS Edit, Commenting this out as cut was reaching too far into memory and deleting rcon and power sensor info.
+	levels = list() // RS Edit, defining an empty list instead of running cut.
 	var/my_z = get_z(src)
-	
+
 	//Actually doing it special this time instead of letting using_map decide
 	if(using_map.use_overmap)
 		var/obj/effect/overmap/visitable/S = get_overmap_sector(my_z)
@@ -418,7 +419,7 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 			levels = GetConnectedZlevels(my_z)
 	else
 		levels = GetConnectedZlevels(my_z)
-		
+
 	for(var/z in levels)
 		if(!GLOB.gravity_generators["[z]"])
 			GLOB.gravity_generators["[z]"] = list()
@@ -428,7 +429,8 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 			GLOB.gravity_generators["[z]"] -= src
 
 /obj/machinery/gravity_generator/main/proc/update_areas()
-	areas.Cut()
+	// areas.Cut() // RS Edit, same as stated in the levels.Cut() comment, was causing issues.
+	areas = list() // RS Edit, same fix as above. Ignoring the cut proc and using a blank list.
 	for(var/area/A)
 		if(istype(A, /area/shuttle))
 			continue //Skip shuttle areas
