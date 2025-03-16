@@ -219,6 +219,7 @@
 	if(!prey.devourable)
 		return FALSE
 	if(isanimal(pred) && !prey.allowmobvore)
+		to_chat("isanimal = [pred] - [isanimal(pred)] - prey.allowmobvore = [prey.allowmobvore]")
 		return FALSE
 	if(pred != prey && !pred.can_be_drop_pred || !prey.can_be_drop_prey)	//Both of these always need to be true for any of the other spont vore checks to go through
 		return FALSE
