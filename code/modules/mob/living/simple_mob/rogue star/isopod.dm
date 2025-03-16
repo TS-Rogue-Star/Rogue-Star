@@ -7,6 +7,7 @@
 	icon = 'icons/rogue-star/mob_64x32.dmi'
 	icon_living = "isopod"
 	icon_state = "isopod"
+	icon_rest = "isopod_resting"
 
 	faction = "neutral"
 
@@ -17,6 +18,13 @@
 	default_pixel_x = -16
 
 	var/rolled_up_countdown = 0
+	var/isopod_voice_rate = 1
+	var/list/isopod_voice_sound_list = list(
+			'sound/voice/knuckles.ogg',
+			'sound/voice/spiderchitter.ogg',
+			'sound/voice/spiderpurr.ogg',
+			'sound/voice/wurble.ogg'
+		)
 
 	ai_holder_type = /datum/ai_holder/simple_mob/isopod
 
@@ -43,12 +51,47 @@
 	devourable = TRUE
 	digestable = FALSE
 
+	var/obj/belly/leggy_zone
+
+/mob/living/simple_mob/vore/isopod/init_vore()
+	..()
+	var/obj/belly/b = vore_selected
+
+	//DO THE REST OF THE STOMACH SETUP HERE
+
+	b = new /obj/belly(src)
+
+	b.immutable = TRUE
+	b.mode_flags = DM_FLAG_THICKBELLY
+	b.human_prey_swallow_time = 0.01 SECONDS
+	b.digestchance = 0
+	b.digest_brute = 0
+	b.digest_burn = 0
+	b.absorbchance = 0
+	b.escapable = FALSE
+	b.escapechance = 0
+	b.digest_mode = DM_HEAL
+	b.name = "leg dimension"
+	b.desc = ""
+	b.contaminates = 0
+	b.item_digest_mode = IM_HOLD
+	b.fancy_vore = 1
+	b.vore_verb = "curl"
+	leggy_zone = b
+
+/mob/living/simple_mob/vore/isopod/Initialize()
+	. = ..()
+	resize(rand(75,125) / 100)
+
 /mob/living/simple_mob/vore/isopod/Life()
 	. = ..()
 	rolled_up_countdown --
 	if(!ckey)
 		if(resting && rolled_up_countdown <= 0)
 			lay_down()
+	if(size_multiplier >= 1)
+		if(prob(isopod_voice_rate))
+			playsound(src, pick(isopod_voice_sound_list), 75, 1, frequency = 15000 / size_multiplier)
 
 /mob/living/simple_mob/vore/isopod/adjustBruteLoss(amount, include_robo)
 	if(amount >= 0)
@@ -88,9 +131,24 @@
 	roll_up()
 
 /mob/living/simple_mob/vore/isopod/lay_down()
-	if(rolled_up_countdown > 0)
+	if(resting && rolled_up_countdown > 0)
+		resting = TRUE
 		to_chat(src, SPAN_DANGER("You can't unroll yet... it's not safe..."))
 		return
+	if(resting)
+		leggy_zone.release_all_contents()
+	else
+		var/list/potentials = living_mobs(0)
+		if(potentials.len)
+			for(var/mob/living/target in potentials)
+				if(!spont_pref_check(src,target,SPONT_PRED))
+					continue
+				if(target.incorporeal_move)
+					continue
+				if(target.buckled)
+					target.buckled.unbuckle_mob(target, force = TRUE)
+				target.forceMove(leggy_zone)
+				to_chat(target,SPAN_WARNING("\The [src] quickly curls up around you!!!"))
 	. = ..()
 
 /mob/living/simple_mob/vore/isopod/proc/roll_up()
@@ -98,82 +156,133 @@
 	lay_down()
 	rolled_up_countdown = rand(10,50)
 
+/mob/living/simple_mob/vore/isopod/proc/ate()
+	if(prob(25))
+		if(size_multiplier < 5)
+			resize(size_multiplier + (rand(10,25)/1000), uncapped = TRUE)
+		var/obj/item/stack/wetleather/leather = new(get_turf(src), 1)
+		leather.name = "isopod shedding"
+		visible_message(runemessage = "bwomp")
+
 /datum/ai_holder/simple_mob/isopod
-	hostile = TRUE // The majority of simplemobs are hostile.
+	hostile = TRUE
 	retaliate = FALSE
 	cooperative = FALSE
 
 	wander = TRUE
 	returns_home = FALSE
+	handle_corpse = TRUE
+	mauling = TRUE
+	unconscious_vore = TRUE
+	belly_attack = FALSE
 
 	var/item_search_cooldown = 0
 
+/mob/living/simple_mob/vore/isopod/post_digestion()
+	resize(size_multiplier + 0.01, uncapped = TRUE)
+
 /datum/ai_holder/simple_mob/isopod/handle_stance_strategical()
-	to_world("[holder] - handle_stance_strategical")
 	if(holder.resting)	//We are rolled up so don't do it!
-		return
-	if(holder.vore_fullness >= holder.vore_capacity)	//We are full so let's vibe
 		return
 
 	. = ..()
 
-/datum/ai_holder/simple_mob/isopod/list_targets()
-	to_world("[holder] - list_targets")
-	if(isbelly(holder.loc))
-		to_world("[holder] - is in a belly")
-		var/obj/belly/B = holder.loc
-		for(var/thing in B.contents)
-			if(isobj(thing))
-				return thing
-			else if(ismob(thing))
-				if(thing == holder)
-					continue
-				. += thing
-	else
-		if(world.time >= item_search_cooldown)	//Let's not look for items too often
-			to_world("[holder] - try to search for item")
-			item_search_cooldown = world.time + 10 SECONDS
-			for(var/obj/item/I in view(holder, vision_range))
-				if(I.anchored)	//If it's too heavy to lift then we can't eat it
-					continue
-				if(!(istype(I, /obj/item/weapon/reagent_containers/food) || istype(I, /obj/item/trash)))	//We only want food or trash
-					continue
-				. += I	//You left it out so it is mine
-		else
-			to_world("[holder] - search for mob")
-			. = ohearers(vision_range, holder)	//Add mob nearby
-	return .
+/datum/ai_holder/simple_mob/isopod/proc/can_eat(var/atom/movable/food)
+	if(isliving(food))
+		var/mob/living/L = food
 
-/datum/ai_holder/simple_mob/isopod/find_target(list/possible_targets, has_targets_list)
-	to_world("[holder] - find_target")
-	ai_log("find_target() : Entered.", AI_LOG_TRACE)
+		if(L.player_login_key_log)
+			return FALSE
 
-	possible_targets = list_targets()
+		if(L.stat != DEAD)
+			return FALSE		//We only want dead people
 
-	for(var/possible_target in possible_targets)
-		if(can_attack(possible_target)) // Can we attack it?
-			. += possible_target
+		if(!L.digestable)
+			return FALSE
 
-	var/new_target = pick_target(.)
-	give_target(new_target)
-	return new_target
+		if(L.faction == holder.faction)
+			return FALSE	//We don't want to eat our friends
+
+		var/mob/living/simple_mob/vore/isopod/i = holder	//We are an isopod, if we aren't then I don't know what to tell ya it's probably gonna runtime
+		if(!i.will_eat(L))
+			return FALSE		//Check prefs first
+		return TRUE
+	if(istype(food, /obj/item/weapon/reagent_containers/food) || istype(food, /obj/item/trash) || istype(food, /obj/effect/decal/cleanable) || istype(food, /obj/effect/decal/remains))
+		return TRUE
+	return FALSE
 
 /datum/ai_holder/simple_mob/isopod/can_attack(atom/movable/the_target, vision_required)
-	to_world("[holder] - is thinking about if they can attack [the_target]")
-	if(isliving(the_target))
-		to_world("[holder] - [the_target] is living!")
-		var/mob/living/L = the_target
-		if(L.ckey || L.mind || L.client)
-			return FALSE
-		if(L.stat != DEAD)
-			return FALSE
-		if(L.faction == holder.faction)
-			return FALSE
-		if(!(L.devourable && L.digestable && L.allowmobvore))
-			return FALSE
-		return TRUE
-	if(istype(the_target, /obj/item/weapon/reagent_containers/food) || istype(the_target, /obj/item/trash))
-		to_world("[holder] - [the_target] is an object!")
-		return TRUE
-	to_world("[holder] - [the_target] is not valid!")
-	return FALSE
+
+	if(!can_eat(the_target)) return FALSE
+
+	return TRUE		//FEED MY PRETTY FEEED
+
+/datum/ai_holder/simple_mob/isopod/list_targets()
+	if(world.time >= item_search_cooldown)	//Let's not look for items too often
+		. = list()
+		item_search_cooldown = world.time + 10 SECONDS
+		for(var/obj/O in view(holder, vision_range))
+			if(!can_eat(O))	//We only want food or trash
+				continue
+			. += O	//You left it out so it is mine
+	else
+		return ..()
+
+/datum/ai_holder/simple_mob/isopod/pre_melee_attack(atom/A)
+	if(can_eat(A))
+		var/turf/simulated/T = get_turf(A)
+		if(!istype(T,/turf/simulated))
+			T = null
+		if(ismob(A))
+			return ..()
+		var/delet = FALSE
+		if(istype(A, /obj/item/weapon/reagent_containers/food) || istype(A, /obj/item/trash))
+			playsound(holder, 'sound/items/eatfood.ogg', 75, 1)
+		if(istype(A, /obj/effect/decal/cleanable) || istype(A,/obj/effect/decal/remains))
+			playsound(holder, 'sound/items/drop/flesh.ogg', 75, 1)
+			delet = TRUE
+		var/obj/item/I = A
+		var/list/nomverbs = list(
+			"eats",
+			"scromfs",
+			"nibbles up",
+			"homphs",
+			"cronches",
+			"monches",
+			"slurps",
+			"gulps down",
+			"gobbles up",
+			"gobbles down",
+			"inhales",
+			"devours",
+			"ingests",
+			"partakes of",
+			"bolts down",
+			"wolfs down",
+			"crams down",
+			"munches",
+			"grazes on",
+			"noshes on",
+			"scarfs",
+			"dines upon",
+			"glomps",
+			"noms",
+			"nom-noms",
+			"snacks upon",
+			"feasts upon",
+			"chows down upon",
+			"laps up",
+			"packs away"
+		)
+		holder.visible_message(SPAN_DANGER("\The [holder] happily [pick(nomverbs)] \the [A]!"),runemessage = "! ! !")
+		var/mob/living/simple_mob/vore/isopod/H = holder
+		H.ate()
+		set_stance(STANCE_IDLE)
+		if(delet)
+			qdel(A)
+		else
+			I.forceMove(holder.vore_selected)
+		if(T)
+			T.dirt = 0
+		return
+	..()

@@ -133,6 +133,8 @@
 		if(ishuman(L) || issilicon(L))
 			if(L.key && !L.client)	// SSD players get a pass
 				return FALSE
+		if(istype(L,/mob/living/simple_mob/vore/isopod))	//RS ADD - Isopods are friends to all
+			return FALSE									//RS ADD
 		if(L.stat)
 			if(L.stat == DEAD && !handle_corpse) // Leave dead things alone
 				return FALSE
