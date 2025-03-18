@@ -314,16 +314,18 @@
 
 
 /datum/ai_holder/simple_mob/melee/evasive/catslug/on_hear_say(mob/living/speaker, message)
-	if(holder.client || !speaker.client)
+	if(holder.client || !speaker.client )
 		return
+
 	if(findtext(message, "psps") && stance == STANCE_IDLE)
-		set_follow(speaker, follow_for = 5 SECONDS)
+		if(!istype(holder, /mob/living/simple_mob/vore/alienanimals/catslug/custom)) //RS edit, no more psps for scugs with access
+			set_follow(speaker, follow_for = 5 SECONDS)
 
 	if(holder.stat || !holder.say_list || !message || speaker == holder)	//Copied from parrots
 		return
 	var/datum/say_list/S = holder.say_list
 	S.speak |= message
-
+/mob/living/simple_mob/vore/alienanimals/catslug/custom
 
 /mob/living/simple_mob/vore/alienanimals/catslug/horrible
 	ai_holder_type = /datum/ai_holder/simple_mob/melee/evasive/catslug/horrible
