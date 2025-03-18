@@ -217,7 +217,12 @@
 
 /mob/living/carbon/human/GetIdCard()
 	if(get_active_hand())
-		var/obj/item/I = get_active_hand()
+		var/obj/item/I = get_active_hand()//RS Edit Removes mobs not controlled by players from being used as ID cards.
+		if(istype(I, /obj/item/weapon/holder))
+			var/obj/item/weapon/holder/h = I
+			if(!h.held_mob.client)
+				return null
+			//RS Edit End
 		var/id = I.GetID()
 		if(id)
 			return id
