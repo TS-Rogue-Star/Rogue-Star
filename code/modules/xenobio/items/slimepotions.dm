@@ -83,6 +83,9 @@
 	if(currently_using)
 		to_chat(user, span("warning", "This agent has already been used!")) // Possibly trying to cheese the dialogue box and use same potion on multiple targets.
 		return
+	if(M.datum_flags & DF_VAR_EDITED) //RS Add, stops you from using slime potions on boss monsters
+		to_chat(user, span("warning", "\The [M] seems unnaturally powerful.")) // Var edited
+		return
 
 	currently_using = TRUE
 	var/datum/ai_holder/AI = M.ai_holder
@@ -201,6 +204,10 @@
 	if(!M.has_AI())
 		to_chat(user, span("warning", "\The [M] is too strong-willed for this to affect them."))
 		return ..()
+	if(M.datum_flags & DF_VAR_EDITED) //RS Add, stops you from using slime potions on boss monsters
+		to_chat(user, span("warning", "\The [M] seems unnaturally powerful.")) // Var edited
+		return ..()
+
 
 	var/datum/ai_holder/AI = M.ai_holder
 
@@ -236,6 +243,10 @@
 	if(!M.has_AI())
 		to_chat(user, span("warning", "\The [M] is too strong-willed for this to affect them."))
 		return ..()
+	if(M.datum_flags & DF_VAR_EDITED) //RS Add, stops you from using slime potions on boss monsters
+		to_chat(user, span("warning", "\The [M] seems unnaturally powerful.")) // Var edited
+		return ..()
+
 
 	var/datum/ai_holder/AI = M.ai_holder
 
