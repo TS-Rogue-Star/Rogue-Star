@@ -1155,7 +1155,7 @@
 	cost = 0
 	custom_only = FALSE
 
-/datum/trait/neutral/patting_defence/apply(var/datum/species/S,var/mob/living/carbon/human/H) //RS Port of Vorestation PULL #17289
+/datum/trait/neutral/personal_space/apply(var/datum/species/S,var/mob/living/carbon/human/H) //RS Port of Vorestation PULL #17289
 	..()
 	H.touch_reaction_flags |= SPECIES_TRAIT_PERSONAL_BUBBLE
 	H.verbs |= /mob/living/proc/toggle_personal_space

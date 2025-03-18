@@ -34,19 +34,19 @@
 /mob/living/proc/toggle_patting_defence() // RS Port of Vorestation PULL #17289
 	set name = "Toggle Reflexive Biting"
 	set desc = "Toggles the automatic biting for if someone pats you on the head or boops your nose."
-	set category = "Abilities.General"
+	set category = "Abilities"
 
 	if(touch_reaction_flags & SPECIES_TRAIT_PATTING_DEFENCE)
 		touch_reaction_flags &= ~(SPECIES_TRAIT_PATTING_DEFENCE)
 		to_chat(src,span_notice("You will no longer bite hands who pat or boop you."))
 	else
 		touch_reaction_flags |= SPECIES_TRAIT_PATTING_DEFENCE
-		to_chat(src,span_notice("You will now longer bite hands who pat or boop you."))
+		to_chat(src,span_notice("You will now bite hands who pat or boop you."))
 
 /mob/living/proc/toggle_personal_space() // RS Port of Vorestation PULL #17289
 	set name = "Toggle Personal Space"
 	set desc = "Toggles dodging any attempts to hug or pat you."
-	set category = "Abilities.General"
+	set category = "Abilities"
 
 	if(touch_reaction_flags & SPECIES_TRAIT_PERSONAL_BUBBLE)
 		touch_reaction_flags &= ~(SPECIES_TRAIT_PERSONAL_BUBBLE)

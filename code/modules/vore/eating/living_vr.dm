@@ -401,7 +401,6 @@
 	setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 	if((tasted.touch_reaction_flags & SPECIES_TRAIT_PERSONAL_BUBBLE) && (!tasted.grabbed_by.len || !tasted.stat)) // RS Port of Vorestation PULL #17289
 		visible_message(span_warning("[src] tries to lick [tasted], but they dodge out of the way!"),span_warning("You try to lick [tasted], but they deftly avoid your attempt."))
-		log_and_message_admins("[src] tries to lick [tasted], but they dodge out of the way!",src)
 		return
 	visible_message("<span class='warning'>[src] licks [tasted]!</span>","<span class='notice'>You lick [tasted]. They taste rather like [tasted.get_taste_message()].</span>","<b>Slurp!</b>")
 
@@ -444,7 +443,6 @@
 	setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 	if((smelled.touch_reaction_flags & SPECIES_TRAIT_PERSONAL_BUBBLE) && (!smelled.grabbed_by.len || !smelled.stat)) // RS Port of Vorestation PULL #17289
 		visible_message(span_warning("[src] tries to smell [smelled], but they dodge out of the way!"),span_warning("You try to smell [smelled], but they deftly avoid your attempt."))
-		log_and_message_admins("[src] tries to smell [smelled], but they dodge out of the way!",src)
 		return
 	visible_message("<span class='warning'>[src] smells [smelled]!</span>","<span class='notice'>You smell [smelled]. They smell like [smelled.get_smell_message()].</span>","<b>Sniff!</b>")
 

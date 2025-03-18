@@ -442,7 +442,6 @@
 			H.visible_message( \
 				span_warning("[target] reflexively bites the hand of [H] to prevent head patting!"), \
 				span_warning("[target] reflexively bites your hand!"), )
-			log_and_message_admins("[src] pat [target], but they Bite!",src)
 			if(H.hand)
 				H.apply_damage(1, BRUTE, BP_L_HAND)
 			else
@@ -460,7 +459,6 @@
 			H.visible_message( \
 				span_warning("[target] reflexively bites the hand of [H] to prevent nose booping!"), \
 				span_warning("[target] reflexively bites your hand!"), )
-			log_and_message_admins("[src] pat [target], but they Bite!",src)
 			if(H.hand)
 				H.apply_damage(1, BRUTE, BP_L_HAND)
 			else
