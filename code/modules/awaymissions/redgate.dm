@@ -39,6 +39,10 @@
 	if(!isliving(M))		//We only want mob/living, no bullets or mechs or AI eyes or items
 		if(M.type in exceptions)
 			keycheck = FALSE		//we'll allow it
+		if(isanimal(M))
+			var/mob/living/simple_mob/S = M
+			if(S.load_owner && S.load_owner != "seriouslydontsavethis" && load_owner = "STATION")	//RS ADD - Is it someone's personal pet?
+			keycheck = FALSE	//RS ADD - Then allow it
 		else return
 	if(!restrict_mobs || M.faction == "neutral" || M.faction == "pet")
 		keycheck = FALSE		//Probably a pet or something people will want to vibe with
