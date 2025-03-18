@@ -148,6 +148,9 @@
 	if(!holder)
 		return
 	ai_log("handle_wander_movement() : Entered.", AI_LOG_TRACE)
+	if(busy)	//RS ADD START
+		ai_log("handle_wander_movement() : Busy is set to true. Exiting.", AI_LOG_DEBUG)
+		return	//RS ADD END
 	if(isturf(holder.loc) && can_act())
 		wander_delay--
 		if(wander_delay <= 0)
