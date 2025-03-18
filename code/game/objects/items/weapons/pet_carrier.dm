@@ -95,6 +95,12 @@
 		to_chat(user, SPAN_WARNING("You need to open [src]'s door!"))
 		return
 	var/size_diff = user.get_effective_size() - target.get_effective_size()
+	if(isanimal(target))	//RS EDIT START
+		var/mob/living/simple_mob/S = target
+		if(!(S.load_owner && S.load_owner != "seriouslydontsavethis" && S.load_owner = "STATION"))	//RS ADD - Is it someone's personal pet?
+			to_chat(user, SPAN_WARNING("\The [target] can't be picked up with \the [src]."))
+			return
+	//RS EDIT END
 	if(ishuman(target) && size_diff < 0.19)
 		to_chat(user, SPAN_WARNING("You get the feeling [target] is a tad too large for a [name]."))
 		return

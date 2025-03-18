@@ -60,6 +60,9 @@
 	ai_holder_type = /datum/ai_holder/simple_mob/intentional/giant_spider_broodmother
 	load_owner = "seriouslydontsavethis"	//RS ADD - It makes more mobs, please do not save this
 	devourable = FALSE	//RS ADD - They make more mobs, so let's not make them easy to carry around
+	pickup_pref = FALSE	//RS EDIT - See above, except this is relating to pet carriers
+	pickup_active = FALSE	//RS EDIT - See above
+
 	poison_per_bite = 2
 	poison_type = "cyanide"
 

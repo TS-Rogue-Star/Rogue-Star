@@ -45,8 +45,10 @@
 	To lay eggs, click a nearby tile. Laying eggs will deplete a charge."
 	ai_holder_type = /datum/ai_holder/simple_mob/melee/nurse_spider
 
-	load_owner = "seriouslydontsavethis"	//RS ADD - It makes more mobs, please do not save this
-	devourable = FALSE	//RS ADD - They make more mobs, so let's not make them easy to carry around
+	load_owner = "seriouslydontsavethis"	//RS EDIT - It makes more mobs, please do not save this
+	devourable = FALSE	//RS EDIT - They make more mobs, so let's not make them easy to carry around
+	pickup_pref = FALSE	//RS EDIT - See above, except this is relating to pet carriers
+	pickup_active = FALSE	//RS EDIT - See above
 
 	var/fed = 0 // Counter for how many egg laying 'charges' the spider has.
 	var/laying_eggs = FALSE	// Only allow one set of eggs to be laid at once.
