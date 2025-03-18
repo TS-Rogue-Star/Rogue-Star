@@ -1137,4 +1137,26 @@
 /datum/trait/neutral/waddle/apply(var/datum/species/S,var/mob/living/carbon/human/H)
 	..()
 	H.verbs |= /mob/living/proc/waddle_adjust
+
+/datum/trait/neutral/patting_defence //RS Port of Vorestation PULL #17289
+	name = "Reflexive Biting"
+	desc = "You will reflexively bite hands that attempt to pat your head or boop your nose, this can be toggled off."
+	cost = 0
+	custom_only = FALSE
+
+/datum/trait/neutral/patting_defence/apply(var/datum/species/S,var/mob/living/carbon/human/H) //RS Port of Vorestation PULL #17289
+	..()
+	H.touch_reaction_flags |= SPECIES_TRAIT_PATTING_DEFENCE
+	H.verbs |= /mob/living/proc/toggle_patting_defence
+
+/datum/trait/neutral/personal_space //RS Port of Vorestation PULL #17289
+	name = "Personal Space Bubble"
+	desc = "You are adept at avoiding unwanted physical contact and dodge it with ease. You will reflexively dodge any attempt to hug, pat, boop, lick, sniff you or even shake your hand, this can be toggled off."
+	cost = 0
+	custom_only = FALSE
+
+/datum/trait/neutral/patting_defence/apply(var/datum/species/S,var/mob/living/carbon/human/H) //RS Port of Vorestation PULL #17289
+	..()
+	H.touch_reaction_flags |= SPECIES_TRAIT_PERSONAL_BUBBLE
+	H.verbs |= /mob/living/proc/toggle_personal_space
 //RS Edit End

@@ -94,6 +94,7 @@
 #include "code\__defines\span_vr.dm"
 #include "code\__defines\species_languages.dm"
 #include "code\__defines\species_languages_vr.dm"
+#include "code\__defines\species_traits.dm"
 #include "code\__defines\sprite_sheets.dm"
 #include "code\__defines\sqlite_defines.dm"
 #include "code\__defines\stat_tracking.dm"
