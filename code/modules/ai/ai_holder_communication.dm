@@ -108,10 +108,13 @@
 		switch(pick(comm_types))
 			if(COMM_SAY)
 				holder.ISay(safepick(holder.say_list.speak))
+				return TRUE	//RS ADD
 			if(COMM_AUDIBLE_EMOTE)
 				holder.audible_emote(safepick(holder.say_list.emote_hear))
+				return TRUE	//RS ADD
 			if(COMM_VISUAL_EMOTE)
 				holder.visible_emote(safepick(holder.say_list.emote_see))
+				return TRUE	//RS ADD
 
 #undef COMM_SAY
 #undef COMM_AUDIBLE_EMOTE
