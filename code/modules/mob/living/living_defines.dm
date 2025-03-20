@@ -83,3 +83,5 @@
 	var/datum/inventory_panel/inventory_panel
 	var/last_resist_time = 0 // world.time of the most recent resist that wasn't on cooldown.
 	var/tiredness = 0 //For vore draining // RS Edit || Ports VOREStation PR15876
+
+	var/touch_reaction_flags // RS Port of Vorestation PULL #17289
