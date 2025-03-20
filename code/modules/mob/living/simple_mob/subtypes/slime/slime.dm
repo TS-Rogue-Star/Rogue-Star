@@ -82,6 +82,10 @@ var/list/_slime_default_emotes = list(
 
 	can_enter_vent_with = list(/obj/item/clothing/head)
 
+	devourable = FALSE	//RS EDIT - Slimes can be a pretty big force multiplier, so let's not make them super easy to carry around
+	pickup_pref = FALSE	//RS EDIT - See above, except this is relating to pet carriers
+	pickup_active = FALSE	//RS EDIT - See above
+
 /mob/living/simple_mob/slime/get_available_emotes()
 	return global._slime_default_emotes.Copy()
 
