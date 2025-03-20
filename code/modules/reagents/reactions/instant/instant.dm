@@ -95,7 +95,21 @@
 	result = "lube"
 	required_reagents = list("water" = 1, "silicon" = 1, "oxygen" = 1)
 	result_amount = 4
+// Begin Rogue Star edit - Zayah
+/decl/chemical_reaction/instant/glue
+	name = "Space Glue"
+	id = "glue"
+	result = "glue"
+	required_reagents = list("protein" = 1, "sugar" = 1, "sacid" = 1)
+	result_amount = 3
 
+/decl/chemical_reaction/instant/ultraglue
+	name = "Ultra Glue"
+	id = "ultraglue"
+	result = "ultraglue"
+	required_reagents = list("glue" = 2, "spidertoxin" = 1) // Gating the more potent glue behind spidertoxins to limit its accessibility. They also cause clotting of the glue!
+	result_amount = 3
+// End Rogue Star edit
 /decl/chemical_reaction/instant/pacid
 	name = "Polytrinic acid"
 	id = "pacid"
