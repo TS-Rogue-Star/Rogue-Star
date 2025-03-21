@@ -1,8 +1,12 @@
 /obj/var/list/req_access
 /obj/var/list/req_one_access
+/mob/var/key_access_restricted = TRUE	//RS ADD - if true, mobs without a client will automatically decline access, so mobs with access won't open doors unless they are players
 
 //returns 1 if this mob has sufficient access to use this object
 /obj/proc/allowed(mob/M)
+	if(M.key_access_restricted && !M.ckey)	//RS ADD
+		return(null)			//RS ADD
+
 	return check_access(M?.GetIdCard())
 
 /atom/movable/proc/GetAccess()
