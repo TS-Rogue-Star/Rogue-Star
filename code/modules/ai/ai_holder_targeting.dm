@@ -121,6 +121,8 @@
 			closest_targets += A
 	return closest_targets
 
+/mob/var/mob/living/ai_ignores = FALSE	//RS ADD
+
 /datum/ai_holder/proc/can_attack(atom/movable/the_target, var/vision_required = TRUE)
 	ai_log("can_attack() : Entering.", AI_LOG_TRACE)
 	if(!can_see_target(the_target) && vision_required)
@@ -133,6 +135,8 @@
 		if(ishuman(L) || issilicon(L))
 			if(L.key && !L.client)	// SSD players get a pass
 				return FALSE
+		if(L.ai_ignores)	//RS ADD
+			return FALSE	//RS ADD
 		if(L.stat)
 			if(L.stat == DEAD && !handle_corpse) // Leave dead things alone
 				return FALSE
