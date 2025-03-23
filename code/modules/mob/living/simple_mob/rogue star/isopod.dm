@@ -2,7 +2,7 @@
 //RS FILE
 
 /mob/living/simple_mob/vore/isopod
-	name = "space isopod"
+	name = "isopod"
 	desc = "A kind of hard shelled crustacean with many legs and a cute appearance. Known for helping break down decaying matter, and generally being friendly little guys!"
 	icon = 'icons/rogue-star/mob_64x32.dmi'
 	icon_living = "isopod"
@@ -42,8 +42,12 @@
 	mob_swap_flags = ~HEAVY
 	mob_push_flags = ~HEAVY
 
+	holder_type = null
+
 	ai_holder_type = /datum/ai_holder/simple_mob/isopod
 	ai_ignores = TRUE
+
+	catalogue_data = list(/datum/category_item/catalogue/fauna/isopod)
 
 	///// ISOPOD SPECIFIC /////
 	var/body_color
@@ -68,6 +72,8 @@
 			'sound/voice/wurble.ogg'
 		)
 	var/isopod_small = FALSE
+	var/isopod_setup = FALSE
+	var/isopod_clean_duration = 2
 
 ///// VORE RELATED /////
 	vore_active = 1
@@ -75,16 +81,15 @@
 	swallowTime = 2 SECONDS
 	vore_capacity = 2
 	vore_bump_chance = 0
-	vore_bump_emote	= "greedily homms at"
 	vore_digest_chance = 0
 	vore_absorb_chance = 0
 	vore_escape_chance = 10
 	vore_pounce_chance = 0
 	vore_ignores_undigestable = 0
-	vore_default_mode = DM_SELECT
+	vore_default_mode = DM_DIGEST
 	vore_icons = SA_ICON_LIVING
 	vore_stomach_name = "stomach"
-	vore_stomach_flavor = "It's slimy wow!"
+	vore_stomach_flavor = "The slimy flesh of the isopod's stomach presses in tightly around you, churning inward with a hungry insistence! A heavy pressure squeezes and throbs around you, forming to your shape and keeping you neatly packed within the creature. It may come as something of a surprise, that despite being on the inside, it is only just comfortably warm inside, so rather than an oppressive atmosphere, it's actually kind of snug, like a big hug. Of course, those walls are squeezing and working over you quite forcefully, so who knows how safe it is, the creature's organ seems very insistent about how it is churning and clinging to you..."
 	vore_default_contamination_flavor = "Wet"
 	vore_default_contamination_color = "grey"
 	vore_default_item_mode = IM_DIGEST
@@ -104,6 +109,14 @@
 	else
 		b.belly_fullscreen_color = "#292031"
 
+	if(isopod_small)
+		can_be_drop_pred = FALSE
+
+	b.selective_preference = DM_DIGEST
+	b.digest_brute = 0.05
+	b.digest_burn = 0.05
+	b.mode_flags = DM_FLAG_THICKBELLY | DM_FLAG_NUMBING
+
 	//DO THE REST OF THE STOMACH SETUP HERE
 
 	b = new /obj/belly(src)
@@ -119,7 +132,7 @@
 	leggy_zone.escapechance = 0
 	leggy_zone.digest_mode = DM_HEAL
 	leggy_zone.name = "interior"
-	leggy_zone.desc = "Welcome to the leggy zone"
+	leggy_zone.desc = "Caught at the center of the isopod's curl, you find yourself surrounded by many legs! Fourteen, in fact, all pressing close and wrapped around you to hold you close against its tummy! The soft underbelly of the isopod smooshes against you as you are forced to curl up against it, and with how the isopod curls around you like it does, that means that the soft squishy underside of the creature presses to you on just about all sides! It is a confusing place to be stuck! As you settle here, you notice that the head of the creature laps at any scrapes or injuries it, and you may have taken! Aches and pains soothe away as it does so. There doesn't seem to be any easy way out of here though, and who knows, squirming to try to get away while the creature's mouth is so close by may not be the most wise..."
 	leggy_zone.contaminates = 0
 	leggy_zone.item_digest_mode = IM_HOLD
 	leggy_zone.fancy_vore = 1
@@ -129,6 +142,24 @@
 	leggy_zone.escapable = TRUE
 	leggy_zone.belly_fullscreen = "squeeze"
 	leggy_zone.affects_vore_sprites = TRUE
+	leggy_zone.is_wet = FALSE
+	leggy_zone.wet_loop = FALSE
+	leggy_zone.vore_sound = "None"
+	leggy_zone.release_sound = "None"
+
+	leggy_zone.struggle_messages_outside = list(
+		"%pred wobbles a bit as something shifts inside.",
+		"%pred's form shifts a bit as something moves about their center.",
+		"%pred's body rolls slightly as something struggles inside."
+		)
+
+	leggy_zone.struggle_messages_inside = list(
+		"As you struggle %pred's many legs attempt to hold you a little closer to their tummy!",
+		"When you shift in its hold, %pred seems to chitter anxiously...",
+		"While you struggle %pred holds you more tightly!",
+		"When you try to squirm, %pred gives you many soothing pats!",
+		"It's so cramped and tight that it's hard to move at all without being squeezed!"
+	)
 
 /mob/living/simple_mob/vore/isopod/New(loc, small, b_color, u_color, a_color, ae_color, e_color)
 	. = ..()
@@ -148,21 +179,23 @@
 
 /mob/living/simple_mob/vore/isopod/Initialize()
 	. = ..()
-	if(!isopod_small)
-		if(prob(25))
-			resize(rand(75,125) / 100)
-	else
-		resize(1)
 
 	do_isopod_coloring()
-	if(prob(50))
-		do_name()
+	do_name()
+	if(isopod_small) return
+	if(prob(25))
+		resize(rand(75,125) / 100)
+
 
 /mob/living/simple_mob/vore/isopod/proc/do_isopod_coloring()
 	if(isopod_small)
 		icon = 'icons/rogue-star/mobx32.dmi'
 	else
 		icon = 'icons/rogue-star/mob_64x32.dmi'
+
+	if(isopod_setup)
+		update_icon()
+		return
 
 	if(body_color)
 		icon_living = "w-isopod"
@@ -285,14 +318,24 @@
 			playsound(src, 'sound/voice/BugHiss.ogg', 35, 1, frequency = 70000)
 		else
 			playsound(src, 'sound/voice/BugHiss.ogg', 75, 1, frequency = 15000 / size_multiplier)
+
+		visible_message(SPAN_WARNING("\The [src] rolls up protectively!!!"),runemessage = "! ! !")
 	health = maxHealth
 	lay_down()
 	rolled_up_countdown = rand(10,50)
 
 /mob/living/simple_mob/vore/isopod/proc/ate()
-	if(prob(25))
+	var/howmuch = 25
+	if(isopod_small)
+		howmuch = 50
+	if(prob(howmuch))
 		if(size_multiplier < 5)
-			resize(size_multiplier + (rand(10,25)/1000), uncapped = TRUE)
+			howmuch = rand(10,25)
+			if(isopod_small)
+				howmuch *= 0.01
+			else
+				howmuch *= 0.001
+			resize(size_multiplier + howmuch, uncapped = TRUE)
 		var/obj/item/stack/wetleather/leather = new(get_turf(src), 1)
 		leather.name = "isopod shedding"
 		visible_message(runemessage = "bwomp")
@@ -300,13 +343,16 @@
 /mob/living/simple_mob/vore/isopod/proc/isopod_icon()
 	cut_overlays()
 	consider_isopod_icon()
+
 	if(body_color)
-		icon_living = "w-isopod"
-		icon_rest = "w-isopod_resting"
+		color = body_color
 
-	color = body_color
+	if(resting)
+		return
 
-	if(resting || isopod_small)
+	icon_state = icon_living
+
+	if(isopod_small)
 		return
 
 	var/combine_key
@@ -370,20 +416,28 @@
 	if(isopod_small)
 		icon = 'icons/rogue-star/mobx32.dmi'
 		mob_size = MOB_TINY
-		mob_bump_flag = 0
+		mob_always_swap = TRUE
+		mob_bump_flag = null
 		mob_swap_flags = 0
 		mob_push_flags = 0
 		pixel_x = 0
 		default_pixel_x = 0
-
 	else
 		icon = 'icons/rogue-star/mob_64x32.dmi'
 		mob_size = MOB_LARGE
+		mob_always_swap = FALSE
 		mob_bump_flag = HEAVY
 		mob_swap_flags = ~HEAVY
 		mob_push_flags = ~HEAVY
 		pixel_x = -16
 		default_pixel_x = -16
+
+	if(body_color)
+		icon_living = "w-isopod"
+		icon_rest = "w-isopod_resting"
+	else
+		icon_living = "isopod"
+		icon_rest = "isopod_resting"
 
 /mob/living/simple_mob/vore/isopod/proc/vocalize()
 
@@ -396,7 +450,7 @@
 /mob/living/simple_mob/vore/isopod/proc/do_name()
 	if(name != initial(name))
 		return
-	if(name != "space isopod")
+	if(name != "isopod")
 		return
 	var/list/adjectives = list(
 		"rugged",
@@ -431,14 +485,17 @@
 		"distinguished",
 		"pure",
 		"cantankerous",
-		"suspicious"
+		"suspicious",
+		"space",
+		"starry eyed",
+		"scrungly",
+		"attractive",
+		"powerful"
 	)
 
 	name = "[pick(adjectives)] [name]"
 
 /mob/living/simple_mob/vore/isopod/attack_hand(mob/living/carbon/human/M as mob)
-	if(stat == DEAD)
-		return ..()
 	. = ..()
 	if(isopod_small)
 		return
@@ -463,91 +520,46 @@
 					roll_up()		//Gottem
 				ai_holder.min_distance_to_destination = initial(ai_holder.min_distance_to_destination)	//Put this back so we don't get stuck too much
 
+/mob/living/simple_mob/vore/isopod/attackby(obj/item/O, mob/user)
+
+	visible_message(SPAN_NOTICE("\The [user] offers [O] to \the [src]..."))
+	user.drop_from_inventory(O)
+	if(!eat_object(O))
+		if(O.z == z)
+			visible_message(SPAN_WARNING("\The [src] doesn't seem interested..."), runemessage = ". . .")
+		if(isliving(O.loc))
+			visible_message(SPAN_DANGER("\The [src] looks at \the [O.loc] sadly as \the [O] is taken away. . ."), runemessage = ". . .")
+			return
+	else return
+
+	. = ..()
+
 /mob/living/simple_mob/vore/isopod/resize(new_size, animate, uncapped, ignore_prefs, aura_animation)
 	. = ..()
 	if(isopod_small && size_multiplier >= 2)
 		isopod_small = FALSE
-		resize(0.75)
+		resize(1)
 		update_icon()
+		holder_type = null
+		if(!client)
+			can_be_drop_pred = TRUE
 
 	if(!isopod_small && size_multiplier <= 0.25)
 		isopod_small = TRUE
 		resize(1)
 		update_icon()
+		holder_type = /obj/item/weapon/holder/isopod
+		if(!client)
+			can_be_drop_pred = FALSE
 
-///////////////////////// MISC STUFF HERE /////////////////////////
+/mob/living/simple_mob/vore/isopod/get_effective_size(micro)
+	if(isopod_small)
+		return size_multiplier * 0.25
+	else return ..()
 
-/datum/say_list/isopod
-	speak = list(". . .", "! ! !", "? ? ?")
-	emote_hear = list("clicks", "rumbles", "sings")
-	emote_see = list("sways its antennae", "wiggles its antennae", "nibbles something on the floor", "stretches its legs", "hunkers down")
-	say_maybe_target = list("? ? ?")
-	say_got_target = list("! ! !")
-
-/datum/category_item/catalogue/fauna/isopod
-	name = "Alien Wildlife - Isopod"
-	desc = "REPLACE ME"
-	value = CATALOGUER_REWARD_EASY
-
-/mob/living/simple_mob/vore/isopod/mob_bank_save(mob/living/user)
-
-	var/list/to_save = list(
-		"ckey" = user.ckey,
-		"type" = type,
-		"name" = name,
-		"body_color" = body_color,
-		"under_color" = under_color,
-		"antennae_color" = antennae_color,
-		"antennae_end_color" = antennae_end_color,
-		"eye_color" = eye_color
-		)
-
-	return to_save
-
-/mob/living/simple_mob/vore/isopod/mob_bank_load(mob/living/user, list/load)
-	. = ..()
-
-	body_color = load["body_color"]
-	under_color = load["under_color"]
-	antennae_color = load["antennae_color"]
-	antennae_end_color = load["antennae_end_color"]
-	eye_color = load["eye_color"]
-
-	update_icon()
-	resize(1)
-
-///////////////////////// AI STUFF BELOW HERE /////////////////////////
-
-/datum/ai_holder/simple_mob/isopod
-	hostile = TRUE
-	retaliate = FALSE
-	cooperative = FALSE
-
-	wander = TRUE
-	returns_home = FALSE
-	handle_corpse = TRUE
-	mauling = TRUE
-	unconscious_vore = TRUE
-	belly_attack = FALSE
-
-	speak_chance = 1
-
-	var/item_search_cooldown = 0
-
-/datum/ai_holder/simple_mob/isopod/handle_stance_strategical()
-	if(holder.resting)	//We are rolled up so don't do it!
-		return
-
-	..()
-
-/datum/ai_holder/simple_mob/isopod/handle_idle_speaking()
-	. = ..()
-	if(!.)
-		return
-	var/mob/living/simple_mob/vore/isopod/I = holder
-	I.vocalize()
-
-/datum/ai_holder/simple_mob/isopod/proc/can_eat(var/atom/movable/food)
+/mob/living/simple_mob/vore/isopod/can_eat(var/atom/movable/food)
+	if(food.z != z)
+		return FALSE
 	if(isliving(food))
 		var/mob/living/L = food
 
@@ -560,15 +572,13 @@
 		if(!L.digestable)
 			return FALSE
 
-		if(L.faction == holder.faction)
+		if(L.faction == faction)
 			return FALSE	//We don't want to eat our friends
 
-		var/mob/living/simple_mob/vore/isopod/i = holder	//We are an isopod, if we aren't then I don't know what to tell ya it's probably gonna runtime
-		if(!i.will_eat(L))
+		if(!will_eat(L))
 			return FALSE		//Check prefs first
 
-		var/mob/living/simple_mob/vore/isopod/our_isopod = holder
-		if(our_isopod.isopod_small)
+		if(isopod_small)
 			if(L.size_multiplier > 0.35)
 				return FALSE
 
@@ -577,39 +587,36 @@
 		return TRUE
 	return FALSE
 
-/datum/ai_holder/simple_mob/isopod/can_attack(atom/movable/the_target, vision_required)
-
-	if(!can_eat(the_target)) return FALSE
-
-	return TRUE		//FEED MY PRETTY FEEED
-
-/datum/ai_holder/simple_mob/isopod/list_targets()
-	if(world.time >= item_search_cooldown)	//Let's not look for items too often
-		. = list()
-		var/cooldown = rand(5,30) SECONDS
-		var/mob/living/simple_mob/vore/isopod/our_isopod = holder
-		if(our_isopod.isopod_small)
-			cooldown *= 2
-		item_search_cooldown = world.time + cooldown
-		for(var/obj/O in view(holder, 3))
-			if(!can_eat(O))	//We only want food or trash
-				continue
-			. += O	//You left it out so it is mine
-	else
-		return ..()
-
-/datum/ai_holder/simple_mob/isopod/pre_melee_attack(atom/A)
+/mob/living/simple_mob/vore/isopod/proc/eat_object(atom/A)
 	if(can_eat(A))
 		var/turf/simulated/T = get_turf(A)
 		if(!istype(T,/turf/simulated))
 			T = null
 		if(ismob(A))
-			return ..()
+			return FALSE
+		ai_holder.set_busy(TRUE)
+		visible_message(SPAN_WARNING("\The [src] approaches \the [A]. . . "), runemessage = ". . .")
+
+		var/howlong = isopod_clean_duration SECONDS
+		var/ourvol = 75
+		if(isopod_small)
+			howlong *= 2
+			ourvol *= 0.5
+		if(!do_after(src,howlong,A,exclusive = TRUE))
+			ai_holder.set_busy(FALSE)
+			ai_holder.lose_target()
+			return FALSE
+
+		if(resting || A.z != z || !Adjacent(A))
+			ai_holder.set_busy(FALSE)
+			ai_holder.lose_target()
+			return FALSE
+
 		var/delet = FALSE
 		if(istype(A, /obj/item/weapon/reagent_containers/food) || istype(A, /obj/item/trash))
-			playsound(holder, 'sound/items/eatfood.ogg', 75, 1)
+			playsound(src, 'sound/items/eatfood.ogg', ourvol, 1)
 		if(istype(A, /obj/effect/decal/cleanable) || istype(A,/obj/effect/decal/remains))
-			playsound(holder, 'sound/items/drop/flesh.ogg', 75, 1)
+			playsound(src, 'sound/items/drop/flesh.ogg', ourvol, 1)
 			delet = TRUE
 		var/obj/item/I = A
 		var/list/nomverbs = list(
@@ -661,20 +668,151 @@
 			"mirthfully",
 			"elatedly"
 		)
-		holder.visible_message(SPAN_DANGER("\The [holder] [pick(emotion)] [pick(nomverbs)] \the [A]!"),runemessage = "! ! !")
-		var/mob/living/simple_mob/vore/isopod/H = holder
-		H.ate()
-		set_stance(STANCE_IDLE)
+		visible_message(SPAN_DANGER("\The [src] [pick(emotion)] [pick(nomverbs)] \the [A]!"),runemessage = "! ! !")
+		ate()
+		ai_holder.set_stance(STANCE_IDLE)
 		if(delet)
 			qdel(A)
 		else
-			I.forceMove(holder.vore_selected)
+			I.forceMove(vore_selected)
 		if(T)
 			T.dirt = 0
+		ai_holder.set_busy(FALSE)
+		ai_holder.lose_target()
+		return TRUE
+	else
+		ai_holder.lose_target()
+		return FALSE
+
+///////////////////////// MISC STUFF HERE /////////////////////////
+
+/datum/say_list/isopod
+	speak = list(". . .", "! ! !", "? ? ?")
+	emote_hear = list("clicks", "rumbles", "sings")
+	emote_see = list("sways its antennae", "wiggles its antennae", "nibbles something on the floor", "stretches its legs", "hunkers down")
+	say_maybe_target = list("? ? ?")
+	say_got_target = list("! ! !")
+
+/datum/category_item/catalogue/fauna/isopod
+	name = "Alien Wildlife - Isopod"
+	desc = "Isopoda Extralium is a species of hard bodied crustacean found on some worlds. These creatures are notable for their extreme durability, \
+	and their passiveness. When they detect danger, they will curl up on themselves to protect their more fragile parts. While curled up, they can \
+	secrete a fluid from specialized glands with restorative properties. These creatures can also enter a form of long hibernation if their environment \
+	is unsuitable, and will wake up when they end up somewhere more suitable. In response to being attacked, rather than attempting any form of retaliation, \
+	the creatures will simply curl up and ignore its attackers. Isopoda Extralium survives off of dead and decaying matter, trash, and general foodstuffs. \
+	While they have the capacity to devour large creatures, they will not ordinarily eat any living thing on purpose. Dead things on the other hand, they relish. \
+	As they feed, Isopoda Extralium will slowly grow in size and shed their exoskeleton. When they get to their full grown size, they can be quite imposing and \
+	difficult to move, especially large specimens presence can cause obstruction. Their shed exoskeleton can be dried out as a form of leather. \
+	While Isopoda Extralium seems to care little for involving itself with living things, it does seem to have some capacity to understand and assist with injury, \
+	as contacting it while injured can cause it to curl up around the injured person, and use its own restorative fluids to help them too. \
+	It should be noted that, once trapped inside of its curled up shell, it is difficult to escape until it uncurls. Overall, despite its potentially \
+	imposing figure, these creatures are considered harmless and helpful."
+	value = CATALOGUER_REWARD_EASY
+
+/mob/living/simple_mob/vore/isopod/mob_bank_save(mob/living/user)
+
+	var/list/to_save = list(
+		"ckey" = user.ckey,
+		"type" = type,
+		"name" = name,
+		"body_color" = body_color,
+		"under_color" = under_color,
+		"antennae_color" = antennae_color,
+		"antennae_end_color" = antennae_end_color,
+		"eye_color" = eye_color
+		)
+
+	return to_save
+
+/mob/living/simple_mob/vore/isopod/mob_bank_load(mob/living/user, list/load)
+	. = ..()
+
+	body_color = load["body_color"]
+	under_color = load["under_color"]
+	antennae_color = load["antennae_color"]
+	antennae_end_color = load["antennae_end_color"]
+	eye_color = load["eye_color"]
+	isopod_setup = TRUE
+	update_icon()
+	resize(1)
+
+/obj/item/weapon/holder/isopod
+	icon = 'icons/rogue-star/mobx32.dmi'
+	icon_state = "isopod_holder"
+	desc = "Isopoda Extralium"
+
+/obj/item/weapon/holder/isopod/Initialize(mapload, mob/held)
+	. = ..()
+
+	vis_contents -= held_mob
+	var/mob/living/simple_mob/vore/isopod/I = held_mob
+	if(I.body_color)
+		icon_state = "w-isopod_holder"
+		color = I.body_color
+
+/obj/item/weapon/holder/isopod/Entered(mob/held, atom/OldLoc, do_vis = FALSE)
+	. = ..()
+
+///////////////////////// AI STUFF BELOW HERE /////////////////////////
+
+/datum/ai_holder/simple_mob/isopod
+	hostile = TRUE
+	retaliate = FALSE
+	cooperative = FALSE
+
+	wander = TRUE
+	returns_home = FALSE
+	handle_corpse = TRUE
+	mauling = TRUE
+	unconscious_vore = TRUE
+	belly_attack = FALSE
+
+	speak_chance = 1
+
+	violent_breakthrough = FALSE
+
+	var/item_search_cooldown = 0
+
+/datum/ai_holder/simple_mob/isopod/handle_stance_strategical()
+	if(holder.resting)	//We are rolled up so don't do it!
 		return
+
 	..()
 
-	lose_target()
+/datum/ai_holder/simple_mob/isopod/handle_idle_speaking()
+	. = ..()
+	if(!.)
+		return
+	var/mob/living/simple_mob/vore/isopod/I = holder
+	I.vocalize()
+
+/datum/ai_holder/simple_mob/isopod/can_attack(atom/movable/the_target, vision_required)
+
+	var/mob/living/simple_mob/vore/isopod/our_isopod = holder
+	if(!our_isopod.can_eat(the_target)) return FALSE
+
+	return TRUE		//FEED MY PRETTY FEEED
+
+/datum/ai_holder/simple_mob/isopod/list_targets()
+	if(world.time >= item_search_cooldown)	//Let's not look for items too often
+		. = list()
+		var/cooldown = rand(5,30) SECONDS
+		var/mob/living/simple_mob/vore/isopod/our_isopod = holder
+		if(our_isopod.isopod_small)
+			cooldown *= 2
+		item_search_cooldown = world.time + cooldown
+		for(var/obj/O in view(holder, 3))
+			if(!our_isopod.can_eat(O))	//We only want food or trash
+				continue
+			. += O	//You left it out so it is mine
+	else
+		return ..()
+
+/datum/ai_holder/simple_mob/isopod/pre_melee_attack(atom/A)
+	if(isobj(A))
+		var/mob/living/simple_mob/vore/isopod/our_isopod = holder
+		our_isopod.eat_object(A)
+	else return ..()
 
 ///////////////////////// CUSTOM VARIANTS /////////////////////////
 
@@ -682,21 +820,25 @@
 	icon = 'icons/rogue-star/mobx32.dmi'
 	isopod_small = TRUE
 	mob_size = MOB_TINY
-	mob_bump_flag = 0
+	mob_always_swap = TRUE
+	mob_bump_flag = null
 	mob_swap_flags = 0
 	mob_push_flags = 0
 	pixel_x = 0
 	default_pixel_x = 0
 	low_priority = TRUE
+	holder_type = /obj/item/weapon/holder/isopod
+	can_be_drop_pred = FALSE
 
 /mob/living/simple_mob/vore/isopod/small/jani
-	name = "janitor pet"
-	body_color = "#381c4e"
-	under_color = "#3a3666"
-	eye_color = "#ff00ff"
-	antennae_color = "#837e58"
-	antennae_end_color = "#8c00ff"
+	name = "Pillbert Gamma"
+	desc = "Destroyer of dirt, scarfer of scraps, friend to all!"
+	under_color = "#00e1ff"
+	eye_color = "#cc00ff"
+	antennae_color = "#bdaa1f"
+	antennae_end_color = "#ff9900"
 	load_owner = "STATION"
+	isopod_setup = TRUE
 
 /mob/living/simple_mob/vore/isopod/cass
 	body_color = "#612c08"
@@ -704,6 +846,7 @@
 	eye_color = "#612c08"
 	antennae_color = "#272523"
 	antennae_end_color = "#00f7ff"
+	isopod_setup = TRUE
 
 /mob/living/simple_mob/vore/isopod/lira
 	body_color = "#ffffc0"
@@ -711,3 +854,4 @@
 	eye_color = "#1d7fb7"
 	antennae_color = "#ffc965"
 	antennae_end_color = "#00f7ff"
+	isopod_setup = TRUE
