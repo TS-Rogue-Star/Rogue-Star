@@ -552,6 +552,7 @@ var/global/floorIsLava = 0
 		<A href='?src=\ref[src];[HrefToken()];vsc=default'>Choose a default ZAS setting</A><br>
 		"}
 
+	dat += "</html>" //RS Edit || Add html tag for 516 compatibility
 	usr << browse(dat, "window=admin2;size=210x280")
 	return
 
