@@ -535,9 +535,9 @@ var/global/floorIsLava = 0
 	if(!check_rights(0))	return
 
 	var/dat = {"
-		<center><B>Game Panel</B></center><hr>\n
+		<html><center><B>Game Panel</B></center><hr>\n
 		<A href='?src=\ref[src];[HrefToken()];c_mode=1'>Change Game Mode</A><br>
-		"}
+		"} //RS Edit || Add html tag for 516 compatibility
 	if(master_mode == "secret")
 		dat += "<A href='?src=\ref[src];[HrefToken()];f_secret=1'>(Force Secret Mode)</A><br>"
 
@@ -552,6 +552,7 @@ var/global/floorIsLava = 0
 		<A href='?src=\ref[src];[HrefToken()];vsc=default'>Choose a default ZAS setting</A><br>
 		"}
 
+	dat += "</html>" //RS Edit || Add html tag for 516 compatibility
 	usr << browse(dat, "window=admin2;size=210x280")
 	return
 
