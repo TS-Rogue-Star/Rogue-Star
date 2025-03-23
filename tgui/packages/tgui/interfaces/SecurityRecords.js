@@ -188,11 +188,12 @@ const SecurityRecordsViewGeneral = (_properties, context) => {
               textAlign="center"
               color="label">
               <img
-                src={p.substr(1, p.length - 1)}
+                src={p.substr(1, p.length - 2)} // RS Edit
                 style={{
                   width: '96px',
                   'margin-bottom': '0.5rem',
-                  '-ms-interpolation-mode': 'nearest-neighbor',
+                  imageRendering: 'pixelated', // RS Add || For Chromium (516)
+                  '-ms-interpolation-mode': 'nearest-neighbor', // For IE (515)
                 }}
               />
               <br />

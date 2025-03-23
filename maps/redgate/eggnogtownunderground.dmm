@@ -749,6 +749,12 @@
 	temperature = 258.15
 	},
 /area/redgate/eggnogtown/vibeout)
+"TI" = (
+/mob/living/simple_mob/vore/isopod,
+/turf/simulated/mineral/floor/ignore_cavegen/cave{
+	temperature = 258.15
+	},
+/area/redgate/eggnogtown/underground)
 "TN" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -10621,7 +10627,7 @@ aa
 aa
 aa
 aa
-aa
+TI
 aa
 aa
 aa
