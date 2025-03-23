@@ -2221,3 +2221,6 @@
 
 /obj/belly/container_resist(mob/M)
 	return relay_resist(M)
+
+/mob/living/proc/post_digestion()	//In case we want to have a mob do anything after a digestion concludes	//RS ADD
+	return	//RS ADD
