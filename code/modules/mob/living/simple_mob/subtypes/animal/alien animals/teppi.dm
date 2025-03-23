@@ -45,7 +45,7 @@ GLOBAL_VAR_INIT(teppi_count, 0)	// How mant teppi DO we have?
 	situations. They are not especially picky eaters, and have a rather mild temperament.\
 	A pair of well fed Teppi can rather quickly become a small horde, so it is generally\
 	advised to keep an eye on their numbers."
-	value = CATALOGUER_REWARD_EASY
+	value = CATALOGUER_REWARD_EASY	//RS EDIT
 
 /mob/living/simple_mob/vore/alienanimals/teppi
 	name = "teppi"
