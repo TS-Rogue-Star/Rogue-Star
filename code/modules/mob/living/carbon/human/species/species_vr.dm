@@ -22,6 +22,8 @@
 	var/bloodsucker = FALSE // Allows safely getting nutrition from blood.
 	var/bloodsucker_controlmode = "always loud" //Allows selecting between bloodsucker control modes. Always Loud corresponds to original implementation.
 
+	var/electrovore = FALSE //RS Add: Allows the ability to drain power cells of energy to give nutrition
+
 	var/is_weaver = FALSE
 	var/silk_production = FALSE
 	var/silk_reserve = 100
