@@ -292,7 +292,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 
 /proc/shake_camera(mob/M, duration, strength=1)
-	if(!M || !M.client || duration < 1)
+	if(!M || !M.client || duration < 1) //RS Edit / RS Add Chomp PR #16901
 		return
 	var/client/C = M.client
 	var/oldx = C.pixel_x
@@ -305,7 +305,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			animate(C, pixel_x = rand(min, max), pixel_y = rand(min, max), time = 1)
 		else
 			animate(pixel_x = rand(min, max), pixel_y = rand(min, max), time = 1)
-	animate(pixel_x = oldx, pixel_y = oldy, time = 1)
+	animate(pixel_x = oldx, pixel_y = oldy, time = 1) //end RS edit
 
 
 /proc/findname(msg)
