@@ -174,7 +174,7 @@
 	if(ammo_magazine)
 		icon_state = "wt550-[round(ammo_magazine.stored_ammo.len,4)]"
 	else
-		icon_state = "wt550-0"
+		icon_state = "wt550-0" //RS fix
 	return
 
 /*
@@ -243,7 +243,7 @@
 	if(ammo_magazine)
 		icon_state = "carbine-[round(ammo_magazine.stored_ammo.len,2)]"
 	else
-		icon_state = "carbine-e"
+		icon_state = "carbine-e" //RS fix
 	if(!ignore_inhands) update_held_icon()
 	return
 
@@ -489,7 +489,7 @@
 	else if(istype(ammo_magazine,/obj/item/ammo_magazine/m762/ext))
 		icon_state = "bullpup"
 	else
-		icon_state = "bullpup-empty"
+		icon_state = "bullpup-empty" //RS fix
 	if(!ignore_inhands)
 		update_held_icon()
 
