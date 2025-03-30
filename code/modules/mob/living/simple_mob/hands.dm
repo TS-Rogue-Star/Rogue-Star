@@ -11,9 +11,17 @@
 	return
 
 /mob/living/simple_mob/put_in_hands(var/obj/item/W) // No hands.
-	if(has_hands)
-		put_in_active_hand(W)
-		return 1
+	if(has_hands) //RS Edit Start | Fixes simple mobs destroying ID's from PDAs'
+		if(put_in_active_hand(W))
+			update_inv_l_hand()
+			update_inv_r_hand()
+			return 1
+		else if(put_in_inactive_hand(W))
+			update_inv_l_hand()
+			update_inv_r_hand()
+			return 1
+		else
+			return ..() // RS Edit End
 	W.forceMove(get_turf(src))
 	return 1
 
