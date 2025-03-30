@@ -86,7 +86,7 @@
 	if(!istype(M))
 		return
 	if(target != firer)	//If you shot yourself, you probably want to be TFed so don't bother with prefs.
-		if(!M.allow_spontaneous_tf && !tf_admin_pref_override)
+		if(!(M.allow_spontaneous_tf && M.check_vore_whitelist(firer,SPONT_TF,WL_PREY)) && !tf_admin_pref_override)	//RS EDIT
 			return
 	if(M.tf_mob_holder)
 		var/mob/living/ourmob = M.tf_mob_holder
@@ -153,7 +153,7 @@
 				B.owner = new_mob
 				M.vore_organs -= B
 				new_mob.vore_organs += B
-
+			M.drop_both_hands()//RS Add (crawling port broke dropping items when tf'd)
 			new_mob.ckey = M.ckey
 			if(M.ai_holder && new_mob.ai_holder)
 				var/datum/ai_holder/old_AI = M.ai_holder
@@ -237,6 +237,7 @@
 	new_mob.appendage_alt_setting = appendage_alt_setting
 	new_mob.drop_vore = drop_vore
 	new_mob.stumble_vore = stumble_vore
+	new_mob.glowy_belly = glowy_belly
 	new_mob.slip_vore = slip_vore
 	new_mob.throw_vore = throw_vore
 	new_mob.food_vore = food_vore
@@ -296,7 +297,7 @@
 	if(!istype(M))
 		return
 	if(target != firer)	//If you shot yourself, you probably want to be TFed so don't bother with prefs.
-		if(!M.allow_spontaneous_tf && !tf_admin_pref_override)
+		if(!(M.allow_spontaneous_tf && M.check_vore_whitelist(firer,SPONT_TF,WL_PREY)) && !tf_admin_pref_override)	//RS EDIT
 			firer.visible_message("<span class='warning'>\The [src] buzzes impolitely.</span>")
 			return
 	if(M.tf_mob_holder)

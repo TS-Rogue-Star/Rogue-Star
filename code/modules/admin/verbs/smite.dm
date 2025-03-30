@@ -8,7 +8,7 @@
 	if(!istype(target))
 		return
 
-	var/list/smite_types = list(SMITE_BREAKLEGS,SMITE_BLUESPACEARTILLERY,SMITE_SPONTANEOUSCOMBUSTION,SMITE_LIGHTNINGBOLT,
+	var/list/smite_types = list(SMITE_XP,SMITE_BREAKLEGS,SMITE_BLUESPACEARTILLERY,SMITE_SPONTANEOUSCOMBUSTION,SMITE_LIGHTNINGBOLT,
 								SMITE_SHADEKIN_ATTACK,SMITE_SHADEKIN_NOMF,SMITE_AD_SPAM,SMITE_REDSPACE_ABDUCT,SMITE_AUTOSAVE,SMITE_AUTOSAVE_WIDE,SMITE_GIVECHEM,SMITE_PURGECHEM)
 
 	var/smite_choice = tgui_input_list(usr, "Select the type of SMITE for [target]","SMITE Type Choice", smite_types)
@@ -163,6 +163,9 @@
 
 		if(SMITE_PURGECHEM)
 			purge_chems(target, src)
+
+		if(SMITE_XP)	//RS ADD
+			target.grant_xp()	//RS ADD
 
 		else
 			return //Injection? Don't print any messages.

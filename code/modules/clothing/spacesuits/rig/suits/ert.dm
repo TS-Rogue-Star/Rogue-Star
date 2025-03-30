@@ -31,6 +31,7 @@
 		/obj/item/weapon/melee/baton,
 		/obj/item/weapon/gun,
 		/obj/item/weapon/reagent_containers/hypospray,
+		/obj/item/weapon/revised_hypospray, //RS add
 		/obj/item/roller
 		)
 

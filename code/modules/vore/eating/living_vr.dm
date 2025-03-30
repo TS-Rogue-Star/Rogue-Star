@@ -258,6 +258,7 @@
 	P.throw_vore = src.throw_vore
 	P.food_vore = src.food_vore
 	P.stumble_vore = src.stumble_vore
+	P.glowy_belly = src.glowy_belly
 	P.eating_privacy_global = src.eating_privacy_global
 
 	P.nutrition_message_visible = src.nutrition_message_visible
@@ -313,6 +314,7 @@
 	slip_vore = P.slip_vore
 	throw_vore = P.throw_vore
 	stumble_vore = P.stumble_vore
+	glowy_belly = P.glowy_belly
 	food_vore = P.food_vore
 	eating_privacy_global = P.eating_privacy_global
 
@@ -388,7 +390,7 @@
 //
 // Clearly super important. Obviously.
 //
-/mob/living/proc/lick(mob/living/tasted in living_mobs(1,TRUE))	//RS EDIT
+/mob/living/proc/lick(mob/living/tasted in living_mobs_in_view(1, TRUE)) //RS Add Chomp port #7484 | no cross dimensional licking
 	set name = "Lick"
 	set category = "IC"
 	set desc = "Lick someone nearby!"
@@ -429,7 +431,7 @@
 
 
 //This is just the above proc but switched about.
-/mob/living/proc/smell(mob/living/smelled in living_mobs(1, TRUE))	//RS EDIT
+/mob/living/proc/smell(mob/living/smelled  in living_mobs_in_view(1, TRUE)) //RS Add Chomp port #7484 | no cross dimensional Sniffing <- I kinda like the sniffing tho it funny
 	set name = "Smell"
 	set category = "IC"
 	set desc = "Smell someone nearby!"
@@ -1114,6 +1116,17 @@
 			save_ooc_panel()
 	if(href_list["print_ooc_notes_to_chat"])
 		print_ooc_notes_to_chat()
+	//RS ADD START
+	if(href_list["toggle_vore_trustlist"])
+		toggle_vore_trustlist(href_list["toggle_vore_trustlist"])
+		vore_trustlist()
+	if(href_list["edit_vore_trustlist"])
+		toggle_vore_whitelist()
+	if(href_list["print_vore_trustlist"])
+		print_vore_whitelist()
+	if(href_list["toggle_vore_trustlist_mode"])
+		toggle_vore_trustlist_mode()
+	//RS ADD END
 	return ..()
 
 /mob/living/proc/display_voreprefs(mob/user)	//Called by Topic() calls on instances of /mob/living (and subtypes) containing vore_prefs as an argument
@@ -1142,19 +1155,19 @@
 		dispvoreprefs += "<b>Stripping:</b> [H.allow_stripping ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
 		dispvoreprefs += "<b>Contamination:</b> [H.allow_contaminate ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"	//RS ADD END
 	dispvoreprefs += "<u><b>-SPONTANEOUS PREFERENCES-</b></u><br>"
-	dispvoreprefs += "<b>Spontaneous vore prey:</b> [can_be_drop_prey ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
-	dispvoreprefs += "<b>Spontaneous vore pred:</b> [can_be_drop_pred ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
-	dispvoreprefs += "<b>Drop Vore:</b> [drop_vore ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
-	dispvoreprefs += "<b>Slip Vore:</b> [slip_vore ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
-	dispvoreprefs += "<b>Throw vore:</b> [throw_vore ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
-	dispvoreprefs += "<b>Stumble Vore:</b> [stumble_vore ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
-	dispvoreprefs += "<b>Food Vore:</b> [food_vore ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Spontaneous vore prey:</b> [(spont_pref_check(src,user,SPONT_PREY) && can_be_drop_prey) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"	//ADD EXAMINE WHITELIST STUFF HERE
+	dispvoreprefs += "<b>Spontaneous vore pred:</b> [(spont_pref_check(user,src,SPONT_PRED) && can_be_drop_pred) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Drop Vore:</b> [(spont_pref_check(user,src,DROP_VORE) && drop_vore) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Slip Vore:</b> [(spont_pref_check(user,src,SLIP_VORE) && slip_vore) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Throw vore:</b> [(spont_pref_check(user,src,THROW_VORE) && throw_vore) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Stumble Vore:</b> [(spont_pref_check(user,src,STUMBLE_VORE) && stumble_vore) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Food Vore:</b> [(spont_pref_check(user,src,FOOD_VORE) && food_vore) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
 	dispvoreprefs += "<u><b>-OTHER PREFERENCES-</b></u><br>"
-	dispvoreprefs += "<b>Size changing:</b> [resizable ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Size changing:</b> [(spont_pref_check(user,src,RESIZING) && resizable) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
 	dispvoreprefs += "<b>Inbelly Spawning:</b> [allow_inbelly_spawning ? "<font color='green'>Allowed</font>" : "<font color='red'>Disallowed</font>"]<br>"
-	dispvoreprefs += "<b>Spontaneous transformation:</b> [allow_spontaneous_tf ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Spontaneous transformation:</b> [(spont_pref_check(user,src,SPONT_TF) && allow_spontaneous_tf) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
 	dispvoreprefs += "<b>Can be stepped on/over:</b> [step_mechanics_pref ? "<font color='green'>Allowed</font>" : "<font color='red'>Disallowed</font>"]<br>"
-	dispvoreprefs += "<b>Can be picked up:</b> [pickup_pref ? "<font color='green'>Allowed</font>" : "<font color='red'>Disallowed</font>"]<br>"
+	dispvoreprefs += "<b>Can be picked up:</b> [(spont_pref_check(user,src,MICRO_PICKUP) && pickup_pref) ? "<font color='green'>Allowed</font>" : "<font color='red'>Disallowed</font>"]<br>"
 	dispvoreprefs += "<b>Global Vore Privacy is:</b> [eating_privacy_global ? "Subtle" : "Loud"]<br>"
 	user << browse("<html><head><title>Vore prefs: [src]</title></head><body><center>[dispvoreprefs]</center></body></html>", "window=[name]mvp;size=300x600;can_resize=1;can_minimize=0")
 	onclose(user, "[name]")

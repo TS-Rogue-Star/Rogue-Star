@@ -65,6 +65,7 @@
 	var/overlay_min_prey_size	= 0 	//Minimum prey size for belly overlay to show. 0 to disable
 	var/override_min_prey_size = FALSE	//If true, exceeding override prey number will override minimum size requirements
 	var/override_min_prey_num	= 1		//We check belly contents against this to override min size
+	var/belly_overall_mult = 1	//Multiplier applied ontop of any other specific multipliers //RS Edit. Added from VS.
 	//RS Edit: Ports Slow Body Digestion, CHOMPStation PR 5161
 	var/slow_digestion = FALSE
 	var/slow_brutal = FALSE
@@ -197,13 +198,13 @@
 		"You feel your %belly beginning to become active!")
 
 	var/list/digest_chance_messages_prey = list(
-		"In response to your struggling, %owner's %belly begins to get more active...")
+		"In response to your struggling, %pred's %belly begins to get more active...")
 
 	var/list/absorb_chance_messages_owner = list(
 		"You feel your %belly start to cling onto its contents...")
 
 	var/list/absorb_chance_messages_prey = list(
-		"In response to your struggling, %owner's %belly begins to cling more tightly...")
+		"In response to your struggling, %pred's %belly begins to cling more tightly...")
 	//RS EDIT END
 	var/list/select_chance_messages_owner = list(
 		"You feel your %belly beginning to become active!")
@@ -1291,7 +1292,7 @@
 //Receives a return value from digest_act that's how much nutrition
 //the item should be worth
 /obj/belly/proc/digest_item(obj/item/item)
-	var/digested = item.digest_act(src, owner)
+	var/digested = item.digest_act(src)
 	if(!digested)
 		items_preserved |= item
 	else
@@ -2243,3 +2244,6 @@
 
 /obj/belly/container_resist(mob/M)
 	return relay_resist(M)
+
+/mob/living/proc/post_digestion()	//In case we want to have a mob do anything after a digestion concludes	//RS ADD
+	return	//RS ADD

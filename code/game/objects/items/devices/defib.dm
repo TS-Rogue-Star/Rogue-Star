@@ -304,8 +304,8 @@
 		return bad_vital_organ
 
 	//this needs to be last since if any of the 'other conditions are met their messages take precedence
-	if(!H.client && !H.teleop)
-		return "buzzes, \"Resuscitation failed - Mental interface error. Further attempts may be successful.\""
+	//if(!H.client && !H.teleop) //RS remove, revive afk/ghosted/disconect
+	//	return "buzzes, \"Resuscitation failed - Mental interface error. Further attempts may be successful.\"" //RS remove, revive afk/ghosted/disconect
 
 	return null
 

@@ -3,7 +3,7 @@
 /mob/living
 	var/meat_amount = 0					// How much meat to drop from this mob when butchered
 	var/obj/meat_type					// The meat object to drop
-
+	var/name_the_meat = TRUE //RS edit || Ports VOREStation PR16650
 	var/gib_on_butchery = FALSE
 	var/butchery_drops_organs = TRUE	// Do we spawn and/or drop organs when butchered?
 
@@ -14,7 +14,8 @@
 	if(meat_type && meat_amount>0 && (stat == DEAD))
 		while(meat_amount > 0 && do_after(user, 0.5 SECONDS * (mob_size / 10), src))
 			var/obj/item/meat = new meat_type(get_turf(src))
-			meat.name = "[src.name] [meat.name]"
+			if(name_the_meat) //RS Edit || Ports VOREStation PR16650
+				meat.name = "[src.name] [meat.name]"
 			new /obj/effect/decal/cleanable/blood/splatter(get_turf(src))
 			meat_amount--
 

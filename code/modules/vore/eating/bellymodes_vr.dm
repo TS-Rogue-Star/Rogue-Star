@@ -363,6 +363,7 @@
 	if((mode_flags & DM_FLAG_LEAVEREMAINS) && M.digest_leave_remains)
 		handle_remains_leaving(M)
 	digestion_death(M)
+	owner.post_digestion()	//RS ADD
 	if(!ishuman(owner))
 		owner.update_icons()
 	if(isrobot(owner))
@@ -404,9 +405,11 @@
 		owner.adjust_nutrition(oldnutrition)
 		if (istype(owner, /mob/living/carbon/human)) //RS Edit Start Is our owner a human?
 			var/mob/living/carbon/human/howner = owner
-			var/datum/species/shadekin/SK = howner.species
-			if(istype(SK))
-				howner.shadekin_adjust_energy(oldnutrition/10)
+			var/modified_gain = oldnutrition/10
+			if(!L.ckey)
+				modified_gain = modified_gain / 4
+
+			howner.shadekin_adjust_energy(modified_gain,TRUE)
 			/*
 			||----------------------------------------------------------------------------------------------||
 			||                                    Let's do some M A T H!					||

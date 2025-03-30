@@ -352,3 +352,108 @@
 **Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/262<br>
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
+**File:** `icons/obj/aliencoins.dmi`<br>
+**Creator:** VerySoft<br>
+**Link:** https://github.com/VOREStation/VOREStation/pull/10476 - https://github.com/TS-Rogue-Star/Rogue-Star/pull/702<br>
+**License:** Licensed for use by VOREStation, Rogue Star, and their downstreams; unlicensed for further use without permission of copyright holder<br>
+<br>
+**File:** `icons/obj/syringe.dmi`<br>
+**Icon-States:**nchypo, nchypo_empty, nyhpo, nhypo_empty, ncadvhypo, ncadvhypo_empty, nadvhypo, nadvhypo_empty<br>
+**Creator:** Legacy sprites recolored by Andy/Kligor<br>
+**Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/730<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/obj/storage.dmi`<br>
+**Icon-States:**vialcase, vialcaselight, vialcasedark<br>
+**Creator:** Andy/Kligor<br>
+**Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/730<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+**File**: `sound/screams` - `f1.ogg - f15.ogg`<br>
+**Creator:** Volonda<br>
+**Link:** https://freesound.org/people/Volonda/sounds/439517/<br>
+**License:** [Creative Commons 0](https://creativecommons.org/publicdomain/zero/1.0/)<br>
+<br>
+**File**: `sound/screams` - `m1.ogg - m6.ogg`<br>
+**Creator:** marc3122<br>
+**Link:** https://freesound.org/people/marc3122/sounds/556976/<br>
+**License:** [Creative Commons 0](https://creativecommons.org/publicdomain/zero/1.0/)<br>
+<br>
+**File**: `sound/screams` - `m7.ogg - m10.ogg`<br>
+**Creator:** JohnsonBrandEditing<br>
+**Link:** https://freesound.org/people/JohnsonBrandEditing/sounds/173944/<br>
+**License:** [Creative Commons 0](https://creativecommons.org/publicdomain/zero/1.0/)<br>
+<br>
+**File**: `sound/screams` - `m11.ogg - m14.ogg`<br>
+**Creator:** Moulaythami<br>
+**Link:** https://freesound.org/people/Moulaythami/sounds/548377/<br>
+**License:** [Attribution 4.0](https://creativecommons.org/licenses/by/4.0/)<br>
+<br>
+**File**: `sound/screams` - `m15.ogg - m17.ogg`<br>
+**Creator:** Mafon2<br>
+**Link:** https://freesound.org/people/Mafon2/sounds/635281/<br>
+**License:** [Creative Commons 0](https://creativecommons.org/publicdomain/zero/1.0/)<br>
+<br>
+digi-inner-thighs
+**File:** icons/mob/digi_inner-[r/l]_leg.dmi<br>
+**Creator:** SpringSkipper<br>
+**Link:** https://github.com/VOREStation/VOREStation/pull/16881<br>
+<br>
+**File:** `icons/obj/doc_printer_mod_[pre / _post / printing / ejecting].dmi`<br>
+**Creator:** spacemanjim (AKA: MAK) <br>
+**Link:** https://github.com/VOREStation/VOREStation/pull/15552<br>
+**License:** Licensed for use by VOREStation, Rogue Star, and their downstreams; unlicensed for further use without permission of copyright holder<br>
+<br>
+**File:** `code/game/Rogue Star/catborgs`<br>
+**Creator:** Toriate <br>
+**License Holders:** Matica, Cameron The Raven, Spotteh<br>
+**Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/744<br>
+**License:** [CC BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/)<br>
+**Notes:** All files within this folder are covered under the above license, as per the included attribution.txt file 
+<br>
+**File:** `code/game/Rogue Star/icons/fluff/sari_adjusted.dmi`<br>
+**Creator:** Toriate <br>
+**Exclusive License Holder:** Sari Bork<br>
+**Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/758<br>
+**License:** Licensed for use by Rogue Star; unlicensed for further use without permission of license  holder<br>
+<br>
+**File:** `icons/mob/human_races/sprite_accessories/taurs_rs.dmi`<br>
+**Creator:** Radiant Aurora <br>
+**Icon-States:** sergwheat, sergwheat_markings, fatsergal<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/5546
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/human_races/markings_ch.dmi`<br>
+**Icon-States:** guilmon_head, guilmon_chest, guilmon_chest_markings, guilmon_arms, guilmon_legs<br>
+**Creator:**  Original graphics by LetterJay, ported from Skyrat by Echopsychotic<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/3083 https://github.com/Citadel-Station-13/Citadel-Station-13/pull/1597
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `/icons/mob/human_races/sprite_accessories/ears.dmi`<br>
+**Icon-States:** guilmon_ears<br>
+**Creator:** Original graphics by LetterJay, ported from Skyrat by Echopsychotic<br>
+**Link:** https://github.com/CHOMPStation2/CHOMPStation2/pull/3083 https://github.com/Citadel-Station-13/Citadel-Station-13/pull/1597
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/obj/vore.dmi`<br>
+**Creator:** Kligor <br>
+**Icon-States:** rawturkey, roasturkey, roastturkeynmash, roastturkeydrumstick<br>
+**Link:** https://github.com/VOREStation/VOREStation/pull/16650<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/obj/trash.dmi`<br>
+**Creator:** Kligor <br>
+**Icon-States:** turkeybones<br>
+**Link:** https://github.com/VOREStation/VOREStation/pull/16650<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/obj/vore.dmi`<br>
+**Creator:** Kligor <br>
+**Icon-States:** turkey,turkey-1,turkeyrest,turkeydead<br>
+**Link:** https://github.com/VOREStation/VOREStation/pull/16650<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/inventory/head/item_rs.dmi, icons/inventory/head/mob_rs.dmi, icons/inventory/uniform/item_rs.dmi, icons/inventory/uniform/mob_rs.dmi, icons/inventory/suit/item_rs.dmi, icons/inventory/suit/mob_rs.dmi`<br>
+**Icon-States:** talon_basic_refreshed, talon_security_refreshed, talon_jumpsuit_refreshed, talon_pilot_refreshed, talon_captain_refreshed, talon_capcoat, talon_pilotjacket, talon_labcoat, taloncoat, talon_caphat, talon_pilothat, talonnewsoft, talon_beret, talon_officer_beret, winterhood_talon<br>
+**Creator:** Comissioned by axietheaxolotl, Imaginos16<br>
+**Link:** https://github.com/tgstation/tgstation/pull/70226, https://github.com/tgstation/tgstation/pull/67286, https://github.com/tgstation/tgstation/pull/69842, https://github.com/tgstation/tgstation/pull/66355, https://github.com/tgstation/tgstation/pull/73795, https://github.com/tgstation/tgstation/pull/71479
+

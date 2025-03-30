@@ -144,7 +144,7 @@ const ArmoryIcons = (props, context) => {
   if (iconkey in icons) {
     return (
       <img
-        src={icons[iconkey].substr(1, icons[iconkey].length - 1)}
+        src={icons[iconkey].substr(1, icons[iconkey].length - 2)}
         style={{
           position: 'absolute',
           left: 0,
@@ -153,7 +153,8 @@ const ArmoryIcons = (props, context) => {
           bottom: 0,
           width: '64px',
           height: '64px',
-          '-ms-interpolation-mode': 'nearest-neighbor',
+          imageRendering: 'pixelated', // For Chromium (516)
+          '-ms-interpolation-mode': 'nearest-neighbor', // For IE (515)
         }}
       />
     );

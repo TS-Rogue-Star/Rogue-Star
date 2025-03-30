@@ -69,7 +69,8 @@
 			list( //the doc,
 					/obj/item/weapon/storage/firstaid/combat,
 					/obj/item/weapon/gun/projectile/dartgun,
-					/obj/item/weapon/reagent_containers/hypospray,
+					/obj/item/weapon/revised_hypospray/CMO,//RS Edit
+					///obj/item/weapon/reagent_containers/hypospray,
 					/obj/item/weapon/reagent_containers/glass/bottle/chloralhydrate,
 					/obj/item/weapon/reagent_containers/glass/bottle/cyanide,
 					/obj/item/ammo_magazine/chemdart

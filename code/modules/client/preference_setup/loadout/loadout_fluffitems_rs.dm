@@ -59,3 +59,35 @@
 	display_name = "Mimedriver"
 	ckeywhitelist = list("murchant")
 	character_name = list("Fiddle")
+
+/datum/gear/fluff/sarihat
+	path = /obj/item/clothing/head/fluff/sari
+	slot = slot_head
+	display_name = "Sari's hat"
+	ckeywhitelist = list("crossexonar")
+	character_name = null
+
+/datum/gear/fluff/sarioutfit
+	path = /obj/item/clothing/under/fluff/sari
+	slot = slot_w_uniform
+	display_name = "Sari's jacket and clothes"
+	ckeywhitelist = list("crossexonar")
+	character_name = null
+
+/datum/gear/fluff/zara_medal
+	path = /obj/item/clothing/accessory/medal/silver/security
+	display_name = "Zara's Robust Security Award"
+	ckeywhitelist = list("hunterbirk")
+	character_name = list("Zara Aistulf")
+
+/datum/gear/fluff/baele_robe
+	path = /obj/item/clothing/suit/cultrobes/alt/fluff
+	display_name = "Baele's Robe"
+	ckeywhitelist = list("malderg")
+	character_name = list("Baele")
+
+/datum/gear/fluff/baele_hood
+	path = /obj/item/clothing/head/culthood/alt/fluff
+	display_name = "Baele's Robe"
+	ckeywhitelist = list("malderg")
+	character_name = list("Baele")

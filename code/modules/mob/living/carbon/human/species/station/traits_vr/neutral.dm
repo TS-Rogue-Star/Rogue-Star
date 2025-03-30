@@ -1119,17 +1119,20 @@
 	name = "Natural Artist"
 	desc = "Your body creates natural pigment or your fluids work like paint! You can paint without a paintbrush."
 	cost = 0
-	var_changes = list("nautral_artist" = TRUE)
+	custom_only = FALSE
+	var_changes = list("natural_artist" = TRUE)
 
 /datum/trait/neutral/natural_artist/apply(var/datum/species/S,var/mob/living/carbon/human/H)
 	..()
-	H.verbs |= /mob/living/carbon/human/proc/adjust_art_color
+	//H.verbs |= /mob/living/carbon/human/proc/adjust_art_color //simplifying
 	H.verbs |= /mob/living/carbon/human/proc/extend_retract_brush
+
 
 /datum/trait/neutral/waddle
 	name = "Waddle / Animated Movement"
 	desc = "You move in either an animated way or with a quite visible waddle!"
 	cost = 0
+	custom_only = FALSE
 
 /datum/trait/neutral/waddle/apply(var/datum/species/S,var/mob/living/carbon/human/H)
 	..()

@@ -178,7 +178,9 @@ var/list/admin_verbs_fun = list(
 	/client/proc/toggle_event_verb,		//RS ADD
 	/client/proc/change_station_name,	//RS ADD
 	/client/proc/pick_next_random_map,	//RS ADD
-	/client/proc/activate_vore_game	//RS ADD
+	/client/proc/activate_vore_game,	//RS ADD
+	/client/proc/summon					//RS ADD
+
 	)
 
 var/list/admin_verbs_spawn = list(

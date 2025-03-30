@@ -952,17 +952,20 @@ const VoreSelectedBellyVisuals = (props, context) => {
             </LabeledList.Item>
             {affects_voresprite ? (
               <span>
-                <LabeledList.Item label="Vore Sprite Mode">
-                  {(vore_sprite_flags.length && vore_sprite_flags.join(', ')) ||
-                    'None'}
-                  <Button
-                    onClick={() =>
-                      act('set_attribute', { attribute: 'b_vore_sprite_flags' })
-                    }
-                    ml={1}
-                    icon="plus"
-                  />
-                </LabeledList.Item>
+                {belly_sprite_option_shown ? (
+                  <LabeledList.Item label="Belly Sprite to affect">
+                    <Button
+                      onClick={() =>
+                        act('set_attribute', {
+                          attribute: 'b_belly_sprite_to_affect',
+                        })
+                      }
+                      content={belly_sprite_to_affect}
+                    />
+                  </LabeledList.Item>
+                ) : (
+                  ''
+                )}
                 <LabeledList.Item label="Count Absorbed prey for vore sprites">
                   <Button
                     onClick={() =>
@@ -1057,20 +1060,6 @@ const VoreSelectedBellyVisuals = (props, context) => {
                     content={voresprite_size_factor}
                   />
                 </LabeledList.Item>
-                {belly_sprite_option_shown ? (
-                  <LabeledList.Item label="Belly Sprite to affect">
-                    <Button
-                      onClick={() =>
-                        act('set_attribute', {
-                          attribute: 'b_belly_sprite_to_affect',
-                        })
-                      }
-                      content={belly_sprite_to_affect}
-                    />
-                  </LabeledList.Item>
-                ) : (
-                  ''
-                )}
                 {tail_option_shown &&
                 vore_sprite_flags.includes('Undergarment addition') ? (
                   <div>
@@ -1934,12 +1923,26 @@ const VoreUserPreferences = (props, context) => {
     allowstripping,
     allowcontamination,
     allowssdvore,
+    glowing_belly,
     autotransferable,
   } = data.prefs;
 
   const { show_pictures } = data;
 
   const preferences = {
+    belly_glow: {
+      action: 'toggle_glow',
+      test: glowing_belly,
+      tooltip: {
+        main: 'This button is to make your stomach glow or not!',
+        enable: 'Click here to have your stomach glow!',
+        disable: 'Click here to have your stomach be normal.',
+      },
+      content: {
+        enabled: 'Glowing',
+        disabled: 'Not Glowing',
+      },
+    },
     digestion: {
       action: 'toggle_digest',
       test: digestable,
@@ -2468,6 +2471,9 @@ const VoreUserPreferences = (props, context) => {
         </Flex.Item>
         <Flex.Item basis="32%">
           <VoreUserPreferenceItem spec={preferences.eating_privacy_global} />
+        </Flex.Item>
+        <Flex.Item basis="32%">
+          <VoreUserPreferenceItem spec={preferences.belly_glow} />
         </Flex.Item>
       </Flex>
       <Section title="Aesthetic Preferences">

@@ -76,10 +76,11 @@
 		if(can_be_drop_pred) //Toggleable in vore panel
 			var/list/potentials = living_mobs(0)
 			if(potentials.len)
-				var/mob/living/target = pick(potentials)
-				if(istype(target) && target.devourable && target.can_be_drop_prey && vore_selected)
-					target.forceMove(vore_selected)
-					to_chat(target,"<span class='warning'>\The [src] phases in around you, [vore_selected.vore_verb]ing you into their [vore_selected.name]!</span>")
+				for(var/mob/living/target in potentials)	//RS EDIT START
+					if(spont_pref_check(src,target,SPONT_PRED))
+						target.forceMove(vore_selected)
+						to_chat(target,"<span class='warning'>\The [src] phases in around you, [vore_selected.vore_verb]ing you into their [vore_selected.name]!</span>")
+															//RS EDIT END
 
 		// Do this after the potential vore, so we get the belly
 		update_icon()

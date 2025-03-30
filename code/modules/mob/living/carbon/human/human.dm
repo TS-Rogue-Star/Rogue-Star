@@ -101,6 +101,7 @@
 		species.Stat(src)
 
 /mob/living/carbon/human/ex_act(severity)
+	if(is_incorporeal()) return //RS ADD - Do not blow up phased out shadekin
 	if(!blinded)
 		flash_eyes()
 

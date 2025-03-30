@@ -492,9 +492,7 @@
 		else
 			B.apply_damage(5, BRUTE, BP_HEAD) //You're getting fangs pushed into your neck. What do you expect????
 
-			var/datum/species/shadekin/SK = species //RS Edit Start. Shadekin energy.
-			if(istype(SK))
-				shadekin_adjust_energy(50) //RS Edit End A base 50. Goes off the equation that can be seen in bellymodes_vr, plus 10 for drinking blood!
+		shadekin_adjust_energy(50,TRUE) //RS Edit End A base 50. Goes off the equation that can be seen in bellymodes_vr, plus 10 for drinking blood!
 
 		if(!noise && !bleed) //If we're quiet and careful, there should be no blood to serve as evidence
 			B.remove_blood(82) //Removing in one go since we dont want splatter
@@ -507,7 +505,6 @@
 			sleep(50)
 			B.drip(1)
 
-
 //Welcome to the adapted changeling absorb code.
 /mob/living/carbon/human/verb/succubus_drain()
 	set name = "Drain prey of nutrition"
@@ -516,12 +513,6 @@
 	if(!ishuman(src))
 		return //If you're not a human you don't have permission to do this.
 	var/mob/living/carbon/human/C = src
-	//RS Edit Start
-	var/datum/species/shadekin/SK = species //Important for shadekin stuff!
-	var/is_shadekin = 0
-	if(istype(SK))
-		is_shadekin = 1
-	//RS Edit End
 	var/obj/item/weapon/grab/G = src.get_active_hand()
 	if(!istype(G))
 		to_chat(C, "<span class='warning'>You must be grabbing a creature in your active hand to absorb them.</span>")
@@ -547,21 +538,18 @@
 				to_chat(C, "<span class='notice'>You begin to drain [T]...</span>")
 				to_chat(T, "<span class='danger'>An odd sensation flows through your body as [C] begins to drain you!</span>")
 				C.nutrition = (C.nutrition + (T.nutrition*0.05)) //Drain a small bit at first. 5% of the prey's nutrition.
-				if(is_shadekin) //RS Edit
-					shadekin_adjust_energy(T.nutrition*0.05/10) //RS Edit
+				shadekin_adjust_energy(T.nutrition*0.05/10,TRUE) //RS Edit
 				T.nutrition = T.nutrition*0.95
 			if(2)
 				to_chat(C, "<span class='notice'>You feel stronger with every passing moment of draining [T].</span>")
 				src.visible_message("<span class='danger'>[C] seems to be doing something to [T], resulting in [T]'s body looking weaker with every passing moment!</span>")
 				to_chat(T, "<span class='danger'>You feel weaker with every passing moment as [C] drains you!</span>")
 				C.nutrition = (C.nutrition + (T.nutrition*0.1))
-				if(is_shadekin) //RS Edit
-					shadekin_adjust_energy(T.nutrition*0.1/10) //RS Edit
+				shadekin_adjust_energy(T.nutrition*0.1/10,TRUE) //RS Edit
 				T.nutrition = T.nutrition*0.9
 			if(3 to 99)
 				C.nutrition = (C.nutrition + (T.nutrition*0.1)) //Just keep draining them.
-				if(is_shadekin) //RS Edit
-					shadekin_adjust_energy(T.nutrition*0.1/10) //RS Edit
+				shadekin_adjust_energy(T.nutrition*0.1/10,TRUE) //RS Edit
 				T.nutrition = T.nutrition*0.9
 				T.eye_blurry += 5 //Some eye blurry just to signify to the prey that they are still being drained. This'll stack up over time, leave the prey a bit more "weakened" after the deed is done.
 				if(T.nutrition < 100 && stage < 99 && C.drain_finalized == 1)//Did they drop below 100 nutrition? If so, immediately jump to stage 99 so it can advance to 100.
@@ -570,8 +558,7 @@
 					stage = 3
 			if(100)
 				C.nutrition = (C.nutrition + T.nutrition)
-				if(is_shadekin) //RS Edit
-					shadekin_adjust_energy(T.nutrition/10) //RS Edit
+				shadekin_adjust_energy(T.nutrition/10,TRUE) //RS Edit
 				T.nutrition = 0 //Completely drained of everything.
 				var/damage_to_be_applied = T.species.total_health //Get their max health.
 				T.apply_damage(damage_to_be_applied, HALLOSS) //Knock em out.
@@ -592,12 +579,6 @@
 	set category = "Abilities"
 	if(!ishuman(src))
 		return //If you're not a human you don't have permission to do this.
-	//RS Edit Start
-	var/datum/species/shadekin/SK = species //Important for shadekin stuff!
-	var/is_shadekin = 0
-	if(istype(SK))
-		is_shadekin = 1
-	//RS Edit End
 	var/obj/item/weapon/grab/G = src.get_active_hand()
 	if(!istype(G))
 		to_chat(src, "<span class='warning'>You must be grabbing a creature in your active hand to drain them.</span>")
@@ -626,21 +607,18 @@
 				to_chat(src, "<span class='notice'>You begin to drain [T]...</span>")
 				to_chat(T, "<span class='danger'>An odd sensation flows through your body as [src] begins to drain you!</span>")
 				nutrition = (nutrition + (T.nutrition*0.05)) //Drain a small bit at first. 5% of the prey's nutrition.
-				if(is_shadekin) //RS Edit
-					shadekin_adjust_energy(T.nutrition*0.05/10) //RS Edit
+				shadekin_adjust_energy(T.nutrition*0.05/10,TRUE) //RS Edit
 				T.nutrition = T.nutrition*0.95
 			if(2)
 				to_chat(src, "<span class='notice'>You feel stronger with every passing moment as you drain [T].</span>")
 				visible_message("<span class='danger'>[src] seems to be doing something to [T], resulting in [T]'s body looking weaker with every passing moment!</span>")
 				to_chat(T, "<span class='danger'>You feel weaker with every passing moment as [src] drains you!</span>")
 				nutrition = (nutrition + (T.nutrition*0.1))
-				if(is_shadekin) //RS Edit
-					shadekin_adjust_energy(T.nutrition*0.10/10) //RS Edit
+				shadekin_adjust_energy(T.nutrition*0.10/10,TRUE) //RS Edit
 				T.nutrition = T.nutrition*0.9
 			if(3 to 48) //Should be more than enough to get under 100.
 				nutrition = (nutrition + (T.nutrition*0.1)) //Just keep draining them.
-				if(is_shadekin) //RS Edit
-					shadekin_adjust_energy(T.nutrition*0.10/10) //RS Edit
+				shadekin_adjust_energy(T.nutrition*0.10/10,TRUE) //RS Edit
 				T.nutrition = T.nutrition*0.9
 				T.eye_blurry += 5 //Some eye blurry just to signify to the prey that they are still being drained. This'll stack up over time, leave the prey a bit more "weakened" after the deed is done.
 				if(T.nutrition < 100)//Did they drop below 100 nutrition? If so, do one last check then jump to stage 50 (Lethal!)
@@ -653,8 +631,7 @@
 					to_chat(src, "<span class='danger'>You feel invigorated as you completely drain [T] and begin to move onto draining them lethally before realizing they are too strong for you to do so!</span>")
 					to_chat(T, "<span class='danger'>You feel completely drained as [src] finishes draining you and begins to move onto draining you lethally, but you are too strong for them to do so!</span>")
 					nutrition = (nutrition + T.nutrition)
-					if(is_shadekin) //RS Edit
-						shadekin_adjust_energy(T.nutrition/10) //RS Edit
+					shadekin_adjust_energy(T.nutrition/10,TRUE) //RS Edit
 					T.nutrition = 0 //Completely drained of everything.
 					var/damage_to_be_applied = T.species.total_health //Get their max health.
 					T.apply_damage(damage_to_be_applied, HALLOSS) //Knock em out.
@@ -674,8 +651,7 @@
 					T.adjustBrainLoss(5) //Will kill them after a short bit!
 				T.eye_blurry += 20 //A lot of eye blurry just to signify to the prey that they are still being drained. This'll stack up over time, leave the prey a bit more "weakened" after the deed is done. More than non-lethal due to their lifeforce being sucked out
 				nutrition = (nutrition + 25) //Assuming brain damage kills at 60, this gives 300 nutrition.
-				if(is_shadekin) //RS Edit
-					shadekin_adjust_energy(2.5) //RS Edit
+				shadekin_adjust_energy(2.5,TRUE) //RS Edit
 			if(99)
 				if(drain_finalized != 1)
 					stage = 51
@@ -716,12 +692,6 @@
 	if(C.absorbing_prey)
 		to_chat(C, "<span class='warning'>You are already feeding someone!</span>")
 		return
-	//RS Edit Start
-	var/datum/species/shadekin/SK = T.species //Important for shadekin stuff!
-	var/is_shadekin = 0
-	if(istype(SK))
-		is_shadekin = 1
-	//RS Edit End
 
 	C.absorbing_prey = 1
 	for(var/stage = 1, stage<=100, stage++) //100 stages.
@@ -730,21 +700,18 @@
 				to_chat(C, "<span class='notice'>You begin to feed [T]...</span>")
 				to_chat(T, "<span class='notice'>An odd sensation flows through your body as [C] begins to feed you!</span>")
 				T.nutrition = (T.nutrition + (C.nutrition*0.05)) //Drain a small bit at first. 5% of the prey's nutrition.
-				if(is_shadekin) //RS Edit
-					T.shadekin_adjust_energy(C.nutrition*0.05/10) //RS Edit
+				T.shadekin_adjust_energy(C.nutrition*0.05/10,TRUE) //RS Edit
 				C.nutrition = C.nutrition*0.95
 			if(2)
 				to_chat(C, "<span class='notice'>You feel weaker with every passing moment of feeding [T].</span>")
 				src.visible_message("<span class='notice'>[C] seems to be doing something to [T], resulting in [T]'s body looking stronger with every passing moment!</span>")
 				to_chat(T, "<span class='notice'>You feel stronger with every passing moment as [C] feeds you!</span>")
 				T.nutrition = (T.nutrition + (C.nutrition*0.1))
-				if(is_shadekin) //RS Edit
-					T.shadekin_adjust_energy(C.nutrition*0.1/10) //RS Edit
+				T.shadekin_adjust_energy(C.nutrition*0.1/10,TRUE) //RS Edit
 				C.nutrition = C.nutrition*0.90
 			if(3 to 99)
 				T.nutrition = (T.nutrition + (C.nutrition*0.1)) //Just keep draining them.
-				if(is_shadekin) //RS Edit
-					T.shadekin_adjust_energy(C.nutrition*0.1/10) //RS Edit
+				T.shadekin_adjust_energy(C.nutrition*0.1/10,TRUE) //RS Edit
 				C.nutrition = C.nutrition*0.9
 				T.eye_blurry += 1 //Eating a slime's body is odd and will make your vision a bit blurry!
 				if(C.nutrition < 100 && stage < 99 && C.drain_finalized == 1)//Did they drop below 100 nutrition? If so, immediately jump to stage 99 so it can advance to 100.
@@ -753,8 +720,7 @@
 					stage = 3
 			if(100)
 				T.nutrition = (T.nutrition + C.nutrition)
-				if(is_shadekin) //RS Edit
-					T.shadekin_adjust_energy(C.nutrition/10) //RS Edit
+				T.shadekin_adjust_energy(C.nutrition/10,TRUE) //RS Edit
 				C.nutrition = 0 //Completely drained of everything.
 				C.absorbing_prey = 0
 				to_chat(C, "<span class='danger'>You have completely fed [T] every part of your body!</span>")
@@ -1283,7 +1249,7 @@
 			for(var/mob/living/L in T)
 				if(L == src) //no eating yourself. 1984.
 					continue
-				if(L.devourable && L.can_be_drop_prey)
+				if(spont_pref_check(src,L,SPONT_PRED)) //RS EDIT
 					targets += L
 
 	if(!(targets.len))
@@ -1341,7 +1307,7 @@
 			for(var/mob/living/L in T)
 				if(L == src) //no eating yourself. 1984.
 					continue
-				if(L.devourable && L.throw_vore && (L.can_be_drop_pred || L.can_be_drop_prey))
+				if(spont_pref_check(src,L,SPONT_PRED))	//RS EDIT
 					targets += L
 				//With the current throw-vore logic:
 				//If both have pred&prey enabled, person being hit eats the person being thrown. Aka the diver gets eaten.
@@ -1429,7 +1395,7 @@
 				continue
 			if(L == src) //no eating yourself. 1984.
 				continue
-			if(L.devourable && L.throw_vore && (L.can_be_drop_pred || L.can_be_drop_prey))
+			if(spont_pref_check(src,L,THROW_VORE) || spont_pref_check(L,src,THROW_VORE))	//RS EDIT
 				targets += L
 
 		if(!(targets.len))
@@ -1628,7 +1594,7 @@
 				continue
 			if(L == src) //no eating yourself. 1984.
 				continue
-			if(L.devourable && L.throw_vore && (L.can_be_drop_pred || L.can_be_drop_prey))
+			if(spont_pref_check(src,L,THROW_VORE) || spont_pref_check(L,src,THROW_VORE))	//RS EDIT
 				targets += L
 
 		if(!(targets.len))
@@ -1704,7 +1670,7 @@
 
 	choices += "Change amount"
 	choices += "Change verb"
-	choices += "Chemical refresher"
+	choices += "Chemical Refresher"
 
 	var/choice = tgui_alert(src, "Do you wish to inject somebody or adjust settings?", "Selection List", choices)
 
@@ -1769,9 +1735,9 @@
 			continue
 		if(L == src) //no getting high off your own supply, get a nif or something, nerd.
 			continue
-		if(!L.resizable && (trait_injection_selected == "macrocillin" || trait_injection_selected == "microcillin" || trait_injection_selected == "normalcillin")) // If you're using a size reagent, ignore those with pref conflicts.
+		if(!(L.resizable && spont_pref_check(src,L,RESIZING)) && (trait_injection_selected == "macrocillin" || trait_injection_selected == "microcillin" || trait_injection_selected == "normalcillin")) // If you're using a size reagent, ignore those with pref conflicts.	//RS EDIT
 			continue
-		if(!L.allow_spontaneous_tf && (trait_injection_selected == "androrovir" || trait_injection_selected == "gynorovir" || trait_injection_selected == "androgynorovir")) // If you're using a TF reagent, ignore those with pref conflicts. || Ports VOREStation PR16060
+		if(!(L.allow_spontaneous_tf && spont_pref_check(src,L,SPONT_TF)) && (trait_injection_selected == "androrovir" || trait_injection_selected == "gynorovir" || trait_injection_selected == "androgynorovir")) // If you're using a TF reagent, ignore those with pref conflicts. || Ports VOREStation PR16060	//RS EDIT
 			continue
 		targets += L
 
@@ -1830,7 +1796,7 @@
 //RS ADD END
 
 //RS ADD
-/mob/living/carbon/human/proc/adjust_art_color()
+/*/mob/living/carbon/human/proc/adjust_art_color()
 	set name = "Adjust Artistic Color"
 	set category = "Abilities"
 	set desc = "Adjust what color you are currently painting with!"
@@ -1848,7 +1814,7 @@
 			linked_brush.update_paint(species.artist_color)
 			linked_brush.hud_layerise()
 			linked_brush.color = species.artist_color
-
+*/ //Removed and simplified to just click the brush
 /mob/living/carbon/human/proc/extend_retract_brush()
 	set name = "Conjure Natural Brush"
 	set category = "Abilities"

@@ -7,3 +7,4 @@
 //RS Add
 #define SMITE_GIVECHEM				"Give Reagent"
 #define SMITE_PURGECHEM				"Purge All Reagents"
+#define SMITE_XP					"Grant XP"

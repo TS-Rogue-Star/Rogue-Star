@@ -11,7 +11,8 @@ GLOBAL_VAR(special_station_name)
 	var/list/possible_verbs = list(
 		/mob/living/proc/blue_shift,
 		/mob/living/proc/vore_leap_attack,
-		/mob/living/proc/set_size
+		/mob/living/proc/set_size,
+		/mob/living/proc/pomf
 		)
 
 	var/choice = tgui_input_list(usr, "Which verb would you like to add/remove?", "Event Verb", possible_verbs)
@@ -125,3 +126,131 @@ GLOBAL_VAR(special_station_name)
 			for(var/mob/M in player_list)
 				if(M.client)
 					M.client.update_special_station_name()
+
+/mob/living/proc/pomf()
+	set name = "Pomf"
+	set desc = "Pomf them!"
+	set category = "Abilities"
+	set waitfor = FALSE
+
+	visible_message(SPAN_DANGER("\The [src] cries out!!!"))
+	playsound(src, 'sound/effects/bang.ogg', 75, 1)
+
+	for(var/mob/living/L in view(world.view, get_turf(src)))
+		if(!isliving(L))
+			continue
+		if(L == usr)
+			continue
+
+		L.AdjustStunned(3)
+		L.AdjustWeakened(3)
+		to_chat(L,SPAN_WARNING("\The [src]'s call knocks you to the ground!"))
+
+/client/proc/summon()
+	set name = "Summon"
+	set desc = "Summon them!"
+	set category = "Fun"
+	set waitfor = FALSE
+
+	if(!check_rights(R_ADMIN|R_MOD|R_DEBUG|R_EVENT))
+		return
+	if(!config.allow_admin_jump)
+		to_chat(usr, "Admin jumping disabled")
+		return
+
+	var/choice = tgui_alert(usr, "What range do you want to summon people at?","Summoning",list("This Z","Global","Cancel"))
+
+	if(!choice || choice == "Cancel") return
+
+	var/turf/T = get_turf(usr)
+	playsound(mob, 'sound/effects/genetics.ogg', 75, 1)
+	for(var/mob/living/L in player_list)
+		if(!isliving(L))	//Don't summon ghosts or whatever
+			continue
+		if(L == usr)		//Don't summon yourself
+			continue
+		if(isbelly(L.loc))	//their pred will get asked instead
+			continue
+		if(choice == "This Z")	//Extra logic for only affecting people on the same Z
+			var/turf/ourturf = get_turf(L)	//In case someone is hidden in a state where they are not technically on a turf, such as closets, reagent containers, etc
+			if(T.z != ourturf.z)
+				continue
+
+		L.do_summoning(usr,T)
+
+/mob/living/proc/do_summoning(var/mob/target,var/turf/targ_turf)	//Split this into its own proc so it can happen independently
+	if(!target) return
+
+	if(!targ_turf)
+		targ_turf = get_turf(target)
+
+	SEND_SOUND(src, sound('sound/misc/server-ready.ogg'))
+	if(tgui_alert(src,"\The [target] is summoning you to their location. Would you like to join them?","Summoning",list("Yes","No")) != "Yes")
+		return
+
+	forceMove(targ_turf)
+
+/obj/item/weapon/material/sword/wind_blade
+	name = "wind blade"
+	desc = "A beautiful elegant blade covered in impossibly intricate designs and polished to a mirror shine. It is extremely sharp."
+	icon = 'icons/rogue-star/misc.dmi'
+	icon_state = "wind_blade"
+	applies_material_colour = FALSE
+	slot_flags = SLOT_BELT | SLOT_BACK
+	can_cleave = TRUE
+
+	item_icons = list(
+			slot_l_hand_str = 'icons/mob/items/lefthand_melee_rs.dmi',
+			slot_r_hand_str = 'icons/mob/items/righthand_melee_rs.dmi',
+			slot_back_str = 'icons/rogue-star/custom_onmob_back.dmi',
+			slot_belt_str = 'icons/rogue-star/custom_onmob_belt.dmi'
+			)
+
+	var/obj/item/projectile/projectile_type = /obj/item/projectile/sword_beam
+	var/next_fire_time = 0
+	var/shoot_cooldown = 3
+
+/obj/item/weapon/material/sword/wind_blade/pre_attack(mob/living/target, mob/living/user)
+	. = ..()
+	if(user.a_intent == I_HELP)
+		return
+	shoot_beam(target,user,shoot_cooldown)
+
+/obj/item/weapon/material/sword/wind_blade/proc/shoot_beam(mob/living/target, mob/living/user, var/cooldown)
+
+	if(!user || !target) return
+	if(target.z != user.z) return
+
+	add_fingerprint(user)
+
+	user.break_cloak()
+
+	if(world.time < next_fire_time)
+		if (world.time % 3) //to prevent spam
+			to_chat(user, "<span class='warning'>[src] is not ready to fire again!</span>")
+		return
+
+
+	if(cooldown)
+		next_fire_time = world.time + cooldown SECONDS
+
+	user.face_atom(target)
+
+	var/obj/item/projectile/P = new projectile_type(get_turf(src))
+	if(!P)
+		return
+
+	P.launch_projectile(target = target, target_zone = null, user = src, params = null, angle_override = null, forced_spread = 0)
+
+/obj/item/projectile/sword_beam
+	name = "sword beam"
+	icon = 'icons/rogue-star/misc.dmi'
+	icon_state = "sword_slash"
+	fire_sound = 'sound/effects/bang.ogg'
+	damage = 8
+	damage_type = BRUTE
+	check_armour = "melee"
+
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
+	hitsound_wall = 'sound/effects/bang.ogg'
+	speed = 2

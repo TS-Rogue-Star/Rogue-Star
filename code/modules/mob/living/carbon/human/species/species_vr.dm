@@ -53,14 +53,16 @@
 
 /datum/species/create_organs(var/mob/living/carbon/human/H)
 	if(H.nif)
-		var/type = H.nif.type
-		var/durability = H.nif.durability
-		var/list/nifsofts = H.nif.nifsofts
-		var/list/nif_savedata = H.nif.save_data.Copy()
-		..()
+		//RS EDIT START - Instead of counting on the nif getting deleted and making a new one, let's just drop it on the floor and reinstall it, that way it keeps all its contents and such
+		var/obj/item/device/nif/ournif = H.nif	//Let's register the nif because we need to clear the var on H
+		ournif.invisibility = 9999				//Make it super invisible so no one sees our shame for the one or two frames it might be on the screen
+		ournif.forceMove(get_turf(H))			//Put it on the floor, since our organs are about to get regenerated, and if it's in our head, it will die
+		H.nif = null							//Clear H's nif var, otherwise the nif will delete itself when it tries to install
+		..()									//Go ravage my body, I'm ready
 
-		var/obj/item/device/nif/nif = new type(H,durability,nif_savedata)
-		nif.nifsofts = nifsofts
+		ournif.quick_implant(H)					//Same proc that happens when you spawn in with it - will put it back in our head
+		ournif.invisibility = 0					//and unhide the nif in case someone decides to pull it out of our head
+		//RS EDIT END
 	else
 		..()
 /datum/species/proc/produceCopy(var/list/traits, var/mob/living/carbon/human/H, var/custom_base)

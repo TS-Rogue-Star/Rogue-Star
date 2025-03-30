@@ -71,6 +71,7 @@
 /obj/item/canvas/Initialize()
 	. = ..()
 	reset_grid()
+	desc += " (Canvas size is [width]x[height].)" // RSEdit - Add canvas size into the canvas description
 
 /obj/item/canvas/proc/reset_grid()
 	grid = new/list(width,height)
@@ -309,6 +310,10 @@
 		var/newcolor = input(user, "Select a new paint color:", "Paint Palette", P.selected_color) as null|color
 		if(newcolor && Adjacent(user, P) && Adjacent(user, src))
 			P.update_paint(newcolor)
+			if(istype(W, /obj/item/paint_brush/organic) && istype(user, /mob/living/carbon/human)) //RS Add, accounts for organic paintbrushes being used on palettes.
+				var/mob/living/carbon/human/H = user
+				P.color = newcolor
+				H.species.artist_color = newcolor //RS add End
 	else
 		return ..()
 
@@ -680,3 +685,9 @@
 				P.update_appearance()
 		loaded = FALSE
 		log_and_message_admins("<span class='notice'>[key_name_admin(user)] has deleted persistent painting made by [author].</span>")
+
+/obj/structure/sign/painting/unfasten(mob/user)
+	if(current_canvas)
+		to_chat(user,SPAN_WARNING("You have to remove the painting before you can take down the frame!"))
+		return
+	. = ..()

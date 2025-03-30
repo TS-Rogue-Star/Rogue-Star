@@ -91,6 +91,8 @@
 	if(pulledby)
 		pulledby.stop_pulling()
 	stop_pulling()
+	stop_aiming(no_message=1)	//RS ADD - no shooting guns while phased out
+	emp_act(5)	//RS ADD - do a mostly harmless EMP to turn any communicators and radios off
 	canmove = FALSE
 
 	//Shifting in
@@ -108,12 +110,17 @@
 			B.escapable = FALSE
 
 		var/obj/effect/temp_visual/shadekin/phase_out/phaseanim = new /obj/effect/temp_visual/shadekin/phase_out(src.loc)
+		//RS Add | Chomp port #8267
+		phaseanim.pixel_y = (src.size_multiplier - 1) * 16 // Pixel shift for the animation placement
+		phaseanim.adjust_scale(src.size_multiplier, src.size_multiplier)
+		//Rs Add end
 		phaseanim.dir = dir
 		alpha = 0
 		add_modifier(/datum/modifier/shadekin_phase_vision)
 		sleep(5)
-		invisibility = INVISIBILITY_LEVEL_TWO
-		see_invisible = INVISIBILITY_LEVEL_TWO
+		invisibility = INVISIBILITY_SHADEKIN
+		see_invisible = INVISIBILITY_SHADEKIN
+		see_invisible_default = INVISIBILITY_SHADEKIN //RS Add Chomp port #7484 | CHOMPEdit - Allow seeing phased entities while phased.
 		//cut_overlays()
 		update_icon()
 		alpha = 127
@@ -139,6 +146,7 @@
 		//cut_overlays()
 		invisibility = initial(invisibility)
 		see_invisible = initial(see_invisible)
+		see_invisible_default = initial(see_invisible_default)	//RS EDIT
 		incorporeal_move = initial(incorporeal_move)
 		density = initial(density)
 		force_max_speed = initial(force_max_speed)
@@ -146,6 +154,10 @@
 
 		//Cosmetics mostly
 		var/obj/effect/temp_visual/shadekin/phase_in/phaseanim = new /obj/effect/temp_visual/shadekin/phase_in(src.loc)
+		//RS Add | Chomp port #8267
+		phaseanim.pixel_y = (src.size_multiplier - 1) * 16 // Pixel shift for the animation placement
+		phaseanim.adjust_scale(src.size_multiplier, src.size_multiplier)
+		//Rs Add end
 		phaseanim.dir = dir
 		alpha = 0
 		custom_emote(1,"phases in!")
@@ -158,11 +170,11 @@
 		if(can_be_drop_pred) //Toggleable in vore panel
 			var/list/potentials = living_mobs(0)
 			if(potentials.len)
-				var/mob/living/target = pick(potentials)
-				if(istype(target) && target.devourable && target.can_be_drop_prey && vore_selected)
-					target.forceMove(vore_selected)
-					to_chat(target,"<span class='warning'>\The [src] phases in around you, [vore_selected.vore_verb]ing you into their [vore_selected.name]!</span>")
-
+				for(var/mob/living/target in potentials)	//RS EDIT START
+					if(istype(target) && spont_pref_check(src,target,SPONT_PRED))
+						target.forceMove(vore_selected)
+						to_chat(target,"<span class='warning'>\The [src] phases in around you, [vore_selected.vore_verb]ing you into their [vore_selected.name]!</span>")
+															//RS EDIT END
 		ability_flags &= ~AB_PHASE_SHIFTING
 
 		//Affect nearby lights
@@ -203,7 +215,7 @@
 //////////////////////////
 /datum/power/shadekin/regenerate_other
 	name = "Regenerate Other (50)"
-	desc = "Spend energy to heal physical wounds in another creature."
+	desc = "Spend energy to heal physical wounds in another creature. Only works while they are alive."	//RS EDIT
 	verbpath = /mob/living/carbon/human/proc/regenerate_other
 	ability_icon_state = "tech_biomedaura"
 
@@ -236,7 +248,8 @@
 	var/list/viewed = oview(1)
 	var/list/targets = list()
 	for(var/mob/living/L in viewed)
-		targets += L
+		if(L.stat != DEAD)	//RS ADD - This was modelled after healbelly in its ability originally, and healbelly can't heal corpses, so, this probably shouldn't either.
+			targets += L	//RS ADD
 	if(!targets.len)
 		to_chat(src,"<span class='warning'>Nobody nearby to mend!</span>")
 		return FALSE

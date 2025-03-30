@@ -61,9 +61,9 @@
 		usr = M
 
 	if(food_inserted_micros && food_inserted_micros.len)
-		if(M.can_be_drop_pred && M.food_vore && M.vore_selected)
+		if(M.vore_selected)	//RS EDIT
 			for(var/mob/living/F in food_inserted_micros)
-				if(!F.can_be_drop_prey || !F.food_vore)
+				if(!spont_pref_check(M,F,FOOD_VORE))	//RS EDIT
 					continue
 
 				var/do_nom = FALSE
@@ -330,9 +330,13 @@
 							S.food_inserted_micros = list()
 						S.food_inserted_micros += F
 						food_inserted_micros -= F
+			on_slice_extra()
 
 			qdel(src)
 			return
+
+/obj/item/weapon/reagent_containers/food/snacks/proc/on_slice_extra()
+	return
 
 /obj/item/weapon/reagent_containers/food/snacks/MouseDrop_T(mob/living/M, mob/user)
 	if(!user.stat && istype(M) && (M == user) && Adjacent(M) && (M.get_effective_size(TRUE) <= 0.50) && food_can_insert_micro)
@@ -3496,6 +3500,8 @@
 	trash = /obj/item/trash/plate
 	bitesize = 2
 
+//RS Edit || Adds VOREStation PR16650
+/*
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/turkey
 	name = "turkey"
 	desc = "Tastes like chicken."
@@ -3521,7 +3527,53 @@
 	icon = 'icons/obj/food.dmi'
 	icon_state = "turkey_drumstick"
 	trash = /obj/item/trash/plate
+	bitesize = 2 */
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/turkey
+	name = "turkey"
+	desc = "Tastes like chicken."
+	icon = 'icons/obj/food.dmi'
+	icon_state = "roastturkey"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/turkeyslice
+	slices_num = 6
+	w_class = 2
+	nutriment_amt = 20
+	nutriment_desc = list("turkey" = 20)
+	bitesize = 5
+	trash = /obj/item/trash/turkeybones
+	var/list/extra_product = list(/obj/item/weapon/reagent_containers/food/snacks/turkeydrumstick = 2,
+									/obj/item/trash/turkeybones = 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/turkey/Initialize()
+	. = ..()
+	reagents.add_reagent("blackpepper", 1)
+	reagents.add_reagent("sodiumchloride", 1)
+	reagents.add_reagent("cookingoil", 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/turkey/on_slice_extra()
+	for(var/i in extra_product)
+		for(var/j=1 to extra_product[i])
+			new i(src.loc)
+
+/obj/item/weapon/reagent_containers/food/snacks/turkeyslice
+	name = "turkey'n'mash"
+	desc = "Turkey slices with some delicious stuffing."
+	icon = 'icons/obj/food.dmi'
+	icon_state = "roastturkeynmash"
+	trash = /obj/item/trash/plate
 	bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/turkeydrumstick
+	name = "turkey drumstick"
+	desc = "The best part!"
+	icon = 'icons/obj/food.dmi'
+	icon_state = "roastturkeydrumstick"
+	trash = null
+	nutriment_amt = 8
+	nutriment_desc = list("turkey" = 20)
+	bitesize = 2
+
+//RS Edit end
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/suppermatter
 	name = "suppermatter"

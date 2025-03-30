@@ -1,23 +1,24 @@
 //Normal map defs
-#define Z_LEVEL_SHIP_LOW					1
-#define Z_LEVEL_SHIP_MID					2
-#define Z_LEVEL_SHIP_HIGH					3
-#define Z_LEVEL_CENTCOM						4
-#define Z_LEVEL_MISC						5
-#define Z_LEVEL_SPACE_ROCKS					6
-#define Z_LEVEL_BEACH						7
-#define Z_LEVEL_BEACH_CAVE					8
-#define Z_LEVEL_AEROSTAT					9
-#define Z_LEVEL_AEROSTAT_SURFACE			10
-#define Z_LEVEL_DEBRISFIELD					11
-#define Z_LEVEL_FUELDEPOT					12
-#define Z_LEVEL_OVERMAP						13
-#define Z_LEVEL_OFFMAP1						14
-#define Z_LEVEL_SNOWBASE					15
-#define Z_LEVEL_GLACIER						16
-#define Z_LEVEL_GATEWAY						17
-#define Z_LEVEL_OM_ADVENTURE				18
-#define Z_LEVEL_REDGATE						19
+#define Z_LEVEL_SHIP_MAINTENANCE			1
+#define Z_LEVEL_SHIP_LOW					2
+#define Z_LEVEL_SHIP_MID					3
+#define Z_LEVEL_SHIP_HIGH					4
+#define Z_LEVEL_CENTCOM						5
+#define Z_LEVEL_MISC						6
+#define Z_LEVEL_SPACE_ROCKS					7
+#define Z_LEVEL_BEACH						8
+#define Z_LEVEL_BEACH_CAVE					9
+#define Z_LEVEL_AEROSTAT					10
+#define Z_LEVEL_AEROSTAT_SURFACE			11
+#define Z_LEVEL_DEBRISFIELD					12
+#define Z_LEVEL_FUELDEPOT					13
+#define Z_LEVEL_OVERMAP						14
+#define Z_LEVEL_OFFMAP1						15
+#define Z_LEVEL_SNOWBASE					16
+#define Z_LEVEL_GLACIER						17
+#define Z_LEVEL_GATEWAY						18
+#define Z_LEVEL_OM_ADVENTURE				19
+#define Z_LEVEL_REDGATE						20
 
 //Camera networks
 #define NETWORK_HALLS "Halls"
@@ -118,6 +119,7 @@
 	default_skybox = /datum/skybox_settings/stellar_delight
 
 	unit_test_exempt_areas = list(
+		/area/stellardelight/deck0/exterior,
 		/area/stellardelight/deck1/exterior,
 		/area/stellardelight/deck1/exploshuttle,
 		/area/stellardelight/deck1/miningshuttle,
@@ -134,6 +136,7 @@
 	unit_test_exempt_from_atmos = list() //it maint
 
 	unit_test_z_levels = list(
+		Z_LEVEL_SHIP_MAINTENANCE,
 		Z_LEVEL_SHIP_LOW,
 		Z_LEVEL_SHIP_MID,
 		Z_LEVEL_SHIP_HIGH
@@ -185,6 +188,7 @@
 
 	ai_shell_restricted = TRUE
 	ai_shell_allowed_levels = list(
+		Z_LEVEL_SHIP_MAINTENANCE,
 		Z_LEVEL_SHIP_LOW,
 		Z_LEVEL_SHIP_MID,
 		Z_LEVEL_SHIP_HIGH,
@@ -239,7 +243,7 @@
 	)
 
 /obj/effect/landmark/map_data/stellar_delight
-	height = 3
+	height = 4
 
 /obj/effect/overmap/visitable/ship/stellar_delight
 	name = "NRV Stellar Delight"
@@ -285,11 +289,20 @@
 	holomap_legend_x = 220
 	holomap_legend_y = 160
 
+
+/datum/map_z_level/stellar_delight/deck_zero
+	z = Z_LEVEL_SHIP_MAINTENANCE
+	name = "Subdeck"
+	base_turf = /turf/space
+	transit_chance = 25
+	holomap_offset_x = SHIP_HOLOMAP_MARGIN_X
+	holomap_offset_y = SHIP_HOLOMAP_MARGIN_Y
+
 /datum/map_z_level/stellar_delight/deck_one
 	z = Z_LEVEL_SHIP_LOW
 	name = "Deck 1"
-	base_turf = /turf/space
-	transit_chance = 33
+	base_turf = /turf/simulated/open
+	transit_chance = 25
 	holomap_offset_x = SHIP_HOLOMAP_MARGIN_X
 	holomap_offset_y = SHIP_HOLOMAP_MARGIN_Y
 
@@ -297,7 +310,7 @@
 	z = Z_LEVEL_SHIP_MID
 	name = "Deck 2"
 	base_turf = /turf/simulated/open
-	transit_chance = 33
+	transit_chance = 25
 	holomap_offset_x = SHIP_HOLOMAP_MARGIN_X
 	holomap_offset_y = SHIP_HOLOMAP_MARGIN_Y + SHIP_MAP_SIZE
 
@@ -305,7 +318,7 @@
 	z = Z_LEVEL_SHIP_HIGH
 	name = "Deck 3"
 	base_turf = /turf/simulated/open
-	transit_chance = 33
+	transit_chance = 25
 	holomap_offset_x = HOLOMAP_ICON_SIZE - SHIP_HOLOMAP_MARGIN_X - SHIP_MAP_SIZE
 	holomap_offset_y = SHIP_HOLOMAP_MARGIN_Y + SHIP_MAP_SIZE
 
