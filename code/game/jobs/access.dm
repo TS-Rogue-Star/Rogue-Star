@@ -1,8 +1,12 @@
 /obj/var/list/req_access
 /obj/var/list/req_one_access
+/mob/var/key_access_restricted = TRUE	//RS ADD - if true, mobs without a client will automatically decline access, so mobs with access won't open doors unless they are players
 
 //returns 1 if this mob has sufficient access to use this object
 /obj/proc/allowed(mob/M)
+	if(M.key_access_restricted && !M.ckey)	//RS ADD
+		return check_access(null)	//RS ADD
+
 	return check_access(M?.GetIdCard())
 
 /atom/movable/proc/GetAccess()
@@ -217,7 +221,12 @@
 
 /mob/living/carbon/human/GetIdCard()
 	if(get_active_hand())
-		var/obj/item/I = get_active_hand()
+		var/obj/item/I = get_active_hand()//RS Edit Removes mobs not controlled by players from being used as ID cards.
+		if(istype(I, /obj/item/weapon/holder))
+			var/obj/item/weapon/holder/h = I
+			if(!h.held_mob.client)
+				return null
+			//RS Edit End
 		var/id = I.GetID()
 		if(id)
 			return id
