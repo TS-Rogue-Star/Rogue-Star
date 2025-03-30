@@ -359,7 +359,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 			"glowy_belly"			= glowy_belly, //RS ADD
 			"allow_contaminate" 	= allow_contaminate, // RS edit
 			"allow_stripping" 		= allow_stripping, // RS edit
-			"vore_whitelist_toggles" = vore_whitelist_toggles //RS ADD
+			"vore_whitelist_toggles" = vore_whitelist_toggles, //RS ADD
 
 		)
 
