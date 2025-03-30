@@ -10,8 +10,11 @@
 	icon_state = "frozen"
 	in_space = 0
 	initial_generic_waypoints = list("snowbase_surface_e", "snowbase_surface_w", "snowbase_surface_n")
-	extra_z_levels = list(Z_LEVEL_GLACIER)
 	known = TRUE
+
+/obj/effect/overmap/visitable/sector/snowbaseplanet/New(loc, ...)
+	extra_z_levels = list(global.z_list["z_glacier"])
+	. = ..()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //oregen

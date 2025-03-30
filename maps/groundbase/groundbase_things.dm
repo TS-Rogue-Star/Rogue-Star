@@ -71,6 +71,7 @@ VIRGO3B_TURF_CREATE(/turf/simulated/floor/outdoors/dirt)
 
 VIRGO3B_TURF_CREATE(/turf/simulated/floor/outdoors/rocks)
 
+/*//RS REMOVE - dupe
 /turf/simulated/floor/maglev
 	name = "maglev track"
 	desc = "Magnetic levitation tram tracks. Caution! Electrified!"
@@ -79,7 +80,7 @@ VIRGO3B_TURF_CREATE(/turf/simulated/floor/outdoors/rocks)
 	can_be_plated = FALSE
 
 	var/area/shock_area = /area/centcom/terminal/tramfluff
-
+*/
 /turf/simulated/floor/maglev/Initialize()
 	. = ..()
 	shock_area = locate(shock_area)
@@ -91,13 +92,14 @@ VIRGO3B_TURF_CREATE(/turf/simulated/floor/outdoors/rocks)
 /turf/simulated/floor/maglev/attack_hand(var/mob/user)
 	if(prob(75))
 		track_zap(user)
+/*//RS REMOVE - dupe
 /turf/simulated/floor/maglev/proc/track_zap(var/mob/living/user)
 	if (!istype(user)) return
 	if (electrocute_mob(user, shock_area, src))
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
-
+*/
 // Shelter Capsule extra restrictions
 /datum/map_template/shelter/New()
 	..()

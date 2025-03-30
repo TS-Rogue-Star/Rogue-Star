@@ -16,8 +16,11 @@ SUBSYSTEM_DEF(mapping)
 /datum/controller/subsystem/mapping/Initialize(timeofday)
 	if(subsystem_initialized)
 		return
+	log_and_message_admins("Hello from mapping initialize")
+	using_map = new /datum/map/stellar_delight
 	world.max_z_changed() // This is to set up the player z-level list, maxz hasn't actually changed (probably)
 	maploader = new()
+	do_map()
 	load_map_templates()
 
 	if(config.generate_map)
@@ -222,3 +225,27 @@ SUBSYSTEM_DEF(mapping)
 	if (!Debug2)
 		return // Only show up in stat panel if debugging is enabled.
 	. = ..()
+
+/datum/map_template/station_map/
+	name = "STATION MAP"
+	var/list/mappaths = list()
+
+/datum/map_template/station_map/stellar_delight
+	name = "Stellar Delight"
+	mappaths = list(
+		'maps/stellar_delight/stellar_delight0.dmm',
+		'maps/stellar_delight/stellar_delight1.dmm',
+		'maps/stellar_delight/stellar_delight2.dmm',
+		'maps/stellar_delight/stellar_delight3.dmm'
+	)
+
+/proc/do_map()
+	error("Hello from do_map")
+	var/datum/map_template/station_map/station = new /datum/map_template/station_map/stellar_delight
+	for(var/thing in station.mappaths)
+		error("Attempting to load [thing]")
+		var/datum/map_template/MT = new()
+		MT.mappath = thing
+		admin_notice("Lateload: [MT]", R_DEBUG)
+		MT.load_new_z(centered = FALSE)
+	error("Should be all done now!")

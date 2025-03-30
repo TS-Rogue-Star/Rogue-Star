@@ -10,7 +10,6 @@
 	icon_state = "globe"
 	in_space = 0
 	initial_generic_waypoints = list("aerostat_west","aerostat_east","aerostat_south","aerostat_northwest","aerostat_northeast")
-	extra_z_levels = list(Z_LEVEL_AEROSTAT_SURFACE)
 	known = TRUE
 	icon_state = "chlorine"
 
@@ -18,6 +17,11 @@
 	skybox_icon_state = "v2"
 	skybox_pixel_x = 0
 	skybox_pixel_y = 0
+
+/obj/effect/overmap/visitable/sector/virgo2/New(loc, ...)
+	extra_z_levels = list(global.z_list["z_aerostat_surface"])
+	. = ..()
+
 
 // -- Datums -- //
 

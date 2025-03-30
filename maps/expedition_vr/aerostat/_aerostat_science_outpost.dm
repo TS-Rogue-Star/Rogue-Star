@@ -11,7 +11,6 @@
 	icon_state = "globe"
 	in_space = 0
 	initial_generic_waypoints = list("aerostat_n_w", "aerostat_n_n","aerostat_n_e","aerostat_s_w","aerostat_s_s","aerostat_s_e","aerostat_west","aerostat_east")
-	extra_z_levels = list(Z_LEVEL_AEROSTAT_SURFACE)
 	known = TRUE
 	icon_state = "chlorine"
 
