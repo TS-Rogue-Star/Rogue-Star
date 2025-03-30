@@ -424,7 +424,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 		"allowcontamination" = istype(host, /mob/living/carbon/human) ? host:allow_contaminate : TRUE, // RS edit
 		"allowstripping" = istype(host, /mob/living/carbon/human) ? host:allow_stripping : TRUE, // RS edit
 		"allowssdvore" = host.ssd_vore, // RS edit
-		"glowing_belly"  = host.glowy_belly
+		"glowing_belly"  = host.glowy_belly,
 		"autotransferable" = host.autotransferable, //RS Add || Port Chomp 3200
 	)
 
