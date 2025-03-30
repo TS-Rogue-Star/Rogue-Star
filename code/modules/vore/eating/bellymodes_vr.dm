@@ -23,15 +23,16 @@
 			if(!M || !M.autotransferable) continue
 			if(isliving(M))
 				var/mob/living/L = M
+				if(L.absorbed) continue
 			M.belly_cycles++
 			if(M.belly_cycles < autotransferwait / 60) continue
-				autotransferables += M
-			if(LAZYLEN(autotransferables) >= autotransfer_min_amount)
-				var/tally = 0
-				for(var/atom/movable/M in autotransferables)
-					if(check_autotransfer(M))
-						tally++
-					if(autotransfer_max_amount > 0 && tally >= autotransfer_max_amount) break
+			autotransferables += M
+		if(LAZYLEN(autotransferables) >= autotransfer_min_amount)
+			var/tally = 0
+			for(var/atom/movable/M in autotransferables)
+				if(check_autotransfer(M))
+					tally++
+				if(autotransfer_max_amount > 0 && tally >= autotransfer_max_amount) break
 
 	var/play_sound //Potential sound to play at the end to avoid code duplication.
 	var/to_update = FALSE //Did anything update worthy happen?
