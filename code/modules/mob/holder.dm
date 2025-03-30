@@ -64,8 +64,8 @@ var/list/holder_mob_icon_cache = list()
 			location = "[H.loc.loc]'s [H.loc]"
 		else
 			location = "[H.loc]"
-
-		stat("Location", location)
+		if(statpanel("Status"))
+			stat("Location Held:", location)
 //RS Edit End
 
 /obj/item/weapon/holder/Entered(mob/held, atom/OldLoc, var/do_vis = TRUE)	//RS EDIT
