@@ -5,7 +5,7 @@
 //returns 1 if this mob has sufficient access to use this object
 /obj/proc/allowed(mob/M)
 	if(M.key_access_restricted && !M.ckey)	//RS ADD
-		return(null)			//RS ADD
+		return check_access(null)	//RS ADD
 
 	return check_access(M?.GetIdCard())
 
