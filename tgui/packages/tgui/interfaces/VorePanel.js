@@ -1337,7 +1337,7 @@ const VoreSelectedBellyInteractions = (props, context) => {
       ) : (
         'These options only display while interactions are turned on.'
       )}
-      <Section // RS Add Start || Port Chomp 2821, 3194
+      <Section // RS Add Start || Port Chomp 2821, 3194, 6155
         title="Auto-Transfer Options"
         buttons={
           <Button
@@ -1355,19 +1355,19 @@ const VoreSelectedBellyInteractions = (props, context) => {
         }>
         {autotransfer_enabled ? (
           <LabeledList>
-            <LabeledList.Item label="Auto-Transfer Chance">
-              <Button
-                content={autotransfer.autotransferchance + '%'}
-                onClick={() =>
-                  act('set_attribute', { attribute: 'b_autotransferchance' })
-                }
-              />
-            </LabeledList.Item>
             <LabeledList.Item label="Auto-Transfer Time">
               <Button
                 content={autotransfer.autotransferwait / 10 + 's'}
                 onClick={() =>
                   act('set_attribute', { attribute: 'b_autotransferwait' })
+                }
+              />
+            </LabeledList.Item>
+            <LabeledList.Item label="Auto-Transfer Chance">
+              <Button
+                content={autotransfer.autotransferchance + '%'}
+                onClick={() =>
+                  act('set_attribute', { attribute: 'b_autotransferchance' })
                 }
               />
             </LabeledList.Item>
@@ -1380,6 +1380,30 @@ const VoreSelectedBellyInteractions = (props, context) => {
                 }
                 onClick={() =>
                   act('set_attribute', { attribute: 'b_autotransferlocation' })
+                }
+              />
+            </LabeledList.Item>
+            <LabeledList.Item label="Auto-Transfer Secondary Chance">
+              <Button
+                content={autotransfer.autotransferchance_secondary + '%'}
+                onClick={() =>
+                  act('set_attribute', {
+                    attribute: 'b_autotransferchance_secondary',
+                  })
+                }
+              />
+            </LabeledList.Item>
+            <LabeledList.Item label="Auto-Transfer Secondary Location">
+              <Button
+                content={
+                  autotransfer.autotransferlocation_secondary
+                    ? autotransfer.autotransferlocation_secondary
+                    : 'Disabled'
+                }
+                onClick={() =>
+                  act('set_attribute', {
+                    attribute: 'b_autotransferlocation_secondary',
+                  })
                 }
               />
             </LabeledList.Item>

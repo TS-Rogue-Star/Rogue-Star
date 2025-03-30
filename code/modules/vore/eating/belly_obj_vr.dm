@@ -75,6 +75,8 @@
 	var/autotransferchance = 0 				// % Chance of prey being autotransferred to transfer location
 	var/autotransferwait = 10 				// Time between trying to transfer.
 	var/autotransferlocation				// Place to send them
+	var/autotransferchance_secondary = 0 	// % Chance of prey being autotransferred to secondary transfer location || RS Add || Port Chomp 6155
+	var/autotransferlocation_secondary		// Second place to send them || RS Add || Port Chomp 6155
 	var/autotransfer_enabled = FALSE		//RS Add Start || Port Chomp 2821, 2979
 	var/autotransfer_min_amount = 0			// Minimum amount of things to pass at once.
 	var/autotransfer_max_amount = 0			// Maximum amount of things to pass at once.
@@ -390,10 +392,12 @@
 	"fullness3_messages",
 	"fullness4_messages",
 	"fullness5_messages",	// End reagent bellies
-	"autotransferchance",  //RS Add Start || Port Chop 2821, 2979
+	"autotransferchance",  //RS Add Start || Port Chop 2821, 2979, 6155
 	"autotransferwait",
 	"autotransferlocation",
 	"autotransfer_enabled",
+	"autotransferchance_secondary",
+	"autotransferlocation_secondary",
 	"autotransfer_min_amount",
 	"autotransfer_max_amount" //RS Add End
 	)
@@ -1861,24 +1865,25 @@
 		M.updateVRPanel()
 	owner.update_icon()
 
-//Autotransfer callback
-/obj/belly/proc/check_autotransfer(var/atom/movable/prey, var/autotransferlocation) //RS Edit || Port Chomp 2934
-	if(autotransferlocation && (autotransferchance > 0) && (prey in contents))
-		if(prob(autotransferchance))
-			var/obj/belly/dest_belly
-			for(var/obj/belly/B in owner.vore_organs)
-				if(B.name == autotransferlocation)
-					dest_belly = B
-					break
-			if(dest_belly)
-				if(autotransfer_min_amount > 1) //RS Add Start|| Port Chomp 2979
-					autotransfer_queue += prey
-				else
-					transfer_contents(prey, dest_belly) //RS Add End
-		else
-			// Didn't transfer, so wait before retrying
-			// I feel like there's a way to make this timer looping using the normal looping thing, but pass in the ID and cancel it if we aren't looping again
-			prey.belly_cycles = 0 //RS Add || Port Chomp 2934
+//Autotransfer callback || RS Edit Start || Chomp Port 6155
+/obj/belly/proc/check_autotransfer(var/atom/movable/prey)
+	if(!(prey in contents) || !prey.autotransferable) return
+	var/dest_belly_name
+	if(autotransferlocation_secondary && prob(autotransferchance_secondary))
+		dest_belly_name = autotransferlocation_secondary
+	if(autotransferlocation && prob(autotransferchance))
+		dest_belly_name = autotransferlocation
+	if(!dest_belly_name) // Didn't transfer, so wait before retrying
+		prey.belly_cycles = 0
+		return
+	var/obj/belly/dest_belly
+	for(var/obj/belly/B in owner.vore_organs)
+		if(B.name == dest_belly_name)
+			dest_belly = B
+			break
+	if(!dest_belly) return
+	transfer_contents(prey, dest_belly)
+	return TRUE //RS Edit End || Chomp Port 6155
 
 // Belly copies and then returns the copy
 // Needs to be updated for any var changes
@@ -1991,10 +1996,12 @@
 	dupe.show_fullness_messages = show_fullness_messages
 	// End reagent bellies
 
-	dupe.autotransferchance = autotransferchance  //RS ADD Start || Port Chomp 2821, 2979
+	dupe.autotransferchance = autotransferchance  //RS ADD Start || Port Chomp 2821, 2979, 6155
 	dupe.autotransferwait = autotransferwait
 	dupe.autotransferlocation = autotransferlocation
 	dupe.autotransfer_enabled = autotransfer_enabled
+	dupe.autotransferchance_secondary = autotransferchance_secondary
+	dupe.autotransferlocation_secondary = autotransferlocation_secondary
 	dupe.autotransfer_min_amount = autotransfer_min_amount
 	dupe.autotransfer_max_amount = autotransfer_max_amount  //RS Add End
 
