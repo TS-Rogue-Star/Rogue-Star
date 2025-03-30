@@ -10,6 +10,7 @@
 	var/micro_hunt = FALSE					// Will target mobs at or under the micro_hunt_size size, requires vore_hostile to be true
 	var/micro_hunt_size = 0.25
 	var/belly_attack = TRUE					//Mobs attack if they are in a belly!
+	var/incorporeal_attack = FALSE			//RS ADD - if false, the mob will not attempt to target mobs while it is incorporeal
 
 	var/atom/movable/target = null			// The thing (mob or object) we're trying to kill.
 	var/atom/movable/preferred_target = null// If set, and if given the chance, we will always prefer to target this over other options.
@@ -47,6 +48,8 @@
 	ai_log("find_target() : Entered.", AI_LOG_TRACE)
 	if(!hostile) // So retaliating mobs only attack the thing that hit it.
 		return null
+	if(!incorporeal_attack && holder.is_incorporeal())	//RS ADD - don't attack stuff while you shouldn't be able to be attacked unless we meant to
+		return null									//RS ADD
 	. = list()
 	if(!has_targets_list)
 		possible_targets = list_targets()

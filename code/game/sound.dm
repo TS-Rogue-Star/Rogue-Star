@@ -323,7 +323,8 @@ var/list/welcome_sound = list('sound/voice/welcome/0.ogg' = 50,'sound/voice/welc
 'sound/voice/welcome/18-seashell.ogg' = 50, 'sound/voice/welcome/19-seashell.ogg' = 50, 'sound/voice/welcome/20-seashell.ogg' = 50,
 'sound/voice/welcome/21-seashell.ogg' = 50, 'sound/voice/welcome/22-seashell.ogg' = 50, 'sound/voice/welcome/23-seashell.ogg' = 50,
 'sound/voice/welcome/24-seashell.ogg' = 50, 'sound/voice/welcome/25-hazard.ogg' = 50, 'sound/voice/welcome/26-hazard.ogg' = 50,
-'sound/voice/welcome/27.ogg' = 10, 'sound/voice/welcome/28-snowbell.ogg' = 50)
+'sound/voice/welcome/27.ogg' = 10, 'sound/voice/welcome/28-snowbell.ogg' = 50, 'sound/voice/welcome/29-bridger.ogg' = 50,
+'sound/voice/welcome/30-bridger.ogg' = 10)
 
 var/list/yipyap = list('sound/rogue-star/yip/yip1.ogg', 'sound/rogue-star/yip/yip2.ogg', 'sound/rogue-star/yip/yip3.ogg', 'sound/rogue-star/yip/yip4.ogg',
 'sound/rogue-star/yip/yip5.ogg', 'sound/rogue-star/yip/yip6.ogg', 'sound/rogue-star/yip/yip7.ogg', 'sound/rogue-star/yip/yip8.ogg', 'sound/rogue-star/yip/yip9.ogg',
