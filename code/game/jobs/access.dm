@@ -231,11 +231,11 @@
 			var/obj/item/weapon/holder/h = I
 			if(!h.held_mob.client)
 				return GetWornIdCard()
-			//RS Edit End
 		var/id = I.GetID()
 		if(id)
 			return id
 	return GetWornIdCard()
+	//RS Edit End
 
 /mob/living/silicon/GetIdCard()
 	return idcard
