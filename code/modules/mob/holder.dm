@@ -64,11 +64,11 @@ var/list/holder_mob_icon_cache = list()
 			location = "[H.loc.loc]'s [H.loc]"
 		else
 			location = "[H.loc]"
-
-		stat("Location", location)
+		if(statpanel("Status"))
+			stat("Location Held:", location)
 //RS Edit End
 
-/obj/item/weapon/holder/Entered(mob/held, atom/OldLoc)
+/obj/item/weapon/holder/Entered(mob/held, atom/OldLoc, var/do_vis = TRUE)	//RS EDIT
 	if(held_mob)
 		held.forceMove(get_turf(src))
 		held.reset_view(null)
@@ -76,9 +76,10 @@ var/list/holder_mob_icon_cache = list()
 	ASSERT(ismob(held))
 	. = ..()
 	held_mob = held
-	original_vis_flags = held.vis_flags
-	held.vis_flags = VIS_INHERIT_ID|VIS_INHERIT_LAYER|VIS_INHERIT_PLANE
-	vis_contents += held
+	if(do_vis)	//RS EDIT START
+		original_vis_flags = held.vis_flags
+		held.vis_flags = VIS_INHERIT_ID|VIS_INHERIT_LAYER|VIS_INHERIT_PLANE
+		vis_contents += held	//RS EDIT END
 	name = held.name
 	original_transform = held.transform
 	held.transform = null
@@ -87,7 +88,8 @@ var/list/holder_mob_icon_cache = list()
 	if(thing == held_mob)
 		held_mob.transform = original_transform
 		held_mob.update_transform() //VOREStation edit
-		held_mob.vis_flags = original_vis_flags
+		if(original_vis_flags)	//RS EDIT
+			held_mob.vis_flags = original_vis_flags	//RS EDIT
 		held_mob = null
 	..()
 

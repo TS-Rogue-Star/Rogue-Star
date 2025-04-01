@@ -1119,12 +1119,14 @@
 	name = "Natural Artist"
 	desc = "Your body creates natural pigment or your fluids work like paint! You can paint without a paintbrush."
 	cost = 0
-	var_changes = list("nautral_artist" = TRUE)
+	custom_only = FALSE
+	var_changes = list("natural_artist" = TRUE)
 
 /datum/trait/neutral/natural_artist/apply(var/datum/species/S,var/mob/living/carbon/human/H)
 	..()
-	H.verbs |= /mob/living/carbon/human/proc/adjust_art_color
+	//H.verbs |= /mob/living/carbon/human/proc/adjust_art_color //simplifying
 	H.verbs |= /mob/living/carbon/human/proc/extend_retract_brush
+
 
 /datum/trait/neutral/waddle
 	name = "Waddle / Animated Movement"
@@ -1135,4 +1137,32 @@
 /datum/trait/neutral/waddle/apply(var/datum/species/S,var/mob/living/carbon/human/H)
 	..()
 	H.verbs |= /mob/living/proc/waddle_adjust
+
+/datum/trait/neutral/electrovore
+	name = "Electrovore"
+	desc = "Allows you to drain power cells for nutrition."
+	tutorial = "This trait allows you to consume electricity! <br> \
+		You can do this by clicking power cells in your hand on harm intent. <br> \
+		Intent-based control scheme: <br> \
+		HARM - drain power cell in hand"
+
+	cost = 0
+	custom_only = FALSE
+	var_changes = list("electrovore" = TRUE)
+	excludes = list(/datum/trait/neutral/electrovore_obligate)
+
+/datum/trait/neutral/electrovore_obligate
+	name = "Electrovore, Obligate"
+	desc = "Makes you unable to gain nutrition from anything but electricity. To compenstate, you are able to drain energy from power cells."
+	tutorial = "This trait forces you to only consume electricity - you cannot have normal food anymore. Vore is, of course, an exception! <br> \
+		You can satisfy this by clicking power cells in your hand on harm intent, and you can even recharge them by using help intent! <br> \
+		Intent-based control scheme: <br> \
+		HELP - recharge powercell in hand <br> \
+		HARM - drain power cell in hand"
+
+	cost = 0
+	custom_only = FALSE
+	var_changes = list("organic_food_coeff" = 0, "electrovore" = TRUE)
+	excludes = list(/datum/trait/neutral/electrovore)
+
 //RS Edit End

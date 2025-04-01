@@ -297,7 +297,7 @@
 			var/list/potentials = living_mobs(0)
 			if(potentials.len)
 				for(var/mob/living/target in potentials)	//RS EDIT START
-					if(spont_pref_check())
+					if(spont_pref_check(src,target,SPONT_PRED))
 						if(target.buckled)
 							target.buckled.unbuckle_mob(target, force = TRUE)
 						target.forceMove(vore_selected)
