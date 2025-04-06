@@ -216,8 +216,17 @@
 /atom/movable/proc/GetIdCard()
 	return null
 
+/atom/movable/proc/GetWornIdCard()	//RS ADD
+	return null			//RS ADD
+
 /mob/living/bot/GetIdCard()
 	return botcard
+
+/mob/living/carbon/human/GetWornIdCard() //RS Add Start/move Moving check so can be referenced elsewhere
+	if(wear_id)
+		var/id = wear_id.GetID()
+		if(id)
+			return id	//RS ADD END
 
 /mob/living/carbon/human/GetIdCard()
 	if(get_active_hand())
@@ -225,15 +234,11 @@
 		if(istype(I, /obj/item/weapon/holder))
 			var/obj/item/weapon/holder/h = I
 			if(!h.held_mob.client)
-				return null
-			//RS Edit End
+				return GetWornIdCard()	//RS ADD
 		var/id = I.GetID()
 		if(id)
 			return id
-	if(wear_id)
-		var/id = wear_id.GetID()
-		if(id)
-			return id
+	return GetWornIdCard()	//RS EDIT
 
 /mob/living/silicon/GetIdCard()
 	return idcard

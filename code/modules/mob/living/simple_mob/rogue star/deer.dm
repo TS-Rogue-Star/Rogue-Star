@@ -84,6 +84,7 @@
 	R.transferchance = 20
 	R.transferlocation = "reticulum"
 	R.transferchance_secondary = 0
+	R.autotransfer_enabled = 1  // Updated as part of broader autotransfer update
 	R.autotransferchance = 10
 	R.autotransferwait = 20 SECONDS
 	R.autotransferlocation = "reticulum"
@@ -178,6 +179,7 @@
 	reticulum.transferlocation = "omasum"
 	reticulum.transferchance_secondary = 10
 	reticulum.transferlocation_secondary = "rumen"
+	reticulum.autotransfer_enabled = 1  // Updated as part of broader autotransfer update
 	reticulum.autotransferchance = 10
 	reticulum.autotransferwait = 5 SECONDS
 	reticulum.autotransferlocation = "omasum"
@@ -214,6 +216,7 @@
 	O.transferlocation = "abomasum"
 	O.transferchance_secondary = 10
 	O.transferlocation_secondary = "reticulum"
+	O.autotransfer_enabled = 1  // Updated as part of broader autotransfer update
 	O.autotransferchance = 10
 	O.autotransferwait = 5 SECONDS
 	O.autotransferlocation = "abomasum"

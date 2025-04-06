@@ -16,6 +16,24 @@
 	if(!contents.len)
 		return
 
+	//RS Add || Chomp Port 2934, 2979, 2989, 3200, 3204, 6155, 7054 || Autotransfer count moved here.
+	if(autotransfer_enabled)
+		var/list/autotransferables = list()
+		for(var/atom/movable/M in contents)
+			if(!M || !M.autotransferable) continue
+			if(isliving(M))
+				var/mob/living/L = M
+				if(L.absorbed) continue
+			M.belly_cycles++
+			if(M.belly_cycles < autotransferwait / 60) continue
+			autotransferables += M
+		if(LAZYLEN(autotransferables) >= autotransfer_min_amount)
+			var/tally = 0
+			for(var/atom/movable/M in autotransferables)
+				if(check_autotransfer(M))
+					tally++
+				if(autotransfer_max_amount > 0 && tally >= autotransfer_max_amount) break
+
 	var/play_sound //Potential sound to play at the end to avoid code duplication.
 	var/to_update = FALSE //Did anything update worthy happen?
 
