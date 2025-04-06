@@ -88,6 +88,7 @@
 
 
 /obj/belly/goliath
+	autotransfer_enabled = 1  // Updated as part of broader autotransfer update
 	autotransferchance = 50
 	autotransferwait = 150
 	escapable = 1
