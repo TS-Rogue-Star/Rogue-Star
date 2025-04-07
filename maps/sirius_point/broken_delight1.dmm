@@ -11696,7 +11696,6 @@
 /obj/structure/table/standard,
 /obj/machinery/recharger,
 /obj/item/device/retail_scanner/science,
-/obj/item/device/multitool/scioutpost,
 /turf/simulated/floor/tiled/steel_grid,
 /area/rnd/research)
 "yr" = (

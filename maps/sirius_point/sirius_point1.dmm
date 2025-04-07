@@ -2,6 +2,49 @@
 "a" = (
 /turf/simulated/mineral/moonbase,
 /area/space)
+"e" = (
+/obj/structure/railing/grey{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/space)
+"h" = (
+/turf/simulated/floor/plating/external,
+/area/space)
+"r" = (
+/obj/structure/stairs/spawner/north,
+/turf/simulated/floor/tiled/monotile,
+/area/space)
+"u" = (
+/obj/structure/stairs/spawner/west,
+/turf/simulated/floor/tiled/monotile,
+/area/space)
+"w" = (
+/turf/simulated/floor/tiled/monotile,
+/area/space)
+"A" = (
+/obj/structure/stairs/spawner/north,
+/obj/structure/railing/grey{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/space)
+"B" = (
+/obj/structure/railing/grey{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/space)
+"J" = (
+/obj/structure/stairs/spawner/north,
+/obj/structure/railing/grey{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/space)
+"P" = (
+/turf/simulated/floor/tiled,
+/area/space)
 
 (1,1,1) = {"
 a
@@ -7580,7 +7623,7 @@ a
 a
 a
 a
-a
+u
 a
 a
 a
@@ -7722,7 +7765,7 @@ a
 a
 a
 a
-a
+w
 a
 a
 a
@@ -7864,7 +7907,7 @@ a
 a
 a
 a
-a
+h
 a
 a
 a
@@ -8006,7 +8049,7 @@ a
 a
 a
 a
-a
+h
 a
 a
 a
@@ -9160,12 +9203,12 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
+P
+P
+r
+w
+P
+P
 a
 a
 a
@@ -9302,12 +9345,12 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
+P
+P
+A
+e
+P
+P
 a
 a
 a
@@ -9444,12 +9487,12 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
+P
+P
+P
+P
+P
+P
 a
 a
 a
@@ -9586,12 +9629,12 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
+P
+P
+P
+P
+P
+P
 a
 a
 a
@@ -9728,12 +9771,12 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
+P
+P
+P
+P
+P
+P
 a
 a
 a
@@ -9870,12 +9913,12 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
+P
+P
+P
+P
+P
+P
 a
 a
 a
@@ -10012,12 +10055,12 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
+P
+P
+P
+P
+P
+P
 a
 a
 a
@@ -10154,12 +10197,12 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
+P
+P
+P
+P
+P
+P
 a
 a
 a
@@ -10296,12 +10339,12 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
+P
+P
+P
+P
+P
+P
 a
 a
 a
@@ -10438,12 +10481,12 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
+P
+P
+J
+B
+P
+P
 a
 a
 a
@@ -10580,12 +10623,12 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
+P
+P
+r
+w
+P
+P
 a
 a
 a

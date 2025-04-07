@@ -2,98 +2,6 @@
 "a" = (
 /turf/simulated/mineral/floor/moonbase,
 /area/space)
-"h" = (
-/obj/effect/landmark{
-	name = "JoinLate"
-	},
-/turf/simulated/floor/tiled,
-/area/bridge)
-"j" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/simulated/floor/tiled,
-/area/bridge)
-"k" = (
-/obj/effect/landmark{
-	name = "JoinLateGateway"
-	},
-/turf/simulated/floor/tiled,
-/area/bridge)
-"l" = (
-/obj/machinery/cryopod,
-/turf/simulated/floor/tiled,
-/area/bridge)
-"m" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/simulated/floor/tiled,
-/area/bridge)
-"n" = (
-/obj/effect/landmark{
-	name = "Observer-Start"
-	},
-/turf/simulated/floor/tiled,
-/area/bridge)
-"q" = (
-/obj/machinery/computer/cryopod,
-/turf/simulated/floor/tiled,
-/area/bridge)
-"r" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/simulated/floor/tiled,
-/area/bridge)
-"x" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/tiled,
-/area/bridge)
-"A" = (
-/obj/effect/landmark{
-	name = "JoinLateCyborg"
-	},
-/turf/simulated/floor/tiled,
-/area/bridge)
-"D" = (
-/turf/simulated/floor/tiled,
-/area/bridge)
-"H" = (
-/obj/effect/landmark{
-	name = "JoinLateCryo"
-	},
-/turf/simulated/floor/tiled,
-/area/bridge)
-"I" = (
-/obj/machinery/cryopod/robot,
-/turf/simulated/floor/tiled,
-/area/bridge)
-"M" = (
-/turf/simulated/mineral/moonbase,
-/area/bridge)
-"U" = (
-/turf/simulated/mineral/moonbase,
-/area/space)
-"V" = (
-/obj/machinery/power/apc/hyper{
-	dir = 1
-	},
-/turf/simulated/floor/tiled,
-/area/bridge)
-"W" = (
-/obj/effect/landmark{
-	name = "JoinLateElevator"
-	},
-/turf/simulated/floor/tiled,
-/area/bridge)
-"X" = (
-/obj/machinery/alarm,
-/turf/simulated/floor/tiled,
-/area/bridge)
-"Y" = (
-/turf/simulated/wall,
-/area/bridge)
 
 (1,1,1) = {"
 a
@@ -9108,16 +9016,16 @@ a
 a
 a
 a
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 a
 a
 a
@@ -9250,16 +9158,16 @@ a
 a
 a
 a
-Y
-D
-q
-A
-I
-j
-D
-D
-D
-Y
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 a
 a
 a
@@ -9392,16 +9300,16 @@ a
 a
 a
 a
-Y
-D
-D
-D
-D
-D
-D
-D
-D
-Y
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 a
 a
 a
@@ -9534,16 +9442,16 @@ a
 a
 a
 a
-Y
-D
-D
-H
-l
-D
-W
-D
-h
-Y
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 a
 a
 a
@@ -9676,18 +9584,18 @@ a
 a
 a
 a
-Y
-D
-D
-D
-D
-D
-D
-D
-D
-M
-U
-U
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 a
 a
 a
@@ -9818,19 +9726,19 @@ a
 a
 a
 a
-Y
-X
-D
-D
-D
-D
-k
-D
-D
-M
-U
-U
-U
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 a
 a
 a
@@ -9960,19 +9868,19 @@ a
 a
 a
 a
-Y
-r
-D
-D
-D
-D
-D
-D
-D
-M
-U
-U
-U
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 a
 a
 a
@@ -10102,19 +10010,19 @@ a
 a
 a
 a
-Y
-V
-D
-D
-D
-D
-n
-D
-D
-M
-U
-U
-U
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 a
 a
 a
@@ -10244,19 +10152,19 @@ a
 a
 a
 a
-Y
-D
-D
-D
-D
-D
-n
-D
-D
-M
-U
-U
-U
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 a
 a
 a
@@ -10386,18 +10294,18 @@ a
 a
 a
 a
-Y
-D
-D
-D
-D
-D
-D
-D
-D
-M
-U
-U
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 a
 a
 a
@@ -10528,16 +10436,16 @@ a
 a
 a
 a
-Y
-D
-D
-D
-D
-D
-k
-D
-D
-Y
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 a
 a
 a
@@ -10670,16 +10578,16 @@ a
 a
 a
 a
-Y
-D
-x
-D
-D
-D
-D
-D
-D
-Y
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 a
 a
 a
@@ -10812,16 +10720,16 @@ a
 a
 a
 a
-Y
-D
-D
-D
-m
-D
-W
-D
-h
-Y
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 a
 a
 a
@@ -10954,16 +10862,16 @@ a
 a
 a
 a
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 a
 a
 a

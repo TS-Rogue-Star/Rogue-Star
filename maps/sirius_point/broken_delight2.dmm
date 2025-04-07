@@ -2870,7 +2870,6 @@
 /obj/item/weapon/book/manual/command_guide,
 /obj/item/weapon/book/manual/standard_operating_procedure,
 /obj/item/weapon/book/manual/security_space_law,
-/obj/item/weapon/book/manual/sd_guide,
 /obj/structure/closet/walllocker_double/command/north,
 /turf/simulated/floor/wood,
 /area/crew_quarters/captain)
@@ -19882,7 +19881,6 @@
 /area/engineering/engineering_monitoring)
 "Rf" = (
 /obj/structure/table/steel_reinforced,
-/obj/item/weapon/book/manual/sd_guide,
 /obj/effect/floor_decal/milspec/color/blue/half{
 	dir = 6
 	},

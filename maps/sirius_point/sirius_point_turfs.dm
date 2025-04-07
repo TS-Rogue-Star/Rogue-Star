@@ -1,9 +1,13 @@
 // Moonbase turfs
 
 /turf/simulated/mineral/moonbase
-	color="#7a7d83"
-/turf/simulated/mineral/floor/moonbase
-	color="#7a7d83"
+	color="#353636"
+/turf/simulated/mineral/floor/vacuum/moonbase
+	color="#353636"
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors
+	outdoors = 1
+/turf/simulated/floor/plating/external/outdoors
+	outdoors = 1
 
 // Virgo 3b things, for centcomm
 /turf/unsimulated/mineral/virgo3b
