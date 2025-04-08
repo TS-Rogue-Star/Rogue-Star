@@ -199,7 +199,7 @@ Book Cart End
 			to_chat(user, "<span class='notice'>The pages of [title] have been cut out!</span>")
 			return
 	if(src.dat)
-		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book")
+		user << browse("<html><TT><I>Penned by [author].</I></TT> <BR></html>" + "[dat]", "window=book") //RS Edit: Fix books for 516
 		user.visible_message("[user] opens a book titled \"[src.title]\" and begins reading intently.")
 		playsound(src, 'sound/bureaucracy/bookopen.ogg', 50, 1)
 		onclose(user, "book")
@@ -297,7 +297,7 @@ Book Cart End
 	if(user.zone_sel.selecting == O_EYES)
 		user.visible_message("<span class='notice'>You open up the book and show it to [M]. </span>", \
 			"<span class='notice'> [user] opens up a book and shows it to [M]. </span>")
-		M << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book")
+		M << browse("<html><TT><I>Penned by [author].</I></TT> <BR></html>" + "[dat]", "window=book") //RS Edit: Fix books for 516
 		user.setClickCooldown(DEFAULT_QUICK_COOLDOWN) //to prevent spam
 
 /*
