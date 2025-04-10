@@ -1,3 +1,4 @@
+/* RS REMOVE
 //Normal map defs
 #define Z_LEVEL_SHIP_MAINTENANCE			1
 #define Z_LEVEL_SHIP_LOW					2
@@ -22,8 +23,27 @@
 
 //Camera networks
 #define NETWORK_HALLS "Halls"
-
+*///RS REMOVE END
 /datum/map/stellar_delight/New()
+	global.z_list["z_centcom"] = 5
+	global.z_list["z_misc"] = 6
+	global.z_list["z_beach"] = 8
+	global.z_list["z_beach_cave"] = 9
+	global.z_list["z_aerostat"] = 10
+	global.z_list["z_aerostat_surface"] = 11
+	global.z_list["z_debrisfield"] = 12
+	global.z_list["z_fueldepot"] = 13
+	global.z_list["z_offmap1"] = 15
+	global.z_list["z_snowbase"] = 16
+	global.z_list["z_glacier"] = 17
+	global.z_list["z_gateway"] = 18
+	global.z_list["z_om_adventure"] = 19
+	global.z_list["z_redgate"] = 20
+
+	ai_shell_allowed_levels += list(global.z_list["z_misc"])
+	ai_shell_allowed_levels += list(global.z_list["z_beach"])
+	ai_shell_allowed_levels += list(global.z_list["z_aerostat"])
+
 	..()
 	var/choice = pickweight(list(
 		"rs_lobby" = 50,
@@ -191,10 +211,7 @@
 		Z_LEVEL_SHIP_MAINTENANCE,
 		Z_LEVEL_SHIP_LOW,
 		Z_LEVEL_SHIP_MID,
-		Z_LEVEL_SHIP_HIGH,
-		Z_LEVEL_MISC,
-		Z_LEVEL_BEACH,
-		Z_LEVEL_AEROSTAT
+		Z_LEVEL_SHIP_HIGH
 		)
 
 /*
@@ -230,18 +247,19 @@
 	icon_state = "space5"
 	use_stars = FALSE
 
+/*//RS REMOVE
 /datum/planet/virgo3b
-	expected_z_levels = list(Z_LEVEL_CENTCOM)
+	expected_z_levels = list(global.z_list["z_centcom"])
 /datum/planet/virgo4
 	expected_z_levels = list(
-		Z_LEVEL_BEACH
+		global.z_list["z_beach"]
 	)
 /datum/planet/snowbase
 	expected_z_levels = list(
-		Z_LEVEL_SNOWBASE,
-		Z_LEVEL_GLACIER
+		global.z_list["z_snowbase"],
+		global.z_list["z_glacier"]
 	)
-
+*///RS REMOVE END
 /obj/effect/landmark/map_data/stellar_delight
 	height = 4
 
@@ -258,7 +276,7 @@
 	vessel_size = SHIP_SIZE_LARGE
 	initial_generic_waypoints = list("starboard_shuttlepad","port_shuttlepad","sd-1-23-54","sd-1-67-15","sd-1-70-130","sd-1-115-85","sd-2-25-98","sd-2-117-98","sd-3-22-78","sd-3-36-33","sd-3-104-33","sd-3-120-78")
 	initial_restricted_waypoints = list("Exploration Shuttle" = list("sd_explo"), "Mining Shuttle" = list("sd_mining"))
-	levels_for_distress = list(Z_LEVEL_OFFMAP1, Z_LEVEL_BEACH, Z_LEVEL_AEROSTAT, Z_LEVEL_DEBRISFIELD, Z_LEVEL_FUELDEPOT)
+	levels_for_distress = list()
 	unowned_areas = list(/area/shuttle/sdboat)
 	known = TRUE
 	start_x = 2
@@ -270,6 +288,14 @@
 	skybox_icon_state = "skybox"
 	skybox_pixel_x = 450
 	skybox_pixel_y = 200
+
+/obj/effect/overmap/visitable/ship/stellar_delight/New(loc, ...)
+	levels_for_distress += list(global.z_list["z_offmap1"])
+	levels_for_distress += list(global.z_list["z_beach"])
+	levels_for_distress += list(global.z_list["z_aerostat"])
+	levels_for_distress += list(global.z_list["z_aerostat_surface"])
+	levels_for_distress += list(global.z_list["z_fueldepot"])
+	. = ..()
 
 /obj/effect/overmap/visitable/ship/stellar_delight/build_skybox_representation()
 	..()
@@ -346,10 +372,13 @@
 	associated_map_datum = /datum/map_z_level/ship_lateload/ship_centcom
 
 /datum/map_z_level/ship_lateload/ship_centcom
-	z = Z_LEVEL_CENTCOM
 	name = "Centcom"
 	flags = MAP_LEVEL_ADMIN|MAP_LEVEL_SEALED|MAP_LEVEL_CONTACT|MAP_LEVEL_XENOARCH_EXEMPT
 	base_turf = /turf/simulated/floor/outdoors/rocks
+
+/datum/map_z_level/ship_lateload/ship_centcom/New(datum/map/map)
+	z = global.z_list["z_centcom"]
+	. = ..()
 
 /area/centcom //Just to try to make sure there's not space!!!
 	base_turf = /turf/simulated/floor/outdoors/rocks
@@ -362,9 +391,12 @@
 	associated_map_datum = /datum/map_z_level/ship_lateload/misc
 
 /datum/map_z_level/ship_lateload/misc
-	z = Z_LEVEL_MISC
 	name = "Misc"
 	flags = MAP_LEVEL_ADMIN|MAP_LEVEL_SEALED|MAP_LEVEL_CONTACT|MAP_LEVEL_XENOARCH_EXEMPT
+
+/datum/map_z_level/ship_lateload/misc/New(datum/map/map)
+	z = global.z_list["z_misc"]
+	. = ..()
 
 #include "../submaps/space_rocks/space_rocks.dm"
 /datum/map_template/ship_lateload/space_rocks

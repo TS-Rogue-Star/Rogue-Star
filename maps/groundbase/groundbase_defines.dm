@@ -1,4 +1,5 @@
 //Normal map defs
+/*//RS REMOVE START
 #define Z_LEVEL_GB_BOTTOM  					1
 #define Z_LEVEL_GB_MIDDLE  					2
 #define Z_LEVEL_GB_TOP     					3
@@ -25,8 +26,27 @@
 
 //Camera networks
 #define NETWORK_HALLS "Halls"
-
+*///RS REMOVE END
 /datum/map/groundbase/New()
+	global.z_list["z_centcom"] = 9
+	global.z_list["z_misc"] = 10
+	global.z_list["z_beach"] = 12
+	global.z_list["z_beach_cave"] = 13
+	global.z_list["z_aerostat"] = 14
+	global.z_list["z_aerostat_surface"] = 15
+	global.z_list["z_debrisfield"] = 16
+	global.z_list["z_fueldepot"] = 17
+	global.z_list["z_offmap1"] = 18
+	global.z_list["z_snowbase"] = 19
+	global.z_list["z_glacier"] = 20
+	global.z_list["z_gateway"] = 21
+	global.z_list["z_om_adventure"] = 22
+	global.z_list["z_redgate"] = 23
+	overmap_z = global.z_list["z_misc"]
+	ai_shell_allowed_levels += global.z_list["z_misc"]
+	ai_shell_allowed_levels += global.z_list["z_beach"]
+	ai_shell_allowed_levels += global.z_list["z_aerostat"]
+
 	..()
 	var/choice = pickweight(list(
 		"rs_lobby" = 50,
@@ -41,7 +61,6 @@
 	path = "groundbase"
 
 	use_overmap = TRUE
-	overmap_z = Z_LEVEL_MISC
 	overmap_size = 62
 	overmap_event_areas = 100
 	usable_email_tlds = list("virgo.nt")
@@ -262,10 +281,7 @@
 	ai_shell_allowed_levels = list(
 		Z_LEVEL_GB_BOTTOM,
 		Z_LEVEL_GB_MIDDLE,
-		Z_LEVEL_GB_TOP,
-		Z_LEVEL_MISC,
-		Z_LEVEL_BEACH,
-		Z_LEVEL_AEROSTAT
+		Z_LEVEL_GB_TOP
 		)
 
 	planet_datums_to_make = list(
@@ -291,7 +307,7 @@
 	icon_state = "space5"
 	use_stars = FALSE
 
-/datum/planet/virgo3c
+/datum/planet/virgo3c/New()
 	expected_z_levels = list(
 		Z_LEVEL_GB_BOTTOM,
 		Z_LEVEL_GB_MIDDLE,
@@ -301,19 +317,25 @@
 		Z_LEVEL_GB_WILD_E,
 		Z_LEVEL_GB_WILD_W
 		)
-/datum/planet/virgo3b
+	. = ..()
+
+/datum/planet/virgo3b/New()
 	expected_z_levels = list(
-		Z_LEVEL_CENTCOM
+		global.z_list["z_centcom"]
 	)
-/datum/planet/virgo4
+	. = ..()
+/datum/planet/virgo4/New()
 	expected_z_levels = list(
-		Z_LEVEL_BEACH
+		global.z_list["z_beach"]
 	)
-/datum/planet/snowbase
+	. = ..()
+
+/datum/planet/snowbase/New()
 	expected_z_levels = list(
-		Z_LEVEL_SNOWBASE,
-		Z_LEVEL_GLACIER
+		global.z_list["z_snowbase"],
+		global.z_list["z_glacier"]
 	)
+	. = ..()
 
 /obj/effect/landmark/map_data/groundbase
 	height = 3
@@ -455,10 +477,13 @@
 	associated_map_datum = /datum/map_z_level/gb_lateload/gb_centcom
 
 /datum/map_z_level/gb_lateload/gb_centcom
-	z = Z_LEVEL_CENTCOM
 	name = "Centcom"
 	flags = MAP_LEVEL_ADMIN|MAP_LEVEL_SEALED|MAP_LEVEL_CONTACT|MAP_LEVEL_XENOARCH_EXEMPT
 	base_turf = /turf/simulated/floor/outdoors/rocks
+
+/datum/map_z_level/gb_lateload/gb_centcom/New(datum/map/map)
+	z = global.z_list["z_centcom"]
+	. = ..()
 
 /area/centcom //Just to try to make sure there's not space!!!
 	base_turf = /turf/simulated/floor/outdoors/rocks
@@ -471,9 +496,14 @@
 	associated_map_datum = /datum/map_z_level/gb_lateload/misc
 
 /datum/map_z_level/gb_lateload/misc
-	z = Z_LEVEL_MISC
+
 	name = "Misc"
 	flags = MAP_LEVEL_ADMIN|MAP_LEVEL_SEALED|MAP_LEVEL_CONTACT|MAP_LEVEL_XENOARCH_EXEMPT
+
+/datum/map_z_level/gb_lateload/misc/New(datum/map/map)
+	z = global.z_list["z_misc"]
+	. = ..()
+
 
 #include "groundbase_mining.dm"
 /datum/map_template/gb_lateload/mining

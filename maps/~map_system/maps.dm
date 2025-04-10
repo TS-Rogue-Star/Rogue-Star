@@ -1,8 +1,24 @@
 
-var/datum/map/using_map = new USING_MAP_DATUM
+var/datum/map/using_map// = new USING_MAP_DATUM
 var/list/all_maps = list()
 
 /hook/startup/proc/initialise_map_list()
+	if(!fexists("config/map_selection.txt"))
+		using_map = new /datum/map/stellar_delight
+	var/list/Lines = file2list("config/map_selection.txt")
+	for(var/line in Lines)
+		var/our_station = text2path(line)
+		if(our_station)
+			using_map = new our_station
+			break
+	if(!using_map)
+		using_map = new /datum/map/stellar_delight
+
+	if(using_map)
+		log_and_message_admins("[using_map.name] is our map")
+	else
+		log_and_message_admins("We somehow didn't get a map I donno what to tell you")
+
 	for(var/type in subtypesof(/datum/map))
 		var/datum/map/M
 		if(type == using_map.type)
