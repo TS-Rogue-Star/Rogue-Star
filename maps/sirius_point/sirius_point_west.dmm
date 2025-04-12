@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/space)
 
 (1,1,1) = {"

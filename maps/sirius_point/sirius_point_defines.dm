@@ -314,7 +314,7 @@
 /datum/map_z_level/sirius_point/level_zero
 	z = Z_LEVEL_MOONBASE_LOW
 	name = "Sirius Point Underground"
-	base_turf = /turf/simulated/mineral/floor/moonbase
+	base_turf = /turf/simulated/mineral/floor/vacuum/moonbase/outdoors
 	transit_chance = 0
 	holomap_offset_x = MOONBASE_HOLOMAP_MARGIN_X
 	holomap_offset_y = MOONBASE_HOLOMAP_MARGIN_Y
@@ -338,7 +338,7 @@
 /datum/map_z_level/sirius_point/east_crater
 	z = Z_LEVEL_MOONBASE_EAST
 	name = "Sirius Point East Crater"
-	base_turf = /turf/simulated/mineral/floor/moonbase
+	base_turf = /turf/simulated/mineral/floor/vacuum/moonbase/outdoors
 	transit_chance = 0
 	holomap_offset_x = MOONBASE_HOLOMAP_MARGIN_X
 	holomap_offset_y = MOONBASE_HOLOMAP_MARGIN_Y
@@ -346,7 +346,7 @@
 /datum/map_z_level/sirius_point/west_crater
 	z = Z_LEVEL_MOONBASE_WEST
 	name = "Sirius Point West Crater"
-	base_turf = /turf/simulated/mineral/floor/moonbase
+	base_turf = /turf/simulated/mineral/floor/vacuum/moonbase/outdoors
 	transit_chance = 0
 	holomap_offset_x = MOONBASE_HOLOMAP_MARGIN_X
 	holomap_offset_y = MOONBASE_HOLOMAP_MARGIN_Y
@@ -354,7 +354,7 @@
 /datum/map_z_level/sirius_point/mining
 	z = Z_LEVEL_MOONBASE_MINING
 	name = "Sirius Point Mining Depths"
-	base_turf = /turf/simulated/mineral/floor/moonbase
+	base_turf = /turf/simulated/mineral/floor/vacuum/moonbase/outdoors
 	transit_chance = 0
 	holomap_offset_x = MOONBASE_HOLOMAP_MARGIN_X
 	holomap_offset_y = MOONBASE_HOLOMAP_MARGIN_Y

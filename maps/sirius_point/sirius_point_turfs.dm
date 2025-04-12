@@ -1,9 +1,9 @@
 // Moonbase turfs
 
 /turf/simulated/mineral/moonbase
-	color="#353636"
+	color="#7ab6b6"
 /turf/simulated/mineral/floor/vacuum/moonbase
-	color="#353636"
+	color="#8090a0"
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors
 	outdoors = 1
 /turf/simulated/floor/plating/external/outdoors
