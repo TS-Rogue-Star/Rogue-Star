@@ -8,12 +8,12 @@ import { CrewManifestContent } from './CrewManifest';
 
 export const IdentificationComputer = () => {
   return (
-    <Window width={600} height={700}>
-      <Window.Content resizable>
+    <Window width={600} height={700} resizable>
+      <Window.Content scrollable>
         <IdentificationComputerContent />
       </Window.Content>
     </Window>
-  );
+  ); // RS Edit: Add scrollable
 };
 
 export const IdentificationComputerContent = (props, context) => {
