@@ -163,6 +163,7 @@
 		Z_LEVEL_SHIP_MID,
 		Z_LEVEL_SHIP_HIGH
 	)
+
 	station_z_levels = list("SD0","SD1","SD2","SD3")
 
 	lateload_z_levels = list(
@@ -457,7 +458,7 @@
 	flags = MAP_LEVEL_ADMIN|MAP_LEVEL_SEALED|MAP_LEVEL_CONTACT|MAP_LEVEL_XENOARCH_EXEMPT
 
 #include "../expedition_vr/aerostat/_aerostat_science_outpost.dm"
-/datum/map_template/common_lateload/away_aerostat
+/datum/map_template/common_lateload/away_aerostat/science
 	name = "Remmi Science Aerostat - Z1 Aerostat"
 	desc = "The Virgo 2 Aerostat away mission."
 	mappath = 'maps/expedition_vr/aerostat/aerostat_science_outpost.dmm'
