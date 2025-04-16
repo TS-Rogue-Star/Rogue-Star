@@ -31,6 +31,7 @@
 	warmup_time = 10	//want some warmup time so people can cancel.
 	landmark_station = "aerostat_east"
 	landmark_offsite = "aerostat_surface"
+	current_location = "aerostat_east"
 
 /datum/random_map/noise/ore/virgo2
 	descriptor = "virgo 2 ore distribution map"

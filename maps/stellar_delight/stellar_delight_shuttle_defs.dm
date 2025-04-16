@@ -25,6 +25,7 @@
 	docking_controller_tag = "port_escape_pod"
 	move_time = SHUTTLE_TRANSIT_DURATION_RETURN
 	move_direction = EAST
+	map_specific = "StellarDelight"
 
 /datum/shuttle/autodock/ferry/escape_pod/starboardescape
 	name = "Starboard Escape Pod"
@@ -37,6 +38,7 @@
 	docking_controller_tag = "starboard_escape_pod"
 	move_time = SHUTTLE_TRANSIT_DURATION_RETURN
 	move_direction = WEST
+	map_specific = "StellarDelight"
 
 
 //////////////////////////////////////////////////////////////
@@ -105,6 +107,7 @@
 	fuel_consumption = 0
 	defer_initialisation = TRUE
 	range = 1
+	map_specific = "StellarDelight"
 
 /////STARSTUFF/////
 // The shuttle's 'shuttle' computer
@@ -137,6 +140,7 @@
 	shuttle_area = list(/area/shuttle/sdboat/fore,/area/shuttle/sdboat/aft)
 	fuel_consumption = 1
 	defer_initialisation = TRUE
+	map_specific = "StellarDelight"
 
 /area/shuttle/sdboat/fore
 	icon = 'icons/turf/areas_vr.dmi'

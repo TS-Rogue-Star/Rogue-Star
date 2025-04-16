@@ -25,6 +25,8 @@
 #define NETWORK_HALLS "Halls"
 *///RS REMOVE END
 /datum/map/stellar_delight/New()
+	if(global.using_map != src)
+		return ..()
 	global.z_list["z_centcom"] = 5
 	global.z_list["z_misc"] = 6
 	global.z_list["z_beach"] = 8
@@ -161,13 +163,14 @@
 		Z_LEVEL_SHIP_MID,
 		Z_LEVEL_SHIP_HIGH
 	)
+	station_z_levels = list("SD0","SD1","SD2","SD3")
 
 	lateload_z_levels = list(
 		list("Ship - Central Command"),
 		list("Ship - Misc"), //Shuttle transit zones, holodeck templates, etc
 		list("V3b Asteroid Field"),
 		list("Desert Planet - Z1 Beach","Desert Planet - Z2 Cave"),
-		list("Remmi Aerostat - Z1 Aerostat","Remmi Aerostat - Z2 Surface"),
+		list("Remmi Science Aerostat - Z1 Aerostat","Remmi Aerostat - Z2 Surface"),
 		list("Debris Field - Z1 Space"),
 		list("Fuel Depot - Z1 Space"),
 		list("Overmap"),
@@ -315,7 +318,6 @@
 	holomap_legend_x = 220
 	holomap_legend_y = 160
 
-
 /datum/map_z_level/stellar_delight/deck_zero
 	z = Z_LEVEL_SHIP_MAINTENANCE
 	name = "Subdeck"
@@ -350,7 +352,7 @@
 
 /datum/map_template/ship_lateload
 	allow_duplicates = FALSE
-	var/associated_map_datum
+//	var/associated_map_datum //RS REMOVE
 
 /////STATIC LATELOAD/////
 
@@ -363,6 +365,30 @@
 		return
 
 	new associated_map_datum(using_map, z)
+
+/datum/map_template/station_map/sd0
+	name = "SD0"
+	mappath = 'maps/stellar_delight/stellar_delight0.dmm'
+
+	associated_map_datum = /datum/map_z_level/stellar_delight/deck_zero
+
+/datum/map_template/station_map/sd1
+	name = "SD1"
+	mappath = 'maps/stellar_delight/stellar_delight1.dmm'
+
+	associated_map_datum = /datum/map_z_level/stellar_delight/deck_one
+
+/datum/map_template/station_map/sd2
+	name = "SD2"
+	mappath = 'maps/stellar_delight/stellar_delight2.dmm'
+
+	associated_map_datum = /datum/map_z_level/stellar_delight/deck_two
+
+/datum/map_template/station_map/sd3
+	name = "SD3"
+	mappath = 'maps/stellar_delight/stellar_delight3.dmm'
+
+	associated_map_datum = /datum/map_z_level/stellar_delight/deck_three
 
 /datum/map_template/ship_lateload/ship_centcom
 	name = "Ship - Central Command"
@@ -432,7 +458,7 @@
 
 #include "../expedition_vr/aerostat/_aerostat_science_outpost.dm"
 /datum/map_template/common_lateload/away_aerostat
-	name = "Remmi Aerostat - Z1 Aerostat"
+	name = "Remmi Science Aerostat - Z1 Aerostat"
 	desc = "The Virgo 2 Aerostat away mission."
 	mappath = 'maps/expedition_vr/aerostat/aerostat_science_outpost.dmm'
 	associated_map_datum = /datum/map_z_level/common_lateload/away_aerostat

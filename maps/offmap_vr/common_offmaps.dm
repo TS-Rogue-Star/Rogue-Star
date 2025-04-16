@@ -444,7 +444,7 @@
 // Code Shenanigans for Tether lateload maps
 /datum/map_template/common_lateload
 	allow_duplicates = FALSE
-	var/associated_map_datum
+//	var/associated_map_datum //RS REMOVE
 
 /datum/map_template/common_lateload/on_map_loaded(z)
 	if(!associated_map_datum || !ispath(associated_map_datum))

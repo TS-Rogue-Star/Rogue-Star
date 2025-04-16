@@ -4,8 +4,11 @@
 	var/list/lateload_gb_east = list()
 	var/list/lateload_gb_west = list()
 
+/*
 /datum/controller/subsystem/mapping/loadLateMaps()
+	log_and_message_admins(SPAN_DANGER("Hello from loadLateMaps in maps_vr.dm"))
 	if(using_map.name == "RascalsPass")
+		log_and_message_admins(SPAN_DANGER("Hello from loadLateMaps RascalsPass"))
 		var/list/gbn_load = using_map.lateload_gb_north
 		var/list/gbs_load = using_map.lateload_gb_south
 		var/list/gbe_load = using_map.lateload_gb_east
@@ -93,4 +96,5 @@
 					error("Randompick Z level \"[map]\" is not a valid map!")
 				else
 					MT.load_new_z(centered = FALSE)
-    . = ..()
+    return ..()
+*/

@@ -28,6 +28,8 @@
 #define NETWORK_HALLS "Halls"
 *///RS REMOVE END
 /datum/map/groundbase/New()
+	if(global.using_map != src)
+		return ..()
 	global.z_list["z_centcom"] = 9
 	global.z_list["z_misc"] = 10
 	global.z_list["z_beach"] = 12
@@ -211,6 +213,14 @@
 		Z_LEVEL_GB_BOTTOM,
 		Z_LEVEL_GB_MIDDLE,
 		Z_LEVEL_GB_TOP
+	)
+	station_z_levels = list("GB1","GB2","GB3","GB4")
+
+	supplemental_station_z_levels = list(
+		list("Northern Wilds 1","Northern Wilds 2","Northern Wilds 3"),
+		list("Southern Wilds 1","Southern Wilds 2","Southern Wilds 3"),
+		list("Eastern Wilds 1","Eastern Wilds 2"),
+		list("Western Wilds 1","Western Wilds 1")
 	)
 
 	lateload_z_levels = list(
@@ -446,7 +456,6 @@
 
 /datum/map_template/gb_lateload
 	allow_duplicates = FALSE
-	var/associated_map_datum
 
 /////STATIC LATELOAD/////
 
@@ -459,6 +468,31 @@
 		return
 
 	new associated_map_datum(using_map, z)
+
+/datum/map_template/station_map/gb1
+	name = "GB1"
+	mappath = 'maps/groundbase/rp-z1.dmm'
+
+	associated_map_datum = /datum/map_z_level/groundbase/level_one
+
+/datum/map_template/station_map/gb2
+	name = "GB2"
+	mappath = 'maps/groundbase/rp-z2.dmm'
+
+	associated_map_datum = /datum/map_z_level/groundbase/deck_two
+
+/datum/map_template/station_map/gb3
+	name = "GB3"
+	mappath = 'maps/groundbase/rp-z3.dmm'
+
+	associated_map_datum = /datum/map_z_level/groundbase/deck_three
+
+/datum/map_template/station_map/gb4
+	name = "GB4"
+	mappath = 'maps/groundbase/rp-z4.dmm'
+
+	associated_map_datum = /datum/map_z_level/groundbase/gb_enginesat
+
 
 /*
 /datum/map_template/gb_lateload/gb_enginesat

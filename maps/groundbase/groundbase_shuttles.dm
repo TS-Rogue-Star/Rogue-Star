@@ -22,6 +22,7 @@
 	shuttle_area = list(/area/shuttle/groundbase/exploration)
 	fuel_consumption = 1
 	move_direction = NORTH
+	map_specific = "RascalsPass"
 
 /area/shuttle/groundbase/exploration
 	icon = 'icons/turf/areas_vr.dmi'
@@ -51,6 +52,7 @@
 	landmark_station = "eng_surface_pad"
 	landmark_offsite = "enginesat_dock"
 	docking_controller_tag = "engineeringshuttle_docker"
+	map_specific = "RascalsPass"
 
 
 //////////////////////////////////////////////
@@ -183,6 +185,7 @@
 	defer_initialisation = TRUE //We're not loaded until an admin does it
 	fuel_consumption = 5
 	ceiling_type = /turf/simulated/floor/reinforced/airless
+	map_specific = "RascalsPass"
 
 // A shuttle lateloader landmark
 /obj/effect/shuttle_landmark/shuttle_initializer/axolotl

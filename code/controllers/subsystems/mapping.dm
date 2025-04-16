@@ -16,11 +16,9 @@ SUBSYSTEM_DEF(mapping)
 /datum/controller/subsystem/mapping/Initialize(timeofday)
 	if(subsystem_initialized)
 		return
-	log_and_message_admins("Hello from mapping initialize")
-	using_map = new /datum/map/stellar_delight
 	world.max_z_changed() // This is to set up the player z-level list, maxz hasn't actually changed (probably)
 	maploader = new()
-	do_map()
+//	do_map()
 	load_map_templates()
 
 	if(config.generate_map)
@@ -33,9 +31,12 @@ SUBSYSTEM_DEF(mapping)
 	// TODO - Other stuff related to maps and areas could be moved here too.  Look at /tg
 	// Lateload Code related to Expedition areas.
 	if(using_map) // VOREStation Edit: Re-enable this.
+		log_and_message_admins("We have a using map: [using_map], this is pre loadLateMaps")
 		loadLateMaps()
 		if(config.do_funny_names && using_map.sub.len)	//RS ADD
 			using_map.funny_name()						//RS ADD
+	else
+		log_and_message_admins(SPAN_WARNING("No using_map! We can't load any map!"))
 
 	..()
 
@@ -81,6 +82,9 @@ SUBSYSTEM_DEF(mapping)
 
 // VOREStation Edit Start: Enable This
 /datum/controller/subsystem/mapping/proc/loadLateMaps()
+	log_and_message_admins(SPAN_DANGER("Hello from loadLateMaps base, we have [using_map] to load maps from"))
+	var/list/station = using_map.station_z_levels
+	var/list/supplemental = using_map.supplemental_station_z_levels
 	var/list/deffo_load = using_map.lateload_z_levels
 	var/list/gateway_load = using_map.lateload_gateway	//RS EDIT - renamed for readability
 	var/list/om_extra_load = using_map.lateload_overmap	//RS EDIT - renamed for readability
@@ -121,6 +125,29 @@ SUBSYSTEM_DEF(mapping)
 			log_debug("ADMIN LOAD CUSTOM: The file should have been read, data is as follows: RG: [loaded_redgate] GW: [loaded_gateway]")
 
 		//RS ADD END
+
+	for(var/map in station)
+		var/datum/map_template/MT = map_templates[map]
+		if(!istype(MT))
+			error("Lateload Z level \"[map]\" is not a valid map!")
+			continue
+		admin_notice("Station: [MT]", R_DEBUG)
+		MT.load_new_z(centered = FALSE)
+		CHECK_TICK
+
+	if(LAZYLEN(supplemental)) //Just copied from gateway picking, this is so we can have a kind of OM map version of the same concept.	//RS EDIT
+		for(var/list/sup_list in supplemental)
+			var/map = pick(sup_list)	//RS EDIT
+
+			if(!map) //No lateload maps at all
+				return
+
+			var/datum/map_template/MT = map_templates[map]
+			if(!istype(MT))
+				error("Randompick Z level \"[map]\" is not a valid map!")
+			else
+				admin_notice("Station Supplemental: [MT]", R_DEBUG)
+				MT.load_new_z(centered = FALSE)
 
 	for(var/list/maplist in deffo_load)
 		if(!islist(maplist))
@@ -225,27 +252,3 @@ SUBSYSTEM_DEF(mapping)
 	if (!Debug2)
 		return // Only show up in stat panel if debugging is enabled.
 	. = ..()
-
-/datum/map_template/station_map/
-	name = "STATION MAP"
-	var/list/mappaths = list()
-
-/datum/map_template/station_map/stellar_delight
-	name = "Stellar Delight"
-	mappaths = list(
-		'maps/stellar_delight/stellar_delight0.dmm',
-		'maps/stellar_delight/stellar_delight1.dmm',
-		'maps/stellar_delight/stellar_delight2.dmm',
-		'maps/stellar_delight/stellar_delight3.dmm'
-	)
-
-/proc/do_map()
-	error("Hello from do_map")
-	var/datum/map_template/station_map/station = new /datum/map_template/station_map/stellar_delight
-	for(var/thing in station.mappaths)
-		error("Attempting to load [thing]")
-		var/datum/map_template/MT = new()
-		MT.mappath = thing
-		admin_notice("Lateload: [MT]", R_DEBUG)
-		MT.load_new_z(centered = FALSE)
-	error("Should be all done now!")

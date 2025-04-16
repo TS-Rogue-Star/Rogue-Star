@@ -3,14 +3,27 @@ var/datum/map/using_map// = new USING_MAP_DATUM
 var/list/all_maps = list()
 
 /hook/startup/proc/initialise_map_list()
-	if(!fexists("config/map_selection.txt"))
+	if(!fexists("data/map_selection.sav"))
 		using_map = new /datum/map/stellar_delight
-	var/list/Lines = file2list("config/map_selection.txt")
+//	var/list/Lines = file2list("data/map_selection.sav")
+	else
+		log_and_message_admins(SPAN_DANGER("MAP_SELECTION.SAV EXISTS, ATTEMPTING TO LOAD FROM FILE"))
+		var/savefile/F = new /savefile("data/map_selection.sav")
+		var/ourmap
+		F["selected_map"] >> ourmap
+//		if(istype(ourmap,/datum/map))
+		if(ourmap)
+			log_and_message_admins(SPAN_DANGER("LOADED [ourmap] FROM FILE TO USE FOR MAP LOADING!"))
+			using_map = new ourmap
+		else
+			log_and_message_admins(SPAN_DANGER("NO VALID MAP SELECTED, LOADING FROM DEFAULT"))
+/*
 	for(var/line in Lines)
 		var/our_station = text2path(line)
 		if(our_station)
 			using_map = new our_station
 			break
+*/
 	if(!using_map)
 		using_map = new /datum/map/stellar_delight
 
@@ -65,6 +78,9 @@ var/list/all_maps = list()
 
 	//This list contains the z-level numbers which can be accessed via space travel and the percentile chances to get there.
 	var/list/accessible_z_levels = list()
+
+	var/list/station_z_levels = list()
+	var/list/supplemental_station_z_levels = list()
 
 	//List of additional z-levels to load above the existing .dmm file z-levels using the maploader. Must be map template >>> NAMES <<<.
 	var/list/lateload_z_levels = list()

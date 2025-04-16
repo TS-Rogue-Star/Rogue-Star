@@ -4388,4 +4388,5 @@
 #include "maps\submaps\surface_submaps\wilderness\wilderness_areas.dm"
 #include "maps\~map_system\funny_name.dm"
 #include "maps\~map_system\maps.dm"
+#include "maps\~map_system\maps_rs.dm"
 // END_INCLUDE

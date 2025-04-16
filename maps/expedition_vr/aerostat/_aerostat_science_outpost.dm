@@ -26,13 +26,10 @@
 
 // -- Datums -- //
 
-/datum/shuttle/autodock/ferry/aerostat
-	name = "Aerostat Ferry"
-	shuttle_area = /area/shuttle/aerostat
-	docking_controller_tag = "aerostat_shuttle_airlock"
-	warmup_time = 10	//want some warmup time so people can cancel.
-	landmark_station = "aerostat_east"
-	landmark_offsite = "aerostat_surface"
+/datum/shuttle/autodock/ferry/aerostat/New(_name)
+	if(using_map.name != "StellarDelight")
+		docking_controller_tag = "aerostat_shuttle_airlock"
+	. = ..()
 
 /datum/random_map/noise/ore/virgo2
 	descriptor = "virgo 2 ore distribution map"
