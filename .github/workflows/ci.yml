@@ -72,6 +72,13 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
+      - name: Restore legacy OpenSSL 1.1 runtime (amd64 + i386)
+        run: |
+          sudo dpkg --add-architecture i386
+          echo "deb [arch=amd64,i386] http://security.ubuntu.com/ubuntu focal-security main" \
+               | sudo tee /etc/apt/sources.list.d/focal.list
+          sudo apt-get update
+          sudo apt-get install --yes libssl1.1 libssl1.1:i386
       - name: Ensure +x on CI directory
         run: |
           chmod -R +x ./tools/ci
