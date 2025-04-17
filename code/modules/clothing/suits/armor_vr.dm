@@ -125,9 +125,7 @@
 /obj/item/clothing/suit/armor/crusader
 	name = "crusader armor"
 	desc = "God will protect those who defend his faith."
-
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 25, "bomb" = 30, "bio" = 0, "rad" = 0)
-
 	icon = 'icons/inventory/suit/item_vr.dmi'
 	default_worn_icon = 'icons/inventory/suit/mob_vr.dmi'
 	icon_state = "crusader_suit"
@@ -135,36 +133,22 @@
 /obj/item/clothing/head/helmet/crusader
 	name = "crusader helmet"
 	desc = "God will protect those who defend his faith."
-
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 25, "bomb" = 30, "bio" = 0, "rad" = 0)
-
 	icon = 'icons/inventory/head/item_vr.dmi'
 	default_worn_icon = 'icons/inventory/head/mob_vr.dmi'
 	icon_state = "crusader_head"
 
 /obj/item/clothing/suit/armor/combat/crusader_explo
-	name = "explorer low tech suit"
-	desc = "A low tech armoured suit for exploring harsh environments."
+	name = "medieval armor"
+	desc = "A low tech armoured suit. Upon closer inspection, the material seems faux."
 	icon_state = "crusader_explo"
 	icon = 'icons/obj/clothing/knights_vr.dmi'
 	icon_override = 'icons/obj/clothing/knights_vr.dmi'
 	flags = THICKMATERIAL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
-	cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	slowdown=0
-	siemens_coefficient = 0.9
-	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 35, bio = 75, rad = 35) // Inferior to sec vests in bullet/laser but better for environmental protection.
-	allowed = list(
-		/obj/item/device/flashlight,
-		/obj/item/weapon/gun,
-		/obj/item/ammo_magazine,
-		/obj/item/weapon/melee,
-		/obj/item/weapon/material/knife,
-		/obj/item/weapon/tank,
-		/obj/item/device/radio,
-		/obj/item/weapon/pickaxe
-		)
+	siemens_coefficient = 1
+	armor = list(melee = 5, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0) // RS: Armor values gutted.
 
 /obj/item/clothing/suit/armor/combat/crusader_explo/FM
 	name = "field medic low tech suit"
