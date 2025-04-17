@@ -12,6 +12,23 @@
 	flags = RAD_SHIELDED
 	ambience = AMBIENCE_MAINTENANCE
 
+/area/shuttle/excursion
+	requires_power = 1
+	icon_state = "shuttle2"
+	base_turf = /turf/simulated/floor/reinforced
+
+/area/shuttle/excursion/general
+	name = "\improper Excursion Shuttle"
+
+/area/shuttle/excursion/cockpit
+	name = "\improper Excursion Shuttle Cockpit"
+
+/area/shuttle/excursion/cargo
+	name = "\improper Excursion Shuttle Cargo"
+
+/area/shuttle/excursion/power
+	name = "\improper Excursion Shuttle Power"
+
 ////////////////////////////////////////////////////////////////////////////////
 // Everything below here is kept while this is a WIP, delete it later or else //
 ////////////////////////////////////////////////////////////////////////////////

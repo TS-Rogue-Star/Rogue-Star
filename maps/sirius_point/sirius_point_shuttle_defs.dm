@@ -269,3 +269,30 @@
 
 ///obj/effect/overmap/visitable/sector/virgo3b/get_space_zlevels()
 //	return list(Z_LEVEL_SPACE_ROCKS)
+
+////////////////////////////////////////
+//////// Excursion Shuttle /////////////
+////////////////////////////////////////
+// The 'shuttle' of the excursion shuttle
+/datum/shuttle/autodock/overmap/excursion
+	name = "Excursion Shuttle"
+	warmup_time = 0
+	current_location = "tether_excursion_hangar"
+	docking_controller_tag = "expshuttle_docker"
+	shuttle_area = list(/area/shuttle/excursion/cockpit, /area/shuttle/excursion/general, /area/shuttle/excursion/cargo, /area/shuttle/excursion/power)
+	fuel_consumption = 3
+	move_direction = NORTH
+
+// The 'ship' of the excursion shuttle
+/obj/effect/overmap/visitable/ship/landable/excursion
+	name = "Excursion Shuttle"
+	desc = "The traditional Excursion Shuttle. NT Approved!"
+	icon_state = "htu_destroyer_g"
+	vessel_mass = 8000
+	vessel_size = SHIP_SIZE_SMALL
+	shuttle = "Excursion Shuttle"
+
+/obj/machinery/computer/shuttle_control/explore/excursion
+	name = "short jump console"
+	shuttle_tag = "Excursion Shuttle"
+	req_one_access = list(access_pilot)
