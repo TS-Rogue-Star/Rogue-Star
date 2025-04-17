@@ -30,11 +30,11 @@ const getStatColor = (cm) => {
 export const CrewMonitor = () => {
   return (
     <Window width={800} height={600} resizable>
-      <Window.Content>
+      <Window.Content scrollable>
         <CrewMonitorContent />
       </Window.Content>
     </Window>
-  );
+  ); // RS Edit: Add scrollable
 };
 
 export const CrewMonitorContent = (props, context) => {
