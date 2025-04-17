@@ -469,3 +469,14 @@
 
 /obj/effect/floor_decal/road/center
 	icon_state = "center_lines"
+
+//RS add - fake stairs decals
+/obj/effect/floor_decal/shortstairs
+	icon = 'icons/turf/structures.dmi'
+	name = "short stairs"
+
+/obj/effect/floor_decal/shortstairs/top
+	icon_state = "ramptop"
+/obj/effect/floor_decal/shortstairs/bottom
+	icon_state = "rampbottom"
+//end RS add
