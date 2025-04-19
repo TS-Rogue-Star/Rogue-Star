@@ -521,6 +521,53 @@
 	nutriment_desc = list("chocolate" = 5)
 	bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/chocolate_easter_egg
+	name = "chocolate egg"
+	desc = "A colorful confection."
+	icon = 'icons/obj/easter_egg.dmi'
+	icon_state = "1"
+	filling_color = "#7D5F46"
+	center_of_mass = list("x"=16, "y"=13)
+	nutriment_amt = 3
+	nutriment_desc = list("chocolate" = 5)
+	bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/chocolate_easter_egg/Initialize()
+  . = ..()
+  icon_state = "[rand(1,14)]"
+
+/obj/item/weapon/reagent_containers/food/snacks/big_easter_egg
+	name = "chocolate egg"
+	desc = "A big Easter egg. Maybe it's special?."
+	icon = 'icons/obj/easter_egg.dmi'
+	icon_state = "15"
+	filling_color = "#7D5F46"
+	center_of_mass = list("x"=16, "y"=13)
+	nutriment_amt = 3
+	nutriment_desc = list("chocolate" = 7.5)
+	bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/big_easter_egg/Initialize()
+	. = ..()
+	reagents.add_reagent("macrocillin", 1)
+	icon_state = "[rand(15,19)]"
+
+/obj/item/weapon/reagent_containers/food/snacks/small_easter_egg
+	name = "chocolate egg"
+	desc = "A small Easter egg. Maybe it's special?"
+	icon = 'icons/obj/easter_egg.dmi'
+	icon_state = "20"
+	filling_color = "#7D5F46"
+	center_of_mass = list("x"=16, "y"=13)
+	nutriment_amt = 3
+	nutriment_desc = list("chocolate" = 2.5)
+	bitesize = 1
+
+/obj/item/weapon/reagent_containers/food/snacks/small_easter_egg/Initialize()
+	. = ..()
+	reagents.add_reagent("microcillin", 1)
+	icon_state = "[rand(20,23)]"
+
 /obj/item/weapon/reagent_containers/food/snacks/chocolateegg/Initialize()
 	. = ..()
 	reagents.add_reagent("sugar", 2)
