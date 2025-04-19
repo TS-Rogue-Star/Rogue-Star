@@ -3814,7 +3814,6 @@
 	pixel_y = 12
 	},
 /obj/item/weapon/stamp/hos,
-/obj/item/weapon/book/manual/sd_guide,
 /turf/simulated/floor/carpet,
 /area/crew_quarters/heads/hos)
 "nL" = (
@@ -3951,7 +3950,6 @@
 	name = "fancy table"
 	},
 /obj/item/weapon/stamp/rd,
-/obj/item/weapon/book/manual/sd_guide,
 /turf/simulated/floor/carpet/purcarpet,
 /area/crew_quarters/heads/hor)
 "op" = (
@@ -8172,10 +8170,6 @@
 /obj/structure/low_wall/bay/reinforced/steel,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/starboardaft)
-"CO" = (
-/obj/effect/overmap/visitable/ship/stellar_delight,
-/turf/space,
-/area/space)
 "CP" = (
 /obj/structure/cable/green{
 	icon_state = "4-8"
@@ -10811,7 +10805,6 @@
 	pixel_x = 3;
 	pixel_y = 18
 	},
-/obj/item/weapon/book/manual/sd_guide,
 /turf/simulated/floor/carpet,
 /area/crew_quarters/heads/hop)
 "Mu" = (
@@ -11959,7 +11952,6 @@
 	pixel_y = 12
 	},
 /obj/item/weapon/stamp/cmo,
-/obj/item/weapon/book/manual/sd_guide,
 /turf/simulated/floor/carpet/tealcarpet,
 /area/crew_quarters/heads/cmo)
 "PT" = (
@@ -12819,10 +12811,6 @@
 /obj/random/maintenance,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck3/forestarroomb)
-"Te" = (
-/obj/effect/landmark/map_data/stellar_delight,
-/turf/space,
-/area/space)
 "Tf" = (
 /obj/structure/cable/green{
 	icon_state = "1-2"
@@ -13128,7 +13116,6 @@
 "Ud" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/stamp/ce,
-/obj/item/weapon/book/manual/sd_guide,
 /turf/simulated/floor/carpet/oracarpet,
 /area/crew_quarters/heads/chief)
 "Ue" = (
@@ -13821,7 +13808,6 @@
 	dir = 4
 	},
 /obj/structure/table/steel_reinforced,
-/obj/item/weapon/paper/sdshield,
 /turf/simulated/floor,
 /area/stellardelight/deck2/central)
 "WA" = (
@@ -14931,7 +14917,7 @@ Jh
 Jh
 Jh
 Jh
-Te
+Jh
 "}
 (2,1,1) = {"
 Jh
@@ -15073,7 +15059,7 @@ Jh
 Jh
 Jh
 Jh
-CO
+Jh
 "}
 (3,1,1) = {"
 Jh

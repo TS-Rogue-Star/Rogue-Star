@@ -387,6 +387,13 @@
 /obj/machinery/atmospherics/pipe/simple/visible/purple,
 /turf/simulated/floor/tiled/monotile,
 /area/space)
+"GO" = (
+/obj/structure/stairs/spawner/south,
+/obj/structure/railing/grey{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/space)
 "Ig" = (
 /obj/structure/stairs/spawner/north,
 /obj/structure/railing/grey{
@@ -398,6 +405,9 @@
 /obj/machinery/atmospherics/pipe/manifold4w/visible/yellow,
 /obj/machinery/meter,
 /turf/simulated/floor/tiled/monotile,
+/area/space)
+"IY" = (
+/turf/simulated/floor/plating,
 /area/space)
 "Jl" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green{
@@ -4317,8 +4327,8 @@ Es
 Es
 Es
 Es
-Es
-Es
+IY
+NC
 Es
 Es
 Es
@@ -4459,8 +4469,8 @@ NC
 NC
 NC
 NC
-Es
-Es
+IY
+NC
 Es
 Es
 Es
@@ -4601,8 +4611,8 @@ Sh
 Oj
 Oj
 NC
-Es
-Es
+IY
+NC
 Es
 Es
 Es
@@ -4743,8 +4753,8 @@ Sh
 Oj
 Oj
 NC
-Es
-Es
+IY
+NC
 Es
 Es
 Es
@@ -4885,8 +4895,8 @@ Sh
 Oj
 Oj
 NC
-Es
-Es
+IY
+NC
 Es
 Es
 Es
@@ -5027,8 +5037,8 @@ Sh
 Oj
 Oj
 NC
-Es
-Es
+IY
+NC
 Es
 Es
 Es
@@ -5169,8 +5179,8 @@ Sh
 Oj
 Oj
 NC
-Es
-Es
+IY
+NC
 Es
 Es
 Es
@@ -5311,8 +5321,8 @@ Sh
 Oj
 Oj
 NC
-Es
-Es
+IY
+NC
 Es
 Es
 Es
@@ -5453,8 +5463,8 @@ Sh
 Oj
 Oj
 NC
-Es
-Es
+IY
+NC
 Es
 Es
 Es
@@ -5595,8 +5605,8 @@ NC
 NC
 NC
 NC
-Es
-Es
+IY
+NC
 Es
 Es
 Es
@@ -5736,9 +5746,9 @@ Pg
 Es
 Es
 Es
-Es
-Es
-Es
+NC
+IY
+NC
 Es
 Es
 Es
@@ -5878,9 +5888,9 @@ Pg
 Es
 Es
 Es
-Es
-Es
-Es
+NC
+IY
+NC
 Es
 Es
 Es
@@ -6020,14 +6030,14 @@ Pg
 Es
 Es
 Es
-Es
-Es
-Es
-Es
-Es
-Es
-Es
-Es
+NC
+IY
+NC
+NC
+NC
+NC
+NC
+NC
 Es
 Es
 Es
@@ -6162,14 +6172,14 @@ Pg
 Es
 Es
 Es
-Es
-Es
-Es
-Es
-Es
-Es
-Es
-Es
+NC
+IY
+IY
+IY
+IY
+LV
+GO
+NC
 Es
 Es
 Es
@@ -6304,14 +6314,14 @@ Pg
 Es
 Es
 Es
-Es
-Es
-Es
-Es
-Es
-Es
-Es
-Es
+NC
+NC
+NC
+NC
+NC
+NC
+NC
+NC
 Es
 Es
 Es
