@@ -3,10 +3,15 @@
 /turf/simulated/mineral/moonbase
 	color="#7ab6b6"
 /turf/simulated/mineral/floor/vacuum/moonbase
-	color="#8090a0"
+	color="#7e89a1"
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors
 	outdoors = 1
 /turf/simulated/floor/plating/external/outdoors
+	outdoors = 1
+
+/turf/space/cracked_asteroid/moonbase
+	color="#7e89a1"
+/turf/space/cracked_asteroid/moonbase/outdoors
 	outdoors = 1
 
 // Virgo 3b things, for centcomm

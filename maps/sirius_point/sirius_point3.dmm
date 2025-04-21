@@ -5,7 +5,8 @@
 /turf/simulated/floor/outdoors/grass/forest,
 /area/space)
 "ag" = (
-/turf/simulated/floor/carpet/green,
+/obj/structure/bed/chair/sofa/corp,
+/turf/simulated/floor/wood,
 /area/space)
 "ak" = (
 /obj/structure/table/darkglass,
@@ -24,12 +25,7 @@
 /turf/simulated/wall/fancy_shuttle/nondense{
 	fancy_shuttle_tag = "explo"
 	},
-/area/space)
-"ap" = (
-/obj/structure/table/glass,
-/obj/machinery/computer/med_data/laptop,
-/turf/simulated/floor/tiled/white,
-/area/space)
+/area/shuttle/excursion/cargo)
 "az" = (
 /obj/structure/sign/nanotrasen{
 	pixel_y = 30
@@ -48,6 +44,27 @@
 	pixel_y = 28
 	},
 /turf/simulated/floor/tiled/dark,
+/area/space)
+"aX" = (
+/obj/machinery/conveyor_switch/oneway{
+	id = "cargoload"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/milspec,
+/area/space)
+"ba" = (
+/obj/structure/bed/chair/shuttle{
+	dir = 1
+	},
+/obj/structure/closet/emergsuit_wall{
+	pixel_y = 32
+	},
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/turf/simulated/floor/tiled,
 /area/space)
 "bh" = (
 /obj/structure/closet/emcloset,
@@ -87,18 +104,24 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/power)
 "bz" = (
 /obj/machinery/vending/wardrobe/detdrobe,
 /turf/simulated/floor/wood/alt/panel,
 /area/space)
 "bF" = (
-/obj/structure/bed/chair/sofa/corp/left,
-/turf/simulated/floor/wood,
+/obj/structure/bed/chair/bay,
+/turf/simulated/floor/tiled/white,
 /area/space)
+"bJ" = (
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "explo"
+	},
+/turf/simulated/floor/tiled/steel,
+/area/shuttle/excursion/cargo)
 "bM" = (
-/obj/structure/table/woodentable,
-/turf/simulated/floor/carpet/green,
+/obj/structure/bed/chair/comfy,
+/turf/simulated/floor/wood,
 /area/space)
 "bO" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -114,7 +137,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cargo)
 "bS" = (
 /obj/effect/floor_decal/milspec/color/emerald/corner{
 	dir = 4
@@ -143,7 +166,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/general)
 "ce" = (
 /obj/machinery/recharge_station,
 /obj/effect/floor_decal/milspec/color/red,
@@ -168,11 +191,36 @@
 	},
 /turf/simulated/floor/tiled,
 /area/space)
+"cy" = (
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 4
+	},
+/turf/simulated/wall/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/area/space)
 "cz" = (
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 10
 	},
 /turf/simulated/floor/tiled/white,
+/area/space)
+"cB" = (
+/obj/structure/bed/chair/shuttle{
+	dir = 1
+	},
+/obj/structure/closet/emergsuit_wall{
+	dir = 1;
+	pixel_y = -32
+	},
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -28
+	},
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/turf/simulated/floor/tiled,
 /area/space)
 "cC" = (
 /obj/machinery/disposal/wall/cleaner{
@@ -181,11 +229,6 @@
 	name = "auto-resleeving equipment deposit"
 	},
 /turf/simulated/floor/tiled/white,
-/area/space)
-"cD" = (
-/turf/simulated/wall/fancy_shuttle/low{
-	fancy_shuttle_tag = "sdboat"
-	},
 /area/space)
 "cH" = (
 /obj/effect/floor_decal/milspec/color/emerald/half{
@@ -200,18 +243,22 @@
 /obj/effect/floor_decal/milspec/color/emerald/half,
 /turf/simulated/floor/tiled/milspec,
 /area/space)
-"dp" = (
-/obj/machinery/door/firedoor/glass/hidden/shuttle,
-/obj/machinery/door/blast/shuttle/open{
-	id = "shuttleshutter"
+"cR" = (
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/obj/structure/window/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
-	dir = 6
+/turf/simulated/floor/tiled/milspec,
+/area/space)
+"dk" = (
+/obj/structure/railing/grey{
+	dir = 4
 	},
-/turf/simulated/floor/reinforced/airless,
+/obj/structure/railing/grey,
+/turf/simulated/open,
 /area/space)
 "du" = (
 /obj/machinery/vending/wardrobe/robodrobe,
@@ -229,6 +276,13 @@
 	},
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 4
+	},
+/turf/simulated/floor/tiled/milspec,
+/area/space)
+"dC" = (
+/obj/machinery/conveyor{
+	dir = 10;
+	id = "cargoload"
 	},
 /turf/simulated/floor/tiled/milspec,
 /area/space)
@@ -264,7 +318,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cargo)
 "dO" = (
 /turf/simulated/wall,
 /area/space)
@@ -274,7 +328,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cockpit)
 "ee" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
@@ -286,7 +340,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cargo)
 "ei" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -307,6 +361,17 @@
 /obj/effect/floor_decal/milspec/monotile,
 /turf/simulated/floor/reinforced,
 /area/space)
+"ej" = (
+/obj/machinery/door/firedoor/glass/hidden/shuttle,
+/obj/machinery/door/blast/shuttle/open{
+	dir = 4;
+	id = "shuttleshutter"
+	},
+/obj/structure/window/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/turf/simulated/floor/reinforced/airless,
+/area/space)
 "em" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 4
@@ -314,6 +379,15 @@
 /obj/structure/disposaloutlet,
 /obj/effect/floor_decal/milspec/monotile,
 /turf/simulated/floor/reinforced,
+/area/space)
+"eq" = (
+/obj/structure/bed/chair/bay/comfy/blue{
+	dir = 1
+	},
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/turf/simulated/floor/tiled,
 /area/space)
 "ew" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -323,7 +397,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/general)
 "eA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/universal{
 	dir = 8
@@ -341,7 +415,7 @@
 /turf/simulated/wall/fancy_shuttle{
 	fancy_shuttle_tag = "explo"
 	},
-/area/space)
+/area/shuttle/excursion/cargo)
 "eF" = (
 /obj/structure/closet{
 	name = "Evidence Closet"
@@ -362,12 +436,25 @@
 	dir = 1
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/general)
 "eK" = (
-/obj/structure/bed/chair/sofa/left/teal{
-	dir = 4
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1
 	},
-/turf/simulated/floor/tiled/white,
+/obj/machinery/door/window/southright{
+	dir = 1;
+	req_one_access = list(11,67)
+	},
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/turf/simulated/floor/tiled,
+/area/space)
+"eO" = (
+/turf/simulated/wall/fancy_shuttle/low{
+	fancy_shuttle_tag = "sdboat"
+	},
 /area/space)
 "eR" = (
 /obj/effect/floor_decal/corner/paleblue{
@@ -382,28 +469,24 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
-"fe" = (
-/obj/structure/bed/chair/bay/comfy/blue{
+/area/shuttle/excursion/cockpit)
+"fg" = (
+/obj/machinery/atmospherics/unary/engine/fancy_shuttle{
 	dir = 1
 	},
-/obj/structure/panic_button/small{
-	pixel_x = -29;
-	pixel_y = 30
-	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
-/obj/effect/floor_decal/fancy_shuttle{
+/turf/simulated/wall/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
 	},
-/turf/simulated/floor/tiled,
 /area/space)
 "fh" = (
-/obj/structure/bed/chair/sofa/corp/corner{
-	dir = 1
+/obj/effect/floor_decal/corner/paleblue{
+	dir = 6
 	},
-/turf/simulated/floor/wood,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/table/bench/glass,
+/turf/simulated/floor/tiled/white,
 /area/space)
 "fj" = (
 /obj/item/clothing/shoes/magboots,
@@ -413,8 +496,6 @@
 /obj/item/clothing/suit/space/void/security,
 /obj/item/clothing/suit/space/void/security,
 /obj/effect/floor_decal/milspec/color/red,
-/obj/item/weapon/tank/oxygen,
-/obj/item/weapon/tank/oxygen,
 /obj/item/clothing/head/helmet/space/void/security,
 /obj/item/clothing/head/helmet/space/void/security,
 /obj/structure/table/rack/steel,
@@ -475,6 +556,25 @@
 /obj/machinery/computer/skills,
 /turf/simulated/floor/carpet/blue2,
 /area/space)
+"fP" = (
+/obj/structure/handrail{
+	dir = 1
+	},
+/obj/machinery/airlock_sensor{
+	dir = 8;
+	pixel_x = 29;
+	pixel_y = 2
+	},
+/obj/effect/map_helper/airlock/sensor/int_sensor,
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/obj/structure/closet/emergsuit_wall{
+	dir = 1;
+	pixel_y = -32
+	},
+/turf/simulated/floor/tiled,
+/area/space)
 "fQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 6
@@ -482,7 +582,7 @@
 /turf/simulated/wall/fancy_shuttle{
 	fancy_shuttle_tag = "explo"
 	},
-/area/space)
+/area/shuttle/excursion/cargo)
 "fV" = (
 /obj/effect/floor_decal/corner/paleblue/full{
 	dir = 4
@@ -490,10 +590,9 @@
 /turf/simulated/floor/tiled/white,
 /area/space)
 "gb" = (
-/obj/structure/bed/chair/sofa/corp/corner{
-	dir = 1
-	},
-/turf/simulated/floor/carpet/green,
+/obj/effect/floor_decal/milspec/color/emerald/half,
+/obj/machinery/disposal,
+/turf/simulated/floor/tiled,
 /area/space)
 "gj" = (
 /obj/structure/disposalpipe/trunk,
@@ -508,6 +607,13 @@
 /obj/structure/window/reinforced/full,
 /turf/simulated/floor/outdoors/grass/forest,
 /area/space)
+"gl" = (
+/obj/machinery/computer/ship/sensors/adv,
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/turf/simulated/floor/tiled,
+/area/space)
 "gm" = (
 /obj/effect/floor_decal/milspec/color/blue,
 /obj/structure/bed/chair/backed_red{
@@ -518,6 +624,15 @@
 "gp" = (
 /obj/effect/floor_decal/milspec/color/blue/half,
 /turf/simulated/floor/tiled,
+/area/space)
+"gC" = (
+/obj/machinery/conveyor{
+	id = "cargoload"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/milspec,
 /area/space)
 "gF" = (
 /obj/structure/table/standard,
@@ -569,7 +684,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/power)
 "gW" = (
 /obj/structure/bed/chair/shuttle{
 	dir = 8
@@ -584,14 +699,46 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
-"hm" = (
-/obj/machinery/atmospherics/unary/engine/fancy_shuttle{
-	dir = 1
-	},
-/turf/simulated/wall/fancy_shuttle{
+/area/shuttle/excursion/general)
+"gY" = (
+/obj/machinery/portable_atmospherics/canister/phoron,
+/obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
 	},
+/obj/machinery/atmospherics/portables_connector/fuel{
+	dir = 1
+	},
+/obj/machinery/door/window/southleft{
+	dir = 1;
+	req_one_access = list(11,67)
+	},
+/turf/simulated/floor/tiled,
+/area/space)
+"ha" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/angled_bay/external/glass{
+	dir = 4;
+	frequency = 1380;
+	id_tag = null;
+	locked = 1;
+	name = "Docking Port Airlock"
+	},
+/obj/effect/map_helper/airlock/door/int_door,
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 4
+	},
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	dir = 4;
+	frequency = 1380;
+	master_tag = "sd_port_landing";
+	pixel_y = 32;
+	req_one_access = list(13)
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/tiled/steel_ridged,
 /area/space)
 "hq" = (
 /turf/simulated/floor/tiled/milspec/raised,
@@ -614,7 +761,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cargo)
 "hw" = (
 /obj/structure/bed/chair/comfy{
 	dir = 8
@@ -627,48 +774,15 @@
 /obj/structure/window/reinforced/polarized/full,
 /turf/simulated/floor/plating,
 /area/space)
-"hA" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/unary/vent_pump/high_volume{
-	dir = 4;
-	frequency = 1380;
-	id_tag = null
-	},
-/obj/effect/map_helper/airlock/atmos/chamber_pump,
-/obj/effect/map_helper/airlock/sensor/chamber_sensor,
-/obj/machinery/airlock_sensor{
-	frequency = 1380;
-	id_tag = null;
-	pixel_y = -25
-	},
-/obj/machinery/embedded_controller/radio/airlock/docking_port{
-	frequency = 1380;
-	id_tag = "sd_port_landing";
-	pixel_y = 29
-	},
-/turf/simulated/floor/tiled,
-/area/space)
 "hE" = (
 /obj/machinery/vending/cola,
 /turf/simulated/floor/tiled/eris/cafe,
 /area/space)
-"hI" = (
-/obj/structure/bed/chair/bay/comfy/blue{
-	dir = 1
-	},
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/turf/simulated/floor/tiled,
-/area/space)
 "hQ" = (
-/obj/structure/railing/grey,
-/obj/structure/railing/grey{
-	dir = 8
+/obj/structure/bed/chair/sofa/left/teal{
+	dir = 4
 	},
-/turf/simulated/open,
+/turf/simulated/floor/tiled/white,
 /area/space)
 "hY" = (
 /obj/structure/cable/cyan{
@@ -683,7 +797,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cockpit)
 "ic" = (
 /obj/structure/bed/chair{
 	dir = 8
@@ -708,8 +822,25 @@
 /turf/simulated/floor/tiled,
 /area/space)
 "im" = (
-/obj/structure/railing,
-/turf/simulated/open,
+/obj/structure/table/glass,
+/obj/machinery/computer/med_data/laptop,
+/turf/simulated/floor/tiled/white,
+/area/space)
+"it" = (
+/obj/structure/bed/chair/bay/comfy/blue{
+	dir = 1
+	},
+/obj/structure/panic_button/small{
+	pixel_x = -29;
+	pixel_y = 30
+	},
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/turf/simulated/floor/tiled,
 /area/space)
 "iu" = (
 /obj/structure/extinguisher_cabinet{
@@ -726,7 +857,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/general)
 "iy" = (
 /obj/effect/catwalk_plated/dark,
 /turf/simulated/open,
@@ -737,6 +868,23 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
+/area/shuttle/excursion/cargo)
+"iF" = (
+/obj/structure/bed/chair/shuttle{
+	dir = 1
+	},
+/obj/structure/closet/emergsuit_wall{
+	dir = 1;
+	pixel_y = -32
+	},
+/obj/item/device/radio/intercom{
+	dir = 4;
+	pixel_x = 24
+	},
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/turf/simulated/floor/tiled,
 /area/space)
 "iG" = (
 /obj/structure/table/darkglass,
@@ -764,15 +912,12 @@
 	},
 /turf/simulated/floor/tiled,
 /area/space)
-"jc" = (
-/obj/machinery/power/smes/buildable{
-	charge = 500000
+"jb" = (
+/obj/structure/cable/green{
+	icon_state = "1-8"
 	},
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
-	},
-/obj/structure/cable/green{
-	icon_state = "0-4"
 	},
 /turf/simulated/floor/tiled,
 /area/space)
@@ -786,7 +931,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cockpit)
 "jp" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -798,7 +943,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cargo)
 "ju" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -822,26 +967,17 @@
 /obj/effect/floor_decal/milspec/monotile,
 /turf/simulated/floor/reinforced,
 /area/space)
-"jv" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden{
-	dir = 4
-	},
-/obj/effect/overmap/visitable/ship/landable/sd_boat,
-/obj/effect/shuttle_landmark/shuttle_initializer/sdboat,
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
-	dir = 4
-	},
-/turf/simulated/floor/tiled,
-/area/space)
 "jw" = (
 /obj/effect/floor_decal/milspec/color/emerald/corner,
 /turf/simulated/floor/tiled,
+/area/space)
+"jx" = (
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 9
+	},
+/turf/simulated/wall/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
 /area/space)
 "jA" = (
 /obj/effect/floor_decal/milspec/color/emerald/half,
@@ -860,6 +996,26 @@
 /obj/structure/flora/pottedplant/small,
 /turf/simulated/floor/carpet/blue2,
 /area/space)
+"jT" = (
+/obj/machinery/computer/shuttle_control/explore/sdboat{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/power/apc{
+	pixel_y = -28;
+	req_access = null;
+	req_one_access = list(11,67)
+	},
+/obj/structure/cable/green{
+	icon_state = "0-4"
+	},
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/turf/simulated/floor/tiled,
+/area/space)
 "jW" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 8
@@ -877,12 +1033,12 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cargo)
 "jZ" = (
 /turf/simulated/wall/fancy_shuttle/window{
 	fancy_shuttle_tag = "explo"
 	},
-/area/space)
+/area/shuttle/excursion/cockpit)
 "ka" = (
 /obj/effect/floor_decal/milspec/color/blue/half{
 	dir = 9
@@ -893,43 +1049,35 @@
 /obj/item/device/camera,
 /turf/simulated/floor/tiled,
 /area/space)
-"kg" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
-	dir = 6
-	},
-/turf/simulated/wall/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/area/space)
 "kj" = (
-/obj/structure/railing{
+/obj/structure/bed/chair/sofa/right/teal{
 	dir = 4
 	},
-/obj/structure/railing{
-	dir = 1
-	},
-/turf/simulated/open,
-/area/space)
-"kl" = (
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 4
-	},
-/turf/simulated/wall/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
+/turf/simulated/floor/tiled/white,
 /area/space)
 "kn" = (
 /obj/structure/closet/secure_closet/captains,
 /turf/simulated/floor/wood,
 /area/space)
-"kr" = (
-/obj/structure/handrail,
-/obj/effect/map_helper/airlock/atmos/chamber_pump,
+"kx" = (
+/obj/structure/table/steel_reinforced,
+/obj/item/device/radio/intercom{
+	dir = 4;
+	pixel_x = 1;
+	pixel_y = 1
+	},
+/obj/structure/closet/emergsuit_wall{
+	dir = 1;
+	pixel_y = -32
+	},
+/obj/machinery/alarm{
+	pixel_y = 28
+	},
+/obj/machinery/light{
+	dir = 4
+	},
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
-	},
-/obj/machinery/atmospherics/unary/vent_pump/high_volume{
-	dir = 4
 	},
 /turf/simulated/floor/tiled,
 /area/space)
@@ -953,7 +1101,7 @@
 /turf/simulated/wall/fancy_shuttle{
 	fancy_shuttle_tag = "explo"
 	},
-/area/space)
+/area/shuttle/excursion/cargo)
 "kI" = (
 /obj/structure/railing/grey{
 	dir = 8
@@ -982,7 +1130,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/general)
 "kM" = (
 /obj/effect/floor_decal/milspec/color/emerald/corner{
 	dir = 8
@@ -1008,7 +1156,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cargo)
 "kP" = (
 /obj/machinery/recharger/wallcharger{
 	pixel_x = 4;
@@ -1023,7 +1171,7 @@
 	pixel_y = 38
 	},
 /obj/structure/flora/pottedplant/fern,
-/turf/simulated/floor/carpet/blue,
+/turf/simulated/floor/carpet,
 /area/space)
 "kS" = (
 /obj/effect/floor_decal/milspec/color/blue/corner{
@@ -1036,6 +1184,17 @@
 	dir = 1
 	},
 /turf/simulated/floor/carpet/blue2,
+/area/space)
+"kZ" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass,
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled,
 /area/space)
 "la" = (
 /obj/structure/handrail{
@@ -1052,7 +1211,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cargo)
 "lh" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -1078,15 +1237,20 @@
 /turf/simulated/floor/tiled/milspec/sterile,
 /area/space)
 "lq" = (
-/obj/structure/flora/pottedplant/minitree,
-/turf/simulated/floor/carpet/green,
+/obj/structure/bed/chair/comfy{
+	dir = 1
+	},
+/turf/simulated/floor/wood,
 /area/space)
 "lt" = (
 /obj/machinery/power/tesla_coil/collector,
 /turf/simulated/floor/plating/external/outdoors,
 /area/space)
 "lu" = (
-/turf/simulated/floor/carpet/tealcarpet,
+/obj/machinery/vending/wallmed1/public{
+	pixel_y = 29
+	},
+/turf/simulated/floor/tiled/white,
 /area/space)
 "lv" = (
 /obj/structure/bed/chair/sofa/right/black{
@@ -1113,12 +1277,21 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/general)
 "lB" = (
 /obj/structure/table/standard,
 /obj/item/clothing/glasses/omnihud/rnd,
 /obj/item/clothing/glasses/omnihud/rnd,
 /obj/effect/floor_decal/milspec/color/emerald/half,
+/turf/simulated/floor/tiled,
+/area/space)
+"lF" = (
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
 /turf/simulated/floor/tiled,
 /area/space)
 "lH" = (
@@ -1132,11 +1305,24 @@
 	},
 /turf/simulated/floor/tiled,
 /area/space)
-"lP" = (
-/obj/structure/railing{
+"lK" = (
+/obj/structure/fuel_port{
+	dir = 8;
+	pixel_x = -32
+	},
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/obj/machinery/atmospherics/binary/pump/fuel{
 	dir = 1
 	},
-/turf/simulated/open,
+/turf/simulated/floor/tiled,
+/area/space)
+"lP" = (
+/obj/structure/bed/chair/office/light{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/white,
 /area/space)
 "lQ" = (
 /obj/structure/table/woodentable,
@@ -1160,7 +1346,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cargo)
 "lV" = (
 /obj/machinery/computer/security/xenobio{
 	dir = 4
@@ -1186,7 +1372,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cockpit)
 "mf" = (
 /obj/item/device/tape/random,
 /obj/item/device/tape/random,
@@ -1215,7 +1401,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cargo)
 "mu" = (
 /obj/structure/bed/chair/backed_red{
 	dir = 8
@@ -1229,7 +1415,7 @@
 /obj/item/weapon/paper_bin{
 	pixel_y = 7
 	},
-/turf/simulated/floor/carpet/blue,
+/turf/simulated/floor/carpet,
 /area/space)
 "my" = (
 /obj/effect/floor_decal/industrial/warning/color/red,
@@ -1272,7 +1458,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cargo)
 "mQ" = (
 /obj/machinery/door/blast/regular/open{
 	id = "xenopen1"
@@ -1284,12 +1470,6 @@
 /obj/effect/floor_decal/milspec/monotile,
 /turf/simulated/floor/tiled/milspec,
 /area/space)
-"mR" = (
-/obj/machinery/shipsensors/fancy_shuttle,
-/turf/simulated/wall/fancy_shuttle/nondense{
-	fancy_shuttle_tag = "sdboat"
-	},
-/area/space)
 "mW" = (
 /obj/item/roller,
 /obj/item/weapon/storage/box/bodybags,
@@ -1300,25 +1480,8 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/space)
-"nb" = (
-/obj/machinery/computer/shuttle_control/explore/sdboat{
-	dir = 4
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/machinery/power/apc{
-	pixel_y = -28;
-	req_access = null;
-	req_one_access = list(11,67)
-	},
-/obj/structure/cable/green{
-	icon_state = "0-4"
-	},
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/turf/simulated/floor/tiled,
+"nc" = (
+/turf/simulated/wall/bay/r_wall/steel,
 /area/space)
 "nd" = (
 /obj/effect/floor_decal/milspec/color/emerald/half{
@@ -1326,14 +1489,6 @@
 	},
 /obj/structure/closet/secure_closet/scientist,
 /turf/simulated/floor/tiled,
-/area/space)
-"ni" = (
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 9
-	},
-/turf/simulated/wall/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
 /area/space)
 "nj" = (
 /obj/structure/flora/pottedplant/aquatic,
@@ -1362,21 +1517,6 @@
 /obj/item/device/camera,
 /turf/simulated/floor/tiled,
 /area/space)
-"nz" = (
-/obj/structure/handrail{
-	dir = 1
-	},
-/obj/machinery/power/apc{
-	pixel_y = -28;
-	req_access = null;
-	req_one_access = list(11,67)
-	},
-/obj/structure/cable/green,
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/turf/simulated/floor/tiled,
-/area/space)
 "nE" = (
 /obj/structure/table/standard,
 /obj/effect/floor_decal/milspec/color/emerald/half{
@@ -1398,7 +1538,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/general)
 "nP" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 8
@@ -1419,7 +1559,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/general)
 "nV" = (
 /obj/structure/table/rack/shelf/steel,
 /obj/machinery/atmospherics/pipe/simple/hidden/universal{
@@ -1480,12 +1620,30 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/general)
 "op" = (
-/obj/machinery/vending/wallmed1/public{
-	pixel_y = 29
+/obj/structure/table/woodentable,
+/turf/simulated/floor/carpet/tealcarpet,
+/area/space)
+"oq" = (
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 6
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/wall/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/area/space)
+"or" = (
+/obj/effect/fancy_shuttle/sd_shuttle{
+	dir = 1;
+	fancy_shuttle_tag = "sdboat"
+	},
+/obj/effect/fancy_shuttle_floor_preview/sd_shuttle{
+	dir = 1
+	},
+/turf/simulated/wall/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
 /area/space)
 "ov" = (
 /obj/random/vendorall,
@@ -1497,6 +1655,21 @@
 	},
 /turf/simulated/floor/wood,
 /area/space)
+"oJ" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 5
+	},
+/turf/simulated/wall/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/area/space)
+"oR" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "cargounload"
+	},
+/turf/simulated/floor/tiled/milspec,
+/area/space)
 "oS" = (
 /obj/machinery/atmospherics/portables_connector/fuel{
 	dir = 4
@@ -1506,6 +1679,22 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
+/area/shuttle/excursion/general)
+"oT" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/fuel{
+	dir = 1
+	},
+/obj/effect/landmark/stardog,
+/turf/simulated/floor/tiled,
 /area/space)
 "oW" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
@@ -1514,7 +1703,7 @@
 /turf/simulated/wall/fancy_shuttle{
 	fancy_shuttle_tag = "explo"
 	},
-/area/space)
+/area/shuttle/excursion/cargo)
 "pa" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/floor_decal/milspec/monotile,
@@ -1529,11 +1718,11 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/power)
 "pj" = (
 /obj/structure/table/darkglass,
 /obj/item/weapon/folder/red,
-/turf/simulated/floor/carpet/blue,
+/turf/simulated/floor/carpet,
 /area/space)
 "pk" = (
 /obj/structure/table/reinforced,
@@ -1559,17 +1748,6 @@
 /obj/effect/floor_decal/milspec/monotile,
 /turf/simulated/floor/reinforced,
 /area/space)
-"pz" = (
-/obj/machinery/door/firedoor/glass,
-/obj/machinery/door/airlock/glass,
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/tiled,
-/area/space)
 "pC" = (
 /obj/structure/table/bench/glass,
 /turf/simulated/floor/tiled/white,
@@ -1587,7 +1765,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cockpit)
 "pM" = (
 /obj/machinery/power/tesla_coil,
 /turf/simulated/floor/plating/external/outdoors,
@@ -1598,7 +1776,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/general)
 "pT" = (
 /obj/structure/bed/chair/office/dark{
 	dir = 8
@@ -1664,6 +1842,23 @@
 	},
 /turf/simulated/open,
 /area/space)
+"qj" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden{
+	dir = 4
+	},
+/obj/effect/overmap/visitable/ship/landable/sd_boat,
+/obj/effect/shuttle_landmark/shuttle_initializer/sdboat,
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/space)
 "qq" = (
 /obj/structure/bed/chair/sofa/corp/corner{
 	dir = 1
@@ -1689,7 +1884,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/general)
 "qI" = (
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 6
@@ -1733,6 +1928,12 @@
 	},
 /turf/simulated/floor/reinforced,
 /area/space)
+"qT" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
+/turf/simulated/wall/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/area/space)
 "rc" = (
 /obj/effect/floor_decal/milspec/color/red/half{
 	dir = 8
@@ -1761,7 +1962,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/power)
 "ro" = (
 /obj/structure/table/rack,
 /obj/item/weapon/tank/jetpack,
@@ -1790,6 +1991,12 @@
 "rr" = (
 /turf/simulated/floor/tiled,
 /area/space)
+"ru" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/milspec,
+/area/space)
 "rB" = (
 /obj/structure/table/steel_reinforced,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -1799,7 +2006,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cockpit)
 "rF" = (
 /obj/item/weapon/paper_bin{
 	pixel_x = 8;
@@ -1808,13 +2015,6 @@
 /obj/item/weapon/pen,
 /obj/structure/table/glass,
 /turf/simulated/floor/plating,
-/area/space)
-"rN" = (
-/obj/machinery/computer/ship/engines/adv,
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/turf/simulated/floor/tiled,
 /area/space)
 "rQ" = (
 /obj/structure/closet/crate/secure/phoron{
@@ -1839,19 +2039,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
-"rS" = (
-/obj/effect/fancy_shuttle/sd_shuttle{
-	dir = 1;
-	fancy_shuttle_tag = "sdboat"
-	},
-/obj/effect/fancy_shuttle_floor_preview/sd_shuttle{
-	dir = 1
-	},
-/turf/simulated/wall/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/area/space)
+/area/shuttle/excursion/general)
 "rV" = (
 /obj/structure/bed/padded,
 /obj/item/weapon/bedsheet/medical,
@@ -1871,6 +2059,11 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/space)
+"sc" = (
+/turf/simulated/wall/fancy_shuttle{
+	fancy_shuttle_tag = "explo"
+	},
+/area/shuttle/excursion/cargo)
 "se" = (
 /obj/structure/table/reinforced,
 /obj/item/device/uv_light,
@@ -1901,23 +2094,6 @@
 /obj/item/weapon/clipboard,
 /turf/simulated/floor/tiled/dark,
 /area/space)
-"sz" = (
-/obj/structure/bed/chair/shuttle{
-	dir = 1
-	},
-/obj/structure/closet/emergsuit_wall{
-	dir = 1;
-	pixel_y = -32
-	},
-/obj/item/device/radio/intercom{
-	dir = 4;
-	pixel_x = 24
-	},
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/turf/simulated/floor/tiled,
-/area/space)
 "sC" = (
 /obj/machinery/computer/communications,
 /turf/simulated/floor/wood,
@@ -1928,6 +2104,15 @@
 	},
 /turf/simulated/floor/tiled,
 /area/space)
+"sL" = (
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "explo"
+	},
+/turf/simulated/floor/tiled/steel,
+/area/shuttle/excursion/cargo)
 "sP" = (
 /obj/structure/cable/green{
 	icon_state = "1-2"
@@ -1938,7 +2123,7 @@
 	},
 /obj/machinery/recharge_station,
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/power)
 "sQ" = (
 /obj/structure/railing/grey{
 	dir = 4
@@ -1969,15 +2154,12 @@
 /turf/simulated/wall/fancy_shuttle/nondense{
 	fancy_shuttle_tag = "explo"
 	},
-/area/space)
+/area/shuttle/excursion/cargo)
 "tf" = (
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 4
 	},
 /turf/simulated/floor/tiled,
-/area/space)
-"tg" = (
-/turf/simulated/wall/bay/r_wall/steel,
 /area/space)
 "tj" = (
 /obj/structure/table/woodentable,
@@ -2030,6 +2212,14 @@
 /obj/machinery/vending/deluxe_boozeomat,
 /turf/simulated/floor/tiled,
 /area/space)
+"tF" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 10
+	},
+/turf/simulated/wall/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/area/space)
 "tL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 10
@@ -2040,34 +2230,20 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
-"tS" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
-/obj/effect/floor_decal/fancy_shuttle{
+/area/shuttle/excursion/general)
+"ub" = (
+/obj/machinery/door/firedoor/glass/hidden/shuttle,
+/obj/structure/window/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
-	dir = 4
-	},
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/reinforced/airless,
 /area/space)
-"tY" = (
-/obj/effect/map_helper/airlock/atmos/pump_out_external,
-/obj/machinery/atmospherics/unary/vent_pump/high_volume{
-	dir = 1;
-	frequency = 1380;
-	id_tag = "sdboat_docker_pump_out_external"
-	},
-/turf/simulated/wall/fancy_shuttle/low{
-	fancy_shuttle_tag = "sdboat"
+"uj" = (
+/turf/unsimulated/wall/planetary{
+	outdoors = 1
 	},
 /area/space)
-"tZ" = (
+"un" = (
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -2083,42 +2259,12 @@
 	},
 /turf/simulated/floor/tiled,
 /area/space)
-"uj" = (
-/obj/effect/landmark/map_data/sirius_point,
-/turf/simulated/open,
-/area/space)
 "uo" = (
 /obj/machinery/door/window/southleft,
 /obj/machinery/shower{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
-/area/space)
-"ur" = (
-/obj/machinery/door/firedoor/glass,
-/obj/machinery/door/airlock/angled_bay/external/glass{
-	dir = 4;
-	frequency = 1380;
-	id_tag = null;
-	locked = 1;
-	name = "Docking Port Airlock"
-	},
-/obj/effect/map_helper/airlock/door/int_door,
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 4
-	},
-/obj/machinery/access_button{
-	command = "cycle_interior";
-	dir = 4;
-	frequency = 1380;
-	master_tag = "sd_port_landing";
-	pixel_y = 32;
-	req_one_access = list(13)
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/tiled/steel_ridged,
 /area/space)
 "uu" = (
 /obj/structure/bed/padded,
@@ -2131,7 +2277,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cockpit)
 "uw" = (
 /obj/machinery/door/window/brigdoor/westright{
 	req_access = null
@@ -2153,7 +2299,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cargo)
 "uG" = (
 /obj/structure/table/steel,
 /obj/item/weapon/paper_bin{
@@ -2161,6 +2307,11 @@
 	},
 /obj/item/weapon/pen,
 /turf/simulated/floor/tiled/steel_dirty,
+/area/space)
+"uI" = (
+/turf/simulated/wall/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
 /area/space)
 "uJ" = (
 /obj/structure/window/reinforced{
@@ -2182,9 +2333,19 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/general)
 "uR" = (
 /turf/simulated/wall/r_wall,
+/area/space)
+"uX" = (
+/obj/machinery/embedded_controller/radio/simple_docking_controller{
+	frequency = 1380;
+	id_tag = "cargo_bay";
+	pixel_y = 24;
+	req_one_access = null;
+	tag_door = null
+	},
+/turf/simulated/floor/reinforced,
 /area/space)
 "va" = (
 /obj/structure/bed/chair/comfy{
@@ -2195,27 +2356,6 @@
 "vd" = (
 /obj/structure/railing/grey,
 /turf/simulated/open,
-/area/space)
-"ve" = (
-/obj/machinery/airlock_sensor/airlock_exterior/shuttle{
-	dir = 6;
-	pixel_x = 7;
-	pixel_y = 26
-	},
-/obj/effect/map_helper/airlock/sensor/ext_sensor,
-/obj/effect/map_helper/airlock/door/ext_door,
-/obj/machinery/door/firedoor/glass,
-/obj/machinery/door/airlock/glass_external,
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
-	dir = 10
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/tiled,
 /area/space)
 "vf" = (
 /obj/structure/bed/chair/backed_red,
@@ -2251,7 +2391,7 @@
 /turf/simulated/floor/plating/external/outdoors,
 /area/space)
 "vr" = (
-/turf/simulated/floor/carpet/blue,
+/turf/simulated/floor/carpet,
 /area/space)
 "vw" = (
 /obj/structure/sign/painting/library_secure{
@@ -2267,6 +2407,27 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled/milspec,
+/area/space)
+"vz" = (
+/obj/machinery/door/firedoor/glass/hidden/shuttle,
+/obj/machinery/door/blast/shuttle/open{
+	id = "shuttleshutter"
+	},
+/obj/structure/window/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/turf/simulated/floor/reinforced/airless,
+/area/space)
+"vB" = (
+/obj/structure/handrail,
+/obj/effect/map_helper/airlock/atmos/chamber_pump,
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/obj/machinery/atmospherics/unary/vent_pump/high_volume{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
 /area/space)
 "vD" = (
 /obj/structure/table/reinforced,
@@ -2288,7 +2449,7 @@
 	},
 /obj/effect/landmark/stardog,
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cargo)
 "vO" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/fuel{
 	dir = 1
@@ -2299,7 +2460,7 @@
 /turf/simulated/wall/fancy_shuttle{
 	fancy_shuttle_tag = "explo"
 	},
-/area/space)
+/area/shuttle/excursion/cargo)
 "vQ" = (
 /obj/effect/floor_decal/milspec/color/blue,
 /obj/structure/bed/chair/backed_red{
@@ -2325,11 +2486,6 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/gun/energy/taser/xeno,
 /turf/simulated/floor/tiled,
-/area/space)
-"vZ" = (
-/turf/simulated/wall/fancy_shuttle/nondense{
-	fancy_shuttle_tag = "sdboat"
-	},
 /area/space)
 "wq" = (
 /obj/machinery/door/airlock{
@@ -2365,6 +2521,30 @@
 /obj/item/weapon/storage/box/evidence,
 /turf/simulated/floor/tiled/dark,
 /area/space)
+"wI" = (
+/obj/structure/handrail,
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 10
+	},
+/obj/machinery/embedded_controller/radio/airlock/docking_port{
+	frequency = 1380;
+	id_tag = "sdboat_docker";
+	pixel_x = 5;
+	pixel_y = 25
+	},
+/obj/machinery/airlock_sensor{
+	dir = 8;
+	frequency = 1380;
+	id_tag = null;
+	pixel_x = 25;
+	pixel_y = 2
+	},
+/obj/effect/map_helper/airlock/sensor/chamber_sensor,
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/turf/simulated/floor/tiled,
+/area/space)
 "wJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 10
@@ -2375,7 +2555,7 @@
 /turf/simulated/wall/fancy_shuttle{
 	fancy_shuttle_tag = "explo"
 	},
-/area/space)
+/area/shuttle/excursion/cargo)
 "wK" = (
 /obj/machinery/door/airlock/angled_tgmc/dropship2_pilot{
 	req_one_access = list(19,43,67)
@@ -2384,7 +2564,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cockpit)
 "wM" = (
 /obj/effect/floor_decal/milspec/color/black,
 /turf/simulated/floor/tiled/dark,
@@ -2396,6 +2576,18 @@
 "wR" = (
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/space)
+"wV" = (
+/obj/structure/cable/green{
+	icon_state = "2-8"
+	},
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
 	},
 /turf/simulated/floor/tiled,
 /area/space)
@@ -2417,44 +2609,13 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/space)
-"xp" = (
-/obj/structure/handrail{
-	dir = 1
-	},
-/obj/machinery/airlock_sensor{
-	dir = 8;
-	pixel_x = 29;
-	pixel_y = 2
-	},
-/obj/effect/map_helper/airlock/sensor/int_sensor,
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/obj/structure/closet/emergsuit_wall{
-	dir = 1;
-	pixel_y = -32
-	},
-/turf/simulated/floor/tiled,
-/area/space)
 "xq" = (
 /obj/machinery/sleep_console,
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
-"xz" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
-	dir = 4
-	},
-/turf/simulated/floor/tiled,
-/area/space)
+/area/shuttle/excursion/general)
 "xB" = (
 /obj/item/weapon/folder{
 	pixel_x = -4
@@ -2480,7 +2641,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/general)
 "xG" = (
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
@@ -2490,15 +2651,22 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
+/area/shuttle/excursion/general)
+"xL" = (
+/obj/structure/disposalpipe/down,
+/obj/structure/railing/grey{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/monotile,
 /area/space)
-"xP" = (
-/obj/structure/cable/green{
-	icon_state = "1-8"
+"xM" = (
+/obj/machinery/conveyor_switch/oneway{
+	id = "cargounload"
 	},
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/milspec,
 /area/space)
 "xQ" = (
 /obj/structure/closet/firecloset/full/atmos,
@@ -2532,7 +2700,14 @@
 /obj/structure/bed/chair/backed_red{
 	dir = 4
 	},
-/turf/simulated/floor/carpet/blue,
+/turf/simulated/floor/carpet,
+/area/space)
+"yj" = (
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/tiled/milspec,
 /area/space)
 "yl" = (
 /obj/structure/cable/green{
@@ -2545,27 +2720,12 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/power)
 "yp" = (
 /obj/structure/railing{
 	dir = 8
 	},
-/obj/structure/railing,
 /turf/simulated/open,
-/area/space)
-"yq" = (
-/obj/machinery/portable_atmospherics/canister/phoron,
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/obj/machinery/atmospherics/portables_connector/fuel{
-	dir = 1
-	},
-/obj/machinery/door/window/southleft{
-	dir = 1;
-	req_one_access = list(11,67)
-	},
-/turf/simulated/floor/tiled,
 /area/space)
 "yr" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel,
@@ -2579,7 +2739,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cargo)
 "yx" = (
 /obj/item/tape/engineering,
 /obj/machinery/door/firedoor/glass,
@@ -2596,7 +2756,7 @@
 /obj/machinery/computer/secure_data{
 	dir = 4
 	},
-/turf/simulated/floor/carpet/blue,
+/turf/simulated/floor/carpet,
 /area/space)
 "yI" = (
 /obj/item/device/tape/random,
@@ -2621,7 +2781,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/power)
 "yW" = (
 /obj/structure/bed/chair/backed_red{
 	dir = 1
@@ -2643,6 +2803,19 @@
 /obj/structure/trash_pile,
 /turf/simulated/floor/plating,
 /area/space)
+"zl" = (
+/obj/machinery/door/firedoor/glass/hidden/shuttle,
+/obj/machinery/door/blast/shuttle/open{
+	id = "shuttleshutter"
+	},
+/obj/structure/window/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 6
+	},
+/turf/simulated/floor/reinforced/airless,
+/area/space)
 "zm" = (
 /obj/machinery/door/airlock/multi_tile/glass,
 /turf/simulated/floor/tiled/steel_ridged,
@@ -2661,7 +2834,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cargo)
 "zy" = (
 /obj/machinery/door/blast/regular{
 	dir = 4;
@@ -2671,13 +2844,7 @@
 /turf/simulated/floor/reinforced,
 /area/space)
 "zD" = (
-/obj/structure/railing/grey{
-	dir = 8
-	},
-/obj/structure/railing/grey{
-	dir = 4
-	},
-/turf/simulated/open,
+/turf/simulated/floor/reinforced/airless,
 /area/space)
 "zE" = (
 /obj/structure/flora/pottedplant/stoutbush,
@@ -2689,16 +2856,16 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cockpit)
 "zI" = (
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor/carpet/sblucarpet,
 /area/space)
 "zJ" = (
-/obj/structure/bed/chair/sofa/corp{
-	dir = 4
+/obj/structure/bed/chair/sofa/corp/corner{
+	dir = 1
 	},
-/turf/simulated/floor/carpet/green,
+/turf/simulated/floor/wood,
 /area/space)
 "zK" = (
 /obj/structure/table/woodentable,
@@ -2706,18 +2873,27 @@
 /obj/item/weapon/folder/red,
 /turf/simulated/floor/wood/alt/panel,
 /area/space)
+"zL" = (
+/obj/structure/handrail{
+	dir = 1
+	},
+/obj/machinery/power/apc{
+	pixel_y = -28;
+	req_access = null;
+	req_one_access = list(11,67)
+	},
+/obj/structure/cable/green,
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/turf/simulated/floor/tiled,
+/area/space)
 "zN" = (
 /obj/structure/bookcase,
 /obj/item/weapon/book/manual/security_space_law,
 /obj/item/weapon/book/manual/security_space_law,
 /obj/item/weapon/book/manual/security_space_law,
 /turf/simulated/floor/wood/alt/panel,
-/area/space)
-"zO" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
-/turf/simulated/wall/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
 /area/space)
 "zV" = (
 /obj/machinery/atmospherics/unary/vent_pump/high_volume{
@@ -2731,7 +2907,7 @@
 /turf/simulated/wall/fancy_shuttle/nondense{
 	fancy_shuttle_tag = "explo"
 	},
-/area/space)
+/area/shuttle/excursion/cargo)
 "zW" = (
 /obj/structure/flora/pottedplant/orientaltree,
 /turf/simulated/floor/wood,
@@ -2755,14 +2931,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/space)
-"Ab" = (
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 6
-	},
-/turf/simulated/wall/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/area/space)
 "Ac" = (
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "explo"
@@ -2771,7 +2939,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/general)
 "At" = (
 /obj/effect/floor_decal/steeldecal/steel_decals9{
 	dir = 4
@@ -2780,6 +2948,19 @@
 	dir = 1
 	},
 /turf/simulated/floor/tiled/dark,
+/area/space)
+"Az" = (
+/obj/structure/handrail{
+	dir = 1
+	},
+/obj/machinery/alarm{
+	dir = 1;
+	pixel_y = -28
+	},
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/turf/simulated/floor/tiled,
 /area/space)
 "AB" = (
 /obj/item/clothing/mask/breath,
@@ -2807,18 +2988,16 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
-"AI" = (
-/obj/machinery/portable_atmospherics/canister/air,
-/obj/machinery/atmospherics/portables_connector{
-	dir = 1
-	},
-/obj/machinery/door/window/southright{
-	dir = 1;
-	req_one_access = list(11,67)
+/area/shuttle/excursion/cargo)
+"AH" = (
+/obj/structure/cable{
+	icon_state = "4-8"
 	},
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 4
 	},
 /turf/simulated/floor/tiled,
 /area/space)
@@ -2842,7 +3021,7 @@
 /turf/simulated/wall/fancy_shuttle{
 	fancy_shuttle_tag = "explo"
 	},
-/area/space)
+/area/shuttle/excursion/general)
 "AX" = (
 /obj/structure/table/steel,
 /turf/simulated/floor/tiled,
@@ -2880,7 +3059,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cockpit)
 "Bp" = (
 /obj/effect/floor_decal/milspec/color/red,
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -2906,6 +3085,10 @@
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 5
 	},
+/turf/simulated/floor/tiled/milspec,
+/area/space)
+"Bw" = (
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled/milspec,
 /area/space)
 "Bx" = (
@@ -2980,10 +3163,8 @@
 /turf/simulated/floor/tiled/milspec,
 /area/space)
 "BT" = (
-/obj/structure/bed/chair/sofa/corp/right{
-	dir = 4
-	},
-/turf/simulated/floor/carpet/green,
+/obj/machinery/disposal,
+/turf/simulated/floor/tiled/white,
 /area/space)
 "BV" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5,
@@ -3003,7 +3184,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cargo)
 "Ck" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/aux{
 	dir = 6
@@ -3018,6 +3199,17 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
+/area/shuttle/excursion/general)
+"Cs" = (
+/obj/effect/map_helper/airlock/atmos/pump_out_external,
+/obj/machinery/atmospherics/unary/vent_pump/high_volume{
+	dir = 1;
+	frequency = 1380;
+	id_tag = "sdboat_docker_pump_out_external"
+	},
+/turf/simulated/wall/fancy_shuttle/low{
+	fancy_shuttle_tag = "sdboat"
+	},
 /area/space)
 "Ct" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
@@ -3045,12 +3237,12 @@
 	},
 /obj/effect/overmap/visitable/ship/landable/excursion,
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cargo)
 "CA" = (
 /turf/simulated/wall/fancy_shuttle{
 	fancy_shuttle_tag = "explo"
 	},
-/area/space)
+/area/shuttle/excursion/cockpit)
 "CN" = (
 /obj/machinery/light{
 	dir = 1
@@ -3059,12 +3251,18 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cargo)
 "CO" = (
 /obj/machinery/the_singularitygen/tesla{
 	anchored = 1
 	},
 /turf/simulated/floor/plating/external/outdoors,
+/area/space)
+"CS" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/window/bay/reinforced,
+/obj/structure/low_wall/bay/reinforced/steel,
+/turf/simulated/floor,
 /area/space)
 "CT" = (
 /obj/machinery/vending/snlvend,
@@ -3083,7 +3281,7 @@
 /obj/structure/bed/chair/backed_red{
 	dir = 1
 	},
-/turf/simulated/floor/carpet/blue,
+/turf/simulated/floor/carpet,
 /area/space)
 "Di" = (
 /obj/structure/closet/bombcloset/double,
@@ -3133,7 +3331,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cockpit)
 "Du" = (
 /obj/structure/table/rack/steel,
 /obj/item/clothing/gloves/arm_guard/riot,
@@ -3156,18 +3354,6 @@
 /obj/structure/railing/grey,
 /turf/simulated/floor/tiled,
 /area/space)
-"DF" = (
-/obj/structure/bed/chair/shuttle{
-	dir = 1
-	},
-/obj/structure/closet/emergsuit_wall{
-	pixel_y = 32
-	},
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/turf/simulated/floor/tiled,
-/area/space)
 "DG" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/fuel{
 	dir = 4
@@ -3175,6 +3361,14 @@
 /turf/simulated/wall/fancy_shuttle{
 	fancy_shuttle_tag = "explo"
 	},
+/area/shuttle/excursion/cargo)
+"DJ" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "cargounload"
+	},
+/obj/structure/plasticflaps,
+/turf/simulated/floor/tiled/milspec,
 /area/space)
 "DK" = (
 /obj/structure/table/wooden_reinforced,
@@ -3193,6 +3387,18 @@
 /obj/item/weapon/clipboard,
 /turf/simulated/floor/wood/alt/panel,
 /area/space)
+"DX" = (
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/tiled,
+/area/space)
 "DY" = (
 /obj/machinery/shower{
 	dir = 4
@@ -3204,7 +3410,7 @@
 /turf/simulated/wall/fancy_shuttle{
 	fancy_shuttle_tag = "explo"
 	},
-/area/space)
+/area/shuttle/excursion/cargo)
 "Ed" = (
 /obj/effect/floor_decal/milspec/monotile,
 /turf/simulated/floor/reinforced,
@@ -3229,24 +3435,26 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
+/area/shuttle/excursion/cockpit)
+"El" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/simulated/open,
 /area/space)
 "En" = (
 /obj/structure/bed/chair/backed_red,
 /turf/simulated/floor/tiled/eris/cafe,
-/area/space)
-"Ew" = (
-/obj/structure/bed/chair/sofa/right/teal{
-	dir = 4
-	},
-/turf/simulated/floor/tiled/white,
 /area/space)
 "EF" = (
 /obj/machinery/vending/deluxe_cigs,
 /turf/simulated/floor/tiled,
 /area/space)
 "EJ" = (
-/obj/structure/bed/chair/comfy,
-/turf/simulated/floor/carpet/green,
+/obj/structure/bed/chair/office/light{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/tealcarpet,
 /area/space)
 "EM" = (
 /obj/machinery/door/window/southright,
@@ -3282,6 +3490,14 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
+/area/shuttle/excursion/general)
+"EY" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 9
+	},
+/turf/simulated/wall/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
 /area/space)
 "Fb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/aux,
@@ -3293,7 +3509,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cargo)
 "Fc" = (
 /obj/structure/particle_accelerator/power_box{
 	dir = 8
@@ -3316,21 +3532,6 @@
 	dir = 8
 	},
 /turf/simulated/floor/wood,
-/area/space)
-"Fn" = (
-/obj/structure/handrail{
-	dir = 4
-	},
-/obj/effect/map_helper/airlock/atmos/pump_out_internal,
-/obj/machinery/light,
-/obj/machinery/atmospherics/unary/vent_pump/high_volume{
-	frequency = 1380;
-	id_tag = "sdboat_docker_pump_out_internal"
-	},
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/turf/simulated/floor/tiled,
 /area/space)
 "Fo" = (
 /obj/structure/bed/chair{
@@ -3375,13 +3576,13 @@
 	dir = 1
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cockpit)
 "FJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/wall/fancy_shuttle{
 	fancy_shuttle_tag = "explo"
 	},
-/area/space)
+/area/shuttle/excursion/general)
 "FS" = (
 /obj/machinery/button/remote/blast_door{
 	dir = 4;
@@ -3421,8 +3622,11 @@
 /turf/simulated/floor/carpet/sblucarpet,
 /area/space)
 "GA" = (
-/obj/structure/bed/chair/sofa/corp/right,
-/turf/simulated/floor/wood,
+/obj/structure/table/woodentable,
+/obj/machinery/computer/med_data/laptop{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/tealcarpet,
 /area/space)
 "GF" = (
 /obj/machinery/portable_atmospherics/canister/empty,
@@ -3431,27 +3635,14 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/general)
 "GG" = (
 /obj/machinery/alarm/angled,
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
-"GH" = (
-/obj/structure/handrail{
-	dir = 1
-	},
-/obj/machinery/alarm{
-	dir = 1;
-	pixel_y = -28
-	},
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/turf/simulated/floor/tiled,
-/area/space)
+/area/shuttle/excursion/cargo)
 "GN" = (
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
@@ -3463,7 +3654,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/general)
 "GO" = (
 /obj/structure/bed/chair/sofa/black{
 	dir = 8
@@ -3480,8 +3671,7 @@
 /turf/simulated/floor/tiled,
 /area/space)
 "GV" = (
-/obj/structure/bed/chair/sofa/corp/left,
-/turf/simulated/floor/carpet/green,
+/turf/simulated/floor/glass,
 /area/space)
 "GW" = (
 /obj/machinery/computer/med_data/laptop{
@@ -3538,7 +3728,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/general)
 "HF" = (
 /obj/effect/floor_decal/milspec/color/emerald/half,
 /obj/structure/table/reinforced,
@@ -3565,28 +3755,6 @@
 /obj/item/device/slime_scanner,
 /turf/simulated/floor/tiled,
 /area/space)
-"HU" = (
-/obj/structure/table/steel_reinforced,
-/obj/item/device/radio/intercom{
-	dir = 4;
-	pixel_x = 1;
-	pixel_y = 1
-	},
-/obj/structure/closet/emergsuit_wall{
-	dir = 1;
-	pixel_y = -32
-	},
-/obj/machinery/alarm{
-	pixel_y = 28
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/turf/simulated/floor/tiled,
-/area/space)
 "HY" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 4
@@ -3605,20 +3773,18 @@
 /obj/structure/window/reinforced,
 /turf/simulated/open,
 /area/space)
+"In" = (
+/obj/machinery/conveyor{
+	dir = 9
+	},
+/turf/simulated/floor/tiled/milspec,
+/area/space)
 "Io" = (
 /obj/effect/floor_decal/sign/small_7{
 	pixel_x = -1;
 	pixel_y = 1
 	},
 /turf/simulated/floor/tiled/milspec,
-/area/space)
-"Ir" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
-	dir = 5
-	},
-/turf/simulated/wall/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
 /area/space)
 "Iu" = (
 /obj/machinery/vending/coffee,
@@ -3633,6 +3799,16 @@
 "IH" = (
 /obj/structure/flora/pottedplant/stoutbush,
 /turf/simulated/floor/tiled/dark,
+/area/space)
+"IJ" = (
+/obj/structure/handrail{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden,
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/turf/simulated/floor/tiled,
 /area/space)
 "IK" = (
 /obj/structure/table/standard,
@@ -3681,23 +3857,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/space)
-"JA" = (
-/obj/structure/bed/chair/shuttle{
-	dir = 1
-	},
-/obj/structure/closet/emergsuit_wall{
-	dir = 1;
-	pixel_y = -32
-	},
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -28
-	},
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/turf/simulated/floor/tiled,
-/area/space)
 "JE" = (
 /obj/structure/table/rack/steel,
 /obj/item/clothing/gloves/arm_guard/bulletproof,
@@ -3719,7 +3878,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/power)
 "JJ" = (
 /obj/structure/window/reinforced/full,
 /obj/structure/flora/ausbushes/leafybush,
@@ -3739,12 +3898,10 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/general)
 "JQ" = (
-/obj/structure/bed/chair/comfy{
-	dir = 4
-	},
-/turf/simulated/floor/carpet/green,
+/obj/structure/bed/chair/sofa/corp/left,
+/turf/simulated/floor/wood,
 /area/space)
 "JS" = (
 /obj/structure/sign/nanotrasen{
@@ -3752,11 +3909,22 @@
 	},
 /turf/simulated/floor/tiled,
 /area/space)
+"JT" = (
+/obj/machinery/disposal/deliveryChute{
+	dir = 4
+	},
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "cargounload"
+	},
+/obj/structure/disposalpipe/trunk,
+/turf/simulated/floor/tiled/milspec,
+/area/space)
 "Kb" = (
 /obj/machinery/computer/security{
 	dir = 8
 	},
-/turf/simulated/floor/carpet/blue,
+/turf/simulated/floor/carpet,
 /area/space)
 "Kc" = (
 /obj/effect/floor_decal/sign/small_1{
@@ -3779,13 +3947,7 @@
 "Kr" = (
 /obj/structure/table/darkglass,
 /obj/item/weapon/storage/box/donut,
-/turf/simulated/floor/carpet/blue,
-/area/space)
-"Kt" = (
-/obj/structure/bed/chair/office/light{
-	dir = 1
-	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/carpet,
 /area/space)
 "Kx" = (
 /obj/structure/table/reinforced,
@@ -3795,11 +3957,31 @@
 /obj/item/weapon/reagent_containers/syringe,
 /turf/simulated/floor/tiled/white,
 /area/space)
+"KF" = (
+/turf/simulated/wall/fancy_shuttle{
+	fancy_shuttle_tag = "explo"
+	},
+/area/shuttle/excursion/general)
 "KJ" = (
 /obj/structure/bed/chair/sofa/right/black{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/white,
+/area/space)
+"KK" = (
+/obj/machinery/button/remote/blast_door{
+	id = "shuttleshutter";
+	name = "Shutter Control";
+	pixel_x = 17;
+	pixel_y = 27
+	},
+/obj/structure/cable/green{
+	icon_state = "2-8"
+	},
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/turf/simulated/floor/tiled,
 /area/space)
 "KO" = (
 /obj/structure/table/standard,
@@ -3823,7 +4005,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/general)
 "KQ" = (
 /obj/item/weapon/material/shard{
 	icon_state = "medium"
@@ -3859,26 +4041,19 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/general)
 "Lj" = (
 /obj/structure/table/reinforced,
 /turf/simulated/floor/tiled/white,
 /area/space)
 "Ll" = (
-/obj/structure/table/bench/glass,
-/obj/effect/floor_decal/corner/paleblue{
-	dir = 5
-	},
-/turf/simulated/floor/tiled/white,
+/obj/structure/bed/chair/sofa/corp/right,
+/turf/simulated/floor/wood,
 /area/space)
 "Lo" = (
-/obj/structure/railing/grey{
-	dir = 8
+/turf/simulated/wall/fancy_shuttle/nondense{
+	fancy_shuttle_tag = "sdboat"
 	},
-/obj/structure/railing/grey{
-	dir = 4
-	},
-/turf/simulated/floor/tiled/monotile,
 /area/space)
 "Lp" = (
 /obj/effect/floor_decal/milspec/color/blue/half{
@@ -3891,12 +4066,39 @@
 /obj/item/device/electronic_assembly/large/default,
 /turf/simulated/floor/tiled,
 /area/space)
-"Lu" = (
-/obj/structure/bed/chair/shuttle{
-	dir = 1
+"Ls" = (
+/obj/machinery/airlock_sensor/airlock_exterior/shuttle{
+	dir = 6;
+	pixel_x = 7;
+	pixel_y = 26
+	},
+/obj/effect/map_helper/airlock/sensor/ext_sensor,
+/obj/effect/map_helper/airlock/door/ext_door,
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass_external,
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 10
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/tiled,
+/area/space)
+"Lv" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/green{
+	icon_state = "1-2"
 	},
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 4
 	},
 /turf/simulated/floor/tiled,
 /area/space)
@@ -3926,6 +4128,20 @@
 	},
 /turf/simulated/floor/wood,
 /area/space)
+"LP" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass{
+	name = "Starstuff Cockpit";
+	req_one_access = list(67)
+	},
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled,
+/area/space)
 "LR" = (
 /obj/structure/displaycase,
 /turf/simulated/floor/wood,
@@ -3938,13 +4154,10 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cargo)
 "LW" = (
-/obj/structure/table/woodentable,
-/obj/machinery/computer/med_data/laptop{
-	dir = 8
-	},
-/turf/simulated/floor/carpet/tealcarpet,
+/obj/structure/bed/chair/sofa/corp/corner,
+/turf/simulated/floor/wood,
 /area/space)
 "Mb" = (
 /obj/structure/window/reinforced/full,
@@ -3983,29 +4196,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/space)
-"MF" = (
-/obj/machinery/door/firedoor/glass,
-/obj/machinery/door/airlock/angled_bay/external/glass{
-	dir = 4;
-	frequency = 1380;
-	id_tag = null;
-	locked = 1;
-	name = "Docking Port Airlock"
-	},
-/obj/effect/map_helper/airlock/door/ext_door,
-/obj/machinery/access_button{
-	command = "cycle_exterior";
-	dir = 8;
-	frequency = 1380;
-	master_tag = "sd_port_landing";
-	pixel_y = 32;
-	req_one_access = list(13)
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/tiled/steel_ridged,
-/area/space)
 "MJ" = (
 /obj/machinery/door/airlock,
 /turf/simulated/floor/tiled/steel_ridged,
@@ -4033,35 +4223,26 @@
 /obj/machinery/media/jukebox/hacked,
 /turf/simulated/floor/tiled,
 /area/space)
-"MY" = (
-/obj/machinery/computer/ship/helm/adv,
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/turf/simulated/floor/tiled,
-/area/space)
 "Na" = (
 /obj/structure/bed/chair,
 /turf/simulated/floor/tiled/dark,
 /area/space)
-"Nc" = (
-/obj/structure/bed/chair/shuttle{
+"Nd" = (
+/obj/structure/flora/pottedplant/minitree,
+/turf/simulated/floor/wood,
+/area/space)
+"Ne" = (
+/obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/light{
-	dir = 8
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/milspec,
 /area/space)
 "Np" = (
 /obj/structure/flora/pottedplant/fern,
-/turf/simulated/floor/carpet/blue,
-/area/space)
-"Nr" = (
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/carpet,
 /area/space)
 "Nz" = (
 /obj/item/weapon/folder{
@@ -4094,6 +4275,13 @@
 	},
 /turf/simulated/floor/tiled,
 /area/space)
+"NL" = (
+/obj/machinery/computer/ship/engines/adv,
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/turf/simulated/floor/tiled,
+/area/space)
 "NM" = (
 /obj/structure/table/standard,
 /obj/item/weapon/surgical/scalpel,
@@ -4107,26 +4295,17 @@
 /turf/simulated/floor/tiled/dark,
 /area/space)
 "NW" = (
-/obj/structure/bed/chair/sofa/corp/corner,
-/turf/simulated/floor/wood,
+/obj/effect/floor_decal/milspec/color/red/half,
+/obj/machinery/disposal/wall{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/dark,
 /area/space)
 "NX" = (
 /obj/structure/bed/chair/bay{
 	dir = 4
 	},
 /turf/simulated/floor/wood,
-/area/space)
-"Ob" = (
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/tiled,
 /area/space)
 "Oj" = (
 /obj/machinery/atmospherics/binary/pump/fuel{
@@ -4143,7 +4322,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cargo)
 "Om" = (
 /obj/effect/floor_decal/milspec/color/red,
 /obj/structure/table/rack/gun_rack,
@@ -4156,14 +4335,26 @@
 	},
 /turf/simulated/floor/tiled/milspec,
 /area/space)
-"Ou" = (
-/obj/structure/railing{
-	dir = 8
+"Ot" = (
+/obj/machinery/power/smes/buildable{
+	charge = 500000
 	},
-/obj/structure/railing{
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/obj/structure/cable/green{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/tiled,
+/area/space)
+"Ou" = (
+/obj/effect/floor_decal/steeldecal/steel_decals6{
 	dir = 1
 	},
-/turf/simulated/open,
+/obj/effect/floor_decal/steeldecal/steel_decals6{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/dark,
 /area/space)
 "Ov" = (
 /obj/structure/particle_accelerator/end_cap{
@@ -4173,8 +4364,7 @@
 /turf/simulated/floor/tiled/milspec,
 /area/space)
 "Oz" = (
-/obj/structure/bed/chair/bay,
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/carpet/tealcarpet,
 /area/space)
 "OB" = (
 /obj/effect/floor_decal/milspec/color/emerald/half{
@@ -4214,10 +4404,13 @@
 	dir = 1
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/general)
 "OL" = (
-/obj/structure/table/woodentable,
-/turf/simulated/floor/carpet/tealcarpet,
+/obj/effect/floor_decal/steeldecal/steel_decals6{
+	dir = 4
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals6,
+/turf/simulated/floor/tiled/dark,
 /area/space)
 "OM" = (
 /obj/structure/table/standard,
@@ -4239,21 +4432,6 @@
 /obj/structure/closet/radiation,
 /turf/simulated/floor/tiled,
 /area/space)
-"OU" = (
-/obj/machinery/button/remote/blast_door{
-	id = "shuttleshutter";
-	name = "Shutter Control";
-	pixel_x = 17;
-	pixel_y = 27
-	},
-/obj/structure/cable/green{
-	icon_state = "2-8"
-	},
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/turf/simulated/floor/tiled,
-/area/space)
 "OX" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/carpet/blue2,
@@ -4270,7 +4448,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cockpit)
 "Pn" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/fuel{
 	dir = 1
@@ -4286,7 +4464,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cargo)
 "Po" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -4298,12 +4476,15 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cockpit)
 "Pq" = (
-/obj/effect/floor_decal/corner/paleblue/full{
+/obj/effect/floor_decal/steeldecal/steel_decals6{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/white,
+/obj/effect/floor_decal/steeldecal/steel_decals6{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/dark,
 /area/space)
 "Pr" = (
 /obj/structure/window/reinforced,
@@ -4320,14 +4501,16 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/space)
 "Py" = (
-/obj/effect/floor_decal/corner/paleblue/full{
+/obj/structure/railing/grey{
 	dir = 1
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled/monotile,
 /area/space)
 "Pz" = (
-/obj/structure/bed/chair/sofa/corp,
-/turf/simulated/floor/carpet/green,
+/obj/structure/bed/chair/comfy{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
 /area/space)
 "PA" = (
 /obj/structure/particle_accelerator/particle_emitter/left{
@@ -4359,7 +4542,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/general)
 "PN" = (
 /obj/effect/floor_decal/milspec/color/emerald/half,
 /obj/structure/table/steel,
@@ -4403,6 +4586,29 @@
 /obj/item/weapon/bedsheet/captaindouble,
 /turf/simulated/floor/carpet/blue2,
 /area/space)
+"Qd" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/unary/vent_pump/high_volume{
+	dir = 4;
+	frequency = 1380;
+	id_tag = null
+	},
+/obj/effect/map_helper/airlock/atmos/chamber_pump,
+/obj/effect/map_helper/airlock/sensor/chamber_sensor,
+/obj/machinery/airlock_sensor{
+	frequency = 1380;
+	id_tag = null;
+	pixel_y = -25
+	},
+/obj/machinery/embedded_controller/radio/airlock/docking_port{
+	frequency = 1380;
+	id_tag = "sd_port_landing";
+	pixel_y = 29
+	},
+/turf/simulated/floor/tiled,
+/area/space)
 "Qp" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -4429,7 +4635,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cargo)
 "Qw" = (
 /obj/structure/bed/chair/shuttle{
 	dir = 8
@@ -4441,7 +4647,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/general)
 "Qz" = (
 /obj/structure/window/reinforced/full,
 /obj/structure/flora/ausbushes/ppflowers,
@@ -4450,6 +4656,15 @@
 "QA" = (
 /obj/structure/flora/pottedplant/orientaltree,
 /turf/simulated/floor/carpet/blue2,
+/area/space)
+"QN" = (
+/obj/structure/bed/chair/shuttle{
+	dir = 1
+	},
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/turf/simulated/floor/tiled,
 /area/space)
 "QR" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
@@ -4467,19 +4682,6 @@
 /area/space)
 "QY" = (
 /turf/simulated/floor/wood,
-/area/space)
-"QZ" = (
-/obj/structure/fuel_port{
-	dir = 8;
-	pixel_x = -32
-	},
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/obj/machinery/atmospherics/binary/pump/fuel{
-	dir = 1
-	},
-/turf/simulated/floor/tiled,
 /area/space)
 "Rf" = (
 /obj/structure/flora/ausbushes/lavendergrass,
@@ -4507,18 +4709,18 @@
 /turf/simulated/wall/fancy_shuttle/nondense{
 	fancy_shuttle_tag = "explo"
 	},
-/area/space)
+/area/shuttle/excursion/cargo)
 "Ru" = (
 /obj/machinery/shipsensors/fancy_shuttle,
 /turf/simulated/wall/fancy_shuttle/nondense{
 	fancy_shuttle_tag = "explo"
 	},
-/area/space)
+/area/shuttle/excursion/cockpit)
 "Rw" = (
 /obj/structure/bed/chair/backed_red{
 	dir = 8
 	},
-/turf/simulated/floor/carpet/blue,
+/turf/simulated/floor/carpet,
 /area/space)
 "Rx" = (
 /obj/structure/window/reinforced,
@@ -4527,12 +4729,12 @@
 	},
 /turf/simulated/floor/carpet/sblucarpet,
 /area/space)
-"Rz" = (
-/obj/structure/cable/green{
-	icon_state = "2-8"
+"Ry" = (
+/obj/structure/bed/chair/shuttle{
+	dir = 1
 	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
+/obj/machinery/light{
+	dir = 8
 	},
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
@@ -4595,7 +4797,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cockpit)
 "RN" = (
 /obj/random/slimecore,
 /obj/machinery/camera/network/research/xenobio{
@@ -4607,7 +4809,7 @@
 /area/space)
 "RY" = (
 /obj/machinery/hologram/holopad,
-/turf/simulated/floor/carpet/blue,
+/turf/simulated/floor/carpet,
 /area/space)
 "RZ" = (
 /turf/simulated/floor/plating,
@@ -4676,6 +4878,13 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
+/area/shuttle/excursion/cargo)
+"SA" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/tiled/milspec,
 /area/space)
 "SE" = (
 /obj/structure/dogbed,
@@ -4699,7 +4908,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cargo)
 "SN" = (
 /obj/structure/table/steel,
 /obj/fiftyspawner/steel,
@@ -4716,19 +4925,23 @@
 /obj/structure/railing{
 	dir = 8
 	},
+/obj/structure/railing{
+	dir = 1
+	},
 /turf/simulated/open,
 /area/space)
 "Tc" = (
 /obj/structure/railing{
 	dir = 4
 	},
+/obj/structure/railing{
+	dir = 1
+	},
 /turf/simulated/open,
 /area/space)
 "Tf" = (
-/obj/structure/bed/chair/comfy{
-	dir = 1
-	},
-/turf/simulated/floor/carpet/green,
+/obj/structure/table/woodentable,
+/turf/simulated/floor/wood,
 /area/space)
 "Tl" = (
 /obj/machinery/door/blast/regular{
@@ -4737,14 +4950,6 @@
 	},
 /obj/effect/floor_decal/milspec/monotile,
 /turf/simulated/floor/reinforced,
-/area/space)
-"Tq" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
-	dir = 10
-	},
-/turf/simulated/wall/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
 /area/space)
 "Tt" = (
 /obj/structure/bed/chair/office/dark{
@@ -4775,13 +4980,6 @@
 /obj/item/device/mass_spectrometer/adv,
 /turf/simulated/floor/tiled/white,
 /area/space)
-"TA" = (
-/obj/machinery/computer/ship/sensors/adv,
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/turf/simulated/floor/tiled,
-/area/space)
 "TH" = (
 /obj/structure/table/darkglass,
 /obj/item/weapon/stamp/denied{
@@ -4791,27 +4989,21 @@
 /obj/item/weapon/stamp/internalaffairs,
 /turf/simulated/floor/carpet/blue2,
 /area/space)
-"TP" = (
-/obj/machinery/door/firedoor/glass/hidden/shuttle,
-/obj/structure/window/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+"TI" = (
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/turf/simulated/floor/reinforced/airless,
-/area/space)
-"TY" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/milspec,
 /area/space)
 "Uf" = (
-/obj/structure/bed/chair/office/light{
-	dir = 4
+/obj/structure/bed/chair/comfy{
+	dir = 8
 	},
-/turf/simulated/floor/carpet/tealcarpet,
+/turf/simulated/floor/wood,
 /area/space)
 "Uh" = (
 /obj/structure/window/reinforced{
@@ -4847,7 +5039,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cargo)
 "Ut" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -4884,31 +5076,16 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
-"UD" = (
-/obj/structure/handrail{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden,
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/turf/simulated/floor/tiled,
-/area/space)
+/area/shuttle/excursion/cargo)
 "UJ" = (
 /obj/structure/table/darkglass,
-/turf/simulated/floor/carpet/blue,
+/turf/simulated/floor/carpet,
 /area/space)
-"UK" = (
-/obj/machinery/door/firedoor/glass/hidden/shuttle,
-/obj/machinery/door/blast/shuttle/open{
-	dir = 4;
-	id = "shuttleshutter"
-	},
-/obj/structure/window/fancy_shuttle{
+"UQ" = (
+/obj/machinery/shipsensors/fancy_shuttle,
+/turf/simulated/wall/fancy_shuttle/nondense{
 	fancy_shuttle_tag = "sdboat"
 	},
-/turf/simulated/floor/reinforced/airless,
 /area/space)
 "UT" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/fuel{
@@ -4922,7 +5099,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/general)
 "UZ" = (
 /obj/structure/table/rack/shelf/steel,
 /obj/item/clothing/suit/armor/vest/alt{
@@ -4947,6 +5124,13 @@
 "Va" = (
 /obj/item/weapon/material/shard,
 /turf/simulated/floor/tiled/dark,
+/area/space)
+"Vf" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "cargoload"
+	},
+/turf/simulated/floor/tiled/milspec,
 /area/space)
 "Vh" = (
 /obj/effect/floor_decal/sign/small_3{
@@ -4989,14 +5173,18 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
-"Vt" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
-	dir = 9
+/area/shuttle/excursion/cockpit)
+"Vu" = (
+/obj/structure/bed/chair/shuttle{
+	dir = 1
 	},
-/turf/simulated/wall/fancy_shuttle{
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
 	},
+/turf/simulated/floor/tiled,
 /area/space)
 "Vv" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -5009,27 +5197,12 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/general)
 "Vy" = (
 /obj/effect/floor_decal/milspec/color/red/corner{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
-/area/space)
-"VF" = (
-/obj/effect/map_helper/airlock/door/int_door,
-/obj/machinery/door/firedoor/glass,
-/obj/machinery/door/airlock/glass_external,
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
-	dir = 4
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/tiled,
 /area/space)
 "VL" = (
 /turf/simulated/floor/wood/alt/panel,
@@ -5043,7 +5216,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/general)
 "VP" = (
 /obj/structure/bed/chair/sofa/blue,
 /turf/simulated/floor/carpet/sblucarpet,
@@ -5055,16 +5228,6 @@
 "VX" = (
 /obj/structure/table/fancyblack,
 /turf/simulated/floor/carpet/blue2,
-/area/space)
-"Wc" = (
-/obj/machinery/door/firedoor/glass/hidden/shuttle,
-/obj/machinery/door/blast/shuttle/open{
-	id = "shuttleshutter"
-	},
-/obj/structure/window/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/turf/simulated/floor/reinforced/airless,
 /area/space)
 "We" = (
 /obj/effect/floor_decal/milspec/color/emerald/half{
@@ -5099,7 +5262,7 @@
 	req_one_access = list(19,43,67)
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/general)
 "WC" = (
 /obj/machinery/suit_cycler/security,
 /obj/effect/floor_decal/milspec/color/red,
@@ -5134,12 +5297,6 @@
 	},
 /turf/simulated/floor/carpet/oracarpet,
 /area/space)
-"WK" = (
-/obj/machinery/door/firedoor/glass,
-/obj/structure/window/bay/reinforced,
-/obj/structure/low_wall/bay/reinforced/steel,
-/turf/simulated/floor,
-/area/space)
 "WM" = (
 /obj/machinery/door/window/brigdoor/eastright{
 	req_access = null
@@ -5154,10 +5311,11 @@
 /turf/simulated/floor/reinforced,
 /area/space)
 "WR" = (
-/obj/structure/bed/chair/comfy{
+/obj/structure/railing/grey,
+/obj/structure/railing/grey{
 	dir = 8
 	},
-/turf/simulated/floor/carpet/green,
+/turf/simulated/open,
 /area/space)
 "WS" = (
 /obj/structure/closet/crate,
@@ -5200,6 +5358,13 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
+/area/shuttle/excursion/cargo)
+"Xe" = (
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 4;
+	pixel_y = -16
+	},
+/turf/simulated/floor/tiled,
 /area/space)
 "Xf" = (
 /obj/structure/table/woodentable,
@@ -5208,20 +5373,6 @@
 	pixel_y = 7
 	},
 /obj/item/weapon/pen,
-/turf/simulated/floor/tiled,
-/area/space)
-"Xi" = (
-/obj/machinery/door/firedoor/glass,
-/obj/machinery/door/airlock/glass{
-	name = "Starstuff Cockpit";
-	req_one_access = list(67)
-	},
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/tiled,
 /area/space)
 "Xr" = (
@@ -5243,9 +5394,38 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
+/area/shuttle/excursion/general)
+"XB" = (
+/obj/structure/handrail{
+	dir = 4
+	},
+/obj/effect/map_helper/airlock/atmos/pump_out_internal,
+/obj/machinery/light,
+/obj/machinery/atmospherics/unary/vent_pump/high_volume{
+	frequency = 1380;
+	id_tag = "sdboat_docker_pump_out_internal"
+	},
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/turf/simulated/floor/tiled,
+/area/space)
+"XG" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "cargounload"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/milspec,
 /area/space)
 "XI" = (
 /turf/simulated/floor/glass/reinforced,
+/area/space)
+"XL" = (
+/obj/effect/landmark/map_data/sirius_point,
+/turf/simulated/open,
 /area/space)
 "XM" = (
 /obj/structure/bed/chair/shuttle,
@@ -5253,7 +5433,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/general)
 "XN" = (
 /obj/machinery/button/remote/blast_door{
 	id = "xenopen2vent";
@@ -5267,18 +5447,6 @@
 	},
 /turf/simulated/floor/tiled/milspec,
 /area/space)
-"XS" = (
-/obj/structure/bed/chair/shuttle{
-	dir = 1
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/turf/simulated/floor/tiled,
-/area/space)
 "XU" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/aux{
 	dir = 10
@@ -5290,7 +5458,7 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/power)
 "XW" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -5306,6 +5474,22 @@
 	},
 /turf/simulated/floor/tiled/eris/cafe,
 /area/space)
+"Ya" = (
+/obj/structure/plasticflaps,
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "cargoload"
+	},
+/turf/simulated/floor/tiled/milspec,
+/area/space)
+"Yb" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 6
+	},
+/turf/simulated/wall/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/area/space)
 "Yi" = (
 /obj/structure/bed/chair/shuttle,
 /obj/machinery/alarm/angled,
@@ -5313,28 +5497,45 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/general)
 "Yj" = (
 /obj/effect/floor_decal/milspec/color/red/corner{
 	dir = 8
 	},
 /turf/simulated/floor/tiled/dark,
 /area/space)
-"YB" = (
-/obj/machinery/power/terminal{
-	dir = 1
+"Yy" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/angled_bay/external/glass{
+	dir = 4;
+	frequency = 1380;
+	id_tag = null;
+	locked = 1;
+	name = "Docking Port Airlock"
+	},
+/obj/effect/map_helper/airlock/door/ext_door,
+/obj/machinery/access_button{
+	command = "cycle_exterior";
+	dir = 8;
+	frequency = 1380;
+	master_tag = "sd_port_landing";
+	pixel_y = 32;
+	req_one_access = list(13)
 	},
 /obj/structure/cable{
-	icon_state = "0-4"
+	icon_state = "4-8"
 	},
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+/turf/simulated/floor/tiled/steel_ridged,
+/area/space)
+"YF" = (
+/obj/effect/shuttle_landmark{
+	base_area = /area/quartermaster/storage;
+	base_turf = /turf/simulated/floor/reinforced;
+	docking_controller = "cargo_bay";
+	landmark_tag = "supply_station";
+	name = "Ship Cargo Bay"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/fuel{
-	dir = 1
-	},
-/obj/effect/landmark/stardog,
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/reinforced,
 /area/space)
 "YN" = (
 /obj/structure/window/reinforced{
@@ -5354,10 +5555,12 @@
 	},
 /turf/simulated/floor/carpet/blue2,
 /area/space)
-"YT" = (
-/turf/simulated/wall/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+"YY" = (
+/obj/structure/disposalpipe/down,
+/obj/structure/railing/grey{
+	dir = 8
 	},
+/turf/simulated/floor/tiled/monotile,
 /area/space)
 "Za" = (
 /obj/structure/disposalpipe/segment{
@@ -5387,10 +5590,25 @@
 	fancy_shuttle_tag = "explo"
 	},
 /turf/simulated/floor/tiled/steel,
-/area/space)
+/area/shuttle/excursion/cockpit)
 "Zk" = (
 /obj/structure/window/reinforced,
 /turf/simulated/floor/carpet/sblucarpet,
+/area/space)
+"Zo" = (
+/obj/effect/map_helper/airlock/door/int_door,
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass_external,
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/tiled,
 /area/space)
 "Zp" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
@@ -5403,12 +5621,22 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled/steel,
+/area/shuttle/excursion/cargo)
+"Zt" = (
+/obj/structure/disposaloutlet{
+	dir = 8
+	},
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "cargoload"
+	},
+/obj/structure/disposalpipe/trunk,
+/turf/simulated/floor/tiled/milspec,
 /area/space)
 "Zw" = (
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/structure/railing,
 /turf/simulated/open,
 /area/space)
 "ZM" = (
@@ -5433,32 +5661,18 @@
 /turf/simulated/floor/reinforced,
 /area/space)
 "ZP" = (
-/obj/structure/handrail,
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 10
-	},
-/obj/machinery/embedded_controller/radio/airlock/docking_port{
-	frequency = 1380;
-	id_tag = "sdboat_docker";
-	pixel_x = 5;
-	pixel_y = 25
-	},
-/obj/machinery/airlock_sensor{
-	dir = 8;
-	frequency = 1380;
-	id_tag = null;
-	pixel_x = 25;
-	pixel_y = 2
-	},
-/obj/effect/map_helper/airlock/sensor/chamber_sensor,
-/obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/turf/simulated/floor/tiled,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/space)
 "ZQ" = (
 /obj/structure/table/glass,
 /turf/simulated/floor/plating,
+/area/space)
+"ZR" = (
+/obj/machinery/computer/ship/helm/adv,
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/turf/simulated/floor/tiled,
 /area/space)
 "ZX" = (
 /obj/machinery/smartfridge/secure/extract,
@@ -5474,7 +5688,291 @@
 /area/space)
 
 (1,1,1) = {"
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+"}
+(2,1,1) = {"
+uj
 QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+XL
+uj
+"}
+(3,1,1) = {"
+uj
 QX
 QX
 QX
@@ -5615,291 +6113,8 @@ QX
 QX
 uj
 "}
-(2,1,1) = {"
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-"}
-(3,1,1) = {"
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-"}
 (4,1,1) = {"
+uj
 QX
 QX
 QX
@@ -6038,10 +6253,10 @@ QX
 QX
 QX
 QX
-QX
-QX
+uj
 "}
 (5,1,1) = {"
+uj
 QX
 QX
 QX
@@ -6180,10 +6395,10 @@ QX
 QX
 QX
 QX
-QX
-QX
+uj
 "}
 (6,1,1) = {"
+uj
 QX
 QX
 QX
@@ -6322,10 +6537,10 @@ QX
 QX
 QX
 QX
-QX
-QX
+uj
 "}
 (7,1,1) = {"
+uj
 QX
 QX
 QX
@@ -6464,10 +6679,10 @@ QX
 QX
 QX
 QX
-QX
-QX
+uj
 "}
 (8,1,1) = {"
+uj
 QX
 QX
 QX
@@ -6606,10 +6821,10 @@ QX
 QX
 QX
 QX
-QX
-QX
+uj
 "}
 (9,1,1) = {"
+uj
 QX
 QX
 QX
@@ -6748,10 +6963,10 @@ QX
 QX
 QX
 QX
-QX
-QX
+uj
 "}
 (10,1,1) = {"
+uj
 QX
 QX
 QX
@@ -6890,10 +7105,10 @@ QX
 QX
 QX
 QX
-QX
-QX
+uj
 "}
 (11,1,1) = {"
+uj
 QX
 QX
 QX
@@ -7032,10 +7247,10 @@ QX
 QX
 QX
 QX
-QX
-QX
+uj
 "}
 (12,1,1) = {"
+uj
 QX
 QX
 QX
@@ -7174,11 +7389,10 @@ QX
 QX
 QX
 QX
-QX
-QX
+uj
 "}
 (13,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -7317,10 +7531,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (14,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -7459,10 +7673,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (15,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -7601,10 +7815,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (16,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -7743,10 +7957,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (17,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -7885,10 +8099,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (18,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -8027,10 +8241,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (19,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -8169,10 +8383,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (20,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -8311,10 +8525,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (21,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -8453,10 +8667,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (22,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -8595,10 +8809,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (23,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -8737,10 +8951,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (24,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -8827,7 +9041,7 @@ aE
 aE
 uR
 Tu
-Kh
+bk
 IL
 uG
 IL
@@ -8879,10 +9093,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (25,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -8968,7 +9182,7 @@ aE
 aE
 aE
 uR
-bk
+Kh
 bk
 ic
 bk
@@ -9021,10 +9235,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (26,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -9163,10 +9377,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (27,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -9305,10 +9519,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (28,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -9447,10 +9661,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (29,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -9589,10 +9803,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (30,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -9731,10 +9945,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (31,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -9873,10 +10087,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (32,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -10015,10 +10229,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (33,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -10157,10 +10371,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (34,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -10299,10 +10513,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (35,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -10441,10 +10655,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (36,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -10583,10 +10797,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (37,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -10725,10 +10939,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (38,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -10867,10 +11081,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (39,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -11009,10 +11223,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (40,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -11151,10 +11365,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (41,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -11293,10 +11507,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (42,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -11399,14 +11613,15 @@ aE
 aE
 aE
 aE
+aE
+uR
+uR
 Ut
 Ut
 Ut
 Ut
 Ut
 Ut
-Ut
-Ut
 QX
 QX
 QX
@@ -11434,11 +11649,10 @@ QX
 QX
 QX
 QX
-QX
-QX
+uj
 "}
 (43,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -11541,13 +11755,14 @@ aE
 aE
 aE
 aE
-Ut
-gb
+aE
+uR
 zJ
-BT
-ag
-ag
-lq
+lx
+oD
+Tf
+QY
+Nd
 Ut
 QX
 QX
@@ -11576,11 +11791,10 @@ QX
 QX
 QX
 QX
-QX
-QX
+uj
 "}
 (44,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -11683,14 +11897,15 @@ aE
 aE
 aE
 aE
+aE
+uR
+ag
+QY
+QY
+QY
+QY
+QY
 Ut
-Pz
-ag
-ag
-ag
-ag
-ag
-Ut
 QX
 QX
 QX
@@ -11718,11 +11933,10 @@ QX
 QX
 QX
 QX
-QX
-QX
+uj
 "}
 (45,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -11778,7 +11992,7 @@ uR
 dJ
 rr
 rr
-Mx
+gb
 uR
 KW
 Ed
@@ -11825,13 +12039,14 @@ aE
 aE
 aE
 aE
-Ut
-GV
-ag
-Ou
+aE
+uR
+JQ
+QY
 SP
 yp
-ag
+yp
+yp
 Ut
 QX
 QX
@@ -11860,11 +12075,10 @@ QX
 QX
 QX
 QX
-QX
-QX
+uj
 "}
 (46,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -11967,14 +12181,15 @@ aE
 aE
 aE
 aE
+aE
+uR
+QY
+QY
+El
+QX
+QX
+QX
 Ut
-ag
-ag
-lP
-QX
-im
-ag
-Ut
 QX
 QX
 QX
@@ -12002,11 +12217,10 @@ QX
 QX
 QX
 QX
-QX
-QX
+uj
 "}
 (47,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -12109,13 +12323,14 @@ XI
 XI
 XI
 XI
+XI
 Ut
-JQ
-ag
-lP
+Pz
+QY
+El
 QX
-im
-ag
+QX
+QX
 Ut
 QX
 QX
@@ -12144,11 +12359,10 @@ QX
 QX
 QX
 QX
-QX
-QX
+uj
 "}
 (48,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -12251,13 +12465,14 @@ XI
 XI
 XI
 XI
+XI
 Ut
-bM
-ag
-lP
+Tf
+QY
+El
 QX
-im
-ag
+QX
+QX
 Ut
 QX
 QX
@@ -12286,11 +12501,10 @@ QX
 QX
 QX
 QX
-QX
-QX
+uj
 "}
 (49,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -12393,13 +12607,14 @@ XI
 XI
 XI
 XI
+XI
 Ut
-WR
-ag
-lP
+Uf
+QY
+El
 QX
-im
-ag
+QX
+QX
 Ut
 QX
 QX
@@ -12428,11 +12643,10 @@ QX
 QX
 QX
 QX
-QX
-QX
+uj
 "}
 (50,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -12533,16 +12747,17 @@ aE
 aE
 aE
 aE
-aE
-aE
+uR
+uR
+uR
+uR
+QY
+QY
+El
+QX
+QX
+QX
 Ut
-ag
-ag
-lP
-QX
-im
-ag
-Ut
 QX
 QX
 QX
@@ -12570,11 +12785,10 @@ QX
 QX
 QX
 QX
-QX
-QX
+uj
 "}
 (51,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -12670,20 +12884,21 @@ Om
 wM
 nV
 uR
+aE
+aE
+aE
+aE
+aE
+uR
+tv
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-Ut
-hQ
-ag
-kj
+uR
+WR
+QY
 Tc
 Zw
-ag
+Zw
+Zw
 Ut
 QX
 QX
@@ -12712,11 +12927,10 @@ QX
 QX
 QX
 QX
-QX
-QX
+uj
 "}
 (52,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -12812,20 +13026,21 @@ wM
 wM
 xb
 uR
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-Ut
+aE
+aE
+aE
+aE
+aE
+uR
+Py
+pX
+uR
 FD
-ag
-ag
-ag
-ag
-ag
+QY
+QY
+QY
+QY
+QY
 Ut
 QX
 QX
@@ -12854,11 +13069,10 @@ QX
 QX
 QX
 QX
-QX
-QX
+uj
 "}
 (53,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -12904,8 +13118,8 @@ QX
 QX
 Ut
 RZ
-Lo
-zD
+sa
+sQ
 uR
 Ed
 RN
@@ -12954,20 +13168,21 @@ wM
 wM
 xb
 uR
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-Ut
+aE
+aE
+aE
+aE
+aE
+uR
+rr
+rr
+uR
 pX
-ag
-EJ
+QY
 bM
 Tf
 lq
+Nd
 Ut
 QX
 QX
@@ -12996,11 +13211,10 @@ QX
 QX
 QX
 QX
-QX
-QX
+uj
 "}
 (54,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -13096,21 +13310,22 @@ wM
 wM
 xb
 uR
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+aE
+aE
+aE
+aE
+aE
+uR
+rr
+rr
+uR
+uR
 Ut
 Ut
 Ut
 Ut
 Ut
 Ut
-Ut
-Ut
 QX
 QX
 QX
@@ -13138,11 +13353,10 @@ QX
 QX
 QX
 QX
-QX
-QX
+uj
 "}
 (55,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -13238,6 +13452,15 @@ Sq
 uR
 uR
 uR
+aE
+aE
+aE
+aE
+aE
+uR
+rr
+rr
+uR
 QX
 QX
 QX
@@ -13272,19 +13495,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (56,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -13369,17 +13583,26 @@ Dx
 Yj
 rc
 rc
-Dx
+Ou
 rc
 rc
 rc
 rc
 rc
 rc
-Dx
+Pq
 rc
 ce
 Ut
+aE
+aE
+aE
+aE
+aE
+uR
+rr
+rr
+uR
 QX
 QX
 QX
@@ -13414,19 +13637,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (57,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -13512,16 +13726,25 @@ wP
 Mp
 Mp
 Mp
-Dx
+OL
 Mp
 Mp
 Mp
 Mp
-Dx
-Dx
+OL
+OL
 Mp
 ce
 Ut
+aE
+aE
+aE
+aE
+aE
+uR
+QX
+QX
+uR
 QX
 QX
 QX
@@ -13556,19 +13779,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (58,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -13664,6 +13878,11 @@ Sq
 uR
 uR
 uR
+aE
+aE
+aE
+aE
+aE
 QX
 QX
 QX
@@ -13702,15 +13921,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (59,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -13792,7 +14006,7 @@ Dx
 Dx
 Dx
 Dx
-Dq
+NW
 uR
 ya
 ya
@@ -13849,10 +14063,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (60,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -13991,10 +14205,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (61,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -14133,10 +14347,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (62,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -14275,10 +14489,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (63,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -14345,9 +14559,9 @@ sY
 sY
 sY
 hz
-aE
-aE
-aE
+XI
+XI
+XI
 uR
 kP
 vr
@@ -14417,10 +14631,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (64,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -14559,10 +14773,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (65,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -14628,18 +14842,18 @@ sY
 sY
 sY
 sY
-hz
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-hz
-fh
-lx
+Sq
+GV
+GV
+GV
+GV
+GV
+GV
+GV
+GV
+Sq
+QY
+zJ
 lx
 oD
 zW
@@ -14701,10 +14915,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (66,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -14771,17 +14985,17 @@ sY
 sY
 sY
 hz
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+qe
+qe
+qe
+qe
+qe
+qe
+qe
+qe
 hz
-bF
-Lx
+QY
+JQ
 Lx
 QY
 QY
@@ -14843,10 +15057,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (67,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -14985,10 +15199,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (68,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -15127,10 +15341,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (69,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -15212,7 +15426,7 @@ va
 QY
 QY
 Sq
-rr
+iT
 rr
 rr
 rr
@@ -15269,10 +15483,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (70,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -15411,10 +15625,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (71,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -15496,7 +15710,7 @@ va
 QY
 QY
 Sq
-rr
+iT
 rr
 rr
 bh
@@ -15553,10 +15767,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (72,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -15639,7 +15853,7 @@ QY
 QY
 uR
 EF
-rr
+Xe
 rr
 Wt
 uR
@@ -15695,10 +15909,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (73,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -15837,10 +16051,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (74,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -15893,31 +16107,31 @@ Uq
 Uq
 Uq
 hz
-lu
-lu
-lu
-lu
-lu
+aD
+rV
+FZ
+hQ
+kj
 hz
 eR
 cz
 dO
-aD
-FZ
-eK
-Ew
+Oz
+Oz
+Oz
+Oz
 hz
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+sQ
+sQ
+sQ
+sQ
+sQ
+sQ
+sQ
+sQ
 hz
-GA
-Lx
+QY
+Ll
 Lx
 QY
 QY
@@ -15979,10 +16193,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (75,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -16035,31 +16249,31 @@ Uq
 Uq
 Uq
 hz
-lu
-lu
-lu
-Uf
-lu
+Uq
+Uq
+Uq
+Uq
+Uq
 hz
 eR
 cz
 dO
-rV
-Uq
-Uq
-Uq
-hz
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-hz
-NW
-LB
+Oz
+EJ
+Oz
+Oz
+Sq
+GV
+GV
+GV
+GV
+GV
+GV
+GV
+GV
+Sq
+QY
+LW
 LB
 Fm
 zW
@@ -16121,10 +16335,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (76,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -16178,18 +16392,18 @@ Uq
 Uq
 hz
 lu
-lu
-OL
-OL
-LW
+Uq
+Uq
+FZ
+Uq
 hz
-Ll
+eR
 cz
 dO
 op
-Uq
-Uq
-Uq
+op
+GA
+Oz
 uR
 uR
 uR
@@ -16263,10 +16477,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (77,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -16319,23 +16533,23 @@ Uq
 Uq
 Uq
 hz
-lu
-lu
-lu
-lu
-lu
-hz
-Ll
 Uq
-Sq
-Uq
+bF
 Uq
 FZ
-Uq
+lP
 hz
-aE
-aE
-aE
+eR
+cz
+dO
+Oz
+Oz
+Oz
+Oz
+hz
+XI
+XI
+XI
 aE
 aE
 Vj
@@ -16405,10 +16619,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (78,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -16461,19 +16675,19 @@ Uq
 Uq
 Uq
 hz
-lu
-lu
-lu
-lu
-lu
+Uq
+bF
+Uq
+im
+Uq
 hz
-Ll
-cz
-dO
+eR
+Uq
+Sq
 Oz
-Uq
-FZ
-Kt
+Oz
+Oz
+Oz
 hz
 XI
 XI
@@ -16547,10 +16761,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (79,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -16613,9 +16827,9 @@ eR
 cz
 dO
 Oz
-Uq
-ap
-Uq
+Oz
+Oz
+Oz
 hz
 XI
 XI
@@ -16689,10 +16903,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (80,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -16741,8 +16955,8 @@ RZ
 RZ
 uR
 CT
-Pq
 Zc
+Uq
 Zc
 Zc
 Zc
@@ -16753,12 +16967,12 @@ Zc
 Zc
 MP
 cz
-uR
-uR
-uR
-uR
-uR
-uR
+dO
+Oz
+Oz
+Oz
+Oz
+hz
 XI
 XI
 XI
@@ -16831,10 +17045,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (81,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -16883,23 +17097,23 @@ Vj
 RZ
 uR
 Iu
-Py
 qI
 qI
 qI
+qI
 IR
-IR
-IR
-IR
+fh
+fh
+fh
 IR
 IR
 ye
 cz
-Rf
-Uq
-Uq
-FZ
-FZ
+uR
+uR
+uR
+uR
+uR
 uR
 XI
 XI
@@ -16973,10 +17187,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (82,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -17035,6 +17249,148 @@ lh
 lh
 lh
 ML
+LA
+cz
+Rf
+BT
+Uq
+FZ
+FZ
+uR
+XI
+XI
+XI
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+uj
+"}
+(83,1,1) = {"
+uj
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+QX
+hz
+gL
+Uq
+xh
+KJ
+hz
+Se
+Se
+Rx
+Qp
+QX
+QX
+QX
+QX
+Ib
 LA
 Uq
 Sq
@@ -17115,10 +17471,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
-(83,1,1) = {"
-QX
+(84,1,1) = {"
+uj
 QX
 QX
 QX
@@ -17163,14 +17519,14 @@ QX
 QX
 QX
 hz
-gL
+rV
 Uq
-xh
-KJ
-hz
+Uq
+Uq
+Sq
 Se
 Se
-Rx
+Gz
 Qp
 QX
 QX
@@ -17257,152 +17613,10 @@ QX
 QX
 QX
 QX
-QX
-"}
-(84,1,1) = {"
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-hz
-rV
-Uq
-Uq
-Uq
-Sq
-Se
-Se
-Gz
-Qp
-QX
-QX
-QX
-QX
-Ib
-LA
-cz
-QV
-Fd
-Uq
-Uq
-FZ
-uR
-XI
-XI
-XI
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-aE
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (85,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -17465,7 +17679,7 @@ LA
 cz
 Rf
 Fd
-pC
+Uq
 Uq
 FZ
 uR
@@ -17541,10 +17755,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (86,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -17683,10 +17897,10 @@ QX
 QX
 QX
 QX
-QX
+uj
 "}
 (87,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -17757,6 +17971,20 @@ XI
 XI
 XI
 aE
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
 QX
 QX
 QX
@@ -17811,24 +18039,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (88,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -17899,6 +18113,20 @@ XI
 XI
 XI
 aE
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
 QX
 QX
 QX
@@ -17953,24 +18181,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (89,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -18041,6 +18255,20 @@ XI
 XI
 XI
 aE
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
 QX
 QX
 QX
@@ -18095,24 +18323,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (90,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -18183,6 +18397,20 @@ XI
 XI
 XI
 aE
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
 QX
 QX
 QX
@@ -18237,23 +18465,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (91,1,1) = {"
+uj
 QX
 QX
 QX
@@ -18300,9 +18515,8 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
+aE
+aE
 uR
 nK
 Uq
@@ -18325,6 +18539,20 @@ XI
 XI
 XI
 aE
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
 QX
 QX
 QX
@@ -18379,23 +18607,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (92,1,1) = {"
+uj
 QX
 QX
 QX
@@ -18442,9 +18657,8 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
+aE
+aE
 uR
 nK
 Uq
@@ -18467,6 +18681,20 @@ XI
 XI
 XI
 aE
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
 QX
 QX
 QX
@@ -18521,23 +18749,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (93,1,1) = {"
+uj
 QX
 QX
 QX
@@ -18584,9 +18799,8 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
+aE
+aE
 uR
 uR
 uR
@@ -18609,6 +18823,20 @@ XI
 XI
 XI
 aE
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
 QX
 QX
 QX
@@ -18663,23 +18891,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (94,1,1) = {"
+uj
 QX
 QX
 QX
@@ -18726,10 +18941,9 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
+aE
+aE
+aE
 aE
 aE
 aE
@@ -18751,6 +18965,31 @@ XI
 XI
 XI
 aE
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+hz
+hz
+hz
+hz
+uR
+uR
+uR
+uR
+uR
+uR
+uR
+uR
+uR
+uR
+uR
 QX
 QX
 QX
@@ -18794,34 +19033,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (95,1,1) = {"
+uj
 QX
 QX
 QX
@@ -18868,10 +19083,9 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
+aE
+aE
+aE
 aE
 aE
 aE
@@ -18893,8 +19107,31 @@ XI
 XI
 XI
 aE
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+hz
 QX
 QX
+vd
+JT
+cR
+uX
+si
+si
+si
+si
+si
+si
+si
+uR
 QX
 QX
 QX
@@ -18938,32 +19175,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (96,1,1) = {"
+uj
 QX
 QX
 QX
@@ -19010,10 +19225,9 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
+aE
+aE
+aE
 aE
 aE
 aE
@@ -19035,8 +19249,31 @@ XI
 XI
 XI
 aE
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+hz
 QX
 QX
+vd
+DJ
+Ne
+si
+si
+si
+YF
+si
+si
+si
+si
+uR
 QX
 QX
 QX
@@ -19080,33 +19317,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (97,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -19177,8 +19391,31 @@ XI
 XI
 XI
 aE
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+hz
 QX
 QX
+vd
+oR
+ru
+si
+si
+si
+si
+si
+si
+si
+si
+uR
 QX
 QX
 QX
@@ -19222,33 +19459,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (98,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -19311,6 +19525,39 @@ aE
 aE
 aE
 aE
+ZP
+ZP
+ZP
+aE
+XI
+XI
+XI
+aE
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+hz
+sQ
+sQ
+dk
+In
+XG
+si
+si
+si
+si
+si
+si
+si
+si
+uR
 QX
 QX
 QX
@@ -19354,43 +19601,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (99,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -19453,6 +19667,39 @@ aE
 aE
 aE
 aE
+ZP
+ZP
+ZP
+aE
+XI
+XI
+XI
+aE
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+hz
+fv
+fv
+fv
+fv
+xM
+si
+si
+si
+si
+si
+si
+si
+si
+uR
 QX
 QX
 QX
@@ -19496,43 +19743,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (100,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -19595,6 +19809,39 @@ aE
 aE
 aE
 aE
+ZP
+ZP
+ZP
+aE
+XI
+XI
+XI
+aE
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+hz
+qe
+YY
+Bw
+Bw
+yj
+si
+si
+si
+si
+si
+si
+si
+si
+uR
 QX
 QX
 QX
@@ -19638,42 +19885,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (101,1,1) = {"
+uj
 QX
 QX
 QX
@@ -19723,6 +19938,52 @@ QX
 QX
 QX
 QX
+aE
+aE
+aE
+aE
+aE
+aE
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+aE
+XI
+XI
+XI
+aE
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+hz
+sQ
+xL
+Bw
+Bw
+SA
+si
+si
+si
+si
+si
+si
+si
+si
+uR
 QX
 QX
 QX
@@ -19766,56 +20027,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (102,1,1) = {"
+uj
 QX
 QX
 QX
@@ -19865,23 +20080,53 @@ QX
 QX
 QX
 QX
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+aE
+XI
+XI
+XI
+aE
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+hz
+fv
+fv
+fv
+fv
+aX
+si
+si
+si
+si
+si
+si
+si
+si
+uR
 QX
-Nr
-Nr
-Nr
-Nr
-Nr
-Nr
-Nr
-Nr
-Nr
-Nr
-Nr
-Nr
-Nr
-Nr
-Nr
-Nr
 QX
 QX
 QX
@@ -19924,41 +20169,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (103,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -19995,35 +20209,65 @@ CA
 CA
 CA
 CA
-CA
-CA
-CA
-CA
-CA
-CA
-CA
-CA
-CA
-CA
-CA
+KF
+KF
+KF
+KF
+KF
+KF
+KF
+sc
+sc
+sc
+sc
 kF
 QX
-Nr
-Nr
-Nr
-Nr
-Nr
-Nr
-Nr
-vZ
-YT
-YT
-dp
-zO
-zO
-Ir
-rS
-Nr
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+aE
+XI
+XI
+XI
+aE
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+hz
+qe
+qe
+WR
+dC
+gC
+si
+si
+si
+si
+si
+si
+si
+si
+uR
 QX
 QX
 QX
@@ -20067,40 +20311,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (104,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -20137,37 +20351,65 @@ CA
 CA
 CA
 CA
-CA
-CA
-CA
-CA
-CA
-CA
-CA
-nM
+KF
+KF
+KF
+KF
+KF
+KF
+KF
+bJ
 uE
-nM
-CA
-CA
+bJ
+sc
+sc
 QX
-Nr
-vZ
-YT
-YT
-YT
-Wc
-YT
-YT
-YT
-jc
-YB
-QZ
-yq
-Tq
-hm
-Nr
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+uR
+Ut
+Ut
+Ut
+uR
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+hz
 QX
 QX
+vd
+Vf
+ru
+si
+si
+si
+si
+si
+si
+si
+si
+uR
 QX
 QX
 QX
@@ -20211,38 +20453,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (105,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -20281,36 +20495,63 @@ RM
 wK
 PH
 od
-CA
+KF
 oS
 ES
 oS
-CA
+KF
 GG
-nM
+bJ
 Xd
 fQ
 ao
 QX
-Nr
-YT
-YT
-nb
-YT
-DF
-Nc
-JA
-YT
-Ob
-xz
-GH
-YT
-YT
-YT
-Nr
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+uR
+tv
 QX
+vd
+uR
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+hz
 QX
 QX
+vd
+Ya
+Ne
+si
+si
+si
+si
+si
+si
+si
+si
+uR
 QX
 QX
 QX
@@ -20354,37 +20595,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (106,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -20434,24 +20648,52 @@ yr
 DG
 ao
 QX
-Nr
-UK
-rN
-fe
-TP
-Lu
-Lu
-Lu
-TP
-Rz
-tS
-nz
-YT
-cD
-Nr
-Nr
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+uR
+Py
+pX
+FD
+uR
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+hz
 QX
 QX
+vd
+Zt
+TI
+si
+si
+si
+si
+si
+si
+si
+si
+uR
 QX
 QX
 QX
@@ -20495,38 +20737,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (107,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -20565,33 +20779,63 @@ Ds
 CA
 xE
 Hr
-CA
+KF
 GF
 pP
 rQ
-CA
+KF
 AB
 zu
 iC
 oW
 Rt
 QX
-Nr
-UK
-MY
-OU
-Xi
-TY
-TY
-TY
-pz
-xP
-xz
-xp
-Ab
-tY
-Nr
-Nr
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+uR
+rr
+rr
+rr
+uR
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+hz
+hz
+hz
+hz
+uR
+uR
+uR
+uR
+uR
+uR
+uR
+uR
+uR
+uR
+uR
 QX
 QX
 QX
@@ -20635,40 +20879,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (108,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -20707,33 +20921,52 @@ Po
 CA
 xq
 OJ
-CA
-CA
+KF
+KF
 VM
-CA
-CA
+KF
+KF
 bO
 zu
-od
+sL
 Zp
 mC
 QX
-Nr
-UK
-TA
-hI
-TP
-Lu
-Lu
-Lu
-YT
-TP
-VF
-YT
-kl
-cD
-Nr
-Nr
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+uR
+rr
+rr
+rr
+uR
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
 QX
 QX
 QX
@@ -20788,29 +21021,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (109,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -20860,22 +21074,41 @@ jp
 vN
 LT
 QX
-Nr
-YT
-YT
-HU
-YT
-DF
-XS
-sz
-YT
-kr
-tZ
-Fn
-ni
-YT
-YT
-Nr
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+uR
+rr
+rr
+rr
+uR
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
 QX
 QX
 QX
@@ -20930,29 +21163,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (110,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -20991,33 +21205,52 @@ FG
 CA
 Yi
 eG
-CA
-CA
+KF
+KF
 cc
-CA
-CA
+KF
+KF
 CN
 UC
 ms
 ee
 LT
 QX
-Nr
-mR
-YT
-YT
-YT
-Wc
-YT
-YT
-YT
 ZP
-jv
-UD
-AI
-kg
-hm
-Nr
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+uR
+rr
+rr
+rr
+uR
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
 QX
 QX
 QX
@@ -21072,29 +21305,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (111,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -21133,33 +21347,52 @@ CA
 CA
 XM
 iu
-CA
+KF
 bt
 XU
 pc
-CA
-CA
+KF
+sc
 Pn
 Eb
 eC
 zV
 QX
-Nr
-Nr
-Nr
-Nr
-Nr
-Nr
-Nr
-vZ
-YT
-YT
-ve
-zO
-zO
-Vt
-YT
-Nr
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+uR
+rr
+rr
+rr
+uR
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
 QX
 QX
 QX
@@ -21214,29 +21447,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (112,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -21269,13 +21483,13 @@ QX
 jZ
 jZ
 CA
-CA
+KF
 nM
 Ac
 Ac
 ew
 Vv
-CA
+KF
 rl
 yl
 sP
@@ -21286,22 +21500,41 @@ dN
 vO
 ao
 QX
-Nr
-Nr
-Nr
-Nr
-Nr
-Nr
-Nr
-Nr
-Nr
-tg
-MF
-tg
-Nr
-Nr
-Nr
-Nr
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+uR
+rr
+rr
+rr
+uR
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
 QX
 QX
 QX
@@ -21356,29 +21589,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (113,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -21411,13 +21625,13 @@ QX
 si
 jZ
 CA
-CA
+KF
 nM
 JN
 JN
 gW
 Qw
-CA
+KF
 yS
 gV
 JF
@@ -21428,6 +21642,41 @@ la
 wJ
 ao
 QX
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+uR
+rr
+rr
+rr
+uR
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
 QX
 QX
 QX
@@ -21437,9 +21686,6 @@ QX
 QX
 QX
 QX
-WK
-hA
-WK
 QX
 QX
 QX
@@ -21485,42 +21731,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (114,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -21553,23 +21767,58 @@ QX
 si
 si
 Ru
-CA
-CA
-CA
-CA
-CA
-CA
-CA
-CA
-CA
-CA
-CA
+KF
+KF
+KF
+KF
+KF
+KF
+KF
+KF
+KF
+KF
+KF
 SM
 Ct
 kO
-CA
+sc
 td
 QX
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+uR
+rr
+rr
+rr
+uR
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
 QX
 QX
 QX
@@ -21579,9 +21828,6 @@ QX
 QX
 QX
 QX
-tg
-ur
-tg
 QX
 QX
 QX
@@ -21627,42 +21873,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (115,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -21695,23 +21909,58 @@ QX
 si
 si
 si
-CA
-CA
-CA
-CA
-CA
-CA
-CA
-CA
-CA
-CA
-CA
-CA
+KF
+KF
+KF
+KF
+KF
+KF
+KF
+KF
+KF
+KF
+KF
+sc
 Ss
-CA
-CA
-CA
+sc
+sc
+sc
 QX
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
 QX
 QX
 QX
@@ -21721,9 +21970,6 @@ QX
 QX
 QX
 QX
-rr
-rr
-rr
 QX
 QX
 QX
@@ -21769,42 +22015,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (116,1,1) = {"
-QX
+uj
 QX
 QX
 QX
@@ -21854,6 +22068,41 @@ QX
 QX
 QX
 QX
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
 QX
 QX
 QX
@@ -21863,9 +22112,6 @@ QX
 QX
 QX
 QX
-rr
-rr
-rr
 QX
 QX
 QX
@@ -21911,41 +22157,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (117,1,1) = {"
+uj
 QX
 QX
 QX
@@ -21995,6 +22210,41 @@ QX
 QX
 QX
 QX
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
 QX
 QX
 QX
@@ -22005,9 +22255,6 @@ QX
 QX
 QX
 QX
-rr
-rr
-rr
 QX
 QX
 QX
@@ -22052,42 +22299,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (118,1,1) = {"
+uj
 QX
 QX
 QX
@@ -22137,6 +22352,41 @@ QX
 QX
 QX
 QX
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
 QX
 QX
 QX
@@ -22147,9 +22397,6 @@ QX
 QX
 QX
 QX
-rr
-rr
-rr
 QX
 QX
 QX
@@ -22194,42 +22441,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (119,1,1) = {"
+uj
 QX
 QX
 QX
@@ -22259,10 +22474,61 @@ QX
 QX
 QX
 QX
+zD
+zD
+zD
+zD
+zD
+zD
+zD
+zD
+zD
+zD
+zD
+zD
+zD
+zD
+zD
+zD
 QX
 QX
 QX
 QX
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
 QX
 QX
 QX
@@ -22317,61 +22583,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (120,1,1) = {"
+uj
 QX
 QX
 QX
@@ -22401,10 +22616,61 @@ QX
 QX
 QX
 QX
+zD
+zD
+zD
+zD
+zD
+zD
+zD
+Lo
+uI
+uI
+zl
+qT
+qT
+oJ
+or
+zD
 QX
 QX
 QX
 QX
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
 QX
 QX
 QX
@@ -22459,61 +22725,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (121,1,1) = {"
+uj
 QX
 QX
 QX
@@ -22543,10 +22758,61 @@ QX
 QX
 QX
 QX
+zD
+Lo
+uI
+uI
+uI
+vz
+uI
+uI
+uI
+Ot
+oT
+lK
+gY
+tF
+fg
+zD
 QX
 QX
 QX
 QX
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
 QX
 QX
 QX
@@ -22601,61 +22867,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (122,1,1) = {"
+uj
 QX
 QX
 QX
@@ -22685,10 +22900,61 @@ QX
 QX
 QX
 QX
+zD
+uI
+uI
+jT
+uI
+ba
+Ry
+cB
+uI
+DX
+AH
+Az
+uI
+uI
+uI
+zD
 QX
 QX
 QX
 QX
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
 QX
 QX
 QX
@@ -22743,61 +23009,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (123,1,1) = {"
+uj
 QX
 QX
 QX
@@ -22827,10 +23042,61 @@ QX
 QX
 QX
 QX
+zD
+ej
+NL
+it
+ub
+QN
+QN
+QN
+ub
+wV
+Lv
+zL
+uI
+eO
+zD
+zD
 QX
 QX
 QX
 QX
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
 QX
 QX
 QX
@@ -22885,61 +23151,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (124,1,1) = {"
+uj
 QX
 QX
 QX
@@ -22969,10 +23184,61 @@ QX
 QX
 QX
 QX
+zD
+ej
+ZR
+KK
+LP
+lF
+lF
+lF
+kZ
+jb
+AH
+fP
+oq
+Cs
+zD
+zD
 QX
 QX
 QX
 QX
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
 QX
 QX
 QX
@@ -23027,61 +23293,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (125,1,1) = {"
+uj
 QX
 QX
 QX
@@ -23111,10 +23326,61 @@ QX
 QX
 QX
 QX
+zD
+ej
+gl
+eq
+ub
+QN
+QN
+QN
+uI
+ub
+Zo
+uI
+cy
+eO
+zD
+zD
 QX
 QX
 QX
 QX
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
 QX
 QX
 QX
@@ -23169,61 +23435,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (126,1,1) = {"
+uj
 QX
 QX
 QX
@@ -23253,10 +23468,61 @@ QX
 QX
 QX
 QX
+zD
+uI
+uI
+kx
+uI
+ba
+Vu
+iF
+uI
+vB
+un
+XB
+jx
+uI
+uI
+zD
 QX
 QX
 QX
 QX
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
+ZP
 QX
 QX
 QX
@@ -23311,61 +23577,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (127,1,1) = {"
+uj
 QX
 QX
 QX
@@ -23395,6 +23610,22 @@ QX
 QX
 QX
 QX
+zD
+UQ
+uI
+uI
+uI
+vz
+uI
+uI
+uI
+wI
+qj
+IJ
+eK
+Yb
+fg
+zD
 QX
 QX
 QX
@@ -23488,26 +23719,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (128,1,1) = {"
+uj
 QX
 QX
 QX
@@ -23537,6 +23752,22 @@ QX
 QX
 QX
 QX
+zD
+zD
+zD
+zD
+zD
+zD
+zD
+Lo
+uI
+uI
+Ls
+qT
+qT
+EY
+uI
+zD
 QX
 QX
 QX
@@ -23630,26 +23861,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (129,1,1) = {"
+uj
 QX
 QX
 QX
@@ -23679,6 +23894,22 @@ QX
 QX
 QX
 QX
+zD
+zD
+zD
+zD
+zD
+zD
+zD
+zD
+zD
+nc
+Yy
+nc
+zD
+zD
+zD
+zD
 QX
 QX
 QX
@@ -23772,26 +24003,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (130,1,1) = {"
+uj
 QX
 QX
 QX
@@ -23830,6 +24045,9 @@ QX
 QX
 QX
 QX
+CS
+Qd
+CS
 QX
 QX
 QX
@@ -23927,13 +24145,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (131,1,1) = {"
+uj
 QX
 QX
 QX
@@ -23972,6 +24187,9 @@ QX
 QX
 QX
 QX
+nc
+ha
+nc
 QX
 QX
 QX
@@ -24069,13 +24287,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (132,1,1) = {"
+uj
 QX
 QX
 QX
@@ -24114,6 +24329,9 @@ QX
 QX
 QX
 QX
+rr
+rr
+rr
 QX
 QX
 QX
@@ -24211,13 +24429,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (133,1,1) = {"
+uj
 QX
 QX
 QX
@@ -24256,6 +24471,9 @@ QX
 QX
 QX
 QX
+rr
+rr
+rr
 QX
 QX
 QX
@@ -24353,13 +24571,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (134,1,1) = {"
+uj
 QX
 QX
 QX
@@ -24398,6 +24613,9 @@ QX
 QX
 QX
 QX
+rr
+rr
+rr
 QX
 QX
 QX
@@ -24495,13 +24713,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (135,1,1) = {"
+uj
 QX
 QX
 QX
@@ -24540,6 +24755,9 @@ QX
 QX
 QX
 QX
+rr
+rr
+rr
 QX
 QX
 QX
@@ -24637,13 +24855,10 @@ QX
 QX
 QX
 QX
-QX
-QX
-QX
-QX
-QX
+uj
 "}
 (136,1,1) = {"
+uj
 QX
 QX
 QX
@@ -24782,10 +24997,10 @@ QX
 QX
 QX
 QX
-QX
-QX
+uj
 "}
 (137,1,1) = {"
+uj
 QX
 QX
 QX
@@ -24924,10 +25139,10 @@ QX
 QX
 QX
 QX
-QX
-QX
+uj
 "}
 (138,1,1) = {"
+uj
 QX
 QX
 QX
@@ -25066,10 +25281,10 @@ QX
 QX
 QX
 QX
-QX
-QX
+uj
 "}
 (139,1,1) = {"
+uj
 QX
 QX
 QX
@@ -25208,148 +25423,147 @@ QX
 QX
 QX
 QX
-QX
-QX
+uj
 "}
 (140,1,1) = {"
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
-QX
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
+uj
 "}
