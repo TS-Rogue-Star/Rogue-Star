@@ -283,6 +283,11 @@ SUBSYSTEM_DEF(garbage)
 	if(!istype(D))
 		del(D)
 		return
+	if(istype(D,/obj/effect/overmap/visitable/ship/snowglobe))	//RS ADD
+		log_and_message_admins("Attempted to qdel [D], attempting to rescue it.")
+		var/obj/effect/overmap/visitable/ship/snowglobe/sg = D		//RS ADD
+		sg.startspot()											//RS ADD
+		return
 
 	var/datum/qdel_item/I = SSgarbage.items[D.type]
 	if (!I)

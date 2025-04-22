@@ -123,6 +123,7 @@
 		shadekin_ability_datums.Add(SKP)
 
 /datum/species/shadekin/handle_death(var/mob/living/carbon/human/H)
+	H.release_vore_contents(TRUE)	//RS ADD
 	spawn(1)
 		for(var/obj/item/W in H)
 			H.drop_from_inventory(W)
