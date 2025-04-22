@@ -22,6 +22,9 @@
 
 	startspot()
 
+/obj/effect/overmap/visitable/ship/snowglobe/Destroy()	//Instead of deleting ourself let's just move somewhere new!
+	startspot()
+
 /obj/effect/overmap/visitable/ship/snowglobe/proc/startspot()
 
 	var/list/startspots = list()
@@ -34,6 +37,9 @@
 			var/area/A = get_area(ourtable)
 			if(A.flags & RAD_SHIELDED || A.flags & BLUE_SHIELDED)	//Not in the dorms or in maint
 				continue
+			for(var/mob/living/L in view(world.view, get_turf(ourtable)))	//Let's make sure no player sees us appear, in case we move ourself after round start
+				if(isliving(L) && L.ckey)
+					continue
 
 			startspots |= get_turf(ourtable)
 
