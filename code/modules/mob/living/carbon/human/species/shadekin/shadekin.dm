@@ -124,6 +124,7 @@
 
 /datum/species/shadekin/handle_death(var/mob/living/carbon/human/H)
 	spawn(1)
+		H.release_vore_contents(TRUE)	//RS ADD
 		for(var/obj/item/W in H)
 			H.drop_from_inventory(W)
 		qdel(H)
