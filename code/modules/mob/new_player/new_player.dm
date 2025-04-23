@@ -173,7 +173,8 @@
 				observer.verbs -= /mob/observer/dead/verb/toggle_antagHUD        // Poor guys, don't know what they are missing!
 			observer.key = key
 			observer.set_respawn_timer(time_till_respawn()) // Will keep their existing time if any, or return 0 and pass 0 into set_respawn_timer which will use the defaults
-			qdel(src)
+			spawn(30) //RS Add: Prevent the qdel from executing too quickly
+				qdel(src)
 
 			return 1
 
@@ -502,7 +503,8 @@
 			if(imp.handle_implant(character,character.zone_sel.selecting))
 				imp.post_implant(character)
 
-	qdel(src) // Delete new_player mob
+	spawn(30) //RS Add: Prevent the qdel from executing too quickly
+		qdel(src)
 	log_debug("Deleted old mob of character [character.real_name] for [character.ckey] with [character.client]") // TODO; TO HERE.
 
 /mob/new_player/proc/AnnounceCyborg(var/mob/living/character, var/rank, var/join_message, var/channel, var/zlevel)
