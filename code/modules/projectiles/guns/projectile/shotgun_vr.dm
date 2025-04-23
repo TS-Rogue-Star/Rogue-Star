@@ -48,7 +48,7 @@
 		user.visible_message("<span class='warning'>With a fluid movement, [user] unfolds their shotgun's stock and foregrip.</span>",\
 		"<span class='warning'>You unfold the shotgun's stock and foregrip.</span>",\
 		"You hear an ominous click.")
-		icon_state = "compshot"
+		icon_state = "compshotc" //Was "compshot" before. Which doesn't exist.
 		item_state = icon_state
 		w_class = ITEMSIZE_LARGE
 		one_handed_penalty = 15 //Stock extended to steady it, even with just the one hand.
