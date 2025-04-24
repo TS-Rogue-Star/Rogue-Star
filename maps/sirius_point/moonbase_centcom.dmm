@@ -2129,7 +2129,7 @@
 /obj/effect/floor_decal/emblem/stellardelight{
 	dir = 1
 	},
-/turf/simulated/shuttle/floor/white,
+/turf/simulated/shuttle/floor,
 /area/shuttle/escape)
 "gP" = (
 /obj/structure/table/rack,
@@ -2486,7 +2486,7 @@
 /obj/effect/floor_decal/emblem/stellardelight{
 	dir = 8
 	},
-/turf/simulated/shuttle/floor/white,
+/turf/simulated/shuttle/floor,
 /area/shuttle/escape)
 "ih" = (
 /obj/effect/floor_decal/corner/blue{
@@ -3133,7 +3133,7 @@
 /area/centcom/medical)
 "kD" = (
 /obj/effect/floor_decal/emblem/stellardelight/center,
-/turf/simulated/shuttle/floor/white,
+/turf/simulated/shuttle/floor,
 /area/shuttle/escape)
 "kH" = (
 /obj/structure/table/rack,
@@ -4351,7 +4351,7 @@
 /obj/effect/floor_decal/emblem/stellardelight{
 	dir = 4
 	},
-/turf/simulated/shuttle/floor/white,
+/turf/simulated/shuttle/floor,
 /area/shuttle/escape)
 "pq" = (
 /obj/machinery/computer/secure_data,
@@ -4485,7 +4485,7 @@
 /obj/effect/floor_decal/emblem/stellardelight{
 	dir = 5
 	},
-/turf/simulated/shuttle/floor/white,
+/turf/simulated/shuttle/floor,
 /area/shuttle/escape)
 "qc" = (
 /obj/effect/floor_decal/steeldecal/steel_decals10,
@@ -5574,7 +5574,7 @@
 /obj/effect/floor_decal/emblem/stellardelight{
 	dir = 6
 	},
-/turf/simulated/shuttle/floor/white,
+/turf/simulated/shuttle/floor,
 /area/shuttle/escape)
 "wo" = (
 /obj/machinery/door/airlock/centcom{
@@ -6240,9 +6240,9 @@
 /area/centcom/main_hall)
 "zR" = (
 /obj/machinery/light{
-	dir = 1
+	dir = 8
 	},
-/turf/simulated/shuttle/floor/white,
+/turf/simulated/shuttle/floor,
 /area/shuttle/escape)
 "zZ" = (
 /obj/effect/floor_decal/industrial/warning,
@@ -7321,7 +7321,7 @@
 /obj/structure/bed/chair/shuttle{
 	dir = 8
 	},
-/turf/simulated/shuttle/floor/white,
+/turf/simulated/shuttle/floor,
 /area/shuttle/escape)
 "EC" = (
 /obj/machinery/telecomms/hub/preset_cent,
@@ -7777,7 +7777,7 @@
 /obj/structure/bed/chair/shuttle{
 	dir = 1
 	},
-/turf/simulated/shuttle/floor/white,
+/turf/simulated/shuttle/floor,
 /area/shuttle/escape)
 "FZ" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden,
@@ -8091,7 +8091,7 @@
 /obj/effect/floor_decal/emblem/stellardelight{
 	dir = 10
 	},
-/turf/simulated/shuttle/floor/white,
+/turf/simulated/shuttle/floor,
 /area/shuttle/escape)
 "GS" = (
 /obj/structure/table/rack{
@@ -9733,7 +9733,7 @@
 /area/centcom/medical)
 "KS" = (
 /obj/effect/floor_decal/emblem/stellardelight,
-/turf/simulated/shuttle/floor/white,
+/turf/simulated/shuttle/floor,
 /area/shuttle/escape)
 "KT" = (
 /obj/structure/table/standard,
@@ -10840,7 +10840,7 @@
 /area/centcom/medical)
 "Nz" = (
 /obj/structure/table/reinforced,
-/turf/simulated/shuttle/floor/white,
+/turf/simulated/shuttle/floor,
 /area/shuttle/escape)
 "NC" = (
 /obj/structure/bed/chair/office/dark{
@@ -11315,9 +11315,9 @@
 /area/centcom/security)
 "OL" = (
 /obj/machinery/door/firedoor/glass,
-/obj/machinery/door/airlock/angled_bay/external/glass{
-	door_color = "#822a1e";
+/obj/machinery/door/airlock/glass_external{
 	frequency = 1380;
+	icon_state = "door_locked";
 	id_tag = "escape_shuttle_hatch";
 	locked = 1;
 	name = "Docking Port Airlock"
@@ -11524,7 +11524,7 @@
 "Ps" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light/floortube,
-/turf/simulated/shuttle/floor/white,
+/turf/simulated/shuttle/floor,
 /area/shuttle/escape)
 "Pu" = (
 /obj/structure/table/glass,
@@ -13037,7 +13037,7 @@
 /obj/effect/floor_decal/emblem/stellardelight{
 	dir = 9
 	},
-/turf/simulated/shuttle/floor/white,
+/turf/simulated/shuttle/floor,
 /area/shuttle/escape)
 "Ti" = (
 /obj/structure/table/reinforced,
@@ -13074,8 +13074,10 @@
 /turf/simulated/floor/tiled/dark,
 /area/centcom/security)
 "To" = (
-/obj/structure/bed/chair/shuttle,
-/turf/simulated/shuttle/floor/white,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor,
 /area/shuttle/escape)
 "Tp" = (
 /obj/machinery/sleep_console{
@@ -14345,7 +14347,7 @@
 /obj/machinery/status_display{
 	pixel_y = 32
 	},
-/turf/simulated/shuttle/floor/white,
+/turf/simulated/shuttle/floor,
 /area/shuttle/escape)
 "Wh" = (
 /obj/structure/closet{
@@ -14804,12 +14806,6 @@
 	icon_state = "floor_yellow"
 	},
 /area/shuttle/escape)
-"Xk" = (
-/obj/structure/bed/chair/shuttle{
-	dir = 4
-	},
-/turf/simulated/shuttle/floor/white,
-/area/shuttle/escape)
 "Xl" = (
 /obj/structure/bed/chair/shuttle{
 	dir = 8
@@ -15088,18 +15084,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/centcom/security)
-"Ye" = (
-/obj/machinery/door/firedoor/glass,
-/obj/machinery/door/airlock/angled_bay/external/glass{
-	dir = 4;
-	door_color = "#822a1e";
-	frequency = 1380;
-	id_tag = "escape_shuttle_hatch";
-	locked = 1;
-	name = "Docking Port Airlock"
-	},
-/turf/simulated/floor/tiled/steel_ridged,
-/area/shuttle/escape)
 "Yf" = (
 /obj/machinery/door/airlock/angled_bay/external/glass{
 	door_color = "#822a1e";
@@ -15289,12 +15273,12 @@
 /obj/structure/bed/chair/shuttle{
 	dir = 4
 	},
-/turf/simulated/shuttle/floor/white,
+/turf/simulated/shuttle/floor,
 /area/shuttle/escape)
 "YD" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light,
-/turf/simulated/shuttle/floor/white,
+/turf/simulated/shuttle/floor,
 /area/shuttle/escape)
 "YE" = (
 /obj/effect/floor_decal/borderfloorwhite{
@@ -19284,7 +19268,7 @@ Bf
 Ey
 Ey
 Ey
-Ye
+Ey
 Ey
 Ey
 Ey
@@ -19573,10 +19557,10 @@ YQ
 YQ
 XX
 Ey
-Xk
-Xk
-Xk
-Xk
+rQ
+rQ
+rQ
+rQ
 YC
 Ey
 et
@@ -19709,17 +19693,17 @@ Qr
 Bf
 Ot
 Ey
-YQ
-YQ
-YQ
-Xi
-Xi
 Ey
+Ey
+WF
+Ey
+Ey
+Ot
 Wg
-RU
-RU
-RU
-RU
+bn
+bn
+bn
+bn
 yy
 fW
 fW
@@ -19849,19 +19833,19 @@ Vq
 aH
 Qr
 Bf
+Bf
+Bf
 Ey
-Ey
-Ey
-Ey
-WF
-Ey
-Ey
-Ot
-RU
-To
+zR
+bn
+rQ
+rQ
+YC
+bn
+rM
 Nz
 FY
-RU
+bn
 Ot
 PR
 Ot
@@ -19993,19 +19977,19 @@ Qr
 Bf
 Bf
 Bf
-Ey
-zR
-RU
-Xk
-Xk
-YC
-RU
-To
+OL
+bn
+bn
+bn
+bn
+bn
+bn
+rM
 Ps
 FY
-RU
-Xk
-Xk
+bn
+rQ
+rQ
 Ey
 rU
 rQ
@@ -20136,18 +20120,18 @@ Bf
 Bf
 Bf
 OL
-RU
-RU
-RU
-RU
-RU
-RU
-To
+bn
+bn
+LZ
+LZ
+LZ
+bn
+rM
 Nz
 Th
 hY
 GQ
-RU
+bn
 ZC
 bn
 bn
@@ -20279,13 +20263,13 @@ Bf
 Bf
 VZ
 Wg
-RU
+bn
 Nz
 Nz
 Nz
-RU
-RU
-RU
+bn
+bn
+bn
 gN
 kD
 KS
@@ -20420,18 +20404,18 @@ Bf
 Bf
 Bf
 OL
-RU
-RU
-RU
-RU
-RU
-RU
-To
+bn
+bn
+rQ
+rQ
+rQ
+bn
+rM
 Nz
 pZ
 pl
 wn
-RU
+bn
 ZC
 bn
 bn
@@ -20561,19 +20545,19 @@ oa
 Bf
 Bf
 Bf
-Ey
-zR
-RU
-Xl
-Xl
-EB
-RU
-To
+OL
+bn
+bn
+bn
+bn
+bn
+bn
+rM
 Ps
 FY
-RU
-Xl
-Xl
+bn
+LZ
+LZ
 Ey
 gv
 LZ
@@ -20701,19 +20685,19 @@ ze
 ze
 Qr
 Bf
+Bf
+Bf
 Ey
-Ey
-Ey
-Ey
-WF
-Ey
-Ey
-Ot
-RU
 To
+bn
+LZ
+LZ
+EB
+bn
+rM
 Nz
 FY
-RU
+bn
 Ot
 PR
 Ot
@@ -20845,17 +20829,17 @@ Qr
 Bf
 Ot
 Ey
-YQ
-YQ
-YQ
-Xd
-Xd
 Ey
+Ey
+WF
+Ey
+Ey
+Ot
 Wg
-RU
-RU
-RU
-RU
+bn
+bn
+bn
+bn
 zt
 RU
 RU
@@ -20993,10 +20977,10 @@ YQ
 YQ
 XX
 Ey
-Xl
-Xl
-Xl
-Xl
+LZ
+LZ
+LZ
+LZ
 EB
 Ey
 qZ
@@ -21272,7 +21256,7 @@ Bf
 Ey
 Ey
 Ey
-Ye
+Ey
 Ey
 Ey
 Ey

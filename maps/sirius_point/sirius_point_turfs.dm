@@ -1,5 +1,5 @@
 // Moonbase turfs
-
+//Airless moonrock
 /turf/simulated/mineral/moonbase
 	color="#7ab6b6"
 /turf/simulated/mineral/floor/vacuum/moonbase
@@ -8,11 +8,19 @@
 	outdoors = 1
 /turf/simulated/floor/plating/external/outdoors
 	outdoors = 1
+/turf/simulated/floor/reinforced/airless/outdoors
+	outdoors = 1
 
+//Air-y moonrock for inside
+/turf/simulated/mineral/floor
+	color="#7e89a1"
+
+//Special turfs to suck up the air
 /turf/space/cracked_asteroid/moonbase
 	color="#7e89a1"
 /turf/space/cracked_asteroid/moonbase/outdoors
 	outdoors = 1
+
 
 // Virgo 3b things, for centcomm
 /turf/unsimulated/mineral/virgo3b
