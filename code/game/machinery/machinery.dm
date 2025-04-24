@@ -476,8 +476,8 @@ Class Procs:
 		A.state = FRAME_WIRED
 
 	A.set_dir(dir)
-	A.pixel_x = pixel_x
-	A.pixel_y = pixel_y
+	A.pixel_x = 0
+	A.pixel_y = 0
 	A.update_desc()
 	A.update_icon()
 	M.loc = null
