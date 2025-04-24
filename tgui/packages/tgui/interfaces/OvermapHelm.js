@@ -7,7 +7,7 @@ import { OvermapFlightData, OvermapPanControls } from './common/Overmap';
 export const OvermapHelm = (props, context) => {
   return (
     <Window width={565} height={545} resizable>
-      <Window.Content>
+      <Window.Content scrollable>
         <OvermapHelmContent />
       </Window.Content>
     </Window>
