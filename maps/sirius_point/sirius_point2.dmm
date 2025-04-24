@@ -88,6 +88,9 @@
 	},
 /turf/simulated/floor/tiled,
 /area/space)
+"aZ" = (
+/turf/simulated/floor/tiled/monotile,
+/area/bridge)
 "ba" = (
 /obj/structure/closet/secure_closet/warden,
 /obj/item/gunbox/warden,
@@ -132,6 +135,11 @@
 	},
 /turf/simulated/floor/tiled,
 /area/space)
+"bq" = (
+/obj/structure/stairs/spawner/east,
+/obj/structure/railing/grey,
+/turf/simulated/floor/tiled/monotile,
+/area/bridge)
 "bt" = (
 /obj/structure/railing/grey,
 /turf/simulated/floor/water/pool,
@@ -219,7 +227,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled,
-/area/space)
+/area/bridge)
 "cg" = (
 /obj/structure/table/steel,
 /obj/effect/floor_decal/corner/beige{
@@ -627,16 +635,6 @@
 	dir = 8
 	},
 /turf/simulated/floor/tiled/monotile,
-/area/space)
-"fw" = (
-/obj/effect/landmark/start/captain,
-/obj/effect/floor_decal/steeldecal/steel_decals10{
-	dir = 5
-	},
-/obj/effect/floor_decal/steeldecal/steel_decals10{
-	dir = 6
-	},
-/turf/simulated/floor/tiled,
 /area/space)
 "fA" = (
 /obj/structure/table/woodentable,
@@ -1224,6 +1222,9 @@
 /obj/effect/map_effect/perma_light,
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/space)
+"kP" = (
+/turf/simulated/wall,
+/area/bridge)
 "kR" = (
 /obj/effect/floor_decal/milspec/color/black,
 /obj/structure/window/reinforced{
@@ -1351,6 +1352,9 @@
 /obj/structure/table/woodentable,
 /turf/simulated/floor/carpet/blue,
 /area/space)
+"lL" = (
+/turf/simulated/wall/r_wall,
+/area/bridge)
 "lP" = (
 /obj/structure/table/glass,
 /turf/simulated/floor/tiled/white,
@@ -1440,6 +1444,11 @@
 /obj/effect/floor_decal/industrial/hatch,
 /turf/simulated/floor/tiled/monotile,
 /area/space)
+"mF" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass,
+/turf/simulated/floor/tiled/monotile,
+/area/bridge)
 "mH" = (
 /obj/structure/table/glass,
 /obj/machinery/door/window/southright{
@@ -1598,6 +1607,10 @@
 /obj/effect/floor_decal/milspec/monotile,
 /turf/simulated/floor/tiled/milspec,
 /area/space)
+"nQ" = (
+/obj/structure/railing/grey,
+/turf/simulated/floor/tiled/monotile,
+/area/bridge)
 "nT" = (
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /obj/effect/floor_decal/milspec/color/green/half{
@@ -1611,12 +1624,6 @@
 /obj/item/weapon/folder/yellow,
 /obj/item/weapon/stamp/qm,
 /turf/simulated/floor/carpet,
-/area/space)
-"od" = (
-/obj/machinery/power/apc/hyper{
-	dir = 8
-	},
-/turf/simulated/floor/tiled,
 /area/space)
 "og" = (
 /obj/structure/filingcabinet/chestdrawer{
@@ -2034,6 +2041,13 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/space)
+"rO" = (
+/obj/structure/stairs/spawner/east,
+/obj/structure/railing/grey{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/bridge)
 "rP" = (
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 10
@@ -4918,6 +4932,10 @@
 	},
 /turf/simulated/floor/tiled/milspec,
 /area/space)
+"RR" = (
+/obj/structure/stairs/spawner/east,
+/turf/simulated/floor/tiled/monotile,
+/area/bridge)
 "Sh" = (
 /obj/structure/table/woodentable,
 /turf/simulated/floor/carpet,
@@ -5220,6 +5238,12 @@
 /obj/structure/window/reinforced/polarized/full,
 /turf/simulated/floor/plating,
 /area/space)
+"Wc" = (
+/obj/structure/railing/grey{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/bridge)
 "We" = (
 /obj/structure/bed/chair/backed_red{
 	dir = 8
@@ -15205,7 +15229,7 @@ wz
 wz
 wz
 wz
-od
+wz
 wz
 MF
 MF
@@ -15502,7 +15526,7 @@ Xl
 fN
 ah
 Nz
-fw
+FB
 vI
 Xl
 vI
@@ -20327,11 +20351,11 @@ wz
 wz
 wz
 wz
-Da
-lg
-lg
-lg
-Da
+lL
+mF
+mF
+mF
+lL
 lX
 vS
 we
@@ -20469,11 +20493,11 @@ wz
 wz
 wz
 wz
-Da
+lL
 bY
 bY
 bY
-Da
+lL
 nZ
 vS
 vS
@@ -20611,11 +20635,11 @@ wz
 wz
 wz
 wz
-Da
-La
-EH
-qy
-Da
+lL
+Wc
+aZ
+nQ
+lL
 Sh
 ti
 vS
@@ -20753,11 +20777,11 @@ wz
 wz
 wz
 wz
-Da
-Iy
-CG
-jQ
-Da
+lL
+rO
+RR
+bq
+lL
 mj
 vS
 vS
@@ -20895,11 +20919,11 @@ Da
 Da
 Da
 Da
-xJ
-Da
-Da
-Da
-Da
+kP
+lL
+lL
+lL
+lL
 Jf
 vz
 vS
