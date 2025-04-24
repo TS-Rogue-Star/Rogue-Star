@@ -476,8 +476,8 @@ Class Procs:
 		A.state = FRAME_WIRED
 
 	A.set_dir(dir)
-	A.pixel_x = 0
-	A.pixel_y = 0
+	A.pixel_x = 0 //RS Edit: Shift the frame back to the center
+	A.pixel_y = 0 //RS Edit: Shift the frame back to the center
 	A.update_desc()
 	A.update_icon()
 	M.loc = null
