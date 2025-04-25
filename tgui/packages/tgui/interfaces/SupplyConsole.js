@@ -43,7 +43,7 @@ export const SupplyConsole = (props, context) => {
   modalRegisterBodyOverride('view_crate', viewCrateContents);
   return (
     <Window width={700} height={620}>
-      <Window.Content>
+      <Window.Content scrollable>
         <ComplexModal maxWidth="100%" />
         <Section title="Supply Records">
           <SupplyConsoleShuttleStatus />
@@ -51,7 +51,7 @@ export const SupplyConsole = (props, context) => {
         </Section>
       </Window.Content>
     </Window>
-  );
+  ); // RS Edit: Make scrollable
 };
 
 const SupplyConsoleShuttleStatus = (props, context) => {
