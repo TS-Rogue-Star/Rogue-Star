@@ -11,7 +11,7 @@ export const OvermapHelm = (props, context) => {
         <OvermapHelmContent />
       </Window.Content>
     </Window>
-  );
+  ); // RS Edit: Add scrollable
 };
 
 export const OvermapHelmContent = (props, context) => {
