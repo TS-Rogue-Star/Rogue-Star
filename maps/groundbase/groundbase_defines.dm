@@ -340,29 +340,6 @@
 /obj/effect/landmark/map_data/groundbase
 	height = 3
 
-/obj/effect/overmap/visitable/sector/virgo3b
-	name = "Virgo 3B"
-	desc = "Full of phoron, and home to the NSB Adephagia."
-	scanner_desc = @{"[i]Registration[/i]: NSB Adephagia
-[i]Class[/i]: Installation
-[i]Transponder[/i]: Transmitting (CIV), NanoTrasen IFF
-[b]Notice[/b]: NanoTrasen Base, authorized personnel only"}
-	known = TRUE
-	in_space = TRUE
-
-	icon = 'icons/obj/overmap_vr.dmi'
-	icon_state = "virgo3b"
-
-	skybox_icon = 'icons/skybox/virgo3b.dmi'
-	skybox_icon_state = "small"
-	skybox_pixel_x = 0
-	skybox_pixel_y = 0
-
-	initial_generic_waypoints = list()
-	initial_restricted_waypoints = list()
-
-	extra_z_levels = list()
-
 /obj/effect/overmap/visitable/sector/virgo3c
 	name = "Virgo 3C"
 	desc = "A small, volcanically active moon."

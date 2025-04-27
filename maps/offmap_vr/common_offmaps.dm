@@ -709,8 +709,8 @@
 		using_map.z_list["z_centcom"]
 	)
 
-	if(using_map == "StellarDelight")
-		expected_z_levels |= Z_LEVEL_SPACE_ROCKS
+	if(using_map.name == "StellarDelight")
+		expected_z_levels += list(Z_LEVEL_SPACE_ROCKS)
 	. = ..()
 
 /datum/planet/virgo4/New()
@@ -724,4 +724,74 @@
 		using_map.z_list["z_snowbase"],
 		using_map.z_list["z_glacier"]
 	)
+	. = ..()
+
+/////FOR CENTCOMM (at least)/////
+/obj/effect/overmap/visitable/sector/virgo3b
+	name = "Virgo 3B"
+	desc = "Full of phoron, and home to the NSB Adephagia."
+	scanner_desc = @{"[i]Registration[/i]: NSB Adephagia
+[i]Class[/i]: Installation
+[i]Transponder[/i]: Transmitting (CIV), NanoTrasen IFF
+[b]Notice[/b]: NanoTrasen Base, authorized personnel only"}
+	known = TRUE
+	in_space = TRUE
+
+	icon = 'icons/obj/overmap_vr.dmi'
+	icon_state = "virgo3b"
+
+	skybox_icon = 'icons/skybox/virgo3b.dmi'
+	skybox_icon_state = "small"
+	skybox_pixel_x = 0
+	skybox_pixel_y = 0
+
+	initial_restricted_waypoints = list("Central Command Shuttlepad" = list("cc_shuttlepad"))
+
+	extra_z_levels = list(Z_LEVEL_SPACE_ROCKS)
+	var/mob_announce_cooldown = 0
+
+/////SD Starts at V3b to pick up crew refuel and repair (And to make sure it doesn't spawn on hazards)
+/obj/effect/overmap/visitable/sector/virgo3b/Initialize()
+	. = ..()
+	if(!using_map)
+		log_and_message_admins("V3b initialized but there isn't a using map yet!")
+	else
+		log_and_message_admins("V3b initialized and we have: [using_map] as our map!")
+	if(using_map.name == "StellarDelight")
+		log_and_message_admins("[using_map] is our map! So let's do our work!")
+		initial_generic_waypoints = list("sr-c","sr-n","sr-s")
+		for(var/obj/effect/overmap/visitable/ship/stellar_delight/sd in world)
+			sd.forceMove(loc, SOUTH)
+	else
+		log_and_message_admins("It wasn't StellarDelight so we didn't do anything extra!")
+
+/obj/effect/overmap/visitable/sector/virgo3b/Crossed(var/atom/movable/AM)
+	. = ..()
+	announce_atc(AM,going = FALSE)
+
+/obj/effect/overmap/visitable/sector/virgo3b/Uncrossed(var/atom/movable/AM)
+	. = ..()
+	announce_atc(AM,going = TRUE)
+
+/obj/effect/overmap/visitable/sector/virgo3b/proc/announce_atc(var/atom/movable/AM, var/going = FALSE)
+	if(istype(AM, /obj/effect/overmap/visitable/ship/simplemob))
+		if(world.time < mob_announce_cooldown)
+			return
+		else
+			mob_announce_cooldown = world.time + 5 MINUTES
+	var/message = "Sensor contact for vessel '[AM.name]' has [going ? "left" : "entered"] ATC control area."
+	//For landables, we need to see if their shuttle is cloaked
+	if(istype(AM, /obj/effect/overmap/visitable/ship/landable))
+		var/obj/effect/overmap/visitable/ship/landable/SL = AM //Phew
+		var/datum/shuttle/autodock/multi/shuttle = SSshuttles.shuttles[SL.shuttle]
+		if(!istype(shuttle) || !shuttle.cloaked) //Not a multishuttle (the only kind that can cloak) or not cloaked
+			atc.msg(message)
+
+	//For ships, it's safe to assume they're big enough to not be sneaky
+	else if(istype(AM, /obj/effect/overmap/visitable/ship))
+		atc.msg(message)
+
+/obj/effect/overmap/visitable/sector/virgo3b/get_space_zlevels()
+	if(using_map.name == "StellarDelight")
+		return list(Z_LEVEL_SPACE_ROCKS)
 	. = ..()
