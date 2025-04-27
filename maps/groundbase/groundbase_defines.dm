@@ -59,7 +59,7 @@
 	zlevel_datum_type = /datum/map_z_level/groundbase
 
 	lobby_icon = 'icons/misc/title_rs.dmi'
-	lobby_screens = list("logo1")
+	lobby_screens = list("rs_lobby")
 	id_hud_icons = 'icons/mob/hud_jobs_vr.dmi'
 
 
