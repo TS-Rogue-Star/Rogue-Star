@@ -1,3 +1,4 @@
+/*
 #if !defined(USING_MAP_DATUM)
 
 	#include "groundbase_areas.dm"
@@ -26,3 +27,8 @@
 	#warn A map has already been included, ignoring Groundbase
 
 #endif
+*/
+
+#if MAP_TEST
+	#define DEFAULT_MAP /datum/map/groundbase
+	#include

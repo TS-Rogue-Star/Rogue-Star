@@ -1,3 +1,6 @@
+#if !defined(DEFAULT_MAP)
+	#define DEFAULT_MAP /datum/map/stellar_delight
+
 //COMMON STUFF
 #include "tether\tether_jobs.dm"
 #include "offmap_vr\common_offmaps.dm"

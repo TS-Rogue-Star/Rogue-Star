@@ -37,7 +37,7 @@ var/global/list/possible_station_maps = list(
 
 /hook/startup/proc/initialise_map_list()
 	if(!fexists("data/map_selection.sav"))
-		using_map = new /datum/map/stellar_delight
+		using_map = new DEFAULT_MAP
 //	var/list/Lines = file2list("data/map_selection.sav")
 	else
 		log_and_message_admins(SPAN_DANGER("MAP_SELECTION.SAV EXISTS, ATTEMPTING TO LOAD FROM FILE"))
@@ -58,7 +58,7 @@ var/global/list/possible_station_maps = list(
 			break
 */
 	if(!using_map)
-		using_map = new /datum/map/stellar_delight
+		using_map = new DEFAULT_MAP
 
 	if(using_map)
 		log_and_message_admins("[using_map.name] is our map")
