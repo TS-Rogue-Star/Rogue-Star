@@ -377,12 +377,6 @@
 	var/static/image/smallone = image(icon = 'icons/skybox/skybox_rs.dmi', icon_state = "3c")
 	return smallone
 
-// For making the 6-in-1 holomap, we calculate some offsets
-#define SHIP_MAP_SIZE 140 // Width and height of compiled in tether z levels.
-#define SHIP_HOLOMAP_CENTER_GUTTER 40 // 40px central gutter between columns
-#define SHIP_HOLOMAP_MARGIN_X ((HOLOMAP_ICON_SIZE - (2*SHIP_MAP_SIZE) - SHIP_HOLOMAP_CENTER_GUTTER) / 2) // 80
-#define SHIP_HOLOMAP_MARGIN_Y ((HOLOMAP_ICON_SIZE - (2*SHIP_MAP_SIZE)) / 2) // 30
-
 // We have a bunch of stuff common to the station z levels
 /datum/map_z_level/groundbase
 	flags = MAP_LEVEL_STATION|MAP_LEVEL_CONTACT|MAP_LEVEL_PLAYER|MAP_LEVEL_CONSOLES|MAP_LEVEL_XENOARCH_EXEMPT|MAP_LEVEL_PERSIST|MAP_LEVEL_SEALED
