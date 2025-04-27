@@ -4,6 +4,7 @@
 	#include "tether\tether_jobs.dm"
 	#include "offmap_vr\common_offmaps.dm"
 	#include "~map_system\maps_vr.dm"
+	#include "~map_system\maps_rs.dm"
 	#include "common\map_events.dm"
 
 	//SD STUFF
