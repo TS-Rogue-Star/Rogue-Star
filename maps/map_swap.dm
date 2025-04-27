@@ -1,5 +1,6 @@
 #if !defined(DEFAULT_MAP)
 	#define DEFAULT_MAP /datum/map/stellar_delight
+#endif
 
 //COMMON STUFF
 #include "tether\tether_jobs.dm"
