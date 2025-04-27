@@ -23,7 +23,7 @@
 	base_turf = /turf/simulated/floor/outdoors/rocks/caves
 
 /datum/map_z_level/common_lateload/away_beach/New(datum/map/map, mapZ)
-	z = global.z_list["z_beach"]
+	z = using_map.z_list["z_beach"]
 	. = ..()
 
 /datum/map_template/common_lateload/away_beach_cave
@@ -34,19 +34,19 @@
 
 /datum/map_template/common_lateload/away_beach_cave/on_map_loaded(z)
 	. = ..()
-	seed_submaps(list(global.z_list["z_beach_cave"]), 120, /area/tether_away/cave/unexplored/normal, /datum/map_template/surface/mountains/normal)
-	//seed_submaps(list(global.z_list["z_beach_cave"]), 70, /area/tether_away/cave/unexplored/normal, /datum/map_template/surface/mountains/deep)
+	seed_submaps(list(using_map.z_list["z_beach_cave"]), 120, /area/tether_away/cave/unexplored/normal, /datum/map_template/surface/mountains/normal)
+	//seed_submaps(list(using_map.z_list["z_beach_cave"]), 70, /area/tether_away/cave/unexplored/normal, /datum/map_template/surface/mountains/deep)
 
 	// Now for the tunnels.
-	new /datum/random_map/automata/cave_system/no_cracks(null, 3, 3, global.z_list["z_beach_cave"], world.maxx - 4, world.maxy - 4)
-	new /datum/random_map/noise/ore/beachmine(null, 1, 1, global.z_list["z_beach_cave"], 64, 64)
+	new /datum/random_map/automata/cave_system/no_cracks(null, 3, 3, using_map.z_list["z_beach_cave"], world.maxx - 4, world.maxy - 4)
+	new /datum/random_map/noise/ore/beachmine(null, 1, 1, using_map.z_list["z_beach_cave"], 64, 64)
 
 /datum/map_z_level/common_lateload/away_beach_cave
 	name = "Away Mission - Desert Cave"
 	base_turf = /turf/simulated/floor/outdoors/rocks/caves
 
 /datum/map_z_level/common_lateload/away_beach_cave/New(datum/map/map, mapZ)
-	z = global.z_list["z_beach_cave"]
+	z = using_map.z_list["z_beach_cave"]
 	. = ..()
 
 /obj/effect/step_trigger/zlevel_fall/beach
@@ -68,7 +68,7 @@
 	base_turf = /turf/unsimulated/floor/sky/virgo2_sky
 
 /datum/map_z_level/common_lateload/away_aerostat/New(datum/map/map, mapZ)
-	z = global.z_list["z_aerostat"]
+	z = using_map.z_list["z_aerostat"]
 	. = ..()
 
 /datum/map_template/common_lateload/away_aerostat_surface
@@ -79,16 +79,16 @@
 
 /datum/map_template/common_lateload/away_aerostat_surface/on_map_loaded(z)
 	. = ..()
-	seed_submaps(list(global.z_list["z_aerostat_surface"]), 120, /area/offmap/aerostat/surface/unexplored, /datum/map_template/virgo2)
-	new /datum/random_map/automata/cave_system/no_cracks(null, 3, 3, global.z_list["z_aerostat_surface"], world.maxx - 4, world.maxy - 4)
-	new /datum/random_map/noise/ore/virgo2(null, 1, 1, global.z_list["z_aerostat_surface"], 64, 64)
+	seed_submaps(list(using_map.z_list["z_aerostat_surface"]), 120, /area/offmap/aerostat/surface/unexplored, /datum/map_template/virgo2)
+	new /datum/random_map/automata/cave_system/no_cracks(null, 3, 3, using_map.z_list["z_aerostat_surface"], world.maxx - 4, world.maxy - 4)
+	new /datum/random_map/noise/ore/virgo2(null, 1, 1, using_map.z_list["z_aerostat_surface"], 64, 64)
 
 /datum/map_z_level/common_lateload/away_aerostat_surface
 	name = "Away Mission - Aerostat Surface"
 	base_turf = /turf/simulated/mineral/floor/ignore_mapgen/virgo2
 
 /datum/map_z_level/common_lateload/away_aerostat_surface/New(datum/map/map, mapZ)
-	z = global.z_list["z_aerostat_surface"]
+	z = using_map.z_list["z_aerostat_surface"]
 	. = ..()
 
 #include "../expedition_vr/space/_debrisfield.dm"
@@ -104,13 +104,13 @@
 /datum/map_template/common_lateload/away_debrisfield/on_map_loaded(z)
 	. = ..()
 	//Commented out until we actually get POIs
-	seed_submaps(list(global.z_list["z_debrisfield"]), 400, /area/space, /datum/map_template/debrisfield)
+	seed_submaps(list(using_map.z_list["z_debrisfield"]), 400, /area/space, /datum/map_template/debrisfield)
 
 /datum/map_z_level/common_lateload/away_debrisfield
 	name = "Away Mission - Debris Field"
 
 /datum/map_z_level/common_lateload/away_debrisfield/New(datum/map/map, mapZ)
-	z = global.z_list["z_debrisfield"]
+	z = using_map.z_list["z_debrisfield"]
 	. = ..()
 
 /datum/map_template/common_lateload/away_fueldepot
@@ -123,7 +123,7 @@
 	name = "Away Mission - Fuel Depot"
 
 /datum/map_z_level/common_lateload/away_fueldepot/New(datum/map/map, mapZ)
-	z = global.z_list["z_fueldepot"]
+	z = using_map.z_list["z_fueldepot"]
 	. = ..()
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -140,14 +140,14 @@
 	name = "Virgo 5"
 
 /datum/map_z_level/common_lateload/away_snowbase/New(datum/map/map, mapZ)
-	z = global.z_list["z_snowbase"]
+	z = using_map.z_list["z_snowbase"]
 	. = ..()
 
 /datum/map_template/common_lateload/away_snowbase/on_map_loaded(z)
 	. = ..()
 	// Now for the tunnels.
-	new /datum/random_map/automata/cave_system/no_cracks(null, 3, 3, global.z_list["z_snowbase"], world.maxx - 4, world.maxy - 4)
-	new /datum/random_map/noise/ore/snowbasemine(null, 1, 1, global.z_list["z_snowbase"], 64, 64)
+	new /datum/random_map/automata/cave_system/no_cracks(null, 3, 3, using_map.z_list["z_snowbase"], world.maxx - 4, world.maxy - 4)
+	new /datum/random_map/noise/ore/snowbasemine(null, 1, 1, using_map.z_list["z_snowbase"], 64, 64)
 
 //The glacier, which is mostly POIs and mining
 /datum/map_template/common_lateload/away_snowbase_glacier
@@ -160,16 +160,16 @@
 	name = "Virgo 5 Glacier"
 
 /datum/map_z_level/common_lateload/away_snowbase_glacier/New(datum/map/map, mapZ)
-	z = global.z_list["z_glacier"]
+	z = using_map.z_list["z_glacier"]
 	. = ..()
 
 /datum/map_template/common_lateload/away_snowbase_glacier/on_map_loaded(z)
 	. = ..()
-	seed_submaps(list(global.z_list["z_glacier"]), 120, /area/tether_away/snowbase/outside/glacier/unexplored, /datum/map_template/surface/glacier)
+	seed_submaps(list(using_map.z_list["z_glacier"]), 120, /area/tether_away/snowbase/outside/glacier/unexplored, /datum/map_template/surface/glacier)
 
 	// Now for the tunnels.
-	new /datum/random_map/automata/cave_system/no_cracks(null, 3, 3, global.z_list["z_glacier"], world.maxx - 4, world.maxy - 4)
-	new /datum/random_map/noise/ore/snowbasemine(null, 1, 1, global.z_list["z_glacier"], 64, 64)
+	new /datum/random_map/automata/cave_system/no_cracks(null, 3, 3, using_map.z_list["z_glacier"], world.maxx - 4, world.maxy - 4)
+	new /datum/random_map/noise/ore/snowbasemine(null, 1, 1, using_map.z_list["z_glacier"], 64, 64)
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Gateway submaps go here
@@ -190,7 +190,7 @@
 	name = "Gateway Destination"
 
 /datum/map_z_level/common_lateload/gateway_destination/New(datum/map/map, mapZ)
-	z = global.z_list["z_gateway"]
+	z = using_map.z_list["z_gateway"]
 	. = ..()
 
 /*			// Removed due to heavy merc presence
@@ -278,7 +278,7 @@
 	name = "OM Adventure Destination"
 
 /datum/map_z_level/common_lateload/om_adventure_destination/New(datum/map/map, mapZ)
-	z = global.z_list["z_om_adventure"]
+	z = using_map.z_list["z_om_adventure"]
 	. = ..()
 
 #include "../om_adventure/grasscave.dm"
@@ -308,13 +308,13 @@
 	flags = MAP_LEVEL_PLAYER|MAP_LEVEL_SEALED
 
 /datum/map_z_level/common_lateload/redgate_destination/New(datum/map/map, mapZ)
-	z = global.z_list["z_redgate"]
+	z = using_map.z_list["z_redgate"]
 	. = ..()
 
 /datum/map_template/common_lateload/redgate/on_map_loaded(z)
 	. = ..()
-	new /datum/random_map/automata/cave_system/no_cracks(null, 3, 3, global.z_list["z_redgate"], world.maxx, world.maxy)
-	new /datum/random_map/noise/ore(null, 1, 1, global.z_list["z_redgate"], 64, 64)
+	new /datum/random_map/automata/cave_system/no_cracks(null, 3, 3, using_map.z_list["z_redgate"], world.maxx, world.maxy)
+	new /datum/random_map/noise/ore(null, 1, 1, using_map.z_list["z_redgate"], 64, 64)
 
 /datum/map_template/common_lateload/redgate/teppi_ranch
 	name = "Redgate - Teppi Ranch"
@@ -701,5 +701,27 @@
 	base_turf = /turf/space
 
 /datum/map_z_level/common_lateload/talon_v2/New(datum/map/map, mapZ)
-	z = global.z_list["z_offmap1"]
+	z = using_map.z_list["z_offmap1"]
+	. = ..()
+
+/datum/planet/virgo3b/New()
+	expected_z_levels = list(
+		using_map.z_list["z_centcom"]
+	)
+
+	if(using_map == "StellarDelight")
+		expected_z_levels |= Z_LEVEL_SPACE_ROCKS
+	. = ..()
+
+/datum/planet/virgo4/New()
+	expected_z_levels = list(
+		using_map.z_list["z_beach"]
+	)
+	. = ..()
+
+/datum/planet/snowbase/New()
+	expected_z_levels = list(
+		using_map.z_list["z_snowbase"],
+		using_map.z_list["z_glacier"]
+	)
 	. = ..()

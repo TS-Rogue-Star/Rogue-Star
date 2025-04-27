@@ -174,6 +174,8 @@ var/list/all_maps = list()
 	var/announcement_sound = 'sound/AI/preamble.ogg'	//RS ADD
 	var/announcement_length = 18
 
+	var/list/z_list = list()	//RS ADD
+
 /datum/map/New()
 	..()
 	if(zlevel_datum_type)

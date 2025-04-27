@@ -19,7 +19,7 @@
 	skybox_pixel_y = 0
 
 /obj/effect/overmap/visitable/sector/virgo4/New(loc, ...)
-	extra_z_levels = list(global.z_list["z_beach_cave"])
+	extra_z_levels = list(using_map.z_list["z_beach_cave"])
 	. = ..()
 
 

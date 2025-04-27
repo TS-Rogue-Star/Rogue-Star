@@ -58,10 +58,10 @@ var/global/list/latejoin_talon = list()
 	unowned_areas = list(/area/shuttle/talonboat,/area/shuttle/talonpod)
 
 /obj/effect/overmap/visitable/ship/talon/New(loc, ...)
-	levels_for_distress += global.z_list["z_beach"]
-	levels_for_distress += global.z_list["z_aerostat"]
-	levels_for_distress += global.z_list["z_debrisfield"]
-	levels_for_distress += global.z_list["z_fueldepot"]
+	levels_for_distress += using_map.z_list["z_beach"]
+	levels_for_distress += using_map.z_list["z_aerostat"]
+	levels_for_distress += using_map.z_list["z_debrisfield"]
+	levels_for_distress += using_map.z_list["z_fueldepot"]
  	. = ..()
 
 // The shuttle's 'shuttle' computer
@@ -80,10 +80,10 @@ var/global/list/latejoin_talon = list()
 	levels_for_distress = list(1)
 
 /obj/effect/overmap/visitable/ship/landable/talon_boat/New(loc, ...)
-	levels_for_distress += global.z_list["z_beach"]
-	levels_for_distress += global.z_list["z_aerostat"]
-	levels_for_distress += global.z_list["z_debrisfield"]
-	levels_for_distress += global.z_list["z_fueldepot"]
+	levels_for_distress += using_map.z_list["z_beach"]
+	levels_for_distress += using_map.z_list["z_aerostat"]
+	levels_for_distress += using_map.z_list["z_debrisfield"]
+	levels_for_distress += using_map.z_list["z_fueldepot"]
  	. = ..()
 
 // A shuttle lateloader landmark
@@ -130,10 +130,10 @@ var/global/list/latejoin_talon = list()
 	levels_for_distress = list(1)
 
 /obj/effect/overmap/visitable/ship/landable/talon_pod/New(loc, ...)
-	levels_for_distress += global.z_list["z_beach"]
-	levels_for_distress += global.z_list["z_aerostat"]
-	levels_for_distress += global.z_list["z_debrisfield"]
-	levels_for_distress += global.z_list["z_fueldepot"]
+	levels_for_distress += using_map.z_list["z_beach"]
+	levels_for_distress += using_map.z_list["z_aerostat"]
+	levels_for_distress += using_map.z_list["z_debrisfield"]
+	levels_for_distress += using_map.z_list["z_fueldepot"]
  	. = ..()
 
 // A shuttle lateloader landmark

@@ -80,6 +80,7 @@
 	fuel_consumption = 0
 	defer_initialisation = TRUE
 	range = 1
+	map_specific = "StellarDelight"
 
 /////MINING SHUTTLE
 // The shuttle's 'shuttle' computer

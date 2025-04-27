@@ -27,25 +27,15 @@
 /datum/map/stellar_delight/New()
 	if(global.using_map != src)
 		return ..()
-	global.z_list["z_centcom"] = 5
-	global.z_list["z_misc"] = 6
-	global.z_list["z_beach"] = 8
-	global.z_list["z_beach_cave"] = 9
-	global.z_list["z_aerostat"] = 10
-	global.z_list["z_aerostat_surface"] = 11
-	global.z_list["z_debrisfield"] = 12
-	global.z_list["z_fueldepot"] = 13
-	global.z_list["z_offmap1"] = 15
-	global.z_list["z_snowbase"] = 16
-	global.z_list["z_glacier"] = 17
-	global.z_list["z_gateway"] = 18
-	global.z_list["z_om_adventure"] = 19
-	global.z_list["z_redgate"] = 20
 
-	ai_shell_allowed_levels += list(global.z_list["z_misc"])
-	ai_shell_allowed_levels += list(global.z_list["z_beach"])
-	ai_shell_allowed_levels += list(global.z_list["z_aerostat"])
+	ai_shell_allowed_levels += list(z_list["z_misc"])
+	ai_shell_allowed_levels += list(z_list["z_beach"])
+	ai_shell_allowed_levels += list(z_list["z_aerostat"])
 
+	log_and_message_admins("Hello I am on SD and should have set all the global.z_list, anyway I will try to print it out now!")
+	for(var/thing in z_list)
+		log_and_message_admins("Map new Z list: [thing] = [z_list[thing]] <")
+	log_and_message_admins("That's done!")
 	..()
 	var/choice = pickweight(list(
 		"rs_lobby" = 50,
@@ -164,6 +154,23 @@
 		Z_LEVEL_SHIP_HIGH
 	)
 
+	z_list = list(
+	"z_centcom" = 5,
+	"z_misc" = 6,
+	"z_beach" = 8,
+	"z_beach_cave" = 9,
+	"z_aerostat" = 10,
+	"z_aerostat_surface" = 11,
+	"z_debrisfield" = 12,
+	"z_fueldepot" = 13,
+	"z_offmap1" = 15,
+	"z_snowbase" = 16,
+	"z_glacier" = 17,
+	"z_gateway" = 18,
+	"z_om_adventure" = 19,
+	"z_redgate" = 20
+	)
+
 	station_z_levels = list("SD0","SD1","SD2","SD3")
 
 	lateload_z_levels = list(
@@ -239,31 +246,18 @@
 	. +=  "As an employee or contractor of NanoTrasen, operators of the Adephagia and one of the galaxy's largest corporations, you're probably just here to do a job."
 	return jointext(., "<br>")
 
-
+/*
 /datum/map/stellar_delight/perform_map_generation()
 
 	new /datum/random_map/automata/cave_system/no_cracks(null, 1, 1, Z_LEVEL_SPACE_ROCKS, world.maxx, world.maxy) // Create the mining Z-level.
 	new /datum/random_map/noise/ore(null, 1, 1, Z_LEVEL_SPACE_ROCKS, 64, 64)         // Create the mining ore distribution map.
 	return 1
-
+*/
 
 /datum/skybox_settings/stellar_delight
 	icon_state = "space5"
 	use_stars = FALSE
 
-/*//RS REMOVE
-/datum/planet/virgo3b
-	expected_z_levels = list(global.z_list["z_centcom"])
-/datum/planet/virgo4
-	expected_z_levels = list(
-		global.z_list["z_beach"]
-	)
-/datum/planet/snowbase
-	expected_z_levels = list(
-		global.z_list["z_snowbase"],
-		global.z_list["z_glacier"]
-	)
-*///RS REMOVE END
 /obj/effect/landmark/map_data/stellar_delight
 	height = 4
 
@@ -294,11 +288,11 @@
 	skybox_pixel_y = 200
 
 /obj/effect/overmap/visitable/ship/stellar_delight/New(loc, ...)
-	levels_for_distress += list(global.z_list["z_offmap1"])
-	levels_for_distress += list(global.z_list["z_beach"])
-	levels_for_distress += list(global.z_list["z_aerostat"])
-	levels_for_distress += list(global.z_list["z_aerostat_surface"])
-	levels_for_distress += list(global.z_list["z_fueldepot"])
+	levels_for_distress += list(using_map.z_list["z_offmap1"])
+	levels_for_distress += list(using_map.z_list["z_beach"])
+	levels_for_distress += list(using_map.z_list["z_aerostat"])
+	levels_for_distress += list(using_map.z_list["z_aerostat_surface"])
+	levels_for_distress += list(using_map.z_list["z_fueldepot"])
 	. = ..()
 
 /obj/effect/overmap/visitable/ship/stellar_delight/build_skybox_representation()
@@ -404,7 +398,7 @@
 	base_turf = /turf/simulated/floor/outdoors/rocks
 
 /datum/map_z_level/ship_lateload/ship_centcom/New(datum/map/map)
-	z = global.z_list["z_centcom"]
+	z = using_map.z_list["z_centcom"]
 	. = ..()
 
 /area/centcom //Just to try to make sure there's not space!!!
@@ -422,7 +416,7 @@
 	flags = MAP_LEVEL_ADMIN|MAP_LEVEL_SEALED|MAP_LEVEL_CONTACT|MAP_LEVEL_XENOARCH_EXEMPT
 
 /datum/map_z_level/ship_lateload/misc/New(datum/map/map)
-	z = global.z_list["z_misc"]
+	z = using_map.z_list["z_misc"]
 	. = ..()
 
 #include "../submaps/space_rocks/space_rocks.dm"

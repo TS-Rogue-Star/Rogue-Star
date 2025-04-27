@@ -30,24 +30,13 @@
 /datum/map/groundbase/New()
 	if(global.using_map != src)
 		return ..()
-	global.z_list["z_centcom"] = 9
-	global.z_list["z_misc"] = 10
-	global.z_list["z_beach"] = 12
-	global.z_list["z_beach_cave"] = 13
-	global.z_list["z_aerostat"] = 14
-	global.z_list["z_aerostat_surface"] = 15
-	global.z_list["z_debrisfield"] = 16
-	global.z_list["z_fueldepot"] = 17
-	global.z_list["z_offmap1"] = 18
-	global.z_list["z_snowbase"] = 19
-	global.z_list["z_glacier"] = 20
-	global.z_list["z_gateway"] = 21
-	global.z_list["z_om_adventure"] = 22
-	global.z_list["z_redgate"] = 23
-	overmap_z = global.z_list["z_misc"]
-	ai_shell_allowed_levels += global.z_list["z_misc"]
-	ai_shell_allowed_levels += global.z_list["z_beach"]
-	ai_shell_allowed_levels += global.z_list["z_aerostat"]
+	overmap_z = z_list["z_misc"]
+	ai_shell_allowed_levels += z_list["z_misc"]
+	ai_shell_allowed_levels += z_list["z_beach"]
+	ai_shell_allowed_levels += z_list["z_aerostat"]
+
+	for(var/thing in z_list)
+		log_and_message_admins("Map new Z list: [thing] = [z_list[thing]] <")
 
 	..()
 	var/choice = pickweight(list(
@@ -214,6 +203,24 @@
 		Z_LEVEL_GB_MIDDLE,
 		Z_LEVEL_GB_TOP
 	)
+
+	z_list = list(
+	"z_centcom" = 9,
+	"z_misc" = 10,
+	"z_beach" = 12,
+	"z_beach_cave" = 13,
+	"z_aerostat" = 14,
+	"z_aerostat_surface" = 15,
+	"z_debrisfield" = 16,
+	"z_fueldepot" = 17,
+	"z_offmap1" = 18,
+	"z_snowbase" = 19,
+	"z_glacier" = 20,
+	"z_gateway" = 21,
+	"z_om_adventure" = 22,
+	"z_redgate" = 23
+	)
+
 	station_z_levels = list("GB1","GB2","GB3","GB4")
 
 	supplemental_station_z_levels = list(
@@ -305,6 +312,7 @@
 	. +=  "[full_name] is a recently established base on one of Virgo 3's moons."
 	return jointext(., "<br>")
 
+/*
 /datum/map/groundbase/perform_map_generation()	//Z_LEVEL_GB_BOTTOM,Z_LEVEL_GB_MIDDLE,Z_LEVEL_GB_TOP
 
 	seed_submaps(list(Z_LEVEL_GB_BOTTOM,Z_LEVEL_GB_MIDDLE,Z_LEVEL_GB_TOP), 100, /area/groundbase/unexplored/outdoors, /datum/map_template/groundbase/outdoor)	//Outdoor POIs
@@ -312,7 +320,7 @@
 	new /datum/random_map/automata/cave_system/no_cracks(null, 1, 1, Z_LEVEL_MINING, world.maxx, world.maxy) // Create the mining Z-level.
 	new /datum/random_map/noise/ore(null, 1, 1, Z_LEVEL_MINING, 64, 64)         // Create the mining ore distribution map.
 	return 1
-
+*/
 /datum/skybox_settings/groundbase
 	icon_state = "space5"
 	use_stars = FALSE
@@ -327,24 +335,6 @@
 		Z_LEVEL_GB_WILD_E,
 		Z_LEVEL_GB_WILD_W
 		)
-	. = ..()
-
-/datum/planet/virgo3b/New()
-	expected_z_levels = list(
-		global.z_list["z_centcom"]
-	)
-	. = ..()
-/datum/planet/virgo4/New()
-	expected_z_levels = list(
-		global.z_list["z_beach"]
-	)
-	. = ..()
-
-/datum/planet/snowbase/New()
-	expected_z_levels = list(
-		global.z_list["z_snowbase"],
-		global.z_list["z_glacier"]
-	)
 	. = ..()
 
 /obj/effect/landmark/map_data/groundbase
@@ -493,6 +483,10 @@
 
 	associated_map_datum = /datum/map_z_level/groundbase/gb_enginesat
 
+/datum/map_template/station_map/gb3/on_map_loaded(z)
+
+	seed_submaps(list(Z_LEVEL_GB_BOTTOM,Z_LEVEL_GB_MIDDLE,Z_LEVEL_GB_TOP), 100, /area/groundbase/unexplored/outdoors, /datum/map_template/groundbase/outdoor)	//Outdoor POIs
+	seed_submaps(list(Z_LEVEL_GB_BOTTOM,Z_LEVEL_GB_MIDDLE), 200, /area/groundbase/unexplored/rock, /datum/map_template/groundbase/maintcaves)	//Cave POIs
 
 /*
 /datum/map_template/gb_lateload/gb_enginesat
@@ -516,7 +510,7 @@
 	base_turf = /turf/simulated/floor/outdoors/rocks
 
 /datum/map_z_level/gb_lateload/gb_centcom/New(datum/map/map)
-	z = global.z_list["z_centcom"]
+	z = using_map.z_list["z_centcom"]
 	. = ..()
 
 /area/centcom //Just to try to make sure there's not space!!!
@@ -535,7 +529,7 @@
 	flags = MAP_LEVEL_ADMIN|MAP_LEVEL_SEALED|MAP_LEVEL_CONTACT|MAP_LEVEL_XENOARCH_EXEMPT
 
 /datum/map_z_level/gb_lateload/misc/New(datum/map/map)
-	z = global.z_list["z_misc"]
+	z = using_map.z_list["z_misc"]
 	. = ..()
 
 

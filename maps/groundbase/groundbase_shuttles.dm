@@ -18,7 +18,7 @@
 /datum/shuttle/autodock/overmap/gbexplo
 	name = "Exploration Shuttle"
 	current_location = "gb_excursion_pad"
-	docking_controller_tag = "expshuttle_docker"
+//	docking_controller_tag = "expshuttle_docker"
 	shuttle_area = list(/area/shuttle/groundbase/exploration)
 	fuel_consumption = 1
 	move_direction = NORTH
