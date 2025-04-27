@@ -1,4 +1,4 @@
-#if !defined(DEFAULT_MAP)
+#if !MAP_TEST
 	#define DEFAULT_MAP /datum/map/stellar_delight
 #endif
 
