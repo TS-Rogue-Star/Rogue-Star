@@ -62,7 +62,7 @@ var/global/list/latejoin_talon = list()
 	levels_for_distress += using_map.z_list["z_aerostat"]
 	levels_for_distress += using_map.z_list["z_debrisfield"]
 	levels_for_distress += using_map.z_list["z_fueldepot"]
- 	. = ..()
+	. = ..()
 
 // The shuttle's 'shuttle' computer
 /obj/machinery/computer/shuttle_control/explore/talonboat
@@ -84,7 +84,7 @@ var/global/list/latejoin_talon = list()
 	levels_for_distress += using_map.z_list["z_aerostat"]
 	levels_for_distress += using_map.z_list["z_debrisfield"]
 	levels_for_distress += using_map.z_list["z_fueldepot"]
- 	. = ..()
+	. = ..()
 
 // A shuttle lateloader landmark
 /obj/effect/shuttle_landmark/shuttle_initializer/talonboat
@@ -134,7 +134,7 @@ var/global/list/latejoin_talon = list()
 	levels_for_distress += using_map.z_list["z_aerostat"]
 	levels_for_distress += using_map.z_list["z_debrisfield"]
 	levels_for_distress += using_map.z_list["z_fueldepot"]
- 	. = ..()
+	. = ..()
 
 // A shuttle lateloader landmark
 /obj/effect/shuttle_landmark/shuttle_initializer/talonpod
