@@ -95,6 +95,7 @@ jobs:
           TEST_FILE: "code/_unit_tests.dm"
           MAP: ${{ matrix.map }}
           REPLACE: true
+          EXTRA_ARGS: "-D${{ matrix.map }}"
           RUN: "1"
       - name: Compile POIs
         run: |

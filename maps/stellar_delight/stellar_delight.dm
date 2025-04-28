@@ -1,4 +1,3 @@
-/*
 #if !defined(USING_MAP_DATUM)
 
 	#include "stellar_delight_areas.dm"
@@ -26,8 +25,3 @@
 	#warn A map has already been included, ignoring Stellar Delight
 
 #endif
-*/
-
-#if MAP_TEST
-	#define DEFAULT_MAP /datum/map/stellar_delight
-	#include
