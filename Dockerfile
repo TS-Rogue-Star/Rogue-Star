@@ -1,6 +1,6 @@
 FROM i386/ubuntu:xenial as base
 
-ARG BYOND_MAJOR=515
+ARG BYOND_MAJOR=516
 ARG BYOND_MINOR=1661
 
 RUN apt-get update \
