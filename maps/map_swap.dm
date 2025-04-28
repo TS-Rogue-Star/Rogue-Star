@@ -1,4 +1,6 @@
-#if !MAP_TEST
+#ifdef RP_MAP
+	#define DEFAULT_MAP /datum/map/groundbase
+#else
 	#define DEFAULT_MAP /datum/map/stellar_delight
 #endif
 
