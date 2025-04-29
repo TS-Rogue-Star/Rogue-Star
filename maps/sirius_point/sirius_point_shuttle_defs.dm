@@ -171,7 +171,7 @@
 	dynamic_lighting = 0
 
 /////LANDING LANDMARKS/////
-/obj/effect/shuttle_landmark/premade/sd/deck1/portairlock
+/*/obj/effect/shuttle_landmark/premade/sd/deck1/portairlock
 	name = "Near Deck 1 Port Airlock"
 	landmark_tag = "sd-1-23-54"
 /obj/effect/shuttle_landmark/premade/sd/deck1/aft
@@ -202,11 +202,11 @@
 	landmark_tag = "sd-3-104-33"
 /obj/effect/shuttle_landmark/premade/sd/deck3/starboardairlock
 	name = "Near Deck 3 Starboard Airlock"
-	landmark_tag = "sd-3-120-78"
+	landmark_tag = "sd-3-120-78"*/
 
-/obj/item/weapon/paper/dockingcodes/sd
-	name = "Stellar Delight Docking Codes"
-	codes_from_z = Z_LEVEL_MOONBASE_LOW
+/obj/item/weapon/paper/dockingcodes/sp
+	name = "Sirius Point Docking Codes"
+	codes_from_z = Z_LEVEL_MOONBASE_HIGH
 
 /////FOR CENTCOMM (at least)/////
 /obj/effect/overmap/visitable/sector/virgo3b

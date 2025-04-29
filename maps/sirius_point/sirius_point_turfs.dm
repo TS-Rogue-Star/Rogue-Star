@@ -3,13 +3,18 @@
 /turf/simulated/mineral/moonbase
 	color="#7ab6b6"
 /turf/simulated/mineral/floor/vacuum/moonbase
-	color="#7e89a1"
+	color="#7cafc4"
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors
 	outdoors = 1
 /turf/simulated/floor/plating/external/outdoors
 	outdoors = 1
 /turf/simulated/floor/reinforced/airless/outdoors
 	outdoors = 1
+
+/turf/simulated/floor/glass/reinforced/vacuum
+	oxygen = 0
+	nitrogen = 0
+	temperature = TCMB
 
 //Air-y moonrock for inside
 /turf/simulated/mineral/floor
