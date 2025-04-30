@@ -3,7 +3,7 @@
 /turf/simulated/mineral/moonbase
 	color="#7ab6b6"
 /turf/simulated/mineral/floor/vacuum/moonbase
-	color="#7cafc4"
+	color="#8da1bb"
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors
 	outdoors = 1
 /turf/simulated/floor/plating/external/outdoors
@@ -18,11 +18,11 @@
 
 //Air-y moonrock for inside
 /turf/simulated/mineral/floor
-	color="#7e89a1"
+	color="#8da1bb"
 
 //Special turfs to suck up the air
 /turf/space/cracked_asteroid/moonbase
-	color="#7e89a1"
+	color="#8da1bb"
 /turf/space/cracked_asteroid/moonbase/outdoors
 	outdoors = 1
 

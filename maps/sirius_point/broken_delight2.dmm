@@ -2797,7 +2797,6 @@
 	dir = 4;
 	pixel_x = 6
 	},
-/obj/item/weapon/paper/dockingcodes/sd,
 /obj/item/device/radio,
 /obj/item/device/radio,
 /obj/structure/closet/walllocker_double/command/east,
@@ -5343,7 +5342,6 @@
 /obj/structure/closet/secure_closet/captains,
 /obj/item/clothing/glasses/omnihud/all,
 /obj/item/weapon/disk/nuclear,
-/obj/item/weapon/paper/dockingcodes/sd,
 /obj/item/device/retail_scanner/command,
 /turf/simulated/floor/wood,
 /area/crew_quarters/captain)
@@ -6712,10 +6710,6 @@
 "oa" = (
 /turf/simulated/wall/bay/brown,
 /area/maintenance/stellardelight/substation/engineering)
-"ob" = (
-/obj/effect/shuttle_landmark/premade/sd/deck2/starboard,
-/turf/space,
-/area/space)
 "oc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -20795,10 +20789,6 @@
 "Ts" = (
 /turf/simulated/shuttle/wall,
 /area/stellardelight/deck2/starboardescape)
-"Tt" = (
-/obj/effect/shuttle_landmark/premade/sd/deck2/port,
-/turf/space,
-/area/space)
 "Tu" = (
 /obj/machinery/atmospherics/binary/pump/fuel{
 	dir = 8;
@@ -27271,7 +27261,7 @@ Jh
 Jh
 Jh
 Jh
-Tt
+Jh
 Jh
 Jh
 Jh
@@ -40335,7 +40325,7 @@ Jh
 Jh
 Jh
 Jh
-ob
+Jh
 Jh
 Jh
 Jh

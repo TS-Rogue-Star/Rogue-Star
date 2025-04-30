@@ -25,6 +25,9 @@
 /area/space)
 "cW" = (
 /obj/structure/stairs/spawner/west,
+/obj/structure/railing/grey{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/space)
 "dN" = (
@@ -125,9 +128,8 @@
 /turf/simulated/floor/tiled/monotile,
 /area/space)
 "jf" = (
-/obj/structure/stairs/spawner/south,
-/obj/structure/railing/grey{
-	dir = 4
+/obj/structure/railing{
+	dir = 1
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/space)
@@ -313,6 +315,13 @@
 /area/space)
 "yw" = (
 /obj/machinery/atmospherics/binary/pump/on,
+/turf/simulated/floor/tiled/monotile,
+/area/space)
+"zg" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/stairs/spawner/east,
 /turf/simulated/floor/tiled/monotile,
 /area/space)
 "Ae" = (
@@ -559,6 +568,12 @@
 	},
 /obj/effect/floor_decal/industrial/outline/blue,
 /turf/simulated/floor,
+/area/space)
+"RN" = (
+/obj/structure/railing/grey{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/monotile,
 /area/space)
 "RT" = (
 /obj/machinery/atmospherics/pipe/manifold4w/visible/black,
@@ -4955,7 +4970,7 @@ Es
 Es
 NC
 cW
-cW
+DK
 NC
 is
 js
@@ -5096,8 +5111,8 @@ Es
 Es
 NC
 NC
-oR
-oR
+RN
+ZI
 NC
 is
 os
@@ -8586,9 +8601,9 @@ NC
 NC
 NC
 LD
-VS
-jf
-NC
+LD
+LD
+LD
 Es
 Es
 NC
@@ -9295,10 +9310,10 @@ Es
 Es
 Es
 Es
-Es
-Es
-Es
-Es
+LD
+LD
+LD
+LD
 Es
 Es
 Es
@@ -9437,7 +9452,7 @@ Es
 Es
 Es
 Es
-Es
+jf
 Es
 Es
 Es
@@ -9579,7 +9594,7 @@ Es
 Es
 Es
 Es
-Es
+zg
 Es
 Es
 Es
