@@ -10,7 +10,7 @@ env:
 jobs:
   file_tests:
     name: Run Linters
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - name: Ensure +x on CI directory
@@ -36,7 +36,7 @@ jobs:
 
   dreamchecker:
     name: DreamChecker
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
 
@@ -69,9 +69,16 @@ jobs:
     # name: Integration Tests (${{ matrix.map }})
     name: Integration Tests
     # needs: ['file_tests', 'dreamchecker']
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
+      - name: Restore legacy OpenSSL 1.1 runtime (amd64 + i386)
+        run: |
+          sudo dpkg --add-architecture i386
+          echo "deb [arch=amd64,i386] http://security.ubuntu.com/ubuntu focal-security main" \
+               | sudo tee /etc/apt/sources.list.d/focal.list
+          sudo apt-get update
+          sudo apt-get install --yes libssl1.1 libssl1.1:i386
       - name: Ensure +x on CI directory
         run: |
           chmod -R +x ./tools/ci
@@ -120,7 +127,7 @@ jobs:
   tests_successful:
     name: Integration Tests
     needs: ['file_tests', 'dreamchecker', 'unit_tests']
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Report Success
         run: |

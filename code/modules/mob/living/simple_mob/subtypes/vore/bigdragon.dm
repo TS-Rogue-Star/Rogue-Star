@@ -624,6 +624,7 @@ I think I covered everything.
 
 //Making unique belly subtypes for cleanliness and my sanity
 /obj/belly/dragon
+	autotransfer_enabled = 1  // Updated as part of broader autotransfer update
 	autotransferchance = 50
 	autotransferwait = 150
 	escapable = 1

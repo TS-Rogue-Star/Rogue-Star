@@ -4042,6 +4042,10 @@
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/stellardelight/deck1/starboard)
+"hO" = (
+/mob/living/simple_mob/vore/isopod/small/jani,
+/turf/simulated/floor/tiled/monotile,
+/area/janitor)
 "hP" = (
 /obj/structure/morgue{
 	dir = 2
@@ -32165,7 +32169,7 @@ Qr
 aP
 GV
 Rt
-no
+hO
 Eo
 no
 lQ

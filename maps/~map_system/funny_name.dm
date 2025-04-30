@@ -53,6 +53,7 @@
 		"Goblins",
 		"Goobers",
 		"Gremlins",
+		"Isopods",
 		"Kin",
 		"Kitsunes",
 		"Kobs",

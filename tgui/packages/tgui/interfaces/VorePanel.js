@@ -1238,7 +1238,7 @@ const VoreSelectedBellyInteractions = (props, context) => {
   const { act } = useBackend(context);
 
   const { belly } = props;
-  const { escapable, interacts } = belly;
+  const { escapable, interacts, autotransfer_enabled, autotransfer } = belly;
 
   return (
     <Section
@@ -1332,11 +1332,107 @@ const VoreSelectedBellyInteractions = (props, context) => {
               }
             />
           </LabeledList.Item>
+          <LabeledList.Divider />
         </LabeledList>
       ) : (
         'These options only display while interactions are turned on.'
       )}
-    </Section>
+      <Section // RS Add Start || Port Chomp 2821, 3194, 6155
+        title="Auto-Transfer Options"
+        buttons={
+          <Button
+            onClick={() =>
+              act('set_attribute', { attribute: 'b_autotransfer_enabled' })
+            }
+            icon={autotransfer_enabled ? 'toggle-on' : 'toggle-off'}
+            selected={autotransfer_enabled}
+            content={
+              autotransfer_enabled
+                ? 'Auto-Transfer Enabled'
+                : 'Auto-Transfer Disabled'
+            }
+          />
+        }>
+        {autotransfer_enabled ? (
+          <LabeledList>
+            <LabeledList.Item label="Auto-Transfer Time">
+              <Button
+                content={autotransfer.autotransferwait / 10 + 's'}
+                onClick={() =>
+                  act('set_attribute', { attribute: 'b_autotransferwait' })
+                }
+              />
+            </LabeledList.Item>
+            <LabeledList.Item label="Auto-Transfer Chance">
+              <Button
+                content={autotransfer.autotransferchance + '%'}
+                onClick={() =>
+                  act('set_attribute', { attribute: 'b_autotransferchance' })
+                }
+              />
+            </LabeledList.Item>
+            <LabeledList.Item label="Auto-Transfer Location">
+              <Button
+                content={
+                  autotransfer.autotransferlocation
+                    ? autotransfer.autotransferlocation
+                    : 'Disabled'
+                }
+                onClick={() =>
+                  act('set_attribute', { attribute: 'b_autotransferlocation' })
+                }
+              />
+            </LabeledList.Item>
+            <LabeledList.Item label="Auto-Transfer Secondary Chance">
+              <Button
+                content={autotransfer.autotransferchance_secondary + '%'}
+                onClick={() =>
+                  act('set_attribute', {
+                    attribute: 'b_autotransferchance_secondary',
+                  })
+                }
+              />
+            </LabeledList.Item>
+            <LabeledList.Item label="Auto-Transfer Secondary Location">
+              <Button
+                content={
+                  autotransfer.autotransferlocation_secondary
+                    ? autotransfer.autotransferlocation_secondary
+                    : 'Disabled'
+                }
+                onClick={() =>
+                  act('set_attribute', {
+                    attribute: 'b_autotransferlocation_secondary',
+                  })
+                }
+              />
+            </LabeledList.Item>
+            <LabeledList.Item label="Auto-Transfer Min Amount">
+              <Button
+                content={autotransfer.autotransfer_min_amount}
+                onClick={() =>
+                  act('set_attribute', {
+                    attribute: 'b_autotransfer_min_amount',
+                  })
+                }
+              />
+            </LabeledList.Item>
+            <LabeledList.Item label="Auto-Transfer Max Amount">
+              <Button
+                content={autotransfer.autotransfer_max_amount}
+                onClick={() =>
+                  act('set_attribute', {
+                    attribute: 'b_autotransfer_max_amount',
+                  })
+                }
+              />
+            </LabeledList.Item>
+          </LabeledList>
+        ) : (
+          'These options only display while Auto-Transfer is enabled.'
+        )}
+      </Section>
+    </Section> // RS Add End
   );
 };
 
@@ -1852,6 +1948,7 @@ const VoreUserPreferences = (props, context) => {
     allowcontamination,
     allowssdvore,
     glowing_belly,
+    autotransferable,
   } = data.prefs;
 
   const { show_pictures } = data;
@@ -2198,6 +2295,19 @@ const VoreUserPreferences = (props, context) => {
         disabled: 'Disallow SSD Vore',
       },
     },
+    autotransferable: {
+      action: 'toggle_autotransferable',
+      test: autotransferable,
+      tooltip: {
+        main: 'This button is for allowing or preventing belly auto-transfer mechanics from moving you.',
+        enable: 'Click here to allow autotransfer.',
+        disable: 'Click here to prevent autotransfer.',
+      },
+      content: {
+        enabled: 'Auto-Transfer Allowed',
+        disabled: 'Do Not Allow Auto-Transfer',
+      },
+    },
     pickuppref: {
       action: 'toggle_pickuppref',
       test: pickup_mechanics_active,
@@ -2374,13 +2484,16 @@ const VoreUserPreferences = (props, context) => {
           <VoreUserPreferenceItem spec={preferences.allow_ssdvore} />
         </Flex.Item>
         <Flex.Item basis="32%">
+          <VoreUserPreferenceItem spec={preferences.autotransferable} />
+        </Flex.Item>
+        <Flex.Item basis="32%" grow={3}>
           <Button
             fluid
             content="Selective Mode Preference"
             onClick={() => act('switch_selective_mode_pref')}
           />
         </Flex.Item>
-        <Flex.Item basis="32%" grow={3}>
+        <Flex.Item basis="32%">
           <VoreUserPreferenceItem spec={preferences.eating_privacy_global} />
         </Flex.Item>
         <Flex.Item basis="32%">

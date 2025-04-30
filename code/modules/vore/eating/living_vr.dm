@@ -266,6 +266,8 @@
 	P.weight_message_visible = src.weight_message_visible
 	P.weight_messages = src.weight_messages
 
+	P.autotransferable = src.autotransferable //RS Add || Chomp Port 3200
+
 	P.vore_sprite_color = istype(src, /mob/living/carbon/human) ? src:vore_sprite_color : null //RS edit
 	if(isliving(src))
 		var/mob/living/coolguy = src
@@ -320,6 +322,8 @@
 	nutrition_messages = P.nutrition_messages
 	weight_message_visible = P.weight_message_visible
 	weight_messages = P.weight_messages
+
+	autotransferable = P.autotransferable //RS Add || Chomp Port 3200
 
 	if (istype(src, /mob/living/carbon/human)) //RS edit
 		src:vore_sprite_color = P.vore_sprite_color //RS edit
@@ -1141,6 +1145,7 @@
 		dispvoreprefs += "<b>SSD Vore:</b> [ssd_vore ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
 	dispvoreprefs += "<b>Digestable:</b> [digestable ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
 	dispvoreprefs += "<b>Feedable:</b> [feeding ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Autotransferable:</b> [autotransferable ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>" //RS Add || Chomp Port 3200
 	dispvoreprefs += "<b>Absorption Permission:</b> [absorbable ? "<font color='green'>Allowed</font>" : "<font color='red'>Disallowed</font>"]<br>"
 	dispvoreprefs += "<b>Leaves Remains:</b> [digest_leave_remains ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
 	dispvoreprefs += "<b>Mob Vore:</b> [allowmobvore ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
