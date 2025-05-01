@@ -1,7 +1,9 @@
 FROM i386/ubuntu:xenial as base
 
-ARG BYOND_MAJOR=514
-ARG BYOND_MINOR=1589
+#RS EDIT START
+ARG BYOND_MAJOR=516
+ARG BYOND_MINOR=1661
+#RS EDIT END
 
 RUN apt-get update \
     && apt-get install -y \

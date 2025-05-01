@@ -9,11 +9,12 @@
 	var/annihilate = FALSE // If true, all (movable) atoms at the location where the map is loaded will be deleted before the map is loaded in.
 	var/fixed_orientation = FALSE // If true, the submap will not be rotated randomly when loaded.
 
-	var/cost = null /* The map generator has a set 'budget' it spends to place down different submaps. It will pick available submaps randomly until 
-	it runs out. The cost of a submap should roughly corrispond with several factors such as size, loot, difficulty, desired scarcity, etc. 
+	var/cost = null /* The map generator has a set 'budget' it spends to place down different submaps. It will pick available submaps randomly until
+	it runs out. The cost of a submap should roughly corrispond with several factors such as size, loot, difficulty, desired scarcity, etc.
 	Set to -1 to force the submap to always be made. */
 	var/allow_duplicates = FALSE // If false, only one map template will be spawned by the game. Doesn't affect admins spawning then manually.
 	var/discard_prob = 0 // If non-zero, there is a chance that the map seeding algorithm will skip this template when selecting potential templates to use.
+	var/associated_map_datum	//RS EDIT - for maps with a datum!
 
 /datum/map_template/New(path = null, rename = null)
 	if(path)
@@ -74,7 +75,7 @@
 		A.power_change()
 
 	if(machinery_was_awake)
-		SSmachines.wake() // Wake only if it was awake before we tried to suspended it. 
+		SSmachines.wake() // Wake only if it was awake before we tried to suspended it.
 	SSshuttles.block_init_queue = prev_shuttle_queue_state
 	SSshuttles.process_init_queues() // We will flush the queue unless there were other blockers, in which case they will do it.
 

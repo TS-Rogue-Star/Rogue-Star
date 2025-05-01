@@ -5746,8 +5746,6 @@
 /obj/item/ammo_magazine/ammo_box/b12g/stunshell,
 /obj/item/ammo_magazine/ammo_box/b12g/beanbag,
 /obj/item/ammo_magazine/ammo_box/b12g/beanbag,
-/obj/item/weapon/storage/box/empshells/large,
-/obj/item/weapon/storage/box/empshells/large,
 /obj/item/ammo_magazine/ammo_box/b12g,
 /obj/item/ammo_magazine/ammo_box/b12g,
 /obj/item/ammo_magazine/ammo_box/b12g,
@@ -6973,7 +6971,6 @@
 /obj/machinery/status_display{
 	pixel_y = 32
 	},
-/obj/machinery/computer/HolodeckControl/holodorm/warship,
 /obj/machinery/light{
 	dir = 1
 	},

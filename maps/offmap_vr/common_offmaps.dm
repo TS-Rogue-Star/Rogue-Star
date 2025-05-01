@@ -20,8 +20,11 @@
 
 /datum/map_z_level/common_lateload/away_beach
 	name = "Away Mission - Desert Beach"
-	z = Z_LEVEL_BEACH
 	base_turf = /turf/simulated/floor/outdoors/rocks/caves
+
+/datum/map_z_level/common_lateload/away_beach/New(datum/map/map, mapZ)	//RS ADD START - Map swap related
+	z = using_map.z_list["z_beach"]
+	. = ..()	//RS ADD END
 
 /datum/map_template/common_lateload/away_beach_cave
 	name = "Desert Planet - Z2 Cave"
@@ -31,17 +34,20 @@
 
 /datum/map_template/common_lateload/away_beach_cave/on_map_loaded(z)
 	. = ..()
-	seed_submaps(list(Z_LEVEL_BEACH_CAVE), 120, /area/tether_away/cave/unexplored/normal, /datum/map_template/surface/mountains/normal)
-	//seed_submaps(list(Z_LEVEL_BEACH_CAVE), 70, /area/tether_away/cave/unexplored/normal, /datum/map_template/surface/mountains/deep)
+	seed_submaps(list(using_map.z_list["z_beach_cave"]), 120, /area/tether_away/cave/unexplored/normal, /datum/map_template/surface/mountains/normal)	//RS EDIT
+	//seed_submaps(list(using_map.z_list["z_beach_cave"]), 70, /area/tether_away/cave/unexplored/normal, /datum/map_template/surface/mountains/deep)	//RS EDIT
 
 	// Now for the tunnels.
-	new /datum/random_map/automata/cave_system/no_cracks(null, 3, 3, Z_LEVEL_BEACH_CAVE, world.maxx - 4, world.maxy - 4)
-	new /datum/random_map/noise/ore/beachmine(null, 1, 1, Z_LEVEL_BEACH_CAVE, 64, 64)
+	new /datum/random_map/automata/cave_system/no_cracks(null, 3, 3, using_map.z_list["z_beach_cave"], world.maxx - 4, world.maxy - 4)	//RS EDIT
+	new /datum/random_map/noise/ore/beachmine(null, 1, 1, using_map.z_list["z_beach_cave"], 64, 64)	//RS EDIT
 
 /datum/map_z_level/common_lateload/away_beach_cave
 	name = "Away Mission - Desert Cave"
-	z = Z_LEVEL_BEACH_CAVE
 	base_turf = /turf/simulated/floor/outdoors/rocks/caves
+
+/datum/map_z_level/common_lateload/away_beach_cave/New(datum/map/map, mapZ)	//RS ADD START - Map swap related
+	z = using_map.z_list["z_beach_cave"]
+	. = ..()	//RS EDIT END
 
 /obj/effect/step_trigger/zlevel_fall/beach
 	var/static/target_z
@@ -59,8 +65,11 @@
 
 /datum/map_z_level/common_lateload/away_aerostat
 	name = "Away Mission - Aerostat"
-	z = Z_LEVEL_AEROSTAT
 	base_turf = /turf/unsimulated/floor/sky/virgo2_sky
+
+/datum/map_z_level/common_lateload/away_aerostat/New(datum/map/map, mapZ)	//RS ADD START - Map swap related
+	z = using_map.z_list["z_aerostat"]
+	. = ..()	//RS EDIT END
 
 /datum/map_template/common_lateload/away_aerostat_surface
 	name = "Remmi Aerostat - Z2 Surface"
@@ -70,15 +79,17 @@
 
 /datum/map_template/common_lateload/away_aerostat_surface/on_map_loaded(z)
 	. = ..()
-	seed_submaps(list(Z_LEVEL_AEROSTAT_SURFACE), 120, /area/offmap/aerostat/surface/unexplored, /datum/map_template/virgo2)
-	new /datum/random_map/automata/cave_system/no_cracks(null, 3, 3, Z_LEVEL_AEROSTAT_SURFACE, world.maxx - 4, world.maxy - 4)
-	new /datum/random_map/noise/ore/virgo2(null, 1, 1, Z_LEVEL_AEROSTAT_SURFACE, 64, 64)
+	seed_submaps(list(using_map.z_list["z_aerostat_surface"]), 120, /area/offmap/aerostat/surface/unexplored, /datum/map_template/virgo2)	//RS EDIT
+	new /datum/random_map/automata/cave_system/no_cracks(null, 3, 3, using_map.z_list["z_aerostat_surface"], world.maxx - 4, world.maxy - 4)	//RS EDIT
+	new /datum/random_map/noise/ore/virgo2(null, 1, 1, using_map.z_list["z_aerostat_surface"], 64, 64)	//RS EDIT
 
 /datum/map_z_level/common_lateload/away_aerostat_surface
 	name = "Away Mission - Aerostat Surface"
-	z = Z_LEVEL_AEROSTAT_SURFACE
 	base_turf = /turf/simulated/mineral/floor/ignore_mapgen/virgo2
 
+/datum/map_z_level/common_lateload/away_aerostat_surface/New(datum/map/map, mapZ)	//RS ADD START - Map swap related
+	z = using_map.z_list["z_aerostat_surface"]
+	. = ..()	//RS ADD END
 
 #include "../expedition_vr/space/_debrisfield.dm"
 #include "../expedition_vr/space/_fueldepot.dm"
@@ -93,11 +104,14 @@
 /datum/map_template/common_lateload/away_debrisfield/on_map_loaded(z)
 	. = ..()
 	//Commented out until we actually get POIs
-	seed_submaps(list(Z_LEVEL_DEBRISFIELD), 400, /area/space, /datum/map_template/debrisfield)
+	seed_submaps(list(using_map.z_list["z_debrisfield"]), 400, /area/space, /datum/map_template/debrisfield)	//RS EDIT
 
 /datum/map_z_level/common_lateload/away_debrisfield
 	name = "Away Mission - Debris Field"
-	z = Z_LEVEL_DEBRISFIELD
+
+/datum/map_z_level/common_lateload/away_debrisfield/New(datum/map/map, mapZ)	//RS ADD START - Map swap related
+	z = using_map.z_list["z_debrisfield"]
+	. = ..()	//RS ADD END
 
 /datum/map_template/common_lateload/away_fueldepot
 	name = "Fuel Depot - Z1 Space"
@@ -107,7 +121,10 @@
 
 /datum/map_z_level/common_lateload/away_fueldepot
 	name = "Away Mission - Fuel Depot"
-	z = Z_LEVEL_FUELDEPOT
+
+/datum/map_z_level/common_lateload/away_fueldepot/New(datum/map/map, mapZ)	//RS ADD START - Map swap related
+	z = using_map.z_list["z_fueldepot"]
+	. = ..()	//RS ADD END
 
 ///////////////////////////////////////////////////////////////////////////////////////
 //Snowbase
@@ -121,13 +138,16 @@
 
 /datum/map_z_level/common_lateload/away_snowbase
 	name = "Virgo 5"
-	z = Z_LEVEL_SNOWBASE
+
+/datum/map_z_level/common_lateload/away_snowbase/New(datum/map/map, mapZ)	//RS ADD START - Map swap related
+	z = using_map.z_list["z_snowbase"]
+	. = ..()	//RS ADD END
 
 /datum/map_template/common_lateload/away_snowbase/on_map_loaded(z)
 	. = ..()
 	// Now for the tunnels.
-	new /datum/random_map/automata/cave_system/no_cracks(null, 3, 3, Z_LEVEL_SNOWBASE, world.maxx - 4, world.maxy - 4)
-	new /datum/random_map/noise/ore/snowbasemine(null, 1, 1, Z_LEVEL_SNOWBASE, 64, 64)
+	new /datum/random_map/automata/cave_system/no_cracks(null, 3, 3, using_map.z_list["z_snowbase"], world.maxx - 4, world.maxy - 4)	//RS EDIT
+	new /datum/random_map/noise/ore/snowbasemine(null, 1, 1, using_map.z_list["z_snowbase"], 64, 64)	//RS EDIT
 
 //The glacier, which is mostly POIs and mining
 /datum/map_template/common_lateload/away_snowbase_glacier
@@ -138,15 +158,18 @@
 
 /datum/map_z_level/common_lateload/away_snowbase_glacier
 	name = "Virgo 5 Glacier"
-	z = Z_LEVEL_GLACIER
+
+/datum/map_z_level/common_lateload/away_snowbase_glacier/New(datum/map/map, mapZ)	//RS ADD START - Map swap related
+	z = using_map.z_list["z_glacier"]
+	. = ..()	//RS ADD END
 
 /datum/map_template/common_lateload/away_snowbase_glacier/on_map_loaded(z)
 	. = ..()
-	seed_submaps(list(Z_LEVEL_GLACIER), 120, /area/tether_away/snowbase/outside/glacier/unexplored, /datum/map_template/surface/glacier)
+	seed_submaps(list(using_map.z_list["z_glacier"]), 120, /area/tether_away/snowbase/outside/glacier/unexplored, /datum/map_template/surface/glacier)	//RS EDIT
 
 	// Now for the tunnels.
-	new /datum/random_map/automata/cave_system/no_cracks(null, 3, 3, Z_LEVEL_GLACIER, world.maxx - 4, world.maxy - 4)
-	new /datum/random_map/noise/ore/snowbasemine(null, 1, 1, Z_LEVEL_GLACIER, 64, 64)
+	new /datum/random_map/automata/cave_system/no_cracks(null, 3, 3, using_map.z_list["z_glacier"], world.maxx - 4, world.maxy - 4)	//RS EDIT
+	new /datum/random_map/noise/ore/snowbasemine(null, 1, 1, using_map.z_list["z_glacier"], 64, 64)	//RS EDIT
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Gateway submaps go here
@@ -165,7 +188,11 @@
 
 /datum/map_z_level/common_lateload/gateway_destination
 	name = "Gateway Destination"
-	z = Z_LEVEL_GATEWAY
+
+/datum/map_z_level/common_lateload/gateway_destination/New(datum/map/map, mapZ)	//RS ADD START - Map swap related
+	z = using_map.z_list["z_gateway"]
+	. = ..()	//RS ADD END
+
 /*			// Removed due to heavy merc presence
 #include "../gateway_vr/snow_outpost.dm"
 /datum/map_template/common_lateload/gateway/snow_outpost
@@ -249,7 +276,10 @@
 
 /datum/map_z_level/common_lateload/om_adventure_destination
 	name = "OM Adventure Destination"
-	z = Z_LEVEL_OM_ADVENTURE
+
+/datum/map_z_level/common_lateload/om_adventure_destination/New(datum/map/map, mapZ)	//RS ADD START - Map swap related
+	z = using_map.z_list["z_om_adventure"]
+	. = ..()	//RS ADD END
 
 #include "../om_adventure/grasscave.dm"
 /datum/map_template/common_lateload/om_adventure/grasscave
@@ -275,13 +305,16 @@
 
 /datum/map_z_level/common_lateload/redgate_destination
 	name = "Redgate Destination"
-	z = Z_LEVEL_REDGATE
 	flags = MAP_LEVEL_PLAYER|MAP_LEVEL_SEALED
+
+/datum/map_z_level/common_lateload/redgate_destination/New(datum/map/map, mapZ)	//RS ADD START - Map swap related
+	z = using_map.z_list["z_redgate"]
+	. = ..()	//RS ADD END
 
 /datum/map_template/common_lateload/redgate/on_map_loaded(z)
 	. = ..()
-	new /datum/random_map/automata/cave_system/no_cracks(null, 3, 3, Z_LEVEL_REDGATE, world.maxx, world.maxy)
-	new /datum/random_map/noise/ore(null, 1, 1, Z_LEVEL_REDGATE, 64, 64)
+	new /datum/random_map/automata/cave_system/no_cracks(null, 3, 3, using_map.z_list["z_redgate"], world.maxx, world.maxy)	//RS EDIT
+	new /datum/random_map/noise/ore(null, 1, 1, using_map.z_list["z_redgate"], 64, 64)	//RS EDIT
 
 /datum/map_template/common_lateload/redgate/teppi_ranch
 	name = "Redgate - Teppi Ranch"
@@ -411,7 +444,7 @@
 // Code Shenanigans for Tether lateload maps
 /datum/map_template/common_lateload
 	allow_duplicates = FALSE
-	var/associated_map_datum
+//	var/associated_map_datum //RS REMOVE
 
 /datum/map_template/common_lateload/on_map_loaded(z)
 	if(!associated_map_datum || !ispath(associated_map_datum))
@@ -666,4 +699,94 @@
 	name = "Talon"
 	flags = MAP_LEVEL_PLAYER|MAP_LEVEL_PERSIST|MAP_LEVEL_MAPPABLE
 	base_turf = /turf/space
-	z = Z_LEVEL_OFFMAP1
+
+/datum/map_z_level/common_lateload/talon_v2/New(datum/map/map, mapZ)		//RS ADD START - Map swap related
+	z = using_map.z_list["z_offmap1"]
+	. = ..()
+
+/datum/planet/virgo3b/New()
+	expected_z_levels = list(
+		using_map.z_list["z_centcom"]
+	)
+
+	if(using_map.name == "StellarDelight")
+		expected_z_levels += list(Z_LEVEL_SPACE_ROCKS)
+	. = ..()
+
+/datum/planet/virgo4/New()
+	expected_z_levels = list(
+		using_map.z_list["z_beach"]
+	)
+	. = ..()
+
+/datum/planet/snowbase/New()
+	expected_z_levels = list(
+		using_map.z_list["z_snowbase"],
+		using_map.z_list["z_glacier"]
+	)
+	. = ..()
+
+/////FOR CENTCOMM (at least)/////
+/obj/effect/overmap/visitable/sector/virgo3b
+	name = "Virgo 3B"
+	desc = "Full of phoron, and home to the NSB Adephagia."
+	scanner_desc = @{"[i]Registration[/i]: NSB Adephagia
+[i]Class[/i]: Installation
+[i]Transponder[/i]: Transmitting (CIV), NanoTrasen IFF
+[b]Notice[/b]: NanoTrasen Base, authorized personnel only"}
+	known = TRUE
+	in_space = TRUE
+
+	icon = 'icons/obj/overmap_vr.dmi'
+	icon_state = "virgo3b"
+
+	skybox_icon = 'icons/skybox/virgo3b.dmi'
+	skybox_icon_state = "small"
+	skybox_pixel_x = 0
+	skybox_pixel_y = 0
+
+	initial_restricted_waypoints = list("Central Command Shuttlepad" = list("cc_shuttlepad"))
+
+	extra_z_levels = list(Z_LEVEL_SPACE_ROCKS)
+	var/mob_announce_cooldown = 0
+
+/////SD Starts at V3b to pick up crew refuel and repair (And to make sure it doesn't spawn on hazards)
+/obj/effect/overmap/visitable/sector/virgo3b/Initialize()
+	. = ..()
+	if(using_map.name == "StellarDelight")
+		initial_generic_waypoints = list("sr-c","sr-n","sr-s")
+		for(var/obj/effect/overmap/visitable/ship/stellar_delight/sd in world)
+			sd.forceMove(loc, SOUTH)
+
+/obj/effect/overmap/visitable/sector/virgo3b/Crossed(var/atom/movable/AM)
+	. = ..()
+	announce_atc(AM,going = FALSE)
+
+/obj/effect/overmap/visitable/sector/virgo3b/Uncrossed(var/atom/movable/AM)
+	. = ..()
+	announce_atc(AM,going = TRUE)
+
+/obj/effect/overmap/visitable/sector/virgo3b/proc/announce_atc(var/atom/movable/AM, var/going = FALSE)
+	if(istype(AM, /obj/effect/overmap/visitable/ship/simplemob))
+		if(world.time < mob_announce_cooldown)
+			return
+		else
+			mob_announce_cooldown = world.time + 5 MINUTES
+	var/message = "Sensor contact for vessel '[AM.name]' has [going ? "left" : "entered"] ATC control area."
+	//For landables, we need to see if their shuttle is cloaked
+	if(istype(AM, /obj/effect/overmap/visitable/ship/landable))
+		var/obj/effect/overmap/visitable/ship/landable/SL = AM //Phew
+		var/datum/shuttle/autodock/multi/shuttle = SSshuttles.shuttles[SL.shuttle]
+		if(!istype(shuttle) || !shuttle.cloaked) //Not a multishuttle (the only kind that can cloak) or not cloaked
+			atc.msg(message)
+
+	//For ships, it's safe to assume they're big enough to not be sneaky
+	else if(istype(AM, /obj/effect/overmap/visitable/ship))
+		atc.msg(message)
+
+/obj/effect/overmap/visitable/sector/virgo3b/get_space_zlevels()
+	if(using_map.name == "StellarDelight")
+		return list(Z_LEVEL_SPACE_ROCKS)
+	. = ..()
+
+//RS ADD END
