@@ -62,6 +62,8 @@
 
 	allowed_spawns = list("Arrivals Shuttle","Gateway","Cryogenic Storage","Cyborg Storage")
 
+	station_z_levels = list("minitest1","minitest2","minitest3")	//RS ADD
+
 /datum/map/virgo_minitest/New()
 	..()
 	SSticker.start_immediately = TRUE
@@ -79,3 +81,30 @@
 	new /datum/random_map/noise/ore(null, 1, 1, Z_LEVEL_MAIN_VIRGO_TESTING, 64, 64)
 */
 	return 1
+
+/datum/map_template/station_map/minitest1	//RS ADD START
+	name = "minitest1"
+	mappath = 'virgo_minitest-1.dmm'
+
+	associated_map_datum = /datum/map_z_level/minitest/station
+
+/datum/map_template/station_map/minitest2
+	name = "minitest2"
+	mappath = 'virgo_minitest-sector-2.dmm'
+
+	associated_map_datum = /datum/map_z_level/minitest/station/two
+
+/datum/map_z_level/minitest/station/two
+	z = 2
+	name = "Level 2"
+
+/datum/map_template/station_map/minitest3
+	name = "minitest3"
+	mappath = 'virgo_minitest-sector-3.dmm'
+
+	associated_map_datum = /datum/map_z_level/stellar_delight/deck_two
+
+/datum/map_z_level/minitest/station/three
+	z = 3
+	name = "Level 3"
+	//RS ADD END

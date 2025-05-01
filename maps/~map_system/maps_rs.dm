@@ -1,7 +1,8 @@
 //RS FILE
 var/global/list/possible_station_maps = list(
 	"Stellar Delight" = /datum/map/stellar_delight,
-	"Rascal's Pass" = /datum/map/groundbase
+	"Rascal's Pass" = /datum/map/groundbase,
+	"TEST MAP" = /datum/map/virgo_minitest
 )
 
 /client/proc/map_swap()

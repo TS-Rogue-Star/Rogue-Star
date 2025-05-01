@@ -28,3 +28,7 @@
 #include "groundbase/groundbase_things.dm"
 #include "groundbase/groundbase_poi_stuff.dm"
 #include "groundbase/groundbase_wilds.dm"
+//Minitest STUFF
+#include "virgo_minitest/virgo_minitest_defines.dm"
+#include "virgo_minitest/virgo_minitest_shuttles.dm"
+#include "virgo_minitest/virgo_minitest_sectors.dm"
