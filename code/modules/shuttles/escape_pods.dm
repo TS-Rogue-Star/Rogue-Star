@@ -3,6 +3,12 @@
 	category = /datum/shuttle/autodock/ferry/escape_pod
 
 /datum/shuttle/autodock/ferry/escape_pod/New()
+	if(map_specific)	//RS ADD START - Map swap related
+		if(using_map.name != map_specific)
+			qdel(src)
+			return
+						//RS ADD END
+
 	move_time = move_time + rand(-30, 60)
 	if(name in emergency_shuttle.escape_pods)
 		CRASH("An escape pod with the name '[name]' has already been defined.")
