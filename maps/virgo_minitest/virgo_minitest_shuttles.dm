@@ -43,6 +43,7 @@
 	docking_controller_tag = "ferrydemo_shuttle"
 	landmark_station = "nav_station_docking1"
 	landmark_offsite = "nav_ferrydemo_space"
+	map_specific = "Virgo_minitest"	//RS ADD
 
 /area/shuttle/ferrydemo
 	name = "Ferry-Demo Suttle"
@@ -76,6 +77,7 @@
 	current_location = "nav_multidemo_start"
 	destination_tags = list("nav_station_docking2", "nav_shared_space", "nav_station_docking1", "nav_multidemo_nearby")
 	can_cloak = TRUE
+	map_specific = "Virgo_minitest"	//RS ADD
 
 /area/shuttle/multidemo
 	name = "Multi-Demo Suttle"
@@ -115,16 +117,17 @@
 	current_location = "nav_station_inside"
 	docking_controller_tag = "webdemo_docker"
 	web_master_type = /datum/shuttle_web_master/webdemo
+	map_specific = "Virgo_minitest"	//RS ADD
 
 /datum/shuttle_web_master/webdemo
 	destination_class = /datum/shuttle_destination/webdemo
 	starting_destination = /datum/shuttle_destination/webdemo/inside_bridge
 
-//
-//   inside_bridge--\
-//                   |---nearby_bridge---faraway
-//   docked_bridge--/
-//
+/*	//RS EDIT
+   inside_bridge--\
+                   |---nearby_bridge---faraway
+   docked_bridge--/
+*/	//RS EDIT
 
 /datum/shuttle_destination/webdemo/inside_bridge
 	name = "inside the Bridge"

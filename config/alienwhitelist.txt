@@ -117,6 +117,7 @@ jademanique - Protean
 jademanique - Shadekin
 jademanique - Teppi
 jademanique - Xenochimera
+joezill - Shadekin
 joltze - Black-Eyed Shadekin
 joltze - Shadekin
 karamell - Xenochimera
@@ -281,6 +282,7 @@ verysoft - Teppi
 vitoras - Protean
 voidalynx - Black-Eyed Shadekin
 voidalynx - Protean
+voidastra - Promethean Biolinguistics
 voidastra - Shadekin
 wickedtemp - Shadekin Empathy
 whooshboom - Black-Eyed Shadekin

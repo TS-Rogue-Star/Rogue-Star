@@ -31,6 +31,7 @@
 	current_location = "nav_station_docking2"
 	docking_controller_tag = "overmapdemo_docker"
 	fuel_consumption = 0 // Override to infinate fuel for now.
+	map_specific = "Virgo_minitest"	//RS ADD
 
 /area/shuttle/overmapdemo
 	name = "Overmap-Demo Suttle"
