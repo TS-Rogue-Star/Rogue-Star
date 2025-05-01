@@ -120,11 +120,11 @@
 	destination_class = /datum/shuttle_destination/webdemo
 	starting_destination = /datum/shuttle_destination/webdemo/inside_bridge
 
-//
-//   inside_bridge--\
-//                   |---nearby_bridge---faraway
-//   docked_bridge--/
-//
+/*	//RS EDIT
+   inside_bridge--\
+                   |---nearby_bridge---faraway
+   docked_bridge--/
+*/	//RS EDIT
 
 /datum/shuttle_destination/webdemo/inside_bridge
 	name = "inside the Bridge"
