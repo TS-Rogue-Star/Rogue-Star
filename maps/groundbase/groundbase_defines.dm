@@ -326,7 +326,7 @@
 	icon_state = "space5"
 	use_stars = FALSE
 
-/datum/planet/virgo3c/New()	//RS EDIT
+/datum/planet/virgo3c/New()	//RS EDIT START
 	expected_z_levels = list(
 		Z_LEVEL_GB_BOTTOM,
 		Z_LEVEL_GB_MIDDLE,
@@ -336,7 +336,7 @@
 		Z_LEVEL_GB_WILD_E,
 		Z_LEVEL_GB_WILD_W
 		)
-	. = ..()
+	. = ..()	//RS EDIT END
 
 /obj/effect/landmark/map_data/groundbase
 	height = 3

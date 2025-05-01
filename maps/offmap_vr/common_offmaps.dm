@@ -89,7 +89,7 @@
 
 /datum/map_z_level/common_lateload/away_aerostat_surface/New(datum/map/map, mapZ)	//RS ADD START - Map swap related
 	z = using_map.z_list["z_aerostat_surface"]
-	. = ..()	//RS ADD START
+	. = ..()	//RS ADD END
 
 #include "../expedition_vr/space/_debrisfield.dm"
 #include "../expedition_vr/space/_fueldepot.dm"
@@ -104,14 +104,14 @@
 /datum/map_template/common_lateload/away_debrisfield/on_map_loaded(z)
 	. = ..()
 	//Commented out until we actually get POIs
-	seed_submaps(list(using_map.z_list["z_debrisfield"]), 400, /area/space, /datum/map_template/debrisfield)
+	seed_submaps(list(using_map.z_list["z_debrisfield"]), 400, /area/space, /datum/map_template/debrisfield)	//RS EDIT
 
 /datum/map_z_level/common_lateload/away_debrisfield
 	name = "Away Mission - Debris Field"
 
-/datum/map_z_level/common_lateload/away_debrisfield/New(datum/map/map, mapZ)
+/datum/map_z_level/common_lateload/away_debrisfield/New(datum/map/map, mapZ)	//RS ADD START - Map swap related
 	z = using_map.z_list["z_debrisfield"]
-	. = ..()
+	. = ..()	//RS ADD END
 
 /datum/map_template/common_lateload/away_fueldepot
 	name = "Fuel Depot - Z1 Space"
@@ -146,8 +146,8 @@
 /datum/map_template/common_lateload/away_snowbase/on_map_loaded(z)
 	. = ..()
 	// Now for the tunnels.
-	new /datum/random_map/automata/cave_system/no_cracks(null, 3, 3, using_map.z_list["z_snowbase"], world.maxx - 4, world.maxy - 4)
-	new /datum/random_map/noise/ore/snowbasemine(null, 1, 1, using_map.z_list["z_snowbase"], 64, 64)
+	new /datum/random_map/automata/cave_system/no_cracks(null, 3, 3, using_map.z_list["z_snowbase"], world.maxx - 4, world.maxy - 4)	//RS EDIT
+	new /datum/random_map/noise/ore/snowbasemine(null, 1, 1, using_map.z_list["z_snowbase"], 64, 64)	//RS EDIT
 
 //The glacier, which is mostly POIs and mining
 /datum/map_template/common_lateload/away_snowbase_glacier
