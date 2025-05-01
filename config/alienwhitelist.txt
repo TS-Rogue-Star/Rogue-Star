@@ -282,6 +282,7 @@ verysoft - Teppi
 vitoras - Protean
 voidalynx - Black-Eyed Shadekin
 voidalynx - Protean
+voidastra - Promethean Biolinguistics
 voidastra - Shadekin
 wickedtemp - Shadekin Empathy
 whooshboom - Black-Eyed Shadekin
