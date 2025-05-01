@@ -28,16 +28,13 @@
 #define NETWORK_HALLS "Halls"
 *///RS REMOVE END
 /datum/map/groundbase/New()
-	if(global.using_map != src)
+	if(global.using_map != src)	//RS EDIT START - Map swap related
 		return ..()
 	overmap_z = z_list["z_misc"]
 	ai_shell_allowed_levels += z_list["z_misc"]
 	ai_shell_allowed_levels += z_list["z_beach"]
 	ai_shell_allowed_levels += z_list["z_aerostat"]
-
-	for(var/thing in z_list)
-		log_and_message_admins("Map new Z list: [thing] = [z_list[thing]] <")
-
+	//RS ADD END
 	..()
 	var/choice = pickweight(list(
 		"rs_lobby" = 50,
@@ -59,7 +56,7 @@
 	zlevel_datum_type = /datum/map_z_level/groundbase
 
 	lobby_icon = 'icons/misc/title_rs.dmi'
-	lobby_screens = list("rs_lobby")
+	lobby_screens = list("rs_lobby")	//RS EDIT
 	id_hud_icons = 'icons/mob/hud_jobs_vr.dmi'
 
 
@@ -201,9 +198,11 @@
 	unit_test_z_levels = list(
 		Z_LEVEL_GB_BOTTOM,
 		Z_LEVEL_GB_MIDDLE,
-		Z_LEVEL_GB_TOP
+		Z_LEVEL_GB_TOP,
+		Z_LEVEL_GB_ENGINESAT	//RS ADD
 	)
 
+	//RS ADD START
 	z_list = list(
 	"z_centcom" = 9,
 	"z_misc" = 10,
@@ -229,6 +228,7 @@
 		list("Eastern Wilds 1","Eastern Wilds 2"),
 		list("Western Wilds 1","Western Wilds 1")
 	)
+	//RS ADD END
 
 	lateload_z_levels = list(
 		list("Groundbase - Central Command"),
@@ -298,7 +298,8 @@
 	ai_shell_allowed_levels = list(
 		Z_LEVEL_GB_BOTTOM,
 		Z_LEVEL_GB_MIDDLE,
-		Z_LEVEL_GB_TOP
+		Z_LEVEL_GB_TOP,
+		Z_LEVEL_GB_ENGINESAT	//RS ADD
 		)
 
 	planet_datums_to_make = list(
@@ -312,7 +313,7 @@
 	. +=  "[full_name] is a recently established base on one of Virgo 3's moons."
 	return jointext(., "<br>")
 
-/*
+/*	//RS REMOVE START
 /datum/map/groundbase/perform_map_generation()	//Z_LEVEL_GB_BOTTOM,Z_LEVEL_GB_MIDDLE,Z_LEVEL_GB_TOP
 
 	seed_submaps(list(Z_LEVEL_GB_BOTTOM,Z_LEVEL_GB_MIDDLE,Z_LEVEL_GB_TOP), 100, /area/groundbase/unexplored/outdoors, /datum/map_template/groundbase/outdoor)	//Outdoor POIs
@@ -320,12 +321,12 @@
 	new /datum/random_map/automata/cave_system/no_cracks(null, 1, 1, Z_LEVEL_MINING, world.maxx, world.maxy) // Create the mining Z-level.
 	new /datum/random_map/noise/ore(null, 1, 1, Z_LEVEL_MINING, 64, 64)         // Create the mining ore distribution map.
 	return 1
-*/
+*/	//RS REMOVE END
 /datum/skybox_settings/groundbase
 	icon_state = "space5"
 	use_stars = FALSE
 
-/datum/planet/virgo3c/New()
+/datum/planet/virgo3c/New()	//RS EDIT
 	expected_z_levels = list(
 		Z_LEVEL_GB_BOTTOM,
 		Z_LEVEL_GB_MIDDLE,
@@ -430,6 +431,7 @@
 
 	new associated_map_datum(using_map, z)
 
+//RS ADD START
 /datum/map_template/station_map/gb1
 	name = "GB1"
 	mappath = 'maps/groundbase/rp-z1.dmm'
@@ -458,6 +460,7 @@
 
 	seed_submaps(list(Z_LEVEL_GB_BOTTOM,Z_LEVEL_GB_MIDDLE,Z_LEVEL_GB_TOP), 100, /area/groundbase/unexplored/outdoors, /datum/map_template/groundbase/outdoor)	//Outdoor POIs
 	seed_submaps(list(Z_LEVEL_GB_BOTTOM,Z_LEVEL_GB_MIDDLE), 200, /area/groundbase/unexplored/rock, /datum/map_template/groundbase/maintcaves)	//Cave POIs
+//RS ADD END
 
 /*
 /datum/map_template/gb_lateload/gb_enginesat
@@ -480,9 +483,9 @@
 	flags = MAP_LEVEL_ADMIN|MAP_LEVEL_SEALED|MAP_LEVEL_CONTACT|MAP_LEVEL_XENOARCH_EXEMPT
 	base_turf = /turf/simulated/floor/outdoors/rocks
 
-/datum/map_z_level/gb_lateload/gb_centcom/New(datum/map/map)
+/datum/map_z_level/gb_lateload/gb_centcom/New(datum/map/map)	//RS ADD START - Map swap related
 	z = using_map.z_list["z_centcom"]
-	. = ..()
+	. = ..()	//RS ADD END
 
 /area/centcom //Just to try to make sure there's not space!!!
 	base_turf = /turf/simulated/floor/outdoors/rocks
@@ -499,10 +502,9 @@
 	name = "Misc"
 	flags = MAP_LEVEL_ADMIN|MAP_LEVEL_SEALED|MAP_LEVEL_CONTACT|MAP_LEVEL_XENOARCH_EXEMPT
 
-/datum/map_z_level/gb_lateload/misc/New(datum/map/map)
+/datum/map_z_level/gb_lateload/misc/New(datum/map/map)	//RS ADD START - Map swap related
 	z = using_map.z_list["z_misc"]
-	. = ..()
-
+	. = ..()	//RS ADD END
 
 #include "groundbase_mining.dm"
 /datum/map_template/gb_lateload/mining

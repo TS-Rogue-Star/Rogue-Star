@@ -25,7 +25,7 @@
 	docking_controller_tag = "port_escape_pod"
 	move_time = SHUTTLE_TRANSIT_DURATION_RETURN
 	move_direction = EAST
-	map_specific = "StellarDelight"
+	map_specific = "StellarDelight"	//RS ADD
 
 /datum/shuttle/autodock/ferry/escape_pod/starboardescape
 	name = "Starboard Escape Pod"
@@ -38,8 +38,7 @@
 	docking_controller_tag = "starboard_escape_pod"
 	move_time = SHUTTLE_TRANSIT_DURATION_RETURN
 	move_direction = WEST
-	map_specific = "StellarDelight"
-
+	map_specific = "StellarDelight"	//RS ADD
 
 //////////////////////////////////////////////////////////////
 // Supply shuttle
@@ -58,7 +57,7 @@
 // The shuttle's 'shuttle' computer
 /obj/machinery/computer/shuttle_control/explore/stellardelight/exploration
 	name = "boat control console"
-	shuttle_tag = "SD Exploration Shuttle"
+	shuttle_tag = "SD Exploration Shuttle"	//RS ADD
 	req_one_access = null
 	ai_control = TRUE
 
@@ -73,14 +72,14 @@
 
 // The 'shuttle'
 /datum/shuttle/autodock/overmap/exboat
-	name = "SD Exploration Shuttle"
+	name = "SD Exploration Shuttle"	//RS ADD
 	current_location = "sd_explo"
 	docking_controller_tag = "explodocker"
 	shuttle_area = /area/stellardelight/deck1/exploshuttle
 	fuel_consumption = 0
 	defer_initialisation = TRUE
 	range = 1
-	map_specific = "StellarDelight"
+	map_specific = "StellarDelight"	//RS ADD
 
 /////MINING SHUTTLE
 // The shuttle's 'shuttle' computer
@@ -108,7 +107,7 @@
 	fuel_consumption = 0
 	defer_initialisation = TRUE
 	range = 1
-	map_specific = "StellarDelight"
+	map_specific = "StellarDelight"	//RS ADD
 
 /////STARSTUFF/////
 // The shuttle's 'shuttle' computer
@@ -141,7 +140,7 @@
 	shuttle_area = list(/area/shuttle/sdboat/fore,/area/shuttle/sdboat/aft)
 	fuel_consumption = 1
 	defer_initialisation = TRUE
-	map_specific = "StellarDelight"
+	map_specific = "StellarDelight"	//RS ADD
 
 /area/shuttle/sdboat/fore
 	icon = 'icons/turf/areas_vr.dmi'

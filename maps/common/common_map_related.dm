@@ -1,3 +1,5 @@
+//RS FILE - Common defines used by maps, relates to map swap!
+
 #define Z_LEVEL_GB_BOTTOM  					1
 #define Z_LEVEL_GB_MIDDLE  					2
 #define Z_LEVEL_GB_TOP     					3

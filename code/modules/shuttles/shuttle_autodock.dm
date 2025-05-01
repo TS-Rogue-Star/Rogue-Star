@@ -20,10 +20,10 @@
 	flags = SHUTTLE_FLAGS_PROCESS | SHUTTLE_FLAGS_ZERO_G
 
 /datum/shuttle/autodock/New(var/_name, var/obj/effect/shuttle_landmark/start_waypoint)
-	if(map_specific)
+	if(map_specific)	//RS ADD START - Map swap related
 		if(using_map.name != map_specific)
 			qdel(src)
-			return
+			return		//RS ADD END
 
 	..(_name, start_waypoint)
 

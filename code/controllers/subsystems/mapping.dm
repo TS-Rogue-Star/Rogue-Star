@@ -18,7 +18,6 @@ SUBSYSTEM_DEF(mapping)
 		return
 	world.max_z_changed() // This is to set up the player z-level list, maxz hasn't actually changed (probably)
 	maploader = new()
-//	do_map()
 	load_map_templates()
 
 	if(config.generate_map)
@@ -31,12 +30,11 @@ SUBSYSTEM_DEF(mapping)
 	// TODO - Other stuff related to maps and areas could be moved here too.  Look at /tg
 	// Lateload Code related to Expedition areas.
 	if(using_map) // VOREStation Edit: Re-enable this.
-		log_and_message_admins("We have a using map: [using_map], this is pre loadLateMaps")
 		loadLateMaps()
 		if(config.do_funny_names && using_map.sub.len)	//RS ADD
 			using_map.funny_name()						//RS ADD
-	else
-		log_and_message_admins(SPAN_WARNING("No using_map! We can't load any map!"))
+	else	//RS ADD
+		log_and_message_admins(SPAN_WARNING("No using_map! We can't load any map!"))	//RS ADD
 
 	..()
 
@@ -82,9 +80,8 @@ SUBSYSTEM_DEF(mapping)
 
 // VOREStation Edit Start: Enable This
 /datum/controller/subsystem/mapping/proc/loadLateMaps()
-	log_and_message_admins(SPAN_DANGER("Hello from loadLateMaps base, we have [using_map] to load maps from"))
-	var/list/station = using_map.station_z_levels
-	var/list/supplemental = using_map.supplemental_station_z_levels
+	var/list/station = using_map.station_z_levels		//RS ADD - It's the station levels lol
+	var/list/supplemental = using_map.supplemental_station_z_levels	//RS ADD - extra levels like RP's wilderness
 	var/list/deffo_load = using_map.lateload_z_levels
 	var/list/gateway_load = using_map.lateload_gateway	//RS EDIT - renamed for readability
 	var/list/om_extra_load = using_map.lateload_overmap	//RS EDIT - renamed for readability
@@ -126,6 +123,7 @@ SUBSYSTEM_DEF(mapping)
 
 		//RS ADD END
 
+	//RS ADD START
 	for(var/map in station)
 		var/datum/map_template/MT = map_templates[map]
 		if(!istype(MT))
@@ -135,9 +133,9 @@ SUBSYSTEM_DEF(mapping)
 		MT.load_new_z(centered = FALSE)
 		CHECK_TICK
 
-	if(LAZYLEN(supplemental)) //Just copied from gateway picking, this is so we can have a kind of OM map version of the same concept.	//RS EDIT
+	if(LAZYLEN(supplemental))
 		for(var/list/sup_list in supplemental)
-			var/map = pick(sup_list)	//RS EDIT
+			var/map = pick(sup_list)
 
 			if(!map) //No lateload maps at all
 				return
@@ -148,6 +146,7 @@ SUBSYSTEM_DEF(mapping)
 			else
 				admin_notice("Station Supplemental: [MT]", R_DEBUG)
 				MT.load_new_z(centered = FALSE)
+	//RS ADD END
 
 	for(var/list/maplist in deffo_load)
 		if(!islist(maplist))

@@ -65,7 +65,7 @@ jobs:
   unit_tests:
     strategy:
       matrix:
-        map: ['SD_MAP', 'RP_MAP']
+        map: ['SD_MAP', 'RP_MAP']   #RS EDIT
     # name: Integration Tests (${{ matrix.map }})
     name: Integration Tests
     # needs: ['file_tests', 'dreamchecker']
@@ -95,7 +95,7 @@ jobs:
           TEST_FILE: "code/_unit_tests.dm"
           MAP: ${{ matrix.map }}
           REPLACE: true
-          EXTRA_ARGS: "-D${{ matrix.map }}"
+          EXTRA_ARGS: "-D${{ matrix.map }}"   #RS EDIT
           RUN: "1"
       - name: Compile POIs
         run: |

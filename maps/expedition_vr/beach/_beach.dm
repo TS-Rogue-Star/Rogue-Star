@@ -18,10 +18,9 @@
 	skybox_pixel_x = 0
 	skybox_pixel_y = 0
 
-/obj/effect/overmap/visitable/sector/virgo4/New(loc, ...)
+/obj/effect/overmap/visitable/sector/virgo4/New(loc, ...)	//RS ADD START - Map Swap related
 	extra_z_levels = list(using_map.z_list["z_beach_cave"])
-	. = ..()
-
+	. = ..()	//RS ADD END
 
 //This is a special subtype of the thing that generates ores on a map
 //It will generate more rich ores because of the lower numbers than the normal one

@@ -1,3 +1,5 @@
+//RS FILE - Combines the event containers from the maps in a way we can control
+
 #define ASSIGNMENT_ANY "Any"
 #define ASSIGNMENT_AI "AI"
 #define ASSIGNMENT_CYBORG "Cyborg"

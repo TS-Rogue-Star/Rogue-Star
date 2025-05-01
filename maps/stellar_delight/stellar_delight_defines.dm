@@ -25,17 +25,13 @@
 #define NETWORK_HALLS "Halls"
 *///RS REMOVE END
 /datum/map/stellar_delight/New()
-	if(global.using_map != src)
+	if(global.using_map != src)	//RS ADD START - Map swap related
 		return ..()
 
 	ai_shell_allowed_levels += list(z_list["z_misc"])
 	ai_shell_allowed_levels += list(z_list["z_beach"])
 	ai_shell_allowed_levels += list(z_list["z_aerostat"])
-
-	log_and_message_admins("Hello I am on SD and should have set all the global.z_list, anyway I will try to print it out now!")
-	for(var/thing in z_list)
-		log_and_message_admins("Map new Z list: [thing] = [z_list[thing]] <")
-	log_and_message_admins("That's done!")
+		//RS ADD END
 	..()
 	var/choice = pickweight(list(
 		"rs_lobby" = 50,
@@ -58,7 +54,7 @@
 	zlevel_datum_type = /datum/map_z_level/stellar_delight
 
 	lobby_icon = 'icons/misc/title_rs.dmi'
-	lobby_screens = list("rs_lobby")
+	lobby_screens = list("rs_lobby")	//RS EDIT
 	id_hud_icons = 'icons/mob/hud_jobs_vr.dmi'
 
 
@@ -154,6 +150,7 @@
 		Z_LEVEL_SHIP_HIGH
 	)
 
+	//RS ADD START - Map swap related
 	z_list = list(
 	"z_centcom" = 5,
 	"z_misc" = 6,
@@ -171,14 +168,14 @@
 	"z_redgate" = 20
 	)
 
-	station_z_levels = list("SD0","SD1","SD2","SD3")
+	station_z_levels = list("SD0","SD1","SD2","SD3")	//RS ADD END
 
 	lateload_z_levels = list(
 		list("Ship - Central Command"),
 		list("Ship - Misc"), //Shuttle transit zones, holodeck templates, etc
 		list("V3b Asteroid Field"),
 		list("Desert Planet - Z1 Beach","Desert Planet - Z2 Cave"),
-		list("Remmi Science Aerostat - Z1 Aerostat","Remmi Aerostat - Z2 Surface"),
+		list("Remmi Science Aerostat - Z1 Aerostat","Remmi Aerostat - Z2 Surface"),	//RS EDIT
 		list("Debris Field - Z1 Space"),
 		list("Fuel Depot - Z1 Space"),
 		list("Overmap"),
@@ -222,7 +219,7 @@
 		Z_LEVEL_SHIP_MAINTENANCE,
 		Z_LEVEL_SHIP_LOW,
 		Z_LEVEL_SHIP_MID,
-		Z_LEVEL_SHIP_HIGH
+		Z_LEVEL_SHIP_HIGH	//RS ADD
 		)
 
 /*
@@ -246,13 +243,13 @@
 	. +=  "As an employee or contractor of NanoTrasen, operators of the Adephagia and one of the galaxy's largest corporations, you're probably just here to do a job."
 	return jointext(., "<br>")
 
-/*
+/*	//RS REMOVE START
 /datum/map/stellar_delight/perform_map_generation()
 
 	new /datum/random_map/automata/cave_system/no_cracks(null, 1, 1, Z_LEVEL_SPACE_ROCKS, world.maxx, world.maxy) // Create the mining Z-level.
 	new /datum/random_map/noise/ore(null, 1, 1, Z_LEVEL_SPACE_ROCKS, 64, 64)         // Create the mining ore distribution map.
 	return 1
-*/
+*/	//RS REMOVE END
 
 /datum/skybox_settings/stellar_delight
 	icon_state = "space5"
@@ -273,8 +270,8 @@
 	vessel_mass = 25000
 	vessel_size = SHIP_SIZE_LARGE
 	initial_generic_waypoints = list("starboard_shuttlepad","port_shuttlepad","sd-1-23-54","sd-1-67-15","sd-1-70-130","sd-1-115-85","sd-2-25-98","sd-2-117-98","sd-3-22-78","sd-3-36-33","sd-3-104-33","sd-3-120-78")
-	initial_restricted_waypoints = list("SD Exploration Shuttle" = list("sd_explo"), "Mining Shuttle" = list("sd_mining"))
-	levels_for_distress = list()
+	initial_restricted_waypoints = list("SD Exploration Shuttle" = list("sd_explo"), "Mining Shuttle" = list("sd_mining"))	//RS EDIT
+	levels_for_distress = list()	//RS EDIT
 	unowned_areas = list(/area/shuttle/sdboat)
 	known = TRUE
 	start_x = 2
@@ -287,13 +284,13 @@
 	skybox_pixel_x = 450
 	skybox_pixel_y = 200
 
-/obj/effect/overmap/visitable/ship/stellar_delight/New(loc, ...)
+/obj/effect/overmap/visitable/ship/stellar_delight/New(loc, ...)	//RS ADD START - Map swap related
 	levels_for_distress += list(using_map.z_list["z_offmap1"])
 	levels_for_distress += list(using_map.z_list["z_beach"])
 	levels_for_distress += list(using_map.z_list["z_aerostat"])
 	levels_for_distress += list(using_map.z_list["z_aerostat_surface"])
 	levels_for_distress += list(using_map.z_list["z_fueldepot"])
-	. = ..()
+	. = ..()	//RS ADD END
 
 /obj/effect/overmap/visitable/ship/stellar_delight/build_skybox_representation()
 	..()
@@ -355,7 +352,7 @@
 
 	new associated_map_datum(using_map, z)
 
-/datum/map_template/station_map/sd0
+/datum/map_template/station_map/sd0	//RS ADD START - Map swap related
 	name = "SD0"
 	mappath = 'maps/stellar_delight/stellar_delight0.dmm'
 
@@ -377,7 +374,7 @@
 	name = "SD3"
 	mappath = 'maps/stellar_delight/stellar_delight3.dmm'
 
-	associated_map_datum = /datum/map_z_level/stellar_delight/deck_three
+	associated_map_datum = /datum/map_z_level/stellar_delight/deck_three	//RS ADD END
 
 /datum/map_template/ship_lateload/ship_centcom
 	name = "Ship - Central Command"
@@ -391,9 +388,9 @@
 	flags = MAP_LEVEL_ADMIN|MAP_LEVEL_SEALED|MAP_LEVEL_CONTACT|MAP_LEVEL_XENOARCH_EXEMPT
 	base_turf = /turf/simulated/floor/outdoors/rocks
 
-/datum/map_z_level/ship_lateload/ship_centcom/New(datum/map/map)
+/datum/map_z_level/ship_lateload/ship_centcom/New(datum/map/map)	//RS ADD START - Map swap related
 	z = using_map.z_list["z_centcom"]
-	. = ..()
+	. = ..()	//RS ADD END
 
 /area/centcom //Just to try to make sure there's not space!!!
 	base_turf = /turf/simulated/floor/outdoors/rocks
@@ -409,9 +406,9 @@
 	name = "Misc"
 	flags = MAP_LEVEL_ADMIN|MAP_LEVEL_SEALED|MAP_LEVEL_CONTACT|MAP_LEVEL_XENOARCH_EXEMPT
 
-/datum/map_z_level/ship_lateload/misc/New(datum/map/map)
+/datum/map_z_level/ship_lateload/misc/New(datum/map/map)	//RS ADD START - Map swap related
 	z = using_map.z_list["z_misc"]
-	. = ..()
+	. = ..()	//RS ADD END
 
 #include "../submaps/space_rocks/space_rocks.dm"
 /datum/map_template/ship_lateload/space_rocks
@@ -446,8 +443,8 @@
 	flags = MAP_LEVEL_ADMIN|MAP_LEVEL_SEALED|MAP_LEVEL_CONTACT|MAP_LEVEL_XENOARCH_EXEMPT
 
 #include "../expedition_vr/aerostat/_aerostat_science_outpost.dm"
-/datum/map_template/common_lateload/away_aerostat/science
-	name = "Remmi Science Aerostat - Z1 Aerostat"
+/datum/map_template/common_lateload/away_aerostat/science	//RS EDIT
+	name = "Remmi Science Aerostat - Z1 Aerostat"	//RS EDIT
 	desc = "The Virgo 2 Aerostat away mission."
 	mappath = 'maps/expedition_vr/aerostat/aerostat_science_outpost.dmm'
 	associated_map_datum = /datum/map_z_level/common_lateload/away_aerostat

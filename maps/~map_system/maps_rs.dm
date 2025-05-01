@@ -1,3 +1,4 @@
+//RS FILE
 var/global/list/possible_station_maps = list(
 	"Stellar Delight" = /datum/map/stellar_delight,
 	"Rascal's Pass" = /datum/map/groundbase
@@ -18,12 +19,9 @@ var/global/list/possible_station_maps = list(
 			to_chat(src, SPAN_WARNING("Map swap failed for some reason."))
 
 /proc/map_swap_save(to_save)
-	/////////////////////////////////////////////////////////////
-	//>>>>>>>>>REMEMBER TO SANITIZE YOUR INPUT IDIOT<<<<<<<<<<<//
-	/////////////////////////////////////////////////////////////
-//	if(!istype(to_save, /datum/map))
-//		to_world("[to_save] is not the right type")
-//		return FALSE
+	if(!validate_map(to_save))	//Check your input before saving
+		log_and_message_admins("Attempted to save [to_save] to the map swap file. [to_save] is not located in possible_station_maps, and so will not be saved.")
+		return FALSE
 	if(fexists("data/map_selection.sav"))
 		fdel("data/map_selection.sav")
 
@@ -49,7 +47,9 @@ var/global/list/possible_station_maps = list(
 		F["selected_map"] >> ourmap
 		F["last_swap_date"] >> last_swap_date
 
-//		if(istype(ourmap,/datum/map))	//Sanitize whatever path we got from the save file
+		if(!validate_map(ourmap))	//Sanitize whatever path we got from the save file
+			log_debug("Attempted to load [ourmap] from map_selection.sav, but this type is not found in possible_station_maps. Setting ourmap to null.")
+			ourmap = null
 
 		if(ourmap)
 			log_debug(SPAN_DANGER("LOADED [ourmap] FROM FILE TO USE FOR MAP LOADING!"))
@@ -98,3 +98,11 @@ var/global/list/possible_station_maps = list(
 		else
 			log_debug("Auto map swap has triggered! Invalid input, defaulting to Stellar Delight!")
 			return /datum/map/stellar_delight
+
+/proc/validate_map(var/input)
+	var/valid = FALSE
+	for(var/thing in global.possible_station_maps)
+		if(input == global.possible_station_maps[thing])
+			valid = TRUE
+			break
+	return valid

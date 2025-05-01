@@ -37,12 +37,10 @@
 	// Future Thoughts: Baystation put "docking" stuff in a subtype, leaving base type pure and free of docking stuff. Is this best?
 
 /datum/shuttle/New(_name, var/obj/effect/shuttle_landmark/initial_location)
-	if(map_specific)
-		log_and_message_admins("Hello I am [name], I should only work on [map_specific]! We are presently on [using_map.name]")
+	if(map_specific)	//RS ADD START- Map Swap related
 		if(using_map.name != map_specific)
-			log_and_message_admins("[name] shouldn't be here, so now it is time to die")
 			qdel(src)
-			return
+			return		//RS ADD END
 
 	..()
 	if(_name)
@@ -89,9 +87,9 @@
 // This is called after all shuttles have been initialized by SSshuttles, but before sectors have been initialized.
 // Importantly for subtypes, all shuttles will have been initialized and mothershuttles hooked up by the time this is called.
 /datum/shuttle/proc/populate_shuttle_objects()
-	if(map_specific)
+	if(map_specific)	//RS ADD START
 		if(using_map.name != map_specific)
-			return
+			return		//RS ADD END
 
 	// Scan for shuttle consoles on them needing auto-config.
 	for(var/area/A in find_childfree_areas()) // Let sub-shuttles handle their areas, only do our own.

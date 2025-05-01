@@ -1,3 +1,4 @@
+//RS FILE
 #ifdef RP_MAP
 	#define DEFAULT_MAP /datum/map/groundbase
 #else
