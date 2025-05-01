@@ -140,9 +140,10 @@
 		new_player_panel_proc()
 
 	if(href_list["observe"])
-		if(!client.holder && ticker.current_state <= GAME_STATE_PLAYING)	//RS ADD - Prevent observing before the round is started.
-			to_chat(src, "<span class='danger'>The round has not started yet! Please wait until it has to observe!</span>")
-			return 1														//RS ADD END
+		if(!client.holder)	//RS ADD START
+			if(ticker.current_state <= GAME_STATE_PREGAME)	//Prevent observing before the round is started.
+				to_chat(src, "<span class='danger'>The round has not started yet! Please wait until it has to observe!</span>")
+				return 1														//RS ADD END
 		if(tgui_alert(src,"Are you sure you wish to observe? If you do, make sure to not use any knowledge gained from observing if you decide to join later.","Player Setup",list("Yes","No")) == "Yes")
 			if(!client)	return 1
 
