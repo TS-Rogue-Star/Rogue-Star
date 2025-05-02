@@ -17,7 +17,7 @@
 	temperature = TCMB
 
 //Air-y moonrock for inside
-/turf/simulated/mineral/floor
+/turf/simulated/mineral/floor/moonbase
 	color="#8da1bb"
 
 //Special turfs to suck up the air

@@ -243,27 +243,6 @@
 	},
 /turf/simulated/floor/tiled/milspec/sterile,
 /area/space)
-"bM" = (
-/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
-/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
-/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
-/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
-/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
-/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
-/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
-/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
-/obj/item/weapon/reagent_containers/food/condiment/spacespice,
-/obj/item/weapon/reagent_containers/food/condiment/spacespice,
-/obj/item/weapon/reagent_containers/food/condiment/carton/sugar,
-/obj/item/weapon/reagent_containers/food/condiment/carton/sugar,
-/obj/item/weapon/reagent_containers/food/condiment/small/saltshaker,
-/obj/item/weapon/reagent_containers/food/condiment/small/saltshaker,
-/obj/item/weapon/reagent_containers/food/condiment/small/peppermill,
-/obj/item/weapon/reagent_containers/food/condiment/small/peppermill,
-/obj/random/donkpocketbox,
-/obj/structure/closet/secure_closet/freezer/kitchen,
-/turf/simulated/floor/tiled,
-/area/space)
 "bR" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/pouch/eng_parts,
@@ -972,8 +951,16 @@
 /area/space)
 "hQ" = (
 /obj/structure/table/standard,
-/obj/item/weapon/material/knife/butch,
-/obj/item/weapon/material/kitchen/rollingpin,
+/obj/item/weapon/reagent_containers/glass/beaker{
+	pixel_x = 5
+	},
+/obj/item/weapon/reagent_containers/food/condiment/enzyme{
+	layer = 5
+	},
+/obj/item/weapon/reagent_containers/food/condiment/enzyme{
+	layer = 5
+	},
+/obj/item/weapon/reagent_containers/dropper,
 /turf/simulated/floor/tiled,
 /area/space)
 "hR" = (
@@ -1029,10 +1016,6 @@
 "ig" = (
 /obj/structure/flora/lily3,
 /turf/simulated/floor/water/indoors,
-/area/space)
-"io" = (
-/obj/machinery/appliance/mixer/cereal,
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/space)
 "ip" = (
 /obj/structure/table/woodentable,
@@ -1125,10 +1108,6 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled/milspec/sterile,
-/area/space)
-"jx" = (
-/obj/machinery/appliance/mixer/candy,
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/space)
 "jy" = (
 /obj/item/device/gps/engineering{
@@ -2070,7 +2049,14 @@
 /area/space)
 "qO" = (
 /obj/structure/table/standard,
-/obj/item/weapon/book/manual/cook_guide,
+/obj/item/weapon/storage/box/beakers{
+	name = "box of measuring cups";
+	pixel_y = 7;
+	starts_with = list(/obj/item/weapon/reagent_containers/glass/beaker/measuring_cup = 7)
+	},
+/obj/item/weapon/book/manual/cook_guide{
+	pixel_y = 6
+	},
 /turf/simulated/floor/tiled,
 /area/space)
 "qT" = (
@@ -4293,10 +4279,8 @@
 /area/space)
 "Hi" = (
 /obj/structure/table/standard,
-/obj/item/weapon/storage/box/beakers{
-	name = "box of measuring cups";
-	pixel_y = 7;
-	starts_with = list(/obj/item/weapon/reagent_containers/glass/beaker/measuring_cup = 7)
+/obj/machinery/reagentgrinder{
+	pixel_y = 10
 	},
 /turf/simulated/floor/tiled,
 /area/space)
@@ -6356,17 +6340,24 @@
 	},
 /area/space)
 "Xt" = (
-/obj/structure/table/standard,
-/obj/item/weapon/reagent_containers/glass/beaker{
-	pixel_x = 5
-	},
-/obj/item/weapon/reagent_containers/food/condiment/enzyme{
-	layer = 5
-	},
-/obj/item/weapon/reagent_containers/food/condiment/enzyme{
-	layer = 5
-	},
-/obj/item/weapon/reagent_containers/dropper,
+/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
+/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
+/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
+/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
+/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
+/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
+/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
+/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
+/obj/item/weapon/reagent_containers/food/condiment/spacespice,
+/obj/item/weapon/reagent_containers/food/condiment/spacespice,
+/obj/item/weapon/reagent_containers/food/condiment/carton/sugar,
+/obj/item/weapon/reagent_containers/food/condiment/carton/sugar,
+/obj/item/weapon/reagent_containers/food/condiment/small/saltshaker,
+/obj/item/weapon/reagent_containers/food/condiment/small/saltshaker,
+/obj/item/weapon/reagent_containers/food/condiment/small/peppermill,
+/obj/item/weapon/reagent_containers/food/condiment/small/peppermill,
+/obj/random/donkpocketbox,
+/obj/structure/closet/secure_closet/freezer/kitchen,
 /turf/simulated/floor/tiled,
 /area/space)
 "Xv" = (
@@ -6629,9 +6620,8 @@
 /area/space)
 "ZC" = (
 /obj/structure/table/standard,
-/obj/machinery/reagentgrinder{
-	pixel_y = 10
-	},
+/obj/item/weapon/material/knife/butch,
+/obj/item/weapon/material/kitchen/rollingpin,
 /turf/simulated/floor/tiled,
 /area/space)
 "ZH" = (
@@ -14227,8 +14217,8 @@ Su
 Su
 Su
 Su
-io
-jx
+Su
+Su
 Su
 Su
 Su
@@ -14656,7 +14646,7 @@ Ya
 Ya
 kc
 Ya
-bM
+wz
 wz
 wz
 wz
@@ -14940,7 +14930,7 @@ du
 du
 Gd
 Ya
-wz
+qy
 wz
 wz
 wz
@@ -15082,7 +15072,7 @@ kO
 kO
 Gd
 aN
-wz
+sj
 lg
 lX
 wz

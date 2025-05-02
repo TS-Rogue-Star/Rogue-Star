@@ -720,11 +720,10 @@
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/cockpit)
 "gY" = (
-/obj/effect/floor_decal/milspec/color/green/half{
+/obj/structure/bed/chair/backed_red{
 	dir = 4
 	},
-/obj/machinery/vending/wardrobe/hydrobe,
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/space)
 "ha" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -1861,12 +1860,8 @@
 /turf/simulated/floor/tiled/white,
 /area/space)
 "pD" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/open/vacuum{
-	outdoors = 1
-	},
+/obj/structure/bed/chair/backed_red,
+/turf/simulated/floor/glass/reinforced,
 /area/space)
 "pF" = (
 /obj/effect/floor_decal/fancy_shuttle{
@@ -3911,12 +3906,6 @@
 	fancy_shuttle_tag = "explo"
 	},
 /area/shuttle/excursion/cargo)
-"Fc" = (
-/obj/structure/bed/chair/backed_red{
-	dir = 4
-	},
-/turf/simulated/floor/tiled/eris/steel/brown_platform,
-/area/space)
 "Fd" = (
 /obj/structure/closet/secure_closet/medical3,
 /turf/simulated/floor/tiled/white,
@@ -15273,7 +15262,7 @@ QR
 SP
 SP
 SP
-gY
+SP
 tx
 kX
 IR
@@ -15406,7 +15395,7 @@ el
 el
 el
 el
-pD
+gl
 vp
 hq
 Ov
@@ -15553,7 +15542,7 @@ pX
 CY
 XI
 XI
-XI
+pD
 qb
 AX
 QX
@@ -15834,7 +15823,7 @@ el
 el
 el
 Bp
-CY
+gY
 XI
 XI
 XI
@@ -15976,7 +15965,7 @@ el
 el
 el
 Bp
-Fc
+qb
 XI
 PA
 Sh
@@ -16118,7 +16107,7 @@ el
 el
 el
 Bp
-qb
+Wi
 CY
 PS
 qb
@@ -22942,12 +22931,12 @@ Dw
 Dw
 Dw
 Dw
-uR
-uR
-uR
-uR
-uR
-uR
+si
+si
+si
+si
+si
+si
 Dw
 Dw
 dH
@@ -23084,12 +23073,12 @@ si
 si
 si
 si
-uR
-rr
-rr
-rr
-rr
-uR
+si
+si
+si
+si
+si
+si
 dH
 dH
 dX
@@ -23226,13 +23215,13 @@ si
 si
 si
 si
-uR
-rr
-rr
-rr
-rr
-Sq
-eK
+si
+si
+si
+si
+si
+si
+dH
 eK
 eK
 eK
@@ -23368,14 +23357,14 @@ si
 si
 si
 si
-uR
-rr
-rr
-rr
-rr
-uR
+si
+si
+si
+si
+si
+si
+dH
 eK
-UR
 UR
 UR
 UR
@@ -23510,13 +23499,13 @@ si
 si
 si
 si
-uR
-rr
-rr
-rr
-rr
-Sq
-eK
+si
+si
+si
+si
+si
+si
+dH
 eK
 eK
 eK
@@ -23652,12 +23641,12 @@ si
 si
 si
 si
-uR
-rr
-rr
-rr
-rr
-uR
+si
+si
+si
+si
+si
+si
 dH
 dH
 dX
@@ -23794,12 +23783,12 @@ si
 si
 si
 si
-uR
-uR
-uR
-uR
-uR
-uR
+si
+si
+si
+si
+si
+si
 si
 si
 dH

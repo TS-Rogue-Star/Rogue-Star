@@ -1,4 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"as" = (
+/mob/living/simple_mob/animal/goat{
+	name = "Ted"
+	},
+/turf/simulated/floor/tiled/freezer/cold,
+/area/space)
 "aB" = (
 /obj/machinery/atmospherics/binary/pump/on{
 	dir = 4;
@@ -12,6 +18,10 @@
 	dir = 9
 	},
 /turf/simulated/floor/tiled/monotile,
+/area/space)
+"cq" = (
+/obj/machinery/icecream_vat,
+/turf/simulated/floor/tiled/freezer/cold,
 /area/space)
 "cJ" = (
 /obj/machinery/atmospherics/pipe/tank/air{
@@ -64,6 +74,10 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/space)
+"eB" = (
+/obj/structure/closet/crate/freezer,
+/turf/simulated/floor/tiled/freezer/cold,
+/area/space)
 "eV" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 6
@@ -79,6 +93,10 @@
 	dir = 5
 	},
 /turf/simulated/floor/tiled/monotile,
+/area/space)
+"fY" = (
+/obj/structure/foodcart,
+/turf/simulated/floor/tiled/freezer/cold,
 /area/space)
 "gu" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
@@ -113,6 +131,20 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/space)
+"hO" = (
+/obj/structure/closet/gmcloset{
+	name = "formal wardrobe"
+	},
+/obj/item/glass_jar,
+/obj/item/device/retail_scanner/civilian,
+/obj/item/device/retail_scanner/civilian,
+/obj/item/device/destTagger{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/obj/item/weapon/packageWrap,
+/turf/simulated/floor/wood,
+/area/space)
 "is" = (
 /turf/simulated/floor/tiled/techfloor,
 /area/space)
@@ -128,10 +160,19 @@
 /turf/simulated/floor/tiled/monotile,
 /area/space)
 "jf" = (
-/obj/structure/railing{
-	dir = 1
+/obj/structure/closet/chefcloset,
+/obj/item/glass_jar,
+/obj/item/device/retail_scanner/civilian,
+/obj/item/weapon/soap/nanotrasen,
+/obj/item/device/destTagger{
+	pixel_x = 4;
+	pixel_y = 3
 	},
-/turf/simulated/floor/tiled/monotile,
+/obj/item/weapon/packageWrap,
+/obj/item/weapon/packageWrap,
+/obj/item/weapon/packageWrap,
+/obj/item/weapon/tool/wrench,
+/turf/simulated/floor/tiled,
 /area/space)
 "jn" = (
 /obj/machinery/atmospherics/pipe/manifold4w/visible/green,
@@ -226,6 +267,14 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/space)
+"qE" = (
+/obj/structure/reagent_dispensers/beerkeg,
+/turf/simulated/floor/wood,
+/area/space)
+"rh" = (
+/obj/machinery/appliance/mixer/candy,
+/turf/simulated/floor/tiled,
+/area/space)
 "rs" = (
 /obj/machinery/atmospherics/pipe/manifold4w/visible/black,
 /turf/simulated/floor/tiled/monotile,
@@ -267,6 +316,10 @@
 /obj/machinery/atmospherics/pipe/simple/visible/red,
 /turf/simulated/floor/tiled/techfloor,
 /area/space)
+"uh" = (
+/obj/structure/closet/secure_closet/freezer/meat,
+/turf/simulated/floor/tiled/freezer/cold,
+/area/space)
 "uy" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 9
@@ -294,6 +347,19 @@
 /obj/machinery/atmospherics/pipe/simple/visible/cyan,
 /turf/simulated/floor/tiled/monotile,
 /area/space)
+"wq" = (
+/obj/structure/bed/chair/sofa/corp/left,
+/turf/simulated/floor/wood,
+/area/space)
+"wI" = (
+/obj/structure/bed/chair/sofa/corp/right{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/space)
+"wK" = (
+/turf/simulated/floor/tiled/freezer/cold,
+/area/space)
 "xC" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/green{
 	dir = 4
@@ -307,6 +373,12 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/space)
+"xV" = (
+/obj/structure/bed/chair/sofa/corp/corner{
+	dir = 1
+	},
+/turf/simulated/floor/wood,
+/area/space)
 "ye" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 4
@@ -317,12 +389,13 @@
 /obj/machinery/atmospherics/binary/pump/on,
 /turf/simulated/floor/tiled/monotile,
 /area/space)
+"yD" = (
+/obj/structure/kitchenspike,
+/turf/simulated/floor/tiled/freezer/cold,
+/area/space)
 "zg" = (
-/obj/structure/railing{
-	dir = 1
-	},
-/obj/structure/stairs/spawner/east,
-/turf/simulated/floor/tiled/monotile,
+/obj/machinery/vending/wardrobe/hydrobe,
+/turf/simulated/floor/tiled,
 /area/space)
 "Ae" = (
 /obj/machinery/atmospherics/pipe/simple/visible/purple{
@@ -352,6 +425,11 @@
 	dir = 1
 	},
 /turf/simulated/floor/tiled/monotile,
+/area/space)
+"Cg" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/book/manual/bar_guide,
+/turf/simulated/floor/wood,
 /area/space)
 "Co" = (
 /obj/machinery/atmospherics/portables_connector{
@@ -388,6 +466,10 @@
 /obj/structure/railing/grey,
 /turf/simulated/floor/tiled/monotile,
 /area/space)
+"Ei" = (
+/obj/machinery/alarm/freezer,
+/turf/simulated/floor/tiled/freezer/cold,
+/area/space)
 "Eq" = (
 /obj/structure/dispenser,
 /turf/simulated/floor,
@@ -413,6 +495,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/visible/purple,
 /turf/simulated/floor/tiled/monotile,
+/area/space)
+"FX" = (
+/obj/structure/bed/chair/sofa/corp,
+/turf/simulated/floor/wood,
 /area/space)
 "Ge" = (
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
@@ -445,8 +531,25 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/space)
+"HQ" = (
+/obj/structure/stairs/spawner/west,
+/obj/structure/railing/grey,
+/obj/structure/railing/grey{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/space)
 "Ig" = (
 /turf/unsimulated/wall/planetary,
+/area/space)
+"IG" = (
+/obj/effect/floor_decal/steeldecal/steel_decals4{
+	dir = 4
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals4{
+	dir = 9
+	},
+/turf/simulated/floor/tiled/freezer/cold,
 /area/space)
 "IS" = (
 /obj/structure/stairs/spawner/north,
@@ -466,12 +569,25 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/space)
+"Js" = (
+/turf/simulated/floor/wood,
+/area/space)
 "JX" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/powered/pump/filled,
 /turf/simulated/floor,
+/area/space)
+"KR" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/gun/projectile/shotgun/doublebarrel,
+/obj/item/weapon/paper{
+	info = "This permit signifies that the Bartender is permitted to posess this firearm in the bar, and ONLY the bar. Failure to adhere to this permit will result in confiscation of the weapon and possibly arrest.";
+	name = "Shotgun permit"
+	},
+/obj/item/ammo_magazine/ammo_box/b12g/beanbag,
+/turf/simulated/floor/wood,
 /area/space)
 "Lm" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
@@ -575,6 +691,10 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/space)
+"RP" = (
+/obj/structure/closet/secure_closet/bar,
+/turf/simulated/floor/wood,
+/area/space)
 "RT" = (
 /obj/machinery/atmospherics/pipe/manifold4w/visible/black,
 /obj/machinery/meter,
@@ -671,6 +791,10 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/space)
+"Xb" = (
+/obj/machinery/gibber,
+/turf/simulated/floor/tiled/freezer/cold,
+/area/space)
 "Xh" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 4
@@ -686,18 +810,11 @@
 /turf/simulated/floor/tiled/monotile,
 /area/space)
 "Xl" = (
-/obj/structure/closet/chefcloset,
-/obj/item/glass_jar,
-/obj/item/device/retail_scanner/civilian,
-/obj/item/weapon/soap/nanotrasen,
-/obj/item/device/destTagger{
-	pixel_x = 4;
-	pixel_y = 3
-	},
-/obj/item/weapon/packageWrap,
-/obj/item/weapon/packageWrap,
-/obj/item/weapon/packageWrap,
-/obj/item/weapon/tool/wrench,
+/obj/machinery/vending/wardrobe/chefdrobe,
+/turf/simulated/floor/tiled,
+/area/space)
+"Xm" = (
+/obj/machinery/appliance/mixer/cereal,
 /turf/simulated/floor/tiled,
 /area/space)
 "Xt" = (
@@ -727,6 +844,10 @@
 	dir = 8
 	},
 /turf/simulated/floor/tiled/monotile,
+/area/space)
+"YC" = (
+/obj/structure/table/woodentable,
+/turf/simulated/floor/wood,
 /area/space)
 "YX" = (
 /obj/structure/railing/grey,
@@ -8600,10 +8721,10 @@ NC
 NC
 NC
 NC
-LD
-LD
-LD
-LD
+Es
+Es
+Es
+Es
 Es
 Es
 NC
@@ -8742,10 +8863,10 @@ NC
 Es
 Es
 Es
-LD
-LD
-LD
-Xl
+Es
+Es
+Es
+Es
 Es
 Es
 Es
@@ -8884,10 +9005,10 @@ Es
 Es
 Es
 Es
-LD
-LD
-LD
-LD
+NC
+Es
+Es
+Es
 Es
 Es
 Es
@@ -9024,16 +9145,16 @@ NC
 Es
 Es
 Es
-Es
-Es
 LD
 LD
+HQ
 LD
-LD
-Es
-Es
-Es
-Es
+Xm
+NC
+NC
+NC
+NC
+NC
 Es
 Es
 Es
@@ -9166,16 +9287,16 @@ Es
 Es
 Es
 Es
-Es
-Es
+jf
 LD
+oR
 LD
-LD
-LD
-Es
-Es
-Es
-Es
+rh
+NC
+uh
+wK
+fY
+NC
 Es
 Es
 Es
@@ -9308,16 +9429,16 @@ Es
 Es
 Es
 Es
-Es
-Es
+zg
 LD
 LD
 LD
 LD
-Es
-Es
-Es
-Es
+NC
+Ei
+wK
+cq
+NC
 Es
 Es
 Es
@@ -9450,16 +9571,16 @@ Es
 Es
 Es
 Es
-Es
-Es
-jf
-Es
-Es
-Es
-Es
-Es
-Es
-Es
+Xl
+LD
+LD
+LD
+LD
+eb
+IG
+as
+wK
+NC
 Es
 Es
 Es
@@ -9592,16 +9713,16 @@ Es
 Es
 Es
 Es
-Es
-Es
-zg
-Es
-Es
-Es
-Es
-Es
-Es
-Es
+LD
+LD
+LD
+LD
+LD
+NC
+Xb
+wK
+eB
+NC
 Es
 Es
 Es
@@ -9734,16 +9855,16 @@ Es
 Es
 Es
 Es
-Es
-Es
-Es
-Es
-Es
-Es
-Es
-Es
-Es
-Es
+LD
+LD
+LD
+LD
+LD
+NC
+yD
+wK
+yD
+NC
 Es
 Es
 Es
@@ -9876,16 +9997,16 @@ Es
 Es
 Es
 Es
-Es
-Es
-Es
-Es
-Es
-Es
-Es
-Es
-Es
-Es
+NC
+NC
+eb
+NC
+NC
+NC
+NC
+NC
+NC
+NC
 Es
 Es
 Es
@@ -10018,11 +10139,11 @@ Es
 Es
 Es
 Es
-Es
-Es
-Es
-Es
-Es
+xV
+wI
+Js
+Js
+RP
 Es
 Es
 Es
@@ -10160,11 +10281,11 @@ Es
 Es
 Es
 Es
-Es
-Es
-Es
-Es
-Es
+FX
+YC
+Js
+Js
+hO
 Es
 Es
 Es
@@ -10302,11 +10423,11 @@ Es
 Es
 Es
 Es
-Es
-Es
-Es
-Es
-Es
+wq
+Js
+Js
+Js
+qE
 Es
 Es
 Es
@@ -10444,11 +10565,11 @@ Es
 Es
 Es
 Es
-Es
-Es
-Es
-Es
-Es
+Js
+Js
+Js
+KR
+Cg
 Es
 Es
 Es
@@ -12581,7 +12702,7 @@ Es
 Es
 Es
 Es
-NC
+Es
 NC
 NC
 NC
@@ -12724,7 +12845,7 @@ NC
 NC
 NC
 NC
-Es
+NC
 Es
 Es
 Es
