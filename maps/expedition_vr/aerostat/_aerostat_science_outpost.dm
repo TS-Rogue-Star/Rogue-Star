@@ -1,6 +1,5 @@
 #include "../../submaps/pois_vr/aerostat/virgo2.dm"
 
-
 /obj/effect/overmap/visitable/sector/virgo2
 	name = "Virgo 2"
 	desc = "Includes the Remmi Aerostat and associated ground mining complexes."
@@ -10,8 +9,7 @@
 [b]Notice[/b]: Planetary environment not suitable for life. Landing may be hazardous."}
 	icon_state = "globe"
 	in_space = 0
-	initial_generic_waypoints = list("aerostat_n_w", "aerostat_n_n","aerostat_n_e","aerostat_s_w","aerostat_s_s","aerostat_s_e","aerostat_west","aerostat_east")
-	extra_z_levels = list(Z_LEVEL_AEROSTAT_SURFACE)
+	initial_generic_waypoints = list()	//RS EDIT
 	known = TRUE
 	icon_state = "chlorine"
 
@@ -27,13 +25,10 @@
 
 // -- Datums -- //
 
-/datum/shuttle/autodock/ferry/aerostat
-	name = "Aerostat Ferry"
-	shuttle_area = /area/shuttle/aerostat
-	docking_controller_tag = "aerostat_shuttle_airlock"
-	warmup_time = 10	//want some warmup time so people can cancel.
-	landmark_station = "aerostat_east"
-	landmark_offsite = "aerostat_surface"
+/datum/shuttle/autodock/ferry/aerostat/New(_name)	//RS ADD START - Map swap related
+	if(using_map.name == "StellarDelight")
+		docking_controller_tag = "aerostat_shuttle_airlock"
+	. = ..()	//RS ADD END
 
 /datum/random_map/noise/ore/virgo2
 	descriptor = "virgo 2 ore distribution map"
@@ -95,99 +90,7 @@
 	anchored = TRUE
 	density = FALSE
 
-// -- Turfs -- //
-
-//Atmosphere properties
-#define VIRGO2_ONE_ATMOSPHERE	312.1 //kPa
-#define VIRGO2_AVG_TEMP			612 //kelvin
-
-#define VIRGO2_PER_N2		0.10 //percent
-#define VIRGO2_PER_O2		0.03
-#define VIRGO2_PER_N2O		0.00 //Currently no capacity to 'start' a turf with this. See turf.dm
-#define VIRGO2_PER_CO2		0.87
-#define VIRGO2_PER_PHORON	0.00
-
-//Math only beyond this point
-#define VIRGO2_MOL_PER_TURF		(VIRGO2_ONE_ATMOSPHERE*CELL_VOLUME/(VIRGO2_AVG_TEMP*R_IDEAL_GAS_EQUATION))
-#define VIRGO2_MOL_N2			(VIRGO2_MOL_PER_TURF * VIRGO2_PER_N2)
-#define VIRGO2_MOL_O2			(VIRGO2_MOL_PER_TURF * VIRGO2_PER_O2)
-#define VIRGO2_MOL_N2O			(VIRGO2_MOL_PER_TURF * VIRGO2_PER_N2O)
-#define VIRGO2_MOL_CO2			(VIRGO2_MOL_PER_TURF * VIRGO2_PER_CO2)
-#define VIRGO2_MOL_PHORON		(VIRGO2_MOL_PER_TURF * VIRGO2_PER_PHORON)
-
-//Turfmakers
-#define VIRGO2_SET_ATMOS	nitrogen=VIRGO2_MOL_N2;oxygen=VIRGO2_MOL_O2;carbon_dioxide=VIRGO2_MOL_CO2;phoron=VIRGO2_MOL_PHORON;temperature=VIRGO2_AVG_TEMP
-#define VIRGO2_TURF_CREATE(x)	x/virgo2/nitrogen=VIRGO2_MOL_N2;x/virgo2/oxygen=VIRGO2_MOL_O2;x/virgo2/carbon_dioxide=VIRGO2_MOL_CO2;x/virgo2/phoron=VIRGO2_MOL_PHORON;x/virgo2/temperature=VIRGO2_AVG_TEMP;x/virgo2/color="#eacd7c"
-
-/turf/unsimulated/floor/sky/virgo2_sky
-	name = "virgo 2 atmosphere"
-	desc = "Be careful where you step!"
-	color = "#eacd7c"
-	VIRGO2_SET_ATMOS
-
-/turf/unsimulated/floor/sky/virgo2_sky/Initialize()
-	skyfall_levels = list(z+1)
-	. = ..()
-
-/turf/simulated/shuttle/wall/voidcraft/green/virgo2
-	VIRGO2_SET_ATMOS
-	color = "#eacd7c"
-
-/turf/simulated/shuttle/wall/voidcraft/green/virgo2/nocol
-	color = null
-
-VIRGO2_TURF_CREATE(/turf/unsimulated/wall/planetary)
-
-VIRGO2_TURF_CREATE(/turf/simulated/wall)
-VIRGO2_TURF_CREATE(/turf/simulated/floor/plating)
-VIRGO2_TURF_CREATE(/turf/simulated/floor/bluegrid)
-VIRGO2_TURF_CREATE(/turf/simulated/floor/tiled/techfloor)
-
-VIRGO2_TURF_CREATE(/turf/simulated/mineral)
-/////Copied from Virgo3b's ore generation, since there was concern about not being able to get the ore they need on V2
-/turf/simulated/mineral/virgo2/make_ore(var/rare_ore)
-	if(mineral)
-		return
-	var/mineral_name
-	if(rare_ore)
-		mineral_name = pickweight(list(
-			"marble" = 3,
-			"uranium" = 10,
-			"platinum" = 10,
-			"hematite" = 20,
-			"carbon" = 20,
-			"diamond" = 1,
-			"gold" = 8,
-			"silver" = 8,
-			"phoron" = 18,
-			"lead" = 2,
-			"verdantium" = 1))
-	else
-		mineral_name = pickweight(list(
-			"marble" = 2,
-			"uranium" = 5,
-			"platinum" = 5,
-			"hematite" = 35,
-			"carbon" = 35,
-			"gold" = 3,
-			"silver" = 3,
-			"phoron" = 25,
-			"lead" = 1))
-
-	if(mineral_name && (mineral_name in GLOB.ore_data))
-		mineral = GLOB.ore_data[mineral_name]
-		UpdateMineral()
-	update_icon()
-
-VIRGO2_TURF_CREATE(/turf/simulated/mineral/ignore_mapgen)
-VIRGO2_TURF_CREATE(/turf/simulated/mineral/floor)
-VIRGO2_TURF_CREATE(/turf/simulated/mineral/floor/ignore_mapgen)
-
 // -- Areas -- //
-
-// The aerostat shuttle
-/area/shuttle/aerostat
-	name = "\improper Aerostat Shuttle"
 
 //The aerostat itself
 /area/offmap/aerostat
@@ -210,46 +113,6 @@ VIRGO2_TURF_CREATE(/turf/simulated/mineral/floor/ignore_mapgen)
 	icon_state = "crew_quarters"
 	base_turf = /turf/simulated/floor/plating/virgo2
 	dynamic_lighting = FALSE
-
-/area/offmap/aerostat/surface
-	flags = RAD_SHIELDED
-	ambience = list('sound/ambience/ambimine.ogg', 'sound/ambience/song_game.ogg')
-	base_turf = /turf/simulated/mineral/floor/ignore_mapgen/virgo2
-
-/area/offmap/aerostat/surface/explored
-	name = "Away Mission - Aerostat Surface (E)"
-	icon_state = "explored"
-
-/area/offmap/aerostat/surface/unexplored
-	name = "Away Mission - Aerostat Surface (UE)"
-	icon_state = "unexplored"
-
-VIRGO2_TURF_CREATE(/turf/simulated/floor/hull)
-/area/offmap/aerostat/surface/outpost
-	requires_power = TRUE
-	dynamic_lighting = TRUE
-	ambience = list()
-
-/area/offmap/aerostat/surface/outpost/backroom
-	name = "V2 Outpost - Research Area"
-/area/offmap/aerostat/surface/outpost/hallway
-	name = "V2 Outpost - Hallway"
-/area/offmap/aerostat/surface/outpost/cafe
-	name = "V2 Outpost - Cafe"
-/area/offmap/aerostat/surface/outpost/park
-	name = "V2 Outpost - Park"
-/area/offmap/aerostat/surface/outpost/officerone
-	name = "V2 Outpost - Officer's Quarters 1"
-/area/offmap/aerostat/surface/outpost/officertwo
-	name = "V2 Outpost - Officer's Quarters 2"
-/area/offmap/aerostat/surface/outpost/barracks
-	name = "V2 Outpost - Barracks"
-/area/offmap/aerostat/surface/outpost/airlock
-	name = "V2 Outpost - Airlock"
-/area/offmap/aerostat/surface/outpost/powerroom
-	name = "V2 Outpost - Power Room"
-/area/offmap/aerostat/surface/outpost/guardpost
-	name = "V2 Outpost - Guard Post"
 
 /area/offmap/aerostat/inside
 	icon = 'icons/turf/areas_vr.dmi'
@@ -296,7 +159,6 @@ VIRGO2_TURF_CREATE(/turf/simulated/floor/hull)
 /area/offmap/aerostat/inside/south/b
 	name = "Miscellaneous Labs B"
 	icon_state = "blublasqu"
-
 
 /area/offmap/aerostat/inside/powercontrol
 	name = "Power Control"
@@ -357,9 +219,3 @@ VIRGO2_TURF_CREATE(/turf/simulated/floor/hull)
 	icon_state = "crew_quarters"
 	base_turf = /turf/unsimulated/floor/sky/virgo2_sky
 	dynamic_lighting = FALSE
-
-/area/offmap/aerostat/surface/shuttleconsole
-	name = "Away Mission - Aerostat Surface Console"
-	icon_state = "explored"
-	dynamic_lighting = FALSE
-	requires_power = FALSE

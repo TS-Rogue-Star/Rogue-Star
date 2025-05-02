@@ -9,8 +9,7 @@
 [b]Notice[/b]: Planetary environment not suitable for life. Landing may be hazardous."}
 	icon_state = "globe"
 	in_space = 0
-	initial_generic_waypoints = list("aerostat_west","aerostat_east","aerostat_south","aerostat_northwest","aerostat_northeast")
-	extra_z_levels = list(Z_LEVEL_AEROSTAT_SURFACE)
+	initial_generic_waypoints = list()	//RS EDIT
 	known = TRUE
 	icon_state = "chlorine"
 
@@ -18,6 +17,15 @@
 	skybox_icon_state = "v2"
 	skybox_pixel_x = 0
 	skybox_pixel_y = 0
+
+/obj/effect/overmap/visitable/sector/virgo2/New(loc, ...)	//RS ADD START - Map Swap related
+	extra_z_levels = list(using_map.z_list["z_aerostat_surface"])
+	if(using_map == "StellarDelight")
+		initial_generic_waypoints = list("aerostat_n_w", "aerostat_n_n","aerostat_n_e","aerostat_s_w","aerostat_s_s","aerostat_s_e","aerostat_west","aerostat_east")
+	else
+		initial_generic_waypoints = list("aerostat_west","aerostat_east","aerostat_south","aerostat_northwest","aerostat_northeast")
+	. = ..()
+	//RS ADD END
 
 // -- Datums -- //
 
@@ -27,6 +35,7 @@
 	warmup_time = 10	//want some warmup time so people can cancel.
 	landmark_station = "aerostat_east"
 	landmark_offsite = "aerostat_surface"
+	current_location = "aerostat_east"	//RS ADD
 
 /datum/random_map/noise/ore/virgo2
 	descriptor = "virgo 2 ore distribution map"
@@ -211,15 +220,49 @@ VIRGO2_TURF_CREATE(/turf/simulated/floor/bluegrid)
 VIRGO2_TURF_CREATE(/turf/simulated/floor/tiled/techfloor)
 
 VIRGO2_TURF_CREATE(/turf/simulated/mineral)
-/turf/simulated/mineral/virgo2/make_ore()
-	if(mineral)
-		return
+/turf/simulated/mineral/virgo2/make_ore(var/rare_ore)
+	if(using_map.name == "StellarDelight")	//RS EDIT START - Combine SD and other procs for map swap
+		if(mineral)
+			return
+		var/mineral_name
+		if(rare_ore)
+			mineral_name = pickweight(list(
+				"marble" = 3,
+				"uranium" = 10,
+				"platinum" = 10,
+				"hematite" = 20,
+				"carbon" = 20,
+				"diamond" = 1,
+				"gold" = 8,
+				"silver" = 8,
+				"phoron" = 18,
+				"lead" = 2,
+				"verdantium" = 1))
+		else
+			mineral_name = pickweight(list(
+				"marble" = 2,
+				"uranium" = 5,
+				"platinum" = 5,
+				"hematite" = 35,
+				"carbon" = 35,
+				"gold" = 3,
+				"silver" = 3,
+				"phoron" = 25,
+				"lead" = 1))
 
-	var/mineral_name = pickweight(list("marble" = 5, "uranium" = 5, "platinum" = 5, "hematite" = 5, "carbon" = 5, "diamond" = 5, "gold" = 5, "silver" = 5, "lead" = 5, "verdantium" = 5, "rutile" = 20))
+		if(mineral_name && (mineral_name in GLOB.ore_data))
+			mineral = GLOB.ore_data[mineral_name]
+			UpdateMineral()
 
-	if(mineral_name && (mineral_name in GLOB.ore_data))
-		mineral = GLOB.ore_data[mineral_name]
-		UpdateMineral()
+	else
+		if(mineral)
+			return
+
+		var/mineral_name = pickweight(list("marble" = 5, "uranium" = 5, "platinum" = 5, "hematite" = 5, "carbon" = 5, "diamond" = 5, "gold" = 5, "silver" = 5, "lead" = 5, "verdantium" = 5, "rutile" = 20))
+
+		if(mineral_name && (mineral_name in GLOB.ore_data))
+			mineral = GLOB.ore_data[mineral_name]
+			UpdateMineral()		//RS EDIT END
 	update_icon()
 
 VIRGO2_TURF_CREATE(/turf/simulated/mineral/ignore_mapgen)

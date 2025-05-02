@@ -1,21 +1,5 @@
-
-var/datum/map/using_map = new USING_MAP_DATUM
+var/datum/map/using_map// = new USING_MAP_DATUM	//RS EDIT - Map swap related
 var/list/all_maps = list()
-
-/hook/startup/proc/initialise_map_list()
-	for(var/type in subtypesof(/datum/map))
-		var/datum/map/M
-		if(type == using_map.type)
-			M = using_map
-			M.setup_map()
-		else
-			M = new type
-		if(!M.path)
-			log_debug("Map '[M]' does not have a defined path, not adding to map list!")
-		else
-			all_maps[M.path] = M
-	return 1
-
 
 /datum/map
 	var/name = "Unnamed Map"
@@ -49,6 +33,9 @@ var/list/all_maps = list()
 
 	//This list contains the z-level numbers which can be accessed via space travel and the percentile chances to get there.
 	var/list/accessible_z_levels = list()
+
+	var/list/station_z_levels = list()					//RS ADD - Levels the station lives on, used for map swap
+	var/list/supplemental_station_z_levels = list()		//RS ADD - Supplemental Zs that load after the station
 
 	//List of additional z-levels to load above the existing .dmm file z-levels using the maploader. Must be map template >>> NAMES <<<.
 	var/list/lateload_z_levels = list()
@@ -141,6 +128,8 @@ var/list/all_maps = list()
 
 	var/announcement_sound = 'sound/AI/preamble.ogg'	//RS ADD
 	var/announcement_length = 18
+
+	var/list/z_list = list()	//RS ADD - List of Zs by number
 
 /datum/map/New()
 	..()

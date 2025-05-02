@@ -50,6 +50,7 @@
 		"You hear an ominous click.")
 		icon_state = "compshotc" //RS EDIT: i think that it's still trying to reference a sprite that doesn't exist. my previous fix didn't work.
 		item_state = "cshotgun"
+
 		w_class = ITEMSIZE_LARGE
 		one_handed_penalty = 15 //Stock extended to steady it, even with just the one hand.
 		recoil = 1 //As above, stock and foregrip would help with the kick

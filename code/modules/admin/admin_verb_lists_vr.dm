@@ -179,7 +179,8 @@ var/list/admin_verbs_fun = list(
 	/client/proc/change_station_name,	//RS ADD
 	/client/proc/pick_next_random_map,	//RS ADD
 	/client/proc/activate_vore_game,	//RS ADD
-	/client/proc/summon					//RS ADD
+	/client/proc/summon,				//RS ADD
+	/client/proc/map_swap				//RS ADD
 
 	)
 
