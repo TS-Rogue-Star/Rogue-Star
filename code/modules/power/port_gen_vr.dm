@@ -438,6 +438,12 @@
 	default_power_gen = 500000 //Half power
 	nutrition_drain = 0.5	//for half cost - EQUIVALENT EXCHANGE >:O
 
+/obj/machinery/power/rtg/reg/dismantle()  //RS Add: Give it it's own dismantle so it can fix the location
+	. = ..()
+	var/obj/structure/frame/F = .
+	if(istype(F, /obj/structure/frame))
+		F.pixel_x = 0
+		F.pixel_y = 0
 
 // Big altevian version of pacman. has a lot of copypaste from regular kind, but less flexible.
 /obj/machinery/power/port_gen/large_altevian

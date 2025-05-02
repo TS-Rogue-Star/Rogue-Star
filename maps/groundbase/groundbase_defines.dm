@@ -1,4 +1,5 @@
 //Normal map defs
+/*//RS REMOVE START
 #define Z_LEVEL_GB_BOTTOM  					1
 #define Z_LEVEL_GB_MIDDLE  					2
 #define Z_LEVEL_GB_TOP     					3
@@ -25,8 +26,15 @@
 
 //Camera networks
 #define NETWORK_HALLS "Halls"
-
+*///RS REMOVE END
 /datum/map/groundbase/New()
+	if(global.using_map != src)	//RS EDIT START - Map swap related
+		return ..()
+	overmap_z = z_list["z_misc"]
+	ai_shell_allowed_levels += z_list["z_misc"]
+	ai_shell_allowed_levels += z_list["z_beach"]
+	ai_shell_allowed_levels += z_list["z_aerostat"]
+	//RS ADD END
 	..()
 	var/choice = pickweight(list(
 		"rs_lobby" = 50,
@@ -41,7 +49,6 @@
 	path = "groundbase"
 
 	use_overmap = TRUE
-	overmap_z = Z_LEVEL_MISC
 	overmap_size = 62
 	overmap_event_areas = 100
 	usable_email_tlds = list("virgo.nt")
@@ -49,7 +56,7 @@
 	zlevel_datum_type = /datum/map_z_level/groundbase
 
 	lobby_icon = 'icons/misc/title_rs.dmi'
-	lobby_screens = list("logo1")
+	lobby_screens = list("rs_lobby")	//RS EDIT
 	id_hud_icons = 'icons/mob/hud_jobs_vr.dmi'
 
 
@@ -191,8 +198,37 @@
 	unit_test_z_levels = list(
 		Z_LEVEL_GB_BOTTOM,
 		Z_LEVEL_GB_MIDDLE,
-		Z_LEVEL_GB_TOP
+		Z_LEVEL_GB_TOP,
+		Z_LEVEL_GB_ENGINESAT	//RS ADD
 	)
+
+	//RS ADD START
+	z_list = list(
+	"z_centcom" = 9,
+	"z_misc" = 10,
+	"z_beach" = 12,
+	"z_beach_cave" = 13,
+	"z_aerostat" = 14,
+	"z_aerostat_surface" = 15,
+	"z_debrisfield" = 16,
+	"z_fueldepot" = 17,
+	"z_offmap1" = 18,
+	"z_snowbase" = 19,
+	"z_glacier" = 20,
+	"z_gateway" = 21,
+	"z_om_adventure" = 22,
+	"z_redgate" = 23
+	)
+
+	station_z_levels = list("GB1","GB2","GB3","GB4")
+
+	supplemental_station_z_levels = list(
+		list("Northern Wilds 1","Northern Wilds 2","Northern Wilds 3"),
+		list("Southern Wilds 1","Southern Wilds 2","Southern Wilds 3"),
+		list("Eastern Wilds 1","Eastern Wilds 2"),
+		list("Western Wilds 1","Western Wilds 1")
+	)
+	//RS ADD END
 
 	lateload_z_levels = list(
 		list("Groundbase - Central Command"),
@@ -263,9 +299,7 @@
 		Z_LEVEL_GB_BOTTOM,
 		Z_LEVEL_GB_MIDDLE,
 		Z_LEVEL_GB_TOP,
-		Z_LEVEL_MISC,
-		Z_LEVEL_BEACH,
-		Z_LEVEL_AEROSTAT
+		Z_LEVEL_GB_ENGINESAT	//RS ADD
 		)
 
 	planet_datums_to_make = list(
@@ -279,6 +313,7 @@
 	. +=  "[full_name] is a recently established base on one of Virgo 3's moons."
 	return jointext(., "<br>")
 
+/*	//RS REMOVE START
 /datum/map/groundbase/perform_map_generation()	//Z_LEVEL_GB_BOTTOM,Z_LEVEL_GB_MIDDLE,Z_LEVEL_GB_TOP
 
 	seed_submaps(list(Z_LEVEL_GB_BOTTOM,Z_LEVEL_GB_MIDDLE,Z_LEVEL_GB_TOP), 100, /area/groundbase/unexplored/outdoors, /datum/map_template/groundbase/outdoor)	//Outdoor POIs
@@ -286,12 +321,12 @@
 	new /datum/random_map/automata/cave_system/no_cracks(null, 1, 1, Z_LEVEL_MINING, world.maxx, world.maxy) // Create the mining Z-level.
 	new /datum/random_map/noise/ore(null, 1, 1, Z_LEVEL_MINING, 64, 64)         // Create the mining ore distribution map.
 	return 1
-
+*/	//RS REMOVE END
 /datum/skybox_settings/groundbase
 	icon_state = "space5"
 	use_stars = FALSE
 
-/datum/planet/virgo3c
+/datum/planet/virgo3c/New()	//RS EDIT START
 	expected_z_levels = list(
 		Z_LEVEL_GB_BOTTOM,
 		Z_LEVEL_GB_MIDDLE,
@@ -301,45 +336,10 @@
 		Z_LEVEL_GB_WILD_E,
 		Z_LEVEL_GB_WILD_W
 		)
-/datum/planet/virgo3b
-	expected_z_levels = list(
-		Z_LEVEL_CENTCOM
-	)
-/datum/planet/virgo4
-	expected_z_levels = list(
-		Z_LEVEL_BEACH
-	)
-/datum/planet/snowbase
-	expected_z_levels = list(
-		Z_LEVEL_SNOWBASE,
-		Z_LEVEL_GLACIER
-	)
+	. = ..()	//RS EDIT END
 
 /obj/effect/landmark/map_data/groundbase
 	height = 3
-
-/obj/effect/overmap/visitable/sector/virgo3b
-	name = "Virgo 3B"
-	desc = "Full of phoron, and home to the NSB Adephagia."
-	scanner_desc = @{"[i]Registration[/i]: NSB Adephagia
-[i]Class[/i]: Installation
-[i]Transponder[/i]: Transmitting (CIV), NanoTrasen IFF
-[b]Notice[/b]: NanoTrasen Base, authorized personnel only"}
-	known = TRUE
-	in_space = TRUE
-
-	icon = 'icons/obj/overmap_vr.dmi'
-	icon_state = "virgo3b"
-
-	skybox_icon = 'icons/skybox/virgo3b.dmi'
-	skybox_icon_state = "small"
-	skybox_pixel_x = 0
-	skybox_pixel_y = 0
-
-	initial_generic_waypoints = list()
-	initial_restricted_waypoints = list()
-
-	extra_z_levels = list()
 
 /obj/effect/overmap/visitable/sector/virgo3c
 	name = "Virgo 3C"
@@ -377,12 +377,6 @@
 /obj/effect/overmap/visitable/sector/virgo3c/generate_skybox(zlevel)
 	var/static/image/smallone = image(icon = 'icons/skybox/skybox_rs.dmi', icon_state = "3c")
 	return smallone
-
-// For making the 6-in-1 holomap, we calculate some offsets
-#define SHIP_MAP_SIZE 140 // Width and height of compiled in tether z levels.
-#define SHIP_HOLOMAP_CENTER_GUTTER 40 // 40px central gutter between columns
-#define SHIP_HOLOMAP_MARGIN_X ((HOLOMAP_ICON_SIZE - (2*SHIP_MAP_SIZE) - SHIP_HOLOMAP_CENTER_GUTTER) / 2) // 80
-#define SHIP_HOLOMAP_MARGIN_Y ((HOLOMAP_ICON_SIZE - (2*SHIP_MAP_SIZE)) / 2) // 30
 
 // We have a bunch of stuff common to the station z levels
 /datum/map_z_level/groundbase
@@ -424,7 +418,6 @@
 
 /datum/map_template/gb_lateload
 	allow_duplicates = FALSE
-	var/associated_map_datum
 
 /////STATIC LATELOAD/////
 
@@ -437,6 +430,37 @@
 		return
 
 	new associated_map_datum(using_map, z)
+
+//RS ADD START
+/datum/map_template/station_map/gb1
+	name = "GB1"
+	mappath = 'maps/groundbase/rp-z1.dmm'
+
+	associated_map_datum = /datum/map_z_level/groundbase/level_one
+
+/datum/map_template/station_map/gb2
+	name = "GB2"
+	mappath = 'maps/groundbase/rp-z2.dmm'
+
+	associated_map_datum = /datum/map_z_level/groundbase/deck_two
+
+/datum/map_template/station_map/gb3
+	name = "GB3"
+	mappath = 'maps/groundbase/rp-z3.dmm'
+
+	associated_map_datum = /datum/map_z_level/groundbase/deck_three
+
+/datum/map_template/station_map/gb4
+	name = "GB4"
+	mappath = 'maps/groundbase/rp-z4.dmm'
+
+	associated_map_datum = /datum/map_z_level/groundbase/gb_enginesat
+
+/datum/map_template/station_map/gb3/on_map_loaded(z)
+
+	seed_submaps(list(Z_LEVEL_GB_BOTTOM,Z_LEVEL_GB_MIDDLE,Z_LEVEL_GB_TOP), 100, /area/groundbase/unexplored/outdoors, /datum/map_template/groundbase/outdoor)	//Outdoor POIs
+	seed_submaps(list(Z_LEVEL_GB_BOTTOM,Z_LEVEL_GB_MIDDLE), 200, /area/groundbase/unexplored/rock, /datum/map_template/groundbase/maintcaves)	//Cave POIs
+//RS ADD END
 
 /*
 /datum/map_template/gb_lateload/gb_enginesat
@@ -455,10 +479,13 @@
 	associated_map_datum = /datum/map_z_level/gb_lateload/gb_centcom
 
 /datum/map_z_level/gb_lateload/gb_centcom
-	z = Z_LEVEL_CENTCOM
 	name = "Centcom"
 	flags = MAP_LEVEL_ADMIN|MAP_LEVEL_SEALED|MAP_LEVEL_CONTACT|MAP_LEVEL_XENOARCH_EXEMPT
 	base_turf = /turf/simulated/floor/outdoors/rocks
+
+/datum/map_z_level/gb_lateload/gb_centcom/New(datum/map/map)	//RS ADD START - Map swap related
+	z = using_map.z_list["z_centcom"]
+	. = ..()	//RS ADD END
 
 /area/centcom //Just to try to make sure there's not space!!!
 	base_turf = /turf/simulated/floor/outdoors/rocks
@@ -471,9 +498,13 @@
 	associated_map_datum = /datum/map_z_level/gb_lateload/misc
 
 /datum/map_z_level/gb_lateload/misc
-	z = Z_LEVEL_MISC
+
 	name = "Misc"
 	flags = MAP_LEVEL_ADMIN|MAP_LEVEL_SEALED|MAP_LEVEL_CONTACT|MAP_LEVEL_XENOARCH_EXEMPT
+
+/datum/map_z_level/gb_lateload/misc/New(datum/map/map)	//RS ADD START - Map swap related
+	z = using_map.z_list["z_misc"]
+	. = ..()	//RS ADD END
 
 #include "groundbase_mining.dm"
 /datum/map_template/gb_lateload/mining
