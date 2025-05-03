@@ -32,7 +32,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Everything below here is kept while this is a WIP, delete it later or else //
 ////////////////////////////////////////////////////////////////////////////////
-
+/*
 /area/stellardelight
 	name = "Stellar Delight"
 	icon = 'icons/turf/areas_vr.dmi'
@@ -422,3 +422,4 @@
 	name = "Auxiliary Atmospherics"
 /area/rnd/stellardelight/office
 	name = "Research Office"
+*/
