@@ -1,4 +1,4 @@
-//Normal map defs
+/*//Normal map defs
 #define Z_LEVEL_MOONBASE_LOW				1
 #define Z_LEVEL_MOONBASE_MID				2
 #define Z_LEVEL_MOONBASE_HIGH				3
@@ -19,12 +19,15 @@
 #define Z_LEVEL_GLACIER						18
 #define Z_LEVEL_GATEWAY						19
 #define Z_LEVEL_OM_ADVENTURE				20
-#define Z_LEVEL_REDGATE						21
-
-//Camera networks
-#define NETWORK_HALLS "Halls"
+#define Z_LEVEL_REDGATE						21*/
 
 /datum/map/sirius_point/New()
+	if(global.using_map != src)	//Map swap related
+		return ..()
+
+	ai_shell_allowed_levels += list(z_list["z_misc"])
+	ai_shell_allowed_levels += list(z_list["z_beach"])
+	ai_shell_allowed_levels += list(z_list["z_aerostat"])
 	..()
 	var/choice = pickweight(list(
 		"rs_lobby" = 50,
@@ -143,6 +146,25 @@
 		Z_LEVEL_MOONBASE_HIGH
 	)
 
+//RS ADD START - Map swap related
+	z_list = list(
+	"z_centcom" = 7,
+	"z_misc" = 8,
+	"z_beach" = 9,
+	"z_beach_cave" = 10,
+	"z_aerostat" = 11,
+	"z_aerostat_surface" = 12,
+	"z_debrisfield" = 13,
+	"z_fueldepot" = 14,
+	"z_offmap1" = 15,
+	"z_snowbase" = 16,
+	"z_glacier" = 17,
+	"z_gateway" = 18,
+	"z_om_adventure" = 19,
+	"z_redgate" = 20
+	)
+
+	station_z_levels = list("SP0","SP1","SP2","SPE","SPW","SPM")	//RS ADD END
 	lateload_z_levels = list(
 		list("Moonbase - Central Command"),
 		list("Moonbase - Misc"), //Shuttle transit zones, holodeck templates, etc
@@ -193,10 +215,7 @@
 		Z_LEVEL_MOONBASE_HIGH,
 		Z_LEVEL_MOONBASE_EAST,
 		Z_LEVEL_MOONBASE_WEST,
-		Z_LEVEL_MOONBASE_MINING,
-		Z_LEVEL_MISC,
-		Z_LEVEL_BEACH,
-		Z_LEVEL_AEROSTAT
+		Z_LEVEL_MOONBASE_MINING
 		)
 
 /*
@@ -233,22 +252,10 @@
 	icon_state = "space5"
 	use_stars = FALSE
 
-/datum/planet/virgo3b
-	expected_z_levels = list(Z_LEVEL_CENTCOM)
-/datum/planet/virgo4
-	expected_z_levels = list(
-		Z_LEVEL_BEACH
-	)
-/datum/planet/snowbase
-	expected_z_levels = list(
-		Z_LEVEL_SNOWBASE,
-		Z_LEVEL_GLACIER
-	)
-
 /obj/effect/landmark/map_data/sirius_point
 	height = 3
 
-/obj/effect/overmap/visitable/sector/virgo3b
+/*/obj/effect/overmap/visitable/sector/virgo3b
 	name = "Virgo 3B"
 	desc = "Full of phoron, and home to the NSB Adephagia."
 	scanner_desc = @{"[i]Registration[/i]: NSB Adephagia
@@ -269,7 +276,7 @@
 	initial_generic_waypoints = list()
 	initial_restricted_waypoints = list()
 
-	extra_z_levels = list()
+	extra_z_levels = list()*/
 
 /obj/effect/overmap/visitable/sector/virgo3r
 	name = "Virgo 3R"
@@ -282,7 +289,7 @@
 	in_space = TRUE
 
 	icon = 'icons/obj/overmap.dmi'
-	icon_state = "lush"
+	icon_state = "barren"
 
 	skybox_icon = 'icons/skybox/skybox_rs.dmi'
 	skybox_icon_state = "3c"
@@ -292,18 +299,19 @@
 
 	initial_generic_waypoints = list()
 	initial_restricted_waypoints = list()
+	levels_for_distress = list()
+
 
 	extra_z_levels = list()
 
-/obj/effect/overmap/visitable/sector/virgo3c/generate_skybox(zlevel)
-	var/static/image/smallone = image(icon = 'icons/skybox/skybox_rs.dmi', icon_state = "3c")
-	return smallone
+/obj/effect/overmap/visitable/sector/virgo3r/New(loc, ...)	//RS ADD START - Map swap related
+	levels_for_distress += list(using_map.z_list["z_offmap1"])
+	levels_for_distress += list(using_map.z_list["z_beach"])
+	levels_for_distress += list(using_map.z_list["z_aerostat"])
+	levels_for_distress += list(using_map.z_list["z_aerostat_surface"])
+	levels_for_distress += list(using_map.z_list["z_fueldepot"])
+	. = ..()	//RS ADD END
 
-// For making the 6-in-1 holomap, we calculate some offsets - hi this might break? What does this do?
-#define MOONBASE_MAP_SIZE 140 // Width and height of compiled in tether z levels.
-#define MOONBASE_HOLOMAP_CENTER_GUTTER 40 // 40px central gutter between columns
-#define MOONBASE_HOLOMAP_MARGIN_X ((HOLOMAP_ICON_SIZE - (2*MOONBASE_MAP_SIZE) - MOONBASE_HOLOMAP_CENTER_GUTTER) / 2) // 80
-#define MOONBASE_HOLOMAP_MARGIN_Y ((HOLOMAP_ICON_SIZE - (2*MOONBASE_MAP_SIZE)) / 2) // 30
 
 // We have a bunch of stuff common to the station z levels
 /datum/map_z_level/sirius_point
@@ -316,52 +324,51 @@
 	name = "Sirius Point Underground"
 	base_turf = /turf/simulated/mineral/floor/vacuum/moonbase/outdoors
 	transit_chance = 0
-	holomap_offset_x = MOONBASE_HOLOMAP_MARGIN_X
-	holomap_offset_y = MOONBASE_HOLOMAP_MARGIN_Y
+	holomap_offset_x = SHIP_HOLOMAP_MARGIN_X
+	holomap_offset_y = SHIP_HOLOMAP_MARGIN_Y
 
 /datum/map_z_level/sirius_point/level_one
 	z = Z_LEVEL_MOONBASE_MID
 	name = "Sirius Point Level One"
 	base_turf = /turf/simulated/open
 	transit_chance = 0
-	holomap_offset_x = MOONBASE_HOLOMAP_MARGIN_X
-	holomap_offset_y = MOONBASE_HOLOMAP_MARGIN_Y
+	holomap_offset_x = SHIP_HOLOMAP_MARGIN_X
+	holomap_offset_y = SHIP_HOLOMAP_MARGIN_Y
 
 /datum/map_z_level/sirius_point/level_two
 	z = Z_LEVEL_MOONBASE_HIGH
 	name = "Sirius Point Level Two"
 	base_turf = /turf/simulated/open
 	transit_chance = 0
-	holomap_offset_x = MOONBASE_HOLOMAP_MARGIN_X
-	holomap_offset_y = MOONBASE_HOLOMAP_MARGIN_Y
+	holomap_offset_x = SHIP_HOLOMAP_MARGIN_X
+	holomap_offset_y = SHIP_HOLOMAP_MARGIN_Y
 
 /datum/map_z_level/sirius_point/east_crater
 	z = Z_LEVEL_MOONBASE_EAST
 	name = "Sirius Point East Crater"
 	base_turf = /turf/simulated/mineral/floor/vacuum/moonbase/outdoors
 	transit_chance = 0
-	holomap_offset_x = MOONBASE_HOLOMAP_MARGIN_X
-	holomap_offset_y = MOONBASE_HOLOMAP_MARGIN_Y
+	holomap_offset_x = SHIP_HOLOMAP_MARGIN_X
+	holomap_offset_y = SHIP_HOLOMAP_MARGIN_Y
 
 /datum/map_z_level/sirius_point/west_crater
 	z = Z_LEVEL_MOONBASE_WEST
 	name = "Sirius Point West Crater"
 	base_turf = /turf/simulated/mineral/floor/vacuum/moonbase/outdoors
 	transit_chance = 0
-	holomap_offset_x = MOONBASE_HOLOMAP_MARGIN_X
-	holomap_offset_y = MOONBASE_HOLOMAP_MARGIN_Y
+	holomap_offset_x = SHIP_HOLOMAP_MARGIN_X
+	holomap_offset_y = SHIP_HOLOMAP_MARGIN_Y
 
 /datum/map_z_level/sirius_point/mining
 	z = Z_LEVEL_MOONBASE_MINING
 	name = "Sirius Point Mining Depths"
 	base_turf = /turf/simulated/mineral/floor/vacuum/moonbase/outdoors
 	transit_chance = 0
-	holomap_offset_x = MOONBASE_HOLOMAP_MARGIN_X
-	holomap_offset_y = MOONBASE_HOLOMAP_MARGIN_Y
+	holomap_offset_x = SHIP_HOLOMAP_MARGIN_X
+	holomap_offset_y = SHIP_HOLOMAP_MARGIN_Y
 
 /datum/map_template/moonbase_lateload
 	allow_duplicates = FALSE
-	var/associated_map_datum
 
 /////STATIC LATELOAD/////
 
@@ -375,6 +382,42 @@
 
 	new associated_map_datum(using_map, z)
 
+/datum/map_template/station_map/sp0
+	name = "SP0"
+	mappath = 'maps/sirius_point/sirius_point1.dmm'
+
+	associated_map_datum = /datum/map_z_level/sirius_point/level_zero
+
+/datum/map_template/station_map/sp1
+	name = "SP1"
+	mappath = 'maps/sirius_point/sirius_point2.dmm'
+
+	associated_map_datum = /datum/map_z_level/sirius_point/level_one
+
+/datum/map_template/station_map/sp2
+	name = "SP2"
+	mappath = 'maps/sirius_point/sirius_point3.dmm'
+
+	associated_map_datum = /datum/map_z_level/sirius_point/level_two
+
+/datum/map_template/station_map/spe
+	name = "SPE"
+	mappath = 'maps/sirius_point/sirius_point_east.dmm'
+
+	associated_map_datum = /datum/map_z_level/sirius_point/east_crater
+
+/datum/map_template/station_map/spw
+	name = "SPW"
+	mappath = 'maps/sirius_point/sirius_point_west.dmm'
+
+	associated_map_datum = /datum/map_z_level/sirius_point/west_crater
+
+/datum/map_template/station_map/spm
+	name = "SPM"
+	mappath = 'maps/sirius_point/sirius_point_mining.dmm'
+
+	associated_map_datum = /datum/map_z_level/sirius_point/mining
+
 /datum/map_template/moonbase_lateload/moonbase_centcom
 	name = "Moonbase - Central Command"
 	desc = "Central Command lives here!"
@@ -383,7 +426,6 @@
 	associated_map_datum = /datum/map_z_level/moonbase_lateload/moonbase_centcom
 
 /datum/map_z_level/moonbase_lateload/moonbase_centcom
-	z = Z_LEVEL_CENTCOM
 	name = "Centcom"
 	flags = MAP_LEVEL_ADMIN|MAP_LEVEL_SEALED|MAP_LEVEL_CONTACT|MAP_LEVEL_XENOARCH_EXEMPT
 	base_turf = /turf/simulated/floor/outdoors/rocks
@@ -399,7 +441,6 @@
 	associated_map_datum = /datum/map_z_level/moonbase_lateload/misc
 
 /datum/map_z_level/moonbase_lateload/misc
-	z = Z_LEVEL_MISC
 	name = "Misc"
 	flags = MAP_LEVEL_ADMIN|MAP_LEVEL_SEALED|MAP_LEVEL_CONTACT|MAP_LEVEL_XENOARCH_EXEMPT
 

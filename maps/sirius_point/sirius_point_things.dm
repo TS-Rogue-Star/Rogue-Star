@@ -1,4 +1,4 @@
-/obj/machinery/camera/network/halls
+/*/obj/machinery/camera/network/halls
 	network = list(NETWORK_HALLS)
 
 /area/tether/surfacebase/tram
@@ -31,7 +31,7 @@
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
-
+*/
 
 // ### Wall Machines On Full Windows ###
 // To make sure wall-mounted machines placed on full-tile windows are clickable they must be above the window

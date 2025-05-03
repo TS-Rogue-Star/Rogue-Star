@@ -27,61 +27,34 @@
 	flags = SHUTTLE_FLAGS_PROCESS|SHUTTLE_FLAGS_SUPPLY
 	move_direction = WEST
 
-/////EXPLORATION SHUTTLE
-// The shuttle's 'shuttle' computer
-/obj/machinery/computer/shuttle_control/explore/stellardelight/exploration
-	name = "boat control console"
-	shuttle_tag = "Exploration Shuttle"
-	req_one_access = null
-	ai_control = TRUE
+////////////////////////////////////////
+//////// Excursion Shuttle /////////////
+////////////////////////////////////////
+// The 'shuttle' of the excursion shuttle
+/datum/shuttle/autodock/overmap/excursion
+	name = "Excursion Shuttle"
+	warmup_time = 0
+	current_location = "tether_excursion_hangar"
+	docking_controller_tag = "expshuttle_docker"
+	shuttle_area = list(/area/shuttle/excursion/cockpit, /area/shuttle/excursion/general, /area/shuttle/excursion/cargo, /area/shuttle/excursion/power)
+	fuel_consumption = 3
+	move_direction = NORTH
 
-// A shuttle lateloader landmark
-/obj/effect/shuttle_landmark/shuttle_initializer/exploration
-	name = "Exploration Shuttle Landing Pad"
-	base_area = /area/stellardelight/deck1/shuttlebay
-	base_turf = /turf/simulated/floor/reinforced
-	landmark_tag = "sd_explo"
-	docking_controller = "explodocker_bay"
-	shuttle_type = /datum/shuttle/autodock/overmap/exboat
+// The 'ship' of the excursion shuttle
+/obj/effect/overmap/visitable/ship/landable/excursion
+	name = "Excursion Shuttle"
+	desc = "The traditional Excursion Shuttle. NT Approved!"
+	icon_state = "htu_destroyer_g"
+	vessel_mass = 8000
+	vessel_size = SHIP_SIZE_SMALL
+	shuttle = "Excursion Shuttle"
 
-// The 'shuttle'
-/datum/shuttle/autodock/overmap/exboat
-	name = "Exploration Shuttle"
-	current_location = "sd_explo"
-	docking_controller_tag = "explodocker"
-	shuttle_area = /area/stellardelight/deck1/exploshuttle
-	fuel_consumption = 0
-	defer_initialisation = TRUE
-	range = 1
+/obj/machinery/computer/shuttle_control/explore/excursion
+	name = "short jump console"
+	shuttle_tag = "Excursion Shuttle"
+	req_one_access = list(access_pilot)
 
-/////MINING SHUTTLE
-// The shuttle's 'shuttle' computer
-/obj/machinery/computer/shuttle_control/explore/stellardelight/mining
-	name = "boat control console"
-	shuttle_tag = "Mining Shuttle"
-	req_one_access = null
-	ai_control = TRUE
-
-// A shuttle lateloader landmark
-/obj/effect/shuttle_landmark/shuttle_initializer/mining
-	name = "Mining Shuttle Landing Pad"
-	base_area = /area/stellardelight/deck1/shuttlebay
-	base_turf = /turf/simulated/floor/reinforced
-	landmark_tag = "sd_mining"
-	docking_controller = "miningdocker_bay"
-	shuttle_type = /datum/shuttle/autodock/overmap/mineboat
-
-// The 'shuttle'
-/datum/shuttle/autodock/overmap/mineboat
-	name = "Mining Shuttle"
-	current_location = "sd_mining"
-	docking_controller_tag = "miningdocker"
-	shuttle_area = /area/stellardelight/deck1/miningshuttle
-	fuel_consumption = 0
-	defer_initialisation = TRUE
-	range = 1
-
-/////STARSTUFF/////
+/////MOONSTUFF/////
 // The shuttle's 'shuttle' computer
 /obj/machinery/computer/shuttle_control/explore/sdboat
 	name = "Starstuff control console"
@@ -231,7 +204,6 @@
 	initial_restricted_waypoints = list("Central Command Shuttlepad" = list("cc_shuttlepad"))
 
 	//extra_z_levels = list(Z_LEVEL_SPACE_ROCKS)
-	var/mob_announce_cooldown = 0
 
 /*/////SD Starts at V3b to pick up crew refuel and repair (And to make sure it doesn't spawn on hazards)
 /obj/effect/overmap/visitable/sector/virgo3b/Initialize()
@@ -240,59 +212,6 @@
 		sd.forceMove(loc, SOUTH)
 		return*/
 
-//change this to announce for SP?
-/obj/effect/overmap/visitable/sector/virgo3b/Crossed(var/atom/movable/AM)
-	. = ..()
-	announce_atc(AM,going = FALSE)
-
-/obj/effect/overmap/visitable/sector/virgo3b/Uncrossed(var/atom/movable/AM)
-	. = ..()
-	announce_atc(AM,going = TRUE)
-
-/obj/effect/overmap/visitable/sector/virgo3b/proc/announce_atc(var/atom/movable/AM, var/going = FALSE)
-	if(istype(AM, /obj/effect/overmap/visitable/ship/simplemob))
-		if(world.time < mob_announce_cooldown)
-			return
-		else
-			mob_announce_cooldown = world.time + 5 MINUTES
-	var/message = "Sensor contact for vessel '[AM.name]' has [going ? "left" : "entered"] ATC control area."
-	//For landables, we need to see if their shuttle is cloaked
-	if(istype(AM, /obj/effect/overmap/visitable/ship/landable))
-		var/obj/effect/overmap/visitable/ship/landable/SL = AM //Phew
-		var/datum/shuttle/autodock/multi/shuttle = SSshuttles.shuttles[SL.shuttle]
-		if(!istype(shuttle) || !shuttle.cloaked) //Not a multishuttle (the only kind that can cloak) or not cloaked
-			atc.msg(message)
-
-	//For ships, it's safe to assume they're big enough to not be sneaky
-	else if(istype(AM, /obj/effect/overmap/visitable/ship))
-		atc.msg(message)
 
 ///obj/effect/overmap/visitable/sector/virgo3b/get_space_zlevels()
 //	return list(Z_LEVEL_SPACE_ROCKS)
-
-////////////////////////////////////////
-//////// Excursion Shuttle /////////////
-////////////////////////////////////////
-// The 'shuttle' of the excursion shuttle
-/datum/shuttle/autodock/overmap/excursion
-	name = "Excursion Shuttle"
-	warmup_time = 0
-	current_location = "tether_excursion_hangar"
-	docking_controller_tag = "expshuttle_docker"
-	shuttle_area = list(/area/shuttle/excursion/cockpit, /area/shuttle/excursion/general, /area/shuttle/excursion/cargo, /area/shuttle/excursion/power)
-	fuel_consumption = 3
-	move_direction = NORTH
-
-// The 'ship' of the excursion shuttle
-/obj/effect/overmap/visitable/ship/landable/excursion
-	name = "Excursion Shuttle"
-	desc = "The traditional Excursion Shuttle. NT Approved!"
-	icon_state = "htu_destroyer_g"
-	vessel_mass = 8000
-	vessel_size = SHIP_SIZE_SMALL
-	shuttle = "Excursion Shuttle"
-
-/obj/machinery/computer/shuttle_control/explore/excursion
-	name = "short jump console"
-	shuttle_tag = "Excursion Shuttle"
-	req_one_access = list(access_pilot)

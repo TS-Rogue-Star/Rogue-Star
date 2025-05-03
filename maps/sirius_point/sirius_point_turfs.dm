@@ -1,9 +1,10 @@
-// Moonbase turfs
+//Moonbase turfs
 //Airless moonrock
 /turf/simulated/mineral/moonbase
 	color="#7ab6b6"
 /turf/simulated/mineral/floor/vacuum/moonbase
 	color="#8da1bb"
+	edge_blending_priority = 4
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors
 	outdoors = 1
 /turf/simulated/floor/plating/external/outdoors
