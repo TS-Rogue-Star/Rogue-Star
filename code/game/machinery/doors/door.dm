@@ -63,20 +63,15 @@
 		layer = open_layer
 		explosion_resistance = 0
 
-
-	if(width > 1)
-		if(dir in list(EAST, WEST))
-			bound_width = width * world.icon_size
-			bound_height = world.icon_size
-		else
-			bound_width = world.icon_size
-			bound_height = width * world.icon_size
-
 	health = maxhealth
 	update_icon()
 
 	update_nearby_tiles(need_rebuild=1)
 	return
+
+/obj/machinery/door/Initialize()	//RS ADD START
+	. = ..()
+	SetBounds()						//RS ADD END
 
 /obj/machinery/door/Destroy()
 	density = FALSE
@@ -501,14 +496,19 @@
 /obj/machinery/door/Moved(atom/old_loc, direction, forced = FALSE)
 	. = ..()
 	if(width > 1)
-		if(dir in list(EAST, WEST))
-			bound_width = width * world.icon_size
-			bound_height = world.icon_size
-		else
-			bound_width = world.icon_size
-			bound_height = width * world.icon_size
+		SetBounds()	//RS EDIT
 
 	update_nearby_tiles()
 
 /obj/machinery/door/morgue
 	icon = 'icons/obj/doors/doormorgue.dmi'
+
+/obj/machinery/door/proc/SetBounds()	//RS ADD START
+	if(dir in list(EAST, WEST))
+		bound_width = width * world.icon_size
+		bound_height = world.icon_size
+	else
+		bound_width = world.icon_size
+		bound_height = width * world.icon_size
+
+	set_opacity(opacity)	//RS ADD END

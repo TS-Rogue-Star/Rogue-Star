@@ -9,7 +9,6 @@
 
 /obj/machinery/door/airlock/multi_tile/Initialize(mapload)
 	. = ..()
-	SetBounds()
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(SetBounds))
 	apply_opacity_to_my_turfs(opacity)
 
@@ -25,14 +24,6 @@
 /obj/machinery/door/airlock/multi_tile/Destroy()
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 	return ..()
-
-/obj/machinery/door/airlock/multi_tile/proc/SetBounds()
-	if(dir in list(EAST, WEST))
-		bound_width = width * world.icon_size
-		bound_height = world.icon_size
-	else
-		bound_width = world.icon_size
-		bound_height = width * world.icon_size
 
 /obj/machinery/door/airlock/multi_tile/glass
 	name = "Glass Airlock"
