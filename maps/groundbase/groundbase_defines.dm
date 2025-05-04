@@ -30,7 +30,6 @@
 /datum/map/groundbase/New()
 	if(global.using_map != src)	//RS EDIT START - Map swap related
 		return ..()
-	overmap_z = z_list["z_misc"]
 	ai_shell_allowed_levels += z_list["z_misc"]
 	ai_shell_allowed_levels += z_list["z_beach"]
 	ai_shell_allowed_levels += z_list["z_aerostat"]
@@ -217,7 +216,8 @@
 	"z_glacier" = 20,
 	"z_gateway" = 21,
 	"z_om_adventure" = 22,
-	"z_redgate" = 23
+	"z_redgate" = 23,
+	"overmap_z" = 10
 	)
 
 	station_z_levels = list("GB1","GB2","GB3","GB4")

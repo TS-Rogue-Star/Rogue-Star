@@ -60,7 +60,9 @@
 	register_z_levels() // This makes external calls to update global z level information.
 
 	if(!global.using_map.overmap_z)
-		build_overmap()
+		global.using_map.overmap_z = global.using_map.z_list["overmap_z"]	//RS ADD
+		if(!global.using_map.overmap_z)	//RS ADD
+			build_overmap()
 
 	start_x = start_x || rand(OVERMAP_EDGE, global.using_map.overmap_size - OVERMAP_EDGE)
 	start_y = start_y || rand(OVERMAP_EDGE, global.using_map.overmap_size - OVERMAP_EDGE)
