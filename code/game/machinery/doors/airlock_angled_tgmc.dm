@@ -81,7 +81,7 @@
 		T.set_opacity(new_opacity)
 	update_nearby_tiles()
 
-/obj/machinery/door/airlock/angled_tgmc/wide/proc/SetBounds()
+/obj/machinery/door/airlock/angled_tgmc/wide/SetBounds()	//RS EDIT
 	if(dir & 3)
 		bound_width = world.icon_size
 		bound_height = width * world.icon_size
