@@ -24,7 +24,6 @@
 /datum/map/sirius_point/New()
 	if(global.using_map != src)	//Map swap related
 		return ..()
-	overmap_z = z_list["z_misc"]
 	ai_shell_allowed_levels += list(z_list["z_misc"])
 	ai_shell_allowed_levels += list(z_list["z_beach"])
 	ai_shell_allowed_levels += list(z_list["z_aerostat"])
@@ -37,9 +36,9 @@
 		lobby_screens = list(choice)
 
 /datum/map/sirius_point
-	name = "SiriusPoint"
+	name = "Sirius Point"
 	full_name = "NSB Sirius Point"
-	path = "siriuspoint"
+	path = "sirius_point"
 
 	use_overmap = TRUE
 	overmap_size = 62
@@ -161,7 +160,8 @@
 	"z_glacier" = 17,
 	"z_gateway" = 18,
 	"z_om_adventure" = 19,
-	"z_redgate" = 20
+	"z_redgate" = 20,
+	"overmap_z" = 8
 	)
 
 	station_z_levels = list("SP0","SP1","SP2","SPE","SPW","SPM")	//RS ADD END
@@ -230,7 +230,7 @@
 								/datum/planet/virgo4,
 								/datum/planet/snowbase)
 
-/datum/map/moonbase_delight/get_map_info()
+/datum/map/sirius_point/get_map_info()
 	. = list()
 	. +=  "The [full_name] is a an aging but well-maintained research and ISRU facility on the surface of Virgo 3r. [station_short] was originally constructed to aid in construction of a massive planned city, before complications caused the plans to be cancelled and relocated to what is now the city of a Anhur on Virgo 3b.<br>"
 	. +=  "Humanity has spread across the stars and has met many species on similar or even more advanced terms than them - it's a brave new world and many try to find their place in it . <br>"
@@ -273,7 +273,7 @@
 	skybox_pixel_x = 0
 	skybox_pixel_y = 0
 
-	initial_generic_waypoints = list()
+	initial_generic_waypoints = list("east_shuttlepad", "west_shuttlepad","northeast_shuttlepad","sp_excursion_hangar")
 	initial_restricted_waypoints = list()
 	levels_for_distress = list()
 

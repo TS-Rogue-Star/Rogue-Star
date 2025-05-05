@@ -39,6 +39,7 @@
 	shuttle_area = list(/area/shuttle/excursion/cockpit, /area/shuttle/excursion/general, /area/shuttle/excursion/cargo, /area/shuttle/excursion/power)
 	fuel_consumption = 3
 	move_direction = NORTH
+	//map_specific = "sirius_point"
 
 // The 'ship' of the excursion shuttle
 /obj/effect/overmap/visitable/ship/landable/sp_excursion
@@ -87,6 +88,7 @@
 	shuttle_area = list(/area/shuttle/spboat/fore,/area/shuttle/spboat/aft)
 	fuel_consumption = 1
 	defer_initialisation = TRUE
+//	map_specific = "sirius_point"
 
 /area/shuttle/spboat/fore
 	icon = 'icons/turf/areas_vr.dmi'

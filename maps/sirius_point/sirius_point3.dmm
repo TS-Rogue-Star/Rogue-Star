@@ -35,6 +35,10 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/space)
+"aA" = (
+/obj/item/weapon/rig/pathfinder,
+/turf/simulated/floor/tiled,
+/area/bridge)
 "aB" = (
 /obj/structure/railing/grey,
 /obj/structure/window/reinforced,
@@ -422,7 +426,7 @@
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/cockpit)
 "eq" = (
-/obj/item/weapon/rig/military,
+/obj/item/weapon/rig/robotics,
 /turf/simulated/floor/tiled,
 /area/bridge)
 "es" = (
@@ -2522,6 +2526,10 @@
 /obj/item/weapon/rcd/advanced,
 /turf/simulated/floor/carpet/oracarpet,
 /area/space)
+"uC" = (
+/obj/item/weapon/rig/light,
+/turf/simulated/floor/tiled,
+/area/bridge)
 "uG" = (
 /obj/structure/table/steel,
 /obj/item/weapon/paper_bin{
@@ -2965,6 +2973,10 @@
 	},
 /turf/simulated/floor/carpet/sblucarpet,
 /area/space)
+"yj" = (
+/obj/effect/landmark/tram,
+/turf/simulated/floor/tiled/monotile,
+/area/bridge)
 "yl" = (
 /obj/machinery/atmospherics/unary/vent_pump/high_volume{
 	dir = 8
@@ -5435,6 +5447,11 @@
 	id_tag = null;
 	pixel_y = -25
 	},
+/obj/machinery/atmospherics/unary/vent_pump/high_volume{
+	dir = 8;
+	frequency = 1380;
+	id_tag = null
+	},
 /turf/simulated/floor/tiled,
 /area/bridge)
 "Qz" = (
@@ -5667,6 +5684,10 @@
 /obj/structure/flora/pottedplant/minitree,
 /turf/simulated/floor/carpet/green,
 /area/space)
+"RT" = (
+/obj/effect/landmark/arrivals,
+/turf/simulated/floor/tiled/monotile,
+/area/bridge)
 "RU" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 10
@@ -5973,6 +5994,10 @@
 	fancy_shuttle_tag = "explo"
 	},
 /area/shuttle/excursion/cargo)
+"UG" = (
+/obj/item/weapon/rig/combat,
+/turf/simulated/floor/tiled,
+/area/bridge)
 "UI" = (
 /obj/structure/handrail,
 /obj/machinery/atmospherics/pipe/simple/hidden{
@@ -22965,10 +22990,10 @@ dH
 eK
 UR
 eK
-eK
-eK
-eK
-eK
+UR
+UR
+UR
+UR
 Pm
 dX
 dX
@@ -23107,10 +23132,10 @@ dX
 uy
 eK
 eK
-eK
-eK
-OI
-OI
+UR
+UR
+yj
+yj
 OI
 Sm
 fF
@@ -23248,11 +23273,11 @@ eK
 NQ
 eK
 eq
-eK
-eK
-eK
-Qt
-Qt
+uC
+UR
+UR
+RT
+RT
 Qt
 UN
 LF
@@ -23390,11 +23415,11 @@ UR
 eK
 eK
 Kn
-eK
-eK
-eK
-Qt
-Qt
+aA
+UR
+UR
+RT
+RT
 tE
 dX
 dX
@@ -23532,11 +23557,11 @@ eK
 eK
 eK
 TC
-eK
-eK
-eK
-Qt
-Qt
+UG
+UR
+UR
+RT
+RT
 Qt
 UN
 jo
@@ -23675,10 +23700,10 @@ dX
 uy
 eK
 eK
-eK
-eK
-OI
-OI
+UR
+UR
+yj
+yj
 OI
 HB
 je
@@ -23817,10 +23842,10 @@ dH
 eK
 UR
 eK
-eK
-eK
-eK
-eK
+UR
+UR
+UR
+UR
 Pm
 dX
 dX
