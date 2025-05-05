@@ -24,7 +24,7 @@
 /datum/map/sirius_point/New()
 	if(global.using_map != src)	//Map swap related
 		return ..()
-
+	overmap_z = z_list["z_misc"]
 	ai_shell_allowed_levels += list(z_list["z_misc"])
 	ai_shell_allowed_levels += list(z_list["z_beach"])
 	ai_shell_allowed_levels += list(z_list["z_aerostat"])
@@ -42,15 +42,15 @@
 	path = "siriuspoint"
 
 	use_overmap = TRUE
-	overmap_z = Z_LEVEL_OVERMAP
-	overmap_size = 99
-	overmap_event_areas = 200
+	overmap_size = 62
+	overmap_event_areas = 100
+
 	usable_email_tlds = list("virgo.nt")
 
 	zlevel_datum_type = /datum/map_z_level/sirius_point
 
 	lobby_icon = 'icons/misc/title_rs.dmi'
-	lobby_screens = list("youcanttaketheskyfromme")
+	lobby_screens = list("rs_lobby")
 	id_hud_icons = 'icons/mob/hud_jobs_vr.dmi'
 
 
@@ -172,7 +172,6 @@
 		list("Remmi Aerostat - Z1 Aerostat","Remmi Aerostat - Z2 Surface"),
 		list("Debris Field - Z1 Space"),
 		list("Fuel Depot - Z1 Space"),
-		list("Overmap"),
 		list("Offmap Ship - Talon V2"),
 		list("Virgo 5","Virgo 5 Glacier")
 		)
@@ -254,29 +253,6 @@
 
 /obj/effect/landmark/map_data/sirius_point
 	height = 3
-
-/*/obj/effect/overmap/visitable/sector/virgo3b
-	name = "Virgo 3B"
-	desc = "Full of phoron, and home to the NSB Adephagia."
-	scanner_desc = @{"[i]Registration[/i]: NSB Adephagia
-[i]Class[/i]: Installation
-[i]Transponder[/i]: Transmitting (CIV), NanoTrasen IFF
-[b]Notice[/b]: NanoTrasen Base, authorized personnel only"}
-	known = TRUE
-	in_space = TRUE
-
-	icon = 'icons/obj/overmap_vr.dmi'
-	icon_state = "virgo3b"
-
-	skybox_icon = 'icons/skybox/virgo3b.dmi'
-	skybox_icon_state = "small"
-	skybox_pixel_x = 0
-	skybox_pixel_y = 0
-
-	initial_generic_waypoints = list()
-	initial_restricted_waypoints = list()
-
-	extra_z_levels = list()*/
 
 /obj/effect/overmap/visitable/sector/virgo3r
 	name = "Virgo 3R"
@@ -462,7 +438,7 @@
 	z = Z_LEVEL_SPACE_ROCKS
 	name = "V3b Asteroid Field"
 	base_turf = /turf/space
-	flags = MAP_LEVEL_PLAYER|MAP_LEVEL_CONTACT|MAP_LEVEL_CONSOLES*/
+	flags = MAP_LEVEL_PLAYER|MAP_LEVEL_CONTACT|MAP_LEVEL_CONSOLES
 
 /datum/map_template/moonbase_lateload/overmap
 	name = "Overmap"
@@ -474,7 +450,7 @@
 /datum/map_z_level/moonbase_lateload/overmap
 	z = Z_LEVEL_OVERMAP
 	name = "Overmap"
-	flags = MAP_LEVEL_ADMIN|MAP_LEVEL_SEALED|MAP_LEVEL_CONTACT|MAP_LEVEL_XENOARCH_EXEMPT
+	flags = MAP_LEVEL_ADMIN|MAP_LEVEL_SEALED|MAP_LEVEL_CONTACT|MAP_LEVEL_XENOARCH_EXEMPT*/
 
 #include "../expedition_vr/aerostat/_aerostat.dm"
 /datum/map_template/common_lateload/away_aerostat

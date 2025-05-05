@@ -26,7 +26,7 @@
 /turf/simulated/wall/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
 	},
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "az" = (
@@ -194,7 +194,9 @@
 /area/space)
 "ce" = (
 /obj/machinery/recharge_station,
-/obj/effect/floor_decal/milspec/color/red,
+/obj/effect/floor_decal/milspec/color/red/half{
+	dir = 10
+	},
 /turf/simulated/floor/tiled/dark,
 /area/space)
 "cj" = (
@@ -411,7 +413,7 @@
 /turf/simulated/floor/reinforced,
 /area/space)
 "eo" = (
-/obj/machinery/computer/shuttle_control/explore/excursion{
+/obj/machinery/computer/shuttle_control/explore/sp_excursion{
 	dir = 4
 	},
 /obj/effect/floor_decal/fancy_shuttle{
@@ -514,6 +516,13 @@
 	},
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/general)
+"fe" = (
+/turf/simulated/wall/fancy_shuttle/nondense{
+	fancy_shuttle_tag = "sdboat"
+	},
+/area/shuttle/spboat/fore{
+	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
+	})
 "fg" = (
 /obj/machinery/power/tesla_coil/collector,
 /turf/simulated/floor/plating/external/outdoors,
@@ -534,13 +543,6 @@
 /obj/item/tape/engineering,
 /obj/machinery/door/firedoor/glass,
 /turf/simulated/floor/tiled/steel_ridged,
-/area/space)
-"fu" = (
-/obj/machinery/portable_atmospherics/hydroponics,
-/obj/effect/floor_decal/milspec/color/green/half{
-	dir = 1
-	},
-/turf/simulated/floor/tiled,
 /area/space)
 "fv" = (
 /turf/simulated/floor/tiled/milspec,
@@ -758,7 +760,7 @@
 /obj/structure/bed/chair/comfy{
 	dir = 8
 	},
-/turf/simulated/floor/carpet/sblucarpet,
+/turf/simulated/floor/carpet/bcarpet,
 /area/space)
 "hz" = (
 /obj/machinery/door/firedoor/glass,
@@ -852,7 +854,7 @@
 /turf/simulated/wall/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
 	},
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "im" = (
@@ -976,7 +978,7 @@
 /area/bridge)
 "jf" = (
 /obj/structure/table/fancyblack,
-/turf/simulated/floor/carpet/sblucarpet,
+/turf/simulated/floor/carpet/bcarpet,
 /area/space)
 "jl" = (
 /obj/structure/cable/cyan{
@@ -1208,7 +1210,7 @@
 	pixel_y = 38
 	},
 /obj/structure/flora/pottedplant/fern,
-/turf/simulated/floor/carpet/bcarpet,
+/turf/simulated/floor/carpet/sblucarpet,
 /area/space)
 "kS" = (
 /obj/effect/floor_decal/milspec/color/blue/corner{
@@ -1461,7 +1463,7 @@
 /obj/structure/bed/chair/backed_red{
 	dir = 1
 	},
-/turf/simulated/floor/carpet/bcarpet,
+/turf/simulated/floor/carpet/sblucarpet,
 /area/space)
 "my" = (
 /obj/machinery/vending/hydronutrients,
@@ -1720,10 +1722,8 @@
 /turf/simulated/floor/tiled/eris/cafe,
 /area/space)
 "oD" = (
-/obj/structure/bed/chair/sofa/corp/right{
-	dir = 4
-	},
-/turf/simulated/floor/wood,
+/obj/effect/catwalk_plated,
+/turf/simulated/open,
 /area/space)
 "oL" = (
 /obj/structure/closet/crate/secure/phoron{
@@ -1861,7 +1861,7 @@
 /area/space)
 "pD" = (
 /obj/structure/bed/chair/backed_red,
-/turf/simulated/floor/glass/reinforced,
+/turf/simulated/floor/glass,
 /area/space)
 "pF" = (
 /obj/effect/floor_decal/fancy_shuttle{
@@ -2313,7 +2313,7 @@
 	base_area = /area/siriuspoint;
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors;
 	docking_controller = "sp_northwest_landing";
-	landmark_tag = "tether_excursion_hangar";
+	landmark_tag = "sp_excursion_hangar";
 	name = "Excursion Shuttle Dock"
 	},
 /obj/structure/cable/green{
@@ -2326,7 +2326,7 @@
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "explo"
 	},
-/obj/effect/overmap/visitable/ship/landable/excursion,
+/obj/effect/overmap/visitable/ship/landable/sp_excursion,
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/cargo)
 "sQ" = (
@@ -2421,7 +2421,7 @@
 /area/space)
 "tu" = (
 /obj/machinery/portable_atmospherics/hydroponics,
-/turf/simulated/floor/glass/reinforced,
+/turf/simulated/floor/tiled/monotile,
 /area/space)
 "tv" = (
 /obj/structure/railing/grey{
@@ -2553,7 +2553,7 @@
 /obj/structure/bed/chair/comfy{
 	dir = 1
 	},
-/turf/simulated/floor/carpet/sblucarpet,
+/turf/simulated/floor/carpet/bcarpet,
 /area/space)
 "vb" = (
 /turf/simulated/floor/water/pool,
@@ -2589,10 +2589,7 @@
 /turf/simulated/floor/wood,
 /area/space)
 "vp" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/tiled/monotile,
+/turf/simulated/floor/glass,
 /area/space)
 "vw" = (
 /obj/structure/sign/painting/library_secure{
@@ -2952,13 +2949,6 @@
 "ya" = (
 /turf/simulated/floor/carpet/blue2,
 /area/space)
-"yc" = (
-/turf/simulated/wall/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/area/shuttle/sdboat/fore{
-	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
-	})
 "yd" = (
 /obj/structure/sign/biohazard,
 /turf/simulated/wall/r_wall,
@@ -2973,7 +2963,7 @@
 /obj/structure/bed/chair/backed_red{
 	dir = 4
 	},
-/turf/simulated/floor/carpet/bcarpet,
+/turf/simulated/floor/carpet/sblucarpet,
 /area/space)
 "yl" = (
 /obj/machinery/atmospherics/unary/vent_pump/high_volume{
@@ -3005,7 +2995,7 @@
 	fancy_shuttle_tag = "sdboat"
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/fore{
+/area/shuttle/spboat/fore{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "yu" = (
@@ -3046,7 +3036,7 @@
 /obj/machinery/computer/secure_data{
 	dir = 4
 	},
-/turf/simulated/floor/carpet/bcarpet,
+/turf/simulated/floor/carpet/sblucarpet,
 /area/space)
 "yI" = (
 /obj/item/device/tape/random,
@@ -3077,7 +3067,7 @@
 	fancy_shuttle_tag = "sdboat"
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/fore{
+/area/shuttle/spboat/fore{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "yW" = (
@@ -3122,7 +3112,7 @@
 	fancy_shuttle_tag = "sdboat"
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/fore{
+/area/shuttle/spboat/fore{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "zf" = (
@@ -3145,7 +3135,7 @@
 	fancy_shuttle_tag = "sdboat"
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/fore{
+/area/shuttle/spboat/fore{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "zu" = (
@@ -3199,12 +3189,12 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/fore{
+/area/shuttle/spboat/fore{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "zI" = (
 /obj/machinery/hologram/holopad,
-/turf/simulated/floor/carpet/sblucarpet,
+/turf/simulated/floor/carpet/bcarpet,
 /area/space)
 "zJ" = (
 /obj/structure/bed/chair/sofa/corp/corner{
@@ -3225,15 +3215,6 @@
 /obj/item/weapon/book/manual/security_space_law,
 /turf/simulated/floor/wood/alt/panel,
 /area/space)
-"zV" = (
-/obj/machinery/door/firedoor/glass/hidden/shuttle,
-/obj/structure/window/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/turf/simulated/floor/reinforced/airless,
-/area/shuttle/sdboat/fore{
-	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
-	})
 "zW" = (
 /obj/structure/flora/pottedplant/orientaltree,
 /turf/simulated/floor/wood,
@@ -3274,10 +3255,7 @@
 /turf/simulated/floor/tiled/milspec,
 /area/space)
 "At" = (
-/obj/effect/floor_decal/steeldecal/steel_decals9{
-	dir = 4
-	},
-/obj/effect/floor_decal/steeldecal/steel_decals9{
+/obj/machinery/door/firedoor/glass/hidden{
 	dir = 1
 	},
 /turf/simulated/floor/tiled/dark,
@@ -3288,6 +3266,13 @@
 	dir = 8
 	},
 /turf/simulated/open,
+/area/space)
+"Ay" = (
+/obj/machinery/recharge_station,
+/obj/effect/floor_decal/milspec/color/red/half{
+	dir = 6
+	},
+/turf/simulated/floor/tiled/dark,
 /area/space)
 "AB" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
@@ -3429,13 +3414,12 @@
 /obj/effect/floor_decal/milspec/hatchmarks,
 /turf/simulated/floor/tiled,
 /area/space)
-"BA" = (
-/turf/simulated/wall/fancy_shuttle/nondense{
-	fancy_shuttle_tag = "sdboat"
+"Bz" = (
+/obj/structure/bed/chair/sofa/corp/left{
+	dir = 8
 	},
-/area/shuttle/sdboat/fore{
-	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
-	})
+/turf/simulated/floor/wood,
+/area/space)
 "BC" = (
 /obj/structure/table/rack/shelf/steel,
 /obj/item/clothing/suit/storage/vest/heavy/officer{
@@ -3513,7 +3497,7 @@
 	pixel_y = -32
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "Ch" = (
@@ -3529,10 +3513,10 @@
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/cargo)
 "Ci" = (
-/obj/effect/floor_decal/steeldecal/steel_decals6{
+/obj/effect/floor_decal/steeldecal/steel_decals9{
 	dir = 4
 	},
-/obj/effect/floor_decal/steeldecal/steel_decals6,
+/obj/effect/floor_decal/steeldecal/steel_decals9,
 /turf/simulated/floor/tiled/dark,
 /area/space)
 "Cj" = (
@@ -3559,7 +3543,7 @@
 	fancy_shuttle_tag = "sdboat"
 	},
 /turf/simulated/floor/reinforced/airless,
-/area/shuttle/sdboat/fore{
+/area/shuttle/spboat/fore{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "Cx" = (
@@ -3573,7 +3557,7 @@
 	fancy_shuttle_tag = "sdboat"
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "Cy" = (
@@ -3584,7 +3568,7 @@
 	fancy_shuttle_tag = "sdboat"
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "CA" = (
@@ -3641,7 +3625,7 @@
 	fancy_shuttle_tag = "sdboat"
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "Dq" = (
@@ -3701,7 +3685,7 @@
 /turf/simulated/wall/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
 	},
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "Dw" = (
@@ -3730,7 +3714,7 @@
 	fancy_shuttle_tag = "sdboat"
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "DJ" = (
@@ -3749,7 +3733,7 @@
 	fancy_shuttle_tag = "sdboat"
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "DK" = (
@@ -3780,7 +3764,7 @@
 /turf/simulated/wall/fancy_shuttle/nondense{
 	fancy_shuttle_tag = "sdboat"
 	},
-/area/shuttle/sdboat/fore{
+/area/shuttle/spboat/fore{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "Ed" = (
@@ -3799,7 +3783,7 @@
 	fancy_shuttle_tag = "sdboat"
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/fore{
+/area/shuttle/spboat/fore{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "Ej" = (
@@ -3843,7 +3827,7 @@
 /turf/simulated/wall/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
 	},
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "EM" = (
@@ -3916,7 +3900,7 @@
 	fancy_shuttle_tag = "sdboat"
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/fore{
+/area/shuttle/spboat/fore{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "Fg" = (
@@ -3926,8 +3910,8 @@
 /turf/simulated/floor/carpet/blue2,
 /area/space)
 "Fm" = (
-/obj/structure/bed/chair/sofa/corp/left{
-	dir = 8
+/obj/structure/bed/chair/sofa/corp/right{
+	dir = 4
 	},
 /turf/simulated/floor/wood,
 /area/space)
@@ -3978,7 +3962,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/turf/simulated/floor/glass/reinforced,
+/turf/simulated/floor/tiled,
 /area/space)
 "FQ" = (
 /obj/structure/cable/green{
@@ -3991,7 +3975,7 @@
 	fancy_shuttle_tag = "sdboat"
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "FS" = (
@@ -4038,7 +4022,7 @@
 	fancy_shuttle_tag = "sdboat"
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "FZ" = (
@@ -4054,7 +4038,7 @@
 /obj/structure/bed/chair/comfy{
 	dir = 4
 	},
-/turf/simulated/floor/carpet/sblucarpet,
+/turf/simulated/floor/carpet/bcarpet,
 /area/space)
 "Go" = (
 /obj/structure/bed/chair/comfy,
@@ -4134,7 +4118,7 @@
 	},
 /obj/effect/landmark/stardog,
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "GO" = (
@@ -4153,7 +4137,8 @@
 /turf/simulated/floor/tiled,
 /area/space)
 "GV" = (
-/turf/simulated/floor/glass,
+/obj/effect/catwalk_plated/dark,
+/turf/simulated/floor/plating,
 /area/space)
 "GW" = (
 /obj/machinery/computer/med_data/laptop{
@@ -4224,7 +4209,7 @@
 "HA" = (
 /obj/structure/table/darkglass,
 /obj/item/weapon/folder/red,
-/turf/simulated/floor/carpet/bcarpet,
+/turf/simulated/floor/carpet/sblucarpet,
 /area/space)
 "HB" = (
 /obj/machinery/access_button{
@@ -4270,7 +4255,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "HM" = (
@@ -4291,7 +4276,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "HO" = (
@@ -4420,9 +4405,15 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
+"Jh" = (
+/obj/effect/overmap/visitable/sector/virgo3r,
+/turf/simulated/open/vacuum{
+	outdoors = 1
+	},
+/area/space)
 "Jp" = (
 /obj/machinery/computer/security/wooden_tv,
 /obj/structure/table/woodentable,
@@ -4523,19 +4514,18 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden{
 	dir = 4
 	},
-/obj/effect/overmap/visitable/ship/landable/sd_boat,
-/obj/effect/shuttle_landmark/shuttle_initializer/sdboat{
-	base_turf = /turf/simulated/floor/reinforced/airless/outdoors;
-	docking_controller = "sp_west_landing"
-	},
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 4
 	},
+/obj/effect/shuttle_landmark/shuttle_initializer/spboat{
+	docking_controller = "sp_west_landing"
+	},
+/obj/effect/overmap/visitable/ship/landable/spboat,
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "JQ" = (
@@ -4552,7 +4542,7 @@
 /obj/machinery/computer/security{
 	dir = 8
 	},
-/turf/simulated/floor/carpet/bcarpet,
+/turf/simulated/floor/carpet/sblucarpet,
 /area/space)
 "Kc" = (
 /obj/effect/floor_decal/sign/small_1{
@@ -4561,6 +4551,15 @@
 	},
 /turf/simulated/floor/tiled/milspec,
 /area/space)
+"Kg" = (
+/obj/machinery/door/firedoor/glass/hidden/shuttle,
+/obj/structure/window/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/turf/simulated/floor/reinforced/airless,
+/area/shuttle/spboat/fore{
+	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
+	})
 "Kh" = (
 /obj/structure/trash_pile,
 /turf/simulated/floor/tiled/steel_dirty,
@@ -4591,9 +4590,6 @@
 /turf/simulated/floor/tiled,
 /area/bridge)
 "Ko" = (
-/obj/machinery/computer/shuttle_control/explore/sdboat{
-	dir = 4
-	},
 /obj/machinery/light{
 	dir = 8
 	},
@@ -4608,13 +4604,16 @@
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
 	},
+/obj/machinery/computer/shuttle_control/explore/spboat{
+	dir = 4
+	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/fore{
+/area/shuttle/spboat/fore{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "Kr" = (
 /obj/structure/table/darkglass,
-/turf/simulated/floor/carpet/bcarpet,
+/turf/simulated/floor/carpet/sblucarpet,
 /area/space)
 "Ku" = (
 /obj/structure/bed/chair/comfy{
@@ -4664,7 +4663,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "KE" = (
@@ -4679,7 +4678,7 @@
 	fancy_shuttle_tag = "sdboat"
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "KJ" = (
@@ -4714,7 +4713,7 @@
 	fancy_shuttle_tag = "sdboat"
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "KQ" = (
@@ -4772,7 +4771,7 @@
 	fancy_shuttle_tag = "sdboat"
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/fore{
+/area/shuttle/spboat/fore{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "Lj" = (
@@ -4795,13 +4794,13 @@
 /obj/machinery/light,
 /obj/machinery/atmospherics/unary/vent_pump/high_volume{
 	frequency = 1380;
-	id_tag = "sdboat_docker_pump_out_internal"
+	id_tag = "spboat_docker_pump_out_internal"
 	},
 /obj/effect/floor_decal/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "Lp" = (
@@ -4873,7 +4872,7 @@
 	fancy_shuttle_tag = "sdboat"
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "LL" = (
@@ -4901,7 +4900,7 @@
 	fancy_shuttle_tag = "sdboat"
 	},
 /turf/simulated/floor/reinforced/airless,
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "LT" = (
@@ -4915,7 +4914,7 @@
 	fancy_shuttle_tag = "sdboat"
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "LW" = (
@@ -4933,7 +4932,7 @@
 	fancy_shuttle_tag = "sdboat"
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "Mp" = (
@@ -4958,7 +4957,7 @@
 /turf/simulated/wall/fancy_shuttle/nondense{
 	fancy_shuttle_tag = "sdboat"
 	},
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "Mx" = (
@@ -5043,7 +5042,7 @@
 /area/space)
 "Np" = (
 /obj/structure/flora/pottedplant/fern,
-/turf/simulated/floor/carpet/bcarpet,
+/turf/simulated/floor/carpet/sblucarpet,
 /area/space)
 "Nr" = (
 /obj/structure/bed/chair/sofa/corp/left,
@@ -5061,7 +5060,7 @@
 	fancy_shuttle_tag = "sdboat"
 	},
 /turf/simulated/floor/reinforced/airless,
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "Nz" = (
@@ -5150,15 +5149,6 @@
 	},
 /turf/simulated/floor/tiled/milspec,
 /area/space)
-"Ou" = (
-/obj/effect/floor_decal/steeldecal/steel_decals6{
-	dir = 1
-	},
-/obj/effect/floor_decal/steeldecal/steel_decals6{
-	dir = 8
-	},
-/turf/simulated/floor/tiled/dark,
-/area/space)
 "Ov" = (
 /obj/machinery/door/window/brigdoor/westleft{
 	req_access = list(35,28)
@@ -5181,7 +5171,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "Oz" = (
@@ -5307,10 +5297,10 @@
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/general)
 "Pq" = (
-/obj/effect/floor_decal/steeldecal/steel_decals6{
+/obj/effect/floor_decal/steeldecal/steel_decals9{
 	dir = 8
 	},
-/obj/effect/floor_decal/steeldecal/steel_decals6{
+/obj/effect/floor_decal/steeldecal/steel_decals9{
 	dir = 1
 	},
 /turf/simulated/floor/tiled/dark,
@@ -5339,7 +5329,7 @@
 /obj/structure/bed/chair/sofa/corp/corner{
 	dir = 1
 	},
-/turf/simulated/floor/glass/reinforced,
+/turf/simulated/floor/glass,
 /area/space)
 "PD" = (
 /obj/machinery/optable,
@@ -5429,7 +5419,7 @@
 /turf/simulated/wall/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
 	},
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "Qy" = (
@@ -5504,7 +5494,7 @@
 	req_one_access = list(11,67)
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "Rf" = (
@@ -5523,7 +5513,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "Rj" = (
@@ -5564,7 +5554,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "Ru" = (
@@ -5574,14 +5564,14 @@
 /turf/simulated/wall/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
 	},
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "Rw" = (
 /obj/structure/bed/chair/backed_red{
 	dir = 8
 	},
-/turf/simulated/floor/carpet/bcarpet,
+/turf/simulated/floor/carpet/sblucarpet,
 /area/space)
 "Rx" = (
 /obj/structure/bed/chair/backed_grey{
@@ -5623,7 +5613,7 @@
 /turf/simulated/wall/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
 	},
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "RH" = (
@@ -5639,7 +5629,7 @@
 	fancy_shuttle_tag = "sdboat"
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "RL" = (
@@ -5684,7 +5674,7 @@
 /turf/simulated/wall/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
 	},
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "RY" = (
@@ -5693,7 +5683,7 @@
 /obj/item/weapon/paper_bin{
 	pixel_y = 7
 	},
-/turf/simulated/floor/carpet/bcarpet,
+/turf/simulated/floor/carpet/sblucarpet,
 /area/space)
 "RZ" = (
 /turf/simulated/floor/plating,
@@ -5705,7 +5695,7 @@
 /obj/structure/bed/chair/sofa/corp{
 	dir = 4
 	},
-/turf/simulated/floor/glass/reinforced,
+/turf/simulated/floor/glass,
 /area/space)
 "Si" = (
 /obj/structure/window/reinforced/full,
@@ -5757,12 +5747,12 @@
 /obj/machinery/atmospherics/unary/vent_pump/high_volume{
 	dir = 1;
 	frequency = 1380;
-	id_tag = "sdboat_docker_pump_out_external"
+	id_tag = "spboat_docker_pump_out_external"
 	},
 /turf/simulated/wall/fancy_shuttle/low{
 	fancy_shuttle_tag = "sdboat"
 	},
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "SE" = (
@@ -5774,7 +5764,7 @@
 /turf/simulated/wall/fancy_shuttle/low{
 	fancy_shuttle_tag = "sdboat"
 	},
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "SN" = (
@@ -5806,7 +5796,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "SZ" = (
@@ -5843,7 +5833,7 @@
 /turf/simulated/wall/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
 	},
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "Tl" = (
@@ -5927,7 +5917,7 @@
 /turf/simulated/wall/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
 	},
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "Uh" = (
@@ -5990,7 +5980,7 @@
 	},
 /obj/machinery/embedded_controller/radio/airlock/docking_port{
 	frequency = 1380;
-	id_tag = "sdboat_docker";
+	id_tag = "spboat_docker";
 	pixel_x = 5;
 	pixel_y = 25
 	},
@@ -6006,13 +5996,13 @@
 	fancy_shuttle_tag = "sdboat"
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "UJ" = (
 /obj/structure/table/darkglass,
 /obj/item/weapon/storage/box/donut,
-/turf/simulated/floor/carpet/bcarpet,
+/turf/simulated/floor/carpet/sblucarpet,
 /area/space)
 "UN" = (
 /obj/machinery/door/firedoor/glass,
@@ -6077,7 +6067,7 @@
 	dir = 6
 	},
 /turf/simulated/floor/reinforced/airless,
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "Vj" = (
@@ -6103,7 +6093,7 @@
 /turf/simulated/wall/fancy_shuttle{
 	fancy_shuttle_tag = "sdboat"
 	},
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "Vu" = (
@@ -6126,7 +6116,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "Vy" = (
@@ -6222,7 +6212,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/tiled,
-/area/shuttle/sdboat/aft{
+/area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "Wk" = (
@@ -6498,6 +6488,13 @@
 /obj/structure/table/woodentable,
 /turf/simulated/floor/glass,
 /area/space)
+"Yq" = (
+/turf/simulated/wall/fancy_shuttle{
+	fancy_shuttle_tag = "sdboat"
+	},
+/area/shuttle/spboat/fore{
+	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
+	})
 "Yv" = (
 /obj/structure/bed/chair/comfy{
 	dir = 1
@@ -6652,7 +6649,7 @@
 /area/bridge)
 "Zv" = (
 /obj/machinery/biogenerator,
-/turf/simulated/floor/glass/reinforced,
+/turf/simulated/floor/tiled,
 /area/space)
 "Zw" = (
 /obj/structure/railing{
@@ -6694,7 +6691,7 @@
 /area/space)
 "ZU" = (
 /obj/machinery/hologram/holopad,
-/turf/simulated/floor/carpet/bcarpet,
+/turf/simulated/floor/carpet/sblucarpet,
 /area/space)
 "ZX" = (
 /obj/machinery/smartfridge/secure/extract,
@@ -7132,7 +7129,7 @@ el
 el
 el
 el
-el
+Jh
 uj
 "}
 (4,1,1) = {"
@@ -14605,7 +14602,7 @@ Dx
 Yj
 rc
 rc
-Ou
+Pq
 rc
 rc
 rc
@@ -14734,28 +14731,28 @@ XI
 XI
 uR
 Np
-Dh
-Dh
-Dh
+Se
+Se
+Se
 yA
 uR
 Rf
-sQ
-sa
+SZ
+Py
 At
 Dx
 Dx
-Dx
-Dx
-Dx
-Dx
-Dx
-Dx
-Dx
-Dx
-Dx
-Dx
-Dx
+GV
+GV
+GV
+GV
+GV
+GV
+GV
+GV
+GV
+GV
+GV
 Dq
 Ut
 aE
@@ -14827,7 +14824,7 @@ fj
 Ut
 Ut
 Ut
-fu
+tu
 tu
 tu
 XI
@@ -14877,9 +14874,9 @@ XI
 Ut
 yi
 yi
-Dh
-Dh
-Dh
+Se
+Se
+Se
 rc
 rc
 rc
@@ -14898,7 +14895,7 @@ Mp
 Ci
 Ci
 Mp
-ce
+Ay
 uR
 aE
 aE
@@ -14977,7 +14974,7 @@ XI
 XI
 XI
 XI
-XI
+rr
 FN
 Zv
 Ut
@@ -15020,8 +15017,8 @@ Ut
 UJ
 Kr
 mw
-Dh
-Dh
+Se
+Se
 Mp
 Vy
 Dx
@@ -15112,16 +15109,16 @@ el
 el
 fh
 lt
+rr
+rr
 XI
 XI
 XI
-XI
-XI
-XI
-XI
-XI
-XI
-XI
+rr
+rr
+rr
+rr
+rr
 tr
 Ut
 Ut
@@ -15162,8 +15159,8 @@ Ut
 ZU
 RY
 mw
-Dh
-Dh
+Se
+Se
 Ut
 ov
 FW
@@ -15304,8 +15301,8 @@ Ut
 Kr
 HA
 mw
-Dh
-Dh
+Se
+Se
 Ut
 hE
 FW
@@ -15396,7 +15393,7 @@ el
 el
 el
 gl
-vp
+mi
 hq
 Ov
 OL
@@ -15445,9 +15442,9 @@ XI
 Ut
 Rw
 Rw
-Dh
-Dh
-Dh
+Se
+Se
+Se
 Ut
 yP
 FW
@@ -15540,8 +15537,8 @@ el
 el
 pX
 CY
-XI
-XI
+vp
+vp
 pD
 qb
 AX
@@ -15586,9 +15583,9 @@ hz
 hz
 uR
 kP
-Dh
-Dh
-Dh
+Se
+Se
+Se
 Kb
 uR
 Rf
@@ -15682,9 +15679,9 @@ el
 el
 wP
 CY
-XI
-XI
-XI
+vp
+vp
+vp
 Wi
 AX
 QX
@@ -15824,9 +15821,9 @@ el
 el
 Bp
 gY
-XI
-XI
-XI
+vp
+vp
+vp
 CY
 AX
 QX
@@ -15865,20 +15862,20 @@ sY
 sY
 sY
 Sq
-GV
-GV
-GV
-GV
-GV
-GV
-GV
-GV
+oD
+oD
+oD
+oD
+oD
+oD
+oD
+oD
 Sq
 QY
 zJ
 lx
-oD
-zW
+lx
+Fm
 uR
 uR
 uR
@@ -15966,7 +15963,7 @@ el
 el
 Bp
 qb
-XI
+vp
 PA
 Sh
 WC
@@ -16019,7 +16016,7 @@ hz
 QY
 JQ
 Lx
-QY
+Lx
 QY
 uR
 qe
@@ -16302,9 +16299,9 @@ hz
 Gj
 Gj
 Gj
-Se
+Dh
 QY
-QY
+zW
 uR
 tA
 rr
@@ -16870,9 +16867,9 @@ hz
 hw
 hw
 hw
-Se
+Dh
 QY
-QY
+zW
 uR
 EF
 rr
@@ -17155,7 +17152,7 @@ hz
 QY
 Ll
 Lx
-QY
+Lx
 QY
 uR
 LR
@@ -17285,20 +17282,20 @@ EJ
 Oz
 Oz
 Sq
-GV
-GV
-GV
-GV
-GV
-GV
-GV
-GV
+oD
+oD
+oD
+oD
+oD
+oD
+oD
+oD
 Sq
 QY
 LW
 LB
-Fm
-zW
+LB
+Bz
 uR
 QY
 NX
@@ -21670,10 +21667,10 @@ Dw
 Dw
 xN
 xN
-BA
-yc
-yc
-yc
+fe
+Yq
+Yq
+Yq
 LS
 Dv
 Dv
@@ -21812,10 +21809,10 @@ Dw
 Dw
 xN
 xN
-yc
-yc
+Yq
+Yq
 Ko
-yc
+Yq
 LT
 Cx
 DG
@@ -21957,7 +21954,7 @@ xN
 Ct
 yr
 yS
-zV
+Kg
 Cy
 Cy
 Cy
@@ -22241,7 +22238,7 @@ xN
 Ct
 Fe
 zp
-zV
+Kg
 Cy
 Cy
 Cy
@@ -22380,10 +22377,10 @@ Dw
 Dw
 xN
 xN
-yc
-yc
+Yq
+Yq
 Lg
-yc
+Yq
 LT
 Mb
 DJ
@@ -22523,9 +22520,9 @@ Dw
 xN
 xN
 Eb
-yc
-yc
-yc
+Yq
+Yq
+Yq
 LS
 Dv
 Dv

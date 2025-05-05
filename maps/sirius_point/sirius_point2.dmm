@@ -890,8 +890,7 @@
 /turf/simulated/floor/tiled,
 /area/space)
 "hj" = (
-/obj/effect/floor_decal/steeldecal/steel_decals5,
-/obj/machinery/door/firedoor/glass/hidden{
+/obj/machinery/door/firedoor/glass/hidden/steel{
 	dir = 2
 	},
 /turf/simulated/floor/tiled,
@@ -1709,6 +1708,10 @@
 /obj/effect/floor_decal/milspec/color/green/half,
 /turf/simulated/floor/tiled,
 /area/space)
+"nN" = (
+/obj/structure/bed/chair/sofa/corp/right,
+/turf/simulated/floor/carpet/sblucarpet,
+/area/space)
 "nO" = (
 /obj/machinery/botany/editor,
 /obj/effect/floor_decal/milspec/monotile,
@@ -1808,6 +1811,13 @@
 	},
 /obj/machinery/reagentgrinder,
 /turf/simulated/floor/tiled,
+/area/space)
+"oM" = (
+/obj/machinery/recharger{
+	pixel_y = 6
+	},
+/obj/structure/table/reinforced,
+/turf/simulated/floor/carpet/sblucarpet,
 /area/space)
 "oN" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
@@ -1963,6 +1973,15 @@
 	},
 /obj/structure/table/reinforced,
 /turf/simulated/floor/tiled/monotile,
+/area/space)
+"pO" = (
+/obj/machinery/door/firedoor/glass/hidden/steel{
+	dir = 2
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 1
+	},
+/turf/simulated/floor/tiled,
 /area/space)
 "pR" = (
 /obj/structure/table/reinforced,
@@ -2645,6 +2664,14 @@
 	},
 /turf/simulated/floor/tiled,
 /area/space)
+"uE" = (
+/obj/structure/stairs/spawner/south,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 4
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/space)
 "uG" = (
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 9
@@ -3011,6 +3038,12 @@
 /obj/effect/floor_decal/milspec/monotile,
 /turf/simulated/floor/tiled/milspec,
 /area/space)
+"xn" = (
+/obj/machinery/door/firedoor/glass/hidden/steel{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/space)
 "xp" = (
 /obj/effect/floor_decal/milspec/color/blue/half{
 	dir = 6
@@ -3275,6 +3308,12 @@
 /obj/effect/floor_decal/milspec/color/green/half,
 /turf/simulated/floor/tiled,
 /area/space)
+"ze" = (
+/obj/structure/bed/chair/sofa/corp/left{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/sblucarpet,
+/area/space)
 "zf" = (
 /obj/effect/floor_decal/milspec/color/orange/half{
 	dir = 5
@@ -3536,10 +3575,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/space)
 "Bk" = (
-/obj/effect/floor_decal/steeldecal/steel_decals5{
-	dir = 1
-	},
-/obj/machinery/door/firedoor/glass/hidden{
+/obj/machinery/door/firedoor/glass/hidden/steel{
 	dir = 1
 	},
 /turf/simulated/floor/tiled,
@@ -3907,9 +3943,6 @@
 /turf/simulated/floor/tiled,
 /area/space)
 "Ej" = (
-/obj/machinery/recharger{
-	pixel_y = 6
-	},
 /obj/structure/table/reinforced,
 /turf/simulated/floor/carpet/sblucarpet,
 /area/space)
@@ -4150,6 +4183,10 @@
 	pixel_y = -6
 	},
 /turf/simulated/floor/tiled/monotile,
+/area/space)
+"FV" = (
+/obj/structure/bed/chair/sofa/corp/corner,
+/turf/simulated/floor/carpet/sblucarpet,
 /area/space)
 "Ga" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/cyan{
@@ -4671,10 +4708,7 @@
 /turf/simulated/floor/tiled/white,
 /area/space)
 "Kj" = (
-/obj/machinery/door/firedoor/glass/hidden,
-/obj/effect/floor_decal/steeldecal/steel_decals5{
-	dir = 4
-	},
+/obj/machinery/door/firedoor/glass/hidden/steel,
 /turf/simulated/floor/tiled,
 /area/space)
 "Kk" = (
@@ -5569,7 +5603,7 @@
 /area/space)
 "Qn" = (
 /obj/structure/table/rack/steel,
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/monotile,
 /area/space)
 "Qq" = (
 /obj/effect/floor_decal/milspec/color/red/half{
@@ -5687,10 +5721,11 @@
 /turf/simulated/floor/plating,
 /area/space)
 "Rl" = (
-/obj/structure/bed/chair/comfy{
-	dir = 4
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 4
 	},
-/turf/simulated/floor/carpet/sblucarpet,
+/turf/simulated/floor/tiled/monotile,
 /area/space)
 "Rm" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/yellow,
@@ -6224,7 +6259,7 @@
 	},
 /area/space)
 "Ww" = (
-/obj/structure/bed/chair/comfy{
+/obj/structure/bed/chair/sofa/corp{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/sblucarpet,
@@ -9680,7 +9715,7 @@ Su
 Su
 Su
 Su
-Su
+YJ
 Su
 Su
 Su
@@ -9821,10 +9856,10 @@ Su
 Su
 Su
 Su
-Su
-Su
-Su
-Su
+YJ
+YJ
+YJ
+YJ
 Su
 Su
 Su
@@ -9962,11 +9997,11 @@ Su
 Su
 Su
 Su
-Su
-Su
-Su
-Su
-Su
+YJ
+YJ
+YJ
+YJ
+YJ
 Su
 Su
 Su
@@ -10104,10 +10139,10 @@ Su
 Su
 Su
 Su
-Su
-Su
-Su
-Su
+YJ
+YJ
+YJ
+YJ
 Su
 Su
 Su
@@ -10246,10 +10281,10 @@ Su
 Su
 Su
 Su
-Su
-Su
-Su
-Su
+YJ
+YJ
+YJ
+YJ
 Su
 Su
 Su
@@ -10388,9 +10423,9 @@ Su
 Su
 Su
 Su
-Su
-Su
-Su
+YJ
+YJ
+YJ
 Su
 Su
 Su
@@ -10539,11 +10574,11 @@ Su
 Su
 Su
 Su
-Su
-Su
-Su
-Su
-Su
+YJ
+YJ
+YJ
+YJ
+YJ
 Su
 Su
 Su
@@ -10961,15 +10996,15 @@ Su
 Su
 Su
 Su
+YJ
+YJ
+YJ
 Su
 Su
 Su
-Su
-Su
-Su
-Su
-Su
-Su
+YJ
+YJ
+YJ
 Su
 Su
 Su
@@ -11101,17 +11136,17 @@ Su
 Su
 Su
 Su
+YJ
+YJ
+YJ
+Su
+YJ
 Su
 Su
 Su
+YJ
 Su
-Su
-Su
-Su
-Su
-Su
-Su
-Su
+YJ
 Su
 Su
 Su
@@ -11242,18 +11277,18 @@ Su
 Su
 Su
 Su
+YJ
+YJ
 Su
 Su
 Su
+YJ
 Su
 Su
 Su
-Su
-Su
-Su
-Su
-Su
-Su
+YJ
+YJ
+YJ
 Su
 Su
 Su
@@ -11384,13 +11419,13 @@ Su
 Su
 Su
 Su
+YJ
+YJ
 Su
 Su
 Su
 Su
-Su
-Su
-Su
+YJ
 Su
 Su
 Su
@@ -11527,12 +11562,12 @@ Su
 Su
 Su
 Su
+YJ
 Su
 Su
 Su
 Su
-Su
-Su
+YJ
 Su
 Su
 Su
@@ -11669,12 +11704,12 @@ Su
 Su
 Su
 Su
+YJ
+YJ
 Su
 Su
-Su
-Su
-Su
-Su
+YJ
+YJ
 Su
 Su
 Su
@@ -11812,10 +11847,10 @@ Su
 Su
 Su
 Su
-Su
-Su
-Su
-Su
+YJ
+YJ
+YJ
+YJ
 Su
 Su
 Su
@@ -13275,6 +13310,16 @@ MF
 wz
 wz
 wz
+MF
+MF
+wz
+wz
+wz
+wz
+MF
+MF
+wz
+xn
 wz
 wz
 wz
@@ -13282,18 +13327,8 @@ wz
 wz
 wz
 wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
-wz
+MF
+MF
 wz
 wz
 wz
@@ -13426,7 +13461,7 @@ EH
 EH
 EH
 EH
-EH
+pO
 EH
 EH
 EH
@@ -13562,13 +13597,13 @@ wz
 wz
 wz
 wz
+gK
+gK
 wz
 wz
 wz
 wz
-wz
-wz
-wz
+Kj
 wz
 wz
 wz
@@ -14558,8 +14593,8 @@ Da
 Qw
 HW
 ED
-eB
-GT
+EH
+ru
 Da
 dM
 hz
@@ -14700,10 +14735,10 @@ Da
 ZY
 HW
 ED
-fD
-XT
+Rl
+uE
 Da
-Ya
+Da
 Ya
 Ya
 Ya
@@ -14845,7 +14880,7 @@ HW
 tr
 Qq
 Qq
-Qq
+nJ
 Qq
 Qq
 Qq
@@ -14987,7 +15022,7 @@ WW
 Zs
 Zs
 Zs
-Zs
+nJ
 HW
 Zs
 Zs
@@ -17410,7 +17445,7 @@ Da
 Da
 Da
 Da
-Su
+Da
 Su
 Su
 Su
@@ -17551,8 +17586,8 @@ Da
 TM
 LM
 Ej
+oM
 Da
-Su
 Su
 Su
 Su
@@ -17693,8 +17728,8 @@ Da
 ka
 ka
 ka
+ka
 Da
-Su
 Su
 Su
 Su
@@ -17834,9 +17869,9 @@ iY
 nJ
 ka
 ka
-Rl
+ka
+ka
 Da
-Su
 Su
 Su
 Su
@@ -17975,10 +18010,10 @@ wz
 UC
 Da
 ka
-ka
+nN
+Ti
 Ti
 Da
-Su
 Su
 Su
 Su
@@ -18117,10 +18152,10 @@ YF
 wv
 Da
 or
-ka
+FV
 Ww
+ze
 Da
-Su
 Su
 Su
 Su

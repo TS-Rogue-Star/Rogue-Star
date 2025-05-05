@@ -31,71 +31,73 @@
 //////// Excursion Shuttle /////////////
 ////////////////////////////////////////
 // The 'shuttle' of the excursion shuttle
-/datum/shuttle/autodock/overmap/excursion
-	name = "Excursion Shuttle"
+/datum/shuttle/autodock/overmap/sp_excursion
+	name = "Sirius Point Excursion Shuttle"
 	warmup_time = 0
-	current_location = "tether_excursion_hangar"
+	current_location = "sp_excursion_hangar"
 	docking_controller_tag = "expshuttle_docker"
 	shuttle_area = list(/area/shuttle/excursion/cockpit, /area/shuttle/excursion/general, /area/shuttle/excursion/cargo, /area/shuttle/excursion/power)
 	fuel_consumption = 3
 	move_direction = NORTH
 
 // The 'ship' of the excursion shuttle
-/obj/effect/overmap/visitable/ship/landable/excursion
-	name = "Excursion Shuttle"
-	desc = "The traditional Excursion Shuttle. NT Approved!"
+/obj/effect/overmap/visitable/ship/landable/sp_excursion
+	name = "Sirius Point Excursion Shuttle"
+	desc = "The reliable Excursion Shuttle. NT Approved!"
 	icon_state = "htu_destroyer_g"
 	vessel_mass = 8000
 	vessel_size = SHIP_SIZE_SMALL
-	shuttle = "Excursion Shuttle"
+	shuttle = "Sirius Point Excursion Shuttle"
 
-/obj/machinery/computer/shuttle_control/explore/excursion
+/obj/machinery/computer/shuttle_control/explore/sp_excursion
 	name = "short jump console"
-	shuttle_tag = "Excursion Shuttle"
+	shuttle_tag = "Sirius Point Excursion Shuttle"
 	req_one_access = list(access_pilot)
 
-/////MOONSTUFF/////
-// The shuttle's 'shuttle' computer
-/obj/machinery/computer/shuttle_control/explore/sdboat
-	name = "Starstuff control console"
-	shuttle_tag = "Starstuff"
-	req_one_access = list(access_pilot)
-
-/obj/effect/overmap/visitable/ship/landable/sd_boat
-	name = "NTV Starstuff"
+////////////////////////////////////////
+////////////// MOONSTUFF ///////////////
+////////////////////////////////////////
+/obj/effect/overmap/visitable/ship/landable/spboat
+	name = "NTV Moonstuff"
 	desc = "A small shuttle from the NRV Stellar Delight."
 	vessel_mass = 2500
 	vessel_size = SHIP_SIZE_TINY
-	shuttle = "Starstuff"
+	shuttle = "Moonstuff"
 	known = TRUE
 
 // A shuttle lateloader landmark
-/obj/effect/shuttle_landmark/shuttle_initializer/sdboat
-	name = "Port Shuttlepad"
-	base_area = /area/stellardelight/deck3/exterior
+/obj/effect/shuttle_landmark/shuttle_initializer/spboat
+	name = "West Shuttlepad"
+	base_area = /area/siriuspoint
 	base_turf = /turf/simulated/floor/reinforced/airless
-	landmark_tag = "port_shuttlepad"
-	docking_controller = "sd_port_landing"
-	shuttle_type = /datum/shuttle/autodock/overmap/sdboat
+	landmark_tag = "west_shuttlepad"
+	docking_controller = "sp_west_landing"
+	shuttle_type = /datum/shuttle/autodock/overmap/spboat
 
-/datum/shuttle/autodock/overmap/sdboat
-	name = "Starstuff"
-	current_location = "port_shuttlepad"
-	docking_controller_tag = "sdboat_docker"
-	shuttle_area = list(/area/shuttle/sdboat/fore,/area/shuttle/sdboat/aft)
+// The shuttle's 'shuttle' computer
+/obj/machinery/computer/shuttle_control/explore/spboat
+	name = "Moonstuff control console"
+	shuttle_tag = "Moonstuff"
+	req_one_access = list(access_pilot)
+
+/datum/shuttle/autodock/overmap/spboat
+	name = "Moonstuff"
+	current_location = "west_shuttlepad"
+	docking_controller_tag = "spboat_docker"
+	shuttle_area = list(/area/shuttle/spboat/fore,/area/shuttle/spboat/aft)
 	fuel_consumption = 1
 	defer_initialisation = TRUE
 
-/area/shuttle/sdboat/fore
+/area/shuttle/spboat/fore
 	icon = 'icons/turf/areas_vr.dmi'
 	icon_state = "yelwhitri"
-	name = "Starstuff Cockpit"
+	name = "Moonstuff Cockpit"
 	requires_power = 1
 
-/area/shuttle/sdboat/aft
+/area/shuttle/spboat/aft
 	icon = 'icons/turf/areas_vr.dmi'
 	icon_state = "yelwhitri"
-	name = "Starstuff Crew Compartment"
+	name = "Moonstuff Crew Compartment"
 	requires_power = 1
 
 /////Virgo Flyer/////
