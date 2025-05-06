@@ -7,7 +7,7 @@
 	icon_state = "asteroid"
 	color="#8da1bb"
 	edge_blending_priority = 4
-	icon_edge = 'maps/sirius_point/sp_asteroid.dmi'
+	icon_edge = 'maps/sirius_point/sp_asteroid_edge.dmi'
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors
 	outdoors = 1
 /turf/simulated/floor/plating/external/outdoors
