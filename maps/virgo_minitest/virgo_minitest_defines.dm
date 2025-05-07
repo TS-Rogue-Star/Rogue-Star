@@ -65,8 +65,9 @@
 	station_z_levels = list("minitest1","minitest2","minitest3")	//RS ADD
 
 /datum/map/virgo_minitest/New()
-	..()
-	SSticker.start_immediately = TRUE
+	. = ..()	//RS EDIT
+	if(.)	//RS EDIT
+		SSticker.start_immediately = TRUE
 
 /datum/map_z_level/minitest/station
 	z = Z_LEVEL_MAIN_VIRGO_TESTING
