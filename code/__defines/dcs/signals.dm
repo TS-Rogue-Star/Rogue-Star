@@ -779,3 +779,7 @@
 	#define ELEMENT_CONFLICT_FOUND	(1<<0)
 //From reagents touch_x.
 #define COMSIG_REAGENTS_TOUCH "reagent_touch"
+//RS ADD START
+#define COMSIG_FACE_ATOM "face_atom"
+#define COMSIG_GET_ATTACK_SPEED "get_attack_speed"
+//RS ADD END

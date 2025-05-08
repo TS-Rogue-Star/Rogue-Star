@@ -189,8 +189,8 @@
 //'include_robo' only applies to healing, for legacy purposes, as all damage typically hurts both types of organs
 /mob/living/proc/adjustBruteLoss(var/amount,var/include_robo)
 	if(status_flags & GODMODE)	return 0	//godmode
-
 	if(amount > 0)
+		SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE)	//RS ADD
 		for(var/datum/modifier/M in modifiers)
 			if(!isnull(M.incoming_damage_percent))
 				if(M.energy_based)
@@ -222,6 +222,7 @@
 	if(status_flags & GODMODE)	return 0	//godmode
 
 	if(amount > 0)
+		SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE)	//RS ADD
 		for(var/datum/modifier/M in modifiers)
 			if(!isnull(M.incoming_damage_percent))
 				if(M.energy_based)
@@ -250,6 +251,7 @@
 	if(status_flags & GODMODE)	return 0	//godmode
 
 	if(amount > 0)
+		SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE)	//RS ADD
 		for(var/datum/modifier/M in modifiers)
 			if(!isnull(M.incoming_damage_percent))
 				if(M.energy_based)
@@ -284,6 +286,7 @@
 /mob/living/proc/adjustFireLoss(var/amount,var/include_robo)
 	if(status_flags & GODMODE)	return 0	//godmode
 	if(amount > 0)
+		SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE)	//RS ADD
 		for(var/datum/modifier/M in modifiers)
 			if(!isnull(M.incoming_damage_percent))
 				if(M.energy_based)
@@ -313,6 +316,7 @@
 	if(status_flags & GODMODE)	return 0	//godmode
 
 	if(amount > 0)
+		SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE)	//RS ADD
 		for(var/datum/modifier/M in modifiers)
 			if(!isnull(M.incoming_damage_percent))
 				if(M.energy_based)
@@ -339,6 +343,9 @@
 
 /mob/living/proc/adjustBrainLoss(var/amount)
 	if(status_flags & GODMODE)	return 0	//godmode
+	if(amount > 0)	//RS ADD
+		SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE)	//RS ADD
+
 	brainloss = min(max(brainloss + amount, 0),(getMaxHealth()*2))
 
 /mob/living/proc/setBrainLoss(var/amount)
@@ -351,6 +358,7 @@
 /mob/living/proc/adjustHalLoss(var/amount)
 	if(status_flags & GODMODE)	return 0	//godmode
 	if(amount > 0)
+		SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE)	//RS ADD
 		for(var/datum/modifier/M in modifiers)
 			if(M.energy_based && (!isnull(M.incoming_hal_damage_percent) || !isnull(M.disable_duration_percent)))
 				M.energy_source.use(M.damage_cost*amount) // Cost of the Damage absorbed.
@@ -415,6 +423,7 @@
 
 /mob/living/AdjustStunned(amount)
 	if(amount > 0)
+		SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE)	//RS ADD
 		for(var/datum/modifier/M in modifiers)
 			if(!isnull(M.disable_duration_percent))
 				amount = round(amount * M.disable_duration_percent)
@@ -441,6 +450,7 @@
 
 /mob/living/AdjustWeakened(amount)
 	if(amount > 0)
+		SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE)	//RS ADD
 		for(var/datum/modifier/M in modifiers)
 			if(!isnull(M.disable_duration_percent))
 				amount = round(amount * M.disable_duration_percent)
@@ -467,6 +477,7 @@
 
 /mob/living/AdjustParalysis(amount)
 	if(amount > 0)
+		SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE)	//RS ADD
 		for(var/datum/modifier/M in modifiers)
 			if(!isnull(M.disable_duration_percent))
 				amount = round(amount * M.disable_duration_percent)

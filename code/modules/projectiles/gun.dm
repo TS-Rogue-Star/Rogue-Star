@@ -361,6 +361,7 @@
 	user.setMoveCooldown(shoot_time) //no moving while shooting either
 
 	next_fire_time = world.time + shoot_time
+	SEND_SIGNAL(user,COMSIG_MOB_FIRED_GUN)	//RS ADD
 
 	var/held_twohanded = (user.can_wield_item(src) && src.is_held_twohanded(user))
 

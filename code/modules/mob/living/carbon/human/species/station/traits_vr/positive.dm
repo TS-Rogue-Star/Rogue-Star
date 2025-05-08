@@ -369,3 +369,14 @@
 /datum/trait/positive/wall_climber_pro/apply(var/datum/species/S,var/mob/living/carbon/human/H)
 	..()
 	S.can_climb = TRUE
+
+/datum/trait/positive/blend_in	//RS ADD START
+	name = "Chameleon Blend In"
+	desc = "Allows one to blend in to their environment while immobile, becoming very difficult to see!"
+	cost = 1
+	custom_only = TRUE
+
+/datum/trait/positive/blend_in/apply(var/datum/species/S,var/mob/living/carbon/human/H)
+	..()
+	H.verbs |= /mob/living/proc/chameleon_blend
+	//RS ADD END
