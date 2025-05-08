@@ -19,7 +19,7 @@
 		return
 
 	add_modifier(/datum/modifier/blend_in)	//The meat happens with a modifier baby!!!
-	playsound(src, 'sound/effects/EMPulse.ogg', 75, 1)
+	playsound(src, 'sound/effects/basscannon.ogg', 5, 1)
 	return TRUE
 
 /datum/modifier/blend_in	//The magic happens here
