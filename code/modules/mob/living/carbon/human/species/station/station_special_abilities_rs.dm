@@ -4,12 +4,23 @@
 	set category = "Abilities"
 	set desc = "Stand still to blend in!"
 
-	if(stat || paralysis || weakened || stunned || world.time < last_special)
+	if(world.time < last_special)
+		to_chat(src, "<span class='warning'>You can't do that yet!</span>")
+		return
+
+	if(stat || paralysis || weakened || stunned)
 		to_chat(src, "<span class='warning'>You can't do that in your current state.</span>")
 		return
 
 	if(alpha < 255)
-		to_chat(src, "<span class='warning'>You seem to already be blending in, silly!</span>")
+		var/dunnit = FALSE
+		for(var/datum/modifier/M in modifiers)
+			if(M.type == /datum/modifier/blend_in)
+				var/datum/modifier/blend_in/B = M
+				B.expire()
+				dunnit = TRUE
+		if(!dunnit)
+			to_chat(src, "<span class='warning'>You can't do that in your current state.</span>")
 		return
 
 	last_special = world.time + 5 SECONDS	//Please do not spam ty ilu
