@@ -419,12 +419,14 @@
 	if(ishuman(AM))
 		var/mob/living/carbon/human/L = AM
 		L.fur_submerge()
+		L.plane = -26	//RS ADD
 
 /turf/simulated/floor/outdoors/fur/Exited(atom/movable/AM, atom/new_loc)
 	. = ..()
 	if(ishuman(AM))
 		var/mob/living/carbon/human/L = AM
 		L.fur_submerge()
+		L.plane = initial(L.plane)	//RS ADD
 
 /mob/living/carbon/human/proc/fur_submerge()
 	if(QDESTROYING(src))

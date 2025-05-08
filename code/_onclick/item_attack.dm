@@ -79,6 +79,7 @@ avoid code duplication. This includes items that may sometimes act as a standard
 // Same as above but actually does useful things.
 // W is the item being used in the attack, if any. modifier is if the attack should be longer or shorter than usual, for whatever reason.
 /mob/living/get_attack_speed(var/obj/item/W)
+	SEND_SIGNAL(src,COMSIG_GET_ATTACK_SPEED)	//RS ADD
 	var/speed = base_attack_cooldown
 	if(W && istype(W))
 		speed = W.attackspeed
