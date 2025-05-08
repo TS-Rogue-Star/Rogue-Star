@@ -269,6 +269,8 @@
 /mob/living/carbon/human/proc/get_visible_name()
 	if(ability_flags & AB_PHASE_SHIFTED)
 		return "Something"	// Something
+	if(alpha <= EFFECTIVE_INVIS)	//RS ADD - You're basically invisible lol
+		return "Unknown"	//RS ADD
 	if( wear_mask && (wear_mask.flags_inv&HIDEFACE) )	//Wearing a mask which hides our face, use id-name if possible
 		return get_id_name("Unknown")
 	if( head && (head.flags_inv&HIDEFACE) )

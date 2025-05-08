@@ -102,6 +102,7 @@
 	playsound(src, 'sound/weapons/wave.ogg', 60, 1)
 
 	user.visible_message("<span class='warning'>[user] fires \the [src]!</span>","<span class='warning'>You fire \the [src]!</span>")
+	SEND_SIGNAL(user,COMSIG_MOB_FIRED_GUN)	//RS ADD
 
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(4, 1, A)

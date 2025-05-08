@@ -233,8 +233,17 @@
 		return FALSE
 
 	if(respect_alpha && the_target.alpha <= alpha_vision_threshold) // Fake invis.
-		ai_log("can_see_target() : Target ([the_target]) was sufficently transparent to holder and is hidden. Exiting.", AI_LOG_TRACE)
-		return FALSE
+		var/hidden = TRUE	//RS ADD START - Sneaky, but not that sneaky. >:O
+		if(isliving(the_target))
+			var/mob/living/L = the_target
+			for(var/datum/modifier/M in L.modifiers)
+				if(M.type == /datum/modifier/blend_in)
+					var/datum/modifier/blend_in/B = M
+					if(B.chargup < 4)
+						hidden = FALSE
+		if(hidden)	//RS ADD END
+			ai_log("can_see_target() : Target ([the_target]) was sufficently transparent to holder and is hidden. Exiting.", AI_LOG_TRACE)
+			return FALSE
 
 	if(get_dist(holder, the_target) > view_range) // Too far away.
 		ai_log("can_see_target() : Target ([the_target]) was too far from holder. Exiting.", AI_LOG_TRACE)
