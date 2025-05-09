@@ -1209,8 +1209,9 @@
 
 	icon_selected = 0
 	icon_selection_tries = triesleft
-	if(module_sprites.len == 1 || !client) //RS Edit: Remove check that was causing issues (Lira, May 2025)
-		sprite_datum = module_sprites[1]
+	if(module_sprites.len == 1 || !client)
+		if(!(sprite_datum in module_sprites))  //RS Edit: Pull update_multibelly out of check (Lira, May 2025)
+			sprite_datum = module_sprites[1]
 		update_multibelly()
 	else
 		var/selection = tgui_input_list(src, "Select an icon! [triesleft ? "You have [triesleft] more chance\s." : "This is your last try."]", "Robot Icon", module_sprites)
