@@ -11,6 +11,7 @@ GLOBAL_VAR(special_station_name)
 	var/list/possible_verbs = list(
 		/mob/living/proc/blue_shift,
 		/mob/living/proc/vore_leap_attack,
+		/mob/living/proc/sense_ghosts,
 		/mob/living/proc/set_size,
 		/mob/living/proc/pomf
 		)
@@ -108,6 +109,29 @@ GLOBAL_VAR(special_station_name)
 
 	if(Adjacent(choice))	//We leapt at them but we didn't manage to hit them, let's see if we're next to them
 		choice.Weaken(2)	//get knocked down, idiot
+
+/mob/living/proc/sense_ghosts()
+	set name = "Sense Incorporeal Beings"
+	set desc = "Sense if there is a ghost nearby!"
+
+	if(stat || paralysis || weakened || stunned) //Can't focus on ghosts if you're weakened/occupied
+		to_chat(src, "<span class='warning'>You can't do that in your current state.</span>")
+		return
+
+	var/mob/observer/dead/spook = locate() in range(src, 3) //Locate any ghosts in 3 tiles
+	if(spook)
+		var/turf/T = get_turf(spook)
+		var/list/visible = list()
+		for(var/obj/O in T.contents)
+			if(!O.invisibility && O.name)
+				visible += O
+		if(visible.len)
+			var/atom/A = pick(visible) //Pick a ghost that has something nearby
+			to_chat(src, "<span class='notice'>You sense something is[istype(A) ? " near [A]":""].</span>")
+		else //Otherwise, you are merely in the presence of something spooky
+			to_chat(src, "<span class='notice'>You sense something is nearby.</span>")
+	else 	//Nothing spooky here!
+		to_chat(src, "<span class='notice'>Nothing seems to be nearby.</span>")
 
 /client/proc/change_station_name()
 	set category = "Fun"
