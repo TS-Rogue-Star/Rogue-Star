@@ -1570,7 +1570,7 @@
 		vore_fullness_ex = list("sleeper" = 0)
 		vore_icon_bellies = list("sleeper")
 		if(sprite_datum.has_sleeper_light_indicator)
-			vore_light_states = list("sleeper" = 0)  //RS Edit: FIx typo (Lira, May 2025)
+			vore_light_states = list("sleeper" = 0)  //RS Edit: Fix typo (Lira, May 2025)
 			sprite_datum.belly_light_list = list("sleeper")
 	update_fullness() //Set how full the newly defined bellies are, if they're already full
 
