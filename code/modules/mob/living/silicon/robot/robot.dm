@@ -1209,7 +1209,7 @@
 
 	icon_selected = 0
 	icon_selection_tries = triesleft
-	if(module_sprites.len == 1 || !client)
+	if(module_sprites.len == 1 || !client) //RS Edit: Remove check that was causing issues (Lira, May 2025)
 		sprite_datum = module_sprites[1]
 		update_multibelly()
 	else
@@ -1570,7 +1570,7 @@
 		vore_fullness_ex = list("sleeper" = 0)
 		vore_icon_bellies = list("sleeper")
 		if(sprite_datum.has_sleeper_light_indicator)
-			vore_light_states = list("sleeper" = 0)
+			vore_light_states = list("sleeper" = 0)  //RS Edit: FIx typo (Lira, May 2025)
 			sprite_datum.belly_light_list = list("sleeper")
 	update_fullness() //Set how full the newly defined bellies are, if they're already full
 
