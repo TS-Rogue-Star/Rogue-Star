@@ -1210,9 +1210,8 @@
 	icon_selected = 0
 	icon_selection_tries = triesleft
 	if(module_sprites.len == 1 || !client)
-		if(!(sprite_datum in module_sprites))
-			sprite_datum = module_sprites[1]
-			update_multibelly()
+		sprite_datum = module_sprites[1]
+		update_multibelly()
 	else
 		var/selection = tgui_input_list(src, "Select an icon! [triesleft ? "You have [triesleft] more chance\s." : "This is your last try."]", "Robot Icon", module_sprites)
 		sprite_datum = selection
@@ -1571,7 +1570,7 @@
 		vore_fullness_ex = list("sleeper" = 0)
 		vore_icon_bellies = list("sleeper")
 		if(sprite_datum.has_sleeper_light_indicator)
-			vore_light_states = list("sleeepr" = 0)
+			vore_light_states = list("sleeper" = 0)
 			sprite_datum.belly_light_list = list("sleeper")
 	update_fullness() //Set how full the newly defined bellies are, if they're already full
 
