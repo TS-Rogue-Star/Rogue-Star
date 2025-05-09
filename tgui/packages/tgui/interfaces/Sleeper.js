@@ -38,7 +38,7 @@ export const Sleeper = (props, context) => {
   const body = hasOccupant ? <SleeperMain /> : <SleeperEmpty />;
   return (
     <Window width={550} height={760} resizable>
-      <Window.Content className="Layout__content--flexColumn">
+      <Window.Content scrollable className="Layout__content--flexColumn">
         {body}
       </Window.Content>
     </Window>
