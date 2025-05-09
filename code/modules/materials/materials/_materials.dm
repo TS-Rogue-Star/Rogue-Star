@@ -308,7 +308,14 @@ var/list/name_to_material
 
 // Places a girder object when a wall is dismantled, also applies reinforced material.
 /datum/material/proc/place_dismantled_girder(var/turf/target, var/datum/material/reinf_material, var/datum/material/girder_material)
-	var/obj/structure/girder/G = new(target)
+	// RS Add Start: Bay and Eris walls get special treatment (Lira, May 2025)
+	var/path = /obj/structure/girder
+	if(istype(target, /turf/simulated/wall/bay))
+		path = /obj/structure/girder/bay
+	else if(istype(target, /turf/simulated/wall/eris))
+		path = /obj/structure/girder/eris
+	// RS Add End
+	var/obj/structure/girder/G = new path (target) // RS Edit: Use the new girder paths (Lira, May 2025)
 	if(reinf_material)
 		G.reinf_material = reinf_material
 		G.reinforce_girder()
