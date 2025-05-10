@@ -124,7 +124,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 			qdel(L)
 			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 			S.use(1)
-			ChangeTurf(/turf/simulated/floor/airless)
+			ChangeTurf(/turf/simulated/floor) // RS Edit: Oops we were treating open tiles as airless (Lira, May 2025)
 			return
 		else
 			to_chat(user, "<span class='warning'>The plating is going to need some support.</span>")
