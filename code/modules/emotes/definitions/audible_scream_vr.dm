@@ -17,6 +17,24 @@
 				)
 			if(3)
 				return
+			if(4)
+				return list(
+					"sound" = pick("sound/screams/bau1.ogg","sound/screams/bau2.ogg","sound/screams/bau3.ogg","sound/screams/bau4.ogg","sound/screams/bau5.ogg","sound/screams/bau6.ogg","sound/screams/bau7.ogg","sound/screams/bau8.ogg","sound/screams/bau9.ogg","sound/screams/bau10.ogg","sound/screams/bau11.ogg","sound/screams/bau12.ogg","sound/screams/bau13.ogg","sound/screams/bau14.ogg","sound/screams/bau15.ogg"),
+					"vol" = emote_volume
+				)
+
+	switch(H.species.name)
+		if(SPECIES_VULPKANIN)
+			return list(
+				"sound" = pick("sound/screams/bau1.ogg","sound/screams/bau2.ogg","sound/screams/bau3.ogg","sound/screams/bau4.ogg","sound/screams/bau5.ogg","sound/screams/bau6.ogg","sound/screams/bau7.ogg","sound/screams/bau8.ogg","sound/screams/bau9.ogg","sound/screams/bau10.ogg","sound/screams/bau11.ogg","sound/screams/bau12.ogg","sound/screams/bau13.ogg","sound/screams/bau14.ogg","sound/screams/bau15.ogg"),
+				"vol" = emote_volume
+			)
+		if("Wolpin")
+			return list(
+				"sound" = pick("sound/screams/bau1.ogg","sound/screams/bau2.ogg","sound/screams/bau3.ogg","sound/screams/bau4.ogg","sound/screams/bau5.ogg","sound/screams/bau6.ogg","sound/screams/bau7.ogg","sound/screams/bau8.ogg","sound/screams/bau9.ogg","sound/screams/bau10.ogg","sound/screams/bau11.ogg","sound/screams/bau12.ogg","sound/screams/bau13.ogg","sound/screams/bau14.ogg","sound/screams/bau15.ogg"),
+				"vol" = emote_volume
+			)
+
 
 	if(H.get_gender() == FEMALE)
 		return list(
