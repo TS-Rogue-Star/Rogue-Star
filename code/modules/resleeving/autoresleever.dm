@@ -98,7 +98,7 @@
 	if(record_found)
 		charjob = record_found.fields["real_rank"]
 	//RS ADD START
-	else if(ghost.mind)		//Ghosts have minds if they spawned and died, so we can just get their job from that if they don't have records
+	else if(ghost.mind && ghost.mind.name == ghost_client.prefs.real_name)		//Ghosts have minds if they spawned and died, so we can just get their job from that if they don't have records || RS edit: Add a name check to prevent autoresleeving as a different character (Lira, May 2025)
 		var/datum/mind/ourmind = ghost.mind
 		charjob = ourmind.assigned_role
 	//RS ADD END
