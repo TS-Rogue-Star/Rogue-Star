@@ -28,11 +28,14 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 	var/destination = null // the department we're sending to
 
 /obj/machinery/photocopier/faxmachine/New()
+	. = ..()	//RS ADD
 	allfaxes += src
+
+/obj/machinery/photocopier/faxmachine/Initialize()	//RS ADD
+	. = ..()	//RS ADD
 	if(!destination) destination = "[using_map.boss_name]"
 	if( !(("[department]" in alldepartments) || ("[department]" in admin_departments)) )
 		alldepartments |= department
-	..()
 
 /obj/machinery/photocopier/faxmachine/attack_hand(mob/user as mob)
 	user.set_machine(src)
