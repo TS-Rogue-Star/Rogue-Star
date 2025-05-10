@@ -48,8 +48,7 @@
 		user.visible_message("<span class='warning'>With a fluid movement, [user] unfolds their shotgun's stock and foregrip.</span>",\
 		"<span class='warning'>You unfold the shotgun's stock and foregrip.</span>",\
 		"You hear an ominous click.")
-		icon_state = "compshotc" //RS EDIT: i think that it's still trying to reference a sprite that doesn't exist. my previous fix didn't work.
-		item_state = "cshotgun"
+		icon_state = "compshot" //RS EDIT: Third time's the charm.
 
 		w_class = ITEMSIZE_LARGE
 		one_handed_penalty = 15 //Stock extended to steady it, even with just the one hand.
@@ -58,8 +57,7 @@
 		user.visible_message("<b>\The [user]</b> collapses their shotgun's stock and fold it's foregrip.",\
 		"<span class='notice'>You fold the shotgun's stock and foregrip.</span>",\
 		"You hear a click.")
-		icon_state = "compshotc"
-		item_state = "cshotgun"
+		icon_state = "compshotc" //RS EDIT: Finally figured it out. it was messing with item_state when it shouldn't have, but it SHOULD have been changing the icon_state.
 		w_class = ITEMSIZE_NORMAL
 		one_handed_penalty = 30
 		recoil = 5
