@@ -254,3 +254,8 @@ img.icon.bigicon		{max-height: 32px;}
 
 	transition: background-color 15s;
 }
+
+/* RS Add: Fix duplicate sprite bug by hiding sprite sheet icon to account for behavior change in 515 (Lira, May 2025) */
+img.icon:not([src^="data:image/"]) {
+    display: none !important;
+}
