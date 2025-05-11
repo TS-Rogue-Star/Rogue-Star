@@ -63,6 +63,8 @@
 
 // Step 3, pick among the possible, attackable targets.
 /datum/ai_holder/proc/pick_target(list/targets)
+	if(holder.hunter)	//RS ADD
+		targets = ai_hunt(targets)	//RS ADD
 	if(target) // If we already have a target, but are told to pick again, calculate the lowest distance between all possible, and pick from the lowest distance targets.
 		targets = target_filter_distance(targets)
 	else
@@ -352,3 +354,36 @@
 	if(micro_hunt && !(L.get_effective_size(TRUE) <= micro_hunt_size))	//Are they small enough to get?
 		return FALSE
 	return TRUE // Let's go!
+
+/datum/ai_holder/proc/ai_hunt(var/list/target_list)	//RS ADD START
+	if(!holder.hunter)
+		return FALSE
+	var/list/final_list = list()
+	for(var/mob/living/L in target_list)
+		if(!isliving(L))
+			return FALSE
+		var/huntability = 0
+		if(holder.mob_size > L.mob_size)	//It's safer to hunt things smaller than me
+			huntability ++
+		if(holder.size_multiplier > L.size_multiplier)	//It's safer to hunt smaller things
+			huntability ++
+		if(holder.health > L.health)	//It's safer to hunt weaker things
+			huntability ++
+		if(L.weakened || L.stunned || L.sleeping || L.resting)	//It's safer to hunt vulnerable things
+			huntability ++
+		if(isanimal(L) && isanimal(holder))
+			var/mob/living/simple_mob/S = L
+			var/mob/living/simple_mob/Sh = holder
+			if(Sh.melee_damage_upper > S.melee_damage_upper)	//It's safer to hunt weaker things
+				huntability ++
+		huntability *= 500
+
+		if(L.hunter)
+			huntability *= 0.5	//We would prefer to hunt things that aren't hunting us.
+
+		to_world("[holder][L]'s huntability score is [huntability]! Our nutrition is [holder.nutrition].")
+
+		if(holder.nutrition <= huntability)
+			to_world("[L] is a valid target.")
+			final_list |= L
+	return final_list	//RS ADD END
