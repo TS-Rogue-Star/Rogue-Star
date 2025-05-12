@@ -53,8 +53,5 @@
 	layer = ABOVE_WINDOW_LAYER
 /obj/structure/noticeboard
 	layer = ABOVE_WINDOW_LAYER
-
-/* Why is this here?
-/datum/random_map/noise/ore/virgo2		// Less OP generation map, but better than Underdark
-	deep_val = 0.7
-	rare_val = 0.5*/
+/obj/structure/window/plastitanium/full/dome
+	name = "hybrid window"
