@@ -12,6 +12,7 @@
 	var/absorbed = FALSE				// If a mob is absorbed into another
 	var/vore_taste = null				// What the character tastes like
 	var/vore_smell = null				// What the character smells like
+	var/olfaction_track = FALSE			//RS ADD - If true smelling allows one to track the one they smelled.
 	var/noisy = FALSE					// Toggle audible hunger.
 	var/permit_healbelly = TRUE
 	var/stumble_vore = TRUE				//Enabled by default since you have to enable drop pred/prey to do this anyway

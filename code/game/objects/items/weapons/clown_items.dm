@@ -34,6 +34,8 @@
 
 /obj/item/weapon/soap/afterattack(atom/target, mob/user as mob, proximity)
 	if(!proximity) return
+	if(isliving(target))	//RS ADD
+		SEND_SIGNAL(target,COMSIG_MOB_WASHED)	//RS ADD - smelly
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
 	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
 	if(user.client && (target in user.client.screen))
