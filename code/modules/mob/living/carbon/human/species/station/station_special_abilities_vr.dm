@@ -1365,9 +1365,20 @@
 	set category = "Abilities"
 	set desc = "Grab a target with any of your appendages!"
 
-	if(stat || paralysis || weakened || stunned || world.time < last_special) //No tongue flicking while stunned.
+	if(stat || paralysis || weakened || stunned) //No tongue flicking while stunned.
 		to_chat(src, "<span class='warning'>You can't do that in your current state.</span>")
 		return
+
+	var/datum/modifier/blend_in/B	//RS ADD START - Allow long vore trait to be used with chameleon blend in trait!
+	if(world.time < last_special)
+		var/dunnit = FALSE
+		for(var/datum/modifier/M in modifiers)
+			if(M.type == /datum/modifier/blend_in)
+				B = M
+				dunnit = TRUE
+		if(!dunnit)
+			to_chat(src, "<span class='warning'>You can't do that in your current state.</span>")
+			return	//RS ADD END
 
 	last_special = world.time + 10 //Anti-spam.
 
@@ -1423,9 +1434,8 @@
 		var/obj/item/projectile/beam/appendage/appendage_attack = new /obj/item/projectile/beam/appendage(get_turf(loc))
 		appendage_attack.launch_projectile(target, BP_TORSO, src) //Send it.
 		last_special = world.time + 100 //Cooldown for successful strike.
-
-
-
+		if(B)	//RS ADD
+			B.expire()	//RS ADD
 
 /obj/item/projectile/beam/appendage //The tongue projecitle.
 	name = "appendage"

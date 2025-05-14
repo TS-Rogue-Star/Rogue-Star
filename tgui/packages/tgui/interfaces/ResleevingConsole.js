@@ -142,11 +142,11 @@ export const ResleevingConsole = (props, context) => {
   return (
     <Window width={640} height={520} resizable>
       <ComplexModal maxWidth="75%" maxHeight="75%" />
-      <Window.Content className="Layout__content--flexColumn">
+      <Window.Content scrollable className="Layout__content--flexColumn">
         {body}
       </Window.Content>
     </Window>
-  );
+  ); // RS Edit: Adds Scrolling for 516 (Lira, May 2025)
 };
 
 const ResleevingConsoleNavigation = (props, context) => {

@@ -132,6 +132,9 @@ var/list/all_maps = list()
 	var/list/z_list = list()	//RS ADD - List of Zs by number
 
 /datum/map/New()
+	if(global.using_map && global.using_map != src)	//RS ADD START
+		qdel(src)
+		return FALSE				//RS ADD END
 	..()
 	if(zlevel_datum_type)
 		for(var/type in subtypesof(zlevel_datum_type))
@@ -150,6 +153,7 @@ var/list/all_maps = list()
 		default_skybox = new default_skybox()
 	else
 		default_skybox = new()
+	return TRUE	//RS ADD
 
 // Gets the current time on a current zlevel, and returns a time datum
 /datum/map/proc/get_zlevel_time(var/z)
