@@ -10,11 +10,9 @@
 //	color="#8da1bb"
 	edge_blending_priority = 4
 	icon_edge = 'maps/sirius_point/sp_asteroid_edge.dmi'
-/turf/simulated/floor/tiled/asteroid_steel/airless/moonbase
+/turf/simulated/floor/plating/external/sp_asteroidplating
 	icon = 'maps/sirius_point/sp_asteroid.dmi'
 	icon_state = "asteroidfloor"
-/turf/simulated/floor/tiled/asteroid_steel/airless/moonbase/outdoors
-outdoors = 1
 
 /turf/simulated/floor/glass/reinforced/vacuum
 	oxygen = 0
@@ -24,15 +22,13 @@ outdoors = 1
 //outdoors versions of the above and some existing turfs
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors
 	outdoors = 1
+/turf/simulated/floor/plating/external/sp_asteroidplating/outdoors
+	outdoors = 1
 /turf/simulated/floor/plating/external/outdoors
 	outdoors = 1
 /turf/simulated/floor/reinforced/airless/outdoors
 	outdoors = 1
-/turf/simulated/floor/tiled/asteroid_steel/airless/moonbase
-	outdoors = 1
-/turf/simulated/floor/tiled/asteroid_steel/airless/moonbase
-	outdoors = 1
-/turf/simulated/floor/glass/reinforced/vacuum
+/turf/simulated/floor/glass/reinforced/vacuum/outdoors
 	outdoors = 1
 
 //Air-y moonrock for inside
@@ -41,6 +37,11 @@ outdoors = 1
 	icon_state = "asteroid"
 	sand_icon_path = 'maps/sirius_point/sp_asteroid.dmi'
 	sand_icon_state = "asteroid"
+	edge_blending_priority = 4
+	icon_edge = 'maps/sirius_point/sp_asteroid_edge.dmi'
+/turf/simulated/floor/plating/moonbase
+	icon = 'maps/sirius_point/sp_asteroid.dmi'
+	icon_state = "asteroidfloor"
 
 //Special turf to suck up the air
 /turf/space/cracked_asteroid/moonbase
@@ -48,6 +49,9 @@ outdoors = 1
 /turf/space/cracked_asteroid/moonbase/outdoors
 	outdoors = 1
 
+/turf/unsimulated/mineral/moonbase
+	name = "impassable rock"
+	color="#7ab6b6"
 
 //We may not need anything below this line thanks to the simultaneous map definitions
 // Virgo 3b things, for centcomm
