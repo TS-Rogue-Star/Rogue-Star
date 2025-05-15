@@ -173,26 +173,3 @@
 		to_chat(src,SPAN_NOTICE("You start paying attention to the smell of \the [OT.tracked_name] again!"))
 		OT.give_compass()
 		return
-
-	/*
-
-	var/feedback = list()
-	feedback += "There are noises of movement "
-	var/direction = get_dir(src, tracked)
-	if(direction)
-		feedback += "towards the [dir2text(direction)], "
-		switch(get_dist(src, tracked) / 50)
-			if(0 to 0.1)
-				feedback += "very close by."
-			if(0.1 to 0.2)
-				feedback += "close by."
-			if(0.2 to 0.4)
-				feedback += "some distance away."
-			if(0.4 to 0.8)
-				feedback += "further away."
-			else
-				feedback += "far away."
-	else // No need to check distance if they're standing right on-top of us
-		feedback += "right on top of you."
-	to_chat(src,jointext(SPAN_NOTICE(feedback),null))
-	*/
