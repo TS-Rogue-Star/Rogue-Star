@@ -271,7 +271,7 @@
 	emote_message_3p_target = "prbts at TARGET."
 	emote_sound = 'sound/voice/prbt.ogg'
 
-/decl/emote/audible/caw
+/decl/emote/audible/caw //RS Add
 	key = "caw"
 	emote_message_1p = "You caw! CAW!"
 	emote_message_3p = "caws! CAW!"
