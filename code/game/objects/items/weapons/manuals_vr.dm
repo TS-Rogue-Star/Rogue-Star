@@ -3,7 +3,7 @@
 	desc = "A set of corporate guidelines for keeping space stations running smoothly."
 	icon_state = "sop"
 	icon = 'icons/obj/library_vr.dmi'
-	author = "NanoTrasen"
+	author = "Huuuk Furok"
 	title = "Standard Operating Procedure"
 
 /obj/item/weapon/book/manual/standard_operating_procedure/New()
@@ -14,7 +14,7 @@
 		</head>
 
 		<body>
-		<iframe width='100%' height='97%' src="[config.wikiurl]Standard_Operating_Procedure&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+		<iframe width='100%' height='97%' src="[config.wikiurl]index.php?title=Standard_Operating_Procedure&action=render" frameborder="0" id="main_frame"></iframe>
 		</body>
 
 		</html>
