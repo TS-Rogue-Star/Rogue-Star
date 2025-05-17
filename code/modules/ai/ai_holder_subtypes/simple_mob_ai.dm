@@ -6,7 +6,8 @@
 	retaliate = TRUE	// The majority of simplemobs will fight back.
 	cooperative = TRUE
 	returns_home = FALSE
-	can_flee = FALSE
+	can_flee = TRUE	//RS ADD
+	dying_threshold = 0.25	//RS ADD - 25%
 	speak_chance = 1 // If the mob's saylist is empty, nothing will happen.
 	wander = TRUE
 	base_wander_delay = 4
@@ -27,6 +28,7 @@
 // Will keep the mob within a limited radius of its home, useful for guarding an area
 /datum/ai_holder/simple_mob/guard
 	returns_home = TRUE
+	can_flee = FALSE	//RS ADD
 
 // Won't return home while it's busy doing something else, like chasing a player
 /datum/ai_holder/simple_mob/guard/give_chase
@@ -197,4 +199,3 @@
 
 /datum/ai_holder/simple_mob/passive/speedy
 	base_wander_delay = 1
-

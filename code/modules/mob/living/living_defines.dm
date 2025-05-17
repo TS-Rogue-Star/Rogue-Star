@@ -83,3 +83,5 @@
 	var/datum/inventory_panel/inventory_panel
 	var/last_resist_time = 0 // world.time of the most recent resist that wasn't on cooldown.
 	var/tiredness = 0 //For vore draining // RS Edit || Ports VOREStation PR15876
+	var/hunter = FALSE	//RS ADD - if TRUE hostile mobs will consider a variety of factors against its nutrition to determine if a target is valid. Well fed hunters don't need to hunt. Starving hunters may pick riskier fights.
+	var/pips = 2		//RS ADD - How many food are we worth to hunters?
