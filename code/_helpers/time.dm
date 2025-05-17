@@ -21,7 +21,7 @@ var/world_startup_time
 
 	return wtime + (time_offset + wusage) * world.tick_lag
 
-GLOBAL_VAR_INIT(roundstart_hour, pick(2,7,12,17))
+GLOBAL_VAR_INIT(roundstart_hour, text2num(time2text(world.timeofday, "hh") - 6))	//RS EDIT - real time
 var/station_date = ""
 var/next_station_date_change = 1 DAY
 
@@ -29,7 +29,7 @@ var/next_station_date_change = 1 DAY
 #define roundstart_delay_time (world.time - round_duration_in_ds)
 #define world_time_in_ds(time) (GLOB.roundstart_hour HOURS + time - roundstart_delay_time)
 #define round_duration_in_ds (GLOB.round_start_time ? REALTIMEOFDAY - GLOB.round_start_time : 0)
-#define station_time_in_ds (GLOB.roundstart_hour HOURS + round_duration_in_ds)
+#define station_time_in_ds (world_startup_time - 6 HOURS + round_duration_in_ds)	//RS EDIT - real time
 
 /proc/stationtime2text()
 	return time2text(station_time_in_ds + GLOB.timezoneOffset, "hh:mm")
