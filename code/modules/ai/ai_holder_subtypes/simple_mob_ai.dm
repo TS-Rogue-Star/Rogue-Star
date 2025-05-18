@@ -124,6 +124,10 @@
 /datum/ai_holder/simple_mob/melee/evasive
 
 /datum/ai_holder/simple_mob/melee/evasive/post_melee_attack(atom/A)
+	if(isliving(A))	//RS ADD
+		var/mob/living/L = A
+		if(L.stat)
+			return	//RS ADD - Do not dance around if the target is dead please
 	if(holder.Adjacent(A))
 		holder.IMove(get_step(holder, pick(alldirs)))
 		holder.face_atom(A)

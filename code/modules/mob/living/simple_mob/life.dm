@@ -74,6 +74,8 @@
 		heal_countdown --
 		return
 	if(resting)
+		if(oxyloss > 0)	//RS ADD
+			adjustOxyLoss(-1)	//RS ADD
 		if(bruteloss > 0)
 			adjustBruteLoss(-10)
 		else if(fireloss > 0)
