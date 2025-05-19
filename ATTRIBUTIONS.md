@@ -456,4 +456,8 @@ digi-inner-thighs
 **Icon-States:** talon_basic_refreshed, talon_security_refreshed, talon_jumpsuit_refreshed, talon_pilot_refreshed, talon_captain_refreshed, talon_capcoat, talon_pilotjacket, talon_labcoat, taloncoat, talon_caphat, talon_pilothat, talonnewsoft, talon_beret, talon_officer_beret, winterhood_talon<br>
 **Creator:** Comissioned by axietheaxolotl, Imaginos16<br>
 **Link:** https://github.com/tgstation/tgstation/pull/70226, https://github.com/tgstation/tgstation/pull/67286, https://github.com/tgstation/tgstation/pull/69842, https://github.com/tgstation/tgstation/pull/66355, https://github.com/tgstation/tgstation/pull/73795, https://github.com/tgstation/tgstation/pull/71479
-
+<br>
+**File:** `sound/voice/caw.ogg`<br>
+**Creator:**  Jofae<br>
+**Link:** https://freesound.org/people/Jofae/sounds/361470/<br>
+**License:** [Creative Commons 0](https://creativecommons.org/publicdomain/zero/1.0/)<br>

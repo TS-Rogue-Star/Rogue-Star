@@ -437,13 +437,17 @@
 	set desc = "Smell someone nearby!"
 	set popup_menu = FALSE
 
-	if(!istype(smelled))
+	if(!istype(smelled) || smelled == src)	//RS EDIT - Don't smell yourself
 		return
 	if(!checkClickCooldown() || incapacitated(INCAPACITATION_ALL))
 		return
 
 	setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 	visible_message("<span class='warning'>[src] smells [smelled]!</span>","<span class='notice'>You smell [smelled]. They smell like [smelled.get_smell_message()].</span>","<b>Sniff!</b>")
+
+	if(olfaction_track)	//RS ADD START
+		SEND_SIGNAL(src,COMSIG_MOB_SMELLED)
+		add_modifier(/datum/modifier/olfaction_track, origin = smelled)	//RS ADD END
 
 /mob/living/proc/get_smell_message(allow_generic = 1)
 	if(!vore_smell && !allow_generic)
