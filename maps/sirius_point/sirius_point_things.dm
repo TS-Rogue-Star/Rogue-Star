@@ -1,13 +1,14 @@
-/obj/structure/window/dome
+/obj/structure/window/reinforced/full/dome
 	name = "hybrid window"
 	desc = "A window made of advanced composite materials. The light glimmers in pretty colors off the surface. Looks like it could survive an asteroid strike point-blank."
-	icon_state = "window"
-	basestate = "window"//change back to rwindow if it looks weird
+	icon_state = "rwindow-full"
+	basestate = "rwindow"
+	fulltile = TRUE
 	maxhealth = 300.0//a reinforced window is 40
-	reinf = 0
 	maximal_heat = T0C + 7000
 	damage_per_fire_tick = 1.0
 	force_threshold = 10
+	flags = 0
 
 // ### Wall Machines On Full Windows ###
 // To make sure wall-mounted machines placed on full-tile windows are clickable they must be above the window

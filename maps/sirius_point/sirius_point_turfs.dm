@@ -10,7 +10,7 @@
 //	color="#8da1bb"
 	edge_blending_priority = 4
 	icon_edge = 'maps/sirius_point/sp_asteroid_edge.dmi'
-/turf/simulated/floor/plating/external/sp_asteroidplating
+/turf/simulated/floor/plating/external/moonbaseplating
 	icon = 'maps/sirius_point/sp_asteroid.dmi'
 	icon_state = "asteroidfloor"
 
@@ -22,7 +22,7 @@
 //outdoors versions of the above and some existing turfs
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors
 	outdoors = 1
-/turf/simulated/floor/plating/external/sp_asteroidplating/outdoors
+/turf/simulated/floor/plating/external/moonbaseplating/outdoors
 	outdoors = 1
 /turf/simulated/floor/plating/external/outdoors
 	outdoors = 1
@@ -53,7 +53,9 @@
 	name = "impassable rock"
 	color="#7ab6b6"
 
-//We may not need anything below this line thanks to the simultaneous map definitions
+///////////////////////////////////////////////////////////////////////////////////////
+//We may not need anything below this line thanks to the simultaneous map definitions//
+///////////////////////////////////////////////////////////////////////////////////////
 // Virgo 3b things, for centcomm
 /turf/unsimulated/mineral/virgo3b
 	blocks_air = TRUE
