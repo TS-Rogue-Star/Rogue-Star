@@ -162,6 +162,7 @@
 							living_user.forceMove(belly_dest)
 							to_chat(pred, "<span class='notice'>[living_user] materializes inside you as they end up in your [belly_dest]!</span>")
 							to_chat(living_user, "<span class='danger'>You materialize inside [pred] as you end up in their [belly_dest]!</span>")
+							pred.update_icon() //RS Add: Fixes bug where tum was not updating (Lira, May 2025)
 
 	else
 		for(var/obj/O in FromTurf)
