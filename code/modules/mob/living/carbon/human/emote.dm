@@ -182,7 +182,8 @@ var/list/_human_default_emotes = list(
 	/decl/emote/audible/blowkiss,
 	/decl/emote/audible/multisound/poyo,
 	/decl/emote/audible/multisound/a,
-	/decl/emote/audible/multisound/wawa
+	/decl/emote/audible/multisound/wawa,
+	/decl/emote/audible/caw
 	//RS ADD END
 )
 

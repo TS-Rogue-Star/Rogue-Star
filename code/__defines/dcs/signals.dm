@@ -782,4 +782,6 @@
 //RS ADD START
 #define COMSIG_FACE_ATOM "face_atom"
 #define COMSIG_GET_ATTACK_SPEED "get_attack_speed"
+#define COMSIG_MOB_SMELLED "mob_smelled"
+#define COMSIG_MOB_WASHED "mob_washed"
 //RS ADD END

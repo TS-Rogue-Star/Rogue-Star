@@ -254,3 +254,44 @@ GLOBAL_VAR(special_station_name)
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	hitsound_wall = 'sound/effects/bang.ogg'
 	speed = 2
+
+/client/proc/add_trait()
+	set name = "Add Trait"
+	set category = "Fun"
+
+	if(!check_rights(R_FUN)) return
+
+	var/choice = tgui_input_list(usr,"Who will you apply the trait to?","Apply Trait",player_list)
+	if(!choice) return
+	if(!ishuman(choice))
+		to_chat(usr,SPAN_WARNING("\The [choice] can't take traits."))
+		return
+	var/mob/living/carbon/human/H = choice
+	choice = null
+	//var/list/ourtraits = subtypesof(/datum/trait)
+	choice = tgui_input_list(usr, "What trait will you apply to [H]?","Apply Trait",all_traits)
+	if(!choice) return
+
+	var/datum/trait/ourtrait = new choice()
+	ourtrait.apply(H.species,H,H.species.traits[ourtrait])
+
+	log_and_message_admins("has applied trait: [ourtrait] ([choice]) to [H].")
+
+/obj/trait_adder
+	name = "trait_adder"
+	icon = 'icons/rogue-star/misc.dmi'
+	icon_state = "crystal_key"
+
+	plane = PLANE_BUILDMODE
+
+	var/trait
+
+/obj/trait_adder/Crossed(O)
+	. = ..()
+	if(!trait) return
+	if(!ishuman(O)) return
+
+	var/mob/living/carbon/human/H = O
+	var/datum/trait/ourtrait = new trait()
+	ourtrait.apply(H.species,H,H.species.traits[ourtrait])
+	log_debug("\The [src] has applied trait: [ourtrait] ([trait]) to [H].")
