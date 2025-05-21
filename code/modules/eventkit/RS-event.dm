@@ -275,6 +275,8 @@ GLOBAL_VAR(special_station_name)
 	var/datum/trait/ourtrait = new choice()
 	ourtrait.apply(H.species,H,H.species.traits[ourtrait])
 
+	log_and_message_admins("has applied trait: [ourtrait] ([choice]) to [H].")
+
 /obj/trait_adder
 	name = "trait_adder"
 	icon = 'icons/rogue-star/misc.dmi'
@@ -292,3 +294,4 @@ GLOBAL_VAR(special_station_name)
 	var/mob/living/carbon/human/H = O
 	var/datum/trait/ourtrait = new trait()
 	ourtrait.apply(H.species,H,H.species.traits[ourtrait])
+	log_debug("\The [src] has applied trait: [ourtrait] ([trait]) to [H].")

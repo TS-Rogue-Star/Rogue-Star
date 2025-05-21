@@ -43,6 +43,8 @@
 	var/list/nearby_things = range(0, get_turf(src))
 	for(var/mob/M in nearby_things)
 		var/obj/O = assembly ? assembly : src
+		if(M.stat || is_blind(M)) //RS Add: You can't read screans if you are unconscious, dead, or blind (Lira, May 2025)
+			continue
 		to_chat(M, "<span class='notice'>\icon[O][bicon(O)] [stuff_to_display]</span>")
 
 /obj/item/integrated_circuit/output/screen/large
