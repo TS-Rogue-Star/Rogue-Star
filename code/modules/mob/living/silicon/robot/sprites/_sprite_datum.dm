@@ -214,7 +214,7 @@
 	var/obj/item/weapon/tool/crowbar/cyborg/C = locate() in module.modules
 	if(C)
 		C.name = "puppy jaws"
-		C.desc = "The jaws of a small dog. Still strong enough to pry things."
+		C.desc = "The jaws of a small dog. Still strong enough to pry things and can act in place of a crowbar." //RS Edit: Tweaked the language to make it more clear this can be used as a crowbar (Lira, May 2025)
 		C.icon = 'icons/mob/dogborg_vr.dmi'
 		C.icon_state = "smalljaws_textless"
 		C.hitsound = 'sound/weapons/bite.ogg'
