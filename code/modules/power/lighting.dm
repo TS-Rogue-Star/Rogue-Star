@@ -447,6 +447,8 @@ var/global/list/light_type_cache = list()
 // update lighting
 /obj/machinery/light/proc/update(var/trigger = 1)
 	update_icon()
+	if(auto_flicker)	//RS ADD - We need to be processing to do autoflicker!
+		START_PROCESSING(SSobj, src)	//RS ADD
 	//VOREStation Edit Start
 	if(!on)
 		needsound = TRUE // Play sound next time we turn on
@@ -892,6 +894,16 @@ var/global/list/light_type_cache = list()
 // use power
 
 /obj/machinery/light/process()
+	if(auto_flicker)	//RS EDIT START - Moved this up. It needs to happen BEFORE something else does PROCESS_KILL, or else the flicker won't refresh
+		if(flickering)
+			return
+		if(check_for_player_proximity(src, radius = 12, ignore_ghosts = FALSE, ignore_afk = TRUE))
+			seton(TRUE) // Lights must be on to flicker.
+			flicker(5)
+			return
+		else
+			seton(FALSE) // Otherwise keep it dark and spooky for when someone shows up.
+			return	//RS EDIT END - We don't really care about the rest, since this is probably an event or an away mission area
 	if(!cell)
 		return PROCESS_KILL
 	if(has_power())
@@ -902,13 +914,6 @@ var/global/list/light_type_cache = list()
 	if(emergency_mode && !use_emergency_power(LIGHT_EMERGENCY_POWER_USE))
 		update(FALSE) //Disables emergency mode and sets the color to normal
 		return PROCESS_KILL // Drop out if we're out of cell power. These are often in POIs and there's no point in recharging.
-
-	if(auto_flicker && !flickering)
-		if(check_for_player_proximity(src, radius = 12, ignore_ghosts = FALSE, ignore_afk = TRUE))
-			seton(TRUE) // Lights must be on to flicker.
-			flicker(5)
-		else
-			seton(FALSE) // Otherwise keep it dark and spooky for when someone shows up.
 
 // called when area power state changes
 /obj/machinery/light/power_change()
