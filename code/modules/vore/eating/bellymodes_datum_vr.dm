@@ -178,29 +178,33 @@ GLOBAL_LIST_INIT(digest_modes, list())
 	if(L.stat == DEAD)
 		return null // Can't heal the dead with healbelly
 	var/mob/living/carbon/human/H = L
-	if(B.owner.nutrition > 90 && H.isSynthetic())
-		for(var/obj/item/organ/external/E in H.organs) //Needed for healing prosthetics
-			var/obj/item/organ/external/O = E
-			if(O.brute_dam > 0 || O.burn_dam > 0) //Making sure healing continues until fixed.
-				O.heal_damage(0.5, 0.5, 0, 1) // Less effective healing as able to fix broken limbs
-				B.owner.adjust_nutrition(-10)  // More costly for the pred, since metals and stuff
-			if(L.health < L.maxHealth)
-				L.adjustToxLoss(-2)
-				L.adjustOxyLoss(-2)
-				L.adjustCloneLoss(-1)
-				B.owner.adjust_nutrition(-2)  // Normal cost per old functionality
-	if(B.owner.nutrition > 90 && (L.health < L.maxHealth) && !H.isSynthetic())
-		L.adjustBruteLoss(-2.5)
-		L.adjustFireLoss(-2.5)
-		L.adjustToxLoss(-5)
-		L.adjustOxyLoss(-5)
-		L.adjustCloneLoss(-1.25)
-		B.owner.adjust_nutrition(-4)
-		if(L.nutrition <= 400)
+	if(B.owner.nutrition > 90 || B.owner.natural_healer)	//RS EDIT START - Check nutrition AND special var!
+		var/nutrition_cost = 0	//How much nutrition this costs the B.owner. Let's just tally it all up and do it at the end to work better with natural_healer!
+		if(H.isSynthetic())
+			for(var/obj/item/organ/external/E in H.organs) //Needed for healing prosthetics
+				var/obj/item/organ/external/O = E
+				if(O.brute_dam > 0 || O.burn_dam > 0) //Making sure healing continues until fixed.
+					O.heal_damage(0.5, 0.5, 0, 1) // Less effective healing as able to fix broken limbs
+					nutrition_cost -= 10  // More costly for the pred, since metals and stuff
+				if(L.health < L.maxHealth)
+					L.adjustToxLoss(-2)
+					L.adjustOxyLoss(-2)
+					L.adjustCloneLoss(-1)
+					nutrition_cost -= 2  // Normal cost per old functionality
+		else if(L.health < L.maxHealth)
+			L.adjustBruteLoss(-2.5)
+			L.adjustFireLoss(-2.5)
+			L.adjustToxLoss(-5)
+			L.adjustOxyLoss(-5)
+			L.adjustCloneLoss(-1.25)
+			nutrition_cost -= 4
+			if(L.nutrition <= 400)
+				L.adjust_nutrition(2)
+		else if(L.nutrition <= 400)
+			nutrition_cost -= 2
 			L.adjust_nutrition(2)
-	else if(B.owner.nutrition > 90 && (L.nutrition <= 400))
-		B.owner.adjust_nutrition(-2)
-		L.adjust_nutrition(2)
+		if(!B.owner.natural_healer)	//If this is true let's not cost the B.owner anything since they got the special beans or whatever.
+			B.owner.adjust_nutrition(nutrition_cost)	//RS EDIT END
 	if(L.stat != oldstat)
 		return list("to_update" = TRUE)
 

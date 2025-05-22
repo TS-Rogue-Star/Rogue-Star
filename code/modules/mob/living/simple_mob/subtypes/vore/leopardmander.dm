@@ -49,6 +49,7 @@
 	max_tox = 0 // for virgo3b survivability
 
 	nom_mob = TRUE
+	natural_healer = TRUE //RS ADD
 
 /datum/category_item/catalogue/fauna/leopardmander
 	name = "Sivian Fauna - Va'aen Drake"
@@ -72,7 +73,7 @@
 
 /mob/living/simple_mob/vore/leopardmander/Initialize()
 	..()
-	src.adjust_nutrition(src.max_nutrition)
+//	src.adjust_nutrition(src.max_nutrition) //RS EDIT
 
 /mob/living/simple_mob/vore/leopardmander/init_vore()
 	. = ..()
@@ -101,6 +102,7 @@
 		"As the thinning air begins to make you feel dizzy, menacing bworps and grumbles fill that dark, constantly shifting organ!",
 		"The constant, rhythmic kneading and massaging starts to take its toll along with the muggy heat, making you feel weaker and weaker!",
 		"The drake happily wanders around while digesting its meal, almost like it is trying to show off the hanging gut you've given it. Not like it made much of a difference on his already borderline obese form anyway~")
+	B.human_prey_swallow_time = 40	//RS ADD - It's healing you make it happen FASTER AAAAAA
 
 /datum/say_list/leopardmander
 	speak = list("Prurr.", "Rrrhf.", "Rrrrrll.", "Mrrrrph.")

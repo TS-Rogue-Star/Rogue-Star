@@ -47,6 +47,7 @@ I think I covered everything.
 ///
 ///		Main type
 ///
+/mob/living/var/natural_healer = FALSE	//RS ADD - If true, healbelly costs 0 nutrition to use
 
 /mob/living/simple_mob/vore/bigdragon
 	name = "large dragon"
@@ -111,6 +112,7 @@ I think I covered everything.
 	plane = ABOVE_MOB_PLANE
 
 	load_owner = "seriouslydontsavethis"	//RS - ADD - They're essentially boss mobs, so, yeah, just don't.
+	natural_healer = TRUE	//RS ADD
 
 	//Dragon vars
 	var/notame
@@ -254,7 +256,7 @@ I think I covered everything.
 
 /mob/living/simple_mob/vore/bigdragon/Initialize()
 	..()
-	src.adjust_nutrition(src.max_nutrition)
+//	src.adjust_nutrition(src.max_nutrition)	//RS EDIT
 	build_icons(1)
 	add_language(LANGUAGE_DRUDAKAR)
 	add_language(LANGUAGE_UNATHI)
