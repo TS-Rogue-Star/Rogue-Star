@@ -98,20 +98,23 @@
 	var/teleport_y = 0
 	var/teleport_z = 0
 
+/obj/effect/step_trigger/teleporter/Initialize()
+	. = ..()
+	if(!teleport_z)	//RS ADD - If we don't have a Z then let's use the Z the thing is on!
+		teleport_z = z			//RS ADD
+
 /obj/effect/step_trigger/teleporter/Trigger(atom/movable/AM)
-	if(teleport_x && teleport_y)	//RS EDIT START
-		if(!teleport_z)
-			teleport_z = z			//RS EDIT END
+	if(teleport_x && teleport_y && teleport_z)
 		var/turf/T = locate(teleport_x, teleport_y, teleport_z)
 		move_object(AM, T)
-
 
 /obj/effect/step_trigger/teleporter/proc/move_object(atom/movable/AM, turf/T)
 	if(!T)
 		return
 	if(AM.anchored && !istype(AM, /obj/mecha))
 		return
-
+	if(istype(AM,/obj/effect/abstract/directional_lighting))	//RS EDIT - Don't teleport flashlight spotlights
+		return	//RS EDIT
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(L.pulling)
