@@ -99,7 +99,9 @@
 	var/teleport_z = 0
 
 /obj/effect/step_trigger/teleporter/Trigger(atom/movable/AM)
-	if(teleport_x && teleport_y && teleport_z)
+	if(teleport_x && teleport_y)	//RS EDIT START
+		if(!teleport_z)
+			teleport_z = z			//RS EDIT END
 		var/turf/T = locate(teleport_x, teleport_y, teleport_z)
 		move_object(AM, T)
 
@@ -285,4 +287,3 @@ var/global/list/tele_landmarks = list() // Terrible, but the alternative is loop
 
 /obj/effect/step_trigger/warning/train_edge
 	warningmessage = "The wind billowing alongside the train is extremely strong here! Any movement could easily pull you down beneath the carriages, return to the train immediately!"
-
