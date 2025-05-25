@@ -177,6 +177,8 @@
 /mob/living/proc/look_over_there(var/atom/A)
 	if(!A || !client)
 		return
+	if(isAI(src))	//AI vision is already super funky, so, let's just not
+		return
 	var/turf/T = get_turf(A)
 	if(get_dist(get_turf(src),T) > world.view)	//You can only look to the edge of your normal vision!
 		return
