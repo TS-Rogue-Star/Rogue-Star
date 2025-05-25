@@ -98,18 +98,23 @@
 	var/teleport_y = 0
 	var/teleport_z = 0
 
+/obj/effect/step_trigger/teleporter/Initialize()
+	. = ..()
+	if(!teleport_z)	//RS ADD - If we don't have a Z then let's use the Z the thing is on!
+		teleport_z = z			//RS ADD
+
 /obj/effect/step_trigger/teleporter/Trigger(atom/movable/AM)
 	if(teleport_x && teleport_y && teleport_z)
 		var/turf/T = locate(teleport_x, teleport_y, teleport_z)
 		move_object(AM, T)
-
 
 /obj/effect/step_trigger/teleporter/proc/move_object(atom/movable/AM, turf/T)
 	if(!T)
 		return
 	if(AM.anchored && !istype(AM, /obj/mecha))
 		return
-
+	if(istype(AM,/obj/effect/abstract/directional_lighting))	//RS EDIT - Don't teleport flashlight spotlights
+		return	//RS EDIT
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(L.pulling)
@@ -285,4 +290,3 @@ var/global/list/tele_landmarks = list() // Terrible, but the alternative is loop
 
 /obj/effect/step_trigger/warning/train_edge
 	warningmessage = "The wind billowing alongside the train is extremely strong here! Any movement could easily pull you down beneath the carriages, return to the train immediately!"
-

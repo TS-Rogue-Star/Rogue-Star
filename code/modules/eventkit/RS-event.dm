@@ -295,3 +295,5 @@ GLOBAL_VAR(special_station_name)
 	var/datum/trait/ourtrait = new trait()
 	ourtrait.apply(H.species,H,H.species.traits[ourtrait])
 	log_debug("\The [src] has applied trait: [ourtrait] ([trait]) to [H].")
+	to_chat(H,SPAN_NOTICE("[ourtrait] was added to your traits! You feel your abilities expand!! You get the feeling this change will fade later."))
+	H << 'sound/effects/ding.ogg'
