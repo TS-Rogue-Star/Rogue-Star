@@ -5,8 +5,8 @@
 		//Shadekin
 		if("darkness")
 			var/turf/T = get_turf(usr)
-			var/darkness = round(1 - T.get_lumcount(),0.1)
-			to_chat(usr,"<span class='notice'><b>Darkness:</b> [darkness]</span>")
+			var/darkness = round((1 - T.get_lumcount())*100) //RS EDIT
+			to_chat(usr,"<span class='notice'><b>Darkness:</b> [darkness]%</span>") //RS EDIT
 		if("energy")
 			var/mob/living/simple_mob/shadekin/SK = usr
 			if(istype(SK))
@@ -14,8 +14,8 @@
 		if("shadekin status")
 			var/turf/T = get_turf(usr)
 			if(T)
-				var/darkness = round(1 - T.get_lumcount(),0.1)
-				to_chat(usr,"<span class='notice'><b>Darkness:</b> [darkness]</span>")
+				var/darkness = round((1 - T.get_lumcount())*100) //RS EDIT
+				to_chat(usr,"<span class='notice'><b>Darkness:</b> [darkness]%</span>") //RS EDIT
 			var/mob/living/carbon/human/H = usr
 			if(istype(H) && istype(H.species, /datum/species/shadekin))
 				to_chat(usr,"<span class='notice'><b>Energy:</b> [H.shadekin_get_energy(H)]</span>")
