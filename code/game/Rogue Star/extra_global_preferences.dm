@@ -125,6 +125,7 @@
 /mob/living/Login()
 	. = ..()
 	client.prefs.extra_global_load()
+	reset_look()
 
 /mob/living/proc/check_vore_whitelist(var/mob/living/L,var/preftype,var/mode)	//Check if preftype is something we have on whitelist, and if so, if L is on our list
 	if(!client)	//not going to have a whitelist, so just say yes

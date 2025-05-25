@@ -39,6 +39,8 @@
 	if(stat || lockdown || weakened || stunned || paralysis)
 		return
 
+	SEND_SIGNAL(src,COMSIG_CLICK)	//RS ADD
+
 	face_atom(A) // change direction to face what you clicked on
 
 	if(aiCamera && aiCamera.in_camera_mode)
