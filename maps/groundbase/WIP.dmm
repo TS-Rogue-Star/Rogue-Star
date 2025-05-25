@@ -157,7 +157,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/lobby)
 "aeO" = (
-/obj/machinery/telecomms/hub/preset/groundbase,
+/obj/machinery/telecomms/hub/preset/station,
 /obj/machinery/atmospherics/pipe/manifold/hidden/black{
 	dir = 1
 	},
@@ -281,7 +281,7 @@
 	},
 /area/groundbase/command/tcomms/chamber)
 "alQ" = (
-/obj/machinery/telecomms/server/presets/service/groundbase,
+/obj/machinery/telecomms/server/presets/service/station,
 /turf/simulated/floor/tiled/dark{
 	nitrogen = 100;
 	oxygen = 0;
@@ -289,7 +289,7 @@
 	},
 /area/groundbase/command/tcomms/chamber)
 "alT" = (
-/obj/machinery/telecomms/broadcaster/preset_right/groundbase,
+/obj/machinery/telecomms/broadcaster/preset_right/station,
 /turf/simulated/floor/tiled/dark{
 	nitrogen = 100;
 	oxygen = 0;
@@ -349,7 +349,7 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/shuttle/groundbase/exploration)
 "anW" = (
-/obj/machinery/telecomms/receiver/preset_right/groundbase,
+/obj/machinery/telecomms/receiver/preset_right/station,
 /turf/simulated/floor/tiled/dark{
 	nitrogen = 100;
 	oxygen = 0;
@@ -1097,7 +1097,7 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/patient4)
 "aQO" = (
-/obj/machinery/telecomms/bus/preset_two/groundbase,
+/obj/machinery/telecomms/bus/preset_two/station,
 /obj/machinery/atmospherics/pipe/simple/hidden/black,
 /turf/simulated/floor/tiled/dark{
 	nitrogen = 100;
@@ -33560,7 +33560,7 @@
 /obj/item/clothing/suit/space/void/exploration,
 /obj/item/clothing/head/helmet/space/void/exploration,
 /obj/item/clothing/head/helmet/space/void/exploration,
-/obj/item/device/bluespaceradio/groundbase_prelinked,
+/obj/item/device/bluespaceradio/station_prelinked,
 /obj/machinery/door/window/brigdoor/eastright{
 	req_access = list(43)
 	},
