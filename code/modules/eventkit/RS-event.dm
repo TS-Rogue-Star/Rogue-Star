@@ -332,6 +332,7 @@ GLOBAL_VAR(special_station_name)
 
 /obj/notifier/Crossed(O)
 	. = ..()
+	if(isobserver(O)) return	//Let's not trigger on ghosts
 	for(var/mob/M in player_list)
 		if(M.ckey in notify_who)
 			M << 'sound/rogue-star/misc/ghost_alert.ogg'
