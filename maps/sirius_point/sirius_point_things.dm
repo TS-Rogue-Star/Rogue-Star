@@ -65,3 +65,5 @@
 	layer = ABOVE_WINDOW_LAYER
 /obj/structure/noticeboard
 	layer = ABOVE_WINDOW_LAYER
+/obj/machinery/disposal/wall
+	layer = ABOVE_WINDOW_LAYER
