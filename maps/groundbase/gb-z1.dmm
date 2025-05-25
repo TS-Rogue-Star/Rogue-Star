@@ -800,7 +800,7 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/office)
 "bR" = (
-/obj/machinery/telecomms/hub/preset/groundbase,
+/obj/machinery/telecomms/hub/preset/station,
 /turf/simulated/floor/tiled/dark{
 	nitrogen = 100;
 	oxygen = 0;
@@ -892,7 +892,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/engine)
 "cc" = (
-/obj/machinery/telecomms/broadcaster/preset_right/groundbase,
+/obj/machinery/telecomms/broadcaster/preset_right/station,
 /turf/simulated/floor/tiled/dark{
 	nitrogen = 100;
 	oxygen = 0;
@@ -973,7 +973,7 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/equipment)
 "cm" = (
-/obj/machinery/telecomms/receiver/preset_right/groundbase,
+/obj/machinery/telecomms/receiver/preset_right/station,
 /turf/simulated/floor/tiled/dark{
 	nitrogen = 100;
 	oxygen = 0;
@@ -1550,7 +1550,7 @@
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/or2)
 "dv" = (
-/obj/machinery/telecomms/server/presets/service/groundbase,
+/obj/machinery/telecomms/server/presets/service/station,
 /turf/simulated/floor/tiled/dark{
 	nitrogen = 100;
 	oxygen = 0;
@@ -1805,7 +1805,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/civilian/bar)
 "dT" = (
-/obj/machinery/telecomms/bus/preset_two/groundbase,
+/obj/machinery/telecomms/bus/preset_two/station,
 /turf/simulated/floor/tiled/dark{
 	nitrogen = 100;
 	oxygen = 0;
@@ -17439,7 +17439,7 @@
 /obj/item/clothing/suit/space/void/exploration,
 /obj/item/clothing/head/helmet/space/void/exploration,
 /obj/item/clothing/head/helmet/space/void/exploration,
-/obj/item/device/bluespaceradio/groundbase_prelinked,
+/obj/item/device/bluespaceradio/station_prelinked,
 /obj/machinery/door/window/brigdoor/eastright{
 	req_access = list(43)
 	},
