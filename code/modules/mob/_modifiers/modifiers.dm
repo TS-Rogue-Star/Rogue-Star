@@ -145,6 +145,7 @@
 					// Not allow to add a second instance, but we can try to prolong the first instance.
 					if(expire_at && world.time + expire_at > M.expire_at)
 						M.expire_at = world.time + expire_at
+					M.modifier_update(origin)	//RS ADD
 					return
 
 	// If we're at this point, the mob doesn't already have it, or it does but stacking is allowed.
@@ -277,3 +278,6 @@
 	if(abs)
 		return "[abs( ((multi - 1) * 100) )]%"
 	return "[((multi - 1) * 100)]%"
+
+/datum/modifier/proc/modifier_update(var/atom/updated_origin)	//RS ADD
+	return	//RS ADD
