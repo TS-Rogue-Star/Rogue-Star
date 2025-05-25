@@ -173,3 +173,44 @@
 		to_chat(src,SPAN_NOTICE("You start paying attention to the smell of \the [OT.tracked_name] again!"))
 		OT.give_compass()
 		return
+
+/mob/living/proc/look_over_there(var/atom/A)
+	if(!A || !client)
+		return
+	if(isAI(src))	//AI vision is already super funky, so, let's just not
+		return
+	var/turf/T = get_turf(A)
+	if(get_dist(get_turf(src),T) > world.view)	//You can only look to the edge of your normal vision!
+		return
+	var/to_x = (T.x - x) * 32
+	var/to_y = (T.y - y) * 32
+
+	animate(client,0.75 SECOND,FALSE,SINE_EASING,pixel_x = to_x,pixel_y = to_y)	//Animate tells the client to interpolate! It's nice and smooth and fast
+	face_atom(T)	//Woah look!
+	add_modifier(/datum/modifier/look_over_there)	//This keeps track of if you should be looking or not!
+
+/mob/proc/reset_look()
+	if(client)
+		animate(client,0.75 SECOND,FALSE,SINE_EASING,pixel_x = 0,pixel_y = 0)
+
+/datum/modifier/look_over_there
+	name = "Looking"
+	desc = "Looking into the distance!"
+
+	stacks = MODIFIER_STACK_EXTEND
+
+/datum/modifier/look_over_there/New()
+	. = ..()
+	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, PROC_REF(expire))
+	RegisterSignal(holder, COMSIG_MOB_APPLY_DAMGE, PROC_REF(expire))
+	RegisterSignal(holder, COMSIG_MOB_FIRED_GUN, PROC_REF(expire))
+	RegisterSignal(holder, COMSIG_CLICK, PROC_REF(expire))
+
+
+/datum/modifier/look_over_there/expire(silent)
+	. = ..()
+	holder.reset_look()
+	UnregisterSignal(holder,COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(holder,COMSIG_MOB_APPLY_DAMGE)
+	UnregisterSignal(holder,COMSIG_MOB_FIRED_GUN)
+	UnregisterSignal(holder,COMSIG_CLICK)

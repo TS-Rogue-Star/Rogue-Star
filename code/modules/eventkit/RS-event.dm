@@ -297,3 +297,43 @@ GLOBAL_VAR(special_station_name)
 	log_debug("\The [src] has applied trait: [ourtrait] ([trait]) to [H].")
 	to_chat(H,SPAN_NOTICE("[ourtrait] was added to your traits! You feel your abilities expand!! You get the feeling this change will fade later."))
 	H << 'sound/effects/ding.ogg'
+
+/obj/notifier
+	name = "notifier"
+	icon = 'icons/rogue-star/misc.dmi'
+	icon_state = "notifier"
+	plane = PLANE_GHOSTS
+	anchored = TRUE
+	var/list/notify_who = list()
+
+/obj/notifier/attack_ghost(mob/user)
+	. = ..()
+
+	if(!user?.client?.holder) return
+
+	if(user.ckey in notify_who)
+		remove_notification(user)
+	else
+		add_notification(user)
+
+/obj/notifier/proc/add_notification(var/mob/M)
+	if(!M) return
+	if(!M.ckey) return
+
+	notify_who.Add(M.ckey)
+	to_chat(M,SPAN_NOTICE("Added you to the notification list."))
+
+/obj/notifier/proc/remove_notification(var/mob/M)
+	if(!M) return
+	if(!M.ckey) return
+
+	notify_who.Remove(M.ckey)
+	to_chat(M,SPAN_WARNING("Removed you from the notification list."))
+
+/obj/notifier/Crossed(O)
+	. = ..()
+	if(isobserver(O)) return	//Let's not trigger on ghosts
+	for(var/mob/M in player_list)
+		if(M.ckey in notify_who)
+			M << 'sound/rogue-star/misc/ghost_alert.ogg'
+			to_chat(M,SPAN_WARNING("[O] HAS CROSSED [src]"))
