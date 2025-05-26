@@ -111,6 +111,8 @@
 	spawn(1)	// slight delay to prevent infinite propagation due to map order	//TODO: please no spawn() in process(). It's a very bad idea
 		var/items_moved = 0
 		for(var/atom/movable/A in affecting)
+			if(istype(A,/obj/effect))	//RS ADD - Don't move effects, they are not usually strictly physical things
+				continue				//RS ADD
 			if(!A.anchored)
 				if(A.loc == src.loc) // prevents the object from being affected if it's not currently here.
 					step(A,movedir)
