@@ -174,6 +174,7 @@
 		OT.give_compass()
 		return
 
+//I thought it would be fun if people could look further. Maybe they can see some things that they wouldn't normally be able to!
 /mob/living/proc/look_over_there(var/atom/A)
 	if(!A || !client)
 		return
