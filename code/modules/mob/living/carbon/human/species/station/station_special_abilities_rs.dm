@@ -180,6 +180,9 @@
 		return
 	if(isAI(src))	//AI vision is already super funky, so, let's just not
 		return
+	if(isrobot(src))
+		if(istype(A,/obj/machinery))	//Let's just assume that if we're clicking a machine as a borg then we probably don't want to look!
+			return
 	var/turf/T = get_turf(A)
 	if(get_dist(get_turf(src),T) > world.view)	//You can only look to the edge of your normal vision!
 		return
