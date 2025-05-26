@@ -180,6 +180,9 @@
 		return
 	if(isAI(src))	//AI vision is already super funky, so, let's just not
 		return
+	if(isrobot(src))
+		if(istype(A,/obj/machinery))	//Let's just assume that if we're clicking a machine as a borg then we probably don't want to look!
+			return
 	var/turf/T = get_turf(A)
 	if(get_dist(get_turf(src),T) > world.view)	//You can only look to the edge of your normal vision!
 		return
@@ -196,11 +199,11 @@
 	desc = "Looking into the distance!"
 
 	stacks = MODIFIER_STACK_EXTEND
-	var/obj/effect/look_spoiler/our_eye
+	var/obj/effect/abstract/look_spoiler/our_eye
 
 /datum/modifier/look_over_there/New(var/new_holder, var/new_origin)
 	. = ..()
-	our_eye = new /obj/effect/look_spoiler(get_turf(holder))
+	our_eye = new /obj/effect/abstract/look_spoiler(get_turf(holder))
 
 	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, PROC_REF(expire))
 	RegisterSignal(holder, COMSIG_MOB_APPLY_DAMGE, PROC_REF(expire))
@@ -232,7 +235,7 @@
 	animate(holder.client,0.75 SECOND,FALSE,SINE_EASING,pixel_x = to_x,pixel_y = to_y)
 	holder.face_atom(T)	//Woah look!
 
-/obj/effect/look_spoiler
+/obj/effect/abstract/look_spoiler
 	name = "specter"
 	icon = 'icons/rogue-star/misc96x96.dmi'
 	icon_state = "look_spoiler"
