@@ -4522,7 +4522,7 @@
 	},
 /area/tcommsat/chamber)
 "ajh" = (
-/obj/machinery/telecomms/broadcaster/preset_right/tether,
+/obj/machinery/telecomms/broadcaster/preset_right/station,
 /turf/simulated/floor/tiled/dark{
 	nitrogen = 100;
 	oxygen = 0;
@@ -4575,7 +4575,7 @@
 /turf/simulated/floor/plating,
 /area/engineering/engine_airlock)
 "aju" = (
-/obj/machinery/telecomms/hub/preset/tether,
+/obj/machinery/telecomms/hub/preset/station,
 /turf/simulated/floor/tiled/dark{
 	nitrogen = 100;
 	oxygen = 0;
@@ -4710,7 +4710,7 @@
 /turf/simulated/floor,
 /area/storage/tech)
 "ajS" = (
-/obj/machinery/telecomms/receiver/preset_right/tether,
+/obj/machinery/telecomms/receiver/preset_right/station,
 /turf/simulated/floor/tiled/dark{
 	nitrogen = 100;
 	oxygen = 0;
@@ -5061,7 +5061,7 @@
 /turf/simulated/floor,
 /area/storage/tech)
 "alg" = (
-/obj/machinery/telecomms/server/presets/service/tether,
+/obj/machinery/telecomms/server/presets/service/station,
 /turf/simulated/floor/tiled/dark{
 	nitrogen = 100;
 	oxygen = 0;
@@ -18994,7 +18994,7 @@
 /turf/simulated/floor,
 /area/maintenance/cargo)
 "gFp" = (
-/obj/machinery/telecomms/bus/preset_two/tether,
+/obj/machinery/telecomms/bus/preset_two/station,
 /turf/simulated/floor/tiled/dark{
 	nitrogen = 100;
 	oxygen = 0;
@@ -20751,7 +20751,7 @@
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/suit/space/void/exploration,
 /obj/item/clothing/head/helmet/space/void/exploration,
-/obj/item/device/bluespaceradio/tether_prelinked,
+/obj/item/device/bluespaceradio/station_prelinked,
 /obj/machinery/door/window/brigdoor{
 	req_access = list(43)
 	},

@@ -784,4 +784,5 @@
 #define COMSIG_GET_ATTACK_SPEED "get_attack_speed"
 #define COMSIG_MOB_SMELLED "mob_smelled"
 #define COMSIG_MOB_WASHED "mob_washed"
+#define COMSIG_LOOK_RESET "look_reset"
 //RS ADD END

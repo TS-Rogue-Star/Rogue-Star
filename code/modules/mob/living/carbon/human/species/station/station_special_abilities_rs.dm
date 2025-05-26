@@ -173,3 +173,71 @@
 		to_chat(src,SPAN_NOTICE("You start paying attention to the smell of \the [OT.tracked_name] again!"))
 		OT.give_compass()
 		return
+
+/mob/living/proc/look_over_there(var/atom/A)
+	if(!A || !client)
+		return
+	if(isAI(src))	//AI vision is already super funky, so, let's just not
+		return
+	var/turf/T = get_turf(A)
+	if(get_dist(get_turf(src),T) > world.view)	//You can only look to the edge of your normal vision!
+		return
+
+	add_modifier(/datum/modifier/look_over_there,origin = T)	//This keeps track of if you should be looking or not!
+
+/mob/proc/reset_look()
+	SEND_SIGNAL(src,COMSIG_LOOK_RESET)
+	if(client)
+		animate(client,0.75 SECOND,FALSE,SINE_EASING,pixel_x = 0,pixel_y = 0)
+
+/datum/modifier/look_over_there
+	name = "Looking"
+	desc = "Looking into the distance!"
+
+	stacks = MODIFIER_STACK_EXTEND
+	var/obj/effect/look_spoiler/our_eye
+
+/datum/modifier/look_over_there/New(var/new_holder, var/new_origin)
+	. = ..()
+	our_eye = new /obj/effect/look_spoiler(get_turf(holder))
+
+	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, PROC_REF(expire))
+	RegisterSignal(holder, COMSIG_MOB_APPLY_DAMGE, PROC_REF(expire))
+	RegisterSignal(holder, COMSIG_MOB_FIRED_GUN, PROC_REF(expire))
+	RegisterSignal(holder, COMSIG_CLICK, PROC_REF(expire))
+	RegisterSignal(holder, COMSIG_LOOK_RESET, PROC_REF(expire))
+
+	modifier_update(new_origin)
+
+/datum/modifier/look_over_there/expire(silent)
+	. = ..()
+	UnregisterSignal(holder,COMSIG_LOOK_RESET)
+	UnregisterSignal(holder,COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(holder,COMSIG_MOB_APPLY_DAMGE)
+	UnregisterSignal(holder,COMSIG_MOB_FIRED_GUN)
+	UnregisterSignal(holder,COMSIG_CLICK)
+
+	QDEL_NULL(our_eye)
+	holder.reset_look()
+
+/datum/modifier/look_over_there/modifier_update(var/atom/updated_origin)
+	var/turf/T = get_turf(updated_origin)
+
+	var/to_x = (T.x - holder.x) * 32
+	var/to_y = (T.y - holder.y) * 32
+
+//	animate(our_eye,0.75 SECOND,FALSE,SINE_EASING,x = T.x,y = T.x)
+	our_eye.forceMove(T)
+	animate(holder.client,0.75 SECOND,FALSE,SINE_EASING,pixel_x = to_x,pixel_y = to_y)
+	holder.face_atom(T)	//Woah look!
+
+/obj/effect/look_spoiler
+	name = "specter"
+	icon = 'icons/rogue-star/misc96x96.dmi'
+	icon_state = "look_spoiler"
+	alpha = 100
+	pixel_x = -32
+	pixel_y = -32
+	plane = PLANE_BUILDMODE
+	anchored = TRUE
+	mouse_opacity = 0
