@@ -222,12 +222,12 @@
 
 /datum/modifier/look_over_there/modifier_update(var/atom/updated_origin)
 	var/turf/T = get_turf(updated_origin)
-
-	var/to_x = (T.x - holder.x) * 32
-	var/to_y = (T.y - holder.y) * 32
+	var/turf/H_T = get_turf(holder)	//Compare turfs, in case we happen to be in a hand or in a closet or in a tummy or whatever
+	var/to_x = (T.x - H_T.x) * 32
+	var/to_y = (T.y - H_T.y) * 32
 
 //	animate(our_eye,0.75 SECOND,FALSE,SINE_EASING,x = T.x,y = T.x)
-	our_eye.forceMove(T)
+	our_eye.forceMove(T)	//Move this instead of animating it, so event runners can see it in its accurate location
 	animate(holder.client,0.75 SECOND,FALSE,SINE_EASING,pixel_x = to_x,pixel_y = to_y)
 	holder.face_atom(T)	//Woah look!
 
