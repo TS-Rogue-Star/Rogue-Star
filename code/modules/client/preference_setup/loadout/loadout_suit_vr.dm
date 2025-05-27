@@ -109,8 +109,7 @@ Talon winter coat
 
 /datum/gear/suit/armor/combat/crusader_explo
 	display_name = "knight, explo"
-	path = /obj/item/clothing/suit/armor/combat/crusader_explo
-	allowed_roles = list("Explorer","Pathfinder")
+	path = /obj/item/clothing/suit/armor/combat/crusader_explo //RS: Explorer/Pathfinder job restrictions removed. Made into mostly cosmetic item.
 
 /datum/gear/suit/armor/combat/crusader_explo/FM
 	display_name = "knight, Field Medic"
