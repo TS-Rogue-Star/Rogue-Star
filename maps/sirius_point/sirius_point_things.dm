@@ -10,6 +10,10 @@
 	force_threshold = 10
 	flags = 0
 
+//exterior floor decal
+/obj/effect/floor_decal/milspec/monotile/moonbase
+	color = "#b8c0c4"
+
 // ### Wall Machines On Full Windows ###
 // To make sure wall-mounted machines placed on full-tile windows are clickable they must be above the window
 //
