@@ -298,15 +298,15 @@ GLOBAL_VAR(special_station_name)
 	to_chat(H,SPAN_NOTICE("[ourtrait] was added to your traits! You feel your abilities expand!! You get the feeling this change will fade later."))
 	H << 'sound/effects/ding.ogg'
 
-/obj/notifier
+/atom/movable/notifier
 	name = "notifier"
 	icon = 'icons/rogue-star/misc.dmi'
 	icon_state = "notifier"
-	plane = PLANE_GHOSTS
+	plane = PLANE_ADMIN_SECRET
 	anchored = TRUE
 	var/list/notify_who = list()
 
-/obj/notifier/attack_ghost(mob/user)
+/atom/movable/notifier/attack_ghost(mob/user)
 	. = ..()
 
 	if(!user?.client?.holder) return
@@ -316,21 +316,21 @@ GLOBAL_VAR(special_station_name)
 	else
 		add_notification(user)
 
-/obj/notifier/proc/add_notification(var/mob/M)
+/atom/movable/notifier/proc/add_notification(var/mob/M)
 	if(!M) return
 	if(!M.ckey) return
 
 	notify_who.Add(M.ckey)
 	to_chat(M,SPAN_NOTICE("Added you to the notification list."))
 
-/obj/notifier/proc/remove_notification(var/mob/M)
+/atom/movable/notifier/proc/remove_notification(var/mob/M)
 	if(!M) return
 	if(!M.ckey) return
 
 	notify_who.Remove(M.ckey)
 	to_chat(M,SPAN_WARNING("Removed you from the notification list."))
 
-/obj/notifier/Crossed(O)
+/atom/movable/notifier/Crossed(O)
 	. = ..()
 	if(isobserver(O)) return	//Let's not trigger on ghosts
 	for(var/mob/M in player_list)
