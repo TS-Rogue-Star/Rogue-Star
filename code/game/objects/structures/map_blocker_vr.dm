@@ -8,7 +8,7 @@
 	opacity = 0
 	density = TRUE
 	unacidable = TRUE
-	plane = PLANE_BUILDMODE
+	plane = PLANE_ADMIN_SECRET	//RS EDIT
 
 /*	//VOREStation Edit
 /obj/effect/blocker/Initialize() // For non-gateway maps.

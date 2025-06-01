@@ -282,7 +282,7 @@ GLOBAL_VAR(special_station_name)
 	icon = 'icons/rogue-star/misc.dmi'
 	icon_state = "crystal_key"
 
-	plane = PLANE_BUILDMODE
+	plane = PLANE_ADMIN_SECRET
 
 	var/trait
 
