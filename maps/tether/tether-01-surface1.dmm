@@ -14528,7 +14528,7 @@
 /area/medical/virology)
 "ayM" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/monkeycubes,
+/obj/random/monkey_cubes,
 /obj/machinery/light{
 	dir = 4
 	},
