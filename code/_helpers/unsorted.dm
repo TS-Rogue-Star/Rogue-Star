@@ -1501,6 +1501,7 @@ GLOBAL_REAL_VAR(list/stack_trace_storage)
 
 	. += new /obj/screen/plane_master{plane = PLANE_MESONS} 			//Meson-specific things like open ceilings.
 	. += new /obj/screen/plane_master{plane = PLANE_BUILDMODE}			//Things that only show up while in build mode
+	. += new /obj/screen/plane_master{plane = PLANE_ADMIN_SECRET}		//RS ADD - Things that only show up if you're an admin who is peeking secrets
 
 	// Real tangible stuff planes
 	. += new /obj/screen/plane_master/main{plane = TURF_PLANE}

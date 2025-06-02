@@ -199,11 +199,11 @@
 	desc = "Looking into the distance!"
 
 	stacks = MODIFIER_STACK_EXTEND
-	var/obj/effect/abstract/look_spoiler/our_eye
+	var/atom/movable/look_spoiler/our_eye
 
 /datum/modifier/look_over_there/New(var/new_holder, var/new_origin)
 	. = ..()
-	our_eye = new /obj/effect/abstract/look_spoiler(get_turf(holder))
+	our_eye = new /atom/movable/look_spoiler(get_turf(holder))
 
 	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, PROC_REF(expire))
 	RegisterSignal(holder, COMSIG_MOB_APPLY_DAMGE, PROC_REF(expire))
@@ -235,13 +235,13 @@
 	animate(holder.client,0.75 SECOND,FALSE,SINE_EASING,pixel_x = to_x,pixel_y = to_y)
 	holder.face_atom(T)	//Woah look!
 
-/obj/effect/abstract/look_spoiler
+/atom/movable/look_spoiler
 	name = "specter"
 	icon = 'icons/rogue-star/misc96x96.dmi'
 	icon_state = "look_spoiler"
 	alpha = 100
 	pixel_x = -32
 	pixel_y = -32
-	plane = PLANE_BUILDMODE
+	plane = PLANE_ADMIN_SECRET
 	anchored = TRUE
 	mouse_opacity = 0

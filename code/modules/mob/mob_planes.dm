@@ -42,6 +42,7 @@
 	plane_masters[VIS_MESONS]		= new /obj/screen/plane_master{plane = PLANE_MESONS} 			//Meson-specific things like open ceilings.
 
 	plane_masters[VIS_BUILDMODE]	= new /obj/screen/plane_master{plane = PLANE_BUILDMODE}			//Things that only show up while in build mode
+	plane_masters[VIS_ADMIN_SECRET]	= new /obj/screen/plane_master{plane = PLANE_ADMIN_SECRET}	//RS ADD - Things that only show up if you're an admin who is peeking secrets
 
 	// Real tangible stuff planes
 	plane_masters[VIS_TURFS]	= new /obj/screen/plane_master/main{plane = TURF_PLANE}
@@ -113,7 +114,7 @@
 			alter_values(SP, values)
 
 
-	
+
 
 ////////////////////
 // The Plane Master
