@@ -42,6 +42,8 @@
 		if(build_mode != "Yes")
 			to_chat(src, "Will not re-enter buildmode after switch.")
 
+	mob.reset_look()	//RS ADD
+
 	if(istype(mob,/mob/observer/dead))
 		//re-enter
 		var/mob/observer/dead/ghost = mob

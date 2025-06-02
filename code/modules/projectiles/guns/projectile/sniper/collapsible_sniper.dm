@@ -30,6 +30,13 @@
 			user.put_in_any_hand_if_possible(assembly) || assembly.dropInto(user.loc)
 			user.put_in_any_hand_if_possible(barrel) || barrel.dropInto(user.loc)
 
+			//RS ADD START - Inherit persist storable
+			if(!persist_storable)
+				barrel.persist_storable = FALSE
+				assembly.persist_storable = FALSE
+				stock.persist_storable = FALSE
+			//RS ADD END
+
 
 /obj/item/sniper_rifle_part
 	name = "AM rifle part"
@@ -167,6 +174,8 @@
 				var/mob/living/carbon/human/user = usr
 				user.unEquip(src, force=1)
 				user.put_in_any_hand_if_possible(gun) || gun.dropInto(loc)
+			if(!(persist_storable && barrel.persist_storable && stock.persist_storable && trigger_group.persist_storable))	//RS ADD - inherit persist_storable
+				gun.persist_storable = FALSE
 			qdel(src)
 
 /obj/item/weapon/gun/projectile/heavysniper/update_icon()
