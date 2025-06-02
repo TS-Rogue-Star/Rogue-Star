@@ -304,6 +304,7 @@ GLOBAL_VAR(special_station_name)
 	icon_state = "notifier"
 	plane = PLANE_ADMIN_SECRET
 	anchored = TRUE
+	alpha = 125
 	var/list/notify_who = list()
 
 /atom/movable/notifier/attack_ghost(mob/user)
