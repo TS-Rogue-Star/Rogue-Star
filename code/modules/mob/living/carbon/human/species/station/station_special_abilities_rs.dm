@@ -204,6 +204,7 @@
 /datum/modifier/look_over_there/New(var/new_holder, var/new_origin)
 	. = ..()
 	our_eye = new /atom/movable/look_spoiler(get_turf(holder))
+	our_eye.name = holder
 
 	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, PROC_REF(expire))
 	RegisterSignal(holder, COMSIG_MOB_APPLY_DAMGE, PROC_REF(expire))
