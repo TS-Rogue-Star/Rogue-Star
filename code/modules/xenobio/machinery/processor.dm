@@ -10,7 +10,7 @@
 	anchored = TRUE
 	var/processing = FALSE // So I heard you like processing.
 	var/list/to_be_processed = list()
-	var/monkeys_recycled = 0
+	var/list/monkeys_recycled = list()	//RS EDIT
 	description_info = "Clickdrag dead slimes or monkeys to it to insert them.  It will make a new monkey cube for every four monkeys it processes."
 
 /obj/item/weapon/circuitboard/processor
@@ -69,10 +69,14 @@
 		extract(AM)
 		sleep(1 SECONDS)
 
-	while(monkeys_recycled >= 4)
-		new /obj/item/weapon/reagent_containers/food/snacks/monkeycube(get_turf(src))
+	while(monkeys_recycled.len >= 4)	//RS EDIT START - Let's think about what KIND of monkeys we got instead of just giving regular monkeys
+		var/which = pick(monkeys_recycled)
+		juice_monkey(src,monkeys_recycled[which])
+		monkeys_recycled.Remove(which)	//Remove the one we picked
+		monkeys_recycled.Remove(pick(monkeys_recycled))	//Also remove 3 more since we're mashing them together.
+		monkeys_recycled.Remove(pick(monkeys_recycled))
+		monkeys_recycled.Remove(pick(monkeys_recycled))	//RS EDIT END
 		playsound(src, 'sound/effects/splat.ogg', 50, 1)
-		monkeys_recycled -= 4
 		sleep(1 SECOND)
 
 	processing = FALSE
@@ -93,8 +97,8 @@
 		var/mob/living/carbon/human/M = AM
 		playsound(src, 'sound/effects/splat.ogg', 50, 1)
 		to_be_processed.Remove(M)
+		monkeys_recycled["[world.time]-[M.species.name]"] = M.species.name	//RS EDIT
 		qdel(M)
-		monkeys_recycled++
 		sleep(1 SECOND)
 
 /obj/machinery/processor/proc/can_insert(var/atom/movable/AM)
@@ -116,3 +120,29 @@
 	if(user.stat || user.incapacitated(INCAPACITATION_DISABLED) || !istype(user))
 		return
 	insert(AM, user)
+
+/proc/juice_monkey(var/where,var/input)	//RS ADD START - Since we need this in multiple places, let's just make it a global proc lol
+	if(!where || !input)
+		return
+	var/which
+	switch(input)
+		if(SPECIES_MONKEY_TAJ)
+			which = /obj/item/weapon/reagent_containers/food/snacks/monkeycube/farwacube
+		if(SPECIES_MONKEY_SKRELL)
+			which = /obj/item/weapon/reagent_containers/food/snacks/monkeycube/neaeracube
+		if(SPECIES_MONKEY_UNATHI)
+			which = /obj/item/weapon/reagent_containers/food/snacks/monkeycube/stokcube
+		if(SPECIES_MONKEY_AKULA)
+			which = /obj/item/weapon/reagent_containers/food/snacks/monkeycube/sobakacube
+		if(SPECIES_MONKEY_NEVREAN)
+			which = /obj/item/weapon/reagent_containers/food/snacks/monkeycube/sparracube
+		if(SPECIES_MONKEY_SERGAL)
+			which = /obj/item/weapon/reagent_containers/food/snacks/monkeycube/sarucube
+		if(SPECIES_MONKEY_VULPKANIN)
+			which = /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wolpincube
+		else
+			which = /obj/item/weapon/reagent_containers/food/snacks/monkeycube
+	if(which)
+		new which(get_turf(where))
+
+//RS ADD END

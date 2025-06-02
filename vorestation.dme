@@ -1140,6 +1140,7 @@
 #include "code\game\objects\effects\overlays.dm"
 #include "code\game\objects\effects\pet_spawner.dm"
 #include "code\game\objects\effects\portals.dm"
+#include "code\game\objects\effects\random_rs.dm"
 #include "code\game\objects\effects\semirandom_mobs_vr.dm"
 #include "code\game\objects\effects\spiders.dm"
 #include "code\game\objects\effects\spiders_vr.dm"
