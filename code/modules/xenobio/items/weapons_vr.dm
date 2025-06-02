@@ -103,7 +103,7 @@
 	icon_state = "chainsaw0"
 	var/processing = FALSE // So I heard you like processing.
 	var/list/to_be_processed = list()
-	var/monkeys_recycled = 0
+	var/list/monkeys_recycled = list()	//RS EDIT
 	description_info = "Click a monkey or slime to begin processing."
 
 /obj/item/weapon/slime_grinder/proc/extract(var/atom/movable/AM, var/mob/living/user)
@@ -118,18 +118,24 @@
 				S.cores--
 		qdel(S)
 
-	if(istype(AM, /mob/living/carbon/human/monkey))
+	if(istype(AM, /mob/living/carbon/human))	//RS EDIT START - Let's think about what KIND of monkeys we got instead of just giving regular monkeys
+		var/mob/living/carbon/human/H = AM
+		if(!istype(H.species, /datum/species/monkey))
+			return FALSE
 		playsound(src, 'sound/machines/juicer.ogg', 25, 1)
 		if(do_after(user, 15))
-			var/mob/living/carbon/human/M = AM
 			playsound(src, 'sound/effects/splat.ogg', 50, 1)
-			qdel(M)
-			monkeys_recycled++
+			monkeys_recycled["[world.time]-[H.species.name]"] = H.species.name
+			qdel(H)
 			sleep(1 SECOND)
-		while(monkeys_recycled >= 4)
-			new /obj/item/weapon/reagent_containers/food/snacks/monkeycube(get_turf(src))
+		while(monkeys_recycled.len >= 4)
+			var/which = pick(monkeys_recycled)
+			juice_monkey(src,monkeys_recycled[which])
+			monkeys_recycled.Remove(which)	//Remove the one we picked
+			monkeys_recycled.Remove(pick(monkeys_recycled))	//Also remove 3 more since we're mashing them together.
+			monkeys_recycled.Remove(pick(monkeys_recycled))
+			monkeys_recycled.Remove(pick(monkeys_recycled))	//RS EDIT END
 			playsound(src, 'sound/effects/splat.ogg', 50, 1)
-			monkeys_recycled -= 4
 			sleep(1 SECOND)
 	processing = FALSE
 

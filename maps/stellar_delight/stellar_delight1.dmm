@@ -2307,11 +2307,6 @@
 /turf/simulated/wall/bay/r_wall/steel,
 /area/maintenance/stellardelight/deck1/portaft)
 "el" = (
-/obj/item/weapon/storage/box/monkeycubes,
-/obj/item/weapon/storage/box/monkeycubes,
-/obj/item/weapon/storage/box/monkeycubes,
-/obj/item/weapon/storage/box/monkeycubes,
-/obj/item/weapon/storage/box/monkeycubes,
 /obj/structure/closet/walllocker_double/east,
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/unary/vent_pump/on{
@@ -2319,6 +2314,11 @@
 	},
 /obj/item/weapon/storage/box/beakers,
 /obj/item/weapon/reagent_containers/spray/cleaner,
+/obj/random/monkey_cubes,
+/obj/random/monkey_cubes,
+/obj/random/monkey_cubes,
+/obj/random/monkey_cubes,
+/obj/random/monkey_cubes,
 /turf/simulated/floor/tiled/steel_grid,
 /area/rnd/xenobiology)
 "em" = (
@@ -19611,7 +19611,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
-/obj/item/weapon/storage/box/monkeycubes/wolpincubes,
+/obj/random/monkey_cubes,
 /turf/simulated/floor/tiled/eris/white/bluecorner,
 /area/medical/virology)
 "PR" = (

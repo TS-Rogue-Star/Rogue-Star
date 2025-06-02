@@ -1718,8 +1718,8 @@
 /area/offmap/aerostat/inside/southchamb)
 "ev" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/monkeycubes,
-/obj/item/weapon/storage/box/monkeycubes/wolpincubes,
+/obj/random/monkey_cubes,
+/obj/random/monkey_cubes,
 /obj/machinery/light,
 /turf/simulated/floor/tiled/white,
 /area/offmap/aerostat/inside/virology)
@@ -7170,8 +7170,8 @@
 /area/offmap/aerostat/inside/xenoarch)
 "An" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/monkeycubes,
-/obj/item/weapon/storage/box/monkeycubes,
+/obj/random/monkey_cubes,
+/obj/random/monkey_cubes,
 /obj/item/weapon/storage/pill_bottle/dylovene,
 /obj/item/weapon/storage/pill_bottle/dylovene,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -10125,7 +10125,7 @@
 	pixel_y = 24
 	},
 /obj/item/weapon/gun/energy/taser/xeno,
-/obj/item/weapon/storage/box/monkeycubes,
+/obj/random/monkey_cubes,
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
