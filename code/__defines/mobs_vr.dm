@@ -7,7 +7,9 @@
 
 #define VIS_AUGMENTED		32
 
-#define VIS_COUNT			32
+#define VIS_ADMIN_SECRET	33	//RS ADD
+
+#define VIS_COUNT			33	//RS EDIT
 
 //Protean organs
 #define O_ORCH		"orchestrator"

@@ -411,9 +411,7 @@
 
 #define VIS_STATUS			27
 
-#define VIS_ADMIN_SECRET	28	//RS ADD
-
-#define VIS_COUNT			28 //Must be highest number from above.	//RS EDIT
+#define VIS_COUNT			27 //Must be highest number from above.
 
 //Some mob icon layering defines
 #define BODY_LAYER		-100
