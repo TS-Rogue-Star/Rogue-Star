@@ -12,6 +12,9 @@
 	flags = RAD_SHIELDED
 	ambience = AMBIENCE_MAINTENANCE
 
+/area/asteroid/siriuspoint
+	ambience = AMBIENCE_SPACE
+
 /area/shuttle/excursion
 	requires_power = 1
 	icon_state = "shuttle2"
