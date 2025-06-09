@@ -2,9 +2,11 @@
 //Airless moonrock
 /turf/simulated/mineral/moonbase
 	color="#7ab6b6"
+	temperature = TCMB
 //Air-y moonrock
 /turf/simulated/mineral/cave/moonbase
 	color="#7ab6b6"
+
 /turf/simulated/mineral/floor/vacuum/moonbase
 	icon = 'maps/sirius_point/sp_asteroid.dmi'
 	icon_state = "asteroid"
