@@ -226,6 +226,8 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			"belly_fullscreen_color_secondary" = selected.belly_fullscreen_color_secondary,
 			"belly_fullscreen_color_trinary" = selected.belly_fullscreen_color_trinary,
 			"colorization_enabled" = selected.colorization_enabled,
+			"belly_healthbar_overlay_theme" = selected.belly_healthbar_overlay_theme,	//RS ADD
+			"belly_healthbar_overlay_color" = selected.belly_healthbar_overlay_color,	//RS ADD
 			"eating_privacy_local" = selected.eating_privacy_local,
 			"silicon_belly_overlay_preference"	= selected.silicon_belly_overlay_preference,
 			"visible_belly_minimum_prey"	= selected.visible_belly_minimum_prey,
@@ -359,6 +361,8 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 
 		selected_list["disable_hud"] = selected.disable_hud
 		selected_list["colorization_enabled"] = selected.colorization_enabled
+		selected_list["belly_healthbar_overlay_theme"] = selected.belly_healthbar_overlay_theme	//RS ADD
+		selected_list["belly_healthbar_overlay_color"] = selected.belly_healthbar_overlay_color	//RS ADD
 		selected_list["belly_fullscreen_color"] = selected.belly_fullscreen_color
 		selected_list["belly_fullscreen_color_secondary"] = selected.belly_fullscreen_color_secondary
 		selected_list["belly_fullscreen_color_trinary"] = selected.belly_fullscreen_color_trinary
@@ -1568,7 +1572,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 	var/atom/movable/target = locate(params["pick"])
 	if(!(target in host.vore_selected))
 		return TRUE // Not in our X anymore, update UI
-	var/list/available_options = list("Examine", "Eject", "Move", "Advance", "Transfer")
+	var/list/available_options = list("Examine","Health Bar", "Eject", "Move", "Advance", "Transfer")	//RS EDIT
 	if(ishuman(target))
 		available_options += "Transform"
 	if(isliving(target))
@@ -1577,191 +1581,31 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			available_options += "Process"
 	intent = tgui_input_list(user, "What would you like to do with [target]?", "Vore Pick", available_options)
 	switch(intent)
-		if("Examine")
-			var/list/results = target.examine(host)
-			if(!results || !results.len)
-				results = list("You were unable to examine that. Tell a developer!")
-			to_chat(user, jointext(results, "<br>"))
-			if(isliving(target))
-				var/mob/living/ourtarget = target
-				ourtarget.chat_healthbar(user)
+		if("Examine")	//RS EDIT START - Generalized BABY
+			host.vore_selected.examine_target(target)
 			return TRUE
-
 		if("Eject")
-			if(host.stat)
-				to_chat(user,"<span class='warning'>You can't do that in your state!</span>")
-				return TRUE
-
-			host.vore_selected.release_specific_contents(target)
+			host.vore_selected.eject_target(target)
 			return TRUE
-
 		if("Move")
-			if(host.stat)
-				to_chat(user,"<span class='warning'>You can't do that in your state!</span>")
-				return TRUE
-			var/obj/belly/choice = tgui_input_list(usr, "Move [target] where?","Select Belly", host.vore_organs)
-			if(!choice || !(target in host.vore_selected))
-				return TRUE
-			to_chat(target,"<span class='warning'>You're squished from [host]'s [lowertext(host.vore_selected.name)] to their [lowertext(choice.name)]!</span>")
-			host.vore_selected.transfer_contents(target, choice)
-
-
+			host.vore_selected.move_target(target)
+			return TRUE
 		if("Transfer")
-			if(host.stat)
-				to_chat(user,"<span class='warning'>You can't do that in your state!</span>")
-				return TRUE
-			if(isliving(target))
-				var/mob/living/p = target
-				if(!p.ssd_vore_check(host))
-					return
-
-			var/mob/living/belly_owner = host
-
-			var/list/viable_candidates = list()
-			for(var/mob/living/candidate in range(1, host))
-				if(istype(candidate) && !(candidate == host))
-					if(candidate.vore_organs.len && candidate.feeding && !candidate.no_vore)
-						viable_candidates += candidate
-			if(!viable_candidates.len)
-				to_chat(user, "<span class='notice'>There are no viable candidates around you!</span>")
-				return TRUE
-			belly_owner = tgui_input_list(user, "Who do you want to receive the target?", "Select Predator", viable_candidates)
-
-			if(!belly_owner || !(belly_owner in range(1, host)))
-				return TRUE
-
-			var/obj/belly/choice = tgui_input_list(user, "Move [target] where?","Select Belly", belly_owner.vore_organs)
-			if(!choice || !(target in host.vore_selected) || !belly_owner || !(belly_owner in range(1, host)))
-				return TRUE
-
-			if(belly_owner != host)
-				to_chat(user, "<span class='notice'>Transfer offer sent. Await their response.</span>")
-				var/accepted = tgui_alert(belly_owner, "[host] is trying to transfer [target] from their [lowertext(host.vore_selected.name)] into your [lowertext(choice.name)]. Do you accept?", "Feeding Offer", list("Yes", "No"))
-				if(accepted != "Yes")
-					to_chat(user, "<span class='warning'>[belly_owner] refused the transfer!!</span>")
-					return TRUE
-				if(!belly_owner || !(belly_owner in range(1, host)))
-					return TRUE
-				to_chat(target,"<span class='warning'>You're squished from [host]'s [lowertext(host.vore_selected.name)] to [belly_owner]'s [lowertext(choice.name)]!</span>")
-				to_chat(belly_owner,"<span class='warning'>[target] is squished from [host]'s [lowertext(host.vore_selected.name)] to your [lowertext(choice.name)]!</span>")
-				host.vore_selected.transfer_contents(target, choice)
-			else
-				to_chat(target,"<span class='warning'>You're squished from [host]'s [lowertext(host.vore_selected.name)] to their [lowertext(choice.name)]!</span>")
-				host.vore_selected.transfer_contents(target, choice)
+			host.vore_selected.transfer_target(target)
 			return TRUE
-
 		if("Transform")
-			if(host.stat)
-				to_chat(user,"<span class='warning'>You can't do that in your state!</span>")
-				return TRUE
-
-			var/mob/living/carbon/human/H = target
-			if(!istype(H))
-				return
-
-			var/datum/tgui_module/appearance_changer/vore/V = new(host, H)
-			V.tgui_interact(user)
+			host.vore_selected.transform_target(target)
 			return TRUE
-
 		if("Process")
-			var/mob/living/ourtarget = target
-			var/list/process_options = list()
-
-			if(ourtarget.digestable)
-				process_options += "Digest"
-
-			if(ourtarget.absorbable)
-				process_options += "Absorb"
-
-			process_options += "Knockout" //Can't think of any mechanical prefs that would restrict this. // RS Edit || Ports VOREStation PR15876
-
-			if(process_options.len)
-				process_options += "Cancel"
-
-			else
-				to_chat(usr, "<span class= 'warning'>You cannot instantly process [ourtarget].</span>")
-				return
-
-			var/ourchoice = tgui_input_list(usr, "How would you prefer to process \the [target]? This will perform the given action instantly if the prey accepts.","Instant Process", process_options)
-			if(!ourchoice)
-				return
-			if(!ourtarget.client)
-				to_chat(usr, "<span class= 'warning'>You cannot instantly process [ourtarget].</span>")
-				return
-			var/obj/belly/b = ourtarget.loc
-			switch(ourchoice)
-				if("Digest")
-					if(ourtarget.absorbed)
-						to_chat(usr, "<span class= 'warning'>\The [ourtarget] is absorbed, and cannot presently be digested.</span>")
-						return
-					if(tgui_alert(ourtarget, "\The [usr] is attempting to instantly digest you. Is this something you are okay with happening to you?","Instant Digest", list("No", "Yes")) != "Yes")
-						to_chat(usr, "<span class= 'warning'>\The [ourtarget] declined your digest attempt.</span>")
-						to_chat(ourtarget, "<span class= 'warning'>You declined the digest attempt.</span>")
-						return
-					if(ourtarget.loc != b)
-						to_chat(usr, "<span class= 'warning'>\The [ourtarget] is no longer in \the [b].</span>")
-						return
-					if(isliving(usr))
-						var/mob/living/l = usr
-						var/thismuch = ourtarget.health + 100
-						if(ishuman(l))
-							var/mob/living/carbon/human/h = l
-							thismuch = thismuch * h.species.digestion_nutrition_modifier
-						l.adjust_nutrition(thismuch)
-					ourtarget.mind?.vore_death = TRUE
-					ourtarget.death()		// To make sure all on-death procs get properly called
-					if(ourtarget) //RS Edit start || Ports CHOMPStation 7158
-						if(ourtarget.is_preference_enabled(/datum/client_preference/digestion_noises))
-							SEND_SOUND(ourtarget, sound(get_sfx("fancy_death_prey")))
-						b.handle_digestion_death(ourtarget) // RS Edit end
-				if("Absorb")
-					if(tgui_alert(ourtarget, "\The [usr] is attempting to instantly absorb you. Is this something you are okay with happening to you?","Instant Absorb", list("No", "Yes")) != "Yes")
-						to_chat(usr, "<span class= 'warning'>\The [ourtarget] declined your absorb attempt.</span>")
-						to_chat(ourtarget, "<span class= 'warning'>You declined the absorb attempt.</span>")
-						return
-					if(ourtarget.loc != b)
-						to_chat(usr, "<span class= 'warning'>\The [ourtarget] is no longer in \the [b].</span>")
-						return
-					if(isliving(usr))
-						var/mob/living/l = usr
-						l.adjust_nutrition(ourtarget.nutrition)
-						var/n = 0 - ourtarget.nutrition
-						ourtarget.adjust_nutrition(n)
-					b.absorb_living(ourtarget)
-				//RS Edit || Ports VOREStation PR15876
-				if("Knockout")
-					if(tgui_alert(ourtarget, "\The [usr] is attempting to instantly make you unconscious, you will be unable until ejected from the pred. Is this something you are okay with happening to you?","Instant Knockout", list("No", "Yes")) != "Yes")
-						to_chat(usr, "<span class= 'vwarning'>\The [ourtarget] declined your knockout attempt.</span>")
-						to_chat(ourtarget, "<span class= 'vwarning'>You declined the knockout attempt.</span>")
-						return
-					if(ourtarget.loc != b)
-						to_chat(usr, "<span class= 'vwarning'>\The [ourtarget] is no longer in \the [b].</span>")
-						return
-					ourtarget.AdjustSleeping(500000)
-					to_chat(ourtarget, "<span class= 'vwarning'>\The [usr] has put you to sleep, you will remain unconscious until ejected from the belly.</span>")
-				if("Cancel")
-					return
-				//RS Edit || Ports VOREStation PR15876
-		//RS ADD START
+			host.vore_selected.process_target(target)
+			return TRUE
 		if("Advance")
-			if(host.stat)
-				to_chat(user,"<span class='warning'>You can't do that in your state!</span>")
-				return TRUE
-			var/list/choices = list()
-			var/obj/belly/choice
-			for(var/obj/belly/b in host.vore_organs)
-				if(b.name == host.vore_selected.transferlocation || b.name == host.vore_selected.transferlocation_secondary)
-					choices += b
-			if(!choices.len)
-				to_chat(user,"<span class='warning'>You haven't configured any transfer locations for your [lowertext(host.vore_selected)]. Please configure at least one transfer location in order to advance your [lowertext(host.vore_selected)]'s contents.</span>")
-			else
-				choice = tgui_input_list(user, "Advance your [lowertext(host.vore_selected)]'s contents to which belly?","Select Belly", choices)
-
-			if(!choice || !(target in host.vore_selected))
-				return TRUE
-			to_chat(target,"<span class='warning'>You're squished from [host]'s [lowertext(host.vore_selected.name)] to their [lowertext(choice.name)]!</span>")
-			host.vore_selected.transfer_contents(target, choice)
-		//RS ADD END
+			host.vore_selected.advance_target(target)
+			return TRUE
+		if("Health Bar")
+			host.vore_selected.healthbar_target(target)
+			return TRUE
+		//RS EDIT END
 
 /datum/vore_look/proc/set_attr(mob/user, params)
 	if(!host.vore_selected)

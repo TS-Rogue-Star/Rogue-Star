@@ -192,6 +192,7 @@
 /mob/proc/reset_look()
 	SEND_SIGNAL(src,COMSIG_LOOK_RESET)
 	if(client)
+		cancel_camera()
 		animate(client,0.75 SECOND,FALSE,SINE_EASING,pixel_x = 0,pixel_y = 0)
 
 /datum/modifier/look_over_there

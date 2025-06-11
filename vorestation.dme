@@ -321,6 +321,7 @@
 #include "code\controllers\subsystems\processing\obj.dm"
 #include "code\controllers\subsystems\processing\processing.dm"
 #include "code\controllers\subsystems\processing\projectiles.dm"
+#include "code\controllers\subsystems\rs_ui\rs_ui.dm"
 #include "code\controllers\subsystems\processing\turfs.dm"
 #include "code\core\atom\Transform.dm"
 #include "code\core\datum\IsAbstract.dm"
