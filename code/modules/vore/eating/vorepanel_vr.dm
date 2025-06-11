@@ -1433,7 +1433,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 
 	var/intent = "Examine"
 	if(isliving(target))
-		intent = tgui_alert(usr, "What do you want to do to them?","Query",list("Examine","Help Out","Devour"))
+		intent = tgui_alert(usr, "What do you want to do to them?","Query",list("Examine","Healthbar","Help Out","Devour"))
 
 	else if(istype(target, /obj/item))
 		intent = tgui_alert(usr, "What do you want to do to that?","Query",list("Examine","Use Hand"))
@@ -1502,6 +1502,8 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 					M.absorbed = FALSE
 					OB.handle_absorb_langs(M, OB.owner)
 				TB.nom_mob(M)
+		if("Healthbar")			//RS ADD
+			new /obj/screen/movable/rs_ui/healthbar(user,target,user)	//RS ADD
 
 /datum/vore_look/proc/pick_from_outside(mob/user, params)
 	var/intent
@@ -1582,7 +1584,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 	intent = tgui_input_list(user, "What would you like to do with [target]?", "Vore Pick", available_options)
 	switch(intent)
 		if("Examine")	//RS EDIT START - Generalized BABY
-			host.vore_selected.examine_target(target)
+			host.vore_selected.examine_target(target,user)
 			return TRUE
 		if("Eject")
 			host.vore_selected.eject_target(target)

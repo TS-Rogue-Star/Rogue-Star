@@ -2266,9 +2266,8 @@
 		return FALSE
 	return TRUE
 
-/obj/belly/proc/examine_target(var/mob/living/our_prey)
-	if(!check_belly_access(usr,our_prey)) return
-	to_chat(owner, jointext(our_prey.examine(owner), "<br>"))
+/obj/belly/proc/examine_target(var/mob/living/our_prey,var/mob/living/user)
+	to_chat(user, jointext(our_prey.examine(user), "<br>"))
 
 /obj/belly/proc/eject_target(var/mob/living/our_prey)
 	if(!check_belly_access(usr,our_prey)) return

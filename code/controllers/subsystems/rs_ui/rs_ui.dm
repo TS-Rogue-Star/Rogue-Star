@@ -447,7 +447,7 @@ SUBSYSTEM_DEF(rs_ui)
 	//Check before choice
 	var/obj/belly/B = tracked.loc
 	var/list/available_options = list("Examine")
-	if(usr != tracked)
+	if(usr == B.owner)
 		available_options += "Advance"
 		available_options += "Transfer"
 		available_options += "Process"
@@ -471,7 +471,7 @@ SUBSYSTEM_DEF(rs_ui)
 		if("Transfer")
 			B.transfer_target(tracked)
 		if("Examine")
-			B.examine_target(tracked)
+			B.examine_target(tracked,usr)
 		if("Transform")
 			B.transform_target(tracked)
 		if("Process")
