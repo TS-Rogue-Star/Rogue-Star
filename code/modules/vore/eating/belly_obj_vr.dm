@@ -403,7 +403,7 @@
 	"autotransferlocation_secondary",
 	"autotransfer_min_amount",
 	"autotransfer_max_amount",
-	"belly_healthbar_overlay_theme",	//RS ADD END
+	"belly_healthbar_overlay_theme",
 	"belly_healthbar_overlay_color"		//RS ADD END
 	)
 
@@ -813,6 +813,9 @@
 
 	//Place them into our drop_location
 	M.forceMove(drop_location())
+	if(ismob(M))
+		var/mob/ourmob = M
+		ourmob.reset_view(null)
 	items_preserved -= M
 
 	//Special treatment for absorbed prey
@@ -889,6 +892,9 @@
 		prey.buckled.unbuckle_mob()
 
 	prey.forceMove(src)
+	if(ismob(prey))
+		var/mob/ourmob = prey
+		ourmob.reset_view(owner)
 	owner.updateVRPanel()
 	if(isanimal(owner))
 		owner.update_icon()
@@ -1212,6 +1218,10 @@
 	//This is probably already the case, but for sub-prey, it won't be.
 	if(M.loc != src)
 		M.forceMove(src)
+
+	if(ismob(M))
+		var/mob/ourmob = M
+		ourmob.reset_view(owner)
 
 	//Seek out absorbed prey of the prey, absorb them too.
 	//This in particular will recurse oddly because if there is absorbed prey of prey of prey...
@@ -1847,6 +1857,9 @@
 	if(!(content in src) || !istype(target))
 		return
 	content.forceMove(target)
+	if(ismob(content) && !isobserver(content)) //RSEdit: Ports VOREStation PR15918 | Fixes bug where camera is not set to follow the ghost
+		var/mob/ourmob = content
+		ourmob.reset_view(owner)
 	if(isitem(content))
 		var/obj/item/I = content
 		if(istype(I,/obj/item/weapon/card/id))
