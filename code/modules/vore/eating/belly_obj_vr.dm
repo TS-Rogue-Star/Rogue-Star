@@ -272,6 +272,9 @@
 	var/belly_fullscreen_color_secondary = "#428242"
 	var/belly_fullscreen_color_trinary = "#f0f0f0"
 
+	var/belly_healthbar_overlay_theme	//RS ADD
+	var/belly_healthbar_overlay_color	//RS ADD
+
 //For serialization, keep this updated, required for bellies to save correctly.
 /obj/belly/vars_to_save()
 	var/list/saving = list(
@@ -399,7 +402,9 @@
 	"autotransferchance_secondary",
 	"autotransferlocation_secondary",
 	"autotransfer_min_amount",
-	"autotransfer_max_amount" //RS Add End
+	"autotransfer_max_amount",
+	"belly_healthbar_overlay_theme",
+	"belly_healthbar_overlay_color"		//RS ADD END
 	)
 
 	if (save_digest_mode == 1)
@@ -503,6 +508,14 @@
 		// Begin RS edit
 		if (istype(owner, /mob/living/carbon/human))
 			owner:update_fullness()
+
+		if(owner.client)
+			if(owner.client.is_preference_enabled(/datum/client_preference/vore_health_bars))
+				new /obj/screen/movable/rs_ui/healthbar(owner,M,owner)
+		if(M.client)
+			if(M.client.is_preference_enabled(/datum/client_preference/vore_health_bars))
+				new /obj/screen/movable/rs_ui/healthbar(M,M,M)
+
 		// End RS edit
 
 	/*/ Intended for simple mobs  //RS Add || Chomp Port 2934 || Counting belly cycles now.
@@ -860,10 +873,6 @@
 			soundfile = fancy_release_sounds[release_sound]
 		if(soundfile)
 			playsound(src, soundfile, vol = privacy_volume, vary = 1, falloff = VORE_SOUND_FALLOFF, preference = /datum/client_preference/eating_noises, volume_channel = VOLUME_CHANNEL_VORE)
-	//Should fix your view not following you out of mobs sometimes!
-	if(ismob(M))
-		var/mob/ourmob = M
-		ourmob.reset_view(null)
 
 	if(!owner.ckey && escape_stun)
 		owner.Weaken(escape_stun)
@@ -1936,6 +1945,8 @@
 	dupe.belly_fullscreen_color_secondary = belly_fullscreen_color_secondary
 	dupe.belly_fullscreen_color_trinary = belly_fullscreen_color_trinary
 	dupe.colorization_enabled = colorization_enabled
+	dupe.belly_healthbar_overlay_theme = belly_healthbar_overlay_theme	//RS ADD
+	dupe.belly_healthbar_overlay_color = belly_healthbar_overlay_color	//RS ADD
 	dupe.egg_type = egg_type
 	dupe.emote_time = emote_time
 	dupe.emote_active = emote_active
@@ -2254,3 +2265,228 @@
 
 /mob/living/proc/post_digestion()	//In case we want to have a mob do anything after a digestion concludes	//RS ADD
 	return	//RS ADD
+
+//RS ADD START - Moved and generalized the selectable actions for bellies so they can be called from different kinds of things!
+/obj/belly/proc/check_belly_access(var/user,var/mob/living/our_prey,var/consider_stat = TRUE)
+	if(user && user != owner)
+		return FALSE
+	if(our_prey.loc != src)
+		to_chat(owner, "[our_prey] is not inside of \the [src]!")
+		return FALSE
+	if(owner.stat && consider_stat)
+		to_chat(owner,"<span class='warning'>You can't do that in your state!</span>")
+		return FALSE
+	return TRUE
+
+/obj/belly/proc/examine_target(var/mob/living/our_prey,var/mob/living/user)
+	to_chat(user, jointext(our_prey.examine(user), "<br>"))
+
+/obj/belly/proc/eject_target(var/mob/living/our_prey)
+	if(!check_belly_access(usr,our_prey)) return
+	release_specific_contents(our_prey)
+
+/obj/belly/proc/move_target(var/mob/living/our_prey)
+	if(!check_belly_access(usr,our_prey)) return
+
+	var/list/choices = owner.vore_organs.Copy()
+
+	choices -= src
+
+	var/obj/belly/choice = tgui_input_list(usr, "Move [our_prey] where?","Select Belly", owner.vore_organs)
+	if(!choice || !(our_prey in src.contents))
+		return
+	to_chat(our_prey,"<span class='warning'>You're squished from [owner]'s [lowertext(src.name)] to their [lowertext(choice.name)]!</span>")
+	transfer_contents(our_prey, choice)
+
+/obj/belly/proc/transfer_target(var/mob/living/our_prey)
+	if(!check_belly_access(usr,our_prey)) return
+
+	if(isliving(our_prey))
+		if(!our_prey.ssd_vore_check(owner))
+			return
+
+	if(tgui_alert(owner, "Do you want to transfer between your own bellies, or someone else's?", "Belly Transfer", list("Mine", "Someone Else's")) == "Mine")
+		move_target(our_prey)
+		return
+
+	var/list/viable_candidates = list()
+	for(var/mob/living/candidate in range(1, owner))
+		if(istype(candidate) && !(candidate == owner))
+			if(candidate.vore_organs.len && candidate.feeding && !candidate.no_vore)
+				viable_candidates += candidate
+	if(!viable_candidates.len)
+		to_chat(owner, "<span class='notice'>There are no viable candidates around you!</span>")
+		return
+	var/mob/living/belly_owner = tgui_input_list(owner, "Who do you want to receive [our_prey]?", "Select Predator", viable_candidates)
+
+	if(!belly_owner || !(belly_owner in range(1, owner)))
+		return
+
+	var/obj/belly/choice = tgui_input_list(owner, "Move [our_prey] where?","Select Belly", belly_owner.vore_organs)
+	if(!choice)
+		return
+	if(our_prey.loc != src)
+		to_chat(owner,SPAN_WARNING("\The [our_prey] is not inside your [src] anymore."))
+		return
+	if(!(belly_owner in range(1, owner)))
+		to_chat(owner,SPAN_WARNING("\The [belly_owner] is no longer in range!"))
+		return
+	to_chat(owner, "<span class='notice'>Transfer offer sent. Await their response.</span>")
+	var/accepted = tgui_alert(belly_owner, "[owner] is trying to transfer [our_prey] from their [lowertext(name)] into your [lowertext(choice.name)]. Do you accept?", "Feeding Offer", list("Yes", "No"))
+	if(accepted != "Yes")
+		to_chat(owner, "<span class='warning'>[belly_owner] refused the transfer!!</span>")
+		return
+	if(!(belly_owner in range(1, owner)))
+		to_chat(owner,SPAN_WARNING("\The [belly_owner] is no longer in range!"))
+		return
+	if(our_prey.loc != src)
+		to_chat(owner,SPAN_WARNING("\The [our_prey] is not inside your [src] anymore."))
+		return
+	to_chat(our_prey,"<span class='warning'>You're squished from [owner]'s [lowertext(name)] to [belly_owner]'s [lowertext(choice.name)]!</span>")
+	to_chat(belly_owner,"<span class='warning'>[our_prey] is squished from [owner]'s [lowertext(name)] to your [lowertext(choice.name)]!</span>")
+	transfer_contents(our_prey, choice)
+
+/obj/belly/proc/transform_target(var/mob/living/our_prey)
+	if(!check_belly_access(usr,our_prey)) return
+
+	var/mob/living/carbon/human/H = our_prey
+	if(!istype(H))
+		return
+
+	var/datum/tgui_module/appearance_changer/vore/V = new(owner, H)
+	V.tgui_interact(owner)
+	return
+
+/obj/belly/proc/process_target(var/mob/living/our_prey)
+	if(!check_belly_access(usr,our_prey)) return
+
+	if(!our_prey.client)
+		to_chat(owner, "<span class= 'warning'>You cannot instantly process [our_prey].</span>")
+		return
+
+	var/list/process_options = list()
+
+	if(our_prey.digestable)
+		process_options += "Digest"
+
+	if(our_prey.absorbable)
+		process_options += "Absorb"
+
+	process_options += "Knockout" //Can't think of any mechanical prefs that would restrict this. // RS Edit || Ports VOREStation PR15876
+
+	if(process_options.len)
+		process_options += "Cancel"
+
+	else
+		to_chat(owner, "<span class= 'warning'>You cannot instantly process [our_prey].</span>")
+		return
+
+	var/ourchoice = tgui_input_list(owner, "How would you prefer to process \the [our_prey]? This will perform the given action instantly if the prey accepts.","Instant Process", process_options)
+	if(!ourchoice)
+		return
+	if(!our_prey.client)
+		to_chat(owner, "<span class= 'warning'>You cannot instantly process [our_prey].</span>")
+		return
+	switch(ourchoice)
+		if("Digest")
+			if(our_prey.absorbed)
+				to_chat(owner, "<span class= 'warning'>\The [our_prey] is absorbed, and cannot presently be digested.</span>")
+				return
+			if(tgui_alert(our_prey, "\The [owner] is attempting to instantly digest you. Is this something you are okay with happening to you?","Instant Digest", list("No", "Yes")) != "Yes")
+				to_chat(owner, "<span class= 'warning'>\The [our_prey] declined your digest attempt.</span>")
+				to_chat(our_prey, "<span class= 'warning'>You declined the digest attempt.</span>")
+				return
+			if(our_prey.loc != src)
+				to_chat(owner, "<span class= 'warning'>\The [our_prey] is no longer in \the [src].</span>")
+				return
+			if(isliving(owner))
+				var/mob/living/l = owner
+				var/thismuch = our_prey.health + 100
+				if(ishuman(l))
+					var/mob/living/carbon/human/h = l
+					thismuch = thismuch * h.species.digestion_nutrition_modifier
+				l.adjust_nutrition(thismuch)
+			our_prey.mind?.vore_death = TRUE
+			our_prey.death()		// To make sure all on-death procs get properly called
+			if(our_prey) //RS Edit start || Ports CHOMPStation 7158
+				if(our_prey.is_preference_enabled(/datum/client_preference/digestion_noises))
+					SEND_SOUND(our_prey, sound(get_sfx("fancy_death_prey")))
+				handle_digestion_death(our_prey) // RS Edit end
+		if("Absorb")
+			if(tgui_alert(our_prey, "\The [owner] is attempting to instantly absorb you. Is this something you are okay with happening to you?","Instant Absorb", list("No", "Yes")) != "Yes")
+				to_chat(owner, "<span class= 'warning'>\The [our_prey] declined your absorb attempt.</span>")
+				to_chat(our_prey, "<span class= 'warning'>You declined the absorb attempt.</span>")
+				return
+			if(our_prey.loc != src)
+				to_chat(owner, "<span class= 'warning'>\The [our_prey] is no longer in \the [src].</span>")
+				return
+			if(isliving(owner))
+				var/mob/living/l = owner
+				l.adjust_nutrition(our_prey.nutrition)
+				var/n = 0 - our_prey.nutrition
+				our_prey.adjust_nutrition(n)
+			absorb_living(our_prey)
+		//RS Edit || Ports VOREStation PR15876
+		if("Knockout")
+			if(tgui_alert(our_prey, "\The [owner] is attempting to instantly make you unconscious, you will be unable until ejected from the pred. Is this something you are okay with happening to you?","Instant Knockout", list("No", "Yes")) != "Yes")
+				to_chat(owner, "<span class= 'vwarning'>\The [our_prey] declined your knockout attempt.</span>")
+				to_chat(our_prey, "<span class= 'vwarning'>You declined the knockout attempt.</span>")
+				return
+			if(our_prey.loc != src)
+				to_chat(owner, "<span class= 'vwarning'>\The [our_prey] is no longer in \the [src].</span>")
+				return
+			our_prey.AdjustSleeping(500000)
+			to_chat(our_prey, "<span class= 'vwarning'>\The [owner] has put you to sleep, you will remain unconscious until ejected from the belly.</span>")
+		if("Cancel")
+			return
+		//RS Edit || Ports VOREStation PR15876
+
+/obj/belly/proc/advance_target(var/mob/living/our_prey)
+	if(!check_belly_access(usr,our_prey)) return
+	var/list/choices = list()
+	var/obj/belly/choice
+	for(var/obj/belly/b in owner.vore_organs)
+		if(b.name == transferlocation || b.name == transferlocation_secondary)
+			choices += b
+	if(!choices.len)
+		to_chat(owner,"<span class='warning'>You haven't configured any transfer locations for your [lowertext(name)]. Please configure at least one transfer location in order to advance your [lowertext(name)]'s contents.</span>")
+		return
+	choice = tgui_input_list(owner, "Advance your [lowertext(name)]'s contents to which belly?","Select Belly", choices)
+	if(!choice)
+		return
+	if(our_prey.loc != src)
+		to_chat(owner,"<span class='warning'>\The [our_prey] is not in \the [src] anymore!</span>")
+		return
+	to_chat(our_prey,"<span class='warning'>You're squished from [owner]'s [lowertext(name)] to their [lowertext(choice.name)]!</span>")
+	for(var/obj/belly/b in owner.vore_organs)
+		if(b.name == choice)
+			choice = b
+	transfer_contents(our_prey, choice)
+
+/obj/belly/proc/healthbar_target(var/mob/living/our_prey)
+	if(!check_belly_access(usr,our_prey,FALSE)) return
+	new /obj/screen/movable/rs_ui/healthbar(owner,our_prey,owner)
+
+/obj/belly/proc/return_effective_d_mode(var/mob/living/ourmob)
+	if(!isliving(ourmob))
+		return FALSE
+	if(digest_mode == DM_SELECT)
+		switch(ourmob.selective_preference)
+			if(DM_DIGEST)
+				return DM_DIGEST
+			if(DM_ABSORB)
+				return DM_ABSORB
+			if(DM_DRAIN)
+				return DM_DRAIN
+			if(DM_DEFAULT)
+				switch(selective_preference)
+					if(DM_DIGEST)
+						return DM_DIGEST
+					if(DM_ABSORB)
+						return DM_ABSORB
+					if(DM_DRAIN)
+						return DM_DRAIN
+	else
+		return digest_mode
+
+//RS ADD END
