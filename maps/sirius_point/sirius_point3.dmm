@@ -190,6 +190,12 @@
 	},
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/cockpit)
+"bw" = (
+/obj/structure/bed/chair/sofa/corp/left{
+	dir = 8
+	},
+/turf/simulated/floor/glass,
+/area/space)
 "bz" = (
 /obj/machinery/vending/wardrobe/detdrobe,
 /turf/simulated/floor/wood/alt/panel,
@@ -599,6 +605,17 @@
 "dX" = (
 /turf/simulated/wall/r_wall,
 /area/ai_monitored/storage/emergency/eva)
+"dY" = (
+/obj/structure/railing/grey{
+	dir = 8
+	},
+/obj/structure/railing/grey,
+/turf/simulated/open,
+/area/space)
+"dZ" = (
+/obj/structure/bed/chair/sofa/corp/corner,
+/turf/simulated/floor/glass,
+/area/space)
 "ed" = (
 /obj/machinery/recharger/wallcharger{
 	pixel_x = 4;
@@ -787,6 +804,12 @@
 	},
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/cockpit)
+"eW" = (
+/obj/structure/bed/chair/backed_red{
+	dir = 4
+	},
+/turf/simulated/floor/glass,
+/area/space)
 "fc" = (
 /obj/machinery/computer/ship/sensors/adv,
 /obj/effect/floor_decal/fancy_shuttle{
@@ -836,6 +859,10 @@
 "fj" = (
 /turf/simulated/floor/plating,
 /area/crew_quarters/bar)
+"fl" = (
+/obj/structure/table/hardwoodtable,
+/turf/simulated/floor/glass,
+/area/space)
 "fr" = (
 /obj/machinery/light{
 	dir = 8
@@ -1130,6 +1157,12 @@
 	},
 /obj/structure/lattice,
 /turf/simulated/open,
+/area/space)
+"hm" = (
+/obj/structure/bed/chair/sofa/corp/corner{
+	dir = 1
+	},
+/turf/simulated/floor/glass,
 /area/space)
 "hq" = (
 /obj/structure/window/reinforced{
@@ -1941,6 +1974,15 @@
 /obj/structure/table/steel,
 /obj/item/device/integrated_circuit_printer,
 /turf/simulated/floor/tiled,
+/area/space)
+"lk" = (
+/obj/structure/railing/grey{
+	dir = 8
+	},
+/obj/structure/railing/grey{
+	dir = 1
+	},
+/turf/simulated/open,
 /area/space)
 "lm" = (
 /obj/effect/floor_decal/fancy_shuttle{
@@ -3262,6 +3304,12 @@
 	},
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/power)
+"rm" = (
+/obj/structure/bed/chair/sofa/corp/right{
+	dir = 4
+	},
+/turf/simulated/floor/glass,
+/area/space)
 "rn" = (
 /obj/structure/bed/chair,
 /turf/simulated/floor/tiled/steel_dirty,
@@ -3290,6 +3338,13 @@
 	dir = 1
 	},
 /turf/simulated/floor/carpet/sblucarpet,
+/area/space)
+"rx" = (
+/obj/structure/table/hardwoodtable,
+/obj/machinery/chemical_dispenser/bar_alc/full{
+	pixel_y = 5
+	},
+/turf/simulated/floor/glass,
 /area/space)
 "rz" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
@@ -4097,6 +4152,11 @@
 /obj/machinery/power/emitter,
 /turf/simulated/floor/plating/external/outdoors,
 /area/engineering/engine_room)
+"wh" = (
+/obj/item/weapon/storage/box/glasses/meta,
+/obj/item/weapon/storage/box/glasses/meta/metapint,
+/turf/simulated/floor/glass,
+/area/space)
 "wj" = (
 /obj/effect/floor_decal/milspec/color/black,
 /obj/item/gunbox/stun,
@@ -4275,9 +4335,10 @@
 /turf/simulated/floor/tiled,
 /area/space)
 "xe" = (
-/obj/effect/floor_decal/milspec/color/red/half,
-/obj/structure/closet/emcloset,
-/turf/simulated/floor/tiled/dark,
+/obj/structure/bed/chair/backed_red{
+	dir = 8
+	},
+/turf/simulated/floor/glass,
 /area/space)
 "xh" = (
 /obj/structure/bed/chair/sofa/left/black{
@@ -5150,6 +5211,10 @@
 /obj/structure/bed/chair,
 /turf/simulated/floor/tiled/dark,
 /area/space)
+"Co" = (
+/obj/machinery/hologram/holopad,
+/turf/simulated/floor/wood,
+/area/space)
 "Cp" = (
 /obj/machinery/conveyor{
 	dir = 10;
@@ -5375,6 +5440,13 @@
 /area/space)
 "Dx" = (
 /turf/simulated/floor/tiled/dark,
+/area/space)
+"Dz" = (
+/obj/structure/railing/grey,
+/obj/structure/railing/grey{
+	dir = 4
+	},
+/turf/simulated/open,
 /area/space)
 "DC" = (
 /obj/structure/particle_accelerator/particle_emitter/left{
@@ -6024,7 +6096,7 @@
 /area/medical/virology)
 "GV" = (
 /obj/effect/catwalk_plated/dark,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/eris/bcircuit,
 /area/space)
 "GW" = (
 /obj/machinery/computer/med_data/laptop{
@@ -6203,6 +6275,15 @@
 /obj/item/device/slime_scanner,
 /obj/item/device/slime_scanner,
 /turf/simulated/floor/tiled,
+/area/space)
+"HS" = (
+/obj/structure/railing/grey{
+	dir = 4
+	},
+/obj/structure/railing/grey{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/monotile,
 /area/space)
 "HT" = (
 /turf/simulated/open,
@@ -7551,6 +7632,12 @@
 	},
 /turf/simulated/floor/tiled/milspec/sterile,
 /area/space)
+"OO" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full/dome,
+/turf/simulated/floor/plating,
+/area/space)
 "OP" = (
 /turf/simulated/wall/r_wall,
 /area/bridge/meeting_room)
@@ -7830,6 +7917,10 @@
 "Ql" = (
 /turf/simulated/floor/tiled/dark,
 /area/hallway/secondary/exit)
+"Qo" = (
+/obj/machinery/vending/boozeomat,
+/turf/simulated/floor/glass,
+/area/space)
 "Qp" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -7911,6 +8002,15 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled,
+/area/space)
+"QU" = (
+/obj/structure/railing/grey{
+	dir = 1
+	},
+/obj/structure/railing/grey{
+	dir = 4
+	},
+/turf/simulated/open,
 /area/space)
 "QV" = (
 /obj/structure/window/reinforced/full,
@@ -8408,6 +8508,10 @@
 /obj/machinery/portable_atmospherics/hydroponics,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/bar)
+"SQ" = (
+/obj/structure/bed/chair/sofa/corp/left,
+/turf/simulated/floor/glass,
+/area/space)
 "SR" = (
 /obj/structure/handrail{
 	dir = 1
@@ -8528,6 +8632,10 @@
 "Tu" = (
 /obj/random/vendorall,
 /turf/simulated/floor/tiled/steel_dirty,
+/area/space)
+"Tv" = (
+/obj/structure/bed/chair/sofa/corp/right,
+/turf/simulated/floor/glass,
 /area/space)
 "Tw" = (
 /obj/machinery/door/window/brigdoor/eastright{
@@ -8689,6 +8797,10 @@
 "Ux" = (
 /obj/structure/bed/chair/sofa/right/blue,
 /turf/simulated/floor/carpet/blue2,
+/area/space)
+"Uy" = (
+/obj/machinery/hologram/holopad,
+/turf/simulated/floor/glass,
 /area/space)
 "UA" = (
 /obj/structure/table/darkglass,
@@ -12191,13 +12303,13 @@ el
 el
 el
 el
-el
-el
-el
-el
-el
-el
-el
+OO
+OO
+OO
+OO
+OO
+OO
+OO
 el
 el
 el
@@ -12332,15 +12444,15 @@ el
 el
 el
 el
-el
-el
-el
-el
-el
-el
-el
-el
-el
+OO
+OO
+Ym
+Ym
+At
+Ym
+Ym
+OO
+OO
 el
 el
 el
@@ -12473,17 +12585,17 @@ el
 el
 el
 el
-el
-el
-el
-el
-el
-el
-el
-el
-el
-el
-el
+OO
+OO
+At
+xe
+xe
+At
+xe
+xe
+At
+OO
+OO
 el
 el
 el
@@ -12615,17 +12727,17 @@ el
 el
 el
 el
-el
-el
-el
-el
-el
-el
-el
-el
-el
-el
-el
+OO
+Qo
+fl
+vX
+vX
+vX
+vX
+vX
+hm
+rm
+OO
 el
 el
 el
@@ -12757,17 +12869,17 @@ el
 el
 el
 el
-el
-el
-el
-el
-el
-el
-el
-el
-el
-el
-el
+OO
+wh
+fl
+vX
+lk
+qe
+dY
+vX
+SQ
+Ym
+OO
 el
 el
 el
@@ -12899,17 +13011,17 @@ el
 el
 el
 el
-el
-el
-el
-el
-el
-el
-el
-el
-el
-el
-el
+OO
+At
+fl
+vX
+tv
+QX
+HS
+vX
+At
+Uy
+OO
 el
 el
 el
@@ -13041,17 +13153,17 @@ el
 el
 el
 el
-el
-el
-el
-el
-el
-el
-el
-el
-el
-el
-el
+OO
+At
+rx
+vX
+QU
+sQ
+Dz
+vX
+Tv
+Ym
+OO
 el
 el
 el
@@ -13183,17 +13295,17 @@ el
 el
 el
 el
-el
-el
-el
-el
-el
-el
-el
-el
-el
-el
-el
+OO
+At
+At
+vX
+vX
+vX
+vX
+vX
+dZ
+bw
+OO
 el
 el
 el
@@ -13325,17 +13437,17 @@ el
 el
 el
 el
-el
-el
-el
-el
-el
-el
-el
-el
-el
-el
-el
+OO
+OO
+At
+eW
+eW
+At
+eW
+eW
+At
+OO
+OO
 el
 el
 el
@@ -13468,15 +13580,15 @@ el
 el
 el
 el
-el
-el
-el
-el
-el
-el
-el
-el
-el
+OO
+OO
+Ym
+Ym
+At
+Ym
+Ym
+OO
+OO
 el
 el
 el
@@ -13611,13 +13723,13 @@ el
 el
 el
 el
-el
-el
-el
-el
-el
-el
-el
+OO
+OO
+OO
+OO
+OO
+OO
+OO
 el
 el
 el
@@ -17233,9 +17345,9 @@ cU
 Ro
 aE
 uR
+RZ
 GM
 qe
-uR
 uR
 Ed
 RN
@@ -17850,7 +17962,7 @@ GV
 GV
 GV
 GV
-xe
+Dq
 Mx
 aE
 aE
@@ -20394,7 +20506,7 @@ LB
 LB
 Bz
 uR
-QY
+Co
 NX
 QY
 QY
@@ -20937,7 +21049,7 @@ Si
 Qz
 Sq
 xV
-Rf
+JJ
 uR
 eR
 vv
@@ -21104,10 +21216,10 @@ ya
 VX
 PZ
 uR
-hz
-hz
-hz
-hz
+gG
+gG
+gG
+gG
 uR
 aE
 aE

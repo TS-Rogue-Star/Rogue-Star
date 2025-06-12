@@ -1,4 +1,5 @@
 //Moonbase turfs
+
 //Airless moonrock
 /turf/simulated/mineral/moonbase
 	color="#7ab6b6"
@@ -7,6 +8,7 @@
 /turf/simulated/mineral/cave/moonbase
 	color="#7ab6b6"
 
+//Floors
 /turf/simulated/mineral/floor/vacuum/moonbase
 	icon = 'maps/sirius_point/sp_asteroid.dmi'
 	icon_state = "asteroid"
@@ -15,10 +17,11 @@
 //	color="#8da1bb"
 	edge_blending_priority = 4
 	icon_edge = 'maps/sirius_point/sp_asteroid_edge.dmi'
+	temperature = TCMB
 /turf/simulated/floor/plating/external/moonbaseplating
 	icon = 'maps/sirius_point/sp_asteroid.dmi'
 	icon_state = "asteroidfloor"
-
+	temperature = TCMB
 /turf/simulated/floor/glass/reinforced/vacuum
 	oxygen = 0
 	nitrogen = 0
@@ -62,7 +65,7 @@
 //We may not need anything below this line thanks to the simultaneous map definitions//
 ///////////////////////////////////////////////////////////////////////////////////////
 // Virgo 3b things, for centcomm
-/turf/unsimulated/mineral/virgo3b
+/*/turf/unsimulated/mineral/virgo3b
 	blocks_air = TRUE
 
 /turf/unsimulated/floor/steel
@@ -143,4 +146,4 @@ VIRGO3B_TURF_CREATE(/turf/simulated/floor/outdoors/rocks)
 	if(mineral_name && (mineral_name in GLOB.ore_data))
 		mineral = GLOB.ore_data[mineral_name]
 		UpdateMineral()
-	update_icon()
+	update_icon()*/
