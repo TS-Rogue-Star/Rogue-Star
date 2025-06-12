@@ -47,6 +47,7 @@ SUBSYSTEM_DEF(rs_ui)
 	var/mob/living/holder					//Who the health bar is being displayed to
 	var/tracked_stat = 0					//How much of whatever stat we are tracking was last update - if changed we update the hud
 	var/mode = DM_DIGEST					//The last recorded digest mode for the belly tracked is in - if changed we update the hud
+	var/last_movecheck = FALSE				//While a mob's move is on cooldown, the hud will display a different icon
 	var/static/list/icon_cache = list()		//We cache the icons we have made so we don't have to make them again
 	var/image/bar_frame						//The frame for the healthbar
 	var/image/bar_frame_background			//The bar's background
@@ -57,6 +58,10 @@ SUBSYSTEM_DEF(rs_ui)
 	var/overlay_color						//Same as above but for the color
 	var/matrix/original_transform			//We delete tracked's transform so they appear normal sized in the hud, but we store it and restore it to them when the hud dies.
 	var/atom/movable/tummy_shadow/shadow	//This holds tracked's vis_contents and makes it so you can't click on it.
+	var/static/list/move_reactables = list(
+		"Womb",
+		"Between"
+	)
 
 /obj/screen/movable/rs_ui/healthbar/New(loc, var/tracked_mob,var/holder_mob)
 	if(!register_tummy_target(tracked_mob,holder_mob))
@@ -305,8 +310,55 @@ SUBSYSTEM_DEF(rs_ui)
 */
 
 
+/obj/screen/movable/rs_ui/healthbar/proc/consider_overlays(var/obj/belly/B)
+	var/moving = FALSE				//Whether or not the belly owner is moving - we'll use this to help know which state to use
+	var/update_overlay = FALSE		//We only update the overlay when this is true
+	if(B.belly_healthbar_overlay_theme in move_reactables)	//Only some of the overlays react to movement
+		moving = B.owner.checkMoveCooldown()	//Since we don't keep track of the mob itself we'll just check its movement cooldown. If it's on cooldown, then it moved recently! May not be turbo accurate but it's good enough for updating every 2 seconds or so
+		if(moving != last_movecheck)	//We compare that result to the previous cycle's result
+			update_overlay = TRUE		//If it's different, then we know we need to update!
+			last_movecheck = moving		//And we record the result!
+	if(B.belly_healthbar_overlay_theme != overlay_theme)	//If the belly owner adjusts this, it gets applied to the belly, so all the huds that are thinking about it will update if it's different from the previous cycle!
+		update_overlay = TRUE
+		overlay_theme = B.belly_healthbar_overlay_theme
+	if(B.belly_healthbar_overlay_color != overlay_color)	//Same as above
+		update_overlay = TRUE
+		overlay_color = B.belly_healthbar_overlay_color
 
+	if(update_overlay)	//We only do any image work if there's something to update!
+		cut_overlay(underlay_fx)
+		underlay_fx = null
+		cut_overlay(overlay_fx)
+		overlay_fx = null
 
+		if(overlay_theme)
+			var/ourkey = "[overlay_theme]-[overlay_color]-[moving]"
+
+			underlay_fx = icon_cache["underlay_fx_[ourkey]"]
+			if(!underlay_fx)
+				underlay_fx = image('icons/rogue-star/vore_healthbar.dmi',null,"[overlay_theme]_under")
+				underlay_fx.pixel_x = -32
+				underlay_fx.pixel_y = -32
+				underlay_fx.layer = layer - 9
+				underlay_fx.appearance_flags = RESET_COLOR|KEEP_APART|PIXEL_SCALE
+				underlay_fx.color = overlay_color
+
+				icon_cache["underlay_fx_[ourkey]"] = underlay_fx
+			add_overlay(underlay_fx)
+
+			overlay_fx = icon_cache["overlay_fx_[ourkey]"]
+			if(!overlay_fx)
+				overlay_fx = image('icons/rogue-star/vore_healthbar.dmi',null,"[overlay_theme]_[moving]")
+				overlay_fx.pixel_x = -32
+				overlay_fx.pixel_y = -32
+				overlay_fx.plane = plane
+				overlay_fx.layer = layer + 8
+				overlay_fx.appearance_flags = RESET_COLOR|KEEP_APART|PIXEL_SCALE
+				overlay_fx.color = overlay_color
+
+				icon_cache["overlay_fx_[ourkey]"] = overlay_fx
+
+			add_overlay(overlay_fx)
 
 /obj/screen/movable/rs_ui/healthbar/proc/absorbed()	//Special icon for having been fully absorbed.
 	health_bar = icon_cache["absorbed"]
@@ -328,10 +380,8 @@ SUBSYSTEM_DEF(rs_ui)
 	if(!tracked)	//We can't work without tracked
 		cleanup()
 		return
-	if(check_moved())	//We have tracked, but is tracked moving around? Then they aren't in a belly!!! No health bar for you!
-		return
 	var/obj/belly/B = tracked.loc
-	if(!isbelly(B))	//Double check, is tracked in a belly?
+	if(!isbelly(B))	//is tracked in a belly?
 		cleanup()
 		return
 	if(tracked != holder)	//If tracked is also the holder, that means they're the prey in the belly!
@@ -340,43 +390,7 @@ SUBSYSTEM_DEF(rs_ui)
 				cleanup()
 				return
 
-	if(B.belly_healthbar_overlay_theme != overlay_theme || B.belly_healthbar_overlay_color != overlay_color)	//This should be its own proc
-
-		cut_overlay(underlay_fx)
-		underlay_fx = null
-		cut_overlay(overlay_fx)
-		overlay_fx = null
-
-		if(B.belly_healthbar_overlay_theme)
-			var/ourkey = "[B.belly_healthbar_overlay_theme]-[B.belly_healthbar_overlay_color]"
-
-			underlay_fx = icon_cache["underlay_fx_[ourkey]"]
-			if(!underlay_fx)
-				underlay_fx = image('icons/rogue-star/vore_healthbar.dmi',null,"[B.belly_healthbar_overlay_theme]_under")
-				underlay_fx.pixel_x = -32
-				underlay_fx.pixel_y = -32
-				underlay_fx.layer = layer - 9
-				underlay_fx.appearance_flags = RESET_COLOR|KEEP_APART|PIXEL_SCALE
-				underlay_fx.color = B.belly_healthbar_overlay_color
-
-				icon_cache["underlay_fx_[ourkey]"] = underlay_fx
-			add_overlay(underlay_fx)
-
-			overlay_fx = icon_cache["overlay_fx_[ourkey]"]
-			if(!overlay_fx)
-				overlay_fx = image('icons/rogue-star/vore_healthbar.dmi',null,B.belly_healthbar_overlay_theme)
-				overlay_fx.pixel_x = -32
-				overlay_fx.pixel_y = -32
-				overlay_fx.plane = plane
-				overlay_fx.layer = layer + 8
-				overlay_fx.appearance_flags = RESET_COLOR|KEEP_APART|PIXEL_SCALE
-				overlay_fx.color = B.belly_healthbar_overlay_color
-
-				icon_cache["overlay_fx_[ourkey]"] = overlay_fx
-
-			overlay_theme = B.belly_healthbar_overlay_theme
-			overlay_color = B.belly_healthbar_overlay_color
-			add_overlay(overlay_fx)
+	consider_overlays(B)	//This thinks about whether we should update the tummy visuals!
 
 	var/update_anyway = FALSE
 	if(consider_mode(B))
@@ -394,7 +408,6 @@ SUBSYSTEM_DEF(rs_ui)
 		else
 			update_digest(update_anyway)
 
-
 /obj/screen/movable/rs_ui/healthbar/proc/consider_mode(var/obj/belly/B)
 	if(mode != B.digest_mode)
 		mode = B.digest_mode
@@ -402,26 +415,26 @@ SUBSYSTEM_DEF(rs_ui)
 		return TRUE
 
 /obj/screen/movable/rs_ui/healthbar/proc/update_digest(var/override = FALSE)
-	var/our_health = tracked.health
-	if(ishuman(tracked))
+	var/our_health = tracked.health		//For digest and any mode that uses this we'll think about health, so, just a normal health bar!
+	if(ishuman(tracked))				//Humans go to -100 health, so we add 100 to whatever they have
 		our_health+=100
-	if(tracked_stat != our_health)
+	if(tracked_stat != our_health)		//Only update when what we track doesn't match what we last recorded
 		update_bar()
-		tracked_stat = our_health
+		tracked_stat = our_health		//Record the stat so we can compare it next time
 	else if(override)
 		update_bar()
 
 /obj/screen/movable/rs_ui/healthbar/proc/update_absorb(var/override = FALSE)
-	if(tracked.nutrition != tracked_stat)
+	if(tracked.nutrition != tracked_stat)	//For drain and absorb we think about nutrition, since that's what gets affected
 		update_bar()
-		tracked_stat = tracked.nutrition
-	else if(tracked.absorbed)
+		tracked_stat = tracked.nutrition	//Record for future comparison
+	else if(tracked.absorbed)				//If we're updating absorb and they have been absorbed, then we'll call update too!
 		update_bar()
 	else if(override)
 		update_bar()
 
 /obj/screen/movable/rs_ui/healthbar/proc/update_select(var/obj/belly/B,var/override = FALSE)
-	switch(B.return_effective_d_mode(tracked))
+	switch(B.return_effective_d_mode(tracked))	//Select is annoying so I made it simple, it considers some stuff and picks what should be applying
 		if(DM_DIGEST)
 			update_digest(override)
 		if(DM_ABSORB)
@@ -431,28 +444,22 @@ SUBSYSTEM_DEF(rs_ui)
 		else
 			update_digest(override)
 
-/obj/screen/movable/rs_ui/healthbar/proc/check_moved()
-	if(!isbelly(tracked.loc))
-		cleanup()
-		return TRUE
-	return FALSE
-
 /obj/screen/movable/rs_ui/healthbar/Click(location, control, params)
 	if(!tracked)
 		cleanup()
 	if(!isbelly(tracked.loc))
 		cleanup()
-	if(usr != holder && usr != tracked)
+	if(usr != holder)	//I'm not sure how you would get here if you weren't the holder but, just in case!
 		return
 	//Check before choice
 	var/obj/belly/B = tracked.loc
 	var/list/available_options = list("Examine")
-	if(usr == B.owner)
+	if(usr == B.owner)	//If you're the belly owner you get extra options!!
 		available_options += "Advance"
 		available_options += "Transfer"
 		available_options += "Process"
 		if(ishuman(tracked))
-			available_options += "Transform"
+			available_options += "Transform"	//This only works for humans
 		available_options += "Eject"
 		available_options += "Customize"
 	available_options += "Close"
@@ -461,7 +468,7 @@ SUBSYSTEM_DEF(rs_ui)
 	if(B != tracked.loc)
 		return
 
-	switch(input)
+	switch(input)		//Most of these are the same options and methods you get from clicking someone in the vore panel
 		if("Close")
 			cleanup()
 		if("Eject")
@@ -480,15 +487,16 @@ SUBSYSTEM_DEF(rs_ui)
 			customize()
 
 /obj/screen/movable/rs_ui/healthbar/proc/customize()
-	if(holder == tracked)	//Are we the prey?
-		return	//Then it's not our belly!
 	var/obj/belly/B = tracked.loc
 	if(!isbelly(B))
 		cleanup()
 		return
+	if(B.owner != holder)	//If it's not our belly then we can't customize it!
+		return
 	var/list/ourlist = list(
 		"Inside",
 		"Stomach",
+		"Churn",
 		"Tight",
 		"Mouth",
 		"Tunnel",
@@ -524,7 +532,7 @@ SUBSYSTEM_DEF(rs_ui)
 
 	new /obj/screen/movable/rs_ui/healthbar(src,src,src)
 
-/atom/movable/tummy_shadow
+/atom/movable/tummy_shadow	//This object just shows someone's vis contents but makes it so you can't click it!
 	mouse_opacity = FALSE
 
 /atom/movable/tummy_shadow/New(loc, var/mob/living/L)
@@ -535,47 +543,3 @@ SUBSYSTEM_DEF(rs_ui)
 	for(var/thing in vis_contents)
 		vis_contents -= thing
 	..()
-
-/*
-/////NA BEGIN/////
-
-/obj/screen/movable/nobj_holder
-	var/atom/navigable_object/tracked
-
-/obj/screen/movable/nobj_holder/New(loc,var/to_track)
-	. = ..()
-	tracked = to_track
-	vis_contents += tracked
-	RegisterSignal(tracked,COMSIG_PARENT_QDELETING,PROC_REF(Destroy),TRUE)
-
-/obj/screen/movable/nobj_holder/Destroy()
-	UnregisterSignal(tracked,COMSIG_PARENT_QDELETING)
-
-	vis_contents -= tracked
-	tracked = null
-	return ..()
-
-/atom/navigable_object
-	name = "level"
-	desc = "A space that users can move around within."
-
-/atom/navigable_object/proc/add_object(var/our_object)
-	new /atom/movable/mobile_object_holder(src,our_object)
-
-/atom/movable/mobile_object_holder/New(loc, var/our_object)
-	if(isliving(our_object) || isobj(our_object))
-		vis_contents += our_object
-		return ..()
-	qdel(src)
-*/
-
-/*
-/proc/getIconMask(atom/A)//By yours truly. Creates a dynamic mask for a mob/whatever. /N
-	var/icon/alpha_mask = new(A.icon,A.icon_state)//So we want the default icon and icon state of A.
-	for(var/I in A.overlays)//For every image in overlays. var/image/I will not work, don't try it.
-		if(I:layer>A.layer)	continue//If layer is greater than what we need, skip it.
-		var/icon/image_overlay = new(I:icon,I:icon_state)//Blend only works with icon objects.
-		//Also, icons cannot directly set icon_state. Slower than changing variables but whatever.
-		alpha_mask.Blend(image_overlay,ICON_OR)//OR so they are lumped together in a nice overlay.
-	return alpha_mask//And now return the mask.
-*/
