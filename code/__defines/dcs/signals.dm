@@ -785,4 +785,7 @@
 #define COMSIG_MOB_SMELLED "mob_smelled"
 #define COMSIG_MOB_WASHED "mob_washed"
 #define COMSIG_LOOK_RESET "look_reset"
+#define COMSIG_DIGESTED "mob_digested"
+#define COMSIG_VORE_HEALTHBAR_UPDATE "vore_healthbar_update"
+#define COMSIG_VORE_HEALTHBAR_CLEANUP "vore_healthbar_cleanup"
 //RS ADD END
