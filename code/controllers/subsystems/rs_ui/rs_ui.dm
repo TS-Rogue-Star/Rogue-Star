@@ -176,20 +176,27 @@ SUBSYSTEM_DEF(rs_ui)
 	var/oursprite = "frame"			//The sprite we use for the frame
 	var/bg_state = "draining"		//The sprite we use for the background of the healthbar
 	var/bg_color = "#720000"		//The color we use for the background of the healthbar
+	var/tag
 	if(tracked.absorbed)		//Being absorbed makes us ignore other digest modes so we'll just pretend it's set to absorb, and give us a fancier sprite~
 		ourmode = DM_ABSORB
 		oursprite = "frame_pulse_b"
+		tag = "absorbed"
 	switch(ourmode)
 		if(DM_DIGEST)
 			ourcolor = "#ff0000"
+			tag = "digesting"
 		if(DM_DRAIN)
 			ourcolor = "#ffe600"
 			bg_color = "#9e7941"
+			tag = "draining"
 		if(DM_ABSORB)
 			ourcolor = "#cc00ff"
 			bg_color = "#703c7e"
+			if(!tag)
+				tag = "absorbing"
 		if(DM_HEAL)
 			ourcolor = "#78ff74"
+			tag = "healing"
 			if(tracked.health == tracked.maxHealth)		//Do different sprites for if tracked is damaged or full health!
 				oursprite = "frame_pulse"
 			else
@@ -201,16 +208,22 @@ SUBSYSTEM_DEF(rs_ui)
 
 
 	/////BAR FRAME/////
-	bar_frame = icon_cache["[ourcolor]-[oursprite]"]	//Try to pull from the cache
+	bar_frame = icon_cache["[tag]-[ourcolor]-[oursprite]"]	//Try to pull from the cache
 	if(!bar_frame)										//If we don't have it, then let's build it!
-		bar_frame = image('icons/rogue-star/vore_healthbar.dmi',null,oursprite)	//These sprites are 96x96!
+		if(tag)
+			var/icon/frame = new('icons/rogue-star/vore_healthbar.dmi',oursprite)	//These sprites are 96x96!
+			var/icon/frame_tag = new('icons/rogue-star/vore_healthbar.dmi',"tag_[tag]")
+			frame.Blend(frame_tag,ICON_UNDERLAY)
+			bar_frame = image(frame)
+		else
+			bar_frame = image('icons/rogue-star/vore_healthbar.dmi',null,oursprite)	//These sprites are 96x96!
 		bar_frame.pixel_x = -32				//Center it
 		bar_frame.pixel_y = -70				//This makes it be pleasantly under the overlay!
 		bar_frame.plane = plane
 		bar_frame.layer = layer + 12		//The frame is on top of everything else! Nothing should go in front of the frame!
 		bar_frame.color = ourcolor
 		bar_frame.appearance_flags = RESET_COLOR|KEEP_APART|PIXEL_SCALE
-		icon_cache["[ourcolor]-[oursprite]"] = bar_frame	//Cache it so we don't have to make it again
+		icon_cache["[tag]-[ourcolor]-[oursprite]"] = bar_frame	//Cache it so we don't have to make it again
 	add_overlay(bar_frame)
 	/////BAR BACKGROUND/////
 	bar_frame_background = icon_cache["[bg_color]-[bg_state]"]	//Pull from cache!
@@ -499,6 +512,7 @@ SUBSYSTEM_DEF(rs_ui)
 		"Churn",
 		"Tight",
 		"Mouth",
+		"Tube",
 		"Tunnel",
 		"Womb",
 		"Between",

@@ -1433,7 +1433,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 
 	var/intent = "Examine"
 	if(isliving(target))
-		intent = tgui_alert(usr, "What do you want to do to them?","Query",list("Examine","Healthbar","Help Out","Devour"))
+		intent = tgui_alert(usr, "What do you want to do to them?","Query",list("Examine","Healthbar","Help Out","Devour"))	//RS EDIT
 
 	else if(istype(target, /obj/item))
 		intent = tgui_alert(usr, "What do you want to do to that?","Query",list("Examine","Use Hand"))
