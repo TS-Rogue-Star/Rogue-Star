@@ -18,7 +18,7 @@
 /area/space)
 "ah" = (
 /obj/structure/undies_wardrobe,
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/plating,
 /area/space)
 "am" = (
 /obj/structure/inflatable/door,
@@ -4236,7 +4236,12 @@
 /turf/simulated/floor/tiled,
 /area/space)
 "LF" = (
-/obj/machinery/recharge_station,
+/obj/effect/floor_decal/steeldecal/steel_decals3{
+	dir = 8
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals3{
+	dir = 9
+	},
 /turf/simulated/floor/tiled/white,
 /area/space)
 "LG" = (
@@ -13004,7 +13009,7 @@ Qw
 IY
 IY
 IY
-IY
+rZ
 zv
 ox
 rZ
@@ -13288,8 +13293,8 @@ qd
 qd
 qd
 qd
-WR
 qd
+WR
 qd
 qd
 qd
@@ -14009,8 +14014,8 @@ lB
 IY
 IY
 rZ
-oj
-oj
+rZ
+rZ
 GB
 GB
 GB
@@ -14150,9 +14155,9 @@ qd
 dk
 IY
 IY
+IY
+IY
 rZ
-oj
-oj
 GB
 GB
 GB
@@ -14293,7 +14298,7 @@ NC
 NC
 NC
 NC
-NC
+IY
 NC
 GB
 GB
@@ -14435,7 +14440,7 @@ pW
 NC
 pW
 NC
-LF
+IY
 NC
 GB
 GB
@@ -14577,7 +14582,7 @@ nY
 NC
 nY
 NC
-nY
+IY
 NC
 GB
 GB
@@ -14718,8 +14723,8 @@ qd
 sJ
 nN
 nN
-nN
-nN
+NC
+IY
 NC
 mA
 xG
@@ -14859,9 +14864,9 @@ hS
 qd
 dP
 nN
-nN
-nN
-nN
+LF
+BS
+IY
 NC
 uv
 mA
@@ -15002,7 +15007,7 @@ qd
 dP
 nN
 nN
-nN
+NC
 ah
 NC
 mA

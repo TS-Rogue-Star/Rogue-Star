@@ -592,7 +592,9 @@
 "dU" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass_security/polarized{
-	req_one_access = list(58)
+	req_one_access = list(58);
+	id_tint = "hos";
+	name = "Head of Security's Office"
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/space)
@@ -795,6 +797,12 @@
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/cockpit)
 "fd" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/command{
+	id_tag = "captaindoor";
+	name = "Site Manager's Office";
+	req_access = list(20)
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/bridge_hallway)
 "fe" = (
@@ -1109,6 +1117,12 @@
 /turf/simulated/floor/wood,
 /area/crew_quarters/bar)
 "hc" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass_research{
+	name = "Circuitry Workshop";
+	req_access = list(7);
+	req_one_access = null
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/rnd/research)
 "he" = (
@@ -2323,6 +2337,11 @@
 /obj/structure/bed/chair/office/dark{
 	dir = 8
 	},
+/obj/machinery/button/windowtint/multitint{
+	id = "hos";
+	pixel_x = -15;
+	pixel_y = -30
+	},
 /turf/simulated/floor/carpet/blue2,
 /area/space)
 "mW" = (
@@ -2577,7 +2596,9 @@
 "nX" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/multi_tile/glass{
-	dir = 1
+	dir = 1;
+	req_one_access = list(47);
+	name = "Research"
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/rnd/research)
@@ -2623,6 +2644,14 @@
 	},
 /turf/simulated/floor/carpet/purcarpet,
 /area/rnd/rdoffice)
+"oo" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/command{
+	name = "Server Room";
+	req_access = list(30)
+	},
+/turf/simulated/floor/tiled/steel_ridged,
+/area/rnd/research)
 "op" = (
 /obj/item/weapon/paper_bin{
 	pixel_x = 3;
@@ -3248,6 +3277,10 @@
 /turf/simulated/floor/tiled,
 /area/space)
 "ri" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass_command/polarized{
+	req_access = list(30)
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/rnd/rdoffice)
 "rj" = (
@@ -3424,6 +3457,14 @@
 /obj/item/weapon/reagent_containers/spray/luminol,
 /turf/simulated/floor/tiled/white,
 /area/space)
+"sg" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized/full{
+	id = "hos"
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "si" = (
 /turf/simulated/floor/reinforced,
 /area/space)
@@ -3575,6 +3616,15 @@
 	},
 /turf/simulated/floor/carpet/purcarpet,
 /area/rnd/rdoffice)
+"te" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/command{
+	id_tag = "RDdoor";
+	name = "Research Director";
+	req_access = list(30)
+	},
+/turf/simulated/floor/tiled/steel_ridged,
+/area/rnd/research)
 "tf" = (
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 4
@@ -3655,7 +3705,7 @@
 /area/space)
 "tA" = (
 /obj/machinery/vending/deluxe_boozeomat,
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/monotile,
 /area/bridge_hallway)
 "tE" = (
 /obj/machinery/embedded_controller/radio/docking_port_multi{
@@ -4666,6 +4716,11 @@
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "yT" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass_command/polarized{
+	name = "Meeting Room";
+	id_tint = "headmeetingroom"
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/bridge/meeting_room)
 "yW" = (
@@ -5225,11 +5280,9 @@
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/cargo)
 "Cu" = (
-/obj/machinery/door/firedoor/glass,
-/obj/structure/grille,
-/obj/structure/window/reinforced/full,
-/turf/simulated/floor/plating,
-/area/rnd/research)
+/obj/effect/catwalk_plated,
+/turf/simulated/floor/tiled/eris/bcircuit,
+/area/bridge_hallway)
 "Cy" = (
 /obj/structure/bed/chair/shuttle{
 	dir = 1
@@ -5313,7 +5366,9 @@
 "Df" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
-/obj/structure/window/reinforced/polarized/full,
+/obj/structure/window/reinforced/polarized/full{
+	id = "rdoffice"s"
+	},
 /turf/simulated/floor/plating,
 /area/rnd/rdoffice)
 "Dh" = (
@@ -5651,7 +5706,9 @@
 "Ez" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
-/obj/structure/window/reinforced/polarized/full,
+/obj/structure/window/reinforced/polarized/full{
+	id = "headmeetingroom"
+	},
 /turf/simulated/floor/plating,
 /area/bridge/meeting_room)
 "EA" = (
@@ -5673,7 +5730,7 @@
 /area/medical/virology)
 "EF" = (
 /obj/machinery/vending/deluxe_cigs,
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/monotile,
 /area/bridge_hallway)
 "EI" = (
 /turf/simulated/wall/r_wall,
@@ -6147,6 +6204,11 @@
 /obj/structure/bed/chair/office/light{
 	dir = 8
 	},
+/obj/machinery/button/windowtint/multitint{
+	id = "rdoffice";
+	pixel_x = -26;
+	pixel_y = -30
+	},
 /turf/simulated/floor/carpet/purcarpet,
 /area/rnd/rdoffice)
 "Hr" = (
@@ -6263,6 +6325,13 @@
 /obj/item/device/slime_scanner,
 /turf/simulated/floor/tiled,
 /area/space)
+"HR" = (
+/obj/machinery/button/windowtint/multitint{
+	id = "headmeetingroom";
+	pixel_y = -24
+	},
+/turf/simulated/floor/wood,
+/area/bridge/meeting_room)
 "HT" = (
 /turf/simulated/open,
 /area/bridge_hallway)
@@ -6418,6 +6487,7 @@
 /turf/simulated/floor/tiled/white,
 /area/medical/virology)
 "Jl" = (
+/obj/machinery/door/firedoor/glass,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/medical_restroom)
 "Jn" = (
@@ -6704,6 +6774,15 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/secondary/exit)
+"Kv" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/multi_tile/glass{
+	dir = 1;
+	req_one_access = list(47);
+	name = "Research"
+	},
+/turf/simulated/floor/tiled/steel_ridged,
+/area/space)
 "Kw" = (
 /obj/machinery/door/firedoor/glass,
 /turf/simulated/floor/tiled/steel_ridged,
@@ -7206,7 +7285,9 @@
 "MF" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
-/obj/structure/window/reinforced/polarized/full,
+/obj/structure/window/reinforced/polarized/full{
+	id = "rdoffice"s"
+	},
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 1
@@ -7215,7 +7296,7 @@
 /area/rnd/rdoffice)
 "MH" = (
 /obj/structure/closet/emcloset,
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/monotile,
 /area/bridge_hallway)
 "MI" = (
 /obj/effect/floor_decal/milspec/color/red/half{
@@ -8018,6 +8099,14 @@
 "QY" = (
 /turf/simulated/floor/wood,
 /area/space)
+"QZ" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized/full{
+	id = "headmeetingroom"
+	},
+/turf/simulated/floor/plating,
+/area/bridge_hallway)
 "Rb" = (
 /obj/effect/shuttle_landmark{
 	base_area = /area/stellardelight/deck3/exterior;
@@ -9216,7 +9305,7 @@
 /area/space)
 "Wt" = (
 /obj/structure/closet/firecloset/full,
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/monotile,
 /area/bridge_hallway)
 "Wu" = (
 /obj/structure/bed/chair/office/dark{
@@ -9635,6 +9724,14 @@
 /obj/structure/table/woodentable,
 /turf/simulated/floor/glass,
 /area/space)
+"Yn" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass_command/polarized{
+	name = "Meeting Room";
+	id_tint = "headmeetingroom"
+	},
+/turf/simulated/floor/tiled/steel_ridged,
+/area/bridge_hallway)
 "Yp" = (
 /turf/simulated/wall/r_wall,
 /area/hallway/secondary/exit)
@@ -9892,6 +9989,20 @@
 	},
 /obj/effect/floor_decal/milspec/monotile,
 /turf/simulated/floor/reinforced,
+/area/space)
+"ZN" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized/full{
+	id = "hos"
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
 /area/space)
 "ZP" = (
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
@@ -17078,7 +17189,7 @@ KW
 uR
 uR
 yd
-Sq
+Qr
 uR
 uR
 Ed
@@ -17645,7 +17756,7 @@ uR
 UG
 UG
 cW
-hc
+ED
 UG
 UG
 UG
@@ -17784,7 +17895,7 @@ AX
 rr
 rr
 rr
-Cu
+UG
 Lw
 wR
 wp
@@ -17926,7 +18037,7 @@ Rz
 FO
 rr
 rr
-hc
+oo
 wQ
 Ox
 Ox
@@ -18068,7 +18179,7 @@ Nf
 rr
 rr
 rr
-Cu
+UG
 yy
 MD
 JY
@@ -18222,7 +18333,7 @@ nX
 UG
 UG
 UG
-hc
+te
 UG
 UG
 UG
@@ -18243,11 +18354,11 @@ Dx
 Dx
 NW
 uR
-hz
-hz
+sg
+sg
 dU
-hz
-hz
+sg
+sg
 uR
 uR
 Qr
@@ -18384,7 +18495,7 @@ FW
 FW
 FW
 FW
-hz
+sg
 NN
 ya
 ya
@@ -18526,7 +18637,7 @@ En
 KO
 XY
 FW
-hz
+sg
 Te
 OK
 ya
@@ -18668,7 +18779,7 @@ En
 IK
 XY
 FW
-hz
+sg
 Dm
 UW
 jj
@@ -18916,7 +19027,7 @@ el
 Mx
 RZ
 RZ
-Zf
+Qr
 RZ
 RZ
 RZ
@@ -19354,7 +19465,7 @@ Ut
 uR
 uR
 Qr
-Pu
+Kv
 uR
 YU
 Df
@@ -19382,8 +19493,8 @@ Pl
 Hm
 Hm
 CI
-To
-To
+ZN
+ZN
 uR
 uR
 To
@@ -19660,10 +19771,10 @@ cn
 cn
 Ri
 do
-fd
+Yn
 Oq
-Hm
-Hm
+Cu
+Cu
 Hm
 cR
 el
@@ -19801,11 +19912,11 @@ cn
 jf
 cn
 Ri
-do
-CI
-Hm
-Hm
-Hm
+HR
+QZ
+Oq
+Cu
+Cu
 Hm
 cR
 el
@@ -19944,10 +20055,10 @@ cn
 cn
 Ri
 do
-fd
+Yn
 Oq
-Hm
-Hm
+Cu
+Cu
 Hm
 cR
 el
@@ -20918,7 +21029,7 @@ ob
 hz
 eR
 BV
-Sq
+Qr
 Oz
 Oz
 Oz
@@ -21049,12 +21160,12 @@ RZ
 uR
 dO
 dO
-Sq
+Qr
 dO
 uR
 Si
 Qz
-Sq
+Qr
 xV
 JJ
 uR
@@ -21758,7 +21869,7 @@ rV
 Oz
 Oz
 Oz
-Sq
+Qr
 ya
 ya
 dr
@@ -21770,7 +21881,7 @@ QX
 Ib
 eR
 BV
-Sq
+Qr
 Uq
 Uq
 Uq
@@ -22326,7 +22437,7 @@ rV
 Oz
 Oz
 Oz
-Sq
+Qr
 ya
 ya
 lQ
@@ -22622,7 +22733,7 @@ Ut
 Ut
 eR
 BV
-Sq
+Qr
 Uq
 Uq
 Uq
