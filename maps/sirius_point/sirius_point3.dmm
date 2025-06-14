@@ -48,6 +48,15 @@
 /obj/structure/sign/warning/docking_area,
 /turf/simulated/wall/r_wall,
 /area/space)
+"ay" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass_medical/polarized{
+	id_tag = "patient1";
+	id_tint = "patient1";
+	name = "Patient Recovery"
+	},
+/turf/simulated/floor/tiled/steel_ridged,
+/area/space)
 "az" = (
 /obj/structure/table/steel_reinforced,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -592,9 +601,9 @@
 "dU" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass_security/polarized{
-	req_one_access = list(58);
 	id_tint = "hos";
-	name = "Head of Security's Office"
+	name = "Head of Security's Office";
+	req_one_access = list(58)
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/space)
@@ -1665,6 +1674,15 @@
 	},
 /turf/simulated/floor/tiled,
 /area/space)
+"jC" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/command{
+	id_tag = "CEdoor";
+	name = "Chief Engineer";
+	req_access = list(56)
+	},
+/turf/simulated/floor/tiled/steel_ridged,
+/area/engineering/aft_hallway)
 "jD" = (
 /obj/structure/window/reinforced,
 /turf/simulated/floor/tiled/dark,
@@ -2597,8 +2615,8 @@
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/multi_tile/glass{
 	dir = 1;
-	req_one_access = list(47);
-	name = "Research"
+	name = "Research";
+	req_one_access = list(47)
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/rnd/research)
@@ -2609,6 +2627,14 @@
 	},
 /obj/effect/floor_decal/milspec/monotile,
 /turf/simulated/floor/reinforced,
+/area/space)
+"nZ" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass_command/polarized{
+	id_tint = "cmooffice";
+	req_one_access = list(40)
+	},
+/turf/simulated/floor/tiled/steel_ridged,
 /area/space)
 "ob" = (
 /obj/effect/floor_decal/corner/paleblue/full{
@@ -2694,6 +2720,16 @@
 	dir = 1
 	},
 /turf/simulated/floor/reinforced/airless/outdoors,
+/area/space)
+"oy" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/command{
+	id_tag = "cmodoor";
+	name = "Chief Medical Officer";
+	req_access = list(40);
+	req_one_access = list()
+	},
+/turf/simulated/floor/tiled/steel_ridged,
 /area/space)
 "oD" = (
 /obj/effect/catwalk_plated,
@@ -3279,6 +3315,7 @@
 "ri" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass_command/polarized{
+	id_tint = "rdoffice";
 	req_access = list(30)
 	},
 /turf/simulated/floor/tiled/steel_ridged,
@@ -3513,6 +3550,14 @@
 	},
 /turf/simulated/floor/tiled/milspec,
 /area/space)
+"sB" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized/full{
+	id = "patient2"
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "sC" = (
 /obj/machinery/computer/communications,
 /turf/simulated/floor/carpet/blue2,
@@ -3696,7 +3741,9 @@
 "tz" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
-/obj/structure/window/reinforced/polarized/full,
+/obj/structure/window/reinforced/polarized/full{
+	id = "cmooffice"
+	},
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -4676,6 +4723,14 @@
 	},
 /turf/simulated/floor/carpet/sblucarpet,
 /area/space)
+"yD" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized/full{
+	id = "cmooffice"
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "yG" = (
 /obj/structure/bed/chair/sofa/right/black{
 	dir = 8
@@ -4718,8 +4773,8 @@
 "yT" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass_command/polarized{
-	name = "Meeting Room";
-	id_tint = "headmeetingroom"
+	id_tint = "headmeetingroom";
+	name = "Meeting Room"
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/bridge/meeting_room)
@@ -5345,9 +5400,11 @@
 "CR" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
-/obj/structure/window/reinforced/polarized/full,
+/obj/structure/window/reinforced/polarized/full{
+	id = "patient1"
+	},
 /turf/simulated/floor/plating,
-/area/engineering/aft_hallway)
+/area/space)
 "CS" = (
 /obj/item/weapon/material/shard,
 /turf/simulated/floor/tiled/dark,
@@ -5367,7 +5424,7 @@
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
 /obj/structure/window/reinforced/polarized/full{
-	id = "rdoffice"s"
+	id = "rdoffice"
 	},
 /turf/simulated/floor/plating,
 /area/rnd/rdoffice)
@@ -5738,6 +5795,11 @@
 "EJ" = (
 /obj/structure/bed/chair/office/light{
 	dir = 4
+	},
+/obj/machinery/button/windowtint/multitint{
+	id = "cmooffice";
+	pixel_x = 26;
+	pixel_y = -20
 	},
 /turf/simulated/floor/carpet/tealcarpet,
 /area/space)
@@ -6332,6 +6394,10 @@
 	},
 /turf/simulated/floor/wood,
 /area/bridge/meeting_room)
+"HS" = (
+/obj/machinery/door/firedoor/glass,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/engineering/aft_hallway)
 "HT" = (
 /turf/simulated/open,
 /area/bridge_hallway)
@@ -6778,8 +6844,8 @@
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/multi_tile/glass{
 	dir = 1;
-	req_one_access = list(47);
-	name = "Research"
+	name = "Research";
+	req_one_access = list(47)
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/space)
@@ -6843,6 +6909,19 @@
 "KJ" = (
 /obj/structure/bed/chair/sofa/right/black{
 	dir = 4
+	},
+/obj/machinery/button/windowtint/multitint{
+	id = "patient2";
+	pixel_x = 6;
+	pixel_y = -27
+	},
+/obj/machinery/button/remote/airlock{
+	dir = 1;
+	id = "patient2";
+	name = "Door Bolt Control";
+	pixel_x = -6;
+	pixel_y = -28;
+	specialfunctions = 4
 	},
 /turf/simulated/floor/carpet/tealcarpet,
 /area/space)
@@ -7286,7 +7365,7 @@
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
 /obj/structure/window/reinforced/polarized/full{
-	id = "rdoffice"s"
+	id = "rdoffice"
 	},
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -7365,6 +7444,15 @@
 	name = "Ship Cargo Bay"
 	},
 /turf/simulated/floor/reinforced,
+/area/space)
+"Ne" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass_medical/polarized{
+	id_tag = "patient2";
+	id_tint = "patient2";
+	name = "Patient Recovery"
+	},
+/turf/simulated/floor/tiled/steel_ridged,
 /area/space)
 "Nf" = (
 /obj/structure/table/steel,
@@ -7748,6 +7836,19 @@
 "OZ" = (
 /obj/structure/bed/chair/sofa/left/black{
 	dir = 8
+	},
+/obj/machinery/button/windowtint/multitint{
+	id = "patient1";
+	pixel_x = -6;
+	pixel_y = -27
+	},
+/obj/machinery/button/remote/airlock{
+	dir = 1;
+	id = "patient1";
+	name = "Door Bolt Control";
+	pixel_x = 7;
+	pixel_y = -28;
+	specialfunctions = 4
 	},
 /turf/simulated/floor/carpet/tealcarpet,
 /area/space)
@@ -9216,6 +9317,11 @@
 /area/space)
 "Wf" = (
 /obj/structure/bed/chair/office/dark,
+/obj/machinery/button/windowtint/multitint{
+	id = "ceoffice";
+	pixel_x = -16;
+	pixel_y = -28
+	},
 /turf/simulated/floor/carpet/oracarpet,
 /area/space)
 "Wh" = (
@@ -9359,6 +9465,14 @@
 	dir = 10
 	},
 /turf/simulated/floor/tiled/white,
+/area/space)
+"Wz" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/polarized/full{
+	id = "ceoffice"
+	},
+/turf/simulated/floor/plating,
 /area/space)
 "WA" = (
 /turf/simulated/floor/glass/reinforced,
@@ -9727,8 +9841,8 @@
 "Yn" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass_command/polarized{
-	name = "Meeting Room";
-	id_tint = "headmeetingroom"
+	id_tint = "headmeetingroom";
+	name = "Meeting Room"
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/bridge_hallway)
@@ -13944,13 +14058,13 @@ Ro
 aE
 aE
 aE
-hz
-hz
-hz
-hz
-hz
-hz
-hz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
 aE
 aE
 uR
@@ -14086,13 +14200,13 @@ Ro
 aE
 aE
 aE
-hz
+Wz
 zP
 Fz
 Fz
 tj
 tj
-hz
+Wz
 aE
 aE
 uR
@@ -14228,7 +14342,7 @@ Ro
 aE
 aE
 aE
-hz
+Wz
 Mz
 Fz
 MM
@@ -14370,13 +14484,13 @@ Ro
 aE
 aE
 aE
-hz
+Wz
 NL
 Fz
 Fz
 Fz
 Fz
-CR
+Eu
 LM
 km
 Sc
@@ -14512,13 +14626,13 @@ Ro
 aE
 aE
 aE
-hz
+Wz
 Gp
 Fz
 gN
 Fz
 Fz
-CR
+Eu
 km
 km
 DI
@@ -14654,17 +14768,17 @@ Ro
 aE
 aE
 aE
-hz
+Wz
 Fz
 Wf
 tj
 XO
 Fz
-qB
+jC
 km
 km
 km
-qB
+HS
 rr
 uR
 bQ
@@ -14796,13 +14910,13 @@ Ro
 aE
 aE
 aE
-hz
+Wz
 bL
 WI
 ps
 OR
 Fz
-CR
+Eu
 cx
 cx
 km
@@ -14949,7 +15063,7 @@ Eu
 Eu
 Eu
 Eu
-Sq
+Qr
 uR
 aG
 Og
@@ -15234,7 +15348,7 @@ BV
 lY
 iT
 rr
-Sq
+Qr
 Dx
 Dx
 TH
@@ -16086,7 +16200,7 @@ uR
 uR
 rr
 rr
-Sq
+Qr
 Dx
 Dx
 TH
@@ -20320,11 +20434,11 @@ uR
 Qr
 Pu
 uR
-hz
-hz
-hz
-hz
-hz
+yD
+yD
+yD
+yD
+yD
 QX
 QX
 QX
@@ -20466,7 +20580,7 @@ GJ
 Bd
 sT
 rT
-hz
+yD
 sQ
 sQ
 sQ
@@ -20608,7 +20722,7 @@ jq
 EJ
 Oz
 Oz
-Sq
+nZ
 At
 At
 At
@@ -20750,7 +20864,7 @@ op
 dt
 GA
 Oz
-hz
+yD
 Yd
 Ym
 Yv
@@ -21029,7 +21143,7 @@ ob
 hz
 eR
 BV
-Qr
+oy
 Oz
 Oz
 Oz
@@ -21580,7 +21694,7 @@ el
 el
 Mx
 OH
-hz
+CR
 lu
 Gg
 uR
@@ -21722,12 +21836,12 @@ el
 el
 Mx
 OH
-hz
+CR
 Oz
 Oz
 Hk
 aD
-hz
+CR
 ya
 ya
 Rx
@@ -21864,12 +21978,12 @@ el
 el
 Mx
 OH
-hz
+CR
 rV
 Oz
 Oz
 Oz
-Qr
+ay
 ya
 ya
 dr
@@ -22006,12 +22120,12 @@ el
 el
 Mx
 OH
-hz
+CR
 gL
 Oz
 yG
 OZ
-hz
+CR
 Ux
 ya
 Pr
@@ -22290,12 +22404,12 @@ el
 el
 Mx
 OH
-hz
+sB
 gL
 Oz
 xh
 KJ
-hz
+sB
 Wo
 ya
 Rx
@@ -22432,12 +22546,12 @@ el
 el
 Mx
 OH
-hz
+sB
 rV
 Oz
 Oz
 Oz
-Qr
+Ne
 ya
 ya
 lQ
@@ -22574,12 +22688,12 @@ el
 el
 Mx
 OH
-hz
+sB
 Oz
 Oz
 BE
 aD
-hz
+sB
 nj
 ya
 Pr
@@ -22716,7 +22830,7 @@ el
 el
 Mx
 OH
-hz
+sB
 lu
 yg
 uR

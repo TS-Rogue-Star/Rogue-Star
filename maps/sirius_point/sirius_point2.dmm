@@ -505,6 +505,10 @@
 /area/space)
 "ci" = (
 /obj/machinery/computer/security,
+/obj/machinery/door/blast/shutters{
+	id = "commandsecofficeshutter";
+	layer = 40
+	},
 /turf/simulated/floor/wood,
 /area/space)
 "cm" = (
@@ -574,6 +578,11 @@
 	},
 /obj/structure/window/reinforced,
 /obj/structure/table/woodentable,
+/obj/machinery/door/blast/shutters{
+	dir = 8;
+	id = "commandsecofficeshutter";
+	layer = 40
+	},
 /turf/simulated/floor/wood,
 /area/space)
 "cA" = (
@@ -651,6 +660,11 @@
 "cQ" = (
 /obj/machinery/computer/security{
 	dir = 1
+	},
+/obj/machinery/door/blast/shutters{
+	dir = 2;
+	id = "commandsecofficeshutter";
+	layer = 40
 	},
 /turf/simulated/floor/wood,
 /area/space)
@@ -1172,6 +1186,11 @@
 "fd" = (
 /obj/machinery/door/window/westleft,
 /obj/structure/table/woodentable,
+/obj/machinery/door/blast/shutters{
+	dir = 8;
+	id = "commandsecofficeshutter";
+	layer = 40
+	},
 /turf/simulated/floor/wood,
 /area/space)
 "ff" = (
@@ -1777,14 +1796,15 @@
 /turf/simulated/open,
 /area/space)
 "hN" = (
-/obj/structure/table/reinforced,
-/obj/effect/floor_decal/milspec/color/emerald/half{
-	dir = 1
+/obj/machinery/mech_recharger,
+/obj/machinery/button/remote/blast_door{
+	dir = 8;
+	id = "mechbay";
+	name = "Mech Bay Shutters";
+	pixel_x = 26;
+	req_access = list(29,47)
 	},
-/obj/machinery/holoposter{
-	pixel_y = 32
-	},
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/bluegrid,
 /area/space)
 "hO" = (
 /obj/machinery/door/firedoor/glass,
@@ -3153,6 +3173,14 @@
 /obj/item/device/healthanalyzer,
 /turf/simulated/floor/tiled/white,
 /area/rnd/research_restroom)
+"mQ" = (
+/obj/machinery/button/remote/blast_door{
+	dir = 1;
+	id = "commandsecofficeshutter";
+	pixel_y = -27
+	},
+/turf/simulated/floor/carpet/sblucarpet,
+/area/space)
 "mS" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -3377,8 +3405,8 @@
 "ol" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
-/obj/structure/window/reinforced/full{
-	id = "commandsecoffice"
+/obj/structure/window/reinforced/polarized/full{
+	id = "commandsecofice"
 	},
 /turf/simulated/floor/plating,
 /area/space)
@@ -3995,7 +4023,8 @@
 "qR" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/blast/shutters{
-	dir = 4
+	dir = 4;
+	id = "mechbay"
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/space)
@@ -4058,8 +4087,8 @@
 "ri" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/research{
-	req_one_access = list(29,47);
-	name = "Robotics Lab"
+	name = "Robotics Lab";
+	req_one_access = list(29,47)
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/rnd/research)
@@ -6085,8 +6114,8 @@
 "yY" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/multi_tile/glass{
-	req_one_access = list(7);
-	name = "Research"
+	name = "Research";
+	req_one_access = list(7)
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/rnd/research)
@@ -6110,6 +6139,11 @@
 "zb" = (
 /obj/machinery/door/window/westright,
 /obj/structure/table/woodentable,
+/obj/machinery/door/blast/shutters{
+	dir = 8;
+	id = "commandsecofficeshutter";
+	layer = 40
+	},
 /turf/simulated/floor/wood,
 /area/space)
 "zc" = (
@@ -6867,6 +6901,10 @@
 /obj/structure/table/woodentable,
 /obj/item/weapon/folder/yellow,
 /obj/item/weapon/folder/blue,
+/obj/machinery/button/windowtint/multitint{
+	id = "commandsecoffice";
+	pixel_y = 27
+	},
 /turf/simulated/floor/carpet/sblucarpet,
 /area/space)
 "BO" = (
@@ -7730,6 +7768,9 @@
 	dir = 5
 	},
 /obj/item/weapon/storage/box/gloves,
+/obj/machinery/holoposter{
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled,
 /area/space)
 "FA" = (
@@ -8811,6 +8852,11 @@
 	dir = 1
 	},
 /obj/structure/table/woodentable,
+/obj/machinery/door/blast/shutters{
+	dir = 8;
+	id = "commandsecofficeshutter";
+	layer = 40
+	},
 /turf/simulated/floor/wood,
 /area/space)
 "Kc" = (
@@ -9430,7 +9476,10 @@
 /area/space)
 "Mf" = (
 /obj/machinery/door/firedoor/glass,
-/obj/machinery/door/airlock/glass_medical/polarized,
+/obj/machinery/door/airlock/medical{
+	name = "Mental Health";
+	req_one_access = list(64)
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/space)
 "Mg" = (
@@ -9863,8 +9912,8 @@
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/multi_tile/glass{
 	dir = 1;
-	req_one_access = list(47);
-	name = "Research"
+	name = "Research";
+	req_one_access = list(47)
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/rnd/research)
@@ -10503,6 +10552,9 @@
 /obj/item/clothing/glasses/welding,
 /obj/item/weapon/weldingtool,
 /obj/item/clothing/head/welding,
+/obj/machinery/holoposter{
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled,
 /area/space)
 "Qd" = (
@@ -10672,6 +10724,22 @@
 /obj/machinery/vending/altevian,
 /turf/simulated/floor/carpet,
 /area/space)
+"QT" = (
+/obj/effect/floor_decal/corner/purple{
+	dir = 6
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 8
+	},
+/obj/machinery/button/remote/blast_door{
+	dir = 4;
+	id = "mechbay";
+	name = "Mech Bay Shutters";
+	pixel_x = -26;
+	req_access = list(29,47)
+	},
+/turf/simulated/floor/tiled,
+/area/space)
 "QU" = (
 /obj/structure/cable{
 	icon_state = "2-8"
@@ -10750,8 +10818,8 @@
 "Ri" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/research{
-	req_one_access = list(29,47);
-	name = "Robotics Lab"
+	name = "Robotics Lab";
+	req_one_access = list(29,47)
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/space)
@@ -12280,6 +12348,11 @@
 "Yh" = (
 /obj/structure/bed/chair/office/dark{
 	dir = 4
+	},
+/obj/machinery/button/windowtint/multitint{
+	id = "psychoffice";
+	pixel_x = -15;
+	pixel_y = -30
 	},
 /turf/simulated/floor/carpet/blue,
 /area/space)
@@ -20845,7 +20918,7 @@ yY
 TX
 zV
 Yw
-Wa
+Ya
 TX
 Qg
 iY
@@ -20987,7 +21060,7 @@ LZ
 TX
 wz
 Yw
-Wa
+Ya
 TX
 Qg
 iY
@@ -21129,7 +21202,7 @@ wr
 np
 zV
 Yw
-Wa
+Ya
 TX
 Qg
 iY
@@ -21396,8 +21469,8 @@ BW
 MF
 wz
 BW
-Da
-hN
+Ya
+WV
 MN
 wz
 wz
@@ -21839,7 +21912,7 @@ TX
 bA
 xl
 mZ
-Wa
+Ya
 TX
 Qg
 Do
@@ -21981,7 +22054,7 @@ TX
 ht
 ht
 mZ
-Wa
+Ya
 TX
 Qg
 iY
@@ -22102,7 +22175,7 @@ SJ
 Rl
 ou
 Da
-YH
+hN
 gK
 gK
 YH
@@ -22123,7 +22196,7 @@ Ij
 HD
 Fe
 OW
-Wa
+Ya
 TX
 Qg
 iY
@@ -22263,9 +22336,9 @@ SR
 Da
 Da
 Ya
-Wa
-Wa
-Wa
+Ya
+Ya
+Ya
 TX
 Qg
 vc
@@ -22389,7 +22462,7 @@ MF
 MF
 IO
 Pp
-ed
+QT
 ed
 ed
 ed
@@ -24406,7 +24479,7 @@ ka
 ka
 ka
 ka
-ka
+mQ
 Da
 Da
 Da

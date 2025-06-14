@@ -2114,8 +2114,8 @@
 /area/space)
 "sR" = (
 /turf/simulated/floor/outdoors/ice{
-	outdoors = 0;
-	edge_blending_priority = 1
+	edge_blending_priority = 1;
+	outdoors = 0
 	},
 /area/space)
 "sW" = (
@@ -5758,8 +5758,8 @@
 /area/space)
 "Xg" = (
 /obj/machinery/conveyor{
-	id = "miningdelivery";
-	dir = 5
+	dir = 5;
+	id = "miningdelivery"
 	},
 /obj/machinery/mineral/output,
 /turf/simulated/mineral/floor/vacuum/moonbase,
