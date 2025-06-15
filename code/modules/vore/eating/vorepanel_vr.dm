@@ -1579,8 +1579,8 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 		available_options += "Transform"
 	if(isliving(target))
 		var/mob/living/datarget = target
-		available_options += "Health Bar"
-		available_options += "Print Health Bar"
+		available_options += "Health Bar"	//RS ADD
+		available_options += "Print Health Bar"	//RS ADD
 		if(datarget.client)
 			available_options += "Process"
 	intent = tgui_input_list(user, "What would you like to do with [target]?", "Vore Pick", available_options)
