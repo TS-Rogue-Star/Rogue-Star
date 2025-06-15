@@ -1,4 +1,5 @@
 //Health bars in the game window would be pretty challenging and I don't know how to do that, so I thought this would be a good alternative
+//I figured it out 17 months later lol
 
 /mob/living/proc/chat_healthbar(var/mob/living/reciever, override = FALSE)
 	if(!reciever)	//No one to send it to, don't bother
@@ -11,21 +12,22 @@
 	var/ourpercent = 0
 
 	if(ishuman(src))	//humans don't die or become unconcious at 0%, it's actually like -50% or something, so, let's pretend they have 50 more health than they do
-		ourpercent = ((health + 50) / (maxHealth + 50)) * 100
+		ourpercent = ((health + 100) / (maxHealth + 100)) * 100	//RS EDIT
 	else
 		ourpercent = (health / maxHealth) * 100
 
 	var/ourbar = ""
 	var/obj/belly/ourbelly = src.loc
+	var/ourmode = ourbelly.return_effective_d_mode(src)		//RS ADD
 	var/which_var = "Health"
-	if(ourbelly.digest_mode == "Absorb" || ourbelly.digest_mode == "Drain")
-		ourpercent = round(((nutrition - 100) / 500) * 100)
+	if(ourmode == "Absorb" || ourmode == "Drain")	//RS EDIT
+		ourpercent = round(((nutrition - 100) / 2000) * 100)	//RS EDIT
 		which_var = "Nutrition"	//It's secretly also a nutrition bar depending on your digest mode
 
 	ourpercent = round(ourpercent)
 
 	switch(ourpercent)	//I thought about trying to do this in a more automated way but my brain isn't very large so enjoy my stupid switch statement
-		if(100)
+		if(100 to INFINITY)	//RS EDIT
 			ourbar = "|▓▓▓▓▓▓▓▓▓▓|"
 		if(95 to 99)
 			ourbar = "|▓▓▓▓▓▓▓▓▓▒|"
@@ -71,27 +73,30 @@
 			ourbar = "!░░░░░░░░░░!"
 
 	ourbar = "[ourbar] [which_var] - [src.name]"
-
 	if(stat == UNCONSCIOUS)
 		ourbar = "[ourbar] - UNCONSCIOUS"
 	else if(stat == DEAD)
 		ourbar = "[ourbar] - DEAD"
 	if(absorbed)
 		ourbar = "<font color='#cd45f0'>[ourbar] - ABSORBED</font>"	//Absorb is a little funny, I didn't want it to say 'absorbing ABSORBED' so we did it different
+	else if(ourmode == "Drain")												//RS ADD START
+		ourbar = "<font color='#e49c00'>[ourbar] - [ourmode]ing</font>"
+	else if(ourmode == "Absorb")
+		ourbar = "<font color='#cd45f0'>[ourbar] - [ourmode]ing</font>"	//RS ADD END
 	else if(ourpercent > 75)
-		ourbar = "<span class='green'>[ourbar] - [ourbelly.digest_mode]ing</span>"
+		ourbar = "<span class='green'>[ourbar] - [ourmode]ing</span>"	//RS EDIT
 	else if(ourpercent > 50)
-		ourbar = "<span class='orange'>[ourbar] - [ourbelly.digest_mode]ing</span>"
+		ourbar = "<span class='orange'>[ourbar] - [ourmode]ing</span>"	//RS EDIT
 	else if(ourpercent > 0)
-		ourbar = "<span class='red'>[ourbar] - [ourbelly.digest_mode]ing</span>"
+		ourbar = "<span class='red'>[ourbar] - [ourmode]ing</span>"		//RS EDIT
 	else
-		ourbar = "<span class = 'danger'>[ourbar] - [ourbelly.digest_mode]ing</span>"
+		ourbar = "<span class = 'danger'>[ourbar] - [ourmode]ing</span>"//RS EDIT
 
 	to_chat(reciever,ourbar)
 
 /mob/living/verb/print_healthbars()
 	set name = "Print Prey Healthbars"
-	set category = "Abilities"
+	set category = "IC"	//RS EDIT
 
 	var/nuffin = TRUE
 	for(var/obj/belly/b in vore_organs)
@@ -109,3 +114,14 @@
 			nuffin = FALSE
 	if(nuffin)
 		to_chat(src, "<span class='warning'>There are no mobs within any of your bellies to print health bars for.</span>")
+
+/mob/living/verb/print_classic_healthbar()	//RS ADD START
+	set name = "Print Classic Vore Healthbar"
+	set category = "IC"
+
+	if(!isbelly(loc))
+		to_chat(src, "<span class='warning'>You aren't in a belly, you can't print a healthbar, silly!</span>")
+		return
+
+	chat_healthbar(src, TRUE)
+	//RS ADD END

@@ -475,6 +475,7 @@ SUBSYSTEM_DEF(rs_ui)
 			available_options += "Transform"	//This only works for humans
 		available_options += "Eject"
 		available_options += "Customize"
+	available_options += "Print Healthbar"
 	available_options += "Close"
 	var/input = tgui_input_list(usr, "What will you do with this UI?", "Vore UI", available_options)
 	//Also check after choice
@@ -496,6 +497,8 @@ SUBSYSTEM_DEF(rs_ui)
 			B.transform_target(tracked)
 		if("Process")
 			B.process_target(tracked)
+		if("Print Healthbar")
+			tracked.chat_healthbar(usr)
 		if("Customize")
 			customize()
 
@@ -519,6 +522,7 @@ SUBSYSTEM_DEF(rs_ui)
 		"Pocket",
 		"Hand",
 		"Fist",
+		"D-Pet",
 		"Remove"
 	)
 	var/selection = tgui_input_list(holder, "Select a style! Remember to go save your vore panel after you select one if you want it to stick!", "RS-UI Customization", ourlist,B.belly_healthbar_overlay_theme)

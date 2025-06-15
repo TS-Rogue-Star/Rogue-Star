@@ -1574,11 +1574,13 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 	var/atom/movable/target = locate(params["pick"])
 	if(!(target in host.vore_selected))
 		return TRUE // Not in our X anymore, update UI
-	var/list/available_options = list("Examine","Health Bar", "Eject", "Move", "Advance", "Transfer")	//RS EDIT
+	var/list/available_options = list("Examine", "Eject", "Move", "Advance", "Transfer")	//RS EDIT
 	if(ishuman(target))
 		available_options += "Transform"
 	if(isliving(target))
 		var/mob/living/datarget = target
+		available_options += "Health Bar"
+		available_options += "Print Health Bar"
 		if(datarget.client)
 			available_options += "Process"
 	intent = tgui_input_list(user, "What would you like to do with [target]?", "Vore Pick", available_options)
@@ -1605,7 +1607,13 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			host.vore_selected.advance_target(target)
 			return TRUE
 		if("Health Bar")
-			host.vore_selected.healthbar_target(target)
+			if(isliving(target))
+				host.vore_selected.healthbar_target(target)
+			return TRUE
+		if("Print Health Bar")
+			if(isliving(target))
+				var/mob/living/L = target
+				L.chat_healthbar(host)
 			return TRUE
 		//RS EDIT END
 
