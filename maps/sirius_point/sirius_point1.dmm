@@ -1253,7 +1253,7 @@
 /turf/simulated/floor/outdoors/grass/seasonal/preset/winter{
 	outdoors = 0
 	},
-/area/maintenance/moonbase/basement/iceroom)
+/area/crew_quarters/moonbase/basement/iceroom)
 "ip" = (
 /obj/structure/mirror{
 	pixel_y = 38
@@ -1403,7 +1403,7 @@
 /turf/simulated/floor/outdoors/grass/seasonal/preset/winter{
 	outdoors = 0
 	},
-/area/maintenance/moonbase/basement/iceroom)
+/area/crew_quarters/moonbase/basement/iceroom)
 "jn" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green{
 	dir = 4
@@ -1560,10 +1560,10 @@
 /obj/structure/bed/double,
 /obj/item/weapon/bedsheet/purpledouble,
 /turf/simulated/floor/wood,
-/area/maintenance/moonbase/basement/iceroom)
+/area/crew_quarters/moonbase/basement/iceroom)
 "ks" = (
 /turf/simulated/wall/wood,
-/area/maintenance/moonbase/basement/iceroom)
+/area/crew_quarters/moonbase/basement/iceroom)
 "kt" = (
 /obj/structure/bed/chair/comfy{
 	dir = 8
@@ -1863,7 +1863,7 @@
 /turf/simulated/floor/outdoors/grass/seasonal/preset/winter{
 	outdoors = 0
 	},
-/area/maintenance/moonbase/basement/iceroom)
+/area/crew_quarters/moonbase/basement/iceroom)
 "mu" = (
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/northair)
@@ -2899,7 +2899,7 @@
 /turf/simulated/floor/outdoors/grass/seasonal/preset/winter{
 	outdoors = 0
 	},
-/area/maintenance/moonbase/basement/iceroom)
+/area/crew_quarters/moonbase/basement/iceroom)
 "sM" = (
 /turf/simulated/mineral/moonbase,
 /area/moonbase/dorms/dorm4)
@@ -2922,13 +2922,13 @@
 "sQ" = (
 /obj/structure/table/woodentable,
 /turf/simulated/floor/wood,
-/area/maintenance/moonbase/basement/iceroom)
+/area/crew_quarters/moonbase/basement/iceroom)
 "sR" = (
 /turf/simulated/floor/outdoors/ice{
 	edge_blending_priority = 1;
 	outdoors = 0
 	},
-/area/maintenance/moonbase/basement/iceroom)
+/area/crew_quarters/moonbase/basement/iceroom)
 "sT" = (
 /obj/random/humanoidremains,
 /turf/simulated/floor/plating/moonbase,
@@ -3123,7 +3123,7 @@
 "tT" = (
 /obj/structure/simple_door/wood,
 /turf/simulated/floor/wood,
-/area/maintenance/moonbase/basement/iceroom)
+/area/crew_quarters/moonbase/basement/iceroom)
 "tU" = (
 /obj/structure/table/woodentable,
 /turf/simulated/floor/carpet,
@@ -3562,7 +3562,7 @@
 /area/moonbase/dorms/dorm2)
 "wC" = (
 /turf/simulated/mineral/crystal_shiny,
-/area/maintenance/moonbase/basement/iceroom)
+/area/crew_quarters/moonbase/basement/iceroom)
 "wD" = (
 /obj/machinery/photocopier,
 /turf/simulated/floor/carpet,
@@ -3871,7 +3871,7 @@
 /area/engineering/atmos)
 "yx" = (
 /turf/simulated/floor/outdoors/newdirt,
-/area/maintenance/moonbase/basement/iceroom)
+/area/crew_quarters/moonbase/basement/iceroom)
 "yy" = (
 /obj/structure/table/steel,
 /obj/item/device/flashlight/lamp{
@@ -4124,7 +4124,7 @@
 /area/maintenance/moonbase/basement/archive)
 "zR" = (
 /turf/simulated/wall/r_wall,
-/area/maintenance/moonbase/basement/iceroom)
+/area/crew_quarters/moonbase/basement/iceroom)
 "zS" = (
 /obj/machinery/mineral/equipment_vendor,
 /turf/simulated/floor/tiled/eris/steel/cargo,
@@ -4648,7 +4648,7 @@
 	pixel_y = 5
 	},
 /turf/simulated/floor/wood,
-/area/maintenance/moonbase/basement/iceroom)
+/area/crew_quarters/moonbase/basement/iceroom)
 "Dj" = (
 /turf/simulated/mineral/moonbase,
 /area/moonbase/dorms/dorm3)
@@ -4805,7 +4805,7 @@
 /obj/structure/bed/double,
 /obj/item/weapon/bedsheet/bluedouble,
 /turf/simulated/floor/wood,
-/area/maintenance/moonbase/basement/iceroom)
+/area/crew_quarters/moonbase/basement/iceroom)
 "EF" = (
 /obj/structure/closet/firecloset/full/atmos,
 /turf/simulated/floor/tiled/monotile,
@@ -4968,7 +4968,7 @@
 /obj/item/weapon/book/custom_library/fiction/starsandsometimesfallingones,
 /obj/item/weapon/book/custom_library/fiction/truelovehathmyheart,
 /turf/simulated/floor/plating,
-/area/maintenance/moonbase/basement/iceroom)
+/area/crew_quarters/moonbase/basement/iceroom)
 "FC" = (
 /turf/simulated/floor/wood/alt,
 /area/hallway/moonbase/shop)
@@ -5249,7 +5249,7 @@
 /area/maintenance/moonbase/basement/borgroom)
 "GY" = (
 /turf/simulated/floor/wood,
-/area/maintenance/moonbase/basement/iceroom)
+/area/crew_quarters/moonbase/basement/iceroom)
 "GZ" = (
 /obj/structure/table/rack/shelf,
 /turf/simulated/floor/tiled/monotile,
@@ -5579,7 +5579,7 @@
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/maintenance_hatch,
 /turf/simulated/floor/plating,
-/area/maintenance/moonbase/basement/iceroom)
+/area/crew_quarters/moonbase/basement/iceroom)
 "IW" = (
 /obj/machinery/recharge_station,
 /turf/simulated/floor/carpet/gaycarpet,
@@ -5921,7 +5921,7 @@
 	id = "gameroom"
 	},
 /turf/simulated/floor/plating,
-/area/maintenance/moonbase/basement/iceroom)
+/area/crew_quarters/moonbase/basement/iceroom)
 "Lg" = (
 /obj/effect/floor_decal/milspec/color/red/corner{
 	dir = 1
@@ -7140,7 +7140,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/wood,
-/area/maintenance/moonbase/basement/iceroom)
+/area/crew_quarters/moonbase/basement/iceroom)
 "RZ" = (
 /obj/machinery/atmospherics/pipe/simple/visible/purple,
 /obj/machinery/atmospherics/binary/pump{
@@ -7280,7 +7280,7 @@
 /turf/simulated/floor/outdoors/grass/seasonal/preset/winter{
 	outdoors = 0
 	},
-/area/maintenance/moonbase/basement/iceroom)
+/area/crew_quarters/moonbase/basement/iceroom)
 "SY" = (
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor/tiled/eris/techmaint_cargo,
@@ -7426,7 +7426,7 @@
 /turf/simulated/floor/outdoors/snow{
 	outdoors = 0
 	},
-/area/maintenance/moonbase/basement/iceroom)
+/area/crew_quarters/moonbase/basement/iceroom)
 "TX" = (
 /obj/structure/bookcase{
 	name = "bookcase (Religious)"
@@ -8104,7 +8104,7 @@
 "Yp" = (
 /obj/structure/table/bench/wooden,
 /turf/simulated/floor/outdoors/newdirt,
-/area/maintenance/moonbase/basement/iceroom)
+/area/crew_quarters/moonbase/basement/iceroom)
 "Yq" = (
 /obj/structure/reagent_dispensers/fueltank/barrel/three,
 /turf/simulated/floor/tiled/steel_dirty,
@@ -8142,7 +8142,7 @@
 "YA" = (
 /obj/structure/bonfire,
 /turf/simulated/floor/outdoors/newdirt,
-/area/maintenance/moonbase/basement/iceroom)
+/area/crew_quarters/moonbase/basement/iceroom)
 "YB" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red,
 /turf/simulated/floor/tiled/monotile,

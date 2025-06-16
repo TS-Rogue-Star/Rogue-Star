@@ -64,6 +64,10 @@
 	name = "Small Room"
 /area/crew_quarters/moonbase/maintbar
 	name = "Unused Observation Deck"
+	ambience = AMBIENCE_RUINS
+/area/crew_quarters/moonbase/basement/iceroom
+	name = "Tundra Biosphere Simulation"
+	ambience = AMBIENCE_RUINS
 
 /area/security/moonbase
 	icon_state = "brig"
@@ -284,8 +288,6 @@
 	name = "Water Systems Maintenance"
 /area/maintenance/moonbase/basement/iceroomcontrol
 	name = "Tundra Biosphere Control"
-/area/maintenance/moonbase/basement/iceroom
-	name = "Tundra Biosphere Simulation"
 /area/maintenance/moonbase/basement/boxingring
 	name = "Unused Storage"
 /area/maintenance/moonbase/basement/boxingring
