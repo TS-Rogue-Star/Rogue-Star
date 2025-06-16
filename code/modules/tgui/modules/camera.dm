@@ -20,6 +20,7 @@
 	var/obj/screen/skybox/local_skybox
 	// Stuff for moving cameras
 	var/turf/last_camera_turf
+	var/atom/movable/look_spoiler/our_eye	//RS ADD - Make it easier for staff to know when someone is looking at an area!
 
 /datum/tgui_module/camera/New(host, list/network_computer)
 	. = ..()
@@ -36,6 +37,9 @@
 	cam_screen.screen_loc = "[map_name]:1,1"
 
 	cam_plane_masters = get_tgui_plane_masters()
+
+	our_eye = new /atom/movable/look_spoiler(src)	//RS ADD
+	our_eye.icon_state = "camera_spoiler"
 
 	for(var/obj/screen/instance as anything in cam_plane_masters)
 		instance.assigned_map = map_name
@@ -75,6 +79,7 @@
 	QDEL_LIST(cam_plane_masters)
 	qdel(cam_background)
 	qdel(cam_foreground)
+	qdel_null(our_eye)	//RS ADD
 	return ..()
 
 /datum/tgui_module/camera/tgui_interact(mob/user, datum/tgui/ui = null)
@@ -142,6 +147,7 @@
 		if(active_camera)
 			GLOB.moved_event.unregister(active_camera, src, PROC_REF(update_active_camera_screen))
 		active_camera = C
+		handle_eye()	//RS ADD
 		GLOB.moved_event.register(active_camera, src, PROC_REF(update_active_camera_screen))
 		playsound(tgui_host(), get_sfx("terminal_type"), 25, FALSE)
 		update_active_camera_screen()
@@ -211,6 +217,8 @@
 	local_skybox.scale_to_view(size_x)
 	local_skybox.set_position("CENTER", "CENTER", (world.maxx>>1) - newturf.x, (world.maxy>>1) - newturf.y)
 
+	handle_eye()	//RS ADD
+
 // Returns the list of cameras accessible from this computer
 // This proc operates in two distinct ways depending on the context in which the module is created.
 // It can either return a list of cameras sharing the same the internal `network` variable, or
@@ -275,6 +283,7 @@
 		if(active_camera)
 			GLOB.moved_event.unregister(active_camera, src, PROC_REF(update_active_camera_screen))
 		active_camera = null
+		handle_eye()	//RS ADD
 		playsound(tgui_host(), 'sound/machines/terminal_off.ogg', 25, FALSE)
 
 // NTOS Version
@@ -298,3 +307,12 @@
 
 /datum/tgui_module/camera/bigscreen/tgui_state(mob/user)
 	return GLOB.tgui_physical_state_bigscreen
+
+//RS ADD START
+/datum/tgui_module/camera/proc/handle_eye()
+	if(!active_camera)
+		if(our_eye)
+			our_eye.forceMove(src)
+		return
+	our_eye.forceMove(get_turf(active_camera))
+//RS ADD END

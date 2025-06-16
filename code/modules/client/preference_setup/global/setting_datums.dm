@@ -475,3 +475,12 @@ var/list/_client_preferences_by_type
 	key = "CHAT_ADSAY"
 	enabled_description = "Show"
 	disabled_description = "Hide"
+
+//RS ADD START
+/datum/client_preference/holder/show_staff_secrets
+	description ="Staff Secrets"
+	key = "STAFF_SECRETS"
+	enabled_description = "Show"
+	disabled_description = "Hide"
+	enabled_by_default = FALSE
+//RS ADD END

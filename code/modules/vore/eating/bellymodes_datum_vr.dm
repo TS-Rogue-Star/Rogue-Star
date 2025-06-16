@@ -51,7 +51,6 @@ GLOBAL_LIST_INIT(digest_modes, list())
 		return
 
 	// Deal digestion damage (and feed the pred)
-	var/old_health = L.health	// RS ADD
 	var/old_brute = L.getBruteLoss()
 	var/old_burn = L.getFireLoss()
 	var/old_oxy = L.getOxyLoss()
@@ -83,7 +82,6 @@ GLOBAL_LIST_INIT(digest_modes, list())
 
 			howner.shadekin_adjust_energy(damage_gain,TRUE) 	//1dmg to 1 energy, more or less.
 
-	consider_healthbar(L, old_health, B.owner)
 	// End RS edit
 	if(isrobot(B.owner))
 		var/mob/living/silicon/robot/R = B.owner
@@ -115,16 +113,12 @@ GLOBAL_LIST_INIT(digest_modes, list())
 /datum/digest_mode/absorb/process_mob(obj/belly/B, mob/living/L)
 	if(!L.absorbable || L.absorbed)
 		return null
-	var/old_nutrition = L.nutrition
 	B.steal_nutrition(L)
 	if (B.reagent_mode_flags & DM_FLAG_REAGENTSABSORB && B.reagents.total_volume < B.reagents.maximum_volume) // Reagent bellies || RS Add || Chomp Port
 		B.GenerateBellyReagents_absorbing()
 	if(L.nutrition < 100)
 		B.absorb_living(L)
-		consider_healthbar(L, old_nutrition, B.owner)
 		return list("to_update" = TRUE)
-	else
-		consider_healthbar(L, old_nutrition, B.owner)
 
 /datum/digest_mode/unabsorb
 	id = DM_UNABSORB
@@ -140,9 +134,7 @@ GLOBAL_LIST_INIT(digest_modes, list())
 	noise_chance = 10
 
 /datum/digest_mode/drain/process_mob(obj/belly/B, mob/living/L)
-	var/old_nutrition = L.nutrition
 	B.steal_nutrition(L)
-	consider_healthbar(L, old_nutrition, B.owner)
 
 /datum/digest_mode/drain/shrink
 	id = DM_SHRINK

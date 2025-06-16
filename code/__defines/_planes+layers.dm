@@ -187,6 +187,8 @@ What is the naming convention for planes or layers?
 #define PLANE_PLAYER_HUD_ABOVE	97 //Things above the player hud
 
 #define PLANE_ADMIN3			99 //Purely for shenanigans (above HUD)
+#define PLANE_ADMIN_SECRET		100	//RS ADD - Some admin secrets live here
+
 
 
 //////////////////////////
