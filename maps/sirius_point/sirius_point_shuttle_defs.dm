@@ -69,7 +69,7 @@
 // A shuttle lateloader landmark
 /obj/effect/shuttle_landmark/shuttle_initializer/spboat
 	name = "West Shuttlepad"
-	base_area = /area/siriuspoint
+	base_area = /area/moonbase/surface
 	base_turf = /turf/simulated/floor/reinforced/airless
 	landmark_tag = "west_shuttlepad"
 	docking_controller = "sp_west_landing"

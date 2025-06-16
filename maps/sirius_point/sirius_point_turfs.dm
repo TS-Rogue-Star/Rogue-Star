@@ -1,5 +1,8 @@
 //Moonbase turfs
 
+/turf/simulated/open/vacuum/outdoors
+	outdoors = 1
+
 //Airless moonrock
 /turf/simulated/mineral/moonbase
 	color="#7ab6b6"
