@@ -759,8 +759,9 @@
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/medical_restroom)
 "dO" = (
-/turf/simulated/wall,
-/area/crew_quarters/heads/cmo)
+/obj/effect/floor_decal/milspec/color/blue/half,
+/turf/simulated/floor/tiled,
+/area/crew_quarters/courtroom)
 "dS" = (
 /turf/simulated/floor/tiled,
 /area/ai_monitored/storage/emergency/eva)
@@ -4808,6 +4809,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/structure/closet/secure_closet/courtroom,
 /turf/simulated/floor/wood,
 /area/crew_quarters/courtroom)
 "vp" = (
@@ -5760,11 +5762,11 @@
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "zq" = (
-/obj/effect/floor_decal/milspec/color/blue/half,
-/obj/structure/closet/secure_closet/courtroom,
-/obj/structure/closet/secure_closet/courtroom,
-/turf/simulated/floor/tiled,
-/area/crew_quarters/courtroom)
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/simulated/floor/glass/reinforced,
+/area/crew_quarters/bar)
 "zr" = (
 /obj/machinery/light/bigfloorlamp,
 /turf/simulated/floor/outdoors/grass/seasonal/dark/notrees_nomobs,
@@ -10183,11 +10185,6 @@
 	temperature = 80
 	},
 /area/maintenance/moonbase/level2/east)
-"SW" = (
-/turf/simulated/floor/glass/reinforced/vacuum{
-	outdoors = 1
-	},
-/area/moonbase/surface/leveltwo/east)
 "SX" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass,
@@ -17129,7 +17126,7 @@ RW
 Fo
 Fo
 Fo
-gp
+dO
 qB
 mE
 mE
@@ -17271,7 +17268,7 @@ yW
 RW
 RW
 RW
-zq
+gp
 qB
 BW
 mE
@@ -17413,7 +17410,7 @@ RW
 Fo
 Fo
 Fo
-gp
+dO
 qB
 mE
 mE
@@ -21193,7 +21190,7 @@ CY
 PS
 qb
 qb
-IR
+zq
 Ov
 Ov
 Ov
@@ -21530,9 +21527,9 @@ Ri
 tM
 Yn
 Oq
+Cu
+Cu
 Hm
-Cu
-Cu
 cR
 do
 do
@@ -21672,9 +21669,9 @@ Ri
 HR
 QZ
 Oq
+Cu
+Cu
 Hm
-Cu
-Cu
 cR
 do
 do
@@ -21814,9 +21811,9 @@ Ri
 tM
 Yn
 Oq
+Cu
+Cu
 Hm
-Cu
-Cu
 cR
 do
 do
@@ -21956,8 +21953,8 @@ ZC
 tM
 CI
 EF
-Hm
-Hm
+Cu
+Cu
 Hm
 CI
 do
@@ -22098,8 +22095,8 @@ tM
 tM
 CI
 wc
-Hm
-Hm
+Cu
+Cu
 Hm
 CI
 kC
@@ -22218,7 +22215,7 @@ kj
 et
 eR
 vv
-dO
+zD
 GJ
 Bd
 sT
@@ -22240,8 +22237,8 @@ Lx
 Cz
 CI
 MH
-Hm
-Hm
+Cu
+Cu
 Hm
 CI
 ry
@@ -22360,7 +22357,7 @@ cz
 et
 eR
 vv
-dO
+zD
 jq
 EJ
 Oz
@@ -22502,7 +22499,7 @@ cz
 et
 eR
 vv
-dO
+zD
 op
 dt
 GA
@@ -22644,7 +22641,7 @@ lP
 et
 eR
 vv
-dO
+zD
 Oz
 wZ
 Oz
@@ -22928,7 +22925,7 @@ HZ
 xy
 eR
 vv
-dO
+zD
 Oz
 Oz
 Oz
@@ -23070,7 +23067,7 @@ NP
 NP
 MP
 vv
-dO
+zD
 xU
 rT
 zG
@@ -23675,7 +23672,7 @@ aX
 aX
 aX
 aX
-SW
+aX
 cr
 bF
 bF
@@ -23816,8 +23813,8 @@ aX
 aX
 aX
 aX
-SW
-SW
+aX
+aX
 cr
 bF
 bF

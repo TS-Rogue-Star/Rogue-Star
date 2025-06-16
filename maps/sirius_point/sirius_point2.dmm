@@ -3137,6 +3137,13 @@
 "kv" = (
 /turf/simulated/wall/r_wall,
 /area/crew_quarters/bar)
+"kw" = (
+/obj/structure/flora/pottedplant/minitree,
+/obj/effect/floor_decal/corner/paleblue{
+	dir = 6
+	},
+/turf/simulated/floor/tiled,
+/area/medical/reception)
 "kx" = (
 /turf/simulated/wall/r_wall,
 /area/engineering/moonbase/techstorage)
@@ -4011,7 +4018,10 @@
 /obj/structure/bed/chair{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/eris/white/gray_platform,
+/obj/effect/floor_decal/corner/paleblue{
+	dir = 9
+	},
+/turf/simulated/floor/tiled,
 /area/medical/reception)
 "nn" = (
 /turf/simulated/wall/durasteel,
@@ -4067,7 +4077,10 @@
 /obj/machinery/computer/transhuman/designer{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/eris/white/gray_platform,
+/obj/effect/floor_decal/corner/paleblue/full{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
 /area/medical/reception)
 "nB" = (
 /obj/effect/floor_decal/industrial/hatch,
@@ -4796,7 +4809,8 @@
 /area/quartermaster/storage)
 "qj" = (
 /obj/structure/flora/pottedplant/minitree,
-/turf/simulated/floor/tiled/eris/white/gray_platform,
+/obj/effect/floor_decal/corner/paleblue/full,
+/turf/simulated/floor/tiled,
 /area/medical/reception)
 "qk" = (
 /obj/effect/floor_decal/corner/paleblue{
@@ -6847,7 +6861,7 @@
 /turf/simulated/floor/tiled,
 /area/engineering/engineering_monitoring)
 "wP" = (
-/turf/simulated/floor/tiled/eris/white/techfloor_grid,
+/turf/simulated/floor/tiled/monotile,
 /area/quartermaster/storage)
 "wQ" = (
 /obj/effect/floor_decal/milspec/color/blue/half,
@@ -7311,7 +7325,10 @@
 /obj/structure/bed/chair{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/eris/white/gray_platform,
+/obj/effect/floor_decal/corner/paleblue/full{
+	dir = 1
+	},
+/turf/simulated/floor/tiled,
 /area/medical/reception)
 "yB" = (
 /obj/structure/bed/chair/office/light{
@@ -7979,7 +7996,7 @@
 /turf/simulated/floor/plating,
 /area/hallway/moonbase/easthall)
 "AD" = (
-/turf/simulated/floor/tiled/eris/dark/monofloor,
+/turf/simulated/floor/glass/reinforced,
 /area/medical/moonbase/traumaward)
 "AE" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5,
@@ -9620,6 +9637,12 @@
 	outdoors = 0
 	},
 /area/crew_quarters/bar)
+"Ge" = (
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/medical/reception)
 "Gf" = (
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 1
@@ -11116,6 +11139,12 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/central)
+"KU" = (
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/medical/reception)
 "KV" = (
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology/xenoflora)
@@ -11903,9 +11932,6 @@
 /area/bridge/moonbase/secretaryoffice)
 "Nj" = (
 /obj/structure/railing/grey,
-/obj/structure/railing/grey{
-	dir = 1
-	},
 /turf/simulated/floor/tiled/monotile,
 /area/crew_quarters/kitchen)
 "Nk" = (
@@ -13198,7 +13224,7 @@
 	},
 /area/tcommsat/chamber)
 "Rr" = (
-/turf/simulated/floor/tiled/eris/white/gray_platform,
+/turf/simulated/floor/tiled,
 /area/medical/reception)
 "Rs" = (
 /obj/machinery/door/firedoor/glass,
@@ -13602,7 +13628,10 @@
 /area/medical/medbay_emt_bay)
 "SV" = (
 /obj/machinery/medical_kiosk,
-/turf/simulated/floor/tiled/eris/white/gray_platform,
+/obj/effect/floor_decal/corner/paleblue/full{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
 /area/medical/reception)
 "SW" = (
 /obj/machinery/vending/wardrobe/janidrobe,
@@ -13937,6 +13966,12 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/hallway/moonbase/shop)
+"Ug" = (
+/obj/effect/floor_decal/corner/paleblue{
+	dir = 6
+	},
+/turf/simulated/floor/tiled,
+/area/medical/reception)
 "Uj" = (
 /obj/effect/floor_decal/corner/lightorange/full{
 	dir = 8
@@ -23929,7 +23964,7 @@ aT
 Ex
 Ex
 Ex
-RI
+aN
 Nj
 VZ
 VZ
@@ -24071,7 +24106,7 @@ du
 rz
 kO
 Gd
-aN
+RI
 Fy
 lg
 lX
@@ -26089,13 +26124,13 @@ SY
 BO
 wq
 SV
-Rr
-Rr
+KU
+KU
 nm
 nm
 nm
-Rr
-Rr
+KU
+KU
 qj
 yw
 LY
@@ -26375,11 +26410,11 @@ wq
 yy
 Rr
 Rr
-qj
-Rr
-Rr
-Rr
-Rr
+kw
+Ug
+Ge
+Ug
+Ge
 nA
 yw
 LY
