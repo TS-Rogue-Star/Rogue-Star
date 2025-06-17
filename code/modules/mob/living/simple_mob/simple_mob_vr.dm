@@ -275,6 +275,8 @@
 		"The stomach glorps and gurgles as it tries to work you into slop.")
 	can_be_drop_pred = TRUE // Mobs will eat anyone that decides to drop/slip into them by default.
 	B.belly_fullscreen = "yet_another_tumby"
+	B.belly_healthbar_overlay_theme = "Stomach"		//RS ADD
+	B.belly_healthbar_overlay_color = "#823232"	//RS ADD
 
 /mob/living/simple_mob/Bumped(var/atom/movable/AM, yes)
 	if(tryBumpNom(AM))

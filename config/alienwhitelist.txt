@@ -69,6 +69,7 @@ drvulpotnic - Shadekin
 dustyumbry - Diona
 dustyumbry - Xenochimera
 durandaal - Teppi
+dwaggy90 - Shadekin
 dyrmun - Shadekin
 eekasqueak - Shadekin
 essbie - Black-Eyed Shadekin
@@ -117,6 +118,7 @@ jademanique - Protean
 jademanique - Shadekin
 jademanique - Teppi
 jademanique - Xenochimera
+joezill - Protean
 joezill - Shadekin
 joltze - Black-Eyed Shadekin
 joltze - Shadekin
@@ -223,6 +225,7 @@ seagha - Vox
 seashelltheotter - Shadekin
 seiga - Vox
 sepulchre - Vox
+shadowquill - Shadekin
 shindari - Shadekin
 shirosenshi - Xenochimera
 shoanaeackeye - Xenochimera

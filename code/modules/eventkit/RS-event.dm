@@ -11,6 +11,7 @@ GLOBAL_VAR(special_station_name)
 	var/list/possible_verbs = list(
 		/mob/living/proc/blue_shift,
 		/mob/living/proc/vore_leap_attack,
+		/mob/living/proc/sense_ghosts,
 		/mob/living/proc/set_size,
 		/mob/living/proc/pomf
 		)
@@ -108,6 +109,29 @@ GLOBAL_VAR(special_station_name)
 
 	if(Adjacent(choice))	//We leapt at them but we didn't manage to hit them, let's see if we're next to them
 		choice.Weaken(2)	//get knocked down, idiot
+
+/mob/living/proc/sense_ghosts()
+	set name = "Sense Incorporeal Beings"
+	set desc = "Sense if there is a ghost nearby!"
+
+	if(stat || paralysis || weakened || stunned) //Can't focus on ghosts if you're weakened/occupied
+		to_chat(src, "<span class='warning'>You can't do that in your current state.</span>")
+		return
+
+	var/mob/observer/dead/spook = locate() in range(src, 3) //Locate any ghosts in 3 tiles
+	if(spook)
+		var/turf/T = get_turf(spook)
+		var/list/visible = list()
+		for(var/obj/O in T.contents)
+			if(!O.invisibility && O.name)
+				visible += O
+		if(visible.len)
+			var/atom/A = pick(visible) //Pick a ghost that has something nearby
+			to_chat(src, "<span class='notice'>You sense something is[istype(A) ? " near [A]":""].</span>")
+		else //Otherwise, you are merely in the presence of something spooky
+			to_chat(src, "<span class='notice'>You sense something is nearby.</span>")
+	else 	//Nothing spooky here!
+		to_chat(src, "<span class='notice'>Nothing seems to be nearby.</span>")
 
 /client/proc/change_station_name()
 	set category = "Fun"
@@ -282,7 +306,7 @@ GLOBAL_VAR(special_station_name)
 	icon = 'icons/rogue-star/misc.dmi'
 	icon_state = "crystal_key"
 
-	plane = PLANE_BUILDMODE
+	plane = PLANE_ADMIN_SECRET
 
 	var/trait
 
@@ -298,15 +322,16 @@ GLOBAL_VAR(special_station_name)
 	to_chat(H,SPAN_NOTICE("[ourtrait] was added to your traits! You feel your abilities expand!! You get the feeling this change will fade later."))
 	H << 'sound/effects/ding.ogg'
 
-/obj/notifier
+/atom/movable/notifier
 	name = "notifier"
 	icon = 'icons/rogue-star/misc.dmi'
 	icon_state = "notifier"
-	plane = PLANE_GHOSTS
+	plane = PLANE_ADMIN_SECRET
 	anchored = TRUE
+	alpha = 125
 	var/list/notify_who = list()
 
-/obj/notifier/attack_ghost(mob/user)
+/atom/movable/notifier/attack_ghost(mob/user)
 	. = ..()
 
 	if(!user?.client?.holder) return
@@ -316,21 +341,21 @@ GLOBAL_VAR(special_station_name)
 	else
 		add_notification(user)
 
-/obj/notifier/proc/add_notification(var/mob/M)
+/atom/movable/notifier/proc/add_notification(var/mob/M)
 	if(!M) return
 	if(!M.ckey) return
 
 	notify_who.Add(M.ckey)
 	to_chat(M,SPAN_NOTICE("Added you to the notification list."))
 
-/obj/notifier/proc/remove_notification(var/mob/M)
+/atom/movable/notifier/proc/remove_notification(var/mob/M)
 	if(!M) return
 	if(!M.ckey) return
 
 	notify_who.Remove(M.ckey)
 	to_chat(M,SPAN_WARNING("Removed you from the notification list."))
 
-/obj/notifier/Crossed(O)
+/atom/movable/notifier/Crossed(O)
 	. = ..()
 	if(isobserver(O)) return	//Let's not trigger on ghosts
 	for(var/mob/M in player_list)
