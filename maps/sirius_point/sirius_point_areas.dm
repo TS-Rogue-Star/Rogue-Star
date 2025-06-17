@@ -293,23 +293,25 @@
 /area/maintenance/moonbase/basement/boxingring
 	name = "Unused Storage"
 
-/area/maintenance/moonbase/basement/caves
+/area/moonbase/basement/caves
 	ambience = AMBIENCE_RUINS
 	flags = AREA_FLAG_IS_NOT_PERSISTENT
 	icon = 'icons/turf/areas_vr.dmi'
 	icon_state = "orablasqu"
-/area/maintenance/moonbase/basement/caves/northeast
+/area/moonbase/basement/caves/northeast
 	name = "Northeast Tunnels"
-/area/maintenance/moonbase/basement/caves/northwest
+/area/moonbase/basement/caves/northwest
 	name = "Northwest Tunnels"
-/area/maintenance/moonbase/basement/caves/southwest
+/area/moonbase/basement/caves/southwest
 	name = "Southwest Tunnels"
-/area/maintenance/moonbase/basement/caves/southwest
+/area/moonbase/basement/caves/southwest
 	name = "Southwest Tunnels"
-/area/maintenance/moonbase/basement/caves/east
+/area/moonbase/basement/caves/east
 	name = "East Tunnels"
-/area/maintenance/moonbase/basement/caves/flooded
+/area/moonbase/basement/caves/flooded
 	name = "Flooded Tunnels"
+/area/moonbase/basement/caves/level2
+	name = "Level One Tunnels"
 
 /////////////////
 // The Surface //
