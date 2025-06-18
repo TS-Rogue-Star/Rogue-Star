@@ -55,8 +55,8 @@
 	name = "Flight Lounge"
 	icon = 'icons/turf/areas_vr.dmi'
 	icon_state = "magwhisqu"
-/area/library/moonbase/office
-	name = "Librarian Office"
+/area/crew_quarters/moonbase/bartender
+	name = "The Backrooms"
 /area/crew_quarters/moonbase/carproom
 	name = "Carp Encounter Simulator"
 	ambience = AMBIENCE_SPACE
@@ -68,6 +68,8 @@
 /area/crew_quarters/moonbase/basement/iceroom
 	name = "Tundra Biosphere Simulation"
 	ambience = AMBIENCE_RUINS
+/area/library/moonbase/office
+	name = "Librarian Office"
 
 /area/security/moonbase
 	icon_state = "brig"
@@ -128,6 +130,8 @@
 	name = "Engineering EVA"
 /area/engineering/moonbase/powerroom
 	name = "Engine Room Power Station"
+/area/engineering/moonbase/oxygenproduction
+	name = "Oxygen Production Lab"
 
 /area/rnd/moonbase/rndlab
 	icon = 'icons/turf/areas_vr.dmi'
@@ -193,9 +197,9 @@
 	icon_state = "dorm8"
 
 
-/////////////////
-// Maintenance //
-/////////////////
+/////////////////////////
+// Maintenance & Caves //
+/////////////////////////
 
 /area/maintenance/moonbase
 	flags = RAD_SHIELDED

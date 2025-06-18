@@ -232,7 +232,7 @@
 
 /datum/map/sirius_point/get_map_info()
 	. = list()
-	. +=  "The [full_name] is a an aging but well-maintained research and ISRU facility on the surface of Virgo 3r. [station_short] was originally constructed to aid in construction of a massive planned city, before complications caused the plans to be cancelled and relocated to what is now the city of a Anhur on Virgo 3b.<br>"
+	. +=  "The [full_name] is a an aging but well-maintained research and ISRU facility on the surface of Virgo 3x. [station_short] was originally constructed to aid in construction of a massive planned city, before complications caused the plans to be cancelled and relocated to what is now the city of a Anhur on Virgo 3b.<br>"
 	. +=  "Humanity has spread across the stars and has met many species on similar or even more advanced terms than them - it's a brave new world and many try to find their place in it . <br>"
 	. +=  "Though Virgo-Erigone is not important for the great movers and shakers, it sees itself in the midst of the interests of a reviving alien species of the Zorren, corporate and subversive interests and other exciting dangers the Periphery has to face.<br>"
 	. +=  "As an employee or contractor of NanoTrasen, operators of [station_short] and one of the galaxy's largest corporations, you're probably just here to do a job."
