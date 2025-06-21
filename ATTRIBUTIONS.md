@@ -466,3 +466,4 @@ digi-inner-thighs
 **Icon-States:** portalboots_mob, portalboots, portalgloves_mob, portalgloves, portaluniform_mob, portaluniform_mob_r, portaluniform, portalcoat_mob, portalcoat, portalmask_mob, portalmask, portalberet_mob, portalberet<br>
 **Creator:** Original graphics by Ebin-Halcyon, Imaginos16<br>
 **Link:** https://github.com/Skyrat-SS13/Skyrat-tg/pull/10737, https://github.com/tgstation/tgstation/pull/69842, https://github.com/Skyrat-SS13/Skyrat-tg/pull/14148
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
