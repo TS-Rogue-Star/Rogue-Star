@@ -35,7 +35,7 @@
 //GooglyFox:Portal
 /obj/item/clothing/under/fluff/portaluniform
 	name = "Talon turtleneck"
-	desc = "A large, well kempt and silky soft ITV Talon branded colored orange turtleneck with a golden nametag on the chest, it reads \"Portal, COMMANDER.\", it smells vibrantly of oranges."
+	desc = "A comfortably warm ITV Talon branded colored orange turtleneck atop some black slacks which itself is buckled on with a belt dawned with a golden belt buckle. There's a golden nametag on the chest, it reads \"Portal, COMMANDER.\", it smells vibrantly of oranges."
 	icon = 'icons/vore/custom_clothes_rs.dmi'
 	icon_override = 'icons/vore/custom_onmob_rs.dmi'
 	icon_state = "portaluniform"
