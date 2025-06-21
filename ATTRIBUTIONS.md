@@ -461,3 +461,7 @@ digi-inner-thighs
 **Creator:**  Jofae<br>
 **Link:** https://freesound.org/people/Jofae/sounds/361470/<br>
 **License:** [Creative Commons 0](https://creativecommons.org/publicdomain/zero/1.0/)<br>
+<br>
+**File:** `icons/vore/custom_clothes_rs.dmi, icons/vore/custom_onmob_rs.dmi`<br>
+**Icon-States:** portalboots_mob, portalboots, portalgloves_mob, portalgloves, portaluniform_mob, portaluniform_mob_r, portaluniform, portalcoat_mob, portalcoat, portalmask_mob, portalmask, portalberet_mob, portalberet<br>
+**Link:** https://github.com/tgstation/tgstation/pull/70226, https://github.com/tgstation/tgstation/pull/67286, https://github.com/tgstation/tgstation/pull/69842, https://github.com/tgstation/tgstation/pull/66355, https://github.com/tgstation/tgstation/pull/73795, https://github.com/tgstation/tgstation/pull/71479

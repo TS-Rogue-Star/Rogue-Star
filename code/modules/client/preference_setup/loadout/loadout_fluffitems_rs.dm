@@ -91,3 +91,45 @@
 	display_name = "Baele's Robe"
 	ckeywhitelist = list("malderg")
 	character_name = list("Baele")
+
+/datum/gear/fluff/portal_beret
+	path = /obj/item/clothing/head/beret/fluff/portalberet
+	slot = slot_head
+	display_name = "Portal's Beret"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_mask
+	path = /obj/item/clothing/mask/fluff/portal_mask
+	slot = slot_mask
+	display_name = "Portal's Mask"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_coat
+	path = /obj/item/clothing/suit/storage/fluff/portalcoat
+	slot = slot_wear_suit
+	display_name = "Portal's Coat"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_uniform
+	path = /obj/item/clothing/under/fluff/portaluniform
+	slot = slot_w_uniform
+	display_name = "Portal's Uniform"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_gloves
+	path = /obj/item/clothing/gloves/fluff/portalgloves
+	slot = slot_gloves
+	display_name = "Portal's Gloves"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_boots
+	path = /obj/item/clothing/shoes/boots/fluff/portalboots
+	slot = slot_shoes
+	display_name = "Portal's Boots"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
