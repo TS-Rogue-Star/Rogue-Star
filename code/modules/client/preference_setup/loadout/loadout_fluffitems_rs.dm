@@ -101,7 +101,7 @@
 
 /datum/gear/fluff/portal_mask
 	path = /obj/item/clothing/mask/fluff/portal_mask
-	slot = slot_mask
+	slot = slot_wear_mask
 	display_name = "Portal's Mask"
 	ckeywhitelist = list("googlyfox")
 	character_name = null

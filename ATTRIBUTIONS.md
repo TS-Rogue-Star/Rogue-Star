@@ -454,7 +454,7 @@ digi-inner-thighs
 <br>
 **File:** `icons/inventory/head/item_rs.dmi, icons/inventory/head/mob_rs.dmi, icons/inventory/uniform/item_rs.dmi, icons/inventory/uniform/mob_rs.dmi, icons/inventory/suit/item_rs.dmi, icons/inventory/suit/mob_rs.dmi`<br>
 **Icon-States:** talon_basic_refreshed, talon_security_refreshed, talon_jumpsuit_refreshed, talon_pilot_refreshed, talon_captain_refreshed, talon_capcoat, talon_pilotjacket, talon_labcoat, taloncoat, talon_caphat, talon_pilothat, talonnewsoft, talon_beret, talon_officer_beret, winterhood_talon<br>
-**Creator:** Comissioned by axietheaxolotl, Imaginos16<br>
+**Creator:** Original graphics by axietheaxolotl, Imaginos16<br>
 **Link:** https://github.com/tgstation/tgstation/pull/70226, https://github.com/tgstation/tgstation/pull/67286, https://github.com/tgstation/tgstation/pull/69842, https://github.com/tgstation/tgstation/pull/66355, https://github.com/tgstation/tgstation/pull/73795, https://github.com/tgstation/tgstation/pull/71479
 <br>
 **File:** `sound/voice/caw.ogg`<br>
@@ -464,4 +464,5 @@ digi-inner-thighs
 <br>
 **File:** `icons/vore/custom_clothes_rs.dmi, icons/vore/custom_onmob_rs.dmi`<br>
 **Icon-States:** portalboots_mob, portalboots, portalgloves_mob, portalgloves, portaluniform_mob, portaluniform_mob_r, portaluniform, portalcoat_mob, portalcoat, portalmask_mob, portalmask, portalberet_mob, portalberet<br>
-**Link:** https://github.com/tgstation/tgstation/pull/70226, https://github.com/tgstation/tgstation/pull/67286, https://github.com/tgstation/tgstation/pull/69842, https://github.com/tgstation/tgstation/pull/66355, https://github.com/tgstation/tgstation/pull/73795, https://github.com/tgstation/tgstation/pull/71479
+**Creator:** Original graphics by Ebin-Halcyon, Imaginos16<br>
+**Link:** https://github.com/Skyrat-SS13/Skyrat-tg/pull/10737, https://github.com/tgstation/tgstation/pull/69842, https://github.com/Skyrat-SS13/Skyrat-tg/pull/14148
