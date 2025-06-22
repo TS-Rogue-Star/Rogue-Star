@@ -1,11 +1,11 @@
 var/datum/planet/moonbase/planet_moonbase = null
 
 /datum/time/moonbase
-	seconds_in_day = 24 HOURS
+	seconds_in_day = 6 HOURS
 
 /datum/planet/moonbase
 	name = "Virgo 3x"
-	desc = "An airless rock in far orbit around Virgo Prime. Which seemingly barren, it posses convenient transfer orbits, and holds many secrets..."
+	desc = "An airless rock in far orbit around Virgo Prime. While seemingly barren, it posses convenient transfer orbits, and holds many secrets..."
 	current_time = new /datum/time/moonbase()
 //	expected_z_levels = list(1) // This is defined elsewhere.
 	planetary_wall_type = /turf/unsimulated/wall/planetary
@@ -96,11 +96,13 @@ var/datum/planet/moonbase/planet_moonbase = null
 
 
 /datum/weather_holder/moonbase
-	temperature = TCMB
+	temperature = 2.7
 	allowed_weather_types = list(
 		WEATHER_CLEAR			= new /datum/weather/moonbase/clear(),
+		WEATHER_CLEAR			= new /datum/weather/moonbase/clear()
 		)
 	roundstart_weather_chances = list(
+		WEATHER_CLEAR		= 100,
 		WEATHER_CLEAR		= 100
 		)
 
@@ -112,7 +114,18 @@ var/datum/planet/moonbase/planet_moonbase = null
 /datum/weather/moonbase/clear
 	name = "clear"
 	transition_chances = list(
-		WEATHER_CLAER = 100)
+		WEATHER_CLEAR2 = 100)
+	transition_messages = list(
+	"The sky turns static and cold."
+		)
+	sky_visible = TRUE
+	observed_message = "The sky is clear."
+	imminent_transition_message = "The sky is returning to its normal emptiness."
+
+/datum/weather/moonbase/clear2
+	name = "clear"
+	transition_chances = list(
+		WEATHER_CLEAR = 100)
 	transition_messages = list(
 	"The sky turns static and cold."
 		)
