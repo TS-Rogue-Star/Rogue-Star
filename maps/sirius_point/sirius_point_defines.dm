@@ -227,6 +227,7 @@
 	mining_outpost_z =		list(Z_LEVEL_SURFACE_MINE)
 */
 	planet_datums_to_make = list(/datum/planet/virgo3b,
+								/datum/planet/moonbase,
 								/datum/planet/virgo4,
 								/datum/planet/snowbase)
 
@@ -250,6 +251,17 @@
 /datum/skybox_settings/sirius_point
 	icon_state = "space5"
 	use_stars = FALSE
+
+/datum/planet/moonbase/New()
+	expected_z_levels = list(
+		Z_LEVEL_MOONBASE_LOW,
+		Z_LEVEL_MOONBASE_MID,
+		Z_LEVEL_MOONBASE_HIGH,
+		Z_LEVEL_MOONBASE_EAST,
+		Z_LEVEL_MOONBASE_WEST,
+		Z_LEVEL_MOONBASE_MINING
+		)
+	. = ..()
 
 /obj/effect/landmark/map_data/sirius_point
 	height = 3

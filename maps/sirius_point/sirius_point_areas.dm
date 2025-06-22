@@ -40,7 +40,7 @@
 	name = "Basement Rec Area"
 	icon_state = "basement"
 /area/hallway/moonbase/shop
-	name = "Commercial Area"
+	name = "Multipurpose Room"
 	icon_state = "basement"
 
 
@@ -69,7 +69,8 @@
 	name = "Tundra Biosphere Simulation"
 	ambience = AMBIENCE_RUINS
 /area/library/moonbase/office
-	name = "Librarian Office"
+	name = "Librarian's Office"
+	lightswitch = 0
 
 /area/security/moonbase
 	icon_state = "brig"

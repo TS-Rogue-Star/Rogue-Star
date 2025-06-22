@@ -12,10 +12,11 @@
 /turf/simulated/mineral/floor/moonbase,
 /area/moonbase/basement/caves/east)
 "ad" = (
-/obj/structure/table/rack/shelf/wood,
-/obj/random/mainttoyloot/nofail,
-/turf/simulated/floor/wood/alt,
-/area/hallway/moonbase/shop)
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/blue2,
+/area/moonbase/dorms)
 "ag" = (
 /obj/structure/railing/grey{
 	dir = 4
@@ -90,6 +91,12 @@
 /obj/machinery/atmospherics/pipe/simple/visible/purple,
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/aft_hallway)
+"aF" = (
+/obj/structure/cable/orange{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/engineering/aft_hallway)
 "aH" = (
 /turf/simulated/floor/water/indoors,
 /area/moonbase/dorms/dorm5)
@@ -121,8 +128,16 @@
 	pixel_y = 4
 	},
 /obj/item/weapon/pen,
-/turf/simulated/floor/tiled/eris/derelict2,
+/turf/simulated/floor/tiled/steel_dirty,
 /area/maintenance/moonbase/basement/engibreakroom)
+"aO" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/maintenance/engi,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled/steel_ridged,
+/area/maintenance/moonbase/substation/security)
 "aR" = (
 /turf/simulated/mineral/floor/moonbase,
 /area/moonbase/dorms/dorm1)
@@ -149,6 +164,9 @@
 /area/moonbase/dorms/dorm8)
 "aW" = (
 /obj/structure/table/glass,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/white,
 /area/moonbase/dorms/dorm2)
 "aX" = (
@@ -190,7 +208,6 @@
 /turf/simulated/mineral/floor/moonbase,
 /area/maintenance/moonbase/basement/olddorms)
 "bi" = (
-/obj/machinery/alarm,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -217,6 +234,9 @@
 /obj/effect/floor_decal/milspec/color/red/half{
 	dir = 8
 	},
+/obj/structure/cable/pink{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/tiled/dark,
 /area/security/security_equiptment_storage)
 "bl" = (
@@ -232,7 +252,10 @@
 /area/maintenance/moonbase/basement/north)
 "bp" = (
 /obj/effect/floor_decal/milspec/color/red/half,
-/obj/machinery/light,
+/obj/structure/table/steel,
+/obj/item/device/flashlight/lamp{
+	pixel_y = 6
+	},
 /turf/simulated/floor/tiled/dark,
 /area/security/security_equiptment_storage)
 "br" = (
@@ -317,12 +340,21 @@
 	pixel_x = 1;
 	pixel_y = 5
 	},
-/turf/simulated/floor/carpet,
+/turf/simulated/floor/carpet/brown,
 /area/maintenance/moonbase/basement/archive)
 "bQ" = (
 /obj/structure/table/glass,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/white,
 /area/moonbase/dorms/dorm4)
+"bR" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/plating/moonbase,
+/area/moonbase/basement/caves/northeast)
 "bU" = (
 /turf/simulated/wall/r_wall,
 /area/moonbase/dorms/dorm2)
@@ -373,6 +405,12 @@
 "cf" = (
 /turf/simulated/floor/tiled/dark,
 /area/chapel/chapel_morgue)
+"cg" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/basement/south)
 "ch" = (
 /obj/structure/curtain/black,
 /turf/simulated/floor/tiled/dark,
@@ -420,6 +458,9 @@
 "ct" = (
 /turf/simulated/wall/r_wall,
 /area/moonbase/dorms/dorm7)
+"cu" = (
+/turf/simulated/floor/tiled/steel_dirty,
+/area/crew_quarters/moonbase/basement/iceroom)
 "cw" = (
 /obj/structure/smoletrack/roadS{
 	dir = 4
@@ -472,6 +513,7 @@
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/snacks/ratpackburger,
 /obj/item/weapon/reagent_containers/food/snacks/ratpacktaco,
+/obj/machinery/light,
 /turf/simulated/floor/carpet,
 /area/moonbase/dorms/dorm7)
 "cL" = (
@@ -483,6 +525,18 @@
 	},
 /obj/structure/curtain/open/privacy{
 	name = "shower curtain"
+	},
+/turf/simulated/floor/tiled/white,
+/area/crew_quarters/pool)
+"cM" = (
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 6
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 5
+	},
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/pool)
@@ -499,12 +553,30 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/atmos)
+"cP" = (
+/obj/structure/cable/cyan{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/tiled/steel_dirty,
+/area/medical/moonbase/basement)
 "cQ" = (
 /obj/structure/table/rack/shelf,
 /obj/item/weapon/storage/pouch/ammo,
 /obj/item/weapon/storage/pouch/ammo,
 /turf/simulated/floor/tiled/techmaint,
 /area/security/security_equiptment_storage)
+"cR" = (
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 4
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/hallway/moonbase/shop)
 "cU" = (
 /obj/machinery/shower{
 	pixel_y = 16
@@ -586,6 +658,9 @@
 /area/moonbase/surface/underground)
 "dq" = (
 /obj/structure/undies_wardrobe,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor/carpet,
 /area/moonbase/dorms/dorm1)
 "dr" = (
@@ -598,9 +673,11 @@
 /turf/simulated/floor/tiled/dark,
 /area/chapel/chapel_morgue)
 "ds" = (
-/obj/structure/prop/rock/small/water,
-/turf/simulated/floor/water/indoors,
-/area/moonbase/basement/caves/east)
+/obj/machinery/light/lamppost{
+	dir = 1
+	},
+/turf/simulated/mineral/floor/moonbase,
+/area/moonbase/basement/caves/northeast)
 "dt" = (
 /obj/item/bee_pack,
 /obj/item/honey_frame,
@@ -627,6 +704,11 @@
 /obj/item/honey_frame,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/kitchen)
+"du" = (
+/obj/structure/inflatable/door,
+/obj/item/tape/atmos,
+/turf/simulated/mineral/floor/moonbase,
+/area/moonbase/basement/caves/northeast)
 "dv" = (
 /obj/structure/prop/rock/small/wateralt,
 /turf/simulated/floor/water/indoors,
@@ -640,7 +722,7 @@
 /area/chapel/office)
 "dC" = (
 /obj/machinery/photocopier,
-/turf/simulated/floor/carpet,
+/turf/simulated/floor/carpet/brown,
 /area/maintenance/moonbase/basement/archive)
 "dD" = (
 /obj/machinery/door/firedoor/glass,
@@ -653,6 +735,12 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/atmos)
+"dG" = (
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled,
+/area/quartermaster/moonbase/mining/eva)
 "dH" = (
 /turf/simulated/wall,
 /area/security/range)
@@ -666,10 +754,26 @@
 /turf/simulated/floor/wood,
 /area/space)
 "dJ" = (
+/obj/machinery/light/floortube{
+	dir = 4;
+	pixel_x = 3;
+	pixel_y = 1
+	},
+/obj/structure/railing/grey{
+	dir = 4
+	},
+/turf/simulated/floor/plating/external/moonbaseplating,
+/area/moonbase/surface/levelone/south)
+"dM" = (
 /obj/machinery/door/firedoor/glass,
-/obj/machinery/door/airlock/maintenance_hatch,
+/obj/machinery/door/airlock/maintenance,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/crew_quarters/moonbase/basement/iceroom)
+"dN" = (
+/obj/effect/catwalk_plated,
+/obj/effect/catwalk_plated,
 /turf/simulated/floor/plating,
-/area/maintenance/moonbase/basement/iceroomcontrol)
+/area/quartermaster/moonbase/mining/eva)
 "dO" = (
 /obj/structure/railing/grey{
 	dir = 8
@@ -728,6 +832,9 @@
 /area/engineering/atmos)
 "ed" = (
 /obj/structure/bed/chair/sofa/right/black,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/steel_dirty,
 /area/maintenance/moonbase/basement/olddorms)
 "ee" = (
@@ -736,6 +843,18 @@
 "ef" = (
 /turf/simulated/wall/r_wall,
 /area/moonbase/dorms/dorm6)
+"eh" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/eris/white/brown_platform,
+/area/hallway/moonbase/basement)
+"ej" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/maintenance/moonbase/basement/borgroom)
 "em" = (
 /obj/structure/railing/grey{
 	dir = 1
@@ -773,6 +892,11 @@
 /obj/structure/smolebuilding/houses,
 /turf/simulated/floor/smole/megablocks,
 /area/crew_quarters/moonbase/smallroom)
+"eu" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/maintenance,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/groundbase/hotspring)
 "ez" = (
 /obj/structure/bed/chair/comfy/black{
 	dir = 8
@@ -783,6 +907,10 @@
 /obj/structure/closet/crate/freezer,
 /turf/simulated/floor/tiled/freezer/cold,
 /area/crew_quarters/kitchen)
+"eC" = (
+/obj/machinery/door/firedoor/glass,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/maintenance/moonbase/basement/south)
 "eE" = (
 /obj/structure/table/steel,
 /obj/item/weapon/paper_bin{
@@ -797,7 +925,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
-/area/maintenance/atmos_control)
+/area/engineering/moonbase/oxygenproduction)
 "eG" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -809,6 +937,14 @@
 "eJ" = (
 /turf/simulated/floor/tiled/dark,
 /area/security/security_equiptment_storage)
+"eO" = (
+/obj/structure/ore_box,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 27;
+	pixel_x = 0
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/quartermaster/moonbase/mining/eva)
 "eP" = (
 /obj/structure/prop/rock/crystal_dust,
 /turf/simulated/mineral/floor/moonbase,
@@ -835,6 +971,7 @@
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/snacks/ratpackburger,
 /obj/item/weapon/reagent_containers/food/snacks/ratpacktaco,
+/obj/machinery/light,
 /turf/simulated/floor/carpet,
 /area/moonbase/dorms/dorm4)
 "fa" = (
@@ -866,6 +1003,9 @@
 /area/moonbase/dorms/dorm5)
 "fj" = (
 /obj/structure/undies_wardrobe,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor/carpet,
 /area/moonbase/dorms/dorm2)
 "fk" = (
@@ -890,6 +1030,16 @@
 /obj/structure/table/steel,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/medical/moonbase/basement)
+"fA" = (
+/obj/machinery/power/apc,
+/obj/structure/cable/green{
+	icon_state = "0-8"
+	},
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/substation/cargo)
 "fB" = (
 /obj/structure/closet/wardrobe/chaplain_black,
 /obj/item/weapon/storage/fancy/crayons,
@@ -945,6 +1095,12 @@
 /obj/structure/table/rack/shelf,
 /turf/simulated/floor/tiled/monotile,
 /area/maintenance/moonbase/basement/borgroom)
+"fM" = (
+/obj/structure/cable/green{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/tiled,
+/area/quartermaster/moonbase/mining/lockerroom)
 "fQ" = (
 /turf/simulated/floor/tiled/white,
 /area/moonbase/dorms/dorm6)
@@ -967,6 +1123,15 @@
 "ga" = (
 /turf/simulated/wall/r_wall,
 /area/crew_quarters/recreation_area_restroom)
+"gb" = (
+/obj/structure/morgue{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/dark,
+/area/chapel/chapel_morgue)
 "gd" = (
 /turf/simulated/wall/r_wall,
 /area/hallway/moonbase/basement)
@@ -1006,6 +1171,15 @@
 /obj/item/weapon/storage/briefcase/inflatable,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/emstorage)
+"gm" = (
+/obj/structure/bed/chair/sofa/corp{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/moonbase/basement/caves/northeast)
 "go" = (
 /turf/simulated/mineral/moonbase,
 /area/moonbase/dorms/dorm1)
@@ -1013,8 +1187,15 @@
 /obj/structure/prop/machine/tgmc_console4/starts_on,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/maintenance/moonbase/basement/iceroomcontrol)
-"gs" = (
+"gr" = (
+/obj/structure/cable/pink{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/plating,
+/area/maintenance/moonbase/substation/security)
+"gs" = (
+/obj/structure/salvageable/server,
+/turf/simulated/floor/tiled/milspec/raised,
 /area/maintenance/moonbase/basement/techmonitoring)
 "gt" = (
 /turf/simulated/floor/plating,
@@ -1033,6 +1214,9 @@
 /area/moonbase/dorms/dorm5)
 "gw" = (
 /obj/structure/table/glass,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/white,
 /area/moonbase/dorms/dorm1)
 "gx" = (
@@ -1067,6 +1251,11 @@
 /area/space)
 "gL" = (
 /obj/machinery/atmospherics/binary/pump/on,
+/obj/machinery/light/floortube{
+	dir = 8;
+	pixel_x = -4;
+	pixel_y = 1
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/atmos)
 "gP" = (
@@ -1088,10 +1277,11 @@
 /turf/simulated/floor/tiled,
 /area/crew_quarters/kitchen)
 "gR" = (
-/obj/structure/table/rack/shelf/wood,
-/obj/random/medical,
-/turf/simulated/floor/carpet,
-/area/hallway/moonbase/shop)
+/obj/machinery/power/apc{
+	dir = 4
+	},
+/turf/simulated/floor/plating/moonbase,
+/area/moonbase/basement/caves/northeast)
 "gT" = (
 /obj/effect/floor_decal/milspec/color/red/corner,
 /turf/simulated/floor/tiled/dark,
@@ -1200,6 +1390,9 @@
 	dir = 1
 	},
 /obj/machinery/firealarm,
+/obj/structure/cable/pink{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/tiled/dark,
 /area/security/security_equiptment_storage)
 "hu" = (
@@ -1222,6 +1415,18 @@
 	outdoors = 0
 	},
 /area/crew_quarters/bar)
+"hB" = (
+/obj/structure/bed/chair/comfy{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/blue2,
+/area/moonbase/dorms)
+"hC" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/tiled,
+/area/quartermaster/moonbase/mining/lockerroom)
 "hF" = (
 /obj/structure/railing/grey,
 /turf/simulated/mineral/floor/moonbase,
@@ -1238,6 +1443,12 @@
 /obj/machinery/vending/magivend,
 /turf/simulated/floor/wood/alt/panel,
 /area/crew_quarters/theatre)
+"hN" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/crew_quarters/recreation_area)
 "hO" = (
 /obj/machinery/light,
 /turf/simulated/floor/grass,
@@ -1288,6 +1499,16 @@
 	outdoors = 0
 	},
 /area/groundbase/hotspring)
+"ie" = (
+/obj/effect/floor_decal/corner/purple{
+	dir = 10
+	},
+/obj/structure/cable/green{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc,
+/turf/simulated/floor/tiled,
+/area/quartermaster/moonbase/mining/eva)
 "if" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -1311,6 +1532,13 @@
 /obj/structure/window/reinforced/full,
 /turf/simulated/floor/plating,
 /area/moonbase/dorms/dorm5)
+"ii" = (
+/obj/structure/railing/grey{
+	dir = 4
+	},
+/obj/structure/stairs/spawner/north,
+/turf/simulated/floor/plating,
+/area/moonbase/surface/underground)
 "ij" = (
 /obj/machinery/transhuman/autoresleever,
 /turf/simulated/floor/carpet,
@@ -1346,7 +1574,7 @@
 /area/moonbase/basement/caves/northeast)
 "is" = (
 /turf/simulated/floor/tiled/techfloor,
-/area/maintenance/atmos_control)
+/area/engineering/moonbase/oxygenproduction)
 "iw" = (
 /obj/machinery/atmospherics/omni/atmos_filter{
 	name = "Phoron Filter";
@@ -1368,6 +1596,10 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/moonbase/dorms/dorm5)
+"iz" = (
+/obj/structure/prop/statue/phoron,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/moonbase/surface/levelone/south)
 "iA" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -1378,8 +1610,17 @@
 /obj/structure/window/reinforced,
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/shop)
+"iC" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/eris/techmaint_cargo,
+/area/holodeck_control)
 "iD" = (
 /obj/structure/table/glass,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/white,
 /area/moonbase/dorms/dorm5)
 "iE" = (
@@ -1388,19 +1629,20 @@
 	},
 /turf/simulated/floor/water/indoors,
 /area/moonbase/dorms/dorm6)
+"iF" = (
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/substation/security)
 "iG" = (
-/obj/effect/floor_decal/corner/beige{
-	dir = 9
-	},
-/obj/structure/closet/crate,
-/obj/structure/extinguisher_cabinet{
-	dir = 4;
-	pixel_x = -27
-	},
-/turf/simulated/floor/tiled,
-/area/quartermaster/moonbase/mining)
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/turf/simulated/floor/plating,
+/area/moonbase/basement/caves/northeast)
 "iH" = (
 /obj/structure/undies_wardrobe,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor/carpet,
 /area/moonbase/dorms/dorm6)
 "iI" = (
@@ -1445,11 +1687,27 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/recreation_area_restroom)
+"iS" = (
+/obj/effect/floor_decal/steeldecal/steel_decals10,
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/white,
+/area/crew_quarters/pool)
 "iY" = (
 /obj/structure/table/woodentable,
 /obj/item/ammo_magazine/ammo_box/b12g/beanbag,
 /turf/simulated/floor/wood,
 /area/space)
+"ja" = (
+/obj/structure/cable/green{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/tiled,
+/area/quartermaster/moonbase/mining/eva)
 "jc" = (
 /obj/structure/inflatable/door,
 /turf/simulated/mineral/floor/moonbase,
@@ -1478,6 +1736,14 @@
 /obj/machinery/vending/wardrobe/chefdrobe,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/kitchen)
+"jg" = (
+/obj/machinery/door/airlock/glass_mining,
+/obj/machinery/door/firedoor/glass,
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/tiled/steel_ridged,
+/area/quartermaster/moonbase/mining/lockerroom)
 "jh" = (
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/aft_hallway)
@@ -1485,7 +1751,8 @@
 /obj/effect/floor_decal/milspec/color/red/half{
 	dir = 6
 	},
-/obj/structure/closet/emcloset,
+/obj/structure/table/steel,
+/obj/random/maintenance/security,
 /turf/simulated/floor/tiled/dark,
 /area/security/security_equiptment_storage)
 "jj" = (
@@ -1535,6 +1802,9 @@
 /area/engineering/aft_hallway)
 "jv" = (
 /obj/structure/undies_wardrobe,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor/carpet,
 /area/moonbase/dorms/dorm8)
 "jw" = (
@@ -1558,13 +1828,30 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/moonbase/level1/east)
 "jB" = (
-/obj/item/device/radio/intercom{
-	dir = 1;
-	name = "Station Intercom (General)";
-	pixel_y = 24
+/obj/structure/closet/crate,
+/obj/fiftyspawner/steel,
+/obj/fiftyspawner/steel,
+/obj/fiftyspawner/rglass,
+/obj/fiftyspawner/glass,
+/obj/fiftyspawner/wood,
+/obj/fiftyspawner/wood/sif,
+/turf/simulated/floor/plating,
+/area/moonbase/surface/underground)
+"jC" = (
+/obj/machinery/door/firedoor/glass/hidden{
+	dir = 1
 	},
-/turf/simulated/floor/tiled,
-/area/quartermaster/moonbase/mining)
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/eris/white/brown_platform,
+/area/hallway/moonbase/basement)
+"jH" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/plating/external,
+/area/maintenance/moonbase/level1/north)
 "jK" = (
 /turf/simulated/wall,
 /area/maintenance/moonbase/level1/east)
@@ -1634,6 +1921,7 @@
 /area/engineering/atmos)
 "kj" = (
 /obj/machinery/mineral/unloading_machine,
+/obj/machinery/light,
 /turf/simulated/floor/tiled,
 /area/quartermaster/moonbase/mining)
 "kk" = (
@@ -1694,8 +1982,14 @@
 /obj/item/device/flashlight/lamp{
 	pixel_y = 6
 	},
-/turf/simulated/floor/tiled/eris/derelict2,
+/turf/simulated/floor/tiled/steel_dirty,
 /area/maintenance/moonbase/basement/engibreakroom)
+"kw" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/wall,
+/area/maintenance/moonbase/basement/emstorage)
 "kx" = (
 /obj/structure/prop/rock/crystal_dust,
 /turf/simulated/mineral/floor/moonbase,
@@ -1758,6 +2052,13 @@
 "kQ" = (
 /turf/simulated/wall/r_wall,
 /area/quartermaster/moonbase/mining)
+"kR" = (
+/obj/structure/catwalk,
+/obj/structure/cable/green{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/level1/east)
 "kS" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -1778,6 +2079,13 @@
 	},
 /turf/simulated/floor/plating/moonbase,
 /area/maintenance/moonbase/basement/olddorms)
+"lb" = (
+/obj/effect/catwalk_plated,
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/quartermaster/moonbase/mining/lockerroom)
 "lc" = (
 /obj/structure/target_stake,
 /turf/simulated/mineral/floor/moonbase,
@@ -1869,6 +2177,18 @@
 /obj/item/device/radio/emergency,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/north)
+"lD" = (
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 8
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/hallway/moonbase/shop)
 "lH" = (
 /obj/structure/closet/walllocker_double/misc_civ/north,
 /turf/simulated/floor/tiled/white,
@@ -1877,6 +2197,14 @@
 /obj/structure/bookcase/manuals/xenoarchaeology,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/archive)
+"lL" = (
+/obj/machinery/light/floortube{
+	dir = 8;
+	pixel_x = -4;
+	pixel_y = 1
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/engineering/atmos)
 "lM" = (
 /turf/simulated/wall/r_wall,
 /area/crew_quarters/pool)
@@ -1898,6 +2226,11 @@
 /obj/machinery/door/airlock/maintenance,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/moonbase/level1/north)
+"lR" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/maintenance,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/crew_quarters/bar)
 "lS" = (
 /obj/structure/bookcase{
 	name = "bookcase (Non-Fiction)"
@@ -1939,6 +2272,15 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/quartermaster/moonbase/mining/lockerroom)
+"md" = (
+/obj/machinery/power/apc/hyper{
+	dir = 1
+	},
+/obj/machinery/alarm{
+	dir = 1
+	},
+/turf/simulated/floor/wood,
+/area/groundbase/hotspring)
 "me" = (
 /obj/structure/railing/grey,
 /turf/simulated/mineral/floor/moonbase,
@@ -1955,6 +2297,18 @@
 /obj/machinery/door/airlock/maintenance,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/moonbase/basement/west)
+"mj" = (
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 8
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/hallway/moonbase/shop)
 "ml" = (
 /obj/item/device/radio/intercom{
 	dir = 4;
@@ -1978,6 +2332,9 @@
 	},
 /obj/structure/railing/grey{
 	dir = 8
+	},
+/obj/structure/cable/green{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/quartermaster/moonbase/mining)
@@ -2003,19 +2360,11 @@
 /turf/simulated/floor/tiled,
 /area/crew_quarters/kitchen)
 "mw" = (
-/obj/structure/table/woodentable,
-/obj/machinery/cash_register/civilian,
-/obj/machinery/door/blast/shutters{
-	dir = 4;
-	id = "shop"
-	},
-/turf/simulated/floor/wood/alt,
-/area/hallway/moonbase/shop)
+/turf/simulated/wall/wood,
+/area/moonbase/basement/caves/northeast)
 "mx" = (
-/obj/machinery/door/firedoor/glass,
-/obj/machinery/door/airlock/maintenance/engi,
-/turf/simulated/floor/tiled/steel_ridged,
-/area/maintenance/moonbase/level1/east)
+/turf/simulated/wall/r_wall,
+/area/maintenance/moonbase/substation/cargo)
 "mz" = (
 /obj/structure/table/bench/steel,
 /turf/simulated/floor/tiled/eris/techmaint_cargo,
@@ -2058,6 +2407,14 @@
 /obj/structure/window/reinforced/full,
 /turf/simulated/floor/plating,
 /area/quartermaster/moonbase/mining/lockerroom)
+"mQ" = (
+/obj/item/device/radio/intercom{
+	dir = 4;
+	name = "Station Intercom (General)";
+	pixel_x = 24
+	},
+/turf/simulated/floor/tiled,
+/area/quartermaster/moonbase/mining)
 "mR" = (
 /turf/simulated/mineral/floor/moonbase,
 /area/maintenance/moonbase/basement/motel)
@@ -2067,11 +2424,23 @@
 	},
 /turf/simulated/floor/carpet,
 /area/crew_quarters/recreation_area)
-"mV" = (
+"mT" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/maintenance/engi,
+/obj/structure/cable/pink{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/tiled/steel_ridged,
-/area/maintenance/moonbase/basement/south)
+/area/maintenance/moonbase/substation/security)
+"mU" = (
+/obj/effect/catwalk_plated,
+/obj/effect/catwalk_plated,
+/turf/simulated/floor/plating,
+/area/quartermaster/moonbase/mining/lockerroom)
+"mV" = (
+/obj/effect/catwalk_plated,
+/turf/simulated/floor/plating,
+/area/quartermaster/moonbase/mining)
 "mW" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -2086,6 +2455,12 @@
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/maintenance/moonbase/basement/techmonitoring)
+"mY" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/plating/external,
+/area/maintenance/moonbase/level1/north)
 "mZ" = (
 /obj/item/toy/plushie/borgplushie/scrubpuppy,
 /obj/item/toy/plushie/borgplushie/medihound{
@@ -2103,8 +2478,9 @@
 /turf/simulated/floor/plating/moonbase,
 /area/security/range)
 "nd" = (
-/turf/simulated/mineral/moonbase,
-/area/moonbase/dorms)
+/obj/machinery/light/small,
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/basement/emstorage)
 "nf" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/maintenance,
@@ -2115,13 +2491,17 @@
 	dir = 8
 	},
 /turf/simulated/floor/tiled,
-/area/moonbase/surface/underground)
+/area/crew_quarters/moonbase/maintbar)
 "nh" = (
 /obj/structure/toilet{
 	dir = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/moonbase/dorms/dorm6)
+"nj" = (
+/obj/machinery/light,
+/turf/simulated/floor/tiled/eris/white/brown_platform,
+/area/hallway/moonbase/basement)
 "nm" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock,
@@ -2167,7 +2547,7 @@
 /obj/structure/bed/chair{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/eris/derelict2,
+/turf/simulated/floor/tiled/steel_dirty,
 /area/maintenance/moonbase/basement/engibreakroom)
 "nJ" = (
 /obj/machinery/conveyor{
@@ -2243,7 +2623,7 @@
 "ob" = (
 /obj/structure/table/rack/steel,
 /obj/random/toolbox,
-/turf/simulated/floor/tiled/eris/derelict2,
+/turf/simulated/floor/tiled/steel_dirty,
 /area/maintenance/moonbase/basement/engibreakroom)
 "oc" = (
 /obj/structure/bed/chair{
@@ -2257,6 +2637,15 @@
 /obj/random/maintenance,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/annex)
+"of" = (
+/obj/structure/railing/grey{
+	dir = 1
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/mineral/floor/moonbase,
+/area/moonbase/surface/underground)
 "og" = (
 /turf/simulated/floor/carpet,
 /area/maintenance/moonbase/basement/whalers)
@@ -2280,6 +2669,12 @@
 /obj/effect/floor_decal/corner/grey/bordercorner,
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/pool)
+"ou" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/substation/cargo)
 "ov" = (
 /obj/structure/closet/crate,
 /obj/random/maintenance/security,
@@ -2308,7 +2703,7 @@
 /obj/item/stack/material/algae/ten,
 /obj/structure/table/rack,
 /turf/simulated/floor/tiled/techfloor,
-/area/maintenance/atmos_control)
+/area/engineering/moonbase/oxygenproduction)
 "oD" = (
 /obj/machinery/atmospherics/pipe/tank/phoron{
 	dir = 1
@@ -2321,7 +2716,7 @@
 /turf/simulated/floor/tiled/steel_dirty,
 /area/maintenance/moonbase/basement/olddorms)
 "oF" = (
-/turf/simulated/floor/tiled/eris/derelict2,
+/turf/simulated/floor/tiled/steel_dirty,
 /area/maintenance/moonbase/basement/engibreakroom)
 "oG" = (
 /obj/structure/prop/rock/crystal,
@@ -2337,6 +2732,25 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/hallway/moonbase/basement)
+"oI" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/quartermaster/moonbase/mining/eva)
+"oL" = (
+/obj/structure/cable/pink{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/sensor{
+	name = "Powernet Sensor - Security Subgrid";
+	name_tag = "Security Subgrid"
+	},
+/obj/structure/cable/pink{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/substation/security)
 "oO" = (
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/northwest)
@@ -2359,13 +2773,26 @@
 /obj/structure/window/reinforced/full,
 /turf/simulated/floor/plating,
 /area/moonbase/dorms/dorm4)
+"oV" = (
+/turf/simulated/wall,
+/area/moonbase/basement/caves/northeast)
 "oW" = (
 /turf/simulated/wall/r_wall,
 /area/moonbase/dorms/dorm5)
+"oY" = (
+/obj/structure/bed/chair/sofa/corp/left{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/moonbase/basement/caves/northeast)
 "pb" = (
 /obj/machinery/mining/drill/loaded,
 /turf/simulated/mineral/floor/vacuum/moonbase,
 /area/quartermaster/moonbase/mining/eva)
+"pc" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/simulated/floor/plating,
+/area/moonbase/surface/underground)
 "pd" = (
 /obj/structure/extinguisher_cabinet{
 	dir = 8;
@@ -2376,6 +2803,12 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/atmos)
+"pe" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/blue2,
+/area/moonbase/dorms)
 "pf" = (
 /turf/simulated/wall/r_wall,
 /area/maintenance/moonbase/basement/emstorage)
@@ -2404,6 +2837,15 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/moonbase/dorms/dorm3)
+"pk" = (
+/turf/simulated/wall,
+/area/maintenance/moonbase/substation/cargo)
+"pl" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/moonbase/basement/caves/northeast)
 "pm" = (
 /obj/structure/railing/grey{
 	dir = 1
@@ -2411,6 +2853,15 @@
 /obj/structure/stairs/spawner/west,
 /turf/simulated/floor/plating/external/moonbaseplating,
 /area/moonbase/surface/underground)
+"pp" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/substation/cargo)
 "pq" = (
 /obj/machinery/atmospherics/pipe/manifold4w/visible/cyan,
 /turf/simulated/floor/tiled/monotile,
@@ -2465,7 +2916,10 @@
 /area/maintenance/moonbase/basement/emstorage)
 "pG" = (
 /obj/structure/dispenser/oxygen,
-/turf/simulated/floor/tiled/eris/steel/cargo,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
 /area/quartermaster/moonbase/mining/lockerroom)
 "pI" = (
 /turf/simulated/floor/tiled/white,
@@ -2481,7 +2935,7 @@
 /obj/item/clothing/suit/storage/hooded/wintercoat,
 /obj/item/clothing/suit/storage/hooded/wintercoat,
 /turf/simulated/floor/tiled/steel_dirty,
-/area/maintenance/moonbase/basement/iceroomcontrol)
+/area/crew_quarters/moonbase/basement/iceroom)
 "pP" = (
 /obj/structure/table/standard,
 /turf/simulated/floor/carpet/bcarpet,
@@ -2489,6 +2943,9 @@
 "pQ" = (
 /turf/simulated/mineral/moonbase,
 /area/moonbase/dorms/dorm8)
+"pR" = (
+/turf/simulated/floor/wood,
+/area/moonbase/basement/caves/northeast)
 "pS" = (
 /obj/random/multiple/ore_pile,
 /turf/simulated/mineral/floor/vacuum/moonbase,
@@ -2523,6 +2980,11 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/holodeck_control)
+"qc" = (
+/obj/structure/table/steel,
+/obj/item/weapon/storage/briefcase/inflatable,
+/turf/simulated/floor/plating,
+/area/moonbase/basement/caves/northwest)
 "qd" = (
 /turf/simulated/wall/r_wall,
 /area/holodeck_control)
@@ -2583,6 +3045,17 @@
 	},
 /turf/simulated/floor/lino,
 /area/chapel/office)
+"qu" = (
+/obj/machinery/light/floortube{
+	dir = 8;
+	pixel_x = -4;
+	pixel_y = 1
+	},
+/obj/structure/railing/grey{
+	dir = 8
+	},
+/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/area/moonbase/surface/levelone/south)
 "qv" = (
 /turf/simulated/wall/r_wall,
 /area/security/security_equiptment_storage)
@@ -2597,6 +3070,7 @@
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/snacks/ratpackburger,
 /obj/item/weapon/reagent_containers/food/snacks/ratpacktaco,
+/obj/machinery/light,
 /turf/simulated/floor/carpet,
 /area/moonbase/dorms/dorm3)
 "qz" = (
@@ -2633,8 +3107,14 @@
 /area/moonbase/surface/levelone/south)
 "qK" = (
 /obj/structure/table/steel,
-/turf/simulated/floor/tiled/eris/derelict2,
+/turf/simulated/floor/tiled/steel_dirty,
 /area/maintenance/moonbase/basement/engibreakroom)
+"qL" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/dark,
+/area/chapel/chapel_morgue)
 "qM" = (
 /obj/structure/railing/grey{
 	dir = 1
@@ -2664,6 +3144,7 @@
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/snacks/ratpackburger,
 /obj/item/weapon/reagent_containers/food/snacks/ratpacktaco,
+/obj/machinery/light,
 /turf/simulated/floor/carpet,
 /area/moonbase/dorms/dorm2)
 "qU" = (
@@ -2706,6 +3187,10 @@
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/south)
 "rb" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/east)
 "rc" = (
@@ -2742,6 +3227,9 @@
 /obj/item/toy/plushie/susred,
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/moonbase/surface/levelone/north)
+"rm" = (
+/turf/simulated/floor/plating/external,
+/area/moonbase/basement/caves/northeast)
 "ro" = (
 /obj/effect/floor_decal/steeldecal/steel_decals10{
 	dir = 9
@@ -2760,7 +3248,7 @@
 	pixel_x = 0
 	},
 /turf/simulated/floor/tiled/techfloor,
-/area/maintenance/atmos_control)
+/area/engineering/moonbase/oxygenproduction)
 "rq" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/maintenance,
@@ -2783,6 +3271,12 @@
 /obj/structure/prop/machine/gravygen,
 /turf/simulated/floor/plating/moonbase,
 /area/maintenance/moonbase/basement/engibreakroom)
+"rv" = (
+/obj/machinery/firealarm{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/quartermaster/moonbase/mining)
 "rw" = (
 /obj/machinery/light,
 /obj/structure/table/bench/wooden,
@@ -2817,17 +3311,26 @@
 /obj/structure/closet/boxinggloves,
 /turf/simulated/floor/plating/moonbase,
 /area/maintenance/moonbase/basement/boxingring)
+"rF" = (
+/obj/machinery/light_construct{
+	dir = 8
+	},
+/turf/simulated/floor/plating/external,
+/area/moonbase/basement/caves/northeast)
 "rH" = (
 /obj/machinery/firealarm,
 /turf/simulated/floor/tiled/dark,
 /area/chapel/chapel_morgue)
 "rI" = (
-/obj/machinery/power/apc{
-	cell_type = /obj/item/weapon/cell/hyper;
-	dir = 4
+/obj/item/stack/material/algae/ten,
+/obj/item/stack/material/algae/ten,
+/obj/item/stack/material/algae/ten,
+/obj/structure/table/rack,
+/obj/machinery/light{
+	dir = 8
 	},
-/turf/simulated/floor/wood,
-/area/groundbase/hotspring)
+/turf/simulated/floor/tiled/techfloor,
+/area/engineering/moonbase/oxygenproduction)
 "rJ" = (
 /obj/effect/floor_decal/steeldecal/steel_decals10{
 	dir = 10
@@ -2911,6 +3414,12 @@
 	},
 /turf/simulated/mineral/floor/moonbase,
 /area/moonbase/basement/caves/flooded)
+"sd" = (
+/obj/structure/cable/pink{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/tiled/dark,
+/area/security/security_equiptment_storage)
 "se" = (
 /obj/structure/closet/firecloset,
 /turf/simulated/floor/plating,
@@ -2987,6 +3496,12 @@
 	},
 /turf/simulated/floor/lino,
 /area/maintenance/moonbase/basement/engibreakroom)
+"su" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/basement/south)
 "sw" = (
 /turf/simulated/floor/tiled/white,
 /area/moonbase/dorms/dorm2)
@@ -3071,17 +3586,11 @@
 /turf/simulated/mineral/floor/moonbase,
 /area/moonbase/basement/caves/flooded)
 "sP" = (
-/obj/structure/table/woodentable,
-/obj/machinery/button/remote/blast_door{
-	id = "shop";
-	name = "Shop Shutters"
+/obj/machinery/light{
+	dir = 4
 	},
-/obj/machinery/door/blast/shutters{
-	dir = 8;
-	id = "shop"
-	},
-/turf/simulated/floor/wood/alt,
-/area/hallway/moonbase/shop)
+/turf/simulated/floor/tiled/steel_dirty,
+/area/maintenance/moonbase/basement/olddorms)
 "sQ" = (
 /obj/structure/table/woodentable,
 /turf/simulated/floor/wood,
@@ -3239,7 +3748,7 @@
 /area/crew_quarters/pool)
 "tJ" = (
 /obj/machinery/door/window/westleft,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/milspec/raised,
 /area/maintenance/moonbase/basement/techmonitoring)
 "tK" = (
 /obj/item/toy/plushie/carp,
@@ -3248,14 +3757,14 @@
 "tL" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red,
 /turf/simulated/floor/tiled/techfloor,
-/area/maintenance/atmos_control)
+/area/engineering/moonbase/oxygenproduction)
 "tM" = (
 /obj/structure/stairs/spawner/north,
 /obj/structure/railing/grey{
 	dir = 4
 	},
 /turf/simulated/floor/tiled,
-/area/moonbase/surface/underground)
+/area/crew_quarters/moonbase/maintbar)
 "tN" = (
 /obj/effect/floor_decal/steeldecal/steel_decals10{
 	dir = 10
@@ -3313,6 +3822,11 @@
 /obj/effect/floor_decal/corner/beige{
 	dir = 5
 	},
+/obj/item/device/radio/intercom{
+	dir = 1;
+	name = "Station Intercom (General)";
+	pixel_y = 24
+	},
 /turf/simulated/floor/tiled,
 /area/quartermaster/moonbase/mining/eva)
 "tY" = (
@@ -3328,12 +3842,24 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/moonbase/basement/techmonitoring)
+"ua" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/plating/moonbase,
+/area/moonbase/basement/caves/northeast)
 "ub" = (
 /obj/effect/floor_decal/industrial/warning/color{
 	dir = 1
 	},
 /turf/simulated/floor/plating/external/moonbaseplating,
 /area/quartermaster/moonbase/mining/eva)
+"ue" = (
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/substation/cargo)
 "uf" = (
 /obj/structure/railing/grey{
 	dir = 1
@@ -3483,7 +4009,7 @@
 /turf/simulated/floor/carpet,
 /area/maintenance/moonbase/basement/whalers)
 "uZ" = (
-/obj/structure/prop/machine/tgmc_console4/starts_on,
+/obj/structure/salvageable/console_os,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/maintenance/moonbase/basement/poolmaint)
 "vb" = (
@@ -3524,6 +4050,13 @@
 /obj/machinery/portable_atmospherics/powered/pump/filled,
 /turf/simulated/floor,
 /area/engineering/atmos)
+"vh" = (
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
+/obj/effect/catwalk_plated,
+/turf/simulated/floor/plating,
+/area/quartermaster/moonbase/mining)
 "vo" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/maintenance,
@@ -3572,6 +4105,7 @@
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/snacks/ratpackburger,
 /obj/item/weapon/reagent_containers/food/snacks/ratpackramen,
+/obj/machinery/light,
 /turf/simulated/floor/carpet,
 /area/moonbase/dorms/dorm5)
 "vz" = (
@@ -3592,9 +4126,8 @@
 /turf/simulated/mineral/floor/moonbase,
 /area/hallway/moonbase/basement)
 "vC" = (
-/obj/structure/extinguisher_cabinet{
-	dir = 4;
-	pixel_x = -27
+/obj/machinery/light{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/recreation_area_restroom)
@@ -3618,22 +4151,17 @@
 /area/groundbase/hotspring)
 "vM" = (
 /obj/structure/bed/chair/sofa/right/brown,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor/carpet,
 /area/medical/moonbase/basementresleeving)
 "vN" = (
-/obj/item/weapon/paper_bin{
-	pixel_y = 5
+/obj/structure/bed/chair/sofa/corp/right{
+	dir = 4
 	},
-/obj/structure/table/woodentable,
-/obj/item/weapon/pen{
-	pixel_y = 6
-	},
-/obj/machinery/door/blast/shutters{
-	dir = 2;
-	id = "shop"
-	},
-/turf/simulated/floor/wood/alt,
-/area/hallway/moonbase/shop)
+/turf/simulated/floor/carpet/blue2,
+/area/moonbase/dorms)
 "vO" = (
 /turf/simulated/floor/plating/external,
 /area/moonbase/surface/underground)
@@ -3642,6 +4170,9 @@
 /area/moonbase/dorms/dorm4)
 "vS" = (
 /obj/structure/table/glass,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/white,
 /area/moonbase/dorms/dorm7)
 "vT" = (
@@ -3681,11 +4212,11 @@
 	},
 /area/groundbase/hotspring)
 "vZ" = (
-/obj/effect/catwalk_plated,
-/turf/simulated/floor/water/indoors{
-	movement_cost = 0
-	},
-/area/moonbase/basement/caves/east)
+/obj/structure/table/rack/shelf,
+/obj/random/maintenance/cargo,
+/obj/random/pouch,
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/basement/west)
 "wd" = (
 /turf/simulated/wall,
 /area/moonbase/basement/caves/northwest)
@@ -3695,6 +4226,9 @@
 /obj/item/clothing/under/bathrobe,
 /obj/item/weapon/towel/random,
 /obj/item/weapon/towel/random,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 30
+	},
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/recreation_area_restroom)
 "wf" = (
@@ -3703,7 +4237,14 @@
 /area/engineering/atmos)
 "wg" = (
 /turf/simulated/floor/tiled,
-/area/moonbase/surface/underground)
+/area/crew_quarters/moonbase/maintbar)
+"wh" = (
+/obj/effect/catwalk_plated,
+/obj/structure/cable/green{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating,
+/area/quartermaster/moonbase/mining/lockerroom)
 "wj" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock,
@@ -3752,6 +4293,12 @@
 /obj/random/coin,
 /turf/simulated/floor/water/indoors,
 /area/moonbase/basement/caves/east)
+"ww" = (
+/obj/machinery/power/apc{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/maintenance/moonbase/basement/borgroom)
 "wy" = (
 /obj/machinery/door/firedoor/glass,
 /turf/simulated/floor/plating,
@@ -3772,6 +4319,12 @@
 "wH" = (
 /obj/effect/floor_decal/corner/beige{
 	dir = 9
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/cable/green{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/tiled,
 /area/quartermaster/moonbase/mining)
@@ -3807,6 +4360,12 @@
 /obj/machinery/door/airlock/maintenance,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/moonbase/basement/dorms)
+"wT" = (
+/obj/structure/bed/chair/comfy{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/blue2,
+/area/moonbase/dorms)
 "wW" = (
 /obj/structure/table/steel,
 /turf/simulated/floor/carpet/bcarpet,
@@ -3821,13 +4380,22 @@
 /obj/random/maintenance/misc,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/annex)
-"xe" = (
-/obj/structure/table/steel,
-/obj/item/device/flashlight/lamp{
-	pixel_y = 6
+"xd" = (
+/obj/machinery/light/small{
+	dir = 4
 	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/catwalk,
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/level1/east)
+"xe" = (
 /obj/effect/floor_decal/milspec/color/red/half{
 	dir = 10
+	},
+/obj/structure/cable/pink{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/tiled/dark,
 /area/security/security_equiptment_storage)
@@ -3865,12 +4433,11 @@
 /obj/random/maintenance/engineering,
 /obj/random/powercell,
 /obj/random/maintenance/engineering,
-/turf/simulated/floor/tiled/eris/derelict2,
+/turf/simulated/floor/tiled/steel_dirty,
 /area/maintenance/moonbase/basement/engibreakroom)
 "xu" = (
-/obj/structure/prop/rock/crystal,
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
-/area/moonbase/surface/levelone/south)
+/turf/simulated/wall,
+/area/crew_quarters/moonbase/basement/iceroom)
 "xw" = (
 /obj/structure/prop/rock/crystal,
 /obj/effect/map_effect/perma_light{
@@ -3878,9 +4445,23 @@
 	},
 /turf/simulated/mineral/floor/moonbase,
 /area/maintenance/moonbase/basement/engibreakroom)
+"xx" = (
+/obj/machinery/atmospherics/pipe/manifold/visible/red{
+	dir = 8
+	},
+/obj/machinery/light/floortube{
+	dir = 8;
+	pixel_x = -4;
+	pixel_y = 1
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/engineering/atmos)
 "xz" = (
 /obj/structure/bed/chair/sofa/left/blue{
 	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/maintenance/moonbase/basement/borgroom)
@@ -3905,7 +4486,7 @@
 /area/holodeck_control)
 "xF" = (
 /turf/simulated/wall/r_wall,
-/area/maintenance/atmos_control)
+/area/engineering/moonbase/oxygenproduction)
 "xG" = (
 /obj/structure/table/steel_reinforced,
 /obj/effect/floor_decal/milspec/hatchmarks,
@@ -3934,14 +4515,9 @@
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/emstorage)
 "xN" = (
-/obj/structure/table/woodentable,
-/obj/item/device/retail_scanner/civilian,
-/obj/machinery/door/blast/shutters{
-	dir = 2;
-	id = "shop"
-	},
-/turf/simulated/floor/wood/alt,
-/area/hallway/moonbase/shop)
+/obj/structure/girder,
+/turf/simulated/floor/plating/external,
+/area/moonbase/basement/caves/northeast)
 "xP" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/maintenance,
@@ -3971,6 +4547,12 @@
 /obj/structure/table/woodentable,
 /turf/simulated/floor/wood,
 /area/space)
+"xW" = (
+/obj/structure/table/rack/shelf,
+/obj/random/maintenance/engineering,
+/obj/random/pouch,
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/basement/south)
 "xX" = (
 /turf/simulated/wall/r_wall{
 	can_open = 1
@@ -3981,6 +4563,12 @@
 /obj/structure/railing/grey{
 	dir = 8
 	},
+/obj/structure/cable{
+	icon_state = "16-0"
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/moonbase/dorms)
 "xZ" = (
@@ -3989,6 +4577,9 @@
 /area/rnd/research)
 "yb" = (
 /obj/structure/undies_wardrobe,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/recreation_area_restroom)
 "yd" = (
@@ -4014,6 +4605,9 @@
 /area/medical/moonbase/basement)
 "yj" = (
 /obj/structure/railing/grey,
+/obj/structure/cable/pink{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/security/security_equiptment_storage)
 "yk" = (
@@ -4035,6 +4629,11 @@
 /obj/fiftyspawner/gaycarpet,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/dorms)
+"yo" = (
+/obj/structure/bed/double,
+/obj/item/weapon/bedsheet/orangedouble,
+/turf/simulated/floor/wood,
+/area/moonbase/basement/caves/northeast)
 "yp" = (
 /obj/item/weapon/stool/padded{
 	dir = 1
@@ -4056,6 +4655,31 @@
 /obj/machinery/portable_atmospherics/canister/oxygen/prechilled,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/medical/moonbase/basement)
+"ys" = (
+/obj/structure/bookcase{
+	name = "bookcase (Fiction)"
+	},
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/item/weapon/book/bundle/custom_library/fiction/apurrrrfectman,
+/obj/item/weapon/book/bundle/custom_library/fiction/beyondthedoor,
+/obj/item/weapon/book/bundle/custom_library/fiction/coldmountain,
+/obj/item/weapon/book/bundle/custom_library/fiction/ghostship,
+/obj/item/weapon/book/bundle/custom_library/fiction/manfromsnowyriver,
+/obj/item/weapon/book/bundle/custom_library/fiction/metalglen,
+/obj/item/weapon/book/bundle/custom_library/fiction/poemsforarainyday,
+/obj/item/weapon/book/bundle/custom_library/fiction/raissue142,
+/obj/item/weapon/book/bundle/custom_library/fiction/raissue147,
+/obj/item/weapon/book/bundle/custom_library/fiction/silence,
+/obj/item/weapon/book/bundle/custom_library/fiction/taleoftherainbowcat,
+/obj/item/weapon/book/custom_library/fiction/blacksmithandkinglybloke,
+/obj/item/weapon/book/custom_library/fiction/irishairmanforseesdeath,
+/obj/item/weapon/book/custom_library/fiction/myrock,
+/obj/item/weapon/book/custom_library/fiction/starsandsometimesfallingones,
+/obj/item/weapon/book/custom_library/fiction/truelovehathmyheart,
+/turf/simulated/floor/plating,
+/area/moonbase/basement/caves/northeast)
 "yt" = (
 /turf/simulated/wall/r_wall,
 /area/moonbase/dorms/dorm8)
@@ -4101,6 +4725,9 @@
 "yE" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/newspaper,
+/obj/machinery/firealarm{
+	dir = 1
+	},
 /turf/simulated/floor/carpet,
 /area/hallway/moonbase/basement)
 "yG" = (
@@ -4131,6 +4758,12 @@
 "yH" = (
 /turf/simulated/wall,
 /area/maintenance/moonbase/basement/east)
+"yK" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/basement/emstorage)
 "yL" = (
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/moonbase/surface/levelone/north)
@@ -4197,6 +4830,7 @@
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/snacks/ratpackburger,
 /obj/item/weapon/reagent_containers/food/snacks/ratpacktaco,
+/obj/machinery/light,
 /turf/simulated/floor/carpet,
 /area/moonbase/dorms/dorm6)
 "zj" = (
@@ -4270,13 +4904,11 @@
 /turf/simulated/mineral/floor/moonbase,
 /area/maintenance/moonbase/basement/motel)
 "zy" = (
-/obj/machinery/mech_recharger,
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 27;
-	pixel_x = 0
+/obj/machinery/light{
+	dir = 4
 	},
-/turf/simulated/floor/tiled/monotile,
-/area/quartermaster/moonbase/mining/eva)
+/turf/simulated/floor/carpet/blue2,
+/area/moonbase/dorms)
 "zz" = (
 /obj/structure/barricade/cutout/clown,
 /turf/simulated/floor/carpet/gaycarpet,
@@ -4331,14 +4963,19 @@
 /obj/structure/bed/chair/comfy{
 	dir = 8
 	},
-/turf/simulated/floor/carpet,
+/turf/simulated/floor/carpet/brown,
 /area/maintenance/moonbase/basement/archive)
 "zR" = (
 /turf/simulated/wall/r_wall,
 /area/crew_quarters/moonbase/basement/iceroom)
 "zS" = (
 /obj/machinery/mineral/equipment_vendor,
-/turf/simulated/floor/tiled/eris/steel/cargo,
+/obj/item/device/radio/intercom{
+	dir = 4;
+	name = "Station Intercom (General)";
+	pixel_x = 24
+	},
+/turf/simulated/floor/tiled,
 /area/quartermaster/moonbase/mining/lockerroom)
 "zU" = (
 /obj/structure/flora/pottedplant/dead,
@@ -4391,15 +5028,29 @@
 	},
 /turf/simulated/mineral/floor/moonbase,
 /area/hallway/moonbase/basement)
+"Ak" = (
+/obj/structure/prop/machine/solifier/starts_on,
+/turf/simulated/floor/water/pool,
+/area/maintenance/moonbase/basement/poolmaint)
+"Am" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/multi_tile/metal/mait,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/maintenance/moonbase/basement/south)
 "An" = (
 /obj/random/maintenance,
 /turf/simulated/floor/plating,
 /area/moonbase/basement/caves/northwest)
+"Ao" = (
+/turf/simulated/wall,
+/area/maintenance/moonbase/substation/security)
 "Ap" = (
 /obj/item/weapon/storage/box/nifsofts_mining,
 /obj/structure/table/reinforced,
 /obj/item/device/personal_shield_generator/belt/mining/loaded,
-/turf/simulated/floor/tiled/eris/steel/cargo,
+/obj/item/weapon/storage/pouch/flares/full_glow,
+/obj/item/weapon/storage/pouch/flares/full_glow,
+/turf/simulated/floor/tiled,
 /area/quartermaster/moonbase/mining/lockerroom)
 "At" = (
 /obj/machinery/door/window/southleft,
@@ -4420,6 +5071,11 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/pool)
+"Av" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/hallway/moonbase/basement)
 "Ay" = (
 /obj/structure/bed/chair/sofa/corp{
 	dir = 4
@@ -4443,15 +5099,28 @@
 	},
 /turf/simulated/floor/water/indoors,
 /area/moonbase/basement/caves/flooded)
+"AC" = (
+/obj/effect/catwalk_plated,
+/obj/effect/catwalk_plated,
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/quartermaster/moonbase/mining/eva)
 "AD" = (
 /turf/simulated/floor/wood,
 /area/space)
+"AE" = (
+/obj/machinery/power/breakerbox/activated{
+	RCon_tag = "Cargo Substation Bypass"
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/substation/cargo)
 "AF" = (
-/obj/structure/table/steel,
-/obj/random/maintenance/security,
 /obj/effect/floor_decal/milspec/color/red/half{
 	dir = 6
 	},
+/obj/machinery/light,
 /turf/simulated/floor/tiled/dark,
 /area/security/security_equiptment_storage)
 "AG" = (
@@ -4462,7 +5131,7 @@
 /obj/item/clothing/suit/storage/hooded/wintercoat,
 /obj/item/clothing/suit/storage/hooded/cloak/winter,
 /turf/simulated/floor/tiled/steel_dirty,
-/area/maintenance/moonbase/basement/iceroomcontrol)
+/area/crew_quarters/moonbase/basement/iceroom)
 "AH" = (
 /turf/simulated/floor/carpet,
 /area/medical/moonbase/basementresleeving)
@@ -4480,6 +5149,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
+/obj/structure/closet/firecloset/full/atmos,
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/atmos)
 "AR" = (
@@ -4490,6 +5160,18 @@
 /obj/machinery/door/airlock/maintenance,
 /turf/simulated/floor/tiled/eris/derelict2,
 /area/maintenance/moonbase/basement/engibreakroom)
+"AT" = (
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 4
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/hallway/moonbase/shop)
 "AU" = (
 /obj/structure/table/glass,
 /obj/item/weapon/towel/random,
@@ -4512,6 +5194,15 @@
 	icon_state = "techmaint"
 	},
 /area/moonbase/dorms/dorm5)
+"AY" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/substation/security)
 "AZ" = (
 /turf/simulated/floor/plating/external/moonbaseplating,
 /area/moonbase/surface/underground)
@@ -4548,6 +5239,13 @@
 	},
 /turf/simulated/floor/tiled/steel_dirty,
 /area/maintenance/moonbase/basement/poolmaint)
+"Bj" = (
+/obj/structure/closet/crate,
+/obj/item/stack/cable_coil,
+/obj/item/stack/cable_coil,
+/obj/item/weapon/storage/box/lights/tubes,
+/turf/simulated/floor/plating,
+/area/moonbase/basement/caves/northeast)
 "Bk" = (
 /obj/structure/bed/double/padded,
 /turf/simulated/floor/plating,
@@ -4600,6 +5298,15 @@
 /obj/structure/table/steel,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/annex)
+"BE" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/pink{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/basement/south)
 "BF" = (
 /obj/structure/table/rack/shelf,
 /obj/random/maintenance,
@@ -4652,6 +5359,7 @@
 /area/moonbase/dorms/dorm2)
 "BR" = (
 /obj/structure/table/steel,
+/obj/random/pouch,
 /turf/simulated/floor/carpet/geo,
 /area/maintenance/moonbase/basement/motel)
 "BS" = (
@@ -4675,6 +5383,15 @@
 "Ca" = (
 /turf/simulated/floor/carpet/retro,
 /area/crew_quarters/moonbase/carproom)
+"Cb" = (
+/obj/machinery/atmospherics/pipe/simple/visible/red,
+/obj/machinery/light/floortube{
+	dir = 4;
+	pixel_x = 3;
+	pixel_y = 1
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/engineering/atmos)
 "Cc" = (
 /obj/structure/railing/grey{
 	dir = 1
@@ -4697,11 +5414,25 @@
 /obj/machinery/firealarm,
 /turf/simulated/floor/carpet,
 /area/moonbase/dorms/dorm1)
+"Ch" = (
+/obj/machinery/power/apc{
+	dir = 1
+	},
+/obj/structure/cable/green{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/tiled,
+/area/quartermaster/moonbase/mining/lockerroom)
 "Cj" = (
 /obj/structure/table/woodentable,
 /obj/random/contraband,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/dorms)
+"Ck" = (
+/obj/effect/catwalk_plated,
+/obj/effect/catwalk_plated,
+/turf/simulated/floor/plating,
+/area/quartermaster/moonbase/mining)
 "Cl" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating,
@@ -4714,7 +5445,9 @@
 /area/engineering/atmos)
 "Cp" = (
 /obj/structure/closet/crate,
-/obj/machinery/firealarm,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor/tiled,
 /area/quartermaster/moonbase/mining)
 "Cq" = (
@@ -4726,7 +5459,9 @@
 /turf/simulated/floor/carpet,
 /area/moonbase/dorms/dorm8)
 "Cs" = (
-/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/tank/air{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/southair)
 "Ct" = (
@@ -4790,13 +5525,21 @@
 /obj/structure/fireaxecabinet{
 	pixel_y = -32
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/aft_hallway)
 "CJ" = (
 /turf/simulated/floor/plating,
 /area/moonbase/basement/caves/northwest)
 "CL" = (
-/turf/simulated/floor/tiled/eris/steel/cargo,
+/obj/effect/catwalk_plated,
+/obj/effect/catwalk_plated,
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
 /area/quartermaster/moonbase/mining/lockerroom)
 "CM" = (
 /turf/simulated/wall/r_wall,
@@ -4876,7 +5619,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
-/area/maintenance/atmos_control)
+/area/engineering/moonbase/oxygenproduction)
 "Dh" = (
 /obj/structure/table/woodentable,
 /obj/item/device/flashlight/lamp/green{
@@ -4890,12 +5633,32 @@
 /area/moonbase/dorms/dorm3)
 "Dl" = (
 /obj/structure/table/steel,
-/obj/random/contraband/nofail,
+/obj/random/contraband,
+/obj/random/maintenance/clean,
 /turf/simulated/floor/wood/broken,
 /area/maintenance/moonbase/basement/motel)
 "Dm" = (
-/turf/simulated/floor/plating,
-/area/maintenance/atmos_control)
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/lino,
+/area/chapel/office)
+"Dn" = (
+/obj/effect/floor_decal/corner/beige{
+	dir = 9
+	},
+/obj/structure/closet/crate,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/quartermaster/moonbase/mining)
+"Dp" = (
+/obj/structure/bed/chair/sofa/corp/right{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/blue2,
+/area/moonbase/dorms)
 "Dr" = (
 /turf/unsimulated/mineral/moonbase,
 /area/moonbase/dorms/dorm2)
@@ -4903,6 +5666,11 @@
 /obj/structure/closet/emcloset,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/poolmaint)
+"Dx" = (
+/obj/structure/table/woodentable,
+/obj/machinery/light,
+/turf/simulated/floor/carpet,
+/area/medical/moonbase/basementresleeving)
 "Dy" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/floor/plating/moonbase,
@@ -4920,13 +5688,25 @@
 /area/holodeck_control)
 "DD" = (
 /obj/structure/closet/firecloset/full/atmos,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/aft_hallway)
+"DG" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/carpet/blue2,
+/area/moonbase/dorms)
 "DH" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red,
 /obj/machinery/door/firedoor/glass,
 /turf/simulated/floor/tiled/steel_ridged,
-/area/maintenance/atmos_control)
+/area/engineering/moonbase/oxygenproduction)
 "DK" = (
 /obj/structure/stairs/spawner/west,
 /obj/structure/railing/grey,
@@ -4946,6 +5726,9 @@
 /area/maintenance/moonbase/basement/olddorms)
 "DO" = (
 /obj/structure/undies_wardrobe,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor/carpet,
 /area/moonbase/dorms/dorm5)
 "DQ" = (
@@ -4958,12 +5741,21 @@
 /obj/machinery/portable_atmospherics/powered/pump/filled,
 /turf/simulated/mineral/floor/moonbase,
 /area/moonbase/basement/caves/northwest)
+"DX" = (
+/obj/structure/closet/coffin,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/dark,
+/area/chapel/chapel_morgue)
 "Ea" = (
 /obj/structure/table/steel,
 /turf/simulated/floor/tiled/techmaint,
 /area/maintenance/moonbase/basement/techmonitoring)
 "Eb" = (
-/obj/structure/foamedmetal,
+/obj/structure/table/rack/shelf,
+/obj/random/maintenance,
+/obj/random/maintenance,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/northair)
 "Ec" = (
@@ -4981,6 +5773,12 @@
 "Ef" = (
 /turf/simulated/mineral/floor/moonbase,
 /area/moonbase/basement/caves/east)
+"Eh" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/carpet/blue2,
+/area/moonbase/dorms)
 "Ei" = (
 /obj/machinery/disposal/wall{
 	dir = 4
@@ -4989,6 +5787,9 @@
 /area/crew_quarters/recreation_area_restroom)
 "Ek" = (
 /obj/structure/table/glass,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/white,
 /area/moonbase/dorms/dorm3)
 "Eo" = (
@@ -5013,9 +5814,12 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
 /turf/simulated/floor/plating,
-/area/maintenance/atmos_control)
+/area/engineering/moonbase/oxygenproduction)
 "Ew" = (
 /obj/structure/table/glass,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/white,
 /area/moonbase/dorms/dorm8)
 "Ez" = (
@@ -5040,6 +5844,15 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/moonbase/basement/annex)
+"ED" = (
+/obj/structure/cable/pink{
+	icon_state = "0-2"
+	},
+/obj/structure/cable/pink{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/substation/security)
 "EE" = (
 /obj/structure/bed/double,
 /obj/item/weapon/bedsheet/bluedouble,
@@ -5051,7 +5864,11 @@
 /area/engineering/atmos)
 "EI" = (
 /obj/structure/table/bench/steel,
-/turf/simulated/floor/tiled/eris/steel/cargo,
+/obj/effect/catwalk_plated,
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
 /area/quartermaster/moonbase/mining/lockerroom)
 "EJ" = (
 /obj/item/device/flashlight/lantern{
@@ -5062,11 +5879,30 @@
 /obj/structure/table/woodentable,
 /turf/simulated/mineral/floor/moonbase,
 /area/moonbase/basement/caves/northwest)
+"EK" = (
+/obj/machinery/power/smes/buildable{
+	RCon_tag = "Substation - Security";
+	output_attempt = 0
+	},
+/obj/structure/cable/pink{
+	icon_state = "0-4"
+	},
+/obj/structure/cable/pink{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/substation/security)
 "EL" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/multi_tile/glass,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/pool)
+"EN" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/white,
+/area/crew_quarters/recreation_area_restroom)
 "EQ" = (
 /obj/machinery/item_bank{
 	dir = 4;
@@ -5085,6 +5921,16 @@
 /obj/structure/loot_pile/mecha/ripley,
 /turf/simulated/mineral/floor/moonbase,
 /area/moonbase/basement/caves/northwest)
+"ET" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/maintenance{
+	req_one_access = list(1)
+	},
+/obj/structure/cable/pink{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled/steel_ridged,
+/area/security/security_equiptment_storage)
 "EV" = (
 /obj/structure/prop/rock/small/alt,
 /turf/simulated/mineral/floor/moonbase,
@@ -5100,13 +5946,22 @@
 /area/security/security_equiptment_storage)
 "Fa" = (
 /obj/structure/inflatable,
-/obj/item/tape/engineering,
+/obj/item/tape/atmos,
 /turf/simulated/mineral/floor/moonbase,
 /area/moonbase/basement/caves/northwest)
 "Fc" = (
 /obj/structure/toilet,
 /turf/simulated/floor/tiled/old_tile,
 /area/maintenance/moonbase/basement/olddorms)
+"Fd" = (
+/obj/structure/cable/green{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	dir = 1
+	},
+/turf/simulated/floor/tiled,
+/area/quartermaster/moonbase/mining)
 "Ff" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 10
@@ -5225,12 +6080,30 @@
 /turf/simulated/floor/plating,
 /area/crew_quarters/moonbase/basement/iceroom)
 "FC" = (
-/turf/simulated/floor/wood/alt,
-/area/hallway/moonbase/shop)
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/mineral/floor/moonbase,
+/area/moonbase/basement/caves/northeast)
 "FD" = (
 /obj/structure/railing/grey,
+/obj/structure/cable/orange{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/aft_hallway)
+"FE" = (
+/obj/structure/railing/grey{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/moonbase/surface/underground)
+"FG" = (
+/obj/structure/railing/grey{
+	dir = 8
+	},
+/turf/simulated/floor/plating/external/moonbaseplating,
+/area/moonbase/surface/levelone/south)
 "FH" = (
 /turf/simulated/wall,
 /area/maintenance/moonbase/basement/olddorms)
@@ -5264,6 +6137,12 @@
 	},
 /turf/simulated/floor/tiled/old_tile,
 /area/maintenance/moonbase/basement/olddorms)
+"FL" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/quartermaster/moonbase/mining/eva)
 "FM" = (
 /turf/simulated/mineral/floor/moonbase,
 /area/moonbase/surface/underground)
@@ -5288,6 +6167,12 @@
 /obj/structure/railing/grey{
 	dir = 4
 	},
+/obj/structure/cable/cyan{
+	icon_state = "16-0"
+	},
+/obj/structure/cable/cyan{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/medical/moonbase/basement)
 "FU" = (
@@ -5311,6 +6196,16 @@
 /obj/machinery/door/airlock,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/moonbase/dorms/dorm7)
+"FZ" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/structure/catwalk,
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/level1/east)
 "Ga" = (
 /obj/structure/table/rack/shelf/wood,
 /obj/fiftyspawner/retrocarpet_red,
@@ -5430,13 +6325,12 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/kitchen)
 "GA" = (
-/obj/structure/table/woodentable,
-/obj/machinery/door/blast/shutters{
-	dir = 2;
-	id = "shop"
+/obj/machinery/door/firedoor/glass,
+/obj/structure/simple_door/wood,
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
 	},
-/turf/simulated/floor/wood/alt,
-/area/hallway/moonbase/shop)
+/area/crew_quarters/bar)
 "GB" = (
 /turf/simulated/floor/plating/moonbase,
 /area/moonbase/surface/underground)
@@ -5491,9 +6385,12 @@
 "GR" = (
 /obj/structure/closet/firecloset/full/atmos,
 /turf/simulated/floor/tiled/techfloor,
-/area/maintenance/atmos_control)
+/area/engineering/moonbase/oxygenproduction)
 "GS" = (
 /obj/structure/undies_wardrobe,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor/carpet,
 /area/moonbase/dorms/dorm4)
 "GT" = (
@@ -5516,7 +6413,7 @@
 "Ha" = (
 /obj/structure/railing/grey,
 /turf/simulated/floor/tiled/techfloor,
-/area/maintenance/atmos_control)
+/area/engineering/moonbase/oxygenproduction)
 "Hb" = (
 /obj/effect/floor_decal/fakestairs/top{
 	dir = 1
@@ -5581,6 +6478,19 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/moonbase/dorms/dorm6)
+"Hs" = (
+/obj/effect/floor_decal/corner/beige{
+	dir = 9
+	},
+/obj/structure/extinguisher_cabinet{
+	dir = 4;
+	pixel_x = -27
+	},
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled,
+/area/quartermaster/moonbase/mining)
 "Ht" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/simulated/floor/outdoors/grass/forest{
@@ -5705,7 +6615,7 @@
 /obj/structure/closet/walllocker_double/cargo/west{
 	name = "mining tools"
 	},
-/turf/simulated/floor/tiled/eris/steel/cargo,
+/turf/simulated/floor/tiled,
 /area/quartermaster/moonbase/mining/lockerroom)
 "Id" = (
 /obj/item/toy/plushie/carp/electric,
@@ -5776,10 +6686,23 @@
 /obj/structure/trash_pile,
 /turf/simulated/mineral/floor/moonbase,
 /area/moonbase/basement/caves/northeast)
+"IB" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/mineral/floor/moonbase,
+/area/moonbase/basement/caves/flooded)
 "IC" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/floor/wood,
 /area/crew_quarters/recreation_area)
+"ID" = (
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/substation/cargo)
 "IE" = (
 /obj/structure/bed/chair/sofa/corp/right{
 	dir = 8
@@ -5802,6 +6725,12 @@
 	},
 /turf/simulated/floor/tiled/freezer/cold,
 /area/crew_quarters/kitchen)
+"IH" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/plating/moonbase,
+/area/moonbase/basement/caves/northeast)
 "IJ" = (
 /mob/living/simple_mob/vore/alienanimals/teppi/baby,
 /turf/simulated/floor/grass,
@@ -5816,12 +6745,21 @@
 /obj/structure/railing/grey{
 	dir = 8
 	},
+/obj/structure/cable{
+	icon_state = "16-0"
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/east)
 "IQ" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(48)
+	},
+/obj/structure/cable/green{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/quartermaster/moonbase/mining)
@@ -5896,6 +6834,9 @@
 /area/maintenance/moonbase/basement/southair)
 "Jk" = (
 /obj/structure/undies_wardrobe,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor/carpet,
 /area/moonbase/dorms/dorm7)
 "Jl" = (
@@ -5928,6 +6869,9 @@
 /turf/simulated/floor/grass,
 /area/crew_quarters/kitchen)
 "Jt" = (
+/obj/structure/cable/cyan{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/tiled,
 /area/medical/moonbase/basement)
 "Jw" = (
@@ -5946,9 +6890,8 @@
 /obj/random/maintenance,
 /obj/random/maintenance,
 /obj/random/maintenance/clean,
-/obj/random/maintenance/clean,
-/obj/random/mainttoyloot,
 /obj/structure/closet/crate,
+/obj/item/weapon/storage/pouch/flares/full_glow,
 /turf/simulated/mineral/floor/moonbase,
 /area/moonbase/basement/caves/northwest)
 "JG" = (
@@ -5985,11 +6928,17 @@
 /area/moonbase/dorms/dorm4)
 "JR" = (
 /obj/structure/undies_wardrobe,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor/carpet,
 /area/moonbase/dorms/dorm3)
 "JU" = (
 /obj/structure/bed/chair/sofa/left/brown{
 	dir = 8
+	},
+/obj/machinery/power/apc{
+	dir = 4
 	},
 /turf/simulated/floor/carpet,
 /area/medical/moonbase/basementresleeving)
@@ -6001,6 +6950,9 @@
 /obj/effect/floor_decal/steeldecal/steel_decals6{
 	dir = 1
 	},
+/obj/structure/cable/pink{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/tiled/dark,
 /area/security/security_equiptment_storage)
 "JY" = (
@@ -6009,7 +6961,7 @@
 	dir = 4;
 	pixel_x = -27
 	},
-/turf/simulated/floor/tiled/eris/steel/cargo,
+/turf/simulated/floor/tiled,
 /area/quartermaster/moonbase/mining/lockerroom)
 "JZ" = (
 /obj/structure/bed/chair/sofa/left/black{
@@ -6029,7 +6981,13 @@
 /turf/simulated/floor/tiled/steel_dirty,
 /area/maintenance/moonbase/basement/whalers)
 "Ke" = (
-/turf/simulated/floor/carpet,
+/obj/machinery/button/remote/blast_door{
+	id = "shop";
+	name = "Shop Shutters";
+	pixel_x = 0;
+	pixel_y = 25
+	},
+/turf/simulated/floor/carpet/blue2,
 /area/hallway/moonbase/shop)
 "Kf" = (
 /obj/structure/flora/ausbushes/ywflowers,
@@ -6057,6 +7015,13 @@
 /obj/fiftyspawner/wood,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/dorms)
+"Kk" = (
+/obj/machinery/mech_recharger,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/quartermaster/moonbase/mining/eva)
 "Kp" = (
 /obj/structure/prop/rock/crystal_dust,
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
@@ -6119,7 +7084,7 @@
 /obj/structure/table/rack,
 /obj/structure/railing/grey,
 /turf/simulated/floor/tiled/techfloor,
-/area/maintenance/atmos_control)
+/area/engineering/moonbase/oxygenproduction)
 "KM" = (
 /obj/structure/table/rack/shelf,
 /obj/random/action_figure{
@@ -6158,6 +7123,12 @@
 	outdoors = 0
 	},
 /area/groundbase/hotspring)
+"KT" = (
+/obj/machinery/power/breakerbox/activated{
+	RCon_tag = "Security Substation Bypass"
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/substation/security)
 "KU" = (
 /obj/vehicle/train/engine/quadbike/built,
 /turf/simulated/floor/plating/external/moonbaseplating,
@@ -6201,6 +7172,9 @@
 /obj/effect/floor_decal/milspec/color/red/corner{
 	dir = 1
 	},
+/obj/structure/cable/pink{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/tiled/dark,
 /area/security/security_equiptment_storage)
 "Lh" = (
@@ -6209,12 +7183,10 @@
 	dir = 5
 	},
 /turf/simulated/floor/tiled/techfloor,
-/area/maintenance/atmos_control)
+/area/engineering/moonbase/oxygenproduction)
 "Lj" = (
-/obj/item/device/radio/intercom{
-	dir = 4;
-	name = "Station Intercom (General)";
-	pixel_x = 24
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/eris/white/brown_platform,
 /area/hallway/moonbase/basement)
@@ -6271,9 +7243,11 @@
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/hotspring)
 "LB" = (
-/obj/structure/waterfall/top,
-/turf/simulated/floor/water/indoors,
-/area/moonbase/basement/caves/east)
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/quartermaster/moonbase/mining/lockerroom)
 "LC" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden{
 	dir = 8
@@ -6289,7 +7263,7 @@
 /area/maintenance/moonbase/basement/east)
 "LF" = (
 /obj/machinery/door/window/westright,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/milspec/raised,
 /area/maintenance/moonbase/basement/techmonitoring)
 "LG" = (
 /obj/effect/floor_decal/chapel{
@@ -6297,12 +7271,30 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/chapel/chapel_morgue)
+"LH" = (
+/obj/structure/table/bench/steel,
+/obj/effect/catwalk_plated,
+/turf/simulated/floor/plating,
+/area/quartermaster/moonbase/mining/lockerroom)
+"LI" = (
+/obj/structure/table/woodentable,
+/obj/item/device/radio/intercom{
+	pixel_y = -24
+	},
+/turf/simulated/floor/carpet,
+/area/hallway/moonbase/basement)
 "LL" = (
 /obj/structure/railing/grey{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/west)
+"LM" = (
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled,
+/area/quartermaster/moonbase/mining)
 "LN" = (
 /obj/structure/table/rack/shelf,
 /obj/random/firstaid,
@@ -6375,6 +7367,11 @@
 	},
 /turf/simulated/mineral/floor/moonbase,
 /area/moonbase/basement/caves/flooded)
+"Md" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/atmos,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/engineering/moonbase/oxygenproduction)
 "Me" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/simulated/floor/outdoors/grass/forest{
@@ -6402,6 +7399,9 @@
 /obj/effect/floor_decal/milspec/color/red/half{
 	dir = 9
 	},
+/obj/structure/cable/pink{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/tiled/dark,
 /area/security/security_equiptment_storage)
 "Ml" = (
@@ -6418,6 +7418,14 @@
 /obj/random/maintenance,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/engibreakroom)
+"Mp" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
+/area/groundbase/hotspring)
 "Mq" = (
 /obj/structure/bed/chair/sofa/corp{
 	dir = 4
@@ -6467,6 +7475,12 @@
 "MC" = (
 /turf/simulated/wall/r_wall,
 /area/chapel/chapel_morgue)
+"ME" = (
+/obj/structure/railing/grey{
+	dir = 4
+	},
+/turf/simulated/floor/plating/external/moonbaseplating,
+/area/moonbase/surface/levelone/south)
 "MG" = (
 /obj/structure/bed/double/padded,
 /obj/item/weapon/bedsheet/browndouble,
@@ -6505,6 +7519,9 @@
 /area/maintenance/moonbase/basement/borgroom)
 "MQ" = (
 /obj/machinery/mineral/stacking_machine,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/quartermaster/moonbase/mining)
 "MR" = (
@@ -6603,6 +7620,15 @@
 /obj/item/weapon/pen,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/maintenance/moonbase/basement/whalers)
+"Np" = (
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/green{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/tiled,
+/area/quartermaster/moonbase/mining)
 "Nr" = (
 /obj/structure/table/steel,
 /obj/random/potion,
@@ -6627,6 +7653,12 @@
 /obj/item/weapon/bedsheet/purple,
 /turf/simulated/mineral/floor/moonbase,
 /area/moonbase/basement/caves/northwest)
+"Nx" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/white,
+/area/crew_quarters/pool)
 "Nz" = (
 /obj/structure/smoletrack/roadT,
 /turf/simulated/floor/smole/megablocks,
@@ -6647,6 +7679,13 @@
 	},
 /turf/simulated/floor/tiled,
 /area/crew_quarters/kitchen)
+"NF" = (
+/obj/machinery/atmospherics/pipe/simple/visible/red,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/engineering/moonbase/oxygenproduction)
 "NG" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -6677,18 +7716,31 @@
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/snacks/ratpackburger,
 /obj/item/weapon/reagent_containers/food/snacks/ratpackramen,
+/obj/machinery/light,
 /turf/simulated/floor/carpet,
 /area/moonbase/dorms/dorm1)
 "NK" = (
 /obj/machinery/firealarm,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/kitchen)
+"NN" = (
+/obj/structure/table/rack/shelf,
+/obj/random/maintenance,
+/obj/random/maintenance,
+/turf/simulated/floor/plating,
+/area/moonbase/surface/underground)
 "NO" = (
 /turf/simulated/wall/r_wall,
 /area/rnd/research)
 "NQ" = (
-/turf/simulated/floor/carpet,
+/turf/simulated/floor/carpet/brown,
 /area/maintenance/moonbase/basement/archive)
+"NS" = (
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/tiled,
+/area/quartermaster/moonbase/mining/lockerroom)
 "NT" = (
 /turf/simulated/floor/wood/broken,
 /area/maintenance/moonbase/basement/motel)
@@ -6704,7 +7756,18 @@
 /obj/structure/railing/grey,
 /obj/machinery/atmospherics/pipe/manifold/visible/red,
 /turf/simulated/floor/tiled/techfloor,
-/area/maintenance/atmos_control)
+/area/engineering/moonbase/oxygenproduction)
+"NX" = (
+/obj/machinery/atmospherics/binary/pump{
+	dir = 1
+	},
+/obj/machinery/light/floortube{
+	dir = 4;
+	pixel_x = 3;
+	pixel_y = 1
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/engineering/atmos)
 "Oa" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock,
@@ -6757,6 +7820,12 @@
 	outdoors = 0
 	},
 /area/groundbase/hotspring)
+"Oq" = (
+/obj/structure/bed/chair/sofa/corp/left{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/blue2,
+/area/moonbase/dorms)
 "Os" = (
 /obj/machinery/vending/wardrobe/chapdrobe,
 /turf/simulated/floor/lino,
@@ -6778,9 +7847,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/southair)
 "Oz" = (
-/obj/structure/table/rack/shelf/wood,
-/obj/random/maintenance/clean,
-/turf/simulated/floor/carpet,
+/turf/simulated/floor/carpet/blue2,
 /area/hallway/moonbase/shop)
 "OA" = (
 /turf/simulated/mineral/floor/moonbase,
@@ -6794,8 +7861,13 @@
 "OC" = (
 /turf/simulated/floor/water/indoors,
 /area/moonbase/dorms/dorm1)
+"OE" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/moonbase/basement/caves/northeast)
 "OF" = (
-/obj/machinery/firealarm{
+/obj/machinery/light{
 	dir = 8
 	},
 /turf/simulated/floor/tiled/eris/white/brown_platform,
@@ -6832,6 +7904,19 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/northair)
+"OT" = (
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 6
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 5
+	},
+/obj/item/device/radio/intercom{
+	dir = 1;
+	pixel_y = 24
+	},
+/turf/simulated/floor/tiled/white,
+/area/crew_quarters/pool)
 "OU" = (
 /obj/structure/ladder/up,
 /turf/simulated/floor/plating,
@@ -6852,6 +7937,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/toystore)
+"Pa" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/quartermaster/moonbase/mining/eva)
 "Pb" = (
 /obj/structure/table/steel,
 /obj/item/weapon/paper_bin{
@@ -6949,6 +8040,12 @@
 /obj/structure/prop/rock/crystal_dust,
 /turf/simulated/mineral/floor/moonbase,
 /area/maintenance/moonbase/basement/olddorms)
+"Pt" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/crew_quarters/recreation_area)
 "Pu" = (
 /obj/structure/reagent_dispensers/fueltank/barrel/two,
 /turf/simulated/floor/plating,
@@ -6978,6 +8075,17 @@
 /obj/structure/railing/grey,
 /turf/simulated/mineral/floor/moonbase,
 /area/moonbase/surface/underground)
+"Py" = (
+/obj/structure/cable/green{
+	icon_state = "0-2"
+	},
+/obj/structure/cable/green,
+/obj/machinery/power/smes/buildable{
+	RCon_tag = "Substation - Cargo";
+	output_attempt = 0
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/substation/cargo)
 "Pz" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -7034,7 +8142,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/tiled/techfloor,
-/area/maintenance/atmos_control)
+/area/engineering/moonbase/oxygenproduction)
 "PP" = (
 /obj/structure/bookcase{
 	name = "bookcase (Reference)"
@@ -7081,6 +8189,10 @@
 /obj/item/weapon/book/manual/virology,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/archive)
+"PQ" = (
+/obj/structure/catwalk,
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/level1/east)
 "PR" = (
 /turf/simulated/floor/tiled/old_tile,
 /area/maintenance/moonbase/basement/poolmaint)
@@ -7089,9 +8201,9 @@
 /turf/simulated/floor,
 /area/engineering/atmos)
 "PU" = (
-/obj/structure/table/rack/shelf,
-/turf/simulated/floor/plating,
-/area/maintenance/moonbase/basement/south)
+/obj/structure/table/woodentable,
+/turf/simulated/floor/carpet/blue2,
+/area/moonbase/dorms)
 "PW" = (
 /obj/structure/bed/chair/sofa/corp/right{
 	dir = 4
@@ -7107,7 +8219,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/tiled,
-/area/moonbase/surface/underground)
+/area/crew_quarters/moonbase/maintbar)
 "PZ" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 8
@@ -7120,6 +8232,15 @@
 	},
 /turf/simulated/floor/carpet/geo,
 /area/maintenance/moonbase/basement/motel)
+"Qb" = (
+/obj/machinery/atmospherics/binary/pump,
+/obj/machinery/light/floortube{
+	dir = 8;
+	pixel_x = -4;
+	pixel_y = 1
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/engineering/atmos)
 "Qc" = (
 /obj/structure/bed/chair/comfy{
 	dir = 4
@@ -7208,11 +8329,26 @@
 "Qw" = (
 /turf/unsimulated/mineral/moonbase,
 /area/moonbase/dorms/dorm5)
+"Qx" = (
+/obj/machinery/light/floortube{
+	dir = 4;
+	pixel_x = 3;
+	pixel_y = 1
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/engineering/atmos)
 "Qy" = (
 /obj/structure/inflatable/door,
-/obj/item/tape/engineering,
+/obj/item/tape/atmos,
 /turf/simulated/mineral/floor/moonbase,
 /area/moonbase/basement/caves/northwest)
+"QB" = (
+/obj/structure/cable/green{
+	icon_state = "1-8"
+	},
+/obj/effect/catwalk_plated,
+/turf/simulated/floor/plating,
+/area/quartermaster/moonbase/mining)
 "QC" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/atmospherics/pipe/simple/visible/supply{
@@ -7233,6 +8369,16 @@
 /obj/structure/bed/chair/sofa/corner/brown,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/maintenance/moonbase/basement/south)
+"QJ" = (
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/green{
+	icon_state = "2-8"
+	},
+/obj/effect/catwalk_plated,
+/turf/simulated/floor/plating,
+/area/quartermaster/moonbase/mining)
 "QK" = (
 /obj/machinery/atmospherics/pipe/simple/visible/purple{
 	dir = 6
@@ -7293,20 +8439,35 @@
 /obj/structure/railing/grey{
 	dir = 4
 	},
+/obj/structure/cable/cyan{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/medical/moonbase/basement)
 "QZ" = (
-/turf/unsimulated/mineral/moonbase,
-/area/moonbase/dorms)
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
+/area/crew_quarters/bar)
 "Ra" = (
 /obj/structure/reagent_dispensers/fueltank/barrel/three,
 /turf/simulated/floor/tiled/steel_dirty,
-/area/maintenance/moonbase/basement/iceroomcontrol)
+/area/crew_quarters/moonbase/basement/iceroom)
 "Rb" = (
 /obj/structure/barricade,
 /obj/item/tape/engineering,
 /turf/simulated/mineral/floor/moonbase,
 /area/moonbase/basement/caves/east)
+"Rc" = (
+/obj/structure/catwalk,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/level1/east)
 "Rd" = (
 /obj/structure/table/woodentable,
 /obj/item/toy/figure/clown,
@@ -7411,6 +8572,12 @@
 /obj/structure/bookcase/manuals/medical,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/archive)
+"RF" = (
+/obj/machinery/power/apc{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/basement/emstorage)
 "RG" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock,
@@ -7420,12 +8587,21 @@
 /obj/machinery/deployable/barrier,
 /turf/simulated/floor/tiled/techmaint,
 /area/security/security_equiptment_storage)
+"RJ" = (
+/obj/structure/table/rack/shelf,
+/obj/random/maintenance,
+/obj/random/pouch,
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/basement/emstorage)
 "RK" = (
 /obj/structure/railing/grey{
 	dir = 1
 	},
 /turf/simulated/mineral/floor/moonbase,
 /area/hallway/moonbase/basement)
+"RL" = (
+/turf/unsimulated/mineral/moonbase,
+/area/moonbase/surface/underground)
 "RM" = (
 /obj/structure/railing/grey{
 	dir = 4
@@ -7433,10 +8609,10 @@
 /turf/simulated/mineral/floor/moonbase,
 /area/moonbase/basement/caves/east)
 "RN" = (
-/obj/structure/stairs/spawner/west,
 /obj/structure/railing/grey{
 	dir = 1
 	},
+/obj/structure/stairs/spawner/west,
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/aft_hallway)
 "RO" = (
@@ -7476,12 +8652,27 @@
 /obj/item/target/alien,
 /turf/simulated/mineral/floor/moonbase,
 /area/security/range)
+"RV" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/maintenance/engi,
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/tiled/steel_ridged,
+/area/maintenance/moonbase/substation/cargo)
 "RW" = (
 /obj/structure/bed/chair/comfy{
 	dir = 8
 	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/moonbase/basement/iceroom)
+"RX" = (
+/obj/structure/catwalk,
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/level1/east)
 "RZ" = (
 /obj/machinery/atmospherics/pipe/simple/visible/purple,
 /obj/machinery/atmospherics/binary/pump{
@@ -7490,10 +8681,8 @@
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/atmos)
 "Sa" = (
-/obj/structure/table/rack/shelf/wood,
-/obj/random/mainttoyloot/nofail,
-/turf/simulated/floor/carpet,
-/area/hallway/moonbase/shop)
+/turf/simulated/floor/plating,
+/area/moonbase/basement/caves/northeast)
 "Sb" = (
 /turf/unsimulated/mineral/moonbase,
 /area/moonbase/dorms/dorm4)
@@ -7519,7 +8708,7 @@
 /area/crew_quarters/recreation_area)
 "Sh" = (
 /turf/simulated/floor/water/pool,
-/area/maintenance/atmos_control)
+/area/engineering/moonbase/oxygenproduction)
 "Sl" = (
 /obj/structure/railing/grey{
 	dir = 1
@@ -7584,6 +8773,12 @@
 "SF" = (
 /obj/structure/stairs/spawner/west,
 /obj/structure/railing/grey,
+/obj/structure/cable/pink{
+	icon_state = "16-0"
+	},
+/obj/structure/cable/pink{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/security/security_equiptment_storage)
 "SG" = (
@@ -7607,6 +8802,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/south)
+"SM" = (
+/obj/machinery/portable_atmospherics/powered/pump/filled,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/basement/emstorage)
 "SN" = (
 /obj/structure/railing/grey{
 	dir = 8
@@ -7635,12 +8837,14 @@
 /turf/simulated/floor/tiled/eris/techmaint_cargo,
 /area/maintenance/moonbase/basement/boxingring)
 "SZ" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor/tiled/monotile,
-/area/quartermaster/moonbase/mining/eva)
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/substation/cargo)
 "Ta" = (
 /obj/structure/bed/chair/wood/wings{
 	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8
 	},
 /turf/simulated/floor/lino,
 /area/chapel/office)
@@ -7672,6 +8876,15 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/atmos)
+"Tm" = (
+/obj/machinery/door/firedoor/glass/hidden{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/eris/white/brown_platform,
+/area/hallway/moonbase/basement)
 "Tp" = (
 /obj/machinery/atmospherics/pipe/simple/visible/universal{
 	dir = 4
@@ -7686,7 +8899,7 @@
 "Tv" = (
 /obj/structure/table/woodentable,
 /obj/random/contraband,
-/turf/simulated/floor/carpet,
+/turf/simulated/floor/carpet/brown,
 /area/maintenance/moonbase/basement/archive)
 "Tw" = (
 /obj/structure/table/steel,
@@ -7694,6 +8907,15 @@
 /obj/random/donkpocketbox,
 /turf/simulated/floor/lino,
 /area/maintenance/moonbase/basement/engibreakroom)
+"Ty" = (
+/obj/machinery/atmospherics/pipe/simple/visible/red,
+/obj/machinery/light/floortube{
+	dir = 8;
+	pixel_x = -4;
+	pixel_y = 1
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/engineering/atmos)
 "Tz" = (
 /obj/structure/trash_pile,
 /turf/simulated/floor/plating,
@@ -7718,6 +8940,9 @@
 /obj/random/maintenance,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/southair)
+"TH" = (
+/turf/simulated/wall/r_wall,
+/area/crew_quarters/moonbase/maintbar)
 "TI" = (
 /obj/structure/toilet{
 	dir = 4
@@ -7740,15 +8965,13 @@
 	},
 /area/groundbase/hotspring)
 "TO" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/folder,
-/obj/item/weapon/folder,
-/obj/machinery/door/blast/shutters{
-	dir = 2;
-	id = "shop"
+/obj/effect/floor_decal/steeldecal/steel_decals10,
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 4
 	},
-/turf/simulated/floor/wood/alt,
-/area/hallway/moonbase/shop)
+/obj/machinery/light,
+/turf/simulated/floor/tiled/white,
+/area/crew_quarters/pool)
 "TP" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/storage/fancy/cigarettes,
@@ -7762,6 +8985,12 @@
 /obj/structure/stairs/spawner/south,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/northwest)
+"TS" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/substation/security)
 "TT" = (
 /turf/simulated/floor/tiled/techmaint,
 /area/maintenance/moonbase/basement/techmonitoring)
@@ -7787,8 +9016,29 @@
 /obj/item/weapon/book/custom_library/religious/wayofbleedingswan,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/archive)
+"TY" = (
+/obj/machinery/light/floortube{
+	dir = 4;
+	pixel_x = 3;
+	pixel_y = 1
+	},
+/obj/structure/railing/grey{
+	dir = 4
+	},
+/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/area/moonbase/surface/levelone/south)
+"Ua" = (
+/obj/structure/closet/crate,
+/obj/item/stack/cable_coil,
+/obj/item/stack/cable_coil,
+/obj/item/weapon/storage/box/lights/tubes,
+/turf/simulated/floor/plating,
+/area/moonbase/surface/underground)
 "Ub" = (
 /obj/structure/filingcabinet/chestdrawer,
+/obj/machinery/power/apc{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/steel_dirty,
 /area/medical/moonbase/basement)
 "Uc" = (
@@ -7879,15 +9129,35 @@
 	},
 /turf/simulated/floor/carpet/retro_red,
 /area/crew_quarters/recreation_area)
+"UB" = (
+/obj/structure/closet/crate,
+/obj/fiftyspawner/steel,
+/obj/fiftyspawner/steel,
+/obj/fiftyspawner/rglass,
+/obj/fiftyspawner/glass,
+/obj/fiftyspawner/wood,
+/obj/fiftyspawner/wood/sif,
+/turf/simulated/floor/plating,
+/area/moonbase/basement/caves/northeast)
 "UC" = (
 /turf/simulated/mineral/cave/moonbase,
 /area/moonbase/basement/caves/flooded)
+"UD" = (
+/obj/structure/simple_door/wood,
+/turf/simulated/floor/wood,
+/area/moonbase/basement/caves/northeast)
 "UF" = (
 /obj/structure/railing/grey{
 	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/northwest)
+"UG" = (
+/obj/structure/bed/chair/sofa/corp/right{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/moonbase/basement/caves/northeast)
 "UH" = (
 /obj/structure/prop/rock/small/water,
 /turf/simulated/floor/water/indoors,
@@ -7901,6 +9171,13 @@
 	},
 /turf/simulated/mineral/floor/moonbase,
 /area/maintenance/moonbase/basement/annex)
+"UM" = (
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/terminal,
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/substation/security)
 "UN" = (
 /obj/structure/table/rack/gun_rack,
 /obj/item/weapon/gun/energy/laser/practice,
@@ -8037,8 +9314,15 @@
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/snacks/ratpackburger,
 /obj/item/weapon/reagent_containers/food/snacks/ratpackramen,
+/obj/machinery/light,
 /turf/simulated/floor/carpet,
 /area/moonbase/dorms/dorm8)
+"Vz" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/storage/mre/random,
+/obj/item/weapon/storage/mre/random,
+/turf/simulated/floor/wood,
+/area/moonbase/basement/caves/northeast)
 "VB" = (
 /obj/machinery/light{
 	dir = 1
@@ -8070,7 +9354,7 @@
 	req_one_access = list(24)
 	},
 /turf/simulated/floor/tiled/steel_ridged,
-/area/maintenance/atmos_control)
+/area/engineering/moonbase/oxygenproduction)
 "VN" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 27;
@@ -8089,16 +9373,23 @@
 /obj/structure/railing/grey{
 	dir = 8
 	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/moonbase/dorms)
 "VT" = (
-/obj/structure/waterfall,
-/obj/structure/waterfall/mist,
-/turf/simulated/floor/water/indoors,
-/area/moonbase/basement/caves/east)
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/basement/emstorage)
 "VU" = (
 /obj/structure/railing/grey{
 	dir = 8
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/east)
@@ -8117,10 +9408,16 @@
 /obj/effect/floor_decal/steeldecal/steel_decals6{
 	dir = 8
 	},
+/obj/structure/cable/pink{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/tiled/dark,
 /area/security/security_equiptment_storage)
 "Wc" = (
 /obj/machinery/mineral/processing_unit,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/quartermaster/moonbase/mining)
 "Wd" = (
@@ -8141,6 +9438,12 @@
 	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/recreation_area)
+"Wh" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/mineral/floor/moonbase,
+/area/moonbase/basement/caves/flooded)
 "Wk" = (
 /obj/structure/foamedmetal,
 /turf/simulated/wall,
@@ -8148,6 +9451,9 @@
 "Wm" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/medical,
+/obj/structure/cable/cyan{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/medical/moonbase/basement)
 "Wo" = (
@@ -8157,6 +9463,15 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/quartermaster/moonbase/mining/lockerroom)
+"Wq" = (
+/obj/structure/cable/green{
+	icon_state = "1-8"
+	},
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled,
+/area/quartermaster/moonbase/mining)
 "Ws" = (
 /obj/structure/prop/rock/crystal_dust,
 /turf/simulated/mineral/floor/moonbase,
@@ -8177,6 +9492,12 @@
 /obj/structure/stairs/spawner/north,
 /obj/structure/railing/grey{
 	dir = 8
+	},
+/obj/structure/cable/green{
+	icon_state = "16-0"
+	},
+/obj/structure/cable/green{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/quartermaster/moonbase/mining)
@@ -8203,6 +9524,14 @@
 "WC" = (
 /turf/simulated/floor/plating/moonbase,
 /area/moonbase/basement/caves/northeast)
+"WF" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/maintenance/engi,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/tiled/steel_ridged,
+/area/maintenance/moonbase/substation/cargo)
 "WG" = (
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/annex)
@@ -8217,6 +9546,12 @@
 /obj/machinery/meter,
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/atmos)
+"WL" = (
+/obj/structure/bed/chair/comfy{
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/moonbase/basement/caves/northeast)
 "WN" = (
 /obj/structure/prop/rock/crystal,
 /obj/effect/map_effect/perma_light{
@@ -8229,17 +9564,29 @@
 /area/maintenance/moonbase/basement/olddorms)
 "WQ" = (
 /obj/structure/table/woodentable,
-/turf/simulated/floor/carpet,
+/turf/simulated/floor/carpet/brown,
 /area/maintenance/moonbase/basement/archive)
 "WR" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/maintenance,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/holodeck_control)
+"WS" = (
+/obj/machinery/power/apc{
+	dir = 1
+	},
+/obj/structure/cable/cyan{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/tiled/steel_dirty,
+/area/medical/moonbase/basement)
 "WT" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/multi_tile/glass{
 	req_access = list(48)
+	},
+/obj/structure/cable/green{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/quartermaster/moonbase/mining/eva)
@@ -8266,7 +9613,7 @@
 /turf/simulated/floor/tiled/steel_dirty,
 /area/maintenance/moonbase/basement/whalers)
 "WX" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/on{
 	dir = 8
 	},
 /obj/effect/floor_decal/industrial/bot_outline/red,
@@ -8371,9 +9718,9 @@
 /turf/simulated/floor/carpet/purcarpet,
 /area/maintenance/moonbase/basement/motel)
 "XB" = (
-/obj/machinery/atmospherics/pipe/tank/air,
-/turf/simulated/floor/plating,
-/area/maintenance/moonbase/basement/southair)
+/obj/structure/prop/statue/phoron,
+/turf/simulated/mineral/floor/moonbase,
+/area/moonbase/basement/caves/northeast)
 "XD" = (
 /turf/simulated/wall,
 /area/maintenance/moonbase/basement/archive)
@@ -8398,6 +9745,12 @@
 "XL" = (
 /turf/simulated/wall/r_wall,
 /area/moonbase/dorms)
+"XM" = (
+/obj/structure/table/rack/shelf,
+/obj/random/maintenance,
+/obj/random/pouch,
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/basement/east)
 "XN" = (
 /turf/simulated/wall,
 /area/maintenance/moonbase/basement/motel)
@@ -8438,6 +9791,9 @@
 /area/medical/moonbase/basement)
 "Yd" = (
 /obj/structure/table/glass,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/white,
 /area/moonbase/dorms/dorm6)
 "Ye" = (
@@ -8458,6 +9814,12 @@
 /obj/structure/table/bench/steel,
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/recreation_area_restroom)
+"Yl" = (
+/obj/structure/bed/chair/sofa/corp/left{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/blue2,
+/area/moonbase/dorms)
 "Ym" = (
 /obj/machinery/light{
 	dir = 1
@@ -8472,6 +9834,11 @@
 /obj/machinery/mineral/output,
 /turf/simulated/floor/tiled/monotile,
 /area/quartermaster/moonbase/mining)
+"Yo" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/maintenance,
+/turf/simulated/floor/tiled/steel_dirty,
+/area/maintenance/moonbase/basement/engibreakroom)
 "Yp" = (
 /obj/structure/table/bench/wooden,
 /turf/simulated/floor/outdoors/newdirt,
@@ -8509,7 +9876,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled,
-/area/moonbase/surface/underground)
+/area/crew_quarters/moonbase/maintbar)
 "YA" = (
 /obj/structure/bonfire,
 /turf/simulated/floor/outdoors/newdirt,
@@ -8524,12 +9891,19 @@
 	},
 /turf/simulated/floor/tiled,
 /area/crew_quarters/kitchen)
+"YD" = (
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/obj/effect/catwalk_plated,
+/turf/simulated/floor/plating,
+/area/quartermaster/moonbase/mining)
 "YE" = (
-/obj/machinery/firealarm{
+/obj/machinery/light_construct{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/eris/techmaint_cargo,
-/area/holodeck_control)
+/turf/simulated/floor/plating,
+/area/moonbase/basement/caves/northeast)
 "YG" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -8562,7 +9936,7 @@
 	dir = 9
 	},
 /turf/simulated/floor/tiled/techfloor,
-/area/maintenance/atmos_control)
+/area/engineering/moonbase/oxygenproduction)
 "YP" = (
 /obj/structure/window/reinforced,
 /obj/structure/table/steel,
@@ -8577,6 +9951,9 @@
 "YT" = (
 /obj/structure/table/rack/shelf,
 /obj/item/weapon/storage/toolbox/emergency,
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/emstorage)
 "YU" = (
@@ -8601,18 +9978,30 @@
 	dir = 1
 	},
 /turf/simulated/floor/tiled/techfloor,
-/area/maintenance/atmos_control)
+/area/engineering/moonbase/oxygenproduction)
 "YY" = (
 /turf/simulated/floor/outdoors/newdirt{
 	outdoors = 0
 	},
 /area/groundbase/hotspring)
+"YZ" = (
+/obj/machinery/power/sensor{
+	name = "Powernet Sensor - Cargo Subgrid";
+	name_tag = "Cargo Subgrid"
+	},
+/obj/machinery/light/small,
+/obj/structure/cable/green,
+/obj/structure/cable/green{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/substation/cargo)
 "Za" = (
 /turf/simulated/floor/carpet/retro_red,
 /area/crew_quarters/recreation_area)
 "Zd" = (
 /turf/simulated/wall/r_wall,
-/area/maintenance/moonbase/basement/techmonitoring)
+/area/maintenance/moonbase/substation/security)
 "Zf" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/floor/wood/alt/panel,
@@ -8621,12 +10010,23 @@
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
 /obj/structure/table/woodentable,
-/turf/simulated/floor/carpet,
+/turf/simulated/floor/carpet/brown,
 /area/maintenance/moonbase/basement/archive)
 "Zh" = (
 /obj/structure/table/woodentable,
 /turf/simulated/floor/carpet,
 /area/hallway/moonbase/basement)
+"Zk" = (
+/obj/machinery/light/floortube{
+	dir = 8;
+	pixel_x = -4;
+	pixel_y = 1
+	},
+/obj/structure/railing/grey{
+	dir = 8
+	},
+/turf/simulated/floor/plating/external/moonbaseplating,
+/area/moonbase/surface/levelone/south)
 "Zl" = (
 /obj/structure/bed/chair/sofa/corp/right{
 	dir = 4
@@ -8675,6 +10075,12 @@
 "Zy" = (
 /obj/structure/stairs/spawner/west,
 /obj/structure/railing/grey,
+/obj/structure/cable/orange{
+	icon_state = "0-4"
+	},
+/obj/structure/cable/orange{
+	icon_state = "16-0"
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/aft_hallway)
 "ZA" = (
@@ -8696,7 +10102,7 @@
 	dir = 6
 	},
 /turf/simulated/floor/tiled/techfloor,
-/area/maintenance/atmos_control)
+/area/engineering/moonbase/oxygenproduction)
 "ZI" = (
 /obj/structure/railing/grey,
 /turf/simulated/floor/tiled/monotile,
@@ -8757,6 +10163,12 @@
 /obj/structure/closet/emcloset/legacy,
 /turf/simulated/floor/plating/external,
 /area/maintenance/moonbase/level1/north)
+"ZU" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/white,
+/area/crew_quarters/pool)
 "ZV" = (
 /obj/structure/sink{
 	pixel_y = 20
@@ -10509,7 +11921,7 @@ oj
 oj
 oj
 oj
-oj
+PX
 oj
 oj
 oj
@@ -10650,8 +12062,8 @@ oj
 oj
 oj
 oj
-oj
-oj
+PX
+PX
 oj
 oj
 oj
@@ -10778,6 +12190,13 @@ oj
 oj
 oj
 oj
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
 oj
 oj
 oj
@@ -10785,14 +12204,7 @@ oj
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+PX
 oj
 oj
 oj
@@ -10918,23 +12330,23 @@ oj
 oj
 oj
 oj
+Cu
+Cu
+Cu
+Cu
+Cu
+PX
+PX
+PX
+Cu
+Cu
 oj
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+PX
+PX
+PX
 oj
 oj
 oj
@@ -11059,22 +12471,22 @@ oj
 oj
 oj
 oj
+Cu
+Cu
+Cu
+Cu
+PX
+PX
+PX
+oG
+PX
+PX
+PX
+PX
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+PX
 oj
 oj
 oj
@@ -11201,22 +12613,22 @@ oj
 oj
 oj
 oj
+Cu
+Cu
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+PX
 oj
 oj
 oj
@@ -11342,23 +12754,23 @@ oj
 oj
 oj
 oj
+Cu
+Cu
+Cu
+PX
+PX
+rW
+PX
+PX
+PX
+PX
+PX
+PX
+rW
+PX
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+PX
 oj
 oj
 oj
@@ -11386,7 +12798,7 @@ ms
 ms
 ms
 ms
-TW
+ms
 TW
 TW
 sR
@@ -11483,24 +12895,24 @@ oj
 oj
 oj
 oj
+Cu
+Cu
+Cu
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+PX
 oj
 oj
 oj
@@ -11528,7 +12940,7 @@ yx
 ms
 ms
 ms
-TW
+ms
 TW
 TW
 sR
@@ -11589,11 +13001,11 @@ Es
 Es
 Es
 Es
-NC
-NC
-NC
-NC
-NC
+TH
+TH
+TH
+TH
+TH
 Es
 Es
 Es
@@ -11625,26 +13037,26 @@ oj
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+Cu
+Cu
+Cu
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
 oj
 oj
 oj
@@ -11670,8 +13082,8 @@ yx
 ms
 ms
 ms
-TW
-TW
+ms
+ms
 TW
 TW
 sR
@@ -11689,7 +13101,7 @@ yH
 cz
 cz
 cz
-cz
+XM
 yH
 oj
 oj
@@ -11731,11 +13143,11 @@ Ki
 Ki
 Ki
 AR
-NC
+TH
 tM
 Yz
 wg
-NC
+TH
 Es
 Es
 Es
@@ -11767,27 +13179,27 @@ oj
 oj
 oj
 oj
+Cu
+Cu
+PX
+oG
+PX
+PX
+PX
+PX
+PX
+rW
+PX
+PX
+oG
+PX
+PX
+PX
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+PX
+PX
+PX
 oj
 oj
 oj
@@ -11812,8 +13224,8 @@ yx
 ms
 ms
 ms
-TW
-TW
+ms
+ms
 TW
 TW
 sR
@@ -11823,10 +13235,10 @@ ee
 ee
 SI
 wF
-oj
-oj
-oj
-oj
+rZ
+rZ
+rZ
+rZ
 rZ
 rZ
 rZ
@@ -11837,7 +13249,7 @@ oj
 oj
 oj
 Mm
-vZ
+ZX
 uf
 JL
 JL
@@ -11877,7 +13289,7 @@ wg
 wg
 wg
 wg
-NC
+TH
 Es
 Es
 Es
@@ -11909,27 +13321,27 @@ oj
 oj
 oj
 oj
+Cu
+Cu
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+PX
+PX
 oj
 oj
 oj
@@ -11954,8 +13366,8 @@ ms
 ms
 ms
 ms
-TW
-TW
+ms
+ms
 TW
 TW
 sR
@@ -11965,23 +13377,23 @@ Nf
 ee
 IT
 wF
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+jB
+VK
+VK
+VK
+VK
+VK
+VK
+VK
+rZ
 oj
 oj
 oj
 JL
 Mm
-vZ
+ZX
 uf
-Ef
+JL
 Ef
 Ef
 JL
@@ -12015,11 +13427,11 @@ Ki
 Ki
 Ki
 AR
-NC
+TH
 PY
 ng
 wg
-NC
+TH
 Es
 Es
 Es
@@ -12051,27 +13463,27 @@ oj
 oj
 oj
 oj
+Cu
+Cu
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+PX
+PX
 oj
 oj
 oj
@@ -12096,8 +13508,8 @@ ms
 ms
 ms
 ms
-TW
-TW
+ms
+ms
 TW
 TW
 TW
@@ -12107,15 +13519,15 @@ ee
 ee
 wF
 wF
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+Ua
+VK
+VK
+VK
+VK
+VK
+VK
+VK
+rZ
 oj
 oj
 Ho
@@ -12157,11 +13569,11 @@ Es
 Es
 Es
 Es
-NC
-NC
-NC
-NC
-NC
+TH
+TH
+TH
+TH
+TH
 Es
 Es
 Es
@@ -12193,27 +13605,27 @@ oj
 oj
 oj
 oj
+Cu
+Cu
+PX
+PX
+PX
+rW
+PX
+PX
+PX
+PX
+PX
+PX
+rW
+PX
+PX
 oj
 oj
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+PX
 oj
 oj
 oj
@@ -12238,8 +13650,8 @@ ks
 ms
 ms
 ms
-TW
-TW
+ms
+ms
 TW
 TW
 TW
@@ -12248,16 +13660,16 @@ US
 ee
 ee
 wF
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+VK
+VK
+VK
+VK
+VK
+VK
+VK
+VK
+VK
+rZ
 oj
 oj
 Ho
@@ -12335,28 +13747,28 @@ oj
 oj
 oj
 oj
+Cu
+Cu
+Cu
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
 oj
 oj
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+PX
+PX
 oj
 oj
 oj
@@ -12380,26 +13792,26 @@ ks
 ms
 ms
 ms
+ms
 TW
 TW
 TW
 TW
-TW
-rX
-wF
-Ik
-wF
-rX
+zR
+xu
+dM
+xu
+zR
 Ti
 Ti
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+VK
+VK
+VK
+VK
+VK
+VK
+VK
+rZ
 oj
 oj
 Ho
@@ -12413,7 +13825,7 @@ Bx
 wk
 bB
 bB
-Dm
+xF
 xF
 xF
 xF
@@ -12477,6 +13889,20 @@ oj
 oj
 oj
 oj
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+PX
+PX
+PX
+oG
+PX
+PX
+PX
+PX
 oj
 oj
 oj
@@ -12484,21 +13910,7 @@ oj
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+PX
 oj
 oj
 oj
@@ -12522,26 +13934,26 @@ tT
 ms
 ms
 ms
+ms
 TW
 TW
 TW
 TW
-TW
-rX
-ee
-ee
+zR
+cu
+cu
 Ra
-rX
+zR
 Bb
 Ti
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+VK
+VK
+VK
+VK
+VK
+VK
+VK
+rZ
 oj
 oj
 Ho
@@ -12555,10 +13967,10 @@ Kw
 Ki
 bB
 bB
-Dm
-xF
+Md
+is
 oB
-oB
+rI
 KI
 Sh
 Sh
@@ -12567,7 +13979,7 @@ xF
 ox
 bB
 SC
-SC
+xW
 Lk
 Ki
 bB
@@ -12621,6 +14033,16 @@ oj
 oj
 oj
 oj
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+PX
+PX
+PX
+PX
 oj
 oj
 oj
@@ -12630,17 +14052,7 @@ oj
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+Qy
 oj
 oj
 oj
@@ -12669,21 +14081,21 @@ TW
 TW
 TW
 TW
-dJ
-ee
-ee
-ee
-rX
+IU
+cu
+cu
+cu
+zR
 kV
 Ti
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+VK
+VK
+VK
+rZ
+rZ
+rZ
+rZ
+rZ
 oj
 oj
 Ho
@@ -12695,10 +14107,10 @@ AS
 Ho
 Ho
 Ki
-PU
-PU
-Dm
+Lk
+Lk
 xF
+is
 is
 is
 Ha
@@ -12765,14 +14177,14 @@ oj
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
 oj
 oj
 oj
@@ -12811,17 +14223,17 @@ TW
 TW
 TW
 TW
-rX
-ee
-ee
-ee
-wF
+zR
+cu
+cu
+cu
+xu
 BX
 bn
-oj
-oj
-oj
-oj
+VK
+VK
+VK
+rZ
 oj
 oj
 oj
@@ -12839,8 +14251,8 @@ sT
 ld
 ld
 ld
-xF
-xF
+ld
+is
 ZH
 YX
 Lh
@@ -12953,17 +14365,17 @@ wC
 wC
 wC
 wC
-rX
+zR
 AG
-ee
-ee
-wF
+cu
+cu
+xu
 SG
 bn
-oj
-oj
-oj
-oj
+VK
+VK
+VK
+rZ
 oj
 oj
 oj
@@ -12981,7 +14393,7 @@ lx
 ld
 RN
 Zy
-xF
+ld
 GR
 PO
 YX
@@ -13095,17 +14507,17 @@ zR
 zR
 zR
 zR
-rX
+zR
 pL
-ee
-ee
-wF
+cu
+cu
+xu
 Hy
 bn
-oj
-oj
-oj
-oj
+VK
+VK
+VK
+rZ
 oj
 xw
 xa
@@ -13114,16 +14526,16 @@ xa
 xa
 xa
 Ho
+sU
+sU
 Ho
-Ho
-Ho
-AS
+Yo
 Ho
 ld
 ld
 Sl
 FD
-xF
+ld
 xF
 rp
 is
@@ -13237,14 +14649,15 @@ oj
 oj
 oj
 oj
-wF
-wF
-Ik
-wF
-wF
+xu
+xu
+dM
+xu
+xu
 Hy
 bn
 Ho
+sX
 Ho
 Ho
 ly
@@ -13252,9 +14665,8 @@ ly
 ly
 ly
 ly
-ly
-ly
-ly
+Ho
+Ho
 Ho
 aN
 qK
@@ -13264,7 +14676,7 @@ oF
 ld
 DD
 jh
-jh
+aF
 CI
 xF
 PO
@@ -13528,9 +14940,9 @@ BX
 BX
 Hy
 bn
-Ho
-Ho
-Ho
+CY
+CY
+CY
 YI
 CY
 CY
@@ -13552,7 +14964,7 @@ ju
 ll
 DH
 tL
-tL
+NF
 YO
 Sh
 Sh
@@ -13658,7 +15070,7 @@ mR
 mR
 mR
 mR
-oj
+zH
 zH
 zH
 zH
@@ -13670,8 +15082,8 @@ zH
 rQ
 Hy
 bn
-oj
-oj
+bn
+bn
 Hc
 Hc
 Hc
@@ -13691,7 +15103,7 @@ Hc
 Hc
 WU
 ki
-xF
+Hc
 xF
 xF
 xF
@@ -13800,9 +15212,9 @@ mR
 mR
 mR
 mR
-zx
 zH
 zv
+mu
 xk
 hR
 Dc
@@ -13812,8 +15224,8 @@ zH
 BX
 Hy
 bn
-oj
-oj
+oA
+oA
 Hc
 PT
 ow
@@ -13921,7 +15333,7 @@ oj
 oj
 oj
 oj
-QU
+Qy
 oj
 oj
 oj
@@ -13943,7 +15355,7 @@ Zu
 Zu
 Zu
 zH
-zH
+mu
 mu
 kN
 LC
@@ -13954,8 +15366,8 @@ zD
 BX
 Hy
 bn
-bn
-bn
+BX
+BX
 Hc
 PT
 ow
@@ -13977,7 +15389,7 @@ hc
 Jl
 Ww
 XU
-EF
+KN
 KN
 xm
 Hc
@@ -14085,7 +15497,7 @@ NV
 dQ
 RB
 zH
-Eb
+mu
 mu
 HF
 HF
@@ -14096,8 +15508,8 @@ zH
 BX
 Hy
 bn
-oA
-oA
+BX
+BX
 Hc
 RT
 sY
@@ -14245,23 +15657,23 @@ VI
 YB
 Ph
 fd
-YB
+Cb
 YB
 iw
 fd
-YB
+Cb
 YB
 kA
 nS
-YB
+Cb
 Sp
 to
 Fp
-Xj
+NX
 Tk
 Uh
 KN
-KN
+Qx
 Af
 vg
 Hc
@@ -14675,19 +16087,19 @@ gL
 Uc
 xH
 Zw
-KN
+lL
 js
 pq
 wf
-os
+Qb
 BL
 mG
 Co
-Fp
+xx
 Fp
 YB
 Xj
-YB
+Ty
 Fp
 VO
 Hc
@@ -14788,7 +16200,7 @@ oj
 oj
 XN
 Bk
-tu
+qc
 tu
 XN
 dj
@@ -14851,11 +16263,11 @@ JW
 iP
 iP
 iP
-xu
 iP
 iP
 iP
 iP
+tC
 iP
 iP
 Es
@@ -14895,7 +16307,7 @@ oj
 oj
 oj
 oj
-oj
+Cu
 Cu
 fG
 PX
@@ -14993,7 +16405,7 @@ iP
 iP
 iP
 iP
-iP
+ER
 iP
 iP
 iP
@@ -15038,9 +16450,9 @@ oj
 oj
 oj
 oj
-oj
-oj
-oj
+Cu
+Cu
+Cu
 oG
 PX
 PX
@@ -15278,7 +16690,7 @@ YG
 iP
 iP
 iP
-tC
+iP
 iP
 iP
 iP
@@ -15706,7 +17118,7 @@ iP
 iP
 iP
 iP
-iP
+iz
 iP
 iP
 iP
@@ -15774,7 +17186,7 @@ oj
 PX
 PX
 PX
-QU
+Qy
 CJ
 CJ
 CJ
@@ -15845,7 +17257,7 @@ tc
 YG
 iP
 iP
-qJ
+iP
 iP
 iP
 iP
@@ -16255,7 +17667,7 @@ bB
 bB
 bB
 bB
-bB
+Am
 ox
 Ki
 Es
@@ -16270,7 +17682,7 @@ Da
 iP
 iP
 iP
-xu
+ER
 iP
 iP
 iP
@@ -16397,7 +17809,7 @@ bB
 bB
 bB
 bB
-bB
+eC
 ox
 Ki
 Es
@@ -16417,7 +17829,7 @@ iP
 iP
 iP
 iP
-iP
+qJ
 iP
 iP
 Es
@@ -16684,10 +18096,10 @@ uz
 Jq
 ox
 Ki
-Es
-Es
-Es
-Es
+rZ
+rZ
+rZ
+rZ
 Es
 Es
 Es
@@ -16826,9 +18238,9 @@ Ea
 Jq
 ox
 Ki
-Es
-Es
-Es
+VK
+pc
+pc
 DM
 DM
 DM
@@ -16912,7 +18324,7 @@ oj
 oj
 oj
 eX
-bX
+Ak
 az
 Sr
 Bi
@@ -16967,15 +18379,15 @@ TT
 TT
 Jq
 ox
-Ki
-Es
-Es
-Es
+wk
+VK
+VK
+VK
 DM
-XB
 gt
 Cs
-Cl
+Cs
+Cs
 DM
 Es
 Es
@@ -17099,22 +18511,22 @@ OO
 Oj
 Pi
 qv
-bB
-AR
-bB
-bB
-bB
+cg
+aO
+TS
+AY
+KT
 Zd
 LF
 tJ
 Jq
 ox
 Ki
-Es
-Es
-Es
-DM
-XB
+VK
+VK
+VK
+BS
+gt
 gt
 gt
 gt
@@ -17241,25 +18653,25 @@ rV
 kK
 qv
 qv
-bB
-mV
-bB
-bB
-bB
+su
+Zd
+iF
+UM
+EK
 Zd
 gs
 gs
 Jq
 ox
 Ki
-Es
-Es
-Es
+VK
+VK
+VK
 DM
-XB
 gt
 gt
 gt
+Cl
 DM
 Es
 Es
@@ -17382,21 +18794,21 @@ Mk
 JX
 Wb
 xe
-qv
-bB
-AR
-bB
-bB
-bB
+ET
+BE
+mT
+ED
+oL
+gr
 Zd
 gs
 gs
 Jq
 ox
 Ki
-Es
-Es
-Es
+NN
+NN
+NN
 CM
 CM
 CM
@@ -17525,19 +18937,19 @@ gT
 bW
 AF
 qv
-bB
-AR
-Ki
-Ki
-Ki
-Jq
+su
+Zd
+Ao
+Ao
+Ao
+Ao
 Jq
 Jq
 Jq
 ox
 Ki
-Es
-Es
+rZ
+rZ
 CM
 CM
 Ji
@@ -17639,13 +19051,13 @@ Yy
 Yy
 qd
 MI
-YE
 ml
+iC
 xE
 xE
 xE
 xE
-xE
+iC
 mz
 hS
 qd
@@ -17660,14 +19072,14 @@ mA
 Pl
 fa
 Sw
-eJ
+sd
 bk
 Lg
 bp
 qv
 qv
 qv
-bB
+su
 Jc
 Ki
 cI
@@ -17773,7 +19185,7 @@ ga
 iR
 NH
 NH
-NH
+EN
 NH
 NH
 aU
@@ -17926,7 +19338,7 @@ AU
 AU
 jS
 CF
-ye
+OF
 ye
 ye
 fk
@@ -17934,7 +19346,7 @@ Zh
 gd
 Br
 Cq
-rR
+jC
 ye
 EQ
 ye
@@ -18057,13 +19469,13 @@ lM
 lH
 bJ
 bJ
-bJ
+ZU
 bJ
 bJ
 MW
 MW
 MW
-bJ
+ZU
 bJ
 bJ
 jS
@@ -18080,17 +19492,17 @@ rR
 ye
 ye
 ye
-GC
+Av
 ri
 XI
 XI
 XI
+lD
 XI
 XI
 XI
 XI
-XI
-RD
+cR
 vb
 RD
 dO
@@ -18111,7 +19523,7 @@ gt
 gt
 gt
 gt
-Cl
+gt
 CM
 Es
 Es
@@ -18221,17 +19633,17 @@ ea
 ye
 ye
 ye
-ye
+nj
 gd
 Ke
-Ke
-Ke
-Ke
-Ke
-Ke
-Ke
-Ke
-Ke
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
 YV
 Gp
 Gp
@@ -18253,7 +19665,7 @@ TG
 TG
 TG
 Zx
-Cl
+gt
 CM
 Es
 Es
@@ -18327,7 +19739,7 @@ Bu
 Bu
 Bu
 Bu
-hx
+QZ
 hx
 hx
 ry
@@ -18365,15 +19777,15 @@ ye
 ye
 ye
 LS
-FC
-sP
-xN
-Ke
-Ke
 Oz
 Oz
-gR
-Ke
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
 iA
 iP
 iP
@@ -18480,7 +19892,7 @@ jw
 wM
 wM
 lM
-Ud
+cM
 nv
 nv
 nv
@@ -18507,15 +19919,15 @@ hn
 ye
 ye
 LS
-FC
-FC
-GA
-Ke
-Ke
-Ke
-Ke
-Ke
-Ke
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
 iA
 iP
 iP
@@ -18635,7 +20047,7 @@ TF
 bt
 bJ
 jS
-ye
+eh
 ye
 Xr
 RK
@@ -18649,15 +20061,15 @@ hF
 ye
 ye
 LS
-ad
-FC
-GA
-Ke
-Sa
 Oz
-Sa
-Ke
-Ke
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
 iA
 iP
 ER
@@ -18764,7 +20176,7 @@ wM
 wM
 wM
 lM
-Ud
+OT
 nv
 Lo
 nv
@@ -18791,15 +20203,15 @@ vB
 ye
 ye
 LS
-FC
-FC
-vN
-Ke
-Ke
-Ke
-Ke
-Ke
-Ke
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
 iA
 iP
 iP
@@ -18933,15 +20345,15 @@ ye
 ye
 ye
 LS
-FC
-mw
-TO
-Ke
-Ke
 Oz
-gR
 Oz
-Ke
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
 iA
 iP
 iP
@@ -19038,7 +20450,7 @@ Bu
 Bu
 Bu
 Bu
-Bu
+QZ
 Bu
 cB
 AZ
@@ -19073,17 +20485,17 @@ ul
 ye
 ye
 ye
-ye
+nj
 gd
-Ke
-Ke
-Ke
-Ke
-Ke
-Ke
-Ke
-Ke
-Ke
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
+Oz
 qZ
 Gp
 Gp
@@ -19179,8 +20591,8 @@ Bu
 Bu
 Bu
 Bu
-Bu
-Bu
+hx
+hx
 Bu
 cB
 qM
@@ -19192,14 +20604,14 @@ wM
 lM
 dh
 bJ
-bJ
+Nx
 bJ
 bJ
 Hv
 tH
 yU
 Hv
-bJ
+Nx
 bJ
 bJ
 jS
@@ -19208,7 +20620,7 @@ ye
 ye
 ye
 fk
-Zh
+LI
 gd
 Br
 Cq
@@ -19216,17 +20628,17 @@ rR
 ye
 ye
 ye
-GC
+Av
 ri
 RD
 RD
-RD
 vs
+AT
 RD
 RD
 RD
 RD
-XI
+mj
 nO
 XI
 Sv
@@ -19321,7 +20733,7 @@ Bu
 YY
 zu
 Bu
-Bu
+hx
 Bu
 Bu
 cB
@@ -19346,7 +20758,7 @@ Ul
 cD
 jS
 CF
-ye
+Lj
 ye
 ye
 fk
@@ -19354,7 +20766,7 @@ Zh
 gd
 oH
 Cq
-rR
+Tm
 ye
 ye
 ye
@@ -19459,11 +20871,11 @@ Bu
 Bu
 Bu
 Bu
-YY
+Mp
 YY
 zu
-Bu
-Bu
+GA
+hx
 cB
 cB
 cB
@@ -19605,11 +21017,11 @@ KR
 YY
 zu
 Bu
-Bu
-cB
-oj
-oj
-oj
+QZ
+lR
+Il
+Wh
+Il
 oj
 oj
 oj
@@ -19617,23 +21029,23 @@ oj
 gj
 oj
 oj
+iS
 oa
 oa
 oa
-oa
-oa
+TO
 UC
 Il
-Il
-sN
+UC
+UC
 Mc
 lW
-rs
-rs
-rs
-rs
+Pt
 rs
 Wg
+rs
+rs
+Pt
 zw
 Hu
 dn
@@ -19692,8 +21104,8 @@ ci
 ct
 QV
 Rq
-Es
-Es
+RL
+RL
 Es
 Es
 Es
@@ -19751,11 +21163,11 @@ cB
 cB
 oj
 oj
-oj
-oj
-oj
-oj
-oj
+Il
+Il
+IB
+Il
+Il
 gj
 oj
 oj
@@ -19833,10 +21245,10 @@ ci
 MG
 ct
 QV
-Rq
+QV
 Es
-Es
-Es
+RL
+RL
 Es
 Es
 Es
@@ -19974,11 +21386,11 @@ ct
 FY
 ct
 ct
-QV
-Rq
+Yl
+vN
 Es
 Es
-Es
+RL
 Es
 Es
 Es
@@ -20091,36 +21503,36 @@ jy
 XL
 hs
 vu
+ad
+wQ
+wQ
+wQ
+wQ
+wQ
+ad
 wQ
 wQ
 wQ
 wQ
 wQ
 wQ
+ad
 wQ
 wQ
 wQ
 wQ
 wQ
 wQ
+ad
 wQ
 wQ
 wQ
 wQ
 wQ
 wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-XL
-nd
-QZ
+hB
 Es
-Es
-Es
+RL
 Es
 Es
 Es
@@ -20233,36 +21645,36 @@ jy
 Ih
 wQ
 wQ
+Eh
+pe
+pe
+pe
+pe
+pe
+pe
+pe
+pe
+pe
+pe
+pe
+pe
+pe
+pe
+pe
+pe
+pe
+pe
+pe
+pe
+pe
 wQ
 wQ
 wQ
 wQ
 wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-XL
-nd
-QZ
+PU
 Es
-Es
-Es
+RL
 Es
 Es
 Es
@@ -20300,7 +21712,7 @@ Bu
 Bu
 Bu
 Bu
-rI
+Mu
 Ly
 iI
 cB
@@ -20375,36 +21787,36 @@ jy
 XL
 xY
 VS
+DG
+wQ
+wQ
+wQ
+wQ
+wQ
+zy
 wQ
 wQ
 wQ
 wQ
 wQ
 wQ
+zy
 wQ
 wQ
 wQ
 wQ
 wQ
 wQ
+zy
 wQ
 wQ
 wQ
 wQ
 wQ
 wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-wQ
-XL
-nd
-QZ
+wT
 Es
-Es
-Es
+RL
 Es
 Es
 Es
@@ -20442,7 +21854,7 @@ cB
 Bu
 Bu
 Bu
-Bu
+Mu
 Bu
 Bu
 Bu
@@ -20542,11 +21954,11 @@ yt
 Tt
 yt
 yt
-pQ
-qX
+Dp
+Oq
 Es
 Es
-Es
+RL
 Es
 Es
 Es
@@ -20584,8 +21996,8 @@ cB
 cB
 cB
 cB
+md
 cB
-Bu
 Bu
 Bu
 Bu
@@ -20685,10 +22097,10 @@ Ni
 Cr
 yt
 pQ
-qX
+pQ
 Es
-Es
-Es
+RL
+RL
 Es
 Es
 Es
@@ -20725,8 +22137,8 @@ oj
 oj
 oj
 oj
-oj
 cB
+eu
 cB
 cB
 cB
@@ -20828,8 +22240,8 @@ Ni
 yt
 pQ
 qX
-Es
-Es
+RL
+RL
 Es
 Es
 Es
@@ -20864,15 +22276,15 @@ oj
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+ir
+ir
+ir
+ir
+ir
+FC
+ir
+WC
+WC
 oj
 oj
 oj
@@ -20903,15 +22315,15 @@ Il
 oj
 oj
 Il
-jj
+oj
 Mc
 cx
-rs
+hN
 IC
 ho
 gW
 wp
-rs
+hN
 uq
 Hu
 hL
@@ -21005,16 +22417,16 @@ oj
 oj
 oj
 oj
+ir
+ir
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+ir
+ir
+ir
+WC
+WC
 oj
 oj
 oj
@@ -21147,16 +22559,16 @@ oj
 oj
 oj
 oj
+Iy
+Qu
 oj
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
+Qu
+ir
+WC
+WC
 oj
 oj
 oj
@@ -21287,19 +22699,19 @@ oj
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+oV
+oV
+oV
+oV
+oV
+xN
+xN
+oV
+oV
+oV
+WC
+WC
+ir
 oj
 oj
 oj
@@ -21429,19 +22841,19 @@ oj
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+oV
+rm
+rF
+rm
+rm
+rm
+rm
+rF
+rm
+iG
+bR
+WC
+Ws
 oj
 oj
 oj
@@ -21571,19 +22983,19 @@ oj
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+oV
+Sa
+Sa
+Sa
+Sa
+Sa
+Sa
+Sa
+Sa
+iG
+WC
+WC
+ir
 oj
 oj
 oj
@@ -21713,19 +23125,19 @@ oj
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+oV
+Sa
+Sa
+Sa
+Sa
+Bj
+Sa
+Sa
+Sa
+OE
+WC
+WC
+ds
 oj
 oj
 oj
@@ -21855,19 +23267,19 @@ oj
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+xN
+Sa
+Sa
+Sa
+Sa
+UB
+Sa
+Sa
+Sa
+iG
+WC
+WC
+ir
 oj
 oj
 oj
@@ -21897,7 +23309,7 @@ Qp
 Qp
 ge
 ge
-Yb
+WS
 Yb
 ge
 qh
@@ -21997,18 +23409,18 @@ oj
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+xN
+Sa
+Sa
+Sa
+Sa
+Sa
+Sa
+Sa
+Sa
+iG
+WC
+WC
 oj
 oj
 oj
@@ -22039,7 +23451,7 @@ FS
 QY
 Jt
 Wm
-Yb
+cP
 Yb
 uy
 Ng
@@ -22139,18 +23551,18 @@ oj
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+xN
+Sa
+Sa
+Sa
+Sa
+Sa
+Sa
+Sa
+Sa
+iG
+WC
+WC
 oj
 oj
 oj
@@ -22192,7 +23604,7 @@ ia
 ia
 ia
 ia
-ia
+sP
 ia
 ia
 FH
@@ -22207,7 +23619,7 @@ oj
 wR
 wR
 wR
-Vr
+hC
 wR
 WG
 qN
@@ -22281,18 +23693,18 @@ oj
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+xN
+Sa
+Sa
+Sa
+Sa
+Sa
+Sa
+Sa
+Sa
+OE
+WC
+WC
 oj
 oj
 oj
@@ -22357,7 +23769,7 @@ ph
 ph
 Er
 ep
-wO
+vZ
 wO
 ph
 ph
@@ -22423,18 +23835,18 @@ oj
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+oV
+Sa
+Sa
+Sa
+Sa
+Sa
+Sa
+Sa
+Sa
+iG
+WC
+WC
 oj
 ir
 bE
@@ -22565,18 +23977,18 @@ oj
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+oV
+Sa
+YE
+Sa
+Sa
+Sa
+Sa
+YE
+Sa
+iG
+bR
+WC
 oj
 ir
 ir
@@ -22633,7 +24045,7 @@ wR
 wR
 wR
 wR
-Vr
+Ch
 wR
 wR
 Up
@@ -22716,7 +24128,7 @@ Bt
 Bt
 Bt
 Bt
-oj
+oV
 WC
 WC
 WC
@@ -22735,12 +24147,12 @@ WC
 WC
 WC
 WC
+ua
 WC
 WC
 WC
 WC
-WC
-WC
+ua
 WC
 WC
 WC
@@ -22775,7 +24187,7 @@ Ib
 pG
 JY
 Ap
-CL
+NS
 Nh
 wR
 Es
@@ -22858,7 +24270,17 @@ mh
 Ta
 Ka
 Bt
-oj
+Qu
+WC
+WC
+WC
+WC
+WC
+gR
+WC
+WC
+WC
+IH
 WC
 WC
 WC
@@ -22871,16 +24293,6 @@ WC
 WC
 WC
 WC
-WC
-WC
-WC
-WC
-WC
-WC
-WC
-WC
-WC
-GB
 WC
 WC
 WC
@@ -22913,11 +24325,11 @@ oj
 oj
 wR
 Jn
-CL
-CL
-CL
-CL
-CL
+Vr
+wh
+lb
+lb
+fM
 Nh
 wR
 Es
@@ -23055,11 +24467,11 @@ oj
 oj
 wR
 Jn
-CL
+Vr
 EI
-EI
-EI
-CL
+LH
+LH
+Vr
 Nh
 wR
 Jb
@@ -23146,10 +24558,10 @@ Bt
 WC
 WC
 tl
+mY
 or
 or
-or
-or
+jH
 KB
 Yi
 nB
@@ -23197,11 +24609,11 @@ oj
 oj
 wR
 Jn
+Vr
 CL
-CL
-CL
-CL
-CL
+mU
+mU
+Vr
 Nh
 wR
 Fm
@@ -23275,7 +24687,7 @@ oj
 oj
 oj
 MC
-rK
+DX
 cf
 cf
 cf
@@ -23316,7 +24728,7 @@ HN
 AH
 AH
 AH
-Pp
+Dx
 HN
 oj
 oj
@@ -23331,19 +24743,19 @@ NG
 vW
 Mz
 Mz
-FH
-NC
-NC
-NC
-NC
+pk
+mx
+mx
+mx
+mx
 oj
 wR
 Jn
-CL
-CL
+LB
+NS
 zS
-CL
-CL
+Vr
+LB
 mc
 wR
 BH
@@ -23473,26 +24885,26 @@ FH
 FH
 iq
 FH
-FH
-VK
-VK
-VK
+pk
+AE
+Py
+YZ
 kQ
 kQ
 wR
 wR
 mP
-LZ
+jg
 mP
 LZ
 mP
 wR
 wR
+eO
 JC
-JC
+oI
 uQ
-SZ
-JC
+uQ
 Sc
 Jb
 Jb
@@ -23569,7 +24981,7 @@ Ka
 Xc
 Bt
 Bt
-WC
+bR
 WC
 tl
 tl
@@ -23614,27 +25026,27 @@ oj
 oj
 Px
 Kg
-tR
-NC
-VK
-VK
-VK
+of
+mx
+pp
+ID
+fA
 kQ
 Wv
 mp
+Hs
 wH
-wH
-LD
+Np
 fE
 LD
+Dn
 KZ
-iG
 Sc
 tX
 tr
 tr
 tr
-Ct
+ie
 Sc
 Sc
 Sc
@@ -23679,9 +25091,9 @@ Es
 Es
 Es
 NC
-Es
-Es
-Es
+NC
+NC
+NC
 "}
 (106,1,1) = {"
 Es
@@ -23707,7 +25119,7 @@ cf
 LG
 MC
 fB
-Ka
+Dm
 Lp
 Bt
 oj
@@ -23757,29 +25169,29 @@ Fx
 Px
 Kg
 tR
-NC
-VK
-VK
-VK
+mx
+ou
+SZ
+ue
 kQ
 Yt
 Vp
 LD
-LD
-LD
-LD
-LD
-LD
-LD
+mV
+QJ
+YD
+YD
+YD
+LM
 WT
-tr
-uQ
-uQ
-uQ
-tr
+dG
+AC
+AC
+AC
+ja
 eb
 tr
-tr
+Pa
 tr
 eb
 ub
@@ -23790,40 +25202,40 @@ Je
 Je
 Je
 Je
+Zk
 Pr
 Pr
 Pr
 Pr
 Pr
-Pr
-Pr
+Zk
 Pr
 Pr
 Pr
 mF
 mF
+qu
 mF
 mF
 mF
 mF
 mF
+qu
 mF
 mF
 mF
-mF
-mF
+Pr
+Pr
+Zk
 Pr
 Pr
 Pr
 Pr
 Pr
-Pr
-Pr
-Pr
-Pr
-Pr
-Pr
-Pr
+Zk
+FG
+FG
+FG
 "}
 (107,1,1) = {"
 Es
@@ -23899,29 +25311,29 @@ cd
 jK
 jz
 jK
-cd
-cd
 mx
-cd
+WF
+mx
+RV
 kQ
 kQ
 kQ
-jB
-LD
-LD
-LD
-LD
-LD
+Fd
+mV
+vh
+Ck
+Ck
+Ck
 LD
 pK
 tr
-uQ
-uQ
-uQ
+dN
+dN
+dN
 tr
 eb
 tr
-tr
+FL
 tr
 eb
 ub
@@ -23932,40 +25344,40 @@ Je
 Je
 Je
 Je
+dJ
 Pr
 Pr
 Pr
 Pr
 Pr
-Pr
-Pr
+dJ
 Pr
 Pr
 Pr
 mF
 mF
+TY
 mF
 mF
 mF
 mF
 mF
+TY
 mF
 mF
 mF
-mF
-mF
+Pr
+Pr
+dJ
 Pr
 Pr
 Pr
 Pr
 Pr
-Pr
-Pr
-Pr
-Pr
-Pr
-Pr
-Pr
+dJ
+ME
+ME
+ME
 "}
 (108,1,1) = {"
 Es
@@ -23987,7 +25399,7 @@ GB
 GB
 GB
 xX
-cf
+qL
 dr
 sh
 MC
@@ -24038,22 +25450,22 @@ oj
 cd
 IN
 VU
+xd
 rb
 rb
 rb
-rb
-rb
-rb
-rb
-rb
-rb
+Rc
+PQ
+kR
+RX
+FZ
 IQ
-LD
-LD
-LD
-LD
-LD
-LD
+Wq
+YD
+QB
+Ck
+Ck
+Ck
 xf
 Sc
 er
@@ -24105,9 +25517,9 @@ Es
 Es
 Es
 NC
-Es
-Es
-Es
+NC
+NC
+NC
 "}
 (109,1,1) = {"
 Es
@@ -24180,7 +25592,7 @@ qe
 pf
 pf
 pf
-qe
+kw
 qe
 qe
 bw
@@ -24191,16 +25603,16 @@ qe
 Fw
 kQ
 Cp
+rv
 LD
 LD
 LD
-LD
-LD
+mQ
 kj
 Sc
-zy
 Sf
 Sf
+Kk
 kl
 kl
 Sc
@@ -24324,9 +25736,9 @@ YT
 oT
 qe
 QW
+yK
 oT
-oT
-oT
+RF
 Ii
 Ii
 qe
@@ -24470,7 +25882,7 @@ oT
 oT
 oT
 oT
-oT
+nd
 qe
 oj
 kQ
@@ -24564,7 +25976,7 @@ ir
 ir
 ir
 ir
-ir
+oj
 oj
 oj
 WC
@@ -24611,7 +26023,7 @@ oT
 oT
 oT
 oT
-Ii
+RJ
 Ii
 qe
 oj
@@ -24698,14 +26110,14 @@ oj
 MC
 MC
 PL
-PL
+gb
 PL
 MC
 oj
 oj
 oj
 oj
-oj
+ir
 ir
 ir
 ir
@@ -24754,7 +26166,7 @@ oT
 oT
 oT
 oT
-oT
+nd
 qe
 oj
 kQ
@@ -24846,8 +26258,8 @@ MC
 oj
 oj
 oj
-oj
-oj
+ir
+ir
 oj
 oj
 oj
@@ -24887,7 +26299,7 @@ Ef
 Ef
 qe
 rt
-rt
+SM
 KW
 pF
 qe
@@ -24988,7 +26400,7 @@ oj
 oj
 oj
 oj
-oj
+du
 oj
 oj
 oj
@@ -25129,8 +26541,8 @@ oj
 oj
 oj
 oj
-oj
-oj
+ir
+ir
 UZ
 UZ
 UZ
@@ -25271,12 +26683,12 @@ oj
 oj
 oj
 oj
-oj
+ir
 oj
 UZ
 mZ
 jL
-jL
+ej
 jL
 lT
 XK
@@ -25319,7 +26731,7 @@ oj
 oj
 oj
 qe
-oT
+VT
 oT
 oT
 bw
@@ -25412,8 +26824,8 @@ oj
 oj
 oj
 oj
-oj
-oj
+ir
+ir
 oj
 UZ
 yq
@@ -25554,7 +26966,7 @@ oj
 oj
 oj
 oj
-oj
+ir
 oj
 oj
 UZ
@@ -25696,7 +27108,7 @@ oj
 oj
 oj
 oj
-oj
+ir
 oj
 oj
 UZ
@@ -25838,7 +27250,7 @@ oj
 oj
 oj
 oj
-oj
+ir
 oj
 oj
 UZ
@@ -25958,10 +27370,10 @@ Es
 (122,1,1) = {"
 Es
 oj
-oj
 yL
 yL
 yL
+yL
 oj
 oj
 oj
@@ -25979,8 +27391,8 @@ oj
 oj
 oj
 oj
-oj
-oj
+ir
+ir
 oj
 oj
 UZ
@@ -26044,11 +27456,11 @@ oj
 oj
 oj
 oj
-Es
-Es
-Es
-Es
-Es
+NC
+NC
+NC
+NC
+NC
 Es
 Es
 Es
@@ -26103,7 +27515,6 @@ oj
 yL
 yL
 yL
-yL
 oj
 oj
 oj
@@ -26122,6 +27533,7 @@ oj
 oj
 oj
 oj
+ir
 oj
 oj
 oj
@@ -26129,7 +27541,7 @@ UZ
 sq
 nG
 xz
-jL
+ww
 lT
 XK
 Lm
@@ -26186,11 +27598,11 @@ oj
 oj
 oj
 oj
-Es
-Es
-Es
-Es
-Es
+NC
+ii
+FE
+VK
+VK
 Es
 Es
 Es
@@ -26247,6 +27659,13 @@ yL
 yL
 oj
 oj
+mw
+mw
+mw
+mw
+mw
+ir
+ir
 oj
 oj
 oj
@@ -26256,14 +27675,7 @@ oj
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+ir
 oj
 oj
 oj
@@ -26328,11 +27740,11 @@ oj
 oj
 oj
 oj
-Es
-Es
-Es
-Es
-Es
+NC
+NC
+NC
+NC
+NC
 Es
 Es
 Es
@@ -26389,23 +27801,23 @@ oj
 oj
 oj
 oj
+mw
+oY
+gm
+UG
+mw
+XB
+ir
+ir
 oj
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+ir
+ir
+ir
+ir
+ir
 oj
 oj
 oj
@@ -26531,6 +27943,22 @@ oj
 oj
 oj
 oj
+mw
+Vz
+pR
+pR
+mw
+ir
+ir
+ir
+oj
+oj
+ir
+ir
+ir
+ir
+ir
+ir
 oj
 oj
 oj
@@ -26567,26 +27995,10 @@ oj
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-JL
-JL
-JL
-ds
+Ef
+Ef
+Ef
+Ef
 oj
 oj
 oj
@@ -26673,6 +28085,17 @@ oj
 oj
 oj
 oj
+mw
+WL
+pR
+pR
+UD
+ir
+ir
+ir
+ir
+ir
+ir
 oj
 oj
 oj
@@ -26715,20 +28138,9 @@ oj
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-LB
-VT
-JL
+Ef
+Ef
+Ef
 oj
 oj
 oj
@@ -26815,6 +28227,14 @@ oj
 oj
 oj
 oj
+mw
+pR
+pR
+pR
+mw
+ir
+ir
+ir
 oj
 oj
 oj
@@ -26860,17 +28280,9 @@ oj
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-JL
-JL
-JL
+Ef
+Ef
+Ef
 oj
 oj
 oj
@@ -26957,14 +28369,14 @@ oj
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+mw
+yo
+pl
+ys
+mw
+ir
+XB
+ir
 oj
 oj
 oj
@@ -27099,13 +28511,13 @@ oj
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
+mw
+mw
+mw
+mw
+mw
+ir
+ir
 oj
 oj
 oj
