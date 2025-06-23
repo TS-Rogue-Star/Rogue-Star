@@ -310,7 +310,8 @@
 		return ..()
 
 /datum/etching/get_view_variables_options()
-	return ..() + {"
+	. = ..()
+	. += {"
 	<option>---</option>
 	<option value='?_src_=vars;[HrefToken()];event_etching=\ref[src.ourmob]'>Toggle Event Character</option>
 	<option value='?_src_=vars;[HrefToken()];save_etching=\ref[src.ourmob]'>Save</option>
@@ -328,7 +329,7 @@
 	if(href_list["event_etching"])
 		if(!check_rights(R_FUN))	return
 
-		var/mob/living/L = locate(href_list["event_etching"])
+		var/mob/living/L = mob
 		if(!L.etching)
 			to_chat(usr, "\The [L] has no etching.")
 			return
