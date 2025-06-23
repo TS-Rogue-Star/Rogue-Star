@@ -131,6 +131,7 @@ You can also set the stat of a NIF to NIF_TEMPFAIL without any issues to disable
 			for(var/path in starting_software)
 				new path(src)
 			starting_software = null
+		persist_nif_data(H)	//RS ADD
 		return TRUE
 
 	return FALSE
