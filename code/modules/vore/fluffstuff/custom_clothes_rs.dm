@@ -2,8 +2,8 @@
 
 //GooglyFox:Portal
 /obj/item/clothing/head/beret/fluff/portalberet
-	name = "Talon commander beret"
-	desc = "A preserved, silky soft beret with a golden talon badge on the front, it's colored in ITV Talon colors, not the best for head protection but damn does it look good. You see a faint initial in the beret, designating \"Portal\"."
+	name = "Talon lieutenant commander beret"
+	desc = "A preserved, silky soft beret with a golden talon badge on the front, it's colored in ITV Talon colors, not the best for head protection but damn does it look good. You see a faint initial on the inside of the beret, designating \"Portal\"."
 	icon = 'icons/vore/custom_clothes_rs.dmi'
 	icon_override = 'icons/vore/custom_onmob_rs.dmi'
 	icon_state = "portalberet"
@@ -25,8 +25,8 @@
 
 //GooglyFox:Portal
 /obj/item/clothing/suit/storage/fluff/portalcoat
-	name = "Talon commander greatcoat"
-	desc = "A large, well kempt and silky soft ITV Talon branded colored greatcoat that are mostly used by more of the highest ranks of the vessel known as the Commander. Usually above the Captain in some cases, this particular greatcoat has some pockets in it, holding some personal items such as photos of Portal and T.O.A.S.T.E.R. together."
+	name = "Talon lieutenant commander greatcoat"
+	desc = "A large, well kempt and silky soft ITV Talon branded colored greatcoat that are mostly used by more of the highest ranks of the vessel known as the Lieutenant Commander. Usually below the Commander in some cases, this particular greatcoat has some pockets in it, holding some personal items such as photos of Portal and T.O.A.S.T.E.R. together."
 	icon = 'icons/vore/custom_clothes_rs.dmi'
 	icon_override = 'icons/vore/custom_onmob_rs.dmi'
 	icon_state = "portalcoat"
@@ -35,7 +35,7 @@
 //GooglyFox:Portal
 /obj/item/clothing/under/fluff/portaluniform
 	name = "Talon turtleneck"
-	desc = "A comfortably warm ITV Talon branded colored orange turtleneck atop some black slacks which itself is buckled on with a belt dawned with a golden belt buckle. There's a golden nametag on the chest, it reads \"Portal, COMMANDER.\", it smells vibrantly of oranges."
+	desc = "A comfortably warm ITV Talon colored orange turtleneck atop some black slacks which itself is buckled on with a belt dawned with a golden belt buckle. There's a golden nametag on the chest, it reads \"Portal, LIEUTENANT COMMANDER.\", it smells vibrantly of oranges."
 	icon = 'icons/vore/custom_clothes_rs.dmi'
 	icon_override = 'icons/vore/custom_onmob_rs.dmi'
 	icon_state = "portaluniform"
