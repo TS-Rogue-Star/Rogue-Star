@@ -10,6 +10,9 @@
 //Air-y moonrock
 /turf/simulated/mineral/cave/moonbase
 	color="#7ab6b6"
+	temperature = 293.15
+	oxygen = 21.8366
+	nitrogen = 82.1472
 
 //Floors
 /turf/simulated/mineral/floor/vacuum/moonbase
