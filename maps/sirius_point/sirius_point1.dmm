@@ -7242,6 +7242,10 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/groundbase/hotspring)
+"LA" = (
+/obj/effect/fake_sun/cool,
+/turf/simulated/mineral/moonbase,
+/area/moonbase/surface/underground)
 "LB" = (
 /obj/machinery/light{
 	dir = 4
@@ -10607,7 +10611,7 @@ Es
 Es
 Es
 Es
-Es
+LA
 Es
 Es
 "}

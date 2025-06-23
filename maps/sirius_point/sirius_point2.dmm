@@ -11043,6 +11043,10 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/central)
+"Dp" = (
+/obj/effect/fake_sun/cool,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/moonbase/surface/levelone/south)
 "Dq" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 4
@@ -20212,7 +20216,7 @@ UG
 UG
 UG
 UG
-UG
+Dp
 Lt
 Lt
 "}

@@ -13457,6 +13457,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/solars)
+"Xh" = (
+/obj/effect/fake_sun/cool,
+/turf/simulated/open/vacuum{
+	outdoors = 1
+	},
+/area/moonbase/surface/leveltwo/south)
 "Xk" = (
 /obj/random/maintenance/clean,
 /obj/random/maintenance/clean,
@@ -14725,7 +14731,7 @@ do
 do
 do
 do
-do
+Xh
 do
 "}
 (5,1,1) = {"

@@ -1,4 +1,4 @@
-var/datum/planet/moonbase/planet_moonbase = null
+/*var/datum/planet/moonbase/planet_moonbase = null
 
 /datum/time/moonbase
 	seconds_in_day = 6 HOURS
@@ -108,8 +108,8 @@ var/datum/planet/moonbase/planet_moonbase = null
 
 /datum/weather/moonbase
 	name = "moonbase"
-	temp_high = 2.7
-	temp_low = 2.7
+	temp_high = 2.8
+	temp_low = 2.6
 
 /datum/weather/moonbase/clear
 	name = "clear"
@@ -123,7 +123,7 @@ var/datum/planet/moonbase/planet_moonbase = null
 	imminent_transition_message = "The sky is returning to its normal emptiness."
 
 /datum/weather/moonbase/clear2
-	name = "clear"
+	name = "clear2"
 	transition_chances = list(
 		WEATHER_CLEAR = 100)
 	transition_messages = list(
@@ -132,3 +132,4 @@ var/datum/planet/moonbase/planet_moonbase = null
 	sky_visible = TRUE
 	observed_message = "The sky is clear."
 	imminent_transition_message = "The sky is returning to its normal emptiness."
+*/
