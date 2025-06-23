@@ -447,7 +447,7 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/eris,
 /area/security/main)
 "bK" = (
 /obj/effect/floor_decal/corner/lime{
@@ -1206,7 +1206,7 @@
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/eris,
 /area/security/main)
 "ey" = (
 /turf/simulated/floor/carpet/purple,
@@ -1641,7 +1641,7 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/eris,
 /area/security/main)
 "gd" = (
 /obj/structure/flora/ausbushes/lavendergrass,
@@ -5520,7 +5520,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/eris,
 /area/security/main)
 "rY" = (
 /turf/simulated/floor/tiled/white,
@@ -9536,7 +9536,7 @@
 /area/medical/virology)
 "GV" = (
 /obj/effect/catwalk_plated/dark,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/eris,
 /area/security/main)
 "GW" = (
 /obj/machinery/computer/med_data/laptop{
