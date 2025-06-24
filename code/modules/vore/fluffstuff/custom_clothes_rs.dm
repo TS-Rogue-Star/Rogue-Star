@@ -25,17 +25,20 @@
 
 //GooglyFox:Portal
 /obj/item/clothing/suit/storage/fluff/jacket/portaljacket
-	name = "pizza station delivery jacket"
-	desc = "A slick white and red pizza station branded jacket made with a polyester exterior, lined with fleece, a comfortable interior to keep the delivery person warm, it has a patch on the right breast, with a \"SAFE DRIVER\", and below it on the same patch dawns the pizza station logo of a rocket. Lower on that side is the name \"Portal\", and on the left the logo is once again used, with \"DELIVERY\" written below it. Smells like pizza sauce and cheese."
+	name = "pizza station delivery windbreaker"
+	desc = "A slick, lightweight white and red pizza station branded button-up windbreaker made with a water-resistant coating polyester exterior, lined with fleece, a comfortable, soft interior to keep the delivery person warm, it has a patch on the right breast, with a \"SAFE DRIVER\", and below it on the same patch dawns the pizza station logo of a rocket. Lower on that side is the name \"Portal\", and on the left breast the logo is once again used, with \"DELIVERY\" written below it. Smells like pizza sauce and cheese."
 	icon = 'icons/vore/custom_clothes_rs.dmi'
 	icon_override = 'icons/vore/custom_onmob_rs.dmi'
 	icon_state = "portaljacket"
 	item_state = "portaljacket_mob"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 
 //GooglyFox:Portal
 /obj/item/clothing/under/fluff/portaluniform
 	name = "pizza station employee uniform"
-	desc = "A clean, kempt dress shirt in a deep red color, there's a shape of a rocket on the back in a red color atop some black jeans which itself is buckled on with a belt dawned with a silver belt buckle in the shape of a pizza, with the text \"PIZZA STATION\" written below. There's a nametag on the chest, it reads \"Portal\", it smells vibrantly of oranges and pizza."
+	desc = "A clean, kempt dress shirt in a deep red color, atop some black jeans which itself is buckled on with a belt dawned with a silver belt buckle in the shape of a pizza, there's a shape of a rocket on the back in a bright red color with the text \"PIZZA STATION\" written below the logo. There's a nametag on the chest, it reads \"Portal\", it smells vibrantly of oranges and pizza."
 	icon = 'icons/vore/custom_clothes_rs.dmi'
 	icon_override = 'icons/vore/custom_onmob_rs.dmi'
 	icon_state = "portaluniform2"
@@ -68,5 +71,5 @@
 	icon_override = 'icons/vore/custom_onmob_rs.dmi'
 	icon_state = "portalbag"
 	item_state = "portalbag_mob"
-	slowdown = 0.2
+	slowdown = 0.4
 	max_storage_space = INVENTORY_DUFFLEBAG_SPACE // FOR THE PIZZAS AND DRINKS!
