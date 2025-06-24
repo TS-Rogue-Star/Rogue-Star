@@ -9,7 +9,7 @@
 /area/crew_quarters/recreation_area)
 "ab" = (
 /obj/random/mainttoyloot,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
 "ac" = (
 /obj/structure/cable{
@@ -37,10 +37,7 @@
 	dir = 4
 	},
 /obj/structure/railing/grey,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/maintenance/moonbase/basement/annex)
 "ah" = (
 /obj/structure/undies_wardrobe,
@@ -57,14 +54,14 @@
 "al" = (
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/visible/supply,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
 "am" = (
 /obj/structure/inflatable/door,
 /obj/item/tape/engineering{
 	icon_state = "tape_h_0"
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
 "an" = (
 /obj/machinery/door/firedoor/glass,
@@ -212,7 +209,7 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/moonbase/level1/north)
 "aR" = (
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/dorms/dorm1)
 "aS" = (
 /obj/structure/trash_pile,
@@ -259,7 +256,7 @@
 /obj/machinery/light/lamppost{
 	dir = 8
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
 "aZ" = (
 /obj/machinery/door/firedoor/glass,
@@ -286,7 +283,7 @@
 /obj/machinery/power/apc{
 	dir = 4
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/flooded)
 "bd" = (
 /obj/machinery/light/small{
@@ -316,7 +313,7 @@
 /obj/effect/map_effect/perma_light{
 	light_color = "#87CEEB"
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/maintenance/moonbase/basement/olddorms)
 "bi" = (
 /obj/machinery/light{
@@ -352,7 +349,7 @@
 /area/security/security_equiptment_storage)
 "bl" = (
 /obj/structure/prop/rock/small/alt,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northwest)
 "bm" = (
 /obj/structure/inflatable,
@@ -403,7 +400,7 @@
 /obj/machinery/light/lamppost{
 	dir = 8
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northeast)
 "bB" = (
 /turf/simulated/floor/plating,
@@ -532,7 +529,7 @@
 /area/moonbase/surface/levelone/south)
 "ca" = (
 /obj/item/weapon/storage/toolbox/electrical,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northwest)
 "cb" = (
 /obj/structure/table/rack/shelf,
@@ -600,7 +597,7 @@
 /area/crew_quarters/pool)
 "cn" = (
 /obj/structure/trash_pile,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
 "co" = (
 /obj/effect/floor_decal/corner/grey/bordercorner{
@@ -646,7 +643,7 @@
 /area/crew_quarters/recreation_area)
 "cy" = (
 /obj/structure/prop/rock/crystal_dust,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/maintenance/moonbase/basement/engibreakroom)
 "cz" = (
 /obj/structure/table/rack/shelf,
@@ -680,7 +677,7 @@
 /area/crew_quarters/pool)
 "cF" = (
 /obj/structure/trash_pile,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/maintenance/moonbase/basement/olddorms)
 "cG" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
@@ -908,7 +905,8 @@
 /obj/machinery/atmospherics/pipe/zpipe/up/scrubbers{
 	dir = 2
 	},
-/turf/simulated/mineral/floor/moonbase,
+/obj/structure/lattice,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
 "dq" = (
 /obj/structure/undies_wardrobe,
@@ -930,7 +928,7 @@
 /obj/machinery/light/lamppost{
 	dir = 1
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northeast)
 "dt" = (
 /obj/item/bee_pack,
@@ -961,7 +959,7 @@
 "du" = (
 /obj/structure/inflatable/door,
 /obj/item/tape/atmos,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northeast)
 "dv" = (
 /obj/structure/prop/rock/small/wateralt,
@@ -1240,6 +1238,15 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/groundbase/hotspring)
+"ev" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/basement/annex)
 "ex" = (
 /obj/structure/cable/green{
 	icon_state = "4-8"
@@ -1325,7 +1332,7 @@
 /area/quartermaster/moonbase/mining/eva)
 "eP" = (
 /obj/structure/prop/rock/crystal_dust,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/maintenance/moonbase/basement/east)
 "eQ" = (
 /obj/structure/table/bench/steel,
@@ -1402,7 +1409,7 @@
 /turf/simulated/floor/wood,
 /area/groundbase/hotspring)
 "fh" = (
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/dorms/dorm5)
 "fj" = (
 /obj/structure/undies_wardrobe,
@@ -1417,7 +1424,7 @@
 /area/hallway/moonbase/basement)
 "fl" = (
 /obj/structure/closet/emcloset,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/maintenance/moonbase/basement/olddorms)
 "fm" = (
 /obj/structure/cable{
@@ -1495,14 +1502,13 @@
 /area/quartermaster/moonbase/mining)
 "fG" = (
 /obj/structure/prop/rock/crystal_dust,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northwest)
 "fH" = (
-/obj/structure/railing/grey,
 /obj/structure/cable{
-	icon_state = "4-8"
+	icon_state = "1-8"
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/annex)
 "fI" = (
 /obj/structure/closet/crate,
@@ -1898,14 +1904,9 @@
 /turf/simulated/floor/water/indoors,
 /area/moonbase/dorms/dorm4)
 "gZ" = (
-/obj/structure/railing/grey{
-	dir = 1
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/mineral/floor/moonbase,
-/area/maintenance/moonbase/basement/annex)
+/obj/structure/ladder/up,
+/turf/simulated/mineral/floor/vacuum/moonbase,
+/area/moonbase/surface/levelone/north)
 "ha" = (
 /obj/effect/floor_decal/steeldecal/steel_decals10{
 	dir = 1
@@ -1940,7 +1941,7 @@
 /turf/simulated/floor/tiled/white,
 /area/moonbase/dorms/dorm1)
 "hh" = (
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/dorms/dorm6)
 "hi" = (
 /obj/structure/cable/green{
@@ -1961,7 +1962,7 @@
 /obj/structure/railing/grey{
 	dir = 1
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
 "hm" = (
 /obj/machinery/recharge_station,
@@ -1973,7 +1974,7 @@
 	dir = 8
 	},
 /obj/structure/railing/grey,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/hallway/moonbase/basement)
 "ho" = (
 /obj/random/plushie,
@@ -2070,7 +2071,7 @@
 /area/maintenance/moonbase/basement/poolmaint)
 "hF" = (
 /obj/structure/railing/grey,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/hallway/moonbase/basement)
 "hG" = (
 /obj/machinery/meter,
@@ -2078,7 +2079,7 @@
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/atmos)
 "hJ" = (
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/dorms/dorm3)
 "hL" = (
 /obj/machinery/vending/magivend,
@@ -2159,14 +2160,14 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
 "id" = (
 /obj/structure/railing/grey{
 	dir = 4
 	},
 /obj/machinery/light/small,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
 "ie" = (
 /obj/effect/floor_decal/corner/purple{
@@ -2207,14 +2208,14 @@
 	},
 /obj/structure/stairs/spawner/north,
 /turf/simulated/floor/plating,
-/area/moonbase/surface/underground)
+/area/maintenance/moonbase/level1/southeast)
 "ij" = (
 /obj/machinery/transhuman/autoresleever,
 /turf/simulated/floor/tiled/monotile,
 /area/medical/moonbase/basementresleeving)
 "ik" = (
 /obj/structure/prop/rock/flat,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northeast)
 "il" = (
 /obj/machinery/power/apc{
@@ -2248,7 +2249,7 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/moonbase/basement/olddorms)
 "ir" = (
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northeast)
 "is" = (
 /turf/simulated/floor/tiled/techfloor,
@@ -2487,7 +2488,7 @@
 /area/quartermaster/moonbase/mining/eva)
 "jc" = (
 /obj/structure/inflatable/door,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
 "jd" = (
 /obj/machinery/shower{
@@ -2532,7 +2533,7 @@
 /area/security/security_equiptment_storage)
 "jj" = (
 /obj/structure/prop/rock/small/alt,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/flooded)
 "jk" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
@@ -2885,7 +2886,7 @@
 /area/maintenance/moonbase/basement/emstorage)
 "kx" = (
 /obj/structure/prop/rock/crystal_dust,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
 "kz" = (
 /obj/structure/bed/double/padded,
@@ -2934,7 +2935,7 @@
 /obj/item/device/flashlight/lantern{
 	on = 1
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northeast)
 "kK" = (
 /obj/machinery/door/firedoor/glass,
@@ -2971,7 +2972,7 @@
 /area/maintenance/moonbase/basement/northair)
 "kO" = (
 /obj/item/weapon/material/fishing_rod/modern,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northwest)
 "kQ" = (
 /turf/simulated/wall/r_wall,
@@ -3044,7 +3045,7 @@
 /area/quartermaster/moonbase/mining/lockerroom)
 "lc" = (
 /obj/structure/target_stake,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/security/range)
 "ld" = (
 /turf/simulated/wall/r_wall,
@@ -3141,7 +3142,7 @@
 /obj/structure/railing/grey{
 	dir = 4
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/maintenance/moonbase/basement/engibreakroom)
 "lz" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -3302,7 +3303,7 @@
 /area/groundbase/hotspring)
 "me" = (
 /obj/structure/railing/grey,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
 "mg" = (
 /obj/structure/catwalk,
@@ -3480,7 +3481,7 @@
 "mN" = (
 /obj/structure/table/woodentable,
 /obj/random/tool/powermaint,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/flooded)
 "mO" = (
 /obj/structure/catwalk,
@@ -3510,7 +3511,7 @@
 /turf/simulated/floor/tiled,
 /area/quartermaster/moonbase/mining)
 "mR" = (
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/maintenance/moonbase/basement/motel)
 "mS" = (
 /obj/structure/bed/chair/backed_red{
@@ -3629,7 +3630,7 @@
 /area/moonbase/basement/caves/east)
 "nq" = (
 /obj/structure/prop/rock/small,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northeast)
 "ns" = (
 /obj/structure/cable{
@@ -3708,11 +3709,11 @@
 	dir = 1;
 	id = "miningdelivery"
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/quartermaster/moonbase/mining/eva)
 "nK" = (
 /obj/random/humanoidremains,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
 "nM" = (
 /obj/effect/floor_decal/steeldecal/steel_decals10{
@@ -3835,7 +3836,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/surface/underground)
 "og" = (
 /turf/simulated/floor/carpet,
@@ -3847,7 +3848,13 @@
 /obj/structure/railing/grey{
 	dir = 8
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
+/area/moonbase/basement/caves/east)
+"om" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
 "oq" = (
 /obj/structure/catwalk,
@@ -3941,7 +3948,7 @@
 /obj/effect/map_effect/perma_light{
 	light_color = "#87CEEB"
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northwest)
 "oH" = (
 /obj/structure/stairs/spawner/north,
@@ -3998,7 +4005,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/south)
 "oQ" = (
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/maintenance/moonbase/basement/olddorms)
 "oR" = (
 /turf/simulated/floor/tiled/monotile,
@@ -4143,7 +4150,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/northair)
 "pu" = (
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/crew_quarters/recreation_area)
 "pv" = (
 /obj/structure/cable{
@@ -4174,7 +4181,7 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/maintenance/moonbase/basement/techmonitoring)
 "pE" = (
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/southair)
 "pF" = (
@@ -4254,6 +4261,15 @@
 /obj/machinery/photocopier,
 /turf/simulated/floor/wood,
 /area/maintenance/moonbase/basement/motel)
+"qa" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/basement/south)
 "qb" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/multi_tile/glass{
@@ -4297,7 +4313,7 @@
 /obj/structure/railing/grey{
 	dir = 4
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/maintenance/moonbase/basement/olddorms)
 "qi" = (
 /obj/structure/table/woodentable,
@@ -4686,11 +4702,12 @@
 /turf/simulated/floor/plating/external,
 /area/moonbase/basement/caves/northeast)
 "rG" = (
-/obj/machinery/light/small{
-	dir = 1
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
 	},
-/turf/simulated/mineral/floor/moonbase,
-/area/moonbase/basement/caves/east)
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/basement/south)
 "rH" = (
 /obj/machinery/firealarm,
 /turf/simulated/floor/tiled/dark,
@@ -4740,7 +4757,7 @@
 /obj/random/snack,
 /obj/random/snack,
 /obj/random/firstaid,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northwest)
 "rO" = (
 /obj/machinery/door/firedoor/glass,
@@ -4783,7 +4800,7 @@
 /area/security/security_equiptment_storage)
 "rW" = (
 /obj/structure/prop/statue/phoron,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northwest)
 "rX" = (
 /turf/simulated/wall/r_wall,
@@ -4808,7 +4825,7 @@
 /obj/machinery/light/lamppost{
 	dir = 4
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/flooded)
 "sd" = (
 /obj/structure/cable/pink{
@@ -5010,7 +5027,7 @@
 /area/moonbase/dorms/dorm4)
 "sN" = (
 /obj/structure/prop/rock/small,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/flooded)
 "sP" = (
 /obj/machinery/light{
@@ -5309,7 +5326,7 @@
 /obj/structure/railing/grey{
 	dir = 1
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/surface/underground)
 "tS" = (
 /obj/structure/bed/chair/sofa/corp/left{
@@ -5514,13 +5531,13 @@
 /obj/structure/window/reinforced{
 	pixel_y = -4
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/flooded)
 "uE" = (
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
 "uF" = (
 /obj/structure/bed/chair/sofa/right/brown,
@@ -5531,7 +5548,7 @@
 /obj/effect/map_effect/perma_light{
 	light_color = "#87CEEB"
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/maintenance/moonbase/basement/motel)
 "uH" = (
 /obj/structure/table/rack/shelf,
@@ -5632,13 +5649,13 @@
 /obj/effect/map_effect/perma_light{
 	light_color = "#87CEEB"
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/maintenance/moonbase/basement/east)
 "vd" = (
 /obj/structure/railing/grey{
 	dir = 1
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/maintenance/moonbase/basement/annex)
 "ve" = (
 /turf/simulated/wall,
@@ -5756,7 +5773,7 @@
 	dir = 4
 	},
 /obj/structure/railing/grey,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/hallway/moonbase/basement)
 "vC" = (
 /obj/machinery/light{
@@ -6028,7 +6045,7 @@
 /turf/simulated/floor/plating/moonbase,
 /area/maintenance/moonbase/basement/boxingring)
 "wt" = (
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/dorms/dorm7)
 "wu" = (
 /obj/structure/table/rack/shelf,
@@ -6054,7 +6071,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/annex)
 "wz" = (
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/dorms/dorm2)
 "wA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
@@ -6166,7 +6183,7 @@
 /turf/simulated/floor/plating,
 /area/moonbase/basement/caves/northwest)
 "xa" = (
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/maintenance/moonbase/basement/engibreakroom)
 "xb" = (
 /obj/structure/closet/crate,
@@ -6235,7 +6252,7 @@
 /obj/item/device/flashlight/lantern{
 	on = 1
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northwest)
 "xs" = (
 /obj/structure/table/rack/shelf/steel,
@@ -6259,7 +6276,7 @@
 /obj/effect/map_effect/perma_light{
 	light_color = "#87CEEB"
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/maintenance/moonbase/basement/engibreakroom)
 "xx" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/red{
@@ -6301,7 +6318,7 @@
 /obj/structure/railing/grey{
 	dir = 1
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/maintenance/moonbase/basement/west)
 "xC" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green{
@@ -6386,7 +6403,7 @@
 /area/moonbase/surface/underground)
 "xS" = (
 /obj/item/mecha_parts/mecha_equipment/tool/drill/bore,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northwest)
 "xT" = (
 /obj/structure/cable/green{
@@ -6751,7 +6768,7 @@
 /obj/structure/railing/grey{
 	dir = 1
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
 "zf" = (
 /obj/structure/catwalk,
@@ -6794,7 +6811,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
 "zl" = (
 /obj/structure/table/woodentable,
@@ -6815,7 +6832,7 @@
 /area/maintenance/moonbase/basement/south)
 "zn" = (
 /obj/structure/prop/rock/crystal_dust,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/flooded)
 "zo" = (
 /obj/effect/floor_decal/chapel,
@@ -6832,7 +6849,7 @@
 /obj/structure/railing/grey{
 	dir = 4
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/hallway/moonbase/basement)
 "zt" = (
 /turf/simulated/wall/r_wall,
@@ -6856,7 +6873,7 @@
 /area/crew_quarters/recreation_area)
 "zx" = (
 /obj/structure/prop/rock/crystal_dust,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/maintenance/moonbase/basement/motel)
 "zy" = (
 /obj/machinery/light{
@@ -6896,13 +6913,7 @@
 /area/maintenance/moonbase/basement/northair)
 "zF" = (
 /obj/structure/railing/grey,
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/maintenance/moonbase/basement/annex)
 "zG" = (
 /obj/machinery/door/firedoor/glass,
@@ -6922,7 +6933,7 @@
 /obj/structure/railing/grey{
 	dir = 8
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/maintenance/moonbase/basement/olddorms)
 "zO" = (
 /turf/simulated/floor/water/indoors,
@@ -7027,7 +7038,7 @@
 /obj/structure/railing/grey{
 	dir = 1
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/hallway/moonbase/basement)
 "Ai" = (
 /obj/machinery/light/small,
@@ -7231,15 +7242,8 @@
 /turf/simulated/floor/tiled/eris/derelict2,
 /area/maintenance/moonbase/basement/engibreakroom)
 "AT" = (
-/obj/structure/railing/grey,
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/mineral/floor/moonbase,
-/area/maintenance/moonbase/basement/annex)
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/level1/southeast)
 "AU" = (
 /obj/structure/table/glass,
 /obj/item/weapon/towel/random,
@@ -7724,7 +7728,7 @@
 /obj/structure/railing/grey{
 	dir = 4
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/hallway/moonbase/basement)
 "CI" = (
 /obj/structure/fireaxecabinet{
@@ -7751,10 +7755,7 @@
 "CN" = (
 /obj/structure/railing/grey,
 /obj/structure/prop/rock/crystal_dust,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/maintenance/moonbase/basement/annex)
 "CO" = (
 /obj/machinery/disposal/wall/cleaner{
@@ -7786,7 +7787,7 @@
 	pixel_y = -4
 	},
 /obj/structure/prop/rock/crystal_dust,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/flooded)
 "CX" = (
 /obj/machinery/door/firedoor/glass,
@@ -7800,7 +7801,7 @@
 /area/maintenance/moonbase/basement/engibreakroom)
 "CZ" = (
 /obj/structure/prop/rock/small,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
 "Da" = (
 /obj/structure/prop/rock/small/alt,
@@ -7909,7 +7910,7 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	icon_state = "1-2"
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/annex)
@@ -8009,7 +8010,7 @@
 /area/maintenance/moonbase/basement/motel)
 "DR" = (
 /obj/machinery/portable_atmospherics/powered/pump/filled,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northwest)
 "DT" = (
 /obj/structure/railing{
@@ -8067,7 +8068,7 @@
 /turf/simulated/floor/carpet/bcarpet,
 /area/maintenance/moonbase/basement/motel)
 "Ef" = (
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
 "Eg" = (
 /obj/structure/cable{
@@ -8226,7 +8227,7 @@
 	},
 /obj/random/coin,
 /obj/structure/table/woodentable,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northwest)
 "EK" = (
 /obj/machinery/power/smes/buildable{
@@ -8272,11 +8273,11 @@
 /obj/effect/map_effect/perma_light{
 	light_color = "#87CEEB"
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/surface/levelone/south)
 "ES" = (
 /obj/structure/loot_pile/mecha/ripley,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northwest)
 "ET" = (
 /obj/machinery/door/firedoor/glass,
@@ -8296,7 +8297,7 @@
 /area/space)
 "EV" = (
 /obj/structure/prop/rock/small/alt,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
 "EW" = (
 /obj/structure/cable{
@@ -8328,7 +8329,7 @@
 "Fa" = (
 /obj/structure/inflatable,
 /obj/item/tape/atmos,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northwest)
 "Fc" = (
 /obj/structure/toilet,
@@ -8343,6 +8344,12 @@
 	},
 /turf/simulated/floor/tiled,
 /area/quartermaster/moonbase/mining)
+"Fe" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/basement/annex)
 "Ff" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 10
@@ -8377,7 +8384,7 @@
 /area/groundbase/hotspring/water)
 "Fk" = (
 /obj/structure/table/bench/wooden,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northwest)
 "Fl" = (
 /obj/machinery/shower{
@@ -8433,7 +8440,7 @@
 /area/maintenance/moonbase/basement/west)
 "Fx" = (
 /obj/structure/prop/rock/crystal_dust,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/surface/underground)
 "Fy" = (
 /obj/structure/bookcase{
@@ -8480,6 +8487,12 @@
 	},
 /turf/simulated/floor/carpet,
 /area/moonbase/dorms/dorm3)
+"FB" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/mineral/floor/cave/moonbase,
+/area/moonbase/basement/caves/east)
 "FC" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -8501,7 +8514,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/moonbase/surface/underground)
+/area/maintenance/moonbase/level1/southeast)
 "FF" = (
 /obj/structure/cable{
 	icon_state = "0-8"
@@ -8561,7 +8574,7 @@
 /turf/simulated/floor/tiled,
 /area/quartermaster/moonbase/mining/eva)
 "FM" = (
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/surface/underground)
 "FN" = (
 /obj/structure/cable{
@@ -8665,7 +8678,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/dorms)
 "Gb" = (
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/dorms/dorm8)
 "Gd" = (
 /obj/effect/decal/cleanable/blood/drip{
@@ -8720,7 +8733,7 @@
 /area/crew_quarters/recreation_area_restroom)
 "Gn" = (
 /obj/effect/catwalk_plated,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/maintenance/moonbase/basement/west)
 "Go" = (
 /obj/machinery/door/firedoor/glass,
@@ -8965,12 +8978,16 @@
 /obj/structure/railing/grey{
 	dir = 1
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/maintenance/moonbase/basement/annex)
+"Hl" = (
+/obj/machinery/light,
+/turf/simulated/mineral/floor/cave/moonbase,
+/area/moonbase/basement/caves/east)
 "Hm" = (
 /obj/structure/bonfire,
 /obj/item/weapon/flame/lighter/zippo/communist,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northwest)
 "Ho" = (
 /turf/simulated/wall,
@@ -9105,7 +9122,7 @@
 /area/quartermaster/moonbase/mining/eva)
 "HK" = (
 /obj/structure/table/woodentable,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/flooded)
 "HL" = (
 /turf/simulated/floor/water/indoors,
@@ -9268,7 +9285,7 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/moonbase/basement/iceroomcontrol)
 "Il" = (
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/flooded)
 "In" = (
 /obj/structure/bed/chair/sofa/left/brown,
@@ -9281,7 +9298,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
 "Ir" = (
 /obj/structure/table/gamblingtable,
@@ -9313,13 +9330,13 @@
 /area/maintenance/moonbase/basement/dorms)
 "Iy" = (
 /obj/structure/trash_pile,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northeast)
 "IB" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/flooded)
 "IC" = (
 /obj/structure/closet/emcloset,
@@ -9508,7 +9525,7 @@
 /obj/structure/picnic_blanket_deployed/for_mapping_use{
 	name = "picnic blanket"
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northeast)
 "Ji" = (
 /obj/structure/reagent_dispensers/fueltank/barrel/three,
@@ -9602,7 +9619,7 @@
 /obj/random/maintenance/clean,
 /obj/structure/closet/crate,
 /obj/item/weapon/storage/pouch/flares/full_glow,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northwest)
 "JE" = (
 /obj/structure/catwalk,
@@ -9624,7 +9641,7 @@
 /area/maintenance/moonbase/basement/boxingring)
 "JJ" = (
 /obj/item/weapon/storage/toolbox/lunchbox/nt,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northeast)
 "JK" = (
 /obj/structure/bed,
@@ -9655,7 +9672,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/maintenance/moonbase/basement/olddorms)
 "JU" = (
 /obj/structure/bed/chair/sofa/left/brown{
@@ -9729,7 +9746,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/surface/underground)
 "Kh" = (
 /obj/machinery/photocopier,
@@ -9838,6 +9855,15 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/maintenance/moonbase/level1/north)
+"KD" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/maintenance,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/maintenance/moonbase/basement/south)
 "KF" = (
 /obj/structure/bed/chair/sofa/corner/black,
 /turf/simulated/floor/tiled/steel_dirty,
@@ -9938,7 +9964,7 @@
 /area/maintenance/moonbase/basement/emstorage)
 "KX" = (
 /obj/structure/prop/rock/small/alt,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/maintenance/moonbase/basement/olddorms)
 "KZ" = (
 /obj/effect/floor_decal/corner/beige{
@@ -10037,7 +10063,7 @@
 /area/maintenance/moonbase/basement/emstorage)
 "Lw" = (
 /obj/structure/prop/rock/round,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
 "Lx" = (
 /obj/structure/table/wooden_reinforced,
@@ -10119,7 +10145,7 @@
 /obj/machinery/power/apc{
 	dir = 8
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
 "LL" = (
 /obj/structure/railing/grey{
@@ -10157,7 +10183,7 @@
 /obj/machinery/light/lamppost{
 	dir = 4
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northeast)
 "LR" = (
 /obj/structure/cable{
@@ -10176,7 +10202,7 @@
 /area/hallway/moonbase/basement)
 "LT" = (
 /obj/structure/prop/statue/phoron,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
 "LU" = (
 /obj/machinery/light,
@@ -10232,7 +10258,7 @@
 /obj/structure/window/reinforced{
 	pixel_y = -4
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/flooded)
 "Md" = (
 /obj/machinery/door/firedoor/glass,
@@ -10333,13 +10359,13 @@
 /obj/structure/bed/chair{
 	dir = 1
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/flooded)
 "Mx" = (
 /obj/structure/railing/grey{
 	dir = 8
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/hallway/moonbase/basement)
 "My" = (
 /obj/effect/decal/cleanable/blood/drip,
@@ -10483,7 +10509,7 @@
 /obj/effect/map_effect/perma_light{
 	light_color = "#87CEEB"
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/flooded)
 "Nd" = (
 /obj/machinery/conveyor{
@@ -10508,7 +10534,7 @@
 /area/maintenance/moonbase/basement/iceroomcontrol)
 "Ng" = (
 /obj/effect/catwalk_plated,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/maintenance/moonbase/basement/olddorms)
 "Nh" = (
 /obj/structure/closet/secure_closet/miner,
@@ -10586,12 +10612,12 @@
 "Nu" = (
 /obj/machinery/portable_atmospherics/powered/scrubber,
 /obj/item/weapon/storage/briefcase/inflatable,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northwest)
 "Nw" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/purple,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northwest)
 "Nx" = (
 /obj/machinery/light{
@@ -10869,7 +10895,7 @@
 /turf/simulated/floor/carpet/blue2,
 /area/hallway/moonbase/shop)
 "OA" = (
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/maintenance/moonbase/basement/east)
 "OB" = (
 /obj/structure/table/rack/shelf/steel,
@@ -10891,6 +10917,15 @@
 	},
 /turf/simulated/floor/tiled/eris/white/brown_platform,
 /area/hallway/moonbase/basement)
+"OG" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/basement/annex)
 "OH" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -10965,7 +11000,7 @@
 /area/maintenance/moonbase/basement/north)
 "OW" = (
 /obj/item/toy/gnome,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northeast)
 "OX" = (
 /obj/structure/table/rack/shelf,
@@ -11021,7 +11056,7 @@
 	dir = 4
 	},
 /obj/structure/railing/grey,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
 "Pd" = (
 /obj/machinery/atmospherics/pipe/tank/phoron,
@@ -11114,7 +11149,7 @@
 /area/moonbase/surface/levelone/south)
 "Ps" = (
 /obj/structure/prop/rock/crystal_dust,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/maintenance/moonbase/basement/olddorms)
 "Pt" = (
 /obj/machinery/light{
@@ -11149,7 +11184,7 @@
 /area/maintenance/moonbase/basement/dorms)
 "Px" = (
 /obj/structure/railing/grey,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/surface/underground)
 "Py" = (
 /obj/structure/cable/green{
@@ -11182,7 +11217,7 @@
 	},
 /area/groundbase/hotspring/water)
 "PC" = (
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/security/range)
 "PF" = (
 /obj/structure/bed/double/padded,
@@ -11308,7 +11343,7 @@
 /turf/simulated/floor/carpet,
 /area/moonbase/dorms/dorm7)
 "PX" = (
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northwest)
 "PY" = (
 /obj/structure/stairs/spawner/north,
@@ -11418,7 +11453,7 @@
 /obj/effect/map_effect/perma_light{
 	light_color = "#87CEEB"
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northeast)
 "Qv" = (
 /obj/machinery/light{
@@ -11443,7 +11478,7 @@
 "Qy" = (
 /obj/structure/inflatable/door,
 /obj/item/tape/atmos,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northwest)
 "Qz" = (
 /obj/machinery/light/small,
@@ -11564,7 +11599,7 @@
 /area/crew_quarters/recreation_area)
 "QU" = (
 /obj/structure/inflatable/door,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northwest)
 "QV" = (
 /turf/simulated/mineral/moonbase,
@@ -11605,7 +11640,7 @@
 "Rb" = (
 /obj/structure/barricade,
 /obj/item/tape/engineering,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
 "Rc" = (
 /obj/structure/catwalk,
@@ -11808,7 +11843,7 @@
 /obj/structure/railing/grey{
 	dir = 1
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/hallway/moonbase/basement)
 "RL" = (
 /turf/unsimulated/mineral/moonbase,
@@ -11817,7 +11852,7 @@
 /obj/structure/railing/grey{
 	dir = 4
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
 "RN" = (
 /obj/structure/railing/grey{
@@ -11880,7 +11915,7 @@
 /obj/item/target/alien,
 /obj/item/target/alien,
 /obj/item/target/alien,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/security/range)
 "RV" = (
 /obj/machinery/door/firedoor/glass,
@@ -12097,10 +12132,7 @@
 	dir = 8
 	},
 /obj/structure/railing/grey,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/maintenance/moonbase/basement/annex)
 "SO" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden{
@@ -12206,7 +12238,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/visible/supply,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
 "Th" = (
 /obj/machinery/light/floortube{
@@ -12325,7 +12357,7 @@
 /area/maintenance/moonbase/basement/annex)
 "TA" = (
 /obj/structure/railing/grey,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/maintenance/moonbase/basement/west)
 "TC" = (
 /obj/machinery/door/firedoor/glass,
@@ -12373,7 +12405,7 @@
 /area/medical/moonbase/basement)
 "TL" = (
 /obj/structure/trash_pile,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northwest)
 "TN" = (
 /obj/structure/railing,
@@ -12572,7 +12604,7 @@
 /obj/structure/railing/grey{
 	dir = 1
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/hallway/moonbase/basement)
 "Uy" = (
 /obj/structure/cable/cyan{
@@ -12644,7 +12676,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
 "UK" = (
 /obj/structure/railing/grey{
@@ -12653,7 +12685,7 @@
 /obj/structure/railing/grey{
 	dir = 1
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/maintenance/moonbase/basement/annex)
 "UM" = (
 /obj/structure/cable{
@@ -12777,7 +12809,7 @@
 /turf/simulated/floor/lino,
 /area/chapel/office)
 "Vh" = (
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/dorms/dorm4)
 "Vi" = (
 /obj/machinery/door/firedoor/glass,
@@ -12910,9 +12942,8 @@
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/atmos)
 "VJ" = (
-/obj/machinery/light/small,
-/turf/simulated/mineral/floor/moonbase,
-/area/moonbase/basement/caves/east)
+/turf/simulated/wall/r_wall,
+/area/maintenance/moonbase/level1/southeast)
 "VK" = (
 /turf/simulated/floor/plating,
 /area/moonbase/surface/underground)
@@ -13031,7 +13062,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/flooded)
 "Wk" = (
 /obj/structure/foamedmetal,
@@ -13063,7 +13094,7 @@
 /area/quartermaster/moonbase/mining)
 "Ws" = (
 /obj/structure/prop/rock/crystal_dust,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northeast)
 "Wt" = (
 /obj/machinery/atmospherics/pipe/tank/nitrous_oxide{
@@ -13099,7 +13130,7 @@
 /obj/random/maintenance,
 /obj/random/maintenance,
 /obj/random/contraband,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northwest)
 "Wz" = (
 /obj/structure/cable{
@@ -13142,7 +13173,7 @@
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/atmos)
 "WK" = (
-/obj/machinery/light/small,
+/obj/machinery/light,
 /turf/simulated/floor/plating/moonbase,
 /area/moonbase/basement/caves/east)
 "WL" = (
@@ -13156,7 +13187,7 @@
 /obj/effect/map_effect/perma_light{
 	light_color = "#87CEEB"
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
 "WO" = (
 /obj/structure/cable{
@@ -13207,7 +13238,7 @@
 /obj/structure/window/reinforced{
 	pixel_y = -4
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/flooded)
 "WW" = (
 /obj/structure/closet/emcloset,
@@ -13352,7 +13383,7 @@
 /area/maintenance/moonbase/basement/motel)
 "XB" = (
 /obj/structure/prop/statue/phoron,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northeast)
 "XD" = (
 /turf/simulated/wall,
@@ -13413,7 +13444,7 @@
 /area/maintenance/moonbase/basement/motel)
 "XO" = (
 /obj/structure/reagent_dispensers/fueltank/barrel/three,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northwest)
 "XR" = (
 /obj/structure/window/reinforced,
@@ -13691,7 +13722,7 @@
 "YU" = (
 /obj/item/clothing/head/welding/fluff,
 /obj/item/weapon/weldingtool,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northwest)
 "YV" = (
 /obj/machinery/door/firedoor/glass,
@@ -13879,7 +13910,7 @@
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
 "ZD" = (
 /obj/structure/table/bench/wooden,
@@ -13927,7 +13958,7 @@
 /obj/structure/table/rack,
 /obj/random/maintenance,
 /obj/random/maintenance/clean,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northwest)
 "ZM" = (
 /obj/machinery/door/firedoor/glass,
@@ -13943,7 +13974,7 @@
 	id = "miningdelivery"
 	},
 /obj/random/multiple/ore_pile,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/quartermaster/moonbase/mining/eva)
 "ZO" = (
 /obj/structure/table/rack/shelf/steel,
@@ -13963,7 +13994,7 @@
 /area/crew_quarters/theatre)
 "ZQ" = (
 /obj/structure/reagent_dispensers/fueltank/barrel/three,
-/turf/simulated/mineral/floor/moonbase,
+/turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/flooded)
 "ZR" = (
 /obj/machinery/atmospherics/pipe/tank/nitrogen,
@@ -20127,7 +20158,7 @@ oj
 oj
 oj
 oj
-oj
+gZ
 oj
 oj
 oj
@@ -23196,9 +23227,9 @@ hP
 Ev
 bB
 bB
-wk
-bB
-bB
+KD
+qa
+rG
 zf
 Ki
 Ki
@@ -24892,8 +24923,8 @@ br
 HI
 WG
 WG
-DE
-WG
+Bp
+Fe
 WG
 MJ
 MJ
@@ -25035,7 +25066,7 @@ WG
 WG
 UK
 SN
-WG
+DE
 WG
 MJ
 Wk
@@ -25176,8 +25207,8 @@ br
 BD
 WG
 vd
-fH
-WG
+zF
+DE
 cj
 MJ
 MJ
@@ -25318,8 +25349,8 @@ br
 yy
 Gw
 Rw
-fH
-WG
+zF
+DE
 xb
 MJ
 Iw
@@ -25461,7 +25492,7 @@ eE
 WG
 vd
 zF
-BV
+OG
 BV
 Ie
 oe
@@ -25601,9 +25632,9 @@ pX
 br
 fv
 Du
-gZ
-AT
-WG
+vd
+zF
+DE
 yX
 MJ
 Lz
@@ -25742,10 +25773,10 @@ VD
 ez
 br
 ls
-WG
+DE
 vd
 CN
-WG
+DE
 WG
 MJ
 MJ
@@ -25884,10 +25915,10 @@ VD
 VD
 ck
 WG
-WG
+DE
 Hi
 ag
-WG
+DE
 WG
 MJ
 qA
@@ -26026,10 +26057,10 @@ VD
 VD
 br
 Rg
-WG
-WG
-DE
-WG
+Bp
+BV
+ev
+fH
 se
 MJ
 Kj
@@ -29256,7 +29287,7 @@ oj
 oj
 oj
 oj
-Ef
+om
 Ef
 dp
 al
@@ -30263,7 +30294,7 @@ oj
 oj
 oj
 oj
-rG
+Ef
 Ef
 WN
 qe
@@ -30690,7 +30721,7 @@ oj
 oj
 Ef
 Ef
-Ef
+Hl
 oj
 oj
 oj
@@ -30947,11 +30978,11 @@ GX
 Cy
 Lm
 Lm
-Lm
-Lm
 xg
 Lm
 Lm
+Lm
+xg
 Lm
 Lm
 XK
@@ -31255,39 +31286,39 @@ oj
 oj
 oj
 oj
+om
 Ef
 Ef
+oj
+oj
+oj
+oj
+oj
+oj
+oj
+oj
+oj
+oj
+oj
+oj
+oj
+oj
+oj
+oj
+oj
+oj
+oj
+oj
+oj
+oj
+oj
+oj
+oj
 VJ
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-oj
-NC
-NC
-NC
-NC
-NC
+VJ
+VJ
+VJ
+VJ
 Es
 Es
 Es
@@ -31342,7 +31373,7 @@ oj
 yL
 yL
 yL
-oj
+gZ
 oj
 oj
 oj
@@ -31396,8 +31427,8 @@ oj
 oj
 oj
 oj
-oj
-WN
+Ef
+Ef
 Ef
 Ef
 oj
@@ -31425,11 +31456,11 @@ oj
 oj
 oj
 oj
-NC
+VJ
 ii
 FE
-VK
-VK
+AT
+AT
 Es
 Es
 Es
@@ -31567,11 +31598,11 @@ oj
 oj
 oj
 oj
-NC
-NC
-NC
-NC
-NC
+VJ
+VJ
+VJ
+VJ
+VJ
 Es
 Es
 Es
@@ -31681,7 +31712,7 @@ oj
 oj
 oj
 Ef
-Ef
+WN
 Ef
 Ef
 oj
@@ -32109,7 +32140,7 @@ oj
 oj
 Ef
 Ef
-Ef
+FB
 oj
 oj
 oj
