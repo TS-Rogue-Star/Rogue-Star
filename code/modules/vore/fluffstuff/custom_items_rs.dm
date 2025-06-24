@@ -162,11 +162,9 @@
 	. = ..()
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/dr_gibb/deluxe
-	description_fluff = "Following a 2490 lawsuit and a spate of deaths, Gilthari Exports reminds customers that the 'Dr.' legally stands for 'Drink', now even better.. Somehow!"
 	icon = 'icons/vore/custom_items_rs.dmi'
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/space_up/deluxe
-	description_fluff = "The 'Space' branding was originally added to the 'Alpha Cola' product line in order to justify selling cans for 50% higher prices to 'off-world' retailers. Despite being chemically identical, Space Cola proved so popular that Centauri Provisions eventually applied the name to the entire product line - price hike and all. Now even better.. Somehow!"
 	icon = 'icons/vore/custom_items_rs.dmi'
 
 /obj/item/weapon/storage/fancy/soda

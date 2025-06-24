@@ -45,7 +45,7 @@
 //GooglyFox:Portal
 /obj/item/clothing/gloves/fluff/portalgloves
 	name = "work gloves with wedding ring"
-	desc = "Some heavy duty work gloves meant for carrying pizzas without your fingers getting cold. It has a golden ring on the left hand on the middle finger, it glimmers brightly with some engraved text, \"T.O.A.S.T.E.R.\". There's also the name Portal engraved on the inside of the ring."
+	desc = "Some heavy duty work gloves meant for carrying pizzas without your fingers getting cold. It has a golden ring on the left hand on the middle finger, it glimmers brightly with some engraved text, \"T.O.A.S.T.E.R.\". There's also the name \"Portal\" engraved on the inside of the ring."
 	icon = 'icons/vore/custom_clothes_rs.dmi'
 	icon_override = 'icons/vore/custom_onmob_rs.dmi'
 	icon_state = "portalgloves"
@@ -54,7 +54,7 @@
 //GooglyFox:Portal
 /obj/item/clothing/shoes/boots/fluff/portalboots
 	name = "work boots"
-	desc = "Some heavy duty work boots meant for long walks and constant wear-and-tear. They stomp loudly everywhere they walk due to such."
+	desc = "Some heavy duty work boots meant for long walks and harsh weather or environments. They're pretty loud wherever the person wearing them walk due to being so heavy-duty."
 	icon = 'icons/vore/custom_clothes_rs.dmi'
 	icon_override = 'icons/vore/custom_onmob_rs.dmi'
 	icon_state = "portalboots"
@@ -63,7 +63,7 @@
 //GooglyFox:Portal
 /obj/item/weapon/storage/backpack/satchel/fluff/portalbag
 	name = "pizza station delivery satchel"
-	desc = "A slick white and red pizza station branded it's a snug satchel with a insulated interior to keep your food warm, and or cold. with \"DELIVERY\" written on the bag, and the pizza station logo on the flap. Smells like pizza sauce and cheese."
+	desc = "A clunky, heavy white and red pizza station branded satchel with a insulated interior to keep your food warm, and drinks cold, with seperate spots in the bag for each to sit without making eachother warmer or colder! Truly modern technology. The bag also comes with a \"DELIVERY\" patch on the bag, and the pizza station logo on the flap. It smells like pepperoni!"
 	icon = 'icons/vore/custom_clothes_rs.dmi'
 	icon_override = 'icons/vore/custom_onmob_rs.dmi'
 	icon_state = "portalbag"
