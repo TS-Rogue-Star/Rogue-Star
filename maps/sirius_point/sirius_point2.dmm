@@ -4626,9 +4626,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/turf/simulated/open/vacuum{
-	outdoors = 1
-	},
+/turf/simulated/open,
 /area/maintenance/moonbase/level1/south)
 "emu" = (
 /obj/structure/marker_beacon{
@@ -4684,9 +4682,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/open/vacuum{
-	outdoors = 1
-	},
+/turf/simulated/open,
 /area/maintenance/moonbase/level1/south)
 "eoT" = (
 /obj/structure/curtain/open/shower/security,
@@ -8497,9 +8493,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
-/turf/simulated/open/vacuum{
-	outdoors = 1
-	},
+/turf/simulated/open,
 /area/maintenance/moonbase/level1/south)
 "ikz" = (
 /obj/machinery/door/firedoor/glass,
@@ -13438,9 +13432,7 @@
 /obj/structure/railing/grey{
 	dir = 8
 	},
-/turf/simulated/open/vacuum{
-	outdoors = 1
-	},
+/turf/simulated/open,
 /area/maintenance/moonbase/level1/south)
 "nfd" = (
 /obj/machinery/conveyor{
@@ -13501,9 +13493,7 @@
 /area/quartermaster/storage)
 "nje" = (
 /obj/structure/railing/grey,
-/turf/simulated/open/vacuum{
-	outdoors = 1
-	},
+/turf/simulated/open,
 /area/maintenance/moonbase/level1/south)
 "njh" = (
 /turf/simulated/mineral/moonbase,
@@ -15586,9 +15576,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/light/small,
-/turf/simulated/open/vacuum{
-	outdoors = 1
-	},
+/turf/simulated/open,
 /area/maintenance/moonbase/level1/south)
 "prS" = (
 /obj/fiftyspawner/wood,
@@ -20704,9 +20692,7 @@
 /obj/structure/railing/grey{
 	dir = 8
 	},
-/turf/simulated/open/vacuum{
-	outdoors = 1
-	},
+/turf/simulated/open,
 /area/maintenance/moonbase/level1/south)
 "uJa" = (
 /obj/machinery/optable,
@@ -21376,9 +21362,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/open/vacuum{
-	outdoors = 1
-	},
+/turf/simulated/open,
 /area/maintenance/moonbase/level1/south)
 "vud" = (
 /obj/structure/railing{
@@ -21540,9 +21524,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/solars)
 "vGI" = (
-/turf/simulated/open/vacuum{
-	outdoors = 1
-	},
+/turf/simulated/open,
 /area/maintenance/moonbase/level1/south)
 "vGK" = (
 /obj/structure/marker_beacon{

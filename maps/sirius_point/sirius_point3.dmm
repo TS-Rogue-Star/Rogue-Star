@@ -11058,11 +11058,12 @@
 /obj/machinery/embedded_controller/radio/simple_docking_controller{
 	frequency = 1380;
 	id_tag = "cargo_bay";
-	pixel_y = 24;
+	pixel_y = 0;
 	req_one_access = null;
-	tag_door = null
+	tag_door = null;
+	pixel_x = 0
 	},
-/turf/simulated/floor/reinforced,
+/turf/simulated/floor/tiled/milspec,
 /area/quartermaster/storage)
 "Ls" = (
 /obj/structure/railing/grey,
@@ -28716,7 +28717,7 @@ di
 aB
 oV
 dd
-Lr
+Eq
 Eq
 Eq
 Nd
@@ -29140,7 +29141,7 @@ TD
 di
 di
 YE
-fv
+Lr
 bB
 Eq
 Eq
