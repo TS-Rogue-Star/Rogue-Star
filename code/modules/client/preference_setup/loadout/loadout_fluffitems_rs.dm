@@ -92,10 +92,10 @@
 	ckeywhitelist = list("malderg")
 	character_name = list("Baele")
 
-/datum/gear/fluff/portal_beret
-	path = /obj/item/clothing/head/beret/fluff/portalberet
+/datum/gear/fluff/portal_cap
+	path = /obj/item/clothing/head/soft/fluff/portalcap
 	slot = slot_head
-	display_name = "Portal's Beret"
+	display_name = "Portal's Cap"
 	ckeywhitelist = list("googlyfox")
 	character_name = null
 
@@ -106,10 +106,10 @@
 	ckeywhitelist = list("googlyfox")
 	character_name = null
 
-/datum/gear/fluff/portal_coat
-	path = /obj/item/clothing/suit/storage/fluff/portalcoat
+/datum/gear/fluff/portal_jacket
+	path = /obj/item/clothing/suit/storage/fluff/jacket/portaljacket
 	slot = slot_wear_suit
-	display_name = "Portal's Coat"
+	display_name = "Portal's Jacket"
 	ckeywhitelist = list("googlyfox")
 	character_name = null
 
@@ -131,5 +131,60 @@
 	path = /obj/item/clothing/shoes/boots/fluff/portalboots
 	slot = slot_shoes
 	display_name = "Portal's Boots"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_bag
+	path = /obj/item/weapon/storage/backpack/satchel/fluff/portalbag
+	slot = slot_back
+	display_name = "Portal's Satchel"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_plushie
+	path = /obj/item/toy/plushie/portal
+	display_name = "Portal Plushie"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_pizza
+	path = /obj/item/pizzabox/pizzastation/margherita
+	display_name = "Portal's Pizza Margherita"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_pizza/vegetable
+	path = /obj/item/pizzabox/pizzastation/vegetable
+	display_name = "Portal's Pizza Vegetable"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_pizza/mushroom
+	path = /obj/item/pizzabox/pizzastation/mushroom
+	display_name = "Portal's Pizza Mushroom"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_pizza/meat
+	path = /obj/item/pizzabox/pizzastation/meat
+	display_name = "Portal's Pizza Meat"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_pizza/pineapple
+	path = /obj/item/pizzabox/pizzastation/pineapple
+	display_name = "Portal's Pizza Pineapple"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_soda/dr_gibb
+	path = /obj/item/weapon/storage/fancy/soda/dr_gibb
+	display_name = "Portal's Dr. Gibb"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_soda/space_up
+	path = /obj/item/weapon/storage/fancy/soda/space_up
+	display_name = "Portal's Space Up"
 	ckeywhitelist = list("googlyfox")
 	character_name = null
