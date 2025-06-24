@@ -3,16 +3,13 @@
 /turf/simulated/open/vacuum/outdoors
 	outdoors = 1
 
-//Airless moonrock
+//Airless moonrock walls
 /turf/simulated/mineral/moonbase
 	color="#7ab6b6"
 	temperature = TCMB
-//Air-y moonrock
+//Air-y moonrock walls
 /turf/simulated/mineral/cave/moonbase
 	color="#7ab6b6"
-	temperature = 293.15
-	oxygen = 21.8366
-	nitrogen = 82.1472
 
 //Floors
 /turf/simulated/mineral/floor/vacuum/moonbase
@@ -45,8 +42,8 @@
 /turf/simulated/floor/glass/reinforced/vacuum/outdoors
 	outdoors = 1
 
-//Air-y moonrock for inside
-/turf/simulated/mineral/floor/moonbase
+//Air-y moonrock floors for inside
+/turf/simulated/mineral/floor/cave/moonbase
 	icon = 'maps/sirius_point/sp_asteroid.dmi'
 	icon_state = "asteroid"
 	sand_icon_path = 'maps/sirius_point/sp_asteroid.dmi'

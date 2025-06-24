@@ -55,8 +55,8 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/moonbase/basement/east)
 "al" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/visible/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/visible/supply,
 /turf/simulated/mineral/floor/moonbase,
 /area/moonbase/basement/caves/east)
 "am" = (
@@ -4685,6 +4685,12 @@
 	},
 /turf/simulated/floor/plating/external,
 /area/moonbase/basement/caves/northeast)
+"rG" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/mineral/floor/moonbase,
+/area/moonbase/basement/caves/east)
 "rH" = (
 /obj/machinery/firealarm,
 /turf/simulated/floor/tiled/dark,
@@ -12197,8 +12203,9 @@
 /obj/item/tape/engineering{
 	icon_state = "tape_h_0"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/visible/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/visible/supply,
 /turf/simulated/mineral/floor/moonbase,
 /area/moonbase/basement/caves/east)
 "Th" = (
@@ -12902,6 +12909,10 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/atmos)
+"VJ" = (
+/obj/machinery/light/small,
+/turf/simulated/mineral/floor/moonbase,
+/area/moonbase/basement/caves/east)
 "VK" = (
 /turf/simulated/floor/plating,
 /area/moonbase/surface/underground)
@@ -30252,7 +30263,7 @@ oj
 oj
 oj
 oj
-Ef
+rG
 Ef
 WN
 qe
@@ -31246,7 +31257,7 @@ oj
 oj
 Ef
 Ef
-Ef
+VJ
 oj
 oj
 oj
