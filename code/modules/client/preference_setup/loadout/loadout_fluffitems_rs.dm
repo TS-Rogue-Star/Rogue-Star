@@ -93,7 +93,7 @@
 	character_name = list("Baele")
 
 /datum/gear/fluff/portal_cap
-	path = /obj/item/clothing/head/soft/fluff/portalcap
+	path = /obj/item/clothing/head/soft/fluff/portalsoft
 	slot = slot_head
 	display_name = "Portal's Cap"
 	ckeywhitelist = list("googlyfox")

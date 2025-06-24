@@ -1563,4 +1563,11 @@
 	extra_overlay = "bigfluffytail-1"
 	extra_overlay2 = "bigfluffytail-2"
 
+/datum/sprite_accessory/tail/longtail/bigfluffytail/triple_color
+	name = "Very Fluffy Tail Straightened"
+	icon = 'icons/rogue-star/tails_64x32_rs.dmi'
+	icon_state = "bigfluffytail2"
+	extra_overlay = "bigfluffytail2-1"
+	extra_overlay2 = "bigfluffytail2-2"
+
 //RS ADD END

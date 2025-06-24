@@ -1,13 +1,13 @@
 //RS CUSTOM FLUFF CLOTHING BEGIN
 
 //GooglyFox:Portal
-/obj/item/clothing/head/soft/fluff/portalcap
+/obj/item/clothing/head/soft/fluff/portalsoft
 	name = "pizza station employee baseball cap"
 	desc = "A deep red baseball cap with a small pizza station logo on the back, and the front of the baseball cap is the pizza station logo, and the name \"Pizza Station\", it fits pretty well, it has some faint initials on the inside, \"P\". You can smell a subtle whiff of pizza."
 	icon = 'icons/vore/custom_clothes_rs.dmi'
 	icon_override = 'icons/vore/custom_onmob_rs.dmi'
-	icon_state = "portalcap"
-	item_state = "portalcap_mob"
+	icon_state = "portalsoft"
+	item_state_slots = list(slot_r_hand_str = "redsoft", slot_l_hand_str = "redsoft")
 
 //GooglyFox:Portal
 /obj/item/clothing/mask/fluff/portal_mask
