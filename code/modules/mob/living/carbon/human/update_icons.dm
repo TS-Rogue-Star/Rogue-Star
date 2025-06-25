@@ -193,6 +193,14 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 
 	remove_layer(MOB_DAM_LAYER)
 
+	if(isbelly(loc))	//RS ADD START
+		var/obj/belly/b = loc
+		if(!(b.mode_flags & DM_FLAG_DAMAGEICON))
+			return
+		if(client)
+			if(!client.is_preference_enabled(/datum/client_preference/vore_damage_overlay))
+				return		//RS ADD END
+
 	// first check whether something actually changed about damage appearance
 	var/damage_appearance = ""
 
