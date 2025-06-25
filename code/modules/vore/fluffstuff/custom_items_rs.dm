@@ -169,7 +169,7 @@
 				prob(5);/obj/item/weapon/reagent_containers/food/snacks/onionrings,
 				prob(5);/obj/item/weapon/reagent_containers/food/snacks/fries,
 				prob(3);/obj/item/weapon/reagent_containers/food/snacks/chilicheesefries,
-				prob(4);/obj/item/weapon/reagent_containers/food/snacks/cheesyfries
+				prob(4);/obj/item/weapon/reagent_containers/food/snacks/cheesyfries,
 				prob(5);/obj/item/weapon/reagent_containers/food/snacks/tossedsalad)
 
 /obj/random/fluff/portaldrink

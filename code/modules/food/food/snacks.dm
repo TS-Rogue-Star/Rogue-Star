@@ -3716,7 +3716,7 @@
 	name = "ham & pineapple pizza"
 	desc = "One of the most debated pizzas in existence."
 	icon_state = "pineapple_pizza"
-	slice_path = /obj/item/weapon/reagent_containers/food/snacks/slice/pineapple // RS Fix (Someone fucked up pineapple pizza)
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pineappleslice
 	slices_num = 6
 	center_of_mass = list("x"=16, "y"=11)
 	nutriment_desc = list("pizza crust" = 10, "tomato" = 10, "ham" = 10)
@@ -3729,7 +3729,7 @@
 	reagents.add_reagent("cheese", 5)
 	reagents.add_reagent("tomatojuice", 6)
 
-/obj/item/weapon/reagent_containers/food/snacks/slice/pineapple // RS Fix (Someone fucked up pineapple pizza)
+/obj/item/weapon/reagent_containers/food/snacks/pineappleslice
 	name = "ham & pineapple pizza slice"
 	desc = "A slice of contraband."
 	icon_state = "pineapple_pizza_slice"
@@ -3737,8 +3737,9 @@
 	bitesize = 2
 	center_of_mass = list("x"=18, "y"=13)
 
-/obj/item/weapon/reagent_containers/food/snacks/slice/pineapple/filled // RS Fix (Someone fucked up pineapple pizza)
-	filled = TRUE // RS Fix (Someone fucked up pineapple pizza)
+/obj/item/weapon/reagent_containers/food/snacks/pineappleslice/filled
+	nutriment_desc = list("pizza crust" = 5, "tomato" = 5)
+	nutriment_amt = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meatpizza
 	name = "Meatpizza"

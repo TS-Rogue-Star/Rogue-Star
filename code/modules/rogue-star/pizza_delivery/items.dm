@@ -18,11 +18,10 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/pineapple/pizzastation
 	icon = 'icons/rogue-star/pizza_delivery/items_rs.dmi'
-	slice_path = /obj/item/weapon/reagent_containers/food/snacks/slice/pineapple/pizzastation
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pineappleslice/pizzastation
 
-/obj/item/weapon/reagent_containers/food/snacks/slice/pineapple/pizzastation
+/obj/item/weapon/reagent_containers/food/snacks/pineappleslice/pizzastation
 	icon = 'icons/rogue-star/pizza_delivery/items_rs.dmi'
-	whole_path = /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/pineapple/pizzastation
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meatpizza/pizzastation
 	icon = 'icons/rogue-star/pizza_delivery/items_rs.dmi'
