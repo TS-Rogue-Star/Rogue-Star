@@ -292,11 +292,11 @@
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/archive)
 "be" = (
-/obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 4
+/obj/machinery/alarm{
+	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/maintenance/moonbase/basement/southair)
+/area/maintenance/moonbase/basement/south)
 "bf" = (
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
@@ -380,6 +380,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/emstorage)
+"bv" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/basement/northair)
 "bw" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/maintenance,
@@ -659,17 +663,10 @@
 /turf/simulated/wall/r_wall,
 /area/crew_quarters/bar)
 "cC" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /turf/simulated/floor/plating,
-/area/maintenance/moonbase/basement/southair)
+/area/maintenance/moonbase/basement/northair)
 "cD" = (
 /obj/structure/table/glass,
 /obj/item/weapon/bikehorn/rubberducky,
@@ -891,6 +888,10 @@
 /obj/structure/railing/grey{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/zpipe/up/scrubbers{
+	dir = 2
+	},
+/obj/machinery/atmospherics/pipe/zpipe/up/supply,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/solars)
 "dn" = (
@@ -905,7 +906,6 @@
 /obj/machinery/atmospherics/pipe/zpipe/up/scrubbers{
 	dir = 2
 	},
-/obj/structure/lattice,
 /turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
 "dq" = (
@@ -967,10 +967,10 @@
 /area/moonbase/basement/caves/northeast)
 "dw" = (
 /obj/machinery/atmospherics/pipe/zpipe/up/supply{
-	dir = 4
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/zpipe/up/scrubbers{
-	dir = 4
+	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/southair)
@@ -1120,7 +1120,6 @@
 "dY" = (
 /obj/structure/bed/double/padded,
 /obj/item/weapon/bedsheet/browndouble,
-/obj/effect/decal/cleanable/blood,
 /turf/simulated/floor/carpet/geo,
 /area/maintenance/moonbase/basement/motel)
 "ea" = (
@@ -1997,8 +1996,11 @@
 /turf/simulated/wall,
 /area/maintenance/moonbase/basement/olddorms)
 "hr" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/southair)
@@ -2613,11 +2615,8 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/moonbase/level1/east)
 "jA" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/southair)
@@ -2964,10 +2963,9 @@
 /turf/simulated/floor,
 /area/maintenance/moonbase/substation/civilian)
 "kN" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden{
-	dir = 1
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 4
 	},
-/obj/machinery/meter,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/northair)
 "kO" = (
@@ -3741,13 +3739,16 @@
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/shop)
 "nP" = (
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 5
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/northair)
 "nQ" = (
-/obj/machinery/atmospherics/unary/vent_scrubber/on{
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -3998,6 +3999,8 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/northwest)
 "oP" = (
@@ -4104,7 +4107,7 @@
 	},
 /obj/structure/stairs/spawner/west,
 /turf/simulated/floor/plating/external/moonbaseplating,
-/area/moonbase/surface/underground)
+/area/moonbase/surface/levelone/north)
 "po" = (
 /obj/structure/cable{
 	icon_state = "1-8"
@@ -4141,12 +4144,13 @@
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/atmos)
 "pt" = (
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 10
-	},
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/northair)
 "pu" = (
@@ -4352,6 +4356,8 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating/moonbase,
 /area/moonbase/basement/caves/northwest)
 "qr" = (
@@ -4455,7 +4461,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating/external/moonbaseplating,
-/area/moonbase/surface/underground)
+/area/moonbase/surface/levelone/north)
 "qN" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/maintenance{
@@ -5452,6 +5458,8 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/moonbase/basement/caves/northwest)
 "un" = (
@@ -5494,7 +5502,7 @@
 	},
 /obj/structure/stairs/spawner/east,
 /turf/simulated/floor/plating/external/moonbaseplating,
-/area/moonbase/surface/underground)
+/area/moonbase/surface/levelone/north)
 "uv" = (
 /obj/machinery/disposal/wall,
 /turf/simulated/floor/tiled/dark,
@@ -5706,6 +5714,8 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/moonbase/level1/solars)
 "vs" = (
@@ -6146,8 +6156,10 @@
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/west)
 "wP" = (
-/turf/simulated/floor/tiled,
-/area/rnd/research)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/basement/northair)
 "wQ" = (
 /turf/simulated/floor/carpet/blue2,
 /area/moonbase/dorms)
@@ -6909,6 +6921,8 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/moonbase/basement/northair)
 "zF" = (
@@ -7007,11 +7021,11 @@
 /turf/simulated/floor/carpet,
 /area/medical/moonbase/basementresleeving)
 "Ad" = (
-/obj/machinery/atmospherics/pipe/simple/hidden{
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/maintenance/moonbase/basement/southair)
+/area/maintenance/moonbase/basement/south)
 "Ae" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/cyan{
 	dir = 8
@@ -7079,6 +7093,12 @@
 /obj/item/weapon/storage/pouch/flares/full_glow,
 /turf/simulated/floor/tiled,
 /area/quartermaster/moonbase/mining/lockerroom)
+"Ar" = (
+/obj/machinery/alarm{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/basement/northair)
 "As" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -7277,7 +7297,7 @@
 /area/maintenance/moonbase/substation/security)
 "AZ" = (
 /turf/simulated/floor/plating/external/moonbaseplating,
-/area/moonbase/surface/underground)
+/area/moonbase/surface/levelone/north)
 "Ba" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -7629,7 +7649,12 @@
 /turf/simulated/floor/plating,
 /area/quartermaster/moonbase/mining)
 "Cl" = (
-/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/southair)
 "Co" = (
@@ -7817,10 +7842,11 @@
 /turf/simulated/floor/tiled/white,
 /area/hallway/moonbase/basement)
 "Dc" = (
-/obj/machinery/atmospherics/pipe/simple/hidden,
-/obj/machinery/meter,
+/obj/machinery/alarm{
+	dir = 1
+	},
 /turf/simulated/floor/plating,
-/area/maintenance/moonbase/basement/northair)
+/area/moonbase/basement/caves/northwest)
 "Dd" = (
 /obj/effect/decal/cleanable/blood,
 /obj/structure/table/woodentable,
@@ -8050,9 +8076,10 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/maintenance/moonbase/basement/techmonitoring)
 "Eb" = (
-/obj/structure/table/rack/shelf,
-/obj/random/maintenance,
-/obj/random/maintenance,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/obj/machinery/meter,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/northair)
 "Ec" = (
@@ -8067,6 +8094,12 @@
 /obj/item/weapon/storage/backpack,
 /turf/simulated/floor/carpet/bcarpet,
 /area/maintenance/moonbase/basement/motel)
+"Ee" = (
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/basement/south)
 "Ef" = (
 /turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
@@ -8838,7 +8871,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc,
-/turf/simulated/mineral/floor/vacuum/moonbase,
+/turf/simulated/floor/plating/external/moonbaseplating,
 /area/moonbase/surface/levelone/south)
 "GH" = (
 /obj/machinery/power/breakerbox/activated{
@@ -9315,6 +9348,8 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/moonbase/level1/northwest)
 "Iv" = (
@@ -9528,7 +9563,6 @@
 /turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northeast)
 "Ji" = (
-/obj/structure/reagent_dispensers/fueltank/barrel/three,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -9987,6 +10021,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/crew_quarters/moonbase/basement/iceroom)
+"Lf" = (
+/obj/machinery/atmospherics/pipe/simple/hidden,
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/basement/northair)
 "Lg" = (
 /obj/effect/floor_decal/milspec/color/red/corner{
 	dir = 1
@@ -10098,9 +10136,8 @@
 /turf/simulated/floor/tiled,
 /area/quartermaster/moonbase/mining/lockerroom)
 "LC" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden{
-	dir = 8
-	},
+/obj/machinery/atmospherics/pipe/zpipe/up/scrubbers,
+/obj/machinery/atmospherics/pipe/zpipe/up/supply,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/northair)
 "LD" = (
@@ -10341,8 +10378,8 @@
 /turf/simulated/floor/wood,
 /area/groundbase/hotspring)
 "Ms" = (
-/obj/effect/decal/cleanable/blood/drip{
-	icon_state = "2"
+/obj/machinery/light/small{
+	dir = 8
 	},
 /turf/simulated/floor/carpet/geo,
 /area/maintenance/moonbase/basement/motel)
@@ -11437,9 +11474,12 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/recreation_area_restroom)
 "Qr" = (
-/obj/effect/decal/cleanable/blood/drip,
-/turf/simulated/floor/carpet/geo,
-/area/maintenance/moonbase/basement/motel)
+/obj/machinery/atmospherics/pipe/manifold/hidden{
+	dir = 8
+	},
+/obj/machinery/meter,
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/basement/northair)
 "Qs" = (
 /obj/effect/catwalk_plated,
 /turf/simulated/floor/tiled/eris/bcircuit,
@@ -11502,6 +11542,8 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/solars)
 "QF" = (
@@ -11772,6 +11814,8 @@
 /obj/structure/railing/grey{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/solars)
 "Rz" = (
@@ -12265,13 +12309,15 @@
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/atmos)
 "Tl" = (
-/obj/machinery/door/firedoor/glass,
-/obj/machinery/door/airlock/maintenance,
-/obj/structure/cable{
-	icon_state = "4-8"
+/obj/machinery/atmospherics/portables_connector{
+	dir = 4
 	},
-/turf/simulated/floor/tiled/steel_ridged,
-/area/maintenance/moonbase/basement/poolmaint)
+/obj/effect/floor_decal/industrial/outline/yellow,
+/obj/machinery/alarm{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/engineering/atmos)
 "Tm" = (
 /obj/machinery/door/firedoor/glass/hidden{
 	dir = 1
@@ -12284,10 +12330,6 @@
 "Tn" = (
 /obj/structure/cable{
 	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/southair)
@@ -12439,6 +12481,12 @@
 /obj/structure/railing/grey{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/zpipe/up/scrubbers{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/zpipe/up/supply{
+	dir = 1
+	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/northwest)
 "TS" = (
@@ -12576,10 +12624,9 @@
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/north)
 "Uu" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/southair)
 "Uv" = (
@@ -12651,6 +12698,8 @@
 /obj/structure/railing/grey{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/northwest)
 "UG" = (
@@ -13644,6 +13693,9 @@
 "YD" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
+	},
+/obj/machinery/alarm{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/maintenance/moonbase/basement/techmonitoring)
@@ -18912,7 +18964,7 @@ wl
 CJ
 CJ
 CJ
-CJ
+Dc
 CP
 CP
 CP
@@ -19073,10 +19125,10 @@ mR
 zH
 zv
 mu
-xk
-hR
-Dc
-OS
+Ar
+mu
+mu
+kN
 nP
 zH
 BX
@@ -19104,7 +19156,7 @@ Eq
 hc
 cG
 Eq
-Eq
+Tl
 EF
 AN
 xm
@@ -19213,12 +19265,12 @@ Zu
 Zu
 Zu
 zH
+bv
 mu
 mu
-kN
 LC
-LC
-nP
+wP
+cC
 pt
 zD
 lv
@@ -19355,12 +19407,12 @@ NV
 dQ
 RB
 zH
-mu
-mu
-HF
-HF
-HF
-HF
+xk
+Qr
+hR
+Lf
+OS
+Eb
 dK
 zH
 Ut
@@ -19497,8 +19549,8 @@ dj
 dj
 kt
 zH
-Eb
-Eb
+HF
+HF
 XD
 XD
 XD
@@ -20490,7 +20542,7 @@ QR
 dj
 dj
 tk
-Qr
+OJ
 OJ
 OJ
 XD
@@ -21191,9 +21243,9 @@ CJ
 Xq
 aS
 eX
-wM
-GW
 Hw
+GW
+wM
 wM
 XN
 th
@@ -21334,9 +21386,9 @@ wd
 wd
 eX
 eX
-Tl
+GW
+wM
 JN
-tv
 JN
 JN
 iK
@@ -21477,8 +21529,8 @@ oj
 oj
 eX
 GW
-JN
-wP
+wM
+tv
 Sz
 JN
 DQ
@@ -21619,8 +21671,8 @@ eX
 eX
 eX
 GW
+wM
 JN
-NO
 xZ
 NO
 FI
@@ -22242,7 +22294,7 @@ VK
 VK
 VK
 DM
-Cl
+gt
 Cs
 Cs
 Cs
@@ -22522,7 +22574,7 @@ Xx
 Jq
 aq
 Ki
-VK
+pc
 VK
 VK
 DM
@@ -22811,7 +22863,7 @@ rZ
 CM
 CM
 Ji
-Ad
+zi
 gt
 Pu
 CM
@@ -22953,7 +23005,7 @@ Es
 CM
 Ox
 vT
-zi
+Cl
 dw
 tx
 CM
@@ -23086,8 +23138,8 @@ KA
 bB
 FV
 Ki
-bB
-bB
+Ee
+Ad
 aq
 Ki
 Es
@@ -23236,7 +23288,7 @@ Ki
 Ki
 CM
 FW
-be
+gt
 nQ
 jA
 gt
@@ -23368,7 +23420,7 @@ bD
 hP
 QS
 bB
-bB
+be
 Ki
 Jc
 eA
@@ -23378,9 +23430,9 @@ Nm
 iX
 NL
 xP
-cC
-Tn
+xP
 Gj
+Tn
 HG
 CM
 Es
@@ -29343,7 +29395,7 @@ yT
 yT
 yT
 yT
-yT
+Pr
 NC
 Es
 Es
