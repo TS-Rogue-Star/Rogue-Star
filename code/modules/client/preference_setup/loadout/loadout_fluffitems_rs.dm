@@ -148,43 +148,25 @@
 	character_name = null
 
 /datum/gear/fluff/portal_pizza
-	path = /obj/item/pizzabox/pizzastation/margherita
-	display_name = "Portal's Pizza Margherita"
+	path = /obj/random/fluff/portalpizza
+	display_name = "Random Pizza"
 	ckeywhitelist = list("googlyfox")
 	character_name = null
 
-/datum/gear/fluff/portal_pizza/vegetable
-	path = /obj/item/pizzabox/pizzastation/vegetable
-	display_name = "Portal's Pizza Vegetable"
+/datum/gear/fluff/portal_pizza_double
+	path = /obj/random/fluff/portalpizza_double
+	display_name = "Random Second Pizza"
 	ckeywhitelist = list("googlyfox")
 	character_name = null
 
-/datum/gear/fluff/portal_pizza/mushroom
-	path = /obj/item/pizzabox/pizzastation/mushroom
-	display_name = "Portal's Pizza Mushroom"
+/datum/gear/fluff/portal_side
+	path = /obj/random/fluff/portalside
+	display_name = "Random Side Dish"
 	ckeywhitelist = list("googlyfox")
 	character_name = null
 
-/datum/gear/fluff/portal_pizza/meat
-	path = /obj/item/pizzabox/pizzastation/meat
-	display_name = "Portal's Pizza Meat"
-	ckeywhitelist = list("googlyfox")
-	character_name = null
-
-/datum/gear/fluff/portal_pizza/pineapple
-	path = /obj/item/pizzabox/pizzastation/pineapple
-	display_name = "Portal's Pizza Pineapple"
-	ckeywhitelist = list("googlyfox")
-	character_name = null
-
-/datum/gear/fluff/portal_soda/dr_gibb
-	path = /obj/item/weapon/storage/fancy/soda/dr_gibb
-	display_name = "Portal's Dr. Gibb"
-	ckeywhitelist = list("googlyfox")
-	character_name = null
-
-/datum/gear/fluff/portal_soda/space_up
-	path = /obj/item/weapon/storage/fancy/soda/space_up
-	display_name = "Portal's Space Up"
+/datum/gear/fluff/portal_soda
+	path = /obj/random/fluff/portaldrink
+	display_name = "Random Drinks"
 	ckeywhitelist = list("googlyfox")
 	character_name = null
