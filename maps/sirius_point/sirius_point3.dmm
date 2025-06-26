@@ -245,7 +245,9 @@
 /turf/simulated/floor/reinforced,
 /area/moonbase/surface/leveltwo/east)
 "be" = (
-/turf/simulated/floor/outdoors/grass/seasonal/dark/notrees_nomobs,
+/turf/simulated/floor/outdoors/grass/seasonal/dark/notrees_nomobs{
+	outdoors = 0
+	},
 /area/crew_quarters/bar)
 "bg" = (
 /obj/effect/floor_decal/industrial/warning/color/red,
@@ -688,9 +690,11 @@
 /turf/simulated/floor/tiled,
 /area/engineering/aft_hallway)
 "cy" = (
-/obj/structure/table/woodentable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/structure/bed/chair/backed_red{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/crew_quarters/bar)
@@ -816,7 +820,12 @@
 /area/rnd/research)
 "cX" = (
 /obj/effect/floor_decal/milspec/color/black,
-/obj/machinery/light,
+/obj/structure/table/rack/steel,
+/obj/item/ammo_magazine/ammo_box/b12g/pellet,
+/obj/item/ammo_magazine/ammo_box/b12g/pellet,
+/obj/item/ammo_magazine/ammo_box/b12g/pellet,
+/obj/item/ammo_magazine/ammo_box/b12g/pellet,
+/obj/item/ammo_magazine/ammo_box/b12g,
 /turf/simulated/floor/tiled/dark,
 /area/security/armoury)
 "cY" = (
@@ -1488,6 +1497,12 @@
 	},
 /turf/simulated/floor/tiled,
 /area/crew_quarters/moonbase/abandonedoffice)
+"fo" = (
+/obj/structure/table/hardwoodtable,
+/obj/item/weapon/storage/box/glasses/meta/metapint,
+/obj/item/weapon/storage/box/glasses/meta,
+/turf/simulated/floor/tiled/eris/steel/bar_flat,
+/area/crew_quarters/moonbase/maintbar)
 "fp" = (
 /obj/structure/bed/padded,
 /obj/item/weapon/bedsheet/medical,
@@ -2122,6 +2137,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
+/obj/structure/table/woodentable,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/crew_quarters/bar)
 "hr" = (
@@ -2749,11 +2765,8 @@
 /turf/simulated/floor/plating,
 /area/crew_quarters/bar)
 "jb" = (
-/obj/structure/table/rack/shelf/steel,
-/obj/machinery/atmospherics/pipe/simple/hidden/universal{
-	dir = 8
-	},
 /obj/effect/floor_decal/milspec/color/black,
+/obj/effect/floor_decal/milspec/color/red,
 /obj/item/weapon/cell/device/weapon{
 	pixel_x = -6;
 	pixel_y = -3
@@ -2769,7 +2782,7 @@
 	pixel_x = -1;
 	pixel_y = -8
 	},
-/obj/effect/floor_decal/milspec/color/red,
+/obj/structure/table/rack/steel,
 /turf/simulated/floor/tiled/dark,
 /area/security/armoury)
 "jc" = (
@@ -3194,12 +3207,16 @@
 /turf/simulated/floor/tiled,
 /area/arrival/moonbase/dockingbays)
 "kq" = (
-/obj/item/weapon/storage/box/glasses/meta,
-/obj/item/weapon/storage/box/glasses/meta/metapint,
-/obj/structure/closet/walllocker_double/north{
-	layer = 40
+/obj/structure/cable{
+	icon_state = "1-2"
 	},
-/turf/simulated/floor/tiled/eris/steel/bar_flat,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/turf/simulated/floor/tiled/eris/steel/bar_light,
 /area/crew_quarters/moonbase/maintbar)
 "kv" = (
 /obj/structure/railing/grey{
@@ -3539,9 +3556,6 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/arrival/moonbase/dockingbays)
 "lr" = (
-/obj/structure/bed/chair/backed_red{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -3711,6 +3725,7 @@
 /obj/machinery/chemical_dispenser/bar_alc/full{
 	pixel_y = 5
 	},
+/obj/machinery/atmospherics/unary/vent_scrubber/on,
 /turf/simulated/floor/tiled/eris/steel/bar_flat,
 /area/crew_quarters/moonbase/maintbar)
 "lV" = (
@@ -3937,18 +3952,19 @@
 /turf/simulated/floor/reinforced,
 /area/rnd/xenobiology)
 "mA" = (
-/obj/structure/table/rack/steel,
 /obj/effect/floor_decal/milspec/color/red,
-/obj/item/ammo_magazine/ammo_box/b12g/beanbag,
-/obj/item/ammo_magazine/ammo_box/b12g/beanbag,
-/obj/item/ammo_magazine/ammo_box/b12g/stunshell,
-/obj/item/ammo_magazine/ammo_box/b12g/stunshell,
-/obj/item/ammo_magazine/ammo_box/b12g/blank,
-/obj/item/ammo_magazine/ammo_box/b12g/blank,
-/obj/item/ammo_magazine/ammo_box/b12g/practice,
-/obj/item/ammo_magazine/ammo_box/b12g/practice,
-/obj/item/ammo_magazine/ammo_box/b12g/practice,
-/obj/item/ammo_magazine/ammo_box/b12g/practice,
+/obj/machinery/firealarm{
+	dir = 4
+	},
+/obj/structure/table/rack/steel,
+/obj/item/ammo_magazine/m9mmt/rubber,
+/obj/item/ammo_magazine/m9mmt/rubber,
+/obj/item/ammo_magazine/m9mmt/rubber,
+/obj/item/ammo_magazine/m9mmt/rubber,
+/obj/item/ammo_magazine/m9mmt,
+/obj/item/ammo_magazine/m9mmt,
+/obj/item/ammo_magazine/m9mmt,
+/obj/item/ammo_magazine/m9mmt,
 /turf/simulated/floor/tiled/dark,
 /area/security/armoury)
 "mB" = (
@@ -4498,6 +4514,12 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
 /turf/simulated/floor/tiled/eris/steel/bar_light,
 /area/crew_quarters/moonbase/maintbar)
 "om" = (
@@ -4907,9 +4929,9 @@
 /turf/simulated/floor/tiled/white,
 /area/medical/medbay_primary_storage)
 "pD" = (
-/obj/structure/bed/chair/backed_red,
-/turf/simulated/floor/glass/reinforced,
-/area/crew_quarters/bar)
+/obj/machinery/alarm,
+/turf/simulated/floor/tiled/eris/steel/bar_flat,
+/area/crew_quarters/moonbase/maintbar)
 "pF" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -5682,6 +5704,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
+/obj/structure/bed/chair/sofa/corp/right{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/crew_quarters/bar)
 "rL" = (
@@ -6091,6 +6116,12 @@
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
 /turf/simulated/floor/tiled/eris/steel/bar_light,
 /area/crew_quarters/moonbase/maintbar)
 "tj" = (
@@ -6337,6 +6368,12 @@
 /obj/structure/catwalk,
 /turf/simulated/floor/plating/external/outdoors,
 /area/moonbase/surface/leveltwo/west)
+"tX" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/turf/simulated/floor/tiled/eris/steel/bar_light,
+/area/crew_quarters/moonbase/maintbar)
 "tY" = (
 /obj/machinery/light{
 	dir = 8
@@ -6508,6 +6545,12 @@
 	fancy_shuttle_tag = "explo"
 	},
 /area/shuttle/excursion/cargo)
+"uI" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/eris/steel/bar_light,
+/area/crew_quarters/moonbase/maintbar)
 "uJ" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -6627,6 +6670,8 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/eris/steel/bar_light,
 /area/crew_quarters/moonbase/maintbar)
 "vo" = (
@@ -6647,6 +6692,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/bed/chair/backed_red,
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/crew_quarters/bar)
 "vq" = (
@@ -7897,7 +7943,9 @@
 /area/crew_quarters/bar)
 "zr" = (
 /obj/machinery/light/bigfloorlamp,
-/turf/simulated/floor/outdoors/grass/seasonal/dark/notrees_nomobs,
+/turf/simulated/floor/outdoors/grass/seasonal/dark/notrees_nomobs{
+	outdoors = 0
+	},
 /area/crew_quarters/bar)
 "zs" = (
 /obj/structure/sign/warning/docking_area,
@@ -8425,6 +8473,14 @@
 "Bv" = (
 /obj/effect/floor_decal/milspec/color/red,
 /obj/structure/table/rack/gun_rack/steel,
+/obj/item/weapon/gun/projectile/automatic/wt550{
+	pixel_x = 0;
+	pixel_y = 3
+	},
+/obj/item/weapon/gun/projectile/automatic/wt550{
+	pixel_x = 2;
+	pixel_y = -3
+	},
 /turf/simulated/floor/tiled/dark,
 /area/security/armoury)
 "Bx" = (
@@ -11077,16 +11133,18 @@
 /turf/simulated/floor/tiled/white,
 /area/security/detectives_office)
 "Ky" = (
-/obj/structure/table/rack/steel,
 /obj/effect/floor_decal/milspec/color/red,
-/obj/item/ammo_magazine/m45/rubber,
-/obj/item/ammo_magazine/m45/rubber,
-/obj/item/ammo_magazine/m45/rubber,
-/obj/item/ammo_magazine/m45/rubber,
-/obj/item/ammo_magazine/m45,
-/obj/item/ammo_magazine/m45,
-/obj/item/ammo_magazine/m45,
-/obj/item/ammo_magazine/m45,
+/obj/structure/table/rack/steel,
+/obj/item/ammo_magazine/ammo_box/b12g/beanbag,
+/obj/item/ammo_magazine/ammo_box/b12g/beanbag,
+/obj/item/ammo_magazine/ammo_box/b12g/stunshell,
+/obj/item/ammo_magazine/ammo_box/b12g/stunshell,
+/obj/item/ammo_magazine/ammo_box/b12g/blank,
+/obj/item/ammo_magazine/ammo_box/b12g/blank,
+/obj/item/ammo_magazine/ammo_box/b12g/practice,
+/obj/item/ammo_magazine/ammo_box/b12g/practice,
+/obj/item/ammo_magazine/ammo_box/b12g/practice,
+/obj/item/ammo_magazine/ammo_box/b12g/practice,
 /turf/simulated/floor/tiled/dark,
 /area/security/armoury)
 "Kz" = (
@@ -11249,6 +11307,15 @@
 	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/captain/moonbase/office)
+"KS" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/eris/steel/bar_light,
+/area/crew_quarters/moonbase/maintbar)
 "KT" = (
 /obj/machinery/chem_master,
 /obj/machinery/light{
@@ -12904,6 +12971,12 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/eris/steel/bar_light,
 /area/crew_quarters/moonbase/maintbar)
 "PY" = (
@@ -13092,6 +13165,7 @@
 "QK" = (
 /obj/structure/table/hardwoodtable,
 /obj/item/weapon/reagent_containers/glass/rag,
+/obj/machinery/atmospherics/unary/vent_pump/on,
 /turf/simulated/floor/tiled/eris/steel/bar_flat,
 /area/crew_quarters/moonbase/maintbar)
 "QM" = (
@@ -13729,6 +13803,8 @@
 /obj/structure/cable{
 	icon_state = "32-2"
 	},
+/obj/machinery/atmospherics/pipe/zpipe/down/supply,
+/obj/machinery/atmospherics/pipe/zpipe/down/scrubbers,
 /turf/simulated/floor/tiled/monotile,
 /area/crew_quarters/moonbase/maintbar)
 "SM" = (
@@ -14491,13 +14567,16 @@
 /turf/simulated/floor/tiled/white,
 /area/medical/virology)
 "Vg" = (
-/obj/structure/table/rack/steel,
 /obj/effect/floor_decal/milspec/color/red,
-/obj/item/ammo_magazine/ammo_box/b12g/pellet,
-/obj/item/ammo_magazine/ammo_box/b12g/pellet,
-/obj/item/ammo_magazine/ammo_box/b12g/pellet,
-/obj/item/ammo_magazine/ammo_box/b12g/pellet,
-/obj/item/ammo_magazine/ammo_box/b12g,
+/obj/structure/table/rack/steel,
+/obj/item/ammo_magazine/m45/rubber,
+/obj/item/ammo_magazine/m45/rubber,
+/obj/item/ammo_magazine/m45/rubber,
+/obj/item/ammo_magazine/m45/rubber,
+/obj/item/ammo_magazine/m45,
+/obj/item/ammo_magazine/m45,
+/obj/item/ammo_magazine/m45,
+/obj/item/ammo_magazine/m45,
 /turf/simulated/floor/tiled/dark,
 /area/security/armoury)
 "Vh" = (
@@ -14969,10 +15048,8 @@
 /turf/simulated/floor/glass/reinforced,
 /area/rnd/research)
 "WC" = (
-/obj/structure/bed/chair/sofa/corp/right{
-	dir = 4
-	},
-/turf/simulated/floor/tiled/eris/steel/brown_platform,
+/obj/structure/bed/chair/sofa/corp,
+/turf/simulated/floor/glass/reinforced,
 /area/crew_quarters/bar)
 "WD" = (
 /obj/machinery/door/firedoor/glass,
@@ -15105,6 +15182,7 @@
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
+/obj/machinery/alarm,
 /turf/simulated/floor,
 /area/maintenance/moonbase/level2/east)
 "WS" = (
@@ -18821,7 +18899,7 @@ do
 do
 HC
 kl
-Nq
+fo
 vX
 vX
 vX
@@ -18964,7 +19042,7 @@ do
 HC
 ll
 QK
-vX
+tX
 XB
 Kk
 zY
@@ -19104,9 +19182,9 @@ do
 do
 do
 HC
-kq
+ll
 Nq
-vX
+uI
 lw
 bo
 SL
@@ -19246,9 +19324,9 @@ do
 do
 do
 HC
-ll
+pD
 lU
-vX
+KS
 zj
 eW
 xm
@@ -19390,7 +19468,7 @@ do
 HC
 cQ
 qO
-vn
+kq
 vn
 vn
 vn
@@ -22910,20 +22988,20 @@ jD
 uJ
 VX
 VX
-VX
-VX
-VX
-VX
-VX
-VX
-VX
-VX
-VX
-VX
-VX
-VX
-VX
-VX
+XM
+XM
+XM
+XM
+XM
+XM
+XM
+XM
+XM
+XM
+XM
+XM
+XM
+XM
 VX
 VX
 Kz
@@ -24840,7 +24918,7 @@ Dh
 fS
 Gj
 Gj
-pD
+Gj
 cy
 IR
 Ov
@@ -25124,7 +25202,7 @@ CX
 gY
 Gj
 Gj
-Gj
+PA
 rJ
 nO
 Gd
@@ -25266,8 +25344,8 @@ Bp
 qb
 Gj
 Gj
-PA
 WC
+qb
 IR
 Ov
 Ov
@@ -25409,7 +25487,7 @@ Wi
 CY
 CY
 PS
-qb
+CY
 IR
 Ov
 Ov
@@ -26203,7 +26281,7 @@ Eh
 Eh
 Eh
 Eh
-do
+Eh
 do
 do
 do
@@ -26345,7 +26423,7 @@ Eh
 Eh
 Eh
 Eh
-do
+Eh
 do
 do
 do
@@ -26487,7 +26565,7 @@ Eh
 Eh
 Eh
 Eh
-do
+Eh
 do
 do
 do
@@ -26629,7 +26707,7 @@ Eh
 Eh
 Eh
 Eh
-do
+Eh
 do
 do
 do
@@ -26771,7 +26849,7 @@ Eh
 Eh
 Eh
 Eh
-do
+Eh
 do
 do
 do
@@ -26913,7 +26991,7 @@ Eh
 Eh
 Eh
 Eh
-do
+Eh
 do
 do
 do
@@ -27055,7 +27133,7 @@ Eh
 Eh
 Eh
 Eh
-do
+Eh
 do
 do
 do
@@ -27197,7 +27275,7 @@ Eh
 Eh
 Eh
 Eh
-do
+Eh
 do
 do
 do
@@ -27339,7 +27417,7 @@ Eh
 Eh
 Eh
 Eh
-do
+Eh
 do
 do
 do
@@ -27481,7 +27559,7 @@ Eh
 Eh
 Eh
 Eh
-do
+Eh
 do
 do
 do
@@ -27623,7 +27701,7 @@ Eh
 Eh
 Eh
 Eh
-do
+Eh
 do
 do
 do
