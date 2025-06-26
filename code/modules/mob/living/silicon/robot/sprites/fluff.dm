@@ -202,3 +202,20 @@
 
 	is_whitelisted = TRUE
 	whitelist_ckey = "lunarfleet"
+
+/datum/robot_sprite/dogborg/service/fluff/aurum
+	name = CUSTOM_BORGSPRITE("Aurum")
+
+	sprite_icon = 'icons/mob/robot/fluff_wide.dmi'
+	sprite_icon_state = "googlyfox-aurum-serv"
+
+	has_eye_light_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	has_rest_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit", "Bellyup")
+	has_dead_sprite = TRUE
+	has_dead_sprite_overlay = TRUE
+	pixel_x = -16
+
+	is_whitelisted = TRUE
+	whitelist_ckey = "googlyfox"
