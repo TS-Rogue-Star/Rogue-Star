@@ -148,7 +148,7 @@
 	icon_state = "pizzabox1"
 	spawn_nothing_percentage = 25
 
-/obj/random/fluff/portalpizza/double/item_to_spawn()
+/obj/random/fluff/portalpizza_double/item_to_spawn()
 	return pick(prob(5);/obj/item/pizzabox/pizzastation/margherita,
 				prob(5);/obj/item/pizzabox/pizzastation/vegetable,
 				prob(5);/obj/item/pizzabox/pizzastation/mushroom,
@@ -163,7 +163,7 @@
 	icon_state = "sidedish1"
 	spawn_nothing_percentage = 0
 
-/obj/random/fluff/portalpizza/double/item_to_spawn()
+/obj/random/fluff/portalside/item_to_spawn()
 	return pick(prob(5);/obj/item/weapon/reagent_containers/food/snacks/vegetarian_calzone,
 				prob(3);/obj/item/weapon/reagent_containers/food/snacks/meat_calzone,
 				prob(5);/obj/item/weapon/reagent_containers/food/snacks/onionrings,

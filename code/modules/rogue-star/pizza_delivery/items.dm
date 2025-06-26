@@ -9,43 +9,125 @@
 		)
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/margherita/pizzastation
+	name = "pizza margherita"
+	desc = "The most cheezy pizza in galaxy."
 	icon = 'icons/rogue-star/pizza_delivery/items_rs.dmi'
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/slice/margherita/pizzastation
+	nutriment_desc = list("crust" = 1, "tomato" = 1, "cheese" = 1)
+	nutriment_amt = 25
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/margherita/pizzastation/Initialize()
+	. = ..()
+	reagents.add_reagent("protein", 8)
+	reagents.add_reagent("tomatojuice", 6)
+	reagents.add_reagent("paracetamol", 4)
+	reagents.add_reagent("enzyme", 1)
+	reagents.add_reagent("iron", 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/slice/margherita/pizzastation
+	name = "margherita slice"
+	desc = "A slice of the most cheezy pizza in galaxy."
 	icon = 'icons/rogue-star/pizza_delivery/items_rs.dmi'
 	whole_path = /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/margherita/pizzastation
+	nutriment_desc = list("crust" = 1, "tomato" = 1, "cheese" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/pineapple/pizzastation
+	name = "\improper Hawaiian pizza"
+	desc = "The pizza equivalent of Einstein's riddle."
 	icon = 'icons/rogue-star/pizza_delivery/items_rs.dmi'
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pineappleslice/pizzastation
+	nutriment_desc = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pineapple" = 2, "ham" = 2)
+	nutriment_amt = 20
 
-/obj/item/weapon/reagent_containers/food/snacks/pineappleslice/pizzastation
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/pineapple/pizzastation/Initialize()
+	. = ..()
+	reagents.add_reagent("protein", 5)
+	reagents.add_reagent("tomatojuice", 6)
+	reagents.add_reagent("pineapplejuice", 6)
+	reagents.add_reagent("paracetamol", 4)
+	reagents.add_reagent("enzyme", 1)
+	reagents.add_reagent("iron", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/slice/pineapple/pizzastation
+	name = "\improper Hawaiian pizza slice"
+	desc = "A slice of delicious controversy."
 	icon = 'icons/rogue-star/pizza_delivery/items_rs.dmi'
+	icon_state = "pineapple_pizza_slice"
+	filling_color = "#BAA14C"
+	bitesize = 2
+	center_of_mass = list("x"=18, "y"=13)
+	whole_path = /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/pineapple/pizzastation
+	nutriment_desc = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pineapple" = 2, "ham" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meatpizza/pizzastation
+	name = "meatpizza"
+	desc = "Greasy pizza with delicious meat."
 	icon = 'icons/rogue-star/pizza_delivery/items_rs.dmi'
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/slice/meatpizza/pizzastation
+	nutriment_desc = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1)
+	nutriment_amt = 25
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meatpizza/pizzastation/Initialize()
+	. = ..()
+	reagents.add_reagent("protein", 8)
+	reagents.add_reagent("tomatojuice", 6)
+	reagents.add_reagent("paracetamol", 5)
+	reagents.add_reagent("enzyme", 1)
+	reagents.add_reagent("iron", 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/slice/meatpizza/pizzastation
+	name = "meatpizza slice"
+	desc = "A nutritious slice of meatpizza."
 	icon = 'icons/rogue-star/pizza_delivery/items_rs.dmi'
 	whole_path = /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meatpizza/pizzastation
+	nutriment_desc = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/mushroompizza/pizzastation
+	name = "mushroom pizza"
+	desc = "Very special pizza."
 	icon = 'icons/rogue-star/pizza_delivery/items_rs.dmi'
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/slice/mushroompizza/pizzastation
+	nutriment_desc = list("crust" = 1, "tomato" = 1, "cheese" = 1, "mushroom" = 1)
+	nutriment_amt = 28
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/mushroompizza/pizzastation/Initialize()
+	. = ..()
+	reagents.add_reagent("protein", 3)
+	reagents.add_reagent("tomatojuice", 6)
+	reagents.add_reagent("tricordrazine", 5)
+	reagents.add_reagent("paracetamol", 4)
+	reagents.add_reagent("enzyme", 1)
+	reagents.add_reagent("iron", 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/slice/mushroompizza/pizzastation
+	name = "mushroom pizza slice"
+	desc = "Maybe it is the last slice of pizza in your life."
 	icon = 'icons/rogue-star/pizza_delivery/items_rs.dmi'
 	whole_path = /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/mushroompizza/pizzastation
+	nutriment_desc = list("crust" = 1, "tomato" = 1, "cheese" = 1, "mushroom" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/vegetablepizza/pizzastation
+	name = "vegetable pizza"
+	desc = "No one of Tomatoes Sapiens were harmed during making this pizza."
 	icon = 'icons/rogue-star/pizza_delivery/items_rs.dmi'
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/slice/vegetablepizza/pizzastation
+	nutriment_desc = list("crust" = 1, "tomato" = 2, "cheese" = 1, "carrot" = 1)
+	nutriment_amt = 25
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/vegetablepizza/pizzastation/Initialize()
+	. = ..()
+	reagents.add_reagent("tomatojuice", 6)
+	reagents.add_reagent("tricordrazine", 5)
+	reagents.add_reagent("paracetamol", 4)
+	reagents.add_reagent("enzyme", 1)
+	reagents.add_reagent("iron", 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/slice/vegetablepizza/pizzastation
+	name = "vegetable pizza slice"
+	desc = "A slice of the most green pizza of all pizzas not containing green ingredients."
 	icon = 'icons/rogue-star/pizza_delivery/items_rs.dmi'
 	whole_path = /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/vegetablepizza/pizzastation
+	nutriment_desc = list("crust" = 1, "tomato" = 2, "cheese" = 1, "carrot" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/donkpocket/pizzastation
 	name = "Donkpocket pizza"
@@ -130,12 +212,12 @@
 
 /obj/item/pizzabox/pizzastation/meat/Initialize()
 	pizza = new /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meatpizza/pizzastation(src)
-	boxtag = "Pizza Station's Meatlover's Supreme"
+	boxtag = "Pizza Station's Meatlovers' Supreme"
 	. = ..()
 
 /obj/item/pizzabox/pizzastation/pineapple/Initialize()
 	pizza = new /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/pineapple/pizzastation(src)
-	boxtag = "Pizza Station's Hawaiian Sunrise"
+	boxtag = "Pizza Station's Honolulu Chew"
 	. = ..()
 
 /obj/item/pizzabox/pizzastation/donkpocket/Initialize()
