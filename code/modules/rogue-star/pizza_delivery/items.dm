@@ -35,7 +35,7 @@
 	name = "\improper Hawaiian pizza"
 	desc = "The pizza equivalent of Einstein's riddle."
 	icon = 'icons/rogue-star/pizza_delivery/items_rs.dmi'
-	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pineappleslice/pizzastation
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/slice/pineapple/pizzastation
 	nutriment_desc = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pineapple" = 2, "ham" = 2)
 	nutriment_amt = 20
 
