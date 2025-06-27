@@ -480,7 +480,7 @@
 /datum/category_item/synthesizer/lunchmenu/pineapplepizzaslice
 	name = "Pineapple Pizza (Slice)"
 	id = "pineapplepizzaslice"
-	build_path = /obj/item/weapon/reagent_containers/food/snacks/pineappleslice/filled
+	build_path = /obj/item/weapon/reagent_containers/food/snacks/slice/pineapple/filled
 	voice_order = list("pineapple pizza", "pizza with pineapple", "abomination pizza", "best pizza")
 	voice_temp = "hot"
 
