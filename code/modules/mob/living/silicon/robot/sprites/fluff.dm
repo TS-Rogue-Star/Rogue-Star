@@ -204,7 +204,7 @@
 	whitelist_ckey = "lunarfleet"
 
 /datum/robot_sprite/dogborg/service/fluff/aurum
-	name = CUSTOM_BORGSPRITE("Aurum")
+	name = CUSTOM_BORGSPRITE("Aurum The Synth")
 
 	sprite_icon = 'icons/mob/robot/fluff_wide.dmi'
 	sprite_icon_state = "googlyfox-aurum-serv"
@@ -215,6 +215,8 @@
 	rest_sprite_options = list("Default", "Sit", "Bellyup")
 	has_dead_sprite = TRUE
 	has_dead_sprite_overlay = TRUE
+	has_vore_belly_resting_sprites = TRUE
+	belly_capacity_list = list("belly" = 2)
 	pixel_x = -16
 
 	is_whitelisted = TRUE
