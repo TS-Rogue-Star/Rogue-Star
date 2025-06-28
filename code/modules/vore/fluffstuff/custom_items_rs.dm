@@ -146,9 +146,24 @@
 	desc = "For Portal to bring a second randomized pizza!"
 	icon = 'icons/rogue-star/pizza_delivery/items_rs.dmi'
 	icon_state = "pizzabox1"
-	spawn_nothing_percentage = 25
+	spawn_nothing_percentage = 50
 
 /obj/random/fluff/portalpizza_double/item_to_spawn()
+	return pick(prob(5);/obj/item/pizzabox/pizzastation/margherita,
+				prob(5);/obj/item/pizzabox/pizzastation/vegetable,
+				prob(5);/obj/item/pizzabox/pizzastation/mushroom,
+				prob(5);/obj/item/pizzabox/pizzastation/meat,
+				prob(5);/obj/item/pizzabox/pizzastation/pineapple,
+				prob(1);/obj/item/pizzabox/pizzastation/donkpocket)
+
+/obj/random/fluff/portalpizza_triple
+	name = "third random Portal pizza"
+	desc = "For Portal to bring a third randomized pizza!"
+	icon = 'icons/rogue-star/pizza_delivery/items_rs.dmi'
+	icon_state = "pizzabox1"
+	spawn_nothing_percentage = 75
+
+/obj/random/fluff/portalpizza_triple/item_to_spawn()
 	return pick(prob(5);/obj/item/pizzabox/pizzastation/margherita,
 				prob(5);/obj/item/pizzabox/pizzastation/vegetable,
 				prob(5);/obj/item/pizzabox/pizzastation/mushroom,
@@ -182,4 +197,5 @@
 /obj/random/fluff/portaldrink/item_to_spawn()
 	return pick(prob(5);/obj/item/weapon/storage/fancy/soda/dr_gibb,
 				prob(5);/obj/item/weapon/storage/fancy/soda/space_up,
-				prob(5);/obj/item/weapon/storage/fancy/soda/cola)
+				prob(5);/obj/item/weapon/storage/fancy/soda/cola,
+				prob(4);/obj/item/weapon/storage/fancy/soda/cola/zero)

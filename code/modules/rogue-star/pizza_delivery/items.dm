@@ -246,6 +246,15 @@
 		slot_r_hand_str = 'icons/rogue-star/pizza_delivery/items_right_hand_rs.dmi',
 		)
 
+/obj/item/weapon/reagent_containers/food/drinks/cans/decaf_cola/pizzastation
+	name = "\improper Space Cola Zero"
+	icon = 'icons/rogue-star/pizza_delivery/items_rs.dmi'
+	icon_state = "cola_zero"
+	item_icons = list(
+		slot_l_hand_str = 'icons/rogue-star/pizza_delivery/items_left_hand_rs.dmi',
+		slot_r_hand_str = 'icons/rogue-star/pizza_delivery/items_right_hand_rs.dmi',
+		)
+
 /obj/item/weapon/storage/fancy/soda
 	name = "can ring"
 	desc = "Holds up to six soda cans."
@@ -332,3 +341,20 @@
 /obj/item/weapon/storage/fancy/soda/cola/update_icon(var/itemremoved = 0)
 	var/total_contents = contents.len - itemremoved
 	icon_state = "cocanholder[total_contents]"
+
+/obj/item/weapon/storage/fancy/soda/cola/zero
+	name = "Space Cola Zero can ring"
+	desc = "Holds up to six soda cans."
+	icon = 'icons/rogue-star/pizza_delivery/items_rs.dmi'
+	icon_state = "czcanholder6"
+	w_class = ITEMSIZE_NORMAL
+	throwforce = 2
+	slot_flags = SLOT_BELT
+	max_storage_space = ITEMSIZE_COST_SMALL * 6
+	storage_slots = 6
+	can_hold = list(/obj/item/weapon/reagent_containers/food/drinks/cans/decaf_cola/pizzastation)
+	starts_with = list(/obj/item/weapon/reagent_containers/food/drinks/cans/decaf_cola/pizzastation = 6)
+
+/obj/item/weapon/storage/fancy/soda/cola/zero/update_icon(var/itemremoved = 0)
+	var/total_contents = contents.len - itemremoved
+	icon_state = "czcanholder[total_contents]"
