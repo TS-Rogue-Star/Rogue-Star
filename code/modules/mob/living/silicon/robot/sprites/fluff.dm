@@ -216,7 +216,7 @@
 	has_dead_sprite = TRUE
 	has_dead_sprite_overlay = TRUE
 	has_vore_belly_resting_sprites = TRUE
-	belly_capacity_list = list("belly" = 2)
+	belly_capacity_list = list("sleeper" = 1, "belly" = 2, "throat" = 1)
 	pixel_x = -16
 
 	is_whitelisted = TRUE
