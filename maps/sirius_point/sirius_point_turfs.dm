@@ -32,22 +32,6 @@
 	nitrogen = 0
 	temperature = TCMB
 
-//outdoors versions of the above and some existing turfs
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors
-	outdoors = 1
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors
-	outdoors = 1
-/turf/simulated/floor/plating/external/outdoors
-	outdoors = 1
-/turf/simulated/floor/reinforced/airless/outdoors
-	outdoors = 1
-/turf/simulated/floor/glass/reinforced/vacuum/outdoors
-	outdoors = 1
-/turf/simulated/open/vacuum/outdoors
-	outdoors = 1
-
-
-
 //Air-y moonrock floors for inside
 /turf/simulated/mineral/floor/cave/moonbase
 	icon = 'maps/sirius_point/sp_asteroid.dmi'
@@ -64,6 +48,20 @@
 /turf/space/cracked_asteroid/moonbase
 	icon = 'maps/sirius_point/sp_asteroid.dmi'
 /turf/space/cracked_asteroid/moonbase/outdoors
+	outdoors = 1
+
+//outdoors versions of the above and some existing turfs
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors
+	outdoors = 1
+/turf/simulated/floor/plating/external/moonbaseplating/outdoors
+	outdoors = 1
+/turf/simulated/floor/plating/external/outdoors
+	outdoors = 1
+/turf/simulated/floor/reinforced/airless/outdoors
+	outdoors = 1
+/turf/simulated/floor/glass/reinforced/vacuum/outdoors
+	outdoors = 1
+/turf/simulated/open/vacuum/outdoors
 	outdoors = 1
 
 /turf/unsimulated/mineral/moonbase
