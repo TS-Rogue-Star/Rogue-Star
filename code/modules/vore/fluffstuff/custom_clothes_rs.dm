@@ -23,6 +23,9 @@
 	item_flags = FLEXIBLEMATERIAL
 	protean_drop_whitelist = TRUE
 
+/obj/item/clothing/mask/fluff/portal_mask/digest_act(var/atom/movable/item_storage = null)
+	return FALSE
+
 //GooglyFox:Portal
 /obj/item/clothing/suit/storage/fluff/jacket/portaljacket
 	name = "pizza station delivery windbreaker"
