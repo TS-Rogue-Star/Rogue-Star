@@ -178,6 +178,13 @@
 "aL" = (
 /turf/simulated/wall/r_wall,
 /area/hallway/moonbase/northhall)
+"aM" = (
+/obj/effect/floor_decal/milspec/color/blue/half,
+/obj/machinery/alarm{
+	dir = 1
+	},
+/turf/simulated/floor/tiled,
+/area/bridge_hallway)
 "aO" = (
 /obj/machinery/vitals_monitor,
 /turf/simulated/floor/carpet/tealcarpet,
@@ -238,6 +245,15 @@
 	},
 /turf/simulated/open,
 /area/quartermaster/storage)
+"ba" = (
+/obj/structure/railing/grey{
+	dir = 4
+	},
+/obj/effect/floor_decal/fakestairs/bottom{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/steel,
+/area/maintenance/moonbase/level2/center)
 "bd" = (
 /obj/machinery/light/floortube{
 	dir = 1
@@ -469,14 +485,14 @@
 	},
 /area/moonbase/surface/leveltwo/south)
 "bJ" = (
-/obj/effect/catwalk_plated/dark,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
+/obj/structure/cable/pink{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/plating/eris,
+/obj/structure/cable/pink{
+	icon_state = "1-2"
+	},
+/obj/effect/catwalk_plated/dark,
+/turf/simulated/floor/tiled/eris/bcircuit,
 /area/security/main)
 "bK" = (
 /obj/effect/floor_decal/corner/lime{
@@ -490,6 +506,11 @@
 	},
 /obj/machinery/light{
 	dir = 4
+	},
+/obj/machinery/requests_console/preset/ce{
+	pixel_x = 28;
+	pixel_y = 0;
+	dir = 8
 	},
 /turf/simulated/floor/carpet/oracarpet,
 /area/crew_quarters/heads/chief)
@@ -1091,9 +1112,6 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/heads/hos)
-"dW" = (
-/turf/simulated/floor/tiled/monotile,
-/area/arrival/moonbase/main)
 "dX" = (
 /turf/simulated/wall/r_wall,
 /area/ai_monitored/storage/emergency/eva)
@@ -1206,6 +1224,8 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/steel,
 /area/maintenance/moonbase/level2/center)
 "em" = (
@@ -1257,14 +1277,14 @@
 /turf/simulated/floor/plating/external/outdoors,
 /area/engineering/engine_room)
 "ev" = (
-/obj/effect/catwalk_plated/dark,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
+/obj/structure/cable/pink{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/plating/eris,
+/obj/structure/cable/pink{
+	icon_state = "1-2"
+	},
+/obj/effect/catwalk_plated/dark,
+/turf/simulated/floor/tiled/eris/bcircuit,
 /area/security/main)
 "ey" = (
 /turf/simulated/floor/carpet/purple,
@@ -1353,6 +1373,9 @@
 /obj/effect/floor_decal/milspec/color/blue/corner{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
 /turf/simulated/floor/tiled,
 /area/bridge_hallway)
 "eL" = (
@@ -1438,6 +1461,12 @@
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/bridge_hallway)
@@ -1734,11 +1763,11 @@
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology)
 "gc" = (
-/obj/effect/catwalk_plated/dark,
-/obj/structure/cable{
+/obj/structure/cable/pink{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/plating/eris,
+/obj/effect/catwalk_plated/dark,
+/turf/simulated/floor/tiled/eris/bcircuit,
 /area/security/main)
 "gd" = (
 /obj/structure/flora/ausbushes/lavendergrass,
@@ -1764,6 +1793,8 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/wood,
 /area/crew_quarters/captain/moonbase/office)
 "gj" = (
@@ -1807,6 +1838,12 @@
 /obj/structure/closet/secure_closet/courtroom,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/courtroom)
+"gr" = (
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/steel,
+/area/maintenance/moonbase/level2/center)
 "gt" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/cable/pink{
@@ -2286,7 +2323,12 @@
 /obj/item/device/radio/intercom{
 	dir = 1;
 	name = "Station Intercom (General)";
-	pixel_y = 24
+	pixel_y = 23;
+	pixel_x = -32
+	},
+/obj/machinery/requests_console/preset/hos{
+	pixel_x = 0;
+	pixel_y = 28
 	},
 /turf/simulated/floor/carpet/blue2,
 /area/crew_quarters/heads/hos)
@@ -2620,6 +2662,13 @@
 	},
 /turf/simulated/floor/carpet/blue2,
 /area/bridge/meeting_room)
+"iE" = (
+/obj/structure/railing/grey{
+	dir = 8
+	},
+/obj/structure/railing/grey,
+/turf/simulated/floor/water/indoors,
+/area/bridge_hallway)
 "iG" = (
 /obj/machinery/door/firedoor/glass,
 /obj/effect/map_helper/airlock/door/int_door,
@@ -2816,6 +2865,7 @@
 /area/arrival/moonbase/main)
 "jf" = (
 /obj/machinery/hologram/holopad,
+/obj/effect/floor_decal/industrial/bot_outline/blue,
 /turf/simulated/floor/wood,
 /area/bridge/meeting_room)
 "jg" = (
@@ -2881,7 +2931,8 @@
 /obj/item/device/radio/intercom{
 	dir = 1;
 	name = "Station Intercom (General)";
-	pixel_y = 24
+	pixel_y = 22;
+	pixel_x = 0
 	},
 /turf/simulated/floor/carpet/tealcarpet,
 /area/crew_quarters/heads/cmo)
@@ -2981,6 +3032,7 @@
 /area/crew_quarters/captain/moonbase/office)
 "jG" = (
 /obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass_external,
 /obj/structure/cable/green{
 	icon_state = "1-2"
 	},
@@ -3046,6 +3098,12 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
 /turf/simulated/floor/tiled/steel,
 /area/maintenance/moonbase/level2/center)
 "jR" = (
@@ -3067,12 +3125,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/medical/moonbase/upperlevel)
-"jT" = (
-/obj/effect/fake_sun/cool,
-/turf/simulated/open/vacuum{
-	outdoors = 1
-	},
-/area/moonbase/surface/leveltwo/south)
 "jU" = (
 /obj/structure/dispenser/oxygen,
 /obj/effect/floor_decal/industrial/warning/color/tile,
@@ -3589,6 +3641,7 @@
 /turf/simulated/open,
 /area/crew_quarters/moonbase/maintbar)
 "lx" = (
+/obj/machinery/atmospherics/unary/vent_scrubber/on,
 /obj/structure/bed/chair/sofa/corp{
 	dir = 4
 	},
@@ -3646,6 +3699,12 @@
 	},
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
+"lF" = (
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/crew_quarters/captain/moonbase/office)
 "lH" = (
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 10
@@ -3661,6 +3720,12 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/coffee_shop)
 "lM" = (
@@ -3671,6 +3736,7 @@
 /area/medical/virology)
 "lN" = (
 /obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass_external,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/engineering/engine_room)
 "lO" = (
@@ -3832,13 +3898,19 @@
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/aft_hallway)
 "ml" = (
-/obj/structure/cable/blue{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/structure/cable/blue{
+/obj/structure/cable{
 	icon_state = "1-8"
 	},
 /obj/effect/catwalk_plated,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/eris/bcircuit,
 /area/bridge_hallway)
 "mn" = (
@@ -4101,7 +4173,8 @@
 /obj/item/modular_computer/console/preset/command,
 /obj/item/device/radio/intercom/department/security{
 	dir = 1;
-	pixel_y = 24
+	pixel_y = 35;
+	pixel_x = 0
 	},
 /turf/simulated/floor/carpet/blue2,
 /area/crew_quarters/heads/hos)
@@ -4263,6 +4336,16 @@
 	},
 /turf/simulated/floor,
 /area/maintenance/moonbase/level2/east)
+"nG" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/steel,
+/area/maintenance/moonbase/level2/center)
 "nH" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
@@ -4504,6 +4587,12 @@
 "oj" = (
 /obj/structure/railing{
 	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/zpipe/down/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/zpipe/down/supply{
+	dir = 4
 	},
 /obj/structure/cable{
 	icon_state = "32-4"
@@ -4882,10 +4971,11 @@
 /turf/simulated/floor/carpet/oracarpet,
 /area/crew_quarters/heads/chief)
 "pt" = (
-/obj/structure/cable/blue{
+/obj/structure/cable{
 	icon_state = "1-2"
 	},
 /obj/effect/catwalk_plated,
+/turf/simulated/floor/tiled,
 /turf/simulated/floor/tiled/eris/bcircuit,
 /area/bridge_hallway)
 "pv" = (
@@ -5268,6 +5358,12 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/steel,
 /area/maintenance/moonbase/level2/center)
 "qB" = (
@@ -5405,6 +5501,12 @@
 	},
 /obj/structure/cable{
 	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
 	},
 /turf/simulated/floor/tiled,
 /area/bridge_hallway)
@@ -5619,8 +5721,17 @@
 	},
 /turf/simulated/floor/carpet/sblucarpet,
 /area/security/briefing_room)
+"rx" = (
+/obj/machinery/alarm{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/steel,
+/area/maintenance/moonbase/level2/center)
 "ry" = (
 /obj/structure/ladder,
+/obj/structure/railing/grey{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/maintenance/moonbase/level2/center)
 "rz" = (
@@ -5805,11 +5916,11 @@
 /turf/simulated/floor/tiled/white,
 /area/security/detectives_office)
 "rX" = (
-/obj/effect/catwalk_plated/dark,
-/obj/structure/cable{
+/obj/structure/cable/pink{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating/eris,
+/obj/effect/catwalk_plated/dark,
+/turf/simulated/floor/tiled/eris/bcircuit,
 /area/security/main)
 "rY" = (
 /turf/simulated/floor/tiled/white,
@@ -5964,6 +6075,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level2/east)
+"sH" = (
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/steel,
+/area/maintenance/moonbase/level2/center)
 "sI" = (
 /obj/structure/bed/chair/comfy,
 /turf/simulated/floor/wood,
@@ -6088,7 +6205,10 @@
 /obj/structure/table/alien{
 	name = "fancy table"
 	},
-/obj/machinery/firealarm,
+/obj/machinery/requests_console/preset/rd{
+	pixel_x = 0;
+	pixel_y = 28
+	},
 /turf/simulated/floor/carpet/purcarpet,
 /area/rnd/rdoffice)
 "te" = (
@@ -6208,6 +6328,17 @@
 	},
 /turf/simulated/open,
 /area/hallway/moonbase/central)
+"tw" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/effect/catwalk_plated,
+/turf/simulated/floor/tiled/eris/bcircuit,
+/area/bridge_hallway)
 "tx" = (
 /obj/effect/floor_decal/milspec/color/green/half{
 	dir = 4
@@ -6400,6 +6531,12 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
 /turf/simulated/floor/carpet/blue2,
 /area/bridge/meeting_room)
 "uh" = (
@@ -6577,17 +6714,21 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
 /turf/simulated/floor/carpet/blue2,
 /area/bridge/meeting_room)
 "uR" = (
 /turf/simulated/wall/r_wall,
 /area/maintenance/moonbase/level2/east)
 "uS" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/simulated/floor/tiled/monotile,
-/area/arrival/moonbase/main)
+/obj/machinery/firealarm,
+/turf/simulated/floor/carpet/purcarpet,
+/area/rnd/rdoffice)
 "uV" = (
 /obj/effect/floor_decal/industrial/warning/color/red{
 	dir = 8
@@ -6708,6 +6849,12 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/medical/moonbase/upperlevel)
+"vu" = (
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/crew_quarters/captain/moonbase/office)
 "vv" = (
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 10
@@ -6942,19 +7089,25 @@
 /turf/simulated/floor/plating/external/outdoors,
 /area/engineering/engine_room)
 "wc" = (
-/obj/structure/closet/secure_closet,
-/obj/machinery/firealarm,
 /obj/effect/floor_decal/milspec/color/blue/half{
 	dir = 1
 	},
-/turf/simulated/floor/tiled,
+/obj/structure/flora/lily2,
+/obj/structure/railing/grey{
+	dir = 8
+	},
+/turf/simulated/floor/water/indoors,
 /area/bridge_hallway)
 "wd" = (
-/obj/machinery/light{
-	dir = 4
-	},
 /obj/structure/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/steel,
 /area/maintenance/moonbase/level2/center)
@@ -7342,6 +7495,11 @@
 	},
 /turf/simulated/floor/plating/external/outdoors,
 /area/engineering/engine_room)
+"xt" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/carpet/blue2,
+/area/bridge/meeting_room)
 "xu" = (
 /obj/item/device/taperecorder,
 /obj/item/device/camera,
@@ -7805,6 +7963,12 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/captain/moonbase/office)
 "yW" = (
@@ -7959,6 +8123,8 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/bridge_hallway)
 "zu" = (
@@ -8164,6 +8330,15 @@
 	},
 /turf/simulated/floor/tiled/milspec,
 /area/quartermaster/storage)
+"Ag" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/turf/simulated/floor/wood,
+/area/bridge/meeting_room)
 "Ai" = (
 /obj/structure/cable/green{
 	icon_state = "2-4"
@@ -8347,7 +8522,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/monotile,
 /area/crew_quarters/moonbase/pilotroom)
 "Bf" = (
 /obj/machinery/door/window/brigdoor/northleft{
@@ -8402,11 +8577,14 @@
 /turf/simulated/floor/tiled/white,
 /area/medical/virology)
 "Bm" = (
-/obj/structure/cable,
-/obj/machinery/power/apc,
-/obj/effect/floor_decal/milspec/color/blue/half,
-/turf/simulated/floor/tiled,
-/area/bridge_hallway)
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/blue2,
+/area/bridge/meeting_room)
 "Bo" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 8
@@ -8512,6 +8690,9 @@
 "Bz" = (
 /obj/structure/bed/chair/sofa/corp/left{
 	dir = 8
+	},
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 1
 	},
 /turf/simulated/floor/carpet/blue2,
 /area/bridge/meeting_room)
@@ -8900,6 +9081,12 @@
 "CY" = (
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
 /area/crew_quarters/bar)
+"CZ" = (
+/obj/effect/catwalk_plated,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/tiled/eris/bcircuit,
+/area/bridge_hallway)
 "Db" = (
 /obj/structure/prop/rock/small/water,
 /turf/simulated/floor/water/indoors,
@@ -9169,6 +9356,10 @@
 	},
 /turf/simulated/floor/wood/alt/panel,
 /area/security/detectives_office)
+"DP" = (
+/obj/effect/landmark/map_data/sirius_point,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/moonbase/surface/leveltwo/south)
 "DQ" = (
 /obj/structure/bed/chair{
 	dir = 4
@@ -9203,6 +9394,12 @@
 /obj/structure/flora/pottedplant/minitree,
 /obj/structure/cable{
 	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
 	},
 /turf/simulated/floor/carpet/green,
 /area/crew_quarters/coffee_shop)
@@ -9366,6 +9563,16 @@
 /obj/structure/disposalpipe/trunk,
 /turf/simulated/floor/tiled/milspec,
 /area/quartermaster/storage)
+"Em" = (
+/obj/structure/table/darkglass,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/blue2,
+/area/bridge/meeting_room)
 "En" = (
 /obj/structure/bed/chair/backed_red,
 /turf/simulated/floor/tiled/eris/cafe,
@@ -9404,6 +9611,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/arrival/moonbase/main)
+"Ey" = (
+/obj/structure/railing/grey,
+/turf/simulated/floor/water/indoors,
+/area/bridge_hallway)
 "Ez" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -9652,9 +9863,27 @@
 	},
 /turf/simulated/floor/carpet/purcarpet,
 /area/rnd/rdoffice)
+"Fl" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
+/turf/simulated/floor/tiled,
+/area/bridge_hallway)
 "Fm" = (
 /obj/structure/bed/chair/sofa/corp/right{
 	dir = 4
+	},
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 1
 	},
 /turf/simulated/floor/carpet/blue2,
 /area/bridge/meeting_room)
@@ -9979,7 +10208,12 @@
 	},
 /obj/item/device/radio/intercom/department/medbay{
 	dir = 1;
-	pixel_y = 24
+	pixel_y = 35;
+	pixel_x = 32
+	},
+/obj/machinery/requests_console/preset/cmo{
+	pixel_x = 0;
+	pixel_y = 28
 	},
 /turf/simulated/floor/carpet/tealcarpet,
 /area/crew_quarters/heads/cmo)
@@ -10092,7 +10326,7 @@
 /area/medical/virology)
 "GV" = (
 /obj/effect/catwalk_plated/dark,
-/turf/simulated/floor/plating/eris,
+/turf/simulated/floor/tiled/eris/bcircuit,
 /area/security/main)
 "GW" = (
 /obj/machinery/computer/med_data/laptop{
@@ -10166,6 +10400,8 @@
 /obj/effect/floor_decal/milspec/color/blue/half{
 	dir = 6
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled,
 /area/bridge_hallway)
 "Hi" = (
@@ -10232,7 +10468,8 @@
 /obj/effect/floor_decal/milspec/color/blue/half{
 	dir = 8
 	},
-/turf/simulated/floor/tiled,
+/obj/machinery/atmospherics/unary/vent_pump/on,
+/turf/simulated/floor/tiled/monotile,
 /area/bridge_hallway)
 "Ht" = (
 /obj/machinery/door/firedoor/glass,
@@ -10309,6 +10546,9 @@
 /obj/structure/window/reinforced/full/dome,
 /turf/simulated/floor/plating,
 /area/crew_quarters/moonbase/maintbar)
+"HD" = (
+/turf/simulated/open/vacuum/outdoors,
+/area/moonbase/surface/leveltwo/south)
 "HF" = (
 /obj/effect/floor_decal/milspec/color/emerald/half,
 /obj/structure/table/reinforced,
@@ -10568,6 +10808,12 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/blue2,
 /area/crew_quarters/captain/moonbase/office)
 "IH" = (
@@ -10699,9 +10945,7 @@
 /area/medical/medbay_primary_storage)
 "Jh" = (
 /obj/effect/overmap/visitable/sector/virgo3r,
-/turf/simulated/open/vacuum{
-	outdoors = 1
-	},
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/moonbase/surface/leveltwo/south)
 "Ji" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -10796,6 +11040,10 @@
 	},
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology)
+"JB" = (
+/obj/machinery/atmospherics/unary/vent_scrubber/on,
+/turf/simulated/floor/tiled/monotile,
+/area/bridge_hallway)
 "JC" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 4
@@ -11305,6 +11553,12 @@
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/captain/moonbase/office)
 "KS" = (
@@ -11539,6 +11793,7 @@
 /turf/simulated/wall/r_wall,
 /area/security/tactical)
 "LB" = (
+/obj/machinery/atmospherics/unary/vent_scrubber/on,
 /obj/structure/bed/chair/sofa/corp{
 	dir = 8
 	},
@@ -11736,6 +11991,12 @@
 /obj/machinery/door/airlock/maintenance,
 /obj/structure/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/moonbase/level2/center)
@@ -11954,11 +12215,11 @@
 /turf/simulated/floor/plating,
 /area/rnd/rdoffice)
 "MH" = (
-/obj/structure/closet/emcloset,
 /obj/effect/floor_decal/milspec/color/blue/half{
 	dir = 1
 	},
-/turf/simulated/floor/tiled,
+/obj/structure/flora/lily1,
+/turf/simulated/floor/water/indoors,
 /area/bridge_hallway)
 "MI" = (
 /obj/effect/floor_decal/milspec/color/red/half{
@@ -12190,6 +12451,12 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/blue2,
 /area/crew_quarters/captain/moonbase/office)
 "Nz" = (
@@ -12328,6 +12595,16 @@
 	outdoors = 1
 	},
 /area/moonbase/surface/leveltwo/west)
+"NY" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/wood,
+/area/crew_quarters/captain/moonbase/office)
 "NZ" = (
 /obj/structure/bed/chair/backed_red{
 	dir = 4
@@ -12404,6 +12681,8 @@
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled,
 /area/bridge_hallway)
 "Or" = (
@@ -12926,6 +13205,12 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/green,
 /area/crew_quarters/coffee_shop)
 "PR" = (
@@ -13316,6 +13601,12 @@
 /obj/structure/bed/chair/comfy{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/bridge/meeting_room)
 "Rj" = (
@@ -13341,6 +13632,7 @@
 /area/moonbase/surface/leveltwo/south)
 "Rq" = (
 /obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass_external,
 /obj/structure/cable/green{
 	icon_state = "4-8"
 	},
@@ -13558,6 +13850,10 @@
 "RQ" = (
 /obj/structure/cable{
 	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
 	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/captain/moonbase/office)
@@ -14293,6 +14589,10 @@
 	},
 /obj/item/weapon/folder/blue_captain,
 /obj/item/weapon/folder/blue_captain,
+/obj/machinery/requests_console/preset/captain{
+	pixel_x = 0;
+	pixel_y = 28
+	},
 /turf/simulated/floor/carpet/blue2,
 /area/crew_quarters/captain/moonbase/office)
 "Um" = (
@@ -14454,6 +14754,9 @@
 /obj/item/weapon/pen,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/crew_quarters/moonbase/abandonedoffice)
+"UQ" = (
+/turf/simulated/open/vacuum/outdoors,
+/area/moonbase/surface/leveltwo/east)
 "UR" = (
 /obj/item/roller,
 /obj/item/bodybag/cryobag,
@@ -14771,6 +15074,8 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/captain/moonbase/bedroom)
 "VL" = (
@@ -14790,6 +15095,12 @@
 /area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
+"VO" = (
+/obj/effect/floor_decal/milspec/color/blue/half,
+/obj/structure/cable,
+/obj/machinery/power/apc,
+/turf/simulated/floor/tiled,
+/area/bridge_hallway)
 "VP" = (
 /obj/structure/bed/chair/sofa/blue,
 /obj/item/device/radio/intercom{
@@ -14967,11 +15278,11 @@
 /turf/simulated/floor/tiled/white,
 /area/medical/medbay_primary_storage)
 "Wt" = (
-/obj/structure/closet/firecloset/full,
 /obj/effect/floor_decal/milspec/color/blue/half{
 	dir = 5
 	},
-/turf/simulated/floor/tiled,
+/obj/structure/prop/rock/small/water,
+/turf/simulated/floor/water/indoors,
 /area/bridge_hallway)
 "Wu" = (
 /obj/structure/bed/chair/office/dark{
@@ -15428,10 +15739,7 @@
 	},
 /area/medical/moonbase/traumaward)
 "XL" = (
-/obj/effect/landmark/map_data/sirius_point,
-/turf/simulated/open/vacuum{
-	outdoors = 1
-	},
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/moonbase/surface/leveltwo/south)
 "XM" = (
 /turf/simulated/wall/r_wall,
@@ -15565,6 +15873,8 @@
 	id_tint = "headmeetingroom";
 	name = "Meeting Room"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/bridge_hallway)
 "Yp" = (
@@ -15609,10 +15919,16 @@
 /turf/simulated/wall/r_wall,
 /area/medical/ward)
 "Yz" = (
-/obj/structure/cable/blue{
+/obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/effect/catwalk_plated,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/eris/bcircuit,
 /area/bridge_hallway)
 "YD" = (
@@ -15622,6 +15938,8 @@
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/steel,
 /area/maintenance/moonbase/level2/center)
 "YE" = (
@@ -15734,6 +16052,18 @@
 	},
 /turf/simulated/floor/carpet/green,
 /area/crew_quarters/coffee_shop)
+"YX" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/bridge_hallway)
 "YY" = (
 /obj/structure/sign/warning/docking_area{
 	pixel_x = -32;
@@ -15798,6 +16128,12 @@
 	},
 /obj/structure/cable{
 	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
 	},
 /turf/simulated/floor/carpet/green,
 /area/crew_quarters/coffee_shop)
@@ -15941,6 +16277,12 @@
 /turf/simulated/floor/carpet/purple,
 /area/maintenance/moonbase/level2/center)
 "ZC" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/bridge/meeting_room)
 "ZD" = (
@@ -15968,6 +16310,9 @@
 /obj/structure/lattice,
 /turf/simulated/open,
 /area/crew_quarters/bar)
+"ZI" = (
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/moonbase/surface/leveltwo/west)
 "ZJ" = (
 /obj/structure/bed/chair/backed_red{
 	dir = 4
@@ -16051,13 +16396,12 @@
 /turf/simulated/floor/carpet/sblucarpet,
 /area/security/briefing_room)
 "ZV" = (
-/obj/machinery/light{
-	dir = 4
-	},
 /obj/effect/floor_decal/milspec/color/blue/half{
 	dir = 4
 	},
-/turf/simulated/floor/tiled,
+/obj/structure/flora/lily3,
+/obj/structure/railing/grey,
+/turf/simulated/floor/water/indoors,
 /area/bridge_hallway)
 "ZX" = (
 /obj/machinery/smartfridge/secure/extract,
@@ -16086,150 +16430,292 @@
 /area/maintenance/moonbase/level1/solars)
 
 (1,1,1) = {"
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+DP
 "}
 (2,1,1) = {"
-PZ
-PZ
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+Jh
+"}
+(3,1,1) = {"
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -16367,153 +16853,11 @@ do
 do
 do
 XL
-do
-"}
-(3,1,1) = {"
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-mF
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-Jh
-do
+XL
 "}
 (4,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -16650,12 +16994,12 @@ do
 do
 do
 do
-jT
-do
+XL
+XL
 "}
 (5,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -16792,12 +17136,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (6,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -16934,12 +17278,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (7,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -17076,12 +17420,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (8,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -17218,12 +17562,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (9,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -17360,12 +17704,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (10,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -17502,12 +17846,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (11,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -17644,12 +17988,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (12,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -17786,12 +18130,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (13,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -17928,12 +18272,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (14,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -18070,12 +18414,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (15,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -18212,12 +18556,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (16,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -18354,12 +18698,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (17,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -18496,12 +18840,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (18,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -18638,12 +18982,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (19,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -18780,12 +19124,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (20,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -18922,12 +19266,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (21,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -19064,12 +19408,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (22,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -19206,12 +19550,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (23,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -19348,12 +19692,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (24,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -19490,12 +19834,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (25,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -19632,12 +19976,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (26,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -19774,12 +20118,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (27,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -19916,12 +20260,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (28,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -20058,12 +20402,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (29,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -20200,12 +20544,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (30,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -20342,12 +20686,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (31,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -20484,12 +20828,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (32,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -20626,12 +20970,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (33,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -20768,12 +21112,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (34,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -20910,12 +21254,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (35,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -21052,12 +21396,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (36,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -21194,12 +21538,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (37,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -21336,12 +21680,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (38,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -21478,12 +21822,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (39,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -21620,12 +21964,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (40,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -21762,12 +22106,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (41,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -21904,12 +22248,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (42,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -22046,12 +22390,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (43,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -22188,12 +22532,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (44,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -22330,12 +22674,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (45,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -22472,12 +22816,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (46,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -22614,12 +22958,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (47,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -22756,12 +23100,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (48,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -22898,12 +23242,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (49,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -23002,8 +23346,8 @@ XM
 XM
 XM
 XM
-VX
-VX
+bF
+bF
 Kz
 bF
 bF
@@ -23040,12 +23384,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (50,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -23182,12 +23526,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (51,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -23324,12 +23668,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (52,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -23466,12 +23810,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (53,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -23608,12 +23952,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (54,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -23750,12 +24094,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (55,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -23892,12 +24236,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (56,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -24034,12 +24378,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (57,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -24176,12 +24520,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (58,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -24318,12 +24662,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (59,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -24460,12 +24804,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (60,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -24602,12 +24946,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (61,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -24744,12 +25088,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (62,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -24810,7 +25154,7 @@ SQ
 SQ
 QJ
 Df
-jd
+uS
 DQ
 jd
 jd
@@ -24886,12 +25230,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (63,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -25028,12 +25372,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (64,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -25170,12 +25514,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (65,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -25312,12 +25656,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (66,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -25395,7 +25739,7 @@ vx
 tM
 tM
 Lx
-Lx
+Em
 Cz
 CI
 OV
@@ -25454,12 +25798,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (67,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -25537,7 +25881,7 @@ Ez
 vx
 tM
 tM
-tM
+Bm
 tM
 CI
 HT
@@ -25596,12 +25940,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (68,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -25685,7 +26029,7 @@ CI
 tA
 Hs
 eK
-Hm
+aM
 CI
 do
 do
@@ -25738,12 +26082,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (69,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -25821,12 +26165,12 @@ Ez
 cn
 cn
 cn
-Ri
-tM
+Ag
+xt
 Yn
 Oq
-Cu
-Yz
+CZ
+tw
 Hm
 cR
 do
@@ -25880,12 +26224,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (70,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -26022,12 +26366,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (71,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -26164,12 +26508,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (72,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -26251,9 +26595,9 @@ ZC
 cu
 CI
 EF
-Cu
-Yz
-Hm
+JB
+Fl
+VO
 CI
 do
 do
@@ -26306,12 +26650,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (73,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -26389,13 +26733,13 @@ Ez
 vx
 tM
 tM
-tM
+Bm
 tM
 CI
 wc
-Cu
-Yz
-Bm
+iE
+YX
+Hm
 CI
 kC
 kC
@@ -26448,12 +26792,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (74,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -26531,24 +26875,24 @@ vx
 tM
 tM
 Lx
-Lx
+Em
 Cz
 CI
 MH
-Cu
-Yz
+Ey
+YX
 Hm
 CI
 ry
+ba
+gr
 bk
 bk
 bk
-bk
-bk
-bk
+rx
 rD
 mS
-bk
+sH
 qA
 bk
 YK
@@ -26590,12 +26934,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (75,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -26690,7 +27034,7 @@ el
 el
 YD
 el
-el
+nG
 jQ
 fb
 YK
@@ -26732,12 +27076,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (76,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -26874,12 +27218,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (77,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -27016,12 +27360,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (78,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -27158,12 +27502,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (79,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -27300,12 +27644,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (80,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -27442,12 +27786,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (81,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -27529,7 +27873,7 @@ aR
 aR
 VK
 gi
-gi
+NY
 RQ
 uj
 AP
@@ -27584,12 +27928,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (82,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -27671,8 +28015,8 @@ Ob
 vL
 cF
 gg
-SE
-SE
+lF
+vu
 Xv
 AP
 kC
@@ -27726,12 +28070,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (83,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -27868,12 +28212,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (84,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -28010,12 +28354,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (85,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -28152,12 +28496,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (86,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -28294,12 +28638,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (87,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -28436,12 +28780,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (88,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -28578,12 +28922,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (89,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -28720,12 +29064,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (90,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -28862,12 +29206,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (91,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -29004,12 +29348,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (92,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -29146,12 +29490,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (93,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -29288,12 +29632,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (94,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -29430,12 +29774,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (95,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -29572,12 +29916,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (96,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -29714,12 +30058,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (97,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -29856,12 +30200,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (98,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -29998,12 +30342,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (99,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -30140,12 +30484,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (100,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -30282,12 +30626,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (101,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -30424,12 +30768,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (102,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -30566,12 +30910,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (103,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -30708,12 +31052,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (104,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -30850,12 +31194,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (105,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -30992,12 +31336,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (106,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -31134,12 +31478,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (107,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -31276,12 +31620,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (108,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -31418,12 +31762,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (109,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -31560,12 +31904,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (110,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -31631,9 +31975,9 @@ UI
 Dw
 Dw
 Vo
-uS
+uy
 mw
-dW
+BV
 qT
 Ns
 Ql
@@ -31702,12 +32046,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (111,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -31844,12 +32188,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (112,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -31986,12 +32330,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (113,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -32128,12 +32472,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (114,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -32270,12 +32614,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (115,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -32412,12 +32756,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (116,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -32554,12 +32898,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (117,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -32696,12 +33040,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (118,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -32838,12 +33182,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (119,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -32980,12 +33324,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (120,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -33122,12 +33466,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (121,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -33264,12 +33608,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (122,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -33406,12 +33750,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (123,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -33548,12 +33892,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (124,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -33690,12 +34034,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (125,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -33832,12 +34176,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (126,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -33903,9 +34247,9 @@ Dw
 Dw
 Dw
 Vo
-dW
+Ec
 Up
-dW
+BV
 DH
 tG
 Ry
@@ -33974,12 +34318,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (127,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -34116,12 +34460,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (128,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -34258,12 +34602,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (129,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -34400,12 +34744,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (130,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -34542,12 +34886,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (131,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -34684,12 +35028,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (132,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -34826,12 +35170,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (133,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -34968,12 +35312,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (134,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -35110,12 +35454,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (135,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -35252,12 +35596,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (136,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -35394,12 +35738,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (137,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -35536,12 +35880,12 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (138,1,1) = {"
-PZ
-PZ
+Kd
+Kd
 PZ
 PZ
 PZ
@@ -35678,31 +36022,10 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (139,1,1) = {"
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
 Kd
 Kd
 Kd
@@ -35717,6 +36040,27 @@ Kd
 Kd
 Kd
 Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
 XC
 XC
 XC
@@ -35820,31 +36164,10 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 "}
 (140,1,1) = {"
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
-PZ
 Kd
 Kd
 Kd
@@ -35859,6 +36182,27 @@ Kd
 Kd
 Kd
 Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
 XC
 XC
 XC
@@ -35894,74 +36238,74 @@ XC
 XC
 XC
 XC
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
-do
+UQ
+UQ
+UQ
+UQ
+UQ
+UQ
+UQ
+UQ
+UQ
+UQ
+UQ
+UQ
+UQ
+UQ
+UQ
+UQ
+UQ
+UQ
+UQ
+UQ
+UQ
+UQ
+UQ
+UQ
+UQ
+UQ
+UQ
+UQ
+UQ
+UQ
+HD
+HD
+HD
+HD
+HD
+HD
+HD
+HD
+HD
+HD
+HD
+HD
+HD
+HD
+HD
+HD
+HD
+HD
+HD
+HD
+HD
+HD
+HD
+HD
+HD
+HD
+HD
+HD
+HD
+HD
+HD
+HD
+HD
+HD
+HD
+HD
+HD
+HD
+XL
+XL
 "}

@@ -251,7 +251,7 @@
 	icon_state = "space5"
 	use_stars = FALSE
 
-/datum/planet/moonbase/New()
+/datum/planet/virgo3x/New()
 	expected_z_levels = list(
 		Z_LEVEL_MOONBASE_LOW,
 		Z_LEVEL_MOONBASE_MID,
@@ -302,9 +302,10 @@
 
 // We have a bunch of stuff common to the station z levels
 /datum/map_z_level/sirius_point
-	flags = MAP_LEVEL_STATION|MAP_LEVEL_CONTACT|MAP_LEVEL_PLAYER|MAP_LEVEL_CONSOLES|MAP_LEVEL_XENOARCH_EXEMPT|MAP_LEVEL_PERSIST
+	flags = MAP_LEVEL_STATION|MAP_LEVEL_CONTACT|MAP_LEVEL_PLAYER|MAP_LEVEL_CONSOLES|MAP_LEVEL_XENOARCH_EXEMPT|MAP_LEVEL_PERSIST|MAP_LEVEL_SEALED
 	holomap_legend_x = 220
 	holomap_legend_y = 160
+	transit_chance = 0
 
 /datum/map_z_level/sirius_point/level_zero
 	z = Z_LEVEL_MOONBASE_LOW

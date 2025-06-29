@@ -1,8 +1,5 @@
 //Moonbase turfs
 
-/turf/simulated/open/vacuum/outdoors
-	outdoors = 1
-
 //Airless moonrock walls
 /turf/simulated/mineral/moonbase
 	color="#7ab6b6"
@@ -10,6 +7,11 @@
 //Air-y moonrock walls
 /turf/simulated/mineral/cave/moonbase
 	color="#7ab6b6"
+
+/turf/unsimulated/wall/planetary/moonbase
+	oxygen = 0
+	nitrogen = 0
+	temperature = TCMB
 
 //Floors
 /turf/simulated/mineral/floor/vacuum/moonbase
@@ -41,6 +43,10 @@
 	outdoors = 1
 /turf/simulated/floor/glass/reinforced/vacuum/outdoors
 	outdoors = 1
+/turf/simulated/open/vacuum/outdoors
+	outdoors = 1
+
+
 
 //Air-y moonrock floors for inside
 /turf/simulated/mineral/floor/cave/moonbase
