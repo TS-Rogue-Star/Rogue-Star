@@ -179,12 +179,8 @@
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/atmos)
 "aC" = (
-/obj/machinery/atmospherics/pipe/simple/visible/purple,
-/obj/structure/cable/orange{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/tiled,
-/area/engineering/aft_hallway)
+/turf/simulated/wall/r_wall,
+/area/space)
 "aD" = (
 /obj/machinery/power/apc,
 /obj/structure/cable{
@@ -842,11 +838,8 @@
 /turf/simulated/mineral/floor/cave/moonbase,
 /area/maintenance/moonbase/basement/olddorms)
 "cG" = (
-/obj/machinery/atmospherics/pipe/simple/visible/red{
-	dir = 4
-	},
 /obj/structure/cable/orange{
-	icon_state = "4-8"
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/atmos)
@@ -2370,6 +2363,9 @@
 /obj/machinery/atmospherics/pipe/simple/visible/purple{
 	dir = 4
 	},
+/obj/structure/cable/orange{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/atmos)
 "hd" = (
@@ -3145,7 +3141,7 @@
 	dir = 6
 	},
 /obj/structure/cable/orange{
-	icon_state = "2-8"
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/tiled,
 /area/engineering/aft_hallway)
@@ -6459,7 +6455,7 @@
 	dir = 4
 	},
 /obj/structure/cable/orange{
-	icon_state = "2-8"
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/atmos)
@@ -6705,6 +6701,15 @@
 	},
 /turf/simulated/floor/lino,
 /area/maintenance/moonbase/basement/engibreakroom)
+"uo" = (
+/obj/machinery/atmospherics/pipe/simple/visible/purple{
+	dir = 4
+	},
+/obj/structure/cable/orange{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/engineering/atmos)
 "up" = (
 /obj/structure/bed/chair/sofa/corp/right{
 	dir = 4
@@ -10394,9 +10399,6 @@
 /area/moonbase/basement/caves/northeast)
 "FD" = (
 /obj/structure/railing/grey,
-/obj/structure/cable/orange{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/aft_hallway)
 "FE" = (
@@ -14146,6 +14148,9 @@
 /obj/machinery/atmospherics/pipe/simple/visible/purple{
 	dir = 6
 	},
+/obj/structure/cable/orange{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/tiled,
 /area/engineering/aft_hallway)
 "QL" = (
@@ -14276,6 +14281,12 @@
 "Rf" = (
 /obj/machinery/atmospherics/pipe/simple/visible/purple{
 	dir = 4
+	},
+/obj/structure/cable/orange{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/orange{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/tiled,
 /area/engineering/aft_hallway)
@@ -14533,6 +14544,12 @@
 	dir = 1
 	},
 /obj/structure/stairs/spawner/west,
+/obj/structure/cable/orange{
+	icon_state = "16-0"
+	},
+/obj/structure/cable/orange{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/aft_hallway)
 "RO" = (
@@ -14702,6 +14719,9 @@
 "Sl" = (
 /obj/structure/railing/grey{
 	dir = 1
+	},
+/obj/structure/cable/orange{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/aft_hallway)
@@ -16167,6 +16187,9 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor/glass,
+/obj/structure/cable/orange{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/engineering/atmos)
 "WV" = (
@@ -16958,12 +16981,6 @@
 "Zy" = (
 /obj/structure/stairs/spawner/west,
 /obj/structure/railing/grey,
-/obj/structure/cable/orange{
-	icon_state = "0-4"
-	},
-/obj/structure/cable/orange{
-	icon_state = "16-0"
-	},
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/aft_hallway)
 "Zz" = (
@@ -21653,8 +21670,8 @@ MV
 OH
 ld
 DD
-jh
 aF
+jh
 CI
 xF
 PO
@@ -21796,7 +21813,7 @@ oF
 Pf
 jh
 QK
-aC
+xy
 xy
 VM
 Df
@@ -22222,16 +22239,16 @@ Gs
 Uw
 Eq
 hc
-cG
+Jl
 Eq
 Tl
+KN
+KN
+KN
 EF
 AN
 xm
 Hc
-Es
-Es
-Ki
 Zb
 Ki
 Es
@@ -22363,17 +22380,17 @@ PT
 Ge
 sW
 Pj
-hc
+uo
 tI
 Ww
 Xv
+cG
+cG
+cG
 wE
 KN
 xm
 Hc
-Es
-Es
-Ki
 Zb
 Ki
 Es
@@ -22510,12 +22527,12 @@ Jl
 Zw
 KN
 KN
+KN
+KN
+KN
 rr
 vg
 Hc
-Es
-Es
-Ki
 Zb
 Ki
 Ki
@@ -22651,13 +22668,13 @@ NX
 Tk
 Uh
 KN
+KN
+KN
+KN
 Qx
 Af
 vg
 Hc
-Es
-Es
-Ki
 Vo
 oi
 Jj
@@ -22794,12 +22811,12 @@ uR
 XU
 KN
 KN
+KN
+KN
+KN
 Af
 vg
 Hc
-Es
-Es
-Ki
 Zb
 Ki
 Ki
@@ -22934,14 +22951,14 @@ RC
 wf
 wf
 wf
+wf
+wf
+wf
 os
 wf
 lp
 vg
 Hc
-Es
-Es
-Ki
 iL
 Ki
 Es
@@ -23076,14 +23093,14 @@ Co
 xx
 Fp
 YB
+YB
+YB
+YB
 Xj
 Ty
 Fp
 VO
 Hc
-Es
-Es
-Ki
 Zb
 Ki
 Es
@@ -23220,12 +23237,12 @@ Co
 Xj
 CR
 KN
+KN
+KN
+KN
 Co
 VO
 Hc
-Es
-Es
-Ki
 Zb
 Ki
 Es
@@ -23361,13 +23378,13 @@ Tp
 Co
 Xj
 CR
+KN
+KN
+KN
 iQ
 Co
 VO
 Hc
-Es
-Es
-Ki
 Zb
 Ki
 Es
@@ -23503,13 +23520,13 @@ dF
 Ff
 Xj
 CR
+KN
+KN
+KN
 ql
 Ys
 VO
 Hc
-Es
-Es
-Ki
 Zb
 Ki
 Es
@@ -23645,13 +23662,13 @@ lU
 Hc
 Hc
 Hc
+aC
+aC
+aC
 Hc
 Hc
 Hc
 Hc
-ve
-ve
-ve
 vQ
 Ki
 Es
