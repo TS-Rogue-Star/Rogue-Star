@@ -9170,13 +9170,6 @@
 	},
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/general)
-"AC" = (
-/obj/structure/railing/grey,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/simulated/open,
-/area/maintenance/moonbase/level2/west)
 "AF" = (
 /obj/structure/particle_accelerator/fuel_chamber{
 	dir = 8
@@ -15800,7 +15793,7 @@
 /obj/structure/cable{
 	icon_state = "32-4"
 	},
-/obj/structure/railing/grey,
+/obj/structure/ladder,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level2/west)
 "Ug" = (
@@ -28686,8 +28679,8 @@ QA
 PZ
 PZ
 PZ
-JM
-JM
+LR
+hy
 zx
 Yx
 hJ
@@ -28829,7 +28822,7 @@ PZ
 PZ
 PZ
 JM
-AC
+TB
 zx
 Yx
 yX

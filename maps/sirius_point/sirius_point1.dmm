@@ -1343,19 +1343,9 @@
 /turf/simulated/floor/carpet/geo,
 /area/maintenance/moonbase/basement/motel)
 "ea" = (
-/obj/structure/window/reinforced{
-	dir = 8;
-	pixel_x = -4
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 1
-	},
-/turf/simulated/floor/tiled/eris/white/brown_platform,
-/area/hallway/moonbase/basement)
+/obj/machinery/light,
+/turf/simulated/floor/plating/external/moonbaseplating,
+/area/moonbase/surface/levelone/north)
 "eb" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass_external,
@@ -2460,9 +2450,6 @@
 /area/maintenance/moonbase/basement/southair)
 "hs" = (
 /obj/structure/stairs/spawner/north,
-/obj/structure/railing/grey{
-	dir = 4
-	},
 /turf/simulated/floor/tiled/monotile,
 /area/moonbase/dorms)
 "ht" = (
@@ -4977,6 +4964,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/effect/catwalk_plated,
+/obj/structure/railing/grey{
+	dir = 4
+	},
+/obj/structure/railing/grey{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/moonbase/dorms)
 "pf" = (
@@ -6673,18 +6666,10 @@
 /turf/simulated/floor/grass,
 /area/crew_quarters/kitchen)
 "ul" = (
-/obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 4
+/obj/structure/railing/grey{
+	dir = 4
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/tiled/eris/white/brown_platform,
+/turf/simulated/floor/tiled/monotile,
 /area/hallway/moonbase/basement)
 "um" = (
 /obj/structure/catwalk,
@@ -7061,9 +7046,6 @@
 /turf/simulated/floor/wood,
 /area/maintenance/moonbase/basement/motel)
 "vu" = (
-/obj/structure/railing/grey{
-	dir = 4
-	},
 /turf/simulated/floor/tiled/monotile,
 /area/moonbase/dorms)
 "vv" = (
@@ -7872,9 +7854,6 @@
 /area/chapel/chapel_morgue)
 "xY" = (
 /obj/structure/stairs/spawner/north,
-/obj/structure/railing/grey{
-	dir = 8
-	},
 /obj/structure/cable{
 	icon_state = "16-0"
 	},
@@ -9318,6 +9297,9 @@
 /turf/simulated/floor/tiled,
 /area/quartermaster/moonbase/mining)
 "Cq" = (
+/obj/structure/railing/grey{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/hallway/moonbase/basement)
 "Cr" = (
@@ -15904,9 +15886,6 @@
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/south)
 "VS" = (
-/obj/structure/railing/grey{
-	dir = 8
-	},
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -26482,7 +26461,7 @@ fk
 yE
 gd
 oH
-Cq
+ul
 rR
 ye
 ye
@@ -26623,8 +26602,8 @@ xO
 lE
 lE
 KH
-ea
-ea
+lE
+lE
 lE
 lE
 XF
@@ -26738,7 +26717,7 @@ QZ
 hx
 hx
 ry
-AZ
+ea
 Yx
 eX
 eX
@@ -27306,7 +27285,7 @@ Bu
 hx
 hx
 ry
-AZ
+ea
 Yx
 eX
 eX
@@ -27475,8 +27454,8 @@ Tb
 lu
 lu
 Bm
-ul
-ul
+lu
+lu
 lu
 lu
 PS
@@ -27760,7 +27739,7 @@ fk
 Zh
 gd
 oH
-Cq
+ul
 Tm
 ye
 Sn
