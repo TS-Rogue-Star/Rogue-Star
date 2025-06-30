@@ -20,7 +20,7 @@
 	item_state_slots = null
 	body_parts_covered = FACE
 	flags_inv = HIDEFACE
-	item_flags = FLEXIBLEMATERIAL
+	item_flags = FLEXIBLEMATERIAL|AIRTIGHT
 	protean_drop_whitelist = TRUE
 
 /obj/item/clothing/mask/fluff/portal_mask/digest_act(var/atom/movable/item_storage = null)
@@ -75,4 +75,4 @@
 	icon_state = "portalbag"
 	item_state = "portalbag_mob"
 	slowdown = 0.4
-	max_storage_space = INVENTORY_DUFFLEBAG_SPACE // FOR THE PIZZAS AND DRINKS!
+	max_storage_space = ITEMSIZE_COST_NORMAL * 8 // FOR THE PIZZAS AND DRINKS!
