@@ -24266,11 +24266,11 @@
 /obj/structure/cable{
 	icon_state = "16-0"
 	},
-/obj/structure/ladder/up,
 /obj/machinery/alarm{
 	dir = 8
 	},
 /obj/machinery/light/small,
+/obj/structure/ladder/updown,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/north)
 "uDX" = (
@@ -45085,8 +45085,8 @@ vOZ
 cjj
 tsM
 lKL
-hRy
-hRy
+gyI
+gyI
 wGc
 kzu
 oWh
@@ -45227,7 +45227,7 @@ oek
 oek
 lKL
 lKL
-hRy
+gyI
 bEJ
 wGc
 kzu
@@ -45367,10 +45367,10 @@ njh
 sRa
 sRa
 sRa
-hRy
-hRy
-hRy
-hRy
+gyI
+gyI
+gyI
+gyI
 wGc
 kzu
 ofY
@@ -45510,9 +45510,9 @@ njh
 njh
 njh
 njh
-hRy
+gyI
 baL
-hRy
+gyI
 ecF
 kzu
 bns

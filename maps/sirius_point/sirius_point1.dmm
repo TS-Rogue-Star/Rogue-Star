@@ -11360,9 +11360,7 @@
 /turf/simulated/floor/tiled/steel_dirty,
 /area/maintenance/moonbase/basement/olddorms)
 "IB" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/structure/ladder/up,
 /turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/flooded)
 "IC" = (
@@ -28139,7 +28137,7 @@ oj
 oj
 Il
 Il
-IB
+Wh
 Il
 Il
 Vd
@@ -28281,7 +28279,7 @@ oj
 oj
 oj
 oj
-oj
+IB
 oj
 oj
 Vd
