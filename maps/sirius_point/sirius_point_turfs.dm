@@ -1,12 +1,24 @@
 //Moonbase turfs
 
+
 //Airless moonrock walls
+//	color="#7ab6b6"
 /turf/simulated/mineral/moonbase
-	color="#7ab6b6"
-	temperature = TCMB
+	sand_icon_path = 'maps/sirius_point/sp_asteroid.dmi'
+	sand_icon_state = "asteroid"
+	icon_edge = 'maps/sirius_point/sp_asteroid_edge.dmi'
+	rock_icon_path = 'maps/sirius_point/sp_asteroid_wall.dmi'
+//	rock_icon_state = "rock"
+//	rock_side_icon_state = "rock_side"
+
 //Air-y moonrock walls
 /turf/simulated/mineral/cave/moonbase
-	color="#7ab6b6"
+	sand_icon_path = 'maps/sirius_point/sp_asteroid.dmi'
+	sand_icon_state = "asteroid"
+	icon_edge = 'maps/sirius_point/sp_asteroid_edge.dmi'
+	rock_icon_path = 'maps/sirius_point/sp_asteroid_wall.dmi'
+//	rock_icon_state = "rock"
+//	rock_side_icon_state = "rock_side"
 
 /turf/unsimulated/wall/planetary/moonbase
 	oxygen = 0
@@ -19,7 +31,6 @@
 	icon_state = "asteroid"
 	sand_icon_path = 'maps/sirius_point/sp_asteroid.dmi'
 	sand_icon_state = "asteroid"
-//	color="#8da1bb"
 	edge_blending_priority = 4
 	icon_edge = 'maps/sirius_point/sp_asteroid_edge.dmi'
 	temperature = TCMB
