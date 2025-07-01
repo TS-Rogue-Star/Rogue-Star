@@ -90,16 +90,16 @@
 		if(bcell)
 			. += "<span class='notice'>The [bcell.name] is [round(bcell.percent())]% charged.</span>"
 		if(!bcell)
-			. += "<span class='warning'>The Unit does not have a power source installed.</span>"
+			. += "<span class='warning'>does not have a power source installed.</span>"
 
 		if(smodule)
-			. += "<span class='notice'>The [src] has a [smodule.name] installed.</span>"
+			. += "<span class='notice'>has a [smodule.name] installed enabling the device to work through walls.</span>"
 		if(!smodule)
-			. += "<span class='notice'>The [src] is missing a phasic scanning module.</span>"
+			. += "<span class='warning'>is missing a phasic scanning module.</span>"
 		if(!mybeaker)
-			. += "<span class='warning'>The [src] is missing a beaker.</span>"
+			. += "<span class='warning'> is missing a beaker.</span>"
 		if(mybeaker)
-			. += "<span class='notice'>The [src] has a [mybeaker.name] installed.</span>"
+			. += "<span class='notice'>has a [mybeaker.name] installed granting charge capacity of [tankmax] per type.</span>"
 			if(brutevol)
 				. += "<span class='notice'>Bruteheal charge meter reads [round(100*brutevol/tankmax)]% remaining.</span>"
 			else
