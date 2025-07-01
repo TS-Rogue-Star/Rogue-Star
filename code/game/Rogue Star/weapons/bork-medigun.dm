@@ -45,15 +45,19 @@
 	action_button_name = "Remove/Replace medigun"
 
 	var/obj/item/device/bork_medigun/linked/medigun
+	var/obj/item/weapon/reagent_containers/glass/beaker/mybeaker = null
 	var/obj/item/weapon/cell/bcell = null
+	var/obj/item/weapon/stock_parts/scanning_module/phasic/smodule = null
 	var/brutevol = 0
 	var/toxvol = 0
 	var/burnvol = 0
-	var/tankmax = 100
+	var/tankmax = 60
 	var/chargecost = 25
 	var/bpcmo = 0
 	var/containsgun = 1
+	var/maintenance
 	bcell = /obj/item/weapon/cell/apc
+	mybeaker = /obj/item/weapon/reagent_containers/glass/beaker
 //backpack item
 /obj/item/device/medigun_backpack/cmo
 	name = "Bork Medical Beam Backpack Unit CMO"
@@ -69,10 +73,11 @@
 	w_class = ITEMSIZE_HUGE
 	unacidable = TRUE
 	action_button_name = "Remove/Replace medigun"
-	brutevol = 100
-	toxvol = 100
-	burnvol = 100
-	tankmax = 100
+	mybeaker = /obj/item/weapon/reagent_containers/glass/beaker/large
+	tankmax = 120
+	brutevol = 120
+	toxvol = 120
+	burnvol = 120
 	chargecost = 25
 	bpcmo = 1
 
@@ -80,22 +85,33 @@
 	. = ..()
 
 	if(Adjacent(user))
+		if(maintenance)
+			. += "<span class='warning'>The Maintenance hatch is open.</span>"
 		if(bcell)
-			. += "<span class='notice'>The Cell is [round(bcell.percent())]% charged.</span>"
+			. += "<span class='notice'>The [bcell.name] is [round(bcell.percent())]% charged.</span>"
 		if(!bcell)
 			. += "<span class='warning'>The Unit does not have a power source installed.</span>"
-		if(brutevol)
-			. += "<span class='notice'>Bruteheal tank has [brutevol] U remaining.</span>"
-		else
-			. += "<span class='notice'>Bruteheal tank is empty.</span>"
-		if(burnvol)
-			. += "<span class='notice'>Burnheal tank has [burnvol] U remaining.</span>"
-		else
-			. += "<span class='notice'>Burnheal tank is empty.</span>"
-		if(toxvol)
-			. += "<span class='notice'>Toxheal tank has [toxvol] U remaining.</span>"
-		else
-			. += "<span class='notice'>Toxheal tank is empty.</span>"
+
+		if(smodule)
+			. += "<span class='notice'>The [src] has a [smodule.name] installed.</span>"
+		if(!smodule)
+			. += "<span class='notice'>The [src] is missing a phasic scanning module.</span>"
+		if(!mybeaker)
+			. += "<span class='warning'>The [src] is missing a beaker.</span>"
+		if(mybeaker)
+			. += "<span class='notice'>The [src] has a [mybeaker.name] installed.</span>"
+			if(brutevol)
+				. += "<span class='notice'>Bruteheal charge meter reads [round(100*brutevol/tankmax)]% remaining.</span>"
+			else
+				. += "<span class='warning'>Bruteheal charge meter reads empty.</span>"
+			if(burnvol)
+				. += "<span class='notice'>Burnheal charge meter reads [round(100*burnvol/tankmax)]% remaining.</span>"
+			else
+				. += "<span class='warning'>Burnheal charge meter reads empty.</span>"
+			if(toxvol)
+				. += "<span class='notice'>Toxheal charge meter reads [round(100*toxvol/tankmax)]% remaining.</span>"
+			else
+				. += "<span class='warning'>Toxheal charge meter reads empty.</span>"
 
 /obj/item/device/medigun_backpack/get_cell()
 	return bcell
@@ -145,7 +161,8 @@
 		medigun = new medigun(src, src)
 	else
 		medigun = new(src, src)
-
+	if(ispath(mybeaker))
+		mybeaker = new mybeaker(src)
 	if(ispath(bcell))
 		bcell = new bcell(src)
 	update_icon()
@@ -182,27 +199,184 @@
 
 
 /obj/item/device/medigun_backpack/attackby(obj/item/weapon/W, mob/user, params)
-	if(W == medigun)
-		to_chat(user, "<span class='warning'>backpack clicked with gun</span>")
-		reattach_medigun(user)
-	else if(istype(W, /obj/item/weapon/cell))
-		if(bcell)
-			to_chat(user, "<span class='notice'>\The [src] already has a cell.</span>")
-		else
-			if(!user.unEquip(W))
-				return
-			W.forceMove(src)
-			bcell = W
-			to_chat(user, "<span class='notice'>You install a cell in \the [src].</span>")
-			update_icon()
+	if(!maintenance && (istype(W, /obj/item/weapon/reagent_containers/glass/beaker) || istype(W, /obj/item/weapon/reagent_containers/glass/bottle)))
 
+		playsound(src, 'sound/weapons/empty.ogg', 50, 1)
+		var/reagentwhitelist = list("bicaridine", "anti_toxin", "kelotane", "dermaline", "tricordrazine")
+
+		for(var/G in W.reagents.reagent_list)
+			var/datum/reagent/R = G
+			var/modifier = 1
+			var/totransfer = 0
+			var/name = ""
+			if(R.id in reagentwhitelist)
+				switch(R.id)
+					if("bicaridine")
+						name = "bruteheal"
+						modifier = 4
+						totransfer = tankmax - brutevol
+					if("anti_toxin")
+						name = "toxheal"
+						modifier = 4
+						totransfer = tankmax - toxvol
+					if("kelotane")
+						name = "burnheal"
+						modifier = 4
+						totransfer = tankmax - burnvol
+					if("dermaline")
+						name = "burnheal"
+						modifier = 8
+						totransfer = tankmax - burnvol
+					if("tricordrazine")
+						name = "tricordrazine"
+						modifier = 1
+						if((brutevol != tankmax) && (burnvol != tankmax) && (toxvol != tankmax))
+							totransfer = 1  //tempcheck to get past the totransfer check
+						else
+							totransfer = 0
+				if(totransfer <= 0)
+					to_chat(user, span("notice", "The [src] cannot accept anymore [name]!"))
+				totransfer = min(totransfer,W.reagents.get_reagent_amount(R.id) * modifier)
+				switch(R.id)
+					if("bicaridine")
+						brutevol += totransfer
+					if("anti_toxin")
+						toxvol += totransfer
+					if("kelotane")
+						burnvol += totransfer
+					if("dermaline")
+						burnvol += totransfer
+					if("tricordrazine")
+						var/maxamount = W.reagents.get_reagent_amount(R.id)
+						var/amountused
+						var/oldbrute = brutevol
+						var/oldburn = burnvol
+						var/oldtox = toxvol
+
+						while(maxamount > 0)
+							if(brutevol >= tankmax && burnvol >= tankmax && toxvol >= tankmax)
+								break
+							maxamount --
+							amountused++
+							totransfer ++
+							if(brutevol < tankmax)
+								brutevol ++
+							if(burnvol < tankmax)
+								burnvol ++
+							if(toxvol < tankmax)
+								toxvol ++
+						var/readout = "You add [amountused] units of [R.name] to the [src]. \n The [src] Synthesizes "
+						var/readoutadditions = FALSE
+						if(oldbrute != brutevol)
+							readout += "[round(100*(brutevol - oldbrute)/tankmax)]% of bruteheal charge"
+							readoutadditions = TRUE
+						if(oldburn != burnvol)
+							if(readoutadditions)
+								readout += ", "
+							readout += "[round(100*(burnvol - oldburn)/tankmax)]% of burnheal charge"
+							readoutadditions = TRUE
+						if(oldtox != toxvol)
+							if(readoutadditions)
+								readout += ", "
+							readout += "[round(100*toxvol - oldtox)/tankmax]% of toxheal charge"
+						if(oldbrute != brutevol || oldburn != burnvol || oldtox != toxvol)to_chat(user, span("notice", "[readout]."))
+				if(totransfer > 0)
+					if(R.id != "tricordrazine")
+						to_chat(user, span("notice", "You add [totransfer / modifier] units of [R.name] to the [src]. \n The [src] Synthesizes [round(100*totransfer/tankmax)]% charge of [name]."))
+					W.reagents.remove_reagent(R.id, totransfer / modifier)
+				update_icon()
+	if(W == medigun)
+		//to_chat(user, "<span class='warning'>backpack clicked with gun</span>")
+		reattach_medigun(user)
 	else if(W.is_screwdriver())
-		if(bcell)
-			bcell.update_icon()
-			bcell.forceMove(get_turf(src.loc))
-			bcell = null
-			to_chat(user, "<span class='notice'>You remove the cell from \the [src].</span>")
-			update_icon()
+		if(!maintenance)
+			maintenance = 1
+			to_chat(user, "<span class='notice'>You open the maintenance hatch on \the [src].</span>")
+			if(!containsgun)
+				reattach_medigun(user)
+			return
+		else
+			var/list/installedparts
+			installedparts = list("close hatch")
+			if(bcell)
+				installedparts.Add("cell")
+			if(smodule)
+				installedparts.Add("scanning module")
+			if(mybeaker)
+				installedparts.Add("beaker")
+			var/menuchoice = tgui_input_list(user, "Which Module would you like to remove?", "Parts and options:", installedparts)
+
+			if(menuchoice == "close hatch")
+				maintenance = 0
+				to_chat(user, "<span class='notice'>You close the maintenance hatch on \the [src].</span>")
+				return
+			else if(menuchoice == "beaker")
+				var/confirmremove = tgui_alert(user,"Are you sure you want to Remove [mybeaker.name]? All Chems will be voided","Yes or No",list("Yes","No"))
+				if(confirmremove == "Yes")
+					mybeaker.forceMove(get_turf(src.loc))
+					mybeaker = null
+					toxvol = 0
+					brutevol = 0
+					burnvol = 0
+					tankmax = 0
+					update_icon()
+					to_chat(user, "<span class='notice'>You remove the [mybeaker.name] from \the [src].</span>")
+					return
+				else if(confirmremove == "No")
+					to_chat(user, "<span class='notice'>You decide not to remove the [mybeaker.name] from \the [src].</span>")
+					return
+			else if(menuchoice == "cell")
+				bcell.update_icon()
+				bcell.forceMove(get_turf(src.loc))
+				bcell = null
+				to_chat(user, "<span class='notice'>You remove the cell from \the [src].</span>")
+				update_icon()
+				return
+			else if(menuchoice == "scanning module")
+				smodule.update_icon()
+				smodule.forceMove(get_turf(src.loc))
+				smodule = null
+				to_chat(user, "<span class='notice'>You remove the [smodule] from \the [src].</span>")
+				update_icon()
+				return
+	if(maintenance)
+		if(istype(W, /obj/item/weapon/cell))
+			if(bcell)
+				to_chat(user, "<span class='notice'>\The [src] already has a cell.</span>")
+			else
+				if(!user.unEquip(W))
+					return
+				W.forceMove(src)
+				bcell = W
+				to_chat(user, "<span class='notice'>You install a cell in \the [src].</span>")
+				update_icon()
+		else if(istype(W, /obj/item/weapon/stock_parts/scanning_module/phasic))
+			if(smodule)
+				to_chat(user, "<span class='notice'>\The [src] already has a [W]].</span>")
+			else
+				if(!user.unEquip(W))
+					return
+				W.forceMove(src)
+				smodule = W
+				to_chat(user, "<span class='notice'>You install the [W] into \the [src].</span>")
+				update_icon()
+		else if(istype(W, /obj/item/weapon/reagent_containers/glass/beaker))
+			if(mybeaker)
+				to_chat(user, "<span class='notice'>\The [src] already has a beaker.</span>")
+			else
+				if(!user.unEquip(W))
+					return
+				W.forceMove(src)
+				mybeaker = W
+				if(istype(W, /obj/item/weapon/reagent_containers/glass/beaker/bluespace))
+					tankmax = 300
+				else if(istype(W, /obj/item/weapon/reagent_containers/glass/beaker/large))
+					tankmax = 120
+				else
+					tankmax = 60
+				to_chat(user, "<span class='notice'>You slot the [W] in \the [src].</span>")
+				update_icon()
+
 	else
 		return ..()
 
@@ -241,18 +415,18 @@
 
 
 /obj/item/device/bork_medigun/linked/forceMove(atom/destination) //Forcemove override, ugh
-	to_chat(world, "<span class='warning'>forcemove</span>")
-	to_chat(world, "<span class='warning'>[destination]</span>")
+	//to_chat(world, "<span class='warning'>forcemove</span>")
+	//to_chat(world, "<span class='warning'>[destination]</span>")
 	if(destination == medigun_base_unit || destination == medigun_base_unit.loc || isturf(destination))
 		. = doMove(destination, 0, 0)
 		if(isturf(destination))
 			for(var/atom/A as anything in destination) // If we can't scan the turf, see if we can scan anything on it, to help with aiming.
 				if(istype(A,/obj/structure/closet ))
 					break
-			to_chat(world, "<span class='warning'>isturf</span>")
+			//to_chat(world, "<span class='warning'>isturf</span>")
 			if(ismob(medigun_base_unit.loc))
 				var/mob/user = medigun_base_unit.loc
-				to_chat(world, "<span class='warning'>[user] eats ass</span>")
+				//to_chat(world, "<span class='warning'>[user] eats ass</span>")
 				medigun_base_unit.reattach_medigun(user)
 
 
@@ -270,14 +444,17 @@
 /obj/item/device/medigun_backpack/verb/toggle_medigun()
 	set name = "Toggle medigun"
 	set category = "Object"
-
 	var/mob/living/carbon/human/user = usr
+	if(maintenance)
+		to_chat(user, "<span class='warning'>Please close the maintenance hatch with a screwdriver first.</span>")
+		return
+
 	if(!medigun)
 		to_chat(user, "<span class='warning'>The medigun is missing!</span>")
 		return
 
 	if(medigun.loc != src)
-		to_chat(user, "<span class='warning'>location not source</span>")
+		//to_chat(user, "<span class='warning'>location not source</span>")
 		reattach_medigun(user) //Remove from their hands and back onto the medigun unit
 		return
 
@@ -290,7 +467,7 @@
 			containsgun = 0
 			icon_state = "mg-backpack-deployed"
 			item_state = "mg-backpack-deployed-onmob"
-			to_chat(user, "<span class='warning'>Deploy</span>")
+			//to_chat(user, "<span class='warning'>Deploy</span>")
 			update_icon() //success
 			if(!bpcmo)
 				medigun.update_twohanding()
@@ -319,19 +496,19 @@
 
 /obj/item/device/medigun_backpack/dropped(mob/user)
 	..()
-	to_chat(user, "<span class='warning'>Dropped backpack</span>")
+	//to_chat(user, "<span class='warning'>Dropped backpack</span>")
 	reattach_medigun(user) //medigun attached to a base unit should never exist outside of their base unit or the mob equipping the base unit
 
 /obj/item/device/medigun_backpack/proc/reattach_medigun(mob/user)
-	to_chat(world, "<span class='warning'>Null</span>")
+	//to_chat(world, "<span class='warning'>Null</span>")
 	//to_chat(user, "<span class='notice'>[user]</span>")
 	//to_chat(user, "<span class='notice'>[medigun.loc]</span>")
 	//to_chat(user, "<span class='notice'>[src]</span>")
 	if(containsgun == 0)
-		to_chat(world, "<span class='warning'>doesnt contain gun</span>")
+		//to_chat(world, "<span class='warning'>doesnt contain gun</span>")
 		containsgun = 1
 		if(!medigun)
-			to_chat(world, "<span class='warning'>return</span>")
+			//to_chat(world, "<span class='warning'>return</span>")
 			return
 		if(bpcmo)
 			icon_state = "mg-backpack_cmo"
@@ -339,19 +516,19 @@
 		else
 			icon_state = "mg-backpack"
 			item_state = "mg-backpack-onmob"
-		to_chat(user, "<span class='notice'>just before medigun busy</span>")
+		//to_chat(user, "<span class='notice'>just before medigun busy</span>")
 		if(medigun.busy)
 			medigun.busy = 0
 		update_icon()
 		user.update_inv_back()
-		to_chat(user, "<span class='notice'>just before ismob</span>")
+		//to_chat(user, "<span class='notice'>just before ismob</span>")
 		if(ismob(medigun.loc))
-			to_chat(user, "<span class='notice'>ismob</span>")
+			//to_chat(user, "<span class='notice'>ismob</span>")
 			var/mob/M = medigun.loc
 			if(M.drop_from_inventory(medigun, src))
 				to_chat(user, "<span class='notice'>\The [medigun] snaps back into the main unit.</span>")
 		else
-			to_chat(user, "<span class='notice'>!ismob</span>")
+			//to_chat(user, "<span class='notice'>!ismob</span>")
 			medigun.forceMove(src)
 			to_chat(user, "<span class='notice'>\The [medigun] snaps back into the main unit.</span>")
 
@@ -380,95 +557,7 @@
 	else
 		return ..()
 
-/obj/item/device/medigun_backpack/attackby(obj/item/weapon/W, mob/user as mob)
-	if(istype(W, /obj/item/weapon/reagent_containers/glass/beaker) || istype(W, /obj/item/weapon/reagent_containers/glass/bottle))
 
-		playsound(src, 'sound/weapons/empty.ogg', 50, 1)
-		var/reagentwhitelist = list("bicaridine", "anti_toxin", "kelotane", "dermaline", "tricordrazine")
-
-		for(var/G in W.reagents.reagent_list)
-			var/datum/reagent/R = G
-			var/modifier = 1
-			var/totransfer = 0
-			var/name = ""
-			if(R.id in reagentwhitelist)
-				switch(R.id)
-					if("bicaridine")
-						name = "bruteheal"
-						modifier = 4
-						totransfer = tankmax - brutevol
-					if("anti_toxin")
-						name = "toxheal"
-						modifier = 4
-						totransfer = tankmax - toxvol
-					if("kelotane")
-						name = "burnheal"
-						modifier = 4
-						totransfer = tankmax - burnvol
-					if("dermaline")
-						name = "burnheal"
-						modifier = 8
-						totransfer = tankmax - burnvol
-					if("tricordrazine")
-						name = "tricordrazine"
-						modifier = 1
-						if((brutevol != 100) && (burnvol != 100) && (toxvol != 100))
-							totransfer = 1  //tempcheck to get past the totransfer check
-						else
-							totransfer = 0
-				if(totransfer <= 0)
-					to_chat(user, span("notice", "The [name] tank is full!"))
-				totransfer = min(totransfer,W.reagents.get_reagent_amount(R.id) * modifier)
-				switch(R.id)
-					if("bicaridine")
-						brutevol += totransfer
-					if("anti_toxin")
-						toxvol += totransfer
-					if("kelotane")
-						burnvol += totransfer
-					if("dermaline")
-						burnvol += totransfer
-					if("tricordrazine")
-						var/maxamount = W.reagents.get_reagent_amount(R.id)
-						var/amountused
-						var/oldbrute = brutevol
-						var/oldburn = burnvol
-						var/oldtox = toxvol
-
-						while(maxamount > 0)
-							if(brutevol >= 100 && burnvol >= 100 && toxvol >= 100)
-								break
-							maxamount --
-							amountused++
-							totransfer ++
-							if(brutevol < 100)
-								brutevol ++
-							if(burnvol < 100)
-								burnvol ++
-							if(toxvol < 100)
-								toxvol ++
-						var/readout = "You add [amountused] units of [R.name] to the tank. \n The [src] Synthesizes "
-						var/readoutadditions = FALSE
-						if(oldbrute != brutevol)
-							readout += "([brutevol - oldbrute]) of brute charge"
-							readoutadditions = TRUE
-						if(oldburn != burnvol)
-							if(readoutadditions)
-								readout += ", "
-							readout += "([burnvol - oldburn]) of burn charge"
-							readoutadditions = TRUE
-						if(oldtox != toxvol)
-							if(readoutadditions)
-								readout += ", "
-							readout += "([toxvol - oldtox]) of tox charge"
-						if(oldbrute != brutevol || oldburn != burnvol || oldtox != toxvol)to_chat(user, span("notice", "[readout]."))
-				if(totransfer > 0)
-					if(R.id != "tricordrazine")
-						to_chat(user, span("notice", "You add [totransfer / modifier] units of [R.name] to the tank. \n The [src] Synthesizes [totransfer] charge of [name]."))
-					W.reagents.remove_reagent(R.id, totransfer / modifier)
-				update_icon()
-	else
-		..()
 /obj/item/device/bork_medigun/linked/proc/should_stop(var/mob/living/target, var/mob/living/user, var/active_hand)
 	if(!target ||  !user || !active_hand || !istype(target) || !istype(user) || !busy)
 		return TRUE
@@ -485,7 +574,7 @@
 		return TRUE
 
 	//if(get_dist(user, target) > beam_range)
-	if(!(target in view(beam_range, user)))
+	if(!(target in range(beam_range, user)) || (!(target in view(10, user)) && !medigun_base_unit.smodule))
 		to_chat(user, span("warning", "You are too far away from \the [target] to heal them, Or they are not in view. Get closer."))
 		return TRUE
 
@@ -538,7 +627,7 @@
 	if(target == user)
 		to_chat(user, span("warning", "Cant heal yourself."))
 		return
-	if(!(target in view(beam_range, user)))
+	if(!(target in range(beam_range, user)) || (!(target in view(10, user)) && !medigun_base_unit.smodule))
 		to_chat(user, span("warning", "You are too far away from \the [target] to heal them, Or they are not in view. Get closer."))
 		return
 	current_target = target
