@@ -4,17 +4,21 @@
 //Airless moonrock walls
 //	color="#7ab6b6"
 /turf/simulated/mineral/moonbase
+	name = "Moonrock"
+	floor_name = "Regolith"
+	rock_icon_path = 'maps/sirius_point/sp_asteroid_wall.dmi'
+	icon_edge = 'maps/sirius_point/sp_asteroid_edge.dmi'
 	sand_icon_path = 'maps/sirius_point/sp_asteroid.dmi'
 	sand_icon_state = "asteroid"
-	icon_edge = 'maps/sirius_point/sp_asteroid_edge.dmi'
-	rock_icon_path = 'maps/sirius_point/sp_asteroid_wall.dmi'
 
 //Air-y moonrock walls
 /turf/simulated/mineral/cave/moonbase
+	name = "Moonrock"
+	floor_name = "Regolith"
+	rock_icon_path = 'maps/sirius_point/sp_asteroid_wall.dmi'
+	icon_edge = 'maps/sirius_point/sp_asteroid_edge.dmi'
 	sand_icon_path = 'maps/sirius_point/sp_asteroid.dmi'
 	sand_icon_state = "asteroid"
-	icon_edge = 'maps/sirius_point/sp_asteroid_edge.dmi'
-	rock_icon_path = 'maps/sirius_point/sp_asteroid_wall.dmi'
 
 /turf/unsimulated/wall/planetary/moonbase
 	oxygen = 0
@@ -23,12 +27,14 @@
 
 //Floors
 /turf/simulated/mineral/floor/vacuum/moonbase
+	name = "Regolith"
+	floor_name = "Regolith"
 	icon = 'maps/sirius_point/sp_asteroid.dmi'
 	icon_state = "asteroid"
 	sand_icon_path = 'maps/sirius_point/sp_asteroid.dmi'
+	icon_edge = 'maps/sirius_point/sp_asteroid_edge.dmi'
 	sand_icon_state = "asteroid"
 	edge_blending_priority = 4
-	icon_edge = 'maps/sirius_point/sp_asteroid_edge.dmi'
 	temperature = TCMB
 /turf/simulated/floor/plating/external/moonbaseplating
 	icon = 'maps/sirius_point/sp_asteroid.dmi'
@@ -73,4 +79,5 @@
 
 /turf/unsimulated/mineral/moonbase
 	name = "impassable rock"
-	color="#7ab6b6"
+	rock_icon_path = 'maps/sirius_point/sp_asteroid_wall.dmi'
+	icon_edge = 'maps/sirius_point/sp_asteroid_edge.dmi'
