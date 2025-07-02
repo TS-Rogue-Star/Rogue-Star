@@ -20,7 +20,7 @@
 		)
 	w_class = ITEMSIZE_HUGE
 	force = 0
-	var/beam_range = 4 // How many tiles away it can scan. Changing this also changes the box size.
+	var/beam_range = 3 // How many tiles away it can scan. Changing this also changes the box size.
 	var/busy = FALSE // Set to true when scanning, to stop multiple scans.
 	var/wielded = 0
 	var/current_target
@@ -45,19 +45,20 @@
 	action_button_name = "Remove/Replace medigun"
 
 	var/obj/item/device/bork_medigun/linked/medigun
-	var/obj/item/weapon/reagent_containers/glass/beaker/mybeaker = null
-	var/obj/item/weapon/cell/bcell = null
-	var/obj/item/weapon/stock_parts/scanning_module/phasic/smodule = null
+	var/obj/item/weapon/cell/bcell = /obj/item/weapon/cell/apc
+	var/obj/item/weapon/stock_parts/scanning_module/smodule = /obj/item/weapon/stock_parts/scanning_module
+	var/obj/item/weapon/stock_parts/manipulator/smanipulator = /obj/item/weapon/stock_parts/manipulator
+	var/obj/item/weapon/stock_parts/capacitor/scapacitor = /obj/item/weapon/stock_parts/capacitor
+	var/obj/item/weapon/stock_parts/micro_laser/slaser = /obj/item/weapon/stock_parts/micro_laser
 	var/brutevol = 0
 	var/toxvol = 0
 	var/burnvol = 0
 	var/tankmax = 60
-	var/chargecost = 25
+	var/chargecost = 40
 	var/bpcmo = 0
 	var/containsgun = 1
 	var/maintenance
-	bcell = /obj/item/weapon/cell/apc
-	mybeaker = /obj/item/weapon/reagent_containers/glass/beaker
+
 //backpack item
 /obj/item/device/medigun_backpack/cmo
 	name = "Bork Medical Beam Backpack Unit CMO"
@@ -73,12 +74,15 @@
 	w_class = ITEMSIZE_HUGE
 	unacidable = TRUE
 	action_button_name = "Remove/Replace medigun"
-	mybeaker = /obj/item/weapon/reagent_containers/glass/beaker/large
-	tankmax = 120
-	brutevol = 120
-	toxvol = 120
-	burnvol = 120
-	chargecost = 25
+	scapacitor = /obj/item/weapon/stock_parts/capacitor/adv
+	smanipulator = /obj/item/weapon/stock_parts/manipulator/nano
+	smodule = /obj/item/weapon/stock_parts/scanning_module/adv
+	slaser = /obj/item/weapon/stock_parts/micro_laser/high
+	chargecost = 30
+	tankmax = 100
+	brutevol = 100
+	toxvol = 100
+	burnvol = 100
 	bpcmo = 1
 
 /obj/item/device/medigun_backpack/examine(mob/user)
@@ -90,28 +94,39 @@
 		if(bcell)
 			. += "<span class='notice'>The [bcell.name] is [round(bcell.percent())]% charged.</span>"
 		if(!bcell)
-			. += "<span class='warning'>does not have a power source installed.</span>"
-
+			. += "<span class='warning'>It does not have a power source installed.</span>"
 		if(smodule)
-			. += "<span class='notice'>has a [smodule.name] installed enabling the device to work through walls.</span>"
+			if(smodule.get_rating() >= 5)
+				. += "<span class='notice'>It has a [smodule.name] installed, device will function within [medigun.beam_range] tiles and through walls.</span>"
+			else
+				. += "<span class='notice'>It has a [smodule.name] installed, device will function within [medigun.beam_range] tiles.</span>"
 		if(!smodule)
-			. += "<span class='warning'>is missing a phasic scanning module.</span>"
-		if(!mybeaker)
-			. += "<span class='warning'> is missing a beaker.</span>"
-		if(mybeaker)
-			. += "<span class='notice'>has a [mybeaker.name] installed granting charge capacity of [tankmax] per type.</span>"
+			. += "<span class='warning'>It is missing a scanning module.</span>"
+
+		if(smanipulator)
+			. += "<span class='notice'>It has a [smanipulator.name] installed.</span>"
+		if(!smanipulator)
+			. += "<span class='warning'>It is missing a manipulator.</span>"
+		if(scapacitor)
+			if(chargecost > 0)
+				. += "<span class='notice'>It has a [scapacitor.name] installed, battery charge will now drain at [chargecost] per second, and grants a heal charge capacity of [tankmax] per type.</span>"
+			else if(chargecost == 0)
+				. += "<span class='notice'>It has a [scapacitor.name] installed, The battery will not drain at all, and grants a heal charge capacity of [tankmax] per type.</span>"
 			if(brutevol)
-				. += "<span class='notice'>Bruteheal charge meter reads [round(100*brutevol/tankmax)]% remaining.</span>"
+				. += "<span class='notice'>The Bruteheal charge meter reads [round(100*brutevol/tankmax)]% remaining.</span>"
 			else
-				. += "<span class='warning'>Bruteheal charge meter reads empty.</span>"
+				. += "<span class='warning'>The Bruteheal charge meter reads empty.</span>"
 			if(burnvol)
-				. += "<span class='notice'>Burnheal charge meter reads [round(100*burnvol/tankmax)]% remaining.</span>"
+				. += "<span class='notice'>The Burnheal charge meter reads [round(100*burnvol/tankmax)]% remaining.</span>"
 			else
-				. += "<span class='warning'>Burnheal charge meter reads empty.</span>"
+				. += "<span class='warning'>The Burnheal charge meter reads empty.</span>"
 			if(toxvol)
-				. += "<span class='notice'>Toxheal charge meter reads [round(100*toxvol/tankmax)]% remaining.</span>"
+				. += "<span class='notice'>The Toxheal charge meter reads [round(100*toxvol/tankmax)]% remaining.</span>"
 			else
-				. += "<span class='warning'>Toxheal charge meter reads empty.</span>"
+				. += "<span class='warning'>The Toxheal charge meter reads empty.</span>"
+		if(!scapacitor)
+			. += "<span class='warning'>It is missing a capacitor, you may not digitize chems.</span>"
+
 
 /obj/item/device/medigun_backpack/get_cell()
 	return bcell
@@ -155,16 +170,24 @@
 				LAZYSET(item_state_slots, slot_l_hand_str, initial(item_state))
 				LAZYSET(item_state_slots, slot_r_hand_str, initial(item_state))
 		..()
-/obj/item/device/medigun_backpack/New() //starts without a cell for rnd
+/obj/item/device/medigun_backpack/New()
 	..()
 	if(ispath(medigun))
 		medigun = new medigun(src, src)
 	else
 		medigun = new(src, src)
-	if(ispath(mybeaker))
-		mybeaker = new mybeaker(src)
+	if(bpcmo)
+		medigun.beam_range = 4
 	if(ispath(bcell))
 		bcell = new bcell(src)
+	if(ispath(smodule))
+		smodule = new smodule(src)
+	if(ispath(smanipulator))
+		smanipulator = new smanipulator(src)
+	if(ispath(scapacitor))
+		scapacitor = new scapacitor(src)
+	if(ispath(slaser))
+		slaser = new slaser(src)
 	update_icon()
 
 /obj/item/device/medigun_backpack/Destroy()
@@ -209,23 +232,24 @@
 			var/modifier = 1
 			var/totransfer = 0
 			var/name = ""
+			var maniptier = smanipulator.get_rating()
 			if(R.id in reagentwhitelist)
 				switch(R.id)
 					if("bicaridine")
 						name = "bruteheal"
-						modifier = 4
+						modifier = 2*maniptier
 						totransfer = tankmax - brutevol
 					if("anti_toxin")
 						name = "toxheal"
-						modifier = 4
+						modifier = 2*maniptier
 						totransfer = tankmax - toxvol
 					if("kelotane")
 						name = "burnheal"
-						modifier = 4
+						modifier = 2*maniptier
 						totransfer = tankmax - burnvol
 					if("dermaline")
 						name = "burnheal"
-						modifier = 8
+						modifier = 4*maniptier
 						totransfer = tankmax - burnvol
 					if("tricordrazine")
 						name = "tricordrazine"
@@ -265,7 +289,7 @@
 								burnvol ++
 							if(toxvol < tankmax)
 								toxvol ++
-						var/readout = "You add [amountused] units of [R.name] to the [src]. \n The [src] Synthesizes "
+						var/readout = "You add [amountused] units of [R.name] to the [src]. \n The [src] digitizes "
 						var/readoutadditions = FALSE
 						if(oldbrute != brutevol)
 							readout += "[round(100*(brutevol - oldbrute)/tankmax)]% of bruteheal charge"
@@ -282,7 +306,7 @@
 						if(oldbrute != brutevol || oldburn != burnvol || oldtox != toxvol)to_chat(user, span("notice", "[readout]."))
 				if(totransfer > 0)
 					if(R.id != "tricordrazine")
-						to_chat(user, span("notice", "You add [totransfer / modifier] units of [R.name] to the [src]. \n The [src] Synthesizes [round(100*totransfer/tankmax)]% charge of [name]."))
+						to_chat(user, span("notice", "You add [totransfer / modifier] units of [R.name] to the [src]. \n The [src] digitizes [round(100*totransfer/tankmax)]% charge of [name]."))
 					W.reagents.remove_reagent(R.id, totransfer / modifier)
 				update_icon()
 	if(W == medigun)
@@ -302,29 +326,18 @@
 				installedparts.Add("cell")
 			if(smodule)
 				installedparts.Add("scanning module")
-			if(mybeaker)
-				installedparts.Add("beaker")
+			if(scapacitor)
+				installedparts.Add("capacitor")
+			if(smanipulator)
+				installedparts.Add("manipulator")
+			if(slaser)
+				installedparts.Add("laser")
 			var/menuchoice = tgui_input_list(user, "Which Module would you like to remove?", "Parts and options:", installedparts)
 
 			if(menuchoice == "close hatch")
 				maintenance = 0
 				to_chat(user, "<span class='notice'>You close the maintenance hatch on \the [src].</span>")
 				return
-			else if(menuchoice == "beaker")
-				var/confirmremove = tgui_alert(user,"Are you sure you want to Remove [mybeaker.name]? All Chems will be voided","Yes or No",list("Yes","No"))
-				if(confirmremove == "Yes")
-					mybeaker.forceMove(get_turf(src.loc))
-					mybeaker = null
-					toxvol = 0
-					brutevol = 0
-					burnvol = 0
-					tankmax = 0
-					update_icon()
-					to_chat(user, "<span class='notice'>You remove the [mybeaker.name] from \the [src].</span>")
-					return
-				else if(confirmremove == "No")
-					to_chat(user, "<span class='notice'>You decide not to remove the [mybeaker.name] from \the [src].</span>")
-					return
 			else if(menuchoice == "cell")
 				bcell.update_icon()
 				bcell.forceMove(get_turf(src.loc))
@@ -339,6 +352,27 @@
 				to_chat(user, "<span class='notice'>You remove the [smodule] from \the [src].</span>")
 				update_icon()
 				return
+			else if(menuchoice == "capacitor")
+				scapacitor.update_icon()
+				scapacitor.forceMove(get_turf(src.loc))
+				scapacitor = null
+				to_chat(user, "<span class='notice'>You remove the [scapacitor] from \the [src].</span>")
+				update_icon()
+				return
+			else if(menuchoice == "manipulator")
+				smanipulator.update_icon()
+				smanipulator.forceMove(get_turf(src.loc))
+				smanipulator = null
+				to_chat(user, "<span class='notice'>You remove the [smanipulator] from \the [src].</span>")
+				update_icon()
+				return
+			else if(menuchoice == "laser")
+				slaser.update_icon()
+				slaser.forceMove(get_turf(src.loc))
+				slaser = null
+				to_chat(user, "<span class='notice'>You remove the [slaser] from \the [src].</span>")
+				update_icon()
+				return
 	if(maintenance)
 		if(istype(W, /obj/item/weapon/cell))
 			if(bcell)
@@ -350,7 +384,7 @@
 				bcell = W
 				to_chat(user, "<span class='notice'>You install a cell in \the [src].</span>")
 				update_icon()
-		else if(istype(W, /obj/item/weapon/stock_parts/scanning_module/phasic))
+		else if(istype(W, /obj/item/weapon/stock_parts/scanning_module))
 			if(smodule)
 				to_chat(user, "<span class='notice'>\The [src] already has a [W]].</span>")
 			else
@@ -359,22 +393,51 @@
 				W.forceMove(src)
 				smodule = W
 				to_chat(user, "<span class='notice'>You install the [W] into \the [src].</span>")
+				medigun.beam_range = 3+smodule.get_rating()
 				update_icon()
-		else if(istype(W, /obj/item/weapon/reagent_containers/glass/beaker))
-			if(mybeaker)
-				to_chat(user, "<span class='notice'>\The [src] already has a beaker.</span>")
+		else if(istype(W, /obj/item/weapon/stock_parts/manipulator))
+			if(smanipulator)
+				to_chat(user, "<span class='notice'>\The [src] already has a [W]].</span>")
 			else
 				if(!user.unEquip(W))
 					return
 				W.forceMove(src)
-				mybeaker = W
-				if(istype(W, /obj/item/weapon/reagent_containers/glass/beaker/bluespace))
-					tankmax = 300
-				else if(istype(W, /obj/item/weapon/reagent_containers/glass/beaker/large))
-					tankmax = 120
+				smanipulator = W
+				to_chat(user, "<span class='notice'>You install the [W] into \the [src].</span>")
+
+				update_icon()
+		else if(istype(W, /obj/item/weapon/stock_parts/micro_laser))
+			if(slaser)
+				to_chat(user, "<span class='notice'>\The [src] already has a [W]].</span>")
+			else
+				if(!user.unEquip(W))
+					return
+				W.forceMove(src)
+				slaser = W
+				to_chat(user, "<span class='notice'>You install the [W] into \the [src].</span>")
+
+				update_icon()
+		else if(istype(W, /obj/item/weapon/stock_parts/capacitor))
+			if(scapacitor)
+				to_chat(user, "<span class='notice'>\The [src] already has a [W]].</span>")
+			else
+				if(!user.unEquip(W))
+					return
+				W.forceMove(src)
+				scapacitor = W
+				var/scaptier = scapacitor.get_rating()
+				chargecost = 50-(10*scaptier)
+				if(scaptier >= 5)
+					tankmax = 500 // alien tech go brr
 				else
-					tankmax = 60
-				to_chat(user, "<span class='notice'>You slot the [W] in \the [src].</span>")
+					tankmax = 50*scaptier
+				if(brutevol > tankmax)
+					brutevol = tankmax
+				if(burnvol > tankmax)
+					burnvol = tankmax
+				if(toxvol > tankmax)
+					toxvol = tankmax
+				to_chat(user, "<span class='notice'>You install the [W] into \the [src].</span>")
 				update_icon()
 
 	else
@@ -616,7 +679,21 @@
 		return
 
 	//var/mob/living/L = target
-
+	if(!medigun_base_unit.smanipulator)
+		to_chat(user, "<span class='warning'>\The [src] Blinks a red error light, Manipulator missing.</span>")
+		return
+	if(!medigun_base_unit.scapacitor)
+		to_chat(user, "<span class='warning'>\The [src] Blinks a blue error light, capacitor missing.</span>")
+		return
+	if(!medigun_base_unit.slaser)
+		to_chat(user, "<span class='warning'>\The [src] Blinks an orange error light, laser missing.</span>")
+		return
+	if(!medigun_base_unit.smodule)
+		to_chat(user, "<span class='warning'>\The [src] Blinks a pink error light, scanning module missing.</span>")
+		return
+	if(!checked_use(medigun_base_unit.chargecost))
+		to_chat(user, "<span class='warning'>\The [src] doesn't have enough charge left to do that.</span>")
+		return
 	if(get_dist(target, user) > beam_range)
 		to_chat(user, span("warning", "You are too far away from \the [target] to affect it. Get closer."))
 		return
@@ -655,18 +732,26 @@
 					to_chat(user, "<span class='warning'>\The [src] doesn't have enough charge left to do that.</span>")
 					break
 				H.add_modifier(/datum/modifier/medbeameffect, 1 SECONDS)
-				if(medigun_base_unit.brutevol > 0 && H.getBruteLoss())
-					H.adjustBruteLoss(-1)
-					medigun_base_unit.brutevol --
-					ishealing = 1
-				if(medigun_base_unit.burnvol > 0 && H.getFireLoss())
-					H.adjustFireLoss(-1)
-					medigun_base_unit.burnvol --
-					ishealing = 1
-				if(medigun_base_unit.toxvol > 0 && H.getToxLoss())
-					H.adjustToxLoss(-1)
-					medigun_base_unit.toxvol --
-					ishealing = 1
+				var/lastier = medigun_base_unit.slaser.get_rating()
+				var/healmod = lastier
+				if(H.getBruteLoss())
+					healmod = min(lastier,medigun_base_unit.brutevol,H.getBruteLoss())
+					if(medigun_base_unit.brutevol >= healmod)
+						H.adjustBruteLoss(-healmod)
+						medigun_base_unit.brutevol -= healmod
+						ishealing = 1
+				if(H.getFireLoss())
+					healmod = min(lastier,medigun_base_unit.burnvol,H.getFireLoss())
+					if(medigun_base_unit.burnvol >= healmod)
+						H.adjustFireLoss(-healmod)
+						medigun_base_unit.burnvol -= healmod
+						ishealing = 1
+				if(H.getToxLoss())
+					healmod = min(lastier,medigun_base_unit.toxvol,H.getToxLoss())
+					if(medigun_base_unit.toxvol >= healmod)
+						H.adjustToxLoss(-healmod)
+						medigun_base_unit.toxvol -= healmod
+						ishealing = 1
 				if(medigun_base_unit.brutevol <= 0 || medigun_base_unit.burnvol <= 0 || medigun_base_unit.toxvol <= 0)
 					medigun_base_unit.update_icon()
 				if(ishealing != washealing) // Either we stopped or started healing this cycle
