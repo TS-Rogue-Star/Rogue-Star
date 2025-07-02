@@ -8,8 +8,6 @@
 	sand_icon_state = "asteroid"
 	icon_edge = 'maps/sirius_point/sp_asteroid_edge.dmi'
 	rock_icon_path = 'maps/sirius_point/sp_asteroid_wall.dmi'
-//	rock_icon_state = "rock"
-//	rock_side_icon_state = "rock_side"
 
 //Air-y moonrock walls
 /turf/simulated/mineral/cave/moonbase
@@ -17,8 +15,6 @@
 	sand_icon_state = "asteroid"
 	icon_edge = 'maps/sirius_point/sp_asteroid_edge.dmi'
 	rock_icon_path = 'maps/sirius_point/sp_asteroid_wall.dmi'
-//	rock_icon_state = "rock"
-//	rock_side_icon_state = "rock_side"
 
 /turf/unsimulated/wall/planetary/moonbase
 	oxygen = 0

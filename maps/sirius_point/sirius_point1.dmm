@@ -106,6 +106,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/hallway/moonbase/shop)
+"ao" = (
+/obj/machinery/light/floortube{
+	dir = 8;
+	pixel_x = -4;
+	pixel_y = 1
+	},
+/turf/simulated/floor/plating/moonbase,
+/area/moonbase/basement/caves/northwest)
 "ap" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
@@ -1377,7 +1385,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/simulated/floor/tiled/eris/white/brown_platform,
+/turf/simulated/floor/tiled/eris/dark,
 /area/hallway/moonbase/basement)
 "ei" = (
 /obj/machinery/door/firedoor/glass,
@@ -1577,6 +1585,12 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/moonbase/dorms/dorm8)
 "eJ" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/dark,
 /area/security/security_equiptment_storage)
 "eK" = (
@@ -1967,7 +1981,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
-/turf/simulated/floor/tiled/eris/white/brown_platform,
+/turf/simulated/floor/tiled/eris/dark,
 /area/hallway/moonbase/basement)
 "fY" = (
 /obj/structure/foodcart,
@@ -3192,7 +3206,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/eris/white/brown_platform,
+/turf/simulated/floor/tiled/eris/dark,
 /area/hallway/moonbase/basement)
 "jD" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -3366,7 +3380,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/eris/white/brown_platform,
+/turf/simulated/floor/tiled/eris/dark,
 /area/hallway/moonbase/basement)
 "ka" = (
 /obj/machinery/light/small{
@@ -3622,6 +3636,9 @@
 /obj/item/weapon/material/fishing_rod/modern,
 /turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northwest)
+"kP" = (
+/turf/simulated/mineral/floor/cave/moonbase,
+/area/hallway/moonbase/basement)
 "kQ" = (
 /turf/simulated/wall/r_wall,
 /area/quartermaster/moonbase/mining)
@@ -3740,7 +3757,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/eris/white/brown_platform,
+/turf/simulated/floor/tiled/eris/dark,
 /area/hallway/moonbase/basement)
 "lj" = (
 /obj/structure/prop/rock/crystal,
@@ -3817,7 +3834,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/tiled/eris/white/brown_platform,
+/turf/simulated/floor/tiled/eris/dark,
 /area/hallway/moonbase/basement)
 "lv" = (
 /obj/structure/cable{
@@ -3883,7 +3900,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 1
 	},
-/turf/simulated/floor/tiled/eris/white/brown_platform,
+/turf/simulated/floor/tiled/eris/dark,
 /area/hallway/moonbase/basement)
 "lH" = (
 /obj/structure/closet/walllocker_double/misc_civ/north,
@@ -4372,7 +4389,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
-/turf/simulated/floor/tiled/eris/white/brown_platform,
+/turf/simulated/floor/tiled/eris/dark,
 /area/hallway/moonbase/basement)
 "nk" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
@@ -5330,14 +5347,11 @@
 /turf/simulated/floor/tiled/steel_dirty,
 /area/maintenance/moonbase/basement/south)
 "qp" = (
-/obj/structure/catwalk,
-/obj/structure/cable{
-	icon_state = "1-2"
+/obj/structure/railing/grey{
+	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/plating/moonbase,
-/area/moonbase/basement/caves/northwest)
+/turf/simulated/floor/water/indoors,
+/area/hallway/moonbase/basement)
 "qq" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/eris/techmaint_cargo,
@@ -5839,7 +5853,7 @@
 /obj/machinery/door/firedoor/glass/hidden{
 	dir = 1
 	},
-/turf/simulated/floor/tiled/eris/white/brown_platform,
+/turf/simulated/floor/tiled/eris/dark,
 /area/hallway/moonbase/basement)
 "rS" = (
 /obj/structure/ladder/up,
@@ -6852,6 +6866,12 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/pool)
+"uM" = (
+/obj/structure/railing/grey{
+	dir = 4
+	},
+/turf/simulated/floor/water/indoors,
+/area/hallway/moonbase/basement)
 "uN" = (
 /obj/structure/cable/green{
 	icon_state = "2-8"
@@ -7796,7 +7816,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/eris/white/brown_platform,
+/turf/simulated/floor/tiled/eris/dark,
 /area/hallway/moonbase/basement)
 "xP" = (
 /obj/structure/cable{
@@ -7902,7 +7922,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/north)
 "ye" = (
-/turf/simulated/floor/tiled/eris/white/brown_platform,
+/turf/simulated/floor/tiled/eris/dark,
 /area/hallway/moonbase/basement)
 "yf" = (
 /obj/machinery/light/small{
@@ -8031,7 +8051,9 @@
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/atmos)
 "yx" = (
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
 /area/crew_quarters/moonbase/basement/iceroom)
 "yy" = (
 /obj/structure/table/steel,
@@ -8901,7 +8923,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/tiled/eris/white/brown_platform,
+/turf/simulated/floor/tiled/eris/dark,
 /area/hallway/moonbase/basement)
 "Bn" = (
 /obj/structure/cable/cyan{
@@ -9396,7 +9418,7 @@
 /area/maintenance/moonbase/basement/techmonitoring)
 "CF" = (
 /obj/structure/closet/emcloset,
-/turf/simulated/floor/tiled/eris/white/brown_platform,
+/turf/simulated/floor/tiled/eris/dark,
 /area/hallway/moonbase/basement)
 "CG" = (
 /turf/simulated/floor/carpet,
@@ -9500,6 +9522,12 @@
 /obj/machinery/door/airlock/security{
 	name = "Security"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/security/security_equiptment_storage)
 "CY" = (
@@ -9526,7 +9554,7 @@
 /obj/machinery/alarm{
 	dir = 1
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/moonbase,
 /area/moonbase/basement/caves/northwest)
 "Dd" = (
 /obj/effect/decal/cleanable/blood,
@@ -9620,7 +9648,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/eris/white/brown_platform,
+/turf/simulated/floor/tiled/eris/dark,
 /area/hallway/moonbase/basement)
 "Dr" = (
 /turf/unsimulated/mineral/moonbase,
@@ -10093,7 +10121,7 @@
 	dir = 4;
 	pixel_x = -26
 	},
-/turf/simulated/floor/tiled/eris/white/brown_platform,
+/turf/simulated/floor/tiled/eris/dark,
 /area/hallway/moonbase/basement)
 "ER" = (
 /obj/structure/prop/rock/crystal,
@@ -12038,7 +12066,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 1
 	},
-/turf/simulated/floor/tiled/eris/white/brown_platform,
+/turf/simulated/floor/tiled/eris/dark,
 /area/hallway/moonbase/basement)
 "KI" = (
 /obj/item/stack/material/algae/ten,
@@ -12225,7 +12253,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/eris/white/brown_platform,
+/turf/simulated/floor/tiled/eris/dark,
 /area/hallway/moonbase/basement)
 "Lk" = (
 /obj/structure/table/rack/shelf,
@@ -12477,7 +12505,7 @@
 	dir = 4
 	},
 /obj/structure/catwalk,
-/turf/simulated/floor/plating/moonbase,
+/turf/simulated/floor/plating,
 /area/moonbase/basement/caves/northwest)
 "LX" = (
 /obj/structure/bed/chair/sofa/corp{
@@ -13377,7 +13405,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/eris/white/brown_platform,
+/turf/simulated/floor/tiled/eris/dark,
 /area/hallway/moonbase/basement)
 "OG" = (
 /obj/structure/cable{
@@ -13880,7 +13908,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/tiled/eris/white/brown_platform,
+/turf/simulated/floor/tiled/eris/dark,
 /area/hallway/moonbase/basement)
 "PT" = (
 /obj/structure/grille,
@@ -14315,7 +14343,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
-/turf/simulated/floor/tiled/eris/white/brown_platform,
+/turf/simulated/floor/tiled/eris/dark,
 /area/hallway/moonbase/basement)
 "Ro" = (
 /obj/structure/cable{
@@ -14496,7 +14524,7 @@
 /obj/machinery/alarm{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/eris/white/brown_platform,
+/turf/simulated/floor/tiled/eris/dark,
 /area/hallway/moonbase/basement)
 "RJ" = (
 /obj/structure/table/rack/shelf,
@@ -14731,7 +14759,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/eris/white/brown_platform,
+/turf/simulated/floor/tiled/eris/dark,
 /area/hallway/moonbase/basement)
 "Sp" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/red{
@@ -14965,7 +14993,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/eris/white/brown_platform,
+/turf/simulated/floor/tiled/eris/dark,
 /area/hallway/moonbase/basement)
 "Tc" = (
 /obj/structure/cable{
@@ -15034,7 +15062,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/eris/white/brown_platform,
+/turf/simulated/floor/tiled/eris/dark,
 /area/hallway/moonbase/basement)
 "Tn" = (
 /obj/structure/cable{
@@ -15314,7 +15342,7 @@
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/tiled/eris/white/brown_platform,
+/turf/simulated/floor/tiled/eris/dark,
 /area/hallway/moonbase/basement)
 "Uh" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green{
@@ -15762,6 +15790,14 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/recreation_area_restroom)
+"Vu" = (
+/obj/machinery/light/floortube{
+	dir = 4;
+	pixel_x = 3;
+	pixel_y = 1
+	},
+/turf/simulated/floor/plating/moonbase,
+/area/moonbase/basement/caves/northwest)
 "Vv" = (
 /obj/machinery/button/remote/airlock{
 	id = "Dorm2";
@@ -15967,6 +16003,24 @@
 	},
 /turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/flooded)
+"Wi" = (
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 8
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/hallway/moonbase/shop)
 "Wj" = (
 /obj/structure/table/bench/steel,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -16061,7 +16115,7 @@
 /obj/machinery/power/apc{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/eris/white/brown_platform,
+/turf/simulated/floor/tiled/eris/dark,
 /area/hallway/moonbase/basement)
 "WA" = (
 /obj/structure/bed/chair/sofa/left/black{
@@ -16290,7 +16344,7 @@
 /area/moonbase/basement/caves/northwest)
 "Xr" = (
 /obj/structure/table/bench/steel,
-/turf/simulated/floor/tiled/eris/white/brown_platform,
+/turf/simulated/floor/tiled/eris/dark,
 /area/hallway/moonbase/basement)
 "Xs" = (
 /obj/structure/flora/ausbushes/fullgrass,
@@ -16352,7 +16406,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/tiled/eris/white/brown_platform,
+/turf/simulated/floor/tiled/eris/dark,
 /area/hallway/moonbase/basement)
 "XG" = (
 /obj/structure/closet/athletic_swimwear,
@@ -16541,7 +16595,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
-/turf/simulated/floor/tiled/eris/white/brown_platform,
+/turf/simulated/floor/tiled/eris/dark,
 /area/hallway/moonbase/basement)
 "Yl" = (
 /obj/structure/bed/chair/sofa/corp/left{
@@ -16574,7 +16628,9 @@
 /area/maintenance/moonbase/basement/engibreakroom)
 "Yp" = (
 /obj/structure/table/bench/wooden,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
 /area/crew_quarters/moonbase/basement/iceroom)
 "Yq" = (
 /obj/structure/reagent_dispensers/fueltank/barrel/three,
@@ -16668,7 +16724,9 @@
 /area/crew_quarters/moonbase/maintbar)
 "YA" = (
 /obj/structure/bonfire,
-/turf/simulated/floor/outdoors/newdirt,
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
 /area/crew_quarters/moonbase/basement/iceroom)
 "YB" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red,
@@ -21730,19 +21788,19 @@ mo
 mo
 mo
 mo
-CJ
-CJ
-CJ
-CJ
 wl
+wl
+wl
+wl
+Vu
 wl
 ok
 wl
+Vu
 wl
-CJ
-CJ
-CJ
-CJ
+wl
+wl
+wl
 CP
 CP
 CP
@@ -21876,11 +21934,11 @@ um
 um
 um
 um
-qp
-qp
+um
+um
 LW
-qp
-qp
+um
+um
 um
 um
 um
@@ -22014,18 +22072,18 @@ mo
 mo
 mo
 mo
-CJ
-CJ
-CJ
-CJ
 wl
+wl
+wl
+wl
+ao
 wl
 pT
 wl
+ao
 wl
-CJ
-CJ
-CJ
+wl
+wl
 Dc
 CP
 CP
@@ -26471,7 +26529,7 @@ lD
 lD
 lD
 Jf
-lD
+Wi
 lD
 lD
 cR
@@ -26883,8 +26941,8 @@ Xr
 Ah
 Mx
 Mx
-Mx
-Mx
+qp
+qp
 Mx
 Mx
 hn
@@ -27027,7 +27085,7 @@ lj
 hW
 hW
 hW
-hW
+kP
 lj
 hF
 ye
@@ -27166,8 +27224,8 @@ ye
 Xr
 Ux
 CH
-CH
-CH
+uM
+uM
 zs
 CH
 CH
