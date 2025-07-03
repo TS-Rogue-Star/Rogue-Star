@@ -58,6 +58,8 @@
 	var/bpcmo = 0
 	var/containsgun = 1
 	var/maintenance
+	var/smaniptier = 1
+	var/regen = 0
 
 //backpack item
 /obj/item/device/medigun_backpack/cmo
@@ -104,9 +106,18 @@
 			. += "<span class='warning'>It is missing a scanning module.</span>"
 
 		if(smanipulator)
-			. += "<span class='notice'>It has a [smanipulator.name] installed.</span>"
+			if(smaniptier < 5)
+				. += "<span class='notice'>It has a [smanipulator.name] installed, chem digitizing is now [(smaniptier/4)*100]% Efficient.</span>"
+			else
+				. += "<span class='notice'>It has a [smanipulator.name] installed, chem digitizing is now 100% Efficient and heal charges will slowly regenerate over time using base battery.</span>"
 		if(!smanipulator)
 			. += "<span class='warning'>It is missing a manipulator.</span>"
+		if(slaser)
+			. += "<span class='notice'>It has a [slaser.name] installed and can heal [slaser.get_rating()] damage per cycle.</span>"
+		if(!slaser)
+			. += "<span class='warning'>It is missing a laser.</span>"
+
+
 		if(scapacitor)
 			if(chargecost > 0)
 				. += "<span class='notice'>It has a [scapacitor.name] installed, battery charge will now drain at [chargecost] per second, and grants a heal charge capacity of [tankmax] per type.</span>"
@@ -127,6 +138,24 @@
 		if(!scapacitor)
 			. += "<span class='warning'>It is missing a capacitor, you may not digitize chems.</span>"
 
+/obj/item/device/medigun_backpack/process()
+	if(smaniptier >= 5 && medigun.busy == 0)
+		regen = 0
+		if(brutevol < tankmax)
+			if(checked_use(25))
+				regen = 1
+				brutevol ++
+		if(burnvol < tankmax)
+			if(checked_use(25))
+				regen = 1
+				burnvol ++
+		if(toxvol < tankmax)
+			if(checked_use(25))
+				regen = 1
+				toxvol ++
+		if(regen == 1)
+			update_icon()
+			//to_chat(world, "<span class='notice'>Regenned.</span>")
 
 /obj/item/device/medigun_backpack/get_cell()
 	return bcell
@@ -192,8 +221,13 @@
 
 /obj/item/device/medigun_backpack/Destroy()
 	. = ..()
+	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(medigun)
 	QDEL_NULL(bcell)
+	QDEL_NULL(smodule)
+	QDEL_NULL(smanipulator)
+	QDEL_NULL(scapacitor)
+	QDEL_NULL(slaser)
 
 
 
@@ -232,24 +266,26 @@
 			var/modifier = 1
 			var/totransfer = 0
 			var/name = ""
-			var maniptier = smanipulator.get_rating()
+			var/maniptier = smanipulator.get_rating()
+			if(maniptier > 4)
+				maniptier = 4
 			if(R.id in reagentwhitelist)
 				switch(R.id)
 					if("bicaridine")
 						name = "bruteheal"
-						modifier = 2*maniptier
+						modifier = maniptier
 						totransfer = tankmax - brutevol
 					if("anti_toxin")
 						name = "toxheal"
-						modifier = 2*maniptier
+						modifier = maniptier
 						totransfer = tankmax - toxvol
 					if("kelotane")
 						name = "burnheal"
-						modifier = 2*maniptier
+						modifier = maniptier
 						totransfer = tankmax - burnvol
 					if("dermaline")
 						name = "burnheal"
-						modifier = 4*maniptier
+						modifier = 2*maniptier
 						totransfer = tankmax - burnvol
 					if("tricordrazine")
 						name = "tricordrazine"
@@ -302,7 +338,7 @@
 						if(oldtox != toxvol)
 							if(readoutadditions)
 								readout += ", "
-							readout += "[round(100*toxvol - oldtox)/tankmax]% of toxheal charge"
+							readout += "[round(100*(toxvol - oldtox)/tankmax)]% of toxheal charge"
 						if(oldbrute != brutevol || oldburn != burnvol || oldtox != toxvol)to_chat(user, span("notice", "[readout]."))
 				if(totransfer > 0)
 					if(R.id != "tricordrazine")
@@ -363,6 +399,8 @@
 				smanipulator.update_icon()
 				smanipulator.forceMove(get_turf(src.loc))
 				smanipulator = null
+				smaniptier = 0
+				STOP_PROCESSING(SSobj, src)
 				to_chat(user, "<span class='notice'>You remove the [smanipulator] from \the [src].</span>")
 				update_icon()
 				return
@@ -403,6 +441,11 @@
 					return
 				W.forceMove(src)
 				smanipulator = W
+				smaniptier = smanipulator.get_rating()
+				if(smaniptier >= 5)
+					START_PROCESSING(SSobj, src)
+				else
+					STOP_PROCESSING(SSobj, src)
 				to_chat(user, "<span class='notice'>You install the [W] into \the [src].</span>")
 
 				update_icon()
@@ -428,7 +471,7 @@
 				var/scaptier = scapacitor.get_rating()
 				chargecost = 50-(10*scaptier)
 				if(scaptier >= 5)
-					tankmax = 500 // alien tech go brr
+					tankmax = 300 // alien tech go brr
 				else
 					tankmax = 50*scaptier
 				if(brutevol > tankmax)
@@ -608,6 +651,12 @@
 /obj/item/device/bork_medigun/linked/checked_use(var/charge_amt)
 	return (medigun_base_unit.bcell && medigun_base_unit.bcell.checked_use(charge_amt))
 
+/obj/item/device/medigun_backpack/proc/checked_use(var/charge_amt)
+	return 0
+
+/obj/item/device/medigun_backpack/checked_use(var/charge_amt)
+	return (bcell && bcell.checked_use(charge_amt))
+
 /obj/item/device/bork_medigun/linked/attack_self(mob/living/user)
 	if(!medigun_base_unit.bpcmo)update_twohanding()
 	if(busy)
@@ -725,7 +774,7 @@
 		var/ishealing = 0
 		while(!should_stop(H, user, active_hand))
 			//stoplag(15)
-			if(do_after(user,5,ignore_movement = 1))
+			if(do_after(user,10,ignore_movement = 1))
 				var/washealing = ishealing // Did we heal last cycle
 				ishealing = 0 // The default is 'we didn't heal this cycle'
 				if(!checked_use(medigun_base_unit.chargecost))
@@ -735,19 +784,19 @@
 				var/lastier = medigun_base_unit.slaser.get_rating()
 				var/healmod = lastier
 				if(H.getBruteLoss())
-					healmod = min(lastier,medigun_base_unit.brutevol,H.getBruteLoss())
+					healmod = round(min(lastier,medigun_base_unit.brutevol,H.getBruteLoss()))
 					if(medigun_base_unit.brutevol >= healmod)
 						H.adjustBruteLoss(-healmod)
 						medigun_base_unit.brutevol -= healmod
 						ishealing = 1
 				if(H.getFireLoss())
-					healmod = min(lastier,medigun_base_unit.burnvol,H.getFireLoss())
+					healmod = round(min(lastier,medigun_base_unit.burnvol,H.getFireLoss()))
 					if(medigun_base_unit.burnvol >= healmod)
 						H.adjustFireLoss(-healmod)
 						medigun_base_unit.burnvol -= healmod
 						ishealing = 1
 				if(H.getToxLoss())
-					healmod = min(lastier,medigun_base_unit.toxvol,H.getToxLoss())
+					healmod = round(min(lastier,medigun_base_unit.toxvol,H.getToxLoss()))
 					if(medigun_base_unit.toxvol >= healmod)
 						H.adjustToxLoss(-healmod)
 						medigun_base_unit.toxvol -= healmod
