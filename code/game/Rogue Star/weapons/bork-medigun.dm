@@ -113,7 +113,10 @@
 		if(!smanipulator)
 			. += "<span class='warning'>It is missing a manipulator.</span>"
 		if(slaser)
-			. += "<span class='notice'>It has a [slaser.name] installed and can heal [slaser.get_rating()] damage per cycle.</span>"
+			if(slaser.get_rating() >= 5)
+				. += "<span class='notice'>It has a [slaser.name] installed and can heal [slaser.get_rating()] damage per cycle, and will slowly bandage and salve wounds.</span>"
+			else
+				. += "<span class='notice'>It has a [slaser.name] installed and can heal [slaser.get_rating()] damage per cycle.</span>"
 		if(!slaser)
 			. += "<span class='warning'>It is missing a laser.</span>"
 
@@ -686,7 +689,7 @@
 		return TRUE
 
 	//if(get_dist(user, target) > beam_range)
-	if(!(target in range(beam_range, user)) || (!(target in view(10, user)) && !medigun_base_unit.smodule))
+	if(!(target in range(beam_range, user)) || (!(target in view(10, user)) && !(medigun_base_unit.smodule.get_rating() >= 5)))
 		to_chat(user, span("warning", "You are too far away from \the [target] to heal them, Or they are not in view. Get closer."))
 		return TRUE
 
@@ -803,6 +806,31 @@
 						ishealing = 1
 				if(medigun_base_unit.brutevol <= 0 || medigun_base_unit.burnvol <= 0 || medigun_base_unit.toxvol <= 0)
 					medigun_base_unit.update_icon()
+				if(medigun_base_unit.slaser.get_rating() >= 5)
+					var/treated = 0
+					for(var/obj/item/organ/external/E in H.organs)
+						var/obj/item/organ/external/O = E
+						for (var/datum/wound/W in O.wounds)
+							if (W.internal)
+								continue
+							if (W.bandaged && W.disinfected)
+								continue
+							if(!(O.is_bandaged()) && !(O.is_disinfected()))
+								if(medigun_base_unit.brutevol >= 1)
+									medigun_base_unit.brutevol -= 1
+									W.bandage()
+									W.disinfect()
+									O.update_damages()
+									treated = 1
+							if(!(O.is_salved()))
+								if(medigun_base_unit.burnvol >= 1)
+									medigun_base_unit.burnvol -= 1
+									O.salve()
+									treated = 1
+							if(treated)
+								break
+						if(treated)
+							break
 				if(ishealing != washealing) // Either we stopped or started healing this cycle
 					if(ishealing)
 						target.filters += filter
