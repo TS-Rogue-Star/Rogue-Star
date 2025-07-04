@@ -1,4 +1,4 @@
-var/datum/planet/virgo3x/planet_virgo3x = null
+/*var/datum/planet/virgo3x/planet_virgo3x = null
 
 /datum/time/virgo3x
 	seconds_in_day = 6 HOURS
@@ -640,3 +640,4 @@ var/datum/planet/virgo3x/planet_virgo3x = null
 		"The clouds drift lower, as if to blot out everything."
 	)
 	imminent_transition_message = "Clouds are drifting down as the area is getting extremely foggy."
+*/

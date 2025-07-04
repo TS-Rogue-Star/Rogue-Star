@@ -6991,6 +6991,12 @@
 /obj/structure/table/woodentable,
 /turf/simulated/floor/carpet/oracarpet,
 /area/crew_quarters/heads/chief)
+"tl" = (
+/obj/structure/railing/grey{
+	dir = 4
+	},
+/turf/simulated/floor/plating/external/outdoors,
+/area/moonbase/surface/leveltwo/west)
 "tm" = (
 /obj/item/weapon/gun/energy/gun{
 	pixel_x = 2;
@@ -8718,6 +8724,10 @@
 	},
 /turf/simulated/floor/carpet/sblucarpet,
 /area/security/briefing_room)
+"yj" = (
+/obj/effect/fake_sun/moonbase,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/moonbase/surface/leveltwo/south)
 "yk" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -14201,9 +14211,7 @@
 /obj/structure/railing/grey{
 	dir = 1
 	},
-/turf/simulated/open/vacuum{
-	outdoors = 1
-	},
+/turf/simulated/floor/plating/external/outdoors,
 /area/moonbase/surface/leveltwo/west)
 "NY" = (
 /obj/structure/cable{
@@ -17661,9 +17669,7 @@
 "Xz" = (
 /obj/structure/lattice,
 /obj/structure/catwalk,
-/turf/simulated/open/vacuum{
-	outdoors = 1
-	},
+/turf/simulated/floor/plating/external/outdoors,
 /area/moonbase/surface/leveltwo/west)
 "XB" = (
 /obj/structure/railing/grey{
@@ -18890,7 +18896,7 @@ do
 do
 do
 XL
-XL
+yj
 "}
 (4,1,1) = {"
 Kd
@@ -20974,11 +20980,11 @@ aE
 aE
 aE
 aE
-mF
-mF
-mF
-mF
-mF
+aE
+aE
+aE
+aE
+aE
 mF
 mF
 mF
@@ -21103,10 +21109,10 @@ aE
 aE
 aE
 aE
-mF
-mF
-mF
-mF
+VX
+VX
+VX
+VX
 aE
 Us
 aE
@@ -21116,11 +21122,11 @@ aE
 aE
 Us
 aE
-mF
-mF
-mF
-mF
-mF
+aE
+aE
+aE
+aE
+aE
 mF
 mF
 mF
@@ -21258,11 +21264,11 @@ aE
 aE
 aE
 aE
-Ad
-Ad
-Ad
-mF
-mF
+tl
+tl
+tl
+aE
+aE
 mF
 mF
 mF
@@ -21404,7 +21410,7 @@ Xz
 Xz
 Xz
 NX
-mF
+aE
 mF
 mF
 mF
@@ -21546,7 +21552,7 @@ XZ
 XZ
 Xz
 NX
-mF
+aE
 mF
 mF
 mF
@@ -21688,7 +21694,7 @@ UO
 XZ
 Xz
 NX
-mF
+aE
 mF
 mF
 mF
@@ -21830,7 +21836,7 @@ ow
 IQ
 Xz
 NX
-mF
+aE
 mF
 mF
 mF
@@ -21972,7 +21978,7 @@ Gc
 IQ
 Xz
 NX
-mF
+aE
 mF
 mF
 mF
@@ -22114,7 +22120,7 @@ Gc
 IQ
 Xz
 NX
-mF
+aE
 mF
 mF
 mF
@@ -22256,7 +22262,7 @@ ly
 XZ
 Xz
 NX
-mF
+aE
 mF
 mF
 mF
@@ -22398,7 +22404,7 @@ sW
 sW
 Xz
 NX
-mF
+aE
 mF
 mF
 mF
@@ -22540,7 +22546,7 @@ Tg
 LV
 Xz
 NX
-mF
+aE
 mF
 mF
 mF
@@ -22682,7 +22688,7 @@ on
 LV
 Xz
 NX
-mF
+aE
 mF
 mF
 mF
@@ -22824,7 +22830,7 @@ SG
 LV
 Xz
 NX
-mF
+aE
 mF
 mF
 mF
@@ -22966,7 +22972,7 @@ EU
 LV
 Xz
 NX
-mF
+aE
 mF
 mF
 mF
@@ -23108,7 +23114,7 @@ xu
 LV
 Xz
 NX
-mF
+aE
 mF
 mF
 mF
@@ -23250,7 +23256,7 @@ sW
 sW
 Xz
 NX
-mF
+aE
 mF
 mF
 mF
@@ -23392,7 +23398,7 @@ Ve
 Ft
 Xz
 NX
-mF
+aE
 mF
 mF
 mF
@@ -23534,7 +23540,7 @@ Fi
 Ft
 Xz
 NX
-mF
+aE
 mF
 mF
 mF

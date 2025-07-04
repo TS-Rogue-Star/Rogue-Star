@@ -79,5 +79,9 @@
 
 /turf/unsimulated/mineral/moonbase
 	name = "impassable rock"
-	rock_icon_path = 'maps/sirius_point/sp_asteroid_wall.dmi'
-	icon_edge = 'maps/sirius_point/sp_asteroid_edge.dmi'
+//	rock_icon_path = 'maps/sirius_point/sp_asteroid_wall.dmi'
+//	icon_edge = 'maps/sirius_point/sp_asteroid_edge.dmi'
+
+///turf/simulated/mineral/floor/vacuum/moonbase/outdoors/Initialize(mapload)
+//	. = ..()
+//	make_outdoors()
