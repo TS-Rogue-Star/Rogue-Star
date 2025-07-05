@@ -8724,10 +8724,6 @@
 	},
 /turf/simulated/floor/carpet/sblucarpet,
 /area/security/briefing_room)
-"yj" = (
-/obj/effect/fake_sun/moonbase,
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
-/area/moonbase/surface/leveltwo/south)
 "yk" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -18896,7 +18892,7 @@ do
 do
 do
 XL
-yj
+XL
 "}
 (4,1,1) = {"
 Kd

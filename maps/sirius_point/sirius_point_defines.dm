@@ -227,7 +227,7 @@
 	mining_outpost_z =		list(Z_LEVEL_SURFACE_MINE)
 */
 	planet_datums_to_make = list(/datum/planet/virgo3b,
-								///datum/planet/virgo3x,
+								/datum/planet/virgo3x,
 								/datum/planet/virgo4,
 								/datum/planet/snowbase)
 

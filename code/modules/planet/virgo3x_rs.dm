@@ -1,10 +1,10 @@
-/*var/datum/planet/virgo3x/planet_virgo3x = null
+var/datum/planet/virgo3x/planet_virgo3x = null
 
 /datum/time/virgo3x
 	seconds_in_day = 6 HOURS
 
 /datum/planet/virgo3x
-	name = "Virgo-3x"
+	name = "Virgo-3X"
 	desc = "Moon's haunted."
 	current_time = new /datum/time/virgo3x()
 	planetary_wall_type = /turf/unsimulated/wall/planetary/moonbase
@@ -97,8 +97,8 @@
 /datum/weather_holder/virgo3x
 	temperature = T0C
 	allowed_weather_types = list(
-		WEATHER_CLEAR			= new /datum/weather/virgo3x/clear(),
-		WEATHER_OVERCAST		= new /datum/weather/virgo3x/overcast(),
+		WEATHER_CLEAR			= new /datum/weather/virgo3x/clear()
+		/*WEATHER_OVERCAST		= new /datum/weather/virgo3x/overcast(),
 		WEATHER_LIGHT_SNOW		= new /datum/weather/virgo3x/light_snow(),
 		WEATHER_SNOW			= new /datum/weather/virgo3x/snow(),
 		WEATHER_BLIZZARD		= new /datum/weather/virgo3x/blizzard(),
@@ -114,28 +114,25 @@
 		WEATHER_FALLOUT_TEMP	= new /datum/weather/virgo3x/fallout/temp(),
 		WEATHER_CONFETTI		= new /datum/weather/virgo3x/confetti(),
 		WEATHER_ECLIPSE			= new /datum/weather/virgo3x/eclipse(),
-		WEATHER_FOG_ECLIPSE		= new /datum/weather/virgo3x/fog/eclipse()
+		WEATHER_FOG_ECLIPSE		= new /datum/weather/virgo3x/fog/eclipse()*/
 		)
 	roundstart_weather_chances = list(
-		WEATHER_CLEAR		= 50,
-		WEATHER_OVERCAST	= 10,
-		WEATHER_RAIN		= 1,
-		WEATHER_LIGHT_SNOW  = 1
+		WEATHER_CLEAR		= 1
 		)
 
 /datum/weather/virgo3x
 	name = "virgo3x"
-	temp_high = 283.15 // 10c
-	temp_low = 273.15  // 0c
+	temp_high = 2.7
+	temp_low = 2.7
 
 /datum/weather/virgo3x/clear
 	name = "clear"
 	transition_chances = list(
-		WEATHER_CLEAR = 120,
-		WEATHER_OVERCAST = 40,
+		WEATHER_CLEAR = 1
+		/*WEATHER_OVERCAST = 40,
 		WEATHER_LIGHT_SNOW = 2,
 		WEATHER_BLOOD_MOON = 2,
-		WEATHER_EMBERFALL = 1)
+		WEATHER_EMBERFALL = 1*/)
 	transition_messages = list(
 		"The sky clears up.",
 		"The sky is visible.",
@@ -145,10 +142,10 @@
 	observed_message = "The sky is clear."
 	imminent_transition_message = "The sky is rapidly clearing up."
 
-/datum/weather/virgo3x/overcast
+/*/datum/weather/virgo3x/overcast
 	name = "overcast"
-	temp_high = 283.15 // 10c
-	temp_low = 273.15  // 0c
+	temp_high = 2.7
+	temp_low = 2.7
 	light_modifier = 0.8
 	transition_chances = list(
 		WEATHER_CLEAR = 50,
@@ -168,8 +165,8 @@
 /datum/weather/virgo3x/light_snow
 	name = "light snow"
 	icon_state = "snowfall_light"
-	temp_high = 268.15 // -5c
-	temp_low = 	263.15 // -10c
+	temp_high = 2.7
+	temp_low = 2.7
 	light_modifier = 0.7
 	transition_chances = list(
 		WEATHER_LIGHT_SNOW = 25,
@@ -188,9 +185,9 @@
 /datum/weather/virgo3x/snow
 	name = "moderate snow"
 	icon_state = "snowfall_med"
-	temp_high = 268.15 // -5c
-	temp_low = 	263.15 // -10c
-	wind_high = 2
+	temp_high = 2.7
+	temp_low = 2.7
+	wind_high = 0
 	wind_low = 0
 	light_modifier = 0.5
 	flight_failure_modifier = 5
@@ -211,8 +208,8 @@
 /datum/weather/virgo3x/blizzard
 	name = "blizzard"
 	icon_state = "snowfall_heavy"
-	temp_high = 268.15 // -5c
-	temp_low = 	263.15 // -10c
+	temp_high = 2.7
+	temp_low = 2.7
 	wind_high = 4
 	wind_low = 2
 	light_modifier = 0.3
@@ -233,8 +230,8 @@
 /datum/weather/virgo3x/rain
 	name = "rain"
 	icon_state = "rain"
-	temp_high = 283.15 // 10c
-	temp_low = 273.15  // 0c
+	temp_high = 2.7
+	temp_low = 2.7
 	wind_high = 2
 	wind_low = 1
 	light_modifier = 0.5
@@ -280,8 +277,8 @@
 /datum/weather/virgo3x/storm
 	name = "storm"
 	icon_state = "storm"
-	temp_high = 283.15 // 10c
-	temp_low = 273.15  // 0c
+	temp_high = 2.7
+	temp_low = 2.7
 	wind_high = 4
 	wind_low = 2
 	light_modifier = 0.3
@@ -346,8 +343,8 @@
 /datum/weather/virgo3x/hail
 	name = "hail"
 	icon_state = "hail"
-	temp_high = 268.15 // -5c
-	temp_low = 	263.15 // -10c
+	temp_high = 2.7
+	temp_low = 2.7
 	light_modifier = 0.3
 	flight_failure_modifier = 15
 	timer_low_bound = 2
@@ -409,8 +406,8 @@
 	wind_low = 0
 	light_modifier = 0.7
 
-	temp_high = 273.15 // 0c
-	temp_low = 	263.15 // -10c
+	temp_high = 2.7
+	temp_low = 2.7
 
 	transition_chances = list(
 		WEATHER_FOG = 50,
@@ -431,8 +428,8 @@
 	name = "blood moon"
 	light_modifier = 0.5
 	light_color = "#FF0000"
-	temp_high = 283.15 // 10c
-	temp_low = 273.15  // 0c
+	temp_high = 2.7
+	temp_low = 2.7
 	flight_failure_modifier = 25
 	timer_low_bound = 10
 	timer_high_bound = 15
@@ -517,8 +514,8 @@
 	icon_state = "ashfall_moderate"
 	light_modifier = 0.1
 	light_color = "#FF0000"
-	temp_high = 313.15	// 40c
-	temp_low = 303.15	// 30c
+	temp_high = 2.7
+	temp_low = 2.7
 	wind_high = 6
 	wind_low = 3
 	flight_failure_modifier = 50
@@ -612,8 +609,8 @@
 
 /datum/weather/virgo3x/eclipse
 	name = "eclipse"
-	temp_high = 283.15 // 10c
-	temp_low = 273.15  // 0c
+	temp_high = 2.7
+	temp_low = 2.7
 	light_modifier = 0
 	transition_chances = list(
 		WEATHER_ECLIPSE = 100
