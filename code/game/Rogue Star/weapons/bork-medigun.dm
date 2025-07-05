@@ -54,7 +54,7 @@
 	var/toxvol = 0
 	var/burnvol = 0
 	var/tankmax = 60
-	var/chargecost = 40
+	var/chargecost = 50
 	var/bpcmo = 0
 	var/containsgun = 1
 	var/maintenance
@@ -80,7 +80,7 @@
 	smanipulator = /obj/item/weapon/stock_parts/manipulator/nano
 	smodule = /obj/item/weapon/stock_parts/scanning_module/adv
 	slaser = /obj/item/weapon/stock_parts/micro_laser/high
-	chargecost = 30
+	chargecost = 40
 	tankmax = 100
 	brutevol = 100
 	toxvol = 100
@@ -472,11 +472,11 @@
 				W.forceMove(src)
 				scapacitor = W
 				var/scaptier = scapacitor.get_rating()
-				chargecost = 50-(10*scaptier)
+				chargecost = 60-(10*scaptier)
 				if(scaptier >= 5)
-					tankmax = 300 // alien tech go brr
+					tankmax = 150 // alien tech go brr
 				else
-					tankmax = 50*scaptier
+					tankmax = 25*scaptier
 				if(brutevol > tankmax)
 					brutevol = tankmax
 				if(burnvol > tankmax)
