@@ -20,15 +20,32 @@ SUBSYSTEM_DEF(tgui)
 	var/list/open_uis_by_src = list()
 	/// The HTML base used for all UIs.
 	var/basehtml
+	var/list/basehtml_by_bundle   // NEW: keyed by asset datum path
 
-/datum/controller/subsystem/tgui/PreInit()
-	basehtml = file2text('tgui/public/tgui.html')
+/datum/controller/subsystem/tgui/PreInit()  //RS Edit: Creates seperate preinit processes for legacy and modern tgui windows (Lira, July 2025)
+	// Legacy
+	var/html_legacy = file2text("tgui/public/tgui.html")
 	// Inject inline polyfills
-	var/polyfill = file2text('tgui/public/tgui-polyfill.min.js')
-	polyfill = "<script>\n[polyfill]\n</script>"
-	basehtml = replacetextEx(basehtml, "<!-- tgui:inline-polyfill -->", polyfill)
-	basehtml = replacetextEx(basehtml, "<!-- tgui:nt-copyright -->", "Nanotrasen (c) 2284-[CURRENT_STATION_YEAR]")
+	var/poly = file2text("tgui/public/tgui-polyfill.min.js")
+	html_legacy = replacetextEx(html_legacy, "<!-- tgui:inline-polyfill -->",
+								"<script>\n[poly]\n</script>")
+	html_legacy = replacetextEx(html_legacy, "<!-- tgui:nt-copyright -->",
+								"Nanotrasen (c) 2284-[CURRENT_STATION_YEAR]")
 
+	// Modern
+	var/html_modern = file2text("tguimodern/public/tgui.html")
+	// Inject inline polyfills
+	var/poly2 = file2text("tguimodern/public/tgui-polyfill.min.js")
+	html_modern = replacetextEx(html_modern, "<!-- tgui:inline-polyfill -->",
+								"<script>\n[poly2]\n</script>")
+	html_modern = replacetextEx(html_modern, "<!-- tgui:nt-copyright -->",
+								"Nanotrasen (c) 2284-[CURRENT_STATION_YEAR]")
+
+	// Register both
+	basehtml_by_bundle = list(
+		/datum/asset/simple/tgui        = html_legacy,
+		/datum/asset/simple/tguimodern  = html_modern,
+	)
 /datum/controller/subsystem/tgui/Shutdown()
 	close_all_uis()
 
@@ -60,7 +77,7 @@ SUBSYSTEM_DEF(tgui)
  * required user mob
  * return datum/tgui
  */
-/datum/controller/subsystem/tgui/proc/request_pooled_window(mob/user)
+/datum/controller/subsystem/tgui/proc/request_pooled_window(mob/user, desired_bundle)
 	if(!user.client)
 		return null
 	var/list/windows = user.client.tgui_windows
@@ -76,6 +93,8 @@ SUBSYSTEM_DEF(tgui)
 			window = new(user.client, window_id, pooled = TRUE)
 		// Skip windows with acquired locks
 		if(window.locked)
+			continue
+		if(window.status == TGUI_WINDOW_READY && window.loaded_bundle != desired_bundle)
 			continue
 		if(window.status == TGUI_WINDOW_READY)
 			return window

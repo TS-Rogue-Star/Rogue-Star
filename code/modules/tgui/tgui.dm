@@ -6,6 +6,11 @@
 /**
  * tgui datum (represents a UI).
  */
+
+// RS Add: New bundle defines for legacy and modern (Lira, July 2025)
+#define BUNDLE_LEGACY  /datum/asset/simple/tgui
+#define BUNDLE_MODERN  /datum/asset/simple/tguimodern
+
 /datum/tgui
 	/// The mob who opened/is using the UI.
 	var/mob/user
@@ -45,6 +50,12 @@
 	var/datum/tgui/parent_ui
 	/// Children of this UI
 	var/list/children = list()
+
+	var/core_bundle = BUNDLE_LEGACY   // RS Add: Default to legacy bundle (Lira, July 2025)
+
+/datum/tgui_modern //RS Add: modern tgui uses the modern bundle (Lira, July 2025)
+    parent_type = /datum/tgui
+    core_bundle = BUNDLE_MODERN
 
 /**
  * public
@@ -89,18 +100,20 @@
 	process_status()
 	if(status < STATUS_UPDATE)
 		return null
-	window = SStgui.request_pooled_window(user)
+	window = SStgui.request_pooled_window(user, src.core_bundle) //RS Add: Let the controller know which bundle (Lira, July 2025)
 	if(!window)
 		return null
 	opened_at = world.time
 	window.acquire_lock(src)
+	if(isnull(window.loaded_bundle)) //RS Add: Set loaded_bundle value (Lira, July 2025)
+		window.loaded_bundle = src.core_bundle
 	if(!window.is_ready())
+		window.target_bundle = src.core_bundle //RS Add: Set target bundle (Lira, July 2025)
 		window.initialize(
 			strict_mode = TRUE,
-			fancy = user.client.prefs.tgui_fancy,
-			assets = list(
-				get_asset_datum(/datum/asset/simple/tgui),
-			))
+			fancy 		= user.client.prefs.tgui_fancy,
+			assets 		= list(get_asset_datum(src.core_bundle),))
+		window.loaded_bundle = src.core_bundle      // RS Add: Update loaded bundle (Lira, July 2025)
 	else
 		window.send_message("ping")
 	window.send_asset(get_asset_datum(/datum/asset/simple/fontawesome))

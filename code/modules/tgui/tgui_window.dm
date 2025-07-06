@@ -26,6 +26,10 @@
 	var/initial_inline_css
 	var/mouse_event_macro_set = FALSE
 
+	//RS Add: New vars for selecting bundle (Lira, July 2025)
+	var/loaded_bundle
+	var/target_bundle
+
 /**
  * public
  *
@@ -84,7 +88,9 @@
 	else
 		options += "titlebar=1;can_resize=1;"
 	// Generate page html
-	var/html = SStgui.basehtml
+	var/html = SStgui.basehtml_by_bundle[ target_bundle ] \
+			? SStgui.basehtml_by_bundle[ target_bundle ] \
+			: SStgui.basehtml_by_bundle[/datum/asset/simple/tgui]   // RS Edit: Make html selection dynamic (Lira, July 2025)
 	html = replacetextEx(html, "\[tgui:windowId]", id)
 	html = replacetextEx(html, "\[tgui:strictMode]", strict_mode)
 	// Inject assets

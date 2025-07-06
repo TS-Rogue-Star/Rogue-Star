@@ -1,11 +1,17 @@
 //DEFINITIONS FOR ASSET DATUMS START HERE.
 
-/datum/asset/simple/tgui
+/datum/asset/simple/tgui  //Legacy bundle
 	// keep_local_name = TRUE
 	assets = list(
-		"tgui.bundle.js" = file("tgui/public/tgui.bundle.js"),
+		"tgui.bundle.js"  = file("tgui/public/tgui.bundle.js"),
 		"tgui.bundle.css" = file("tgui/public/tgui.bundle.css"),
 	)
+
+/datum/asset/simple/tguimodern //RS Edit: Adds secondary tgui bundle (Lira, July 2025)
+	assets = list (
+		"tguimodern.bundle.js"  = file("tguimodern/public/tgui.bundle.js"),
+		"tguimodern.bundle.css" = file("tguimodern/public/tgui.bundle.css"),
+    )
 
 
 /datum/asset/simple/headers
