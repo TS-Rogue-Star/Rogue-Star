@@ -112,7 +112,7 @@
 		window.initialize(
 			strict_mode = TRUE,
 			fancy 		= user.client.prefs.tgui_fancy,
-			assets 		= list(get_asset_datum(src.core_bundle),))
+			assets 		= list(get_asset_datum(src.core_bundle),)) //RS Edit: Make bundle selection dynamic (Lira, July 2025)
 		window.loaded_bundle = src.core_bundle      // RS Add: Update loaded bundle (Lira, July 2025)
 	else
 		window.send_message("ping")

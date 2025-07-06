@@ -20,7 +20,7 @@ SUBSYSTEM_DEF(tgui)
 	var/list/open_uis_by_src = list()
 	/// The HTML base used for all UIs.
 	var/basehtml
-	var/list/basehtml_by_bundle   // NEW: keyed by asset datum path
+	var/list/basehtml_by_bundle   // RS Add: New var to hold both html version (Lira, July 2025)
 
 /datum/controller/subsystem/tgui/PreInit()  //RS Edit: Creates seperate preinit processes for legacy and modern tgui windows (Lira, July 2025)
 	// Legacy
@@ -77,7 +77,7 @@ SUBSYSTEM_DEF(tgui)
  * required user mob
  * return datum/tgui
  */
-/datum/controller/subsystem/tgui/proc/request_pooled_window(mob/user, desired_bundle)
+/datum/controller/subsystem/tgui/proc/request_pooled_window(mob/user, desired_bundle) //RS Edit: Identify requested bundle (Lira, July 2025)
 	if(!user.client)
 		return null
 	var/list/windows = user.client.tgui_windows
@@ -94,7 +94,7 @@ SUBSYSTEM_DEF(tgui)
 		// Skip windows with acquired locks
 		if(window.locked)
 			continue
-		if(window.status == TGUI_WINDOW_READY && window.loaded_bundle != desired_bundle)
+		if(window.status == TGUI_WINDOW_READY && window.loaded_bundle != desired_bundle) //RS Add: Identify if loaded bundle is not equal to desired bundle (Lira, July 2025)
 			continue
 		if(window.status == TGUI_WINDOW_READY)
 			return window
