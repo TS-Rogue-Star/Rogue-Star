@@ -322,39 +322,33 @@
 	base_turf = /turf/simulated/open
 	transit_chance = 0
 	holomap_offset_x = SHIP_HOLOMAP_MARGIN_X
-	holomap_offset_y = SHIP_HOLOMAP_MARGIN_Y
+	holomap_offset_y = SHIP_HOLOMAP_MARGIN_Y + SHIP_MAP_SIZE
 
 /datum/map_z_level/sirius_point/level_two
 	z = Z_LEVEL_MOONBASE_HIGH
 	name = "Sirius Point Level Two"
 	base_turf = /turf/simulated/open
 	transit_chance = 0
-	holomap_offset_x = SHIP_HOLOMAP_MARGIN_X
-	holomap_offset_y = SHIP_HOLOMAP_MARGIN_Y
+	holomap_offset_x = HOLOMAP_ICON_SIZE - SHIP_HOLOMAP_MARGIN_X - SHIP_MAP_SIZE
+	holomap_offset_y = SHIP_HOLOMAP_MARGIN_Y + SHIP_MAP_SIZE
 
 /datum/map_z_level/sirius_point/east_crater
 	z = Z_LEVEL_MOONBASE_EAST
 	name = "Sirius Point East Crater"
 	base_turf = /turf/simulated/mineral/floor/vacuum/moonbase/outdoors
 	transit_chance = 0
-	holomap_offset_x = SHIP_HOLOMAP_MARGIN_X
-	holomap_offset_y = SHIP_HOLOMAP_MARGIN_Y
 
 /datum/map_z_level/sirius_point/west_crater
 	z = Z_LEVEL_MOONBASE_WEST
 	name = "Sirius Point West Crater"
 	base_turf = /turf/simulated/mineral/floor/vacuum/moonbase/outdoors
 	transit_chance = 0
-	holomap_offset_x = SHIP_HOLOMAP_MARGIN_X
-	holomap_offset_y = SHIP_HOLOMAP_MARGIN_Y
 
 /datum/map_z_level/sirius_point/mining
 	z = Z_LEVEL_MOONBASE_MINING
 	name = "Sirius Point Mining Depths"
 	base_turf = /turf/simulated/mineral/floor/vacuum/moonbase/outdoors
 	transit_chance = 0
-	holomap_offset_x = SHIP_HOLOMAP_MARGIN_X
-	holomap_offset_y = SHIP_HOLOMAP_MARGIN_Y
 
 /datum/map_template/moonbase_lateload
 	allow_duplicates = FALSE

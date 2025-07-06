@@ -964,8 +964,10 @@
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/medical_restroom)
 "cW" = (
-/obj/structure/sign/biohazard,
-/turf/simulated/wall/r_wall,
+/obj/effect/floor_decal/milspec/color/emerald/half{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
 /area/rnd/research)
 "cX" = (
 /obj/effect/floor_decal/milspec/color/black,
@@ -2762,6 +2764,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/sign/department/xenolab{
+	pixel_x = -32;
+	pixel_y = 0
+	},
 /turf/simulated/floor/tiled,
 /area/rnd/research)
 "ic" = (
@@ -2946,7 +2952,10 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/glass/reinforced,
+/obj/effect/floor_decal/milspec/color/emerald/half{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
 /area/rnd/research)
 "iy" = (
 /obj/effect/floor_decal/milspec/color/green/half{
@@ -4665,6 +4674,16 @@
 	},
 /turf/simulated/floor/tiled/steel_dirty,
 /area/crew_quarters/moonbase/abandonedoffice)
+"nc" = (
+/obj/effect/floor_decal/milspec/color/red/half{
+	dir = 8
+	},
+/obj/structure/sign/department/armory{
+	pixel_x = -32;
+	pixel_y = 0
+	},
+/turf/simulated/floor/tiled/dark,
+/area/security/main)
 "nd" = (
 /obj/machinery/button/remote/blast_door{
 	id = "GatewayShutter";
@@ -5944,6 +5963,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/sign/examroom{
+	pixel_x = -32;
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled/white,
 /area/medical/moonbase/upperlevel)
 "qt" = (
@@ -5974,7 +5997,10 @@
 /obj/machinery/firealarm{
 	dir = 4
 	},
-/turf/simulated/floor/glass/reinforced,
+/obj/effect/floor_decal/milspec/color/emerald/half{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
 /area/rnd/research)
 "qz" = (
 /obj/structure/handrail{
@@ -6287,6 +6313,10 @@
 	},
 /obj/machinery/firealarm{
 	dir = 1
+	},
+/obj/structure/sign/department/virology{
+	pixel_x = 32;
+	pixel_y = -32
 	},
 /turf/simulated/floor/tiled/white,
 /area/medical/moonbase/upperlevel)
@@ -7129,6 +7159,10 @@
 /obj/machinery/vending/deluxe_boozeomat,
 /obj/effect/floor_decal/milspec/color/blue/half{
 	dir = 9
+	},
+/obj/structure/sign/department/conference_room{
+	pixel_x = 0;
+	pixel_y = 32
 	},
 /turf/simulated/floor/tiled,
 /area/bridge_hallway)
@@ -8237,9 +8271,6 @@
 /turf/simulated/floor/tiled,
 /area/rnd/research)
 "wR" = (
-/obj/effect/floor_decal/milspec/color/emerald/half{
-	dir = 8
-	},
 /obj/structure/cable/white{
 	icon_state = "1-4"
 	},
@@ -8247,6 +8278,9 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 8
 	},
 /turf/simulated/floor/tiled,
@@ -10871,6 +10905,10 @@
 /obj/effect/floor_decal/milspec/color/blue/half{
 	dir = 5
 	},
+/obj/structure/sign/department/conference_room{
+	pixel_x = 0;
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled,
 /area/bridge_hallway)
 "EG" = (
@@ -13054,6 +13092,26 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/security/detectives_office)
+"KY" = (
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 1
+	},
+/obj/structure/sign/directions/command{
+	pixel_x = -32;
+	dir = 8;
+	pixel_y = 32
+	},
+/obj/structure/sign/directions/bar{
+	dir = 1;
+	pixel_x = -32;
+	pixel_y = 38
+	},
+/obj/structure/sign/directions/evac{
+	pixel_x = -32;
+	pixel_y = 26
+	},
+/turf/simulated/floor/tiled,
+/area/arrival/moonbase/main)
 "KZ" = (
 /obj/structure/railing/grey{
 	dir = 1
@@ -15345,6 +15403,10 @@
 /area/bridge/meeting_room)
 "Rj" = (
 /obj/effect/floor_decal/milspec/color/red/corner,
+/obj/structure/sign/department/commander{
+	pixel_x = 32;
+	pixel_y = -32
+	},
 /turf/simulated/floor/tiled/dark,
 /area/security/main)
 "Rk" = (
@@ -15634,6 +15696,16 @@
 /area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
+"RV" = (
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 8
+	},
+/obj/structure/sign/directions/evac{
+	pixel_x = -32;
+	pixel_y = -32
+	},
+/turf/simulated/floor/tiled,
+/area/arrival/moonbase/dockingbays)
 "RW" = (
 /turf/simulated/floor/tiled,
 /area/crew_quarters/courtroom)
@@ -17005,6 +17077,19 @@
 /area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
+"VN" = (
+/obj/effect/floor_decal/milspec/color/red/half{
+	dir = 8
+	},
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/structure/sign/department/armory{
+	pixel_x = -32;
+	pixel_y = 0
+	},
+/turf/simulated/floor/tiled/dark,
+/area/security/main)
 "VO" = (
 /obj/effect/floor_decal/milspec/color/blue/half,
 /obj/structure/cable,
@@ -18115,6 +18200,27 @@
 	},
 /turf/simulated/floor/tiled,
 /area/ai_monitored/storage/emergency/eva)
+"Ze" = (
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 1
+	},
+/obj/structure/sign/directions/chapel{
+	dir = 1;
+	pixel_x = 32;
+	pixel_y = 26
+	},
+/obj/structure/sign/directions/ai_core{
+	dir = 1;
+	pixel_x = 32;
+	pixel_y = 38
+	},
+/obj/structure/sign/directions/telecomms{
+	dir = 1;
+	pixel_x = 32;
+	pixel_y = 32
+	},
+/turf/simulated/floor/tiled,
+/area/arrival/moonbase/main)
 "Zf" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/maintenance,
@@ -26192,7 +26298,7 @@ UG
 UG
 UG
 kQ
-cW
+UG
 UG
 UG
 UG
@@ -26367,12 +26473,12 @@ nh
 Pq
 rc
 rc
-rc
+nc
 rc
 rc
 hV
 Pq
-nh
+VN
 ce
 Cv
 XM
@@ -26477,12 +26583,12 @@ wQ
 JL
 Dc
 Ox
+cW
+cW
 WA
 WA
-WA
-WA
-WA
-WA
+cW
+cW
 Ox
 iL
 vJ
@@ -26620,7 +26726,7 @@ bR
 JY
 MD
 ix
-WA
+MD
 WA
 WA
 qy
@@ -34969,7 +35075,7 @@ TY
 Ji
 uC
 JH
-uC
+RV
 uC
 rG
 uC
@@ -35008,7 +35114,7 @@ uC
 dF
 uC
 yt
-Ec
+KY
 FQ
 eq
 wi
@@ -35292,7 +35398,7 @@ nv
 lb
 nv
 yt
-Ec
+Ze
 FQ
 Mk
 wi

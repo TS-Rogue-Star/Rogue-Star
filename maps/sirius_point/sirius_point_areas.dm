@@ -56,7 +56,7 @@
 	icon = 'icons/turf/areas_vr.dmi'
 	icon_state = "magwhisqu"
 /area/crew_quarters/moonbase/bartender
-	name = "The Backrooms"
+	name = "Bar Backroom"
 /area/crew_quarters/moonbase/carproom
 	name = "Carp Encounter Simulator"
 	ambience = AMBIENCE_SPACE
@@ -71,6 +71,10 @@
 /area/library/moonbase/office
 	name = "Librarian's Office"
 	lightswitch = 0
+/area/library/moonbase/clownoffice
+	name = "Honk Annex"
+/area/library/moonbase/mimeoffice
+	name = "The Backrooms"
 
 /area/security/moonbase
 	icon_state = "brig"
@@ -171,7 +175,6 @@
 	forbid_singulo = TRUE
 	emotes_from_beyond = FALSE
 	block_phase_shift = TRUE
-
 /area/moonbase/dorms/dorm1
 	name = "Dorm 1"
 	icon_state = "dorm1"
