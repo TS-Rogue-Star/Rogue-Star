@@ -245,31 +245,61 @@
  */
 /datum/tgui/proc/get_payload(custom_data, with_data, with_static_data)
 	var/list/json_data = list()
-	json_data["config"] = list(
-		"title" = title,
-		"status" = status,
-		"interface" = interface,
-		//"refreshing" = refreshing,
-		"refreshing" = FALSE,
-		"map" = (using_map && using_map.path) ? using_map.path : "Unknown",
-		"mapZLevel" = map_z_level,
-		"window" = list(
-			"key" = window_key,
-			"size" = window_size,
-			"fancy" = user.client.prefs.tgui_fancy,
-			"locked" = user.client.prefs.tgui_lock,
-		),
-		"client" = list(
-			"ckey" = user.client.ckey,
-			"address" = user.client.address,
-			"computer_id" = user.client.computer_id,
-		),
-		"user" = list(
-			"name" = "[user]",
-			"ckey" = "[user.ckey]",
-			"observer" = isobserver(user),
-		),
-	)
+	if(src.core_bundle == /datum/asset/simple/tguimodern)
+		json_data["config"] = list(
+			"title" = title,
+			"status" = status,
+			"interface" = list(
+				"name" = interface,
+				"layout" = null, // user.client.prefs.read_preference(/datum/preference/choiced/tgui_layout), // unused
+			),
+			//"refreshing" = refreshing,
+			"refreshing" = FALSE,
+			"map" = (using_map && using_map.path) ? using_map.path : "Unknown",
+			"mapZLevel" = map_z_level,
+			"window" = list(
+				"key" = window_key,
+				"size" = window_size,
+				"fancy" = user.client.prefs.tgui_fancy,
+				"locked" = user.client.prefs.tgui_lock,
+			),
+			"client" = list(
+				"ckey" = user.client.ckey,
+				"address" = user.client.address,
+				"computer_id" = user.client.computer_id,
+			),
+			"user" = list(
+				"name" = "[user]",
+				"ckey" = "[user.ckey]",
+				"observer" = isobserver(user),
+			),
+		)
+	else
+		json_data["config"] = list(
+			"title" = title,
+			"status" = status,
+			"interface" = interface,
+			//"refreshing" = refreshing,
+			"refreshing" = FALSE,
+			"map" = (using_map && using_map.path) ? using_map.path : "Unknown",
+			"mapZLevel" = map_z_level,
+			"window" = list(
+				"key" = window_key,
+				"size" = window_size,
+				"fancy" = user.client.prefs.tgui_fancy,
+				"locked" = user.client.prefs.tgui_lock,
+			),
+			"client" = list(
+				"ckey" = user.client.ckey,
+				"address" = user.client.address,
+				"computer_id" = user.client.computer_id,
+			),
+			"user" = list(
+				"name" = "[user]",
+				"ckey" = "[user.ckey]",
+				"observer" = isobserver(user),
+			),
+		)
 	var/data = custom_data || with_data && src_object.tgui_data(user, src, state)
 	if(data)
 		json_data["data"] = data

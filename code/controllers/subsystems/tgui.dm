@@ -34,10 +34,17 @@ SUBSYSTEM_DEF(tgui)
 
 	// Modern
 	var/html_modern = file2text("tguimodern/public/tgui.html")
-	// Inject inline polyfills
-	var/poly2 = file2text("tguimodern/public/tgui-polyfill.min.js")
-	html_modern = replacetextEx(html_modern, "<!-- tgui:inline-polyfill -->",
-								"<script>\n[poly2]\n</script>")
+
+	// Inject inline helper functions || Port Virgo PR17476
+	var/helpers = file2text('tguimodern/public/helpers.min.js')
+	helpers = "<script type='text/javascript'>\n[helpers]\n</script>"
+	html_modern = replacetextEx(html_modern, "<!-- tgui:helpers -->", helpers)
+
+	// Inject inline ntos-error styles || Port Virgo PR17476
+	var/ntos_error = file2text('tguimodern/public/ntos-error.min.css')
+	ntos_error = "<style type='text/css'>\n[ntos_error]\n</style>"
+	html_modern = replacetextEx(html_modern, "<!-- tgui:ntos-error -->", ntos_error)
+
 	html_modern = replacetextEx(html_modern, "<!-- tgui:nt-copyright -->",
 								"Nanotrasen (c) 2284-[CURRENT_STATION_YEAR]")
 
