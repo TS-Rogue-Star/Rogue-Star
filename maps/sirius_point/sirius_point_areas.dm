@@ -9,14 +9,14 @@
 // The Station //
 /////////////////
 
-/area/arrival/moonbase
+/area/hallway/arrival/moonbase
 	icon = 'icons/turf/areas_rs.dmi'
 	icon_state = "floor2"
 	ambience = AMBIENCE_ARRIVALS
 	sound_env = LARGE_ENCLOSED
-/area/arrival/moonbase/main
+/area/hallway/arrival/moonbase/main
 	name = "Arrivals Hallway"
-/area/arrival/moonbase/dockingbays
+/area/hallway/arrival/moonbase/dockingbays
 	name = "Docking Bays"
 
 /area/hallway/moonbase
