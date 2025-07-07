@@ -3157,7 +3157,6 @@
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 10
 	},
-/obj/random/medical,
 /obj/machinery/power/apc,
 /obj/structure/cable/cyan{
 	icon_state = "0-8"
@@ -15836,7 +15835,9 @@
 	pixel_y = 26
 	},
 /obj/structure/disposalpipe/sortjunction{
-	dir = 4
+	dir = 4;
+	sortType = "Trash";
+	name = "Trash"
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/easthall)
@@ -27689,11 +27690,8 @@
 /area/bridge)
 "tBr" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/disposalpipe/trunk,
-/obj/structure/disposaloutlet{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor/tiled,
 /area/quartermaster/moonbase/trashroom)
 "tBv" = (
 /obj/machinery/atmospherics/unary/vent_pump/on,
