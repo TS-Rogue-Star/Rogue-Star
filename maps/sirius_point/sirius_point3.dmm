@@ -10843,6 +10843,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/structure/sign/warning/server_room{
+	pixel_x = 32;
+	pixel_y = -32
+	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level2/east)
 "CN" = (
