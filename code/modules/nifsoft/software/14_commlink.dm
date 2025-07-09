@@ -55,7 +55,7 @@
 	owner = new_name
 	name = "[owner]'s [initial(name)]"
 	nif.save_data["commlink_name"] = owner
-	nif.human.etching.needs_saving = TRUE	//RS ADD
+	persist_nif_data(nif.human)	//RS ADD
 
 //So that only the owner's chat is relayed to others.
 /obj/item/device/communicator/commlink/hear_talk(mob/living/M, list/message_pieces, verb)
