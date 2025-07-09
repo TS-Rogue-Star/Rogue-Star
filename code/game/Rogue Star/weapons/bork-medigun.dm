@@ -46,20 +46,29 @@
 
 	var/obj/item/device/bork_medigun/linked/medigun
 	var/obj/item/weapon/cell/bcell = /obj/item/weapon/cell/apc
+	var/obj/item/weapon/stock_parts/matter_bin/sbin = /obj/item/weapon/stock_parts/matter_bin
 	var/obj/item/weapon/stock_parts/scanning_module/smodule = /obj/item/weapon/stock_parts/scanning_module
 	var/obj/item/weapon/stock_parts/manipulator/smanipulator = /obj/item/weapon/stock_parts/manipulator
 	var/obj/item/weapon/stock_parts/capacitor/scapacitor = /obj/item/weapon/stock_parts/capacitor
 	var/obj/item/weapon/stock_parts/micro_laser/slaser = /obj/item/weapon/stock_parts/micro_laser
+	var/phoronvol = 0
+	var/charging = 0
+	var/brutecharge = 0
+	var/toxcharge = 0
+	var/burncharge = 0
 	var/brutevol = 0
 	var/toxvol = 0
 	var/burnvol = 0
-	var/tankmax = 60
-	var/chargecost = 50
+	var/chemcap = 60
+	var/tankmax = 30
+	var/chargecost = 25
 	var/bpcmo = 0
 	var/containsgun = 1
 	var/maintenance
 	var/smaniptier = 1
+	var/sbintier = 1
 	var/regen = 0
+	var/gridstatus = 0
 
 //backpack item
 /obj/item/device/medigun_backpack/cmo
@@ -80,16 +89,78 @@
 	smanipulator = /obj/item/weapon/stock_parts/manipulator/nano
 	smodule = /obj/item/weapon/stock_parts/scanning_module/adv
 	slaser = /obj/item/weapon/stock_parts/micro_laser/high
-	chargecost = 40
-	tankmax = 100
-	brutevol = 100
-	toxvol = 100
-	burnvol = 100
+	chargecost = 20
+	chemcap = 120
+	tankmax = 60
+	brutecharge = 40
+	toxcharge = 40
+	burncharge = 40
+	brutevol = 60
+	toxvol = 60
+	burnvol = 60
 	bpcmo = 1
+
+
+
+/obj/item/device/medigun_backpack/tgui_interact(mob/user, datum/tgui/ui = null)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Medigun", name) // 510, 460
+		ui.open()
+
+/obj/item/device/medigun_backpack/tgui_data(mob/user)
+	var/mob/living/carbon/human/H = medigun.current_target
+	var/patientname = "No Target"
+	var/patienthealth = 0
+	var/patientbruteloss = 0
+	var/patientfireloss = 0
+	var/patienttoxloss = 0
+	var/patientoxyloss = 0
+	//var/minhealth = 0
+	if(scapacitor.get_rating() < 5)
+		gridstatus = 3
+	if(H)
+		patientname = H
+		patienthealth = max(0, (H.health+abs(config.health_threshold_dead))/(H.maxHealth+abs(config.health_threshold_dead)))
+		to_chat(world, "<span class='notice'>Bark [patienthealth] Bark</span>")
+		patientbruteloss = H.getBruteLoss()
+		patientfireloss = H.getFireLoss()
+		patienttoxloss = H.getToxLoss()
+		patientoxyloss = H.getOxyLoss()
+	var/list/data = list(
+		"Generator" = charging,
+		"powerCellStatus" = bcell ? bcell.percent() : null,
+		"Gridstatus" = gridstatus,
+		"PhoronStatus" = sbin ? 100.0*(phoronvol/chemcap) : null,
+		"BrutehealCharge" = scapacitor ? 100.0*(brutecharge/tankmax) : null,
+		"BrutehealVol" = sbin ? brutevol : null,
+		"BurnhealCharge" = scapacitor ? 100.0*(burncharge/tankmax) : null,
+		"BurnhealVol" = sbin ? burnvol : null,
+		"ToxhealCharge" = scapacitor ? 100.0*(toxcharge/tankmax) : null,
+		"ToxhealVol" = sbin ? toxvol : null,
+		"patientname" = smodule ? patientname : null,
+		"patienthealth" = smodule ? 100 * patienthealth : null,
+		"patientbrute" = smodule ? patientbruteloss : null,
+		"patientburn" = smodule ? patientfireloss : null,
+		"patienttox" = smodule ? patienttoxloss : null,
+		"patientoxy" = smodule ? patientoxyloss : null
+		)
+	return data
+
+
+/obj/item/device/medigun_backpack/tgui_act(action, params)
+	if(..())
+		return TRUE
+
+	. = TRUE
+	switch(action)
+		if("gentoggle")
+			ui_action_click()
+
 
 /obj/item/device/medigun_backpack/examine(mob/user)
 	. = ..()
-
+	tgui_interact(user)
 	if(Adjacent(user))
 		if(maintenance)
 			. += "<span class='warning'>The Maintenance hatch is open.</span>"
@@ -97,68 +168,124 @@
 			. += "<span class='notice'>The [bcell.name] is [round(bcell.percent())]% charged.</span>"
 		if(!bcell)
 			. += "<span class='warning'>It does not have a power source installed.</span>"
-		if(smodule)
-			if(smodule.get_rating() >= 5)
-				. += "<span class='notice'>It has a [smodule.name] installed, device will function within [medigun.beam_range] tiles and through walls.</span>"
-			else
-				. += "<span class='notice'>It has a [smodule.name] installed, device will function within [medigun.beam_range] tiles.</span>"
-		if(!smodule)
-			. += "<span class='warning'>It is missing a scanning module.</span>"
+		if(maintenance)
+			if(smodule)
+				if(smodule.get_rating() >= 5)
+					. += "<span class='notice'>It has a [smodule.name] installed, device will function within [medigun.beam_range] tiles and through walls.</span>"
+				else
+					. += "<span class='notice'>It has a [smodule.name] installed, device will function within [medigun.beam_range] tiles.</span>"
+			if(!smodule)
+				. += "<span class='warning'>It is missing a scanning module.</span>"
 
-		if(smanipulator)
-			if(smaniptier < 5)
-				. += "<span class='notice'>It has a [smanipulator.name] installed, chem digitizing is now [(smaniptier/4)*100]% Efficient.</span>"
-			else
-				. += "<span class='notice'>It has a [smanipulator.name] installed, chem digitizing is now 100% Efficient and heal charges will slowly regenerate over time using base battery.</span>"
-		if(!smanipulator)
-			. += "<span class='warning'>It is missing a manipulator.</span>"
-		if(slaser)
-			if(slaser.get_rating() >= 5)
-				. += "<span class='notice'>It has a [slaser.name] installed and can heal [slaser.get_rating()] damage per cycle, and will slowly bandage and salve wounds.</span>"
-			else
-				. += "<span class='notice'>It has a [slaser.name] installed and can heal [slaser.get_rating()] damage per cycle.</span>"
-		if(!slaser)
-			. += "<span class='warning'>It is missing a laser.</span>"
+			if(smanipulator)
+				if(smaniptier >=  5)
+					. += "<span class='notice'>It has a [smanipulator.name] installed, chem digitizing is now 125% Efficient.</span>"
+				else
+					. += "<span class='notice'>It has a [smanipulator.name] installed, chem digitizing is now [(smaniptier/4)*100]% Efficient.</span>"
+			if(!smanipulator)
+				. += "<span class='warning'>It is missing a manipulator.</span>"
+			if(slaser)
+				if(slaser.get_rating() >= 5)
+					. += "<span class='notice'>It has a [slaser.name] installed and can heal [slaser.get_rating()] damage per cycle, and will stop bleeding and pain while beam focused.</span>"
+				else
+					. += "<span class='notice'>It has a [slaser.name] installed and can heal [slaser.get_rating()] damage per cycle.</span>"
+			if(!slaser)
+				. += "<span class='warning'>It is missing a laser.</span>"
+			if(scapacitor)
+				var/captier = scapacitor.get_rating()
+				if(captier < 5)
+					. += "<span class='notice'>It has a [scapacitor.name] installed, battery charge will now drain at [chargecost] per second, and grants a heal charge capacity of [tankmax] per type.</span>"
+				else
+					. += "<span class='notice'>It has a [scapacitor.name] installed, battery charge will now drain at [chargecost] per second, the cell will recharge from the local power grid, it also grants a heal charge capacity of [tankmax] per type.</span>"
+			if(!scapacitor)
+				. += "<span class='warning'>It is missing a capacitor, you may not digitize chems.</span>"
+			if(sbin)
+				if(smodule.get_rating() >= 5)
+					. += "<span class='notice'>It has a [sbin.name] installed, can hold [chemcap] reserve chems, will slowly generate chems in exchange for power.</span>"
+				else
+					. += "<span class='notice'>It has a [sbin.name] installed, can hold [chemcap] reserve chems.</span>"
+			if(!sbin)
+				. += "<span class='warning'>It is missing a matter bin.</span>"
+		if(sbin && scapacitor)
+			. += "<span class='notice'>The <font color = 'red'>Bruteheal</font> charge meter reads, main:(<font color = 'red'>[brutecharge]</font> / <font color = 'red'>[tankmax]</font>) Reserve: (<font color = 'red'>[brutevol]</font> / <font color = 'red'>[chemcap]</font>)</span>"
+			. += "<span class='notice'>The <font color = '#FFA500'>Burnheal</font> charge meter reads, main:(<font color = '#FFA500'>[burncharge]</font> / <font color = '#FFA500'>[tankmax]</font>) Reserve: (<font color = '#FFA500'>[burnvol]</font> / <font color = '#FFA500'>[chemcap]</font>)</span>"
+			. += "<span class='notice'>The <font color = 'green'>Toxheal</font> charge meter reads, main:(<font color = 'green'>[toxcharge]</font> / <font color = 'green'>[tankmax]</font>) Reserve: (<font color = 'green'>[toxvol]</font> / <font color = 'green'>[chemcap]</font>)</span>"
+			. += "<span class='notice'>The <font color = '#e100ffad'>Phoron</font> tank meter reads: (<font color = '#e100ffad'>[phoronvol]</font> / <font color = '#e100ffad'>[chemcap]</font>)</span>"
 
 
-		if(scapacitor)
-			if(chargecost > 0)
-				. += "<span class='notice'>It has a [scapacitor.name] installed, battery charge will now drain at [chargecost] per second, and grants a heal charge capacity of [tankmax] per type.</span>"
-			else if(chargecost == 0)
-				. += "<span class='notice'>It has a [scapacitor.name] installed, The battery will not drain at all, and grants a heal charge capacity of [tankmax] per type.</span>"
-			if(brutevol)
-				. += "<span class='notice'>The Bruteheal charge meter reads [round(100*brutevol/tankmax)]% remaining.</span>"
-			else
-				. += "<span class='warning'>The Bruteheal charge meter reads empty.</span>"
-			if(burnvol)
-				. += "<span class='notice'>The Burnheal charge meter reads [round(100*burnvol/tankmax)]% remaining.</span>"
-			else
-				. += "<span class='warning'>The Burnheal charge meter reads empty.</span>"
-			if(toxvol)
-				. += "<span class='notice'>The Toxheal charge meter reads [round(100*toxvol/tankmax)]% remaining.</span>"
-			else
-				. += "<span class='warning'>The Toxheal charge meter reads empty.</span>"
-		if(!scapacitor)
-			. += "<span class='warning'>It is missing a capacitor, you may not digitize chems.</span>"
+
+/obj/item/device/medigun_backpack/proc/apc_charge()
+	gridstatus = 0
+	var/area/A = get_area(src)
+	if(!istype(A) || !A.powered(EQUIP))
+		return FALSE
+	gridstatus = 1
+	if(bcell && (bcell.charge < bcell.maxcharge))
+		var/cur_charge = bcell.charge
+		var/delta = min(50, bcell.maxcharge-cur_charge)
+		bcell.give(delta)
+		A.use_power_oneoff(delta*100, EQUIP)
+		gridstatus = 2
+	return TRUE
 
 /obj/item/device/medigun_backpack/process()
-	if(smaniptier >= 5 && medigun.busy == 0)
+	var/modifier
+	if(bcell.charge >= 10)
 		regen = 0
-		if(brutevol < tankmax)
-			if(checked_use(25))
+		if(brutecharge < tankmax && brutevol > 0 && (bcell.checked_use(5)))
+			modifier = smaniptier * 2
+			if(modifier > brutevol)
+				modifier = brutevol
+			if(modifier > (tankmax - brutecharge))
+				modifier = tankmax - brutecharge
+			brutevol -= modifier
+			regen = 1
+			brutecharge += modifier
+		if(burncharge < tankmax && burnvol > 0 && (bcell.checked_use(5)))
+			modifier = smaniptier * 2
+			if(modifier > burnvol)
+				modifier = burnvol
+			if(modifier > (tankmax - burncharge))
+				modifier = tankmax - burncharge
+			burnvol -= modifier
+			regen = 1
+			burncharge += modifier
+		if(toxcharge < tankmax && toxvol > 0 && (bcell.checked_use(5)))
+			modifier = smaniptier * 2
+			if(modifier > toxvol)
+				modifier = toxvol
+			if(modifier > (tankmax - toxcharge))
+				modifier = tankmax - toxcharge
+			toxvol -= modifier
+			regen = 1
+			toxcharge += modifier
+		//Alien tier
+		if(sbintier >= 5 && medigun.busy == 0  && (bcell.charge >= 10))
+			if(brutevol < chemcap && (bcell.checked_use(10)))
 				regen = 1
 				brutevol ++
-		if(burnvol < tankmax)
-			if(checked_use(25))
+			if(burnvol < chemcap && (bcell.checked_use(10)))
 				regen = 1
 				burnvol ++
-		if(toxvol < tankmax)
-			if(checked_use(25))
+			if(toxvol < chemcap && (bcell.checked_use(10)))
 				regen = 1
 				toxvol ++
 		if(regen == 1)
 			update_icon()
 			//to_chat(world, "<span class='notice'>Regenned.</span>")
+	if(bcell && scapacitor.get_rating()>= 5 && charging == 0)
+		apc_charge()
+	if(bcell && charging)
+		if((bcell.amount_missing() >= 50))
+			if(phoronvol > 0)
+				phoronvol --
+				bcell.give(50)
+				update_icon()
+			else
+				if(ismob(loc))
+					var/mob/user = loc
+					to_chat(user, span("notice", "The phoron generator sputters then stops."))
+				charging = 0
 
 /obj/item/device/medigun_backpack/get_cell()
 	return bcell
@@ -166,13 +293,23 @@
 /obj/item/device/medigun_backpack/update_icon()
 	. = ..()
 	cut_overlays()
-	if(brutevol <= 0)
+	if((bcell.percent() <= 5 ))
+		add_overlay(image('code/game/Rogue Star/icons/itemicons/borkmedigun.dmi', "no_battery"))
+	else if((bcell.percent() <= 25 && bcell.percent() > 5))
+		add_overlay(image('code/game/Rogue Star/icons/itemicons/borkmedigun.dmi', "low_battery"))
+	if(brutevol <= 0 && brutecharge > 0)
+		add_overlay(image('code/game/Rogue Star/icons/itemicons/borkmedigun.dmi', "red"))
+	else if(brutecharge <= 0 && brutevol <= 0)
 		add_overlay(image('code/game/Rogue Star/icons/itemicons/borkmedigun.dmi', "redstrike-blink"))
 		//to_chat(world, span("warning", "brute empty"))
-	if(toxvol <= 0)
+	if(toxvol <= 0 && toxcharge > 0)
+		add_overlay(image('code/game/Rogue Star/icons/itemicons/borkmedigun.dmi', "green"))
+	else if(toxcharge <= 0 && toxvol <= 0)
 		add_overlay(image('code/game/Rogue Star/icons/itemicons/borkmedigun.dmi', "greenstrike-blink"))
 		//to_chat(world, span("warning", "tox empty"))
-	if(burnvol <= 0)
+	if(burnvol <= 0 && burncharge > 0)
+		add_overlay(image('code/game/Rogue Star/icons/itemicons/borkmedigun.dmi', "orange"))
+	else if(burncharge <= 0 && burnvol <= 0)
 		add_overlay(image('code/game/Rogue Star/icons/itemicons/borkmedigun.dmi', "orangestrike-blink"))
 		//to_chat(world, span("warning", "burn  empty"))
 
@@ -212,8 +349,11 @@
 		medigun.beam_range = 4
 	if(ispath(bcell))
 		bcell = new bcell(src)
+	if(ispath(sbin))
+		sbin = new sbin(src)
 	if(ispath(smodule))
 		smodule = new smodule(src)
+		START_PROCESSING(SSobj, src)
 	if(ispath(smanipulator))
 		smanipulator = new smanipulator(src)
 	if(ispath(scapacitor))
@@ -221,6 +361,7 @@
 	if(ispath(slaser))
 		slaser = new slaser(src)
 	update_icon()
+
 
 /obj/item/device/medigun_backpack/Destroy()
 	. = ..()
@@ -235,8 +376,15 @@
 
 
 /obj/item/device/medigun_backpack/ui_action_click()
-	toggle_medigun()
-
+	if(charging)
+		to_chat(usr, span("notice", "You disable the phoron generator."))
+		charging = 0
+	else
+		if(phoronvol > 0)
+			to_chat(usr, span("notice", "You enable the phoron generator."))
+			charging = 1
+		else
+			to_chat(usr, span("warning", "Not Enough Phoron stored."))
 /obj/item/device/medigun_backpack/attack_hand(mob/user)
 	if(loc == user)
 		toggle_medigun()
@@ -262,41 +410,42 @@
 	if(!maintenance && (istype(W, /obj/item/weapon/reagent_containers/glass/beaker) || istype(W, /obj/item/weapon/reagent_containers/glass/bottle)))
 
 		playsound(src, 'sound/weapons/empty.ogg', 50, 1)
-		var/reagentwhitelist = list("bicaridine", "anti_toxin", "kelotane", "dermaline", "tricordrazine")
+		var/reagentwhitelist = list("bicaridine", "anti_toxin", "kelotane", "dermaline", "phoron")//, "tricordrazine")
 
 		for(var/G in W.reagents.reagent_list)
 			var/datum/reagent/R = G
 			var/modifier = 1
 			var/totransfer = 0
 			var/name = ""
-			var/maniptier = smanipulator.get_rating()
-			if(maniptier > 4)
-				maniptier = 4
 			if(R.id in reagentwhitelist)
 				switch(R.id)
 					if("bicaridine")
 						name = "bruteheal"
-						modifier = maniptier
-						totransfer = tankmax - brutevol
+						modifier = 4
+						totransfer = chemcap - brutevol
 					if("anti_toxin")
 						name = "toxheal"
-						modifier = maniptier
-						totransfer = tankmax - toxvol
+						modifier = 4
+						totransfer = chemcap - toxvol
 					if("kelotane")
 						name = "burnheal"
-						modifier = maniptier
-						totransfer = tankmax - burnvol
+						modifier = 4
+						totransfer = chemcap - burnvol
 					if("dermaline")
 						name = "burnheal"
-						modifier = 2*maniptier
-						totransfer = tankmax - burnvol
-					if("tricordrazine")
+						modifier = 8
+						totransfer = chemcap - burnvol
+					if("phoron")
+						name = "phoron"
+						modifier = 1
+						totransfer = chemcap - phoronvol
+					/*if("tricordrazine")
 						name = "tricordrazine"
 						modifier = 1
-						if((brutevol != tankmax) && (burnvol != tankmax) && (toxvol != tankmax))
+						if((brutevol != chemcap) && (burnvol != chemcap) && (toxvol != chemcap))
 							totransfer = 1  //tempcheck to get past the totransfer check
 						else
-							totransfer = 0
+							totransfer = 0*/
 				if(totransfer <= 0)
 					to_chat(user, span("notice", "The [src] cannot accept anymore [name]!"))
 				totransfer = min(totransfer,W.reagents.get_reagent_amount(R.id) * modifier)
@@ -309,7 +458,9 @@
 						burnvol += totransfer
 					if("dermaline")
 						burnvol += totransfer
-					if("tricordrazine")
+					if("phoron")
+						phoronvol += totransfer
+					/*if("tricordrazine") //Tricord too problematic
 						var/maxamount = W.reagents.get_reagent_amount(R.id)
 						var/amountused
 						var/oldbrute = brutevol
@@ -317,35 +468,35 @@
 						var/oldtox = toxvol
 
 						while(maxamount > 0)
-							if(brutevol >= tankmax && burnvol >= tankmax && toxvol >= tankmax)
+							if(brutevol >= chemcap && burnvol >= chemcap && toxvol >= chemcap)
 								break
 							maxamount --
 							amountused++
 							totransfer ++
-							if(brutevol < tankmax)
+							if(brutevol < chemcap)
 								brutevol ++
-							if(burnvol < tankmax)
+							if(burnvol < chemcap)
 								burnvol ++
-							if(toxvol < tankmax)
+							if(toxvol < chemcap)
 								toxvol ++
-						var/readout = "You add [amountused] units of [R.name] to the [src]. \n The [src] digitizes "
+						var/readout = "You add [amountused] units of [R.name] to the [src]. \n The [src] Stores "
 						var/readoutadditions = FALSE
 						if(oldbrute != brutevol)
-							readout += "[round(100*(brutevol - oldbrute)/tankmax)]% of bruteheal charge"
+							readout += "[round(brutevol - oldbrute)] U of bruteheal vol"
 							readoutadditions = TRUE
 						if(oldburn != burnvol)
 							if(readoutadditions)
 								readout += ", "
-							readout += "[round(100*(burnvol - oldburn)/tankmax)]% of burnheal charge"
+							readout += "[round(burnvol - oldburn)] U of burnheal vol"
 							readoutadditions = TRUE
 						if(oldtox != toxvol)
 							if(readoutadditions)
 								readout += ", "
-							readout += "[round(100*(toxvol - oldtox)/tankmax)]% of toxheal charge"
-						if(oldbrute != brutevol || oldburn != burnvol || oldtox != toxvol)to_chat(user, span("notice", "[readout]."))
+							readout += "[round(toxvol - oldtox)] U of toxheal vol"
+						if(oldbrute != brutevol || oldburn != burnvol || oldtox != toxvol)to_chat(user, span("notice", "[readout]."))*/
 				if(totransfer > 0)
 					if(R.id != "tricordrazine")
-						to_chat(user, span("notice", "You add [totransfer / modifier] units of [R.name] to the [src]. \n The [src] digitizes [round(100*totransfer/tankmax)]% charge of [name]."))
+						to_chat(user, span("notice", "You add [totransfer / modifier] units of [R.name] to the [src]. \n The [src] stores [round(totransfer)] U of [name]."))
 					W.reagents.remove_reagent(R.id, totransfer / modifier)
 				update_icon()
 	if(W == medigun)
@@ -361,10 +512,12 @@
 		else
 			var/list/installedparts
 			installedparts = list("close hatch")
-			if(bcell)
-				installedparts.Add("cell")
+			//if(bcell)
+			//	installedparts.Add("cell")
 			if(smodule)
 				installedparts.Add("scanning module")
+			if(sbin)
+				installedparts.Add("matter bin")
 			if(scapacitor)
 				installedparts.Add("capacitor")
 			if(smanipulator)
@@ -377,12 +530,21 @@
 				maintenance = 0
 				to_chat(user, "<span class='notice'>You close the maintenance hatch on \the [src].</span>")
 				return
-			else if(menuchoice == "cell")
+			/*else if(menuchoice == "cell")
 				bcell.update_icon()
 				bcell.forceMove(get_turf(src.loc))
 				bcell = null
 				to_chat(user, "<span class='notice'>You remove the cell from \the [src].</span>")
 				update_icon()
+				return*/
+			else if(menuchoice == "matter bin")
+				sbin.update_icon()
+				sbin.forceMove(get_turf(src.loc))
+				sbin = null
+				sbintier = 0
+				to_chat(user, "<span class='notice'>You remove the [sbin] from \the [src].</span>")
+				update_icon()
+				STOP_PROCESSING(SSobj, src)
 				return
 			else if(menuchoice == "scanning module")
 				smodule.update_icon()
@@ -396,6 +558,7 @@
 				scapacitor.forceMove(get_turf(src.loc))
 				scapacitor = null
 				to_chat(user, "<span class='notice'>You remove the [scapacitor] from \the [src].</span>")
+				STOP_PROCESSING(SSobj, src)
 				update_icon()
 				return
 			else if(menuchoice == "manipulator")
@@ -415,7 +578,7 @@
 				update_icon()
 				return
 	if(maintenance)
-		if(istype(W, /obj/item/weapon/cell))
+		/*if(istype(W, /obj/item/weapon/cell))
 			if(bcell)
 				to_chat(user, "<span class='notice'>\The [src] already has a cell.</span>")
 			else
@@ -424,10 +587,10 @@
 				W.forceMove(src)
 				bcell = W
 				to_chat(user, "<span class='notice'>You install a cell in \the [src].</span>")
-				update_icon()
-		else if(istype(W, /obj/item/weapon/stock_parts/scanning_module))
+				update_icon()*/
+		if(istype(W, /obj/item/weapon/stock_parts/scanning_module))
 			if(smodule)
-				to_chat(user, "<span class='notice'>\The [src] already has a [W]].</span>")
+				to_chat(user, "<span class='notice'>\The [src] already has a scanning module.</span>")
 			else
 				if(!user.unEquip(W))
 					return
@@ -438,23 +601,20 @@
 				update_icon()
 		else if(istype(W, /obj/item/weapon/stock_parts/manipulator))
 			if(smanipulator)
-				to_chat(user, "<span class='notice'>\The [src] already has a [W]].</span>")
+				to_chat(user, "<span class='notice'>\The [src] already has a manipulator.</span>")
 			else
 				if(!user.unEquip(W))
 					return
 				W.forceMove(src)
 				smanipulator = W
 				smaniptier = smanipulator.get_rating()
-				if(smaniptier >= 5)
-					START_PROCESSING(SSobj, src)
-				else
-					STOP_PROCESSING(SSobj, src)
+				if(sbin && scapacitor)START_PROCESSING(SSobj, src)
 				to_chat(user, "<span class='notice'>You install the [W] into \the [src].</span>")
 
 				update_icon()
 		else if(istype(W, /obj/item/weapon/stock_parts/micro_laser))
 			if(slaser)
-				to_chat(user, "<span class='notice'>\The [src] already has a [W]].</span>")
+				to_chat(user, "<span class='notice'>\The [src] already has a micro laser.</span>")
 			else
 				if(!user.unEquip(W))
 					return
@@ -465,24 +625,47 @@
 				update_icon()
 		else if(istype(W, /obj/item/weapon/stock_parts/capacitor))
 			if(scapacitor)
-				to_chat(user, "<span class='notice'>\The [src] already has a [W]].</span>")
+				to_chat(user, "<span class='notice'>\The [src] already has a capacitor.</span>")
 			else
 				if(!user.unEquip(W))
 					return
 				W.forceMove(src)
 				scapacitor = W
 				var/scaptier = scapacitor.get_rating()
-				chargecost = 60-(10*scaptier)
+				chargecost = 30-(5*scaptier)
 				if(scaptier >= 5)
-					tankmax = 150 // alien tech go brr
+					tankmax = 150
 				else
-					tankmax = 25*scaptier
-				if(brutevol > tankmax)
-					brutevol = tankmax
-				if(burnvol > tankmax)
-					burnvol = tankmax
-				if(toxvol > tankmax)
-					toxvol = tankmax
+					tankmax = 30*scaptier
+				if(brutecharge > tankmax)
+					brutecharge = tankmax
+				if(burncharge > tankmax)
+					burncharge = tankmax
+				if(toxcharge > tankmax)
+					toxcharge = tankmax
+				if(sbin && smanipulator)START_PROCESSING(SSobj, src)
+				to_chat(user, "<span class='notice'>You install the [W] into \the [src].</span>")
+				update_icon()
+		else if(istype(W, /obj/item/weapon/stock_parts/matter_bin))
+			if(sbin)
+				to_chat(user, "<span class='notice'>\The [src] already has a matter bin.</span>")
+			else
+				if(!user.unEquip(W))
+					return
+				W.forceMove(src)
+				sbin = W
+				sbintier = sbin.get_rating()
+				if(sbintier >= 5)
+					chemcap = 300
+				else
+					chemcap = 60*(sbintier)
+				if(brutecharge > chemcap)
+					brutecharge = chemcap
+				if(burncharge > chemcap)
+					burncharge = chemcap
+				if(toxcharge > chemcap)
+					toxcharge = chemcap
+				if(scapacitor && smanipulator)START_PROCESSING(SSobj, src)
 				to_chat(user, "<span class='notice'>You install the [W] into \the [src].</span>")
 				update_icon()
 
@@ -783,54 +966,59 @@
 				if(!checked_use(medigun_base_unit.chargecost))
 					to_chat(user, "<span class='warning'>\The [src] doesn't have enough charge left to do that.</span>")
 					break
-				H.add_modifier(/datum/modifier/medbeameffect, 1 SECONDS)
 				var/lastier = medigun_base_unit.slaser.get_rating()
+				if(lastier >= 5)
+					H.add_modifier(/datum/modifier/medbeameffect, 2 SECONDS)
+
 				var/healmod = lastier
 				if(H.getBruteLoss())
-					healmod = round(min(lastier,medigun_base_unit.brutevol,H.getBruteLoss()))
-					if(medigun_base_unit.brutevol >= healmod)
+					healmod = round(min(lastier,medigun_base_unit.brutecharge,H.getBruteLoss()))
+					if(medigun_base_unit.brutecharge >= healmod)
 						H.adjustBruteLoss(-healmod)
-						medigun_base_unit.brutevol -= healmod
+						medigun_base_unit.brutecharge -= healmod
 						ishealing = 1
 				if(H.getFireLoss())
-					healmod = round(min(lastier,medigun_base_unit.burnvol,H.getFireLoss()))
-					if(medigun_base_unit.burnvol >= healmod)
+					healmod = round(min(lastier,medigun_base_unit.burncharge,H.getFireLoss()))
+					if(medigun_base_unit.burncharge >= healmod)
 						H.adjustFireLoss(-healmod)
-						medigun_base_unit.burnvol -= healmod
+						medigun_base_unit.burncharge -= healmod
 						ishealing = 1
 				if(H.getToxLoss())
-					healmod = round(min(lastier,medigun_base_unit.toxvol,H.getToxLoss()))
-					if(medigun_base_unit.toxvol >= healmod)
+					healmod = round(min(lastier,medigun_base_unit.toxcharge,H.getToxLoss()))
+					if(medigun_base_unit.toxcharge >= healmod)
 						H.adjustToxLoss(-healmod)
-						medigun_base_unit.toxvol -= healmod
+						medigun_base_unit.toxcharge -= healmod
 						ishealing = 1
-				if(medigun_base_unit.brutevol <= 0 || medigun_base_unit.burnvol <= 0 || medigun_base_unit.toxvol <= 0)
-					medigun_base_unit.update_icon()
-				if(medigun_base_unit.slaser.get_rating() >= 5)
-					var/treated = 0
-					for(var/obj/item/organ/external/E in H.organs)
-						var/obj/item/organ/external/O = E
-						for (var/datum/wound/W in O.wounds)
-							if (W.internal)
-								continue
-							if (W.bandaged && W.disinfected)
-								continue
-							if(!(O.is_bandaged()) && !(O.is_disinfected()))
-								if(medigun_base_unit.brutevol >= 1)
-									medigun_base_unit.brutevol -= 1
-									W.bandage()
-									W.disinfect()
-									O.update_damages()
-									treated = 1
-							if(!(O.is_salved()))
-								if(medigun_base_unit.burnvol >= 1)
-									medigun_base_unit.burnvol -= 1
-									O.salve()
-									treated = 1
-							if(treated)
-								break
+				var/treated = 0
+				for(var/name in list(BP_HEAD, BP_L_HAND, BP_R_HAND, BP_L_ARM, BP_R_ARM, BP_L_FOOT, BP_R_FOOT, BP_L_LEG, BP_R_LEG, BP_GROIN, BP_TORSO))
+					var/obj/item/organ/external/O = H.organs_by_name[name]
+					for(var/datum/wound/W in O.wounds)
+						if (W.internal)
+							continue
+						if (W.bandaged && W.disinfected)
+							continue
+						if (W.damage_type == BRUISE || W.damage_type == CUT || W.damage_type == PIERCE)
+							if(medigun_base_unit.brutecharge >= 1)
+								if(W.damage <= 1)
+									O.wounds -= W
+									medigun_base_unit.brutecharge -= 1
+								else
+									W.damage -= healmod
+									medigun_base_unit.brutecharge -= healmod
+								O.update_damages()
+								treated = 1
+						if (W.damage_type == BURN)
+							if(medigun_base_unit.burncharge >= 1)
+								if(W.damage <= 1)
+									O.wounds -= W
+									medigun_base_unit.burncharge -= 1
+								treated = 1
 						if(treated)
 							break
+				//if(medigun_base_unit.brutecharge <= 0 || medigun_base_unit.burncharge <= 0 || medigun_base_unit.toxcharge <= 0)
+				medigun_base_unit.update_icon()
+				//if(medigun_base_unit.slaser.get_rating() >= 5)
+
 				if(ishealing != washealing) // Either we stopped or started healing this cycle
 					if(ishealing)
 						target.filters += filter
