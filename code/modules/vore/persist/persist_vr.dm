@@ -84,7 +84,7 @@
 
 	//This one doesn't rely on persistence prefs
 	if(ishuman(occupant) && occupant.stat != DEAD)
-		persist_nif_data(occupant, prefs)
+		persist_nif_data(occupant)	//RS ADD
 
 	if(!prefs.persistence_settings)
 		return // Persistence disabled by preference settings
