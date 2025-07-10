@@ -68,7 +68,7 @@ export const MedigunParts = (props: { examineData: ExamineData }, context) => {
                 {scapacitor.rating >= 5
                   ? ' the cell will recharge from the local power grid, it also grants a heal charge capacity of '
                   : ' and grants a heal charge capacity of '}
-                + {scapacitor.tankmax + ' per type'}
+                {scapacitor.tankmax + ' per type'}
                 {'.'}
               </Box>
             ) : (
