@@ -15,7 +15,7 @@ export const Medigun = (props, context) => {
   tab[1] = <MedigunParts examineData={examine_data} />;
 
   return (
-    <Window width={450} height={460}>
+    <Window width={450} height={470}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
