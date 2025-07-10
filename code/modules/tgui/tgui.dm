@@ -245,11 +245,11 @@
  */
 /datum/tgui/proc/get_payload(custom_data, with_data, with_static_data)
 	var/list/json_data = list()
-	if(src.core_bundle == /datum/asset/simple/tguimodern)
+	if(src.core_bundle == /datum/asset/simple/tguimodern) //RS Edit: Split json_data to meet different interface requirements for different versions (Lira, July 2025)
 		json_data["config"] = list(
 			"title" = title,
 			"status" = status,
-			"interface" = list(
+			"interface" = list( // Port Virgo PR 17520
 				"name" = interface,
 				"layout" = null, // user.client.prefs.read_preference(/datum/preference/choiced/tgui_layout), // unused
 			),
