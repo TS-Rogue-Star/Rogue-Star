@@ -117,7 +117,7 @@
 	var/patienttoxloss = 0
 	var/patientoxyloss = 0
 	//var/minhealth = 0
-	if(scapacitor.get_rating() < 5)
+	if(scapacitor?.get_rating() < 5)
 		gridstatus = 3
 	if(H)
 		patientname = H
@@ -128,24 +128,36 @@
 		patienttoxloss = H.getToxLoss()
 		patientoxyloss = H.getOxyLoss()
 	var/list/data = list(
+		"maintenance" = maintenance,
 		"Generator" = charging,
 		"powerCellStatus" = bcell ? bcell.percent() : null,
 		"Gridstatus" = gridstatus,
-		"PhoronStatus" = sbin ? 100.0*(phoronvol/chemcap) : null,
-		"BrutehealCharge" = scapacitor ? 100.0*(brutecharge/tankmax) : null,
+		"PhoronStatus" = sbin ? phoronvol/chemcap : null,
+		"BrutehealCharge" = scapacitor ? brutecharge/tankmax : null,
 		"BrutehealVol" = sbin ? brutevol : null,
-		"BurnhealCharge" = scapacitor ? 100.0*(burncharge/tankmax) : null,
+		"BurnhealCharge" = scapacitor ? burncharge/tankmax : null,
 		"BurnhealVol" = sbin ? burnvol : null,
-		"ToxhealCharge" = scapacitor ? 100.0*(toxcharge/tankmax) : null,
+		"ToxhealCharge" = scapacitor ? toxcharge/tankmax : null,
 		"ToxhealVol" = sbin ? toxvol : null,
 		"patientname" = smodule ? patientname : null,
-		"patienthealth" = smodule ? 100 * patienthealth : null,
+		"patienthealth" = smodule ? patienthealth : null,
 		"patientbrute" = smodule ? patientbruteloss : null,
 		"patientburn" = smodule ? patientfireloss : null,
 		"patienttox" = smodule ? patienttoxloss : null,
-		"patientoxy" = smodule ? patientoxyloss : null
+		"patientoxy" = smodule ? patientoxyloss : null,
+		"examine_data" = get_examine_data()
 		)
 	return data
+
+
+/obj/item/device/medigun_backpack/proc/get_examine_data()
+	return list(
+		"smodule" = smodule ? list("name" = smodule.name, "range" = medigun.beam_range, "rating" = smodule.get_rating()) : null,
+		"smanipulator" = smanipulator ? list("name" = smanipulator.name, "rating" = smaniptier) : null,
+		"slaser" = slaser ? list("name" = slaser.name, "rating" = slaser.get_rating()) : null,
+		"scapacitor" = scapacitor ? list("name" = scapacitor.name, "chargecost" = chargecost, "tankmax" = tankmax, "rating" = scapacitor.get_rating()) : null,
+		"sbin" = sbin ? list("name" = sbin.name, "chemcap" = chemcap, "rating" = sbin.get_rating()) : null
+	)
 
 
 /obj/item/device/medigun_backpack/tgui_act(action, params)
@@ -158,61 +170,63 @@
 			ui_action_click()
 
 
-/obj/item/device/medigun_backpack/examine(mob/user)
+/obj/item/device/medigun_backpack/ShiftClick(mob/user)
 	. = ..()
+	if(!medigun)
+		return
 	tgui_interact(user)
+	/*
 	if(Adjacent(user))
 		if(maintenance)
 			. += "<span class='warning'>The Maintenance hatch is open.</span>"
 		if(bcell)
-			. += "<span class='notice'>The [bcell.name] is [round(bcell.percent())]% charged.</span>"
+			. += "<span class='notice'>The <u>[bcell.name]</u> is <u>[round(bcell.percent())]% charged</u>.</span>"
 		if(!bcell)
 			. += "<span class='warning'>It does not have a power source installed.</span>"
 		if(maintenance)
 			if(smodule)
 				if(smodule.get_rating() >= 5)
-					. += "<span class='notice'>It has a [smodule.name] installed, device will function within [medigun.beam_range] tiles and through walls.</span>"
+					. += "<span class='notice'>It has a [smodule.name] installed, device will function within <u>[medigun.beam_range] tiles and through walls</u>.</span>"
 				else
-					. += "<span class='notice'>It has a [smodule.name] installed, device will function within [medigun.beam_range] tiles.</span>"
+					. += "<span class='notice'>It has a [smodule.name] installed, device will function within <u>[medigun.beam_range] tiles</u>.</span>"
 			if(!smodule)
 				. += "<span class='warning'>It is missing a scanning module.</span>"
 
 			if(smanipulator)
 				if(smaniptier >=  5)
-					. += "<span class='notice'>It has a [smanipulator.name] installed, chem digitizing is now 125% Efficient.</span>"
+					. += "<span class='notice'>It has a <u>[smanipulator.name]</u> installed, chem digitizing is now <u>125% Efficient</u>.</span>"
 				else
-					. += "<span class='notice'>It has a [smanipulator.name] installed, chem digitizing is now [(smaniptier/4)*100]% Efficient.</span>"
+					. += "<span class='notice'>It has a <u>[smanipulator.name]</u> installed, chem digitizing is now <u>[(smaniptier/4)*100]% Efficient</u>.</span>"
 			if(!smanipulator)
 				. += "<span class='warning'>It is missing a manipulator.</span>"
 			if(slaser)
 				if(slaser.get_rating() >= 5)
-					. += "<span class='notice'>It has a [slaser.name] installed and can heal [slaser.get_rating()] damage per cycle, and will stop bleeding and pain while beam focused.</span>"
+					. += "<span class='notice'>It has a <u>[slaser.name]</u> installed and can heal <u>[slaser.get_rating()] damage per cycle, and will stop bleeding and pain</u> while beam focused.</span>"
 				else
-					. += "<span class='notice'>It has a [slaser.name] installed and can heal [slaser.get_rating()] damage per cycle.</span>"
+					. += "<span class='notice'>It has a <u>[slaser.name]</u> installed and can heal <u>[slaser.get_rating()] damage per cycle</u>.</span>"
 			if(!slaser)
 				. += "<span class='warning'>It is missing a laser.</span>"
 			if(scapacitor)
 				var/captier = scapacitor.get_rating()
 				if(captier < 5)
-					. += "<span class='notice'>It has a [scapacitor.name] installed, battery charge will now drain at [chargecost] per second, and grants a heal charge capacity of [tankmax] per type.</span>"
+					. += "<span class='notice'>It has a <u>[scapacitor.name]</u> installed, battery charge will now drain at <u>[chargecost] per second, and grants a heal charge capacity of [tankmax] per type</u>.</span>"
 				else
-					. += "<span class='notice'>It has a [scapacitor.name] installed, battery charge will now drain at [chargecost] per second, the cell will recharge from the local power grid, it also grants a heal charge capacity of [tankmax] per type.</span>"
+					. += "<span class='notice'>It has a <u>[scapacitor.name]</u> installed, battery charge will now drain at <u>[chargecost] per second, the cell will recharge from the local power grid, it also grants a heal charge capacity of [tankmax] per type</u>.</span>"
 			if(!scapacitor)
 				. += "<span class='warning'>It is missing a capacitor, you may not digitize chems.</span>"
 			if(sbin)
-				if(smodule.get_rating() >= 5)
-					. += "<span class='notice'>It has a [sbin.name] installed, can hold [chemcap] reserve chems, will slowly generate chems in exchange for power.</span>"
+				if(sbin.get_rating() >= 5)
+					. += "<span class='notice'>It has a <u>[sbin.name]</u> installed, can hold <u>[chemcap] reserve chems, will slowly generate chems in exchange for power</u>.</span>"
 				else
-					. += "<span class='notice'>It has a [sbin.name] installed, can hold [chemcap] reserve chems.</span>"
+					. += "<span class='notice'>It has a <u>[sbin.name]</u> installed, can hold <u>[chemcap] reserve chems</u>.</span>"
 			if(!sbin)
 				. += "<span class='warning'>It is missing a matter bin.</span>"
 		if(sbin && scapacitor)
-			. += "<span class='notice'>The <font color = 'red'>Bruteheal</font> charge meter reads, main:(<font color = 'red'>[brutecharge]</font> / <font color = 'red'>[tankmax]</font>) Reserve: (<font color = 'red'>[brutevol]</font> / <font color = 'red'>[chemcap]</font>)</span>"
-			. += "<span class='notice'>The <font color = '#FFA500'>Burnheal</font> charge meter reads, main:(<font color = '#FFA500'>[burncharge]</font> / <font color = '#FFA500'>[tankmax]</font>) Reserve: (<font color = '#FFA500'>[burnvol]</font> / <font color = '#FFA500'>[chemcap]</font>)</span>"
-			. += "<span class='notice'>The <font color = 'green'>Toxheal</font> charge meter reads, main:(<font color = 'green'>[toxcharge]</font> / <font color = 'green'>[tankmax]</font>) Reserve: (<font color = 'green'>[toxvol]</font> / <font color = 'green'>[chemcap]</font>)</span>"
+			. += "<span class='notice'>The <font color = 'red'>Bruteheal</font> charge meter reads, main: (<font color = 'red'>[brutecharge]</font> / <font color = 'red'>[tankmax]</font>) Reserve: (<font color = 'red'>[brutevol]</font> / <font color = 'red'>[chemcap]</font>)</span>"
+			. += "<span class='notice'>The <font color = '#FFA500'>Burnheal</font> charge meter reads, main: (<font color = '#FFA500'>[burncharge]</font> / <font color = '#FFA500'>[tankmax]</font>) Reserve: (<font color = '#FFA500'>[burnvol]</font> / <font color = '#FFA500'>[chemcap]</font>)</span>"
+			. += "<span class='notice'>The <font color = 'green'>Toxheal</font> charge meter reads, main: (<font color = 'green'>[toxcharge]</font> / <font color = 'green'>[tankmax]</font>) Reserve: (<font color = 'green'>[toxvol]</font> / <font color = 'green'>[chemcap]</font>)</span>"
 			. += "<span class='notice'>The <font color = '#e100ffad'>Phoron</font> tank meter reads: (<font color = '#e100ffad'>[phoronvol]</font> / <font color = '#e100ffad'>[chemcap]</font>)</span>"
-
-
+	*/
 
 /obj/item/device/medigun_backpack/proc/apc_charge()
 	gridstatus = 0
