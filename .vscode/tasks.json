@@ -46,6 +46,19 @@
 			],
 			"group": "build",
 			"label": "tgui: prettybuild"
+		},
+		{
+			"type": "shell",
+			"command": "tgui/bin/tgui",
+			"windows": {
+				"command": ".\\tguimodern\\bin\\tgui-prettybuild.bat"
+			},
+			"problemMatcher": [
+				"$tsc",
+				"$eslint-stylish"
+			],
+			"group": "build",
+			"label": "tguimodern: prettybuild"
 		}
 	]
 }
