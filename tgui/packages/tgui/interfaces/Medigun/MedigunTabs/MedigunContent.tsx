@@ -136,7 +136,7 @@ export const MedigunContent = (props, context) => {
                 <Stack.Item>
                   {data.patientname !== 'No Target' && (
                     <Stack>
-                      <Stack.Item width="35%">
+                      <Stack.Item width="200px">
                         <LabeledList>
                           <LabeledList.Item label="Brute Damage">
                             <Box color="red">{patientbrute}</Box>
