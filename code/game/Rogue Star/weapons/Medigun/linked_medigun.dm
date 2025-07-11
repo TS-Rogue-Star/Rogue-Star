@@ -108,7 +108,7 @@
 		to_chat(user, span_warning("\The [src] is already targeting something."))
 		return
 
-	if(!isliving(target))
+	if(!ishuman(target))
 		return
 
 	if(!medigun_base_unit.smanipulator)
@@ -147,79 +147,78 @@
 	var/filter = filter(type = "outline", size = 1, color = "#037ffc")
 	var/list/box_segments = list()
 	playsound(src, 'sound/weapons/wave.ogg', 50)
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		to_chat(user, span_notice("Locking on to [H]"))
-		to_chat(H, span_warning("[user] is targetting you with their medigun"))
-		if(user.client)
-			box_segments = draw_box(target, beam_range, user.client)
-			color_box(box_segments, "#037ffc", 5)
-		var/ishealing = 0
-		while(!should_stop(H, user, user.get_active_hand()))
-			if(do_after(user, 10, ignore_movement = 1))
-				var/washealing = ishealing // Did we heal last cycle
-				ishealing = 0 // The default is 'we didn't heal this cycle'
-				if(!checked_use(medigun_base_unit.chargecost))
-					to_chat(user, span_warning("\The [src] doesn't have enough charge left to do that."))
-					break
-				var/lastier = medigun_base_unit.slaser.get_rating()
-				if(lastier >= 5)
-					H.add_modifier(/datum/modifier/medbeameffect, 2 SECONDS)
+	var/mob/living/carbon/human/H = target
+	to_chat(user, span_notice("Locking on to [H]"))
+	to_chat(H, span_warning("[user] is targetting you with their medigun"))
+	if(user.client)
+		box_segments = draw_box(target, beam_range, user.client)
+		color_box(box_segments, "#037ffc", 5)
+	var/ishealing = 0
+	while(!should_stop(H, user, user.get_active_hand()))
+		if(do_after(user, 10, ignore_movement = 1))
+			var/washealing = ishealing // Did we heal last cycle
+			ishealing = 0 // The default is 'we didn't heal this cycle'
+			if(!checked_use(medigun_base_unit.chargecost))
+				to_chat(user, span_warning("\The [src] doesn't have enough charge left to do that."))
+				break
+			var/lastier = medigun_base_unit.slaser.get_rating()
+			if(lastier >= 5)
+				H.add_modifier(/datum/modifier/medbeameffect, 2 SECONDS)
 
-				var/healmod = lastier
-				if(H.getBruteLoss())
-					healmod = round(min(lastier,medigun_base_unit.brutecharge,H.getBruteLoss()))
-					if(medigun_base_unit.brutecharge >= healmod)
-						H.adjustBruteLoss(-healmod)
-						medigun_base_unit.brutecharge -= healmod
-						ishealing = 1
-				if(H.getFireLoss())
-					healmod = round(min(lastier,medigun_base_unit.burncharge,H.getFireLoss()))
-					if(medigun_base_unit.burncharge >= healmod)
-						H.adjustFireLoss(-healmod)
-						medigun_base_unit.burncharge -= healmod
-						ishealing = 1
-				if(H.getToxLoss())
-					healmod = round(min(lastier,medigun_base_unit.toxcharge,H.getToxLoss()))
-					if(medigun_base_unit.toxcharge >= healmod)
-						H.adjustToxLoss(-healmod)
-						medigun_base_unit.toxcharge -= healmod
-						ishealing = 1
-				var/treated = 0
-				for(var/name in list(BP_HEAD, BP_L_HAND, BP_R_HAND, BP_L_ARM, BP_R_ARM, BP_L_FOOT, BP_R_FOOT, BP_L_LEG, BP_R_LEG, BP_GROIN, BP_TORSO))
-					var/obj/item/organ/external/O = H.organs_by_name[name]
-					for(var/datum/wound/W in O.wounds)
-						if (W.internal)
-							continue
-						if (W.bandaged && W.disinfected)
-							continue
-						if (W.damage_type == BRUISE || W.damage_type == CUT || W.damage_type == PIERCE)
-							if(medigun_base_unit.brutecharge >= 1)
-								if(W.damage <= 1)
-									O.wounds -= W
-									medigun_base_unit.brutecharge -= 1
-								else
-									W.damage -= healmod
-									medigun_base_unit.brutecharge -= healmod
-								O.update_damages()
-								treated = 1
-						if (W.damage_type == BURN)
-							if(medigun_base_unit.burncharge >= 1)
-								if(W.damage <= 1)
-									O.wounds -= W
-									medigun_base_unit.burncharge -= 1
-								treated = 1
-						if(treated)
-							break
-				//if(medigun_base_unit.brutecharge <= 0 || medigun_base_unit.burncharge <= 0 || medigun_base_unit.toxcharge <= 0)
-				medigun_base_unit.update_icon()
-				//if(medigun_base_unit.slaser.get_rating() >= 5)
+			var/healmod = lastier
+			if(H.getBruteLoss())
+				healmod = round(min(lastier,medigun_base_unit.brutecharge,H.getBruteLoss()))
+				if(medigun_base_unit.brutecharge >= healmod)
+					H.adjustBruteLoss(-healmod)
+					medigun_base_unit.brutecharge -= healmod
+					ishealing = 1
+			if(H.getFireLoss())
+				healmod = round(min(lastier,medigun_base_unit.burncharge,H.getFireLoss()))
+				if(medigun_base_unit.burncharge >= healmod)
+					H.adjustFireLoss(-healmod)
+					medigun_base_unit.burncharge -= healmod
+					ishealing = 1
+			if(H.getToxLoss())
+				healmod = round(min(lastier,medigun_base_unit.toxcharge,H.getToxLoss()))
+				if(medigun_base_unit.toxcharge >= healmod)
+					H.adjustToxLoss(-healmod)
+					medigun_base_unit.toxcharge -= healmod
+					ishealing = 1
+			var/treated = 0
+			for(var/name in list(BP_HEAD, BP_L_HAND, BP_R_HAND, BP_L_ARM, BP_R_ARM, BP_L_FOOT, BP_R_FOOT, BP_L_LEG, BP_R_LEG, BP_GROIN, BP_TORSO))
+				var/obj/item/organ/external/O = H.organs_by_name[name]
+				for(var/datum/wound/W in O.wounds)
+					if (W.internal)
+						continue
+					if (W.bandaged && W.disinfected)
+						continue
+					if (W.damage_type == BRUISE || W.damage_type == CUT || W.damage_type == PIERCE)
+						if(medigun_base_unit.brutecharge >= 1)
+							if(W.damage <= 1)
+								O.wounds -= W
+								medigun_base_unit.brutecharge -= 1
+							else
+								W.damage -= healmod
+								medigun_base_unit.brutecharge -= healmod
+							O.update_damages()
+							treated = 1
+					if (W.damage_type == BURN)
+						if(medigun_base_unit.burncharge >= 1)
+							if(W.damage <= 1)
+								O.wounds -= W
+								medigun_base_unit.burncharge -= 1
+							treated = 1
+					if(treated)
+						break
+			//if(medigun_base_unit.brutecharge <= 0 || medigun_base_unit.burncharge <= 0 || medigun_base_unit.toxcharge <= 0)
+			medigun_base_unit.update_icon()
+			//if(medigun_base_unit.slaser.get_rating() >= 5)
 
-				if(ishealing != washealing) // Either we stopped or started healing this cycle
-					if(ishealing)
-						target.filters += filter
-					else
-						target.filters -= filter
+			if(ishealing != washealing) // Either we stopped or started healing this cycle
+				if(ishealing)
+					target.filters += filter
+				else
+					target.filters -= filter
 
 	busy = FALSE
 	current_target = null
