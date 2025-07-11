@@ -75,7 +75,7 @@ export const MedigunParts = (props: { examineData: ExamineData }, context) => {
               <Box color="red">Missing</Box>
             )}
           </LabeledList.Item>
-          <LabeledList.Item label="Capacitor">
+          <LabeledList.Item label="Matter Bin">
             {sbin ? (
               <Box>
                 {'It has a ' +
