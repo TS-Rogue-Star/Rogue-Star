@@ -65,7 +65,7 @@
 			return TRUE
 
 		if("rem_smodule")
-			if(!smodule)
+			if(!smodule || !maintenance)
 				return FALSE
 			smodule.forceMove(get_turf(loc))
 			smodule = null
@@ -74,7 +74,7 @@
 			return TRUE
 
 		if("rem_mani")
-			if(!smanipulator)
+			if(!smanipulator || !maintenance)
 				return FALSE
 			STOP_PROCESSING(SSobj, src)
 			smanipulator.forceMove(get_turf(loc))
@@ -85,7 +85,7 @@
 			return TRUE
 
 		if("rem_laser")
-			if(!slaser)
+			if(!slaser || !maintenance)
 				return FALSE
 			slaser.forceMove(get_turf(loc))
 			slaser = null
@@ -94,7 +94,7 @@
 			return TRUE
 
 		if("rem_cap")
-			if(!slaser)
+			if(!scapacitor || !maintenance)
 				return FALSE
 			STOP_PROCESSING(SSobj, src)
 			scapacitor.forceMove(get_turf(loc))
@@ -104,7 +104,7 @@
 			return TRUE
 
 		if("rem_bin")
-			if(!sbin)
+			if(!sbin || !maintenance)
 				return FALSE
 			STOP_PROCESSING(SSobj, src)
 			sbin.forceMove(get_turf(loc))
