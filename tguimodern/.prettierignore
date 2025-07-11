@@ -13,6 +13,8 @@
 **/*.json
 **/*.yml
 **/*.md
+**/*.cjs
+**/*.mts
 
 # Avoid running on any bundles.
 /public/**/*
