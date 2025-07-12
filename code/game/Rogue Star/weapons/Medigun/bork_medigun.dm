@@ -85,6 +85,7 @@
 		var/x_displacement = (-box_size * our_icon_size) + pixel_x_correction
 		var/y_displacement = (-box_size * our_icon_size) + (our_icon_size * i) + pixel_y_correction
 		our_box += draw_line(A, WEST, x_displacement, y_displacement, C)
+	return our_box
 
 // Draws an individual segment of the box.
 /obj/item/device/bork_medigun/proc/draw_line(atom/A, line_dir, line_pixel_x, line_pixel_y, client/C)
