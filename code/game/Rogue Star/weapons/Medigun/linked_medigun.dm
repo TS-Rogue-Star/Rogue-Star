@@ -56,7 +56,7 @@
 		busy = !busy
 
 /obj/item/device/bork_medigun/linked/proc/should_stop(var/mob/living/target, var/mob/living/user, var/active_hand)
-	if(!target || !user || !active_hand || !istype(target) || !istype(user) || !busy)
+	if(!target || !user || (!active_hand && medigun_base_unit.is_twohanded()) || !istype(target) || !istype(user) || !busy)
 		return TRUE
 
 	if((user.get_active_hand() != active_hand || wielded == 0) && medigun_base_unit.is_twohanded())
