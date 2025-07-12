@@ -2,6 +2,7 @@ import { BooleanLike } from '../../../common/react';
 
 export type Data = {
   maintenance: BooleanLike;
+  tankmax: number;
   Generator: number;
   Gridstatus: number;
   powerCellStatus: number | null;

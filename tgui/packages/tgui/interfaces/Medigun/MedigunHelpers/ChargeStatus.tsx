@@ -5,18 +5,21 @@ export const ChargeStatus = (
     name: string;
     color: string;
     charge: number | null;
+    max: number | null;
     volume: number | null;
   },
   context
 ) => {
-  const { name, color, charge, volume } = props;
+  const { name, color, charge, max, volume } = props;
 
   return (
     <LabeledList.Item label={name}>
       <Stack>
         <Stack.Item grow>
           {charge !== null ? (
-            <ProgressBar color={color} value={charge} />
+            <ProgressBar color={color} value={charge / (max || 1)}>
+              {charge} / {max}
+            </ProgressBar>
           ) : (
             <Box color="red">Missing Capacitor</Box>
           )}

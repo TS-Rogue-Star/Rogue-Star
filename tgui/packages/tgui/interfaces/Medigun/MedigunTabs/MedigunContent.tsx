@@ -10,6 +10,7 @@ export const MedigunContent = (props, context) => {
 
   const {
     maintenance,
+    tankmax,
     Generator,
     Gridstatus,
     powerCellStatus,
@@ -88,18 +89,21 @@ export const MedigunContent = (props, context) => {
               name="Brute Charge"
               color="bad"
               charge={BrutehealCharge}
+              max={tankmax}
               volume={BrutehealVol}
             />
             <ChargeStatus
               name="Burn Charge"
               color="average"
               charge={BurnhealCharge}
+              max={tankmax}
               volume={BurnhealVol}
             />
             <ChargeStatus
               name="Tox Charge"
               color="good"
               charge={ToxhealCharge}
+              max={tankmax}
               volume={ToxhealVol}
             />
           </LabeledList>
@@ -117,7 +121,20 @@ export const MedigunContent = (props, context) => {
                 <Stack.Item>
                   <LabeledList>
                     <LabeledList.Item label="Name">
-                      {patientname || 'None'}
+                      {patientname ? (
+                        <Stack>
+                          <Stack.Item grow>{patientname}</Stack.Item>
+                          <Stack.Item>
+                            <Button
+                              color="red"
+                              onClick={() => act('cancel_healing')}>
+                              Stop Healing
+                            </Button>
+                          </Stack.Item>
+                        </Stack>
+                      ) : (
+                        'No Target'
+                      )}
                     </LabeledList.Item>
                     {data.patientname !== 'No Target' && (
                       <LabeledList.Item label="Total Health">

@@ -6,7 +6,7 @@
 
 /obj/item/device/medigun_backpack/tgui_data(mob/user)
 	var/mob/living/carbon/human/H = medigun.current_target
-	var/patientname = "No Target"
+	var/patientname
 	var/patienthealth = 0
 	var/patientbruteloss = 0
 	var/patientfireloss = 0
@@ -26,14 +26,15 @@
 	var/list/data = list(
 		"maintenance" = maintenance,
 		"Generator" = charging,
+		"tankmax" = tankmax,
 		"powerCellStatus" = bcell ? bcell.percent() : null,
 		"Gridstatus" = gridstatus,
 		"PhoronStatus" = sbin ? phoronvol/chemcap : null,
-		"BrutehealCharge" = scapacitor ? brutecharge/tankmax : null,
+		"BrutehealCharge" = scapacitor ? brutecharge : null,
 		"BrutehealVol" = sbin ? brutevol : null,
-		"BurnhealCharge" = scapacitor ? burncharge/tankmax : null,
+		"BurnhealCharge" = scapacitor ? burncharge : null,
 		"BurnhealVol" = sbin ? burnvol : null,
-		"ToxhealCharge" = scapacitor ? toxcharge/tankmax : null,
+		"ToxhealCharge" = scapacitor ? toxcharge : null,
 		"ToxhealVol" = sbin ? toxvol : null,
 		"patientname" = smodule ? patientname : null,
 		"patienthealth" = smodule ? patienthealth : null,
@@ -63,6 +64,11 @@
 		if("gentoggle")
 			ui_action_click()
 			return TRUE
+
+		if("cancel_healing")
+			if(medigun)
+				medigun.busy = FALSE
+				return TRUE
 
 		if("rem_smodule")
 			if(!smodule || !maintenance)
