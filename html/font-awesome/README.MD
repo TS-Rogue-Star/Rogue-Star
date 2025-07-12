@@ -2,3 +2,5 @@ Due to the fact browse_rsc can't create subdirectories, every time you update fo
 are correct eg ../webfonts/fa-regular-400.ttf => fa-regular-400.ttf (or whatever you call it in asset datum)
 
 Finally, removing brand related css. You can do this by formatting the css, removing them manually (or some regex?) and then minifying it.
+
+Current version is 6.7.2.  Port of TGStation PR88791.  Font Awesome licence included in the accompanying LICENSE.txt file.

@@ -174,7 +174,7 @@
 		"fa-v4compatibility.ttf" = 'html/font-awesome/webfonts/fa-v4compatibility.ttf',
 		"font-awesome.css"    = 'html/font-awesome/css/all.min.css',
 		"v4shim.css"          = 'html/font-awesome/css/v4-shims.min.css'
-	)
+	) //RS Edit: Changes Font Awesome files as part of upgrade to 5.14.0 to 6.7.2  Port of TGStation PR88791 (Lira, July 2025)
 
 /datum/asset/simple/tgfont
 	assets = list(
