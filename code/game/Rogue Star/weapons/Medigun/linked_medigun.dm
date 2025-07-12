@@ -53,10 +53,10 @@
 	if(medigun_base_unit.is_twohanded())
 		update_twohanding()
 	if(busy)
-		busy = !busy
+		busy = MEDIGUN_CANCELLED
 
 /obj/item/device/bork_medigun/linked/proc/should_stop(var/mob/living/target, var/mob/living/user, var/active_hand)
-	if(!target || !user || (!active_hand && medigun_base_unit.is_twohanded()) || !istype(target) || !istype(user) || !busy)
+	if(!target || !user || (!active_hand && medigun_base_unit.is_twohanded()) || !istype(target) || !istype(user) || busy < MEDIGUN_BUSY)
 		return TRUE
 
 	if((user.get_active_hand() != active_hand || wielded == 0) && medigun_base_unit.is_twohanded())
@@ -131,7 +131,7 @@
 		return
 
 	if(target == current_target && busy)
-		busy = FALSE
+		busy = MEDIGUN_CANCELLED
 		return
 	if(target == user)
 		to_chat(user, span_warning("Cant heal yourself."))
@@ -141,7 +141,7 @@
 		return
 
 	current_target = target
-	busy = TRUE
+	busy = MEDIGUN_BUSY
 	update_icon()
 	var/datum/beam/scan_beam = user.Beam(target, icon = 'code/game/Rogue Star/icons/itemicons/borkmedigun.dmi', icon_state = "medbeam_basic", time = 6000)
 	var/filter = filter(type = "outline", size = 1, color = "#037ffc")
@@ -220,7 +220,8 @@
 				else
 					target.filters -= filter
 
-	busy = FALSE
+	action_cancelled = FALSE
+	busy = MEDIGUN_IDLE
 	current_target = null
 
 	// Now clean up the effects.

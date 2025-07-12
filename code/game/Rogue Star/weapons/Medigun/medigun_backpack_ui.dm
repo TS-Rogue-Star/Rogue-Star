@@ -66,8 +66,8 @@
 			return TRUE
 
 		if("cancel_healing")
-			if(medigun)
-				medigun.busy = FALSE
+			if(medigun?.busy)
+				medigun.busy = MEDIGUN_CANCELLED
 				return TRUE
 
 		if("rem_smodule")

@@ -116,7 +116,7 @@
 			adjust_toxvol(smaniptier * 2)
 			icon_needs_update = TRUE
 		//Alien tier
-		if(sbintier >= 5 && medigun.busy == 0  && (bcell.charge >= 10))
+		if(sbintier >= 5 && medigun.busy == MEDIGUN_IDLE && (bcell.charge >= 10))
 			if(brutevol < chemcap && (bcell.checked_use(10)))
 				icon_needs_update = TRUE
 				brutevol ++
@@ -492,7 +492,7 @@
 		if(!medigun)
 			return
 		if(medigun.busy)
-			medigun.busy = FALSE
+			medigun.busy = MEDIGUN_IDLE
 		replace_icon()
 		user.update_inv_back()
 		if(ismob(medigun.loc))

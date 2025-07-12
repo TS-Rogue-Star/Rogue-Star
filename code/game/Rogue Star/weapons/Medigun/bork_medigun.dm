@@ -1,3 +1,7 @@
+#define MEDIGUN_IDLE 0
+#define MEDIGUN_CANCELLED 1
+#define MEDIGUN_BUSY 2
+
 /obj/item/device/bork_medigun
 	name = "Bork Medical Beam Disperser"
 	desc = "A highly advanced beam gun, designed for progressive and gradual healing of damaged tissue."
@@ -12,7 +16,8 @@
 	w_class = ITEMSIZE_HUGE
 	force = 0
 	var/beam_range = 3 // How many tiles away it can scan. Changing this also changes the box size.
-	var/busy = FALSE // Set to true when scanning, to stop multiple scans.
+	var/busy = MEDIGUN_IDLE // Set to true when scanning, to stop multiple scans.
+	var/action_cancelled = FALSE
 	var/wielded = FALSE
 	var/current_target
 	var/mgcmo
