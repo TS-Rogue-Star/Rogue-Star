@@ -24,7 +24,7 @@ export const ChargeStatus = (
         <Stack.Item>
           <Box color="label">Reserve:</Box>
         </Stack.Item>
-        <Stack.Item>
+        <Stack.Item basis="10%">
           {volume !== null ? (
             <Box color={color} bold>
               {volume}
