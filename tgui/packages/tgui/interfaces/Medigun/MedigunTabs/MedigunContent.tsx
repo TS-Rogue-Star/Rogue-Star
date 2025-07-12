@@ -136,7 +136,7 @@ export const MedigunContent = (props, context) => {
                         'No Target'
                       )}
                     </LabeledList.Item>
-                    {data.patientname !== 'No Target' && (
+                    {!!data.patientname && (
                       <LabeledList.Item label="Total Health">
                         <ProgressBar
                           ranges={{
