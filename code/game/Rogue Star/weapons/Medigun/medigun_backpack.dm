@@ -38,6 +38,7 @@
 	var/sbintier = 1
 	var/gridstatus = 0
 	var/chargecap = 1000
+	var/kenzie = 0
 
 //backpack item
 /obj/item/device/medigun_backpack/cmo
@@ -176,15 +177,29 @@
 		add_overlay(image('code/game/Rogue Star/icons/itemicons/borkmedigun.dmi', "orangestrike-blink"))
 
 /obj/item/device/medigun_backpack/proc/replace_icon(inhand)
+	var/special = null
+	if(kenzie)
+		special = "-kenzie"
 	if(inhand)
-		icon_state = "mg-backpack-deployed"
-		item_state = "mg-backpack-deployed-onmob"
+		icon_state = "mg-backpack-deployed[special]"
+		item_state = "mg-backpack-deployed-onmob[special]"
+		if(is_twohanded())
+			medigun.icon_state = "medblaster[special]"
+			medigun.base_icon_state = "medblaster[special]"
+			medigun.wielded_item_state = "medblaster[special]-wielded"
+			medigun.update_icon()
+		else
+			medigun.icon_state = "medblaster_cmo[special]"
+			medigun.base_icon_state = "medblaster_cmo[special]"
+			medigun.wielded_item_state = ""
+			medigun.update_icon()
 	else if(is_twohanded())
-		icon_state = "mg-backpack"
-		item_state = "mg-backpack-onmob"
+		icon_state = "mg-backpack[special]"
+		item_state = "mg-backpack-onmob[special]"
 	else
-		icon_state = "mg-backpack_cmo"
-		item_state = "mg-backpack_cmo-onmob"
+		icon_state = "mg-backpack_cmo[special]"
+		item_state = "mg-backpack_cmo-onmob[special]"
+
 	update_icon()
 
 /obj/item/device/medigun_backpack/Initialize(mapload)
@@ -221,6 +236,19 @@
 	QDEL_NULL(slaser)
 	. = ..()
 
+/obj/item/device/medigun_backpack/equipped(var/mob/user, var/slot)
+
+	//to_chat(world, span_notice("bark [user.real_name] \ [slot] \ [user.ckey]"))
+	if(slot == slot_back || slot == slot_s_store)
+		if(user.real_name == "Kenzie Houser" && user.ckey == "memewuff")
+			kenzie = 1
+			to_chat(user, span_notice("Epic Lasagna Wolf Detected, Engaging BAD ASS MODE."))
+		else
+			kenzie = 0
+			//to_chat(world, span_notice("Not Kenzie"))
+		replace_icon()
+	..()
+
 /obj/item/device/medigun_backpack/ui_action_click()
 	if(charging)
 		to_chat(usr, span_notice("You disable the phoron generator."))
@@ -240,6 +268,10 @@
 		bcell.emp_act(severity)
 
 /obj/item/device/medigun_backpack/attack_hand(mob/user)
+	if(maintenance)
+		maintenance = 0
+		to_chat(user, span_notice("You close the maintenance hatch on \the [src]."))
+		return
 	if(loc == user)
 		toggle_medigun()
 		return
@@ -399,7 +431,9 @@
 /obj/item/device/medigun_backpack/proc/refill_reagent(var/obj/item/weapon/container, mob/user)
 	if(!maintenance && (istype(container, /obj/item/weapon/reagent_containers/glass/beaker) || istype(container, /obj/item/weapon/reagent_containers/glass/bottle)))
 
-		playsound(src, 'sound/weapons/empty.ogg', 50, 1)
+		if(!(container.flags & OPENCONTAINER))
+			to_chat(user, span_warning("You need to open the [container] first!"))
+			return
 		var/reagentwhitelist = list("bicaridine", "anti_toxin", "kelotane", "dermaline", "phoron")//, "tricordrazine")
 
 		for(var/G in container.reagents.reagent_list)
@@ -490,6 +524,7 @@
 					if(R.id != "tricordrazine")
 						to_chat(user, span_notice("You add [totransfer / modifier] units of [R.name] to the [src]. \n The [src] stores [round(totransfer)] U of [name]."))
 					container.reagents.remove_reagent(R.id, totransfer / modifier)
+					playsound(src, 'sound/weapons/empty.ogg', 50, 1)
 				update_icon()
 				return TRUE
 	return FALSE
@@ -502,17 +537,14 @@
 
 	if((slot_flags & SLOT_BACK) && M.get_equipped_item(slot_back) == src)
 		return TRUE
-	if((slot_flags & SLOT_BELT) && M.get_equipped_item(slot_belt) == src)
-		return TRUE
 	if((slot_flags & SLOT_BACK) && M.get_equipped_item(slot_s_store) == src)
 		return TRUE
-	if((slot_flags & SLOT_BELT) && M.get_equipped_item(slot_s_store) == src)
-		return TRUE
-
 	return FALSE
 
 /obj/item/device/medigun_backpack/dropped(mob/user)
 	..()
+	kenzie = 0
+	replace_icon()
 	reattach_medigun(user) //medigun attached to a base unit should never exist outside of their base unit or the mob equipping the base unit
 
 /obj/item/device/medigun_backpack/proc/reattach_medigun(mob/user)

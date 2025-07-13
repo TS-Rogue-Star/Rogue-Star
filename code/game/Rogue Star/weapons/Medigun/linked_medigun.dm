@@ -143,8 +143,13 @@
 	current_target = target
 	busy = MEDIGUN_BUSY
 	update_icon()
-	var/datum/beam/scan_beam = user.Beam(target, icon = 'code/game/Rogue Star/icons/itemicons/borkmedigun.dmi', icon_state = "medbeam_basic", time = 6000)
-	var/filter = filter(type = "outline", size = 1, color = "#037ffc")
+	var/myicon = "medbeam_basic"
+	var/mycolor = "#037ffc"
+	if(medigun_base_unit.kenzie)
+		myicon = "medbeam_basic_kenzie"
+		mycolor = "#8a18ad"
+	var/datum/beam/scan_beam = user.Beam(target, icon = 'code/game/Rogue Star/icons/itemicons/borkmedigun.dmi', icon_state = myicon, time = 6000)
+	var/filter = filter(type = "outline", size = 1, color = mycolor)
 	var/list/box_segments = list()
 	playsound(src, 'sound/weapons/wave.ogg', 50)
 	var/mob/living/carbon/human/H = target
@@ -152,7 +157,7 @@
 	to_chat(H, span_warning("[user] is targetting you with their medigun"))
 	if(user.client)
 		box_segments = draw_box(target, beam_range, user.client)
-		color_box(box_segments, "#037ffc", 5)
+		color_box(box_segments, mycolor, 5)
 	var/ishealing = 0
 	while(!should_stop(H, user, user.get_active_hand()))
 		if(do_after(user, 10, ignore_movement = 1))
