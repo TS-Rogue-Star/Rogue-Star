@@ -28,9 +28,13 @@ export type ExamineData = {
   slaser: { name: string; rating: number } | null;
   scapacitor: {
     name: string;
-    chargecost: number;
+    chargecap: number;
+    rating: number;
+  } | null;
+  sbin: {
+    name: string;
+    chemcap: number;
     tankmax: number;
     rating: number;
   } | null;
-  sbin: { name: string; chemcap: number; rating: number } | null;
 };

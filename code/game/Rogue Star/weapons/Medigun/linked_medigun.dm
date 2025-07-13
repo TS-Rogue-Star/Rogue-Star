@@ -123,7 +123,7 @@
 	if(!medigun_base_unit.smodule)
 		to_chat(user, span_warning("\The [src] Blinks a pink error light, scanning module missing."))
 		return
-	if(!checked_use(medigun_base_unit.chargecost))
+	if(!check_charge(5))
 		to_chat(user, span_warning("\The [src] doesn't have enough charge left to do that."))
 		return
 	if(get_dist(target, user) > beam_range)
@@ -158,7 +158,7 @@
 		if(do_after(user, 10, ignore_movement = 1))
 			var/washealing = ishealing // Did we heal last cycle
 			ishealing = 0 // The default is 'we didn't heal this cycle'
-			if(!checked_use(medigun_base_unit.chargecost))
+			if(!checked_use(5))
 				to_chat(user, span_warning("\The [src] doesn't have enough charge left to do that."))
 				break
 			var/lastier = medigun_base_unit.slaser.get_rating()
@@ -167,23 +167,48 @@
 
 			var/healmod = lastier
 			if(H.getBruteLoss())
-				healmod = round(min(lastier,medigun_base_unit.brutecharge,H.getBruteLoss()))
-				if(medigun_base_unit.brutecharge >= healmod)
-					H.adjustBruteLoss(-healmod)
-					medigun_base_unit.brutecharge -= healmod
-					ishealing = 1
+				healmod = min(lastier,medigun_base_unit.brutecharge,H.getBruteLoss())
+				if(medigun_base_unit.brutecharge >= round(healmod))
+					if(!checked_use(healmod))
+						to_chat(user, span_warning("\The [src] doesn't have enough charge left to do that."))
+						break
+					if(healmod < 0)
+						healmod = 0
+					else
+						H.adjustBruteLoss(-healmod)
+						medigun_base_unit.brutecharge -= round(healmod)
+						ishealing = 1
 			if(H.getFireLoss())
-				healmod = round(min(lastier,medigun_base_unit.burncharge,H.getFireLoss()))
-				if(medigun_base_unit.burncharge >= healmod)
-					H.adjustFireLoss(-healmod)
-					medigun_base_unit.burncharge -= healmod
-					ishealing = 1
+				healmod = min(lastier,medigun_base_unit.burncharge,H.getFireLoss())
+				if(medigun_base_unit.burncharge >= round(healmod))
+					if(!checked_use(healmod))
+						to_chat(user, span_warning("\The [src] doesn't have enough charge left to do that."))
+						break
+					if(healmod < 0)
+						healmod = 0
+					else
+						H.adjustFireLoss(-healmod)
+						medigun_base_unit.burncharge -= round(healmod)
+						ishealing = 1
 			if(H.getToxLoss())
-				healmod = round(min(lastier,medigun_base_unit.toxcharge,H.getToxLoss()))
-				if(medigun_base_unit.toxcharge >= healmod)
-					H.adjustToxLoss(-healmod)
-					medigun_base_unit.toxcharge -= healmod
-					ishealing = 1
+				healmod = min(lastier,medigun_base_unit.toxcharge,H.getToxLoss())
+				if(medigun_base_unit.toxcharge >= round(healmod))
+					if(!checked_use(healmod))
+						to_chat(user, span_warning("\The [src] doesn't have enough charge left to do that."))
+						break
+					if(healmod < 0)
+						healmod = 0
+					else
+						H.adjustToxLoss(-healmod)
+						medigun_base_unit.toxcharge -= round(healmod)
+						ishealing = 1
+			if(H.getOxyLoss())
+				healmod = min(10*lastier,H.getOxyLoss())
+				if(!checked_use(min(10,healmod)))
+					to_chat(user, span_warning("\The [src] doesn't have enough charge left to do that."))
+					break
+				H.adjustOxyLoss(-healmod)
+				ishealing = 1
 			var/treated = 0
 			for(var/name in list(BP_HEAD, BP_L_HAND, BP_R_HAND, BP_L_ARM, BP_R_ARM, BP_L_FOOT, BP_R_FOOT, BP_L_LEG, BP_R_LEG, BP_GROIN, BP_TORSO))
 				var/obj/item/organ/external/O = H.organs_by_name[name]

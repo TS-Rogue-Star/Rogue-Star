@@ -92,13 +92,13 @@ export const MedigunParts = (
                   <Box>
                     {'It has a ' +
                       scapacitor.name +
-                      ' installed, battery charge will now drain at ' +
-                      scapacitor.chargecost +
-                      ' per second '}
+                      ' installed, battery Capacity is now ' +
+                      scapacitor.chargecap +
+                      ' Units '}
                     {scapacitor.rating >= 5
-                      ? ' the cell will recharge from the local power grid, it also grants a heal charge capacity of '
-                      : ' and grants a heal charge capacity of '}
-                    {scapacitor.tankmax + ' per type'}
+                      ? ' the cell will recharge from the local power grid'
+                      : ''}
+                    {''}
                     {'.'}
                   </Box>
                 )
@@ -117,12 +117,13 @@ export const MedigunParts = (
                     {'It has a ' +
                       sbin.name +
                       ' installed, can hold ' +
+                      sbin.tankmax +
+                      ' charge and ' +
                       sbin.chemcap +
                       ' reserve chems '}
                     {sbin.rating >= 5
-                      ? 'and will slowly generate chems in exchange for power'
-                      : undefined}
-                    {'.'}
+                      ? 'and will slowly generate chems in exchange for power.'
+                      : '.'}
                   </Box>
                 )
               ) : (

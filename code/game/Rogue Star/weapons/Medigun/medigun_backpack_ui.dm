@@ -51,8 +51,8 @@
 		"smodule" = smodule ? list("name" = smodule.name, "range" = medigun.beam_range, "rating" = smodule.get_rating()) : null,
 		"smanipulator" = smanipulator ? list("name" = smanipulator.name, "rating" = smaniptier) : null,
 		"slaser" = slaser ? list("name" = slaser.name, "rating" = slaser.get_rating()) : null,
-		"scapacitor" = scapacitor ? list("name" = scapacitor.name, "chargecost" = chargecost, "tankmax" = tankmax, "rating" = scapacitor.get_rating()) : null,
-		"sbin" = sbin ? list("name" = sbin.name, "chemcap" = chemcap, "rating" = sbin.get_rating()) : null
+		"scapacitor" = scapacitor ? list("name" = scapacitor.name, "chargecap" = chargecap, "rating" = scapacitor.get_rating()) : null,
+		"sbin" = sbin ? list("name" = sbin.name, "chemcap" = chemcap, "tankmax" = tankmax, "rating" = sbin.get_rating()) : null
 	)
 
 /obj/item/device/medigun_backpack/tgui_act(action, params, datum/tgui/ui)

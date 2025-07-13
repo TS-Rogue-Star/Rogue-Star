@@ -16,7 +16,7 @@
 	action_button_name = "Remove/Replace medigun"
 
 	var/obj/item/device/bork_medigun/linked/medigun
-	var/obj/item/weapon/cell/bcell = /obj/item/weapon/cell/apc
+	var/obj/item/weapon/cell/bcell = /obj/item/weapon/cell
 	var/obj/item/weapon/stock_parts/matter_bin/sbin = /obj/item/weapon/stock_parts/matter_bin
 	var/obj/item/weapon/stock_parts/scanning_module/smodule = /obj/item/weapon/stock_parts/scanning_module
 	var/obj/item/weapon/stock_parts/manipulator/smanipulator = /obj/item/weapon/stock_parts/manipulator
@@ -32,12 +32,12 @@
 	var/burnvol = 0
 	var/chemcap = 60
 	var/tankmax = 30
-	var/chargecost = 25
 	var/containsgun = TRUE
 	var/maintenance = FALSE
 	var/smaniptier = 1
 	var/sbintier = 1
 	var/gridstatus = 0
+	var/chargecap = 1000
 
 //backpack item
 /obj/item/device/medigun_backpack/cmo
@@ -49,15 +49,16 @@
 	smanipulator = /obj/item/weapon/stock_parts/manipulator/nano
 	smodule = /obj/item/weapon/stock_parts/scanning_module/adv
 	slaser = /obj/item/weapon/stock_parts/micro_laser/high
-	chargecost = 20
-	chemcap = 120
+	bcell = /obj/item/weapon/cell/apc
 	tankmax = 60
-	brutecharge = 40
-	toxcharge = 40
-	burncharge = 40
-	brutevol = 60
-	toxvol = 60
-	burnvol = 60
+	brutecharge = 60
+	toxcharge = 60
+	burncharge = 60
+	chemcap = 120
+	brutevol = 120
+	toxvol = 120
+	burnvol = 120
+	chargecap = 5000
 
 /obj/item/device/medigun_backpack/proc/is_twohanded()
 	return TRUE
@@ -106,13 +107,13 @@
 /obj/item/device/medigun_backpack/process()
 	if(bcell.charge >= 10)
 		var/icon_needs_update = FALSE
-		if(brutecharge < tankmax && brutevol > 0 && (bcell.checked_use(5)))
+		if(brutecharge < tankmax && brutevol > 0 && (bcell.checked_use(smaniptier * 2)))
 			adjust_brutevol(smaniptier * 2)
 			icon_needs_update = TRUE
-		if(burncharge < tankmax && burnvol > 0 && (bcell.checked_use(5)))
+		if(burncharge < tankmax && burnvol > 0 && (bcell.checked_use(smaniptier * 2)))
 			adjust_burnvol(smaniptier * 2)
 			icon_needs_update = TRUE
-		if(toxcharge < tankmax && toxvol > 0 && (bcell.checked_use(5)))
+		if(toxcharge < tankmax && toxvol > 0 && (bcell.checked_use(smaniptier * 2)))
 			adjust_toxvol(smaniptier * 2)
 			icon_needs_update = TRUE
 		//Alien tier
@@ -233,6 +234,11 @@
 
 	to_chat(usr, span_warning("Not Enough Phoron stored."))
 
+/obj/item/device/medigun_backpack/emp_act(severity)
+	. = ..()
+	if(bcell)
+		bcell.emp_act(severity)
+
 /obj/item/device/medigun_backpack/attack_hand(mob/user)
 	if(loc == user)
 		toggle_medigun()
@@ -324,17 +330,32 @@
 			W.forceMove(src)
 			scapacitor = W
 			var/scaptier = scapacitor.get_rating()
-			chargecost = 30-(5*scaptier)
-			if(scaptier >= 5)
-				tankmax = 150
-			else
-				tankmax = 30*scaptier
-			if(brutecharge > tankmax)
-				brutecharge = tankmax
-			if(burncharge > tankmax)
-				burncharge = tankmax
-			if(toxcharge > tankmax)
-				toxcharge = tankmax
+			if(scaptier == 1)
+				chargecap = 1000
+				bcell.maxcharge = 1000
+				if(bcell.charge > chargecap)
+					bcell.charge = chargecap
+			else if(scaptier == 2)
+				chargecap = 5000
+				bcell.maxcharge = 5000
+				if(bcell.charge > chargecap)
+					bcell.charge = chargecap
+			else if(scaptier == 3)
+				chargecap = 10000
+				bcell.maxcharge = 10000
+				if(bcell.charge > chargecap)
+					bcell.charge = chargecap
+			else if(scaptier == 4)
+				chargecap = 20000
+				bcell.maxcharge = 20000
+				if(bcell.charge > chargecap)
+					bcell.charge = chargecap
+			else if(scaptier == 5)
+				chargecap = 30000
+				bcell.maxcharge = 30000
+				if(bcell.charge > chargecap)
+					bcell.charge = chargecap
+
 			if(sbin && smanipulator)START_PROCESSING(SSobj, src)
 			to_chat(user, span_notice("You install the [W] into \the [src]."))
 			update_icon()
@@ -351,14 +372,22 @@
 			sbintier = sbin.get_rating()
 			if(sbintier >= 5)
 				chemcap = 300
+				tankmax = 150
 			else
 				chemcap = 60*(sbintier)
+				tankmax = 30*sbintier
 			if(brutecharge > chemcap)
 				brutecharge = chemcap
 			if(burncharge > chemcap)
 				burncharge = chemcap
 			if(toxcharge > chemcap)
 				toxcharge = chemcap
+			if(brutecharge > tankmax)
+				brutecharge = tankmax
+			if(burncharge > tankmax)
+				burncharge = tankmax
+			if(toxcharge > tankmax)
+				toxcharge = tankmax
 			if(scapacitor && smanipulator)START_PROCESSING(SSobj, src)
 			to_chat(user, span_notice("You install the [W] into \the [src]."))
 			update_icon()
