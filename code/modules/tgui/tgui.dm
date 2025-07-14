@@ -6,6 +6,11 @@
 /**
  * tgui datum (represents a UI).
  */
+
+// RS Add: New bundle defines for legacy and modern (Lira, July 2025)
+#define BUNDLE_LEGACY  /datum/asset/simple/tgui
+#define BUNDLE_MODERN  /datum/asset/simple/tguimodern
+
 /datum/tgui
 	/// The mob who opened/is using the UI.
 	var/mob/user
@@ -45,6 +50,12 @@
 	var/datum/tgui/parent_ui
 	/// Children of this UI
 	var/list/children = list()
+
+	var/core_bundle = BUNDLE_LEGACY   // RS Add: Default to legacy bundle (Lira, July 2025)
+
+/datum/tgui_modern //RS Add: modern tgui uses the modern bundle (Lira, July 2025)
+    parent_type = /datum/tgui
+    core_bundle = BUNDLE_MODERN
 
 /**
  * public
@@ -89,18 +100,20 @@
 	process_status()
 	if(status < STATUS_UPDATE)
 		return null
-	window = SStgui.request_pooled_window(user)
+	window = SStgui.request_pooled_window(user, src.core_bundle) //RS Add: Let the controller know which bundle (Lira, July 2025)
 	if(!window)
 		return null
 	opened_at = world.time
 	window.acquire_lock(src)
+	if(isnull(window.loaded_bundle)) //RS Add: Set loaded_bundle value (Lira, July 2025)
+		window.loaded_bundle = src.core_bundle
 	if(!window.is_ready())
+		window.target_bundle = src.core_bundle //RS Add: Set target bundle (Lira, July 2025)
 		window.initialize(
 			strict_mode = TRUE,
-			fancy = user.client.prefs.tgui_fancy,
-			assets = list(
-				get_asset_datum(/datum/asset/simple/tgui),
-			))
+			fancy 		= user.client.prefs.tgui_fancy,
+			assets 		= list(get_asset_datum(src.core_bundle),)) //RS Edit: Make bundle selection dynamic (Lira, July 2025)
+		window.loaded_bundle = src.core_bundle      // RS Add: Update loaded bundle (Lira, July 2025)
 	else
 		window.send_message("ping")
 	window.send_asset(get_asset_datum(/datum/asset/simple/fontawesome))
@@ -232,31 +245,61 @@
  */
 /datum/tgui/proc/get_payload(custom_data, with_data, with_static_data)
 	var/list/json_data = list()
-	json_data["config"] = list(
-		"title" = title,
-		"status" = status,
-		"interface" = interface,
-		//"refreshing" = refreshing,
-		"refreshing" = FALSE,
-		"map" = (using_map && using_map.path) ? using_map.path : "Unknown",
-		"mapZLevel" = map_z_level,
-		"window" = list(
-			"key" = window_key,
-			"size" = window_size,
-			"fancy" = user.client.prefs.tgui_fancy,
-			"locked" = user.client.prefs.tgui_lock,
-		),
-		"client" = list(
-			"ckey" = user.client.ckey,
-			"address" = user.client.address,
-			"computer_id" = user.client.computer_id,
-		),
-		"user" = list(
-			"name" = "[user]",
-			"ckey" = "[user.ckey]",
-			"observer" = isobserver(user),
-		),
-	)
+	if(src.core_bundle == /datum/asset/simple/tguimodern) //RS Edit: Split json_data to meet different interface requirements for different versions (Lira, July 2025)
+		json_data["config"] = list(
+			"title" = title,
+			"status" = status,
+			"interface" = list( // Port Virgo PR 17520
+				"name" = interface,
+				"layout" = null, // user.client.prefs.read_preference(/datum/preference/choiced/tgui_layout), // unused
+			),
+			//"refreshing" = refreshing,
+			"refreshing" = FALSE,
+			"map" = (using_map && using_map.path) ? using_map.path : "Unknown",
+			"mapZLevel" = map_z_level,
+			"window" = list(
+				"key" = window_key,
+				"size" = window_size,
+				"fancy" = user.client.prefs.tgui_fancy,
+				"locked" = user.client.prefs.tgui_lock,
+			),
+			"client" = list(
+				"ckey" = user.client.ckey,
+				"address" = user.client.address,
+				"computer_id" = user.client.computer_id,
+			),
+			"user" = list(
+				"name" = "[user]",
+				"ckey" = "[user.ckey]",
+				"observer" = isobserver(user),
+			),
+		)
+	else
+		json_data["config"] = list(
+			"title" = title,
+			"status" = status,
+			"interface" = interface,
+			//"refreshing" = refreshing,
+			"refreshing" = FALSE,
+			"map" = (using_map && using_map.path) ? using_map.path : "Unknown",
+			"mapZLevel" = map_z_level,
+			"window" = list(
+				"key" = window_key,
+				"size" = window_size,
+				"fancy" = user.client.prefs.tgui_fancy,
+				"locked" = user.client.prefs.tgui_lock,
+			),
+			"client" = list(
+				"ckey" = user.client.ckey,
+				"address" = user.client.address,
+				"computer_id" = user.client.computer_id,
+			),
+			"user" = list(
+				"name" = "[user]",
+				"ckey" = "[user.ckey]",
+				"observer" = isobserver(user),
+			),
+		)
 	var/data = custom_data || with_data && src_object.tgui_data(user, src, state)
 	if(data)
 		json_data["data"] = data

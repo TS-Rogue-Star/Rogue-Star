@@ -1,11 +1,17 @@
 //DEFINITIONS FOR ASSET DATUMS START HERE.
 
-/datum/asset/simple/tgui
+/datum/asset/simple/tgui  //Legacy bundle
 	// keep_local_name = TRUE
 	assets = list(
-		"tgui.bundle.js" = file("tgui/public/tgui.bundle.js"),
+		"tgui.bundle.js"  = file("tgui/public/tgui.bundle.js"),
 		"tgui.bundle.css" = file("tgui/public/tgui.bundle.css"),
 	)
+
+/datum/asset/simple/tguimodern //RS Edit: Adds secondary tgui bundle (Lira, July 2025)
+	assets = list (
+		"tguimodern.bundle.js"  = file("tguimodern/public/tgui.bundle.js"),
+		"tguimodern.bundle.css" = file("tguimodern/public/tgui.bundle.css"),
+    )
 
 
 /datum/asset/simple/headers
@@ -169,10 +175,9 @@
 
 /datum/asset/simple/fontawesome
 	assets = list(
-		"fa-regular-400.eot"  = 'html/font-awesome/webfonts/fa-regular-400.eot',
-		"fa-regular-400.woff" = 'html/font-awesome/webfonts/fa-regular-400.woff',
-		"fa-solid-900.eot"    = 'html/font-awesome/webfonts/fa-solid-900.eot',
-		"fa-solid-900.woff"   = 'html/font-awesome/webfonts/fa-solid-900.woff',
+		"fa-regular-400.ttf" = 'html/font-awesome/webfonts/fa-regular-400.ttf',
+		"fa-solid-900.ttf" = 'html/font-awesome/webfonts/fa-solid-900.ttf',
+		"fa-v4compatibility.ttf" = 'html/font-awesome/webfonts/fa-v4compatibility.ttf',
 		"font-awesome.css"    = 'html/font-awesome/css/all.min.css',
 		"v4shim.css"          = 'html/font-awesome/css/v4-shims.min.css'
 	)

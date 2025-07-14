@@ -97,7 +97,7 @@
 /obj/item/canvas/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "Canvas", name)
+		ui = new /datum/tgui_modern(user, src, "Canvas", name) //RS Edit: Use the modern UI (Lira, July 2025)
 		ui.set_autoupdate(FALSE)
 		ui.open()
 
