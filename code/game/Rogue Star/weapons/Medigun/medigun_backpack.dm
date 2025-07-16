@@ -268,10 +268,11 @@
 		bcell.emp_act(severity)
 
 /obj/item/device/medigun_backpack/attack_hand(mob/user)
-	if(maintenance)
+	/*if(maintenance)
 		maintenance = 0
 		to_chat(user, span_notice("You close the maintenance hatch on \the [src]."))
-		return
+		return*/
+
 	if(loc == user)
 		toggle_medigun()
 		return
@@ -300,6 +301,35 @@
 		//to_chat(user, span_warning("backpack clicked with gun"))
 		reattach_medigun(user)
 		return
+	if(W.is_crowbar() && maintenance)
+		if(smodule )
+			smodule.forceMove(get_turf(loc))
+			smodule = null
+
+		if(smanipulator)
+			STOP_PROCESSING(SSobj, src)
+			smanipulator.forceMove(get_turf(loc))
+			smanipulator = null
+			smaniptier = 0
+
+		if(slaser)
+			slaser.forceMove(get_turf(loc))
+			slaser = null
+
+		if(scapacitor)
+			STOP_PROCESSING(SSobj, src)
+			scapacitor.forceMove(get_turf(loc))
+			scapacitor = null
+
+		if(sbin)
+			STOP_PROCESSING(SSobj, src)
+			sbin.forceMove(get_turf(loc))
+			sbin = null
+			sbintier = 0
+
+		to_chat(user, span_notice("You remove the Components from \the [src]."))
+		update_icon()
+		return TRUE
 
 	if(W.is_screwdriver())
 		if(!maintenance)

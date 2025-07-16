@@ -74,8 +74,8 @@
 			if(!smodule || !maintenance)
 				return FALSE
 			smodule.forceMove(get_turf(loc))
-			smodule = null
 			to_chat(ui.user, span_notice("You remove the [smodule] from \the [src]."))
+			smodule = null
 			update_icon()
 			return TRUE
 
@@ -84,9 +84,9 @@
 				return FALSE
 			STOP_PROCESSING(SSobj, src)
 			smanipulator.forceMove(get_turf(loc))
+			to_chat(ui.user, span_notice("You remove the [smanipulator] from \the [src]."))
 			smanipulator = null
 			smaniptier = 0
-			to_chat(ui.user, span_notice("You remove the [smanipulator] from \the [src]."))
 			update_icon()
 			return TRUE
 
@@ -94,8 +94,8 @@
 			if(!slaser || !maintenance)
 				return FALSE
 			slaser.forceMove(get_turf(loc))
-			slaser = null
 			to_chat(ui.user, span_notice("You remove the [slaser] from \the [src]."))
+			slaser = null
 			update_icon()
 			return TRUE
 
@@ -104,8 +104,8 @@
 				return FALSE
 			STOP_PROCESSING(SSobj, src)
 			scapacitor.forceMove(get_turf(loc))
-			scapacitor = null
 			to_chat(ui.user, span_notice("You remove the [scapacitor] from \the [src]."))
+			scapacitor = null
 			update_icon()
 			return TRUE
 
@@ -114,9 +114,9 @@
 				return FALSE
 			STOP_PROCESSING(SSobj, src)
 			sbin.forceMove(get_turf(loc))
+			to_chat(ui.user, span_notice("You remove the [sbin] from \the [src]."))
 			sbin = null
 			sbintier = 0
-			to_chat(ui.user, span_notice("You remove the [sbin] from \the [src]."))
 			update_icon()
 			return TRUE
 

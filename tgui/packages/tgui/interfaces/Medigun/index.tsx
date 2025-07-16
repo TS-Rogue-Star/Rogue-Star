@@ -22,10 +22,14 @@ export const Medigun = (props, context) => {
         <Stack vertical fill>
           <Stack.Item>
             <Tabs>
-              <Tabs.Tab onClick={() => setSelectedTab(0)}>
+              <Tabs.Tab
+                selected={selectedTab === 0}
+                onClick={() => setSelectedTab(0)}>
                 Medigun Content
               </Tabs.Tab>
-              <Tabs.Tab onClick={() => setSelectedTab(1)}>
+              <Tabs.Tab
+                selected={selectedTab === 1}
+                onClick={() => setSelectedTab(1)}>
                 Medigun Parts
               </Tabs.Tab>
             </Tabs>

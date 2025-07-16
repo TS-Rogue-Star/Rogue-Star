@@ -4,7 +4,7 @@
 
 	var/mob/living/carbon/human/user = usr
 	if(maintenance)
-		to_chat(user, span_warning("Please close the maintenance hatch with a screwdriver first."))
+		to_chat(user, span_warning("Please close the maintenance hatch with a screwdriver first, or to remove components, use a crowbar."))
 		return
 
 	if(!medigun)
