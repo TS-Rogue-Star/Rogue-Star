@@ -295,16 +295,13 @@
 		. += "<span class='boldnotice'>[capitalize(thing)]</span>: [xp[thing]]\n"
 
 /datum/etching/vv_edit_var(var_name, var_value)
+	if(var_name == "savable" || var_name == "unlockables")
+		return FALSE
 	if(var_name == "event_character")
 		enable_event_character()
-		return
-	else if(var_name == "savable")
+		. = TRUE
+	else if(!event_character)
 		return FALSE
-	else if(var_name == "unlockables")
-		return FALSE
-	if(!event_character)
-		return FALSE
-
 	else
 		needs_saving = TRUE
 		return ..()
