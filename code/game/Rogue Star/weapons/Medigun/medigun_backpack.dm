@@ -196,9 +196,13 @@
 	else if(is_twohanded())
 		icon_state = "mg-backpack[special]"
 		item_state = "mg-backpack-onmob[special]"
+		medigun.icon_state = "medblaster[special]"
+		medigun.base_icon_state = "medblaster[special]"
 	else
 		icon_state = "mg-backpack_cmo[special]"
 		item_state = "mg-backpack_cmo-onmob[special]"
+		medigun.icon_state = "medblaster_cmo[special]"
+		medigun.base_icon_state = "medblaster_cmo[special]"
 
 	update_icon()
 
@@ -240,7 +244,7 @@
 
 	//to_chat(world, span_notice("bark [user.real_name] \ [slot] \ [user.ckey]"))
 	if(slot == slot_back || slot == slot_s_store)
-		if(user.real_name == "Kenzie Houser" && user.ckey == "memewuff")
+		if(user.ckey == "crossexonar")
 			kenzie = 1
 			to_chat(user, span_notice("Epic Lasagna Wolf Detected, Engaging BAD ASS MODE."))
 		else

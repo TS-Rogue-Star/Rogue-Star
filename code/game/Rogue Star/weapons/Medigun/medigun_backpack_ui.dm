@@ -20,7 +20,7 @@
 		gridstatus = 3
 	if(H)
 		patientname = H
-		patienthealth = max(0, (H.health+abs(config.health_threshold_dead))/(H.maxHealth+abs(config.health_threshold_dead)))
+		patienthealth = max(0, (H.health+abs(config.health_threshold_dead))/(H.getMaxHealth()+abs(config.health_threshold_dead)))
 		patientbruteloss = H.getBruteLoss()
 		patientfireloss = H.getFireLoss()
 		patienttoxloss = H.getToxLoss()
