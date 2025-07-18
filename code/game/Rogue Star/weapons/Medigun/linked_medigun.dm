@@ -173,7 +173,7 @@
 			var/healmod = lastier
 			if(H.getBruteLoss())
 				healmod = min(lastier,medigun_base_unit.brutecharge,H.getBruteLoss())
-				if(medigun_base_unit.brutecharge >= round(healmod))
+				if(medigun_base_unit.brutecharge >= healmod)
 					if(!checked_use(healmod))
 						to_chat(user, span_warning("\The [src] doesn't have enough charge left to do that."))
 						break
@@ -181,11 +181,11 @@
 						healmod = 0
 					else
 						H.adjustBruteLoss(-healmod)
-						medigun_base_unit.brutecharge -= round(healmod)
+						medigun_base_unit.brutecharge -= healmod
 						ishealing = 1
 			if(H.getFireLoss())
 				healmod = min(lastier,medigun_base_unit.burncharge,H.getFireLoss())
-				if(medigun_base_unit.burncharge >= round(healmod))
+				if(medigun_base_unit.burncharge >= healmod)
 					if(!checked_use(healmod))
 						to_chat(user, span_warning("\The [src] doesn't have enough charge left to do that."))
 						break
@@ -193,11 +193,11 @@
 						healmod = 0
 					else
 						H.adjustFireLoss(-healmod)
-						medigun_base_unit.burncharge -= round(healmod)
+						medigun_base_unit.burncharge -= healmod
 						ishealing = 1
 			if(H.getToxLoss())
 				healmod = min(lastier,medigun_base_unit.toxcharge,H.getToxLoss())
-				if(medigun_base_unit.toxcharge >= round(healmod))
+				if(medigun_base_unit.toxcharge >= healmod)
 					if(!checked_use(healmod))
 						to_chat(user, span_warning("\The [src] doesn't have enough charge left to do that."))
 						break
@@ -205,7 +205,7 @@
 						healmod = 0
 					else
 						H.adjustToxLoss(-healmod)
-						medigun_base_unit.toxcharge -= round(healmod)
+						medigun_base_unit.toxcharge -= healmod
 						ishealing = 1
 			if(H.getOxyLoss())
 				healmod = min(10*lastier,H.getOxyLoss())
@@ -227,7 +227,7 @@
 							if(W.damage <= 1)
 								O.wounds -= W
 								medigun_base_unit.brutecharge -= 1
-							else
+							else if(medigun_base_unit.brutecharge >= healmod)
 								W.damage -= healmod
 								medigun_base_unit.brutecharge -= healmod
 							O.update_damages()

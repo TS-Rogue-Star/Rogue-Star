@@ -1,8 +1,8 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../../../backend';
-import { Box, Button, LabeledList, ProgressBar, Section, Stack } from '../../../components';
+import { Blink, Box, Button, LabeledList, ProgressBar, Section, Stack } from '../../../components';
 import { Data } from '../types';
-import { gridStatusToColor, gridStatusToText, powerToColor, powerToText } from '../constants';
+import { gridStatusToColor, gridStatusToText, powerToColor, powerToText, statToColor, statToString } from '../constants';
 import { ChargeStatus } from '../MedigunHelpers/ChargeStatus';
 
 export const MedigunContent = (props, context) => {
@@ -27,6 +27,8 @@ export const MedigunContent = (props, context) => {
     patientburn,
     patienttox,
     patientoxy,
+    bloodStatus,
+    patientstatus,
   } = data;
 
   return (
@@ -137,16 +139,53 @@ export const MedigunContent = (props, context) => {
                       )}
                     </LabeledList.Item>
                     {!!data.patientname && (
-                      <LabeledList.Item label="Total Health">
-                        <ProgressBar
-                          ranges={{
-                            good: [0.5, Infinity],
-                            average: [0.25, 0.5],
-                            bad: [-Infinity, 0.25],
-                          }}
-                          value={patienthealth}
-                        />
-                      </LabeledList.Item>
+                      <>
+                        <LabeledList.Item label="Total Health">
+                          <ProgressBar
+                            ranges={{
+                              good: [0.5, Infinity],
+                              average: [0.25, 0.5],
+                              bad: [-Infinity, 0.25],
+                            }}
+                            value={patienthealth}>
+                            {patientstatus ? (
+                              <Stack>
+                                <Stack.Item grow />
+                                <Stack.Item>
+                                  <Blink>
+                                    <Box
+                                      bold
+                                      color={statToColor[patientstatus]}>
+                                      {statToString[patientstatus]}
+                                    </Box>
+                                  </Blink>
+                                </Stack.Item>
+                                <Stack.Item>
+                                  {`${(patienthealth * 100).toFixed()}%`}
+                                </Stack.Item>
+                              </Stack>
+                            ) : (
+                              `${statToString[patientstatus || 0]} ${(
+                                patienthealth * 100
+                              ).toFixed()}%`
+                            )}
+                          </ProgressBar>
+                        </LabeledList.Item>
+                        <LabeledList.Item label="Blood Volume">
+                          {bloodStatus ? (
+                            <ProgressBar
+                              color="red"
+                              value={
+                                bloodStatus.volume / bloodStatus.max_volume
+                              }
+                            />
+                          ) : (
+                            <Blink>
+                              <Box color="red">No Blood Detected</Box>
+                            </Blink>
+                          )}
+                        </LabeledList.Item>
+                      </>
                     )}
                   </LabeledList>
                 </Stack.Item>

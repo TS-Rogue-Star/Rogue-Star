@@ -18,7 +18,7 @@ export const ChargeStatus = (
         <Stack.Item grow>
           {charge !== null ? (
             <ProgressBar color={color} value={charge / (max || 1)}>
-              {charge} / {max}
+              {charge.toFixed()} / {max}
             </ProgressBar>
           ) : (
             <Box color="red">Missing Capacitor</Box>
@@ -30,7 +30,7 @@ export const ChargeStatus = (
         <Stack.Item basis="10%">
           {volume !== null ? (
             <Box color={color} bold>
-              {volume}
+              {volume.toFixed()}
             </Box>
           ) : (
             <Box color="red">Missing Bin</Box>

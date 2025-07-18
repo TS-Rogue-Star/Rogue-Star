@@ -19,6 +19,8 @@ export type Data = {
   patientburn: number | null;
   patienttox: number | null;
   patientoxy: number | null;
+  bloodStatus: { volume: number; max_volume: number } | null;
+  patientstatus: number | null;
   examine_data: ExamineData;
 };
 

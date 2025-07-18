@@ -12,6 +12,8 @@
 	var/patientfireloss = 0
 	var/patienttoxloss = 0
 	var/patientoxyloss = 0
+	var/patientstatus = 0
+	var/list/bloodData = list()
 
 	//var/minhealth = 0
 	if(scapacitor?.get_rating() < 5)
@@ -23,6 +25,10 @@
 		patientfireloss = H.getFireLoss()
 		patienttoxloss = H.getToxLoss()
 		patientoxyloss = H.getOxyLoss()
+		patientstatus = H.stat
+		if(H.vessel)
+			bloodData["volume"] = round(H.vessel.get_reagent_amount("blood"))
+			bloodData["max_volume"] = H.species.blood_volume
 	var/list/data = list(
 		"maintenance" = maintenance,
 		"Generator" = charging,
@@ -42,6 +48,8 @@
 		"patientburn" = smodule ? patientfireloss : null,
 		"patienttox" = smodule ? patienttoxloss : null,
 		"patientoxy" = smodule ? patientoxyloss : null,
+		"bloodStatus" = smodule ? bloodData : null,
+		"patientstatus" = smodule ? patientstatus : null,
 		"examine_data" = get_examine_data()
 		)
 	return data
