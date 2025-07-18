@@ -295,22 +295,20 @@
 		. += "<span class='boldnotice'>[capitalize(thing)]</span>: [xp[thing]]\n"
 
 /datum/etching/vv_edit_var(var_name, var_value)
+	if(var_name == "savable" || var_name == "unlockables")
+		return FALSE
 	if(var_name == "event_character")
 		enable_event_character()
-		return
-	else if(var_name == "savable")
+		. = TRUE
+	else if(!event_character)
 		return FALSE
-	else if(var_name == "unlockables")
-		return FALSE
-	if(!event_character)
-		return FALSE
-
 	else
 		needs_saving = TRUE
 		return ..()
 
 /datum/etching/get_view_variables_options()
-	return ..() + {"
+	. = ..()
+	. += {"
 	<option>---</option>
 	<option value='?_src_=vars;[HrefToken()];event_etching=\ref[src.ourmob]'>Toggle Event Character</option>
 	<option value='?_src_=vars;[HrefToken()];save_etching=\ref[src.ourmob]'>Save</option>
@@ -328,7 +326,7 @@
 	if(href_list["event_etching"])
 		if(!check_rights(R_FUN))	return
 
-		var/mob/living/L = locate(href_list["event_etching"])
+		var/mob/living/L = mob
 		if(!L.etching)
 			to_chat(usr, "\The [L] has no etching.")
 			return

@@ -348,6 +348,12 @@ var/list/_client_preferences_by_type
 	enabled_description = "Enabled"
 	disabled_description = "Disabled"
 
+/datum/client_preference/vore_damage_overlay
+	description = "Vore Self Damage Overlay"
+	key = "VORE_DAMAGE_OVERLAY"
+	enabled_description = "Enabled"
+	disabled_description = "Disabled"
+
 //RS ADDITION END
 
 /datum/client_preference/runechat_mob

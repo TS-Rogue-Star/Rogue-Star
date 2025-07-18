@@ -166,20 +166,22 @@ var/global/list/permanent_unlockables = list(
 			. += "\n"
 		. += our_money
 
-/datum/etching/proc/update_nif(var/mob/living/carbon/human/H)
+/datum/etching/proc/update_nif()
+	var/mob/living/carbon/human/H = ourmob
 	if(H.nif)		//We have a nif, let's see if it needs to be updated
-		if(H.nif.owner != ourmob.real_name)		//Is this nif ours? If not, we shouldn't save it
-			nif_type = null
-			nif_durability = 0
-			needs_saving = TRUE
-		if(H.nif.type != nif_type)	//Our nif types don't match, we either just got a nif, or we got an upgrade, nice, let's record it!
-			nif_type = H.nif.type
-			nif_durability = H.nif.durability
-			needs_saving = TRUE
-	else if(nif_type)		//We don't have a nif, but we do have a record of one, so we probably got ours removed, let's clear the data.
-		nif_type = null
-		nif_durability = 0
+		if(H.nif.owner != H.real_name)		//Is this nif ours? If not, we shouldn't save it
+			return
+		//Otherwise if something is asking us to update the nif, then let's update it!
+		nif_type = H.nif.type
+		nif_durability = H.nif.durability
+		nif_savedata = H.nif.save_data
 		needs_saving = TRUE
+
+/datum/etching/proc/clear_nif_save()
+	nif_type = null
+	nif_durability = null
+	nif_savedata = null
+	needs_saving = TRUE
 
 /proc/persist_nif_data(var/mob/living/carbon/human/H)
 	if(!ishuman(H))		//We are not a human, don't bother!
@@ -187,7 +189,7 @@ var/global/list/permanent_unlockables = list(
 		return
 	if(!H.etching)		//We do not have the ability to save character persist data, don't bother!
 		return
-	H.etching.update_nif(H)
+	H.etching.update_nif()
 
 /datum/etching/setup(var/datum/preferences/P)
 	. = ..()
