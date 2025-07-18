@@ -2,7 +2,7 @@ import { useBackend, useLocalState } from '../../backend';
 import { MedigunParts } from './MedigunTabs/MedigunParts';
 import { Stack, Tabs } from '../../components';
 import { Window } from '../../layouts';
-import { Data } from './types';
+import type { Data } from './types';
 import { MedigunContent } from './MedigunTabs/MedigunContent';
 
 export const Medigun = (props, context) => {
@@ -11,7 +11,7 @@ export const Medigun = (props, context) => {
   const [selectedTab, setSelectedTab] = useLocalState(context, 'mediGunTab', 0);
 
   const tab: InfernoElement<JSX.Element>[] = [];
-  tab[0] = <MedigunContent />;
+  tab[0] = <MedigunContent smodule={examine_data.smodule} />;
   tab[1] = (
     <MedigunParts examineData={examine_data} maintenance={maintenance} />
   );

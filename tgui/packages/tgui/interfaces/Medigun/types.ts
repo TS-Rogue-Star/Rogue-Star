@@ -1,4 +1,4 @@
-import { BooleanLike } from '../../../common/react';
+import type { BooleanLike } from '../../../common/react';
 
 export type Data = {
   maintenance: BooleanLike;
@@ -26,8 +26,10 @@ export type Data = {
   examine_data: ExamineData;
 };
 
+export type SModule = { name: string; range: number; rating: number } | null;
+
 export type ExamineData = {
-  smodule: { name: string; range: number; rating: number } | null;
+  smodule: SModule;
   smanipulator: { name: string; rating: number } | null;
   slaser: { name: string; rating: number } | null;
   scapacitor: {

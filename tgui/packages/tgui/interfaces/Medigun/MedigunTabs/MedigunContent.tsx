@@ -1,11 +1,11 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../../../backend';
-import { Blink, Box, Button, LabeledList, ProgressBar, Section, Stack } from '../../../components';
-import { Data } from '../types';
+import { Box, Button, LabeledList, ProgressBar, Section, Stack } from '../../../components';
+import type { Data, SModule } from '../types';
 import { gridStatusToColor, gridStatusToText, powerToColor, powerToText, statToColor, statToString } from '../constants';
 import { ChargeStatus } from '../MedigunHelpers/ChargeStatus';
 
-export const MedigunContent = (props, context) => {
+export const MedigunContent = (props: { smodule: SModule }, context) => {
   const { act, data } = useBackend<Data>(context);
 
   const {
@@ -32,6 +32,10 @@ export const MedigunContent = (props, context) => {
     organ_damage,
     inner_bleeding,
   } = data;
+
+  const { smodule } = props;
+
+  const moduleLevel = smodule?.rating || 0;
 
   return (
     <Stack vertical fill>
@@ -151,19 +155,24 @@ export const MedigunContent = (props, context) => {
                             }}
                             value={patient_health}>
                             <Stack>
-                              <Stack.Item grow />
-                              {!!organ_damage && (
-                                <Stack.Item>
-                                  <Box bold>Organ Damage!</Box>
-                                </Stack.Item>
-                              )}
-
-                              {!!patient_status && (
-                                <Stack.Item>
-                                  <Box bold color={statToColor[patient_status]}>
-                                    {statToString[patient_status]}
-                                  </Box>
-                                </Stack.Item>
+                              {moduleLevel >= 2 && (
+                                <>
+                                  <Stack.Item grow />
+                                  {!!organ_damage && (
+                                    <Stack.Item>
+                                      <Box bold>Organ Damage!</Box>
+                                    </Stack.Item>
+                                  )}
+                                  {!!patient_status && (
+                                    <Stack.Item>
+                                      <Box
+                                        bold
+                                        color={statToColor[patient_status]}>
+                                        {statToString[patient_status]}
+                                      </Box>
+                                    </Stack.Item>
+                                  )}
+                                </>
                               )}
                               <Stack.Item>
                                 {`${(patient_health * 100).toFixed()}%`}
@@ -171,39 +180,41 @@ export const MedigunContent = (props, context) => {
                             </Stack>
                           </ProgressBar>
                         </LabeledList.Item>
-                        <LabeledList.Item label="Blood Volume">
-                          {blood_status ? (
-                            <ProgressBar
-                              color="red"
-                              value={
-                                blood_status.volume / blood_status.max_volume
-                              }>
-                              <Stack>
-                                <Stack.Item grow />
-                                {!!inner_bleeding && (
+                        {moduleLevel >= 2 && (
+                          <LabeledList.Item label="Blood Volume">
+                            {blood_status ? (
+                              <ProgressBar
+                                color="red"
+                                value={
+                                  blood_status.volume / blood_status.max_volume
+                                }>
+                                <Stack>
+                                  <Stack.Item grow />
+                                  {!!inner_bleeding && (
+                                    <Stack.Item grow>
+                                      <Box bold>Inner Bleeding!</Box>
+                                    </Stack.Item>
+                                  )}
                                   <Stack.Item grow>
-                                    <Box bold>Inner Bleeding!</Box>
+                                    {`${(
+                                      (blood_status.volume /
+                                        blood_status.max_volume) *
+                                      100
+                                    ).toFixed()}%`}
                                   </Stack.Item>
-                                )}
-                                <Stack.Item grow>
-                                  {(
-                                    (blood_status.volume /
-                                      blood_status.max_volume) *
-                                    100
-                                  ).toFixed()}
-                                </Stack.Item>
-                              </Stack>
-                            </ProgressBar>
-                          ) : (
-                            <Box color="red">No Blood Detected</Box>
-                          )}
-                        </LabeledList.Item>
+                                </Stack>
+                              </ProgressBar>
+                            ) : (
+                              <Box color="red">No Blood Detected</Box>
+                            )}
+                          </LabeledList.Item>
+                        )}
                       </>
                     )}
                   </LabeledList>
                 </Stack.Item>
                 <Stack.Item>
-                  {!!data.patient_name && (
+                  {!!data.patient_name && moduleLevel >= 2 && (
                     <Stack>
                       <Stack.Item width="200px">
                         <LabeledList>

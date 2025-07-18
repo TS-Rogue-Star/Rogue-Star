@@ -1,7 +1,7 @@
 import { BooleanLike } from '../../../../common/react';
 import { useBackend } from '../../../backend';
 import { Box, Button, LabeledList, Section, Stack } from '../../../components';
-import { ExamineData } from '../types';
+import type { ExamineData } from '../types';
 
 export const MedigunParts = (
   props: { examineData: ExamineData; maintenance: BooleanLike },
