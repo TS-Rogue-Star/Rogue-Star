@@ -244,7 +244,7 @@
 
 	//to_chat(world, span_notice("bark [user.real_name] \ [slot] \ [user.ckey]"))
 	if(slot == slot_back || slot == slot_s_store)
-		if(user.ckey == "crossexonar")
+		if(user.real_name == "Kenzie Houser" && user.ckey == "memewuff")
 			kenzie = 1
 			to_chat(user, span_notice("Epic Lasagna Wolf Detected, Engaging BAD ASS MODE."))
 		else

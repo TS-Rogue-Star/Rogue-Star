@@ -163,7 +163,7 @@
 			if(!checked_use(5))
 				to_chat(user, span_warning("\The [src] doesn't have enough charge left to do that."))
 				break
-			if(target.stat == DEAD)
+			if(H.stat == DEAD)
 				continue
 			var/lastier = medigun_base_unit.slaser.get_rating()
 			if(lastier >= 5)

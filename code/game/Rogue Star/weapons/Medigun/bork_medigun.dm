@@ -19,7 +19,7 @@
 	var/busy = MEDIGUN_IDLE // Set to true when scanning, to stop multiple scans.
 	var/action_cancelled = FALSE
 	var/wielded = FALSE
-	var/current_target
+	var/mob/current_target
 	var/mgcmo
 	canremove = FALSE
 
