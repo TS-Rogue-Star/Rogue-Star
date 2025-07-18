@@ -48,7 +48,7 @@ export const MedigunParts = (
                   <Box>
                     {'It has a ' +
                       smanipulator.name +
-                      ' installed, chem digitizing is now '}
+                      ' installed, chem digitizing is '}
                     {smanipulator.rating >= 5
                       ? '125% Efficient'
                       : (smanipulator.rating / 4) * 100 + '% Efficient'}
@@ -92,7 +92,7 @@ export const MedigunParts = (
                   <Box>
                     {'It has a ' +
                       scapacitor.name +
-                      ' installed, battery Capacity is now ' +
+                      ' installed, battery Capacity is ' +
                       scapacitor.chargecap +
                       ' Units '}
                     {scapacitor.rating >= 5

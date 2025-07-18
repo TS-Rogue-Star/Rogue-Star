@@ -8,6 +8,7 @@
 	var/mob/living/carbon/human/H = medigun.current_target
 	var/patientname
 	var/patienthealth = 0
+	var/patienthealthnum = 0
 	var/patientbruteloss = 0
 	var/patientfireloss = 0
 	var/patienttoxloss = 0
@@ -21,6 +22,7 @@
 	if(H)
 		patientname = H
 		patienthealth = max(0, (H.health+abs(config.health_threshold_dead))/(H.maxHealth+abs(config.health_threshold_dead)))
+		patienthealthnum = H.health
 		patientbruteloss = H.getBruteLoss()
 		patientfireloss = H.getFireLoss()
 		patienttoxloss = H.getToxLoss()
