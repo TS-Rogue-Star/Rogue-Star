@@ -71,7 +71,7 @@ export const MedigunParts = (
                       slaser.name +
                       ' installed, and can heal ' +
                       slaser.rating +
-                      ' damage per cycle '}
+                      ' damage per cycle'}
                     {slaser.rating >= 5 ? ' and will' : undefined}
                     {slaser.rating >= 5 ? ' stop bleeding and pain' : undefined}
                     {slaser.rating >= 5 ? ' while beam is focused' : ''}
@@ -94,7 +94,7 @@ export const MedigunParts = (
                       scapacitor.name +
                       ' installed, battery Capacity is ' +
                       scapacitor.chargecap +
-                      ' Units '}
+                      ' Units'}
                     {scapacitor.rating >= 5
                       ? ' the cell will recharge from the local power grid'
                       : ''}
@@ -120,7 +120,7 @@ export const MedigunParts = (
                       sbin.tankmax +
                       ' charge and ' +
                       sbin.chemcap +
-                      ' reserve chems '}
+                      ' reserve chems'}
                     {sbin.rating >= 5
                       ? 'and will slowly generate chems in exchange for power.'
                       : '.'}

@@ -63,7 +63,10 @@
 		to_chat(user, span_warning("Please keep your hands free!"))
 		return TRUE
 
-	if(user.incapacitated(INCAPACITATION_DEFAULT))
+	if(user.incapacitated(INCAPACITATION_ALL))
+		return TRUE
+
+	if(user.stat)
 		return TRUE
 
 	if(target.isSynthetic())
@@ -81,12 +84,6 @@
 
 	if(!ishuman(target))
 		return TRUE
-
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		if(H.stat >= DEAD)
-			to_chat(user, span_warning("\the [target] is deceased!"))
-			return TRUE
 
 		/*if(!H.getBruteLoss() && !H.getFireLoss() && !H.getToxLoss())// && !H.getOxyLoss()) // No point Wasting fuel/power if target healed
 			playsound(src, 'sound/machines/ping.ogg', 50)

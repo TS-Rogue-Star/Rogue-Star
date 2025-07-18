@@ -14,11 +14,20 @@
 	var/patientoxyloss = 0
 	var/patientstatus = 0
 	var/list/bloodData = list()
+	var/inner_bleeding = FALSE
+	var/organ_damage = FALSE
 
 	//var/minhealth = 0
 	if(scapacitor?.get_rating() < 5)
 		gridstatus = 3
 	if(H)
+		for(var/obj/item/organ/org in H.internal_organs)
+			if(org.robotic >= ORGAN_ROBOT)
+				continue
+			if(org.status & ORGAN_BLEEDING)
+				inner_bleeding = TRUE
+			if(org.damage >= 1 && !istype(org, /obj/item/organ/internal/brain))
+				organ_damage = TRUE
 		patientname = H
 		patienthealth = max(0, (H.health+abs(config.health_threshold_dead))/(H.getMaxHealth()+abs(config.health_threshold_dead)))
 		patientbruteloss = H.getBruteLoss()
@@ -31,25 +40,27 @@
 			bloodData["max_volume"] = H.species.blood_volume
 	var/list/data = list(
 		"maintenance" = maintenance,
-		"Generator" = charging,
+		"generator" = charging,
+		"gridstatus" = gridstatus,
 		"tankmax" = tankmax,
-		"powerCellStatus" = bcell ? bcell.percent() : null,
-		"Gridstatus" = gridstatus,
-		"PhoronStatus" = sbin ? phoronvol/chemcap : null,
-		"BrutehealCharge" = scapacitor ? brutecharge : null,
-		"BrutehealVol" = sbin ? brutevol : null,
-		"BurnhealCharge" = scapacitor ? burncharge : null,
-		"BurnhealVol" = sbin ? burnvol : null,
-		"ToxhealCharge" = scapacitor ? toxcharge : null,
-		"ToxhealVol" = sbin ? toxvol : null,
-		"patientname" = smodule ? patientname : null,
-		"patienthealth" = smodule ? patienthealth : null,
-		"patientbrute" = smodule ? patientbruteloss : null,
-		"patientburn" = smodule ? patientfireloss : null,
-		"patienttox" = smodule ? patienttoxloss : null,
-		"patientoxy" = smodule ? patientoxyloss : null,
-		"bloodStatus" = smodule ? bloodData : null,
-		"patientstatus" = smodule ? patientstatus : null,
+		"power_cell_status" = bcell ? bcell.percent() : null,
+		"phoron_status" = sbin ? phoronvol/chemcap : null,
+		"bruteheal_charge" = scapacitor ? brutecharge : null,
+		"burnheal_charge" = scapacitor ? burncharge : null,
+		"toxheal_charge" = scapacitor ? toxcharge : null,
+		"bruteheal_vol" = sbin ? brutevol : null,
+		"burnheal_vol" = sbin ? burnvol : null,
+		"toxheal_vol" = sbin ? toxvol : null,
+		"patient_name" = smodule ? patientname : null,
+		"patient_health" = smodule ? patienthealth : null,
+		"patient_brute" = smodule ? patientbruteloss : null,
+		"patient_burn" = smodule ? patientfireloss : null,
+		"patient_tox" = smodule ? patienttoxloss : null,
+		"patient_oxy" = smodule ? patientoxyloss : null,
+		"blood_status" = smodule ? bloodData : null,
+		"patient_status" = smodule ? patientstatus : null,
+		"organ_damage" = smodule ? organ_damage : null,
+		"inner_bleeding" = smodule ? inner_bleeding : null,
 		"examine_data" = get_examine_data()
 		)
 	return data

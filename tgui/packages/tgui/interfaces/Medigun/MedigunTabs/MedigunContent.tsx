@@ -11,24 +11,26 @@ export const MedigunContent = (props, context) => {
   const {
     maintenance,
     tankmax,
-    Generator,
-    Gridstatus,
-    powerCellStatus,
-    PhoronStatus,
-    BrutehealCharge,
-    BurnhealCharge,
-    ToxhealCharge,
-    BrutehealVol,
-    BurnhealVol,
-    ToxhealVol,
-    patientname,
-    patienthealth,
-    patientbrute,
-    patientburn,
-    patienttox,
-    patientoxy,
-    bloodStatus,
-    patientstatus,
+    generator,
+    gridstatus,
+    power_cell_status,
+    phoron_status,
+    bruteheal_charge,
+    burnheal_charge,
+    toxheal_charge,
+    bruteheal_vol,
+    burnheal_vol,
+    toxheal_vol,
+    patient_name,
+    patient_health,
+    patient_brute,
+    patient_burn,
+    patient_tox,
+    patient_oxy,
+    blood_status,
+    patient_status,
+    organ_damage,
+    inner_bleeding,
   } = data;
 
   return (
@@ -39,7 +41,7 @@ export const MedigunContent = (props, context) => {
             <LabeledList.Item label="Power Cell">
               {maintenance ? (
                 <Box color="red">Maintenance Hatch Open</Box>
-              ) : powerCellStatus !== null ? (
+              ) : power_cell_status !== null ? (
                 <ProgressBar
                   ranges={{
                     good: [50, Infinity],
@@ -48,35 +50,35 @@ export const MedigunContent = (props, context) => {
                   }}
                   minValue={0}
                   maxValue={100}
-                  value={powerCellStatus}
+                  value={power_cell_status}
                 />
               ) : (
                 <Box color="red">Missing Cell</Box>
               )}
             </LabeledList.Item>
-            {Gridstatus !== 3 && (
+            {gridstatus !== 3 && (
               <LabeledList.Item
                 label="Wireless Power"
-                color={gridStatusToColor[Gridstatus]}>
-                {gridStatusToText[Gridstatus] || 'Unavailable'}
+                color={gridStatusToColor[gridstatus]}>
+                {gridStatusToText[gridstatus] || 'Unavailable'}
               </LabeledList.Item>
             )}
             <LabeledList.Item
               label="Phoron Generator"
-              color={powerToColor[Generator]}
+              color={powerToColor[generator]}
               buttons={
                 <Button
-                  content={Generator ? 'On' : 'Off'}
-                  selected={Generator}
-                  color={Generator ? '' : 'bad'}
+                  content={generator ? 'On' : 'Off'}
+                  selected={generator}
+                  color={generator ? '' : 'bad'}
                   onClick={() => act('gentoggle')}
                 />
               }>
-              [ {powerToText[Generator] || 'Unavailable'} ]
+              [ {powerToText[generator] || 'Unavailable'} ]
             </LabeledList.Item>
-            {PhoronStatus !== null ? (
+            {phoron_status !== null ? (
               <LabeledList.Item label="Phoron Volume">
-                <ProgressBar color="pink" value={PhoronStatus} />
+                <ProgressBar color="pink" value={phoron_status} />
               </LabeledList.Item>
             ) : (
               <Box color="red">Missing Bin</Box>
@@ -90,23 +92,23 @@ export const MedigunContent = (props, context) => {
             <ChargeStatus
               name="Brute Charge"
               color="bad"
-              charge={BrutehealCharge}
+              charge={bruteheal_charge}
               max={tankmax}
-              volume={BrutehealVol}
+              volume={bruteheal_vol}
             />
             <ChargeStatus
               name="Burn Charge"
               color="average"
-              charge={BurnhealCharge}
+              charge={burnheal_charge}
               max={tankmax}
-              volume={BurnhealVol}
+              volume={burnheal_vol}
             />
             <ChargeStatus
               name="Tox Charge"
               color="good"
-              charge={ToxhealCharge}
+              charge={toxheal_charge}
               max={tankmax}
-              volume={ToxhealVol}
+              volume={toxheal_vol}
             />
           </LabeledList>
         </Section>
@@ -114,18 +116,18 @@ export const MedigunContent = (props, context) => {
       <Stack.Item grow>
         <Section fill title="Patient Status">
           <Stack vertical fill>
-            {patienthealth !== null &&
-            patientbrute !== null &&
-            patientburn !== null &&
-            patienttox !== null &&
-            patientoxy !== null ? (
+            {patient_health !== null &&
+            patient_brute !== null &&
+            patient_burn !== null &&
+            patient_tox !== null &&
+            patient_oxy !== null ? (
               <Fragment>
                 <Stack.Item>
                   <LabeledList>
                     <LabeledList.Item label="Name">
-                      {patientname ? (
+                      {patient_name ? (
                         <Stack>
-                          <Stack.Item grow>{patientname}</Stack.Item>
+                          <Stack.Item grow>{patient_name}</Stack.Item>
                           <Stack.Item>
                             <Button
                               color="red"
@@ -138,7 +140,7 @@ export const MedigunContent = (props, context) => {
                         'No Target'
                       )}
                     </LabeledList.Item>
-                    {!!data.patientname && (
+                    {!!data.patient_name && (
                       <>
                         <LabeledList.Item label="Total Health">
                           <ProgressBar
@@ -147,42 +149,53 @@ export const MedigunContent = (props, context) => {
                               average: [0.25, 0.5],
                               bad: [-Infinity, 0.25],
                             }}
-                            value={patienthealth}>
-                            {patientstatus ? (
-                              <Stack>
-                                <Stack.Item grow />
+                            value={patient_health}>
+                            <Stack>
+                              <Stack.Item grow />
+                              {!!organ_damage && (
                                 <Stack.Item>
-                                  <Blink>
-                                    <Box
-                                      bold
-                                      color={statToColor[patientstatus]}>
-                                      {statToString[patientstatus]}
-                                    </Box>
-                                  </Blink>
+                                  <Box bold>Organ Damage!</Box>
                                 </Stack.Item>
+                              )}
+
+                              {!!patient_status && (
                                 <Stack.Item>
-                                  {`${(patienthealth * 100).toFixed()}%`}
+                                  <Box bold color={statToColor[patient_status]}>
+                                    {statToString[patient_status]}
+                                  </Box>
                                 </Stack.Item>
-                              </Stack>
-                            ) : (
-                              `${statToString[patientstatus || 0]} ${(
-                                patienthealth * 100
-                              ).toFixed()}%`
-                            )}
+                              )}
+                              <Stack.Item>
+                                {`${(patient_health * 100).toFixed()}%`}
+                              </Stack.Item>
+                            </Stack>
                           </ProgressBar>
                         </LabeledList.Item>
                         <LabeledList.Item label="Blood Volume">
-                          {bloodStatus ? (
+                          {blood_status ? (
                             <ProgressBar
                               color="red"
                               value={
-                                bloodStatus.volume / bloodStatus.max_volume
-                              }
-                            />
+                                blood_status.volume / blood_status.max_volume
+                              }>
+                              <Stack>
+                                <Stack.Item grow />
+                                {!!inner_bleeding && (
+                                  <Stack.Item grow>
+                                    <Box bold>Inner Bleeding!</Box>
+                                  </Stack.Item>
+                                )}
+                                <Stack.Item grow>
+                                  {(
+                                    (blood_status.volume /
+                                      blood_status.max_volume) *
+                                    100
+                                  ).toFixed()}
+                                </Stack.Item>
+                              </Stack>
+                            </ProgressBar>
                           ) : (
-                            <Blink>
-                              <Box color="red">No Blood Detected</Box>
-                            </Blink>
+                            <Box color="red">No Blood Detected</Box>
                           )}
                         </LabeledList.Item>
                       </>
@@ -190,25 +203,25 @@ export const MedigunContent = (props, context) => {
                   </LabeledList>
                 </Stack.Item>
                 <Stack.Item>
-                  {!!data.patientname && (
+                  {!!data.patient_name && (
                     <Stack>
                       <Stack.Item width="200px">
                         <LabeledList>
                           <LabeledList.Item label="Brute Damage">
-                            <Box color="red">{patientbrute}</Box>
+                            <Box color="red">{patient_brute}</Box>
                           </LabeledList.Item>
                           <LabeledList.Item label="Burn Damage">
-                            <Box color="orange">{patientburn}</Box>
+                            <Box color="orange">{patient_burn}</Box>
                           </LabeledList.Item>
                         </LabeledList>
                       </Stack.Item>
                       <Stack.Item>
                         <LabeledList>
                           <LabeledList.Item label="Tox Damage">
-                            <Box color="green">{patienttox}</Box>
+                            <Box color="green">{patient_tox}</Box>
                           </LabeledList.Item>
                           <LabeledList.Item label="Oxy Damage">
-                            <Box color="blue">{patientoxy}</Box>
+                            <Box color="blue">{patient_oxy}</Box>
                           </LabeledList.Item>
                         </LabeledList>
                       </Stack.Item>
