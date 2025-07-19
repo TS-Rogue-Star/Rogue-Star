@@ -4,7 +4,6 @@
 		ui = new(user, src, "Medigun", name)
 		ui.open()
 
-
 /obj/item/device/medigun_backpack/tgui_status(mob/user, datum/tgui_state/state)
 	if(!bcell)
 		return STATUS_CLOSE

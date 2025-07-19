@@ -79,7 +79,7 @@
 		bcell.give(delta)
 		A.use_power_oneoff(delta*100, EQUIP)
 		gridstatus = 2
-		if(chargung && ismob(loc))
+		if(charging && ismob(loc))
 			to_chat(loc, span_notice("With the grid connection enabled, the phoron generator sputters then stops."))
 		charging = FALSE
 	return TRUE
