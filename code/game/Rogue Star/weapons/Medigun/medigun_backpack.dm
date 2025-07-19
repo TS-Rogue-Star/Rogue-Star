@@ -348,8 +348,7 @@
 		if(!maintenance)
 			maintenance = TRUE
 			to_chat(user, span_notice("You open the maintenance hatch on \the [src]."))
-			if(!containsgun)
-				reattach_medigun(user)
+			reattach_medigun(user)
 			return
 
 		maintenance = FALSE
@@ -592,22 +591,24 @@
 	reattach_medigun(user) //medigun attached to a base unit should never exist outside of their base unit or the mob equipping the base unit
 
 /obj/item/device/medigun_backpack/proc/reattach_medigun(mob/user)
-	if(!containsgun)
-		containsgun = TRUE
-		if(!medigun)
-			return
-		if(medigun.busy)
-			medigun.busy = MEDIGUN_IDLE
-		replace_icon()
-		user.update_inv_back()
-		if(ismob(medigun.loc))
-			var/mob/M = medigun.loc
-			if(M.drop_from_inventory(medigun, src))
-				to_chat(user, span_notice("\The [medigun] snaps back into the main unit."))
-			return
+	if(containsgun)
+		return
 
-		medigun.forceMove(src)
-		to_chat(user, span_notice("\The [medigun] snaps back into the main unit."))
+	containsgun = TRUE
+	if(!medigun)
+		return
+	if(medigun.busy)
+		medigun.busy = MEDIGUN_IDLE
+	replace_icon()
+	user.update_inv_back()
+	if(ismob(medigun.loc))
+		var/mob/M = medigun.loc
+		if(M.drop_from_inventory(medigun, src))
+			to_chat(user, span_notice("\The [medigun] snaps back into the main unit."))
+		return
+
+	medigun.forceMove(src)
+	to_chat(user, span_notice("\The [medigun] snaps back into the main unit."))
 
 /obj/item/device/medigun_backpack/proc/checked_use(var/charge_amt)
 	return (bcell && bcell.checked_use(charge_amt))
