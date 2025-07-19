@@ -166,11 +166,11 @@
 			if(H.stat == DEAD)
 				continue
 			var/lastier = medigun_base_unit.slaser.get_rating()
-			if(lastier >= 5)
-				H.add_modifier(/datum/modifier/medbeameffect, 2 SECONDS)
+			//if(lastier >= 5)
+			H.add_modifier(/datum/modifier/medbeameffect, 2 SECONDS)
 
 			var/healmod = lastier
-			if(H.getBruteLoss())
+			/*if(H.getBruteLoss())
 				healmod = min(lastier,medigun_base_unit.brutecharge,H.getBruteLoss())
 				if(medigun_base_unit.brutecharge >= healmod)
 					if(!checked_use(healmod))
@@ -193,7 +193,7 @@
 					else
 						H.adjustFireLoss(-healmod)
 						medigun_base_unit.burncharge -= healmod
-						ishealing = 1
+						ishealing = 1*/
 			if(H.getToxLoss())
 				healmod = min(lastier,medigun_base_unit.toxcharge,H.getToxLoss())
 				if(medigun_base_unit.toxcharge >= healmod)
@@ -213,35 +213,52 @@
 					break
 				H.adjustOxyLoss(-healmod)
 				ishealing = 1
-			var/treated = 0
-			for(var/name in list(BP_HEAD, BP_L_HAND, BP_R_HAND, BP_L_ARM, BP_R_ARM, BP_L_FOOT, BP_R_FOOT, BP_L_LEG, BP_R_LEG, BP_GROIN, BP_TORSO))
-				var/obj/item/organ/external/O = H.organs_by_name[name]
-				for(var/datum/wound/W in O.wounds)
-					if (W.internal)
-						continue
-					if (W.bandaged && W.disinfected)
-						continue
-					if (W.damage_type == BRUISE || W.damage_type == CUT || W.damage_type == PIERCE)
-						if(medigun_base_unit.brutecharge >= 1)
-							if(W.damage <= 1)
-								O.wounds -= W
-								medigun_base_unit.brutecharge -= 1
-							else if(medigun_base_unit.brutecharge >= healmod)
-								W.damage -= healmod
-								medigun_base_unit.brutecharge -= healmod
-							O.update_damages()
-							treated = 1
-					if (W.damage_type == BURN)
-						if(medigun_base_unit.burncharge >= 1)
-							if(W.damage <= 1)
-								O.wounds -= W
-								medigun_base_unit.burncharge -= 1
-							treated = 1
-					if(treated)
+			healmod = lastier //Resets For while loop below
+			var/loopcheck = lastier
+			while(healmod > 0 && loopcheck > 0 && ((H.getFireLoss() && medigun_base_unit.burncharge >= 1) || (H.getBruteLoss() && medigun_base_unit.burncharge >= 1)))
+				for(var/name in list(BP_HEAD, BP_L_HAND, BP_R_HAND, BP_L_ARM, BP_R_ARM, BP_L_FOOT, BP_R_FOOT, BP_L_LEG, BP_R_LEG, BP_GROIN, BP_TORSO))
+					var/obj/item/organ/external/O = H.organs_by_name[name]
+					for(var/datum/wound/W in O.wounds)
+						if (W.internal)
+							continue
+						//if (W.bandaged && W.disinfected)
+						//	continue
+						if (W.damage_type == BRUISE || W.damage_type == CUT || W.damage_type == PIERCE)
+							if(medigun_base_unit.brutecharge >= 1)
+								if(W.damage <= 1)
+									O.wounds -= W
+									medigun_base_unit.brutecharge -= 1
+									ishealing = 1
+								else if(medigun_base_unit.brutecharge >= 1)
+									W.damage -= 1
+									medigun_base_unit.brutecharge -= 1
+									healmod -= 1
+									ishealing = 1
+						if (W.damage_type == BURN)
+							if(medigun_base_unit.burncharge >= 1)
+								if(W.damage <= 1)
+									O.wounds -= W
+									medigun_base_unit.burncharge -= 1
+									ishealing = 1
+								else if(medigun_base_unit.burncharge >= 1)
+									W.damage -= 1
+									medigun_base_unit.burncharge -= 1
+									healmod -= 1
+									ishealing = 1
+						if(healmod <= 0)
+							break
+					if(healmod <= 0)
 						break
+				loopcheck --
 			//if(medigun_base_unit.brutecharge <= 0 || medigun_base_unit.burncharge <= 0 || medigun_base_unit.toxcharge <= 0)
 			medigun_base_unit.update_icon()
 			//if(medigun_base_unit.slaser.get_rating() >= 5)
+
+		//Blood regeneration if there is some space
+			if(lastier >= 5)
+				if(H.vessel.get_reagent_amount("blood") < H.species.blood_volume)
+					var/datum/reagent/blood/B = locate() in H.vessel.reagent_list //Grab some blood
+					B.volume += min(5, (H.species.blood_volume - H.vessel.get_reagent_amount("blood")))// regenerate blood
 
 			if(ishealing != washealing) // Either we stopped or started healing this cycle
 				if(ishealing)
