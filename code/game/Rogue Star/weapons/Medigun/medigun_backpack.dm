@@ -22,8 +22,8 @@
 	var/obj/item/weapon/stock_parts/manipulator/smanipulator = /obj/item/weapon/stock_parts/manipulator
 	var/obj/item/weapon/stock_parts/capacitor/scapacitor = /obj/item/weapon/stock_parts/capacitor
 	var/obj/item/weapon/stock_parts/micro_laser/slaser = /obj/item/weapon/stock_parts/micro_laser
+	var/charging = FALSE
 	var/phoronvol = 0
-	var/charging = 0
 	var/brutecharge = 0
 	var/toxcharge = 0
 	var/burncharge = 0
@@ -38,7 +38,7 @@
 	var/sbintier = 1
 	var/gridstatus = 0
 	var/chargecap = 1000
-	var/kenzie = 0
+	var/kenzie = FALSE
 
 //backpack item
 /obj/item/device/medigun_backpack/cmo
@@ -79,6 +79,9 @@
 		bcell.give(delta)
 		A.use_power_oneoff(delta*100, EQUIP)
 		gridstatus = 2
+		if(chargung && ismob(loc))
+			to_chat(loc, span_notice("With the grid connection enabled, the phoron generator sputters then stops."))
+		charging = FALSE
 	return TRUE
 
 /obj/item/device/medigun_backpack/proc/adjust_brutevol(modifier)
@@ -131,11 +134,19 @@
 
 		if(icon_needs_update)
 			update_icon()
+	else
+		if(ismob(loc))
+			to_chat(loc, span_warning("With a sudden whirr, the phoron generator spins up."))
+		charging = TRUE
 
-	if(bcell && scapacitor.get_rating()>= 5 && charging == 0)
+	if(!bcell)
+		return
+
+	if(scapacitor.get_rating() >= 5)
 		apc_charge()
+		return
 
-	if(!bcell || !charging)
+	if(!charging)
 		return
 
 	if((bcell.amount_missing() >= 50))
@@ -146,9 +157,8 @@
 			return
 
 		if(ismob(loc))
-			var/mob/user = loc
-			to_chat(user, span_notice("The phoron generator sputters then stops."))
-		charging = 0
+			to_chat(loc, span_notice("The phoron generator sputters then stops."))
+		charging = FALSE
 
 /obj/item/device/medigun_backpack/get_cell()
 	return bcell
@@ -245,10 +255,10 @@
 	//to_chat(world, span_notice("bark [user.real_name] \ [slot] \ [user.ckey]"))
 	if(slot == slot_back || slot == slot_s_store)
 		if(user.real_name == "Kenzie Houser" && user.ckey == "memewuff")
-			kenzie = 1
+			kenzie = TRUE
 			to_chat(user, span_notice("Epic Lasagna Wolf Detected, Engaging BAD ASS MODE."))
 		else
-			kenzie = 0
+			kenzie = FALSE
 			//to_chat(world, span_notice("Not Kenzie"))
 		replace_icon()
 	..()
@@ -256,12 +266,12 @@
 /obj/item/device/medigun_backpack/ui_action_click()
 	if(charging)
 		to_chat(usr, span_notice("You disable the phoron generator."))
-		charging = 0
+		charging = FALSE
 		return
 
 	if(phoronvol > 0)
 		to_chat(usr, span_notice("You enable the phoron generator."))
-		charging = 1
+		charging = TRUE
 		return
 
 	to_chat(usr, span_warning("Not Enough Phoron stored."))
@@ -577,7 +587,7 @@
 
 /obj/item/device/medigun_backpack/dropped(mob/user)
 	..()
-	kenzie = 0
+	kenzie = FALSE
 	replace_icon()
 	reattach_medigun(user) //medigun attached to a base unit should never exist outside of their base unit or the mob equipping the base unit
 
