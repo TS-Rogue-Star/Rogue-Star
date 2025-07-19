@@ -15,7 +15,7 @@ export const MedigunParts = (
     <Section
       fill
       title="Installed Modules"
-      button={
+      buttons={
         <Button
           onClick={() => act('toggle_maintenance')}
           selected={maintenance}
