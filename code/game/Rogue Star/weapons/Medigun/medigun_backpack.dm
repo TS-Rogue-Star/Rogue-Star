@@ -109,6 +109,9 @@
 	toxcharge += modifier
 
 /obj/item/device/medigun_backpack/process()
+	if(!bcell)
+		return
+
 	if(bcell.charge >= 10)
 		var/icon_needs_update = FALSE
 		if(brutecharge < tankmax && brutevol > 0 && (bcell.checked_use(smaniptier * 2)))
@@ -134,17 +137,13 @@
 
 		if(icon_needs_update)
 			update_icon()
-	else
+	else if(!charging)
 		if(ismob(loc))
 			to_chat(loc, span_warning("With a sudden whirr, the phoron generator spins up."))
 		charging = TRUE
 
-	if(!bcell)
-		return
-
 	if(scapacitor.get_rating() >= 5)
 		apc_charge()
-		return
 
 	if(!charging)
 		return
@@ -478,6 +477,7 @@
 		if(!(container.flags & OPENCONTAINER))
 			to_chat(user, span_warning("You need to open the [container] first!"))
 			return
+
 		var/reagentwhitelist = list("bicaridine", "anti_toxin", "kelotane", "dermaline", "phoron")//, "tricordrazine")
 
 		for(var/G in container.reagents.reagent_list)
