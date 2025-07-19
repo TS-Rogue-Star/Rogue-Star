@@ -10,6 +10,10 @@
 	icon_edge = 'maps/sirius_point/sp_asteroid_edge.dmi'
 	sand_icon_path = 'maps/sirius_point/sp_asteroid.dmi'
 	sand_icon_state = "asteroid"
+/turf/simulated/mineral/moonbase/ignore_mapgen
+	ignore_mapgen = 1
+	ignore_cavegen = 1
+	ignore_oregen  = 1
 
 //Air-y moonrock walls
 /turf/simulated/mineral/cave/moonbase
@@ -36,6 +40,10 @@
 	sand_icon_state = "asteroid"
 	edge_blending_priority = 4
 	temperature = TCMB
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen
+	ignore_mapgen = 1
+	ignore_cavegen = 1
+	ignore_oregen  = 1
 /turf/simulated/floor/plating/external/moonbaseplating
 	icon = 'maps/sirius_point/sp_asteroid.dmi'
 	icon_state = "asteroidfloor"

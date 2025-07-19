@@ -3206,6 +3206,12 @@
 /obj/effect/catwalk_plated,
 /turf/simulated/floor/plating/eris,
 /area/janitor)
+"bRc" = (
+/obj/structure/bed/chair/sofa/left/black{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/level1/west)
 "bRp" = (
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 10
@@ -3793,6 +3799,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/west)
+"clB" = (
+/obj/effect/map_effect/portal/line/side_a{
+	dir = 8
+	},
+/turf/simulated/floor/plating/external/moonbaseplating,
+/area/moonbase/surface/levelone/east)
 "clJ" = (
 /obj/structure/cable{
 	icon_state = "1-8"
@@ -3867,6 +3879,16 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/central)
+"cmX" = (
+/obj/structure/railing/grey{
+	dir = 1
+	},
+/obj/effect/map_effect/portal/master/side_a{
+	dir = 8;
+	portal_id = "sp_east"
+	},
+/turf/simulated/floor/plating/external/moonbaseplating,
+/area/moonbase/surface/levelone/east)
 "cni" = (
 /obj/structure/table/steel,
 /obj/item/weapon/packageWrap,
@@ -7062,6 +7084,13 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/westhall)
+"evq" = (
+/obj/structure/railing/grey,
+/obj/effect/map_effect/portal/line/side_a{
+	dir = 8
+	},
+/turf/simulated/floor/plating/external/moonbaseplating,
+/area/moonbase/surface/levelone/east)
 "evC" = (
 /obj/effect/floor_decal/steeldecal/steel_decals10,
 /obj/effect/floor_decal/steeldecal/steel_decals10{
@@ -7452,6 +7481,10 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /turf/simulated/floor/tiled/monotile,
 /area/bridge)
+"eOi" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/simulated/floor/plating/external/outdoors,
+/area/moonbase/surface/levelone/west)
 "eOv" = (
 /obj/structure/catwalk,
 /obj/structure/cable{
@@ -8726,6 +8759,12 @@
 /obj/item/stack/material/phoron,
 /turf/simulated/floor/tiled/white,
 /area/medical/chemistry)
+"fIX" = (
+/obj/effect/map_effect/portal/line/side_a{
+	dir = 4
+	},
+/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/area/moonbase/surface/levelone/west)
 "fJB" = (
 /obj/structure/railing/grey,
 /obj/structure/cable{
@@ -9020,6 +9059,13 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/quartermaster/moonbase/lockerrom)
+"fUb" = (
+/obj/structure/table/steel_reinforced,
+/obj/item/weapon/storage/toolbox/mechanical{
+	pixel_y = 5
+	},
+/turf/simulated/floor/plating/external/outdoors,
+/area/moonbase/surface/levelone/west)
 "fUw" = (
 /turf/space/cracked_asteroid/moonbase/outdoors,
 /area/moonbase/surface/levelone/north)
@@ -9538,7 +9584,7 @@
 /turf/simulated/floor/tiled,
 /area/engineering/engineering_monitoring)
 "goW" = (
-/obj/structure/bed/chair/sofa/corner/orange,
+/obj/structure/bed/chair/sofa/corner/black,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/west)
 "gpc" = (
@@ -10265,11 +10311,8 @@
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/shop)
 "gTa" = (
-/obj/structure/stairs/spawner/north,
-/obj/structure/railing/grey{
-	dir = 8
-	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/obj/structure/vehiclecage/quadbike,
+/turf/simulated/floor/plating/external/outdoors,
 /area/moonbase/surface/levelone/west)
 "gUi" = (
 /obj/structure/table/steel,
@@ -10466,7 +10509,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/external/moonbaseplating/outdoors,
-/area/moonbase/surface/levelone/west)
+/area/engineering/moonbase/eva)
 "hbT" = (
 /obj/structure/railing/grey{
 	dir = 8
@@ -10721,6 +10764,12 @@
 	},
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology/xenoflora)
+"hjj" = (
+/obj/structure/railing/grey{
+	dir = 4
+	},
+/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/area/ai_monitored/storage/eva)
 "hjk" = (
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
@@ -14589,6 +14638,10 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/rnd/research_storage)
+"jSa" = (
+/obj/structure/bed/chair/sofa/right/black,
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/level1/west)
 "jSb" = (
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -17108,6 +17161,12 @@
 /obj/structure/cable/green,
 /turf/simulated/floor/tiled/monotile,
 /area/crew_quarters/bar)
+"lzX" = (
+/obj/structure/railing/grey{
+	dir = 4
+	},
+/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/area/engineering/moonbase/eva)
 "lAO" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -19637,6 +19696,9 @@
 	},
 /turf/simulated/floor/carpet/turcarpet,
 /area/library)
+"nxL" = (
+/turf/simulated/wall/r_wall,
+/area/moonbase/surface/levelone/east)
 "nxQ" = (
 /obj/effect/floor_decal/milspec/color/orange/half{
 	dir = 8
@@ -19714,6 +19776,9 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/rnd/research_foyer)
+"nAE" = (
+/turf/simulated/floor/plating/external/outdoors,
+/area/moonbase/surface/levelone/west)
 "nAR" = (
 /obj/effect/floor_decal/steeldecal/steel_decals4,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -23502,6 +23567,13 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/ai_monitored/storage/eva)
+"qnc" = (
+/obj/effect/map_effect/portal/master/side_a{
+	dir = 4;
+	portal_id = "sp_west"
+	},
+/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/area/moonbase/surface/levelone/west)
 "qnI" = (
 /obj/structure/stairs/spawner/east,
 /obj/structure/railing,
@@ -23583,7 +23655,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/east)
 "qsA" = (
-/obj/structure/bed/chair/sofa/orange,
+/obj/structure/bed/chair/sofa/black,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/west)
 "qsK" = (
@@ -24825,8 +24897,12 @@
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/westhall)
 "rno" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ai_upload_foyer)
 "rnq" = (
@@ -26118,7 +26194,8 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/obj/structure/vehiclecage/quadbike,
+/turf/simulated/floor/plating/external/outdoors,
 /area/moonbase/surface/levelone/west)
 "sfy" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -27253,6 +27330,9 @@
 	},
 /turf/simulated/floor/carpet/green,
 /area/library)
+"sPd" = (
+/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/area/engineering/moonbase/eva)
 "sPX" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -28980,7 +29060,7 @@
 	pixel_y = -32
 	},
 /turf/simulated/floor/plating/external/moonbaseplating/outdoors,
-/area/moonbase/surface/levelone/west)
+/area/ai_monitored/storage/eva)
 "uam" = (
 /obj/structure/flora/pottedplant/orientaltree,
 /obj/machinery/camera/network/command{
@@ -30490,6 +30570,10 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/moonbase/techstorage)
+"vlu" = (
+/obj/structure/table/steel_reinforced,
+/turf/simulated/floor/plating/external/outdoors,
+/area/moonbase/surface/levelone/west)
 "vlZ" = (
 /obj/effect/floor_decal/milspec/color/red/half{
 	dir = 8
@@ -32276,6 +32360,9 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/medical/morgue)
+"wEj" = (
+/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/area/ai_monitored/storage/eva)
 "wFP" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5,
 /turf/simulated/floor/tiled,
@@ -32371,6 +32458,11 @@
 	},
 /turf/simulated/floor/carpet/sblucarpet,
 /area/crew_quarters/heads/hop)
+"wJG" = (
+/obj/structure/table/steel_reinforced,
+/obj/item/weapon/tool/wrench,
+/turf/simulated/floor/plating/external/outdoors,
+/area/moonbase/surface/levelone/west)
 "wJJ" = (
 /obj/structure/railing/grey{
 	dir = 8
@@ -32944,7 +33036,7 @@
 /turf/simulated/floor/carpet/green,
 /area/storage/art)
 "xfF" = (
-/obj/structure/bed/chair/sofa/left/orange{
+/obj/structure/bed/chair/sofa/black{
 	dir = 8
 	},
 /turf/simulated/floor/plating,
@@ -34726,11 +34818,11 @@ roX
 roX
 roX
 roX
-roX
-roX
-roX
-roX
-ojZ
+ran
+qnc
+fIX
+fIX
+rsD
 ojZ
 ojZ
 ojZ
@@ -34868,11 +34960,11 @@ roX
 roX
 roX
 roX
-roX
-roX
-roX
-roX
-ojZ
+ran
+tCA
+tCA
+tCA
+rsD
 ojZ
 ojZ
 ojZ
@@ -35011,9 +35103,9 @@ fgg
 fgg
 fgg
 fgg
-fgg
-fgg
-fgg
+tCA
+tCA
+tCA
 vNb
 vNb
 vNb
@@ -35153,9 +35245,9 @@ fgg
 fgg
 fgg
 fgg
-fgg
-fgg
-fgg
+tCA
+tCA
+tCA
 vNb
 vNb
 vNb
@@ -35295,9 +35387,9 @@ fgg
 fgg
 fgg
 fgg
-fgg
-fgg
-fgg
+tCA
+tCA
+tCA
 vNb
 vNb
 vNb
@@ -35437,9 +35529,9 @@ fgg
 fgg
 fgg
 fgg
-fgg
-fgg
-fgg
+tCA
+tCA
+tCA
 vNb
 vNb
 vNb
@@ -35579,9 +35671,9 @@ fgg
 fgg
 fgg
 fgg
-fgg
-fgg
-fgg
+tCA
+tCA
+tCA
 vNb
 vNb
 vNb
@@ -35721,9 +35813,9 @@ fgg
 fgg
 fgg
 fgg
-fgg
-fgg
-fgg
+tCA
+tCA
+tCA
 vNb
 vNb
 vNb
@@ -35863,9 +35955,9 @@ fgg
 fgg
 fgg
 fgg
-fgg
-fgg
-fgg
+tCA
+tCA
+tCA
 vNb
 vNb
 vNb
@@ -36005,9 +36097,9 @@ fgg
 fgg
 fgg
 fgg
-fgg
-fgg
-fgg
+tCA
+tCA
+tCA
 vNb
 vNb
 vNb
@@ -36147,9 +36239,9 @@ fgg
 fgg
 fgg
 fgg
-fgg
-fgg
-fgg
+tCA
+tCA
+tCA
 vNb
 vNb
 vNb
@@ -36285,13 +36377,13 @@ fgg
 fgg
 fgg
 fgg
+jJq
 fgg
 fgg
 fgg
-fgg
-fgg
-fgg
-fgg
+tCA
+tCA
+tCA
 vNb
 vNb
 vNb
@@ -36431,9 +36523,9 @@ fgg
 fgg
 fgg
 fgg
-fgg
-fgg
-fgg
+tCA
+tCA
+tCA
 vNb
 vNb
 vNb
@@ -36573,9 +36665,9 @@ fgg
 fgg
 fgg
 fgg
-fgg
-fgg
-fgg
+tCA
+tCA
+tCA
 vNb
 vNb
 vNb
@@ -36715,9 +36807,9 @@ fgg
 fgg
 fgg
 fgg
-fgg
-fgg
-fgg
+tCA
+tCA
+tCA
 vNb
 vNb
 vNb
@@ -36857,9 +36949,9 @@ fgg
 fgg
 fgg
 fgg
-fgg
-fgg
-fgg
+tCA
+tCA
+tCA
 vNb
 vNb
 vNb
@@ -36999,9 +37091,9 @@ fgg
 fgg
 fgg
 fgg
-fgg
-fgg
-fgg
+tCA
+tCA
+tCA
 vNb
 vNb
 vNb
@@ -37141,14 +37233,14 @@ fgg
 fgg
 fgg
 fgg
-fgg
-fgg
-fgg
+tCA
+tCA
+tCA
 vNb
 vNb
 vNb
 vNb
-vNb
+kTJ
 vNb
 vNb
 vNb
@@ -37283,9 +37375,9 @@ fgg
 fgg
 fgg
 fgg
-fgg
-fgg
-fgg
+tCA
+tCA
+tCA
 vNb
 vNb
 vNb
@@ -37424,10 +37516,10 @@ xeq
 xeq
 xeq
 xeq
-fgg
-fgg
-fgg
-fgg
+xeq
+tCA
+tCA
+tCA
 vNb
 vNb
 vNb
@@ -37563,13 +37655,13 @@ glO
 cDm
 xnU
 xnU
+xnU
 gHn
 xnU
 ixo
-fgg
-fgg
-fgg
-fgg
+tCA
+tCA
+tCA
 vNb
 vNb
 vNb
@@ -37705,13 +37797,13 @@ glO
 cDm
 xnU
 xnU
-oZv
-krg
+jSa
+xnU
+xnU
 ixo
-fgg
-fgg
-jJq
-fgg
+tCA
+tCA
+tCA
 vNb
 vNb
 vNb
@@ -37849,11 +37941,11 @@ xnU
 xnU
 qsA
 krg
+krg
 ixo
-fgg
-fgg
-fgg
-fgg
+tCA
+tCA
+tCA
 vNb
 vNb
 vNb
@@ -37991,11 +38083,11 @@ spz
 xnU
 goW
 xfF
+bRc
 ixo
-fgg
-fgg
-fgg
-fgg
+tCA
+tCA
+tCA
 vNb
 vNb
 vNb
@@ -38134,10 +38226,10 @@ xeq
 xeq
 xeq
 xeq
-fgg
-bWT
-fgg
-fgg
+xeq
+tCA
+tCA
+tCA
 vNb
 vNb
 vNb
@@ -38272,14 +38364,14 @@ tDZ
 aDf
 cDm
 xeq
-tCA
-tCA
+vlu
+nAE
 sfx
+gTa
+nAE
 tCA
-fgg
-fgg
-fgg
-fgg
+tCA
+tCA
 vNb
 vNb
 vNb
@@ -38414,14 +38506,14 @@ ouE
 nzj
 rqm
 ixo
+fUb
+nAE
+gTa
+gTa
+nAE
 tCA
 tCA
 tCA
-tCA
-fgg
-fgg
-fgg
-fgg
 vNb
 vNb
 vNb
@@ -38556,14 +38648,14 @@ hBT
 nzj
 rqm
 ixo
+wJG
+nAE
+nAE
+nAE
+nAE
 tCA
 tCA
 tCA
-tCA
-fgg
-fgg
-fgg
-fgg
 vNb
 vNb
 vNb
@@ -38698,14 +38790,14 @@ vuO
 nzj
 rqm
 ixo
+vlu
+nAE
+nAE
+gTa
+nAE
 tCA
 tCA
 tCA
-tCA
-fgg
-fgg
-fgg
-fgg
 vNb
 vNb
 vNb
@@ -38840,14 +38932,14 @@ ccO
 aDf
 dMK
 xeq
+eOi
+nAE
+nAE
+nAE
+nAE
 tCA
 tCA
 tCA
-tCA
-fgg
-fgg
-fgg
-fgg
 vNb
 vNb
 vNb
@@ -38982,14 +39074,14 @@ dst
 aDf
 fJB
 xeq
-gTa
-bYL
+ran
+nAE
+nAE
+nAE
+nAE
 tCA
 tCA
-fgg
-bWT
-fgg
-fgg
+tCA
 vNb
 vNb
 vNb
@@ -39128,10 +39220,10 @@ odf
 oki
 tCA
 tCA
-fgg
-fgg
-fgg
-fgg
+tCA
+tCA
+tCA
+tCA
 vNb
 vNb
 vNb
@@ -39266,14 +39358,14 @@ jbt
 aDf
 guD
 xeq
+ran
 upH
 tCA
 tCA
 tCA
-fgg
-fgg
-fgg
-fgg
+tCA
+tCA
+tCA
 vNb
 vNb
 vNb
@@ -39408,14 +39500,14 @@ kyX
 hby
 bYL
 bYL
+bYL
 tCA
 tCA
 tCA
 tCA
-fgg
-fgg
-fgg
-fgg
+tCA
+tCA
+tCA
 vNb
 vNb
 vNb
@@ -39547,6 +39639,7 @@ lpT
 rUI
 uWm
 kyX
+sPd
 tCA
 tCA
 tCA
@@ -39554,10 +39647,9 @@ tCA
 tCA
 tCA
 tCA
-fgg
-fgg
-fgg
-fgg
+tCA
+tCA
+tCA
 vNb
 vNb
 vNb
@@ -39689,17 +39781,17 @@ pRW
 sav
 kjr
 aSv
+lzX
 oki
 oki
-oki
-oki
-tCA
+hjj
+wEj
 tZJ
+wEj
 tCA
-fgg
-fgg
-fgg
-fgg
+tCA
+tCA
+tCA
 vNb
 vNb
 vNb
@@ -39838,12 +39930,12 @@ xbu
 sgm
 sgm
 xbu
-fgg
-bWT
-fgg
-fgg
+tCA
+tCA
+tCA
+tCA
 vNb
-xQn
+vNb
 vNb
 vNb
 vNb
@@ -39985,7 +40077,7 @@ fRN
 fRN
 fRN
 vNb
-vNb
+xQn
 vNb
 vNb
 vNb
@@ -54262,11 +54354,11 @@ vXZ
 vXZ
 vXZ
 vXZ
-vXZ
+nxL
 brU
 cLx
 tbl
-vXZ
+nxL
 vXZ
 vXZ
 vXZ
@@ -54404,11 +54496,11 @@ vXZ
 vXZ
 vXZ
 vXZ
-vXZ
-brU
-cLx
-tbl
-vXZ
+nxL
+cmX
+clB
+evq
+nxL
 vXZ
 vXZ
 vXZ

@@ -325,6 +325,8 @@
 // The Surface //
 /////////////////
 
+//level one is Z-level 2
+
 /area/moonbase/surface
 	name = "Sirius Point Exterior"
 	ambience = list('sound/ambience/ambimine.ogg', 'sound/goonstation/spooky/Somewhere_Tone.ogg', 'sound/goonstation/spooky/Void_Song.ogg', 'sound/music/main.ogg', 'sound/music/space.ogg')
@@ -334,10 +336,15 @@
 	flags = AREA_FLAG_IS_NOT_PERSISTENT
 	sound_env = SOUND_ENVIRONMENT_MOUNTAINS
 
+/area/moonbase/surface/east_crater
+	name = "Styx Crater"
+/area/moonbase/surface/west_crater
+	name = "Acheron Crater"
+
 /area/moonbase/surface/underground
 	name = "Sirius Point Underground"
-	base_turf = /turf/simulated/mineral/floor/vacuum/moonbase/outdoors
-//level one is Z-level 2
+	base_turf = /turf/simulated/mineral/floor/vacuum/moonbase
+
 /area/moonbase/surface/levelone/north
 	name = "Northern Sirius Point Level One"
 /area/moonbase/surface/levelone/south
