@@ -172,7 +172,7 @@
 	if(should_stop(H, user, user.get_active_hand()))
 		return
 
-	if(do_after(user, 10, ignore_movement = 1))
+	if(do_after(user, 10, ignore_movement = TRUE, needhand = medigun_base_unit.is_twohanded()))
 		var/washealing = ishealing // Did we heal last cycle
 		ishealing = FALSE // The default is 'we didn't heal this cycle'
 		if(!checked_use(5))
