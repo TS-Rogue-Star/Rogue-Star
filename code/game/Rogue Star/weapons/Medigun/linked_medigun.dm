@@ -250,43 +250,44 @@
 		process_medigun(H, user, filter, ishealing)
 
 /obj/item/device/bork_medigun/linked/proc/process_wounds(mob/living/carbon/human/H, heal_ticks, remaining_strength, ishealing)
-	if(remaining_strength <= 0 || heal_ticks <= 0)
-		return ishealing
-	if((!H.getFireLoss() || medigun_base_unit.burncharge <= 0) && (!H.getBruteLoss() || medigun_base_unit.burncharge <= 0))
-		return ishealing
-
-	for(var/name in BP_ALL)
-		var/obj/item/organ/external/O = H.organs_by_name[name]
-		for(var/datum/wound/W in O.wounds)
-			if (W.internal)
-				continue
-			//if (W.bandaged && W.disinfected)
-			//	continue
-			if (W.damage_type == BRUISE || W.damage_type == CUT || W.damage_type == PIERCE)
-				if(medigun_base_unit.brutecharge >= 1)
-					if(W.damage <= 1)
-						O.wounds -= W
-						medigun_base_unit.brutecharge -= 1
-						ishealing = TRUE
-					else if(medigun_base_unit.brutecharge >= 1)
-						W.damage -= 1
-						medigun_base_unit.brutecharge -= 1
-						remaining_strength -= 1
-						ishealing = TRUE
-			if (W.damage_type == BURN)
-				if(medigun_base_unit.burncharge >= 1)
-					if(W.damage <= 1)
-						O.wounds -= W
-						medigun_base_unit.burncharge -= 1
-						ishealing = TRUE
-					else if(medigun_base_unit.burncharge >= 1)
-						W.damage -= 1
-						medigun_base_unit.burncharge -= 1
-						remaining_strength -= 1
-						ishealing = TRUE
-			if(remaining_strength <= 0)
-				return ishealing
+	while(heal_ticks)
 		if(remaining_strength <= 0)
 			return ishealing
-	heal_ticks--
-	return process_wounds(H, heal_ticks, remaining_strength, ishealing)
+		if((!H.getFireLoss() || medigun_base_unit.burncharge <= 0) && (!H.getBruteLoss() || medigun_base_unit.burncharge <= 0))
+			return ishealing
+
+		for(var/name in BP_ALL)
+			var/obj/item/organ/external/O = H.organs_by_name[name]
+			for(var/datum/wound/W in O.wounds)
+				if (W.internal)
+					continue
+				//if (W.bandaged && W.disinfected)
+				//	continue
+				if (W.damage_type == BRUISE || W.damage_type == CUT || W.damage_type == PIERCE)
+					if(medigun_base_unit.brutecharge >= 1)
+						if(W.damage <= 1)
+							O.wounds -= W
+							medigun_base_unit.brutecharge -= 1
+							ishealing = TRUE
+						else if(medigun_base_unit.brutecharge >= 1)
+							W.damage -= 1
+							medigun_base_unit.brutecharge -= 1
+							remaining_strength -= 1
+							ishealing = TRUE
+				if (W.damage_type == BURN)
+					if(medigun_base_unit.burncharge >= 1)
+						if(W.damage <= 1)
+							O.wounds -= W
+							medigun_base_unit.burncharge -= 1
+							ishealing = TRUE
+						else if(medigun_base_unit.burncharge >= 1)
+							W.damage -= 1
+							medigun_base_unit.burncharge -= 1
+							remaining_strength -= 1
+							ishealing = TRUE
+				if(remaining_strength <= 0)
+					return ishealing
+			if(remaining_strength <= 0)
+				return ishealing
+		heal_ticks--
+	return ishealing
