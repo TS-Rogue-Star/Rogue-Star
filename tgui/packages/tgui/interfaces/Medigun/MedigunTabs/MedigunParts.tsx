@@ -12,7 +12,17 @@ export const MedigunParts = (
   const { smodule, smanipulator, slaser, scapacitor, sbin } = examineData;
 
   return (
-    <Section fill title="Installed Modules">
+    <Section
+      fill
+      title="Installed Modules"
+      button={
+        <Button
+          onClick={() => act('toggle_maintenance')}
+          selected={maintenance}
+          tooltip="Toggle maintenance mode"
+          icon="wrench"
+        />
+      }>
       <Stack vertical fill>
         <Stack.Item>
           <LabeledList>

@@ -89,6 +89,10 @@
 				medigun.busy = MEDIGUN_CANCELLED
 				return TRUE
 
+		if("toggle_maintenance")
+			maintenance = !maintenance
+			return TRUE
+
 		if("rem_smodule")
 			if(!smodule || !maintenance)
 				return FALSE
