@@ -282,7 +282,7 @@
 
 /obj/item/device/medigun_backpack/attack_hand(mob/user)
 	/*if(maintenance)
-		maintenance = 0
+		maintenance = FALSE
 		to_chat(user, span_notice("You close the maintenance hatch on \the [src]."))
 		return*/
 
@@ -346,13 +346,13 @@
 
 	if(W.is_screwdriver())
 		if(!maintenance)
-			maintenance = 1
+			maintenance = TRUE
 			to_chat(user, span_notice("You open the maintenance hatch on \the [src]."))
 			if(!containsgun)
 				reattach_medigun(user)
 			return
 
-		maintenance = 0
+		maintenance = FALSE
 		to_chat(user, span_notice("You close the maintenance hatch on \the [src]."))
 		return
 
