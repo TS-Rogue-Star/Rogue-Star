@@ -168,13 +168,13 @@
 	if(user.client) // If for some reason they logged out mid-scan the box will be gone anyways.
 		delete_box(box_segments, user.client)
 
-/obj/item/device/bork_medigun/linked/proc/process_medigun(mob/living/carbon/human/H, mob/user, filter, ishealing = 0)
+/obj/item/device/bork_medigun/linked/proc/process_medigun(mob/living/carbon/human/H, mob/user, filter, ishealing = FALSE)
 	if(should_stop(H, user, user.get_active_hand()))
 		return
 
 	if(do_after(user, 10, ignore_movement = 1))
 		var/washealing = ishealing // Did we heal last cycle
-		ishealing = 0 // The default is 'we didn't heal this cycle'
+		ishealing = FALSE // The default is 'we didn't heal this cycle'
 		if(!checked_use(5))
 			to_chat(user, span_warning("\The [src] doesn't have enough charge left to do that."))
 			return
@@ -221,14 +221,14 @@
 				else
 					H.adjustToxLoss(-healmod)
 					medigun_base_unit.toxcharge -= healmod
-					ishealing = 1
+					ishealing = TRUE
 		if(H.getOxyLoss())
 			healmod = min(10*lastier,H.getOxyLoss())
 			if(!checked_use(min(10,healmod)))
 				to_chat(user, span_warning("\The [src] doesn't have enough charge left to do that."))
 				return
 			H.adjustOxyLoss(-healmod)
-			ishealing = 1
+			ishealing = TRUE
 
 		ishealing = process_wounds(H, lastier, lastier, ishealing)
 		//if(medigun_base_unit.brutecharge <= 0 || medigun_base_unit.burncharge <= 0 || medigun_base_unit.toxcharge <= 0)
@@ -267,26 +267,26 @@
 					if(W.damage <= 1)
 						O.wounds -= W
 						medigun_base_unit.brutecharge -= 1
-						ishealing = 1
+						ishealing = TRUE
 					else if(medigun_base_unit.brutecharge >= 1)
 						W.damage -= 1
 						medigun_base_unit.brutecharge -= 1
 						remaining_strength -= 1
-						ishealing = 1
+						ishealing = TRUE
 			if (W.damage_type == BURN)
 				if(medigun_base_unit.burncharge >= 1)
 					if(W.damage <= 1)
 						O.wounds -= W
 						medigun_base_unit.burncharge -= 1
-						ishealing = 1
+						ishealing = TRUE
 					else if(medigun_base_unit.burncharge >= 1)
 						W.damage -= 1
 						medigun_base_unit.burncharge -= 1
 						remaining_strength -= 1
-						ishealing = 1
+						ishealing = TRUE
 			if(remaining_strength <= 0)
 				return ishealing
 		if(remaining_strength <= 0)
 			return ishealing
 	heal_ticks--
-	process_wounds(H, heal_ticks, remaining_strength, ishealing)
+	return process_wounds(H, heal_ticks, remaining_strength, ishealing)
