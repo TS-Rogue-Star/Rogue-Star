@@ -17,7 +17,7 @@ export const Medigun = (props, context) => {
   );
 
   return (
-    <Window width={450} height={490}>
+    <Window width={450} height={500}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
