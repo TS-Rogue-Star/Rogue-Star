@@ -118,3 +118,84 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 	origin_tech = list(TECH_MATERIAL = 3)
 	siemens_coefficient = 0.9
+
+/obj/item/toy/plushie/portal
+	name = "fluffy goo-wolf plushie"
+	desc = "A gooey white wolf-like plushie with orange markings on the limbs, chin, tail and ears, they appear to be dripping slightly. It has a black skull-like mask over it's face and is wearing a pizza delivery uniform with a nametag depicting the name \"Portal\" on it! It looks incredibly fluffy and soft!"
+	icon = 'icons/vore/custom_items_rs.dmi'
+	icon_state = "portal"
+	pokephrase = "Pizza Delivery~!"
+
+/obj/random/fluff/portalpizza
+	name = "random Portal pizza"
+	desc = "For Portal to bring a randomized pizza!"
+	icon = 'icons/rogue-star/pizza_delivery/items_rs.dmi'
+	icon_state = "pizzabox1"
+	spawn_nothing_percentage = 0
+
+/obj/random/fluff/portalpizza/item_to_spawn()
+	return pick(prob(5);/obj/item/pizzabox/pizzastation/margherita,
+				prob(5);/obj/item/pizzabox/pizzastation/vegetable,
+				prob(5);/obj/item/pizzabox/pizzastation/mushroom,
+				prob(5);/obj/item/pizzabox/pizzastation/meat,
+				prob(5);/obj/item/pizzabox/pizzastation/pineapple,
+				prob(1);/obj/item/pizzabox/pizzastation/donkpocket)
+
+/obj/random/fluff/portalpizza_double
+	name = "second random Portal pizza"
+	desc = "For Portal to bring a second randomized pizza!"
+	icon = 'icons/rogue-star/pizza_delivery/items_rs.dmi'
+	icon_state = "pizzabox1"
+	spawn_nothing_percentage = 50
+
+/obj/random/fluff/portalpizza_double/item_to_spawn()
+	return pick(prob(5);/obj/item/pizzabox/pizzastation/margherita,
+				prob(5);/obj/item/pizzabox/pizzastation/vegetable,
+				prob(5);/obj/item/pizzabox/pizzastation/mushroom,
+				prob(5);/obj/item/pizzabox/pizzastation/meat,
+				prob(5);/obj/item/pizzabox/pizzastation/pineapple,
+				prob(1);/obj/item/pizzabox/pizzastation/donkpocket)
+
+/obj/random/fluff/portalpizza_triple
+	name = "third random Portal pizza"
+	desc = "For Portal to bring a third randomized pizza!"
+	icon = 'icons/rogue-star/pizza_delivery/items_rs.dmi'
+	icon_state = "pizzabox1"
+	spawn_nothing_percentage = 75
+
+/obj/random/fluff/portalpizza_triple/item_to_spawn()
+	return pick(prob(5);/obj/item/pizzabox/pizzastation/margherita,
+				prob(5);/obj/item/pizzabox/pizzastation/vegetable,
+				prob(5);/obj/item/pizzabox/pizzastation/mushroom,
+				prob(5);/obj/item/pizzabox/pizzastation/meat,
+				prob(5);/obj/item/pizzabox/pizzastation/pineapple,
+				prob(1);/obj/item/pizzabox/pizzastation/donkpocket)
+
+/obj/random/fluff/portalside
+	name = "random Portal sidedish"
+	desc = "For Portal to bring a randomized side dish!"
+	icon = 'icons/rogue-star/pizza_delivery/items_rs.dmi'
+	icon_state = "sidedish1"
+	spawn_nothing_percentage = 0
+
+/obj/random/fluff/portalside/item_to_spawn()
+	return pick(prob(5);/obj/item/weapon/reagent_containers/food/snacks/vegetarian_calzone,
+				prob(3);/obj/item/weapon/reagent_containers/food/snacks/meat_calzone,
+				prob(5);/obj/item/weapon/reagent_containers/food/snacks/onionrings,
+				prob(5);/obj/item/weapon/reagent_containers/food/snacks/fries,
+				prob(3);/obj/item/weapon/reagent_containers/food/snacks/chilicheesefries,
+				prob(4);/obj/item/weapon/reagent_containers/food/snacks/cheesyfries,
+				prob(5);/obj/item/weapon/reagent_containers/food/snacks/tossedsalad)
+
+/obj/random/fluff/portaldrink
+	name = "random Portal soda"
+	desc = "For Portal to bring a randomized drink!"
+	icon = 'icons/rogue-star/pizza_delivery/items_rs.dmi'
+	icon_state = "cocanholder6"
+	spawn_nothing_percentage = 0
+
+/obj/random/fluff/portaldrink/item_to_spawn()
+	return pick(prob(5);/obj/item/weapon/storage/fancy/soda/dr_gibb,
+				prob(5);/obj/item/weapon/storage/fancy/soda/space_up,
+				prob(5);/obj/item/weapon/storage/fancy/soda/cola,
+				prob(4);/obj/item/weapon/storage/fancy/soda/cola/zero)
