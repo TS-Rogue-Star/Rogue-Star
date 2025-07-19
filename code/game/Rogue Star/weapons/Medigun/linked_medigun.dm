@@ -250,7 +250,7 @@
 		process_medigun(H, user, filter, ishealing)
 
 /obj/item/device/bork_medigun/linked/proc/process_wounds(mob/living/carbon/human/H, heal_ticks, remaining_strength, ishealing)
-	while(heal_ticks)
+	while(heal_ticks > 0)
 		if(remaining_strength <= 0)
 			return ishealing
 		if((!H.getFireLoss() || medigun_base_unit.burncharge <= 0) && (!H.getBruteLoss() || medigun_base_unit.burncharge <= 0))
