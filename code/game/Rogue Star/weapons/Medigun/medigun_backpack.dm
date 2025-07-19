@@ -137,7 +137,7 @@
 
 		if(icon_needs_update)
 			update_icon()
-	else if(!charging)
+	else if(!charging && phoronvol > 0)
 		if(ismob(loc))
 			to_chat(loc, span_warning("With a sudden whirr, the phoron generator spins up."))
 		charging = TRUE

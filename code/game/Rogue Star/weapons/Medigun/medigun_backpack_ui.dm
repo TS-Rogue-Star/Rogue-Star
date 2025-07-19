@@ -7,7 +7,7 @@
 /obj/item/device/medigun_backpack/tgui_status(mob/user, datum/tgui_state/state)
 	if(!bcell)
 		return STATUS_CLOSE
-	if(bcell.percent() <= 0)
+	if(bcell.percent() < 10)
 		return STATUS_CLOSE
 	return ..()
 
