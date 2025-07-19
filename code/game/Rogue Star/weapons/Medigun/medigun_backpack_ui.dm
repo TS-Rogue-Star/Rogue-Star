@@ -4,13 +4,6 @@
 		ui = new(user, src, "Medigun", name)
 		ui.open()
 
-/obj/item/device/medigun_backpack/tgui_status(mob/user, datum/tgui_state/state)
-	if(!bcell)
-		return STATUS_CLOSE
-	if(bcell.percent() < 10)
-		return STATUS_CLOSE
-	return ..()
-
 /obj/item/device/medigun_backpack/tgui_data(mob/user)
 	var/mob/living/carbon/human/H = medigun.current_target
 	var/patientname
