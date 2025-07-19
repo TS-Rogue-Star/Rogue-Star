@@ -92,7 +92,7 @@
 		if("toggle_maintenance")
 			maintenance = !maintenance
 			if(!containsgun)
-				reattach_medigun(user)
+				reattach_medigun(ui.user)
 			return TRUE
 
 		if("rem_smodule")
