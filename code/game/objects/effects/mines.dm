@@ -213,7 +213,7 @@
 	var/turf/O = get_turf(src)
 	if(!O)
 		return
-	src.fragmentate(O, num_fragments, spread_range, fragment_types) //only 20 weak fragments because you're stepping directly on it
+	src.fragmentate(O, num_fragments, spread_range, fragment_types) //only 20 weak fragments because you're stepping directly on it || RS Edit: Ports VOREStation PR17558
 	visible_message("\The [src.name] detonates!")
 	spawn(0)
 		qdel(s)
