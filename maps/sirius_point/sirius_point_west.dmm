@@ -9,7 +9,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/tiled/white,
-/area/outpost/research)
+/area/outpost/research/hallway)
 "as" = (
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 1
@@ -23,12 +23,35 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/toxins_misc_lab)
+"aC" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/weapon/reagent_containers/glass/bucket,
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
+/area/moonbase/fixedpoi/homestead)
 "aH" = (
 /turf/simulated/wall/r_wall,
 /area/outpost/research/anomaly_analysis)
 "aN" = (
 /turf/simulated/wall/r_wall,
 /area/outpost/research/toxins_misc_lab)
+"aO" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/green{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/tiled/white,
+/area/outpost/research/tox_store)
 "aP" = (
 /obj/machinery/atmospherics/pipe/simple/visible/blue{
 	dir = 5
@@ -52,7 +75,7 @@
 	},
 /obj/effect/map_helper/airlock/sensor/ext_sensor,
 /turf/simulated/floor/plating/external/moonbaseplating/outdoors,
-/area/outpost/research)
+/area/outpost/research/hallway)
 "be" = (
 /obj/structure/bed/chair/office/light{
 	dir = 8
@@ -74,11 +97,15 @@
 	name = "Anomalous Materials"
 	},
 /turf/simulated/floor/tiled/steel_ridged,
-/area/outpost/research/anomaly_storage)
+/area/outpost/research/hallway)
 "bl" = (
 /obj/structure/table/standard,
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/mixing)
+"bm" = (
+/obj/machinery/hologram/holopad,
+/turf/simulated/floor/tiled,
+/area/outpost/research/anomaly)
 "br" = (
 /obj/machinery/atmospherics/binary/pump,
 /obj/effect/floor_decal/industrial/danger{
@@ -102,10 +129,13 @@
 /turf/simulated/floor/tiled,
 /area/outpost/research/anomaly)
 "bv" = (
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor/outdoors/grass/forest{
 	outdoors = 0
 	},
-/area/outpost/research)
+/area/outpost/research/hallway)
 "by" = (
 /obj/structure/grille,
 /obj/structure/window/phoronreinforced{
@@ -134,7 +164,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/tiled/white,
-/area/outpost/research)
+/area/outpost/research/hallway)
 "bF" = (
 /obj/effect/floor_decal/industrial/warning/corner,
 /obj/effect/floor_decal/industrial/warning/corner{
@@ -177,7 +207,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/moonbase/surface/west_crater)
+/area/moonbase/fixedpoi/homestead)
 "bV" = (
 /obj/machinery/atmospherics/pipe/simple/visible/blue{
 	dir = 9
@@ -198,7 +228,9 @@
 	dir = 8;
 	portal_id = "sp_west"
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
 /area/moonbase/surface/west_crater)
 "bY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -222,7 +254,7 @@
 	},
 /obj/structure/window/reinforced,
 /turf/simulated/floor/plating,
-/area/moonbase/surface/west_crater)
+/area/moonbase/fixedpoi/homestead)
 "cl" = (
 /obj/structure/table/standard,
 /obj/machinery/light,
@@ -232,16 +264,23 @@
 /turf/simulated/floor/tiled/dark,
 /area/outpost/research/anomaly)
 "co" = (
+/obj/structure/reagent_dispensers/fueltank/barrel/two,
 /turf/simulated/floor/outdoors/grass/seasonal/preset/autumn{
 	outdoors = 0
 	},
-/area/moonbase/surface/west_crater)
+/area/moonbase/fixedpoi/homestead)
 "cp" = (
 /obj/machinery/firealarm{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
 /area/outpost/research/anomaly_analysis)
+"cB" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass_external,
+/obj/effect/map_helper/airlock/door/int_door,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/moonbase/fixedpoi/homestead)
 "cC" = (
 /obj/machinery/atmospherics/unary/heat_exchanger,
 /obj/structure/window/basic,
@@ -260,6 +299,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/outpost/research/power)
+"cK" = (
+/obj/machinery/appliance/cooker/oven,
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
 "cO" = (
 /obj/machinery/light,
 /obj/machinery/artifact_scanpad,
@@ -273,17 +316,26 @@
 /turf/simulated/floor/tiled/dark,
 /area/outpost/research/anomaly)
 "cR" = (
-/obj/machinery/door/firedoor/glass,
-/obj/structure/grille,
-/obj/structure/window/reinforced/full,
-/turf/simulated/floor/plating,
-/area/outpost/research/power)
+/turf/simulated/wall/wood,
+/area/moonbase/fixedpoi/homestead)
 "cT" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 5
 	},
 /turf/simulated/wall/r_wall,
-/area/outpost/research)
+/area/outpost/research/hallway)
+"cU" = (
+/obj/machinery/shower{
+	pixel_y = 16
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 10
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 9
+	},
+/turf/simulated/floor/tiled/old_tile,
+/area/moonbase/fixedpoi/homestead)
 "cV" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 4
@@ -319,6 +371,25 @@
 	},
 /turf/simulated/floor/tiled,
 /area/outpost/research/anomaly)
+"di" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/reagent_containers/food/condiment/small/saltshaker{
+	pixel_x = -3;
+	pixel_y = 4
+	},
+/obj/item/weapon/reagent_containers/food/condiment/small/peppermill{
+	pixel_x = 2;
+	pixel_y = 7
+	},
+/turf/simulated/floor/wood,
+/area/outpost/research/dorms)
+"dk" = (
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/firedoor/border_only,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/outpost/research/hallway)
 "dl" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/red,
 /obj/machinery/meter,
@@ -333,7 +404,7 @@
 	},
 /obj/structure/window/reinforced,
 /turf/simulated/floor/plating,
-/area/moonbase/surface/west_crater)
+/area/moonbase/fixedpoi/homestead)
 "dt" = (
 /obj/machinery/atmospherics/pipe/simple/visible/black{
 	dir = 9
@@ -353,6 +424,24 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/mixing)
+"dA" = (
+/obj/structure/closet/cabinet,
+/obj/item/clothing/suit/storage/hooded/wintercoat/hydro,
+/obj/item/clothing/shoes/boots/winter/hydro,
+/obj/item/clothing/under/rank/hydroponics,
+/obj/item/clothing/under/rank/hydroponics/alt,
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
+"dD" = (
+/obj/structure/closet/crate/hydroponics,
+/turf/simulated/floor/outdoors/grass/seasonal/preset/autumn{
+	outdoors = 0
+	},
+/area/moonbase/fixedpoi/homestead)
+"dG" = (
+/obj/structure/flora/pottedplant/minitree,
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
 "dK" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/manifold/visible/red{
@@ -371,12 +460,34 @@
 /obj/machinery/washing_machine,
 /turf/simulated/floor/tiled,
 /area/outpost/research/anomaly)
+"ec" = (
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 4
+	},
+/turf/simulated/wall/r_wall,
+/area/moonbase/fixedpoi/homestead)
+"ej" = (
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/alarms_hidden{
+	dir = 4
+	},
+/turf/simulated/floor/plating/eris,
+/area/moonbase/fixedpoi/homestead)
 "ep" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/mixing)
+"et" = (
+/obj/structure/toilet,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/old_tile,
+/area/moonbase/fixedpoi/homestead)
 "ew" = (
 /obj/structure/cable/green{
 	icon_state = "2-4"
@@ -400,7 +511,7 @@
 /turf/simulated/floor/outdoors/grass/seasonal/preset/autumn{
 	outdoors = 0
 	},
-/area/moonbase/surface/west_crater)
+/area/moonbase/fixedpoi/homestead)
 "eO" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /obj/machinery/atmospherics/pipe/simple/visible/black{
@@ -440,7 +551,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/moonbase/surface/west_crater)
+/area/moonbase/fixedpoi/homestead)
 "eZ" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/black,
 /obj/machinery/door/blast/regular{
@@ -459,7 +570,7 @@
 	},
 /obj/structure/window/reinforced,
 /turf/simulated/floor/plating,
-/area/moonbase/surface/west_crater)
+/area/moonbase/fixedpoi/homestead)
 "fe" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
@@ -470,27 +581,23 @@
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/toxins_misc_lab)
 "fg" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/glass_science{
-	name = "Anomalous Materials"
-	},
-/turf/simulated/floor/tiled/steel_ridged,
-/area/outpost/research)
+/obj/structure/table/woodentable,
+/obj/item/weapon/material/knife/butch,
+/obj/item/weapon/material/kitchen/rollingpin,
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
 "fk" = (
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
 /area/outpost/research/power)
+"fm" = (
+/obj/machinery/portable_atmospherics/hydroponics/soil,
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
+/area/moonbase/fixedpoi/homestead)
 "fv" = (
 /obj/machinery/light{
 	dir = 1
@@ -521,6 +628,12 @@
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/toxins_misc_lab)
+"fH" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/simulated/floor/water/indoors,
+/area/moonbase/fixedpoi/homestead)
 "fP" = (
 /turf/simulated/wall/r_wall,
 /area/outpost/research/anomaly_storage)
@@ -551,7 +664,7 @@
 	name = "General Gasworks"
 	},
 /turf/simulated/floor/tiled/steel_ridged,
-/area/outpost/research/tox_store)
+/area/outpost/research/hallway)
 "ge" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
@@ -583,12 +696,26 @@
 	},
 /turf/simulated/floor/plating,
 /area/outpost/research/power)
+"gi" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/outpost/research/power)
+"gj" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/simulated/floor/outdoors/grass/seasonal/preset/autumn{
+	outdoors = 0
+	},
+/area/moonbase/fixedpoi/homestead)
 "gn" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden{
 	dir = 8
 	},
 /turf/simulated/wall/r_wall,
-/area/outpost/research)
+/area/outpost/research/hallway)
 "go" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -601,6 +728,14 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/mixing)
+"gt" = (
+/obj/structure/table/woodentable,
+/obj/machinery/microwave,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
 "gD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -611,8 +746,11 @@
 /obj/structure/cable/green{
 	icon_state = "4-8"
 	},
+/obj/structure/railing/grey{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/white,
-/area/outpost/research)
+/area/outpost/research/hallway)
 "gG" = (
 /obj/effect/floor_decal/industrial/danger,
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -691,8 +829,8 @@
 	dir = 4
 	},
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
-/turf/simulated/floor/tiled/steel_grid,
-/area/outpost/research)
+/turf/simulated/floor/tiled/eris/dark/gray_platform,
+/area/outpost/research/hallway)
 "hx" = (
 /obj/structure/grille,
 /obj/structure/window/phoronreinforced{
@@ -701,6 +839,9 @@
 /obj/structure/window/phoronreinforced/full,
 /turf/simulated/floor/reinforced/airless,
 /area/outpost/research/toxins_misc_lab)
+"hD" = (
+/turf/simulated/wall/r_wall,
+/area/moonbase/fixedpoi/homestead)
 "hE" = (
 /obj/effect/floor_decal/industrial/warning/corner{
 	dir = 4
@@ -759,7 +900,7 @@
 /area/outpost/research/anomaly)
 "il" = (
 /turf/simulated/floor/plating/external/moonbaseplating/outdoors,
-/area/outpost/research)
+/area/outpost/research/hallway)
 "io" = (
 /obj/item/device/radio/intercom{
 	dir = 4;
@@ -767,11 +908,11 @@
 	pixel_x = 24
 	},
 /turf/simulated/floor/tiled/white,
-/area/outpost/research)
+/area/outpost/research/hallway)
 "it" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/white,
-/area/outpost/research)
+/area/outpost/research/hallway)
 "ix" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/structure/cable/green{
@@ -788,6 +929,14 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/outpost/research/anomaly_analysis)
+"iB" = (
+/obj/structure/closet/cabinet,
+/obj/item/clothing/under/overalls,
+/obj/item/clothing/under/overalls/sleek,
+/obj/item/clothing/under/rank/neo_suspect_overalls,
+/obj/item/clothing/under/serviceoveralls,
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
 "iC" = (
 /obj/structure/cable/green{
 	icon_state = "2-8"
@@ -799,11 +948,12 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled/white,
-/area/outpost/research)
+/area/outpost/research/hallway)
 "iN" = (
-/obj/machinery/alarm,
-/turf/simulated/floor/tiled/white,
-/area/outpost/research)
+/turf/simulated/floor/outdoors/grass/forest{
+	outdoors = 0
+	},
+/area/outpost/research/hallway)
 "iO" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8
@@ -811,6 +961,48 @@
 /obj/machinery/portable_atmospherics/canister/empty,
 /turf/simulated/floor/plating,
 /area/outpost/research/power)
+"iY" = (
+/obj/structure/bed/chair/wood/wings{
+	dir = 1
+	},
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
+"jg" = (
+/obj/machinery/appliance/cooker/grill,
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
+"jj" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/outpost/research/dorms)
+"jn" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/item/weapon/reagent_containers/glass/bucket,
+/turf/simulated/floor/outdoors/grass/seasonal/preset/autumn{
+	outdoors = 0
+	},
+/area/moonbase/fixedpoi/homestead)
+"jp" = (
+/obj/structure/grille,
+/obj/machinery/door/firedoor/glass,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/outpost/research/dorms)
+"js" = (
+/obj/machinery/power/apc{
+	dir = 1
+	},
+/obj/structure/cable/green{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/tiled/white,
+/area/outpost/research/tox_store)
 "jw" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
@@ -829,7 +1021,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/moonbase/surface/west_crater)
+/area/moonbase/fixedpoi/homestead)
 "jE" = (
 /obj/machinery/atmospherics/binary/pump/on{
 	dir = 1;
@@ -842,7 +1034,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/r_wall,
-/area/outpost/research)
+/area/outpost/research/hallway)
 "jU" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/table/standard,
@@ -903,8 +1095,12 @@
 	dir = 8
 	},
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
-/turf/simulated/floor/tiled/steel_grid,
-/area/outpost/research)
+/turf/simulated/floor/tiled/eris/dark/gray_platform,
+/area/outpost/research/hallway)
+"kw" = (
+/obj/machinery/alarm,
+/turf/simulated/floor/tiled/white,
+/area/outpost/research/tox_store)
 "ky" = (
 /obj/effect/floor_decal/industrial/warning/corner{
 	dir = 1
@@ -924,6 +1120,12 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/mixing)
+"lc" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/old_tile,
+/area/moonbase/fixedpoi/homestead)
 "ld" = (
 /obj/machinery/alarm,
 /turf/simulated/floor/tiled/white,
@@ -951,6 +1153,19 @@
 "lx" = (
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/toxins_misc_lab)
+"lL" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/simulated/floor/outdoors/grass/forest{
+	outdoors = 0
+	},
+/area/outpost/research/hallway)
+"lM" = (
+/obj/machinery/power/rtg/fake_gen,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating/eris,
+/area/moonbase/fixedpoi/homestead)
 "lO" = (
 /obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/floor/tiled/white,
@@ -975,8 +1190,8 @@
 	},
 /obj/effect/map_helper/airlock/sensor/chamber_sensor,
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
-/turf/simulated/floor/tiled/steel_grid,
-/area/outpost/research)
+/turf/simulated/floor/tiled/eris/dark/gray_platform,
+/area/outpost/research/hallway)
 "mg" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 9
@@ -987,6 +1202,9 @@
 /obj/machinery/atmospherics/valve,
 /turf/simulated/floor/tiled,
 /area/outpost/research/anomaly_analysis)
+"mn" = (
+/turf/simulated/floor/tiled/old_tile,
+/area/moonbase/fixedpoi/homestead)
 "mr" = (
 /obj/structure/cable/green{
 	icon_state = "4-8"
@@ -1032,6 +1250,24 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/outpost/research/anomaly)
+"mQ" = (
+/obj/structure/closet/toolcloset,
+/turf/simulated/floor/outdoors/grass/seasonal/preset/autumn{
+	outdoors = 0
+	},
+/area/moonbase/fixedpoi/homestead)
+"mS" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/reagent_containers/food/condiment/small/peppermill{
+	pixel_x = 2;
+	pixel_y = 7
+	},
+/obj/item/weapon/reagent_containers/food/condiment/small/saltshaker{
+	pixel_x = -3;
+	pixel_y = 4
+	},
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
 "mU" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
@@ -1044,6 +1280,12 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/exp_prep)
+"ne" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
 "nk" = (
 /obj/machinery/atmospherics/unary/freezer{
 	icon_state = "freezer"
@@ -1080,13 +1322,29 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled/white,
-/area/outpost/research)
+/area/outpost/research/hallway)
+"ny" = (
+/obj/machinery/power/smes/buildable{
+	charge = 2e+006;
+	input_attempt = 1;
+	input_level = 100000;
+	output_level = 200000
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating/eris,
+/area/moonbase/fixedpoi/homestead)
+"nG" = (
+/obj/machinery/door/firedoor/border_only,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/outpost/research/hallway)
 "nQ" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass_external,
 /obj/effect/map_helper/airlock/door/int_door,
 /turf/simulated/floor/tiled/steel_ridged,
-/area/outpost/research)
+/area/outpost/research/hallway)
 "nT" = (
 /obj/structure/cable/green{
 	icon_state = "1-8"
@@ -1120,7 +1378,14 @@
 	dir = 1
 	},
 /turf/simulated/floor/tiled/white,
-/area/outpost/research)
+/area/outpost/research/hallway)
+"oo" = (
+/obj/structure/sink/kitchen{
+	dir = 4;
+	pixel_x = 11
+	},
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
 "op" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /turf/simulated/floor/tiled,
@@ -1136,17 +1401,35 @@
 	mapped_in_color = "Lime"
 	},
 /turf/simulated/floor/plating/external/moonbaseplating/outdoors,
-/area/outpost/research)
+/area/outpost/research/hallway)
+"oD" = (
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/white,
+/area/outpost/research/hallway)
 "oE" = (
 /obj/machinery/light,
 /turf/simulated/floor/tiled/white,
-/area/outpost/research)
+/area/outpost/research/hallway)
 "oH" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
 /turf/simulated/floor/plating,
 /area/outpost/research/anomaly_analysis)
+"oJ" = (
+/obj/structure/bed/chair/comfy/black{
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
 "oP" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/black{
 	dir = 4
@@ -1179,6 +1462,10 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/outpost/research/tox_store)
+"pi" = (
+/obj/structure/coatrack,
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
 "ps" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -1190,7 +1477,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/moonbase/surface/west_crater)
+/area/moonbase/fixedpoi/homestead)
 "pM" = (
 /obj/machinery/door/blast/regular{
 	dir = 8;
@@ -1219,12 +1506,20 @@
 	},
 /turf/simulated/floor/tiled,
 /area/outpost/research/anomaly)
-"qj" = (
-/obj/structure/railing/grey{
-	dir = 8
+"qd" = (
+/obj/structure/table/steel,
+/obj/item/weapon/reagent_containers/spray/windowsealant,
+/obj/item/weapon/reagent_containers/spray/windowsealant,
+/turf/simulated/floor/outdoors/grass/seasonal/preset/autumn{
+	outdoors = 0
 	},
-/turf/simulated/floor/tiled/white,
-/area/outpost/research)
+/area/moonbase/fixedpoi/homestead)
+"qj" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/outpost/research/dorms)
 "qq" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 9
@@ -1254,6 +1549,11 @@
 /obj/effect/floor_decal/industrial/outline/red,
 /turf/simulated/floor/tiled/dark,
 /area/outpost/research/anomaly_storage)
+"qA" = (
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
+/area/moonbase/fixedpoi/homestead)
 "qB" = (
 /obj/machinery/atmospherics/pipe/manifold/visible,
 /obj/machinery/meter,
@@ -1266,7 +1566,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/outpost/research/anomaly_analysis)
 "qF" = (
-/obj/machinery/atmospherics/pipe/manifold4w/hidden/black,
+/obj/machinery/atmospherics/pipe/manifold4w/visible/black,
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/toxins_misc_lab)
 "qK" = (
@@ -1287,6 +1587,23 @@
 /obj/item/device/multitool,
 /turf/simulated/floor/tiled,
 /area/outpost/research/anomaly)
+"rb" = (
+/obj/structure/table/woodentable,
+/obj/random/snack,
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
+"ri" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/outpost/research/dorms)
 "rp" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/glass_science{
@@ -1294,6 +1611,16 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/outpost/research/anomaly)
+"rr" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/simulated/floor/outdoors/grass/forest{
+	outdoors = 0
+	},
+/area/outpost/research/dorms)
+"rs" = (
+/obj/structure/prop/rock/crystal_dust,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/moonbase/surface/west_crater)
 "ru" = (
 /obj/machinery/atmospherics/unary/vent_pump/high_volume{
 	dir = 4;
@@ -1330,6 +1657,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/outpost/research/mixing)
+"rL" = (
+/obj/machinery/light/small,
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
 "rM" = (
 /obj/machinery/artifact_harvester,
 /turf/simulated/floor/tiled/dark,
@@ -1407,7 +1738,13 @@
 /obj/machinery/door/airlock/multi_tile/glass,
 /obj/machinery/door/firedoor/border_only,
 /turf/simulated/floor/tiled/steel_ridged,
-/area/outpost/research/power)
+/area/outpost/research/hallway)
+"sF" = (
+/obj/structure/ore_box,
+/turf/simulated/floor/outdoors/grass/seasonal/preset/autumn{
+	outdoors = 0
+	},
+/area/moonbase/fixedpoi/homestead)
 "sI" = (
 /obj/structure/cable/green{
 	icon_state = "4-8"
@@ -1434,7 +1771,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/moonbase/surface/west_crater)
+/area/moonbase/fixedpoi/homestead)
 "sR" = (
 /obj/structure/table/standard,
 /obj/structure/reagent_dispensers/acid{
@@ -1446,6 +1783,17 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/outpost/research/anomaly)
+"sV" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/obj/machinery/alarm{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/white,
+/area/outpost/research/hallway)
 "tb" = (
 /obj/machinery/light{
 	dir = 4
@@ -1457,7 +1805,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/tiled/white,
-/area/outpost/research)
+/area/outpost/research/hallway)
 "tl" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -1467,11 +1815,21 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/structure/cable/green{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/tiled/white,
-/area/outpost/research)
+/area/outpost/research/hallway)
 "tq" = (
 /turf/simulated/floor/tiled/dark,
 /area/outpost/research/anomaly)
+"ty" = (
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/simulated/floor/plating/eris,
+/area/moonbase/fixedpoi/homestead)
 "tz" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 4
@@ -1491,18 +1849,51 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/mixing)
+"tH" = (
+/obj/structure/bed/chair/wood/wings,
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
 "tK" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
 /turf/simulated/floor/plating,
-/area/outpost/research)
+/area/outpost/research/hallway)
+"tN" = (
+/obj/machinery/biogenerator,
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
+/area/moonbase/fixedpoi/homestead)
+"tQ" = (
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 10
+	},
+/turf/simulated/wall/r_wall,
+/area/moonbase/fixedpoi/homestead)
 "tR" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/toxins_misc_lab)
+"tT" = (
+/obj/structure/marker_beacon{
+	mapped_in_color = "Lime"
+	},
+/turf/simulated/floor/plating/external/moonbaseplating{
+	edge_blending_priority = 1
+	},
+/area/moonbase/fixedpoi/homestead)
+"um" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
+"un" = (
+/turf/simulated/floor/wood,
+/area/outpost/research/dorms)
 "uw" = (
 /obj/effect/floor_decal/industrial/warning/corner,
 /turf/simulated/floor/tiled/dark,
@@ -1527,6 +1918,12 @@
 /obj/machinery/alarm,
 /turf/simulated/floor/tiled,
 /area/outpost/research/anomaly_storage)
+"uT" = (
+/obj/structure/flora/ausbushes/brflowers,
+/turf/simulated/floor/outdoors/grass/forest{
+	outdoors = 0
+	},
+/area/outpost/research/hallway)
 "vb" = (
 /obj/machinery/alarm{
 	alarm_id = "anomaly_testing";
@@ -1550,6 +1947,20 @@
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/exp_prep)
+"vu" = (
+/obj/machinery/power/apc{
+	dir = 1
+	},
+/obj/structure/cable/green{
+	icon_state = "0-8"
+	},
+/obj/effect/floor_decal/fakestairs/bottom{
+	dir = 4;
+	color = "#964B00"
+	},
+/obj/structure/railing,
+/turf/simulated/floor/wood,
+/area/outpost/research/dorms)
 "vw" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -1564,7 +1975,7 @@
 /area/moonbase/surface/west_crater)
 "vE" = (
 /turf/simulated/wall/r_wall,
-/area/outpost/research)
+/area/outpost/research/hallway)
 "vG" = (
 /obj/effect/floor_decal/industrial/warning/cee{
 	dir = 1
@@ -1583,6 +1994,19 @@
 /obj/item/device/assembly_holder/timer_igniter,
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/tox_store)
+"vZ" = (
+/obj/machinery/alarm{
+	dir = 1
+	},
+/obj/effect/floor_decal/fakestairs/bottom{
+	dir = 4;
+	color = "#964B00"
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/simulated/floor/wood,
+/area/outpost/research/dorms)
 "we" = (
 /obj/machinery/atmospherics/pipe/tank/air{
 	dir = 4
@@ -1617,6 +2041,12 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/outpost/research/toxins_misc_lab)
+"wB" = (
+/obj/effect/map_effect/perma_light/brighter,
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
+/area/moonbase/fixedpoi/homestead)
 "wL" = (
 /obj/structure/sign/warning/hot_exhaust,
 /turf/simulated/wall/r_wall,
@@ -1651,6 +2081,10 @@
 /obj/machinery/light,
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/toxins_misc_lab)
+"xo" = (
+/obj/structure/bed/chair/sofa/left/black,
+/turf/simulated/floor/wood,
+/area/outpost/research/dorms)
 "xu" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor/glass,
@@ -1661,6 +2095,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/outpost/research/anomaly)
+"xy" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/reagent_containers/food/snacks/ratpacktaco,
+/obj/item/weapon/reagent_containers/food/snacks/ratpackramen,
+/obj/item/weapon/reagent_containers/food/snacks/ratpackburger,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/wood,
+/area/outpost/research/dorms)
 "xF" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/red{
 	dir = 1
@@ -1672,6 +2116,12 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/toxins_misc_lab)
+"xL" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
 "xX" = (
 /obj/machinery/atmospherics/portables_connector,
 /obj/effect/floor_decal/industrial/outline/red,
@@ -1684,6 +2134,11 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/mixing)
+"yb" = (
+/turf/simulated/floor/wood{
+	edge_blending_priority = 1
+	},
+/area/moonbase/fixedpoi/homestead)
 "yc" = (
 /obj/machinery/atmospherics/unary/vent_pump/high_volume{
 	dir = 8
@@ -1694,8 +2149,8 @@
 	id_tag = "scipost_airlock"
 	},
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
-/turf/simulated/floor/tiled/steel_grid,
-/area/outpost/research)
+/turf/simulated/floor/tiled/eris/dark/gray_platform,
+/area/outpost/research/hallway)
 "yh" = (
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/moonbase/surface/west_crater)
@@ -1753,6 +2208,16 @@
 /obj/machinery/meter,
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/mixing)
+"yJ" = (
+/obj/structure/table/steel,
+/obj/item/weapon/storage/toolbox/mechanical{
+	pixel_y = 5
+	},
+/obj/item/weapon/storage/toolbox/electrical,
+/turf/simulated/floor/outdoors/grass/seasonal/preset/autumn{
+	outdoors = 0
+	},
+/area/moonbase/fixedpoi/homestead)
 "yK" = (
 /obj/structure/table/standard,
 /obj/machinery/atmospherics/unary/vent_pump/on,
@@ -1794,7 +2259,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/moonbase/surface/west_crater)
+/area/moonbase/fixedpoi/homestead)
 "zh" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -1804,12 +2269,18 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/outpost/research/tox_store)
+"zj" = (
+/obj/structure/bed/chair/comfy/black{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
 "zk" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 6
 	},
 /turf/simulated/wall/r_wall,
-/area/outpost/research)
+/area/outpost/research/hallway)
 "zn" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -1828,7 +2299,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/outpost/research)
+/area/outpost/research/hallway)
 "zq" = (
 /obj/structure/table/standard,
 /obj/machinery/computer/atmoscontrol/laptop{
@@ -1866,7 +2337,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/tiled/white,
-/area/outpost/research)
+/area/outpost/research/hallway)
 "zM" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
@@ -1883,12 +2354,42 @@
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/outpost/research/power)
+"zN" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass_external,
+/obj/effect/map_helper/airlock/door/ext_door,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/moonbase/fixedpoi/homestead)
+"zO" = (
+/obj/machinery/atmospherics/pipe/tank/air{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/outpost/research/power)
+"zQ" = (
+/obj/structure/flora/ausbushes/sunnybush,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/outdoors/grass/forest{
+	outdoors = 0
+	},
+/area/outpost/research/dorms)
 "zT" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/outpost/research/power)
+"zZ" = (
+/obj/structure/marker_beacon{
+	mapped_in_color = "Lime"
+	},
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/moonbase/surface/west_crater)
 "Ac" = (
 /obj/machinery/atmospherics/unary/vent_scrubber{
 	dir = 8
@@ -1900,6 +2401,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled,
 /area/outpost/research/anomaly)
+"Au" = (
+/obj/structure/bed/chair/wood{
+	dir = 1
+	},
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
 "AB" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 8
@@ -1914,12 +2421,25 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/exp_prep)
+"AN" = (
+/obj/structure/bed/chair/sofa/black,
+/turf/simulated/floor/wood,
+/area/outpost/research/dorms)
 "Bg" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 5
 	},
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/toxins_misc_lab)
+"Bh" = (
+/obj/machinery/power/apc{
+	dir = 4
+	},
+/obj/structure/cable/green{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/tiled/white,
+/area/outpost/research/hallway)
 "Bm" = (
 /obj/machinery/atmospherics/trinary/atmos_filter{
 	dir = 4;
@@ -1945,6 +2465,17 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/exp_prep)
+"Bz" = (
+/obj/effect/map_helper/airlock/sensor/ext_sensor,
+/obj/machinery/airlock_sensor/airlock_exterior{
+	pixel_x = -24;
+	dir = 4;
+	pixel_y = 32
+	},
+/turf/simulated/floor/plating/external/moonbaseplating{
+	edge_blending_priority = 1
+	},
+/area/moonbase/fixedpoi/homestead)
 "BB" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8
@@ -1974,7 +2505,7 @@
 /obj/structure/sign/warning/airlock,
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/wall/r_wall,
-/area/outpost/research)
+/area/outpost/research/hallway)
 "BY" = (
 /obj/structure/bed/chair/office/light,
 /turf/simulated/floor/tiled,
@@ -2031,7 +2562,11 @@
 	dir = 10
 	},
 /turf/simulated/wall/r_wall,
-/area/outpost/research)
+/area/outpost/research/hallway)
+"Da" = (
+/obj/structure/bed/chair/wood,
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
 "Dd" = (
 /obj/machinery/atmospherics/trinary/mixer/m_mixer{
 	dir = 4;
@@ -2040,6 +2575,10 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/mixing)
+"Dn" = (
+/obj/structure/simple_door/wood,
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
 "Dr" = (
 /obj/machinery/atmospherics/binary/pump/on,
 /turf/simulated/floor/plating,
@@ -2063,7 +2602,20 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/tiled/steel_ridged,
-/area/outpost/research)
+/area/outpost/research/hallway)
+"DC" = (
+/obj/structure/sink{
+	pixel_y = 20
+	},
+/obj/structure/mirror{
+	pixel_y = 38
+	},
+/obj/structure/window/reinforced{
+	dir = 8;
+	pixel_x = -4
+	},
+/turf/simulated/floor/tiled/old_tile,
+/area/moonbase/fixedpoi/homestead)
 "DF" = (
 /obj/machinery/power/terminal{
 	dir = 8
@@ -2105,6 +2657,31 @@
 	},
 /turf/simulated/floor/reinforced/airless,
 /area/outpost/research/toxins_misc_lab)
+"Er" = (
+/obj/structure/bookcase{
+	name = "bookcase (Fiction)"
+	},
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/item/weapon/book/bundle/custom_library/fiction/apurrrrfectman,
+/obj/item/weapon/book/bundle/custom_library/fiction/beyondthedoor,
+/obj/item/weapon/book/bundle/custom_library/fiction/coldmountain,
+/obj/item/weapon/book/bundle/custom_library/fiction/ghostship,
+/obj/item/weapon/book/bundle/custom_library/fiction/manfromsnowyriver,
+/obj/item/weapon/book/bundle/custom_library/fiction/metalglen,
+/obj/item/weapon/book/bundle/custom_library/fiction/poemsforarainyday,
+/obj/item/weapon/book/bundle/custom_library/fiction/raissue142,
+/obj/item/weapon/book/bundle/custom_library/fiction/raissue147,
+/obj/item/weapon/book/bundle/custom_library/fiction/silence,
+/obj/item/weapon/book/bundle/custom_library/fiction/taleoftherainbowcat,
+/obj/item/weapon/book/custom_library/fiction/blacksmithandkinglybloke,
+/obj/item/weapon/book/custom_library/fiction/irishairmanforseesdeath,
+/obj/item/weapon/book/custom_library/fiction/myrock,
+/obj/item/weapon/book/custom_library/fiction/starsandsometimesfallingones,
+/obj/item/weapon/book/custom_library/fiction/truelovehathmyheart,
+/turf/simulated/floor/plating,
+/area/moonbase/fixedpoi/homestead)
 "Ex" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /turf/simulated/floor/plating/external/moonbaseplating/outdoors,
@@ -2122,6 +2699,15 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/mixing)
+"EO" = (
+/obj/structure/bed/chair/comfy/black{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
 "EZ" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 4
@@ -2138,16 +2724,33 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/mixing)
+"Fd" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/reagent_containers/glass/beaker{
+	pixel_x = 5
+	},
+/obj/item/weapon/reagent_containers/food/condiment/enzyme{
+	layer = 5
+	},
+/obj/item/weapon/reagent_containers/dropper,
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
 "Fe" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/mixing)
+"Ff" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full/dome,
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
 "Fh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/white,
-/area/outpost/research)
+/area/outpost/research/hallway)
 "Fj" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/black{
 	dir = 4
@@ -2160,13 +2763,12 @@
 /turf/simulated/floor/reinforced/airless,
 /area/outpost/research/toxins_misc_lab)
 "Fq" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/simulated/floor/outdoors/grass/forest{
-	outdoors = 0
-	},
-/area/outpost/research)
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
+"FI" = (
+/obj/structure/bed/chair/sofa/black,
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
 "FT" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
@@ -2202,6 +2804,17 @@
 	},
 /turf/simulated/floor/reinforced/airless,
 /area/outpost/research/toxins_misc_lab)
+"Gj" = (
+/obj/machinery/airlock_sensor/airlock_interior{
+	pixel_x = 24;
+	pixel_y = 32;
+	dir = 8
+	},
+/obj/effect/map_helper/airlock/sensor/int_sensor,
+/turf/simulated/floor/outdoors/grass/seasonal/preset/autumn{
+	outdoors = 0
+	},
+/area/moonbase/fixedpoi/homestead)
 "Gm" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1
@@ -2211,6 +2824,14 @@
 	},
 /turf/simulated/floor/tiled,
 /area/outpost/research/anomaly_analysis)
+"Gn" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/simulated/floor/outdoors/grass/seasonal/preset/autumn{
+	outdoors = 0
+	},
+/area/moonbase/fixedpoi/homestead)
 "Gr" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -2226,6 +2847,17 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/outpost/research/anomaly_analysis)
+"GB" = (
+/obj/machinery/atmospherics/unary/vent_pump/high_volume{
+	dir = 1
+	},
+/obj/machinery/embedded_controller/radio/airlock/airlock_controller{
+	pixel_y = 24;
+	id_tag = "homestead_airlock"
+	},
+/obj/effect/map_helper/airlock/atmos/chamber_pump,
+/turf/simulated/floor/tiled/eris/dark/danger,
+/area/moonbase/fixedpoi/homestead)
 "GE" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/alarm{
@@ -2257,7 +2889,16 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/tiled/steel_ridged,
-/area/outpost/research/power)
+/area/outpost/research/hallway)
+"GU" = (
+/obj/structure/sink/kitchen{
+	dir = 8;
+	pixel_x = -11
+	},
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
+/area/moonbase/fixedpoi/homestead)
 "Hd" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -2266,10 +2907,25 @@
 	dir = 9
 	},
 /turf/simulated/wall/r_wall,
-/area/outpost/research)
+/area/outpost/research/hallway)
 "Hk" = (
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/tiled/white,
-/area/outpost/research)
+/area/outpost/research/hallway)
+"Hp" = (
+/obj/machinery/atmospherics/unary/vent_pump/high_volume{
+	dir = 1
+	},
+/obj/effect/map_helper/airlock/sensor/chamber_sensor,
+/obj/machinery/airlock_sensor{
+	pixel_x = 0;
+	pixel_y = 24
+	},
+/obj/effect/map_helper/airlock/atmos/chamber_pump,
+/turf/simulated/floor/tiled/eris/dark/danger,
+/area/moonbase/fixedpoi/homestead)
 "Ht" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/black{
 	dir = 9
@@ -2289,8 +2945,11 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
+/obj/structure/cable/green{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/tiled/white,
-/area/outpost/research)
+/area/outpost/research/hallway)
 "HK" = (
 /obj/machinery/firealarm{
 	dir = 4
@@ -2311,6 +2970,12 @@
 /obj/machinery/atmospherics/pipe/manifold/visible/yellow,
 /turf/simulated/floor/tiled,
 /area/outpost/research/anomaly_analysis)
+"Ij" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/turf/simulated/floor/outdoors/grass/forest{
+	outdoors = 0
+	},
+/area/outpost/research/hallway)
 "Ik" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -2323,18 +2988,34 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/tox_store)
+"Iq" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
+/area/moonbase/fixedpoi/homestead)
 "IH" = (
 /obj/structure/cable/green{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/tiled,
 /area/outpost/research/anomaly)
+"IU" = (
+/obj/structure/flora/pottedplant/large,
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
 "IV" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 1
 	},
 /turf/simulated/floor/tiled/dark,
 /area/outpost/research/tox_store)
+"IZ" = (
+/obj/structure/railing,
+/turf/simulated/floor/outdoors/grass/seasonal/preset/autumn{
+	outdoors = 0
+	},
+/area/moonbase/fixedpoi/homestead)
 "Je" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
@@ -2411,6 +3092,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/mixing)
+"JY" = (
+/turf/simulated/wall/r_wall,
+/area/outpost/research/dorms)
+"JZ" = (
+/obj/machinery/hologram/holopad,
+/turf/simulated/floor/wood,
+/area/outpost/research/dorms)
 "Kb" = (
 /obj/structure/cable/green{
 	icon_state = "1-2"
@@ -2424,6 +3112,14 @@
 /obj/machinery/atmospherics/pipe/manifold/visible,
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/mixing)
+"Ks" = (
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 5
+	},
+/turf/simulated/floor/outdoors/grass/seasonal/preset/autumn{
+	outdoors = 0
+	},
+/area/moonbase/fixedpoi/homestead)
 "Kv" = (
 /obj/machinery/power/apc{
 	dir = 8
@@ -2434,6 +3130,14 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled,
 /area/outpost/research/anomaly)
+"Kw" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/simulated/floor/outdoors/grass/seasonal/preset/autumn{
+	outdoors = 0
+	},
+/area/moonbase/fixedpoi/homestead)
 "Kx" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
@@ -2453,6 +3157,13 @@
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/outpost/research/power)
+"KC" = (
+/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/portable_atmospherics/canister/air/airlock,
+/turf/simulated/floor/outdoors/grass/seasonal/preset/autumn{
+	outdoors = 0
+	},
+/area/moonbase/fixedpoi/homestead)
 "KD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/black{
 	dir = 4
@@ -2473,6 +3184,10 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/mixing)
+"KG" = (
+/obj/structure/bed/chair/sofa/corner/black,
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
 "KP" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/black{
 	dir = 4
@@ -2481,6 +3196,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/mixing)
+"Lf" = (
+/obj/structure/bed/chair/sofa/right/black,
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
 "Lt" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/firealarm{
@@ -2495,7 +3214,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 4;
 	frequency = 1445;
-	id = "burn_in";
+	id = "homestead_airs";
 	volume_rate = 700
 	},
 /turf/simulated/floor/reinforced/airless,
@@ -2519,6 +3238,14 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/exp_prep)
+"LI" = (
+/obj/machinery/alarm{
+	dir = 4
+	},
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
+/area/moonbase/fixedpoi/homestead)
 "LK" = (
 /obj/machinery/atmospherics/pipe/vent/high_volume,
 /turf/simulated/floor/plating/external/moonbaseplating/outdoors,
@@ -2536,6 +3263,14 @@
 	},
 /turf/simulated/floor/plating/external/moonbaseplating/outdoors,
 /area/moonbase/surface/west_crater)
+"Mb" = (
+/obj/structure/bed/chair/comfy/black{
+	dir = 4
+	},
+/turf/simulated/floor/wood{
+	edge_blending_priority = 1
+	},
+/area/moonbase/fixedpoi/homestead)
 "Mh" = (
 /obj/machinery/artifact_analyser,
 /turf/simulated/floor/tiled/dark,
@@ -2551,7 +3286,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/moonbase/surface/west_crater)
+/area/moonbase/fixedpoi/homestead)
 "Mo" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
@@ -2629,7 +3364,7 @@
 /obj/machinery/door/airlock/glass_external,
 /obj/effect/map_helper/airlock/door/ext_door,
 /turf/simulated/floor/tiled/steel_ridged,
-/area/outpost/research)
+/area/outpost/research/hallway)
 "MG" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor/glass,
@@ -2640,23 +3375,36 @@
 	},
 /turf/simulated/floor/plating,
 /area/outpost/research/power)
+"MH" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/reagent_containers/spray/cleaner,
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
 "MT" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/blue,
 /obj/machinery/light,
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/mixing)
-"Nf" = (
-/obj/structure/railing/grey{
+"Nd" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/power/apc{
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating,
+/area/outpost/research/dorms)
+"Nf" = (
+/obj/effect/floor_decal/fakestairs/top{
+	color = "#964B00";
+	dir = 4
+	},
+/obj/structure/railing{
 	dir = 1
 	},
-/obj/structure/cable/green{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/tiled/white,
-/area/outpost/research)
+/turf/simulated/floor/tiled,
+/area/outpost/research/dorms)
 "Nl" = (
 /obj/machinery/vending/phoronresearch,
 /turf/simulated/floor/tiled/white,
@@ -2691,6 +3439,21 @@
 	},
 /turf/simulated/floor/tiled,
 /area/outpost/research/anomaly)
+"NZ" = (
+/obj/structure/bed/chair/comfy/black{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/outpost/research/dorms)
+"Of" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/simulated/floor/outdoors/grass/forest{
+	outdoors = 0
+	},
+/area/outpost/research/hallway)
 "Oq" = (
 /obj/structure/table/rack,
 /obj/item/clothing/suit/bio_suit/anomaly,
@@ -2710,6 +3473,12 @@
 "Oy" = (
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/mixing)
+"OH" = (
+/obj/machinery/seed_storage/garden,
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
+/area/moonbase/fixedpoi/homestead)
 "OJ" = (
 /obj/machinery/door/blast/regular{
 	dir = 4;
@@ -2718,9 +3487,25 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/outpost/research/anomaly_analysis)
+"OL" = (
+/obj/structure/table/steel,
+/obj/item/weapon/storage/belt/hydro,
+/obj/item/weapon/storage/belt/hydro,
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
+/area/moonbase/fixedpoi/homestead)
 "OO" = (
 /turf/simulated/floor/tiled,
 /area/outpost/research/anomaly_storage)
+"OV" = (
+/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/item/weapon/reagent_containers/food/snacks/meat,
+/obj/item/weapon/reagent_containers/food/snacks/meat,
+/obj/item/weapon/reagent_containers/food/snacks/meat,
+/obj/item/weapon/reagent_containers/food/snacks/meat,
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
 "OZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/binary/pump{
@@ -2759,6 +3544,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/outpost/research/power)
+"Pz" = (
+/obj/structure/table/steel,
+/obj/item/weapon/storage/box/metalfoam{
+	pixel_y = 7
+	},
+/turf/simulated/floor/outdoors/grass/seasonal/preset/autumn{
+	outdoors = 0
+	},
+/area/moonbase/fixedpoi/homestead)
 "PC" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -2770,7 +3564,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/moonbase/surface/west_crater)
+/area/moonbase/fixedpoi/homestead)
 "PJ" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /obj/structure/filingcabinet/chestdrawer{
@@ -2792,7 +3586,7 @@
 	dir = 9
 	},
 /turf/simulated/floor/tiled/white,
-/area/outpost/research)
+/area/outpost/research/hallway)
 "PU" = (
 /obj/effect/floor_decal/industrial/danger{
 	dir = 1
@@ -2840,6 +3634,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/outpost/research/power)
+"Qx" = (
+/obj/structure/table/woodentable,
+/turf/simulated/floor/wood,
+/area/outpost/research/dorms)
 "Qy" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
@@ -2857,6 +3655,22 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/dark,
 /area/outpost/research/anomaly)
+"Rb" = (
+/obj/structure/railing/grey{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/white,
+/area/outpost/research/hallway)
+"Rc" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden{
+	dir = 1
+	},
+/turf/simulated/wall/r_wall,
+/area/moonbase/fixedpoi/homestead)
+"Rd" = (
+/obj/structure/bed/chair/sofa/right/black,
+/turf/simulated/floor/wood,
+/area/outpost/research/dorms)
 "Re" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
@@ -2911,7 +3725,9 @@
 /obj/effect/map_effect/portal/line/side_a{
 	dir = 8
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
 /area/moonbase/surface/west_crater)
 "Sb" = (
 /obj/structure/cable/green{
@@ -3022,6 +3838,10 @@
 /obj/machinery/atmospherics/portables_connector,
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/mixing)
+"SY" = (
+/obj/structure/table/woodentable,
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
 "Ta" = (
 /turf/simulated/wall/r_wall,
 /area/outpost/research/tox_store)
@@ -3053,6 +3873,29 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/outpost/research/mixing)
+"TQ" = (
+/obj/structure/bookcase{
+	name = "bookcase (Non-Fiction)"
+	},
+/obj/item/weapon/book/bundle/custom_library/nonfiction/riseandfallofpersianempire,
+/obj/item/weapon/book/bundle/custom_library/nonfiction/skrelliancastesystem,
+/obj/item/weapon/book/bundle/custom_library/nonfiction/viabilityofcorporategov,
+/obj/item/weapon/book/custom_library/nonfiction/freesirisailightbulbs,
+/obj/item/weapon/book/manual/synthetic_life,
+/turf/simulated/floor/plating,
+/area/moonbase/fixedpoi/homestead)
+"TS" = (
+/obj/fiftyspawner/glass,
+/obj/fiftyspawner/glass,
+/obj/fiftyspawner/glass,
+/obj/fiftyspawner/steel,
+/obj/fiftyspawner/steel,
+/obj/fiftyspawner/steel,
+/obj/structure/closet,
+/turf/simulated/floor/outdoors/grass/seasonal/preset/autumn{
+	outdoors = 0
+	},
+/area/moonbase/fixedpoi/homestead)
 "Ub" = (
 /obj/structure/cable/green{
 	icon_state = "2-8"
@@ -3071,10 +3914,42 @@
 	},
 /turf/simulated/floor/tiled,
 /area/outpost/research/anomaly_analysis)
+"Ux" = (
+/obj/random/vendordrink,
+/turf/simulated/floor/wood,
+/area/outpost/research/dorms)
 "UA" = (
 /obj/structure/anomaly_container,
 /turf/simulated/floor/tiled/dark,
 /area/outpost/research/anomaly_analysis)
+"UH" = (
+/obj/structure/bookcase{
+	name = "bookcase (Religious)"
+	},
+/obj/item/weapon/book/bundle/custom_library/religious/zoroastrianism,
+/obj/item/weapon/book/custom_library/religious/feastofkubera,
+/obj/item/weapon/book/custom_library/religious/storyoflordganesha,
+/obj/item/weapon/book/custom_library/religious/sungoddessofkorea,
+/obj/item/weapon/book/custom_library/religious/wayofbleedingswan,
+/turf/simulated/floor/plating,
+/area/moonbase/fixedpoi/homestead)
+"UN" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/green{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/tiled/white,
+/area/outpost/research/hallway)
+"UQ" = (
+/obj/effect/floor_decal/fakestairs/top{
+	color = "#964B00"
+	},
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
 "US" = (
 /obj/machinery/portable_atmospherics/powered/scrubber/huge/stationary{
 	scrub_id = "science_outpost"
@@ -3097,7 +3972,7 @@
 "UX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
 /turf/simulated/floor/tiled/white,
-/area/outpost/research)
+/area/outpost/research/hallway)
 "Va" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -3105,6 +3980,9 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/mixing)
+"Vd" = (
+/turf/simulated/floor/tiled/white,
+/area/outpost/research/hallway)
 "Vl" = (
 /obj/effect/floor_decal/industrial/outline/red,
 /turf/simulated/floor/tiled/dark,
@@ -3124,12 +4002,18 @@
 	dir = 8
 	},
 /turf/simulated/floor/tiled/white,
-/area/outpost/research)
+/area/outpost/research/hallway)
 "Vr" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/table/standard,
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/tox_store)
+"VP" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating/eris,
+/area/moonbase/fixedpoi/homestead)
 "Wi" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 6
@@ -3147,6 +4031,16 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
+/area/moonbase/fixedpoi/homestead)
+"Ws" = (
+/obj/structure/closet/crate/secure/hydrosec,
+/turf/simulated/floor/outdoors/grass/seasonal/preset/autumn{
+	outdoors = 0
+	},
+/area/moonbase/fixedpoi/homestead)
+"Wv" = (
+/obj/structure/prop/rock/crystal,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/moonbase/surface/west_crater)
 "WA" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/black{
@@ -3176,6 +4070,10 @@
 /obj/machinery/atmospherics/binary/pump,
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/mixing)
+"Xf" = (
+/obj/random/vendorfood,
+/turf/simulated/floor/wood,
+/area/outpost/research/dorms)
 "Xk" = (
 /obj/structure/prop/rock/sharp,
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
@@ -3187,6 +4085,12 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/mixing)
+"Xn" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/outpost/research/power)
 "Xt" = (
 /obj/structure/cable/green{
 	icon_state = "2-4"
@@ -3215,20 +4119,21 @@
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/mixing)
 "XR" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+	edge_blending_priority = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/area/moonbase/surface/west_crater)
+"XU" = (
+/obj/structure/flora/pottedplant/flower,
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
+"XY" = (
+/obj/structure/table/steel,
+/obj/item/weapon/storage/toolbox/hydro,
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
 	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
-/obj/structure/cable/green{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/tiled/white,
-/area/outpost/research)
+/area/moonbase/fixedpoi/homestead)
 "Yc" = (
 /obj/structure/table/standard,
 /turf/simulated/floor/tiled/white,
@@ -3239,9 +4144,43 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/outpost/research/anomaly_analysis)
+"Yj" = (
+/obj/effect/floor_decal/fakestairs/top{
+	color = "#964B00";
+	dir = 4
+	},
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
+/obj/structure/railing,
+/turf/simulated/floor/tiled,
+/area/outpost/research/dorms)
 "Ym" = (
 /turf/simulated/floor/plating/external/moonbaseplating/outdoors,
 /area/moonbase/surface/west_crater)
+"Yn" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/light,
+/turf/simulated/floor/plating,
+/area/outpost/research/power)
+"Yo" = (
+/obj/effect/map_effect/perma_light/brighter,
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/simulated/floor/water/indoors,
+/area/moonbase/fixedpoi/homestead)
+"Yp" = (
+/obj/machinery/light/bigfloorlamp,
+/turf/simulated/floor/outdoors/grass/seasonal/preset/autumn{
+	outdoors = 0
+	},
+/area/moonbase/fixedpoi/homestead)
 "Yr" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -3253,6 +4192,25 @@
 /obj/structure/window/phoronreinforced/full,
 /turf/simulated/floor/reinforced/airless,
 /area/outpost/research/toxins_misc_lab)
+"Ys" = (
+/obj/item/weapon/bedsheet/orangedouble,
+/obj/structure/bed/double,
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
+"Yy" = (
+/turf/simulated/floor/outdoors/grass/seasonal/preset/autumn{
+	outdoors = 0
+	},
+/area/moonbase/fixedpoi/homestead)
+"YC" = (
+/turf/simulated/floor/water/indoors,
+/area/moonbase/fixedpoi/homestead)
+"YI" = (
+/obj/machinery/vending/hydronutrients,
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
+/area/moonbase/fixedpoi/homestead)
 "YK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -3260,22 +4218,11 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/tiled/white,
-/area/outpost/research)
+/area/outpost/research/hallway)
 "YR" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
-/obj/structure/railing/grey{
-	dir = 1
-	},
-/turf/simulated/floor/tiled/white,
-/area/outpost/research)
+/obj/structure/table/bench/wooden,
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
 "Zn" = (
 /obj/machinery/camera/network/research_outpost{
 	dir = 4
@@ -3304,10 +4251,40 @@
 	},
 /turf/simulated/floor/tiled,
 /area/outpost/research/anomaly_analysis)
+"ZD" = (
+/obj/structure/bed/chair/sofa/left/black{
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
+"ZH" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/outpost/research/dorms)
+"ZJ" = (
+/obj/structure/bed/chair/comfy/black,
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
 "ZP" = (
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/wall/r_wall,
-/area/outpost/research)
+/area/outpost/research/hallway)
+"ZX" = (
+/obj/structure/closet/crate/chest,
+/obj/item/ammo_magazine/clip/c12g/pellet,
+/obj/item/ammo_magazine/clip/c12g,
+/obj/item/ammo_magazine/ammo_box/b12g/beanbag,
+/obj/item/weapon/gun/projectile/shotgun/doublebarrel/flare,
+/turf/simulated/floor/wood,
+/area/moonbase/fixedpoi/homestead)
 
 (1,1,1) = {"
 MA
@@ -14814,7 +15791,7 @@ MA
 (82,1,1) = {"
 MA
 MA
-yh
+MA
 yh
 yh
 yh
@@ -14956,7 +15933,7 @@ MA
 (83,1,1) = {"
 MA
 MA
-yh
+MA
 yh
 yh
 yh
@@ -15098,6 +16075,7 @@ MA
 (84,1,1) = {"
 MA
 MA
+MA
 yh
 yh
 yh
@@ -15134,8 +16112,7 @@ yh
 yh
 yh
 yh
-yh
-yh
+rs
 yh
 yh
 yh
@@ -15240,6 +16217,9 @@ MA
 (85,1,1) = {"
 MA
 MA
+MA
+MA
+MA
 yh
 yh
 yh
@@ -15261,10 +16241,7 @@ yh
 yh
 yh
 yh
-yh
-yh
-yh
-yh
+zZ
 yh
 yh
 yh
@@ -15382,9 +16359,9 @@ MA
 (86,1,1) = {"
 MA
 MA
-yh
-yh
-yh
+MA
+MA
+MA
 yh
 yh
 yh
@@ -15524,8 +16501,8 @@ MA
 (87,1,1) = {"
 MA
 MA
-yh
-yh
+MA
+MA
 yh
 yh
 yh
@@ -15688,11 +16665,11 @@ PC
 Mn
 Mn
 ds
-co
-co
-co
-co
-co
+YI
+GU
+aC
+tN
+XY
 ps
 Mn
 Mn
@@ -15827,17 +16804,17 @@ yh
 PC
 Mn
 jy
-co
-co
-co
-co
-co
-eH
-co
-co
-co
-co
-co
+Yy
+Yy
+Yy
+OH
+qA
+wB
+qA
+OL
+dD
+Ws
+Yy
 ps
 Mn
 sO
@@ -15957,7 +16934,7 @@ yh
 yh
 yh
 yh
-yh
+Wv
 yh
 yh
 yh
@@ -15967,21 +16944,21 @@ yh
 yh
 PC
 jy
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
 Wo
 sO
 yh
@@ -16108,23 +17085,23 @@ yh
 yh
 PC
 jy
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+jn
 Wo
 sO
 yh
@@ -16249,25 +17226,25 @@ yh
 yh
 PC
 jy
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
 Wo
 sO
 yh
@@ -16390,27 +17367,27 @@ yh
 yh
 PC
 jy
-co
+Yy
 eH
-co
-co
-co
-co
-co
+Yy
+Yy
+Yy
+Yy
+Yy
 eH
-co
-co
-co
-co
-co
+Yy
+Yy
+Yy
+Yy
+Yy
 eH
-co
-co
-co
-co
-co
+Yy
+Yy
+Yy
+Yy
+Yy
 eH
-co
+Yy
 Wo
 sO
 yh
@@ -16531,29 +17508,29 @@ yh
 yh
 PC
 jy
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
+ny
+VP
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
 Wo
 sO
 yh
@@ -16620,7 +17597,7 @@ yh
 yh
 yh
 yh
-Ym
+XR
 yh
 yh
 yh
@@ -16672,31 +17649,31 @@ yh
 yh
 yh
 cf
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
+lM
+ty
+ej
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+fm
+qA
+fm
+qA
+fm
+qA
+fm
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
 bS
 yh
 yh
@@ -16769,7 +17746,7 @@ yh
 yh
 yh
 yh
-gR
+Ez
 Oy
 Oy
 ep
@@ -16806,39 +17783,39 @@ yh
 yh
 yh
 yh
-yh
-yh
-yh
-yh
-yh
-yh
-PC
-jy
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
+hD
+hD
+zg
+zg
+zg
+zg
+hD
+cR
+cR
+cR
+cR
+cR
+cR
+gj
+gj
+Yp
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
 Wo
 sO
 yh
@@ -16904,8 +17881,8 @@ yh
 yh
 yh
 yh
-Ym
-Ym
+XR
+XR
 yh
 yh
 yh
@@ -16948,40 +17925,40 @@ yh
 yh
 yh
 yh
-yh
-yh
-yh
-yh
-yh
-yh
-cf
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
+hD
+fg
+MH
+Fq
+Fq
+Fq
+Fq
+cR
+dA
+Fq
+ne
+IU
+cR
+Fq
+Fq
+Kw
+Yy
+Yy
+Yy
+Yy
+fm
+qA
+fm
+qA
+fm
+qA
+fm
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
 bS
 yh
 yh
@@ -17047,7 +18024,7 @@ yh
 yh
 yh
 yh
-Ym
+XR
 yh
 yh
 yh
@@ -17090,40 +18067,40 @@ yh
 yh
 yh
 yh
-yh
-yh
-yh
-yh
-yh
-yh
 cf
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
+OV
+Fq
+Da
+rb
+iY
+rL
+cR
+dA
+Fq
+Fq
+Fq
+cR
+Fq
+Fq
+UQ
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
 bS
 yh
 yh
@@ -17187,7 +18164,7 @@ yh
 yh
 yh
 yh
-Ym
+XR
 yh
 yh
 yh
@@ -17229,43 +18206,43 @@ MA
 MA
 MA
 yh
+rs
 yh
 yh
-yh
-yh
-yh
-yh
-yh
-yh
-PC
-jy
-co
-co
-co
-co
+cf
+gt
+Fq
+Da
+mS
+Au
+Fq
+Dn
+Fq
+Fq
+Fq
+Fq
+Dn
+Fq
+Fq
+UQ
+Yy
 eH
-co
-co
-co
-co
-co
+Yy
+Yy
+fm
+qA
+fm
+wB
+fm
+qA
+fm
+Yy
+Yy
 eH
-co
-co
-co
-co
-co
-eH
-co
-co
-co
-co
-co
-eH
-co
-co
-co
-co
+Yy
+Yy
+Yy
+Yy
 Wo
 sO
 yh
@@ -17329,7 +18306,7 @@ yh
 yh
 yh
 yh
-Ym
+XR
 yh
 yh
 yh
@@ -17374,41 +18351,41 @@ yh
 yh
 yh
 yh
-yh
-yh
-yh
-yh
-yh
 cf
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
+cK
+Fq
+tH
+rb
+Au
+Fq
+cR
+Fq
+um
+Fq
+pi
+cR
+Fq
+Fq
+UQ
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+yb
+Mb
+Mb
 bS
 yh
 yh
@@ -17471,9 +18448,9 @@ yh
 yh
 yh
 yh
+XR
 yh
-yh
-Ym
+XR
 yh
 yh
 yh
@@ -17516,41 +18493,41 @@ yh
 yh
 yh
 yh
-yh
-yh
-yh
-yh
-yh
 cf
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
+jg
+Fq
+tH
+rb
+Au
+Fq
+cR
+cR
+cR
+Dn
+cR
+cR
+xL
+Fq
+Kw
+Yy
+Yy
+Yy
+Yy
+fm
+qA
+fm
+qA
+fm
+qA
+fm
+Yy
+Yy
+Yy
+Yy
+IZ
+ZJ
+SY
+SY
 bS
 yh
 yh
@@ -17615,7 +18592,7 @@ yh
 yh
 yh
 yh
-Ym
+XR
 yh
 yh
 yh
@@ -17656,45 +18633,46 @@ MA
 MA
 yh
 yh
+zZ
 yh
-yh
-yh
-yh
-yh
-yh
-yh
-cf
-co
-eH
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-eH
-co
+hD
+Fd
+oo
+um
+Fq
+Fq
+Fq
+cR
+TQ
+EO
+Fq
+XU
+cR
+Fq
+Fq
+Kw
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+YC
+fH
+Yo
+fH
 bS
 yh
+zZ
 yh
 yh
 yh
@@ -17755,9 +18733,8 @@ yh
 yh
 yh
 yh
-yh
-Ym
-Ym
+XR
+XR
 yh
 yh
 yh
@@ -17776,7 +18753,7 @@ MD
 hP
 Ht
 Ez
-dd
+kw
 zz
 dd
 dd
@@ -17800,41 +18777,41 @@ yh
 yh
 yh
 yh
-yh
-yh
-yh
-yh
-yh
-cf
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
+hD
+hD
+hD
+hD
+hD
+Dn
+hD
+cR
+UH
+Fq
+Fq
+Fq
+Ff
+YR
+Fq
+Kw
+Yy
+Yy
+Yy
+Yy
+fm
+qA
+fm
+qA
+fm
+qA
+fm
+Yy
+Yy
+Yy
+YC
+YC
+YC
+YC
+YC
 bS
 yh
 yh
@@ -17898,14 +18875,14 @@ yh
 yh
 yh
 yh
-Ym
+XR
 yh
 yh
 yh
 yh
 yh
 yh
-gR
+Ez
 nk
 lO
 HP
@@ -17918,8 +18895,8 @@ dv
 Ub
 qw
 Ez
-dd
-zz
+js
+aO
 dd
 dd
 dd
@@ -17942,41 +18919,41 @@ yh
 yh
 yh
 yh
-yh
-yh
-yh
-yh
-yh
-cf
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
+hD
+cU
+lc
+hD
+iB
+Fq
+SY
+cR
+Er
+Fq
+Fq
+zj
+Ff
+YR
+Fq
+Kw
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+YC
+YC
+YC
+YC
+YC
 bS
 yh
 yh
@@ -18039,8 +19016,8 @@ yh
 yh
 yh
 yh
-Ym
-Ym
+XR
+XR
 yh
 yh
 yh
@@ -18084,40 +19061,40 @@ yh
 yh
 yh
 yh
-yh
-yh
-yh
-yh
-yh
-Wo
-sO
-co
-co
-co
-co
+hD
+cU
+mn
+hD
+xL
+Fq
+oJ
+cR
+Lf
+Fq
+Fq
+SY
+Ff
+YR
+Fq
+Kw
+Yy
 eH
-co
-co
-co
-co
-co
+Yy
+Yy
+fm
+qA
+fm
+wB
+fm
+qA
+fm
+Yy
+Yy
 eH
-co
-co
-co
-co
-co
-eH
-co
-co
-co
-co
-co
-eH
-co
-co
-co
-co
+YC
+YC
+YC
+YC
 PC
 jy
 yh
@@ -18181,9 +19158,9 @@ yh
 yh
 yh
 yh
-Ym
-Ym
-Ym
+XR
+XR
+XR
 yh
 yh
 aH
@@ -18226,40 +19203,40 @@ yh
 yh
 yh
 yh
-yh
-yh
-yh
-yh
-yh
-yh
-cf
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
+hD
+DC
+mn
+Dn
+Fq
+Fq
+rL
+cR
+FI
+Fq
+Fq
+oJ
+Ff
+YR
+Fq
+Kw
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+YC
+YC
+YC
+YC
 bS
 yh
 yh
@@ -18323,9 +19300,9 @@ yh
 yh
 yh
 yh
-Ym
-Ym
-Ym
+XR
+XR
+XR
 yh
 yh
 aH
@@ -18344,10 +19321,10 @@ JN
 Nu
 Sn
 fP
-Ta
+vE
 gc
-Ta
-PK
+vE
+vE
 PK
 PK
 PK
@@ -18368,40 +19345,40 @@ yh
 yh
 yh
 yh
-yh
-yh
-yh
-yh
-yh
-yh
-cf
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
+hD
+et
+mn
+hD
+ZX
+Ys
+XU
+cR
+KG
+ZD
+um
+dG
+cR
+Fq
+Fq
+Kw
+Yy
+Yy
+Yy
+Yy
+fm
+qA
+fm
+qA
+fm
+qA
+fm
+Yy
+Yy
+Yy
+YC
+YC
+YC
+YC
 bS
 yh
 yh
@@ -18465,9 +19442,9 @@ yh
 yh
 yh
 yh
-Ym
-Ym
-Ym
+XR
+XR
+XR
 yh
 yh
 OJ
@@ -18488,13 +19465,13 @@ qx
 fP
 iN
 gD
-Hk
-PK
+Vd
+vE
 Jw
-JG
+Xn
 JG
 we
-we
+zO
 we
 PK
 yh
@@ -18510,39 +19487,39 @@ yh
 yh
 yh
 yh
-yh
-yh
-yh
-yh
-yh
-yh
-Wo
-sO
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
+hD
+hD
+hD
+hD
+hD
+zg
+hD
+cR
+cR
+cR
+cR
+cR
+cR
+Gn
+Gn
+Yp
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+YC
+YC
+YC
 eW
 jy
 yh
@@ -18607,9 +19584,9 @@ yh
 yh
 yh
 yh
-Ym
-Ym
-Ym
+XR
+XR
+XR
 yh
 yh
 OJ
@@ -18628,10 +19605,10 @@ Jn
 bF
 cV
 fP
-Nf
-XR
-Hk
-cR
+lL
+gD
+Vd
+tK
 Qr
 DY
 hb
@@ -18649,7 +19626,7 @@ MA
 MA
 MA
 yh
-yh
+hF
 yh
 yh
 yh
@@ -18660,31 +19637,31 @@ yh
 yh
 yh
 cf
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
+Iq
+Iq
+LI
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+fm
+qA
+fm
+qA
+fm
+qA
+fm
+Yy
+Yy
+Yy
+Yy
+YC
+YC
 bS
 yh
 yh
@@ -18749,9 +19726,9 @@ yh
 yh
 yh
 yh
-Ym
-Ym
-Ym
+XR
+XR
+XR
 yh
 yh
 OJ
@@ -18770,9 +19747,9 @@ Jn
 Tj
 qx
 fP
-Fq
-YR
-Hk
+bv
+gD
+Vd
 sw
 FT
 DG
@@ -18803,29 +19780,29 @@ yh
 yh
 Wo
 sO
-co
-co
-eH
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
+Iq
+Iq
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
 eW
 jy
 yh
@@ -18891,9 +19868,9 @@ yh
 yh
 yh
 yh
-Ym
-Ym
-Ym
+XR
+XR
+XR
 yh
 yh
 aH
@@ -18912,7 +19889,7 @@ Jn
 bF
 Mt
 fP
-bv
+Ij
 bC
 zJ
 GT
@@ -18932,7 +19909,7 @@ MA
 (111,1,1) = {"
 MA
 MA
-yh
+MA
 yh
 yh
 yh
@@ -18946,27 +19923,27 @@ yh
 yh
 Wo
 sO
-co
-co
-co
-co
-co
-co
-co
+Yy
 eH
-co
-co
-co
-co
-co
+Yy
+Yy
+Yy
+Yy
+Yy
 eH
-co
-co
-co
-co
-co
+Yy
+Yy
+Yy
+Yy
+Yy
 eH
-co
+Yy
+Yy
+Yy
+Yy
+Yy
+eH
+Yy
 eW
 jy
 yh
@@ -19033,9 +20010,9 @@ yh
 yh
 yh
 yh
-Ym
-Ym
-Ym
+XR
+XR
+XR
 yh
 yh
 aH
@@ -19054,10 +20031,10 @@ fv
 Tj
 qx
 fP
-bv
-YR
-Hk
-cR
+iN
+gD
+Vd
+tK
 Px
 DY
 Dr
@@ -19074,7 +20051,7 @@ MA
 (112,1,1) = {"
 MA
 MA
-yh
+MA
 yh
 yh
 yh
@@ -19089,25 +20066,25 @@ yh
 yh
 Wo
 sO
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
 eW
 jy
 yh
@@ -19175,9 +20152,9 @@ yh
 yh
 yh
 yh
-Ym
-Ym
-Ym
+XR
+XR
+XR
 yh
 yh
 yh
@@ -19196,15 +20173,15 @@ gS
 bF
 Mt
 fP
-bv
-YR
-Hk
-PK
+iN
+gD
+Vd
+vE
 zt
-JG
+gi
 JG
 iO
-JG
+gi
 DF
 PK
 yh
@@ -19216,7 +20193,7 @@ MA
 (113,1,1) = {"
 MA
 MA
-yh
+MA
 yh
 yh
 yh
@@ -19232,23 +20209,23 @@ yh
 yh
 Wo
 sO
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
 eW
 jy
 yh
@@ -19317,9 +20294,9 @@ yh
 yh
 yh
 yh
-Ym
-Ym
-Ym
+XR
+XR
+XR
 yh
 yh
 yh
@@ -19329,7 +20306,7 @@ Ea
 Gb
 IH
 qX
-Gb
+bm
 bs
 Gb
 rM
@@ -19338,10 +20315,10 @@ uN
 Tj
 qx
 fP
-bv
-YR
+uT
+gD
 oE
-PK
+vE
 PK
 PK
 PK
@@ -19358,6 +20335,7 @@ MA
 (114,1,1) = {"
 MA
 MA
+MA
 yh
 yh
 yh
@@ -19365,8 +20343,7 @@ yh
 yh
 yh
 yh
-yh
-yh
+Wv
 yh
 yh
 yh
@@ -19375,21 +20352,21 @@ yh
 yh
 Wo
 sO
+Yy
+Yy
 co
 co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
-co
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+Yy
+mQ
+TS
 eW
 jy
 yh
@@ -19459,9 +20436,9 @@ yh
 yh
 yh
 yh
-Ym
-Ym
-Ym
+XR
+XR
+XR
 yh
 yh
 yh
@@ -19480,9 +20457,9 @@ OO
 bF
 cV
 fP
-bv
-YR
-Hk
+iN
+gD
+Vd
 vE
 gJ
 LH
@@ -19500,7 +20477,7 @@ MA
 (115,1,1) = {"
 MA
 MA
-yh
+MA
 yh
 yh
 yh
@@ -19519,17 +20496,17 @@ yh
 Wo
 zg
 sO
-co
-co
-co
-co
-co
+sF
+sF
+sF
+Yy
+Yy
 eH
-co
-co
-co
-co
-co
+Yy
+Yp
+qd
+Pz
+yJ
 eW
 zg
 jy
@@ -19601,9 +20578,9 @@ yh
 yh
 yh
 yh
-Ym
-Ym
-Ym
+XR
+XR
+XR
 yh
 yh
 yh
@@ -19622,9 +20599,9 @@ Sq
 sh
 qx
 fP
-bv
-YR
-Hk
+iN
+gD
+Vd
 tK
 Oq
 bY
@@ -19642,7 +20619,7 @@ MA
 (116,1,1) = {"
 MA
 MA
-yh
+MA
 yh
 yh
 yh
@@ -19664,11 +20641,11 @@ Wo
 zg
 zg
 fa
-co
-co
-co
-co
-co
+KC
+Ks
+Gj
+Yy
+Yy
 eW
 zg
 zg
@@ -19743,9 +20720,9 @@ yh
 yh
 yh
 yh
-Ym
-Ym
-Ym
+XR
+XR
+XR
 yh
 yh
 yh
@@ -19764,16 +20741,16 @@ OO
 gO
 qS
 fP
-bv
-YR
-Hk
+Of
+gD
+Vd
 tK
 jY
 eR
 kf
 zb
 wT
-Gr
+Yn
 PK
 yh
 yh
@@ -19807,9 +20784,9 @@ yh
 yh
 Wo
 zg
-Mn
-zg
-zg
+ec
+cB
+hD
 zg
 jy
 yh
@@ -19885,9 +20862,9 @@ yh
 yh
 yh
 yh
-Ym
-Ym
-Ym
+XR
+XR
+XR
 yh
 yh
 yh
@@ -19906,9 +20883,9 @@ op
 Sb
 HK
 fP
-qj
+Ij
 gD
-Hk
+Vd
 tK
 Sz
 eR
@@ -19949,6 +20926,9 @@ yh
 yh
 yh
 yh
+Rc
+Hp
+hD
 yh
 yh
 yh
@@ -20024,12 +21004,9 @@ yh
 yh
 yh
 yh
-yh
-yh
-yh
-Ym
-Ym
-Ym
+XR
+XR
+XR
 oy
 vE
 zk
@@ -20039,16 +21016,16 @@ cT
 vE
 vE
 vE
-fg
-vE
-vE
-vE
-vE
-fP
 bg
-fP
-fP
-Hk
+vE
+vE
+vE
+vE
+vE
+bg
+vE
+vE
+Rb
 oj
 zJ
 Dw
@@ -20068,6 +21045,7 @@ MA
 (119,1,1) = {"
 MA
 MA
+MA
 yh
 yh
 yh
@@ -20090,6 +21068,9 @@ yh
 yh
 yh
 yh
+tQ
+GB
+hD
 yh
 yh
 yh
@@ -20165,13 +21146,9 @@ yh
 yh
 yh
 yh
-yh
-yh
-yh
-yh
-Ym
-Ym
-Ym
+XR
+XR
+XR
 il
 MF
 ko
@@ -20183,16 +21160,16 @@ UX
 it
 iC
 YK
-YK
+sV
 YK
 YK
 tl
 HG
+UN
 YK
-YK
-YK
+oD
 PS
-Hk
+Vd
 tK
 vf
 oW
@@ -20210,6 +21187,7 @@ MA
 (120,1,1) = {"
 MA
 MA
+MA
 yh
 yh
 yh
@@ -20232,6 +21210,9 @@ yh
 yh
 yh
 yh
+hD
+zN
+hD
 yh
 yh
 yh
@@ -20239,6 +21220,7 @@ yh
 yh
 yh
 yh
+rs
 yh
 yh
 yh
@@ -20306,35 +21288,30 @@ yh
 yh
 yh
 yh
-yh
-yh
-yh
-yh
-yh
-Ym
-Ym
-Ym
+XR
+XR
+XR
 aY
 MF
 hs
 lW
 nQ
 Fh
-Hk
-Hk
-Hk
+Vd
+Vd
+Vd
 ns
 io
-Hk
-Hk
+Vd
+Vd
 ti
+Bh
+Vd
 Hk
-Hk
-Hk
-Hk
-Hk
+Vd
+Vd
 ns
-Hk
+Vd
 vE
 vf
 Vn
@@ -20352,6 +21329,7 @@ MA
 (121,1,1) = {"
 MA
 MA
+MA
 yh
 yh
 yh
@@ -20374,6 +21352,9 @@ yh
 yh
 yh
 yh
+tT
+Bz
+tT
 yh
 yh
 yh
@@ -20449,32 +21430,28 @@ yh
 yh
 yh
 yh
-yh
-yh
-yh
-yh
-Ym
-Ym
-Ym
+XR
+XR
+XR
 oy
 vE
 CS
 jJ
 BR
 Hd
-zo
+vE
 zo
 zo
 vE
 vE
 zo
 zo
-zo
 vE
 vE
-zo
-zo
-zo
+vE
+dk
+tK
+nG
 vE
 vE
 vE
@@ -20595,9 +21572,9 @@ yh
 yh
 yh
 yh
-Ym
-Ym
-Ym
+XR
+XR
+XR
 yh
 yh
 yh
@@ -20612,13 +21589,13 @@ yh
 yh
 yh
 yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
+XR
+JY
+Yj
+zQ
+Nf
+JY
+XR
 yh
 yh
 yh
@@ -20737,9 +21714,9 @@ yh
 yh
 yh
 yh
-Ym
-Ym
-Ym
+XR
+XR
+XR
 yh
 yh
 yh
@@ -20754,13 +21731,13 @@ yh
 yh
 yh
 yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
+JY
+JY
+vu
+rr
+vZ
+JY
+JY
 yh
 yh
 yh
@@ -20876,16 +21853,12 @@ yh
 yh
 yh
 yh
-yh
-yh
-yh
-Ym
-Ym
-Ym
-yh
-yh
-yh
-yh
+XR
+XR
+XR
+XR
+XR
+XR
 yh
 yh
 yh
@@ -20900,9 +21873,13 @@ yh
 yh
 yh
 yh
-yh
-yh
-yh
+jp
+Xf
+un
+jj
+un
+un
+jp
 yh
 yh
 yh
@@ -20937,6 +21914,7 @@ yh
 yh
 yh
 yh
+rs
 yh
 yh
 yh
@@ -21014,16 +21992,21 @@ yh
 yh
 yh
 yh
+XR
+XR
+XR
+XR
 yh
+XR
+XR
+XR
+XR
 yh
 yh
 yh
 yh
 yh
 yh
-Ym
-Ym
-Ym
 yh
 yh
 yh
@@ -21032,19 +22015,13 @@ yh
 yh
 yh
 yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
+jp
+Ux
+un
+JZ
+un
+Rd
+jp
 yh
 yh
 yh
@@ -21155,20 +22132,17 @@ yh
 yh
 yh
 yh
+XR
+XR
 yh
 yh
-yh
-yh
-yh
-yh
-yh
-yh
-Ym
-Ym
-Ym
-yh
-yh
-yh
+XR
+XR
+XR
+XR
+XR
+XR
+XR
 yh
 yh
 yh
@@ -21183,10 +22157,13 @@ yh
 yh
 yh
 yh
-yh
-yh
-yh
-yh
+jp
+xy
+NZ
+NZ
+un
+AN
+jp
 yh
 yh
 yh
@@ -21305,9 +22282,9 @@ yh
 yh
 yh
 yh
-Ym
-Ym
-Ym
+XR
+XR
+XR
 yh
 yh
 yh
@@ -21322,13 +22299,13 @@ yh
 yh
 yh
 yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
+jp
+di
+Qx
+Qx
+qj
+xo
+jp
 yh
 yh
 yh
@@ -21447,9 +22424,9 @@ yh
 yh
 yh
 yh
-Ym
-Ym
-Ym
+XR
+XR
+XR
 yh
 yh
 yh
@@ -21464,13 +22441,13 @@ yh
 yh
 yh
 yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
+ZH
+ri
+ri
+ri
+ri
+ri
+Nd
 yh
 yh
 yh
@@ -21589,9 +22566,9 @@ yh
 yh
 yh
 yh
-Ym
-Ym
-Ym
+XR
+XR
+XR
 yh
 yh
 yh
@@ -21731,9 +22708,9 @@ yh
 yh
 yh
 yh
-Ym
-Ym
-Ym
+XR
+XR
+XR
 yh
 yh
 yh
@@ -21873,9 +22850,9 @@ yh
 yh
 yh
 yh
-Ym
-Ym
-Ym
+XR
+XR
+XR
 yh
 yh
 yh
@@ -22015,9 +22992,9 @@ yh
 yh
 yh
 yh
-Ym
-Ym
-Ym
+XR
+XR
+XR
 yh
 yh
 yh
@@ -22157,9 +23134,9 @@ yh
 yh
 yh
 yh
-Ym
-Ym
-Ym
+XR
+XR
+XR
 yh
 yh
 yh
@@ -22299,9 +23276,9 @@ yh
 yh
 yh
 yh
-Ym
-Ym
-Ym
+XR
+XR
+XR
 yh
 yh
 yh
@@ -22441,9 +23418,9 @@ yh
 yh
 yh
 yh
-Ym
-Ym
-Ym
+XR
+XR
+XR
 yh
 yh
 yh
@@ -22482,6 +23459,7 @@ MA
 (136,1,1) = {"
 MA
 MA
+MA
 yh
 yh
 yh
@@ -22582,10 +23560,9 @@ yh
 yh
 yh
 yh
-yh
-Ym
-Ym
-Ym
+XR
+XR
+XR
 yh
 yh
 yh
@@ -22624,117 +23601,117 @@ MA
 (137,1,1) = {"
 MA
 MA
+MA
 yh
 yh
 yh
 yh
 yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-Ym
-Ym
-Ym
 yh
 yh
 yh
 yh
 MA
 MA
+MA
+MA
+MA
+MA
 yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+MA
+MA
+MA
+MA
+MA
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+yh
+MA
+MA
+MA
+MA
+MA
+MA
+XR
+XR
+XR
+MA
+MA
+MA
+yh
+yh
+MA
+MA
 MA
 MA
 MA
@@ -22766,19 +23743,52 @@ MA
 (138,1,1) = {"
 MA
 MA
+MA
+MA
+MA
+MA
+MA
 yh
 yh
+MA
+MA
+MA
+MA
+MA
+MA
+MA
+MA
 yh
+MA
+MA
+MA
+MA
 yh
 yh
 yh
 yh
 yh
+MA
+MA
+MA
+MA
+MA
+MA
+MA
+MA
+MA
+MA
 yh
 yh
 yh
 yh
 yh
+MA
+MA
+MA
+MA
+MA
+MA
 yh
 yh
 yh
@@ -22798,6 +23808,16 @@ yh
 yh
 yh
 yh
+MA
+MA
+MA
+MA
+MA
+MA
+MA
+MA
+MA
+MA
 yh
 yh
 yh
@@ -22807,73 +23827,30 @@ yh
 yh
 yh
 yh
+MA
+MA
+MA
+MA
+MA
+MA
 yh
 yh
 yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-Ym
-Ym
-Ym
-yh
-yh
-yh
-yh
+MA
+MA
+MA
+MA
+MA
+MA
+MA
+MA
+XR
+XR
+XR
+MA
+MA
+MA
+MA
 MA
 MA
 MA
@@ -23009,9 +23986,9 @@ MA
 MA
 MA
 pQ
-Ym
-Ym
-Ym
+XR
+XR
+XR
 pQ
 MA
 MA

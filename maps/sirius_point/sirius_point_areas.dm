@@ -363,6 +363,16 @@
 	name = "Western Sirius Point Level Two"
 
 
+////////////////////////////
+// Nearby Fixed Locations //
+////////////////////////////
+
+/area/moonbase/fixedpoi/homestead
+	name = "Homestead"
+	icon_state = "orablasqu"
+	sound_env = SOUND_ENVIRONMENT_FOREST
+	ambience = AMBIENCE_SIF
+
 //////////////
 // The Mine //
 //////////////
@@ -381,6 +391,9 @@
 // Substations//
 ////////////////
 
+/area/maintenance/moonbase/substation
+	icon = 'icons/turf/areas_vr.dmi'
+	icon_state = "orablasqu"
 /area/maintenance/moonbase/substation/atmospherics
 	name = "Atmospherics Substation"
 /area/maintenance/moonbase/substation/cargo
@@ -399,6 +412,8 @@
 	name = "Research Substation"
 /area/maintenance/moonbase/substation/security
 	name = "Security Substation"
+/area/maintenance/moonbase/substation/aicomms
+	name = "AI & Telecomms Substation"
 
 //////////////
 // Shuttles //

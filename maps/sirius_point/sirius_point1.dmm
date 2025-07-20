@@ -401,7 +401,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/brown,
 /area/maintenance/moonbase/basement/archive)
 "be" = (
 /obj/machinery/alarm{
@@ -589,10 +589,6 @@
 "bE" = (
 /turf/simulated/floor/water/indoors,
 /area/moonbase/basement/caves/northeast)
-"bF" = (
-/obj/machinery/portable_atmospherics/canister/empty,
-/turf/simulated/floor/tiled/monotile,
-/area/engineering/atmos)
 "bG" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -812,6 +808,13 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/pool)
+"cm" = (
+/obj/machinery/light_switch{
+	pixel_x = 23;
+	pixel_y = -23
+	},
+/turf/simulated/floor/tiled/old_tile,
+/area/maintenance/moonbase/basement/poolmaint)
 "cn" = (
 /obj/structure/trash_pile,
 /turf/simulated/mineral/floor/cave/moonbase,
@@ -1449,8 +1452,9 @@
 /turf/simulated/floor/plating/external,
 /area/moonbase/basement/caves/flooded)
 "dX" = (
-/turf/simulated/floor/plating,
-/area/maintenance/moonbase/basement/archive)
+/obj/effect/decal/remains/unathi,
+/turf/simulated/floor/tiled/old_tile,
+/area/maintenance/moonbase/basement/olddorms)
 "dY" = (
 /obj/structure/bed/double/padded,
 /obj/item/weapon/bedsheet/browndouble,
@@ -1832,7 +1836,7 @@
 /turf/simulated/wall,
 /area/maintenance/moonbase/basement/poolmaint)
 "eY" = (
-/obj/effect/decal/remains/tajaran,
+/obj/effect/decal/remains/human,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/olddorms)
 "eZ" = (
@@ -2791,13 +2795,6 @@
 "hJ" = (
 /turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/dorms/dorm3)
-"hK" = (
-/obj/machinery/atmospherics/pipe/simple/visible/cyan{
-	dir = 4
-	},
-/obj/machinery/portable_atmospherics/canister/empty,
-/turf/simulated/floor/tiled/monotile,
-/area/engineering/atmos)
 "hL" = (
 /obj/machinery/vending/magivend,
 /turf/simulated/floor/wood/alt/panel,
@@ -4180,7 +4177,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/south)
 "lA" = (
-/obj/structure/girder,
+/obj/structure/foamedmetal,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/olddorms)
 "lB" = (
@@ -4296,6 +4293,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/machinery/light_switch{
+	dir = 8;
+	pixel_x = 24;
+	pixel_y = 23
 	},
 /turf/simulated/floor/carpet,
 /area/moonbase/dorms/dorm5)
@@ -4877,6 +4879,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/light_switch{
+	pixel_x = -23;
+	pixel_y = 23;
+	dir = 1
+	},
 /turf/simulated/floor/carpet/gaycarpet,
 /area/library/moonbase/clownoffice)
 "nv" = (
@@ -5927,10 +5934,10 @@
 /turf/simulated/floor/carpet,
 /area/moonbase/dorms/dorm3)
 "qz" = (
+/obj/machinery/atmospherics/unary/vent_pump/on,
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/machinery/atmospherics/unary/vent_pump/on,
 /turf/simulated/floor/wood/alt/panel,
 /area/crew_quarters/theatre)
 "qA" = (
@@ -6614,10 +6621,10 @@
 /turf/simulated/floor/tiled/white,
 /area/moonbase/dorms/dorm2)
 "sx" = (
+/obj/machinery/atmospherics/unary/vent_scrubber/on,
 /obj/structure/railing{
 	dir = 8
 	},
-/obj/machinery/atmospherics/unary/vent_scrubber/on,
 /turf/simulated/floor/wood/alt/panel,
 /area/crew_quarters/theatre)
 "sy" = (
@@ -8638,9 +8645,15 @@
 /turf/simulated/floor/plating,
 /area/moonbase/dorms/dorm2)
 "yl" = (
-/obj/structure/bed/double,
-/obj/item/weapon/bedsheet/browndouble,
-/turf/simulated/floor/plating,
+/obj/machinery/shower{
+	dir = 8
+	},
+/obj/effect/decal/remains/tajaran,
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 4
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals10,
+/turf/simulated/floor/tiled/old_tile,
 /area/maintenance/moonbase/basement/olddorms)
 "ym" = (
 /turf/simulated/wall/r_wall,
@@ -9477,7 +9490,6 @@
 /obj/random/ammo,
 /obj/random/ammo,
 /obj/item/weapon/cell/device/weapon/empty,
-/obj/random/ammo,
 /turf/simulated/floor/tiled/techmaint,
 /area/security/security_equiptment_storage)
 "AL" = (
@@ -11269,6 +11281,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/machinery/light_switch{
+	dir = 8;
+	pixel_x = 24;
+	pixel_y = 23
 	},
 /turf/simulated/floor/carpet,
 /area/moonbase/dorms/dorm3)
@@ -13369,6 +13386,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/light_switch{
+	pixel_x = -23;
+	pixel_y = 23;
+	dir = 1
+	},
 /turf/simulated/floor/carpet/bcarpet,
 /area/library/moonbase/mimeoffice)
 "Lu" = (
@@ -13418,8 +13440,14 @@
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/dorms)
 "LA" = (
-/obj/effect/decal/remains/unathi,
-/turf/simulated/floor/plating,
+/obj/machinery/shower{
+	dir = 8
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 4
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals10,
+/turf/simulated/floor/tiled/old_tile,
 /area/maintenance/moonbase/basement/olddorms)
 "LB" = (
 /obj/machinery/light{
@@ -13522,6 +13550,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/machinery/light_switch{
+	dir = 4;
+	pixel_x = -24;
+	pixel_y = 23
 	},
 /turf/simulated/floor/carpet,
 /area/moonbase/dorms/dorm8)
@@ -13898,7 +13931,7 @@
 /turf/simulated/floor/tiled/monotile,
 /area/quartermaster/moonbase/mining)
 "MR" = (
-/obj/structure/railing{
+/obj/structure/railing/overhang/waterless/under{
 	dir = 1
 	},
 /turf/simulated/floor/wood/alt/panel,
@@ -13966,6 +13999,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/machinery/light_switch{
+	dir = 8;
+	pixel_x = 24;
+	pixel_y = 23
 	},
 /turf/simulated/floor/carpet,
 /area/moonbase/dorms/dorm7)
@@ -15225,7 +15263,6 @@
 /obj/random/ammo,
 /obj/random/ammo,
 /obj/item/weapon/cell/device/weapon/empty,
-/obj/random/ammo,
 /obj/machinery/light,
 /turf/simulated/floor/tiled/techmaint,
 /area/security/security_equiptment_storage)
@@ -15757,6 +15794,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/machinery/light_switch{
+	dir = 8;
+	pixel_x = 24;
+	pixel_y = 23
+	},
 /turf/simulated/floor/carpet,
 /area/moonbase/dorms/dorm1)
 "RG" = (
@@ -15844,6 +15886,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/machinery/light_switch{
+	dir = 4;
+	pixel_x = -24;
+	pixel_y = 23
 	},
 /turf/simulated/floor/carpet,
 /area/moonbase/dorms/dorm4)
@@ -16391,6 +16438,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/machinery/light_switch{
+	dir = 4;
+	pixel_x = -24;
+	pixel_y = 23
 	},
 /turf/simulated/floor/carpet,
 /area/moonbase/dorms/dorm6)
@@ -17169,6 +17221,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/machinery/light_switch{
+	dir = 4;
+	pixel_x = -24;
+	pixel_y = 23
+	},
 /turf/simulated/floor/carpet,
 /area/moonbase/dorms/dorm2)
 "Vx" = (
@@ -17492,6 +17549,9 @@
 /obj/random/contraband,
 /turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northwest)
+"Wy" = (
+/turf/simulated/floor/tiled/old_tile,
+/area/maintenance/moonbase/basement/olddorms)
 "Wz" = (
 /obj/structure/cable{
 	icon_state = "0-4"
@@ -24231,9 +24291,9 @@ Fp
 NX
 Tk
 Uh
-bF
-bF
-hK
+KN
+KN
+mG
 KN
 Qx
 Af
@@ -24373,9 +24433,9 @@ Re
 uR
 uR
 XU
-bF
-bF
-hK
+KN
+KN
+mG
 KN
 KN
 Af
@@ -24769,7 +24829,7 @@ Zt
 XA
 kC
 XD
-dX
+NQ
 TX
 NQ
 TX
@@ -24913,7 +24973,7 @@ XN
 XD
 NQ
 yG
-dX
+NQ
 yG
 iv
 XD
@@ -25198,7 +25258,7 @@ XD
 eW
 NQ
 NQ
-dX
+NQ
 Ai
 XD
 mg
@@ -25481,7 +25541,7 @@ Ce
 XD
 NQ
 bd
-dX
+NQ
 NQ
 XD
 XD
@@ -27311,7 +27371,7 @@ oj
 eX
 Rr
 PR
-PR
+cm
 qk
 GW
 ga
@@ -30464,8 +30524,8 @@ sx
 VW
 Um
 Yw
-HD
-HD
+QF
+QF
 QF
 WE
 Pk
@@ -32735,7 +32795,7 @@ jx
 WO
 Mz
 FH
-Mz
+lA
 Mz
 eY
 FH
@@ -32877,8 +32937,8 @@ vz
 WO
 Mz
 lA
+lA
 Mz
-LA
 Mz
 FH
 oj
@@ -33020,8 +33080,8 @@ WO
 Mz
 FH
 Mz
-Mz
-Mz
+dX
+Wy
 FH
 oj
 wR
@@ -33162,7 +33222,7 @@ LR
 Bv
 FH
 Mz
-Mz
+LA
 yl
 FH
 oj
