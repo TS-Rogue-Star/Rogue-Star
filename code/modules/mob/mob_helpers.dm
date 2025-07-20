@@ -167,22 +167,22 @@
 
 	//This is done here now, since previously it was just done in a dumb spot that made no sense.
 	//Even if you were Neo, anyone could land a blow on you.
-	var/has_evasion_chance = FALSE
+	var/evasion_chance = 0	//RS ADD
 	if(isliving(target))
 		var/mob/living/our_target = target
-		var/evasion_chance = our_target.get_evasion()
+		evasion_chance = our_target.get_evasion()	//RS EDIT
 
-		if(!evasion_chance && !target.client) //If our target HAS no evasion chance and they're an NPC, we hit.
+		if(!evasion_chance && !miss_chance_mod && !target.client) //If our target HAS no evasion chance and they're an NPC, we hit.	//RS EDIT
 			return zone
 		if(evasion_chance)
-			has_evasion_chance = TRUE
 			miss_chance_mod += evasion_chance
 	//However, get_accuracy_penalty() is also used in eyestab, open-hand clicking someone, and resolve_item_attack()
 	//The big one is resolve_item_attack(). It's the 'we are hit in melee combat'
 	//We are unable to include it here as it is dependent on the attacker, so we'll let it just continue being calculated where it is.
 
-	if(has_evasion_chance && miss_chance_mod > 0 && prob(miss_chance_mod))
-		return null
+	if(evasion_chance > 0 || miss_chance_mod > 0)	//RS EDIT START
+		if(prob(miss_chance_mod))
+			return null		//RS EDIT END
 
 	if(!target.client) //If the target is an NPC, we will always hit (barring extreme circumstances like mobs having modified evasion, handled above). Removes baymiss against mobs.
 		return zone
@@ -211,7 +211,7 @@
 
 	else if(non_living_always_hits) //Warning: This will make things like frag mines ANNIHILATE people without evasion.
 		return zone
-	else if(!has_evasion_chance && prob(miss_chance_mod)) //Only take miss chance into account when we have no evasion IF the attacker is non-living (turret/mine/claymore).
+	else if(!evasion_chance && prob(miss_chance_mod)) //Only take miss chance into account when we have no evasion IF the attacker is non-living (turret/mine/claymore).
 		return null //They missed.
 
 	//However, if a mob IS attacking a player, let's throw in some RNG into the mix to make it feel better for players.

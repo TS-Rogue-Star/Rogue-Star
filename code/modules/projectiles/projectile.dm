@@ -661,6 +661,12 @@
 	// These ONLY matter if the mob you are attacking has evasion  OR if it's coming from a non-living attacker (Mines/Turrets).
 	// The get_zone_with_miss_chance() proc is HIGHLY variable and can be changed server to server with multiple simple var switches built in without having to do specialty code or multiple edits.
 	var/miss_chance = (-accuracy + miss_modifier) //Chance to miss the target. Higher
+	var/effective_view = world.view	//RS ADD START - Let's make it so that you have a chance to miss if they're too far away
+	if(firer.client)
+		effective_view = firer.client.view
+	if(distance > effective_view)
+		miss_chance += (distance - effective_view) * 20	//RS ADD START
+
 	var/hit_zone = get_zone_with_miss_chance(def_zone, target_mob, miss_chance, ranged_attack=(distance > 1 || original != target_mob), force_hit = !can_miss, attacker = firer) //if the projectile hits a target we weren't originally aiming at then retain the chance to miss
 	//RS edit end
 
