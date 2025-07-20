@@ -18,6 +18,8 @@
 	// Breakthrough
 	var/failed_breakthroughs = 0		// How many times we've failed to breakthrough something lately
 
+	var/walk_attempts = 0				//RS ADD - How many times did we try and fail to walk?
+
 /datum/ai_holder/proc/walk_to_destination()
 	ai_log("walk_to_destination() : Entering.",AI_LOG_TRACE)
 	if(!destination)
@@ -82,7 +84,7 @@
 // Walk towards whatever.
 /datum/ai_holder/proc/walk_path(atom/A, get_to = 1)
 	ai_log("walk_path() : Entered.", AI_LOG_TRACE)
-
+	var/turf/ourturf = get_turf(holder)
 	if(use_astar)
 		if(!path.len) // If we're missing a path, make a new one.
 			ai_log("walk_path() : No path. Attempting to calculate path.", AI_LOG_DEBUG)
@@ -117,6 +119,16 @@
 
 	ai_log("walk_path() : Exited.", AI_LOG_TRACE)
 
+	if(ourturf == get_turf(holder))
+		walk_attempts ++
+	else
+		walk_attempts = 0
+	to_world("Walk attempt [walk_attempts]")
+	if(walk_attempts >= 10)
+		lose_target()
+		give_up_movement()
+		walk_attempts = 0
+		to_world("giving up!")
 
 //Take one step along a path
 /datum/ai_holder/proc/move_once()
