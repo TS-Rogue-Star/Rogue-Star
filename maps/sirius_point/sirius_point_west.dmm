@@ -1691,7 +1691,7 @@
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
 	dir = 4;
 	pixel_x = -24;
-	id_tag = "ne_airlock"
+	id_tag = "scipost_airlock"
 	},
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
 /turf/simulated/floor/tiled/steel_grid,

@@ -1282,6 +1282,13 @@
 /obj/structure/table/hardwoodtable,
 /turf/simulated/floor/wood,
 /area/crew_quarters/coffee_shop)
+"aDB" = (
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/air/airlock,
+/turf/simulated/floor/tiled,
+/area/ai_monitored/storage/eva)
 "aDR" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -3759,7 +3766,7 @@
 	},
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
 	pixel_y = 24;
-	id_tag = "main_eva"
+	id_tag = "se_airlock"
 	},
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
 /turf/simulated/floor/tiled/steel_grid,
@@ -8601,10 +8608,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 9
-	},
-/obj/structure/sign/warning/airlock{
-	pixel_x = -32;
-	pixel_y = 0
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/ai_monitored/storage/eva)
@@ -15325,12 +15328,6 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden{
 	dir = 8
 	},
-/obj/machinery/airlock_sensor/airlock_interior{
-	pixel_y = 32;
-	pixel_x = -24;
-	dir = 4
-	},
-/obj/effect/map_helper/airlock/sensor/int_sensor,
 /turf/simulated/floor/tiled,
 /area/ai_monitored/storage/eva)
 "kpF" = (
@@ -15531,6 +15528,12 @@
 /obj/effect/floor_decal/milspec/monotile,
 /turf/simulated/floor/tiled/milspec,
 /area/rnd/moonbase/robotics)
+"kya" = (
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 9
+	},
+/turf/simulated/floor/tiled,
+/area/ai_monitored/storage/eva)
 "kyq" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/cable{
@@ -16131,6 +16134,12 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/medical/chemistry)
+"kPi" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/ai_monitored/storage/eva)
 "kPt" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass_research{
@@ -23974,6 +23983,12 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden,
+/obj/effect/map_helper/airlock/sensor/int_sensor,
+/obj/machinery/airlock_sensor/airlock_interior{
+	pixel_y = -32;
+	pixel_x = -24;
+	dir = 4
+	},
 /turf/simulated/floor/tiled,
 /area/ai_monitored/storage/eva)
 "qDP" = (
@@ -31595,6 +31610,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 10
 	},
+/obj/structure/sign/warning/airlock{
+	pixel_x = -32;
+	pixel_y = 0
+	},
 /turf/simulated/floor/tiled,
 /area/ai_monitored/storage/eva)
 "vXR" = (
@@ -32893,6 +32912,11 @@
 /obj/structure/railing/grey,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/west)
+"xar" = (
+/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/portable_atmospherics/canister/air/airlock,
+/turf/simulated/floor/tiled,
+/area/ai_monitored/storage/eva)
 "xaT" = (
 /obj/machinery/atmospherics/unary/vent_pump/high_volume{
 	dir = 1
@@ -40635,9 +40659,9 @@ qmM
 iTN
 jDQ
 gWK
-tgV
-tgV
-wDb
+xar
+kPi
+kya
 tgV
 iva
 fRN
@@ -40778,9 +40802,9 @@ mCF
 mCF
 mCF
 wXR
-tgV
+aDB
 qMx
-tgV
+wDb
 sQl
 fRN
 mcN
