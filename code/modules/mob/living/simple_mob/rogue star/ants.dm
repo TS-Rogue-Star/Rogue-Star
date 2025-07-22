@@ -13,7 +13,7 @@
 
 	mob_size = MOB_SMALL
 	pass_flags = PASSTABLE
-	density = FALSE
+//	density = FALSE
 
 	ai_holder_type = /datum/ai_holder/simple_mob/ant
 
@@ -54,11 +54,12 @@
 	b.digest_burn = 0.1
 	b.mode_flags = DM_FLAG_THICKBELLY | DM_FLAG_NUMBING
 
-
-/mob/living/simple_mob/vore/ant/New(newloc,var/team)
+/mob/living/simple_mob/vore/ant/New(newloc,var/team,var/oureyes)
 	. = ..()
 	if(team)
 		team_color = team
+	if(oureyes)
+		eye_color = oureyes
 	if(!team_color)
 		team_color = pick(list("#640a06","#1f1f33","#d4ac3d","#183d1d"))
 
@@ -81,26 +82,9 @@
 	prey.Weaken(10)
 
 /mob/living/simple_mob/vore/ant/proc/queen_me()
-	queen = TRUE
-	pixel_x = -16
-	icon = 'icons/rogue-star/mob_64x32.dmi'
-	icon_state = "queen"
-	icon_living = "queen"
-	icon_dead = "queen_dead"
-	pixel_x = -16
-	default_pixel_x = -16
-	desc = "So regal!"
-	maxHealth = 500
-	health = 500
-	melee_damage_upper = 10
-	melee_damage_lower = 1
-
-	mob_size = MOB_LARGE
-
-	update_icon()
-	if(ai_holder)
-		ai_holder.cooperative = TRUE
-		ai_holder.build_faction_friends()
+	var/mob/living/simple_mob/vore/ant/queen/Q = new(get_turf(src),team_color,eye_color)
+	Q.dir = dir
+	qdel(src)
 
 /mob/living/simple_mob/vore/ant/update_icon()
 	. = ..()
@@ -142,7 +126,10 @@
 	return FALSE
 
 //Squish code from cockroach.dm
-/mob/living/simple_mob/vore/ant/Crossed(var/atom/movable/AM)
+//mob/living/simple_mob/vore/ant/Crossed(var/atom/movable/AM)
+
+/mob/living/simple_mob/vore/ant/Bumped(atom/movable/AM, yes)
+	to_world("[AM] bumped [src]")
 	if(queen)
 		return
 	if(stat == DEAD)
@@ -171,6 +158,8 @@
 				death(TRUE)
 			else
 				visible_message("<span class='notice'>[src] avoids getting crushed.</span>")
+	return ..()
+
 
 /mob/living/simple_mob/vore/ant/queen
 	name = "queen ant"
@@ -179,10 +168,17 @@
 	icon_state = "queen"
 	icon_living = "queen"
 	icon_dead = "queen_dead"
-
-/mob/living/simple_mob/vore/ant/queen/New()
-	. = ..()
-	queen_me()
+	queen = TRUE
+	mob_size = MOB_LARGE
+	mob_bump_flag = HEAVY
+	mob_swap_flags = ~HEAVY
+	mob_push_flags = ~HEAVY
+	pixel_x = -16
+	default_pixel_x = -16
+	maxHealth = 500
+	health = 500
+	melee_damage_upper = 10
+	melee_damage_lower = 1
 
 /mob/living/simple_mob/vore/ant/red/team_color = "#640a06"
 /mob/living/simple_mob/vore/ant/black/team_color = "#1f1f33"
