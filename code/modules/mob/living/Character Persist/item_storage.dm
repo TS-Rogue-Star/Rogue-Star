@@ -116,7 +116,6 @@ var/global/list/permanent_unlockables = list(
 	switch(mode)
 		if("triangles")
 			triangles += value
-	needs_saving = TRUE
 
 /datum/etching/proc/report_money()
 	. = "<span class='boldnotice'>◬</span>: [triangles]\n\n"
@@ -141,19 +140,11 @@ var/global/list/permanent_unlockables = list(
 	var/list/to_save = list(
 		"triangles" = triangles,
 		"item_storage" = item_storage,
-		"unlockables" = unlockables
+		"unlockables" = unlockables,
+		"nif_type" = nif_type,
+		"nif_durability" = nif_durability,
+		"nif_savedata" = nif_savedata
 	)
-
-	if(ishuman(ourmob))
-		var/mob/living/carbon/human/H = ourmob
-		if(H.nif)
-			to_save["nif_type"] = H.nif.type
-			to_save["nif_durability"] = H.nif.durability
-			to_save["nif_savedata"] = H.nif.save_data
-	else if(ourclient)	//For nif conversion
-		to_save["nif_type"] = nif_type
-		to_save["nif_durability"] = nif_durability
-		to_save["nif_savedata"] = nif_savedata
 
 	return to_save
 
@@ -178,6 +169,7 @@ var/global/list/permanent_unlockables = list(
 		needs_saving = TRUE
 
 /datum/etching/proc/clear_nif_save()
+	log_debug("ETCHING: clear_nif_save called on [ourmob]. Nif was [nif_type], [nif_durability], [nif_savedata]")
 	nif_type = null
 	nif_durability = null
 	nif_savedata = null
