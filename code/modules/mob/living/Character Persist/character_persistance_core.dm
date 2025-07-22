@@ -219,7 +219,7 @@
 		if(IsGuestKey(ourmob.key))
 			return
 
-	if((!savable && !event_character) || !needs_saving)
+	if(!savable || !needs_saving)
 		return
 
 	if(shutting_down)	//Don't try to save more than once if we're already saving and shutting down.
@@ -248,6 +248,8 @@
 	if(!json_to_file)
 		log_debug("Saving: [save_path] failed json encode.")
 		return
+
+	log_debug("ETCHING: save called on [ourmob]: [json_to_file]")
 
 	//Write it out
 	try
