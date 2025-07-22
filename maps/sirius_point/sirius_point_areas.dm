@@ -338,11 +338,18 @@
 
 /area/moonbase/surface/east_crater
 	name = "Styx Crater"
+/area/moonbase/surface/east_crater/unexplored
+	name = "Unexplored Styx Crater"
 /area/moonbase/surface/west_crater
 	name = "Acheron Crater"
+/area/moonbase/surface/west_crater/unexplored
+	name = "Unexplored Acheron Crater"
 
 /area/moonbase/surface/underground
 	name = "Sirius Point Underground"
+	base_turf = /turf/simulated/mineral/floor/vacuum/moonbase
+/area/moonbase/surface/mining
+	name = "Sirius Point Mining"
 	base_turf = /turf/simulated/mineral/floor/vacuum/moonbase
 
 /area/moonbase/surface/levelone/north

@@ -36,6 +36,8 @@
 #include "sirius_point/sirius_point_telecomms.dm"
 #include "sirius_point/sirius_point_things.dm"
 #include "sirius_point/sirius_point_turfs.dm"
+#include "sirius_point/sirius_point_pois.dm"
+
 //Minitest STUFF
 #include "virgo_minitest/virgo_minitest_defines.dm"
 #include "virgo_minitest/virgo_minitest_shuttles.dm"

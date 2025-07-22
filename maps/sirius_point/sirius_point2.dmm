@@ -156,7 +156,6 @@
 	pixel_y = 27;
 	pixel_x = 0
 	},
-/obj/machinery/vending/nifsoft_shop,
 /obj/structure/table/reinforced,
 /obj/random/tech_supply,
 /obj/random/tech_supply,
@@ -260,6 +259,15 @@
 /obj/structure/bed/chair/sofa/pew/left,
 /turf/simulated/floor/tiled/dark,
 /area/chapel/main)
+"agn" = (
+/obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/visible/supply{
+	dir = 4
+	},
+/turf/simulated/mineral/floor/cave/moonbase,
+/area/moonbase/basement/caves/level2)
 "agr" = (
 /obj/structure/table/woodentable,
 /obj/random/snack,
@@ -872,6 +880,9 @@
 	dir = 8
 	},
 /obj/effect/floor_decal/milspec/stripe,
+/obj/structure/railing/grey{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/milspec,
 /area/quartermaster/storage)
 "avx" = (
@@ -1205,7 +1216,7 @@
 	dir = 8
 	},
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
-/turf/simulated/floor/tiled/monotile,
+/turf/simulated/floor/tiled/eris/dark/danger,
 /area/medical/moonbase/accesshall)
 "aAF" = (
 /obj/structure/table/woodentable,
@@ -1291,6 +1302,11 @@
 /obj/structure/window/reinforced/full,
 /turf/simulated/floor/plating,
 /area/rnd/research_storage)
+"aDa" = (
+/obj/effect/floor_decal/milspec/stripe,
+/obj/structure/railing/grey,
+/turf/simulated/floor/tiled/milspec,
+/area/quartermaster/storage)
 "aDf" = (
 /turf/simulated/wall/r_wall,
 /area/engineering/moonbase/eva)
@@ -1481,7 +1497,7 @@
 	dir = 8
 	},
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
-/turf/simulated/floor/tiled/monotile,
+/turf/simulated/floor/tiled/eris/dark/danger,
 /area/maintenance/moonbase/level1/west)
 "aHN" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
@@ -1612,12 +1628,14 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ai_upload_foyer)
 "aJf" = (
-/obj/machinery/conveyor_switch/oneway{
-	id = "cargounload"
+/obj/structure/cable{
+	icon_state = "4-8"
 	},
-/obj/structure/window/reinforced,
-/turf/simulated/floor/tiled/milspec,
-/area/quartermaster/storage)
+/obj/machinery/vending/nifsoft_shop{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/storage/primary)
 "aJg" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5,
 /obj/structure/cable{
@@ -2089,6 +2107,9 @@
 /turf/simulated/floor/tiled/white,
 /area/medical/chemistry)
 "bcS" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/simulated/open,
 /area/maintenance/moonbase/level1/northwest)
 "bcZ" = (
@@ -2566,7 +2587,7 @@
 	},
 /obj/effect/map_helper/airlock/sensor/chamber_sensor,
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
-/turf/simulated/floor/tiled/monotile,
+/turf/simulated/floor/tiled/eris/dark/danger,
 /area/maintenance/moonbase/level1/west)
 "bso" = (
 /obj/structure/cable{
@@ -2715,6 +2736,21 @@
 "bzt" = (
 /turf/simulated/floor/carpet/blue2,
 /area/moonbase/dorms)
+"bzW" = (
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 1
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 8
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/firedoor/glass/hidden/steel,
+/turf/simulated/floor/tiled,
+/area/hallway/moonbase/central)
 "bAi" = (
 /obj/structure/marker_beacon{
 	mapped_in_color = "Burgundy"
@@ -3793,7 +3829,7 @@
 	id_tag = "se_airlock"
 	},
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
-/turf/simulated/floor/tiled/monotile,
+/turf/simulated/floor/tiled/eris/dark/danger,
 /area/maintenance/moonbase/level1/southeast)
 "ciO" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/cyan{
@@ -3982,7 +4018,7 @@
 	},
 /area/crew_quarters/bar)
 "coC" = (
-/turf/simulated/floor/carpet,
+/turf/simulated/floor/carpet/bcarpet,
 /area/chapel/main)
 "coE" = (
 /obj/machinery/door/firedoor/glass,
@@ -4606,8 +4642,8 @@
 /turf/simulated/floor/tiled/dark,
 /area/chapel/main)
 "cJD" = (
+/obj/structure/disposalpipe/segment,
 /obj/machinery/conveyor{
-	dir = 1;
 	id = "cargounload"
 	},
 /turf/simulated/floor/tiled/milspec,
@@ -4738,7 +4774,7 @@
 	id_tag = "med_airlock"
 	},
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
-/turf/simulated/floor/tiled/monotile,
+/turf/simulated/floor/tiled/eris/dark/danger,
 /area/medical/moonbase/accesshall)
 "cNb" = (
 /obj/machinery/atmospherics/portables_connector{
@@ -5280,7 +5316,7 @@
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass_external,
 /obj/effect/map_helper/airlock/door/int_door,
-/turf/simulated/floor/tiled/eris/dark/danger,
+/turf/simulated/floor/tiled/steel_ridged,
 /area/ai_monitored/storage/eva)
 "dmr" = (
 /obj/effect/floor_decal/milspec_sterile/green/half,
@@ -5975,17 +6011,18 @@
 /turf/simulated/floor/wood,
 /area/bridge/moonbase/secretaryoffice)
 "dIO" = (
-/obj/machinery/power/apc{
-	dir = 1
-	},
 /obj/structure/cable/green{
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	dir = 8
 	},
 /turf/simulated/floor/tiled,
 /area/crew_quarters/kitchen)
 "dIZ" = (
 /obj/structure/morgue/crematorium{
-	dir = 1
+	dir = 2;
+	id = "crematorium"
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/medical/morgue)
@@ -6152,7 +6189,7 @@
 	pixel_x = 0;
 	pixel_y = 24
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/eris/dark/danger,
 /area/maintenance/moonbase/level1/solars)
 "dOm" = (
 /obj/structure/railing/grey{
@@ -6275,13 +6312,17 @@
 	},
 /area/medical/moonbase/accesshall)
 "dRJ" = (
-/obj/machinery/door/airlock/multi_tile/glass,
-/obj/machinery/door/firedoor/glass,
+/obj/effect/floor_decal/corner/purple{
+	dir = 6
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 8
+	},
 /obj/structure/sign/department/sci{
 	pixel_x = -32;
 	pixel_y = 0
 	},
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled,
 /area/hallway/moonbase/central)
 "dSi" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
@@ -6331,7 +6372,9 @@
 /obj/structure/railing/grey{
 	dir = 8
 	},
-/turf/simulated/floor/plating/external/outdoors,
+/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
 /area/moonbase/surface/levelone/west)
 "dTB" = (
 /turf/simulated/wall,
@@ -6684,11 +6727,14 @@
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/central)
 "efg" = (
+/obj/machinery/light,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "cargoload"
 	},
-/obj/machinery/light,
 /turf/simulated/floor/tiled/milspec,
 /area/quartermaster/storage)
 "efl" = (
@@ -7011,7 +7057,6 @@
 	},
 /obj/item/weapon/book/bundle/custom_library/fiction/apurrrrfectman,
 /obj/item/weapon/book/bundle/custom_library/fiction/beyondthedoor,
-/obj/item/weapon/book/bundle/custom_library/fiction/chroniclesofmargatavol1,
 /obj/item/weapon/book/bundle/custom_library/fiction/coldmountain,
 /obj/item/weapon/book/bundle/custom_library/fiction/ghostship,
 /obj/item/weapon/book/bundle/custom_library/fiction/manfromsnowyriver,
@@ -7666,7 +7711,7 @@
 "eSk" = (
 /obj/structure/table/wooden_reinforced,
 /obj/item/weapon/storage/bible,
-/turf/simulated/floor/carpet,
+/turf/simulated/floor/carpet/bcarpet,
 /area/chapel/main)
 "eTo" = (
 /obj/structure/cable{
@@ -7700,6 +7745,18 @@
 	},
 /turf/simulated/floor/wood,
 /area/bridge/moonbase/secretaryoffice)
+"eTL" = (
+/obj/effect/floor_decal/steeldecal/steel_decals10,
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/firedoor/glass/hidden/steel{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/hallway/moonbase/central)
 "eUc" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
@@ -7893,7 +7950,6 @@
 /turf/simulated/floor/tiled/milspec/sterile,
 /area/medical/surgery2)
 "fba" = (
-/obj/effect/floor_decal/corner/paleblue/full,
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
 	},
@@ -7908,6 +7964,12 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/effect/floor_decal/corner/paleblue{
+	dir = 9
+	},
+/obj/effect/floor_decal/corner/paleblue{
+	dir = 6
 	},
 /turf/simulated/floor/tiled/white,
 /area/medical/moonbase/traumaward)
@@ -8159,6 +8221,17 @@
 /obj/machinery/message_server,
 /turf/simulated/floor/tiled/techfloor,
 /area/tcommsat/computer)
+"flW" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/obj/machinery/conveyor{
+	id = "cargounload";
+	dir = 6
+	},
+/turf/simulated/floor/tiled/milspec,
+/area/quartermaster/storage)
 "flY" = (
 /obj/effect/floor_decal/milspec/monotile,
 /obj/effect/floor_decal/milspec/cargo,
@@ -8854,9 +8927,7 @@
 /obj/effect/map_effect/portal/line/side_a{
 	dir = 4
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
-	edge_blending_priority = 1
-	},
+/turf/simulated/floor/plating/external/moonbaseplating,
 /area/moonbase/surface/levelone/west)
 "fJB" = (
 /obj/structure/railing/grey,
@@ -10378,12 +10449,13 @@
 "gPZ" = (
 /obj/machinery/light/floortube{
 	dir = 4;
-	pixel_x = 2
+	pixel_x = 3;
+	pixel_y = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled,
 /area/quartermaster/storage)
 "gQg" = (
@@ -10416,7 +10488,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/tiled/monotile,
+/turf/simulated/floor/tiled/eris/dark/danger,
 /area/maintenance/moonbase/level1/southeast)
 "gSl" = (
 /obj/structure/cable{
@@ -10501,7 +10573,7 @@
 	dir = 4
 	},
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
-/turf/simulated/floor/tiled/monotile,
+/turf/simulated/floor/tiled/eris/dark/danger,
 /area/maintenance/moonbase/level1/northeast)
 "gWK" = (
 /obj/machinery/gear_dispenser/suit_fancy/autolok,
@@ -10641,7 +10713,9 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 1
 	},
-/turf/simulated/floor/plating/external/outdoors,
+/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
 /area/engineering/moonbase/eva)
 "hbT" = (
 /obj/structure/railing/grey{
@@ -10901,7 +10975,9 @@
 /obj/structure/railing/grey{
 	dir = 4
 	},
-/turf/simulated/floor/plating/external/outdoors,
+/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
 /area/ai_monitored/storage/eva)
 "hjk" = (
 /obj/structure/cable/cyan{
@@ -10919,6 +10995,9 @@
 /area/quartermaster/storage)
 "hjL" = (
 /obj/effect/floor_decal/milspec/stripe{
+	dir = 8
+	},
+/obj/structure/railing/grey{
 	dir = 8
 	},
 /turf/simulated/floor/tiled/milspec,
@@ -11399,6 +11478,12 @@
 /obj/random/pouch,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/south)
+"hzL" = (
+/obj/effect/floor_decal/corner/paleblue{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/white,
+/area/medical/moonbase/traumaward)
 "hAo" = (
 /obj/effect/floor_decal/corner/paleblue/full{
 	dir = 8
@@ -11470,6 +11555,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/crew_quarters/kitchen)
+"hCJ" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor/glass/hidden/steel{
+	dir = 1
+	},
+/obj/effect/floor_decal/milspec/monotile,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/rnd/moonbase/rndlab)
 "hDU" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -12392,14 +12488,14 @@
 	},
 /area/tcommsat/chamber)
 "ioz" = (
-/obj/effect/floor_decal/corner/paleblue/full{
-	dir = 8
-	},
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/floor_decal/corner/paleblue{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/white,
 /area/medical/moonbase/traumaward)
 "ioL" = (
@@ -12412,6 +12508,9 @@
 /obj/machinery/power/apc,
 /obj/structure/lattice,
 /obj/effect/catwalk_plated,
+/obj/structure/cable/blue{
+	icon_state = "0-8"
+	},
 /turf/simulated/open,
 /area/ai_upload)
 "ipH" = (
@@ -12695,15 +12794,12 @@
 /turf/simulated/floor/tiled,
 /area/quartermaster/moonbase/trashroom)
 "ixS" = (
-/obj/structure/railing/grey{
-	dir = 4
+/obj/structure/table/steel,
+/obj/item/device/flashlight/lamp{
+	pixel_y = 6
 	},
-/obj/structure/railing/grey{
-	dir = 1
-	},
-/obj/machinery/light,
-/turf/simulated/open,
-/area/moonbase/basement/caves/level2)
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/level1/east)
 "ixW" = (
 /turf/simulated/floor/carpet/oracarpet,
 /area/engineering/break_room)
@@ -12769,11 +12865,13 @@
 /turf/simulated/floor/tiled/white,
 /area/medical/moonbase/traumaward)
 "iAA" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "cargounload"
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
-/obj/structure/plasticflaps,
+/obj/machinery/conveyor{
+	id = "cargounload";
+	dir = 4
+	},
 /turf/simulated/floor/tiled/milspec,
 /area/quartermaster/storage)
 "iAC" = (
@@ -14676,12 +14774,17 @@
 /obj/machinery/door/firedoor/glass/hidden/steel{
 	dir = 2
 	},
-/obj/machinery/door/window/brigdoor/southright{
-	req_one_access = list(7,47)
-	},
+/obj/structure/window/reinforced,
 /obj/effect/floor_decal/milspec/monotile,
 /turf/simulated/floor/tiled/monotile,
 /area/rnd/moonbase/robotics)
+"jNm" = (
+/obj/vehicle/train/engine/quadbike/random,
+/obj/effect/floor_decal/industrial/warning{
+	dir = 6
+	},
+/turf/simulated/floor/plating/external/outdoors,
+/area/moonbase/surface/levelone/south)
 "jNF" = (
 /obj/structure/flora/pottedplant/orientaltree,
 /turf/simulated/floor/carpet/sblucarpet,
@@ -14723,6 +14826,7 @@
 	},
 /obj/structure/bed/padded,
 /obj/item/weapon/bedsheet/medical,
+/obj/machinery/alarm,
 /turf/simulated/floor/tiled/white,
 /area/medical/genetics_cloning)
 "jQo" = (
@@ -15548,7 +15652,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/tiled/monotile,
+/turf/simulated/floor/tiled/eris/dark/danger,
 /area/maintenance/moonbase/level1/southeast)
 "krG" = (
 /obj/machinery/door/firedoor/glass,
@@ -15631,6 +15735,13 @@
 "kuf" = (
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/moonbase/eva)
+"kuO" = (
+/obj/vehicle/train/engine/quadbike/built,
+/obj/effect/floor_decal/industrial/warning{
+	dir = 10
+	},
+/turf/simulated/floor/plating/external/outdoors,
+/area/moonbase/surface/levelone/south)
 "kuW" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 4
@@ -15651,6 +15762,18 @@
 	edge_blending_priority = 1
 	},
 /area/moonbase/surface/levelone/west)
+"kvS" = (
+/obj/structure/table/steel,
+/obj/item/weapon/pen/red,
+/obj/item/weapon/pen{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/weapon/paper_bin{
+	pixel_y = 7
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/level1/east)
 "kws" = (
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
@@ -17319,19 +17442,17 @@
 /turf/simulated/floor/plating,
 /area/rnd/moonbase/robotics/mechbay)
 "lzI" = (
-/obj/machinery/disposal/deliveryChute{
-	dir = 4
-	},
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "cargoload"
-	},
 /obj/structure/sign/department/cargo_dock{
 	pixel_x = 0;
 	pixel_y = -32
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/light,
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "cargoload"
 	},
 /turf/simulated/floor/tiled/milspec,
 /area/quartermaster/storage)
@@ -17350,7 +17471,9 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 1
 	},
-/turf/simulated/floor/plating/external/outdoors,
+/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
 /area/engineering/moonbase/eva)
 "lAO" = (
 /obj/structure/cable{
@@ -18254,9 +18377,6 @@
 /area/maintenance/moonbase/level1/southeast)
 "mfq" = (
 /obj/effect/floor_decal/milspec/color/emerald/half,
-/obj/machinery/firealarm{
-	dir = 1
-	},
 /obj/machinery/light,
 /turf/simulated/floor/tiled,
 /area/rnd/moonbase/rndlab)
@@ -18729,7 +18849,7 @@
 	id_tag = "nw_airlock"
 	},
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
-/turf/simulated/floor/tiled/monotile,
+/turf/simulated/floor/tiled/eris/dark/danger,
 /area/maintenance/moonbase/level1/west)
 "mrE" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -19111,7 +19231,9 @@
 /turf/simulated/floor/tiled/eris/dark/cargo,
 /area/security/lobby)
 "mLQ" = (
-/turf/simulated/floor/plating/external/outdoors,
+/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
 /area/ai_monitored/storage/eva)
 "mMy" = (
 /obj/structure/table/woodentable,
@@ -19538,12 +19660,9 @@
 /turf/simulated/floor/plating/eris,
 /area/ai)
 "nfd" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "cargounload"
-	},
-/turf/simulated/floor/tiled/milspec,
-/area/quartermaster/storage)
+/obj/machinery/light/small,
+/turf/simulated/mineral/floor/cave/moonbase,
+/area/maintenance/moonbase/level1/east)
 "nfn" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -19614,12 +19733,11 @@
 /turf/simulated/floor/plating,
 /area/engineering/storage)
 "niC" = (
-/obj/machinery/conveyor_switch/oneway{
-	id = "cargoload"
+/obj/machinery/light/small{
+	dir = 1
 	},
-/obj/structure/window/reinforced,
-/turf/simulated/floor/tiled/milspec,
-/area/quartermaster/storage)
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/level1/east)
 "nje" = (
 /obj/structure/railing/grey,
 /turf/simulated/open,
@@ -19645,10 +19763,10 @@
 /area/ai_upload_foyer)
 "nkW" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/item/clothing/suit/space/void/merc/odst,
-/obj/item/weapon/tank/oxygen,
-/obj/item/clothing/head/helmet/space/void/merc/odst,
 /obj/structure/disposalpipe/segment,
+/obj/item/weapon/storage/backpack/ert/commander,
+/obj/item/clothing/suit/space/void/responseteam/command,
+/obj/item/weapon/tank/oxygen,
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/central)
 "nlr" = (
@@ -20083,12 +20201,15 @@
 /turf/simulated/wall/r_wall,
 /area/security/security_equiptment_storage)
 "nEJ" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "cargounload"
-	},
 /obj/machinery/camera/network/cargo{
 	dir = 1
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/conveyor{
+	id = "cargounload";
+	dir = 4
 	},
 /turf/simulated/floor/tiled/milspec,
 /area/quartermaster/storage)
@@ -20202,7 +20323,6 @@
 /area/medical/psych)
 "nIZ" = (
 /obj/effect/floor_decal/emblem/nt2,
-/obj/effect/landmark/start/captain,
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/central)
 "nJe" = (
@@ -20846,7 +20966,7 @@
 	dir = 8
 	},
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
-/turf/simulated/floor/tiled/monotile,
+/turf/simulated/floor/tiled/eris/dark/danger,
 /area/maintenance/moonbase/level1/northeast)
 "ogn" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
@@ -20998,7 +21118,9 @@
 /obj/structure/railing/grey{
 	dir = 4
 	},
-/turf/simulated/floor/plating/external/outdoors,
+/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
 /area/moonbase/surface/levelone/west)
 "okk" = (
 /obj/machinery/atmospherics/unary/vent_pump/high_volume{
@@ -21010,7 +21132,7 @@
 	pixel_y = 24
 	},
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
-/turf/simulated/floor/tiled/monotile,
+/turf/simulated/floor/tiled/eris/dark/danger,
 /area/maintenance/moonbase/level1/southeast)
 "okr" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
@@ -21259,9 +21381,6 @@
 /turf/simulated/floor/plating,
 /area/engineering/moonbase/powerroom)
 "osZ" = (
-/obj/effect/floor_decal/corner/paleblue/full{
-	dir = 4
-	},
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
 	},
@@ -21273,6 +21392,12 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/effect/floor_decal/corner/paleblue{
+	dir = 9
+	},
+/obj/effect/floor_decal/corner/paleblue{
+	dir = 6
 	},
 /turf/simulated/floor/tiled/white,
 /area/medical/moonbase/traumaward)
@@ -21353,7 +21478,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/monotile,
 /area/ai_monitored/storage/eva)
 "ova" = (
 /obj/effect/floor_decal/corner/paleblue{
@@ -22017,13 +22142,11 @@
 /turf/simulated/floor/plating,
 /area/storage/primary)
 "oOU" = (
-/obj/effect/floor_decal/steeldecal/steel_decals5{
-	dir = 4
-	},
 /obj/structure/sign/department/medbay{
 	pixel_x = 32;
 	pixel_y = 0
 	},
+/obj/machinery/door/firedoor/glass/hidden/steel,
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/central)
 "oPn" = (
@@ -22410,12 +22533,12 @@
 /turf/simulated/floor/tiled/dark,
 /area/security/lobby)
 "pia" = (
-/obj/effect/floor_decal/corner/paleblue/full{
-	dir = 1
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
+	},
+/obj/effect/floor_decal/corner/paleblue{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/white,
 /area/medical/moonbase/traumaward)
@@ -23679,7 +23802,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/monotile,
 /area/ai_monitored/storage/eva)
 "qgt" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
@@ -23740,6 +23863,12 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/shop)
+"qix" = (
+/obj/effect/floor_decal/industrial/warning{
+	dir = 8
+	},
+/turf/simulated/floor/plating/external/outdoors,
+/area/moonbase/surface/levelone/south)
 "qiI" = (
 /turf/simulated/wall/r_wall,
 /area/rnd/xenobiology/xenoflora)
@@ -23755,7 +23884,7 @@
 	pixel_y = 24;
 	id_tag = "solars_airlock"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/eris/dark/danger,
 /area/maintenance/moonbase/level1/solars)
 "qiW" = (
 /obj/structure/curtain/open/shower/medical,
@@ -23836,9 +23965,7 @@
 	dir = 4;
 	portal_id = "sp_west"
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
-	edge_blending_priority = 1
-	},
+/turf/simulated/floor/plating/external/moonbaseplating,
 /area/moonbase/surface/levelone/west)
 "qnI" = (
 /obj/structure/stairs/spawner/east,
@@ -23862,6 +23989,21 @@
 	temperature = 80
 	},
 /area/tcommsat/chamber)
+"qof" = (
+/obj/structure/lattice,
+/obj/effect/catwalk_plated,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 2
+	},
+/obj/structure/cable/blue{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/blue{
+	icon_state = "1-4"
+	},
+/turf/simulated/open,
+/area/ai_upload)
 "qot" = (
 /obj/fiftyspawner/plasteel,
 /obj/fiftyspawner/plasteel,
@@ -23925,10 +24067,14 @@
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/west)
 "qsK" = (
-/obj/effect/floor_decal/milspec/cargo_arrow,
 /obj/machinery/firealarm{
 	dir = 4
 	},
+/obj/effect/floor_decal/milspec/stripe,
+/obj/machinery/conveyor_switch/oneway{
+	id = "cargoload"
+	},
+/obj/structure/railing/grey,
 /turf/simulated/floor/tiled/milspec,
 /area/quartermaster/storage)
 "qsL" = (
@@ -23987,6 +24133,13 @@
 /obj/structure/bed/chair/sofa/corp/right,
 /turf/simulated/floor/carpet/retro,
 /area/hallway/moonbase/easthall)
+"qvz" = (
+/obj/effect/floor_decal/milspec/color/emerald/half,
+/obj/machinery/firealarm{
+	dir = 1
+	},
+/turf/simulated/floor/tiled,
+/area/rnd/moonbase/rndlab)
 "qvO" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -24164,9 +24317,8 @@
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/east)
 "qBc" = (
-/obj/structure/window/reinforced,
-/turf/simulated/floor/tiled/milspec,
-/area/quartermaster/storage)
+/turf/simulated/mineral/floor/vacuum/moonbase,
+/area/moonbase/surface/levelone/east)
 "qBl" = (
 /obj/structure/table/steel_reinforced,
 /obj/item/weapon/storage/box/trackimp,
@@ -24693,7 +24845,7 @@
 	id_tag = "ne_airlock"
 	},
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
-/turf/simulated/floor/tiled/monotile,
+/turf/simulated/floor/tiled/eris/dark/danger,
 /area/maintenance/moonbase/level1/northeast)
 "qXj" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
@@ -24802,7 +24954,9 @@
 /area/quartermaster/storage)
 "raK" = (
 /obj/effect/floor_decal/milspec/cargo,
-/obj/vehicle/train/engine,
+/obj/vehicle/train/engine{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/milspec,
 /area/quartermaster/storage)
 "raL" = (
@@ -24991,6 +25145,10 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled,
 /area/rnd/research)
+"riz" = (
+/obj/effect/floor_decal/industrial/warning,
+/turf/simulated/floor/plating/external/outdoors,
+/area/moonbase/surface/levelone/south)
 "riA" = (
 /obj/structure/bed/chair/comfy/brown,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -25115,6 +25273,12 @@
 	},
 /turf/simulated/floor/carpet/purcarpet,
 /area/rnd/research_foyer_auxiliary)
+"rmC" = (
+/obj/effect/floor_decal/industrial/warning{
+	dir = 4
+	},
+/turf/simulated/floor/plating/external/outdoors,
+/area/moonbase/surface/levelone/south)
 "rmS" = (
 /obj/structure/table/rack/shelf,
 /obj/item/device/cataloguer,
@@ -25189,6 +25353,13 @@
 "rnE" = (
 /turf/simulated/open,
 /area/crew_quarters/kitchen)
+"rnK" = (
+/obj/vehicle/train/trolley/trailer/random,
+/obj/effect/floor_decal/industrial/warning{
+	dir = 9
+	},
+/turf/simulated/floor/plating/external/outdoors,
+/area/moonbase/surface/levelone/south)
 "rnM" = (
 /obj/structure/cable/green{
 	icon_state = "1-2"
@@ -25438,13 +25609,14 @@
 /area/ai_upload)
 "rvJ" = (
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/machinery/door/firedoor/glass/hidden/steel{
 	dir = 1
 	},
 /obj/effect/floor_decal/milspec/monotile,
+/obj/machinery/door/window/brigdoor/northright{
+	req_access = null;
+	req_one_access = list(7,47)
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/rnd/moonbase/rndlab)
 "rvR" = (
@@ -26000,7 +26172,9 @@
 /area/hallway/moonbase/westhall)
 "rQY" = (
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced,
+/obj/machinery/door/window/brigdoor/southright{
+	req_one_access = list(7,47)
+	},
 /obj/machinery/door/firedoor/glass/hidden/steel{
 	dir = 2
 	},
@@ -26384,11 +26558,12 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/rnd/moonbase/robotics/synthetics)
 "sct" = (
-/obj/machinery/door/firedoor/glass,
-/obj/structure/grille,
-/obj/structure/window/reinforced/full,
-/turf/simulated/floor/plating,
-/area/hallway/moonbase/central)
+/obj/vehicle/train/trolley/trailer/random,
+/obj/effect/floor_decal/industrial/warning{
+	dir = 1
+	},
+/turf/simulated/floor/plating/external/outdoors,
+/area/moonbase/surface/levelone/south)
 "scv" = (
 /obj/structure/catwalk,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -26447,8 +26622,11 @@
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/south)
 "sdy" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "cargoload"
 	},
 /turf/simulated/floor/tiled/milspec,
@@ -26511,7 +26689,7 @@
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass_external,
 /obj/effect/map_helper/airlock/door/ext_door,
-/turf/simulated/floor/tiled/eris/dark/danger,
+/turf/simulated/floor/tiled/steel_ridged,
 /area/ai_monitored/storage/eva)
 "shi" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -26822,6 +27000,13 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/central)
+"srX" = (
+/obj/vehicle/train/trolley/trailer/random,
+/obj/effect/floor_decal/industrial/warning{
+	dir = 5
+	},
+/turf/simulated/floor/plating/external/outdoors,
+/area/moonbase/surface/levelone/south)
 "ssg" = (
 /obj/structure/bed/chair/office/dark{
 	dir = 1
@@ -26893,6 +27078,11 @@
 	temperature = 80
 	},
 /area/tcommsat/chamber)
+"suC" = (
+/obj/vehicle/train/engine/quadbike/built,
+/obj/effect/floor_decal/industrial/warning,
+/turf/simulated/floor/plating/external/outdoors,
+/area/moonbase/surface/levelone/south)
 "suG" = (
 /turf/simulated/wall/r_wall,
 /area/engineering/foyer)
@@ -27456,6 +27646,12 @@
 /obj/machinery/light,
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/northhall)
+"sKV" = (
+/obj/structure/table/rack/shelf,
+/obj/random/maintenance,
+/obj/random/maintenance,
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/level1/east)
 "sLf" = (
 /obj/structure/bed/chair/sofa/left/orange,
 /turf/simulated/floor/plating,
@@ -27531,20 +27727,18 @@
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/south)
 "sNB" = (
-/obj/structure/disposaloutlet{
-	dir = 8
-	},
-/obj/structure/disposalpipe/trunk{
-	dir = 4
-	},
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "cargounload"
-	},
 /obj/structure/sign/department/cargo_dock{
 	pixel_x = 0;
 	pixel_y = -32
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/conveyor{
+	id = "cargounload";
+	dir = 4
+	},
+/obj/machinery/light,
 /turf/simulated/floor/tiled/milspec,
 /area/quartermaster/storage)
 "sNM" = (
@@ -27626,7 +27820,9 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 1
 	},
-/turf/simulated/floor/plating/external/outdoors,
+/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
 /area/engineering/moonbase/eva)
 "sPX" = (
 /obj/structure/cable{
@@ -27682,13 +27878,8 @@
 /turf/simulated/open,
 /area/ai_upload)
 "sRC" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "cargoload"
-	},
-/obj/structure/plasticflaps,
-/turf/simulated/floor/tiled/milspec,
-/area/quartermaster/storage)
+/turf/simulated/floor/plating/external/moonbaseplating,
+/area/moonbase/surface/levelone/west)
 "sSi" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/maintenance{
@@ -27818,6 +28009,14 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/medical/moonbase/traumaward)
+"sVd" = (
+/obj/structure/disposaloutlet,
+/obj/structure/disposalpipe/trunk,
+/obj/machinery/conveyor{
+	id = "cargounload"
+	},
+/turf/simulated/floor/tiled/milspec,
+/area/quartermaster/storage)
 "sVx" = (
 /obj/structure/prop/rock/round,
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
@@ -28076,7 +28275,7 @@
 	dir = 4
 	},
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
-/turf/simulated/floor/tiled/monotile,
+/turf/simulated/floor/tiled/eris/dark/danger,
 /area/maintenance/moonbase/level1/west)
 "tgR" = (
 /obj/effect/floor_decal/milspec/color/orange/half,
@@ -28494,12 +28693,11 @@
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/southeast)
 "twW" = (
-/obj/machinery/door/airlock/multi_tile/glass,
-/obj/machinery/door/firedoor/glass,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor/tiled/steel_ridged,
-/area/hallway/moonbase/central)
+/obj/effect/floor_decal/industrial/warning{
+	dir = 1
+	},
+/turf/simulated/floor/plating/external/outdoors,
+/area/moonbase/surface/levelone/south)
 "txm" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor/glass/hidden/steel{
@@ -29383,7 +29581,9 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 4
 	},
-/turf/simulated/floor/plating/external/outdoors,
+/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
 /area/ai_monitored/storage/eva)
 "uam" = (
 /obj/structure/flora/pottedplant/orientaltree,
@@ -29502,6 +29702,10 @@
 "udS" = (
 /obj/machinery/light{
 	dir = 8
+	},
+/obj/structure/railing/grey,
+/obj/machinery/conveyor_switch/oneway{
+	id = "cargounload"
 	},
 /turf/simulated/floor/tiled/milspec,
 /area/quartermaster/storage)
@@ -31352,6 +31556,14 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /turf/simulated/floor/tiled/monotile,
 /area/quartermaster/storage)
+"vFJ" = (
+/obj/machinery/door/firedoor/glass/hidden{
+	dir = 1
+	},
+/turf/simulated/floor/outdoors/grass/forest{
+	outdoors = 0
+	},
+/area/hallway/moonbase/central)
 "vFQ" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 8
@@ -32182,12 +32394,17 @@
 /turf/simulated/floor/tiled,
 /area/rnd/moonbase/robotics/mechbay)
 "wkO" = (
-/obj/machinery/door/firedoor/glass,
+/obj/effect/floor_decal/corner/paleblue{
+	dir = 9
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 4
+	},
 /obj/structure/sign/department/medbay{
 	pixel_x = 32;
 	pixel_y = 0
 	},
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled,
 /area/hallway/moonbase/central)
 "wlr" = (
 /obj/effect/floor_decal/corner/paleblue{
@@ -32370,11 +32587,9 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/item/weapon/gun/projectile/automatic/l6_saw,
-/obj/item/ammo_magazine/m545saw,
-/obj/item/ammo_magazine/m545saw,
-/obj/item/ammo_magazine/m545saw,
 /obj/structure/disposalpipe/segment,
+/obj/item/weapon/gun/energy/pulse_rifle,
+/obj/item/weapon/cell/device/weapon/recharge/captain,
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/central)
 "wqC" = (
@@ -32727,7 +32942,9 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 4
 	},
-/turf/simulated/floor/plating/external/outdoors,
+/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
 /area/ai_monitored/storage/eva)
 "wFP" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5,
@@ -32915,7 +33132,7 @@
 	dir = 4
 	},
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
-/turf/simulated/floor/tiled/monotile,
+/turf/simulated/floor/tiled/eris/dark/danger,
 /area/medical/moonbase/accesshall)
 "wOc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -33018,7 +33235,7 @@
 	},
 /obj/effect/map_helper/airlock/sensor/chamber_sensor,
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
-/turf/simulated/floor/tiled/monotile,
+/turf/simulated/floor/tiled/eris/dark/danger,
 /area/medical/moonbase/accesshall)
 "wQi" = (
 /obj/machinery/disposal,
@@ -33128,29 +33345,6 @@
 	},
 /area/moonbase/surface/levelone/north)
 "wVt" = (
-/obj/item/bee_pack,
-/obj/item/honey_frame,
-/obj/item/honey_frame,
-/obj/item/honey_frame,
-/obj/item/honey_frame,
-/obj/item/honey_frame,
-/obj/item/weapon/tool/crowbar,
-/obj/item/bee_smoker,
-/obj/item/beehive_assembly,
-/obj/structure/closet/crate/hydroponics{
-	desc = "All you need to start your own honey farm.";
-	name = "beekeeping crate"
-	},
-/obj/item/beehive_assembly,
-/obj/item/beehive_assembly,
-/obj/item/beehive_assembly,
-/obj/item/beehive_assembly,
-/obj/item/bee_pack,
-/obj/item/bee_pack,
-/obj/item/bee_pack,
-/obj/item/honey_frame,
-/obj/item/honey_frame,
-/obj/item/honey_frame,
 /obj/machinery/mob_bank{
 	layer = 40
 	},
@@ -33261,7 +33455,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/monotile,
 /area/ai_monitored/storage/eva)
 "wYb" = (
 /obj/machinery/conveyor{
@@ -33282,7 +33476,9 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/moonbase/level1/west)
 "wZs" = (
-/obj/structure/railing/grey,
+/obj/structure/railing/grey{
+	dir = 1
+	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/west)
 "xaT" = (
@@ -33385,11 +33581,11 @@
 /turf/simulated/wall/r_wall,
 /area/medical/moonbase/accesshall)
 "xeL" = (
-/obj/machinery/door/firedoor/glass,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor/tiled/steel_ridged,
-/area/hallway/moonbase/central)
+/obj/structure/bed/chair{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/level1/east)
 "xeW" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/silver{
@@ -33560,6 +33756,11 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/southhall)
+"xly" = (
+/obj/vehicle/train/engine/quadbike/random,
+/obj/effect/floor_decal/industrial/warning,
+/turf/simulated/floor/plating/external/outdoors,
+/area/moonbase/surface/levelone/south)
 "xlL" = (
 /obj/effect/floor_decal/corner/green{
 	dir = 9
@@ -33640,7 +33841,7 @@
 	},
 /obj/effect/map_helper/airlock/sensor/chamber_sensor,
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
-/turf/simulated/floor/tiled/monotile,
+/turf/simulated/floor/tiled/eris/dark/danger,
 /area/maintenance/moonbase/level1/northeast)
 "xnX" = (
 /obj/machinery/light/small{
@@ -33765,11 +33966,14 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/engineering/moonbase/powerroom)
 "xsW" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "cargounload"
-	},
 /obj/machinery/light,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/conveyor{
+	id = "cargounload";
+	dir = 4
+	},
 /turf/simulated/floor/tiled/milspec,
 /area/quartermaster/storage)
 "xtb" = (
@@ -33998,10 +34202,10 @@
 	pixel_x = -4;
 	pixel_y = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled,
 /area/quartermaster/storage)
 "xyo" = (
@@ -34067,7 +34271,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/monotile,
 /area/ai_monitored/storage/eva)
 "xzB" = (
 /obj/structure/cable{
@@ -34414,6 +34618,19 @@
 "xLG" = (
 /turf/simulated/wall/r_wall,
 /area/rnd/research_foyer_auxiliary)
+"xMk" = (
+/obj/machinery/disposal/deliveryChute{
+	dir = 8
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "cargoload"
+	},
+/turf/simulated/floor/tiled/milspec,
+/area/quartermaster/storage)
 "xMp" = (
 /obj/structure/bed/chair/office/light{
 	dir = 4
@@ -34584,8 +34801,8 @@
 /turf/simulated/floor/tiled/white,
 /area/medical/moonbase/traumaward)
 "xQH" = (
-/obj/effect/floor_decal/milspec/cargo_arrow{
-	dir = 4
+/obj/structure/railing/grey{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/milspec,
 /area/quartermaster/storage)
@@ -34679,6 +34896,7 @@
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/easthall)
 "xVD" = (
+/obj/effect/landmark/start/captain,
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/central)
 "xWw" = (
@@ -35016,6 +35234,12 @@
 	},
 /turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/level2)
+"yiC" = (
+/obj/machinery/door/firedoor/glass/hidden/steel{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/hallway/moonbase/central)
 "yke" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -35377,9 +35601,9 @@ roX
 roX
 roX
 ran
-tCA
-tCA
-tCA
+sRC
+sRC
+sRC
 rsD
 ojZ
 ojZ
@@ -35519,9 +35743,9 @@ roX
 roX
 roX
 roX
-tCA
-tCA
-tCA
+sRC
+sRC
+sRC
 ojZ
 ojZ
 ojZ
@@ -35661,9 +35885,9 @@ roX
 roX
 roX
 roX
-tCA
-tCA
-tCA
+sRC
+sRC
+sRC
 ojZ
 ojZ
 ojZ
@@ -35803,9 +36027,9 @@ fgg
 fgg
 roX
 roX
-tCA
-tCA
-tCA
+sRC
+sRC
+sRC
 ojZ
 ojZ
 ojZ
@@ -38646,9 +38870,9 @@ xeq
 tCA
 tCA
 tCA
-vNb
-vNb
-vNb
+rnK
+qix
+kuO
 vNb
 vNb
 vNb
@@ -38788,9 +39012,9 @@ fRq
 tCA
 tCA
 tCA
-vNb
-vNb
-vNb
+twW
+uCB
+riz
 vNb
 vNb
 vNb
@@ -38930,9 +39154,9 @@ jvs
 tCA
 tCA
 tCA
-vNb
-vNb
-vNb
+sct
+uCB
+suC
 vNb
 vNb
 vNb
@@ -39072,9 +39296,9 @@ jvs
 tCA
 tCA
 tCA
-vNb
-vNb
-vNb
+twW
+uCB
+riz
 vNb
 vNb
 vNb
@@ -39214,9 +39438,9 @@ jvs
 tCA
 tCA
 tCA
-vNb
-vNb
-vNb
+sct
+uCB
+xly
 vNb
 vNb
 vNb
@@ -39356,9 +39580,9 @@ jbU
 tCA
 tCA
 tCA
-vNb
-vNb
-vNb
+twW
+uCB
+riz
 vNb
 vNb
 vNb
@@ -39498,9 +39722,9 @@ tCA
 tCA
 tCA
 tCA
-vNb
-vNb
-vNb
+srX
+rmC
+jNm
 vNb
 vNb
 vNb
@@ -39917,9 +40141,9 @@ hby
 dTx
 dTx
 dTx
-nAE
-nAE
-nAE
+tCA
+tCA
+tCA
 tCA
 tCA
 tCA
@@ -40056,12 +40280,12 @@ rUI
 uWm
 kyX
 sPd
-nAE
-nAE
-nAE
-nAE
-nAE
-nAE
+tCA
+tCA
+tCA
+tCA
+tCA
+tCA
 tCA
 tCA
 tCA
@@ -43719,7 +43943,7 @@ sxu
 wSR
 bML
 uka
-nmt
+xvR
 rpr
 gKd
 eBE
@@ -43861,7 +44085,7 @@ sxu
 rPI
 mfq
 uka
-xvR
+nmt
 hfb
 gKd
 eBE
@@ -43997,11 +44221,11 @@ cEY
 rct
 nAR
 krz
-mBl
+hCJ
 vpc
 bDM
 onw
-diL
+qvz
 uka
 fwT
 fBm
@@ -44697,7 +44921,7 @@ oPn
 ykR
 mDY
 lFE
-mDY
+yiC
 qYS
 mDY
 mDY
@@ -44839,7 +45063,7 @@ wdf
 wdf
 wdf
 dSF
-wdf
+eTL
 wdf
 wdf
 wdf
@@ -44849,7 +45073,7 @@ wdf
 gIr
 bIt
 wdf
-xeL
+wdf
 wdf
 wdf
 wdf
@@ -44981,7 +45205,7 @@ ePs
 lJH
 ePs
 ePs
-ePs
+vFJ
 ePs
 ePs
 ePs
@@ -44991,7 +45215,7 @@ ePs
 tId
 qgM
 ePs
-sct
+ePs
 ePs
 ePs
 lJH
@@ -45123,7 +45347,7 @@ xxp
 xxp
 xxp
 oFJ
-xxp
+bzW
 xxp
 cVz
 qep
@@ -45133,7 +45357,7 @@ xxp
 sBa
 nFa
 cZh
-twW
+cZh
 raL
 cZh
 cZh
@@ -46133,7 +46357,7 @@ bXB
 bXB
 lIC
 fXR
-rAG
+heO
 xDv
 sGb
 xrI
@@ -46275,7 +46499,7 @@ xpT
 ljR
 aii
 fXR
-heO
+rAG
 mmq
 vIu
 rbO
@@ -47112,7 +47336,7 @@ gqc
 cew
 aQF
 ldL
-fsd
+mEW
 osZ
 pia
 wpm
@@ -47254,7 +47478,7 @@ aQF
 aQF
 aQF
 wlr
-fsd
+hzL
 fba
 ioz
 bhG
@@ -47992,10 +48216,10 @@ aoC
 pZN
 bQF
 udS
-sUG
+sVd
 cJD
 cJD
-cJD
+flW
 vwf
 phb
 vwf
@@ -48273,7 +48497,7 @@ lGx
 eks
 rpg
 hjx
-jEL
+lfm
 rVc
 hlE
 sUG
@@ -48415,13 +48639,13 @@ olQ
 olQ
 aaR
 hjx
-lfm
+eYH
 rVc
 sUG
 sUG
 sUG
 swv
-nfd
+iAA
 vwf
 odk
 vwf
@@ -48557,12 +48781,12 @@ luM
 gUi
 xKn
 hjx
-eYH
+ggl
 rVc
 sUG
 hlE
 sUG
-qBc
+swv
 iAA
 vwf
 vwf
@@ -48699,12 +48923,12 @@ ssg
 ubR
 xKn
 hjx
-ggl
+jEL
 rVc
 siT
 eJW
 siT
-aJf
+swv
 sNB
 lJm
 wCN
@@ -49125,12 +49349,12 @@ pvO
 rnq
 mdY
 aBO
-ggl
+jEL
 rVc
 jmB
 eJW
 jmB
-niC
+swv
 lzI
 lJm
 dcD
@@ -49267,13 +49491,13 @@ jgh
 ubR
 lIo
 hjx
-enX
+ggl
 rVc
-nVr
-whd
-whd
-qBc
-sRC
+sUG
+sUG
+sUG
+swv
+sdy
 lJm
 lwK
 nvw
@@ -49409,11 +49633,11 @@ kLh
 lsk
 lIo
 hjx
-rsk
+enX
 rVc
 raK
-sUG
-sUG
+hlE
+hlE
 swv
 sdy
 lJm
@@ -49539,7 +49763,7 @@ vUe
 ofb
 akJ
 uij
-nlD
+aJf
 oOK
 tBv
 wtG
@@ -49551,12 +49775,12 @@ wDa
 vFh
 uEF
 hjx
-jEL
+rsk
 rVc
-sUG
-hlE
-hlE
-swv
+nVr
+whd
+whd
+aDa
 efg
 lJm
 uwI
@@ -49699,7 +49923,7 @@ soM
 eJr
 rVc
 qsK
-sdy
+xMk
 lJm
 jUu
 uVF
@@ -50093,8 +50317,8 @@ njh
 oek
 wCo
 wCo
-hIC
-lQk
+cZd
+agn
 cZd
 hIC
 hIC
@@ -51668,7 +51892,7 @@ sRa
 bqp
 nSi
 oKL
-sRa
+gyI
 sRa
 sRa
 sRa
@@ -51809,9 +52033,9 @@ sRa
 sRa
 tDE
 nSi
-ixS
-oek
-oek
+tMf
+gyI
+nfd
 oek
 oek
 oek
@@ -51952,9 +52176,9 @@ sRa
 tDE
 kwu
 rYn
-ish
 cjj
-guN
+cjj
+ish
 cjj
 cjj
 cjj
@@ -52072,7 +52296,7 @@ eaU
 eaU
 eaU
 eaU
-eaU
+qof
 tpN
 yhq
 lxf
@@ -52094,8 +52318,8 @@ nWY
 tDE
 frf
 sTM
-oek
-oek
+gyI
+nfd
 oek
 oek
 smH
@@ -52248,7 +52472,7 @@ qVI
 qVI
 qVI
 qVI
-qVI
+mKL
 oek
 sRa
 sRa
@@ -52386,17 +52610,17 @@ gyI
 njh
 njh
 oek
+niC
 qVI
-qVI
-qVI
-qVI
-qVI
+xeL
+xeL
+kvS
 oek
 njh
 njh
 njh
 gyI
-gyI
+wtr
 gyI
 ecF
 kzu
@@ -52528,11 +52752,11 @@ njh
 njh
 njh
 oek
-qVI
-qVI
-qVI
-qVI
-qVI
+sKV
+sKV
+mKL
+mKL
+ixS
 oek
 njh
 njh
@@ -52671,9 +52895,9 @@ njh
 njh
 oek
 oek
-oek
-oek
-oek
+smH
+smH
+smH
 oek
 oek
 njh
@@ -52813,9 +53037,9 @@ vXZ
 vXZ
 vXZ
 vXZ
-vXZ
-vXZ
-vXZ
+qBc
+qBc
+qBc
 vXZ
 vXZ
 vXZ
@@ -52955,9 +53179,9 @@ vXZ
 vXZ
 vXZ
 vXZ
-vXZ
-vXZ
-vXZ
+qBc
+qBc
+qBc
 vXZ
 vXZ
 vXZ
@@ -53097,9 +53321,9 @@ vXZ
 vXZ
 vXZ
 vXZ
-vXZ
-vXZ
-vXZ
+qBc
+qBc
+qBc
 vXZ
 vXZ
 vXZ
@@ -53240,8 +53464,8 @@ vXZ
 vXZ
 uPs
 uPs
-vXZ
-vXZ
+uPs
+uPs
 vXZ
 vXZ
 vXZ
@@ -53383,8 +53607,8 @@ vXZ
 uPs
 uPs
 uPs
-vXZ
-vXZ
+uPs
+uPs
 vXZ
 vXZ
 vXZ

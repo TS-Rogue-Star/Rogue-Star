@@ -7,6 +7,7 @@
 	#include "sirius_point_turfs.dm"
 	#include "sirius_point_events.dm"
 	#include "sirius_point_areas.dm"
+	#include "sirius_point_pois.dm"
 	#include "..\offmap_vr\common_offmaps.dm"
 	#include "..\tether\tether_jobs.dm"
 

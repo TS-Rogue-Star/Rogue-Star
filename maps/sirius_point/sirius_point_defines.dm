@@ -240,11 +240,6 @@
 	return jointext(., "<br>")
 
 
-/datum/map/sirius_point/perform_map_generation()
-
-	new /datum/random_map/automata/cave_system/no_cracks(null, 1, 1, Z_LEVEL_MOONBASE_MINING, world.maxx, world.maxy) // Create the mining Z-level.
-	new /datum/random_map/noise/ore(null, 1, 1, Z_LEVEL_MOONBASE_MINING, 64, 64)         // Create the mining ore distribution map.
-	return 1
 
 
 //we probably don't need this?
@@ -400,6 +395,14 @@
 	mappath = 'maps/sirius_point/sirius_point_mining.dmm'
 
 	associated_map_datum = /datum/map_z_level/sirius_point/mining
+
+/datum/map_template/station_map/spw/on_map_loaded(z)
+	seed_submaps(list(Z_LEVEL_MOONBASE_WEST), 100, /area/moonbase/surface/west_crater/unexplored, /datum/map_template/surface/west_crater)
+
+/datum/map_template/station_map/spm/on_map_loaded(z)
+	. = ..()
+	new /datum/random_map/automata/cave_system/no_cracks(null, 3, 3, Z_LEVEL_MOONBASE_MINING, world.maxx - 4, world.maxy - 4)
+	new /datum/random_map/noise/ore(null, 1, 1, Z_LEVEL_MOONBASE_MINING, 64, 64)
 
 /datum/map_template/moonbase_lateload/moonbase_centcom
 	name = "Moonbase - Central Command"
