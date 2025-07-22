@@ -217,6 +217,7 @@ rubyflamewing - Protean
 rykkastormheart - Xenochimera
 ryumi - Protean
 ryumi - Xenochimera
+ryumi - Black-Eyed Shadekin
 satinisle - Black-Eyed Shadekin
 satinisle - Protean
 scoutisafolflol - Xenochimera
@@ -232,6 +233,8 @@ shoanaeackeye - Xenochimera
 shoanaeackeye - Diona
 shoanaeackeye - Shadekin
 shoanaeackeye - Black-Eyed Shadekin
+shoanaeackeye - Shadekin Empathy
+shoanaeackeye - Teppi
 silencedmp5a5 - Shadekin
 silencedmp5a5 - Teppi
 silenrea - Protean
@@ -245,6 +248,7 @@ sinisterevil - Xenochimera
 sirlionfur - Black-Eyed Shadekin
 skylarks - Black-Eyed Shadekin
 slovakiani - Black-Eyed Shadekin
+slovakiani - Shadekin
 slysilentclaw - Black-Eyed Shadekin
 smdytb1 - Black-Eyed Shadekin
 solazius - Diona

@@ -653,10 +653,22 @@
 
 	if(target_mob in impacted_mobs)
 		return
+	//RS edit: Ports VOREStation PR17340
+	// Accuracy here is inverted as accuracy is being applied as a negative miss_chance_mod.
+	// This means that, accuracy negates evasion 1:1 when it comes to PvP combat (or for PvE combat if you give a mob natural evasion)
+	// Things that affect accuracy: gun_accuracy_mod species var (Bad Shot/Eagle Eye), Fear, Gun Accuracy.
+	// +accuracy = higher chance to hit through evasion. -accuracy = lower chance to hit through evasion.
+	// These ONLY matter if the mob you are attacking has evasion  OR if it's coming from a non-living attacker (Mines/Turrets).
+	// The get_zone_with_miss_chance() proc is HIGHLY variable and can be changed server to server with multiple simple var switches built in without having to do specialty code or multiple edits.
+	var/miss_chance = (-accuracy + miss_modifier) //Chance to miss the target. Higher
+	var/effective_view = world.view	//RS ADD START - Let's make it so that you have a chance to miss if they're too far away
+	if(firer.client)
+		effective_view = firer.client.view
+	if(distance > effective_view)
+		miss_chance += (distance - effective_view) * 20	//RS ADD START
 
-	//roll to-hit
-	miss_modifier = max(15*(distance-2) - accuracy + miss_modifier + target_mob.get_evasion(), -100)
-	var/hit_zone = get_zone_with_miss_chance(def_zone, target_mob, miss_modifier, ranged_attack=(distance > 1 || original != target_mob), force_hit = !can_miss) //if the projectile hits a target we weren't originally aiming at then retain the chance to miss
+	var/hit_zone = get_zone_with_miss_chance(def_zone, target_mob, miss_chance, ranged_attack=(distance > 1 || original != target_mob), force_hit = !can_miss, attacker = firer) //if the projectile hits a target we weren't originally aiming at then retain the chance to miss
+	//RS edit end
 
 	var/result = PROJECTILE_FORCE_MISS
 	if(hit_zone)

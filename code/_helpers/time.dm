@@ -21,7 +21,7 @@ var/world_startup_time
 
 	return wtime + (time_offset + wusage) * world.tick_lag
 
-GLOBAL_VAR_INIT(roundstart_hour, text2num(time2text(world.timeofday, "hh")) - 6)    //RS EDIT - real time, autumn fix
+GLOBAL_VAR_INIT(roundstart_hour, text2num(time2text(world.timeofday, "hh")) - 6)	//RS EDIT - real time
 var/station_date = ""
 var/next_station_date_change = 1 DAY
 
