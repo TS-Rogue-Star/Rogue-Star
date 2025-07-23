@@ -1,7 +1,7 @@
 //backpack item
 /obj/item/device/medigun_backpack
-	name = "Bork Medical Beam Backpack Unit"
-	desc = "A highly advanced beam gun unit, designed for progressive and gradual healing of damaged tissue."
+	name = "protoype bluespace medigun backpack"
+	desc = "Contains a bluespace medigun, this portable unit digitizes and stores chems and battery power used by the attached gun."
 	icon = 'code/game/Rogue Star/icons/itemicons/borkmedigun.dmi'
 	icon_override = 'code/game/Rogue Star/icons/itemicons/borkmedigun.dmi'
 	icon_state = "mg-backpack"
@@ -42,8 +42,8 @@
 
 //backpack item
 /obj/item/device/medigun_backpack/cmo
-	name = "Bork Medical Beam Backpack Unit CMO"
-	desc = "An even more advanced beam gun unit, designed for progressive and gradual healing of damaged tissue."
+	name = "prototype bluespace medigun backpack - CMO"
+	desc = "Contains a compact version of the bluespace medigun able to be used one handed, this portable unit digitizes and stores chems and battery power used by the attached gun."
 	icon_state = "mg-backpack_cmo"
 	item_state = "mg-backpack_cmo-onmob"
 	scapacitor = /obj/item/weapon/stock_parts/capacitor/adv

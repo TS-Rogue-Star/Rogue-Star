@@ -3,8 +3,8 @@
 #define MEDIGUN_BUSY 2
 
 /obj/item/device/bork_medigun
-	name = "Bork Medical Beam Disperser"
-	desc = "A highly advanced beam gun, designed for progressive and gradual healing of damaged tissue."
+	name = "prototype bluespace medigun"
+	desc = "The Bork BSM-92 or 'Blue Space Medigun' utilizes advanced bluespace technology to transfer beneficial reagents directly to torn tissue. This way, even larger wounds can be mended efficiently in short periods of time"
 	icon = 'code/game/Rogue Star/icons/itemicons/borkmedigun.dmi'
 	icon_state = "medblaster"
 	var/wielded_item_state = "medblaster-wielded"

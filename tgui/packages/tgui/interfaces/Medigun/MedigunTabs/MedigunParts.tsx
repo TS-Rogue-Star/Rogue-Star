@@ -83,7 +83,7 @@ export const MedigunParts = (
                       slaser.rating +
                       ' damage per cycle'}
                     {slaser.rating >= 5 ? ' and will' : undefined}
-                    {slaser.rating >= 5 ? ' stop bleeding and pain' : undefined}
+                    {slaser.rating >= 5 ? ' regenerate blood' : undefined}
                     {slaser.rating >= 5 ? ' while beam is focused' : ''}
                     {'.'}
                   </Box>
