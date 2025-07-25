@@ -471,6 +471,7 @@
 
 
 /obj/item/device/medigun_backpack/proc/refill_reagent(var/obj/item/weapon/container, mob/user)
+	. = FALSE
 	if(!maintenance && (istype(container, /obj/item/weapon/reagent_containers/glass/beaker) || istype(container, /obj/item/weapon/reagent_containers/glass/bottle)))
 
 		if(!(container.flags & OPENCONTAINER))
@@ -565,12 +566,12 @@
 						if(oldbrute != brutevol || oldburn != burnvol || oldtox != toxvol)to_chat(user, span_notice("[readout]."))*/
 				if(totransfer > 0)
 					if(R.id != "tricordrazine")
-						to_chat(user, span_notice("You add [totransfer / modifier] units of [R.name] to the [src]. \n The [src] stores [round(totransfer)] U of [name]."))
+						to_chat(user, span_notice("You add [totransfer / modifier] units of [R.name] to [src]. \n [src] stores [round(totransfer)] U of [name]."))
 					container.reagents.remove_reagent(R.id, totransfer / modifier)
 					playsound(src, 'sound/weapons/empty.ogg', 50, 1)
 				update_icon()
-				return TRUE
-	return FALSE
+				. = TRUE
+	return
 
 //checks that the base unit is in the correct slot to be used
 /obj/item/device/medigun_backpack/proc/slot_check()
