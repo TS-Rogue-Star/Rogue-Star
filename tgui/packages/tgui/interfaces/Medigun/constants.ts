@@ -1,3 +1,4 @@
+// RS File
 export const powerToColor = ['bad', 'good'];
 
 export const powerToText = ['Generator Offline', 'Generator Running'];

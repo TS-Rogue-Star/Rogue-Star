@@ -1,3 +1,4 @@
+// RS File
 import type { BooleanLike } from '../../../common/react';
 
 export type Data = {
