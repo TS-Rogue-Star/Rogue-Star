@@ -113,6 +113,8 @@
 
 	pixel_x = -34
 	pixel_y = -15
+	default_pixel_x = -34
+	default_pixel_y = -15
 	old_x = -34
 	vis_height = 80
 	icon_expected_width = 100
