@@ -461,3 +461,20 @@ digi-inner-thighs
 **Creator:**  Jofae<br>
 **Link:** https://freesound.org/people/Jofae/sounds/361470/<br>
 **License:** [Creative Commons 0](https://creativecommons.org/publicdomain/zero/1.0/)<br>
+<br>
+**File:** `code/game/Rogue Star/icons/itemicons/borkmedigun.dmi`<br>
+**Creator:** Commissioned by Cross_Exonar from Toriate<br>
+**Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/1010<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/items/lefthand_guns_rs.dmi,icons/mob/items/righthand_guns_rs.dmi`<br>
+**Icon-States:**medblaster-wielded, medblaster, medblaster_cmo, medblaster-kenzie-wielded, medblaster-kenzie, medblaster_cmo-kenzie<br>
+**Creator:** Commissioned by Cross_Exonar from Toriate<br>
+**Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/1010<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+File: icons/mob/items/modifier_effects.dmi<br> 
+Icon-States:medigun_effect<br> 
+Creator: Commissioned by Cross_Exonar from Toriate<br> 
+Link: https://github.com/TS-Rogue-Star/Rogue-Star/pull/1010<br> 
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
