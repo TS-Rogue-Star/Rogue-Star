@@ -484,3 +484,19 @@ digi-inner-thighs
 **Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/1011<br>
 **License:** Licensed for use by Rogue Star; unlicensed for further use without permission of license holder<br>
 <br>
+**File:** `code/game/Rogue Star/icons/itemicons/borkmedigun.dmi`<br>
+**Creator:** Commissioned by Cross_Exonar from Toriate<br>
+**Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/1010<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/items/lefthand_guns_rs.dmi,icons/mob/items/righthand_guns_rs.dmi`<br>
+**Icon-States:**medblaster-wielded, medblaster, medblaster_cmo, medblaster-kenzie-wielded, medblaster-kenzie, medblaster_cmo-kenzie<br>
+**Creator:** Commissioned by Cross_Exonar from Toriate<br>
+**Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/1010<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+File: icons/mob/items/modifier_effects.dmi<br> 
+Icon-States:medigun_effect<br> 
+Creator: Commissioned by Cross_Exonar from Toriate<br> 
+Link: https://github.com/TS-Rogue-Star/Rogue-Star/pull/1010<br> 
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>

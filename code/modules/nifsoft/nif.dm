@@ -176,6 +176,7 @@ You can also set the stat of a NIF to NIF_TEMPFAIL without any issues to disable
 	human = null
 	install_done = null
 	update_icon()
+	H.client?.etching.clear_nif_save()	//RS ADD
 
 //EMP adds wear and disables all nifsoft
 /obj/item/device/nif/emp_act(var/severity)
@@ -700,4 +701,4 @@ You can also set the stat of a NIF to NIF_TEMPFAIL without any issues to disable
 	else
 		nif.examine_msg = new_flavor
 		nif.save_data["examine_msg"] = new_flavor
-	etching.needs_saving = TRUE	//RS ADD
+	persist_nif_data(src)	//RS ADD

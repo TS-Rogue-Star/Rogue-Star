@@ -116,7 +116,6 @@ var/global/list/permanent_unlockables = list(
 	switch(mode)
 		if("triangles")
 			triangles += value
-	needs_saving = TRUE
 
 /datum/etching/proc/report_money()
 	. = "<span class='boldnotice'>◬</span>: [triangles]\n\n"
@@ -141,19 +140,11 @@ var/global/list/permanent_unlockables = list(
 	var/list/to_save = list(
 		"triangles" = triangles,
 		"item_storage" = item_storage,
-		"unlockables" = unlockables
+		"unlockables" = unlockables,
+		"nif_type" = nif_type,
+		"nif_durability" = nif_durability,
+		"nif_savedata" = nif_savedata
 	)
-
-	if(ishuman(ourmob))
-		var/mob/living/carbon/human/H = ourmob
-		if(H.nif)
-			to_save["nif_type"] = H.nif.type
-			to_save["nif_durability"] = H.nif.durability
-			to_save["nif_savedata"] = H.nif.save_data
-	else if(ourclient)	//For nif conversion
-		to_save["nif_type"] = nif_type
-		to_save["nif_durability"] = nif_durability
-		to_save["nif_savedata"] = nif_savedata
 
 	return to_save
 
@@ -170,26 +161,19 @@ var/global/list/permanent_unlockables = list(
 	var/mob/living/carbon/human/H = ourmob
 	if(H.nif)		//We have a nif, let's see if it needs to be updated
 		if(H.nif.owner != H.real_name)		//Is this nif ours? If not, we shouldn't save it
-			nif_type = null
-			nif_durability = 0
-			needs_saving = TRUE
 			return
-		if(H.nif.type != nif_type)	//Our nif types don't match, we either just got a nif, or we got an upgrade, nice, let's record it!
-			nif_type = H.nif.type
-			nif_durability = H.nif.durability
-			needs_saving = TRUE
-			return
-
+		//Otherwise if something is asking us to update the nif, then let's update it!
+		nif_type = H.nif.type
 		nif_durability = H.nif.durability
 		nif_savedata = H.nif.save_data
 		needs_saving = TRUE
 
-		return
-
-	else if(nif_type)		//We don't have a nif, but we do have a record of one, so we probably got ours removed, let's clear the data.
-		nif_type = null
-		nif_durability = 0
-		needs_saving = TRUE
+/datum/etching/proc/clear_nif_save()
+	log_debug("ETCHING: clear_nif_save called on [ourmob]. Nif was [nif_type], [nif_durability], [nif_savedata]")
+	nif_type = null
+	nif_durability = null
+	nif_savedata = null
+	needs_saving = TRUE
 
 /proc/persist_nif_data(var/mob/living/carbon/human/H)
 	if(!ishuman(H))		//We are not a human, don't bother!
