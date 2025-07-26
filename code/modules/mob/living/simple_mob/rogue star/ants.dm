@@ -11,13 +11,15 @@
 	melee_damage_upper = 5
 	melee_damage_lower = 0
 
-	mob_size = MOB_SMALL
-	pass_flags = PASSTABLE
-//	density = FALSE
+	mob_size = MOB_TINY
+	mob_always_swap = TRUE
+	mob_bump_flag = null
+	mob_swap_flags = 0
+	mob_push_flags = 0
 
 	ai_holder_type = /datum/ai_holder/simple_mob/ant
 
-	var/queen = FALSE	//Extra stuff gets considered if this is true
+	var/queen = 0	//Extra stuff gets considered if this is true
 	var/list/overlays_cache = list()	//Holds on to eyes and crowns mostly
 	var/team_color = null				//Just to keep track, gets converted to color
 	var/eye_color = null				//Keeps track of eye color for sprite building
@@ -74,6 +76,11 @@
 	new /obj/effect/decal/cleanable/bug_remains(src.loc)
 	qdel(src)
 
+/mob/living/simple_mob/vore/ant/examine(mob/user)
+	. = ..()
+	if(queen > 0)
+		. += SPAN_NOTICE("She appears to be wearing [queen] crowns.")
+
 /mob/living/simple_mob/vore/ant/proc/ant_stun(var/mob/living/prey)
 	if(!will_eat(prey))
 		return FALSE
@@ -108,15 +115,30 @@
 		overlays_cache[combine_key] = our_image
 	add_overlay(our_image)
 
-	if(queen)	//crown
+	if(queen > 0)	//crown
 		our_image = null
-		combine_key = "crown"
+		combine_key = "crown[queen]"
 		our_image = overlays_cache[combine_key]
 		if(!our_image)
-			our_image = image(icon,null,"queen_crown")
-			our_image.appearance_flags = RESET_COLOR|KEEP_APART|PIXEL_SCALE
-			overlays_cache[combine_key] = our_image
-		add_overlay(our_image)
+			var/ourcrown
+			switch(queen)
+				if(1)
+					ourcrown = "queen_crown"
+				if(2)
+					ourcrown = "double_queen_crown"
+				if(3)
+					ourcrown = "triple_queen_crown"
+				if(4 to INFINITY)
+					ourcrown = "quadruple_queen_crown"
+				else
+					ourcrown = null
+			if(ourcrown)
+				our_image = image(icon,null,ourcrown)
+				our_image.appearance_flags = RESET_COLOR|KEEP_APART|PIXEL_SCALE
+				overlays_cache[combine_key] = our_image
+				add_overlay(our_image)
+
+	pixel_x = default_pixel_x
 
 /mob/living/simple_mob/vore/ant/can_eat(var/atom/movable/food)
 	if(food.z != z)
@@ -126,19 +148,14 @@
 	return FALSE
 
 //Squish code from cockroach.dm
-//mob/living/simple_mob/vore/ant/Crossed(var/atom/movable/AM)
-
-/mob/living/simple_mob/vore/ant/Bumped(atom/movable/AM, yes)
-	to_world("[AM] bumped [src]")
+/mob/living/simple_mob/vore/ant/Crossed(var/atom/movable/AM)
 	if(queen)
-		return
+		return FALSE
 	if(stat == DEAD)
-		return
+		return TRUE
 	if(istype(AM,/mob/living/simple_mob/vore/ant))
-		return
+		return FALSE
 	if(isliving(AM))
-		death(TRUE)
-
 		var/mob/living/A = AM
 		if(A.is_incorporeal())
 			return
@@ -148,6 +165,7 @@
 			return
 		if(prob(33))
 			A.visible_message("<span class='notice'>[A] squashed [src].</span>", "<span class='notice'>You squashed [src].</span>")
+			spawn(0)
 			death(TRUE)
 		else
 			visible_message("<span class='notice'>[src] avoids getting crushed.</span>")
@@ -155,11 +173,11 @@
 		if(isstructure(AM))
 			if(prob(33))
 				AM.visible_message("<span class='notice'>[src] was crushed under [AM].</span>")
+				spawn(0)
 				death(TRUE)
 			else
 				visible_message("<span class='notice'>[src] avoids getting crushed.</span>")
 	return ..()
-
 
 /mob/living/simple_mob/vore/ant/queen
 	name = "queen ant"
@@ -168,11 +186,13 @@
 	icon_state = "queen"
 	icon_living = "queen"
 	icon_dead = "queen_dead"
-	queen = TRUE
+	queen = 1
+
 	mob_size = MOB_LARGE
 	mob_bump_flag = HEAVY
 	mob_swap_flags = ~HEAVY
 	mob_push_flags = ~HEAVY
+	mob_always_swap = FALSE
 	pixel_x = -16
 	default_pixel_x = -16
 	maxHealth = 500

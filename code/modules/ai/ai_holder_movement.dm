@@ -123,12 +123,10 @@
 		walk_attempts ++
 	else
 		walk_attempts = 0
-	to_world("Walk attempt [walk_attempts]")
 	if(walk_attempts >= 10)
 		lose_target()
 		give_up_movement()
 		walk_attempts = 0
-		to_world("giving up!")
 
 //Take one step along a path
 /datum/ai_holder/proc/move_once()
