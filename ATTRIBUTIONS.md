@@ -478,3 +478,26 @@ Icon-States:medigun_effect<br>
 Creator: Commissioned by Cross_Exonar from Toriate<br> 
 Link: https://github.com/TS-Rogue-Star/Rogue-Star/pull/1010<br> 
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+File: icons/mob/100x100.dmi<br>
+Creator: LooseLeaf<br>
+Link: https://github.com/TS-Rogue-Star/Rogue-Star/pull/1011<br>
+License: Licensed for use by Rogue Star; unlicensed for further use without permission of license holder<br>
+<br>
+File: icons/mob/75x100.dmi<br>
+Creator: LooseLeaf<br>
+Link: https://github.com/TS-Rogue-Star/Rogue-Star/pull/424<br>
+License: Licensed for use by Rogue Star; unlicensed for further use without permission of license holder<br>
+<br>
+File: icons/effects/effects.dmi <br>
+Icon-States: egg_impact<br> 
+Creator: LooseLeaf<br>
+Link: https://github.com/TS-Rogue-Star/Rogue-Star/pull/1011<br>
+License: Licensed for use by Rogue Star; unlicensed for further use without permission of license holder<br>
+<br>
+File: icons/obj/projectiles.dmi <br>
+Icon-States: egg<br> 
+Creator: LooseLeaf<br>
+Link: https://github.com/TS-Rogue-Star/Rogue-Star/pull/1011<br>
+License: Licensed for use by Rogue Star; unlicensed for further use without permission of license holder<br>
+<br>
