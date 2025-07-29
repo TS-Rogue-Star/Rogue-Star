@@ -38,20 +38,24 @@
 	var/sbintier = 1
 	var/gridstatus = 0
 	var/chargecap = 1000
+	var/compact = 0
 	var/kenzie = FALSE
 
 //backpack item
-/obj/item/device/medigun_backpack/cmo
-	name = "prototype bluespace medigun backpack - CMO"
+/obj/item/device/medigun_backpack/compact
+	name = "prototype bluespace medigun backpack - compact"
 	desc = "Contains a compact version of the bluespace medigun able to be used one handed, this portable unit digitizes and stores chems and battery power used by the attached gun."
-	icon_state = "mg-backpack_cmo"
-	item_state = "mg-backpack_cmo-onmob"
+	icon_state = "mg-belt"
+	item_state = "mg-belt-onmob"
 	scapacitor = /obj/item/weapon/stock_parts/capacitor/adv
 	smanipulator = /obj/item/weapon/stock_parts/manipulator/nano
 	smodule = /obj/item/weapon/stock_parts/scanning_module/adv
 	slaser = /obj/item/weapon/stock_parts/micro_laser/high
 	bcell = /obj/item/weapon/cell/apc
-	tankmax = 60
+	compact = TRUE
+	w_class = ITEMSIZE_LARGE
+	slot_flags = SLOT_BELT
+	/*tankmax = 60
 	brutecharge = 60
 	toxcharge = 60
 	burncharge = 60
@@ -59,12 +63,12 @@
 	brutevol = 120
 	toxvol = 120
 	burnvol = 120
-	chargecap = 5000
+	chargecap = 5000*/
 
 /obj/item/device/medigun_backpack/proc/is_twohanded()
 	return TRUE
 
-/obj/item/device/medigun_backpack/cmo/is_twohanded()
+/obj/item/device/medigun_backpack/compact/is_twohanded()
 	return FALSE
 
 /obj/item/device/medigun_backpack/proc/apc_charge()
@@ -186,32 +190,35 @@
 		add_overlay(image('code/game/Rogue Star/icons/itemicons/borkmedigun.dmi', "orangestrike-blink"))
 
 /obj/item/device/medigun_backpack/proc/replace_icon(inhand)
+	var/sprite = "-backpack"
+	if(compact)
+		sprite = "-belt"
 	var/special = null
 	if(kenzie)
 		special = "-kenzie"
 	if(inhand)
-		icon_state = "mg-backpack-deployed[special]"
-		item_state = "mg-backpack-deployed-onmob[special]"
+		icon_state = "mg[sprite]-deployed[special]"
+		item_state = "mg[sprite]-deployed-onmob[special]"
 		if(is_twohanded())
 			medigun.icon_state = "medblaster[special]"
 			medigun.base_icon_state = "medblaster[special]"
 			medigun.wielded_item_state = "medblaster[special]-wielded"
 			medigun.update_icon()
 		else
-			medigun.icon_state = "medblaster_cmo[special]"
-			medigun.base_icon_state = "medblaster_cmo[special]"
+			medigun.icon_state = "medblaster-compact[special]"
+			medigun.base_icon_state = "medblaster-compact[special]"
 			medigun.wielded_item_state = ""
 			medigun.update_icon()
 	else if(is_twohanded())
-		icon_state = "mg-backpack[special]"
-		item_state = "mg-backpack-onmob[special]"
+		icon_state = "mg[sprite][special]"
+		item_state = "mg[sprite]-onmob[special]"
 		medigun.icon_state = "medblaster[special]"
 		medigun.base_icon_state = "medblaster[special]"
 	else
-		icon_state = "mg-backpack_cmo[special]"
-		item_state = "mg-backpack_cmo-onmob[special]"
-		medigun.icon_state = "medblaster_cmo[special]"
-		medigun.base_icon_state = "medblaster_cmo[special]"
+		icon_state = "mg[sprite][special]"
+		item_state = "mg[sprite]-onmob[special]"
+		medigun.icon_state = "medblaster-compact[special]"
+		medigun.base_icon_state = "medblaster-compact[special]"
 
 	update_icon()
 
@@ -221,8 +228,8 @@
 		medigun = new medigun(src, src)
 	else
 		medigun = new(src, src)
-	if(!is_twohanded())
-		medigun.beam_range = 4
+	/*if(!is_twohanded())
+		medigun.beam_range = 4*/
 	if(ispath(bcell))
 		bcell = new bcell(src)
 	if(ispath(sbin))
@@ -252,7 +259,7 @@
 /obj/item/device/medigun_backpack/equipped(var/mob/user, var/slot)
 
 	//to_chat(world, span_notice("bark [user.real_name] \ [slot] \ [user.ckey]"))
-	if(slot == slot_back || slot == slot_s_store)
+	if(slot == slot_back || slot == slot_belt || slot == slot_s_store)
 		if(user.real_name == "Kenzie Houser" && user.ckey == "memewuff")
 			kenzie = TRUE
 			to_chat(user, span_notice("Epic Lasagna Wolf Detected, Engaging BAD ASS MODE."))
@@ -262,7 +269,7 @@
 		replace_icon()
 	..()
 
-/obj/item/device/medigun_backpack/ui_action_click()
+/obj/item/device/medigun_backpack/AltClick(mob/user)
 	if(charging)
 		to_chat(usr, span_notice("You disable the phoron generator."))
 		charging = FALSE
@@ -274,6 +281,9 @@
 		return
 
 	to_chat(usr, span_warning("Not Enough Phoron stored."))
+
+
+
 
 /obj/item/device/medigun_backpack/emp_act(severity)
 	. = ..()
@@ -301,10 +311,7 @@
 			return
 		src.add_fingerprint(usr)
 		M.put_in_any_hand_if_possible(src)
-		/*icon_state = "mg-backpack"
-		item_state = "mg-backpack-onmob"
-		update_icon() //success
-		usr.update_inv_back()*/
+
 
 
 /obj/item/device/medigun_backpack/attackby(obj/item/weapon/W, mob/user, params)
@@ -583,6 +590,8 @@
 		return TRUE
 	if((slot_flags & SLOT_BACK) && M.get_equipped_item(slot_s_store) == src)
 		return TRUE
+	if((slot_flags & SLOT_BELT) && M.get_equipped_item(slot_belt) == src)
+		return TRUE
 	return FALSE
 
 /obj/item/device/medigun_backpack/dropped(mob/user)
@@ -594,7 +603,6 @@
 /obj/item/device/medigun_backpack/proc/reattach_medigun(mob/user)
 	if(containsgun)
 		return
-
 	containsgun = TRUE
 	if(!medigun)
 		return
@@ -607,7 +615,7 @@
 		if(M.drop_from_inventory(medigun, src))
 			to_chat(user, span_notice("\The [medigun] snaps back into the main unit."))
 		return
-
+	//do_after(user, 2, ignore_movement = TRUE)
 	medigun.forceMove(src)
 	to_chat(user, span_notice("\The [medigun] snaps back into the main unit."))
 

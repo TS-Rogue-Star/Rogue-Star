@@ -144,8 +144,14 @@
 			update_icon()
 			return TRUE
 
-/obj/item/device/medigun_backpack/ShiftClick(mob/user)
+/*/obj/item/device/medigun_backpack/ShiftClick(mob/user)
 	. = ..()
 	if(!medigun)
 		return
-	tgui_interact(user)
+	tgui_interact(user)*/ //changed to ui_action_click
+
+/obj/item/device/medigun_backpack/ui_action_click()
+	. = ..()
+	if(!medigun)
+		return
+	tgui_interact(usr)
