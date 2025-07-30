@@ -21,6 +21,18 @@
 
 	ai_holder_type = /datum/ai_holder/simple_mob/ant
 
+	has_langs = list(LANGUAGE_ANIMAL)
+	say_list_type = /datum/say_list/ant
+	tt_desc = "Formica Stelarium"
+
+	attacktext = list("nibbled")
+	friendly = list("nuzzles", "nibbles", "wiggles its antennae at", "rubs against")
+	catalogue_data = list(/datum/category_item/catalogue/fauna/ant)
+
+	response_help   = "pets"
+	response_disarm = "bops"
+	response_harm   = "attacks"
+
 	var/queen = 0	//Extra stuff gets considered if this is true
 	var/list/overlays_cache = list()	//Holds on to eyes and crowns mostly
 	var/team_color = null				//Just to keep track, gets converted to color
@@ -38,7 +50,8 @@
 	vore_escape_chance = 10
 	vore_pounce_chance = 25
 	vore_ignores_undigestable = 0
-	vore_default_mode = DM_DIGEST
+	vore_default_mode = DM_SELECT
+	selective_preference = DM_DIGEST
 	vore_icons = SA_ICON_LIVING
 	vore_stomach_name = "stomach"
 	vore_stomach_flavor = "The slick smooth surfaces of the stretchy insect flesh form against your figure as you settle inside. The walls hold you securely behind armor plating, trapped in the churning heat of the soft insides of this bug. The rolling burbles of its social stomach squeezing against you in rhythmic undulations, stirring up everything within, and mooshing everything into one mass."
@@ -87,6 +100,8 @@
 
 /mob/living/simple_mob/vore/ant/Life()
 	. = ..()
+	if(ckey)
+		return
 	kiss_cooldown --
 	if(queen)
 		if(world.time < reproduce_cooldown)
@@ -480,10 +495,10 @@
 				else return TRUE
 			else
 				return TRUE	//You're not a friend AND you're still alive, it is ON let's GO!!!
-		else if(!handle_corpse)
+		if(!handle_corpse)
 			if(L.stat)
 				return FALSE
-		else if(check_attacker(the_target))
+		if(check_attacker(the_target))
 			return TRUE
 		return FALSE
 	else if(!our_ant.can_eat(the_target)) return FALSE
@@ -536,3 +551,15 @@
 			if(S.ai_holder)
 				S.ai_holder.add_attacker(AM)	//All of the ants near her will remember you until they die now
 				S.ai_holder.give_target(AM)		//Also they all are rapidly approaching your location.
+
+/datum/category_item/catalogue/fauna/ant
+	name = "Alien Wildlife - Ant"
+	desc = "Ants are primarily non-agressive, but will invade areas where food has been left out in order to take it! Food that has been taken by an ant will typicallt be returned to a queen ant as soon as possible, if one exists nearby. Queen ants are the primary reproductives in an ant colony, producing new workers rapidly to spread and grow the colony! While the worker ants do not care much what you do to other workers, the colony will band together to defend the queen if she ever comes under attack."
+	value = CATALOGUER_REWARD_EASY
+
+/datum/say_list/ant
+	speak = list(". . .", "! ! !", "? ? ?")
+	emote_hear = list("clicks...", "clacks...")
+	emote_see = list("sways its antennae", "wiggles its antennae", "nibbles something on the floor", "stretches its legs", "hunkers down")
+	say_maybe_target = list("? ? ?")
+	say_got_target = list("! ! !")
