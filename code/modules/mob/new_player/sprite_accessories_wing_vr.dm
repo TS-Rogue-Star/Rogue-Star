@@ -176,6 +176,7 @@
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "neckfur_markings"
 
+// RS Add Start
 /datum/sprite_accessory/wing/neckfur_noback
 	name = "neck fur (without back part)"
 	desc = ""
@@ -183,6 +184,7 @@
 	do_colouration = 1
 	color_blend_mode = ICON_MULTIPLY
 	extra_overlay = "neckfur_markings"
+// RS Add End
 
 /datum/sprite_accessory/wing/feathered
 	name = "feathered wings, colorable"
