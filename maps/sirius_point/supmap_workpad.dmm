@@ -662,10 +662,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/template_noop)
-"eY" = (
-/obj/structure/prop/machine/tgmc_console3/starts_on,
-/turf/simulated/shuttle/floor/black,
-/area/template_noop)
 "fb" = (
 /obj/effect/floor_decal/milspec/color/green/corner{
 	dir = 8
@@ -698,6 +694,10 @@
 /obj/machinery/meter,
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
+"fu" = (
+/obj/structure/table/steel,
+/turf/simulated/shuttle/floor,
+/area/template_noop)
 "fv" = (
 /turf/simulated/floor/wood,
 /area/template_noop)
@@ -726,10 +726,6 @@
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/home1)
-"fD" = (
-/obj/structure/girder,
-/turf/simulated/floor/plating/external,
-/area/template_noop)
 "fE" = (
 /obj/item/device/radio/intercom{
 	dir = 4;
@@ -1100,9 +1096,6 @@
 /obj/structure/curtain/open/shower,
 /turf/simulated/floor/tiled/techmaint,
 /area/submap/moonbase/poi/west_crater/home1)
-"jf" = (
-/turf/simulated/shuttle/floor/airless,
-/area/template_noop)
 "ji" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/white,
@@ -1418,6 +1411,9 @@
 "lT" = (
 /obj/machinery/atmospherics/portables_connector,
 /turf/simulated/floor/tiled/white,
+/area/template_noop)
+"lU" = (
+/turf/simulated/floor/plating/external,
 /area/template_noop)
 "mi" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -1735,10 +1731,6 @@
 "nP" = (
 /obj/structure/flora/pottedplant/flower,
 /turf/simulated/floor/carpet/turcarpet,
-/area/template_noop)
-"nQ" = (
-/obj/structure/prop/machine/tgmc_console1/starts_on,
-/turf/simulated/shuttle/floor/black,
 /area/template_noop)
 "nX" = (
 /obj/machinery/bomb_tester,
@@ -2412,9 +2404,6 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/submap/moonbase/poi/west_crater/home2)
-"sR" = (
-/turf/simulated/floor/plating/external,
-/area/template_noop)
 "sS" = (
 /obj/item/weapon/bedsheet/orangedouble,
 /obj/structure/bed/double,
@@ -2708,6 +2697,13 @@
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/garden3)
+"vF" = (
+/obj/structure/table/steel,
+/obj/item/weapon/storage/mre/random,
+/obj/item/weapon/storage/mre/random,
+/obj/item/weapon/storage/mre/random,
+/turf/simulated/shuttle/floor,
+/area/template_noop)
 "vH" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -2771,11 +2767,6 @@
 	outdoors = 0
 	},
 /area/submap/moonbase/poi/west_crater/home1)
-"wp" = (
-/obj/item/weapon/bedsheet/blue,
-/obj/structure/bed,
-/turf/simulated/shuttle/floor,
-/area/template_noop)
 "wu" = (
 /turf/simulated/floor/plating/external/moonbaseplating/outdoors{
 	edge_blending_priority = 1
@@ -3429,6 +3420,12 @@
 	},
 /turf/simulated/floor/tiled,
 /area/template_noop)
+"BQ" = (
+/obj/structure/prop/machine/tgmc_console2/starts_on{
+	pixel_x = -6
+	},
+/turf/simulated/shuttle/floor/black,
+/area/template_noop)
 "Cd" = (
 /obj/structure/table/steel,
 /obj/machinery/recharger{
@@ -3456,12 +3453,6 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/submap/moonbase/poi/west_crater/garden1)
-"Cs" = (
-/obj/structure/prop/machine/tgmc_console2/starts_on{
-	pixel_x = -6
-	},
-/turf/simulated/shuttle/floor/black,
-/area/template_noop)
 "Cv" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -3541,6 +3532,9 @@
 	},
 /obj/machinery/portable_atmospherics/canister/empty,
 /turf/simulated/floor/plating,
+/area/template_noop)
+"CO" = (
+/turf/simulated/shuttle/floor/airless,
 /area/template_noop)
 "CP" = (
 /obj/effect/floor_decal/industrial/danger{
@@ -3743,13 +3737,6 @@
 /obj/fiftyspawner/steel,
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
-"Ep" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/storage/mre/random,
-/obj/item/weapon/storage/mre/random,
-/obj/item/weapon/storage/mre/random,
-/turf/simulated/shuttle/floor,
-/area/template_noop)
 "Eu" = (
 /obj/machinery/crystal/lava,
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
@@ -3930,6 +3917,12 @@
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/simulated/floor/tiled/dark,
 /area/template_noop)
+"Fs" = (
+/obj/structure/bed/chair/bay/shuttle{
+	dir = 1
+	},
+/turf/simulated/shuttle/floor,
+/area/template_noop)
 "Ft" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor/glass,
@@ -3966,6 +3959,10 @@
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/home2)
+"FH" = (
+/obj/structure/prop/machine/tgmc_console1/starts_on,
+/turf/simulated/shuttle/floor/black,
+/area/template_noop)
 "FJ" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -4557,6 +4554,10 @@
 "KY" = (
 /turf/simulated/floor/wood,
 /area/submap/moonbase/poi/west_crater/home1)
+"Ld" = (
+/obj/structure/girder,
+/turf/simulated/floor/plating/external,
+/area/template_noop)
 "Le" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass_external,
@@ -4627,6 +4628,13 @@
 /obj/structure/frame,
 /turf/simulated/floor/plating/external/outdoors,
 /area/submap/moonbase/poi/west_crater/construction4)
+"LC" = (
+/obj/item/bodybag/cryobag,
+/obj/item/weapon/storage/firstaid/adv,
+/obj/item/device/healthanalyzer,
+/obj/structure/table/steel,
+/turf/simulated/shuttle/floor,
+/area/template_noop)
 "LE" = (
 /obj/effect/floor_decal/milspec/color/green/half{
 	dir = 6
@@ -5027,12 +5035,6 @@
 	},
 /turf/simulated/floor/tiled/eris/dark/danger,
 /area/submap/moonbase/poi/west_crater/garden3)
-"OH" = (
-/obj/structure/bed/chair/bay/shuttle{
-	dir = 1
-	},
-/turf/simulated/shuttle/floor,
-/area/template_noop)
 "OI" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/black,
 /obj/structure/cable/green{
@@ -5245,6 +5247,11 @@
 /turf/simulated/floor/plating/external/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
+/area/template_noop)
+"Qw" = (
+/obj/item/weapon/bedsheet/blue,
+/obj/structure/bed,
+/turf/simulated/shuttle/floor,
 /area/template_noop)
 "Qy" = (
 /obj/structure/table/woodentable,
@@ -6212,6 +6219,10 @@
 /obj/effect/map_helper/airlock/sensor/ext_sensor,
 /turf/simulated/floor/plating/external/moonbaseplating/outdoors,
 /area/submap/moonbase/poi/west_crater/home2)
+"XR" = (
+/obj/structure/prop/machine/tgmc_console3/starts_on,
+/turf/simulated/shuttle/floor/black,
+/area/template_noop)
 "XX" = (
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/submap/moonbase/poi/west_crater/construction4)
@@ -7179,7 +7190,7 @@ RB
 RB
 RB
 RB
-fD
+Ld
 ME
 ME
 ME
@@ -7316,12 +7327,12 @@ ME
 RB
 RB
 RB
-Ko
-Ko
+LC
+fu
 RB
-jf
-jf
-sR
+CO
+CO
+lU
 ME
 ME
 ME
@@ -7456,14 +7467,14 @@ kR
 ME
 ME
 MQ
-nQ
-OH
+FH
+Fs
 rE
 rE
 RB
-jf
-sR
-sR
+CO
+lU
+lU
 ME
 ME
 ME
@@ -7598,13 +7609,13 @@ kR
 ME
 ME
 MQ
-eY
-OH
+XR
+Fs
 rE
 rE
 zA
-jf
-sR
+CO
+lU
 ME
 ME
 ME
@@ -7740,13 +7751,13 @@ kR
 ME
 ME
 MQ
-Cs
-OH
+BQ
+Fs
 rE
 rE
 RB
-jf
-sR
+CO
+lU
 ME
 ME
 ME
@@ -7884,11 +7895,11 @@ ME
 RB
 RB
 RB
-Ep
-wp
+vF
+Qw
 RB
-sR
-sR
+lU
+lU
 ME
 ME
 ME
@@ -8030,7 +8041,7 @@ RB
 RB
 RB
 RB
-fD
+Ld
 ME
 ME
 ME
