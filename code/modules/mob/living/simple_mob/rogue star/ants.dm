@@ -17,8 +17,6 @@
 	mob_swap_flags = 0
 	mob_push_flags = 0
 
-	load_owner = "seriouslydontsavethis"
-
 	ai_holder_type = /datum/ai_holder/simple_mob/ant
 
 	has_langs = list(LANGUAGE_ANIMAL)
@@ -84,13 +82,23 @@
 /mob/living/simple_mob/vore/ant/New(newloc,var/team,var/oureyes)
 	. = ..()
 	if(team)
-		team_color = team
+		to_world("team [team]")
+		if(istype(team,/mob/living/simple_mob/vore/ant))
+			var/mob/living/simple_mob/vore/ant/A = team
+			to_world("Team is ant [A] - [A.faction]")
+			team_color = A.team_color
+			faction = A.faction
+			to_world("Set faction to [faction]")
+		else
+			team_color = team
+			faction = team_color
+			to_world("Team is not ant, faction is [faction]")
 	if(oureyes)
 		eye_color = oureyes
 	if(!team_color)
 		team_color = pick(list("#640a06","#1f1f33","#d4ac3d","#183d1d"))
-
-	faction = team_color
+		faction = team_color
+		to_world("No team color, picked random, faction is [faction]")
 	color = team_color
 	if(!eye_color)
 		eye_color = random_color()
@@ -100,15 +108,17 @@
 
 /mob/living/simple_mob/vore/ant/Life()
 	. = ..()
-	if(ckey)
+	if(ckey || load_owner)
 		return
 	kiss_cooldown --
 	if(queen)
 		if(world.time < reproduce_cooldown)
 			return
+		if(!isturf(loc))
+			return
 		if(nutrition > 150)
 			nutrition -= 150
-			var/mob/living/simple_mob/vore/ant/A = new(get_turf(src),team_color)
+			var/mob/living/simple_mob/vore/ant/A = new(get_turf(src),src)
 			reproduce_cooldown = world.time + 10 SECONDS
 			visible_message("\The [A] is born from \the [src]... It's the miracle of life!", runemessage = "! ! !")
 			spawn()
@@ -175,13 +185,22 @@
 
 /mob/living/simple_mob/vore/ant/proc/queen_me()
 	var/turf/T = get_turf(src)
-	var/mob/living/simple_mob/vore/ant/queen/Q = new(T,team_color,eye_color)
+	var/mob/living/simple_mob/vore/ant/queen/Q = new(T,src,eye_color)
 	Q.dir = dir
 	for(var/mob/living/simple_mob/vore/ant/A in oview(world.view,T))
 		if(A.team_color == team_color)
 			if(A.ai_holder)
 				if(!A.ai_holder.home_turf)
 					A.ai_holder.home_turf = Q
+	if(capture_caught)
+		for(var/obj/item/capture_crystal/crystal in world)
+			if(istype(crystal,/obj/item/capture_crystal))
+				if(crystal.bound_mob == src)
+					crystal.transfer_bound_mob(Q)
+	if(ckey)
+		Q.ckey = ckey
+	if(load_owner)
+		Q.load_owner = load_owner
 	qdel(src)
 
 /mob/living/simple_mob/vore/ant/proc/silly_name()
@@ -315,6 +334,8 @@
 
 //Squish code from cockroach.dm
 /mob/living/simple_mob/vore/ant/Crossed(var/atom/movable/AM)
+	if(ckey || load_owner || capture_caught)
+		return ..()
 	if(queen)
 		return FALSE
 	if(stat == DEAD)
@@ -405,6 +426,62 @@
 				to_chat(thing,SPAN_DANGER("Suddenly the walls around you squeeze in tightly, irresistibly you are forced along the slick chute, back toward the ant’s mouth! Instead of being released though, you are dutifully squirted into the mouth of a larger ant! A queen ant! She guzzles you down quickly, swallowing you away in a noisy GLLRP, sending you to stew in her eager stomach."))
 			vore_selected.transfer_contents(thing,other_ant.vore_selected)
 
+/mob/living/simple_mob/vore/ant/save_conditions(mob/living/user)
+	if(load_owner == "STATION")
+		to_chat(user, "<span class = 'warning'>\The [src] is registered as a station pet, and as such can not be registered again.</span>")
+		return FALSE
+	if(initial(load_owner) == "seriouslydontsavethis")
+		to_chat(user,"<span class = 'warning'>\The [src] is too complicated to be able to be registered.</span>")
+		return FALSE
+	if(load_owner && load_owner != user.ckey)
+		to_chat(user,"<span class = 'warning'>\The [src] is already registered, it already has a owner.</span>")
+		return FALSE
+	if(client || ckey)	//It's a player, don't save it
+		to_chat(user,"<span class = 'warning'>\The [src] isn't able to be registered.</span>")
+		return FALSE
+	if(!ai_holder)	//It doesn't have an AI, something weird is going on, don't save it
+		to_chat(user,"<span class = 'warning'>\The [src] isn't able to be registered.</span>")
+		return FALSE
+	if(ai_holder.hostile && faction != user.faction)	//It's hostile to the person trying to save it, don't save it
+		if(ai_holder.stance != STANCE_IDLE)
+			to_chat(user,"<span class = 'warning'>\The [src] is too unruly to be registered.</span>")
+			return FALSE
+	if(!capture_crystal)	//If it isn't catchable with capture crystals, it probably shouldn't be saved with the storage system.
+		to_chat(user,"<span class = 'warning'>\The [src] isn't able to be registered.</span>")
+		return FALSE
+	if(!(ai_holder.stance == STANCE_SLEEP || ai_holder.stance == STANCE_IDLE || ai_holder.stance == STANCE_FOLLOW))	//The AI is trying to do stuff, don't save it
+		to_chat(user,"<span class = 'warning'>\The [src] is too unruly to be registered.</span>")
+		return FALSE
+	if(stat != CONSCIOUS)
+		to_chat(user,"<span class = 'warning'>\The [src] is not in a condition to be scanned.</span>")
+		return FALSE
+	return TRUE
+
+/mob/living/simple_mob/vore/ant/mob_bank_save(mob/living/user)
+
+	var/list/to_save = list(
+		"ckey" = user.ckey,
+		"type" = /mob/living/simple_mob/vore/ant,
+		"name" = name,
+		"team_color" = team_color,
+		"eye_color" = eye_color
+		)
+
+	return to_save
+
+/mob/living/simple_mob/vore/ant/mob_bank_load(mob/living/user, var/list/load)
+	if(user)
+		load_owner = user.ckey
+	else
+		load_owner = "STATION"
+	name = load["name"]
+	real_name = name
+	team_color = load["team_color"]
+	color = team_color
+	eye_color = load["eye_color"]
+
+	update_icon()
+
 /mob/living/simple_mob/vore/ant/queen
 	name = "queen ant"
 	desc = "So regal!"
@@ -442,10 +519,12 @@
 
 /mob/living/simple_mob/vore/ant/random/New(newloc, team, oureyes)
 	team_color = random_color()
+	faction = team_color
 	. = ..()
 
 /mob/living/simple_mob/vore/ant/queen/random/New(newloc, team, oureyes)
 	team_color = random_color()
+	faction = team_color
 	. = ..()
 
 //AI STUFF mostly stolen from isopods
@@ -480,9 +559,11 @@
 	var/mob/living/simple_mob/vore/ant/our_ant = holder
 	if(isliving(the_target))
 		var/mob/living/L = the_target
+		if(L.faction == our_ant.faction)
+			return FALSE
 		if(istype(the_target,/mob/living/simple_mob/vore/ant))	//So I see that you are an ant...
 			var/mob/living/simple_mob/vore/ant/target_ant = the_target
-			if(target_ant.faction == our_ant.faction)	//Are you an ant friend... or an antly foe...
+			if(target_ant.team_color == our_ant.team_color)	//Are you an ant friend... or an antly foe...
 				if(target_ant.queen && !our_ant.queen)	//You are a queen and I am not!
 					if(our_ant.kiss_cooldown > 0)		//I want to kiss the queen...
 						return FALSE
