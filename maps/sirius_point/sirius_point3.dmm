@@ -1786,6 +1786,15 @@
 /obj/machinery/alarm,
 /turf/simulated/floor/plating/external/outdoors,
 /area/engineering/engine_room)
+"fa" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/turf/simulated/floor/tiled,
+/area/engineering/engine_room)
 "fc" = (
 /obj/machinery/computer/ship/sensors/adv,
 /obj/effect/floor_decal/fancy_shuttle{
@@ -3059,7 +3068,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/eris/dark/danger,
 /area/hallway/arrival/moonbase/dockingbays)
 "ik" = (
 /obj/effect/floor_decal/fancy_shuttle{
@@ -3230,6 +3239,7 @@
 /area/bridge_hallway)
 "iF" = (
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
+/obj/machinery/atmospherics/unary/vent_pump/high_volume,
 /turf/simulated/floor/tiled/eris/dark/danger,
 /area/engineering/engine_room)
 "iG" = (
@@ -3256,7 +3266,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/eris/dark/danger,
 /area/hallway/arrival/moonbase/dockingbays)
 "iI" = (
 /obj/machinery/power/apc{
@@ -3667,6 +3677,7 @@
 	icon_state = "1-2"
 	},
 /obj/effect/map_helper/airlock/door/int_door,
+/obj/machinery/atmospherics/pipe/manifold/hidden,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/engineering/engine_room)
 "jH" = (
@@ -3796,7 +3807,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/eris/dark/danger,
 /area/hallway/arrival/moonbase/dockingbays)
 "jY" = (
 /obj/effect/floor_decal/corner/lime{
@@ -4354,7 +4365,7 @@
 	locked = 1;
 	name = "Docking Port Airlock"
 	},
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/eris/dark/danger,
 /area/hallway/arrival/moonbase/dockingbays)
 "lr" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -5476,6 +5487,12 @@
 	},
 /turf/simulated/floor/carpet/oracarpet,
 /area/crew_quarters/heads/chief)
+"oi" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden{
+	dir = 4
+	},
+/turf/simulated/wall/r_wall,
+/area/engineering/engine_room)
 "oj" = (
 /obj/structure/railing{
 	dir = 1
@@ -7290,6 +7307,9 @@
 /obj/structure/cable/green{
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 5
+	},
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "sL" = (
@@ -7591,6 +7611,9 @@
 /obj/structure/cable/green{
 	icon_state = "1-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/universal{
+	dir = 4
+	},
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "tu" = (
@@ -7772,7 +7795,7 @@
 	locked = 1;
 	name = "Docking Port Airlock"
 	},
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/eris/dark/danger,
 /area/hallway/arrival/moonbase/main)
 "tR" = (
 /obj/item/device/sleevemate,
@@ -7853,13 +7876,10 @@
 /turf/simulated/floor/tiled/dark,
 /area/lawoffice/moonbase/iaatwo)
 "ui" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+/obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 6
 	},
-/turf/simulated/floor/tiled,
+/turf/simulated/wall/r_wall,
 /area/engineering/engine_room)
 "uj" = (
 /obj/machinery/light,
@@ -8043,6 +8063,9 @@
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass_external,
 /obj/effect/map_helper/airlock/door/int_door,
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 5
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/engineering/engine_room)
 "uQ" = (
@@ -8856,6 +8879,11 @@
 	pixel_y = 24
 	},
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
+/obj/machinery/atmospherics/unary/vent_pump/high_volume{
+	dir = 1;
+	frequency = 1380;
+	id_tag = null
+	},
 /turf/simulated/floor/tiled/eris/dark/danger,
 /area/engineering/engine_room)
 "xb" = (
@@ -9247,7 +9275,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/eris/dark/danger,
 /area/hallway/arrival/moonbase/dockingbays)
 "xY" = (
 /obj/machinery/light_construct{
@@ -9516,6 +9544,7 @@
 	dir = 8
 	},
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
+/obj/machinery/atmospherics/unary/vent_pump/high_volume,
 /turf/simulated/floor/tiled/eris/dark/danger,
 /area/engineering/engine_room)
 "yI" = (
@@ -9690,7 +9719,7 @@
 	locked = 1;
 	name = "Docking Port Airlock"
 	},
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/eris/dark/danger,
 /area/hallway/arrival/moonbase/dockingbays)
 "zg" = (
 /obj/machinery/firealarm,
@@ -9800,6 +9829,11 @@
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
 	pixel_y = 24;
 	id_tag = "engine_airlock"
+	},
+/obj/machinery/atmospherics/unary/vent_pump/high_volume{
+	dir = 1;
+	frequency = 1380;
+	id_tag = null
 	},
 /turf/simulated/floor/tiled/eris/dark/danger,
 /area/engineering/engine_room)
@@ -12735,7 +12769,7 @@
 	name = "Docking Port Airlock"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden,
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/eris/dark/danger,
 /area/hallway/arrival/moonbase/main)
 "HC" = (
 /obj/machinery/door/firedoor/glass,
@@ -13250,7 +13284,7 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/medical/medbay_primary_storage)
 "Jh" = (
-/obj/effect/overmap/visitable/sector/virgo3r,
+/obj/effect/overmap/visitable/sector/virgo3x,
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/moonbase/surface/leveltwo/south)
 "Ji" = (
@@ -15947,7 +15981,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/eris/dark/danger,
 /area/hallway/arrival/moonbase/dockingbays)
 "PK" = (
 /obj/machinery/atmospherics/unary/vent_pump/on,
@@ -16585,7 +16619,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/eris/dark/danger,
 /area/hallway/arrival/moonbase/dockingbays)
 "Ru" = (
 /obj/structure/handrail{
@@ -16871,6 +16905,12 @@
 	},
 /turf/simulated/open,
 /area/engineering/aft_hallway)
+"Sd" = (
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 10
+	},
+/turf/simulated/wall/r_wall,
+/area/engineering/engine_room)
 "Se" = (
 /turf/simulated/floor/carpet/sblucarpet,
 /area/security/briefing_room)
@@ -16957,7 +16997,7 @@
 	name = "Docking Port Airlock"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden,
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/eris/dark/danger,
 /area/hallway/arrival/moonbase/main)
 "Sn" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
@@ -17856,7 +17896,7 @@
 	name = "Docking Port Airlock"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden,
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/eris/dark/danger,
 /area/hallway/arrival/moonbase/main)
 "UO" = (
 /obj/structure/table/steel,
@@ -18368,8 +18408,12 @@
 	locked = 1;
 	name = "Docking Port Airlock"
 	},
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/eris/dark/danger,
 /area/hallway/arrival/moonbase/main)
+"Wb" = (
+/obj/machinery/atmospherics/pipe/simple/hidden,
+/turf/simulated/wall/r_wall,
+/area/engineering/engine_room)
 "Wd" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -18983,6 +19027,12 @@
 /obj/structure/flora/pottedplant/orientaltree,
 /turf/simulated/floor/wood,
 /area/crew_quarters/captain/moonbase/office)
+"Xw" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden{
+	dir = 1
+	},
+/turf/simulated/wall/r_wall,
+/area/engineering/engine_room)
 "Xx" = (
 /obj/machinery/atmospherics/portables_connector/aux{
 	dir = 1
@@ -19612,7 +19662,7 @@
 	locked = 1;
 	name = "Docking Port Airlock"
 	},
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/eris/dark/danger,
 /area/hallway/arrival/moonbase/main)
 "Zu" = (
 /obj/machinery/light{
@@ -23565,7 +23615,7 @@ mF
 mF
 mF
 mF
-EI
+ui
 zw
 iF
 uO
@@ -23707,7 +23757,7 @@ mF
 mF
 mF
 mF
-EI
+Xw
 xa
 yH
 jG
@@ -23849,10 +23899,10 @@ mF
 mF
 mF
 mF
-EI
-EI
-EI
-EI
+Sd
+Wb
+Wb
+oi
 sK
 fB
 AF
@@ -24137,8 +24187,8 @@ mF
 EI
 Tx
 nC
-lE
-ui
+fa
+Yo
 Yo
 ZB
 rb
@@ -24176,10 +24226,10 @@ Mj
 aE
 aE
 aE
-aE
-aE
-aE
-Eh
+mF
+mF
+mF
+do
 do
 do
 do

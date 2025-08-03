@@ -261,8 +261,8 @@
 /obj/effect/landmark/map_data/sirius_point
 	height = 3
 
-/obj/effect/overmap/visitable/sector/virgo3r
-	name = "Virgo 3R"
+/obj/effect/overmap/visitable/sector/virgo3x
+	name = "Virgo 3X"
 	desc = "A small, barren moon."
 	scanner_desc = @{"[i]Registration[/i]: NSB Sirius Point
 [i]Class[/i]: Installation
@@ -280,12 +280,16 @@
 	skybox_pixel_x = 0
 	skybox_pixel_y = 0
 
-	initial_generic_waypoints = list("east_shuttlepad", "west_shuttlepad","northeast_shuttlepad","sp_excursion_hangar")
+	initial_generic_waypoints = list("east_shuttlepad", "west_shuttlepad","northeast_shuttlepad","sp_excursion_hangar","west_crater_pad1")
 	initial_restricted_waypoints = list()
 	levels_for_distress = list()
 
 
-	extra_z_levels = list()
+	extra_z_levels = list(
+		Z_LEVEL_MOONBASE_MINING,
+		Z_LEVEL_MOONBASE_EAST,
+		Z_LEVEL_MOONBASE_WEST
+	)
 
 /obj/effect/overmap/visitable/sector/virgo3r/New(loc, ...)	//RS ADD START - Map swap related
 	levels_for_distress += list(using_map.z_list["z_offmap1"])
@@ -397,7 +401,7 @@
 	associated_map_datum = /datum/map_z_level/sirius_point/mining
 
 /datum/map_template/station_map/spw/on_map_loaded(z)
-	seed_submaps(list(Z_LEVEL_MOONBASE_WEST), 100, /area/moonbase/surface/west_crater/unexplored, /datum/map_template/surface/west_crater)
+	seed_submaps(list(Z_LEVEL_MOONBASE_WEST), 210, /area/moonbase/surface/west_crater/unexplored, /datum/map_template/surface/moonbase/west_crater)
 
 /datum/map_template/station_map/spm/on_map_loaded(z)
 	. = ..()

@@ -1,0 +1,861 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"au" = (
+/obj/effect/floor_decal/milspec/color/green/half{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/garden3)
+"bB" = (
+/obj/effect/floor_decal/milspec/color/green/half{
+	dir = 6
+	},
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/garden3)
+"bV" = (
+/obj/effect/floor_decal/milspec/color/green/half{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/garden3)
+"cl" = (
+/obj/machinery/airlock_sensor/airlock_exterior{
+	pixel_y = 32;
+	dir = 4;
+	pixel_x = -24
+	},
+/obj/effect/map_helper/airlock/sensor/ext_sensor,
+/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/area/submap/moonbase/poi/west_crater/garden3)
+"cN" = (
+/turf/simulated/floor/outdoors/grass/forest{
+	outdoors = 0
+	},
+/area/submap/moonbase/poi/west_crater/garden3)
+"dr" = (
+/obj/effect/floor_decal/milspec/color/green/half{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/garden3)
+"dx" = (
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 4
+	},
+/turf/simulated/wall/r_wall,
+/area/submap/moonbase/poi/west_crater/garden3)
+"gB" = (
+/obj/machinery/portable_atmospherics/hydroponics,
+/turf/simulated/floor/outdoors/grass/forest{
+	outdoors = 0
+	},
+/area/submap/moonbase/poi/west_crater/garden3)
+"gC" = (
+/obj/structure/table/steel,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
+/obj/random/powercell,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/submap/moonbase/poi/west_crater/garden3)
+"ib" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/west_crater/garden3)
+"jc" = (
+/obj/structure/closet,
+/obj/item/clothing/suit/space/void/refurb,
+/obj/item/clothing/suit/space/void/refurb,
+/obj/item/clothing/head/helmet/space/void/refurb,
+/obj/item/clothing/head/helmet/space/void/refurb,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/weapon/tank/oxygen,
+/obj/item/weapon/tank/oxygen,
+/turf/simulated/floor/tiled/monotile,
+/area/submap/moonbase/poi/west_crater/garden3)
+"lR" = (
+/obj/effect/floor_decal/milspec/color/green/half{
+	dir = 10
+	},
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/garden3)
+"mr" = (
+/obj/machinery/power/rtg/fake_gen,
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/garden3)
+"nd" = (
+/obj/item/device/gps/internal/poi{
+	gps_tag = "Unidentified Signal"
+	},
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/garden3)
+"oo" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/west_crater/garden3)
+"ph" = (
+/obj/effect/floor_decal/milspec/color/green/half{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/garden3)
+"pz" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/west_crater/garden3)
+"qI" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/garden3)
+"rM" = (
+/obj/effect/floor_decal/milspec/color/green/half{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/garden3)
+"tC" = (
+/turf/simulated/wall/r_wall,
+/area/submap/moonbase/poi/west_crater/garden3)
+"wc" = (
+/obj/effect/floor_decal/milspec/color/green/half{
+	dir = 10
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals9{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/garden3)
+"wT" = (
+/obj/machinery/embedded_controller/radio/airlock/airlock_controller{
+	pixel_y = 24;
+	id_tag = "garden3_airlock"
+	},
+/obj/effect/map_helper/airlock/atmos/chamber_pump,
+/obj/machinery/airlock_sensor{
+	pixel_x = 0;
+	pixel_y = -24;
+	dir = 1
+	},
+/obj/effect/map_helper/airlock/sensor/chamber_sensor,
+/obj/machinery/atmospherics/unary/vent_pump/high_volume{
+	dir = 1;
+	frequency = 1380;
+	id_tag = null
+	},
+/obj/machinery/light/small,
+/turf/simulated/floor/tiled/eris/dark/danger,
+/area/submap/moonbase/poi/west_crater/garden3)
+"yk" = (
+/obj/effect/floor_decal/milspec/color/green/half{
+	dir = 8
+	},
+/obj/machinery/vending/hydronutrients{
+	dir = 4
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/garden3)
+"Ad" = (
+/obj/machinery/light,
+/turf/simulated/floor/outdoors/grass/forest{
+	outdoors = 0
+	},
+/area/submap/moonbase/poi/west_crater/garden3)
+"Af" = (
+/obj/machinery/atmospherics/pipe/tank/air{
+	dir = 4
+	},
+/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/garden3)
+"AB" = (
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/garden3)
+"BX" = (
+/obj/machinery/biogenerator,
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/submap/moonbase/poi/west_crater/garden3)
+"DT" = (
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 10
+	},
+/turf/simulated/wall/r_wall,
+/area/submap/moonbase/poi/west_crater/garden3)
+"Ew" = (
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/west_crater/garden3)
+"Ey" = (
+/obj/effect/floor_decal/milspec/color/green/half{
+	dir = 6
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals9{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/garden3)
+"EN" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/outdoors/grass/forest{
+	outdoors = 0
+	},
+/area/submap/moonbase/poi/west_crater/garden3)
+"Ge" = (
+/obj/effect/floor_decal/milspec/color/green/half{
+	dir = 5
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals9{
+	dir = 8
+	},
+/obj/machinery/power/apc/alarms_hidden{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/garden3)
+"IM" = (
+/obj/effect/floor_decal/milspec/color/green/half{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/universal{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/garden3)
+"IS" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/garden3)
+"JE" = (
+/obj/structure/table/steel,
+/obj/item/weapon/storage/toolbox/hydro,
+/obj/item/weapon/storage/belt/hydro,
+/turf/simulated/floor/tiled/monotile,
+/area/submap/moonbase/poi/west_crater/garden3)
+"Kc" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/r_wall,
+/area/submap/moonbase/poi/west_crater/garden3)
+"Kr" = (
+/obj/structure/table/steel,
+/obj/item/bodybag/cryobag,
+/obj/item/weapon/storage/firstaid/adv,
+/obj/item/device/healthanalyzer,
+/obj/random/mre,
+/obj/random/mre,
+/turf/simulated/floor/tiled/monotile,
+/area/submap/moonbase/poi/west_crater/garden3)
+"Kw" = (
+/turf/template_noop,
+/area/template_noop)
+"Lm" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/outdoors/grass/forest{
+	outdoors = 0
+	},
+/area/submap/moonbase/poi/west_crater/garden3)
+"LR" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/garden3)
+"Nw" = (
+/obj/effect/floor_decal/milspec/color/green/half,
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/garden3)
+"NH" = (
+/obj/effect/floor_decal/milspec/color/green/half{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/garden3)
+"Ps" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/submap/moonbase/poi/west_crater/garden3)
+"Qg" = (
+/obj/effect/floor_decal/milspec/color/green/corner,
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/garden3)
+"Qr" = (
+/obj/structure/table/steel,
+/obj/machinery/cell_charger{
+	pixel_x = 0;
+	pixel_y = 4
+	},
+/obj/random/powercell,
+/turf/simulated/floor/tiled/monotile,
+/area/submap/moonbase/poi/west_crater/garden3)
+"Qy" = (
+/obj/effect/map_helper/airlock/sensor/int_sensor,
+/obj/machinery/airlock_sensor/airlock_interior{
+	pixel_x = 24;
+	pixel_y = -32;
+	dir = 8
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 8
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 4
+	},
+/obj/effect/floor_decal/industrial/loading/white{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/garden3)
+"RP" = (
+/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/garden3)
+"SW" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/universal{
+	dir = 4
+	},
+/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/garden3)
+"Td" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/machinery/meter,
+/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/garden3)
+"Ue" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/west_crater/garden3)
+"Uk" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass_external,
+/obj/effect/map_helper/airlock/door/ext_door,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/submap/moonbase/poi/west_crater/garden3)
+"UF" = (
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/garden3)
+"Wp" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass_external,
+/obj/effect/map_helper/airlock/door/int_door,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/submap/moonbase/poi/west_crater/garden3)
+"Xb" = (
+/obj/effect/floor_decal/milspec/color/green/corner{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/garden3)
+"XH" = (
+/obj/effect/floor_decal/milspec/color/green/half{
+	dir = 4
+	},
+/obj/machinery/seed_storage/garden{
+	dir = 8
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/garden3)
+"XV" = (
+/obj/effect/floor_decal/milspec/color/green/half{
+	dir = 9
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals9,
+/obj/machinery/alarm,
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/garden3)
+"Zh" = (
+/obj/effect/floor_decal/milspec/color/green/half{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/garden3)
+
+(1,1,1) = {"
+Kw
+Kw
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Kw
+Kw
+"}
+(2,1,1) = {"
+Kw
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Kw
+"}
+(3,1,1) = {"
+Ew
+Ew
+tC
+tC
+pz
+tC
+tC
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+ib
+Ew
+Ew
+"}
+(4,1,1) = {"
+Ew
+Af
+tC
+gC
+Qr
+Kr
+tC
+gB
+cN
+gB
+cN
+gB
+Lm
+gB
+cN
+gB
+cN
+gB
+Lm
+gB
+oo
+Ew
+Ew
+"}
+(5,1,1) = {"
+Ew
+SW
+tC
+XV
+ph
+ph
+wc
+cN
+cN
+cN
+cN
+cN
+cN
+cN
+cN
+cN
+cN
+cN
+cN
+cN
+oo
+Ew
+Ew
+"}
+(6,1,1) = {"
+Ew
+Td
+oo
+Zh
+IS
+IS
+Xb
+rM
+dr
+dr
+yk
+dr
+dr
+dr
+dr
+dr
+au
+lR
+cN
+gB
+oo
+Ew
+Ew
+"}
+(7,1,1) = {"
+Ew
+RP
+oo
+IM
+UF
+UF
+UF
+AB
+UF
+UF
+nd
+UF
+UF
+qI
+UF
+JE
+BX
+Nw
+cN
+Ad
+oo
+Ew
+Ew
+"}
+(8,1,1) = {"
+Ew
+RP
+oo
+NH
+UF
+UF
+Qg
+bV
+bV
+bV
+XH
+bV
+bV
+bV
+bV
+bV
+bV
+bB
+cN
+gB
+oo
+Ew
+Ew
+"}
+(9,1,1) = {"
+Ew
+LR
+Kc
+Ge
+bV
+bV
+Ey
+cN
+cN
+cN
+cN
+cN
+cN
+cN
+cN
+cN
+cN
+cN
+cN
+cN
+oo
+Ew
+Ew
+"}
+(10,1,1) = {"
+Ew
+mr
+tC
+Ps
+Qy
+jc
+tC
+gB
+cN
+gB
+cN
+gB
+EN
+gB
+cN
+gB
+cN
+gB
+EN
+gB
+oo
+Ew
+Ew
+"}
+(11,1,1) = {"
+Ew
+Ew
+tC
+dx
+Wp
+tC
+tC
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+Ue
+Ew
+Ew
+"}
+(12,1,1) = {"
+Kw
+Ew
+Ew
+DT
+wT
+tC
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Kw
+"}
+(13,1,1) = {"
+Kw
+Kw
+Ew
+tC
+Uk
+tC
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+Kw
+Kw
+"}
+(14,1,1) = {"
+Kw
+Kw
+Ew
+Ew
+cl
+Ew
+Ew
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+"}
+(15,1,1) = {"
+Kw
+Kw
+Ew
+Ew
+Ew
+Ew
+Ew
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+"}
+(16,1,1) = {"
+Kw
+Kw
+Kw
+Ew
+Ew
+Ew
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+Kw
+"}
