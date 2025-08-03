@@ -57,6 +57,8 @@
 	name = "white goose"
 	desc = "And just when you thought it was a lovely day..."
 
+//Rogue Star Add - Start
+
 /mob/living/simple_mob/animal/space/goose/buff
 	icon = 'icons/mob/64x64.dmi'
 	icon_state = "buffgoose"
@@ -90,3 +92,126 @@
 
 	pixel_x = -19
 	default_pixel_x = -19 //Centers hitbox of sprite.
+
+/mob/living/simple_mob/animal/space/goose/armored
+	icon = 'icons/mob/100x100.dmi'
+	icon_state = "armoredgoose"
+	icon_living = "armoredgoose"
+	icon_dead = "armoredgoose_dead"
+	name = "armored goose"
+	desc = "A fierce and feathered foe"
+
+	maxHealth = 300
+	health = 300
+	melee_damage_lower = 30
+	melee_damage_upper = 30
+	attack_armor_pen = 30
+	attack_sound = 'sound/weapons/taser.ogg'
+	attacktext = list("pummeled")
+	movement_cooldown = 3
+	armor = list(melee = 40, bullet = 30, laser = 30, energy = 10, bomb = 10, bio = 100, rad = 100)
+
+	pixel_x = -34
+	pixel_y = -15
+	default_pixel_x = -34
+	default_pixel_y = -15
+	old_x = -34
+	vis_height = 80
+	icon_expected_width = 100
+	icon_expected_height = 100
+
+/datum/say_list/goose/armored
+	emote_hear = list("honks with authority.")
+	emote_see = list("checks its radio","scans the area for threats")
+
+/mob/living/simple_mob/animal/space/goose/armored/ranged
+	icon_state = "armoredgoose_ranged"
+	icon_living = "armoredgoose_ranged"
+	icon_dead = "armoredgoose_ranged_dead"
+
+	maxHealth = 250
+	health = 250
+	melee_damage_lower = 5
+	melee_damage_upper = 5
+	attack_sound = 'sound/weapons/bite.ogg'
+	projectiletype = /obj/item/projectile/bullet/egg
+	attacktext = list("shot")
+	movement_cooldown = 3
+
+/mob/living/simple_mob/animal/space/goose/armored/ranged/shoot_target(atom/A)
+		flick("armoredgoose_ranged_fire", src)
+		. = ..()
+
+/mob/living/simple_mob/animal/space/goose/armored/grenadier
+	icon_state = "armoredgoose_grenadier"
+	icon_living = "armoredgoose_grenadier"
+	icon_dead = "armoredgoose_grenadier_dead"
+	desc = "A bad bird with bombs"
+
+	maxHealth = 200
+	health = 200
+	melee_damage_lower = 5
+	melee_damage_upper = 5
+	attack_sound = 'sound/weapons/bite.ogg'
+	movement_cooldown = 3
+
+	var/grenade_type = /obj/item/weapon/grenade/chem_grenade/teargas
+	special_attack_charges = 10
+	special_attack_cooldown = 30 SECONDS
+	special_attack_min_range = 2
+	special_attack_max_range = 8
+
+/mob/living/simple_mob/animal/space/goose/armored/grenadier/do_special_attack(atom/A)
+	set waitfor = FALSE
+	set_AI_busy(TRUE)
+
+	var/obj/item/weapon/grenade/G = new grenade_type(get_turf(src))
+	if(istype(G))
+		G.throw_at(A, G.throw_range, G.throw_speed, src)
+		G.attack_self(src)
+		special_attack_charges = max(special_attack_charges-1, 0)
+
+	set_AI_busy(FALSE)
+
+
+/mob/living/simple_mob/animal/space/goose/armored/captain
+	icon = 'icons/mob/100x100.dmi'
+	icon_state = "armoredgoose_captain"
+	icon_living = "armoredgoose_captain"
+	icon_dead = "armoredgoose_captain_dead"
+	name = "armored goose captain"
+	desc = "A tough tactician"
+
+	maxHealth = 200
+	health = 200
+	melee_damage_lower = 5
+	melee_damage_upper = 5
+	attack_armor_pen = 10
+	attack_sound = 'sound/weapons/bite.ogg'
+
+/mob/living/simple_mob/animal/space/goose/armored/captain/handle_special()
+	for(var/mob/living/L in range(8, src))
+		if(L == src)
+			continue
+		if(IIsAlly(L))
+			L.add_modifier(/datum/modifier/aura/goose_captain_buff, null, src)
+
+/datum/modifier/aura/goose_captain_buff
+	name = "Morale Boost"
+	on_created_text = "<span class='notice'>With your captain at your side, anything is possible.</span>"
+	on_expired_text = "<span class='warning'>Sometimes you have to go it alone.</span>"
+	stacks = MODIFIER_STACK_FORBID
+	aura_max_distance = 8
+	mob_overlay_state = "signal_blue"
+
+	disable_duration_percent = 0.5
+	attack_speed_percent = 0.75
+	incoming_damage_percent	= 0.75
+	evasion = 20
+	accuracy = 10
+
+/datum/modifier/aura/goose_captain_buff/tick()
+	if(holder.stat == DEAD)
+		expire()
+
+//Rogue Star Add - End
