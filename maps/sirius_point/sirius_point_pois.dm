@@ -98,16 +98,6 @@
 	cost = 10
 	fixed_orientation = FALSE
 
-/area/submap/moonbase/poi/west_crater/rocks8
-	name = "POI - Rocks 8"
-	ambience = AMBIENCE_RUINS
-/area/submap/moonbase/poi/west_crater/rocks9
-	name = "POI - Rocks 9"
-	ambience = AMBIENCE_RUINS
-/area/submap/moonbase/poi/west_crater/rocks10
-	name = "POI - Rocks 10"
-	ambience = AMBIENCE_RUINS
-
 /area/submap/moonbase/poi/west_crater/rovercharging
 	name = "POI - Rover Charging"
 	ambience = AMBIENCE_TECH_RUINS
@@ -221,3 +211,33 @@
 ////////////////
 // East Crater//
 ////////////////
+
+/area/submap/moonbase/poi/east_crater/wreck1
+	name = "POI - Shipweck 1"
+	ambience = AMBIENCE_TECH_RUINS
+	requires_power = 1
+/datum/map_template/surface/moonbase/east_crater/wreck1
+	name = "POI - Shipweck 1"
+	desc = "An old shipwreck."
+	mappath = 'maps/sirius_point/submaps/wreck1.dmm'
+	cost = 10
+
+/area/submap/moonbase/poi/east_crater/wreck2
+	name = "POI - Shipweck 2"
+	ambience = AMBIENCE_TECH_RUINS
+	requires_power = 1
+/datum/map_template/surface/moonbase/east_crater/wreck2
+	name = "POI - Shipweck 2"
+	desc = "An old shipwreck."
+	mappath = 'maps/sirius_point/submaps/wreck2.dmm'
+	cost = 10
+
+/area/submap/moonbase/poi/east_crater/wreck3
+	name = "POI - Shipweck 3"
+	ambience = AMBIENCE_TECH_RUINS
+	requires_power = 1
+/datum/map_template/surface/moonbase/east_crater/wreck3
+	name = "POI - Shipweck 3"
+	desc = "An luxurious shipwreck"
+	mappath = 'maps/sirius_point/submaps/wreck3.dmm'
+	cost = 10

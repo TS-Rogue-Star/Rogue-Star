@@ -4,6 +4,9 @@
 	edge_blending_priority = 1
 	},
 /area/moonbase/surface/east_crater)
+"c" = (
+/turf/space/cracked_asteroid/moonbase/outdoors,
+/area/moonbase/surface/east_crater/unexplored)
 "d" = (
 /turf/simulated/wall/r_wall,
 /area/moonbase/surface/east_crater)
@@ -1525,7 +1528,7 @@ a
 a
 j
 I
-I
+c
 I
 p
 p
@@ -1801,7 +1804,7 @@ p
 p
 I
 I
-I
+c
 I
 j
 a
@@ -3853,7 +3856,7 @@ I
 I
 I
 I
-I
+c
 I
 I
 I
@@ -13914,7 +13917,7 @@ I
 M
 I
 I
-I
+c
 I
 I
 I
@@ -15272,7 +15275,7 @@ p
 p
 I
 I
-I
+c
 I
 I
 p
