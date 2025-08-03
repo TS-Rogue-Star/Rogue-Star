@@ -112,3 +112,12 @@
 	pixel_x = rand(-12, 12)
 	pixel_y = rand(-9, 0)
 // VOREStation Add End
+
+//Rogue Star Add - Egg Splatter
+
+/obj/effect/temp_visual/impact_effect/egg_impact
+	icon_state = "egg_impact"
+	plane = PLANE_LIGHTING_ABOVE
+	duration = 8
+
+//Rogue Star End

@@ -349,6 +349,11 @@
 	active = FALSE
 	update_icon()
 
+/obj/item/capture_crystal/proc/transfer_bound_mob(var/mob/living/newmob)	//RS ADD START
+	UnregisterSignal(bound_mob, COMSIG_PARENT_QDELETING)
+	bound_mob = newmob
+	RegisterSignal(newmob, COMSIG_PARENT_QDELETING, PROC_REF(mob_was_deleted), TRUE)	//RS ADD END
+
 //If the crystal hasn't been set up, it does this
 /obj/item/capture_crystal/proc/activate(mob/living/user, target)
 	if(!cooldown_check())		//Are we ready to do things yet?
@@ -399,9 +404,8 @@
 			active = TRUE
 		else									//Shoot, it didn't work and now it's mad!!!
 			S.ai_holder.go_wake()
-			S.ai_holder.target = user
-			S.ai_holder.track_target_position()
-			S.ai_holder.set_stance(STANCE_FIGHT)
+			S.ai_holder.add_attacker(user)	//RS EDIT
+			S.ai_holder.give_target(user)	//RS EDIT
 			user.visible_message("\The [src] bonks into \the [S], angering it!")
 			playsound(src, 'sound/effects/capture-crystal-negative.ogg', 75, 1, -1)
 			to_chat(user, "<span class='notice'>\The [src] clicks unsatisfyingly.</span>")
