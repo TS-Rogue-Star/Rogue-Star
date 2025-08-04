@@ -73,7 +73,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/home1)
@@ -81,7 +81,7 @@
 /obj/machinery/atmospherics/pipe/tank/air{
 	dir = 8
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/home1)
@@ -186,7 +186,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/universal{
 	dir = 4
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/home1)
@@ -240,7 +240,7 @@
 	pixel_x = 32;
 	pixel_y = 24
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/home1)
@@ -278,7 +278,7 @@
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/home1)
@@ -479,7 +479,7 @@
 	dir = 4
 	},
 /obj/machinery/meter/turf,
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/home1)
@@ -540,7 +540,7 @@
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/home1)

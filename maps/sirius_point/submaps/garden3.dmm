@@ -27,7 +27,7 @@
 	pixel_x = -24
 	},
 /obj/effect/map_helper/airlock/sensor/ext_sensor,
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/turf/simulated/floor/airless/moonbaseplating/outdoors,
 /area/submap/moonbase/poi/west_crater/garden3)
 "cN" = (
 /turf/simulated/floor/outdoors/grass/forest{
@@ -97,7 +97,7 @@
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/garden3)
@@ -206,7 +206,7 @@
 /obj/machinery/atmospherics/pipe/tank/air{
 	dir = 4
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/garden3)
@@ -317,7 +317,7 @@
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/garden3)
@@ -376,7 +376,7 @@
 /turf/simulated/floor/tiled,
 /area/submap/moonbase/poi/west_crater/garden3)
 "RP" = (
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/garden3)
@@ -384,7 +384,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/universal{
 	dir = 4
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/garden3)
@@ -393,7 +393,7 @@
 	dir = 10
 	},
 /obj/machinery/meter,
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/garden3)

@@ -3,7 +3,7 @@
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/submap/moonbase/poi/west_crater/construction3)
 "e" = (
-/turf/simulated/floor/plating/external/outdoors,
+/turf/simulated/floor/airless/outdoors,
 /area/submap/moonbase/poi/west_crater/construction3)
 "w" = (
 /obj/structure/prop/rock/round,
@@ -22,11 +22,11 @@
 /area/submap/moonbase/poi/west_crater/construction3)
 "E" = (
 /obj/structure/frame,
-/turf/simulated/floor/plating/external/outdoors,
+/turf/simulated/floor/airless/outdoors,
 /area/submap/moonbase/poi/west_crater/construction3)
 "I" = (
 /obj/structure/girder,
-/turf/simulated/floor/plating/external/outdoors,
+/turf/simulated/floor/airless/outdoors,
 /area/submap/moonbase/poi/west_crater/construction3)
 "K" = (
 /obj/structure/prop/rock/small,
@@ -36,11 +36,11 @@
 /obj/structure/table/steel,
 /obj/random/maintenance,
 /obj/random/maintenance,
-/turf/simulated/floor/plating/external/outdoors,
+/turf/simulated/floor/airless/outdoors,
 /area/submap/moonbase/poi/west_crater/construction3)
 "Y" = (
 /obj/random/multiple/corp_crate,
-/turf/simulated/floor/plating/external/outdoors,
+/turf/simulated/floor/airless/outdoors,
 /area/submap/moonbase/poi/west_crater/construction3)
 
 (1,1,1) = {"

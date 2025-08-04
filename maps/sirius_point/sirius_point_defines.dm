@@ -403,6 +403,9 @@
 /datum/map_template/station_map/spw/on_map_loaded(z)
 	seed_submaps(list(Z_LEVEL_MOONBASE_WEST), 210, /area/moonbase/surface/west_crater/unexplored, /datum/map_template/surface/moonbase/west_crater)
 
+/datum/map_template/station_map/spe/on_map_loaded(z)
+	seed_submaps(list(Z_LEVEL_MOONBASE_EAST), 210, /area/moonbase/surface/east_crater/unexplored, /datum/map_template/surface/moonbase/east_crater)
+
 /datum/map_template/station_map/spm/on_map_loaded(z)
 	. = ..()
 	new /datum/random_map/automata/cave_system/no_cracks(null, 3, 3, Z_LEVEL_MOONBASE_MINING, world.maxx - 4, world.maxy - 4)

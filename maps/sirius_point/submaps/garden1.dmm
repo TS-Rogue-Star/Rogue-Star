@@ -27,7 +27,7 @@
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/garden1)
@@ -159,7 +159,7 @@
 /obj/machinery/atmospherics/pipe/tank/air{
 	dir = 4
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/garden1)
@@ -271,7 +271,7 @@
 	dir = 10
 	},
 /obj/machinery/meter,
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/garden1)
@@ -355,7 +355,7 @@
 	pixel_x = 32;
 	pixel_y = 24
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/garden1)
@@ -439,7 +439,7 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/submap/moonbase/poi/west_crater/garden1)
 "Tp" = (
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/garden1)

@@ -3,17 +3,17 @@
 /turf/simulated/mineral/moonbase/ignore_mapgen,
 /area/submap/moonbase/poi/west_crater/construction4)
 "b" = (
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/construction4)
 "c" = (
 /obj/structure/frame,
-/turf/simulated/floor/plating/external/outdoors,
+/turf/simulated/floor/airless/outdoors,
 /area/submap/moonbase/poi/west_crater/construction4)
 "f" = (
 /obj/random/multiple/corp_crate,
-/turf/simulated/floor/plating/external/moonbaseplating,
+/turf/simulated/floor/airless/moonbaseplating,
 /area/submap/moonbase/poi/west_crater/construction4)
 "i" = (
 /obj/structure/prop/rock/crystal,
@@ -26,7 +26,7 @@
 /obj/structure/table/steel,
 /obj/random/maintenance,
 /obj/random/maintenance,
-/turf/simulated/floor/plating/external/moonbaseplating,
+/turf/simulated/floor/airless/moonbaseplating,
 /area/submap/moonbase/poi/west_crater/construction4)
 "v" = (
 /obj/structure/prop/rock/small,
@@ -38,16 +38,16 @@
 /area/submap/moonbase/poi/west_crater/construction4)
 "M" = (
 /obj/structure/girder,
-/turf/simulated/floor/plating/external/outdoors,
+/turf/simulated/floor/airless/outdoors,
 /area/submap/moonbase/poi/west_crater/construction4)
 "N" = (
-/turf/simulated/floor/plating/external/outdoors,
+/turf/simulated/floor/airless/outdoors,
 /area/submap/moonbase/poi/west_crater/construction4)
 "O" = (
 /turf/simulated/wall,
 /area/submap/moonbase/poi/west_crater/construction4)
 "Y" = (
-/turf/simulated/floor/plating/external/moonbaseplating,
+/turf/simulated/floor/airless/moonbaseplating,
 /area/submap/moonbase/poi/west_crater/construction4)
 
 (1,1,1) = {"

@@ -14,27 +14,11 @@
 /obj/effect/floor_decal/milspec/monotile/moonbase
 	color = "#b8c0c4"
 
-//THE SUN THE SUN THE SUN THE SUN
-/obj/effect/fake_sun/moonbase
-	name = "moonbase fake sun"
-	family = "moonbase"
-	do_weather = FALSE
-	weather_visuals_icon = 'icons/effects/weather.dmi'
-	weather_visuals_icon_state = "fog"
-	possible_light_setups = list(
-		list(
-			"brightness" = 4,
-			"color" = "#75637e"
-		),
-		list(
-			"brightness" = 4,
-			"color" = "#6691aa"
-		),
-		list(
-			"brightness" = 4,
-			"color" = "#ac7a59"
-		)
-	)
+/obj/effect/floor_decal/emblem/siriuspoint
+	icon = 'maps/sirius_point/sirius_point_decals.dmi'
+	icon_state = "sirius_point"
+/obj/effect/floor_decal/emblem/siriuspoint/center
+	icon_state = "sirius_point_center"
 
 // ### Wall Machines On Full Windows ###
 // To make sure wall-mounted machines placed on full-tile windows are clickable they must be above the window

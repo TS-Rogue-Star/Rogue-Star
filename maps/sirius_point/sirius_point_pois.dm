@@ -238,6 +238,36 @@
 	requires_power = 1
 /datum/map_template/surface/moonbase/east_crater/wreck3
 	name = "POI - Shipweck 3"
-	desc = "An luxurious shipwreck"
+	desc = "A luxurious shipwreck"
 	mappath = 'maps/sirius_point/submaps/wreck3.dmm'
 	cost = 10
+
+/area/submap/moonbase/poi/east_crater/wreck4
+	name = "POI - Shipweck 4"
+	ambience = AMBIENCE_TECH_RUINS
+	requires_power = 1
+/datum/map_template/surface/moonbase/east_crater/wreck4
+	name = "POI - Shipweck 4"
+	desc = "An old shipwreck."
+	mappath = 'maps/sirius_point/submaps/wreck4.dmm'
+	cost = 10
+
+/area/submap/moonbase/poi/east_crater/wreck5
+	name = "POI - Shipweck 5"
+	ambience = AMBIENCE_TECH_RUINS
+	requires_power = 1
+/datum/map_template/surface/moonbase/east_crater/wreck5
+	name = "POI - Shipweck 5"
+	desc = "An old shipwreck that crashed during a prison break."
+	mappath = 'maps/sirius_point/submaps/wreck5.dmm'
+	cost = 10
+
+/area/submap/moonbase/poi/east_crater/xenoship
+	name = "POI - Xenomorph Transport"
+	ambience = AMBIENCE_TECH_RUINS
+	requires_power = 1
+/datum/map_template/surface/moonbase/east_crater/xenoship
+	name = "POI - Xenomorph Transport"
+	desc = "A failed attempt to wrangle xenomorphs, hidden in a cave."
+	mappath = 'maps/sirius_point/submaps/xenoship.dmm'
+	cost = 20

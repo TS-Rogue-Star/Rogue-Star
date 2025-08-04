@@ -44,7 +44,7 @@
 	ignore_mapgen = 1
 	ignore_cavegen = 1
 	ignore_oregen  = 1
-/turf/simulated/floor/plating/external/moonbaseplating
+/turf/simulated/floor/airless/moonbaseplating
 	icon = 'maps/sirius_point/sp_asteroid.dmi'
 	icon_state = "asteroidfloor"
 	temperature = TCMB
@@ -74,9 +74,9 @@
 //outdoors versions of the above and some existing turfs
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors
 	outdoors = 1
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors
+/turf/simulated/floor/airless/moonbaseplating/outdoors
 	outdoors = 1
-/turf/simulated/floor/plating/external/outdoors
+/turf/simulated/floor/airless/outdoors
 	outdoors = 1
 /turf/simulated/floor/reinforced/airless/outdoors
 	outdoors = 1

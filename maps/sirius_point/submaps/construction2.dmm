@@ -1,14 +1,14 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/simulated/floor/plating/external/outdoors,
+/turf/simulated/floor/airless/outdoors,
 /area/submap/moonbase/poi/west_crater/construction2)
 "f" = (
 /obj/random/multiple/corp_crate,
-/turf/simulated/floor/plating/external/outdoors,
+/turf/simulated/floor/airless/outdoors,
 /area/submap/moonbase/poi/west_crater/construction2)
 "i" = (
 /obj/structure/frame,
-/turf/simulated/floor/plating/external/outdoors,
+/turf/simulated/floor/airless/outdoors,
 /area/submap/moonbase/poi/west_crater/construction2)
 "k" = (
 /turf/simulated/wall,
@@ -16,7 +16,7 @@
 "l" = (
 /obj/structure/table/steel,
 /obj/random/maintenance,
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/construction2)
@@ -24,16 +24,16 @@
 /obj/structure/table/rack,
 /obj/random/maintenance,
 /obj/random/maintenance,
-/turf/simulated/floor/plating/external/outdoors,
+/turf/simulated/floor/airless/outdoors,
 /area/submap/moonbase/poi/west_crater/construction2)
 "w" = (
 /obj/structure/table/steel,
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/construction2)
 "A" = (
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/construction2)
@@ -42,7 +42,7 @@
 /area/submap/moonbase/poi/west_crater/construction2)
 "X" = (
 /obj/structure/girder,
-/turf/simulated/floor/plating/external/outdoors,
+/turf/simulated/floor/airless/outdoors,
 /area/submap/moonbase/poi/west_crater/construction2)
 
 (1,1,1) = {"

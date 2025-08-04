@@ -6,7 +6,7 @@
 /obj/effect/floor_decal/industrial/loading/white{
 	dir = 1
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/rovercharging)
@@ -17,14 +17,14 @@
 /obj/item/weapon/tool/crowbar/red,
 /obj/item/weapon/tool/crowbar/red,
 /obj/effect/floor_decal/industrial/warning/color,
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/rovercharging)
 "i" = (
 /obj/structure/table/steel_reinforced,
 /obj/effect/floor_decal/industrial/warning/color,
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/rovercharging)
@@ -35,7 +35,7 @@
 /obj/effect/floor_decal/industrial/warning/color/corner{
 	dir = 8
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/rovercharging)
@@ -47,7 +47,7 @@
 /obj/effect/floor_decal/industrial/warning/color{
 	dir = 10
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/rovercharging)
@@ -56,7 +56,7 @@
 	dir = 5
 	},
 /obj/vehicle/train/trolley/trailer/random,
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/rovercharging)
@@ -64,7 +64,7 @@
 /obj/effect/floor_decal/industrial/warning/color/corner{
 	dir = 4
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/rovercharging)
@@ -86,7 +86,7 @@
 /obj/structure/cable/orange{
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/rovercharging)
@@ -104,20 +104,20 @@
 /obj/structure/cable/orange{
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/rovercharging)
 "z" = (
 /obj/effect/floor_decal/industrial/warning/color/corner,
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/rovercharging)
 "A" = (
 /obj/effect/floor_decal/industrial/outline,
 /obj/vehicle/train/engine/quadbike/built,
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/rovercharging)
@@ -125,7 +125,7 @@
 /obj/effect/floor_decal/industrial/warning/color{
 	dir = 6
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/rovercharging)
@@ -133,12 +133,12 @@
 /obj/effect/floor_decal/industrial/warning/color/corner{
 	dir = 1
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/rovercharging)
 "G" = (
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/rovercharging)
@@ -147,7 +147,7 @@
 	dir = 4
 	},
 /obj/structure/table/bench/padded,
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/rovercharging)
@@ -155,7 +155,7 @@
 /obj/effect/floor_decal/industrial/warning/color{
 	dir = 8
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/rovercharging)
@@ -163,13 +163,13 @@
 /obj/item/device/gps/internal/poi{
 	gps_tag = "Unidentified Signal"
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/rovercharging)
 "N" = (
 /obj/effect/floor_decal/industrial/outline,
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/rovercharging)
@@ -184,7 +184,7 @@
 /area/submap/moonbase/poi/west_crater/rovercharging)
 "W" = (
 /obj/effect/floor_decal/industrial/loading/white,
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/rovercharging)
@@ -200,7 +200,7 @@
 /obj/effect/floor_decal/industrial/warning/color{
 	dir = 1
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/rovercharging)

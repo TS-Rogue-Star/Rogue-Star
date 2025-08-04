@@ -7,18 +7,18 @@
 /obj/item/weapon/storage/toolbox/mechanical{
 	pixel_y = 3
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/moonbase/surface/west_crater)
 "an" = (
 /obj/effect/shuttle_landmark{
 	base_area = /area/moonbase/surface/west_crater;
-	base_turf = /turf/simulated/floor/plating/external/moonbaseplating/outdoors;
+	base_turf = /turf/simulated/floor/airless/moonbaseplating/outdoors;
 	landmark_tag = "west_crater_pad1";
 	name = "West Crater Shuttlepad"
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/moonbase/surface/west_crater)
@@ -100,7 +100,7 @@
 	dir = 1
 	},
 /obj/effect/map_helper/airlock/sensor/ext_sensor,
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/turf/simulated/floor/airless/moonbaseplating/outdoors,
 /area/outpost/research/hallway)
 "be" = (
 /obj/structure/bed/chair/office/light{
@@ -254,7 +254,7 @@
 	dir = 8;
 	portal_id = "sp_west"
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/moonbase/surface/west_crater)
@@ -439,7 +439,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/black{
 	dir = 9
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/turf/simulated/floor/airless/moonbaseplating/outdoors,
 /area/outpost/research/toxins_misc_lab)
 "du" = (
 /obj/structure/table/standard,
@@ -714,7 +714,7 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/turf/simulated/floor/airless/moonbaseplating/outdoors,
 /area/moonbase/surface/west_crater)
 "gg" = (
 /obj/structure/anomaly_container,
@@ -789,7 +789,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/turf/simulated/floor/airless/moonbaseplating/outdoors,
 /area/outpost/research/toxins_misc_lab)
 "gJ" = (
 /obj/structure/dispenser{
@@ -901,7 +901,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 9
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/turf/simulated/floor/airless/moonbaseplating/outdoors,
 /area/moonbase/surface/west_crater)
 "hP" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/black,
@@ -933,7 +933,7 @@
 /area/outpost/research/anomaly)
 "il" = (
 /obj/item/device/gps/internal/base,
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/turf/simulated/floor/airless/moonbaseplating/outdoors,
 /area/outpost/research/hallway)
 "io" = (
 /obj/item/device/radio/intercom{
@@ -1005,7 +1005,7 @@
 	dir = 6
 	},
 /obj/vehicle/train/trolley/trailer/random,
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/moonbase/surface/west_crater)
@@ -1087,7 +1087,7 @@
 	dir = 1;
 	target_pressure = 200
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/turf/simulated/floor/airless/moonbaseplating/outdoors,
 /area/outpost/research/toxins_misc_lab)
 "jJ" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden{
@@ -1277,7 +1277,7 @@
 /area/outpost/research/anomaly)
 "mx" = (
 /obj/effect/floor_decal/industrial/warning/color,
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/moonbase/surface/west_crater)
@@ -1469,7 +1469,7 @@
 /obj/structure/marker_beacon{
 	mapped_in_color = "Lime"
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/turf/simulated/floor/airless/moonbaseplating/outdoors,
 /area/outpost/research/hallway)
 "oD" = (
 /obj/structure/cable/green{
@@ -1728,7 +1728,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
 	dir = 4
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/turf/simulated/floor/airless/moonbaseplating/outdoors,
 /area/outpost/research/toxins_misc_lab)
 "rI" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/blue{
@@ -1990,7 +1990,7 @@
 /obj/structure/marker_beacon{
 	mapped_in_color = "Lime"
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/moonbase/fixedpoi/homestead)
@@ -2033,7 +2033,7 @@
 	},
 /obj/structure/table/steel,
 /obj/random/powercell,
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/moonbase/surface/west_crater)
@@ -2090,7 +2090,7 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 10
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/turf/simulated/floor/airless/moonbaseplating/outdoors,
 /area/moonbase/surface/west_crater)
 "vE" = (
 /turf/simulated/wall/r_wall,
@@ -2105,7 +2105,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 5
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/turf/simulated/floor/airless/moonbaseplating/outdoors,
 /area/moonbase/surface/west_crater)
 "vU" = (
 /obj/structure/table/standard,
@@ -2259,7 +2259,7 @@
 /obj/effect/floor_decal/industrial/warning/color{
 	dir = 10
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/moonbase/surface/west_crater)
@@ -2536,7 +2536,7 @@
 /obj/effect/floor_decal/industrial/warning/color{
 	dir = 4
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/moonbase/surface/west_crater)
@@ -2622,7 +2622,7 @@
 	dir = 4;
 	pixel_y = 32
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/moonbase/fixedpoi/homestead)
@@ -2740,7 +2740,7 @@
 	dir = 8
 	},
 /obj/vehicle/train/engine/quadbike/random,
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/moonbase/surface/west_crater)
@@ -2855,7 +2855,7 @@
 /area/moonbase/fixedpoi/homestead)
 "Ex" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/turf/simulated/floor/airless/moonbaseplating/outdoors,
 /area/moonbase/surface/west_crater)
 "Ez" = (
 /turf/simulated/wall/r_wall,
@@ -2887,7 +2887,7 @@
 	dir = 10
 	},
 /obj/vehicle/train/trolley/trailer/random,
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/moonbase/surface/west_crater)
@@ -2895,7 +2895,7 @@
 /obj/effect/floor_decal/industrial/warning/color{
 	dir = 8
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/moonbase/surface/west_crater)
@@ -2903,7 +2903,7 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 4
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/turf/simulated/floor/airless/moonbaseplating/outdoors,
 /area/moonbase/surface/west_crater)
 "Fa" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/blue{
@@ -3133,7 +3133,7 @@
 	dir = 4
 	},
 /obj/vehicle/train/engine/quadbike/random,
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/moonbase/surface/west_crater)
@@ -3141,7 +3141,7 @@
 /obj/effect/floor_decal/industrial/warning/color{
 	dir = 1
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/moonbase/surface/west_crater)
@@ -3264,7 +3264,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 9
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/turf/simulated/floor/airless/moonbaseplating/outdoors,
 /area/outpost/research/toxins_misc_lab)
 "Jz" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/black,
@@ -3467,7 +3467,7 @@
 /area/moonbase/fixedpoi/homestead)
 "LK" = (
 /obj/machinery/atmospherics/pipe/vent/high_volume,
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/turf/simulated/floor/airless/moonbaseplating/outdoors,
 /area/outpost/research/toxins_misc_lab)
 "LN" = (
 /obj/machinery/atmospherics/pipe/manifold/visible{
@@ -3480,7 +3480,7 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 9
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/turf/simulated/floor/airless/moonbaseplating/outdoors,
 /area/moonbase/surface/west_crater)
 "Mb" = (
 /obj/structure/bed/chair/comfy/black{
@@ -3614,7 +3614,7 @@
 /obj/structure/table/steel,
 /obj/random/powercell,
 /obj/random/powercell,
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/moonbase/surface/west_crater)
@@ -3735,7 +3735,7 @@
 /obj/effect/floor_decal/industrial/warning/color{
 	dir = 9
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/moonbase/surface/west_crater)
@@ -3835,7 +3835,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/turf/simulated/floor/airless/moonbaseplating/outdoors,
 /area/outpost/research/toxins_misc_lab)
 "PY" = (
 /obj/machinery/button/remote/blast_door{
@@ -3969,7 +3969,7 @@
 /obj/effect/map_effect/portal/line/side_b{
 	dir = 8
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/moonbase/surface/west_crater)
@@ -4002,7 +4002,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/turf/simulated/floor/airless/moonbaseplating/outdoors,
 /area/moonbase/surface/west_crater)
 "Sn" = (
 /obj/effect/floor_decal/industrial/warning{
@@ -4265,7 +4265,7 @@
 /obj/effect/floor_decal/industrial/warning/color{
 	dir = 6
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/moonbase/surface/west_crater)
@@ -4279,7 +4279,7 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 6
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/turf/simulated/floor/airless/moonbaseplating/outdoors,
 /area/moonbase/surface/west_crater)
 "Wo" = (
 /obj/machinery/door/firedoor/glass,
@@ -4322,7 +4322,7 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction{
 	dir = 8
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/turf/simulated/floor/airless/moonbaseplating/outdoors,
 /area/moonbase/surface/west_crater)
 "WY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/black{
@@ -4380,7 +4380,7 @@
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/mixing)
 "XR" = (
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/moonbase/surface/west_crater)
@@ -4413,7 +4413,7 @@
 /obj/effect/floor_decal/industrial/warning/color{
 	dir = 5
 	},
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors{
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/moonbase/surface/west_crater)
@@ -4429,7 +4429,7 @@
 /turf/simulated/floor/tiled,
 /area/outpost/research/dorms)
 "Ym" = (
-/turf/simulated/floor/plating/external/moonbaseplating/outdoors,
+/turf/simulated/floor/airless/moonbaseplating/outdoors,
 /area/moonbase/surface/west_crater)
 "Yn" = (
 /obj/structure/cable{

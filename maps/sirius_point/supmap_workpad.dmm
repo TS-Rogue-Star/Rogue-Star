@@ -1,16 +1,28 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/machinery/door/blast/regular/open{
+	dir = 4;
+	id = "talon_quietroom"
+	},
+/obj/structure/grille/broken,
+/obj/item/weapon/material/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "ab" = (
 /obj/structure/bed/chair/office/light{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
-"ae" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/catwalk,
-/turf/simulated/floor/plating,
-/area/template_noop)
+"ah" = (
+/mob/living/simple_mob/animal/space/alien,
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "aj" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 10
@@ -62,6 +74,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled,
 /area/submap/moonbase/poi/west_crater/garden3)
+"aw" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "burst_l"
+	},
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "ay" = (
 /obj/effect/floor_decal/industrial/danger{
 	dir = 8
@@ -107,6 +126,9 @@
 	},
 /turf/simulated/floor/tiled,
 /area/submap/moonbase/poi/west_crater/home2)
+"aD" = (
+/turf/simulated/mineral/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "aE" = (
 /obj/machinery/atmospherics/unary/heat_exchanger,
 /obj/structure/window/basic,
@@ -139,10 +161,6 @@
 	dir = 8
 	},
 /turf/simulated/floor/tiled/white,
-/area/template_noop)
-"aN" = (
-/mob/living/simple_mob/animal/space/carp/roguemines,
-/turf/simulated/floor/plating/external,
 /area/template_noop)
 "aO" = (
 /obj/machinery/atmospherics/portables_connector{
@@ -192,6 +210,9 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/black,
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
+"bh" = (
+/turf/simulated/shuttle/floor,
+/area/submap/moonbase/poi/east_crater/wreck1)
 "bi" = (
 /obj/effect/floor_decal/milspec/color/green/half{
 	dir = 8
@@ -204,6 +225,22 @@
 	},
 /turf/simulated/floor/tiled,
 /area/submap/moonbase/poi/west_crater/garden2)
+"bj" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/machinery/door/blast/regular/open{
+	dir = 4;
+	id = "talon_quietroom"
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"bl" = (
+/turf/simulated/floor/carpet/blue2,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "bm" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/wall/r_wall,
@@ -253,16 +290,6 @@
 /obj/machinery/artifact_analyser,
 /turf/simulated/floor/tiled/dark,
 /area/template_noop)
-"bz" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
-	},
-/obj/structure/catwalk,
-/turf/simulated/floor/plating,
-/area/template_noop)
 "bA" = (
 /obj/effect/floor_decal/milspec/color/green/half{
 	dir = 4
@@ -280,6 +307,12 @@
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/home1)
+"bF" = (
+/obj/structure/bed/chair/sofa/corp/right{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "bG" = (
 /turf/simulated/mineral/moonbase/ignore_mapgen,
 /area/template_noop)
@@ -298,6 +331,21 @@
 "bK" = (
 /turf/simulated/floor/tiled/white,
 /area/submap/moonbase/poi/west_crater/home2)
+"bM" = (
+/obj/random/multiple/corp_crate,
+/turf/simulated/floor/plating/external,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"bN" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "bQ" = (
 /obj/structure/table/standard,
 /obj/machinery/light,
@@ -350,12 +398,6 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/submap/moonbase/poi/west_crater/garden1)
-"cf" = (
-/obj/structure/bed/chair/bay/comfy{
-	dir = 1
-	},
-/turf/simulated/floor/wood,
-/area/template_noop)
 "ch" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/universal{
 	dir = 4
@@ -364,11 +406,32 @@
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/garden2)
-"cw" = (
-/obj/structure/table/steel,
-/obj/random/awayloot/looseloot,
-/turf/simulated/shuttle/floor/yellow,
-/area/template_noop)
+"co" = (
+/obj/structure/bed/chair/bay/comfy{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"cp" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating/external,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"cs" = (
+/obj/structure/girder,
+/turf/simulated/floor/plating/external/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"cu" = (
+/turf/simulated/mineral/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"cy" = (
+/obj/item/weapon/weldingtool/experimental,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "cA" = (
 /obj/machinery/atmospherics/binary/pump/on,
 /turf/simulated/floor/plating,
@@ -406,6 +469,10 @@
 /obj/machinery/atmospherics/valve,
 /turf/simulated/floor/tiled,
 /area/template_noop)
+"cN" = (
+/mob/living/simple_mob/mechanical/hivebot/ranged_damage/basic,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "cO" = (
 /obj/random/mre,
 /obj/random/mre,
@@ -414,18 +481,6 @@
 /obj/structure/closet/walllocker_double/north,
 /turf/simulated/floor/tiled,
 /area/submap/moonbase/poi/west_crater/home2)
-"cP" = (
-/obj/machinery/power/pointdefense{
-	id_tag = "talon_pd"
-	},
-/obj/effect/floor_decal/industrial/warning/dust{
-	dir = 10
-	},
-/obj/structure/cable/green{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/reinforced/airless,
-/area/template_noop)
 "cT" = (
 /obj/structure/table/steel,
 /obj/machinery/cell_charger{
@@ -455,14 +510,15 @@
 	},
 /turf/simulated/floor/carpet/turcarpet,
 /area/submap/moonbase/poi/west_crater/home1)
-"db" = (
-/obj/machinery/alarm/talon{
-	dir = 8;
-	pixel_x = 22
-	},
-/obj/structure/flora/pottedplant,
-/turf/simulated/floor/wood,
-/area/template_noop)
+"dc" = (
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/airlock/silver,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"dd" = (
+/obj/structure/girder,
+/turf/simulated/floor/plating/external,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "df" = (
 /obj/effect/floor_decal/industrial/loading/white{
 	dir = 1
@@ -512,11 +568,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
-"dB" = (
-/obj/structure/catwalk,
-/obj/structure/barricade,
-/turf/simulated/floor/plating,
-/area/template_noop)
 "dD" = (
 /obj/structure/railing,
 /turf/simulated/floor/carpet/brown,
@@ -544,6 +595,12 @@
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/garden2)
+"dK" = (
+/obj/structure/bed/chair/bay/shuttle{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "dL" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -628,13 +685,23 @@
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
 /turf/simulated/floor/tiled/eris/dark/gray_platform,
 /area/template_noop)
-"el" = (
-/obj/machinery/light{
+"eh" = (
+/mob/living/simple_mob/animal/space/alien/drone,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"ej" = (
+/obj/structure/grille/broken,
+/obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/flora/pottedplant/orientaltree,
-/turf/simulated/floor/wood,
-/area/template_noop)
+/obj/item/weapon/material/shard,
+/obj/item/stack/rods,
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/east_crater/wreck4)
+"ek" = (
+/obj/structure/prop/machine/tgmc_console5,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "em" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/snacks/ratpacktaco,
@@ -679,22 +746,9 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
-"et" = (
-/obj/structure/frame,
-/turf/simulated/shuttle/floor/yellow,
-/area/template_noop)
 "eu" = (
 /turf/simulated/wall,
 /area/submap/moonbase/poi/west_crater/construction3)
-"ex" = (
-/obj/structure/table/steel,
-/obj/item/weapon/cell/device/weapon,
-/obj/item/weapon/cell/device/weapon,
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/simulated/shuttle/floor/yellow,
-/area/template_noop)
 "eE" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -728,22 +782,37 @@
 /obj/structure/prop/rock/crystal,
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/submap/moonbase/poi/west_crater/rocks6)
+"eT" = (
+/obj/structure/flora/pottedplant/orientaltree,
+/turf/simulated/floor/wood,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "eU" = (
 /obj/structure/fireplace,
 /turf/simulated/floor/wood,
 /area/submap/moonbase/poi/west_crater/home1)
 "eV" = (
-/mob/living/simple_mob/animal/space/carp/large/roguemines,
-/turf/simulated/shuttle/floor/yellow{
-	edge_blending_priority = 1
+/obj/structure/hull_corner/long_vert{
+	dir = 6
 	},
-/area/template_noop)
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "eW" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
 /area/template_noop)
+"fa" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "fb" = (
 /obj/effect/floor_decal/milspec/color/green/corner{
 	dir = 8
@@ -751,6 +820,9 @@
 /obj/effect/floor_decal/steeldecal/steel_decals9,
 /turf/simulated/floor/tiled,
 /area/submap/moonbase/poi/west_crater/garden1)
+"fc" = (
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "ff" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -765,20 +837,35 @@
 /obj/structure/prop/rock/crystal,
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/submap/moonbase/poi/west_crater/construction4)
+"fi" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "fj" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 1
 	},
 /turf/simulated/floor/tiled,
 /area/submap/moonbase/poi/west_crater/home2)
+"fn" = (
+/obj/structure/table/woodentable,
+/obj/structure/flora/pottedplant/small{
+	pixel_y = -11
+	},
+/turf/simulated/floor/wood,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "fq" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/red,
 /obj/machinery/meter,
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
 "fu" = (
-/turf/simulated/floor/plating/external/outdoors,
-/area/template_noop)
+/obj/structure/shuttle/engine/propulsion,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck1)
 "fv" = (
 /turf/simulated/floor/wood,
 /area/template_noop)
@@ -818,41 +905,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
-"fF" = (
-/obj/structure/bookcase{
-	name = "bookcase (Fiction)"
-	},
-/obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 4
-	},
-/obj/item/weapon/book/bundle/custom_library/fiction/apurrrrfectman,
-/obj/item/weapon/book/bundle/custom_library/fiction/beyondthedoor,
-/obj/item/weapon/book/bundle/custom_library/fiction/coldmountain,
-/obj/item/weapon/book/bundle/custom_library/fiction/ghostship,
-/obj/item/weapon/book/bundle/custom_library/fiction/manfromsnowyriver,
-/obj/item/weapon/book/bundle/custom_library/fiction/metalglen,
-/obj/item/weapon/book/bundle/custom_library/fiction/poemsforarainyday,
-/obj/item/weapon/book/bundle/custom_library/fiction/raissue142,
-/obj/item/weapon/book/bundle/custom_library/fiction/raissue147,
-/obj/item/weapon/book/bundle/custom_library/fiction/silence,
-/obj/item/weapon/book/bundle/custom_library/fiction/taleoftherainbowcat,
-/obj/item/weapon/book/custom_library/fiction/blacksmithandkinglybloke,
-/obj/item/weapon/book/custom_library/fiction/irishairmanforseesdeath,
-/obj/item/weapon/book/custom_library/fiction/myrock,
-/obj/item/weapon/book/custom_library/fiction/starsandsometimesfallingones,
-/obj/item/weapon/book/custom_library/fiction/truelovehathmyheart,
-/turf/simulated/floor/wood,
-/area/template_noop)
-"fH" = (
-/obj/structure/sign/warning/airlock{
-	pixel_x = 32
-	},
-/obj/effect/floor_decal/industrial/warning,
-/obj/structure/handrail{
-	dir = 8
-	},
-/turf/simulated/floor/tiled/techfloor/grid,
-/area/template_noop)
 "fK" = (
 /obj/structure/bed/chair/sofa/black{
 	dir = 8
@@ -868,6 +920,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/submap/moonbase/poi/west_crater/home1)
+"fM" = (
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "fO" = (
 /obj/item/device/gps/internal/poi{
 	gps_tag = "Unidentified Signal"
@@ -887,13 +942,6 @@
 /obj/structure/prop/rock/crystal_dust,
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/submap/moonbase/poi/west_crater/rocks3)
-"fW" = (
-/obj/structure/bed/chair/bay/chair,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
-	},
-/turf/simulated/floor/wood,
-/area/template_noop)
 "fZ" = (
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor/wood,
@@ -910,6 +958,13 @@
 "ge" = (
 /turf/simulated/floor/carpet,
 /area/template_noop)
+"gj" = (
+/obj/structure/salvageable/shuttle_console,
+/turf/simulated/shuttle/floor/black,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"gl" = (
+/turf/simulated/floor/plating/external/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck2)
 "gn" = (
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/wall/r_wall,
@@ -931,6 +986,15 @@
 	},
 /turf/simulated/floor/tiled/eris/dark/gray_platform,
 /area/submap/moonbase/poi/west_crater/garden2)
+"gp" = (
+/obj/machinery/light,
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"gr" = (
+/obj/item/weapon/storage/pouch/ammo,
+/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "gu" = (
 /obj/structure/table/steel_reinforced,
 /obj/item/weapon/storage/toolbox/mechanical{
@@ -975,22 +1039,35 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/submap/moonbase/poi/west_crater/home1)
+"gP" = (
+/obj/random/multiple/corp_crate,
+/turf/simulated/floor/plating/external,
+/area/submap/moonbase/poi/east_crater/wreck1)
 "gS" = (
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/submap/moonbase/poi/west_crater/construction5)
-"gT" = (
-/obj/structure/table/steel,
-/obj/random/awayloot/looseloot,
-/turf/simulated/shuttle/floor,
-/area/template_noop)
 "gU" = (
 /obj/machinery/light,
 /turf/simulated/floor/tiled,
 /area/submap/moonbase/poi/west_crater/home2)
 "gW" = (
-/mob/living/simple_mob/mechanical/hivebot/ranged_damage/basic,
-/turf/simulated/shuttle/floor/yellow/airless,
-/area/template_noop)
+/obj/structure/prop/machine/nt_biocan,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"gY" = (
+/obj/structure/bed/chair/sofa/corp{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"hb" = (
+/obj/structure/shuttle/window,
+/obj/structure/grille,
+/turf/simulated/floor,
+/area/submap/moonbase/poi/east_crater/wreck2)
 "hc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
@@ -1010,9 +1087,16 @@
 /turf/simulated/wall/r_wall,
 /area/submap/moonbase/poi/west_crater/home2)
 "hi" = (
-/obj/structure/bed/chair/sofa/corp/left,
-/turf/simulated/floor/wood,
-/area/template_noop)
+/obj/structure/shuttle/engine/heater,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating/external/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"hk" = (
+/obj/structure/prop/rock/crystal,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "hr" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -1028,6 +1112,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/submap/moonbase/poi/west_crater/home1)
+"ht" = (
+/obj/structure/prop/rock/crystal,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck1)
 "hu" = (
 /obj/structure/table/standard,
 /obj/item/stack/cable_coil,
@@ -1047,10 +1135,23 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/template_noop)
+"hx" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "burst_l"
+	},
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck2)
 "hy" = (
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/wall/r_wall,
 /area/template_noop)
+"hG" = (
+/obj/random/forgotten_tram,
+/obj/structure/table/rack/shelf/steel,
+/obj/random/awayloot/looseloot,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck2)
 "hN" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -1078,13 +1179,6 @@
 "hW" = (
 /turf/simulated/floor/tiled,
 /area/template_noop)
-"hX" = (
-/obj/structure/frame,
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/simulated/shuttle/floor/yellow,
-/area/template_noop)
 "ia" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/black{
 	dir = 4
@@ -1098,6 +1192,10 @@
 "ic" = (
 /turf/simulated/floor/water/indoors,
 /area/submap/moonbase/poi/west_crater/garden1)
+"ie" = (
+/obj/structure/prop/rock/crystal,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck2)
 "ih" = (
 /turf/simulated/shuttle/wall/hard_corner,
 /area/template_noop)
@@ -1105,12 +1203,27 @@
 /obj/structure/anomaly_container,
 /turf/simulated/floor/tiled,
 /area/template_noop)
+"il" = (
+/obj/structure/table/steel,
+/obj/random/powercell,
+/obj/random/powercell,
+/obj/random/powercell,
+/obj/random/awayloot,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "im" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 1
 	},
 /turf/simulated/floor/tiled/dark,
 /area/template_noop)
+"in" = (
+/obj/structure/foamedmetal,
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"io" = (
+/turf/simulated/shuttle/wall,
+/area/submap/moonbase/poi/east_crater/wreck2)
 "ir" = (
 /obj/random/maintenance,
 /obj/random/maintenance,
@@ -1141,6 +1254,12 @@
 /obj/effect/catwalk_plated,
 /turf/simulated/floor/plating,
 /area/submap/moonbase/poi/west_crater/home2)
+"iw" = (
+/obj/structure/bed/chair/bay/comfy{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "ix" = (
 /turf/simulated/floor/outdoors/grass/seasonal/preset/autumn{
 	outdoors = 0
@@ -1211,13 +1330,10 @@
 /obj/effect/floor_decal/milspec/color/green/half,
 /turf/simulated/floor/tiled,
 /area/submap/moonbase/poi/west_crater/garden3)
-"iN" = (
-/obj/machinery/blackbox_recorder,
-/obj/item/device/gps/internal/poi{
-	gps_tag = "Unidentified Signal"
-	},
-/turf/simulated/shuttle/floor/yellow/airless,
-/area/template_noop)
+"iP" = (
+/mob/living/simple_mob/mechanical/hivebot/support,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "iR" = (
 /turf/simulated/mineral/moonbase/ignore_mapgen,
 /area/submap/moonbase/poi/west_crater/rocks3)
@@ -1233,6 +1349,13 @@
 "iU" = (
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/submap/moonbase/poi/west_crater/rocks7)
+"iX" = (
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/airlock/multi_tile/metal/mait{
+	dir = 2
+	},
+/turf/simulated/floor/tiled/steel_ridged,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "iZ" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/red{
 	dir = 1
@@ -1247,10 +1370,14 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/submap/moonbase/poi/west_crater/home1)
 "jf" = (
-/obj/structure/bed/double,
-/obj/item/weapon/bedsheet/browndouble,
-/turf/simulated/floor/carpet/brown,
-/area/template_noop)
+/obj/structure/table/steel,
+/obj/random/awayloot/looseloot,
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/random/awayloot/looseloot,
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "ji" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/white,
@@ -1277,17 +1404,21 @@
 	},
 /turf/simulated/floor/tiled,
 /area/template_noop)
+"jv" = (
+/turf/simulated/floor/carpet/brown,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "jw" = (
 /obj/structure/girder,
 /turf/simulated/floor/plating/external/outdoors,
 /area/submap/moonbase/poi/west_crater/construction4)
 "jy" = (
-/obj/machinery/blackbox_recorder,
-/obj/item/device/gps/internal/poi{
-	gps_tag = "Unidentified Signal"
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"jC" = (
+/turf/simulated/shuttle/floor/yellow{
+	edge_blending_priority = 1
 	},
-/turf/simulated/shuttle/floor/yellow,
-/area/template_noop)
+/area/submap/moonbase/poi/east_crater/wreck2)
 "jD" = (
 /obj/machinery/alarm,
 /turf/simulated/floor/tiled,
@@ -1299,6 +1430,21 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
+"jG" = (
+/mob/living/simple_mob/mechanical/hivebot/ranged_damage/basic,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"jK" = (
+/obj/structure/prop/machine/nt_biocan,
+/turf/simulated/floor/plating/external,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"jL" = (
+/obj/item/bodybag/cryobag,
+/obj/item/weapon/storage/firstaid/adv,
+/obj/structure/table/steel,
+/obj/item/device/healthanalyzer,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "jM" = (
 /obj/effect/map_helper/airlock/sensor/int_sensor,
 /obj/machinery/airlock_sensor/airlock_interior{
@@ -1331,6 +1477,11 @@
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/home1)
+"jR" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass_external,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "jS" = (
 /obj/structure/cable/green{
 	icon_state = "4-8"
@@ -1361,6 +1512,9 @@
 /obj/structure/bed/chair/sofa/right/blue,
 /turf/simulated/floor/tiled,
 /area/submap/moonbase/poi/west_crater/home2)
+"ka" = (
+/turf/simulated/shuttle/wall,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "kd" = (
 /obj/structure/flora/pottedplant/subterranean,
 /obj/machinery/camera/network/research_outpost{
@@ -1368,10 +1522,15 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
-"kh" = (
-/obj/structure/bed/chair/bay/comfy,
+"kf" = (
+/obj/random/energy/sec,
+/obj/structure/table/steel,
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"kg" = (
+/obj/structure/bed/chair/sofa/corp/left,
 /turf/simulated/floor/wood,
-/area/template_noop)
+/area/submap/moonbase/poi/east_crater/wreck3)
 "kj" = (
 /obj/machinery/atmospherics/unary/heat_exchanger{
 	dir = 1
@@ -1385,13 +1544,8 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/template_noop)
 "kk" = (
-/obj/random/awayloot/looseloot,
-/obj/structure/table/rack/shelf/steel,
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/simulated/shuttle/floor/yellow,
-/area/template_noop)
+/turf/simulated/mineral/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/wreck2)
 "kl" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/condiment/small/peppermill{
@@ -1404,6 +1558,17 @@
 	},
 /turf/simulated/floor/wood,
 /area/template_noop)
+"ko" = (
+/obj/structure/table/rack/shelf/steel,
+/obj/random/powercell,
+/obj/random/powercell,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"kp" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass_external,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "kq" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -1415,6 +1580,24 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled,
 /area/template_noop)
+"kx" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/machinery/light,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"kz" = (
+/obj/structure/table/steel,
+/obj/random/awayloot/looseloot,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/wreck4)
+"kA" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "kE" = (
 /obj/machinery/vending/hydronutrients,
 /turf/simulated/floor/tiled/monotile,
@@ -1431,6 +1614,10 @@
 	},
 /turf/simulated/floor/carpet/turcarpet,
 /area/template_noop)
+"kL" = (
+/obj/structure/prop/machine/nt_pod,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "kN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -1448,9 +1635,15 @@
 "kS" = (
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/submap/moonbase/poi/west_crater/rovercharging)
+"kX" = (
+/turf/simulated/shuttle/wall/hard_corner,
+/area/submap/moonbase/poi/east_crater/wreck2)
 "kY" = (
 /turf/simulated/wall/r_wall,
 /area/submap/moonbase/poi/west_crater/garden2)
+"kZ" = (
+/turf/simulated/shuttle/wall/hard_corner,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "la" = (
 /turf/simulated/floor/plating/external/moonbaseplating/outdoors{
 	edge_blending_priority = 1
@@ -1482,6 +1675,12 @@
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/construction1)
+"lg" = (
+/obj/structure/bed/chair/bay/shuttle{
+	dir = 1
+	},
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "lh" = (
 /turf/simulated/floor/tiled/old_tile,
 /area/template_noop)
@@ -1489,6 +1688,17 @@
 /obj/machinery/light,
 /turf/simulated/floor/tiled/white,
 /area/submap/moonbase/poi/west_crater/home1)
+"lm" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "ln" = (
 /obj/machinery/crystal/ice,
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
@@ -1507,6 +1717,10 @@
 /obj/structure/prop/rock/round,
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/submap/moonbase/poi/west_crater/construction3)
+"lt" = (
+/obj/structure/prop/machine/tradebeacon/starts_active,
+/turf/simulated/floor/plating/external,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "lv" = (
 /obj/structure/closet,
 /obj/item/clothing/suit/space/void/refurb,
@@ -1559,6 +1773,16 @@
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/garden1)
+"lM" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "mfloor6"
+	},
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"lN" = (
+/obj/effect/floor_decal/industrial/warning/color/tile,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "lP" = (
 /obj/machinery/atmospherics/unary/heater{
 	dir = 1;
@@ -1588,11 +1812,22 @@
 /area/template_noop)
 "lU" = (
 /turf/simulated/floor/plating/external,
-/area/template_noop)
-"lV" = (
-/obj/structure/prop/rock/crystal,
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
-/area/template_noop)
+/area/submap/moonbase/poi/east_crater/wreck2)
+"lW" = (
+/obj/structure/prop/machine/bsb_on,
+/turf/simulated/floor/plating/external,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"ma" = (
+/obj/item/bodybag/cryobag,
+/obj/item/weapon/storage/firstaid/adv,
+/obj/structure/table/steel,
+/obj/item/device/healthanalyzer,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/wreck4)
+"mh" = (
+/obj/structure/prop/machine/bsb_on,
+/turf/simulated/floor/plating/external,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "mi" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -1637,12 +1872,23 @@
 	},
 /turf/simulated/floor/plating,
 /area/template_noop)
+"mo" = (
+/obj/structure/table/steel,
+/obj/item/weapon/storage/toolbox/mechanical{
+	pixel_y = 5
+	},
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "mp" = (
 /obj/structure/table/standard,
 /obj/item/weapon/tool/screwdriver,
 /obj/item/device/assembly_holder/timer_igniter,
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
+"mr" = (
+/obj/structure/girder/reinforced,
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "mt" = (
 /obj/machinery/portable_atmospherics/powered/scrubber/huge/stationary{
 	scrub_id = "science_outpost"
@@ -1677,6 +1923,11 @@
 "my" = (
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/submap/moonbase/poi/west_crater/garden1)
+"mz" = (
+/obj/machinery/door/airlock/multi_tile/glass,
+/obj/machinery/door/firedoor/border_only,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "mA" = (
 /obj/structure/table/standard,
 /obj/item/weapon/tool/screwdriver,
@@ -1735,6 +1986,13 @@
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
+"mH" = (
+/obj/structure/table/steel,
+/obj/item/weapon/storage/toolbox/mechanical{
+	pixel_y = 5
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "mJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/universal{
 	dir = 4
@@ -1797,6 +2055,10 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/template_noop)
+"nc" = (
+/obj/structure/reagent_dispensers/fueltank/barrel/two,
+/turf/simulated/floor/plating/external/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck2)
 "nd" = (
 /obj/machinery/portable_atmospherics/hydroponics,
 /turf/simulated/floor/outdoors/grass/forest{
@@ -1843,12 +2105,9 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
-"no" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/simulated/floor/wood,
-/area/template_noop)
+"np" = (
+/turf/simulated/shuttle/wall,
+/area/submap/moonbase/poi/east_crater/wreck1)
 "nq" = (
 /obj/effect/map_helper/airlock/sensor/ext_sensor,
 /turf/simulated/floor/plating/external/moonbaseplating/outdoors{
@@ -1866,6 +2125,10 @@
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/home2)
+"nw" = (
+/obj/structure/frame,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "ny" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -1882,6 +2145,23 @@
 /obj/structure/bed/chair/sofa/black,
 /turf/simulated/floor/wood,
 /area/template_noop)
+"nC" = (
+/obj/machinery/blackbox_recorder,
+/obj/item/device/gps/internal/poi{
+	gps_tag = "Unidentified Signal"
+	},
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"nD" = (
+/obj/item/weapon/material/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"nE" = (
+/obj/item/stack/rods,
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "nI" = (
 /obj/machinery/seed_storage/garden,
 /obj/effect/floor_decal/milspec/color/green/half{
@@ -1952,6 +2232,10 @@
 	},
 /turf/simulated/floor/tiled,
 /area/submap/moonbase/poi/west_crater/garden2)
+"oi" = (
+/obj/structure/salvageable/implant_container,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "oj" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/simulated/floor/outdoors/grass/forest{
@@ -1965,15 +2249,13 @@
 "om" = (
 /turf/simulated/wall,
 /area/submap/moonbase/poi/west_crater/rovercharging)
-"oo" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/simulated/shuttle/floor/yellow/airless,
-/area/template_noop)
-"op" = (
-/turf/simulated/shuttle/floor/yellow,
-/area/template_noop)
+"or" = (
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/wreck4)
+"oz" = (
+/obj/structure/bed/chair/bay/shuttle,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "oA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -2001,15 +2283,12 @@
 	},
 /area/template_noop)
 "oF" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
+/obj/structure/prop/rock/crystal,
+/obj/effect/map_effect/perma_light{
+	light_color = "#87CEEB"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
-	},
-/obj/structure/catwalk,
-/turf/simulated/floor/plating,
-/area/template_noop)
+/turf/simulated/mineral/floor/cave/moonbase,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "oG" = (
 /obj/structure/bed/double,
 /obj/item/weapon/bedsheet/browndouble,
@@ -2068,10 +2347,6 @@
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/garden3)
-"oU" = (
-/obj/structure/bed/chair/comfy/black,
-/turf/simulated/floor/carpet/blue2,
-/area/template_noop)
 "oX" = (
 /obj/structure/cable/green{
 	icon_state = "0-4"
@@ -2082,10 +2357,6 @@
 	state = 2
 	},
 /turf/simulated/floor/tiled,
-/area/template_noop)
-"oY" = (
-/obj/structure/frame,
-/turf/simulated/shuttle/floor/black,
 /area/template_noop)
 "pa" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -2101,18 +2372,14 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
+"pb" = (
+/obj/structure/prop/machine/tgmc_console4,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "pc" = (
 /obj/structure/outcrop/platinum,
 /turf/simulated/mineral/floor/vacuum/moonbase,
 /area/submap/moonbase/poi/west_crater/rocks5)
-"pf" = (
-/obj/structure/table/steel,
-/obj/random/awayloot,
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/simulated/shuttle/floor,
-/area/template_noop)
 "pg" = (
 /obj/machinery/power/smes/buildable{
 	charge = 2e+006;
@@ -2148,6 +2415,14 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/submap/moonbase/poi/west_crater/home2)
+"pn" = (
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/blood{
+	icon_state = "mfloor2"
+	},
+/obj/machinery/light,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "pp" = (
 /obj/machinery/power/apc/alarms_hidden,
 /obj/structure/cable,
@@ -2178,6 +2453,16 @@
 	outdoors = 0
 	},
 /area/submap/moonbase/poi/west_crater/garden1)
+"pz" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass_external,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/submap/moonbase/poi/east_crater/wreck4)
+"pE" = (
+/obj/item/weapon/bedsheet/green,
+/obj/structure/bed,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "pG" = (
 /obj/effect/floor_decal/industrial/warning,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -2212,6 +2497,13 @@
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/rovercharging)
+"pM" = (
+/obj/structure/salvageable/shuttle_console,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor/black,
+/area/submap/moonbase/poi/east_crater/wreck1)
 "pP" = (
 /obj/structure/closet,
 /obj/random/maintenance/clean,
@@ -2243,6 +2535,9 @@
 	},
 /turf/simulated/floor/tiled,
 /area/submap/moonbase/poi/west_crater/garden3)
+"pW" = (
+/turf/simulated/wall/rshull,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "pY" = (
 /obj/machinery/atmospherics/unary/heat_exchanger{
 	dir = 8
@@ -2270,10 +2565,26 @@
 /obj/machinery/meter,
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
+"qg" = (
+/obj/structure/table/rack/shelf/steel,
+/obj/item/weapon/handcuffs,
+/obj/random/ammo,
+/obj/random/ammo,
+/obj/random/ammo,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "qi" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
 /turf/simulated/floor/plating,
 /area/template_noop)
+"qj" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/item/weapon/grenade/chem_grenade/metalfoam,
+/obj/structure/table/rack/shelf/steel,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "ql" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/black{
 	dir = 4
@@ -2337,6 +2648,9 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/template_noop)
+"qK" = (
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "qO" = (
 /obj/structure/extinguisher_cabinet{
 	dir = 8;
@@ -2368,19 +2682,21 @@
 	},
 /turf/simulated/floor/tiled,
 /area/submap/moonbase/poi/west_crater/garden3)
+"qR" = (
+/obj/item/bodybag/cryobag,
+/obj/item/weapon/storage/firstaid/adv,
+/obj/structure/table/steel,
+/obj/item/device/healthanalyzer,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "qS" = (
 /obj/machinery/atmospherics/binary/pump/on{
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/template_noop)
-"qV" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/structure/table/woodentable,
-/obj/item/modular_computer/tablet/preset/custom_loadout/elite,
-/turf/simulated/floor/carpet/blue2,
 /area/template_noop)
 "qW" = (
 /obj/structure/table/steel_reinforced,
@@ -2389,6 +2705,24 @@
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/rovercharging)
+"qY" = (
+/obj/structure/reagent_dispensers/fueltank/barrel/two,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/wreck4)
+"qZ" = (
+/obj/machinery/blackbox_recorder,
+/obj/item/device/gps/internal/poi{
+	gps_tag = "Unidentified Signal"
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"rb" = (
+/obj/structure/table/rack/shelf/steel,
+/obj/random/forgotten_tram,
+/obj/random/forgotten_tram,
+/obj/random/awayloot/looseloot,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "re" = (
 /obj/effect/floor_decal/industrial/danger{
 	dir = 8
@@ -2402,6 +2736,9 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/template_noop)
+"rg" = (
+/turf/simulated/floor/tiled/eris/dark/gray_platform,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "rj" = (
 /obj/machinery/light,
 /obj/machinery/artifact_scanpad,
@@ -2452,12 +2789,19 @@
 /obj/effect/map_helper/airlock/door/ext_door,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/submap/moonbase/poi/west_crater/garden1)
+"rx" = (
+/obj/item/weapon/handcuffs,
+/turf/simulated/shuttle/floor/red/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "rz" = (
 /obj/structure/table/glass,
 /obj/item/weapon/towel/random,
 /obj/item/weapon/towel/random,
 /turf/simulated/floor/tiled/white,
 /area/submap/moonbase/poi/west_crater/home2)
+"rB" = (
+/turf/simulated/floor/plating/external,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "rE" = (
 /turf/simulated/shuttle/floor,
 /area/template_noop)
@@ -2490,15 +2834,15 @@
 /obj/structure/bed/chair/sofa/right/black,
 /turf/simulated/floor/carpet/turcarpet,
 /area/template_noop)
+"rO" = (
+/obj/structure/prop/machine/tgmc_console1,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "rP" = (
 /obj/structure/table/steel,
 /obj/item/weapon/storage/toolbox/hydro,
 /turf/simulated/floor/tiled/monotile,
 /area/submap/moonbase/poi/west_crater/garden2)
-"rQ" = (
-/mob/living/simple_mob/animal/space/carp/roguemines,
-/turf/simulated/shuttle/floor/yellow/airless,
-/area/template_noop)
 "rU" = (
 /obj/structure/bed/chair/wood,
 /turf/simulated/floor/wood,
@@ -2531,6 +2875,13 @@
 /obj/machinery/alarm,
 /turf/simulated/floor/tiled,
 /area/submap/moonbase/poi/west_crater/home2)
+"sc" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "burst_l"
+	},
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "sd" = (
 /obj/structure/railing{
 	dir = 4
@@ -2550,9 +2901,11 @@
 /obj/structure/girder,
 /turf/simulated/floor/plating/external/outdoors,
 /area/submap/moonbase/poi/west_crater/construction1)
-"sp" = (
-/turf/simulated/wall/shull,
-/area/template_noop)
+"sm" = (
+/obj/structure/shuttle/window,
+/obj/structure/grille,
+/turf/simulated/floor,
+/area/submap/moonbase/poi/east_crater/wreck1)
 "sq" = (
 /obj/machinery/door/airlock/multi_tile/glass,
 /obj/machinery/door/firedoor/border_only,
@@ -2579,6 +2932,16 @@
 /obj/item/weapon/tank/oxygen,
 /turf/simulated/floor/tiled,
 /area/submap/moonbase/poi/west_crater/home1)
+"sv" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced,
+/obj/machinery/door/blast/regular/open{
+	dir = 4;
+	id = "talon_quietroom"
+	},
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "sx" = (
 /obj/machinery/atmospherics/portables_connector,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -2605,6 +2968,13 @@
 /obj/item/device/multitool,
 /turf/simulated/floor/tiled,
 /area/template_noop)
+"sH" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/shuttle/engine/heater,
+/turf/simulated/floor/plating/external,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "sI" = (
 /obj/structure/prop/rock/crystal,
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
@@ -2629,6 +2999,9 @@
 /obj/effect/floor_decal/milspec/color/green/half,
 /turf/simulated/floor/tiled,
 /area/submap/moonbase/poi/west_crater/garden2)
+"sN" = (
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "sP" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -2638,6 +3011,14 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/submap/moonbase/poi/west_crater/home2)
+"sQ" = (
+/obj/random/awayloot/looseloot,
+/obj/structure/table/rack/shelf/steel,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/moonbase/poi/east_crater/wreck2)
 "sS" = (
 /obj/item/weapon/bedsheet/orangedouble,
 /obj/structure/bed/double,
@@ -2649,9 +3030,12 @@
 	},
 /turf/simulated/floor/carpet,
 /area/template_noop)
-"sX" = (
-/turf/simulated/shuttle/floor/yellow/airless,
-/area/template_noop)
+"sZ" = (
+/obj/item/weapon/material/shard{
+	icon_state = "small"
+	},
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "tb" = (
 /obj/machinery/alarm,
 /obj/structure/reagent_dispensers/watertank,
@@ -2670,9 +3054,8 @@
 /turf/simulated/floor/plating,
 /area/template_noop)
 "te" = (
-/obj/structure/prop/rock/crystal,
-/turf/simulated/mineral/floor/cave/moonbase,
-/area/template_noop)
+/turf/simulated/floor/plating/external,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "tg" = (
 /obj/structure/cable/green{
 	icon_state = "1-4"
@@ -2688,9 +3071,9 @@
 	},
 /turf/simulated/floor/tiled,
 /area/template_noop)
-"to" = (
-/turf/simulated/floor/carpet/blue2,
-/area/template_noop)
+"ti" = (
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/moonbase/poi/east_crater/wreck1)
 "tp" = (
 /obj/structure/table/steel,
 /obj/machinery/cell_charger{
@@ -2751,6 +3134,10 @@
 	outdoors = 0
 	},
 /area/submap/moonbase/poi/west_crater/garden3)
+"tx" = (
+/obj/structure/flora/pottedplant/minitree,
+/turf/simulated/floor/carpet/brown,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "ty" = (
 /obj/structure/table/steel,
 /obj/random/mre,
@@ -2758,12 +3145,17 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /turf/simulated/floor/tiled/monotile,
 /area/submap/moonbase/poi/west_crater/garden2)
-"tB" = (
-/obj/random/forgotten_tram,
-/obj/random/forgotten_tram,
-/obj/structure/table/rack/shelf/steel,
-/turf/simulated/shuttle/floor/yellow/airless,
-/area/template_noop)
+"tz" = (
+/obj/item/weapon/handcuffs,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/shuttle/floor/red/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"tC" = (
+/obj/machinery/door/firedoor/border_only,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "tF" = (
 /obj/structure/frame,
 /turf/simulated/floor/plating/external/outdoors,
@@ -2807,16 +3199,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/template_noop)
-"tV" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/structure/closet/emergsuit_wall{
-	dir = 4;
-	pixel_x = 32
-	},
-/turf/simulated/floor/tiled/techmaint,
-/area/template_noop)
 "tW" = (
 /obj/structure/table/steel_reinforced,
 /obj/item/weapon/tool/wrench,
@@ -2828,18 +3210,26 @@
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/rovercharging)
+"tZ" = (
+/turf/simulated/floor/plating/external,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"ub" = (
+/obj/structure/prop/machine/tgmc_console1,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "uh" = (
 /turf/simulated/floor/plating/external/outdoors,
 /area/submap/moonbase/poi/west_crater/construction2)
-"ui" = (
-/obj/structure/hull_corner/long_horiz{
-	dir = 9
-	},
-/turf/template_noop,
-/area/template_noop)
+"ul" = (
+/obj/structure/salvageable/shuttle_console,
+/turf/simulated/shuttle/floor/black,
+/area/submap/moonbase/poi/east_crater/wreck1)
 "un" = (
-/turf/simulated/wall/rshull,
-/area/template_noop)
+/obj/structure/bed/chair/bay/shuttle{
+	dir = 1
+	},
+/turf/simulated/shuttle/floor,
+/area/submap/moonbase/poi/east_crater/wreck1)
 "up" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /obj/item/weapon/reagent_containers/food/snacks/meat,
@@ -2879,6 +3269,19 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/submap/moonbase/poi/west_crater/home1)
+"uu" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/machinery/door/blast/regular/open{
+	dir = 4;
+	id = "talon_quietroom"
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "uv" = (
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/submap/moonbase/poi/west_crater/rocks5)
@@ -2916,23 +3319,10 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/template_noop)
-"uT" = (
-/obj/random/multiple/corp_crate,
-/turf/simulated/floor/plating/external,
-/area/template_noop)
 "uU" = (
 /obj/machinery/seed_storage/garden,
 /turf/simulated/floor/tiled/monotile,
 /area/submap/moonbase/poi/west_crater/garden2)
-"uW" = (
-/obj/structure/prop/machine/tgmc_console2/starts_on{
-	pixel_x = -6
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/simulated/shuttle/floor/black,
-/area/template_noop)
 "uY" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1
@@ -2942,6 +3332,12 @@
 	},
 /turf/simulated/floor/tiled,
 /area/template_noop)
+"ve" = (
+/obj/item/weapon/storage/toolbox/syndicate/powertools,
+/obj/structure/table/steel,
+/obj/item/weapon/grenade/chem_grenade/metalfoam,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "vf" = (
 /obj/structure/table/glass,
 /obj/random/soap_common,
@@ -2954,6 +3350,17 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /turf/simulated/floor/tiled,
 /area/template_noop)
+"vl" = (
+/obj/structure/table/steel,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/wreck4)
+"vo" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/simulated/floor/plating/external,
+/area/submap/moonbase/poi/east_crater/wreck2)
 "vu" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable/green{
@@ -2970,6 +3377,16 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
+"vx" = (
+/obj/machinery/blackbox_recorder,
+/obj/item/device/gps/internal/poi{
+	gps_tag = "Unidentified Signal"
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck2)
 "vE" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
@@ -2985,7 +3402,7 @@
 /obj/item/weapon/storage/mre/random,
 /obj/item/weapon/storage/mre/random,
 /turf/simulated/shuttle/floor,
-/area/template_noop)
+/area/submap/moonbase/poi/east_crater/wreck1)
 "vH" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -3012,12 +3429,38 @@
 /obj/machinery/portable_atmospherics/canister/empty,
 /turf/simulated/floor/tiled/dark,
 /area/template_noop)
+"vO" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "mfloor2"
+	},
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "vP" = (
 /obj/effect/floor_decal/industrial/warning/corner{
 	dir = 8
 	},
 /turf/simulated/floor/tiled/dark,
 /area/template_noop)
+"vX" = (
+/obj/structure/grille,
+/obj/machinery/door/blast/regular/open{
+	dir = 4;
+	id = "talon_quietroom"
+	},
+/obj/item/weapon/material/shard{
+	icon_state = "small"
+	},
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"vY" = (
+/mob/living/simple_mob/mechanical/hivebot/ranged_damage/basic,
+/turf/simulated/shuttle/floor,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"vZ" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass_external,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "wa" = (
 /turf/simulated/floor/reinforced,
 /area/template_noop)
@@ -3043,23 +3486,18 @@
 /obj/structure/bed/chair/sofa/right/black,
 /turf/simulated/floor/wood,
 /area/template_noop)
-"wl" = (
-/obj/structure/bookcase{
-	name = "bookcase (Religious)"
-	},
-/obj/item/weapon/book/bundle/custom_library/religious/zoroastrianism,
-/obj/item/weapon/book/custom_library/religious/feastofkubera,
-/obj/item/weapon/book/custom_library/religious/storyoflordganesha,
-/obj/item/weapon/book/custom_library/religious/sungoddessofkorea,
-/obj/item/weapon/book/custom_library/religious/wayofbleedingswan,
-/turf/simulated/floor/wood,
-/area/template_noop)
 "wo" = (
 /obj/machinery/portable_atmospherics/hydroponics,
 /turf/simulated/floor/outdoors/grass/forest{
 	outdoors = 0
 	},
 /area/submap/moonbase/poi/west_crater/home1)
+"wr" = (
+/obj/item/weapon/handcuffs,
+/obj/structure/table/steel,
+/obj/item/weapon/handcuffs,
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "wu" = (
 /turf/simulated/floor/plating/external/moonbaseplating/outdoors{
 	edge_blending_priority = 1
@@ -3075,16 +3513,11 @@
 /obj/structure/cable,
 /turf/simulated/floor/tiled,
 /area/submap/moonbase/poi/west_crater/garden3)
-"wE" = (
-/obj/machinery/blackbox_recorder,
-/obj/item/device/gps/internal/poi{
-	gps_tag = "Unidentified Signal"
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/simulated/shuttle/floor/yellow/airless,
-/area/template_noop)
+"wG" = (
+/mob/living/simple_mob/animal/space/alien/drone,
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "wH" = (
 /obj/machinery/light,
 /turf/simulated/floor/water/indoors,
@@ -3124,6 +3557,12 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/submap/moonbase/poi/west_crater/garden3)
+"wS" = (
+/obj/structure/table/rack/shelf/steel,
+/obj/random/gun/random,
+/obj/item/weapon/gun/energy/gun,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "wX" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -3148,6 +3587,15 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
+"wZ" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "xc" = (
 /obj/effect/floor_decal/milspec/color/green/half{
 	dir = 4
@@ -3176,6 +3624,15 @@
 /obj/structure/window/reinforced/full/dome,
 /turf/simulated/floor/wood,
 /area/template_noop)
+"xk" = (
+/obj/structure/bed/chair/bay/shuttle{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "xn" = (
 /obj/structure/table/steel,
 /obj/random/maintenance,
@@ -3184,6 +3641,14 @@
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/construction4)
+"xq" = (
+/obj/structure/closet,
+/obj/random/maintenance/clean,
+/obj/random/maintenance/clean,
+/obj/random/maintenance/clean,
+/obj/random/awayloot/looseloot,
+/turf/simulated/floor/carpet/blue2,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "xr" = (
 /obj/structure/cable/green{
 	icon_state = "4-8"
@@ -3201,10 +3666,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/submap/moonbase/poi/west_crater/garden3)
-"xx" = (
-/obj/structure/girder,
-/turf/simulated/floor/plating/external/outdoors,
-/area/template_noop)
 "xy" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -3230,19 +3691,19 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
+"xL" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "xM" = (
 /obj/structure/prop/rock/small,
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/submap/moonbase/poi/west_crater/construction3)
-"xO" = (
-/obj/structure/table/rack/shelf/steel,
-/obj/random/gun/random,
+"xP" = (
 /turf/simulated/shuttle/floor/yellow/airless,
-/area/template_noop)
-"xQ" = (
-/obj/structure/shuttle/engine/propulsion,
-/turf/simulated/floor/plating/external,
-/area/template_noop)
+/area/submap/moonbase/poi/east_crater/wreck3)
 "xS" = (
 /obj/structure/bookcase{
 	name = "bookcase (Non-Fiction)"
@@ -3316,13 +3777,30 @@
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/rovercharging)
-"yh" = (
-/turf/simulated/floor/tiled/techmaint,
-/area/template_noop)
+"yj" = (
+/obj/structure/table/steel,
+/obj/item/weapon/storage/toolbox/mechanical{
+	pixel_y = 5
+	},
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/moonbase/poi/east_crater/wreck1)
 "yl" = (
 /obj/structure/flora/pottedplant/flower,
 /turf/simulated/floor/carpet,
 /area/template_noop)
+"yn" = (
+/obj/structure/bed/chair/bay/shuttle{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"yq" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/reagent_dispensers/watertank,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "yr" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 1
@@ -3335,9 +3813,19 @@
 	},
 /turf/simulated/floor/tiled,
 /area/template_noop)
+"yy" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/grille/broken,
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "yz" = (
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/submap/moonbase/poi/west_crater/rocks3)
+"yE" = (
+/turf/simulated/floor/plating/external/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck1)
 "yI" = (
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/submap/moonbase/poi/west_crater/home1)
@@ -3367,13 +3855,6 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/submap/moonbase/poi/west_crater/garden2)
-"yQ" = (
-/obj/structure/table/rack/shelf/steel,
-/obj/random/ammo,
-/obj/random/ammo,
-/obj/random/ammo,
-/turf/simulated/shuttle/floor/yellow/airless,
-/area/template_noop)
 "yZ" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -3416,11 +3897,6 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/carpet,
 /area/template_noop)
-"zh" = (
-/obj/structure/table/woodentable,
-/obj/random/drinkbottle,
-/turf/simulated/floor/wood,
-/area/template_noop)
 "zi" = (
 /obj/structure/cable/green{
 	icon_state = "4-8"
@@ -3448,11 +3924,22 @@
 	},
 /turf/simulated/floor/plating,
 /area/template_noop)
+"zp" = (
+/mob/living/simple_mob/animal/space/carp/large/roguemines,
+/turf/simulated/shuttle/floor/yellow{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/east_crater/wreck2)
+"zz" = (
+/obj/structure/shuttle/window,
+/obj/structure/grille,
+/turf/simulated/floor,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "zA" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/silver,
 /turf/simulated/floor/tiled/steel_ridged,
-/area/template_noop)
+/area/submap/moonbase/poi/east_crater/wreck1)
 "zC" = (
 /obj/structure/frame,
 /turf/simulated/floor/plating/external/moonbaseplating/outdoors{
@@ -3488,10 +3975,6 @@
 	},
 /turf/simulated/floor/plating/eris,
 /area/template_noop)
-"zP" = (
-/obj/structure/frame,
-/turf/simulated/shuttle/floor/yellow/airless,
-/area/template_noop)
 "zQ" = (
 /obj/effect/floor_decal/fakestairs/top{
 	color = "#964B00";
@@ -3503,10 +3986,6 @@
 /obj/structure/railing,
 /turf/simulated/floor/tiled,
 /area/template_noop)
-"zR" = (
-/mob/living/simple_mob/mechanical/hivebot/ranged_damage/basic,
-/turf/simulated/shuttle/floor,
-/area/template_noop)
 "zS" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 6
@@ -3516,10 +3995,6 @@
 "zV" = (
 /obj/structure/bed/chair/sofa/left/black,
 /turf/simulated/floor/wood,
-/area/template_noop)
-"Ab" = (
-/mob/living/simple_mob/mechanical/hivebot,
-/turf/simulated/floor/carpet/brown,
 /area/template_noop)
 "Ad" = (
 /obj/effect/floor_decal/industrial/warning/color/corner,
@@ -3564,6 +4039,17 @@
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/rovercharging)
+"Al" = (
+/obj/random/multiple/corp_crate,
+/turf/simulated/floor/plating/external/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"Am" = (
+/obj/machinery/blackbox_recorder,
+/obj/item/device/gps/internal/poi{
+	gps_tag = "Unidentified Signal"
+	},
+/turf/simulated/shuttle/floor,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "An" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/black{
 	dir = 1
@@ -3583,6 +4069,9 @@
 	},
 /turf/simulated/floor/plating,
 /area/submap/moonbase/poi/west_crater/home1)
+"As" = (
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "At" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor/glass,
@@ -3646,12 +4135,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/template_noop)
-"AH" = (
-/obj/machinery/power/apc/super{
-	dir = 1
-	},
-/turf/simulated/shuttle/floor/yellow/airless,
-/area/template_noop)
 "AI" = (
 /obj/structure/sink{
 	pixel_y = 20
@@ -3674,23 +4157,17 @@
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/garden1)
-"AS" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
-/obj/machinery/light{
+"AO" = (
+/obj/structure/bed/chair/bay/shuttle{
 	dir = 8
 	},
-/turf/simulated/floor/wood,
-/area/template_noop)
-"AW" = (
-/obj/structure/frame,
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/simulated/shuttle/floor/yellow,
-/area/template_noop)
+/obj/machinery/light,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"AY" = (
+/obj/effect/decal/cleanable/blood/xeno,
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "AZ" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
@@ -3703,10 +4180,10 @@
 /obj/effect/floor_decal/milspec/color/emerald/half,
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
-"Bb" = (
-/obj/structure/shuttle/engine/propulsion,
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
-/area/template_noop)
+"Bc" = (
+/obj/structure/prop/machine/tube,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "Bd" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -3746,16 +4223,6 @@
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
 /turf/simulated/floor/tiled/eris/dark/gray_platform,
 /area/template_noop)
-"Bq" = (
-/obj/random/multiple/corp_crate,
-/turf/simulated/shuttle/floor/yellow/airless,
-/area/template_noop)
-"Bt" = (
-/obj/structure/bed/chair/sofa/corp{
-	dir = 4
-	},
-/turf/simulated/floor/wood,
-/area/template_noop)
 "Bw" = (
 /obj/structure/dispenser{
 	phorontanks = 0
@@ -3784,6 +4251,9 @@
 /obj/structure/curtain/black,
 /turf/simulated/floor/plating,
 /area/submap/moonbase/poi/west_crater/home1)
+"BF" = (
+/turf/simulated/shuttle/wall,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "BI" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 4
@@ -3791,18 +4261,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/black,
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
-"BJ" = (
-/mob/living/simple_mob/mechanical/hivebot,
-/turf/simulated/floor/carpet/blue2,
-/area/template_noop)
-"BL" = (
-/turf/simulated/floor/carpet/brown,
-/area/template_noop)
-"BM" = (
-/obj/machinery/door/firedoor/glass,
-/obj/machinery/door/airlock/glass_external,
-/turf/simulated/floor/tiled/steel_ridged,
-/area/template_noop)
+"BK" = (
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"BO" = (
+/obj/structure/prop/machine/nt_biocan,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "BP" = (
 /obj/machinery/firealarm{
 	dir = 4
@@ -3813,19 +4278,25 @@
 /turf/simulated/floor/tiled,
 /area/template_noop)
 "BQ" = (
-/obj/structure/prop/machine/tgmc_console2/starts_on{
-	pixel_x = -6
-	},
-/turf/simulated/shuttle/floor/black,
-/area/template_noop)
-"BX" = (
-/obj/structure/closet,
-/obj/random/maintenance/clean,
-/obj/random/maintenance/clean,
-/obj/random/maintenance/clean,
-/obj/random/awayloot/looseloot,
-/turf/simulated/floor/carpet/blue2,
-/area/template_noop)
+/obj/random/forgotten_tram,
+/obj/random/forgotten_tram,
+/obj/structure/table/rack/shelf/steel,
+/obj/item/weapon/grenade/chem_grenade/metalfoam,
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"BZ" = (
+/mob/living/simple_mob/animal/space/ray,
+/turf/simulated/shuttle/floor,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"Ca" = (
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"Cc" = (
+/obj/structure/table/rack/shelf/steel,
+/obj/random/forgotten_tram,
+/obj/random/forgotten_tram,
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "Cd" = (
 /obj/structure/table/steel,
 /obj/machinery/recharger{
@@ -3834,13 +4305,15 @@
 /obj/random/powercell,
 /turf/simulated/floor/tiled,
 /area/submap/moonbase/poi/west_crater/home1)
-"Cf" = (
-/turf/simulated/floor/tiled/eris/dark/gray_platform,
-/area/template_noop)
 "Cg" = (
 /obj/structure/closet/secure_closet/xenoarchaeologist,
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
+"Cj" = (
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/airlock/silver,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "Co" = (
 /obj/machinery/portable_atmospherics/hydroponics,
 /obj/machinery/light{
@@ -3888,6 +4361,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/submap/moonbase/poi/west_crater/home2)
+"Cz" = (
+/obj/structure/girder,
+/turf/simulated/floor/plating/external/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck1)
 "CA" = (
 /obj/effect/floor_decal/milspec/color/green/half{
 	dir = 8
@@ -3897,6 +4374,11 @@
 	},
 /turf/simulated/floor/tiled,
 /area/submap/moonbase/poi/west_crater/garden3)
+"CC" = (
+/obj/structure/bed/double,
+/obj/item/weapon/bedsheet/browndouble,
+/turf/simulated/floor/carpet/brown,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "CD" = (
 /obj/machinery/power/apc{
 	dir = 1
@@ -3906,6 +4388,13 @@
 	},
 /turf/simulated/floor/tiled,
 /area/template_noop)
+"CF" = (
+/turf/simulated/shuttle/floor/red/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"CJ" = (
+/mob/living/simple_mob/mechanical/hivebot/support/logistics,
+/turf/simulated/floor/wood,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "CK" = (
 /obj/machinery/light{
 	dir = 4
@@ -3938,7 +4427,7 @@
 /area/template_noop)
 "CO" = (
 /turf/simulated/shuttle/floor/airless,
-/area/template_noop)
+/area/submap/moonbase/poi/east_crater/wreck5)
 "CP" = (
 /obj/effect/floor_decal/industrial/danger{
 	dir = 4
@@ -3951,17 +4440,15 @@
 	},
 /turf/simulated/floor/tiled,
 /area/template_noop)
+"CR" = (
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck1)
 "Df" = (
 /obj/structure/cable/green{
 	icon_state = "1-2"
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
-/area/template_noop)
-"Dg" = (
-/obj/structure/bed/double,
-/obj/item/weapon/bedsheet/browndouble,
-/turf/simulated/floor/carpet/blue2,
 /area/template_noop)
 "Di" = (
 /obj/structure/cable/green{
@@ -3973,11 +4460,29 @@
 	},
 /turf/simulated/floor/tiled,
 /area/template_noop)
+"Dj" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "Dm" = (
 /obj/structure/table/steel,
 /obj/random/maintenance,
 /turf/simulated/floor/plating/external/outdoors,
 /area/submap/moonbase/poi/west_crater/construction5)
+"Dr" = (
+/obj/machinery/door/blast/regular/open{
+	dir = 4;
+	id = "talon_quietroom"
+	},
+/obj/structure/grille/broken,
+/obj/item/weapon/material/shard,
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "Ds" = (
 /obj/structure/sink/kitchen{
 	dir = 8;
@@ -4009,11 +4514,6 @@
 /obj/machinery/door/airlock/maintenance_hatch,
 /turf/simulated/floor/plating,
 /area/template_noop)
-"Dx" = (
-/obj/random/awayloot/looseloot,
-/obj/structure/table/rack/shelf/steel,
-/turf/simulated/shuttle/floor/yellow,
-/area/template_noop)
 "Dz" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass_external,
@@ -4031,13 +4531,6 @@
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/rovercharging)
-"DE" = (
-/obj/structure/bed/chair/bay/chair,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
-	},
-/turf/simulated/floor/wood,
-/area/template_noop)
 "DG" = (
 /obj/machinery/light{
 	dir = 1
@@ -4072,12 +4565,6 @@
 /obj/machinery/light,
 /turf/simulated/floor/carpet/turcarpet,
 /area/submap/moonbase/poi/west_crater/home1)
-"DP" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/simulated/floor/carpet/blue2,
-/area/template_noop)
 "DQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
@@ -4085,6 +4572,10 @@
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/template_noop)
+"DR" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/simulated/floor/plating/external,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "DS" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -4163,6 +4654,13 @@
 /obj/fiftyspawner/steel,
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
+"Er" = (
+/obj/item/bodybag/cryobag,
+/obj/item/weapon/storage/firstaid/adv,
+/obj/structure/table/steel,
+/obj/item/device/healthanalyzer,
+/turf/simulated/shuttle/floor,
+/area/submap/moonbase/poi/east_crater/wreck1)
 "Eu" = (
 /obj/machinery/crystal/lava,
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
@@ -4173,6 +4671,31 @@
 	outdoors = 0
 	},
 /area/template_noop)
+"Ew" = (
+/obj/structure/bookcase{
+	name = "bookcase (Fiction)"
+	},
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/item/weapon/book/bundle/custom_library/fiction/apurrrrfectman,
+/obj/item/weapon/book/bundle/custom_library/fiction/beyondthedoor,
+/obj/item/weapon/book/bundle/custom_library/fiction/coldmountain,
+/obj/item/weapon/book/bundle/custom_library/fiction/ghostship,
+/obj/item/weapon/book/bundle/custom_library/fiction/manfromsnowyriver,
+/obj/item/weapon/book/bundle/custom_library/fiction/metalglen,
+/obj/item/weapon/book/bundle/custom_library/fiction/poemsforarainyday,
+/obj/item/weapon/book/bundle/custom_library/fiction/raissue142,
+/obj/item/weapon/book/bundle/custom_library/fiction/raissue147,
+/obj/item/weapon/book/bundle/custom_library/fiction/silence,
+/obj/item/weapon/book/bundle/custom_library/fiction/taleoftherainbowcat,
+/obj/item/weapon/book/custom_library/fiction/blacksmithandkinglybloke,
+/obj/item/weapon/book/custom_library/fiction/irishairmanforseesdeath,
+/obj/item/weapon/book/custom_library/fiction/myrock,
+/obj/item/weapon/book/custom_library/fiction/starsandsometimesfallingones,
+/obj/item/weapon/book/custom_library/fiction/truelovehathmyheart,
+/turf/simulated/floor/wood,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "Ey" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
@@ -4216,15 +4739,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/submap/moonbase/poi/west_crater/home1)
-"EF" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/structure/catwalk,
-/turf/simulated/floor/plating,
-/area/template_noop)
 "EH" = (
 /obj/machinery/alarm{
 	dir = 8
@@ -4248,6 +4762,12 @@
 	},
 /turf/simulated/floor/tiled/eris/dark/gray_platform,
 /area/submap/moonbase/poi/west_crater/garden1)
+"EK" = (
+/obj/random/forgotten_tram,
+/obj/random/forgotten_tram,
+/obj/structure/table/rack/shelf/steel,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck2)
 "EO" = (
 /obj/structure/closet,
 /obj/item/clothing/suit/space/void/refurb,
@@ -4270,6 +4790,11 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/submap/moonbase/poi/west_crater/home1)
+"ER" = (
+/obj/structure/bed,
+/obj/item/weapon/bedsheet/purple,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "ET" = (
 /obj/structure/cable/green{
 	icon_state = "1-4"
@@ -4317,6 +4842,15 @@
 /obj/random/vendordrink,
 /turf/simulated/floor/wood,
 /area/template_noop)
+"Fi" = (
+/obj/machinery/button/remote/blast_door{
+	dir = 8;
+	id = "xenoship";
+	pixel_y = 32;
+	pixel_x = 24
+	},
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "Fj" = (
 /obj/structure/table/steel,
 /obj/item/bodybag/cryobag,
@@ -4348,6 +4882,12 @@
 	},
 /turf/simulated/floor/wood,
 /area/submap/moonbase/poi/west_crater/home1)
+"Fp" = (
+/obj/structure/table/rack/shelf/steel,
+/obj/item/weapon/handcuffs,
+/obj/random/gun/random,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "Fq" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/simulated/floor/tiled/dark,
@@ -4357,25 +4897,12 @@
 	dir = 1
 	},
 /turf/simulated/shuttle/floor,
-/area/template_noop)
+/area/submap/moonbase/poi/east_crater/wreck3)
 "Ft" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor/glass,
 /obj/structure/window/reinforced/full,
 /turf/simulated/floor/plating,
-/area/template_noop)
-"Fv" = (
-/obj/structure/table/woodentable,
-/obj/machinery/button/remote/blast_door{
-	dir = 8;
-	id = "talon_quietroom";
-	name = "window blast shields";
-	pixel_x = 28
-	},
-/obj/structure/closet/walllocker/medical/south,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/storage/firstaid/o2,
-/turf/simulated/floor/wood,
 /area/template_noop)
 "Fw" = (
 /obj/structure/railing/grey{
@@ -4398,11 +4925,15 @@
 	},
 /turf/simulated/floor/greengrid,
 /area/template_noop)
-"FB" = (
-/obj/effect/floor_decal/industrial/outline/yellow,
-/obj/random/multiple/corp_crate/talon_cargo,
-/turf/simulated/floor/tiled/techfloor,
-/area/template_noop)
+"Fz" = (
+/obj/machinery/door/window/brigdoor/northleft{
+	req_access = null
+	},
+/obj/machinery/door/window/brigdoor/southright{
+	req_access = null
+	},
+/turf/simulated/shuttle/floor/red/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "FF" = (
 /obj/machinery/power/rtg/fake_gen,
 /obj/structure/cable{
@@ -4413,9 +4944,11 @@
 	},
 /area/submap/moonbase/poi/west_crater/home2)
 "FH" = (
-/obj/structure/prop/machine/tgmc_console1/starts_on,
-/turf/simulated/shuttle/floor/black,
-/area/template_noop)
+/obj/structure/table/steel,
+/obj/random/awayloot/looseloot,
+/obj/item/weapon/grenade/chem_grenade/metalfoam,
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "FJ" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -4426,6 +4959,19 @@
 /obj/structure/window/reinforced,
 /turf/simulated/floor/plating,
 /area/submap/moonbase/poi/west_crater/garden1)
+"FK" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"FN" = (
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"FO" = (
+/obj/structure/table/woodentable,
+/turf/simulated/floor/wood,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "FR" = (
 /obj/machinery/atmospherics/pipe/tank/air{
 	dir = 8
@@ -4449,6 +4995,10 @@
 	},
 /turf/simulated/floor/tiled,
 /area/submap/moonbase/poi/west_crater/garden1)
+"FU" = (
+/mob/living/simple_mob/animal/space/ray,
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/moonbase/poi/east_crater/wreck1)
 "FZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/wall/r_wall,
@@ -4468,6 +5018,12 @@
 /obj/structure/table/glass,
 /turf/simulated/floor/tiled/white,
 /area/submap/moonbase/poi/west_crater/home2)
+"Gg" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/shuttle/floor/red/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "Gh" = (
 /obj/structure/railing/grey{
 	dir = 8
@@ -4512,6 +5068,17 @@
 "Gx" = (
 /turf/simulated/floor/carpet/brown,
 /area/submap/moonbase/poi/west_crater/home1)
+"GB" = (
+/obj/structure/prop/machine/alien_tank,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"GC" = (
+/obj/structure/prop/machine/nt_biocan,
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "GF" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -4561,6 +5128,12 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
+"GO" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "mfloor4"
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "GP" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5,
 /turf/simulated/floor/tiled,
@@ -4590,6 +5163,13 @@
 "GV" = (
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/submap/moonbase/poi/west_crater/garden3)
+"GW" = (
+/obj/structure/prop/machine/tgmc_console1,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "GX" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -4614,10 +5194,27 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
+"Hh" = (
+/obj/structure/hull_corner/long_vert{
+	dir = 10
+	},
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck4)
+"Hj" = (
+/obj/structure/reagent_dispensers/fueltank/barrel/three,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "Hl" = (
 /obj/structure/prop/rock/crystal_dust,
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/submap/moonbase/poi/west_crater/rocks4)
+"Ho" = (
+/obj/structure/table/steel,
+/obj/random/ammo,
+/obj/random/ammo,
+/obj/random/gun/random,
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "Hq" = (
 /obj/machinery/alarm,
 /turf/simulated/floor/plating,
@@ -4631,6 +5228,12 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
+"Ht" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "Hw" = (
 /obj/structure/closet/secure_closet/hydroponics,
 /obj/effect/floor_decal/milspec/color/green/half{
@@ -4677,6 +5280,10 @@
 /obj/effect/map_helper/airlock/door/ext_door,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/submap/moonbase/poi/west_crater/garden2)
+"HP" = (
+/obj/structure/bed/chair/bay/comfy,
+/turf/simulated/floor/wood,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "HQ" = (
 /obj/machinery/portable_atmospherics/hydroponics,
 /turf/simulated/floor/outdoors/grass/forest{
@@ -4686,14 +5293,6 @@
 "HT" = (
 /obj/machinery/camera/network/research_outpost,
 /turf/simulated/floor/tiled,
-/area/template_noop)
-"HU" = (
-/obj/effect/floor_decal/industrial/outline/yellow,
-/obj/machinery/camera/network/talon{
-	dir = 1
-	},
-/obj/structure/vehiclecage/quadbike,
-/turf/simulated/floor/tiled/techfloor,
 /area/template_noop)
 "HV" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -4712,13 +5311,6 @@
 /obj/item/weapon/material/knife/butch,
 /obj/item/weapon/material/kitchen/rollingpin,
 /turf/simulated/floor/wood,
-/area/template_noop)
-"Ic" = (
-/obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/plating/external/outdoors,
 /area/template_noop)
 "Ie" = (
 /turf/simulated/floor/plating/external/outdoors,
@@ -4746,6 +5338,11 @@
 /obj/structure/prop/rock/crystal_dust,
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/submap/moonbase/poi/west_crater/rocks2)
+"Ip" = (
+/obj/structure/grille/broken,
+/obj/random/grenade,
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "Iq" = (
 /obj/machinery/vending/hydronutrients,
 /obj/effect/floor_decal/milspec/color/green/half{
@@ -4770,10 +5367,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/template_noop)
-"Iv" = (
-/mob/living/simple_mob/mechanical/hivebot/support/logistics,
-/turf/simulated/floor/wood,
-/area/template_noop)
 "Iy" = (
 /turf/simulated/wall/wood,
 /area/template_noop)
@@ -4782,12 +5375,6 @@
 	dir = 1
 	},
 /turf/simulated/floor/tiled/dark,
-/area/template_noop)
-"IG" = (
-/obj/effect/floor_decal/industrial/warning/dust{
-	dir = 1
-	},
-/turf/simulated/floor/reinforced/airless,
 /area/template_noop)
 "IH" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
@@ -4806,10 +5393,20 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/wood,
 /area/submap/moonbase/poi/west_crater/home1)
+"IM" = (
+/obj/effect/decal/remains/human,
+/obj/structure/bed/chair/bay/shuttle,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "IR" = (
 /obj/effect/floor_decal/industrial/warning,
 /turf/simulated/floor/tiled/dark,
 /area/template_noop)
+"IS" = (
+/obj/structure/table/woodentable,
+/obj/random/drinkbottle,
+/turf/simulated/floor/wood,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "IU" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -4823,6 +5420,9 @@
 	},
 /turf/simulated/floor/plating,
 /area/submap/moonbase/poi/west_crater/home2)
+"IY" = (
+/turf/simulated/mineral/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "Ja" = (
 /obj/effect/floor_decal/milspec/color/green/corner,
 /obj/effect/floor_decal/steeldecal/steel_decals9{
@@ -4877,6 +5477,13 @@
 /obj/item/weapon/book/custom_library/fiction/truelovehathmyheart,
 /turf/simulated/floor/carpet/turcarpet,
 /area/template_noop)
+"Jj" = (
+/obj/machinery/blackbox_recorder,
+/obj/item/device/gps/internal/poi{
+	gps_tag = "Unidentified Signal"
+	},
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "Jl" = (
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/submap/moonbase/poi/west_crater/rocks6)
@@ -4887,6 +5494,12 @@
 	},
 /turf/simulated/floor/tiled,
 /area/submap/moonbase/poi/west_crater/home2)
+"Jn" = (
+/obj/structure/bed/chair/bay/shuttle{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor/red/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "Jo" = (
 /obj/structure/outcrop/platinum,
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
@@ -4897,6 +5510,10 @@
 	outdoors = 0
 	},
 /area/template_noop)
+"Jr" = (
+/obj/structure/frame,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "Js" = (
 /obj/machinery/atmospherics/trinary/mixer/m_mixer{
 	dir = 4;
@@ -4925,6 +5542,11 @@
 /obj/item/weapon/gun/projectile/shotgun/doublebarrel/flare,
 /turf/simulated/floor/carpet,
 /area/template_noop)
+"JB" = (
+/obj/structure/table/steel,
+/obj/item/weapon/storage/box/flashbangs,
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "JH" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -4935,6 +5557,13 @@
 /obj/structure/window/reinforced,
 /turf/simulated/floor/plating,
 /area/submap/moonbase/poi/west_crater/garden3)
+"JJ" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "JK" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -4972,32 +5601,39 @@
 "JV" = (
 /turf/simulated/wall/r_wall,
 /area/template_noop)
+"JY" = (
+/obj/structure/grille/broken,
+/obj/item/weapon/material/shard{
+	icon_state = "small"
+	},
+/obj/item/stack/rods,
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "JZ" = (
 /turf/simulated/floor/tiled/white,
 /area/submap/moonbase/poi/west_crater/home1)
-"Kc" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/simulated/floor/carpet/brown,
-/area/template_noop)
-"Kf" = (
+"Ka" = (
+/obj/structure/prop/rock/crystal,
+/turf/simulated/mineral/floor/cave/moonbase,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"Ke" = (
 /obj/item/bodybag/cryobag,
 /obj/item/weapon/storage/firstaid/adv,
 /obj/structure/table/steel,
 /obj/item/device/healthanalyzer,
 /turf/simulated/shuttle/floor,
-/area/template_noop)
+/area/submap/moonbase/poi/east_crater/wreck3)
+"Kh" = (
+/obj/structure/reagent_dispensers/fueltank/barrel/two,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/wreck4)
+"Kj" = (
+/turf/simulated/shuttle/floor,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "Kk" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /turf/simulated/floor/tiled,
 /area/submap/moonbase/poi/west_crater/garden1)
-"Km" = (
-/obj/random/forgotten_tram,
-/obj/random/forgotten_tram,
-/obj/structure/table/rack/shelf/steel,
-/turf/simulated/shuttle/floor/yellow,
-/area/template_noop)
 "Ko" = (
 /turf/simulated/floor/plating,
 /area/template_noop)
@@ -5005,6 +5641,14 @@
 /obj/random/energy,
 /turf/simulated/floor/carpet/turcarpet,
 /area/submap/moonbase/poi/west_crater/home1)
+"KC" = (
+/obj/structure/table/steel,
+/obj/random/awayloot,
+/obj/item/weapon/storage/mre/random,
+/obj/item/weapon/storage/mre/random,
+/obj/item/weapon/storage/mre/random,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "KD" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 4
@@ -5028,6 +5672,10 @@
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/rovercharging)
+"KO" = (
+/obj/structure/girder,
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "KQ" = (
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/submap/moonbase/poi/west_crater/rocks4)
@@ -5054,19 +5702,28 @@
 "Ld" = (
 /obj/structure/girder,
 /turf/simulated/floor/plating/external,
-/area/template_noop)
+/area/submap/moonbase/poi/east_crater/wreck1)
 "Le" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass_external,
 /obj/effect/map_helper/airlock/door/int_door,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/submap/moonbase/poi/west_crater/garden3)
+"Lf" = (
+/turf/simulated/shuttle/wall/hard_corner,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "Li" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 10
 	},
 /turf/simulated/wall/r_wall,
 /area/submap/moonbase/poi/west_crater/garden3)
+"Lj" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "mgibbl2"
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "Ll" = (
 /obj/structure/sink/kitchen{
 	dir = 4;
@@ -5092,6 +5749,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/template_noop)
+"Lq" = (
+/obj/structure/table/steel,
+/obj/random/awayloot/looseloot,
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"Ls" = (
+/obj/structure/prop/machine/alien_tank,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "Lt" = (
 /obj/machinery/airlock_sensor/airlock_exterior{
 	pixel_y = 32;
@@ -5116,6 +5782,13 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/template_noop)
+"Lx" = (
+/obj/structure/table/steel,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "Ly" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/table/standard,
@@ -5125,17 +5798,12 @@
 /obj/structure/frame,
 /turf/simulated/floor/plating/external/outdoors,
 /area/submap/moonbase/poi/west_crater/construction4)
-"LB" = (
-/obj/structure/table/steel,
-/obj/random/energy,
-/turf/simulated/shuttle/floor/yellow,
-/area/template_noop)
 "LC" = (
-/obj/structure/shuttle/engine/heater{
-	dir = 8
+/obj/effect/decal/cleanable/blood{
+	icon_state = "mfloor6"
 	},
-/turf/simulated/shuttle/floor/yellow/airless,
-/area/template_noop)
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "LE" = (
 /obj/effect/floor_decal/milspec/color/green/half{
 	dir = 6
@@ -5145,6 +5813,11 @@
 	},
 /turf/simulated/floor/tiled,
 /area/submap/moonbase/poi/west_crater/garden2)
+"LF" = (
+/obj/structure/table/steel,
+/obj/random/awayloot/looseloot,
+/turf/simulated/shuttle/floor,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "LG" = (
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /obj/machinery/light{
@@ -5155,6 +5828,14 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
+"LI" = (
+/obj/structure/table/steel,
+/obj/random/awayloot,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"LJ" = (
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/moonbase/poi/east_crater/wreck2)
 "LK" = (
 /obj/structure/prop/rock/flat,
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
@@ -5165,6 +5846,10 @@
 	},
 /turf/simulated/floor/wood,
 /area/template_noop)
+"LQ" = (
+/obj/structure/frame,
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "LV" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/structure/cable/green{
@@ -5181,6 +5866,12 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/template_noop)
+"LX" = (
+/obj/machinery/power/apc/super{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "LZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -5225,6 +5916,10 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/template_noop)
+"Mj" = (
+/obj/structure/frame,
+/turf/simulated/shuttle/floor/black,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "Mk" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -5237,21 +5932,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/submap/moonbase/poi/west_crater/garden2)
-"Mp" = (
-/obj/machinery/light_switch{
-	dir = 1;
-	pixel_y = -26
+"Mo" = (
+/obj/item/modular_computer/console{
+	dir = 4
 	},
-/obj/structure/table/woodentable,
-/obj/machinery/button/remote/blast_door{
-	dir = 4;
-	id = "talon_quietroom";
-	name = "window blast shields";
-	pixel_x = -28
+/obj/item/weapon/material/shard{
+	icon_state = "medium"
 	},
-/obj/machinery/recharger,
-/turf/simulated/floor/wood,
-/area/template_noop)
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "Mq" = (
 /obj/effect/floor_decal/industrial/warning/corner,
 /turf/simulated/floor/tiled/dark,
@@ -5285,13 +5974,69 @@
 /obj/structure/table/standard,
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
+"MA" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/machinery/door/blast/regular/open{
+	dir = 4;
+	id = "talon_quietroom"
+	},
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"MC" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/machinery/door/blast/regular/open{
+	dir = 4;
+	id = "talon_quietroom"
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "ME" = (
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/template_noop)
+"MG" = (
+/obj/structure/table/steel,
+/obj/item/weapon/cell/device/weapon,
+/obj/item/weapon/cell/device/weapon,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/moonbase/poi/east_crater/wreck2)
 "MI" = (
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor/tiled,
 /area/template_noop)
+"MJ" = (
+/obj/structure/reagent_dispensers/fueltank/barrel/two,
+/obj/machinery/light,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"MK" = (
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/airlock/silver,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"MN" = (
+/obj/item/weapon/material/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"MO" = (
+/turf/simulated/mineral/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/wreck1)
 "MQ" = (
 /obj/structure/shuttle/window,
 /obj/structure/grille,
@@ -5303,15 +6048,15 @@
 	},
 /turf/simulated/floor/tiled/old_tile,
 /area/template_noop)
+"MT" = (
+/obj/structure/bed/chair/bay/comfy{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "MU" = (
 /obj/machinery/atmospherics/binary/pump,
 /turf/simulated/floor/tiled/white,
-/area/template_noop)
-"MZ" = (
-/obj/effect/floor_decal/industrial/warning/dust/corner{
-	dir = 1
-	},
-/turf/simulated/floor/reinforced/airless,
 /area/template_noop)
 "Na" = (
 /obj/structure/bed/chair/comfy/black{
@@ -5356,13 +6101,6 @@
 /obj/effect/map_helper/airlock/door/ext_door,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/submap/moonbase/poi/west_crater/home1)
-"Ni" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 8;
-	icon_state = "burst_l"
-	},
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
-/area/template_noop)
 "Nj" = (
 /obj/machinery/power/rtg/fake_gen,
 /obj/structure/cable{
@@ -5381,12 +6119,31 @@
 	},
 /area/submap/moonbase/poi/west_crater/rovercharging)
 "Nm" = (
-/obj/structure/table/steel,
-/obj/item/weapon/storage/toolbox/mechanical{
-	pixel_y = 5
+/obj/structure/bed/chair/comfy/black,
+/turf/simulated/floor/carpet/blue2,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"Nn" = (
+/obj/structure/salvageable/shuttle_console,
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"No" = (
+/obj/structure/closet,
+/obj/random/maintenance/clean,
+/obj/random/maintenance/clean,
+/obj/random/maintenance/clean,
+/obj/random/awayloot/looseloot,
+/turf/simulated/floor/carpet/brown,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"Nq" = (
+/mob/living/simple_mob/animal/space/alien,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"Nt" = (
+/obj/structure/bed/chair/bay/shuttle{
+	dir = 8
 	},
-/turf/simulated/shuttle/floor/yellow/airless,
-/area/template_noop)
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "Nu" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1
@@ -5457,6 +6214,21 @@
 	},
 /turf/simulated/floor/tiled,
 /area/template_noop)
+"NO" = (
+/obj/machinery/power/apc/super{
+	dir = 1
+	},
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"NP" = (
+/obj/machinery/button/remote/blast_door{
+	dir = 1;
+	id = "xenoship";
+	pixel_y = -24;
+	pixel_x = 0
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "NQ" = (
 /obj/machinery/camera/network/research_outpost{
 	dir = 8
@@ -5472,6 +6244,10 @@
 	},
 /turf/simulated/floor/wood,
 /area/template_noop)
+"NS" = (
+/obj/structure/prop/machine/tube/starts_down,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "NW" = (
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/submap/moonbase/poi/west_crater/rocks2)
@@ -5499,6 +6275,22 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
+"Oc" = (
+/obj/structure/table/steel,
+/obj/item/weapon/storage/toolbox/mechanical{
+	pixel_y = 5
+	},
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"Oe" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating/external,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "Og" = (
 /obj/machinery/power/apc/alarms_hidden{
 	dir = 1
@@ -5521,6 +6313,12 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/submap/moonbase/poi/west_crater/home2)
+"Op" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "Os" = (
 /obj/structure/table/steel,
 /obj/item/weapon/storage/belt/hydro,
@@ -5552,6 +6350,13 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/template_noop)
+"Oy" = (
+/obj/item/weapon/material/shard,
+/obj/structure/bed/chair/bay/shuttle{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "Oz" = (
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
 	pixel_y = 24;
@@ -5571,12 +6376,16 @@
 	},
 /turf/simulated/floor/tiled/eris/dark/danger,
 /area/submap/moonbase/poi/west_crater/garden3)
-"OC" = (
-/obj/structure/cable/green{
-	icon_state = "4-8"
+"OE" = (
+/obj/structure/frame,
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"OH" = (
+/obj/structure/bed/chair/bay/shuttle{
+	dir = 4
 	},
-/turf/simulated/wall/rshull,
-/area/template_noop)
+/turf/simulated/shuttle/floor/red/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "OI" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/black,
 /obj/structure/cable/green{
@@ -5590,6 +6399,12 @@
 	outdoors = 0
 	},
 /area/template_noop)
+"OK" = (
+/obj/machinery/power/apc/super{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "OM" = (
 /obj/machinery/washing_machine,
 /turf/simulated/floor/tiled/white,
@@ -5651,11 +6466,14 @@
 /turf/simulated/floor/tiled,
 /area/template_noop)
 "Pc" = (
-/obj/random/forgotten_tram,
-/obj/structure/table/rack/shelf/steel,
-/obj/random/awayloot/looseloot,
-/turf/simulated/shuttle/floor/yellow/airless,
-/area/template_noop)
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "Pd" = (
 /obj/structure/cable/green{
 	icon_state = "4-8"
@@ -5674,6 +6492,13 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
+"Pf" = (
+/obj/machinery/blackbox_recorder,
+/obj/item/device/gps/internal/poi{
+	gps_tag = "Unidentified Signal"
+	},
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "Ph" = (
 /obj/machinery/shower{
 	pixel_y = 16
@@ -5689,12 +6514,14 @@
 /turf/simulated/floor/tiled/dark,
 /area/template_noop)
 "Pk" = (
-/obj/structure/table/woodentable,
-/obj/structure/flora/pottedplant/small{
-	pixel_y = -11
+/obj/structure/table/rack/shelf/steel,
+/obj/random/forgotten_tram,
+/obj/random/forgotten_tram,
+/obj/machinery/light{
+	dir = 4
 	},
-/turf/simulated/floor/wood,
-/area/template_noop)
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "Pm" = (
 /obj/structure/table/woodentable,
 /turf/simulated/floor/wood,
@@ -5702,6 +6529,11 @@
 "Po" = (
 /turf/simulated/wall,
 /area/submap/moonbase/poi/west_crater/construction5)
+"Pp" = (
+/obj/structure/table/rack/shelf/steel,
+/obj/random/explorer_shield,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "Pq" = (
 /obj/structure/girder,
 /turf/simulated/floor/plating/external/outdoors,
@@ -5760,25 +6592,25 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/template_noop)
+"PJ" = (
+/turf/simulated/mineral/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "PK" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass_external,
 /obj/effect/map_helper/airlock/door/ext_door,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/submap/moonbase/poi/west_crater/home2)
-"PM" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/full,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
+"PN" = (
+/turf/simulated/floor/tiled/eris/dark/gray_platform,
+/area/submap/moonbase/poi/east_crater/wreck4)
+"PR" = (
+/obj/effect/floor_decal/industrial/warning/color/tile,
+/obj/machinery/door/blast/multi_tile/four_tile_ver{
+	id = "xenoship"
 	},
-/obj/machinery/door/blast/regular/open{
-	dir = 4;
-	id = "talon_quietroom"
-	},
-/turf/simulated/floor/plating,
-/area/template_noop)
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "PT" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
@@ -5803,15 +6635,16 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
+"Qk" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/brown,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "Ql" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
-	},
-/turf/simulated/floor/wood,
-/area/template_noop)
+/obj/structure/bed/chair/comfy/black,
+/turf/simulated/floor/carpet/brown,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "Qm" = (
 /obj/machinery/atmospherics/pipe/tank/air{
 	dir = 4
@@ -5820,27 +6653,26 @@
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/home2)
+"Qq" = (
+/obj/structure/table/steel,
+/obj/random/energy,
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/moonbase/poi/east_crater/wreck2)
 "Qt" = (
 /turf/simulated/floor/plating/external/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
 /area/template_noop)
+"Qv" = (
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/airlock/hatch,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "Qw" = (
 /obj/item/weapon/bedsheet/blue,
 /obj/structure/bed,
 /turf/simulated/shuttle/floor,
-/area/template_noop)
-"Qx" = (
-/obj/structure/table/woodentable,
-/obj/machinery/atmospherics/unary/vent_scrubber/on{
-	dir = 1
-	},
-/obj/item/weapon/reagent_containers/food/drinks/glass2/coffeemug/talon{
-	pixel_x = 6;
-	pixel_y = -1
-	},
-/turf/simulated/floor/wood,
-/area/template_noop)
+/area/submap/moonbase/poi/east_crater/wreck1)
 "Qy" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/glass/beaker{
@@ -5859,19 +6691,11 @@
 /obj/effect/floor_decal/milspec/color/green/corner,
 /turf/simulated/floor/tiled,
 /area/submap/moonbase/poi/west_crater/garden3)
-"QJ" = (
-/obj/structure/hull_corner{
-	dir = 4
-	},
-/turf/template_noop,
-/area/template_noop)
-"QO" = (
-/obj/structure/table/woodentable,
-/obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 1
-	},
-/turf/simulated/floor/wood,
-/area/template_noop)
+"QK" = (
+/obj/structure/prop/machine/nt_biocan,
+/obj/machinery/light,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "QP" = (
 /obj/machinery/power/terminal{
 	dir = 8
@@ -5879,6 +6703,26 @@
 /obj/structure/cable,
 /turf/simulated/floor/plating/eris,
 /area/template_noop)
+"QQ" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/shuttle/engine/heater,
+/turf/simulated/floor/plating/external,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"QR" = (
+/mob/living/simple_mob/animal/space/carp/roguemines,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"QS" = (
+/obj/item/weapon/material/shard{
+	icon_state = "small"
+	},
+/obj/structure/bed/chair/bay/shuttle{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "QT" = (
 /obj/structure/bookcase{
 	name = "bookcase (Religious)"
@@ -5909,6 +6753,18 @@
 /obj/machinery/meter,
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
+"Rc" = (
+/obj/structure/flora/pottedplant/minitree,
+/turf/simulated/floor/carpet/blue2,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"Rd" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "Re" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
 /turf/simulated/floor/tiled/white,
@@ -5925,10 +6781,12 @@
 /obj/structure/window/reinforced,
 /turf/simulated/shuttle/plating/airless,
 /area/template_noop)
-"Rm" = (
-/obj/structure/flora/pottedplant/minitree,
-/turf/simulated/floor/carpet/brown,
-/area/template_noop)
+"Rl" = (
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"Ro" = (
+/turf/simulated/floor/plating/external,
+/area/submap/moonbase/poi/east_crater/wreck1)
 "Rq" = (
 /obj/effect/floor_decal/milspec/color/green/corner{
 	dir = 1
@@ -5951,13 +6809,10 @@
 	},
 /turf/simulated/floor/wood,
 /area/template_noop)
-"Rv" = (
-/obj/structure/table/steel,
-/obj/item/weapon/storage/toolbox/mechanical{
-	pixel_y = 5
-	},
-/turf/simulated/shuttle/floor/yellow,
-/area/template_noop)
+"Ru" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/simulated/floor/plating/external,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "Rx" = (
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 4
@@ -5977,6 +6832,12 @@
 "RB" = (
 /turf/simulated/shuttle/wall,
 /area/template_noop)
+"RC" = (
+/obj/item/weapon/material/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "RD" = (
 /obj/structure/flora/pottedplant/minitree,
 /obj/machinery/alarm,
@@ -6003,13 +6864,6 @@
 /obj/effect/floor_decal/milspec/color/green/half,
 /turf/simulated/floor/tiled,
 /area/submap/moonbase/poi/west_crater/garden1)
-"RH" = (
-/obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/plating/external,
-/area/template_noop)
 "RI" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -6042,13 +6896,8 @@
 /turf/simulated/floor/plating,
 /area/template_noop)
 "RT" = (
-/obj/structure/closet,
-/obj/random/maintenance/clean,
-/obj/random/maintenance/clean,
-/obj/random/maintenance/clean,
-/obj/random/awayloot/looseloot,
-/turf/simulated/floor/carpet/brown,
-/area/template_noop)
+/turf/simulated/wall/rshull,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "RV" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/glass_science{
@@ -6069,6 +6918,20 @@
 /obj/structure/bed/chair/comfy/black,
 /turf/simulated/floor/carpet,
 /area/submap/moonbase/poi/west_crater/home2)
+"Sm" = (
+/obj/structure/reagent_dispensers/fueltank/barrel/two,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"Sp" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/flora/pottedplant/orientaltree,
+/turf/simulated/floor/wood,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "Sq" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 9
@@ -6111,6 +6974,23 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/template_noop)
+"SB" = (
+/obj/item/stack/rods,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"SC" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/blue2,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"SD" = (
+/obj/machinery/blackbox_recorder,
+/obj/item/device/gps/internal/poi{
+	gps_tag = "Unidentified Signal"
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "SF" = (
 /turf/simulated/wall/r_wall,
 /area/submap/moonbase/poi/west_crater/garden3)
@@ -6169,11 +7049,6 @@
 	},
 /turf/simulated/shuttle/plating/carry,
 /area/template_noop)
-"SR" = (
-/turf/simulated/shuttle/floor/yellow{
-	edge_blending_priority = 1
-	},
-/area/template_noop)
 "SV" = (
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/simulated/floor/tiled/dark,
@@ -6224,12 +7099,10 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/submap/moonbase/poi/west_crater/garden3)
-"Tg" = (
-/obj/structure/hull_corner{
-	dir = 1
-	},
-/turf/template_noop,
-/area/template_noop)
+"Te" = (
+/mob/living/simple_mob/mechanical/hivebot,
+/turf/simulated/floor/carpet/brown,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "Ti" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -6240,12 +7113,33 @@
 /obj/structure/window/reinforced,
 /turf/simulated/floor/plating,
 /area/submap/moonbase/poi/west_crater/garden3)
-"Tm" = (
-/obj/structure/bed/chair/sofa/corp/right{
-	dir = 4
+"Tj" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced{
+	dir = 8
 	},
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/east_crater/wreck4)
+"Tn" = (
+/obj/structure/bookcase{
+	name = "bookcase (Religious)"
+	},
+/obj/item/weapon/book/bundle/custom_library/religious/zoroastrianism,
+/obj/item/weapon/book/custom_library/religious/feastofkubera,
+/obj/item/weapon/book/custom_library/religious/storyoflordganesha,
+/obj/item/weapon/book/custom_library/religious/sungoddessofkorea,
+/obj/item/weapon/book/custom_library/religious/wayofbleedingswan,
 /turf/simulated/floor/wood,
-/area/template_noop)
+/area/submap/moonbase/poi/east_crater/wreck3)
+"To" = (
+/obj/structure/prop/machine/alien_tank/starts_broken,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"Tp" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/simulated/floor/plating/external,
+/area/submap/moonbase/poi/east_crater/wreck1)
 "Tr" = (
 /obj/machinery/chem_master,
 /obj/machinery/camera/network/research_outpost{
@@ -6253,6 +7147,18 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/template_noop)
+"Ts" = (
+/obj/random/multiple/corp_crate,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"Tt" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/table/woodentable,
+/obj/item/modular_computer/tablet/preset/custom_loadout/elite,
+/turf/simulated/floor/carpet/blue2,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "Tw" = (
 /obj/structure/cable/green{
 	icon_state = "2-8"
@@ -6282,6 +7188,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/template_noop)
+"TF" = (
+/obj/structure/shuttle/window,
+/obj/structure/grille,
+/turf/simulated/floor,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"TG" = (
+/obj/item/weapon/material/shard,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "TH" = (
 /obj/machinery/vending/phoronresearch,
 /turf/simulated/floor/tiled/white,
@@ -6304,17 +7219,19 @@
 	},
 /turf/simulated/floor/tiled,
 /area/template_noop)
-"TM" = (
-/obj/machinery/door/firedoor/glass/talon,
-/obj/machinery/door/airlock/maintenance/common,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/plating,
-/area/template_noop)
 "TO" = (
 /obj/structure/bed/chair/office/light,
 /turf/simulated/floor/tiled,
 /area/template_noop)
+"TP" = (
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck4)
+"TQ" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck2)
 "TU" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -6331,6 +7248,9 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/template_noop)
+"TX" = (
+/turf/simulated/floor/wood,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "TY" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -6346,14 +7266,6 @@
 	dir = 5
 	},
 /turf/simulated/floor/plating,
-/area/template_noop)
-"Ue" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/structure/table/woodentable,
-/obj/item/modular_computer/laptop/preset/custom_loadout/elite,
-/turf/simulated/floor/carpet/brown,
 /area/template_noop)
 "Ug" = (
 /obj/structure/cable{
@@ -6379,6 +7291,17 @@
 	},
 /turf/simulated/floor/tiled,
 /area/template_noop)
+"Uo" = (
+/obj/structure/bookcase{
+	name = "bookcase (Non-Fiction)"
+	},
+/obj/item/weapon/book/bundle/custom_library/nonfiction/riseandfallofpersianempire,
+/obj/item/weapon/book/bundle/custom_library/nonfiction/skrelliancastesystem,
+/obj/item/weapon/book/bundle/custom_library/nonfiction/viabilityofcorporategov,
+/obj/item/weapon/book/custom_library/nonfiction/freesirisailightbulbs,
+/obj/item/weapon/book/manual/synthetic_life,
+/turf/simulated/floor/wood,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "Us" = (
 /obj/machinery/artifact_scanpad,
 /obj/machinery/light{
@@ -6397,12 +7320,22 @@
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /turf/simulated/floor/wood,
 /area/template_noop)
-"UD" = (
-/obj/structure/bed/chair/sofa/corp/corner{
+"UB" = (
+/obj/machinery/light{
 	dir = 1
 	},
-/turf/simulated/floor/wood,
-/area/template_noop)
+/obj/structure/table/steel,
+/obj/item/ammo_magazine/ammo_box/b12g/pellet,
+/obj/item/ammo_magazine/ammo_box/b12g/stunshell,
+/obj/random/projectile/shotgun,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"UD" = (
+/obj/item/weapon/material/shard{
+	icon_state = "small"
+	},
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "UF" = (
 /obj/machinery/power/apc{
 	dir = 1
@@ -6417,18 +7350,10 @@
 /obj/structure/railing,
 /turf/simulated/floor/wood,
 /area/template_noop)
-"UG" = (
-/obj/structure/table/woodentable,
-/obj/random/paicard,
-/turf/simulated/floor/wood,
-/area/template_noop)
-"UJ" = (
-/obj/structure/catwalk,
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating,
-/area/template_noop)
+"UH" = (
+/obj/structure/reagent_dispensers/fueltank/barrel/two,
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck1)
 "UK" = (
 /obj/machinery/washing_machine,
 /turf/simulated/floor/tiled,
@@ -6449,12 +7374,12 @@
 	},
 /area/template_noop)
 "UP" = (
-/obj/machinery/blackbox_recorder,
-/obj/item/device/gps/internal/poi{
-	gps_tag = "Unidentified Signal"
+/obj/structure/bed/chair/bay/shuttle{
+	dir = 1
 	},
-/turf/simulated/shuttle/floor,
-/area/template_noop)
+/obj/machinery/light,
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "UU" = (
 /obj/structure/closet/crate/chest,
 /obj/random/awayloot/looseloot,
@@ -6464,6 +7389,10 @@
 /obj/structure/prop/rock/crystal,
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/submap/moonbase/poi/west_crater/rocks4)
+"UY" = (
+/mob/living/simple_mob/animal/space/carp/roguemines,
+/turf/simulated/floor/plating/external,
+/area/submap/moonbase/poi/east_crater/wreck2)
 "UZ" = (
 /obj/effect/floor_decal/milspec/color/green/corner{
 	dir = 8
@@ -6471,6 +7400,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled,
 /area/submap/moonbase/poi/west_crater/garden3)
+"Va" = (
+/obj/machinery/door/firedoor/border_only,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "Ve" = (
 /obj/structure/cable{
 	icon_state = "2-8"
@@ -6535,10 +7468,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/submap/moonbase/poi/west_crater/home1)
-"Vm" = (
-/obj/structure/flora/pottedplant/orientaltree,
-/turf/simulated/floor/wood,
-/area/template_noop)
 "Vn" = (
 /obj/structure/bed/double,
 /obj/item/weapon/bedsheet/hopdouble,
@@ -6587,6 +7516,17 @@
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
+"Vv" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/item/weapon/material/shard{
+	icon_state = "small"
+	},
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "Vw" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/outdoors/grass/forest{
@@ -6693,6 +7633,22 @@
 	},
 /turf/simulated/floor/tiled,
 /area/submap/moonbase/poi/west_crater/home2)
+"VU" = (
+/obj/random/awayloot/looseloot,
+/obj/structure/table/rack/shelf/steel,
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"VW" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/table/woodentable,
+/obj/item/modular_computer/laptop/preset/custom_loadout/elite,
+/turf/simulated/floor/carpet/brown,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"VY" = (
+/turf/simulated/shuttle/wall/hard_corner,
+/area/submap/moonbase/poi/east_crater/wreck1)
 "Wa" = (
 /obj/structure/table/steel,
 /obj/item/weapon/storage/toolbox/hydro,
@@ -6744,10 +7700,6 @@
 	},
 /turf/simulated/shuttle/floor,
 /area/template_noop)
-"Wh" = (
-/obj/random/multiple/corp_crate,
-/turf/simulated/floor/plating/external/outdoors,
-/area/template_noop)
 "Wj" = (
 /obj/structure/table/woodentable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -6758,12 +7710,6 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
-/area/template_noop)
-"Wm" = (
-/obj/structure/table/rack/shelf/steel,
-/obj/item/weapon/handcuffs,
-/obj/item/weapon/handcuffs,
-/turf/simulated/shuttle/floor/yellow/airless,
 /area/template_noop)
 "Wn" = (
 /obj/machinery/atmospherics/pipe/manifold/visible,
@@ -6785,6 +7731,10 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /turf/simulated/floor/tiled,
 /area/template_noop)
+"Ws" = (
+/obj/structure/reagent_dispensers/fueltank/barrel/two,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck2)
 "Wu" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 8
@@ -6797,27 +7747,23 @@
 	},
 /turf/simulated/floor/plating,
 /area/template_noop)
-"WJ" = (
-/obj/structure/bookcase{
-	name = "bookcase (Non-Fiction)"
-	},
-/obj/item/weapon/book/bundle/custom_library/nonfiction/riseandfallofpersianempire,
-/obj/item/weapon/book/bundle/custom_library/nonfiction/skrelliancastesystem,
-/obj/item/weapon/book/bundle/custom_library/nonfiction/viabilityofcorporategov,
-/obj/item/weapon/book/custom_library/nonfiction/freesirisailightbulbs,
-/obj/item/weapon/book/manual/synthetic_life,
-/turf/simulated/floor/wood,
-/area/template_noop)
-"WM" = (
-/obj/structure/flora/pottedplant/minitree,
-/turf/simulated/floor/carpet/blue2,
-/area/template_noop)
+"WE" = (
+/obj/structure/prop/machine/tgmc_console5,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "WR" = (
 /obj/machinery/light/lamppost{
 	dir = 8
 	},
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/submap/moonbase/poi/west_crater/rovercharging)
+"WT" = (
+/obj/structure/shuttle/engine/heater,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating/external,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "WW" = (
 /obj/structure/table/steel,
 /obj/item/weapon/storage/belt/hydro,
@@ -6836,6 +7782,17 @@
 /obj/structure/prop/rock/crystal,
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/submap/moonbase/poi/west_crater/rocks2)
+"Xg" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "Xj" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/binary/pump{
@@ -6843,6 +7800,13 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
+"Xl" = (
+/obj/structure/shuttle/engine/heater,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating/external,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "Xm" = (
 /obj/machinery/atmospherics/pipe/tank/air{
 	dir = 4
@@ -6860,6 +7824,18 @@
 	edge_blending_priority = 1
 	},
 /area/submap/moonbase/poi/west_crater/home1)
+"Xt" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "mfloor7"
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"Xu" = (
+/obj/structure/bed/chair/bay/shuttle{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "Xv" = (
 /obj/structure/table/steel,
 /obj/effect/floor_decal/milspec/color/green/half{
@@ -6885,12 +7861,22 @@
 	},
 /turf/simulated/floor/tiled,
 /area/submap/moonbase/poi/west_crater/garden1)
+"XE" = (
+/obj/structure/reagent_dispensers/watertank/high,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "XH" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 9
 	},
 /turf/simulated/wall/r_wall,
 /area/submap/moonbase/poi/west_crater/home2)
+"XI" = (
+/obj/structure/bed/chair/sofa/corp/corner{
+	dir = 1
+	},
+/turf/simulated/floor/wood,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "XJ" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -6933,9 +7919,11 @@
 /turf/simulated/floor/plating/external/moonbaseplating/outdoors,
 /area/submap/moonbase/poi/west_crater/home2)
 "XR" = (
-/obj/structure/prop/machine/tgmc_console3/starts_on,
-/turf/simulated/shuttle/floor/black,
-/area/template_noop)
+/obj/structure/table/steel,
+/obj/random/powercell,
+/obj/random/powercell,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "XX" = (
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/submap/moonbase/poi/west_crater/construction4)
@@ -6969,14 +7957,10 @@
 "Yh" = (
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
-"Yn" = (
-/obj/machinery/door/blast/regular{
-	dir = 4;
-	id = "talon_cargo_port";
-	name = "Cargo Loading Hatch"
-	},
-/turf/simulated/floor/tiled/techfloor/grid,
-/area/template_noop)
+"Yi" = (
+/mob/living/simple_mob/mechanical/hivebot,
+/turf/simulated/floor/carpet/blue2,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "Yo" = (
 /obj/machinery/power/rtg/fake_gen,
 /obj/structure/cable{
@@ -6990,6 +7974,22 @@
 /obj/effect/map_helper/airlock/door/ext_door,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/template_noop)
+"Yr" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/wreck4)
+"Ys" = (
+/obj/structure/bed/chair/bay/comfy{
+	dir = 1
+	},
+/turf/simulated/floor/wood,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"Yu" = (
+/obj/structure/frame,
+/turf/simulated/shuttle/floor/yellow,
+/area/submap/moonbase/poi/east_crater/wreck5)
 "Yw" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -7008,6 +8008,10 @@
 /obj/machinery/portable_atmospherics/canister/air/airlock,
 /turf/simulated/floor/tiled,
 /area/submap/moonbase/poi/west_crater/home1)
+"YA" = (
+/obj/structure/prop/machine/nt_biocan,
+/turf/simulated/floor/plating/external,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "YB" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -7020,6 +8024,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/submap/moonbase/poi/west_crater/garden1)
+"YC" = (
+/obj/structure/table/rack/shelf/steel,
+/obj/random/ammo,
+/obj/random/ammo,
+/obj/random/grenade,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/wreck4)
 "YH" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -7045,9 +8056,26 @@
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
 "YS" = (
-/obj/structure/bed/chair/comfy/black,
-/turf/simulated/floor/carpet/brown,
-/area/template_noop)
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/airlock/silver,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"YT" = (
+/obj/structure/table/steel,
+/obj/random/awayloot,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"YY" = (
+/obj/structure/prop/machine/nt_optable,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"Zc" = (
+/obj/structure/prop/machine/tradebeacon/starts_active,
+/turf/simulated/floor/plating/external,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "Zf" = (
 /obj/structure/closet/cabinet,
 /obj/item/clothing/suit/storage/hooded/wintercoat/hydro,
@@ -7056,6 +8084,11 @@
 /obj/item/clothing/under/rank/hydroponics/alt,
 /turf/simulated/floor/wood,
 /area/template_noop)
+"Zh" = (
+/obj/structure/bed/double,
+/obj/item/weapon/bedsheet/browndouble,
+/turf/simulated/floor/carpet/blue2,
+/area/submap/moonbase/poi/east_crater/wreck3)
 "Zl" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/black{
 	dir = 4
@@ -7099,6 +8132,10 @@
 /obj/structure/table/standard,
 /turf/simulated/floor/tiled/white,
 /area/template_noop)
+"ZD" = (
+/obj/random/multiple/corp_crate,
+/turf/simulated/floor/plating/external/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck1)
 "ZF" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -7135,6 +8172,13 @@
 	outdoors = 0
 	},
 /area/submap/moonbase/poi/west_crater/garden3)
+"ZW" = (
+/obj/machinery/power/apc/super{
+	dir = 1
+	},
+/obj/structure/prop/machine/stamper,
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/east_crater/xenoship)
 "ZX" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/alarms_hidden{
@@ -7207,29 +8251,29 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-bG
-bG
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+kR
+kR
+kR
+MO
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+kR
+kR
+kR
+kR
 kR
 kR
 kR
@@ -7349,29 +8393,29 @@ kR
 kR
 kR
 wi
-ME
-ME
-bG
-bG
-bG
-bG
-bG
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+kR
+MO
+MO
+MO
+MO
+MO
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+kR
+kR
 kR
 kR
 kR
@@ -7491,29 +8535,29 @@ kR
 kR
 kR
 wi
-ME
-ME
-bG
-bG
-bG
-bG
-bG
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-lV
-ME
-ME
-ME
+CR
+MO
+MO
+MO
+MO
+MO
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+ht
+CR
+CR
+CR
+kR
 kR
 kR
 kR
@@ -7633,29 +8677,29 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-bG
-bG
-bG
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+CR
+CR
+MO
+MO
+MO
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+kR
 kR
 kR
 kR
@@ -7775,29 +8819,28 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-RB
-RB
-xx
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+np
+np
+Cz
+CR
+CR
+CR
+CR
+CR
+CR
+CR
 kR
 kR
 kR
@@ -7805,21 +8848,22 @@ kR
 kR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+IY
+IY
+As
+As
+As
+As
+As
+lM
+As
+As
+As
+As
+As
+As
+IY
+IY
 kR
 kR
 kR
@@ -7917,52 +8961,52 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-ME
-RB
-MQ
-RB
-RB
-RB
-RB
+CR
+CR
+CR
+np
+sm
+np
+np
+np
+np
 Ld
-ME
-ME
-fu
-Wh
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+CR
+CR
+yE
+ZD
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
 kR
 kR
 kR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+IY
+IY
+IY
+IY
+As
+As
+in
+in
+in
+As
+As
+in
+in
+in
+As
+As
+IY
+IY
+IY
 kR
 kR
 kR
@@ -8059,53 +9103,53 @@ kR
 kR
 kR
 wi
-ME
-ME
-RB
-RB
-RB
-Kf
-pf
-RB
-CO
-CO
-lU
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-RB
-RB
-RB
-RB
-ME
+CR
+np
+np
+np
+Er
+YT
+np
+UH
+Ca
+Ro
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+np
+np
+np
+np
+CR
 kR
 kR
 kR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+IY
+IY
+IY
+IY
+in
+in
+in
+in
+As
+AY
+As
+in
+in
+in
+in
+in
+IY
+IY
+IY
+IY
 kR
 kR
 kR
@@ -8201,54 +9245,54 @@ kR
 kR
 kR
 wi
-ME
-ME
-MQ
-FH
-Fs
-rE
-rE
-RB
-CO
-lU
-lU
-ME
-ME
-ME
-ME
-xx
-RB
-RB
-RB
-hX
-Ic
-Bb
-ME
+CR
+sm
+ul
+un
+bh
+bh
+np
+Ca
+Ro
+Ro
+CR
+CR
+CR
+CR
+Cz
+np
+np
+np
+Sm
+hi
+fu
+CR
 kR
 kR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+IY
+IY
+IY
+IY
+IY
+in
+in
+in
+As
+As
+As
+vO
+As
+in
+in
+in
+in
+IY
+IY
+IY
+IY
+IY
 kR
 kR
 kR
@@ -8343,54 +9387,54 @@ kR
 kR
 kR
 wi
-ME
-ME
-MQ
-XR
-Fs
-rE
-rE
+CR
+sm
+ul
+un
+BZ
+bh
 zA
-CO
-lU
-ME
-ME
-ME
+Ca
+Ro
+CR
+CR
+CR
+yE
+CR
+yE
+yE
+np
+yj
+ti
+hi
 fu
-ME
-fu
-fu
-RB
-Rv
-op
-Ic
-Bb
-ME
+CR
 kR
 kR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+IY
+IY
+IY
+IY
+IY
+As
+oF
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+IY
+IY
+IY
+IY
+IY
 kR
 kR
 kR
@@ -8485,54 +9529,54 @@ kR
 kR
 kR
 wi
-ME
-ME
-MQ
-uW
-Fs
-rE
-rE
-RB
-CO
-lU
-ME
-ME
-ME
-Wh
-ME
-ME
-fu
-RB
-cw
-op
-RB
-ih
-ME
+CR
+sm
+pM
+un
+bh
+bh
+np
+Ca
+Ro
+CR
+CR
+CR
+ZD
+CR
+CR
+yE
+np
+Lq
+ti
+np
+VY
+CR
 kR
 kR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+IY
+IY
+IY
+IY
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+IY
+IY
+IY
+IY
 kR
 kR
 kR
@@ -8627,54 +9671,54 @@ kR
 kR
 kR
 wi
-ME
-ME
-RB
-RB
-RB
+CR
+np
+np
+np
 vF
 Qw
-RB
-lU
-uT
-ME
-ME
-fu
-fu
-ME
-ME
-fu
+np
+Tp
+gP
+CR
+CR
+yE
+yE
+CR
+CR
+yE
 zA
-op
-op
-jy
-MQ
-ME
+FU
+ti
+nC
+sm
+CR
 kR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+IY
+IY
+IY
+IY
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+IY
+IY
+IY
+IY
 kR
 kR
 kR
@@ -8769,55 +9813,55 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-ME
-RB
-MQ
-RB
-RB
-RB
+CR
+CR
+CR
+np
+sm
+np
+np
+np
 Ld
-ME
-ME
-ME
-ME
-ME
-ME
-Wh
-RB
-Km
-op
-RB
-ih
-ME
+CR
+CR
+CR
+CR
+CR
+CR
+ZD
+np
+BQ
+ti
+np
+VY
+CR
 kR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+IY
+IY
+IY
+IY
+As
+As
+As
+As
+As
+As
+Fi
+As
+As
+As
+As
+As
+As
+As
+As
+As
+IY
+IY
+IY
+IY
 kR
 kR
 kR
@@ -8911,55 +9955,55 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+yE
+np
+BQ
+ti
+hi
 fu
-RB
-Km
-op
-Ic
-Bb
-ME
+CR
 kR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+IY
+IY
+IY
+IY
+As
+As
+As
+As
+As
+RT
+lN
+lN
+lN
+PR
+RT
+As
+As
+As
+As
+As
+IY
+IY
+IY
+IY
 kR
 kR
 kR
@@ -9053,55 +10097,55 @@ kR
 kR
 kR
 wi
-ME
-lV
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-fu
-ME
-ME
-ME
+ht
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+yE
+CR
+CR
+CR
 Ld
-ih
-RB
-AW
-Ic
-Bb
-ME
+VY
+np
+gW
+hi
+fu
+CR
 kR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+IY
+IY
+IY
+IY
+As
+As
+As
+nD
+As
+RT
+sN
+Bc
+sN
+NP
+RT
+As
+As
+oF
+As
+As
+As
+IY
+IY
+IY
 kR
 kR
 kR
@@ -9195,56 +10239,56 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-Wh
-fu
-ME
-ME
-ME
-ME
-RB
-RB
-RB
-RB
-ME
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+ZD
+yE
+CR
+CR
+CR
+CR
+np
+np
+np
+np
+CR
 kR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+IY
+IY
+IY
+IY
+As
+sZ
+Dr
+vX
+MC
+RT
+sN
+kL
+sN
+XE
+RT
+As
+As
+As
+As
+As
+As
+IY
+IY
+IY
+IY
 kR
 kR
 kR
@@ -9337,56 +10381,56 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-xx
-RB
-RB
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+Cz
+np
+np
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+IY
+IY
+IY
+IY
+IY
+As
+As
+sv
+ub
+nw
+RT
+FK
+kL
+sN
+kx
+RT
+As
+As
+As
+As
+As
+As
+IY
+IY
+IY
+IY
 kR
 kR
 kR
@@ -9479,56 +10523,56 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-bG
-bG
-bG
-bG
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+CR
+CR
+MO
+MO
+MO
+MO
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+IY
+IY
+IY
+IY
+IY
+As
+As
+aa
+ek
+AO
+RT
+sN
+NS
+sN
+sN
+RT
+As
+As
+As
+As
+As
+As
+IY
+IY
+IY
+IY
 kR
 kR
 kR
@@ -9621,56 +10665,56 @@ kR
 kR
 kR
 wi
-ME
-ME
-bG
-bG
-bG
-bG
-bG
-bG
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+CR
+MO
+MO
+MO
+MO
+MO
+MO
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+IY
+IY
+IY
+IY
+IY
+As
+As
+MA
+oz
+wG
+YS
+LC
+sN
+sN
+sN
+RT
+RT
+MC
+bj
+Zc
+As
+As
+IY
+IY
+IY
+IY
 kR
 kR
 kR
@@ -9763,56 +10807,56 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-bG
-bG
-bG
-bG
-bG
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-bG
-bG
-bG
-ME
-ME
-ME
-ME
+CR
+CR
+MO
+MO
+MO
+MO
+MO
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+MO
+MO
+MO
+CR
+CR
+CR
+CR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+IY
+IY
+IY
+IY
+As
+As
+As
+RT
+IM
+FN
+RT
+YY
+sN
+Nq
+sN
+YS
+GO
+eh
+MA
+rB
+As
+As
+IY
+IY
+IY
+IY
 kR
 kR
 kR
@@ -9905,56 +10949,56 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-ME
-bG
-bG
-bG
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-bG
-bG
-bG
-bG
-bG
-ME
-ME
-ME
+kR
+CR
+CR
+MO
+MO
+MO
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+MO
+MO
+MO
+MO
+MO
+CR
+CR
 kR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+IY
+IY
+IY
+IY
+As
+As
+As
+RT
+RT
+YS
+RT
+To
+sN
+sN
+sN
+RT
+GW
+MT
+MA
+YA
+As
+As
+As
+in
+IY
+IY
 kR
 kR
 kR
@@ -10047,56 +11091,56 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-bG
-bG
-ME
-ME
-ME
-ME
-ME
+kR
+kR
+kR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+CR
+MO
+MO
+CR
+CR
 kR
 kR
 kR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+IY
+in
+in
+As
+As
+oF
+As
+RT
+iw
+Xt
+RT
+GB
+sN
+sN
+MJ
+RT
+WE
+LI
+MA
+rB
+As
+As
+IY
+in
+in
+in
 kR
 kR
 kR
@@ -10213,32 +11257,32 @@ wi
 wi
 wi
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+in
+in
+IY
+IY
+As
+As
+As
+MA
+KC
+pn
+RT
+To
+sN
+sN
+oi
+RT
+RT
+MC
+uu
+lW
+As
+As
+IY
+IY
+IY
+IY
 kR
 kR
 kR
@@ -10331,21 +11375,19 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-bG
-bG
-bG
-bG
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+kR
+kR
+kk
+kk
+kk
+kk
+kk
+jy
+jy
+jy
+jy
+jy
+jy
 kR
 kR
 kR
@@ -10357,30 +11399,32 @@ kR
 kR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+IY
+IY
+IY
+IY
+As
+As
+As
+MA
+co
+gr
+RT
+Ls
+sN
+sN
+Hj
+RT
+As
+As
+As
+As
+As
+As
+IY
+IY
+IY
+IY
 kR
 kR
 kR
@@ -10473,21 +11517,20 @@ kR
 kR
 kR
 wi
-ME
-ME
-bG
-bG
-bG
-bG
-bG
-bG
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+kR
+kk
+kk
+kk
+kk
+kk
+kk
+kk
+jy
+jy
+jy
+jy
+jy
+jy
 kR
 kR
 kR
@@ -10498,31 +11541,32 @@ kR
 kR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+IY
+IY
+IY
+IY
+IY
+As
+As
+RT
+pE
+ER
+RT
+RT
+Va
+iX
+RT
+RT
+As
+As
+As
+As
+As
+As
+IY
+IY
+IY
+IY
 kR
 kR
 kR
@@ -10615,21 +11659,20 @@ kR
 kR
 kR
 wi
-ME
-bG
-bG
-bG
-bG
-bG
-bG
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+kR
+kk
+kk
+kk
+kk
+kk
+kk
+jy
+jy
+jy
+jy
+jy
+jy
+jy
 kR
 kR
 kR
@@ -10640,31 +11683,32 @@ kR
 kR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+IY
+IY
+IY
+IY
+IY
+As
+As
+RT
+RT
+RT
+RT
+ZW
+sN
+Lj
+qZ
+RT
+As
+As
+oF
+As
+As
+IY
+IY
+IY
+IY
+IY
 kR
 kR
 kR
@@ -10757,21 +11801,21 @@ kR
 kR
 kR
 wi
-bG
-bG
-bG
-bG
-bG
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+kk
+kk
+kk
+kk
+kk
+jy
+jy
+jy
+jy
+jy
+jy
+jy
+jy
+jy
+jy
 kR
 kR
 kR
@@ -10781,32 +11825,32 @@ kR
 kR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+IY
+IY
+IY
+IY
+IY
+As
+As
+As
+As
+As
+RT
+UB
+eh
+sN
+sN
+jR
+As
+As
+As
+As
+As
+IY
+IY
+IY
+IY
+IY
 kR
 kR
 kR
@@ -10899,21 +11943,21 @@ kR
 kR
 kR
 wi
-ME
-bG
-bG
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-lV
-ME
+kk
+kk
+kk
+jy
+jy
+jy
+jy
+jy
+jy
+jy
+jy
+jy
+jy
+ie
+jy
 kR
 kR
 kR
@@ -10923,32 +11967,32 @@ kR
 kR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+IY
+IY
+IY
+IY
+IY
+As
+As
+As
+As
+RT
+RT
+jL
+ve
+il
+QK
+RT
+RT
+As
+As
+As
+As
+IY
+IY
+IY
+IY
+IY
 kR
 kR
 kR
@@ -11041,21 +12085,21 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+jy
+jy
+jy
+jy
+jy
+jy
+jy
+jy
+jy
+jy
+jy
+jy
+jy
+jy
+jy
 kR
 kR
 kR
@@ -11065,32 +12109,32 @@ kR
 kR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+IY
+IY
+IY
+IY
+IY
+As
+As
+As
+As
+RT
+cp
+cp
+cp
+cp
+cp
+cp
+RT
+As
+As
+As
+As
+IY
+IY
+IY
+IY
+IY
 kR
 kR
 kR
@@ -11183,21 +12227,21 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-ih
-Ni
-Ni
-ih
-Ni
-Ni
-ih
-ME
-ME
-ME
-ME
-ME
+jy
+jy
+jy
+kX
+hx
+hx
+kX
+hx
+hx
+kX
+jy
+jy
+jy
+jy
+jy
 kR
 kR
 kR
@@ -11207,31 +12251,31 @@ kR
 kR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+IY
+IY
+IY
+IY
+IY
+As
+oF
+As
+As
+RT
+sc
+sc
+sc
+sc
+sc
+sc
+RT
+As
+As
+As
+As
+IY
+IY
+IY
+IY
 kR
 kR
 kR
@@ -11325,21 +12369,21 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-RB
-LC
-LC
-RB
-LC
-LC
-RB
-ME
-ME
-ME
-ME
-ME
+jy
+jy
+jy
+io
+TQ
+TQ
+io
+TQ
+TQ
+io
+jy
+jy
+jy
+jy
+jy
 kR
 kR
 kR
@@ -11349,31 +12393,31 @@ kR
 kR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+IY
+IY
+IY
+IY
+IY
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+IY
+IY
+IY
+IY
 kR
 kR
 kR
@@ -11467,21 +12511,21 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-MQ
-Nm
-sX
-wE
-sX
-Pc
-MQ
-ME
-ME
-ME
-ME
-ME
+jy
+jy
+jy
+hb
+Oc
+Rl
+vx
+Rl
+hG
+hb
+jy
+jy
+jy
+jy
+jy
 kR
 kR
 kR
@@ -11492,30 +12536,30 @@ kR
 kR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+IY
+IY
+IY
+IY
+IY
+As
+As
+As
+As
+As
+As
+As
+ah
+As
+As
+As
+As
+As
+As
+As
+IY
+IY
+IY
+IY
 kR
 kR
 kR
@@ -11609,21 +12653,21 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-MQ
+jy
+jy
+jy
+hb
 lU
 lU
-sX
-sX
-tB
-MQ
-ME
-ME
-ME
-ME
-ME
+Rl
+Rl
+EK
+hb
+jy
+jy
+jy
+jy
+jy
 kR
 kR
 kR
@@ -11634,30 +12678,30 @@ kR
 kR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+IY
+IY
+IY
+IY
+IY
+IY
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+IY
+IY
+IY
+IY
 kR
 kR
 kR
@@ -11751,21 +12795,21 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-RB
-ME
-ME
-aN
+jy
+jy
+jy
+io
+jy
+jy
+UY
 lU
-sX
-RB
-ME
-ME
-ME
-ME
-ME
+Rl
+io
+jy
+jy
+jy
+jy
+jy
 kR
 kR
 kR
@@ -11777,28 +12821,28 @@ kR
 kR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+As
+As
+As
+As
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
 kR
 kR
 kR
@@ -11893,21 +12937,21 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-xx
-ME
-ME
-ME
-ME
-ME
+jy
+jy
+jy
+jy
+jy
+jy
+jy
+jy
+jy
+cs
+jy
+jy
+jy
+jy
+jy
 kR
 kR
 kR
@@ -11920,27 +12964,27 @@ kR
 kR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
 kR
 kR
 kR
@@ -12035,21 +13079,21 @@ wi
 wi
 wi
 wi
-ME
-ME
-ME
-xx
-fu
-fu
-ME
-fu
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+jy
+jy
+jy
+cs
+nc
+gl
+jy
+gl
+jy
+jy
+jy
+jy
+jy
+jy
+jy
 kR
 kR
 kR
@@ -12063,24 +13107,24 @@ kR
 kR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
 kR
 kR
 kR
@@ -12177,21 +13221,21 @@ EP
 kR
 kR
 wi
-lV
-ME
-ME
-RB
-fu
-fu
-ME
-fu
-Wh
-xx
-ME
-ME
-bG
-ME
-ME
+ie
+jy
+jy
+io
+gl
+gl
+jy
+gl
+Al
+cs
+jy
+jy
+kk
+jy
+jy
 kR
 kR
 kR
@@ -12207,22 +13251,22 @@ kR
 kR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
 kR
 kR
 kR
@@ -12319,21 +13363,21 @@ EP
 kR
 kR
 wi
-ME
-ME
-ME
-RB
-Wh
-fu
-ME
-ME
-fu
-xx
-ME
-ME
-bG
-bG
-ME
+jy
+jy
+jy
+io
+Al
+gl
+jy
+jy
+gl
+cs
+jy
+jy
+kk
+kk
+jy
 kR
 kR
 kR
@@ -12352,16 +13396,16 @@ kR
 kR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
+IY
 kR
 kR
 kR
@@ -12461,21 +13505,21 @@ EP
 kR
 kR
 wi
-ME
-ME
-ME
-xx
-fu
-ME
-lV
-ME
-fu
-xx
-ME
-bG
-bG
-bG
-ME
+jy
+jy
+jy
+cs
+gl
+jy
+ie
+jy
+gl
+cs
+jy
+kk
+kk
+kk
+jy
 kR
 kR
 kR
@@ -12497,11 +13541,11 @@ kR
 kR
 kR
 kR
-kR
-kR
-kR
-kR
-kR
+IY
+IY
+IY
+IY
+IY
 kR
 kR
 kR
@@ -12603,21 +13647,21 @@ EP
 kR
 kR
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-fu
-RB
-ME
-bG
-bG
-bG
-ME
+jy
+jy
+jy
+jy
+jy
+jy
+jy
+jy
+nc
+io
+jy
+kk
+kk
+kk
+jy
 kR
 kR
 kR
@@ -12745,21 +13789,21 @@ EP
 kR
 kR
 wi
-ME
-ME
-ME
-ME
-ME
-ME
+jy
+jy
+jy
+jy
+jy
+jy
 lU
 lU
-sX
-RB
-bG
-bG
-bG
-bG
-ME
+Ws
+io
+kk
+kk
+kk
+kk
+jy
 kR
 kR
 kR
@@ -12887,21 +13931,21 @@ EP
 kR
 kR
 wi
-ME
-ME
-ME
-xx
-sX
-sX
-sX
-sX
-sX
-bG
-bG
-bG
-bG
-bG
-ME
+jy
+jy
+jy
+cs
+Rl
+Rl
+Rl
+Rl
+Rl
+kk
+kk
+kk
+kk
+kk
+jy
 kR
 kR
 kR
@@ -13029,21 +14073,21 @@ EP
 kR
 kR
 wi
-ME
-ME
-ME
-RB
+jy
+jy
+jy
+io
+vo
+Rl
+QR
 lU
-sX
-rQ
-lU
-bG
-bG
-bG
-bG
-bG
-bG
-ME
+kk
+kk
+kk
+kk
+kk
+kk
+jy
 kR
 kR
 kR
@@ -13171,21 +14215,21 @@ EP
 kR
 kR
 wi
-ME
-ME
-ME
-RB
-uT
-sX
-sX
-sX
-bG
-bG
-bG
-bG
-bG
-ME
-ME
+jy
+jy
+jy
+io
+bM
+Rl
+Rl
+Rl
+kk
+kk
+kk
+kk
+kk
+jy
+jy
 kR
 kR
 kR
@@ -13313,21 +14357,21 @@ EP
 kR
 kR
 wi
-ME
-ME
-ME
-RB
-RB
-RB
-zA
-RB
-RB
-ih
-ME
-ME
-ME
-ME
-ME
+jy
+jy
+jy
+io
+io
+io
+MK
+io
+io
+kX
+jy
+jy
+jy
+jy
+jy
 kR
 kR
 kR
@@ -13455,21 +14499,21 @@ EP
 kR
 kR
 wi
-ME
-ME
-ME
-RB
-LB
-ex
-op
-kk
-Dx
-RB
-ME
-ME
-ME
-ME
-ME
+jy
+jy
+jy
+io
+Qq
+MG
+LJ
+sQ
+VU
+io
+jy
+jy
+jy
+jy
+jy
 kR
 kR
 kR
@@ -13597,21 +14641,21 @@ EP
 kR
 kR
 wi
-ME
-ME
-ME
-MQ
-op
-SR
-op
-op
-op
-MQ
-ME
-ME
-ME
-ME
-ME
+jy
+jy
+jy
+hb
+LJ
+jC
+LJ
+LJ
+LJ
+hb
+jy
+jy
+jy
+jy
+jy
 kR
 kR
 kR
@@ -13739,21 +14783,21 @@ EP
 kR
 kR
 wi
-ME
-ME
-ME
-MQ
-SR
-te
-eV
-op
-op
-MQ
-ME
-ME
-ME
-ME
-ME
+jy
+jy
+jy
+hb
+jC
+Ka
+zp
+LJ
+LJ
+hb
+jy
+jy
+jy
+jy
+jy
 kR
 kR
 kR
@@ -13881,21 +14925,21 @@ EP
 kR
 kR
 wi
-ME
-ME
-ME
-RB
-et
-bG
-bG
-et
-et
-RB
-ME
-ME
-ME
-ME
-ME
+jy
+jy
+jy
+io
+OE
+kk
+kk
+OE
+OE
+io
+jy
+jy
+jy
+jy
+jy
 kR
 kR
 kR
@@ -14023,21 +15067,21 @@ EP
 kR
 kR
 wi
-ME
-ME
-ME
-RB
-MQ
-bG
-bG
-MQ
-MQ
-RB
-ME
-ME
-ME
-ME
-ME
+jy
+jy
+jy
+io
+hb
+kk
+kk
+hb
+hb
+io
+jy
+jy
+jy
+jy
+jy
 kR
 kR
 kR
@@ -14165,21 +15209,21 @@ EP
 kR
 kR
 wi
-ME
-ME
-bG
-bG
-bG
-bG
-bG
-bG
-bG
-ME
-ME
-ME
-ME
-ME
-ME
+jy
+jy
+kk
+kk
+kk
+kk
+kk
+kk
+kk
+jy
+jy
+jy
+jy
+jy
+jy
 kR
 kR
 kR
@@ -14307,21 +15351,21 @@ wi
 wi
 kR
 wi
-ME
-ME
-bG
-bG
-bG
-bG
-bG
-bG
-bG
-bG
-ME
-ME
-ME
-lV
-ME
+jy
+jy
+kk
+kk
+kk
+kk
+kk
+kk
+kk
+kk
+jy
+jy
+jy
+ie
+jy
 kR
 kR
 kR
@@ -14449,21 +15493,21 @@ kR
 kR
 kR
 wi
-ME
-ME
-bG
-bG
-bG
-bG
-bG
-bG
-bG
-ME
-ME
-ME
-ME
-ME
-ME
+jy
+jy
+kk
+kk
+kk
+kk
+kk
+kk
+kk
+jy
+jy
+jy
+jy
+jy
+jy
 kR
 kR
 kR
@@ -14591,21 +15635,21 @@ kR
 kR
 kR
 wi
-ME
-bG
-bG
-bG
-bG
-bG
-bG
-bG
-bG
-bG
-ME
-ME
-ME
-ME
-ME
+jy
+kk
+kk
+kk
+kk
+kk
+kk
+kk
+kk
+kk
+jy
+jy
+jy
+jy
+jy
 kR
 kR
 kR
@@ -14733,21 +15777,21 @@ kR
 kR
 kR
 wi
-ME
-bG
-bG
-bG
-bG
-bG
-bG
-bG
-bG
-bG
-ME
-ME
-ME
-ME
-ME
+kR
+kk
+kk
+kk
+kk
+kk
+kk
+kk
+kk
+kk
+jy
+jy
+jy
+jy
+kR
 kR
 kR
 kR
@@ -14875,21 +15919,21 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-bG
-bG
-bG
-bG
-bG
-bG
-ME
-ME
-ME
-ME
-ME
-ME
+kR
+kk
+kk
+kk
+kk
+kk
+kk
+kk
+kk
+jy
+jy
+jy
+jy
+jy
+kR
 kR
 kR
 kR
@@ -15017,21 +16061,21 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-ME
-bG
-bG
-bG
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+kR
+kR
+kk
+kk
+kk
+kk
+kk
+jy
+jy
+jy
+jy
+jy
+jy
+kR
+kR
 kR
 kR
 kR
@@ -15301,33 +16345,33 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-ME
-ME
-bG
-bG
-bG
-bG
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-bG
-bG
-bG
-bG
-ME
-ME
-ME
+kR
+kR
+BK
+cu
+cu
+cu
+cu
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+cu
+cu
+cu
+cu
+BK
+kR
+kR
+kR
+kR
 kR
 kR
 kR
@@ -15443,33 +16487,33 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-ME
-bG
-bG
-bG
-bG
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-bG
-bG
-bG
-bG
-bG
-bG
-ME
-ME
+kR
+BK
+cu
+cu
+cu
+cu
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+cu
+cu
+cu
+cu
+cu
+cu
+BK
+kR
+kR
+kR
 kR
 kR
 kR
@@ -15585,33 +16629,33 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-bG
-bG
-bG
-bG
-bG
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-bG
-bG
-bG
-bG
-bG
-ME
-ME
-ME
+BK
+cu
+cu
+cu
+cu
+cu
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+cu
+cu
+cu
+cu
+cu
+BK
+BK
+BK
+kR
+kR
 kR
 kR
 kR
@@ -15727,33 +16771,33 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-bG
-bG
-bG
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-bG
-ME
-ME
-ME
-ME
-ME
-ME
+BK
+cu
+cu
+cu
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+cu
+BK
+BK
+BK
+BK
+BK
+BK
+kR
+kR
 kR
 kR
 kR
@@ -15869,33 +16913,33 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-bG
-bG
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+BK
+cu
+cu
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+kR
+kR
 kR
 kR
 kR
@@ -16011,33 +17055,33 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-RB
-RB
-RB
-RB
-MQ
-MQ
-MQ
-MQ
-RB
-MQ
-MQ
-MQ
-MQ
-RB
-RB
-RB
-RB
-ME
-ME
-ME
+BK
+BK
+BK
+BK
+BK
+BF
+BF
+BF
+BF
+TF
+TF
+TF
+TF
+BF
+TF
+TF
+TF
+TF
+BF
+BF
+BF
+BF
+BK
+BK
+BK
+kR
+kR
 kR
 kR
 kR
@@ -16153,33 +17197,33 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-RB
-RB
-gT
-Kf
-RB
-oU
-qV
-to
-WM
-RB
-YS
-Ue
-BL
-Rm
-RB
-Bq
-Bq
-RB
-RB
-ME
-ME
+BK
+BK
+BK
+BK
+BF
+BF
+LF
+Ke
+BF
+Nm
+Tt
+bl
+Rc
+BF
+Ql
+VW
+jv
+tx
+BF
+Ts
+Ts
+BF
+BF
+BK
+BK
+kR
+kR
 kR
 kR
 kR
@@ -16295,33 +17339,33 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-ME
-ME
-RB
-RB
-UP
-rE
-rE
-RB
-to
-BJ
-to
-to
-RB
-BL
-BL
-Ab
-BL
-RB
-oo
-sX
-lU
-lU
-ME
-ME
+BK
+BK
+BK
+BF
+BF
+Am
+Kj
+Kj
+BF
+bl
+Yi
+bl
+bl
+BF
+jv
+jv
+Te
+jv
+BF
+qj
+xP
+tZ
+tZ
+BK
+BK
+kR
+kR
 kR
 kR
 kR
@@ -16437,33 +17481,33 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-ME
-ME
-MQ
-oY
+BK
+BK
+BK
+TF
+Mj
 Fs
-rE
-rE
-RB
-Dg
-DP
-to
-BX
-RB
-jf
-Kc
-BL
-RT
-RB
-Wm
-sX
-RH
-xQ
-ME
-ME
+Kj
+Kj
+BF
+Zh
+SC
+bl
+xq
+BF
+CC
+Qk
+jv
+No
+BF
+ko
+xP
+WT
+DR
+BK
+BK
+kR
+kR
 kR
 kR
 kR
@@ -16579,33 +17623,33 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-ME
-ME
-MQ
-FH
+BK
+BK
+BK
+TF
+gj
 Fs
-zR
-rE
-RB
-RB
-RB
-zA
-RB
-RB
-RB
-RB
-zA
-RB
-RB
-yQ
-sX
-RB
-RB
-ME
-ME
+vY
+Kj
+BF
+BF
+BF
+dc
+BF
+BF
+BF
+BF
+dc
+BF
+BF
+qg
+xP
+BF
+BF
+BK
+BK
+kR
+kR
 kR
 kR
 kR
@@ -16721,33 +17765,33 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-ME
-ME
-MQ
-XR
+BK
+BK
+BK
+TF
+gj
 Fs
-rE
-rE
-RB
-Vm
-no
-fv
-zh
-zh
-zh
-zh
-fv
-el
-RB
-xO
-sX
-iN
-RB
-ME
-ME
+Kj
+Kj
+BF
+eT
+xL
+TX
+IS
+IS
+IS
+IS
+TX
+Sp
+BF
+Fp
+xP
+Pf
+BF
+BK
+BK
+kR
+kR
 kR
 kR
 kR
@@ -16863,33 +17907,33 @@ kR
 kR
 kR
 wi
-ME
-ME
-lV
-ME
-ME
-MQ
-BQ
+hk
+BK
+BK
+TF
+gj
 Fs
-rE
-rE
-zA
-fv
-fv
-fv
-fv
-fv
-fv
-fv
-fv
-fv
-zA
-gW
-sX
-RB
-RB
-ME
-ME
+Kj
+Kj
+dc
+TX
+TX
+TX
+TX
+TX
+TX
+TX
+TX
+TX
+dc
+jG
+xP
+BF
+BF
+BK
+BK
+kR
+kR
 kR
 kR
 kR
@@ -17005,33 +18049,33 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-ME
-ME
-MQ
-oY
+BK
+BK
+BK
+TF
+Mj
 Fs
-rE
-rE
-RB
-wl
-kh
-Pm
-cf
-fv
-Iv
-fv
-fv
-fv
-RB
-AH
-sX
-RH
-xQ
-ME
-ME
+Kj
+Kj
+BF
+Tn
+HP
+FO
+Ys
+TX
+CJ
+TX
+TX
+TX
+BF
+NO
+xP
+QQ
+DR
+BK
+BK
+kR
+kR
 kR
 kR
 kR
@@ -17147,33 +18191,33 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-ME
-ME
-RB
-RB
-ih
-BM
-BM
-RB
-fF
-kh
-Pm
-cf
-fv
-UD
-Bt
-Tm
-fv
-RB
-oo
-sX
-RH
-xQ
-ME
-ME
+BK
+BK
+BK
+BF
+BF
+kZ
+kp
+kp
+BF
+Ew
+HP
+FO
+Ys
+TX
+XI
+gY
+bF
+TX
+BF
+yq
+xP
+WT
+DR
+BK
+BK
+kR
+kR
 kR
 kR
 kR
@@ -17289,33 +18333,33 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-RB
-RB
-Cf
-Cf
-RB
-WJ
-kh
-Pm
-cf
-fv
-hi
-Pk
-Pm
-fv
-RB
-zP
-sX
-RB
-RB
-ME
-ME
+BK
+BK
+BK
+BK
+BF
+BF
+rg
+rg
+BF
+Uo
+HP
+FO
+Ys
+Op
+kg
+fn
+FO
+TX
+BF
+Jr
+xP
+BF
+BF
+BK
+BK
+kR
+kR
 kR
 kR
 kR
@@ -17431,33 +18475,33 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-RB
-BM
-BM
-RB
-MQ
-MQ
-MQ
-MQ
-MQ
-MQ
-MQ
-MQ
-MQ
-RB
-Ld
-lU
-Ld
-ME
-ME
-ME
+BK
+BK
+BK
+BK
+BK
+BF
+kp
+kp
+BF
+TF
+TF
+TF
+TF
+TF
+TF
+TF
+TF
+TF
+BF
+dd
+tZ
+dd
+BK
+BK
+BK
+kR
+kR
 kR
 kR
 kR
@@ -17573,33 +18617,33 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+kR
+kR
 kR
 kR
 kR
@@ -17715,33 +18759,33 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+cu
+cu
+cu
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+kR
+kR
 kR
 kR
 kR
@@ -17857,33 +18901,33 @@ kR
 kR
 kR
 wi
-ME
-ME
-bG
-bG
-bG
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-lV
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+kR
+cu
+cu
+cu
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+hk
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+kR
+kR
+kR
 kR
 kR
 kR
@@ -17999,33 +19043,33 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-bG
-bG
-bG
-bG
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+kR
+kR
+cu
+cu
+cu
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+BK
+kR
+kR
+kR
+kR
 kR
 kR
 kR
@@ -18283,33 +19327,33 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+kR
+kR
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+kR
+kR
+kR
+kR
 kR
 kR
 kR
@@ -18425,33 +19469,33 @@ wi
 wi
 kR
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+kR
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+kR
+kR
+kR
 kR
 kR
 kR
@@ -18567,33 +19611,33 @@ Gc
 Gc
 Gc
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+eV
+pW
+pW
+pW
+pW
+TP
+TP
+TP
+TP
+kR
+kR
 kR
 kR
 kR
@@ -18709,33 +19753,33 @@ Gc
 Gc
 Gc
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+TP
+TP
+TP
+RC
+TG
+TP
+TP
+eV
+pW
+pW
+Ip
+mr
+pW
+pz
+pz
+pW
+pW
+pW
+BO
+sH
+Ru
+TP
+TP
+TP
+TP
+kR
+kR
 kR
 kR
 kR
@@ -18851,33 +19895,33 @@ iT
 Gc
 Gc
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+TP
+TP
+TP
+Rd
+kA
+lm
+pW
+pW
+pW
+wS
+YC
+Pp
+pW
+PN
+PN
+pW
+XR
+Lx
+mH
+Xl
+Ru
+TP
+TP
+PJ
+TP
+kR
+kR
 kR
 kR
 kR
@@ -18993,33 +20037,33 @@ iT
 Gc
 Gc
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+TP
+TP
+Xg
+wZ
+kz
+xk
+Xu
+pW
+Kh
+or
+or
+or
+pW
+pz
+pz
+pW
+fc
+fc
+fc
+pW
+pW
+TP
+PJ
+PJ
+TP
+kR
+kR
 kR
 kR
 kR
@@ -19135,33 +20179,33 @@ fQ
 Gc
 Gc
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+TP
+TP
+Pc
+rO
+dK
+cN
+fc
+mz
+or
+or
+iP
+or
+Yr
+or
+or
+pW
+OK
+fc
+fc
+sH
+Ru
+TP
+PJ
+PJ
+PJ
+kR
+kR
 kR
 kR
 kR
@@ -19277,33 +20321,33 @@ eu
 Gc
 Gc
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+TP
+TP
+Pc
+pb
+dK
+fc
+fc
+tC
+or
+or
+or
+or
+or
+or
+or
+Cj
+fc
+cN
+fc
+Xl
+Ru
+TP
+PJ
+PJ
+PJ
+kR
+kR
 kR
 kR
 kR
@@ -19419,33 +20463,33 @@ eu
 Gc
 Gc
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+TP
+TP
+fa
+Dj
+ma
+vl
+SD
+pW
+fi
+or
+or
+or
+or
+or
+or
+pW
+fc
+fc
+fc
+pW
+pW
+TP
+PJ
+PJ
+PJ
+kR
+kR
 kR
 kR
 kR
@@ -19561,33 +20605,33 @@ eu
 Gc
 Gc
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+PJ
+TP
+TP
+fa
+lm
+lm
+pW
+pW
+pW
+Nt
+Oy
+Nt
+Nt
+QS
+Nt
+pW
+rb
+Pk
+qY
+sH
+Ru
+TP
+PJ
+PJ
+TP
+kR
+kR
 kR
 kR
 kR
@@ -19703,33 +20747,33 @@ eu
 Gc
 Gc
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+PJ
+PJ
+TP
+TP
+TP
+TP
+TP
+Hh
+pW
+mr
+kA
+ej
+JY
+Tj
+pW
+pW
+pW
+pW
+BO
+Xl
+Ru
+TP
+TP
+TP
+TP
+kR
+kR
 kR
 kR
 kR
@@ -19845,33 +20889,33 @@ eu
 Gc
 Gc
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+PJ
+PJ
+PJ
+PJ
+PJ
+PJ
+TP
+TP
+TP
+TP
+RC
+TP
+TP
+TP
+TP
+TP
+Hh
+pW
+pW
+pW
+pW
+TP
+TP
+TP
+TP
+kR
+kR
 kR
 kR
 kR
@@ -19987,33 +21031,33 @@ eu
 Gc
 Gc
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+kR
+PJ
+PJ
+PJ
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+kR
+kR
+kR
 kR
 kR
 kR
@@ -20129,33 +21173,33 @@ eu
 Gc
 Gc
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+kR
+kR
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+kR
+kR
+kR
+kR
 kR
 kR
 kR
@@ -20271,33 +21315,33 @@ eu
 Gc
 Gc
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+wi
+wi
+wi
+wi
+wi
+wi
+wi
+wi
+wi
+wi
+wi
+wi
+wi
+wi
+wi
+wi
+wi
+wi
+wi
+wi
+wi
+wi
+wi
+wi
+wi
+wi
+wi
 kR
 kR
 kR
@@ -20413,33 +21457,33 @@ iT
 Gc
 Gc
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+kR
+kR
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+aD
+aD
+aD
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
 kR
 kR
 kR
@@ -20555,33 +21599,33 @@ iT
 Gc
 Gc
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+kR
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+aD
+aD
+aD
+aD
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
 kR
 kR
 kR
@@ -20697,33 +21741,33 @@ eu
 Gc
 Gc
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+fM
+fM
+fM
+fM
+UD
+fM
+fM
+MN
+fM
+fM
+fM
+aD
+aD
+aD
+aD
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
 kR
 kR
 kR
@@ -20839,33 +21883,33 @@ eu
 Gc
 Gc
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+fM
+fM
+fM
+ka
+bN
+yy
+JJ
+Vv
+ka
+fM
+fM
+fM
+aD
+aD
+aD
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
 kR
 kR
 kR
@@ -20981,33 +22025,33 @@ Gc
 Gc
 Gc
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+fM
+fM
+fM
+zz
+Jj
+Mo
+LQ
+kf
+zz
+te
+lt
+fM
+fM
+aD
+fM
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
 kR
 kR
 kR
@@ -21123,33 +22167,33 @@ Gc
 Gc
 Gc
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+fM
+fM
+fM
+zz
+Nn
+yn
+yn
+gp
+zz
+jK
+mh
+fM
+fM
+fM
+fM
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
 kR
 kR
 kR
@@ -21265,33 +22309,33 @@ wi
 wi
 wi
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+fM
+fM
+fM
+ka
+jf
+CO
+CO
+JB
+Lf
+ka
+ka
+Lf
+fM
+fM
+fM
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
 kR
 kR
 kR
@@ -21407,33 +22451,33 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+fM
+fM
+fM
+ka
+Ho
+CO
+CO
+lg
+ka
+OH
+OH
+ka
+fM
+fM
+fM
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
 kR
 kR
 kR
@@ -21549,33 +22593,33 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+fM
+fM
+fM
+zz
+CO
+CO
+CO
+lg
+ka
+Gg
+rx
+KO
+SB
+fM
+fM
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
 kR
 kR
 kR
@@ -21691,33 +22735,33 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+fM
+fM
+fM
+vZ
+CO
+CO
+CO
+CO
+Fz
+CF
+CF
+nE
+cy
+fM
+fM
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
 kR
 kR
 kR
@@ -21833,33 +22877,33 @@ kR
 kR
 kR
 wi
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-ME
+fM
+fM
+fM
+zz
+CO
+CO
+CO
+UP
+ka
+tz
+CF
+KO
+fM
+SB
+fM
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
 kR
 kR
 kR
@@ -21975,21 +23019,21 @@ kR
 kR
 kR
 wi
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+fM
+fM
+fM
+ka
+qR
+wr
+CO
+lg
+ka
+Jn
+Jn
+ka
+fM
+fM
+fM
 kR
 kR
 kR
@@ -22117,21 +23161,21 @@ kR
 kR
 kR
 wi
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+fM
+aD
+fM
+ka
+ka
+ka
+Qv
+ka
+ka
+ka
+ka
+ka
+fM
+fM
+fM
 kR
 kR
 kR
@@ -22259,21 +23303,21 @@ kR
 kR
 kR
 wi
-yh
-yh
-yh
-yh
-fH
-Yn
-IG
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+fM
+aD
+aD
+ka
+mo
+qK
+qK
+LX
+Cc
+Cc
+Cc
+ka
+fM
+fM
+fM
 kR
 kR
 kR
@@ -22401,21 +23445,21 @@ kR
 kR
 kR
 wi
-FB
-yh
-yh
-HU
-un
-un
-MZ
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+aD
+aD
+aD
+ka
+FH
+Yu
+qK
+Ht
+qK
+qK
+GC
+ka
+fM
+fM
+fM
 kR
 kR
 kR
@@ -22543,21 +23587,21 @@ kR
 kR
 kR
 wi
-yh
-yh
-FB
-un
-un
-Tg
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+aD
+aD
+aD
+Lf
+Oe
+Oe
+Oe
+Lf
+Oe
+Oe
+Oe
+Lf
+fM
+fM
+fM
 kR
 kR
 kR
@@ -22685,21 +23729,21 @@ kR
 kR
 kR
 wi
-FB
-tV
-FB
-un
-ui
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+aD
+aD
+aD
+aD
+aw
+aw
+aw
+fM
+aw
+aw
+aw
+fM
+fM
+fM
+fM
 kR
 kR
 kR
@@ -22827,21 +23871,21 @@ kR
 kR
 kR
 wi
-sp
-sp
-un
-un
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+aD
+aD
+aD
+aD
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
 kR
 kR
 kR
@@ -22969,20 +24013,20 @@ kR
 kR
 kR
 wi
-AS
-Mp
-un
-Tg
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+aD
+aD
+aD
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
 kR
 kR
 kR
@@ -23111,19 +24155,19 @@ kR
 kR
 kR
 wi
-fW
-QO
-PM
 kR
 kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+aD
+aD
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
 kR
 kR
 kR
@@ -23253,21 +24297,21 @@ kR
 kR
 kR
 wi
-Ql
-UG
-PM
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
-kR
+wi
+wi
+wi
+wi
+wi
+wi
+wi
+wi
+wi
+wi
+wi
+wi
+wi
+wi
+wi
 kR
 kR
 kR
@@ -23395,9 +24439,9 @@ kR
 kR
 kR
 wi
-DE
-Qx
-PM
+kR
+kR
+kR
 kR
 kR
 kR
@@ -23537,10 +24581,10 @@ kR
 kR
 kR
 wi
-db
-Fv
-un
-QJ
+kR
+kR
+kR
+kR
 kR
 kR
 kR
@@ -23679,13 +24723,13 @@ kR
 kR
 kR
 wi
-sp
-sp
-un
-un
-un
-un
-cP
+kR
+kR
+kR
+kR
+kR
+kR
+kR
 kR
 kR
 kR
@@ -23821,15 +24865,15 @@ kR
 kR
 kR
 wi
-ae
-ae
-TM
-EF
-oF
-un
-OC
-un
-un
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
 kR
 kR
 kR
@@ -23963,15 +25007,15 @@ kR
 kR
 kR
 wi
-sp
-sp
-sp
-sp
-bz
-oF
-UJ
-dB
-un
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
+kR
 kR
 kR
 kR
