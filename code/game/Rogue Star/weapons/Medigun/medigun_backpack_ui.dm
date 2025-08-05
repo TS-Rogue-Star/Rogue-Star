@@ -1,10 +1,10 @@
-/obj/item/device/medigun_backpack/tgui_interact(mob/user, datum/tgui/ui)
+/obj/item/device/continuous_medigun/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Medigun", name)
 		ui.open()
 
-/obj/item/device/medigun_backpack/tgui_data(mob/user)
+/obj/item/device/continuous_medigun/tgui_data(mob/user)
 	var/mob/living/carbon/human/H = medigun.current_target
 	var/patientname
 	var/patienthealth = 0
@@ -44,7 +44,7 @@
 		"gridstatus" = gridstatus,
 		"tankmax" = tankmax,
 		"power_cell_status" = bcell ? bcell.percent() : null,
-		"phoron_status" = sbin ? phoronvol/chemcap : null,
+		"cell_status" = ccell ? (ccell.percent()/100) : null,
 		"bruteheal_charge" = scapacitor ? brutecharge : null,
 		"burnheal_charge" = scapacitor ? burncharge : null,
 		"toxheal_charge" = scapacitor ? toxcharge : null,
@@ -65,7 +65,7 @@
 		)
 	return data
 
-/obj/item/device/medigun_backpack/proc/get_examine_data()
+/obj/item/device/continuous_medigun/proc/get_examine_data()
 	return list(
 		"smodule" = smodule ? list("name" = smodule.name, "range" = medigun.beam_range, "rating" = smodule.get_rating()) : null,
 		"smanipulator" = smanipulator ? list("name" = smanipulator.name, "rating" = smaniptier) : null,
@@ -74,14 +74,14 @@
 		"sbin" = sbin ? list("name" = sbin.name, "chemcap" = chemcap, "tankmax" = tankmax, "rating" = sbin.get_rating()) : null
 	)
 
-/obj/item/device/medigun_backpack/tgui_act(action, params, datum/tgui/ui)
+/obj/item/device/continuous_medigun/tgui_act(action, params, datum/tgui/ui)
 	if(..())
 		return TRUE
 
 	. = TRUE
 	switch(action)
-		if("gentoggle")
-			ui_action_click()
+		if("celleject")
+			cell_eject()
 			return TRUE
 
 		if("cancel_healing")
@@ -144,13 +144,22 @@
 			update_icon()
 			return TRUE
 
-/*/obj/item/device/medigun_backpack/ShiftClick(mob/user)
+/*/obj/item/device/continuous_medigun/ShiftClick(mob/user)
 	. = ..()
 	if(!medigun)
 		return
 	tgui_interact(user)*/ //changed to ui_action_click
-
-/obj/item/device/medigun_backpack/ui_action_click()
+/obj/item/device/continuous_medigun/proc/cell_eject()
+	if(!ccell)
+		return FALSE
+	charging = FALSE
+	ccell.forceMove(get_turf(loc))
+	//usr.put_in_hands(ccell)
+	to_chat(usr, span_notice("You remove the [ccell] from \the [src]."))
+	ccell = null
+	update_icon()
+	return TRUE
+/obj/item/device/continuous_medigun/ui_action_click()
 	. = ..()
 	if(!medigun)
 		return

@@ -1,7 +1,7 @@
 /obj/item/device/bork_medigun/linked
-	var/obj/item/device/medigun_backpack/medigun_base_unit
+	var/obj/item/device/continuous_medigun/medigun_base_unit
 
-/obj/item/device/bork_medigun/linked/Initialize(mapload, var/obj/item/device/medigun_backpack/backpack)
+/obj/item/device/bork_medigun/linked/Initialize(mapload, var/obj/item/device/continuous_medigun/backpack)
 	. = ..()
 	medigun_base_unit = backpack
 	RegisterSignal(src,COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
@@ -129,7 +129,7 @@
 			if(isliving(A))
 				target = A
 				break
-	if(!istype(medigun_base_unit, /obj/item/device/medigun_backpack/compact))
+	if(!istype(medigun_base_unit, /obj/item/device/continuous_medigun/compact))
 		update_twohanding()
 	if(busy && !(target == current_target) && isliving(target))
 		to_chat(user, span_warning("\The [src] is already targeting something."))
@@ -212,14 +212,18 @@
 			process_medigun(H, user, filter)
 			return
 		var/lastier = medigun_base_unit.slaser.get_rating()
-		//if(lastier >= 5)
-		if(checked_use(5))
-			H.add_modifier(/datum/modifier/medbeameffect, 2 SECONDS)
-			if(H.getHalLoss())
+		if(lastier >= 2)
+			if(checked_use(5))
+				H.add_modifier(/datum/modifier/medbeameffect, 2 SECONDS)
+			if(H.getHalLoss() && (checked_use(5)))
 				H.adjustHalLoss(-20)
-			H.AdjustParalysis(-1)
-			H.AdjustStunned(-1)
-			H.AdjustWeakened(-1)
+			if(H.weakened && (checked_use(5)))
+				H.AdjustWeakened(-1)
+			if(H.stunned && (checked_use(10)))
+				H.AdjustStunned(-1)
+			if(lastier >= 3) //paralysis is a bit costlier
+				if(H.paralysis && (checked_use(15)))
+					H.AdjustParalysis(-1)
 		var/healmod = lastier
 		/*if(H.getBruteLoss())
 			healmod = min(lastier,medigun_base_unit.brutecharge,H.getBruteLoss())
