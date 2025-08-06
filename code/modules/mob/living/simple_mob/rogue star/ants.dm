@@ -82,23 +82,18 @@
 /mob/living/simple_mob/vore/ant/New(newloc,var/team,var/oureyes)
 	. = ..()
 	if(team)
-		to_world("team [team]")
 		if(istype(team,/mob/living/simple_mob/vore/ant))
 			var/mob/living/simple_mob/vore/ant/A = team
-			to_world("Team is ant [A] - [A.faction]")
 			team_color = A.team_color
 			faction = A.faction
-			to_world("Set faction to [faction]")
 		else
 			team_color = team
 			faction = team_color
-			to_world("Team is not ant, faction is [faction]")
 	if(oureyes)
 		eye_color = oureyes
 	if(!team_color)
 		team_color = pick(list("#640a06","#1f1f33","#d4ac3d","#183d1d"))
 		faction = team_color
-		to_world("No team color, picked random, faction is [faction]")
 	color = team_color
 	if(!eye_color)
 		eye_color = random_color()
