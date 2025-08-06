@@ -832,6 +832,7 @@
 /turf/simulated/floor/wood/alt/panel,
 /area/security/detectives_office)
 "cr" = (
+/obj/structure/railing/grey,
 /obj/structure/lattice,
 /turf/simulated/open,
 /area/quartermaster/storage)
@@ -1484,7 +1485,6 @@
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/general)
 "ef" = (
-/obj/structure/railing/grey,
 /obj/structure/lattice,
 /turf/simulated/open,
 /area/quartermaster/storage)
@@ -2508,6 +2508,7 @@
 /obj/structure/bed/chair/comfy/black{
 	dir = 8
 	},
+/obj/effect/landmark/start/captain,
 /turf/simulated/floor/carpet/blue2,
 /area/crew_quarters/captain/moonbase/office)
 "gW" = (
@@ -33319,9 +33320,9 @@ qw
 qw
 qw
 TD
-cr
-cr
 ef
+ef
+cr
 iw
 iR
 Eq
@@ -34313,9 +34314,9 @@ qw
 qw
 qw
 TD
-cr
-cr
 ef
+ef
+cr
 jN
 iR
 Eq
