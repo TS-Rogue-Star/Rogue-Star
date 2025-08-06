@@ -33,7 +33,7 @@ var/datum/planet/virgo3x/planet_virgo3x = null
 	switch(sun_position)
 		if(0 to 0.3) // Night
 			low_brightness = 0.3
-			low_color = "#000066"
+			low_color = "#3d0066"
 
 			high_brightness = 0.4
 			high_color = "#66004D"
@@ -51,16 +51,16 @@ var/datum/planet/virgo3x/planet_virgo3x = null
 			low_brightness = 0.9
 			low_color = "#CC3300"
 
-			high_brightness = 3.0
+			high_brightness = 1.0
 			high_color = "#FF9933"
 			min = 0.50
 
 		if(0.45 to 1.00) // Noon
 			low_brightness = 3.0
-			low_color = "#DDDDDD"
+			low_color = "#83b0d4"
 
-			high_brightness = 10.0
-			high_color = "#FFFFFF"
+			high_brightness = 6.0
+			high_color = "#a8c6df"
 			min = 0.70
 
 	var/interpolate_weight = (abs(min - sun_position)) * 4
@@ -97,9 +97,9 @@ var/datum/planet/virgo3x/planet_virgo3x = null
 /datum/weather_holder/virgo3x
 	temperature = T0C
 	allowed_weather_types = list(
-		WEATHER_CLEAR			= new /datum/weather/virgo3x/clear()
-		/*WEATHER_OVERCAST		= new /datum/weather/virgo3x/overcast(),
-		WEATHER_LIGHT_SNOW		= new /datum/weather/virgo3x/light_snow(),
+		WEATHER_CLEAR			= new /datum/weather/virgo3x/clear(),
+		WEATHER_ANOMALY			= new /datum/weather/virgo3x/purpleanomaly()
+		/*WEATHER_LIGHT_SNOW		= new /datum/weather/virgo3x/light_snow(),
 		WEATHER_SNOW			= new /datum/weather/virgo3x/snow(),
 		WEATHER_BLIZZARD		= new /datum/weather/virgo3x/blizzard(),
 		WEATHER_RAIN			= new /datum/weather/virgo3x/rain(),
@@ -117,7 +117,8 @@ var/datum/planet/virgo3x/planet_virgo3x = null
 		WEATHER_FOG_ECLIPSE		= new /datum/weather/virgo3x/fog/eclipse()*/
 		)
 	roundstart_weather_chances = list(
-		WEATHER_CLEAR		= 1
+		WEATHER_CLEAR		= 5,
+		WEATHER_ANOMALY		= 1
 		)
 
 /datum/weather/virgo3x
@@ -128,19 +129,34 @@ var/datum/planet/virgo3x/planet_virgo3x = null
 /datum/weather/virgo3x/clear
 	name = "clear"
 	transition_chances = list(
-		WEATHER_CLEAR = 1
-		/*WEATHER_OVERCAST = 40,
-		WEATHER_LIGHT_SNOW = 2,
-		WEATHER_BLOOD_MOON = 2,
-		WEATHER_EMBERFALL = 1*/)
+		WEATHER_CLEAR = 5,
+		WEATHER_ANOMALY = 1
+		)
 	transition_messages = list(
-		"The sky clears up.",
-		"The sky is visible.",
-		"The weather is calm."
+		"The stars are clearly visible.",
+		"The empty sky is visible.",
 		)
 	sky_visible = TRUE
-	observed_message = "The sky is clear."
-	imminent_transition_message = "The sky is rapidly clearing up."
+	observed_message = "The stars are clear and cold."
+	imminent_transition_message = "The stars are returning to their cold emptiness."
+
+/datum/weather/virgo3x/purpleanomaly
+	name = "anomaly"
+	icon_state = "purpleanomaly"
+	temp_high = 2.7
+	temp_low = 2.7
+	light_modifier = 0.3
+	light_color = "#7529d8"
+	transition_chances = list(
+		WEATHER_CLEAR = 15,
+		WEATHER_ANOMALY = 5
+		)
+	transition_messages = list(
+		"Violet particles begin to flicker around you.",
+		"A strange  energy fills the air.",
+		)
+	observed_message = "A strange anomalous energy is seeping out of the rocks."
+	imminent_transition_message = "Purple spots begin to manifest from the rocks."
 
 /*/datum/weather/virgo3x/overcast
 	name = "overcast"

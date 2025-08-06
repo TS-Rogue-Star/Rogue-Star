@@ -1263,6 +1263,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/toystore)
+"dz" = (
+/obj/vehicle/train/engine/quadbike/random,
+/turf/simulated/mineral/floor/vacuum/moonbase,
+/area/moonbase/surface/levelone/south)
 "dA" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -2546,7 +2550,8 @@
 /area/moonbase/dorms/dorm4)
 "gZ" = (
 /obj/structure/ladder/up,
-/turf/simulated/mineral/floor/vacuum/moonbase,
+/obj/effect/floor_decal/industrial/outline,
+/turf/simulated/floor/airless/moonbaseplating,
 /area/moonbase/surface/levelone/north)
 "ha" = (
 /obj/effect/floor_decal/steeldecal/steel_decals10{
@@ -3346,6 +3351,14 @@
 	},
 /turf/simulated/floor/plating/moonbase,
 /area/moonbase/basement/caves/northeast)
+"jl" = (
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/powered/pump/filled,
+/obj/machinery/light,
+/turf/simulated/floor,
+/area/engineering/atmos)
 "jm" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/light{
@@ -3717,7 +3730,7 @@
 /turf/simulated/floor/tiled,
 /area/crew_quarters/kitchen)
 "kh" = (
-/obj/machinery/mining/brace,
+/obj/vehicle/train/trolley/trailer/random,
 /turf/simulated/mineral/floor/vacuum/moonbase,
 /area/moonbase/surface/levelone/south)
 "ki" = (
@@ -5417,9 +5430,9 @@
 /turf/simulated/floor/plating/moonbase,
 /area/moonbase/basement/caves/northeast)
 "pb" = (
-/obj/machinery/mining/drill/loaded,
-/turf/simulated/mineral/floor/vacuum/moonbase,
-/area/moonbase/surface/levelone/south)
+/obj/structure/barricade,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/moonbase/surface/underground)
 "pc" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating,
@@ -6436,9 +6449,7 @@
 /turf/simulated/floor/tiled/eris/dark,
 /area/hallway/moonbase/basement)
 "rS" = (
-/obj/structure/ladder/up,
-/obj/effect/floor_decal/industrial/outline,
-/turf/simulated/mineral/floor/vacuum/moonbase,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/moonbase/surface/underground)
 "rT" = (
 /obj/machinery/light/small{
@@ -11030,12 +11041,10 @@
 /turf/simulated/floor/tiled/eris/dark,
 /area/hallway/moonbase/basement)
 "ER" = (
-/obj/structure/prop/rock/crystal,
-/obj/effect/map_effect/perma_light{
-	light_color = "#87CEEB"
-	},
-/turf/simulated/mineral/floor/cave/moonbase,
-/area/moonbase/surface/levelone/south)
+/obj/structure/ladder/up,
+/obj/effect/floor_decal/industrial/outline,
+/turf/simulated/floor/airless/moonbaseplating,
+/area/moonbase/surface/underground)
 "ES" = (
 /obj/structure/loot_pile/mecha/ripley,
 /turf/simulated/mineral/floor/cave/moonbase,
@@ -11466,6 +11475,9 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/medical/moonbase/basement)
+"FT" = (
+/turf/space/cracked_asteroid/moonbase/outdoors,
+/area/moonbase/surface/underground)
 "FU" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/item/weapon/towel/random,
@@ -13262,7 +13274,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/substation/security)
 "KU" = (
-/obj/vehicle/train/engine/quadbike/built,
+/obj/vehicle/train/engine/quadbike/random,
 /turf/simulated/floor/airless/moonbaseplating,
 /area/moonbase/surface/levelone/south)
 "KV" = (
@@ -15342,6 +15354,14 @@
 /obj/structure/prop/machine/tgmc_console1/starts_on,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/maintenance/moonbase/basement/iceroomcontrol)
+"Qn" = (
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/powered/scrubber,
+/obj/machinery/light,
+/turf/simulated/floor,
+/area/engineering/atmos)
 "Qo" = (
 /turf/unsimulated/mineral/moonbase,
 /area/moonbase/dorms/dorm6)
@@ -16839,10 +16859,8 @@
 /turf/simulated/floor/wood/alt/panel,
 /area/crew_quarters/theatre)
 "Un" = (
-/obj/structure/ladder/up,
-/obj/effect/floor_decal/industrial/outline,
-/turf/simulated/mineral/floor/vacuum/moonbase,
-/area/moonbase/surface/levelone/south)
+/turf/simulated/floor/airless/moonbaseplating,
+/area/moonbase/surface/underground)
 "Uo" = (
 /obj/structure/prop/machine/tgmc_console3/starts_on,
 /turf/simulated/floor/tiled/steel_dirty,
@@ -19343,7 +19361,7 @@ oj
 oj
 oj
 oj
-oj
+ER
 oj
 oj
 oj
@@ -19485,7 +19503,7 @@ oj
 oj
 oj
 oj
-oj
+rS
 oj
 oj
 oj
@@ -19626,9 +19644,9 @@ oj
 oj
 oj
 oj
-oj
-oj
-oj
+rS
+rS
+rS
 oj
 oj
 oj
@@ -19768,10 +19786,10 @@ oj
 oj
 oj
 oj
-oj
-oj
-oj
-oj
+rS
+rS
+rS
+rS
 oj
 oj
 oj
@@ -19909,12 +19927,12 @@ oj
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
+rS
+rS
+rS
+rS
+rS
+rS
 oj
 oj
 oj
@@ -20051,12 +20069,12 @@ oj
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
+rS
+rS
+FT
+rS
+rS
+rS
 oj
 oj
 oj
@@ -20193,12 +20211,12 @@ oj
 oj
 oj
 oj
-oj
-oj
-oj
-oj
-oj
-oj
+rS
+rS
+rS
+rS
+rS
+rS
 oj
 oj
 oj
@@ -20336,10 +20354,10 @@ oj
 oj
 oj
 oj
-oj
-oj
-oj
-oj
+rS
+rS
+rS
+rS
 oj
 oj
 oj
@@ -24258,7 +24276,7 @@ mG
 KN
 KN
 rr
-vg
+jl
 Hc
 BA
 AR
@@ -24395,10 +24413,10 @@ NX
 Tk
 Uh
 KN
-KN
+Qx
 mG
 KN
-Qx
+KN
 Af
 vg
 Hc
@@ -24821,10 +24839,10 @@ xx
 Fp
 YB
 YB
-YB
+Ty
 Fp
 Xj
-Ty
+YB
 Fp
 VO
 Hc
@@ -24968,7 +24986,7 @@ Jl
 KN
 KN
 Co
-VO
+Qn
 Hc
 Zb
 bB
@@ -25127,7 +25145,7 @@ iP
 iP
 iP
 iP
-ER
+Gl
 iP
 iP
 iP
@@ -26404,7 +26422,7 @@ Da
 iP
 iP
 iP
-ER
+Gl
 iP
 iP
 iP
@@ -27115,7 +27133,7 @@ Es
 Es
 Es
 Es
-Es
+ER
 Es
 Es
 Es
@@ -27412,10 +27430,10 @@ Es
 Es
 Es
 Es
-iP
-iP
-iP
 Es
+iP
+iP
+iP
 Es
 Es
 Es
@@ -27553,12 +27571,12 @@ yT
 Es
 Es
 Es
-iP
-iP
-iP
-iP
-iP
 Es
+iP
+iP
+iP
+iP
+iP
 Es
 Es
 Es
@@ -27693,14 +27711,14 @@ yT
 Es
 yT
 yT
-yT
-iP
-iP
-iP
-iP
-iP
-iP
 Es
+Es
+iP
+iP
+iP
+iP
+iP
+iP
 Es
 Es
 Es
@@ -27834,15 +27852,15 @@ Es
 Es
 Es
 Es
-Es
-Es
+yT
+yT
+yT
 iP
 iP
 iP
 iP
 iP
 iP
-Es
 Es
 Es
 Es
@@ -27978,13 +27996,13 @@ Es
 Es
 Es
 Es
-iP
-iP
-iP
-iP
-iP
-iP
 Es
+iP
+iP
+iP
+iP
+iP
+iP
 Es
 Es
 Es
@@ -28121,11 +28139,11 @@ Es
 Es
 Es
 Es
-iP
-iP
-iP
-iP
 Es
+iP
+iP
+iP
+iP
 Es
 Es
 Es
@@ -28264,9 +28282,9 @@ Es
 Es
 Es
 Es
-iP
-iP
 Es
+iP
+iP
 Es
 Es
 Es
@@ -33087,7 +33105,7 @@ Es
 Es
 Es
 Es
-Es
+ER
 Es
 Es
 Es
@@ -33229,7 +33247,7 @@ Es
 Es
 Es
 Es
-rS
+Un
 Es
 Es
 Es
@@ -33374,8 +33392,8 @@ iP
 iP
 iP
 iP
-Es
-Es
+iP
+iP
 Es
 Es
 Es
@@ -33492,8 +33510,8 @@ Es
 Es
 Es
 Es
-uA
-yA
+yT
+yT
 yA
 yA
 Es
@@ -33518,8 +33536,8 @@ iP
 iP
 iP
 iP
-Es
-Es
+iP
+iP
 Es
 Es
 Es
@@ -33634,7 +33652,7 @@ Es
 Es
 KU
 YF
-yT
+dz
 yT
 yT
 yT
@@ -33661,8 +33679,8 @@ iP
 iP
 iP
 iP
-Es
-Es
+iP
+iP
 Es
 Es
 Es
@@ -33803,8 +33821,8 @@ iP
 bV
 iP
 iP
-Es
-Es
+iP
+iP
 Es
 NC
 Es
@@ -34230,8 +34248,8 @@ bV
 iP
 iP
 iP
-Es
-Es
+iP
+iP
 NC
 Es
 Es
@@ -34372,8 +34390,8 @@ iP
 iP
 iP
 iP
-Es
-Es
+iP
+iP
 Es
 Es
 Es
@@ -34513,8 +34531,8 @@ iP
 iP
 iP
 iP
-Es
-Es
+iP
+iP
 Es
 Es
 Es
@@ -34631,7 +34649,7 @@ Pr
 yT
 yT
 yT
-kh
+uA
 Es
 Es
 Es
@@ -34655,8 +34673,8 @@ iP
 iP
 iP
 iP
-Es
-Es
+iP
+iP
 Es
 Es
 Es
@@ -34773,7 +34791,7 @@ oj
 kh
 yT
 yT
-pb
+yT
 Es
 Es
 Es
@@ -34797,8 +34815,8 @@ iP
 iP
 iP
 iP
-Es
-Es
+iP
+iP
 Es
 Es
 Es
@@ -34912,7 +34930,7 @@ oj
 oj
 oj
 oj
-pb
+yT
 yT
 yT
 kh
@@ -34939,8 +34957,8 @@ iP
 iP
 iP
 iP
-Es
-Es
+iP
+iP
 Es
 Es
 Es
@@ -35080,8 +35098,8 @@ iP
 iP
 iP
 iP
-Es
-Es
+iP
+iP
 Es
 Es
 Es
@@ -35197,8 +35215,8 @@ oj
 oj
 oj
 oj
+pb
 oj
-oj
 Es
 Es
 Es
@@ -35221,8 +35239,8 @@ iP
 iP
 iP
 iP
-Es
-Es
+iP
+iP
 Es
 Es
 Es
@@ -35339,8 +35357,8 @@ oj
 oj
 oj
 oj
+rS
 oj
-oj
 Es
 Es
 Es
@@ -35362,7 +35380,7 @@ iP
 iP
 iP
 iP
-Es
+iP
 Es
 Es
 Es
@@ -35480,8 +35498,8 @@ oj
 oj
 oj
 oj
-oj
-oj
+rS
+rS
 oj
 Es
 Es
@@ -35622,7 +35640,7 @@ oj
 oj
 oj
 oj
-oj
+rS
 oj
 oj
 Es
@@ -35764,12 +35782,12 @@ oj
 oj
 oj
 oj
+rS
 oj
 oj
-oj
-Es
-Es
-Es
+iP
+iP
+iP
 Es
 Es
 Es
@@ -35906,13 +35924,13 @@ oj
 oj
 oj
 oj
-oj
-oj
-oj
-Es
-Es
-Es
-Es
+rS
+rS
+iP
+iP
+iP
+iP
+iP
 Es
 Es
 Es
@@ -36050,11 +36068,11 @@ oj
 oj
 oj
 oj
-oj
-Es
-Es
-Es
-Es
+iP
+iP
+iP
+iP
+iP
 Es
 Es
 Es
@@ -36193,10 +36211,10 @@ oj
 oj
 oj
 oj
-Es
-Es
-Es
-Es
+iP
+iP
+iP
+iP
 Es
 Es
 Es
@@ -36336,8 +36354,8 @@ oj
 oj
 oj
 Es
-Es
-Es
+iP
+iP
 Es
 Es
 Es

@@ -832,9 +832,9 @@
 /turf/simulated/floor/wood/alt/panel,
 /area/security/detectives_office)
 "cr" = (
-/obj/effect/floor_decal/milspec/monotile/moonbase,
-/turf/simulated/floor/airless/outdoors,
-/area/moonbase/surface/leveltwo/east)
+/obj/structure/lattice,
+/turf/simulated/open,
+/area/quartermaster/storage)
 "ct" = (
 /obj/effect/floor_decal/steeldecal/steel_decals10{
 	dir = 10
@@ -1484,9 +1484,10 @@
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/general)
 "ef" = (
-/obj/effect/floor_decal/milspec/monotile/moonbase,
-/turf/simulated/floor/airless/outdoors,
-/area/moonbase/surface/leveltwo/south)
+/obj/structure/railing/grey,
+/obj/structure/lattice,
+/turf/simulated/open,
+/area/quartermaster/storage)
 "eg" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -2507,7 +2508,6 @@
 /obj/structure/bed/chair/comfy/black{
 	dir = 8
 	},
-/obj/effect/landmark/start/captain,
 /turf/simulated/floor/carpet/blue2,
 /area/crew_quarters/captain/moonbase/office)
 "gW" = (
@@ -17337,8 +17337,7 @@
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /obj/structure/cable/white{
-	icon_state = "0-2";
-	dir = 8
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/tiled,
 /area/rnd/workshop)
@@ -17615,7 +17614,7 @@
 	output_level = 250000
 	},
 /obj/structure/cable/green{
-	icon_state = "0-2"
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
 /area/engineering/engine_room)
@@ -20319,6 +20318,9 @@ Jh
 (3,1,1) = {"
 Kd
 Kd
+Kd
+Kd
+Kd
 bm
 bm
 bm
@@ -20356,36 +20358,33 @@ bm
 bm
 bm
 bm
-bm
-bm
-bm
-bm
-bm
-sj
-sj
-sj
-sj
-sj
-sj
-sj
-sj
-sj
-sj
-sj
-sj
-sj
-sj
-sj
-sj
-sj
-sj
-sj
-sj
-sj
-sj
-sj
-sj
-sj
+Kd
+Kd
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
 sj
 sj
 sj
@@ -20451,17 +20450,17 @@ do
 do
 do
 do
-do
-do
-do
-do
+XL
+XL
+XL
+XL
 XL
 XL
 "}
 (4,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -20595,15 +20594,15 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 XL
 XL
 "}
 (5,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -20737,15 +20736,15 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 XL
 XL
 "}
 (6,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -20879,15 +20878,15 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 XL
 XL
 "}
 (7,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -21022,7 +21021,7 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
@@ -21164,7 +21163,7 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
@@ -21306,7 +21305,7 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
@@ -21448,7 +21447,7 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
@@ -21590,7 +21589,7 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
@@ -24070,9 +24069,9 @@ Wb
 Wb
 oi
 sK
-fB
-AF
 Eg
+AF
+fB
 GD
 VU
 EI
@@ -24863,7 +24862,7 @@ XL
 (35,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -25005,7 +25004,7 @@ XL
 (36,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -25147,7 +25146,7 @@ XL
 (37,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -25282,14 +25281,14 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (38,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -25424,14 +25423,14 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (39,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -25566,14 +25565,14 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (40,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -25708,14 +25707,14 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (41,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -25850,14 +25849,14 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (42,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -25992,14 +25991,14 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (43,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -26134,14 +26133,14 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (44,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -26276,14 +26275,14 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (45,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -26418,14 +26417,14 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (46,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -26560,14 +26559,14 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (47,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -26702,14 +26701,14 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (48,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -26844,14 +26843,14 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (49,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -26986,14 +26985,14 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (50,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -27128,14 +27127,14 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (51,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -27270,14 +27269,14 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (52,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -27412,14 +27411,14 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (53,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -27554,14 +27553,14 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (54,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -27696,14 +27695,14 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (55,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -27838,14 +27837,14 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (56,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -27980,14 +27979,14 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (57,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -28129,7 +28128,7 @@ XL
 (58,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -28271,7 +28270,7 @@ XL
 (59,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -28413,7 +28412,7 @@ XL
 (60,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -28555,7 +28554,7 @@ XL
 (61,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -28697,7 +28696,7 @@ XL
 (62,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -28839,7 +28838,7 @@ XL
 (63,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -28981,7 +28980,7 @@ XL
 (64,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -29123,7 +29122,7 @@ XL
 (65,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -29137,7 +29136,7 @@ bm
 QA
 Is
 EG
-nO
+Gd
 Gd
 Gd
 Gd
@@ -29265,7 +29264,7 @@ XL
 (66,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -29407,7 +29406,7 @@ XL
 (67,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -29549,7 +29548,7 @@ XL
 (68,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -29691,7 +29690,7 @@ XL
 (69,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -29833,7 +29832,7 @@ XL
 (70,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -29975,7 +29974,7 @@ XL
 (71,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -30117,7 +30116,7 @@ XL
 (72,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -30259,7 +30258,7 @@ XL
 (73,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -30401,7 +30400,7 @@ XL
 (74,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -30543,7 +30542,7 @@ XL
 (75,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -30685,7 +30684,7 @@ XL
 (76,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -30827,7 +30826,7 @@ XL
 (77,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -30969,7 +30968,7 @@ XL
 (78,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -31111,7 +31110,7 @@ XL
 (79,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -31253,7 +31252,7 @@ XL
 (80,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -31388,14 +31387,14 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (81,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -31530,14 +31529,14 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (82,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -31672,14 +31671,14 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (83,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -31814,14 +31813,14 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (84,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -31901,10 +31900,10 @@ qw
 qw
 qw
 qw
-cr
-cr
-cr
-cr
+qw
+qw
+qw
+qw
 kC
 hW
 AR
@@ -31956,14 +31955,14 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (85,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -32043,10 +32042,10 @@ qw
 qw
 qw
 qw
-cr
-cr
-cr
-cr
+qw
+qw
+CW
+qw
 kC
 kC
 kC
@@ -32098,14 +32097,14 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (86,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -32185,26 +32184,26 @@ qw
 qw
 qw
 qw
-cr
-cr
-cr
-cr
-cr
-cr
-cr
-cr
-cr
-cr
-cr
-cr
-cr
-cr
-cr
-cr
-cr
-cr
-ef
-ef
+qw
+qw
+qw
+qw
+qw
+qw
+qw
+qw
+qw
+qw
+qw
+qw
+qw
+qw
+qw
+qw
+qw
+qw
+Eh
+Eh
 Ro
 Eh
 Eh
@@ -32240,7 +32239,7 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
@@ -32382,7 +32381,7 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
@@ -32524,7 +32523,7 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
@@ -32666,7 +32665,7 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
@@ -32808,7 +32807,7 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
@@ -32950,7 +32949,7 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
@@ -33092,7 +33091,7 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
@@ -33234,7 +33233,7 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
@@ -33320,9 +33319,9 @@ qw
 qw
 qw
 TD
-di
-di
-YE
+cr
+cr
+ef
 iw
 iR
 Eq
@@ -33376,7 +33375,7 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
@@ -33518,7 +33517,7 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
@@ -33660,7 +33659,7 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
@@ -33802,7 +33801,7 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
@@ -33944,7 +33943,7 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
@@ -34086,14 +34085,14 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (100,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -34228,14 +34227,14 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (101,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -34314,9 +34313,9 @@ qw
 qw
 qw
 TD
-di
-di
-YE
+cr
+cr
+ef
 jN
 iR
 Eq
@@ -34370,14 +34369,14 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (102,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -34512,14 +34511,14 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (103,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -34607,10 +34606,10 @@ su
 Eq
 Eq
 Eq
+Eq
+Eq
+Eq
 uk
-Eq
-Eq
-Eq
 vC
 qw
 qw
@@ -34654,15 +34653,15 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (104,1,1) = {"
 Kd
 Kd
-bm
-bm
+Kd
+Kd
 bm
 bm
 bm
@@ -34796,15 +34795,15 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (105,1,1) = {"
 Kd
 Kd
-bm
-bm
+Kd
+Kd
 bm
 bm
 bm
@@ -34938,15 +34937,15 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (106,1,1) = {"
 Kd
 Kd
-bm
-bm
+Kd
+Kd
 bm
 bm
 bm
@@ -35080,15 +35079,15 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (107,1,1) = {"
 Kd
 Kd
-bm
-bm
+Kd
+Kd
 bm
 bm
 bm
@@ -35222,15 +35221,15 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
 (108,1,1) = {"
 Kd
 Kd
-bm
-bm
+Kd
+Kd
 bm
 bm
 bm
@@ -35371,8 +35370,8 @@ XL
 (109,1,1) = {"
 Kd
 Kd
-bm
-bm
+Kd
+Kd
 bm
 bm
 bm
@@ -35513,8 +35512,8 @@ XL
 (110,1,1) = {"
 Kd
 Kd
-bm
-bm
+Kd
+Kd
 bm
 bm
 bm
@@ -35655,7 +35654,7 @@ XL
 (111,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -35797,7 +35796,7 @@ XL
 (112,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -35939,7 +35938,7 @@ XL
 (113,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -36791,7 +36790,7 @@ XL
 (119,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -36933,7 +36932,7 @@ XL
 (120,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -37075,7 +37074,7 @@ XL
 (121,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -37501,7 +37500,7 @@ XL
 (124,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -37643,8 +37642,8 @@ XL
 (125,1,1) = {"
 Kd
 Kd
-bm
-bm
+Kd
+Kd
 bm
 bm
 bm
@@ -37785,8 +37784,8 @@ XL
 (126,1,1) = {"
 Kd
 Kd
-bm
-bm
+Kd
+Kd
 bm
 bm
 bm
@@ -37927,8 +37926,8 @@ XL
 (127,1,1) = {"
 Kd
 Kd
-bm
-bm
+Kd
+Kd
 bm
 bm
 bm
@@ -38069,8 +38068,8 @@ XL
 (128,1,1) = {"
 Kd
 Kd
-bm
-bm
+Kd
+Kd
 bm
 bm
 bm
@@ -38211,7 +38210,7 @@ XL
 (129,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -38353,7 +38352,7 @@ XL
 (130,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -38772,7 +38771,7 @@ do
 do
 do
 do
-do
+XL
 XL
 XL
 "}
@@ -38913,15 +38912,15 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 XL
 XL
 "}
 (134,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -39055,15 +39054,15 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 XL
 XL
 "}
 (135,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -39197,15 +39196,15 @@ do
 do
 do
 do
-do
-do
+XL
+XL
 XL
 XL
 "}
 (136,1,1) = {"
 Kd
 Kd
-bm
+Kd
 bm
 bm
 bm
@@ -39338,15 +39337,16 @@ do
 do
 do
 do
-do
-do
-do
+XL
+XL
+XL
 XL
 XL
 "}
 (137,1,1) = {"
 Kd
 Kd
+Kd
 bm
 bm
 bm
@@ -39355,12 +39355,11 @@ bm
 bm
 bm
 bm
-bm
-bm
-bm
-bm
-bm
-bm
+Kd
+Kd
+Kd
+Kd
+Kd
 bm
 bm
 bm
@@ -39479,32 +39478,32 @@ do
 do
 do
 do
-do
-do
-do
-do
+XL
+XL
+XL
+XL
 XL
 XL
 "}
 (138,1,1) = {"
 Kd
 Kd
+Kd
+Kd
+Kd
+Kd
 bm
 bm
 bm
 bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
+Kd
 bm
 bm
 bm
@@ -39620,11 +39619,11 @@ do
 do
 do
 do
-do
-do
-do
-do
-do
+XL
+XL
+XL
+XL
+XL
 XL
 XL
 "}

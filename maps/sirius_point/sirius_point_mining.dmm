@@ -2,6 +2,48 @@
 "a" = (
 /turf/simulated/mineral/floor/vacuum/moonbase,
 /area/moonbase/surface/mining)
+"d" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass_external,
+/obj/effect/map_helper/airlock/door/int_door,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/moonbase/surface/mining)
+"f" = (
+/obj/machinery/atmospherics/pipe/simple/hidden,
+/turf/simulated/wall/r_wall,
+/area/moonbase/surface/mining)
+"h" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass_external,
+/obj/effect/map_helper/airlock/door/ext_door,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/moonbase/surface/mining)
+"k" = (
+/obj/effect/map_helper/airlock/sensor/int_sensor,
+/obj/machinery/airlock_sensor/airlock_interior{
+	dir = 4;
+	pixel_x = -24
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden{
+	dir = 1
+	},
+/turf/simulated/floor/tiled,
+/area/moonbase/surface/mining)
+"p" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 9
+	},
+/turf/simulated/wall/r_wall,
+/area/moonbase/surface/mining)
+"q" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden{
+	dir = 4
+	},
+/turf/simulated/wall/r_wall,
+/area/moonbase/surface/mining)
 "s" = (
 /turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
 /area/moonbase/surface/mining)
@@ -11,26 +53,124 @@
 	},
 /turf/simulated/floor/airless/moonbaseplating,
 /area/moonbase/surface/mining)
+"v" = (
+/obj/machinery/atmospherics/unary/vent_pump/high_volume{
+	dir = 8
+	},
+/obj/effect/map_helper/airlock/atmos/chamber_pump,
+/turf/simulated/floor/tiled/eris/dark/danger,
+/area/moonbase/surface/mining)
 "w" = (
 /turf/simulated/mineral/moonbase/ignore_mapgen,
 /area/moonbase/surface/mining)
+"x" = (
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 6
+	},
+/turf/simulated/wall/r_wall,
+/area/moonbase/surface/mining)
+"z" = (
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 5
+	},
+/turf/simulated/wall/r_wall,
+/area/moonbase/surface/mining)
 "A" = (
 /turf/simulated/mineral/moonbase,
+/area/moonbase/surface/mining)
+"B" = (
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/moonbase/surface/mining)
+"C" = (
+/obj/machinery/atmospherics/unary/vent_pump/high_volume{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/effect/map_helper/airlock/atmos/chamber_pump,
+/turf/simulated/floor/tiled/eris/dark/danger,
+/area/moonbase/surface/mining)
+"D" = (
+/obj/structure/marker_beacon{
+	mapped_in_color = "Lime"
+	},
+/turf/simulated/floor/airless/moonbaseplating/outdoors,
+/area/moonbase/surface/mining)
+"E" = (
+/obj/machinery/atmospherics/unary/vent_pump/high_volume{
+	dir = 8
+	},
+/obj/machinery/embedded_controller/radio/airlock/airlock_controller{
+	dir = 4;
+	pixel_x = -24;
+	id_tag = "minepost_airlock"
+	},
+/obj/effect/map_helper/airlock/atmos/chamber_pump,
+/turf/simulated/floor/tiled/eris/dark/danger,
+/area/moonbase/surface/mining)
+"F" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden{
+	dir = 8
+	},
+/turf/simulated/wall/r_wall,
 /area/moonbase/surface/mining)
 "G" = (
 /turf/simulated/floor/airless/moonbaseplating{
 	edge_blending_priority = 1
 	},
 /area/moonbase/surface/mining)
+"H" = (
+/turf/space/cracked_asteroid/moonbase/outdoors,
+/area/moonbase/surface/mining)
 "I" = (
+/turf/simulated/wall/r_wall,
+/area/moonbase/surface/mining)
+"N" = (
+/obj/structure/sign/warning/airlock,
+/obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/wall/r_wall,
 /area/moonbase/surface/mining)
 "O" = (
 /obj/effect/map_effect/portal/line/side_b,
 /turf/simulated/floor/airless/moonbaseplating,
 /area/moonbase/surface/mining)
+"Q" = (
+/obj/item/device/gps/internal/base,
+/turf/simulated/floor/airless/moonbaseplating/outdoors,
+/area/moonbase/surface/mining)
+"R" = (
+/obj/machinery/airlock_sensor/airlock_exterior{
+	pixel_y = -24;
+	pixel_x = 32;
+	dir = 1
+	},
+/obj/effect/map_helper/airlock/sensor/ext_sensor,
+/turf/simulated/floor/airless/moonbaseplating/outdoors,
+/area/moonbase/surface/mining)
+"U" = (
+/obj/machinery/atmospherics/unary/vent_pump/high_volume{
+	dir = 4
+	},
+/obj/machinery/airlock_sensor{
+	dir = 8;
+	pixel_x = 24
+	},
+/obj/effect/map_helper/airlock/sensor/chamber_sensor,
+/obj/effect/map_helper/airlock/atmos/chamber_pump,
+/turf/simulated/floor/tiled/eris/dark/danger,
+/area/moonbase/surface/mining)
 "V" = (
 /turf/simulated/floor/airless/moonbaseplating,
+/area/moonbase/surface/mining)
+"W" = (
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 10
+	},
+/turf/simulated/wall/r_wall,
 /area/moonbase/surface/mining)
 
 (1,1,1) = {"
@@ -8950,10 +9090,10 @@ A
 A
 A
 A
-A
-A
-A
-A
+s
+s
+s
+s
 A
 s
 s
@@ -9091,16 +9231,16 @@ A
 A
 A
 A
-A
-A
-A
-A
-A
-A
 s
 s
 s
 s
+D
+I
+x
+F
+f
+z
 s
 s
 s
@@ -9237,12 +9377,12 @@ s
 s
 s
 s
-s
-s
-s
-s
-s
-s
+Q
+h
+v
+E
+d
+k
 s
 s
 s
@@ -9379,12 +9519,12 @@ s
 s
 s
 s
-s
-s
-s
-s
-s
-s
+R
+h
+C
+U
+d
+B
 s
 s
 s
@@ -9516,17 +9656,17 @@ s
 s
 s
 s
-A
-A
-A
-A
-A
-A
-A
 s
 s
 s
+H
 s
+D
+I
+W
+q
+N
+p
 s
 s
 s
@@ -9659,11 +9799,11 @@ A
 A
 A
 A
-A
-A
-A
-A
-A
+s
+s
+s
+s
+s
 A
 s
 s
