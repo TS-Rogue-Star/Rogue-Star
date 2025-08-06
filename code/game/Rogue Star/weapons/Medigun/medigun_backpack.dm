@@ -39,6 +39,7 @@
 	var/gridstatus = 0
 	var/chargecap = 1000
 	var/compact = 0
+	var/busy = FALSE
 	var/kenzie = FALSE
 
 //belt item
@@ -64,6 +65,29 @@
 	toxvol = 120
 	burnvol = 120
 	chargecap = 5000*/
+
+
+/obj/item/weapon/paper/continuous_medigun_manual
+	name = "Bluespace LongRange Experimental Medigun manual"
+	info = {"<h4>Bluespace Longrange  Experimental Medigun</h4>
+	<p></p>
+	<p>A prototype bluespace medigun in development by BORK</p>
+	<p></p>
+	<br />
+	<ul>
+		<li>Hello and welcome to your quick field guide for the Blem</li>
+		<li>Device accepts power cells, feel free to bother security!</li>
+		<li>Device is refilled using chems, namely Bicaridine, Dylovene, and Kelotane.</li>
+		<li>Device must be worn to use, backpack variant will fit on your back, while the compact one may be worn as a belt.</li>
+		<li>Device comes with an intuitive and detailed user interface, Just look at the screen for a readout. ((There is an icon on the top left of your screen))</li>
+		<li>Usage is simple, take the medigun into your hands and point at the target you wish to heal, unit will do the rest.</li>
+		<li>Device may be upgraded with parts obtained from science, ensure the maintenance hatch is open before installing.</li>
+		<li>You may open the hatch with either a screwdriver, or through the user interface.</li>
+		<li>Once the maintenance hatch is open, you may either eject everything with a crowbar, or through the user interface under the convienient parts tab.</li>
+		<li>Go forth and spread healthiness, Were counting on you and your feedback to produce a better product!</li>
+		<li>Please forward any feedback and complaints to 'Sari Bork' CEO of Bork Industries.</li>
+	</ul>"}
+
 
 /obj/item/device/continuous_medigun/proc/is_twohanded()
 	return TRUE
@@ -151,16 +175,15 @@
 
 	if(!charging || !ccell)
 		return
-	var/scaptier = scapacitor.get_rating()
-	var/missing = min(scaptier*25, bcell.amount_missing())
+	var/missing = min(50, bcell.amount_missing())
 	if((missing > 0))
 		if(ccell && ccell.checked_use(missing))
 			bcell.give(missing)
 			update_icon()
 			return
 
-		if(ismob(loc))
-			to_chat(loc, span_notice("The Cell is out of power."))
+		//if(ismob(loc))
+			//to_chat(loc, span_notice("The Cell is out of power."))
 		charging = FALSE
 
 /obj/item/device/continuous_medigun/get_cell()
@@ -365,129 +388,194 @@
 		maintenance = FALSE
 		to_chat(user, span_notice("You close the maintenance hatch on \the [src]."))
 		return
-	if(istype(W, /obj/item/weapon/cell))
+	if(istype(W, /obj/item/weapon/cell/device))
+		busy = TRUE
+		if(!do_after(user, 10))
+			busy = FALSE
+			return
+		busy = FALSE
 		if(!user.unEquip(W))
 			return
-		W.forceMove(src)
 		if(ccell)
+			if(!user.put_in_hands(ccell))
+				ccell.forceMove(get_turf(loc))
 			to_chat(user, span_notice("You Swap the [W] for \the [ccell]."))
+		if(!ccell)
+			to_chat(user, span_notice("You install the [W] into \the [src]."))
+		W.forceMove(src)
 		ccell = W
-		to_chat(user, span_notice("You install the [W] into \the [src]."))
+
 		charging = TRUE
 		return
 
 
 	if(maintenance)
-		if(istype(W, /obj/item/weapon/stock_parts/scanning_module))
-			if(smodule)
-				to_chat(user, span_notice("\The [src] already has a scanning module."))
-			else
+		if(busy == FALSE)
+
+			if(istype(W, /obj/item/weapon/stock_parts/scanning_module))
+				if(W.type == smodule.type)
+					to_chat(user, span_notice("\The [src] already has a [W]."))
+					return
+				busy = TRUE
+				if(!do_after(user, 10))
+					busy = FALSE
+					return
+				busy = FALSE
 				if(!user.unEquip(W))
 					return
+				if(smodule)
+					if(!user.put_in_hands(smodule))
+						smodule.forceMove(get_turf(loc))
+					to_chat(user, span_notice("You Swap the [W] for \the [smodule]."))
+				if(!smodule)
+					to_chat(user, span_notice("You install the [W] into \the [src]."))
 				W.forceMove(src)
 				smodule = W
-				to_chat(user, span_notice("You install the [W] into \the [src]."))
 				medigun.beam_range = 3+smodule.get_rating()
 				update_icon()
 				return
 
-		if(istype(W, /obj/item/weapon/stock_parts/manipulator))
-			if(smanipulator)
-				to_chat(user, span_notice("\The [src] already has a manipulator."))
+			if(istype(W, /obj/item/weapon/stock_parts/manipulator))
+				if(W.type == smanipulator.type)
+					to_chat(user, span_notice("\The [src] already has a [smanipulator]."))
+					return
+				busy = TRUE
+				if(!do_after(user, 10))
+					busy = FALSE
+					return
+				busy = FALSE
+				if(!user.unEquip(W))
+					return
+				if(smanipulator)
+					if(!user.put_in_hands(smanipulator))
+						smanipulator.forceMove(get_turf(loc))
+					to_chat(user, span_notice("You Swap the [W] for \the [smanipulator]."))
+				if(!smanipulator)
+					to_chat(user, span_notice("You install the [W] into \the [src]."))
+				W.forceMove(src)
+				smanipulator = W
+				smaniptier = smanipulator.get_rating()
+				if(sbin && scapacitor)START_PROCESSING(SSobj, src)
+				to_chat(user, span_notice("You install the [W] into \the [src]."))
+				update_icon()
 				return
-			if(!user.unEquip(W))
-				return
-			W.forceMove(src)
-			smanipulator = W
-			smaniptier = smanipulator.get_rating()
-			if(sbin && scapacitor)START_PROCESSING(SSobj, src)
-			to_chat(user, span_notice("You install the [W] into \the [src]."))
-			update_icon()
-			return
 
-		if(istype(W, /obj/item/weapon/stock_parts/micro_laser))
-			if(slaser)
-				to_chat(user, span_notice("\The [src] already has a micro laser."))
+			if(istype(W, /obj/item/weapon/stock_parts/micro_laser))
+				if(W.type == slaser.type)
+					to_chat(user, span_notice("\The [src] already has a [slaser]."))
+					return
+				busy = TRUE
+				if(!do_after(user, 10))
+					busy = FALSE
+					return
+				busy = FALSE
+				if(!user.unEquip(W))
+					return
+				if(slaser)
+					if(!user.put_in_hands(slaser))
+						slaser.forceMove(get_turf(loc))
+					to_chat(user, span_notice("You Swap the [W] for \the [slaser]."))
+				if(!slaser)
+					to_chat(user, span_notice("You install the [W] into \the [src]."))
+				W.forceMove(src)
+				slaser = W
+				to_chat(user, span_notice("You install the [W] into \the [src]."))
+				update_icon()
 				return
-			if(!user.unEquip(W))
-				return
-			W.forceMove(src)
-			slaser = W
-			to_chat(user, span_notice("You install the [W] into \the [src]."))
-			update_icon()
-			return
 
-		if(istype(W, /obj/item/weapon/stock_parts/capacitor))
-			if(scapacitor)
-				to_chat(user, span_notice("\The [src] already has a capacitor."))
-				return
-			if(!user.unEquip(W))
-				return
-			W.forceMove(src)
-			scapacitor = W
-			var/scaptier = scapacitor.get_rating()
-			if(scaptier == 1)
-				chargecap = 1000
-				bcell.maxcharge = 1000
-				if(bcell.charge > chargecap)
-					bcell.charge = chargecap
-			else if(scaptier == 2)
-				chargecap = 2000
-				bcell.maxcharge = 2000
-				if(bcell.charge > chargecap)
-					bcell.charge = chargecap
-			else if(scaptier == 3)
-				chargecap = 3000
-				bcell.maxcharge = 3000
-				if(bcell.charge > chargecap)
-					bcell.charge = chargecap
-			else if(scaptier == 4)
-				chargecap = 4000
-				bcell.maxcharge = 4000
-				if(bcell.charge > chargecap)
-					bcell.charge = chargecap
-			else if(scaptier == 5)
-				chargecap = 5000
-				bcell.maxcharge = 5000
-				if(bcell.charge > chargecap)
-					bcell.charge = chargecap
+			if(istype(W, /obj/item/weapon/stock_parts/capacitor))
+				if(W.type == scapacitor.type)
+					to_chat(user, span_notice("\The [src] already has a [scapacitor]."))
+					return
+				busy = TRUE
+				if(!do_after(user, 10))
+					busy = FALSE
+					return
+				busy = FALSE
+				if(!user.unEquip(W))
+					return
+				if(scapacitor)
+					if(!user.put_in_hands(scapacitor))
+						scapacitor.forceMove(get_turf(loc))
+					to_chat(user, span_notice("You Swap the [W] for \the [scapacitor]."))
+				if(!scapacitor)
+					to_chat(user, span_notice("You install the [W] into \the [src]."))
+				W.forceMove(src)
+				scapacitor = W
+				var/scaptier = scapacitor.get_rating()
+				if(scaptier == 1)
+					chargecap = 1000
+					bcell.maxcharge = 1000
+					if(bcell.charge > chargecap)
+						bcell.charge = chargecap
+				else if(scaptier == 2)
+					chargecap = 2000
+					bcell.maxcharge = 2000
+					if(bcell.charge > chargecap)
+						bcell.charge = chargecap
+				else if(scaptier == 3)
+					chargecap = 3000
+					bcell.maxcharge = 3000
+					if(bcell.charge > chargecap)
+						bcell.charge = chargecap
+				else if(scaptier == 4)
+					chargecap = 4000
+					bcell.maxcharge = 4000
+					if(bcell.charge > chargecap)
+						bcell.charge = chargecap
+				else if(scaptier == 5)
+					chargecap = 5000
+					bcell.maxcharge = 5000
+					if(bcell.charge > chargecap)
+						bcell.charge = chargecap
 
-			if(sbin && smanipulator)START_PROCESSING(SSobj, src)
-			to_chat(user, span_notice("You install the [W] into \the [src]."))
-			update_icon()
-			return
+				if(sbin && smanipulator)START_PROCESSING(SSobj, src)
+				to_chat(user, span_notice("You install the [W] into \the [src]."))
+				update_icon()
+				return
 
-		if(istype(W, /obj/item/weapon/stock_parts/matter_bin))
-			if(sbin)
-				to_chat(user, span_notice("\The [src] already has a matter bin."))
+			if(istype(W, /obj/item/weapon/stock_parts/matter_bin))
+				if(W.type == sbin.type)
+					to_chat(user, span_notice("\The [src] already has a matter bin."))
+					return
+				busy = TRUE
+				if(!do_after(user, 10))
+					busy = FALSE
+					return
+				busy = FALSE
+				if(!user.unEquip(W))
+					return
+				if(sbin)
+					if(!user.put_in_hands(sbin))
+						sbin.forceMove(get_turf(loc))
+					to_chat(user, span_notice("You Swap the [W] for \the [sbin]."))
+				if(!sbin)
+					to_chat(user, span_notice("You install the [W] into \the [src]."))
+				W.forceMove(src)
+				sbin = W
+				sbintier = sbin.get_rating()
+				if(sbintier >= 5)
+					chemcap = 300
+					tankmax = 150
+				else
+					chemcap = 60*(sbintier)
+					tankmax = 30*sbintier
+				if(brutecharge > chemcap)
+					brutecharge = chemcap
+				if(burncharge > chemcap)
+					burncharge = chemcap
+				if(toxcharge > chemcap)
+					toxcharge = chemcap
+				if(brutecharge > tankmax)
+					brutecharge = tankmax
+				if(burncharge > tankmax)
+					burncharge = tankmax
+				if(toxcharge > tankmax)
+					toxcharge = tankmax
+				if(scapacitor && smanipulator)START_PROCESSING(SSobj, src)
+				to_chat(user, span_notice("You install the [W] into \the [src]."))
+				update_icon()
 				return
-			if(!user.unEquip(W))
-				return
-			W.forceMove(src)
-			sbin = W
-			sbintier = sbin.get_rating()
-			if(sbintier >= 5)
-				chemcap = 300
-				tankmax = 150
-			else
-				chemcap = 60*(sbintier)
-				tankmax = 30*sbintier
-			if(brutecharge > chemcap)
-				brutecharge = chemcap
-			if(burncharge > chemcap)
-				burncharge = chemcap
-			if(toxcharge > chemcap)
-				toxcharge = chemcap
-			if(brutecharge > tankmax)
-				brutecharge = tankmax
-			if(burncharge > tankmax)
-				burncharge = tankmax
-			if(toxcharge > tankmax)
-				toxcharge = tankmax
-			if(scapacitor && smanipulator)START_PROCESSING(SSobj, src)
-			to_chat(user, span_notice("You install the [W] into \the [src]."))
-			update_icon()
-			return
 
 	return ..()
 

@@ -40,11 +40,11 @@
 			bloodData["max_volume"] = H.species.blood_volume
 	var/list/data = list(
 		"maintenance" = maintenance,
-		"generator" = charging,
 		"gridstatus" = gridstatus,
 		"tankmax" = tankmax,
 		"power_cell_status" = bcell ? bcell.percent() : null,
-		"cell_status" = ccell ? (ccell.percent()/100) : null,
+		"battery_name" = ccell ? ccell.name : null,
+		"battery_status" = ccell ? (ccell.percent()/100) : null,
 		"bruteheal_charge" = scapacitor ? brutecharge : null,
 		"burnheal_charge" = scapacitor ? burncharge : null,
 		"toxheal_charge" = scapacitor ? toxcharge : null,
@@ -144,17 +144,16 @@
 			update_icon()
 			return TRUE
 
-/*/obj/item/device/continuous_medigun/ShiftClick(mob/user)
+/obj/item/device/continuous_medigun/AltClick(mob/user)
 	. = ..()
-	if(!medigun)
-		return
-	tgui_interact(user)*/ //changed to ui_action_click
+	cell_eject()
 /obj/item/device/continuous_medigun/proc/cell_eject()
 	if(!ccell)
 		return FALSE
 	charging = FALSE
-	ccell.forceMove(get_turf(loc))
-	//usr.put_in_hands(ccell)
+	var/mob/living/carbon/human/user = usr
+	if(!user.put_in_hands(ccell))
+		ccell.forceMove(get_turf(loc))
 	to_chat(usr, span_notice("You remove the [ccell] from \the [src]."))
 	ccell = null
 	update_icon()
