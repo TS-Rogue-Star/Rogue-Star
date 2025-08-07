@@ -13,6 +13,8 @@
 
 	handle_guts()
 	do_healing()	//VOREStation Add
+	if(hunter)			//RS ADD
+		nutrition -= 2	//RS ADD
 
 	return TRUE
 

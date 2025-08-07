@@ -35,6 +35,7 @@
 
 	faction = "dog"	//RS ADD
 	hunter = TRUE	//RS ADD
+	food_pref = CARNIVORE	//RS ADD
 
 // Activate Noms!
 /mob/living/simple_mob/vore/wolf

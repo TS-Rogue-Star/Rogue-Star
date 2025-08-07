@@ -144,8 +144,8 @@
 			return FALSE	//RS ADD
 		if(L.stat)
 			if(L.stat == DEAD) // Leave dead things alone	//RS EDIT
-				if(!handle_corpse && !hunter_check(L))	//RS EDIT
-					return FALSE
+				if(handle_corpse || hunter_check(L))	//RS EDIT
+					return TRUE
 			if(L.stat == UNCONSCIOUS)	// Do we have mauling? Yes? Then maul people who are sleeping but not SSD
 				if(mauling || hunter_check(L))	//RS EDIT
 					return TRUE
@@ -373,6 +373,7 @@
 				wrong_food = TRUE	//Gross!
 
 			if(holder.food_pref_obligate && wrong_food)	//We ONLY eat our food pref, we can't eat the other one!!!
+				target_list.Remove(L)
 				continue
 
 		var/huntability = 0
@@ -410,7 +411,10 @@
 	if(isliving(ourtarget))
 		var/mob/living/L = ourtarget
 		if(L.player_login_key_log)	//Don't eat things that have ever been players
-			return FALSE
+			if(!isanimal(holder)) return FALSE
+			var/mob/living/simple_mob/S = holder
+			if(!S.will_eat(L))
+				return FALSE
 		if(holder.food_pref == CARNIVORE)
 			if(L.plant && holder.food_pref_obligate)	//Obligate carnivores shouldn't eat plants
 				return FALSE
