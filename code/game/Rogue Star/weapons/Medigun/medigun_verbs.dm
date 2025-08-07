@@ -1,4 +1,4 @@
-/obj/item/device/medigun_backpack/verb/toggle_medigun()
+/obj/item/device/continuous_medigun/verb/toggle_medigun()
 	set name = "Toggle medigun"
 	set category = "Object"
 
