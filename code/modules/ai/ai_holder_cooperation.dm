@@ -48,7 +48,10 @@
 	ai_log("request_help() : Entering.", AI_LOG_DEBUG)
 	if(!cooperative || ((world.time - last_helpask_time) < 10 SECONDS))
 		return
-
+	if(isliving(target))	//RS EDIT START
+		var/mob/living/T = target
+		if(T.stat)
+			return	//RS EDIT END - Don't ask for help when your target isn't fighting back.
 	ai_log("request_help() : Asking for help.", AI_LOG_INFO)
 	last_helpask_time = world.time
 
@@ -114,4 +117,3 @@
 		add_attacker(their_target) // We won't wait and 'warn' them while they're stabbing our ally
 	set_follow(friend, 10 SECONDS)
 	ai_log("help_requested() : Exiting.", AI_LOG_DEBUG)
-

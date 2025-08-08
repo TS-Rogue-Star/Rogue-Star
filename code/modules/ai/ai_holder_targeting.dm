@@ -46,7 +46,7 @@
 // Step 2, filter down possible targets to things we actually care about.
 /datum/ai_holder/proc/find_target(var/list/possible_targets, var/has_targets_list = FALSE)
 	ai_log("find_target() : Entered.", AI_LOG_TRACE)
-	if(!hostile) // So retaliating mobs only attack the thing that hit it.
+	if(!hostile && !holder.hunter) // So retaliating mobs only attack the thing that hit it. //RS EDIT
 		return null
 	if(!incorporeal_attack && holder.is_incorporeal())	//RS ADD - don't attack stuff while you shouldn't be able to be attacked unless we meant to
 		return null									//RS ADD
@@ -63,6 +63,8 @@
 
 // Step 3, pick among the possible, attackable targets.
 /datum/ai_holder/proc/pick_target(list/targets)
+	if(holder.hunter)	//RS EDIT
+		targets = ai_hunt(targets)	//RS EDIT
 	if(target) // If we already have a target, but are told to pick again, calculate the lowest distance between all possible, and pick from the lowest distance targets.
 		targets = target_filter_distance(targets)
 	else
@@ -141,10 +143,11 @@
 		if(L.ai_ignores)	//RS ADD
 			return FALSE	//RS ADD
 		if(L.stat)
-			if(L.stat == DEAD && !handle_corpse) // Leave dead things alone
-				return FALSE
+			if(L.stat == DEAD) // Leave dead things alone	//RS EDIT
+				if(handle_corpse || hunter_check(L))	//RS EDIT
+					return TRUE
 			if(L.stat == UNCONSCIOUS)	// Do we have mauling? Yes? Then maul people who are sleeping but not SSD
-				if(mauling)
+				if(mauling || hunter_check(L))	//RS EDIT
 					return TRUE
 				//VOREStation Add Start
 				else if(unconscious_vore && L.allowmobvore)
@@ -352,3 +355,70 @@
 	if(micro_hunt && !(L.get_effective_size(TRUE) <= micro_hunt_size))	//Are they small enough to get?
 		return FALSE
 	return TRUE // Let's go!
+
+/datum/ai_holder/proc/ai_hunt(var/list/target_list)	//RS ADD START
+	if(!holder.hunter)
+		return FALSE
+	var/list/final_list = list()
+	var/max_huntability = 0
+	for(var/mob/living/L in target_list)
+		if(!isliving(L))
+			continue
+		var/wrong_food = FALSE
+		if(!holder.food_pref == OMNIVORE)	//Omnivores eat everything which is poggers so if we are one we can skip thinking about the rest
+			if(L.plant)	//Is the target a plant?
+				if(holder.food_pref == CARNIVORE)	//Are we a carnivore?
+					wrong_food = TRUE	//Gross!
+			else if(holder.food_pref == HERBIVORE)	//It's not a plant, but are we an herbivore?
+				wrong_food = TRUE	//Gross!
+
+			if(holder.food_pref_obligate && wrong_food)	//We ONLY eat our food pref, we can't eat the other one!!!
+				target_list.Remove(L)
+				continue
+
+		var/huntability = 0
+		if(holder.mob_size > L.mob_size)	//It's safer to hunt things smaller than me
+			huntability ++
+		if(holder.size_multiplier > L.size_multiplier)	//It's safer to hunt smaller things
+			huntability ++
+		if(holder.health > L.health)	//It's safer to hunt weaker things
+			huntability ++
+		if(L.weakened || L.stunned || L.sleeping || L.resting)	//It's safer to hunt vulnerable things
+			huntability ++
+		if(isanimal(L) && isanimal(holder))
+			var/mob/living/simple_mob/S = L
+			var/mob/living/simple_mob/Sh = holder
+			if(Sh.melee_damage_upper > S.melee_damage_upper)	//It's safer to hunt weaker things
+				huntability ++
+		huntability *= 500
+
+		if(wrong_food || L.food_pref == CARNIVORE)
+			huntability *= 0.5	//This is the wrong food, or another hunter, so it's less appealing!
+
+//		to_world("[holder] considering [L]: N - [holder.nutrition]/[huntability] - H")
+		if(holder.nutrition <= huntability)	//Is its huntability score higher than our nutrition?
+			if(huntability > max_huntability)	//It is! But is it the most huntable thing we have seen?
+				max_huntability = huntability	//Nice, let's update the number
+				final_list = list()				//We'll make a new list too, so we only have the most huntable things!!!
+				final_list |= L					//Add it to the list!
+			else if(huntability == max_huntability)	//Is it at least as huntable as what we are already thinking about?
+				final_list |= L	//Then add it to the list!
+	return final_list	//RS ADD END
+
+/datum/ai_holder/proc/hunter_check(atom/movable/ourtarget)	//RS ADD START
+	if(!holder.hunter)
+		return FALSE
+	if(isliving(ourtarget))
+		var/mob/living/L = ourtarget
+		if(L.player_login_key_log)	//Don't eat things that have ever been players
+			if(!isanimal(holder)) return FALSE
+			var/mob/living/simple_mob/S = holder
+			if(!S.will_eat(L))
+				return FALSE
+		if(holder.food_pref == CARNIVORE)
+			if(L.plant && holder.food_pref_obligate)	//Obligate carnivores shouldn't eat plants
+				return FALSE
+		else if(holder.food_pref == HERBIVORE)
+			if(!L.plant && holder.food_pref_obligate)	//Obligate herbivores shouldn't eat meat
+				return FALSE
+	return TRUE	//RS ADD END
