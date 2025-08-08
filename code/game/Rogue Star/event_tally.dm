@@ -130,6 +130,9 @@
 	var/score_type_paths = list()				//A list of type paths of an item that the score keeper is looking to collect
 	var/list/scoreboard = list()				//A list of people's names and their associated scores.
 	var/score_stock_locked = FALSE				//If true, will prevent new scoring items from being added when you click it with them
+	var/list/msg_hist = list()
+	var/firetime
+	var/queued_msg
 
 /obj/score_keeper/Initialize()
 	. = ..()
@@ -141,13 +144,28 @@
 /obj/score_keeper/Destroy()
 	. = ..()
 
+/obj/score_keeper/process()
+	if(!firetime)
+		STOP_PROCESSING(SSobj,src)
+		return
+	if(world.time < firetime)
+		return
+	firetime = null
+	for(var/mob/M in player_list)
+		if(!istype(M,/mob/new_player))
+			to_chat(M, "<h2 class='alert'>[src] Announcement</h2>")
+			to_chat(M, "<span class='alert'>[queued_msg]</span>")
+			M << 'sound/AI/preamble.ogg'
+	queued_msg = null
+	STOP_PROCESSING(SSobj,src)
+
 /obj/score_keeper/attack_hand(mob/user)
 	. = ..()
 
 	if(!user.client.holder)
 		report_score()
 		return
-	var/choice = tgui_alert(user,"What would you like to do?","[src] configuration",list("Report","Add","Remove","Change"))
+	var/choice = tgui_alert(user,"What would you like to do?","[src] configuration",list("Report","Add","Remove","Change","Automate"))
 
 	switch(choice)
 		if("Report")
@@ -196,8 +214,40 @@
 			score_type_paths[choice] = score_val
 
 			to_chat(user, SPAN_NOTICE("Changed the score value for [choice] to [score_type_paths[choice]]."))
+		if("Automate")
+			if(firetime)
+				choice = tgui_input_list(user,"[src] is configured to announce \"[choice]\".","Automation",list("Cancel Announcement","Announce Now","Nevermind"))
+				if(choice == "Cancel Announcement")
+					STOP_PROCESSING(SSobj,src)
+					queued_msg = null
+					firetime = null
+					return
+				else if(choice == "Announce Now")
+					firetime = world.time
+					return
+				else return
+			choice = null
+			if(msg_hist.len)
+				if(tgui_input_list(user,"Would you like to input a new message, or select a previously entered one?","Automation",list("New","Select")) == "Select")
+					choice = tgui_input_list(user,"Select a previously entered message.","Automation",msg_hist)
+			if(!choice)
+				choice = tgui_input_text(user,"What would you like to announce?","Automation")
+			if(!choice) return
+			var/ourtime = tgui_input_number(user,"In how many minutes would you like this to be said?","Automation")
+			if(!ourtime) return
+			if(tgui_input_list(user,"[src] will announce \"[choice]\" in [ourtime] minutes. Is that okay?","Automation Confirmation",list("Cancel","Confirm")) != "Confirm")
+				to_chat(user,"CANCELLED - \"[choice]\"")
+				return
+			queued_msg = choice
+			msg_hist += choice
+			firetime = world.time + (ourtime MINUTES)
+			START_PROCESSING(SSobj,src)
 
 		else return
+
+/obj/score_keeper/attack_ghost(mob/user)
+	. = ..()
+	attack_hand(user)
 
 /obj/score_keeper/attackby(obj/item/O, mob/user)
 	. = ..()
@@ -262,11 +312,17 @@
 
 	return O
 
+/datum/modifier/autospeak
+	name = "Autospeak"
+	desc = "You are tracking someone!"
 
+	stacks = MODIFIER_STACK_ALLOWED
+	var/our_speech
 
-
-
-
+/datum/modifier/autospeak/expire(silent)
+	if(our_speech)
+		holder.say(our_speech)
+	. = ..()
 
 
 
