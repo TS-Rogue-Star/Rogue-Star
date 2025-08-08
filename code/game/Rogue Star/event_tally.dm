@@ -221,8 +221,10 @@
 					STOP_PROCESSING(SSobj,src)
 					queued_msg = null
 					firetime = null
+					return
 				else if(choice == "Announce Now")
 					firetime = world.time
+					return
 				else return
 			choice = null
 			if(msg_hist.len)
