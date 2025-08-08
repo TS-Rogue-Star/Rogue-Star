@@ -440,7 +440,7 @@
 
 /datum/map_template/moonbase_lateload/moonbase_misc
 	name = "Moonbase - Misc"
-	desc = "Misc areas, like some transit areas, holodecks, merc area."
+	desc = "Misc areas, like some transit areas, holodecks, merc area, and the holodeck."
 	mappath = 'moonbase_misc.dmm'
 
 	associated_map_datum = /datum/map_z_level/moonbase_lateload/misc
