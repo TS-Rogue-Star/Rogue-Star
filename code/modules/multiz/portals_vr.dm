@@ -80,7 +80,11 @@
 		if(response == "Select Type")
 			select_portal_subtype(user)		//RS EDIT
 			return
-
+	else if(!portal_enabled && user?.client?.holder)	//RS EDIT START
+		if(tgui_alert(user, "Enable the portal?", "Inactive Portal", list("Yes","No")) == "Yes")
+			portal_enabled = TRUE
+			if(istype(target,/obj/structure/portal_event))
+				target.portal_enabled = TRUE	//RS EDIT END
 	else if(user?.client?.holder)
 		src.teleport(user)
 	else return
