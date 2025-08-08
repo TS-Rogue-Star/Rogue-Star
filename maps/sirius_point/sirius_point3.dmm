@@ -5233,10 +5233,13 @@
 /turf/simulated/floor/tiled/white,
 /area/medical/virology)
 "nC" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-4"
+/obj/structure/cable/green{
+	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
+/obj/machinery/door/firedoor/glass/hidden/steel{
+	dir = 1
+	},
+/turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "nD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel,
@@ -5681,16 +5684,23 @@
 /obj/structure/lattice,
 /turf/simulated/open/vacuum/outdoors,
 /area/moonbase/surface/leveltwo/south)
+"oB" = (
+/obj/machinery/airlock_sensor/airlock_exterior{
+	dir = 1;
+	pixel_x = 0;
+	pixel_y = -24
+	},
+/obj/effect/map_helper/airlock/sensor/ext_sensor,
+/turf/simulated/floor/airless/outdoors,
+/area/engineering/engine_room)
 "oD" = (
 /obj/effect/catwalk_plated,
 /turf/simulated/open,
 /area/hallway/moonbase/central)
 "oE" = (
-/obj/effect/map_helper/airlock/sensor/ext_sensor,
-/obj/machinery/airlock_sensor/airlock_exterior{
-	dir = 1;
-	pixel_x = 0;
-	pixel_y = -24
+/obj/machinery/power/tesla_coil/collector,
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/airless/outdoors,
 /area/engineering/engine_room)
@@ -7176,11 +7186,10 @@
 /turf/simulated/floor/tiled/monotile,
 /area/security/moonbase/legal)
 "sc" = (
-/obj/machinery/power/grounding_rod,
-/obj/structure/cable/green{
-	icon_state = "1-2"
+/obj/machinery/light{
+	dir = 4
 	},
-/turf/simulated/floor/airless/outdoors,
+/turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "se" = (
 /obj/structure/table/reinforced,
@@ -9154,11 +9163,16 @@
 /turf/simulated/floor/airless/outdoors,
 /area/engineering/engine_room)
 "xw" = (
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
+/obj/machinery/light{
+	dir = 4
 	},
-/obj/machinery/power/tesla_coil/splitter,
-/turf/simulated/floor/airless/outdoors,
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/obj/machinery/door/firedoor/glass/hidden/steel{
+	dir = 1
+	},
+/turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "xx" = (
 /obj/structure/cable{
@@ -11155,9 +11169,18 @@
 /turf/simulated/floor/airless/outdoors,
 /area/moonbase/surface/leveltwo/east)
 "CX" = (
-/obj/structure/cable/yellow,
-/obj/machinery/power/tesla_coil/splitter,
-/turf/simulated/floor/airless/outdoors,
+/obj/structure/cable/green{
+	icon_state = "1-4"
+	},
+/obj/machinery/airlock_sensor/airlock_interior{
+	pixel_x = 32;
+	pixel_y = 24
+	},
+/obj/effect/map_helper/airlock/sensor/int_sensor,
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 1
+	},
+/turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "CY" = (
 /turf/simulated/floor/tiled/eris/steel/brown_platform,
@@ -11630,7 +11653,7 @@
 /area/security/main)
 "Eg" = (
 /obj/machinery/particle_accelerator/control_box,
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/monotile,
 /area/engineering/engine_room)
 "Eh" = (
 /turf/simulated/floor/airless/outdoors,
@@ -11819,15 +11842,9 @@
 /turf/simulated/floor/plating,
 /area/crew_quarters/bar)
 "EH" = (
-/obj/structure/cable/green{
-	icon_state = "1-4"
-	},
-/obj/machinery/airlock_sensor/airlock_interior{
-	pixel_x = 32;
-	pixel_y = 24
-	},
-/obj/effect/map_helper/airlock/sensor/int_sensor,
-/turf/simulated/floor/tiled,
+/obj/machinery/power/tesla_coil/collector,
+/obj/structure/cable/yellow,
+/turf/simulated/floor/airless/outdoors,
 /area/engineering/engine_room)
 "EI" = (
 /turf/simulated/wall/r_wall,
@@ -12696,6 +12713,7 @@
 "Hb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/effect/floor_decal/steeldecal/steel_decals5,
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "Hc" = (
@@ -14728,13 +14746,10 @@
 /turf/simulated/floor/tiled/white,
 /area/medical/exam_room)
 "Mf" = (
-/obj/machinery/light{
-	dir = 4
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 1
 	},
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "Mg" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -18323,11 +18338,13 @@
 /turf/simulated/floor/plating,
 /area/hallway/arrival/moonbase/main)
 "Vp" = (
-/obj/machinery/power/grounding_rod,
-/obj/structure/cable/green{
-	icon_state = "4-8"
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
 	},
-/turf/simulated/floor/airless/outdoors,
+/obj/machinery/door/firedoor/glass/hidden/steel{
+	dir = 1
+	},
+/turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "Vq" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
@@ -19070,10 +19087,11 @@
 /turf/simulated/floor/plating,
 /area/crew_quarters/bar)
 "Xb" = (
-/obj/structure/cable/green{
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "Xd" = (
 /obj/machinery/floodlight,
@@ -21792,7 +21810,6 @@ sj
 sj
 sj
 sj
-sj
 BA
 BA
 BA
@@ -21806,7 +21823,8 @@ BA
 BA
 BA
 BA
-aE
+BA
+BA
 aE
 aE
 aE
@@ -21934,10 +21952,8 @@ sj
 sj
 sj
 sj
-sj
 BA
 Ai
-sc
 vq
 vq
 vq
@@ -21945,10 +21961,12 @@ vq
 vq
 vq
 vq
-sc
+vq
+vq
+vq
+vq
 IW
 BA
-aE
 aE
 aE
 aE
@@ -22076,10 +22094,10 @@ sj
 sj
 sj
 sj
-sj
 BA
 xi
 co
+wJ
 co
 co
 co
@@ -22087,10 +22105,10 @@ co
 co
 co
 co
+wJ
 co
 xi
 BA
-aE
 aE
 aE
 aE
@@ -22218,9 +22236,9 @@ sj
 sj
 sj
 sj
-sj
 BA
 xi
+co
 co
 uq
 co
@@ -22230,9 +22248,9 @@ co
 co
 VB
 co
+co
 xi
 BA
-aE
 aE
 aE
 aE
@@ -22360,21 +22378,21 @@ sj
 sj
 sj
 sj
-sj
 BA
-xi
-co
-pM
+wa
 co
 co
 co
+io
+uV
+uV
+uV
+nn
 co
 co
-pM
 co
-xi
+aj
 BA
-aE
 aE
 aE
 aE
@@ -22502,21 +22520,21 @@ sj
 sj
 sj
 sj
-sj
 BA
-wa
+xi
 co
-Nj
 co
-io
-uV
-nn
+pM
+kg
 co
-Nj
 co
-aj
+co
+bg
+pM
+co
+co
+xi
 BA
-aE
 aE
 aE
 aE
@@ -22644,21 +22662,21 @@ sj
 sj
 sj
 sj
-sj
 BA
 AM
 co
-RP
-CX
-kg
-zB
-bg
-xw
+oE
 hN
+kg
+co
+zB
+co
+bg
+RP
+EH
 co
 eu
 BA
-aE
 aE
 aE
 aE
@@ -22786,21 +22804,21 @@ sj
 sj
 sj
 sj
-sj
 BA
-wa
+xi
 co
-Nj
 co
-xv
-Fq
-xs
+KB
+kg
 co
-Nj
 co
-Fb
+co
+bg
+KB
+co
+co
+xi
 BA
-aE
 aE
 aE
 aE
@@ -22928,21 +22946,21 @@ sj
 sj
 sj
 sj
-sj
 BA
-xi
-co
-KB
+wa
 co
 co
+Nj
+xv
+Fq
+Fq
+Fq
+xs
+Nj
 co
 co
-co
-KB
-co
-co
+Fb
 BA
-aE
 aE
 aE
 Mj
@@ -23070,9 +23088,9 @@ sj
 sj
 sj
 sj
-sj
 BA
 xi
+co
 co
 UB
 co
@@ -23083,8 +23101,8 @@ co
 qM
 co
 co
+co
 BA
-aE
 aE
 aE
 Mj
@@ -23212,9 +23230,9 @@ sj
 sj
 sj
 sj
-sj
 BA
-Vp
+xi
+co
 co
 pG
 TU
@@ -23224,9 +23242,9 @@ Pk
 TU
 xk
 co
-wJ
+co
+co
 BA
-aE
 aE
 aE
 Mj
@@ -23354,10 +23372,10 @@ sj
 sj
 sj
 sj
-sj
 BA
 xi
 co
+wJ
 co
 co
 co
@@ -23365,10 +23383,10 @@ Nj
 co
 co
 co
+wJ
 co
 co
 BA
-aE
 aE
 aE
 Mj
@@ -23496,10 +23514,10 @@ sj
 sj
 sj
 sj
-sj
 BA
 xi
-oE
+oB
+EI
 EI
 EI
 GX
@@ -23509,8 +23527,8 @@ GX
 EI
 EI
 co
+co
 BA
-aE
 aE
 aE
 Mj
@@ -23638,12 +23656,12 @@ sj
 sj
 sj
 sj
-sj
 EI
 Rq
 lN
 EI
 Vc
+fB
 PF
 tn
 Ch
@@ -23651,8 +23669,8 @@ mh
 Tp
 EI
 co
+co
 BA
-aE
 aE
 aE
 Mj
@@ -23780,11 +23798,11 @@ sj
 sj
 sj
 sj
-sj
 ui
 zw
 iF
 uO
+Mf
 fB
 Bq
 Ac
@@ -23922,12 +23940,12 @@ sj
 sj
 sj
 sj
-sj
 Xw
 xa
 yH
 jG
-EH
+CX
+fB
 fB
 Aw
 fB
@@ -24064,12 +24082,12 @@ sj
 sj
 sj
 sj
-sj
 Sd
 Wb
 Wb
 oi
 sK
+fB
 Eg
 AF
 fB
@@ -24207,11 +24225,11 @@ sj
 sj
 sj
 sj
-sj
-EI
+cK
 jy
-Xb
+nC
 tt
+fB
 fB
 AW
 fB
@@ -24349,13 +24367,13 @@ sj
 sj
 sj
 sj
-sj
-EI
+cK
 Tx
-nC
+Vp
 fa
 Yo
 Yo
+Xb
 ZB
 rb
 fB
@@ -24491,13 +24509,13 @@ sj
 sj
 sj
 sj
-sj
-EI
+cK
 eY
-Mf
+xw
 ER
 bf
 bf
+sc
 cL
 cL
 ER
@@ -24637,7 +24655,7 @@ aE
 EI
 EI
 EI
-EI
+GX
 GX
 GX
 GX

@@ -76,7 +76,7 @@
 	shuttle_name = "Crew Transport"
 	emergency_shuttle_docked_message = "The evacuation shuttle has arrived. You have approximately %ETD% to board the shuttle."
 	emergency_shuttle_leaving_dock = "The emergency shuttle has departed. Estimate %ETA% until arrival at %dock_name%."
-	emergency_shuttle_called_message = "An emergency evacuation has begun, and an off-schedule shuttle has been called. It will arrive at deck three, aft in approximately %ETA%."
+	emergency_shuttle_called_message = "An emergency evacuation has begun, and an off-schedule shuttle has been called. It will arrive at deck two, southeast in approximately %ETA%."
 	emergency_shuttle_recall_message = "The evacuation shuttle has been recalled."
 
 	station_networks = list(
@@ -121,20 +121,36 @@
 
 	default_skybox = /datum/skybox_settings/sirius_point
 
-//oi dumbass update these
+//unit tests are yet to be implemented
 	unit_test_exempt_areas = list(
-		/area/stellardelight/deck0/exterior,
-		/area/stellardelight/deck1/exterior,
-		/area/stellardelight/deck1/exploshuttle,
-		/area/stellardelight/deck1/miningshuttle,
-		/area/stellardelight/deck2/exterior,
-		/area/stellardelight/deck2/portescape,
-		/area/stellardelight/deck2/starboardescape,
-		/area/stellardelight/deck3/exterior,
-
-		/area/medical/cryo,
-		/area/holodeck_control,
-		/area/tcommsat/chamber
+		/area/maintenance/moonbase/substation,
+		/area/maintenance/moonbase/substation/atmospherics,
+		/area/maintenance/moonbase/substation/cargo,
+		/area/maintenance/moonbase/substation/civilian,
+		/area/maintenance/moonbase/substation/command,
+		/area/maintenance/moonbase/substation/engineering,
+		/area/maintenance/moonbase/substation/exploration,
+		/area/maintenance/moonbase/substation/medical,
+		/area/maintenance/moonbase/substation/research,
+		/area/maintenance/moonbase/substation/security,
+		/area/maintenance/moonbase/substation/aicomms,
+		/area/moonbasemine,
+		/area/moonbasemine/unexplored,
+		/area/moonbasemine/explored,
+		/area/maintenance/moonbase,
+		/area/moonbase/surface/east_crater,
+		/area/moonbase/surface/east_crater/unexplored,
+		/area/moonbase/surface/west_crater,
+		/area/moonbase/surface/west_crater/unexplored,
+		/area/moonbase/surface/underground,
+		/area/moonbase/surface/levelone/north,
+		/area/moonbase/surface/levelone/south,
+		/area/moonbase/surface/levelone/east,
+		/area/moonbase/surface/levelone/west,
+		/area/moonbase/surface/leveltwo/north,
+		/area/moonbase/surface/leveltwo/south,
+		/area/moonbase/surface/leveltwo/east,
+		/area/moonbase/surface/leveltwo/west
 		)
 
 	unit_test_exempt_from_atmos = list() //it maint
@@ -233,16 +249,12 @@
 
 /datum/map/sirius_point/get_map_info()
 	. = list()
-	. +=  "The [full_name] is a an aging but well-maintained research and ISRU facility on the surface of Virgo 3x. [station_short] was originally constructed to aid in construction of a massive planned city, before complications caused the plans to be cancelled and relocated to what is now the city of Anhur on Virgo 3b.<br>"
+	. +=  "The [full_name] is a an aging but well-maintained research and ISRU facility on the surface of Virgo 3X. [station_short] was originally constructed to aid in construction of a massive colony, before complications caused the plans to be cancelled and relocated to what is now the city of Anhur on Virgo 3B.<br>"
 	. +=  "Humanity has spread across the stars and has met many species on similar or even more advanced terms than them - it's a brave new world and many try to find their place in it . <br>"
 	. +=  "Though Virgo-Erigone is not important for the great movers and shakers, it sees itself in the midst of the interests of a reviving alien species of the Zorren, corporate and subversive interests and other exciting dangers the Periphery has to face.<br>"
 	. +=  "As an employee or contractor of NanoTrasen, operators of [station_short] and one of the galaxy's largest corporations, you're probably just here to do a job."
 	return jointext(., "<br>")
 
-
-
-
-//we probably don't need this?
 /datum/skybox_settings/sirius_point
 	icon_state = "space5"
 	use_stars = FALSE

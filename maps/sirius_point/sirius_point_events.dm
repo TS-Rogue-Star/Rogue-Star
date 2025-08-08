@@ -65,7 +65,7 @@
 		// Just blows out a few lights
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Electrical Storm",			/datum/event/electrical_storm, 			70,		list(ASSIGNMENT_ENGINEER = 25, ASSIGNMENT_JANITOR = 100), 1),
 		// This one is just too fun.
-		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Gravity Failure",			/datum/event/gravity,	 				0,	list(), 1),
+		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Gravity Failure",			/datum/event/gravity,	 				0,	list(), 0),
 		// Temporary power failure, but mitigatead by subgrids
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Grid Check",				/datum/event/grid_check, 				0,		list(ASSIGNMENT_ENGINEER = 25), 1, min_jobs = list(ASSIGNMENT_ENGINEER = 1)),
 		// Pure RP fun, no mechanical effects.

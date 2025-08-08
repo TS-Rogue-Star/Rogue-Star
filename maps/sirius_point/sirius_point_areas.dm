@@ -348,9 +348,9 @@
 /area/moonbase/surface/underground
 	name = "Sirius Point Underground"
 	base_turf = /turf/simulated/mineral/floor/vacuum/moonbase
-/area/moonbase/surface/mining
-	name = "Sirius Point Mining"
-	base_turf = /turf/simulated/mineral/floor/vacuum/moonbase
+/area/moonbase/surface/underground/outdoors
+	name = "Sirius Point Level Zero"
+	base_turf = /turf/simulated/mineral/floor/vacuum/moonbase/outdoors
 
 /area/moonbase/surface/levelone/north
 	name = "Northern Sirius Point Level One"
@@ -406,7 +406,7 @@
 /area/maintenance/moonbase/substation/cargo
 	name = "Cargo Substation"
 /area/maintenance/moonbase/substation/civilian
-	name = "Civilian Substation"
+	name = "Biodome Substation"
 /area/maintenance/moonbase/substation/command
 	name = "Command Substation"
 /area/maintenance/moonbase/substation/engineering

@@ -12,6 +12,7 @@
 	flags = AREA_FLAG_IS_NOT_PERSISTENT
 	sound_env = SOUND_ENVIRONMENT_MOUNTAINS
 	base_turf = /turf/simulated/mineral/floor/vacuum/moonbase/outdoors
+	block_phase_shift = 1
 
 /area/submap/moonbase/poi/west_crater
 	name = "POI - Sirius Point"
