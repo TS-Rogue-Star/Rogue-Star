@@ -2,6 +2,7 @@
 var/global/list/possible_station_maps = list(
 	"Stellar Delight" = /datum/map/stellar_delight,
 	"Rascal's Pass" = /datum/map/groundbase,
+	"Sirius Point" = /datum/map/sirius_point,
 	"TEST MAP" = /datum/map/virgo_minitest
 )
 

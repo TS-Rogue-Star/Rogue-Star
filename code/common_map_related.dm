@@ -17,6 +17,13 @@
 #define Z_LEVEL_SPACE_ROCKS					7
 #define Z_LEVEL_OVERMAP						14
 
+#define Z_LEVEL_MOONBASE_LOW				1
+#define Z_LEVEL_MOONBASE_MID				2
+#define Z_LEVEL_MOONBASE_HIGH				3
+#define Z_LEVEL_MOONBASE_EAST				4
+#define Z_LEVEL_MOONBASE_WEST				5
+#define Z_LEVEL_MOONBASE_MINING				6
+
 // For making the 6-in-1 holomap, we calculate some offsets
 #define SHIP_MAP_SIZE 140 // Width and height of compiled in tether z levels.
 #define SHIP_HOLOMAP_CENTER_GUTTER 40 // 40px central gutter between columns
