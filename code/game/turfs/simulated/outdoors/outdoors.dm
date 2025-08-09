@@ -61,15 +61,18 @@ var/list/turf_edge_cache = list()
 
 	. = ..()
 
+/*	RS remove - handled by parent
 /turf/simulated/floor/Initialize(mapload)
 	if(is_outdoors())
 		SSplanets.addTurf(src)
 	. = ..()
+*/
 
 /turf/simulated/floor/Destroy()
 	if(is_outdoors())
 		SSplanets.removeTurf(src)
 	return ..()
+
 
 // Turfs can decide if they should be indoors or outdoors.
 // By default they choose based on their area's setting.

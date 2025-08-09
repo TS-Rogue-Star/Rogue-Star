@@ -1,0 +1,678 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"b" = (
+/turf/template_noop,
+/area/template_noop)
+"c" = (
+/obj/structure/girder,
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"d" = (
+/obj/structure/table/steel,
+/obj/random/awayloot,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"f" = (
+/obj/structure/reagent_dispensers/fueltank/barrel/two,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"g" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"k" = (
+/obj/structure/girder,
+/turf/simulated/floor/airless/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"n" = (
+/obj/structure/bed/chair/bay/shuttle{
+	dir = 1
+	},
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"q" = (
+/mob/living/simple_mob/animal/space/ray,
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"r" = (
+/obj/structure/shuttle/window,
+/obj/structure/grille,
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"s" = (
+/obj/structure/salvageable/shuttle_console,
+/turf/simulated/shuttle/floor/black/airless,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"t" = (
+/turf/simulated/floor/airless/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"u" = (
+/obj/random/forgotten_tram,
+/obj/random/forgotten_tram,
+/obj/structure/table/rack/shelf/steel,
+/obj/item/weapon/grenade/chem_grenade/metalfoam,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"w" = (
+/turf/simulated/mineral/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"y" = (
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"z" = (
+/obj/structure/salvageable/shuttle_console,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor/black/airless,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"A" = (
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"D" = (
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/airlock/silver,
+/turf/simulated/floor/tiled/external,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"F" = (
+/obj/structure/shuttle/engine/heater,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"G" = (
+/obj/structure/table/steel,
+/obj/random/awayloot/looseloot,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"H" = (
+/turf/simulated/shuttle/wall,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"I" = (
+/obj/item/stack/rods,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"K" = (
+/obj/machinery/blackbox_recorder,
+/obj/item/device/gps/internal/poi{
+	gps_tag = "Unidentified Signal"
+	},
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"L" = (
+/obj/structure/reagent_dispensers/fueltank/barrel/two,
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"M" = (
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"O" = (
+/obj/structure/prop/rock/crystal,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"P" = (
+/obj/item/bodybag/cryobag,
+/obj/item/weapon/storage/firstaid/adv,
+/obj/structure/table/steel,
+/obj/item/device/healthanalyzer,
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"Q" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"R" = (
+/obj/random/multiple/corp_crate,
+/turf/simulated/floor/airless/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"S" = (
+/turf/simulated/shuttle/wall/hard_corner,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"U" = (
+/obj/structure/prop/machine/nt_biocan,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"V" = (
+/obj/item/weapon/bedsheet/blue,
+/obj/structure/bed,
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"W" = (
+/mob/living/simple_mob/animal/space/ray,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"X" = (
+/obj/structure/table/steel,
+/obj/item/weapon/storage/toolbox/mechanical{
+	pixel_y = 5
+	},
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"Y" = (
+/obj/structure/table/steel,
+/obj/item/weapon/storage/mre/random,
+/obj/item/weapon/storage/mre/random,
+/obj/item/weapon/storage/mre/random,
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck1)
+"Z" = (
+/obj/random/multiple/corp_crate,
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck1)
+
+(1,1,1) = {"
+b
+b
+b
+w
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
+b
+b
+"}
+(2,1,1) = {"
+b
+w
+w
+w
+w
+w
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
+"}
+(3,1,1) = {"
+a
+w
+w
+w
+w
+w
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+O
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+w
+w
+w
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+H
+H
+k
+a
+a
+a
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+H
+r
+H
+H
+H
+H
+c
+I
+a
+t
+R
+I
+a
+a
+a
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+a
+H
+H
+H
+P
+d
+H
+L
+y
+A
+a
+a
+a
+a
+a
+a
+a
+H
+H
+H
+S
+a
+"}
+(8,1,1) = {"
+a
+r
+s
+n
+y
+y
+H
+y
+A
+A
+a
+a
+a
+a
+c
+H
+H
+H
+f
+F
+g
+a
+"}
+(9,1,1) = {"
+a
+r
+s
+n
+q
+y
+D
+y
+A
+a
+a
+a
+A
+a
+A
+y
+H
+X
+M
+F
+g
+a
+"}
+(10,1,1) = {"
+a
+r
+z
+n
+y
+y
+H
+y
+A
+a
+a
+a
+Z
+a
+A
+y
+H
+G
+M
+H
+S
+a
+"}
+(11,1,1) = {"
+a
+H
+H
+H
+Y
+V
+H
+Q
+Z
+a
+a
+A
+A
+a
+A
+y
+D
+W
+M
+K
+r
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+H
+r
+H
+H
+H
+c
+a
+a
+a
+a
+a
+A
+Z
+H
+u
+M
+H
+S
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+A
+H
+u
+M
+F
+g
+a
+"}
+(14,1,1) = {"
+O
+a
+a
+a
+a
+a
+a
+a
+a
+I
+a
+t
+a
+I
+a
+c
+S
+H
+U
+F
+g
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+R
+t
+a
+a
+a
+a
+H
+H
+H
+S
+a
+"}
+(16,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+k
+H
+H
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(17,1,1) = {"
+a
+a
+w
+w
+w
+w
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(18,1,1) = {"
+a
+w
+w
+w
+w
+w
+w
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(19,1,1) = {"
+a
+a
+w
+w
+w
+w
+w
+a
+a
+a
+a
+a
+a
+a
+a
+w
+w
+w
+a
+a
+a
+a
+"}
+(20,1,1) = {"
+b
+a
+a
+w
+w
+w
+a
+a
+a
+a
+a
+a
+a
+a
+w
+w
+w
+w
+w
+a
+a
+b
+"}
+(21,1,1) = {"
+b
+b
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+w
+w
+a
+a
+b
+b
+b
+"}
