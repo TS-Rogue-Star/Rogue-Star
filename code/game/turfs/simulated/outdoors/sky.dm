@@ -14,7 +14,7 @@
 
 /turf/simulated/sky/Initialize()
 	. = ..()
-	SSplanets.addTurf(src)
+	//SSplanets.addTurf(src)		RS remove - handled by parent
 	set_light(2, 2, "#FFFFFF")
 
 /turf/simulated/sky/north
