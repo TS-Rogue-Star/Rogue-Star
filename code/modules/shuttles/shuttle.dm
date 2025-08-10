@@ -63,7 +63,7 @@
 	if(!istype(current_location))
 		if(debug_logging)
 			log_shuttle("UM whoops, no initial? [src]")
-		CRASH("Shuttle '[name]' could not find its starting location landmark [current_location].")
+		CRASH("Shuttle '[name]' could not find its starting location landmark [initial(current_location)].") // RS Edit - Fix debug message (SSshuttles will have nulled this if it couldn't find it)
 
 	if(src.name in SSshuttles.shuttles)
 		CRASH("A shuttle with the name '[name]' is already defined.")
