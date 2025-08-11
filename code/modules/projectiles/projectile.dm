@@ -662,8 +662,10 @@
 	// The get_zone_with_miss_chance() proc is HIGHLY variable and can be changed server to server with multiple simple var switches built in without having to do specialty code or multiple edits.
 	var/miss_chance = (-accuracy + miss_modifier) //Chance to miss the target. Higher
 	var/effective_view = world.view	//RS ADD START - Let's make it so that you have a chance to miss if they're too far away
-	if(firer.client)
-		effective_view = firer.client.view
+	if(isliving(firer))
+		var/mob/living/L = firer
+		if(L.client)
+			effective_view = firer.client.view
 	if(distance > effective_view)
 		miss_chance += (distance - effective_view) * 20	//RS ADD START
 
