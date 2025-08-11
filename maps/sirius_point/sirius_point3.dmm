@@ -8630,12 +8630,16 @@
 	},
 /area/crew_quarters/bar)
 "wa" = (
-/obj/machinery/power/emitter,
 /obj/structure/cable/green{
 	icon_state = "4-8"
 	},
 /obj/structure/cable/green{
 	icon_state = "0-4"
+	},
+/obj/machinery/power/emitter{
+	anchored = 1;
+	icon_state = "emitter1";
+	state = 1
 	},
 /turf/simulated/floor/airless/outdoors,
 /area/engineering/engine_room)
@@ -24270,7 +24274,7 @@ sj
 sj
 sj
 sj
-cK
+EI
 jy
 nC
 tt
@@ -24412,7 +24416,7 @@ sj
 sj
 sj
 sj
-cK
+EI
 Tx
 Vp
 fa
@@ -24554,7 +24558,7 @@ sj
 sj
 sj
 sj
-cK
+EI
 eY
 xw
 ER
@@ -24696,7 +24700,7 @@ aE
 aE
 aE
 aE
-aE
+EI
 EI
 EI
 EI
