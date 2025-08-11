@@ -858,7 +858,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ai_upload_foyer)
 "auk" = (
-/obj/structure/bonfire/permanent,
+/obj/structure/bonfire,
 /turf/simulated/floor/outdoors/newdirt{
 	outdoors = 0
 	},
@@ -2471,7 +2471,7 @@
 /obj/machinery/alarm{
 	dir = 4
 	},
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/monotile,
 /area/crew_quarters/kitchen)
 "bno" = (
 /obj/effect/floor_decal/milspec/color/emerald/half{
@@ -2629,6 +2629,7 @@
 	dir = 4
 	},
 /obj/structure/catwalk,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/east)
 "btm" = (
@@ -2834,8 +2835,11 @@
 /turf/simulated/floor/plating,
 /area/engineering/storage)
 "bDB" = (
-/obj/machinery/appliance/cooker/grill,
-/turf/simulated/floor/tiled,
+/obj/structure/table/standard,
+/obj/item/weapon/book/manual/cook_guide{
+	pixel_y = 6
+	},
+/turf/simulated/floor/tiled/monotile,
 /area/crew_quarters/kitchen)
 "bDM" = (
 /obj/structure/table/standard,
@@ -2881,6 +2885,9 @@
 /obj/machinery/vending/loadout/accessory,
 /obj/machinery/power/apc{
 	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/crew_quarters/locker)
@@ -3018,6 +3025,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/barrestroom)
 "bIt" = (
@@ -4041,6 +4049,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/barrestroom)
 "cnB" = (
@@ -4625,6 +4634,7 @@
 /obj/effect/floor_decal/milspec/color/green/half{
 	dir = 9
 	},
+/obj/item/weapon/gun/energy/floragun,
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology/xenoflora)
 "cFW" = (
@@ -4869,6 +4879,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/barrestroom)
 "cNR" = (
@@ -5014,6 +5025,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals6{
+	dir = 1
 	},
 /turf/simulated/floor/tiled,
 /area/rnd/research_foyer)
@@ -5367,11 +5381,13 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/bridge/moonbase/waitingroom)
 "dmc" = (
-/obj/machinery/chemical_dispenser/bar_alc/full{
-	pixel_y = 5
-	},
 /obj/item/weapon/reagent_containers/glass/rag,
 /obj/structure/table/hardwoodtable,
+/obj/machinery/chemical_dispenser/bar_alc/full{
+	dir = 8;
+	pixel_x = 0;
+	pixel_y = 4
+	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/bar)
 "dmp" = (
@@ -5753,6 +5769,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/east)
 "dym" = (
@@ -6614,7 +6631,21 @@
 /turf/simulated/open,
 /area/ai_upload)
 "ebw" = (
-/obj/machinery/appliance/cooker/fryer,
+/obj/structure/closet/chefcloset,
+/obj/item/glass_jar,
+/obj/item/device/retail_scanner/civilian,
+/obj/item/weapon/soap/nanotrasen,
+/obj/item/device/destTagger{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/obj/item/weapon/packageWrap,
+/obj/item/weapon/packageWrap,
+/obj/item/weapon/packageWrap,
+/obj/item/weapon/tool/wrench,
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 1
+	},
 /obj/machinery/light/small/neon/generic_purple{
 	pixel_x = 32
 	},
@@ -7009,6 +7040,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/east)
@@ -7465,7 +7500,8 @@
 "eBt" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/multi_tile/metal{
-	name = "Medbay EVA"
+	name = "Medbay EVA";
+	req_one_access = list(5)
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/medical/moonbase/accesshall)
@@ -7506,11 +7542,15 @@
 /turf/simulated/floor/tiled,
 /area/engineering/foyer)
 "eDn" = (
-/obj/structure/table/standard,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/catwalk,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/tiled,
-/area/crew_quarters/kitchen)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/level1/east)
 "eDJ" = (
 /obj/effect/floor_decal/milspec/color/orange/half{
 	dir = 10
@@ -8524,6 +8564,10 @@
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/east)
 "fue" = (
@@ -8677,6 +8721,10 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/security/warden)
+"fym" = (
+/obj/machinery/appliance/cooker/fryer,
+/turf/simulated/floor/tiled/monotile,
+/area/crew_quarters/kitchen)
 "fyq" = (
 /obj/machinery/computer/security,
 /obj/effect/floor_decal/milspec/color/black,
@@ -9255,6 +9303,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/floor_decal/steeldecal/steel_decals6{
+	dir = 4
+	},
 /turf/simulated/floor/tiled,
 /area/rnd/research)
 "fOq" = (
@@ -9289,6 +9340,9 @@
 /obj/machinery/door/airlock/maintenance,
 /obj/structure/cable{
 	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/moonbase/level1/east)
@@ -9433,6 +9487,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/east)
 "fWA" = (
@@ -10792,6 +10847,10 @@
 	},
 /turf/simulated/floor/plating/eris,
 /area/security/lobby)
+"gZh" = (
+/obj/structure/bookcase,
+/turf/simulated/floor/wood,
+/area/library)
 "gZU" = (
 /obj/structure/table/steel_reinforced,
 /obj/structure/window/reinforced{
@@ -10940,6 +10999,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/moonbase/level1/east)
 "hdt" = (
@@ -11298,6 +11358,9 @@
 /area/tcommsat/chamber)
 "hoX" = (
 /obj/structure/disposalpipe/junction,
+/obj/item/weapon/stool/padded{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/eris/cafe,
 /area/crew_quarters/bar)
 "hoY" = (
@@ -12315,8 +12378,11 @@
 /area/hallway/moonbase/central)
 "iaG" = (
 /obj/structure/table/standard,
-/obj/machinery/microwave,
-/turf/simulated/floor/tiled,
+/obj/machinery/reagentgrinder{
+	pixel_y = 10
+	},
+/obj/item/weapon/reagent_containers/spray/cleaner,
+/turf/simulated/floor/tiled/monotile,
 /area/crew_quarters/kitchen)
 "ibh" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
@@ -13464,28 +13530,11 @@
 /turf/simulated/floor/tiled/monotile,
 /area/ai_monitored/storage/eva)
 "iRt" = (
-/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
-/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
-/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
-/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
-/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
-/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
-/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
-/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
-/obj/item/weapon/reagent_containers/food/condiment/spacespice,
-/obj/item/weapon/reagent_containers/food/condiment/spacespice,
-/obj/item/weapon/reagent_containers/food/condiment/carton/sugar,
-/obj/item/weapon/reagent_containers/food/condiment/carton/sugar,
-/obj/item/weapon/reagent_containers/food/condiment/small/saltshaker,
-/obj/item/weapon/reagent_containers/food/condiment/small/saltshaker,
-/obj/item/weapon/reagent_containers/food/condiment/small/peppermill,
-/obj/item/weapon/reagent_containers/food/condiment/small/peppermill,
-/obj/random/donkpocketbox,
-/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/machinery/chem_master/condimaster,
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/monotile,
 /area/crew_quarters/kitchen)
 "iRy" = (
 /obj/structure/table/steel,
@@ -13548,6 +13597,18 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/engineering/locker_room)
+"iRT" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/junction{
+	dir = 2;
+	icon_state = "pipe-j2"
+	},
+/turf/simulated/floor/tiled/white,
+/area/crew_quarters/barrestroom)
 "iSc" = (
 /obj/effect/floor_decal/steeldecal/steel_decals3{
 	dir = 4
@@ -13691,7 +13752,9 @@
 /obj/machinery/firealarm{
 	dir = 1
 	},
-/obj/machinery/atmospherics/unary/vent_pump/on,
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 1
+	},
 /turf/simulated/floor/carpet/blue2,
 /area/moonbase/dorms)
 "iVQ" = (
@@ -14052,6 +14115,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -14843,7 +14909,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/monotile,
 /area/crew_quarters/kitchen)
 "jFj" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden,
@@ -14891,9 +14957,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
+/obj/structure/disposalpipe/junction/yjunction,
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/northhall)
 "jIK" = (
@@ -15298,6 +15362,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/northhall)
 "jXI" = (
@@ -15406,6 +15471,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/north)
 "kaL" = (
@@ -16780,6 +16846,9 @@
 /obj/structure/cable/white{
 	icon_state = "1-8"
 	},
+/obj/effect/floor_decal/steeldecal/steel_decals6{
+	dir = 4
+	},
 /turf/simulated/floor/tiled,
 /area/rnd/research_foyer)
 "kUm" = (
@@ -17115,13 +17184,22 @@
 /turf/simulated/floor/plating,
 /area/engineering/storage)
 "lii" = (
-/obj/machinery/appliance/cooker/oven,
-/turf/simulated/floor/tiled,
+/obj/structure/table/standard,
+/obj/item/weapon/reagent_containers/food/condiment/small/peppermill{
+	pixel_x = 3;
+	pixel_y = 13
+	},
+/obj/item/weapon/reagent_containers/food/condiment/small/saltshaker{
+	pixel_x = -1;
+	pixel_y = 10
+	},
+/turf/simulated/floor/tiled/monotile,
 /area/crew_quarters/kitchen)
 "liB" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/maintenance{
-	req_one_access = list(5)
+	req_one_access = list(5);
+	name = "Morgue"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -18290,14 +18368,23 @@
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/southwesthall)
 "lUg" = (
-/obj/machinery/r_n_d/circuit_imprinter{
-	dir = 1
-	},
-/obj/item/weapon/reagent_containers/glass/beaker/sulphuric,
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/table/reinforced,
+/obj/item/stack/material/plasteel{
+	amount = 10
+	},
+/obj/fiftyspawner/glass,
+/obj/fiftyspawner/glass,
+/obj/fiftyspawner/glass,
+/obj/fiftyspawner/glass,
+/obj/fiftyspawner/steel,
+/obj/fiftyspawner/steel,
+/obj/fiftyspawner/steel,
+/obj/fiftyspawner/steel,
+/obj/fiftyspawner/steel,
 /turf/simulated/floor/tiled/steel,
 /area/rnd/moonbase/robotics)
 "lUj" = (
@@ -18438,6 +18525,14 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/rnd/xenobiology/xenoflora)
+"lZv" = (
+/obj/structure/table/standard,
+/obj/item/weapon/material/knife/butch,
+/obj/item/weapon/material/kitchen/rollingpin,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/tiled,
+/area/crew_quarters/kitchen)
 "lZW" = (
 /obj/effect/landmark/vines,
 /turf/simulated/floor/carpet/green,
@@ -18668,13 +18763,10 @@
 /area/maintenance/moonbase/level1/southeast)
 "mgq" = (
 /obj/structure/table/standard,
-/obj/item/weapon/reagent_containers/food/condiment/small/peppermill{
-	pixel_x = 3;
-	pixel_y = 13
-	},
-/obj/item/weapon/reagent_containers/food/condiment/small/saltshaker{
-	pixel_x = -1;
-	pixel_y = 10
+/obj/item/weapon/storage/box/beakers{
+	name = "box of measuring cups";
+	pixel_y = 7;
+	starts_with = list(/obj/item/weapon/reagent_containers/glass/beaker/measuring_cup = 7)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -18826,6 +18918,10 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/east)
 "mkW" = (
@@ -19570,6 +19666,9 @@
 "mOf" = (
 /obj/structure/cable{
 	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/east)
@@ -20959,6 +21058,9 @@
 /obj/machinery/disposal/wall/cleaner{
 	dir = 8
 	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/barrestroom)
 "nYh" = (
@@ -21957,6 +22059,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/moonbase/level1/east)
 "oCx" = (
@@ -22724,6 +22827,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/north)
 "pgp" = (
@@ -23448,6 +23552,12 @@
 	},
 /turf/simulated/floor/carpet,
 /area/quartermaster/moonbase/hallway)
+"pFR" = (
+/obj/effect/landmark{
+	name = "JoinLateRedgate"
+	},
+/turf/simulated/floor/tiled,
+/area/hallway/moonbase/southhall)
 "pFT" = (
 /obj/structure/waterfall,
 /obj/structure/waterfall/mist,
@@ -24411,6 +24521,9 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/east)
 "qsA" = (
@@ -24960,6 +25073,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/east)
 "qLz" = (
@@ -25265,13 +25381,12 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/westhall)
 "qXS" = (
-/obj/structure/table/standard,
-/obj/item/weapon/material/knife/butch,
-/obj/item/weapon/material/kitchen/rollingpin,
-/turf/simulated/floor/tiled,
+/obj/machinery/appliance/cooker/grill,
+/turf/simulated/floor/tiled/monotile,
 /area/crew_quarters/kitchen)
 "qXW" = (
 /obj/machinery/door/firedoor/glass,
@@ -26352,6 +26467,15 @@
 /obj/structure/disposalpipe/trunk,
 /turf/simulated/floor/wood,
 /area/crew_quarters/bar)
+"rHP" = (
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 8
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 1
+	},
+/turf/simulated/floor/tiled,
+/area/crew_quarters/kitchen)
 "rIa" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/cyan{
 	dir = 8
@@ -26406,6 +26530,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/north)
 "rJu" = (
@@ -26767,7 +26892,24 @@
 /turf/simulated/floor/carpet/oracarpet,
 /area/engineering/break_room)
 "rWk" = (
-/obj/machinery/chem_master/condimaster,
+/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
+/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
+/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
+/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
+/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
+/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
+/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
+/obj/item/weapon/reagent_containers/food/condiment/carton/flour,
+/obj/item/weapon/reagent_containers/food/condiment/spacespice,
+/obj/item/weapon/reagent_containers/food/condiment/spacespice,
+/obj/item/weapon/reagent_containers/food/condiment/carton/sugar,
+/obj/item/weapon/reagent_containers/food/condiment/carton/sugar,
+/obj/item/weapon/reagent_containers/food/condiment/small/saltshaker,
+/obj/item/weapon/reagent_containers/food/condiment/small/saltshaker,
+/obj/item/weapon/reagent_containers/food/condiment/small/peppermill,
+/obj/item/weapon/reagent_containers/food/condiment/small/peppermill,
+/obj/random/donkpocketbox,
+/obj/structure/closet/secure_closet/freezer/kitchen,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/kitchen)
 "rXd" = (
@@ -26780,6 +26922,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/east)
@@ -26797,6 +26943,9 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals6{
+	dir = 8
 	},
 /turf/simulated/floor/tiled,
 /area/rnd/research_foyer)
@@ -26881,6 +27030,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/east)
 "rZX" = (
@@ -28805,6 +28955,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/floor_decal/steeldecal/steel_decals6,
 /turf/simulated/floor/tiled,
 /area/rnd/research_foyer)
 "tmc" = (
@@ -29694,6 +29845,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/barrestroom)
 "tMM" = (
@@ -30045,15 +30197,11 @@
 /turf/simulated/floor/carpet/sblucarpet,
 /area/medical/reception)
 "uaZ" = (
-/obj/structure/table/standard,
-/obj/machinery/reagentgrinder{
-	pixel_y = 10
-	},
-/obj/item/weapon/reagent_containers/spray/cleaner,
+/obj/machinery/appliance/cooker/oven,
 /obj/machinery/camera/network/civilian{
 	dir = 1
 	},
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/monotile,
 /area/crew_quarters/kitchen)
 "ube" = (
 /obj/structure/cable{
@@ -30329,8 +30477,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/structure/disposalpipe/junction{
+	dir = 8
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/westhall)
@@ -30595,6 +30743,11 @@
 /obj/structure/table/hardwoodtable,
 /obj/machinery/light/small/fairylights{
 	pixel_y = 7
+	},
+/obj/machinery/chemical_dispenser/bar_soft/full{
+	dir = 8;
+	pixel_x = 0;
+	pixel_y = 4
 	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/bar)
@@ -30914,6 +31067,9 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light/small,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/east)
 "uMd" = (
@@ -31207,15 +31363,8 @@
 /area/crew_quarters/sleep/cryo)
 "uWE" = (
 /obj/structure/table/standard,
-/obj/item/weapon/storage/box/beakers{
-	name = "box of measuring cups";
-	pixel_y = 7;
-	starts_with = list(/obj/item/weapon/reagent_containers/glass/beaker/measuring_cup = 7)
-	},
-/obj/item/weapon/book/manual/cook_guide{
-	pixel_y = 6
-	},
-/turf/simulated/floor/tiled,
+/obj/machinery/microwave,
+/turf/simulated/floor/tiled/monotile,
 /area/crew_quarters/kitchen)
 "uWK" = (
 /obj/structure/bookcase{
@@ -32487,6 +32636,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/east)
 "vUE" = (
@@ -32612,24 +32762,14 @@
 /turf/simulated/floor/tiled,
 /area/engineering/workshop)
 "vWR" = (
-/obj/fiftyspawner/steel,
-/obj/fiftyspawner/steel,
-/obj/fiftyspawner/steel,
-/obj/fiftyspawner/steel,
-/obj/fiftyspawner/steel,
-/obj/fiftyspawner/glass,
-/obj/fiftyspawner/glass,
-/obj/fiftyspawner/glass,
-/obj/fiftyspawner/glass,
-/obj/item/stack/material/plasteel{
-	amount = 10
-	},
-/obj/structure/closet/walllocker_double/science/west,
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/table/reinforced,
+/obj/machinery/r_n_d/circuit_imprinter{
+	dir = 1
+	},
+/obj/item/weapon/reagent_containers/glass/beaker/sulphuric,
 /turf/simulated/floor/tiled/steel,
 /area/rnd/moonbase/robotics)
 "vWZ" = (
@@ -33437,6 +33577,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/floor_decal/steeldecal/steel_decals6,
 /turf/simulated/floor/tiled,
 /area/rnd/research)
 "wCo" = (
@@ -33539,6 +33680,12 @@
 /obj/machinery/computer/aifixer,
 /turf/simulated/floor/tiled/eris/bcircuit,
 /area/ai_upload_foyer)
+"wIh" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/white,
+/area/crew_quarters/barrestroom)
 "wIp" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/backpack/dufflebag/eng,
@@ -35330,6 +35477,9 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/north)
 "xQm" = (
@@ -35504,6 +35654,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/east)
 "xWX" = (
@@ -43931,7 +44082,7 @@ sjM
 sjM
 sjM
 pNZ
-enf
+fym
 qXS
 uaZ
 cFf
@@ -44069,9 +44220,9 @@ tRK
 pOp
 jSV
 kua
-eDn
-mgq
 nbe
+mgq
+lZv
 bCJ
 sjM
 sjM
@@ -44210,13 +44361,13 @@ dxJ
 sWk
 kXV
 dYE
-wbK
+rHP
 sjM
 sjM
-sjM
+enf
 wbK
 iaG
-iaG
+uWE
 uWE
 iwA
 brC
@@ -45710,7 +45861,7 @@ rLs
 dFv
 rYj
 hPH
-jpv
+pFR
 qrh
 sfy
 tPm
@@ -45851,7 +46002,7 @@ aaI
 wIE
 dFv
 jpv
-jpv
+pFR
 yat
 qrh
 mUE
@@ -45994,7 +46145,7 @@ rLs
 dFv
 ktT
 xkR
-jpv
+pFR
 qrh
 gMJ
 cNR
@@ -50038,7 +50189,7 @@ jIg
 jWG
 tMB
 cnp
-cnp
+iRT
 bIr
 cNt
 rJf
@@ -50096,7 +50247,7 @@ lwK
 nvw
 fOg
 wuO
-eRF
+gZh
 eRF
 eRF
 jjN
@@ -50180,7 +50331,7 @@ mva
 jop
 xnP
 dlj
-qSl
+wIh
 aYC
 xnP
 rwX
@@ -50523,7 +50674,7 @@ uVF
 iUU
 rcA
 eRF
-eRF
+gZh
 eRF
 bIH
 pJE
@@ -50629,12 +50780,12 @@ xWV
 xWV
 vUz
 bso
-abF
-abF
-abF
+eDn
+eDn
+eDn
 fVJ
-abF
-abF
+eDn
+eDn
 ekG
 vUe
 vUe
