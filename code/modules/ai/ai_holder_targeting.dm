@@ -365,18 +365,29 @@
 		if(!isliving(L))
 			continue
 		var/wrong_food = FALSE
-		if(!holder.food_pref == OMNIVORE)	//Omnivores eat everything which is poggers so if we are one we can skip thinking about the rest
-			if(L.plant)	//Is the target a plant?
-				if(holder.food_pref == CARNIVORE)	//Are we a carnivore?
-					wrong_food = TRUE	//Gross!
-			else if(holder.food_pref == HERBIVORE)	//It's not a plant, but are we an herbivore?
-				wrong_food = TRUE	//Gross!
-
-			if(holder.food_pref_obligate && wrong_food)	//We ONLY eat our food pref, we can't eat the other one!!!
-				target_list.Remove(L)
-				continue
-
 		var/huntability = 0
+		if(L.isSynthetic())
+			if(holder.food_pref != ROBOVORE)
+				wrong_food = TRUE
+
+		switch(holder.food_pref)
+			if(CARNIVORE)
+				if(L.food_class != (FP_MEAT || FP_FOOD))
+					wrong_food = TRUE
+			if(HERBIVORE)
+				if(L.food_class != (FP_PLANT || FP_FOOD))
+					wrong_food = TRUE
+			if(ROBOVORE)
+				if(!L.isSynthetic())
+					if(L.food_class != FP_FOOD)
+						wrong_food = TRUE
+
+		if(wrong_food && L.food_pref_obligate)
+			target_list.Remove(L)
+			continue
+
+		if(L.food_class == FP_FOOD)
+			huntability ++
 		if(holder.mob_size > L.mob_size)	//It's safer to hunt things smaller than me
 			huntability ++
 		if(holder.size_multiplier > L.size_multiplier)	//It's safer to hunt smaller things
@@ -392,7 +403,7 @@
 				huntability ++
 		huntability *= 500
 
-		if(wrong_food || L.food_pref == CARNIVORE)
+		if(wrong_food || L.food_pref == holder.food_pref)
 			huntability *= 0.5	//This is the wrong food, or another hunter, so it's less appealing!
 
 //		to_world("[holder] considering [L]: N - [holder.nutrition]/[huntability] - H")
@@ -415,10 +426,11 @@
 			var/mob/living/simple_mob/S = holder
 			if(!S.will_eat(L))
 				return FALSE
-		if(holder.food_pref == CARNIVORE)
+/*		if(holder.food_pref == CARNIVORE)
 			if(L.plant && holder.food_pref_obligate)	//Obligate carnivores shouldn't eat plants
 				return FALSE
 		else if(holder.food_pref == HERBIVORE)
 			if(!L.plant && holder.food_pref_obligate)	//Obligate herbivores shouldn't eat meat
 				return FALSE
+*/
 	return TRUE	//RS ADD END

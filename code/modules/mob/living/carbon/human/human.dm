@@ -36,6 +36,7 @@
 		name = real_name
 		if(mind)
 			mind.name = real_name
+		food_class = species.food_class	//RS ADD
 
 	nutrition = rand(200,400)
 
@@ -54,6 +55,7 @@
 
 	//verbs |= /mob/living/proc/toggle_selfsurgery //VOREStation Removal
 	AddComponent(/datum/component/personal_crafting)
+	if(species.)
 
 /mob/living/carbon/human/Destroy()
 	human_mob_list -= src

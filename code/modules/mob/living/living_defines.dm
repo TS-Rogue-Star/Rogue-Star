@@ -86,5 +86,5 @@
 	var/hunter = FALSE				//RS ADD - if TRUE hostile mobs will consider a variety of factors against its nutrition to determine if a target is valid. Well fed hunters don't need to hunt. Starving hunters may pick riskier fights.
 	var/food_pref = OMNIVORE		//RS ADD - Affects hunter behavior!
 	var/food_pref_obligate = FALSE	//RS ADD - if true, we ONLY eat meat or ONLY eat plant. If false, the opposite is less appealing!
-	var/plant = FALSE				//RS ADD - If true, carnivores will ignore you for hunting, but herbivores may not...
+	var/food_class = FP_MEAT		//RS ADD - What are we considered to hunters?
 	var/pips = 100					//RS ADD - How many food are we worth to hunters?
