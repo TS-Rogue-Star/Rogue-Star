@@ -34,7 +34,7 @@
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/hallway)
 "as" = (
 /obj/machinery/atmospherics/pipe/manifold/visible{
@@ -189,7 +189,7 @@
 /obj/structure/railing/grey{
 	dir = 1
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/hallway)
 "bF" = (
 /obj/effect/floor_decal/industrial/warning/corner,
@@ -265,7 +265,7 @@
 /obj/structure/cable/green{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/exp_prep)
 "cc" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
@@ -321,7 +321,7 @@
 /area/outpost/research/toxins_misc_lab)
 "cD" = (
 /obj/effect/floor_decal/milspec/color/emerald/half,
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/hallway)
 "cJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
@@ -555,7 +555,7 @@
 /obj/structure/cable/green{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/exp_prep)
 "eS" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -568,7 +568,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/hallway)
 "eU" = (
 /obj/machinery/atmospherics/unary/heat_exchanger{
@@ -794,7 +794,7 @@
 /obj/structure/railing/grey{
 	dir = 1
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/hallway)
 "gG" = (
 /obj/effect/floor_decal/industrial/danger,
@@ -807,7 +807,7 @@
 /obj/structure/dispenser{
 	phorontanks = 0
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/exp_prep)
 "gL" = (
 /turf/simulated/floor/tiled/dark,
@@ -953,20 +953,17 @@
 	name = "Station Intercom (General)";
 	pixel_x = 24
 	},
-/obj/effect/floor_decal/milspec/color/emerald/half{
-	dir = 4
-	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled/monotile,
 /area/outpost/research/hallway)
 "it" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/hallway)
 "ix" = (
 /obj/machinery/door/firedoor/border_only,
@@ -1013,7 +1010,7 @@
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/hallway)
 "iI" = (
 /obj/effect/floor_decal/industrial/warning/color{
@@ -1129,7 +1126,7 @@
 /obj/item/clothing/mask/breath,
 /obj/effect/floor_decal/industrial/hatch/yellow,
 /obj/machinery/alarm,
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/exp_prep)
 "kc" = (
 /obj/machinery/atmospherics/unary/heat_exchanger{
@@ -1163,7 +1160,7 @@
 /area/outpost/research/tox_store)
 "kf" = (
 /obj/structure/closet/secure_closet/xenoarchaeologist,
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/exp_prep)
 "ko" = (
 /obj/machinery/atmospherics/unary/vent_pump/high_volume{
@@ -1359,7 +1356,7 @@
 /obj/structure/cable/green{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/exp_prep)
 "ne" = (
 /obj/machinery/light/small{
@@ -1405,7 +1402,7 @@
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/hallway)
 "ny" = (
 /obj/machinery/power/smes/buildable{
@@ -1467,7 +1464,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/hallway)
 "oo" = (
 /obj/structure/sink/kitchen{
@@ -1505,12 +1502,12 @@
 /obj/effect/floor_decal/milspec/color/emerald/corner{
 	dir = 1
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/hallway)
 "oE" = (
 /obj/machinery/light,
 /obj/effect/floor_decal/milspec/color/emerald/half,
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/hallway)
 "oH" = (
 /obj/machinery/door/firedoor/glass,
@@ -1535,7 +1532,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/exp_prep)
 "pb" = (
 /obj/machinery/atmospherics/portables_connector{
@@ -1575,7 +1572,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/hallway)
 "ps" = (
 /obj/machinery/door/firedoor/glass,
@@ -1786,11 +1783,10 @@
 /turf/simulated/floor/plating,
 /area/outpost/research/mixing)
 "rK" = (
-/obj/effect/floor_decal/milspec/color/emerald/half,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled/monotile,
 /area/outpost/research/hallway)
 "rL" = (
 /obj/machinery/light/small,
@@ -1830,7 +1826,7 @@
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 6
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/hallway)
 "sg" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
@@ -1851,11 +1847,11 @@
 /area/outpost/research/anomaly_storage)
 "sl" = (
 /obj/machinery/washing_machine,
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/exp_prep)
 "sn" = (
 /obj/structure/closet/excavation,
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/exp_prep)
 "ss" = (
 /obj/machinery/atmospherics/unary/heat_exchanger{
@@ -1942,7 +1938,7 @@
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/hallway)
 "tb" = (
 /obj/machinery/light{
@@ -1954,13 +1950,10 @@
 /obj/machinery/camera/network/research_outpost{
 	dir = 8
 	},
-/obj/effect/floor_decal/milspec/color/emerald/half{
-	dir = 4
-	},
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled/monotile,
 /area/outpost/research/hallway)
 "tl" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -1977,7 +1970,7 @@
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/hallway)
 "tq" = (
 /turf/simulated/floor/tiled/dark,
@@ -2129,7 +2122,7 @@
 /obj/item/weapon/storage/belt/archaeology,
 /obj/item/stack/flag/yellow,
 /obj/item/clothing/mask/breath,
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/exp_prep)
 "vu" = (
 /obj/machinery/power/apc{
@@ -2245,7 +2238,7 @@
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/hallway)
 "wP" = (
 /obj/machinery/atmospherics/unary/heat_exchanger{
@@ -2546,7 +2539,7 @@
 /obj/structure/cable/green{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/hallway)
 "zM" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -2637,7 +2630,7 @@
 /obj/structure/cable/green{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/exp_prep)
 "AN" = (
 /obj/structure/bed/chair/sofa/black,
@@ -2662,7 +2655,7 @@
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/hallway)
 "Bm" = (
 /obj/machinery/atmospherics/trinary/atmos_filter{
@@ -2686,7 +2679,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/hallway)
 "Bw" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
@@ -2702,7 +2695,7 @@
 /obj/machinery/camera/network/research_outpost{
 	dir = 1
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/exp_prep)
 "Bz" = (
 /obj/effect/map_helper/airlock/sensor/ext_sensor,
@@ -3041,7 +3034,7 @@
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/hallway)
 "Fj" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/black{
@@ -3204,7 +3197,7 @@
 /obj/structure/cable/green{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/hallway)
 "Hp" = (
 /obj/machinery/atmospherics/unary/vent_pump/high_volume{
@@ -3257,7 +3250,7 @@
 /obj/structure/cable/green{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/hallway)
 "HK" = (
 /obj/machinery/firealarm{
@@ -3304,7 +3297,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/hallway)
 "Iq" = (
 /obj/machinery/portable_atmospherics/canister/air,
@@ -3566,7 +3559,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/exp_prep)
 "LI" = (
 /obj/machinery/alarm{
@@ -3756,11 +3749,10 @@
 /turf/simulated/floor/tiled,
 /area/outpost/research/dorms)
 "Nk" = (
-/obj/effect/floor_decal/milspec/color/emerald/half,
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled/monotile,
 /area/outpost/research/hallway)
 "Nl" = (
 /obj/machinery/vending/phoronresearch,
@@ -3825,7 +3817,7 @@
 /obj/structure/cable/green{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/exp_prep)
 "Oy" = (
 /turf/simulated/floor/tiled/white,
@@ -3950,7 +3942,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/hallway)
 "PU" = (
 /obj/effect/floor_decal/industrial/danger{
@@ -4028,7 +4020,7 @@
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 1
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/hallway)
 "Rc" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden{
@@ -4165,7 +4157,7 @@
 /obj/item/clothing/glasses/science,
 /obj/item/clothing/mask/breath,
 /obj/effect/floor_decal/industrial/hatch/yellow,
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/exp_prep)
 "SD" = (
 /obj/machinery/atmospherics/binary/pump,
@@ -4314,7 +4306,7 @@
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/hallway)
 "UQ" = (
 /obj/effect/floor_decal/fakestairs/top{
@@ -4346,7 +4338,7 @@
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/hallway)
 "Va" = (
 /obj/machinery/firealarm{
@@ -4356,7 +4348,7 @@
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/mixing)
 "Vd" = (
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/hallway)
 "Vl" = (
 /obj/effect/floor_decal/industrial/outline/red,
@@ -4369,7 +4361,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/exp_prep)
 "Vq" = (
 /obj/machinery/atmospherics/pipe/simple/hidden,
@@ -4379,7 +4371,7 @@
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/hallway)
 "Vr" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -4447,7 +4439,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/hallway)
 "WG" = (
 /obj/structure/table/standard,
@@ -4633,7 +4625,7 @@
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/white,
+/turf/simulated/floor/tiled,
 /area/outpost/research/hallway)
 "YR" = (
 /obj/structure/table/bench/wooden,

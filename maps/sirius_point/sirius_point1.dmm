@@ -37,7 +37,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/carpet/bcarpet,
-/area/library/moonbase/mimeoffice)
+/area/crew_quarters/moonbase/mimeoffice)
 "af" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
@@ -69,7 +69,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/bcarpet,
-/area/library/moonbase/mimeoffice)
+/area/crew_quarters/moonbase/mimeoffice)
 "ak" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/maintenance,
@@ -379,7 +379,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/steel_ridged,
-/area/library/moonbase/mimeoffice)
+/area/crew_quarters/moonbase/mimeoffice)
 "ba" = (
 /obj/structure/cable{
 	icon_state = "0-2"
@@ -798,7 +798,7 @@
 	req_access = list(138)
 	},
 /turf/simulated/floor/tiled/steel_ridged,
-/area/library/moonbase/mimeoffice)
+/area/crew_quarters/moonbase/mimeoffice)
 "cl" = (
 /obj/structure/bed/chair/backed_grey{
 	dir = 4
@@ -1550,7 +1550,7 @@
 	dir = 9
 	},
 /turf/simulated/floor/carpet/gaycarpet,
-/area/library/moonbase/clownoffice)
+/area/crew_quarters/moonbase/clownoffice)
 "em" = (
 /obj/structure/railing/grey{
 	dir = 1
@@ -1667,7 +1667,7 @@
 	},
 /obj/effect/landmark/start/mime,
 /turf/simulated/floor/carpet/bcarpet,
-/area/library/moonbase/mimeoffice)
+/area/crew_quarters/moonbase/mimeoffice)
 "eA" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -1893,8 +1893,17 @@
 /turf/simulated/floor/wood,
 /area/groundbase/hotspring)
 "ff" = (
-/obj/structure/closet/coffin,
+/obj/structure/morgue/crematorium{
+	dir = 2;
+	id = "crematorium"
+	},
 /obj/machinery/camera/network/civilian,
+/obj/machinery/button/crematorium{
+	id = "crematorium";
+	pixel_x = 25;
+	req_access = list();
+	req_one_access = null
+	},
 /turf/simulated/floor/tiled/dark,
 /area/chapel/chapel_morgue)
 "fg" = (
@@ -2849,12 +2858,9 @@
 /turf/simulated/wall/r_wall,
 /area/hallway/moonbase/shop)
 "hQ" = (
-/obj/structure/morgue/crematorium{
-	dir = 2;
-	id = "crematorium"
-	},
-/turf/simulated/floor/tiled/dark,
-/area/chapel/chapel_morgue)
+/obj/random/maintenance,
+/turf/simulated/mineral/floor/vacuum/moonbase,
+/area/moonbase/surface/underground)
 "hR" = (
 /obj/machinery/atmospherics/binary/pump,
 /turf/simulated/floor/plating,
@@ -4212,7 +4218,7 @@
 "lw" = (
 /obj/structure/barricade/cutout/mime,
 /turf/simulated/floor/carpet/bcarpet,
-/area/library/moonbase/mimeoffice)
+/area/crew_quarters/moonbase/mimeoffice)
 "lx" = (
 /turf/simulated/floor/plating/moonbase,
 /area/maintenance/moonbase/basement/engibreakroom)
@@ -4892,9 +4898,6 @@
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/poolmaint)
 "no" = (
-/obj/machinery/alarm{
-	dir = 4
-	},
 /turf/simulated/floor/lino,
 /area/maintenance/moonbase/basement/engibreakroom)
 "np" = (
@@ -4928,7 +4931,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/carpet/gaycarpet,
-/area/library/moonbase/clownoffice)
+/area/crew_quarters/moonbase/clownoffice)
 "nv" = (
 /turf/simulated/floor/water/deep/pool,
 /area/crew_quarters/pool)
@@ -5786,7 +5789,7 @@
 	},
 /obj/item/toy/figure/mime,
 /turf/simulated/floor/carpet/bcarpet,
-/area/library/moonbase/mimeoffice)
+/area/crew_quarters/moonbase/mimeoffice)
 "pQ" = (
 /turf/simulated/mineral/moonbase,
 /area/moonbase/dorms/dorm8)
@@ -5827,7 +5830,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/bcarpet,
-/area/library/moonbase/mimeoffice)
+/area/crew_quarters/moonbase/mimeoffice)
 "pY" = (
 /obj/machinery/alarm{
 	dir = 8
@@ -6147,10 +6150,11 @@
 	dir = 9
 	},
 /turf/simulated/floor/carpet/bcarpet,
-/area/library/moonbase/mimeoffice)
+/area/crew_quarters/moonbase/mimeoffice)
 "qU" = (
 /obj/structure/table/steel_reinforced,
 /obj/effect/floor_decal/milspec/hatchmarks,
+/obj/machinery/recharger,
 /turf/simulated/floor/tiled/dark,
 /area/security/range)
 "qV" = (
@@ -7168,7 +7172,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/gaycarpet,
-/area/library/moonbase/clownoffice)
+/area/crew_quarters/moonbase/clownoffice)
 "tQ" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -8094,7 +8098,7 @@
 /area/moonbase/basement/caves/northwest)
 "wm" = (
 /turf/simulated/floor/carpet/gaycarpet,
-/area/library/moonbase/clownoffice)
+/area/crew_quarters/moonbase/clownoffice)
 "wn" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock{
@@ -8143,7 +8147,7 @@
 /area/maintenance/moonbase/basement/boxingring)
 "ws" = (
 /turf/simulated/wall/r_wall,
-/area/library/moonbase/clownoffice)
+/area/crew_quarters/moonbase/clownoffice)
 "wt" = (
 /turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/dorms/dorm7)
@@ -8244,6 +8248,12 @@
 "wK" = (
 /turf/simulated/floor/tiled/freezer/cold,
 /area/crew_quarters/kitchen)
+"wL" = (
+/obj/machinery/alarm{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/steel_dirty,
+/area/maintenance/moonbase/basement/engibreakroom)
 "wM" = (
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/poolmaint)
@@ -8605,7 +8615,7 @@
 "xR" = (
 /obj/machinery/vending/wardrobe/mimedrobe,
 /turf/simulated/floor/carpet/bcarpet,
-/area/library/moonbase/mimeoffice)
+/area/crew_quarters/moonbase/mimeoffice)
 "xS" = (
 /obj/item/mecha_parts/mecha_equipment/tool/drill/bore,
 /turf/simulated/mineral/floor/cave/moonbase,
@@ -9157,7 +9167,7 @@
 "zz" = (
 /obj/structure/barricade/cutout/clown,
 /turf/simulated/floor/carpet/gaycarpet,
-/area/library/moonbase/clownoffice)
+/area/crew_quarters/moonbase/clownoffice)
 "zA" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -10961,7 +10971,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/carpet/gaycarpet,
-/area/library/moonbase/clownoffice)
+/area/crew_quarters/moonbase/clownoffice)
 "EA" = (
 /obj/structure/smoletrack/roadturn{
 	dir = 1
@@ -10978,7 +10988,7 @@
 	req_one_access = null
 	},
 /turf/simulated/floor/tiled/steel_ridged,
-/area/library/moonbase/clownoffice)
+/area/crew_quarters/moonbase/clownoffice)
 "EC" = (
 /obj/structure/cable{
 	icon_state = "1-8"
@@ -11951,6 +11961,10 @@
 /obj/random/maintenance,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/southair)
+"He" = (
+/obj/random/trash,
+/turf/simulated/mineral/floor/vacuum/moonbase,
+/area/moonbase/surface/underground)
 "Hf" = (
 /obj/machinery/firealarm{
 	dir = 4
@@ -12107,7 +12121,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/bcarpet,
-/area/library/moonbase/mimeoffice)
+/area/crew_quarters/moonbase/mimeoffice)
 "HD" = (
 /turf/simulated/floor/wood/alt/panel,
 /area/crew_quarters/theatre)
@@ -12622,7 +12636,7 @@
 /obj/machinery/recharge_station,
 /obj/machinery/alarm,
 /turf/simulated/floor/carpet/gaycarpet,
-/area/library/moonbase/clownoffice)
+/area/crew_quarters/moonbase/clownoffice)
 "IX" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass_external,
@@ -13541,7 +13555,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/carpet/bcarpet,
-/area/library/moonbase/mimeoffice)
+/area/crew_quarters/moonbase/mimeoffice)
 "Lu" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
@@ -14577,7 +14591,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/carpet/bcarpet,
-/area/library/moonbase/mimeoffice)
+/area/crew_quarters/moonbase/mimeoffice)
 "Oh" = (
 /obj/machinery/computer/arcade/battle,
 /turf/simulated/floor/carpet/retro_red,
@@ -14801,7 +14815,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/carpet/gaycarpet,
-/area/library/moonbase/clownoffice)
+/area/crew_quarters/moonbase/clownoffice)
 "ON" = (
 /obj/structure/table/steel,
 /obj/random/tool/powermaint,
@@ -15010,7 +15024,7 @@
 /area/engineering/atmos)
 "Pk" = (
 /turf/simulated/wall/r_wall,
-/area/library/moonbase/mimeoffice)
+/area/crew_quarters/moonbase/mimeoffice)
 "Pl" = (
 /obj/item/device/radio/intercom{
 	dir = 4;
@@ -15458,7 +15472,7 @@
 /obj/machinery/recharge_station,
 /obj/machinery/alarm,
 /turf/simulated/floor/carpet/bcarpet,
-/area/library/moonbase/mimeoffice)
+/area/crew_quarters/moonbase/mimeoffice)
 "Qu" = (
 /obj/structure/prop/rock/crystal,
 /obj/effect/map_effect/perma_light{
@@ -15709,7 +15723,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/gaycarpet,
-/area/library/moonbase/clownoffice)
+/area/crew_quarters/moonbase/clownoffice)
 "Re" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 4
@@ -16290,7 +16304,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/carpet/bcarpet,
-/area/library/moonbase/mimeoffice)
+/area/crew_quarters/moonbase/mimeoffice)
 "Sz" = (
 /obj/machinery/light,
 /obj/machinery/camera/network/research{
@@ -16721,7 +16735,7 @@
 	},
 /obj/item/toy/figure/clown,
 /turf/simulated/floor/carpet/gaycarpet,
-/area/library/moonbase/clownoffice)
+/area/crew_quarters/moonbase/clownoffice)
 "TK" = (
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
@@ -17439,7 +17453,7 @@
 /area/moonbase/basement/caves/east)
 "VD" = (
 /turf/simulated/floor/carpet/bcarpet,
-/area/library/moonbase/mimeoffice)
+/area/crew_quarters/moonbase/mimeoffice)
 "VF" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/black{
 	dir = 8
@@ -17712,7 +17726,7 @@
 	},
 /obj/effect/landmark/start/clown,
 /turf/simulated/floor/carpet/gaycarpet,
-/area/library/moonbase/clownoffice)
+/area/crew_quarters/moonbase/clownoffice)
 "Wv" = (
 /obj/structure/railing/grey{
 	dir = 8
@@ -17839,7 +17853,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/gaycarpet,
-/area/library/moonbase/clownoffice)
+/area/crew_quarters/moonbase/clownoffice)
 "WQ" = (
 /obj/structure/table/woodentable,
 /turf/simulated/floor/carpet/brown,
@@ -18050,7 +18064,7 @@
 "Xw" = (
 /obj/machinery/vending/wardrobe/clowndrobe,
 /turf/simulated/floor/carpet/gaycarpet,
-/area/library/moonbase/clownoffice)
+/area/crew_quarters/moonbase/clownoffice)
 "Xx" = (
 /obj/structure/salvageable/server,
 /obj/machinery/light/small,
@@ -18075,7 +18089,8 @@
 /turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/northeast)
 "XC" = (
-/obj/random/trash_pile,
+/obj/random/trash,
+/obj/random/maintenance,
 /turf/simulated/mineral/floor/vacuum/moonbase,
 /area/moonbase/surface/underground)
 "XD" = (
@@ -18131,7 +18146,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/carpet/gaycarpet,
-/area/library/moonbase/clownoffice)
+/area/crew_quarters/moonbase/clownoffice)
 "XK" = (
 /turf/simulated/wall/r_wall,
 /area/ai_upload)
@@ -18863,7 +18878,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/steel_ridged,
-/area/library/moonbase/clownoffice)
+/area/crew_quarters/moonbase/clownoffice)
 "ZL" = (
 /obj/structure/table/rack,
 /obj/random/maintenance,
@@ -23767,7 +23782,7 @@ td
 CY
 Ho
 ob
-oF
+wL
 kp
 xs
 xs
@@ -23918,14 +23933,14 @@ Hc
 WU
 ki
 sF
-xF
-xF
-xF
-xF
-xF
-AR
-AR
-AR
+Hc
+Hc
+Hc
+Hc
+Hc
+Hc
+Hc
+Hc
 au
 AR
 bB
@@ -25898,7 +25913,7 @@ nc
 nc
 nc
 PC
-oj
+PC
 oj
 oj
 Ki
@@ -27635,7 +27650,7 @@ Es
 Es
 yT
 XC
-yT
+hQ
 Es
 Es
 Es
@@ -27775,7 +27790,7 @@ Es
 Es
 Es
 Es
-yT
+hQ
 yT
 yT
 yT
@@ -27917,7 +27932,7 @@ Es
 Es
 Es
 Es
-XC
+He
 yT
 yT
 yT
@@ -28060,7 +28075,7 @@ Es
 Es
 Es
 Es
-yT
+hQ
 yT
 XC
 Es
@@ -34638,7 +34653,7 @@ oj
 oj
 oj
 MC
-hQ
+rK
 cf
 cf
 cf

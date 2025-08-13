@@ -18,6 +18,8 @@
 	name = "Arrivals Hallway"
 /area/hallway/arrival/moonbase/dockingbays
 	name = "Docking Bays"
+/area/hallway/arrival/moonbase/teleporter
+	name = "Teleporter Hub"
 
 /area/hallway/moonbase
 	icon = 'icons/turf/areas_rs.dmi'
@@ -68,16 +70,17 @@
 /area/crew_quarters/moonbase/basement/iceroom
 	name = "Tundra Biosphere Simulation"
 	ambience = AMBIENCE_RUINS
+/area/crew_quarters/moonbase/clownoffice
+	name = "Honk Annex"
+/area/crew_quarters/moonbase/mimeoffice
+	name = "The Backrooms"
 /area/library/moonbase/office
 	name = "Librarian's Office"
 	lightswitch = 0
-/area/library/moonbase/clownoffice
-	name = "Honk Annex"
-/area/library/moonbase/mimeoffice
-	name = "The Backrooms"
 
 /area/security/moonbase
 	icon_state = "brig"
+	block_phase_shift = TRUE
 /area/security/moonbase/cellone
 	name = "Cell One"
 /area/security/moonbase/celltwo
@@ -153,6 +156,9 @@
 	name = "Research and Development Lab"
 /area/rnd/moonbase/serverroom
 	name = "Research Server Room"
+	block_phase_shift = TRUE
+/area/rnd/rdoffice
+	block_phase_shift = TRUE
 
 /area/bridge/moonbase/secretaryoffice
 	name = "Command Secretary Offices"
@@ -174,31 +180,39 @@
 	forbid_events = TRUE
 	forbid_singulo = TRUE
 	emotes_from_beyond = FALSE
-	block_phase_shift = TRUE
+	block_phase_shift = FALSE
 /area/moonbase/dorms/dorm1
 	name = "Dorm 1"
 	icon_state = "dorm1"
+	block_phase_shift = TRUE
 /area/moonbase/dorms/dorm2
 	name = "Dorm 2"
 	icon_state = "dorm2"
+	block_phase_shift = TRUE
 /area/moonbase/dorms/dorm3
 	name = "Dorm 3"
 	icon_state = "dorm3"
+	block_phase_shift = TRUE
 /area/moonbase/dorms/dorm4
 	name = "Dorm 4"
 	icon_state = "dorm4"
+	block_phase_shift = TRUE
 /area/moonbase/dorms/dorm5
 	name = "Dorm 5"
 	icon_state = "dorm5"
+	block_phase_shift = TRUE
 /area/moonbase/dorms/dorm6
 	name = "Dorm 6"
 	icon_state = "dorm6"
+	block_phase_shift = TRUE
 /area/moonbase/dorms/dorm7
 	name = "Dorm 7"
 	icon_state = "dorm7"
+	block_phase_shift = TRUE
 /area/moonbase/dorms/dorm8
 	name = "Dorm 8"
 	icon_state = "dorm8"
+	block_phase_shift = TRUE
 
 
 /////////////////////////
