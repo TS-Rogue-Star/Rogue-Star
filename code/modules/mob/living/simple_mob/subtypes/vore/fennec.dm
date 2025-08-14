@@ -51,6 +51,8 @@
 
 	say_list_type = /datum/say_list/fennec
 	ai_holder_type = /datum/ai_holder/simple_mob/passive
+	hunter = TRUE				//RS ADD
+	food_pref = CARNIVORE		//RS ADD
 
 // Activate Noms!
 /mob/living/simple_mob/vore/fennec

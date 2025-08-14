@@ -43,6 +43,10 @@
 	vore_default_mode = DM_HOLD
 	vore_icons = SA_ICON_LIVING
 
+	hunter = TRUE				//RS ADD
+	food_pref = HERBIVORE		//RS ADD
+	food_pref_obligate = TRUE	//RS ADD
+
 	var/body_color 				//brown, black and white, leave blank for random
 
 	var/grumpiness = 0 			// This determines how grumpy we are. Pet us to increase it, leave us alone to decrease.
@@ -150,6 +154,10 @@
 
 	say_list_type = /datum/say_list/rabbit
 	ai_holder_type = /datum/ai_holder/simple_mob/melee/evasive
+
+	hunter = FALSE					//RS EDIT - This one should just murder you
+	food_pref = OMNIVORE			//RS EDIT
+	food_pref_obligate = FALSE		//RD EDIT
 
 /mob/living/simple_mob/vore/rabbit/killer/ex_act()
 	gib()

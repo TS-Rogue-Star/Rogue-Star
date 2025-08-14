@@ -91,7 +91,7 @@
 		O_EYES =     /obj/item/organ/internal/eyes/alraune,
 		A_FRUIT =    /obj/item/organ/internal/fruitgland,
 		)
-
+	food_class = FP_PLANT	//RS ADD
 
 /datum/species/alraune/handle_environment_special(var/mob/living/carbon/human/H)
 	if(H.inStasisNow()) // if they're in stasis, they won't need this stuff.

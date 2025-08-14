@@ -44,6 +44,10 @@
 	special_attack_max_range = 5
 	special_attack_cooldown = 100
 
+	hunter = TRUE				//RS ADD
+	food_pref = CARNIVORE		//RS ADD
+	food_pref_obligate = TRUE	//RS ADD
+
 // Pepe is love, not hate.
 /mob/living/simple_mob/vore/aggressive/frog/New()
 	if(rand(1,1000000) == 1)

@@ -48,6 +48,10 @@ var/list/_cat_default_emotes = list(
 
 	has_langs = list(LANGUAGE_ANIMAL)
 
+	hunter = TRUE				//RS ADD
+	food_pref = CARNIVORE		//RS ADD
+	food_pref_obligate = TRUE	//RS ADD
+
 	var/mob/living/friend = null // Our best pal, who we'll follow. Meow.
 	var/named = FALSE //have I been named yet?
 	var/friend_name = null //VOREStation Edit - Lock befriending to this character

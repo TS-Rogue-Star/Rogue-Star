@@ -27,6 +27,8 @@
 	if you strip it off unsuspecting prey. You're stronger than other shadekin, faster, and more capable in \
 	a brawl, but you barely generate any of your own energy. You can stand in a dark spot to gather scraps \
 	of energy in a pinch, but otherwise need to take it, by force if necessary."
+	hunter = TRUE				//RS ADD
+	food_pref = OMNIVORE		//RS ADD
 
 /mob/living/simple_mob/shadekin/red
 	ai_holder_type = /datum/ai_holder/simple_mob/melee/shadekin	//RS EDIT
@@ -122,6 +124,9 @@
 	steal it from others when it suits you. You generate energy at a moderate pace in dark areas, and staying in well-lit \
 	areas is taxing on your energy. You can harvest energy from others in a fight, but since you don't need to, you may \
 	just choose to simply not fight."
+
+	hunter = TRUE				//RS ADD
+	food_pref = OMNIVORE		//RS ADD
 
 /mob/living/simple_mob/shadekin/purple
 	ai_holder_type = /datum/ai_holder/simple_mob/retaliate
@@ -285,6 +290,9 @@
 	player_msg = "You usually hunt for energy to fuel yourself, though not as often as your red-eyed cousins. \
 	You're stronger than most shadekin, faster, and more capable in a brawl, but you don't generate much of your own energy. \
 	You can stand in a dark spot to gather some energy, but otherwise need to take it, by force if necessary."
+
+	hunter = TRUE				//RS ADD
+	food_pref = OMNIVORE		//RS ADD
 
 /mob/living/simple_mob/shadekin/orange
 	ai_holder_type = /datum/ai_holder/simple_mob/melee/shadekin	//RS EDIT

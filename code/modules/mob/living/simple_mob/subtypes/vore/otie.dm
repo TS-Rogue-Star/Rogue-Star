@@ -43,6 +43,9 @@
 	ai_holder_type = /datum/ai_holder/simple_mob/melee/evasive/otie
 	say_list_type = /datum/say_list/otie
 
+	hunter = TRUE				//RS ADD
+	food_pref = CARNIVORE		//RS ADD
+
 	var/mob/living/carbon/human/friend
 	var/tamed = 0
 	var/tame_chance = 50 //It's a fiddy-fiddy default you may get a buddy pal or you may get mauled and ate. Win-win!

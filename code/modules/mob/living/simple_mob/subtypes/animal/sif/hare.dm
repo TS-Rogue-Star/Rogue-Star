@@ -64,6 +64,9 @@
 	meat_amount = 1
 
 	say_list_type = /datum/say_list/hare
+	hunter = TRUE				//RS ADD
+	food_pref = HERBIVORE		//RS ADD
+	food_pref_obligate = TRUE	//RS ADD
 
 /datum/say_list/hare
 	speak = list("Snrf...","Crk!")

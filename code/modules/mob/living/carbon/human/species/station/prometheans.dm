@@ -123,6 +123,8 @@ var/datum/species/shapeshifter/promethean/prometheans
 
 	valid_transform_species = list(SPECIES_HUMAN, SPECIES_HUMAN_VATBORN, SPECIES_UNATHI, SPECIES_TAJ, SPECIES_SKRELL, SPECIES_DIONA, SPECIES_TESHARI, SPECIES_MONKEY)
 
+	food_class = FP_SLIME	//RS ADD
+
 	var/heal_rate = 0.5 // Temp. Regen per tick.
 
 	default_emotes = list(

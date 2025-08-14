@@ -54,6 +54,10 @@
 
 	ai_holder_type = /datum/ai_holder/simple_mob/melee
 
+	hunter = TRUE				//RS ADD
+	food_pref = CARNIVORE		//RS ADD
+	food_pref_obligate = TRUE	//RS ADD
+
 // Activate Noms!
 /mob/living/simple_mob/vore/aggressive/giant_snake
 	vore_active = 1

@@ -30,6 +30,9 @@
 	ai_holder_type = /datum/ai_holder/simple_mob/fox
 	holder_type = /obj/item/weapon/holder/fox
 
+	hunter = TRUE				//RS ADD
+	food_pref = CARNIVORE		//RS ADD
+
 	var/turns_since_scan = 0
 	var/mob/flee_target
 
