@@ -1169,7 +1169,11 @@
 	name = "Food Body"
 	desc = "Your body is made of some manner of food. This increases the liklihood of hungry creatures attempting to hunt you to eat."
 	cost = 0
-	var_changes = list("food_class" = FP_FOOD)
 	custom_only = FALSE
+
+/datum/trait/neutral/food_body/apply(var/datum/species/S,var/mob/living/carbon/human/H)
+	..()
+	S.food_class = FP_FOOD
+	H.food_class = FP_FOOD
 
 //RS Edit End
