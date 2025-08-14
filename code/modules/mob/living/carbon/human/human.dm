@@ -36,7 +36,6 @@
 		name = real_name
 		if(mind)
 			mind.name = real_name
-		food_class = species.food_class	//RS ADD
 
 	nutrition = rand(200,400)
 

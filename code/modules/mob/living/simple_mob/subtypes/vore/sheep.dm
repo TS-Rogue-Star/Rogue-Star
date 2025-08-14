@@ -35,6 +35,10 @@
 	say_list_type = /datum/say_list/sheep
 	ai_holder_type = /datum/ai_holder/simple_mob/retaliate/edible
 
+	hunter = TRUE				//RS ADD
+	food_pref = HERBIVORE		//RS ADD
+	food_pref_obligate = TRUE	//RS ADD
+
 //	var/harvestable_wool = TRUE			//Relating to wool growth and shearing down below.
 //	var/wool_growth = 0
 

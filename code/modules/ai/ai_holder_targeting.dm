@@ -29,6 +29,7 @@
 
 	var/forgive_resting = TRUE				//VOREStation add - If TRUE on a RETALIATE mob, then mob will drop target if it becomes hostile to you but hasn't taken damage
 	var/grab_hostile = TRUE
+	var/blood_time = 0						//RS ADD - hunting mobs will only care about blood that is newer than this.
 
 // A lot of this is based off of /TG/'s AI code.
 
@@ -42,6 +43,19 @@
 	for(var/HM in typecache_filter_list(range(vision_range, holder), hostile_machines))
 		if(can_see(holder, HM, vision_range))
 			. += HM
+	if(holder.hunter)
+		if(holder.nutrition < 1500)
+			for(var/obj/item/weapon/reagent_containers/food/snacks/S in view(world.view,get_turf(holder)))
+				switch(holder.food_pref)
+					if(OMNIVORE)
+						if(istype(S,/obj/item/weapon/reagent_containers/food/snacks))
+							. += S
+					if(CARNIVORE)
+						if(istype(S,/obj/item/weapon/reagent_containers/food/snacks/meat))
+							. += S
+					if(HERBIVORE)
+						if(istype(S,/obj/item/weapon/reagent_containers/food/snacks/grown))
+							. += S
 
 // Step 2, filter down possible targets to things we actually care about.
 /datum/ai_holder/proc/find_target(var/list/possible_targets, var/has_targets_list = FALSE)
@@ -58,6 +72,10 @@
 			. += possible_target
 
 	var/new_target = pick_target(.)
+	if(holder.hunter && !new_target)	//RS ADD START
+		if(holder.food_pref == CARNIVORE || holder.food_pref == OMNIVORE)
+			blood_hunt()
+			return						//RS ADD START
 	give_target(new_target)
 	return new_target
 
@@ -170,6 +188,10 @@
 		if(holder.IIsAlly(L))
 			return FALSE
 		return TRUE
+
+	if(isobj(the_target))	//RS ADD START
+		if(holder.can_eat(the_target))
+			return TRUE		//RS ADD END
 
 	if(istype(the_target, /obj/mecha))
 		var/obj/mecha/M = the_target
@@ -359,30 +381,39 @@
 /datum/ai_holder/proc/ai_hunt(var/list/target_list)	//RS ADD START
 	if(!holder.hunter)
 		return FALSE
+	var/list/obj_list = list()
 	var/list/final_list = list()
 	var/max_huntability = 0
-	for(var/mob/living/L in target_list)
-		if(!isliving(L))
+
+	for(var/thing in target_list)
+		if(isobj(thing))
+			var/obj/O = thing
+			switch(holder.food_pref)
+				if(OMNIVORE)
+					if(istype(O,/obj/item/weapon/reagent_containers/food/snacks))
+						obj_list += O
+						to_world("[O] is valid omnivore food")
+				if(CARNIVORE)
+					if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/meat))
+						obj_list += O
+						to_world("[O] is valid carnivore food")
+				if(HERBIVORE)
+					if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/grown))
+						obj_list += O
+						to_world("[O] is valid herbivore food")
+		if(obj_list.len)
 			continue
+		if(!isliving(thing))
+			continue
+		var/mob/living/L = thing
+
 		var/wrong_food = FALSE
 		var/huntability = 0
-		if(L.isSynthetic())
-			if(holder.food_pref != ROBOVORE)
-				wrong_food = TRUE
 
-		switch(holder.food_pref)
-			if(CARNIVORE)
-				if(L.food_class != (FP_MEAT || FP_FOOD))
-					wrong_food = TRUE
-			if(HERBIVORE)
-				if(L.food_class != (FP_PLANT || FP_FOOD))
-					wrong_food = TRUE
-			if(ROBOVORE)
-				if(!L.isSynthetic())
-					if(L.food_class != FP_FOOD)
-						wrong_food = TRUE
+		if(!food_class_check(L))
+			wrong_food = TRUE
 
-		if(wrong_food && L.food_pref_obligate)
+		if(wrong_food && holder.food_pref_obligate)
 			target_list.Remove(L)
 			continue
 
@@ -403,8 +434,11 @@
 				huntability ++
 		huntability *= 500
 
-		if(wrong_food || L.food_pref == holder.food_pref)
+		if(wrong_food)
 			huntability *= 0.5	//This is the wrong food, or another hunter, so it's less appealing!
+		else if(L.food_pref == holder.food_pref)
+			if(L.food_pref != OMNIVORE)
+				huntability *= 0.5
 
 //		to_world("[holder] considering [L]: N - [holder.nutrition]/[huntability] - H")
 		if(holder.nutrition <= huntability)	//Is its huntability score higher than our nutrition?
@@ -414,6 +448,10 @@
 				final_list |= L					//Add it to the list!
 			else if(huntability == max_huntability)	//Is it at least as huntable as what we are already thinking about?
 				final_list |= L	//Then add it to the list!
+
+	if(obj_list.len)
+		return obj_list
+
 	return final_list	//RS ADD END
 
 /datum/ai_holder/proc/hunter_check(atom/movable/ourtarget)	//RS ADD START
@@ -426,11 +464,40 @@
 			var/mob/living/simple_mob/S = holder
 			if(!S.will_eat(L))
 				return FALSE
-/*		if(holder.food_pref == CARNIVORE)
-			if(L.plant && holder.food_pref_obligate)	//Obligate carnivores shouldn't eat plants
-				return FALSE
-		else if(holder.food_pref == HERBIVORE)
-			if(!L.plant && holder.food_pref_obligate)	//Obligate herbivores shouldn't eat meat
-				return FALSE
-*/
 	return TRUE	//RS ADD END
+
+/datum/ai_holder/proc/food_class_check(var/thing)
+
+	if(isliving(thing))
+		var/mob/living/L = thing
+		if(L.food_class == FP_FOOD)
+			return TRUE
+		if(holder.food_pref == ROBOVORE)
+			if(!L.isSynthetic())
+				return FALSE
+		switch(holder.food_pref)
+			if(CARNIVORE)
+				if(L.food_class != FP_MEAT)
+					return FALSE
+			if(HERBIVORE)
+				if(L.food_class != FP_PLANT)
+					return FALSE
+	if(isobj(thing))
+		if(!holder.can_eat(thing))
+			return FALSE
+	return TRUE
+
+/datum/ai_holder/proc/blood_hunt()
+	var/obj/effect/decal/cleanable/blood/ourblood
+	for(var/obj/effect/decal/cleanable/blood/B in view(world.view,holder))
+		if(!istype(B,/obj/effect/decal/cleanable/blood))
+			continue
+		if(B.blood_time <= blood_time)
+			continue
+		if(!ourblood)
+			ourblood = B
+		if(B.blood_time > ourblood.blood_time)
+			ourblood = B
+	if(ourblood)
+		blood_time = ourblood.blood_time
+		walk_path(ourblood)

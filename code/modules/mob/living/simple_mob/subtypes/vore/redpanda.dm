@@ -28,6 +28,9 @@
 	say_list_type = /datum/say_list/redpanda
 	ai_holder_type = /datum/ai_holder/simple_mob/passive
 
+	hunter = TRUE				//RS ADD
+	food_pref = OMNIVORE		//RS ADD
+
 // Activate Noms!
 /mob/living/simple_mob/vore/redpanda
 	vore_active = 1

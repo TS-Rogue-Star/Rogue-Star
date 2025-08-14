@@ -41,6 +41,9 @@
 	buckle_lying = FALSE
 	max_tox = 0 // for virgo3b survivability
 
+	hunter = TRUE				//RS ADD
+	food_pref = CARNIVORE		//RS ADD
+
 /mob/living/simple_mob/vore/greatwolf
 
 	vore_bump_chance = 25

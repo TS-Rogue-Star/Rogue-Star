@@ -70,12 +70,26 @@
 
 /datum/modifier/bleeding
 	name = "Simplemob Bleeding"
+	var/idle_time = 0
 
 /datum/modifier/bleeding/tick()
 	. = ..()
+	if(isbelly(holder.loc))
+		expire()
+		return
 	new /obj/effect/decal/cleanable/blood/drip(get_turf(holder))
 	holder.adjustOxyLoss(1)
+	to_world(holder.oxyloss)
 	if(holder.resting)
+		expire()
+	if(holder.player_login_key_log)
+		return
+	if(holder.ai_holder)
+		if(holder.ai_holder.stance == STANCE_IDLE)
+			idle_time ++
+		else
+			idle_time = 0
+	if(idle_time >= 30)
 		expire()
 
 var/mob/living/simple_mob/simplemob_bleeds = TRUE

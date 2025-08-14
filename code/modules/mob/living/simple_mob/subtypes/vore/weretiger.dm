@@ -31,6 +31,10 @@
 
 	has_hands = 1
 
+	hunter = TRUE				//RS ADD
+	food_pref = CARNIVORE		//RS ADD
+	food_pref_obligate = TRUE	//RS ADD
+
 // Nomnomn
 /mob/living/simple_mob/vore/weretiger
 	vore_active = 1
