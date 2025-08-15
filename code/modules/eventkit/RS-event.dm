@@ -200,19 +200,15 @@ GLOBAL_VAR(special_station_name)
 			if(T.z != ourturf.z)
 				continue
 
-		L.do_summoning(usr,T)
+		SEND_SOUND(src, sound('sound/misc/server-ready.ogg'))
+		tgui_alert_async(L, "\The [usr] is summoning you to their location. Would you like to join them?", "Summoning", list("Yes", "No"), CALLBACK(src, PROC_REF(summon_reply),L,T), null)
 
-/mob/living/proc/do_summoning(var/mob/target,var/turf/targ_turf)	//Split this into its own proc so it can happen independently
-	if(!target) return
-
-	if(!targ_turf)
-		targ_turf = get_turf(target)
-
-	SEND_SOUND(src, sound('sound/misc/server-ready.ogg'))
-	if(tgui_alert(src,"\The [target] is summoning you to their location. Would you like to join them?","Summoning",list("Yes","No")) != "Yes")
-		return
-
-	forceMove(targ_turf)
+/client/proc/summon_reply(var/mob/living/L,var/turf/T,response)
+	if(!response) return
+	if(response != "Yes") return
+	if(!L) return
+	if(!T) return
+	L.forceMove(T)
 
 /obj/item/weapon/material/sword/wind_blade
 	name = "wind blade"
