@@ -1,0 +1,871 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aU" = (
+/obj/structure/bed/chair/sofa/corner,
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/home2)
+"br" = (
+/obj/structure/sink{
+	pixel_y = 20
+	},
+/obj/structure/mirror{
+	pixel_y = 38
+	},
+/turf/simulated/floor/tiled/white,
+/area/submap/moonbase/poi/west_crater/home2)
+"cb" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/obj/effect/catwalk_plated,
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/west_crater/home2)
+"dv" = (
+/obj/structure/table/glass,
+/obj/random/soap_common,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/white,
+/area/submap/moonbase/poi/west_crater/home2)
+"dy" = (
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 1
+	},
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/home2)
+"eS" = (
+/obj/structure/table/steel,
+/obj/machinery/cell_charger{
+	pixel_x = 0;
+	pixel_y = 4
+	},
+/obj/random/powercell,
+/turf/simulated/floor/tiled/monotile,
+/area/submap/moonbase/poi/west_crater/home2)
+"fa" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass_external,
+/obj/effect/map_helper/airlock/door/int_door,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/submap/moonbase/poi/west_crater/home2)
+"fJ" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/carpet,
+/area/submap/moonbase/poi/west_crater/home2)
+"fL" = (
+/obj/structure/bed/chair/sofa/black,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/home2)
+"gB" = (
+/turf/simulated/floor/tiled/white,
+/area/submap/moonbase/poi/west_crater/home2)
+"gU" = (
+/obj/random/mre,
+/obj/random/mre,
+/obj/random/mre,
+/obj/random/mre,
+/obj/structure/closet/walllocker_double/north,
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/home2)
+"hZ" = (
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/home2)
+"is" = (
+/obj/structure/flora/pottedplant/minitree,
+/turf/simulated/floor/carpet,
+/area/submap/moonbase/poi/west_crater/home2)
+"iI" = (
+/obj/machinery/alarm,
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/home2)
+"kA" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/submap/moonbase/poi/west_crater/home2)
+"lg" = (
+/turf/template_noop,
+/area/template_noop)
+"mL" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/home2)
+"nU" = (
+/obj/structure/curtain/open/shower,
+/obj/machinery/shower{
+	dir = 1;
+	pixel_y = -2
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/submap/moonbase/poi/west_crater/home2)
+"op" = (
+/obj/structure/table/woodentable,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/item/weapon/cell/device/weapon,
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/home2)
+"oC" = (
+/obj/structure/bed/chair/sofa/black,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/home2)
+"oT" = (
+/obj/structure/bed/chair/sofa/right/blue,
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/home2)
+"sp" = (
+/obj/structure/table/steel,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
+/obj/random/powercell,
+/turf/simulated/floor/tiled/monotile,
+/area/submap/moonbase/poi/west_crater/home2)
+"sQ" = (
+/obj/structure/closet,
+/obj/item/clothing/suit/space/void/refurb,
+/obj/item/clothing/suit/space/void/refurb,
+/obj/item/clothing/head/helmet/space/void/refurb,
+/obj/item/clothing/head/helmet/space/void/refurb,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/weapon/tank/oxygen,
+/obj/item/weapon/tank/oxygen,
+/turf/simulated/floor/tiled/monotile,
+/area/submap/moonbase/poi/west_crater/home2)
+"tP" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/home2)
+"vk" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/west_crater/home2)
+"vP" = (
+/obj/structure/closet,
+/obj/random/maintenance/clean,
+/obj/random/maintenance/clean,
+/obj/random/maintenance/clean,
+/turf/simulated/floor/carpet,
+/area/submap/moonbase/poi/west_crater/home2)
+"wx" = (
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 9
+	},
+/turf/simulated/wall/r_wall,
+/area/submap/moonbase/poi/west_crater/home2)
+"wV" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/west_crater/home2)
+"xX" = (
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/home2)
+"yK" = (
+/obj/structure/bed/chair/comfy/black,
+/turf/simulated/floor/carpet,
+/area/submap/moonbase/poi/west_crater/home2)
+"zn" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 1
+	},
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/home2)
+"zy" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass_external,
+/obj/effect/map_helper/airlock/door/ext_door,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/submap/moonbase/poi/west_crater/home2)
+"zC" = (
+/obj/machinery/airlock_sensor/airlock_exterior{
+	pixel_y = 32;
+	dir = 4;
+	pixel_x = -24
+	},
+/obj/effect/map_helper/airlock/sensor/ext_sensor,
+/turf/simulated/floor/airless/moonbaseplating/outdoors,
+/area/submap/moonbase/poi/west_crater/home2)
+"Af" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/white,
+/area/submap/moonbase/poi/west_crater/home2)
+"AQ" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/home2)
+"DB" = (
+/obj/structure/table/glass,
+/obj/item/weapon/towel/random,
+/obj/item/weapon/towel/random,
+/turf/simulated/floor/tiled/white,
+/area/submap/moonbase/poi/west_crater/home2)
+"EU" = (
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 4
+	},
+/turf/simulated/wall/r_wall,
+/area/submap/moonbase/poi/west_crater/home2)
+"Fg" = (
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/home2)
+"Fw" = (
+/obj/effect/map_helper/airlock/sensor/int_sensor,
+/obj/machinery/airlock_sensor/airlock_interior{
+	pixel_x = 24;
+	pixel_y = -32;
+	dir = 8
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 8
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 4
+	},
+/obj/effect/floor_decal/industrial/loading/white{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/home2)
+"FH" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/universal{
+	dir = 4
+	},
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/home2)
+"Gr" = (
+/obj/effect/floor_decal/steeldecal/steel_decals5,
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/home2)
+"Gt" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/table/woodentable,
+/turf/simulated/floor/carpet,
+/area/submap/moonbase/poi/west_crater/home2)
+"Hk" = (
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/west_crater/home2)
+"Ih" = (
+/obj/machinery/light,
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/home2)
+"Is" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/submap/moonbase/poi/west_crater/home2)
+"IA" = (
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/airlock/silver,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/submap/moonbase/poi/west_crater/home2)
+"IB" = (
+/obj/structure/table/glass,
+/turf/simulated/floor/tiled/white,
+/area/submap/moonbase/poi/west_crater/home2)
+"Jj" = (
+/obj/structure/bed/double/padded,
+/obj/item/weapon/bedsheet/browndouble,
+/turf/simulated/floor/carpet,
+/area/submap/moonbase/poi/west_crater/home2)
+"JQ" = (
+/obj/machinery/power/rtg/fake_gen,
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/home2)
+"Kn" = (
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/home2)
+"Kr" = (
+/obj/machinery/portable_atmospherics/canister/air/airlock,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/submap/moonbase/poi/west_crater/home2)
+"Kw" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals5,
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/home2)
+"KF" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/west_crater/home2)
+"Ov" = (
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/random/multiple/corp_crate,
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/home2)
+"OD" = (
+/obj/structure/table/woodentable,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/home2)
+"OQ" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/effect/catwalk_plated,
+/obj/item/device/gps/internal/poi{
+	gps_tag = "Unidentified Signal"
+	},
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/west_crater/home2)
+"Ph" = (
+/turf/simulated/wall/r_wall,
+/area/submap/moonbase/poi/west_crater/home2)
+"Qu" = (
+/obj/structure/bed/chair/sofa/left/black{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/home2)
+"QN" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/catwalk_plated,
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/west_crater/home2)
+"SJ" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/submap/moonbase/poi/west_crater/home2)
+"SS" = (
+/obj/machinery/power/apc/alarms_hidden,
+/obj/structure/cable,
+/obj/random/multiple/corp_crate,
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/home2)
+"Tk" = (
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 6
+	},
+/turf/simulated/floor/tiled,
+/area/submap/moonbase/poi/west_crater/home2)
+"Ty" = (
+/turf/simulated/floor/carpet,
+/area/submap/moonbase/poi/west_crater/home2)
+"Ub" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/effect/catwalk_plated,
+/turf/simulated/floor/plating,
+/area/submap/moonbase/poi/west_crater/home2)
+"XW" = (
+/obj/machinery/atmospherics/pipe/tank/air{
+	dir = 4
+	},
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/home2)
+"Yi" = (
+/obj/structure/closet/walllocker_double/medical/east,
+/obj/item/bodybag/cryobag,
+/obj/item/weapon/storage/firstaid/adv,
+/obj/item/device/healthanalyzer,
+/obj/structure/sink{
+	pixel_y = 20
+	},
+/obj/structure/mirror{
+	pixel_y = 38
+	},
+/turf/simulated/floor/tiled/white,
+/area/submap/moonbase/poi/west_crater/home2)
+"ZZ" = (
+/obj/machinery/embedded_controller/radio/airlock/airlock_controller{
+	pixel_y = 24;
+	id_tag = "home2_airlock"
+	},
+/obj/effect/map_helper/airlock/atmos/chamber_pump,
+/obj/machinery/airlock_sensor{
+	pixel_x = 0;
+	pixel_y = -24;
+	dir = 1
+	},
+/obj/effect/map_helper/airlock/sensor/chamber_sensor,
+/obj/machinery/atmospherics/unary/vent_pump/high_volume,
+/turf/simulated/floor/tiled/eris/dark/danger,
+/area/submap/moonbase/poi/west_crater/home2)
+
+(1,1,1) = {"
+lg
+lg
+lg
+lg
+Hk
+Hk
+Hk
+Hk
+Hk
+Hk
+Hk
+lg
+lg
+lg
+lg
+"}
+(2,1,1) = {"
+lg
+lg
+lg
+Hk
+Hk
+Ph
+Ph
+Ph
+Ph
+Ph
+Hk
+Hk
+lg
+lg
+lg
+"}
+(3,1,1) = {"
+lg
+lg
+Hk
+Hk
+Ph
+Ph
+dv
+DB
+IB
+Ph
+Ph
+Hk
+Hk
+lg
+lg
+"}
+(4,1,1) = {"
+lg
+Hk
+Hk
+Hk
+Ph
+br
+gB
+gB
+gB
+nU
+Ph
+Hk
+Hk
+Hk
+lg
+"}
+(5,1,1) = {"
+Hk
+Hk
+Hk
+Hk
+Ph
+Yi
+gB
+gB
+Af
+nU
+Ph
+Hk
+Hk
+Hk
+Hk
+"}
+(6,1,1) = {"
+Hk
+Ph
+Ph
+Ph
+Ph
+Ph
+Ph
+IA
+Ph
+Ph
+Ph
+Ph
+Ph
+Ph
+Hk
+"}
+(7,1,1) = {"
+Hk
+KF
+yK
+Gt
+is
+Ph
+Ov
+xX
+Fg
+Ph
+yK
+Gt
+is
+KF
+Hk
+"}
+(8,1,1) = {"
+Hk
+KF
+Ty
+Ty
+Ty
+IA
+zn
+cb
+Kw
+IA
+Ty
+Ty
+Ty
+KF
+Hk
+"}
+(9,1,1) = {"
+Hk
+KF
+Jj
+fJ
+vP
+Ph
+xX
+Ub
+xX
+Ph
+vP
+fJ
+Jj
+KF
+Hk
+"}
+(10,1,1) = {"
+Hk
+Ph
+Ph
+Ph
+Ph
+Ph
+iI
+OQ
+SS
+Ph
+Ph
+Ph
+Ph
+Ph
+Hk
+"}
+(11,1,1) = {"
+Hk
+KF
+yK
+Gt
+is
+Ph
+mL
+QN
+xX
+Ph
+yK
+Gt
+is
+KF
+Hk
+"}
+(12,1,1) = {"
+Hk
+KF
+Ty
+Ty
+Ty
+IA
+dy
+QN
+Gr
+IA
+Ty
+Ty
+Ty
+KF
+Hk
+"}
+(13,1,1) = {"
+Hk
+KF
+Jj
+fJ
+vP
+Ph
+xX
+QN
+xX
+Ph
+vP
+fJ
+Jj
+KF
+Hk
+"}
+(14,1,1) = {"
+Hk
+Ph
+Ph
+Ph
+Ph
+Ph
+gU
+Is
+Ih
+Ph
+Ph
+Ph
+Ph
+Ph
+Hk
+"}
+(15,1,1) = {"
+Hk
+Hk
+XW
+JQ
+Ph
+oT
+xX
+Is
+xX
+sp
+Ph
+Kn
+Hk
+Hk
+Hk
+"}
+(16,1,1) = {"
+Hk
+Hk
+FH
+AQ
+vk
+fL
+op
+kA
+xX
+eS
+KF
+Kn
+Hk
+Hk
+Hk
+"}
+(17,1,1) = {"
+Hk
+Hk
+tP
+hZ
+wV
+oC
+OD
+SJ
+xX
+sQ
+KF
+Kn
+Hk
+Hk
+Hk
+"}
+(18,1,1) = {"
+Hk
+Hk
+Hk
+Hk
+Ph
+aU
+Qu
+Fw
+Tk
+Kr
+Ph
+Kn
+Hk
+Hk
+Hk
+"}
+(19,1,1) = {"
+Hk
+Hk
+Hk
+Hk
+Ph
+Ph
+Ph
+fa
+EU
+Ph
+Ph
+Hk
+Hk
+Hk
+Hk
+"}
+(20,1,1) = {"
+lg
+Hk
+Hk
+Hk
+Hk
+Hk
+Ph
+ZZ
+wx
+Hk
+Hk
+Hk
+Hk
+Hk
+lg
+"}
+(21,1,1) = {"
+lg
+lg
+Hk
+Hk
+Hk
+Hk
+Ph
+zy
+Ph
+Hk
+Hk
+Hk
+Hk
+lg
+lg
+"}
+(22,1,1) = {"
+lg
+lg
+lg
+Hk
+Hk
+Hk
+Hk
+zC
+Hk
+Hk
+Hk
+Hk
+lg
+lg
+lg
+"}
+(23,1,1) = {"
+lg
+lg
+lg
+lg
+Hk
+Hk
+Hk
+Hk
+Hk
+Hk
+Hk
+lg
+lg
+lg
+lg
+"}
