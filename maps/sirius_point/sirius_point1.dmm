@@ -98,9 +98,7 @@
 /area/moonbase/basement/caves/east)
 "an" = (
 /obj/machinery/door/firedoor/glass,
-/obj/machinery/door/airlock/maintenance{
-	req_one_access = list(1)
-	},
+/obj/machinery/door/airlock/maintenance,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -1772,6 +1770,7 @@
 /obj/machinery/camera/network/civilian{
 	dir = 1
 	},
+/obj/machinery/hologram/holopad,
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/pool)
 "eO" = (
@@ -1806,7 +1805,8 @@
 /obj/effect/map_helper/airlock/sensor/ext_sensor,
 /obj/machinery/airlock_sensor/airlock_interior{
 	pixel_x = 32;
-	pixel_y = 24
+	pixel_y = 24;
+	req_access = list(48)
 	},
 /turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
@@ -3184,7 +3184,9 @@
 	dir = 8
 	},
 /obj/machinery/door/firedoor/glass,
-/obj/machinery/door/airlock/maintenance_hatch,
+/obj/machinery/door/airlock/maintenance_hatch{
+	req_one_access = null
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/moonbase/basement/south)
 "iM" = (
@@ -3307,7 +3309,8 @@
 /obj/machinery/airlock_sensor/airlock_interior{
 	pixel_x = -32;
 	pixel_y = -24;
-	dir = 1
+	dir = 1;
+	req_access = list(48)
 	},
 /obj/effect/floor_decal/steeldecal/steel_decals5,
 /obj/effect/floor_decal/steeldecal/steel_decals5{
@@ -3966,7 +3969,8 @@
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/multi_tile/glass{
 	dir = 1;
-	name = "Security Storage"
+	name = "Security Storage";
+	req_one_access = list(1)
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/security/security_equiptment_storage)
@@ -6334,9 +6338,7 @@
 /area/groundbase/hotspring)
 "rx" = (
 /obj/machinery/door/firedoor/glass,
-/obj/machinery/door/airlock/maintenance{
-	req_one_access = list(1)
-	},
+/obj/machinery/door/airlock/maintenance,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -6772,6 +6774,10 @@
 	name = "Holodeck Projector Floor"
 	},
 /area/holodeck/alphadeck)
+"sI" = (
+/obj/machinery/hologram/holopad,
+/turf/simulated/floor/wood/alt/panel,
+/area/crew_quarters/theatre)
 "sJ" = (
 /obj/machinery/disposal/wall/cleaner,
 /obj/structure/disposalpipe/trunk,
@@ -7020,7 +7026,9 @@
 /area/maintenance/moonbase/basement/motel)
 "tv" = (
 /obj/machinery/door/firedoor/glass,
-/obj/machinery/door/airlock/research,
+/obj/machinery/door/airlock/research{
+	req_one_access = list(29,47)
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/rnd/research)
 "tw" = (
@@ -7176,7 +7184,8 @@
 "tQ" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/maintenance_hatch{
-	id_tag = "privatesleever"
+	id_tag = "privatesleever";
+	req_one_access = null
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -12591,7 +12600,8 @@
 "IQ" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/maintenance{
-	req_access = list(48)
+	req_access = list(48);
+	name = "Mining"
 	},
 /obj/structure/cable/green{
 	icon_state = "1-2"
@@ -13564,7 +13574,9 @@
 /area/maintenance/moonbase/basement/olddorms)
 "Lv" = (
 /obj/machinery/door/firedoor/glass,
-/obj/machinery/door/airlock/maintenance_hatch,
+/obj/machinery/door/airlock/maintenance_hatch{
+	req_one_access = null
+	},
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -14948,7 +14960,8 @@
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
 	dir = 4;
 	pixel_x = -24;
-	id_tag = "mining_airlock"
+	id_tag = "mining_airlock";
+	req_access = list(48)
 	},
 /obj/structure/cable/green{
 	icon_state = "1-2"
@@ -18670,6 +18683,10 @@
 /area/maintenance/moonbase/basement/archive)
 "Zh" = (
 /obj/structure/table/woodentable,
+/obj/machinery/status_display{
+	pixel_y = -32;
+	pixel_x = 0
+	},
 /turf/simulated/floor/carpet,
 /area/hallway/moonbase/basement)
 "Zi" = (
@@ -30450,7 +30467,7 @@ Wd
 MR
 HD
 OP
-HD
+sI
 HD
 HD
 lC

@@ -1,9 +1,9 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/universal,
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/floor/tiled,
 /area/outpost/mining_main)
 "ai" = (
@@ -130,6 +130,15 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/outpost/mining_main)
+"iU" = (
+/obj/machinery/atmospherics/binary/pump/on{
+	dir = 1
+	},
+/obj/machinery/alarm{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/outpost/mining_main/maintenance)
 "jd" = (
 /obj/structure/table/bench/padded,
 /turf/simulated/floor/tiled/monotile,
@@ -200,6 +209,9 @@
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/outpost/mining_main/maintenance)
 "oT" = (
@@ -220,12 +232,19 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 4
+	},
 /turf/simulated/floor/tiled,
 /area/outpost/mining_main)
 "pY" = (
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/air/airlock,
 /turf/simulated/floor/plating,
 /area/outpost/mining_main/maintenance)
 "qF" = (
@@ -270,6 +289,13 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/outpost/mining_main)
+"tn" = (
+/obj/machinery/portable_atmospherics/canister/air/airlock,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/outpost/mining_main/maintenance)
 "tA" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -368,14 +394,14 @@
 	dir = 4;
 	pixel_x = -24
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden{
-	dir = 1
-	},
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 1
 	},
 /obj/effect/floor_decal/steeldecal/steel_decals5,
 /obj/effect/floor_decal/industrial/loading/white,
+/obj/machinery/atmospherics/pipe/manifold/hidden{
+	dir = 1
+	},
 /turf/simulated/floor/tiled,
 /area/outpost/mining_main)
 "xj" = (
@@ -447,12 +473,16 @@
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 5
+	},
 /turf/simulated/floor/plating,
 /area/outpost/mining_main/maintenance)
 "Bc" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/multi_tile/glass{
-	dir = 1
+	dir = 1;
+	req_access = list(48)
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/outpost/mining_main)
@@ -518,7 +548,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 9
+	},
 /turf/simulated/floor/tiled,
 /area/outpost/mining_main)
 "Do" = (
@@ -609,9 +644,11 @@
 /obj/machinery/power/apc{
 	dir = 1
 	},
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/structure/cable{
 	icon_state = "0-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 6
 	},
 /turf/simulated/floor/plating,
 /area/outpost/mining_main/maintenance)
@@ -931,9 +968,20 @@
 /turf/simulated/floor/airless/moonbaseplating,
 /area/outpost/mining_main)
 "VH" = (
-/obj/machinery/alarm,
-/turf/simulated/floor/plating,
-/area/outpost/mining_main/maintenance)
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/outpost/mining_main)
 "VW" = (
 /obj/machinery/light,
 /obj/structure/table/bench/padded,
@@ -977,6 +1025,9 @@
 /obj/machinery/door/firedoor/glass,
 /obj/structure/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/outpost/mining_main)
@@ -1038,6 +1089,15 @@
 /obj/item/clothing/head/helmet/space/void/mining,
 /turf/simulated/floor/tiled/techfloor,
 /area/outpost/mining_main)
+"Zx" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/outpost/mining_main/maintenance)
 "ZB" = (
 /obj/structure/medical_stand,
 /obj/effect/floor_decal/corner/paleblue/full{
@@ -8993,7 +9053,7 @@ UI
 sN
 SF
 tR
-IY
+iU
 TL
 Gd
 BN
@@ -9131,7 +9191,7 @@ ks
 ks
 ks
 XD
-VH
+gy
 Fs
 Xd
 Wq
@@ -9274,7 +9334,7 @@ ks
 ks
 XD
 HJ
-vl
+Zx
 AW
 Fs
 Fs
@@ -9415,7 +9475,7 @@ ks
 ks
 ks
 XD
-gy
+tn
 pY
 oG
 vl
@@ -9843,7 +9903,7 @@ ki
 UM
 Yc
 uo
-ye
+VH
 Ab
 Ab
 Ze
@@ -9985,7 +10045,7 @@ UM
 UM
 ap
 Qy
-ye
+VH
 Ab
 Jd
 JF
@@ -10127,7 +10187,7 @@ Hk
 bL
 hn
 Co
-ye
+VH
 cK
 UG
 gZ

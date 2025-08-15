@@ -300,14 +300,10 @@
 /turf/simulated/open,
 /area/quartermaster/storage)
 "ba" = (
-/obj/structure/railing/grey{
-	dir = 4
-	},
-/obj/effect/floor_decal/fakestairs/bottom{
-	dir = 1
-	},
-/turf/simulated/floor/tiled/steel,
-/area/maintenance/moonbase/level2/center)
+/obj/effect/floor_decal/corner/lime/full,
+/obj/structure/closet/l3closet/virology,
+/turf/simulated/floor/tiled/techfloor,
+/area/medical/virology)
 "bd" = (
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 5
@@ -593,9 +589,7 @@
 /turf/simulated/floor/plating/eris,
 /area/security/main)
 "bK" = (
-/obj/effect/floor_decal/corner/lime{
-	dir = 10
-	},
+/obj/effect/floor_decal/corner/lime,
 /turf/simulated/floor/tiled/techfloor,
 /area/medical/virology)
 "bL" = (
@@ -2365,10 +2359,8 @@
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/cargo)
 "gA" = (
-/obj/item/weapon/handcuffs/legcuffs/fuzzy,
-/obj/item/weapon/handcuffs/fuzzy,
-/turf/simulated/floor/plating,
-/area/crew_quarters/captain/moonbase/bedroom)
+/turf/simulated/wall/r_wall,
+/area/moonbase/surface/leveltwo/east)
 "gC" = (
 /obj/structure/closet/crate,
 /obj/item/weapon/folder/yellow,
@@ -2638,6 +2630,16 @@
 	},
 /turf/simulated/floor/carpet/blue2,
 /area/crew_quarters/heads/hos)
+"hf" = (
+/obj/effect/floor_decal/corner/lime/full{
+	dir = 4
+	},
+/obj/structure/closet/l3closet/virology,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/medical/virology)
 "hg" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 8
@@ -3133,6 +3135,14 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/medical/exam_room)
+"in" = (
+/obj/effect/floor_decal/milspec/color/blue/half,
+/obj/machinery/status_display{
+	pixel_y = -32;
+	pixel_x = 0
+	},
+/turf/simulated/floor/tiled,
+/area/bridge_hallway)
 "io" = (
 /obj/machinery/field_generator{
 	anchored = 1;
@@ -3862,23 +3872,14 @@
 /turf/simulated/floor/carpet/green,
 /area/crew_quarters/coffee_shop)
 "jY" = (
-/obj/effect/floor_decal/corner/lime{
-	dir = 5
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 8
 	},
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
+/obj/machinery/status_display{
+	pixel_x = -32
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/tiled/techfloor,
-/area/medical/virology)
+/turf/simulated/floor/tiled,
+/area/hallway/arrival/moonbase/dockingbays)
 "jZ" = (
 /obj/structure/railing{
 	dir = 1
@@ -5255,7 +5256,9 @@
 /turf/simulated/floor/carpet/oracarpet,
 /area/crew_quarters/heads/chief)
 "nz" = (
-/obj/machinery/door/window/brigdoor/eastleft,
+/obj/machinery/door/window/brigdoor/eastleft{
+	req_access = null
+	},
 /obj/effect/floor_decal/steeldecal/steel_decals10,
 /obj/effect/floor_decal/steeldecal/steel_decals10{
 	dir = 4
@@ -6055,9 +6058,14 @@
 /turf/simulated/floor/tiled/eris/techmaint_cargo,
 /area/rnd/xenobiology)
 "pn" = (
-/obj/structure/bed/double/padded,
-/turf/simulated/floor/plating,
-/area/crew_quarters/captain/moonbase/bedroom)
+/obj/structure/bed/chair{
+	dir = 4
+	},
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/hallway/arrival/moonbase/main)
 "po" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -7029,9 +7037,6 @@
 /area/maintenance/moonbase/level2/center)
 "ry" = (
 /obj/structure/ladder,
-/obj/structure/railing/grey{
-	dir = 4
-	},
 /turf/simulated/floor/tiled/monotile,
 /area/maintenance/moonbase/level2/center)
 "rz" = (
@@ -7660,9 +7665,6 @@
 /obj/effect/floor_decal/milspec/color/emerald/half{
 	dir = 4
 	},
-/obj/machinery/firealarm{
-	dir = 4
-	},
 /turf/simulated/floor/tiled,
 /area/hallway/arrival/moonbase/dockingbays)
 "th" = (
@@ -7895,6 +7897,11 @@
 /obj/machinery/camera/network/halls{
 	dir = 8
 	},
+/obj/machinery/computer/cryopod/gateway{
+	pixel_x = 32;
+	pixel_y = 32
+	},
+/obj/machinery/alarm,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/hallway/arrival/moonbase/teleporter)
 "tI" = (
@@ -8450,7 +8457,9 @@
 "vt" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/multi_tile/glass{
-	dir = 1
+	dir = 1;
+	req_one_access = list(5);
+	name = "Medbay"
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/medical/moonbase/upperlevel)
@@ -9681,7 +9690,6 @@
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/cargo)
 "yv" = (
-/obj/structure/closet/l3closet/virology,
 /obj/effect/floor_decal/corner/lime/full{
 	dir = 4
 	},
@@ -9691,6 +9699,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/structure/table/glass,
 /turf/simulated/floor/tiled/white,
 /area/medical/virology)
 "yx" = (
@@ -9905,6 +9914,9 @@
 	id = "cargounload"
 	},
 /obj/structure/disposalpipe/trunk,
+/obj/machinery/status_display/supply_display{
+	pixel_x = -32
+	},
 /turf/simulated/floor/tiled/milspec,
 /area/quartermaster/storage)
 "zc" = (
@@ -10156,6 +10168,9 @@
 "zJ" = (
 /obj/structure/bed/chair/sofa/corp/left{
 	dir = 4
+	},
+/obj/machinery/status_display{
+	pixel_x = -32
 	},
 /turf/simulated/floor/carpet/blue2,
 /area/bridge/meeting_room)
@@ -10659,10 +10674,10 @@
 	tag_exterior_door = "virology_airlock_exterior";
 	tag_interior_door = "virology_airlock_interior"
 	},
-/obj/structure/closet/l3closet/virology,
 /obj/effect/floor_decal/corner/lime{
 	dir = 10
 	},
+/obj/structure/table/glass,
 /turf/simulated/floor/tiled/white,
 /area/medical/virology)
 "Bm" = (
@@ -10961,8 +10976,8 @@
 /turf/simulated/floor/tiled,
 /area/hallway/arrival/moonbase/main)
 "BW" = (
-/obj/structure/sign/nanotrasen{
-	pixel_y = 30
+/obj/machinery/status_display{
+	pixel_y = 32
 	},
 /turf/simulated/floor/tiled,
 /area/security/moonbase/legal)
@@ -11857,6 +11872,9 @@
 	id = "cargoload"
 	},
 /obj/structure/disposalpipe/trunk,
+/obj/machinery/status_display/supply_display{
+	pixel_x = 32
+	},
 /turf/simulated/floor/tiled/milspec,
 /area/quartermaster/storage)
 "Em" = (
@@ -12518,6 +12536,7 @@
 /obj/effect/floor_decal/techfloor/orange{
 	dir = 6
 	},
+/obj/structure/closet/firecloset,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/hallway/arrival/moonbase/teleporter)
 "Gj" = (
@@ -12619,6 +12638,7 @@
 /obj/effect/floor_decal/techfloor/orange{
 	dir = 10
 	},
+/obj/structure/closet/emcloset,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/hallway/arrival/moonbase/teleporter)
 "GD" = (
@@ -15875,11 +15895,6 @@
 /obj/structure/bed/chair{
 	dir = 8
 	},
-/obj/item/device/radio/intercom{
-	dir = 4;
-	name = "Station Intercom (General)";
-	pixel_x = 24
-	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -15901,9 +15916,6 @@
 "OI" = (
 /obj/effect/floor_decal/techfloor/orange{
 	dir = 9
-	},
-/obj/machinery/computer/cryopod/gateway{
-	pixel_x = -32
 	},
 /obj/machinery/power/apc/hyper{
 	dir = 1
@@ -16332,6 +16344,9 @@
 	},
 /obj/structure/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/status_display{
+	pixel_x = 32
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/hallway/arrival/moonbase/main)
@@ -17962,7 +17977,7 @@
 /area/lawoffice/moonbase/iaatwo)
 "TI" = (
 /turf/simulated/floor/plating,
-/area/crew_quarters/captain/moonbase/bedroom)
+/area/hallway/moonbase/central)
 "TJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 5
@@ -18010,9 +18025,6 @@
 /obj/effect/floor_decal/corner/lime{
 	dir = 5
 	},
-/obj/machinery/light{
-	dir = 1
-	},
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
 	},
@@ -18024,6 +18036,9 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/shower{
+	pixel_y = 16
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/medical/virology)
@@ -18600,6 +18615,9 @@
 	},
 /obj/effect/floor_decal/milspec/color/orange/half{
 	dir = 4
+	},
+/obj/machinery/status_display{
+	pixel_x = 32
 	},
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
@@ -19182,7 +19200,9 @@
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "WG" = (
-/obj/machinery/door/window/brigdoor/eastright,
+/obj/machinery/door/window/brigdoor/eastright{
+	req_access = null
+	},
 /obj/effect/floor_decal/steeldecal/steel_decals10,
 /obj/effect/floor_decal/steeldecal/steel_decals10{
 	dir = 4
@@ -19277,8 +19297,11 @@
 /turf/simulated/floor/reinforced/airless/outdoors,
 /area/moonbase/surface/leveltwo/east)
 "WT" = (
-/turf/simulated/floor/airless/outdoors,
-/area/crew_quarters/captain/moonbase/bedroom)
+/obj/effect/floor_decal/corner/lime{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/medical/virology)
 "WU" = (
 /obj/effect/catwalk_plated,
 /obj/machinery/light{
@@ -30781,10 +30804,10 @@ CI
 MH
 Ey
 YX
-Hm
+in
 CI
 ry
-ba
+bk
 gr
 bk
 OS
@@ -31193,8 +31216,8 @@ gG
 gG
 gG
 cf
-pn
-gA
+TI
+TI
 TI
 OP
 ec
@@ -32329,8 +32352,8 @@ aX
 aX
 aX
 qw
-WT
-WT
+qw
+qw
 cF
 fD
 cF
@@ -32471,8 +32494,8 @@ aX
 aX
 aX
 qw
-WT
-WT
+qw
+qw
 cF
 cF
 cF
@@ -33194,8 +33217,8 @@ Qs
 hz
 hz
 hz
-hz
-hz
+Qs
+Qs
 Qs
 Qs
 Qs
@@ -33598,7 +33621,7 @@ YZ
 GU
 Um
 YZ
-qw
+gA
 qw
 qw
 qw
@@ -33738,9 +33761,9 @@ Jk
 aK
 YZ
 TR
-bK
-YZ
-qw
+WT
+ba
+gA
 qw
 qw
 qw
@@ -33879,10 +33902,10 @@ nz
 WG
 Jn
 YZ
-jY
+TR
 bK
-YZ
-qw
+hf
+gA
 qw
 qw
 qw
@@ -35040,8 +35063,8 @@ Qs
 hz
 hz
 hz
-hz
-hz
+Qs
+Qs
 Qs
 Qs
 Qs
@@ -36589,8 +36612,8 @@ aa
 PE
 Km
 Mr
+pn
 lg
-Ol
 we
 Pm
 Ol
@@ -36833,7 +36856,7 @@ JH
 RV
 uC
 rG
-uC
+jY
 uC
 kp
 dF
@@ -37121,7 +37144,7 @@ nv
 nv
 tf
 uB
-nv
+wD
 lY
 nv
 uB
