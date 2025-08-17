@@ -23,7 +23,9 @@ var/global/list/image/splatter_cache=list()
 	var/amount = 5
 	generic_filth = TRUE
 	persistent = FALSE
-	var/blood_time = 0	//RS ADD - Records the world time when the blood was made
+	var/blood_time = 0		//RS ADD - Records the world time when the blood was made
+	var/blood_source		//RS ADD - The type that the blood comes from
+	var/blood_food_class	//RS ADD - The food class of what dropped this blood
 
 /obj/effect/decal/cleanable/blood/reveal_blood()
 	if(!fluorescent)
@@ -38,7 +40,7 @@ var/global/list/image/splatter_cache=list()
 		amount = 0
 	..(ignore=1)
 
-/obj/effect/decal/cleanable/blood/New()
+/obj/effect/decal/cleanable/blood/New(loc,source)	//RS EDIT
 	..()
 	update_icon()
 	if(istype(src, /obj/effect/decal/cleanable/blood/gibs))

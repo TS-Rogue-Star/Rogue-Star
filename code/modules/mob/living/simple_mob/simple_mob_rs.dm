@@ -2,6 +2,8 @@
 /mob/living/proc/feed_from_target(var/mob/living/food)
 	if(!isliving(food))
 		return
+	if(faction == food.faction)
+		return
 	if(food.pips <= 0)	//Has it already been eaten?
 		return	//IT HAS NOOO
 	add_modifier(/datum/modifier/feeding, origin = food)
@@ -74,12 +76,15 @@
 
 /datum/modifier/bleeding/tick()
 	. = ..()
+	if(holder.stat)
+		expire()
+		return
 	if(isbelly(holder.loc))
 		expire()
 		return
-	new /obj/effect/decal/cleanable/blood/drip(get_turf(holder))
-	holder.adjustOxyLoss(1)
-	to_world(holder.oxyloss)
+//new /obj/effect/decal/cleanable/blood/drip(get_turf(holder))
+	blood_splatter(holder,holder,mob_source = holder)
+	holder.adjustOxyLoss(2)
 	if(holder.resting)
 		expire()
 	if(holder.player_login_key_log)

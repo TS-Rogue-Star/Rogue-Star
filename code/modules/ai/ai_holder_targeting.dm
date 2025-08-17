@@ -75,7 +75,7 @@
 	if(holder.hunter && !new_target)	//RS ADD START
 		if(holder.food_pref == CARNIVORE || holder.food_pref == OMNIVORE)
 			blood_hunt()
-			return						//RS ADD START
+			return						//RS ADD END
 	give_target(new_target)
 	return new_target
 
@@ -160,6 +160,8 @@
 				return FALSE
 		if(L.ai_ignores)	//RS ADD
 			return FALSE	//RS ADD
+		if(holder.IIsAlly(L))	//RS EDIT
+			return FALSE	//RS EDIT
 		if(L.stat)
 			if(L.stat == DEAD) // Leave dead things alone	//RS EDIT
 				if(handle_corpse || hunter_check(L))	//RS EDIT
@@ -180,13 +182,16 @@
 		//VOREStation add start
 		else if(forgive_resting && !isbelly(holder.loc))	//Doing it this way so we only think about the other conditions if the var is actually set
 			if((holder.health == holder.maxHealth) && !hostile && (L.resting || L.weakened || L.stunned))	//If our health is full, no one is fighting us, we can forgive
-				var/mob/living/simple_mob/vore/eater = holder
-				if(!eater.will_eat(L))		//We forgive people we can eat by eating them
-					set_stance(STANCE_IDLE)
-					return FALSE	//Forgiven
+				if(holder.hunter)	//RS ADD START
+					if(holder.food_pref_obligate)
+						if(!food_class_check(L))
+							return FALSE
+				else				//RS ADD END
+					var/mob/living/simple_mob/vore/eater = holder
+					if(!eater.will_eat(L))		//We forgive people we can eat by eating them
+						set_stance(STANCE_IDLE)
+						return FALSE	//Forgiven
 		//VOREStation add end
-		if(holder.IIsAlly(L))
-			return FALSE
 		return TRUE
 
 	if(isobj(the_target))	//RS ADD START
@@ -392,15 +397,12 @@
 				if(OMNIVORE)
 					if(istype(O,/obj/item/weapon/reagent_containers/food/snacks))
 						obj_list += O
-						to_world("[O] is valid omnivore food")
 				if(CARNIVORE)
 					if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/meat))
 						obj_list += O
-						to_world("[O] is valid carnivore food")
 				if(HERBIVORE)
 					if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/grown))
 						obj_list += O
-						to_world("[O] is valid herbivore food")
 		if(obj_list.len)
 			continue
 		if(!isliving(thing))
@@ -439,6 +441,8 @@
 		else if(L.food_pref == holder.food_pref)
 			if(L.food_pref != OMNIVORE)
 				huntability *= 0.5
+		else
+			huntability += 100	//It's not the wrong food type so it's gotta be preferable to anything else you got going
 
 //		to_world("[holder] considering [L]: N - [holder.nutrition]/[huntability] - H")
 		if(holder.nutrition <= huntability)	//Is its huntability score higher than our nutrition?
@@ -463,6 +467,9 @@
 			if(!isanimal(holder)) return FALSE
 			var/mob/living/simple_mob/S = holder
 			if(!S.will_eat(L))
+				return FALSE
+		if(holder.food_pref_obligate)
+			if(!food_class_check(L))
 				return FALSE
 	return TRUE	//RS ADD END
 
@@ -494,6 +501,11 @@
 			continue
 		if(B.blood_time <= blood_time)
 			continue
+		if(B.blood_source == holder.type)
+			continue
+		if(holder.food_pref == CARNIVORE)
+			if(B.blood_food_class != FP_MEAT || B.blood_food_class != FP_FOOD)
+				continue
 		if(!ourblood)
 			ourblood = B
 		if(B.blood_time > ourblood.blood_time)

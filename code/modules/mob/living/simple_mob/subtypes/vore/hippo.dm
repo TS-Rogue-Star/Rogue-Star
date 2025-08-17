@@ -52,6 +52,7 @@
 
 	hunter = TRUE				//RS ADD
 	food_pref = OMNIVORE		//RS ADD
+	faction = "hippo"			//RS ADD - Hippos are rood
 
 // Activate Noms!
 /mob/living/simple_mob/vore/hippo //I don't know why it's in a seperate line but everyone does it so i do it

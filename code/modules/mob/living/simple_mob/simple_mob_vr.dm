@@ -152,6 +152,15 @@
 		//if(will_eat(L) && (!L.canmove || vore_standing_too))
 		if(hunter && !L.player_login_key_log)	//RS EDIT START
 			if(L.stat == DEAD)
+				if(food_pref_obligate)	//RS ADD START
+					if(food_pref == CARNIVORE)
+						if(L.food_class != FP_MEAT)
+							ai_holder?.set_stance(STANCE_IDLE)
+							return
+					if(food_pref == HERBIVORE)
+						if(L.food_class != FP_PLANT)
+							ai_holder?.set_stance(STANCE_IDLE)
+							return		//RS ADD END
 				feed_from_target(L)
 				return
 			if(mob_size <= L.mob_size + 10)

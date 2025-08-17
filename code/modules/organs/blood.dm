@@ -210,7 +210,7 @@ var/const/CE_STABLE_THRESHOLD = 0.5
 //Makes a blood drop, leaking amt units of blood from the mob
 /mob/living/carbon/human/proc/drip(var/amt)
 	if(remove_blood(amt))
-		blood_splatter(src,src)
+		blood_splatter(src,src,mob_source = src)	//RS EDIT
 
 /mob/living/carbon/human/proc/remove_blood(var/amt)
 	if(!should_have_organ(O_HEART)) //TODO: Make drips come from the reagents instead.
@@ -364,7 +364,7 @@ var/const/CE_STABLE_THRESHOLD = 0.5
 		//AB is a universal receiver.
 	return 0
 
-/proc/blood_splatter(var/target,var/datum/reagent/blood/source,var/large)
+/proc/blood_splatter(var/target,var/datum/reagent/blood/source,var/large,var/mob/living/mob_source)	//RS EDIT
 
 	//Vorestation Edit Start - We're not going to splatter at all because we're in something and that's silly.
 	if(istype(source,/atom/movable))
@@ -428,4 +428,7 @@ var/const/CE_STABLE_THRESHOLD = 0.5
 
 	B.fluorescent  = 0
 	B.invisibility = 0
+	if(mob_source)	//RS ADD START
+		B.blood_source = mob_source.type
+		B.blood_food_class = mob_source.food_class	//RS ADD END
 	return B
