@@ -458,9 +458,6 @@ SUBSYSTEM_DEF(rs_ui)
 			update_digest(override)
 
 /obj/screen/movable/rs_ui/healthbar/Click(location, control, params)
-	if(moved) // Ignore click if it was actually a drag (Lira, August 2025)
-		moved = FALSE
-		return
 	if(!tracked)
 		cleanup()
 	if(!isbelly(tracked.loc))

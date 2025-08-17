@@ -135,6 +135,15 @@
 /obj/screen/movable/snap
 	snap2grid = TRUE
 
+//RS Add: Runs before any click to prevent drags from registering as a click (Lira, August 2025)
+/client/Click(atom/object, location, control, params)
+	var/obj/screen/movable/M = object
+	if(istype(M))
+		if(M.moved)
+			M.moved = FALSE
+			return
+	return ..()
+
 //RS Add: Begin pixel-smooth dragging when mouse is pressed (Lira, August 2025)
 /obj/screen/movable/MouseDown(location, control, params)
 	. = ..()
