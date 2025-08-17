@@ -503,13 +503,11 @@
 			continue
 		if(B.blood_source == holder.type)
 			continue
-		if(holder.food_pref == CARNIVORE)
-			if(B.blood_food_class != FP_MEAT || B.blood_food_class != FP_FOOD)
-				continue
 		if(!ourblood)
 			ourblood = B
 		if(B.blood_time > ourblood.blood_time)
 			ourblood = B
 	if(ourblood)
 		blood_time = ourblood.blood_time
-		walk_path(ourblood)
+		give_destination(ourblood,1)
+		return

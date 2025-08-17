@@ -401,6 +401,10 @@ var/const/CE_STABLE_THRESHOLD = 0.5
 		drop.add_overlay(drips)
 		drop.drips |= drips
 
+	if(mob_source)	//RS ADD START
+		B.blood_source = mob_source.type
+		B.blood_food_class = mob_source.food_class	//RS ADD END
+
 	// If there's no data to copy, call it quits here.
 	if(!istype(source))
 		return B
@@ -428,7 +432,4 @@ var/const/CE_STABLE_THRESHOLD = 0.5
 
 	B.fluorescent  = 0
 	B.invisibility = 0
-	if(mob_source)	//RS ADD START
-		B.blood_source = mob_source.type
-		B.blood_food_class = mob_source.food_class	//RS ADD END
 	return B
