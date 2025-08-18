@@ -162,9 +162,6 @@
 "T" = (
 /turf/simulated/floor/plating/external,
 /area/submap/glacier/digsite)
-"Y" = (
-/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
-/area/submap/cave/digsite)
 
 (1,1,1) = {"
 a
@@ -537,7 +534,7 @@ b
 b
 b
 g
-Y
+g
 a
 "}
 (18,1,1) = {"
