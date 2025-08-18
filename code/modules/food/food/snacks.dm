@@ -225,7 +225,7 @@
 			forceMove(belly_target)
 			return 1
 		else if(reagents)								//Handle ingestion of the reagent.
-			playsound(M, eating_sound, rand(10,50), 1)
+			playsound(M, eating_sound, rand(10,50), 1, preference = /datum/client_preference/food_eating_noises)	//RS EDIT - Preference
 			if(reagents.total_volume)
 				if(reagents.total_volume > bitesize)
 					reagents.trans_to_mob(M, bitesize, CHEM_INGEST)
