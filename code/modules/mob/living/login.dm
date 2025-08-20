@@ -59,6 +59,14 @@
 					voice_sounds_list = goon_speak_roach_sound
 				if("goon speak skelly")
 					voice_sounds_list = goon_speak_skelly_sound
+				//RS ADD START
+				if("yip")
+					voice_sounds_list = talk_yip
+				if("yap")
+					voice_sounds_list = talk_yap
+				if("yipyap")
+					voice_sounds_list = talk_yipyap
+				//RS ADD END
 		else
 			voice_sounds_list = talk_sound
 	//VOREStation Add End
