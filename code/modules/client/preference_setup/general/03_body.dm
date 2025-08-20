@@ -1,5 +1,19 @@
 var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-")
 
+//RS Add: Lets cache the base preview icon (Lira, August 2025)
+var/global/icon/GLOB_markings_base_preview_icon = null
+
+//RS Add: Returns the base review (Lira, August 2025)
+/proc/get_markings_base_preview_icon()
+    if(isicon(GLOB_markings_base_preview_icon))
+        return GLOB_markings_base_preview_icon
+    var/list/base_states_vat = icon_states('icons/mob/human_races/subspecies/r_vatgrown.dmi')
+    if("preview" in base_states_vat)
+        GLOB_markings_base_preview_icon = new/icon(icon = 'icons/mob/human_races/subspecies/r_vatgrown.dmi', icon_state = "preview", frame = 1)
+    else
+        GLOB_markings_base_preview_icon = new/icon(32,32)
+    return GLOB_markings_base_preview_icon
+
 /datum/preferences
 	var/equip_preview_mob = EQUIP_PREVIEW_ALL
 	var/animations_toggle = FALSE
@@ -631,6 +645,9 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 		. += "<a href='?src=\ref[src];hair_color=1'>Change Color</a> [color_square(pref.r_hair, pref.g_hair, pref.b_hair)] "
 	. += " Style: <a href='?src=\ref[src];hair_style_left=[pref.h_style]'><</a> <a href='?src=\ref[src];hair_style_right=[pref.h_style]''>></a> <a href='?src=\ref[src];hair_style=1'>[pref.h_style]</a><br>" //The <</a> & ></a> in this line is correct-- those extra characters are the arrows you click to switch between styles.
 
+	// RS Add: Open hair gallery (Lira, August 2025)
+	. += " <a href='?src=\ref[src];hair_gallery=1'>Open Gallery</a><br>"
+
 	. += "<b>Gradient</b><br>"
 	. += "<a href='?src=\ref[src];grad_color=1'>Change Color</a> [color_square(pref.r_grad, pref.g_grad, pref.b_grad)] "
 	. += " Style: <a href='?src=\ref[src];grad_style_left=[pref.grad_style]'><</a> <a href='?src=\ref[src];grad_style_right=[pref.grad_style]''>></a> <a href='?src=\ref[src];grad_style=1'>[pref.grad_style]</a><br>"
@@ -656,6 +673,7 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 	var/list/ear_styles = pref.get_available_styles(global.ear_styles_list)
 	var/datum/sprite_accessory/ears/ear = ear_styles[pref.ear_style]
 	. += "<b>Ears</b><br>"
+	. += " <a href='?src=\ref[src];ears_gallery=1'>Open Gallery</a>" //RS Add: Open ears gallery (Lira, August 2025)
 	if(istype(ear))
 		. += " Style: <a href='?src=\ref[src];ear_style=1'>[ear.name]</a><br>"
 		if(ear.do_colouration)
@@ -669,6 +687,7 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 
 	var/datum/sprite_accessory/ears/ears_secondary = ear_styles[pref.ear_secondary_style] // RS EDIT START (Port of VS PR#16513 'Adds a second ear slot.')
 	. += "<b>Horns</b><br>"
+	. += " <a href='?src=\ref[src];horns_gallery=1'>Open Gallery</a>" //RS Add: Open horns gallery (Lira, August 2025)
 	if(istype(ears_secondary))
 		. += " Style: <a href='?src=\ref[src];ear_secondary_style=1'>[ears_secondary.name]</a><br>"
 		for(var/channel in 1 to min(ears_secondary.get_color_channel_count(), length(GLOB.fancy_sprite_accessory_color_channel_names)))
@@ -679,6 +698,7 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 	var/list/tail_styles = pref.get_available_styles(global.tail_styles_list)
 	var/datum/sprite_accessory/tail/tail = tail_styles[pref.tail_style]
 	. += "<b>Tail</b><br>"
+	. += " <a href='?src=\ref[src];tails_gallery=1'>Open Gallery</a>" //RS Add: Open tails gallery (Lira, August 2025)
 	if(istype(tail))
 		. += " Style: <a href='?src=\ref[src];tail_style=1'>[tail.name]</a><br>"
 		if(tail.do_colouration)
@@ -693,6 +713,7 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 	var/list/wing_styles = pref.get_available_styles(global.wing_styles_list)
 	var/datum/sprite_accessory/wing/wings = wing_styles[pref.wing_style]
 	. += "<b>Wing</b><br>"
+	. += " <a href='?src=\ref[src];wings_gallery=1'>Open Gallery</a>" //RS Add: Open wings gallery (Lira, August 2025)
 	if(istype(wings))
 		. += " Style: <a href='?src=\ref[src];wing_style=1'>[wings.name]</a><br>"
 		if(wings.do_colouration)
@@ -700,12 +721,12 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 		if(wings.extra_overlay)
 			. += "<a href='?src=\ref[src];wing_color2=1'>Change Secondary Color</a> [color_square(pref.r_wing2, pref.g_wing2, pref.b_wing2)]<br>"
 		if(wings.extra_overlay2)
-			. += "<a href='?src=\ref[src];wing_color3=1'>Change Secondary Color</a> [color_square(pref.r_wing3, pref.g_wing3, pref.b_wing3)]<br>"
+			. += "<a href='?src=\\ref[src];wing_color3=1'>Change Tertiary Color</a> [color_square(pref.r_wing3, pref.g_wing3, pref.b_wing3)]<br>" //RS Edit: Typo fix (Lira, August 2025)
 	else
 		. += " Style: <a href='?src=\ref[src];wing_style=1'>Select</a><br>"
 
 	. += "<br><a href='?src=\ref[src];marking_style=1'>Body Markings +</a><br>"
-	. += "<table>"
+	. += " <a href='?src=\ref[src];marking_gallery=1'>Open Gallery</a><br><table>" //RS Add: Open markings gallery (Lira, August 2025)
 	for(var/M in pref.body_markings)
 		. += "<tr><td>[M]</td><td>[pref.body_markings.len > 1 ? "<a href='?src=\ref[src];marking_up=[M]'>&#708;</a> <a href='?src=\ref[src];marking_down=[M]'>&#709;</a> <a href='?src=\ref[src];marking_move=[M]'>mv</a> " : ""]<a href='?src=\ref[src];marking_remove=[M]'>-</a> <a href='?src=\ref[src];marking_color=[M]'>Color</a>[color_square(hex = pref.body_markings[M]["color"] ? pref.body_markings[M]["color"] : "#000000")] - <a href='?src=\ref[src];marking_submenu=[M]'>Customize</a></td></tr>"
 
@@ -836,6 +857,155 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 		if(new_h_style && CanUseTopic(user))
 			pref.h_style = new_h_style
 			return TOPIC_REFRESH_UPDATE_PREVIEW
+
+	//RS Add Start: Logic for the new gallary buttons (Lira, August 2025)
+
+	else if(href_list["hair_gallery"])
+		hair_gallery_window(user, 1)
+		return TOPIC_HANDLED
+
+	else if(href_list["hair_gallery_page"])
+		var/page = text2num(href_list["hair_gallery_page"]) || 1
+		hair_gallery_window(user, page)
+		return TOPIC_HANDLED
+
+	else if(href_list["hair_gallery_close"])
+		user << browse(null, "window=prefs_hair_gallery")
+		return TOPIC_HANDLED
+
+	else if(href_list["hair_set"])
+		var/new_style = href_list["hair_set"]
+		var/list/styles = pref.get_available_styles(global.hair_styles_list)
+		if(styles[new_style])
+			pref.h_style = new_style
+			user << browse(null, "window=prefs_hair_gallery")
+			return TOPIC_REFRESH_UPDATE_PREVIEW
+		return TOPIC_NOACTION
+
+	else if(href_list["ears_gallery"])
+		ears_gallery_window(user, 1)
+		return TOPIC_HANDLED
+
+	else if(href_list["ears_gallery_page"])
+		var/page = text2num(href_list["ears_gallery_page"]) || 1
+		ears_gallery_window(user, page)
+		return TOPIC_HANDLED
+
+	else if(href_list["ears_gallery_close"])
+		user << browse(null, "window=prefs_ears_gallery")
+		return TOPIC_HANDLED
+
+	else if(href_list["ear_set"])
+		var/new_style = href_list["ear_set"]
+		var/list/styles = pref.get_available_styles(global.ear_styles_list)
+		if(styles[new_style])
+			pref.ear_style = new_style
+			user << browse(null, "window=prefs_ears_gallery")
+			return TOPIC_REFRESH_UPDATE_PREVIEW
+		return TOPIC_NOACTION
+
+	else if(href_list["horns_gallery"])
+		horns_gallery_window(user, 1)
+		return TOPIC_HANDLED
+
+	else if(href_list["horns_gallery_page"])
+		var/page = text2num(href_list["horns_gallery_page"]) || 1
+		horns_gallery_window(user, page)
+		return TOPIC_HANDLED
+
+	else if(href_list["horns_gallery_close"])
+		user << browse(null, "window=prefs_horns_gallery")
+		return TOPIC_HANDLED
+
+	else if(href_list["horns_set"])
+		var/new_style = href_list["horns_set"]
+		var/list/styles = pref.get_available_styles(global.ear_styles_list)
+		if(styles[new_style])
+			pref.ear_secondary_style = new_style
+			user << browse(null, "window=prefs_horns_gallery")
+			return TOPIC_REFRESH_UPDATE_PREVIEW
+		return TOPIC_NOACTION
+
+	else if(href_list["tails_gallery"])
+		tails_gallery_window(user, 1)
+		return TOPIC_HANDLED
+
+	else if(href_list["tails_gallery_page"])
+		var/page = text2num(href_list["tails_gallery_page"]) || 1
+		tails_gallery_window(user, page)
+		return TOPIC_HANDLED
+
+	else if(href_list["tails_gallery_close"])
+		user << browse(null, "window=prefs_tails_gallery")
+		return TOPIC_HANDLED
+
+	else if(href_list["tail_set"])
+		var/new_style = href_list["tail_set"]
+		var/list/styles = pref.get_available_styles(global.tail_styles_list)
+		if(styles[new_style])
+			pref.tail_style = new_style
+			user << browse(null, "window=prefs_tails_gallery")
+			return TOPIC_REFRESH_UPDATE_PREVIEW
+		return TOPIC_NOACTION
+
+	else if(href_list["wings_gallery"])
+		wings_gallery_window(user, 1)
+		return TOPIC_HANDLED
+
+	else if(href_list["wings_gallery_page"])
+		var/page = text2num(href_list["wings_gallery_page"]) || 1
+		wings_gallery_window(user, page)
+		return TOPIC_HANDLED
+
+	else if(href_list["wings_gallery_close"])
+		user << browse(null, "window=prefs_wings_gallery")
+		return TOPIC_HANDLED
+
+	else if(href_list["wing_set"])
+		var/new_style = href_list["wing_set"]
+		var/list/styles = pref.get_available_styles(global.wing_styles_list)
+		if(styles[new_style])
+			pref.wing_style = new_style
+			user << browse(null, "window=prefs_wings_gallery")
+			return TOPIC_REFRESH_UPDATE_PREVIEW
+		return TOPIC_NOACTION
+
+	else if(href_list["marking_gallery"])
+		markings_gallery_window(user, "heads", 1)
+		return TOPIC_HANDLED
+
+	else if(href_list["marking_add"])
+		var/new_marking = href_list["marking_add"]
+		if(new_marking && CanUseTopic(user))
+			if(body_marking_styles_list[new_marking])
+				if(!pref.body_markings)
+					pref.body_markings = list()
+				if(pref.body_markings[new_marking])
+					pref.body_markings -= new_marking
+				else
+					pref.body_markings[new_marking] = pref.mass_edit_marking_list(new_marking)
+				var/cat = href_list["marking_gallery_cat"] || "heads"
+				var/page = text2num(href_list["marking_gallery_page"]) || 1
+				markings_gallery_window(user, cat, page)
+				return TOPIC_REFRESH_UPDATE_PREVIEW
+		return TOPIC_NOACTION
+
+	else if(href_list["marking_gallery_cat"])
+		var/page = text2num(href_list["marking_gallery_page"]) || 1
+		markings_gallery_window(user, href_list["marking_gallery_cat"], page)
+		return TOPIC_HANDLED
+
+	else if(href_list["marking_gallery_page"])
+		var/cat = href_list["marking_gallery_cat"] || "heads"
+		var/page = text2num(href_list["marking_gallery_page"]) || 1
+		markings_gallery_window(user, cat, page)
+		return TOPIC_HANDLED
+
+	else if(href_list["marking_gallery_close"])
+		user << browse(null, "window=prefs_markings_gallery")
+		return TOPIC_HANDLED
+
+	//RS Add End
 
 	else if(href_list["grad_style"])
 		var/list/valid_gradients = GLOB.hair_gradients
@@ -1551,3 +1721,491 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 	pref.markings_subwindow.set_content(dat)
 	pref.markings_subwindow.open(FALSE)
 	onclose(user, "prefs_markings_subwindow", src)
+
+//RS Add: Hair gallery window (Lira, August 2025)
+/datum/category_item/player_setup_item/general/body/proc/hair_gallery_window(mob/user, var/page)
+	var/dat = "<html><body style='background:#111;color:#ddd;font-family:Verdana,Arial;'><center>"
+	dat += "<h3>Select Hair Style</h3>"
+	dat += "<div><a href='?src=\ref[src];hair_gallery_close=1'>Close</a></div>"
+	var/page_num = max(1, text2num(page) || 1)
+	var/list/valid_hairstyles_grid = pref.get_valid_hairstyles()
+	if(LAZYLEN(valid_hairstyles_grid))
+		var/list/all_names = sortList(valid_hairstyles_grid)
+		var/page_size = 60
+		var/total = all_names.len
+		var/total_pages = max(1, round((total + page_size - 1) / page_size))
+		if(page_num > total_pages) page_num = total_pages
+		var/start_i = ((page_num - 1) * page_size) + 1
+		var/end_i = min(total, page_num * page_size)
+		var/prev_link = (page_num > 1) ? "<a href='?src=\ref[src];hair_gallery_page=[page_num-1]'>Prev</a>" : "Prev"
+		var/next_link = (page_num < total_pages) ? "<a href='?src=\ref[src];hair_gallery_page=[page_num+1]'>Next</a>" : "Next"
+		dat += "<div style='margin:6px;'>[prev_link] | Page [page_num] / [total_pages] | [next_link]</div>"
+		dat += "<div style='max-height:560px; overflow-y:auto; padding:6px; border:1px solid #333; background:#111; margin:6px;'>"
+		dat += "<table cellspacing='6' cellpadding='0' style='border-collapse:separate;'><tr>"
+		var/col = 0
+		var/max_cols = 6
+		var/idx = 0
+		for(var/style_name in all_names)
+			idx += 1
+			if(idx < start_i || idx > end_i)
+				continue
+			var/datum/sprite_accessory/hair/hair_style = hair_styles_list[style_name]
+			if(!istype(hair_style))
+				continue
+			var/icon/preview_face = icon(icon = 'icons/mob/human_races/r_def_human.dmi', icon_state = "head_f")
+			var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
+			var/icon/hair_s_add = new/icon("icon" = hair_style.icon_add, "icon_state" = "[hair_style.icon_state]_s")
+			var/icon/grad_s = null
+			if(hair_style.do_colouration)
+				if(pref.grad_style)
+					grad_s = new/icon("icon" = 'icons/mob/hair_gradients.dmi', "icon_state" = GLOB.hair_gradients[pref.grad_style])
+					grad_s.Blend(hair_s, ICON_AND)
+					grad_s.Blend(rgb(pref.r_grad, pref.g_grad, pref.b_grad), ICON_MULTIPLY)
+				hair_s.Blend(rgb(pref.r_hair, pref.g_hair, pref.b_hair), ICON_MULTIPLY)
+				hair_s.Blend(hair_s_add, ICON_ADD)
+				if(!isnull(grad_s))
+					hair_s.Blend(grad_s, ICON_OVERLAY)
+			preview_face.Blend(hair_s, ICON_OVERLAY)
+			preview_face.Scale(64, 64)
+			var/icon/display_icon = icon(preview_face)
+			var/selected = (style_name == pref.h_style)
+			var/cell_style = selected ? "border:2px solid #66a3ff;" : "border:1px solid #444;"
+			dat += "<td style='[cell_style] background:#222; text-align:center; width:96px; height:120px; vertical-align:top; padding:4px;'>"
+			dat += "<div style='display:block;margin:0 auto;'>"
+			dat += "<a href='?src=\ref[src];hair_set=[url_encode(style_name)]' title='[style_name]'>[bicon(display_icon)]</a>"
+			dat += "</div>"
+			dat += "<div style='font-size:11px;color:#ccc;margin-top:4px;max-width:88px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;' title='[style_name]'>[style_name]</div>"
+			dat += "</td>"
+			col += 1
+			if(col >= max_cols)
+				dat += "</tr><tr>"
+				col = 0
+		dat += "</tr></table>"
+		dat += "</div>"
+	else
+		dat += "<p>No hairstyles available.</p>"
+	dat += "<div><a href='?src=\ref[src];hair_gallery_close=1'>Close</a></div>"
+	dat += "</center></body></html>"
+	user << browse(dat, "window=prefs_hair_gallery;size=1000x720")
+
+//RS Add: Ears gallery window (Lira, August 2025)
+/datum/category_item/player_setup_item/general/body/proc/ears_gallery_window(mob/user, var/page)
+	var/dat = "<html><body style='background:#111;color:#ddd;font-family:Verdana,Arial;'><center>"
+	dat += "<h3>Select Ears</h3>"
+	dat += "<div><a href='?src=\ref[src];ears_gallery_close=1'>Close</a></div>"
+	var/page_num = max(1, text2num(page) || 1)
+	var/list/styles = pref.get_available_styles(global.ear_styles_list)
+	if(LAZYLEN(styles))
+		var/list/all_names = sortList(styles)
+		var/page_size = 60
+		var/total = all_names.len
+		var/total_pages = max(1, round((total + page_size - 1) / page_size))
+		if(page_num > total_pages) page_num = total_pages
+		var/start_i = ((page_num - 1) * page_size) + 1
+		var/end_i = min(total, page_num * page_size)
+		var/prev_link = (page_num > 1) ? "<a href='?src=\ref[src];ears_gallery_page=[page_num-1]'>Prev</a>" : "Prev"
+		var/next_link = (page_num < total_pages) ? "<a href='?src=\ref[src];ears_gallery_page=[page_num+1]'>Next</a>" : "Next"
+		dat += "<div style='margin:6px;'>[prev_link] | Page [page_num] / [total_pages] | [next_link]</div>"
+		dat += "<div style='max-height:560px; overflow-y:auto; padding:6px; border:1px solid #333; background:#111; margin:6px;'>"
+		dat += "<table cellspacing='6' cellpadding='0' style='border-collapse:separate;'><tr>"
+		var/col = 0
+		var/max_cols = 6
+		var/idx = 0
+		for(var/style_name in all_names)
+			idx += 1
+			if(idx < start_i || idx > end_i)
+				continue
+			var/datum/sprite_accessory/ears/E = styles[style_name]
+			if(!istype(E)) continue
+			var/icon/base_icon = icon(get_markings_base_preview_icon())
+			var/icon/acc = new/icon(icon = E.icon, icon_state = E.icon_state, frame = 1)
+			if(E.do_colouration)
+				acc.Blend(rgb(pref.r_ears, pref.g_ears, pref.b_ears), E.color_blend_mode)
+				if(E.extra_overlay)
+					var/icon/add1 = new/icon(icon = E.icon, icon_state = E.extra_overlay, frame = 1)
+					add1.Blend(rgb(pref.r_ears2, pref.g_ears2, pref.b_ears2), E.color_blend_mode)
+					acc.Blend(add1, ICON_OVERLAY)
+				if(E.extra_overlay2)
+					var/icon/add2 = new/icon(icon = E.icon, icon_state = E.extra_overlay2, frame = 1)
+					add2.Blend(rgb(pref.r_ears3, pref.g_ears3, pref.b_ears3), E.color_blend_mode)
+					acc.Blend(add2, ICON_OVERLAY)
+			var/base_w = base_icon.Width()
+			var/base_h = base_icon.Height()
+			var/acc_w = acc.Width()
+			var/acc_h = acc.Height()
+			if(acc_w != base_w)
+				if(acc_w > base_w)
+					acc.Shift(WEST, round((acc_w - base_w) / 2))
+				else if(acc_w < base_w)
+					acc.Shift(EAST, round((base_w - acc_w) / 2))
+			if(acc_h != base_h)
+				if(acc_h > base_h)
+					acc.Shift(NORTH, acc_h - base_h)
+				else if(acc_h < base_h)
+					acc.Shift(SOUTH, base_h - acc_h)
+			base_icon.Blend(acc, ICON_OVERLAY)
+			var/icon/preview_icon = icon(base_icon)
+			preview_icon.Scale(64,64)
+			var/selected = (pref.ear_style == style_name)
+			var/cell_style = selected ? "border:2px solid #66a3ff;" : "border:1px solid #444;"
+			dat += "<td style='[cell_style] background:#222; text-align:center; width:96px; height:120px; vertical-align:top; padding:4px;'>"
+			dat += "<div style='display:block;margin:0 auto;'>"
+			dat += "<a href='?src=\ref[src];ear_set=[url_encode(style_name)]' title='[style_name]'>[bicon(preview_icon)]</a>"
+			dat += "</div>"
+			dat += "<div style='font-size:11px;color:#ccc;margin-top:4px;max-width:88px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;' title='[style_name]'>[style_name]</div>"
+			dat += "</td>"
+			col += 1
+			if(col >= max_cols)
+				dat += "</tr><tr>"
+				col = 0
+		dat += "</tr></table>"
+		dat += "</div>"
+	else
+		dat += "<p>No ear styles available.</p>"
+	dat += "<div><a href='?src=\ref[src];ears_gallery_close=1'>Close</a></div>"
+	dat += "</center></body></html>"
+	user << browse(dat, "window=prefs_ears_gallery;size=1000x720")
+
+//RS Add: Horns gallery window (Lira, August 2025)
+/datum/category_item/player_setup_item/general/body/proc/horns_gallery_window(mob/user, var/page)
+	var/dat = "<html><body style='background:#111;color:#ddd;font-family:Verdana,Arial;'><center>"
+	dat += "<h3>Select Horns</h3>"
+	dat += "<div><a href='?src=\ref[src];horns_gallery_close=1'>Close</a></div>"
+	var/page_num = max(1, text2num(page) || 1)
+	var/list/styles = pref.get_available_styles(global.ear_styles_list)
+	if(LAZYLEN(styles))
+		var/list/all_names = sortList(styles)
+		var/page_size = 60
+		var/total = all_names.len
+		var/total_pages = max(1, round((total + page_size - 1) / page_size))
+		if(page_num > total_pages) page_num = total_pages
+		var/start_i = ((page_num - 1) * page_size) + 1
+		var/end_i = min(total, page_num * page_size)
+		var/prev_link = (page_num > 1) ? "<a href='?src=\ref[src];horns_gallery_page=[page_num-1]'>Prev</a>" : "Prev"
+		var/next_link = (page_num < total_pages) ? "<a href='?src=\ref[src];horns_gallery_page=[page_num+1]'>Next</a>" : "Next"
+		dat += "<div style='margin:6px;'>[prev_link] | Page [page_num] / [total_pages] | [next_link]</div>"
+		dat += "<div style='max-height:560px; overflow-y:auto; padding:6px; border:1px solid #333; background:#111; margin:6px;'>"
+		dat += "<table cellspacing='6' cellpadding='0' style='border-collapse:separate;'><tr>"
+		var/col = 0
+		var/max_cols = 6
+		var/idx = 0
+		for(var/style_name in all_names)
+			idx += 1
+			if(idx < start_i || idx > end_i)
+				continue
+			var/datum/sprite_accessory/ears/E = styles[style_name]
+			if(!istype(E)) continue
+			var/icon/base_icon = icon(get_markings_base_preview_icon())
+			var/icon/acc = new/icon(icon = E.icon, icon_state = E.icon_state, frame = 1)
+			if(E.do_colouration)
+				var/ccount = E.get_color_channel_count()
+				if(ccount >= 1)
+					acc.Blend(LAZYACCESS(pref.ear_secondary_colors, 1) || "#ffffff", E.color_blend_mode)
+				if(E.extra_overlay)
+					var/icon/a1 = new/icon(icon = E.icon, icon_state = E.extra_overlay, frame = 1)
+					a1.Blend(LAZYACCESS(pref.ear_secondary_colors, 2) || "#ffffff", E.color_blend_mode)
+					acc.Blend(a1, ICON_OVERLAY)
+				if(E.extra_overlay2)
+					var/icon/a2 = new/icon(icon = E.icon, icon_state = E.extra_overlay2, frame = 1)
+					a2.Blend(LAZYACCESS(pref.ear_secondary_colors, 3) || "#ffffff", E.color_blend_mode)
+					acc.Blend(a2, ICON_OVERLAY)
+			var/base_w2 = base_icon.Width()
+			var/base_h2 = base_icon.Height()
+			var/acc_w2 = acc.Width()
+			var/acc_h2 = acc.Height()
+			if(acc_w2 != base_w2)
+				if(acc_w2 > base_w2)
+					acc.Shift(WEST, round((acc_w2 - base_w2) / 2))
+				else if(acc_w2 < base_w2)
+					acc.Shift(EAST, round((base_w2 - acc_w2) / 2))
+			if(acc_h2 != base_h2)
+				if(acc_h2 > base_h2)
+					acc.Shift(NORTH, acc_h2 - base_h2)
+				else if(acc_h2 < base_h2)
+					acc.Shift(SOUTH, base_h2 - acc_h2)
+			base_icon.Blend(acc, ICON_OVERLAY)
+			var/icon/preview_icon = icon(base_icon)
+			preview_icon.Scale(64,64)
+			var/selected = (pref.ear_secondary_style == style_name)
+			var/cell_style = selected ? "border:2px solid #66a3ff;" : "border:1px solid #444;"
+			dat += "<td style='[cell_style] background:#222; text-align:center; width:96px; height:120px; vertical-align:top; padding:4px;'>"
+			dat += "<div style='display:block;margin:0 auto;'>"
+			dat += "<a href='?src=\ref[src];horns_set=[url_encode(style_name)]' title='[style_name]'>[bicon(preview_icon)]</a>"
+			dat += "</div>"
+			dat += "<div style='font-size:11px;color:#ccc;margin-top:4px;max-width:88px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;' title='[style_name]'>[style_name]</div>"
+			dat += "</td>"
+			col += 1
+			if(col >= max_cols)
+				dat += "</tr><tr>"
+				col = 0
+		dat += "</tr></table>"
+		dat += "</div>"
+	else
+		dat += "<p>No horns available.</p>"
+	dat += "<div><a href='?src=\ref[src];horns_gallery_close=1'>Close</a></div>"
+	dat += "</center></body></html>"
+	user << browse(dat, "window=prefs_horns_gallery;size=1000x720")
+
+//RS Add: Tails gallery window (Lira, August 2025)
+/datum/category_item/player_setup_item/general/body/proc/tails_gallery_window(mob/user, var/page)
+	var/dat = "<html><body style='background:#111;color:#ddd;font-family:Verdana,Arial;'><center>"
+	dat += "<h3>Select Tail</h3>"
+	dat += "<div><a href='?src=\ref[src];tails_gallery_close=1'>Close</a></div>"
+	var/page_num = max(1, text2num(page) || 1)
+	var/list/styles = pref.get_available_styles(global.tail_styles_list)
+	if(LAZYLEN(styles))
+		var/list/all_names = sortList(styles)
+		var/page_size = 60
+		var/total = all_names.len
+		var/total_pages = max(1, round((total + page_size - 1) / page_size))
+		if(page_num > total_pages) page_num = total_pages
+		var/start_i = ((page_num - 1) * page_size) + 1
+		var/end_i = min(total, page_num * page_size)
+		var/prev_link = (page_num > 1) ? "<a href='?src=\ref[src];tails_gallery_page=[page_num-1]'>Prev</a>" : "Prev"
+		var/next_link = (page_num < total_pages) ? "<a href='?src=\ref[src];tails_gallery_page=[page_num+1]'>Next</a>" : "Next"
+		dat += "<div style='margin:6px;'>[prev_link] | Page [page_num] / [total_pages] | [next_link]</div>"
+		dat += "<div style='max-height:560px; overflow-y:auto; padding:6px; border:1px solid #333; background:#111; margin:6px;'>"
+		dat += "<table cellspacing='6' cellpadding='0' style='border-collapse:separate;'><tr>"
+		var/col = 0
+		var/max_cols = 6
+		var/idx = 0
+		for(var/style_name in all_names)
+			idx += 1
+			if(idx < start_i || idx > end_i)
+				continue
+			var/datum/sprite_accessory/tail/T = styles[style_name]
+			if(!istype(T)) continue
+			var/icon/base_icon = icon(get_markings_base_preview_icon())
+			var/icon/acc = new/icon(icon = T.icon, icon_state = T.icon_state, frame = 1)
+			if(T.do_colouration)
+				acc.Blend(rgb(pref.r_tail, pref.g_tail, pref.b_tail), T.color_blend_mode)
+				if(T.extra_overlay)
+					var/icon/add1 = new/icon(icon = T.icon, icon_state = T.extra_overlay, frame = 1)
+					add1.Blend(rgb(pref.r_tail2, pref.g_tail2, pref.b_tail2), T.color_blend_mode)
+					acc.Blend(add1, ICON_OVERLAY)
+				if(T.extra_overlay2)
+					var/icon/add2 = new/icon(icon = T.icon, icon_state = T.extra_overlay2, frame = 1)
+					add2.Blend(rgb(pref.r_tail3, pref.g_tail3, pref.b_tail3), T.color_blend_mode)
+					acc.Blend(add2, ICON_OVERLAY)
+			var/base_w3 = base_icon.Width()
+			var/base_h3 = base_icon.Height()
+			var/acc_w3 = acc.Width()
+			var/acc_h3 = acc.Height()
+			if(acc_w3 != base_w3)
+				if(acc_w3 > base_w3)
+					acc.Shift(WEST, round((acc_w3 - base_w3) / 2))
+				else if(acc_w3 < base_w3)
+					acc.Shift(EAST, round((base_w3 - acc_w3) / 2))
+			if(acc_h3 != base_h3)
+				if(acc_h3 > base_h3)
+					acc.Shift(NORTH, acc_h3 - base_h3)
+				else if(acc_h3 < base_h3)
+					acc.Shift(SOUTH, base_h3 - acc_h3)
+			base_icon.Blend(acc, ICON_OVERLAY)
+			var/icon/preview_icon = icon(base_icon)
+			preview_icon.Scale(64,64)
+			var/selected = (pref.tail_style == style_name)
+			var/cell_style = selected ? "border:2px solid #66a3ff;" : "border:1px solid #444;"
+			dat += "<td style='[cell_style] background:#222; text-align:center; width:96px; height:120px; vertical-align:top; padding:4px;'>"
+			dat += "<div style='display:block;margin:0 auto;'>"
+			dat += "<a href='?src=\ref[src];tail_set=[url_encode(style_name)]' title='[style_name]'>[bicon(preview_icon)]</a>"
+			dat += "</div>"
+			dat += "<div style='font-size:11px;color:#ccc;margin-top:4px;max-width:88px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;' title='[style_name]'>[style_name]</div>"
+			dat += "</td>"
+			col += 1
+			if(col >= max_cols)
+				dat += "</tr><tr>"
+				col = 0
+		dat += "</tr></table>"
+		dat += "</div>"
+	else
+		dat += "<p>No tail styles available.</p>"
+	dat += "<div><a href='?src=\ref[src];tails_gallery_close=1'>Close</a></div>"
+	dat += "</center></body></html>"
+	user << browse(dat, "window=prefs_tails_gallery;size=1000x720")
+
+//RS Add: Wings gallery window (Lira, August 2025)
+/datum/category_item/player_setup_item/general/body/proc/wings_gallery_window(mob/user, var/page)
+	var/dat = "<html><body style='background:#111;color:#ddd;font-family:Verdana,Arial;'><center>"
+	dat += "<h3>Select Wings</h3>"
+	dat += "<div><a href='?src=\ref[src];wings_gallery_close=1'>Close</a></div>"
+	var/page_num = max(1, text2num(page) || 1)
+	var/list/styles = pref.get_available_styles(global.wing_styles_list)
+	if(LAZYLEN(styles))
+		var/list/all_names = sortList(styles)
+		var/page_size = 60
+		var/total = all_names.len
+		var/total_pages = max(1, round((total + page_size - 1) / page_size))
+		if(page_num > total_pages) page_num = total_pages
+		var/start_i = ((page_num - 1) * page_size) + 1
+		var/end_i = min(total, page_num * page_size)
+		var/prev_link = (page_num > 1) ? "<a href='?src=\ref[src];wings_gallery_page=[page_num-1]'>Prev</a>" : "Prev"
+		var/next_link = (page_num < total_pages) ? "<a href='?src=\ref[src];wings_gallery_page=[page_num+1]'>Next</a>" : "Next"
+		dat += "<div style='margin:6px;'>[prev_link] | Page [page_num] / [total_pages] | [next_link]</div>"
+		dat += "<div style='max-height:560px; overflow-y:auto; padding:6px; border:1px solid #333; background:#111; margin:6px;'>"
+		dat += "<table cellspacing='6' cellpadding='0' style='border-collapse:separate;'><tr>"
+		var/col = 0
+		var/max_cols = 6
+		var/idx = 0
+		for(var/style_name in all_names)
+			idx += 1
+			if(idx < start_i || idx > end_i)
+				continue
+			var/datum/sprite_accessory/wing/W = styles[style_name]
+			if(!istype(W)) continue
+			var/icon/base_icon = icon(get_markings_base_preview_icon())
+			var/icon/acc = new/icon(icon = W.icon, icon_state = W.icon_state, frame = 1)
+			if(W.do_colouration)
+				acc.Blend(rgb(pref.r_wing, pref.g_wing, pref.b_wing), W.color_blend_mode)
+				if(W.extra_overlay)
+					var/icon/add1 = new/icon(icon = W.icon, icon_state = W.extra_overlay, frame = 1)
+					add1.Blend(rgb(pref.r_wing2, pref.g_wing2, pref.b_wing2), W.color_blend_mode)
+					acc.Blend(add1, ICON_OVERLAY)
+				if(W.extra_overlay2)
+					var/icon/add2 = new/icon(icon = W.icon, icon_state = W.extra_overlay2, frame = 1)
+					add2.Blend(rgb(pref.r_wing3, pref.g_wing3, pref.b_wing3), W.color_blend_mode)
+					acc.Blend(add2, ICON_OVERLAY)
+			var/base_w4 = base_icon.Width()
+			var/base_h4 = base_icon.Height()
+			var/acc_w4 = acc.Width()
+			var/acc_h4 = acc.Height()
+			if(acc_w4 != base_w4)
+				if(acc_w4 > base_w4)
+					acc.Shift(WEST, round((acc_w4 - base_w4) / 2))
+				else if(acc_w4 < base_w4)
+					acc.Shift(EAST, round((base_w4 - acc_w4) / 2))
+			if(acc_h4 != base_h4)
+				if(acc_h4 > base_h4)
+					acc.Shift(NORTH, acc_h4 - base_h4)
+				else if(acc_h4 < base_h4)
+					acc.Shift(SOUTH, base_h4 - acc_h4)
+			base_icon.Blend(acc, ICON_OVERLAY)
+			var/icon/preview_icon = icon(base_icon)
+			preview_icon.Scale(64,64)
+			var/selected = (pref.wing_style == style_name)
+			var/cell_style = selected ? "border:2px solid #66a3ff;" : "border:1px solid #444;"
+			dat += "<td style='[cell_style] background:#222; text-align:center; width:96px; height:120px; vertical-align:top; padding:4px;'>"
+			dat += "<div style='display:block;margin:0 auto;'>"
+			dat += "<a href='?src=\ref[src];wing_set=[url_encode(style_name)]' title='[style_name]'>[bicon(preview_icon)]</a>"
+			dat += "</div>"
+			dat += "<div style='font-size:11px;color:#ccc;margin-top:4px;max-width:88px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;' title='[style_name]'>[style_name]</div>"
+			dat += "</td>"
+			col += 1
+			if(col >= max_cols)
+				dat += "</tr><tr>"
+				col = 0
+		dat += "</tr></table>"
+		dat += "</div>"
+	else
+		dat += "<p>No wing styles available.</p>"
+	dat += "<div><a href='?src=\ref[src];wings_gallery_close=1'>Close</a></div>"
+	dat += "</center></body></html>"
+	user << browse(dat, "window=prefs_wings_gallery;size=1000x720")
+
+//RS Add: Markings markings window (Lira, August 2025)
+/datum/category_item/player_setup_item/general/body/proc/markings_gallery_window(mob/user, var/category, var/page)
+	var/dat = "<html><body style='background:#111;color:#ddd;font-family:Verdana,Arial;'><center>"
+	dat += "<h3>Select Body Marking</h3>"
+	dat += "<div><a href='?src=\ref[src];marking_gallery_close=1'>Close</a></div>"
+	if(!category) category = "heads"
+	var/page_num = max(1, text2num(page) || 1)
+	var/list/cats = list(
+		"heads" = "Head",
+		"bodies" = "Body",
+		"limbs" = "Limbs",
+		"addons" = "Tats/Scars",
+		"skintone" = "Skintone",
+		"teshari" = "Teshari",
+		"vox" = "Vox",
+		"augment" = "Augment",
+		"all" = "All"
+	)
+	var/catbar = ""
+	for(var/c in cats)
+		if(category == c)
+			catbar += " <b>[cats[c]]</b>"
+		else
+			catbar += " <a href='?src=\ref[src];marking_gallery_cat=[c]'>[cats[c]]</a>"
+	dat += "<div style='margin:6px;padding:6px;border:1px solid #333;background:#111;'>[catbar]</div>"
+	var/list/valid_markings_grid
+	switch(category)
+		if("heads")
+			valid_markings_grid = body_marking_heads.Copy()
+		if("bodies")
+			valid_markings_grid = body_marking_bodies.Copy()
+		if("limbs")
+			valid_markings_grid = body_marking_limbs.Copy()
+		if("addons")
+			valid_markings_grid = body_marking_addons.Copy()
+		if("skintone")
+			valid_markings_grid = body_marking_skintone.Copy()
+		if("teshari")
+			valid_markings_grid = body_marking_teshari.Copy()
+		if("vox")
+			valid_markings_grid = body_marking_vox.Copy()
+		if("augment")
+			valid_markings_grid = body_marking_augment.Copy()
+		else
+			valid_markings_grid = body_marking_styles_list.Copy()
+	if(LAZYLEN(valid_markings_grid))
+		var/page_size = 60
+		var/total = valid_markings_grid.len
+		var/total_pages = max(1, round((total + page_size - 1) / page_size))
+		if(page_num > total_pages) page_num = total_pages
+		var/start_i = ((page_num - 1) * page_size) + 1
+		var/end_i = min(total, page_num * page_size)
+		var/prev_link = (page_num > 1) ? "<a href='?src=\ref[src];marking_gallery_page=[page_num-1];marking_gallery_cat=[category]'>Prev</a>" : "Prev"
+		var/next_link = (page_num < total_pages) ? "<a href='?src=\ref[src];marking_gallery_page=[page_num+1];marking_gallery_cat=[category]'>Next</a>" : "Next"
+		dat += "<div style='margin:6px;'>[prev_link] | Page [page_num] / [total_pages] | [next_link]</div>"
+		dat += "<div style='max-height:560px; overflow-y:auto; padding:6px; border:1px solid #333; background:#111; margin:6px;'>"
+		dat += "<table cellspacing='6' cellpadding='0' style='border-collapse:separate;'><tr>"
+		var/col = 0
+		var/max_cols = 6
+		var/idx = 0
+		for(var/style_name in sortList(valid_markings_grid))
+			idx += 1
+			if(idx < start_i || idx > end_i)
+				continue
+			var/datum/sprite_accessory/marking/mark_style = body_marking_styles_list[style_name]
+			if(!istype(mark_style))
+				continue
+			var/preview_tag = null
+			var/list/state_list = icon_states(mark_style.icon)
+			var/list/priority_parts = list(BP_HEAD,BP_TORSO,BP_GROIN,BP_L_ARM,BP_R_ARM,BP_L_HAND,BP_R_HAND,BP_L_LEG,BP_R_LEG,BP_L_FOOT,BP_R_FOOT)
+			for(var/p in priority_parts)
+				if(!(p in mark_style.body_parts))
+					continue
+				var/state_name = "[mark_style.icon_state]-[p]"
+				if(state_name in state_list)
+					preview_tag = p
+					break
+			var/icon/preview_icon
+			if(preview_tag)
+				var/state_name = "[mark_style.icon_state]-[preview_tag]"
+				var/icon/mark_s = new/icon(icon = mark_style.icon, icon_state = state_name, frame = 1)
+				mark_s.Blend("#bb0000", mark_style.color_blend_mode)
+				var/icon/base_icon = icon(get_markings_base_preview_icon())
+				base_icon.Blend(mark_s, ICON_OVERLAY)
+				preview_icon = icon(base_icon)
+				preview_icon.Scale(64, 64)
+			else
+				continue
+			var/selected = (pref.body_markings && (style_name in pref.body_markings))
+			var/cell_style = selected ? "border:2px solid #66a3ff;" : "border:1px solid #444;"
+			dat += "<td style='[cell_style] background:#222; text-align:center; width:96px; height:120px; vertical-align:top; padding:4px;'>"
+			dat += "<div style='display:block;margin:0 auto;'>"
+			dat += "<a href='?src=\ref[src];marking_add=[url_encode(style_name)];marking_gallery_cat=[category];marking_gallery_page=[page_num]' title='[style_name]'>[bicon(preview_icon)]</a>"
+			dat += "</div>"
+			dat += "<div style='font-size:11px;color:#ccc;margin-top:4px;max-width:88px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;' title='[style_name]'>[style_name]</div>"
+			dat += "</td>"
+			col += 1
+			if(col >= max_cols)
+				dat += "</tr><tr>"
+				col = 0
+		dat += "</tr></table>"
+		dat += "</div>"
+	else
+		dat += "<p>No markings available.</p>"
+	dat += "<div><a href='?src=\ref[src];marking_gallery_close=1'>Close</a></div>"
+	dat += "</center></body></html>"
+	user << browse(dat, "window=prefs_markings_gallery;size=1000x720")
