@@ -22,6 +22,7 @@
 	ai_holder_type = /datum/ai_holder/simple_mob/passive/cookiegirl
 
 	faction = "cookiegirl"
+	food_class = FP_FOOD	//RS ADD
 
 	// Activate Noms!
 /mob/living/simple_mob/vore/cookiegirl

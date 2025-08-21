@@ -39,6 +39,10 @@
 	max_n2 = 0
 	minbodytemp = 0
 
+	hunter = TRUE				//RS ADD
+	food_pref = CARNIVORE		//RS ADD
+	food_pref_obligate = TRUE	//RS ADD
+
 // Activate Noms!
 /mob/living/simple_mob/vore/aggressive/dino
 	vore_active = 1

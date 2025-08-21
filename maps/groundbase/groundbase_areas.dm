@@ -6,6 +6,7 @@
 	dynamic_lighting = TRUE
 	ambience = AMBIENCE_RUINS
 	base_turf = /turf/simulated/mineral/floor/virgo3c
+	hunter_override = TRUE	//RS ADD
 
 /area/maintenance/groundbase
 	name = "Maintenance"

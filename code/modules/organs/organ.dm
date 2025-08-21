@@ -179,7 +179,7 @@ var/list/organ_cache = list()
 		var/datum/reagent/blood/B = locate(/datum/reagent/blood) in reagents.reagent_list
 		if(B && prob(40) && !isbelly(loc)) //VOREStation Edit
 			reagents.remove_reagent("blood",0.1)
-			blood_splatter(src,B,1)
+			blood_splatter(src,B,1,owner)	//RS EDIT
 		if(config.organs_decay && decays) damage += rand(1,3)
 		if(damage >= max_damage)
 			damage = max_damage
@@ -446,7 +446,7 @@ var/list/organ_cache = list()
 
 	to_chat(user, "<span class='notice'>You take an experimental bite out of \the [src].</span>")
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in reagents.reagent_list
-	blood_splatter(src,B,1)
+	blood_splatter(src,B,1,owner)	//RS EDIT
 
 	user.drop_from_inventory(src)
 	var/obj/item/weapon/reagent_containers/food/snacks/organ/O = new(get_turf(src))

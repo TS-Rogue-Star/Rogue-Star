@@ -20,6 +20,8 @@
 	//glow_range = 0
 	//glow_intensity = 0
 
+	food_class = FP_SLIME	//RS ADD
+
 	var/mob/living/carbon/human/humanform
 	var/datum/modifier/healing
 

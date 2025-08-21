@@ -35,6 +35,11 @@
 	can_buckle = TRUE
 	buckle_movable = TRUE
 	buckle_lying = FALSE
+
+	hunter = TRUE				//RS ADD
+	food_pref = CARNIVORE		//RS ADD
+	food_pref_obligate = TRUE	//RS ADD
+
 	var/initial_icon = "raptorpurple"
 	var/wg_state = 0
 
