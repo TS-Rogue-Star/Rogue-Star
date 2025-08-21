@@ -518,7 +518,7 @@ var/list/intents = list(I_HELP,I_DISARM,I_GRAB,I_HURT)
 					if(istype(food,/obj/item/weapon/reagent_containers/food/snacks/grown))
 						return TRUE
 			return FALSE
-	return TRUE
+	return TRUE		//RS ADD END
 
 /mob/proc/can_force_feed()
 	return 1

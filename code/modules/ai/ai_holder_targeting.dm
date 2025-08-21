@@ -43,7 +43,7 @@
 	for(var/HM in typecache_filter_list(range(vision_range, holder), hostile_machines))
 		if(can_see(holder, HM, vision_range))
 			. += HM
-	if(holder.hunter)
+	if(holder.hunter)	//RS ADD START
 		if(holder.nutrition < 1500)
 			for(var/obj/item/weapon/reagent_containers/food/snacks/S in view(world.view,get_turf(holder)))
 				switch(holder.food_pref)
@@ -55,7 +55,7 @@
 							. += S
 					if(HERBIVORE)
 						if(istype(S,/obj/item/weapon/reagent_containers/food/snacks/grown))
-							. += S
+							. += S		//RS ADD END
 
 // Step 2, filter down possible targets to things we actually care about.
 /datum/ai_holder/proc/find_target(var/list/possible_targets, var/has_targets_list = FALSE)
@@ -182,16 +182,16 @@
 		//VOREStation add start
 		else if(forgive_resting && !isbelly(holder.loc))	//Doing it this way so we only think about the other conditions if the var is actually set
 			if((holder.health == holder.maxHealth) && !hostile && (L.resting || L.weakened || L.stunned))	//If our health is full, no one is fighting us, we can forgive
-				if(holder.hunter)	//RS ADD START
+				if(holder.hunter)	//RS EDIT START
 					if(holder.food_pref_obligate)
 						if(!food_class_check(L))
 							return FALSE
-				else				//RS ADD END
+				else
 					var/mob/living/simple_mob/vore/eater = holder
 					if(!eater.will_eat(L))		//We forgive people we can eat by eating them
 						set_stance(STANCE_IDLE)
 						return FALSE	//Forgiven
-		//VOREStation add end
+		//VOREStation add end	//RS EDIT END
 		return TRUE
 
 	if(isobj(the_target))	//RS ADD START
