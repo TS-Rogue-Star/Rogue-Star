@@ -15,6 +15,10 @@
 	holder_type = /obj/item/weapon/holder/fennec
 	mob_size = MOB_SMALL
 
+	hunter = TRUE				//RS ADD
+	food_pref = CARNIVORE		//RS ADD
+	food_pref_obligate = TRUE	//RS ADD
+
 	has_langs = list(LANGUAGE_ANIMAL)
 
 /mob/living/simple_mob/animal/passive/fennec/faux

@@ -29,6 +29,7 @@
 
 	var/forgive_resting = TRUE				//VOREStation add - If TRUE on a RETALIATE mob, then mob will drop target if it becomes hostile to you but hasn't taken damage
 	var/grab_hostile = TRUE
+	var/blood_time = 0						//RS ADD - hunting mobs will only care about blood that is newer than this.
 
 // A lot of this is based off of /TG/'s AI code.
 
@@ -42,11 +43,24 @@
 	for(var/HM in typecache_filter_list(range(vision_range, holder), hostile_machines))
 		if(can_see(holder, HM, vision_range))
 			. += HM
+	if(holder.hunter)	//RS ADD START
+		if(holder.nutrition < 1500)
+			for(var/obj/item/weapon/reagent_containers/food/snacks/S in view(world.view,get_turf(holder)))
+				switch(holder.food_pref)
+					if(OMNIVORE)
+						if(istype(S,/obj/item/weapon/reagent_containers/food/snacks))
+							. += S
+					if(CARNIVORE)
+						if(istype(S,/obj/item/weapon/reagent_containers/food/snacks/meat))
+							. += S
+					if(HERBIVORE)
+						if(istype(S,/obj/item/weapon/reagent_containers/food/snacks/grown))
+							. += S		//RS ADD END
 
 // Step 2, filter down possible targets to things we actually care about.
 /datum/ai_holder/proc/find_target(var/list/possible_targets, var/has_targets_list = FALSE)
 	ai_log("find_target() : Entered.", AI_LOG_TRACE)
-	if(!hostile) // So retaliating mobs only attack the thing that hit it.
+	if(!hostile && !holder.hunter) // So retaliating mobs only attack the thing that hit it. //RS EDIT
 		return null
 	if(!incorporeal_attack && holder.is_incorporeal())	//RS ADD - don't attack stuff while you shouldn't be able to be attacked unless we meant to
 		return null									//RS ADD
@@ -58,11 +72,17 @@
 			. += possible_target
 
 	var/new_target = pick_target(.)
+	if(holder.hunter && !new_target)	//RS ADD START
+		if(holder.food_pref == CARNIVORE || holder.food_pref == OMNIVORE)
+			blood_hunt()
+			return						//RS ADD END
 	give_target(new_target)
 	return new_target
 
 // Step 3, pick among the possible, attackable targets.
 /datum/ai_holder/proc/pick_target(list/targets)
+	if(holder.hunter)	//RS EDIT
+		targets = ai_hunt(targets)	//RS EDIT
 	if(target) // If we already have a target, but are told to pick again, calculate the lowest distance between all possible, and pick from the lowest distance targets.
 		targets = target_filter_distance(targets)
 	else
@@ -140,11 +160,14 @@
 				return FALSE
 		if(L.ai_ignores)	//RS ADD
 			return FALSE	//RS ADD
+		if(holder.IIsAlly(L))	//RS EDIT
+			return FALSE	//RS EDIT
 		if(L.stat)
-			if(L.stat == DEAD && !handle_corpse) // Leave dead things alone
-				return FALSE
+			if(L.stat == DEAD) // Leave dead things alone	//RS EDIT
+				if(handle_corpse || hunter_check(L))	//RS EDIT
+					return TRUE
 			if(L.stat == UNCONSCIOUS)	// Do we have mauling? Yes? Then maul people who are sleeping but not SSD
-				if(mauling)
+				if(mauling || hunter_check(L))	//RS EDIT
 					return TRUE
 				//VOREStation Add Start
 				else if(unconscious_vore && L.allowmobvore)
@@ -159,14 +182,21 @@
 		//VOREStation add start
 		else if(forgive_resting && !isbelly(holder.loc))	//Doing it this way so we only think about the other conditions if the var is actually set
 			if((holder.health == holder.maxHealth) && !hostile && (L.resting || L.weakened || L.stunned))	//If our health is full, no one is fighting us, we can forgive
-				var/mob/living/simple_mob/vore/eater = holder
-				if(!eater.will_eat(L))		//We forgive people we can eat by eating them
-					set_stance(STANCE_IDLE)
-					return FALSE	//Forgiven
-		//VOREStation add end
-		if(holder.IIsAlly(L))
-			return FALSE
+				if(holder.hunter)	//RS EDIT START
+					if(holder.food_pref_obligate)
+						if(!food_class_check(L))
+							return FALSE
+				else
+					var/mob/living/simple_mob/vore/eater = holder
+					if(!eater.will_eat(L))		//We forgive people we can eat by eating them
+						set_stance(STANCE_IDLE)
+						return FALSE	//Forgiven
+		//VOREStation add end	//RS EDIT END
 		return TRUE
+
+	if(isobj(the_target))	//RS ADD START
+		if(holder.can_eat(the_target))
+			return TRUE		//RS ADD END
 
 	if(istype(the_target, /obj/mecha))
 		var/obj/mecha/M = the_target
@@ -352,3 +382,132 @@
 	if(micro_hunt && !(L.get_effective_size(TRUE) <= micro_hunt_size))	//Are they small enough to get?
 		return FALSE
 	return TRUE // Let's go!
+
+/datum/ai_holder/proc/ai_hunt(var/list/target_list)	//RS ADD START
+	if(!holder.hunter)
+		return FALSE
+	var/list/obj_list = list()
+	var/list/final_list = list()
+	var/max_huntability = 0
+
+	for(var/thing in target_list)
+		if(isobj(thing))
+			var/obj/O = thing
+			switch(holder.food_pref)
+				if(OMNIVORE)
+					if(istype(O,/obj/item/weapon/reagent_containers/food/snacks))
+						obj_list += O
+				if(CARNIVORE)
+					if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/meat))
+						obj_list += O
+				if(HERBIVORE)
+					if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/grown))
+						obj_list += O
+		if(obj_list.len)
+			continue
+		if(!isliving(thing))
+			continue
+		var/mob/living/L = thing
+
+		var/wrong_food = FALSE
+		var/huntability = 0
+
+		if(!food_class_check(L))
+			wrong_food = TRUE
+
+		if(wrong_food && holder.food_pref_obligate)
+			target_list.Remove(L)
+			continue
+
+		if(L.food_class == FP_FOOD)
+			huntability ++
+		if(holder.mob_size > L.mob_size)	//It's safer to hunt things smaller than me
+			huntability ++
+		if(holder.size_multiplier > L.size_multiplier)	//It's safer to hunt smaller things
+			huntability ++
+		if(holder.health > L.health)	//It's safer to hunt weaker things
+			huntability ++
+		if(L.weakened || L.stunned || L.sleeping || L.resting)	//It's safer to hunt vulnerable things
+			huntability ++
+		if(isanimal(L) && isanimal(holder))
+			var/mob/living/simple_mob/S = L
+			var/mob/living/simple_mob/Sh = holder
+			if(Sh.melee_damage_upper > S.melee_damage_upper)	//It's safer to hunt weaker things
+				huntability ++
+		huntability *= 500
+
+		if(wrong_food)
+			huntability *= 0.5	//This is the wrong food, or another hunter, so it's less appealing!
+		else if(L.food_pref == holder.food_pref)
+			if(L.food_pref != OMNIVORE)
+				huntability *= 0.5
+		else
+			huntability += 100	//It's not the wrong food type so it's gotta be preferable to anything else you got going
+
+//		to_world("[holder] considering [L]: N - [holder.nutrition]/[huntability] - H")
+		if(holder.nutrition <= huntability)	//Is its huntability score higher than our nutrition?
+			if(huntability > max_huntability)	//It is! But is it the most huntable thing we have seen?
+				max_huntability = huntability	//Nice, let's update the number
+				final_list = list()				//We'll make a new list too, so we only have the most huntable things!!!
+				final_list |= L					//Add it to the list!
+			else if(huntability == max_huntability)	//Is it at least as huntable as what we are already thinking about?
+				final_list |= L	//Then add it to the list!
+
+	if(obj_list.len)
+		return obj_list
+
+	return final_list	//RS ADD END
+
+/datum/ai_holder/proc/hunter_check(atom/movable/ourtarget)	//RS ADD START
+	if(!holder.hunter)
+		return FALSE
+	if(isliving(ourtarget))
+		var/mob/living/L = ourtarget
+		if(L.player_login_key_log)	//Don't eat things that have ever been players
+			if(!isanimal(holder)) return FALSE
+			var/mob/living/simple_mob/S = holder
+			if(!S.will_eat(L))
+				return FALSE
+		if(holder.food_pref_obligate)
+			if(!food_class_check(L))
+				return FALSE
+	return TRUE	//RS ADD END
+
+/datum/ai_holder/proc/food_class_check(var/thing)
+
+	if(isliving(thing))
+		var/mob/living/L = thing
+		if(L.food_class == FP_FOOD)
+			return TRUE
+		if(holder.food_pref == ROBOVORE)
+			if(!L.isSynthetic())
+				return FALSE
+		switch(holder.food_pref)
+			if(CARNIVORE)
+				if(L.food_class != FP_MEAT)
+					return FALSE
+			if(HERBIVORE)
+				if(L.food_class != FP_PLANT)
+					return FALSE
+	if(isobj(thing))
+		if(!holder.can_eat(thing))
+			return FALSE
+	return TRUE
+
+/datum/ai_holder/proc/blood_hunt()
+	var/obj/effect/decal/cleanable/blood/ourblood
+	for(var/obj/effect/decal/cleanable/blood/B in view(world.view,holder))
+		if(!istype(B,/obj/effect/decal/cleanable/blood))
+			continue
+		if(B.blood_time <= blood_time)
+			continue
+		if(B.blood_source == holder.type)
+			continue
+		if(!ourblood)
+			ourblood = B
+		if(B.blood_time > ourblood.blood_time)
+			ourblood = B
+	if(ourblood)
+		blood_time = ourblood.blood_time
+		give_destination(ourblood,1)
+		return
