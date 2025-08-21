@@ -163,7 +163,7 @@
 /mob/living/simple_mob/vore/jackolanturn/proc/lets_desc()
 	var/ourdesc = "A fat, freshly picked pumpkin. This one has a "
 	switch(carve_state)
-		if(null || "")
+		if(null , "")
 			return
 		if("agony")
 			ourdesc = ourdesc + "face carved into it! It appears to be in horrible agony!"

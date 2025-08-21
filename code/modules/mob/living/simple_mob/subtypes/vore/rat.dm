@@ -65,6 +65,9 @@
 	vore_pounce_chance = 45
 	vore_icons = SA_ICON_LIVING | SA_ICON_REST
 
+	hunter = TRUE				//RS ADD
+	food_pref = OMNIVORE		//RS ADD
+
 	var/life_since_foodscan = 0
 
 	say_list_type = /datum/say_list/rat

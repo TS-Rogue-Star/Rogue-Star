@@ -276,6 +276,9 @@
 		. += injury_level
 	// VOREStation Edit Stop
 
+	if(health < maxHealth && health > 0)	//RS ADD
+		. *= 2 - (health / maxHealth)	//RS ADD - Slow down when injured
+
 	. += config.animal_delay
 
 	. += ..()

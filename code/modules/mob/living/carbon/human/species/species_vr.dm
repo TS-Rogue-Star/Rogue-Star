@@ -47,6 +47,8 @@
 	var/list/food_preference = list()
 	var/food_preference_bonus = 0
 
+	var/food_class = FP_MEAT	//RS ADD
+
 /datum/species/proc/give_numbing_bite() //Holy SHIT this is hacky, but it works. Updating a mob's attacks mid game is insane.
 	unarmed_attacks = list()
 	unarmed_types += /datum/unarmed_attack/bite/sharp/numbing

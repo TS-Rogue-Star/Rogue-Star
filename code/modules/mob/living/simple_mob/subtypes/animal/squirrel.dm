@@ -48,6 +48,10 @@
 	mob_size = MOB_SMALL
 	softfall = TRUE
 
+	hunter = TRUE				//RS ADD
+	food_pref = HERBIVORE		//RS ADD
+	food_pref_obligate = TRUE	//RS ADD
+
 	var/static/list/overlays_cache = list()
 	var/do_seasons = TRUE
 	var/picked_color = FALSE

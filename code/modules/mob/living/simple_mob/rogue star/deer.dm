@@ -44,6 +44,11 @@
 
 	has_langs = list(LANGUAGE_ANIMAL)
 	say_list_type = /datum/say_list/deer
+
+	hunter = TRUE
+	food_pref = HERBIVORE
+	food_pref_obligate = TRUE
+
 	var/run_over = FALSE	//teehee
 
 /////////////////////////////////////// Vore stuff///////////////////////////////////////////

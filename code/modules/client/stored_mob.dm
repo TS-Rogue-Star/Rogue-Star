@@ -150,6 +150,7 @@
 	ourmob.real_name = whatname
 	ourmob.load_owner = user.ckey
 	ourmob.faction = user.faction
+	ourmob.hunter = FALSE
 	var/list/to_save = ourmob.mob_bank_save(user)
 	ourmob.verbs += /mob/living/simple_mob/proc/toggle_ghostjoin
 	ourmob.verbs += /mob/living/simple_mob/proc/toggle_follow
@@ -209,6 +210,7 @@
 	var/mob/living/simple_mob/M = new ourtype(get_turf(src))
 	M.mob_bank_load(user, load)
 	M.faction = user.faction
+	M.hunter = FALSE
 	M.desc += " It has a PET tag: \"[M.real_name]\", if lost, return to [user.real_name]."
 	M.revivedby = user.real_name
 	to_chat(user,"<span class = 'notice'>\The [M] appears from \the [src]!</span>")
@@ -400,6 +402,7 @@
 		var/ourtype = ourmob["type"]
 		var/mob/living/simple_mob/M = new ourtype(get_turf(src))
 		M.mob_bank_load(load = ourmob)
+		M.hunter = FALSE
 		M.desc += " It has a PET tag: \"[M.real_name]\", it is registered as a station pet!"
 		M.faction = "neutral"
 		M.ai_holder.hostile = FALSE

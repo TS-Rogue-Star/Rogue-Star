@@ -574,6 +574,26 @@ var/list/intents = list(I_HELP,I_DISARM,I_GRAB,I_HURT)
 /mob/proc/can_eat()
 	return 1
 
+/mob/living/can_eat(var/food)	//RS ADD START
+	if(hunter)
+		if(isobj(food))
+			switch(food_pref)
+				if(OMNIVORE)
+					if(istype(food,/obj/item/weapon/reagent_containers/food/snacks))
+						return TRUE
+					if(istype(food,/obj/effect/decal/cleanable/blood))
+						return TRUE
+				if(CARNIVORE)
+					if(istype(food,/obj/item/weapon/reagent_containers/food/snacks/meat))
+						return TRUE
+					if(istype(food,/obj/effect/decal/cleanable/blood))
+						return TRUE
+				if(HERBIVORE)
+					if(istype(food,/obj/item/weapon/reagent_containers/food/snacks/grown))
+						return TRUE
+			return FALSE
+	return TRUE		//RS ADD END
+
 /mob/proc/can_force_feed()
 	return 1
 
