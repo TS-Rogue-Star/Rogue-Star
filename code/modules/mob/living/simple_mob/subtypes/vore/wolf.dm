@@ -119,6 +119,7 @@
 	icon_living = "diredog"
 	icon_state = "diredog"
 	icon_rest = "diredog_rest"
+	faction = "neutral"	//RS ADD
 
 /mob/living/simple_mob/vore/wolf/direwolf/dog/sec
 	name = "large guard dog"
@@ -135,6 +136,7 @@
 	icon_living = "direwolfs"
 	icon_state = "direwolfs"
 	icon_rest = "direwolfs_rest"
+	faction = "neutral"	//RS ADD
 
 /mob/living/simple_mob/vore/wolf/direwolf/rykka
 	name = "Rykka"
