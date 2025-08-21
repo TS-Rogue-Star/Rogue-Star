@@ -1,6 +1,6 @@
-**File:** `icons/inventory/face/mob.dmi`
-**Icon-States:** `hosmask`,`wardenmask`,`officermask`,
-**Creator:** Unknown, icon states modified from icons/inventory/face/mob_unathi.dmi by Sad Starfish
+**File:** `icons/inventory/face/mob.dmi`<br>
+**Icon-States:** `hosmask`,`wardenmask`,`officermask`<br>
+**Creator:** Unknown, icon states modified from icons/inventory/face/mob_unathi.dmi by Sad Starfish<br>
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
 **File:** `maps/tether/submaps/om_ships/aro2.dmi`<br>
