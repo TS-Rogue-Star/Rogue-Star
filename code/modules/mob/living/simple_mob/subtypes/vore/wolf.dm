@@ -33,6 +33,10 @@
 	ai_holder_type = /datum/ai_holder/simple_mob/melee/evasive
 	catalogue_data = list(/datum/category_item/catalogue/fauna/wolf)
 
+	faction = "dog"	//RS ADD
+	hunter = TRUE	//RS ADD
+	food_pref = CARNIVORE	//RS ADD
+
 // Activate Noms!
 /mob/living/simple_mob/vore/wolf
 	vore_active = 1
@@ -115,6 +119,7 @@
 	icon_living = "diredog"
 	icon_state = "diredog"
 	icon_rest = "diredog_rest"
+	faction = "neutral"	//RS ADD
 
 /mob/living/simple_mob/vore/wolf/direwolf/dog/sec
 	name = "large guard dog"
@@ -131,6 +136,7 @@
 	icon_living = "direwolfs"
 	icon_state = "direwolfs"
 	icon_rest = "direwolfs_rest"
+	faction = "neutral"	//RS ADD
 
 /mob/living/simple_mob/vore/wolf/direwolf/rykka
 	name = "Rykka"

@@ -84,6 +84,14 @@ var/list/_client_preferences_by_type
 	else
 		preference_mob.update_music()
 
+//RS ADD START
+/datum/client_preference/food_eating_noises
+	description = "Food Eating Noises"
+	key = "FOOD EATING_NOISES"
+	enabled_description = "Enabled"
+	disabled_description = "Disabled"
+//RS ADD END
+
 /datum/client_preference/eating_noises
 	description = "Eating Noises"
 	key = "EATING_NOISES"

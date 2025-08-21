@@ -46,6 +46,9 @@
 	vore_icons = SA_ICON_LIVING
 	belly_size_multiplier = 2.5
 
+	hunter = TRUE				//RS ADD
+	food_pref = OMNIVORE		//RS ADD
+
 /datum/say_list/seagull
 	speak = list("Ha-Ha-Ha!","Huoh-Huoh-Huoh!","Keow?")
 	emote_hear = list("screams!","chirps.")

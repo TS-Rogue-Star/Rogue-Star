@@ -943,6 +943,7 @@
 		'sound/ambience/star_dog/woof2.ogg'
 		)
 	sound_env = SOUND_ENVIRONMENT_DIZZY
+	hunter_override = FALSE	//RS ADD
 
 	valid_mobs = list(	//Dog map spawns the dogs. It's not hard to understand!
 		list(

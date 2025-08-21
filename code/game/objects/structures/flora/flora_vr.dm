@@ -238,7 +238,7 @@
 /obj/structure/flora/pumpkin/carved/proc/lets_desc()
 	var/ourdesc = "A fat, freshly picked pumpkin. This one has a "
 	switch(carve_state)
-		if(null || "")
+		if(null , "")	//RS EDIT
 			return
 		if("agony")
 			ourdesc = ourdesc + "face carved into it! It appears to be in horrible agony!"
