@@ -1,3 +1,8 @@
+**File:** `icons/inventory/face/mob.dmi`<br>
+**Icon-States:** `hosmask`,`wardenmask`,`officermask`<br>
+**Creator:** Unknown, icon states modified from icons/inventory/face/mob_unathi.dmi by Sad Starfish<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
 **File:** `maps/tether/submaps/om_ships/aro2.dmi`<br>
 **Creator:** Nia Tahl, deriv by Aronai.<br>
 **License:** [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)<br>
