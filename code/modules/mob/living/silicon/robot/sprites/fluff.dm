@@ -206,7 +206,7 @@
 /datum/robot_sprite/dogborg/service/fluff/aurum
 	name = CUSTOM_BORGSPRITE("Aurum The Synth")
 
-	sprite_icon = 'icons/mob/robot/fluff_wide.dmi'
+	sprite_icon = 'icons/mob/robot/fluff_wide_rs.dmi'
 	sprite_icon_state = "googlyfox-aurum-serv"
 
 	has_eye_light_sprites = TRUE
