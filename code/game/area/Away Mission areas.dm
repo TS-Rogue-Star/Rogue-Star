@@ -12,6 +12,7 @@
 	var/semirandom_group_max = 10
 	var/mob_intent = "default"	//"default" uses default settings, use "hostile", "retaliate", or "passive" respectively
 	var/ghostjoin = FALSE		//If true, enables ghost join on semirandom spawned mobs
+	var/hunter_override = FALSE	//RS ADD - If true, any mobs spawned by the area have their hunter var disabled
 
 /area/proc/EvalValidSpawnTurfs()
 	//Adds turfs to the valid)turfs list, used for spawning.
@@ -70,6 +71,10 @@
 	if(ghostjoin)
 		M.ghostjoin = TRUE
 		M.ghostjoin_icon()
+	if(M.z in using_map.station_levels)	//RS ADD
+		M.hunter = FALSE	//RS ADD
+	if(hunter_override)		//RS ADD
+		M.hunter = FALSE	//RS ADD
 	if(!AI)
 		return
 	switch(mob_intent)

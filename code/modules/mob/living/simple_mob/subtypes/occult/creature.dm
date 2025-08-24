@@ -30,6 +30,9 @@
 
 	ai_holder_type = /datum/ai_holder/simple_mob/melee
 
+	hunter = TRUE				//RS ADD
+	food_pref = OMNIVORE		//RS ADD
+
 // Strong Variant
 /mob/living/simple_mob/creature/strong
 	maxHealth = 160

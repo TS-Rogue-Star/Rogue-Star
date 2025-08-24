@@ -29,5 +29,8 @@
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/tomatomeat
 	meat_amount = 4
 
+	hunter = TRUE				//RS ADD
+	food_pref = OMNIVORE		//RS ADD
+
 /decl/mob_organ_names/tomato
 	hit_zones = list("flesh", "leaf", "mouth")

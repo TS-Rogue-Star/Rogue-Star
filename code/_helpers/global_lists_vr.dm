@@ -70,6 +70,7 @@ var/global/list/classic_vore_sounds = list(
 		"Rustle 4 (cloth)"	= 'sound/effects/rustle4.ogg',
 		"Rustle 5 (cloth)"	= 'sound/effects/rustle5.ogg',
 		"Zipper" = 'sound/items/zip.ogg',
+		"Munch" = 'sound/items/eatfood.ogg',	//RS ADD
 		"None" = null)
 
 var/global/list/classic_release_sounds = list(
@@ -103,6 +104,7 @@ var/global/list/fancy_vore_sounds = list(
 		"Rustle 4 (cloth)"	= 'sound/effects/rustle4.ogg',
 		"Rustle 5 (cloth)"	= 'sound/effects/rustle5.ogg',
 		"Zipper" = 'sound/items/zip.ogg',
+		"Munch" = 'sound/items/eatfood.ogg',	//RS ADD
 		"None" = null
 		)
 

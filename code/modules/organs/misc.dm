@@ -22,7 +22,7 @@
 			return
 
 		var/datum/reagent/blood/B = locate(/datum/reagent/blood) in H.vessel.reagent_list
-		blood_splatter(H,B,1)
+		blood_splatter(H,B,1,H)	//RS EDIT
 		var/obj/effect/decal/cleanable/blood/splatter/goo = locate() in get_turf(owner)
 		if(goo)
 			goo.name = "husk ichor"

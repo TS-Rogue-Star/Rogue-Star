@@ -150,13 +150,27 @@
 
 		// We're not attempting a pounce, if they're down or we can eat standing, do it as long as they're edible. Otherwise, hit normally.
 		//if(will_eat(L) && (!L.canmove || vore_standing_too))
+		if(hunter && !L.player_login_key_log)	//RS EDIT START
+			if(L.stat == DEAD)
+				if(food_pref_obligate)	//RS ADD START
+					if(food_pref == CARNIVORE)
+						if(L.food_class != FP_MEAT)
+							ai_holder?.set_stance(STANCE_IDLE)
+							return
+					if(food_pref == HERBIVORE)
+						if(L.food_class != FP_PLANT)
+							ai_holder?.set_stance(STANCE_IDLE)
+							return		//RS ADD END
+				feed_from_target(L)
+				return
+			if(mob_size <= L.mob_size + 10)
+				return ..()	//RS EDIT END - Do not vore things that you aren't quite a bit bigger than if you are a hunter dealing with an NPC
 		if(will_eat(L) && (L.lying || vore_standing_too)) //RS Port Chomp PR 7900 || CHOMPEdit
 			return EatTarget(L)
 		else
 			return ..()
 	else
 		return ..()
-
 
 /mob/living/simple_mob/proc/CanPounceTarget(var/mob/living/M) //returns either FALSE or a %chance of success
 	if(!M.canmove || issilicon(M) || world.time < vore_pounce_cooldown) //eliminate situations where pouncing CANNOT happen
@@ -184,6 +198,9 @@
 		playsound(src, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 
 	//if(will_eat(M) && (!M.canmove || vore_standing_too)) //if they're edible then eat them too
+	if(hunter && !M.player_login_key_log)	//RS ADD - Don't vore things we're hunting!
+		return	//RS ADD
+
 	if(will_eat(M) && (M.lying || vore_standing_too)) //if they're edible then eat them too //RS Port Chomp PR 7900 || CHOMPEdit Crawling compat
 		return EatTarget(M)
 	else

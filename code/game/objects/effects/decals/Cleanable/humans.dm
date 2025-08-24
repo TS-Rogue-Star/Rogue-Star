@@ -23,6 +23,9 @@ var/global/list/image/splatter_cache=list()
 	var/amount = 5
 	generic_filth = TRUE
 	persistent = FALSE
+	var/blood_time = 0		//RS ADD - Records the world time when the blood was made
+	var/blood_source		//RS ADD - The type that the blood comes from
+	var/blood_food_class	//RS ADD - The food class of what dropped this blood
 
 /obj/effect/decal/cleanable/blood/reveal_blood()
 	if(!fluorescent)
@@ -37,7 +40,7 @@ var/global/list/image/splatter_cache=list()
 		amount = 0
 	..(ignore=1)
 
-/obj/effect/decal/cleanable/blood/New()
+/obj/effect/decal/cleanable/blood/New(loc,source)	//RS EDIT
 	..()
 	update_icon()
 	if(istype(src, /obj/effect/decal/cleanable/blood/gibs))
@@ -50,6 +53,7 @@ var/global/list/image/splatter_cache=list()
 						blood_DNA |= B.blood_DNA.Copy()
 					qdel(B)
 	addtimer(CALLBACK(src, PROC_REF(dry)), DRYING_TIME * (amount+1))
+	blood_time = world.time	//RS ADD
 
 /obj/effect/decal/cleanable/blood/update_icon()
 	if(basecolor == "rainbow") basecolor = get_random_colour(1)
@@ -129,6 +133,12 @@ var/global/list/image/splatter_cache=list()
 		user.hand_blood_color = basecolor
 		user.update_inv_gloves(1)
 		user.verbs += /mob/living/carbon/human/proc/bloody_doodle
+
+/obj/effect/decal/cleanable/blood/attack_generic(mob/user)	//RS ADD START
+	. = ..()
+	if(isanimal(user))
+		visible_message("\The [user] laps up \the [src]...",runemessage = "schlorp")
+		qdel(src)	//RS ADD END
 
 /obj/effect/decal/cleanable/blood/splatter
         random_icon_states = list("mgibbl1", "mgibbl2", "mgibbl3", "mgibbl4", "mgibbl5")
