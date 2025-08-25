@@ -83,7 +83,7 @@
 						var/mob/living/carbon/human/H = C
 						flash_time *= H.species.flash_mod
 
-						if(flash_time != 0) // Modified slightly from handheld flashes.
+						if(flash_time != 0)
 							H.Confuse(flash_time + 2)
 							H.Blind(flash_time)
 							H.eye_blurry = max(H.eye_blurry, flash_time + 5)
@@ -109,7 +109,7 @@
 		flash()
 	..(severity)
 
-obj/machinery/flasher/portable/process() // RS ADD
+obj/machinery/flasher/process() // RS ADD
 	if(disable || !anchored || (last_flash && world.time < last_flash + 150))
 		return
 	for (var/mob/living/O in viewers(src,null))
