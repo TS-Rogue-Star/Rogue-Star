@@ -1,0 +1,641 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aG" = (
+/obj/item/weapon/weldingtool/experimental,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"bg" = (
+/obj/structure/table/rack/shelf/steel,
+/obj/random/forgotten_tram,
+/obj/random/forgotten_tram,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"eh" = (
+/obj/structure/bed/chair/bay/shuttle{
+	dir = 1
+	},
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"eu" = (
+/obj/structure/bed/chair/bay/shuttle{
+	dir = 1
+	},
+/obj/machinery/light,
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"fp" = (
+/obj/structure/girder,
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"fE" = (
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"hF" = (
+/obj/item/weapon/handcuffs,
+/turf/simulated/shuttle/floor/red/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"jj" = (
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"jv" = (
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/airlock/hatch,
+/turf/simulated/floor/tiled/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"jy" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass_security{
+	req_one_access = null
+	},
+/turf/simulated/floor/tiled/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"kC" = (
+/obj/item/bodybag/cryobag,
+/obj/item/weapon/storage/firstaid/adv,
+/obj/structure/table/steel,
+/obj/item/device/healthanalyzer,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"ng" = (
+/turf/simulated/shuttle/wall/hard_corner,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"nW" = (
+/turf/simulated/shuttle/floor/red/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"ph" = (
+/turf/simulated/shuttle/wall,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"pv" = (
+/obj/structure/table/steel,
+/obj/random/awayloot/looseloot,
+/obj/item/weapon/grenade/chem_grenade/metalfoam,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"qK" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/shuttle/floor/red/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"rC" = (
+/obj/machinery/blackbox_recorder,
+/obj/item/device/gps/internal/poi{
+	gps_tag = "Unidentified Signal"
+	},
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"sk" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/item/weapon/material/shard{
+	icon_state = "small"
+	},
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"sx" = (
+/turf/template_noop,
+/area/template_noop)
+"tT" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "burst_l"
+	},
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"vg" = (
+/obj/item/weapon/handcuffs,
+/obj/structure/table/steel,
+/obj/item/weapon/handcuffs,
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"vE" = (
+/obj/item/weapon/material/shard{
+	icon_state = "small"
+	},
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"vW" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"wh" = (
+/obj/structure/shuttle/window,
+/obj/structure/grille,
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"zH" = (
+/obj/structure/bed/chair/bay/shuttle{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"Ai" = (
+/obj/machinery/light,
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"AS" = (
+/obj/structure/table/steel,
+/obj/random/ammo,
+/obj/random/ammo,
+/obj/random/gun/random,
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"Bt" = (
+/obj/structure/frame,
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"BP" = (
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"Cn" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"CY" = (
+/obj/structure/prop/machine/bsb_on,
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"DR" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"DZ" = (
+/obj/structure/table/steel,
+/obj/item/weapon/storage/toolbox/mechanical{
+	pixel_y = 5
+	},
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"HK" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"Ie" = (
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"IL" = (
+/obj/structure/prop/machine/nt_biocan,
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"IZ" = (
+/obj/structure/salvageable/shuttle_console,
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"Ja" = (
+/obj/item/stack/rods,
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"Jj" = (
+/obj/item/weapon/material/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"Lq" = (
+/obj/structure/prop/machine/nt_biocan,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"LS" = (
+/obj/machinery/power/apc{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"Ma" = (
+/obj/structure/bed/chair/bay/shuttle{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor/red/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"MF" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/grille/broken,
+/obj/item/stack/rods,
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"MP" = (
+/obj/item/modular_computer/console{
+	dir = 4
+	},
+/obj/item/weapon/material/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"NS" = (
+/turf/simulated/mineral/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"NW" = (
+/obj/structure/frame,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"QG" = (
+/obj/structure/table/steel,
+/obj/item/weapon/storage/box/flashbangs,
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"RC" = (
+/obj/structure/prop/machine/tradebeacon/starts_active,
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"Tf" = (
+/obj/item/stack/rods,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"Tl" = (
+/obj/structure/bed/chair/bay/shuttle{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor/red/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"Vx" = (
+/obj/item/weapon/handcuffs,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/shuttle/floor/red/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"VA" = (
+/obj/structure/table/steel,
+/obj/random/awayloot/looseloot,
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/random/awayloot/looseloot,
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"VW" = (
+/obj/random/energy/sec,
+/obj/structure/table/steel,
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+"Xh" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass_external,
+/turf/simulated/floor/tiled/airless,
+/area/submap/moonbase/poi/east_crater/wreck5)
+
+(1,1,1) = {"
+sx
+sx
+jj
+jj
+jj
+jj
+jj
+jj
+jj
+jj
+NS
+NS
+NS
+sx
+sx
+"}
+(2,1,1) = {"
+sx
+jj
+jj
+jj
+jj
+jj
+jj
+jj
+jj
+jj
+NS
+NS
+NS
+NS
+sx
+"}
+(3,1,1) = {"
+jj
+jj
+jj
+jj
+vE
+jj
+jj
+Jj
+jj
+jj
+jj
+NS
+NS
+NS
+NS
+"}
+(4,1,1) = {"
+jj
+jj
+jj
+ph
+vW
+MF
+Cn
+sk
+ph
+jj
+jj
+jj
+NS
+NS
+NS
+"}
+(5,1,1) = {"
+jj
+jj
+jj
+wh
+rC
+MP
+Bt
+VW
+wh
+BP
+RC
+jj
+jj
+NS
+jj
+"}
+(6,1,1) = {"
+jj
+jj
+jj
+wh
+IZ
+zH
+zH
+Ai
+wh
+IL
+CY
+jj
+jj
+jj
+jj
+"}
+(7,1,1) = {"
+jj
+jj
+jj
+ph
+VA
+Ie
+Ie
+QG
+ng
+ph
+ph
+ng
+jj
+jj
+jj
+"}
+(8,1,1) = {"
+jj
+jj
+jj
+ph
+AS
+Ie
+Ie
+eh
+ph
+Ma
+Ma
+ng
+jj
+jj
+jj
+"}
+(9,1,1) = {"
+jj
+jj
+jj
+wh
+Ie
+Ie
+Ie
+eh
+ph
+qK
+hF
+fp
+Tf
+jj
+jj
+"}
+(10,1,1) = {"
+jj
+jj
+jj
+Xh
+Ie
+Ie
+Ie
+Ie
+jy
+nW
+nW
+Ja
+aG
+jj
+jj
+"}
+(11,1,1) = {"
+jj
+jj
+jj
+wh
+Ie
+Ie
+Ie
+eu
+ph
+Vx
+nW
+fp
+jj
+Tf
+jj
+"}
+(12,1,1) = {"
+jj
+jj
+jj
+ph
+kC
+vg
+Ie
+eh
+ph
+Tl
+Tl
+ng
+jj
+jj
+jj
+"}
+(13,1,1) = {"
+jj
+NS
+jj
+ph
+ph
+ph
+jv
+ph
+ph
+ph
+ph
+ph
+jj
+jj
+jj
+"}
+(14,1,1) = {"
+jj
+NS
+NS
+ph
+DZ
+fE
+fE
+LS
+bg
+bg
+bg
+ph
+jj
+jj
+jj
+"}
+(15,1,1) = {"
+NS
+NS
+NS
+ph
+pv
+NW
+fE
+HK
+fE
+fE
+Lq
+ph
+jj
+jj
+jj
+"}
+(16,1,1) = {"
+NS
+NS
+NS
+ng
+DR
+DR
+DR
+ng
+DR
+DR
+DR
+ng
+jj
+jj
+jj
+"}
+(17,1,1) = {"
+NS
+NS
+NS
+NS
+tT
+tT
+tT
+jj
+tT
+tT
+tT
+jj
+jj
+jj
+jj
+"}
+(18,1,1) = {"
+NS
+NS
+NS
+NS
+jj
+jj
+jj
+jj
+jj
+jj
+jj
+jj
+jj
+jj
+jj
+"}
+(19,1,1) = {"
+sx
+NS
+NS
+NS
+jj
+jj
+jj
+jj
+jj
+jj
+jj
+jj
+jj
+jj
+sx
+"}
+(20,1,1) = {"
+sx
+sx
+NS
+NS
+jj
+jj
+jj
+jj
+jj
+jj
+jj
+jj
+jj
+sx
+sx
+"}
