@@ -495,8 +495,13 @@ digi-inner-thighs
 **Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/1010<br>
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
-File: icons/mob/items/modifier_effects.dmi<br> 
+File: `icons/mob/items/modifier_effects.dmi`<br> 
 Icon-States:medigun_effect<br> 
 Creator: Commissioned by Cross_Exonar from Toriate<br> 
 Link: https://github.com/TS-Rogue-Star/Rogue-Star/pull/1010<br> 
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+Files: `sound/voice/augh1.ogg,sound/voice/augh2.ogg`<br> 
+Creator: Whatislegs<br> 
+Link: https://github.com/TS-Rogue-Star/Rogue-Star/pull/1041<br> 
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>

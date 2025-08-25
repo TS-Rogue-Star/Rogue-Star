@@ -99,6 +99,14 @@
 				character.voice_sounds_list = goon_speak_roach_sound
 			if("goon speak skelly")
 				character.voice_sounds_list = goon_speak_skelly_sound
+			//RS ADD START
+			if("yip")
+				character.voice_sounds_list = talk_yip
+			if("yap")
+				character.voice_sounds_list = talk_yap
+			if("yipyap")
+				character.voice_sounds_list = talk_yipyap
+			//RS ADD END
 	character.custom_speech_bubble = pref.custom_speech_bubble
 
 /datum/category_item/player_setup_item/vore/size/content(var/mob/user)
@@ -200,7 +208,13 @@
 			"goon speak pug",
 			"goon speak pugg",
 			"goon speak roach",
-			"goon speak skelly")
+			"goon speak skelly",
+			//RS ADD START
+			"yip",
+			"yap",
+			"yipyap"
+			//RS ADD END
+			)
 		var/choice = tgui_input_list(usr, "Which set of sounds would you like to use for your character's speech sounds?", "Voice Sounds", possible_voice_types)
 		if(!choice)
 			pref.voice_sound = "beep-boop"
@@ -246,6 +260,14 @@
 				S = sound(pick(goon_speak_roach_sound))
 			if("goon speak skelly")
 				S = sound(pick(goon_speak_skelly_sound))
+			//RS ADD START
+			if("yip")
+				S = sound(pick(talk_yip))
+			if("yap")
+				S = sound(pick(talk_yap))
+			if("yipyap")
+				S = sound(pick(talk_yipyap))
+			//RS ADD END
 		if(S)
 			S.frequency = pick(pref.voice_freq)
 			S.volume = 50
