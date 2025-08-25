@@ -1016,7 +1016,9 @@
 /obj/effect/floor_decal/industrial/warning/color{
 	dir = 6
 	},
-/obj/vehicle/train/trolley/trailer/random,
+/obj/vehicle/train/trolley/trailer{
+	paint_color = "#FFFFFF"
+	},
 /turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
@@ -2075,7 +2077,7 @@
 	dir = 9
 	},
 /obj/structure/table/steel,
-/obj/random/powercell,
+/obj/item/weapon/book/manual/rover_guide,
 /turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
@@ -2821,7 +2823,9 @@
 /obj/effect/floor_decal/industrial/warning/color{
 	dir = 8
 	},
-/obj/vehicle/train/engine/quadbike/random,
+/obj/vehicle/train/engine/quadbike/built{
+	paint_color = "#FFFFFF"
+	},
 /turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
@@ -2977,7 +2981,9 @@
 /obj/effect/floor_decal/industrial/warning/color{
 	dir = 10
 	},
-/obj/vehicle/train/trolley/trailer/random,
+/obj/vehicle/train/trolley/trailer{
+	paint_color = "#FFFFFF"
+	},
 /turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
@@ -3223,7 +3229,9 @@
 /obj/effect/floor_decal/industrial/warning/color{
 	dir = 4
 	},
-/obj/vehicle/train/engine/quadbike/random,
+/obj/vehicle/train/engine/quadbike/built{
+	paint_color = "#FFFFFF"
+	},
 /turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
@@ -3716,6 +3724,7 @@
 	dir = 5
 	},
 /obj/structure/table/steel,
+/obj/random/powercell,
 /obj/random/powercell,
 /obj/random/powercell,
 /turf/simulated/floor/airless/moonbaseplating/outdoors{

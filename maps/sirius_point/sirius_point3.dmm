@@ -8003,6 +8003,10 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/medical/medbay_primary_storage)
+"tP" = (
+/obj/structure/prop/rock/crystal,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/moonbase/surface/leveltwo/east)
 "tQ" = (
 /obj/machinery/door/firedoor/glass,
 /obj/effect/map_helper/airlock/door/ext_door,
@@ -10191,7 +10195,7 @@
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "zI" = (
-/obj/structure/bed/chair/sofa/corner/beige{
+/obj/structure/bed/chair/sofa/corner/black{
 	dir = 1
 	},
 /turf/simulated/floor/plating,
@@ -11048,6 +11052,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level2/west)
+"BZ" = (
+/obj/structure/closet/secure_closet/personal,
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/level1/solars)
 "Ca" = (
 /obj/structure/bed/chair/sofa/corp/right,
 /turf/simulated/floor/carpet/green,
@@ -11112,6 +11120,10 @@
 	},
 /turf/simulated/floor/carpet/blue2,
 /area/lawoffice/moonbase/iaaone)
+"Cl" = (
+/obj/structure/prop/rock/crystal_dust,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/moonbase/surface/leveltwo/east)
 "Cm" = (
 /obj/structure/bed/chair,
 /turf/simulated/floor/tiled/dark,
@@ -13133,6 +13145,10 @@
 	},
 /turf/simulated/floor/tiled/eris/techmaint_cargo,
 /area/rnd/xenobiology)
+"Hz" = (
+/obj/structure/table/standard,
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/level1/solars)
 "HB" = (
 /obj/machinery/access_button{
 	command = "cycle_interior";
@@ -14423,7 +14439,7 @@
 /turf/simulated/floor/tiled/white,
 /area/security/detectives_office)
 "KU" = (
-/obj/structure/bed/chair/sofa/beige,
+/obj/structure/bed/chair/sofa/black,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/solars)
 "KW" = (
@@ -16174,6 +16190,10 @@
 	},
 /turf/simulated/floor/carpet/tealcarpet,
 /area/medical/patient_a)
+"Pa" = (
+/obj/structure/flora/pottedplant/subterranean,
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/level1/solars)
 "Pb" = (
 /obj/machinery/firealarm{
 	dir = 1
@@ -16752,7 +16772,7 @@
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "Qx" = (
-/obj/structure/bed/chair/sofa/left/beige,
+/obj/structure/bed/chair/sofa/left/black,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/solars)
 "Qy" = (
@@ -19071,11 +19091,11 @@
 /turf/simulated/floor/tiled,
 /area/rnd/research)
 "Wq" = (
-/obj/structure/bed/chair/sofa/right/beige{
-	dir = 4
-	},
 /obj/machinery/light/small{
 	dir = 8
+	},
+/obj/structure/bed/chair/sofa/black{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/solars)
@@ -20212,6 +20232,12 @@
 	},
 /turf/simulated/floor/tiled/eris/dark/danger,
 /area/hallway/arrival/moonbase/main)
+"Zs" = (
+/obj/structure/bed/chair/sofa/right/black{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/level1/solars)
 "Zu" = (
 /obj/machinery/light{
 	dir = 4
@@ -24565,7 +24591,7 @@ bm
 Xg
 zI
 Wq
-MO
+Zs
 Xg
 bm
 bm
@@ -24989,7 +25015,7 @@ bm
 bm
 bm
 Xg
-MO
+Pa
 MO
 hR
 Xg
@@ -25131,9 +25157,9 @@ bm
 bm
 bm
 Xg
-uW
+dc
 MO
-MO
+Hz
 Xg
 bm
 bm
@@ -25273,9 +25299,9 @@ bm
 bm
 bm
 Xg
-dc
-ZZ
-kb
+uW
+MO
+MO
 Xg
 bm
 bm
@@ -25414,11 +25440,11 @@ bm
 bm
 bm
 bm
-pA
-zd
-zd
-zd
-pA
+Xg
+kb
+ZZ
+BZ
+Xg
 bm
 bm
 bm
@@ -25556,11 +25582,11 @@ bm
 bm
 bm
 bm
-bm
-bm
-bm
-bm
-bm
+pA
+zd
+zd
+zd
+pA
 bm
 bm
 bm
@@ -35557,7 +35583,7 @@ XC
 XC
 XC
 XC
-XC
+tP
 XC
 XC
 XC
@@ -36117,7 +36143,7 @@ Nz
 Ql
 RM
 Zp
-XC
+Cl
 xq
 Dw
 Dw
@@ -37963,7 +37989,7 @@ BH
 RJ
 GC
 Ew
-XC
+tP
 xq
 Dw
 Dw

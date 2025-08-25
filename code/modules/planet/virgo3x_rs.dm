@@ -129,8 +129,8 @@ var/datum/planet/virgo3x/planet_virgo3x = null
 /datum/weather/virgo3x/clear
 	name = "clear"
 	transition_chances = list(
-		WEATHER_CLEAR = 5,
-		WEATHER_ANOMALY = 1
+		WEATHER_CLEAR = 25,
+		WEATHER_ANOMALY = 5
 		)
 	transition_messages = list(
 		"The stars are clearly visible.",
