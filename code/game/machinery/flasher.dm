@@ -109,7 +109,7 @@
 		flash()
 	..(severity)
 
-/obj/machinery/flasher/process() // RS ADD
+/obj/machinery/flasher/portable/process() // RS ADD
 	if(disable || !anchored || (last_flash && world.time < last_flash + 150))
 		return
 	for (var/mob/living/O in viewers(src,null))
