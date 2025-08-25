@@ -67,7 +67,7 @@
 		M.faction = mob_faction
 
 	if(mob_disable_hunting)	//RS ADD
-		M.hunting = FALSE	//RS ADD
+		M.hunter = FALSE	//RS ADD
 
 
 /obj/random/mob/sif
