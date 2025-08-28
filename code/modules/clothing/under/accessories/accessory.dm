@@ -453,8 +453,6 @@
 /obj/item/clothing/accessory/bracelet/material/glass/New(var/newloc)
 	..(newloc, "glass")
 
-	..()
-
 /obj/item/clothing/accessory/halfcape
 	name = "half cape"
 	desc = "A tasteful half-cape, suitible for European nobles and retro anime protagonists."
