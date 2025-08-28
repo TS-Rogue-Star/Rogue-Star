@@ -38,6 +38,8 @@
 		give_up_movement()
 		set_stance(stance == STANCE_REPOSITION ? STANCE_APPROACH : STANCE_IDLE)
 		ai_log("walk_to_destination() : Destination reached. Exiting.", AI_LOG_INFO)
+		if(holder.hunter)	//RS ADD
+			blood_hunt()	//RS ADD
 		return
 
 	ai_log("walk_to_destination() : Walking.", AI_LOG_TRACE)
