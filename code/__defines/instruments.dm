@@ -22,3 +22,6 @@
 // /datum/instrument instrument_flags
 #define INSTRUMENT_LEGACY (1<<0) //Legacy instrument. Implies INSTRUMENT_DO_NOT_AUTOSAMPLE
 #define INSTRUMENT_DO_NOT_AUTOSAMPLE (1<<1) //Do not automatically sample
+
+//RS Add: Max tile distance to include instruments in a band sync (Lira, August 2025)
+#define BAND_SYNC_RANGE 7

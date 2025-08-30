@@ -1,6 +1,11 @@
 /**
  * Returns the HTML for the status UI for this song datum.
  */
+
+////////////////////////////////////////////////////////////////////////////////////
+//Updated by Lira for Rogue Star August 2025 to support forming synchronized bands//
+////////////////////////////////////////////////////////////////////////////////////
+
 /datum/song/proc/instrument_status_ui()
 	. = list()
 	. += "<div class='statusDisplay'>"
@@ -28,6 +33,41 @@
 	. += "<a href='?src=[REF(src)];setvolume=1'>Volume</a>: [volume]<br>"
 	. += "<a href='?src=[REF(src)];setdropoffvolume=1'>Volume Dropoff Threshold</a>: [sustain_dropoff_volume]<br>"
 	. += "<a href='?src=[REF(src)];togglesustainhold=1'>Sustain indefinitely last held note</a>: [full_sustain_held_note? "Enabled" : "Disabled"].<br>"
+	. += "Band Sync Delay: [band_delay_ds / 10]s (<a href='?src=[REF(src)];setsyncdelay=1'>Set</a>)<br>" //RS Add: Band sync delay toggle (Lira, August 2025)
+	. += "Band Autoplay: [band_autoplay ? "Enabled" : "Disabled"] (<a href='?src=[REF(src)];toggleautoplay=1'>Toggle</a>)<br>" //RS Add: Band autoplay toggle (Lira, August 2025)
+	if(note_filter_enabled) //RS Add: Band note range filter toggle (Lira, August 2025)
+		. += "Note Range Filter: [note_filter_min]-[note_filter_max] (<a href='?src=[REF(src)];setnotefilter=1'>Set</a> | <a href='?src=[REF(src)];clearnotefilter=1'>Clear</a> | <a href='?src=[REF(src)];notefilterpreset=1'>Presets</a>)<br>"
+	else
+		. += "Note Range Filter: Off (<a href='?src=[REF(src)];setnotefilter=1'>Set</a> | <a href='?src=[REF(src)];clearnotefilter=1'>Clear</a> | <a href='?src=[REF(src)];notefilterpreset=1'>Presets</a>)<br>"
+	//RS Add Start: Band management UI (Lira, August 2025)
+	if(band_leader == src)
+		. += "<br><b>Band (Leader)</b>: <a href='?src=[REF(src)];inviteband=1'>Invite Nearby</a> | <a href='?src=[REF(src)];dissolveband=1'>Dissolve</a><br>"
+		if(length(band_followers))
+			. += "Members:<br>"
+			var/turf/lt = get_turf(parent)
+			for(var/datum/song/S as anything in band_followers)
+				var/member_name = (S.parent && S.parent.name) ? S.parent.name : "instrument"
+				var/configured_name = (S.using_instrument && S.using_instrument.name) ? S.using_instrument.name : "unconfigured"
+				var/status
+				var/mob/holder = S.get_holder()
+				if(!holder)
+					status = "Not ready (unheld)"
+				else
+					var/turf/ft = get_turf(S.parent)
+					if(!ft || !lt || (get_dist(lt, ft) > band_range))
+						status = "Not ready (out of range)"
+					else
+						status = "Ready"
+				. += "- [S.get_holder_name()] ([member_name]: [configured_name]) - [status] <a href='?src=[REF(src)];kick=[REF(S)]'>Kick</a> | <a href='?src=[REF(src)];promote=[REF(S)]'>Make Leader</a><br>"
+		else
+			. += "No members yet.<br>"
+	else if(band_leader)
+		var/leader_name = (band_leader.parent && band_leader.parent.name) ? band_leader.parent.name : "instrument"
+		var/leader_configured = (band_leader.using_instrument && band_leader.using_instrument.name) ? band_leader.using_instrument.name : "unconfigured"
+		. += "<br><b>Band (Member)</b>: Leader is [band_leader.get_holder_name()] ([leader_name]: [leader_configured]) | <a href='?src=[REF(src)];leaveband=1'>Leave</a><br>"
+	else
+		. += "<br><b>Band</b>: <a href='?src=[REF(src)];createband=1'>Create Sync</a><br>"
+	//RS Add End
 	. += "</div>"
 
 /datum/song/proc/interact(mob/user)
@@ -160,6 +200,7 @@
 		tempo = sanitize_tempo(tempo + text2num(href_list["tempo"]))
 
 	else if(href_list["play"])
+		band_paused_manually = FALSE //RS Add: Clear manual pause when the user explicitly plays again (Lira, August 2025)
 		INVOKE_ASYNC(src, PROC_REF(start_playing), usr)
 
 	else if(href_list["newline"])
@@ -188,7 +229,8 @@
 		lines[num] = content
 
 	else if(href_list["stop"])
-		stop_playing()
+		band_paused_manually = TRUE //RS Add: Mark as manually paused and do not leave band membership (Lira, August 2025)
+		stop_playing(TRUE) //RS Edit: Pass true to keep band together (Lira, August 2025)
 
 	else if(href_list["setlinearfalloff"])
 		var/amount = tgui_input_number(usr, "Set linear sustain duration in seconds", "Linear Sustain Duration")
@@ -247,5 +289,95 @@
 
 	else if(href_list["togglesustainhold"])
 		full_sustain_held_note = !full_sustain_held_note
+
+	//RS Add Start: Define band sync hrefs (Lira, August 2025)
+
+	else if(href_list["setsyncdelay"])
+		var/seconds = tgui_input_number(usr, "Set band sync delay (seconds)", "Band Sync Delay", band_delay_ds / 10)
+		if(!isnull(seconds))
+			band_delay_ds = clamp(round(seconds * 10, world.tick_lag), 0, 5 SECONDS)
+
+	else if(href_list["toggleautoplay"])
+		band_autoplay = !band_autoplay
+
+	else if(href_list["setnotefilter"])
+		var/low = tgui_input_number(usr, "Lowest note key (0-127)", "Note Range Low", note_filter_min)
+		if(isnull(low))
+			return
+		var/high = tgui_input_number(usr, "Highest note key (0-127)", "Note Range High", note_filter_max)
+		if(isnull(high))
+			return
+		set_note_filter_bounds(low, high)
+
+	else if(href_list["clearnotefilter"])
+		clear_note_filter()
+
+	else if(href_list["notefilterpreset"])
+		var/list/presets = list(
+			"Off",
+			"Below middle C (<=59)",
+			"Above middle C (>=60)",
+			"Lows (C0-B3)",
+			"Mids (C4-B5)",
+			"Highs (C6-127)",
+			"Only C3-B3",
+			"Only C4-B4",
+			"Only C5-B5"
+		)
+		var/choice = tgui_input_list(usr, "Select preset", "Note Filter Presets", presets)
+		if(!choice)
+			return
+		switch(choice)
+			if("Off")
+				clear_note_filter()
+			if("Below middle C (<=59)")
+				set_note_filter_bounds(0, 59)
+			if("Above middle C (>=60)")
+				set_note_filter_bounds(60, 127)
+			if("Lows (C0-B3)")
+				set_note_filter_bounds(0, 47)
+			if("Mids (C4-B5)")
+				set_note_filter_bounds(48, 71)
+			if("Highs (C6-127)")
+				set_note_filter_bounds(72, 127)
+			if("Only C3-B3")
+				set_note_filter_bounds(36, 47)
+			if("Only C4-B4")
+				set_note_filter_bounds(48, 59)
+			if("Only C5-B5")
+				set_note_filter_bounds(60, 71)
+
+	else if(href_list["createband"])
+		band_create()
+
+	else if(href_list["inviteband"])
+		band_invite_nearby(usr)
+
+	else if(href_list["dissolveband"])
+		band_stop_followers()
+
+	else if(href_list["leaveband"])
+		if(band_leader)
+			band_leave()
+
+	else if(href_list["kick"])
+		var/ref = href_list["kick"]
+		var/datum/song/S = locate(ref)
+		if(istype(S))
+			S.stop_playing(TRUE)
+			S.band_leave()
+
+	else if(href_list["promote"])
+		var/refp = href_list["promote"]
+		var/datum/song/NS = locate(refp)
+		if(istype(NS))
+			var/target_holder = NS.get_holder_name()
+			var/instr_name = (NS.parent && NS.parent.name) ? NS.parent.name : "instrument"
+			var/ans = tgui_alert(usr, "Make [target_holder] ([instr_name]) the band leader?", "Transfer Band Leadership", list("Yes", "No"))
+			if(ans == "Yes")
+				band_transfer_leadership(NS)
+				updateDialog(usr)
+
+	//RS Add End
 
 	updateDialog()
