@@ -93,7 +93,7 @@
 			if(locate(/obj/structure/lattice, get_step(src, direction)))
 				dir_sum += direction
 			else
-				if(!(istype(get_step(src, direction), /turf/space)))
+				if(!(istype(get_step(src, direction), /turf/space) || istype(get_step(src, direction), /turf/simulated/open))) // RS Edit
 					dir_sum += direction
 
 		icon_state = "lattice[dir_sum]"
