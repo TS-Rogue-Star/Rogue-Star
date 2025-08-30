@@ -98,7 +98,7 @@
 
 /datum/gear/flask/New()
 	..()
-	gear_tweaks += new/datum/gear_tweak/reagents(lunchables_ethanol_reagents())
+	gear_tweaks += new/datum/gear_tweak/reagents(lunchables_drink_reagents()) //RS Edit: Allow non-alcoholic drinks (Lira, August 2025)
 
 /datum/gear/vacflask
 	display_name = "vacuum-flask"
