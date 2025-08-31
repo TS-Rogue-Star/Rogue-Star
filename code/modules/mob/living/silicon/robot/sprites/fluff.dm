@@ -203,7 +203,7 @@
 	is_whitelisted = TRUE
 	whitelist_ckey = "lunarfleet"
 
-/datum/robot_sprite/dogborg/service/fluff/aurum // RS Edit
+/datum/robot_sprite/dogborg/service/fluff/aurum // RS Addition
 	name = CUSTOM_BORGSPRITE("Aurum The Synth")
 
 	sprite_icon = 'icons/mob/robot/fluff_wide_rs.dmi'
