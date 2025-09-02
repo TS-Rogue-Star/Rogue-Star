@@ -461,3 +461,8 @@ digi-inner-thighs
 **Creator:**  Jofae<br>
 **Link:** https://freesound.org/people/Jofae/sounds/361470/<br>
 **License:** [Creative Commons 0](https://creativecommons.org/publicdomain/zero/1.0/)<br>
+<br>
+**File:** `icons/mob/robot/fluff_wide_rs.dmi`<br>
+**Icon-States:** googlyfox-aurum-serv, googlyfox-aurum-serv-eyes, googlyfox-aurum-serv-wreck, googlyfox-aurum-serv-rest, googlyfox-aurum-serv-belly-1-rest, googlyfox-aurum-serv-belly-2-rest, googlyfox-aurum-serv-sit, googlyfox-aurum-serv-belly-1-sit, googlyfox-aurum-serv-belly-2-sit, googlyfox-aurum-serv-bellyup, googlyfox-aurum-serv-belly-1-bellyup, googlyfox-aurum-serv-belly-2-bellyup, googlyfox-aurum-serv-belly-1, googlyfox-aurum-serv-sleeper-1, googlyfox-aurum-serv-belly-2, googlyfox-aurum-serv-throat-1, googlyfox-aurum-serv-lights<br>
+**Creator:** Comissioned by ChromeFoxxity<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
