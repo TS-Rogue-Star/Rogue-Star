@@ -171,7 +171,7 @@ GLOBAL_DATUM_INIT(gear_tweak_free_matrix_recolor, /datum/gear_tweak/matrix_recol
 	return "Random"
 
 /datum/gear_tweak/reagents/get_metadata(var/user, var/list/metadata)
-	. = tgui_input_list(user, "Choose an entry.", "Character Preference", valid_reagents + list("Random", "None"), metadata)
+	. = tgui_input_list(user, "Choose an entry.", "Character Preference", valid_reagents + list("Random", "Random Alcoholic", "Random Non-Alcoholic", "None"), metadata) //RS Edit: Add random alcoholic and random non-alcoholic options (Lira, September 2025)
 	if(!.)
 		return metadata
 
@@ -180,6 +180,12 @@ GLOBAL_DATUM_INIT(gear_tweak_free_matrix_recolor, /datum/gear_tweak/matrix_recol
 		return
 	if(metadata == "Random")
 		. = valid_reagents[pick(valid_reagents)]
+	else if(metadata == "Random Alcoholic") //RS Add: Random alcoholic drink (Lira, September 2025)
+		var/list/alcohols = lunchables_ethanol_reagents()
+		. = alcohols[pick(alcohols)]
+	else if(metadata == "Random Non-Alcoholic") //RS Add: Random non-alcoholic drink (Lira, September 2025)
+		var/list/softs = lunchables_drink_reagents()
+		. = softs[pick(softs)]
 	else
 		. = valid_reagents[metadata]
 	I.reagents.add_reagent(., I.reagents.get_free_space())

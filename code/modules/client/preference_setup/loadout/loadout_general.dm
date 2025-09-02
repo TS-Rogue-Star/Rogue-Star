@@ -98,7 +98,17 @@
 
 /datum/gear/flask/New()
 	..()
-	gear_tweaks += new/datum/gear_tweak/reagents(lunchables_drink_reagents()) //RS Edit: Allow non-alcoholic drinks (Lira, August 2025)
+	//RS Add: Build a combined drink list (Lira, September 2025)
+	var/list/_drinks = lunchables_drink_reagents()
+	_drinks = _drinks.Copy()
+	var/list/_booze = lunchables_ethanol_reagents()
+	for(var/k in _booze)
+		if(_drinks[k])
+			_drinks["[k] (alcoholic)"] = _booze[k]
+		else
+			_drinks[k] = _booze[k]
+	//RS Add End
+	gear_tweaks += new/datum/gear_tweak/reagents(_drinks) //RS Edit: Use consolidated drink list (Lira, September 2025)
 
 /datum/gear/vacflask
 	display_name = "vacuum-flask"
@@ -106,7 +116,17 @@
 
 /datum/gear/vacflask/New()
 	..()
-	gear_tweaks += new/datum/gear_tweak/reagents(lunchables_drink_reagents())
+	//RS Add: Build a combined drink list (Lira, September 2025)
+	var/list/_drinks = lunchables_drink_reagents()
+	_drinks = _drinks.Copy()
+	var/list/_booze = lunchables_ethanol_reagents()
+	for(var/k in _booze)
+		if(_drinks[k])
+			_drinks["[k] (alcoholic)"] = _booze[k]
+		else
+			_drinks[k] = _booze[k]
+	//RS Add End
+	gear_tweaks += new/datum/gear_tweak/reagents(_drinks) //RS Edit: Use consolidated drink list (Lira, September 2025)
 
 /datum/gear/lunchbox
 	display_name = "lunchbox"
@@ -195,4 +215,14 @@
 	coffeemugs["tall rainbow coffee mug"] = /obj/item/weapon/reagent_containers/food/drinks/glass2/coffeemug/tall/rainbow
 	coffeemugs["Talon coffee mug"] = /obj/item/weapon/reagent_containers/food/drinks/glass2/coffeemug/talon
 	gear_tweaks += new /datum/gear_tweak/path(coffeemugs)
-	gear_tweaks += new /datum/gear_tweak/reagents(lunchables_drink_reagents())
+	//RS Add: Build a combined drink list (Lira, September 2025)
+	var/list/_drinks = lunchables_drink_reagents()
+	_drinks = _drinks.Copy()
+	var/list/_booze = lunchables_ethanol_reagents()
+	for(var/k in _booze)
+		if(_drinks[k])
+			_drinks["[k] (alcoholic)"] = _booze[k]
+		else
+			_drinks[k] = _booze[k]
+	//RS Add End
+	gear_tweaks += new /datum/gear_tweak/reagents(_drinks)  //RS Edit: Use consolidated drink list (Lira, September 2025)
