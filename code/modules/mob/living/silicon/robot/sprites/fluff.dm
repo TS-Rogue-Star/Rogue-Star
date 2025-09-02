@@ -207,7 +207,47 @@
 	name = CUSTOM_BORGSPRITE("Aurum The Synth")
 
 	sprite_icon = 'icons/mob/robot/fluff_wide_rs.dmi'
-	sprite_icon_state = "googlyfox-aurum-serv"
+	sprite_icon_state = "googlyfox-aurum"
+
+	has_eye_light_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	has_rest_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit", "Bellyup")
+	has_dead_sprite = TRUE
+	has_dead_sprite_overlay = TRUE
+	has_vore_belly_resting_sprites = TRUE
+	belly_capacity_list = list("sleeper" = 1, "belly" = 2, "throat" = 1)
+	pixel_x = -16
+
+	is_whitelisted = TRUE
+	whitelist_ckey = "googlyfox"
+
+/datum/robot_sprite/dogborg/crisis/fluff/aurum // RS Addition
+	name = CUSTOM_BORGSPRITE("Aurum The Synth")
+
+	sprite_icon = 'icons/mob/robot/fluff_wide_rs.dmi'
+	sprite_icon_state = "googlyfox-aurum"
+	sprite_hud_icon_state = "medihound"
+
+	has_eye_light_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	has_rest_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit", "Bellyup")
+	has_dead_sprite = TRUE
+	has_dead_sprite_overlay = TRUE
+	has_vore_belly_resting_sprites = TRUE
+	belly_capacity_list = list("sleeper" = 1, "belly" = 2, "throat" = 1)
+	pixel_x = -16
+
+	is_whitelisted = TRUE
+	whitelist_ckey = "googlyfox"
+
+/datum/robot_sprite/dogborg/engineering/fluff/aurum // RS Addition
+	name = CUSTOM_BORGSPRITE("Aurum The Synth")
+
+	sprite_icon = 'icons/mob/robot/fluff_wide_rs.dmi'
+	sprite_icon_state = "googlyfox-aurum"
+	sprite_hud_icon_state = "pupdozer"
 
 	has_eye_light_sprites = TRUE
 	has_vore_belly_sprites = TRUE
@@ -226,8 +266,8 @@
 	name = CUSTOM_BORGSPRITE("Aurum The Synth")
 
 	sprite_icon = 'icons/mob/robot/fluff_wide_rs.dmi'
-	sprite_icon_state = "googlyfox-aurum-serv"
-	sprite_hud_icon_state = "security"
+	sprite_icon_state = "googlyfox-aurum"
+	sprite_hud_icon_state = "k9"
 
 	has_eye_light_sprites = TRUE
 	has_vore_belly_sprites = TRUE
