@@ -59,7 +59,7 @@
 	if(!nif)
 		return
 	nif.save_data["[list_pos]"] = inside_flavor
-	nif.human.etching.needs_saving = TRUE	//RS ADD
+	persist_nif_data(nif.human)	//RS ADD
 	return TRUE
 
 /datum/nifsoft/soulcatcher/proc/load_settings()

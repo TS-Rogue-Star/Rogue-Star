@@ -1165,4 +1165,15 @@
 	var_changes = list("organic_food_coeff" = 0, "electrovore" = TRUE)
 	excludes = list(/datum/trait/neutral/electrovore)
 
+/datum/trait/neutral/food_body
+	name = "Food Body"
+	desc = "Your body is made of some manner of food. This increases the liklihood of hungry creatures attempting to hunt you to eat."
+	cost = 0
+	custom_only = FALSE
+
+/datum/trait/neutral/food_body/apply(var/datum/species/S,var/mob/living/carbon/human/H)
+	..()
+	S.food_class = FP_FOOD
+	H.food_class = FP_FOOD
+
 //RS Edit End

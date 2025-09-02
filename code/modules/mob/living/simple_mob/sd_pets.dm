@@ -4,6 +4,7 @@
 	devourable = 0
 	digestable = 0
 	load_owner = "STATION"
+	hunter = FALSE	//RS ADD
 
 /datum/category_item/catalogue/fauna/catslug/tulidaan
 	name = "Alien Wildlife - Catslug - Tulidaan"
@@ -31,6 +32,7 @@
 	catalogue_data = list(/datum/category_item/catalogue/fauna/catslug/tulidaan)
 	holder_type = /obj/item/weapon/holder/catslug/tulidaan
 	load_owner = "STATION"
+	hunter = FALSE	//RS ADD
 
 /obj/item/weapon/holder/catslug/tulidaan
 	item_state = "tulidaan"
@@ -40,6 +42,7 @@
 	desc = "Don't make fun, they have a condition."
 	digestable = 0
 	load_owner = "STATION"
+	hunter = FALSE	//RS ADD
 
 /mob/living/simple_mob/animal/passive/mouse/jerboa/leggy/New()
 	..()
@@ -51,6 +54,7 @@
 	desc = "Heading out west wasn't far enough, so he's going to space!"
 	digestable = 0
 	load_owner = "STATION"
+	hunter = FALSE	//RS ADD
 
 /mob/living/simple_mob/animal/passive/mouse/brown/feivel/New()
 	..()
@@ -64,6 +68,7 @@
 	digestable = 0
 	holder_type = /obj/item/weapon/holder/cat/jones
 	load_owner = "STATION"
+	hunter = FALSE	//RS ADD
 
 /obj/item/weapon/holder/cat/jones
 	item_state = "cat2"
@@ -74,6 +79,7 @@
 	devourable = 0
 	digestable = 0
 	load_owner = "STATION"
+	hunter = FALSE	//RS ADD
 
 /mob/living/simple_mob/animal/passive/tindalos/twigs
 	name = "Twigs"
@@ -81,6 +87,7 @@
 	devourable = 0
 	digestable = 0
 	load_owner = "STATION"
+	hunter = FALSE	//RS ADD
 
 /mob/living/simple_mob/animal/passive/bird/azure_tit/iceman
 	name = "Iceman"
@@ -88,6 +95,7 @@
 	devourable = 0
 	digestable = 0
 	load_owner = "STATION"
+	hunter = FALSE	//RS ADD
 
 /mob/living/simple_mob/animal/passive/mimepet/gregory
 	name = "Gregory XXVI Esq."
@@ -95,6 +103,7 @@
 	devourable = 0
 	digestable = 0
 	load_owner = "STATION"
+	hunter = FALSE	//RS ADD
 
 /mob/living/simple_mob/vore/fennec/bridgette
 	name = "Bridgette"
@@ -102,6 +111,7 @@
 	devourable = 0
 	digestable = 0
 	load_owner = "STATION"
+	hunter = FALSE	//RS ADD
 
 /datum/category_item/catalogue/fauna/otie/cocoa
 	name = "Creature - Otie - Cocoa"
@@ -124,6 +134,7 @@
 	ai_holder_type = /datum/ai_holder/simple_mob/melee/evasive/otie/cocoa
 	catalogue_data = list(/datum/category_item/catalogue/fauna/otie/cocoa)
 	load_owner = "STATION"
+	hunter = FALSE	//RS ADD
 
 
 /datum/ai_holder/simple_mob/melee/evasive/otie/cocoa

@@ -1,6 +1,6 @@
 # This file has all the information on what versions of libraries are thrown into the code
 # For dreamchecker
-export SPACEMAN_DMM_VERSION=suite-1.7
+export SPACEMAN_DMM_VERSION=suite-1.10 #RS Edit: Updated from version 1.7 to 1.10 (Lira, August 2025)
 # For NanoUI + TGUI
 export NODE_VERSION=16
 # Byond Major

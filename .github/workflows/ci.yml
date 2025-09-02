@@ -44,7 +44,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/SpacemanDMM
-          key: ${{ runner.os }}-dreamchecker-${{ hashFiles('dependencies.sh')}}
+          key: ${{ runner.os }}-dreamchecker-${{ hashFiles('_build_dependencies.sh')}} #RS Edit: Fix dependency file (Lira, August 2025)
           restore-keys: ${{ runner.os }}-dreamchecker
 
       - name: Install Dependencies

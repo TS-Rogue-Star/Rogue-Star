@@ -422,6 +422,7 @@ var/list/channel_to_radio_key = new
 //RS ADD START
 /mob/living/proc/say_sound(whispering,our_ending,var/datum/language/our_language)
 	var/list/say_sounds
+	var/cut = 1
 	if(say_sound_lang_override(our_language,whispering))
 		return
 
@@ -429,6 +430,9 @@ var/list/channel_to_radio_key = new
 		say_sounds = voice_sounds_list
 	else if(voice_sounds_list== goon_speak_bottalk_sound)
 		say_sounds = voice_sounds_list
+	else if(voice_sounds_list == talk_yip ||voice_sounds_list == talk_yap || voice_sounds_list == talk_yipyap)
+		say_sounds = voice_sounds_list
+		cut = 0.3
 	else if(our_ending == "?")
 		say_sounds = list(voice_sounds_list[2])
 	else if(our_ending == "!")
@@ -436,14 +440,13 @@ var/list/channel_to_radio_key = new
 	else
 		say_sounds = list(voice_sounds_list[1])
 
-	post_say_sound(say_sounds,1,whispering)
+	post_say_sound(say_sounds,1,whispering,cut)
 
 
-/mob/living/proc/say_sound_lang_override(var/datum/language/our_language,whispering)
+/mob/living/proc/say_sound_lang_override(var/datum/language/our_language,whispering,base_volume = 1)
 	if(!our_language)
 		return FALSE
 	var/list/say_sounds
-	var/ourvolume = 1
 	switch(our_language.name)
 		if(LANGUAGE_TEPPI)
 			if(size_multiplier >= 1.5)
@@ -455,30 +458,30 @@ var/list/channel_to_radio_key = new
 			else
 				say_sounds = list('sound/voice/teppi/whine1.ogg', 'sound/voice/teppi/whine2.ogg')
 
-			ourvolume = 0.3
+			base_volume = 0.3
 
 		if(LANGUAGE_EAL)
 			say_sounds = goon_speak_bottalk_sound
 		if(LANGUAGE_PROMETHEAN)
 			say_sounds = list('sound/effects/slime_squish.ogg')
-			ourvolume = 0.3
+			base_volume = 0.3
 		if(LANGUAGE_SCHECHI)
 			say_sounds = list('sound/voice/teshchirp.ogg','sound/voice/teshtrill.ogg')
-			ourvolume = 0.3
+			base_volume = 0.3
 		if(LANGUAGE_VESPINAE)
 			say_sounds = list('sound/voice/spiderchitter.ogg','sound/voice/spiderpurr.ogg')
-			ourvolume = 0.3
+			base_volume = 0.3
 		if(LANGUAGE_VOX)
 			say_sounds = list('sound/voice/shriek1.ogg')
-			ourvolume = 0.1
+			base_volume = 0.1
 
 	if(!say_sounds)
 		if(istype(src,/mob/living/simple_mob/vore/doglin))
-			say_sounds = yipyap
-			ourvolume = 0.3
+			say_sounds = talk_yipyap
+			base_volume = 0.3
 
 	if(say_sounds)
-		post_say_sound(say_sounds,ourvolume,whispering)
+		post_say_sound(say_sounds,base_volume,whispering)
 		return TRUE
 	return FALSE
 

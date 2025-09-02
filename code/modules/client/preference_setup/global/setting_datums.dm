@@ -84,6 +84,14 @@ var/list/_client_preferences_by_type
 	else
 		preference_mob.update_music()
 
+//RS ADD START
+/datum/client_preference/food_eating_noises
+	description = "Food Eating Noises"
+	key = "FOOD EATING_NOISES"
+	enabled_description = "Enabled"
+	disabled_description = "Disabled"
+//RS ADD END
+
 /datum/client_preference/eating_noises
 	description = "Eating Noises"
 	key = "EATING_NOISES"
@@ -345,6 +353,12 @@ var/list/_client_preferences_by_type
 /datum/client_preference/vore_health_bars
 	description = "Vore Health Bars"
 	key = "VORE_HEALTH_BARS"
+	enabled_description = "Enabled"
+	disabled_description = "Disabled"
+
+/datum/client_preference/vore_damage_overlay
+	description = "Vore Self Damage Overlay"
+	key = "VORE_DAMAGE_OVERLAY"
 	enabled_description = "Enabled"
 	disabled_description = "Disabled"
 

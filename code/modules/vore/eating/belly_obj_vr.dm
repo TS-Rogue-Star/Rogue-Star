@@ -88,7 +88,7 @@
 	//drain modes // RS Edit: Ports VOREStation PR15876
 	var/tmp/static/list/drainmodes = list(DR_NORMAL,DR_SLEEP,DR_FAKE,DR_WEIGHT)
 	//Digest mode addon flags
-	var/tmp/static/list/mode_flag_list = list("Numbing" = DM_FLAG_NUMBING, "Stripping" = DM_FLAG_STRIPPING, "Leave Remains" = DM_FLAG_LEAVEREMAINS, "Muffles" = DM_FLAG_THICKBELLY, "Affect Worn Items" = DM_FLAG_AFFECTWORN, "Jams Sensors" = DM_FLAG_JAMSENSORS, "Complete Absorb" = DM_FLAG_FORCEPSAY, "Slow Body Digestion" = DM_FLAG_SLOWBODY, "Gradual Body Digestion" = DM_FLAG_SLOWBRUTAL)
+	var/tmp/static/list/mode_flag_list = list("Numbing" = DM_FLAG_NUMBING, "Stripping" = DM_FLAG_STRIPPING, "Leave Remains" = DM_FLAG_LEAVEREMAINS, "Muffles" = DM_FLAG_THICKBELLY, "Affect Worn Items" = DM_FLAG_AFFECTWORN, "Jams Sensors" = DM_FLAG_JAMSENSORS, "Complete Absorb" = DM_FLAG_FORCEPSAY, "Slow Body Digestion" = DM_FLAG_SLOWBODY, "Gradual Body Digestion" = DM_FLAG_SLOWBRUTAL, "Visual Damage" = DM_FLAG_DAMAGEICON)	//RS EDIT
 	//Item related modes
 	var/tmp/static/list/item_digest_modes = list(IM_HOLD,IM_DIGEST_FOOD,IM_DIGEST)
 
@@ -850,6 +850,10 @@
 	//Clean up our own business
 	if(!ishuman(owner))
 		owner.update_icons()
+
+	if(ishuman(M))	//RS ADD START - Let's make sure people's damage overlays happen when they are released
+		var/mob/living/carbon/human/H = M
+		H.UpdateDamageIcon()	//RS ADD END
 
 	//Determines privacy
 	var/privacy_range = world.view

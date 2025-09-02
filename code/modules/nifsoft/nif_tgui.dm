@@ -157,7 +157,7 @@
 		if("setTheme")
 			if((params["theme"] in valid_ui_themes) || params["theme"] == null)
 				save_data["ui_theme"] = params["theme"]
-				human.etching.needs_saving = TRUE	//RS ADD
+				persist_nif_data(human)	//RS ADD
 			return TRUE
 		if("toggle_module")
 			var/datum/nifsoft/NS = locate(params["module"]) in nifsofts

@@ -25,6 +25,10 @@
 	meat_amount = 6
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
 
+	hunter = TRUE				//RS ADD
+	food_pref = HERBIVORE		//RS ADD
+	food_pref_obligate = TRUE	//RS ADD
+
 	var/datum/reagents/udder = null
 
 /mob/living/simple_mob/animal/goat/New()
