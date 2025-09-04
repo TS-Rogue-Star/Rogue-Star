@@ -280,3 +280,4 @@
 	pixel_x = -16
 	is_whitelisted = TRUE
 	whitelist_ckey = "googlyfox"
+	sprite_flags = ROBOT_HAS_LASER_SPRITE | ROBOT_HAS_TASER_SPRITE
