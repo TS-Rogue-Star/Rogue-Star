@@ -193,6 +193,5 @@
 	name = "Kitsune Taur (Christy)"
 	icon = 'icons/rogue-star/tails_64x32_rs.dmi'
 	icon_state = "Christykitsunetaur"
-	//vore_tail_sprite_variant = "N" //set to wolftaur for testing
 	fullness_icons = 3
 	do_colouration = 0
