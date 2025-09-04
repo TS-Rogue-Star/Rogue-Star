@@ -1,3 +1,7 @@
+// /////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2025 to implement scroll wheel//
+// /////////////////////////////////////////////////////////////////////////
+
 import { useBackend } from '../backend';
 import { Button, Icon, NoticeBox, NumberInput, Section, Slider, Table, Tabs } from '../components';
 import { Window } from '../layouts';
@@ -140,6 +144,8 @@ export const ColorMateMatrix = (props, context) => {
             minValue={-10}
             maxValue={10}
             step={0.01}
+            wheelStep={0.01} // RS Add: Scroll wheel support (Lira, September 2025)
+            wheelStepShift={0.1} // RS Add: Scroll wheel support (Lira, September 2025)
             value={matrixcolors.rr}
             onChange={(e, value) =>
               act('set_matrix_color', {
@@ -156,6 +162,8 @@ export const ColorMateMatrix = (props, context) => {
             minValue={-10}
             maxValue={10}
             step={0.01}
+            wheelStep={0.01} // RS Add: Scroll wheel support (Lira, September 2025)
+            wheelStepShift={0.1} // RS Add: Scroll wheel support (Lira, September 2025)
             value={matrixcolors.gr}
             onChange={(e, value) =>
               act('set_matrix_color', {
@@ -172,6 +180,8 @@ export const ColorMateMatrix = (props, context) => {
             minValue={-10}
             maxValue={10}
             step={0.01}
+            wheelStep={0.01} // RS Add: Scroll wheel support (Lira, September 2025)
+            wheelStepShift={0.1} // RS Add: Scroll wheel support (Lira, September 2025)
             value={matrixcolors.br}
             onChange={(e, value) =>
               act('set_matrix_color', {
@@ -190,6 +200,8 @@ export const ColorMateMatrix = (props, context) => {
             minValue={-10}
             maxValue={10}
             step={0.01}
+            wheelStep={0.01} // RS Add: Scroll wheel support (Lira, September 2025)
+            wheelStepShift={0.1} // RS Add: Scroll wheel support (Lira, September 2025)
             value={matrixcolors.rg}
             onChange={(e, value) =>
               act('set_matrix_color', {
@@ -206,6 +218,8 @@ export const ColorMateMatrix = (props, context) => {
             minValue={-10}
             maxValue={10}
             step={0.01}
+            wheelStep={0.01} // RS Add: Scroll wheel support (Lira, September 2025)
+            wheelStepShift={0.1} // RS Add: Scroll wheel support (Lira, September 2025)
             value={matrixcolors.gg}
             onChange={(e, value) =>
               act('set_matrix_color', {
@@ -222,6 +236,8 @@ export const ColorMateMatrix = (props, context) => {
             minValue={-10}
             maxValue={10}
             step={0.01}
+            wheelStep={0.01} // RS Add: Scroll wheel support (Lira, September 2025)
+            wheelStepShift={0.1} // RS Add: Scroll wheel support (Lira, September 2025)
             value={matrixcolors.bg}
             onChange={(e, value) =>
               act('set_matrix_color', {
@@ -240,6 +256,8 @@ export const ColorMateMatrix = (props, context) => {
             minValue={-10}
             maxValue={10}
             step={0.01}
+            wheelStep={0.01} // RS Add: Scroll wheel support (Lira, September 2025)
+            wheelStepShift={0.1} // RS Add: Scroll wheel support (Lira, September 2025)
             value={matrixcolors.rb}
             onChange={(e, value) =>
               act('set_matrix_color', {
@@ -256,6 +274,8 @@ export const ColorMateMatrix = (props, context) => {
             minValue={-10}
             maxValue={10}
             step={0.01}
+            wheelStep={0.01} // RS Add: Scroll wheel support (Lira, September 2025)
+            wheelStepShift={0.1} // RS Add: Scroll wheel support (Lira, September 2025)
             value={matrixcolors.gb}
             onChange={(e, value) =>
               act('set_matrix_color', {
@@ -272,6 +292,8 @@ export const ColorMateMatrix = (props, context) => {
             minValue={-10}
             maxValue={10}
             step={0.01}
+            wheelStep={0.01} // RS Add: Scroll wheel support (Lira, September 2025)
+            wheelStepShift={0.1} // RS Add: Scroll wheel support (Lira, September 2025)
             value={matrixcolors.bb}
             onChange={(e, value) =>
               act('set_matrix_color', {
@@ -290,6 +312,8 @@ export const ColorMateMatrix = (props, context) => {
             minValue={-10}
             maxValue={10}
             step={0.01}
+            wheelStep={0.01} // RS Add: Scroll wheel support (Lira, September 2025)
+            wheelStepShift={0.1} // RS Add: Scroll wheel support (Lira, September 2025)
             value={matrixcolors.cr}
             onChange={(e, value) =>
               act('set_matrix_color', {
@@ -306,6 +330,8 @@ export const ColorMateMatrix = (props, context) => {
             minValue={-10}
             maxValue={10}
             step={0.01}
+            wheelStep={0.01} // RS Add: Scroll wheel support (Lira, September 2025)
+            wheelStepShift={0.1} // RS Add: Scroll wheel support (Lira, September 2025)
             value={matrixcolors.cg}
             onChange={(e, value) =>
               act('set_matrix_color', {
@@ -322,6 +348,8 @@ export const ColorMateMatrix = (props, context) => {
             minValue={-10}
             maxValue={10}
             step={0.01}
+            wheelStep={0.01} // RS Add: Scroll wheel support (Lira, September 2025)
+            wheelStepShift={0.1} // RS Add: Scroll wheel support (Lira, September 2025)
             value={matrixcolors.cb}
             onChange={(e, value) =>
               act('set_matrix_color', {

@@ -4,6 +4,10 @@
  * @license MIT
  */
 
+// ///////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2025 to add scroll wheel support//
+// ///////////////////////////////////////////////////////////////////////////
+
 import { clamp } from 'common/math';
 import { classes, pureComponentHooks } from 'common/react';
 import { Component, createRef } from 'inferno';
@@ -135,6 +139,68 @@ export class NumberInput extends Component {
         } catch {}
       }
     };
+
+    // RS Add: Adds scroll wheel support (Lira, September 2025)
+    this.handleWheel = (e) => {
+      const { editing } = this.state;
+      const {
+        minValue,
+        maxValue,
+        step,
+        onChange,
+        onDrag,
+        wheelStep,
+        wheelStepShift,
+        wheelAllowWhileEditing,
+      } = this.props;
+      if (editing && wheelAllowWhileEditing === false) {
+        return;
+      }
+      // Determine scroll direction: wheel up should increase value
+      let direction = 0;
+      if (typeof e.deltaY === 'number') {
+        direction = e.deltaY < 0 ? 1 : -1;
+      } else if (typeof e.wheelDelta === 'number') {
+        direction = e.wheelDelta > 0 ? 1 : -1;
+      }
+      if (direction === 0) {
+        return;
+      }
+      // Determine wheel delta size
+      const baseWheel = Number.isFinite(wheelStep) ? wheelStep : step;
+      const shiftWheel = Number.isFinite(wheelStepShift)
+        ? wheelStepShift
+        : baseWheel * 10;
+      const delta = e.shiftKey ? shiftWheel : baseWheel;
+      // Compute next value and snap to step like dragging logic
+      const stepOffset = Number.isFinite(minValue) ? minValue % step : 0;
+      const currentValue = Number.isFinite(this.state.value)
+        ? this.state.value
+        : this.props.value;
+      const internal = currentValue + direction * delta;
+      // Snap using rounding to avoid floating-point issues
+      let snapped =
+        Math.round((internal - stepOffset) / step) * step + stepOffset;
+      // Reduce FP noise
+      snapped = parseFloat(snapped.toFixed(10));
+      snapped = clamp(snapped, minValue, maxValue);
+      this.setState({ value: snapped });
+      if (editing && this.inputRef && this.inputRef.current) {
+        try {
+          this.inputRef.current.value = String(snapped);
+        } catch {}
+      }
+      this.suppressFlicker();
+      if (onChange) {
+        onChange(e, snapped);
+      }
+      if (onDrag) {
+        onDrag(e, snapped);
+      }
+      if (e.preventDefault) e.preventDefault();
+      if (e.stopPropagation) e.stopPropagation();
+    };
+    // RS Add End
   }
 
   render() {
@@ -189,7 +255,9 @@ export class NumberInput extends Component {
         minHeight={height}
         lineHeight={lineHeight}
         fontSize={fontSize}
-        onMouseDown={this.handleDragStart}>
+        onMouseDown={this.handleDragStart}
+        // RS Add: Adds scroll wheel support (Lira, September 2025)
+        onWheel={this.handleWheel}>
         <div className="NumberInput__barContainer">
           <div
             className="NumberInput__bar"
@@ -211,6 +279,7 @@ export class NumberInput extends Component {
             'line-height': lineHeight,
             'font-size': fontSize,
           }}
+          onWheel={this.handleWheel} // RS Add: Adds scroll wheel support (Lira, September 2025)
           onBlur={(e) => {
             if (!editing) {
               return;
@@ -281,4 +350,9 @@ NumberInput.defaultProps = {
   step: 1,
   stepPixelSize: 1,
   suppressFlicker: 50,
+  // RS Add Start: Adds scroll wheel support (Lira, September 2025)
+  wheelStep: null,
+  wheelStepShift: null,
+  wheelAllowWhileEditing: true,
+  // RS Add End
 };

@@ -1,3 +1,7 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//Updated by Lira for Rogue Star September 2025 to call the colormate when coloring via color matrix //
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #define LOADOUT_BAN_STRING "Custom loadout"
 
 /datum/gear_tweak/proc/get_contents(var/metadata)
@@ -59,20 +63,34 @@ GLOBAL_DATUM_INIT(gear_tweak_free_matrix_recolor, /datum/gear_tweak/matrix_recol
 /datum/gear_tweak/matrix_recolor/get_default()
 	return null
 
-/datum/gear_tweak/matrix_recolor/get_metadata(user, metadata)
-	var/list/returned = color_matrix_picker(user, "Pick a color matrix for this item", "Matrix Recolor", "Ok", "Erase", "Cancel", TRUE, 10 MINUTES, islist(metadata) && metadata)
+// Use Colormate UI instead of the legacy browser window (Lira, September 2025)
+/datum/gear_tweak/matrix_recolor/get_metadata(user, metadata, datum/gear/gear = null)
+	var/obj/preview_item = null
+	if(istype(gear))
+		// Spawn a temporary instance of the gear item for preview; no location needed
+		var/path_to_item = gear.path
+		if(ispath(path_to_item))
+			// Try to construct without location; this should be fine for icon previews
+			preview_item = new path_to_item
+	var/list/returned = colormate_matrix_picker(user, islist(metadata) && metadata, preview_item)
 	var/list/L = returned["matrix"]
+	var/out
 	if(returned["button"] == 3)
-		return metadata
-	if((returned["button"] == 2) || !islist(L) || !ISINRANGE(L.len, 9, 20))
-		return list()
-	var/identity = TRUE
-	var/static/list/ones = list(1, 5, 9)
-	for(var/i in 1 to L.len)
-		if(L[i] != ((i in ones)? 1 : 0))
-			identity = FALSE
-			break
-	return identity? list() : L
+		out = metadata
+	else if((returned["button"] == 2) || !islist(L) || !ISINRANGE(L.len, 9, 20))
+		out = list()
+	else
+		var/identity = TRUE
+		var/static/list/ones = list(1, 5, 9)
+		for(var/i in 1 to L.len)
+			if(L[i] != ((i in ones)? 1 : 0))
+				identity = FALSE
+				break
+		out = identity? list() : L
+	// Cleanup preview item if created
+	if(preview_item)
+		qdel(preview_item)
+	return out
 
 /datum/gear_tweak/matrix_recolor/tweak_item(obj/item/I, metadata)
 	. = ..()
