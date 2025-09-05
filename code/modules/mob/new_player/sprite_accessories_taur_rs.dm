@@ -188,10 +188,3 @@
 	name = "Kitsune Taur (Eight-Tail)"
 	icon = 'icons/rogue-star/tails_64x32_rs.dmi'
 	icon_state = "eighttailkitsunetaur"
-
-/datum/sprite_accessory/tail/taur/christykitsunetaur
-	name = "Kitsune Taur (Christy)"
-	icon = 'icons/rogue-star/tails_64x32_rs.dmi'
-	icon_state = "Christykitsunetaur"
-	fullness_icons = 3
-	do_colouration = 0

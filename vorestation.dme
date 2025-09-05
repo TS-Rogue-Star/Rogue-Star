@@ -3403,6 +3403,7 @@
 #include "code\modules\mob\new_player\sprite_accessories_tail_snowflake.dm"
 #include "code\modules\mob\new_player\sprite_accessories_taur.dm"
 #include "code\modules\mob\new_player\sprite_accessories_taur_rs.dm"
+#include "code\modules\mob\new_player\sprite_accessories_taur_snowflake_rs.dm"
 #include "code\modules\mob\new_player\sprite_accessories_taur_vr.dm"
 #include "code\modules\mob\new_player\sprite_accessories_vr.dm"
 #include "code\modules\mob\new_player\sprite_accessories_wing.dm"
