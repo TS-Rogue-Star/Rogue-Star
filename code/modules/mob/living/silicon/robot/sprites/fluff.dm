@@ -208,6 +208,7 @@
 
 	sprite_icon = 'icons/mob/robot/fluff_wide_rs.dmi'
 	sprite_icon_state = "googlyfox-aurum"
+	sprite_hud_icon_state = "boozehound"
 
 	has_eye_light_sprites = TRUE
 	has_vore_belly_sprites = TRUE
@@ -262,6 +263,46 @@
 	is_whitelisted = TRUE
 	whitelist_ckey = "googlyfox"
 
+/datum/robot_sprite/dogborg/science/fluff/aurum // RS Addition
+	name = CUSTOM_BORGSPRITE("Aurum The Synth")
+
+	sprite_icon = 'icons/mob/robot/fluff_wide_rs.dmi'
+	sprite_icon_state = "googlyfox-aurum"
+	sprite_hud_icon_state = "sci-borg"
+
+	has_eye_light_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	has_rest_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit", "Bellyup")
+	has_dead_sprite = TRUE
+	has_dead_sprite_overlay = TRUE
+	has_vore_belly_resting_sprites = TRUE
+	belly_capacity_list = list("sleeper" = 1, "belly" = 2, "throat" = 1)
+	pixel_x = -16
+
+	is_whitelisted = TRUE
+	whitelist_ckey = "googlyfox"
+
+/datum/robot_sprite/dogborg/mining/fluff/aurum // RS Addition
+	name = CUSTOM_BORGSPRITE("Aurum The Synth")
+
+	sprite_icon = 'icons/mob/robot/fluff_wide_rs.dmi'
+	sprite_icon_state = "googlyfox-aurum"
+	sprite_hud_icon_state = "miner"
+
+	has_eye_light_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	has_rest_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit", "Bellyup")
+	has_dead_sprite = TRUE
+	has_dead_sprite_overlay = TRUE
+	has_vore_belly_resting_sprites = TRUE
+	belly_capacity_list = list("sleeper" = 1, "belly" = 2, "throat" = 1)
+	pixel_x = -16
+
+	is_whitelisted = TRUE
+	whitelist_ckey = "googlyfox"
+
 /datum/robot_sprite/dogborg/security/fluff/aurum // RS Addition
 	name = CUSTOM_BORGSPRITE("Aurum The Synth")
 
@@ -278,6 +319,7 @@
 	has_vore_belly_resting_sprites = TRUE
 	belly_capacity_list = list("sleeper" = 1, "belly" = 2, "throat" = 1)
 	pixel_x = -16
+
 	is_whitelisted = TRUE
 	whitelist_ckey = "googlyfox"
 	sprite_flags = ROBOT_HAS_LASER_SPRITE | ROBOT_HAS_TASER_SPRITE
