@@ -510,3 +510,9 @@ Files: `sound/voice/augh1.ogg,sound/voice/augh2.ogg`<br>
 Creator: Whatislegs<br> 
 Link: https://github.com/TS-Rogue-Star/Rogue-Star/pull/1041<br> 
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+Files: `icons/rogue-star/tails_64x32_rs.dmi, icons/mob/vore/Taur_Bellies.dmi`<br>
+Icon-States: eighttailkitsunetaur, ChristyKitsune, ChristyKitsuneTaur, Taur-CKT-1 idle, Taur-CKT-2 idle, Taur-CKT-3 idle <br> 
+Creator: Kligor<br> 
+Link: https://github.com/TS-Rogue-Star/Rogue-Star/pull/1063<br> 
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>

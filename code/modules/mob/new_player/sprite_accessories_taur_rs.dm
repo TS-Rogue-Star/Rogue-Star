@@ -183,3 +183,8 @@
 	vore_tail_sprite_variant = "N"
 	fullness_icons = 3
 	struggle_anim = TRUE
+
+/datum/sprite_accessory/tail/taur/kitsunetaur
+	name = "Kitsune Taur (Eight-Tail)"
+	icon = 'icons/rogue-star/tails_64x32_rs.dmi'
+	icon_state = "eighttailkitsunetaur"

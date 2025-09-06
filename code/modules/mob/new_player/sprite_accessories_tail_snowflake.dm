@@ -79,4 +79,9 @@
 	icon_state = "kara_tail"
 	ckeys_allowed = list("satinisle")
 
-
+/datum/sprite_accessory/tail/longtail/christykitsune
+	name = "Christy Tails"
+	icon = 'icons/rogue-star/tails_64x32_rs.dmi'
+	icon_state = "ChristyKitsune"
+	//ckeys_allowed = list("christykitsune")
+	do_colouration = 0
