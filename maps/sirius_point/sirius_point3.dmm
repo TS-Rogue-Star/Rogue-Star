@@ -18854,7 +18854,7 @@
 /turf/simulated/floor/wood/alt/panel,
 /area/security/detectives_office)
 "VM" = (
-/obj/effect/fancy_shuttle/sd_shuttle{
+/obj/effect/fancy_shuttle/sp_shuttle{
 	dir = 1;
 	fancy_shuttle_tag = "spboat"
 	},

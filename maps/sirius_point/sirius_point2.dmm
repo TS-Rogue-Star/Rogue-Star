@@ -158,7 +158,7 @@
 /obj/random/tech_supply,
 /obj/random/tech_supply,
 /obj/random/tech_supply,
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/techmaint,
 /area/storage/primary)
 "aeC" = (
 /obj/machinery/clonepod/transhuman,
@@ -539,6 +539,9 @@
 /turf/simulated/floor/tiled/dark,
 /area/security/checkpoint)
 "akJ" = (
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 1
+	},
 /turf/simulated/floor/tiled,
 /area/storage/primary)
 "akN" = (
@@ -1683,6 +1686,9 @@
 	},
 /obj/machinery/vending/nifsoft_shop{
 	dir = 8
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 4
 	},
 /turf/simulated/floor/tiled,
 /area/storage/primary)
@@ -8290,7 +8296,7 @@
 	pixel_y = 24
 	},
 /obj/machinery/lapvend,
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/techmaint,
 /area/storage/primary)
 "ffv" = (
 /obj/structure/cable/cyan{
@@ -8319,7 +8325,7 @@
 	dir = 8
 	},
 /obj/machinery/disposal,
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/techmaint,
 /area/storage/primary)
 "ffJ" = (
 /turf/simulated/floor/tiled/white,
@@ -9289,19 +9295,18 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ai_cyborg_station)
 "fNQ" = (
-/obj/effect/floor_decal/steeldecal/steel_decals6{
-	dir = 6;
-	pixel_x = -1
-	},
-/obj/effect/floor_decal/steeldecal/steel_decals6{
-	dir = 5
-	},
 /obj/structure/cable/pink{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/segment,
+/obj/effect/floor_decal/steeldecal/steel_decals6{
+	dir = 6
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals6{
+	dir = 5
+	},
 /turf/simulated/floor/tiled/dark,
 /area/security/lobby)
 "fNR" = (
@@ -11568,7 +11573,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/techmaint,
 /area/storage/primary)
 "htF" = (
 /obj/effect/floor_decal/corner/paleblue{
@@ -12360,18 +12365,17 @@
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/shop)
 "hVQ" = (
-/obj/effect/floor_decal/steeldecal/steel_decals6{
-	dir = 6;
-	pixel_x = -1
-	},
-/obj/effect/floor_decal/steeldecal/steel_decals6{
-	dir = 5
-	},
 /obj/structure/cable/pink{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/effect/floor_decal/steeldecal/steel_decals6{
+	dir = 5
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals6{
+	dir = 6
+	},
 /turf/simulated/floor/tiled/dark,
 /area/security/lobby)
 "hVX" = (
@@ -13278,7 +13282,7 @@
 /area/engineering/locker_room)
 "iEb" = (
 /obj/structure/reagent_dispensers/watertank,
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/techmaint,
 /area/storage/primary)
 "iEU" = (
 /obj/structure/cable{
@@ -16834,6 +16838,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/crew_quarters/bar)
+"kSO" = (
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/storage/primary)
 "kTa" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 4
@@ -17931,8 +17941,7 @@
 /area/ai_monitored/storage/eva)
 "lDI" = (
 /obj/effect/floor_decal/steeldecal/steel_decals6{
-	dir = 6;
-	pixel_x = -1
+	dir = 6
 	},
 /obj/effect/floor_decal/steeldecal/steel_decals6{
 	dir = 5
@@ -18273,6 +18282,13 @@
 	icon_state = "2-4"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/effect/floor_decal/steeldecal/steel_decals5,
+/obj/effect/floor_decal/steeldecal/steel_decals6{
+	dir = 6
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals6{
+	dir = 5
+	},
 /turf/simulated/floor/tiled,
 /area/storage/primary)
 "lMX" = (
@@ -18392,7 +18408,7 @@
 "lRM" = (
 /obj/machinery/alarm,
 /obj/machinery/vending/assist,
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/techmaint,
 /area/storage/primary)
 "lSb" = (
 /obj/effect/floor_decal/corner/paleblue/full,
@@ -20235,6 +20251,13 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
+/obj/effect/floor_decal/steeldecal/steel_decals5,
+/obj/effect/floor_decal/steeldecal/steel_decals6{
+	dir = 6
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals6{
+	dir = 5
+	},
 /turf/simulated/floor/tiled,
 /area/storage/primary)
 "nlG" = (
@@ -21392,7 +21415,7 @@
 "ofb" = (
 /obj/machinery/firealarm,
 /obj/machinery/vending/tool,
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/techmaint,
 /area/storage/primary)
 "off" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
@@ -25323,7 +25346,7 @@
 /obj/random/tech_supply,
 /obj/random/tech_supply,
 /obj/random/tech_supply,
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/techmaint,
 /area/storage/primary)
 "qTj" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden,
@@ -25528,7 +25551,7 @@
 /obj/random/tech_supply,
 /obj/random/tech_supply,
 /obj/machinery/camera/network/civilian,
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/techmaint,
 /area/storage/primary)
 "qZs" = (
 /obj/machinery/power/smes/buildable{
@@ -25727,6 +25750,9 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/security/lobby)
+"rht" = (
+/turf/simulated/floor/tiled/techmaint,
+/area/storage/primary)
 "rig" = (
 /obj/structure/cable{
 	icon_state = "2-4"
@@ -27518,6 +27544,12 @@
 /obj/structure/railing/grey,
 /turf/simulated/floor/tiled/monotile,
 /area/hallway/moonbase/northhall)
+"smE" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/storage/primary)
 "smH" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -28008,7 +28040,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/monotile,
 /area/storage/primary)
 "sAx" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -30468,6 +30500,9 @@
 /area/maintenance/moonbase/level1/south)
 "uij" = (
 /obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 4
 	},
 /turf/simulated/floor/tiled,
@@ -33781,7 +33816,7 @@
 /area/maintenance/moonbase/level1/west)
 "wGO" = (
 /obj/structure/closet/emcloset,
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/techmaint,
 /area/storage/primary)
 "wHz" = (
 /obj/machinery/portable_atmospherics/hydroponics,
@@ -35549,6 +35584,12 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/security/security_processing)
+"xMW" = (
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/storage/primary)
 "xNp" = (
 /obj/structure/cable{
 	icon_state = "2-8"
@@ -36158,7 +36199,7 @@
 /obj/random/tech_supply,
 /obj/random/tech_supply,
 /obj/random/tech_supply,
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/techmaint,
 /area/storage/primary)
 "yly" = (
 /obj/structure/table/woodentable,
@@ -50209,9 +50250,9 @@ dFT
 mOf
 vUe
 aeu
-akJ
-akJ
-akJ
+xMW
+xMW
+xMW
 iHY
 rAG
 pPu
@@ -50494,7 +50535,7 @@ uLD
 vUe
 ffe
 akJ
-uij
+smE
 nlD
 hpX
 vdg
@@ -50635,7 +50676,7 @@ dFT
 mOf
 vUe
 ofb
-akJ
+kSO
 uij
 aJf
 oOK
@@ -50777,7 +50818,7 @@ dFT
 fRe
 vUe
 lRM
-akJ
+rht
 ffA
 ykU
 vUe

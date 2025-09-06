@@ -411,3 +411,14 @@ GLOBAL_LIST_EMPTY(fancy_shuttles)
 	split_file = 'icons/turf/fancy_shuttles/pod.dmi'
 /obj/effect/fancy_shuttle_floor_preview/escapepod
 	icon = 'icons/turf/fancy_shuttles/pod_preview.dmi'
+
+/**
+ * RS add
+ * Sirius Point Shuttle
+ * North facing: W:9, H:14
+ */
+/obj/effect/fancy_shuttle/sp_shuttle
+	icon = 'icons/turf/fancy_shuttles/sp_shuttle_preview.dmi'
+	split_file = 'icons/turf/fancy_shuttles/sp_shuttle.dmi'
+/obj/effect/fancy_shuttle_floor_preview/sp_shuttle
+	icon = 'icons/turf/fancy_shuttles/sp_shuttle_preview.dmi'
