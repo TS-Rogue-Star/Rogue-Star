@@ -669,7 +669,7 @@ var/global/list/loadout_human_wearable_cache = list()
 		var/metadata
 		if(istype(tweak, /datum/gear_tweak/matrix_recolor))
 			var/datum/gear_tweak/matrix_recolor/mt = tweak
-			metadata = mt.get_metadata(user, get_tweak_metadata(gear, mt), gear)
+			metadata = mt.get_metadata(user, get_tweak_metadata(gear, mt), gear, get_gear_metadata(gear))
 		else
 			metadata = tweak.get_metadata(user, get_tweak_metadata(gear, tweak))
 		// RS Edit End

@@ -10,11 +10,13 @@
 
 import { clamp } from 'common/math';
 import { classes, pureComponentHooks } from 'common/react';
+import { throttle } from 'common/timer';
 import { Component, createRef } from 'inferno';
 import { AnimatedNumber } from './AnimatedNumber';
 import { Box } from './Box';
 
 const DEFAULT_UPDATE_RATE = 400;
+const DEFAULT_WHEEL_UPDATE_RATE = 50; // RS Add: Limit how often wheel-driven changes propagate to backend (ms) (Lira, September 2025)
 
 export class NumberInput extends Component {
   constructor(props) {
@@ -48,6 +50,18 @@ export class NumberInput extends Component {
         );
       }
     };
+
+    // RS Add: Throttle for wheel-driven updates to avoid event spam (Lira, September 2025)
+    this.commitWheelThrottled = throttle((snappedValue) => {
+      const { onChange, onDrag } = this.props;
+      this.suppressFlicker();
+      if (onChange) {
+        onChange(undefined, snappedValue);
+      }
+      if (onDrag) {
+        onDrag(undefined, snappedValue);
+      }
+    }, this.props.wheelUpdateRate || DEFAULT_WHEEL_UPDATE_RATE);
 
     this.handleDragStart = (e) => {
       const { value } = this.props;
@@ -142,7 +156,7 @@ export class NumberInput extends Component {
 
     // RS Add: Adds scroll wheel support (Lira, September 2025)
     this.handleWheel = (e) => {
-      const { editing } = this.state;
+      const { editing, dragging } = this.state;
       const {
         minValue,
         maxValue,
@@ -153,6 +167,10 @@ export class NumberInput extends Component {
         wheelStepShift,
         wheelAllowWhileEditing,
       } = this.props;
+      // Ignore scripted events and wheel during drag
+      if ((typeof e.isTrusted === 'boolean' && !e.isTrusted) || dragging) {
+        return;
+      }
       if (editing && wheelAllowWhileEditing === false) {
         return;
       }
@@ -167,36 +185,45 @@ export class NumberInput extends Component {
         return;
       }
       // Determine wheel delta size
-      const baseWheel = Number.isFinite(wheelStep) ? wheelStep : step;
+      const effectiveStep = Number.isFinite(step) && step > 0 ? step : 1;
+      const baseWheel = Number.isFinite(wheelStep) ? wheelStep : effectiveStep;
       const shiftWheel = Number.isFinite(wheelStepShift)
         ? wheelStepShift
         : baseWheel * 10;
       const delta = e.shiftKey ? shiftWheel : baseWheel;
+      // If delta is zero, treat as disabled for this control
+      if (!Number.isFinite(delta) || delta === 0) {
+        return;
+      }
       // Compute next value and snap to step like dragging logic
-      const stepOffset = Number.isFinite(minValue) ? minValue % step : 0;
+      const stepOffset = Number.isFinite(minValue)
+        ? minValue % effectiveStep
+        : 0;
       const currentValue = Number.isFinite(this.state.value)
         ? this.state.value
         : this.props.value;
       const internal = currentValue + direction * delta;
       // Snap using rounding to avoid floating-point issues
       let snapped =
-        Math.round((internal - stepOffset) / step) * step + stepOffset;
+        Math.round((internal - stepOffset) / effectiveStep) * effectiveStep +
+        stepOffset;
       // Reduce FP noise
       snapped = parseFloat(snapped.toFixed(10));
       snapped = clamp(snapped, minValue, maxValue);
+      // If nothing would change, return early
+      if (snapped === currentValue) {
+        if (e.preventDefault) e.preventDefault();
+        if (e.stopPropagation) e.stopPropagation();
+        return;
+      }
       this.setState({ value: snapped });
       if (editing && this.inputRef && this.inputRef.current) {
         try {
           this.inputRef.current.value = String(snapped);
         } catch {}
       }
-      this.suppressFlicker();
-      if (onChange) {
-        onChange(e, snapped);
-      }
-      if (onDrag) {
-        onDrag(e, snapped);
-      }
+      // Throttle backend updates to avoid event spam
+      this.commitWheelThrottled(snapped);
       if (e.preventDefault) e.preventDefault();
       if (e.stopPropagation) e.stopPropagation();
     };
@@ -353,6 +380,7 @@ NumberInput.defaultProps = {
   // RS Add Start: Adds scroll wheel support (Lira, September 2025)
   wheelStep: null,
   wheelStepShift: null,
-  wheelAllowWhileEditing: true,
+  wheelAllowWhileEditing: false,
+  wheelUpdateRate: DEFAULT_WHEEL_UPDATE_RATE,
   // RS Add End
 };

@@ -740,6 +740,15 @@ the input, or successfully enter a number.
 - `onDrag: (e, value) => void` - An event, which fires about every 500ms
 when you drag the input up and down, on release and on manual editing.
 
+**RS Add Start:Documentation for scroll wheel - Lira, September 2025**
+- `wheelStep?: number` (default: 'step') - Step to use for mouse wheel adjustments.
+- `wheelStepShift?: number` (default: 'wheelStep * 10')- Step to use while holding Shift.
+- `wheelAllowWhileEditing?: boolean` (default: false) - If false, wheel input is ignored when the field is in text-edit mode.
+- `wheelUpdateRate?: number` (default: 50) - Throttle interval in ms for backend updates during wheel scrolling.
+  Note: Wheel events are throttled and synthetic (untrusted) wheel events are ignored to avoid event spam.
+  Passing `wheelStep={0}` disables wheel adjustments for that control.
+**RS Add End**
+
 ### `Popper`
 
 Popper lets you position elements so that they don't go out of the bounds of the window. See [popper.js](https://popper.js.org/) for more information.

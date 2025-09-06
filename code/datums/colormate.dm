@@ -67,6 +67,10 @@
 /datum/ColorMate/tgui_data()
 	. = list()
 	.["activemode"] = active_mode
+	// RS Add Start: Expose picker-mode flags to UI so it can hide unsupported modes (Lira, September 2025)
+	.["picker_mode"] = picker_mode
+	.["picker_force_mode"] = picker_force_mode
+	// RS Add End
 	.["matrixcolors"] = list(
 		"rr" = color_matrix_last[1],
 		"rg" = color_matrix_last[2],

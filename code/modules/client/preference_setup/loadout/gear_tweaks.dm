@@ -64,11 +64,15 @@ GLOBAL_DATUM_INIT(gear_tweak_free_matrix_recolor, /datum/gear_tweak/matrix_recol
 	return null
 
 // Use Colormate UI instead of the legacy browser window (Lira, September 2025)
-/datum/gear_tweak/matrix_recolor/get_metadata(user, metadata, datum/gear/gear = null)
+/datum/gear_tweak/matrix_recolor/get_metadata(user, metadata, datum/gear/gear = null, list/all_metadata = null)
 	var/obj/preview_item = null
 	if(istype(gear))
 		// Spawn a temporary instance of the gear item for preview; no location needed
-		var/path_to_item = gear.path
+		var/datum/gear_data/gd = new(gear.path, null)
+		if(length(gear.gear_tweaks) && islist(all_metadata))
+			for(var/datum/gear_tweak/gt in gear.gear_tweaks)
+				gt.tweak_gear_data(all_metadata["[gt]"], gd)
+		var/path_to_item = gd.path
 		if(ispath(path_to_item))
 			// Try to construct without location; this should be fine for icon previews
 			preview_item = new path_to_item
