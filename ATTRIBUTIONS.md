@@ -510,3 +510,9 @@ Files: `sound/voice/augh1.ogg,sound/voice/augh2.ogg`<br>
 Creator: Whatislegs<br> 
 Link: https://github.com/TS-Rogue-Star/Rogue-Star/pull/1041<br> 
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/mob/robot/fluff_wide_rs.dmi`<br>
+**Icon-States:** googlyfox-aurum-serv, googlyfox-aurum-serv-eyes, googlyfox-aurum-serv-wreck, googlyfox-aurum-serv-rest, googlyfox-aurum-serv-belly-1-rest, googlyfox-aurum-serv-belly-2-rest, googlyfox-aurum-serv-sit, googlyfox-aurum-serv-belly-1-sit, googlyfox-aurum-serv-belly-2-sit, googlyfox-aurum-serv-bellyup, googlyfox-aurum-serv-belly-1-bellyup, googlyfox-aurum-serv-belly-2-bellyup, googlyfox-aurum-serv-belly-1, googlyfox-aurum-serv-sleeper-1, googlyfox-aurum-serv-belly-2, googlyfox-aurum-serv-throat-1, googlyfox-aurum-serv-lights<br>
+**Creator:** ChromeFoxxity<br>
+Link: https://github.com/TS-Rogue-Star/Rogue-Star/pull/987<br>
+**License: Licensed for use by Rogue Star; unlicensed for further use without permission of developing player<br>
