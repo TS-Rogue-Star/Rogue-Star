@@ -22,6 +22,11 @@
 					"sound" = pick("sound/rogue-star/bau/bau1.ogg","sound/rogue-star/bau/bau2.ogg","sound/rogue-star/bau/bau3.ogg","sound/rogue-star/bau/bau4.ogg","sound/rogue-star/bau/bau5.ogg","sound/rogue-star/bau/bau6.ogg","sound/rogue-star/bau/bau7.ogg","sound/rogue-star/bau/bau8.ogg","sound/rogue-star/bau/bau9.ogg","sound/rogue-star/bau/bau10.ogg","sound/rogue-star/bau/bau11.ogg","sound/rogue-star/bau/bau12.ogg","sound/rogue-star/bau/bau13.ogg","sound/rogue-star/bau/bau14.ogg","sound/rogue-star/bau/bau15.ogg"),
 					"vol" = emote_volume
 				)
+			if(5)
+				return list(
+					"sound" = pick("sound/voice/augh1.ogg","sound/voice/augh2.ogg"),
+					"vol" = emote_volume
+				)
 
 	switch(H.species.name)
 		if(SPECIES_VULPKANIN)
@@ -34,7 +39,6 @@
 				"sound" = pick("sound/rogue-star/bau/bau1.ogg","sound/rogue-star/bau/bau2.ogg","sound/rogue-star/bau/bau3.ogg","sound/rogue-star/bau/bau4.ogg","sound/rogue-star/bau/bau5.ogg","sound/rogue-star/bau/bau6.ogg","sound/rogue-star/bau/bau7.ogg","sound/rogue-star/bau/bau8.ogg","sound/rogue-star/bau/bau9.ogg","sound/rogue-star/bau/bau10.ogg","sound/rogue-star/bau/bau11.ogg","sound/rogue-star/bau/bau12.ogg","sound/rogue-star/bau/bau13.ogg","sound/rogue-star/bau/bau14.ogg","sound/rogue-star/bau/bau15.ogg"),
 				"vol" = emote_volume
 			)
-
 
 	if(H.get_gender() == FEMALE)
 		return list(

@@ -13,6 +13,8 @@
 
 	handle_guts()
 	do_healing()	//VOREStation Add
+	if(hunter)			//RS ADD
+		nutrition -= 2	//RS ADD
 
 	return TRUE
 
@@ -74,6 +76,8 @@
 		heal_countdown --
 		return
 	if(resting)
+		if(oxyloss > 0)	//RS ADD
+			adjustOxyLoss(-1)	//RS ADD
 		if(bruteloss > 0)
 			adjustBruteLoss(-10)
 		else if(fireloss > 0)

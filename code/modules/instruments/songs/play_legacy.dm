@@ -46,7 +46,7 @@
  * * acc is either "b", "n", or "#"
  * * oct is 1-8 (or 9 for C)
  */
-/datum/song/proc/playkey_legacy(note, acc as text, oct, mob/user)
+/datum/song/proc/playkey_legacy(note, acc as text, oct, mob/user, list/targets_override) //RS Edit: Add override list (Lira, August 2025)
 	// handle accidental -> B<>C of E<>F
 	if(acc == "b" && (note == 3 || note == 6)) // C or F
 		if(note == 3)
@@ -69,6 +69,13 @@
 	if(oct < 1 || (note == 3 ? oct > 9 : oct > 8))
 		return
 
+	//RS Add Start: Numeric key for note-range filter (A=1..G=7) (Lira, August 2025)
+	var/numeric_key = clamp((note_offset_lookup[note] + oct * 12 + accent_lookup[acc]), key_min, key_max)
+	if(note_filter_enabled)
+		if(numeric_key < note_filter_min || numeric_key > note_filter_max)
+			return
+	//RS Add End
+
 	// now generate name
 	var/soundfile = "sound/instruments/[cached_legacy_dir]/[ascii2text(note+64)][acc][oct].[cached_legacy_ext]"
 	soundfile = file(soundfile)
@@ -80,7 +87,8 @@
 	if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > last_hearcheck)
 		do_hearcheck()
 	var/sound/music_played = sound(soundfile)
-	for(var/mob/M as anything in hearing_mobs)
+	var/list/targets = islist(targets_override) ? targets_override : hearing_mobs //RS Add: Adds override (Lira, August 2025)
+	for(var/mob/M as anything in targets) //RS Edit: Use targets instead of hearing_mobs (Lira, August 2025)
 		/* Would be nice
 		if(user && HAS_TRAIT(user, TRAIT_MUSICIAN) && isliving(M))
 			var/mob/living/L = M

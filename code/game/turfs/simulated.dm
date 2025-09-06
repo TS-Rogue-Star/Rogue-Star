@@ -174,7 +174,7 @@
 				B.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 				B.virus2 = virus_copylist(M.virus2)
 			return 1 //we bloodied the floor
-		blood_splatter(src,M.get_blood(M.vessel),1)
+		blood_splatter(src,M.get_blood(M.vessel),1,M)	//RS EDIT
 		return 1 //we bloodied the floor
 	return 0
 
