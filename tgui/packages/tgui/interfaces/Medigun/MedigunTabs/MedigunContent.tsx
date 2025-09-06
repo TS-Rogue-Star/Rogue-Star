@@ -3,7 +3,7 @@ import { Fragment } from 'inferno';
 import { useBackend } from '../../../backend';
 import { Box, Button, LabeledList, ProgressBar, Section, Stack } from '../../../components';
 import type { Data, SModule } from '../types';
-import { gridStatusToColor, gridStatusToText, powerToColor, powerToText, statToColor, statToString } from '../constants';
+import { gridStatusToText, statToColor, statToString } from '../constants';
 import { ChargeStatus } from '../MedigunHelpers/ChargeStatus';
 
 export const MedigunContent = (props: { smodule: SModule }, context) => {
@@ -12,10 +12,10 @@ export const MedigunContent = (props: { smodule: SModule }, context) => {
   const {
     maintenance,
     tankmax,
-    generator,
+    battery_name,
+    battery_status,
     gridstatus,
     power_cell_status,
-    phoron_status,
     bruteheal_charge,
     burnheal_charge,
     toxheal_charge,
@@ -43,7 +43,7 @@ export const MedigunContent = (props: { smodule: SModule }, context) => {
       <Stack.Item>
         <Section title="Power Status">
           <LabeledList>
-            <LabeledList.Item label="Power Cell">
+            <LabeledList.Item label="Capacitor">
               {maintenance ? (
                 <Box color="red">Maintenance Hatch Open</Box>
               ) : power_cell_status !== null ? (
@@ -62,31 +62,29 @@ export const MedigunContent = (props: { smodule: SModule }, context) => {
               )}
             </LabeledList.Item>
             {gridstatus !== 3 && (
-              <LabeledList.Item
-                label="Wireless Power"
-                color={gridStatusToColor[gridstatus]}>
-                {gridStatusToText[gridstatus] || 'Unavailable'}
+              <LabeledList.Item label="Wireless Power" color={'good'}>
+                {gridStatusToText[gridstatus] || 'No Cell Installed'}
               </LabeledList.Item>
             )}
             <LabeledList.Item
-              label="Phoron Generator"
-              color={powerToColor[generator]}
+              label="Battery Status"
+              color={'white'}
               buttons={
                 <Button
-                  content={generator ? 'On' : 'Off'}
-                  selected={generator}
-                  color={generator ? '' : 'bad'}
-                  onClick={() => act('gentoggle')}
+                  content={battery_status !== null ? 'Eject' : 'Missing'}
+                  selected={battery_status}
+                  color={battery_status ? '' : 'bad'}
+                  onClick={() => act('celleject')}
                 />
               }>
-              [ {powerToText[generator] || 'Unavailable'} ]
+              [ {battery_name || 'Unavailable'} ]
             </LabeledList.Item>
-            {phoron_status !== null ? (
-              <LabeledList.Item label="Phoron Volume">
-                <ProgressBar color="pink" value={phoron_status} />
+            {battery_status !== null ? (
+              <LabeledList.Item label="Battery Status">
+                <ProgressBar color="green" value={battery_status} />
               </LabeledList.Item>
             ) : (
-              <Box color="red">Missing Bin</Box>
+              <Box />
             )}
           </LabeledList>
         </Section>

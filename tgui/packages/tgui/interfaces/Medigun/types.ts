@@ -4,10 +4,11 @@ import type { BooleanLike } from '../../../common/react';
 export type Data = {
   maintenance: BooleanLike;
   tankmax: number;
-  generator: number;
+  battery_name: string | null;
+  battery_status: number;
   gridstatus: number;
   power_cell_status: number | null;
-  phoron_status: number | null;
+  cell_status: number | null;
   bruteheal_charge: number | null;
   burnheal_charge: number | null;
   toxheal_charge: number | null;
