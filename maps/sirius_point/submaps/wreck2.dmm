@@ -9,7 +9,7 @@
 "d" = (
 /obj/structure/shuttle/window,
 /obj/structure/grille,
-/turf/simulated/floor/airless,
+/turf/simulated/floor,
 /area/submap/moonbase/poi/east_crater/wreck2)
 "e" = (
 /mob/living/simple_mob/animal/space/carp/roguemines,
@@ -55,6 +55,10 @@
 	icon_state = "burst_l"
 	},
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"x" = (
+/obj/item/stack/rods,
+/turf/simulated/shuttle/floor/yellow/airless,
 /area/submap/moonbase/poi/east_crater/wreck2)
 "y" = (
 /turf/simulated/shuttle/floor/yellow/airless,
@@ -146,7 +150,7 @@
 "X" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/silver,
-/turf/simulated/floor/tiled/external,
+/turf/simulated/floor/tiled/steel_ridged,
 /area/submap/moonbase/poi/east_crater/wreck2)
 "Y" = (
 /obj/structure/shuttle/engine/heater{
@@ -559,8 +563,8 @@ O
 O
 d
 y
-y
-y
+x
+W
 y
 y
 d
@@ -577,7 +581,7 @@ O
 d
 y
 i
-W
+x
 y
 y
 d

@@ -628,11 +628,11 @@
 /turf/simulated/floor/carpet/retro_red,
 /area/crew_quarters/recreation_area)
 "bL" = (
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
 /obj/machinery/disposal/wall/cleaner{
 	dir = 8
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 1
 	},
 /turf/simulated/floor/carpet/blue2,
 /area/moonbase/dorms)
@@ -3452,9 +3452,13 @@
 /turf/simulated/floor,
 /area/engineering/atmos)
 "jm" = (
-/obj/structure/disposalpipe/segment,
 /obj/machinery/light{
 	dir = 8
+	},
+/obj/structure/disposalpipe/tagger{
+	dir = 1;
+	name = "package tagger - Resleeving";
+	sort_tag = "Resleeving"
 	},
 /turf/simulated/floor/tiled/white,
 /area/hallway/moonbase/basement)
@@ -5789,6 +5793,7 @@
 /obj/machinery/camera/network/civilian{
 	dir = 5
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/carpet/blue2,
 /area/moonbase/dorms)
 "pK" = (
@@ -6818,11 +6823,9 @@
 /turf/simulated/floor/plating/moonbase,
 /area/moonbase/basement/caves/east)
 "sF" = (
-/obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 4
-	},
-/turf/simulated/wall/r_wall,
-/area/engineering/atmos)
+/obj/structure/ladder/up,
+/turf/simulated/floor/tiled/eris/dark/monofloor,
+/area/ai_upload)
 "sG" = (
 /obj/structure/girder,
 /turf/simulated/floor/plating,
@@ -9654,13 +9657,10 @@
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/south)
 "AJ" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/disposalpipe/junction/yjunction{
-	dir = 1
+/obj/structure/disposalpipe/tagger{
+	dir = 1;
+	name = "package tagger - Resleeving";
+	sort_tag = "Resleeving"
 	},
 /turf/simulated/floor/carpet/blue2,
 /area/moonbase/dorms)
@@ -9886,11 +9886,18 @@
 /area/medical/moonbase/basement)
 "Bo" = (
 /obj/structure/cable{
-	icon_state = "1-2"
+	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/carpet/blue2,
 /area/moonbase/dorms)
 "Bp" = (
@@ -11685,6 +11692,22 @@
 "Gb" = (
 /turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/dorms/dorm8)
+"Gc" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/carpet/blue2,
+/area/moonbase/dorms)
 "Gd" = (
 /obj/effect/decal/cleanable/blood/drip{
 	icon_state = "2"
@@ -12994,11 +13017,11 @@
 /turf/simulated/floor/tiled/eris/techmaint_cargo,
 /area/maintenance/moonbase/basement/boxingring)
 "JI" = (
-/obj/structure/disposalpipe/trunk{
-	dir = 4
-	},
 /obj/machinery/disposal/wall{
 	dir = 4
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 1
 	},
 /turf/simulated/floor/carpet/blue2,
 /area/moonbase/dorms)
@@ -15271,7 +15294,9 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/junction/yjunction{
+	dir = 1
+	},
 /turf/simulated/floor/carpet/blue2,
 /area/moonbase/dorms)
 "PI" = (
@@ -24040,7 +24065,7 @@ Hc
 Hc
 WU
 ki
-sF
+Hc
 Hc
 Hc
 Hc
@@ -30441,7 +30466,7 @@ XL
 hs
 vu
 ad
-kX
+Bo
 pJ
 JI
 wQ
@@ -30584,8 +30609,8 @@ pe
 pe
 Eh
 PH
-Bo
-AJ
+Ig
+Ig
 Ig
 Ig
 Ig
@@ -30725,8 +30750,8 @@ XL
 xY
 VS
 DG
-kX
-wQ
+Gc
+AJ
 bL
 wQ
 wQ
@@ -36623,7 +36648,7 @@ UZ
 UZ
 UZ
 XK
-Lm
+sF
 Lm
 Lm
 Lm

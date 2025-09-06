@@ -12,7 +12,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/simulated/floor/airless,
+/turf/simulated/floor,
 /area/submap/moonbase/poi/east_crater/wreck4)
 "bi" = (
 /obj/item/weapon/material/shard{
@@ -30,7 +30,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced,
-/turf/simulated/floor/airless,
+/turf/simulated/floor,
 /area/submap/moonbase/poi/east_crater/wreck4)
 "eH" = (
 /obj/structure/table/rack/shelf/steel,
@@ -41,12 +41,12 @@
 "eL" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/silver,
-/turf/simulated/floor/tiled/airless,
+/turf/simulated/floor/tiled/steel_ridged,
 /area/submap/moonbase/poi/east_crater/wreck4)
 "fe" = (
 /obj/machinery/door/airlock/multi_tile/glass,
 /obj/machinery/door/firedoor/border_only,
-/turf/simulated/floor/tiled/airless,
+/turf/simulated/floor/tiled/steel_ridged,
 /area/submap/moonbase/poi/east_crater/wreck4)
 "fg" = (
 /obj/structure/window/reinforced{
@@ -80,7 +80,7 @@
 /area/submap/moonbase/poi/east_crater/wreck4)
 "hA" = (
 /obj/machinery/door/firedoor/border_only,
-/turf/simulated/floor/tiled/airless,
+/turf/simulated/floor/tiled/steel_ridged,
 /area/submap/moonbase/poi/east_crater/wreck4)
 "ir" = (
 /obj/structure/bed/chair/bay/shuttle{
@@ -131,7 +131,7 @@
 "tT" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass_external,
-/turf/simulated/floor/tiled/techmaint/airless,
+/turf/simulated/floor/tiled/steel_ridged,
 /area/submap/moonbase/poi/east_crater/wreck4)
 "ur" = (
 /obj/structure/table/steel,
@@ -202,7 +202,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced,
-/turf/simulated/floor/airless,
+/turf/simulated/floor,
 /area/submap/moonbase/poi/east_crater/wreck4)
 "Dh" = (
 /obj/structure/grille,
@@ -210,7 +210,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/simulated/floor/airless,
+/turf/simulated/floor,
 /area/submap/moonbase/poi/east_crater/wreck4)
 "DP" = (
 /obj/structure/table/steel,
@@ -276,7 +276,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor/airless,
+/turf/simulated/floor,
 /area/submap/moonbase/poi/east_crater/wreck4)
 "Rx" = (
 /obj/structure/table/rack/shelf/steel,
@@ -291,7 +291,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/simulated/floor/airless,
+/turf/simulated/floor,
 /area/submap/moonbase/poi/east_crater/wreck4)
 "UK" = (
 /obj/structure/hull_corner/long_vert{
@@ -311,7 +311,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor/airless,
+/turf/simulated/floor,
 /area/submap/moonbase/poi/east_crater/wreck4)
 "Xu" = (
 /turf/simulated/mineral/moonbase/ignore_mapgen,
@@ -325,7 +325,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/simulated/floor/airless,
+/turf/simulated/floor,
 /area/submap/moonbase/poi/east_crater/wreck4)
 "YS" = (
 /obj/structure/grille,
@@ -336,7 +336,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/simulated/floor/airless,
+/turf/simulated/floor,
 /area/submap/moonbase/poi/east_crater/wreck4)
 "ZA" = (
 /obj/structure/grille/broken,

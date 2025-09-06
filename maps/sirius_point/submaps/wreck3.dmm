@@ -182,8 +182,8 @@
 /turf/simulated/floor/wood/airless,
 /area/submap/moonbase/poi/east_crater/wreck3)
 "AP" = (
-/mob/living/simple_mob/mechanical/hivebot/support/logistics,
-/turf/simulated/floor/wood/airless,
+/obj/item/stack/rods,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/submap/moonbase/poi/east_crater/wreck3)
 "Bd" = (
 /obj/structure/table/woodentable,
@@ -270,7 +270,7 @@
 "OH" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass_external,
-/turf/simulated/floor/tiled/techmaint/airless,
+/turf/simulated/floor/tiled/steel_ridged,
 /area/submap/moonbase/poi/east_crater/wreck3)
 "OY" = (
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
@@ -306,7 +306,7 @@
 "Rq" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/silver,
-/turf/simulated/floor/tiled/external,
+/turf/simulated/floor/tiled/steel_ridged,
 /area/submap/moonbase/poi/east_crater/wreck3)
 "So" = (
 /turf/simulated/shuttle/wall,
@@ -314,7 +314,7 @@
 "Su" = (
 /obj/structure/shuttle/window,
 /obj/structure/grille,
-/turf/simulated/floor/airless,
+/turf/simulated/floor,
 /area/submap/moonbase/poi/east_crater/wreck3)
 "Tp" = (
 /mob/living/simple_mob/mechanical/hivebot/ranged_damage/basic,
@@ -704,7 +704,7 @@ It
 Bd
 ZM
 rF
-AP
+rF
 rF
 rF
 rF
@@ -818,7 +818,7 @@ OY
 OY
 OY
 OY
-OY
+AP
 OY
 OY
 OY

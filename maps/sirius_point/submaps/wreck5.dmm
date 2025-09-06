@@ -39,14 +39,14 @@
 "jv" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/hatch,
-/turf/simulated/floor/tiled/airless,
+/turf/simulated/floor/tiled/steel_ridged,
 /area/submap/moonbase/poi/east_crater/wreck5)
 "jy" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass_security{
 	req_one_access = null
 	},
-/turf/simulated/floor/tiled/airless,
+/turf/simulated/floor/tiled/steel_ridged,
 /area/submap/moonbase/poi/east_crater/wreck5)
 "kC" = (
 /obj/item/bodybag/cryobag,
@@ -133,7 +133,7 @@
 "wh" = (
 /obj/structure/shuttle/window,
 /obj/structure/grille,
-/turf/simulated/floor/airless,
+/turf/simulated/floor,
 /area/submap/moonbase/poi/east_crater/wreck5)
 "zH" = (
 /obj/structure/bed/chair/bay/shuttle{
@@ -296,7 +296,7 @@
 "Xh" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass_external,
-/turf/simulated/floor/tiled/airless,
+/turf/simulated/floor/tiled/steel_ridged,
 /area/submap/moonbase/poi/east_crater/wreck5)
 
 (1,1,1) = {"

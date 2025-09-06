@@ -1048,13 +1048,15 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/light_switch{
 	dir = 4;
 	pixel_x = -24;
 	pixel_y = 23
+	},
+/obj/structure/disposalpipe/tagger{
+	dir = 4;
+	name = "package tagger - Resleeving";
+	sort_tag = "Resleeving"
 	},
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/medical_restroom)
@@ -9881,7 +9883,7 @@
 "yS" = (
 /obj/machinery/computer/ship/engines/adv,
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /turf/simulated/floor/tiled,
 /area/shuttle/spboat/fore{
@@ -9979,7 +9981,7 @@
 "ze" = (
 /obj/machinery/computer/ship/helm/adv,
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /turf/simulated/floor/tiled,
 /area/shuttle/spboat/fore{
@@ -10061,7 +10063,7 @@
 "zp" = (
 /obj/machinery/computer/ship/sensors/adv,
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /turf/simulated/floor/tiled,
 /area/shuttle/spboat/fore{
@@ -10188,7 +10190,7 @@
 	icon_state = "2-8"
 	},
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /turf/simulated/floor/tiled,
 /area/shuttle/spboat/fore{
@@ -11190,7 +11192,7 @@
 	dir = 1
 	},
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /turf/simulated/floor/tiled,
 /area/shuttle/spboat/aft{
@@ -11467,7 +11469,7 @@
 	icon_state = "1-2"
 	},
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /turf/simulated/floor/tiled,
 /area/shuttle/spboat/aft{
@@ -11541,7 +11543,7 @@
 /area/security/armoury)
 "Dv" = (
 /turf/simulated/wall/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
@@ -11627,7 +11629,7 @@
 	dir = 8
 	},
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /turf/simulated/floor/tiled,
 /area/shuttle/spboat/aft{
@@ -11665,7 +11667,7 @@
 	dir = 4
 	},
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /turf/simulated/floor/tiled,
 /area/shuttle/spboat/aft{
@@ -12137,7 +12139,7 @@
 /area/engineering/engine_room)
 "ES" = (
 /turf/simulated/wall/fancy_shuttle/nondense{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /area/shuttle/spboat/fore{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
@@ -12236,7 +12238,7 @@
 	id = "shuttleshutter"
 	},
 /obj/structure/window/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /turf/simulated/floor/reinforced/airless,
 /area/shuttle/spboat/fore{
@@ -12492,7 +12494,7 @@
 "FT" = (
 /obj/machinery/shipsensors/fancy_shuttle,
 /turf/simulated/wall/fancy_shuttle/nondense{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /area/shuttle/spboat/fore{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
@@ -12516,7 +12518,7 @@
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass,
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /obj/structure/cable/green{
 	icon_state = "1-2"
@@ -12792,7 +12794,7 @@
 	icon_state = "0-4"
 	},
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /obj/machinery/computer/shuttle_control/explore/spboat{
 	dir = 4
@@ -12826,7 +12828,7 @@
 	charge = 500000
 	},
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /obj/structure/cable/green{
 	icon_state = "0-4"
@@ -13213,7 +13215,7 @@
 	icon_state = "4-8"
 	},
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /turf/simulated/floor/tiled,
 /area/shuttle/spboat/aft{
@@ -13240,7 +13242,7 @@
 /area/rnd/xenobiology)
 "HN" = (
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /obj/machinery/light{
 	dir = 1
@@ -13562,7 +13564,7 @@
 	dir = 1
 	},
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /turf/simulated/floor/tiled,
 /area/shuttle/spboat/fore{
@@ -13665,7 +13667,7 @@
 /obj/structure/handrail,
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /obj/machinery/atmospherics/unary/vent_pump/high_volume{
 	dir = 4
@@ -13872,7 +13874,7 @@
 	dir = 4
 	},
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /turf/simulated/floor/tiled,
 /area/shuttle/spboat/fore{
@@ -13955,7 +13957,7 @@
 	},
 /obj/effect/map_helper/airlock/sensor/chamber_sensor,
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /turf/simulated/floor/tiled,
 /area/shuttle/spboat/aft{
@@ -14082,7 +14084,7 @@
 	icon_state = "4-8"
 	},
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /turf/simulated/floor/tiled,
 /area/shuttle/spboat/fore{
@@ -14133,7 +14135,7 @@
 "Kn" = (
 /obj/machinery/door/firedoor/glass/hidden/shuttle,
 /obj/structure/window/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /turf/simulated/floor/reinforced/airless,
 /area/shuttle/spboat/fore{
@@ -14146,7 +14148,7 @@
 	req_one_access = list(67)
 	},
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /obj/structure/cable/green{
 	icon_state = "1-2"
@@ -14277,12 +14279,12 @@
 	icon_state = "0-4"
 	},
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/fuel{
-	dir = 1
+	fancy_shuttle_tag = "spboat"
 	},
 /obj/effect/landmark/stardog,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 6
+	},
 /turf/simulated/floor/tiled,
 /area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
@@ -14292,7 +14294,7 @@
 	icon_state = "4-8"
 	},
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 4
@@ -14384,7 +14386,7 @@
 	icon_state = "1-2"
 	},
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 4
@@ -14554,7 +14556,7 @@
 	id = "shuttleshutter"
 	},
 /obj/structure/window/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /turf/simulated/floor/reinforced/airless,
 /area/shuttle/spboat/aft{
@@ -14604,7 +14606,7 @@
 	},
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /obj/machinery/atmospherics/unary/vent_pump/high_volume{
 	dir = 4
@@ -14788,7 +14790,7 @@
 	dir = 4
 	},
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 4
@@ -14897,7 +14899,7 @@
 /area/maintenance/moonbase/level2/west)
 "LS" = (
 /turf/simulated/wall/fancy_shuttle/nondense{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
@@ -14915,7 +14917,7 @@
 	pixel_x = -28
 	},
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /turf/simulated/floor/tiled,
 /area/shuttle/spboat/aft{
@@ -14984,7 +14986,7 @@
 	pixel_y = 32
 	},
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /turf/simulated/floor/tiled,
 /area/shuttle/spboat/aft{
@@ -15156,7 +15158,7 @@
 	pixel_x = 24
 	},
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /turf/simulated/floor/tiled,
 /area/shuttle/spboat/aft{
@@ -15177,7 +15179,7 @@
 	icon_state = "1-8"
 	},
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /turf/simulated/floor/tiled,
 /area/shuttle/spboat/aft{
@@ -15542,17 +15544,16 @@
 /turf/simulated/floor/tiled/dark,
 /area/security/checkpoint2)
 "Nt" = (
-/obj/machinery/door/firedoor/glass/hidden/shuttle,
-/obj/machinery/door/blast/shuttle/open{
-	id = "shuttleshutter"
+/obj/structure/cable{
+	icon_state = "4-8"
 	},
-/obj/structure/window/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+/obj/effect/floor_decal/fancy_shuttle{
+	fancy_shuttle_tag = "spboat"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
-	dir = 6
+/obj/machinery/atmospherics/pipe/manifold/hidden/fuel{
+	dir = 1
 	},
-/turf/simulated/floor/reinforced/airless,
+/turf/simulated/floor/tiled,
 /area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
@@ -15922,7 +15923,7 @@
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass_external,
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 4
@@ -16013,7 +16014,7 @@
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass_external,
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 10
@@ -16766,7 +16767,7 @@
 "Qw" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/wall/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
@@ -16970,7 +16971,7 @@
 	pixel_x = -32
 	},
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /obj/machinery/atmospherics/binary/pump/fuel{
 	dir = 1
@@ -17169,7 +17170,7 @@
 	},
 /obj/effect/map_helper/airlock/sensor/int_sensor,
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /obj/structure/closet/emergsuit_wall{
 	dir = 1;
@@ -17272,7 +17273,7 @@
 	id_tag = "spboat_docker_pump_out_internal"
 	},
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /turf/simulated/floor/tiled,
 /area/shuttle/spboat/aft{
@@ -17287,7 +17288,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /turf/simulated/floor/tiled,
 /area/shuttle/spboat/aft{
@@ -17381,7 +17382,7 @@
 "RU" = (
 /obj/machinery/portable_atmospherics/canister/phoron,
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /obj/machinery/atmospherics/portables_connector/fuel{
 	dir = 1
@@ -17568,7 +17569,7 @@
 	dir = 6
 	},
 /turf/simulated/wall/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
@@ -17687,7 +17688,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
@@ -17733,8 +17734,9 @@
 	pixel_y = -28
 	},
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor/tiled,
 /area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
@@ -17801,7 +17803,7 @@
 	},
 /obj/structure/cable/green,
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /turf/simulated/floor/tiled,
 /area/shuttle/spboat/aft{
@@ -17851,7 +17853,7 @@
 	req_one_access = list(11,67)
 	},
 /obj/effect/floor_decal/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /turf/simulated/floor/tiled,
 /area/shuttle/spboat/aft{
@@ -18019,7 +18021,7 @@
 	dir = 9
 	},
 /turf/simulated/wall/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
@@ -18059,16 +18061,6 @@
 "TI" = (
 /turf/simulated/floor/plating,
 /area/hallway/moonbase/central)
-"TJ" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
-	dir = 5
-	},
-/turf/simulated/wall/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/area/shuttle/spboat/aft{
-	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
-	})
 "TN" = (
 /obj/machinery/alarm{
 	dir = 8
@@ -18397,7 +18389,7 @@
 /area/moonbase/surface/leveltwo/east)
 "UI" = (
 /turf/simulated/wall/fancy_shuttle/low{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
@@ -18425,7 +18417,7 @@
 	id_tag = "spboat_docker_pump_out_external"
 	},
 /turf/simulated/wall/fancy_shuttle/low{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
@@ -18558,7 +18550,7 @@
 	dir = 6
 	},
 /turf/simulated/wall/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
@@ -18630,7 +18622,7 @@
 	dir = 9
 	},
 /turf/simulated/wall/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
@@ -18703,16 +18695,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
-"Vq" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
-	dir = 10
-	},
-/turf/simulated/wall/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
-	},
-/area/shuttle/spboat/aft{
-	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
-	})
 "Vr" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 4
@@ -18759,7 +18741,7 @@
 "Vv" = (
 /obj/machinery/door/firedoor/glass/hidden/shuttle,
 /obj/structure/window/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /turf/simulated/floor/reinforced/airless,
 /area/shuttle/spboat/aft{
@@ -18874,13 +18856,13 @@
 "VM" = (
 /obj/effect/fancy_shuttle/sd_shuttle{
 	dir = 1;
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /obj/effect/fancy_shuttle_floor_preview/sd_shuttle{
 	dir = 1
 	},
 /turf/simulated/wall/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
@@ -19058,7 +19040,7 @@
 	dir = 1
 	},
 /turf/simulated/wall/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
@@ -19834,7 +19816,7 @@
 /area/security/checkpoint2)
 "Yq" = (
 /turf/simulated/wall/fancy_shuttle{
-	fancy_shuttle_tag = "sdboat"
+	fancy_shuttle_tag = "spboat"
 	},
 /area/shuttle/spboat/fore{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
@@ -35276,10 +35258,10 @@ Dw
 LS
 Dv
 Dv
-Nt
-Qw
-Qw
-TJ
+Lg
+Dv
+Dv
+Dv
 VM
 Dw
 wh
@@ -35421,7 +35403,7 @@ GN
 KD
 Rc
 RU
-Vq
+UZ
 Wj
 Dw
 wh
@@ -35560,10 +35542,10 @@ DG
 LT
 Dv
 HN
-KE
+Nt
 SR
-Dv
-Dv
+Qw
+Vi
 Dv
 Dw
 Td

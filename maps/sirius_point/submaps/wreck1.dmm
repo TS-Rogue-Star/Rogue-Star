@@ -64,6 +64,11 @@
 "w" = (
 /turf/simulated/mineral/moonbase/ignore_mapgen,
 /area/submap/moonbase/poi/east_crater/wreck1)
+"x" = (
+/obj/structure/shuttle/window,
+/obj/structure/grille,
+/turf/simulated/floor,
+/area/submap/moonbase/poi/east_crater/wreck1)
 "y" = (
 /turf/simulated/shuttle/floor/airless,
 /area/submap/moonbase/poi/east_crater/wreck1)
@@ -80,7 +85,7 @@
 "D" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/silver,
-/turf/simulated/floor/tiled/external,
+/turf/simulated/floor/tiled/steel_ridged,
 /area/submap/moonbase/poi/east_crater/wreck1)
 "F" = (
 /obj/structure/shuttle/engine/heater,
@@ -297,7 +302,7 @@ a
 a
 a
 H
-r
+x
 H
 H
 H
@@ -342,7 +347,7 @@ a
 "}
 (8,1,1) = {"
 a
-r
+x
 s
 n
 y
@@ -366,7 +371,7 @@ a
 "}
 (9,1,1) = {"
 a
-r
+x
 s
 n
 q
@@ -390,7 +395,7 @@ a
 "}
 (10,1,1) = {"
 a
-r
+x
 z
 n
 y
@@ -441,7 +446,7 @@ a
 a
 a
 H
-r
+x
 H
 H
 H

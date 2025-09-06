@@ -4,7 +4,7 @@
 /obj/machinery/door/airlock/multi_tile/metal/mait{
 	dir = 2
 	},
-/turf/simulated/floor/tiled/airless,
+/turf/simulated/floor/tiled/steel_ridged,
 /area/submap/moonbase/poi/east_crater/xenoship)
 "at" = (
 /obj/structure/reagent_dispensers/watertank,
@@ -34,7 +34,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor/airless,
+/turf/simulated/floor,
 /area/submap/moonbase/poi/east_crater/xenoship)
 "dw" = (
 /obj/item/weapon/storage/pouch/ammo,
@@ -48,7 +48,7 @@
 /area/submap/moonbase/poi/east_crater/xenoship)
 "ei" = (
 /obj/effect/floor_decal/industrial/warning/color/tile,
-/turf/simulated/floor/tiled/airless,
+/turf/simulated/floor,
 /area/submap/moonbase/poi/east_crater/xenoship)
 "ej" = (
 /obj/structure/prop/machine/alien_tank/starts_broken,
@@ -74,7 +74,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/simulated/floor/airless,
+/turf/simulated/floor,
 /area/submap/moonbase/poi/east_crater/xenoship)
 "hY" = (
 /mob/living/simple_mob/animal/space/alien,
@@ -358,7 +358,7 @@
 /area/submap/moonbase/poi/east_crater/xenoship)
 "Pl" = (
 /obj/machinery/door/firedoor/border_only,
-/turf/simulated/floor/tiled/airless,
+/turf/simulated/floor/tiled/steel_ridged,
 /area/submap/moonbase/poi/east_crater/xenoship)
 "Qh" = (
 /obj/effect/decal/cleanable/blood{
@@ -380,7 +380,7 @@
 /obj/machinery/door/blast/multi_tile/four_tile_ver{
 	id = "xenoship"
 	},
-/turf/simulated/floor/tiled/airless,
+/turf/simulated/floor,
 /area/submap/moonbase/poi/east_crater/xenoship)
 "SR" = (
 /obj/item/bodybag/cryobag,
@@ -396,12 +396,12 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced,
-/turf/simulated/floor/airless,
+/turf/simulated/floor,
 /area/submap/moonbase/poi/east_crater/xenoship)
 "Tj" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass_external,
-/turf/simulated/floor/tiled/airless,
+/turf/simulated/floor/tiled/steel_ridged,
 /area/submap/moonbase/poi/east_crater/xenoship)
 "TJ" = (
 /obj/effect/decal/cleanable/blood{
@@ -423,13 +423,13 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced,
-/turf/simulated/floor/airless,
+/turf/simulated/floor,
 /area/submap/moonbase/poi/east_crater/xenoship)
 "VT" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
 /obj/structure/window/reinforced,
-/turf/simulated/floor/airless,
+/turf/simulated/floor,
 /area/submap/moonbase/poi/east_crater/xenoship)
 "WA" = (
 /obj/structure/foamedmetal,
@@ -820,7 +820,7 @@ yk
 bU
 TN
 ur
-pM
+El
 OS
 Ck
 Ck

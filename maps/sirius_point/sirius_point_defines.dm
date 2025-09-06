@@ -286,8 +286,8 @@
 	icon = 'icons/obj/overmap.dmi'
 	icon_state = "barren"
 
-	skybox_icon = 'icons/skybox/skybox_rs.dmi'
-	skybox_icon_state = "3c"
+//	skybox_icon = 'icons/skybox/skybox_rs.dmi'
+//	skybox_icon_state = "3c"
 
 	skybox_pixel_x = 0
 	skybox_pixel_y = 0
