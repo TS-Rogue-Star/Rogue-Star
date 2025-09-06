@@ -665,7 +665,14 @@ var/global/list/loadout_human_wearable_cache = list()
 		var/datum/gear_tweak/tweak = locate(href_list["tweak"])
 		if(!tweak || !istype(gear) || !(tweak in gear.gear_tweaks))
 			return TOPIC_NOACTION
-		var/metadata = tweak.get_metadata(user, get_tweak_metadata(gear, tweak))
+		// RS Edit: Updated to call color matrix when appropriate (Lira, September 2025)
+		var/metadata
+		if(istype(tweak, /datum/gear_tweak/matrix_recolor))
+			var/datum/gear_tweak/matrix_recolor/mt = tweak
+			metadata = mt.get_metadata(user, get_tweak_metadata(gear, mt), gear, get_gear_metadata(gear))
+		else
+			metadata = tweak.get_metadata(user, get_tweak_metadata(gear, tweak))
+		// RS Edit End
 		if(!metadata || !CanUseTopic(user))
 			return TOPIC_NOACTION
 		set_tweak_metadata(gear, tweak, metadata)
