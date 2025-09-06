@@ -16,6 +16,7 @@
 	var/mob_wander_distance = 3
 	var/mob_hostile = 0
 	var/mob_retaliate = 0
+	var/mob_disable_hunting = TRUE	//RS ADD - If true, mobs spawned through the random spawners will have hunter set to FALSE
 
 /obj/random/mob/item_to_spawn()
 	return pick(prob(10);/mob/living/simple_mob/animal/passive/lizard,
@@ -65,6 +66,8 @@
 	if(mob_faction)
 		M.faction = mob_faction
 
+	if(mob_disable_hunting)	//RS ADD
+		M.hunter = FALSE	//RS ADD
 
 
 /obj/random/mob/sif

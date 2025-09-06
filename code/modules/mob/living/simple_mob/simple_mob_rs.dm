@@ -97,9 +97,16 @@
 	if(idle_time >= 30)
 		expire()
 
-var/mob/living/simple_mob/simplemob_bleeds = TRUE
+/mob/living/simple_mob/
+	var/simplemob_bleeds = TRUE
+
+/mob/living/simple_mob/xeno
+	simplemob_bleeds = FALSE
+	hunter = FALSE
+/mob/living/simple_mob/mechanical
+	simplemob_bleeds = FALSE
 
 /mob/living/simple_mob/adjustBruteLoss(amount, include_robo)
 	. = ..()
-	if(simplemob_bleeds)
+	if(amount > 0 && simplemob_bleeds)
 		add_modifier(/datum/modifier/bleeding)

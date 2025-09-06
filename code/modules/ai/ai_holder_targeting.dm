@@ -30,6 +30,8 @@
 	var/forgive_resting = TRUE				//VOREStation add - If TRUE on a RETALIATE mob, then mob will drop target if it becomes hostile to you but hasn't taken damage
 	var/grab_hostile = TRUE
 	var/blood_time = 0						//RS ADD - hunting mobs will only care about blood that is newer than this.
+	var/last_target_sighting = 0			//RS ADD - The last time a mob saw its target
+	var/last_attacked_time = 0				//RS ADD - The last time a mob was attacked
 
 // A lot of this is based off of /TG/'s AI code.
 
@@ -72,10 +74,11 @@
 			. += possible_target
 
 	var/new_target = pick_target(.)
-	if(holder.hunter && !new_target)	//RS ADD START
-		if(holder.food_pref == CARNIVORE || holder.food_pref == OMNIVORE)
-			blood_hunt()
-			return						//RS ADD END
+	if(stance == STANCE_IDLE)				//RS ADD START
+		if(holder.hunter && !new_target)
+			if(holder.food_pref == CARNIVORE || holder.food_pref == OMNIVORE)
+				blood_hunt()
+				return						//RS ADD END
 	give_target(new_target)
 	return new_target
 
@@ -279,10 +282,20 @@
 		ai_log("can_see_target() : Target ([the_target]) was too far from holder. Exiting.", AI_LOG_TRACE)
 		return FALSE
 
-	if(!can_see(holder, the_target, view_range))
+/*	if(!can_see(holder, the_target, view_range))	//RS EDIT START
 		ai_log("can_see_target() : Target ([the_target]) failed can_see(). Exiting.", AI_LOG_TRACE)
 		return FALSE
-
+*/
+	if(the_target in view(view_range,holder))
+		last_target_sighting = world.time
+	else if(world.time >= last_target_sighting + 2 SECONDS)
+		ai_log("can_see_target() : Timed out. Exiting.", AI_LOG_TRACE)
+		return FALSE
+	if(!hostile && !holder.hunter)
+		if(holder.health > (holder.maxHealth * 0.75))
+			if(last_attacked_time + 5 SECONDS <= world.time)
+				remove_target()
+				return FALSE	//RS EDIT END
 	ai_log("can_see_target() : Target ([the_target]) can be seen. Exiting.", AI_LOG_TRACE)
 	return TRUE
 
@@ -313,7 +326,7 @@
 	if(holder.stat) // We're dead.
 		ai_log("react_to_attack() : Was attacked by [attacker], but we are dead/unconscious.", AI_LOG_TRACE)
 		return FALSE
-	if(!hostile && !retaliate) // Not allowed to defend ourselves.
+	if(!hostile && !retaliate && !holder.hunter) // Not allowed to defend ourselves.	//RS EDIT
 		ai_log("react_to_attack() : Was attacked by [attacker], but we are not allowed to attack back.", AI_LOG_TRACE)
 		return FALSE
 	if(!belly_attack)
@@ -340,6 +353,7 @@
 
 	ai_log("react_to_attack() : Was attacked by [attacker].", AI_LOG_INFO)
 	on_attacked(attacker) // So we attack immediately and not threaten.
+	last_attacked_time = world.time	//RS ADD
 	return give_target(attacker, urgent = TRUE) // Also handles setting the appropiate stance.
 
 // Sets a few vars so mobs that threaten will react faster to an attacker or someone who attacked them before.

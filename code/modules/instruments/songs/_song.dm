@@ -8,6 +8,11 @@
  * These are the actual backend behind instruments.
  * They attach to an atom and provide the editor + playback functionality.
  */
+
+////////////////////////////////////////////////////////////////////////////////////
+//Updated by Lira for Rogue Star August 2025 to support forming synchronized bands//
+////////////////////////////////////////////////////////////////////////////////////
+
 /datum/song
 	/// Name of the song
 	var/name = "Untitled"
@@ -127,6 +132,34 @@
 	var/cached_exponential_dropoff = 1.045
 	/////////////////////////////////////////////////////////////////////////
 
+	//RS Add: Visual cue (Lira, August 2025)
+	/// Last world.time we spawned a floating note visual
+	var/last_note_fx_time = 0
+	/// Interval in deciseconds between note visuals
+	var/note_fx_interval_ds = 20
+
+	//RS Add: Band sync (Lira, August 2025)
+	/// If following, points to the leader's song datum
+	var/datum/song/band_leader
+	/// If leader, list of follower song datums
+	var/list/datum/song/band_followers
+	/// Optional override for sync radius (tiles); defaults to BAND_SYNC_RANGE
+	var/band_range = BAND_SYNC_RANGE
+	/// Optional per-instrument sync delay in deciseconds (applied when following in a band)
+	var/band_delay_ds = 0
+	/// If enabled, follower auto-starts and auto-resumes with the leader
+	var/band_autoplay = TRUE
+	/// Set true when the user manually clicked Stop; prevents auto-resume until they Play again
+	var/band_paused_manually = FALSE
+
+	//RS Add: Note range filter (Lira, August 2025)
+	/// Enable/disable note range filter per performer
+	var/note_filter_enabled = FALSE
+	/// Inclusive lower bound (0-127)
+	var/note_filter_min = INSTRUMENT_MIN_KEY
+	/// Inclusive upper bound (0-127)
+	var/note_filter_max = INSTRUMENT_MAX_KEY
+
 /datum/song/New(atom/parent, list/instrument_ids, new_range)
 	SSinstruments.on_song_new(src)
 	lines = list()
@@ -141,6 +174,7 @@
 	update_sustain()
 	if(new_range)
 		instrument_range = new_range
+	band_followers = list() //RS Edit: Initialize band followers (Lira, August 2025)
 
 /datum/song/Destroy()
 	stop_playing()
@@ -151,6 +185,8 @@
 		using_instrument = null
 	allowed_instrument_ids = null
 	parent = null
+	band_followers = null //RS Edit: Destory the followers (Lira, August 2025)
+	band_leader = null //RS Edit: Destory the followers (Lira, August 2025)
 	return ..()
 
 /**
@@ -208,6 +244,13 @@
 	if(!using_instrument?.ready())
 		to_chat(user, "<span class='warning'>An error has occurred with [src]. Please reset the instrument.</span>")
 		return
+	if(band_is_follower() && !(band_leader?.playing)) //RS Add: If we're a band member and the leader isn't playing, block manual start (Lira, August 2025)
+		to_chat(user, "<span class='warning'>Band leader is not currently playing; no active song to sync.</span>")
+		return
+	band_paused_manually = FALSE //RS Add: User explicitly started playback; clear any manual pause state
+	if(band_is_follower() && band_leader?.playing) //RS Add: If we're a band follower and the leader is currently playing, mirror the leader's lines and tempo so chord indices align (Lira, August 2025)
+		lines = band_leader.lines?.Copy() || list()
+		tempo = band_leader.tempo
 	compile_chords()
 	if(!length(compiled_chords))
 		to_chat(user, "<span class='warning'>Song is empty.</span>")
@@ -222,12 +265,41 @@
 	delay_by = 0
 	current_chord = 1
 	user_playing = user
+	last_note_fx_time = world.time - note_fx_interval_ds //RS Add: Prime visual cue so the first note shows quickly (Lira, August 2025)
 	START_PROCESSING(SSinstruments, src)
+
+	//RS Add Start: Band playing (Lira, August 2025)
+	//If we're a band leader with selected followers, start them now
+	if(band_is_leader())
+		band_start_followers(user)
+	//If we just started as a follower while leader is mid-song, immediately sync by playing the leader's current chord so we "catch up".
+	else if(band_is_follower() && band_leader?.playing)
+		//Only sync if we're ready (held and in range)
+		if(band_ready_for(band_leader))
+			//Ensure hearing lists are fresh
+			if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > band_leader.last_hearcheck)
+				band_leader.do_hearcheck()
+			if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > last_hearcheck)
+				do_hearcheck()
+			var/ch_idx = clamp(band_leader.current_chord, 1, length(compiled_chords))
+			if(ch_idx <= length(compiled_chords))
+				//Reflect our current chord to match leader for UI consistency
+				current_chord = ch_idx
+				var/list/f_chord = compiled_chords[ch_idx]
+				var/list/targets = band_leader.hearing_mobs?.Copy() || list()
+				targets |= hearing_mobs
+				var/delay = max(0, round(band_delay_ds, world.tick_lag))
+				if(delay)
+					var/list/targets_snapshot = targets.Copy()
+					addtimer(CALLBACK(src, PROC_REF(play_chord_if_playing), f_chord, targets_snapshot), delay)
+				else
+					play_chord_if_playing(f_chord, targets)
+	//RS Add End
 
 /**
  * Stops playing, terminating all sounds if in synthesized mode. Clears hearing_mobs.
  */
-/datum/song/proc/stop_playing()
+/datum/song/proc/stop_playing(keep_band = FALSE) //RS Edit: End band by default (Lira, August 2025)
 	if(!playing)
 		return
 	playing = FALSE
@@ -238,17 +310,53 @@
 	terminate_all_sounds(TRUE)
 	hearing_mobs.len = 0
 	user_playing = null
+	//RS Add Start: Band stop playing (Lira, August 2025)
+	if(band_leader == src)
+		band_stop_followers_playback()
+	if(!keep_band && band_is_follower())
+		band_leave()
+	//RS Add End
 
 /**
  * Processes our song.
  */
 /datum/song/proc/process_song(wait)
+	if(playing) //RS Add: Visual cue when playing (Lira, August 2025)
+		//Throttle to once every note_fx_interval_ds deciseconds
+		if(world.time - last_note_fx_time >= note_fx_interval_ds)
+			var/atom/anchor = get_holder() || parent
+			if(anchor)
+				//Show a musical note above the performer/instrument to viewers in instrument range
+				var/note = pick("♪", "♫")
+				anchor.runechat_message(note, instrument_range, FALSE, list("musicnote", "black_outline"))
+			last_note_fx_time = world.time
+
+	if(band_is_follower()) //RS Add: Followers don't advance their own chord progression; leader drives playback (Lira, August 2025)
+		return
+
 	if(!length(compiled_chords) || should_stop_playing(user_playing))
 		stop_playing()
 		return
 	var/list/chord = compiled_chords[current_chord]
 	if(++elapsed_delay >= delay_by)
-		play_chord(chord)
+		//RS Add Start: Band logic (Lira, August 2025)
+		var/list/targets_override
+		if(band_is_leader())
+			//Build a union of hearing mobs from leader and ready followers
+			if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > last_hearcheck)
+				do_hearcheck()
+			targets_override = hearing_mobs.Copy()
+			for(var/datum/song/S as anything in band_followers)
+				if(!S.band_ready_for(src))
+					continue
+				if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > S.last_hearcheck)
+					S.do_hearcheck()
+				targets_override |= S.hearing_mobs
+		play_chord(chord, targets_override)
+		//Broadcast this chord to followers (if any)
+		if(band_is_leader())
+			band_broadcast_play(current_chord)
+		//RS Add End
 		elapsed_delay = 0
 		delay_by = tempodiv_to_delay(chord[length(chord)])
 		current_chord++
@@ -278,10 +386,10 @@
 /**
  * Plays a chord.
  */
-/datum/song/proc/play_chord(list/chord)
+/datum/song/proc/play_chord(list/chord, list/targets_override) //RS Edit: Adds band override (Lira, August 2025)
 	// last value is timing information
 	for(var/i in 1 to (length(chord) - 1))
-		legacy? playkey_legacy(chord[i][1], chord[i][2], chord[i][3], user_playing) : playkey_synth(chord[i], user_playing)
+		legacy? playkey_legacy(chord[i][1], chord[i][2], chord[i][3], user_playing, targets_override) : playkey_synth(chord[i], user_playing, targets_override) //RS Edit: Adds band override (Lira, August 2025)
 
 /**
  * Checks if we should halt playback.
@@ -403,3 +511,287 @@
 		return TRUE
 	var/obj/structure/musician/M = parent
 	return M.should_stop_playing(user)
+
+//RS Add Start: Band sync support procs (Lira, August 2025)
+
+//Returns the mob holding this instrument if handheld, or null otherwise
+/datum/song/proc/get_holder()
+	if(istype(parent, /obj/item))
+		var/obj/item/I = parent
+		if(ismob(I.loc))
+			return I.loc
+	return null
+
+//Holder name if available
+/datum/song/proc/get_holder_name()
+	var/mob/M = get_holder()
+	return M ? M.name : "(unheld)"
+
+//Returns TRUE if follower is held and within range of the given leader
+/datum/song/proc/band_ready_for(datum/song/leader)
+	if(!leader || QDELETED(leader) || QDELETED(leader.parent) || QDELETED(parent))
+		return FALSE
+	var/mob/holder = get_holder()
+	if(!holder)
+		return FALSE
+	var/turf/lt = get_turf(leader.parent)
+	var/turf/ft = get_turf(parent)
+	if(!lt || !ft)
+		return FALSE
+	return (get_dist(lt, ft) <= leader.band_range)
+
+//Enable and set inclusive note range filter (0-127 keys)
+/datum/song/proc/set_note_filter_bounds(low, high)
+	low = clamp(round(low), INSTRUMENT_MIN_KEY, INSTRUMENT_MAX_KEY)
+	high = clamp(round(high), INSTRUMENT_MIN_KEY, INSTRUMENT_MAX_KEY)
+	if(high < low)
+		var/tmp = low
+		low = high
+		high = tmp
+	note_filter_min = low
+	note_filter_max = high
+	note_filter_enabled = TRUE
+	updateDialog()
+
+//Disable note range filter
+/datum/song/proc/clear_note_filter()
+	note_filter_enabled = FALSE
+	updateDialog()
+
+ //Plays a chord only if we are still playing
+/datum/song/proc/play_chord_if_playing(list/chord, list/targets_override)
+	if(!playing)
+		return
+	play_chord(chord, targets_override)
+
+//Are we currently leading a band?
+/datum/song/proc/band_is_leader()
+	return band_leader == src && length(band_followers)
+
+//Are we currently following a band?
+/datum/song/proc/band_is_follower()
+	return band_leader && band_leader != src
+
+//Create band: set self as leader and ensure followers list exists
+/datum/song/proc/band_create()
+	band_leader = src
+	if(!islist(band_followers))
+		band_followers = list()
+
+
+//Invite nearby held instruments to join our band
+/datum/song/proc/band_invite_nearby(mob/requester)
+    if(band_leader != src)
+        band_create()
+    var/turf/src_turf = get_turf(parent)
+    var/mob/holder
+    var/req_name
+    var/instr_name
+    var/msg
+    var/ans
+    for(var/datum/song/S as anything in SSinstruments.songs)
+        if(S == src)
+            continue
+        if(QDELETED(S) || QDELETED(S.parent))
+            continue
+        if(S.band_leader || S.band_is_follower())
+            continue
+        var/turf/other = get_turf(S.parent)
+        if(!other || get_dist(src_turf, other) > band_range)
+            continue
+        holder = S.get_holder()
+        if(!holder || !holder.client)
+            continue
+        req_name = requester ? requester.name : "Someone"
+        instr_name = (S.parent && S.parent.name) ? S.parent.name : "instrument"
+        msg = "[req_name] wants to sync your [instr_name] with their band. Accept?"
+        ans = tgui_alert(holder, msg, "Band Invite", list("Accept", "Decline"))
+        if(ans == "Accept")
+            S.band_join(src)
+            to_chat(holder, "<span class='notice'>You joined [requester?.name]'s band.</span>")
+            to_chat(requester, "<span class='notice'>[holder.name] joined your band.</span>")
+
+//Start all collected followers: copy song state and start their processing
+/datum/song/proc/band_start_followers(mob/user)
+	if(!band_is_leader())
+		return
+	for(var/datum/song/S as anything in band_followers.Copy())
+		if(QDELETED(S) || QDELETED(S.parent))
+			band_followers -= S
+			continue
+		S.band_join(src)
+		//Always push current song/tempo to followers so they are primed, even if autoplay is disabled; this lets them press Play and sync
+		S.lines = src.lines?.Copy() || list()
+		S.tempo = src.tempo
+		S.compile_chords()
+		//Reset manual pause on new leader start; obey follower autoplay
+		S.band_paused_manually = FALSE
+		//Only start ready followers (held and in range) and with autoplay enabled
+		if(S.band_autoplay && S.band_ready_for(src))
+			//Ensure they are not already playing solo
+			if(S.playing)
+				S.stop_playing(TRUE)
+			//Start their processing; progression is driven by leader
+			S.playing = TRUE
+			S.elapsed_delay = 0
+			S.delay_by = 0
+			S.current_chord = 1
+			S.user_playing = user
+			SEND_SIGNAL(S.parent, COMSIG_SONG_START)
+			START_PROCESSING(SSinstruments, S)
+		else
+			//Ensure not playing if not ready
+			if(S.playing)
+				S.stop_playing(TRUE)
+
+//Stop and release all followers
+/datum/song/proc/band_stop_followers()
+	for(var/datum/song/S as anything in band_followers)
+		if(QDELETED(S))
+			continue
+		S.stop_playing(TRUE)
+		S.band_leave()
+	band_followers.len = 0
+	band_leader = null
+
+//Stops playback for all followers but keeps membership intact
+/datum/song/proc/band_stop_followers_playback()
+	for(var/datum/song/S as anything in band_followers)
+		if(QDELETED(S))
+			continue
+		S.stop_playing(TRUE)
+
+//A follower joins the given leader
+/datum/song/proc/band_join(datum/song/leader)
+	band_leader = leader
+	if(!(src in leader.band_followers))
+		leader.band_followers += src
+
+//Leave the current band
+/datum/song/proc/band_leave()
+	if(band_leader)
+		band_leader.band_followers -= src
+	band_leader = null
+
+
+//Transfer band leadership from this leader to one of its followers
+/datum/song/proc/band_transfer_leadership(datum/song/new_leader)
+	if(band_leader != src)
+		return
+	if(!istype(new_leader) || QDELETED(new_leader) || new_leader == src)
+		return
+	if(!(new_leader in band_followers))
+		return
+
+	//Snapshot current band membership including ourselves
+	var/list/all_members = band_followers?.Copy() || list()
+	all_members |= src
+
+	var/was_playing = playing
+	var/prev_chord = current_chord
+
+	//Prime the new leader with our song data
+	new_leader.lines = src.lines?.Copy() || list()
+	new_leader.tempo = src.tempo
+	new_leader.compile_chords()
+
+	//New leader becomes a leader
+	new_leader.band_leader = new_leader
+	if(!islist(new_leader.band_followers))
+		new_leader.band_followers = list()
+	else
+		new_leader.band_followers.len = 0
+
+	//Reassign all members to the new leader and rebuild their follower list
+	for(var/datum/song/S as anything in all_members)
+		if(QDELETED(S))
+			continue
+		if(S == new_leader)
+			continue
+		S.band_leader = new_leader
+		if(!(S in new_leader.band_followers))
+			new_leader.band_followers += S
+
+	//Old leader is now a follower of the new leader
+	band_followers.len = 0
+	band_leader = new_leader
+
+	//If we were playing, start the new leader and sync to our current chord
+	if(was_playing)
+		if(!new_leader.playing)
+			new_leader.start_playing(user_playing)
+		//Align chord index for continuity
+		new_leader.current_chord = clamp(prev_chord, 1, length(new_leader.compiled_chords))
+		new_leader.elapsed_delay = 0
+		if(length(new_leader.compiled_chords))
+			var/list/ch = new_leader.compiled_chords[new_leader.current_chord]
+			new_leader.delay_by = new_leader.tempodiv_to_delay(ch[length(ch)])
+
+	//Broadcast notices
+	var/new_leader_name = new_leader.get_holder_name()
+	var/list/notify = list()
+	notify += new_leader
+	for(var/datum/song/S as anything in new_leader.band_followers)
+		notify += S
+	for(var/datum/song/N as anything in notify)
+		var/mob/H = N.get_holder()
+		if(!H)
+			continue
+		if(N == new_leader)
+			to_chat(H, "<span class='notice'>You are now the band leader.</span>")
+		else if(N == src)
+			to_chat(H, "<span class='notice'>You made [new_leader_name] the band leader.</span>")
+		else
+			to_chat(H, "<span class='notice'>Band leader is now [new_leader_name].</span>")
+
+
+//Broadcast a chord index to followers; they will play their own compiled chord at that index
+/datum/song/proc/band_broadcast_play(chord_index)
+	if(!band_is_leader())
+		return
+	//Ensure our own hearing list is fresh
+	if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > last_hearcheck)
+		do_hearcheck()
+	for(var/datum/song/S as anything in band_followers.Copy())
+		if(QDELETED(S) || QDELETED(S.parent))
+			band_followers -= S
+			continue
+		//Drop if out of range
+		var/turf/other = get_turf(S.parent)
+		if(!other || !S.band_ready_for(src))
+			//Not ready: Ensure not playing but keep membership
+			if(S.playing)
+				S.stop_playing(TRUE)
+			//Clear manual pause when follower becomes unready so that returning to ready state can auto-resume if autoplay is enabled
+			S.band_paused_manually = FALSE
+			continue
+		//Update follower hearing list too
+			if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > S.last_hearcheck)
+				S.do_hearcheck()
+		//Autoplay auto-resume: If follower is ready, not playing, autoplay enabled, and not manually paused, start them now synced to the leader's current chord
+		if(!S.playing && S.band_autoplay && !S.band_paused_manually)
+			S.lines = src.lines?.Copy() || list()
+			S.tempo = src.tempo
+			S.compile_chords()
+			S.playing = TRUE
+			S.elapsed_delay = 0
+			S.delay_by = 0
+			S.current_chord = clamp(chord_index, 1, length(S.compiled_chords))
+			S.user_playing = user_playing
+			SEND_SIGNAL(S.parent, COMSIG_SONG_START)
+			START_PROCESSING(SSinstruments, S)
+		//Ensure chords exist
+		if(chord_index > length(S.compiled_chords))
+			continue
+		var/list/f_chord = S.compiled_chords[chord_index]
+		//Union of leader and follower targets so everyone in either range hears
+		var/list/targets = hearing_mobs.Copy()
+		targets |= S.hearing_mobs
+		var/delay = max(0, round(S.band_delay_ds, world.tick_lag))
+		if(delay)
+			//Schedule with delay, snapshot targets
+			var/list/targets_snapshot = targets.Copy()
+			addtimer(CALLBACK(S, PROC_REF(play_chord_if_playing), f_chord, targets_snapshot), delay)
+		else
+			S.play_chord_if_playing(f_chord, targets)
+//RS Add End
