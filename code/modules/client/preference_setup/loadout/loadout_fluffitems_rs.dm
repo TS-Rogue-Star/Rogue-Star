@@ -91,3 +91,82 @@
 	display_name = "Baele's Robe"
 	ckeywhitelist = list("malderg")
 	character_name = list("Baele")
+
+/datum/gear/fluff/portal_cap
+	path = /obj/item/clothing/head/soft/fluff/portalsoft
+	slot = slot_head
+	display_name = "Portal's Cap"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_mask
+	path = /obj/item/clothing/mask/fluff/portal_mask
+	slot = slot_wear_mask
+	display_name = "Portal's Mask"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_jacket
+	path = /obj/item/clothing/suit/storage/fluff/jacket/portaljacket
+	slot = slot_wear_suit
+	display_name = "Portal's Jacket"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_uniform
+	path = /obj/item/clothing/under/fluff/portaluniform
+	slot = slot_w_uniform
+	display_name = "Portal's Uniform"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_gloves
+	path = /obj/item/clothing/gloves/fluff/portalgloves
+	slot = slot_gloves
+	display_name = "Portal's Gloves"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_boots
+	path = /obj/item/clothing/shoes/boots/fluff/portalboots
+	slot = slot_shoes
+	display_name = "Portal's Boots"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_bag
+	path = /obj/item/weapon/storage/backpack/satchel/fluff/portalbag
+	slot = slot_back
+	display_name = "Portal's Satchel"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_plushie
+	path = /obj/item/toy/plushie/portal
+	display_name = "Portal Plushie"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_pizza
+	path = /obj/random/fluff/portalpizza
+	display_name = "Random Pizza"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_pizza_double
+	path = /obj/random/fluff/portalpizza_double
+	display_name = "Random Second Pizza"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_side
+	path = /obj/random/fluff/portalside
+	display_name = "Random Side Dish"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_soda
+	path = /obj/random/fluff/portaldrink
+	display_name = "Random Drinks"
+	ckeywhitelist = list("googlyfox")
+	character_name = null

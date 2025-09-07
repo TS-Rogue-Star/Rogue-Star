@@ -459,7 +459,7 @@ digi-inner-thighs
 <br>
 **File:** `icons/inventory/head/item_rs.dmi, icons/inventory/head/mob_rs.dmi, icons/inventory/uniform/item_rs.dmi, icons/inventory/uniform/mob_rs.dmi, icons/inventory/suit/item_rs.dmi, icons/inventory/suit/mob_rs.dmi`<br>
 **Icon-States:** talon_basic_refreshed, talon_security_refreshed, talon_jumpsuit_refreshed, talon_pilot_refreshed, talon_captain_refreshed, talon_capcoat, talon_pilotjacket, talon_labcoat, taloncoat, talon_caphat, talon_pilothat, talonnewsoft, talon_beret, talon_officer_beret, winterhood_talon<br>
-**Creator:** Comissioned by axietheaxolotl, Imaginos16<br>
+**Creator:** Original graphics by axietheaxolotl, Imaginos16<br>
 **Link:** https://github.com/tgstation/tgstation/pull/70226, https://github.com/tgstation/tgstation/pull/67286, https://github.com/tgstation/tgstation/pull/69842, https://github.com/tgstation/tgstation/pull/66355, https://github.com/tgstation/tgstation/pull/73795, https://github.com/tgstation/tgstation/pull/71479
 <br>
 **File:** `sound/voice/caw.ogg`<br>
@@ -467,6 +467,10 @@ digi-inner-thighs
 **Link:** https://freesound.org/people/Jofae/sounds/361470/<br>
 **License:** [Creative Commons 0](https://creativecommons.org/publicdomain/zero/1.0/)<br>
 <br>
+**File:** `icons/vore/custom_clothes_rs.dmi, icons/vore/custom_onmob_rs.dmi, custom_items_rs.dmi, custom_items_right_hand_rs.dmi, custom_items_left_hand_rs.dmi, tails_64x32_rs.dmi`<br>
+**Icon-States:** portalboots_mob, portalboots, portalgloves_mob, portalgloves, portaluniform_mob, portaluniform_mob, portaluniform, portaljacket_mob, portaljacket, portalmask_mob, portalmask, portalcap_mob, portalcap, portalbag_mob, portalbag, pizzabox, canholder, dr_gibb, space_up, bigfluffytail2`<br>
+**Creator:** Original graphics by Ebin-Halcyon, Imaginos16, AdipemDragon, CoiledLamb, OrionTheFox, GuillaumePrata, VerySoft<br>
+**Link:** https://github.com/Skyrat-SS13/Skyrat-tg/pull/10737, https://github.com/tgstation/tgstation/pull/64111, https://github.com/tgstation/tgstation/pull/77424, https://github.com/tgstation/tgstation/pull/77964, https://github.com/tgstation/tgstation/pull/70220, https://github.com/TS-Rogue-Star/Rogue-Star/pull/737
 **File:** `icons/mob/100x100.dmi`<br>
 **Creator: LooseLeaf<br>
 **Link: https://github.com/TS-Rogue-Star/Rogue-Star/pull/1011<br>

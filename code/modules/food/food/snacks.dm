@@ -3682,7 +3682,7 @@
 /////////////////////////////////////////////////PIZZA/////////////////////////////////////////////////
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza
-	slices_num = 6
+	slices_num = 8 // RS Edit
 	filling_color = "#BAA14C"
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/margherita
@@ -3690,7 +3690,7 @@
 	desc = "The golden standard of pizzas."
 	icon_state = "pizzamargherita"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/slice/margherita
-	slices_num = 6
+	slices_num = 8 // RS Edit
 	center_of_mass = list("x"=16, "y"=11)
 	nutriment_desc = list("pizza crust" = 10, "tomato" = 10, "cheese" = 15)
 	nutriment_amt = 35
@@ -3717,8 +3717,8 @@
 	name = "ham & pineapple pizza"
 	desc = "One of the most debated pizzas in existence."
 	icon_state = "pineapple_pizza"
-	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pineappleslice
-	slices_num = 6
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/slice/pineapple // RS Edit
+	slices_num = 8 // RS Edit
 	center_of_mass = list("x"=16, "y"=11)
 	nutriment_desc = list("pizza crust" = 10, "tomato" = 10, "ham" = 10)
 	nutriment_amt = 30
@@ -3730,24 +3730,24 @@
 	reagents.add_reagent("cheese", 5)
 	reagents.add_reagent("tomatojuice", 6)
 
-/obj/item/weapon/reagent_containers/food/snacks/pineappleslice
+/obj/item/weapon/reagent_containers/food/snacks/slice/pineapple // RS Edit
 	name = "ham & pineapple pizza slice"
 	desc = "A slice of contraband."
 	icon_state = "pineapple_pizza_slice"
 	filling_color = "#BAA14C"
 	bitesize = 2
 	center_of_mass = list("x"=18, "y"=13)
+	whole_path = /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/pineapple // RS Edit
 
-/obj/item/weapon/reagent_containers/food/snacks/pineappleslice/filled
-	nutriment_desc = list("pizza crust" = 5, "tomato" = 5)
-	nutriment_amt = 5
+/obj/item/weapon/reagent_containers/food/snacks/slice/pineapple/filled
+	filled = TRUE
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meatpizza
 	name = "Meatpizza"
 	desc = "A pizza with meat topping."
 	icon_state = "meatpizza"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/slice/meatpizza
-	slices_num = 6
+	slices_num = 8 // RS Edit
 	center_of_mass = list("x"=16, "y"=11)
 	nutriment_desc = list("pizza crust" = 10, "tomato" = 10, "cheese" = 15, "meat" = 10)
 	nutriment_amt = 10
@@ -3775,7 +3775,7 @@
 	desc = "Very special pizza."
 	icon_state = "mushroompizza"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/slice/mushroompizza
-	slices_num = 6
+	slices_num = 8 // RS Edit
 	center_of_mass = list("x"=16, "y"=11)
 	nutriment_desc = list("pizza crust" = 10, "tomato" = 10, "cheese" = 5, "mushroom" = 10)
 	nutriment_amt = 35
@@ -3802,7 +3802,7 @@
 	desc = "No one of Tomato Sapiens were harmed during making this pizza."
 	icon_state = "vegetablepizza"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/slice/vegetablepizza
-	slices_num = 6
+	slices_num = 8 // RS Edit
 	center_of_mass = list("x"=16, "y"=11)
 	nutriment_desc = list("pizza crust" = 10, "tomato" = 10, "cheese" = 5, "eggplant" = 5, "carrot" = 5, "corn" = 5)
 	nutriment_amt = 25
@@ -3831,7 +3831,7 @@
 	desc = "This was once a normal pizza, but it has been coated in batter and deep-fried. Whatever toppings it once had are a mystery, but they're still under there, somewhere..."
 	icon_state = "pizzacrunch"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pizzacrunchslice
-	slices_num = 6
+	slices_num = 8 // RS Edit
 	nutriment_amt = 25
 	nutriment_desc = list("fried pizza" = 25)
 	center_of_mass = list("x"=16, "y"=11)
@@ -3850,7 +3850,7 @@
 	desc = "This pizza might actually be alive.  There's mold all over."
 	icon_state = "oldpizza"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/slice/oldpizza
-	slices_num = 6
+	slices_num = 8 // RS Edit
 	center_of_mass = list("x"=16, "y"=11)
 	nutriment_desc = list("stale pizza crust" = 10, "moldy tomato" = 10, "moldy cheese" = 5)
 	nutriment_amt = 10
