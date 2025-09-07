@@ -83,5 +83,5 @@
 	name = "Christy Tails"
 	icon = 'icons/rogue-star/tails_64x32_rs.dmi'
 	icon_state = "ChristyKitsune"
-	//ckeys_allowed = list("christykitsune")
+	ckeys_allowed = list("christykitsune")
 	do_colouration = 0
