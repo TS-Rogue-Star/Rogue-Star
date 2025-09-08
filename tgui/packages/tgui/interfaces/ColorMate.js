@@ -1,11 +1,16 @@
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2025 with a new mode for use in the character creator loadout//
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 import { useBackend } from '../backend';
 import { Button, Icon, NoticeBox, NumberInput, Section, Slider, Table, Tabs } from '../components';
 import { Window } from '../layouts';
 
 export const ColorMate = (props, context) => {
   const { act, data } = useBackend(context);
-  const { activemode, temp } = data;
+  const { activemode, temp, picker_mode, picker_force_mode } = data; // RS Add: Add picker mode data (Lira, September 2025)
   const item = data.item || [];
+  const hideNonMatrixTabs = !!(picker_mode && picker_force_mode === 3); // RS Add: Hide tabs in picker mode (Lira, September 2025)
   return (
     <Window width="980" height="720" resizable>
       <Window.Content overflow="auto">
@@ -42,26 +47,30 @@ export const ColorMate = (props, context) => {
                 </Table.Cell>
               </Table>
               <Tabs fluid>
-                <Tabs.Tab
-                  key="1"
-                  selected={activemode === 1}
-                  onClick={() =>
-                    act('switch_modes', {
-                      mode: 1,
-                    })
-                  }>
-                  Tint coloring (Simple)
-                </Tabs.Tab>
-                <Tabs.Tab
-                  key="2"
-                  selected={activemode === 2}
-                  onClick={() =>
-                    act('switch_modes', {
-                      mode: 2,
-                    })
-                  }>
-                  HSV coloring (Normal)
-                </Tabs.Tab>
+                {!hideNonMatrixTabs && ( // RS Add: Hide tabs in picker mode (Lira, September 2025)
+                  <Tabs.Tab
+                    key="1"
+                    selected={activemode === 1}
+                    onClick={() =>
+                      act('switch_modes', {
+                        mode: 1,
+                      })
+                    }>
+                    Tint coloring (Simple)
+                  </Tabs.Tab>
+                )}
+                {!hideNonMatrixTabs && ( // RS Add: Hide tabs in picker mode (Lira, September 2025)
+                  <Tabs.Tab
+                    key="2"
+                    selected={activemode === 2}
+                    onClick={() =>
+                      act('switch_modes', {
+                        mode: 2,
+                      })
+                    }>
+                    HSV coloring (Normal)
+                  </Tabs.Tab>
+                )}
                 <Tabs.Tab
                   key="3"
                   selected={activemode === 3}
