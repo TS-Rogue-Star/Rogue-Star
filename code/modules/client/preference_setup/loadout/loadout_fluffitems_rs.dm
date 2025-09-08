@@ -91,3 +91,17 @@
 	display_name = "Baele's Robe"
 	ckeywhitelist = list("malderg")
 	character_name = list("Baele")
+
+// Approved via modmail (Lira, September 2025)
+/datum/gear/fluff/sad_starfish_medal
+	path = /obj/item/clothing/accessory/medal/silver/security/fluff/sadstarfish
+	display_name = "Robust Security Award"
+	ckeywhitelist = list("sadstarfish")
+	character_name = list("Simon Crawford")
+
+// Approved via modmail (Lira, September 2025)
+/datum/gear/fluff/alceris_culinary_medal
+	path = /obj/item/clothing/accessory/medal/gold/fluff/alceris
+	display_name = "Medal of Culinary Prowess"
+	ckeywhitelist = list("alceris")
+	character_name = list("Alceris")
