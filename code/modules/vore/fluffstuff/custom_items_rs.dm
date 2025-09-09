@@ -118,3 +118,12 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 	origin_tech = list(TECH_MATERIAL = 3)
 	siemens_coefficient = 0.9
+
+// Approved via modmail (Lira, September 2025)
+/obj/item/clothing/accessory/medal/silver/security/fluff/sadstarfish
+	desc = "An award for distinguished combat and personal risk in the defense of corporate commercial interests. Often awarded to security staff. This one has a crudely carved picture of a plastic knife on the back."
+
+// Approved via modmail (Lira, September 2025)
+/obj/item/clothing/accessory/medal/gold/fluff/alceris
+	name = "Medal of Culinary Prowess"
+	desc = "A medal awarded for the completion of ten lasagnas. Wow!"
