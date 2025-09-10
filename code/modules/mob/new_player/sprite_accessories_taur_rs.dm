@@ -186,5 +186,5 @@
 
 /datum/sprite_accessory/tail/taur/kitsunetaur
 	name = "Kitsune Taur (Eight-Tail)"
-	icon = 'icons/rogue-star/tails_64x32_rs.dmi'
+	icon = 'icons/mob/vore/tails_64x32.dmi'
 	icon_state = "eighttailkitsunetaur"

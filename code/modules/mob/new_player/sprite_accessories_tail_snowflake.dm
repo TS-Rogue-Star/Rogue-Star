@@ -81,7 +81,7 @@
 
 /datum/sprite_accessory/tail/longtail/christykitsune
 	name = "Christy Tails"
-	icon = 'icons/rogue-star/tails_64x32_rs.dmi'
+	icon = 'icons/mob/vore/tails_64x32.dmi'
 	icon_state = "ChristyKitsune"
 	ckeys_allowed = list("christykitsune")
 	do_colouration = 0

@@ -1,6 +1,6 @@
 /datum/sprite_accessory/tail/taur/christykitsunetaur
 	name = "Christy Taur"
-	icon = 'icons/rogue-star/tails_64x32_rs.dmi'
+	icon = 'icons/mob/vore/tails_64x32.dmi'
 	icon_state = "ChristyKitsuneTaur"
 	vore_tail_sprite_variant = "CKT"
 	fullness_icons = 3
