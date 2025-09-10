@@ -1,5 +1,9 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Updated by Lira for Rogue Star September 2025 with a new late join UI and some related optimizations//
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /mob/new_player
 	var/ready = 0
 	var/spawning = 0			//Referenced when you want to delete the new_player later on in the code.
@@ -411,6 +415,9 @@
 	if(!job.player_has_enough_pto(src.client))
 		return 0
 	//VOREStation Add End
+	// Checks for jobs with minimum age requirements || RS Edit: Moved from late load (Lira, September 2025)
+	if((job.minimum_character_age || job.min_age_by_species) && (client.prefs.age < job.get_min_age(client.prefs.species, client.prefs.organ_data["brain"])))
+		return 0
 	return 1
 
 
@@ -430,18 +437,28 @@
 	if(!client)
 		return 0
 
-	//Find our spawning point.
-	var/list/join_props = job_master.LateSpawn(client, rank)
-
-	if(!join_props)
-		return
-
-	var/turf/T = join_props["turf"]
-	var/do_announce = join_props["announcement"]
-	var/join_message = join_props["msg"]
-	var/announce_channel = join_props["channel"] || "Common"
+	//Find our spawning point || RS Edit Start: Restructured to try multiple times in case of fail (Lira, September 2025)
+	var/list/join_props
+	var/turf/T
+	var/do_announce
+	var/join_message
+	var/announce_channel
+	var/max_attempts = 5
+	for(var/i in 1 to max_attempts)
+		join_props = job_master.LateSpawn(client, rank)
+		if(join_props)
+			T = join_props["turf"]
+			join_message = join_props["msg"]
+			if(T && join_message)
+				do_announce = join_props["announcement"]
+				announce_channel = join_props["channel"] || "Common"
+				break
+		// Try again in 2 ticks
+		sleep(2 * world.tick_lag)
+	//RS Edit End
 
 	if(!T || !join_message)
+		to_chat(src, "<span class='warning'>Unable to find a valid spawn location for [rank]. Please verify your chosen spawn point in Character Setup and try again.</span>") //RS Add: Provide indicator that spawn failed (Lira, September 2025)
 		return 0
 
 	spawning = 1
@@ -522,51 +539,157 @@
 /mob/new_player/proc/LateChoices()
 	var/name = client.prefs.be_random_name ? "friend" : client.prefs.real_name
 
-	var/dat = "<html><body><center>"
-	dat += "<b>Welcome, [name].<br></b>"
-	dat += "Round Duration: [roundduration2text()]<br>"
+	//RS Add Start: Late join menu CSS (Lira, September 2025)
+	var/dat = "<html><head><style type='text/css'>"
+	dat += "body{background:#121418;color:#d7dce2;font-family:Verdana,Arial,sans-serif;font-size:12px;margin:0;padding:8px;}"
+	dat += ".header{margin:6px 0 10px 0;padding:6px 8px;background:#0d1116;border:1px solid #27303a;}"
+	dat += ".title{font-weight:bold;color:#c8d4e0;}"
+	dat += ".muted{color:#9aa6b2;}"
+	dat += "a{color:#8fc1ff;text-decoration:none;}a:hover{text-decoration:underline;}"
+	dat += ".section{background:#0d1116;border:1px solid #27303a;margin:8px 0;padding:6px 8px;}"
+	dat += ".section-title{color:#b8c7d3;font-weight:bold;margin:2px 0 6px 0;}"
+	dat += ".jobs{line-height:1.6;}"
+	dat += ".job{display:block;padding:1px 0;}"
+	dat += ".meta{color:#9aa6b2;margin-left:4px;font-size:11px;}"
+	dat += ".warn{color:#ff6b6b;}"
+	dat += ".toggle{float:right;color:#9fb4c3;}"
+	dat += "</style></head><body>"
+	//RS Add End
 
+	//RS Edit Start: Use menu CSS for header (Lira, September 2025)
+	dat += "<div class='header'>"
+	dat += "<div class='title'>Welcome, [name].</div>"
+	dat += "<div class='muted'>Round Duration: [roundduration2text()]</div>"
 	if(emergency_shuttle) //In case NanoTrasen decides reposess CentCom's shuttles.
 		if(emergency_shuttle.going_to_centcom()) //Shuttle is going to CentCom, not recalled
-			dat += "<font color='red'><b>The station has been evacuated.</b></font><br>"
+			dat += "<div class='warn'><b>The station has been evacuated.</b></div>"
 		if(emergency_shuttle.online())
 			if (emergency_shuttle.evac)	// Emergency shuttle is past the point of no recall
-				dat += "<font color='red'>The station is currently undergoing evacuation procedures.</font><br>"
+				dat += "<div class='warn'>The station is currently undergoing evacuation procedures.</div>"
 			else						// Crew transfer initiated
-				dat += "<font color='red'>The station is currently undergoing crew transfer procedures.</font><br>"
+				dat += "<div class='warn'>The station is currently undergoing crew transfer procedures.</div>"
+	dat += "<div class='muted'>Choose from the following open/valid positions. "
+	dat += "<a class='toggle' href='byond://?src=\ref[src];hidden_jobs=1;[HrefToken()]'>[show_hidden_jobs ? "Hide":"Show"] Hidden Jobs</a></div>"
+	dat += "</div>"
+	// RS Edit End
 
-	dat += "Choose from the following open/valid positions:<br>"
-	dat += "<a href='byond://?src=\ref[src];hidden_jobs=1'>[show_hidden_jobs ? "Hide":"Show"] Hidden Jobs.</a><br>"
+	//RS Add Start: Create department list (Lira, Spetember 2025)
+	var/list/sections = list()
+	var/list/sections_offduty = list()
+	for(var/datum/department/dept as anything in SSjob.get_all_department_datums())
+		if(dept.name == DEPARTMENT_OFFDUTY)
+			continue
+		sections[dept.name] = list()
+		sections_offduty[dept.name] = list()
+	//RS Add End
 
-	var/deferred = ""
+	// RS Edit Start: Track locked instead of exclude and precompile active counts per role to avoid scanning player_list for every job (Lira, September 2025)
+	var/list/active_counts = list()
+	for(var/mob/PM in player_list)
+		//Only players with a job assigned and AFK for less than 10 minutes count as active
+		if(PM.mind && PM.client && PM.mind.assigned_role && PM.client.inactivity <= 10 MINUTES)
+			var/title_key = PM.mind.assigned_role
+			if(active_counts[title_key])
+				active_counts[title_key] += 1
+			else
+				active_counts[title_key] = 1
+
 	for(var/datum/job/job in job_master.occupations)
-		if(job && IsJobAvailable(job.title))
-			// Checks for jobs with minimum age requirements
-			if((job.minimum_character_age || job.min_age_by_species) && (client.prefs.age < job.get_min_age(client.prefs.species, client.prefs.organ_data["brain"])))
-				continue
+		var/locked = FALSE
+		if(!job)
+			continue
+		if (!IsJobAvailable(job.title))
+			locked = TRUE
+		var/is_offduty = SSjob.is_job_in_department(job.title, DEPARTMENT_OFFDUTY)
+		if(!is_offduty || (is_offduty && locked))
 			// Checks for jobs set to "Never" in preferences	//TODO: Figure out a better way to check for this
 			if(!(client.prefs.GetJobDepartment(job, 1) & job.flag))
 				if(!(client.prefs.GetJobDepartment(job, 2) & job.flag))
 					if(!(client.prefs.GetJobDepartment(job, 3) & job.flag))
 						if(!show_hidden_jobs && job.title != "Assistant")	// Assistant is always an option
 							continue
-			var/active = 0
-			// Only players with the job assigned and AFK for less than 10 minutes count as active
-			for(var/mob/M in player_list) if(M.mind && M.client && M.mind.assigned_role == job.title && M.client.inactivity <= 10 MINUTES)
-				active++
 
-			var/string = "<a href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions]) (Active: [active])</a><br>"
+		// Lookup active count (players assigned to this job and not AFK >10 minutes)
+		var/active = 0
+		if(active_counts[job.title])
+			active = active_counts[job.title]
+	//RS Edit End
 
-			if(job.offmap_spawn) //At the bottom
-				deferred += string
+	//RS Add Start: Construct and sort job list (Lira, September 2025)
+
+		//Get job department
+		var/section_name = job.departments[1]
+		if(SSjob.is_job_in_department(job.title, DEPARTMENT_OFFDUTY))
+			switch(job.pto_type)
+				if(PTO_MEDICAL) section_name = DEPARTMENT_MEDICAL
+				if(PTO_ENGINEERING) section_name = DEPARTMENT_ENGINEERING
+				if(PTO_SECURITY) section_name = DEPARTMENT_SECURITY
+				if(PTO_SCIENCE) section_name = DEPARTMENT_RESEARCH
+				if(PTO_EXPLORATION) section_name = DEPARTMENT_PLANET
+				if(PTO_CARGO) section_name = DEPARTMENT_CARGO
+				if(PTO_CIVILIAN) section_name = DEPARTMENT_CIVILIAN
+			if(!section_name)
+				section_name = DEPARTMENT_CIVILIAN
+		if(!section_name)
+			continue
+		// Hide Central Command roles entirely unless the viewer can actually join them
+		if(section_name == "Central Command" && locked)
+			continue
+
+		// Create job links
+		var/job_color = job.selection_color
+		//Make Off-duty Worker match civilian roles
+		if(is_offduty && job.pto_type == PTO_CIVILIAN)
+			job_color = "#515151"
+		var/job_style = "border-left:3px solid [job_color];padding-left:6px;"
+		if(locked)
+			job_style += "opacity:0.65;"
+		var/job_link = "<a class='job' href='byond://?src=\ref[src];SelectedJob=[job.title];[HrefToken()]' style='[job_style]'>"
+		job_link += "<span class='job-title'>[job.title]</span>"
+		job_link += " <span class='meta'>([job.current_positions])</span>"
+		job_link += " <span class='meta'>Active: [active]</span>"
+		if(locked)
+			job_link += " <span class='meta'>(Locked)</span>"
+		job_link += "</a>"
+		//Off-duty roles appear at the bottom of their department list
+		if(is_offduty)
+			sections_offduty[section_name] += job_link
+		else
+			//Make sure Site Manager is first in Command list
+			if(section_name == DEPARTMENT_COMMAND && istype(job, /datum/job/captain))
+				sections[section_name] = list(job_link) + sections[section_name]
 			else
-				dat += string
+				sections[section_name] += job_link
 
-	dat += deferred
+	//List departments in order
+	for(var/datum/department/dept as anything in SSjob.get_all_department_datums())
+		if(dept.name == DEPARTMENT_OFFDUTY)
+			continue
+		var/list/jobs_html_normal = sections[dept.name]
+		var/list/jobs_html_od = sections_offduty[dept.name]
+		var/total_len = (jobs_html_normal ? jobs_html_normal.len : 0) + (jobs_html_od ? jobs_html_od.len : 0)
+		if(total_len <= 0)
+			continue
+		var/dept_color = dept.color
+		if(dept.name == DEPARTMENT_CIVILIAN)
+			dept_color = "#dddddd"
+		else if(dept.name == DEPARTMENT_SYNTHETIC)
+			dept_color = "#3F823F"
+		else if(dept.name == "Central Command")
+			dept_color = "#3333FF"
+		dat += "<div class='section' style='border-left:3px solid [dept_color]'>"
+		dat += "<div class='section-title' style='color:[dept_color]'>[dept.name]</div>"
+		var/list/merged = list()
+		if(jobs_html_normal) merged += jobs_html_normal
+		if(jobs_html_od) merged += jobs_html_od
+		dat += "<div class='jobs'>[jointext(merged, "")]</div>"
+		dat += "</div>"
 
-	dat += "</center>"
-	src << browse(dat, "window=latechoices;size=300x640;can_close=1")
+	dat += "</body></html>"
+	src << browse(dat, "window=latechoices;size=560x720;can_close=1")
+	return
 
+	//RS Add End
 
 /mob/new_player/proc/create_character(var/turf/T)
 	spawning = 1
