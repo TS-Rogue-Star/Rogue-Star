@@ -13095,6 +13095,8 @@
 	dir = 8;
 	pixel_x = -28
 	},
+/obj/item/canvas/drawing_tablet,
+/obj/item/canvas/drawing_tablet,
 /turf/simulated/floor/tiled{
 	edge_blending_priority = -1;
 	outdoors = 0
