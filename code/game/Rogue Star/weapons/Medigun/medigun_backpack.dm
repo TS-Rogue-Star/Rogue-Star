@@ -413,9 +413,10 @@
 		if(busy == FALSE)
 
 			if(istype(W, /obj/item/weapon/stock_parts/scanning_module))
-				if(W.type == smodule.type)
-					to_chat(user, span_notice("\The [src] already has a [W]."))
-					return
+				if(smodule)
+					if(W.type == smodule.type)
+						to_chat(user, span_notice("\The [src] already has a [W]."))
+						return
 				busy = TRUE
 				if(!do_after(user, 10))
 					busy = FALSE
@@ -436,9 +437,10 @@
 				return
 
 			if(istype(W, /obj/item/weapon/stock_parts/manipulator))
-				if(W.type == smanipulator.type)
-					to_chat(user, span_notice("\The [src] already has a [smanipulator]."))
-					return
+				if(smanipulator)
+					if(W.type == smanipulator.type)
+						to_chat(user, span_notice("\The [src] already has a [smanipulator]."))
+						return
 				busy = TRUE
 				if(!do_after(user, 10))
 					busy = FALSE
@@ -461,9 +463,10 @@
 				return
 
 			if(istype(W, /obj/item/weapon/stock_parts/micro_laser))
-				if(W.type == slaser.type)
-					to_chat(user, span_notice("\The [src] already has a [slaser]."))
-					return
+				if(slaser)
+					if(W.type == slaser.type)
+						to_chat(user, span_notice("\The [src] already has a [slaser]."))
+						return
 				busy = TRUE
 				if(!do_after(user, 10))
 					busy = FALSE
@@ -484,9 +487,10 @@
 				return
 
 			if(istype(W, /obj/item/weapon/stock_parts/capacitor))
-				if(W.type == scapacitor.type)
-					to_chat(user, span_notice("\The [src] already has a [scapacitor]."))
-					return
+				if(scapacitor)
+					if(W.type == scapacitor.type)
+						to_chat(user, span_notice("\The [src] already has a [scapacitor]."))
+						return
 				busy = TRUE
 				if(!do_after(user, 10))
 					busy = FALSE
@@ -535,9 +539,10 @@
 				return
 
 			if(istype(W, /obj/item/weapon/stock_parts/matter_bin))
-				if(W.type == sbin.type)
-					to_chat(user, span_notice("\The [src] already has a matter bin."))
-					return
+				if(sbin)
+					if(W.type == sbin.type)
+						to_chat(user, span_notice("\The [src] already has a matter bin."))
+						return
 				busy = TRUE
 				if(!do_after(user, 10))
 					busy = FALSE
