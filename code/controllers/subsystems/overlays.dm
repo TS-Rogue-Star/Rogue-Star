@@ -120,6 +120,7 @@ SUBSYSTEM_DEF(overlays)
 		overlays = our_overlays
 	else
 		overlays.Cut()
+	SEND_SIGNAL(src,COMSIG_ATOM_UPDATE_OVERLAYS) // RS ADD
 
 
 /// Immediately runs an overlay update and dequeues the atom
