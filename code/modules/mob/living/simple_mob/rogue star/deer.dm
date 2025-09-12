@@ -16,6 +16,7 @@
 	icon_state = "deer"
 	icon_living = "deer"
 	icon_dead = "deer_dead"
+	var/icon_run_over = "deer_dead_alt"
 	icon_rest = "deer_rest"
 	icon = 'icons/rogue-star/mobx32.dmi'
 
@@ -294,15 +295,16 @@
 	else ..()
 
 /mob/living/simple_mob/vore/deer/update_icon()
-	. = ..()
 	if(run_over)
-		icon_state = "deer_dead_alt"
+		icon_state = icon_run_over
+	. = ..()
 
 /mob/living/simple_mob/vore/deer/Crossed(atom/movable/AM)
-	if(istype(AM, /obj/vehicle) && stat != DEAD)
-		run_over = TRUE
-		visible_emote("is run over by \the [AM]!!!")
-		death()
+	if(icon_run_over && stat != DEAD)
+		if(istype(AM, /obj/vehicle))
+			run_over = TRUE
+			visible_emote("is run over by \the [AM]!!!")
+			death()
 	else ..()
 
 /datum/ai_holder/simple_mob/evasive

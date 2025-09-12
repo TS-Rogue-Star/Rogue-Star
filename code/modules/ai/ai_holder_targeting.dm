@@ -47,17 +47,23 @@
 			. += HM
 	if(holder.hunter)	//RS ADD START
 		if(holder.nutrition < 1500)
-			for(var/obj/item/weapon/reagent_containers/food/snacks/S in view(world.view,get_turf(holder)))
-				switch(holder.food_pref)
-					if(OMNIVORE)
-						if(istype(S,/obj/item/weapon/reagent_containers/food/snacks))
-							. += S
-					if(CARNIVORE)
-						if(istype(S,/obj/item/weapon/reagent_containers/food/snacks/meat))
-							. += S
-					if(HERBIVORE)
-						if(istype(S,/obj/item/weapon/reagent_containers/food/snacks/grown))
-							. += S		//RS ADD END
+			switch(holder.food_pref)
+				if(OMNIVORE,CARNIVORE,HERBIVORE)
+					for(var/obj/item/weapon/reagent_containers/food/snacks/S in view(world.view,get_turf(holder)))
+						switch(holder.food_pref)
+							if(OMNIVORE)
+								if(istype(S,/obj/item/weapon/reagent_containers/food/snacks))
+									. += S
+							if(CARNIVORE)
+								if(istype(S,/obj/item/weapon/reagent_containers/food/snacks/meat))
+									. += S
+							if(HERBIVORE)
+								if(istype(S,/obj/item/weapon/reagent_containers/food/snacks/grown))
+									. += S
+				if(ROBOVORE)
+					for(var/obj/item/weapon/ore/O in view(world.view,get_turf(holder)))
+						. += O
+	//RS ADD END
 
 // Step 2, filter down possible targets to things we actually care about.
 /datum/ai_holder/proc/find_target(var/list/possible_targets, var/has_targets_list = FALSE)
