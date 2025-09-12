@@ -183,3 +183,8 @@
 	vore_tail_sprite_variant = "N"
 	fullness_icons = 3
 	struggle_anim = TRUE
+
+/datum/sprite_accessory/tail/taur/kitsunetaur
+	name = "Kitsune Taur (Eight-Tail)"
+	icon = 'icons/mob/vore/tails_64x32.dmi'
+	icon_state = "eighttailkitsunetaur"
