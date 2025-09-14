@@ -511,6 +511,12 @@ Creator: Whatislegs<br>
 Link: https://github.com/TS-Rogue-Star/Rogue-Star/pull/1041<br> 
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
+Files: `icons/mob/vore/tails_64x32.dmi, icons/mob/vore/Taur_Bellies.dmi`<br>
+Icon-States: eighttailkitsunetaur, ChristyKitsune, ChristyKitsuneTaur, Taur-CKT-1 idle, Taur-CKT-2 idle, Taur-CKT-3 idle <br> 
+Creator: Kligor<br> 
+Link: https://github.com/TS-Rogue-Star/Rogue-Star/pull/1063<br> 
+**License:** eighttailkitsunetaur is under [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/), all others (ckey locked sprites listed above) are unliscened for further use without permission of character owner<br>
+<br>
 **File:** `icons/mob/robot/fluff_wide_rs.dmi`<br>
 **Icon-States:** googlyfox-aurum-serv, googlyfox-aurum-serv-eyes, googlyfox-aurum-serv-wreck, googlyfox-aurum-serv-rest, googlyfox-aurum-serv-belly-1-rest, googlyfox-aurum-serv-belly-2-rest, googlyfox-aurum-serv-sit, googlyfox-aurum-serv-belly-1-sit, googlyfox-aurum-serv-belly-2-sit, googlyfox-aurum-serv-bellyup, googlyfox-aurum-serv-belly-1-bellyup, googlyfox-aurum-serv-belly-2-bellyup, googlyfox-aurum-serv-belly-1, googlyfox-aurum-serv-sleeper-1, googlyfox-aurum-serv-belly-2, googlyfox-aurum-serv-throat-1, googlyfox-aurum-serv-lights<br>
 **Creator:** ChromeFoxxity<br>

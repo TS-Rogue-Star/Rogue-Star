@@ -79,4 +79,11 @@
 	icon_state = "kara_tail"
 	ckeys_allowed = list("satinisle")
 
-
+//RS Edit start
+/datum/sprite_accessory/tail/longtail/christykitsune
+	name = "Christy Tails"
+	icon = 'icons/mob/vore/tails_64x32.dmi'
+	icon_state = "ChristyKitsune"
+	ckeys_allowed = list("christykitsune")
+	do_colouration = 0
+//RS Edit end
