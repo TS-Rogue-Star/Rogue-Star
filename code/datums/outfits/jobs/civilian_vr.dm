@@ -90,3 +90,7 @@
 
 /decl/hierarchy/outfit/job/assistant/entrepreneur/spirit_healer
 	l_hand = /obj/item/weapon/storage/box/spirit_healer		//RS EDIT //Ported from VOREStation 15933 - END
+
+// RS Add: Digital artist starts with a drawing tablet (Lira, September 2025)
+/decl/hierarchy/outfit/job/assistant/entrepreneur/digital_artist
+	l_hand = /obj/item/canvas/drawing_tablet
