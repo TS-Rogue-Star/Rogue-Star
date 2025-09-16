@@ -330,42 +330,6 @@
 	desc = "Despite its soft appearance, this creature is actually quite hard and durable. It partakes of a diet high in minerals, which its body has formed into an incredibly durable armor just under the surface of its skin. The minerals are most notable along its head, back end, and feet, where they are not contained by skin or flesh. The top of its head is adorned in a crown of several sharp horns, and what might otherwise be considered a tail, is a large outcropping of these same crystals. Of note, this creature lacks any feet in the traditional sense, instead having something resembling hooves, but made out of that same crystal. These creatures seem to have a method of chipping and sharpening their hooves, so they are each quite dangerous! With its high mineral diet, this creature has a highly specialized multi compartment digestive tract, and it seems quite capable of and willing to scrap for mineral based meals both processed and otherwise. These creatures are considered a nuisance, as they have a tendency to nibble wires and at the edges of structures, and upon some technology."
 	value = CATALOGUER_REWARD_TRIVIAL
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /////SKITTERER/////
 /mob/living/simple_mob/vore/moon_skitterer
 	name = ""
@@ -387,19 +351,37 @@
 	max_n2 = 0
 	minbodytemp = 0
 
+/////////////////////////////////////// Vore stuff ///////////////////////////////////////////
+
+	swallowTime = 3 SECONDS
+	vore_active = 1
+	vore_capacity = 1
+	vore_bump_chance = 1
+	vore_bump_emote	= "suddenly pounces on"
+	vore_ignores_undigestable = 0
+	vore_default_mode = DM_DIGEST
+	vore_icons = SA_ICON_LIVING
+	vore_stomach_name = "stomach"
+	vore_default_contamination_flavor = "Wet"
+	vore_default_contamination_color = "grey"
+	vore_default_item_mode = IM_DIGEST
+	vore_bump_chance = 5
+	vore_pounce_chance = 35
+	vore_pounce_falloff = 0
+	vore_standing_too = TRUE
+
 /mob/living/simple_mob/vore/moon_skitterer/New()
 	color = pick(list("#FFFFFF","#fff9d9","#a89153","#56758f","#625569","#382d1f","#3b3b3b"))
 	. = ..()
 
-
 /////RAY/////
-/mob/living/simple_mob/vore/moon_ray
-	name = "moon ray"
-	desc = "A large, somewhat flat kind of creature that has adapted to float above the ground!"
+/mob/living/simple_mob/vore/dust_stalker
+	name = "Dust Stalker"
+	desc = "A broad, flat kind of creature. It floats silently above the ground and moves by flapping its body! It’s covered in smooth skin, textured so that it doesn’t reflect light well. "
 	icon = 'icons/rogue-star/mobx64.dmi'
 	icon_state = "moon_ray"
 	icon_living = "moon_ray"
-	tt_desc = "lunae angit"
+	tt_desc = "sequirian sangune"
 	faction = "ray"
 
 	pixel_x = -16
@@ -414,7 +396,9 @@
 	var/list/overlays_cache = list()
 	var/marking_color
 	var/eye_color
-	ai_holder_type = /datum/ai_holder/simple_mob
+
+	ai_holder_type = /datum/ai_holder/simple_mob/melee/hit_and_run
+
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0
@@ -425,20 +409,59 @@
 	max_n2 = 0
 	minbodytemp = 0
 
+	special_attack_min_range = 1
+	special_attack_max_range = 3
+	special_attack_cooldown = 15 SECONDS
+
 	hunter = TRUE
 	food_pref = CARNIVORE
 
-	vore_active = TRUE
-	vore_capacity = 1
+/////////////////////////////////////// Vore stuff ///////////////////////////////////////////
 
-/mob/living/simple_mob/vore/moon_ray/New()
+	swallowTime = 3 SECONDS
+	vore_active = 1
+	vore_capacity = 1
+	vore_bump_chance = 1
+	vore_bump_emote	= "suddenly pounces on"
+	vore_ignores_undigestable = 0
+	vore_default_mode = DM_DIGEST
+	vore_icons = SA_ICON_LIVING
+	vore_stomach_name = "stomach"
+	vore_default_contamination_flavor = "Wet"
+	vore_default_contamination_color = "grey"
+	vore_default_item_mode = IM_HOLD
+	vore_bump_chance = 5
+	vore_pounce_chance = 35
+	vore_pounce_falloff = 0
+	vore_standing_too = TRUE
+	vore_unconcious_eject_chance = 90
+
+/mob/living/simple_mob/vore/dust_stalker/init_vore()
+	..()
+
+	var/obj/belly/base = vore_selected
+	base.name = "stomach"
+	base.desc = "The flesh isn’t as warm as you would expect as it presses against you, it’s kind of cool and relaxing to the touch. Here and there, you can feel prickly points which poke you. The flesh clings to you, wrapping you up and SQUEEZING you intensely, the flesh folds over you and holds you securely while soaking up any fluid it is able to get ahold of! Its flat body pumps around you as it squishes you out as flat as it can! SMUSH! This must be what it feels like to be juiced… gloorrrglll…"
+	base.belly_fullscreen = "anibelly"
+	base.colorization_enabled = TRUE
+	base.belly_fullscreen_color = marking_color
+	base.belly_healthbar_overlay_theme = "Tight"
+	base.belly_healthbar_overlay_color = marking_color
+	base.digest_brute = 0
+	base.digest_burn = 0
+	base.digest_oxy = 12
+	base.digestchance = 0
+	base.absorbchance = 0
+	base.escapechance = 10
+
+/mob/living/simple_mob/vore/dust_stalker/New()
 	color = pick(list("#FFFFFF","#fff9d9","#d9fbff","#f1d9ff","#ffd9d9","#3b3b3b"))
 	. = ..()
 	marking_color = random_color()
 	eye_color = pick(list("#e100ff","#ff0000"))
 	update_icon()
 
-/mob/living/simple_mob/vore/moon_ray/update_icon()
+/mob/living/simple_mob/vore/dust_stalker/update_icon()
 	. = ..()
 
 	var/our_state = "moon_ray_marking"
@@ -464,7 +487,7 @@
 		overlays_cache[combine_key] = our_image
 	add_overlay(our_image)
 
-/mob/living/simple_mob/vore/moon_ray/Life()
+/mob/living/simple_mob/vore/dust_stalker/Life()
 	. = ..()
 	if(ai_holder.stance == STANCE_IDLE)
 		if(alpha == 255)
@@ -474,41 +497,33 @@
 			else
 				ai_holder.wander = TRUE
 
+/mob/living/simple_mob/vore/dust_stalker/is_cloaked()
+	if(isbelly(loc))
+		return TRUE
+	if(alpha < 255)
+		return TRUE
+	if(health != maxHealth)
+		return FALSE
+	if(nutrition > 1250)
+		return FALSE
+	return TRUE
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/mob/living/simple_mob/vore/scarybot/quad_bot/do_special_attack(atom/A)
+/mob/living/simple_mob/vore/dust_stalker/do_special_attack(atom/A)
 	set waitfor = FALSE
 	if(!isliving(A))
 		return FALSE
 	var/mob/living/L = A
-
 	if(L.stat != CONSCIOUS)
 		return FALSE
-
+	if(L.isSynthetic())
+		return FALSE
 	set_AI_busy(TRUE)
-	visible_message(span("warning","\The [src]'s eyes flash ominously!"))
 	// Telegraph, since getting stunned suddenly feels bad.
 	do_windup_animation(L, 0.5 SECOND)
 	sleep(0.5 SECOND) // For the telegraphing.
 
 	// Do the actual leap.
-	visible_message(span("critical","\The [src] leaps at \the [L]!"))
+	visible_message(span("critical","\The [src] dashes toward \the [L]!"))
 	throw_at(get_step(L, get_turf(src)), 3, 1, src)
 	playsound(src, 'sound/effects/teleport.ogg', 75, 1)
 
@@ -516,23 +531,19 @@
 
 	set_AI_busy(FALSE)
 
-	visible_message(span("danger","\The [src] emits a shrill metalic shriek!!!"))
-	playsound(src, 'sound/effects/screech.ogg', 75, 1)
 	Weaken(1)
-	for(var/mob/living/thing in view(2,get_turf(src)))
+	for(var/mob/living/thing in view(1,get_turf(src)))
 		if(isliving(thing))
 			if(thing.faction != faction)
-				if(thing.client)
-					to_chat(thing,span("critical","The sound causes you to stumble!"))
 				thing.Weaken(2)
-				forceMove(get_turf(thing))
-				thing.add_modifier(/datum/modifier/ray_pinned,5 SECONDS)
+				thing.Stun(2)
+				sleep(5)
+				throw_at(get_step(L, get_turf(src)), 3, 1, src)
+				if(thing.client)
+					to_chat(thing,span("critical","\The [src] pushes you down and pins you under its body!!!"))
+				thing.add_modifier(/datum/modifier/ray_pinned,5 SECONDS,src)
 				break
-
-
-
-
-
+	return TRUE
 
 /datum/modifier/ray_pinned
 	name = "Ray Pinned"
@@ -542,9 +553,14 @@
 	. = ..()
 	if(isliving(new_origin))
 		our_ray = new_origin
-	our_ray.ai_holder.set_AI_busy(TRUE)
+	else
+		expire()
+		return
+	our_ray.set_AI_busy(TRUE)
 	holder.weakened = 2
+	holder.stunned = 2
 	our_ray.weakened = 2
+	to_chat(holder, SPAN_DANGER("\The [our_ray] latches on to you!!!"))
 
 /datum/modifier/ray_pinned/tick()
 	. = ..()
@@ -557,21 +573,29 @@
 	if(our_ray.loc != holder.loc)
 		expire()
 		return
-	our_ray.ai_holder.set_AI_busy(TRUE)
-	if(ishuman(holder))
-		var/mob/living/carbon/human/H
-		H.remove_blood(82)
-	else
-		holder.adjustOxyLoss(25)
-	our_ray.adjust_nutrition(250)
 	holder.weakened = 2
+	holder.stunned = 2
 	our_ray.weakened = 2
+	our_ray.set_AI_busy(TRUE)
+	if(ishuman(holder))
+		var/mob/living/carbon/human/H = holder
+		H.remove_blood(15)
+	else
+		holder.adjustOxyLoss(15)
+	our_ray.adjust_nutrition(250)
+	to_chat(holder, SPAN_DANGER("\The [our_ray] sucks something out of you!!!"))
+	holder.visible_message(runemessage = "glorp")
 
 /datum/modifier/ray_pinned/expire(silent)
 	. = ..()
 
-	our_ray.ai_holder.set_AI_busy(FALSE)
+	our_ray.set_AI_busy(FALSE)
+	to_chat(holder, SPAN_NOTICE("\The [our_ray] lets you go..."))
 
+/datum/category_item/catalogue/fauna/dust_stalker
+	name = "Alien Wildlife - Sequirian Sangune"
+	desc = "A dangerous predatory creature known to blend in with its surroundings and then to quickly strike, and drain blood from its victims. It floats above the ground by some unknown process, thought to be to do with some internal magnetism. Its skin can rapidly change color, and it has enough wisdom to know to stay perfectly still while so hidden. When it detects a potential prey item, it rushes them down, using its flat body to pounce upon them, and pin them to the ground, where it is free to bite them, and draw blood out. Once again, it has enough wisdom to not drain prey dry, usually trying to leave them alive so that they can be fed upon again in the future. This behavior does not extend to groups of these creatures however, as together, a group may drain someone dry in a matter of moments! These creatures have immense self preservation though, as the moment their prey is actually able to fight back, they will run away."
+	value = CATALOGUER_REWARD_MEDIUM
 
 
 /////OUTISE MVP/////

@@ -84,7 +84,7 @@
 		if(holder.hunter && !new_target)
 			if(holder.food_pref == CARNIVORE || holder.food_pref == OMNIVORE)
 				blood_hunt()
-				return						//RS ADD END
+				return null						//RS ADD END
 	give_target(new_target)
 	return new_target
 
@@ -284,18 +284,22 @@
 			ai_log("can_see_target() : Target ([the_target]) was sufficently transparent to holder and is hidden. Exiting.", AI_LOG_TRACE)
 			return FALSE
 
+/*	//RS REMOVE START
 	if(get_dist(holder, the_target) > view_range) // Too far away.
 		ai_log("can_see_target() : Target ([the_target]) was too far from holder. Exiting.", AI_LOG_TRACE)
 		return FALSE
 
-/*	if(!can_see(holder, the_target, view_range))	//RS EDIT START
+	if(!can_see(holder, the_target, view_range))
 		ai_log("can_see_target() : Target ([the_target]) failed can_see(). Exiting.", AI_LOG_TRACE)
 		return FALSE
-*/
-	if(the_target in view(view_range,holder))
+*/	//RS REMOVE END
+	if(the_target in view(view_range,holder))	//RS EDIT START - Check to see if we can  literally see them
 		last_target_sighting = world.time
-	else if(world.time >= last_target_sighting + 2 SECONDS)
+		if(stance == STANCE_IDLE)
+			give_target(target)
+	else if(world.time >= last_target_sighting + 2 SECONDS)	//We can't, if it's been too long, let's just give up
 		ai_log("can_see_target() : Timed out. Exiting.", AI_LOG_TRACE)
+		remove_target()
 		return FALSE
 	if(!hostile && !holder.hunter)
 		if(holder.health > (holder.maxHealth * 0.75))
