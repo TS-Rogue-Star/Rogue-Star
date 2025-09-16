@@ -378,6 +378,7 @@
 #include "code\datums\components\material_container.dm"
 #include "code\datums\components\overlay_lighting.dm"
 #include "code\datums\components\resize_guard.dm"
+#include "code\datums\components\selfclicktoggle.dm"
 #include "code\datums\components\crafting\crafting.dm"
 #include "code\datums\components\crafting\crafting_external.dm"
 #include "code\datums\components\crafting\recipes.dm"
