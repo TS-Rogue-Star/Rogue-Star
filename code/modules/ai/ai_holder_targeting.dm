@@ -284,7 +284,7 @@
 			ai_log("can_see_target() : Target ([the_target]) was sufficently transparent to holder and is hidden. Exiting.", AI_LOG_TRACE)
 			return FALSE
 
-/*	//RS REMOVE START
+	/*	//RS REMOVE START
 	if(get_dist(holder, the_target) > view_range) // Too far away.
 		ai_log("can_see_target() : Target ([the_target]) was too far from holder. Exiting.", AI_LOG_TRACE)
 		return FALSE
@@ -292,7 +292,7 @@
 	if(!can_see(holder, the_target, view_range))
 		ai_log("can_see_target() : Target ([the_target]) failed can_see(). Exiting.", AI_LOG_TRACE)
 		return FALSE
-*/	//RS REMOVE END
+	*/	//RS REMOVE END
 	if(the_target in view(view_range,holder))	//RS EDIT START - Check to see if we can  literally see them
 		last_target_sighting = world.time
 		if(stance == STANCE_IDLE)
