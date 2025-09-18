@@ -155,6 +155,7 @@
 #include "code\_helpers\string_lists.dm"
 #include "code\_helpers\text.dm"
 #include "code\_helpers\time.dm"
+#include "code\_helpers\traits_rs.dm"
 #include "code\_helpers\turfs.dm"
 #include "code\_helpers\type2type.dm"
 #include "code\_helpers\type_processing.dm"

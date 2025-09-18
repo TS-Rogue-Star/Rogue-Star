@@ -239,12 +239,11 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 		pref.gross_meatbag = 1
 		pref.dirty_synth = 0
 
+	var/datum/species/selected_species = GLOB.all_species[pref.species] // RS ADD
+
 	// Clean up positive traits
 	for(var/datum/trait/path as anything in pref.pos_traits)
-		if(!(path in positive_traits))
-			pref.pos_traits -= path
-			continue
-		if(!(pref.species == SPECIES_CUSTOM) && !(path in everyone_traits_positive))
+		if(!(path in positive_traits_map[selected_species])) // RS EDIT
 			pref.pos_traits -= path
 			continue
 		var/take_flags = initial(path.can_take)
@@ -252,10 +251,7 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 			pref.pos_traits -= path
 	//Neutral traits
 	for(var/datum/trait/path as anything in pref.neu_traits)
-		if(!(path in neutral_traits))
-			pref.neu_traits -= path
-			continue
-		if(!(pref.species == SPECIES_CUSTOM) && !(path in everyone_traits_neutral))
+		if(!(path in neutral_traits_map[selected_species])) // RS EDIT
 			pref.neu_traits -= path
 			continue
 		var/take_flags = initial(path.can_take)
@@ -263,17 +259,13 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 			pref.neu_traits -= path
 	//Negative traits
 	for(var/datum/trait/path as anything in pref.neg_traits)
-		if(!(path in negative_traits))
-			pref.neg_traits -= path
-			continue
-		if(!(pref.species == SPECIES_CUSTOM) && !(path in everyone_traits_negative))
+		if(!(path in negative_traits_map[selected_species])) // RS EDIT
 			pref.neg_traits -= path
 			continue
 		var/take_flags = initial(path.can_take)
 		if((pref.dirty_synth && !(take_flags & SYNTHETICS)) || (pref.gross_meatbag && !(take_flags & ORGANICS)))
 			pref.neg_traits -= path
 
-	var/datum/species/selected_species = GLOB.all_species[pref.species]
 	if(selected_species.selects_bodytype)
 		if (!(pref.custom_base in pref.get_custom_bases_for_species()))
 			pref.custom_base = SPECIES_HUMAN
@@ -354,21 +346,21 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 	. += "<a href='?src=\ref[src];add_trait=[POSITIVE_MODE]'>Positive Trait +</a><br>"
 	. += "<ul>"
 	for(var/T in pref.pos_traits)
-		var/datum/trait/trait = positive_traits[T]
+		var/datum/trait/trait = positive_traits_map[pref.species][T] // RS EDIT
 		. += "<li>- <a href='?src=\ref[src];clicked_pos_trait=[T]'>[trait.name] </a> [get_html_for_trait(trait, pref.pos_traits[T])]</li>"	//RS REMOVAL
 	. += "</ul>"
 
 	. += "<a href='?src=\ref[src];add_trait=[NEUTRAL_MODE]'>Neutral Trait +</a><br>"
 	. += "<ul>"
 	for(var/T in pref.neu_traits)
-		var/datum/trait/trait = neutral_traits[T]
+		var/datum/trait/trait = neutral_traits_map[pref.species][T] // RS EDIT
 		. += "<li>- <a href='?src=\ref[src];clicked_neu_trait=[T]'>[trait.name] </a> [get_html_for_trait(trait, pref.neu_traits[T])]</li>"	//RS REMOVAL
 	. += "</ul>"
 
 	. += "<a href='?src=\ref[src];add_trait=[NEGATIVE_MODE]'>Negative Trait +</a><br>"
 	. += "<ul>"
 	for(var/T in pref.neg_traits)
-		var/datum/trait/trait = negative_traits[T]
+		var/datum/trait/trait = negative_traits_map[pref.species][T] // RS EDIT
 		. += "<li>- <a href='?src=\ref[src];clicked_neg_trait=[T]'>[trait.name] </a> [get_html_for_trait(trait, pref.neg_traits[T])]</li>"	//RS REMOVAL
 	. += "</ul>"
 
@@ -571,27 +563,17 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 		var/list/picklist
 		var/list/mylist
 		switch(mode)
+			// RS EDIT START
 			if(POSITIVE_MODE)
-				if(pref.species == SPECIES_CUSTOM)
-					picklist = positive_traits.Copy() - pref.pos_traits
-					mylist = pref.pos_traits
-				else
-					picklist = everyone_traits_positive.Copy() - pref.pos_traits
-					mylist = pref.pos_traits
+				picklist = positive_traits_map[pref.species].Copy() - pref.pos_traits
+				mylist = pref.pos_traits
 			if(NEUTRAL_MODE)
-				if(pref.species == SPECIES_CUSTOM)
-					picklist = neutral_traits.Copy() - pref.neu_traits
-					mylist = pref.neu_traits
-				else
-					picklist = everyone_traits_neutral.Copy() - pref.neu_traits
-					mylist = pref.neu_traits
+				picklist = neutral_traits_map[pref.species].Copy() - pref.neu_traits
+				mylist = pref.neu_traits
 			if(NEGATIVE_MODE)
-				if(pref.species == SPECIES_CUSTOM)
-					picklist = negative_traits.Copy() - pref.neg_traits
-					mylist = pref.neg_traits
-				else
-					picklist = everyone_traits_negative.Copy() - pref.neg_traits
-					mylist = pref.neg_traits
+				picklist = negative_traits_map[pref.species].Copy() - pref.neg_traits
+				mylist = pref.neg_traits
+			// RS EDIT END
 			else
 
 		if(isnull(picklist))
@@ -651,11 +633,8 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 				tgui_alert_async(usr, "The trait you've selected can only be taken by synthetic characters!", "Error")
 				return TOPIC_REFRESH
 
-			if(pref.species in instance.banned_species)
-				tgui_alert_async(usr, "The trait you've selected cannot be taken by the species you've chosen!", "Error")
-				return TOPIC_REFRESH
-
-			if( LAZYLEN(instance.allowed_species) && !(pref.species in instance.allowed_species))
+			if(pref.species in instance.banned_species || (LAZYLEN(instance.allowed_species) && !(pref.species in instance.allowed_species))) // RS EDIT
+				// We shouldn't be able to get here anymore, but let's keep it, just in case...
 				tgui_alert_async(usr, "The trait you've selected cannot be taken by the species you've chosen!", "Error")
 				return TOPIC_REFRESH
 
