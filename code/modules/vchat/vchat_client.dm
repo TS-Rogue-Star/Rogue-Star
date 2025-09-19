@@ -1,5 +1,9 @@
 //The 'V' is for 'VORE' but you can pretend it's for Vue.js if you really want.
 
+////////////////////////////////////////////////////////////////////////////////////////
+//Updated by Lira for Rogue Star September 2025 as part of a VChat enhancement package//
+////////////////////////////////////////////////////////////////////////////////////////
+
 //These are sent to the client via browse_rsc() in advance so the HTML can access them.
 GLOBAL_LIST_INIT(vchatFiles, list(
 	"code/modules/vchat/css/vchat-font-embedded.css",
@@ -8,6 +12,173 @@ GLOBAL_LIST_INIT(vchatFiles, list(
 	"code/modules/vchat/js/polyfills.min.js",
 	"code/modules/vchat/js/vue.min.js",
 	"code/modules/vchat/js/vchat.min.js"
+))
+// RS Add: Vchat category rules (Lira, September 2025)
+GLOBAL_LIST_INIT(vchat_category_rules, list(
+	list(
+		category = "vc_localchat",
+		matchers = list(
+			list(include = list("filter_say")),
+			list(include = list("say")),
+			list(include = list("emote")),
+			list(include = list("emote_subtle"))
+		)
+	),
+	list(
+		category = "vc_radio",
+		matchers = list(
+			list(include = list("filter_radio")),
+			list(include = list("alert")),
+			list(include = list("syndradio")),
+			list(include = list("centradio")),
+			list(include = list("airadio")),
+			list(include = list("entradio")),
+			list(include = list("comradio")),
+			list(include = list("secradio")),
+			list(include = list("engradio")),
+			list(include = list("medradio")),
+			list(include = list("sciradio")),
+			list(include = list("supradio")),
+			list(include = list("srvradio")),
+			list(include = list("expradio")),
+			list(include = list("radio")),
+			list(include = list("deptradio")),
+			list(include = list("newscaster"))
+		)
+	),
+	list(
+		category = "vc_info",
+		matchers = list(
+			list(include = list("filter_notice")),
+			list(include = list("notice"), exclude = list("pm")),
+			list(include = list("adminnotice")),
+			list(include = list("info")),
+			list(include = list("sinister")),
+			list(include = list("cult"))
+		)
+	),
+	list(
+		category = "vc_warnings",
+		matchers = list(
+			list(include = list("filter_warning")),
+			list(include = list("warning"), exclude = list("pm")),
+			list(include = list("critical")),
+			list(include = list("userdanger")),
+			list(include = list("italics"))
+		)
+	),
+	list(
+		category = "vc_deadchat",
+		matchers = list(
+			list(include = list("filter_deadsay")),
+			list(include = list("deadsay"))
+		)
+	),
+	list(
+		category = "vc_pray",
+		matchers = list(
+			list(include = list("filter_pray"))
+		)
+	),
+	list(
+		category = "vc_globalooc",
+		matchers = list(
+			list(include = list("ooc")),
+			list(include = list("filter_ooc"))
+		)
+	),
+	list(
+		category = "vc_nif",
+		matchers = list(
+			list(include = list("nif"))
+		)
+	),
+	list(
+		category = "vc_mentor",
+		matchers = list(
+			list(include = list("mentor_channel")),
+			list(include = list("mentor"))
+		)
+	),
+	list(
+		category = "vc_adminpm",
+		matchers = list(
+			list(include = list("filter_pm")),
+			list(include = list("pm"))
+		)
+	),
+	list(
+		category = "vc_adminchat",
+		matchers = list(
+			list(include = list("filter_asay")),
+			list(include = list("admin_channel"))
+		)
+	),
+	list(
+		category = "vc_modchat",
+		matchers = list(
+			list(include = list("filter_msay")),
+			list(include = list("mod_channel"))
+		)
+	),
+	list(
+		category = "vc_eventchat",
+		matchers = list(
+			list(include = list("filter_esay")),
+			list(include = list("event_channel"))
+		)
+	),
+	list(
+		category = "vc_combat",
+		matchers = list(
+			list(include = list("filter_combat")),
+			list(include = list("danger"))
+		)
+	),
+	list(
+		category = "vc_adminlogs",
+		matchers = list(
+			list(include = list("filter_adminlogs")),
+			list(include = list("log_message"))
+		)
+	),
+	list(
+		category = "vc_attacklogs",
+		matchers = list(
+			list(include = list("filter_attacklogs"))
+		)
+	),
+	list(
+		category = "vc_debuglogs",
+		matchers = list(
+			list(include = list("filter_debuglogs"))
+		)
+	),
+	list(
+		category = "vc_looc",
+		matchers = list(
+			list(include = list("looc"))
+		)
+	),
+	list(
+		category = "vc_rlooc",
+		matchers = list(
+			list(include = list("rlooc"))
+		)
+	),
+	list(
+		category = "vc_system",
+		matchers = list(
+			list(include = list("boldannounce")),
+			list(include = list("filter_system"))
+		)
+	),
+	list(
+		category = "vc_unsorted",
+		matchers = list(
+			list(include = list("unsorted"))
+		)
+	)
 ))
 
 // The to_chat() macro calls this proc
@@ -33,6 +204,176 @@ GLOBAL_LIST_INIT(vchatFiles, list(
 
 //This is used to convert icons to base64 <image> strings, because byond stores icons in base64 in savefiles.
 GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of icons for the browser output
+
+// RS Add Start: Procs to support vchat update (Lira, September 2025)
+
+// Return TRUE when a character should be treated as whitespace while trimming strings
+/proc/vchat_is_whitespace_char(var/ch)
+	if(!istext(ch) || !length(ch))
+		return FALSE
+	var/ascii_val = text2ascii(ch)
+	if(isnull(ascii_val))
+		return FALSE
+	return ascii_val == 32 || ascii_val == 9 || ascii_val == 10 || ascii_val == 13
+
+// Trim leading and trailing whitespace from strings used in filenames and payloads
+/proc/vchat_trim_whitespace(var/text)
+	if(!istext(text))
+		return ""
+	var/len = length(text)
+	if(!len)
+		return ""
+	var/start = 1
+	while(start <= len && vchat_is_whitespace_char(copytext(text, start, start + 1)))
+		start++
+	if(start > len)
+		return ""
+	var/finish = len + 1
+	while(finish > start && vchat_is_whitespace_char(copytext(text, finish - 1, finish)))
+		finish--
+	return copytext(text, start, finish)
+
+// Extract the class list
+/proc/vchat_extract_span_classes(var/message)
+	if(!istext(message))
+		return list()
+
+	var/lower_message = lowertext(message)
+	var/start = findtext(lower_message, "<span")
+	if(!start)
+		return list()
+	var/end = findtext(lower_message, ">", start)
+	if(!end)
+		return list()
+	var/segment = copytext(message, start, end)
+	var/segment_lower = lowertext(segment)
+
+	var/class_pos = findtext(segment_lower, "class")
+	if(!class_pos)
+		return list()
+
+	var/pos = class_pos + 5 // move to the character after "class"
+	while(pos <= length(segment) && vchat_is_whitespace_char(copytext(segment_lower, pos, pos + 1)))
+		pos++
+
+	if(pos > length(segment) || copytext(segment, pos, pos + 1) != "=")
+		return list()
+	pos++
+
+	while(pos <= length(segment) && vchat_is_whitespace_char(copytext(segment_lower, pos, pos + 1)))
+		pos++
+
+	if(pos > length(segment))
+		return list()
+	var/delim = copytext(segment, pos, pos + 1)
+	if(!(delim == "\"" || delim == "'"))
+		return list()
+
+	var/value_start = pos + 1
+	var/value_end = findtext(segment, delim, value_start)
+	if(!value_end)
+		value_end = length(segment) + 1
+	var/class_text = lowertext(copytext(segment, value_start, value_end))
+	class_text = replacetext(class_text, "\t", " ")
+	class_text = replacetext(class_text, "\n", " ")
+	while(findtext(class_text, "  "))
+		class_text = replacetext(class_text, "  ", " ")
+
+	var/list/classes = list()
+	for(var/token in splittext(class_text, " "))
+		if(!length(token))
+			continue
+		classes += token
+
+	return classes
+
+// Resolve a VChat category identifier from a stored message snippet
+/proc/vchat_category_from_message(var/message)
+	var/list/classes = vchat_extract_span_classes(message)
+	if(!LAZYLEN(classes))
+		return "vc_unsorted"
+
+	var/list/class_lookup = list()
+	for(var/class_name in classes)
+		class_lookup[class_name] = TRUE
+
+	for(var/list/rule_entry as anything in GLOB.vchat_category_rules)
+		var/list/matchers = rule_entry["matchers"]
+		if(!islist(matchers))
+			continue
+
+		for(var/list/matcher as anything in matchers)
+			var/list/includes = matcher["include"]
+			var/list/excludes = matcher["exclude"]
+			var/matched = TRUE
+
+			if(islist(includes))
+				for(var/inc in includes)
+					if(!class_lookup[inc])
+						matched = FALSE
+						break
+
+			if(!matched)
+				continue
+
+			if(islist(excludes))
+				for(var/exc in excludes)
+					if(class_lookup[exc])
+						matched = FALSE
+						break
+
+			if(matched)
+				return rule_entry["category"]
+
+	return "vc_unsorted"
+
+// Return TRUE when the given category should appear in the current export set
+/proc/vchat_allowed_category(var/list/categories, var/category)
+	if(!LAZYLEN(categories))
+		return TRUE
+	return (category in categories)
+
+// Format a message plus repeat counter for fallback HTML exports
+/proc/vchat_format_saved_message(var/message, var/repeats)
+	var/result = message
+	if(repeats > 1)
+		result += "(x[repeats])"
+	result += "<br>\n"
+	return result
+
+
+// Prune unsafe characters from user supplied filenames prior to export
+/proc/vchat_sanitize_filename(var/name)
+	if(!istext(name))
+		return null
+
+	var/cleaned = vchat_trim_whitespace(copytext(name, 1, 128))
+	if(!length(cleaned))
+		return null
+
+	var/list/output = list()
+	for(var/i = 1, i <= length(cleaned), i++)
+		var/ch = copytext(cleaned, i, i + 1)
+		var/ascii_val = text2ascii(ch)
+		if(isnull(ascii_val))
+			continue
+		if((ascii_val >= 48 && ascii_val <= 57) || (ascii_val >= 65 && ascii_val <= 90) || (ascii_val >= 97 && ascii_val <= 122))
+			output += ch
+		else if(ch == " " || ch == "-" || ch == "_" || ch == "(" || ch == ")" || ch == ".")
+			output += ch
+		else
+			output += "_"
+
+	var/result = vchat_trim_whitespace(list2text(output, ""))
+	if(!length(result))
+		return null
+
+	if(!findtext(result, ".html"))
+		result += ".html"
+
+	return result
+
+// RS Add End
 
 //The main object attached to clients, created when they connect, and has start() called on it in client/New()
 /datum/chatOutput
@@ -162,7 +503,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 /datum/chatOutput/proc/load_database()
 	set waitfor = FALSE
 	// Only send them the number of buffered messages, instead of the ENTIRE log
-	var/list/results = vchat_get_messages(owner.ckey, message_buffer) //If there's bad performance on reconnects, look no further
+	var/list/results = vchat_get_messages(owner.ckey, message_buffer, GLOB.vchat_current_round_id) //If there's bad performance on reconnects, look no further || RS Edit: Add round ID (Lira, September 2025)
 	if(islist(results))
 		for(var/i in results.len to 1 step -1)
 			var/list/message = results[i]
@@ -265,6 +606,14 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 			loaded = FALSE
 		if("debug")
 			data = debugmsg(arglist(params))
+		// RS Add Start: Refs for vchat update (Lira, September 2025)
+		if("save_chatlog")
+			save_chatlog_request(arglist(params))
+		if("request_rounds")
+			data = round_list_request(arglist(params))
+		if("request_history")
+			data = round_history_request(arglist(params))
+		// RS Add End
 
 	if(href_list["showingnum"])
 		message_buffer = CLAMP(text2num(href_list["showingnum"]), 50, 2000)
@@ -296,6 +645,221 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	var/list/ban = world.IsBanned(key = ckey, address = ip, computer_id = cid)
 	if(ban)
 		log_and_message_admins("[key_name(owner)] has a cookie from a banned account! (Cookie: [ckey], [ip], [cid])")
+
+// RS Add Start: Save and history procs (Lira, September 2025)
+
+// Handle save chatlog
+/datum/chatOutput/proc/save_chatlog_request(var/data)
+	if(!owner || !data)
+		return
+
+	var/list/payload
+	if(istext(data))
+		payload = json_decode(data)
+	else if(islist(data))
+		payload = data
+
+	if(!islist(payload))
+		return
+
+	var/list/categories = list()
+	if(islist(payload["categories"]))
+		for(var/category in payload["categories"])
+			if(istext(category))
+				categories += category
+
+	var/filename = null
+	if(istext(payload["filename"]))
+		filename = vchat_sanitize_filename(payload["filename"])
+
+	var/round_id = null
+	var/use_all_rounds = FALSE
+	if(istext(payload["round_id"]))
+		var/tmp_round = vchat_trim_whitespace(payload["round_id"])
+		if(length(tmp_round))
+			if(lowertext(tmp_round) == "all")
+				use_all_rounds = TRUE
+			else
+				round_id = tmp_round
+
+	save_chatlog_to_disk(categories, filename, round_id, use_all_rounds)
+
+// Compile the saved round overview sent to the client history UI
+/datum/chatOutput/proc/round_list_request()
+	if(!owner)
+		return list("evttype" = "round_list", "rounds" = list(), "error" = "Client unavailable")
+
+	var/list/rounds = vchat_get_round_overview(owner.ckey)
+	if(!islist(rounds))
+		rounds = list()
+
+	var/total_messages = 0
+	for(var/list/entry in rounds)
+		if(!islist(entry))
+			continue
+		var/count = entry["message_count"]
+		if(istext(count))
+			count = text2num(count)
+		if(isnum(count))
+			total_messages += count
+
+	return list(
+		"evttype" = "round_list",
+		"rounds" = rounds,
+		"round_total" = rounds.len,
+		"total_messages" = total_messages,
+		"current_round_id" = GLOB.vchat_current_round_id)
+
+// Fetch stored chat messages for a specific round or all rounds on demand
+/datum/chatOutput/proc/round_history_request(var/data)
+	if(!owner)
+		return list("evttype" = "round_history", "round_id" = null, "messages" = list(), "error" = "Client unavailable", "current_round_id" = GLOB.vchat_current_round_id)
+
+	var/list/payload
+	if(istext(data))
+		payload = json_decode(data)
+	else if(islist(data))
+		payload = data
+
+	var/round_id = null
+	var/use_all_rounds = FALSE
+	var/source = null
+	if(islist(payload))
+		if(istext(payload["round_id"]))
+			var/tmp_round = vchat_trim_whitespace(payload["round_id"])
+			if(length(tmp_round))
+				if(lowertext(tmp_round) == "all")
+					use_all_rounds = TRUE
+				else
+					round_id = tmp_round
+		if(istext(payload["source"]))
+			source = payload["source"]
+
+	if(isnull(round_id) && !use_all_rounds)
+		round_id = GLOB.vchat_current_round_id
+
+	var/list/messages = vchat_get_messages(owner.ckey, null, use_all_rounds ? null : round_id)
+	if(!LAZYLEN(messages))
+		return list(
+			"evttype" = "round_history",
+			"round_id" = round_id,
+			"messages" = list(),
+			"error" = "No messages found for that round.",
+			"current_round_id" = GLOB.vchat_current_round_id,
+			"use_all_rounds" = use_all_rounds)
+
+	var/list/output = list()
+	var/message_count = 0
+	for(var/list/entry in messages)
+		if(!islist(entry))
+			continue
+		var/msg_text = entry["message"]
+		if(!istext(msg_text))
+			continue
+		var/logged_at = entry["logged_at"]
+		if(istext(logged_at))
+			logged_at = text2num(logged_at)
+		if(!isnum(logged_at))
+			logged_at = 0
+		var/world_time = entry["worldtime"]
+		if(istext(world_time))
+			world_time = text2num(world_time)
+		var/list/output_line = list(
+			"content" = msg_text,
+			"logged_at" = logged_at,
+			"worldtime" = world_time)
+		output += list(output_line)
+		message_count++
+		CHECK_TICK
+
+	return list(
+		"evttype" = "round_history",
+		"round_id" = round_id,
+		"messages" = output,
+		"message_count" = message_count,
+		"current_round_id" = GLOB.vchat_current_round_id,
+		"use_all_rounds" = use_all_rounds,
+		"source" = source)
+
+// Perform the server-side chatlog export workflow and stream the file to the client
+/datum/chatOutput/proc/save_chatlog_to_disk(var/list/categories, var/filename, var/round_id, var/use_all_rounds = FALSE)
+	if(!owner)
+		return
+
+	if(isnull(round_id) && !use_all_rounds)
+		round_id = GLOB.vchat_current_round_id
+
+	var/list/messages = vchat_get_messages(owner.ckey, null, use_all_rounds ? null : round_id)
+	if(!LAZYLEN(messages))
+		to_chat(owner, "<span class='warning'>Error: No messages found! Please inform a dev if you do have messages!</span>")
+		return
+
+	var/list/allowed_categories = list()
+	if(LAZYLEN(categories))
+		for(var/category in categories)
+			if(istext(category))
+				allowed_categories += category
+
+	var/list/output_lines = list()
+	var/last_message
+	var/last_category
+	var/repeat_count = 0
+
+	for(var/list/result in messages)
+		var/message = result["message"]
+		if(!istext(message))
+			continue
+
+		var/category = vchat_category_from_message(message)
+		if(!vchat_allowed_category(allowed_categories, category))
+			continue
+
+		if(last_message && last_category == category && last_message == message)
+			repeat_count++
+			continue
+
+		if(last_message)
+			output_lines += vchat_format_saved_message(last_message, repeat_count)
+
+		last_message = message
+		last_category = category
+		repeat_count = 1
+		CHECK_TICK
+
+	if(last_message)
+		output_lines += vchat_format_saved_message(last_message, repeat_count)
+
+	if(!output_lines.len)
+		to_chat(owner, "<span class='warning'>Error: No messages matched the selected filters.</span>")
+		return
+
+	var/text_blob = "<html><head><style>"
+	text_blob += file2text(file("code/modules/vchat/css/ss13styles.css"))
+	text_blob += "</style></head><body>"
+	text_blob += list2text(output_lines, "")
+	text_blob += "</body></html>"
+
+	var/tmp_path = "data/chatlog_tmp/[owner.ckey]_client_chat_log"
+	if(fexists(tmp_path) && !fdel(tmp_path))
+		to_chat(owner, "<span class='warning'>Error: Your chat log is already being prepared. Please wait until it's been downloaded before trying again.</span>")
+		return
+
+	rustg_file_write(text_blob, tmp_path)
+
+	var/export_name = filename
+	if(!istext(export_name) || !length(export_name))
+		var/date_segment = time2text(world.timeofday, "YYYY_MM_DD_(hh_mm)")
+		export_name = "log_[date_segment].html"
+
+	owner << ftp(file(tmp_path), export_name)
+
+	spawn(10 SECONDS)
+		if(fexists(tmp_path) && !fdel(tmp_path))
+			spawn(1 MINUTE)
+				if(fexists(tmp_path) && !fdel(tmp_path))
+					log_debug("Warning: [owner.ckey]'s chatlog could not be deleted one minute after file transfer was initiated. It is located at '[tmp_path]' and will need to be manually removed.")
+
+// RS Add End
 
 //Converts an icon to base64. Operates by putting the icon in the iconCache savefile,
 // exporting it as text, and then parsing the base64 from that.
@@ -417,7 +981,7 @@ var/to_chat_src
 		to_chat(src, "<span class='warning'>Error: VChat isn't processing your messages!</span>")
 		return
 
-	var/list/results = vchat_get_messages(ckey)
+	var/list/results = vchat_get_messages(ckey, null, GLOB.vchat_current_round_id) // RS Edit: Add round ID (Lira, September 2025)
 	if(!LAZYLEN(results))
 		to_chat(src, "<span class='warning'>Error: No messages found! Please inform a dev if you do have messages!</span>")
 		return
