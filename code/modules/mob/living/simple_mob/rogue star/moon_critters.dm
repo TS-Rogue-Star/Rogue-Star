@@ -786,8 +786,8 @@
 	desc = "A dangerous predatory creature known to blend in with its surroundings and then to quickly strike, and drain blood from its victims. It floats above the ground by some unknown process, thought to be to do with some internal magnetism. Its skin can rapidly change color, and it has enough wisdom to know to stay perfectly still while so hidden. When it detects a potential prey item, it rushes them down, using its flat body to pounce upon them, and pin them to the ground, where it is free to bite them, and draw blood out. Once again, it has enough wisdom to not drain prey dry, usually trying to leave them alive so that they can be fed upon again in the future. This behavior does not extend to groups of these creatures however, as together, a group may drain someone dry in a matter of moments! These creatures have immense self preservation though, as the moment their prey is actually able to fight back, they will run away."
 	value = CATALOGUER_REWARD_MEDIUM
 
-
-/////OUTISE MVP/////
+/*
 /mob/living/simple_mob/vore/moon_dragon
 	name = "moon dragon"
 	desc = "A dragon from the moon, can't get much more obvious than that! Does it have three eyes?"
+*/
