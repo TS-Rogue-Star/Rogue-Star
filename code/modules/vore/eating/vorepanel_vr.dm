@@ -2,6 +2,10 @@
 // Vore management panel for players
 //
 
+//////////////////////////////////////////////////////////////////////////////////
+//Updated by Lira for Rogue Star September 2025 to integrate trust list settings//
+//////////////////////////////////////////////////////////////////////////////////
+
 //INSERT COLORIZE-ONLY STOMACHS HERE
 var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 														"a_synth_flesh_mono_hole",
@@ -16,6 +20,60 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 														"post_tumby_passage_fluidless",
 														"not_quite_tumby",
 														"could_it_be_a_tumby")
+
+// RS Add: Maps together var on mob to toggle pref, client pref, and whitelist flag (Lira, September 2025)
+var/static/list/vore_trustlist_preference_map = list(
+	"dropnom_prey" = list(
+		"host_var" = "can_be_drop_prey",
+		"client_var" = "can_be_drop_prey",
+		"trust_key" = SPONT_PREY,
+	),
+	"dropnom_pred" = list(
+		"host_var" = "can_be_drop_pred",
+		"client_var" = "can_be_drop_pred",
+		"trust_key" = SPONT_PRED,
+	),
+	"drop_vore" = list(
+		"host_var" = "drop_vore",
+		"client_var" = "drop_vore",
+		"trust_key" = DROP_VORE,
+	),
+	"slip_vore" = list(
+		"host_var" = "slip_vore",
+		"client_var" = "slip_vore",
+		"trust_key" = SLIP_VORE,
+	),
+	"stumble_vore" = list(
+		"host_var" = "stumble_vore",
+		"client_var" = "stumble_vore",
+		"trust_key" = STUMBLE_VORE,
+	),
+	"throw_vore" = list(
+		"host_var" = "throw_vore",
+		"client_var" = "throw_vore",
+		"trust_key" = THROW_VORE,
+	),
+	"food_vore" = list(
+		"host_var" = "food_vore",
+		"client_var" = "food_vore",
+		"trust_key" = FOOD_VORE,
+	),
+	"pickup_pref" = list(
+		"host_var" = "pickup_pref",
+		"client_var" = "pickup_pref",
+		"trust_key" = MICRO_PICKUP,
+	),
+	"spontaneous_tf" = list(
+		"host_var" = "allow_spontaneous_tf",
+		"client_var" = "allow_spontaneous_tf",
+		"trust_key" = SPONT_TF,
+	),
+	"resize" = list(
+		"host_var" = "resizable",
+		"client_var" = "resizable",
+		"trust_key" = RESIZING,
+	)
+)
 
 /mob
 	var/datum/vore_look/vorePanel
@@ -428,7 +486,82 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 		"autotransferable" = host.autotransferable, //RS Add || Port Chomp 3200
 	)
 
+	// RS Add start: Trustlist data (Lira, September 2025)
+	var/list/trustlist_toggles = list()
+	if(host.client && host.client.prefs_vr)
+		if(islist(host.client.prefs_vr.vore_whitelist_toggles))
+			trustlist_toggles = host.client.prefs_vr.vore_whitelist_toggles.Copy()
+	data["trustlist_toggles"] = trustlist_toggles
+
+	var/trust_mode = WL_BOTH
+	if(host.client && host.client.prefs && host.client.prefs.vore_whitelist_preference)
+		trust_mode = host.client.prefs.vore_whitelist_preference
+	data["trustlist_mode"] = trust_mode
+	// RS Add End
+
 	return data
+
+// RS Add: Incorporate trustlist (Lira, September 2025)
+/datum/vore_look/proc/set_trustlist_preference_state(var/pref_id, var/state)
+	if(!pref_id || !host)
+		return FALSE
+
+	var/list/spec = vore_trustlist_preference_map[pref_id]
+	if(!spec)
+		return FALSE
+
+	var/host_var = spec["host_var"]
+	if(!(host_var in host.vars))
+		return FALSE
+
+	if(state)
+		state = lowertext(state)
+
+	var/trust_key = spec["trust_key"]
+	var/current_enabled = !!host.vars[host_var]
+	var/in_trust = FALSE
+	var/datum/vore_preferences/client_prefs = null
+	if(host.client && host.client.prefs_vr)
+		client_prefs = host.client.prefs_vr
+		if(!islist(client_prefs.vore_whitelist_toggles))
+			client_prefs.vore_whitelist_toggles = list()
+		if(trust_key)
+			in_trust = (trust_key in client_prefs.vore_whitelist_toggles)
+
+	var/current_state = "disabled"
+	if(current_enabled)
+		if(in_trust)
+			current_state = "trustlist"
+		else
+			current_state = "enabled"
+
+	if(!(state == "disabled" || state == "enabled" || state == "trustlist"))
+		switch(current_state)
+			if("disabled")
+				state = "enabled"
+			if("enabled")
+				state = "trustlist"
+			if("trustlist")
+				state = "disabled"
+
+	if(state == current_state)
+		return FALSE
+
+	var/enable_value = (state != "disabled")
+	host.vars[host_var] = enable_value
+
+	if(client_prefs)
+		var/client_var = spec["client_var"]
+		if(client_var && (client_var in client_prefs.vars))
+			client_prefs.vars[client_var] = enable_value
+		if(trust_key)
+			if(state == "trustlist")
+				client_prefs.vore_whitelist_toggles |= trust_key
+			else
+				client_prefs.vore_whitelist_toggles -= trust_key
+
+	unsaved_changes = TRUE
+	return TRUE
 
 /datum/vore_look/tgui_act(action, params)
 	if(..())
@@ -505,6 +638,26 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 
 		if("set_attribute")
 			return set_attr(usr, params)
+		// RS Add: Trustlist actions (Lira, September 2025)
+		if("set_preference_state")
+			set_trustlist_preference_state(params["pref"], params["state"])
+			return TRUE
+		if("trustlist_edit")
+			if(isliving(host))
+				var/mob/living/L = host
+				L.toggle_vore_whitelist()
+			return TRUE
+		if("trustlist_print")
+			if(isliving(host))
+				var/mob/living/L = host
+				L.print_vore_whitelist()
+			return TRUE
+		if("trustlist_mode")
+			if(isliving(host))
+				var/mob/living/L = host
+				L.toggle_vore_trustlist_mode(params["mode"])
+			return TRUE
+		// RS Add End
 
 		if("saveprefs")
 			if(isnewplayer(host))
@@ -573,16 +726,10 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			unsaved_changes = TRUE
 			return TRUE
 		if("toggle_dropnom_pred")
-			host.can_be_drop_pred = !host.can_be_drop_pred
-			if(host.client.prefs_vr)
-				host.client.prefs_vr.can_be_drop_pred = host.can_be_drop_pred
-			unsaved_changes = TRUE
+			set_trustlist_preference_state("dropnom_pred") // RS Add: Trustlist integration (Lira, September 2025)
 			return TRUE
 		if("toggle_dropnom_prey")
-			host.can_be_drop_prey = !host.can_be_drop_prey
-			if(host.client.prefs_vr)
-				host.client.prefs_vr.can_be_drop_prey = host.can_be_drop_prey
-			unsaved_changes = TRUE
+			set_trustlist_preference_state("dropnom_prey") // RS Add: Trustlist integration (Lira, September 2025)
 			return TRUE
 		if("toggle_allow_inbelly_spawning")
 			host.allow_inbelly_spawning = !host.allow_inbelly_spawning
@@ -591,10 +738,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			unsaved_changes = TRUE
 			return TRUE
 		if("toggle_allow_spontaneous_tf")
-			host.allow_spontaneous_tf = !host.allow_spontaneous_tf
-			if(host.client.prefs_vr)
-				host.client.prefs_vr.allow_spontaneous_tf = host.allow_spontaneous_tf
-			unsaved_changes = TRUE
+			set_trustlist_preference_state("spontaneous_tf") // RS Add: Trustlist integration (Lira, September 2025)
 			return TRUE
 		if("toggle_digest")
 			host.digestable = !host.digestable
@@ -615,10 +759,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			unsaved_changes = TRUE
 			return TRUE
 		if("toggle_resize")
-			host.resizable = !host.resizable
-			if(host.client.prefs_vr)
-				host.client.prefs_vr.resizable = host.resizable
-			unsaved_changes = TRUE
+			set_trustlist_preference_state("resize") // RS Add: Trustlist integration (Lira, September 2025)
 			return TRUE
 		if("toggle_feed")
 			host.feeding = !host.feeding
@@ -651,10 +792,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			unsaved_changes = TRUE
 			return TRUE
 		if("toggle_pickuppref")
-			host.pickup_pref = !host.pickup_pref
-			if(host.client.prefs_vr)
-				host.client.prefs_vr.pickup_pref = host.pickup_pref
-			unsaved_changes = TRUE
+			set_trustlist_preference_state("pickup_pref") // RS Add: Trustlist integration (Lira, September 2025)
 			return TRUE
 		if("toggle_healbelly")
 			host.permit_healbelly = !host.permit_healbelly
@@ -693,24 +831,19 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			unsaved_changes = TRUE
 			return TRUE //RS Add End
 		if("toggle_drop_vore")
-			host.drop_vore = !host.drop_vore
-			unsaved_changes = TRUE
+			set_trustlist_preference_state("drop_vore") // RS Add: Trustlist integration (Lira, September 2025)
 			return TRUE
 		if("toggle_slip_vore")
-			host.slip_vore = !host.slip_vore
-			unsaved_changes = TRUE
+			set_trustlist_preference_state("slip_vore") // RS Add: Trustlist integration (Lira, September 2025)
 			return TRUE
 		if("toggle_stumble_vore")
-			host.stumble_vore = !host.stumble_vore
-			unsaved_changes = TRUE
+			set_trustlist_preference_state("stumble_vore") // RS Add: Trustlist integration (Lira, September 2025)
 			return TRUE
 		if("toggle_throw_vore")
-			host.throw_vore = !host.throw_vore
-			unsaved_changes = TRUE
+			set_trustlist_preference_state("throw_vore") // RS Add: Trustlist integration (Lira, September 2025)
 			return TRUE
 		if("toggle_food_vore")
-			host.food_vore = !host.food_vore
-			unsaved_changes = TRUE
+			set_trustlist_preference_state("food_vore") // RS Add: Trustlist integration (Lira, September 2025)
 			return TRUE
 		if("switch_selective_mode_pref")
 			host.selective_preference = tgui_input_list(usr, "What would you prefer happen to you with selective bellymode?","Selective Bellymode", list(DM_DEFAULT, DM_DIGEST, DM_ABSORB, DM_DRAIN))

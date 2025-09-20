@@ -487,7 +487,16 @@
 	to_chat(src,SPAN_NOTICE("Remember to save your changes in the vore panel to have them stick!"))
 	vorePanel.unsaved_changes = TRUE
 
-/mob/living/proc/toggle_vore_trustlist_mode()
+// Adjusted to allow TGUI changes without opening html window (Lira, September 2025)
+/mob/living/proc/toggle_vore_trustlist_mode(var/new_mode)
+	if(new_mode)
+		if(!(new_mode in list(WL_BOTH, WL_PREY, WL_PRED)))
+			return
+		client.prefs.vore_whitelist_preference = new_mode
+		client.prefs.extra_global_save()
+		to_chat(src, SPAN_NOTICE("Trust list mode set to [new_mode]."))
+		return
+
 	var/choice = tgui_alert(src,"For preferences that the trust list is enabled for, setting this will allow trusted users to engage only with the selected mode, and will restrict all users from interacting with the opposite mode, if applicable. Which will you choose?","Trust List Mode",list("[WL_BOTH]","[WL_PREY]","[WL_PRED]"))
 
 	if(!choice)
