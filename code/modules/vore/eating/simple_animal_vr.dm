@@ -25,6 +25,7 @@
 	//RS ADD START
 	if(ai_holder)
 		ai_holder.set_stance(STANCE_IDLE)
+		ai_holder.lose_target()
 	//RS ADD END
 
 //
