@@ -62,7 +62,7 @@
 		return 0
 
 	//space check ~no flying space trains sorry
-	if(on && istype(destination, /turf/space))
+	if(on && (istype(destination, /turf/space) || istype(destination, /turf/simulated/open)))	// RS edit
 		return 0
 
 	return ..()
