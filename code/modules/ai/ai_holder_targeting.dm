@@ -123,6 +123,8 @@
 		else
 			set_stance(STANCE_FIGHT)
 		last_target_time = world.time
+		if(holder.resting)		//RS ADD
+			holder.lay_down()	//RS ADD
 		return TRUE
 
 // Filters return one or more 'preferred' targets.

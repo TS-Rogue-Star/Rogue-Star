@@ -7,8 +7,7 @@
 	icon = 'icons/rogue-star/mobx32.dmi'
 	icon_state = "moon_deer"
 	icon_living = "moon_deer"
-	icon_dead = "deer_dead"
-	icon_rest = "deer_rest"
+	icon_dead = "moon_deer_dead"
 
 	var/list/overlays_cache = list()
 	var/crystal_color
@@ -128,51 +127,22 @@
 		"There seems to be a solid shape distending their belly.")
 
 	base.digest_messages_prey = list(
-		"The walls squeeze and grind across your figure, bathing you in caustic slime with each pass, softening you up little by little until you fade away entirely within %pred, plumping out their body.",
-		"A cacophony of gurgling and burbling sounds out as the walls collapse in on you, reducing you to naught more than sloppy nutrients for %pred to absorb!",
-		"Your surroundings throb and churn around you with immense weight and powebase. Squeezing you tighter and tighter with every beat of %pred's heart! The walls fold in around you and clench you tightly until there's nothing left! %pred gives off a little belch to punctuate your stay.",
-		"Each beat of %pred's heart throbs through the flesh around you, a soothing rumbling to fall into as those walls close in on you with their smothering churns. Your senses fade away as you fall into a dream, and give yourself to %pred..."
-		)
-
-	base.emote_lists[DM_HOLD] = list(
-		"The walls press over you here and there as %pred moves...",
-		"%pred's heartbeat pumps under the surface of the flesh surrounding you, making the whole area throb with every beat.",
-		"The molten pressure of the walls forms them to your shape and fills in any space they can wedge intiteration.",
-		"Every moment within %pred gets you ever more soaked, dripping with stringy fluids that connect between you and the surroundings!",
-		"%pred gives a happy little sigh now and then when you shift or move.",
-		"An almost deafening GLORGLE bubbles up from somewhere deeper within %pred! Oh deabase...",
-		"A rush of air burbles up passed you as %pred's body CLENCHES inward around you. A moment later a rumbling 'bworp' sounds out from up above...",
-		"Doughy flesh rumbles a bit as it closes in on you, holding you close as %pred takes a deep breath. As the lungs inflate somewhere nearby, you can hear the whoosh, and the space available to you shrinks as those walls close in, squeeeeeeezing you for a moment, before %pred breathes out again in a little sigh.",
-		"The walls suddenly clench inward, squeezing you and squelching against your figure as %pred hiccups.",
-		"Somewhere deeper within %pred something burbles, a low, deep sound."
+		"Your vision begins to fade even as the see through flesh folds over your features, collapsing in on you, your softening shape deforming to that of the gut that contained you! Deep bellowing gurgles fill your ears, your senses dulling into nothingness as you are smothered and churned and digested! GWORGLL… Soon there’s nothing but a sticky mess left… a mess that those guts would no doubt relish in soaking up and adding to the glittering body~ Your own mineral content might even add to those pretty gems, living on within the creature..."
 		)
 
 	base.emote_lists[DM_DIGEST] = list(
-		"The walls churn intensely around you, squeezing in and smearing you in caustic slime.",
-		"The steamy heat of the active walls smother over your features, gurgling and slurping against you intensely!",
-		"The rhythmic motion of %pred's walls moving fills your ears with squelches and deep gurgles as they fold in over you and pin you into new, interesting shapes!",
-		"The walls close in on you, squeezing you heavily, churning up and down and all around, smearing you in caustic juices!!!",
-		"%pred's flesh pummels inward, gripping and pumping against your figure, actively churning you down!",
-		"The folds of flesh pin your arms to your sides as they squeeze you and grind the belly's contents over your form!",
-		"The fluids inside of %pred bubble and smear over your form!",
-		"%pred's %belly GLORGLES and burbles against you, every shift of weight eliciting a sloppy slurp or gurgling squelch!",
-		"For a moment the walls really squeeze inward on you, folding over your form and pressing down, grinding heavier and heavier!! Sloppy slimy sweltering and sticky! Immense pressure hold on to you as those gurglings fill your ears! Stringy fluids stick to you as those walls try to break you down... They slowly, slowly ease up on you over time, but never quite back off of you...",
-		"Your weight bounces and tips as %pred moves around! The walls stretch and push you back into the center of the %belly through tension alone."
+		"The world outside glitters through the flesh to you as you are smothered over and over again in waves of needy pressure. Thick slime sloshes over you as the %belly attempts to soften you up...",
+		"%pred's %belly grinds over you heavily, forcing you to curl up into a tiny little ball, smothered in gastric attention.",
+		"The walls offer a distorted view of the outside world here, but still hold you fast! Pumping and squeezing against you as they slather you in colorful digestive fluids.",
+		"The hot, tight space of %pred's %belly doesn't give you much room to move around, and now and then it seems like the creature delibarately flexes upon you, squeeeeezing you tighter... forcing you a little deeper. Gloorrrggll..."
 		)
 
 	base.emote_lists[DM_ABSORB] = list(
-		"The doughy press of the walls cling to you as they slurp and squelch with each and every move.",
-		"The walls of %pred's %belly close in on you, the molten texture clinging to you, forming to your shape and squeezing in on you possessively!",
-		"With every press of %pred's %belly you seem to sink into the flesh a little bit more...",
-		"The walls close in on you, pressing in on you a little tighter with each beat of %pred's heart...",
-		"When you shift your weight to reposition, you find that pressing any of your limbs into the flesh causes them to sink in deep, not offering you any leverage at all! It takes a lot of effort to pull it back out!",
-		"%pred's %belly presses in on you tightly, not giving you any room to move at all! No matter how you squirm or pull away, the walls seem only to cling on you greedily!",
-		"The moisture around you seems to soak right into %pred's flesh, and where that moisture soaks in, you find it ever more difficult to pull away!",
-		"%pred slowly takes a breath, and as they doo, the space around you seems to grow tighter, squeezing you more and more snugly with each passing moment, as the lungs nearby put pressure on you, sinking you into the flesh of %pred's %belly that much more quickly!",
-		"The molten touch of %pred's %belly folds over you, clenching inward and squelching as you are plunged into it with every swelling throb of that flesh!",
-		"You struggle to keep your head free as the walls close in on you, squishing and slathering you in slime. You can push and shove at the flesh all you want, but it only results in your digits sinking deeper into %pred!"
+		"The walls here are immensely soft, and being as you can see through them a bit, you can actually SEE your own digits sinking into them, see the glittering walls forming to your figure, like being on the inside of a vacuum bag...",
+		"The flesh holds you tightly, hot and heavy and oh so soft, squeezing you heavily like a passionate lover, eager for some more attention. %pred's beating heart throbs through everything that touches you.",
+		"There is absolutely no space in here that you aren't occupying, and even that space the flesh seems insistent upon reclaiming, squeezing close to you, holding you tighter and tighter, sinking you into the folds little by little, until... well, it's getting hard to tell where you end, and where %pred begins...",
+		"The hot, tight space of %pred's %belly doesn't give you much room to move around, and now and then it seems like the creature delibarately flexes upon you, squeeeeezing you tighter... forcing you a little deeper. Gloorrrggll..."
 		)
-
 
 	var/obj/belly/iteration = new /obj/belly(src)
 	iteration.name = "contritipetram"	//"I will crush you"
@@ -306,13 +276,21 @@
 	. = ..()
 
 	var/combine_key = "crystal-[crystal_color]"
+	if(stat == DEAD)
+		combine_key = "[combine_key]-dead"
 	var/image/our_image = overlays_cache[combine_key]
 	if(!our_image)
-		our_image = image(icon,null,"moon_deer_crystal")
+		if(stat == DEAD)
+			our_image = image(icon,null,"moon_deer_dead_crystal")
+		else
+			our_image = image(icon,null,"moon_deer_crystal")
 		our_image.color = crystal_color
 		our_image.appearance_flags = RESET_COLOR|KEEP_APART|PIXEL_SCALE
 		overlays_cache[combine_key] = our_image
 	add_overlay(our_image)
+
+	if(stat == DEAD)
+		return
 
 	combine_key = "shine"
 	our_image = overlays_cache[combine_key]
@@ -331,12 +309,14 @@
 	value = CATALOGUER_REWARD_TRIVIAL
 
 /////SKITTERER/////
-/mob/living/simple_mob/vore/moon_skitterer
-	name = ""
-	desc = "A creature covered in sharp looking plates. It has at least four legs, and a long, hard pointy tail."
+/mob/living/simple_mob/vore/stellagan
+	name = "stellagan"
+	desc = "A creature covered in sharp looking plates. It has at least four legs, a long pointy tail, and beady little eyes. It seems to be a fairly well armored little thing!"
 	icon = 'icons/rogue-star/mobx32.dmi'
 	icon_state = "skitterer"
 	icon_living = "skitterer"
+	icon_rest = "skitterer-roll"
+	icon_dead = "skitterer_dead"
 	tt_desc = "lunam serpere"
 
 	ai_holder_type = /datum/ai_holder/simple_mob/passive
@@ -351,6 +331,31 @@
 	max_n2 = 0
 	minbodytemp = 0
 
+	armor = list(
+			"melee" = 100,
+			"bullet" = 100,
+			"laser" = 100,
+			"energy" = 100,
+			"bomb" = 0,
+			"bio" = 100,
+			"rad" = 100)
+
+	armor_soak = list(
+		"melee" = 30,
+		"bullet" = 30,
+		"laser" = 10,
+		"energy" = 10,
+		"bomb" = 0,
+		"bio" = 100,
+		"rad" = 100
+		)
+
+	response_help = "pets"
+	response_disarm = "rudely paps"
+	response_harm = "punches"
+
+	var/rolled_up = FALSE
+	var/roll_up_countdown = 0
 /////////////////////////////////////// Vore stuff ///////////////////////////////////////////
 
 	swallowTime = 3 SECONDS
@@ -359,20 +364,119 @@
 	vore_bump_chance = 1
 	vore_bump_emote	= "suddenly pounces on"
 	vore_ignores_undigestable = 0
-	vore_default_mode = DM_DIGEST
+	vore_default_mode = DM_SELECT
 	vore_icons = SA_ICON_LIVING
 	vore_stomach_name = "stomach"
 	vore_default_contamination_flavor = "Wet"
 	vore_default_contamination_color = "grey"
-	vore_default_item_mode = IM_DIGEST
-	vore_bump_chance = 5
-	vore_pounce_chance = 35
+	vore_default_item_mode = IM_HOLD
+	vore_bump_chance = 1
+	vore_pounce_chance = 1
 	vore_pounce_falloff = 0
 	vore_standing_too = TRUE
 
-/mob/living/simple_mob/vore/moon_skitterer/New()
+/mob/living/simple_mob/vore/stellagan/init_vore()
+	..()
+
+	var/obj/belly/base = vore_selected
+	base.name = "stomach"
+	base.desc = "The flesh surrounding you is surprisingly soft and pillowy. Smushy in a pleasant kind of way, holding to you securely! You can feel the throb of the creature’s heart pump through the flesh all around you, compressing you a little bit more with each and every beat. A thick, almost jiggly slime coats everything, and seems almost to crawl across your body. It’s hard to tell though if the slime is moving, or if it is just the motion of the insides of the creature and your own body causing the sensation! Either way, it’s hot, steamy, and incredibly tight inside of here!!!"
+	base.belly_fullscreen = "anibelly"
+	base.belly_healthbar_overlay_theme = "Tight"
+	base.belly_healthbar_overlay_color = base.belly_fullscreen_color
+	base.digest_brute = 1
+	base.digest_burn = 0.5
+	base.digest_oxy = 0
+	base.digestchance = 0
+	base.absorbchance = 0
+	base.escapechance = 25
+
+/mob/living/simple_mob/vore/stellagan/New()
 	color = pick(list("#FFFFFF","#fff9d9","#a89153","#56758f","#625569","#382d1f","#3b3b3b"))
+	var/adjectives = list(
+		"brave",
+		"undaunted",
+		"powerful",
+		"asteroid",
+		"lunar",
+		"skittering",
+		"polite",
+		"curious",
+		"eager",
+		"cautious",
+		"playful",
+		"bounding",
+		"prickly",
+		"pointy",
+		"sharp",
+		"bright-eyed",
+		"mirthful",
+		"dauntless",
+		"tiny",
+		"little",
+		"big",
+		"enormouse",
+		"needy",
+		"aloof",
+		)
+	name = "[pick(adjectives)] [name]"
 	. = ..()
+
+/mob/living/simple_mob/vore/stellagan/verb/roll_up()
+	set name = "Roll"
+	set desc = "Roll around at the speed of sound, or therabouts."
+	set category = "Abilities"
+
+	rolled_up = !rolled_up
+	if(rolled_up)
+		if(!client)
+			roll_up_countdown = 20
+		movement_cooldown = -3
+	else
+		movement_cooldown = 3
+
+	update_icon()
+
+/mob/living/simple_mob/vore/stellagan/Life()
+	. = ..()
+	if(!client)
+		if(roll_up_countdown > 0)
+			roll_up_countdown --
+		else if(rolled_up)
+			roll_up()
+
+/mob/living/simple_mob/vore/stellagan/update_icon()
+	. = ..()
+	if(stat == DEAD)
+		return
+	if(rolled_up)
+		icon_state = "skitterer-roll"
+
+/mob/living/simple_mob/vore/stellagan/adjustOxyLoss(amount)
+	if(amount >= 0 && !rolled_up)
+		roll_up()
+
+/mob/living/simple_mob/vore/stellagan/adjustCloneLoss(amount)
+	if(amount >= 0 && !rolled_up)
+		roll_up()
+
+/mob/living/simple_mob/vore/stellagan/adjustBrainLoss(amount)
+	if(amount >= 0 && !rolled_up)
+		roll_up()
+
+/mob/living/simple_mob/vore/stellagan/adjustToxLoss(amount)
+	if(amount >= 0 && !rolled_up)
+		roll_up()
+
+/mob/living/simple_mob/vore/stellagan/adjustHalLoss(amount)
+	if(amount >= 0 && !rolled_up)
+		roll_up()
+
+
+/datum/category_item/catalogue/fauna/stellagan
+	name = "Alien Wildlife - Lunam Serpere"
+	desc = "A small creature with significant armor plating. It is able to curl up its body to better protect itself from harm. This creature shows no fear or aggression to crew life, and seems quite passive in general, preferring to curl up and hide from its troubles than ever fight. It survives in extreme climates thanks to its gut biome being able to break just about anything it eats down into useful compounds that its body can absorb. This means though that as long as there is something that it can fit in its mouth, then it can survive and thrive basically anywhere, so long as whatever the substance is isn’t poisonous to the bacteria. It has six legs underneath its plated body, each tipped with a pair of claws which it can use to grip on to things, however, it is extremely difficult to get it to actually tip over without also curling up, so it is quite difficult to study while alive."
+	value = CATALOGUER_REWARD_TRIVIAL
 
 /////RAY/////
 /mob/living/simple_mob/vore/dust_stalker
@@ -381,6 +485,8 @@
 	icon = 'icons/rogue-star/mobx64.dmi'
 	icon_state = "moon_ray"
 	icon_living = "moon_ray"
+	icon_dead = "moon_ray_dead"
+	icon_rest = "moon_ray"
 	tt_desc = "sequirian sangune"
 	faction = "ray"
 
@@ -397,7 +503,7 @@
 	var/marking_color
 	var/eye_color
 
-	ai_holder_type = /datum/ai_holder/simple_mob/melee/hit_and_run
+	ai_holder_type = /datum/ai_holder/simple_mob/melee/hit_and_run/dust_stalker
 
 	min_oxy = 0
 	max_oxy = 0
@@ -413,8 +519,14 @@
 	special_attack_max_range = 3
 	special_attack_cooldown = 15 SECONDS
 
+	response_help = "pets"
+	response_disarm = "rudely paps"
+	response_harm = "punches"
+
 	hunter = TRUE
 	food_pref = CARNIVORE
+	var/hiding = FALSE
+	var/confidence = 0
 
 /////////////////////////////////////// Vore stuff ///////////////////////////////////////////
 
@@ -435,6 +547,7 @@
 	vore_pounce_falloff = 0
 	vore_standing_too = TRUE
 	vore_unconcious_eject_chance = 90
+	vore_default_item_mode = IM_HOLD
 
 /mob/living/simple_mob/vore/dust_stalker/init_vore()
 	..()
@@ -454,6 +567,24 @@
 	base.absorbchance = 0
 	base.escapechance = 10
 
+	base.struggle_messages_outside = list(
+		"Something shifts noticably inside of %pred.",
+		"A muffled voice grunts out from within of %pred!",
+		"Deep rolling GLORPs come out of %pred as something fights inside!"
+	)
+
+	base.digest_messages_prey = list(
+		"Your world spins as your head gets more and more light, while at the same time, that flesh squeezes in on you heavier, heavier with each passing moment, the warm fluid from inside of you flows out freely, pooling around you and being soaked up through that eager, churning gut, slick squelching rolling over you in intense waves. The sounds of that gut working on you, the beast that had caught you roaring with life, its heart thundering in your ears, while your own slows, and your senses fade away as you are bled dry…",
+		)
+
+	base.emote_lists[DM_DIGEST] = list(
+		"The walls squeeze you tightly, wringing you like a rag! GLOORRGGNNN...",
+		"Intense waves of pressure pump against you with a powerful insistence!",
+		"The %pred's heart thunders in your ears as the flesh around you squeezes you tightly!",
+		"The walls pump and throb against you so intensely!",
+		"The slick flesh folds over you, grinding you all over as it squeezes you so tightly!"
+		)
+
 /mob/living/simple_mob/vore/dust_stalker/New()
 	color = pick(list("#FFFFFF","#fff9d9","#d9fbff","#f1d9ff","#ffd9d9","#3b3b3b"))
 	. = ..()
@@ -465,10 +596,16 @@
 	. = ..()
 
 	var/our_state = "moon_ray_marking"
-	if(vore_fullness)
+	if(resting)
+		our_state = "[our_state]-[vore_fullness]"
+	else if(vore_fullness)
 		our_state = "[our_state]-[vore_fullness]"
 		icon_state = "[icon_living]-[vore_fullness]"
 	var/combine_key = "marking-[marking_color]-[vore_fullness]"
+	if(stat == DEAD)
+		icon_state = icon_dead
+		our_state = "moon_ray_dead_marking"
+		combine_key = "marking-[marking_color]-dead"
 	var/image/our_image = overlays_cache[combine_key]
 	if(!our_image)
 		our_image = image(icon,null,our_state)
@@ -476,7 +613,8 @@
 		our_image.appearance_flags = RESET_COLOR|KEEP_APART|PIXEL_SCALE
 		overlays_cache[combine_key] = our_image
 	add_overlay(our_image)
-
+	if(stat == DEAD)
+		return
 	combine_key = "eye-[eye_color]"
 	our_image = overlays_cache[combine_key]
 	if(!our_image)
@@ -489,14 +627,46 @@
 
 /mob/living/simple_mob/vore/dust_stalker/Life()
 	. = ..()
+	if(resting)
+		if(confidence < 20)
+			confidence ++
+		return
+	else
+		if(confidence > 0)
+			confidence --
+		if(health != maxHealth)
+			confidence --
 	if(ai_holder.stance == STANCE_IDLE)
 		if(alpha == 255)
 			if(prob(10))
-				ai_holder.wander = FALSE
-				chameleon_blend()
+				time_to_hide()
 			else
 				ai_holder.wander = TRUE
 
+/mob/living/simple_mob/vore/dust_stalker/verb/time_to_hide()
+	set name = "Stalk"
+	set desc = "Stalk your prey!"
+	set category = "Abilities"
+
+	if(resting)
+		return
+
+	ai_holder.wander = FALSE
+	chameleon_blend()
+	cut_overlays()
+	icon_state = "moon_ray_hide"
+	var/combine_key = "marking-[marking_color]"
+	var/image/our_image = overlays_cache[combine_key]
+	if(!our_image)
+		our_image = image(icon,null,"moon_ray_hide_marking")
+		our_image.color = marking_color
+		our_image.appearance_flags = RESET_COLOR|KEEP_APART|PIXEL_SCALE
+		overlays_cache[combine_key] = our_image
+	add_overlay(our_image)
+
+	resting = TRUE
+
+/*
 /mob/living/simple_mob/vore/dust_stalker/is_cloaked()
 	if(isbelly(loc))
 		return TRUE
@@ -507,6 +677,25 @@
 	if(nutrition > 1250)
 		return FALSE
 	return TRUE
+*/
+/datum/ai_holder/simple_mob/melee/hit_and_run/dust_stalker/special_flee_check()
+	if(!istype(holder, /mob/living/simple_mob/vore/dust_stalker))
+		return FALSE
+	var/mob/living/simple_mob/vore/dust_stalker/ds = holder
+	if(isbelly(ds.loc))
+		return FALSE
+	if(ds.hiding)
+		return FALSE
+	if(ds.confidence > 0)
+		return FALSE
+	return TRUE
+
+/mob/living/simple_mob/vore/dust_stalker/prey_unconcious(mob/living/L)
+	. = ..()
+	if(.)
+		hiding = FALSE
+		resting = FALSE
+		confidence = 0
 
 /mob/living/simple_mob/vore/dust_stalker/do_special_attack(atom/A)
 	set waitfor = FALSE

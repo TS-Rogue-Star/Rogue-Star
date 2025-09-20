@@ -4,18 +4,22 @@
 
 /mob/living/proc/prey_unconcious(var/mob/living/L)
 	if(vore_unconcious_eject_chance <= 0)
-		return
+		return FALSE
 	if(ckey)
-		return
+		return FALSE
 	if(!L)
-		return
+		return FALSE
 	if(L.stat != UNCONSCIOUS)
-		return
+		return FALSE
+	if(!isbelly(L.loc))
+		return FALSE
+	var/obj/belly/B = L.loc
+	if(B.owner != src)
+		return FALSE
 	if(prob(vore_unconcious_eject_chance))
-		if(isbelly(L.loc))
-			var/obj/belly/B = L.loc
-			if(B.owner == src)
-				B.release_specific_contents(L)
-				to_chat(L,"you got released lol")
+		B.release_specific_contents(L)
+		to_chat(L,SPAN_NOTICE("As you slip into unconsciousness, you can feel the flesh tighen, squeezing you out of \the [B.owner]'s [B], saving you from being claimed entirely!"))
+		return TRUE
 	else
-		to_chat(L,"you didn't get released, rip bozo")
+		to_chat(L,SPAN_WARNING("As you slip into unconsciousness, you can feel \the [B.owner]'s [B] press in heavier, squeezing you deeper, greedier... smothering you close and keeping you... oh dear. It doesn't seem like you're getting away this time..."))
+		return FALSE
