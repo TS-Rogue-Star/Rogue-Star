@@ -547,3 +547,9 @@ Link: https://github.com/TS-Rogue-Star/Rogue-Star/pull/1063<br>
 **Creator:** ChromeFoxxity<br>
 Link: https://github.com/TS-Rogue-Star/Rogue-Star/pull/987<br>
 **License: Licensed for use by Rogue Star; unlicensed for further use without permission of developing player<br>
+<br>
+**File:** `icons/vore/custom_clothes_rs.dmi, icons/vore/custom_onmob_rs.dmi, custom_items_rs.dmi, custom_items_right_hand_rs.dmi, custom_items_left_hand_rs.dmi, tails_64x32_rs.dmi`<br>
+**Icon-States:** portalboots_mob, portalboots, portalgloves_mob, portalgloves, portaluniform_mob, portaluniform_mob, portaluniform, portaljacket_mob, portaljacket, portalmask_mob, portalmask, portalcap_mob, portalcap, portalbag_mob, portalbag, pizzabox, canholder, dr_gibb, space_up, bigfluffytail2`<br>
+**Creator:** Original graphics by Ebin-Halcyon, Imaginos16, AdipemDragon, CoiledLamb, OrionTheFox, GuillaumePrata, VerySoft<br>
+**Link:** https://github.com/Skyrat-SS13/Skyrat-tg/pull/10737, https://github.com/tgstation/tgstation/pull/64111, https://github.com/tgstation/tgstation/pull/77424, https://github.com/tgstation/tgstation/pull/77964, https://github.com/tgstation/tgstation/pull/70220, https://github.com/TS-Rogue-Star/Rogue-Star/pull/737
+<br>
