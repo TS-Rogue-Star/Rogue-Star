@@ -68,6 +68,13 @@
 "O" = (
 /turf/simulated/floor/airless/moonbaseplating,
 /area/moonbase/surface/east_crater)
+"R" = (
+/obj/effect/area_mob_spawner/sirius_point/explo{
+	how_many_mobs_max = 30;
+	how_many_mobs_min = 10
+	},
+/turf/simulated/mineral/moonbase/ignore_mapgen,
+/area/moonbase/surface/east_crater/unexplored)
 "T" = (
 /obj/structure/prop/rock/crystal,
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
@@ -1351,7 +1358,7 @@ p
 p
 p
 p
-p
+R
 E
 E
 E
