@@ -2755,6 +2755,8 @@
 /obj/item/paint_brush,
 /obj/effect/landmark/vines,
 /obj/structure/closet/walllocker_double/misc_civ/north,
+/obj/item/canvas/drawing_tablet,
+/obj/item/canvas/drawing_tablet,
 /turf/simulated/floor/tiled,
 /area/storage/art)
 "fI" = (

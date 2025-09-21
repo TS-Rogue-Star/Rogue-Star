@@ -14,6 +14,10 @@
 	var/saved_icon = 'icons/inventory/face/item.dmi'
 	var/saved_icon_state = "cigbutt"
 	var/saved_overlays
+	// RS Add Start: Vars for instance-specific names (e.g., fishing hats) (Lira, September 2025)
+	var/saved_name
+	var/saved_desc
+	// RS Add End
 
 /obj/item/device/chameleon/dropped()
 	disrupt()
@@ -37,6 +41,10 @@
 			saved_icon = target.icon
 			saved_icon_state = target.icon_state
 			saved_overlays = target.overlays
+			// RS Add Start: Capture the current instance's name/desc exactly as displayed (Lira, September 2025)
+			saved_name = target.name
+			saved_desc = target.desc
+			// RS Add End
 
 /obj/item/device/chameleon/proc/toggle()
 	if(!can_use || !saved_item) return
@@ -56,6 +64,12 @@
 		if(!O) return
 		var/obj/effect/dummy/chameleon/C = new /obj/effect/dummy/chameleon(usr.loc)
 		C.activate(O, usr, saved_icon, saved_icon_state, saved_overlays, src)
+		// RS Add Start: Apply the scanned item's exact name/desc (Lira, September 2025)
+		if(saved_name)
+			C.name = saved_name
+		if(saved_desc)
+			C.desc = saved_desc
+		// RS Add End
 		qdel(O)
 		to_chat(usr, "<span class='notice'>You activate the [src].</span>")
 		var/obj/effect/overlay/T = new/obj/effect/overlay(get_turf(src))

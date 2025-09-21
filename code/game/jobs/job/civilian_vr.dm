@@ -264,7 +264,7 @@
 	alt_titles = list("Performer" = /datum/alt_title/performer, "Musician" = /datum/alt_title/musician, "Stagehand" = /datum/alt_title/stagehand,
 						"Actor" = /datum/alt_title/actor, "Dancer" = /datum/alt_title/dancer, "Singer" = /datum/alt_title/singer,
 						"Magician" = /datum/alt_title/magician, "Comedian" = /datum/alt_title/comedian, "Tragedian" = /datum/alt_title/tragedian,
-						"Artist" = /datum/alt_title/artist, "Game Master" = /datum/alt_title/game_master)
+						"Artist" = /datum/alt_title/artist, "Digital Artist" = /datum/alt_title/digital_artist, "Game Master" = /datum/alt_title/game_master) // RS Edit: Add ditial artist job (Lira, September 2025)
 
 // Entertainer Alt Titles
 /datum/alt_title/actor
@@ -310,6 +310,12 @@
 /datum/alt_title/game_master
 	title = "Game Master"
 	title_blurb = "A Game Master provides recreation for the crew by hosting variety of games. From cards to roleplaying to something more personalized."
+
+// RS Add: New digital artist job (Lira, September 2025)
+/datum/alt_title/digital_artist
+	title = "Digital Artist"
+	title_blurb = "Legendary master of the drawing tablet."
+	title_outfit = /decl/hierarchy/outfit/job/assistant/entrepreneur/digital_artist
 
 //////////////////////////////////
 //			Entrepreneur
