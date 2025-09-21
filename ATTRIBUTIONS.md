@@ -511,6 +511,31 @@ Creator: Whatislegs<br>
 Link: https://github.com/TS-Rogue-Star/Rogue-Star/pull/1041<br> 
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
+**File:** `icons/turf/fancy_shuttles/sp_shuttle_preview.dmi`<br>
+**Creator:** Modified by AutumnWolf from sd_shuttle.dmi<br>
+**Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/1034<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `maps/sirius_point/sirius_point_decals.dmi`<br>
+**Creator:** VerySoft <br>
+**Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/1034<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `maps/sirius_point/sp_asteroid.dmi,maps/sirius_point/sp_asteroid_edge.dmi`<br>
+**Creator:** Altered by AutumnWolf from asteroid.dmi<br>
+**Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/1034<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `maps/sirius_point/sp_asteroid_wall.dmi`<br>
+**Creator:** Altered by AutumnWolf from walls.dmi<br>
+**Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/1034<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)
+<br>
+**File:** `icons/effects/weather.dmi`<br>
+**Creator:** AutumnWolf <br>
+**Icon-States:** purpleanomaly<br>
+**Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/1034<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 Files: `icons/mob/vore/tails_64x32.dmi, icons/mob/vore/Taur_Bellies.dmi`<br>
 Icon-States: eighttailkitsunetaur, ChristyKitsune, ChristyKitsuneTaur, Taur-CKT-1 idle, Taur-CKT-2 idle, Taur-CKT-3 idle <br> 
 Creator: Kligor<br> 
