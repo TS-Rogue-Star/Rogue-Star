@@ -266,8 +266,7 @@
 	},
 /obj/structure/table/steel,
 /obj/item/weapon/storage/toolbox/mechanical{
-	pixel_y = 8;
-	pixel_x = 0
+	pixel_y = 8
 	},
 /obj/item/weapon/storage/toolbox/electrical{
 	pixel_y = -3
@@ -319,7 +318,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
 /obj/structure/table/steel,
 /obj/machinery/cell_charger{
-	pixel_x = 0;
 	pixel_y = 4
 	},
 /obj/random/powercell,
@@ -584,8 +582,8 @@
 	},
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
 	dir = 4;
-	pixel_x = -24;
-	id_tag = "minepost_airlock"
+	id_tag = "minepost_airlock";
+	pixel_x = -24
 	},
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
 /turf/simulated/floor/tiled/eris/dark/danger,
@@ -707,6 +705,13 @@
 /obj/machinery/suit_cycler/mining,
 /turf/simulated/floor/tiled/techfloor,
 /area/outpost/mining_main)
+"JI" = (
+/obj/effect/area_mob_spawner/sirius_point/explo{
+	how_many_mobs_max = 20;
+	how_many_mobs_min = 5
+	},
+/turf/simulated/mineral/moonbase,
+/area/moonbasemine/unexplored)
 "JO" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -839,7 +844,6 @@
 	},
 /obj/item/weapon/storage/firstaid/adv,
 /obj/item/weapon/storage/firstaid/o2{
-	pixel_x = 0;
 	pixel_y = -6
 	},
 /turf/simulated/floor/tiled/white,
@@ -887,7 +891,6 @@
 	},
 /obj/structure/table/steel,
 /obj/machinery/cell_charger{
-	pixel_x = 0;
 	pixel_y = 4
 	},
 /obj/random/powercell,
@@ -1070,9 +1073,9 @@
 /area/outpost/mining_main/maintenance)
 "YO" = (
 /obj/machinery/airlock_sensor/airlock_exterior{
-	pixel_y = -24;
+	dir = 1;
 	pixel_x = 32;
-	dir = 1
+	pixel_y = -24
 	},
 /obj/effect/map_helper/airlock/sensor/ext_sensor,
 /obj/effect/floor_decal/industrial/loading/white{
@@ -1681,7 +1684,7 @@ gq
 gq
 gq
 gq
-gq
+JI
 DG
 ks
 ks

@@ -53,6 +53,8 @@
 	max_n2 = 0
 	minbodytemp = 0
 
+	see_in_dark = 8
+
 	hunter = TRUE
 	food_pref = ROBOVORE
 	food_pref_obligate = TRUE
@@ -308,7 +310,25 @@
 	desc = "Despite its soft appearance, this creature is actually quite hard and durable. It partakes of a diet high in minerals, which its body has formed into an incredibly durable armor just under the surface of its skin. The minerals are most notable along its head, back end, and feet, where they are not contained by skin or flesh. The top of its head is adorned in a crown of several sharp horns, and what might otherwise be considered a tail, is a large outcropping of these same crystals. Of note, this creature lacks any feet in the traditional sense, instead having something resembling hooves, but made out of that same crystal. These creatures seem to have a method of chipping and sharpening their hooves, so they are each quite dangerous! With its high mineral diet, this creature has a highly specialized multi compartment digestive tract, and it seems quite capable of and willing to scrap for mineral based meals both processed and otherwise. These creatures are considered a nuisance, as they have a tendency to nibble wires and at the edges of structures, and upon some technology."
 	value = CATALOGUER_REWARD_TRIVIAL
 
-/////SKITTERER/////
+/mob/living/simple_mob/vore/prancer/mob_bank_save(mob/living/user)
+	var/list/to_save = list(
+		"ckey" = user.ckey,
+		"type" = type,
+		"name" = name,
+		"color" = color,
+		"crystal" = crystal_color
+		)
+
+	return to_save
+
+/mob/living/simple_mob/vore/prancer/mob_bank_load(mob/living/user, var/list/load)
+	name = load["name"]
+	real_name = name
+	color = load["color"]
+	crystal_color = load["crystal"]
+	update_icon()
+
+/////STELLAGAN/////
 /mob/living/simple_mob/vore/stellagan
 	name = "stellagan"
 	desc = "A creature covered in sharp looking plates. It has at least four legs, a long pointy tail, and beady little eyes. It seems to be a fairly well armored little thing!"
@@ -354,6 +374,8 @@
 	response_disarm = "rudely paps"
 	response_harm = "punches"
 
+	see_in_dark = 8
+
 	var/rolled_up = FALSE
 	var/roll_up_countdown = 0
 /////////////////////////////////////// Vore stuff ///////////////////////////////////////////
@@ -392,7 +414,7 @@
 	base.escapechance = 25
 
 /mob/living/simple_mob/vore/stellagan/New()
-	color = pick(list("#FFFFFF","#fff9d9","#a89153","#56758f","#625569","#382d1f","#3b3b3b"))
+	color = pickweight(list("#FFFFFF" = 100,"#fff9d9" = 100,"#a89153" = 100,"#56758f" = 100,"#625569" = 100,"#382d1f" = 100,"#3b3b3b" = 100,"#223ccc" = 1))
 	var/adjectives = list(
 		"brave",
 		"undaunted",
@@ -478,9 +500,27 @@
 	desc = "A small creature with significant armor plating. It is able to curl up its body to better protect itself from harm. This creature shows no fear or aggression to crew life, and seems quite passive in general, preferring to curl up and hide from its troubles than ever fight. It survives in extreme climates thanks to its gut biome being able to break just about anything it eats down into useful compounds that its body can absorb. This means though that as long as there is something that it can fit in its mouth, then it can survive and thrive basically anywhere, so long as whatever the substance is isn’t poisonous to the bacteria. It has six legs underneath its plated body, each tipped with a pair of claws which it can use to grip on to things, however, it is extremely difficult to get it to actually tip over without also curling up, so it is quite difficult to study while alive."
 	value = CATALOGUER_REWARD_TRIVIAL
 
+/mob/living/simple_mob/vore/stellagan/mob_bank_save(mob/living/user)
+
+	var/list/to_save = list(
+		"ckey" = user.ckey,
+		"type" = type,
+		"name" = name,
+		"color" = color
+		)
+
+	return to_save
+
+/mob/living/simple_mob/vore/stellagan/mob_bank_load(mob/living/user, var/list/load)
+	name = load["name"]
+	real_name = name
+	color = load["color"]
+	update_icon()
+
+
 /////RAY/////
 /mob/living/simple_mob/vore/dust_stalker
-	name = "Dust Stalker"
+	name = "dust stalker"
 	desc = "A broad, flat kind of creature. It floats silently above the ground and moves by flapping its body! It’s covered in smooth skin, textured so that it doesn’t reflect light well. "
 	icon = 'icons/rogue-star/mobx64.dmi'
 	icon_state = "moon_ray"
@@ -499,6 +539,7 @@
 	melee_damage_upper = 2
 	movement_cooldown = -1
 
+	see_in_dark = 8
 	var/list/overlays_cache = list()
 	var/marking_color
 	var/eye_color
@@ -591,6 +632,10 @@
 	marking_color = random_color()
 	eye_color = pick(list("#e100ff","#ff0000"))
 	update_icon()
+
+/mob/living/simple_mob/vore/dust_stalker/Initialize()
+	. = ..()
+	time_to_hide()
 
 /mob/living/simple_mob/vore/dust_stalker/update_icon()
 	. = ..()
@@ -785,6 +830,26 @@
 	name = "Alien Wildlife - Sequirian Sangune"
 	desc = "A dangerous predatory creature known to blend in with its surroundings and then to quickly strike, and drain blood from its victims. It floats above the ground by some unknown process, thought to be to do with some internal magnetism. Its skin can rapidly change color, and it has enough wisdom to know to stay perfectly still while so hidden. When it detects a potential prey item, it rushes them down, using its flat body to pounce upon them, and pin them to the ground, where it is free to bite them, and draw blood out. Once again, it has enough wisdom to not drain prey dry, usually trying to leave them alive so that they can be fed upon again in the future. This behavior does not extend to groups of these creatures however, as together, a group may drain someone dry in a matter of moments! These creatures have immense self preservation though, as the moment their prey is actually able to fight back, they will run away."
 	value = CATALOGUER_REWARD_MEDIUM
+
+/mob/living/simple_mob/vore/dust_stalker/mob_bank_save(mob/living/user)
+	var/list/to_save = list(
+		"ckey" = user.ckey,
+		"type" = type,
+		"name" = name,
+		"color" = color,
+		"marking_color" = marking_color,
+		"eye_color" = eye_color
+		)
+
+	return to_save
+
+/mob/living/simple_mob/vore/dust_stalker/mob_bank_load(mob/living/user, var/list/load)
+	name = load["name"]
+	real_name = name
+	color = load["color"]
+	marking_color = load["marking_color"]
+	eye_color = load["eye_color"]
+	update_icon()
 
 /*
 /mob/living/simple_mob/vore/moon_dragon
