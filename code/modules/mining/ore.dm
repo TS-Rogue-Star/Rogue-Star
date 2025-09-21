@@ -6,6 +6,15 @@
 	w_class = ITEMSIZE_SMALL
 	var/datum/geosample/geologic_data
 	var/material
+	var/food_value = 100	//RS ADD
+
+/obj/item/weapon/ore/attack_generic(mob/living/user)	//RS ADD START
+	if(user.food_pref == ROBOVORE)	//What if we're a hungry little mineral muncher...
+		visible_message(SPAN_WARNING("\The [user] eats \the [src]!"),runemessage = "cronch cronch")
+		user.adjust_nutrition(food_value)	//Yummers...
+		qdel(src)
+		return
+	. = ..()	//RS START END
 
 /obj/item/weapon/ore/uranium
 	name = "pitchblende"
@@ -30,6 +39,7 @@
 	icon_state = "ore_marble"
 	origin_tech = list(TECH_MATERIAL = 1)
 	material = "marble"
+	food_value = 50	//RS ADD
 
 /obj/item/weapon/ore/glass
 	name = "sand"
@@ -37,6 +47,7 @@
 	origin_tech = list(TECH_MATERIAL = 1)
 	material = "sand"
 	slot_flags = SLOT_HOLSTER
+	food_value = 10	//RS ADD
 
 // POCKET SAND!
 /obj/item/weapon/ore/glass/throw_impact(atom/hit_atom)
@@ -55,24 +66,28 @@
 	icon_state = "ore_phoron"
 	origin_tech = list(TECH_MATERIAL = 2)
 	material = "phoron"
+	food_value = 250	//RS ADD
 
 /obj/item/weapon/ore/silver
 	name = "native silver ore"
 	icon_state = "ore_silver"
 	origin_tech = list(TECH_MATERIAL = 3)
 	material = "silver"
+	food_value = 500	//RS ADD
 
 /obj/item/weapon/ore/gold
 	name = "native gold ore"
 	icon_state = "ore_gold"
 	origin_tech = list(TECH_MATERIAL = 4)
 	material = "gold"
+	food_value = 1000	//RS ADD
 
 /obj/item/weapon/ore/diamond
 	name = "diamonds"
 	icon_state = "ore_diamond"
 	origin_tech = list(TECH_MATERIAL = 6)
 	material = "diamond"
+	food_value = 2000	//RS ADD
 
 /obj/item/weapon/ore/osmium
 	name = "raw platinum"

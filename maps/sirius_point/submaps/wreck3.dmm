@@ -1,0 +1,907 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/structure/flora/pottedplant/orientaltree,
+/turf/simulated/floor/wood/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"aB" = (
+/obj/machinery/blackbox_recorder,
+/obj/item/device/gps/internal/poi{
+	gps_tag = "Unidentified Signal"
+	},
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"bL" = (
+/obj/item/stack/rods,
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"dd" = (
+/obj/structure/bookcase{
+	name = "bookcase (Religious)"
+	},
+/obj/item/weapon/book/bundle/custom_library/religious/zoroastrianism,
+/obj/item/weapon/book/custom_library/religious/feastofkubera,
+/obj/item/weapon/book/custom_library/religious/storyoflordganesha,
+/obj/item/weapon/book/custom_library/religious/sungoddessofkorea,
+/obj/item/weapon/book/custom_library/religious/wayofbleedingswan,
+/turf/simulated/floor/wood/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"fl" = (
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"fm" = (
+/obj/random/multiple/corp_crate,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"fI" = (
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"gJ" = (
+/obj/structure/bed/chair/sofa/corp{
+	dir = 4
+	},
+/turf/simulated/floor/wood/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"hk" = (
+/obj/structure/bed/chair/sofa/corp/corner{
+	dir = 1
+	},
+/turf/simulated/floor/wood/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"ht" = (
+/turf/simulated/shuttle/wall/hard_corner,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"hy" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"hV" = (
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"iC" = (
+/obj/structure/bed/chair/sofa/corp/left,
+/turf/simulated/floor/wood/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"kE" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/table/woodentable,
+/obj/item/modular_computer/tablet/preset/custom_loadout/elite,
+/turf/simulated/floor/wood/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"kJ" = (
+/obj/machinery/light,
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"kM" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/wood/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"kO" = (
+/obj/structure/girder,
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"mo" = (
+/obj/structure/bed/chair/sofa/corp/right{
+	dir = 4
+	},
+/turf/simulated/floor/wood/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"mX" = (
+/obj/structure/salvageable/shuttle_console,
+/turf/simulated/shuttle/floor/black/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"nK" = (
+/obj/machinery/power/apc{
+	dir = 1
+	},
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"qx" = (
+/obj/structure/shuttle/engine/heater,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"qH" = (
+/obj/structure/table/steel,
+/obj/random/awayloot/looseloot,
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"qL" = (
+/obj/structure/flora/pottedplant/minitree,
+/turf/simulated/floor/wood/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"rF" = (
+/turf/simulated/floor/wood/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"ss" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/table/woodentable,
+/obj/item/modular_computer/laptop/preset/custom_loadout/elite,
+/turf/simulated/floor/wood/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"sw" = (
+/obj/structure/table/rack/shelf/steel,
+/obj/item/weapon/handcuffs,
+/obj/random/ammo,
+/obj/random/ammo,
+/obj/random/ammo,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"td" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"ui" = (
+/obj/structure/prop/rock/crystal,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"uq" = (
+/obj/structure/bed/double,
+/obj/item/weapon/bedsheet/browndouble,
+/turf/simulated/floor/wood/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"vj" = (
+/obj/structure/salvageable/shuttle_console,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/shuttle/floor/black/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"vV" = (
+/mob/living/simple_mob/mechanical/hivebot,
+/turf/simulated/floor/wood/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"wu" = (
+/obj/structure/bed/chair/comfy/black,
+/turf/simulated/floor/wood/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"wX" = (
+/obj/item/bodybag/cryobag,
+/obj/item/weapon/storage/firstaid/adv,
+/obj/structure/table/steel,
+/obj/item/device/healthanalyzer,
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"xM" = (
+/obj/structure/frame,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"ze" = (
+/obj/structure/closet,
+/obj/random/maintenance/clean,
+/obj/random/maintenance/clean,
+/obj/random/maintenance/clean,
+/obj/random/awayloot/looseloot,
+/turf/simulated/floor/wood/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"AP" = (
+/obj/item/stack/rods,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"Bd" = (
+/obj/structure/table/woodentable,
+/turf/simulated/floor/wood/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"Cx" = (
+/turf/simulated/mineral/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"Cy" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/flora/pottedplant/orientaltree,
+/turf/simulated/floor/wood/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"CJ" = (
+/obj/structure/table/rack/shelf/steel,
+/obj/random/powercell,
+/obj/random/powercell,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"CP" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/shuttle/engine/heater,
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"FF" = (
+/obj/item/stack/rods,
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"GQ" = (
+/obj/structure/table/woodentable,
+/obj/structure/flora/pottedplant/small{
+	pixel_y = -11
+	},
+/turf/simulated/floor/wood/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"It" = (
+/obj/structure/bed/chair/bay/comfy,
+/turf/simulated/floor/wood/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"Iz" = (
+/obj/structure/bookcase{
+	name = "bookcase (Fiction)"
+	},
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/item/weapon/book/bundle/custom_library/fiction/apurrrrfectman,
+/obj/item/weapon/book/bundle/custom_library/fiction/beyondthedoor,
+/obj/item/weapon/book/bundle/custom_library/fiction/coldmountain,
+/obj/item/weapon/book/bundle/custom_library/fiction/ghostship,
+/obj/item/weapon/book/bundle/custom_library/fiction/manfromsnowyriver,
+/obj/item/weapon/book/bundle/custom_library/fiction/metalglen,
+/obj/item/weapon/book/bundle/custom_library/fiction/poemsforarainyday,
+/obj/item/weapon/book/bundle/custom_library/fiction/raissue142,
+/obj/item/weapon/book/bundle/custom_library/fiction/raissue147,
+/obj/item/weapon/book/bundle/custom_library/fiction/silence,
+/obj/item/weapon/book/bundle/custom_library/fiction/taleoftherainbowcat,
+/obj/item/weapon/book/custom_library/fiction/blacksmithandkinglybloke,
+/obj/item/weapon/book/custom_library/fiction/irishairmanforseesdeath,
+/obj/item/weapon/book/custom_library/fiction/myrock,
+/obj/item/weapon/book/custom_library/fiction/starsandsometimesfallingones,
+/obj/item/weapon/book/custom_library/fiction/truelovehathmyheart,
+/turf/simulated/floor/wood/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"Km" = (
+/obj/structure/table/woodentable,
+/obj/random/drinkbottle,
+/turf/simulated/floor/wood/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"Kw" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/reagent_dispensers/watertank,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"KC" = (
+/turf/template_noop,
+/area/template_noop)
+"OH" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass_external,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"OY" = (
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"Ph" = (
+/obj/item/stack/rods,
+/obj/item/weapon/material/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"PV" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/wood/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"PZ" = (
+/obj/structure/frame,
+/turf/simulated/shuttle/floor/black/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"QP" = (
+/obj/structure/bookcase{
+	name = "bookcase (Non-Fiction)"
+	},
+/obj/item/weapon/book/bundle/custom_library/nonfiction/riseandfallofpersianempire,
+/obj/item/weapon/book/bundle/custom_library/nonfiction/skrelliancastesystem,
+/obj/item/weapon/book/bundle/custom_library/nonfiction/viabilityofcorporategov,
+/obj/item/weapon/book/custom_library/nonfiction/freesirisailightbulbs,
+/obj/item/weapon/book/manual/synthetic_life,
+/turf/simulated/floor/wood/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"Rq" = (
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/airlock/silver,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"So" = (
+/turf/simulated/shuttle/wall,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"Su" = (
+/obj/structure/shuttle/window,
+/obj/structure/grille,
+/turf/simulated/floor,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"Tp" = (
+/mob/living/simple_mob/mechanical/hivebot/ranged_damage/basic,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"TM" = (
+/obj/structure/bed/chair/bay/shuttle{
+	dir = 1
+	},
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"TS" = (
+/mob/living/simple_mob/mechanical/hivebot/ranged_damage/basic,
+/turf/simulated/shuttle/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"Wa" = (
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"Wc" = (
+/obj/machinery/blackbox_recorder,
+/obj/item/device/gps/internal/poi{
+	gps_tag = "Unidentified Signal"
+	},
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"Ya" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/item/weapon/grenade/chem_grenade/metalfoam,
+/obj/structure/table/rack/shelf/steel,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"Yc" = (
+/obj/machinery/light,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"ZM" = (
+/obj/structure/bed/chair/bay/comfy{
+	dir = 1
+	},
+/turf/simulated/floor/wood/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+"ZR" = (
+/obj/structure/table/rack/shelf/steel,
+/obj/item/weapon/handcuffs,
+/obj/random/gun/random,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck3)
+
+(1,1,1) = {"
+KC
+KC
+OY
+Cx
+Cx
+Cx
+Cx
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+Cx
+Cx
+Cx
+Cx
+OY
+KC
+KC
+"}
+(2,1,1) = {"
+KC
+OY
+Cx
+Cx
+Cx
+Cx
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+OY
+KC
+"}
+(3,1,1) = {"
+OY
+Cx
+Cx
+Cx
+Cx
+Cx
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+Cx
+Cx
+Cx
+Cx
+Cx
+OY
+OY
+OY
+"}
+(4,1,1) = {"
+OY
+Cx
+Cx
+Cx
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+Cx
+OY
+OY
+OY
+OY
+OY
+OY
+"}
+(5,1,1) = {"
+OY
+Cx
+Cx
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+"}
+(6,1,1) = {"
+OY
+OY
+OY
+OY
+OY
+So
+So
+So
+So
+Su
+Su
+Su
+Su
+So
+Su
+Su
+Su
+Su
+So
+So
+So
+ht
+ht
+OY
+OY
+"}
+(7,1,1) = {"
+OY
+OY
+OY
+OY
+So
+So
+qH
+wX
+So
+wu
+kE
+rF
+qL
+So
+wu
+ss
+rF
+qL
+So
+fm
+fm
+CP
+FF
+hy
+OY
+"}
+(8,1,1) = {"
+OY
+OY
+OY
+So
+So
+aB
+hV
+kJ
+So
+rF
+vV
+rF
+rF
+So
+rF
+rF
+vV
+rF
+So
+Ya
+fl
+Ph
+fI
+OY
+OY
+"}
+(9,1,1) = {"
+OY
+OY
+OY
+Su
+PZ
+TM
+hV
+hV
+So
+uq
+kM
+rF
+ze
+So
+uq
+kM
+rF
+ze
+So
+CJ
+fl
+qx
+td
+OY
+OY
+"}
+(10,1,1) = {"
+OY
+OY
+OY
+Su
+mX
+TM
+TS
+hV
+So
+So
+So
+Rq
+So
+So
+So
+So
+Rq
+So
+So
+sw
+fl
+So
+So
+OY
+OY
+"}
+(11,1,1) = {"
+OY
+OY
+OY
+Su
+vj
+TM
+hV
+hV
+So
+aa
+PV
+rF
+Km
+Km
+Km
+Km
+rF
+Cy
+So
+ZR
+fl
+Wc
+So
+OY
+OY
+"}
+(12,1,1) = {"
+ui
+OY
+OY
+Su
+mX
+TM
+hV
+hV
+Rq
+rF
+rF
+rF
+rF
+rF
+rF
+rF
+rF
+rF
+Rq
+Tp
+fl
+So
+So
+OY
+OY
+"}
+(13,1,1) = {"
+OY
+OY
+OY
+Su
+PZ
+TM
+hV
+hV
+So
+dd
+It
+Bd
+ZM
+rF
+rF
+rF
+rF
+rF
+So
+nK
+fl
+CP
+td
+OY
+OY
+"}
+(14,1,1) = {"
+OY
+OY
+OY
+So
+So
+ht
+OH
+OH
+So
+Iz
+It
+Bd
+ZM
+rF
+hk
+gJ
+mo
+rF
+So
+Kw
+fl
+CP
+td
+OY
+OY
+"}
+(15,1,1) = {"
+OY
+OY
+OY
+OY
+So
+So
+Wa
+Yc
+So
+QP
+It
+Bd
+ZM
+kM
+iC
+GQ
+Bd
+rF
+So
+xM
+fl
+qx
+td
+OY
+OY
+"}
+(16,1,1) = {"
+OY
+OY
+OY
+OY
+OY
+So
+OH
+OH
+ht
+Su
+Su
+Su
+Su
+Su
+Su
+Su
+Su
+Su
+ht
+kO
+bL
+ht
+ht
+OY
+OY
+"}
+(17,1,1) = {"
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+AP
+OY
+OY
+OY
+OY
+"}
+(18,1,1) = {"
+Cx
+Cx
+Cx
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+"}
+(19,1,1) = {"
+KC
+Cx
+Cx
+Cx
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+ui
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+KC
+"}
+(20,1,1) = {"
+KC
+KC
+Cx
+Cx
+Cx
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+KC
+KC
+"}

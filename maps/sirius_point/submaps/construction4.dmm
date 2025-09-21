@@ -1,0 +1,367 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/mineral/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/west_crater/construction4)
+"b" = (
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/construction4)
+"c" = (
+/obj/structure/frame,
+/turf/simulated/floor/airless/outdoors,
+/area/submap/moonbase/poi/west_crater/construction4)
+"f" = (
+/obj/random/multiple/corp_crate,
+/turf/simulated/floor/airless/moonbaseplating,
+/area/submap/moonbase/poi/west_crater/construction4)
+"i" = (
+/obj/structure/prop/rock/crystal,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/west_crater/construction4)
+"q" = (
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/west_crater/construction4)
+"u" = (
+/obj/structure/table/steel,
+/obj/random/maintenance,
+/obj/random/maintenance,
+/turf/simulated/floor/airless/moonbaseplating,
+/area/submap/moonbase/poi/west_crater/construction4)
+"v" = (
+/obj/structure/prop/rock/small,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/west_crater/construction4)
+"K" = (
+/obj/structure/prop/rock/flat,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/west_crater/construction4)
+"M" = (
+/obj/structure/girder,
+/turf/simulated/floor/airless/outdoors,
+/area/submap/moonbase/poi/west_crater/construction4)
+"N" = (
+/turf/simulated/floor/airless/outdoors,
+/area/submap/moonbase/poi/west_crater/construction4)
+"O" = (
+/turf/simulated/wall,
+/area/submap/moonbase/poi/west_crater/construction4)
+"Y" = (
+/turf/simulated/floor/airless/moonbaseplating,
+/area/submap/moonbase/poi/west_crater/construction4)
+
+(1,1,1) = {"
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+"}
+(2,1,1) = {"
+q
+q
+q
+q
+q
+q
+q
+q
+q
+i
+q
+q
+q
+"}
+(3,1,1) = {"
+q
+q
+q
+q
+a
+a
+a
+a
+q
+q
+q
+q
+q
+"}
+(4,1,1) = {"
+q
+q
+q
+a
+a
+a
+a
+a
+a
+a
+q
+q
+q
+"}
+(5,1,1) = {"
+q
+q
+a
+a
+a
+u
+u
+u
+a
+a
+q
+q
+q
+"}
+(6,1,1) = {"
+q
+q
+a
+a
+a
+Y
+Y
+Y
+a
+a
+a
+q
+q
+"}
+(7,1,1) = {"
+q
+q
+a
+a
+O
+f
+Y
+Y
+a
+a
+a
+q
+q
+"}
+(8,1,1) = {"
+q
+q
+q
+a
+O
+f
+Y
+Y
+O
+a
+a
+q
+q
+"}
+(9,1,1) = {"
+q
+q
+q
+a
+O
+c
+N
+N
+O
+a
+a
+q
+q
+"}
+(10,1,1) = {"
+q
+q
+q
+q
+M
+N
+N
+N
+O
+q
+q
+q
+q
+"}
+(11,1,1) = {"
+q
+q
+q
+q
+M
+N
+N
+N
+O
+q
+q
+q
+q
+"}
+(12,1,1) = {"
+q
+q
+v
+q
+M
+N
+N
+c
+M
+q
+q
+q
+q
+"}
+(13,1,1) = {"
+q
+q
+q
+q
+O
+N
+N
+N
+M
+q
+q
+q
+q
+"}
+(14,1,1) = {"
+q
+q
+q
+q
+O
+N
+N
+N
+M
+q
+q
+q
+q
+"}
+(15,1,1) = {"
+q
+q
+q
+q
+O
+N
+N
+N
+M
+q
+q
+q
+q
+"}
+(16,1,1) = {"
+q
+q
+q
+q
+q
+b
+b
+b
+q
+q
+q
+q
+q
+"}
+(17,1,1) = {"
+q
+q
+q
+q
+q
+q
+b
+b
+q
+q
+K
+q
+q
+"}
+(18,1,1) = {"
+q
+q
+i
+q
+q
+q
+b
+q
+q
+q
+q
+q
+q
+"}
+(19,1,1) = {"
+q
+q
+q
+q
+q
+b
+q
+q
+q
+q
+q
+q
+q
+"}
+(20,1,1) = {"
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+"}
+(21,1,1) = {"
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+"}
