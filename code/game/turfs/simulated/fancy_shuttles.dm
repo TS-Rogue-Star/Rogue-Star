@@ -201,7 +201,7 @@ GLOBAL_LIST_EMPTY(fancy_shuttles)
     reinf = 1
     force_threshold = 7
     var/fancy_shuttle_tag
-    var/ready = FALSE // Dealing with init order shenanigans from /obj/structure/window
+    var/ready = FALSE // RS edit, Dealing with init order shenanigans from /obj/structure/window
 
 /obj/structure/window/fancy_shuttle/Initialize(mapload, ...)
     . = ..()
@@ -220,6 +220,7 @@ GLOBAL_LIST_EMPTY(fancy_shuttles)
             return
         icon = F.split_icon
         icon_state = "walls [x - F.x],[y - F.y]"
+// End RS edit
 
 /**
  * Invisible ship equipment (otherwise the same as normal)
