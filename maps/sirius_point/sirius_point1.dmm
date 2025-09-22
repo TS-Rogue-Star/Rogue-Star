@@ -1713,9 +1713,7 @@
 /area/maintenance/moonbase/basement/annex)
 "eF" = (
 /obj/structure/railing/grey,
-/obj/machinery/atmospherics/pipe/simple/visible/red{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/manifold/visible/purple,
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/moonbase/oxygenproduction)
 "eG" = (
@@ -3514,12 +3512,13 @@
 /turf/simulated/floor/tiled/steel_dirty,
 /area/medical/moonbase/basement)
 "ju" = (
-/obj/machinery/atmospherics/pipe/simple/visible/red{
-	dir = 6
-	},
 /obj/structure/cable/orange{
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/visible/red{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/visible/purple,
 /turf/simulated/floor/tiled,
 /area/engineering/aft_hallway)
 "jv" = (
@@ -4188,13 +4187,13 @@
 /turf/simulated/floor/carpet,
 /area/moonbase/dorms/dorm1)
 "ll" = (
-/obj/machinery/atmospherics/pipe/simple/visible/red,
 /obj/structure/cable/orange{
 	icon_state = "1-2"
 	},
 /obj/machinery/camera/network/engineering{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/simple/visible/purple,
 /turf/simulated/floor/tiled,
 /area/engineering/aft_hallway)
 "lm" = (
@@ -6346,12 +6345,12 @@
 /turf/simulated/floor/tiled/white,
 /area/moonbase/dorms/dorm1)
 "rp" = (
-/obj/machinery/atmospherics/pipe/simple/visible/purple{
-	dir = 4
-	},
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 27;
 	pixel_x = 0
+	},
+/obj/machinery/atmospherics/pipe/manifold/visible/red{
+	dir = 1
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/moonbase/oxygenproduction)
@@ -7195,11 +7194,11 @@
 /turf/simulated/floor/carpet/retro,
 /area/crew_quarters/moonbase/carproom)
 "tL" = (
-/obj/machinery/atmospherics/pipe/simple/visible/red,
 /obj/structure/cable/orange,
 /obj/machinery/power/apc{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/visible/purple,
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/moonbase/oxygenproduction)
 "tM" = (
@@ -8554,7 +8553,7 @@
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/atmos)
 "xy" = (
-/obj/machinery/atmospherics/pipe/simple/visible/purple,
+/obj/machinery/atmospherics/pipe/simple/visible/red,
 /turf/simulated/floor/tiled,
 /area/engineering/aft_hallway)
 "xz" = (
@@ -10561,8 +10560,8 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/security/security_equiptment_storage)
 "Df" = (
-/obj/machinery/atmospherics/pipe/manifold/visible/purple{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/visible/red{
+	dir = 9
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/moonbase/oxygenproduction)
@@ -10740,11 +10739,11 @@
 /turf/simulated/floor/carpet/blue2,
 /area/moonbase/dorms)
 "DH" = (
-/obj/machinery/atmospherics/pipe/simple/visible/red,
 /obj/machinery/door/firedoor/glass,
 /obj/structure/cable/orange{
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/visible/purple,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/engineering/moonbase/oxygenproduction)
 "DI" = (
@@ -13556,7 +13555,7 @@
 /area/security/security_equiptment_storage)
 "Lh" = (
 /obj/structure/railing/grey,
-/obj/machinery/atmospherics/pipe/simple/visible/red{
+/obj/machinery/atmospherics/pipe/simple/visible/purple{
 	dir = 5
 	},
 /turf/simulated/floor/tiled/techfloor,
@@ -14486,10 +14485,10 @@
 /turf/simulated/floor/tiled,
 /area/crew_quarters/moonbase/maintbar)
 "NF" = (
-/obj/machinery/atmospherics/pipe/simple/visible/red,
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/visible/purple,
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/moonbase/oxygenproduction)
 "NG" = (
@@ -14613,7 +14612,9 @@
 /area/maintenance/moonbase/basement/motel)
 "NW" = (
 /obj/structure/railing/grey,
-/obj/machinery/atmospherics/pipe/manifold/visible/red,
+/obj/machinery/atmospherics/pipe/simple/visible/purple{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/moonbase/oxygenproduction)
 "NX" = (
@@ -15344,7 +15345,7 @@
 /turf/simulated/floor/carpet,
 /area/moonbase/dorms/dorm3)
 "PO" = (
-/obj/machinery/atmospherics/pipe/manifold/visible/purple{
+/obj/machinery/atmospherics/pipe/manifold/visible/red{
 	dir = 1
 	},
 /turf/simulated/floor/tiled/techfloor,
@@ -15701,11 +15702,8 @@
 /turf/simulated/floor/plating/eris,
 /area/quartermaster/moonbase/mining)
 "QK" = (
-/obj/machinery/atmospherics/pipe/simple/visible/purple{
+/obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 6
-	},
-/obj/structure/cable/orange{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/tiled,
 /area/engineering/aft_hallway)
@@ -15837,14 +15835,14 @@
 /turf/simulated/floor/tiled/monotile,
 /area/engineering/atmos)
 "Rf" = (
-/obj/machinery/atmospherics/pipe/simple/visible/purple{
-	dir = 4
-	},
 /obj/structure/cable/orange{
 	icon_state = "4-8"
 	},
 /obj/structure/cable/orange{
 	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/visible/purple{
+	dir = 6
 	},
 /turf/simulated/floor/tiled,
 /area/engineering/aft_hallway)
@@ -17613,11 +17611,11 @@
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/engibreakroom)
 "VM" = (
-/obj/machinery/atmospherics/pipe/simple/visible/purple,
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/multi_tile/metal{
 	req_one_access = list(24)
 	},
+/obj/machinery/atmospherics/pipe/simple/visible/red,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/engineering/moonbase/oxygenproduction)
 "VN" = (
@@ -18678,11 +18676,11 @@
 /area/crew_quarters/moonbase/basement/iceroom)
 "YO" = (
 /obj/structure/railing/grey,
-/obj/machinery/atmospherics/pipe/simple/visible/red{
-	dir = 9
-	},
 /obj/machinery/alarm{
 	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/visible/purple{
+	dir = 9
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/moonbase/oxygenproduction)
@@ -18986,7 +18984,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/poolmaint)
 "ZH" = (
-/obj/machinery/atmospherics/pipe/simple/visible/purple{
+/obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 6
 	},
 /turf/simulated/floor/tiled/techfloor,
@@ -23359,7 +23357,7 @@ ld
 GR
 PO
 YX
-NW
+eF
 Sh
 AR
 AR
@@ -23500,7 +23498,7 @@ FD
 ld
 xF
 rp
-is
+YX
 eF
 Sh
 AR
@@ -23643,7 +23641,7 @@ CI
 xF
 PO
 YX
-NW
+eF
 Sh
 AR
 QA
@@ -23779,12 +23777,12 @@ gA
 oF
 Pf
 jh
+aF
 QK
-xy
 xy
 VM
 Df
-YX
+is
 NW
 Sh
 AR
