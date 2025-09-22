@@ -809,12 +809,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/crew_quarters/moonbase/abandonedoffice)
-"cm" = (
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 5
-	},
-/turf/simulated/floor/tiled,
-/area/engineering/engine_room)
 "cn" = (
 /obj/structure/table/fancyblack,
 /turf/simulated/floor/wood,
@@ -1815,6 +1809,12 @@
 	dir = 9
 	},
 /turf/simulated/floor/plating,
+/area/engineering/engine_room)
+"fa" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/universal{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "fc" = (
 /obj/machinery/computer/ship/sensors/adv,
@@ -3711,6 +3711,18 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled/white,
 /area/medical/moonbase/upperlevel)
+"jy" = (
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/firedoor/glass/hidden/steel{
+	dir = 1
+	},
+/obj/effect/floor_decal/milspec/color/orange/corner{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/engineering/engine_room)
 "jA" = (
 /obj/effect/floor_decal/milspec/color/emerald/half,
 /obj/structure/table/reinforced,
@@ -12621,18 +12633,6 @@
 /area/shuttle/spboat/aft{
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
-"FY" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/firedoor/glass/hidden/steel{
-	dir = 1
-	},
-/obj/effect/floor_decal/milspec/color/orange/corner{
-	dir = 8
-	},
-/turf/simulated/floor/tiled,
-/area/engineering/engine_room)
 "FZ" = (
 /obj/structure/table/glass,
 /turf/simulated/floor/tiled/white,
@@ -13548,8 +13548,8 @@
 /turf/simulated/floor/carpet/tealcarpet,
 /area/medical/patient_a)
 "Iy" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/universal{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 5
 	},
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
@@ -24598,7 +24598,7 @@ Wb
 Wb
 oi
 sK
-cm
+Iy
 Eg
 AF
 fB
@@ -24738,9 +24738,9 @@ sj
 sj
 EI
 nC
-FY
+jy
 tt
-Iy
+fa
 fB
 AW
 fB
