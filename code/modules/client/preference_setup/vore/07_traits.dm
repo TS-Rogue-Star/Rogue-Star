@@ -562,16 +562,20 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 		var/mode = text2num(href_list["add_trait"])
 		var/list/picklist
 		var/list/mylist
+		var/list/listtocopy
 		switch(mode)
 			// RS EDIT START
 			if(POSITIVE_MODE)
-				picklist = positive_traits_map[pref.species].Copy() - pref.pos_traits
+				listtocopy = positive_traits_map[pref.species]
+				picklist = listtocopy.Copy() - pref.pos_traits
 				mylist = pref.pos_traits
 			if(NEUTRAL_MODE)
-				picklist = neutral_traits_map[pref.species].Copy() - pref.neu_traits
+				listtocopy =  neutral_traits_map[pref.species]
+				picklist = listtocopy.Copy() - pref.neu_traits
 				mylist = pref.neu_traits
 			if(NEGATIVE_MODE)
-				picklist = negative_traits_map[pref.species].Copy() - pref.neg_traits
+				listtocopy = negative_traits_map[pref.species]
+				picklist = listtocopy.Copy() - pref.neg_traits
 				mylist = pref.neg_traits
 			// RS EDIT END
 			else
