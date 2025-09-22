@@ -810,9 +810,10 @@
 /turf/simulated/floor/plating,
 /area/crew_quarters/moonbase/abandonedoffice)
 "cm" = (
-/obj/machinery/portable_atmospherics/canister/air/airlock,
-/obj/machinery/atmospherics/portables_connector,
-/turf/simulated/floor/plating,
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 5
+	},
+/turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "cn" = (
 /obj/structure/table/fancyblack,
@@ -1804,20 +1805,15 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/groundbase/substation/sci)
 "eY" = (
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
 /obj/machinery/camera/network/engineering{
 	dir = 9
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 9
-	},
-/turf/simulated/floor/plating,
-/area/engineering/engine_room)
-"fa" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/atmospherics/portables_connector,
-/obj/machinery/portable_atmospherics/canister/air/airlock,
 /turf/simulated/floor/plating,
 /area/engineering/engine_room)
 "fc" = (
@@ -3715,14 +3711,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled/white,
 /area/medical/moonbase/upperlevel)
-"jy" = (
-/obj/structure/extinguisher_cabinet{
-	dir = 4;
-	pixel_x = -27
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden,
-/turf/simulated/floor/plating,
-/area/engineering/engine_room)
 "jA" = (
 /obj/effect/floor_decal/milspec/color/emerald/half,
 /obj/structure/table/reinforced,
@@ -4663,8 +4651,20 @@
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/cargo)
 "lT" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden,
-/obj/machinery/meter,
+/obj/machinery/power/smes/buildable{
+	RCon_tag = "Engine - Core";
+	charge = 2e+006;
+	input_attempt = 1;
+	input_level = 200000;
+	name = "Engine";
+	output_level = 250000
+	},
+/obj/structure/cable/green{
+	icon_state = "0-8"
+	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor/plating,
 /area/engineering/engine_room)
 "lU" = (
@@ -5645,8 +5645,8 @@
 /turf/simulated/floor/wood/alt/panel,
 /area/security/detectives_office)
 "oi" = (
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 9
+/obj/machinery/atmospherics/pipe/manifold/hidden{
+	dir = 4
 	},
 /turf/simulated/wall/r_wall,
 /area/engineering/engine_room)
@@ -7569,6 +7569,7 @@
 /obj/effect/floor_decal/milspec/color/orange/half{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "sL" = (
@@ -7868,7 +7869,7 @@
 /obj/structure/cable/green{
 	icon_state = "1-8"
 	},
-/obj/effect/floor_decal/milspec/color/orange/half{
+/obj/effect/floor_decal/milspec/color/orange/corner{
 	dir = 1
 	},
 /turf/simulated/floor/tiled,
@@ -7975,9 +7976,6 @@
 "tF" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
-	},
-/obj/effect/floor_decal/milspec/color/orange/half{
-	dir = 1
 	},
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
@@ -8687,10 +8685,10 @@
 "vL" = (
 /obj/structure/bed/double/padded,
 /obj/item/weapon/bedsheet/captaindouble,
-/obj/machinery/disposal/wall/cleaner{
-	dir = 4
-	},
 /obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/disposal/wall/cleaner{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/blue2,
@@ -9400,13 +9398,14 @@
 /turf/simulated/floor/airless/outdoors,
 /area/engineering/engine_room)
 "xw" = (
-/obj/machinery/power/terminal{
-	dir = 8
-	},
 /obj/structure/cable/yellow{
-	icon_state = "0-2"
+	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
+/obj/machinery/door/firedoor/glass/hidden/steel{
+	dir = 1
+	},
+/obj/effect/floor_decal/milspec/color/orange/corner,
+/turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "xx" = (
 /obj/structure/cable{
@@ -10224,8 +10223,8 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
 	},
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
@@ -12623,10 +12622,16 @@
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "FY" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden{
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/firedoor/glass/hidden/steel{
+	dir = 1
+	},
+/obj/effect/floor_decal/milspec/color/orange/corner{
 	dir = 8
 	},
-/turf/simulated/wall/r_wall,
+/turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "FZ" = (
 /obj/structure/table/glass,
@@ -13543,9 +13548,10 @@
 /turf/simulated/floor/carpet/tealcarpet,
 /area/medical/patient_a)
 "Iy" = (
-/obj/machinery/atmospherics/portables_connector,
-/obj/machinery/portable_atmospherics/canister/air/airlock,
-/turf/simulated/floor/plating,
+/obj/machinery/atmospherics/pipe/simple/hidden/universal{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "IA" = (
 /obj/machinery/hologram/holopad,
@@ -18089,18 +18095,10 @@
 /turf/simulated/floor/reinforced,
 /area/rnd/xenobiology)
 "Tx" = (
-/obj/machinery/power/smes/buildable{
-	RCon_tag = "Engine - Core";
-	charge = 2e+006;
-	input_attempt = 1;
-	input_level = 200000;
-	name = "Engine";
-	output_level = 250000
+/obj/machinery/door/firedoor/glass/hidden/steel{
+	dir = 1
 	},
-/obj/structure/cable/green{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "Tz" = (
 /obj/structure/table/reinforced,
@@ -18809,7 +18807,7 @@
 	pixel_x = 32
 	},
 /obj/effect/floor_decal/milspec/color/orange/half{
-	dir = 5
+	dir = 4
 	},
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
@@ -24597,10 +24595,10 @@ sj
 sj
 Sd
 Wb
-FY
+Wb
 oi
 sK
-fB
+cm
 Eg
 AF
 fB
@@ -24737,12 +24735,12 @@ sj
 sj
 sj
 sj
+sj
 EI
-cm
-jy
 nC
+FY
 tt
-fB
+Iy
 fB
 AW
 fB
@@ -24879,8 +24877,8 @@ sj
 sj
 sj
 sj
+sj
 EI
-fa
 lT
 Tx
 tF
@@ -25021,8 +25019,8 @@ sj
 sj
 sj
 sj
+sj
 EI
-Iy
 eY
 xw
 Vp
@@ -25163,7 +25161,7 @@ aE
 aE
 aE
 aE
-EI
+aE
 EI
 EI
 EI
