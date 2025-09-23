@@ -374,6 +374,7 @@
 		to_chat(user, span_notice("You convert and upgrade \the [src] to be more compact."))
 		do_upgrade()
 		medigun.wielded_item_state = ""
+		medigun.wielded = FALSE
 		LAZYSET(medigun.item_state_slots, slot_l_hand_str, initial(medigun.item_state))
 		LAZYSET(medigun.item_state_slots, slot_r_hand_str, initial(medigun.item_state))
 		qdel(W)
