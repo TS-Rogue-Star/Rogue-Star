@@ -106,7 +106,18 @@
 /mob/living/simple_mob/mechanical
 	simplemob_bleeds = FALSE
 
-/mob/living/simple_mob/adjustBruteLoss(amount, include_robo)
+/mob/living/simple_mob/do_attack(atom/A, turf/T)
+	var/mob/living/simple_mob/S
+	var/S_health
+	if(isanimal(A))
+		S = A
+		S_health = S.health
 	. = ..()
-	if(amount > 0 && simplemob_bleeds)
-		add_modifier(/datum/modifier/bleeding)
+	if(!S_health)
+		return
+	if(!hunter)
+		return
+	if(!isanimal(A))
+		return
+	if(S.health < S_health)
+		S.add_modifier(/datum/modifier/bleeding)
