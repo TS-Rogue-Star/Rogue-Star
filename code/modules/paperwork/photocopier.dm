@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2025 so that drawing tablets can be connected to photocopiers to print art //
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /obj/machinery/photocopier
 	name = "photocopier"
 	desc = "Copy all your important papers here!"
@@ -153,6 +157,46 @@
 			flick(insert_anim, src)
 		else
 			to_chat(user, "<span class='notice'>There is already something in \the [src].</span>")
+	//RS Add: Allows drawing tablets to be printed to a photocopier (Lira, September 2025)
+	else if(istype(O, /obj/item/canvas/drawing_tablet))
+		var/obj/item/canvas/drawing_tablet/T = O
+		// Ask to transfer and print
+		var/ans = tgui_alert(user, "Do you want to transfer data to the photocopier and print your art?", "Print Artwork", list("Yes", "No"))
+		if(ans != "Yes")
+			return
+		if(toner < 5)
+			to_chat(user, "<span class='warning'>There is not enough toner to print the artwork. (Requires 5)</span>")
+			playsound(src, "sound/machines/buzz-two.ogg", 100)
+			return
+		// Get title
+		var/tablet_art_name = stripped_input(user, "What do you want to name the printed artwork?", max_length = 250)
+		if(!tablet_art_name)
+			tablet_art_name = "Untitled Artwork"
+		// Optional signature
+		var/sign_choice = tgui_alert(user, "Would you like to sign your work?", "Sign Artwork", list("Yes", "No"))
+		var/final_title = tablet_art_name
+		if(sign_choice == "Yes")
+			final_title = "[tablet_art_name], by [user.real_name]"
+		// Print and clear tablet
+		playsound(src, "sound/machines/copier.ogg", 100, 1)
+		sleep(11)
+		var/obj/item/canvas/N = print_tablet_canvas(T, user, final_title)
+		if(N)
+			N.loc = src.loc
+			audible_message("<span class='notice'>You can hear [src] whirring as it finishes printing.</span>", runemessage = "whirr")
+			playsound(src, "sound/machines/buzzbeep.ogg", 30)
+			T.reset_grid()
+			T.used = FALSE
+			T.history = list()
+			T.pending_changes = null
+			T.stroke_dedup = FALSE
+			T.stroke_visited = null
+			T.cur_stroke_id = null
+			T.update_appearance()
+			SStgui.update_uis(T)
+		else
+			to_chat(user, "<span class='warning'>The artwork could not be printed.</span>")
+			playsound(src, "sound/machines/buzz-two.ogg", 100)
 	else if(istype(O, /obj/item/device/toner))
 		if(toner <= 10) //allow replacing when low toner is affecting the print darkness
 			user.drop_item()
@@ -256,6 +300,45 @@
 		visible_message("<span class='notice'>A red light on \the [src] flashes, indicating that it is out of toner.</span>")
 
 	return p
+
+// RS Add: Print a new finalized canvas from a drawing tablet (Lira, September 2025)
+/obj/machinery/photocopier/proc/print_tablet_canvas(var/obj/item/canvas/drawing_tablet/T, var/mob/user, var/art_name)
+	if(!T)
+		return
+	if(toner <= 0)
+		return
+	// Create a new standard 24x24 canvas and copy pixel data
+	var/obj/item/canvas/twentyfour_twentyfour/N = new /obj/item/canvas/twentyfour_twentyfour(src.loc)
+	// Ensure grid is allocated
+	N.reset_grid()
+	// Copy background/base color
+	N.canvas_color = T.canvas_color
+	// Copy per-layer pixel data
+	for(var/i in 1 to 3)
+		var/list/Gl = T.layers[i]
+		if(!islist(Gl))
+			continue
+		for(var/x in 1 to T.width)
+			if(!islist(N.layers[i][x]))
+				N.layers[i][x] = new/list(N.height)
+			for(var/y in 1 to T.height)
+				N.layers[i][x][y] = Gl[x][y]
+	// Mark used and finalize without prompting (we already have a name)
+	N.used = TRUE
+	N.finalized = TRUE
+	if(user)
+		N.author_name = user.real_name
+		N.author_ckey = user.ckey
+	if(istext(art_name) && art_name)
+		N.painting_name = art_name
+	else
+		N.painting_name = "Untitled Artwork"
+	N.generate_proper_overlay()
+	// Consume toner similar to photos
+	toner -= 5
+	if(toner < 0)
+		toner = 0
+	return N
 
 // VOREStation Edit Start
 

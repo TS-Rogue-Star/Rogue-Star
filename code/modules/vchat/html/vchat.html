@@ -1,3 +1,7 @@
+<!-- //////////////////////////////////////////////////////////////////////////////////// -->
+<!-- Updated by Lira for Rogue Star September 2025 as part of a VChat enhancement package -->
+<!-- //////////////////////////////////////////////////////////////////////////////////// -->
+
 <!DOCTYPE html>
 <html debug="true">
 <head>
@@ -131,24 +135,30 @@
 								</div>
 							</div>
 							<div class="inline fields">
-								<div class="field" title="Hides messages for performance (Min 50, Max 2000, Default 200)">
-									<label># Stored Messages</label>
-									<input class="inputbox" type="number" name="showingnum" placeholder="200" v-model.lazy.number="showingnum" required @keyup.enter="blur_this($event)">
+								<!--RS Add Start: Font selection (Lira, September 2025)-->
+								<div class="field" title="Font family stack used for chat text">
+									<label for="fontfamily-select">Font Family</label>
+									<select id="fontfamily-select" class="ui dropdown" v-model="fontfamily">
+										<option v-for="option in fontfamily_options" :key="option.value" :value="option.value">{{ option.label }}</option>
+									</select>
+									<button class="ui button" type="button" @click="reset_fontfamily">Reset</button>
+								<!--RS Add End-->
 								</div>
 							</div>
 						</div>
-						<button class="ui button" @click="save_chatlog">Export Chatlog</button>
+						<button class="ui primary button" @click="save_chatlog">Export Chatlog</button> <!--RS Edit: Button Style (Lira, September 2025)-->
+						<button class="ui primary button" @click="open_history_viewer">View Chat History</button> <!--RS Add: New chat history viewer (Lira, September 2025)-->
 					</div>
 				</div>
 			</div>
 		</div>
 
 		<!-- Messages box -->
-		<div v-show="!editing" id="messagebox" class="ui segment" @click="click_message" :class="{ inverted: inverted }" :style="{fontSize: fontsize+'em', lineHeight: lineheight+'%'}">
+		<div v-show="!editing" id="messagebox" class="ui segment" @click="click_message" :class="{ inverted: inverted }" :style="{fontSize: fontsize+'em', lineHeight: lineheight+'%', fontFamily: fontfamily}"> <!--RS Edit: Add font (Lira, September 2025)-->
+			<div ref="archivedMessages" class="archived-messages" v-once></div> <!--RS Add: Add archived messages (Lira, September 2025)-->
 			<transition-group name="msgsanim" tag="span" :css="animated">
 				<!-- We're filtering -->
 				<template v-if="current_categories.length">
-					<div v-show="unshown_messages > 0" key="hidewarn1"><span class='notice'>[ {{unshown_messages}} previous messages archived for performance. ]</span></div>
 					<div v-for="message in shown_messages" :key="message.id">
 						<span v-html="message.content"></span>
 						<span v-show="message.repeats > 1" class="ui grey circular label">x{{message.repeats}}</span>
@@ -156,7 +166,6 @@
 				</template>
 				<!-- We're not filtering, messages go directly to dom -->
 				<template v-else>
-					<div v-show="archived_messages.length > 0" key="hidewarn2"><span class='notice'>[ {{archived_messages.length}} previous messages archived for performance. ]</span></div>
 					<div v-for="message in messages" :key="message.id">
 						<span v-html="message.content"></span>
 						<span v-show="message.repeats > 1" class="ui grey circular label">x{{message.repeats}}</span>
@@ -164,6 +173,96 @@
 				</template>
 			</transition-group>
 		</div>
+		<!--RS Add Start: Round export and historical viewer (Lira, September 2025)-->
+		<div v-if="round_selector.visible" class="round-selector-backdrop">
+			<div class="round-selector-modal" :class="{ inverted: inverted }">
+				<h3>Select Round</h3>
+				<p class="round-selector-help">Choose which saved round to include in your export.</p>
+				<div class="round-selector-status" v-if="round_selector.loading">
+					Loading recent rounds...
+				</div>
+				<div class="round-selector-status error" v-if="!round_selector.loading && round_selector.error">
+					{{ round_selector.error }}
+				</div>
+				<div class="round-selector-buttons">
+					<button class="ui primary button" @click="select_current_round">
+						Current round
+						<span v-if="round_selector.currentOption && round_selector.currentOption.messageCount">
+							({{ round_selector.currentOption.messageCount }} messages)
+						</span>
+						<span v-else-if="round_selector.loading" class="round-selector-pill subtle">Loading...</span>
+					</button>
+					<button class="ui primary button" @click="select_all_rounds">
+						All saved rounds
+						<span v-if="round_selector.totalMessages">
+							({{ round_selector.totalMessages }} messages)
+						</span>
+					</button>
+				</div>
+				<div class="round-selector-list" v-if="round_selector.options.length">
+					<div class="round-selector-heading">Recent rounds</div>
+					<button v-for="option in round_selector.options" :key="option.id" class="round-selector-option" @click="select_round_option(option)">
+						<div class="round-selector-option-title">
+							<span>{{ option.startDisplay || option.id }}</span>
+							<span v-if="option.isCurrent" class="round-selector-pill">Current</span>
+							<span v-else-if="option.isOpen" class="round-selector-pill subtle">Ongoing</span>
+						</div>
+						<div class="round-selector-option-meta">
+							<span class="round-selector-option-id">{{ option.id }}</span>
+							<span class="round-selector-option-count">{{ option.messageCount }} messages</span>
+							<span v-if="option.endDisplay" class="round-selector-option-end">Ended {{ option.endDisplay }}</span>
+						</div>
+					</button>
+				</div>
+				<div class="round-selector-actions">
+					<button class="ui button" @click="cancel_round_selection">Cancel</button>
+				</div>
+			</div>
+		</div>
+
+		<div v-if="history_viewer.visible" class="history-viewer-backdrop">
+			<div class="history-viewer-modal" :class="{ inverted: inverted }">
+				<div class="history-viewer-header">
+					<h3>Round Chat History</h3>
+					<button class="ui mini button" @click="close_history_viewer">Close</button>
+				</div>
+				<div class="history-viewer-controls">
+					<label for="history-round-select">Round</label>
+					<select id="history-round-select" class="history-viewer-select" :disabled="history_viewer.loading || history_viewer.roundsLoading" v-model="history_viewer.roundId" @change="change_history_round($event)">
+						<option value="">Current round</option>
+						<option value="all">All saved rounds</option>
+						<option v-for="option in round_overview.options" :key="option.id" :value="option.id">
+							{{ option.startDisplay || option.id }} ({{ option.messageCount }} messages)
+						</option>
+					</select>
+					<button class="ui primary button" @click="request_round_history(history_viewer.roundId, 'viewer')">Refresh</button>
+				</div>
+				<div class="history-viewer-status" v-if="history_viewer.roundsLoading">
+					Loading round list...
+				</div>
+				<div class="history-viewer-status error" v-if="!history_viewer.roundsLoading && round_overview.error">
+					{{ round_overview.error }}
+				</div>
+				<div class="history-viewer-status" v-if="history_viewer.loading">
+					Loading history...
+				</div>
+				<div class="history-viewer-status error" v-if="history_viewer.error">
+					{{ history_viewer.error }}
+				</div>
+				<div class="history-viewer-meta" v-if="!history_viewer.loading && !history_viewer.error">
+					<span class="history-viewer-round">{{ history_viewer.roundLabel }}</span>
+					<span class="history-viewer-count">{{ filtered_history_messages.length }} messages<span v-if="history_viewer.messageCount !== filtered_history_messages.length"> ({{ history_viewer.messageCount }} total)</span></span>
+				</div>
+				<div class="history-viewer-content" :class="{ loading: history_viewer.loading }" :style="{ fontFamily: fontfamily }">
+					<div v-if="!history_viewer.loading && !filtered_history_messages.length && !history_viewer.error" class="history-viewer-empty">No messages available for this tab.</div>
+					<div v-for="entry in filtered_history_messages" :key="entry.id" class="history-viewer-message">
+						<span class="history-viewer-index">#{{ entry.id }}</span>
+						<span class="history-viewer-text" v-html="entry.content"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--RS Add End-->
 
 	</div>
 	<!--

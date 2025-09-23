@@ -1,0 +1,746 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/structure/reagent_dispensers/fueltank/barrel/two,
+/turf/simulated/floor/airless/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"d" = (
+/obj/structure/shuttle/window,
+/obj/structure/grille,
+/turf/simulated/floor,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"e" = (
+/mob/living/simple_mob/animal/space/carp/roguemines,
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"g" = (
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"i" = (
+/obj/structure/prop/rock/crystal,
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"j" = (
+/turf/simulated/shuttle/wall/hard_corner,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"k" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"l" = (
+/obj/random/forgotten_tram,
+/obj/random/forgotten_tram,
+/obj/structure/table/rack/shelf/steel,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"m" = (
+/turf/simulated/mineral/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"r" = (
+/obj/random/multiple/corp_crate,
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"s" = (
+/turf/simulated/shuttle/wall,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"t" = (
+/obj/structure/girder,
+/turf/simulated/floor/airless/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"u" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "burst_l"
+	},
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"x" = (
+/obj/item/stack/rods,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"y" = (
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"A" = (
+/obj/structure/girder,
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"D" = (
+/obj/structure/table/steel,
+/obj/item/weapon/cell/device/weapon,
+/obj/item/weapon/cell/device/weapon,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"E" = (
+/obj/random/awayloot/looseloot,
+/obj/structure/table/rack/shelf/steel,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"F" = (
+/obj/random/multiple/corp_crate,
+/turf/simulated/floor/airless/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"G" = (
+/obj/structure/table/steel,
+/obj/item/weapon/storage/toolbox/mechanical{
+	pixel_y = 5
+	},
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"H" = (
+/obj/random/awayloot/looseloot,
+/obj/structure/table/rack/shelf/steel,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"I" = (
+/obj/structure/reagent_dispensers/fueltank/barrel/two,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"J" = (
+/obj/random/forgotten_tram,
+/obj/structure/table/rack/shelf/steel,
+/obj/random/awayloot/looseloot,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"L" = (
+/obj/machinery/blackbox_recorder,
+/obj/item/device/gps/internal/poi{
+	gps_tag = "Unidentified Signal"
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"M" = (
+/turf/simulated/floor/airless/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"O" = (
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"R" = (
+/obj/structure/table/steel,
+/obj/random/energy,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"S" = (
+/mob/living/simple_mob/animal/space/carp/roguemines,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"T" = (
+/obj/structure/prop/rock/crystal,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"U" = (
+/obj/structure/frame,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"W" = (
+/mob/living/simple_mob/animal/space/carp/large/roguemines,
+/turf/simulated/shuttle/floor/yellow/airless,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"X" = (
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/airlock/silver,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"Y" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/wreck2)
+"Z" = (
+/obj/item/stack/rods,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/east_crater/wreck2)
+
+(1,1,1) = {"
+a
+a
+m
+m
+m
+m
+m
+O
+O
+O
+O
+O
+O
+a
+a
+"}
+(2,1,1) = {"
+a
+m
+m
+m
+m
+m
+m
+m
+O
+O
+O
+O
+O
+O
+a
+"}
+(3,1,1) = {"
+a
+m
+m
+m
+m
+m
+m
+O
+O
+O
+O
+O
+O
+O
+a
+"}
+(4,1,1) = {"
+m
+m
+m
+m
+m
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+"}
+(5,1,1) = {"
+m
+m
+m
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+T
+O
+"}
+(6,1,1) = {"
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+"}
+(7,1,1) = {"
+O
+O
+O
+j
+u
+u
+j
+u
+u
+j
+O
+O
+O
+O
+O
+"}
+(8,1,1) = {"
+O
+O
+O
+s
+Y
+Y
+s
+Y
+Y
+s
+O
+O
+O
+O
+O
+"}
+(9,1,1) = {"
+O
+O
+O
+d
+G
+y
+L
+y
+J
+d
+O
+O
+O
+O
+O
+"}
+(10,1,1) = {"
+O
+O
+O
+d
+g
+g
+y
+y
+l
+d
+O
+O
+O
+O
+O
+"}
+(11,1,1) = {"
+O
+O
+O
+s
+O
+O
+e
+g
+y
+s
+O
+O
+O
+O
+O
+"}
+(12,1,1) = {"
+O
+O
+O
+Z
+O
+O
+O
+O
+O
+A
+O
+O
+O
+O
+O
+"}
+(13,1,1) = {"
+O
+O
+O
+t
+b
+M
+O
+M
+O
+Z
+O
+O
+O
+O
+O
+"}
+(14,1,1) = {"
+T
+O
+O
+s
+M
+M
+O
+M
+F
+t
+O
+O
+m
+O
+O
+"}
+(15,1,1) = {"
+O
+O
+O
+s
+F
+M
+O
+O
+M
+t
+O
+O
+m
+m
+O
+"}
+(16,1,1) = {"
+O
+O
+O
+t
+M
+O
+T
+O
+M
+t
+O
+m
+m
+m
+O
+"}
+(17,1,1) = {"
+O
+O
+O
+Z
+O
+O
+O
+O
+b
+s
+O
+m
+m
+m
+O
+"}
+(18,1,1) = {"
+O
+O
+O
+O
+O
+O
+g
+g
+I
+s
+m
+m
+m
+m
+O
+"}
+(19,1,1) = {"
+O
+O
+O
+A
+y
+y
+y
+y
+y
+m
+m
+m
+m
+m
+O
+"}
+(20,1,1) = {"
+O
+O
+O
+s
+k
+y
+S
+g
+m
+m
+m
+m
+m
+m
+O
+"}
+(21,1,1) = {"
+O
+O
+O
+s
+r
+y
+y
+y
+m
+m
+m
+m
+m
+O
+O
+"}
+(22,1,1) = {"
+O
+O
+O
+s
+s
+s
+X
+s
+s
+j
+O
+O
+O
+O
+O
+"}
+(23,1,1) = {"
+O
+O
+O
+s
+R
+D
+y
+H
+E
+s
+O
+O
+O
+O
+O
+"}
+(24,1,1) = {"
+O
+O
+O
+d
+y
+x
+W
+y
+y
+d
+O
+O
+O
+O
+O
+"}
+(25,1,1) = {"
+O
+O
+O
+d
+y
+i
+x
+y
+y
+d
+O
+O
+O
+O
+O
+"}
+(26,1,1) = {"
+O
+O
+O
+s
+U
+m
+m
+U
+U
+s
+O
+O
+O
+O
+O
+"}
+(27,1,1) = {"
+O
+O
+O
+s
+d
+m
+m
+d
+d
+s
+O
+O
+O
+O
+O
+"}
+(28,1,1) = {"
+O
+O
+O
+O
+m
+m
+m
+m
+m
+O
+O
+O
+O
+O
+O
+"}
+(29,1,1) = {"
+O
+O
+m
+m
+m
+m
+m
+m
+m
+m
+O
+O
+O
+T
+O
+"}
+(30,1,1) = {"
+O
+O
+m
+m
+m
+m
+m
+m
+m
+O
+O
+O
+O
+O
+O
+"}
+(31,1,1) = {"
+O
+m
+m
+m
+m
+m
+m
+m
+m
+m
+O
+O
+O
+O
+O
+"}
+(32,1,1) = {"
+a
+m
+m
+m
+m
+m
+m
+m
+m
+m
+O
+O
+O
+O
+a
+"}
+(33,1,1) = {"
+a
+m
+m
+m
+m
+m
+m
+m
+m
+O
+O
+O
+O
+O
+a
+"}
+(34,1,1) = {"
+a
+a
+m
+m
+m
+m
+m
+O
+O
+O
+O
+O
+O
+a
+a
+"}

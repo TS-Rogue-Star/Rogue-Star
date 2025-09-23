@@ -43,6 +43,10 @@
 	paint_color = rgb(rand(1,255),rand(1,255),rand(1,255))
 	..()
 
+/obj/vehicle/train/engine/quadbike/white/New()
+	paint_color = "#FFFFFF"
+	..()
+
 /obj/vehicle/train/engine/quadbike/Destroy()
 	QDEL_NULL(soundloop)
 	return ..()
@@ -206,6 +210,10 @@
 
 /obj/vehicle/train/trolley/trailer/random/New()
 	paint_color = rgb(rand(1,255),rand(1,255),rand(1,255))
+	..()
+
+/obj/vehicle/train/trolley/trailer/white/New()
+	paint_color = "#FFFFFF"
 	..()
 
 /obj/vehicle/train/trolley/trailer/proc/update_load()

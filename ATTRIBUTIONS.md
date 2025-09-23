@@ -72,17 +72,17 @@
 <br>
 ### ROGUE STAR SPECIFIC ATTRIBUTIONS
 **File**: `icons/mob/screen_full_vore.dmi`<br>
-**Icon-States:** `anibelly`, `totally_mawful`, `further_mawful`, `robot`, and `beak`<br>
+**Icon-States:** `anibelly`, `totally_mawful`, `further_mawful`, `robot`, `beak`, and `semitrans`<br>
 **Creator:** VerySoft<br>
 **License:** Licensed for use by Rogue Star; unlicensed for further use without permission of copyright holder<br>
 <br>
 **File**: `icons/mob/screen_full_colorized_vore.dmi`<br>
-**Icon-States:** `anibelly`, `totally_mawful`, `robot`, and `beak`<br>
+**Icon-States:** `anibelly`, `totally_mawful`, `robot`, `beak`, and `semitrans`<br>
 **Creator:** VerySoft<br>
 **License:** Licensed for use by Rogue Star; unlicensed for further use without permission of copyright holder<br>
 <br>
 **File**: `icons/mob/screen_full_colorized_vore_overlays.dmi`<br>
-**Icon-States:** `totally_mawful_nc`, `further_mawful_nc`, `robot_l1`, `robot_l2` `beak_l1`,`beak_l2`, and `beak_nc`<br>
+**Icon-States:** `totally_mawful_nc`, `further_mawful_nc`, `robot_l1`, `robot_l2` `beak_l1`,`beak_l2`, `beak_nc`, and `semitrans_nc`<br>
 **Creator:** VerySoft<br>
 **License:** Licensed for use by Rogue Star; unlicensed for further use without permission of copyright holder<br>
 <br>
@@ -510,6 +510,37 @@ Files: `sound/voice/augh1.ogg,sound/voice/augh2.ogg`<br>
 Creator: Whatislegs<br> 
 Link: https://github.com/TS-Rogue-Star/Rogue-Star/pull/1041<br> 
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `icons/turf/fancy_shuttles/sp_shuttle_preview.dmi`<br>
+**Creator:** Modified by AutumnWolf from sd_shuttle.dmi<br>
+**Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/1034<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `maps/sirius_point/sirius_point_decals.dmi`<br>
+**Creator:** VerySoft <br>
+**Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/1034<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `maps/sirius_point/sp_asteroid.dmi,maps/sirius_point/sp_asteroid_edge.dmi`<br>
+**Creator:** Altered by AutumnWolf from asteroid.dmi<br>
+**Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/1034<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
+**File:** `maps/sirius_point/sp_asteroid_wall.dmi`<br>
+**Creator:** Altered by AutumnWolf from walls.dmi<br>
+**Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/1034<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)
+<br>
+**File:** `icons/effects/weather.dmi`<br>
+**Creator:** AutumnWolf <br>
+**Icon-States:** purpleanomaly<br>
+**Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/1034<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+Files: `icons/mob/vore/tails_64x32.dmi, icons/mob/vore/Taur_Bellies.dmi`<br>
+Icon-States: eighttailkitsunetaur, ChristyKitsune, ChristyKitsuneTaur, Taur-CKT-1 idle, Taur-CKT-2 idle, Taur-CKT-3 idle <br> 
+Creator: Kligor<br> 
+Link: https://github.com/TS-Rogue-Star/Rogue-Star/pull/1063<br> 
+**License:** eighttailkitsunetaur is under [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/), all others (ckey locked sprites listed above) are unliscened for further use without permission of character owner<br>
 <br>
 **File:** `icons/mob/robot/fluff_wide_rs.dmi`<br>
 **Icon-States:** googlyfox-aurum-serv, googlyfox-aurum-serv-eyes, googlyfox-aurum-serv-wreck, googlyfox-aurum-serv-rest, googlyfox-aurum-serv-belly-1-rest, googlyfox-aurum-serv-belly-2-rest, googlyfox-aurum-serv-sit, googlyfox-aurum-serv-belly-1-sit, googlyfox-aurum-serv-belly-2-sit, googlyfox-aurum-serv-bellyup, googlyfox-aurum-serv-belly-1-bellyup, googlyfox-aurum-serv-belly-2-bellyup, googlyfox-aurum-serv-belly-1, googlyfox-aurum-serv-sleeper-1, googlyfox-aurum-serv-belly-2, googlyfox-aurum-serv-throat-1, googlyfox-aurum-serv-lights<br>
