@@ -374,6 +374,7 @@
 		to_chat(user, span_notice("You convert and upgrade \the [src] to be more compact."))
 		do_upgrade()
 		medigun.wielded_item_state = ""
+		medigun.wielded = FALSE
 		qdel(W)
 	if(W.is_crowbar() && maintenance)
 		if(smodule )
