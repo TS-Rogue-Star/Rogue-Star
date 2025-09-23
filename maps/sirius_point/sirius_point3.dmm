@@ -13073,6 +13073,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/floor_decal/steeldecal/steel_decals5,
+/obj/machinery/light_switch{
+	pixel_x = 23;
+	pixel_y = -24;
+	dir = 1
+	},
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "Hc" = (
