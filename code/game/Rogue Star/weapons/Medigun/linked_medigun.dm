@@ -129,7 +129,7 @@
 			if(isliving(A))
 				target = A
 				break
-	if(!medigun_base_unit.compact)
+	if(medigun_base_unit.is_twohanded())
 		update_twohanding()
 	if(busy && !(target == current_target) && isliving(target))
 		to_chat(user, span_warning("\The [src] is already targeting something."))
