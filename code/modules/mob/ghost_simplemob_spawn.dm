@@ -50,8 +50,10 @@ GLOBAL_LIST_INIT(ghost_spawnable_mobs,list(
 		"Pakkun - Amethyst" = /mob/living/simple_mob/vore/pakkun/purple
 	),
 	"Panther" = /mob/living/simple_mob/vore/aggressive/panther,
+	"Prancer" = /mob/living/simple_mob/vore/prancer,
 	"Sect Queen" = /mob/living/simple_mob/vore/sect_queen,
 	"Sect Drone" = /mob/living/simple_mob/vore/sect_drone,
+	"Stellagan" = /mob/living/simple_mob/vore/stellagan,
 	"Rabbit" = /mob/living/simple_mob/vore/rabbit,
 	"Raptor" = /mob/living/simple_mob/vore/raptor,
 	"Rat - Giant" = /mob/living/simple_mob/vore/aggressive/rat,
