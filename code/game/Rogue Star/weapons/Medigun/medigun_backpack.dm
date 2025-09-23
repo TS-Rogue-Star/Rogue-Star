@@ -120,9 +120,11 @@
 	compact = TRUE
 	w_class = ITEMSIZE_LARGE
 	slot_flags = SLOT_BELT
+	medigun.wielded_item_state = ""
+	medigun.wielded = FALSE
 	update_icon()
 	playsound(src,'sound/items/change_drill.ogg',25,1)
-
+	medigun.item_state_slots.Cut()
 
 /obj/item/device/continuous_medigun/proc/adjust_brutevol(modifier)
 	if(modifier > brutevol)
@@ -373,8 +375,7 @@
 			return
 		to_chat(user, span_notice("You convert and upgrade \the [src] to be more compact."))
 		do_upgrade()
-		medigun.wielded_item_state = ""
-		medigun.wielded = FALSE
+
 		qdel(W)
 	if(W.is_crowbar() && maintenance)
 		if(smodule )
