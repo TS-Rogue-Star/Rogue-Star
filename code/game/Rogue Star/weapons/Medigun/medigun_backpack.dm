@@ -95,10 +95,7 @@
 
 
 /obj/item/device/continuous_medigun/proc/is_twohanded()
-	return TRUE
-
-/obj/item/device/continuous_medigun/compact/is_twohanded()
-	return FALSE
+	return !compact
 
 /obj/item/device/continuous_medigun/proc/apc_charge()
 	gridstatus = 0
@@ -245,21 +242,25 @@
 			medigun.base_icon_state = "medblaster[special]"
 			medigun.wielded_item_state = "medblaster[special]-wielded"
 			medigun.update_icon()
+			to_chat(world, span_notice("Inhand, twohand"))
 		else
 			medigun.icon_state = "medblaster-compact[special]"
 			medigun.base_icon_state = "medblaster-compact[special]"
 			medigun.wielded_item_state = ""
 			medigun.update_icon()
+			to_chat(world, span_notice("Inhand, onehand"))
 	else if(is_twohanded())
 		icon_state = "mg[sprite][special]"
 		item_state = "mg[sprite]-onmob[special]"
 		medigun.icon_state = "medblaster[special]"
 		medigun.base_icon_state = "medblaster[special]"
+		to_chat(world, span_notice("onback, twohand"))
 	else
 		icon_state = "mg[sprite][special]"
 		item_state = "mg[sprite]-onmob[special]"
 		medigun.icon_state = "medblaster-compact[special]"
 		medigun.base_icon_state = "medblaster-compact[special]"
+		to_chat(world, span_notice("onback, onehand"))
 
 	update_icon()
 
@@ -372,7 +373,7 @@
 			return
 		to_chat(user, span_notice("You convert and upgrade \the [src] to be more compact."))
 		do_upgrade()
-		//W.forceMove(get_turf(loc))
+		medigun.wielded_item_state = ""
 		qdel(W)
 	if(W.is_crowbar() && maintenance)
 		if(smodule )

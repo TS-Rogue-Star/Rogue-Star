@@ -40,9 +40,11 @@
 			if(M.can_wield_item(src) && src.is_held_twohanded(M))
 				LAZYSET(item_state_slots, slot_l_hand_str, wielded_item_state)
 				LAZYSET(item_state_slots, slot_r_hand_str, wielded_item_state)
+				to_chat(world, span_notice("part1"))
 			else
 				LAZYSET(item_state_slots, slot_l_hand_str, initial(item_state))
 				LAZYSET(item_state_slots, slot_r_hand_str, initial(item_state))
+				to_chat(world, span_notice("part2"))
 		..()
 
 // Draws a box showing the limits of movement while scanning something.
