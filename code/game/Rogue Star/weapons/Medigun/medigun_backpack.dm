@@ -88,6 +88,11 @@
 		<li>Please forward any feedback and complaints to 'Sari Bork' CEO of Bork Industries.</li>
 	</ul>"}
 
+/obj/item/device/continuous_medigun_modkit
+	name = "Continuous Medigun upgrade kit"
+	desc = "A kit containing all the needed tools and parts to upgrade the BLEM."
+	icon_state = "modkit"
+
 
 /obj/item/device/continuous_medigun/proc/is_twohanded()
 	return TRUE
@@ -108,6 +113,19 @@
 		A.use_power_oneoff(delta*100, EQUIP)
 		gridstatus = 2
 	return TRUE
+
+
+/obj/item/device/continuous_medigun/proc/do_upgrade()
+	name = "prototype bluespace medigun backpack - compact"
+	desc = "Contains a compact version of the bluespace medigun able to be used one handed, this portable unit digitizes and stores chems and battery power used by the attached gun."
+	icon_state = "mg-belt"
+	item_state = "mg-belt-onmob"
+	compact = TRUE
+	w_class = ITEMSIZE_LARGE
+	slot_flags = SLOT_BELT
+	update_icon()
+	playsound(src,'sound/items/change_drill.ogg',25,1)
+
 
 /obj/item/device/continuous_medigun/proc/adjust_brutevol(modifier)
 	if(modifier > brutevol)
@@ -348,6 +366,14 @@
 		//to_chat(user, span_warning("backpack clicked with gun"))
 		reattach_medigun(user)
 		return
+	if(istype(W, /obj/item/device/continuous_medigun_modkit))
+		if(slot_check())
+			to_chat(user, span_notice("Please place \the [src] on the ground before upgrading."))
+			return
+		to_chat(user, span_notice("You convert and upgrade \the [src] to be more compact."))
+		do_upgrade()
+		//W.forceMove(get_turf(loc))
+		qdel(W)
 	if(W.is_crowbar() && maintenance)
 		if(smodule )
 			smodule.forceMove(get_turf(loc))
@@ -400,18 +426,18 @@
 			if(!user.put_in_hands(ccell))
 				ccell.forceMove(get_turf(loc))
 			to_chat(user, span_notice("You Swap the [W] for \the [ccell]."))
+			playsound(src, 'sound/weapons/flipblade.ogg', 25, 1)
 		if(!ccell)
 			to_chat(user, span_notice("You install the [W] into \the [src]."))
+			playsound(src, 'sound/weapons/flipblade.ogg', 25, 1)
 		W.forceMove(src)
 		ccell = W
-
 		charging = TRUE
 		return
 
 
 	if(maintenance)
 		if(busy == FALSE)
-
 			if(istype(W, /obj/item/weapon/stock_parts/scanning_module))
 				if(smodule)
 					if(W.type == smodule.type)
@@ -428,8 +454,10 @@
 					if(!user.put_in_hands(smodule))
 						smodule.forceMove(get_turf(loc))
 					to_chat(user, span_notice("You Swap the [W] for \the [smodule]."))
+					playsound(src, 'sound/weapons/flipblade.ogg', 25, 1)
 				if(!smodule)
 					to_chat(user, span_notice("You install the [W] into \the [src]."))
+					playsound(src, 'sound/weapons/flipblade.ogg', 25, 1)
 				W.forceMove(src)
 				smodule = W
 				medigun.beam_range = 3+smodule.get_rating()
@@ -452,13 +480,14 @@
 					if(!user.put_in_hands(smanipulator))
 						smanipulator.forceMove(get_turf(loc))
 					to_chat(user, span_notice("You Swap the [W] for \the [smanipulator]."))
+					playsound(src, 'sound/weapons/flipblade.ogg', 25, 1)
 				if(!smanipulator)
 					to_chat(user, span_notice("You install the [W] into \the [src]."))
+					playsound(src, 'sound/weapons/flipblade.ogg', 25, 1)
 				W.forceMove(src)
 				smanipulator = W
 				smaniptier = smanipulator.get_rating()
 				if(sbin && scapacitor)START_PROCESSING(SSobj, src)
-				to_chat(user, span_notice("You install the [W] into \the [src]."))
 				update_icon()
 				return
 
@@ -478,11 +507,12 @@
 					if(!user.put_in_hands(slaser))
 						slaser.forceMove(get_turf(loc))
 					to_chat(user, span_notice("You Swap the [W] for \the [slaser]."))
+					playsound(src, 'sound/weapons/flipblade.ogg', 25, 1)
 				if(!slaser)
 					to_chat(user, span_notice("You install the [W] into \the [src]."))
+					playsound(src, 'sound/weapons/flipblade.ogg', 25, 1)
 				W.forceMove(src)
 				slaser = W
-				to_chat(user, span_notice("You install the [W] into \the [src]."))
 				update_icon()
 				return
 
@@ -502,8 +532,10 @@
 					if(!user.put_in_hands(scapacitor))
 						scapacitor.forceMove(get_turf(loc))
 					to_chat(user, span_notice("You Swap the [W] for \the [scapacitor]."))
+					playsound(src, 'sound/weapons/flipblade.ogg', 25, 1)
 				if(!scapacitor)
 					to_chat(user, span_notice("You install the [W] into \the [src]."))
+					playsound(src, 'sound/weapons/flipblade.ogg', 25, 1)
 				W.forceMove(src)
 				scapacitor = W
 				var/scaptier = scapacitor.get_rating()
@@ -534,7 +566,6 @@
 						bcell.charge = chargecap
 
 				if(sbin && smanipulator)START_PROCESSING(SSobj, src)
-				to_chat(user, span_notice("You install the [W] into \the [src]."))
 				update_icon()
 				return
 
@@ -554,8 +585,10 @@
 					if(!user.put_in_hands(sbin))
 						sbin.forceMove(get_turf(loc))
 					to_chat(user, span_notice("You Swap the [W] for \the [sbin]."))
+					playsound(src, 'sound/weapons/flipblade.ogg', 25, 1)
 				if(!sbin)
 					to_chat(user, span_notice("You install the [W] into \the [src]."))
+					playsound(src, 'sound/weapons/flipblade.ogg', 25, 1)
 				W.forceMove(src)
 				sbin = W
 				sbintier = sbin.get_rating()
@@ -578,7 +611,6 @@
 				if(toxcharge > tankmax)
 					toxcharge = tankmax
 				if(scapacitor && smanipulator)START_PROCESSING(SSobj, src)
-				to_chat(user, span_notice("You install the [W] into \the [src]."))
 				update_icon()
 				return
 

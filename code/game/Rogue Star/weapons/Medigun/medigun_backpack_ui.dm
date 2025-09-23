@@ -99,6 +99,7 @@
 				return FALSE
 			smodule.forceMove(get_turf(loc))
 			to_chat(ui.user, span_notice("You remove the [smodule] from \the [src]."))
+			playsound(src, 'sound/weapons/empty.ogg', 50, 1)
 			smodule = null
 			update_icon()
 			return TRUE
@@ -109,6 +110,7 @@
 			STOP_PROCESSING(SSobj, src)
 			smanipulator.forceMove(get_turf(loc))
 			to_chat(ui.user, span_notice("You remove the [smanipulator] from \the [src]."))
+			playsound(src, 'sound/weapons/empty.ogg', 50, 1)
 			smanipulator = null
 			smaniptier = 0
 			update_icon()
@@ -119,6 +121,7 @@
 				return FALSE
 			slaser.forceMove(get_turf(loc))
 			to_chat(ui.user, span_notice("You remove the [slaser] from \the [src]."))
+			playsound(src, 'sound/weapons/empty.ogg', 50, 1)
 			slaser = null
 			update_icon()
 			return TRUE
@@ -129,6 +132,7 @@
 			STOP_PROCESSING(SSobj, src)
 			scapacitor.forceMove(get_turf(loc))
 			to_chat(ui.user, span_notice("You remove the [scapacitor] from \the [src]."))
+			playsound(src, 'sound/weapons/empty.ogg', 50, 1)
 			scapacitor = null
 			update_icon()
 			return TRUE
@@ -139,6 +143,7 @@
 			STOP_PROCESSING(SSobj, src)
 			sbin.forceMove(get_turf(loc))
 			to_chat(ui.user, span_notice("You remove the [sbin] from \the [src]."))
+			playsound(src, 'sound/weapons/empty.ogg', 50, 1)
 			sbin = null
 			sbintier = 0
 			update_icon()
@@ -155,6 +160,7 @@
 	if(!user.put_in_hands(ccell))
 		ccell.forceMove(get_turf(loc))
 	to_chat(usr, span_notice("You remove the [ccell] from \the [src]."))
+	playsound(src, 'sound/weapons/empty.ogg', 50, 1)
 	ccell = null
 	update_icon()
 	return TRUE
