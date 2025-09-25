@@ -239,11 +239,9 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 		pref.gross_meatbag = 1
 		pref.dirty_synth = 0
 
-	var/datum/species/selected_species = GLOB.all_species[pref.species] // RS ADD
-
 	// Clean up positive traits
 	for(var/datum/trait/path as anything in pref.pos_traits)
-		if(!(path in positive_traits_map[selected_species])) // RS EDIT
+		if(!(path in positive_traits_map[pref.species])) // RS EDIT
 			pref.pos_traits -= path
 			continue
 		var/take_flags = initial(path.can_take)
@@ -251,7 +249,7 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 			pref.pos_traits -= path
 	//Neutral traits
 	for(var/datum/trait/path as anything in pref.neu_traits)
-		if(!(path in neutral_traits_map[selected_species])) // RS EDIT
+		if(!(path in neutral_traits_map[pref.species])) // RS EDIT
 			pref.neu_traits -= path
 			continue
 		var/take_flags = initial(path.can_take)
@@ -259,12 +257,14 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 			pref.neu_traits -= path
 	//Negative traits
 	for(var/datum/trait/path as anything in pref.neg_traits)
-		if(!(path in negative_traits_map[selected_species])) // RS EDIT
+		if(!(path in negative_traits_map[pref.species])) // RS EDIT
 			pref.neg_traits -= path
 			continue
 		var/take_flags = initial(path.can_take)
 		if((pref.dirty_synth && !(take_flags & SYNTHETICS)) || (pref.gross_meatbag && !(take_flags & ORGANICS)))
 			pref.neg_traits -= path
+
+	var/datum/species/selected_species = GLOB.all_species[pref.species]
 
 	if(selected_species.selects_bodytype)
 		if (!(pref.custom_base in pref.get_custom_bases_for_species()))
