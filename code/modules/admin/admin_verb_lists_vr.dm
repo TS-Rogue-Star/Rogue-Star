@@ -182,8 +182,8 @@ var/list/admin_verbs_fun = list(
 	/client/proc/summon,				//RS ADD
 	/client/proc/map_swap,				//RS ADD
 	/client/proc/add_trait,				//RS ADD
-	/client/proc/toggle_admin_secret_view	//RS ADD
-
+	/client/proc/toggle_admin_secret_view,	//RS ADD
+	/client/proc/toggle_multichar			//RS ADD
 	)
 
 var/list/admin_verbs_spawn = list(

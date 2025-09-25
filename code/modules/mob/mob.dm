@@ -72,7 +72,8 @@
 		if(client?.prefs.chat_timestamp)
 			to_chat(src,"[time] [msg]")
 		else if(teleop)
-			to_chat(teleop, create_text_tag("body", "BODY:", teleop.client) + "[msg]")
+			if(teleop != src)	//RS EDIT
+				to_chat(teleop, create_text_tag("body", "BODY:", teleop.client) + "\<[SPAN_NOTICE(src)]\>: [msg]") //RS EDIT - Makes teleop messages a little more informative
 		else
 			to_chat(src,msg)
 	return
