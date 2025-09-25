@@ -1,3 +1,7 @@
+// /////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star September 2025 to integrate trust list settings //
+// /////////////////////////////////////////////////////////////////////////////////
+
 import { capitalize } from 'common/string';
 import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
@@ -1953,6 +1957,27 @@ const VoreUserPreferences = (props, context) => {
 
   const { show_pictures } = data;
 
+  // RS Add Start: Trustlist integration (Lira, September 2025)
+  const trustlistRaw = data.trustlist_toggles || [];
+  const trustlistList = (
+    Array.isArray(trustlistRaw) ? trustlistRaw : Object.values(trustlistRaw)
+  ).filter(Boolean);
+  const trustlistSet = new Set(trustlistList);
+  const trustlistMode = data.trustlist_mode || 'Both';
+  const trustModeCycle = {
+    Both: 'Predator',
+    Predator: 'Prey',
+    Prey: 'Both',
+  };
+  const nextTrustMode = trustModeCycle[trustlistMode] || 'Predator';
+  const prefState = (enabled, key) => {
+    if (!enabled) {
+      return 'disabled';
+    }
+    return key && trustlistSet.has(key) ? 'trustlist' : 'enabled';
+  };
+  // RS Add End
+
   const preferences = {
     belly_glow: {
       action: 'toggle_glow',
@@ -2048,6 +2073,8 @@ const VoreUserPreferences = (props, context) => {
       },
     },
     dropnom_prey: {
+      id: 'dropnom_prey', // RS Add: Trustlist integration (Lira, September 2025)
+      state: prefState(can_be_drop_prey, 'Spontaneous Prey'), // RS Add: Trustlist integration (Lira, September 2025)
       action: 'toggle_dropnom_prey',
       test: can_be_drop_prey,
       tooltip: {
@@ -2055,14 +2082,18 @@ const VoreUserPreferences = (props, context) => {
           'This toggle is for spontaneous, environment related vore' +
           ' as prey, including drop-noms, teleporters, etc.',
         enable: 'Click here to allow being spontaneous prey.',
+        trustlist: 'Click here to restrict spontaneous prey to trusted users.', // RS Add: Trustlist integration (Lira, September 2025)
         disable: 'Click here to prevent being spontaneous prey.',
       },
       content: {
         enabled: 'Spontaneous Prey Enabled',
+        trustlist: 'Spontaneous Prey: Trust List', // RS Add: Trustlist integration (Lira, September 2025)
         disabled: 'Spontaneous Prey Disabled',
       },
     },
     dropnom_pred: {
+      id: 'dropnom_pred', // RS Add: Trustlist integration (Lira, September 2025)
+      state: prefState(can_be_drop_pred, 'Spontaneous Pred'), // RS Add: Trustlist integration (Lira, September 2025)
       action: 'toggle_dropnom_pred',
       test: can_be_drop_pred,
       tooltip: {
@@ -2070,14 +2101,19 @@ const VoreUserPreferences = (props, context) => {
           'This toggle is for spontaneous, environment related vore' +
           ' as a predator, including drop-noms, teleporters, etc.',
         enable: 'Click here to allow being spontaneous pred.',
+        trustlist:
+          'Click here to restrict spontaneous predation to trusted users.', // RS Add: Trustlist integration (Lira, September 2025)
         disable: 'Click here to prevent being spontaneous pred.',
       },
       content: {
         enabled: 'Spontaneous Pred Enabled',
+        trustlist: 'Spontaneous Pred: Trust List', // RS Add: Trustlist integration (Lira, September 2025)
         disabled: 'Spontaneous Pred Disabled',
       },
     },
     toggle_drop_vore: {
+      id: 'drop_vore', // RS Add: Trustlist integration (Lira, September 2025)
+      state: prefState(drop_vore, 'Drop Vore'), // RS Add: Trustlist integration (Lira, September 2025)
       action: 'toggle_drop_vore',
       test: drop_vore,
       tooltip: {
@@ -2085,14 +2121,18 @@ const VoreUserPreferences = (props, context) => {
           'Allows for dropnom spontaneous vore to occur. ' +
           'Note, you still need spontaneous vore pred and/or prey enabled.',
         enable: 'Click here to allow for dropnoms.',
+        trustlist: 'Click here to restrict dropnoms to trusted users.', // RS Add: Trustlist integration (Lira, September 2025)
         disable: 'Click here to disable dropnoms.',
       },
       content: {
         enabled: 'Drop Noms Enabled',
+        trustlist: 'Drop Noms: Trust List', // RS Add: Trustlist integration (Lira, September 2025)
         disabled: 'Drop Noms Disabled',
       },
     },
     toggle_slip_vore: {
+      id: 'slip_vore', // RS Add: Trustlist integration (Lira, September 2025)
+      state: prefState(slip_vore, 'Slip Vore'), // RS Add: Trustlist integration (Lira, September 2025)
       action: 'toggle_slip_vore',
       test: slip_vore,
       tooltip: {
@@ -2100,14 +2140,18 @@ const VoreUserPreferences = (props, context) => {
           'Allows for slip related spontaneous vore to occur. ' +
           'Note, you still need spontaneous vore pred and/or prey enabled.',
         enable: 'Click here to allow for slip vore.',
+        trustlist: 'Click here to restrict slip vore to trusted users.', // RS Add: Trustlist integration (Lira, September 2025)
         disable: 'Click here to disable slip vore.',
       },
       content: {
         enabled: 'Slip Vore Enabled',
+        trustlist: 'Slip Vore: Trust List', // RS Add: Trustlist integration (Lira, September 2025)
         disabled: 'Slip Vore Disabled',
       },
     },
     toggle_stumble_vore: {
+      id: 'stumble_vore', // RS Add: Trustlist integration (Lira, September 2025)
+      state: prefState(stumble_vore, 'Stumble Vore'), // RS Add: Trustlist integration (Lira, September 2025)
       action: 'toggle_stumble_vore',
       test: stumble_vore,
       tooltip: {
@@ -2115,14 +2159,18 @@ const VoreUserPreferences = (props, context) => {
           'Allows for stumble related spontaneous vore to occur. ' +
           ' Note, you still need spontaneous vore pred and/or prey enabled.',
         enable: 'Click here to allow for stumble vore.',
+        trustlist: 'Click here to restrict stumble vore to trusted users.', // RS Add: Trustlist integration (Lira, September 2025)
         disable: 'Click here to disable stumble vore.',
       },
       content: {
         enabled: 'Stumble Vore Enabled',
+        trustlist: 'Stumble Vore: Trust List', // RS Add: Trustlist integration (Lira, September 2025)
         disabled: 'Stumble Vore Disabled',
       },
     },
     toggle_throw_vore: {
+      id: 'throw_vore', // RS Add: Trustlist integration (Lira, September 2025)
+      state: prefState(throw_vore, 'Throw Vore'), // RS Add: Trustlist integration (Lira, September 2025)
       action: 'toggle_throw_vore',
       test: throw_vore,
       tooltip: {
@@ -2130,14 +2178,18 @@ const VoreUserPreferences = (props, context) => {
           'Allows for throw related spontaneous vore to occur. ' +
           ' Note, you still need spontaneous vore pred and/or prey enabled.',
         enable: 'Click here to allow for throw vore.',
+        trustlist: 'Click here to restrict throw vore to trusted users.', // RS Add: Trustlist integration (Lira, September 2025)
         disable: 'Click here to disable throw vore.',
       },
       content: {
         enabled: 'Throw Vore Enabled',
+        trustlist: 'Throw Vore: Trust List', // RS Add: Trustlist integration (Lira, September 2025)
         disabled: 'Throw Vore Disabled',
       },
     },
     toggle_food_vore: {
+      id: 'food_vore', // RS Add: Trustlist integration (Lira, September 2025)
+      state: prefState(food_vore, 'Food Vore'), // RS Add: Trustlist integration (Lira, September 2025)
       action: 'toggle_food_vore',
       test: food_vore,
       tooltip: {
@@ -2145,10 +2197,12 @@ const VoreUserPreferences = (props, context) => {
           'Allows for food related spontaneous vore to occur. ' +
           ' Note, you still need spontaneous vore pred and/or prey enabled.',
         enable: 'Click here to allow for food vore.',
+        trustlist: 'Click here to restrict food vore to trusted users.', // RS Add: Trustlist integration (Lira, September 2025)
         disable: 'Click here to disable food vore.',
       },
       content: {
         enabled: 'Food Vore Enabled',
+        trustlist: 'Food Vore: Trust List', // RS Add: Trustlist integration (Lira, September 2025)
         disabled: 'Food Vore Disabled',
       },
     },
@@ -2181,15 +2235,19 @@ const VoreUserPreferences = (props, context) => {
       },
     },
     resize: {
+      id: 'resize', // RS Add: Trustlist integration (Lira, September 2025)
+      state: prefState(resizable, 'Resizing'), // RS Add: Trustlist integration (Lira, September 2025)
       action: 'toggle_resize',
       test: resizable,
       tooltip: {
         main: 'This button is to toggle your ability to be resized by others.',
         enable: 'Click here to allow being resized.',
+        trustlist: 'Click here to restrict resizing to trusted users.', // RS Add: Trustlist integration (Lira, September 2025)
         disable: 'Click here to prevent being resized.',
       },
       content: {
         enabled: 'Resizing Allowed',
+        trustlist: 'Resizing: Trust List', // RS Add: Trustlist integration (Lira, September 2025)
         disabled: 'No Resizing',
       },
     },
@@ -2309,6 +2367,8 @@ const VoreUserPreferences = (props, context) => {
       },
     },
     pickuppref: {
+      id: 'pickup_pref', // RS Add: Trustlist integration (Lira, September 2025)
+      state: prefState(pickup_mechanics_active, 'Micro Pickup'), // RS Add: Trustlist integration (Lira, September 2025)
       action: 'toggle_pickuppref',
       test: pickup_mechanics_active,
       tooltip: {
@@ -2316,16 +2376,22 @@ const VoreUserPreferences = (props, context) => {
         enable:
           'You will not participate in pick-up mechanics.' +
           ' Click this to allow picking up/being picked up.',
+        trustlist:
+          'Allows macros to pick you up into their hands, and you to pick up micros.' +
+          ' Click to restrict pick-up mechanics to trusted users.', // RS Add: Trustlist integration (Lira, September 2025)
         disable:
           'Allows macros to pick you up into their hands, and you to pick up micros.' +
           ' Click to disable pick-up mechanics.',
       },
       content: {
         enabled: 'Pick-up Mechanics Enabled',
+        trustlist: 'Pick-up Mechanics: Trust List', // RS Add: Trustlist integration (Lira, September 2025)
         disabled: 'Pick-up Mechanics Disabled',
       },
     },
     spontaneous_tf: {
+      id: 'spontaneous_tf', // RS Add: Trustlist integration (Lira, September 2025)
+      state: prefState(allow_spontaneous_tf, 'Spontaneous TF'), // RS Add: Trustlist integration (Lira, September 2025)
       action: 'toggle_allow_spontaneous_tf',
       test: allow_spontaneous_tf,
       tooltip: {
@@ -2333,10 +2399,13 @@ const VoreUserPreferences = (props, context) => {
           'This toggle is for spontaneous or environment related transformation' +
           ' as a victim, such as via chemicals.',
         enable: 'Click here to allow being spontaneously transformed.',
+        trustlist:
+          'Click here to restrict spontaneous transformations to trusted users.', // RS Add: Trustlist integration (Lira, September 2025)
         disable: 'Click here to disable being spontaneously transformed.',
       },
       content: {
         enabled: 'Spontaneous TF Enabled',
+        trustlist: 'Spontaneous TF: Trust List', // RS Add: Trustlist integration (Lira, September 2025)
         disabled: 'Spontaneous TF Disabled',
       },
     },
@@ -2395,11 +2464,13 @@ const VoreUserPreferences = (props, context) => {
           Contents Preference: {show_pictures ? 'Show Pictures' : 'Show List'}
         </Button>
       }>
-      <Flex spacing={1} wrap="wrap" justify="center">
+      {/* RS Edit: Cleanup spacing (Lira, September 2025) */}
+      <Flex spacing={1} wrap="wrap" justify="center" align="stretch">
         <Flex.Item basis="32%">
           <VoreUserPreferenceItem spec={preferences.digestion} />
         </Flex.Item>
-        <Flex.Item basis="32%" grow={1}>
+        {/* RS Edit: Cleanup spacing (Lira, September 2025) */}
+        <Flex.Item basis="32%">
           <VoreUserPreferenceItem spec={preferences.absorbable} />
         </Flex.Item>
         <Flex.Item basis="32%">
@@ -2408,7 +2479,8 @@ const VoreUserPreferences = (props, context) => {
         <Flex.Item basis="32%">
           <VoreUserPreferenceItem spec={preferences.mobvore} />
         </Flex.Item>
-        <Flex.Item basis="32%" grow={1}>
+        {/* RS Edit: Cleanup spacing (Lira, September 2025) */}
+        <Flex.Item basis="32%">
           <VoreUserPreferenceItem spec={preferences.feed} />
         </Flex.Item>
         <Flex.Item basis="32%">
@@ -2418,36 +2490,12 @@ const VoreUserPreferences = (props, context) => {
           />
         </Flex.Item>
         <Flex.Item basis="32%">
-          <VoreUserPreferenceItem spec={preferences.dropnom_prey} />
-        </Flex.Item>
-        <Flex.Item basis="32%" grow={1}>
-          <VoreUserPreferenceItem spec={preferences.dropnom_pred} />
-        </Flex.Item>
-        <Flex.Item basis="32%">
-          <VoreUserPreferenceItem spec={preferences.toggle_drop_vore} />
-        </Flex.Item>
-        <Flex.Item basis="32%">
-          <VoreUserPreferenceItem spec={preferences.toggle_slip_vore} />
-        </Flex.Item>
-        <Flex.Item basis="32%" grow={1}>
-          <VoreUserPreferenceItem spec={preferences.toggle_stumble_vore} />
-        </Flex.Item>
-        <Flex.Item basis="32%">
-          <VoreUserPreferenceItem spec={preferences.toggle_throw_vore} />
-        </Flex.Item>
-        <Flex.Item basis="32%">
-          <VoreUserPreferenceItem spec={preferences.toggle_food_vore} />
-        </Flex.Item>
-        <Flex.Item basis="32%" grow={1}>
           <VoreUserPreferenceItem spec={preferences.inbelly_spawning} />
         </Flex.Item>
         <Flex.Item basis="32%">
           <VoreUserPreferenceItem spec={preferences.noisy} />
         </Flex.Item>
         <Flex.Item basis="32%">
-          <VoreUserPreferenceItem spec={preferences.resize} />
-        </Flex.Item>
-        <Flex.Item basis="32%" grow={1}>
           <VoreUserPreferenceItem
             spec={preferences.steppref}
             tooltipPosition="top"
@@ -2465,19 +2513,11 @@ const VoreUserPreferences = (props, context) => {
             tooltipPosition="top"
           />
         </Flex.Item>
-        <Flex.Item basis="32%" grow={1}>
-          <VoreUserPreferenceItem
-            spec={preferences.pickuppref}
-            tooltipPosition="top"
-          />
-        </Flex.Item>
-        <Flex.Item basis="32%">
-          <VoreUserPreferenceItem spec={preferences.spontaneous_tf} />
-        </Flex.Item>
         <Flex.Item basis="32%">
           <VoreUserPreferenceItem spec={preferences.allow_stripping} />
         </Flex.Item>
-        <Flex.Item basis="32%" grow={1}>
+        {/* RS Edit: Cleanup spacing (Lira, September 2025) */}
+        <Flex.Item basis="32%">
           <VoreUserPreferenceItem spec={preferences.allow_contamination} />
         </Flex.Item>
         <Flex.Item basis="32%">
@@ -2486,11 +2526,13 @@ const VoreUserPreferences = (props, context) => {
         <Flex.Item basis="32%">
           <VoreUserPreferenceItem spec={preferences.autotransferable} />
         </Flex.Item>
-        <Flex.Item basis="32%" grow={3}>
+        {/* RS Edit: Cleanup spacing (Lira, September 2025) */}
+        <Flex.Item basis="32%">
           <Button
             fluid
             content="Selective Mode Preference"
             onClick={() => act('switch_selective_mode_pref')}
+            style={{ height: '100%' }} // RS Edit: Cleanup spacing (Lira, September 2025)
           />
         </Flex.Item>
         <Flex.Item basis="32%">
@@ -2500,7 +2542,77 @@ const VoreUserPreferences = (props, context) => {
           <VoreUserPreferenceItem spec={preferences.belly_glow} />
         </Flex.Item>
       </Flex>
-      <Section title="Aesthetic Preferences">
+      {/* RS Edit Start: New trust list section (Lira, September 2025) */}
+      <Section title="Trust List Preferences" mt={2}>
+        <Flex spacing={1} wrap="wrap" justify="center" align="stretch">
+          <Flex.Item basis="32%">
+            <Button
+              fluid
+              icon="user-plus"
+              content="Edit Trust List Keys"
+              tooltip="Add or remove trusted BYOND keys."
+              onClick={() => act('trustlist_edit')}
+              style={{ height: '100%' }}
+            />
+          </Flex.Item>
+          <Flex.Item basis="32%">
+            <Button
+              fluid
+              icon="print"
+              content="Print Trust List"
+              tooltip="Print current trust list in chat window."
+              onClick={() => act('trustlist_print')}
+              style={{ height: '100%' }}
+            />
+          </Flex.Item>
+          <Flex.Item basis="32%">
+            <Button
+              fluid
+              icon="random"
+              content={`Trust Mode: ${trustlistMode}`}
+              tooltip="Determine whether trust list applies to pred interactions, prey interactions, or both."
+              onClick={() => act('trustlist_mode', { mode: nextTrustMode })}
+              style={{ height: '100%' }}
+            />
+          </Flex.Item>
+          <Flex.Item basis="32%">
+            <VoreUserPreferenceItem spec={preferences.dropnom_prey} />
+          </Flex.Item>
+          <Flex.Item basis="32%">
+            <VoreUserPreferenceItem spec={preferences.dropnom_pred} />
+          </Flex.Item>
+          <Flex.Item basis="32%">
+            <VoreUserPreferenceItem spec={preferences.toggle_drop_vore} />
+          </Flex.Item>
+          <Flex.Item basis="32%">
+            <VoreUserPreferenceItem spec={preferences.toggle_slip_vore} />
+          </Flex.Item>
+          <Flex.Item basis="32%">
+            <VoreUserPreferenceItem spec={preferences.toggle_stumble_vore} />
+          </Flex.Item>
+          <Flex.Item basis="32%">
+            <VoreUserPreferenceItem spec={preferences.toggle_throw_vore} />
+          </Flex.Item>
+          <Flex.Item basis="32%">
+            <VoreUserPreferenceItem spec={preferences.toggle_food_vore} />
+          </Flex.Item>
+          <Flex.Item basis="32%">
+            <VoreUserPreferenceItem spec={preferences.resize} />
+          </Flex.Item>
+          <Flex.Item basis="32%">
+            <VoreUserPreferenceItem
+              spec={preferences.pickuppref}
+              tooltipPosition="top"
+            />
+          </Flex.Item>
+          <Flex.Item basis="32%">
+            <VoreUserPreferenceItem spec={preferences.spontaneous_tf} />
+          </Flex.Item>
+        </Flex>
+      </Section>
+      {/* RS Edit End */}
+      {/* RS Edit: Cleanup spacing (Lira, September 2025) */}
+      <Section title="Aesthetic Preferences" mt={2}>
         <Flex spacing={1} wrap="wrap" justify="center">
           <Flex.Item basis="50%" grow={1}>
             <Button
@@ -2581,17 +2693,83 @@ const VoreUserPreferences = (props, context) => {
 const VoreUserPreferenceItem = (props, context) => {
   const { act } = useBackend(context);
 
-  const { spec, ...rest } = props;
-  const { action, test, tooltip, content } = spec;
+  // RS Edit Start: Trustlist integration (Lira, September 2025)
+  const { spec, style: itemStyle, ...rest } = props;
+  const { action, test, tooltip = {}, content = {}, id, state } = spec;
+  // RS Edit End
+
+  // RS Add Start: Trustlist integration (Lira, September 2025)
+  const isTriState = state !== undefined;
+  const currentState = isTriState ? state : test ? 'enabled' : 'disabled';
+
+  const serverNextState = isTriState
+    ? currentState === 'disabled'
+      ? 'enabled'
+      : currentState === 'enabled'
+        ? 'trustlist'
+        : 'disabled'
+    : null;
+
+  let icon;
+  if (isTriState) {
+    if (currentState === 'trustlist') {
+      icon = 'user-shield';
+    } else if (currentState === 'enabled') {
+      icon = 'check';
+    } else {
+      icon = 'ban';
+    }
+  } else {
+    icon = test ? 'toggle-on' : 'toggle-off';
+  }
+
+  const selected = !isTriState && test;
+
+  const tooltipKey = isTriState
+    ? serverNextState === 'enabled'
+      ? 'enable'
+      : serverNextState === 'disabled'
+        ? 'disable'
+        : 'trustlist'
+    : test
+      ? 'disable'
+      : 'enable';
+
+  const tooltipSuffix = tooltip[tooltipKey] || '';
+  const tooltipText = [tooltip.main, tooltipSuffix]
+    .filter(Boolean)
+    .join(' ')
+    .trim();
+
+  const fallbackContent = test ? content.enabled : content.disabled;
+  const buttonContent = content[currentState] || fallbackContent;
+
+  let color;
+  if (isTriState) {
+    if (currentState === 'trustlist') {
+      color = 'purple';
+    } else if (currentState === 'enabled') {
+      color = 'green';
+    }
+  }
+
+  const onClick =
+    isTriState && id
+      ? () => act('set_preference_state', { pref: id, state: serverNextState })
+      : () => act(action);
+  // RS Add End
 
   return (
+    // RS Edit: Trustlist integration (Lira, September 2025)
     <Button
-      onClick={() => act(action)}
-      icon={test ? 'toggle-on' : 'toggle-off'}
-      selected={test}
+      onClick={onClick}
+      icon={icon}
+      selected={selected}
       fluid
-      tooltip={tooltip.main + ' ' + (test ? tooltip.disable : tooltip.enable)}
-      content={test ? content.enabled : content.disabled}
+      tooltip={tooltipText}
+      content={buttonContent}
+      color={color}
+      style={{ height: '100%', ...(itemStyle || {}) }}
       {...rest}
     />
   );
