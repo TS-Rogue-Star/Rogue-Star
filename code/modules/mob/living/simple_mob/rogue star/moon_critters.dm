@@ -631,6 +631,7 @@
 	. = ..()
 	marking_color = random_color()
 	eye_color = pick(list("#e100ff","#ff0000"))
+	dir = pick(list(1,2,4,8))
 	update_icon()
 
 /mob/living/simple_mob/vore/dust_stalker/Initialize()
@@ -639,6 +640,18 @@
 
 /mob/living/simple_mob/vore/dust_stalker/update_icon()
 	. = ..()
+
+	if(alpha < 255 && resting)
+		icon_state = "moon_ray_hide"
+		var/combine_key = "hide-marking-[marking_color]"
+		var/image/our_image = overlays_cache[combine_key]
+		if(!our_image)
+			our_image = image(icon,null,"moon_ray_hide_marking")
+			our_image.color = marking_color
+			our_image.appearance_flags = RESET_COLOR|KEEP_APART|PIXEL_SCALE
+			overlays_cache[combine_key] = our_image
+		add_overlay(our_image)
+		return
 
 	var/our_state = "moon_ray_marking"
 	if(resting)
@@ -673,6 +686,9 @@
 /mob/living/simple_mob/vore/dust_stalker/Life()
 	. = ..()
 	if(resting)
+		if(alpha == 255)
+			chameleon_blend()
+			update_icon()
 		if(confidence < 20)
 			confidence ++
 		return
@@ -685,8 +701,6 @@
 		if(alpha == 255)
 			if(prob(10))
 				time_to_hide()
-			else
-				ai_holder.wander = TRUE
 
 /mob/living/simple_mob/vore/dust_stalker/verb/time_to_hide()
 	set name = "Stalk"
@@ -696,11 +710,10 @@
 	if(resting)
 		return
 
-	ai_holder.wander = FALSE
-	chameleon_blend()
+	resting = TRUE
 	cut_overlays()
 	icon_state = "moon_ray_hide"
-	var/combine_key = "marking-[marking_color]"
+	var/combine_key = "hide-marking-[marking_color]"
 	var/image/our_image = overlays_cache[combine_key]
 	if(!our_image)
 		our_image = image(icon,null,"moon_ray_hide_marking")
@@ -708,8 +721,7 @@
 		our_image.appearance_flags = RESET_COLOR|KEEP_APART|PIXEL_SCALE
 		overlays_cache[combine_key] = our_image
 	add_overlay(our_image)
-
-	resting = TRUE
+	chameleon_blend()
 
 /*
 /mob/living/simple_mob/vore/dust_stalker/is_cloaked()

@@ -3420,6 +3420,10 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/light_switch{
+	pixel_x = -23;
+	pixel_y = 24
+	},
 /turf/simulated/floor/tiled/white,
 /area/medical/medbay_primary_storage)
 "iO" = (
@@ -6720,6 +6724,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/machinery/light_switch{
+	dir = 8;
+	pixel_x = 24;
+	pixel_y = 23
 	},
 /turf/simulated/floor/tiled/dark,
 /area/security/evidence_storage)
@@ -11065,6 +11074,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/light_switch{
+	dir = 4;
+	pixel_x = -24;
+	pixel_y = 23
+	},
 /turf/simulated/floor/tiled,
 /area/ai_monitored/storage/emergency/eva)
 "BO" = (
@@ -13059,6 +13073,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/floor_decal/steeldecal/steel_decals5,
+/obj/machinery/light_switch{
+	pixel_x = 23;
+	pixel_y = -24;
+	dir = 1
+	},
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "Hc" = (
@@ -18264,6 +18283,11 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
+	},
+/obj/machinery/light_switch{
+	pixel_x = -23;
+	pixel_y = -24;
+	dir = 1
 	},
 /turf/simulated/floor/tiled,
 /area/crew_quarters/courtroom)
@@ -28707,7 +28731,7 @@ Ye
 Ye
 qa
 Ye
-UG
+Ye
 yy
 bR
 JY
@@ -28849,7 +28873,7 @@ AX
 np
 db
 rr
-La
+Ye
 La
 La
 hc
@@ -28991,7 +29015,7 @@ KC
 FO
 SA
 rC
-La
+Ye
 Sn
 Qb
 dH
@@ -29133,7 +29157,7 @@ qH
 No
 DR
 KM
-La
+Ye
 MX
 PL
 cJ
@@ -29275,7 +29299,7 @@ Vk
 Ek
 Ek
 SU
-La
+Ye
 fC
 Ts
 mo
@@ -29417,7 +29441,7 @@ it
 Qa
 yb
 Pv
-La
+Ye
 XQ
 Ts
 hP
@@ -29554,12 +29578,12 @@ bm
 bm
 ue
 Gq
-fl
-fl
-fl
-fl
-fl
-La
+Ye
+Ye
+Ye
+Ye
+Ye
+Ye
 gk
 Ts
 Pp
@@ -31983,12 +32007,12 @@ aA
 vg
 tI
 vv
-NQ
-NQ
-NQ
-NQ
-NQ
-NQ
+zD
+zD
+zD
+zD
+zD
+zD
 qo
 aX
 aX

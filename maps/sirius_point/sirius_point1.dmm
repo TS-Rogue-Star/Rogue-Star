@@ -5,6 +5,7 @@
 	pixel_x = 4
 	},
 /obj/structure/table/woodentable,
+/obj/item/canvas/drawing_tablet,
 /turf/simulated/floor/wood,
 /area/crew_quarters/recreation_area)
 "ab" = (
@@ -1246,6 +1247,7 @@
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 1
 	},
+/obj/machinery/honey_extractor,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/kitchen)
 "du" = (
@@ -2590,6 +2592,10 @@
 /obj/structure/table/standard,
 /obj/item/weapon/bikehorn/rubberducky,
 /obj/machinery/alarm,
+/obj/machinery/light_switch{
+	pixel_x = -23;
+	pixel_y = 24
+	},
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/recreation_area_restroom)
 "gV" = (
@@ -4146,6 +4152,11 @@
 "ld" = (
 /turf/simulated/wall/r_wall,
 /area/engineering/aft_hallway)
+"le" = (
+/obj/machinery/power/apc,
+/obj/structure/cable/cyan,
+/turf/simulated/floor/tiled/steel_dirty,
+/area/medical/moonbase/basement)
 "lf" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/maintenance/engi,
@@ -6084,10 +6095,11 @@
 /area/maintenance/moonbase/basement/dorms)
 "qB" = (
 /obj/structure/cable/cyan{
-	icon_state = "1-8"
-	},
-/obj/structure/cable/cyan{
 	icon_state = "1-4"
+	},
+/obj/machinery/light_switch{
+	pixel_x = -23;
+	pixel_y = 24
 	},
 /turf/simulated/floor/tiled/steel_dirty,
 /area/medical/moonbase/basement)
@@ -8797,6 +8809,9 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/alarm,
+/obj/structure/cable/cyan{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/tiled/steel_dirty,
 /area/medical/moonbase/basement)
 "yj" = (
@@ -9587,6 +9602,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/machinery/light_switch{
+	dir = 4;
+	pixel_x = -24;
+	pixel_y = -32
 	},
 /turf/simulated/floor/carpet,
 /area/medical/moonbase/basementresleeving)
@@ -10681,6 +10701,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/annex)
+"Dv" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/light_switch{
+	dir = 4;
+	pixel_x = -24;
+	pixel_y = 23
+	},
+/turf/simulated/floor/wood,
+/area/crew_quarters/recreation_area)
 "Dw" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/floor/plating,
@@ -11217,6 +11248,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/light_switch{
+	pixel_x = -23;
+	pixel_y = -24;
+	dir = 1
+	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/moonbase/bartender)
 "EV" = (
@@ -11256,6 +11292,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/machinery/light_switch{
+	dir = 4;
+	pixel_x = -24;
+	pixel_y = -23
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/maintenance/moonbase/basement/borgroom)
@@ -12614,6 +12655,10 @@
 	},
 /obj/effect/floor_decal/steeldecal/steel_decals4{
 	dir = 9
+	},
+/obj/machinery/light_switch{
+	pixel_x = -23;
+	pixel_y = 24
 	},
 /turf/simulated/floor/tiled/freezer/cold,
 /area/crew_quarters/kitchen)
@@ -17001,6 +17046,17 @@
 	},
 /turf/simulated/floor/tiled/eris/dark,
 /area/hallway/moonbase/basement)
+"Ug" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/light_switch{
+	pixel_x = -23;
+	pixel_y = -24;
+	dir = 1
+	},
+/turf/simulated/floor/tiled/white,
+/area/crew_quarters/pool)
 "Uh" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green{
 	dir = 4
@@ -17986,14 +18042,12 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/holodeck_control)
 "WS" = (
-/obj/machinery/power/apc{
-	dir = 1
-	},
-/obj/structure/cable/cyan{
-	icon_state = "0-4"
+/obj/machinery/light_switch{
+	pixel_x = -23;
+	pixel_y = 24
 	},
 /turf/simulated/floor/tiled/steel_dirty,
-/area/medical/moonbase/basement)
+/area/maintenance/moonbase/basement/olddorms)
 "WT" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/multi_tile/glass{
@@ -29289,7 +29343,7 @@ TF
 TF
 TF
 bt
-Tx
+Ug
 EL
 ye
 kr
@@ -30003,7 +30057,7 @@ lW
 Pt
 cs
 Wg
-UQ
+Dv
 rn
 Pt
 zw
@@ -32269,7 +32323,7 @@ Qp
 Qp
 ge
 ge
-WS
+Yb
 Yb
 ge
 qh
@@ -32417,7 +32471,7 @@ uy
 Ng
 Ng
 iq
-ia
+WS
 Lu
 ia
 ia
@@ -32554,7 +32608,7 @@ Qp
 ge
 ge
 yi
-Yb
+le
 ge
 zN
 zN
