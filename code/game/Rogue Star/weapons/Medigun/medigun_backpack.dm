@@ -77,7 +77,8 @@
 /obj/item/device/continuous_medigun_modkit
 	name = "Continuous Medigun upgrade kit"
 	desc = "A kit containing all the needed tools and parts to upgrade the BLEM."
-	icon_state = "modkit"
+	icon = 'code/game/Rogue Star/icons/itemicons/borkmedigun.dmi'
+	icon_state = "mg-modkit"
 
 
 /obj/item/device/continuous_medigun/proc/is_twohanded()
