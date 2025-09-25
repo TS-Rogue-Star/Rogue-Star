@@ -229,3 +229,13 @@ Any-Mode: (hotkey doesn't need to be on)
 		winset(src, null, "mainwindow.macro=[hotkey_macro_name] hotkey_toggle.is-checked=true mapwindow.map.focus=true")
 	else
 		winset(src, null, "mainwindow.macro=[macro_name] hotkey_toggle.is-checked=false input.focus=true")
+
+/mob/verb/hotkey()	//RS ADD START
+	set name = "Hotkey"
+	set hidden = TRUE
+
+	var/which = !is_preference_enabled(/datum/client_preference/hotkeys_default)
+	set_preference(/datum/client_preference/hotkeys_default, which)
+
+	client.set_hotkeys_macro(hotkeys_enabled = which)
+	//RS ADD END
