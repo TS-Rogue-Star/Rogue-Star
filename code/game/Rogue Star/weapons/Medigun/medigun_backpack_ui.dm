@@ -17,7 +17,6 @@
 	var/inner_bleeding = FALSE
 	var/organ_damage = FALSE
 
-	//var/minhealth = 0
 	if(scapacitor?.get_rating() < 5)
 		gridstatus = 3
 	if(H)

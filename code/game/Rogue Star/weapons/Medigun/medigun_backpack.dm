@@ -1,6 +1,6 @@
 //backpack item
 /obj/item/device/continuous_medigun
-	name = "protoype bluespace medigun backpack"
+	name = "prototype bluespace medigun backpack"
 	desc = "Contains a bluespace medigun, this portable unit digitizes and stores chems and battery power used by the attached gun."
 	icon = 'code/game/Rogue Star/icons/itemicons/borkmedigun.dmi'
 	icon_override = 'code/game/Rogue Star/icons/itemicons/borkmedigun.dmi'
@@ -51,20 +51,6 @@
 	compact = TRUE
 	w_class = ITEMSIZE_LARGE
 	slot_flags = SLOT_BELT
-	/*scapacitor = /obj/item/weapon/stock_parts/capacitor/adv
-	smanipulator = /obj/item/weapon/stock_parts/manipulator/nano
-	smodule = /obj/item/weapon/stock_parts/scanning_module/adv
-	slaser = /obj/item/weapon/stock_parts/micro_laser/high
-	bcell = /obj/item/weapon/cell/apc*/ //For CMO version later
-	/*tankmax = 60
-	brutecharge = 60
-	toxcharge = 60
-	burncharge = 60
-	chemcap = 120
-	brutevol = 120
-	toxvol = 120
-	burnvol = 120
-	chargecap = 5000*/
 
 
 /obj/item/weapon/paper/continuous_medigun_manual
@@ -124,7 +110,10 @@
 	medigun.wielded = FALSE
 	update_icon()
 	playsound(src,'sound/items/change_drill.ogg',25,1)
-	medigun.item_state_slots.Cut()
+	medigun.wielded_item_state = ""
+	medigun.wielded = FALSE
+	LAZYCLEARLIST(medigun.item_state_slots)
+
 
 /obj/item/device/continuous_medigun/proc/adjust_brutevol(modifier)
 	if(modifier > brutevol)
@@ -179,10 +168,6 @@
 
 		if(icon_needs_update)
 			update_icon()
-	/*else if(!charging && ccell && ccell.check_charge(50))
-		if(ismob(loc))
-			to_chat(loc, span_warning("The Inserted Cell clicks as it charges the capacitor."))
-		charging = TRUE*/
 
 	if(scapacitor.get_rating() >= 5)
 		if(apc_charge())
@@ -244,25 +229,21 @@
 			medigun.base_icon_state = "medblaster[special]"
 			medigun.wielded_item_state = "medblaster[special]-wielded"
 			medigun.update_icon()
-			to_chat(world, span_notice("Inhand, twohand"))
 		else
 			medigun.icon_state = "medblaster-compact[special]"
 			medigun.base_icon_state = "medblaster-compact[special]"
 			medigun.wielded_item_state = ""
 			medigun.update_icon()
-			to_chat(world, span_notice("Inhand, onehand"))
 	else if(is_twohanded())
 		icon_state = "mg[sprite][special]"
 		item_state = "mg[sprite]-onmob[special]"
 		medigun.icon_state = "medblaster[special]"
 		medigun.base_icon_state = "medblaster[special]"
-		to_chat(world, span_notice("onback, twohand"))
 	else
 		icon_state = "mg[sprite][special]"
 		item_state = "mg[sprite]-onmob[special]"
 		medigun.icon_state = "medblaster-compact[special]"
 		medigun.base_icon_state = "medblaster-compact[special]"
-		to_chat(world, span_notice("onback, onehand"))
 
 	update_icon()
 
@@ -272,8 +253,6 @@
 		medigun = new medigun(src, src)
 	else
 		medigun = new(src, src)
-	/*if(!is_twohanded())
-		medigun.beam_range = 4*/
 	if(ispath(bcell))
 		bcell = new bcell(src)
 		bcell.charge = 0
@@ -303,32 +282,15 @@
 
 /obj/item/device/continuous_medigun/equipped(var/mob/user, var/slot)
 
-	//to_chat(world, span_notice("bark [user.real_name] \ [slot] \ [user.ckey]"))
 	if(slot == slot_back || slot == slot_belt || slot == slot_s_store)
 		if(user.real_name == "Kenzie Houser" && user.ckey == "memewuff")
 			kenzie = TRUE
 			to_chat(user, span_notice("Epic Lasagna Wolf Detected, Engaging BAD ASS MODE."))
 		else
 			kenzie = FALSE
-			//to_chat(world, span_notice("Not Kenzie"))
 		replace_icon()
 	..()
 
-/*
-/obj/item/device/continuous_medigun/AltClick(mob/user)
-	if(charging)
-		to_chat(usr, span_notice("You disable the phoron generator."))
-		charging = FALSE
-		return
-
-	if(phoronvol > 0)
-		to_chat(usr, span_notice("You enable the phoron generator."))
-		charging = TRUE
-		return
-
-	to_chat(usr, span_warning("Not Enough Phoron stored."))
-
-*/
 
 
 /obj/item/device/continuous_medigun/emp_act(severity)
@@ -339,11 +301,6 @@
 		ccell.emp_act(severity)
 
 /obj/item/device/continuous_medigun/attack_hand(mob/user)
-	/*if(maintenance)
-		maintenance = FALSE
-		to_chat(user, span_notice("You close the maintenance hatch on \the [src]."))
-		return*/
-
 	if(loc == user)
 		toggle_medigun()
 		return
@@ -366,7 +323,6 @@
 	if(refill_reagent(W, user))
 		return
 	if(W == medigun)
-		//to_chat(user, span_warning("backpack clicked with gun"))
 		reattach_medigun(user)
 		return
 	if(istype(W, /obj/item/device/continuous_medigun_modkit))
@@ -375,9 +331,6 @@
 			return
 		to_chat(user, span_notice("You convert and upgrade \the [src] to be more compact."))
 		do_upgrade()
-		medigun.wielded_item_state = ""
-		medigun.wielded = FALSE
-		medigun.item_state_slots.Cut()
 		qdel(W)
 	if(W.is_crowbar() && maintenance)
 		if(smodule )
@@ -656,17 +609,6 @@
 						name = "burnheal"
 						modifier = 8
 						totransfer = chemcap - burnvol
-					/*if("phoron")
-						name = "phoron"
-						modifier = 1
-						totransfer = chemcap - phoronvol*/ //Changed to battery cell
-					/*if("tricordrazine")
-						name = "tricordrazine"
-						modifier = 1
-						if((brutevol != chemcap) && (burnvol != chemcap) && (toxvol != chemcap))
-							totransfer = 1  //tempcheck to get past the totransfer check
-						else
-							totransfer = 0*/
 				if(totransfer <= 0)
 					to_chat(user, span_notice("The [src] cannot accept anymore [name]!"))
 				totransfer = min(totransfer, container.reagents.get_reagent_amount(R.id) * modifier)
@@ -680,42 +622,6 @@
 						burnvol += totransfer
 					if("dermaline")
 						burnvol += totransfer
-					//if("phoron")
-					//	phoronvol += totransfer
-					/*if("tricordrazine") //Tricord too problematic
-						var/maxamount = container.reagents.get_reagent_amount(R.id)
-						var/amountused
-						var/oldbrute = brutevol
-						var/oldburn = burnvol
-						var/oldtox = toxvol
-
-						while(maxamount > 0)
-							if(brutevol >= chemcap && burnvol >= chemcap && toxvol >= chemcap)
-								break
-							maxamount --
-							amountused++
-							totransfer ++
-							if(brutevol < chemcap)
-								brutevol ++
-							if(burnvol < chemcap)
-								burnvol ++
-							if(toxvol < chemcap)
-								toxvol ++
-						var/readout = "You add [amountused] units of [R.name] to the [src]. \n The [src] Stores "
-						var/readoutadditions = FALSE
-						if(oldbrute != brutevol)
-							readout += "[round(brutevol - oldbrute)] U of bruteheal vol"
-							readoutadditions = TRUE
-						if(oldburn != burnvol)
-							if(readoutadditions)
-								readout += ", "
-							readout += "[round(burnvol - oldburn)] U of burnheal vol"
-							readoutadditions = TRUE
-						if(oldtox != toxvol)
-							if(readoutadditions)
-								readout += ", "
-							readout += "[round(toxvol - oldtox)] U of toxheal vol"
-						if(oldbrute != brutevol || oldburn != burnvol || oldtox != toxvol)to_chat(user, span_notice("[readout]."))*/
 				if(totransfer > 0)
 					if(R.id != "tricordrazine")
 						to_chat(user, span_notice("You add [totransfer / modifier] units of [R.name] to [src]. \n [src] stores [round(totransfer)] U of [name]."))
@@ -760,7 +666,6 @@
 		if(M.drop_from_inventory(medigun, src))
 			to_chat(user, span_notice("\The [medigun] snaps back into the main unit."))
 		return
-	//do_after(user, 2, ignore_movement = TRUE)
 	medigun.forceMove(src)
 	to_chat(user, span_notice("\The [medigun] snaps back into the main unit."))
 
