@@ -154,6 +154,9 @@
 	var/list/to_save = ourmob.mob_bank_save(user)
 	ourmob.verbs += /mob/living/simple_mob/proc/toggle_ghostjoin
 	ourmob.verbs += /mob/living/simple_mob/proc/toggle_follow
+	user.verbs += /mob/living/proc/toggle_pet_swap
+	ourmob.verbs += /mob/living/proc/toggle_pet_swap
+
 	if(ourmob.ai_holder.hostile)
 		ourmob.verbs += /mob/living/simple_mob/proc/toggle_hostile
 		ourmob.ai_holder.hostile = FALSE
@@ -222,6 +225,12 @@
 		M.verbs += /mob/living/simple_mob/proc/toggle_hostile
 		M.ai_holder.hostile = FALSE
 		M.ai_holder.vore_hostile = FALSE
+	if(!user.client.multichar_last)
+		user.client.multichar_list |= M
+		user.client.multichar_list |= user
+		user.client.multichar_last = M
+		user.verbs += /mob/living/proc/toggle_pet_swap
+		M.verbs += /mob/living/proc/toggle_pet_swap
 
 /obj/machinery/mob_bank/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
