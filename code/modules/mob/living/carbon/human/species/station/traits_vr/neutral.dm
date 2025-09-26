@@ -50,8 +50,9 @@
 			"x" = list("ks", "kss", "ksss")
 		),
 	autohiss_exempt = list(LANGUAGE_UNATHI))
-
 	excludes = list(/datum/trait/neutral/autohiss_tajaran, /datum/trait/neutral/autohiss_zaddat)
+	custom_only = FALSE // RS EDIT
+	allowed_species = list(SPECIES_CUSTOM,SPECIES_PROMETHEAN,SPECIES_PROTEAN)  // RS EDIT
 
 /datum/trait/neutral/autohiss_tajaran
 	name = "Autohiss (Tajaran)"
@@ -63,6 +64,8 @@
 		),
 	autohiss_exempt = list(LANGUAGE_SIIK,LANGUAGE_AKHANI,LANGUAGE_ALAI))
 	excludes = list(/datum/trait/neutral/autohiss_unathi, /datum/trait/neutral/autohiss_zaddat)
+	custom_only = FALSE  // RS EDIT
+	allowed_species = list(SPECIES_CUSTOM,SPECIES_PROMETHEAN,SPECIES_PROTEAN)  // RS EDIT
 
 /datum/trait/neutral/autohiss_zaddat
 	name = "Autohiss (Zaddat)"
@@ -81,6 +84,8 @@
 		),
 	autohiss_exempt = list(LANGUAGE_ZADDAT,LANGUAGE_VESPINAE))
 	excludes = list(/datum/trait/neutral/autohiss_tajaran, /datum/trait/neutral/autohiss_unathi)
+	custom_only = FALSE  // RS EDIT
+	allowed_species = list(SPECIES_CUSTOM,SPECIES_PROMETHEAN,SPECIES_PROTEAN)  // RS EDIT
 
 /datum/trait/neutral/bloodsucker
 	name = "Bloodsucker, Obligate"
