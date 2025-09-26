@@ -73,6 +73,7 @@
 	RegisterSignal(choice,COMSIG_PARENT_QDELETING,PROC_REF(multichar_deleted),TRUE)
 	multichar_list |= choice
 	choice.teleop = mob
+	log_debug("MULTICHAR: [src] registered [choice] - [choice.type] to multichar")
 
 //Unregister char
 /client/proc/unregister_multichar(var/mob/living/L)
@@ -124,6 +125,7 @@
 		multichar.toggle_visible()
 	else
 		multichar.toggle_visible_pet()
+	log_admin("MULTICHAR: [src] is now controlling [ourmob] - [ourmob.type]")
 
 //Last
 /client/proc/swap_last_multichar()

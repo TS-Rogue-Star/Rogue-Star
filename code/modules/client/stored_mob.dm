@@ -155,6 +155,9 @@
 	ourmob.verbs += /mob/living/simple_mob/proc/toggle_ghostjoin
 	ourmob.verbs += /mob/living/simple_mob/proc/toggle_follow
 	user.verbs += /mob/living/proc/toggle_pet_swap
+	user.client.multichar_list += ourmob
+	user.client.multichar_list += user
+	user.client.multichar_last += ourmob
 	ourmob.verbs += /mob/living/proc/toggle_pet_swap
 
 	if(ourmob.ai_holder.hostile)
