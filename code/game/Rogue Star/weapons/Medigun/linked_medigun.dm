@@ -25,19 +25,12 @@
 	return ..()
 /obj/item/device/bork_medigun/linked/proc/on_moved(atom/movable/source, atom/old_loc, atom/new_loc)
 	SIGNAL_HANDLER
-	//to_chat(world, span_warning("old [old_loc]"))
 	if(!medigun_base_unit)
-		//to_chat(world, span_warning("no base unit"))
 		return
-	/*if(medigun_base_unit.containsgun == 1)
-		//to_chat(world, span_warning("contains gun"))
-		return*/
 	if(old_loc == medigun_base_unit.loc)
-		//to_chat(world, span_warning("old loc"))
 		lastloc = old_loc
 	if(loc != medigun_base_unit.loc && loc != medigun_base_unit)
 		var/mob/user = medigun_base_unit.loc
-		//to_chat(world, span_warning("not in holster"))
 		if(lastloc)
 			user.put_in_hands(src) //Detach the medigun into the user's hands
 			lastloc = null
@@ -48,28 +41,6 @@
 			medigun_base_unit.reattach_medigun(user)
 		return
 
-/*/obj/item/device/bork_medigun/linked/forceMove(atom/destination) //Forcemove override, ugh
-	if(destination == medigun_base_unit || destination == medigun_base_unit.loc || isturf(destination))
-		. = doMove(destination, 0, 0)
-		if(isturf(destination))
-			for(var/atom/A as anything in destination) // If we can't scan the turf, see if we can scan anything on it, to help with aiming.
-				if(istype(A,/obj/structure/closet ))
-					break
-			if(ismob(medigun_base_unit.loc))
-				var/mob/user = medigun_base_unit.loc
-				medigun_base_unit.reattach_medigun(user)
-*/
-/*
-/obj/item/device/bork_medigun/linked/dropped(mob/user)
-	..() //update twohanding
-
-	if(medigun_base_unit.containsgun == 0)
-		//to_chat(user, span_warning("[loc]"))
-		if(medigun_base_unit)
-
-			//to_chat(user, span_warning("Dropped"))
-			medigun_base_unit.reattach_medigun(user) //medigun attached to a base unit should never exist outside of their base unit or the mob equipping the base unit
-*/
 /obj/item/device/bork_medigun/linked/proc/check_charge(var/charge_amt)
 	return (medigun_base_unit.bcell && medigun_base_unit.bcell.check_charge(charge_amt))
 
@@ -103,23 +74,16 @@
 		to_chat(user, span_warning("Target is not organic."))
 		return TRUE
 
-	//if(get_dist(user, target) > beam_range)
 	if(!(target in range(beam_range, user)) || (!(target in view(10, user)) && !(medigun_base_unit.smodule.get_rating() >= 5)))
 		to_chat(user, span_warning("You are too far away from \the [target] to heal them, Or they are not in view. Get closer."))
 		return TRUE
 
 	if(!isliving(target))
-		//to_chat(user, span_warning("\the [target] is not a valid target."))
 		return TRUE
 
 	if(!ishuman(target))
 		return TRUE
 
-		/*if(!H.getBruteLoss() && !H.getFireLoss() && !H.getToxLoss())// && !H.getOxyLoss()) // No point Wasting fuel/power if target healed
-			playsound(src, 'sound/machines/ping.ogg', 50)
-			to_chat(user, span_warning("\the [target] is fully healed."))
-			return TRUE
-		*/
 	return FALSE
 
 /obj/item/device/bork_medigun/linked/afterattack(atom/target, mob/user, proximity_flag)
@@ -129,7 +93,7 @@
 			if(isliving(A))
 				target = A
 				break
-	if(!istype(medigun_base_unit, /obj/item/device/continuous_medigun/compact))
+	if(medigun_base_unit.is_twohanded())
 		update_twohanding()
 	if(busy && !(target == current_target) && isliving(target))
 		to_chat(user, span_warning("\The [src] is already targeting something."))
@@ -225,30 +189,7 @@
 				if(H.paralysis && (checked_use(15)))
 					H.AdjustParalysis(-1)
 		var/healmod = lastier
-		/*if(H.getBruteLoss())
-			healmod = min(lastier,medigun_base_unit.brutecharge,H.getBruteLoss())
-			if(medigun_base_unit.brutecharge >= healmod)
-				if(!checked_use(healmod))
-					to_chat(user, span_warning("\The [src] doesn't have enough charge left to do that."))
-					break
-				if(healmod < 0)
-					healmod = 0
-				else
-					H.adjustBruteLoss(-healmod)
-					medigun_base_unit.brutecharge -= healmod
-					ishealing = 1
-		if(H.getFireLoss())
-			healmod = min(lastier,medigun_base_unit.burncharge,H.getFireLoss())
-			if(medigun_base_unit.burncharge >= healmod)
-				if(!checked_use(healmod))
-					to_chat(user, span_warning("\The [src] doesn't have enough charge left to do that."))
-					break
-				if(healmod < 0)
-					healmod = 0
-				else
-					H.adjustFireLoss(-healmod)
-					medigun_base_unit.burncharge -= healmod
-					ishealing = 1*/
+
 		if(H.getToxLoss())
 			healmod = min(lastier,medigun_base_unit.toxcharge,H.getToxLoss())
 			if(medigun_base_unit.toxcharge >= healmod)
@@ -270,9 +211,7 @@
 			ishealing = TRUE
 
 		ishealing = process_wounds(H, lastier, lastier, ishealing)
-		//if(medigun_base_unit.brutecharge <= 0 || medigun_base_unit.burncharge <= 0 || medigun_base_unit.toxcharge <= 0)
 		medigun_base_unit.update_icon()
-		//if(medigun_base_unit.slaser.get_rating() >= 5)
 
 	//Blood regeneration if there is some space
 		if(lastier >= 5)
@@ -300,8 +239,6 @@
 			for(var/datum/wound/W in O.wounds)
 				if (W.internal)
 					continue
-				//if (W.bandaged && W.disinfected)
-				//	continue
 				if (W.damage_type == BRUISE || W.damage_type == CUT || W.damage_type == PIERCE)
 					if(medigun_base_unit.brutecharge >= 1)
 						if(W.damage <= 1)
