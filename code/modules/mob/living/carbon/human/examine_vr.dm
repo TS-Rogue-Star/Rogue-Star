@@ -34,25 +34,25 @@
 	var/message = ""
 	var/nutrition_examine = round(nutrition)
 	switch(nutrition_examine)
-		if(0 to 49)
+		if(0 to 149) // This is the point where you're slowed down from starvation. RS EDIT START
 			message = nutrition_messages[1]
-		if(50 to 99)
+		if(150 to 249) // This is where you get the alert that you're hungry.
 			message = nutrition_messages[2]
-		if(100 to 1800)
+		if(250 to 499) // About one bowl of macaroni and cheese.
 			message = nutrition_messages[3]
-		if(1801 to 2800) // Fat.
+		if(500 to 999) // Two bowls of macaroni and cheese, and a bit more than the overeating alert.
 			message = nutrition_messages[4]
-		if(2801 to 3900)
+		if(1000 to 2599) // Four bowls of macaroni and cheese.
 			message = nutrition_messages[5]
-		if(3901 to 10000) // One person fully digested.
+		if(2600 to 5199) // One person fully digested.
 			message = nutrition_messages[6]
-		if(10001 to 18000) // Two people.
+		if(5200 to 7799) // Two people.
 			message = nutrition_messages[7]
-		if(18001 to 27000) // Three people.
+		if(7800 to 10399) // Three people.
 			message = nutrition_messages[8]
-		if(27001 to 39000) // Four people.
+		if(10400 to 12999) // Four people.
 			message = nutrition_messages[9]
-		if(39001 to INFINITY) // More.
+		if(13000 to INFINITY) // More. RS EDIT END
 			message = nutrition_messages[10]
 	if(message)
 		message = "<span class='notice'>[message]</span>"
