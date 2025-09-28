@@ -1014,6 +1014,10 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/machinery/door/blast/regular/open{
+	dir = 4;
+	id = "bridgelockdown"
+	},
 /turf/simulated/floor/plating,
 /area/bridge_hallway)
 "cS" = (
@@ -1130,7 +1134,8 @@
 /obj/structure/window/reinforced/full,
 /obj/structure/flora/ausbushes/pointybush,
 /turf/simulated/floor/outdoors/grass/forest{
-	outdoors = 0
+	outdoors = 0;
+	edge_blending_priority = 0
 	},
 /area/medical/moonbase/traumaward)
 "dg" = (
@@ -1540,6 +1545,10 @@
 /obj/item/weapon/paper/monitorkey,
 /obj/item/weapon/folder/white_rd,
 /obj/item/weapon/folder/white_rd,
+/obj/machinery/keycard_auth{
+	pixel_x = 0;
+	pixel_y = 26
+	},
 /turf/simulated/floor/carpet/purple,
 /area/rnd/rdoffice)
 "el" = (
@@ -2322,7 +2331,6 @@
 /area/crew_quarters/captain/moonbase/bedroom)
 "gp" = (
 /obj/effect/floor_decal/milspec/color/blue/half,
-/obj/structure/closet/secure_closet/courtroom,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
@@ -2914,6 +2922,10 @@
 	pixel_y = 28
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
+/obj/machinery/keycard_auth{
+	pixel_x = 28;
+	pixel_y = 0
+	},
 /turf/simulated/floor/carpet/blue2,
 /area/crew_quarters/heads/hos)
 "hN" = (
@@ -5330,6 +5342,13 @@
 	},
 /turf/simulated/floor/carpet/oracarpet,
 /area/crew_quarters/heads/chief)
+"nx" = (
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 1
+	},
+/obj/machinery/computer/timeclock/premade/east,
+/turf/simulated/floor/tiled,
+/area/hallway/arrival/moonbase/main)
 "nz" = (
 /obj/machinery/door/window/brigdoor/eastleft{
 	req_access = null
@@ -6927,6 +6946,15 @@
 	fancy_shuttle_tag = "explo"
 	},
 /area/shuttle/excursion/cargo)
+"qY" = (
+/obj/effect/floor_decal/steeldecal/steel_decals5,
+/obj/machinery/item_bank{
+	dir = 8;
+	pixel_x = 26;
+	pixel_y = 0
+	},
+/turf/simulated/floor/tiled,
+/area/hallway/arrival/moonbase/main)
 "qZ" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -8834,6 +8862,10 @@
 /obj/machinery/camera/network/civilian{
 	dir = 8
 	},
+/obj/random/paicard{
+	pixel_x = 0;
+	pixel_y = 6
+	},
 /turf/simulated/floor/outdoors/newdirt{
 	outdoors = 0
 	},
@@ -9085,6 +9117,9 @@
 /area/maintenance/moonbase/level2/center)
 "wI" = (
 /obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
 /turf/simulated/floor/outdoors/sidewalk/slab{
 	outdoors = 0
 	},
@@ -9371,7 +9406,10 @@
 /area/moonbase/surface/leveltwo/east)
 "xr" = (
 /obj/machinery/door/firedoor/glass,
-/obj/machinery/door/airlock/medical,
+/obj/machinery/door/airlock/medical{
+	req_one_access = null;
+	name = "Recovery Ward"
+	},
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
 	},
@@ -9523,7 +9561,8 @@
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/window/reinforced/full,
 /turf/simulated/floor/outdoors/grass/forest{
-	outdoors = 0
+	outdoors = 0;
+	edge_blending_priority = 0
 	},
 /area/medical/moonbase/traumaward)
 "xK" = (
@@ -10155,6 +10194,9 @@
 "zo" = (
 /obj/effect/map_effect/perma_light/brighter,
 /obj/structure/railing,
+/obj/structure/railing{
+	dir = 4
+	},
 /turf/simulated/open,
 /area/crew_quarters/bar)
 "zp" = (
@@ -12183,7 +12225,7 @@
 /obj/machinery/button/windowtint/multitint{
 	id = "cmooffice";
 	pixel_x = 26;
-	pixel_y = -20
+	pixel_y = -16
 	},
 /obj/effect/landmark/start/cmo,
 /turf/simulated/floor/carpet/tealcarpet,
@@ -12741,6 +12783,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/machinery/keycard_auth,
 /turf/simulated/floor/carpet/oracarpet,
 /area/crew_quarters/heads/chief)
 "Gq" = (
@@ -12892,6 +12935,10 @@
 /obj/machinery/requests_console/preset/cmo{
 	pixel_x = 0;
 	pixel_y = 28
+	},
+/obj/machinery/keycard_auth{
+	pixel_x = -27;
+	pixel_y = 0
 	},
 /turf/simulated/floor/carpet/tealcarpet,
 /area/crew_quarters/heads/cmo)
@@ -13271,6 +13318,15 @@
 /obj/structure/table/standard,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/solars)
+"HA" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/simulated/open,
+/area/crew_quarters/bar)
 "HB" = (
 /obj/machinery/access_button{
 	command = "cycle_interior";
@@ -13746,7 +13802,6 @@
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 5
 	},
-/obj/machinery/computer/timeclock/premade/north,
 /obj/structure/cable/cyan{
 	icon_state = "2-4"
 	},
@@ -17144,7 +17199,9 @@
 "Rf" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/window/reinforced/full,
-/turf/simulated/floor/outdoors/grass/forest,
+/turf/simulated/floor/outdoors/grass/forest{
+	outdoors = 0
+	},
 /area/crew_quarters/moonbase/pilotroom)
 "Rg" = (
 /obj/machinery/atmospherics/unary/vent_pump/high_volume{
@@ -18172,10 +18229,14 @@
 /turf/simulated/floor/plating,
 /area/quartermaster/storage)
 "TG" = (
-/obj/structure/table/bench/glass,
-/obj/structure/table/bench/glass,
-/turf/simulated/floor/tiled/white,
-/area/medical/medbay_primary_storage)
+/obj/effect/floor_decal/corner/paleblue{
+	dir = 10
+	},
+/obj/machinery/light,
+/turf/simulated/floor/outdoors/grass/forest{
+	outdoors = 0
+	},
+/area/medical/moonbase/upperlevel)
 "TH" = (
 /obj/structure/table/darkglass,
 /obj/item/device/flashlight/lamp/green{
@@ -19475,7 +19536,6 @@
 /obj/effect/floor_decal/milspec/color/red/half{
 	dir = 1
 	},
-/obj/machinery/computer/timeclock/premade/north,
 /obj/structure/cable/pink{
 	icon_state = "4-8"
 	},
@@ -19799,7 +19859,8 @@
 /obj/structure/window/reinforced/full,
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/simulated/floor/outdoors/grass/forest{
-	outdoors = 0
+	outdoors = 0;
+	edge_blending_priority = 0
 	},
 /area/medical/moonbase/traumaward)
 "XL" = (
@@ -31690,7 +31751,7 @@ Ov
 Ov
 zo
 zq
-IR
+HA
 Ov
 es
 Ov
@@ -31976,9 +32037,9 @@ be
 be
 be
 wI
-Ov
-Ov
-Ov
+be
+be
+be
 Ov
 ky
 ky
@@ -32111,7 +32172,7 @@ QA
 ky
 ky
 ky
-Ov
+be
 be
 be
 be
@@ -32119,7 +32180,7 @@ zr
 be
 be
 be
-Ov
+be
 ky
 ky
 ky
@@ -32719,7 +32780,7 @@ Xn
 Fx
 Qz
 Fd
-TG
+pC
 dZ
 nU
 yk
@@ -33142,7 +33203,7 @@ UU
 UU
 hi
 dW
-ho
+TG
 xV
 Fd
 pC
@@ -38403,9 +38464,9 @@ Dw
 Dw
 Dw
 Vo
-Ec
+nx
 Up
-BV
+qY
 DH
 tG
 Ry

@@ -1216,9 +1216,7 @@
 /obj/machinery/atmospherics/pipe/zpipe/up/scrubbers{
 	dir = 2
 	},
-/turf/simulated/floor/plating/moonbase{
-	edge_blending_priority = 1
-	},
+/turf/simulated/floor/plating/moonbase,
 /area/moonbase/basement/caves/east)
 "dq" = (
 /obj/structure/undies_wardrobe,
@@ -1527,7 +1525,8 @@
 "ei" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock{
-	id_tag = "Dorm6"
+	id_tag = "Dorm6";
+	name = "Dorm 6"
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -1729,7 +1728,8 @@
 "eH" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock{
-	id_tag = "Dorm8"
+	id_tag = "Dorm8";
+	name = "Dorm 8"
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -3622,6 +3622,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/north)
+"jI" = (
+/obj/machinery/light/small,
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/basement/east)
 "jJ" = (
 /obj/structure/cable/green{
 	icon_state = "1-8"
@@ -6526,6 +6530,9 @@
 /obj/machinery/alarm{
 	dir = 4
 	},
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/steel_dirty,
 /area/maintenance/moonbase/basement/iceroomcontrol)
 "rN" = (
@@ -8102,7 +8109,8 @@
 "wb" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock{
-	id_tag = "Dorm2"
+	id_tag = "Dorm2";
+	name = "Dorm 2"
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -8182,7 +8190,8 @@
 "wn" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock{
-	id_tag = "Dorm5"
+	id_tag = "Dorm5";
+	name = "Dorm 5"
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -10111,7 +10120,8 @@
 "BP" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock{
-	id_tag = "Dorm1"
+	id_tag = "Dorm1";
+	name = "Dorm 1"
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -10821,7 +10831,8 @@
 "DP" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock{
-	id_tag = "Dorm3"
+	id_tag = "Dorm3";
+	name = "Dorm 3"
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -11428,10 +11439,10 @@
 /area/maintenance/moonbase/basement/engibreakroom)
 "Fs" = (
 /obj/machinery/light/small{
-	dir = 8
+	dir = 1
 	},
-/turf/simulated/floor/tiled/steel_dirty,
-/area/maintenance/moonbase/basement/iceroomcontrol)
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/basement/east)
 "Ft" = (
 /obj/structure/bed/chair/sofa/corp/left{
 	dir = 8
@@ -15913,7 +15924,8 @@
 "Rj" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock{
-	id_tag = "Dorm4"
+	id_tag = "Dorm4";
+	name = "Dorm 4"
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -16097,7 +16109,7 @@
 /area/maintenance/moonbase/basement/archive)
 "RF" = (
 /obj/machinery/button/remote/airlock{
-	id = "privatesleever";
+	id = "Dorm1";
 	name = "Door Lock";
 	pixel_y = -22;
 	specialfunctions = 4;
@@ -16356,7 +16368,8 @@
 "Sm" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock{
-	id_tag = "Dorm7"
+	id_tag = "Dorm7";
+	name = "Dorm 7"
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -18395,6 +18408,10 @@
 /obj/random/contraband,
 /turf/simulated/mineral/floor/cave/moonbase,
 /area/moonbase/basement/caves/east)
+"XW" = (
+/obj/structure/reagent_dispensers/fueltank/barrel/two,
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/basement/east)
 "XX" = (
 /obj/structure/cable{
 	icon_state = "2-4"
@@ -18855,6 +18872,9 @@
 	pixel_y = -32;
 	pixel_x = 0
 	},
+/obj/machinery/recharger{
+	pixel_y = 5
+	},
 /turf/simulated/floor/carpet,
 /area/hallway/moonbase/basement)
 "Zi" = (
@@ -19096,6 +19116,7 @@
 /obj/structure/table/rack/shelf/steel,
 /obj/random/maintenance/research,
 /obj/random/maintenance/research,
+/obj/machinery/light/small,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/maintenance/moonbase/basement/iceroomcontrol)
 "ZP" = (
@@ -21678,7 +21699,7 @@ sR
 rX
 rM
 ee
-Fs
+ee
 wF
 OA
 eP
@@ -21689,7 +21710,7 @@ yH
 LE
 lg
 lg
-lg
+XW
 yH
 lg
 lg
@@ -21831,7 +21852,7 @@ yH
 Cx
 lg
 lg
-lg
+jI
 yH
 rP
 gh
@@ -21970,7 +21991,7 @@ oj
 OA
 OA
 yH
-lg
+Fs
 lg
 lg
 lg
@@ -29876,7 +29897,7 @@ KR
 TN
 Mu
 YY
-zu
+YY
 KR
 Bu
 Bu
@@ -30444,7 +30465,7 @@ Ny
 YY
 Mu
 YY
-YY
+zu
 KR
 KR
 Bu
