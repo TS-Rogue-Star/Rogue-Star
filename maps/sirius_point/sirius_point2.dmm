@@ -135,6 +135,12 @@
 /obj/item/weapon/storage/bag/mail,
 /turf/simulated/floor/tiled,
 /area/quartermaster/moonbase/lockerrom)
+"adP" = (
+/obj/machinery/recharge_station,
+/turf/simulated/floor/outdoors/sidewalk/slab{
+	outdoors = 0
+	},
+/area/crew_quarters/bar)
 "adS" = (
 /obj/structure/lattice,
 /turf/simulated/open,
@@ -2920,7 +2926,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/monotile,
 /area/rnd/moonbase/rndlab)
 "bDQ" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
@@ -3085,12 +3091,12 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/barrestroom)
 "bIt" = (
@@ -3346,7 +3352,9 @@
 /turf/simulated/floor/tiled/white,
 /area/medical/moonbase/traumaward)
 "bOd" = (
-/obj/machinery/door/window/brigdoor/eastright,
+/obj/machinery/door/window/brigdoor/eastright{
+	req_access = list(24)
+	},
 /obj/structure/table/reinforced,
 /obj/effect/floor_decal/milspec/color/orange,
 /turf/simulated/floor/tiled,
@@ -3855,6 +3863,10 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/medical/reception)
+"cdB" = (
+/obj/machinery/hologram/holopad,
+/turf/simulated/floor/tiled/monotile,
+/area/bridge)
 "ceh" = (
 /obj/structure/closet/secure_closet/cargotech,
 /obj/effect/floor_decal/corner/beige{
@@ -4354,7 +4366,7 @@
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/easthall)
 "cuJ" = (
-/obj/structure/closet/emcloset,
+/obj/machinery/recharge_station,
 /turf/simulated/floor/tiled/monotile,
 /area/security/moonbase/legal)
 "cuP" = (
@@ -4961,7 +4973,9 @@
 /turf/simulated/floor/tiled/monotile,
 /area/janitor)
 "cLV" = (
-/obj/machinery/door/window/brigdoor/eastleft,
+/obj/machinery/door/window/brigdoor/eastleft{
+	req_access = list(24)
+	},
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin{
 	pixel_y = 7
@@ -11055,8 +11069,9 @@
 /turf/simulated/floor/wood,
 /area/library)
 "gZl" = (
-/obj/machinery/light,
-/obj/machinery/recharge_station,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor/outdoors/sidewalk/slab{
 	outdoors = 0
 	},
@@ -19849,6 +19864,10 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /turf/simulated/floor/tiled/dark,
 /area/security/lobby)
+"mJD" = (
+/obj/machinery/recharge_station,
+/turf/simulated/floor/tiled/white,
+/area/crew_quarters/barrestroom)
 "mJR" = (
 /obj/structure/railing/grey{
 	dir = 1
@@ -21717,7 +21736,8 @@
 "ogR" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/maintenance/engi{
-	req_one_access = list(5,10)
+	req_one_access = null;
+	req_access = list(5,10)
 	},
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
@@ -21922,7 +21942,7 @@
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/monotile,
 /area/rnd/moonbase/rndlab)
 "onN" = (
 /obj/structure/cable/cyan{
@@ -25376,6 +25396,12 @@
 "qIZ" = (
 /obj/structure/table/glass,
 /obj/random/soap,
+/obj/machinery/power/apc{
+	dir = 8
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/barrestroom)
 "qJi" = (
@@ -27104,7 +27130,11 @@
 /turf/simulated/floor/plating,
 /area/crew_quarters/bar)
 "rPI" = (
-/turf/simulated/floor/tiled,
+/obj/machinery/hologram/holopad{
+	pixel_x = 0;
+	pixel_y = 1
+	},
+/turf/simulated/floor/tiled/monotile,
 /area/rnd/moonbase/rndlab)
 "rQf" = (
 /obj/structure/table/reinforced,
@@ -32016,6 +32046,15 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/easthall)
+"uZf" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor/tiled/white,
+/area/crew_quarters/barrestroom)
 "uZg" = (
 /turf/simulated/floor/tiled,
 /area/janitor)
@@ -32173,9 +32212,8 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/security/security_processing)
 "vgW" = (
-/obj/machinery/power/apc,
 /obj/structure/cable{
-	icon_state = "0-4"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/barrestroom)
@@ -33696,7 +33734,6 @@
 /turf/simulated/open,
 /area/rnd/research)
 "wnf" = (
-/obj/machinery/hologram/holopad,
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
@@ -33712,7 +33749,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/monotile,
+/turf/simulated/floor/tiled,
 /area/bridge)
 "wnG" = (
 /obj/structure/cable{
@@ -35211,6 +35248,10 @@
 /obj/structure/bed/chair/comfy/black{
 	dir = 4
 	},
+/obj/structure/closet/emergsuit_wall{
+	dir = 1;
+	pixel_y = -32
+	},
 /turf/simulated/floor/carpet/green,
 /area/security/moonbase/legal)
 "xrI" = (
@@ -36248,7 +36289,11 @@
 /obj/effect/landmark{
 	name = "lightsout"
 	},
-/turf/simulated/floor/tiled,
+/obj/machinery/hologram/holopad{
+	pixel_x = 0;
+	pixel_y = 1
+	},
+/turf/simulated/floor/tiled/monotile,
 /area/hallway/moonbase/central)
 "xWw" = (
 /obj/structure/table/rack/shelf/steel,
@@ -36344,21 +36389,15 @@
 /turf/simulated/floor/tiled,
 /area/rnd/moonbase/robotics)
 "xYr" = (
-/obj/machinery/hologram/holopad,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+/obj/structure/bed/chair/comfy/black{
 	dir = 8
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/structure/closet/emergsuit_wall{
+	dir = 1;
+	pixel_y = -32
 	},
-/turf/simulated/floor/tiled/monotile,
-/area/bridge)
+/turf/simulated/floor/carpet/green,
+/area/security/moonbase/legal)
 "xYK" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -42747,7 +42786,7 @@ wtR
 mNJ
 fpJ
 dDq
-dDq
+xYr
 den
 ahw
 ufj
@@ -46155,7 +46194,7 @@ gcz
 gcz
 sGA
 itN
-xYr
+nrI
 itN
 itN
 xoH
@@ -46580,7 +46619,7 @@ aLC
 pVH
 gcz
 gVv
-itN
+cdB
 fUI
 tbk
 ntW
@@ -48229,7 +48268,7 @@ rPc
 nHw
 iuE
 iuE
-iuE
+vbn
 oHp
 oHp
 xJr
@@ -48240,8 +48279,8 @@ oHp
 oHp
 oHp
 oHp
-iuE
-iuE
+vbn
+vbn
 dHc
 ozD
 hEo
@@ -48372,14 +48411,14 @@ rPc
 ijg
 nHw
 vbn
-vbn
+oHp
 oHp
 oHp
 dYt
 rAj
 dxJ
 gZl
-oHp
+adP
 oHp
 oHp
 dHc
@@ -50513,7 +50552,7 @@ obG
 ofK
 qIZ
 xnP
-xcH
+xnP
 xcH
 xcH
 xcH
@@ -50654,8 +50693,8 @@ xnP
 dlj
 qSl
 vgW
+mJD
 xnP
-rwX
 rwX
 rwX
 rwX
@@ -50796,8 +50835,8 @@ tMB
 cnp
 iRT
 bIr
+uZf
 cNt
-rJf
 rJf
 rJf
 pfr
@@ -50939,7 +50978,7 @@ dlj
 wIh
 aYC
 xnP
-rwX
+xnP
 rwX
 rwX
 xCg

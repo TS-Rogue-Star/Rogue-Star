@@ -16833,7 +16833,8 @@
 "Qc" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/maintenance/engi{
-	req_access = list(10,47)
+	req_access = list(10,47);
+	req_one_access = null
 	},
 /obj/structure/cable/white{
 	icon_state = "1-2"
