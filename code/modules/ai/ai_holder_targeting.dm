@@ -185,11 +185,8 @@
 					var/mob/living/simple_mob/vore/eater = holder
 					if(eater.will_eat(L))
 						return TRUE
-					else
-						return FALSE
 				//VOREStation Add End
-				else
-					return FALSE
+			return FALSE	//RS EDIT - Unlike below, here if we don't return appropriate conditions, then we shouldn't attack
 		//VOREStation add start
 		else if(forgive_resting && !isbelly(holder.loc))	//Doing it this way so we only think about the other conditions if the var is actually set
 			if((holder.health == holder.maxHealth) && !hostile && (L.resting || L.weakened || L.stunned))	//If our health is full, no one is fighting us, we can forgive
