@@ -1958,6 +1958,10 @@
 "fp" = (
 /obj/structure/bed/padded,
 /obj/item/weapon/bedsheet/medical,
+/obj/structure/sign/painting/public{
+	pixel_x = 30;
+	pixel_y = 0
+	},
 /turf/simulated/floor/carpet/tealcarpet,
 /area/medical/patient_b)
 "fq" = (
@@ -2193,6 +2197,14 @@
 	pixel_x = -23;
 	pixel_y = -24;
 	dir = 1
+	},
+/obj/machinery/button/remote/airlock{
+	dir = 1;
+	id = "patient1";
+	name = "Door Bolt Control";
+	pixel_x = 37;
+	pixel_y = -28;
+	specialfunctions = 4
 	},
 /turf/simulated/floor/carpet/tealcarpet,
 /area/medical/patient_a)
@@ -3817,6 +3829,9 @@
 /obj/structure/table/rack,
 /obj/item/weapon/storage/pouch/holding,
 /obj/item/weapon/rig/hazmat/equipped,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor/carpet/purple,
 /area/rnd/rdoffice)
 "jM" = (
@@ -4496,6 +4511,10 @@
 "lu" = (
 /obj/structure/bed/padded,
 /obj/item/weapon/bedsheet/medical,
+/obj/structure/sign/painting/public{
+	pixel_x = -30;
+	pixel_y = 0
+	},
 /turf/simulated/floor/carpet/tealcarpet,
 /area/medical/patient_a)
 "lv" = (
@@ -5719,10 +5738,11 @@
 /obj/structure/bed/chair/sofa/corp/left{
 	dir = 4
 	},
-/obj/machinery/light{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/sign/painting/public{
+	pixel_x = -30;
+	pixel_y = 0
+	},
 /turf/simulated/floor/carpet/purple,
 /area/rnd/rdoffice)
 "on" = (
@@ -5871,6 +5891,14 @@
 	pixel_x = -23;
 	pixel_y = -24;
 	dir = 1
+	},
+/obj/machinery/button/remote/airlock{
+	dir = 1;
+	id = "patient2";
+	name = "Door Bolt Control";
+	pixel_x = 37;
+	pixel_y = -28;
+	specialfunctions = 4
 	},
 /turf/simulated/floor/carpet/tealcarpet,
 /area/medical/patient_b)
@@ -7487,6 +7515,23 @@
 	fancy_shuttle_tag = "explo"
 	},
 /area/shuttle/excursion/cargo)
+"sr" = (
+/obj/structure/toilet{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/button/remote/airlock{
+	dir = 1;
+	id = "medbathroom2";
+	name = "Door Bolt Control";
+	pixel_x = -7;
+	pixel_y = -26;
+	specialfunctions = 4
+	},
+/turf/simulated/floor/tiled/white,
+/area/crew_quarters/medical_restroom)
 "ss" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 8
@@ -8436,6 +8481,16 @@
 	},
 /turf/simulated/floor/carpet/tealcarpet,
 /area/crew_quarters/heads/cmo)
+"uT" = (
+/obj/structure/flora/pottedplant/stoutbush,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/disposal/wall{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/blue2,
+/area/bridge/meeting_room)
 "uU" = (
 /obj/structure/table/woodentable,
 /obj/structure/flora/pottedplant/smallcactus{
@@ -8920,6 +8975,13 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/hallway/arrival/moonbase/main)
+"wg" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/medical{
+	id_tag = "medbathroom2"
+	},
+/turf/simulated/floor/tiled/steel_ridged,
+/area/crew_quarters/medical_restroom)
 "wh" = (
 /turf/simulated/wall/r_wall,
 /area/hallway/moonbase/westhall)
@@ -11079,6 +11141,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/hallway/arrival/moonbase/teleporter)
+"BI" = (
+/obj/structure/sign/painting/public{
+	pixel_x = -30;
+	pixel_y = 0
+	},
+/turf/simulated/floor/carpet/blue2,
+/area/hallway/moonbase/central)
 "BJ" = (
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -11123,6 +11192,10 @@
 	},
 /turf/simulated/floor/tiled,
 /area/ai_monitored/storage/emergency/eva)
+"BN" = (
+/obj/machinery/light,
+/turf/simulated/floor/carpet/purple,
+/area/rnd/rdoffice)
 "BO" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -11222,6 +11295,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/sign/painting/public{
+	pixel_x = -30;
+	pixel_y = 0
+	},
 /turf/simulated/floor/tiled,
 /area/security/moonbase/legal)
 "Cc" = (
@@ -11231,10 +11308,11 @@
 /turf/simulated/floor/plating,
 /area/rnd/workshop)
 "Cd" = (
-/obj/machinery/disposal/wall{
-	dir = 1
+/obj/structure/sign/painting/public{
+	pixel_x = 0;
+	pixel_y = -30
 	},
-/obj/structure/disposalpipe/trunk{
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/blue2,
@@ -13907,7 +13985,9 @@
 /area/medical/virology)
 "Jl" = (
 /obj/machinery/door/firedoor/glass,
-/obj/machinery/door/airlock/medical,
+/obj/machinery/door/airlock/medical{
+	id_tag = "medbathroom1"
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/medical_restroom)
 "Jn" = (
@@ -14146,6 +14226,13 @@
 /obj/machinery/vending/sol,
 /turf/simulated/floor/wood,
 /area/crew_quarters/coffee_shop)
+"JP" = (
+/obj/structure/sign/painting/public{
+	pixel_x = 0;
+	pixel_y = -30
+	},
+/turf/simulated/floor/carpet/blue2,
+/area/bridge/meeting_room)
 "JQ" = (
 /obj/structure/railing/grey{
 	dir = 1
@@ -14507,14 +14594,6 @@
 	id = "patient2";
 	pixel_x = 58;
 	pixel_y = -27
-	},
-/obj/machinery/button/remote/airlock{
-	dir = 1;
-	id = "patient2";
-	name = "Door Bolt Control";
-	pixel_x = 71;
-	pixel_y = -28;
-	specialfunctions = 4
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-4"
@@ -16062,6 +16141,14 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/button/remote/airlock{
+	dir = 1;
+	id = "medbathroom1";
+	name = "Door Bolt Control";
+	pixel_x = -7;
+	pixel_y = -26;
+	specialfunctions = 4
+	},
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/medical_restroom)
 "Oq" = (
@@ -16365,14 +16452,6 @@
 	id = "patient1";
 	pixel_x = -6;
 	pixel_y = -27
-	},
-/obj/machinery/button/remote/airlock{
-	dir = 1;
-	id = "patient1";
-	name = "Door Bolt Control";
-	pixel_x = 7;
-	pixel_y = -28;
-	specialfunctions = 4
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-8"
@@ -17020,6 +17099,9 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/maintenance/groundbase/substation/sci)
 "QF" = (
@@ -18230,14 +18312,13 @@
 /turf/simulated/floor/plating,
 /area/quartermaster/storage)
 "TG" = (
-/obj/effect/floor_decal/corner/paleblue{
-	dir = 10
+/obj/structure/flora/pottedplant/minitree,
+/obj/structure/sign/painting/public{
+	pixel_x = 30;
+	pixel_y = 0
 	},
-/obj/machinery/light,
-/turf/simulated/floor/outdoors/grass/forest{
-	outdoors = 0
-	},
-/area/medical/moonbase/upperlevel)
+/turf/simulated/floor/carpet/tealcarpet,
+/area/crew_quarters/heads/cmo)
 "TH" = (
 /obj/structure/table/darkglass,
 /obj/item/device/flashlight/lamp/green{
@@ -29233,7 +29314,7 @@ Df
 jL
 Hl
 jd
-jd
+BN
 MF
 VX
 VX
@@ -29958,7 +30039,7 @@ tM
 tM
 Lx
 Em
-Cz
+uT
 CI
 OV
 SS
@@ -30219,7 +30300,7 @@ gP
 QX
 vd
 rM
-ya
+BI
 so
 so
 eB
@@ -30952,7 +31033,7 @@ vx
 tM
 tM
 Bm
-tM
+JP
 CI
 wc
 iE
@@ -31929,7 +32010,7 @@ qs
 bp
 zD
 xU
-rT
+TG
 zG
 hS
 tz
@@ -33204,7 +33285,7 @@ UU
 UU
 hi
 dW
-TG
+ho
 xV
 Fd
 pC
@@ -33764,7 +33845,7 @@ AV
 AV
 Jl
 AV
-Jl
+wg
 YZ
 YZ
 YZ
@@ -33906,7 +33987,7 @@ qw
 AV
 Op
 AV
-Op
+sr
 YZ
 Rv
 dT

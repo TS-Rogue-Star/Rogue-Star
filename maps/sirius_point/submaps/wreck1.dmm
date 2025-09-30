@@ -107,7 +107,7 @@
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/submap/moonbase/poi/east_crater/wreck1)
 "K" = (
-/obj/machinery/blackbox_recorder,
+/obj/structure/salvageable/server_os,
 /obj/item/device/gps/internal/poi{
 	gps_tag = "Unidentified Signal"
 	},

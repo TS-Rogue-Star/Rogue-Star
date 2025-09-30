@@ -1363,6 +1363,10 @@
 	pixel_y = 4
 	},
 /obj/structure/table/woodentable,
+/obj/structure/sign/painting/public{
+	pixel_x = 0;
+	pixel_y = -30
+	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/coffee_shop)
 "aCz" = (
@@ -1825,7 +1829,9 @@
 /turf/simulated/floor/tiled,
 /area/rnd/research)
 "aMN" = (
-/obj/machinery/door/airlock,
+/obj/machinery/door/airlock{
+	id_tag = "scibathroom1"
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/rnd/research_restroom)
 "aMP" = (
@@ -4924,6 +4930,10 @@
 /obj/machinery/door/window/brigdoor/southright{
 	req_access = list(25)
 	},
+/obj/structure/sign/painting/public{
+	pixel_x = 30;
+	pixel_y = 0
+	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/coffee_shop)
 "cKQ" = (
@@ -5540,6 +5550,9 @@
 	dir = 8;
 	pixel_x = 0;
 	pixel_y = 4
+	},
+/obj/machinery/light/small/fairylights{
+	pixel_y = 7
 	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/bar)
@@ -9443,6 +9456,9 @@
 /area/security/lobby)
 "fNR" = (
 /obj/effect/landmark/start/bartender,
+/obj/machinery/light/small/fairylights{
+	pixel_y = 5
+	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/bar)
 "fOc" = (
@@ -10096,6 +10112,14 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/button/remote/airlock{
+	dir = 1;
+	id = "secbathroom2";
+	name = "Door Bolt Control";
+	pixel_x = -7;
+	pixel_y = -26;
+	specialfunctions = 4
+	},
 /turf/simulated/floor/tiled/white,
 /area/security/security_bathroom)
 "glm" = (
@@ -10732,6 +10756,13 @@
 	},
 /turf/simulated/floor/tiled,
 /area/rnd/moonbase/rndlab)
+"gLU" = (
+/obj/structure/sign/painting/public{
+	pixel_x = 30;
+	pixel_y = 0
+	},
+/turf/simulated/floor/tiled/dark,
+/area/chapel/main)
 "gLZ" = (
 /obj/effect/floor_decal/milspec/color/red/half{
 	dir = 6
@@ -11101,6 +11132,9 @@
 /area/medical/moonbase/accesshall)
 "haB" = (
 /obj/machinery/vending/weeb,
+/obj/structure/sign/painting/public{
+	pixel_y = 30
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/security/moonbase/legal)
 "haC" = (
@@ -11362,6 +11396,14 @@
 	},
 /obj/machinery/light/small{
 	dir = 8
+	},
+/obj/machinery/button/remote/airlock{
+	dir = 4;
+	id = "scibathroom1";
+	name = "Door Bolt Control";
+	pixel_x = -26;
+	pixel_y = 7;
+	specialfunctions = 4
 	},
 /turf/simulated/floor/tiled/white,
 /area/rnd/research_restroom)
@@ -13095,6 +13137,14 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/button/remote/airlock{
+	dir = 1;
+	id = "barbathroom2";
+	name = "Door Bolt Control";
+	pixel_x = -7;
+	pixel_y = -26;
+	specialfunctions = 4
+	},
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/barrestroom)
 "ish" = (
@@ -13529,6 +13579,9 @@
 "iFQ" = (
 /obj/machinery/chemical_dispenser/bar_coffee/full,
 /obj/structure/table/hardwoodtable,
+/obj/machinery/light/small/fairylights{
+	pixel_y = 7
+	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/bar)
 "iFS" = (
@@ -13865,6 +13918,14 @@
 /obj/structure/toilet,
 /obj/machinery/light/small{
 	dir = 8
+	},
+/obj/machinery/button/remote/airlock{
+	dir = 8;
+	id = "engbathroom1";
+	name = "Door Bolt Control";
+	pixel_x = 26;
+	pixel_y = -7;
+	specialfunctions = 4
 	},
 /turf/simulated/floor/tiled/white,
 /area/engineering/locker_room)
@@ -17370,6 +17431,23 @@
 /obj/item/weapon/folder/blue,
 /turf/simulated/floor/tiled,
 /area/bridge)
+"lcw" = (
+/obj/structure/toilet{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/button/remote/airlock{
+	dir = 1;
+	id = "secbathroom1";
+	name = "Door Bolt Control";
+	pixel_x = -7;
+	pixel_y = -26;
+	specialfunctions = 4
+	},
+/turf/simulated/floor/tiled/white,
+/area/security/security_bathroom)
 "lda" = (
 /obj/machinery/telecomms/processor/preset_one,
 /turf/simulated/floor/tiled/dark{
@@ -18894,7 +18972,7 @@
 /turf/simulated/floor/tiled,
 /area/quartermaster/moonbase/lockerrom)
 "maA" = (
-/obj/structure/table/hardwoodtable,
+/obj/effect/landmark/start/bartender,
 /obj/machinery/light/small/fairylights{
 	pixel_y = 6
 	},
@@ -19895,6 +19973,23 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/engineering/moonbase/eva)
+"mKC" = (
+/obj/structure/toilet{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/button/remote/airlock{
+	dir = 1;
+	id = "barbathroom1";
+	name = "Door Bolt Control";
+	pixel_x = -7;
+	pixel_y = -26;
+	specialfunctions = 4
+	},
+/turf/simulated/floor/tiled/white,
+/area/crew_quarters/barrestroom)
 "mKL" = (
 /obj/structure/table/steel,
 /turf/simulated/floor/plating,
@@ -20161,6 +20256,14 @@
 /obj/machinery/door/firedoor/glass,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/security/lobby)
+"mVw" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/security{
+	name = "Security Bathroom";
+	id_tag = "secbathroom1"
+	},
+/turf/simulated/floor/tiled/steel_ridged,
+/area/security/security_bathroom)
 "mVM" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment{
@@ -21793,7 +21896,9 @@
 /turf/simulated/floor/tiled,
 /area/ai_monitored/storage/eva)
 "ojj" = (
-/obj/machinery/door/airlock,
+/obj/machinery/door/airlock{
+	id_tag = "barbathroom1"
+	},
 /turf/simulated/floor/plating,
 /area/crew_quarters/barrestroom)
 "oju" = (
@@ -22933,6 +23038,9 @@
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 4
 	},
+/obj/structure/sign/painting/public{
+	pixel_y = 30
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/hallway/moonbase/shop)
 "oQW" = (
@@ -23354,9 +23462,6 @@
 /area/security/lobby)
 "pkJ" = (
 /obj/structure/table/hardwoodtable,
-/obj/machinery/light/small/fairylights{
-	pixel_y = 5
-	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/bar)
 "pkT" = (
@@ -23903,6 +24008,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 9
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 10
+	},
 /turf/simulated/floor/tiled/white,
 /area/rnd/research_restroom)
 "pEB" = (
@@ -24441,6 +24552,12 @@
 "pZp" = (
 /obj/machinery/light{
 	dir = 8
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 9
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals10{
+	dir = 10
 	},
 /turf/simulated/floor/tiled/white,
 /area/rnd/research_restroom)
@@ -25688,7 +25805,8 @@
 "qTI" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/security{
-	name = "Security Bathroom"
+	name = "Security Bathroom";
+	id_tag = "secbathroom2"
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/security/security_bathroom)
@@ -26401,6 +26519,13 @@
 /obj/effect/catwalk_plated,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/west)
+"rqo" = (
+/obj/structure/sign/painting/public{
+	pixel_x = -30;
+	pixel_y = 0
+	},
+/turf/simulated/floor/tiled/dark,
+/area/chapel/main)
 "rqD" = (
 /obj/structure/catwalk,
 /obj/structure/cable{
@@ -26676,9 +26801,6 @@
 /area/moonbase/surface/levelone/north)
 "rzy" = (
 /obj/structure/table/hardwoodtable,
-/obj/machinery/light/small/fairylights{
-	pixel_y = 7
-	},
 /obj/machinery/firealarm{
 	dir = 8
 	},
@@ -31316,9 +31438,6 @@
 /area/maintenance/moonbase/substation/medical)
 "uzS" = (
 /obj/structure/table/hardwoodtable,
-/obj/machinery/light/small/fairylights{
-	pixel_y = 7
-	},
 /obj/machinery/chemical_dispenser/bar_soft/full{
 	dir = 8;
 	pixel_x = 0;
@@ -33494,6 +33613,12 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/medical/reception)
+"waE" = (
+/obj/machinery/door/airlock{
+	id_tag = "barbathroom2"
+	},
+/turf/simulated/floor/plating,
+/area/crew_quarters/barrestroom)
 "waN" = (
 /obj/structure/table/woodentable,
 /turf/simulated/floor/carpet/blue2,
@@ -34417,7 +34542,9 @@
 /turf/simulated/floor/plating/eris,
 /area/security/lobby)
 "wNp" = (
-/obj/machinery/door/airlock,
+/obj/machinery/door/airlock{
+	id_tag = "engbathroom1"
+	},
 /turf/simulated/floor/plating,
 /area/engineering/locker_room)
 "wNy" = (
@@ -36577,6 +36704,13 @@
 	},
 /turf/simulated/open,
 /area/quartermaster/moonbase/hallway)
+"ygX" = (
+/obj/structure/sign/painting/public{
+	pixel_x = 0;
+	pixel_y = -30
+	},
+/turf/simulated/floor/carpet/purcarpet,
+/area/rnd/research_foyer_auxiliary)
 "yhh" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -44189,7 +44323,7 @@ qcP
 rYu
 odt
 liX
-liX
+ygX
 xLG
 gwP
 nHe
@@ -44909,7 +45043,7 @@ xvR
 rpr
 gKd
 eBE
-glj
+lcw
 eBE
 glj
 pkC
@@ -45051,7 +45185,7 @@ xvR
 rpr
 tir
 eBE
-qTI
+mVw
 eBE
 qTI
 pkC
@@ -45576,8 +45710,8 @@ bmJ
 taa
 dQv
 ljD
-fNR
 maA
+pkJ
 dDe
 pQO
 pQO
@@ -45860,8 +45994,8 @@ kbS
 taa
 pdi
 ljD
-fNR
 maA
+pkJ
 dDe
 pQO
 pyO
@@ -50823,7 +50957,7 @@ qNe
 sHE
 cRH
 whx
-cRH
+rqo
 cRH
 sHE
 kFF
@@ -51260,7 +51394,7 @@ sKR
 xnP
 ojj
 xnP
-ojj
+waE
 xnP
 rwX
 rwX
@@ -51400,7 +51534,7 @@ vlb
 iOv
 wFP
 xnP
-irZ
+mKC
 xnP
 irZ
 xnP
@@ -51675,7 +51809,7 @@ osn
 kRz
 bYN
 dAS
-cRH
+gLU
 cRH
 kRz
 tJC
