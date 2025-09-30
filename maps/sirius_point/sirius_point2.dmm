@@ -5551,9 +5551,6 @@
 	pixel_x = 0;
 	pixel_y = 4
 	},
-/obj/machinery/light/small/fairylights{
-	pixel_y = 7
-	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/bar)
 "dml" = (
@@ -9456,9 +9453,6 @@
 /area/security/lobby)
 "fNR" = (
 /obj/effect/landmark/start/bartender,
-/obj/machinery/light/small/fairylights{
-	pixel_y = 5
-	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/bar)
 "fOc" = (
@@ -13579,9 +13573,6 @@
 "iFQ" = (
 /obj/machinery/chemical_dispenser/bar_coffee/full,
 /obj/structure/table/hardwoodtable,
-/obj/machinery/light/small/fairylights{
-	pixel_y = 7
-	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/bar)
 "iFS" = (
@@ -18972,9 +18963,9 @@
 /turf/simulated/floor/tiled,
 /area/quartermaster/moonbase/lockerrom)
 "maA" = (
-/obj/effect/landmark/start/bartender,
+/obj/structure/table/hardwoodtable,
 /obj/machinery/light/small/fairylights{
-	pixel_y = 6
+	pixel_y = 5
 	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/bar)
@@ -23462,6 +23453,9 @@
 /area/security/lobby)
 "pkJ" = (
 /obj/structure/table/hardwoodtable,
+/obj/machinery/light/small/fairylights{
+	pixel_y = 6
+	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/bar)
 "pkT" = (
@@ -26803,6 +26797,9 @@
 /obj/structure/table/hardwoodtable,
 /obj/machinery/firealarm{
 	dir = 8
+	},
+/obj/machinery/light/small/fairylights{
+	pixel_y = 7
 	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/bar)
@@ -31442,6 +31439,9 @@
 	dir = 8;
 	pixel_x = 0;
 	pixel_y = 4
+	},
+/obj/machinery/light/small/fairylights{
+	pixel_y = 7
 	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/bar)
@@ -45710,7 +45710,7 @@ bmJ
 taa
 dQv
 ljD
-maA
+fNR
 pkJ
 dDe
 pQO
@@ -45853,7 +45853,7 @@ taa
 ajz
 ljD
 fNR
-pkJ
+maA
 fVv
 pQO
 pQO
@@ -45994,7 +45994,7 @@ kbS
 taa
 pdi
 ljD
-maA
+fNR
 pkJ
 dDe
 pQO
