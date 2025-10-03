@@ -323,7 +323,6 @@
 	z = Z_LEVEL_MOONBASE_LOW
 	name = "Sirius Point Underground"
 	base_turf = /turf/simulated/mineral/floor/vacuum/moonbase/outdoors
-	flags = MAP_LEVEL_STATION|MAP_LEVEL_CONTACT|MAP_LEVEL_PLAYER|MAP_LEVEL_CONSOLES|MAP_LEVEL_SEALED
 	transit_chance = 0
 	holomap_offset_x = SHIP_HOLOMAP_MARGIN_X
 	holomap_offset_y = SHIP_HOLOMAP_MARGIN_Y
@@ -332,7 +331,6 @@
 	z = Z_LEVEL_MOONBASE_MID
 	name = "Sirius Point Level One"
 	base_turf = /turf/simulated/open
-	flags = MAP_LEVEL_STATION|MAP_LEVEL_CONTACT|MAP_LEVEL_PLAYER|MAP_LEVEL_CONSOLES|MAP_LEVEL_SEALED
 	transit_chance = 0
 	holomap_offset_x = SHIP_HOLOMAP_MARGIN_X
 	holomap_offset_y = SHIP_HOLOMAP_MARGIN_Y + SHIP_MAP_SIZE
@@ -341,7 +339,6 @@
 	z = Z_LEVEL_MOONBASE_HIGH
 	name = "Sirius Point Level Two"
 	base_turf = /turf/simulated/open
-	flags = MAP_LEVEL_STATION|MAP_LEVEL_CONTACT|MAP_LEVEL_PLAYER|MAP_LEVEL_CONSOLES|MAP_LEVEL_SEALED
 	transit_chance = 0
 	holomap_offset_x = HOLOMAP_ICON_SIZE - SHIP_HOLOMAP_MARGIN_X - SHIP_MAP_SIZE
 	holomap_offset_y = SHIP_HOLOMAP_MARGIN_Y + SHIP_MAP_SIZE
@@ -350,18 +347,21 @@
 	z = Z_LEVEL_MOONBASE_EAST
 	name = "Sirius Point East Crater"
 	base_turf = /turf/simulated/mineral/floor/vacuum/moonbase/outdoors
+	flags = MAP_LEVEL_CONTACT|MAP_LEVEL_PLAYER|MAP_LEVEL_CONSOLES|MAP_LEVEL_PERSIST|MAP_LEVEL_SEALED
 	transit_chance = 0
 
 /datum/map_z_level/sirius_point/west_crater
 	z = Z_LEVEL_MOONBASE_WEST
 	name = "Sirius Point West Crater"
 	base_turf = /turf/simulated/mineral/floor/vacuum/moonbase/outdoors
+	flags = MAP_LEVEL_CONTACT|MAP_LEVEL_PLAYER|MAP_LEVEL_CONSOLES|MAP_LEVEL_PERSIST|MAP_LEVEL_SEALED
 	transit_chance = 0
 
 /datum/map_z_level/sirius_point/mining
 	z = Z_LEVEL_MOONBASE_MINING
 	name = "Sirius Point Mining Depths"
 	base_turf = /turf/simulated/mineral/floor/vacuum/moonbase
+	flags = MAP_LEVEL_CONTACT|MAP_LEVEL_PLAYER|MAP_LEVEL_CONSOLES|MAP_LEVEL_PERSIST|MAP_LEVEL_SEALED
 	transit_chance = 0
 
 /datum/map_template/moonbase_lateload
