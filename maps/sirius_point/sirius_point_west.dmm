@@ -57,6 +57,10 @@
 	outdoors = 0
 	},
 /area/moonbase/fixedpoi/homestead)
+"aD" = (
+/obj/machinery/portable_atmospherics/powered/scrubber,
+/turf/simulated/floor/tiled/white,
+/area/outpost/research/toxins_misc_lab)
 "aH" = (
 /turf/simulated/wall/r_wall,
 /area/outpost/research/anomaly_analysis)
@@ -91,6 +95,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/powered/scrubber,
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/mixing)
 "aY" = (
@@ -209,6 +214,7 @@
 	dir = 4;
 	pixel_x = -27
 	},
+/obj/machinery/portable_atmospherics/powered/pump,
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/mixing)
 "bQ" = (
@@ -1016,9 +1022,7 @@
 /obj/effect/floor_decal/industrial/warning/color{
 	dir = 6
 	},
-/obj/vehicle/train/trolley/trailer{
-	paint_color = "#FFFFFF"
-	},
+/obj/vehicle/train/trolley/trailer/white,
 /turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
@@ -2058,6 +2062,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/weapon/tank/phoron,
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/tox_store)
 "uG" = (
@@ -2166,9 +2171,7 @@
 /turf/simulated/floor/airless/moonbaseplating/outdoors,
 /area/moonbase/surface/west_crater)
 "vU" = (
-/obj/structure/table/standard,
-/obj/item/weapon/tool/screwdriver,
-/obj/item/device/assembly_holder/timer_igniter,
+/obj/structure/dispenser,
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/tox_store)
 "vZ" = (
@@ -2572,6 +2575,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/outpost/research/power)
+"zP" = (
+/obj/structure/table/woodentable,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/recharger{
+	pixel_y = 5
+	},
+/turf/simulated/floor/wood,
+/area/outpost/research/dorms)
 "zQ" = (
 /obj/structure/flora/ausbushes/sunnybush,
 /obj/machinery/light{
@@ -2821,9 +2832,7 @@
 /obj/effect/floor_decal/industrial/warning/color{
 	dir = 8
 	},
-/obj/vehicle/train/engine/quadbike/built{
-	paint_color = "#FFFFFF"
-	},
+/obj/vehicle/train/engine/quadbike/white,
 /turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
@@ -2921,6 +2930,10 @@
 	},
 /turf/simulated/floor/carpet/turcarpet,
 /area/moonbase/fixedpoi/homestead)
+"Eo" = (
+/obj/machinery/portable_atmospherics/powered/scrubber,
+/turf/simulated/floor/tiled/white,
+/area/outpost/research/mixing)
 "Er" = (
 /obj/structure/bookcase{
 	name = "bookcase (Fiction)"
@@ -2979,9 +2992,7 @@
 /obj/effect/floor_decal/industrial/warning/color{
 	dir = 10
 	},
-/obj/vehicle/train/trolley/trailer{
-	paint_color = "#FFFFFF"
-	},
+/obj/vehicle/train/trolley/trailer/white,
 /turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
@@ -3065,6 +3076,10 @@
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/outpost/research/power)
+"FU" = (
+/obj/machinery/portable_atmospherics/powered/pump,
+/turf/simulated/floor/tiled/white,
+/area/outpost/research/mixing)
 "FX" = (
 /obj/machinery/portable_atmospherics/powered/scrubber/huge/stationary{
 	scrub_id = "science_outpost"
@@ -3226,9 +3241,7 @@
 /obj/effect/floor_decal/industrial/warning/color{
 	dir = 4
 	},
-/obj/vehicle/train/engine/quadbike/built{
-	paint_color = "#FFFFFF"
-	},
+/obj/vehicle/train/engine/quadbike/white,
 /turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
@@ -3432,15 +3445,6 @@
 /obj/machinery/atmospherics/pipe/manifold/visible,
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/mixing)
-"Ks" = (
-/obj/machinery/atmospherics/portables_connector{
-	dir = 4
-	},
-/obj/machinery/portable_atmospherics/canister/air/airlock,
-/turf/simulated/floor/outdoors/grass/seasonal/preset/autumn{
-	outdoors = 0
-	},
-/area/moonbase/fixedpoi/homestead)
 "Kv" = (
 /obj/machinery/power/apc{
 	dir = 8
@@ -3479,8 +3483,7 @@
 /turf/simulated/floor/plating,
 /area/outpost/research/power)
 "KC" = (
-/obj/machinery/portable_atmospherics/canister/air/airlock,
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/pipe/tank/air{
 	dir = 4
 	},
 /turf/simulated/floor/outdoors/grass/seasonal/preset/autumn{
@@ -4199,6 +4202,8 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/item/device/assembly_holder/timer_igniter,
+/obj/item/weapon/tool/screwdriver,
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/tox_store)
 "SU" = (
@@ -4382,6 +4387,9 @@
 "Vr" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/table/standard,
+/obj/machinery/recharger{
+	pixel_y = 5
+	},
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/tox_store)
 "Vy" = (
@@ -18169,7 +18177,7 @@ yh
 yh
 yh
 Ez
-Oy
+Eo
 Oy
 ep
 ep
@@ -18471,7 +18479,7 @@ Cq
 wP
 pY
 mg
-lx
+aD
 aN
 yh
 yh
@@ -19448,7 +19456,7 @@ yh
 yh
 Ez
 FX
-Oy
+FU
 EF
 tb
 Zv
@@ -21064,7 +21072,7 @@ zg
 zg
 fa
 KC
-Ks
+KC
 Gj
 Yy
 Yy
@@ -22724,7 +22732,7 @@ yh
 jp
 di
 Qx
-Qx
+zP
 qj
 xo
 jp

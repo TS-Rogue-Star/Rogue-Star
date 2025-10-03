@@ -111,7 +111,7 @@
 /turf/simulated/shuttle/floor/yellow/airless,
 /area/submap/moonbase/poi/east_crater/wreck2)
 "L" = (
-/obj/machinery/blackbox_recorder,
+/obj/structure/salvageable/server_os,
 /obj/item/device/gps/internal/poi{
 	gps_tag = "Unidentified Signal"
 	},

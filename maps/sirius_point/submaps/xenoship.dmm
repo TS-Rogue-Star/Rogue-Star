@@ -59,7 +59,7 @@
 /turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
 /area/submap/moonbase/poi/east_crater/xenoship)
 "gL" = (
-/obj/machinery/blackbox_recorder,
+/obj/structure/salvageable/server,
 /obj/item/device/gps/internal/poi{
 	gps_tag = "Unidentified Signal"
 	},

@@ -334,7 +334,7 @@
 /turf/simulated/floor/tiled/techmaint/airless,
 /area/submap/moonbase/poi/east_crater/wreck3)
 "Wc" = (
-/obj/machinery/blackbox_recorder,
+/obj/structure/salvageable/server_os,
 /obj/item/device/gps/internal/poi{
 	gps_tag = "Unidentified Signal"
 	},
