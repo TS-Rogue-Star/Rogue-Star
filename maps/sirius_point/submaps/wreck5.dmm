@@ -80,7 +80,7 @@
 /turf/simulated/shuttle/floor/red/airless,
 /area/submap/moonbase/poi/east_crater/wreck5)
 "rC" = (
-/obj/machinery/blackbox_recorder,
+/obj/structure/salvageable/shuttle_console,
 /obj/item/device/gps/internal/poi{
 	gps_tag = "Unidentified Signal"
 	},
