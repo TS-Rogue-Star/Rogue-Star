@@ -483,16 +483,24 @@ const AppearanceChangerMarkings = (props, context) => {
       </Box>
       <LabeledList>
         {markings.map((m) => (
-          <LabeledList.Item key={m.marking_name} label={m.marking_name}>
+          <LabeledList.Item
+            key={m.marking_name}
+            label={m.marking_label || m.marking_name}>
+            {/* RS Edit: Custom marking support (Lira, September 2025) */}
             <ColorBox color={m.marking_color} mr={1} />
             <Button
               content="Change Color"
               onClick={() => act('marking', { todo: 4, name: m.marking_name })}
             />
-            <Button
-              content="-"
-              onClick={() => act('marking', { todo: 0, name: m.marking_name })}
-            />
+            {m.marking_removable ? (
+              <Button
+                content="-"
+                onClick={() =>
+                  act('marking', { todo: 0, name: m.marking_name })
+                }
+              />
+            ) : null}
+            {/* RS Edit: Custom marking support (Lira, September 2025) */}
             <Button
               content="Move down"
               onClick={() => act('marking', { todo: 3, name: m.marking_name })}

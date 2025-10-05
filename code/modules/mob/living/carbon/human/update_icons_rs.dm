@@ -4,6 +4,10 @@
 
 	remove_layer(VORE_BELLY_LAYER)
 
+	// RS Add: Respect vore layer disable flag to avoid rebuilding overlays (Lira, September 2025)
+	if(disable_vore_layers)
+		return
+
 	var/image/vore_belly_image = get_vore_belly_image()
 
 	if(vore_belly_image)
@@ -41,6 +45,10 @@
 		return
 
 	remove_layer(VORE_TAIL_LAYER)
+
+	// RS Add: Respect vore layer disable flag to avoid rebuilding overlays (Lira, September 2025)
+	if(disable_vore_layers)
+		return
 
 	var/image/vore_tail_image = get_vore_tail_image()
 	if(vore_tail_image)
