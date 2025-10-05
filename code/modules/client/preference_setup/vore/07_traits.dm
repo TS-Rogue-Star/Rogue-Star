@@ -306,11 +306,26 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 		pref.gross_meatbag = 1
 		pref.dirty_synth = 0
 
+	// RS Edit Start: Reduce unneeded processing for character preview (Lira, September 2025)
 	var/datum/species/S = character.species
-	var/datum/species/new_S = S.produceCopy(pref.pos_traits + pref.neu_traits + pref.neg_traits, character, pref.custom_base)
-
-	for(var/datum/trait/T in new_S.traits)
-		T.apply_pref(src)
+	var/datum/species/new_S = S
+	var/rebuild_traits = TRUE
+	var/signature = null
+	if(character.preview_fast && pref.species == SPECIES_CUSTOM)
+		signature = pref.get_custom_trait_signature()
+		if(signature && character.preview_trait_signature == signature)
+			rebuild_traits = FALSE
+	if(rebuild_traits)
+		new_S = S.produceCopy(pref.pos_traits + pref.neu_traits + pref.neg_traits, character, pref.custom_base)
+		if(character.preview_fast)
+			character.preview_trait_signature = signature
+		for(var/datum/trait/T in new_S.traits)
+			T.apply_pref(src)
+	else if(character.preview_fast)
+		character.preview_trait_signature = signature
+	else
+		character.preview_trait_signature = null
+	// RS Edit End
 
 	//Any additional non-trait settings can be applied here
 	new_S.blood_color = pref.blood_color

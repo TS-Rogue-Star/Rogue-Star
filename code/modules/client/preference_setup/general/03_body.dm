@@ -136,11 +136,16 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 /datum/preferences/proc/mass_edit_marking_list(var/marking, var/change_on = TRUE, var/change_color = TRUE, var/marking_value = null, var/on = TRUE, var/color = "#000000")
 	var/datum/sprite_accessory/marking/mark_datum = body_marking_styles_list[marking]
 	var/list/new_marking = marking_value||mark_datum.body_parts
+	// RS Add Start: Default color (Lira, September 2025)
+	var/default_color = color
+	if(mark_datum && !mark_datum.do_colouration)
+		default_color = "#FFFFFF"
+	// RS Add End
 	for (var/NM in new_marking)
 		if (marking_value && !islist(new_marking[NM])) continue
-		new_marking[NM] = list("on" = (!change_on && marking_value) ? marking_value[NM]["on"] : on, "color" = (!change_color && marking_value) ? marking_value[NM]["color"] : color)
+		new_marking[NM] = list("on" = (!change_on && marking_value) ? marking_value[NM]["on"] : on, "color" = (!change_color && marking_value) ? marking_value[NM]["color"] : default_color) // RS Edit: Incorporate default color (Lira, September 2025)
 	if (change_color)
-		new_marking["color"] = color
+		new_marking["color"] = default_color // RS Edit: Incorporate default color (Lira, September 2025)
 	return new_marking
 
 /datum/category_item/player_setup_item/general/body
@@ -173,6 +178,11 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 	S["organ_data"]			>> pref.organ_data
 	S["rlimb_data"]			>> pref.rlimb_data
 	S["body_markings"]		>> pref.body_markings
+	// RS Add Start: Custom markings data
+	var/list/custom_markings_payload
+	S["custom_markings"]	>> custom_markings_payload
+	pref.load_custom_markings_from_payload(custom_markings_payload)
+	// RS And End
 	S["synth_color"]		>> pref.synth_color
 	S["synth_red"]			>> pref.r_synth
 	S["synth_green"]		>> pref.g_synth
@@ -240,6 +250,7 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 	S["organ_data"]			<< pref.organ_data
 	S["rlimb_data"]			<< pref.rlimb_data
 	S["body_markings"]		<< pref.body_markings
+	S["custom_markings"]	<< pref.get_custom_markings_payload() // RS Add: Custom markings (Lira, September 2025)
 	S["synth_color"]		<< pref.synth_color
 	S["synth_red"]			<< pref.r_synth
 	S["synth_green"]		<< pref.g_synth
@@ -312,8 +323,20 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 	else pref.body_markings &= body_marking_styles_list
 	for (var/M in pref.body_markings) //VOREStation Edit
 		if (!islist(pref.body_markings[M]))
-			var/col = istext(pref.body_markings[M]) ? pref.body_markings[M] : "#000000"
+			// RS Add Start: Custom markings support (Lira, September 2025)
+			var/datum/sprite_accessory/marking/mark_datum = body_marking_styles_list[M]
+			var/default_color = (mark_datum && !mark_datum.do_colouration) ? "#FFFFFF" : "#000000"
+			// RS Add End
+			var/col = istext(pref.body_markings[M]) ? pref.body_markings[M] : default_color // RS Edit: Default color (Lira, September 2025)
 			pref.body_markings[M] = pref.mass_edit_marking_list(M,color=col)
+		// RS Add: Custom markings support (Lira, September 2025)
+		else
+			var/datum/sprite_accessory/marking/existing_datum = body_marking_styles_list[M]
+			if(existing_datum && !existing_datum.do_colouration)
+				pref.body_markings[M]["color"] = "#FFFFFF"
+				for(var/bp in existing_datum.body_parts)
+					if(islist(pref.body_markings[M][bp]))
+						pref.body_markings[M][bp]["color"] = "#FFFFFF"
 	if(!pref.bgstate || !(pref.bgstate in pref.bgstate_options))
 		pref.bgstate = "000"
 
@@ -722,10 +745,45 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 	. += "<br><a href='?src=\ref[src];marking_gallery=1'>Body Markings +</a><br>" //RS Edit: Opens new gallery (Lira, August 2025)
 	. += "<br><table>"
 	for(var/M in pref.body_markings)
-		. += "<tr><td>[M]</td><td>[pref.body_markings.len > 1 ? "<a href='?src=\ref[src];marking_up=[M]'>&#708;</a> <a href='?src=\ref[src];marking_down=[M]'>&#709;</a> <a href='?src=\ref[src];marking_move=[M]'>mv</a> " : ""]<a href='?src=\ref[src];marking_remove=[M]'>-</a> <a href='?src=\ref[src];marking_color=[M]'>Color</a>[color_square(hex = pref.body_markings[M]["color"] ? pref.body_markings[M]["color"] : "#000000")] - <a href='?src=\ref[src];marking_submenu=[M]'>Customize</a></td></tr>"
+		// RS Add Start: Custom markings support (Lira, September 2025)
+		var/datum/sprite_accessory/marking/style = body_marking_styles_list[M]
+		var/display_name = pref.get_marking_display_name(M)
+		var/allow_color = style ? style.do_colouration : TRUE
+		var/current_color = pref.body_markings[M]["color"]
+		if(!istext(current_color))
+			current_color = allow_color ? "#000000" : "#FFFFFF"
+		var/color_control
+		if(allow_color)
+			color_control = "<a href='?src=\ref[src];marking_color=[M]'>Color</a>"
+		else
+			color_control = "<span class='disabled'>Color</span>"
+		var/reorder = pref.body_markings.len > 1 ? "<a href='?src=\ref[src];marking_up=[M]'>&#708;</a> <a href='?src=\ref[src];marking_down=[M]'>&#709;</a> <a href='?src=\ref[src];marking_move=[M]'>mv</a> " : ""
+		var/remove_control
+		if(style?.hide_from_marking_gallery)
+			remove_control = "<span class='disabled'>-</span>"
+		else
+			remove_control = "<a href='?src=\ref[src];marking_remove=[M]'>-</a>"
+		. += "<tr><td>[display_name]</td><td>[reorder][remove_control] [color_control][color_square(hex = current_color)] - <a href='?src=\ref[src];marking_submenu=[M]'>Customize</a></td></tr>"
+		// RS Add End
 
 	. += "</table>"
 	. += "<br>"
+	// RS Add Start: Surface control for the player's custom marking slot. (Lira)
+	var/datum/custom_marking/current_mark = pref.get_primary_custom_marking()
+	if(istype(current_mark))
+		var/mark_id = current_mark.id ? url_encode(current_mark.id) : null
+		var/display = current_mark.name ? html_encode(current_mark.name) : "(Custom Marking)"
+		var/list/chunks = list()
+		chunks += "<b>Custom Marking:</b> Enabled"
+		chunks += display
+		if(mark_id)
+			chunks += "<a href='?src=\ref[src];custom_markings_edit=[mark_id]'>Edit</a>"
+		chunks += "<a href='?src=\ref[src];custom_markings_disable=1'>Disable</a>"
+		var/line = jointext(chunks, " ")
+		. += "[line]<br>"
+	else
+		. += "<b>Custom Marking:</b> Disabled <a href='?src=\ref[src];custom_markings_enable=1'>Enable</a><br><br>"
+	// RS Add End
 	. += "<b>Allow Synth markings:</b> <a href='?src=\ref[src];synth_markings=1'><b>[pref.synth_markings ? "Yes" : "No"]</b></a><br>"
 	. += "<b>Allow Synth color:</b> <a href='?src=\ref[src];synth_color=1'><b>[pref.synth_color ? "Yes" : "No"]</b></a><br>"
 	if(pref.synth_color)
@@ -1001,6 +1059,39 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 			return TOPIC_REFRESH_UPDATE_PREVIEW
 		return TOPIC_NOACTION
 
+	// RS Add Start: Support enabling, editing, and disabling the custom marking slot (Lira, September 2025)
+	else if(href_list["custom_markings_enable"])
+		var/confirm = tgui_alert(user, "This is an advanced character editing tool that allows you to edit individual pixels on your character to adjust or create new markings.  Custom markings have the same standards as markings added to the RogueStar codebase.  They should make realistic sense and must be SFW.  If it wouldn't get approved to add to the code, it should not be done here.  If you are uncertain about something, please let us know and we're happy to chatter about it.", "Enable Custom Markings?", list("Cancel", "Agree"))
+		if(confirm != "Agree")
+			return TOPIC_NOACTION
+		var/datum/custom_marking/enabled_mark = pref.ensure_primary_custom_marking()
+		var/debug_ckey = pref.client_ckey
+		if(!debug_ckey && pref.client)
+			debug_ckey = pref.client.ckey
+		if(!debug_ckey)
+			debug_ckey = "unknown"
+		var/log_id = enabled_mark?.id || "(none)"
+		log_debug("CustomMarkings: [debug_ckey] enabled editor (mark=[log_id]).")
+		if(enabled_mark)
+			INVOKE_ASYNC(pref, /datum/preferences/proc/refresh_custom_marking_assets, FALSE, TRUE, enabled_mark)
+		return TOPIC_REFRESH_UPDATE_PREVIEW
+
+	else if(href_list["custom_markings_edit"])
+		var/id = href_list["custom_markings_edit"]
+		if(!id)
+			var/datum/custom_marking/mark = pref.get_primary_custom_marking()
+			id = mark?.id
+		if(id)
+			pref.open_custom_marking_designer(user, id)
+		return TOPIC_HANDLED
+
+	else if(href_list["custom_markings_disable"])
+		var/datum/custom_marking/mark = pref.get_primary_custom_marking()
+		if(mark && tgui_alert(user, "Disable custom marking?", "Confirm", list("No", "Yes")) == "Yes")
+			pref.remove_custom_marking(mark.id)
+		return TOPIC_REFRESH_UPDATE_PREVIEW
+	// RS Add End
+
 	else if(href_list["marking_gallery"])
 		markings_gallery_window(user, "heads", 1)
 		return TOPIC_HANDLED
@@ -1127,7 +1218,8 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 		if(start != 1)
 			move_locs -= pref.body_markings[start-1]
 
-		var/inject_after = tgui_input_list(user, "Move [M] ahead of...", "Character Preference", move_locs) //Move ahead of any marking that isn't the current or previous one.
+		var/display_name = pref.get_marking_display_name(M) // RS Add: Custom marking support (Lira, September 2025)
+		var/inject_after = tgui_input_list(user, "Move [display_name] ahead of...", "Character Preference", move_locs) //Move ahead of any marking that isn't the current or previous one. || RS Edit: Custom marking support (Lira, September 2025)
 		var/newpos = pref.body_markings.Find(inject_after)
 		if(newpos)
 			moveElement(pref.body_markings, start, newpos+1)
@@ -1135,16 +1227,27 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 
 	else if(href_list["marking_remove"])
 		var/M = href_list["marking_remove"]
+		// RS Add Start: Custom markings support (Lira, September 2025)
+		var/datum/sprite_accessory/marking/remove_style = body_marking_styles_list[M]
+		if(remove_style?.hide_from_marking_gallery)
+			return TOPIC_NOACTION
+		// RS Add End
 		winshow(user, "prefs_markings_subwindow", FALSE)
 		pref.body_markings -= M
 		return TOPIC_REFRESH_UPDATE_PREVIEW
 
 	else if(href_list["marking_color"])
 		var/M = href_list["marking_color"]
+		// RS Add Start: Custom markings support (Lira, September 2025)
+		var/datum/sprite_accessory/marking/mark_datum = body_marking_styles_list[M]
+		if(mark_datum && !mark_datum.do_colouration)
+			return TOPIC_NOACTION
+		// RS Add End
 		if (isnull(pref.body_markings[M]["color"]))
 			if (tgui_alert(user, "You currently have customized marking colors. This will reset each bodypart's color. Are you sure you want to continue?","Reset Bodypart Colors",list("Yes","No")) == "No")
 				return TOPIC_NOACTION
-		var/mark_color = input(user, "Choose the [M] color: ", "Character Preference", pref.body_markings[M]["color"]) as color|null
+		var/display_name = pref.get_marking_display_name(M) // RS Add: Custom markings support (Lira, September 2025)
+		var/mark_color = input(user, "Choose the [display_name] color: ", "Character Preference", pref.body_markings[M]["color"]) as color|null // RS Edit: Custom markings support (Lira, September 2025)
 		if(mark_color && CanUseTopic(user))
 			pref.body_markings[M] = pref.mass_edit_marking_list(M,FALSE,TRUE,pref.body_markings[M],color="[mark_color]")
 			return TOPIC_REFRESH_UPDATE_PREVIEW
@@ -1166,10 +1269,16 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 
 	else if (href_list["color_all_marking_selection"])
 		var/marking = href_list["color_all_marking_selection"]
+		// RS Add Start: Custom markings support (Lira, September 2025)
+		var/datum/sprite_accessory/marking/mark_datum2 = body_marking_styles_list[marking]
+		if(mark_datum2 && !mark_datum2.do_colouration)
+			return TOPIC_NOACTION
+		// RS Add End
 		if (pref.body_markings.Find(marking) == 0)
 			winshow(user, "prefs_markings_subwindow", FALSE)
 			return TOPIC_NOACTION
-		var/mark_color = input(user, "Choose the [marking] color: ", "Character Preference", pref.body_markings[marking]["color"]) as color|null
+		var/display_name = pref.get_marking_display_name(marking) // RS Add: Custom markings support (Lira, September 2025)
+		var/mark_color = input(user, "Choose the [display_name] color: ", "Character Preference", pref.body_markings[marking]["color"]) as color|null // RS Edit: Custom markings support (Lira, September 2025)
 		if(mark_color && CanUseTopic(user))
 			pref.body_markings[marking] = pref.mass_edit_marking_list(marking,FALSE,TRUE,pref.body_markings[marking],color="[mark_color]")
 			markings_subwindow(user, marking)
@@ -1177,12 +1286,18 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 
 	else if (href_list["zone_marking_color"])
 		var/marking = href_list["zone_marking_color"]
+		// RS Add Start: Custom markings support (Lira, September 2025)
+		var/datum/sprite_accessory/marking/mark_datum3 = body_marking_styles_list[marking]
+		if(mark_datum3 && !mark_datum3.do_colouration)
+			return TOPIC_NOACTION
+		// RS Add End
 		if (pref.body_markings.Find(marking) == 0)
 			winshow(user, "prefs_markings_subwindow", FALSE)
 			return TOPIC_NOACTION
 		var/zone = href_list["zone"]
 		pref.body_markings[marking]["color"] = null //turn off the color button outside the submenu
-		var/mark_color = input(user, "Choose the [marking] color: ", "Character Preference", pref.body_markings[marking][zone]["color"]) as color|null
+		var/display_name_zone = pref.get_marking_display_name(marking) // RS Add: Custom markings support (Lira, September 2025)
+		var/mark_color = input(user, "Choose the [display_name_zone] color: ", "Character Preference", pref.body_markings[marking][zone]["color"]) as color|null // RS Edit: Custom markings support (Lira, September 2025)
 		if(mark_color && CanUseTopic(user))
 			pref.body_markings[marking][zone]["color"] = "[mark_color]"
 			markings_subwindow(user, marking)
@@ -1634,25 +1749,62 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 
 	user << browse(dat, "window=species;size=700x400")
 
+// RS Edit: Custom markings support (Lira, September 2025)
 /datum/category_item/player_setup_item/general/body/proc/markings_subwindow(mob/user, marking)
+	if(!pref.body_markings || pref.body_markings.Find(marking) == 0)
+		winshow(user, "prefs_markings_subwindow", FALSE)
+		return
+	var/list/marking_data = pref.body_markings[marking]
+	if(!islist(marking_data))
+		winshow(user, "prefs_markings_subwindow", FALSE)
+		return
 	var/static/list/part_to_string = list(BP_HEAD = "Head", BP_TORSO = "Upper Body", BP_GROIN = "Lower Body", BP_R_ARM = "Right Arm", BP_L_ARM = "Left Arm", BP_R_HAND = "Right Hand", BP_L_HAND = "Left Hand", BP_R_LEG = "Right Leg", BP_L_LEG = "Left Leg", BP_R_FOOT = "Right Foot", BP_L_FOOT = "Left Foot")
-	var/dat = "<html><body><center><h2>Editing '[marking]'</h2><br>"
+	var/dat = "<html><body style='margin:6px;font:13px Verdana;'>"
+	var/display_name = pref.get_marking_display_name(marking)
+	dat += "<center><h2 style='margin:0 0 8px 0;'>Editing '[html_encode(display_name)]'</h2>"
+	var/datum/sprite_accessory/marking/mark_datum = body_marking_styles_list[marking]
+	var/allow_color = mark_datum ? mark_datum.do_colouration : TRUE
 	dat += "<a href='?src=\ref[src];toggle_all_marking_selection=[marking];toggle=1'>Enable All</a> "
 	dat += "<a href='?src=\ref[src];toggle_all_marking_selection=[marking];toggle=0'>Disable All</a> "
-	dat += "<a href='?src=\ref[src];color_all_marking_selection=[marking]'>Change Color of All</a><br></center>"
-	dat += "<br>"
-	for (var/bodypart in pref.body_markings[marking])
-		if (!islist(pref.body_markings[marking][bodypart])) continue
-		dat += "[part_to_string[bodypart]]: [color_square(hex = pref.body_markings[marking][bodypart]["color"])] "
-		dat += "<a href='?src=\ref[src];zone_marking_color=[marking];zone=[bodypart]'>Change</a> "
-		dat += "<a href='?src=\ref[src];zone_marking_toggle=[marking];zone=[bodypart];toggle=[!pref.body_markings[marking][bodypart]["on"]]'>[pref.body_markings[marking][bodypart]["on"] ? "Toggle Off" : "Toggle On"]</a><br>"
-
+	if(allow_color)
+		dat += "<a href='?src=\ref[src];color_all_marking_selection=[marking]'>Change Color of All</a>"
+	else
+		dat += "<span class='disabled'>Change Color of All</span>"
+	dat += "</center><hr style='margin:8px 0;'>"
+	var/body_sections_found = FALSE
+	for(var/bodypart in marking_data)
+		var/list/bodypart_data = marking_data[bodypart]
+		if(!islist(bodypart_data))
+			continue
+		body_sections_found = TRUE
+		var/body_color = bodypart_data["color"]
+		if(!istext(body_color))
+			body_color = allow_color ? "#000000" : "#FFFFFF"
+		else if(!allow_color)
+			body_color = "#FFFFFF"
+		var/part_on = bodypart_data["on"] ? TRUE : FALSE
+		var/next_toggle = part_on ? 0 : 1
+		var/toggle_label = part_on ? "Toggle Off" : "Toggle On"
+		dat += "<div style='margin-bottom:4px;'>[part_to_string[bodypart]]: [color_square(hex = body_color)] "
+		if(allow_color)
+			dat += "<a href='?src=\ref[src];zone_marking_color=[marking];zone=[bodypart]'>Change</a> "
+		else
+			dat += "<span class='disabled'>Change</span> "
+		dat += "<a href='?src=\ref[src];zone_marking_toggle=[marking];zone=[bodypart];toggle=[next_toggle]'>[toggle_label]</a></div>"
+	if(!body_sections_found)
+		dat += "<i>No editable body zones available for this marking.</i>"
 	dat += "</body></html>"
-	winshow(user, "prefs_markings_subwindow", TRUE)
-	pref.markings_subwindow = new(user, "prefs_markings_browser", "Marking Editor", 400, 400)
-	pref.markings_subwindow.set_content(dat)
-	pref.markings_subwindow.open(FALSE)
-	onclose(user, "prefs_markings_subwindow", src)
+	var/datum/browser/popup = pref.markings_subwindow
+	if(!popup)
+		popup = new(user, "prefs_markings_subwindow", "Marking Editor", 400, 400, src)
+		pref.markings_subwindow = popup
+	else
+		if(popup.user != user)
+			popup.user = user
+		if(popup.ref != src)
+			popup.ref = src
+	popup.set_content(dat)
+	popup.open()
 
 //RS Add: Hair gallery window (Lira, August 2025)
 /datum/category_item/player_setup_item/general/body/proc/hair_gallery_window(mob/user, var/page)
@@ -2237,12 +2389,15 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 		var/max_cols = 6
 		var/idx = 0
 		for(var/style_name in sortList(valid_markings_grid))
+			// RS Edit Start: Custom markings support (Lira, September 2025)
+			var/datum/sprite_accessory/marking/mark_style = body_marking_styles_list[style_name]
+			if(!istype(mark_style) || mark_style.hide_from_marking_gallery)
+				continue
+			// RS Edit End
 			idx += 1
 			if(idx < start_i || idx > end_i)
 				continue
-			var/datum/sprite_accessory/marking/mark_style = body_marking_styles_list[style_name]
-			if(!istype(mark_style))
-				continue
+			var/display_name = mark_style.get_display_name() // RS Edit: Custom markings support (Lira, September 2025)
 			var/icon/preview_icon
 			var/icon/base_icon = icon(get_markings_base_preview_icon())
 			var/list/state_list = icon_states(mark_style.icon)
@@ -2266,7 +2421,7 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 			var/cell_style = selected ? "border:2px solid #66a3ff;" : "border:1px solid #444;"
 			dat += "<td style='[cell_style] background:#222; text-align:center; width:96px; height:120px; vertical-align:top; padding:4px;'>"
 			dat += "<div style='display:block;margin:0 auto;'>"
-			dat += "<a href='?src=\ref[src];marking_add=[url_encode(style_name)];marking_gallery_cat=[category];marking_gallery_page=[page_num]' title='[style_name]'>[bicon(preview_icon)]</a>"
+			dat += "<a href='?src=\ref[src];marking_add=[url_encode(style_name)];marking_gallery_cat=[category];marking_gallery_page=[page_num]' title='[display_name]'>[bicon(preview_icon)]</a>" // RS Edit: Custom markings support (Lira, September 2025)
 			dat += "</div>"
 			dat += "<div style='font-size:11px;color:#ccc;margin-top:4px;max-width:88px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;' title='[style_name]'>[style_name]</div>"
 			dat += "</td>"
