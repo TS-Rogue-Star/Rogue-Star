@@ -9,7 +9,8 @@ import { Window } from '../layouts';
 
 const PX_PER_UNIT = 24;
 
-class PaintCanvas extends Component {
+export class PaintCanvas extends Component {
+  // RS Edit: Export canvas (Lira, September 2025)
   constructor(props) {
     super(props);
     this.canvasRef = createRef();
@@ -20,13 +21,59 @@ class PaintCanvas extends Component {
     this.lastPos = null;
     this.strokeSeq = 0;
     this.currentStroke = null;
+    this.overlayCache = null;
+    this.gridBuffer = this.cloneGrid(props.value || []);
+    this.lastDiffSeq = props.diffSeq || 0;
     this.handleGlobalMouseUp = this.handleGlobalMouseUp.bind(this);
     this.handleGlobalKeyDown = this.handleGlobalKeyDown.bind(this);
     this.isInside = false;
     // RS Add End
   }
 
+  // RS Add: Custom marking support (Lira, September 2025)
+  cloneGrid(source) {
+    if (!Array.isArray(source)) {
+      return [];
+    }
+    return source.map((column) =>
+      Array.isArray(column) ? column.slice() : []
+    );
+  }
+
+  // RS Add: Custom marking support (Lira, September 2025)
+  applyDiff(diff) {
+    if (!Array.isArray(diff) || !diff.length) {
+      return;
+    }
+    if (!Array.isArray(this.gridBuffer) || !this.gridBuffer.length) {
+      this.gridBuffer = this.cloneGrid(this.props.value || []);
+    }
+    diff.forEach((entry) => {
+      if (!entry) {
+        return;
+      }
+      const xi = (entry.x || 0) - 1;
+      const yi = (entry.y || 0) - 1;
+      if (xi < 0 || yi < 0) {
+        return;
+      }
+      if (xi >= this.gridBuffer.length) {
+        return;
+      }
+      const column = this.gridBuffer[xi];
+      if (!Array.isArray(column) || yi >= column.length) {
+        return;
+      }
+      column[yi] = entry.color || '#00000000';
+    });
+  }
+
   componentDidMount() {
+    // RS Add: Custom marking support (Lira, September 2025)
+    if (Array.isArray(this.props.diff) && this.props.diff.length) {
+      this.applyDiff(this.props.diff);
+      this.lastDiffSeq = this.props.diffSeq || 0;
+    }
     this.drawCanvas(this.props);
     // RS Add Start: End brush strokes even if mouse is released outside the canvas (Lira, September 2025)
     window.addEventListener('mouseup', this.handleGlobalMouseUp);
@@ -36,8 +83,58 @@ class PaintCanvas extends Component {
     // RS Add End
   }
 
-  componentDidUpdate() {
-    this.drawCanvas(this.props);
+  componentDidUpdate(prevProps) {
+    // RS Add Start: Custom marking support (Lira, September 2025)
+    let shouldRedraw = false;
+
+    const prevValue = prevProps.value || [];
+    const nextValue = this.props.value || [];
+
+    if (
+      prevValue !== nextValue ||
+      prevValue.length !== nextValue.length ||
+      (Array.isArray(prevValue[0]) ? prevValue[0].length : 0) !==
+        (Array.isArray(nextValue[0]) ? nextValue[0].length : 0)
+    ) {
+      this.gridBuffer = this.cloneGrid(nextValue);
+      this.lastDiffSeq = this.props.diffSeq || 0;
+      shouldRedraw = true;
+    }
+
+    const incomingDiffSeq = this.props.diffSeq;
+    if (
+      incomingDiffSeq !== undefined &&
+      incomingDiffSeq !== null &&
+      incomingDiffSeq !== this.lastDiffSeq &&
+      Array.isArray(this.props.diff) &&
+      this.props.diff.length
+    ) {
+      if (!Array.isArray(this.gridBuffer) || !this.gridBuffer.length) {
+        this.gridBuffer = this.cloneGrid(
+          this.props.value || prevProps.value || []
+        );
+      }
+      this.applyDiff(this.props.diff);
+      this.lastDiffSeq = incomingDiffSeq;
+      shouldRedraw = true;
+    }
+
+    if (
+      shouldRedraw ||
+      prevProps.reference !== this.props.reference ||
+      prevProps.referenceParts !== this.props.referenceParts ||
+      prevProps.referenceOpacity !== this.props.referenceOpacity ||
+      prevProps.referenceOpacityMap !== this.props.referenceOpacityMap ||
+      prevProps.layerParts !== this.props.layerParts ||
+      prevProps.layerRevision !== this.props.layerRevision ||
+      prevProps.otherLayerOpacity !== this.props.otherLayerOpacity ||
+      prevProps.tool !== this.props.tool ||
+      prevProps.size !== this.props.size ||
+      prevProps.previewColor !== this.props.previewColor
+    ) {
+      // RS Add End
+      this.drawCanvas(this.props);
+    }
   }
 
   // RS Add: Remove event listeners on unmount (Lira, September 2025)
@@ -47,26 +144,115 @@ class PaintCanvas extends Component {
     window.removeEventListener('keydown', this.handleGlobalKeyDown);
   }
 
+  // RS Edit: Allow overlaying species reference guides when painting custom markings (Lira, September 2025)
   drawCanvas(propSource) {
-    const ctx = this.canvasRef.current.getContext('2d');
-    const grid = propSource.value;
-    const x_size = grid.length;
-    if (!x_size) {
+    // RS Add Start: Custom marking support (Lira, September 2025)
+    const canvas = this.canvasRef.current;
+    if (!canvas) {
       return;
     }
-    const y_size = grid[0].length;
-    const x_scale = Math.round(this.canvasRef.current.width / x_size);
-    const y_scale = Math.round(this.canvasRef.current.height / y_size);
+    // RS Add End
+    const ctx = canvas.getContext('2d'); // RS Edit: Custom marking support (Lira, September 2025)
+    const grid =
+      Array.isArray(this.gridBuffer) && this.gridBuffer.length
+        ? this.gridBuffer
+        : propSource.value || []; // RS Edit: Custom marking support (Lira, September 2025)
+
+    // RS Add Start: Resolve part overlays so each slot can supply custom guidance art (Lira, September 2025)
+    const reference = propSource.reference || null;
+    const referenceParts = propSource.referenceParts || null;
+    const layerParts = propSource.layerParts || null;
+    const layerOrder = propSource.layerOrder || null;
+    const activeLayerKey = propSource.activeLayerKey || null;
+    const otherLayerOpacity = propSource.otherLayerOpacity;
+    const referenceOpacityMap = propSource.referenceOpacityMap || null;
+    const referencePartKeys = referenceParts ? Object.keys(referenceParts) : [];
+    let fallbackReference = reference;
+    if (referenceParts && referencePartKeys.length) {
+      if (referenceParts.generic) {
+        fallbackReference = referenceParts.generic;
+      } else {
+        for (const key of referencePartKeys) {
+          const layer = referenceParts[key];
+          if (layer && layer.length) {
+            fallbackReference = layer;
+            break;
+          }
+        }
+      }
+    }
+    // RS Add Emd
+
+    // RS Edit Start: Custom marking support (Lira, September 2025)
+    let x_size = grid.length;
+    let y_size = x_size && Array.isArray(grid[0]) ? grid[0].length : 0;
+    if ((!x_size || !y_size) && fallbackReference && fallbackReference.length) {
+      x_size = fallbackReference.length;
+      y_size = fallbackReference[0] ? fallbackReference[0].length || 0 : 0;
+    }
+    if (!x_size || !y_size) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      this.overlayCache = null;
+      return;
+    }
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const x_scale = Math.max(1, Math.round(canvas.width / x_size));
+    const y_scale = Math.max(1, Math.round(canvas.height / y_size));
+    // RS Edit End
+
+    // RS Add Start: Support user-tunable opacity per part while respecting sane defaults (Lira, September 2025)
+    const defaultReferenceOpacity = clamp(
+      propSource.referenceOpacity !== undefined
+        ? propSource.referenceOpacity
+        : 0.4,
+      0,
+      1
+    );
+    const resolvedGenericOpacity = resolveGenericOpacity(
+      referenceOpacityMap,
+      defaultReferenceOpacity
+    );
+    const layerOpacity = clamp(
+      otherLayerOpacity !== undefined
+        ? otherLayerOpacity
+        : resolvedGenericOpacity,
+      0,
+      1
+    );
+    const overlayCanvas = this.getOverlayCanvas({
+      source: propSource,
+      canvas,
+      xScale: x_scale,
+      yScale: y_scale,
+      ySize: y_size,
+      reference,
+      referenceParts,
+      referencePartKeys,
+      referenceOpacityMap,
+      resolvedGenericOpacity,
+      layerParts,
+      layerOrder,
+      activeLayerKey,
+      layerOpacity,
+    });
+    if (overlayCanvas) {
+      ctx.drawImage(overlayCanvas, 0, 0);
+    }
+    // RS Add End
+
     ctx.save();
     ctx.scale(x_scale, y_scale);
+    ctx.imageSmoothingEnabled = false; // RS Add: Custom marking support (Lira, September 2025)
     for (let x = 0; x < grid.length; x++) {
       const element = grid[x];
+      if (!element) continue; // RS Add: Custom marking support (Lira, September 2025)
       for (let y = 0; y < element.length; y++) {
         const color = element[y];
         ctx.fillStyle = color;
         ctx.fillRect(x, y, 1, 1);
       }
     }
+
     // RS Add: Overlay preview for line tool (Lira, September 2025)
     const tool = this.props.tool || 'brush';
     if (
@@ -92,14 +278,94 @@ class PaintCanvas extends Component {
     ctx.restore();
   }
 
+  // RS Add: Custom marking support (Lira, Septembe 2025)
+  getOverlayCanvas(options) {
+    const {
+      source,
+      canvas,
+      xScale,
+      yScale,
+      ySize,
+      reference,
+      referenceParts,
+      referencePartKeys,
+      referenceOpacityMap,
+      resolvedGenericOpacity,
+      layerParts,
+      layerOrder,
+      activeLayerKey,
+      layerOpacity,
+    } = options;
+    const revision = source.layerRevision || 0;
+    const opacitySignature = serializeOpacityMap(referenceOpacityMap);
+    const normalizedOpacity = Number.isFinite(layerOpacity) ? layerOpacity : 0;
+    const overlayKey = [
+      revision,
+      activeLayerKey || '',
+      Math.round(normalizedOpacity * 1000) / 1000,
+      opacitySignature,
+      Math.round(resolvedGenericOpacity * 1000) / 1000,
+      canvas.width,
+      canvas.height,
+      referencePartKeys.join(','),
+    ].join('|');
+    if (this.overlayCache && this.overlayCache.key === overlayKey) {
+      return this.overlayCache.canvas;
+    }
+    if (
+      !shouldRenderOverlay({
+        reference,
+        referenceParts,
+        referenceOpacityMap,
+        resolvedGenericOpacity,
+        layerParts,
+        layerOpacity: normalizedOpacity,
+        activeLayerKey,
+      })
+    ) {
+      this.overlayCache = { key: overlayKey, canvas: null };
+      return null;
+    }
+    const overlayCanvas = document.createElement('canvas');
+    overlayCanvas.width = canvas.width;
+    overlayCanvas.height = canvas.height;
+    const overlayCtx = overlayCanvas.getContext('2d');
+    overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
+
+    drawReferenceGuides(
+      overlayCtx,
+      reference,
+      referenceParts,
+      referencePartKeys,
+      referenceOpacityMap,
+      resolvedGenericOpacity,
+      xScale,
+      yScale,
+      ySize,
+      layerParts,
+      layerOrder,
+      activeLayerKey,
+      normalizedOpacity
+    );
+
+    this.overlayCache = { key: overlayKey, canvas: overlayCanvas };
+    return overlayCanvas;
+  }
+
   // RS Add Start: Pulled out of clickwrapper and updated to support new painting system (Lira, September 2025)
   getGridCoord(event) {
     // RS Add End
-    const x_size = this.props.value.length;
+    // RS Edit Start: Custom marking support (Lira, September 2025)
+    const grid =
+      Array.isArray(this.gridBuffer) && this.gridBuffer.length
+        ? this.gridBuffer
+        : this.props.value || [];
+    const x_size = grid.length;
+    // RS Edit End
     if (!x_size) {
       return null; // RS Edit: Add null (Lira, September 2025)
     }
-    const y_size = this.props.value[0].length;
+    const y_size = Array.isArray(grid[0]) ? grid[0].length : 0; // RS Edit: Custom marking support (Lira, September 2025)
     const x_scale = this.canvasRef.current.width / x_size;
     const y_scale = this.canvasRef.current.height / y_size;
     const x = Math.floor(event.offsetX / x_scale) + 1;
@@ -289,7 +555,16 @@ class PaintCanvas extends Component {
   }
 
   render() {
-    const { res = 1, value, dotsize = PX_PER_UNIT, ...rest } = this.props;
+    const {
+      res = 1,
+      value,
+      dotsize = PX_PER_UNIT,
+      // RS Add Start: Reference support (Lira, September 2025)
+      reference: _reference,
+      referenceOpacity: _referenceOpacity,
+      // RS Add End
+      ...rest
+    } = this.props;
     const [width, height] = getImageSize(value);
     return (
       <canvas
@@ -323,6 +598,9 @@ const getImageSize = (value) => {
   const height = width !== 0 ? value[0].length : 0;
   return [width, height];
 };
+
+// RS Add: Utility to keep reference opacity inputs within sane bounds (Lira, September 2025)
+const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
 export const Canvas = (props, context) => {
   const { act, data } = useBackend(context);
@@ -701,5 +979,183 @@ const drawLinePixels = (x1, y1, x2, y2, plot) => {
       cy += sy;
     }
   }
+};
+// RS Add End
+
+// RS Add Start: Custom marking support (Lira, September 2025)
+const resolveGenericOpacity = (opacityMap, fallback) => {
+  if (opacityMap && opacityMap.generic !== undefined) {
+    return clamp(opacityMap.generic, 0, 1);
+  }
+  return fallback;
+};
+const buildLayerOrder = (prioritizedOrder, referenceKeys, layerParts) => {
+  const order = [];
+  const seen = new Set();
+  const push = (key) => {
+    if (!key || seen.has(key)) {
+      return;
+    }
+    seen.add(key);
+    order.push(key);
+  };
+
+  push('generic');
+  if (Array.isArray(prioritizedOrder)) {
+    for (const key of prioritizedOrder) {
+      push(key);
+    }
+  }
+  if (Array.isArray(referenceKeys)) {
+    for (const key of referenceKeys) {
+      push(key);
+    }
+  }
+  if (layerParts) {
+    for (const key of Object.keys(layerParts)) {
+      push(key);
+    }
+  }
+  return order;
+};
+
+const serializeOpacityMap = (opacityMap) => {
+  if (!opacityMap) {
+    return '';
+  }
+  const keys = Object.keys(opacityMap).sort();
+  return keys.map((key) => `${key}:${opacityMap[key]}`).join(',');
+};
+
+const shouldRenderOverlay = ({
+  reference,
+  referenceParts,
+  referenceOpacityMap,
+  resolvedGenericOpacity,
+  layerParts,
+  layerOpacity,
+  activeLayerKey,
+}) => {
+  if (reference && resolvedGenericOpacity > 0) {
+    return true;
+  }
+  if (referenceParts) {
+    for (const key of Object.keys(referenceParts)) {
+      const grid = referenceParts[key];
+      if (!grid || !grid.length) {
+        continue;
+      }
+      let opacity = resolvedGenericOpacity;
+      if (referenceOpacityMap && referenceOpacityMap[key] !== undefined) {
+        opacity = clamp(referenceOpacityMap[key], 0, 1);
+      }
+      if (opacity > 0) {
+        return true;
+      }
+    }
+  }
+  if (!layerParts || layerOpacity <= 0) {
+    return false;
+  }
+  const keys = Object.keys(layerParts);
+  for (const key of keys) {
+    if (key === activeLayerKey) {
+      continue;
+    }
+    const grid = layerParts[key];
+    if (grid && grid.length) {
+      return true;
+    }
+  }
+  return false;
+};
+
+const drawGridLayer = (ctx, grid, yLimit) => {
+  if (!grid) {
+    return;
+  }
+  for (let x = 0; x < grid.length; x++) {
+    const column = grid[x];
+    if (!column) continue;
+    const limit = Math.min(column.length, yLimit);
+    for (let y = 0; y < limit; y++) {
+      const color = column[y];
+      if (!color) continue;
+      ctx.fillStyle = color;
+      ctx.fillRect(x, y, 1, 1);
+    }
+  }
+};
+
+const drawReferenceGuides = (
+  ctx,
+  reference,
+  referenceParts,
+  referencePartKeys,
+  opacityMap,
+  resolvedGenericOpacity,
+  xScale,
+  yScale,
+  yLimit,
+  layerParts,
+  layerOrder,
+  activeLayerKey,
+  layerOpacity
+) => {
+  const orderedKeys = buildLayerOrder(
+    layerOrder,
+    referencePartKeys,
+    layerParts
+  );
+  if (!orderedKeys.length && !referenceParts && !reference && !layerParts) {
+    return;
+  }
+
+  ctx.save();
+  ctx.scale(xScale, yScale);
+  ctx.imageSmoothingEnabled = false;
+
+  for (const key of orderedKeys) {
+    const refGrid = referenceParts
+      ? key === 'generic'
+        ? referenceParts.generic
+        : referenceParts[key]
+      : null;
+    if (refGrid) {
+      const opacity =
+        opacityMap && opacityMap[key] !== undefined
+          ? clamp(opacityMap[key], 0, 1)
+          : resolvedGenericOpacity;
+      if (opacity > 0) {
+        ctx.globalAlpha = opacity;
+        drawGridLayer(ctx, refGrid, yLimit);
+      }
+    } else if (key === 'generic' && reference && reference.length) {
+      ctx.globalAlpha = resolvedGenericOpacity;
+      drawGridLayer(ctx, reference, yLimit);
+    }
+
+    if (
+      layerParts &&
+      key !== activeLayerKey &&
+      layerOpacity > 0 &&
+      layerParts[key]
+    ) {
+      ctx.globalAlpha = layerOpacity;
+      drawGridLayer(ctx, layerParts[key], yLimit);
+    }
+  }
+
+  if (
+    (!orderedKeys.length || orderedKeys[0] !== 'generic') &&
+    reference &&
+    reference.length &&
+    (!layerParts || layerOpacity <= 0)
+  ) {
+    ctx.globalAlpha = resolvedGenericOpacity;
+    drawGridLayer(ctx, reference, yLimit);
+  }
+
+  ctx.restore();
 };
 // RS Add End
