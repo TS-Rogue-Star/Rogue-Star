@@ -8,6 +8,7 @@
 	var/sensorpref = 5		//Suit sensor loadout pref
 	var/wings_hidden = FALSE
 	var/tail_hidden = FALSE
+	var/disable_vore_layers = FALSE // RS Add: Custom markings support (Lira, September 2025)
 	var/markings_len = 0 //mostly an arbitrary number
 	var/low_sorting_priority = FALSE
 

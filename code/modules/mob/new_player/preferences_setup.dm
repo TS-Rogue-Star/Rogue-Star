@@ -193,10 +193,10 @@
 	g_skin = green
 	b_skin = blue
 
-/datum/preferences/proc/dress_preview_mob(var/mob/living/carbon/human/mannequin)
+/datum/preferences/proc/dress_preview_mob(var/mob/living/carbon/human/mannequin, fast_preview = FALSE) // RS Edit: Custom markings support (Lira, September 2025)
 	if(!mannequin.dna) // Special handling for preview icons before SSAtoms has initailized.
 		mannequin.dna = new /datum/dna(null)
-	copy_to(mannequin, TRUE)
+	copy_to(mannequin, TRUE, fast_preview) // RS Edit: Custom markings support (Lira, September 2025)
 
 	if(!equip_preview_mob)
 		return
@@ -252,12 +252,12 @@
 		mannequin.job = previewJob.title
 		previewJob.equip_preview(mannequin, player_alt_titles[previewJob.title])
 
-/datum/preferences/proc/update_preview_icon()
+/datum/preferences/proc/update_preview_icon(fast_preview = TRUE) // RS Edit: Custom markings support (Lira, September 2025)
 	var/mob/living/carbon/human/dummy/mannequin/mannequin = get_mannequin(client_ckey)
 	if(!mannequin.dna) // Special handling for preview icons before SSAtoms has initailized.
 		mannequin.dna = new /datum/dna(null)
 	mannequin.delete_inventory(TRUE)
-	dress_preview_mob(mannequin)
+	dress_preview_mob(mannequin, fast_preview) // RS Edit: Custom markings support (Lira, September 2025)
 	mannequin.update_transform() //VOREStation Edit to update size/shape stuff.
 	mannequin.toggle_tail(setting = animations_toggle)
 	mannequin.toggle_wing(setting = animations_toggle)
@@ -265,6 +265,7 @@
 	mannequin.ImmediateOverlayUpdate()
 
 	update_character_previews(new /mutable_appearance(mannequin))
+	custom_marking_preview_overlays = null // RS Add: Custom markings support (Lira, September 2025)
 
 /datum/preferences/proc/get_highest_job()
 	var/datum/job/highJob

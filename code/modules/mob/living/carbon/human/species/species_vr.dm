@@ -106,6 +106,14 @@
 
 	return new_copy
 
+// RS Add: Minimal preview mannequin (Lira, September 2025)
+/datum/species/proc/clone_basic_appearance(var/mob/living/carbon/human/H)
+	if(!istype(H))
+		return
+	handle_post_spawn(H)
+	create_organs(H)
+	return
+
 /datum/species/proc/copy_variables(var/datum/species/S, var/list/whitelist)
 	//List of variables to ignore, trying to copy type will runtime.
 	var/list/blacklist = list("type", "loc", "client", "ckey")

@@ -87,3 +87,8 @@ GLOBAL_LIST_INIT(fancy_sprite_accessory_color_channel_names, list("Primary", "Se
 
 	var/digitigrade_acceptance = MARKING_NONDIGI_ONLY
 	var/digitigrade_icon = 'icons/mob/human_races/markings_digi.dmi'
+	var/hide_from_marking_gallery = FALSE // RS Add: Hide the style from the character setup marking gallery when true (Lira, September 2025)
+
+// RS Add: Return marking display name (Lira, September 2025)
+/datum/sprite_accessory/marking/proc/get_display_name()
+	return name
