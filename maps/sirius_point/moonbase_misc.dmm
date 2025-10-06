@@ -1094,16 +1094,10 @@
 /area/holodeck/source_theatre)
 "dm" = (
 /obj/effect/floor_decal/carpet{
-	dir = 5
+	dir = 4
 	},
 /obj/effect/floor_decal/carpet{
-	dir = 6
-	},
-/obj/effect/floor_decal/carpet{
-	dir = 10
-	},
-/obj/effect/floor_decal/carpet{
-	dir = 9
+	dir = 8
 	},
 /turf/simulated/floor/holofloor/carpet,
 /area/holodeck/source_theatre)
@@ -2057,11 +2051,6 @@
 "gs" = (
 /obj/item/clothing/head/collectable/paper,
 /turf/unsimulated/beach/sand,
-/area/beach)
-"gt" = (
-/turf/unsimulated/floor{
-	icon_state = "sandwater"
-	},
 /area/beach)
 "gu" = (
 /turf/unsimulated/beach/coastline{
@@ -3054,21 +3043,6 @@
 "TY" = (
 /turf/unsimulated/map,
 /area/space)
-"Ug" = (
-/obj/effect/floor_decal/carpet{
-	dir = 5
-	},
-/obj/effect/floor_decal/carpet{
-	dir = 6
-	},
-/obj/effect/floor_decal/carpet{
-	dir = 10
-	},
-/obj/effect/floor_decal/carpet{
-	dir = 9
-	},
-/turf/simulated/floor/holofloor/carpet,
-/area/holodeck/source_basketball)
 "Uq" = (
 /obj/effect/floor_decal/corner/paleblue/full,
 /turf/simulated/floor/holofloor/tiled{
@@ -3091,21 +3065,6 @@
 	icon_state = "white"
 	},
 /area/holodeck/source_patient_ward)
-"Xh" = (
-/obj/effect/floor_decal/carpet{
-	dir = 5
-	},
-/obj/effect/floor_decal/carpet{
-	dir = 6
-	},
-/obj/effect/floor_decal/carpet{
-	dir = 9
-	},
-/obj/effect/floor_decal/carpet{
-	dir = 10
-	},
-/turf/simulated/floor/holofloor/carpet,
-/area/holodeck/source_meetinghall)
 "Xi" = (
 /obj/effect/shuttle_landmark/transit{
 	base_area = /area/space;
@@ -6745,7 +6704,7 @@ gc
 gc
 gc
 gc
-gt
+ga
 gy
 gO
 gN
@@ -6887,7 +6846,7 @@ gc
 gc
 gc
 gc
-gt
+ga
 gy
 gO
 gN
@@ -7029,7 +6988,7 @@ gh
 gi
 gc
 gc
-gt
+ga
 gy
 gO
 gN
@@ -7171,7 +7130,7 @@ gc
 gh
 gc
 gs
-gt
+ga
 gy
 gO
 gN
@@ -7313,7 +7272,7 @@ gc
 gc
 gc
 gc
-gt
+ga
 gy
 gO
 gN
@@ -7455,7 +7414,7 @@ gc
 gc
 gc
 gc
-gt
+ga
 gy
 gO
 gN
@@ -7597,7 +7556,7 @@ gc
 gc
 gc
 gc
-gt
+ga
 gy
 gO
 gN
@@ -7739,7 +7698,7 @@ gc
 gc
 gp
 gc
-gt
+ga
 gy
 gO
 gN
@@ -7881,7 +7840,7 @@ gc
 gc
 gc
 gc
-gt
+ga
 gy
 gO
 gN
@@ -8023,7 +7982,7 @@ gc
 gc
 gq
 gc
-gt
+ga
 gy
 gO
 gN
@@ -8165,7 +8124,7 @@ gc
 gc
 gc
 gc
-gt
+ga
 gy
 gO
 gN
@@ -8307,7 +8266,7 @@ gc
 gc
 gq
 gc
-gt
+ga
 gy
 gO
 gN
@@ -8449,7 +8408,7 @@ gc
 gc
 gc
 gc
-gt
+ga
 gy
 gO
 gN
@@ -8591,7 +8550,7 @@ gc
 gc
 gr
 gc
-gt
+ga
 gy
 gO
 gN
@@ -8733,7 +8692,7 @@ gc
 gc
 gc
 gc
-gt
+ga
 gy
 gO
 gN
@@ -8875,7 +8834,7 @@ gc
 gc
 gc
 gc
-gt
+ga
 gy
 gO
 gN
@@ -9017,7 +8976,7 @@ gf
 gh
 gc
 gc
-gt
+ga
 gy
 gO
 gN
@@ -9159,7 +9118,7 @@ gc
 gc
 gc
 gc
-gt
+ga
 gy
 gO
 gN
@@ -9301,7 +9260,7 @@ gc
 gc
 gc
 gc
-gt
+ga
 gy
 gO
 gN
@@ -16535,9 +16494,9 @@ bg
 bH
 bZ
 bZ
-dr
+bZ
 dm
-bH
+bZ
 dr
 dA
 dH
@@ -16547,8 +16506,8 @@ eK
 eK
 eK
 eK
-Xh
-Xh
+eK
+eK
 eK
 dB
 fZ
@@ -16969,7 +16928,7 @@ dB
 dN
 ei
 ei
-Ug
+ei
 eZ
 fr
 ei
