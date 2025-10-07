@@ -330,10 +330,12 @@
 	name = "Southwest Tunnels"
 /area/moonbase/basement/caves/east
 	name = "East Tunnels"
+/area/moonbase/basement/caves/west
+	name = "West Tunnels"
 /area/moonbase/basement/caves/flooded
 	name = "Flooded Tunnels"
 /area/moonbase/basement/caves/level2
-	name = "Level One Tunnels"
+	name = "Level One Tunnels"//not a typo
 
 /////////////////
 // The Surface //
@@ -351,13 +353,13 @@
 	sound_env = SOUND_ENVIRONMENT_MOUNTAINS
 
 /area/moonbase/surface/east_crater
-	name = "Styx Crater"
+	name = "Stygian Mothyards"
 /area/moonbase/surface/east_crater/unexplored
-	name = "Unexplored Styx Crater"
+	name = "Unexplored Stygian Mothyards"
 /area/moonbase/surface/west_crater
-	name = "Acheron Crater"
+	name = "Acheron Basin"
 /area/moonbase/surface/west_crater/unexplored
-	name = "Unexplored Acheron Crater"
+	name = "Unexplored Acheron Basin"
 
 /area/moonbase/surface/underground
 	name = "Sirius Point Underground"

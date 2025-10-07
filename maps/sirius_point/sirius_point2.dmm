@@ -3359,7 +3359,7 @@
 /area/medical/moonbase/traumaward)
 "bOd" = (
 /obj/machinery/door/window/brigdoor/eastright{
-	req_access = list(24)
+	req_access = list(10)
 	},
 /obj/structure/table/reinforced,
 /obj/effect/floor_decal/milspec/color/orange,
@@ -4984,7 +4984,7 @@
 /area/janitor)
 "cLV" = (
 /obj/machinery/door/window/brigdoor/eastleft{
-	req_access = list(24)
+	req_access = list(10)
 	},
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin{
@@ -5091,20 +5091,7 @@
 /turf/simulated/floor/plating,
 /area/crew_quarters/bar)
 "cRd" = (
-/obj/random/mug{
-	pixel_y = 9
-	},
-/obj/random/mug{
-	pixel_x = 7;
-	pixel_y = 7
-	},
-/obj/random/mug{
-	pixel_y = 2
-	},
-/obj/random/mug{
-	pixel_x = 6
-	},
-/obj/structure/table/woodentable,
+/obj/machinery/appliance/cooker/oven,
 /turf/simulated/floor/tiled/eris/cafe,
 /area/crew_quarters/coffee_shop)
 "cRm" = (
@@ -7254,20 +7241,6 @@
 	},
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/moonbase/surface/levelone/north)
-"enf" = (
-/obj/structure/table/standard,
-/obj/item/weapon/reagent_containers/glass/beaker{
-	pixel_x = 5
-	},
-/obj/item/weapon/reagent_containers/food/condiment/enzyme{
-	layer = 5
-	},
-/obj/item/weapon/reagent_containers/food/condiment/enzyme{
-	layer = 5
-	},
-/obj/item/weapon/reagent_containers/dropper,
-/turf/simulated/floor/tiled,
-/area/crew_quarters/kitchen)
 "enu" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/light/small{
@@ -18938,11 +18911,11 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/rnd/xenobiology/xenoflora)
 "lZv" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/table/standard,
 /obj/item/weapon/material/knife/butch,
 /obj/item/weapon/material/kitchen/rollingpin,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/kitchen)
 "lZW" = (
@@ -19166,13 +19139,18 @@
 /area/maintenance/moonbase/level1/southeast)
 "mgq" = (
 /obj/structure/table/standard,
-/obj/item/weapon/storage/box/beakers{
-	name = "box of measuring cups";
-	pixel_y = 7;
-	starts_with = list(/obj/item/weapon/reagent_containers/glass/beaker/measuring_cup = 7)
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/weapon/reagent_containers/glass/beaker{
+	pixel_x = 5
+	},
+/obj/item/weapon/reagent_containers/dropper,
+/obj/item/weapon/reagent_containers/food/condiment/enzyme{
+	layer = 5
+	},
+/obj/item/weapon/reagent_containers/food/condiment/enzyme{
+	layer = 5
+	},
 /turf/simulated/floor/tiled,
 /area/crew_quarters/kitchen)
 "mgt" = (
@@ -23514,7 +23492,9 @@
 /obj/structure/cable/pink{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/security,
+/obj/machinery/door/airlock/security{
+	name = "Security Basement"
+	},
 /obj/machinery/door/firedoor/glass,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/security/security_equiptment_storage)
@@ -27516,6 +27496,11 @@
 /obj/item/weapon/reagent_containers/food/condiment/small/peppermill,
 /obj/random/donkpocketbox,
 /obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/item/weapon/storage/box/beakers{
+	name = "box of measuring cups";
+	pixel_y = 7;
+	starts_with = list(/obj/item/weapon/reagent_containers/glass/beaker/measuring_cup = 7)
+	},
 /turf/simulated/floor/tiled,
 /area/crew_quarters/kitchen)
 "rXd" = (
@@ -32204,6 +32189,19 @@
 /turf/simulated/floor/tiled/eris/bcircuit,
 /area/ai_upload_foyer)
 "vaf" = (
+/obj/random/mug{
+	pixel_y = 9
+	},
+/obj/random/mug{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/obj/random/mug{
+	pixel_y = 2
+	},
+/obj/random/mug{
+	pixel_x = 6
+	},
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/drinks/glass2/square{
 	pixel_x = 8;
@@ -32213,15 +32211,7 @@
 	pixel_x = 8;
 	pixel_y = 8
 	},
-/obj/item/weapon/reagent_containers/food/drinks/glass2/square{
-	pixel_x = 8;
-	pixel_y = 8
-	},
 /obj/item/weapon/hand_labeler,
-/obj/machinery/light_switch{
-	pixel_x = -23;
-	pixel_y = 24
-	},
 /turf/simulated/floor/tiled/eris/cafe,
 /area/crew_quarters/coffee_shop)
 "vaC" = (
@@ -34413,6 +34403,7 @@
 /area/maintenance/moonbase/level1/west)
 "wGO" = (
 /obj/structure/closet/emcloset,
+/obj/machinery/computer/timeclock/premade/west,
 /turf/simulated/floor/tiled/techmaint,
 /area/storage/primary)
 "wHz" = (
@@ -45015,9 +45006,9 @@ tRK
 pOp
 jSV
 kua
-nbe
-mgq
 lZv
+mgq
+nbe
 bCJ
 sjM
 sjM
@@ -45159,7 +45150,7 @@ dYE
 rHP
 sjM
 sjM
-enf
+sjM
 wbK
 iaG
 uWE
