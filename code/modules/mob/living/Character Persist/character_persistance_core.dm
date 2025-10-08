@@ -62,6 +62,9 @@
 	var/old_path = "data/player_saves/[copytext(ckey, 1, 2)]/[ckey]/magic/[old_name]-etching.json"
 	if(!fexists(old_path))
 		return
+	var/name_option = "Transfer to [new_name]"
+	if(tgui_alert(src,"There is player persistent data associated with [old_name]. Do you want the charater persist data to be transferred to [new_name]? If so, the data will become available to [new_name], and become unavailable to [old_name]. Also, if there is any data associated with [new_name], it will be overwritten.","CHARACTER PERSIST RENAME",list(name_option,"Do not")) != name_option)
+		return
 	var/list/load = json_decode(file2text(old_path))
 
 	var/new_path = "data/player_saves/[copytext(ckey, 1, 2)]/[ckey]/magic/[new_name]-etching.json"
