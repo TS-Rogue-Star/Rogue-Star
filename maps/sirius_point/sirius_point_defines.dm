@@ -233,6 +233,14 @@
 		Z_LEVEL_MOONBASE_MINING
 		)
 
+	expected_station_connected = list(
+		Z_LEVEL_MOONBASE_LOW,
+		Z_LEVEL_MOONBASE_MID,
+		Z_LEVEL_MOONBASE_HIGH,
+		Z_LEVEL_MOONBASE_EAST,
+		Z_LEVEL_MOONBASE_WEST,
+		Z_LEVEL_MOONBASE_MINING
+	)
 /*
 	belter_docked_z = 		list(Z_LEVEL_SPACE_LOW)
 	belter_transit_z =	 	list(Z_LEVEL_MISC)

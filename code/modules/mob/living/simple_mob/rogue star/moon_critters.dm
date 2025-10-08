@@ -863,8 +863,318 @@
 	eye_color = load["eye_color"]
 	update_icon()
 
-/*
+
+/////DRAGON/////
 /mob/living/simple_mob/vore/moon_dragon
 	name = "moon dragon"
 	desc = "A dragon from the moon, can't get much more obvious than that! Does it have three eyes?"
-*/
+	icon = 'icons/rogue-star/mobx32.dmi'
+	icon_state = "moon_deer"
+	icon_living = "moon_deer"
+	icon_dead = "moon_deer_dead"
+
+	faction = "dragon"
+
+	see_in_dark = 8
+
+	ai_holder_type = /datum/ai_holder/simple_mob/detector
+
+	min_oxy = 0
+	max_oxy = 0
+	min_tox = 0
+	max_tox = 0
+	min_co2 = 0
+	max_co2 = 0
+	min_n2 = 0
+	max_n2 = 0
+	minbodytemp = 0
+
+	response_help = "pets"
+	response_disarm = "rudely paps"
+	response_harm = "punches"
+	mob_size = MOB_LARGE
+	var/list/overlays_cache = list()
+	var/marking_color
+	var/eye_color
+	var/list/enthralled = list()
+	var/sealed = FALSE
+
+/////////////////////////////////////// Vore stuff ///////////////////////////////////////////
+
+	swallowTime = 3 SECONDS
+	vore_active = 1
+	vore_capacity = 1
+	vore_bump_chance = 1
+	vore_bump_emote	= "suddenly pounces on"
+	vore_ignores_undigestable = 0
+	vore_default_mode = DM_SELECT
+	vore_icons = SA_ICON_LIVING
+	vore_stomach_name = "stomach"
+	vore_default_contamination_flavor = "Wet"
+	vore_default_contamination_color = "grey"
+	vore_default_item_mode = IM_HOLD
+	vore_bump_chance = 1
+	vore_pounce_chance = 1
+	vore_pounce_falloff = 0
+	vore_standing_too = TRUE
+
+/mob/living/simple_mob/vore/moon_dragon/init_vore()
+	..()
+
+	var/obj/belly/base = vore_selected
+	base.name = "stomach"
+	base.desc = "REPLACE ME"
+	base.belly_fullscreen = "anibelly"
+	base.belly_healthbar_overlay_theme = "Tight"
+	base.belly_healthbar_overlay_color = base.belly_fullscreen_color
+	base.digest_brute = 1
+	base.digest_burn = 0.5
+	base.digest_oxy = 0
+	base.digestchance = 0
+	base.absorbchance = 0
+	base.escapechance = 25
+
+/mob/living/simple_mob/vore/moon_dragon/Initialize()
+	. = ..()
+	drgn_repos()
+
+/mob/living/simple_mob/vore/moon_dragon/Life()
+	. = ..()
+	if(client)
+		return
+	var/turf/ourturf = get_turf(src)
+	for(var/mob/living/thrall in enthralled)
+		if(thrall.stat)
+			enthralled -= thrall
+			continue
+		var/iterations = enthralled[thrall]
+		if(iterations >= 10)
+			drgn_repos()
+			return
+		else
+			enthralled[thrall] = iterations + 1
+			var/list/msglist = list(
+				"Your body moves on its own.",
+				"It feels good to move closer to \the [src].",
+				"It feels like you are moving through a warm, soft cloud."
+			)
+			to_chat(thrall,SPAN_OCCULT(pick(msglist)))
+		thrall.stunned = 5
+		if(get_dist(ourturf,get_turf(thrall)) <= 1)
+			walk_towards(thrall,thrall,1)
+			if(will_eat(thrall))
+				animal_nom(thrall)
+			drgn_repos()
+			return
+	for(var/atom/movable/look_spoiler/eye in view(world.view,ourturf))
+		if(!istype(eye,/atom/movable/look_spoiler))
+			continue
+		else
+			for(var/mob/living/L in player_list)
+				if(L.name == eye.name)
+					enthrall(L)
+					return
+			drgn_repos()
+			return
+	var/active_seal = consider_seal()
+	if(active_seal)
+		if(prob(10))
+			drgn_repos()
+	else if(rand(1,500) == 500)
+		drgn_repos()
+
+/mob/living/simple_mob/vore/moon_dragon/proc/consider_seal()
+	var/dangerous_air = FALSE
+	if(vore_fullness <= 0)
+		return FALSE	//We don't have any contents so we don't need to protect anything
+	var/turf/T = get_turf(src)
+
+	if(T.oxygen < 15)	//Not enough oxy
+		dangerous_air = TRUE
+	if(T.temperature < 250 || T.temperature > 320)	//Too hot or too cold
+		dangerous_air = TRUE
+	var/datum/gas_mixture/our_air = T.return_air_for_internal_lifeform()
+	var/ourpressure = our_air.return_pressure()	//This is just how you do this I guess for some reason
+	if(ourpressure < 85 || ourpressure > 115)	//Too much pressure or not enough
+		dangerous_air = TRUE
+	if(dangerous_air)
+		if(!sealed)
+			sealed = TRUE
+			for(var/obj/belly/b in vore_organs)
+				b.escapechance = 0
+				for(var/mob/living/L in b.contents)
+					to_chat(L,SPAN_WARNING("The walls squeeze a little tighter, pressing in on you holding you still, as the way out seals up! You can't escape right now!"))
+	else if(sealed)
+		sealed = FALSE
+		for(var/obj/belly/b in vore_organs)
+			switch(b.name)
+				if("stomach")
+					b.escapechance = 25
+				else
+					b.escapechance = 10
+
+			for(var/mob/living/L in b.contents)
+				to_chat(L,SPAN_OCCULT("The walls ease up again, returning to a welcoming pillowy softness, and allowing you to move around a little more. Perhaps you could escape now, if you wished."))
+	if(dangerous_air)
+		return TRUE
+	return FALSE
+
+/mob/living/simple_mob/vore/moon_dragon/proc/drgn_repos()
+	for(var/mob/living/thrall in enthralled)
+		var/list/adjective = list(
+			"wonderful",
+			"luxurious",
+			"comfortable",
+			"cozy",
+			"troubled"
+
+		)
+		to_chat(thrall,FONT_LARGE(SPAN_OCCULT("The view of \the [src] fades from your sight, but as it does you are overcome with an immense wearyness, and you eagerly tumble into a [pick(adjective)] dream...")))
+		enthralled -= thrall
+		thrall.SetSleeping(10)
+		thrall.add_modifier(/datum/modifier/dragon_dreams,origin = src)
+		UnregisterSignal(thrall, COMSIG_PARENT_QDELETING)
+		walk_towards(thrall,thrall,1)
+
+	var/turf/move_target = FALSE
+	while(move_target == FALSE)
+		move_target = drgn_repos_search()
+		if(isturf(move_target))
+			forceMove(move_target)
+		else
+			move_target = FALSE
+
+/mob/living/simple_mob/vore/moon_dragon/proc/drgn_repos_search()
+	var/which_z = z
+	if(z in using_map.expected_station_connected)
+		which_z = pick(using_map.expected_station_connected)
+	else
+		var/Z_up = z
+		var/Z_down = z
+		if(HasAbove(src.z))
+			Z_up ++
+		if(HasBelow(src.z))
+			Z_down --
+		which_z = rand(Z_down,Z_up)
+	var/turf/T = locate(rand(1, world.maxx), rand(1,world.maxy), which_z)
+	var/area/A = T.loc
+	if(A.flags & BLUE_SHIELDED)
+		return FALSE
+	if(isspace(T) || isopenspace(T))
+		return FALSE
+	if(T.check_density())
+		return FALSE
+//	for(var/thing in T.contents)
+//		if(isstructure(thing))
+//			return FALSE
+	for(var/mob/living/L in view(8,T))
+		if(isliving(L))
+			return FALSE
+
+	return T
+
+/mob/living/proc/ai_detect(atom/A)
+	return
+
+/mob/living/simple_mob/vore/moon_dragon/ai_detect(atom/A)
+	if(A in enthralled)
+		return FALSE
+	if(!isliving(A))
+		return FALSE
+	enthrall(A)
+
+/mob/living/simple_mob/vore/moon_dragon/post_escape(atom/movable/M)
+	if(isliving(M))
+		var/mob/living/L = M
+		L.sleeping = 10
+	drgn_repos()
+
+/mob/living/simple_mob/vore/moon_dragon/proc/enthrall(var/mob/living/L)
+	if(!isliving(L))
+		return
+	face_atom(L)
+	to_chat(L,FONT_GIANT(SPAN_OCCULT("You can see \the [src]'s face in your mind.")))
+	L.face_atom(src)
+	L.Stun(10)
+	enthralled |= L
+	RegisterSignal(L, COMSIG_PARENT_QDELETING,PROC_REF(enthralled_cleanup),TRUE)
+	walk_towards(L,src,1 SECONDS)
+	return TRUE
+
+/mob/living/simple_mob/vore/moon_dragon/proc/enthralled_cleanup()
+	for(var/thing in enthralled)
+		if(!isliving(thing))
+			enthralled -= thing
+			UnregisterSignal(thing, COMSIG_PARENT_QDELETING)
+			continue
+		var/mob/living/thrall = thing
+		if(thrall.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
+			enthralled -= thrall
+			UnregisterSignal(thrall, COMSIG_PARENT_QDELETING)
+			continue
+
+/datum/ai_holder/simple_mob/detector
+	hostile = TRUE
+	retaliate = TRUE
+	wander = FALSE
+
+/datum/ai_holder/simple_mob/detector/find_target()
+
+	list_targets()
+
+/datum/ai_holder/simple_mob/detector/list_targets()
+	. = ..()
+
+	if(istype(holder,/mob/living/simple_mob/vore/moon_dragon))
+		var/mob/living/simple_mob/vore/moon_dragon/drgn = holder
+		for(var/atom/movable/look_spoiler/eye in view(world.view,get_turf(drgn)))
+			if(!istype(eye,/atom/movable/look_spoiler))
+				continue
+			else
+				for(var/mob/living/L in player_list)
+					if(L.name == eye.name)
+						drgn.enthrall(L)
+						return
+				drgn.drgn_repos()
+				return
+
+	for(var/thing in .)
+		if(holder.ai_detect(thing))
+			return
+
+/datum/modifier/dragon_dreams
+	name = "Dragon Dreams"
+	desc = "Dreams from a dragon!"
+	stacks = MODIFIER_STACK_FORBID
+	var/mob/living/simple_mob/vore/moon_dragon/dragon
+
+/datum/modifier/dragon_dreams/New(new_holder, new_origin)
+	. = ..()
+	dragon = new_origin
+	RegisterSignal(dragon,COMSIG_PARENT_QDELETING,PROC_REF(expire),TRUE)
+
+	holder.throw_alert("dragon dreams", /obj/screen/alert/dragon_dreams)
+
+/datum/modifier/dragon_dreams/tick()
+	. = ..()
+	if(holder.sleeping <= 1)
+		return
+
+/datum/modifier/dragon_dreams/expire(silent)
+	UnregisterSignal(dragon,COMSIG_PARENT_QDELETING)
+	dragon = null
+	holder.clear_alert("dragon dreams")
+	. = ..()
+
+/obj/screen/alert/dragon_dreams
+	name = "Dragon Dreams"
+	desc = "You're feeling pretty good. Like the whole world is a dream... A wonderful hazy illusion, where you can do anything~"
+	icon = 'icons/rogue-star/misc.dmi'
+	icon_state = "crystal_key"
+
+/obj/screen/alert/dragon_dreams/Click(location, control, params)
+	. = ..()
+	if(isliving(usr))
+		var/mob/living/L = usr
+		if(L.sleeping <= 0)
+			L.sleeping = 10

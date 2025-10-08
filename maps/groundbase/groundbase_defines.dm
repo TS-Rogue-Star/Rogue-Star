@@ -202,6 +202,19 @@
 	)
 
 	//RS ADD START
+	expected_station_connected = list(
+		Z_LEVEL_GB_BOTTOM,
+		Z_LEVEL_GB_MIDDLE,
+		Z_LEVEL_GB_TOP,
+		Z_LEVEL_GB_ENGINESAT,
+		Z_LEVEL_GB_WILD_N,
+		Z_LEVEL_GB_WILD_S,
+		Z_LEVEL_GB_WILD_E,
+		Z_LEVEL_GB_WILD_W,
+		Z_LEVEL_MINING
+	)
+	//RS ADD END
+	//RS ADD START
 	z_list = list(
 	"z_centcom" = 9,
 	"z_misc" = 10,
