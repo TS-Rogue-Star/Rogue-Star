@@ -695,7 +695,7 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 	var/datum/sprite_accessory/ears/ear = ear_styles[pref.ear_style]
 	. += "<b>Ears</b><br>"
 	if(istype(ear))
-		. += " Style: <a href='?src=\ref[src];ears_gallery=1'>[ear.name]</a><br>"  //RS Edit: Opens new gallery (Lira, August 2025)
+		. += " Style: <a href='?src=\ref[src];ears_gallery=1'>[ear.name]</a> <a href='?src=\ref[src];ears_clear=1' style='color:#ffffff;background-color:#cc0000;border-color:#000000;' onmouseover=\"this.style.backgroundColor='#ffffff'; this.style.color='#cc0000';\" onmouseout=\"this.style.backgroundColor='#cc0000'; this.style.color='#ffffff';\">X</a><br>"  //RS Edit: Opens new gallery (Lira, August 2025) || Clear button (Lira, October 2025)
 		if(ear.do_colouration)
 			. += "<a href='?src=\ref[src];ear_color=1'>Change Color</a> [color_square(pref.r_ears, pref.g_ears, pref.b_ears)]<br>"
 		if(ear.extra_overlay)
@@ -708,7 +708,7 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 	var/datum/sprite_accessory/ears/ears_secondary = ear_styles[pref.ear_secondary_style] // RS EDIT START (Port of VS PR#16513 'Adds a second ear slot.')
 	. += "<b>Horns</b><br>"
 	if(istype(ears_secondary))
-		. += " Style: <a href='?src=\ref[src];horns_gallery=1'>[ears_secondary.name]</a><br>" //RS Edit: Opens new gallery (Lira, August 2025)
+		. += " Style: <a href='?src=\ref[src];horns_gallery=1'>[ears_secondary.name]</a> <a href='?src=\ref[src];horns_clear=1' style='color:#ffffff;background-color:#cc0000;border-color:#000000;' onmouseover=\"this.style.backgroundColor='#ffffff'; this.style.color='#cc0000';\" onmouseout=\"this.style.backgroundColor='#cc0000'; this.style.color='#ffffff';\">X</a><br>" //RS Edit: Opens new gallery (Lira, August 2025) || Clear button (Lira, October 2025)
 		for(var/channel in 1 to min(ears_secondary.get_color_channel_count(), length(GLOB.fancy_sprite_accessory_color_channel_names)))
 			. += "<a href='?src=\ref[src];ear_secondary_color=[channel]'>Change [GLOB.fancy_sprite_accessory_color_channel_names[channel]] Color</a> [color_square(hex = LAZYACCESS(pref.ear_secondary_colors, channel) || "#ffffff")]<br>"
 	else
@@ -719,7 +719,7 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 	var/datum/sprite_accessory/tail/tail = tail_styles[pref.tail_style]
 	. += "<b>Tail</b><br>"
 	if(istype(tail))
-		. += " Style: <a href='?src=\ref[src];tails_gallery=1'>[tail.name]</a><br>" //RS Edit: Opens new gallery (Lira, August 2025)
+		. += " Style: <a href='?src=\ref[src];tails_gallery=1'>[tail.name]</a> <a href='?src=\ref[src];tail_clear=1' style='color:#ffffff;background-color:#cc0000;border-color:#000000;' onmouseover=\"this.style.backgroundColor='#ffffff'; this.style.color='#cc0000';\" onmouseout=\"this.style.backgroundColor='#cc0000'; this.style.color='#ffffff';\">X</a><br>" //RS Edit: Opens new gallery (Lira, August 2025) || Clear button (Lira, October 2025)
 		if(tail.do_colouration)
 			. += "<a href='?src=\ref[src];tail_color=1'>Change Color</a> [color_square(pref.r_tail, pref.g_tail, pref.b_tail)]<br>"
 		if(tail.extra_overlay)
@@ -733,7 +733,7 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 	var/datum/sprite_accessory/wing/wings = wing_styles[pref.wing_style]
 	. += "<b>Wing</b><br>"
 	if(istype(wings))
-		. += " Style: <a href='?src=\ref[src];wings_gallery=1'>[wings.name]</a><br>" //RS Edit: Opens new gallery (Lira, August 2025)
+		. += " Style: <a href='?src=\ref[src];wings_gallery=1'>[wings.name]</a> <a href='?src=\ref[src];wings_clear=1' style='color:#ffffff;background-color:#cc0000;border-color:#000000;' onmouseover=\"this.style.backgroundColor='#ffffff'; this.style.color='#cc0000';\" onmouseout=\"this.style.backgroundColor='#cc0000'; this.style.color='#ffffff';\">X</a><br>" //RS Edit: Opens new gallery (Lira, August 2025) || Clear button (Lira, October 2025)
 		if(wings.do_colouration)
 			. += "<a href='?src=\ref[src];wing_color=1'>Change Color</a> [color_square(pref.r_wing, pref.g_wing, pref.b_wing)]<br>"
 		if(wings.extra_overlay)
@@ -994,6 +994,11 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 			return TOPIC_REFRESH_UPDATE_PREVIEW
 		return TOPIC_NOACTION
 
+	 // Clears selection (Lira, October 2025)
+	else if(href_list["ears_clear"])
+		pref.ear_style = null
+		return TOPIC_REFRESH_UPDATE_PREVIEW
+
 	else if(href_list["horns_gallery"])
 		horns_gallery_window(user, 1)
 		return TOPIC_HANDLED
@@ -1015,6 +1020,12 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 			user << browse(null, "window=prefs_horns_gallery")
 			return TOPIC_REFRESH_UPDATE_PREVIEW
 		return TOPIC_NOACTION
+
+	// Clears selection (Lira, October 2025)
+	else if(href_list["horns_clear"])
+		pref.ear_secondary_style = null
+		pref.ear_secondary_colors = list()
+		return TOPIC_REFRESH_UPDATE_PREVIEW
 
 	else if(href_list["tails_gallery"])
 		tails_gallery_window(user, 1)
@@ -1038,6 +1049,11 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 			return TOPIC_REFRESH_UPDATE_PREVIEW
 		return TOPIC_NOACTION
 
+	// Clears selection (Lira, October 2025)
+	else if(href_list["tail_clear"])
+		pref.tail_style = null
+		return TOPIC_REFRESH_UPDATE_PREVIEW
+
 	else if(href_list["wings_gallery"])
 		wings_gallery_window(user, 1)
 		return TOPIC_HANDLED
@@ -1059,6 +1075,11 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 			user << browse(null, "window=prefs_wings_gallery")
 			return TOPIC_REFRESH_UPDATE_PREVIEW
 		return TOPIC_NOACTION
+
+	// Clears selection (Lira, October 2025)
+	else if(href_list["wings_clear"])
+		pref.wing_style = null
+		return TOPIC_REFRESH_UPDATE_PREVIEW
 
 	// RS Add Start: Support enabling, editing, and disabling the custom marking slot (Lira, September 2025)
 	else if(href_list["custom_markings_enable"])
