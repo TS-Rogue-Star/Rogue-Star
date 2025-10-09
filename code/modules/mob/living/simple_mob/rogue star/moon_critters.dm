@@ -868,10 +868,13 @@
 /mob/living/simple_mob/vore/moon_dragon
 	name = "moon dragon"
 	desc = "A dragon from the moon, can't get much more obvious than that! Does it have three eyes?"
-	icon = 'icons/rogue-star/mobx32.dmi'
-	icon_state = "moon_deer"
-	icon_living = "moon_deer"
+	icon = 'icons/rogue-star/mobx96.dmi'
+	icon_state = "dragon"
+	icon_living = "dragon"
 	icon_dead = "moon_deer_dead"
+
+	default_pixel_x = -32
+	pixel_x = -32
 
 	faction = "dragon"
 
@@ -935,6 +938,21 @@
 	base.escapechance = 25
 
 /mob/living/simple_mob/vore/moon_dragon/Initialize()
+	. = ..()
+	color = pick(list(
+		"#FFFFFF",
+		"#19101f",
+		"#403e44",
+		"#2d3a74",
+		"#7a2020",
+		"#9fe696",
+		"#faabd0",
+		"#fde091",
+		"#213319",
+		"#eee3be"
+	))
+
+/mob/living/simple_mob/vore/moon_dragon/repos/Initialize()
 	. = ..()
 	drgn_repos()
 
@@ -1057,6 +1075,8 @@
 			Z_down --
 		which_z = rand(Z_down,Z_up)
 	var/turf/T = locate(rand(1, world.maxx), rand(1,world.maxy), which_z)
+	if(!T)
+		return FALSE
 	var/area/A = T.loc
 	if(A.flags & BLUE_SHIELDED)
 		return FALSE
