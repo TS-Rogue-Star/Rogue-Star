@@ -151,6 +151,7 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 /datum/category_item/player_setup_item/general/body
 	name = "Body"
 	sort_order = 3
+	var/last_marking_search_query = null //RS Add: Remember last markings search (Lira, October 2025)
 
 /datum/category_item/player_setup_item/general/body/load_character(var/savefile/S)
 	S["species"]			>> pref.species
@@ -905,7 +906,7 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 	else if(href_list["hair_style"]) //RS Edit: Depreciated for new gallery (Lira, August 2025)
 		return TOPIC_HANDLED
 
-	//RS Add Start: Logic for the new gallary buttons (Lira, August 2025)
+	//RS Add Start: Logic for the new gallary buttons (Lira, August 2025) || Markings search added (Lira, October 2025)
 
 	else if(href_list["hair_gallery"])
 		hair_gallery_window(user, 1)
@@ -1093,7 +1094,23 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 	// RS Add End
 
 	else if(href_list["marking_gallery"])
-		markings_gallery_window(user, "heads", 1)
+		var/search = href_list["marking_gallery_search_term"] ? url_decode(href_list["marking_gallery_search_term"]) : null
+		markings_gallery_window(user, "heads", 1, search)
+		return TOPIC_HANDLED
+
+	else if(href_list["marking_gallery_search"])
+		var/cat = href_list["marking_gallery_cat"] ? url_decode(href_list["marking_gallery_cat"]) : "heads"
+		var/q = input(user, "Search body markings by name:", "Marking Search", last_marking_search_query) as text|null
+		if(isnull(q))
+			return TOPIC_HANDLED
+		last_marking_search_query = q
+		markings_gallery_window(user, cat, 1, q)
+		return TOPIC_HANDLED
+
+	else if(href_list["marking_gallery_search_clear"])
+		last_marking_search_query = null
+		var/cat = href_list["marking_gallery_cat"] ? url_decode(href_list["marking_gallery_cat"]) : "heads"
+		markings_gallery_window(user, cat, 1, null)
 		return TOPIC_HANDLED
 
 	else if(href_list["marking_add"])
@@ -1106,21 +1123,25 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 					pref.body_markings -= new_marking
 				else
 					pref.body_markings[new_marking] = pref.mass_edit_marking_list(new_marking)
-				var/cat = href_list["marking_gallery_cat"] || "heads"
+				var/cat = href_list["marking_gallery_cat"] ? url_decode(href_list["marking_gallery_cat"]) : "heads"
 				var/page = text2num(href_list["marking_gallery_page"]) || 1
-				markings_gallery_window(user, cat, page)
+				var/search = href_list["marking_gallery_search_term"] ? url_decode(href_list["marking_gallery_search_term"]) : null
+				markings_gallery_window(user, cat, page, search)
 				return TOPIC_REFRESH_UPDATE_PREVIEW
 		return TOPIC_NOACTION
 
 	else if(href_list["marking_gallery_cat"])
+		var/cat = href_list["marking_gallery_cat"] ? url_decode(href_list["marking_gallery_cat"]) : "heads"
 		var/page = text2num(href_list["marking_gallery_page"]) || 1
-		markings_gallery_window(user, href_list["marking_gallery_cat"], page)
+		var/search = href_list["marking_gallery_search_term"] ? url_decode(href_list["marking_gallery_search_term"]) : null
+		markings_gallery_window(user, cat, page, search)
 		return TOPIC_HANDLED
 
 	else if(href_list["marking_gallery_page"])
-		var/cat = href_list["marking_gallery_cat"] || "heads"
+		var/cat = href_list["marking_gallery_cat"] ? url_decode(href_list["marking_gallery_cat"]) : "heads"
 		var/page = text2num(href_list["marking_gallery_page"]) || 1
-		markings_gallery_window(user, cat, page)
+		var/search = href_list["marking_gallery_search_term"] ? url_decode(href_list["marking_gallery_search_term"]) : null
+		markings_gallery_window(user, cat, page, search)
 		return TOPIC_HANDLED
 
 	else if(href_list["marking_gallery_close"])
@@ -2328,13 +2349,12 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 	dat += "</center></body></html>"
 	user << browse(dat, "window=prefs_wings_gallery;size=1000x720")
 
-//RS Add: Markings markings window (Lira, August 2025)
-/datum/category_item/player_setup_item/general/body/proc/markings_gallery_window(mob/user, var/category, var/page)
+//RS Add: Markings markings window (Lira, August 2025) || Markings search added (Lira, October 2025)
+/datum/category_item/player_setup_item/general/body/proc/markings_gallery_window(mob/user, var/category, var/page, var/search)
 	var/dat = "<html><body style='background:#111;color:#ddd;font-family:Verdana,Arial;'><center>"
-	dat += "<h3>Select Body Marking</h3>"
-	dat += "<div><a href='?src=\ref[src];marking_gallery_close=1'>Close</a></div>"
-	if(!category) category = "heads"
 	var/page_num = max(1, text2num(page) || 1)
+	if(!category)
+		category = "heads"
 	var/list/cats = list(
 		"heads" = "Head",
 		"bodies" = "Body",
@@ -2346,12 +2366,24 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 		"augment" = "Augment",
 		"all" = "All"
 	)
+	if(!(category in cats))
+		category = "heads"
+	var/search_encoded = search ? url_encode(search) : null
+	var/search_link = "<a href='?src=\ref[src];marking_gallery_search=1;marking_gallery_cat=[url_encode(category)];marking_gallery_page=[page_num]'>Search</a>"
+	if(search)
+		search_link = "Search: <b>[html_encode(search)]</b> ( <a href='?src=\ref[src];marking_gallery_search_clear=1;marking_gallery_cat=[url_encode(category)]'>clear</a> )"
+	dat += "<h3>Select Body Marking</h3>"
+	dat += "<div>[search_link] | <a href='?src=\ref[src];marking_gallery_close=1'>Close</a></div>"
 	var/catbar = ""
 	for(var/c in cats)
 		if(category == c)
 			catbar += " <b>[cats[c]]</b>"
 		else
-			catbar += " <a href='?src=\ref[src];marking_gallery_cat=[c]'>[cats[c]]</a>"
+			var/c_encoded = url_encode(c)
+			if(search_encoded)
+				catbar += " <a href='?src=\ref[src];marking_gallery_cat=[c_encoded];marking_gallery_search_term=[search_encoded]'>[cats[c]]</a>"
+			else
+				catbar += " <a href='?src=\ref[src];marking_gallery_cat=[c_encoded]'>[cats[c]]</a>"
 	dat += "<div style='margin:6px;padding:6px;border:1px solid #333;background:#111;'>[catbar]</div>"
 	var/list/valid_markings_grid
 	switch(category)
@@ -2373,35 +2405,62 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 			valid_markings_grid = body_marking_augment.Copy()
 		else
 			valid_markings_grid = body_marking_styles_list.Copy()
-	if(LAZYLEN(valid_markings_grid))
+	var/list/priority_parts = list(BP_HEAD,BP_TORSO,BP_GROIN,BP_L_ARM,BP_R_ARM,BP_L_HAND,BP_R_HAND,BP_L_LEG,BP_R_LEG,BP_L_FOOT,BP_R_FOOT)
+	var/list/filtered_styles = list()
+	var/needle = search ? lowertext(search) : null
+	if(valid_markings_grid)
+		for(var/style_name in sortList(valid_markings_grid))
+			var/datum/sprite_accessory/marking/mark_style = body_marking_styles_list[style_name]
+			if(!istype(mark_style) || mark_style.hide_from_marking_gallery)
+				continue
+			var/display_name = mark_style.get_display_name()
+			if(needle)
+				var/name_lower = lowertext(style_name)
+				var/display_lower = lowertext(display_name)
+				if(!findtext(display_lower, needle) && !findtext(name_lower, needle))
+					continue
+			var/list/state_list = icon_states(mark_style.icon)
+			var/has_any = FALSE
+			for(var/p in priority_parts)
+				if(!(p in mark_style.body_parts))
+					continue
+				var/state_name = "[mark_style.icon_state]-[p]"
+				if(!(state_name in state_list))
+					continue
+				has_any = TRUE
+				break
+			if(!has_any)
+				continue
+			filtered_styles += style_name
+	if(LAZYLEN(filtered_styles))
 		var/page_size = 60
-		var/total = valid_markings_grid.len
+		var/total = filtered_styles.len
 		var/total_pages = max(1, round((total + page_size - 1) / page_size))
-		if(page_num > total_pages) page_num = total_pages
+		if(page_num > total_pages)
+			page_num = total_pages
 		var/start_i = ((page_num - 1) * page_size) + 1
 		var/end_i = min(total, page_num * page_size)
-		var/prev_link = (page_num > 1) ? "<a href='?src=\ref[src];marking_gallery_page=[page_num-1];marking_gallery_cat=[category]'>Prev</a>" : "Prev"
-		var/next_link = (page_num < total_pages) ? "<a href='?src=\ref[src];marking_gallery_page=[page_num+1];marking_gallery_cat=[category]'>Next</a>" : "Next"
+		var/search_fragment = search_encoded ? ";marking_gallery_search_term=[search_encoded]" : ""
+		var/prev_link = (page_num > 1) ? "<a href='?src=\ref[src];marking_gallery_page=[page_num-1];marking_gallery_cat=[url_encode(category)][search_fragment]'>Prev</a>" : "Prev"
+		var/next_link = (page_num < total_pages) ? "<a href='?src=\ref[src];marking_gallery_page=[page_num+1];marking_gallery_cat=[url_encode(category)][search_fragment]'>Next</a>" : "Next"
 		dat += "<div style='margin:6px;'>[prev_link] | Page [page_num] / [total_pages] | [next_link]</div>"
 		dat += "<div style='max-height:560px; overflow-y:auto; padding:6px; border:1px solid #333; background:#111; margin:6px;'>"
 		dat += "<table cellspacing='6' cellpadding='0' style='border-collapse:separate;'><tr>"
 		var/col = 0
 		var/max_cols = 6
 		var/idx = 0
-		for(var/style_name in sortList(valid_markings_grid))
+		for(var/style_name in filtered_styles)
 			// RS Edit Start: Custom markings support (Lira, September 2025)
 			var/datum/sprite_accessory/marking/mark_style = body_marking_styles_list[style_name]
-			if(!istype(mark_style) || mark_style.hide_from_marking_gallery)
+			if(!istype(mark_style))
 				continue
 			// RS Edit End
+			var/display_name = mark_style.get_display_name() // RS Edit: Custom markings support (Lira, September 2025)
 			idx += 1
 			if(idx < start_i || idx > end_i)
 				continue
-			var/display_name = mark_style.get_display_name() // RS Edit: Custom markings support (Lira, September 2025)
-			var/icon/preview_icon
 			var/icon/base_icon = icon(get_markings_base_preview_icon())
 			var/list/state_list = icon_states(mark_style.icon)
-			var/list/priority_parts = list(BP_HEAD,BP_TORSO,BP_GROIN,BP_L_ARM,BP_R_ARM,BP_L_HAND,BP_R_HAND,BP_L_LEG,BP_R_LEG,BP_L_FOOT,BP_R_FOOT)
 			var/has_any = FALSE
 			for(var/p in priority_parts)
 				if(!(p in mark_style.body_parts))
@@ -2415,13 +2474,16 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 				has_any = TRUE
 			if(!has_any)
 				continue
-			preview_icon = icon(base_icon)
+			var/icon/preview_icon = icon(base_icon)
 			preview_icon.Scale(64, 64)
 			var/selected = (pref.body_markings && (style_name in pref.body_markings))
 			var/cell_style = selected ? "border:2px solid #66a3ff;" : "border:1px solid #444;"
 			dat += "<td style='[cell_style] background:#222; text-align:center; width:96px; height:120px; vertical-align:top; padding:4px;'>"
 			dat += "<div style='display:block;margin:0 auto;'>"
-			dat += "<a href='?src=\ref[src];marking_add=[url_encode(style_name)];marking_gallery_cat=[category];marking_gallery_page=[page_num]' title='[display_name]'>[bicon(preview_icon)]</a>" // RS Edit: Custom markings support (Lira, September 2025)
+			if(search_fragment)
+				dat += "<a href='?src=\ref[src];marking_add=[url_encode(style_name)];marking_gallery_cat=[url_encode(category)];marking_gallery_page=[page_num][search_fragment]' title='[display_name]'>[bicon(preview_icon)]</a>" // RS Edit: Custom markings support (Lira, September 2025)
+			else
+				dat += "<a href='?src=\ref[src];marking_add=[url_encode(style_name)];marking_gallery_cat=[url_encode(category)];marking_gallery_page=[page_num]' title='[display_name]'>[bicon(preview_icon)]</a>" // RS Edit: Custom markings support (Lira, September 2025)
 			dat += "</div>"
 			dat += "<div style='font-size:11px;color:#ccc;margin-top:4px;max-width:88px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;' title='[style_name]'>[style_name]</div>"
 			dat += "</td>"
@@ -2432,7 +2494,10 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 		dat += "</tr></table>"
 		dat += "</div>"
 	else
-		dat += "<p>No markings available.</p>"
+		if(search)
+			dat += "<p>No markings match this search.</p>"
+		else
+			dat += "<p>No markings available.</p>"
 	dat += "<div><a href='?src=\ref[src];marking_gallery_close=1'>Close</a></div>"
 	dat += "</center></body></html>"
 	user << browse(dat, "window=prefs_markings_gallery;size=1000x720")
