@@ -880,10 +880,16 @@
 
 	if(!owner.ckey && escape_stun)
 		owner.Weaken(escape_stun)
+		owner.post_escape(M)	//RS ADD
 	if(istype(M,/obj/effect/overmap/visitable/ship))	// RS EDIT START
 		var/obj/effect/overmap/visitable/ship/S = M
 		SSskybox.rebuild_skyboxes(S.map_z)	// RS EDIT END
 	return 1
+
+//RS ADD START - POST ESCAPE - in case you want there to be something that happens to a mob when someone escapes!
+/mob/living/proc/post_escape(atom/movable/M)
+	return
+//RS ADD END
 
 // Actually perform the mechanics of devouring the tasty prey.
 // The purpose of this method is to avoid duplicate code, and ensure that all necessary
