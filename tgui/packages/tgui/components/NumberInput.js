@@ -93,26 +93,31 @@ export class NumberInput extends Component {
       document.addEventListener('mouseup', this.handleDragEnd);
     };
 
+    // RS Edit: Prevent extended decimals on drag (Lira, October 2025)
     this.handleDragMove = (e) => {
       const { minValue, maxValue, step, stepPixelSize } = this.props;
       this.setState((prevState) => {
         const state = { ...prevState };
         const offset = state.origin - e.screenY;
         if (prevState.dragging) {
-          const stepOffset = Number.isFinite(minValue) ? minValue % step : 0;
+          const effectiveStep = Number.isFinite(step) && step !== 0 ? step : 1;
+          const stepOffset = Number.isFinite(minValue)
+            ? minValue % effectiveStep
+            : 0;
           // Translate mouse movement to value
           // Give it some headroom (by increasing clamp range by 1 step)
           state.internalValue = clamp(
-            state.internalValue + (offset * step) / stepPixelSize,
-            minValue - step,
-            maxValue + step
+            state.internalValue + (offset * effectiveStep) / stepPixelSize,
+            minValue - effectiveStep,
+            maxValue + effectiveStep
           );
           // Clamp the final value
-          state.value = clamp(
-            state.internalValue - (state.internalValue % step) + stepOffset,
-            minValue,
-            maxValue
-          );
+          let snapped =
+            Math.round((state.internalValue - stepOffset) / effectiveStep) *
+              effectiveStep +
+            stepOffset;
+          snapped = clamp(snapped, minValue, maxValue);
+          state.value = parseFloat(snapped.toFixed(10));
           state.origin = e.screenY;
         } else if (Math.abs(offset) > 4) {
           state.dragging = true;
