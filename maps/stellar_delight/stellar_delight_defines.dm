@@ -222,6 +222,15 @@
 		Z_LEVEL_SHIP_HIGH	//RS ADD
 		)
 
+	//RS ADD START
+	expected_station_connected = list(
+		Z_LEVEL_SHIP_MAINTENANCE,
+		Z_LEVEL_SHIP_LOW,
+		Z_LEVEL_SHIP_MID,
+		Z_LEVEL_SHIP_HIGH
+	)
+	//RS ADD END
+
 /*
 	belter_docked_z = 		list(Z_LEVEL_SPACE_LOW)
 	belter_transit_z =	 	list(Z_LEVEL_MISC)

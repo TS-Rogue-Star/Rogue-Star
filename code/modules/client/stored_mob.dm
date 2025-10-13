@@ -224,7 +224,7 @@
 	mob_takers += user.ckey
 	M.verbs += /mob/living/simple_mob/proc/toggle_ghostjoin
 	M.verbs += /mob/living/simple_mob/proc/toggle_follow
-	if(M.ai_holder.hostile)
+	if(M.ai_holder?.hostile)
 		M.verbs += /mob/living/simple_mob/proc/toggle_hostile
 		M.ai_holder.hostile = FALSE
 		M.ai_holder.vore_hostile = FALSE
