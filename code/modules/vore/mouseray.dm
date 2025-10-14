@@ -81,6 +81,7 @@
 	tracer_type = /obj/effect/projectile/tracer/laser_omni
 	impact_type = /obj/effect/projectile/impact/laser_omni
 
+// RS Edit: Standardize mob revert, cleanup, and mind tracking (Lira, October 2025)
 /obj/item/projectile/beam/mouselaser/on_hit(var/atom/target)
 	var/mob/living/M = target
 	if(!istype(M))
@@ -89,81 +90,60 @@
 		if(!(M.allow_spontaneous_tf && M.check_vore_whitelist(firer,SPONT_TF,WL_PREY)) && !tf_admin_pref_override)	//RS EDIT
 			return
 	if(M.tf_mob_holder)
-		var/mob/living/ourmob = M.tf_mob_holder
-		if(ourmob.ai_holder)
-			var/datum/ai_holder/our_AI = ourmob.ai_holder
-			our_AI.set_stance(STANCE_IDLE)
-		M.tf_mob_holder = null
-		ourmob.ckey = M.ckey
-		var/turf/get_dat_turf = get_turf(target)
-		ourmob.loc = get_dat_turf
-		ourmob.forceMove(get_dat_turf)
-		ourmob.vore_selected = M.vore_selected
-		M.vore_selected = null
-		for(var/obj/belly/B as anything in M.vore_organs)
-			B.loc = ourmob
-			B.forceMove(ourmob)
-			B.owner = ourmob
-			M.vore_organs -= B
-			ourmob.vore_organs += B
-
-		ourmob.Life(1)
-		if(ishuman(M))
-			for(var/obj/item/W in M)
-				if(istype(W, /obj/item/weapon/implant/backup) || istype(W, /obj/item/device/nif))
-					continue
-				M.drop_from_inventory(W)
-
-		qdel(target)
+		M.revert_mob_tf()
 		return
-	else
-		if(M.stat == DEAD)	//We can let it undo the TF, because the person will be dead, but otherwise things get weird.
-			return
-		var/mob/living/new_mob = spawn_mob(M)
-		new_mob.faction = M.faction
+	if(M.stat == DEAD)	//We can let it undo the TF, because the person will be dead, but otherwise things get weird.
+		return
+	var/mob/living/new_mob = spawn_mob(M)
+	new_mob.faction = M.faction
 
-		if(new_mob && isliving(new_mob))
-			for(var/obj/belly/B as anything in new_mob.vore_organs)
-				new_mob.vore_organs -= B
-				qdel(B)
-			new_mob.vore_organs = list()
-			new_mob.name = M.name
-			new_mob.real_name = M.real_name
-			for(var/lang in M.languages)
-				new_mob.languages |= lang
-			M.copy_vore_prefs_to_mob(new_mob)
-			new_mob.vore_selected = M.vore_selected
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(ishuman(new_mob))
-					var/mob/living/carbon/human/N = new_mob
-					N.gender = H.gender
-					N.identifying_gender = H.identifying_gender
-				else
-					new_mob.gender = H.gender
+	if(new_mob && isliving(new_mob))
+		var/datum/mind/original_mind = M.mind
+		var/old_ckey = M.ckey
+		for(var/obj/belly/B as anything in new_mob.vore_organs)
+			new_mob.vore_organs -= B
+			qdel(B)
+		new_mob.vore_organs = list()
+		new_mob.name = M.name
+		new_mob.real_name = M.real_name
+		for(var/lang in M.languages)
+			new_mob.languages |= lang
+		M.copy_vore_prefs_to_mob(new_mob)
+		new_mob.vore_selected = M.vore_selected
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(ishuman(new_mob))
+				var/mob/living/carbon/human/N = new_mob
+				N.gender = H.gender
+				N.identifying_gender = H.identifying_gender
 			else
-				new_mob.gender = M.gender
-				if(ishuman(new_mob))
-					var/mob/living/carbon/human/N = new_mob
-					N.identifying_gender = M.gender
+				new_mob.gender = H.gender
+		else
+			new_mob.gender = M.gender
+			if(ishuman(new_mob))
+				var/mob/living/carbon/human/N = new_mob
+				N.identifying_gender = M.gender
 
-			for(var/obj/belly/B as anything in M.vore_organs)
-				B.loc = new_mob
-				B.forceMove(new_mob)
-				B.owner = new_mob
-				M.vore_organs -= B
-				new_mob.vore_organs += B
-			M.drop_both_hands()//RS Add (crawling port broke dropping items when tf'd)
-			new_mob.ckey = M.ckey
-			if(M.ai_holder && new_mob.ai_holder)
-				var/datum/ai_holder/old_AI = M.ai_holder
-				old_AI.set_stance(STANCE_SLEEP)
-				var/datum/ai_holder/new_AI = new_mob.ai_holder
-				new_AI.hostile = old_AI.hostile
-				new_AI.retaliate = old_AI.retaliate
-			M.loc = new_mob
-			M.forceMove(new_mob)
-			new_mob.tf_mob_holder = M
+		for(var/obj/belly/B as anything in M.vore_organs)
+			B.loc = new_mob
+			B.forceMove(new_mob)
+			B.owner = new_mob
+			M.vore_organs -= B
+			new_mob.vore_organs += B
+		M.drop_both_hands()//RS Add (crawling port broke dropping items when tf'd)
+		if(original_mind)
+			original_mind.transfer_to(new_mob)
+		else if(old_ckey)
+			new_mob.ckey = old_ckey
+		if(M.ai_holder && new_mob.ai_holder)
+			var/datum/ai_holder/old_AI = M.ai_holder
+			old_AI.set_stance(STANCE_SLEEP)
+			var/datum/ai_holder/new_AI = new_mob.ai_holder
+			new_AI.hostile = old_AI.hostile
+			new_AI.retaliate = old_AI.retaliate
+		M.loc = new_mob
+		M.forceMove(new_mob)
+		new_mob.tf_mob_holder = M
 
 /obj/item/projectile/beam/mouselaser/proc/spawn_mob(var/mob/living/target)
 	if(!ispath(tf_type))
@@ -178,11 +158,23 @@
 	if(!tf_mob_holder)
 		return
 	var/mob/living/ourmob = tf_mob_holder
+	// RS Add: Mind tracking (Lira, October 2025)
+	if(!ourmob)
+		return
 	if(ourmob.ai_holder)
 		var/datum/ai_holder/our_AI = ourmob.ai_holder
 		our_AI.set_stance(STANCE_IDLE)
+	// RS Add Start: Mind tracking (Lira, October 2025)
+	var/datum/mind/original_mind = mind
+	var/old_ckey = ckey
+	// RS Add End
 	tf_mob_holder = null
-	ourmob.ckey = ckey
+	// RS Edit Start: Mind tracking (Lira, October 2025)
+	if(original_mind)
+		original_mind.transfer_to(ourmob)
+	else if(old_ckey)
+		ourmob.ckey = old_ckey
+	// RS Edit End
 	var/turf/get_dat_turf = get_turf(src)
 	ourmob.loc = get_dat_turf
 	ourmob.forceMove(get_dat_turf)
@@ -301,37 +293,10 @@
 			firer.visible_message("<span class='warning'>\The [src] buzzes impolitely.</span>")
 			return
 	if(M.tf_mob_holder)
-		var/mob/living/ourmob = M.tf_mob_holder
-		if(ourmob.ai_holder)
-			var/datum/ai_holder/our_AI = ourmob.ai_holder
-			our_AI.set_stance(STANCE_IDLE)
-		M.tf_mob_holder = null
-		ourmob.ckey = M.ckey
-		var/turf/get_dat_turf = get_turf(target)
-		ourmob.loc = get_dat_turf
-		ourmob.forceMove(get_dat_turf)
-		ourmob.vore_selected = M.vore_selected
-		M.vore_selected = null
-		for(var/obj/belly/B as anything in M.vore_organs)
-			B.loc = ourmob
-			B.forceMove(ourmob)
-			B.owner = ourmob
-			M.vore_organs -= B
-			ourmob.vore_organs += B
-
-		ourmob.Life(1)
-
-		if(ishuman(M))
-			for(var/obj/item/W in M)
-				if(istype(W, /obj/item/weapon/implant/backup) || istype(W, /obj/item/device/nif))
-					continue
-				M.drop_from_inventory(W)
-
-		qdel(target)
+		M.revert_mob_tf() // RS Add: Standardize mob revert (Lira, October 2025)
 		firer.visible_message("<span class='notice'>\The [shot_from] boops pleasantly.</span>")
 		return
-	else
-		firer.visible_message("<span class='warning'>\The [shot_from] buzzes impolitely.</span>")
+	firer.visible_message("<span class='warning'>\The [shot_from] buzzes impolitely.</span>") // RS Edit: Cleanup (Lira, October 2025)
 
 /obj/item/weapon/gun/energy/mouseray/admin		//NEVER GIVE THIS TO ANYONE
 	name = "experimental metamorphosis ray"
