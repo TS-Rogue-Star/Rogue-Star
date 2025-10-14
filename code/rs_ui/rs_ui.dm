@@ -5,6 +5,22 @@ Some neato on screen hud elements live here, for elements we want to update with
 Primarily intended to be vore related, but may turn out to be more.
 Just kind of experimenting with what's possible with regards to on screen hud elements.
 */
+
+// Add RSUI healthbars to vore panel (Lira, October 2025)
+var/global/list/rsui_healthbar_overlay_themes = list("Inside",
+													"Stomach",
+													"Churn",
+													"Tight",
+													"Mouth",
+													"Tube",
+													"Tunnel",
+													"Womb",
+													"Between",
+													"Pocket",
+													"Hand",
+													"Fist",
+													"D-Pet")
+
 SUBSYSTEM_DEF(rs_ui)
 	name = "Rogue Star UI"
 	flags = SS_NO_INIT | SS_BACKGROUND
@@ -502,6 +518,7 @@ SUBSYSTEM_DEF(rs_ui)
 		if("Customize")
 			customize()
 
+// Updated to add RSUI healthbars to vore panel (Lira, October 2025)
 /obj/screen/movable/rs_ui/healthbar/proc/customize()
 	var/obj/belly/B = tracked.loc
 	if(!isbelly(B))
@@ -509,30 +526,22 @@ SUBSYSTEM_DEF(rs_ui)
 		return
 	if(B.owner != holder)	//If it's not our belly then we can't customize it!
 		return
-	var/list/ourlist = list(
-		"Inside",
-		"Stomach",
-		"Churn",
-		"Tight",
-		"Mouth",
-		"Tube",
-		"Tunnel",
-		"Womb",
-		"Between",
-		"Pocket",
-		"Hand",
-		"Fist",
-		"D-Pet",
-		"Remove"
-	)
+	var/list/ourlist = rsui_healthbar_overlay_themes.Copy()
+	ourlist += "Remove"
 	var/selection = tgui_input_list(holder, "Select a style! Remember to go save your vore panel after you select one if you want it to stick!", "RS-UI Customization", ourlist,B.belly_healthbar_overlay_theme)
 	if(!selection)
 		return
-	var/ourcolor = input(usr, "What color?", "RS-UI Coloration", overlay_color) as color|null
 	if(selection == "Remove")
 		selection = null
+	var/ourcolor
+	if(selection)
+		ourcolor = input(usr, "What color?", "RS-UI Coloration", overlay_color) as color|null
+	else
+		ourcolor = null
 	B.belly_healthbar_overlay_theme = selection
-	if(ourcolor)
+	if(selection == null)
+		B.belly_healthbar_overlay_color = null
+	else if(ourcolor)
 		B.belly_healthbar_overlay_color = ourcolor
 	if(holder.vorePanel)
 		holder.vorePanel.unsaved_changes = TRUE

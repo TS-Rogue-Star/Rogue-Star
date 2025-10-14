@@ -1174,10 +1174,10 @@
 /obj/item/weapon/tank/emergency/oxygen/double,
 /obj/item/weapon/tank/emergency/oxygen/double,
 /obj/item/weapon/tank/emergency/oxygen/double,
-/obj/item/clothing/mask/chameleon,
-/obj/item/clothing/mask/chameleon,
-/obj/item/clothing/mask/chameleon,
-/obj/item/clothing/mask/chameleon,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
 /obj/item/device/flashlight,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/north)
@@ -9372,8 +9372,8 @@
 /obj/structure/table/rack/shelf,
 /obj/item/weapon/tank/emergency/oxygen/double,
 /obj/item/weapon/tank/emergency/oxygen/double,
-/obj/item/clothing/mask/chameleon,
-/obj/item/clothing/mask/chameleon,
+/obj/item/clothing/mask/gas/explorer,
+/obj/item/clothing/mask/gas,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/basement/emstorage)
 "zk" = (
@@ -10773,6 +10773,10 @@
 	},
 /obj/effect/floor_decal/steeldecal/steel_decals3{
 	dir = 5
+	},
+/obj/machinery/vending/wallmed1/public{
+	pixel_x = 0;
+	pixel_y = -32
 	},
 /turf/simulated/floor/tiled/white,
 /area/hallway/moonbase/basement)

@@ -217,6 +217,22 @@
 /obj/machinery/portable_atmospherics/powered/pump,
 /turf/simulated/floor/tiled/white,
 /area/outpost/research/mixing)
+"bI" = (
+/obj/structure/closet,
+/obj/item/clothing/suit/space/void/refurb,
+/obj/item/clothing/suit/space/void/refurb,
+/obj/item/clothing/head/helmet/space/void/refurb,
+/obj/item/clothing/head/helmet/space/void/refurb,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/weapon/tank/oxygen,
+/obj/item/weapon/tank/oxygen,
+/obj/item/weapon/tank/oxygen,
+/obj/item/weapon/tank/oxygen,
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
+/area/moonbase/fixedpoi/homestead)
 "bQ" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8
@@ -1113,6 +1129,15 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/outpost/research/hallway)
+"jQ" = (
+/obj/structure/closet/emergsuit_wall{
+	dir = 4;
+	pixel_x = 27
+	},
+/turf/simulated/floor/outdoors/newdirt{
+	outdoors = 0
+	},
+/area/moonbase/fixedpoi/homestead)
 "jU" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/table/standard,
@@ -2416,6 +2441,9 @@
 /area/outpost/research/mixing)
 "yJ" = (
 /obj/structure/table/steel,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
 /turf/simulated/floor/outdoors/grass/seasonal/preset/autumn{
 	outdoors = 0
 	},
@@ -3115,7 +3143,7 @@
 	pixel_y = 32
 	},
 /obj/effect/map_helper/airlock/sensor/int_sensor,
-/turf/simulated/floor/outdoors/grass/seasonal/preset/autumn{
+/turf/simulated/floor/outdoors/newdirt{
 	outdoors = 0
 	},
 /area/moonbase/fixedpoi/homestead)
@@ -3486,7 +3514,7 @@
 /obj/machinery/atmospherics/pipe/tank/air{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/grass/seasonal/preset/autumn{
+/turf/simulated/floor/outdoors/newdirt{
 	outdoors = 0
 	},
 /area/moonbase/fixedpoi/homestead)
@@ -3525,6 +3553,11 @@
 /area/outpost/research/mixing)
 "KS" = (
 /obj/structure/table/woodentable,
+/obj/item/weapon/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/weapon/pen,
 /turf/simulated/floor/carpet,
 /area/moonbase/fixedpoi/homestead)
 "Lf" = (
@@ -17927,7 +17960,7 @@ MA
 MA
 yh
 yh
-yh
+zZ
 yh
 yh
 yh
@@ -19063,7 +19096,7 @@ MA
 MA
 yh
 yh
-zZ
+yh
 yh
 hD
 Fd
@@ -20199,7 +20232,7 @@ MA
 MA
 yh
 yh
-yh
+zZ
 yh
 yh
 yh
@@ -21074,8 +21107,8 @@ fa
 KC
 KC
 Gj
-Yy
-Yy
+jQ
+bI
 eW
 zg
 zg
@@ -22775,11 +22808,11 @@ yh
 yh
 yh
 yh
-yh
-XR
-XR
-XR
-yh
+uR
+EU
+Do
+EU
+ER
 yh
 yh
 yh
@@ -22917,11 +22950,11 @@ yh
 yh
 yh
 yh
-uR
-EU
-Do
-EU
-ER
+ae
+XR
+XR
+XR
+mx
 yh
 yh
 yh
@@ -23059,11 +23092,11 @@ yh
 yh
 yh
 yh
-ae
-XR
-XR
-XR
-mx
+MV
+Ad
+Hu
+Ad
+iI
 yh
 yh
 yh
@@ -23201,11 +23234,11 @@ yh
 yh
 yh
 yh
-MV
-Ad
-Hu
-Ad
-iI
+yh
+yh
+yh
+yh
+yh
 yh
 yh
 yh
@@ -24188,7 +24221,7 @@ MA
 MA
 MA
 MA
-yh
+MA
 MA
 MA
 MA

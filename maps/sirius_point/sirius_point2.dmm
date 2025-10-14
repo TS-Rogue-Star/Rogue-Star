@@ -5585,10 +5585,10 @@
 /obj/item/weapon/tank/emergency/oxygen/double,
 /obj/item/weapon/tank/emergency/oxygen/double,
 /obj/item/weapon/tank/emergency/oxygen/double,
-/obj/item/clothing/mask/chameleon,
-/obj/item/clothing/mask/chameleon,
-/obj/item/clothing/mask/chameleon,
-/obj/item/clothing/mask/chameleon,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level2/center)
 "dnk" = (
@@ -16977,6 +16977,10 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
+/obj/fiftyspawner/steel,
+/obj/fiftyspawner/steel,
+/obj/fiftyspawner/glass,
+/obj/fiftyspawner/glass,
 /turf/simulated/floor/tiled,
 /area/rnd/moonbase/rndlab)
 "kNZ" = (
@@ -21571,6 +21575,10 @@
 /obj/structure/table/glass,
 /obj/item/weapon/towel/random,
 /obj/item/weapon/towel/random,
+/obj/machinery/vending/wallmed1/public{
+	pixel_x = 0;
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/barrestroom)
 "obJ" = (
