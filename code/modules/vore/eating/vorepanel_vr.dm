@@ -5,6 +5,8 @@
 //////////////////////////////////////////////////////////////////////////////////
 //Updated by Lira for Rogue Star September 2025 to integrate trust list settings//
 //////////////////////////////////////////////////////////////////////////////////
+//Updated by Lira for Rogue Star October 2025 to integrate RSUI health bars///////
+//////////////////////////////////////////////////////////////////////////////////
 
 //INSERT COLORIZE-ONLY STOMACHS HERE
 var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
@@ -74,6 +76,116 @@ var/static/list/vore_trustlist_preference_map = list(
 		"trust_key" = RESIZING,
 	)
 )
+
+// RS Add Start: Add RSUI healthbars to vore panel (Lira, October 2025)
+
+var/global/list/rsui_healthbar_overlay_states
+var/global/list/rsui_healthbar_preview_cache = list()
+
+/proc/rsui_healthbar_crop_icon(var/icon/I)
+	if(!I)
+		return null
+	var/width = I.Width()
+	var/height = I.Height()
+	if(!width || !height)
+		return I
+	var/min_x = width
+	var/max_x = 1
+	var/min_y = height
+	var/max_y = 1
+	for(var/y = 1; y <= height; y++)
+		for(var/x = 1; x <= width; x++)
+			if(I.GetPixel(x, y))
+				if(x < min_x)
+					min_x = x
+				if(x > max_x)
+					max_x = x
+				if(y < min_y)
+					min_y = y
+				if(y > max_y)
+					max_y = y
+	if(max_x < min_x || max_y < min_y)
+		return I
+	if(min_x > 1 || min_y > 1 || max_x < width || max_y < height)
+		I.Crop(min_x, min_y, max_x, max_y)
+	return I
+
+/proc/rsui_healthbar_init_states()
+	if(rsui_healthbar_overlay_states)
+		return
+	var/list/states = icon_states('icons/rogue-star/vore_healthbar.dmi')
+	if(!states)
+		states = list()
+	rsui_healthbar_overlay_states = list()
+	for(var/theme in rsui_healthbar_overlay_themes)
+		var/list/theme_states = list(
+			"under" = null,
+			"overlay" = null,
+		)
+		if("[theme]_under" in states)
+			theme_states["under"] = "[theme]_under"
+		var/list/candidates = list("[theme]_0", "[theme]_1", "[theme]_FALSE", "[theme]_TRUE", "[theme]_false", "[theme]_true", "[theme]_still", theme)
+		for(var/state_name in candidates)
+			if(state_name in states)
+				theme_states["overlay"] = state_name
+				break
+		rsui_healthbar_overlay_states[theme] = theme_states
+
+/proc/rsui_healthbar_get_preview(var/theme, var/preview_color)
+	var/cache_color = preview_color ? "[preview_color]" : ""
+	var/cache_key = "[theme]-[cache_color]"
+	var/cached = rsui_healthbar_preview_cache[cache_key]
+	if(cached)
+		return cached
+
+	var/icon/base_icon = icon('icons/rogue-star/vore_healthbar.dmi',"circle", SOUTH, 1)
+	if(!base_icon)
+		return null
+
+	if(!theme)
+		var/base_key = "__rsui_base_circle"
+		var/base_cached = rsui_healthbar_preview_cache[base_key]
+		if(!base_cached)
+			var/icon/no_theme_icon = new(base_icon)
+			rsui_healthbar_crop_icon(no_theme_icon)
+			base_cached = icon2base64(no_theme_icon)
+			rsui_healthbar_preview_cache[base_key] = base_cached
+		rsui_healthbar_preview_cache[cache_key] = base_cached
+		return base_cached
+
+	rsui_healthbar_init_states()
+	var/list/theme_states = rsui_healthbar_overlay_states[theme]
+	if(!theme_states)
+		var/fallback_base = rsui_healthbar_preview_cache["__rsui_base_circle"]
+		if(!fallback_base)
+			var/icon/fallback_icon = new(base_icon)
+			rsui_healthbar_crop_icon(fallback_icon)
+			fallback_base = icon2base64(fallback_icon)
+			rsui_healthbar_preview_cache["__rsui_base_circle"] = fallback_base
+		rsui_healthbar_preview_cache[cache_key] = fallback_base
+		return fallback_base
+
+	var/under_state = theme_states["under"]
+	if(under_state)
+		var/icon/under_icon = icon('icons/rogue-star/vore_healthbar.dmi', under_state, SOUTH, 1)
+		if(preview_color)
+			under_icon.Blend(preview_color, ICON_MULTIPLY)
+		base_icon.Blend(under_icon, ICON_OVERLAY)
+
+	var/overlay_state = theme_states["overlay"]
+	if(overlay_state)
+		var/icon/overlay_icon = icon('icons/rogue-star/vore_healthbar.dmi', overlay_state, SOUTH, 1)
+		if(preview_color)
+			overlay_icon.Blend(preview_color, ICON_MULTIPLY)
+		base_icon.Blend(overlay_icon, ICON_OVERLAY)
+
+	rsui_healthbar_crop_icon(base_icon)
+
+	var/base64 = icon2base64(base_icon)
+	rsui_healthbar_preview_cache[cache_key] = base64
+	return base64
+
+// RS Add End
 
 /mob
 	var/datum/vore_look/vorePanel
@@ -242,6 +354,18 @@ var/static/list/vore_trustlist_preference_map = list(
 	var/list/selected_list = null
 	if(host.vore_selected)
 		var/obj/belly/selected = host.vore_selected
+		// RS Add Start: Add RSUI healthbars to vore panel (Lira, October 2025)
+		var/list/healthbar_theme_cards = list()
+		for(var/theme in rsui_healthbar_overlay_themes)
+			var/list/card = list(
+				"name" = theme,
+				"preview" = rsui_healthbar_get_preview(theme, null),
+			)
+			healthbar_theme_cards += list(card)
+		var/healthbar_current_preview = null
+		if(selected.belly_healthbar_overlay_theme)
+			healthbar_current_preview = rsui_healthbar_get_preview(selected.belly_healthbar_overlay_theme, selected.belly_healthbar_overlay_color)
+		// RS Add End
 		selected_list = list(
 			"belly_name" = selected.name,
 			"is_wet" = selected.is_wet,
@@ -280,6 +404,8 @@ var/static/list/vore_trustlist_preference_map = list(
 			"colorization_enabled" = selected.colorization_enabled,
 			"belly_healthbar_overlay_theme" = selected.belly_healthbar_overlay_theme,	//RS ADD
 			"belly_healthbar_overlay_color" = selected.belly_healthbar_overlay_color,	//RS ADD
+			"healthbar_theme_options" = healthbar_theme_cards, // RS Add: Add RSUI healthbars to vore panel (Lira, October 2025)
+			"healthbar_current_preview" = healthbar_current_preview, // RS Add: Add RSUI healthbars to vore panel (Lira, October 2025)
 			"eating_privacy_local" = selected.eating_privacy_local,
 			"silicon_belly_overlay_preference"	= selected.silicon_belly_overlay_preference,
 			"visible_belly_minimum_prey"	= selected.visible_belly_minimum_prey,
@@ -1715,6 +1841,59 @@ var/static/list/vore_trustlist_preference_map = list(
 		if("b_clear_preview")
 			host.vore_selected.clear_preview(host) //Clears the stomach overlay. This is a failsafe but shouldn't occur.
 			. = TRUE
+		// RS Add Start:  Add RSUI healthbars to vore panel (Lira, October 2025)
+		if("b_healthbar_theme")
+			var/list/options = rsui_healthbar_overlay_themes.Copy()
+			options += "Remove"
+			var/default_choice = host.vore_selected.belly_healthbar_overlay_theme
+			var/selection = tgui_input_list(usr, "Select a style! Remember to go save your vore panel after you select one if you want it to stick!", "RS-UI Customization", options, default_choice)
+			if(!selection)
+				return FALSE
+			if(selection == "Remove")
+				selection = null
+			if(host.vore_selected.belly_healthbar_overlay_theme == selection)
+				return FALSE
+			host.vore_selected.belly_healthbar_overlay_theme = selection
+			if(!selection)
+				host.vore_selected.belly_healthbar_overlay_color = null
+			. = TRUE
+		if("b_healthbar_theme_set")
+			var/theme = params["theme"]
+			if(!theme)
+				return FALSE
+			if(!istext(theme))
+				return FALSE
+			if(!(theme in rsui_healthbar_overlay_themes))
+				return FALSE
+			if(host.vore_selected.belly_healthbar_overlay_theme == theme)
+				return FALSE
+			host.vore_selected.belly_healthbar_overlay_theme = theme
+			. = TRUE
+		if("b_healthbar_theme_clear")
+			if(isnull(host.vore_selected.belly_healthbar_overlay_theme))
+				return FALSE
+			host.vore_selected.belly_healthbar_overlay_theme = null
+			host.vore_selected.belly_healthbar_overlay_color = null
+			. = TRUE
+		if("b_healthbar_color")
+			if(!host.vore_selected.belly_healthbar_overlay_theme)
+				return FALSE
+			var/current_color = host.vore_selected.belly_healthbar_overlay_color
+			var/newcolor = input(usr, "Choose an RS-UI overlay color.", "RS-UI Coloration", current_color) as color|null
+			if(!newcolor)
+				return FALSE
+			if(current_color == newcolor)
+				return FALSE
+			host.vore_selected.belly_healthbar_overlay_color = newcolor
+			. = TRUE
+		if("b_healthbar_color_clear")
+			if(!host.vore_selected.belly_healthbar_overlay_theme)
+				return FALSE
+			if(isnull(host.vore_selected.belly_healthbar_overlay_color))
+				return FALSE
+			host.vore_selected.belly_healthbar_overlay_color = null
+			. = TRUE
+		// RS Add End
 		if("b_fullscreen_color")
 			var/newcolor = input(usr, "Choose a color.", "", host.vore_selected.belly_fullscreen_color) as color|null
 			if(newcolor)

@@ -1,6 +1,8 @@
 // /////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star September 2025 to integrate trust list settings //
 // /////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2025 to integrate RSUI health bars ///////
+// /////////////////////////////////////////////////////////////////////////////////
 
 import { capitalize } from 'common/string';
 import { Fragment } from 'inferno';
@@ -57,7 +59,8 @@ export const VorePanel = (props, context) => {
   tabs[1] = <VoreUserPreferences />;
 
   return (
-    <Window width={890} height={660} theme="abstract" resizable>
+    <Window width={900} height={660} theme="abstract" resizable>
+      {/* RS Edit: Make window longer (Lira, October 2025) */}
       <Window.Content scrollable>
         {(data.unsaved_changes && (
           <NoticeBox danger>
@@ -220,13 +223,15 @@ const VoreSelectedBelly = (props, context) => {
 
   tabs[4] = <VoreSelectedBellyVisuals belly={belly} />;
 
-  tabs[5] = <VoreSelectedBellyInteractions belly={belly} />;
+  tabs[5] = <VoreSelectedBellyHealthbar belly={belly} />; // RS Add: Add RSUI healthbars to vore panel (Lira, October 2025)
 
-  tabs[6] = <VoreSelectedBellyLiquidOptions belly={belly} />;
+  tabs[6] = <VoreSelectedBellyInteractions belly={belly} />;
 
-  tabs[7] = <VoreSelectedBellyLiquidMessages belly={belly} />;
+  tabs[7] = <VoreSelectedBellyLiquidOptions belly={belly} />;
 
-  tabs[8] = <VoreContentsPanel outside contents={contents} />;
+  tabs[8] = <VoreSelectedBellyLiquidMessages belly={belly} />;
+
+  tabs[9] = <VoreContentsPanel outside contents={contents} />;
 
   return (
     <Fragment>
@@ -247,15 +252,19 @@ const VoreSelectedBelly = (props, context) => {
           Visuals
         </Tabs.Tab>
         <Tabs.Tab selected={tabIndex === 5} onClick={() => setTabIndex(5)}>
-          Interactions
+          {/* RS Add: Add RSUI healthbars to vore panel (Lira, October 2025) */}
+          Healthbar
         </Tabs.Tab>
         <Tabs.Tab selected={tabIndex === 6} onClick={() => setTabIndex(6)}>
-          Liquid Options
+          Interactions
         </Tabs.Tab>
         <Tabs.Tab selected={tabIndex === 7} onClick={() => setTabIndex(7)}>
-          Liquid Messages
+          Liquid Options
         </Tabs.Tab>
         <Tabs.Tab selected={tabIndex === 8} onClick={() => setTabIndex(8)}>
+          Liquid Messages
+        </Tabs.Tab>
+        <Tabs.Tab selected={tabIndex === 9} onClick={() => setTabIndex(9)}>
           Contents ({contents.length})
         </Tabs.Tab>
       </Tabs>
@@ -1114,78 +1123,99 @@ const VoreSelectedBellyVisuals = (props, context) => {
         </Flex>
       </Section>
       <Section title="Belly Fullscreens Preview and Coloring">
-        <Flex direction="row">
-          <Box
-            backgroundColor={belly_fullscreen_color}
-            width="20px"
-            height="20px"
-          />
-          <Button
-            icon="eye-dropper"
-            onClick={() =>
-              act('set_attribute', {
-                attribute: 'b_fullscreen_color',
-                val: null,
-              })
-            }>
-            Select Primary Color
-          </Button>
-          <Box
-            backgroundColor={belly_fullscreen_color_secondary}
-            width="20px"
-            height="20px"
-          />
-          <Button
-            icon="eye-dropper"
-            onClick={() =>
-              act('set_attribute', {
-                attribute: 'b_fullscreen_color_secondary',
-                val: null,
-              })
-            }>
-            Select Secondary Color
-          </Button>
-          <Box
-            backgroundColor={belly_fullscreen_color_trinary}
-            width="20px"
-            height="20px"
-          />
-          <Button
-            icon="eye-dropper"
-            onClick={() =>
-              act('set_attribute', {
-                attribute: 'b_fullscreen_color_trinary',
-                val: null,
-              })
-            }>
-            Select Trinary Color
-          </Button>
-          <LabeledList.Item label="Enable Coloration">
-            <Button
-              onClick={() =>
-                act('set_attribute', { attribute: 'b_colorization_enabled' })
-              }
-              icon={colorization_enabled ? 'toggle-on' : 'toggle-off'}
-              selected={colorization_enabled}
-              content={colorization_enabled ? 'Yes' : 'No'}
+        <Flex direction="row" wrap="wrap" align="center">
+          {/* RS Edit Start: Tweaked for formatting (Lira, October 2025)*/}
+          <Flex.Item>
+            <Box
+              backgroundColor={belly_fullscreen_color}
+              width="20px"
+              height="20px"
             />
-          </LabeledList.Item>
-          <LabeledList.Item label="Preview Belly">
+          </Flex.Item>
+          <Flex.Item>
             <Button
+              icon="eye-dropper"
               onClick={() =>
-                act('set_attribute', { attribute: 'b_preview_belly' })
-              }
-              content={'Preview'}
+                act('set_attribute', {
+                  attribute: 'b_fullscreen_color',
+                  val: null,
+                })
+              }>
+              Select Primary Color
+            </Button>
+          </Flex.Item>
+          <Flex.Item>
+            <Box
+              backgroundColor={belly_fullscreen_color_secondary}
+              width="20px"
+              height="20px"
             />
-          </LabeledList.Item>
-          <LabeledList.Item label="Clear Preview">
+          </Flex.Item>
+          <Flex.Item>
             <Button
+              icon="eye-dropper"
               onClick={() =>
-                act('set_attribute', { attribute: 'b_clear_preview' })
-              }
-              content={'Clear'}
+                act('set_attribute', {
+                  attribute: 'b_fullscreen_color_secondary',
+                  val: null,
+                })
+              }>
+              Select Secondary Color
+            </Button>
+          </Flex.Item>
+          <Flex.Item>
+            <Box
+              backgroundColor={belly_fullscreen_color_trinary}
+              width="20px"
+              height="20px"
             />
-          </LabeledList.Item>
+          </Flex.Item>
+          <Flex.Item>
+            <Button
+              icon="eye-dropper"
+              onClick={() =>
+                act('set_attribute', {
+                  attribute: 'b_fullscreen_color_trinary',
+                  val: null,
+                })
+              }>
+              Select Trinary Color
+            </Button>
+          </Flex.Item>
+          <Flex.Item basis="100%" />
+          <Flex.Item>
+            <LabeledList.Item label="Enable Coloration">
+              <Button
+                onClick={() =>
+                  act('set_attribute', { attribute: 'b_colorization_enabled' })
+                }
+                icon={colorization_enabled ? 'toggle-on' : 'toggle-off'}
+                selected={colorization_enabled}
+                content={colorization_enabled ? 'Yes' : 'No'}
+              />
+            </LabeledList.Item>
+          </Flex.Item>
+          <Flex.Item>
+            <LabeledList.Item label="Preview Belly">
+              <Button
+                onClick={() =>
+                  act('set_attribute', { attribute: 'b_preview_belly' })
+                }
+                content={'Preview'}
+              />
+            </LabeledList.Item>
+          </Flex.Item>
+          <Flex.Item>
+            <LabeledList.Item label="Clear Preview">
+              <Button
+                onClick={() =>
+                  act('set_attribute', { attribute: 'b_clear_preview' })
+                }
+                content={'Clear'}
+              />
+            </LabeledList.Item>
+          </Flex.Item>
+          {/* RS Edit End*/}
         </Flex>
       </Section>
       <Section>
@@ -1235,6 +1265,175 @@ const VoreSelectedBellyVisuals = (props, context) => {
         </Section>
       </Section>
     </Fragment>
+  );
+};
+
+// RS Add: Add RSUI healthbars to vore panel (Lira, October 2025)
+const VoreSelectedBellyHealthbar = (props, context) => {
+  const { act } = useBackend(context);
+
+  const { belly } = props;
+  const {
+    belly_healthbar_overlay_theme,
+    belly_healthbar_overlay_color,
+    healthbar_theme_options = [],
+    healthbar_current_preview,
+  } = belly;
+
+  const themeOptions = Array.isArray(healthbar_theme_options)
+    ? healthbar_theme_options
+    : [];
+  const hasOverlay = Boolean(belly_healthbar_overlay_theme);
+  const selectedTheme = belly_healthbar_overlay_theme || 'None';
+  const currentPreview = healthbar_current_preview;
+
+  return (
+    <Section title="RS-UI Healthbar Overlay">
+      <Flex align="center" spacing={2} wrap="wrap">
+        <Flex.Item>
+          {currentPreview ? (
+            <Box
+              backgroundColor="#111"
+              p={1}
+              style={{
+                imageRendering: 'pixelated',
+                display: 'inline-block',
+              }}>
+              <img
+                src={`data:image/png;base64,${currentPreview}`}
+                width="96"
+                height="96"
+                alt={`${selectedTheme} overlay preview`}
+                style={{ imageRendering: 'pixelated' }}
+              />
+            </Box>
+          ) : (
+            <Box italic color="label">
+              No overlay selected
+            </Box>
+          )}
+        </Flex.Item>
+        <Flex.Item grow>
+          <Box mb={1}>
+            <b>Selected:</b> {selectedTheme}
+          </Box>
+          <Flex spacing={1} wrap="wrap">
+            <Flex.Item>
+              <Button
+                icon="eraser"
+                content="Clear"
+                disabled={!hasOverlay}
+                onClick={() =>
+                  act('set_attribute', {
+                    attribute: 'b_healthbar_theme_clear',
+                  })
+                }
+              />
+            </Flex.Item>
+          </Flex>
+          <Box mt={1}>
+            <Flex spacing={1} align="center" wrap="wrap">
+              {belly_healthbar_overlay_color ? (
+                <Flex.Item>
+                  <Box
+                    backgroundColor={belly_healthbar_overlay_color}
+                    width="32px"
+                    height="32px"
+                    mr={1}
+                  />
+                </Flex.Item>
+              ) : null}
+              <Flex.Item>
+                <Button
+                  icon="eye-dropper"
+                  content="Pick Color"
+                  disabled={!hasOverlay}
+                  onClick={() =>
+                    act('set_attribute', { attribute: 'b_healthbar_color' })
+                  }
+                />
+              </Flex.Item>
+              <Flex.Item>
+                <Button
+                  icon="eraser"
+                  content="Clear Color"
+                  disabled={!hasOverlay || !belly_healthbar_overlay_color}
+                  onClick={() =>
+                    act('set_attribute', {
+                      attribute: 'b_healthbar_color_clear',
+                    })
+                  }
+                />
+              </Flex.Item>
+            </Flex>
+          </Box>
+        </Flex.Item>
+      </Flex>
+      {themeOptions.length ? (
+        <Fragment>
+          <Divider mt={1} />
+          <Box mb={1}>Click a theme below to apply its RS-UI overlay.</Box>
+          <Flex wrap="wrap" spacing={1}>
+            {themeOptions.map((option) => {
+              if (!option || !option.name) {
+                return null;
+              }
+              const optionName = option.name;
+              const optionPreview = option.preview;
+              return (
+                <Flex.Item
+                  key={optionName}
+                  basis="120px"
+                  grow={0}
+                  style={{ minWidth: '120px' }}>
+                  <Button
+                    fluid
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                    }}
+                    selected={optionName === belly_healthbar_overlay_theme}
+                    onClick={() =>
+                      act('set_attribute', {
+                        attribute: 'b_healthbar_theme_set',
+                        theme: optionName,
+                      })
+                    }>
+                    <Box
+                      mb={1}
+                      p={1}
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                      }}>
+                      {optionPreview ? (
+                        <img
+                          src={`data:image/png;base64,${optionPreview}`}
+                          width="96"
+                          height="96"
+                          alt={`${optionName} overlay preview`}
+                          style={{ imageRendering: 'pixelated' }}
+                        />
+                      ) : (
+                        <Box italic color="label">
+                          No preview
+                        </Box>
+                      )}
+                    </Box>
+                    <Box textAlign="center">{optionName}</Box>
+                  </Button>
+                </Flex.Item>
+              );
+            })}
+          </Flex>
+        </Fragment>
+      ) : (
+        <NoticeBox mt={1}>
+          No RS-UI themes are available for preview on this server.
+        </NoticeBox>
+      )}
+    </Section>
   );
 };
 
