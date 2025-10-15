@@ -58,6 +58,7 @@ var/datum/antagonist/rogue_ai/malf
 
 		A.setup_for_malf()
 		A.laws = new /datum/ai_laws/nanotrasen/malfunction
+		A.notify_of_law_change("NEW ZEROTH LAW: <b>[config.law_zero]</b>") // RS Add: Sync shell law changes (Lira, October 2025)
 
 
 		var/mob/living/silicon/ai/malf = player.current
@@ -101,4 +102,3 @@ var/datum/antagonist/rogue_ai/malf
 	if (newname)
 		player.SetName(newname)
 	if(player.mind) player.mind.name = player.name
-
