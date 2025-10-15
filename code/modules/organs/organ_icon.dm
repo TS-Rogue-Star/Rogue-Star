@@ -117,7 +117,7 @@ var/global/list/marking_icon_cache = list() // RS Add: Icon cache (Lira, Septemb
 	if(owner.h_style)
 		var/style = owner.h_style
 		var/datum/sprite_accessory/hair/hair_style = hair_styles_list[style]
-		if(owner.head && (owner.head.flags_inv & BLOCKHEADHAIR))
+		if(owner.head && (owner.head.flags_inv & (BLOCKHEADHAIR | HIDEHEAD))) // RS Edit: Hide head (Lira, October 2025)
 			if(!(hair_style.flags & HAIR_VERY_SHORT))
 				hair_style = hair_styles_list["Short Hair"]
 		if(hair_style && (species.get_bodytype(owner) in hair_style.species_allowed))

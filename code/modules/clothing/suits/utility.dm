@@ -82,7 +82,7 @@
 	name = "Radiation hood"
 	icon_state = "rad"
 	desc = "A hood with radiation protective properties. Label: Made with lead, do not eat insulation"
-	flags_inv = BLOCKHAIR
+	flags_inv = BLOCKHAIR|HIDEHEAD // RS Edit: Precent muzzles from sticking out (Lira, October 2025)
 	item_flags = THICKMATERIAL
 	body_parts_covered = HEAD|FACE|EYES
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 60, rad = 100)
