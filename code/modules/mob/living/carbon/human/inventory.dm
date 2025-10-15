@@ -146,10 +146,13 @@ This saves us from having to call add_fingerprint() any time something is put in
 		head = null
 		if(istype(W, /obj/item))
 			var/obj/item/I = W
-			if(I.flags_inv & (HIDEMASK|BLOCKHAIR|BLOCKHEADHAIR))
+			if(I.flags_inv & (HIDEMASK|BLOCKHAIR|BLOCKHEADHAIR|HIDEHEAD)) // RS Edit: Hide head (Lira, October 2025)
 				update_hair(0)	//rebuild hair
 				update_inv_ears(0)
 				update_inv_wear_mask(0)
+				// RS Edit: Hidge head (Lira, October 2025)
+				if(I.flags_inv & HIDEHEAD)
+					update_icons_body()
 		update_inv_head()
 	else if (W == l_ear)
 		l_ear = null
@@ -170,9 +173,12 @@ This saves us from having to call add_fingerprint() any time something is put in
 		wear_mask = null
 		if(istype(W, /obj/item))
 			var/obj/item/I = W
-			if(I.flags_inv & (BLOCKHAIR|BLOCKHEADHAIR))
+			if(I.flags_inv & (BLOCKHAIR|BLOCKHEADHAIR|HIDEHEAD)) // RS Edit: Hide head (Lira, October 2025)
 				update_hair(0)	//rebuild hair
 				update_inv_ears(0)
+				// RS Edit: Hide head (Lira, October 2025)
+				if(I.flags_inv & HIDEHEAD)
+					update_icons_body()
 		// If this is how the internals are connected, disable them
 		if(internal && !(head?.item_flags & AIRTIGHT))
 			if(internals)
@@ -310,10 +316,13 @@ This saves us from having to call add_fingerprint() any time something is put in
 			update_inv_gloves()
 		if(slot_head)
 			src.head = W
-			if(head.flags_inv & (BLOCKHAIR|BLOCKHEADHAIR|HIDEMASK))
+			if(head.flags_inv & (BLOCKHAIR|BLOCKHEADHAIR|HIDEMASK|HIDEHEAD)) // RS Edit: Hide head (Lira, October 2025)
 				update_hair()	//rebuild hair
 				update_inv_ears(0)
 				update_inv_wear_mask(0)
+				// RS Edit: Hide head (Lira, October 2025)
+				if(head.flags_inv & HIDEHEAD)
+					update_icons_body()
 			if(istype(W,/obj/item/clothing/head/kitty))
 				W.update_icon(src)
 			W.equipped(src, slot)

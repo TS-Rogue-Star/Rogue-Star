@@ -167,6 +167,11 @@
 		target.revivedby = user.name
 		target.ai_holder.returns_home = FALSE
 		target.revive()
+		// RS Add: Revive holder (Lira, October 2025)
+		if(target.tf_mob_holder && istype(target.tf_mob_holder, /mob/living))
+			var/mob/living/holder = target.tf_mob_holder
+			if(holder.stat == DEAD)
+				holder.revive()
 		target.sight = initial(target.sight)
 		target.see_in_dark = initial(target.see_in_dark)
 		target.see_invisible = initial(target.see_invisible)
@@ -188,6 +193,11 @@
 	user.visible_message("[user] presses [src] to [target]...", runemessage = "presses [src] to [target]")
 	if(do_after(user, revive_time, exclusive = TASK_ALL_EXCLUSIVE, target = target))
 		target.revive()
+		// RS Add: Revive holder (Lira, October 2025)
+		if(target.tf_mob_holder && istype(target.tf_mob_holder, /mob/living))
+			var/mob/living/holder = target.tf_mob_holder
+			if(holder.stat == DEAD)
+				holder.revive()
 		target.sight = initial(target.sight)
 		target.see_in_dark = initial(target.see_in_dark)
 		target.see_invisible = initial(target.see_invisible)

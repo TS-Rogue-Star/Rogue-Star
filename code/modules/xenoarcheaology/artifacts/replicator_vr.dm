@@ -127,7 +127,14 @@
 						M.vore_organs -= B
 						new_mob.vore_organs += B
 
-					new_mob.ckey = M.ckey
+					// RS Edit Start: Mind tracking (Lira, October 2025)
+					var/datum/mind/source_mind = M.mind
+					var/source_ckey = M.ckey
+					if(source_mind)
+						source_mind.transfer_to(new_mob)
+					else if(source_ckey)
+						new_mob.ckey = source_ckey
+					// RS Edit End
 					if(M.ai_holder && new_mob.ai_holder)
 						var/datum/ai_holder/old_AI = M.ai_holder
 						old_AI.set_stance(STANCE_SLEEP)
@@ -179,7 +186,14 @@
 						M.vore_organs -= B
 						new_mob.vore_organs += B
 
-					new_mob.ckey = M.ckey
+					// RS Edit Start: Mind tracking (Lira, October 2025)
+					var/datum/mind/original_mind = M.mind
+					var/old_ckey = M.ckey
+					if(original_mind)
+						original_mind.transfer_to(new_mob)
+					else if(old_ckey)
+						new_mob.ckey = old_ckey
+					// RS Edit End
 					if(M.ai_holder && new_mob.ai_holder)
 						var/datum/ai_holder/old_AI = M.ai_holder
 						old_AI.set_stance(STANCE_SLEEP)
