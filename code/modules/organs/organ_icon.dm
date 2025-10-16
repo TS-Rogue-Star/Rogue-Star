@@ -191,6 +191,15 @@ var/global/list/marking_icon_cache = list() // RS Add: Icon cache (Lira, Septemb
 		should_apply_transparency = TRUE
 		apply_colouration(mob_icon) //RS END START (CS PR #5565)
 
+	// RS Edit: Default limb fluff renders first so player markings can recolor it (Lira, October 2025)
+	if(body_hair && islist(h_col) && h_col.len >= 3)
+		var/cache_key = "[body_hair]-[icon_name]-[h_col[1]][h_col[2]][h_col[3]]"
+		if(!limb_icon_cache[cache_key]) //RS COMMENT: Technically, CH PR #5565 has some GLOB stuff  going on here. That is a major refractor for something like this.
+			var/icon/I = icon(species.get_icobase(owner), "[icon_name]_[body_hair]")
+			I.Blend(rgb(h_col[1],h_col[2],h_col[3]), ICON_MULTIPLY) //VOREStation edit
+			limb_icon_cache[cache_key] = I
+		mob_icon.Blend(limb_icon_cache[cache_key], ICON_OVERLAY)
+
 	//Body markings, actually does not include head this time. Done separately above. || RS Edit: Custom markings support (Lira, September 2025)
 	if((!istype(src,/obj/item/organ/external/head) && !(force_icon && !skip_forced_icon)) || (model && owner && owner.synth_markings)) //RS EDIT (CS PR #5565)
 		for(var/M in markings)
@@ -213,14 +222,6 @@ var/global/list/marking_icon_cache = list() // RS Add: Icon cache (Lira, Septemb
 			add_overlay(mark_s) //So when it's not on your body, it has icons
 			mob_icon.Blend(mark_s, ICON_OVERLAY) //So when it's on your body, it has icons
 			icon_cache_key += "[M][mark_color]"
-
-	if(body_hair && islist(h_col) && h_col.len >= 3)
-		var/cache_key = "[body_hair]-[icon_name]-[h_col[1]][h_col[2]][h_col[3]]"
-		if(!limb_icon_cache[cache_key]) //RS COMMENT: Technically, CH PR #5565 has some GLOB stuff  going on here. That is a major refractor for something like this.
-			var/icon/I = icon(species.get_icobase(owner), "[icon_name]_[body_hair]")
-			I.Blend(rgb(h_col[1],h_col[2],h_col[3]), ICON_MULTIPLY) //VOREStation edit
-			limb_icon_cache[cache_key] = I
-		mob_icon.Blend(limb_icon_cache[cache_key], ICON_OVERLAY)
 
 	// VOREStation edit start
 	if(nail_polish && !(force_icon && !skip_forced_icon))
