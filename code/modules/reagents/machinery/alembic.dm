@@ -1,6 +1,6 @@
 /obj/machinery/alembic
-	name = "Alembic"
-	desc = "A piece of glass chemical apparatus that is used to distill and concentrate chemicals."
+	name = "alembic" // RS Edit: Lowercase (Lira, October 2025)
+	desc = "A glass chemical apparatus that is used to distill and concentrate chemicals." // RS Edit: Typo (Lira, October 2025)
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "alembic"
 	use_power = FALSE
