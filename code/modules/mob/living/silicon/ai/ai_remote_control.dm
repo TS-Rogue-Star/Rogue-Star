@@ -6,6 +6,44 @@
 		verbs += /mob/living/silicon/ai/proc/deploy_to_shell_act
 	return ..()
 
+//RS Add: Sync unassigned shells when AI joins (Lira, October 2025)
+/mob/living/silicon/ai/proc/sync_unassigned_shells()
+	if(!config.allow_ai_shells)
+		return
+	if(!GLOB.available_ai_shells || !GLOB.available_ai_shells.len)
+		return
+
+	if(!connected_robots)
+		connected_robots = list()
+
+	for(var/mob/living/silicon/robot/R as anything in GLOB.available_ai_shells)
+		if(QDELETED(R))
+			continue
+		if(!R.shell)
+			continue
+
+		var/mob/living/silicon/ai/current_owner = R.connected_ai
+		if(current_owner && QDELETED(current_owner))
+			current_owner = null
+			R.connected_ai = null
+
+		if(current_owner && current_owner != src)
+			continue
+
+		var/new_assignment = isnull(current_owner)
+
+		R.connected_ai = src
+		if(!(R in connected_robots))
+			connected_robots |= R
+
+		if(!R.lawupdate)
+			R.lawupdate = TRUE
+
+		R.sync()
+
+		if(new_assignment)
+			R.notify_ai(ROBOT_NOTIFICATION_AI_SHELL)
+
 /mob/living/silicon/ai/proc/deploy_to_shell(var/mob/living/silicon/robot/target)
 	if(!config.allow_ai_shells)
 		to_chat(src, span("warning", "AI Shells are not allowed on this server. You shouldn't have this verb because of it, so consider making a bug report."))
