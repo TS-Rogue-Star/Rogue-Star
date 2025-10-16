@@ -219,6 +219,8 @@ var/list/ai_verbs_default = list(
 		show_laws()
 		to_chat(src, "<span class='filter_notice'><b>These laws may be changed by other players, or by you being the traitor.</b></span>")
 
+	sync_unassigned_shells() //RS Add: Sync unassigned shells when AI joins (Lira, October 2025)
+
 	job = "AI"
 	setup_icon()
 
