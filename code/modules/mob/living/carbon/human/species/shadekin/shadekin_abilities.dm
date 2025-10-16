@@ -334,14 +334,37 @@
 	on_created_text = "<span class='notice'>You drag part of The Dark into realspace, enveloping yourself.</span>"
 	on_expired_text = "<span class='warning'>You lose your grasp on The Dark and realspace reasserts itself.</span>"
 	stacks = MODIFIER_STACK_EXTEND
-	var/mob/living/simple_mob/shadekin/my_kin
+	var/mob/living/my_kin // RS Edit: Both simple and carbon (Lira, October 2025)
+	// RS Add Start: Track lighting (Lira, October 2025)
+	var/old_glow_toggle
+	var/old_glow_range
+	var/old_glow_intensity
+	var/old_glow_color
+	var/old_light_range
+	var/old_light_power
+	var/old_light_color
+	var/old_light_on
+	// RS Add End
 
+// RS Edit: Ensure ability ends on phase (Lira, October 2025)
 /datum/modifier/shadekin/create_shade/tick()
-	if(my_kin.ability_flags & AB_PHASE_SHIFTED)
+	if(!my_kin)
+		my_kin = holder
+	if(my_kin && !QDELETED(my_kin) && hasvar(my_kin, "ability_flags") && (my_kin:ability_flags & AB_PHASE_SHIFTED))
 		expire()
 
 /datum/modifier/shadekin/create_shade/on_applied()
 	my_kin = holder
+	// RS Add Start: Track lighting (Lira, October 2025)
+	old_glow_toggle = holder.glow_toggle
+	old_glow_range = holder.glow_range
+	old_glow_intensity = holder.glow_intensity
+	old_glow_color = holder.glow_color
+	old_light_range = holder.light_range
+	old_light_power = holder.light_power
+	old_light_color = holder.light_color
+	old_light_on = holder.light_on
+	// RS Add End
 	holder.glow_toggle = TRUE
 	holder.glow_range = 8
 	holder.glow_intensity = -10
@@ -349,11 +372,25 @@
 	holder.set_light(8, -10, "#FFFFFF")
 
 /datum/modifier/shadekin/create_shade/on_expire()
-	holder.glow_toggle = initial(holder.glow_toggle)
-	holder.glow_range = initial(holder.glow_range)
-	holder.glow_intensity = initial(holder.glow_intensity)
-	holder.glow_color = initial(holder.glow_color)
-	holder.set_light(0)
+	// RS Edit: Track lighting (Lira, October 2025)
+	if(holder)
+		holder.glow_toggle = old_glow_toggle
+		holder.glow_range = old_glow_range
+		holder.glow_intensity = old_glow_intensity
+		holder.glow_color = old_glow_color
+		var/restore_range = old_light_range
+		var/restore_power = old_light_power
+		var/restore_color = old_light_color
+		var/restore_on = old_light_on
+		if(isnull(restore_range))
+			restore_range = initial(holder.light_range)
+		if(isnull(restore_power))
+			restore_power = initial(holder.light_power)
+		if(isnull(restore_color))
+			restore_color = initial(holder.light_color)
+		if(isnull(restore_on))
+			restore_on = initial(holder.light_on)
+		holder.set_light(restore_range, restore_power, restore_color, restore_on)
 	my_kin = null
 
 /// Light flicker adjusments! Allows you to change three things:
