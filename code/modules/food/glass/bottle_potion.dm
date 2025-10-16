@@ -38,7 +38,7 @@
 	prefill = list("spaceacillin" = 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/potion/magic
-	name = "magic resistence potion"
+	name = "magic resistance potion" // RS Edit: Spelling fix (Lira, October 2025)
 	desc = "A small green bottle containing some dark green liquid that claims to cure magical effects."
 	prefill = list("hyronalin" = 30)
 
@@ -148,4 +148,3 @@
 	name = "volatile potion"
 	desc = "A small green bottle containing some volatile purple liquid."
 	prefill = list("phoron" = 10)
-
