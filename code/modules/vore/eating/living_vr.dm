@@ -766,6 +766,11 @@
 	set category = "Abilities"
 	set desc = "Toggle your glowing on/off!"
 
+	// RS Add: No using toggle when create shade active (Lira, October 2025)
+	if(has_modifier_of_type(/datum/modifier/shadekin/create_shade))
+		to_chat(src,"<span class='warning'>The shade refuses to loosen its hold; wait for it to fade before toggling your glow.</span>")
+		return
+
 	//I don't really see a point to any sort of checking here.
 	//If they're passed out, the light won't help them. Same with buckled. Really, I think it's fine to do this whenever.
 	glow_toggle = !glow_toggle
