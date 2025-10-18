@@ -144,6 +144,13 @@ GLOBAL_DATUM(gateway_station, /obj/machinery/gateway/centerstation)
 	if(!active)		return
 	if(!awaygate)	return
 
+	// RS Add: Shells can't leave the station (Lira, October 2025)
+	if(ismob(M) && isrobot(M))
+		var/mob/living/silicon/robot/R = M
+		if(R.shell)
+			to_chat(R, "<span class='warning'>The gateway flickers and refuses the remote shell.</span>")
+			return
+
 	use_power(5000)
 	M << 'sound/effects/phasein.ogg'
 	playsound(src, 'sound/effects/phasein.ogg', 100, 1)
@@ -335,6 +342,12 @@ GLOBAL_DATUM(gateway_away, /obj/machinery/gateway/centeraway)
 /obj/machinery/gateway/centeraway/Bumped(atom/movable/M as mob|obj)
 	if(!ready)	return
 	if(!active)	return
+	// RS Add: Shells can't leave the station (Lira, October 2025)
+	if(ismob(M) && isrobot(M))
+		var/mob/living/silicon/robot/R = M
+		if(R.shell)
+			to_chat(R, "<span class='warning'>The gateway flickers and refuses the remote shell.</span>")
+			return
 	if(istype(M, /mob/living/carbon))
 		for(var/obj/item/weapon/implant/exile/E in M)//Checking that there is an exile implant in the contents
 			if(E.imp_in == M)//Checking that it's actually implanted vs just in their pocket
