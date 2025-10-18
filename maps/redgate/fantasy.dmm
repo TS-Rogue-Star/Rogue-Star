@@ -754,7 +754,6 @@
 /obj/structure/table/woodentable,
 /obj/random/potion_ingredient,
 /obj/item/weapon/paper{
-	// RS Edit Cleanup Formatting (Lira, October 2025)
 	info = "Apprentice, I have written out these instructions so that you may operate the alembic in your own time without me needing to watch over your every step.[br][br]The alembic is simple to operate, simply activate the spontaneous heating stone beneath it to begin boiling the contents. However, the contents that you choose are critical in creating a potion of any merit, and mixing the wrong materials may create something completely useless, wasting our resources![br][br]You must mix two materials, and only ever two. One primary ingredient, this can be one of many materials with valuable alchemical properties. The other is a potion base, this will be essential to properly break down and transmute the ingredient into a potent potion. Once you have added the two, boil as above, and collect the distillate in a bottle. As for choosing your base, here is a short guide, but be aware that the properties of an ingredient are not always immediately apparent and some experimentation may be required:[br][br]Alkahest is a potent solvent and particularly useful for dissolving metals.[br][br]Aqua Regia is a heavily corrosive mixture of acids that readily dissolve most organic materials.[br][br]Ichor is a rich ferrous fluid that binds well to minerals, it can often break down gemstones.";
 	name = "alchemy instructions"
 	},
@@ -2344,7 +2343,6 @@
 "oH" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/paper{
-	// RS Edit Cleanup Formatting (Lira, October 2025)
 	info = "Apprentice, I have written out these instructions so that you may operate the alembic in your own time without me needing to watch over your every step.[br][br]The alembic is simple to operate, simply activate the spontaneous heating stone beneath it to begin boiling the contents. However, the contents that you choose are critical in creating a potion of any merit, and mixing the wrong materials may create something completely useless, wasting our resources![br][br]You must mix two materials, and only ever two. One primary ingredient, this can be one of many materials with valuable alchemical properties. The other is a potion base, this will be essential to properly break down and transmute the ingredient into a potent potion. Once you have added the two, boil as above, and collect the distillate in a bottle. As for choosing your base, here is a short guide, but be aware that the properties of an ingredient are not always immediately apparent and some experimentation may be required:[br][br]Alkahest is a potent solvent and particularly useful for dissolving metals.[br][br]Aqua Regia is a heavily corrosive mixture of acids that readily dissolve most organic materials.[br][br]Ichor is a rich ferrous fluid that binds well to minerals, it can often break down gemstones.";
 	name = "alchemy instructions"
 	},
