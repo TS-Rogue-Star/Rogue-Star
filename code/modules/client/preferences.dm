@@ -871,6 +871,8 @@ var/list/preferences_datums = list()
 	if(fast_preview && character.species)
 		if(character.species.name == species)
 			needs_species_update = FALSE
+			// Rebuild organs to stop sticky prosthetics and amputations (Lira, October 2025)
+			character.species.create_organs(character)
 	if(needs_species_update)
 	// RS Add End
 		character.set_species(species, null, TRUE, null, fast_preview) // RS Edit: Custom markings support (Lira, September 2025)
