@@ -29,6 +29,23 @@
 		to_chat(src, "You can't use that ability again so soon!")
 		return
 
+	// RS Add Start: Xenochimera slot guards (Lira, October 2025)
+	if(client && client.prefs)
+		if(client.prefs.real_name && client.prefs.real_name != real_name)
+			to_chat(src, "<span class='warning'>Your current character preferences do not match the body you are trying to reconstruct. Load the correct slot first.</span>")
+			return
+		var/current_species = species ? species.name : null
+		if(client.prefs.species && current_species && client.prefs.species != current_species)
+			to_chat(src, "<span class='warning'>Your current species preferences do not match this body. Load the matching slot before regenerating.</span>")
+			return
+
+	chimera_expected_real_name = real_name
+	chimera_expected_species = species ? species.name : null
+	if(client && client.prefs)
+		chimera_expected_real_name = client.prefs.real_name
+		chimera_expected_species = client.prefs.species
+	// RS Add End
+
 	var/time = min(900, (120+780/(1 + nutrition/100))) //capped at 15 mins, roughly 6 minutes at 250 (yellow) nutrition, 4.1 minutes at 500 (grey), cannot be below 2 mins
 	if (quickcheckuninjured()) //if you're completely uninjured, then you get a speedymode - check health first for quickness
 		time = 30
@@ -53,6 +70,10 @@
 				revive_ready = REVIVING_READY //reset their cooldown
 				clear_alert("regen")
 				throw_alert("hatch", /obj/screen/alert/xenochimera/readytohatch)
+				// RS Add Start: Xenochimera slot guards (Lira, October 2025)
+				chimera_expected_real_name = null
+				chimera_expected_species = null
+				// RS Add End
 
 			// Was dead, still dead.
 			else
@@ -113,6 +134,16 @@
 		verbs -= /mob/living/carbon/human/proc/hatch
 		return
 
+	// RS Add: Xenochimera slot guards (Lira, October 2025)
+	if(chimera_expected_real_name || chimera_expected_species)
+		if(client && client.prefs)
+			if(chimera_expected_real_name && client.prefs.real_name != chimera_expected_real_name)
+				to_chat(src, "<span class='warning'>Your regeneration falters; the body you are focusing on does not match the one that began this process.</span>")
+				return
+			if(chimera_expected_species && client.prefs.species != chimera_expected_species)
+				to_chat(src, "<span class='warning'>Your regeneration recoils from the unfamiliar form. Load the correct slot before attempting to hatch.</span>")
+				return
+
 	var/confirm = tgui_alert(usr, "Are you sure you want to hatch right now? This will be very obvious to anyone in view.", "Confirm Regeneration", list("Yes", "No"))
 	if(confirm == "Yes")
 
@@ -170,6 +201,10 @@
 	weakened = 2
 
 	revive_ready = world.time + 10 MINUTES //set the cooldown CHOMPEdit: Reduced this to 10 minutes, you're playing with fire if you're reviving that often.
+	// RS Add Start: Xenochimera slot guards (Lira, October 2025)
+	chimera_expected_real_name = null
+	chimera_expected_species = null
+	// RS Add End
 
 /datum/modifier/resleeving_sickness/chimera //near identical to the regular version, just with different flavortexts
 	name = "imperfect regeneration"
@@ -180,6 +215,10 @@
 
 /mob/living/carbon/human/proc/revivingreset() // keep this as a debug proc or potential future use
 		revive_ready = REVIVING_READY
+		// RS Add Start: Xenochimera slot guards (Lira, October 2025)
+		chimera_expected_real_name = null
+		chimera_expected_species = null
+		// RS Add End
 
 /obj/effect/gibspawner/human/xenochimera
 	fleshcolor = "#14AD8B"
