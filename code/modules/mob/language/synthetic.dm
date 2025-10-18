@@ -34,6 +34,14 @@
 		if(drone_only && !istype(S,/mob/living/silicon/robot/drone))
 			continue
 		else if(istype(S , /mob/living/silicon/ai))
+			// RS Add Start: Prevent dublicate messages for AI shell (Lira, October 2025)
+			var/mob/living/silicon/ai/AI = S
+			var/mob/living/teleop_body = null
+			if(istype(AI.teleop, /mob/living))
+				teleop_body = AI.teleop
+			if(teleop_body && teleop_body != AI && teleop_body.binarycheck())
+				continue
+			// RS Add End
 			message_start = "<i><span class='game say'>[name], <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[speaker];trackname=[html_encode(speaker.name)]'><span class='name'>[speaker.name]</span></a></span></i>"
 		else if (!S.binarycheck())
 			continue
