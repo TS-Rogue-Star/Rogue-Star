@@ -143,6 +143,17 @@
 		return	//RS EDIT
 	if(isAI(M) || istype(M,/mob/observer/eye))	//RS EDIT
 		return	//RS EDIT
+	// RS Add: Shells can't leave the station (Lira, October 2025)
+	if(ismob(M) && isrobot(M))
+		var/mob/living/silicon/robot/R = M
+		if(R.shell)
+			var/turf/source_turf = get_turf(src)
+			var/turf/target_turf = null
+			if(target)
+				target_turf = get_turf(target)
+			if(!source_turf || !target_turf || !isStationLevel(source_turf.z) || !isStationLevel(target_turf.z))
+				to_chat(R, "<span class='warning'>The [src] flares and refuses the remote shell.</span>")
+				return
 	if(istype(M, /obj/effect)) //sparks don't teleport
 		return
 	if (M.anchored&&istype(M, /obj/mecha))
