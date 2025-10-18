@@ -11,6 +11,8 @@
 	var/feral = 0 						// How feral the mob is, if at all. Does nothing for non xenochimera at the moment.
 	var/revive_ready = REVIVING_READY	// Only used for creatures that have the xenochimera regen ability, so far.
 	var/revive_finished = 0				// Only used for xenochimera regen, allows us to find out when the regen will finish.
+	var/chimera_expected_real_name		// RS Add: Tracks the expected character identity during xenochimera regeneration (Lira, October 2025)
+	var/chimera_expected_species		// RS Add: Tracks the expected species string during xenochimera regeneration (Lira, October 2025)
 	var/metabolism = 0.0015
 	var/no_vore = FALSE					// If the character/mob can vore.
 	var/restrict_vore_ventcrawl = FALSE // Self explanatory
