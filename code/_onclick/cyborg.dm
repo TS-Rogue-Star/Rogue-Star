@@ -51,6 +51,10 @@
 			to_chat(src, "<span class='userdanger'>Your camera isn't functional.</span>")
 		return
 
+	if(isliving(A))	//RS ADD START
+		var/mob/living/L = A
+		game_tag(L)	//RS ADD END - The borg is clicking someone else!
+
 	/*
 	cyborg restrained() currently does nothing
 	if(restrained())
