@@ -1661,6 +1661,7 @@
 #include "code\game\Rogue Star\Goliath.dm"
 #include "code\game\Rogue Star\kiss.dm"
 #include "code\game\Rogue Star\special_persist.dm"
+#include "code\game\Rogue Star\tag.dm"
 #include "code\game\Rogue Star\waddle.dm"
 #include "code\game\Rogue Star\_HELPERS\mobs.dm"
 #include "code\game\Rogue Star\catborgs\catborgs.dm"

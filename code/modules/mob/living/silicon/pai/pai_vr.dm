@@ -115,6 +115,7 @@
 
 /mob/living/silicon/pai/update_icon() //Some functions cause this to occur, such as resting
 	..()
+	cut_overlays()	//RS ADD
 	if(chassis == "13")
 		icon = holo_icon
 		add_eyes()
@@ -145,6 +146,11 @@
 		pixel_x = 0
 		default_pixel_x = 0
 	add_eyes()
+	update_modifier_visuals()	//RS ADD START
+
+/mob/living/silicon/pai/update_modifier_visuals()
+	for(var/datum/modifier/M in modifiers)
+		M.simple_overlay()	//RS ADD END
 
 /mob/living/silicon/pai/update_icons() //And other functions cause this to occur, such as digesting someone.
 	..()

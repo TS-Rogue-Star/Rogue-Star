@@ -864,7 +864,9 @@
 			var/obj/item/broken_device = cell_component.wrapped
 			to_chat(user, "<span class='filter_notice'>You remove \the [broken_device].</span>")
 			user.put_in_active_hand(broken_device)
-
+	if(isliving(user))	//RS ADD
+		var/mob/living/L = user
+		L.game_tag(src)	//RS ADD - L is the attacker, so L is touching the borg in this case!
 	if(istype(user,/mob/living/carbon/human) && !opened)
 		var/mob/living/carbon/human/H = user
 		//Adding borg petting.  Help intent pets, Disarm intent taps and Harm is punching(no damage)
@@ -1027,6 +1029,12 @@
 		var/open_overlay = sprite_datum.get_open_sprite(src)
 		if(open_overlay)
 			add_overlay(open_overlay)
+	for(var/datum/modifier/M in modifiers)	//RS ADD START
+		update_modifier_visuals()
+
+/mob/living/silicon/robot/update_modifier_visuals()
+	for(var/datum/modifier/M in modifiers)
+		M.simple_overlay()	//RS ADD END
 
 /mob/living/silicon/robot/proc/installed_modules()
 	if(weapon_lock)
