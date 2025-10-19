@@ -71,16 +71,17 @@ GLOBAL_LIST_INIT(digest_modes, list())
 	var/offset = (1 + ((L.weight - 137) / 137)) // 130 pounds = .95 140 pounds = 1.02
 	var/difference = B.owner.size_multiplier / L.size_multiplier
 	// Begin RS edit
-	if(B.health_impacts_size)
-		if (istype(B.owner, /mob/living/carbon/human))
-			var/mob/living/carbon/human/howner = B.owner
+	// DameonOwen - edited order 10/19/25
+	if (istype(B.owner, /mob/living/carbon/human))
+		var/mob/living/carbon/human/howner = B.owner
+		if(B.health_impacts_size)
 			howner.update_fullness()
 
-			var/modified_damage_gain = damage_gain
-			if(!L.ckey)
-				modified_damage_gain = modified_damage_gain / 4
+		var/modified_damage_gain = damage_gain
+		if(!L.ckey)
+			modified_damage_gain = modified_damage_gain / 4
 
-			howner.shadekin_adjust_energy(damage_gain,TRUE) 	//1dmg to 1 energy, more or less.
+		howner.shadekin_adjust_energy(damage_gain,TRUE) 	//1dmg to 1 energy, more or less.
 
 	// End RS edit
 	if(isrobot(B.owner))
