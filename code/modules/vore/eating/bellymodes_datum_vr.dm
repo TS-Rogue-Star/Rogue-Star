@@ -81,7 +81,7 @@ GLOBAL_LIST_INIT(digest_modes, list())
 		if(!L.ckey)
 			modified_damage_gain = modified_damage_gain / 4
 
-		howner.shadekin_adjust_energy(damage_gain,TRUE) 	//1dmg to 1 energy, more or less.
+		howner.shadekin_adjust_energy(modified_damage_gain,TRUE) 	//1dmg to 1 energy, more or less.
 
 	// End RS edit
 	if(isrobot(B.owner))
