@@ -37,7 +37,7 @@
 			remove_eyes()
 		else
 			add_eyes()
-
+	update_modifier_visuals()	//RS ADD
 //	appearance = ma
 
 
@@ -55,6 +55,11 @@
 		if(M.mob_overlay_state)
 			var/image/I = image("icon" = 'icons/mob/modifier_effects.dmi', "icon_state" = M.mob_overlay_state)
 			I.appearance_flags = RESET_COLOR // So colored mobs don't affect the overlay.
+			var/icon/our_icon = icon(icon, icon_state)	//RS ADD START
+			var/offset = our_icon.Width()
+			if(offset > 32)
+				offset /= 4
+				I.pixel_x = offset	//RS ADD END
 			effects.add_overlay(I)
 
 	modifier_overlay = effects

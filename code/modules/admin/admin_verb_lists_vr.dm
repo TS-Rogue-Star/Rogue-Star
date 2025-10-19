@@ -184,7 +184,8 @@ var/list/admin_verbs_fun = list(
 	/client/proc/add_trait,				//RS ADD
 	/client/proc/toggle_admin_secret_view,	//RS ADD
 	/client/proc/toggle_multichar,			//RS ADD
-	/client/proc/admin_lighting_manager // RS ADD: New Lighting Manager Panel (Lira, October 2025)
+	/client/proc/admin_lighting_manager,	// RS ADD: New Lighting Manager Panel (Lira, October 2025)
+	/client/proc/tag_game					//RS ADD
 	)
 
 var/list/admin_verbs_spawn = list(
