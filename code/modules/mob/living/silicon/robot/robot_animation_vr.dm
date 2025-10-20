@@ -3,6 +3,9 @@
 
 /mob/living/silicon/robot/proc/do_transform_animation()
 	notransform = TRUE
+	// RS Add: Add borg selector TGUI (Lira, October 2025)
+	if(module_selector_ui)
+		SStgui.update_uis(module_selector_ui)
 	dir = SOUTH
 	var/obj/effect/temp_visual/decoy/fading/fivesecond/ANM = new /obj/effect/temp_visual/decoy/fading/fivesecond(loc, src)
 	ANM.layer = layer - 0.01
@@ -20,3 +23,6 @@
 		SetLockdown(0)
 	anchored = FALSE
 	notransform = FALSE
+	// RS Add: Add borg selector TGUI (Lira, October 2025)
+	if(module_selector_ui)
+		SStgui.update_uis(module_selector_ui)

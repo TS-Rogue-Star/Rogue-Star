@@ -38,6 +38,8 @@
 	var/notransform
 	does_spin = FALSE
 
+	var/datum/tgui_module/robot_module_selector/module_selector_ui // RS Add: Add borg selector TGUI (Lira, October 2025)
+
 //Hud stuff
 
 	var/obj/screen/inv1 = null
@@ -152,6 +154,7 @@
 	initialize_components()
 	//if(!unfinished)
 	// Create all the robot parts.
+	module_selector_ui = new(src) // RS Add: Add borg selector TGUI (Lira, October 2025)
 	for(var/V in components) if(V != "power cell")
 		var/datum/robot_component/C = components[V]
 		C.installed = 1
@@ -264,6 +267,7 @@
 		if(deployed)
 			undeploy()
 		revert_shell() // To get it out of the GLOB list.
+	QDEL_NULL(module_selector_ui) // RS Add: Add borg selector TGUI (Lira, October 2025)
 	qdel(wires)
 	wires = null
 	return ..()
@@ -283,39 +287,216 @@
 	update_icon()
 	return module_sprites
 */
+
+// RS Edit: Add borg selector TGUI (Lira, October 2025)
 /mob/living/silicon/robot/proc/pick_module()
 	if(module)
+		if(!icon_selected)
+			if(!module_selector_ui)
+				module_selector_ui = new(src)
+			module_selector_ui.tgui_interact(src)
 		return
-	var/list/modules = list()
 	//VOREStatation Edit Start: shell restrictions
+	if(!module_selector_ui)
+		module_selector_ui = new(src)
+
+	if(!shell && (crisis || security_level == SEC_LEVEL_RED || crisis_override))
+		to_chat(src, "<font color='red'>Crisis mode active. Combat module available.</font>")
+
+	var/list/available = get_available_module_names()
+	if(!available.len)
+		to_chat(src, "<span class='filter_warning'>No modules are available for selection.</span>")
+		return
+
+	module_selector_ui.tgui_interact(src)
+
+// RS Edit: Add borg selector TGUI (Lira, October 2025)
+/mob/living/silicon/robot/proc/get_available_module_names()
+	var/list/names = list()
+
 	if(shell)
-		modules.Add(shell_module_types)
+		for(var/module_name in shell_module_types)
+			if(can_offer_module(module_name))
+				names += module_name
 	else
-		modules.Add(robot_module_types)
+		for(var/module_name in robot_module_types)
+			if(can_offer_module(module_name))
+				names += module_name
+
 		if(crisis || security_level == SEC_LEVEL_RED || crisis_override)
-			to_chat(src, "<font color='red'>Crisis mode active. Combat module available.</font>")
-			modules |= emergency_module_types
+			for(var/module_name in emergency_module_types)
+				if(can_offer_module(module_name) && !(module_name in names))
+					names += module_name
+
 		for(var/module_name in whitelisted_module_types)
-			if(is_borg_whitelisted(src, module_name))
-				modules |= module_name
 	//VOREStatation Edit End: shell restrictions
-	modtype = tgui_input_list(usr, "Please, select a module!", "Robot module", modules)
+			if(can_offer_module(module_name) && !(module_name in names))
+				names += module_name
 
+	return names
+
+// RS Add Start: Add borg selector TGUI (Lira, October 2025)
+
+/mob/living/silicon/robot/proc/get_available_module_entries()
+	var/list/entries = list()
+
+	for(var/module_name in get_available_module_names())
+		var/module_type = robot_modules[module_name]
+		if(!module_type)
+			continue
+
+		var/description = null
+
+		entries += list(list(
+			"id" = module_name,
+			"name" = module_name,
+			"description" = description,
+			"isWhitelisted" = (module_name in whitelisted_module_types)
+		))
+
+	return entries
+
+/mob/living/silicon/robot/proc/get_available_sprite_entries()
+	var/list/entries = list()
+
+	if(!module || !modtype || !SSrobot_sprites)
+		return entries
+
+	var/list/module_sprites = SSrobot_sprites.get_module_sprites(modtype, src)
+	if(!islist(module_sprites) || !module_sprites.len)
+		return entries
+
+	for(var/datum/robot_sprite/sprite in module_sprites)
+		var/preview = null
+		var/icon/preview_icon = sprite.build_preview(src)
+		if(preview_icon)
+			preview = icon2base64(preview_icon)
+
+		entries += list(list(
+			"id" = REF(sprite),
+			"name" = sprite.name,
+			"isCurrent" = (sprite == sprite_datum),
+			"isDefault" = !!sprite.default_sprite,
+			"isWhitelisted" = !!sprite.is_whitelisted,
+			"preview" = preview
+		))
+
+	return entries
+
+/mob/living/silicon/robot/proc/get_current_sprite_name()
+	if(sprite_datum)
+		return sprite_datum.name
+	return null
+
+/mob/living/silicon/robot/proc/can_adjust_sprite()
+	if(!module)
+		return FALSE
+	if(!client)
+		return FALSE
+	return icon_selection_tries > 0
+
+/mob/living/silicon/robot/proc/apply_sprite_selection_by_ref(var/sprite_ref, var/consume_try = TRUE, var/announce = TRUE, var/lock_on_exhaust = TRUE)
+	if(!sprite_ref)
+		return FALSE
+
+	var/datum/robot_sprite/selection = locate(sprite_ref)
+	if(!istype(selection))
+		return FALSE
+
+	return apply_sprite_selection(selection, consume_try, announce, lock_on_exhaust)
+
+// RS Add End
+
+// RS Edit: Add borg selector TGUI (Lira, October 2025)
+/mob/living/silicon/robot/proc/apply_sprite_selection(var/datum/robot_sprite/sprite, var/consume_try = TRUE, var/announce = TRUE, var/lock_on_exhaust = TRUE)
+	if(!module || !sprite || !SSrobot_sprites)
+		return FALSE
+
+	var/list/module_sprites = SSrobot_sprites.get_module_sprites(modtype, src)
+	if(!islist(module_sprites) || !(sprite in module_sprites))
+		return FALSE
+
+	if(icon_selection_tries <= 0 && sprite != sprite_datum)
+		if(announce)
+			to_chat(src, "<span class='filter_warning'>You must reset your module to change icons again.</span>")
+		return FALSE
+
+	if(notransform)
+		if(announce)
+			to_chat(src, "<span class='filter_warning'>Your current transformation has not finished yet!</span>")
+		return FALSE
+
+	var/datum/robot_sprite/old_sprite = sprite_datum
+	if(sprite == old_sprite && icon_selected && icon_selection_tries <= 0)
+		return TRUE
+
+	sprite_datum = sprite
+	update_multibelly()
+
+	var/robot_species = null
+	if(!istype(src, /mob/living/silicon/robot/drone) && sprite_datum)
+		robot_species = sprite_datum.name
+
+	transform_with_anim()
+
+	var/tempheight = vis_height
+	update_icon()
+	if(tempheight != vis_height)
+		var/tempsize = size_multiplier
+		resize(1)
+		resize(tempsize)
+
+	if(consume_try && sprite != old_sprite && icon_selection_tries > 0)
+		icon_selection_tries--
+
+	if(icon_selection_tries <= 0)
+		icon_selection_tries = 0
+		if(lock_on_exhaust)
+			icon_selected = TRUE
+			if(robot_species)
+				sprite_type = robot_species
+			if(hands)
+				update_hud()
+			if(announce)
+				to_chat(src, "<span class='filter_notice'>Your icon has been set. You now require a module reset to change it.</span>")
+
+	if(module_selector_ui)
+		SStgui.update_uis(module_selector_ui)
+
+	return TRUE
+
+// RS Edit: Add borg selector TGUI (Lira, October 2025)
+/mob/living/silicon/robot/proc/can_offer_module(var/module_name)
+	if(!(module_name in robot_modules))
+		return FALSE
+	if(!is_borg_whitelisted(src, module_name))
+		return FALSE
+	return TRUE
+
+// RS Edit: Add borg selector TGUI (Lira, October 2025)
+/mob/living/silicon/robot/proc/apply_module_selection(var/module_name)
 	if(module)
-		return
-	if(!(modtype in robot_modules))
-		return
-	if(!is_borg_whitelisted(src, modtype))
-		return
+		return FALSE
 
-	var/module_type = robot_modules[modtype]
+	if(!can_offer_module(module_name))
+		return FALSE
+
+	var/module_type = robot_modules[module_name]
+	if(!module_type)
+		return FALSE
+
+	modtype = module_name
 	transform_with_anim()	//VOREStation edit: sprite animation
 	new module_type(src)
 
 	hands.icon_state = get_hud_module_icon()
 	feedback_inc("cyborg_[lowertext(modtype)]",1)
 	updatename()
-	notify_ai(ROBOT_NOTIFICATION_NEW_MODULE, module.name)
+	if(module)
+		notify_ai(ROBOT_NOTIFICATION_NEW_MODULE, module.name)
+	if(module_selector_ui)
+		SStgui.update_uis(module_selector_ui)
+	return TRUE
 
 /mob/living/silicon/robot/proc/update_braintype()
 	if(istype(mmi, /obj/item/device/mmi/digital/posibrain))
@@ -1196,8 +1377,8 @@
 
 	return
 
+// RS Edit: Add borg selector TGUI (Lira, October 2025)
 /mob/living/silicon/robot/proc/choose_icon(var/triesleft)
-	var/robot_species = null
 	if(!SSrobot_sprites)
 		to_chat(src, "Robot Sprites have not been initialized yet. How are you choosing a sprite? Harass a coder.")
 		return
@@ -1207,52 +1388,25 @@
 		to_chat(src, "Your module appears to have no sprite options. Harass a coder.")
 		return
 
-	icon_selected = 0
+	icon_selected = FALSE
 	icon_selection_tries = triesleft
 	if(module_sprites.len == 1 || !client)
 		if(!(sprite_datum in module_sprites))  //RS Edit: Pull update_multibelly out of check (Lira, May 2025)
 			sprite_datum = module_sprites[1]
-		update_multibelly()
-	else
-		var/selection = tgui_input_list(src, "Select an icon! [triesleft ? "You have [triesleft] more chance\s." : "This is your last try."]", "Robot Icon", module_sprites)
-		sprite_datum = selection
-		if(selection)
-			sprite_datum = selection
-		else
-			sprite_datum = module_sprites[1]
-		update_multibelly()
-		if(!istype(src,/mob/living/silicon/robot/drone))
-			robot_species = sprite_datum.name
-		if(notransform)
-			to_chat(src, "Your current transformation has not finished yet!")
-			choose_icon(icon_selection_tries)
-			return
-		else
-			transform_with_anim()
+		apply_sprite_selection(sprite_datum, FALSE, FALSE)
+		icon_selected = TRUE
+		icon_selection_tries = 0
+		if(!istype(src,/mob/living/silicon/robot/drone) && sprite_datum)
+			sprite_type = sprite_datum.name
+		if(hands)
+			update_hud()
+		return
 
-	var/tempheight = vis_height
-	update_icon()
-	// This is bad but I dunno other way to 'reset' our resize offset based on vis_height changes other than resizing to normal and back.
-	if(tempheight != vis_height)
-		var/tempsize = size_multiplier
-		resize(1)
-		resize(tempsize)
+	if(!module_selector_ui)
+		module_selector_ui = new(src)
 
-
-	if (module_sprites.len > 1 && triesleft >= 1 && client)
-		icon_selection_tries--
-		var/choice = tgui_alert(usr, "Look at your icon - is this what you want?", "Icon Choice", list("Yes","No"))
-		if(choice == "No")
-			choose_icon(icon_selection_tries)
-			return
-
-
-	icon_selected = 1
-	icon_selection_tries = 0
-	sprite_type = robot_species
-	if(hands)
-		update_hud()
-	to_chat(src, "Your icon has been set. You now require a module reset to change it.")
+	module_selector_ui.tgui_interact(src)
+	SStgui.update_uis(module_selector_ui)
 
 /mob/living/silicon/robot/proc/set_default_module_icon()
 	if(!SSrobot_sprites)
