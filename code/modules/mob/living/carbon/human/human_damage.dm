@@ -26,6 +26,9 @@
 
 	if(status_flags & GODMODE)	return 0	//godmode
 
+	if(amount > 0)	//RS ADD
+		SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE)	//RS ADD
+
 	if(should_have_organ("brain"))
 		var/obj/item/organ/internal/brain/sponge = internal_organs_by_name["brain"]
 		if(sponge)
@@ -113,6 +116,7 @@
 /mob/living/carbon/human/adjustBruteLoss(var/amount,var/include_robo)
 	amount = amount*species.brute_mod
 	if(amount > 0)
+		SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE)	//RS ADD
 		for(var/datum/modifier/M in modifiers)
 			if(!isnull(M.incoming_damage_percent))
 				if(M.energy_based)
@@ -135,6 +139,7 @@
 /mob/living/carbon/human/adjustFireLoss(var/amount,var/include_robo)
 	amount = amount*species.burn_mod
 	if(amount > 0)
+		SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE)	//RS ADD
 		for(var/datum/modifier/M in modifiers)
 			if(!isnull(M.incoming_damage_percent))
 				if(M.energy_based)
@@ -159,6 +164,7 @@
 		var/obj/item/organ/external/O = get_organ(organ_name)
 
 		if(amount > 0)
+			SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE)	//RS ADD
 			for(var/datum/modifier/M in modifiers)
 				if(!isnull(M.incoming_damage_percent))
 					if(M.energy_based)
@@ -185,6 +191,7 @@
 		var/obj/item/organ/external/O = get_organ(organ_name)
 
 		if(amount > 0)
+			SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE)	//RS ADD
 			for(var/datum/modifier/M in modifiers)
 				if(!isnull(M.incoming_damage_percent))
 					if(M.energy_based)
@@ -261,6 +268,7 @@
 	var/heal_prob = max(0, 80 - getCloneLoss())
 	var/mut_prob = min(80, getCloneLoss()+10)
 	if (amount > 0)
+		SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE)	//RS ADD
 		if (prob(mut_prob))
 			var/list/obj/item/organ/external/candidates = list()
 			for (var/obj/item/organ/external/O in organs)
@@ -297,6 +305,8 @@
 		oxyloss = 0
 	else
 		amount = amount*species.oxy_mod
+		if(amount > 0)	//RS ADD
+			SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE)	//RS ADD
 		..(amount)
 
 /mob/living/carbon/human/setOxyLoss(var/amount)
@@ -310,6 +320,7 @@
 		halloss = 0
 	else
 		if(amount > 0)	//only multiply it by the mod if it's positive, or else it takes longer to fade too!
+			SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE)	//RS ADD
 			amount = amount*species.pain_mod
 		..(amount)
 
@@ -329,6 +340,8 @@
 		toxloss = 0
 	else
 		amount = amount*species.toxins_mod
+		if(amount > 0)	//RS ADD
+			SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE)	//RS ADD
 		..(amount)
 
 /mob/living/carbon/human/setToxLoss(var/amount)
@@ -423,11 +436,6 @@ In most cases it makes more sense to use apply_damage() instead! And make sure t
 
 		parts -= picked
 
-		//Bone fractures
-		if(health < maxHealth / 2)	//Let's make people a little more tanky! If our overall health is above 50%, don't break bones
-			if(config.bones_can_break && picked.brute_dam > picked.min_broken_damage * config.organ_health_multiplier && !(picked.robotic >= ORGAN_ROBOT))	//Otherwise break it as normal
-				picked.fracture()
-
 	updatehealth()
 	BITSET(hud_updateflag, HEALTH_HUD)
 	if(update)	UpdateDamageIcon()
@@ -473,7 +481,7 @@ This function restores all organs.
 /mob/living/carbon/human/apply_damage(var/damage = 0, var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0, var/soaked = 0, var/sharp = FALSE, var/edge = FALSE, var/obj/used_weapon = null)
 	if(Debug2)
 		to_world_log("## DEBUG: human/apply_damage() was called on [src], with [damage] damage, an armor value of [blocked], and a soak value of [soaked].")
-
+	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE)	//RS ADD
 	var/obj/item/organ/external/organ = null
 	if(isorgan(def_zone))
 		organ = def_zone

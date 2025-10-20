@@ -99,7 +99,7 @@
 	M.adjustHalLoss(1)
 	if(!M.confused) M.confused = 1
 	M.confused = max(M.confused, 20)
-	M.hallucination += 15
+	M.hallucination = max(M.hallucination, 20) //RS Edit This used to be += 15 resulting in INFINITE HALLUCINATION
 
 	for(var/obj/belly/B as anything in M.vore_organs)
 
@@ -186,3 +186,13 @@
 				H.change_gender_identity(PLURAL)
 				H.visible_message("<span class='notice'>[H] suddenly twitches as some of their features seem to contort and reshape, adjusting... In the end, it seems they are now of mixed gender.</span>",
 								"<span class='warning'>Your body suddenly contorts, feeling very different in various ways... By the time the rushing feeling is over it seems you just became of mixed gender.</span>")
+
+/datum/reagent/acid/diet_digestive // Reagent bellies || RS Add || Chomp Port
+	name = "Diluted digestive acid"
+	id = "diet_stomacid"
+	description = "Some form of digestive slurry."
+	taste_description = "vomit"
+	reagent_state = LIQUID
+	color = "#664330"
+	power = 0.4
+	meltdose = 150 // End reagent bellies

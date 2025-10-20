@@ -23,6 +23,7 @@
 	var/crisis //Admin-settable for combat module use.
 	var/crisis_override = 0
 	var/integrated_light_power = 6
+	var/robotdecal_on = 0	//RS ADD
 	var/datum/wires/robot/wires
 
 	can_be_antagged = TRUE
@@ -36,6 +37,8 @@
 	var/rest_style = "Default"
 	var/notransform
 	does_spin = FALSE
+
+	var/datum/tgui_module/robot_module_selector/module_selector_ui // RS Add: Add borg selector TGUI (Lira, October 2025)
 
 //Hud stuff
 
@@ -111,6 +114,13 @@
 	)
 
 	var/has_recoloured = FALSE  //RS Add || Port Virgo PR 15836
+	//RS Edit Start CS Port
+	//Multibelly support. We do not want to apply it to any module not supporting it in it's sprites
+	var/list/vore_light_states = list() //Robot exclusive
+	vore_capacity_ex = list()
+	vore_fullness_ex = list()
+	vore_icon_bellies = list()
+	//RS Edit End
 
 /mob/living/silicon/robot/New(loc, var/unfinished = 0)
 	spark_system = new /datum/effect/effect/system/spark_spread()
@@ -144,6 +154,7 @@
 	initialize_components()
 	//if(!unfinished)
 	// Create all the robot parts.
+	module_selector_ui = new(src) // RS Add: Add borg selector TGUI (Lira, October 2025)
 	for(var/V in components) if(V != "power cell")
 		var/datum/robot_component/C = components[V]
 		C.installed = 1
@@ -256,6 +267,7 @@
 		if(deployed)
 			undeploy()
 		revert_shell() // To get it out of the GLOB list.
+	QDEL_NULL(module_selector_ui) // RS Add: Add borg selector TGUI (Lira, October 2025)
 	qdel(wires)
 	wires = null
 	return ..()
@@ -275,39 +287,216 @@
 	update_icon()
 	return module_sprites
 */
+
+// RS Edit: Add borg selector TGUI (Lira, October 2025)
 /mob/living/silicon/robot/proc/pick_module()
 	if(module)
+		if(!icon_selected)
+			if(!module_selector_ui)
+				module_selector_ui = new(src)
+			module_selector_ui.tgui_interact(src)
 		return
-	var/list/modules = list()
 	//VOREStatation Edit Start: shell restrictions
+	if(!module_selector_ui)
+		module_selector_ui = new(src)
+
+	if(!shell && (crisis || security_level == SEC_LEVEL_RED || crisis_override))
+		to_chat(src, "<font color='red'>Crisis mode active. Combat module available.</font>")
+
+	var/list/available = get_available_module_names()
+	if(!available.len)
+		to_chat(src, "<span class='filter_warning'>No modules are available for selection.</span>")
+		return
+
+	module_selector_ui.tgui_interact(src)
+
+// RS Edit: Add borg selector TGUI (Lira, October 2025)
+/mob/living/silicon/robot/proc/get_available_module_names()
+	var/list/names = list()
+
 	if(shell)
-		modules.Add(shell_module_types)
+		for(var/module_name in shell_module_types)
+			if(can_offer_module(module_name))
+				names += module_name
 	else
-		modules.Add(robot_module_types)
+		for(var/module_name in robot_module_types)
+			if(can_offer_module(module_name))
+				names += module_name
+
 		if(crisis || security_level == SEC_LEVEL_RED || crisis_override)
-			to_chat(src, "<font color='red'>Crisis mode active. Combat module available.</font>")
-			modules |= emergency_module_types
+			for(var/module_name in emergency_module_types)
+				if(can_offer_module(module_name) && !(module_name in names))
+					names += module_name
+
 		for(var/module_name in whitelisted_module_types)
-			if(is_borg_whitelisted(src, module_name))
-				modules |= module_name
 	//VOREStatation Edit End: shell restrictions
-	modtype = tgui_input_list(usr, "Please, select a module!", "Robot module", modules)
+			if(can_offer_module(module_name) && !(module_name in names))
+				names += module_name
 
+	return names
+
+// RS Add Start: Add borg selector TGUI (Lira, October 2025)
+
+/mob/living/silicon/robot/proc/get_available_module_entries()
+	var/list/entries = list()
+
+	for(var/module_name in get_available_module_names())
+		var/module_type = robot_modules[module_name]
+		if(!module_type)
+			continue
+
+		var/description = null
+
+		entries += list(list(
+			"id" = module_name,
+			"name" = module_name,
+			"description" = description,
+			"isWhitelisted" = (module_name in whitelisted_module_types)
+		))
+
+	return entries
+
+/mob/living/silicon/robot/proc/get_available_sprite_entries()
+	var/list/entries = list()
+
+	if(!module || !modtype || !SSrobot_sprites)
+		return entries
+
+	var/list/module_sprites = SSrobot_sprites.get_module_sprites(modtype, src)
+	if(!islist(module_sprites) || !module_sprites.len)
+		return entries
+
+	for(var/datum/robot_sprite/sprite in module_sprites)
+		var/preview = null
+		var/icon/preview_icon = sprite.build_preview(src)
+		if(preview_icon)
+			preview = icon2base64(preview_icon)
+
+		entries += list(list(
+			"id" = REF(sprite),
+			"name" = sprite.name,
+			"isCurrent" = (sprite == sprite_datum),
+			"isDefault" = !!sprite.default_sprite,
+			"isWhitelisted" = !!sprite.is_whitelisted,
+			"preview" = preview
+		))
+
+	return entries
+
+/mob/living/silicon/robot/proc/get_current_sprite_name()
+	if(sprite_datum)
+		return sprite_datum.name
+	return null
+
+/mob/living/silicon/robot/proc/can_adjust_sprite()
+	if(!module)
+		return FALSE
+	if(!client)
+		return FALSE
+	return icon_selection_tries > 0
+
+/mob/living/silicon/robot/proc/apply_sprite_selection_by_ref(var/sprite_ref, var/consume_try = TRUE, var/announce = TRUE, var/lock_on_exhaust = TRUE)
+	if(!sprite_ref)
+		return FALSE
+
+	var/datum/robot_sprite/selection = locate(sprite_ref)
+	if(!istype(selection))
+		return FALSE
+
+	return apply_sprite_selection(selection, consume_try, announce, lock_on_exhaust)
+
+// RS Add End
+
+// RS Edit: Add borg selector TGUI (Lira, October 2025)
+/mob/living/silicon/robot/proc/apply_sprite_selection(var/datum/robot_sprite/sprite, var/consume_try = TRUE, var/announce = TRUE, var/lock_on_exhaust = TRUE)
+	if(!module || !sprite || !SSrobot_sprites)
+		return FALSE
+
+	var/list/module_sprites = SSrobot_sprites.get_module_sprites(modtype, src)
+	if(!islist(module_sprites) || !(sprite in module_sprites))
+		return FALSE
+
+	if(icon_selection_tries <= 0 && sprite != sprite_datum)
+		if(announce)
+			to_chat(src, "<span class='filter_warning'>You must reset your module to change icons again.</span>")
+		return FALSE
+
+	if(notransform)
+		if(announce)
+			to_chat(src, "<span class='filter_warning'>Your current transformation has not finished yet!</span>")
+		return FALSE
+
+	var/datum/robot_sprite/old_sprite = sprite_datum
+	if(sprite == old_sprite && icon_selected && icon_selection_tries <= 0)
+		return TRUE
+
+	sprite_datum = sprite
+	update_multibelly()
+
+	var/robot_species = null
+	if(!istype(src, /mob/living/silicon/robot/drone) && sprite_datum)
+		robot_species = sprite_datum.name
+
+	transform_with_anim()
+
+	var/tempheight = vis_height
+	update_icon()
+	if(tempheight != vis_height)
+		var/tempsize = size_multiplier
+		resize(1)
+		resize(tempsize)
+
+	if(consume_try && sprite != old_sprite && icon_selection_tries > 0)
+		icon_selection_tries--
+
+	if(icon_selection_tries <= 0)
+		icon_selection_tries = 0
+		if(lock_on_exhaust)
+			icon_selected = TRUE
+			if(robot_species)
+				sprite_type = robot_species
+			if(hands)
+				update_hud()
+			if(announce)
+				to_chat(src, "<span class='filter_notice'>Your icon has been set. You now require a module reset to change it.</span>")
+
+	if(module_selector_ui)
+		SStgui.update_uis(module_selector_ui)
+
+	return TRUE
+
+// RS Edit: Add borg selector TGUI (Lira, October 2025)
+/mob/living/silicon/robot/proc/can_offer_module(var/module_name)
+	if(!(module_name in robot_modules))
+		return FALSE
+	if(!is_borg_whitelisted(src, module_name))
+		return FALSE
+	return TRUE
+
+// RS Edit: Add borg selector TGUI (Lira, October 2025)
+/mob/living/silicon/robot/proc/apply_module_selection(var/module_name)
 	if(module)
-		return
-	if(!(modtype in robot_modules))
-		return
-	if(!is_borg_whitelisted(src, modtype))
-		return
+		return FALSE
 
-	var/module_type = robot_modules[modtype]
+	if(!can_offer_module(module_name))
+		return FALSE
+
+	var/module_type = robot_modules[module_name]
+	if(!module_type)
+		return FALSE
+
+	modtype = module_name
 	transform_with_anim()	//VOREStation edit: sprite animation
 	new module_type(src)
 
 	hands.icon_state = get_hud_module_icon()
 	feedback_inc("cyborg_[lowertext(modtype)]",1)
 	updatename()
-	notify_ai(ROBOT_NOTIFICATION_NEW_MODULE, module.name)
+	if(module)
+		notify_ai(ROBOT_NOTIFICATION_NEW_MODULE, module.name)
+	if(module_selector_ui)
+		SStgui.update_uis(module_selector_ui)
+	return TRUE
 
 /mob/living/silicon/robot/proc/update_braintype()
 	if(istype(mmi, /obj/item/device/mmi/digital/posibrain))
@@ -408,6 +597,35 @@
 	to_chat(usr, "<span class='filter_notice'>You [lights_on ? "enable" : "disable"] your integrated light.</span>")
 	handle_light()
 	update_icon()
+
+/mob/living/silicon/robot/verb/toggle_robot_decals() // loads overlay UNDER lights.	//RS ADD START
+	set category = "Abilities.Silicon"
+	set name = "Toggle extras"
+	robotdecal_on = !robotdecal_on
+	to_chat(usr, span_notice("You [robotdecal_on ? "enable" : "disable"] your extra apperances."))
+	update_icon()
+											//RS ADD END
+
+//RS Edit Start: Allows robots to also have a 'glow' if they have a naturally glowing belly or something of the sort.
+//Instead of turning this ON / OFF EVERY SINGLE TICK like robot's update_icon does (it destroys the overlays and rebuilds them)
+//We're going to just give them the verbs to toggle their natural glow.
+/mob/living/silicon/robot/verb/toggle_glow()
+	set name = "Glow (Toggle)"
+	set category = "Abilities"
+	set desc = "Toggle your glowing on/off!"
+	glow_toggle = !glow_toggle
+
+	to_chat(src,"<span class='notice'>You <b>[glow_toggle ? "en" : "dis"]</b>able your body's glow.</span>")
+
+/mob/living/silicon/robot/verb/change_glow_color()
+	set name = "Glow (Set Color)"
+	set category = "Abilities"
+	set desc = "Pick a color for your body's glow."
+
+	var/new_color = input(src,"Select a new color","Body Glow",glow_color) as color
+	if(new_color)
+		glow_color = new_color
+//RS Edit End
 
 /mob/living/silicon/robot/verb/self_diagnosis_verb()
 	set category = "Robot Commands"
@@ -757,6 +975,25 @@
 
 	return
 
+//RS Edit Start CS Edit
+/mob/living/silicon/robot/proc/reset_belly_lights(var/b_class)
+	if(sprite_datum.belly_light_list.len && sprite_datum.belly_light_list.Find(b_class))
+		vore_light_states[b_class] = 0
+
+/mob/living/silicon/robot/proc/update_belly_lights(var/b_class)
+	if(sprite_datum.belly_light_list.len && sprite_datum.belly_light_list.Find(b_class))
+		vore_light_states[b_class] = 2
+		for (var/belly in vore_organs)
+			var/obj/belly/B = belly
+			if(b_class == "sleeper" && (B.silicon_belly_overlay_preference == "Vorebelly" || B.silicon_belly_overlay_preference == "Both") || b_class != "sleeper")
+				if(B.digest_mode != DM_DIGEST || B.belly_sprite_to_affect != b_class || !B.contents.len)
+					continue
+				for(var/contents in B.contents)
+					if(istype(contents, /mob/living))
+						vore_light_states[b_class] = 1
+						return
+//RS Edit End
+
 /mob/living/silicon/robot/proc/module_reset()
 	transform_with_anim() //VOREStation edit: sprite animation
 	uneq_all()
@@ -769,6 +1006,13 @@
 	module = null
 	updatename("Default")
 	has_recoloured = FALSE  //RS Add || Port Virgo PR 15836
+	//RS Edit Start CS Port
+	// We only use the chomp system when the sprite supports it. Else we go through the fallback
+	vore_capacity_ex = list()
+	vore_fullness_ex = list()
+	vore_light_states = list()
+	update_multibelly()
+	//RS Edit End
 
 /mob/living/silicon/robot/proc/ColorMate() //RS Add Start|| Port Virgo PR 15836
 	set name = "Recolour Module"
@@ -801,7 +1045,9 @@
 			var/obj/item/broken_device = cell_component.wrapped
 			to_chat(user, "<span class='filter_notice'>You remove \the [broken_device].</span>")
 			user.put_in_active_hand(broken_device)
-
+	if(isliving(user))	//RS ADD
+		var/mob/living/L = user
+		L.game_tag(src)	//RS ADD - L is the attacker, so L is touching the borg in this case!
 	if(istype(user,/mob/living/carbon/human) && !opened)
 		var/mob/living/carbon/human/H = user
 		//Adding borg petting.  Help intent pets, Disarm intent taps and Harm is punching(no damage)
@@ -887,6 +1133,7 @@
 		return
 
 	cut_overlays()
+	handle_status_indicators() //CHOMPAdd, needed as we don't have priority overlays anymore
 
 	icon			= sprite_datum.sprite_icon
 	icon_state		= sprite_datum.sprite_icon_state
@@ -898,41 +1145,54 @@
 		old_x = sprite_datum.pixel_x
 
 	if(stat == CONSCIOUS)
-		var/show_belly = FALSE
-		if(sprite_datum.has_vore_belly_sprites)
-			if(vore_selected.silicon_belly_overlay_preference == "Sleeper")
-				if(sleeper_state)
-					show_belly = TRUE
-			else if(vore_selected.silicon_belly_overlay_preference == "Vorebelly")
-				if(LAZYLEN(vore_selected.contents) >= vore_selected.visible_belly_minimum_prey)
-					if(vore_selected.overlay_min_prey_size == 0)	//if min size is 0, we dont check for size
-						show_belly = TRUE
-					else
-						if(vore_selected.override_min_prey_size && (LAZYLEN(vore_selected.contents) > vore_selected.override_min_prey_num))
-							show_belly = TRUE	//Override regardless of content size
-						else
-							for(var/content in vore_selected.contents)	//If ANY in belly are big enough, we set to true
-								if(!istype(content, /mob/living)) continue
-								var/mob/living/prey = content
-								if(prey.size_multiplier >= vore_selected.overlay_min_prey_size)
-									show_belly = TRUE
-									break
-		if(show_belly)
-			add_overlay(sprite_datum.get_belly_overlay(src))
+		update_fullness()
+		for(var/belly_class in vore_fullness_ex)
+			reset_belly_lights(belly_class)
+			var/vs_fullness = vore_fullness_ex[belly_class]
+			if(belly_class == "sleeper" && sleeper_state == 0 && vore_selected.silicon_belly_overlay_preference == "Sleeper") continue
+			if(belly_class == "sleeper" && sleeper_state != 0 && !(vs_fullness + 1 > vore_capacity_ex[belly_class]))
+				if(vore_selected.silicon_belly_overlay_preference == "Sleeper")
+					vs_fullness = vore_capacity_ex[belly_class]
+				else if(vore_selected.silicon_belly_overlay_preference == "Both")
+					vs_fullness += 1
+			if(!vs_fullness > 0) continue
+			if(resting)
+				if(!sprite_datum.has_vore_belly_resting_sprites)
+					continue
+
+
+				if(glowy_belly)
+					var/image/belly_sprite = image(icon, sprite_datum.get_belly_resting_overlay(src, vs_fullness, belly_class))
+					belly_sprite.plane = PLANE_LIGHTING_ABOVE
+					add_overlay(belly_sprite)
+				else
+					add_overlay(sprite_datum.get_belly_resting_overlay(src, vs_fullness, belly_class))
+			else
+				update_belly_lights(belly_class)
+				if(glowy_belly)
+					var/image/belly_sprite = image(icon, sprite_datum.get_belly_overlay(src, vs_fullness, belly_class))
+					belly_sprite.plane = PLANE_LIGHTING_ABOVE
+					add_overlay(belly_sprite)
+				else
+					add_overlay(sprite_datum.get_belly_overlay(src, vs_fullness, belly_class))
 
 		sprite_datum.handle_extra_icon_updates(src)			// Various equipment-based sprites go here.
 
 		if(resting && sprite_datum.has_rest_sprites)
-			cut_overlays() // Hide that gut for it has no ground sprite yo.
 			icon_state = sprite_datum.get_rest_sprite(src)
-			if(show_belly && sprite_datum.has_vore_belly_sprites && sprite_datum.has_vore_belly_resting_sprites)	// Or DOES IT?
-				add_overlay(sprite_datum.get_belly_resting_overlay(src))
 
 		if(sprite_datum.has_eye_sprites)
 			if(!shell || deployed) // Shell borgs that are not deployed will have no eyes.
 				var/eyes_overlay = sprite_datum.get_eyes_overlay(src)
 				if(eyes_overlay)
 					add_overlay(eyes_overlay)
+
+		if(robotdecal_on && sprite_datum.has_robotdecal_sprites)	//RS ADD START
+			if(!shell || deployed) // Shell borgs that are not deployed will have no eyes.
+				var/robotdecal_overlay = sprite_datum.get_robotdecal_overlay(src)
+				if(robotdecal_overlay)
+					add_overlay(robotdecal_overlay)
+										//RS ADD END
 
 		if(lights_on && sprite_datum.has_eye_light_sprites)
 			if(!shell || deployed) // Shell borgs that are not deployed will have no eyes.
@@ -950,6 +1210,12 @@
 		var/open_overlay = sprite_datum.get_open_sprite(src)
 		if(open_overlay)
 			add_overlay(open_overlay)
+	for(var/datum/modifier/M in modifiers)	//RS ADD START
+		update_modifier_visuals()
+
+/mob/living/silicon/robot/update_modifier_visuals()
+	for(var/datum/modifier/M in modifiers)
+		M.simple_overlay()	//RS ADD END
 
 /mob/living/silicon/robot/proc/installed_modules()
 	if(weapon_lock)
@@ -1119,8 +1385,8 @@
 
 	return
 
+// RS Edit: Add borg selector TGUI (Lira, October 2025)
 /mob/living/silicon/robot/proc/choose_icon(var/triesleft)
-	var/robot_species = null
 	if(!SSrobot_sprites)
 		to_chat(src, "Robot Sprites have not been initialized yet. How are you choosing a sprite? Harass a coder.")
 		return
@@ -1130,43 +1396,25 @@
 		to_chat(src, "Your module appears to have no sprite options. Harass a coder.")
 		return
 
-	icon_selected = 0
+	icon_selected = FALSE
 	icon_selection_tries = triesleft
 	if(module_sprites.len == 1 || !client)
-		if(!(sprite_datum in module_sprites))
+		if(!(sprite_datum in module_sprites))  //RS Edit: Pull update_multibelly out of check (Lira, May 2025)
 			sprite_datum = module_sprites[1]
-	else
-		var/selection = tgui_input_list(src, "Select an icon! [triesleft ? "You have [triesleft] more chance\s." : "This is your last try."]", "Robot Icon", module_sprites)
-		sprite_datum = selection
-		if(!istype(src,/mob/living/silicon/robot/drone))
-			robot_species = sprite_datum.name
-		if(notransform)
-			to_chat(src, "Your current transformation has not finished yet!")
-			choose_icon(icon_selection_tries)
-			return
-		else
-			transform_with_anim()
+		apply_sprite_selection(sprite_datum, FALSE, FALSE)
+		icon_selected = TRUE
+		icon_selection_tries = 0
+		if(!istype(src,/mob/living/silicon/robot/drone) && sprite_datum)
+			sprite_type = sprite_datum.name
+		if(hands)
+			update_hud()
+		return
 
-	var/tempheight = vis_height
-	update_icon()
-	// This is bad but I dunno other way to 'reset' our resize offset based on vis_height changes other than resizing to normal and back.
-	if(tempheight != vis_height)
-		var/tempsize = size_multiplier
-		resize(1)
-		resize(tempsize)
+	if(!module_selector_ui)
+		module_selector_ui = new(src)
 
-
-	if (module_sprites.len > 1 && triesleft >= 1 && client)
-		icon_selection_tries--
-		var/choice = tgui_alert(usr, "Look at your icon - is this what you want?", "Icon Choice", list("Yes","No"))
-		if(choice == "No")
-			choose_icon(icon_selection_tries)
-			return
-
-	icon_selected = 1
-	icon_selection_tries = 0
-	sprite_type = robot_species
-	to_chat(src, "<span class='filter_notice'>Your icon has been set. You now require a module reset to change it.</span>")
+	module_selector_ui.tgui_interact(src)
+	SStgui.update_uis(module_selector_ui)
 
 /mob/living/silicon/robot/proc/set_default_module_icon()
 	if(!SSrobot_sprites)
@@ -1467,3 +1715,46 @@
 	if(issilicon(user))
 		return TRUE
 	return FALSE
+
+
+/mob/living/silicon/robot/proc/update_multibelly()
+	vore_icon_bellies = list() //Clear any belly options that may not exist now
+	vore_capacity_ex = list()
+	vore_fullness_ex = list()
+	if(sprite_datum.belly_capacity_list.len)
+		for(var/belly in sprite_datum.belly_capacity_list) //vore icons list only contains a list of names with no associated data
+			vore_capacity_ex[belly] = sprite_datum.belly_capacity_list[belly] //I dont know why but this wasnt working when I just
+			vore_fullness_ex[belly] = 0 //set the lists equal to the old lists
+			vore_icon_bellies += belly
+		for(var/belly in sprite_datum.belly_light_list)
+			vore_light_states[belly] = 0
+	else if(sprite_datum.has_vore_belly_sprites)
+		vore_capacity_ex = list("sleeper" = 1)
+		vore_fullness_ex = list("sleeper" = 0)
+		vore_icon_bellies = list("sleeper")
+		if(sprite_datum.has_sleeper_light_indicator)
+			vore_light_states = list("sleeper" = 0)  //RS Edit: Fix typo (Lira, May 2025)
+			sprite_datum.belly_light_list = list("sleeper")
+	update_fullness() //Set how full the newly defined bellies are, if they're already full
+
+// RS EDIT !! DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG
+// Debug tool to swap the belly type and glowy belly
+/*
+/mob/living/silicon/robot/verb/belly_selection()
+	set name = "Switch selected belly sprite (Vore)"
+	set desc = "Select your belly sprite."
+	set category = "Abilities"
+
+	update_multibelly() //Clear it all and let's reselect.
+	var/list/belly_icons = vore_icon_bellies
+	var/belly_type = tgui_input_list(src, "Choose your belly TYPE:", "Belly Overlay", belly_icons)
+	if(!belly_type)
+		return
+	vore_selected.belly_sprite_to_affect = belly_type
+
+	var/belly_glow = tgui_alert(src, "Do you  want your belly to glow?(show over darkness)?", "Belly glow", list("Yes", "No"))
+	if(!belly_glow || belly_glow == "No")
+		glowy_belly = FALSE
+	else
+		glowy_belly = TRUE
+*/

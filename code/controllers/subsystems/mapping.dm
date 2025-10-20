@@ -33,6 +33,8 @@ SUBSYSTEM_DEF(mapping)
 		loadLateMaps()
 		if(config.do_funny_names && using_map.sub.len)	//RS ADD
 			using_map.funny_name()						//RS ADD
+	else	//RS ADD
+		log_and_message_admins(SPAN_WARNING("No using_map! We can't load any map!"))	//RS ADD
 
 	..()
 
@@ -78,6 +80,8 @@ SUBSYSTEM_DEF(mapping)
 
 // VOREStation Edit Start: Enable This
 /datum/controller/subsystem/mapping/proc/loadLateMaps()
+	var/list/station = using_map.station_z_levels		//RS ADD - It's the station levels lol
+	var/list/supplemental = using_map.supplemental_station_z_levels	//RS ADD - extra levels like RP's wilderness
 	var/list/deffo_load = using_map.lateload_z_levels
 	var/list/gateway_load = using_map.lateload_gateway	//RS EDIT - renamed for readability
 	var/list/om_extra_load = using_map.lateload_overmap	//RS EDIT - renamed for readability
@@ -118,6 +122,31 @@ SUBSYSTEM_DEF(mapping)
 			log_debug("ADMIN LOAD CUSTOM: The file should have been read, data is as follows: RG: [loaded_redgate] GW: [loaded_gateway]")
 
 		//RS ADD END
+
+	//RS ADD START
+	for(var/map in station)
+		var/datum/map_template/MT = map_templates[map]
+		if(!istype(MT))
+			error("Lateload Z level \"[map]\" is not a valid map!")
+			continue
+		admin_notice("Station: [MT]", R_DEBUG)
+		MT.load_new_z(centered = FALSE)
+		CHECK_TICK
+
+	if(LAZYLEN(supplemental))
+		for(var/list/sup_list in supplemental)
+			var/map = pick(sup_list)
+
+			if(!map) //No lateload maps at all
+				return
+
+			var/datum/map_template/MT = map_templates[map]
+			if(!istype(MT))
+				error("Randompick Z level \"[map]\" is not a valid map!")
+			else
+				admin_notice("Station Supplemental: [MT]", R_DEBUG)
+				MT.load_new_z(centered = FALSE)
+	//RS ADD END
 
 	for(var/list/maplist in deffo_load)
 		if(!islist(maplist))

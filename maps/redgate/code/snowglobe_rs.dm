@@ -22,6 +22,10 @@
 
 	startspot()
 
+/obj/effect/overmap/visitable/ship/snowglobe/Destroy()	//Instead of deleting ourself let's just move somewhere new!
+	log_and_message_admins("Somthing tried to destroy the [src]. It will instead sent to a new starting location.")
+	startspot()
+
 /obj/effect/overmap/visitable/ship/snowglobe/proc/startspot()
 
 	var/list/startspots = list()
@@ -34,6 +38,9 @@
 			var/area/A = get_area(ourtable)
 			if(A.flags & RAD_SHIELDED || A.flags & BLUE_SHIELDED)	//Not in the dorms or in maint
 				continue
+			for(var/mob/living/L in view(world.view, get_turf(ourtable)))	//Let's make sure no player sees us appear, in case we move ourself after round start
+				if(isliving(L) && L.ckey)
+					continue
 
 			startspots |= get_turf(ourtable)
 
@@ -41,11 +48,6 @@
 
 	forceMove(startspot)
 	log_and_message_admins("[src] placed itself at [x],[y],[z] - [src.loc]")
-
-/obj/effect/overmap/visitable/ship/snowglobe/Destroy()
-	log_and_message_admins("Somthing tried to destroy the [src]. It will instead sent to a new starting location.")
-
-	startspot()
 
 /obj/effect/overmap/visitable/ship/examine(mob/user, infix, suffix)
 	. = ..()
@@ -93,7 +95,7 @@
 			continue
 		if(!(isliving(player) && player.client))
 			continue
-		if(!(player.resizable && player.pickup_pref))
+		if(!((player.resizable && spont_pref_check(user,player,RESIZING)) && (player.pickup_pref && spont_pref_check(user,player,MICRO_PICKUP))))
 			continue
 		var/area/ourarea = get_area(player)
 		if(!ourarea.grab_zone)

@@ -331,25 +331,52 @@
   * * voucher - The voucher card item
   * * redeemer - The person holding it
   */
-/obj/machinery/mineral/equipment_vendor/proc/redeem_voucher(obj/item/mining_voucher/voucher, mob/redeemer)
-	var/selection = tgui_input_list(redeemer, "Pick your equipment", "Mining Voucher Redemption", list("Kinetic Accelerator", "Resonator", "Mining Drone", "Advanced Scanner", "Crusher"))
-	if(!selection || !Adjacent(redeemer) || voucher.loc != redeemer)
-		return
-	//VOREStation Edit Start - Uncommented these
+/obj/machinery/mineral/equipment_vendor/proc/redeem_voucher(obj/item/mining_voucher/voucher, mob/redeemer) //RS Edit Start. I just tore this from the ground up and reworked it.
+	to_chat(redeemer, "You insert your voucher into the machine!")
+	qdel(voucher) //This keeps me from having to place it in a bunch of other places to keep people from cheeesing it.
+	var/selection = tgui_input_list(redeemer, "Pick your equipment.", "Mining Voucher Redemption", list("Kinetic Accelerator + KA Addon", "Resonator + Advanced Ore Scanner", "Survival Pistol & Machete + Survival Addon",))
 	var/drop_location = drop_location()
+	if(!selection || !Adjacent(redeemer))
+		visible_message("[src] shoots the voucher back out.")
+		new /obj/item/mining_voucher(drop_location)
+		return
 	switch(selection)
-		if("Kinetic Accelerator")
+
+		if("Kinetic Accelerator + KA Addon")
 			new /obj/item/weapon/gun/energy/kinetic_accelerator(drop_location)
-		if("Resonator")
+			var/addon_selection = tgui_input_list(redeemer, "Pick your addon", "Mining Voucher Redemption", list("Cooldown", "Range","Holster")) //Just the basics. Nothing too crazy.
+			switch(addon_selection)
+				if("Cooldown")
+					new /obj/item/borg/upgrade/modkit/cooldown(drop_location)
+				if("Range")
+					new /obj/item/borg/upgrade/modkit/range(drop_location)
+				if("Holster")
+					new /obj/item/clothing/accessory/holster/waist/kinetic_accelerator(drop_location)
+
+		if("Resonator + Advanced Ore Scanner")
 			new /obj/item/resonator(drop_location)
-	//VOREStation Edit End
-		// if("Mining Drone")
-		// 	new /obj/item/storage/box/drone_kit(drop_location)
-		// if("Advanced Scanner")
-		// 	new /obj/item/device/t_scanner/adv_mining_scanner(drop_location)
-		// if("Crusher")
-		// 	new /obj/item/twohanded/required/mining_hammer(drop_location)
-	qdel(voucher)
+			new /obj/item/weapon/mining_scanner/advanced(drop_location)
+
+		if("Survival Pistol & Machete + Survival Addon")
+			new /obj/item/weapon/gun/energy/phasegun/pistol(drop_location)
+			new /obj/item/weapon/material/knife/machete(drop_location)
+			var/addon_selection = tgui_input_list(redeemer, "Pick your survival addon", "Mining Voucher Redemption", list("Shelter Capsule", "Glucose", "Panacea", "Trauma", "Medipens")) //Just the basics. Nothing too crazy.
+			switch(addon_selection)
+				if("Shelter Capsule")
+					new /obj/item/device/survivalcapsule(drop_location)
+				if("Glucose")
+					new /obj/item/weapon/reagent_containers/hypospray/autoinjector/biginjector/glucose(drop_location)
+				if("Panacea")
+					new /obj/item/weapon/reagent_containers/hypospray/autoinjector/biginjector/purity(drop_location)
+				if("Trauma")
+					new /obj/item/weapon/reagent_containers/hypospray/autoinjector/biginjector/brute(drop_location)
+				if("Medipens")
+					var/obj/item/weapon/storage/box/medbox = new /obj/item/weapon/storage/box(drop_location)
+					new /obj/item/weapon/reagent_containers/hypospray/autoinjector/burn(medbox)
+					new /obj/item/weapon/reagent_containers/hypospray/autoinjector/detox(medbox)
+					new /obj/item/weapon/reagent_containers/hypospray/autoinjector/oxy(medbox)
+					new /obj/item/weapon/reagent_containers/hypospray/autoinjector/trauma(medbox)
+//RS Edit End
 
 /obj/machinery/mineral/equipment_vendor/proc/new_prize(var/name, var/path, var/cost) // Generic proc for adding new entries. Good for abusing for FUN and PROFIT.
 	if(!cost)

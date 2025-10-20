@@ -244,6 +244,7 @@
 		var/mob/living/L = O
 		L.ExtinguishMob()
 		L.fire_stacks = -20 //Douse ourselves with water to avoid fire more easily
+		SEND_SIGNAL(L,COMSIG_MOB_WASHED)	//RS ADD - smelly
 
 	if(iscarbon(O))
 		//flush away reagents on the skin

@@ -127,3 +127,64 @@
 	extra_overlay_w = "bigleggy_alienslug"
 	extra_overlay2 = "bigleggy_alienslug_m"
 	extra_overlay2_w = "bigleggy_alienslug_m"
+
+
+//(new goia sprites) Moved to taur_rs
+/datum/sprite_accessory/tail/taur/newzorgoia
+	name = "New Zorgoia (Taur)"
+	icon = 'icons/mob/human_races/sprite_accessories/taurs_rs.dmi'
+	icon_state = "new_zorgoia"
+	extra_overlay = "new_zorgoia_s"
+	ani_state = "new_zorgoia_fat"
+	extra_overlay_w = "new_zorgoia_fat_s"
+
+/datum/sprite_accessory/tail/taur/newzorgoia/fat
+	name = "New Zorgoia (Fat Taur)"
+	icon = 'icons/mob/human_races/sprite_accessories/taurs_rs.dmi'
+	icon_state = "new_zorgoia_fat"
+	extra_overlay = "new_zorgoia_fat_s"
+
+//Added 1/26/2025 fat sergs
+
+/datum/sprite_accessory/tail/taur/ch/sergal/wheaties
+	name = "Sergal (Taur)"
+	icon = 'icons/mob/human_races/sprite_accessories/taurs_rs.dmi'
+	icon_state = "sergwheat"
+	icon_sprite_tag = "wolf"
+	vore_tail_sprite_variant = "N"
+	fullness_icons = 3
+	struggle_anim = TRUE
+
+/datum/sprite_accessory/tail/taur/ch/sergal/fatwheaties
+	name = "Fat Sergal (Taur)"
+	icon = 'icons/mob/human_races/sprite_accessories/taurs_rs.dmi'
+	icon_state = "fatsergal"
+	icon_sprite_tag = "wolf"
+	vore_tail_sprite_variant = "N"
+	fullness_icons = 3
+	struggle_anim = TRUE
+
+/datum/sprite_accessory/tail/taur/ch/sergal/wheaties_2c
+	name = "Sergal (Taur, dual-color)"
+	icon = 'icons/mob/human_races/sprite_accessories/taurs_rs.dmi'
+	icon_state = "sergwheat"
+	extra_overlay = "sergwheat_markings"
+	icon_sprite_tag = "wolf"
+	vore_tail_sprite_variant = "N"
+	fullness_icons = 3
+	struggle_anim = TRUE
+
+/datum/sprite_accessory/tail/taur/ch/sergal/fatwheaties_2c
+	name = "Fat Sergal (Taur, dual-color)"
+	icon = 'icons/mob/human_races/sprite_accessories/taurs_rs.dmi'
+	icon_state = "fatsergal"
+	extra_overlay = "sergwheat_markings"
+	icon_sprite_tag = "wolf"
+	vore_tail_sprite_variant = "N"
+	fullness_icons = 3
+	struggle_anim = TRUE
+
+/datum/sprite_accessory/tail/taur/kitsunetaur
+	name = "Kitsune Taur (Eight-Tail)"
+	icon = 'icons/mob/vore/tails_64x32.dmi'
+	icon_state = "eighttailkitsunetaur"

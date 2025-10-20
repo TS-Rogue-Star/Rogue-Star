@@ -166,6 +166,17 @@
 		for(var/mob/O in hearers(src, null))
 			O.show_message("<span class='warning'>Failure: Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.</span>")
 		return
+	// RS Add: Shells can't leave the station (Lira, October 2025)
+	if(ismob(M) && isrobot(M))
+		var/mob/living/silicon/robot/R = M
+		if(R.shell)
+			var/turf/source_turf = get_turf(src)
+			var/turf/target_turf = null
+			if(com.teleport_control.locked)
+				target_turf = get_turf(com.teleport_control.locked)
+			if(!source_turf || !target_turf || !isStationLevel(source_turf.z) || !isStationLevel(target_turf.z) || !accurate)
+				to_chat(R, "<span class='warning'>The teleporter control rejects the remote shell.</span>")
+				return
 	if(istype(M, /atom/movable))
 		//VOREStation Addition Start: Prevent taurriding abuse
 		if(istype(M, /mob/living))

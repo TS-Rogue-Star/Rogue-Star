@@ -18,7 +18,9 @@
 	var/light_color = null				// If set, the mob possessing the modifier will glow in this color.  Not implemented yet.
 	var/light_range = null				// How far the light for the above var goes. Not implemented yet.
 	var/light_intensity = null			// Ditto. Not implemented yet.
+	var/icon/mob_overlay_icon = 'icons/mob/modifier_effects.dmi'	//RS ADD - Icon for an overlay to apply to a human mob while this exists.
 	var/mob_overlay_state = null		// Icon_state for an overlay to apply to a (human) mob while this exists.  This is actually implemented.
+	var/image/overlay_image		//RS ADD - Cache your overlay image for simple application
 	var/client_color = null				// If set, the client will have the world be shown in this color, from their perspective.
 	var/wire_colors_replace = null		// If set, the client will have wires replaced by the given replacement list. For colorblindness. //VOREStation Add
 	var/list/filter_parameters = null	// If set, will add a filter to the holder with the parameters in this var. Must be a list.
@@ -71,6 +73,8 @@
 		origin = WEAKREF(new_origin)
 	else // We assume the holder caused the modifier if not told otherwise.
 		origin = WEAKREF(holder)
+
+	simple_overlay()	//RS ADD
 	..()
 
 // Checks if the modifier should be allowed to be applied to the mob before attaching it.
@@ -96,6 +100,8 @@
 		holder.update_client_color()
 	if(LAZYLEN(filter_parameters))
 		holder.remove_filter(REF(src))
+	holder.cut_overlay(overlay_image)	//RS ADD
+	QDEL_NULL(overlay_image)
 	qdel(src)
 
 // Override this for special effects when it gets added to the mob.
@@ -145,6 +151,7 @@
 					// Not allow to add a second instance, but we can try to prolong the first instance.
 					if(expire_at && world.time + expire_at > M.expire_at)
 						M.expire_at = world.time + expire_at
+					M.modifier_update(origin)	//RS ADD
 					return
 
 	// If we're at this point, the mob doesn't already have it, or it does but stacking is allowed.
@@ -277,3 +284,27 @@
 	if(abs)
 		return "[abs( ((multi - 1) * 100) )]%"
 	return "[((multi - 1) * 100)]%"
+
+/datum/modifier/proc/modifier_update(var/atom/updated_origin)	//RS ADD
+	return	//RS ADD
+
+/datum/modifier/proc/simple_overlay()	//RS ADD START
+	if(!mob_overlay_icon || !mob_overlay_state)
+		return
+	if(!holder)
+		return
+	if(iscarbon(holder))
+		return
+	if(!overlay_image)
+		var/image/I = image(icon = mob_overlay_icon, icon_state = mob_overlay_state)
+		I.color = effect_color
+		var/icon/our_icon = icon(holder.icon, holder.icon_state)
+		var/offset = our_icon.Width()
+		if(offset > 32)
+			offset /= 4
+			I.pixel_x = offset
+		overlay_image = I
+	if(overlay_image in holder.overlays)
+		return
+	holder.add_overlay(overlay_image)
+	//RS ADD END

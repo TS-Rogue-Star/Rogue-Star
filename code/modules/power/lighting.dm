@@ -447,6 +447,8 @@ var/global/list/light_type_cache = list()
 // update lighting
 /obj/machinery/light/proc/update(var/trigger = 1)
 	update_icon()
+	if(auto_flicker)	//RS ADD - We need to be processing to do autoflicker!
+		START_PROCESSING(SSobj, src)	//RS ADD
 	//VOREStation Edit Start
 	if(!on)
 		needsound = TRUE // Play sound next time we turn on
@@ -731,21 +733,26 @@ var/global/list/light_type_cache = list()
 	set_light(brightness_range * bulb_emergency_brightness_mul, max(bulb_emergency_pow_min, bulb_emergency_pow_mul * (cell.charge / cell.maxcharge)), bulb_emergency_colour)
 	return TRUE
 
-/obj/machinery/light/proc/flicker(var/amount = rand(10, 20))
+/obj/machinery/light/proc/flicker(var/amount = rand(10, 20), var/color) //RS Edit: Allows users to flicker lights!
 	if(flickering) return
 	flickering = 1
 	spawn(0)
+		var/original_color = brightness_color //RS Edit - Colorful flickers!
 		if(on && status == LIGHT_OK)
 			for(var/i = 0; i < amount; i++)
 				if(status != LIGHT_OK) break
+				if(color && brightness_color != color) //RS Edit - Colorful flickers!
+					brightness_color = color //RS Edit - Colorful flickers!
 				on = !on
 				update(0)
 				if(!on) // Only play when the light turns off.
 					playsound(src, 'sound/effects/light_flicker.ogg', 50, 1)
 				sleep(rand(5, 15))
+			brightness_color = original_color //RS Edit - Colorful flickers!
 			on = (status == LIGHT_OK)
 			update(0)
 		flickering = 0
+		update(0) //RS Edit - Colorful flickers!
 
 // ai attack - turn on/off emergency lighting for a specific fixture
 /obj/machinery/light/attack_ai(mob/user)
@@ -887,6 +894,16 @@ var/global/list/light_type_cache = list()
 // use power
 
 /obj/machinery/light/process()
+	if(auto_flicker)	//RS EDIT START - Moved this up. It needs to happen BEFORE something else does PROCESS_KILL, or else the flicker won't refresh
+		if(flickering)
+			return
+		if(check_for_player_proximity(src, radius = 12, ignore_ghosts = FALSE, ignore_afk = TRUE))
+			seton(TRUE) // Lights must be on to flicker.
+			flicker(5)
+			return
+		else
+			seton(FALSE) // Otherwise keep it dark and spooky for when someone shows up.
+			return	//RS EDIT END - We don't really care about the rest, since this is probably an event or an away mission area
 	if(!cell)
 		return PROCESS_KILL
 	if(has_power())
@@ -897,13 +914,6 @@ var/global/list/light_type_cache = list()
 	if(emergency_mode && !use_emergency_power(LIGHT_EMERGENCY_POWER_USE))
 		update(FALSE) //Disables emergency mode and sets the color to normal
 		return PROCESS_KILL // Drop out if we're out of cell power. These are often in POIs and there's no point in recharging.
-
-	if(auto_flicker && !flickering)
-		if(check_for_player_proximity(src, radius = 12, ignore_ghosts = FALSE, ignore_afk = TRUE))
-			seton(TRUE) // Lights must be on to flicker.
-			flicker(5)
-		else
-			seton(FALSE) // Otherwise keep it dark and spooky for when someone shows up.
 
 // called when area power state changes
 /obj/machinery/light/power_change()

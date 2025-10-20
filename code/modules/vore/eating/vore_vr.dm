@@ -72,6 +72,8 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	var/step_mechanics_pref = FALSE
 	var/pickup_pref = TRUE
 
+	var/autotransferable = TRUE //RS Add || Chomp Port 3200
+
 	var/vore_sprite_color = list("stomach" = "#000", "taur belly" = "#000") // RS edit
 	var/allow_contaminate = TRUE	//RS EDIT
 	var/allow_stripping = TRUE		//RS EDIT
@@ -79,6 +81,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	var/list/belly_prefs = list()
 	var/vore_taste = "nothing in particular"
 	var/vore_smell = "nothing in particular"
+	var/glowy_belly = FALSE //RS Add
 
 	var/selective_preference = DM_DEFAULT
 
@@ -116,6 +119,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	var/client_ckey
 
 	var/ssd_vore = FALSE	//RS ADD
+	var/list/vore_whitelist_toggles = list()	//RS ADD - A list of the prefs that are dictated by whitelist
 
 /datum/vore_preferences/New(client/C)
 	if(istype(C))
@@ -129,6 +133,8 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 //
 /proc/is_vore_predator(mob/living/O)
 	if(istype(O,/mob/living))
+		if(!O.vore_organs)	//RS ADD - it will runtime
+			return FALSE	//RS ADD
 		if(O.vore_organs.len > 0)
 			return TRUE
 
@@ -205,8 +211,11 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	eating_privacy_global = json_from_file["eating_privacy_global"]
 	vore_sprite_color = json_from_file["vore_sprite_color"] // RS edit
 	ssd_vore = json_from_file["ssd_vore"] // RS edit
+	glowy_belly = json_from_file["glowy_belly"] //RS ADD
 	allow_contaminate = json_from_file["allow_contaminate"] // RS edit
 	allow_stripping = json_from_file["allow_stripping"] // RS edit
+	vore_whitelist_toggles = json_from_file["vore_whitelist_toggles"]	//RS ADD
+	autotransferable = json_from_file["autotransferable"] //RS Add || Chomp Port 3200
 
 	//Quick sanitize
 	if(isnull(digestable))
@@ -255,6 +264,8 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 		stumble_vore = TRUE
 	if(isnull(food_vore))
 		food_vore = TRUE
+	if(isnull(autotransferable)) //RS Add || Port Chomp 3200
+		autotransferable = TRUE
 	if(isnull(nutrition_message_visible))
 		nutrition_message_visible = TRUE
 	if(isnull(weight_message_visible))
@@ -300,7 +311,10 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 		allow_contaminate = TRUE	//RS ADD
 	if(isnull(allow_stripping))	//RS ADD
 		allow_stripping = TRUE	//RS ADD
-
+	if(isnull(glowy_belly)) //RS ADD
+		glowy_belly =  FALSE //RS ADD
+	if(isnull(vore_whitelist_toggles))	//RS ADD
+		vore_whitelist_toggles = list()	//RS ADD
 	return TRUE
 
 /datum/vore_preferences/proc/save_vore()
@@ -342,9 +356,11 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 			"eating_privacy_global"		= eating_privacy_global,
 			"vore_sprite_color"		= vore_sprite_color, //RS edit
 			"ssd_vore"				= ssd_vore,	//RS ADD
+			"glowy_belly"			= glowy_belly, //RS ADD
 			"allow_contaminate" 	= allow_contaminate, // RS edit
-			"allow_stripping" 		= allow_stripping // RS edit
-
+			"allow_stripping" 		= allow_stripping, // RS edit
+			"vore_whitelist_toggles" = vore_whitelist_toggles, //RS ADD
+			"autotransferable"		= autotransferable, //RS Add || Port Chomp 3200
 		)
 
 	//List to JSON

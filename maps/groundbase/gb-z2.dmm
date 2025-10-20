@@ -11247,7 +11247,7 @@
 /obj/item/weapon/soap/nanotrasen,
 /obj/structure/closet/walllocker_double/medical/east,
 /obj/item/weapon/hand_labeler,
-/obj/item/weapon/storage/box/monkeycubes/wolpincubes,
+/obj/random/monkey_cubes,
 /turf/simulated/floor/tiled/white,
 /area/medical/virology)
 "FC" = (
@@ -13463,11 +13463,11 @@
 /turf/simulated/floor/tiled/eris/cafe,
 /area/groundbase/civilian/kitchen)
 "LE" = (
-/obj/item/weapon/storage/box/monkeycubes,
-/obj/item/weapon/storage/box/monkeycubes,
-/obj/item/weapon/storage/box/monkeycubes,
-/obj/item/weapon/storage/box/monkeycubes,
-/obj/item/weapon/storage/box/monkeycubes,
+/obj/random/monkey_cubes,
+/obj/random/monkey_cubes,
+/obj/random/monkey_cubes,
+/obj/random/monkey_cubes,
+/obj/random/monkey_cubes,
 /obj/item/weapon/storage/box/beakers,
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /obj/structure/table/steel,

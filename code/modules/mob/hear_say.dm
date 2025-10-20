@@ -145,7 +145,9 @@
 		else
 			to_chat(src, "<span class='game say'>[message]</span>")
 	else if(teleop)
-		to_chat(teleop, "<span class='game say'>[create_text_tag("body", "BODY:", teleop.client)][message]</span>")
+		if(src in teleop.client?.multichar_list)	//RS EDIT
+			return
+		to_chat(teleop, "<span class='game say'>[create_text_tag("body", "BODY:", teleop.client)]\<[SPAN_NOTICE(src)]\>: [message]</span>")	//RS EDIT - Makes teleop messages a little more informative
 	else
 		to_chat(src, "<span class='game say'>[message]</span>")
 
@@ -157,7 +159,9 @@
 		else
 			to_chat(src, "<span class='game say'>[message]</span>")
 	else if(teleop)
-		to_chat(teleop, "<span class='game say'>[create_text_tag("body", "BODY:", teleop.client)][message]</span>")
+		if(src in teleop.client.multichar_list)
+			return
+		to_chat(teleop, "<span class='game say'>[create_text_tag("body", "BODY:", teleop.client)]\<[SPAN_NOTICE(src)]\>: [message]</span>")	//RS EDIT - Makes teleop messages a little more informative
 	else
 		to_chat(src, "<span class='game say'>[message]</span>")
 

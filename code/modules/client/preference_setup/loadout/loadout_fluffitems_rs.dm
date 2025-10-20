@@ -59,3 +59,111 @@
 	display_name = "Mimedriver"
 	ckeywhitelist = list("murchant")
 	character_name = list("Fiddle")
+
+/datum/gear/fluff/sarihat
+	path = /obj/item/clothing/head/fluff/sari
+	slot = slot_head
+	display_name = "Sari's hat"
+	ckeywhitelist = list("crossexonar")
+	character_name = null
+
+/datum/gear/fluff/sarioutfit
+	path = /obj/item/clothing/under/fluff/sari
+	slot = slot_w_uniform
+	display_name = "Sari's jacket and clothes"
+	ckeywhitelist = list("crossexonar")
+	character_name = null
+
+/datum/gear/fluff/zara_medal
+	path = /obj/item/clothing/accessory/medal/silver/security
+	display_name = "Zara's Robust Security Award"
+	ckeywhitelist = list("hunterbirk")
+	character_name = list("Zara Aistulf")
+
+/datum/gear/fluff/baele_robe
+	path = /obj/item/clothing/suit/cultrobes/alt/fluff
+	display_name = "Baele's Robe"
+	ckeywhitelist = list("malderg")
+	character_name = list("Baele")
+
+/datum/gear/fluff/baele_hood
+	path = /obj/item/clothing/head/culthood/alt/fluff
+	display_name = "Baele's Robe"
+	ckeywhitelist = list("malderg")
+	character_name = list("Baele")
+
+// Approved via modmail (Lira, September 2025)
+/datum/gear/fluff/sad_starfish_medal
+	path = /obj/item/clothing/accessory/medal/silver/security/fluff/sadstarfish
+	display_name = "Robust Security Award"
+	ckeywhitelist = list("sadstarfish")
+	character_name = list("Simon Crawford")
+
+// Approved via modmail (Lira, September 2025)
+/datum/gear/fluff/alceris_culinary_medal
+	path = /obj/item/clothing/accessory/medal/gold/fluff/alceris
+	display_name = "Medal of Culinary Prowess"
+	ckeywhitelist = list("alceris")
+	character_name = list("Alceris")
+
+/datum/gear/fluff/portal_cap
+	path = /obj/item/clothing/head/soft/fluff/portalsoft
+	slot = slot_head
+	display_name = "Portal's Cap"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_mask
+	path = /obj/item/clothing/mask/fluff/portal_mask
+	slot = slot_wear_mask
+	display_name = "Portal's Mask"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_jacket
+	path = /obj/item/clothing/suit/storage/fluff/jacket/portaljacket
+	slot = slot_wear_suit
+	display_name = "Portal's Jacket"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_uniform
+	path = /obj/item/clothing/under/fluff/portaluniform
+	slot = slot_w_uniform
+	display_name = "Portal's Off-Duty Uniform"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_uniform2
+	path = /obj/item/clothing/under/fluff/portaluniform2
+	slot = slot_w_uniform
+	display_name = "Portal's Uniform"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_gloves
+	path = /obj/item/clothing/gloves/fluff/portalgloves
+	slot = slot_gloves
+	display_name = "Portal's Gloves"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_boots
+	path = /obj/item/clothing/shoes/boots/fluff/portalboots
+	slot = slot_shoes
+	display_name = "Portal's Boots"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_bag
+	path = /obj/item/weapon/storage/backpack/satchel/fluff/portalbag
+	slot = slot_back
+	display_name = "Portal's Satchel"
+	ckeywhitelist = list("googlyfox")
+	character_name = null
+
+/datum/gear/fluff/portal_plushie
+	path = /obj/item/toy/plushie/portal
+	display_name = "Portal Plushie"
+	ckeywhitelist = list("googlyfox")
+	character_name = null

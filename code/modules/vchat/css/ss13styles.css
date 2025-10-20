@@ -1,3 +1,7 @@
+/* //////////////////////////////////////////////////////////////////////////////////// */
+/* Updated by Lira for Rogue Star September 2025 as part of a VChat enhancement package */
+/* //////////////////////////////////////////////////////////////////////////////////// */
+
 /* VChat Styles */
 body.inverted {
 	background-color: #111111;
@@ -254,3 +258,305 @@ img.icon.bigicon		{max-height: 32px;}
 
 	transition: background-color 15s;
 }
+
+/* RS Add: Fix duplicate sprite bug by hiding sprite sheet icon to account for behavior change in 515 (Lira, May 2025) */
+img.icon:not([src^="data:image/"]) {
+    display: none !important;
+}
+
+/* RS Add Start: Round selector and history viewer (Lira, September 2025) */
+.round-selector-backdrop {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.6);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 2000;
+}
+
+.round-selector-modal {
+	background: #ffffff;
+	color: #1b1c1d;
+	max-width: 32rem;
+	width: calc(100% - 2rem);
+	padding: 1.5rem;
+	border-radius: 0.5rem;
+	box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.4);
+}
+
+.round-selector-modal.inverted {
+	background: #1b1c1d;
+	color: #f9fafb;
+}
+
+.round-selector-help {
+	margin-top: 0;
+	margin-bottom: 0.75rem;
+}
+
+.round-selector-status {
+	margin-bottom: 0.75rem;
+}
+
+.round-selector-status.error {
+	color: #db2828;
+}
+
+.round-selector-buttons {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin-bottom: 1rem;
+}
+
+.round-selector-buttons .ui.button {
+	flex: 1 1 12rem;
+}
+
+.round-selector-list {
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	border-radius: 0.35rem;
+	max-height: 16rem;
+	overflow-y: auto;
+	margin-bottom: 1rem;
+}
+
+.round-selector-option {
+	background: transparent;
+	border: 0;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+	width: 100%;
+	text-align: left;
+	padding: 0.75rem 1rem;
+	color: inherit;
+	cursor: pointer;
+}
+
+.round-selector-option:last-child {
+	border-bottom: 0;
+}
+
+.round-selector-option:hover {
+	background: rgba(0, 0, 0, 0.05);
+}
+
+.round-selector-modal.inverted .round-selector-option {
+	border-color: rgba(255, 255, 255, 0.15);
+}
+
+.round-selector-modal.inverted .round-selector-option:hover {
+	background: rgba(255, 255, 255, 0.08);
+}
+
+.round-selector-option-title {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-weight: bold;
+}
+
+.round-selector-option-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	font-size: 0.85em;
+	margin-top: 0.25rem;
+	color: rgba(0, 0, 0, 0.7);
+}
+
+.round-selector-modal.inverted .round-selector-option-meta {
+	color: rgba(255, 255, 255, 0.75);
+}
+
+.round-selector-option-id {
+	font-family: monospace;
+}
+
+.round-selector-option-count,
+.round-selector-option-end {
+	white-space: nowrap;
+}
+
+.round-selector-pill {
+	display: inline-block;
+	padding: 0.15rem 0.5rem;
+	border-radius: 999px;
+	background: #2185d0;
+	color: #ffffff;
+	font-size: 0.75em;
+}
+
+.round-selector-pill.subtle {
+	background: #767676;
+}
+
+.round-selector-actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 0.5rem;
+}
+
+@media (max-width: 640px) {
+	.round-selector-modal {
+		padding: 1rem;
+	}
+
+	.round-selector-buttons .ui.button {
+		flex: 1 1 100%;
+	}
+}
+
+.archived-messages {
+	display: block;
+}
+
+.archived-messages > div {
+	display: block;
+}
+
+.history-viewer-backdrop {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.65);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 2100;
+}
+
+.history-viewer-modal {
+	background: #ffffff;
+	color: #1b1c1d;
+	max-width: 48rem;
+	width: calc(100% - 2rem);
+	max-height: 90vh;
+	display: flex;
+	flex-direction: column;
+	padding: 1.25rem;
+	border-radius: 0.5rem;
+	box-shadow: 0 0.75rem 2.5rem rgba(0, 0, 0, 0.45);
+}
+
+.history-viewer-modal.inverted {
+	background: #1b1c1d;
+	color: #f9fafb;
+}
+
+.history-viewer-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 0.75rem;
+}
+
+.history-viewer-header h3 {
+	margin: 0;
+}
+
+.history-viewer-controls {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+	margin-bottom: 0.75rem;
+}
+
+.history-viewer-controls label {
+	font-weight: bold;
+}
+
+.history-viewer-select {
+	min-width: 14rem;
+	padding: 0.35rem;
+}
+
+.history-viewer-status {
+	margin-bottom: 0.5rem;
+}
+
+.history-viewer-status.error {
+	color: #db2828;
+}
+
+.history-viewer-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	margin-bottom: 0.5rem;
+	font-size: 0.9em;
+	color: rgba(0, 0, 0, 0.7);
+}
+
+.history-viewer-modal.inverted .history-viewer-meta {
+	color: rgba(255, 255, 255, 0.75);
+}
+
+.history-viewer-content {
+	flex: 1 1 auto;
+	overflow-y: auto;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	border-radius: 0.35rem;
+	padding: 0.75rem;
+	background: rgba(0, 0, 0, 0.02);
+}
+
+.history-viewer-modal.inverted .history-viewer-content {
+	border-color: rgba(255, 255, 255, 0.15);
+	background: rgba(255, 255, 255, 0.06);
+}
+
+.history-viewer-content.loading {
+	opacity: 0.6;
+}
+
+.history-viewer-message {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.5rem;
+	margin-bottom: 0.5rem;
+}
+
+.history-viewer-message:last-child {
+	margin-bottom: 0;
+}
+
+.history-viewer-index {
+	font-weight: bold;
+	font-family: monospace;
+}
+
+.history-viewer-text {
+	flex: 1 1 auto;
+}
+
+.history-viewer-empty {
+	text-align: center;
+	color: rgba(0, 0, 0, 0.6);
+}
+
+.history-viewer-modal.inverted .history-viewer-empty {
+	color: rgba(255, 255, 255, 0.65);
+}
+
+@media (max-width: 640px) {
+	.history-viewer-modal {
+		padding: 1rem;
+	}
+
+	.history-viewer-controls {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.history-viewer-select {
+		width: 100%;
+	}
+}
+/* RS Start End */

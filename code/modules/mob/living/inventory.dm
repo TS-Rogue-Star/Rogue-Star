@@ -39,6 +39,9 @@
 
 //Drops the item in our active hand. TODO: rename this to drop_active_hand or something
 /mob/living/drop_item(var/atom/Target)
+
+	if(is_incorporeal()) return	//RS ADD - do not drop items while you are phased out
+
 	var/obj/item/item_dropped = null
 
 	if (hand)
@@ -146,6 +149,8 @@
 		return
 
 	setClickCooldown(1)
+
+	if(is_incorporeal()) return	//RS ADD - do not use items while phased out
 
 	if(istype(loc,/obj/mecha)) return
 

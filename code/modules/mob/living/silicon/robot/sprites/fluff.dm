@@ -143,15 +143,10 @@
 	has_custom_open_sprites = TRUE
 	has_dead_sprite = TRUE
 	has_dead_sprite_overlay = FALSE
+	sprite_flags = ROBOT_HAS_LASER_SPRITE | ROBOT_HAS_TASER_SPRITE
 
 	is_whitelisted = TRUE
 	whitelist_ckey = "foopwotch"
-
-/datum/robot_sprite/security/fluff/foopwotch/handle_extra_icon_updates(var/mob/living/silicon/robot/ourborg)
-	if(istype(ourborg.module_active, /obj/item/weapon/gun/energy/laser/mounted))
-		ourborg.add_overlay("[sprite_icon_state]-laser")
-	if(istype(ourborg.module_active, /obj/item/weapon/gun/energy/taser/mounted/cyborg))
-		ourborg.add_overlay("[sprite_icon_state]-taser")
 
 /datum/robot_sprite/combat/fluff/foopwotch
 	name = CUSTOM_BORGSPRITE("NDF") //For: GAEL
@@ -164,21 +159,10 @@
 	has_custom_open_sprites = TRUE
 	has_dead_sprite = TRUE
 	has_dead_sprite_overlay = FALSE
-	has_speed_sprite = TRUE
-	has_shield_sprite = TRUE
+	sprite_flags = ROBOT_HAS_SHIELD_SPRITE | ROBOT_HAS_SPEED_SPRITE | ROBOT_HAS_LASER_SPRITE | ROBOT_HAS_DISABLER_SPRITE | ROBOT_HAS_DAGGER_SPRITE//RS EDIT
 
 	is_whitelisted = TRUE
 	whitelist_ckey = "foopwotch"
-
-/datum/robot_sprite/combat/fluff/foopwotch/handle_extra_icon_updates(var/mob/living/silicon/robot/ourborg)
-
-	..()
-	if(istype(ourborg.module_active, /obj/item/weapon/gun/energy/laser/mounted) || istype(ourborg.module_active, /obj/item/weapon/gun/energy/lasercannon/mounted))
-		ourborg.add_overlay("[sprite_icon_state]-laser")
-	if(istype(ourborg.module_active, /obj/item/weapon/combat_borgblade))
-		ourborg.add_overlay("[sprite_icon_state]-dagger")
-	if(istype(ourborg.module_active, /obj/item/weapon/gun/energy/taser/mounted/cyborg/ertgun))
-		ourborg.add_overlay("[sprite_icon_state]-disabler")
 
 // J
 
@@ -200,12 +184,6 @@
 	is_whitelisted = TRUE
 	whitelist_ckey = "jademanique"
 
-/datum/robot_sprite/dogborg/security/fluff/jademanique/handle_extra_icon_updates(var/mob/living/silicon/robot/ourborg)
-	if(istype(ourborg.module_active, /obj/item/weapon/gun/energy/laser/mounted))
-		ourborg.add_overlay("[sprite_icon_state]-laser")
-	if(istype(ourborg.module_active, /obj/item/weapon/gun/energy/taser/mounted/cyborg))
-		ourborg.add_overlay("[sprite_icon_state]-taser")
-
 // L
 
 /datum/robot_sprite/dogborg/engineering/fluff/lunarfleet
@@ -224,3 +202,124 @@
 
 	is_whitelisted = TRUE
 	whitelist_ckey = "lunarfleet"
+
+/datum/robot_sprite/dogborg/service/fluff/aurum // RS Addition
+	name = CUSTOM_BORGSPRITE("Aurum The Synth")
+
+	sprite_icon = 'icons/mob/robot/fluff_wide_rs.dmi'
+	sprite_icon_state = "googlyfox-aurum"
+	sprite_hud_icon_state = "boozehound"
+
+	has_eye_light_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	has_rest_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit", "Bellyup")
+	has_dead_sprite = TRUE
+	has_dead_sprite_overlay = TRUE
+	has_vore_belly_resting_sprites = TRUE
+	belly_capacity_list = list("sleeper" = 1, "belly" = 2, "throat" = 1)
+	pixel_x = -16
+
+	is_whitelisted = TRUE
+	whitelist_ckey = "googlyfox"
+
+/datum/robot_sprite/dogborg/crisis/fluff/aurum // RS Addition
+	name = CUSTOM_BORGSPRITE("Aurum The Synth")
+
+	sprite_icon = 'icons/mob/robot/fluff_wide_rs.dmi'
+	sprite_icon_state = "googlyfox-aurum"
+	sprite_hud_icon_state = "medihound"
+
+	has_eye_light_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	has_rest_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit", "Bellyup")
+	has_dead_sprite = TRUE
+	has_dead_sprite_overlay = TRUE
+	has_vore_belly_resting_sprites = TRUE
+	belly_capacity_list = list("sleeper" = 1, "belly" = 2, "throat" = 1)
+	pixel_x = -16
+
+	is_whitelisted = TRUE
+	whitelist_ckey = "googlyfox"
+
+/datum/robot_sprite/dogborg/engineering/fluff/aurum // RS Addition
+	name = CUSTOM_BORGSPRITE("Aurum The Synth")
+
+	sprite_icon = 'icons/mob/robot/fluff_wide_rs.dmi'
+	sprite_icon_state = "googlyfox-aurum"
+	sprite_hud_icon_state = "pupdozer"
+
+	has_eye_light_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	has_rest_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit", "Bellyup")
+	has_dead_sprite = TRUE
+	has_dead_sprite_overlay = TRUE
+	has_vore_belly_resting_sprites = TRUE
+	belly_capacity_list = list("sleeper" = 1, "belly" = 2, "throat" = 1)
+	pixel_x = -16
+
+	is_whitelisted = TRUE
+	whitelist_ckey = "googlyfox"
+
+/datum/robot_sprite/dogborg/science/fluff/aurum // RS Addition
+	name = CUSTOM_BORGSPRITE("Aurum The Synth")
+
+	sprite_icon = 'icons/mob/robot/fluff_wide_rs.dmi'
+	sprite_icon_state = "googlyfox-aurum"
+	sprite_hud_icon_state = "sci-borg"
+
+	has_eye_light_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	has_rest_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit", "Bellyup")
+	has_dead_sprite = TRUE
+	has_dead_sprite_overlay = TRUE
+	has_vore_belly_resting_sprites = TRUE
+	belly_capacity_list = list("sleeper" = 1, "belly" = 2, "throat" = 1)
+	pixel_x = -16
+
+	is_whitelisted = TRUE
+	whitelist_ckey = "googlyfox"
+
+/datum/robot_sprite/dogborg/mining/fluff/aurum // RS Addition
+	name = CUSTOM_BORGSPRITE("Aurum The Synth")
+
+	sprite_icon = 'icons/mob/robot/fluff_wide_rs.dmi'
+	sprite_icon_state = "googlyfox-aurum"
+	sprite_hud_icon_state = "miner"
+
+	has_eye_light_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	has_rest_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit", "Bellyup")
+	has_dead_sprite = TRUE
+	has_dead_sprite_overlay = TRUE
+	has_vore_belly_resting_sprites = TRUE
+	belly_capacity_list = list("sleeper" = 1, "belly" = 2, "throat" = 1)
+	pixel_x = -16
+
+	is_whitelisted = TRUE
+	whitelist_ckey = "googlyfox"
+
+/datum/robot_sprite/dogborg/security/fluff/aurum // RS Addition
+	name = CUSTOM_BORGSPRITE("Aurum The Synth")
+
+	sprite_icon = 'icons/mob/robot/fluff_wide_rs.dmi'
+	sprite_icon_state = "googlyfox-aurum"
+	sprite_hud_icon_state = "k9"
+
+	has_eye_light_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	has_rest_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit", "Bellyup")
+	has_dead_sprite = TRUE
+	has_dead_sprite_overlay = TRUE
+	has_vore_belly_resting_sprites = TRUE
+	belly_capacity_list = list("sleeper" = 1, "belly" = 2, "throat" = 1)
+	pixel_x = -16
+
+	is_whitelisted = TRUE
+	whitelist_ckey = "googlyfox"
+	sprite_flags = ROBOT_HAS_LASER_SPRITE | ROBOT_HAS_TASER_SPRITE

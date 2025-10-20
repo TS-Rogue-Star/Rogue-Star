@@ -20,6 +20,7 @@
 		/mob/living/simple_mob/vore/overmap/stardog,
 		/mob/living/simple_mob/vore/bigdragon,
 		/mob/living/silicon/ai,	//RS EDIT
+		/mob/living/silicon/robot/ai_shell,	// RS Add: Shells can't leave the station (Lira, October 2025)
 		/mob/observer/eye	//RS EDIT
 		)	//There are some things we don't want to come through no matter what.
 
@@ -35,10 +36,20 @@
 	return ..()
 
 /obj/machinery/cryopod/robot/door/gateway/redgate/proc/teleport(var/mob/M as mob)
+	// RS Add: Shells can't leave the station (Lira, October 2025)
+	if(isrobot(M))
+		var/mob/living/silicon/robot/R = M
+		if(R.shell)
+			to_chat(R, "<span class='warning'>The [src] rejects the remote shell and remains inert.</span>")
+			return
 	var/keycheck = TRUE
 	if(!isliving(M))		//We only want mob/living, no bullets or mechs or AI eyes or items
 		if(M.type in exceptions)
 			keycheck = FALSE		//we'll allow it
+		if(isanimal(M))
+			var/mob/living/simple_mob/S = M
+			if(S.load_owner && S.load_owner != "seriouslydontsavethis" && S.load_owner == "STATION")	//RS ADD - Is it someone's personal pet?
+				keycheck = FALSE	//RS ADD - Then allow it
 		else return
 	if(!restrict_mobs || M.faction == "neutral" || M.faction == "pet")
 		keycheck = FALSE		//Probably a pet or something people will want to vibe with

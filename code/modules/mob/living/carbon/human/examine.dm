@@ -272,6 +272,7 @@
 	vorestrings += examine_weight()
 	vorestrings += examine_nutrition()
 	vorestrings += examine_bellies()
+	vorestrings += examine_reagent_bellies() // Reagent bellies || RS Add || Chomp Port
 	vorestrings += examine_pickup_size()
 	vorestrings += examine_step_size()
 	vorestrings += examine_nif()
@@ -305,14 +306,14 @@
 
 	var/ssd_msg = species.get_ssd(src)
 	if(ssd_msg && (!should_have_organ("brain") || has_brain()) && stat != DEAD)
-		if(!key)
+		if(!key && !teleop)	//RS EDIT
 			msg += "<span class='deadsay'>[T.He] [T.is] [ssd_msg]. It doesn't look like [T.he] [T.is] waking up anytime soon.</span>"
 		else if(!client)
 			msg += "<span class='deadsay'>[T.He] [T.is] [ssd_msg].</span>"
 		//VOREStation Add Start
 		if(client && ((client.inactivity / 10) / 60 > 10)) //10 Minutes
 			msg += "\[Inactive for [round((client.inactivity/10)/60)] minutes\]"
-		else if(disconnect_time)
+		else if(disconnect_time && !teleop)	//RS EDIT
 			msg += "\[Disconnected/ghosted [round(((world.realtime - disconnect_time)/10)/60)] minutes ago\]"
 		//VOREStation Add End
 

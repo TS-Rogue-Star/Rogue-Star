@@ -39,24 +39,29 @@ var/list/ai_status_emotions = list(
 
 	return emotions
 
+//RS Edit Start: Updated to call new AI status proc (Lira, October 2025)
 /proc/set_ai_status_displays(mob/user as mob)
 	var/list/ai_emotions = get_ai_emotions(user.ckey)
 	var/emote = tgui_input_list(user, "Please, select a status:", "AI Status", ai_emotions)
 	if(!emote)
 		return
-	for (var/obj/machinery/M in machines) //change status
+	apply_ai_status_emote(emote)
+
+/proc/apply_ai_status_emote(var/emote)
+	if(!emote)
+		return
+	for(var/obj/machinery/M in machines) //change status
 		if(istype(M, /obj/machinery/ai_status_display))
 			var/obj/machinery/ai_status_display/AISD = M
-			AISD.emotion = emote
-			AISD.update()
+			AISD.apply_emote(emote)
 		//if Friend Computer, change ALL displays
 		else if(istype(M, /obj/machinery/status_display))
-
 			var/obj/machinery/status_display/SD = M
-			if(emote=="Friend Computer")
+			if(emote == "Friend Computer")
 				SD.friendc = 1
 			else
 				SD.friendc = 0
+// RS Edit End
 
 /obj/machinery/ai_status_display
 	icon = 'icons/obj/status_display.dmi'
@@ -87,10 +92,22 @@ var/list/ai_status_emotions = list(
 	var/emote = tgui_input_list(user, "Please, select a status:", "AI Status", ai_emotions)
 	if(!emote)
 		return
-	emotion = emote
+	apply_ai_status_emote(emote) // RS Add: Call new AI status proc (Lira, October 2025)
 
 /obj/machinery/ai_status_display/process()
 	return
+
+// RS Add: New proc to display AI status (Lira, October 2025)
+/obj/machinery/ai_status_display/proc/apply_emote(var/emote)
+	emotion = emote
+	switch(emote)
+		if("Blank")
+			mode = 0
+		if("BSOD")
+			mode = 2
+		else
+			mode = 1
+	update()
 
 /obj/machinery/ai_status_display/proc/update()
 	if(mode==0) //Blank

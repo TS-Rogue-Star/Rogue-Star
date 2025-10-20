@@ -47,6 +47,10 @@
 
 	loot_list = list(/obj/item/stack/animalhide/goliath = 100) // /obj/item/crusher_trophy/goliath_tentacle = 100,
 	meat_type = list(/obj/item/weapon/reagent_containers/food/snacks/meat/goliath = 2)
+
+	hunter = TRUE
+	food_pref = OMNIVORE
+
 	/*
 	/// Can this kind of goliath be tamed?
 	var/tameable = TRUE
@@ -88,6 +92,7 @@
 
 
 /obj/belly/goliath
+	autotransfer_enabled = 1  // Updated as part of broader autotransfer update
 	autotransferchance = 50
 	autotransferwait = 150
 	escapable = 1

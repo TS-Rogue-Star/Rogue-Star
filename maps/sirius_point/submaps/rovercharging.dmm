@@ -1,0 +1,342 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/wall,
+/area/submap/moonbase/poi/west_crater/rovercharging)
+"b" = (
+/obj/effect/floor_decal/industrial/loading/white{
+	dir = 1
+	},
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/rovercharging)
+"e" = (
+/obj/structure/table/steel_reinforced,
+/obj/item/weapon/tool/wrench,
+/obj/item/weapon/tool/wrench,
+/obj/item/weapon/tool/crowbar/red,
+/obj/item/weapon/tool/crowbar/red,
+/obj/effect/floor_decal/industrial/warning/color,
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/rovercharging)
+"i" = (
+/obj/structure/table/steel_reinforced,
+/obj/effect/floor_decal/industrial/warning/color,
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/rovercharging)
+"j" = (
+/turf/template_noop,
+/area/template_noop)
+"k" = (
+/obj/effect/floor_decal/industrial/warning/color/corner{
+	dir = 8
+	},
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/rovercharging)
+"m" = (
+/obj/structure/table/steel_reinforced,
+/obj/item/weapon/storage/toolbox/mechanical{
+	pixel_y = 5
+	},
+/obj/effect/floor_decal/industrial/warning/color{
+	dir = 10
+	},
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/rovercharging)
+"p" = (
+/obj/effect/floor_decal/industrial/warning/color{
+	dir = 5
+	},
+/obj/vehicle/train/trolley/trailer/random,
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/rovercharging)
+"s" = (
+/obj/effect/floor_decal/industrial/warning/color/corner{
+	dir = 4
+	},
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/rovercharging)
+"u" = (
+/obj/structure/table/steel_reinforced,
+/obj/machinery/cell_charger{
+	pixel_x = 0;
+	pixel_y = 4
+	},
+/obj/random/powercell,
+/obj/random/powercell,
+/obj/random/powercell,
+/obj/effect/floor_decal/industrial/warning/color{
+	dir = 1
+	},
+/obj/machinery/power/apc{
+	dir = 1
+	},
+/obj/structure/cable/orange{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/rovercharging)
+"v" = (
+/obj/machinery/light/lamppost{
+	dir = 8
+	},
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/west_crater/rovercharging)
+"w" = (
+/obj/machinery/power/rtg/fake_gen,
+/obj/effect/floor_decal/industrial/warning/color{
+	dir = 9
+	},
+/obj/structure/cable/orange{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/rovercharging)
+"z" = (
+/obj/effect/floor_decal/industrial/warning/color/corner,
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/rovercharging)
+"A" = (
+/obj/effect/floor_decal/industrial/outline,
+/obj/vehicle/train/engine/quadbike/built,
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/rovercharging)
+"C" = (
+/obj/effect/floor_decal/industrial/warning/color{
+	dir = 6
+	},
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/rovercharging)
+"D" = (
+/obj/effect/floor_decal/industrial/warning/color/corner{
+	dir = 1
+	},
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/rovercharging)
+"G" = (
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/rovercharging)
+"H" = (
+/obj/effect/floor_decal/industrial/warning/color{
+	dir = 4
+	},
+/obj/structure/table/bench/padded,
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/rovercharging)
+"L" = (
+/obj/effect/floor_decal/industrial/warning/color{
+	dir = 8
+	},
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/rovercharging)
+"M" = (
+/obj/item/device/gps/internal/poi{
+	gps_tag = "Unidentified Signal"
+	},
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/rovercharging)
+"N" = (
+/obj/effect/floor_decal/industrial/outline,
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/rovercharging)
+"P" = (
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/west_crater/rovercharging)
+"Q" = (
+/obj/machinery/light/lamppost{
+	dir = 4
+	},
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/submap/moonbase/poi/west_crater/rovercharging)
+"W" = (
+/obj/effect/floor_decal/industrial/loading/white,
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/rovercharging)
+"Y" = (
+/obj/structure/table/steel_reinforced,
+/obj/machinery/cell_charger{
+	pixel_x = 0;
+	pixel_y = 4
+	},
+/obj/random/powercell,
+/obj/random/powercell,
+/obj/random/powercell,
+/obj/effect/floor_decal/industrial/warning/color{
+	dir = 1
+	},
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/submap/moonbase/poi/west_crater/rovercharging)
+
+(1,1,1) = {"
+j
+P
+P
+P
+P
+P
+Q
+P
+P
+P
+P
+P
+j
+"}
+(2,1,1) = {"
+P
+P
+P
+a
+w
+L
+L
+L
+m
+a
+P
+P
+P
+"}
+(3,1,1) = {"
+P
+P
+P
+a
+u
+G
+N
+G
+e
+a
+P
+P
+P
+"}
+(4,1,1) = {"
+P
+P
+P
+a
+Y
+G
+A
+G
+i
+a
+P
+P
+P
+"}
+(5,1,1) = {"
+P
+P
+G
+k
+D
+G
+G
+G
+k
+D
+G
+P
+P
+"}
+(6,1,1) = {"
+P
+G
+G
+b
+G
+G
+M
+G
+G
+W
+G
+G
+G
+"}
+(7,1,1) = {"
+G
+P
+P
+z
+s
+G
+G
+G
+z
+s
+P
+G
+P
+"}
+(8,1,1) = {"
+P
+P
+P
+P
+p
+H
+H
+H
+C
+P
+P
+P
+P
+"}
+(9,1,1) = {"
+j
+P
+P
+P
+P
+P
+v
+P
+P
+P
+P
+P
+j
+"}

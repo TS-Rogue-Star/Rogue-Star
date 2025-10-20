@@ -175,11 +175,15 @@ var/list/_human_default_emotes = list(
 	/decl/emote/audible/dook,
 	//VOREStation Add End
 	//RS ADD START
-	/decl/emote/audible/yip,
-	/decl/emote/audible/yip/yap,
-	/decl/emote/audible/awawa,
+	/decl/emote/audible/multisound/yip,
+	/decl/emote/audible/multisound/yap,
+	/decl/emote/audible/multisound/awawa,
 	/decl/emote/audible/glub,
-	/decl/emote/audible/blowkiss
+	/decl/emote/audible/blowkiss,
+	/decl/emote/audible/multisound/poyo,
+	/decl/emote/audible/multisound/a,
+	/decl/emote/audible/multisound/wawa,
+	/decl/emote/audible/caw
 	//RS ADD END
 )
 
@@ -324,10 +328,13 @@ var/list/_simple_mob_default_emotes = list(
 	/decl/emote/audible/dook,
 	//VOREStation Add End
 	//RS ADD START
-	/decl/emote/audible/yip,
-	/decl/emote/audible/yip/yap,
-	/decl/emote/audible/awawa,
-	/decl/emote/audible/glub
+	/decl/emote/audible/multisound/yip,
+	/decl/emote/audible/multisound/yap,
+	/decl/emote/audible/multisound/awawa,
+	/decl/emote/audible/glub,
+	/decl/emote/audible/multisound/poyo,
+	/decl/emote/audible/multisound/a,
+	/decl/emote/audible/multisound/wawa
 	//RS ADD END
 	)
 

@@ -27,9 +27,11 @@
 	if you strip it off unsuspecting prey. You're stronger than other shadekin, faster, and more capable in \
 	a brawl, but you barely generate any of your own energy. You can stand in a dark spot to gather scraps \
 	of energy in a pinch, but otherwise need to take it, by force if necessary."
+	hunter = TRUE				//RS ADD
+	food_pref = OMNIVORE		//RS ADD
 
 /mob/living/simple_mob/shadekin/red
-	ai_holder_type = /datum/ai_holder/simple_mob/melee
+	ai_holder_type = /datum/ai_holder/simple_mob/melee/shadekin	//RS EDIT
 
 /mob/living/simple_mob/shadekin/red/white
 	icon_state = "white"
@@ -123,6 +125,9 @@
 	areas is taxing on your energy. You can harvest energy from others in a fight, but since you don't need to, you may \
 	just choose to simply not fight."
 
+	hunter = TRUE				//RS ADD
+	food_pref = OMNIVORE		//RS ADD
+
 /mob/living/simple_mob/shadekin/purple
 	ai_holder_type = /datum/ai_holder/simple_mob/retaliate
 
@@ -170,7 +175,30 @@
 	nom_mob = TRUE
 
 /mob/living/simple_mob/shadekin/yellow
-	ai_holder_type = /datum/ai_holder/simple_mob/melee/hit_and_run
+	ai_holder_type = /datum/ai_holder/simple_mob/shy/shadekin	//RS EDIT
+
+/datum/ai_holder/simple_mob/shy	//RS ADD START - lets make a somewhat more polite AI, this one just flees from basically everything, but doesn't destroy things
+	can_flee = TRUE
+	flee_when_dying = TRUE
+	dying_threshold = 1
+	violent_breakthrough = FALSE
+
+/datum/ai_holder/simple_mob/shy/shadekin/can_attack(atom/movable/the_target, vision_required)	//This one thinks carbon shadekin are cool as long as they aren't rude
+	if(ishuman(the_target))
+		var/mob/living/carbon/human/H = the_target
+		if(!check_attacker(H))
+			if(istype(H.species,/datum/species/shadekin) || istype(H.species,/datum/species/crew_shadekin))
+				return FALSE
+	. = ..()
+
+/datum/ai_holder/simple_mob/melee/shadekin/can_attack(atom/movable/the_target, vision_required)	//This one is rude, but thinks carbon shadekin are cool as long as they aren't rude
+	if(ishuman(the_target))
+		var/mob/living/carbon/human/H = the_target
+		if(!check_attacker(H))
+			if(istype(H.species,/datum/species/shadekin) || istype(H.species,/datum/species/crew_shadekin))
+				return FALSE
+	. = ..()
+	//RS ADD END
 
 /mob/living/simple_mob/shadekin/yellow/white
 	icon_state = "white"
@@ -263,8 +291,11 @@
 	You're stronger than most shadekin, faster, and more capable in a brawl, but you don't generate much of your own energy. \
 	You can stand in a dark spot to gather some energy, but otherwise need to take it, by force if necessary."
 
+	hunter = TRUE				//RS ADD
+	food_pref = OMNIVORE		//RS ADD
+
 /mob/living/simple_mob/shadekin/orange
-	ai_holder_type = /datum/ai_holder/simple_mob/melee
+	ai_holder_type = /datum/ai_holder/simple_mob/melee/shadekin	//RS EDIT
 
 /mob/living/simple_mob/shadekin/orange/white
 	icon_state = "white"

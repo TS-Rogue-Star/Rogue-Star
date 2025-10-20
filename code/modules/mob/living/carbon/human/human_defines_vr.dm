@@ -8,6 +8,7 @@
 	var/sensorpref = 5		//Suit sensor loadout pref
 	var/wings_hidden = FALSE
 	var/tail_hidden = FALSE
+	var/disable_vore_layers = FALSE // RS Add: Custom markings support (Lira, September 2025)
 	var/markings_len = 0 //mostly an arbitrary number
 	var/low_sorting_priority = FALSE
 
@@ -43,10 +44,16 @@
 
 	SK.set_max_energy(src, new_max_energy)
 
-/mob/living/carbon/human/proc/shadekin_adjust_energy(var/amount)
+/mob/living/carbon/human/proc/shadekin_adjust_energy(var/amount, nutrition_drained = FALSE)		//RS EDIT
 	var/datum/species/shadekin/SK = species
 
 	if(!istype(SK))
 		return 0
 
-	SK.set_energy(src, SK.get_energy(src) + amount)
+	var/multiplier = 1	//RS EDIT START
+
+	if(nutrition_drained)
+		if(nutrition <= 1000)	return	//Feed your body before feeding your energy
+		multiplier = SK.energy_drain
+
+	SK.set_energy(src, SK.get_energy(src) + amount * multiplier) //RS EDIT END

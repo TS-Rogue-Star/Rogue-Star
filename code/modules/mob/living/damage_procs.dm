@@ -13,6 +13,7 @@
 		to_world_log("## DEBUG: apply_damage() was called on [src], with [damage] damage, and an armor value of [blocked].")
 	if(!damage || (blocked >= 100))
 		return 0
+	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE)	//RS ADD
 	for(var/datum/modifier/M in modifiers) //MODIFIER STUFF. It's best to do this RIGHT before armor is calculated, so it's done here! This is the 'forcefield' defence.
 		if(damagetype == BRUTE && (!isnull(M.effective_brute_resistance)))
 			if(M.energy_based)

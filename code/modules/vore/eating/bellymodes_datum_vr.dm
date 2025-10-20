@@ -51,7 +51,6 @@ GLOBAL_LIST_INIT(digest_modes, list())
 		return
 
 	// Deal digestion damage (and feed the pred)
-	var/old_health = L.health	// RS ADD
 	var/old_brute = L.getBruteLoss()
 	var/old_burn = L.getFireLoss()
 	var/old_oxy = L.getOxyLoss()
@@ -72,33 +71,39 @@ GLOBAL_LIST_INIT(digest_modes, list())
 	var/offset = (1 + ((L.weight - 137) / 137)) // 130 pounds = .95 140 pounds = 1.02
 	var/difference = B.owner.size_multiplier / L.size_multiplier
 	// Begin RS edit
-	if(B.health_impacts_size)
-		if (istype(B.owner, /mob/living/carbon/human))
-			var/mob/living/carbon/human/howner = B.owner
+	// DameonOwen - edited order 10/19/25
+	if (istype(B.owner, /mob/living/carbon/human))
+		var/mob/living/carbon/human/howner = B.owner
+		if(B.health_impacts_size)
 			howner.update_fullness()
 
-			//Shadekin energy calculation start!
-			var/datum/species/shadekin/SK = howner.species
-			if(istype(SK))
-				switch(SK.get_shadekin_eyecolor(howner))
-					if(RED_EYES)
-						howner.shadekin_adjust_energy(damage_gain) 	//1dmg to 1 energy, more or less.
-					if(ORANGE_EYES)
-						howner.shadekin_adjust_energy(damage_gain/1.5)
-					if(PURPLE_EYES)
-						howner.shadekin_adjust_energy(damage_gain/1.5)
-					else //Anybody else!
-						howner.shadekin_adjust_energy(damage_gain/2)
-			//Shadekin energy calculation end!
-	consider_healthbar(L, old_health, B.owner)
+		var/modified_damage_gain = damage_gain
+		if(!L.ckey)
+			modified_damage_gain = modified_damage_gain / 4
+
+		howner.shadekin_adjust_energy(modified_damage_gain,TRUE) 	//1dmg to 1 energy, more or less.
+
 	// End RS edit
 	if(isrobot(B.owner))
 		var/mob/living/silicon/robot/R = B.owner
-		R.cell.charge += 25 * damage_gain
+		if(B.reagent_mode_flags & DM_FLAG_REAGENTSDIGEST && B.reagents.total_volume < B.reagents.maximum_volume) // Reagent bellies || RS Add || Chomp Port
+			R.cell.charge += 20*damage_gain
+			B.digest_nutri_gain += offset * (1.5 * damage_gain / difference)
+			B.GenerateBellyReagents_digesting()
+		else
+			R.cell.charge += 25*damage_gain
 	if(offset) // If any different than default weight, multiply the % of offset.
-		B.owner.adjust_nutrition(offset*(14 * (damage_gain) / difference)*L.get_digestion_nutrition_modifier()*B.owner.get_digestion_efficiency_modifier()) //4.5 nutrition points per health point. Normal same size 100+100 health prey with average weight would give 900 points if the digestion was instant. With all the size/weight offset taxes plus over time oxyloss+hunger taxes deducted with non-instant digestion, this should be enough to not leave the pred starved.
+		if(B.reagent_mode_flags & DM_FLAG_REAGENTSDIGEST && B.reagents.total_volume < B.reagents.maximum_volume) // Reagent bellies || RS Add || Chomp Port
+			B.owner.adjust_nutrition(offset*(9 * (damage_gain) / difference)*L.get_digestion_nutrition_modifier()*B.owner.get_digestion_efficiency_modifier())
+			B.digest_nutri_gain += offset * (1.5 * damage_gain / difference) * L.get_digestion_nutrition_modifier() * B.owner.get_digestion_efficiency_modifier()
+			B.GenerateBellyReagents_digesting()
+		else
+			B.owner.adjust_nutrition(offset*(14 * (damage_gain) / difference)*L.get_digestion_nutrition_modifier()*B.owner.get_digestion_efficiency_modifier()) //4.5 nutrition points per health point. Normal same size 100+100 health prey with average weight would give 900 points if the digestion was instant. With all the size/weight offset taxes plus over time oxyloss+hunger taxes deducted with non-instant digestion, this should be enough to not leave the pred starved.
 	else
-		B.owner.adjust_nutrition((14 * (damage_gain) / difference)*L.get_digestion_nutrition_modifier()*B.owner.get_digestion_efficiency_modifier())
+		if(B.reagent_mode_flags & DM_FLAG_REAGENTSDIGEST && B.reagents.total_volume < B.reagents.maximum_volume) // Reagent bellies || RS Add || Chomp Port
+			B.owner.adjust_nutrition((9 * (damage_gain) / difference)*L.get_digestion_nutrition_modifier()*B.owner.get_digestion_efficiency_modifier())
+		else
+			B.owner.adjust_nutrition((14 * (damage_gain) / difference)*L.get_digestion_nutrition_modifier()*B.owner.get_digestion_efficiency_modifier())
 	if(L.stat != oldstat)
 		return list("to_update" = TRUE)
 
@@ -109,14 +114,12 @@ GLOBAL_LIST_INIT(digest_modes, list())
 /datum/digest_mode/absorb/process_mob(obj/belly/B, mob/living/L)
 	if(!L.absorbable || L.absorbed)
 		return null
-	var/old_nutrition = L.nutrition
 	B.steal_nutrition(L)
+	if (B.reagent_mode_flags & DM_FLAG_REAGENTSABSORB && B.reagents.total_volume < B.reagents.maximum_volume) // Reagent bellies || RS Add || Chomp Port
+		B.GenerateBellyReagents_absorbing()
 	if(L.nutrition < 100)
 		B.absorb_living(L)
-		consider_healthbar(L, old_nutrition, B.owner)
 		return list("to_update" = TRUE)
-	else
-		consider_healthbar(L, old_nutrition, B.owner)
 
 /datum/digest_mode/unabsorb
 	id = DM_UNABSORB
@@ -132,9 +135,7 @@ GLOBAL_LIST_INIT(digest_modes, list())
 	noise_chance = 10
 
 /datum/digest_mode/drain/process_mob(obj/belly/B, mob/living/L)
-	var/old_nutrition = L.nutrition
 	B.steal_nutrition(L)
-	consider_healthbar(L, old_nutrition, B.owner)
 
 /datum/digest_mode/drain/shrink
 	id = DM_SHRINK
@@ -170,29 +171,33 @@ GLOBAL_LIST_INIT(digest_modes, list())
 	if(L.stat == DEAD)
 		return null // Can't heal the dead with healbelly
 	var/mob/living/carbon/human/H = L
-	if(B.owner.nutrition > 90 && H.isSynthetic())
-		for(var/obj/item/organ/external/E in H.organs) //Needed for healing prosthetics
-			var/obj/item/organ/external/O = E
-			if(O.brute_dam > 0 || O.burn_dam > 0) //Making sure healing continues until fixed.
-				O.heal_damage(0.5, 0.5, 0, 1) // Less effective healing as able to fix broken limbs
-				B.owner.adjust_nutrition(-10)  // More costly for the pred, since metals and stuff
-			if(L.health < L.maxHealth)
-				L.adjustToxLoss(-2)
-				L.adjustOxyLoss(-2)
-				L.adjustCloneLoss(-1)
-				B.owner.adjust_nutrition(-2)  // Normal cost per old functionality
-	if(B.owner.nutrition > 90 && (L.health < L.maxHealth) && !H.isSynthetic())
-		L.adjustBruteLoss(-2.5)
-		L.adjustFireLoss(-2.5)
-		L.adjustToxLoss(-5)
-		L.adjustOxyLoss(-5)
-		L.adjustCloneLoss(-1.25)
-		B.owner.adjust_nutrition(-4)
-		if(L.nutrition <= 400)
+	if(B.owner.nutrition > 90 || B.owner.natural_healer)	//RS EDIT START - Check nutrition AND special var!
+		var/nutrition_cost = 0	//How much nutrition this costs the B.owner. Let's just tally it all up and do it at the end to work better with natural_healer!
+		if(H.isSynthetic())
+			for(var/obj/item/organ/external/E in H.organs) //Needed for healing prosthetics
+				var/obj/item/organ/external/O = E
+				if(O.brute_dam > 0 || O.burn_dam > 0) //Making sure healing continues until fixed.
+					O.heal_damage(0.5, 0.5, 0, 1) // Less effective healing as able to fix broken limbs
+					nutrition_cost -= 10  // More costly for the pred, since metals and stuff
+				if(L.health < L.maxHealth)
+					L.adjustToxLoss(-2)
+					L.adjustOxyLoss(-2)
+					L.adjustCloneLoss(-1)
+					nutrition_cost -= 2  // Normal cost per old functionality
+		else if(L.health < L.maxHealth)
+			L.adjustBruteLoss(-2.5)
+			L.adjustFireLoss(-2.5)
+			L.adjustToxLoss(-5)
+			L.adjustOxyLoss(-5)
+			L.adjustCloneLoss(-1.25)
+			nutrition_cost -= 4
+			if(L.nutrition <= 400)
+				L.adjust_nutrition(2)
+		else if(L.nutrition <= 400)
+			nutrition_cost -= 2
 			L.adjust_nutrition(2)
-	else if(B.owner.nutrition > 90 && (L.nutrition <= 400))
-		B.owner.adjust_nutrition(-2)
-		L.adjust_nutrition(2)
+		if(!B.owner.natural_healer)	//If this is true let's not cost the B.owner anything since they got the special beans or whatever.
+			B.owner.adjust_nutrition(nutrition_cost)	//RS EDIT END
 	if(L.stat != oldstat)
 		return list("to_update" = TRUE)
 

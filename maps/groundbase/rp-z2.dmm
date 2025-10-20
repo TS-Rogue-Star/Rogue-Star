@@ -5181,11 +5181,11 @@
 /turf/simulated/wall,
 /area/groundbase/cargo/office)
 "qK" = (
-/obj/item/weapon/storage/box/monkeycubes,
-/obj/item/weapon/storage/box/monkeycubes,
-/obj/item/weapon/storage/box/monkeycubes,
-/obj/item/weapon/storage/box/monkeycubes,
-/obj/item/weapon/storage/box/monkeycubes,
+/obj/random/monkey_cubes,
+/obj/random/monkey_cubes,
+/obj/random/monkey_cubes,
+/obj/random/monkey_cubes,
+/obj/random/monkey_cubes,
 /obj/item/weapon/storage/box/beakers,
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /obj/structure/table/steel,
@@ -13095,6 +13095,8 @@
 	dir = 8;
 	pixel_x = -28
 	},
+/obj/item/canvas/drawing_tablet,
+/obj/item/canvas/drawing_tablet,
 /turf/simulated/floor/tiled{
 	edge_blending_priority = -1;
 	outdoors = 0

@@ -1118,15 +1118,15 @@ var/global/list/common_tools = list(
 
 // check if mob is lying down on something we can operate him on.
 // The RNG with table/rollerbeds comes into play in do_surgery() so that fail_step() can be used instead.
-/proc/can_operate(mob/living/carbon/M, mob/living/user)
-	. = M.lying
-
-	if(user && M == user && user.allow_self_surgery && user.a_intent == I_HELP)	// You can, technically, always operate on yourself after standing still. Inadvised, but you can.
-
-		if(!M.isSynthetic())
-			. = TRUE
-
+/proc/can_operate(mob/living/carbon/M, mob/living/user) //RS Edit, proc was returning true while target lying down, regardless of anything else.
+	. = FALSE //RS EDIT, formerly returned true while lying down, and skipped below checks.
+	if(user && user.a_intent == I_HELP && M.lying)
+		//if(!M.isSynthetic()) //RS remove, its an admin given only verb, why limit to only organics?
+		. = TRUE
+		if(!(user.allow_self_surgery) && M == user)
+			. = FALSE
 	return .
+	//RS Edit End
 
 // Returns an instance of a valid surgery surface.
 /mob/living/proc/get_surgery_surface(mob/living/user)
@@ -1501,6 +1501,7 @@ GLOBAL_REAL_VAR(list/stack_trace_storage)
 
 	. += new /obj/screen/plane_master{plane = PLANE_MESONS} 			//Meson-specific things like open ceilings.
 	. += new /obj/screen/plane_master{plane = PLANE_BUILDMODE}			//Things that only show up while in build mode
+	. += new /obj/screen/plane_master{plane = PLANE_ADMIN_SECRET}		//RS ADD - Things that only show up if you're an admin who is peeking secrets
 
 	// Real tangible stuff planes
 	. += new /obj/screen/plane_master/main{plane = TURF_PLANE}

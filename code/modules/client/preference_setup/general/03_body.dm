@@ -1,5 +1,19 @@
 var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-")
 
+//RS Add: Lets cache the base preview icon (Lira, August 2025)
+var/global/icon/GLOB_markings_base_preview_icon = null
+
+//RS Add: Returns the base review (Lira, August 2025)
+/proc/get_markings_base_preview_icon()
+    if(isicon(GLOB_markings_base_preview_icon))
+        return GLOB_markings_base_preview_icon
+    var/list/base_states_vat = icon_states('icons/mob/human_races/subspecies/r_vatgrown.dmi')
+    if("preview" in base_states_vat)
+        GLOB_markings_base_preview_icon = new/icon(icon = 'icons/mob/human_races/subspecies/r_vatgrown.dmi', icon_state = "preview", frame = 1)
+    else
+        GLOB_markings_base_preview_icon = new/icon(32,32)
+    return GLOB_markings_base_preview_icon
+
 /datum/preferences
 	var/equip_preview_mob = EQUIP_PREVIEW_ALL
 	var/animations_toggle = FALSE
@@ -122,16 +136,22 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 /datum/preferences/proc/mass_edit_marking_list(var/marking, var/change_on = TRUE, var/change_color = TRUE, var/marking_value = null, var/on = TRUE, var/color = "#000000")
 	var/datum/sprite_accessory/marking/mark_datum = body_marking_styles_list[marking]
 	var/list/new_marking = marking_value||mark_datum.body_parts
+	// RS Add Start: Default color (Lira, September 2025)
+	var/default_color = color
+	if(mark_datum && !mark_datum.do_colouration)
+		default_color = "#FFFFFF"
+	// RS Add End
 	for (var/NM in new_marking)
 		if (marking_value && !islist(new_marking[NM])) continue
-		new_marking[NM] = list("on" = (!change_on && marking_value) ? marking_value[NM]["on"] : on, "color" = (!change_color && marking_value) ? marking_value[NM]["color"] : color)
+		new_marking[NM] = list("on" = (!change_on && marking_value) ? marking_value[NM]["on"] : on, "color" = (!change_color && marking_value) ? marking_value[NM]["color"] : default_color) // RS Edit: Incorporate default color (Lira, September 2025)
 	if (change_color)
-		new_marking["color"] = color
+		new_marking["color"] = default_color // RS Edit: Incorporate default color (Lira, September 2025)
 	return new_marking
 
 /datum/category_item/player_setup_item/general/body
 	name = "Body"
 	sort_order = 3
+	var/last_marking_search_query = null //RS Add: Remember last markings search (Lira, October 2025)
 
 /datum/category_item/player_setup_item/general/body/load_character(var/savefile/S)
 	S["species"]			>> pref.species
@@ -159,6 +179,11 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 	S["organ_data"]			>> pref.organ_data
 	S["rlimb_data"]			>> pref.rlimb_data
 	S["body_markings"]		>> pref.body_markings
+	// RS Add Start: Custom markings data
+	var/list/custom_markings_payload
+	S["custom_markings"]	>> custom_markings_payload
+	pref.load_custom_markings_from_payload(custom_markings_payload)
+	// RS And End
 	S["synth_color"]		>> pref.synth_color
 	S["synth_red"]			>> pref.r_synth
 	S["synth_green"]		>> pref.g_synth
@@ -226,6 +251,7 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 	S["organ_data"]			<< pref.organ_data
 	S["rlimb_data"]			<< pref.rlimb_data
 	S["body_markings"]		<< pref.body_markings
+	S["custom_markings"]	<< pref.get_custom_markings_payload() // RS Add: Custom markings (Lira, September 2025)
 	S["synth_color"]		<< pref.synth_color
 	S["synth_red"]			<< pref.r_synth
 	S["synth_green"]		<< pref.g_synth
@@ -298,8 +324,20 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 	else pref.body_markings &= body_marking_styles_list
 	for (var/M in pref.body_markings) //VOREStation Edit
 		if (!islist(pref.body_markings[M]))
-			var/col = istext(pref.body_markings[M]) ? pref.body_markings[M] : "#000000"
+			// RS Add Start: Custom markings support (Lira, September 2025)
+			var/datum/sprite_accessory/marking/mark_datum = body_marking_styles_list[M]
+			var/default_color = (mark_datum && !mark_datum.do_colouration) ? "#FFFFFF" : "#000000"
+			// RS Add End
+			var/col = istext(pref.body_markings[M]) ? pref.body_markings[M] : default_color // RS Edit: Default color (Lira, September 2025)
 			pref.body_markings[M] = pref.mass_edit_marking_list(M,color=col)
+		// RS Add: Custom markings support (Lira, September 2025)
+		else
+			var/datum/sprite_accessory/marking/existing_datum = body_marking_styles_list[M]
+			if(existing_datum && !existing_datum.do_colouration)
+				pref.body_markings[M]["color"] = "#FFFFFF"
+				for(var/bp in existing_datum.body_parts)
+					if(islist(pref.body_markings[M][bp]))
+						pref.body_markings[M][bp]["color"] = "#FFFFFF"
 	if(!pref.bgstate || !(pref.bgstate in pref.bgstate_options))
 		pref.bgstate = "000"
 
@@ -629,16 +667,16 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 	. += "<b>Hair</b><br>"
 	if(has_flag(mob_species, HAS_HAIR_COLOR))
 		. += "<a href='?src=\ref[src];hair_color=1'>Change Color</a> [color_square(pref.r_hair, pref.g_hair, pref.b_hair)] "
-	. += " Style: <a href='?src=\ref[src];hair_style_left=[pref.h_style]'><</a> <a href='?src=\ref[src];hair_style_right=[pref.h_style]''>></a> <a href='?src=\ref[src];hair_style=1'>[pref.h_style]</a><br>" //The <</a> & ></a> in this line is correct-- those extra characters are the arrows you click to switch between styles.
+	. += " Style: <a href='?src=\ref[src];hair_gallery=1'>[pref.h_style]</a><br>"  //RS Edit: Opens new gallery (Lira, August 2025)
 
 	. += "<b>Gradient</b><br>"
 	. += "<a href='?src=\ref[src];grad_color=1'>Change Color</a> [color_square(pref.r_grad, pref.g_grad, pref.b_grad)] "
-	. += " Style: <a href='?src=\ref[src];grad_style_left=[pref.grad_style]'><</a> <a href='?src=\ref[src];grad_style_right=[pref.grad_style]''>></a> <a href='?src=\ref[src];grad_style=1'>[pref.grad_style]</a><br>"
+	. += " Style: <a href='?src=\ref[src];grad_gallery=1'>[pref.grad_style]</a><br>"  //RS Edit: Opens new gallery (Lira, August 2025)
 
 	. += "<br><b>Facial</b><br>"
 	if(has_flag(mob_species, HAS_HAIR_COLOR))
 		. += "<a href='?src=\ref[src];facial_color=1'>Change Color</a> [color_square(pref.r_facial, pref.g_facial, pref.b_facial)] "
-	. += " Style: <a href='?src=\ref[src];facial_style_left=[pref.f_style]'><</a> <a href='?src=\ref[src];facial_style_right=[pref.f_style]''>></a> <a href='?src=\ref[src];facial_style=1'>[pref.f_style]</a><br>" //Same as above with the extra > & < characters
+	. += " Style: <a href='?src=\ref[src];facial_gallery=1'>[pref.f_style]</a><br>"   //RS Edit: Opens new gallery (Lira, August 2025)
 
 	if(has_flag(mob_species, HAS_EYE_COLOR))
 		. += "<br><b>Eyes</b><br>"
@@ -657,7 +695,7 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 	var/datum/sprite_accessory/ears/ear = ear_styles[pref.ear_style]
 	. += "<b>Ears</b><br>"
 	if(istype(ear))
-		. += " Style: <a href='?src=\ref[src];ear_style=1'>[ear.name]</a><br>"
+		. += " Style: <a href='?src=\ref[src];ears_gallery=1'>[ear.name]</a> <a href='?src=\ref[src];ears_clear=1' style='color:#ffffff;background-color:#cc0000;border-color:#000000;' onmouseover=\"this.style.backgroundColor='#ffffff'; this.style.color='#cc0000';\" onmouseout=\"this.style.backgroundColor='#cc0000'; this.style.color='#ffffff';\">X</a><br>"  //RS Edit: Opens new gallery (Lira, August 2025) || Clear button (Lira, October 2025)
 		if(ear.do_colouration)
 			. += "<a href='?src=\ref[src];ear_color=1'>Change Color</a> [color_square(pref.r_ears, pref.g_ears, pref.b_ears)]<br>"
 		if(ear.extra_overlay)
@@ -665,22 +703,23 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 		if(ear.extra_overlay2)
 			. += "<a href='?src=\ref[src];ear_color3=1'>Change Tertiary Color</a> [color_square(pref.r_ears3, pref.g_ears3, pref.b_ears3)]<br>"
 	else
-		. += " Style: <a href='?src=\ref[src];ear_style=1'>Select</a><br>"
+		. += " Style: <a href='?src=\ref[src];ears_gallery=1'>Select</a><br>" //RS Edit: Opens new gallery (Lira, August 2025)
 
 	var/datum/sprite_accessory/ears/ears_secondary = ear_styles[pref.ear_secondary_style] // RS EDIT START (Port of VS PR#16513 'Adds a second ear slot.')
 	. += "<b>Horns</b><br>"
 	if(istype(ears_secondary))
-		. += " Style: <a href='?src=\ref[src];ear_secondary_style=1'>[ears_secondary.name]</a><br>"
+		. += " Style: <a href='?src=\ref[src];horns_gallery=1'>[ears_secondary.name]</a> <a href='?src=\ref[src];horns_clear=1' style='color:#ffffff;background-color:#cc0000;border-color:#000000;' onmouseover=\"this.style.backgroundColor='#ffffff'; this.style.color='#cc0000';\" onmouseout=\"this.style.backgroundColor='#cc0000'; this.style.color='#ffffff';\">X</a><br>" //RS Edit: Opens new gallery (Lira, August 2025) || Clear button (Lira, October 2025)
 		for(var/channel in 1 to min(ears_secondary.get_color_channel_count(), length(GLOB.fancy_sprite_accessory_color_channel_names)))
 			. += "<a href='?src=\ref[src];ear_secondary_color=[channel]'>Change [GLOB.fancy_sprite_accessory_color_channel_names[channel]] Color</a> [color_square(hex = LAZYACCESS(pref.ear_secondary_colors, channel) || "#ffffff")]<br>"
 	else
-		. += " Style: <a href='?src=\ref[src];ear_secondary_style=1'>Select</a><br>" // RS EDIT END (Port of VS PR#16513 'Adds a second ear slot.')
+		. += " Style: <a href='?src=\ref[src];horns_gallery=1'>Select</a><br>"  //RS Edit: Opens new gallery (Lira, August 2025)
+	// RS EDIT END (Port of VS PR#16513 'Adds a second ear slot.')
 
 	var/list/tail_styles = pref.get_available_styles(global.tail_styles_list)
 	var/datum/sprite_accessory/tail/tail = tail_styles[pref.tail_style]
 	. += "<b>Tail</b><br>"
 	if(istype(tail))
-		. += " Style: <a href='?src=\ref[src];tail_style=1'>[tail.name]</a><br>"
+		. += " Style: <a href='?src=\ref[src];tails_gallery=1'>[tail.name]</a> <a href='?src=\ref[src];tail_clear=1' style='color:#ffffff;background-color:#cc0000;border-color:#000000;' onmouseover=\"this.style.backgroundColor='#ffffff'; this.style.color='#cc0000';\" onmouseout=\"this.style.backgroundColor='#cc0000'; this.style.color='#ffffff';\">X</a><br>" //RS Edit: Opens new gallery (Lira, August 2025) || Clear button (Lira, October 2025)
 		if(tail.do_colouration)
 			. += "<a href='?src=\ref[src];tail_color=1'>Change Color</a> [color_square(pref.r_tail, pref.g_tail, pref.b_tail)]<br>"
 		if(tail.extra_overlay)
@@ -688,29 +727,64 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 		if(tail.extra_overlay2)
 			. += "<a href='?src=\ref[src];tail_color3=1'>Change Tertiary Color</a> [color_square(pref.r_tail3, pref.g_tail3, pref.b_tail3)]<br>"
 	else
-		. += " Style: <a href='?src=\ref[src];tail_style=1'>Select</a><br>"
+		. += " Style: <a href='?src=\ref[src];tails_gallery=1'>Select</a><br>" //RS Edit: Opens new gallery (Lira, August 2025)
 
 	var/list/wing_styles = pref.get_available_styles(global.wing_styles_list)
 	var/datum/sprite_accessory/wing/wings = wing_styles[pref.wing_style]
 	. += "<b>Wing</b><br>"
 	if(istype(wings))
-		. += " Style: <a href='?src=\ref[src];wing_style=1'>[wings.name]</a><br>"
+		. += " Style: <a href='?src=\ref[src];wings_gallery=1'>[wings.name]</a> <a href='?src=\ref[src];wings_clear=1' style='color:#ffffff;background-color:#cc0000;border-color:#000000;' onmouseover=\"this.style.backgroundColor='#ffffff'; this.style.color='#cc0000';\" onmouseout=\"this.style.backgroundColor='#cc0000'; this.style.color='#ffffff';\">X</a><br>" //RS Edit: Opens new gallery (Lira, August 2025) || Clear button (Lira, October 2025)
 		if(wings.do_colouration)
 			. += "<a href='?src=\ref[src];wing_color=1'>Change Color</a> [color_square(pref.r_wing, pref.g_wing, pref.b_wing)]<br>"
 		if(wings.extra_overlay)
 			. += "<a href='?src=\ref[src];wing_color2=1'>Change Secondary Color</a> [color_square(pref.r_wing2, pref.g_wing2, pref.b_wing2)]<br>"
 		if(wings.extra_overlay2)
-			. += "<a href='?src=\ref[src];wing_color3=1'>Change Secondary Color</a> [color_square(pref.r_wing3, pref.g_wing3, pref.b_wing3)]<br>"
+			. += "<a href='?src=\ref[src];wing_color3=1'>Change Tertiary Color</a> [color_square(pref.r_wing3, pref.g_wing3, pref.b_wing3)]<br>" //RS Edit: Typo fix (Lira, August 2025)
 	else
-		. += " Style: <a href='?src=\ref[src];wing_style=1'>Select</a><br>"
+		. += " Style: <a href='?src=\ref[src];wings_gallery=1'>Select</a><br>" //RS Edit: Opens new gallery (Lira, August 2025)
 
-	. += "<br><a href='?src=\ref[src];marking_style=1'>Body Markings +</a><br>"
-	. += "<table>"
+	. += "<br><a href='?src=\ref[src];marking_gallery=1'>Body Markings +</a><br>" //RS Edit: Opens new gallery (Lira, August 2025)
+	. += "<br><table>"
 	for(var/M in pref.body_markings)
-		. += "<tr><td>[M]</td><td>[pref.body_markings.len > 1 ? "<a href='?src=\ref[src];marking_up=[M]'>&#708;</a> <a href='?src=\ref[src];marking_down=[M]'>&#709;</a> <a href='?src=\ref[src];marking_move=[M]'>mv</a> " : ""]<a href='?src=\ref[src];marking_remove=[M]'>-</a> <a href='?src=\ref[src];marking_color=[M]'>Color</a>[color_square(hex = pref.body_markings[M]["color"] ? pref.body_markings[M]["color"] : "#000000")] - <a href='?src=\ref[src];marking_submenu=[M]'>Customize</a></td></tr>"
+		// RS Add Start: Custom markings support (Lira, September 2025)
+		var/datum/sprite_accessory/marking/style = body_marking_styles_list[M]
+		var/display_name = pref.get_marking_display_name(M)
+		var/allow_color = style ? style.do_colouration : TRUE
+		var/current_color = pref.body_markings[M]["color"]
+		if(!istext(current_color))
+			current_color = allow_color ? "#000000" : "#FFFFFF"
+		var/color_control
+		if(allow_color)
+			color_control = "<a href='?src=\ref[src];marking_color=[M]'>Color</a>"
+		else
+			color_control = "<span class='disabled'>Color</span>"
+		var/reorder = pref.body_markings.len > 1 ? "<a href='?src=\ref[src];marking_up=[M]'>&#708;</a> <a href='?src=\ref[src];marking_down=[M]'>&#709;</a> <a href='?src=\ref[src];marking_move=[M]'>mv</a> " : ""
+		var/remove_control
+		if(style?.hide_from_marking_gallery)
+			remove_control = "<span class='disabled'>-</span>"
+		else
+			remove_control = "<a href='?src=\ref[src];marking_remove=[M]'>-</a>"
+		. += "<tr><td>[display_name]</td><td>[reorder][remove_control] [color_control][color_square(hex = current_color)] - <a href='?src=\ref[src];marking_submenu=[M]'>Customize</a></td></tr>"
+		// RS Add End
 
 	. += "</table>"
 	. += "<br>"
+	// RS Add Start: Surface control for the player's custom marking slot. (Lira)
+	var/datum/custom_marking/current_mark = pref.get_primary_custom_marking()
+	if(istype(current_mark))
+		var/mark_id = current_mark.id ? url_encode(current_mark.id) : null
+		var/display = current_mark.name ? html_encode(current_mark.name) : "(Custom Marking)"
+		var/list/chunks = list()
+		chunks += "<b>Custom Marking:</b> Enabled"
+		chunks += display
+		if(mark_id)
+			chunks += "<a href='?src=\ref[src];custom_markings_edit=[mark_id]'>Edit</a>"
+		chunks += "<a href='?src=\ref[src];custom_markings_disable=1'>Disable</a>"
+		var/line = jointext(chunks, " ")
+		. += "[line]<br>"
+	else
+		. += "<b>Custom Marking:</b> Disabled <a href='?src=\ref[src];custom_markings_enable=1'>Enable</a><br><br>"
+	// RS Add End
 	. += "<b>Allow Synth markings:</b> <a href='?src=\ref[src];synth_markings=1'><b>[pref.synth_markings ? "Yes" : "No"]</b></a><br>"
 	. += "<b>Allow Synth color:</b> <a href='?src=\ref[src];synth_color=1'><b>[pref.synth_color ? "Yes" : "No"]</b></a><br>"
 	if(pref.synth_color)
@@ -829,43 +903,282 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 			pref.b_grad = hex2num(copytext(new_grad, 6, 8))
 			return TOPIC_REFRESH_UPDATE_PREVIEW
 
-	else if(href_list["hair_style"])
-		var/list/valid_hairstyles = pref.get_valid_hairstyles()
+	else if(href_list["hair_style"]) //RS Edit: Depreciated for new gallery (Lira, August 2025)
+		return TOPIC_HANDLED
 
-		var/new_h_style = tgui_input_list(user, "Choose your character's hair style:", "Character Preference", valid_hairstyles, pref.h_style)
-		if(new_h_style && CanUseTopic(user))
-			pref.h_style = new_h_style
+	//RS Add Start: Logic for the new gallary buttons (Lira, August 2025) || Markings search added (Lira, October 2025)
+
+	else if(href_list["hair_gallery"])
+		hair_gallery_window(user, 1)
+		return TOPIC_HANDLED
+
+	else if(href_list["hair_gallery_page"])
+		var/page = text2num(href_list["hair_gallery_page"]) || 1
+		hair_gallery_window(user, page)
+		return TOPIC_HANDLED
+
+	else if(href_list["hair_gallery_close"])
+		user << browse(null, "window=prefs_hair_gallery")
+		return TOPIC_HANDLED
+
+	else if(href_list["hair_set"])
+		var/new_style = href_list["hair_set"]
+		var/list/styles = pref.get_available_styles(global.hair_styles_list)
+		if(styles[new_style])
+			pref.h_style = new_style
+			user << browse(null, "window=prefs_hair_gallery")
 			return TOPIC_REFRESH_UPDATE_PREVIEW
+		return TOPIC_NOACTION
 
-	else if(href_list["grad_style"])
-		var/list/valid_gradients = GLOB.hair_gradients
+	else if(href_list["grad_gallery"])
+		grad_gallery_window(user, 1)
+		return TOPIC_HANDLED
 
-		var/new_grad_style = tgui_input_list(user, "Choose a color pattern for your hair:", "Character Preference", valid_gradients, pref.grad_style)
-		if(new_grad_style && CanUseTopic(user))
-			pref.grad_style = new_grad_style
+	else if(href_list["grad_gallery_page"])
+		var/page = text2num(href_list["grad_gallery_page"]) || 1
+		grad_gallery_window(user, page)
+		return TOPIC_HANDLED
+
+	else if(href_list["grad_gallery_close"])
+		user << browse(null, "window=prefs_grad_gallery")
+		return TOPIC_HANDLED
+
+	else if(href_list["grad_set"])
+		var/new_grad = href_list["grad_set"]
+		if(new_grad && (new_grad in GLOB.hair_gradients))
+			pref.grad_style = new_grad
+			user << browse(null, "window=prefs_grad_gallery")
 			return TOPIC_REFRESH_UPDATE_PREVIEW
+		return TOPIC_NOACTION
 
-	else if(href_list["hair_style_left"])
-		var/H = href_list["hair_style_left"]
-		var/list/valid_hairstyles = pref.get_valid_hairstyles()
-		var/start = valid_hairstyles.Find(H)
+	else if(href_list["facial_gallery"])
+		facial_gallery_window(user, 1)
+		return TOPIC_HANDLED
 
-		if(start != 1) //If we're not the beginning of the list, become the previous element.
-			pref.h_style = valid_hairstyles[start-1]
-		else //But if we ARE, become the final element.
-			pref.h_style = valid_hairstyles[valid_hairstyles.len]
+	else if(href_list["facial_gallery_page"])
+		var/page = text2num(href_list["facial_gallery_page"]) || 1
+		facial_gallery_window(user, page)
+		return TOPIC_HANDLED
+
+	else if(href_list["facial_gallery_close"])
+		user << browse(null, "window=prefs_facial_gallery")
+		return TOPIC_HANDLED
+
+	else if(href_list["facial_set"])
+		var/new_fstyle = href_list["facial_set"]
+		if(facial_hair_styles_list[new_fstyle])
+			pref.f_style = new_fstyle
+			user << browse(null, "window=prefs_facial_gallery")
+			return TOPIC_REFRESH_UPDATE_PREVIEW
+		return TOPIC_NOACTION
+
+	else if(href_list["ears_gallery"])
+		ears_gallery_window(user, 1)
+		return TOPIC_HANDLED
+
+	else if(href_list["ears_gallery_page"])
+		var/page = text2num(href_list["ears_gallery_page"]) || 1
+		ears_gallery_window(user, page)
+		return TOPIC_HANDLED
+
+	else if(href_list["ears_gallery_close"])
+		user << browse(null, "window=prefs_ears_gallery")
+		return TOPIC_HANDLED
+
+	else if(href_list["ear_set"])
+		var/new_style = href_list["ear_set"]
+		var/list/styles = pref.get_available_styles(global.ear_styles_list)
+		if(styles[new_style])
+			pref.ear_style = new_style
+			user << browse(null, "window=prefs_ears_gallery")
+			return TOPIC_REFRESH_UPDATE_PREVIEW
+		return TOPIC_NOACTION
+
+	 // Clears selection (Lira, October 2025)
+	else if(href_list["ears_clear"])
+		pref.ear_style = null
 		return TOPIC_REFRESH_UPDATE_PREVIEW
 
-	else if(href_list["hair_style_right"])
-		var/H = href_list["hair_style_right"]
-		var/list/valid_hairstyles = pref.get_valid_hairstyles()
-		var/start = valid_hairstyles.Find(H)
+	else if(href_list["horns_gallery"])
+		horns_gallery_window(user, 1)
+		return TOPIC_HANDLED
 
-		if(start != valid_hairstyles.len) //If we're not the end of the list, become the next element.
-			pref.h_style = valid_hairstyles[start+1]
-		else //But if we ARE, become the first element.
-			pref.h_style = valid_hairstyles[1]
+	else if(href_list["horns_gallery_page"])
+		var/page = text2num(href_list["horns_gallery_page"]) || 1
+		horns_gallery_window(user, page)
+		return TOPIC_HANDLED
+
+	else if(href_list["horns_gallery_close"])
+		user << browse(null, "window=prefs_horns_gallery")
+		return TOPIC_HANDLED
+
+	else if(href_list["horns_set"])
+		var/new_style = href_list["horns_set"]
+		var/list/styles = pref.get_available_styles(global.ear_styles_list)
+		if(styles[new_style])
+			pref.ear_secondary_style = new_style
+			user << browse(null, "window=prefs_horns_gallery")
+			return TOPIC_REFRESH_UPDATE_PREVIEW
+		return TOPIC_NOACTION
+
+	// Clears selection (Lira, October 2025)
+	else if(href_list["horns_clear"])
+		pref.ear_secondary_style = null
+		pref.ear_secondary_colors = list()
 		return TOPIC_REFRESH_UPDATE_PREVIEW
+
+	else if(href_list["tails_gallery"])
+		tails_gallery_window(user, 1)
+		return TOPIC_HANDLED
+
+	else if(href_list["tails_gallery_page"])
+		var/page = text2num(href_list["tails_gallery_page"]) || 1
+		tails_gallery_window(user, page)
+		return TOPIC_HANDLED
+
+	else if(href_list["tails_gallery_close"])
+		user << browse(null, "window=prefs_tails_gallery")
+		return TOPIC_HANDLED
+
+	else if(href_list["tail_set"])
+		var/new_style = href_list["tail_set"]
+		var/list/styles = pref.get_available_styles(global.tail_styles_list)
+		if(styles[new_style])
+			pref.tail_style = new_style
+			user << browse(null, "window=prefs_tails_gallery")
+			return TOPIC_REFRESH_UPDATE_PREVIEW
+		return TOPIC_NOACTION
+
+	// Clears selection (Lira, October 2025)
+	else if(href_list["tail_clear"])
+		pref.tail_style = null
+		return TOPIC_REFRESH_UPDATE_PREVIEW
+
+	else if(href_list["wings_gallery"])
+		wings_gallery_window(user, 1)
+		return TOPIC_HANDLED
+
+	else if(href_list["wings_gallery_page"])
+		var/page = text2num(href_list["wings_gallery_page"]) || 1
+		wings_gallery_window(user, page)
+		return TOPIC_HANDLED
+
+	else if(href_list["wings_gallery_close"])
+		user << browse(null, "window=prefs_wings_gallery")
+		return TOPIC_HANDLED
+
+	else if(href_list["wing_set"])
+		var/new_style = href_list["wing_set"]
+		var/list/styles = pref.get_available_styles(global.wing_styles_list)
+		if(styles[new_style])
+			pref.wing_style = new_style
+			user << browse(null, "window=prefs_wings_gallery")
+			return TOPIC_REFRESH_UPDATE_PREVIEW
+		return TOPIC_NOACTION
+
+	// Clears selection (Lira, October 2025)
+	else if(href_list["wings_clear"])
+		pref.wing_style = null
+		return TOPIC_REFRESH_UPDATE_PREVIEW
+
+	// RS Add Start: Support enabling, editing, and disabling the custom marking slot (Lira, September 2025)
+	else if(href_list["custom_markings_enable"])
+		var/confirm = tgui_alert(user, "This is an advanced character editing tool that allows you to edit individual pixels on your character to adjust or create new markings.  Custom markings have the same standards as markings added to the RogueStar codebase.  They should make realistic sense and must be SFW.  If it wouldn't get approved to add to the code, it should not be done here.  If you are uncertain about something, please let us know and we're happy to chatter about it.", "Enable Custom Markings?", list("Cancel", "Agree"))
+		if(confirm != "Agree")
+			return TOPIC_NOACTION
+		var/datum/custom_marking/enabled_mark = pref.ensure_primary_custom_marking()
+		var/debug_ckey = pref.client_ckey
+		if(!debug_ckey && pref.client)
+			debug_ckey = pref.client.ckey
+		if(!debug_ckey)
+			debug_ckey = "unknown"
+		var/log_id = enabled_mark?.id || "(none)"
+		log_debug("CustomMarkings: [debug_ckey] enabled editor (mark=[log_id]).")
+		if(enabled_mark)
+			INVOKE_ASYNC(pref, /datum/preferences/proc/refresh_custom_marking_assets, FALSE, TRUE, enabled_mark)
+		return TOPIC_REFRESH_UPDATE_PREVIEW
+
+	else if(href_list["custom_markings_edit"])
+		var/id = href_list["custom_markings_edit"]
+		if(!id)
+			var/datum/custom_marking/mark = pref.get_primary_custom_marking()
+			id = mark?.id
+		if(id)
+			pref.open_custom_marking_designer(user, id)
+		return TOPIC_HANDLED
+
+	else if(href_list["custom_markings_disable"])
+		var/datum/custom_marking/mark = pref.get_primary_custom_marking()
+		if(mark && tgui_alert(user, "Disable custom marking?", "Confirm", list("No", "Yes")) == "Yes")
+			pref.remove_custom_marking(mark.id)
+		return TOPIC_REFRESH_UPDATE_PREVIEW
+	// RS Add End
+
+	else if(href_list["marking_gallery"])
+		var/search = href_list["marking_gallery_search_term"] ? url_decode(href_list["marking_gallery_search_term"]) : null
+		markings_gallery_window(user, "heads", 1, search)
+		return TOPIC_HANDLED
+
+	else if(href_list["marking_gallery_search"])
+		var/cat = href_list["marking_gallery_cat"] ? url_decode(href_list["marking_gallery_cat"]) : "heads"
+		var/q = input(user, "Search body markings by name:", "Marking Search", last_marking_search_query) as text|null
+		if(isnull(q))
+			return TOPIC_HANDLED
+		last_marking_search_query = q
+		markings_gallery_window(user, cat, 1, q)
+		return TOPIC_HANDLED
+
+	else if(href_list["marking_gallery_search_clear"])
+		last_marking_search_query = null
+		var/cat = href_list["marking_gallery_cat"] ? url_decode(href_list["marking_gallery_cat"]) : "heads"
+		markings_gallery_window(user, cat, 1, null)
+		return TOPIC_HANDLED
+
+	else if(href_list["marking_add"])
+		var/new_marking = href_list["marking_add"]
+		if(new_marking && CanUseTopic(user))
+			if(body_marking_styles_list[new_marking])
+				if(!pref.body_markings)
+					pref.body_markings = list()
+				if(pref.body_markings[new_marking])
+					pref.body_markings -= new_marking
+				else
+					pref.body_markings[new_marking] = pref.mass_edit_marking_list(new_marking)
+				var/cat = href_list["marking_gallery_cat"] ? url_decode(href_list["marking_gallery_cat"]) : "heads"
+				var/page = text2num(href_list["marking_gallery_page"]) || 1
+				var/search = href_list["marking_gallery_search_term"] ? url_decode(href_list["marking_gallery_search_term"]) : null
+				markings_gallery_window(user, cat, page, search)
+				return TOPIC_REFRESH_UPDATE_PREVIEW
+		return TOPIC_NOACTION
+
+	else if(href_list["marking_gallery_cat"])
+		var/cat = href_list["marking_gallery_cat"] ? url_decode(href_list["marking_gallery_cat"]) : "heads"
+		var/page = text2num(href_list["marking_gallery_page"]) || 1
+		var/search = href_list["marking_gallery_search_term"] ? url_decode(href_list["marking_gallery_search_term"]) : null
+		markings_gallery_window(user, cat, page, search)
+		return TOPIC_HANDLED
+
+	else if(href_list["marking_gallery_page"])
+		var/cat = href_list["marking_gallery_cat"] ? url_decode(href_list["marking_gallery_cat"]) : "heads"
+		var/page = text2num(href_list["marking_gallery_page"]) || 1
+		var/search = href_list["marking_gallery_search_term"] ? url_decode(href_list["marking_gallery_search_term"]) : null
+		markings_gallery_window(user, cat, page, search)
+		return TOPIC_HANDLED
+
+	else if(href_list["marking_gallery_close"])
+		user << browse(null, "window=prefs_markings_gallery")
+		return TOPIC_HANDLED
+
+	//RS Add End
+
+	else if(href_list["grad_style"]) //RS Edit: Depreciated for new gallery (Lira, August 2025)
+		return TOPIC_HANDLED
+
+	else if(href_list["hair_style_left"]) //RS Edit: Depreciated for new gallery (Lira, August 2025)
+		return TOPIC_HANDLED
+
+	else if(href_list["hair_style_right"]) //RS Edit: Depreciated for new gallery (Lira, August 2025)
+		return TOPIC_HANDLED
 
 	else if(href_list["facial_color"])
 		if(!has_flag(mob_species, HAS_HAIR_COLOR))
@@ -910,79 +1223,17 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 			pref.b_skin = hex2num(copytext(new_skin, 6, 8))
 			return TOPIC_REFRESH_UPDATE_PREVIEW
 
-	else if(href_list["facial_style"])
-		var/list/valid_facialhairstyles = pref.get_valid_facialhairstyles()
+	else if(href_list["facial_style"]) //RS Edit: Depreciated for new gallery (Lira, August 2025)
+		return TOPIC_HANDLED
 
-		var/new_f_style = tgui_input_list(user, "Choose your character's facial-hair style:", "Character Preference", valid_facialhairstyles, pref.f_style)
-		if(new_f_style && CanUseTopic(user))
-			pref.f_style = new_f_style
-			return TOPIC_REFRESH_UPDATE_PREVIEW
+	else if(href_list["facial_style_left"]) //RS Edit: Depreciated for new gallery (Lira, August 2025)
+		return TOPIC_HANDLED
 
-	else if(href_list["facial_style_left"])
-		var/F = href_list["facial_style_left"]
-		var/list/valid_facialhairstyles = pref.get_valid_facialhairstyles()
-		var/start = valid_facialhairstyles.Find(F)
+	else if(href_list["facial_style_right"]) //RS Edit: Depreciated for new gallery (Lira, August 2025)
+		return TOPIC_HANDLED
 
-		if(start != 1) //If we're not the beginning of the list, become the previous element.
-			pref.f_style = valid_facialhairstyles[start-1]
-		else //But if we ARE, become the final element.
-			pref.f_style = valid_facialhairstyles[valid_facialhairstyles.len]
-		return TOPIC_REFRESH_UPDATE_PREVIEW
-
-	else if(href_list["facial_style_right"])
-		var/F = href_list["facial_style_right"]
-		var/list/valid_facialhairstyles = pref.get_valid_facialhairstyles()
-		var/start = valid_facialhairstyles.Find(F)
-
-		if(start != valid_facialhairstyles.len) //If we're not the end of the list, become the next element.
-			pref.f_style = valid_facialhairstyles[start+1]
-		else //But if we ARE, become the first element.
-			pref.f_style = valid_facialhairstyles[1]
-		return TOPIC_REFRESH_UPDATE_PREVIEW
-
-	else if(href_list["marking_style"])
-		// var/list/usable_markings = pref.body_markings.Copy() ^ body_marking_styles_list.Copy() //We sort these now
-		/* VOREStation Removal - No markings whitelist, let people mix/match
-		for(var/M in usable_markings)
-			var/datum/sprite_accessory/S = usable_markings[M]
-			var/datum/species/spec = GLOB.all_species[pref.species]
-			if(!S.species_allowed.len)
-				continue
-			else if(!(pref.species in S.species_allowed) && !(pref.custom_base in S.species_allowed) && !(spec.base_species in S.species_allowed))
-				usable_markings -= M
-		*/ //VOREStation Removal End
-		var/category_choice = tgui_input_list(user, "Choose a category for marking style", "Character Preference", list(
-				"All", "Head and Face", "Body",
-				"Arms and Legs", "Bandages and Scars",
-				"Skin and Panels", "Teshari Specific",
-				 "Vox Specific", "Augmentations"))
-		if(!category_choice) return
-		var/marking_category
-		switch(category_choice)
-			if("All")
-				marking_category = body_marking_styles_list.Copy()
-			if("Head and Face")
-				marking_category = body_marking_heads.Copy()
-			if("Body")
-				marking_category = body_marking_bodies.Copy()
-			if("Arms and Legs")
-				marking_category = body_marking_limbs.Copy()
-			if("Bandages and Scars")
-				marking_category = body_marking_addons.Copy()
-			if("Skin and Panels")
-				marking_category = body_marking_skintone.Copy()
-			if("Teshari Specific")
-				marking_category = body_marking_teshari.Copy()
-			if("Vox Specific")
-				marking_category = body_marking_vox.Copy()
-			if("Augmentations")
-				marking_category = body_marking_augment.Copy()
-
-		var/new_marking = tgui_input_list(user, "Choose a body marking for [category_choice]:", "Character Preference", marking_category)
-		if(new_marking && CanUseTopic(user))
-			pref.body_markings[new_marking] = pref.mass_edit_marking_list(new_marking) //New markings start black
-			marking_category = null
-			return TOPIC_REFRESH_UPDATE_PREVIEW
+	else if(href_list["marking_style"]) //RS Edit: Depreciated for new gallery (Lira, August 2025)
+		return TOPIC_HANDLED
 
 	else if(href_list["marking_up"])
 		var/M = href_list["marking_up"]
@@ -1009,7 +1260,8 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 		if(start != 1)
 			move_locs -= pref.body_markings[start-1]
 
-		var/inject_after = tgui_input_list(user, "Move [M] ahead of...", "Character Preference", move_locs) //Move ahead of any marking that isn't the current or previous one.
+		var/display_name = pref.get_marking_display_name(M) // RS Add: Custom marking support (Lira, September 2025)
+		var/inject_after = tgui_input_list(user, "Move [display_name] ahead of...", "Character Preference", move_locs) //Move ahead of any marking that isn't the current or previous one. || RS Edit: Custom marking support (Lira, September 2025)
 		var/newpos = pref.body_markings.Find(inject_after)
 		if(newpos)
 			moveElement(pref.body_markings, start, newpos+1)
@@ -1017,16 +1269,27 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 
 	else if(href_list["marking_remove"])
 		var/M = href_list["marking_remove"]
+		// RS Add Start: Custom markings support (Lira, September 2025)
+		var/datum/sprite_accessory/marking/remove_style = body_marking_styles_list[M]
+		if(remove_style?.hide_from_marking_gallery)
+			return TOPIC_NOACTION
+		// RS Add End
 		winshow(user, "prefs_markings_subwindow", FALSE)
 		pref.body_markings -= M
 		return TOPIC_REFRESH_UPDATE_PREVIEW
 
 	else if(href_list["marking_color"])
 		var/M = href_list["marking_color"]
+		// RS Add Start: Custom markings support (Lira, September 2025)
+		var/datum/sprite_accessory/marking/mark_datum = body_marking_styles_list[M]
+		if(mark_datum && !mark_datum.do_colouration)
+			return TOPIC_NOACTION
+		// RS Add End
 		if (isnull(pref.body_markings[M]["color"]))
 			if (tgui_alert(user, "You currently have customized marking colors. This will reset each bodypart's color. Are you sure you want to continue?","Reset Bodypart Colors",list("Yes","No")) == "No")
 				return TOPIC_NOACTION
-		var/mark_color = input(user, "Choose the [M] color: ", "Character Preference", pref.body_markings[M]["color"]) as color|null
+		var/display_name = pref.get_marking_display_name(M) // RS Add: Custom markings support (Lira, September 2025)
+		var/mark_color = input(user, "Choose the [display_name] color: ", "Character Preference", pref.body_markings[M]["color"]) as color|null // RS Edit: Custom markings support (Lira, September 2025)
 		if(mark_color && CanUseTopic(user))
 			pref.body_markings[M] = pref.mass_edit_marking_list(M,FALSE,TRUE,pref.body_markings[M],color="[mark_color]")
 			return TOPIC_REFRESH_UPDATE_PREVIEW
@@ -1048,10 +1311,16 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 
 	else if (href_list["color_all_marking_selection"])
 		var/marking = href_list["color_all_marking_selection"]
+		// RS Add Start: Custom markings support (Lira, September 2025)
+		var/datum/sprite_accessory/marking/mark_datum2 = body_marking_styles_list[marking]
+		if(mark_datum2 && !mark_datum2.do_colouration)
+			return TOPIC_NOACTION
+		// RS Add End
 		if (pref.body_markings.Find(marking) == 0)
 			winshow(user, "prefs_markings_subwindow", FALSE)
 			return TOPIC_NOACTION
-		var/mark_color = input(user, "Choose the [marking] color: ", "Character Preference", pref.body_markings[marking]["color"]) as color|null
+		var/display_name = pref.get_marking_display_name(marking) // RS Add: Custom markings support (Lira, September 2025)
+		var/mark_color = input(user, "Choose the [display_name] color: ", "Character Preference", pref.body_markings[marking]["color"]) as color|null // RS Edit: Custom markings support (Lira, September 2025)
 		if(mark_color && CanUseTopic(user))
 			pref.body_markings[marking] = pref.mass_edit_marking_list(marking,FALSE,TRUE,pref.body_markings[marking],color="[mark_color]")
 			markings_subwindow(user, marking)
@@ -1059,12 +1328,18 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 
 	else if (href_list["zone_marking_color"])
 		var/marking = href_list["zone_marking_color"]
+		// RS Add Start: Custom markings support (Lira, September 2025)
+		var/datum/sprite_accessory/marking/mark_datum3 = body_marking_styles_list[marking]
+		if(mark_datum3 && !mark_datum3.do_colouration)
+			return TOPIC_NOACTION
+		// RS Add End
 		if (pref.body_markings.Find(marking) == 0)
 			winshow(user, "prefs_markings_subwindow", FALSE)
 			return TOPIC_NOACTION
 		var/zone = href_list["zone"]
 		pref.body_markings[marking]["color"] = null //turn off the color button outside the submenu
-		var/mark_color = input(user, "Choose the [marking] color: ", "Character Preference", pref.body_markings[marking][zone]["color"]) as color|null
+		var/display_name_zone = pref.get_marking_display_name(marking) // RS Add: Custom markings support (Lira, September 2025)
+		var/mark_color = input(user, "Choose the [display_name_zone] color: ", "Character Preference", pref.body_markings[marking][zone]["color"]) as color|null // RS Edit: Custom markings support (Lira, September 2025)
 		if(mark_color && CanUseTopic(user))
 			pref.body_markings[marking][zone]["color"] = "[mark_color]"
 			markings_subwindow(user, marking)
@@ -1308,12 +1583,8 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 		pref.bgstate = next_in_list(pref.bgstate, pref.bgstate_options)
 		return TOPIC_REFRESH_UPDATE_PREVIEW
 
-	else if(href_list["ear_style"])
-		var/new_ear_style = tgui_input_list(user, "Select an ear style for this character:", "Character Preference", pref.get_available_styles(global.ear_styles_list), pref.ear_style)
-		if(new_ear_style)
-			pref.ear_style = new_ear_style
-
-		return TOPIC_REFRESH_UPDATE_PREVIEW
+	else if(href_list["ear_style"]) //RS Edit: Depreciated for new gallery (Lira, August 2025)
+		return TOPIC_HANDLED
 
 	else if(href_list["ear_color"])
 		var/new_earc = input(user, "Choose your character's ear colour:", "Character Preference",
@@ -1342,14 +1613,9 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 			pref.b_ears3 = hex2num(copytext(new_earc3, 6, 8))
 			return TOPIC_REFRESH_UPDATE_PREVIEW
 
+	else if(href_list["ear_secondary_style"]) //RS Edit: Depreciated for new gallery (Lira, August 2025)
+		return TOPIC_HANDLED
 
-
-	else if(href_list["ear_secondary_style"]) // RS EDIT START (Port of VS PR#16513 'Adds a second ear slot.')
-		var/new_style = tgui_input_list(user, "Select an ear style for this character:", "Character Preference", pref.get_available_styles(global.ear_styles_list), pref.ear_secondary_style)
-		if(!new_style)
-			return TOPIC_NOACTION
-		pref.ear_secondary_style = new_style
-		return TOPIC_REFRESH_UPDATE_PREVIEW
 	else if(href_list["ear_secondary_color"])
 		var/channel = text2num(href_list["ear_secondary_color"])
 		// very important sanity check; this makes sure someone can't crash the server by setting channel to some insanely high value
@@ -1370,11 +1636,8 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 		pref.ear_secondary_colors[channel] = new_color
 		return TOPIC_REFRESH_UPDATE_PREVIEW // RS EDIT END (Port of VS PR#16513 'Adds a second ear slot.')
 
-	else if(href_list["tail_style"])
-		var/new_tail_style = tgui_input_list(user, "Select a tail style for this character:", "Character Preference", pref.get_available_styles(global.tail_styles_list), pref.tail_style)
-		if(new_tail_style)
-			pref.tail_style = new_tail_style
-		return TOPIC_REFRESH_UPDATE_PREVIEW
+	else if(href_list["tail_style"]) //RS Edit: Depreciated for new gallery (Lira, August 2025)
+		return TOPIC_HANDLED
 
 	else if(href_list["tail_color"])
 		var/new_tailc = input(user, "Choose your character's tail/taur colour:", "Character Preference",
@@ -1403,12 +1666,8 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 			pref.b_tail3 = hex2num(copytext(new_tailc3, 6, 8))
 			return TOPIC_REFRESH_UPDATE_PREVIEW
 
-	else if(href_list["wing_style"])
-		var/new_wing_style = tgui_input_list(user, "Select a wing style for this character:", "Character Preference", pref.get_available_styles(global.wing_styles_list), pref.wing_style)
-		if(new_wing_style)
-			pref.wing_style = new_wing_style
-
-		return TOPIC_REFRESH_UPDATE_PREVIEW
+	else if(href_list["wing_style"]) //RS Edit: Depreciated for new gallery (Lira, August 2025)
+		return TOPIC_HANDLED
 
 	else if(href_list["wing_color"])
 		var/new_wingc = input(user, "Choose your character's wing colour:", "Character Preference",
@@ -1532,22 +1791,734 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 
 	user << browse(dat, "window=species;size=700x400")
 
+// RS Edit: Custom markings support (Lira, September 2025)
 /datum/category_item/player_setup_item/general/body/proc/markings_subwindow(mob/user, marking)
+	if(!pref.body_markings || pref.body_markings.Find(marking) == 0)
+		winshow(user, "prefs_markings_subwindow", FALSE)
+		return
+	var/list/marking_data = pref.body_markings[marking]
+	if(!islist(marking_data))
+		winshow(user, "prefs_markings_subwindow", FALSE)
+		return
 	var/static/list/part_to_string = list(BP_HEAD = "Head", BP_TORSO = "Upper Body", BP_GROIN = "Lower Body", BP_R_ARM = "Right Arm", BP_L_ARM = "Left Arm", BP_R_HAND = "Right Hand", BP_L_HAND = "Left Hand", BP_R_LEG = "Right Leg", BP_L_LEG = "Left Leg", BP_R_FOOT = "Right Foot", BP_L_FOOT = "Left Foot")
-	var/dat = "<html><body><center><h2>Editing '[marking]'</h2><br>"
+	var/dat = "<html><body style='margin:6px;font:13px Verdana;'>"
+	var/display_name = pref.get_marking_display_name(marking)
+	dat += "<center><h2 style='margin:0 0 8px 0;'>Editing '[html_encode(display_name)]'</h2>"
+	var/datum/sprite_accessory/marking/mark_datum = body_marking_styles_list[marking]
+	var/allow_color = mark_datum ? mark_datum.do_colouration : TRUE
 	dat += "<a href='?src=\ref[src];toggle_all_marking_selection=[marking];toggle=1'>Enable All</a> "
 	dat += "<a href='?src=\ref[src];toggle_all_marking_selection=[marking];toggle=0'>Disable All</a> "
-	dat += "<a href='?src=\ref[src];color_all_marking_selection=[marking]'>Change Color of All</a><br></center>"
-	dat += "<br>"
-	for (var/bodypart in pref.body_markings[marking])
-		if (!islist(pref.body_markings[marking][bodypart])) continue
-		dat += "[part_to_string[bodypart]]: [color_square(hex = pref.body_markings[marking][bodypart]["color"])] "
-		dat += "<a href='?src=\ref[src];zone_marking_color=[marking];zone=[bodypart]'>Change</a> "
-		dat += "<a href='?src=\ref[src];zone_marking_toggle=[marking];zone=[bodypart];toggle=[!pref.body_markings[marking][bodypart]["on"]]'>[pref.body_markings[marking][bodypart]["on"] ? "Toggle Off" : "Toggle On"]</a><br>"
-
+	if(allow_color)
+		dat += "<a href='?src=\ref[src];color_all_marking_selection=[marking]'>Change Color of All</a>"
+	else
+		dat += "<span class='disabled'>Change Color of All</span>"
+	dat += "</center><hr style='margin:8px 0;'>"
+	var/body_sections_found = FALSE
+	for(var/bodypart in marking_data)
+		var/list/bodypart_data = marking_data[bodypart]
+		if(!islist(bodypart_data))
+			continue
+		body_sections_found = TRUE
+		var/body_color = bodypart_data["color"]
+		if(!istext(body_color))
+			body_color = allow_color ? "#000000" : "#FFFFFF"
+		else if(!allow_color)
+			body_color = "#FFFFFF"
+		var/part_on = bodypart_data["on"] ? TRUE : FALSE
+		var/next_toggle = part_on ? 0 : 1
+		var/toggle_label = part_on ? "Toggle Off" : "Toggle On"
+		dat += "<div style='margin-bottom:4px;'>[part_to_string[bodypart]]: [color_square(hex = body_color)] "
+		if(allow_color)
+			dat += "<a href='?src=\ref[src];zone_marking_color=[marking];zone=[bodypart]'>Change</a> "
+		else
+			dat += "<span class='disabled'>Change</span> "
+		dat += "<a href='?src=\ref[src];zone_marking_toggle=[marking];zone=[bodypart];toggle=[next_toggle]'>[toggle_label]</a></div>"
+	if(!body_sections_found)
+		dat += "<i>No editable body zones available for this marking.</i>"
 	dat += "</body></html>"
-	winshow(user, "prefs_markings_subwindow", TRUE)
-	pref.markings_subwindow = new(user, "prefs_markings_browser", "Marking Editor", 400, 400)
-	pref.markings_subwindow.set_content(dat)
-	pref.markings_subwindow.open(FALSE)
-	onclose(user, "prefs_markings_subwindow", src)
+	var/datum/browser/popup = pref.markings_subwindow
+	if(!popup)
+		popup = new(user, "prefs_markings_subwindow", "Marking Editor", 400, 400, src)
+		pref.markings_subwindow = popup
+	else
+		if(popup.user != user)
+			popup.user = user
+		if(popup.ref != src)
+			popup.ref = src
+	popup.set_content(dat)
+	popup.open()
+
+//RS Add: Hair gallery window (Lira, August 2025)
+/datum/category_item/player_setup_item/general/body/proc/hair_gallery_window(mob/user, var/page)
+	var/dat = "<html><body style='background:#111;color:#ddd;font-family:Verdana,Arial;'><center>"
+	dat += "<h3>Select Hair Style</h3>"
+	dat += "<div><a href='?src=\ref[src];hair_gallery_close=1'>Close</a></div>"
+	var/page_num = max(1, text2num(page) || 1)
+	var/list/valid_hairstyles_grid = pref.get_valid_hairstyles()
+	if(LAZYLEN(valid_hairstyles_grid))
+		var/list/all_names = sortList(valid_hairstyles_grid)
+		var/page_size = 60
+		var/total = all_names.len
+		var/total_pages = max(1, round((total + page_size - 1) / page_size))
+		if(page_num > total_pages) page_num = total_pages
+		var/start_i = ((page_num - 1) * page_size) + 1
+		var/end_i = min(total, page_num * page_size)
+		var/prev_link = (page_num > 1) ? "<a href='?src=\ref[src];hair_gallery_page=[page_num-1]'>Prev</a>" : "Prev"
+		var/next_link = (page_num < total_pages) ? "<a href='?src=\ref[src];hair_gallery_page=[page_num+1]'>Next</a>" : "Next"
+		dat += "<div style='margin:6px;'>[prev_link] | Page [page_num] / [total_pages] | [next_link]</div>"
+		dat += "<div style='max-height:560px; overflow-y:auto; padding:6px; border:1px solid #333; background:#111; margin:6px;'>"
+		dat += "<table cellspacing='6' cellpadding='0' style='border-collapse:separate;'><tr>"
+		var/col = 0
+		var/max_cols = 6
+		var/idx = 0
+		for(var/style_name in all_names)
+			idx += 1
+			if(idx < start_i || idx > end_i)
+				continue
+			var/datum/sprite_accessory/hair/hair_style = hair_styles_list[style_name]
+			if(!istype(hair_style))
+				continue
+			var/icon/preview_face = icon(icon = 'icons/mob/human_races/r_def_human.dmi', icon_state = "head_f")
+			var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
+			var/icon/hair_s_add = new/icon("icon" = hair_style.icon_add, "icon_state" = "[hair_style.icon_state]_s")
+			var/icon/grad_s = null
+			if(hair_style.do_colouration)
+				if(pref.grad_style)
+					grad_s = new/icon("icon" = 'icons/mob/hair_gradients.dmi', "icon_state" = GLOB.hair_gradients[pref.grad_style])
+					grad_s.Blend(hair_s, ICON_AND)
+					grad_s.Blend(rgb(pref.r_grad, pref.g_grad, pref.b_grad), ICON_MULTIPLY)
+				hair_s.Blend(rgb(pref.r_hair, pref.g_hair, pref.b_hair), ICON_MULTIPLY)
+				hair_s.Blend(hair_s_add, ICON_ADD)
+				if(!isnull(grad_s))
+					hair_s.Blend(grad_s, ICON_OVERLAY)
+			preview_face.Blend(hair_s, ICON_OVERLAY)
+			preview_face.Scale(64, 64)
+			var/icon/display_icon = icon(preview_face)
+			var/selected = (style_name == pref.h_style)
+			var/cell_style = selected ? "border:2px solid #66a3ff;" : "border:1px solid #444;"
+			dat += "<td style='[cell_style] background:#222; text-align:center; width:96px; height:120px; vertical-align:top; padding:4px;'>"
+			dat += "<div style='display:block;margin:0 auto;'>"
+			dat += "<a href='?src=\ref[src];hair_set=[url_encode(style_name)]' title='[style_name]'>[bicon(display_icon)]</a>"
+			dat += "</div>"
+			dat += "<div style='font-size:11px;color:#ccc;margin-top:4px;max-width:88px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;' title='[style_name]'>[style_name]</div>"
+			dat += "</td>"
+			col += 1
+			if(col >= max_cols)
+				dat += "</tr><tr>"
+				col = 0
+		dat += "</tr></table>"
+		dat += "</div>"
+	else
+		dat += "<p>No hairstyles available.</p>"
+	dat += "<div><a href='?src=\ref[src];hair_gallery_close=1'>Close</a></div>"
+	dat += "</center></body></html>"
+	user << browse(dat, "window=prefs_hair_gallery;size=1000x720")
+
+//RS Add: Gradient gallery window (Lira, August 2025)
+/datum/category_item/player_setup_item/general/body/proc/grad_gallery_window(mob/user, var/page)
+	var/dat = "<html><body style='background:#111;color:#ddd;font-family:Verdana,Arial;'><center>"
+	dat += "<h3>Select Hair Gradient</h3>"
+	dat += "<div><a href='?src=\ref[src];grad_gallery_close=1'>Close</a></div>"
+	var/page_num = max(1, text2num(page) || 1)
+	var/list/gradients = GLOB.hair_gradients
+	if(LAZYLEN(gradients))
+		var/list/all_names = sortList(gradients)
+		var/page_size = 60
+		var/total = all_names.len
+		var/total_pages = max(1, round((total + page_size - 1) / page_size))
+		if(page_num > total_pages) page_num = total_pages
+		var/start_i = ((page_num - 1) * page_size) + 1
+		var/end_i = min(total, page_num * page_size)
+		var/prev_link = (page_num > 1) ? "<a href='?src=\ref[src];grad_gallery_page=[page_num-1]'>Prev</a>" : "Prev"
+		var/next_link = (page_num < total_pages) ? "<a href='?src=\ref[src];grad_gallery_page=[page_num+1]'>Next</a>" : "Next"
+		dat += "<div style='margin:6px;'>[prev_link] | Page [page_num] / [total_pages] | [next_link]</div>"
+		dat += "<div style='max-height:560px; overflow-y:auto; padding:6px; border:1px solid #333; background:#111; margin:6px;'>"
+		dat += "<table cellspacing='6' cellpadding='0' style='border-collapse:separate;'><tr>"
+		var/col = 0
+		var/max_cols = 6
+		var/idx = 0
+		for(var/gname in all_names)
+			idx += 1
+			if(idx < start_i || idx > end_i)
+				continue
+			var/icon_state = gradients[gname]
+			var/datum/sprite_accessory/hair/H = null
+			if(pref.h_style && hair_styles_list[pref.h_style])
+				H = hair_styles_list[pref.h_style]
+			var/icon/preview_face = icon(icon = 'icons/mob/human_races/r_def_human.dmi', icon_state = "head_f")
+			var/icon/hair_s
+			var/icon/hair_s_add
+			if(istype(H))
+				hair_s = new/icon("icon" = H.icon, "icon_state" = "[H.icon_state]_s")
+				hair_s_add = new/icon("icon" = H.icon_add, "icon_state" = "[H.icon_state]_s")
+			else
+				hair_s = new/icon("icon" = 'icons/mob/human_face.dmi', "icon_state" = "hair_bobcutovereye1_s")
+				hair_s_add = new/icon("icon" = 'icons/mob/human_face.dmi', "icon_state" = "hair_bobcutovereye1_s")
+			var/icon/grad_s = null
+			if(icon_state && icon_state != "none")
+				grad_s = new/icon("icon" = 'icons/mob/hair_gradients.dmi', "icon_state" = icon_state)
+				grad_s.Blend(hair_s, ICON_AND)
+				grad_s.Blend(rgb(pref.r_grad, pref.g_grad, pref.b_grad), ICON_MULTIPLY)
+			hair_s.Blend(rgb(pref.r_hair, pref.g_hair, pref.b_hair), ICON_MULTIPLY)
+			hair_s.Blend(hair_s_add, ICON_ADD)
+			if(!isnull(grad_s))
+				hair_s.Blend(grad_s, ICON_OVERLAY)
+			preview_face.Blend(hair_s, ICON_OVERLAY)
+			preview_face.Scale(64, 64)
+			var/icon/display_icon = icon(preview_face)
+			var/selected = (gname == pref.grad_style)
+			var/cell_style = selected ? "border:2px solid #66a3ff;" : "border:1px solid #444;"
+			dat += "<td style='[cell_style] background:#222; text-align:center; width:96px; height:120px; vertical-align:top; padding:4px;'>"
+			dat += "<div style='display:block;margin:0 auto;'>"
+			dat += "<a href='?src=\ref[src];grad_set=[url_encode(gname)]' title='[gname]'>[bicon(display_icon)]</a>"
+			dat += "</div>"
+			dat += "<div style='font-size:11px;color:#ccc;margin-top:4px;max-width:88px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;' title='[gname]'>[gname]</div>"
+			dat += "</td>"
+			col += 1
+			if(col >= max_cols)
+				dat += "</tr><tr>"
+				col = 0
+		dat += "</tr></table>"
+		dat += "</div>"
+	else
+		dat += "<p>No gradients available.</p>"
+	dat += "<div><a href='?src=\ref[src];grad_gallery_close=1'>Close</a></div>"
+	dat += "</center></body></html>"
+	user << browse(dat, "window=prefs_grad_gallery;size=1000x720")
+
+//RS Add: Facial hair gallery window (Lira, August 2025)
+/datum/category_item/player_setup_item/general/body/proc/facial_gallery_window(mob/user, var/page)
+	var/dat = "<html><body style='background:#111;color:#ddd;font-family:Verdana,Arial;'><center>"
+	dat += "<h3>Select Facial Hair</h3>"
+	dat += "<div><a href='?src=\ref[src];facial_gallery_close=1'>Close</a></div>"
+	var/page_num = max(1, text2num(page) || 1)
+	var/list/valid_facial = pref.get_valid_facialhairstyles()
+	if(LAZYLEN(valid_facial))
+		var/list/all_names = list()
+		for(var/N in valid_facial)
+			all_names += N
+		all_names = sortList(all_names)
+		var/page_size = 60
+		var/total = all_names.len
+		var/total_pages = max(1, round((total + page_size - 1) / page_size))
+		if(page_num > total_pages) page_num = total_pages
+		var/start_i = ((page_num - 1) * page_size) + 1
+		var/end_i = min(total, page_num * page_size)
+		var/prev_link = (page_num > 1) ? "<a href='?src=\ref[src];facial_gallery_page=[page_num-1]'>Prev</a>" : "Prev"
+		var/next_link = (page_num < total_pages) ? "<a href='?src=\ref[src];facial_gallery_page=[page_num+1]'>Next</a>" : "Next"
+		dat += "<div style='margin:6px;'>[prev_link] | Page [page_num] / [total_pages] | [next_link]</div>"
+		dat += "<div style='max-height:560px; overflow-y:auto; padding:6px; border:1px solid #333; background:#111; margin:6px;'>"
+		dat += "<table cellspacing='6' cellpadding='0' style='border-collapse:separate;'><tr>"
+		var/col = 0
+		var/max_cols = 6
+		var/idx = 0
+		for(var/style_name in all_names)
+			idx += 1
+			if(idx < start_i || idx > end_i)
+				continue
+			var/datum/sprite_accessory/facial_hair/F = facial_hair_styles_list[style_name]
+			if(!istype(F))
+				continue
+			var/icon/preview_face = icon(icon = 'icons/mob/human_races/r_def_human.dmi', icon_state = "head_f")
+			var/list/__states = icon_states(F.icon)
+			var/__state = ("[F.icon_state]_s" in __states) ? "[F.icon_state]_s" : F.icon_state
+			var/icon/facc = new/icon(icon = F.icon, icon_state = __state, frame = 1)
+			facc.Blend(rgb(pref.r_facial, pref.g_facial, pref.b_facial), F.color_blend_mode)
+			preview_face.Blend(facc, ICON_OVERLAY)
+			preview_face.Scale(64, 64)
+			var/icon/display_icon2 = icon(preview_face)
+			var/selected = (style_name == pref.f_style)
+			var/cell_style = selected ? "border:2px solid #66a3ff;" : "border:1px solid #444;"
+			dat += "<td style='[cell_style] background:#222; text-align:center; width:96px; height:120px; vertical-align:top; padding:4px;'>"
+			dat += "<div style='display:block;margin:0 auto;'>"
+			dat += "<a href='?src=\ref[src];facial_set=[url_encode(style_name)]' title='[style_name]'>[bicon(display_icon2)]</a>"
+			dat += "</div>"
+			dat += "<div style='font-size:11px;color:#ccc;margin-top:4px;max-width:88px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;' title='[style_name]'>[style_name]</div>"
+			dat += "</td>"
+			col += 1
+			if(col >= max_cols)
+				dat += "</tr><tr>"
+				col = 0
+		dat += "</tr></table>"
+		dat += "</div>"
+	else
+		dat += "<p>No facial hair styles available.</p>"
+	dat += "<div><a href='?src=\ref[src];facial_gallery_close=1'>Close</a></div>"
+	dat += "</center></body></html>"
+	user << browse(dat, "window=prefs_facial_gallery;size=1000x720")
+
+//RS Add: Ears gallery window (Lira, August 2025)
+/datum/category_item/player_setup_item/general/body/proc/ears_gallery_window(mob/user, var/page)
+	var/dat = "<html><body style='background:#111;color:#ddd;font-family:Verdana,Arial;'><center>"
+	dat += "<h3>Select Ears</h3>"
+	dat += "<div><a href='?src=\ref[src];ears_gallery_close=1'>Close</a></div>"
+	var/page_num = max(1, text2num(page) || 1)
+	var/list/styles = pref.get_available_styles(global.ear_styles_list)
+	if(LAZYLEN(styles))
+		var/list/all_names = sortList(styles)
+		var/page_size = 60
+		var/total = all_names.len
+		var/total_pages = max(1, round((total + page_size - 1) / page_size))
+		if(page_num > total_pages) page_num = total_pages
+		var/start_i = ((page_num - 1) * page_size) + 1
+		var/end_i = min(total, page_num * page_size)
+		var/prev_link = (page_num > 1) ? "<a href='?src=\ref[src];ears_gallery_page=[page_num-1]'>Prev</a>" : "Prev"
+		var/next_link = (page_num < total_pages) ? "<a href='?src=\ref[src];ears_gallery_page=[page_num+1]'>Next</a>" : "Next"
+		dat += "<div style='margin:6px;'>[prev_link] | Page [page_num] / [total_pages] | [next_link]</div>"
+		dat += "<div style='max-height:560px; overflow-y:auto; padding:6px; border:1px solid #333; background:#111; margin:6px;'>"
+		dat += "<table cellspacing='6' cellpadding='0' style='border-collapse:separate;'><tr>"
+		var/col = 0
+		var/max_cols = 6
+		var/idx = 0
+		for(var/style_name in all_names)
+			idx += 1
+			if(idx < start_i || idx > end_i)
+				continue
+			var/datum/sprite_accessory/ears/E = styles[style_name]
+			if(!istype(E)) continue
+			var/icon/base_icon = icon(get_markings_base_preview_icon())
+			var/icon/acc = new/icon(icon = E.icon, icon_state = E.icon_state, frame = 1)
+			if(E.do_colouration)
+				var/primary_ears = (pref.r_ears == 30 && pref.g_ears == 30 && pref.b_ears == 30) ? "#c0c0c0" : rgb(pref.r_ears, pref.g_ears, pref.b_ears)
+				acc.Blend(primary_ears, E.color_blend_mode)
+				if(E.extra_overlay)
+					var/icon/add1 = new/icon(icon = E.icon, icon_state = E.extra_overlay, frame = 1)
+					var/secondary_ears = (pref.r_ears2 == 30 && pref.g_ears2 == 30 && pref.b_ears2 == 30) ? "#c0c0c0" : rgb(pref.r_ears2, pref.g_ears2, pref.b_ears2)
+					add1.Blend(secondary_ears, E.color_blend_mode)
+					acc.Blend(add1, ICON_OVERLAY)
+				if(E.extra_overlay2)
+					var/icon/add2 = new/icon(icon = E.icon, icon_state = E.extra_overlay2, frame = 1)
+					var/tertiary_ears = (pref.r_ears3 == 30 && pref.g_ears3 == 30 && pref.b_ears3 == 30) ? "#c0c0c0" : rgb(pref.r_ears3, pref.g_ears3, pref.b_ears3)
+					add2.Blend(tertiary_ears, E.color_blend_mode)
+					acc.Blend(add2, ICON_OVERLAY)
+			var/base_w = base_icon.Width()
+			var/base_h = base_icon.Height()
+			var/acc_w = acc.Width()
+			var/acc_h = acc.Height()
+			if(acc_w != base_w)
+				if(acc_w > base_w)
+					acc.Shift(WEST, round((acc_w - base_w) / 2))
+				else if(acc_w < base_w)
+					acc.Shift(EAST, round((base_w - acc_w) / 2))
+			// For tall ears (e.g., 32x64), move both layers down before blending
+			if(acc_w == 32 && acc_h > base_h)
+				var/down = round((acc_h - base_h) / 2) // 16px when 32x64 vs 32x32
+				base_icon.Shift(SOUTH, down)
+				acc.Shift(SOUTH, down)
+			base_icon.Blend(acc, ICON_OVERLAY)
+			var/icon/preview_icon = icon(base_icon)
+			preview_icon.Scale(64,64)
+			var/selected = (pref.ear_style == style_name)
+			var/cell_style = selected ? "border:2px solid #66a3ff;" : "border:1px solid #444;"
+			dat += "<td style='[cell_style] background:#222; text-align:center; width:96px; height:120px; vertical-align:top; padding:4px;'>"
+			dat += "<div style='display:block;margin:0 auto;'>"
+			dat += "<a href='?src=\ref[src];ear_set=[url_encode(style_name)]' title='[style_name]'>[bicon(preview_icon)]</a>"
+			dat += "</div>"
+			dat += "<div style='font-size:11px;color:#ccc;margin-top:4px;max-width:88px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;' title='[style_name]'>[style_name]</div>"
+			dat += "</td>"
+			col += 1
+			if(col >= max_cols)
+				dat += "</tr><tr>"
+				col = 0
+		dat += "</tr></table>"
+		dat += "</div>"
+	else
+		dat += "<p>No ear styles available.</p>"
+	dat += "<div><a href='?src=\ref[src];ears_gallery_close=1'>Close</a></div>"
+	dat += "</center></body></html>"
+	user << browse(dat, "window=prefs_ears_gallery;size=1000x720")
+
+//RS Add: Horns gallery window (Lira, August 2025)
+/datum/category_item/player_setup_item/general/body/proc/horns_gallery_window(mob/user, var/page)
+	var/dat = "<html><body style='background:#111;color:#ddd;font-family:Verdana,Arial;'><center>"
+	dat += "<h3>Select Horns</h3>"
+	dat += "<div><a href='?src=\ref[src];horns_gallery_close=1'>Close</a></div>"
+	var/page_num = max(1, text2num(page) || 1)
+	var/list/styles = pref.get_available_styles(global.ear_styles_list)
+	if(LAZYLEN(styles))
+		var/list/all_names = sortList(styles)
+		var/page_size = 60
+		var/total = all_names.len
+		var/total_pages = max(1, round((total + page_size - 1) / page_size))
+		if(page_num > total_pages) page_num = total_pages
+		var/start_i = ((page_num - 1) * page_size) + 1
+		var/end_i = min(total, page_num * page_size)
+		var/prev_link = (page_num > 1) ? "<a href='?src=\ref[src];horns_gallery_page=[page_num-1]'>Prev</a>" : "Prev"
+		var/next_link = (page_num < total_pages) ? "<a href='?src=\ref[src];horns_gallery_page=[page_num+1]'>Next</a>" : "Next"
+		dat += "<div style='margin:6px;'>[prev_link] | Page [page_num] / [total_pages] | [next_link]</div>"
+		dat += "<div style='max-height:560px; overflow-y:auto; padding:6px; border:1px solid #333; background:#111; margin:6px;'>"
+		dat += "<table cellspacing='6' cellpadding='0' style='border-collapse:separate;'><tr>"
+		var/col = 0
+		var/max_cols = 6
+		var/idx = 0
+		for(var/style_name in all_names)
+			idx += 1
+			if(idx < start_i || idx > end_i)
+				continue
+			var/datum/sprite_accessory/ears/E = styles[style_name]
+			if(!istype(E)) continue
+			var/icon/base_icon = icon(get_markings_base_preview_icon())
+			var/icon/acc = new/icon(icon = E.icon, icon_state = E.icon_state, frame = 1)
+			if(E.do_colouration)
+				var/ccount = E.get_color_channel_count()
+				if(ccount >= 1)
+					acc.Blend(LAZYACCESS(pref.ear_secondary_colors, 1) || "#ffffff", E.color_blend_mode)
+				if(E.extra_overlay)
+					var/icon/a1 = new/icon(icon = E.icon, icon_state = E.extra_overlay, frame = 1)
+					a1.Blend(LAZYACCESS(pref.ear_secondary_colors, 2) || "#ffffff", E.color_blend_mode)
+					acc.Blend(a1, ICON_OVERLAY)
+				if(E.extra_overlay2)
+					var/icon/a2 = new/icon(icon = E.icon, icon_state = E.extra_overlay2, frame = 1)
+					a2.Blend(LAZYACCESS(pref.ear_secondary_colors, 3) || "#ffffff", E.color_blend_mode)
+					acc.Blend(a2, ICON_OVERLAY)
+			var/base_w2 = base_icon.Width()
+			var/base_h2 = base_icon.Height()
+			var/acc_w2 = acc.Width()
+			var/acc_h2 = acc.Height()
+			if(acc_w2 != base_w2)
+				if(acc_w2 > base_w2)
+					acc.Shift(WEST, round((acc_w2 - base_w2) / 2))
+				else if(acc_w2 < base_w2)
+					acc.Shift(EAST, round((base_w2 - acc_w2) / 2))
+			// For tall horns (e.g., 32x64), move both layers down before blending
+			if(acc_w2 == 32 && acc_h2 > base_h2)
+				var/down = round((acc_h2 - base_h2) / 2) // 16px when 32x64 vs 32x32
+				base_icon.Shift(SOUTH, down)
+				acc.Shift(SOUTH, down)
+			base_icon.Blend(acc, ICON_OVERLAY)
+			var/icon/preview_icon = icon(base_icon)
+			preview_icon.Scale(64,64)
+			var/selected = (pref.ear_secondary_style == style_name)
+			var/cell_style = selected ? "border:2px solid #66a3ff;" : "border:1px solid #444;"
+			dat += "<td style='[cell_style] background:#222; text-align:center; width:96px; height:120px; vertical-align:top; padding:4px;'>"
+			dat += "<div style='display:block;margin:0 auto;'>"
+			dat += "<a href='?src=\ref[src];horns_set=[url_encode(style_name)]' title='[style_name]'>[bicon(preview_icon)]</a>"
+			dat += "</div>"
+			dat += "<div style='font-size:11px;color:#ccc;margin-top:4px;max-width:88px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;' title='[style_name]'>[style_name]</div>"
+			dat += "</td>"
+			col += 1
+			if(col >= max_cols)
+				dat += "</tr><tr>"
+				col = 0
+		dat += "</tr></table>"
+		dat += "</div>"
+	else
+		dat += "<p>No horns available.</p>"
+	dat += "<div><a href='?src=\ref[src];horns_gallery_close=1'>Close</a></div>"
+	dat += "</center></body></html>"
+	user << browse(dat, "window=prefs_horns_gallery;size=1000x720")
+
+//RS Add: Tails gallery window (Lira, August 2025)
+/datum/category_item/player_setup_item/general/body/proc/tails_gallery_window(mob/user, var/page)
+	var/dat = "<html><body style='background:#111;color:#ddd;font-family:Verdana,Arial;'><center>"
+	dat += "<h3>Select Tail</h3>"
+	dat += "<div><a href='?src=\ref[src];tails_gallery_close=1'>Close</a></div>"
+	var/page_num = max(1, text2num(page) || 1)
+	var/list/styles = pref.get_available_styles(global.tail_styles_list)
+	if(LAZYLEN(styles))
+		var/list/all_names = sortList(styles)
+		var/page_size = 60
+		var/total = all_names.len
+		var/total_pages = max(1, round((total + page_size - 1) / page_size))
+		if(page_num > total_pages) page_num = total_pages
+		var/start_i = ((page_num - 1) * page_size) + 1
+		var/end_i = min(total, page_num * page_size)
+		var/prev_link = (page_num > 1) ? "<a href='?src=\ref[src];tails_gallery_page=[page_num-1]'>Prev</a>" : "Prev"
+		var/next_link = (page_num < total_pages) ? "<a href='?src=\ref[src];tails_gallery_page=[page_num+1]'>Next</a>" : "Next"
+		dat += "<div style='margin:6px;'>[prev_link] | Page [page_num] / [total_pages] | [next_link]</div>"
+		dat += "<div style='max-height:560px; overflow-y:auto; padding:6px; border:1px solid #333; background:#111; margin:6px;'>"
+		dat += "<table cellspacing='6' cellpadding='0' style='border-collapse:separate;'><tr>"
+		var/col = 0
+		var/max_cols = 6
+		var/idx = 0
+		for(var/style_name in all_names)
+			idx += 1
+			if(idx < start_i || idx > end_i)
+				continue
+			var/datum/sprite_accessory/tail/T = styles[style_name]
+			if(!istype(T)) continue
+			var/icon/base_icon = icon(get_markings_base_preview_icon())
+			var/icon/acc = new/icon(icon = T.icon, icon_state = T.icon_state, frame = 1)
+			if(T.do_colouration)
+				var/primary_tail = (pref.r_tail == 30 && pref.g_tail == 30 && pref.b_tail == 30) ? "#c0c0c0" : rgb(pref.r_tail, pref.g_tail, pref.b_tail)
+				acc.Blend(primary_tail, T.color_blend_mode)
+				if(T.extra_overlay)
+					var/icon/add1 = new/icon(icon = T.icon, icon_state = T.extra_overlay, frame = 1)
+					var/secondary_tail = (pref.r_tail2 == 30 && pref.g_tail2 == 30 && pref.b_tail2 == 30) ? "#c0c0c0" : rgb(pref.r_tail2, pref.g_tail2, pref.b_tail2)
+					add1.Blend(secondary_tail, T.color_blend_mode)
+					acc.Blend(add1, ICON_OVERLAY)
+				if(T.extra_overlay2)
+					var/icon/add2 = new/icon(icon = T.icon, icon_state = T.extra_overlay2, frame = 1)
+					var/tertiary_tail = (pref.r_tail3 == 30 && pref.g_tail3 == 30 && pref.b_tail3 == 30) ? "#c0c0c0" : rgb(pref.r_tail3, pref.g_tail3, pref.b_tail3)
+					add2.Blend(tertiary_tail, T.color_blend_mode)
+					acc.Blend(add2, ICON_OVERLAY)
+			var/base_w3 = base_icon.Width()
+			var/base_h3 = base_icon.Height()
+			var/acc_w3 = acc.Width()
+			var/acc_h3 = acc.Height()
+			if(acc_w3 != base_w3)
+				if(acc_w3 > base_w3)
+					acc.Shift(WEST, round((acc_w3 - base_w3) / 2))
+				else if(acc_w3 < base_w3)
+					acc.Shift(EAST, round((base_w3 - acc_w3) / 2))
+			if(acc_h3 != base_h3)
+				if(acc_h3 > base_h3)
+					acc.Shift(NORTH, acc_h3 - base_h3)
+				else if(acc_h3 < base_h3)
+					acc.Shift(SOUTH, base_h3 - acc_h3)
+			base_icon.Blend(acc, ICON_OVERLAY)
+			var/icon/preview_icon = icon(base_icon)
+			preview_icon.Scale(64,64)
+			var/selected = (pref.tail_style == style_name)
+			var/cell_style = selected ? "border:2px solid #66a3ff;" : "border:1px solid #444;"
+			dat += "<td style='[cell_style] background:#222; text-align:center; width:96px; height:120px; vertical-align:top; padding:4px;'>"
+			dat += "<div style='display:block;margin:0 auto;'>"
+			dat += "<a href='?src=\ref[src];tail_set=[url_encode(style_name)]' title='[style_name]'>[bicon(preview_icon)]</a>"
+			dat += "</div>"
+			dat += "<div style='font-size:11px;color:#ccc;margin-top:4px;max-width:88px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;' title='[style_name]'>[style_name]</div>"
+			dat += "</td>"
+			col += 1
+			if(col >= max_cols)
+				dat += "</tr><tr>"
+				col = 0
+		dat += "</tr></table>"
+		dat += "</div>"
+	else
+		dat += "<p>No tail styles available.</p>"
+	dat += "<div><a href='?src=\ref[src];tails_gallery_close=1'>Close</a></div>"
+	dat += "</center></body></html>"
+	user << browse(dat, "window=prefs_tails_gallery;size=1000x720")
+
+//RS Add: Wings gallery window (Lira, August 2025)
+/datum/category_item/player_setup_item/general/body/proc/wings_gallery_window(mob/user, var/page)
+	var/dat = "<html><body style='background:#111;color:#ddd;font-family:Verdana,Arial;'><center>"
+	dat += "<h3>Select Wings</h3>"
+	dat += "<div><a href='?src=\ref[src];wings_gallery_close=1'>Close</a></div>"
+	var/page_num = max(1, text2num(page) || 1)
+	var/list/styles = pref.get_available_styles(global.wing_styles_list)
+	if(LAZYLEN(styles))
+		var/list/all_names = sortList(styles)
+		var/page_size = 60
+		var/total = all_names.len
+		var/total_pages = max(1, round((total + page_size - 1) / page_size))
+		if(page_num > total_pages) page_num = total_pages
+		var/start_i = ((page_num - 1) * page_size) + 1
+		var/end_i = min(total, page_num * page_size)
+		var/prev_link = (page_num > 1) ? "<a href='?src=\ref[src];wings_gallery_page=[page_num-1]'>Prev</a>" : "Prev"
+		var/next_link = (page_num < total_pages) ? "<a href='?src=\ref[src];wings_gallery_page=[page_num+1]'>Next</a>" : "Next"
+		dat += "<div style='margin:6px;'>[prev_link] | Page [page_num] / [total_pages] | [next_link]</div>"
+		dat += "<div style='max-height:560px; overflow-y:auto; padding:6px; border:1px solid #333; background:#111; margin:6px;'>"
+		dat += "<table cellspacing='6' cellpadding='0' style='border-collapse:separate;'><tr>"
+		var/col = 0
+		var/max_cols = 6
+		var/idx = 0
+		for(var/style_name in all_names)
+			idx += 1
+			if(idx < start_i || idx > end_i)
+				continue
+			var/datum/sprite_accessory/wing/W = styles[style_name]
+			if(!istype(W)) continue
+			var/icon/base_icon = icon(get_markings_base_preview_icon())
+			var/icon/acc = new/icon(icon = W.icon, icon_state = W.icon_state, frame = 1)
+			if(W.do_colouration)
+				var/primary_wing = (pref.r_wing == 30 && pref.g_wing == 30 && pref.b_wing == 30) ? "#c0c0c0" : rgb(pref.r_wing, pref.g_wing, pref.b_wing)
+				acc.Blend(primary_wing, W.color_blend_mode)
+				if(W.extra_overlay)
+					var/icon/add1 = new/icon(icon = W.icon, icon_state = W.extra_overlay, frame = 1)
+					var/secondary_wing = (pref.r_wing2 == 30 && pref.g_wing2 == 30 && pref.b_wing2 == 30) ? "#c0c0c0" : rgb(pref.r_wing2, pref.g_wing2, pref.b_wing2)
+					add1.Blend(secondary_wing, W.color_blend_mode)
+					acc.Blend(add1, ICON_OVERLAY)
+				if(W.extra_overlay2)
+					var/icon/add2 = new/icon(icon = W.icon, icon_state = W.extra_overlay2, frame = 1)
+					var/tertiary_wing = (pref.r_wing3 == 30 && pref.g_wing3 == 30 && pref.b_wing3 == 30) ? "#c0c0c0" : rgb(pref.r_wing3, pref.g_wing3, pref.b_wing3)
+					add2.Blend(tertiary_wing, W.color_blend_mode)
+					acc.Blend(add2, ICON_OVERLAY)
+			var/base_w4 = base_icon.Width()
+			var/base_h4 = base_icon.Height()
+			var/acc_w4 = acc.Width()
+			var/acc_h4 = acc.Height()
+			if(acc_w4 != base_w4)
+				if(acc_w4 > base_w4)
+					acc.Shift(WEST, round((acc_w4 - base_w4) / 2))
+				else if(acc_w4 < base_w4)
+					acc.Shift(EAST, round((base_w4 - acc_w4) / 2))
+			if(acc_h4 != base_h4)
+				if(acc_h4 > base_h4)
+					acc.Shift(NORTH, acc_h4 - base_h4)
+				else if(acc_h4 < base_h4)
+					acc.Shift(SOUTH, base_h4 - acc_h4)
+			base_icon.Blend(acc, ICON_OVERLAY)
+			var/icon/preview_icon = icon(base_icon)
+			preview_icon.Scale(64,64)
+			var/selected = (pref.wing_style == style_name)
+			var/cell_style = selected ? "border:2px solid #66a3ff;" : "border:1px solid #444;"
+			dat += "<td style='[cell_style] background:#222; text-align:center; width:96px; height:120px; vertical-align:top; padding:4px;'>"
+			dat += "<div style='display:block;margin:0 auto;'>"
+			dat += "<a href='?src=\ref[src];wing_set=[url_encode(style_name)]' title='[style_name]'>[bicon(preview_icon)]</a>"
+			dat += "</div>"
+			dat += "<div style='font-size:11px;color:#ccc;margin-top:4px;max-width:88px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;' title='[style_name]'>[style_name]</div>"
+			dat += "</td>"
+			col += 1
+			if(col >= max_cols)
+				dat += "</tr><tr>"
+				col = 0
+		dat += "</tr></table>"
+		dat += "</div>"
+	else
+		dat += "<p>No wing styles available.</p>"
+	dat += "<div><a href='?src=\ref[src];wings_gallery_close=1'>Close</a></div>"
+	dat += "</center></body></html>"
+	user << browse(dat, "window=prefs_wings_gallery;size=1000x720")
+
+//RS Add: Markings markings window (Lira, August 2025) || Markings search added (Lira, October 2025)
+/datum/category_item/player_setup_item/general/body/proc/markings_gallery_window(mob/user, var/category, var/page, var/search)
+	var/dat = "<html><body style='background:#111;color:#ddd;font-family:Verdana,Arial;'><center>"
+	var/page_num = max(1, text2num(page) || 1)
+	if(!category)
+		category = "heads"
+	var/list/cats = list(
+		"heads" = "Head",
+		"bodies" = "Body",
+		"limbs" = "Limbs",
+		"addons" = "Tats/Scars",
+		"skintone" = "Skintone",
+		"teshari" = "Teshari",
+		"vox" = "Vox",
+		"augment" = "Augment",
+		"all" = "All"
+	)
+	if(!(category in cats))
+		category = "heads"
+	var/search_encoded = search ? url_encode(search) : null
+	var/search_link = "<a href='?src=\ref[src];marking_gallery_search=1;marking_gallery_cat=[url_encode(category)];marking_gallery_page=[page_num]'>Search</a>"
+	if(search)
+		search_link = "Search: <b>[html_encode(search)]</b> ( <a href='?src=\ref[src];marking_gallery_search_clear=1;marking_gallery_cat=[url_encode(category)]'>clear</a> )"
+	dat += "<h3>Select Body Marking</h3>"
+	dat += "<div>[search_link] | <a href='?src=\ref[src];marking_gallery_close=1'>Close</a></div>"
+	var/catbar = ""
+	for(var/c in cats)
+		if(category == c)
+			catbar += " <b>[cats[c]]</b>"
+		else
+			var/c_encoded = url_encode(c)
+			if(search_encoded)
+				catbar += " <a href='?src=\ref[src];marking_gallery_cat=[c_encoded];marking_gallery_search_term=[search_encoded]'>[cats[c]]</a>"
+			else
+				catbar += " <a href='?src=\ref[src];marking_gallery_cat=[c_encoded]'>[cats[c]]</a>"
+	dat += "<div style='margin:6px;padding:6px;border:1px solid #333;background:#111;'>[catbar]</div>"
+	var/list/valid_markings_grid
+	switch(category)
+		if("heads")
+			valid_markings_grid = body_marking_heads.Copy()
+		if("bodies")
+			valid_markings_grid = body_marking_bodies.Copy()
+		if("limbs")
+			valid_markings_grid = body_marking_limbs.Copy()
+		if("addons")
+			valid_markings_grid = body_marking_addons.Copy()
+		if("skintone")
+			valid_markings_grid = body_marking_skintone.Copy()
+		if("teshari")
+			valid_markings_grid = body_marking_teshari.Copy()
+		if("vox")
+			valid_markings_grid = body_marking_vox.Copy()
+		if("augment")
+			valid_markings_grid = body_marking_augment.Copy()
+		else
+			valid_markings_grid = body_marking_styles_list.Copy()
+	var/list/priority_parts = list(BP_HEAD,BP_TORSO,BP_GROIN,BP_L_ARM,BP_R_ARM,BP_L_HAND,BP_R_HAND,BP_L_LEG,BP_R_LEG,BP_L_FOOT,BP_R_FOOT)
+	var/list/filtered_styles = list()
+	var/needle = search ? lowertext(search) : null
+	if(valid_markings_grid)
+		for(var/style_name in sortList(valid_markings_grid))
+			var/datum/sprite_accessory/marking/mark_style = body_marking_styles_list[style_name]
+			if(!istype(mark_style) || mark_style.hide_from_marking_gallery)
+				continue
+			var/display_name = mark_style.get_display_name()
+			if(needle)
+				var/name_lower = lowertext(style_name)
+				var/display_lower = lowertext(display_name)
+				if(!findtext(display_lower, needle) && !findtext(name_lower, needle))
+					continue
+			var/list/state_list = icon_states(mark_style.icon)
+			var/has_any = FALSE
+			for(var/p in priority_parts)
+				if(!(p in mark_style.body_parts))
+					continue
+				var/state_name = "[mark_style.icon_state]-[p]"
+				if(!(state_name in state_list))
+					continue
+				has_any = TRUE
+				break
+			if(!has_any)
+				continue
+			filtered_styles += style_name
+	if(LAZYLEN(filtered_styles))
+		var/page_size = 60
+		var/total = filtered_styles.len
+		var/total_pages = max(1, round((total + page_size - 1) / page_size))
+		if(page_num > total_pages)
+			page_num = total_pages
+		var/start_i = ((page_num - 1) * page_size) + 1
+		var/end_i = min(total, page_num * page_size)
+		var/search_fragment = search_encoded ? ";marking_gallery_search_term=[search_encoded]" : ""
+		var/prev_link = (page_num > 1) ? "<a href='?src=\ref[src];marking_gallery_page=[page_num-1];marking_gallery_cat=[url_encode(category)][search_fragment]'>Prev</a>" : "Prev"
+		var/next_link = (page_num < total_pages) ? "<a href='?src=\ref[src];marking_gallery_page=[page_num+1];marking_gallery_cat=[url_encode(category)][search_fragment]'>Next</a>" : "Next"
+		dat += "<div style='margin:6px;'>[prev_link] | Page [page_num] / [total_pages] | [next_link]</div>"
+		dat += "<div style='max-height:560px; overflow-y:auto; padding:6px; border:1px solid #333; background:#111; margin:6px;'>"
+		dat += "<table cellspacing='6' cellpadding='0' style='border-collapse:separate;'><tr>"
+		var/col = 0
+		var/max_cols = 6
+		var/idx = 0
+		for(var/style_name in filtered_styles)
+			// RS Edit Start: Custom markings support (Lira, September 2025)
+			var/datum/sprite_accessory/marking/mark_style = body_marking_styles_list[style_name]
+			if(!istype(mark_style))
+				continue
+			// RS Edit End
+			var/display_name = mark_style.get_display_name() // RS Edit: Custom markings support (Lira, September 2025)
+			idx += 1
+			if(idx < start_i || idx > end_i)
+				continue
+			var/icon/base_icon = icon(get_markings_base_preview_icon())
+			var/list/state_list = icon_states(mark_style.icon)
+			var/has_any = FALSE
+			for(var/p in priority_parts)
+				if(!(p in mark_style.body_parts))
+					continue
+				var/state_name = "[mark_style.icon_state]-[p]"
+				if(!(state_name in state_list))
+					continue
+				var/icon/mark_s = new/icon(icon = mark_style.icon, icon_state = state_name, frame = 1)
+				mark_s.Blend("#bb0000", mark_style.color_blend_mode)
+				base_icon.Blend(mark_s, ICON_OVERLAY)
+				has_any = TRUE
+			if(!has_any)
+				continue
+			var/icon/preview_icon = icon(base_icon)
+			preview_icon.Scale(64, 64)
+			var/selected = (pref.body_markings && (style_name in pref.body_markings))
+			var/cell_style = selected ? "border:2px solid #66a3ff;" : "border:1px solid #444;"
+			dat += "<td style='[cell_style] background:#222; text-align:center; width:96px; height:120px; vertical-align:top; padding:4px;'>"
+			dat += "<div style='display:block;margin:0 auto;'>"
+			if(search_fragment)
+				dat += "<a href='?src=\ref[src];marking_add=[url_encode(style_name)];marking_gallery_cat=[url_encode(category)];marking_gallery_page=[page_num][search_fragment]' title='[display_name]'>[bicon(preview_icon)]</a>" // RS Edit: Custom markings support (Lira, September 2025)
+			else
+				dat += "<a href='?src=\ref[src];marking_add=[url_encode(style_name)];marking_gallery_cat=[url_encode(category)];marking_gallery_page=[page_num]' title='[display_name]'>[bicon(preview_icon)]</a>" // RS Edit: Custom markings support (Lira, September 2025)
+			dat += "</div>"
+			dat += "<div style='font-size:11px;color:#ccc;margin-top:4px;max-width:88px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;' title='[style_name]'>[style_name]</div>"
+			dat += "</td>"
+			col += 1
+			if(col >= max_cols)
+				dat += "</tr><tr>"
+				col = 0
+		dat += "</tr></table>"
+		dat += "</div>"
+	else
+		if(search)
+			dat += "<p>No markings match this search.</p>"
+		else
+			dat += "<p>No markings available.</p>"
+	dat += "<div><a href='?src=\ref[src];marking_gallery_close=1'>Close</a></div>"
+	dat += "</center></body></html>"
+	user << browse(dat, "window=prefs_markings_gallery;size=1000x720")

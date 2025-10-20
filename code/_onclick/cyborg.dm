@@ -39,6 +39,8 @@
 	if(stat || lockdown || weakened || stunned || paralysis)
 		return
 
+	SEND_SIGNAL(src,COMSIG_CLICK)	//RS ADD
+
 	face_atom(A) // change direction to face what you clicked on
 
 	if(aiCamera && aiCamera.in_camera_mode)
@@ -48,6 +50,10 @@
 		else
 			to_chat(src, "<span class='userdanger'>Your camera isn't functional.</span>")
 		return
+
+	if(isliving(A))	//RS ADD START
+		var/mob/living/L = A
+		game_tag(L)	//RS ADD END - The borg is clicking someone else!
 
 	/*
 	cyborg restrained() currently does nothing

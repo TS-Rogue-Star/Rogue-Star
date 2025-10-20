@@ -144,6 +144,9 @@
 		. = ..(message_data)
 
 /mob/living/carbon/human/handle_message_mode(message_mode, list/message_pieces, verb, used_radios)
+
+	if(is_incorporeal()) return	//RS ADD - Prevents shadekin from using radios while phased out
+
 	switch(message_mode)
 		if("intercom")
 			if(!restrained())

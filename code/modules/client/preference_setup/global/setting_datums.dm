@@ -84,6 +84,14 @@ var/list/_client_preferences_by_type
 	else
 		preference_mob.update_music()
 
+//RS ADD START
+/datum/client_preference/food_eating_noises
+	description = "Food Eating Noises"
+	key = "FOOD EATING_NOISES"
+	enabled_description = "Enabled"
+	disabled_description = "Disabled"
+//RS ADD END
+
 /datum/client_preference/eating_noises
 	description = "Eating Noises"
 	key = "EATING_NOISES"
@@ -348,6 +356,12 @@ var/list/_client_preferences_by_type
 	enabled_description = "Enabled"
 	disabled_description = "Disabled"
 
+/datum/client_preference/vore_damage_overlay
+	description = "Vore Self Damage Overlay"
+	key = "VORE_DAMAGE_OVERLAY"
+	enabled_description = "Enabled"
+	disabled_description = "Disabled"
+
 //RS ADDITION END
 
 /datum/client_preference/runechat_mob
@@ -475,3 +489,12 @@ var/list/_client_preferences_by_type
 	key = "CHAT_ADSAY"
 	enabled_description = "Show"
 	disabled_description = "Hide"
+
+//RS ADD START
+/datum/client_preference/holder/show_staff_secrets
+	description ="Staff Secrets"
+	key = "STAFF_SECRETS"
+	enabled_description = "Show"
+	disabled_description = "Hide"
+	enabled_by_default = FALSE
+//RS ADD END

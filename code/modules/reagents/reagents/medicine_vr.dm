@@ -209,37 +209,7 @@
 		return
 	if(M.tf_mob_holder)
 		log_debug("polymorph tf_holder")
-		var/mob/living/ourmob = M.tf_mob_holder
-		if(ourmob.ai_holder)
-			log_debug("polymorph ai")
-			var/datum/ai_holder/our_AI = ourmob.ai_holder
-			our_AI.set_stance(STANCE_IDLE)
-		M.tf_mob_holder = null
-		ourmob.ckey = M.ckey
-		var/turf/get_dat_turf = get_turf(target)
-		ourmob.loc = get_dat_turf
-		ourmob.forceMove(get_dat_turf)
-		ourmob.vore_selected = M.vore_selected
-		M.vore_selected = null
-		for(var/obj/belly/B as anything in M.vore_organs)
-			log_debug("polymorph belly")
-			B.loc = ourmob
-			B.forceMove(ourmob)
-			B.owner = ourmob
-			M.vore_organs -= B
-			ourmob.vore_organs += B
-
-		ourmob.Life(1)
-		if(ishuman(M))
-			log_debug("polymorph human")
-			for(var/obj/item/W in M)
-				log_debug("polymorph items")
-				if(istype(W, /obj/item/weapon/implant/backup) || istype(W, /obj/item/device/nif))
-					log_debug("polymorph implants")
-					continue
-				M.drop_from_inventory(W)
-
-		qdel(target)
+		M.revert_mob_tf() // RS Add: Standardize mob revert (Lira, October 2025)
 		return
 	else
 		log_debug("polymorph else")
@@ -252,6 +222,10 @@
 
 		if(new_mob && isliving(new_mob))
 			log_debug("polymorph new_mob")
+			// RS Add Start: Mind tracking (Lira, October 2025)
+			var/datum/mind/original_mind = M.mind
+			var/old_ckey = M.ckey
+			// RS Add End
 			for(var/obj/belly/B as anything in new_mob.vore_organs)
 				log_debug("polymorph new_mob belly")
 				new_mob.vore_organs -= B
@@ -288,7 +262,12 @@
 				M.vore_organs -= B
 				new_mob.vore_organs += B
 
-			new_mob.ckey = M.ckey
+			// RS Edit Start: Mind tracking (Lira, October 2025)
+			if(original_mind)
+				original_mind.transfer_to(new_mob)
+			else if(old_ckey)
+				new_mob.ckey = old_ckey
+			// RS Edit End
 			if(M.ai_holder && new_mob.ai_holder)
 				var/datum/ai_holder/old_AI = M.ai_holder
 				old_AI.set_stance(STANCE_SLEEP)

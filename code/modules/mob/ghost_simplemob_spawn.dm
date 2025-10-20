@@ -50,8 +50,10 @@ GLOBAL_LIST_INIT(ghost_spawnable_mobs,list(
 		"Pakkun - Amethyst" = /mob/living/simple_mob/vore/pakkun/purple
 	),
 	"Panther" = /mob/living/simple_mob/vore/aggressive/panther,
+	"Prancer" = /mob/living/simple_mob/vore/prancer,
 	"Sect Queen" = /mob/living/simple_mob/vore/sect_queen,
 	"Sect Drone" = /mob/living/simple_mob/vore/sect_drone,
+	"Stellagan" = /mob/living/simple_mob/vore/stellagan,
 	"Rabbit" = /mob/living/simple_mob/vore/rabbit,
 	"Raptor" = /mob/living/simple_mob/vore/raptor,
 	"Rat - Giant" = /mob/living/simple_mob/vore/aggressive/rat,
@@ -164,6 +166,9 @@ GLOBAL_LIST_INIT(ghost_spawnable_mobs,list(
 		if(sus.ckey)
 			to_chat(src, "<span class='danger'>\The [sus] can see you here, try somewhere more discreet!</span>")
 			return
+	for(var/atom/movable/look_spoiler/eye in view(world.view,ourturf))	//RS ADD START - Also don't spawn where people are looking, this covers cameras now too!
+		to_chat(src, "<span class='danger'>[eye] is looking here. Try somewhere else!</span>")
+		return	//RS ADD START
 
 	var/mob/living/simple_mob/newPred = new mobtype(ourturf)
 	qdel(newPred.ai_holder)

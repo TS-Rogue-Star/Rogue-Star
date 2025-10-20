@@ -48,6 +48,10 @@
 		build_click(src, client.buildmode, params, A)
 		return
 
+	if(is_incorporeal())	//RS ADD START - don't shoot at or attack people while you are intangible
+		face_atom(A)
+		return				//RS ADD END
+
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["ctrl"])
 		CtrlShiftClickOn(A)
@@ -70,6 +74,8 @@
 
 	if(stat || paralysis || stunned) //RS Port Chomp PR 8154 ||  CHOMPedit, removed weakened to allow item use while crawling
 		return
+
+	SEND_SIGNAL(src,COMSIG_CLICK)	//RS ADD
 
 	face_atom(A) // change direction to face what you clicked on
 
@@ -288,6 +294,10 @@
 	var/turf/T = get_turf(src)
 	if(T && user.TurfAdjacent(T))
 		user.ToggleTurfTab(T)
+		user.reset_look()	//RS ADD START
+	else if(isliving(user))
+		var/mob/living/L = user
+		L.look_over_there(src)	//RS ADD END
 	return 1
 
 /mob/proc/ToggleTurfTab(var/turf/T)
@@ -342,6 +352,7 @@
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 /mob/proc/face_atom(var/atom/A)
+	SEND_SIGNAL(src,COMSIG_FACE_ATOM)	//RS ADD
 	if(!A || !x || !y || !A.x || !A.y) return
 	var/dx = A.x - x
 	var/dy = A.y - y

@@ -1,7 +1,9 @@
 FROM i386/ubuntu:xenial as base
 
-ARG BYOND_MAJOR=514
-ARG BYOND_MINOR=1589
+#RS EDIT START
+ARG BYOND_MAJOR=516
+ARG BYOND_MINOR=1661
+#RS EDIT END
 
 RUN apt-get update \
     && apt-get install -y \
@@ -9,7 +11,9 @@ RUN apt-get update \
     unzip \
     make \
     libstdc++6 \
-    && curl "https://www.byond.com/download/build/${BYOND_MAJOR}/${BYOND_MAJOR}.${BYOND_MINOR}_byond_linux.zip" -o byond.zip \
+    #RS Edit Start: Add user agent per https://github.com/tgstation/tgstation/pull/91101 (Lira, May 2025)
+    && curl -H "User-Agent: RogueStar/1.0 CI Script" "https://www.byond.com/download/build/${BYOND_MAJOR}/${BYOND_MAJOR}.${BYOND_MINOR}_byond_linux.zip" -o byond.zip \
+    #RS Edit End
     && unzip byond.zip \
     && cd byond \
     && sed -i 's|install:|&\n\tmkdir -p $(MAN_DIR)/man6|' Makefile \

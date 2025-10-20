@@ -779,3 +779,13 @@
 	#define ELEMENT_CONFLICT_FOUND	(1<<0)
 //From reagents touch_x.
 #define COMSIG_REAGENTS_TOUCH "reagent_touch"
+//RS ADD START
+#define COMSIG_FACE_ATOM "face_atom"
+#define COMSIG_GET_ATTACK_SPEED "get_attack_speed"
+#define COMSIG_MOB_SMELLED "mob_smelled"
+#define COMSIG_MOB_WASHED "mob_washed"
+#define COMSIG_LOOK_RESET "look_reset"
+#define COMSIG_DIGESTED "mob_digested"
+#define COMSIG_VORE_HEALTHBAR_UPDATE "vore_healthbar_update"
+#define COMSIG_VORE_HEALTHBAR_CLEANUP "vore_healthbar_cleanup"
+//RS ADD END

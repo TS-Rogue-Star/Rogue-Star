@@ -14,6 +14,9 @@ var/static/list/has_rocks = list("dirt5", "dirt6", "dirt7", "dirt8", "dirt9")
 			R.pixel_x = rand(-6,6)
 			R.pixel_y = rand(-6,6)
 			icon_state = "dirt0"
+			if(prob(10))	//RS ADD
+				var/mob/living/simple_mob/vore/isopod/small/I = new(get_turf(src))	//RS ADD
+				I.visible_message("\The [I] scurries into view from underneath \the [R]!", runemessage = "! ! !")	//RS ADD
 		return
 	if(locate(/obj) in src)
 		to_chat(user, "<span class='notice'>The [name] isn't clear.</span>")

@@ -822,11 +822,14 @@ Note that amputating the affected organ does in fact remove the infection from t
 		status |= ORGAN_BLEEDING
 
 
-	//RS EDIT - MOVED TO human_damage.dm, so that broken bones can only happen when they actually take damage, rather than potentially any life proc
-/*	//Bone fractures
+	//RS EDIT Better Bone Fractures. HP must be <= .5x their total max_health AND the limb must be >min_broken_damage
+	//Bone fractures
 	if(config.bones_can_break && brute_dam > min_broken_damage * config.organ_health_multiplier && !(robotic >= ORGAN_ROBOT))
-		src.fracture()
-*/
+		if(istype(owner,/mob/living/carbon/human))
+			var/mob/living/carbon/human/our_owner = owner
+			if(our_owner.health <= (our_owner.maxHealth*0.5)) //If our owner's health is <= .5 their max health
+				src.fracture()
+
 	update_health()
 
 // new damage icon system

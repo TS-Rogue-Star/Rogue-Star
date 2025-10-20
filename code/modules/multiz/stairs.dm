@@ -152,6 +152,8 @@
 	if(istype(AM, /obj/effect/plant))
 		return
 	//VOREStation Addition End
+	if(istype(AM, /atom/movable/look_spoiler))	//RS ADD
+		return	//RS ADD
 	if(isobserver(AM)) // Ghosts have their own methods for going up and down
 		return
 	if(AM.pulledby) // Animating the movement of pulled things is handled when the puller goes up the stairs
@@ -205,6 +207,8 @@
 	if(istype(AM, /obj/effect/plant))
 		return
 	//VOREStation Addition End
+	if(istype(AM, /atom/movable/look_spoiler))	//RS ADD
+		return	//RS ADD
 	if(isliving(AM))
 		var/mob/living/L = AM
 
@@ -410,6 +414,8 @@
 	if(istype(AM, /obj/effect/plant))
 		return
 	//VOREStation Addition End
+	if(istype(AM, /atom/movable/look_spoiler))	//RS ADD
+		return	//RS ADD
 	if(isobserver(AM)) // Ghosts have their own methods for going up and down
 		return
 	if(AM.pulledby) // Animating the movement of pulled things is handled when the puller goes up the stairs
@@ -461,6 +467,8 @@
 	if(istype(AM, /obj/effect/plant))
 		return
 	//VOREStation Addition End
+	if(istype(AM, /atom/movable/look_spoiler))	//RS ADD
+		return	//RS ADD
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(L.grabbed_by.len) // Same as pulledby, whoever's holding you will keep you from going down stairs.

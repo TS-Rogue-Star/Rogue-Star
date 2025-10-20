@@ -42,6 +42,30 @@
 	change_gender_identity(new_gender_identity)
 	return 1
 
+//RS ADD START
+/mob/living/carbon/human/verb/set_screamsound()
+	set name = "Set Scream Sound"
+	set desc = "Sets the kind of sound used when screaming."
+	set category = "IC"
+	var/new_screamsound = tgui_input_list(usr, "Please select the kind of voice for screaming:", "Set Scream Sound", list(FEMALE, MALE, "Bau", "Augh", "No Sound", "Default"))
+	if(!new_screamsound)
+		return
+	switch(new_screamsound)
+		if(FEMALE)
+			client.prefs.screamsound = 1
+		if(MALE)
+			client.prefs.screamsound = 2
+		if("No Sound")
+			client.prefs.screamsound = 3
+		if("Default")
+			client.prefs.screamsound = 0
+		if("Bau")
+			client.prefs.screamsound = 4
+		if("Augh")
+			client.prefs.screamsound = 5
+
+//RS ADD END
+
 /mob/living/carbon/human/verb/switch_tail_layer()
 	set name = "Switch tail layer"
 	set category = "IC"

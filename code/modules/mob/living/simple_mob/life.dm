@@ -6,9 +6,6 @@
 	if(stat >= DEAD)
 		return FALSE
 
-	handle_stunned()
-	handle_weakened()
-	handle_paralysed()
 	handle_supernatural()
 	handle_atmos()
 
@@ -16,6 +13,8 @@
 
 	handle_guts()
 	do_healing()	//VOREStation Add
+	if(hunter)			//RS ADD
+		nutrition -= 2	//RS ADD
 
 	return TRUE
 
@@ -64,10 +63,10 @@
 		if(-INFINITY to 50)
 			throw_alert("nutrition", /obj/screen/alert/starving)
 
-//VOREStation ADD START - I made this for catslugs but tbh it's probably cool to give to everything. 
+//VOREStation ADD START - I made this for catslugs but tbh it's probably cool to give to everything.
 //Gives all simplemobs passive healing as long as they can find food.
 //Slow enough that it should affect combat basically not at all
-	
+
 /mob/living/simple_mob/proc/do_healing()
 	if(nutrition < 150)
 		return
@@ -77,6 +76,8 @@
 		heal_countdown --
 		return
 	if(resting)
+		if(oxyloss > 0)	//RS ADD
+			adjustOxyLoss(-1)	//RS ADD
 		if(bruteloss > 0)
 			adjustBruteLoss(-10)
 		else if(fireloss > 0)

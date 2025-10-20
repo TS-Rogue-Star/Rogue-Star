@@ -69,9 +69,9 @@
 
 /datum/virus2_editor/proc/show_ui(mob/user)
 	var/H = {"
-	<center><h3>Virus2 Virus Editor</h3></center><br />
+	<html><center><h3>Virus2 Virus Editor</h3></center><br />
 	<b>Effects:</b><br />
-	"}
+	"} //RS Edit: Add html tag for 516 compatibility
 	for(var/i = 1 to 4)
 		var/datum/disease2/effect/Eff = s[i]
 		H += {"
@@ -111,8 +111,8 @@
 	<br />
 	<hr />
 	<b>Initial infectee:</b> <a href="?src=\ref[src];[HrefToken()];what=infectee">[infectee ? infectee : "(choose)"]</a>
-	<a href="?src=\ref[src];[HrefToken()];what=go" style="color:#ff0000">RELEASE</a>
-	"}
+	<a href="?src=\ref[src];[HrefToken()];what=go" style="color:#ff0000">RELEASE</a></html>
+	"} //RS Edit: Add html tag for 516 compatibility
 
 	user << browse(H, "window=virus2edit")
 

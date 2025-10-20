@@ -106,3 +106,32 @@
 	pickup_sound = null
 	matter = null
 	random_color = FALSE
+
+/obj/item/clothing/suit/cultrobes/alt/fluff
+	desc = "A set of common robes designed in imitation of a particular occult style."
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	origin_tech = list(TECH_MATERIAL = 3)
+	siemens_coefficient = 0.9
+
+/obj/item/clothing/head/culthood/alt/fluff
+	desc = "A common hood designed in imitation of a particular occult style."
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	origin_tech = list(TECH_MATERIAL = 3)
+	siemens_coefficient = 0.9
+
+// Approved via modmail (Lira, September 2025)
+/obj/item/clothing/accessory/medal/silver/security/fluff/sadstarfish
+	desc = "An award for distinguished combat and personal risk in the defense of corporate commercial interests. Often awarded to security staff. This one has a crudely carved picture of a plastic knife on the back."
+
+// Approved via modmail (Lira, September 2025)
+/obj/item/clothing/accessory/medal/gold/fluff/alceris
+	name = "Medal of Culinary Prowess"
+	desc = "A medal awarded for the completion of ten lasagnas. Wow!"
+
+// Plushie of all plushies, nodnod
+/obj/item/toy/plushie/portal
+	name = "fluffy goo-wolf plushie"
+	desc = "A gooey white wolf-like plushie with orange markings on the limbs, chin, tail and ears, they appear to be dripping slightly. It has a black skull-like mask over it's face and is wearing a pizza delivery uniform with a nametag depicting the name \"Portal\" on it! It looks incredibly fluffy and soft!"
+	icon = 'icons/vore/custom_items_rs.dmi'
+	icon_state = "portal"
+	pokephrase = "Pizza Delivery~!"

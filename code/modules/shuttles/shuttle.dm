@@ -32,9 +32,16 @@
 
 	var/debug_logging = FALSE // If set to true, the shuttle will start broadcasting its debug messages to admins
 
+	var/map_specific			//RS ADD - If set, will delete itself if the current map is not the right name
+
 	// Future Thoughts: Baystation put "docking" stuff in a subtype, leaving base type pure and free of docking stuff. Is this best?
 
 /datum/shuttle/New(_name, var/obj/effect/shuttle_landmark/initial_location)
+	if(map_specific)	//RS ADD START- Map Swap related
+		if(using_map.name != map_specific)
+			qdel(src)
+			return		//RS ADD END
+
 	..()
 	if(_name)
 		src.name = _name
@@ -56,7 +63,7 @@
 	if(!istype(current_location))
 		if(debug_logging)
 			log_shuttle("UM whoops, no initial? [src]")
-		CRASH("Shuttle '[name]' could not find its starting location landmark [current_location].")
+		CRASH("Shuttle '[name]' could not find its starting location landmark [initial(current_location)].") // RS Edit - Fix debug message (SSshuttles will have nulled this if it couldn't find it)
 
 	if(src.name in SSshuttles.shuttles)
 		CRASH("A shuttle with the name '[name]' is already defined.")
@@ -80,6 +87,10 @@
 // This is called after all shuttles have been initialized by SSshuttles, but before sectors have been initialized.
 // Importantly for subtypes, all shuttles will have been initialized and mothershuttles hooked up by the time this is called.
 /datum/shuttle/proc/populate_shuttle_objects()
+	if(map_specific)	//RS ADD START
+		if(using_map.name != map_specific)
+			return		//RS ADD END
+
 	// Scan for shuttle consoles on them needing auto-config.
 	for(var/area/A in find_childfree_areas()) // Let sub-shuttles handle their areas, only do our own.
 		for(var/obj/machinery/computer/shuttle_control/SC in A)

@@ -3,15 +3,15 @@
 */
 
 var/global/list/hair_accesories_list= list()// Stores /datum/sprite_accessory/hair_accessory indexed by type
-var/global/list/negative_traits = list()	// Negative custom species traits, indexed by path
-var/global/list/neutral_traits = list()		// Neutral custom species traits, indexed by path
-var/global/list/positive_traits = list()	// Positive custom species traits, indexed by path
-var/global/list/everyone_traits_positive = list()	// Neutral traits available to all species, indexed by path
-var/global/list/everyone_traits_neutral = list()	// Neutral traits available to all species, indexed by path
-var/global/list/everyone_traits_negative = list()	// Neutral traits available to all species, indexed by path
 var/global/list/traits_costs = list()		// Just path = cost list, saves time in char setup
 var/global/list/all_traits = list()			// All of 'em at once (same instances)
 var/global/list/active_ghost_pods = list()
+
+// RS ADD START
+var/global/list/positive_traits_map = list() // Positive traits map, indexed by species, then trait path
+var/global/list/neutral_traits_map = list() // Neutral traits map, indexed by species, then trait path
+var/global/list/negative_traits_map = list() // Negative traits map, indexed by species, then trait path
+// RS ADD END
 
 //Global vars for making the overmap_renamer subsystem.
 //Collects all instances by reference of visitable overmap objects of /obj/effect/overmap/visitable like the debris field.
@@ -70,6 +70,7 @@ var/global/list/classic_vore_sounds = list(
 		"Rustle 4 (cloth)"	= 'sound/effects/rustle4.ogg',
 		"Rustle 5 (cloth)"	= 'sound/effects/rustle5.ogg',
 		"Zipper" = 'sound/items/zip.ogg',
+		"Munch" = 'sound/items/eatfood.ogg',	//RS ADD
 		"None" = null)
 
 var/global/list/classic_release_sounds = list(
@@ -103,6 +104,7 @@ var/global/list/fancy_vore_sounds = list(
 		"Rustle 4 (cloth)"	= 'sound/effects/rustle4.ogg',
 		"Rustle 5 (cloth)"	= 'sound/effects/rustle5.ogg',
 		"Zipper" = 'sound/items/zip.ogg',
+		"Munch" = 'sound/items/eatfood.ogg',	//RS ADD
 		"None" = null
 		)
 
@@ -546,24 +548,31 @@ var/global/list/remainless_species = list(SPECIES_PROMETHEAN,
 	// Shakey shakey shake
 	sortTim(all_traits, GLOBAL_PROC_REF(cmp_trait_datums_name), associative = TRUE)
 
+	// RS EDIT START
+    // Initialize species based trait maps
+	for(var/species in GLOB.playable_species)
+		positive_traits_map[species] = list()
+		neutral_traits_map[species] = list()
+		negative_traits_map[species] = list()
+
 	// Split 'em up
 	for(var/traitpath in all_traits)
 		var/datum/trait/T = all_traits[traitpath]
-		var/category = T.category
-		switch(category)
-			if(-INFINITY to -0.1)
-				negative_traits[traitpath] = T
-				if(!(T.custom_only))
-					everyone_traits_negative[traitpath] = T
-			if(0)
-				neutral_traits[traitpath] = T
-				if(!(T.custom_only))
-					everyone_traits_neutral[traitpath] = T
-			if(0.1 to INFINITY)
-				positive_traits[traitpath] = T
-				if(!(T.custom_only))
-					everyone_traits_positive[traitpath] = T
 
+		// More complex, but you only have to do this once at init
+		if (T.custom_only)
+			add_trait_to_species(SPECIES_CUSTOM, traitpath, T)
+		else if (LAZYLEN(T.allowed_species))
+			for (var/species in T.allowed_species)
+				add_trait_to_species(species, traitpath, T)
+		else if (LAZYLEN(T.banned_species))
+			for (var/species in GLOB.playable_species)
+				if(!(species in T.banned_species))
+					add_trait_to_species(species, traitpath, T)
+		else
+			for (var/species in GLOB.playable_species)
+				add_trait_to_species(species, traitpath, T)
+	// RS EDIT END
 
 	// Weaver recipe stuff
 	paths = subtypesof(/datum/weaver_recipe/structure)

@@ -1,0 +1,1399 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ar" = (
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/airlock/multi_tile/metal/mait{
+	dir = 2
+	},
+/turf/simulated/floor/tiled/steel_ridged,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"at" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/machinery/light,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"aw" = (
+/obj/structure/prop/machine/tube/starts_down,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"be" = (
+/obj/structure/frame,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"bg" = (
+/obj/structure/reagent_dispensers/fueltank/barrel/three,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"bv" = (
+/obj/structure/prop/machine/tradebeacon/starts_active,
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"bU" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"dw" = (
+/obj/item/weapon/storage/pouch/ammo,
+/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"dx" = (
+/obj/structure/reagent_dispensers/fueltank/barrel/two,
+/obj/machinery/light,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"ei" = (
+/obj/effect/floor_decal/industrial/warning/color/tile,
+/turf/simulated/floor,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"ej" = (
+/obj/structure/prop/machine/alien_tank/starts_broken,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"gg" = (
+/mob/living/simple_mob/animal/space/alien,
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"gL" = (
+/obj/structure/salvageable/server,
+/obj/item/device/gps/internal/poi{
+	gps_tag = "Unidentified Signal"
+	},
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"hT" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"hY" = (
+/mob/living/simple_mob/animal/space/alien,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"lT" = (
+/obj/structure/bed/chair/bay/comfy{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"mc" = (
+/obj/structure/prop/machine/tgmc_console1,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"mE" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "mgibbl2"
+	},
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"mZ" = (
+/obj/structure/prop/machine/nt_optable,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"nc" = (
+/obj/structure/table/steel,
+/obj/random/powercell,
+/obj/random/powercell,
+/obj/random/powercell,
+/obj/random/awayloot,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"od" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "mfloor4"
+	},
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"ow" = (
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"pM" = (
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/airlock/silver,
+/turf/simulated/floor/tiled/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"pU" = (
+/obj/effect/decal/cleanable/blood/xeno,
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"re" = (
+/obj/structure/salvageable/implant_container,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"rZ" = (
+/obj/structure/table/steel,
+/obj/random/awayloot,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"sh" = (
+/turf/simulated/mineral/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"sy" = (
+/obj/structure/prop/machine/alien_tank,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"up" = (
+/turf/template_noop,
+/area/template_noop)
+"ur" = (
+/mob/living/simple_mob/animal/space/alien/drone,
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"uy" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "burst_l"
+	},
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"uF" = (
+/obj/structure/bed/chair/bay/comfy{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"wA" = (
+/obj/structure/grille/broken,
+/obj/item/weapon/material/shard,
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"wM" = (
+/obj/structure/bed,
+/obj/item/weapon/bedsheet/purple,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"xd" = (
+/obj/structure/prop/machine/tgmc_console5,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"xI" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"yc" = (
+/obj/structure/grille,
+/obj/item/weapon/material/shard{
+	icon_state = "small"
+	},
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"yk" = (
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"ys" = (
+/obj/structure/prop/rock/crystal,
+/obj/effect/map_effect/perma_light{
+	light_color = "#87CEEB"
+	},
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"yv" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/grille/broken,
+/obj/item/weapon/material/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"yz" = (
+/obj/item/weapon/storage/toolbox/syndicate/powertools,
+/obj/structure/table/steel,
+/obj/item/weapon/grenade/chem_grenade/metalfoam,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"zp" = (
+/obj/structure/prop/machine/nt_pod,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"zy" = (
+/obj/structure/prop/machine/nt_biocan,
+/obj/machinery/light,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"Au" = (
+/obj/structure/bed/chair/bay/comfy{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"AO" = (
+/obj/machinery/power/apc{
+	dir = 1
+	},
+/obj/structure/prop/machine/stamper,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"Bh" = (
+/obj/structure/prop/machine/bsb_on,
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"Cb" = (
+/obj/item/weapon/material/shard{
+	icon_state = "small"
+	},
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"Cd" = (
+/obj/item/weapon/bedsheet/green,
+/obj/structure/bed,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"Ck" = (
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"Cv" = (
+/obj/structure/bed/chair/bay/shuttle{
+	dir = 8
+	},
+/obj/machinery/light,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"CL" = (
+/obj/structure/reagent_dispensers/watertank/high,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"CV" = (
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/blood{
+	icon_state = "mfloor2"
+	},
+/obj/machinery/light,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"El" = (
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/airlock/silver,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"EC" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/table/steel,
+/obj/item/ammo_magazine/ammo_box/b12g/pellet,
+/obj/item/ammo_magazine/ammo_box/b12g/stunshell,
+/obj/random/projectile/shotgun,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"EY" = (
+/obj/machinery/button/remote/blast_door{
+	dir = 1;
+	id = "xenoship";
+	pixel_y = -24;
+	pixel_x = 0
+	},
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"Ge" = (
+/obj/structure/prop/machine/tgmc_console1,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"Iw" = (
+/obj/item/weapon/material/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"Ju" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "mfloor2"
+	},
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"Ks" = (
+/obj/structure/prop/machine/tube,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"KC" = (
+/obj/structure/prop/machine/nt_biocan,
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"KZ" = (
+/obj/structure/table/steel,
+/obj/random/awayloot,
+/obj/item/weapon/storage/mre/random,
+/obj/item/weapon/storage/mre/random,
+/obj/item/weapon/storage/mre/random,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"LN" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"OP" = (
+/obj/structure/prop/machine/alien_tank,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"OS" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "mfloor6"
+	},
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"Pl" = (
+/obj/machinery/door/firedoor/border_only,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"Qh" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "mfloor6"
+	},
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"Qn" = (
+/obj/effect/decal/remains/human,
+/obj/structure/bed/chair/bay/shuttle,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"Rd" = (
+/mob/living/simple_mob/animal/space/alien/drone,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"Ru" = (
+/obj/effect/floor_decal/industrial/warning/color/tile,
+/obj/machinery/door/blast/multi_tile/four_tile_ver{
+	id = "xenoship"
+	},
+/turf/simulated/floor,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"SR" = (
+/obj/item/bodybag/cryobag,
+/obj/item/weapon/storage/firstaid/adv,
+/obj/structure/table/steel,
+/obj/item/device/healthanalyzer,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"SU" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/turf/simulated/floor,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"Tj" = (
+/obj/machinery/door/firedoor/glass,
+/obj/machinery/door/airlock/glass_external,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"TJ" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "mfloor7"
+	},
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"TN" = (
+/obj/structure/bed/chair/bay/shuttle,
+/turf/simulated/floor/tiled/techmaint/airless,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"UE" = (
+/turf/simulated/wall/rshull,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"Vv" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/simulated/floor,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"VT" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced,
+/turf/simulated/floor,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"WA" = (
+/obj/structure/foamedmetal,
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/xenoship)
+"Zn" = (
+/obj/machinery/button/remote/blast_door{
+	dir = 8;
+	id = "xenoship";
+	pixel_y = 32;
+	pixel_x = 24
+	},
+/turf/simulated/mineral/floor/vacuum/moonbase/ignore_mapgen,
+/area/submap/moonbase/poi/east_crater/xenoship)
+
+(1,1,1) = {"
+up
+up
+up
+up
+up
+sh
+sh
+sh
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+sh
+sh
+sh
+up
+up
+up
+up
+up
+"}
+(2,1,1) = {"
+up
+up
+up
+sh
+sh
+sh
+sh
+sh
+yk
+Qh
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+sh
+sh
+sh
+sh
+up
+up
+up
+up
+"}
+(3,1,1) = {"
+up
+up
+up
+sh
+sh
+sh
+sh
+sh
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+pU
+yk
+sh
+sh
+sh
+sh
+sh
+up
+up
+up
+"}
+(4,1,1) = {"
+up
+up
+sh
+sh
+sh
+sh
+sh
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+sh
+sh
+sh
+sh
+sh
+sh
+up
+up
+"}
+(5,1,1) = {"
+up
+up
+sh
+sh
+sh
+sh
+sh
+yk
+ys
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+sh
+sh
+sh
+sh
+sh
+up
+up
+"}
+(6,1,1) = {"
+up
+up
+sh
+sh
+sh
+sh
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+sh
+sh
+sh
+sh
+up
+up
+"}
+(7,1,1) = {"
+up
+sh
+sh
+sh
+sh
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+sh
+sh
+sh
+sh
+up
+up
+"}
+(8,1,1) = {"
+up
+sh
+sh
+sh
+sh
+yk
+yk
+yk
+yk
+yk
+yk
+Zn
+Ju
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+sh
+sh
+sh
+sh
+up
+"}
+(9,1,1) = {"
+up
+sh
+sh
+sh
+sh
+yk
+yk
+yk
+yk
+yk
+UE
+ei
+ei
+ei
+Ru
+UE
+yk
+yk
+yk
+yk
+yk
+sh
+sh
+sh
+sh
+up
+"}
+(10,1,1) = {"
+up
+sh
+sh
+sh
+sh
+yk
+yk
+yk
+Iw
+yk
+UE
+Ck
+Ks
+Ck
+EY
+UE
+yk
+yk
+ys
+yk
+yk
+yk
+sh
+sh
+sh
+up
+"}
+(11,1,1) = {"
+up
+sh
+sh
+sh
+sh
+yk
+Cb
+wA
+yc
+hT
+UE
+Ck
+zp
+Ck
+CL
+UE
+yk
+yk
+yk
+yk
+yk
+yk
+sh
+sh
+sh
+sh
+"}
+(12,1,1) = {"
+sh
+sh
+sh
+sh
+sh
+yk
+yk
+VT
+Ge
+be
+UE
+xI
+zp
+Ck
+at
+UE
+yk
+yk
+yk
+yk
+yk
+yk
+sh
+sh
+sh
+sh
+"}
+(13,1,1) = {"
+sh
+sh
+sh
+sh
+sh
+yk
+yk
+yv
+xd
+Cv
+UE
+Ck
+aw
+Ck
+Ck
+UE
+yk
+yk
+yk
+yk
+yk
+yk
+sh
+sh
+sh
+sh
+"}
+(14,1,1) = {"
+sh
+sh
+sh
+sh
+sh
+yk
+yk
+bU
+TN
+ur
+El
+OS
+Ck
+Ck
+Ck
+UE
+UE
+hT
+Vv
+bv
+yk
+yk
+sh
+sh
+sh
+sh
+"}
+(15,1,1) = {"
+sh
+sh
+sh
+sh
+yk
+yk
+yk
+UE
+Qn
+Ck
+UE
+mZ
+Ck
+hY
+Ck
+El
+od
+Rd
+bU
+ow
+yk
+yk
+sh
+sh
+sh
+sh
+"}
+(16,1,1) = {"
+sh
+sh
+sh
+sh
+yk
+yk
+yk
+UE
+UE
+pM
+UE
+ej
+Ck
+Ck
+Ck
+UE
+mc
+lT
+bU
+KC
+yk
+yk
+yk
+WA
+sh
+sh
+"}
+(17,1,1) = {"
+sh
+WA
+WA
+yk
+yk
+ys
+yk
+UE
+Au
+TJ
+UE
+sy
+Ck
+Ck
+dx
+UE
+xd
+rZ
+bU
+ow
+yk
+yk
+sh
+WA
+WA
+WA
+"}
+(18,1,1) = {"
+WA
+WA
+sh
+sh
+yk
+yk
+yk
+bU
+KZ
+CV
+UE
+ej
+Ck
+Ck
+bg
+UE
+UE
+hT
+SU
+Bh
+yk
+yk
+sh
+sh
+sh
+sh
+"}
+(19,1,1) = {"
+sh
+sh
+sh
+sh
+yk
+yk
+yk
+bU
+uF
+dw
+UE
+OP
+Ck
+Ck
+re
+UE
+yk
+yk
+yk
+yk
+yk
+yk
+sh
+sh
+sh
+sh
+"}
+(20,1,1) = {"
+sh
+sh
+sh
+sh
+sh
+yk
+yk
+UE
+Cd
+wM
+UE
+UE
+Pl
+ar
+UE
+UE
+yk
+yk
+yk
+yk
+yk
+yk
+sh
+sh
+sh
+sh
+"}
+(21,1,1) = {"
+sh
+sh
+sh
+sh
+sh
+yk
+yk
+UE
+UE
+UE
+UE
+AO
+Ck
+mE
+gL
+UE
+yk
+yk
+ys
+yk
+yk
+sh
+sh
+sh
+sh
+sh
+"}
+(22,1,1) = {"
+sh
+sh
+sh
+sh
+sh
+yk
+yk
+yk
+yk
+yk
+UE
+EC
+Rd
+Ck
+Ck
+Tj
+yk
+yk
+yk
+yk
+yk
+sh
+sh
+sh
+sh
+sh
+"}
+(23,1,1) = {"
+sh
+sh
+sh
+sh
+sh
+yk
+yk
+yk
+yk
+UE
+UE
+SR
+yz
+nc
+zy
+UE
+UE
+yk
+yk
+yk
+yk
+sh
+sh
+sh
+sh
+sh
+"}
+(24,1,1) = {"
+sh
+sh
+sh
+sh
+sh
+yk
+yk
+yk
+yk
+UE
+LN
+LN
+LN
+LN
+LN
+LN
+UE
+yk
+yk
+yk
+yk
+sh
+sh
+sh
+sh
+sh
+"}
+(25,1,1) = {"
+sh
+sh
+sh
+sh
+sh
+yk
+ys
+yk
+yk
+UE
+uy
+uy
+uy
+uy
+uy
+uy
+UE
+yk
+yk
+yk
+yk
+sh
+sh
+sh
+sh
+up
+"}
+(26,1,1) = {"
+sh
+sh
+sh
+sh
+sh
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+sh
+sh
+sh
+sh
+up
+"}
+(27,1,1) = {"
+up
+sh
+sh
+sh
+sh
+sh
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+gg
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+sh
+sh
+sh
+sh
+up
+"}
+(28,1,1) = {"
+up
+sh
+sh
+sh
+sh
+sh
+sh
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+yk
+sh
+sh
+sh
+sh
+up
+"}
+(29,1,1) = {"
+up
+up
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+yk
+yk
+yk
+yk
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+up
+up
+"}
+(30,1,1) = {"
+up
+up
+up
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+up
+up
+"}
+(31,1,1) = {"
+up
+up
+up
+up
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+up
+up
+up
+up
+"}
+(32,1,1) = {"
+up
+up
+up
+up
+up
+up
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+up
+up
+up
+up
+"}
+(33,1,1) = {"
+up
+up
+up
+up
+up
+up
+up
+up
+up
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+up
+up
+up
+up
+up
+up
+up
+"}
+(34,1,1) = {"
+up
+up
+up
+up
+up
+up
+up
+up
+up
+up
+up
+up
+sh
+sh
+sh
+sh
+sh
+up
+up
+up
+up
+up
+up
+up
+up
+up
+"}

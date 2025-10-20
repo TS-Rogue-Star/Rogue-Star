@@ -3070,7 +3070,7 @@
 /turf/simulated/floor/tiled/milspec,
 /area/aro3/hallway_starboard)
 "sX" = (
-/obj/structure/prop/tgmc_minirockets,
+/obj/structure/prop/war/tgmc_minirockets,
 /obj/effect/floor_decal/milspec/hatchmarks,
 /obj/effect/floor_decal/industrial/warning/dust{
 	dir = 6
@@ -5183,7 +5183,7 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/aro3/medical)
 "Hb" = (
-/obj/structure/prop/tgmc_minirockets,
+/obj/structure/prop/war/tgmc_minirockets,
 /obj/effect/floor_decal/milspec/hatchmarks,
 /obj/effect/floor_decal/industrial/warning/dust{
 	dir = 10
@@ -5324,7 +5324,7 @@
 /turf/simulated/floor/tiled/milspec,
 /area/aro3/atmos)
 "Im" = (
-/obj/structure/prop/tgmc_laser/loaded,
+/obj/structure/prop/war/tgmc_laser/loaded,
 /obj/effect/floor_decal/milspec/hatchmarks,
 /obj/effect/floor_decal/industrial/warning/dust{
 	dir = 6
@@ -6275,7 +6275,7 @@
 /turf/simulated/floor/plating/eris/under,
 /area/aro3/atmos)
 "OM" = (
-/obj/structure/prop/tgmc_laser/loaded,
+/obj/structure/prop/war/tgmc_laser/loaded,
 /obj/effect/floor_decal/milspec/hatchmarks,
 /obj/effect/floor_decal/industrial/warning/dust{
 	dir = 10
@@ -6475,7 +6475,7 @@
 /turf/simulated/floor/tiled/milspec,
 /area/aro3/power)
 "Qd" = (
-/obj/structure/prop/tgmc_minirockets,
+/obj/structure/prop/war/tgmc_minirockets,
 /obj/effect/floor_decal/milspec/hatchmarks,
 /turf/simulated/floor/tiled/techmaint/airless,
 /area/space)

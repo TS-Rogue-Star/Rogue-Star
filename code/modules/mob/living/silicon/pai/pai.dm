@@ -185,6 +185,10 @@
 		// 33% chance to change prime directive (based on severity)
 		// 33% chance of no additional effect
 
+	if(severity == 5)	//RS ADD START - allow for certain very light EMP to be harmless - shadekin related
+		to_chat(src, SPAN_WARNING("Your circuits feel SPICY!!! Whatever you are doing feels dangerous!"))
+		return			//RS ADD END
+
 	src.silence_time = world.timeofday + 120 * 10		// Silence for 2 minutes
 	to_chat(src, "<font color=green><b>Communication circuit overload. Shutting down and reloading communication circuits - speech and messaging functionality will be unavailable until the reboot is complete.</b></font>")
 	if(prob(20))
@@ -427,6 +431,9 @@
 
 /mob/living/silicon/pai/attack_hand(mob/user as mob)
 	if(user.a_intent == I_HELP)
+		if(isliving(user))	//RS ADD START
+			var/mob/living/L = user
+			L.game_tag(src)	//RS ADD END
 		visible_message("<span class='notice'>[user.name] pats [src].</span>")
 	else
 		visible_message("<span class='danger'>[user.name] boops [src] on the head.</span>")
@@ -545,3 +552,12 @@
 	visible_message("<span class='filter_notice'><b>[src]</b> fades away from the screen, the pAI device goes silent.</span>")
 	card.removePersonality()
 	clear_client()
+
+/mob/living/silicon/pai/ClickOn(atom/A, params) //RS ADD START
+	. = ..()
+
+	if(!isturf(src.loc))
+		return
+	if(isliving(A))
+		var/mob/living/L = A
+		game_tag(L)	//RS ADD END - The pai is clicking someone else!

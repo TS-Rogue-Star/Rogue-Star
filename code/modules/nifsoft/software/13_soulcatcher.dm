@@ -59,6 +59,7 @@
 	if(!nif)
 		return
 	nif.save_data["[list_pos]"] = inside_flavor
+	persist_nif_data(nif.human)	//RS ADD
 	return TRUE
 
 /datum/nifsoft/soulcatcher/proc/load_settings()

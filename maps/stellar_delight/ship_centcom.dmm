@@ -6752,7 +6752,7 @@
 	dir = 1
 	},
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/monkeycubes,
+/obj/random/monkey_cubes,
 /obj/effect/floor_decal/borderfloorwhite{
 	dir = 5
 	},
@@ -16064,7 +16064,7 @@ ZQ
 ZQ
 ZQ
 ZQ
-CA
+ZQ
 aa
 "}
 (3,1,1) = {"
@@ -35381,7 +35381,7 @@ aa
 "}
 (139,1,1) = {"
 aa
-ZQ
+CA
 ZQ
 ZQ
 ZQ

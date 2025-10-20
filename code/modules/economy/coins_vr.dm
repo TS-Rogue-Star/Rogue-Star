@@ -38,6 +38,19 @@
 	desc = "A curious triangular coin made primarily of some kind of dark, smooth metal. This one's markings appear to reveal a purple material underneath."
 	value = 20
 
+//RS ADD START
+/obj/item/weapon/aliencoin/diamond
+	name = "curious coin"
+	icon_state = "triangle-d"
+	desc = "A curious triangular coin made primarily of some kind of dark, smooth metal. This one's markings appear to reveal a shining material underneath."
+	value = 100
+
+/obj/item/weapon/aliencoin/exotic
+	name = "curious coin"
+	icon_state = "triangle-e"
+	desc = "A curious triangular coin made primarily of some kind of dark, smooth metal. This one's markings appear to reveal a disturbing, absolutely black material underneath."
+	value = 1000
+//RS ADD END
 
 /obj/item/weapon/aliencoin/attack_self(mob/user as mob)
 	var/result = rand(1, sides)

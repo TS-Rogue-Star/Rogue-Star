@@ -395,6 +395,22 @@ const ChemMasterProductionChemical = (props, context) => {
           Style
         </Button>
       </LabeledList.Item>
+
+      <LabeledList.Item label="Vial">
+        <Button
+          icon="wine-bottle"
+          content="Create Vial (30u max)"
+          mr="0.5rem"
+          mb="0.5rem"
+          onClick={() => modalOpen(context, 'create_vial')}
+        />
+        <Button
+          icon="plus-square"
+          content="Multiple"
+          onClick={() => modalOpen(context, 'create_vials_multiple')}
+        />
+        <br />
+      </LabeledList.Item>
     </LabeledList>
   );
 };

@@ -1,5 +1,6 @@
 #define VORE_SOUND_FALLOFF 0.1
 #define VORE_SOUND_RANGE 3
+#define belly_fullscreen_alpha 100 // RS Add || Chomp Port || KH We don't have an ability to set this at the moment but it's outside the scope of what I'm doing
 
 //
 //  Belly system 2.0, now using objects instead of datums because EH at datums.
@@ -33,7 +34,7 @@
 	var/absorbchance = 0					// % Chance of stomach beginning to absorb if prey struggles
 	var/escapechance = 0 					// % Chance of prey beginning to escape if prey struggles.
 	var/escapechance_absorbed = 0			// % Chance of absorbed prey finishing an escape. Requires a successful escape roll against the above as well.  //RS edit - copy from virgo
-	var/escape_stun = 0						// AI controlled mobs with a number here will be weakened by the provided var when someone escapes, to prevent endless nom loops
+	var/escape_stun = 2						// AI controlled mobs with a number here will be weakened by the provided var when someone escapes, to prevent endless nom loops //RS EDIT
 	var/transferchance = 0 					// % Chance of prey being trasnsfered, goes from 0-100%
 	var/transferchance_secondary = 0 		// % Chance of prey being transfered to transferchance_secondary, also goes 0-100%
 	var/save_digest_mode = TRUE				// Whether this belly's digest mode persists across rounds
@@ -64,6 +65,7 @@
 	var/overlay_min_prey_size	= 0 	//Minimum prey size for belly overlay to show. 0 to disable
 	var/override_min_prey_size = FALSE	//If true, exceeding override prey number will override minimum size requirements
 	var/override_min_prey_num	= 1		//We check belly contents against this to override min size
+	var/belly_overall_mult = 1	//Multiplier applied ontop of any other specific multipliers //RS Edit. Added from VS.
 	//RS Edit: Ports Slow Body Digestion, CHOMPStation PR 5161
 	var/slow_digestion = FALSE
 	var/slow_brutal = FALSE
@@ -73,6 +75,12 @@
 	var/autotransferchance = 0 				// % Chance of prey being autotransferred to transfer location
 	var/autotransferwait = 10 				// Time between trying to transfer.
 	var/autotransferlocation				// Place to send them
+	var/autotransferchance_secondary = 0 	// % Chance of prey being autotransferred to secondary transfer location || RS Add || Port Chomp 6155
+	var/autotransferlocation_secondary		// Second place to send them || RS Add || Port Chomp 6155
+	var/autotransfer_enabled = FALSE		//RS Add Start || Port Chomp 2821, 2979
+	var/autotransfer_min_amount = 0			// Minimum amount of things to pass at once.
+	var/autotransfer_max_amount = 0			// Maximum amount of things to pass at once.
+	var/tmp/list/autotransfer_queue = list()// RS Add End || Reserve for above things.
 
 	//I don't think we've ever altered these lists. making them static until someone actually overrides them somewhere.
 	//Actual full digest modes
@@ -80,7 +88,7 @@
 	//drain modes // RS Edit: Ports VOREStation PR15876
 	var/tmp/static/list/drainmodes = list(DR_NORMAL,DR_SLEEP,DR_FAKE,DR_WEIGHT)
 	//Digest mode addon flags
-	var/tmp/static/list/mode_flag_list = list("Numbing" = DM_FLAG_NUMBING, "Stripping" = DM_FLAG_STRIPPING, "Leave Remains" = DM_FLAG_LEAVEREMAINS, "Muffles" = DM_FLAG_THICKBELLY, "Affect Worn Items" = DM_FLAG_AFFECTWORN, "Jams Sensors" = DM_FLAG_JAMSENSORS, "Complete Absorb" = DM_FLAG_FORCEPSAY, "Slow Body Digestion" = DM_FLAG_SLOWBODY, "Gradual Body Digestion" = DM_FLAG_SLOWBRUTAL)
+	var/tmp/static/list/mode_flag_list = list("Numbing" = DM_FLAG_NUMBING, "Stripping" = DM_FLAG_STRIPPING, "Leave Remains" = DM_FLAG_LEAVEREMAINS, "Muffles" = DM_FLAG_THICKBELLY, "Affect Worn Items" = DM_FLAG_AFFECTWORN, "Jams Sensors" = DM_FLAG_JAMSENSORS, "Complete Absorb" = DM_FLAG_FORCEPSAY, "Slow Body Digestion" = DM_FLAG_SLOWBODY, "Gradual Body Digestion" = DM_FLAG_SLOWBRUTAL, "Visual Damage" = DM_FLAG_DAMAGEICON)	//RS EDIT
 	//Item related modes
 	var/tmp/static/list/item_digest_modes = list(IM_HOLD,IM_DIGEST_FOOD,IM_DIGEST)
 
@@ -180,25 +188,25 @@
 		"%prey slid into your %dest due to their struggling inside your %belly!")
 
 	var/list/primary_transfer_messages_prey = list(
-		"Your attempt to escape %pred's %belly has failed and your struggles only results in you sliding into pred's %dest!")
+		"Your attempt to escape %pred's %belly has failed and your struggles only results in you sliding into %pred's %dest!")	//RS EDIT
 
 	var/list/secondary_transfer_messages_owner = list(
 		"%prey slid into your %dest due to their struggling inside your %belly!")
 
 	var/list/secondary_transfer_messages_prey = list(
-		"Your attempt to escape %pred's %belly has failed and your struggles only results in you sliding into pred's %dest!")
+		"Your attempt to escape %pred's %belly has failed and your struggles only results in you sliding into %pred's %dest!")	//RS EDIT
 
 	var/list/digest_chance_messages_owner = list(
 		"You feel your %belly beginning to become active!")
 
 	var/list/digest_chance_messages_prey = list(
-		"In response to your struggling, %owner's %belly begins to get more active...")
+		"In response to your struggling, %pred's %belly begins to get more active...")
 
 	var/list/absorb_chance_messages_owner = list(
 		"You feel your %belly start to cling onto its contents...")
 
 	var/list/absorb_chance_messages_prey = list(
-		"In response to your struggling, %owner's %belly begins to cling more tightly...")
+		"In response to your struggling, %pred's %belly begins to cling more tightly...")
 	//RS EDIT END
 	var/list/select_chance_messages_owner = list(
 		"You feel your %belly beginning to become active!")
@@ -263,6 +271,9 @@
 	var/belly_fullscreen_color = "#823232"
 	var/belly_fullscreen_color_secondary = "#428242"
 	var/belly_fullscreen_color_trinary = "#f0f0f0"
+
+	var/belly_healthbar_overlay_theme	//RS ADD
+	var/belly_healthbar_overlay_color	//RS ADD
 
 //For serialization, keep this updated, required for bellies to save correctly.
 /obj/belly/vars_to_save()
@@ -347,7 +358,53 @@
 	"drainmode",								//RS edit || Ports VOREStation PR15876
 	"slow_digestion",							//RS Edit || Ports CHOMPStation PR 5161
 	"slow_brutal",								//RS Edit || Ports CHOMPStation Pr 5161
-
+	"reagent_mode_flags",	// Begin reagent bellies || RS Add || Chomp Port
+	"show_liquids",
+	"reagentbellymode",
+	"count_liquid_for_sprite",
+	"liquid_multiplier",
+	"liquid_fullness1_messages",
+	"liquid_fullness2_messages",
+	"liquid_fullness3_messages",
+	"liquid_fullness4_messages",
+	"liquid_fullness5_messages",
+	"reagent_name",
+	"reagent_chosen",
+	"reagentid",
+	"reagentcolor",
+	"gen_cost",
+	"gen_amount",
+	"gen_time",
+	"gen_time_display",
+	"custom_max_volume",
+	"generated_reagents",
+	"vorefootsteps_sounds",
+	"liquid_overlay",
+	"max_liquid_level",
+	"reagent_touches",
+	"mush_overlay",
+	"mush_color",
+	"mush_alpha",
+	"max_mush",
+	"min_mush",
+	"show_fullness_messages",
+	"custom_reagentcolor",
+	"custom_reagentalpha",
+	"fullness1_messages",
+	"fullness2_messages",
+	"fullness3_messages",
+	"fullness4_messages",
+	"fullness5_messages",	// End reagent bellies
+	"autotransferchance",  //RS Add Start || Port Chop 2821, 2979, 6155
+	"autotransferwait",
+	"autotransferlocation",
+	"autotransfer_enabled",
+	"autotransferchance_secondary",
+	"autotransferlocation_secondary",
+	"autotransfer_min_amount",
+	"autotransfer_max_amount",
+	"belly_healthbar_overlay_theme",
+	"belly_healthbar_overlay_color"		//RS ADD END
 	)
 
 	if (save_digest_mode == 1)
@@ -363,6 +420,8 @@
 		owner.vore_organs |= src
 		if(isliving(loc))
 			START_PROCESSING(SSbellies, src)
+	create_reagents(300)	// Begin reagent bellies || RS Add || Chomp Port
+	flags |= NOREACT	// End reagent bellies
 
 /obj/belly/Destroy()
 	STOP_PROCESSING(SSbellies, src)
@@ -375,6 +434,8 @@
 // Called whenever an atom enters this belly
 /obj/belly/Entered(atom/movable/thing, atom/OldLoc)
 
+	thing.belly_cycles = 0 //RS Add || Chomp port 2934 || reset cycle count
+
 	if(istype(thing, /mob/observer)) //RSEdit: Ports keeping a ghost in a vorebelly, CHOMPStation PR#3072
 		if(desc) //RSEdit: Ports letting ghosts see belly descriptions on transfer, CHOMPStation PR#4772
 			//Allow ghosts see where they are if they're still getting squished along inside.
@@ -383,6 +444,13 @@
 			formatted_desc = replacetext(formatted_desc, "%pred", owner) //replace with this belly's owner
 			formatted_desc = replacetext(formatted_desc, "%prey", thing) //replace with whatever mob entered into this belly
 			to_chat(thing, "<span class='notice'><B>[formatted_desc]</B></span>")
+
+	if(owner && istype(owner.loc,/turf/simulated) && !cycle_sloshed && reagents.total_volume > 0) // Begin reagent bellies || RS Add || Chomp Port
+		var/turf/simulated/T = owner.loc
+		var/S = pick(T.vorefootstep_sounds["human"])
+		if(S)
+			playsound(T, S, 50 * (reagents.total_volume / custom_max_volume), FALSE, preference = /datum/client_preference/digestion_noises)
+			cycle_sloshed = TRUE // End reagent bellies
 
 	if(OldLoc in contents)
 		return //Someone dropping something (or being stripdigested)
@@ -400,6 +468,10 @@
 		if(soundfile)
 			playsound(src, soundfile, vol = 100, vary = 1, falloff = VORE_SOUND_FALLOFF, preference = /datum/client_preference/eating_noises, volume_channel = VOLUME_CHANNEL_VORE)
 			recent_sound = TRUE
+
+	if(reagents.total_volume >= 5 && !isliving(thing)) // Reagent bellies || RS Add || Chomp Port
+		reagents.trans_to(thing, reagents.total_volume, 0.1 / (LAZYLEN(contents) ? LAZYLEN(contents) : 1), FALSE)
+		to_chat(thing, "<span class='warning'><B>You splash into a pool of [reagent_name]!</B></span>") // End reagent bellies
 
 	//Messages if it's a mob
 	if(isliving(thing))
@@ -428,15 +500,27 @@
 		if(M.ai_holder)
 			M.ai_holder.handle_eaten()
 
+		if(reagents.total_volume >= 5 && M.digestable) // Reagent bellies || RS Add || Chomp Port
+			if(digest_mode == DM_DIGEST)
+				reagents.trans_to(M, reagents.total_volume * 0.1, 1 / max(LAZYLEN(contents), 1), FALSE)
+			to_chat(M, "<span class='warning'><B>You splash into a pool of [reagent_name]!</B></span>") // End reagent bellies
+
 		// Begin RS edit
 		if (istype(owner, /mob/living/carbon/human))
-			var/mob/living/carbon/human/hum = owner
-			hum.update_fullness()
+			owner:update_fullness()
+
+		if(owner.client)
+			if(owner.client.is_preference_enabled(/datum/client_preference/vore_health_bars))
+				new /obj/screen/movable/rs_ui/healthbar(owner,M,owner)
+		if(M.client)
+			if(M.client.is_preference_enabled(/datum/client_preference/vore_health_bars))
+				new /obj/screen/movable/rs_ui/healthbar(M,M,M)
+
 		// End RS edit
 
-	// Intended for simple mobs
-	if(!owner.client && autotransferlocation && autotransferchance > 0)
-		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/belly, check_autotransfer), thing, autotransferlocation), autotransferwait)
+	/*/ Intended for simple mobs  //RS Add || Chomp Port 2934 || Counting belly cycles now.
+	if(!owner.client || autotransfer_enabled && autotransferlocation && autotransferchance > 0)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/belly, check_autotransfer), thing, autotransferlocation), autotransferwait) */
 
 // Called whenever an atom leaves this belly
 /obj/belly/Exited(atom/movable/thing, atom/OldLoc)
@@ -447,6 +531,7 @@
 		L.clear_fullscreen("belly2")
 		L.clear_fullscreen("belly3")
 		L.clear_fullscreen("belly4")
+		L.clear_fullscreen("belly5") // Reagent bellies || RS Add || Chomp Port
 		if(L.hud_used)
 			if(!L.hud_used.hud_shown)
 				L.toggle_hud_vis()
@@ -467,6 +552,8 @@
 	if(!L.show_vore_fx)
 		L.clear_fullscreen("belly")
 		return
+
+	var/image/ReagentImages = null //Reagent bellies || RS Add || Chomp Port
 
 	if(belly_fullscreen)
 		if(colorization_enabled)
@@ -490,14 +577,65 @@
 				F4.icon_state = "[belly_fullscreen]_nc"
 			else
 				L.clear_fullscreen("belly4")
+			var/obj/screen/fullscreen/F5 = L.overlay_fullscreen("belly5", /obj/screen/fullscreen/belly/colorized/overlay) // Reagent bellies || RS Add || Chomp Port
+			F5.icon_state = belly_fullscreen //Reagent bellies || RS Add || Chomp Port
+			if(L.liquidbelly_visuals && mush_overlay && (owner.nutrition > 0 || max_mush == 0 || min_mush > 0)) // Reagent bellies start || RS Add || Chomp Port
+				ReagentImages = image('icons/mob/vore/bubbles.dmi', "mush")
+				ReagentImages.color = mush_color
+				ReagentImages.alpha = mush_alpha
+				ReagentImages.pixel_y = -450 + (450 / max(max_mush, 1) * max(min(max_mush, owner.nutrition), 1))
+				if(ReagentImages.pixel_y < -450 + (450 / 100 * min_mush))
+					ReagentImages.pixel_y = -450 + (450 / 100 * min_mush)
+				F5.add_overlay(ReagentImages)
+			if(L.liquidbelly_visuals && liquid_overlay && reagents.total_volume)
+				if(digest_mode == DM_HOLD && item_digest_mode == IM_HOLD)
+					ReagentImages = image('icons/mob/vore/bubbles.dmi', "calm")
+				else
+					ReagentImages = image('icons/mob/vore/bubbles.dmi', "bubbles")
+				if(custom_reagentcolor)
+					ReagentImages.color = custom_reagentcolor
+				else
+					ReagentImages.color = reagentcolor
+				if(custom_reagentalpha)
+					ReagentImages.alpha = custom_reagentalpha
+				else
+					ReagentImages.alpha = max(150, min(custom_max_volume, 255)) - (255 - belly_fullscreen_alpha)
+				ReagentImages.pixel_y = -450 + min((450 / custom_max_volume * reagents.total_volume), 450 / 100 * max_liquid_level)
+				F5.add_overlay(ReagentImages) // End reagent bellies
 		else
 			var/obj/screen/fullscreen/F = L.overlay_fullscreen("belly", /obj/screen/fullscreen/belly)
+			var/obj/screen/fullscreen/F5 = L.overlay_fullscreen("belly5", /obj/screen/fullscreen/belly/colorized/overlay) //Reagent bellies || RS Add || Chomp Port
 			F.icon_state = belly_fullscreen
+			F5.icon_state = belly_fullscreen //Reagent bellies || RS Add || Chomp Port
+			if(L.liquidbelly_visuals && mush_overlay && (owner.nutrition > 0 || max_mush == 0 || min_mush > 0)) // Reagent bellies start || RS Add || Chomp Port
+				ReagentImages = image('icons/mob/vore/bubbles.dmi', "mush")
+				ReagentImages.color = mush_color
+				ReagentImages.alpha = mush_alpha
+				ReagentImages.pixel_y = -450 + (450 / max(max_mush, 1) * max(min(max_mush, owner.nutrition), 1))
+				if(ReagentImages.pixel_y < -450 + (450 / 100 * min_mush))
+					ReagentImages.pixel_y = -450 + (450 / 100 * min_mush)
+				F5.add_overlay(ReagentImages)
+			if(L.liquidbelly_visuals && liquid_overlay && reagents.total_volume)
+				if(digest_mode == DM_HOLD && item_digest_mode == IM_HOLD)
+					ReagentImages = image('icons/mob/vore/bubbles.dmi', "calm")
+				else
+					ReagentImages = image('icons/mob/vore/bubbles.dmi', "bubbles")
+				if(custom_reagentcolor)
+					ReagentImages.color = custom_reagentcolor
+				else
+					ReagentImages.color = reagentcolor
+				if(custom_reagentalpha)
+					ReagentImages.alpha = custom_reagentalpha
+				else
+					ReagentImages.alpha = max(150, min(custom_max_volume, 255)) - (255 - belly_fullscreen_alpha)
+				ReagentImages.pixel_y = -450 + min((450 / custom_max_volume * reagents.total_volume), 450 / 100 * max_liquid_level)
+				F5.add_overlay(ReagentImages) // End reagent bellies
 	else
 		L.clear_fullscreen("belly")
 		L.clear_fullscreen("belly2")
 		L.clear_fullscreen("belly3")
 		L.clear_fullscreen("belly4")
+		L.clear_fullscreen("belly5") // Reagent bellies || RS Add || Chomp Port
 
 	if(disable_hud)
 		if(L?.hud_used?.hud_shown)
@@ -509,6 +647,8 @@
 		return
 	if(!L.client)
 		return
+
+	var/image/ReagentImages = null //Reagent bellies || RS Add || Chomp Port
 
 	if(belly_fullscreen)
 		if(colorization_enabled)
@@ -526,20 +666,72 @@
 			if("[belly_fullscreen]_nc" in icon_states('icons/mob/screen_full_colorized_vore_overlays.dmi'))
 				var/obj/screen/fullscreen/F4 = L.overlay_fullscreen("belly4", /obj/screen/fullscreen/belly/colorized/overlay)
 				F4.icon_state = "[belly_fullscreen]_nc"
+			var/obj/screen/fullscreen/F5 = L.overlay_fullscreen("belly5", /obj/screen/fullscreen/belly/colorized/overlay)  //Reagent bellies || RS Add || Chomp Port
+			F5.icon_state = belly_fullscreen //Reagent bellies || RS Add || Chomp Port
+			if(L.liquidbelly_visuals && mush_overlay && (owner.nutrition > 0 || max_mush == 0 || min_mush > 0)) // Reagent bellies start || RS Add || Chomp Port
+				ReagentImages = image('icons/mob/vore/bubbles.dmi', "mush")
+				ReagentImages.color = mush_color
+				ReagentImages.alpha = mush_alpha
+				ReagentImages.pixel_y = -450 + (450 / max(max_mush, 1) * max(min(max_mush, owner.nutrition), 1))
+				if(ReagentImages.pixel_y < -450 + (450 / 100 * min_mush))
+					ReagentImages.pixel_y = -450 + (450 / 100 * min_mush)
+				F5.add_overlay(ReagentImages)
+			if(L.liquidbelly_visuals && liquid_overlay && reagents.total_volume)
+				if(digest_mode == DM_HOLD && item_digest_mode == IM_HOLD)
+					ReagentImages = image('icons/mob/vore/bubbles.dmi', "calm")
+				else
+					ReagentImages = image('icons/mob/vore/bubbles.dmi', "bubbles")
+				if(custom_reagentcolor)
+					ReagentImages.color = custom_reagentcolor
+				else
+					ReagentImages.color = reagentcolor
+				if(custom_reagentalpha)
+					ReagentImages.alpha = custom_reagentalpha
+				else
+					ReagentImages.alpha = max(150, min(custom_max_volume, 255)) - (255 - belly_fullscreen_alpha)
+				ReagentImages.pixel_y = -450 + min((450 / custom_max_volume * reagents.total_volume), 450 / 100 * max_liquid_level)
+				F5.add_overlay(ReagentImages) // End reagent bellies
 		else
 			var/obj/screen/fullscreen/F = L.overlay_fullscreen("belly", /obj/screen/fullscreen/belly)
+			var/obj/screen/fullscreen/F5 = L.overlay_fullscreen("belly5", /obj/screen/fullscreen/belly/colorized/overlay) //Reagent bellies || RS Add || Chomp Port
 			F.icon_state = belly_fullscreen
+			F5.icon_state = belly_fullscreen //Reagent bellies || RS Add || Chomp Port
+			if(L.liquidbelly_visuals && mush_overlay && (owner.nutrition > 0 || max_mush == 0 || min_mush > 0)) // Reagent bellies start || RS Add || Chomp Port
+				ReagentImages = image('icons/mob/vore/bubbles.dmi', "mush")
+				ReagentImages.color = mush_color
+				ReagentImages.alpha = mush_alpha
+				ReagentImages.pixel_y = -450 + (450 / max(max_mush, 1) * max(min(max_mush, owner.nutrition), 1))
+				if(ReagentImages.pixel_y < -450 + (450 / 100 * min_mush))
+					ReagentImages.pixel_y = -450 + (450 / 100 * min_mush)
+				F5.add_overlay(ReagentImages)
+			if(L.liquidbelly_visuals && liquid_overlay && reagents.total_volume)
+				if(digest_mode == DM_HOLD && item_digest_mode == IM_HOLD)
+					ReagentImages = image('icons/mob/vore/bubbles.dmi', "calm")
+				else
+					ReagentImages = image('icons/mob/vore/bubbles.dmi', "bubbles")
+				if(custom_reagentcolor)
+					ReagentImages.color = custom_reagentcolor
+				else
+					ReagentImages.color = reagentcolor
+				if(custom_reagentalpha)
+					ReagentImages.alpha = custom_reagentalpha
+				else
+					ReagentImages.alpha = max(150, min(custom_max_volume, 255)) - (255 - belly_fullscreen_alpha)
+				ReagentImages.pixel_y = -450 + min((450 / custom_max_volume * reagents.total_volume), 450 / 100 * max_liquid_level)
+				F5.add_overlay(ReagentImages) // End reagent bellies
 	else
 		L.clear_fullscreen("belly")
 		L.clear_fullscreen("belly2")
 		L.clear_fullscreen("belly3")
 		L.clear_fullscreen("belly4")
+		L.clear_fullscreen("belly5") // Reagent bellies || RS Add || Chomp Port
 
 /obj/belly/proc/clear_preview(mob/living/L)
 	L.clear_fullscreen("belly")
 	L.clear_fullscreen("belly2")
 	L.clear_fullscreen("belly3")
 	L.clear_fullscreen("belly4")
+	L.clear_fullscreen("belly5") // Reagent bellies || RS Add || Chomp Port
 
 
 
@@ -659,6 +851,10 @@
 	if(!ishuman(owner))
 		owner.update_icons()
 
+	if(ishuman(M))	//RS ADD START - Let's make sure people's damage overlays happen when they are released
+		var/mob/living/carbon/human/H = M
+		H.UpdateDamageIcon()	//RS ADD END
+
 	//Determines privacy
 	var/privacy_range = world.view
 	var/privacy_volume = 100
@@ -681,17 +877,19 @@
 			soundfile = fancy_release_sounds[release_sound]
 		if(soundfile)
 			playsound(src, soundfile, vol = privacy_volume, vary = 1, falloff = VORE_SOUND_FALLOFF, preference = /datum/client_preference/eating_noises, volume_channel = VOLUME_CHANNEL_VORE)
-	//Should fix your view not following you out of mobs sometimes!
-	if(ismob(M))
-		var/mob/ourmob = M
-		ourmob.reset_view(null)
 
 	if(!owner.ckey && escape_stun)
 		owner.Weaken(escape_stun)
+		owner.post_escape(M)	//RS ADD
 	if(istype(M,/obj/effect/overmap/visitable/ship))	// RS EDIT START
 		var/obj/effect/overmap/visitable/ship/S = M
 		SSskybox.rebuild_skyboxes(S.map_z)	// RS EDIT END
 	return 1
+
+//RS ADD START - POST ESCAPE - in case you want there to be something that happens to a mob when someone escapes!
+/mob/living/proc/post_escape(atom/movable/M)
+	return
+//RS ADD END
 
 // Actually perform the mechanics of devouring the tasty prey.
 // The purpose of this method is to avoid duplicate code, and ensure that all necessary
@@ -962,11 +1160,16 @@
 		if(ishuman(M))
 			var/mob/living/carbon/human/Prey = M
 			Prey.bloodstr.del_reagent("numbenzyme")
-			Prey.bloodstr.trans_to_holder(Pred.bloodstr, Prey.bloodstr.total_volume, 0.5, TRUE) // Copy=TRUE because we're deleted anyway
-			Prey.ingested.trans_to_holder(Pred.bloodstr, Prey.ingested.total_volume, 0.5, TRUE) // Therefore don't bother spending cpu
-			Prey.touching.trans_to_holder(Pred.bloodstr, Prey.touching.total_volume, 0.5, TRUE) // On updating the prey's reagents
+			// Begin reagent bellies || RS Add || Chomp Port
+			Prey.bloodstr.trans_to_holder(Pred.ingested, Prey.bloodstr.total_volume, 0.5, TRUE) // Copy=TRUE because we're deleted anyway //CHOMPEdit Start
+			Prey.ingested.trans_to_holder(Pred.ingested, Prey.ingested.total_volume, 0.5, TRUE) // Therefore don't bother spending cpu
+			Prey.touching.del_reagent("stomacid") //Don't need this stuff in our bloodstream.
+			Prey.touching.del_reagent("cleaner") //Don't need this stuff in our bloodstream.
+			Prey.touching.trans_to_holder(Pred.ingested, Prey.touching.total_volume, 0.5, TRUE) // On updating the prey's reagents
 		else if(M.reagents)
-			M.reagents.trans_to_holder(Pred.bloodstr, M.reagents.total_volume, 0.5, TRUE)
+			M.reagents.del_reagent("stomacid") //Don't need this stuff in our bloodstream.
+			M.reagents.del_reagent("cleaner") //Don't need this stuff in our bloodstream.
+			M.reagents.trans_to_holder(Pred.ingested, M.reagents.total_volume, 0.5, TRUE) // End reagent bellies
 
 	//Incase they have the loop going, let's double check to stop it.
 	M.stop_sound_channel(CHANNEL_PREYLOOP)
@@ -1015,6 +1218,8 @@
 		Prey.bloodstr.trans_to_holder(Pred.ingested, Prey.bloodstr.total_volume, copy = TRUE)
 		Prey.ingested.trans_to_holder(Pred.ingested, Prey.ingested.total_volume, copy = TRUE)
 		Prey.touching.trans_to_holder(Pred.ingested, Prey.touching.total_volume, copy = TRUE)
+		Prey.touching.del_reagent("stomacid") // Reagent bellies || RS Add || Chomp Port
+		Prey.touching.del_reagent("cleaner") // Reagent bellies || RS Add || Chomp Port
 		// TODO - Find a way to make the absorbed prey share the effects with the pred.
 		// Currently this is infeasible because reagent containers are designed to have a single my_atom, and we get
 		// problems when A absorbs B, and then C absorbs A,  resulting in B holding onto an invalid reagent container.
@@ -1110,7 +1315,7 @@
 //Receives a return value from digest_act that's how much nutrition
 //the item should be worth
 /obj/belly/proc/digest_item(obj/item/item)
-	var/digested = item.digest_act(src, owner)
+	var/digested = item.digest_act(src)
 	if(!digested)
 		items_preserved |= item
 	else
@@ -1679,21 +1884,25 @@
 		M.updateVRPanel()
 	owner.update_icon()
 
-//Autotransfer callback
-/obj/belly/proc/check_autotransfer(var/prey, var/autotransferlocation)
-	if(autotransferlocation && (autotransferchance > 0) && (prey in contents))
-		if(prob(autotransferchance))
-			var/obj/belly/dest_belly
-			for(var/obj/belly/B in owner.vore_organs)
-				if(B.name == autotransferlocation)
-					dest_belly = B
-					break
-			if(dest_belly)
-				transfer_contents(prey, dest_belly)
-		else
-			// Didn't transfer, so wait before retrying
-			// I feel like there's a way to make this timer looping using the normal looping thing, but pass in the ID and cancel it if we aren't looping again
-			addtimer(CALLBACK(src, PROC_REF(check_autotransfer), prey, autotransferlocation), autotransferwait)
+//Autotransfer callback || RS Edit Start || Chomp Port 6155
+/obj/belly/proc/check_autotransfer(var/atom/movable/prey)
+	if(!(prey in contents) || !prey.autotransferable) return
+	var/dest_belly_name
+	if(autotransferlocation_secondary && prob(autotransferchance_secondary))
+		dest_belly_name = autotransferlocation_secondary
+	if(autotransferlocation && prob(autotransferchance))
+		dest_belly_name = autotransferlocation
+	if(!dest_belly_name) // Didn't transfer, so wait before retrying
+		prey.belly_cycles = 0
+		return
+	var/obj/belly/dest_belly
+	for(var/obj/belly/B in owner.vore_organs)
+		if(B.name == dest_belly_name)
+			dest_belly = B
+			break
+	if(!dest_belly) return
+	transfer_contents(prey, dest_belly)
+	return TRUE //RS Edit End || Chomp Port 6155
 
 // Belly copies and then returns the copy
 // Needs to be updated for any var changes
@@ -1746,6 +1955,8 @@
 	dupe.belly_fullscreen_color_secondary = belly_fullscreen_color_secondary
 	dupe.belly_fullscreen_color_trinary = belly_fullscreen_color_trinary
 	dupe.colorization_enabled = colorization_enabled
+	dupe.belly_healthbar_overlay_theme = belly_healthbar_overlay_theme	//RS ADD
+	dupe.belly_healthbar_overlay_color = belly_healthbar_overlay_color	//RS ADD
 	dupe.egg_type = egg_type
 	dupe.emote_time = emote_time
 	dupe.emote_active = emote_active
@@ -1767,10 +1978,54 @@
 	dupe.health_impacts_size = health_impacts_size
 	dupe.count_items_for_sprite = count_items_for_sprite
 	dupe.item_multiplier = item_multiplier
+	// Reagent bellies || RS Add || Chomp Port
+	dupe.count_liquid_for_sprite = count_liquid_for_sprite
+	dupe.liquid_multiplier = liquid_multiplier
+	dupe.liquid_overlay = liquid_overlay
+	dupe.max_liquid_level = max_liquid_level
+	dupe.reagent_touches = reagent_touches
+	dupe.mush_overlay = mush_overlay
+	dupe.mush_color = mush_color
+	dupe.mush_alpha = mush_alpha
+	dupe.max_mush = max_mush
+	dupe.min_mush = min_mush
+	dupe.custom_reagentcolor = custom_reagentcolor
+	dupe.custom_reagentalpha = custom_reagentalpha
+	// End reagent bellies
 	//RS Edit || Ports CHOMPStation PR 5161
 	dupe.slow_digestion = slow_digestion
 	dupe.slow_brutal = slow_brutal
 	//RS Edit End
+
+	// Begin reagent bellies || RS Add || Chomp Port
+	dupe.show_liquids = show_liquids
+	dupe.reagent_mode_flags = reagent_mode_flags
+	dupe.reagentid = reagentid
+	dupe.reagentcolor = reagentcolor
+	dupe.liquid_fullness1_messages = liquid_fullness1_messages
+	dupe.liquid_fullness2_messages = liquid_fullness2_messages
+	dupe.liquid_fullness3_messages = liquid_fullness3_messages
+	dupe.liquid_fullness4_messages = liquid_fullness4_messages
+	dupe.liquid_fullness5_messages = liquid_fullness5_messages
+	dupe.reagent_name = reagent_name
+	dupe.reagent_chosen = reagent_chosen
+	dupe.gen_cost = gen_cost
+	dupe.gen_amount = gen_amount
+	dupe.gen_time = gen_time
+	dupe.gen_time_display = gen_time_display
+	dupe.custom_max_volume = custom_max_volume
+	dupe.show_fullness_messages = show_fullness_messages
+	// End reagent bellies
+
+	dupe.autotransferchance = autotransferchance  //RS ADD Start || Port Chomp 2821, 2979, 6155
+	dupe.autotransferwait = autotransferwait
+	dupe.autotransferlocation = autotransferlocation
+	dupe.autotransfer_enabled = autotransfer_enabled
+	dupe.autotransferchance_secondary = autotransferchance_secondary
+	dupe.autotransferlocation_secondary = autotransferlocation_secondary
+	dupe.autotransfer_min_amount = autotransfer_min_amount
+	dupe.autotransfer_max_amount = autotransfer_max_amount  //RS Add End
+
 
 	//// Object-holding variables
 	//struggle_messages_outside - strings
@@ -1969,6 +2224,43 @@
 	for(var/I in examine_messages_absorbed)
 		dupe.examine_messages_absorbed += I
 
+	// Begin reagent bellies || RS Add || Chomp Port
+	//generated_reagents - strings
+	dupe.generated_reagents.Cut()
+	for(var/I in generated_reagents)
+		dupe.generated_reagents += I
+
+	// CHOMP fullness messages stage 1
+	//fullness1_messages - strings
+	dupe.fullness1_messages.Cut()
+	for(var/I in fullness1_messages)
+		dupe.fullness1_messages += I
+
+	// CHOMP fullness messages stage 2
+	//fullness2_messages - strings
+	dupe.fullness2_messages.Cut()
+	for(var/I in fullness2_messages)
+		dupe.fullness2_messages += I
+
+	// CHOMP fullness messages stage 3
+	//fullness3_messages - strings
+	dupe.fullness3_messages.Cut()
+	for(var/I in fullness3_messages)
+		dupe.fullness3_messages += I
+
+	// CHOMP fullness messages stage 4
+	//fullness4_messages - strings
+	dupe.fullness4_messages.Cut()
+	for(var/I in fullness4_messages)
+		dupe.fullness4_messages += I
+
+	// CHOMP fullness messages stage 5
+	//generated_reagents - strings
+	dupe.fullness5_messages.Cut()
+	for(var/I in fullness5_messages)
+		dupe.fullness5_messages += I
+	// End reagent bellies
+
 	//emote_lists - index: digest mode, key: list of strings
 	dupe.emote_lists.Cut()
 	for(var/K in emote_lists)
@@ -1980,3 +2272,231 @@
 
 /obj/belly/container_resist(mob/M)
 	return relay_resist(M)
+
+/mob/living/proc/post_digestion()	//In case we want to have a mob do anything after a digestion concludes	//RS ADD
+	return	//RS ADD
+
+//RS ADD START - Moved and generalized the selectable actions for bellies so they can be called from different kinds of things!
+/obj/belly/proc/check_belly_access(var/user,var/mob/living/our_prey,var/consider_stat = TRUE)
+	if(user && user != owner)
+		return FALSE
+	if(our_prey.loc != src)
+		to_chat(owner, "[our_prey] is not inside of \the [src]!")
+		return FALSE
+	if(owner.stat && consider_stat)
+		to_chat(owner,"<span class='warning'>You can't do that in your state!</span>")
+		return FALSE
+	return TRUE
+
+/obj/belly/proc/examine_target(var/mob/living/our_prey,var/mob/living/user)
+	to_chat(user, jointext(our_prey.examine(user), "<br>"))
+
+/obj/belly/proc/eject_target(var/mob/living/our_prey)
+	if(!check_belly_access(usr,our_prey)) return
+	release_specific_contents(our_prey)
+
+/obj/belly/proc/move_target(var/mob/living/our_prey)
+	if(!check_belly_access(usr,our_prey)) return
+
+	var/list/choices = owner.vore_organs.Copy()
+
+	choices -= src
+
+	var/obj/belly/choice = tgui_input_list(usr, "Move [our_prey] where?","Select Belly", owner.vore_organs)
+	if(!choice || !(our_prey in src.contents))
+		return
+	to_chat(our_prey,"<span class='warning'>You're squished from [owner]'s [lowertext(src.name)] to their [lowertext(choice.name)]!</span>")
+	transfer_contents(our_prey, choice)
+
+/obj/belly/proc/transfer_target(var/mob/living/our_prey)
+	if(!check_belly_access(usr,our_prey)) return
+
+	if(isliving(our_prey))
+		if(!our_prey.ssd_vore_check(owner))
+			return
+
+	if(tgui_alert(owner, "Do you want to transfer between your own bellies, or someone else's?", "Belly Transfer", list("Mine", "Someone Else's")) == "Mine")
+		move_target(our_prey)
+		return
+
+	var/list/viable_candidates = list()
+	for(var/mob/living/candidate in range(1, owner))
+		if(istype(candidate) && !(candidate == owner))
+			if(candidate.vore_organs.len && candidate.feeding && !candidate.no_vore)
+				viable_candidates += candidate
+	if(!viable_candidates.len)
+		to_chat(owner, "<span class='notice'>There are no viable candidates around you!</span>")
+		return
+	var/mob/living/belly_owner = tgui_input_list(owner, "Who do you want to receive [our_prey]?", "Select Predator", viable_candidates)
+
+	if(!belly_owner || !(belly_owner in range(1, owner)))
+		return
+
+	var/obj/belly/choice = tgui_input_list(owner, "Move [our_prey] where?","Select Belly", belly_owner.vore_organs)
+	if(!choice)
+		return
+	if(our_prey.loc != src)
+		to_chat(owner,SPAN_WARNING("\The [our_prey] is not inside your [src] anymore."))
+		return
+	if(!(belly_owner in range(1, owner)))
+		to_chat(owner,SPAN_WARNING("\The [belly_owner] is no longer in range!"))
+		return
+	to_chat(owner, "<span class='notice'>Transfer offer sent. Await their response.</span>")
+	var/accepted = tgui_alert(belly_owner, "[owner] is trying to transfer [our_prey] from their [lowertext(name)] into your [lowertext(choice.name)]. Do you accept?", "Feeding Offer", list("Yes", "No"))
+	if(accepted != "Yes")
+		to_chat(owner, "<span class='warning'>[belly_owner] refused the transfer!!</span>")
+		return
+	if(!(belly_owner in range(1, owner)))
+		to_chat(owner,SPAN_WARNING("\The [belly_owner] is no longer in range!"))
+		return
+	if(our_prey.loc != src)
+		to_chat(owner,SPAN_WARNING("\The [our_prey] is not inside your [src] anymore."))
+		return
+	to_chat(our_prey,"<span class='warning'>You're squished from [owner]'s [lowertext(name)] to [belly_owner]'s [lowertext(choice.name)]!</span>")
+	to_chat(belly_owner,"<span class='warning'>[our_prey] is squished from [owner]'s [lowertext(name)] to your [lowertext(choice.name)]!</span>")
+	transfer_contents(our_prey, choice)
+
+/obj/belly/proc/transform_target(var/mob/living/our_prey)
+	if(!check_belly_access(usr,our_prey)) return
+
+	var/mob/living/carbon/human/H = our_prey
+	if(!istype(H))
+		return
+
+	var/datum/tgui_module/appearance_changer/vore/V = new(owner, H)
+	V.tgui_interact(owner)
+	return
+
+/obj/belly/proc/process_target(var/mob/living/our_prey)
+	if(!check_belly_access(usr,our_prey)) return
+
+	if(!our_prey.client)
+		to_chat(owner, "<span class= 'warning'>You cannot instantly process [our_prey].</span>")
+		return
+
+	var/list/process_options = list()
+
+	if(our_prey.digestable)
+		process_options += "Digest"
+
+	if(our_prey.absorbable)
+		process_options += "Absorb"
+
+	process_options += "Knockout" //Can't think of any mechanical prefs that would restrict this. // RS Edit || Ports VOREStation PR15876
+
+	if(process_options.len)
+		process_options += "Cancel"
+
+	else
+		to_chat(owner, "<span class= 'warning'>You cannot instantly process [our_prey].</span>")
+		return
+
+	var/ourchoice = tgui_input_list(owner, "How would you prefer to process \the [our_prey]? This will perform the given action instantly if the prey accepts.","Instant Process", process_options)
+	if(!ourchoice)
+		return
+	if(!our_prey.client)
+		to_chat(owner, "<span class= 'warning'>You cannot instantly process [our_prey].</span>")
+		return
+	switch(ourchoice)
+		if("Digest")
+			if(our_prey.absorbed)
+				to_chat(owner, "<span class= 'warning'>\The [our_prey] is absorbed, and cannot presently be digested.</span>")
+				return
+			if(tgui_alert(our_prey, "\The [owner] is attempting to instantly digest you. Is this something you are okay with happening to you?","Instant Digest", list("No", "Yes")) != "Yes")
+				to_chat(owner, "<span class= 'warning'>\The [our_prey] declined your digest attempt.</span>")
+				to_chat(our_prey, "<span class= 'warning'>You declined the digest attempt.</span>")
+				return
+			if(our_prey.loc != src)
+				to_chat(owner, "<span class= 'warning'>\The [our_prey] is no longer in \the [src].</span>")
+				return
+			if(isliving(owner))
+				var/mob/living/l = owner
+				var/thismuch = our_prey.health + 100
+				if(ishuman(l))
+					var/mob/living/carbon/human/h = l
+					thismuch = thismuch * h.species.digestion_nutrition_modifier
+				l.adjust_nutrition(thismuch)
+			our_prey.mind?.vore_death = TRUE
+			our_prey.death()		// To make sure all on-death procs get properly called
+			if(our_prey) //RS Edit start || Ports CHOMPStation 7158
+				if(our_prey.is_preference_enabled(/datum/client_preference/digestion_noises))
+					SEND_SOUND(our_prey, sound(get_sfx("fancy_death_prey")))
+				handle_digestion_death(our_prey) // RS Edit end
+		if("Absorb")
+			if(tgui_alert(our_prey, "\The [owner] is attempting to instantly absorb you. Is this something you are okay with happening to you?","Instant Absorb", list("No", "Yes")) != "Yes")
+				to_chat(owner, "<span class= 'warning'>\The [our_prey] declined your absorb attempt.</span>")
+				to_chat(our_prey, "<span class= 'warning'>You declined the absorb attempt.</span>")
+				return
+			if(our_prey.loc != src)
+				to_chat(owner, "<span class= 'warning'>\The [our_prey] is no longer in \the [src].</span>")
+				return
+			if(isliving(owner))
+				var/mob/living/l = owner
+				l.adjust_nutrition(our_prey.nutrition)
+				var/n = 0 - our_prey.nutrition
+				our_prey.adjust_nutrition(n)
+			absorb_living(our_prey)
+		//RS Edit || Ports VOREStation PR15876
+		if("Knockout")
+			if(tgui_alert(our_prey, "\The [owner] is attempting to instantly make you unconscious, you will be unable until ejected from the pred. Is this something you are okay with happening to you?","Instant Knockout", list("No", "Yes")) != "Yes")
+				to_chat(owner, "<span class= 'vwarning'>\The [our_prey] declined your knockout attempt.</span>")
+				to_chat(our_prey, "<span class= 'vwarning'>You declined the knockout attempt.</span>")
+				return
+			if(our_prey.loc != src)
+				to_chat(owner, "<span class= 'vwarning'>\The [our_prey] is no longer in \the [src].</span>")
+				return
+			our_prey.AdjustSleeping(500000)
+			to_chat(our_prey, "<span class= 'vwarning'>\The [owner] has put you to sleep, you will remain unconscious until ejected from the belly.</span>")
+		if("Cancel")
+			return
+		//RS Edit || Ports VOREStation PR15876
+
+/obj/belly/proc/advance_target(var/mob/living/our_prey)
+	if(!check_belly_access(usr,our_prey)) return
+	var/list/choices = list()
+	var/obj/belly/choice
+	for(var/obj/belly/b in owner.vore_organs)
+		if(b.name == transferlocation || b.name == transferlocation_secondary)
+			choices += b
+	if(!choices.len)
+		to_chat(owner,"<span class='warning'>You haven't configured any transfer locations for your [lowertext(name)]. Please configure at least one transfer location in order to advance your [lowertext(name)]'s contents.</span>")
+		return
+	choice = tgui_input_list(owner, "Advance your [lowertext(name)]'s contents to which belly?","Select Belly", choices)
+	if(!choice)
+		return
+	if(our_prey.loc != src)
+		to_chat(owner,"<span class='warning'>\The [our_prey] is not in \the [src] anymore!</span>")
+		return
+	to_chat(our_prey,"<span class='warning'>You're squished from [owner]'s [lowertext(name)] to their [lowertext(choice.name)]!</span>")
+	for(var/obj/belly/b in owner.vore_organs)
+		if(b.name == choice)
+			choice = b
+	transfer_contents(our_prey, choice)
+
+/obj/belly/proc/healthbar_target(var/mob/living/our_prey)
+	if(!check_belly_access(usr,our_prey,FALSE)) return
+	new /obj/screen/movable/rs_ui/healthbar(owner,our_prey,owner)
+
+/obj/belly/proc/return_effective_d_mode(var/mob/living/ourmob)
+	if(!isliving(ourmob))
+		return FALSE
+	if(digest_mode == DM_SELECT)
+		switch(ourmob.selective_preference)
+			if(DM_DIGEST)
+				return DM_DIGEST
+			if(DM_ABSORB)
+				return DM_ABSORB
+			if(DM_DRAIN)
+				return DM_DRAIN
+			if(DM_DEFAULT)
+				switch(selective_preference)
+					if(DM_DIGEST)
+						return DM_DIGEST
+					if(DM_ABSORB)
+						return DM_ABSORB
+					if(DM_DRAIN)
+						return DM_DRAIN
+	else
+		return digest_mode
+
+//RS ADD END

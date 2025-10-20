@@ -2481,7 +2481,7 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/science/robotics)
 "clE" = (
-/obj/machinery/telecomms/bus/preset_two/groundbase,
+/obj/machinery/telecomms/bus/preset_two/station,
 /obj/machinery/atmospherics/pipe/simple/hidden/black,
 /turf/simulated/floor/tiled/dark{
 	nitrogen = 100;
@@ -5371,7 +5371,7 @@
 /turf/simulated/floor/tiled/eris/cafe,
 /area/groundbase/civilian/kitchen)
 "eOM" = (
-/obj/machinery/telecomms/server/presets/service/groundbase,
+/obj/machinery/telecomms/server/presets/service/station,
 /turf/simulated/floor/tiled/dark{
 	nitrogen = 100;
 	oxygen = 0;
@@ -5612,6 +5612,7 @@
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 5
 	},
+/obj/structure/medical_stand,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/equipment)
 "eVU" = (
@@ -11755,7 +11756,7 @@
 /turf/simulated/floor/wood,
 /area/groundbase/civilian/bar)
 "ksP" = (
-/obj/machinery/telecomms/broadcaster/preset_right/groundbase,
+/obj/machinery/telecomms/broadcaster/preset_right/station,
 /turf/simulated/floor/tiled/dark{
 	nitrogen = 100;
 	oxygen = 0;
@@ -11821,7 +11822,6 @@
 	},
 /area/groundbase/command/tcomms/chamber)
 "kuX" = (
-/obj/structure/medical_stand,
 /obj/machinery/power/apc{
 	dir = 1
 	},
@@ -11834,6 +11834,23 @@
 /obj/effect/floor_decal/corner/paleblue/full{
 	dir = 1
 	},
+/obj/structure/table/reinforced,
+/obj/random/medical,
+/obj/item/weapon/storage/box/syringes{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/obj/item/weapon/storage/box/syringes{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/obj/item/weapon/storage/box/beakers{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/item/clothing/accessory/stethoscope,
+/obj/item/clothing/accessory/stethoscope,
+/obj/item/clothing/accessory/stethoscope,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/equipment)
 "kuZ" = (
@@ -12669,7 +12686,7 @@
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs,
 /area/groundbase/level1/nw)
 "lgD" = (
-/obj/machinery/telecomms/receiver/preset_right/groundbase,
+/obj/machinery/telecomms/receiver/preset_right/station,
 /turf/simulated/floor/tiled/dark{
 	nitrogen = 100;
 	oxygen = 0;
@@ -17648,7 +17665,7 @@
 /turf/simulated/floor/wood,
 /area/groundbase/civilian/gameroom)
 "pyM" = (
-/obj/machinery/telecomms/hub/preset/groundbase,
+/obj/machinery/telecomms/hub/preset/station,
 /obj/machinery/atmospherics/pipe/manifold/hidden/black{
 	dir = 1
 	},
@@ -21675,7 +21692,7 @@
 	req_access = null;
 	req_one_access = list(18,19,67)
 	},
-/obj/item/device/bluespaceradio/groundbase_prelinked,
+/obj/item/device/bluespaceradio/station_prelinked,
 /obj/item/device/mapping_unit,
 /obj/item/device/cataloguer,
 /obj/item/device/cataloguer,
@@ -22799,26 +22816,42 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/science/rd)
 "tNE" = (
-/obj/item/clothing/accessory/stethoscope,
-/obj/item/clothing/accessory/stethoscope,
-/obj/item/clothing/accessory/stethoscope,
-/obj/item/weapon/storage/box/syringes{
-	pixel_y = 9
-	},
-/obj/item/weapon/storage/box/syringes{
-	pixel_y = 9
-	},
-/obj/random/medical,
-/obj/item/weapon/storage/box/beakers{
-	pixel_x = 14;
-	pixel_y = 10
-	},
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 10
+	},
+/obj/item/weapon/storage/firstaid/hypokit/brute{
+	pixel_x = -6;
+	pixel_y = 15
+	},
+/obj/item/weapon/storage/firstaid/hypokit/brute{
+	pixel_x = -6;
+	pixel_y = 10
+	},
+/obj/item/weapon/storage/firstaid/hypokit/burn{
+	pixel_x = 7;
+	pixel_y = 15
+	},
+/obj/item/weapon/storage/firstaid/hypokit/burn{
+	pixel_x = 7;
+	pixel_y = 10
+	},
+/obj/item/weapon/storage/firstaid/hypokit/toxin{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/obj/item/weapon/storage/firstaid/hypokit/toxin{
+	pixel_x = -6
+	},
+/obj/item/weapon/storage/firstaid/hypokit/oxy{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/item/weapon/storage/firstaid/hypokit/oxy{
+	pixel_x = 7
 	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/equipment)
@@ -24909,9 +24942,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/security/lobby)
 "vCG" = (
-/obj/item/weapon/storage/secure/briefcase/ml3m_pack_med,
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/secure/briefcase/ml3m_pack_med,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 10
@@ -24922,6 +24953,16 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
+/obj/item/weapon/storage/firstaid/mkIhypokit{
+	pixel_y = 15
+	},
+/obj/item/weapon/storage/firstaid/mkIhypokit{
+	pixel_y = 11
+	},
+/obj/item/weapon/storage/secure/briefcase/ml3m_pack_med{
+	pixel_y = 5
+	},
+/obj/item/weapon/storage/secure/briefcase/ml3m_pack_med,
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/equipment)
 "vCI" = (

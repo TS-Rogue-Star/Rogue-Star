@@ -82,7 +82,7 @@
 			continue
 		if(!(isliving(player) && istype(player.loc,/turf/simulated/floor/outdoors/fur) && player.client))
 			continue
-		if(player.resizable && player.pickup_pref)
+		if((player.resizable && spont_pref_check(user,player,RESIZING)) && (player.pickup_pref && spont_pref_check(user,player,MICRO_PICKUP)))	//RS EDIT
 			possible_targets |= player
 
 	if(!possible_targets.len)
@@ -419,12 +419,14 @@
 	if(ishuman(AM))
 		var/mob/living/carbon/human/L = AM
 		L.fur_submerge()
+		L.plane = -26	//RS ADD
 
 /turf/simulated/floor/outdoors/fur/Exited(atom/movable/AM, atom/new_loc)
 	. = ..()
 	if(ishuman(AM))
 		var/mob/living/carbon/human/L = AM
 		L.fur_submerge()
+		L.plane = initial(L.plane)	//RS ADD
 
 /mob/living/carbon/human/proc/fur_submerge()
 	if(QDESTROYING(src))
@@ -941,6 +943,7 @@
 		'sound/ambience/star_dog/woof2.ogg'
 		)
 	sound_env = SOUND_ENVIRONMENT_DIZZY
+	hunter_override = FALSE	//RS ADD
 
 	valid_mobs = list(	//Dog map spawns the dogs. It's not hard to understand!
 		list(

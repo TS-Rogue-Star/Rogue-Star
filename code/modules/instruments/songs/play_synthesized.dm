@@ -42,9 +42,12 @@
  * Plays a specific numerical key from our instrument to anyone who can hear us.
  * Does a hearing check if enough time has passed.
  */
-/datum/song/proc/playkey_synth(key, mob/user)
+/datum/song/proc/playkey_synth(key, mob/user, list/targets_override) //RS Edit: Add override list (Lira, August 2025)
 	if(can_noteshift)
 		key = clamp(key + note_shift, key_min, key_max)
+	if(note_filter_enabled) //RS Add: Note range filtering (Lira, August 2025)
+		if(key < note_filter_min || key > note_filter_max)
+			return FALSE
 	if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > last_hearcheck)
 		do_hearcheck()
 	var/datum/instrument_key/K = using_instrument.samples[num2text(key)] //See how fucking easy it is to make a number text? You don't need a complicated 9 line proc!
@@ -61,7 +64,8 @@
 	channels_playing[channel_text] = 100
 	last_channel_played = channel_text
 	var/turf/source = get_turf(parent)
-	for(var/mob/M as anything in hearing_mobs)
+	var/list/targets = islist(targets_override) ? targets_override : hearing_mobs //RS Add: Adds override (Lira, August 2025)
+	for(var/mob/M as anything in targets) //RS Edit: Use targets instead of hearing_mobs (Lira, August 2025)
 		/* Maybe someday
 		if(user && HAS_TRAIT(user, TRAIT_MUSICIAN) && isliving(M))
 			var/mob/living/L = M

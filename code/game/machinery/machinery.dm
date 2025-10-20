@@ -483,7 +483,7 @@ Class Procs:
 	M.loc = null
 	M.deconstruct(src)
 	qdel(src)
-	return 1
+	return A //RS Edit: Return the frame
 
 /obj/machinery/bullet_act(obj/item/projectile/P, def_zone)
 	. = ..()

@@ -315,11 +315,19 @@
 					if (0) //delete
 						if (name_marking)
 							var/datum/sprite_accessory/marking/mark_datum = body_marking_styles_list[name_marking]
+							// RS Add: Custom marking support (Lira, September 2025)
+							if(mark_datum?.hide_from_marking_gallery)
+								return FALSE
 							if (target.remove_marking(mark_datum))
 								changed_hook(APPEARANCECHANGER_CHANGED_HAIRSTYLE)
 								return TRUE
 					if (1) //add
 						var/list/usable_markings = markings.Copy() ^ body_marking_styles_list.Copy()
+						// RS Add: Custom marking support (Lira, September 2025)
+						for(var/option in usable_markings.Copy())
+							var/datum/sprite_accessory/marking/option_style = body_marking_styles_list[option]
+							if(istype(option_style) && option_style.hide_from_marking_gallery)
+								usable_markings -= option
 						var/new_marking = tgui_input_list(usr, "Choose a body marking:", "New Body Marking", usable_markings)
 						if(new_marking && can_still_topic(usr, state))
 							var/datum/sprite_accessory/marking/mark_datum = body_marking_styles_list[new_marking]
@@ -336,9 +344,13 @@
 							return TRUE
 					if (4) //color
 						var/current = markings[name_marking] ? markings[name_marking] : "#000000"
+						// RS Add Start: Prevent recoloring when the selected marking is not colorable. (Lira, September 2025)
+						var/datum/sprite_accessory/marking/mark_datum = body_marking_styles_list[name_marking]
+						if(mark_datum && !mark_datum.do_colouration)
+							return FALSE
+						// RS Add End
 						var/marking_color = input(usr, "Please select marking color", "Marking color", current) as color|null
 						if(marking_color && can_still_topic(usr, state))
-							var/datum/sprite_accessory/marking/mark_datum = body_marking_styles_list[name_marking]
 							if (target.change_marking_color(mark_datum, marking_color))
 								return TRUE
 		// VOREStation Add End
@@ -438,7 +450,17 @@
 		var/list/markings_data[0]
 		markings = target.get_prioritised_markings()
 		for (var/marking in markings)
-			markings_data[++markings_data.len] = list("marking_name" = marking, "marking_color" = markings[marking]["color"] ? markings[marking]["color"] : "#000000") //too tired to add in another submenu for bodyparts here
+			// RS Edit Start: Custom markings support (Lira, September 2025)
+			var/datum/sprite_accessory/marking/mark_style = body_marking_styles_list[marking]
+			var/mark_label = mark_style ? mark_style.get_display_name() : marking
+			var/mark_color = markings[marking]["color"] ? markings[marking]["color"] : "#000000"
+			var/removable = !(mark_style?.hide_from_marking_gallery)
+			markings_data[++markings_data.len] = list(
+				"marking_name" = marking,
+				"marking_label" = mark_label,
+				"marking_color" = mark_color,
+				"marking_removable" = removable
+			) //too tired to add in another submenu for bodyparts here || RS Edit End
 		data["markings"] = markings_data
 		// VOREStation Add End
 

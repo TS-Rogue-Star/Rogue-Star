@@ -36,7 +36,9 @@
 	if(!islist(pref.nif_savedata))
 		pref.nif_savedata = list()
 
+/* RS REMOVAL - gets handled elsewhere
 /datum/category_item/player_setup_item/vore/nif/copy_to_mob(var/mob/living/carbon/human/character)
+
 	//If you had a NIF...
 	if((character.type == /mob/living/carbon/human) && ispath(pref.nif_path) && pref.nif_durability)
 		new pref.nif_path(character,pref.nif_durability,pref.nif_savedata)
@@ -55,6 +57,12 @@
 		if(!S) WARNING ("Couldn't load NIF save savefile? [pref.real_name]")
 		S.cd = "/character[pref.default_slot]"
 		save_character(S)
+	*/
 
 /datum/category_item/player_setup_item/vore/nif/content(var/mob/user)
-	. += "<b>NIF:</b> [ispath(pref.nif_path) ? "Present" : "None"]"
+
+	if(!pref.client.etching)
+		log_debug("[user] etching data to populate")
+		return
+
+	. += "<b>NIF:</b> [ispath(text2path("[pref.client.etching.nif_type]")) ? "Present" : "None"]"	//RS EDIT

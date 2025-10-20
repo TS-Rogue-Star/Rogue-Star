@@ -124,6 +124,8 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 		listening_level = position.z
 
 /obj/machinery/telecomms/Initialize()
+	var/area/A = get_area(src)	//RS ADD - Let's make it easier to tell these apart
+	name = "[name] ([A.name])"	//RS ADD
 	if(autolinkers.len)
 		// Links nearby machines
 		if(!long_range_link)
@@ -150,6 +152,8 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			if(T.autolinkers.Find(x))
 				if(src != T)
 					links |= T
+				if(ticker.current_state >= GAME_STATE_PREGAME)	//RS ADD - If this is happening after init, then we should make the things we are linking with link back
+					T.links |= src	//RS ADD - or else none of these added after init will work!
 
 /obj/machinery/telecomms/update_icon()
 	if(on)

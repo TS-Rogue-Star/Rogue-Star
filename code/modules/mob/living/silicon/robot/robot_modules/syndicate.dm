@@ -51,7 +51,7 @@
 /obj/item/weapon/robot_module/robot/syndicate/protector/create_equipment(var/mob/living/silicon/robot/robot)
 	..()
 	src.modules += new /obj/item/shield_projector/rectangle/weak(src)
-	src.modules += new /obj/item/weapon/gun/energy/dakkalaser(src)
+	src.modules += new /obj/item/weapon/gun/energy/robotic/laser/dakkalaser(src)
 	src.modules += new /obj/item/weapon/handcuffs/cyborg(src)
 	src.modules += new /obj/item/weapon/melee/baton/robot(src)
 

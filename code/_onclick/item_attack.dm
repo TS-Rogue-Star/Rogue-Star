@@ -21,6 +21,8 @@ avoid code duplication. This includes items that may sometimes act as a standard
 
 // Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
+	if(user.is_incorporeal()) return	//RS ADD - do not use items while phased out
+
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user) & COMPONENT_NO_INTERACT)
 		return
 	return
@@ -77,6 +79,7 @@ avoid code duplication. This includes items that may sometimes act as a standard
 // Same as above but actually does useful things.
 // W is the item being used in the attack, if any. modifier is if the attack should be longer or shorter than usual, for whatever reason.
 /mob/living/get_attack_speed(var/obj/item/W)
+	SEND_SIGNAL(src,COMSIG_GET_ATTACK_SPEED)	//RS ADD
 	var/speed = base_attack_cooldown
 	if(W && istype(W))
 		speed = W.attackspeed

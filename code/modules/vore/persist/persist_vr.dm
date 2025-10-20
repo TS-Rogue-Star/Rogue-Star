@@ -84,7 +84,7 @@
 
 	//This one doesn't rely on persistence prefs
 	if(ishuman(occupant) && occupant.stat != DEAD)
-		persist_nif_data(occupant, prefs)
+		persist_nif_data(occupant)	//RS ADD
 
 	if(!prefs.persistence_settings)
 		return // Persistence disabled by preference settings
@@ -235,6 +235,7 @@
 * towards future shenanigans such as upgradable NIFs or different types or things of that nature,
 * without invoking the need for a bunch of different save file variables.
 */
+/*	//RS EDIT - Rewritten and added to item_storage.dm
 /proc/persist_nif_data(var/mob/living/carbon/human/H,var/datum/preferences/prefs)
 	if(!istype(H))
 		stack_trace("Persist (NIF): Given a nonhuman: [H]")
@@ -269,3 +270,4 @@
 	if(!S) warning("Persist (NIF): Couldn't load NIF save savefile? [prefs.real_name]")
 	S.cd = "/character[prefs.default_slot]"
 	nif_prefs.save_character(S)
+*/

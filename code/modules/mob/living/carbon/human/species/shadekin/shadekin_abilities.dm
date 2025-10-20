@@ -91,6 +91,8 @@
 	if(pulledby)
 		pulledby.stop_pulling()
 	stop_pulling()
+	stop_aiming(no_message=1)	//RS ADD - no shooting guns while phased out
+	emp_act(5)	//RS ADD - do a mostly harmless EMP to turn any communicators and radios off
 	canmove = FALSE
 
 	//Shifting in
@@ -108,12 +110,17 @@
 			B.escapable = FALSE
 
 		var/obj/effect/temp_visual/shadekin/phase_out/phaseanim = new /obj/effect/temp_visual/shadekin/phase_out(src.loc)
+		//RS Add | Chomp port #8267
+		phaseanim.pixel_y = (src.size_multiplier - 1) * 16 // Pixel shift for the animation placement
+		phaseanim.adjust_scale(src.size_multiplier, src.size_multiplier)
+		//Rs Add end
 		phaseanim.dir = dir
 		alpha = 0
 		add_modifier(/datum/modifier/shadekin_phase_vision)
 		sleep(5)
-		invisibility = INVISIBILITY_LEVEL_TWO
-		see_invisible = INVISIBILITY_LEVEL_TWO
+		invisibility = INVISIBILITY_SHADEKIN
+		see_invisible = INVISIBILITY_SHADEKIN
+		see_invisible_default = INVISIBILITY_SHADEKIN //RS Add Chomp port #7484 | CHOMPEdit - Allow seeing phased entities while phased.
 		//cut_overlays()
 		update_icon()
 		alpha = 127
@@ -139,6 +146,7 @@
 		//cut_overlays()
 		invisibility = initial(invisibility)
 		see_invisible = initial(see_invisible)
+		see_invisible_default = initial(see_invisible_default)	//RS EDIT
 		incorporeal_move = initial(incorporeal_move)
 		density = initial(density)
 		force_max_speed = initial(force_max_speed)
@@ -146,6 +154,10 @@
 
 		//Cosmetics mostly
 		var/obj/effect/temp_visual/shadekin/phase_in/phaseanim = new /obj/effect/temp_visual/shadekin/phase_in(src.loc)
+		//RS Add | Chomp port #8267
+		phaseanim.pixel_y = (src.size_multiplier - 1) * 16 // Pixel shift for the animation placement
+		phaseanim.adjust_scale(src.size_multiplier, src.size_multiplier)
+		//Rs Add end
 		phaseanim.dir = dir
 		alpha = 0
 		custom_emote(1,"phases in!")
@@ -158,25 +170,40 @@
 		if(can_be_drop_pred) //Toggleable in vore panel
 			var/list/potentials = living_mobs(0)
 			if(potentials.len)
-				var/mob/living/target = pick(potentials)
-				if(istype(target) && target.devourable && target.can_be_drop_prey && vore_selected)
-					target.forceMove(vore_selected)
-					to_chat(target,"<span class='warning'>\The [src] phases in around you, [vore_selected.vore_verb]ing you into their [vore_selected.name]!</span>")
-
+				for(var/mob/living/target in potentials)	//RS EDIT START
+					if(istype(target) && spont_pref_check(src,target,SPONT_PRED))
+						target.forceMove(vore_selected)
+						to_chat(target,"<span class='warning'>\The [src] phases in around you, [vore_selected.vore_verb]ing you into their [vore_selected.name]!</span>")
+															//RS EDIT END
 		ability_flags &= ~AB_PHASE_SHIFTING
 
 		//Affect nearby lights
-		var/destroy_lights = 0
 
 		for(var/obj/machinery/light/L in machines)
 			if(L.z != z || get_dist(src,L) > 10)
 				continue
 
-			if(prob(destroy_lights))
+			if(prob(flicker_break_chance))
 				spawn(rand(5,25))
 					L.broken()
 			else
-				L.flicker(10)
+				if(flicker_time)
+					L.flicker(flicker_time, flicker_color) //RS edit - Variable Flicker!
+
+		//Yes. I could do a 'for(var/atom/movable/AM in range(effectrange, turf))' but that would take so much processing power the old gods would come down and smite me. So instead we will check for specific things.
+
+		for(var/obj/item/device/flashlight/flashlights in range(7, src)) //Find any flashlights near us and make them flicker too!
+			if(istype(flashlights,/obj/item/device/flashlight/glowstick) ||istype(flashlights,/obj/item/device/flashlight/flare)) //No affecting glowsticks or flares...As funny as that is
+				continue
+			flashlights.flicker(flicker_time, flicker_color, TRUE)
+
+		for(var/mob/living/creatures in range(7, src))
+			for(var/obj/item/device/flashlight/held_lights in creatures.contents)
+				if(istype(held_lights,/obj/item/device/flashlight/glowstick) ||istype(held_lights,/obj/item/device/flashlight/flare) ) //No affecting glowsticks or flares...As funny as that is
+					continue
+				held_lights.flicker(flicker_time, flicker_color, TRUE)
+
+				//do the flicker here
 //RS EDIT END
 
 /datum/modifier/shadekin_phase_vision
@@ -188,7 +215,7 @@
 //////////////////////////
 /datum/power/shadekin/regenerate_other
 	name = "Regenerate Other (50)"
-	desc = "Spend energy to heal physical wounds in another creature."
+	desc = "Spend energy to heal physical wounds in another creature. Only works while they are alive."	//RS EDIT
 	verbpath = /mob/living/carbon/human/proc/regenerate_other
 	ability_icon_state = "tech_biomedaura"
 
@@ -221,7 +248,8 @@
 	var/list/viewed = oview(1)
 	var/list/targets = list()
 	for(var/mob/living/L in viewed)
-		targets += L
+		if(L.stat != DEAD)	//RS ADD - This was modelled after healbelly in its ability originally, and healbelly can't heal corpses, so, this probably shouldn't either.
+			targets += L	//RS ADD
 	if(!targets.len)
 		to_chat(src,"<span class='warning'>Nobody nearby to mend!</span>")
 		return FALSE
@@ -306,14 +334,37 @@
 	on_created_text = "<span class='notice'>You drag part of The Dark into realspace, enveloping yourself.</span>"
 	on_expired_text = "<span class='warning'>You lose your grasp on The Dark and realspace reasserts itself.</span>"
 	stacks = MODIFIER_STACK_EXTEND
-	var/mob/living/simple_mob/shadekin/my_kin
+	var/mob/living/my_kin // RS Edit: Both simple and carbon (Lira, October 2025)
+	// RS Add Start: Track lighting (Lira, October 2025)
+	var/old_glow_toggle
+	var/old_glow_range
+	var/old_glow_intensity
+	var/old_glow_color
+	var/old_light_range
+	var/old_light_power
+	var/old_light_color
+	var/old_light_on
+	// RS Add End
 
+// RS Edit: Ensure ability ends on phase (Lira, October 2025)
 /datum/modifier/shadekin/create_shade/tick()
-	if(my_kin.ability_flags & AB_PHASE_SHIFTED)
+	if(!my_kin)
+		my_kin = holder
+	if(my_kin && !QDELETED(my_kin) && hasvar(my_kin, "ability_flags") && (my_kin:ability_flags & AB_PHASE_SHIFTED))
 		expire()
 
 /datum/modifier/shadekin/create_shade/on_applied()
 	my_kin = holder
+	// RS Add Start: Track lighting (Lira, October 2025)
+	old_glow_toggle = holder.glow_toggle
+	old_glow_range = holder.glow_range
+	old_glow_intensity = holder.glow_intensity
+	old_glow_color = holder.glow_color
+	old_light_range = holder.light_range
+	old_light_power = holder.light_power
+	old_light_color = holder.light_color
+	old_light_on = holder.light_on
+	// RS Add End
 	holder.glow_toggle = TRUE
 	holder.glow_range = 8
 	holder.glow_intensity = -10
@@ -321,9 +372,51 @@
 	holder.set_light(8, -10, "#FFFFFF")
 
 /datum/modifier/shadekin/create_shade/on_expire()
-	holder.glow_toggle = initial(holder.glow_toggle)
-	holder.glow_range = initial(holder.glow_range)
-	holder.glow_intensity = initial(holder.glow_intensity)
-	holder.glow_color = initial(holder.glow_color)
-	holder.set_light(0)
+	// RS Edit: Track lighting (Lira, October 2025)
+	if(holder)
+		holder.glow_toggle = old_glow_toggle
+		holder.glow_range = old_glow_range
+		holder.glow_intensity = old_glow_intensity
+		holder.glow_color = old_glow_color
+		var/restore_range = old_light_range
+		var/restore_power = old_light_power
+		var/restore_color = old_light_color
+		var/restore_on = old_light_on
+		if(isnull(restore_range))
+			restore_range = initial(holder.light_range)
+		if(isnull(restore_power))
+			restore_power = initial(holder.light_power)
+		if(isnull(restore_color))
+			restore_color = initial(holder.light_color)
+		if(isnull(restore_on))
+			restore_on = initial(holder.light_on)
+		holder.set_light(restore_range, restore_power, restore_color, restore_on)
 	my_kin = null
+
+/// Light flicker adjusments! Allows you to change three things:
+/// Flicker Length || Flicker Light Break Chance || Flicker colors
+/mob/living/carbon/human/proc/adjust_flicker()
+	set name = "Adjust Light Flicker"
+	set desc = "Allows you to adjust the settings of the light flicker when you phase in!"
+	set category = "Shadekin"
+
+	var/flicker_timer = tgui_input_number(usr, "Adjust how long lights flicker when you phase in! (Min 10 Max 15 in seconds!)", "Set Flicker", 10, 15, 10)
+	if(flicker_timer > 15 || flicker_timer < 10)
+		to_chat(usr,"<span class='warning'>You must choose a number between 10 and 15</span>")
+		return
+	flicker_time = flicker_timer
+	to_chat(usr,"<span class='warning'>Flicker timer set to [flicker_time] seconds!</span>")
+
+	var/set_new_color = input(src,"Select a color you wish the lights to flicker as (Default is #E0EFF0)","Flicker Color",flicker_color) as color
+	if(set_new_color)
+		flicker_color = set_new_color
+	to_chat(usr,"<span class='warning'>Flicker color set to [flicker_color]!</span>")
+
+	var/break_chance = tgui_input_number(usr, "Adjust the % chance for lights to break when you phase in! (Default 0. Min 0. Max 25)", "Set Break Chance", 0, 25, 0)
+	if(break_chance > 25 || break_chance < 0)
+		to_chat(usr,"<span class='warning'>You must choose a number between 0 and 25</span>")
+		return
+	flicker_break_chance = break_chance
+	to_chat(usr,"<span class='warning'>Break chance set to [flicker_break_chance]%</span>")
+
+//RS Edit End

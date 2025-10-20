@@ -47,6 +47,7 @@ I think I covered everything.
 ///
 ///		Main type
 ///
+/mob/living/var/natural_healer = FALSE	//RS ADD - If true, healbelly costs 0 nutrition to use
 
 /mob/living/simple_mob/vore/bigdragon
 	name = "large dragon"
@@ -111,6 +112,7 @@ I think I covered everything.
 	plane = ABOVE_MOB_PLANE
 
 	load_owner = "seriouslydontsavethis"	//RS - ADD - They're essentially boss mobs, so, yeah, just don't.
+	natural_healer = TRUE	//RS ADD
 
 	//Dragon vars
 	var/notame
@@ -248,11 +250,13 @@ I think I covered everything.
 	verbs |= /mob/living/simple_mob/vore/bigdragon/proc/special_toggle
 	//verbs |= /mob/living/simple_mob/vore/bigdragon/proc/set_name //Implemented upstream
 	//verbs |= /mob/living/simple_mob/vore/bigdragon/proc/set_desc //Implemented upstream
+	verbs |= /mob/living/simple_mob/vore/bigdragon/proc/export_style //RSAdd - port import and export style verbs
+	verbs |= /mob/living/simple_mob/vore/bigdragon/proc/import_style //RSAdd - port import and export style verbs
 	faction = "neutral"
 
 /mob/living/simple_mob/vore/bigdragon/Initialize()
 	..()
-	src.adjust_nutrition(src.max_nutrition)
+//	src.adjust_nutrition(src.max_nutrition)	//RS EDIT
 	build_icons(1)
 	add_language(LANGUAGE_DRUDAKAR)
 	add_language(LANGUAGE_UNATHI)
@@ -314,6 +318,68 @@ I think I covered everything.
 	specialtoggle = !specialtoggle
 	to_chat(src, "<span class='notice'>You will [specialtoggle?"now special":"no longer special"] attack on grab/disarm intent.</span>")
 
+
+//RS Add start - Port over import/export style verbs
+/mob/living/simple_mob/vore/bigdragon/proc/export_style()
+	set name = "Export style string"
+	set desc = "Export a string of text that can be used to instantly get the current style back using the import style verb"
+	set category = "Abilities"
+	var/output_style = jointext(list(
+		overlay_colors["Underbelly"],
+		under,
+		overlay_colors["Body"],
+		body,
+		overlay_colors["Ears"],
+		ears,
+		overlay_colors["Mane"],
+		mane,
+		overlay_colors["Horns"],
+		horns,
+		overlay_colors["Eyes"],
+		eyes), ";")
+	to_chat(src, span_notice("Exported style string is \" [output_style] \". Use this to get the same style in the future with import style"))
+
+/mob/living/simple_mob/vore/bigdragon/proc/import_style()
+	set name = "Import style string"
+	set desc = "Import a string of text that was made using the import style verb to get back that style"
+	set category = "Abilities"
+	var/input_style
+	input_style = sanitizeSafe(tgui_input_text(src,"Paste the style string you exported with Export Style.", "Style loading"))
+	if(input_style)
+		var/list/input_style_list = splittext(input_style, ";")
+		if((LAZYLEN(input_style_list) == 12) && (input_style_list[2] in underbelly_styles) && (input_style_list[4] in body_styles) && (input_style_list[6] in ear_styles) && (input_style_list[8] in mane_styles) && (input_style_list[10] in horn_styles) && (input_style_list[12] in ear_styles))
+			try
+				if(rgb2num(input_style_list[1]))
+					overlay_colors["Underbelly"] = input_style_list[1]
+			catch
+			under = input_style_list[2]
+			try
+				if(rgb2num(input_style_list[3]))
+					overlay_colors["Body"] = input_style_list[3]
+			catch
+			body = input_style_list[4]
+			try
+				if(rgb2num(input_style_list[5]))
+					overlay_colors["Ears"] = input_style_list[5]
+			catch
+			ears = input_style_list[6]
+			try
+				if(rgb2num(input_style_list[7]))
+					overlay_colors["Mane"] = input_style_list[7]
+			catch
+			mane = input_style_list[8]
+			try
+				if(rgb2num(input_style_list[9]))
+					overlay_colors["Horns"] = input_style_list[9]
+			catch
+			horns = input_style_list[10]
+			try
+				if(rgb2num(input_style_list[11]))
+					overlay_colors["Eyes"] = input_style_list[11]
+			catch
+			eyes = input_style_list[12]
+			build_icons()
+//RS Add end
 
 ///
 ///		Icon generation stuff
@@ -560,6 +626,7 @@ I think I covered everything.
 
 //Making unique belly subtypes for cleanliness and my sanity
 /obj/belly/dragon
+	autotransfer_enabled = 1  // Updated as part of broader autotransfer update
 	autotransferchance = 50
 	autotransferwait = 150
 	escapable = 1

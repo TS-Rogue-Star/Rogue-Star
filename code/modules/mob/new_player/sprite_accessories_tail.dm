@@ -1556,4 +1556,18 @@
 	extra_overlay_w = "teppi-f-2"
 	extra_overlay2_w = "teppi-1"
 
+/datum/sprite_accessory/tail/longtail/bigfluffytail
+	name = "Very Fluffy Tail"
+	icon = 'icons/rogue-star/tails_64x32_rs.dmi'
+	icon_state = "bigfluffytail"
+	extra_overlay = "bigfluffytail-1"
+	extra_overlay2 = "bigfluffytail-2"
+
+/datum/sprite_accessory/tail/longtail/bigfluffytail/triple_color
+	name = "Very Fluffy Tail Straightened"
+	icon = 'icons/rogue-star/tails_64x32_rs.dmi'
+	icon_state = "bigfluffytail2"
+	extra_overlay = "bigfluffytail2-1"
+	extra_overlay2 = "bigfluffytail2-2"
+
 //RS ADD END

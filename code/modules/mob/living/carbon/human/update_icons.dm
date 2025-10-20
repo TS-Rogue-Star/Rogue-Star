@@ -193,6 +193,14 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 
 	remove_layer(MOB_DAM_LAYER)
 
+	if(isbelly(loc))	//RS ADD START
+		var/obj/belly/b = loc
+		if(!(b.mode_flags & DM_FLAG_DAMAGEICON))
+			return
+		if(client)
+			if(!client.is_preference_enabled(/datum/client_preference/vore_damage_overlay))
+				return		//RS ADD END
+
 	// first check whether something actually changed about damage appearance
 	var/damage_appearance = ""
 
@@ -264,20 +272,24 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 		icon_key += "[rgb(eyes.eye_colour[1], eyes.eye_colour[2], eyes.eye_colour[3])]"
 	else
 		icon_key += "[r_eyes], [g_eyes], [b_eyes]"
-	var/obj/item/organ/external/head/head = organs_by_name[BP_HEAD]
-	if(head)
-		if(!istype(head, /obj/item/organ/external/stump))
+	// RS Edit Start: Hide head (Lira, October 2025)
+	var/obj/item/organ/external/head/head_organ = organs_by_name[BP_HEAD]
+	var/obj/item/clothing/head/head_item = src.head
+	var/hide_worn_head = (head_item && (head_item.flags_inv & HIDEHEAD))
+	if(head_organ && !hide_worn_head)
+		if(!istype(head_organ, /obj/item/organ/external/stump))
 			if (species.selects_bodytype != SELECTS_BODYTYPE_FALSE)
 				var/headtype = GLOB.all_species[species.base_species]?.has_limbs[BP_HEAD]
 				var/obj/item/organ/external/head/headtypepath = headtype["path"]
-				if (headtypepath && !head.eye_icon_override)
-					head.eye_icon = initial(headtypepath.eye_icon)
-					head.eye_icon_location = initial(headtypepath.eye_icon_location)
-			icon_key += "[head.eye_icon]"
+				if (headtypepath && !head_organ.eye_icon_override)
+					head_organ.eye_icon = initial(headtypepath.eye_icon)
+					head_organ.eye_icon_location = initial(headtypepath.eye_icon_location)
+			icon_key += "[head_organ.eye_icon]"
+	// RS Edit End
 	var/wholeicontransparent = TRUE
 	for(var/organ_tag in species.has_limbs)
 		var/obj/item/organ/external/part = organs_by_name[organ_tag]
-		if(isnull(part) || part.is_stump() || part.is_hidden_by_sprite_accessory()) //VOREStation Edit allowing tails to prevent bodyparts rendering, granting more spriter freedom for taur/digitigrade stuff.
+		if(isnull(part) || part.is_stump() || part.is_hidden_by_sprite_accessory() || (hide_worn_head && organ_tag == BP_HEAD)) //VOREStation Edit allowing tails to prevent bodyparts rendering, granting more spriter freedom for taur/digitigrade stuff. || RS Edit: Hide head (Lira, October 2025)
 			icon_key += "0"
 			continue
 		if(part)
@@ -361,7 +373,7 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 				icon_y_offset = tail_style.offset_y
 
 		for(var/obj/item/organ/external/part in organs)
-			if(isnull(part) || part.is_stump() || part == chest || part.is_hidden_by_sprite_accessory()) //VOREStation Edit allowing tails to prevent bodyparts rendering, granting more spriter freedom for taur/digitigrade stuff.
+			if(isnull(part) || part.is_stump() || part == chest || part.is_hidden_by_sprite_accessory() || (hide_worn_head && part.organ_tag == BP_HEAD)) //VOREStation Edit allowing tails to prevent bodyparts rendering, granting more spriter freedom for taur/digitigrade stuff. || RS Edit: Hide head (Lira, October 2025)
 				continue
 			var/icon/temp = part.get_icon(skeleton, !wholeicontransparent)
 
@@ -497,7 +509,7 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 		return
 
 	//masks and helmets can obscure our hair.
-	if( (head && (head.flags_inv & BLOCKHAIR)) || (wear_mask && (wear_mask.flags_inv & BLOCKHAIR)))
+	if( (head && (head.flags_inv & (BLOCKHAIR | HIDEHEAD))) || (wear_mask && (wear_mask.flags_inv & BLOCKHAIR))) // RS Edit: Hide head (Lira, October 2025)
 		return
 
 	//base icons
@@ -601,7 +613,7 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 		return
 
 	//Our glowy eyes should be hidden if some equipment hides them.
-	if(!should_have_organ(O_EYES) || (head && (head.flags_inv & BLOCKHAIR)) || (wear_mask && (wear_mask.flags_inv & BLOCKHAIR)))
+	if(!should_have_organ(O_EYES) || (head && (head.flags_inv & (BLOCKHAIR | HIDEHEAD))) || (wear_mask && (wear_mask.flags_inv & BLOCKHAIR))) // RS Edit: Hide head (Lira, October 2025)
 		return
 
 	//Get the head, we'll need it later.
@@ -791,7 +803,7 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 
 	remove_layer(EARS_LAYER)
 
-	if((head && head.flags_inv & (BLOCKHAIR | BLOCKHEADHAIR)) || (wear_mask && wear_mask.flags_inv & (BLOCKHAIR | BLOCKHEADHAIR)))
+	if((head && head.flags_inv & (BLOCKHAIR | BLOCKHEADHAIR | HIDEHEAD)) || (wear_mask && wear_mask.flags_inv & (BLOCKHAIR | BLOCKHEADHAIR))) // RS Edit: Hide head (Lira, October 2025)
 		return //Ears are blocked (by hair being blocked, overloaded)
 
 	if(!l_ear && !r_ear)
@@ -1222,14 +1234,14 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 	var/image/effects = new()
 	for(var/datum/modifier/M in modifiers)
 		if(M.mob_overlay_state)
-			if(M.icon_override) //VOREStation Edit. Override for the modifer icon.
-				var/image/I = image(icon = 'icons/mob/modifier_effects_vr.dmi', icon_state = M.mob_overlay_state)
-				I.color = M.effect_color
-				effects.overlays += I // Leaving this as overlays +=
-			else
-				var/image/I = image(icon = 'icons/mob/modifier_effects.dmi', icon_state = M.mob_overlay_state)
-				I.color = M.effect_color
-				effects.overlays += I // Leaving this as overlays +=
+			var/image/I = image(icon = M.mob_overlay_icon, icon_state = M.mob_overlay_state)	//RS EDIT START - generalize the icon instead of hard coded
+			I.color = M.effect_color
+			var/icon/our_icon = icon(icon, icon_state)
+			var/offset = our_icon.Width()
+			if(offset > 32)
+				offset /= 4
+				I.pixel_x = offset
+			effects.overlays += I // Leaving this as overlays +=	//RS EDIT END
 
 	overlays_standing[MODIFIER_EFFECTS_LAYER] = effects
 
@@ -1333,7 +1345,7 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 
 	var/icon/rendered // RS EDIT (Port of VS PR#16513 'Adds a second ear slot.')
 
-	if(ear_style && !(head && (head.flags_inv & BLOCKHEADHAIR)))
+	if(ear_style && !(head && (head.flags_inv & (BLOCKHEADHAIR | HIDEHEAD)))) // RS Edit: Hide head (Lira, October 2025)
 		var/icon/ears_s = new/icon("icon" = ear_style.icon, "icon_state" = ear_style.icon_state)
 		if(ear_style.do_colouration)
 			ears_s.Blend(rgb(src.r_ears, src.g_ears, src.b_ears), ear_style.color_blend_mode)
@@ -1350,7 +1362,7 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 		rendered = ears_s // RS EDIT START (Port of VS PR#16513 'Adds a second ear slot.')
 
 	// todo: this is utterly horrible but i don't think i should be violently refactoring sprite acc rendering in a feature PR ~silicons
-	if(ear_secondary_style && !(head && (head.flags_inv & BLOCKHEADHAIR)))
+	if(ear_secondary_style && !(head && (head.flags_inv & (BLOCKHEADHAIR | HIDEHEAD)))) // RS Edit: Hide head (Lira, October 2025)
 		var/icon/ears_s = new/icon("icon" = ear_secondary_style.icon, "icon_state" = ear_secondary_style.icon_state)
 		if(ear_secondary_style.do_colouration)
 			var/color = LAZYACCESS(ear_secondary_colors, 1)

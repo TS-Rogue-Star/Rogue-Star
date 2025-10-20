@@ -22,6 +22,8 @@
 	var/bloodsucker = FALSE // Allows safely getting nutrition from blood.
 	var/bloodsucker_controlmode = "always loud" //Allows selecting between bloodsucker control modes. Always Loud corresponds to original implementation.
 
+	var/electrovore = FALSE //RS Add: Allows the ability to drain power cells of energy to give nutrition
+
 	var/is_weaver = FALSE
 	var/silk_production = FALSE
 	var/silk_reserve = 100
@@ -45,6 +47,8 @@
 	var/list/food_preference = list()
 	var/food_preference_bonus = 0
 
+	var/food_class = FP_MEAT	//RS ADD
+
 /datum/species/proc/give_numbing_bite() //Holy SHIT this is hacky, but it works. Updating a mob's attacks mid game is insane.
 	unarmed_attacks = list()
 	unarmed_types += /datum/unarmed_attack/bite/sharp/numbing
@@ -53,14 +57,16 @@
 
 /datum/species/create_organs(var/mob/living/carbon/human/H)
 	if(H.nif)
-		var/type = H.nif.type
-		var/durability = H.nif.durability
-		var/list/nifsofts = H.nif.nifsofts
-		var/list/nif_savedata = H.nif.save_data.Copy()
-		..()
+		//RS EDIT START - Instead of counting on the nif getting deleted and making a new one, let's just drop it on the floor and reinstall it, that way it keeps all its contents and such
+		var/obj/item/device/nif/ournif = H.nif	//Let's register the nif because we need to clear the var on H
+		ournif.invisibility = 9999				//Make it super invisible so no one sees our shame for the one or two frames it might be on the screen
+		ournif.forceMove(get_turf(H))			//Put it on the floor, since our organs are about to get regenerated, and if it's in our head, it will die
+		H.nif = null							//Clear H's nif var, otherwise the nif will delete itself when it tries to install
+		..()									//Go ravage my body, I'm ready
 
-		var/obj/item/device/nif/nif = new type(H,durability,nif_savedata)
-		nif.nifsofts = nifsofts
+		ournif.quick_implant(H)					//Same proc that happens when you spawn in with it - will put it back in our head
+		ournif.invisibility = 0					//and unhide the nif in case someone decides to pull it out of our head
+		//RS EDIT END
 	else
 		..()
 /datum/species/proc/produceCopy(var/list/traits, var/mob/living/carbon/human/H, var/custom_base)
@@ -99,6 +105,14 @@
 		H.dna.ready_dna(H)
 
 	return new_copy
+
+// RS Add: Minimal preview mannequin (Lira, September 2025)
+/datum/species/proc/clone_basic_appearance(var/mob/living/carbon/human/H)
+	if(!istype(H))
+		return
+	handle_post_spawn(H)
+	create_organs(H)
+	return
 
 /datum/species/proc/copy_variables(var/datum/species/S, var/list/whitelist)
 	//List of variables to ignore, trying to copy type will runtime.

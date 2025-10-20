@@ -240,6 +240,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
 
+	reset_look()	//RS ADD
+
 	if(stat == DEAD && !forbid_seeing_deadchat)
 		announce_ghost_joinleave(ghostize(1))
 	else
@@ -728,8 +730,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set category = "Ghost"
 
 	var/dat
-	dat += "<h4>Crew Manifest</h4>"
+	dat += "<html><h4>Crew Manifest</h4>"
 	dat += data_core.get_manifest()
+	dat += "</html>"
 
 	src << browse(dat, "window=manifest;size=370x420;can_close=1")
 

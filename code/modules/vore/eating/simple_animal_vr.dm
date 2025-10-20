@@ -22,6 +22,11 @@
 		return
 	feed_grabbed_to_self(src,T)
 	update_icon()
+	//RS ADD START
+	if(ai_holder)
+		ai_holder.set_stance(STANCE_IDLE)
+		ai_holder.lose_target()
+	//RS ADD END
 
 //
 // Simple proc for animals to have their digestion toggled on/off externally

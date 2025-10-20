@@ -12,7 +12,7 @@
 
 	var/vore_active = 0					// If vore behavior is enabled for this mob
 
-	var/vore_capacity = 1				// The capacity (in people) this person can hold
+	vore_capacity = 1				// The capacity (in people) this person can hold
 	var/vore_max_size = RESIZE_HUGE		// The max size this mob will consider eating
 	var/vore_min_size = RESIZE_TINY 	// The min size this mob will consider eating
 	var/vore_bump_chance = 0			// Chance of trying to eat anyone that bumps into them, regardless of hostility
@@ -41,10 +41,10 @@
 	var/vore_default_contamination_flavor = "Generic"	//Contamination descriptors
 	var/vore_default_contamination_color = "green"		//Contamination color
 
-	var/vore_fullness = 0				// How "full" the belly is (controls icons)
+	vore_fullness = 0				// How "full" the belly is (controls icons)
 	var/vore_icons = 0					// Bitfield for which fields we have vore icons for.
 	var/vore_eyes = FALSE				// For mobs with fullness specific eye overlays.
-	var/belly_size_multiplier = 1
+	belly_size_multiplier = 1
 	var/life_disabled = 0				// For performance reasons
 
 	var/vore_attack_override = FALSE	// Enable on mobs you want to have special behaviour on melee grab attack.
@@ -71,7 +71,7 @@
 		return myid
 
 // Update fullness based on size & quantity of belly contents
-/mob/living/simple_mob/proc/update_fullness()
+/mob/living/simple_mob/update_fullness(returning)
 	var/new_fullness = 0
 	for(var/obj/belly/B as anything in vore_organs)
 		for(var/mob/living/M in B)
@@ -115,6 +115,8 @@
 	if(src == M) //Don't eat YOURSELF dork
 		//ai_log("vr/won't eat [M] because it's me!", 3) //VORESTATION AI TEMPORARY REMOVAL
 		return 0
+	if(M.is_incorporeal()) //RS Edit Chomp port #7484 | CHOMPADD - No eating the phased ones
+		return 0
 	if(vore_ignores_undigestable && !M.digestable) //Don't eat people with nogurgle prefs
 		//ai_log("vr/wont eat [M] because I am picky", 3) //VORESTATION AI TEMPORARY REMOVAL
 		return 0
@@ -148,6 +150,21 @@
 
 		// We're not attempting a pounce, if they're down or we can eat standing, do it as long as they're edible. Otherwise, hit normally.
 		//if(will_eat(L) && (!L.canmove || vore_standing_too))
+		if(hunter && !L.player_login_key_log)	//RS EDIT START
+			if(L.stat == DEAD)
+				if(food_pref_obligate)	//RS ADD START
+					if(food_pref == CARNIVORE)
+						if(L.food_class != FP_MEAT)
+							ai_holder?.set_stance(STANCE_IDLE)
+							return
+					if(food_pref == HERBIVORE)
+						if(L.food_class != FP_PLANT)
+							ai_holder?.set_stance(STANCE_IDLE)
+							return		//RS ADD END
+				feed_from_target(L)
+				return
+			if(mob_size <= L.mob_size + 10)
+				return ..()	//RS EDIT END - Do not vore things that you aren't quite a bit bigger than if you are a hunter dealing with an NPC
 		if(will_eat(L) && (L.lying || vore_standing_too)) //RS Port Chomp PR 7900 || CHOMPEdit
 			return EatTarget(L)
 		else
@@ -155,9 +172,10 @@
 	else
 		return ..()
 
-
 /mob/living/simple_mob/proc/CanPounceTarget(var/mob/living/M) //returns either FALSE or a %chance of success
 	if(!M.canmove || issilicon(M) || world.time < vore_pounce_cooldown) //eliminate situations where pouncing CANNOT happen
+		return FALSE
+	if(M.is_incorporeal()) //RS Add Chomp port #7484 | CHOMPADD - No pouncing on the shades
 		return FALSE
 	if(!prob(vore_pounce_chance) || !will_eat(M)) //mob doesn't want to pounce
 		return FALSE
@@ -180,6 +198,9 @@
 		playsound(src, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 
 	//if(will_eat(M) && (!M.canmove || vore_standing_too)) //if they're edible then eat them too
+	if(hunter && !M.player_login_key_log)	//RS ADD - Don't vore things we're hunting!
+		return	//RS ADD
+
 	if(will_eat(M) && (M.lying || vore_standing_too)) //if they're edible then eat them too //RS Port Chomp PR 7900 || CHOMPEdit Crawling compat
 		return EatTarget(M)
 	else
@@ -271,6 +292,8 @@
 		"The stomach glorps and gurgles as it tries to work you into slop.")
 	can_be_drop_pred = TRUE // Mobs will eat anyone that decides to drop/slip into them by default.
 	B.belly_fullscreen = "yet_another_tumby"
+	B.belly_healthbar_overlay_theme = "Stomach"		//RS ADD
+	B.belly_healthbar_overlay_color = "#823232"	//RS ADD
 
 /mob/living/simple_mob/Bumped(var/atom/movable/AM, yes)
 	if(tryBumpNom(AM))

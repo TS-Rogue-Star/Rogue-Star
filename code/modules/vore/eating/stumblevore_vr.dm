@@ -1,13 +1,7 @@
 /mob/living/proc/CanStumbleVore(mob/living/target)
-	if(!can_be_drop_pred)
-		return FALSE
 	if(!is_vore_predator(src))
 		return FALSE
-	if(!target.devourable)
-		return FALSE
-	if(!target.can_be_drop_prey)
-		return FALSE
-	if(!target.stumble_vore || !stumble_vore)
+	if(!spont_pref_check(src,target,STUMBLE_VORE))	//RS EDIT
 		return FALSE
 	return TRUE
 

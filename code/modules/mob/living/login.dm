@@ -20,6 +20,7 @@
 	verbs |= /mob/living/proc/smell
 	verbs |= /mob/living/proc/switch_scaling
 	verbs |= /mob/living/proc/center_offset
+	verbs |= /mob/living/proc/liquidbelly_visuals // Reagent bellies || RS Add || Chomp Port
 
 	if(!no_vore)
 		verbs |= /mob/living/proc/vorebelly_printout
@@ -58,6 +59,14 @@
 					voice_sounds_list = goon_speak_roach_sound
 				if("goon speak skelly")
 					voice_sounds_list = goon_speak_skelly_sound
+				//RS ADD START
+				if("yip")
+					voice_sounds_list = talk_yip
+				if("yap")
+					voice_sounds_list = talk_yap
+				if("yipyap")
+					voice_sounds_list = talk_yipyap
+				//RS ADD END
 		else
 			voice_sounds_list = talk_sound
 	//VOREStation Add End

@@ -10,7 +10,7 @@ env:
 jobs:
   file_tests:
     name: Run Linters
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - name: Ensure +x on CI directory
@@ -36,7 +36,7 @@ jobs:
 
   dreamchecker:
     name: DreamChecker
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
 
@@ -44,7 +44,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/SpacemanDMM
-          key: ${{ runner.os }}-dreamchecker-${{ hashFiles('dependencies.sh')}}
+          key: ${{ runner.os }}-dreamchecker-${{ hashFiles('_build_dependencies.sh')}} #RS Edit: Fix dependency file (Lira, August 2025)
           restore-keys: ${{ runner.os }}-dreamchecker
 
       - name: Install Dependencies
@@ -65,13 +65,20 @@ jobs:
   unit_tests:
     strategy:
       matrix:
-        map: ['stellar_delight', 'groundbase']
+        map: ['SD_MAP', 'RP_MAP']   #RS EDIT
     # name: Integration Tests (${{ matrix.map }})
     name: Integration Tests
     # needs: ['file_tests', 'dreamchecker']
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
+      - name: Restore legacy OpenSSL 1.1 runtime (amd64 + i386)
+        run: |
+          sudo dpkg --add-architecture i386
+          echo "deb [arch=amd64,i386] http://security.ubuntu.com/ubuntu focal-security main" \
+               | sudo tee /etc/apt/sources.list.d/focal.list
+          sudo apt-get update
+          sudo apt-get install --yes libssl1.1 libssl1.1:i386
       - name: Ensure +x on CI directory
         run: |
           chmod -R +x ./tools/ci
@@ -95,6 +102,7 @@ jobs:
           TEST_FILE: "code/_unit_tests.dm"
           MAP: ${{ matrix.map }}
           REPLACE: true
+          EXTRA_ARGS: "-D${{ matrix.map }}"   #RS EDIT
           RUN: "1"
       - name: Compile POIs
         run: |
@@ -120,7 +128,7 @@ jobs:
   tests_successful:
     name: Integration Tests
     needs: ['file_tests', 'dreamchecker', 'unit_tests']
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Report Success
         run: |

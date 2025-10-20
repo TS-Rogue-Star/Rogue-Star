@@ -369,3 +369,28 @@
 /datum/trait/positive/wall_climber_pro/apply(var/datum/species/S,var/mob/living/carbon/human/H)
 	..()
 	S.can_climb = TRUE
+
+//RS ADD START
+/datum/trait/positive/blend_in
+	name = "Chameleon Blend In"
+	desc = "Allows one to blend in to their environment while immobile, becoming very difficult to see!"
+	cost = 1
+	custom_only = TRUE
+
+/datum/trait/positive/blend_in/apply(var/datum/species/S,var/mob/living/carbon/human/H)
+	..()
+	H.verbs |= /mob/living/proc/chameleon_blend
+
+/datum/trait/positive/tracker
+	name = "Olfactory Tracker"
+	desc = "Your nose is sensitive enough to track smells!"
+	cost = 1
+	custom_only = FALSE
+
+/datum/trait/positive/tracker/apply(datum/species/S, mob/living/carbon/human/H, trait_prefs)
+	. = ..()
+
+	H.olfaction_track = TRUE
+	H.verbs |= /mob/living/proc/track_target
+
+//RS ADD END

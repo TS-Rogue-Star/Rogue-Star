@@ -16,6 +16,13 @@
 	var/spit_name = null 				//String
 	var/last_spit = 0 					//Timestamp.
 
+	// RS Add Start: Custom markings support (Lira, September 2025)
+	var/tmp/preview_fast = FALSE		// Indicates the mob is being used for a fast preference preview.
+	var/tmp/preview_species_signature	// Cached preference signature for preview short-circuiting.
+	var/tmp/preview_trait_signature	// Cached custom trait signature for preview short-circuiting.
+	var/tmp/preview_slot_id				// Tracks which preference slot last populated this mob.
+	// RS Add End
+
 	var/can_defib = 1					//Horrible damage (like beheadings) will prevent defibbing organics.
 	var/active_regen = FALSE //Used for the regenerate proc in human_powers.dm
 	var/active_regen_delay = 300
@@ -101,6 +108,7 @@
 		species.Stat(src)
 
 /mob/living/carbon/human/ex_act(severity)
+	if(is_incorporeal()) return //RS ADD - Do not blow up phased out shadekin
 	if(!blinded)
 		flash_eyes()
 
@@ -268,6 +276,8 @@
 /mob/living/carbon/human/proc/get_visible_name()
 	if(ability_flags & AB_PHASE_SHIFTED)
 		return "Something"	// Something
+	if(alpha <= EFFECTIVE_INVIS)	//RS ADD - You're basically invisible lol
+		return "Unknown"	//RS ADD
 	if( wear_mask && (wear_mask.flags_inv&HIDEFACE) )	//Wearing a mask which hides our face, use id-name if possible
 		return get_id_name("Unknown")
 	if( head && (head.flags_inv&HIDEFACE) )
@@ -1173,7 +1183,7 @@
 	else
 		to_chat(usr, "<span class='warning'>You failed to check the pulse. Try again.</span>")
 
-/mob/living/carbon/human/proc/set_species(var/new_species, var/default_colour, var/regen_icons = TRUE, var/mob/living/carbon/human/example = null)	//VOREStation Edit - send an example
+/mob/living/carbon/human/proc/set_species(var/new_species, var/default_colour, var/regen_icons = TRUE, var/mob/living/carbon/human/example = null, var/fast_preview = FALSE)	//VOREStation Edit - send an example || RS Edit: Custom marking support (Lira, September 2025)
 
 	if(!dna)
 		if(!new_species)
@@ -1206,11 +1216,11 @@
 
 	species = GLOB.all_species[new_species]
 
-	if(species.language)
-		add_language(species.language)
-
-	if(species.default_language)
-		add_language(species.default_language)
+	if(!fast_preview) // RS Add: Skip for preview (Lira, September 2025)
+		if(species.language)
+			add_language(species.language)
+		if(species.default_language)
+			add_language(species.default_language)
 
 	if(species.icon_scale_x != 1 || species.icon_scale_y != 1)
 		update_transform()
@@ -1238,11 +1248,13 @@
 
 	//icon_state = lowertext(species.name) //Necessary?
 
-	//VOREStation Edit start: swap places of those two procs
-	species.handle_post_spawn(src)
-
-	species.create_organs(src)
-	//VOREStation Edit end: swap places of those two procs
+	//VOREStation Edit start: swap places of those two procs || RS Edit Start: Custom markings support (Lira, September 2025)
+	if(!fast_preview)
+		species.handle_post_spawn(src)
+		species.create_organs(src)
+	else
+		species.clone_basic_appearance(src)
+	//VOREStation Edit end: swap places of those two procs || RS Edit End
 
 
 	maxHealth = species.total_health
@@ -1259,6 +1271,7 @@
 
 	spawn(0)
 		if(regen_icons) regenerate_icons()
+	if(!fast_preview) // RS Add: Custom markings support (Lira, September 2025)
 		make_blood()
 		if(vessel.total_volume < species.blood_volume)
 			vessel.maximum_volume = species.blood_volume
@@ -1278,6 +1291,14 @@
 	if(species)
 		//if(mind) //VOREStation Removal
 			//apply_traits() //VOREStation Removal
+		// RS Add Start: Custom markings support (Lira, September 2025)
+		if(!fast_preview)
+			preview_fast = FALSE
+			preview_species_signature = null
+			preview_trait_signature = null
+		else
+			preview_fast = TRUE
+		// RS Add End
 		return 1
 	else
 		return 0

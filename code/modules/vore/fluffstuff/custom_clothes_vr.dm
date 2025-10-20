@@ -2139,7 +2139,8 @@ Departamental Swimsuits, for general use
 		return 0
 
 	// Because other mobs (i.e. monkeys) apparently have dropnom prey set to 0, we check SPECIFICALLY for humans' dropnom setting.
-	if (target.type == /mob/living/carbon/human && !target.can_be_drop_prey)
+	var/mob/living/L = user
+	if (target.type == /mob/living/carbon/human && !spont_pref_check(L,target,SPONT_PRED))
 		teleport_fail(user, target)
 		return 0
 

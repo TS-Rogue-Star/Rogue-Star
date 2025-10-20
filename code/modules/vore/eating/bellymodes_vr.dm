@@ -1,6 +1,7 @@
 // Process the predator's effects upon the contents of its belly (i.e digestion/transformation etc)
 /obj/belly/process(wait) //Passed by controller
 	recent_sound = FALSE
+	cycle_sloshed = FALSE // Reagent bellies || RS Add || Chomp Port
 
 	if(loc != owner)
 		if(istype(owner))
@@ -9,9 +10,29 @@
 			qdel(src)
 			return
 
+	HandleBellyReagents()	// Reagent bellies || RS Add || Chomp Port
+
 	// VERY early exit
 	if(!contents.len)
 		return
+
+	//RS Add || Chomp Port 2934, 2979, 2989, 3200, 3204, 6155, 7054 || Autotransfer count moved here.
+	if(autotransfer_enabled)
+		var/list/autotransferables = list()
+		for(var/atom/movable/M in contents)
+			if(!M || !M.autotransferable) continue
+			if(isliving(M))
+				var/mob/living/L = M
+				if(L.absorbed) continue
+			M.belly_cycles++
+			if(M.belly_cycles < autotransferwait / 60) continue
+			autotransferables += M
+		if(LAZYLEN(autotransferables) >= autotransfer_min_amount)
+			var/tally = 0
+			for(var/atom/movable/M in autotransferables)
+				if(check_autotransfer(M))
+					tally++
+				if(autotransfer_max_amount > 0 && tally >= autotransfer_max_amount) break
 
 	var/play_sound //Potential sound to play at the end to avoid code duplication.
 	var/to_update = FALSE //Did anything update worthy happen?
@@ -20,6 +41,8 @@
 	var/list/touchable_atoms = contents - items_preserved
 	if(!length(touchable_atoms))
 		return
+
+	HandleBellyReagentEffects(touchable_atoms) // Reagent bellies || RS Add || Chomp Port
 
 /////////////////////////// Sound Selections ///////////////////////////
 	var/digestion_noise_chance = 0
@@ -145,7 +168,6 @@
 
 	if(to_update)
 		updateVRPanels()
-
 
 /obj/belly/proc/handle_touchable_atoms(list/touchable_atoms)
 	var/did_an_item = FALSE // Only do one item per cycle.
@@ -329,13 +351,22 @@
 	if((mode_flags & DM_FLAG_LEAVEREMAINS) && M.digest_leave_remains)
 		handle_remains_leaving(M)
 	digestion_death(M)
+	owner.post_digestion()	//RS ADD
 	if(!ishuman(owner))
 		owner.update_icons()
 	if(isrobot(owner))
 		var/mob/living/silicon/robot/R = owner
-		R.cell.charge += (nutrition_percent / 100) * compensation * 25 * personal_nutrition_modifier
+		if(reagentbellymode == TRUE && reagent_mode_flags & DM_FLAG_REAGENTSDIGEST && reagents.total_volume < custom_max_volume) // Reagent bellies || RS Add || Chomp Port
+			R.cell.charge += (nutrition_percent / 100) * compensation * 15 * personal_nutrition_modifier
+			GenerateBellyReagents_digested()
+		else
+			R.cell.charge += (nutrition_percent / 100) * compensation * 25 * personal_nutrition_modifier
 	else
-		owner.adjust_nutrition((nutrition_percent / 100) * compensation * 4.5 * personal_nutrition_modifier * pred_digestion_efficiency)
+		if(reagentbellymode == TRUE && reagent_mode_flags & DM_FLAG_REAGENTSDIGEST && reagents.total_volume < custom_max_volume)// Reagent bellies || RS Add || Chomp Port
+			owner.adjust_nutrition((nutrition_percent / 100) * compensation * 3.0 * personal_nutrition_modifier * pred_digestion_efficiency)
+			GenerateBellyReagents_digested()
+		else
+			owner.adjust_nutrition((nutrition_percent / 100) * compensation * 4.5 * personal_nutrition_modifier * pred_digestion_efficiency)
 
 /obj/belly/proc/steal_nutrition(mob/living/L)
 	if(L.nutrition <= 110) //RS Edit || Ports VOREStation PR15876
@@ -356,12 +387,17 @@
 	if(L.nutrition >= 100)
 		var/oldnutrition = (L.nutrition * 0.05)
 		L.nutrition = (L.nutrition * 0.95)
+		if(reagentbellymode == TRUE && reagent_mode_flags & DM_FLAG_REAGENTSDIGEST && reagents.total_volume < custom_max_volume) // Reagent bellies || RS Add || Chomp Port
+			oldnutrition = oldnutrition * 0.75 //keeping the price static, due to how much nutrition can flunctuate
+			GenerateBellyReagents_digesting()
 		owner.adjust_nutrition(oldnutrition)
 		if (istype(owner, /mob/living/carbon/human)) //RS Edit Start Is our owner a human?
 			var/mob/living/carbon/human/howner = owner
-			var/datum/species/shadekin/SK = howner.species
-			if(istype(SK))
-				howner.shadekin_adjust_energy(oldnutrition/10)
+			var/modified_gain = oldnutrition/10
+			if(!L.ckey)
+				modified_gain = modified_gain / 4
+
+			howner.shadekin_adjust_energy(modified_gain,TRUE)
 			/*
 			||----------------------------------------------------------------------------------------------||
 			||                                    Let's do some M A T H!					||

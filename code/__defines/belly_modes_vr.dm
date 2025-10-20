@@ -23,6 +23,7 @@
 #define DM_FLAG_FORCEPSAY		0x40
 #define DM_FLAG_SLOWBODY		0x80  //RS Edit || Ports CHOMPStation Pr 5161
 #define DM_FLAG_SLOWBRUTAL		0x100 //RS Edit
+#define DM_FLAG_DAMAGEICON		0x200 //RS ADD
 
 //Item related modes
 #define IM_HOLD									"Hold"
@@ -44,3 +45,21 @@
 #define DR_SLEEP 								"Sleep"
 #define DR_FAKE									"False Sleep"
 #define DR_WEIGHT								"Weight Drain"
+
+//RS ADD START
+#define SPONT_PREY "Spontaneous Prey"
+#define SPONT_PRED "Spontaneous Pred"
+#define DROP_VORE "Drop Vore"
+#define STUMBLE_VORE "Stumble Vore"
+#define SLIP_VORE "Slip Vore"
+#define THROW_VORE "Throw Vore"
+#define FOOD_VORE "Food Vore"
+#define MICRO_PICKUP "Micro Pickup"
+#define SPONT_TF "Spontaneous TF"
+#define RESIZING "Resizing"
+
+#define WL_PREY "Prey"
+#define WL_PRED "Predator"
+#define WL_BOTH "Both"
+
+//RS ADD END

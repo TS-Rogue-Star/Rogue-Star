@@ -61,6 +61,7 @@
 	return 1
 
 /datum/preferences/proc/load_character(slot)
+	close_custom_marking_designer() //RS Add: Force TGUI window to close (Lira, September 2025)
 	if(!path)				return 0
 	if(!fexists(path))		return 0
 	var/savefile/S = new /savefile(path)
@@ -82,8 +83,22 @@
 		player_setup.load_character(S)
 		S.cd = "/character[default_slot]"
 		player_setup.save_character(S)
+	// RS Add Start: Debug for slot loading (Lira, September 2025)
+	var/loaded_slot = slot
+	if(loaded_slot == SAVE_RESET)
+		loaded_slot = default_slot
+	var/debug_ckey = client_ckey
+	if(!debug_ckey && client)
+		debug_ckey = client.ckey
+	if(!debug_ckey)
+		debug_ckey = "unknown"
+	log_debug("[debug_ckey] loaded character slot [loaded_slot] (requested=[slot]).")
+	// RS Add End
 
 	clear_character_previews() // VOREStation Edit
+
+	client.load_etching(src)	//RS ADD - Let's reload our character persist data
+
 	return 1
 
 /datum/preferences/proc/save_character()

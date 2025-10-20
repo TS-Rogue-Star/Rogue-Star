@@ -535,9 +535,9 @@ var/global/floorIsLava = 0
 	if(!check_rights(0))	return
 
 	var/dat = {"
-		<center><B>Game Panel</B></center><hr>\n
+		<html><center><B>Game Panel</B></center><hr>\n
 		<A href='?src=\ref[src];[HrefToken()];c_mode=1'>Change Game Mode</A><br>
-		"}
+		"} //RS Edit || Add html tag for 516 compatibility
 	if(master_mode == "secret")
 		dat += "<A href='?src=\ref[src];[HrefToken()];f_secret=1'>(Force Secret Mode)</A><br>"
 
@@ -552,6 +552,7 @@ var/global/floorIsLava = 0
 		<A href='?src=\ref[src];[HrefToken()];vsc=default'>Choose a default ZAS setting</A><br>
 		"}
 
+	dat += "</html>" //RS Edit || Add html tag for 516 compatibility
 	usr << browse(dat, "window=admin2;size=210x280")
 	return
 
@@ -689,13 +690,13 @@ var/datum/announcement/minor/admin_min_announcer = new
 		return
 
 	//Split on pipe or \n
+	message += "|0" //RS Edit: Change the way we add the final time
 	decomposed = splittext(message,regex("\\||$","m"))
-	decomposed += "0" //Tack on a final 0 sleep to make 3-per-message evenly
 
 	//Time to find how they screwed up.
 	//Wasn't the right length
-	if((decomposed.len) % 3) //+1 to accomidate the lack of a wait time for the last message
-		to_chat(usr, "<span class='warning'>You passed [decomposed.len] segments (senders+messages+pauses). You must pass a multiple of 3, minus 1 (no pause after the last message). That means a sender and message on every other line (starting on the first), separated by a pipe character (|), and a number every other line that is a pause in seconds.</span>")
+	if((decomposed.len - 1) % 3) //RS Edit: Fix length check
+		to_chat(usr, "<span class='warning'>You passed [decomposed.len - 2] segments (senders+messages+pauses). You must pass a multiple of 3, minus 1 (no pause after the last message). That means a sender and message on every other line (starting on the first), separated by a pipe character (|), and a number every other line that is a pause in seconds.</span>") //RS Edit: Fix debug message
 		return
 
 	//Too long a conversation

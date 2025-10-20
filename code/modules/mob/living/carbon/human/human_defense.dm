@@ -253,7 +253,7 @@ emp_act
 	if(user == src) // Attacking yourself can't miss
 		return target_zone
 
-	var/hit_zone = get_zone_with_miss_chance(target_zone, src, user.get_accuracy_penalty())
+	var/hit_zone = get_zone_with_miss_chance(target_zone, src, user.get_accuracy_penalty(), attacker = user) //RS Edit || Ports VOREStation PR17340
 
 	if(!hit_zone)
 		user.do_attack_animation(src)
@@ -402,7 +402,7 @@ emp_act
 			return
 		// PERSON BEING HIT: CAN BE DROP PRED, ALLOWS THROW VORE.
 		// PERSON BEING THROWN: DEVOURABLE, ALLOWS THROW VORE, CAN BE DROP PREY.
-		if((can_be_drop_pred && throw_vore && vore_selected) && (thrown_mob.devourable && thrown_mob.throw_vore && thrown_mob.can_be_drop_prey)) //Prey thrown into pred.
+		if(spont_pref_check(src,thrown_mob,THROW_VORE)) //Prey thrown into pred.	//RS EDIT
 			vore_selected.nom_mob(thrown_mob) //Eat them!!!
 			visible_message("<span class='warning'>[thrown_mob] is thrown right into [src]'s [lowertext(vore_selected.name)]!</span>")
 			if(thrown_mob.loc != vore_selected)
@@ -412,7 +412,7 @@ emp_act
 
 		// PERSON BEING HIT: CAN BE DROP PREY, ALLOWS THROW VORE, AND IS DEVOURABLE.
 		// PERSON BEING THROWN: CAN BE DROP PRED, ALLOWS THROW VORE.
-		else if((can_be_drop_prey && throw_vore && devourable) && (thrown_mob.can_be_drop_pred && thrown_mob.throw_vore && thrown_mob.vore_selected)) //Pred thrown into prey.
+		else if(spont_pref_check(thrown_mob,src,THROW_VORE)) //Pred thrown into prey.	//RS EDIT
 			visible_message("<span class='warning'>[src] suddenly slips inside of [thrown_mob]'s [lowertext(thrown_mob.vore_selected.name)] as [thrown_mob] flies into them!</span>")
 			thrown_mob.vore_selected.nom_mob(src) //Eat them!!!
 			if(src.loc != thrown_mob.vore_selected)
@@ -432,13 +432,15 @@ emp_act
 				I.forceMove(vore_selected)
 				return //RSEdit End
 		if(in_throw_mode && speed <= THROWFORCE_SPEED_DIVISOR)	//empty active hand and we're in throw mode
-			if(canmove && !restrained())
+			if(canmove && !restrained()&& !src.is_incorporeal()) //RS Edit Chomp port #7484 | CHOMPADD - No hands for the phased ones.
 				if(isturf(O.loc))
 					if(can_catch(O))
 						put_in_active_hand(O)
 						visible_message("<span class='warning'>[src] catches [O]!</span>")
 						throw_mode_off()
 						return
+		if(src.is_incorporeal()) //RS Add Chomp port #7484 | CHOMPADD - Don't hit what's not there.
+			return
 
 		var/dtype = O.damtype
 		var/throw_damage = O.throwforce*(speed/THROWFORCE_SPEED_DIVISOR)
@@ -459,7 +461,7 @@ emp_act
 		if (O.throw_source)
 			var/distance = get_dist(O.throw_source, loc)
 			miss_chance = max(15*(distance-2), 0)
-		zone = get_zone_with_miss_chance(zone, src, miss_chance, ranged_attack=1)
+		zone = get_zone_with_miss_chance(zone, src, miss_chance, ranged_attack=1, attacker = O.thrower) //RS Edit || Ports VOREStation PR17340
 
 		if(zone && O.thrower != src)
 			var/shield_check = check_shields(throw_damage, O, thrower, zone, "[O]")

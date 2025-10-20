@@ -469,3 +469,21 @@
 	var/turf/T = get_turf(loc)
 	if(istype(T))
 		new /obj/item/ammo_casing/afoam_dart/riot(get_turf(loc))
+
+//Rogue Star Add - Start
+
+/obj/item/projectile/bullet/egg
+	fire_sound = 'sound/weapons/Gunshot_old.ogg'
+	damage = 5
+	agony = 30
+	embed_chance = 0
+	armor_penetration = 10
+
+	name = "egg"
+	icon_state = "egg"
+	pixel_y = 25
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/egg_impact
+	hitsound = 'sound/effects/splat.ogg'
+	hitsound_wall = 'sound/effects/splat.ogg'
+
+//Rogue Star Add - End
