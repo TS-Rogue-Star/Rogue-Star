@@ -103,10 +103,10 @@
 			var/bad_msg = "--------------- [T.name] \[[T.x] / [T.y] / [T.z]\] [color]"
 			dirs_checked.Cut()
 			for(P in T)
+				pipe_test_count++
 				if(istype(P, /obj/machinery/atmospherics/pipe/zpipe))
 					log_unit_test("[bad_msg] Skipped zpipe")
 					continue // Do not check zpipes. They are magic.
-				pipe_test_count++
 				if(P.dir in dirs_checked)
 					bad_tests++
 					log_unit_test("[bad_msg] Contains multiple pipes with same direction on top of each other.")
