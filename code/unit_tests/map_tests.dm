@@ -69,6 +69,55 @@
 
 	return 1
 
+/datum/unit_test/pipe_test
+	name = "MAP: Pipe Test (Defined Z-Levels)"
+
+/datum/unit_test/pipe_test/start_test()
+	set background=1
+
+	var/pipe_test_count = 0
+	var/bad_tests = 0
+	var/turf/T = null
+	var/obj/machinery/atmospherics/pipe/C = null
+	var/list/pipe_turfs = list()
+	var/list/dirs_checked = list()
+
+	var/list/exempt_from_pipes = list()
+	exempt_from_pipes += using_map.unit_test_exempt_from_pipes.Copy()
+
+	var/list/zs_to_test = using_map.unit_test_z_levels || list(1) //Either you set it, or you just get z1
+
+	for(var/color in pipe_colors)
+		pipe_turfs = list()
+
+		for(P in world)
+			T = null
+
+			T = get_turf(P)
+			var/area/A = get_area(T)
+			if(T && (T.z in zs_to_test) && !(A.type in exempt_from_pipes))
+				if(P.color == pipe_colors[color])
+					pipe_turfs |= get_turf(P)
+
+		for(T in pipe_turfs)
+			var/bad_msg = "--------------- [T.name] \[[T.x] / [T.y] / [T.z]\] [color]"
+			dirs_checked.Cut()
+			for(P in T)
+				pipe_test_count++
+				if(P.dir in dirs_checked)
+					bad_tests++
+					log_unit_test("[bad_msg] Contains multiple pipes with same direction on top of each other.")
+				dirs_checked.Add(P.dir)
+
+		log_unit_test("[color] pipes checked.")
+
+	if(bad_tests)
+		fail("\[[bad_tests] / [pipe_test_count]\] Some turfs had overlapping pipes going the same direction.")
+	else
+		pass("All \[[pipe_test_count]\] pipes had no overlapping going the same direction.")
+
+	return 1
+
 /datum/unit_test/wire_test
 	name = "MAP: Cable Test (Defined Z-Levels)"
 
