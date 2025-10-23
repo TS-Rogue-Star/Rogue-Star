@@ -91,6 +91,8 @@
 		pipe_turfs = list()
 
 		for(P in world)
+			if(istype(P, /obj/machinery/atmospherics/pipe/zpipe))
+				continue // Do not check zpipes. They are magic.
 			T = null
 
 			T = get_turf(P)
