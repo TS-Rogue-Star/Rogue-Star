@@ -158,12 +158,12 @@
 			pipe_test_count++
 
 			pipe_segment = FALSE
-			pipe_segment = isType(P, /obj/structure/disposalpipe/segment)
+			pipe_segment = istype(P, /obj/structure/disposalpipe/segment)
 			if (!pipe_segment)
 				other_pipe_on_turf = TRUE
 
 			// Check if there are pipes with duplicate directions, or if there is a 3 or 4 way pipe on the turf, but also a segment
-			if ((pipe_segment && P.dir in dirs_checked) || (dirs_checked.len > 0 && other_pipe_on_turf) || (pipe_segment && other_pipe_on_turf))
+			if ((pipe_segment && P.dir in dirs_checked) || (dirs_checked.len() > 0 && other_pipe_on_turf) || (pipe_segment && other_pipe_on_turf))
 				bad_tests++
 				log_unit_test("[bad_msg] Contains multiple pipes on top of each other.")
 			dirs_checked.Add(P.dir)
