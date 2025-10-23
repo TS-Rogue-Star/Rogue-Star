@@ -122,6 +122,7 @@ var/list/all_maps = list()
 	var/list/unit_test_exempt_from_atmos = list()
 	var/list/unit_test_exempt_from_apc = list()
 	var/list/unit_test_exempt_from_wires = list()
+	var/list/unit_test_exempt_from_pipes = list() // RS Edit - add pipe tests
 	var/list/unit_test_z_levels //To test more than Z1, set your z-levels to test here.
 
 	var/list/expected_station_connected		//RS ADD - A list of Zs some of which may be the station, and some may not be, but ARE connected
