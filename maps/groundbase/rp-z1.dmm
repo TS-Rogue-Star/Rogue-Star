@@ -7289,7 +7289,6 @@
 /turf/simulated/floor/tiled,
 /area/groundbase/engineering/techstorage)
 "gxG" = (
-/obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/segment,
