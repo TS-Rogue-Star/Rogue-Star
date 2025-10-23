@@ -122,10 +122,12 @@
 	default_skybox = /datum/skybox_settings/sirius_point
 
 	unit_test_exempt_areas = list(
+		/area/crew_quarters/bar/underground,
 		/area/moonbasemine,
 		/area/moonbasemine/unexplored,
 		/area/moonbasemine/explored,
 		/area/maintenance/moonbase,
+		/area/groundbase/hotspring/water,
 		/area/moonbase/surface/east_crater,
 		/area/moonbase/surface/east_crater/unexplored,
 		/area/moonbase/surface/west_crater,
@@ -144,10 +146,14 @@
 
 	// If it is exempt from APC tests because it is outside, it should also be exempt from atmos
 	unit_test_exempt_from_atmos = list(
+		/area/crew_quarters/bar/underground,
 		/area/moonbasemine,
 		/area/moonbasemine/unexplored,
 		/area/moonbasemine/explored,
 		/area/maintenance/moonbase,
+		/area/groundbase/hotspring,
+		/area/groundbase/hotspring/water,
+		/area/moonbase/basement/caves/east,
 		/area/moonbase/surface/east_crater,
 		/area/moonbase/surface/east_crater/unexplored,
 		/area/moonbase/surface/west_crater,
@@ -161,7 +167,8 @@
 		/area/moonbase/surface/leveltwo/north,
 		/area/moonbase/surface/leveltwo/south,
 		/area/moonbase/surface/leveltwo/east,
-		/area/moonbase/surface/leveltwo/west
+		/area/moonbase/surface/leveltwo/west,
+		/area/tcommsat/chamber
 		)
 
 	unit_test_z_levels = list(
