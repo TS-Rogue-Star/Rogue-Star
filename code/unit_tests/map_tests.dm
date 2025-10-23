@@ -105,10 +105,11 @@
 				pipe_test_count++
 				if(istype(P, /obj/machinery/atmospherics/pipe/zpipe))
 					continue // Do not check zpipes. They are magic.
-				if(P.dir in dirs_checked)
-					bad_tests++
-					log_unit_test("[bad_msg] Contains multiple pipes with same direction on top of each other.")
-				dirs_checked.Add(P.dir)
+				if(P.pipe_color == pipe_colors[color] || P.color == pipe_colors[color])
+					if(P.dir in dirs_checked)
+						bad_tests++
+						log_unit_test("[bad_msg] Contains multiple pipes with same direction on top of each other.")
+					dirs_checked.Add(P.dir)
 
 		log_unit_test("[color] pipes checked.")
 
