@@ -8396,9 +8396,6 @@
 	req_one_access = list(16);
 	stripe_color = "#323d80"
 	},
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ai)
 "ffA" = (
@@ -29026,13 +29023,8 @@
 /area/medical/reception)
 "sOp" = (
 /obj/machinery/door/firedoor/glass,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -35440,9 +35432,6 @@
 "xsU" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass_engineering,
-/obj/structure/cable/orange{
-	icon_state = "4-8"
-	},
 /obj/structure/cable/orange{
 	icon_state = "4-8"
 	},
