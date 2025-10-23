@@ -89,22 +89,24 @@
 
 	for(var/color in pipe_colors)
 		pipe_turfs = list()
-		var/pipes_found = 0 // DEBUG
+		var/pipes_found = list() // DEBUG
+		for(var/colorlocal in pipe_colors) // DEBUG
+			pipes_found[colorlocal] = 0 // DEBUG
+		pipes_found["total"] = 0 // DEBUG
 
 		for(P in world)
 			T = null
 			T = get_turf(P)
-			pipes_found++
+			pipes_found["total"]++ // DEBUG
 			var/area/A = get_area(T)
-			if(!T) //DEBUG
-				log_unit_test("Pipe at [P.x] [P.y] [P.z] had no turf.") // DEBUG
-			if(!A) //DEBUG
-				log_unit_test("Pipe at [P.x] [P.y] [P.z] had no area.") // DEBUG
 			if(T && (T.z in zs_to_test) && !(A.type in exempt_from_pipes))
 				if(P.color == pipe_colors[color])
 					pipe_turfs |= T
+					pipes_found[color]++ // DEBUG
 
-		log_unit_test("Found [pipes_found] pipes and [pipe_turfs.len] turfs.")
+		var/color_pipes = pipes_found[color] // DEBUG
+		var/total_pipes = pipes_found["total"] // DEBUG
+		log_unit_test("Found [color_pipes] [color] pipes, [total_pipes] total pipes, and [pipe_turfs.len] turfs.") // DEBUG
 
 		for(T in pipe_turfs)
 			var/bad_msg = "--------------- [T.name] \[[T.x] / [T.y] / [T.z]\] [color]"
