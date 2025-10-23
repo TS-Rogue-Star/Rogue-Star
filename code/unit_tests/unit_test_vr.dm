@@ -9,8 +9,8 @@
 	if(isnull(mobloc))
 		if(!default_mobloc)
 			for(var/turf/simulated/floor/tiled/T in world)
-				var/pressure = T.zone.air.return_pressure()
-				if(90 < pressure && pressure < 120) // Find a turf between 90 and 120
+				var/pressure = T.zone?.air?.return_pressure()   // RS Edit - zone and air can be null
+				if(pressure && 90 < pressure && pressure < 120) // Find a turf between 90 and 120 ; RS Edit - Check if pressure exists
 					default_mobloc = T
 					break
 		mobloc = default_mobloc
