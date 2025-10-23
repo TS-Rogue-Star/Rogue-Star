@@ -78,7 +78,7 @@
 	var/pipe_test_count = 0
 	var/bad_tests = 0
 	var/turf/T = null
-	var/obj/machinery/atmospherics/pipe/C = null
+	var/obj/machinery/atmospherics/pipe/P = null
 	var/list/pipe_turfs = list()
 	var/list/dirs_checked = list()
 
