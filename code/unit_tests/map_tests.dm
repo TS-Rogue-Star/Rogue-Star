@@ -91,8 +91,6 @@
 		pipe_turfs = list()
 
 		for(P in world)
-			if(istype(P, /obj/machinery/atmospherics/pipe/zpipe))
-				continue // Do not check zpipes. They are magic.
 			T = null
 
 			T = get_turf(P)
@@ -105,6 +103,9 @@
 			var/bad_msg = "--------------- [T.name] \[[T.x] / [T.y] / [T.z]\] [color]"
 			dirs_checked.Cut()
 			for(P in T)
+				if(istype(P, /obj/machinery/atmospherics/pipe/zpipe))
+					log_unit_test("[bad_msg] Skipped zpipe")
+					continue // Do not check zpipes. They are magic.
 				pipe_test_count++
 				if(P.dir in dirs_checked)
 					bad_tests++
