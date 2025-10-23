@@ -87,17 +87,18 @@
 
 	var/list/zs_to_test = using_map.unit_test_z_levels || list(1) //Either you set it, or you just get z1
 
-	for(var/color in pipe_colors)
-		pipe_turfs = list()
-
+	finding_pipe_turfs:
 		for(P in world)
 			T = null
 			T = get_turf(P)
 			var/area/A = get_area(T)
 			if(T && (T.z in zs_to_test) && !(A.type in exempt_from_pipes))
-				if(P.pipe_color == pipe_colors[color] || P.color == pipe_colors[color])
-					pipe_turfs |= T
+				for(var/color in pipe_colors)
+					if(P.pipe_color == pipe_colors[color] || P.color == pipe_colors[color])
+						pipe_turfs |= T
+						continue finding_pipe_turfs // Pipes only have one color
 
+	for(var/color in pipe_colors)
 		for(T in pipe_turfs)
 			var/bad_msg = "--------------- [T.name] \[[T.x] / [T.y] / [T.z]\] [color]"
 			dirs_checked.Cut()
@@ -105,7 +106,7 @@
 				pipe_test_count++
 				if(istype(P, /obj/machinery/atmospherics/pipe/zpipe))
 					continue // Do not check zpipes. They are magic.
-				if(P.pipe_color == pipe_colors[color] || P.color == pipe_colors[color])
+				if(P.pipe_color == pipe_colors[color] || P.color == pipe_colors[color]) // It's okay to have different color pipes in the same direction (supply/waste)
 					if(P.dir in dirs_checked)
 						bad_tests++
 						log_unit_test("[bad_msg] Contains multiple pipes with same direction on top of each other.")
