@@ -89,15 +89,19 @@
 
 	for(var/color in pipe_colors)
 		pipe_turfs = list()
+		var/pipes_found = 0 // DEBUG
 
 		for(P in world)
 			T = null
 
 			T = get_turf(P)
+			pipes_found++
 			var/area/A = get_area(T)
 			if(T && (T.z in zs_to_test) && !(A.type in exempt_from_pipes))
 				if(P.color == pipe_colors[color])
 					pipe_turfs |= get_turf(P)
+
+		log_unit_test("Found [pipes_found] pipes and [pipe_turfs.len] turfs.")
 
 		for(T in pipe_turfs)
 			var/bad_msg = "--------------- [T.name] \[[T.x] / [T.y] / [T.z]\] [color]"
@@ -106,6 +110,9 @@
 				pipe_test_count++
 				if(istype(P, /obj/machinery/atmospherics/pipe/zpipe))
 					log_unit_test("[bad_msg] Skipped zpipe")
+					continue // Do not check zpipes. They are magic.
+				else
+					log_unit_test("[bad_msg] Not a zpipe, is [P.name]")
 				if(P.dir in dirs_checked)
 					bad_tests++
 					log_unit_test("[bad_msg] Contains multiple pipes with same direction on top of each other.")
