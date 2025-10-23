@@ -86,4 +86,4 @@ COPY --from=rust_g /rust_g/target/release/librust_g.so ./librust_g.so
 
 #VOLUME [ "/vorestation/config", "/vorestation/data" ]
 
-ENTRYPOINT [ "DreamDaemon", "vorestation.dmb", "-port", "2303", "-trusted", "-close", "-verbose", "-invisible" ]
+ENTRYPOINT [ "DreamDaemon", "vorestation.dmb", "-port", "2303", "-trusted", "-close", "-verbose" ]
