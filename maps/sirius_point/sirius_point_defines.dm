@@ -123,17 +123,6 @@
 
 //unit tests are yet to be implemented
 	unit_test_exempt_areas = list(
-		/area/maintenance/moonbase/substation,
-		/area/maintenance/moonbase/substation/atmospherics,
-		/area/maintenance/moonbase/substation/cargo,
-		/area/maintenance/moonbase/substation/civilian,
-		/area/maintenance/moonbase/substation/command,
-		/area/maintenance/moonbase/substation/engineering,
-		/area/maintenance/moonbase/substation/exploration,
-		/area/maintenance/moonbase/substation/medical,
-		/area/maintenance/moonbase/substation/research,
-		/area/maintenance/moonbase/substation/security,
-		/area/maintenance/moonbase/substation/aicomms,
 		/area/moonbasemine,
 		/area/moonbasemine/unexplored,
 		/area/moonbasemine/explored,
@@ -153,7 +142,25 @@
 		/area/moonbase/surface/leveltwo/west
 		)
 
-	unit_test_exempt_from_atmos = list() //it maint
+	unit_test_exempt_from_atmos = list(
+		/area/moonbasemine,
+		/area/moonbasemine/unexplored,
+		/area/moonbasemine/explored,
+		/area/maintenance/moonbase,
+		/area/moonbase/surface/east_crater,
+		/area/moonbase/surface/east_crater/unexplored,
+		/area/moonbase/surface/west_crater,
+		/area/moonbase/surface/west_crater/unexplored,
+		/area/moonbase/surface/underground,
+		/area/moonbase/surface/levelone/north,
+		/area/moonbase/surface/levelone/south,
+		/area/moonbase/surface/levelone/east,
+		/area/moonbase/surface/levelone/west,
+		/area/moonbase/surface/leveltwo/north,
+		/area/moonbase/surface/leveltwo/south,
+		/area/moonbase/surface/leveltwo/east,
+		/area/moonbase/surface/leveltwo/west
+	)
 
 	unit_test_z_levels = list(
 		Z_LEVEL_MOONBASE_LOW,
