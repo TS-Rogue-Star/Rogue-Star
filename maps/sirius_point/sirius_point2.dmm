@@ -22587,6 +22587,9 @@
 /obj/structure/disposalpipe/junction/yjunction{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/zpipe/up/supply{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/dark,
 /area/security/lobby)
 "oFm" = (
@@ -27504,7 +27507,7 @@
 /obj/item/weapon/storage/box/beakers{
 	name = "box of measuring cups";
 	pixel_y = 7;
-	starts_with = list(/obj/item/weapon/reagent_containers/glass/beaker/measuring_cup = 7)
+	starts_with = list(/obj/item/weapon/reagent_containers/glass/beaker/measuring_cup=7)
 	},
 /turf/simulated/floor/tiled,
 /area/crew_quarters/kitchen)
@@ -33102,7 +33105,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled/steel_ridged,
