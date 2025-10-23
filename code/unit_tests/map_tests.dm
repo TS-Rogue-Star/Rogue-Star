@@ -93,13 +93,16 @@
 
 		for(P in world)
 			T = null
-
 			T = get_turf(P)
 			pipes_found++
 			var/area/A = get_area(T)
+			if(!T) //DEBUG
+				log_unit_test("Pipe at [P.x] [P.y] [P.z] had no turf.") // DEBUG
+			if(!A) //DEBUG
+				log_unit_test("Pipe at [P.x] [P.y] [P.z] had no area.") // DEBUG
 			if(T && (T.z in zs_to_test) && !(A.type in exempt_from_pipes))
 				if(P.color == pipe_colors[color])
-					pipe_turfs |= get_turf(P)
+					pipe_turfs |= T
 
 		log_unit_test("Found [pipes_found] pipes and [pipe_turfs.len] turfs.")
 
