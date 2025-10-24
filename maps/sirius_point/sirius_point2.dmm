@@ -876,8 +876,10 @@
 /obj/machinery/light/small/fairylights{
 	pixel_y = 6
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
 /turf/simulated/floor/outdoors/sidewalk/slab{
 	outdoors = 0
 	},
@@ -5866,6 +5868,15 @@
 /obj/machinery/drone_fabricator,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/moonbase/basement/caves/level2)
+"duu" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/turf/simulated/floor/tiled/eris/cafe,
+/area/crew_quarters/bar)
 "duF" = (
 /obj/machinery/porta_turret/stationary,
 /turf/simulated/floor/bluegrid{
@@ -8158,6 +8169,15 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/security/security_processing)
+"eWg" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/eris/cafe,
+/area/crew_quarters/bar)
 "eXr" = (
 /obj/effect/floor_decal/corner/green{
 	dir = 9
@@ -11185,6 +11205,9 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
 /turf/simulated/floor/outdoors/sidewalk/slab{
 	outdoors = 0
 	},
@@ -11760,6 +11783,9 @@
 	},
 /obj/machinery/camera/network/civilian{
 	dir = 1
+	},
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 8
 	},
 /turf/simulated/floor/outdoors/sidewalk/slab{
 	outdoors = 0
@@ -13170,10 +13196,12 @@
 /area/ai_upload)
 "ipH" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
 	},
 /turf/simulated/floor/outdoors/sidewalk/slab{
 	outdoors = 0
@@ -13460,6 +13488,16 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled,
 /area/quartermaster/moonbase/trashroom)
+"ixL" = (
+/obj/structure/bed/chair/backed_red{
+	dir = 4
+	},
+/obj/effect/landmark/start/visitor,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/turf/simulated/floor/tiled/eris/cafe,
+/area/crew_quarters/bar)
 "ixS" = (
 /obj/structure/table/steel,
 /obj/item/device/flashlight/lamp{
@@ -17880,11 +17918,13 @@
 /turf/simulated/floor/tiled/white,
 /area/medical/genetics_cloning)
 "lnH" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
 	},
 /turf/simulated/floor/outdoors/sidewalk/slab{
 	outdoors = 0
@@ -18865,6 +18905,15 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/maintenance/moonbase/level1/west)
+"lQT" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/turf/simulated/floor/tiled/eris/cafe,
+/area/crew_quarters/bar)
 "lRM" = (
 /obj/machinery/alarm,
 /obj/machinery/vending/assist,
@@ -19000,6 +19049,9 @@
 "lWa" = (
 /obj/machinery/light/small/fairylights{
 	pixel_y = 7
+	},
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 4
 	},
 /turf/simulated/floor/outdoors/sidewalk/slab{
 	outdoors = 0
@@ -23708,8 +23760,10 @@
 /obj/machinery/light/small/fairylights{
 	pixel_y = 6
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
 /turf/simulated/floor/outdoors/sidewalk/slab{
 	outdoors = 0
 	},
@@ -24096,6 +24150,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/visitor,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/eris/cafe,
 /area/crew_quarters/bar)
 "pyR" = (
@@ -24141,6 +24196,9 @@
 "pBH" = (
 /obj/effect/map_effect/perma_light/brighter,
 /obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /turf/simulated/floor/outdoors/sidewalk/side{
@@ -24324,6 +24382,13 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/chapel/main)
+"pId" = (
+/obj/structure/table/woodentable,
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/eris/cafe,
+/area/crew_quarters/bar)
 "pIu" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/cyan{
 	dir = 1
@@ -25281,6 +25346,9 @@
 /obj/item/device/radio/emergency,
 /obj/item/device/radio,
 /obj/structure/table/woodentable,
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 8
+	},
 /turf/simulated/floor/outdoors/sidewalk/slab{
 	outdoors = 0
 	},
@@ -27793,6 +27861,12 @@
 	},
 /turf/simulated/floor/tiled,
 /area/rnd/research_foyer)
+"rXH" = (
+/obj/structure/bed/chair/backed_red,
+/obj/effect/landmark/start/intern,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/tiled/eris/cafe,
+/area/crew_quarters/bar)
 "rYi" = (
 /turf/simulated/wall,
 /area/maintenance/moonbase/level1/west)
@@ -27956,6 +28030,21 @@
 	},
 /turf/simulated/floor/wood,
 /area/moonbase/dorms)
+"sbU" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/reagent_containers/food/condiment/small/saltshaker{
+	pixel_x = -3;
+	pixel_y = 4
+	},
+/obj/item/weapon/reagent_containers/food/condiment/small/peppermill{
+	pixel_x = 2;
+	pixel_y = 7
+	},
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/eris/cafe,
+/area/crew_quarters/bar)
 "scf" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -29806,6 +29895,20 @@
 /obj/machinery/light,
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/easthall)
+"tiC" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
+/turf/simulated/floor/outdoors/sidewalk/slab{
+	outdoors = 0
+	},
+/area/crew_quarters/bar)
 "tiF" = (
 /obj/structure/cryofeed{
 	dir = 4
@@ -31290,6 +31393,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/south)
+"uis" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/eris/cafe,
+/area/crew_quarters/bar)
 "uiQ" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -34590,6 +34702,15 @@
 	},
 /turf/simulated/floor/wood,
 /area/library)
+"wCU" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/turf/simulated/floor/outdoors/sidewalk/slab{
+	outdoors = 0
+	},
+/area/crew_quarters/bar)
 "wDa" = (
 /obj/structure/bed/chair/office/dark{
 	dir = 8
@@ -34625,6 +34746,17 @@
 "wEj" = (
 /turf/simulated/floor/airless,
 /area/moonbase/surface/levelone/west)
+"wEv" = (
+/obj/machinery/light/small/fairylights{
+	pixel_y = 7
+	},
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/simulated/floor/outdoors/sidewalk/slab{
+	outdoors = 0
+	},
+/area/crew_quarters/bar)
 "wFP" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5,
 /turf/simulated/floor/tiled,
@@ -34967,6 +35099,9 @@
 /area/hallway/moonbase/westhall)
 "wRL" = (
 /obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /turf/simulated/floor/outdoors/sidewalk/side{
@@ -36631,6 +36766,17 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ai)
+"xRN" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/outdoors/sidewalk/side{
+	outdoors = 0
+	},
+/area/crew_quarters/bar)
 "xTy" = (
 /obj/structure/sink{
 	dir = 8;
@@ -46267,12 +46413,12 @@ fNR
 pkJ
 dDe
 pQO
+ixL
 pyO
-pyO
-jou
-jou
-hEK
-nOY
+duu
+lQT
+rXH
+pId
 uQI
 oyj
 hpH
@@ -46409,10 +46555,10 @@ dmc
 uzS
 fVv
 pQO
-cbr
+sbU
 nOY
-jou
-jou
+eWg
+uis
 hEK
 nOY
 uQI
@@ -46696,7 +46842,7 @@ iuE
 iuE
 iuE
 wRL
-wRL
+xRN
 iuE
 iuE
 iuE
@@ -46838,7 +46984,7 @@ iuE
 iuE
 iuE
 wRL
-wRL
+xRN
 iuE
 iuE
 iuE
@@ -47270,7 +47416,7 @@ iuE
 iuE
 iuE
 iuE
-lWa
+wEv
 yfO
 qXW
 pBe
@@ -48818,8 +48964,8 @@ oHp
 oHp
 oHp
 dYt
-rAj
-dxJ
+tiC
+wCU
 gZl
 adP
 oHp
