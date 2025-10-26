@@ -121,28 +121,19 @@
 
 	default_skybox = /datum/skybox_settings/sirius_point
 
-//unit tests are yet to be implemented
 	unit_test_exempt_areas = list(
-		/area/maintenance/moonbase/substation,
-		/area/maintenance/moonbase/substation/atmospherics,
-		/area/maintenance/moonbase/substation/cargo,
-		/area/maintenance/moonbase/substation/civilian,
-		/area/maintenance/moonbase/substation/command,
-		/area/maintenance/moonbase/substation/engineering,
-		/area/maintenance/moonbase/substation/exploration,
-		/area/maintenance/moonbase/substation/medical,
-		/area/maintenance/moonbase/substation/research,
-		/area/maintenance/moonbase/substation/security,
-		/area/maintenance/moonbase/substation/aicomms,
+		/area/crew_quarters/bar/underground,
 		/area/moonbasemine,
 		/area/moonbasemine/unexplored,
 		/area/moonbasemine/explored,
 		/area/maintenance/moonbase,
+		/area/groundbase/hotspring/water,
 		/area/moonbase/surface/east_crater,
 		/area/moonbase/surface/east_crater/unexplored,
 		/area/moonbase/surface/west_crater,
 		/area/moonbase/surface/west_crater/unexplored,
 		/area/moonbase/surface/underground,
+		/area/moonbase/surface/underground/outdoors,
 		/area/moonbase/surface/levelone/north,
 		/area/moonbase/surface/levelone/south,
 		/area/moonbase/surface/levelone/east,
@@ -153,7 +144,32 @@
 		/area/moonbase/surface/leveltwo/west
 		)
 
-	unit_test_exempt_from_atmos = list() //it maint
+	// If it is exempt from APC tests because it is outside, it should also be exempt from atmos
+	unit_test_exempt_from_atmos = list(
+		/area/crew_quarters/bar/underground,
+		/area/moonbasemine,
+		/area/moonbasemine/unexplored,
+		/area/moonbasemine/explored,
+		/area/maintenance/moonbase,
+		/area/groundbase/hotspring,
+		/area/groundbase/hotspring/water,
+		/area/moonbase/basement/caves/east,
+		/area/moonbase/surface/east_crater,
+		/area/moonbase/surface/east_crater/unexplored,
+		/area/moonbase/surface/west_crater,
+		/area/moonbase/surface/west_crater/unexplored,
+		/area/moonbase/surface/underground,
+		/area/moonbase/surface/underground/outdoors,
+		/area/moonbase/surface/levelone/north,
+		/area/moonbase/surface/levelone/south,
+		/area/moonbase/surface/levelone/east,
+		/area/moonbase/surface/levelone/west,
+		/area/moonbase/surface/leveltwo/north,
+		/area/moonbase/surface/leveltwo/south,
+		/area/moonbase/surface/leveltwo/east,
+		/area/moonbase/surface/leveltwo/west,
+		/area/tcommsat/chamber
+		)
 
 	unit_test_z_levels = list(
 		Z_LEVEL_MOONBASE_LOW,

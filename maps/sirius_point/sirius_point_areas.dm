@@ -45,7 +45,8 @@
 	name = "Multipurpose Room"
 	icon_state = "basement"
 
-
+/area/crew_quarters/bar/underground
+	name = "Bar Lower Level"
 /area/crew_quarters/moonbase/abandonedoffice
 	name = "Disused Offices"
 	icon = 'icons/turf/areas_vr.dmi'

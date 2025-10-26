@@ -1,6 +1,8 @@
 //RS FILE
-#ifdef RP_MAP
+#if defined(RP_MAP)
 	#define DEFAULT_MAP /datum/map/groundbase
+#elif defined(SP_MAP)
+	#define DEFAULT_MAP /datum/map/sirius_point
 #else
 	#define DEFAULT_MAP /datum/map/stellar_delight
 #endif

@@ -65,7 +65,7 @@ jobs:
   unit_tests:
     strategy:
       matrix:
-        map: ['SD_MAP', 'RP_MAP']   #RS EDIT
+        map: ['SD_MAP', 'RP_MAP', 'SP_MAP']   #RS EDIT
     # name: Integration Tests (${{ matrix.map }})
     name: Integration Tests
     # needs: ['file_tests', 'dreamchecker']
