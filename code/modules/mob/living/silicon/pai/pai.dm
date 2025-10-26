@@ -111,6 +111,9 @@
 
 	var/our_icon_rotation = 0
 
+	var/datum/tgui_module/pai_chassis_selector/chassis_selector_ui //RS Add: pAI chassis selector UI update (Lira, October 2025)
+	var/list/chassis_preview_cache //RS Add: pAI chassis selector UI update (Lira, October 2025)
+
 /mob/living/silicon/pai/New(var/obj/item/device/paicard)
 	src.loc = paicard
 	card = paicard
@@ -143,6 +146,8 @@
 		if(M)
 			M.toff = FALSE
 	..()
+	chassis_selector_ui = new(src) //RS Add: pAI chassis selector UI update (Lira, October 2025)
+	chassis_preview_cache = list() //RS Add: pAI chassis selector UI update (Lira, October 2025)
 
 /mob/living/silicon/pai/Login()
 	..()
@@ -431,6 +436,9 @@
 
 /mob/living/silicon/pai/attack_hand(mob/user as mob)
 	if(user.a_intent == I_HELP)
+		if(isliving(user))	//RS ADD START
+			var/mob/living/L = user
+			L.game_tag(src)	//RS ADD END
 		visible_message("<span class='notice'>[user.name] pats [src].</span>")
 	else
 		visible_message("<span class='danger'>[user.name] boops [src] on the head.</span>")
@@ -549,3 +557,12 @@
 	visible_message("<span class='filter_notice'><b>[src]</b> fades away from the screen, the pAI device goes silent.</span>")
 	card.removePersonality()
 	clear_client()
+
+/mob/living/silicon/pai/ClickOn(atom/A, params) //RS ADD START
+	. = ..()
+
+	if(!isturf(src.loc))
+		return
+	if(isliving(A))
+		var/mob/living/L = A
+		game_tag(L)	//RS ADD END - The pai is clicking someone else!

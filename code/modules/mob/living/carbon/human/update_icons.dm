@@ -1234,14 +1234,14 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 	var/image/effects = new()
 	for(var/datum/modifier/M in modifiers)
 		if(M.mob_overlay_state)
-			if(M.icon_override) //VOREStation Edit. Override for the modifer icon.
-				var/image/I = image(icon = 'icons/mob/modifier_effects_vr.dmi', icon_state = M.mob_overlay_state)
-				I.color = M.effect_color
-				effects.overlays += I // Leaving this as overlays +=
-			else
-				var/image/I = image(icon = 'icons/mob/modifier_effects.dmi', icon_state = M.mob_overlay_state)
-				I.color = M.effect_color
-				effects.overlays += I // Leaving this as overlays +=
+			var/image/I = image(icon = M.mob_overlay_icon, icon_state = M.mob_overlay_state)	//RS EDIT START - generalize the icon instead of hard coded
+			I.color = M.effect_color
+			var/icon/our_icon = icon(icon, icon_state)
+			var/offset = our_icon.Width()
+			if(offset > 32)
+				offset /= 4
+				I.pixel_x = offset
+			effects.overlays += I // Leaving this as overlays +=	//RS EDIT END
 
 	overlays_standing[MODIFIER_EFFECTS_LAYER] = effects
 

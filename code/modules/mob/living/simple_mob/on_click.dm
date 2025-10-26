@@ -10,11 +10,11 @@
 	if(has_hands && istype(A,/obj) && a_intent != I_HURT)
 		var/obj/O = A
 		return O.attack_hand(src)
-
 	switch(a_intent)
 		if(I_HELP)
 			if(isliving(A))
 				var/mob/living/L = A
+				game_tag(L)	//RS ADD - We are clicking someone else, so we are the one tagging
 				if(istype(L) && (!has_hands || !L.attempt_to_scoop(src)))
 					custom_emote(1,"[pick(friendly)] \the [A]!")
 			if(istype(A,/obj/structure/micro_tunnel))	//Allows simplemobs to click on mouse holes, mice should be allowed to go in mouse holes, and other mobs

@@ -844,7 +844,6 @@
 /obj/structure/catwalk,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor,
 /area/maintenance/stellardelight/deck0/portfore)
 "fy" = (
@@ -3275,6 +3274,12 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/maintenance/stellardelight/deck0/abandonedbar)
+"vM" = (
+/obj/structure/catwalk,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor,
+/area/maintenance/stellardelight/deck0/portfore)
 "vR" = (
 /obj/machinery/light/small,
 /turf/simulated/floor,
@@ -6717,7 +6722,6 @@
 /obj/structure/catwalk,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -14727,12 +14731,12 @@ un
 lf
 fx
 Tm
-fx
-fx
-fx
-fx
+vM
+vM
+vM
+vM
 on
-fx
+vM
 QQ
 Ox
 ba

@@ -180,6 +180,49 @@
 /datum/robot_sprite/proc/do_equipment_glamour(var/obj/item/weapon/robot_module/module)
 	return
 
+// RS Add: Add borg selector TGUI (Lira, October 2025)
+/datum/robot_sprite/proc/build_preview(var/mob/living/silicon/robot/ourborg)
+	if(!sprite_icon || !sprite_icon_state)
+		return null
+
+	var/list/directions = list(SOUTH, NORTH, EAST, WEST)
+	var/icon/result = null
+
+	for(var/d in directions)
+		var/icon/frame_icon = icon(sprite_icon, sprite_icon_state, d, 1, FALSE)
+		if(!frame_icon || !frame_icon.Width() || !frame_icon.Height())
+			continue
+
+		if(has_eye_sprites)
+			var/icon/eye_overlay = icon(sprite_icon, "[sprite_icon_state]-eyes", d, 1, FALSE)
+			if(eye_overlay && eye_overlay.Width() && eye_overlay.Height())
+				frame_icon.Blend(eye_overlay, ICON_OVERLAY)
+
+		if(has_eye_light_sprites)
+			var/icon/light_overlay = icon(sprite_icon, "[sprite_icon_state]-lights", d, 1, FALSE)
+			if(light_overlay && light_overlay.Width() && light_overlay.Height())
+				frame_icon.Blend(light_overlay, ICON_OVERLAY)
+
+		if(has_robotdecal_sprites && ourborg && ourborg.robotdecal_on)
+			var/icon/decal_overlay = icon(sprite_icon, "[sprite_icon_state]-decals", d, 1, FALSE)
+			if(decal_overlay && decal_overlay.Width() && decal_overlay.Height())
+				frame_icon.Blend(decal_overlay, ICON_OVERLAY)
+
+		var/icon/static_frame = icon('icons/effects/effects.dmi', "nothing")
+		static_frame.Scale(frame_icon.Width(), frame_icon.Height())
+		static_frame.Insert(frame_icon, "", SOUTH, 1, FALSE)
+
+		if(!result)
+			result = icon('icons/effects/effects.dmi', "nothing")
+			result.Scale(static_frame.Width(), static_frame.Height())
+
+		result.Insert(static_frame, "", d, 1, FALSE)
+
+	if(!result)
+		return icon(sprite_icon, sprite_icon_state, SOUTH, 1, FALSE)
+
+	return result
+
 // Dogborgs and not-dogborgs that use dogborg stuff. Oh no.
 // Not really necessary to be used by any specific sprite actually, even newly added dogborgs.
 // Mostly a combination of all features dogborgs had prior to conversion to datums for convinience of conversion itself.
