@@ -21,7 +21,7 @@ avoid code duplication. This includes items that may sometimes act as a standard
 
 // Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
-	if(user.is_incorporeal()) return	//RS ADD - do not use items while phased out
+	if(user?.is_incorporeal()) return	//RS ADD - do not use items while phased out || Fix runtime when there is no user (Lira, October 2025)
 
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user) & COMPONENT_NO_INTERACT)
 		return
