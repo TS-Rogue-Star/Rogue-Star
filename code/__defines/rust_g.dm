@@ -1,3 +1,6 @@
+// RS UPDATE - DameonOwen - Updated 10/25/25 - sourced to match /tg/station 4.1.0 release
+// See https://github.com/tgstation/rust-g/releases/tag/4.1.0
+//
 // rust_g.dm - DM API for rust_g extension library
 //
 // To configure, create a `rust_g.config.dm` and set what you care about from
