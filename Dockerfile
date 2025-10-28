@@ -75,9 +75,11 @@ RUN apt-get update \
     && apt-get upgrade -y \
     && apt-get dist-upgrade -y \
     && apt-get install -y --no-install-recommends \
+    #RS Edit Start
     libmariadb-dev \
     mariadb-client \
     libssl-dev \
+    #RS Edit End
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p /root/.byond/bin
 
