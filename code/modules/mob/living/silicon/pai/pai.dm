@@ -111,6 +111,9 @@
 
 	var/our_icon_rotation = 0
 
+	var/datum/tgui_module/pai_chassis_selector/chassis_selector_ui //RS Add: pAI chassis selector UI update (Lira, October 2025)
+	var/list/chassis_preview_cache //RS Add: pAI chassis selector UI update (Lira, October 2025)
+
 /mob/living/silicon/pai/New(var/obj/item/device/paicard)
 	src.loc = paicard
 	card = paicard
@@ -143,6 +146,8 @@
 		if(M)
 			M.toff = FALSE
 	..()
+	chassis_selector_ui = new(src) //RS Add: pAI chassis selector UI update (Lira, October 2025)
+	chassis_preview_cache = list() //RS Add: pAI chassis selector UI update (Lira, October 2025)
 
 /mob/living/silicon/pai/Login()
 	..()

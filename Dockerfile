@@ -1,8 +1,11 @@
-FROM i386/ubuntu:xenial as base
+#RS Edit Start: Ubuntu Xenial has been out of support for ages, and has a lot of vulnerabilities
+#Ubuntu is based on Debian, which still has support for i386. It should just work.
+FROM --platform=linux/386 debian:trixie AS base
+#RS Edit End
 
 #RS EDIT START
 ARG BYOND_MAJOR=516
-ARG BYOND_MINOR=1661
+ARG BYOND_MINOR=1666
 #RS EDIT END
 
 RUN apt-get update \
@@ -11,6 +14,9 @@ RUN apt-get update \
     unzip \
     make \
     libstdc++6 \
+    #RS Edit Start: Need new package (DameonOwen, October 2025)
+    libcurl4-openssl-dev \
+    #RS Edit End
     #RS Edit Start: Add user agent per https://github.com/tgstation/tgstation/pull/91101 (Lira, May 2025)
     && curl -H "User-Agent: RogueStar/1.0 CI Script" "https://www.byond.com/download/build/${BYOND_MAJOR}/${BYOND_MAJOR}.${BYOND_MINOR}_byond_linux.zip" -o byond.zip \
     #RS Edit End
@@ -23,7 +29,7 @@ RUN apt-get update \
     && cd .. \
     && rm -rf byond byond.zip /var/lib/apt/lists/*
 
-FROM base as rust_g
+FROM base AS rust_g
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -39,7 +45,9 @@ RUN apt-get install -y --no-install-recommends \
     gcc-multilib \
     && curl https://sh.rustup.rs -sSf | sh -s -- -y --default-host i686-unknown-linux-gnu \
     && git init \
-    && git remote add origin https://github.com/VOREStation/rust-g
+    # RS Edit Start - Use TGStation (DameonOwen, October 2025)
+    && git remote add origin https://github.com/tgstation/rust-g
+    # RS Edit End
 
 COPY _build_dependencies.sh .
 
@@ -48,11 +56,11 @@ RUN /bin/bash -c "source _build_dependencies.sh \
     && git checkout FETCH_HEAD \
     && ~/.cargo/bin/cargo build --release
 
-FROM base as dm_base
+FROM base AS dm_base
 
 WORKDIR /vorestation
 
-FROM dm_base as build
+FROM dm_base AS build
 
 COPY . .
 
@@ -63,15 +71,15 @@ FROM dm_base
 EXPOSE 2303
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends software-properties-common \
-    && add-apt-repository ppa:ubuntu-toolchain-r/test \
     && apt-get update \
     && apt-get upgrade -y \
     && apt-get dist-upgrade -y \
     && apt-get install -y --no-install-recommends \
-    libmariadb2 \
+    #RS Edit Start
+    libmariadb-dev \
     mariadb-client \
-    libssl1.0.0 \
+    libssl-dev \
+    #RS Edit End
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p /root/.byond/bin
 

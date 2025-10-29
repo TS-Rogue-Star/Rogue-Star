@@ -1,3 +1,7 @@
+////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star October 2025: New TGUI system for choosing your pAI chassis //
+////////////////////////////////////////////////////////////////////////////////////////////////
+
 /mob/living/silicon/pai
 	var/people_eaten = 0
 	icon = 'icons/mob/pai_vr.dmi'
@@ -175,39 +179,198 @@
 		default_pixel_x = 0
 	add_eyes()
 
-//proc override to avoid pAI players being invisible while the chassis selection window is open
+//proc override to avoid pAI players being invisible while the chassis selection window is open || RS Edit: pAI chassis selector UI update (Lira, October 2025)
 /mob/living/silicon/pai/proc/choose_chassis()
 	set category = "pAI Commands"
 	set name = "Choose Chassis"
-	var/choice
 
-	choice = tgui_input_list(usr, "What would you like to use for your mobile chassis icon?", "Chassis Choice", possible_chassis)
-	if(!choice) return
+	if(!chassis_selector_ui)
+		chassis_selector_ui = new(src)
+	chassis_selector_ui.tgui_interact(src)
+
+// RS Edit: pAI chassis selector UI update (Lira, October 2025)
+/mob/living/silicon/pai/proc/update_chassis_icon(var/chassis_id)
+	if(!is_valid_chassis(chassis_id))
+		return FALSE
 	var/oursize = size_multiplier
+	var/previous_chassis = chassis
 	resize(1, FALSE, TRUE, TRUE, FALSE)		//We resize ourselves to normal here for a moment to let the vis_height get reset
-	chassis = possible_chassis[choice]
-	if(chassis == "13")
+	if(chassis_id == "13")
 		if(!holo_icon)
 			if(!get_character_icon())
-				return
+				resize(oursize, FALSE, TRUE, TRUE, FALSE)
+				chassis = previous_chassis
+				return FALSE
 		icon_state = null
 		icon = holo_icon
-	else if(chassis in wide_chassis)
+	else if(islist(wide_chassis) && (chassis_id in wide_chassis))
 		icon = 'icons/mob/pai_vr64x64.dmi'
 		vis_height = 64
+		icon_state = chassis_id
 	else
 		icon = 'icons/mob/pai_vr.dmi'
 		vis_height = 32
+		icon_state = chassis_id
 	resize(oursize, FALSE, TRUE, TRUE, FALSE)	//And then back again now that we're sure the vis_height is correct.
-
-	if(chassis in flying_chassis)
+	if(islist(flying_chassis) && (chassis_id in flying_chassis))
 		hovering = TRUE
 	else
 		hovering = FALSE
 		if(isopenspace(loc))
 			fall()
+	chassis = chassis_id
+	return TRUE
 
+// RS Add Start: pAI chassis selector UI update (Lira, October 2025)
+
+// Returns the display name associated with the provided chassis id
+/mob/living/silicon/pai/proc/get_chassis_display_name(var/chassis_id)
+	for(var/name in possible_chassis)
+		if(possible_chassis[name] == chassis_id)
+			return name
+	return null
+
+// Validates whether the supplied chassis id exists in the available chassis list
+/mob/living/silicon/pai/proc/is_valid_chassis(var/chassis_id)
+	return !isnull(get_chassis_display_name(chassis_id))
+
+// Generates a preview icon that mirrors the in-game chassis appearance
+/mob/living/silicon/pai/proc/get_chassis_preview_icon(var/chassis_id)
+	if(!is_valid_chassis(chassis_id))
+		return null
+	if(chassis_id == "13")
+		if(!holo_icon)
+			return null
+		var/list/states = icon_states(holo_icon)
+		var/preview_state = states && states.len ? states[1] : ""
+		return build_chassis_preview(holo_icon, preview_state)
+	var/list/icon_paths = list(
+		'icons/mob/pai_vr.dmi',
+		'icons/mob/pai_vr64x64.dmi',
+		'icons/mob/pai_vr64x32.dmi',
+		'icons/mob/pai_vr32x64.dmi'
+	)
+	for(var/icon_path in icon_paths)
+		if(chassis_id in cached_icon_states(icon_path))
+			return build_chassis_preview(icon_path, chassis_id)
+	return null
+
+// Return overlay for eye layer
+/mob/living/silicon/pai/proc/get_preview_eye_overlay(var/icon/icon_source, var/icon_state, var/direction, var/icon/frame_icon)
+	if(icon_source && holo_icon && icon_source == holo_icon)
+		var/icon/overlay_icon = null
+		var/width = frame_icon ? frame_icon.Width() : 32
+		var/height = frame_icon ? frame_icon.Height() : 32
+
+		if(width > 32 && height > 32)
+			overlay_icon = icon('icons/mob/pai_vr64x64.dmi', "type13-eyes", direction, 1, FALSE)
+		else if(width > 32)
+			overlay_icon = icon('icons/mob/pai_vr64x32.dmi', "type13-eyes", direction, 1, FALSE)
+		else if(height > 32)
+			overlay_icon = icon('icons/mob/pai_vr32x64.dmi', "type13-eyes", direction, 1, FALSE)
+		else
+			overlay_icon = icon('icons/mob/pai_vr.dmi', "type13-eyes", direction, 1, FALSE)
+
+		if(overlay_icon)
+			if(eye_color)
+				overlay_icon.Blend(eye_color, ICON_MULTIPLY)
+			return overlay_icon
+
+	if(!icon_state || !icon_source)
+		return null
+
+	var/overlay_state = "[icon_state]-eyes"
+	if(!(overlay_state in cached_icon_states(icon_source)))
+		return null
+
+	var/icon/eye_overlay = icon(icon_source, overlay_state, direction, 1, FALSE)
+	if(!eye_overlay)
+		return null
+
+	if(eye_color)
+		eye_overlay.Blend(eye_color, ICON_MULTIPLY)
+
+	return eye_overlay
+
+// Create preview icon
+/mob/living/silicon/pai/proc/build_chassis_preview(var/icon/icon_source, var/icon_state)
+	if(!icon_source)
+		return null
+
+	var/list/directions = list(SOUTH, NORTH, EAST, WEST)
+	var/icon/result = null
+
+	for(var/direction in directions)
+		var/icon/frame_icon = icon(icon_source, icon_state ? icon_state : "", direction, 1, FALSE)
+		if(!frame_icon || !frame_icon.Width() || !frame_icon.Height())
+			continue
+
+		var/icon/eye_overlay = get_preview_eye_overlay(icon_source, icon_state, direction, frame_icon)
+		if(eye_overlay)
+			frame_icon.Blend(eye_overlay, ICON_OVERLAY)
+
+		var/icon/static_frame = icon('icons/effects/effects.dmi', "nothing")
+		static_frame.Scale(frame_icon.Width(), frame_icon.Height())
+		static_frame.Insert(frame_icon, "", SOUTH, 1, FALSE)
+
+		if(!result)
+			result = icon('icons/effects/effects.dmi', "nothing")
+			result.Scale(static_frame.Width(), static_frame.Height())
+
+		result.Insert(static_frame, "", direction, 1, FALSE)
+
+	if(result)
+		return result
+
+	return icon(icon_source, icon_state ? icon_state : "", SOUTH, 1, FALSE)
+
+// Returns the friendly name of the currently selected chassis
+/mob/living/silicon/pai/proc/get_current_chassis_name()
+	return get_chassis_display_name(chassis)
+
+// Produces an ordered list of chassis entries for the selector UI
+/mob/living/silicon/pai/proc/get_available_chassis_entries()
+	var/list/entries = list()
+	if(!islist(possible_chassis) || !possible_chassis.len)
+		return entries
+	var/list/names = list()
+	for(var/name in possible_chassis)
+		names += name
+	names = sortList(names)
+	for(var/name in names)
+		var/chassis_id = possible_chassis[name]
+		var/cache_color = eye_color ? eye_color : "none"
+		var/cache_key = "[chassis_id]#[cache_color]"
+		if(!chassis_preview_cache)
+			chassis_preview_cache = list()
+		var/preview_data = chassis_preview_cache[cache_key]
+		if(isnull(preview_data))
+			var/icon/preview_icon = get_chassis_preview_icon(chassis_id)
+			preview_data = preview_icon ? icon2base64(preview_icon) : ""
+			chassis_preview_cache[cache_key] = preview_data
+		var/final_preview = length(preview_data) ? preview_data : null
+		entries += list(list(
+			"id" = chassis_id,
+			"name" = name,
+			"isCurrent" = (chassis == chassis_id),
+			"preview" = final_preview
+		))
+	return entries
+
+// Applies the requested chassis and refreshes the sprite
+/mob/living/silicon/pai/proc/apply_chassis_selection(var/chassis_id)
+	if(!is_valid_chassis(chassis_id))
+		return FALSE
+	if(!update_chassis_icon(chassis_id))
+		return FALSE
 	update_icon()
+	return TRUE
+
+// CLear preview cache
+/mob/living/silicon/pai/proc/clear_chassis_preview_cache()
+	chassis_preview_cache = list()
+
+// RS Add End
 
 /mob/living/silicon/pai/verb/toggle_eyeglow()
 	set category = "pAI Commands"
@@ -235,12 +398,14 @@
 	var/new_eye_color = input(src, "Choose your character's eye color:", "Eye Color") as color|null
 	if(new_eye_color)
 		eye_color = new_eye_color
+		clear_chassis_preview_cache() // RS Add: pAI chassis selector UI update (Lira, October 2025)
 		update_icon()
 		card.setEmotion(card.current_emotion)
 
 // Release belly contents before being gc'd!
 /mob/living/silicon/pai/Destroy()
 	release_vore_contents()
+	QDEL_NULL(chassis_selector_ui) // RS Add: pAI chassis selector UI update (Lira, October 2025)
 	if(ckey)
 		paikeys -= ckey
 	return ..()
@@ -650,6 +815,7 @@
 	qdel(dummy)
 	holo_icon = new_holo
 	holo_icon_north = new_holo_north
+	clear_chassis_preview_cache() // RS Add: pAI chassis selector UI update (Lira, October 2025)
 	return TRUE
 
 /mob/living/silicon/pai/set_dir(var/new_dir)

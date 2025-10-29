@@ -6,9 +6,11 @@
 GLOBAL_VAR_INIT(use_preloader, FALSE)
 GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 
+// RS Edit: Move from shared dmmRegex to a seperate regex inside each map load (Lira, October 2025)
+	// /"([a-zA-Z]+)" = \(((?:.|\n)*?)\)\n(?!\t)|\((\d+),(\d+),(\d+)\) = \{"([a-zA-Z\n]*)"\}/g
+var/const/DMM_LOADER_REGEX = {""(\[a-zA-Z]+)" = \\(((?:.|\n)*?)\\)\n(?!\t)|\\((\\d+),(\\d+),(\\d+)\\) = \\{"(\[a-zA-Z\n]*)"\\}"}
+
 /dmm_suite
-		// /"([a-zA-Z]+)" = \(((?:.|\n)*?)\)\n(?!\t)|\((\d+),(\d+),(\d+)\) = \{"([a-zA-Z\n]*)"\}/g
-	var/static/regex/dmmRegex = new/regex({""(\[a-zA-Z]+)" = \\(((?:.|\n)*?)\\)\n(?!\t)|\\((\\d+),(\\d+),(\\d+)\\) = \\{"(\[a-zA-Z\n]*)"\\}"}, "g")
 		// /^[\s\n]+"?|"?[\s\n]+$|^"|"$/g
 	var/static/regex/trimQuotesRegex = new/regex({"^\[\\s\n]+"?|"?\[\\s\n]+$|^"|"$"}, "g")
 		// /^[\s\n]+|[\s\n]+$/
@@ -31,9 +33,6 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
  */
 /dmm_suite/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num, orientation as num)
 	
-	dmmRegex = new/regex({""(\[a-zA-Z]+)" = \\(((?:.|\n)*?)\\)\n(?!\t)|\\((\\d+),(\\d+),(\\d+)\\) = \\{"(\[a-zA-Z\n]*)"\\}"}, "g")
-	trimQuotesRegex = new/regex({"^\[\\s\n]+"?|"?\[\\s\n]+$|^"|"$"}, "g")
-	trimRegex = new/regex("^\[\\s\n]+|\[\\s\n]+$", "g")
 	modelCache = list()
 
 	//How I wish for RAII
@@ -55,6 +54,9 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 	var/tfile = dmm_file//the map file we're creating
 	if(isfile(tfile))
 		tfile = file2text(tfile)
+
+	// RS Edit: Move from shared dmmRegex to a seperate regex inside each map load (Lira, October 2025)
+	var/regex/dmmRegex = new/regex(DMM_LOADER_REGEX, "g")
 
 	if(!x_offset)
 		x_offset = 1

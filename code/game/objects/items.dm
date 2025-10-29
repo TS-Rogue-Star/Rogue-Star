@@ -815,6 +815,21 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	var/state2use = get_worn_icon_state(slot_name = slot_name)
 	var/layer2use = get_worn_layer(default_layer = default_layer)
 
+	// RS Add: Fallback for open state clothes that don't have a digi sprite (Lira, October 2025)
+	if(icon2use && state2use)
+		var/state_len = length(state2use)
+		if(state_len >= 5 && copytext(state2use, state_len - 4, state_len + 1) == "_open")
+			if(!icon_states(icon2use).Find(state2use) && istype(src, /obj/item/clothing))
+				var/obj/item/clothing/open_clothes = src
+				var/icon/fallback_icon = null
+				if(open_clothes.update_icon_define_orig && icon_states(open_clothes.update_icon_define_orig).Find(state2use))
+					fallback_icon = open_clothes.update_icon_define_orig
+				else if(open_clothes.default_worn_icon && icon_states(open_clothes.default_worn_icon).Find(state2use))
+					fallback_icon = open_clothes.default_worn_icon
+				if(fallback_icon)
+					icon2use = fallback_icon
+	// RS Add End
+
 	//Snowflakey inhand icons in a specific slot
 	if(inhands && icon2use == icon_override)
 		switch(slot_name)

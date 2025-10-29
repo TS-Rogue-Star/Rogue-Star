@@ -116,6 +116,7 @@
 	ai_holder_type = /datum/ai_holder/simple_mob/retaliate/cooperative
 	var/image/bigshadow
 	var/autodoom = TRUE
+	hunter = FALSE // RS Add: She is too OP (Lira, October 2025)
 
 /mob/living/simple_mob/vore/fennec/huge/Initialize()
 	. = ..()

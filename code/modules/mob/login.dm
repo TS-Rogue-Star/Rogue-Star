@@ -97,3 +97,6 @@
 	if(src.client && src.bellies_loaded == FALSE) // Quick fix
 		log_debug("Fallback reload of bellies from [src.client] into [src]")
 		src.init_vore()
+	// RS Add: Restore character link from teleops on login (Lira, October 2025)
+	if(client)
+		client.rebuild_multichar_state_from_teleops()

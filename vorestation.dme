@@ -4146,6 +4146,7 @@
 #include "code\modules\tgui\modules\gyrotron_control.dm"
 #include "code\modules\tgui\modules\law_manager.dm"
 #include "code\modules\tgui\modules\overmap.dm"
+#include "code\modules\tgui\modules\pai_chassis_selector.dm"
 #include "code\modules\tgui\modules\power_monitor.dm"
 #include "code\modules\tgui\modules\rcon.dm"
 #include "code\modules\tgui\modules\rustcore_monitor.dm"
