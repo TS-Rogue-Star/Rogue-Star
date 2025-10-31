@@ -50,9 +50,9 @@
 			message = nutrition_messages[7]
 		if(7800 to 10399) // Three people.
 			message = nutrition_messages[8]
-		if(10400 to 12999) // Four people.
+		if(10400 to 18199) // Four people.
 			message = nutrition_messages[9]
-		if(13000 to INFINITY) // More. RS EDIT END
+		if(18200 to INFINITY) // More. RS EDIT END
 			message = nutrition_messages[10]
 	if(message)
 		message = "<span class='notice'>[message]</span>"
