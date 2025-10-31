@@ -21,9 +21,17 @@
 
 /mob/proc/set_typing_indicator(var/state) //Leaving this here for mobs.
 
+	// RS Add: Support for typing indicator enhancement (Lira, October 2025)
+	if(!state)
+		input_typing_indicator_active = FALSE
+
 	if(!is_preference_enabled(/datum/client_preference/show_typing_indicator))
 		if(typing_indicator)
 			cut_overlay(typing_indicator, TRUE)
+		// RS Add Start: Support for typing indicator enhancement (Lira, October 2025)
+		typing = FALSE
+		typing_indicator_active = null
+		// RS Add End
 		return
 
 	var/cur_bubble_appearance = custom_speech_bubble
@@ -44,6 +52,111 @@
 		typing_indicator_active = null
 
 	return state
+
+// RS Add Start: Support for typing indicator enhancement (Lira, October 2025)
+
+/mob/verb/typing_indicator_focus()
+	set name = ".TypingIndicatorFocus"
+	set hidden = 1
+
+	if(!client)
+		return
+
+	input_typing_focus = TRUE
+	start_input_typing_indicator_monitor()
+
+/mob/verb/typing_indicator_blur()
+	set name = ".TypingIndicatorBlur"
+	set hidden = 1
+
+	if(!client || !input_typing_focus)
+		return
+
+	lose_input_typing_focus()
+
+#define TYPING_INDICATOR_POLL 10
+#define TYPING_INDICATOR_INPUT_CONTROL "mainwindow.input"
+
+/mob/proc/lose_input_typing_focus()
+	if(!input_typing_focus)
+		return
+
+	input_typing_focus = FALSE
+	stop_input_typing_indicator_monitor()
+
+	if(input_typing_indicator_active)
+		input_typing_indicator_active = FALSE
+		set_typing_indicator(FALSE)
+
+/mob/proc/start_input_typing_indicator_monitor()
+	if(input_typing_timer_id || !client)
+		return
+
+	schedule_input_typing_indicator_check(TYPING_INDICATOR_POLL)
+
+/mob/proc/stop_input_typing_indicator_monitor()
+	if(input_typing_timer_id)
+		deltimer(input_typing_timer_id)
+		input_typing_timer_id = null
+
+/mob/proc/update_input_typing_indicator()
+	input_typing_timer_id = null
+
+	if(!client)
+		lose_input_typing_focus()
+		return
+
+	if(!input_typing_focus)
+		return
+
+	var/current_focus = winget(client, null, "focus")
+	if(current_focus != TYPING_INDICATOR_INPUT_CONTROL)
+		lose_input_typing_focus()
+		return
+
+	var/input_text = winget(client, "input", "text")
+	var/should_show = should_input_trigger_typing_indicator(input_text)
+
+	if(should_show)
+		if(!input_typing_indicator_active)
+			input_typing_indicator_active = TRUE
+			set_typing_indicator(TRUE)
+	else if(input_typing_indicator_active)
+		input_typing_indicator_active = FALSE
+		set_typing_indicator(FALSE)
+
+	schedule_input_typing_indicator_check(TYPING_INDICATOR_POLL)
+
+/mob/proc/schedule_input_typing_indicator_check(var/delay)
+	if(input_typing_timer_id || !client)
+		return
+	input_typing_timer_id = addtimer(CALLBACK(src, PROC_REF(update_input_typing_indicator)), delay, TIMER_STOPPABLE)
+
+/mob/proc/should_input_trigger_typing_indicator(var/input_text)
+	if(!input_text)
+		return FALSE
+
+	var/trimmed = trim_left(input_text)
+	if(!length(trimmed))
+		return FALSE
+
+	var/lowered = lowertext(trimmed)
+	if(startswith(lowered, "say "))
+		return TRUE
+	if(startswith(lowered, "me "))
+		return TRUE
+
+	return FALSE
+
+/mob/proc/startswith(var/text, var/prefix)
+	if(length(text) < length(prefix))
+		return FALSE
+	return copytext(text, 1, length(prefix) + 1) == prefix
+
+#undef TYPING_INDICATOR_POLL
+#undef TYPING_INDICATOR_INPUT_CONTROL
+
+// RS Add End
 
 /mob/verb/say_wrapper()
 	set name = ".Say"
@@ -66,6 +179,26 @@
 
 	if(message)
 		me_verb(message)
+
+// RS Add Start: New client me and say verbs that call the hotkey wrappers (Lira, October 2025)
+/client/verb/say_panel()
+	set name = "Say"
+	set category = "IC"
+
+	if(!mob)
+		return
+
+	mob.say_wrapper()
+
+/client/verb/me_panel()
+	set name = "Me"
+	set category = "IC"
+
+	if(!mob)
+		return
+
+	mob.me_wrapper()
+// RS Add End
 
 // No typing indicators here, but this is the file where the wrappers are, so...
 /mob/verb/whisper_wrapper()

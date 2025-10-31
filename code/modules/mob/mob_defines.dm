@@ -220,6 +220,11 @@
 	var/obj/effect/decal/typing_indicator
 	var/obj/effect/decal/typing_indicator_active
 	var/cur_typing_indicator
+	// RS Add Start: Support for typing indicator enhancement (Lira, October 2025)
+	var/tmp/input_typing_focus = FALSE
+	var/tmp/input_typing_indicator_active = FALSE
+	var/tmp/input_typing_timer_id
+	// RS Add End
 	var/custom_speech_bubble = "default"
 
 	var/low_priority = FALSE //Skip processing life() if there's just no players on this Z-level
