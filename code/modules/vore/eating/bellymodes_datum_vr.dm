@@ -37,7 +37,7 @@ GLOBAL_LIST_INIT(digest_modes, list())
 					SEND_SOUND(L, sound(get_sfx("fancy_death_prey"))) //RS edit end
 			B.handle_digestion_death(L)
 		// Begin RS edit
-		if(!L)
+		if(QDELETED(L)) // RS Edit: Fix double digestion (Lira, November 2025)
 			if (istype(B.owner, /mob/living/carbon/human))
 				var/mob/living/carbon/human/howner = B.owner
 				howner.update_fullness()
@@ -47,7 +47,7 @@ GLOBAL_LIST_INIT(digest_modes, list())
 			return list("to_update" = TRUE, "soundToPlay" = sound(get_sfx("fancy_death_pred")))
 		else
 			B.handle_digestion_death(L)//RS edit end
-	if(!L)
+	if(QDELETED(L)) // RS Edit: Fix double digestion (Lira, November 2025)
 		return
 
 	// Deal digestion damage (and feed the pred)
