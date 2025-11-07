@@ -56,11 +56,11 @@
 	last_flash = world.time
 	use_power(1500)
 
-	for(var/mob/living/O in oviewers(range,src))
+	for(var/mob/living/O in oviewers(range,src)) // RS EDIT
 		if(O.is_incorporeal())
 			continue
 
-		var/flash_time = strength // RS EDIT
+		var/flash_time = strength // RS EDIT START
 		if(istype(O, /mob/living/carbon/human)) // NIF Check!
 			var/mob/living/carbon/human/L = O
 			if(L.nif && L.nif.flag_check(NIF_V_FLASHPROT,NIF_FLAGS_VISION))
@@ -105,7 +105,7 @@
 /obj/machinery/flasher/portable/process() // RS ADD
 	if(disable || !anchored || (last_flash && world.time < last_flash + 150))
 		return
-	for (var/mob/living/O in oviewers(range,src))
+	for (var/mob/living/O in oviewers(range,src)) // RS EDIT
 		if (O.m_intent != "walk" && !(O.is_incorporeal()) && !(O.lying))
 			flash()
 
