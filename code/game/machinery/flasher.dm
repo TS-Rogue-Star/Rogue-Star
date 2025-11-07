@@ -56,7 +56,7 @@
 	last_flash = world.time
 	use_power(1500)
 
-	for(var/mob/living/O in oviewers(2,src))
+	for(var/mob/living/O in oviewers(range,src))
 		if(O.is_incorporeal())
 			continue
 
@@ -105,7 +105,7 @@
 /obj/machinery/flasher/portable/process() // RS ADD
 	if(disable || !anchored || (last_flash && world.time < last_flash + 150))
 		return
-	for (var/mob/living/O in oviewers(2,src))
+	for (var/mob/living/O in oviewers(range,src))
 		if (O.m_intent != "walk" && !(O.is_incorporeal()) && !(O.lying))
 			flash()
 
