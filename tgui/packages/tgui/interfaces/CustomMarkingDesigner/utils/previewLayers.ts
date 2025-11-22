@@ -2,9 +2,24 @@
 // Created by Lira for Rogue Star November 2025: Preview layer helpers for custom marking designer //
 // //////////////////////////////////////////////////////////////////////////////////////////////////
 
-import { GENERIC_PART_KEY, applyDiffToGrid, cloneGridData, createBlankGrid, getPreviewGridFromAsset, getPreviewGridListFromAssets, getPreviewPartMapFromAssets, gridHasPixels, resolveBodyPartLabel } from '../../../utils/character-preview';
+import {
+  GENERIC_PART_KEY,
+  applyDiffToGrid,
+  cloneGridData,
+  createBlankGrid,
+  getPreviewGridFromAsset,
+  getPreviewGridListFromAssets,
+  getPreviewPartMapFromAssets,
+  gridHasPixels,
+  resolveBodyPartLabel,
+} from '../../../utils/character-preview';
+import type {
+  DiffEntry,
+  PreviewDirectionEntry,
+  PreviewDirState,
+  PreviewLayerEntry,
+} from '../../../utils/character-preview';
 import { TRANSPARENT_HEX } from '../../../utils/color';
-import type { DiffEntry, PreviewDirectionEntry, PreviewDirState, PreviewLayerEntry } from '../../../utils/character-preview';
 
 type PartPaintPresenceOptions = {
   dirStates: Record<number, PreviewDirState>;

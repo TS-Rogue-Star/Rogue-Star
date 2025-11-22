@@ -11,18 +11,67 @@ import { normalizeHex } from '../../utils/color';
 import { GENERIC_PART_KEY, resolveBodyPartLabel } from '../../utils/character-preview';
 import type { DiffEntry } from '../../utils/character-preview';
 import { PaintCanvas } from '../Canvas';
-import { DirectionPreviewCanvas, MarkingInfoSection, PaintToolsSection, PhantomClickScheduler, SavingOverlay, SessionControls, ToolBootstrapReset, ToolBootstrapScheduler } from './components';
-import { DOT_SIZE, PREVIEW_CANVAS_TARGET, PREVIEW_PIXEL_MIN, PREVIEW_PIXEL_MAX, PREVIEW_DIFF_CHUNK_SIZE, DEFAULT_GENERIC_REFERENCE_OPACITY, DEFAULT_BODY_PART_REFERENCE_OPACITY, ERASER_PREVIEW_COLOR, COLOR_PICKER_CUSTOM_SLOTS, PLACEHOLDER_TOOL } from './constants';
+import {
+  DirectionPreviewCanvas,
+  MarkingInfoSection,
+  PaintToolsSection,
+  PhantomClickScheduler,
+  SavingOverlay,
+  SessionControls,
+  ToolBootstrapReset,
+  ToolBootstrapScheduler,
+} from './components';
+import {
+  DOT_SIZE,
+  PREVIEW_CANVAS_TARGET,
+  PREVIEW_PIXEL_MIN,
+  PREVIEW_PIXEL_MAX,
+  PREVIEW_DIFF_CHUNK_SIZE,
+  DEFAULT_GENERIC_REFERENCE_OPACITY,
+  DEFAULT_BODY_PART_REFERENCE_OPACITY,
+  ERASER_PREVIEW_COLOR,
+  COLOR_PICKER_CUSTOM_SLOTS,
+  PLACEHOLDER_TOOL,
+} from './constants';
 import { useBrushColorController, useSyncedDirectionState } from './hooks';
 import { createPreviewSyncController } from './services/previewSync';
 import { createStrokeDraftManager } from './services/strokeDrafts';
+import { createExportController } from './services/exportHandlers';
 import { createCanvasSamplingHelpers, generateClearStrokeKey, generateFillStrokeKey } from './utils/canvasSampling';
 import { createPaintHandlers } from './utils/paintHandlers';
-import { createExportController } from './services/exportHandlers';
-import type { CustomMarkingDesignerData, PartRenderPriorityState, PartReplacementState, StrokeDraftState } from './types';
-import { applyDraftDiffsToLayerMap, buildBodyPartLabelMap, buildDraftDiffIndex, buildDraftPixelLookup, buildFlagStateFromServer, buildLocalSessionKey, buildOverlayLayerParts, buildReferenceOpacityMapForDesigner, buildSessionDraftDiff, buildPartPaintPresenceMap, buildRenderedPreviewDirs, chunkDiffEntries, convertCompositeGridToUi, convertCompositeLayerMap, createLayerPriorityToggler, createPartReplacementToggler, createSavingHandlers, initializeColorPickerSlotsIfNeeded, resolveDirectionCanvasSources, resolveLayeringState, syncFlagStateIfNeeded, syncPreviewStateIfNeeded, updatePreviewStateFromPayload } from './utils';
-import CustomEyeIconAsset from '../../../../public/Icons/Rogue Star/eye 1.png';
+import {
+  applyDraftDiffsToLayerMap,
+  buildBodyPartLabelMap,
+  buildDraftDiffIndex,
+  buildDraftPixelLookup,
+  buildFlagStateFromServer,
+  buildLocalSessionKey,
+  buildOverlayLayerParts,
+  buildReferenceOpacityMapForDesigner,
+  buildSessionDraftDiff,
+  buildPartPaintPresenceMap,
+  buildRenderedPreviewDirs,
+  chunkDiffEntries,
+  convertCompositeGridToUi,
+  convertCompositeLayerMap,
+  createLayerPriorityToggler,
+  createPartReplacementToggler,
+  createSavingHandlers,
+  initializeColorPickerSlotsIfNeeded,
+  resolveDirectionCanvasSources,
+  resolveLayeringState,
+  syncFlagStateIfNeeded,
+  syncPreviewStateIfNeeded,
+  updatePreviewStateFromPayload,
+} from './utils';
+import type {
+  CustomMarkingDesignerData,
+  PartRenderPriorityState,
+  PartReplacementState,
+  StrokeDraftState,
+} from './types';
 import { useDesignerUiState } from './state';
+import CustomEyeIconAsset from '../../../../public/Icons/Rogue Star/eye 1.png';
 
 export const CustomMarkingDesigner = (_props, context) => {
   const { act, data } = useBackend<CustomMarkingDesignerData>(context);

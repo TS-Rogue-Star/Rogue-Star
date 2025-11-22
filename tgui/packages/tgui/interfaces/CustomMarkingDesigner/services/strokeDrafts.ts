@@ -3,7 +3,14 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////
 
 import type { DiffEntry } from '../../../utils/character-preview';
-import { arePixelListsEqual, clearAllLocalDraftsInStore, getStoredStrokeDraftsFromStore, mergeStrokePixels, normalizeStrokeKey, updateStrokeDraftsInStore } from '../utils';
+import {
+  arePixelListsEqual,
+  clearAllLocalDraftsInStore,
+  getStoredStrokeDraftsFromStore,
+  mergeStrokePixels,
+  normalizeStrokeKey,
+  updateStrokeDraftsInStore,
+} from '../utils';
 import type { StrokeDraftState } from '../types';
 
 type ContextLike = {
