@@ -253,6 +253,8 @@
 		previewJob.equip_preview(mannequin, player_alt_titles[previewJob.title])
 
 /datum/preferences/proc/update_preview_icon(fast_preview = TRUE) // RS Edit: Custom markings support (Lira, September 2025)
+	custom_markings_preview_ready = TRUE // RS Add: Custom markings support (Lira, Novemember 2025)
+	process_pending_custom_marking_refresh() // RS Add: Custom markings support (Lira, Novemember 2025)
 	var/mob/living/carbon/human/dummy/mannequin/mannequin = get_mannequin(client_ckey)
 	if(!mannequin.dna) // Special handling for preview icons before SSAtoms has initailized.
 		mannequin.dna = new /datum/dna(null)

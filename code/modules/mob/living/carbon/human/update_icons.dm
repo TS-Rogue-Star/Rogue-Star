@@ -99,7 +99,9 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 #define TARGETED_LAYER			37		//'Aimed at' overlay layer
 #define VORE_BELLY_LAYER		38		// RS edit
 #define VORE_TAIL_LAYER			39		// RS edit
-#define TOTAL_LAYERS			39		//VOREStation edit. <---- KEEP THIS UPDATED, should always equal the highest number here, used to initialize a list.
+#define CUSTOM_MARKING_LAYER	40		// RS Add: Layer for render-above-body custom markings (Lira, November 2025)
+#define CUSTOM_MARKING_RENDER_LAYER	(BODY_LAYER + TAIL_UPPER_LAYER_ALT + 0.5) // RS Add: Render above base body overlays (Lira, November 2025)
+#define TOTAL_LAYERS			40		//VOREStation edit. <---- KEEP THIS UPDATED, should always equal the highest number here, used to initialize a list. || RS Edit: Account for custom marking layer (Lira, Novemember 2025)
 //////////////////////////////////
 
 /mob/living/carbon/human
@@ -108,6 +110,7 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 
 //UPDATES OVERLAYS FROM OVERLAYS_LYING/OVERLAYS_STANDING
 //I'll work on removing that stuff by rewriting some of the cloaking stuff at a later date.
+// RS Edit: Rebuild render-priority custom marking overlays after base updates (Lira, Novemember 2025)
 /mob/living/carbon/human/update_icons()
 	if(QDESTROYING(src))
 		return
@@ -437,6 +440,43 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 	update_wing_showing()
 	update_vore_belly_sprite()	// RS edit
 	update_vore_tail_sprite()	// RS edit
+	update_render_priority_markings(digitigrade) // RS Add: Digitigrade custom markings (Lira, November 2025)
+
+// RS Add: Render markings flagged above-body after main icon assembly (Lira, November 2025)
+/mob/living/carbon/human/proc/update_render_priority_markings(var/digitigrade_state = FALSE)
+	if(QDESTROYING(src))
+		return
+	remove_layer(CUSTOM_MARKING_LAYER)
+	var/list/top_overlays = list()
+	for(var/obj/item/organ/external/part in organs)
+		if(isnull(part) || part.is_stump())
+			continue
+		var/check_digi = istype(part, /obj/item/organ/external/leg) || istype(part, /obj/item/organ/external/foot)
+		for(var/M in part.markings)
+			var/list/mark_data = part.markings[M]
+			if(!islist(mark_data) || !mark_data["on"])
+				continue
+			var/datum/sprite_accessory/marking/mark_style = mark_data["datum"]
+			if(!istype(mark_style))
+				mark_style = body_marking_styles_list?[M]
+			if(!istype(mark_style))
+				continue
+			var/render_this_part = mark_style.render_above_body
+			if(!render_this_part && islist(mark_style.render_above_body_parts))
+				render_this_part = !!mark_style.render_above_body_parts[part.organ_tag]
+			if(!render_this_part)
+				continue
+			var/mark_color = mark_data["color"]
+			var/icon/mark_icon = get_cached_marking_icon(mark_style, part.organ_tag, mark_color, check_digi ? digitigrade_state : FALSE)
+			if(!mark_icon)
+				continue
+			var/image/top_image = image(mark_icon)
+			top_image.layer = CUSTOM_MARKING_RENDER_LAYER
+			top_overlays += top_image
+	if(!top_overlays.len)
+		return
+	overlays_standing[CUSTOM_MARKING_LAYER] = top_overlays
+	apply_layer(CUSTOM_MARKING_LAYER)
 
 /mob/living/carbon/human/proc/update_skin()
 	if(QDESTROYING(src))
@@ -1489,4 +1529,6 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 #undef FIRE_LAYER
 #undef WATER_LAYER
 #undef TARGETED_LAYER
+#undef CUSTOM_MARKING_RENDER_LAYER  // RS Add: Custom marking support (Lira, November 2025)
+#undef CUSTOM_MARKING_LAYER  // RS Add: Custom marking support (Lira, November 2025)
 #undef TOTAL_LAYERS

@@ -287,6 +287,29 @@
 	emote_hear = list("grunts", "chuffs", "huffs", "bellows", "bleats")
 	emote_see = list("turns its head", "looks at you", "flicks its tail", "nibbles something off of the ground", "looks around", "stops and stares at something in the distance")
 
+/mob/living/simple_mob/vore/deer/New()
+	if(world_time_season == "winter" && icon_living == "deer")
+		var/chance = rand(1,100)
+		if(chance == 100)
+			icon_living = "r-deer"
+		else if(chance > 75)
+			icon_living = "h-deer"
+
+	if(icon_living == "h-deer")	//Hat
+		icon_state = icon_living
+		ai_holder_type = /datum/ai_holder/simple_mob/retaliate
+		maxHealth = 250
+		health = 250
+	if(icon_living == "r-deer")	//Nose
+		icon_state = icon_living
+		has_eye_glow = TRUE
+		update_icon()
+		ai_holder_type = /datum/ai_holder/simple_mob/retaliate
+		maxHealth = 500
+		health = 500
+
+	. = ..()
+
 /mob/living/simple_mob/vore/deer/Bumped(atom/movable/AM, yes)
 	if(istype(AM, /obj/vehicle) && stat != DEAD)
 		run_over = TRUE
@@ -315,3 +338,9 @@
 	flee_when_outmatched = TRUE
 	outmatched_threshold = 25
 	cooperative = TRUE
+
+/mob/living/simple_mob/vore/deer/hat
+	icon_living = "h-deer"
+
+/mob/living/simple_mob/vore/deer/nose
+	icon_living = "r-deer"

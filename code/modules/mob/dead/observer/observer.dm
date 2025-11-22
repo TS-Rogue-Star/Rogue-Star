@@ -122,7 +122,21 @@
 		// Unclear why this isn't being grabbed by appearance.
 		if(ishuman(body))
 			var/mob/living/carbon/human/H = body
-			add_overlay(H.overlays_standing)
+			// RS Add Start: Capture custom marking ordering (Lira, November 2025)
+			var/list/overlay_payload = list()
+			if(islist(H.overlays_standing))
+				for(var/entry in H.overlays_standing)
+					if(!entry)
+						continue
+					if(islist(entry))
+						for(var/subentry in entry)
+							if(subentry)
+								overlay_payload += subentry
+						continue
+					overlay_payload += entry
+			if(length(overlay_payload))
+				add_overlay(overlay_payload)
+			// RS Add End
 		default_pixel_x = body.default_pixel_x
 		default_pixel_y = body.default_pixel_y
 	if(!T && length(latejoin))

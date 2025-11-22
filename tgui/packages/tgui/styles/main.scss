@@ -42,6 +42,9 @@
 @include meta.load-css('./components/Tabs.scss');
 @include meta.load-css('./components/TextArea.scss');
 @include meta.load-css('./components/Tooltip.scss');
+@include meta.load-css(
+  './components/RogueStarColorPicker.scss'
+); // RS Add: RS Color Picker (Lira, November 2025)
 
 // Interfaces
 @include meta.load-css('./interfaces/ListInput.scss');
@@ -61,6 +64,9 @@
 @include meta.load-css('./interfaces/IDCard.scss');
 @include meta.load-css('./interfaces/TinderMessaging.scss');
 @include meta.load-css('./interfaces/Turbolift.scss');
+@include meta.load-css(
+  './interfaces/RogueStarStyleSheet.scss'
+); // RS Add: RS Style Sheet (Lira, November 2025)
 
 // Layouts
 @include meta.load-css('./layouts/Layout.scss');
