@@ -2,26 +2,9 @@
 // Created by Lira for Rogue Star November 2025: Preview state helpers for custom marking designer //
 // //////////////////////////////////////////////////////////////////////////////////////////////////
 
-import {
-  GENERIC_PART_KEY,
-  applyDiffToGrid,
-  cloneGridData,
-  createBlankGrid,
-  getReferenceGridFromAsset,
-  getReferencePartMapFromAssets,
-} from '../../../utils/character-preview';
-import type {
-  DiffEntry,
-  PreviewDirState,
-  PreviewDirectionSource,
-  PreviewState,
-} from '../../../utils/character-preview';
-import type {
-  BodyPartEntry,
-  CustomMarkingDesignerData,
-  DirectionCanvasSourceOptions,
-  DirectionCanvasSourceResult,
-} from '../types';
+import { GENERIC_PART_KEY, applyDiffToGrid, cloneGridData, createBlankGrid, getReferenceGridFromAsset, getReferencePartMapFromAssets } from '../../../utils/character-preview';
+import type { DiffEntry, PreviewDirState, PreviewDirectionSource, PreviewState } from '../../../utils/character-preview';
+import type { BodyPartEntry, CustomMarkingDesignerData, DirectionCanvasSourceOptions, DirectionCanvasSourceResult } from '../types';
 import { convertCompositeGridToUi } from './gridConversion';
 
 export const buildLocalSessionKey = (dirKey: number, partKey: string) =>
