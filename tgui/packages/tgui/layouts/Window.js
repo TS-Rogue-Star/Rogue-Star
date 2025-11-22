@@ -62,7 +62,15 @@ export class Window extends Component {
   }
 
   render() {
-    const { canClose = true, theme, title, children, buttons } = this.props;
+    const {
+      canClose = true,
+      theme,
+      title,
+      children,
+      buttons,
+      onClose, // RS Add: Close trigger (Lira, November 2025)
+      statusIcon, // RS Add: Status Icon (Lira, November 2025)
+    } = this.props;
     const { config, suspended } = useBackend(this.context);
     const { debugLayout } = useDebug(this.context);
     const dispatch = useDispatch(this.context);
@@ -81,8 +89,17 @@ export class Window extends Component {
           title={!suspended && (title || decodeHtmlEntities(config.title))}
           status={config.status}
           fancy={fancy}
+          statusIcon={statusIcon} // RS Add: Set status icon (Lira, November 2025)
           onDragStart={dragStartHandler}
           onClose={() => {
+            // RS Add: Close function (Lira, November 2025)
+            if (typeof onClose === 'function') {
+              try {
+                onClose();
+              } catch (error) {
+                logger.error('onClose handler threw', error);
+              }
+            }
             logger.log('pressed close');
             dispatch(backendSuspendStart());
           }}
@@ -152,6 +169,7 @@ const TitleBar = (props, context) => {
     onDragStart,
     onClose,
     children,
+    statusIcon, // RS Add: Status icon (Lira, November 2025)
   } = props;
   const dispatch = useDispatch(context);
   // prettier-ignore
@@ -163,15 +181,17 @@ const TitleBar = (props, context) => {
   );
   return (
     <div className={classes(['TitleBar', className])}>
-      {(status === undefined && (
-        <Icon className="TitleBar__statusIcon" name="tools" opacity={0.5} />
-      )) || (
-        <Icon
-          className="TitleBar__statusIcon"
-          color={statusToColor(status)}
-          name="eye"
-        />
-      )}
+      {/* RS Add: Status Icon (Lira, November 2025) */}
+      {statusIcon ||
+        (status === undefined && (
+          <Icon className="TitleBar__statusIcon" name="tools" opacity={0.5} />
+        )) || (
+          <Icon
+            className="TitleBar__statusIcon"
+            color={statusToColor(status)}
+            name="eye"
+          />
+        )}
       <div
         className="TitleBar__dragZone"
         onMousedown={(e) => fancy && onDragStart(e)}

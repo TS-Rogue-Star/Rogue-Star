@@ -48,3 +48,4 @@ export { TimeDisplay } from './TimeDisplay';
 export { TrackOutsideClicks } from './TrackOutsideClicks';
 export { Tooltip } from './Tooltip';
 export { Dialog } from './Dialog';
+export { RogueStarColorPicker } from './RogueStarColorPicker'; // RS Add: New color picker component (Lira, November 2025)

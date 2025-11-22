@@ -387,6 +387,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	var/last_topic_time = 0
 	var/too_many_topics = 0
 	var/topic_spam_limit = 10 //Just enough to get over the startup and such
+	var/pending_start_retry = FALSE // RS Add: Retry startup once a mob attaches (Lira, November 2025)
 
 /datum/chatOutput/New(client/C)
 	. = ..()
@@ -435,10 +436,16 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		owner << browse_rsc(file(filename))
 	resources_sent = TRUE
 
+// RS Edit: Retry chat startup if the mob isn't attached yet (Lira, Novemember 2025)
 //Called from client/New() in a spawn()
 /datum/chatOutput/proc/start()
 	if(!owner)
 		qdel(src)
+		return FALSE
+	if(!owner?.mob)
+		if(!pending_start_retry)
+			pending_start_retry = TRUE
+			addtimer(CALLBACK(src, PROC_REF(_retry_start)), 1 SECOND)
 		return FALSE
 
 	if(!winexists(owner, "htmloutput"))
@@ -466,6 +473,14 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		load()
 
 	return TRUE
+
+// RS Add: Finish initializing chat once the client has a mob (Lira, November 2025)
+/datum/chatOutput/proc/_retry_start()
+	pending_start_retry = FALSE
+	if(owner)
+		start()
+	else
+		qdel(src)
 
 //Attempts to actually load the HTML page into the client's UI
 /datum/chatOutput/proc/load()

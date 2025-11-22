@@ -269,6 +269,24 @@
 	name = "xenomorph tail 2"
 	icon_state = "xenotail"
 
+// RS Add: Preview-only xenomorph tail for custom marking mannequins (Lira, November 2025)
+/datum/sprite_accessory/tail/xenohybrid_preview
+	name = "xenomorph tail (preview)"
+	icon = 'icons/mob/human_races/r_xenomorph.dmi'
+	icon_state = "tail_s"
+	do_colouration = TRUE
+	color_blend_mode = ICON_ADD
+	species_allowed = list() // Prevent players from selecting this
+
+// RS Add: Preview-only xenochimera tail for custom marking mannequins (Lira, November 2025)
+/datum/sprite_accessory/tail/xenochimera_preview
+	name = "xenochimera tail (preview)"
+	icon = 'icons/mob/human_races/r_xenochimera.dmi'
+	icon_state = "tail_s"
+	do_colouration = TRUE
+	color_blend_mode = ICON_ADD
+	species_allowed = list()
+
 /datum/sprite_accessory/tail/eboop
 	name = "EGN mech tail (dual color)"
 	icon_state = "eboop"
@@ -936,6 +954,14 @@
 	name = "armalis tail"
 	icon_state = "armalis_tail_humanoid_s"
 
+// RS Add: Vox tail asset used for mannequin preview builds (Lira, November 2025)
+/datum/sprite_accessory/tail/special/vox
+	name = "vox tail"
+	icon = 'icons/mob/species/vox/tail.dmi'
+	icon_state = "voxtail_static"
+	do_colouration = TRUE
+	color_blend_mode = ICON_MULTIPLY
+
 /datum/sprite_accessory/tail/special/xenodrone
 	name = "xenomorph drone tail"
 	icon_state = "xenos_drone_tail_s"
@@ -951,6 +977,14 @@
 /datum/sprite_accessory/tail/special/xenoqueen
 	name = "xenomorph queen tail"
 	icon_state = "xenos_queen_tail_s"
+
+// RS Add: Spider-leg tail overlay for preview rendering dependencies (Lira, November 2025)
+/datum/sprite_accessory/tail/special/vasilissan_spiderlegs
+	name = "vasilissan spider legs"
+	icon = 'icons/mob/vore/wings_vr.dmi'
+	icon_state = "spider-legs"
+	do_colouration = TRUE
+	color_blend_mode = ICON_MULTIPLY
 
 /datum/sprite_accessory/tail/special/monkey
 	name = "monkey tail"

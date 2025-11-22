@@ -14,6 +14,10 @@ var/list/preferences_datums = list()
 	var/last_ip
 	var/last_id
 
+	// RS Add: Track cooldowns for character setup reloads/marking selections (Lira, November 2025)
+	var/next_charsetup_reload = 0	// world.time when reloading is allowed again
+	var/next_marking_select = 0	// world.time when selecting markings is allowed again
+
 	//game-preferences
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
 	var/ooccolor = "#010000"			//Whatever this is set to acts as 'reset' color and is thus unusable as an actual custom color
@@ -138,11 +142,13 @@ var/list/preferences_datums = list()
 	var/datum/tgui_module/custom_marking_designer/custom_marking_designer_ui
 	var/list/custom_marking_preview_overlays // Cached preview overlay images keyed by direction
 	var/custom_marking_layer_refresh_pending = FALSE
+	var/custom_markings_preview_ready = FALSE // Gate heavy preview work until lobby UI is ready (Lira, November 2025)
 	var/list/custom_marking_reference_payload_cache // Cached mannequin reference payloads reused by the designer UI
 	var/custom_marking_reference_signature // Signature of the mannequin cache payload currently stored
 	var/custom_marking_reference_mannequin_signature // Tracks which signature is applied to the shared reference mannequin
-	var/custom_marking_refresh_sequence = 0 // Increments when a mannequin refresh is scheduled
-	var/custom_marking_last_logged_refresh_sequence // Tracks the last refresh sequence that emitted a debug log
+	var/datum/custom_marking/pending_custom_marking_refresh // Queue a marking refresh until previews are ready (Lira, November 2025)
+	var/pending_custom_marking_force_preview = FALSE // Force preview rebuild when deferred refresh fires (Lira, November 2025)
+	var/pending_custom_marking_reset_cache = FALSE // Clear caches when deferred refresh fires (Lira, November 2025)
 	// RS Add End
 
 	var/list/flavor_texts = list()
@@ -206,25 +212,29 @@ var/list/preferences_datums = list()
 			if(load_preferences())
 				load_character()
 
-
 /datum/preferences/Destroy()
 	. = ..()
 	QDEL_LIST_ASSOC_VAL(char_render_holders)
 	// RS Add Start: Clear cached custom marking references when preferences are deleted (Lira, September 2025)
+	if(islist(custom_markings))
+		for(var/id in custom_markings.Copy())
+			remove_custom_marking(id)
 	custom_markings = null
 	custom_marking_preview_overlays = null
 	QDEL_NULL(custom_marking_designer_ui)
 	custom_marking_reference_payload_cache = null
 	custom_marking_reference_signature = null
 	custom_marking_reference_mannequin_signature = null
-	custom_marking_refresh_sequence = 0
-	custom_marking_last_logged_refresh_sequence = null
+	pending_custom_marking_refresh = null
+	pending_custom_marking_force_preview = FALSE
+	pending_custom_marking_reset_cache = FALSE
 	// RS Add End
 
 // RS Add Start: Custom markings support (Lira, September 2025)
 
 // Return custom marking
 /datum/preferences/proc/get_primary_custom_marking()
+	RETURN_TYPE(/datum/custom_marking)
 	if(!islist(custom_markings))
 		return null
 	for(var/id in custom_markings)
@@ -262,6 +272,7 @@ var/list/preferences_datums = list()
 
 // Load custom markings data
 /datum/preferences/proc/load_custom_markings_from_payload(list/payload)
+	reset_custom_marking_caches()
 	if(islist(custom_markings))
 		for(var/id in custom_markings.Copy())
 			remove_custom_marking(id)
@@ -269,6 +280,7 @@ var/list/preferences_datums = list()
 	if(!islist(payload))
 		return
 	var/loaded = FALSE
+	var/datum/custom_marking/queued_mark = null
 	for(var/id in payload)
 		if(loaded)
 			break
@@ -279,18 +291,51 @@ var/list/preferences_datums = list()
 		mark.from_save(data)
 		if(!mark.id)
 			mark.id = id
+		var/old_style_name = mark.get_style_name()
+		var/has_legacy_entry = islist(body_markings) && old_style_name && (old_style_name in body_markings)
 		var/current_owner = client_ckey || client?.ckey
 		if(!mark.owner_ckey && current_owner)
 			mark.owner_ckey = current_owner
 		else if(mark.owner_ckey && current_owner && mark.owner_ckey != current_owner)
 			// Slot copies inherit ownership so the accessor remains private to the new player
 			mark.owner_ckey = current_owner
+		var/owner_seed = mark.owner_ckey || current_owner
+		var/id_changed = mark.reseed_identifier(owner_seed)
+		if(id_changed && has_legacy_entry && islist(body_markings))
+			var/new_style_name = mark.get_style_name()
+			var/list/rebuilt_markings = list()
+			for(var/key in body_markings)
+				var/value = body_markings[key]
+				if(key == old_style_name)
+					rebuilt_markings[new_style_name] = value
+				else
+					rebuilt_markings[key] = value
+			body_markings = rebuilt_markings
 		mark.register()
-		mark.ensure_sprite_accessory()
+		mark.ensure_sprite_accessory(TRUE)
 		custom_markings[mark.id] = mark
 		sync_loaded_custom_marking(mark)
 		loaded = TRUE
+		queued_mark = mark
 	prune_disallowed_body_markings()
+	if(queued_mark)
+		defer_custom_marking_refresh(queued_mark, TRUE, TRUE)
+
+// Centralized clearing of cached mannequin/preview state (Lira, November 2025)
+/datum/preferences/proc/reset_custom_marking_caches(clear_preview_overlays = TRUE, purge_mannequins = TRUE)
+	custom_marking_reference_payload_cache = null
+	custom_marking_reference_signature = null
+	custom_marking_reference_mannequin_signature = null
+	if(clear_preview_overlays)
+		custom_marking_preview_overlays = null
+	custom_marking_layer_refresh_pending = FALSE
+	if(!purge_mannequins)
+		return
+	var/cache_ckey = client_ckey || client?.ckey
+	if(!cache_ckey)
+		return
+	del_mannequin(cache_ckey)
+	del_mannequin("[cache_ckey]-markref")
 
 // Remove body marking assignments the current player shouldn't be able to use
 /datum/preferences/proc/prune_disallowed_body_markings()
@@ -378,13 +423,6 @@ var/list/preferences_datums = list()
 	if(!module)
 		module = new(src, mark)
 		custom_marking_designer_ui = module
-	var/debug_ckey = client_ckey
-	if(!debug_ckey && client)
-		debug_ckey = client.ckey
-	if(!debug_ckey)
-		debug_ckey = "unknown"
-	var/log_id = mark?.id || "(none)"
-	log_debug("CustomMarkings: [debug_ckey] opened designer (mark=[log_id]).")
 	module.tgui_interact(user)
 
 // Provide a user-friendly label for a stored body marking key
@@ -426,6 +464,13 @@ var/list/preferences_datums = list()
 		qdel(custom_marking_designer_ui)
 	custom_marking_designer_ui = null
 
+// Allow reopening the designer cleanly after cache resets (Lira, November 2025)
+/datum/preferences/proc/restart_custom_marking_designer(mob/user, id)
+	if(!user && client)
+		user = client.mob
+	close_custom_marking_designer()
+	open_custom_marking_designer(user, id)
+
 // Ensure saved custom markings keep their preference entry when loading slots
 /datum/preferences/proc/sync_loaded_custom_marking(datum/custom_marking/mark)
 	if(!istype(mark))
@@ -433,7 +478,7 @@ var/list/preferences_datums = list()
 	var/style_name = mark.get_style_name()
 	if(!istext(style_name) || !length(style_name))
 		return
-	var/datum/sprite_accessory/marking/custom/style = mark.ensure_sprite_accessory()
+	var/datum/sprite_accessory/marking/custom/style = mark.ensure_sprite_accessory(TRUE)
 	if(!istype(style))
 		return
 	LAZYINITLIST(body_markings)
@@ -468,8 +513,20 @@ var/list/preferences_datums = list()
 		current -= existing
 	current["datum"] = style
 
-// Regenerate custom marking sprites and optionally refresh preview icons asynchronously
-/datum/preferences/proc/refresh_custom_marking_assets(force_preview = TRUE, reset_cache = FALSE, datum/custom_marking/target_mark = null)
+// Allow queueing heavy marking refreshes through SScustom_marking (Lira, November 2025)
+/datum/preferences/proc/refresh_custom_marking_assets(force_preview = TRUE, reset_cache = FALSE, datum/custom_marking/target_mark = null, use_queue = FALSE)
+	if(use_queue && SScustom_marking)
+		var/datum/callback/cb = CALLBACK(src, PROC_REF(_process_refresh_custom_marking_assets), force_preview, reset_cache, target_mark)
+		if(SScustom_marking.queue_callback(cb))
+			return
+		var/log_ckey = client_ckey || client?.ckey || "unknown"
+		var/fallback_mark = target_mark?.id || get_primary_custom_marking()?.id
+		log_debug("CustomMarkings: Queue rejected for [log_ckey], running inline (mark=[fallback_mark])")
+		qdel(cb)
+	_process_refresh_custom_marking_assets(force_preview, reset_cache, target_mark)
+
+// Support queued refreshes and cleaned preview overlays
+/datum/preferences/proc/_process_refresh_custom_marking_assets(force_preview = TRUE, reset_cache = FALSE, datum/custom_marking/target_mark = null)
 	if(QDELETED(src))
 		return
 	var/datum/custom_marking/mark = target_mark
@@ -487,14 +544,56 @@ var/list/preferences_datums = list()
 	style.regenerate_if_needed()
 	if(force_preview)
 		var/has_pixels = style.source?.has_visible_pixels()
-		if(islist(char_render_holders) && char_render_holders.len)
-			if(apply_custom_marking_preview(style))
-				return
+		if(islist(char_render_holders) && char_render_holders.len && custom_marking_preview_overlays && custom_marking_preview_overlays.len)
+			for(var/key in custom_marking_preview_overlays)
+				var/list/existing = custom_marking_preview_overlays[key]
+				if(!islist(existing))
+					continue
+				var/obj/screen/setup_preview/holder = char_render_holders?[key]
+				if(!holder)
+					continue
+				var/mutable_appearance/MA = holder.appearance ? new /mutable_appearance(holder.appearance) : new /mutable_appearance(holder)
+				for(var/image/old_overlay in existing)
+					if(old_overlay)
+						MA.overlays -= old_overlay
+				holder.appearance = MA
+			custom_marking_preview_overlays = null
 		if(!has_pixels)
+			schedule_custom_marking_layer_refresh()
 			return
 		update_preview_icon(TRUE)
 
-// Apply custom marking
+// Queue marking refresh when UI isn’t ready (Lira, November 2025)
+/datum/preferences/proc/defer_custom_marking_refresh(datum/custom_marking/mark_to_refresh, force_preview = TRUE, reset_cache = FALSE)
+	if(!istype(mark_to_refresh))
+		return
+	pending_custom_marking_refresh = mark_to_refresh
+	pending_custom_marking_force_preview = force_preview
+	pending_custom_marking_reset_cache = reset_cache
+	if(custom_markings_preview_ready)
+		process_pending_custom_marking_refresh()
+
+// Drain deferred marking refresh once previews can render (Lira, November 2025)
+/datum/preferences/proc/process_pending_custom_marking_refresh()
+	if(!pending_custom_marking_refresh)
+		return
+	var/datum/custom_marking/target = pending_custom_marking_refresh
+	var/force_preview = pending_custom_marking_force_preview || custom_markings_preview_ready
+	var/reset_cache = pending_custom_marking_reset_cache
+	pending_custom_marking_refresh = null
+	pending_custom_marking_force_preview = FALSE
+	pending_custom_marking_reset_cache = FALSE
+	if(!istype(target) || QDELETED(target))
+		return
+	var/use_queue = !!SScustom_marking
+	var/list/context = null
+	if(!use_queue)
+		context = custom_marking_begin_manual_yield()
+	refresh_custom_marking_assets(force_preview, reset_cache, target, use_queue)
+	if(context)
+		custom_marking_end_manual_yield(context)
+
+// Mark previews dirty and defer rendering to mannequin refresh
 /datum/preferences/proc/apply_custom_marking_preview(datum/sprite_accessory/marking/custom/style)
 	if(!style)
 		return FALSE
@@ -502,115 +601,17 @@ var/list/preferences_datums = list()
 		return FALSE
 	if(!isicon(style.icon))
 		return FALSE
-	if(!custom_marking_preview_overlays)
-		custom_marking_preview_overlays = list()
-	var/list/style_states = icon_states(style.icon)
-	if(!islist(style_states))
-		style_states = list()
-	var/list/body_parts = style.source?.body_parts?.Copy()
-	var/list/mark_data = null
-	if(islist(body_markings))
-		mark_data = body_markings?[style.name]
-	var/global_mark_color = null
-	if(islist(mark_data))
-		global_mark_color = mark_data?["color"]
-	var/list/dirs = global.cardinal
-	var/overlay_layer = BODY_LAYER + 2	// Mirrors SKIN_LAYER handling from human icon assembly
-	var/preview_changed = FALSE
-	var/any_holder = FALSE
-	for(var/dir in dirs)
-		var/key = "[dir]"
-		var/obj/screen/setup_preview/holder = char_render_holders?[key]
-		if(!holder)
-			continue
-		any_holder = TRUE
-		var/appearance/holder_appearance = holder.appearance
-		var/mutable_appearance/MA = holder_appearance ? new /mutable_appearance(holder_appearance) : new /mutable_appearance(holder)
-		var/overlay_plane = MA.plane
-		if(isnull(overlay_plane))
-			overlay_plane = holder_appearance ? holder_appearance.plane : holder.plane
-		if(isnull(overlay_plane))
-			overlay_plane = PLANE_PLAYER_HUD
-		MA.dir = dir
-		holder.dir = dir
-		var/list/existing = custom_marking_preview_overlays?[key]
-		var/removed_any = FALSE
-		if(islist(existing))
-			for(var/image/old_overlay in existing)
-				if(old_overlay)
-					MA.overlays -= old_overlay
-					removed_any = TRUE
-		if(removed_any)
-			preview_changed = TRUE
-		var/list/new_overlays = list()
-		if(islist(mark_data))
-			for(var/part in mark_data)
-				if(part == "color")
-					continue
-				var/list/details = mark_data[part]
-				if(!islist(details) || !details["on"])
-					continue
-				var/state = part ? "[style.icon_state]-[part]" : "[style.icon_state]-generic"
-				if(style_states.len && !(state in style_states))
-					continue
-				var/image/img = image(style.icon, state)
-				if(!istype(img))
-					continue
-				img.dir = dir
-				img.layer = overlay_layer
-				img.plane = overlay_plane
-				var/mark_color = islist(details) ? details["color"] : null
-				if(!istext(mark_color))
-					mark_color = global_mark_color
-				if(istext(mark_color))
-					img.color = mark_color
-				new_overlays += img
-		else
-			var/list/apply_parts = body_parts && body_parts.len ? body_parts : list(null)
-			for(var/part in apply_parts)
-				var/state = part ? "[style.icon_state]-[part]" : "[style.icon_state]-generic"
-				if(style_states.len && !(state in style_states))
-					continue
-				var/image/img = image(style.icon, state)
-				if(!istype(img))
-					continue
-				img.dir = dir
-				img.layer = overlay_layer
-				img.plane = overlay_plane
-				new_overlays += img
-		if(!new_overlays.len)
-			var/placeholder_state = style.icon_state
-			if(style_states.len && !(placeholder_state in style_states))
-				placeholder_state = "[style.icon_state]-generic"
-			var/image/placeholder = image(style.icon, placeholder_state)
-			if(istype(placeholder))
-				placeholder.dir = dir
-				placeholder.layer = overlay_layer
-				placeholder.plane = overlay_plane
-				placeholder.color = "#00000000"
-				new_overlays += placeholder
-		if(new_overlays.len)
-			MA.overlays |= new_overlays
-		holder.appearance = MA
-		holder.dir = dir
-		if(new_overlays.len)
-			custom_marking_preview_overlays[key] = new_overlays
-			preview_changed = TRUE
-		else
-			custom_marking_preview_overlays -= key
-	if(any_holder)
-		schedule_custom_marking_layer_refresh()
-	return preview_changed
+	schedule_custom_marking_layer_refresh()
+	return TRUE
 
-// Schedule refresh
+// Always rebuild mannequin overlays asynchronously for custom markings
 /datum/preferences/proc/schedule_custom_marking_layer_refresh()
 	if(custom_marking_layer_refresh_pending)
 		return
 	custom_marking_layer_refresh_pending = TRUE
-	custom_marking_refresh_sequence++
 	INVOKE_ASYNC(src, /datum/preferences/proc/run_custom_marking_layer_refresh)
 
-// Run refresh
+// Simplify mannequin refresh to rely on cached overlays
 /datum/preferences/proc/run_custom_marking_layer_refresh()
 	if(QDELETED(src))
 		custom_marking_layer_refresh_pending = FALSE
@@ -619,16 +620,6 @@ var/list/preferences_datums = list()
 	var/mob/living/carbon/human/dummy/mannequin/mannequin = get_mannequin(client_ckey)
 	if(!istype(mannequin))
 		return
-	var/debug_ckey = client_ckey
-	if(!debug_ckey && client)
-		debug_ckey = client.ckey
-	if(!debug_ckey)
-		debug_ckey = "unknown"
-	var/mark_count = islist(custom_markings) ? custom_markings.len : 0
-	var/current_sequence = custom_marking_refresh_sequence
-	if(custom_marking_last_logged_refresh_sequence != current_sequence)
-		custom_marking_last_logged_refresh_sequence = current_sequence
-		log_debug("CustomMarkings: [debug_ckey] refreshing mannequin (marks=[mark_count]).")
 	if(!mannequin.dna)
 		mannequin.dna = new /datum/dna(null)
 	apply_body_markings_to_mannequin(mannequin)
@@ -705,8 +696,10 @@ var/list/preferences_datums = list()
 		to_chat(user, "<span class='danger'>No mob exists for the given client!</span>")
 		return
 
+	custom_markings_preview_ready = TRUE // RS Add: Custom markings supprt (Lira, November 2025)
+	process_pending_custom_marking_refresh() // RS Add: Custom markings supprt (Lira, November 2025)
 	if(!char_render_holders)
-		update_preview_icon(TRUE) // RS Edit: Custom markings supprt (Lira, Septembe 2025)
+		update_preview_icon(TRUE) // RS Edit: Custom markings supprt (Lira, September 2025)
 	show_character_previews()
 
 	var/dat = "<html><body><center>"
@@ -803,10 +796,17 @@ var/list/preferences_datums = list()
 		save_preferences()
 		save_character()
 	else if(href_list["reload"])
-		load_preferences()
-		load_character()
-		attempt_vr(client.prefs_vr,"load_vore","") //VOREStation Edit
-		sanitize_preferences()
+		// RS Add Start: Prevent reload spam (Lira, November 2025)
+		if(world.time < next_charsetup_reload)
+			to_chat(usr, "<span class='warning'>You can't reload a character slot more than once within [CHARSETUP_RELOAD_DELAY_SECONDS] seconds.</span>")
+			log_debug("[key_name(usr)] hit the Character Setup reload guard.")
+		else
+			next_charsetup_reload = world.time + CHARSETUP_RELOAD_DELAY
+		// RS Add End
+			load_preferences()
+			load_character()
+			attempt_vr(client.prefs_vr,"load_vore","") //VOREStation Edit
+			sanitize_preferences()
 	else if(href_list["load"])
 		if(!IsGuestKey(usr.key))
 			open_load_dialog(usr)

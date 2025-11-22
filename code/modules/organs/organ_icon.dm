@@ -200,7 +200,7 @@ var/global/list/marking_icon_cache = list() // RS Add: Icon cache (Lira, Septemb
 			limb_icon_cache[cache_key] = I
 		mob_icon.Blend(limb_icon_cache[cache_key], ICON_OVERLAY)
 
-	//Body markings, actually does not include head this time. Done separately above. || RS Edit: Custom markings support (Lira, September 2025)
+	//Body markings, actually does not include head this time. Done separately above. || RS Edit: Custom markings support (Lira, September 2025) || Skip above-body markings so they can render in the priority layer (Lira, Novemember 2025)
 	if((!istype(src,/obj/item/organ/external/head) && !(force_icon && !skip_forced_icon)) || (model && owner && owner.synth_markings)) //RS EDIT (CS PR #5565)
 		for(var/M in markings)
 			var/list/mark_data = markings[M]
@@ -210,6 +210,8 @@ var/global/list/marking_icon_cache = list() // RS Add: Icon cache (Lira, Septemb
 			if(!istype(mark_style))
 				mark_style = body_marking_styles_list?[M]
 			if(!istype(mark_style))
+				continue
+			if(mark_style.render_above_body)
 				continue
 			var/isdigitype = mark_style.digitigrade_acceptance //RS EDIT START (CS PR #5565)
 			if(check_digi)

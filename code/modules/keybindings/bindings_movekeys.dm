@@ -72,6 +72,9 @@ var/global/list/MOVE_KEY_MAPPINGS = list(
 
 	mob.focus?.key_up(movekey, src)
 
-// Called every game tick
+// Called every game tick || RS Edit: Guard against missing mob to avoid runtime in early connection (Lira, Novemember 2025)
 /client/keyLoop()
-	mob.focus?.keyLoop(src)
+	var/mob/current_mob = mob
+	if(!current_mob)
+		return
+	current_mob.focus?.keyLoop(src)

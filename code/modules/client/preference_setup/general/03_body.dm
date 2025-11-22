@@ -1087,15 +1087,8 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 		if(confirm != "Agree")
 			return TOPIC_NOACTION
 		var/datum/custom_marking/enabled_mark = pref.ensure_primary_custom_marking()
-		var/debug_ckey = pref.client_ckey
-		if(!debug_ckey && pref.client)
-			debug_ckey = pref.client.ckey
-		if(!debug_ckey)
-			debug_ckey = "unknown"
-		var/log_id = enabled_mark?.id || "(none)"
-		log_debug("CustomMarkings: [debug_ckey] enabled editor (mark=[log_id]).")
 		if(enabled_mark)
-			INVOKE_ASYNC(pref, /datum/preferences/proc/refresh_custom_marking_assets, FALSE, TRUE, enabled_mark)
+			pref.refresh_custom_marking_assets(FALSE, TRUE, enabled_mark, TRUE)
 		return TOPIC_REFRESH_UPDATE_PREVIEW
 
 	else if(href_list["custom_markings_edit"])
@@ -1137,6 +1130,12 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 	else if(href_list["marking_add"])
 		var/new_marking = href_list["marking_add"]
 		if(new_marking && CanUseTopic(user))
+			// RS Add: Prevent reload spam (Lira, November 2025)
+			if(world.time < pref.next_marking_select)
+				to_chat(user, "<span class='warning'>Please wait at least [CHARSETUP_MARKING_DELAY_SECONDS] seconds between selecting markings.</span>")
+				log_debug("[key_name(user)] hit the Character Setup marking selection guard.")
+				return TOPIC_NOACTION
+			pref.next_marking_select = world.time + CHARSETUP_MARKING_DELAY
 			if(body_marking_styles_list[new_marking])
 				if(!pref.body_markings)
 					pref.body_markings = list()
