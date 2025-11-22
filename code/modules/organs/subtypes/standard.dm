@@ -385,12 +385,18 @@
 		add_overlay(lip_icon)
 		mob_icon.Blend(lip_icon, ICON_OVERLAY)
 
-	//Head markings
+	//Head markings || RS Edit: Skip above-body markings and reuse normalized colors for cache keys (Lira, Novemember 2025)
 	for(var/M in markings)
 		if (!markings[M]["on"])
 			continue
 		var/datum/sprite_accessory/marking/mark_style = markings[M]["datum"]
+		if(!istype(mark_style))
+			continue
+		if(mark_style.render_above_body)
+			continue
 		var/icon/mark_s = new/icon("icon" = mark_style.icon, "icon_state" = "[mark_style.icon_state]-[organ_tag]")
+		if(!mark_s)
+			continue
 		// RS Edit Start: Fix head marking coloring for uncolorable markings (Lira, October 2025)
 		var/mark_color = markings[M]["color"]
 		if(mark_style.do_colouration && istext(mark_color) && length(mark_color))
@@ -398,7 +404,7 @@
 		// RS Edit End
 		add_overlay(mark_s) //So when it's not on your body, it has icons
 		mob_icon.Blend(mark_s, ICON_OVERLAY) //So when it's on your body, it has icons
-		icon_cache_key += "[M][markings[M]["color"]]"
+		icon_cache_key += "[M][mark_color]"
 
 	if(eyes_over_markings && eyecon) //VOREStation edit -- toggle to render eyes above markings.
 		add_overlay(eyecon)

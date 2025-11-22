@@ -279,6 +279,7 @@
 #include "code\controllers\subsystems\chat.dm"
 #include "code\controllers\subsystems\chemistry.dm"
 #include "code\controllers\subsystems\circuits.dm"
+#include "code\controllers\subsystems\custom_marking.dm"
 #include "code\controllers\subsystems\dcs.dm"
 #include "code\controllers\subsystems\events.dm"
 #include "code\controllers\subsystems\garbage.dm"

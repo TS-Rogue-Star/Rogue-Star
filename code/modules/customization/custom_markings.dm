@@ -1,6 +1,8 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Created by Lira for Rogue Star September 2025: New system for allowing players to create custom markings //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2025: Refactored to be more efficient /////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Schema version for serialized custom marking payloads
 #define CUSTOM_MARKING_VERSION 1
@@ -11,6 +13,16 @@
 
 // Convenience macro to iterate over cardinal directions in painting payloads
 #define CUSTOM_MARKING_DIRECTIONS list(NORTH, SOUTH, EAST, WEST)
+
+// Maximum number of expensive pixel operations we perform before forcing a yield
+#define CUSTOM_MARKING_DRAW_BATCH 2048
+
+#define CUSTOM_MARKING_CHECK_TICK custom_marking_yield_heartbeat()
+
+// Option keys stored on datum/custom_marking.options
+#define CUSTOM_MARKING_OPTION_RENDER_ON_TOP "render_on_top"
+#define CUSTOM_MARKING_OPTION_REPLACE_MAP "replace_parts"
+#define CUSTOM_MARKING_OPTION_RENDER_PRIORITY_MAP "render_priority_parts"
 
 // Global registry for custom markings, populated at runtime
 GLOBAL_LIST_INIT(custom_markings_by_id, list())
@@ -33,16 +45,106 @@ GLOBAL_LIST_INIT(custom_marking_part_labels, list(
 	BP_L_FOOT = "Left Foot"
 ))
 
+// Replacement helpers: cascade child organs when a parent part is replaced
+GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
+	BP_L_ARM = list(BP_L_HAND),
+	BP_R_ARM = list(BP_R_HAND),
+	BP_L_LEG = list(BP_L_FOOT),
+	BP_R_LEG = list(BP_R_FOOT)
+))
+
+// Throttle custom marking work so large redraws can span multiple ticks via SScustom_marking
+/proc/custom_marking_force_yield()
+	var/delay = world.tick_lag
+	if(delay <= 0)
+		delay = 1
+	GLOB.custom_marking_yield_epoch++
+	stoplag(delay)
+
+// Track yield budget and force pauses when painting work exceeds thresholds
+/proc/custom_marking_yield_heartbeat(force = FALSE)
+	if(!GLOB.custom_marking_allow_yield)
+		return
+	if(force)
+		GLOB.custom_marking_yield_budget = 0
+		custom_marking_force_yield()
+		return
+	GLOB.custom_marking_yield_budget++
+	if(TICK_CHECK || GLOB.custom_marking_yield_budget >= CUSTOM_MARKING_DRAW_BATCH)
+		GLOB.custom_marking_yield_budget = 0
+		custom_marking_force_yield()
+
+// Temporarily enable yielding for synchronous helpers that aren't running inside SScustom_marking
+/proc/custom_marking_begin_manual_yield()
+	var/list/context = list(
+		"allow" = GLOB.custom_marking_allow_yield,
+		"budget" = GLOB.custom_marking_yield_budget
+	)
+	GLOB.custom_marking_allow_yield = TRUE
+	GLOB.custom_marking_yield_budget = 0
+	return context
+
+// Restore the previous yield context after manual work
+/proc/custom_marking_end_manual_yield(list/context)
+	if(!islist(context))
+		return
+	if("allow" in context)
+		GLOB.custom_marking_allow_yield = context["allow"]
+	if("budget" in context)
+		GLOB.custom_marking_yield_budget = context["budget"]
+
 // Generate unique custom marking id
 /proc/generate_custom_marking_id(owner_ckey)
 	var/raw = "[owner_ckey]-[world.time]-[rand(1, 1000000000)]-[world.realtime]"
 	return lowertext("[owner_ckey]-[md5(raw)]")
 
+// Safely insert an icon state with retry logic to avoid corruption
+/proc/custom_marking_insert_icon(icon/target, icon/source, state_name, dir, max_attempts = 3)
+	if(!istype(target, /icon) || !istype(source, /icon))
+		return null
+	if(!istext(state_name) || !length(state_name))
+		state_name = "custom_marking"
+	var/icon/current_source = source
+	var/icon/current_target = target
+	for(var/attempt in 1 to max_attempts)
+		var/original_allow = GLOB.custom_marking_allow_yield
+		GLOB.custom_marking_allow_yield = FALSE
+		var/success = FALSE
+		try
+			current_target.Insert(current_source, state_name, dir)
+			success = TRUE
+		catch(var/exception/e)
+			if(attempt >= max_attempts)
+				stack_trace("CustomMarkings: Failed to insert custom marking state [state_name] dir [dir] (attempt [attempt]): [e]")
+				GLOB.custom_marking_allow_yield = original_allow
+				return current_target
+			current_source = new/icon(current_source)
+			current_target = new/icon(current_target)
+			custom_marking_force_yield()
+		GLOB.custom_marking_allow_yield = original_allow
+		if(success)
+			return current_target
+	return current_target
+
+// Generate a fresh id for the marking based on the owner
+/datum/custom_marking/proc/reseed_identifier(owner_override = null)
+	var/seed_owner = owner_override || owner_ckey || "custom"
+	if(!istext(seed_owner) || !length(seed_owner))
+		seed_owner = "custom"
+	var/new_id = generate_custom_marking_id(seed_owner)
+	if(!new_id)
+		return FALSE
+	if(id && id == new_id)
+		return FALSE
+	id = new_id
+	bake_hash = null
+	return TRUE
+
 // Register or update a custom marking style within global accessory lists
-/proc/register_custom_marking_style(datum/custom_marking/mark)
+/proc/register_custom_marking_style(datum/custom_marking/mark, defer_regeneration = FALSE)
 	if(!istype(mark))
 		return null
-	var/datum/sprite_accessory/marking/custom/style = mark.ensure_sprite_accessory()
+	var/datum/sprite_accessory/marking/custom/style = mark.ensure_sprite_accessory(defer_regeneration)
 	if(!style)
 		return null
 	LAZYINITLIST(body_marking_styles_list)
@@ -104,6 +206,7 @@ GLOBAL_LIST_INIT(custom_marking_part_labels, list(
 		return text2num(value)
 	return null
 
+// Definition for player-authored custom markings and paint data
 /datum/custom_marking
 	var/id // Stable identifier, unique within save scope
 	var/name // Player-owned display name
@@ -148,6 +251,7 @@ GLOBAL_LIST_INIT(custom_marking_part_labels, list(
 		src.body_parts += BP_TORSO
 	src.options = list()
 	src.frames = list()
+	ensure_part_frames(src.body_parts)
 
 // Resolve arbitrary direction inputs into canonical cardinal constants
 /datum/custom_marking/proc/normalize_dir(dir, fallback = NORTH)
@@ -204,6 +308,34 @@ GLOBAL_LIST_INIT(custom_marking_part_labels, list(
 	var/list/info = resolve_frame_components(dir, part)
 	return "[info["dir"]]|[info["part"]]"
 
+// Ensure all required frames exist for the given body parts and directions
+/datum/custom_marking/proc/ensure_part_frames(list/parts = null)
+	if(!islist(frames))
+		frames = list()
+	var/list/normalized_parts = list()
+	if(islist(parts))
+		for(var/part in parts)
+			if(isnull(part))
+				continue
+			var/normalized = normalize_part(part, null)
+			if(isnull(normalized))
+				continue
+			if(!(normalized in normalized_parts))
+				normalized_parts += normalized
+	if(!normalized_parts.len)
+		normalized_parts = list("generic")
+	else if(!("generic" in normalized_parts))
+		normalized_parts += "generic"
+	var/list/directions = CUSTOM_MARKING_DIRECTIONS
+	if(!islist(directions) || !directions.len)
+		directions = list(NORTH, SOUTH, EAST, WEST)
+	for(var/dir in directions)
+		if(!isnum(dir))
+			continue
+		for(var/part in normalized_parts)
+			ensure_frame(dir, part)
+	return TRUE
+
 // Lazily create a painting frame and inherit generic data when needed
 /datum/custom_marking/proc/ensure_frame(dir, part = null)
 	var/list/info = resolve_frame_components(dir, part)
@@ -245,6 +377,194 @@ GLOBAL_LIST_INIT(custom_marking_part_labels, list(
 		return null
 	return ensure_frame(dir_value, part_value)
 
+// Determine whether this marking should render on top of all body sprites
+/datum/custom_marking/proc/is_render_above_body()
+	return !!(islist(options) && options[CUSTOM_MARKING_OPTION_RENDER_ON_TOP])
+
+// Toggle the render priority flag
+/datum/custom_marking/proc/set_render_above_body(state)
+	if(!islist(options))
+		options = list()
+	if(state)
+		options[CUSTOM_MARKING_OPTION_RENDER_ON_TOP] = TRUE
+	else
+		options -= CUSTOM_MARKING_OPTION_RENDER_ON_TOP
+	var/list/priority_map = options?[CUSTOM_MARKING_OPTION_RENDER_PRIORITY_MAP]
+	if(!islist(priority_map) || !priority_map.len)
+		return
+	var/list/remove_queue = list()
+	for(var/key in priority_map)
+		if(priority_map[key] == !!state)
+			remove_queue += key
+	for(var/key in remove_queue)
+		priority_map -= key
+	if(!priority_map.len)
+		options -= CUSTOM_MARKING_OPTION_RENDER_PRIORITY_MAP
+
+// Accessor for per-part render priority overrides
+/datum/custom_marking/proc/get_render_priority_map(create = FALSE)
+	if(!islist(options))
+		if(!create)
+			return null
+		options = list()
+	var/list/map = options[CUSTOM_MARKING_OPTION_RENDER_PRIORITY_MAP]
+	if(!islist(map) && create)
+		map = list()
+		options[CUSTOM_MARKING_OPTION_RENDER_PRIORITY_MAP] = map
+	return map
+
+// Determine whether a part has a render priority override
+/datum/custom_marking/proc/is_part_render_priority(part)
+	var/normalized = normalize_part(part, null)
+	if(isnull(normalized) || normalized == "generic")
+		return FALSE
+	var/list/map = options?[CUSTOM_MARKING_OPTION_RENDER_PRIORITY_MAP]
+	if(!islist(map))
+		return is_render_above_body()
+	if(!(normalized in map))
+		return is_render_above_body()
+	return !!map[normalized]
+
+// Toggle a per-part render priority override
+/datum/custom_marking/proc/set_part_render_priority(part, state)
+	var/normalized = normalize_part(part, null)
+	if(isnull(normalized) || normalized == "generic")
+		return FALSE
+	if(!islist(body_parts) || !(normalized in body_parts))
+		return FALSE
+	var/override_defined = !isnull(state)
+	var/list/map = options?[CUSTOM_MARKING_OPTION_RENDER_PRIORITY_MAP]
+	if(!override_defined)
+		if(islist(map))
+			map -= normalized
+			if(!map.len && islist(options))
+				options -= CUSTOM_MARKING_OPTION_RENDER_PRIORITY_MAP
+		return TRUE
+	map = get_render_priority_map(TRUE)
+	map[normalized] = !!state
+	return TRUE
+
+// Reset an override to follow the global default
+/datum/custom_marking/proc/clear_part_render_priority(part)
+	return set_part_render_priority(part, null)
+
+// Build a lookup of parts that should render above the body
+/datum/custom_marking/proc/get_render_priority_part_list(copy_list = TRUE)
+	var/list/map = options?[CUSTOM_MARKING_OPTION_RENDER_PRIORITY_MAP]
+	var/default_state = is_render_above_body()
+	var/list/candidates = list()
+	if(islist(body_parts))
+		for(var/part in body_parts)
+			if(!(part in candidates))
+				candidates += part
+	if(islist(map))
+		for(var/entry in map)
+			if(!(entry in candidates))
+				candidates += entry
+	var/list/result = list()
+	for(var/part in candidates)
+		if(isnull(part) || part == "generic")
+			continue
+		var/value = islist(map) ? map[part] : null
+		var/on_top = isnull(value) ? default_state : !!value
+		if(on_top)
+			result[part] = TRUE
+	return copy_list ? result.Copy() : result
+
+// Present overrides for UI consumption
+/datum/custom_marking/proc/get_part_render_priority_payload()
+	var/list/map = options?[CUSTOM_MARKING_OPTION_RENDER_PRIORITY_MAP]
+	if(!islist(map) || !map.len)
+		return null
+	var/list/result = list()
+	for(var/part in map)
+		if(isnull(part) || part == "generic")
+			continue
+		if(!islist(body_parts) || !(part in body_parts))
+			continue
+		result[part] = !!map[part]
+	return result.len ? result : null
+
+// Accessor for the replacement map stored inside options
+/datum/custom_marking/proc/get_replacement_map(create = FALSE)
+	if(!islist(options))
+		if(!create)
+			return null
+		options = list()
+	var/list/map = options[CUSTOM_MARKING_OPTION_REPLACE_MAP]
+	if(!islist(map) && create)
+		map = list()
+		options[CUSTOM_MARKING_OPTION_REPLACE_MAP] = map
+	return map
+
+// Determine whether a specific part should be replaced entirely by this marking
+/datum/custom_marking/proc/is_part_replaced(part)
+	var/normalized = normalize_part(part, null)
+	if(isnull(normalized) || normalized == "generic")
+		return FALSE
+	var/list/map = options?[CUSTOM_MARKING_OPTION_REPLACE_MAP]
+	if(!islist(map))
+		return FALSE
+	return !!map[normalized]
+
+// Toggle whether a part is replaced by this marking
+/datum/custom_marking/proc/set_part_replacement(part, state, cascade = TRUE)
+	var/normalized = normalize_part(part, null)
+	if(isnull(normalized) || normalized == "generic")
+		return FALSE
+	if(!islist(body_parts) || !(normalized in body_parts))
+		return FALSE
+	var/list/map = get_replacement_map(TRUE)
+	if(isnull(state))
+		if(islist(map))
+			map -= normalized
+			if(!map.len && islist(options))
+				options -= CUSTOM_MARKING_OPTION_REPLACE_MAP
+		return TRUE
+	map[normalized] = !!state
+	if(cascade && islist(GLOB.custom_marking_replacement_children))
+		var/list/children = GLOB.custom_marking_replacement_children?[normalized]
+		if(islist(children))
+			for(var/child in children)
+				set_part_replacement(child, state, FALSE)
+	return TRUE
+
+// Clear replacement flags for parts that are no longer valid
+/datum/custom_marking/proc/clear_part_replacement(part)
+	return set_part_replacement(part, null)
+
+// Build a list of organ tags that should be hidden when rendering
+/datum/custom_marking/proc/get_replacement_part_list(copy_list = TRUE)
+	var/list/map = options?[CUSTOM_MARKING_OPTION_REPLACE_MAP]
+	if(!islist(map) || !map.len)
+		return list()
+	var/list/result = list()
+	for(var/part in map)
+		if(!map[part])
+			continue
+		if(part == "generic")
+			continue
+		if(islist(body_parts) && !(part in body_parts))
+			continue
+		result += part
+	if(copy_list)
+		return result.Copy()
+	return result
+
+// Present a sanitized payload describing replacement state per part
+/datum/custom_marking/proc/get_part_replacement_payload()
+	var/list/map = options?[CUSTOM_MARKING_OPTION_REPLACE_MAP]
+	if(!islist(map))
+		return null
+	var/list/result = list()
+	for(var/part in map)
+		if(isnull(part) || part == "generic")
+			continue
+		if(islist(body_parts) && !(part in body_parts))
+			continue
+		result[part] = !!map[part]
+	return result.len ? result : list()
+
 // Clear cached bake data so future renders refresh the artwork
 /datum/custom_marking/proc/invalidate_bake()
 	bake_hash = null
@@ -271,6 +591,12 @@ GLOBAL_LIST_INIT(custom_marking_part_labels, list(
 		for(var/dir_key in frames)
 			var/datum/custom_marking_frame/frame = frames[dir_key]
 			if(!istype(frame))
+				continue
+			var/list/components = resolve_frame_components(dir_key, null)
+			if(!islist(components))
+				continue
+			var/part_name = components["part"]
+			if(part_name == "generic")
 				continue
 			var/save_key = frame_key(dir_key)
 			frame_payload[save_key] = frame?.to_save()
@@ -306,6 +632,12 @@ GLOBAL_LIST_INIT(custom_marking_part_labels, list(
 	frames = list()
 	if(islist(frame_payload))
 		for(var/dir_key in frame_payload)
+			var/list/components = resolve_frame_components(dir_key, null)
+			if(!islist(components))
+				continue
+			var/part_name = components["part"]
+			if(part_name == "generic")
+				continue
 			var/list/raw = frame_payload[dir_key]
 			if(!islist(raw))
 				continue
@@ -313,6 +645,7 @@ GLOBAL_LIST_INIT(custom_marking_part_labels, list(
 			frame.from_save(raw)
 			var/save_key = frame_key(dir_key)
 			frames[save_key] = frame
+	ensure_part_frames(body_parts)
 	if(version < CUSTOM_MARKING_VERSION)
 		upgrade(version)
 	version = CUSTOM_MARKING_VERSION
@@ -384,10 +717,10 @@ GLOBAL_LIST_INIT(custom_marking_part_labels, list(
 		layer[x] = column
 	return layer
 
-// Rebuild every paint layer and clear caches
+// Rebuild paint layer and clear caches
 /datum/custom_marking_frame/proc/reset()
 	layers = list()
-	layers.len = 3
+	layers.len = 1
 	for(var/i in 1 to layers.len)
 		layers[i] = build_layer()
 	invalidate()
@@ -414,13 +747,12 @@ GLOBAL_LIST_INIT(custom_marking_part_labels, list(
 	width = other.width
 	height = other.height
 	reset()
-	var/max_layers = max(layers.len, other.layers?.len || 0)
-	for(var/i in 1 to max_layers)
-		var/list/source_layer = other.ensure_layer(i)
-		var/list/target_layer = ensure_layer(i)
-		for(var/x in 1 to width)
-			for(var/y in 1 to height)
-				target_layer[x][y] = source_layer[x][y]
+	var/list/source_layer = other.ensure_layer(1)
+	var/list/target_layer = ensure_layer(1)
+	for(var/x in 1 to width)
+		CUSTOM_MARKING_CHECK_TICK
+		for(var/y in 1 to height)
+			target_layer[x][y] = source_layer[x][y]
 	invalidate()
 
 // Guarantee that a requested layer exists with proper sizing
@@ -429,7 +761,7 @@ GLOBAL_LIST_INIT(custom_marking_part_labels, list(
 		layer_index = 1
 	if(!islist(layers))
 		layers = list()
-	var/expected_len = max(3, layer_index)
+	var/expected_len = max(1, layer_index)
 	if(layers.len < expected_len)
 		layers.len = expected_len
 	if(layer_index > layers.len || !islist(layers[layer_index]))
@@ -508,11 +840,16 @@ GLOBAL_LIST_INIT(custom_marking_part_labels, list(
 		return
 	var/list/new_layers = data["layers"]
 	if(islist(new_layers))
-		layers = new_layers
+		if(islist(new_layers[1]))
+			layers = list()
+			layers.len = 1
+			layers[1] = new_layers[1]
+		else
+			reset()
 	else
 		reset()
 	// Ensure structural integrity
-	for(var/i in 1 to max(3, layers.len))
+	for(var/i in 1 to max(1, layers.len))
 		ensure_layer(i)
 	invalidate()
 
@@ -522,8 +859,10 @@ GLOBAL_LIST_INIT(custom_marking_part_labels, list(
 		return composite_cache
 	var/list/result = new/list(width)
 	for(var/x in 1 to width)
+		CUSTOM_MARKING_CHECK_TICK
 		result[x] = new/list(height)
 		for(var/y in 1 to height)
+			CUSTOM_MARKING_CHECK_TICK
 			for(var/i in length(layers) to 1 step -1)
 				var/list/Grid = layers[i]
 				if(!islist(Grid))
@@ -547,6 +886,7 @@ GLOBAL_LIST_INIT(custom_marking_part_labels, list(
 	color_blend_mode = ICON_MULTIPLY
 	body_parts = list()
 	hide_from_marking_gallery = TRUE
+	digitigrade_acceptance = MARKING_ALL_LEGS
 	var/datum/custom_marking/source
 	var/icon/generated_icon
 	var/cache_hash
@@ -567,6 +907,9 @@ GLOBAL_LIST_INIT(custom_marking_part_labels, list(
 		return
 	name = "[source.name]"
 	body_parts = source.body_parts?.Copy() || list()
+	render_above_body = source.is_render_above_body()
+	render_above_body_parts = source.get_render_priority_part_list()
+	hide_body_parts = source.get_replacement_part_list()
 	if(regenerate)
 		regenerate_if_needed()
 
@@ -579,6 +922,7 @@ GLOBAL_LIST_INIT(custom_marking_part_labels, list(
 	hash_input += list(list("parts" = parts))
 	var/list/hash_dirs = CUSTOM_MARKING_DIRECTIONS
 	for(var/dir in hash_dirs)
+		CUSTOM_MARKING_CHECK_TICK
 		if(parts.len)
 			for(var/part in parts)
 				var/datum/custom_marking_frame/frame = source.get_frame(dir, part, FALSE)
@@ -625,32 +969,109 @@ GLOBAL_LIST_INIT(custom_marking_part_labels, list(
 
 // Bake per-direction icon states for the custom paint job
 /datum/sprite_accessory/marking/custom/proc/build_composite_icon(base_state)
+	var/original_allow = GLOB.custom_marking_allow_yield
+	var/icon/result = null
 	if(!source || !source.id)
-		return null
-	var/icon/result = icon('icons/mob/human_races/markings.dmi', "blank")
-	result.Scale(source.width, source.height)
+		GLOB.custom_marking_allow_yield = original_allow
+		return result
+	var/desired_width = text2num_safe(source.width)
+	if(!isnum(desired_width) || desired_width < 1)
+		desired_width = CUSTOM_MARKING_CANVAS_WIDTH
+	var/desired_height = text2num_safe(source.height)
+	if(!isnum(desired_height) || desired_height < 1)
+		desired_height = CUSTOM_MARKING_CANVAS_HEIGHT
+	var/list/render_queue = list()
 	for(var/dir in CUSTOM_MARKING_DIRECTIONS)
+		CUSTOM_MARKING_CHECK_TICK
 		var/list/parts = source.body_parts?.Copy()
 		if(!parts || !parts.len)
 			parts = list(null)
 		for(var/part in parts)
+			CUSTOM_MARKING_CHECK_TICK
 			var/datum/custom_marking_frame/frame = source.get_frame(dir, part)
 			if(!frame)
 				continue
 			var/list/grid = frame.get_composite()
 			if(!islist(grid))
 				continue
-			var/icon/frame_icon = icon('icons/mob/human_races/markings.dmi', "blank")
-			frame_icon.Scale(source.width, source.height)
-			for(var/x in 1 to source.width)
-				for(var/y in 1 to source.height)
-					var/color = grid[x][y]
-					if(!istext(color))
-						continue
-					frame_icon.DrawBox(color, x, y, x, y)
 			var/state_name = part ? "[base_state]-[part]" : "[base_state]-generic"
-			result.Insert(frame_icon, state_name, dir)
+			render_queue += list(list("dir" = dir, "grid" = grid, "state" = state_name))
+	var/restore_allow = original_allow
+	GLOB.custom_marking_allow_yield = FALSE
+	try
+		result = icon('icons/mob/human_races/markings.dmi', "blank")
+		result.Scale(desired_width, desired_height)
+		var/target_width = result.Width()
+		var/target_height = result.Height()
+		if(target_width < 1)
+			target_width = CUSTOM_MARKING_CANVAS_WIDTH
+		if(target_height < 1)
+			target_height = CUSTOM_MARKING_CANVAS_HEIGHT
+		for(var/list/job in render_queue)
+			var/job_dir = job?["dir"]
+			var/list/job_grid = job?["grid"]
+			var/job_state = job?["state"]
+			if(!islist(job_grid) || !istext(job_state))
+				continue
+			var/icon/new_result = render_custom_marking_state(result, job_grid, job_state, job_dir, target_width, target_height)
+			if(istype(new_result, /icon))
+				result = new_result
+	catch(var/exception/e)
+		GLOB.custom_marking_allow_yield = restore_allow
+		throw e
+	GLOB.custom_marking_allow_yield = restore_allow
 	return result
+
+// Render a single directional state into the composite icon
+/datum/sprite_accessory/marking/custom/proc/render_custom_marking_state(icon/target, list/grid, state_name, dir, target_width, target_height)
+	if(!istype(target, /icon) || !islist(grid))
+		return target
+	if(target_width < 1 || target_height < 1)
+		return target
+	var/original_allow = GLOB.custom_marking_allow_yield
+	GLOB.custom_marking_allow_yield = TRUE
+	var/icon/frame_icon = icon('icons/mob/human_races/markings.dmi', "blank")
+	frame_icon.Scale(target_width, target_height)
+	var/icon/current_target = target
+	var/last_yield_epoch = GLOB.custom_marking_yield_epoch
+	try
+		for(var/x in 1 to target_width)
+			if(grid.len < x)
+				continue
+			CUSTOM_MARKING_CHECK_TICK
+			if(last_yield_epoch != GLOB.custom_marking_yield_epoch)
+				frame_icon = new/icon(frame_icon)
+				current_target = new/icon(current_target)
+				last_yield_epoch = GLOB.custom_marking_yield_epoch
+			var/list/column = grid[x]
+			if(!islist(column))
+				continue
+			for(var/y in 1 to target_height)
+				if(column.len < y)
+					continue
+				CUSTOM_MARKING_CHECK_TICK
+				if(last_yield_epoch != GLOB.custom_marking_yield_epoch)
+					frame_icon = new/icon(frame_icon)
+					current_target = new/icon(current_target)
+					last_yield_epoch = GLOB.custom_marking_yield_epoch
+				var/color = column[y]
+				if(!istext(color))
+					continue
+				frame_icon.DrawBox(color, x, y, x, y)
+		if(frame_icon.Width() != target_width || frame_icon.Height() != target_height)
+			frame_icon.Scale(target_width, target_height)
+		current_target = custom_marking_insert_icon(current_target, frame_icon, state_name, dir, 3)
+		if(!istype(current_target, /icon))
+			return target
+		if(last_yield_epoch != GLOB.custom_marking_yield_epoch)
+			frame_icon = new/icon(frame_icon)
+			current_target = new/icon(current_target)
+			last_yield_epoch = GLOB.custom_marking_yield_epoch
+	catch(var/exception/e)
+		GLOB.custom_marking_allow_yield = original_allow
+		throw e
+	GLOB.custom_marking_allow_yield = original_allow
+	return current_target
 
 // Clear generated icon caches so they rebuild on next use.
 /datum/sprite_accessory/marking/custom/proc/invalidate_cache()
@@ -662,3 +1083,8 @@ GLOBAL_LIST_INIT(custom_marking_part_labels, list(
 #undef CUSTOM_MARKING_CANVAS_WIDTH
 #undef CUSTOM_MARKING_CANVAS_HEIGHT
 #undef CUSTOM_MARKING_DIRECTIONS
+#undef CUSTOM_MARKING_DRAW_BATCH
+#undef CUSTOM_MARKING_CHECK_TICK
+#undef CUSTOM_MARKING_OPTION_RENDER_ON_TOP
+#undef CUSTOM_MARKING_OPTION_REPLACE_MAP
+#undef CUSTOM_MARKING_OPTION_RENDER_PRIORITY_MAP
