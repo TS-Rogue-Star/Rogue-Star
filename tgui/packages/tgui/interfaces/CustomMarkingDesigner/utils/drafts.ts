@@ -3,7 +3,7 @@
 // ////////////////////////////////////////////////////////////////////////////////////////////
 
 import { normalizeHex, TRANSPARENT_HEX } from '../../../utils/color';
-import { GENERIC_PART_KEY, applyDiffToGrid, cloneGridData, createBlankGrid } from '../../../utils/character-preview';
+import { applyDiffToGrid, cloneGridData, createBlankGrid, GENERIC_PART_KEY } from '../../../utils/character-preview';
 import type { DiffEntry } from '../../../utils/character-preview';
 import type { DraftStrokePayload, StrokeDraftEntry, StrokeDraftState } from '../types';
 import { normalizeStrokeKey } from './strokeGeometry';
