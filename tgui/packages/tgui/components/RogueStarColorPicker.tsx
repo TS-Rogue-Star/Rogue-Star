@@ -18,13 +18,13 @@ import {
 } from '../utils/color';
 
 type RogueStarColorPickerProps = {
-  color?: string;
-  currentColor?: string;
-  customColors?: (string | null)[];
-  onCustomColorsChange?: (colors: (string | null)[]) => void;
-  onChange?: (hex: string) => void;
-  onCommit?: (hex: string) => void;
-  showPreview?: boolean;
+  readonly color?: string;
+  readonly currentColor?: string;
+  readonly customColors?: (string | null)[];
+  readonly onCustomColorsChange?: (colors: (string | null)[]) => void;
+  readonly onChange?: (hex: string) => void;
+  readonly onCommit?: (hex: string) => void;
+  readonly showPreview?: boolean;
 };
 
 type RgbState = {

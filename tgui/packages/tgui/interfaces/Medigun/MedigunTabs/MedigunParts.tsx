@@ -5,7 +5,7 @@ import { Box, Button, LabeledList, Section, Stack } from '../../../components';
 import type { ExamineData } from '../types';
 
 export const MedigunParts = (
-  props: { examineData: ExamineData; maintenance: BooleanLike },
+  props: { readonly examineData: ExamineData; readonly maintenance: BooleanLike },
   context
 ) => {
   const { act } = useBackend(context);

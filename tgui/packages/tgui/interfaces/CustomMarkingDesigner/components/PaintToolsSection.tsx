@@ -16,21 +16,21 @@ import { CHIP_BUTTON_CLASS, TOOLBAR_GROUP_CLASS } from '../constants';
 import type { CustomColorSlotsState } from '../types';
 
 type PaintToolsSectionProps = {
-  tool: string | null;
-  setTool: (tool: string) => void;
-  blendMode: string;
-  setBlendMode: (mode: string) => void;
-  analogStrength: number;
-  setAnalogStrength: (value: number) => void;
-  canUndoDrafts: boolean;
-  handleUndo: () => void;
-  handleClear: (confirm: boolean) => void;
-  size: number;
-  setSize: (size: number) => void;
-  brushColor: string;
-  customColorSlots: CustomColorSlotsState;
-  handleCustomColorUpdate: (colors: (string | null)[]) => void;
-  handleColorPickerApply: (hex: string) => void;
+  readonly tool: string | null;
+  readonly setTool: (tool: string) => void;
+  readonly blendMode: string;
+  readonly setBlendMode: (mode: string) => void;
+  readonly analogStrength: number;
+  readonly setAnalogStrength: (value: number) => void;
+  readonly canUndoDrafts: boolean;
+  readonly handleUndo: () => void;
+  readonly handleClear: (confirm: boolean) => void;
+  readonly size: number;
+  readonly setSize: (size: number) => void;
+  readonly brushColor: string;
+  readonly customColorSlots: CustomColorSlotsState;
+  readonly handleCustomColorUpdate: (colors: (string | null)[]) => void;
+  readonly handleColorPickerApply: (hex: string) => void;
 };
 
 export const PaintToolsSection = ({

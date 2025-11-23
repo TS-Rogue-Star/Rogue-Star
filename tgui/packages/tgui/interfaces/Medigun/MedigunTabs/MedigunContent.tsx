@@ -13,7 +13,7 @@ import type { Data, SModule } from '../types';
 import { gridStatusToText, statToColor, statToString } from '../constants';
 import { ChargeStatus } from '../MedigunHelpers/ChargeStatus';
 
-export const MedigunContent = (props: { smodule: SModule }, context) => {
+export const MedigunContent = (props: { readonly smodule: SModule }, context) => {
   const { act, data } = useBackend<Data>(context);
 
   const {
