@@ -5,7 +5,7 @@
   "dependencies": {
     "@fastify/static": "^5.0.2",
     "common": "workspace:*",
-    "fastify": "^3.29.4",
+    "fastify": "^3.29.5",
     "inferno": "^7.4.11",
     "inferno-vnode-flags": "^7.4.11",
     "lodash": "^4.17.21",
