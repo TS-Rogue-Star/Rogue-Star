@@ -3,9 +3,18 @@
 // ////////////////////////////////////////////////////////////////////////////////////////////
 
 import { normalizeHex, TRANSPARENT_HEX } from '../../../utils/color';
-import { applyDiffToGrid, cloneGridData, createBlankGrid, GENERIC_PART_KEY } from '../../../utils/character-preview';
+import {
+  applyDiffToGrid,
+  cloneGridData,
+  createBlankGrid,
+  GENERIC_PART_KEY,
+} from '../../../utils/character-preview';
 import type { DiffEntry } from '../../../utils/character-preview';
-import type { DraftStrokePayload, StrokeDraftEntry, StrokeDraftState } from '../types';
+import type {
+  DraftStrokePayload,
+  StrokeDraftEntry,
+  StrokeDraftState,
+} from '../types';
 import { normalizeStrokeKey } from './strokeGeometry';
 
 export const sanitizeDraftPixels = (

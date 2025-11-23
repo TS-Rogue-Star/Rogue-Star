@@ -2,7 +2,12 @@
 // Created by Lira for Rogue Star November 2025: Types for custom marking designer //
 // //////////////////////////////////////////////////////////////////////////////////
 
-import type { DiffEntry, PreviewDirectionEntry, PreviewDirectionSource, PreviewState } from '../../utils/character-preview';
+import type {
+  DiffEntry,
+  PreviewDirectionEntry,
+  PreviewDirectionSource,
+  PreviewState,
+} from '../../utils/character-preview';
 
 export type DirectionEntry = {
   dir: number;

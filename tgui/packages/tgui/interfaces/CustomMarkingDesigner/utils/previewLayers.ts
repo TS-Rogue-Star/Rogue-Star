@@ -2,8 +2,23 @@
 // Created by Lira for Rogue Star November 2025: Preview layer helpers for custom marking designer //
 // //////////////////////////////////////////////////////////////////////////////////////////////////
 
-import { GENERIC_PART_KEY, applyDiffToGrid, cloneGridData, createBlankGrid, getPreviewGridFromAsset, getPreviewGridListFromAssets, getPreviewPartMapFromAssets, gridHasPixels, resolveBodyPartLabel } from '../../../utils/character-preview';
-import type { DiffEntry, PreviewDirectionEntry, PreviewDirState, PreviewLayerEntry } from '../../../utils/character-preview';
+import {
+  GENERIC_PART_KEY,
+  applyDiffToGrid,
+  cloneGridData,
+  createBlankGrid,
+  getPreviewGridFromAsset,
+  getPreviewGridListFromAssets,
+  getPreviewPartMapFromAssets,
+  gridHasPixels,
+  resolveBodyPartLabel,
+} from '../../../utils/character-preview';
+import type {
+  DiffEntry,
+  PreviewDirectionEntry,
+  PreviewDirState,
+  PreviewLayerEntry,
+} from '../../../utils/character-preview';
 import { TRANSPARENT_HEX } from '../../../utils/color';
 
 type PartPaintPresenceOptions = {
@@ -118,9 +133,9 @@ export const buildRenderedPreviewDirs = (
     directions && directions.length
       ? directions
       : Object.values(dirStates).map((entry) => ({
-        dir: entry.dir,
-        label: entry.label,
-      }));
+          dir: entry.dir,
+          label: entry.label,
+        }));
   const result: PreviewDirectionEntry[] = [];
   for (const entry of orderedDirs) {
     const dirState = dirStates[entry.dir];

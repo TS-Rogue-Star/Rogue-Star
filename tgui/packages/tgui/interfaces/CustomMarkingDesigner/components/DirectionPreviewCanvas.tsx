@@ -79,25 +79,25 @@ export class DirectionPreviewCanvas extends Component<DirectionPreviewCanvasProp
     const fallbackHeight = Math.max(1, height || 1);
     const layerWidths = Array.isArray(layers)
       ? layers
-        .map((layer) => (Array.isArray(layer?.grid) ? layer.grid.length : 0))
-        .filter((value) => typeof value === 'number' && value > 0)
+          .map((layer) => (Array.isArray(layer?.grid) ? layer.grid.length : 0))
+          .filter((value) => typeof value === 'number' && value > 0)
       : [];
     const layerHeights = Array.isArray(layers)
       ? layers
-        .map((layer) => {
-          const grid = layer?.grid;
-          if (!Array.isArray(grid)) {
-            return 0;
-          }
-          let maxHeight = 0;
-          for (const column of grid) {
-            if (Array.isArray(column) && column.length > maxHeight) {
-              maxHeight = column.length;
+          .map((layer) => {
+            const grid = layer?.grid;
+            if (!Array.isArray(grid)) {
+              return 0;
             }
-          }
-          return maxHeight;
-        })
-        .filter((value) => typeof value === 'number' && value > 0)
+            let maxHeight = 0;
+            for (const column of grid) {
+              if (Array.isArray(column) && column.length > maxHeight) {
+                maxHeight = column.length;
+              }
+            }
+            return maxHeight;
+          })
+          .filter((value) => typeof value === 'number' && value > 0)
       : [];
     const gridWidth = layerWidths.length
       ? Math.max(fallbackWidth, ...layerWidths)

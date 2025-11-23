@@ -2,7 +2,16 @@
 // Created by Lira for Rogue Star November 2025: Paint tools and brush controls for custom marking designer //
 // ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-import { Box, Button, Flex, LabeledList, NumberInput, RogueStarColorPicker, Section, Tooltip } from '../../../components';
+import {
+  Box,
+  Button,
+  Flex,
+  LabeledList,
+  NumberInput,
+  RogueStarColorPicker,
+  Section,
+  Tooltip,
+} from '../../../components';
 import { CHIP_BUTTON_CLASS, TOOLBAR_GROUP_CLASS } from '../constants';
 import type { CustomColorSlotsState } from '../types';
 
