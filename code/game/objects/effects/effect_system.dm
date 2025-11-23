@@ -100,10 +100,11 @@ steam.start() -- spawns the effect
 	var/amount = 6.0
 	anchored = TRUE
 	mouse_opacity = 0
+	var/spark_sound = "sparks"	//RS ADD
 
 /obj/effect/effect/sparks/Initialize()
 	. = ..()
-	playsound(src, "sparks", 100, 1)
+	playsound(src, spark_sound, 100, 1)	//RS EDIT
 	var/turf/T = src.loc
 	if (istype(T, /turf))
 		T.hotspot_expose(1000,100)

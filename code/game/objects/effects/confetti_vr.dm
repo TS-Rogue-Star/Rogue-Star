@@ -2,10 +2,7 @@
 	name = "confetti"
 	icon = 'icons/effects/effects_vr.dmi'
 	icon_state = "confetti"
-
-/obj/effect/effect/sparks/Initialize()
-	. = ..()
-	playsound(src, "sounds/items/confetti.ogg ", 100, 1)
+	spark_sound = null	//RS ADD - almost everything that calls for confetti makes a sound itself, and the confetti sound was broken anyway, and playing a sound like 10+ times when confetti spawns sounds terrible, SO, the confetti is silent.
 
 /datum/effect/effect/system/confetti_spread
 	var/total_sparks = 0 // To stop it being spammed and lagging!

@@ -2,7 +2,14 @@
 	name = "spell book"
 	desc = "The legendary book of spells of the wizard."
 	icon = 'icons/obj/library.dmi'
-	icon_state ="spellbook"
+	icon_state = "tome" //RS Edit: Fix missing spellbook icon (Lira, November 2025)
+	// RS Add Start: Fix missing spellbook item slots (Lira, November 2025)
+	item_state = "tome"
+	item_icons = list(
+		slot_l_hand_str = 'icons/mob/items/lefthand_books.dmi',
+		slot_r_hand_str = 'icons/mob/items/righthand_books.dmi'
+		)
+	// RS Add End
 	throw_speed = 1
 	throw_range = 5
 	w_class = ITEMSIZE_SMALL
@@ -78,6 +85,9 @@
 		// END AUTOFIX
 		if(op)
 			dat += "<A href='byond://?src=\ref[src];spell_choice=rememorize'>Re-memorize Spells</A><BR>"
+	// RS Add: Fix html issue (Lira, November 2025)
+	if(dat)
+		dat = "<html><body>[dat]</body></html>"
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")
 	return

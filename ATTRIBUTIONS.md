@@ -583,3 +583,8 @@ Link: https://github.com/TS-Rogue-Star/Rogue-Star/pull/987<br>
 **Creator:** Created by GooglyFox<br>
 **License:** Licensed for use by Rogue Star; unlicensed for further use without permission of developing player.<br>
 <br>
+**File**: `tgui/public/icons/Rogue Star`<br>
+**Creator:** VerySoft<br>
+**License:** Licensed for use by Rogue Star; unlicensed for further use without permission of copyright holder<br>
+**Notes:** All files and icon-states within this folder are covered under the above license, as per the included attribution.txt file
+<br>

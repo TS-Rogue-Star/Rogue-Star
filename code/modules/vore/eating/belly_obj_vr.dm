@@ -579,6 +579,7 @@
 				L.clear_fullscreen("belly4")
 			var/obj/screen/fullscreen/F5 = L.overlay_fullscreen("belly5", /obj/screen/fullscreen/belly/colorized/overlay) // Reagent bellies || RS Add || Chomp Port
 			F5.icon_state = belly_fullscreen //Reagent bellies || RS Add || Chomp Port
+			F5.cut_overlays() // RS Add: Fix sticky overlays (Lira, November 2025)
 			if(L.liquidbelly_visuals && mush_overlay && (owner.nutrition > 0 || max_mush == 0 || min_mush > 0)) // Reagent bellies start || RS Add || Chomp Port
 				ReagentImages = image('icons/mob/vore/bubbles.dmi', "mush")
 				ReagentImages.color = mush_color
@@ -607,6 +608,7 @@
 			var/obj/screen/fullscreen/F5 = L.overlay_fullscreen("belly5", /obj/screen/fullscreen/belly/colorized/overlay) //Reagent bellies || RS Add || Chomp Port
 			F.icon_state = belly_fullscreen
 			F5.icon_state = belly_fullscreen //Reagent bellies || RS Add || Chomp Port
+			F5.cut_overlays() // RS Add: Fix sticky overlays (Lira, November 2025)
 			if(L.liquidbelly_visuals && mush_overlay && (owner.nutrition > 0 || max_mush == 0 || min_mush > 0)) // Reagent bellies start || RS Add || Chomp Port
 				ReagentImages = image('icons/mob/vore/bubbles.dmi', "mush")
 				ReagentImages.color = mush_color
@@ -668,6 +670,7 @@
 				F4.icon_state = "[belly_fullscreen]_nc"
 			var/obj/screen/fullscreen/F5 = L.overlay_fullscreen("belly5", /obj/screen/fullscreen/belly/colorized/overlay)  //Reagent bellies || RS Add || Chomp Port
 			F5.icon_state = belly_fullscreen //Reagent bellies || RS Add || Chomp Port
+			F5.cut_overlays() // RS Add: Fix sticky overlays (Lira, November 2025)
 			if(L.liquidbelly_visuals && mush_overlay && (owner.nutrition > 0 || max_mush == 0 || min_mush > 0)) // Reagent bellies start || RS Add || Chomp Port
 				ReagentImages = image('icons/mob/vore/bubbles.dmi', "mush")
 				ReagentImages.color = mush_color
@@ -696,6 +699,7 @@
 			var/obj/screen/fullscreen/F5 = L.overlay_fullscreen("belly5", /obj/screen/fullscreen/belly/colorized/overlay) //Reagent bellies || RS Add || Chomp Port
 			F.icon_state = belly_fullscreen
 			F5.icon_state = belly_fullscreen //Reagent bellies || RS Add || Chomp Port
+			F5.cut_overlays() // RS Add: Fix sticky overlays (Lira, November 2025)
 			if(L.liquidbelly_visuals && mush_overlay && (owner.nutrition > 0 || max_mush == 0 || min_mush > 0)) // Reagent bellies start || RS Add || Chomp Port
 				ReagentImages = image('icons/mob/vore/bubbles.dmi', "mush")
 				ReagentImages.color = mush_color
