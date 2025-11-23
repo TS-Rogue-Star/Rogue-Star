@@ -3,7 +3,15 @@
 // ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Flex, LabeledList, NumberInput, Section, Tooltip } from '../components';
+import {
+  Box,
+  Button,
+  Flex,
+  LabeledList,
+  NumberInput,
+  Section,
+  Tooltip,
+} from '../components';
 import { Window } from '../layouts';
 import { PaintCanvas } from './Canvas';
 

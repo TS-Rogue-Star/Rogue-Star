@@ -2,7 +2,17 @@ import { round } from 'common/math';
 import { formatPower } from '../format';
 import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Icon, LabeledList, ProgressBar, Stack, Section, Tabs, Slider } from '../components';
+import {
+  Box,
+  Button,
+  Icon,
+  LabeledList,
+  ProgressBar,
+  Stack,
+  Section,
+  Tabs,
+  Slider,
+} from '../components';
 import { Window } from '../layouts';
 import { capitalize } from 'common/string';
 

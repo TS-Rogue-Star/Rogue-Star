@@ -1,9 +1,22 @@
 import { round } from 'common/math';
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Icon, LabeledList, NoticeBox, ProgressBar, Section, Tabs } from '../components';
+import {
+  Box,
+  Button,
+  Flex,
+  Icon,
+  LabeledList,
+  NoticeBox,
+  ProgressBar,
+  Section,
+  Tabs,
+} from '../components';
 import { COLORS } from '../constants';
-import { ComplexModal, modalRegisterBodyOverride } from '../interfaces/common/ComplexModal';
+import {
+  ComplexModal,
+  modalRegisterBodyOverride,
+} from '../interfaces/common/ComplexModal';
 import { Window } from '../layouts';
 
 const viewRecordModalBodyOverride = (modal, context) => {

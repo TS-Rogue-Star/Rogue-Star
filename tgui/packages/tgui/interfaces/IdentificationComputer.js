@@ -1,7 +1,16 @@
 import { sortBy } from 'common/collections';
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Input, LabeledList, Section, Table, Tabs } from '../components';
+import {
+  Box,
+  Button,
+  Flex,
+  Input,
+  LabeledList,
+  Section,
+  Table,
+  Tabs,
+} from '../components';
 import { Window } from '../layouts';
 import { decodeHtmlEntities } from 'common/string';
 import { CrewManifestContent } from './CrewManifest';

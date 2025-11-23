@@ -1,4 +1,11 @@
-import { Section, Box, Button, NoticeBox, LabeledList, NumberInput } from '../components';
+import {
+  Section,
+  Box,
+  Button,
+  NoticeBox,
+  LabeledList,
+  NumberInput,
+} from '../components';
 import { useBackend } from '../backend';
 import { Fragment } from 'inferno';
 import { NtosWindow } from '../layouts';

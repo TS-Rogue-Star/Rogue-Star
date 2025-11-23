@@ -13,7 +13,12 @@ import { Icon } from '../components';
 import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from '../constants';
 import { useDebug } from '../debug';
 import { toggleKitchenSink } from '../debug/actions';
-import { dragStartHandler, recallWindowGeometry, resizeStartHandler, setWindowKey } from '../drag';
+import {
+  dragStartHandler,
+  recallWindowGeometry,
+  resizeStartHandler,
+  setWindowKey,
+} from '../drag';
 import { createLogger } from '../logging';
 import { Layout } from './Layout';
 

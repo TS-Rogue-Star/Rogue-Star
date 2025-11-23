@@ -1,7 +1,20 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Box, Button, Collapsible, Icon, Input, LabeledList, Section, Tabs } from '../components';
-import { ComplexModal, modalOpen, modalRegisterBodyOverride } from '../interfaces/common/ComplexModal';
+import {
+  Box,
+  Button,
+  Collapsible,
+  Icon,
+  Input,
+  LabeledList,
+  Section,
+  Tabs,
+} from '../components';
+import {
+  ComplexModal,
+  modalOpen,
+  modalRegisterBodyOverride,
+} from '../interfaces/common/ComplexModal';
 import { Window } from '../layouts';
 import { LoginInfo } from './common/LoginInfo';
 import { LoginScreen } from './common/LoginScreen';
@@ -359,9 +372,9 @@ const MedicalRecordsMedbots = (_properties, context) => {
                 <Box mt="0.5rem">
                   {medbot.use_beaker
                     ? 'Reservoir: ' +
-                    medbot.total_volume +
-                    '/' +
-                    medbot.maximum_volume
+                      medbot.total_volume +
+                      '/' +
+                      medbot.maximum_volume
                     : 'Using internal synthesizer.'}
                 </Box>
               </Fragment>

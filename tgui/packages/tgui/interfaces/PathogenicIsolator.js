@@ -1,7 +1,18 @@
 import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
-import { ComplexModal, modalRegisterBodyOverride } from '../interfaces/common/ComplexModal';
-import { Box, Button, Flex, NoticeBox, LabeledList, Section, Tabs } from '../components';
+import {
+  ComplexModal,
+  modalRegisterBodyOverride,
+} from '../interfaces/common/ComplexModal';
+import {
+  Box,
+  Button,
+  Flex,
+  NoticeBox,
+  LabeledList,
+  Section,
+  Tabs,
+} from '../components';
 import { Window } from '../layouts';
 
 const virusModalBodyOverride = (modal, context) => {
