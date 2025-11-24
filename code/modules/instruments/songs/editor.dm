@@ -95,7 +95,10 @@
 		dat += " <A href='?src=[REF(src)];newsong=1'>Start a New Song</A>"
 		dat += " <A href='?src=[REF(src)];import=1'>Import a Song</A><BR><BR>"
 		var/bpm = round(600 / tempo)
-		dat += "Tempo: <A href='?src=[REF(src)];tempo=[world.tick_lag]'>-</A> [bpm] BPM <A href='?src=[REF(src)];tempo=-[world.tick_lag]'>+</A><BR><BR>"
+		// RS Edit Start: Remove FPS dependency (Lira, November 2025)
+		var/time_step = get_instrument_time_step()
+		dat += "Tempo: <A href='?src=[REF(src)];tempo=[time_step]'>-</A> [bpm] BPM <A href='?src=[REF(src)];tempo=-[time_step]'>+</A><BR><BR>"
+		// RS Edit End
 		var/linecount = 0
 		for(var/line in lines)
 			linecount += 1
@@ -235,7 +238,7 @@
 	else if(href_list["setlinearfalloff"])
 		var/amount = tgui_input_number(usr, "Set linear sustain duration in seconds", "Linear Sustain Duration")
 		if(!isnull(amount))
-			set_linear_falloff_duration(round(amount * 10, world.tick_lag))
+			set_linear_falloff_duration(round(amount * 10, get_instrument_time_step())) // RS Edit: Remove FPS dependency (Lira, November 2025)
 
 	else if(href_list["setexpfalloff"])
 		var/amount = tgui_input_number(usr, "Set exponential sustain factor", "Exponential sustain factor")
@@ -295,7 +298,7 @@
 	else if(href_list["setsyncdelay"])
 		var/seconds = tgui_input_number(usr, "Set band sync delay (seconds)", "Band Sync Delay", band_delay_ds / 10)
 		if(!isnull(seconds))
-			band_delay_ds = clamp(round(seconds * 10, world.tick_lag), 0, 5 SECONDS)
+			band_delay_ds = clamp(round(seconds * 10, get_instrument_time_step()), 0, 5 SECONDS) // RS Edit: Remove FPS dependency (Lira, November 2025)
 
 	else if(href_list["toggleautoplay"])
 		band_autoplay = !band_autoplay

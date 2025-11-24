@@ -15,14 +15,29 @@
 		tgui_alert_async(host, "The supplied file contains errors: [e]", "Error!")
 		return FALSE
 
+	// RS Edit Start: Updated to support both local and other server vrdb file structures (Lira, November 2025)
+	var/list/belly_entries = list()
 	if(islist(input_data["bellies"]))
-		to_world("true")
-		input_data = input_data["bellies"]
+		belly_entries = input_data["bellies"]
+	else if(islist(input_data))
+		for(var/key in input_data)
+			var/val = input_data[key]
+			if(islist(val))
+				if(islist(val["bellies"]))
+					for(var/nested_belly in val["bellies"])
+						if(islist(nested_belly))
+							belly_entries += list(nested_belly)
+					continue
+				if(istext(val["name"]))
+					belly_entries += list(val)
+		if(length(belly_entries) <= 0)
+			belly_entries = input_data
 
-	if(!islist(input_data))
-		to_world("true")
+	if(!islist(belly_entries) || length(belly_entries) <= 0)
 		tgui_alert_async(usr, "The supplied file was not a valid VRDB file.", "Error!")
 		return FALSE
+	input_data = belly_entries
+	// RS Edit End
 
 	var/list/valid_names = list()
 	var/list/valid_lists = list()
@@ -480,8 +495,14 @@
 			var/new_liquid_multiplier = belly_data["liquid_multiplier"]
 			new_belly.liquid_multiplier = CLAMP(new_liquid_multiplier, 0.1, 10)
 
+		// RS Edit Start: Catch for multiple spellings (Lira, November 2025)
+		var/new_reagent_touches = null
 		if(isnum(belly_data["reagent_touches"])) //Reagent bellies || RS Add || Chomp Port
-			var/new_reagent_touches = belly_data["reagent_touches"]
+			new_reagent_touches = belly_data["reagent_touches"]
+		else if(isnum(belly_data["reagent_toches"])) // Handle vrdb3 typo
+			new_reagent_touches = belly_data["reagent_toches"]
+		if(isnum(new_reagent_touches))
+		// RS Edit End
 			if(new_reagent_touches == 0)
 				new_belly.reagent_touches = FALSE
 			if(new_reagent_touches == 1)
