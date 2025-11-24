@@ -59,6 +59,7 @@ function task-prettier {
 }
 
 function task-prettify {
+  ## RS Edit - use prettier
   yarn prettier --write packages @Args
 }
 
