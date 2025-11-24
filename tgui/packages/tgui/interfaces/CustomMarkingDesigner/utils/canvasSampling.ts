@@ -5,7 +5,12 @@
 import { normalizeHex, TRANSPARENT_HEX } from '../../../utils/color';
 import { GENERIC_PART_KEY } from '../../../utils/character-preview';
 import type { DiffEntry } from '../../../utils/character-preview';
-import { isValidCanvasPoint, resolvePreviewStrokePixels, resolveReferencePixelColor, sampleGridColorAt } from './index';
+import {
+  isValidCanvasPoint,
+  resolvePreviewStrokePixels,
+  resolveReferencePixelColor,
+  sampleGridColorAt,
+} from './index';
 
 type CanvasSamplingOptions = {
   canvasWidth: number;

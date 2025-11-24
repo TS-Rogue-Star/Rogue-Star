@@ -3,7 +3,11 @@
 // /////////////////////////////////////////////////////////////////////////////////////////
 
 import { GENERIC_PART_KEY } from '../../../utils/character-preview';
-import type { BooleanMapState, PartRenderPriorityState, PartReplacementState } from '../types';
+import type {
+  BooleanMapState,
+  PartRenderPriorityState,
+  PartReplacementState,
+} from '../types';
 
 export const normalizeFlagMap = (
   map?: Record<string, boolean> | null

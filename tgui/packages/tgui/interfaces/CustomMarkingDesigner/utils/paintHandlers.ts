@@ -2,7 +2,12 @@
 // Created by Lira for Rogue Star November 2025: Paint handler builders for custom marking designer //
 // ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-import { buildBrushPixels, buildLinePixels, isValidCanvasPoint, normalizeStrokeKey } from './index';
+import {
+  buildBrushPixels,
+  buildLinePixels,
+  isValidCanvasPoint,
+  normalizeStrokeKey,
+} from './index';
 import type { DiffEntry } from '../../../utils/character-preview';
 
 type PaintHandlerOptions = {

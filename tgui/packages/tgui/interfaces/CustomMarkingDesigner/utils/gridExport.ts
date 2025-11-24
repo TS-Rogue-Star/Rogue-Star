@@ -3,8 +3,14 @@
 // ////////////////////////////////////////////////////////////////////////////////////////////////
 
 import { TRANSPARENT_HEX } from '../../../utils/color';
-import { GENERIC_PART_KEY, createBlankGrid } from '../../../utils/character-preview';
-import type { DiffEntry, PreviewDirState } from '../../../utils/character-preview';
+import {
+  GENERIC_PART_KEY,
+  createBlankGrid,
+} from '../../../utils/character-preview';
+import type {
+  DiffEntry,
+  PreviewDirState,
+} from '../../../utils/character-preview';
 import { resolveExportGridForDirPart } from './previewState';
 
 export type GridExportResult = {

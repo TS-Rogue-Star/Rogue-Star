@@ -1,5 +1,11 @@
 import { useBackend } from '../backend';
-import { Button, LabeledList, NumberInput, ProgressBar, Section } from '../components';
+import {
+  Button,
+  LabeledList,
+  NumberInput,
+  ProgressBar,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 
 export const Tank = (props, context) => {

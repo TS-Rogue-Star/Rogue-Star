@@ -7,7 +7,18 @@
 import { capitalize } from 'common/string';
 import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Flex, Collapsible, Icon, LabeledList, NoticeBox, Section, Tabs, Divider } from '../components';
+import {
+  Box,
+  Button,
+  Flex,
+  Collapsible,
+  Icon,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Tabs,
+  Divider,
+} from '../components';
 import { Window } from '../layouts';
 import { classes } from 'common/react';
 

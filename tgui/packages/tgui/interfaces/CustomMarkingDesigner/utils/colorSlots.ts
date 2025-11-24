@@ -2,7 +2,12 @@
 // Created by Lira for Rogue Star November 2025: Color slot helpers for custom marking designer //
 // ///////////////////////////////////////////////////////////////////////////////////////////////
 
-import { buildColorSignatureFromCounts, buildSuggestedColorsFromCounts, collectPreviewColorCounts, hasPreviewLayerContent } from '../../../utils/character-preview';
+import {
+  buildColorSignatureFromCounts,
+  buildSuggestedColorsFromCounts,
+  collectPreviewColorCounts,
+  hasPreviewLayerContent,
+} from '../../../utils/character-preview';
 import { COLOR_PICKER_CUSTOM_SLOTS } from '../constants';
 import type { ColorPickerInitOptions, CustomColorSlotsState } from '../types';
 

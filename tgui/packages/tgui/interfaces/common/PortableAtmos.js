@@ -1,6 +1,13 @@
 import { useBackend } from '../../backend';
 import { Fragment } from 'inferno';
-import { Box, Section, LabeledList, Button, AnimatedNumber, ProgressBar } from '../../components';
+import {
+  Box,
+  Section,
+  LabeledList,
+  Button,
+  AnimatedNumber,
+  ProgressBar,
+} from '../../components';
 
 export const PortableBasicInfo = (props, context) => {
   const { act, data } = useBackend(context);

@@ -1,6 +1,17 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Box, Button, Dimmer, Flex, Icon, Knob, LabeledList, ProgressBar, Section, Tabs } from '../components';
+import {
+  Box,
+  Button,
+  Dimmer,
+  Flex,
+  Icon,
+  Knob,
+  LabeledList,
+  ProgressBar,
+  Section,
+  Tabs,
+} from '../components';
 import { Window } from '../layouts';
 import { ComplexModal } from './common/ComplexModal';
 

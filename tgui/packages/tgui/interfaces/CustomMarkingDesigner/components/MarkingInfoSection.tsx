@@ -2,7 +2,14 @@
 // Created by Lira for Rogue Star November 2025: Marking info section for custom marking designer //
 // /////////////////////////////////////////////////////////////////////////////////////////////////
 
-import { Button, Flex, LabeledList, NumberInput, Section, Tooltip } from '../../../components';
+import {
+  Button,
+  Flex,
+  LabeledList,
+  NumberInput,
+  Section,
+  Tooltip,
+} from '../../../components';
 import { GENERIC_PART_KEY } from '../../../utils/character-preview';
 import type { BodyPartEntry, DirectionEntry } from '../types';
 import { CHIP_BUTTON_CLASS } from '../constants';

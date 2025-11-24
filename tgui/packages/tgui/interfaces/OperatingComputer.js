@@ -2,7 +2,17 @@ import { round } from 'common/math';
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Box, Button, Flex, Icon, Knob, LabeledList, Section, Tabs, ProgressBar } from '../components';
+import {
+  Box,
+  Button,
+  Flex,
+  Icon,
+  Knob,
+  LabeledList,
+  Section,
+  Tabs,
+  ProgressBar,
+} from '../components';
 
 const stats = [
   ['good', 'Conscious'],

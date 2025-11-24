@@ -8,7 +8,14 @@ import { Box } from './Box';
 import { Button } from './Button';
 import { Input } from './Input';
 import { NumberInput } from './NumberInput';
-import { formatHex, hexToRgb, hsvToRgb, normalizeHex, rgbToHex, rgbToHsv } from '../utils/color';
+import {
+  formatHex,
+  hexToRgb,
+  hsvToRgb,
+  normalizeHex,
+  rgbToHex,
+  rgbToHsv,
+} from '../utils/color';
 
 type RogueStarColorPickerProps = {
   color?: string;
@@ -586,7 +593,7 @@ export class RogueStarColorPicker extends Component<
     for (let i = 0; i < CUSTOM_COLOR_SLOTS; i += 1) {
       const entry = provided[i];
       colors.push(
-        typeof entry === 'string' ? normalizeHex(entry) : entry ?? null
+        typeof entry === 'string' ? normalizeHex(entry) : (entry ?? null)
       );
     }
     return colors;

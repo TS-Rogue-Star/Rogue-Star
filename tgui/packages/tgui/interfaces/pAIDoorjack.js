@@ -1,5 +1,12 @@
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, LabeledList, ProgressBar, Section } from '../components';
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  LabeledList,
+  ProgressBar,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 
 export const pAIDoorjack = (props, context) => {

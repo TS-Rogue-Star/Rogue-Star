@@ -3,7 +3,14 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////
 
 import type { DiffEntry } from '../../../utils/character-preview';
-import { arePixelListsEqual, clearAllLocalDraftsInStore, getStoredStrokeDraftsFromStore, mergeStrokePixels, normalizeStrokeKey, updateStrokeDraftsInStore } from '../utils';
+import {
+  arePixelListsEqual,
+  clearAllLocalDraftsInStore,
+  getStoredStrokeDraftsFromStore,
+  mergeStrokePixels,
+  normalizeStrokeKey,
+  updateStrokeDraftsInStore,
+} from '../utils';
 import type { StrokeDraftState } from '../types';
 
 type ContextLike = {
@@ -104,17 +111,17 @@ export const createStrokeDraftManager = (
       const next = { ...prev };
       next[storageKey] = existing
         ? {
-          ...existing,
-          pixels: mergedPixels,
-        }
+            ...existing,
+            pixels: mergedPixels,
+          }
         : {
-          stroke: logicalStrokeKey,
-          session: localSessionKey,
-          dirKey: currentDirKey,
-          part: currentPartKey,
-          sequence: allocateDraftSequence(),
-          pixels: mergedPixels,
-        };
+            stroke: logicalStrokeKey,
+            session: localSessionKey,
+            dirKey: currentDirKey,
+            part: currentPartKey,
+            sequence: allocateDraftSequence(),
+            pixels: mergedPixels,
+          };
       return next;
     });
   };
