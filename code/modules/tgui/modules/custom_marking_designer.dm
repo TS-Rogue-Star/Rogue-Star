@@ -592,6 +592,11 @@
 			preview_revision++
 		send_diff_ack(diff, params?["width"], params?["height"], params?["stroke"])
 		commit_session(session)
+	// Added to avoid race condition (Lira, November 2025)
+	else if(action == "discard_and_close")
+		discard_changes()
+		SStgui.close_uis(src)
+		return FALSE
 	else if(action == "save_and_close")
 		var/replacements_updated = apply_part_replacement_payload(params?["part_replacements"])
 		var/priority_updated = apply_part_render_priority_payload(params?["part_render_priority"])
