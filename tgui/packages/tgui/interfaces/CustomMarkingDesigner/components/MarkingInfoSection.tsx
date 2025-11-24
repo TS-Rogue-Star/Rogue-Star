@@ -45,7 +45,9 @@ type MarkingInfoSectionProps = {
   readonly activePartKey: string;
   readonly activePartLabel: string;
   readonly resolvedPartReplacementMap: Record<string, boolean>;
-  readonly resolvePartLayeringState: (partKey: string | null | undefined) => boolean;
+  readonly resolvePartLayeringState: (
+    partKey: string | null | undefined
+  ) => boolean;
   readonly togglePartLayerPriority: (partKey?: string) => void;
   readonly togglePartReplacement: (partKey?: string) => void;
   readonly setBodyPart: (id: string) => void;
