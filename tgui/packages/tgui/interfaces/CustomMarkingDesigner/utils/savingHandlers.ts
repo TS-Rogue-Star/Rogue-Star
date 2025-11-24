@@ -148,8 +148,7 @@ export const createSavingHandlers = ({
     });
     setPendingClose(true);
     try {
-      await sendAction('discard_changes');
-      await sendAction('save_and_close');
+      await sendAction('discard_and_close'); // Consolidate to avoid race condition (Lira, November 2025)
       clearAllLocalDrafts();
     } catch (error) {
       setPendingClose(false);
