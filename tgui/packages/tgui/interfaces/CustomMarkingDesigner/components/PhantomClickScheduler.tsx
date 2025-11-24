@@ -5,11 +5,11 @@
 import { Component } from 'inferno';
 
 type PhantomClickSchedulerProps = {
-  phantomClickScheduled: boolean;
-  isPlaceholderTool: boolean;
-  activeTool: string | null;
-  setPhantomClickScheduled: (value: boolean) => void;
-  setTool: (tool: string) => void;
+  readonly phantomClickScheduled: boolean;
+  readonly isPlaceholderTool: boolean;
+  readonly activeTool: string | null;
+  readonly setPhantomClickScheduled: (value: boolean) => void;
+  readonly setTool: (tool: string) => void;
 };
 
 export class PhantomClickScheduler extends Component<PhantomClickSchedulerProps> {

@@ -5,8 +5,8 @@
 import { Component } from 'inferno';
 
 export type ToolBootstrapResetProps = {
-  stateToken: string;
-  onReset: () => void;
+  readonly stateToken: string;
+  readonly onReset: () => void;
 };
 
 export class ToolBootstrapReset extends Component<ToolBootstrapResetProps> {

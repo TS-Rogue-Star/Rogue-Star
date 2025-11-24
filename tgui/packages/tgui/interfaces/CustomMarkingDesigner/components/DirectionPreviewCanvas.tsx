@@ -7,10 +7,10 @@ import { Box } from '../../../components';
 import type { PreviewLayerEntry } from '../../../utils/character-preview';
 
 export type DirectionPreviewCanvasProps = {
-  layers?: PreviewLayerEntry[];
-  pixelSize: number;
-  width: number;
-  height: number;
+  readonly layers?: PreviewLayerEntry[];
+  readonly pixelSize: number;
+  readonly width: number;
+  readonly height: number;
 };
 
 export class DirectionPreviewCanvas extends Component<DirectionPreviewCanvasProps> {

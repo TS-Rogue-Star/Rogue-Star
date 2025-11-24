@@ -15,9 +15,9 @@ import type { BodyPartEntry, DirectionEntry } from '../types';
 import { CHIP_BUTTON_CLASS } from '../constants';
 
 type FadeControlProps = {
-  tooltip: string;
-  value: number;
-  onChange: (value: number) => void;
+  readonly tooltip: string;
+  readonly value: number;
+  readonly onChange: (value: number) => void;
 };
 
 const FadeControl = ({ tooltip, value, onChange }: FadeControlProps) => (
@@ -38,20 +38,22 @@ const FadeControl = ({ tooltip, value, onChange }: FadeControlProps) => (
 );
 
 type MarkingInfoSectionProps = {
-  bodyParts: BodyPartEntry[];
-  directions: DirectionEntry[];
-  currentDirectionKey: number;
-  setDirection: (dir: number) => void;
-  activePartKey: string;
-  activePartLabel: string;
-  resolvedPartReplacementMap: Record<string, boolean>;
-  resolvePartLayeringState: (partKey: string | null | undefined) => boolean;
-  togglePartLayerPriority: (partKey?: string) => void;
-  togglePartReplacement: (partKey?: string) => void;
-  setBodyPart: (id: string) => void;
-  uiLocked: boolean;
-  getReferenceOpacityForPart: (partId: string) => number;
-  setReferenceOpacityForPart: (partId: string, value: number) => void;
+  readonly bodyParts: BodyPartEntry[];
+  readonly directions: DirectionEntry[];
+  readonly currentDirectionKey: number;
+  readonly setDirection: (dir: number) => void;
+  readonly activePartKey: string;
+  readonly activePartLabel: string;
+  readonly resolvedPartReplacementMap: Record<string, boolean>;
+  readonly resolvePartLayeringState: (
+    partKey: string | null | undefined
+  ) => boolean;
+  readonly togglePartLayerPriority: (partKey?: string) => void;
+  readonly togglePartReplacement: (partKey?: string) => void;
+  readonly setBodyPart: (id: string) => void;
+  readonly uiLocked: boolean;
+  readonly getReferenceOpacityForPart: (partId: string) => number;
+  readonly setReferenceOpacityForPart: (partId: string, value: number) => void;
 };
 
 export const MarkingInfoSection = ({

@@ -54,10 +54,10 @@ const bodyZonePixelToZone = (x: number, y: number): BodyZone | null => {
 };
 
 type BodyZoneSelectorProps = {
-  onClick?: (zone: BodyZone) => void;
-  scale?: number;
-  selectedZone: BodyZone | null;
-  theme?: string;
+  readonly onClick?: (zone: BodyZone) => void;
+  readonly scale?: number;
+  readonly selectedZone: BodyZone | null;
+  readonly theme?: string;
 };
 
 type BodyZoneSelectorState = {
