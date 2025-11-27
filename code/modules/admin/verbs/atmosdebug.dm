@@ -30,7 +30,7 @@
 	next_turf:
 		for(var/turf/T in world)
 			for(var/dir in cardinal)
-				var/list/connect_types = list(1 = 0, 2 = 0, 3 = 0)
+				var/list/connect_types = list(0, 0, 0) // RS EDIT - 516.1648+ compatibility
 				for(var/obj/machinery/atmospherics/pipe in T)
 					if(dir & pipe.initialize_directions)
 						for(var/connect_type in pipe.connect_types)
