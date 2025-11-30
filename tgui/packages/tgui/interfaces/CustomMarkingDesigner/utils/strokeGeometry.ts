@@ -1,6 +1,8 @@
 // ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Created by Lira for Rogue Star November 2025: Stroke geometry helpers for custom marking designer //
 // ////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2025: Updated to support 64x64 markings ////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import type { DiffEntry } from '../../../utils/character-preview';
 
@@ -168,3 +170,61 @@ export const isValidCanvasPoint = (
   x <= width &&
   y >= 1 &&
   y <= height;
+
+export const resolveMirrorPivot = (width: number): number | null => {
+  const resolvedWidth = Math.max(1, Math.floor(width || 0));
+  if (!Number.isFinite(resolvedWidth) || resolvedWidth <= 0) {
+    return null;
+  }
+  if (resolvedWidth === 64) {
+    return resolvedWidth / 2;
+  }
+  return (resolvedWidth + 1) / 2;
+};
+
+export const mirrorStrokePixelsHorizontally = (
+  pixels: DiffEntry[],
+  width: number
+): DiffEntry[] => {
+  if (!Array.isArray(pixels) || !pixels.length) {
+    return [];
+  }
+  const pivot = resolveMirrorPivot(width);
+  if (!pivot) {
+    return pixels.slice();
+  }
+  const resolvedWidth = Math.max(1, Math.floor(width || 0));
+  const result: DiffEntry[] = [];
+  const seen = new Set<string>();
+  const addPixel = (px: number, py: number, color: string) => {
+    if (!Number.isFinite(px) || !Number.isFinite(py)) {
+      return;
+    }
+    const clampedX = Math.round(px);
+    if (clampedX < 1 || clampedX > resolvedWidth) {
+      return;
+    }
+    const clampedY = Math.round(py);
+    if (clampedY < 1) {
+      return;
+    }
+    const key = `${clampedX}-${clampedY}`;
+    if (seen.has(key)) {
+      return;
+    }
+    seen.add(key);
+    result.push({ x: clampedX, y: clampedY, color });
+  };
+  for (const pixel of pixels) {
+    if (!pixel) {
+      continue;
+    }
+    addPixel(pixel.x, pixel.y, pixel.color);
+    const mirroredX = Math.round(pivot * 2 - Number(pixel.x));
+    if (!Number.isFinite(mirroredX)) {
+      continue;
+    }
+    addPixel(mirroredX, pixel.y, pixel.color);
+  }
+  return result;
+};

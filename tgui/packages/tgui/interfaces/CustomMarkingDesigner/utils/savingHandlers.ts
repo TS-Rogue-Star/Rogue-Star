@@ -1,6 +1,8 @@
 // ///////////////////////////////////////////////////////////////////////////////////////////////////
 // Created by Lira for Rogue Star November 2025: Saving handler helpers for custom marking designer //
 // ///////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2025: Updated to support 64x64 markings ///////////////////
+// ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 import type { PendingCloseMessage, SavingProgressState } from '../types';
 import { buildFlagSavePayload } from './flags';
@@ -17,6 +19,8 @@ export type SavingHandlerOptions = {
   resolvedPartReplacementMap: Record<string, boolean>;
   resolvedPriorityState: BooleanMapState;
   resolvedPartPriorityMap: Record<string, boolean>;
+  resolvedCanvasSizeState: BooleanMapState;
+  resolvedPartCanvasSizeMap: Record<string, boolean>;
   sendActionAfterSync: (
     actionName: string,
     payload?: Record<string, unknown>
@@ -45,6 +49,8 @@ export const createSavingHandlers = ({
   resolvedPartReplacementMap,
   resolvedPriorityState,
   resolvedPartPriorityMap,
+  resolvedCanvasSizeState,
+  resolvedPartCanvasSizeMap,
   sendActionAfterSync,
   clearAllLocalDrafts,
   setSavingProgress,
@@ -58,6 +64,9 @@ export const createSavingHandlers = ({
       : null,
     priorityPayload: resolvedPriorityState.dirty
       ? buildFlagSavePayload(resolvedPartPriorityMap)
+      : null,
+    canvasPayload: resolvedCanvasSizeState.dirty
+      ? buildFlagSavePayload(resolvedPartCanvasSizeMap)
       : null,
   });
 
@@ -77,12 +86,14 @@ export const createSavingHandlers = ({
         value: null,
         label: 'Finalizing with server…',
       });
-      const { replacementPayload, priorityPayload } = buildPayloads();
+      const { replacementPayload, priorityPayload, canvasPayload } =
+        buildPayloads();
       await sendActionAfterSync('save_and_close', {
         ...(replacementPayload
           ? { part_replacements: replacementPayload }
           : {}),
         ...(priorityPayload ? { part_render_priority: priorityPayload } : {}),
+        ...(canvasPayload ? { part_canvas_size: canvasPayload } : {}),
       });
     } catch (error) {
       setPendingClose(false);
@@ -113,12 +124,14 @@ export const createSavingHandlers = ({
         value: null,
         label: 'Finalizing with server…',
       });
-      const { replacementPayload, priorityPayload } = buildPayloads();
+      const { replacementPayload, priorityPayload, canvasPayload } =
+        buildPayloads();
       await sendActionAfterSync('save_progress', {
         ...(replacementPayload
           ? { part_replacements: replacementPayload }
           : {}),
         ...(priorityPayload ? { part_render_priority: priorityPayload } : {}),
+        ...(canvasPayload ? { part_canvas_size: canvasPayload } : {}),
       });
     } catch (error) {
       reportClientWarning(

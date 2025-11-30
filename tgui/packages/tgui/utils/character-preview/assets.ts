@@ -1,6 +1,8 @@
 // ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Created by Lira for Rogue Star November 2025: Character preview asset helpers for custom markings //
 // ////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2025: Updated to support 64x64 markings ////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export type IconAssetPayload = {
   token: string;
@@ -242,7 +244,7 @@ const buildReferenceGrid = (
   width: number,
   height: number
 ): (string | null)[][] => {
-  const grid = createBlankGrid(width, height);
+  let grid = createBlankGrid(width, height);
   const iconWidth = asset.imageData.width;
   const iconHeight = asset.imageData.height;
   const xOffset = Math.round((iconWidth - width) / 2);
@@ -259,6 +261,11 @@ const buildReferenceGrid = (
       const uiY = height - y + 1;
       column[uiY - 1] = color;
     }
+  }
+  const dx = -asset.shiftX;
+  const dy = asset.shiftY;
+  if (dx || dy) {
+    grid = translateGrid(grid, dx, dy);
   }
   return grid;
 };
@@ -290,7 +297,7 @@ const buildPreviewGrid = (
   const iconWidth = asset.imageData.width;
   const iconHeight = asset.imageData.height;
   const xOffset = Math.round((width - iconWidth) / 2);
-  const yOffset = height - iconHeight;
+  const yOffset = Math.min(0, height - iconHeight);
   for (let x = 1; x <= width; x += 1) {
     const column = grid[x - 1];
     const sourceX = x - xOffset;
