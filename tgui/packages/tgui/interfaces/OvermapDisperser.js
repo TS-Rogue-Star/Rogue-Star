@@ -1,5 +1,12 @@
 import { useBackend } from '../backend';
-import { Box, Button, Flex, LabeledList, Section, AnimatedNumber } from '../components';
+import {
+  Box,
+  Button,
+  Flex,
+  LabeledList,
+  Section,
+  AnimatedNumber,
+} from '../components';
 import { Window } from '../layouts';
 import { OvermapPanControls } from './common/Overmap';
 

@@ -3,7 +3,11 @@
 // ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 import { clamp01 } from 'common/math';
-import { normalizeHex, resolvePixelColorFromHex, TRANSPARENT_HEX } from '../../../utils/color';
+import {
+  normalizeHex,
+  resolvePixelColorFromHex,
+  TRANSPARENT_HEX,
+} from '../../../utils/color';
 import type { DiffEntry } from '../../../utils/character-preview';
 
 export type PreviewGrid = (string | null)[][] | null | undefined;
@@ -51,13 +55,13 @@ export const resolvePreviewStrokePixels = (
     const fallbackColor = baseColor
       ? null
       : resolveReferencePixelColor(
-        options.referenceParts,
-        options.activePartKey,
-        options.genericPartKey,
-        options.referenceGrid,
-        pixel.x,
-        pixel.y
-      );
+          options.referenceParts,
+          options.activePartKey,
+          options.genericPartKey,
+          options.referenceGrid,
+          pixel.x,
+          pixel.y
+        );
     const resolved =
       resolvePixelColorFromHex(
         baseColor,

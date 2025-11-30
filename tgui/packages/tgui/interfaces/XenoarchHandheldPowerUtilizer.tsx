@@ -1,6 +1,13 @@
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, NumberInput, Section, ProgressBar } from '../components';
+import {
+  Box,
+  Button,
+  LabeledList,
+  NumberInput,
+  Section,
+  ProgressBar,
+} from '../components';
 import { Window } from '../layouts';
 
 type Data = {

@@ -1,11 +1,18 @@
 // ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Created by Lira for Rogue Star November 2025: Canvas sampling helpers for custom marking designer //
 // ////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2025: Updated to support 64x64 markings ////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import { normalizeHex, TRANSPARENT_HEX } from '../../../utils/color';
 import { GENERIC_PART_KEY } from '../../../utils/character-preview';
 import type { DiffEntry } from '../../../utils/character-preview';
-import { isValidCanvasPoint, resolvePreviewStrokePixels, resolveReferencePixelColor, sampleGridColorAt } from './index';
+import {
+  isValidCanvasPoint,
+  resolvePreviewStrokePixels,
+  resolveReferencePixelColor,
+  sampleGridColorAt,
+} from './index';
 
 type CanvasSamplingOptions = {
   canvasWidth: number;
@@ -24,8 +31,15 @@ type CanvasSamplingOptions = {
 };
 
 export type CanvasSamplingHelpers = {
-  decoratePreviewPixels: (pixels: DiffEntry[]) => DiffEntry[];
-  buildFillPreviewDiff: (startX: number, startY: number) => DiffEntry[];
+  decoratePreviewPixels: (
+    pixels: DiffEntry[],
+    blendModeOverride?: string
+  ) => DiffEntry[];
+  buildFillPreviewDiff: (
+    startX: number,
+    startY: number,
+    blendModeOverride?: string
+  ) => DiffEntry[];
   buildClearPreviewDiff: () => DiffEntry[];
   sampleEyedropperPixelColor: (x: number, y: number) => string | null;
   sampleCurrentPixelColor: (x: number, y: number) => string | null;
@@ -185,11 +199,14 @@ export const createCanvasSamplingHelpers = (
     sampleActiveLayerPixelColor(x, y) ||
     sampleOverlayPixelColor(x, y);
 
-  const decoratePreviewPixels = (pixels: DiffEntry[]) =>
+  const decoratePreviewPixels = (
+    pixels: DiffEntry[],
+    blendModeOverride?: string
+  ) =>
     resolvePreviewStrokePixels({
       pixels,
       brushHex: options.brushColor,
-      blendMode: options.currentBlendMode,
+      blendMode: blendModeOverride || options.currentBlendMode,
       strength: options.analogStrength,
       grid: options.uiCanvasGrid,
       referenceParts: options.referenceParts,
@@ -201,7 +218,8 @@ export const createCanvasSamplingHelpers = (
 
   const buildFillPreviewDiff = (
     startX: number,
-    startY: number
+    startY: number,
+    blendModeOverride?: string
   ): DiffEntry[] => {
     if (
       !isValidCanvasPoint(
@@ -251,7 +269,7 @@ export const createCanvasSamplingHelpers = (
     if (!rawPixels.length) {
       return [];
     }
-    const resolvedPixels = decoratePreviewPixels(rawPixels);
+    const resolvedPixels = decoratePreviewPixels(rawPixels, blendModeOverride);
     if (!resolvedPixels.length) {
       return [];
     }

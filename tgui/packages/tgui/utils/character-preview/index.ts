@@ -4,10 +4,20 @@
 
 import { normalizeHex, TRANSPARENT_HEX } from '../color';
 import type { IconAssetPayload } from './assets';
-import { getPreviewGridFromAsset, getPreviewGridListFromAssets, getPreviewPartMapFromAssets } from './assets';
+import {
+  getPreviewGridFromAsset,
+  getPreviewGridListFromAssets,
+  getPreviewPartMapFromAssets,
+} from './assets';
 
 export type { IconAssetPayload } from './assets';
-export { getPreviewGridFromAsset, getPreviewGridListFromAssets, getPreviewPartMapFromAssets, getReferenceGridFromAsset, getReferencePartMapFromAssets } from './assets';
+export {
+  getPreviewGridFromAsset,
+  getPreviewGridListFromAssets,
+  getPreviewPartMapFromAssets,
+  getReferenceGridFromAsset,
+  getReferencePartMapFromAssets,
+} from './assets';
 
 export const GENERIC_PART_KEY = 'generic';
 
@@ -148,9 +158,9 @@ export const buildRenderedPreviewDirs = (
     directions && directions.length
       ? directions
       : Object.values(dirStates).map((entry) => ({
-        dir: entry.dir,
-        label: entry.label,
-      }));
+          dir: entry.dir,
+          label: entry.label,
+        }));
   const result: PreviewDirectionEntry[] = [];
   for (const entry of orderedDirs) {
     const dirState = dirStates[entry.dir];

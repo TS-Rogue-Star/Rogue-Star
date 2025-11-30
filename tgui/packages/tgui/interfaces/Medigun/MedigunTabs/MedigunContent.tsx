@@ -1,12 +1,22 @@
 // RS File
 import { Fragment } from 'inferno';
 import { useBackend } from '../../../backend';
-import { Box, Button, LabeledList, ProgressBar, Section, Stack } from '../../../components';
+import {
+  Box,
+  Button,
+  LabeledList,
+  ProgressBar,
+  Section,
+  Stack,
+} from '../../../components';
 import type { Data, SModule } from '../types';
 import { gridStatusToText, statToColor, statToString } from '../constants';
 import { ChargeStatus } from '../MedigunHelpers/ChargeStatus';
 
-export const MedigunContent = (props: { smodule: SModule }, context) => {
+export const MedigunContent = (
+  props: { readonly smodule: SModule },
+  context
+) => {
   const { act, data } = useBackend<Data>(context);
 
   const {

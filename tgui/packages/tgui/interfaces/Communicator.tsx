@@ -3,7 +3,17 @@ import { BooleanLike } from 'common/react';
 import { decodeHtmlEntities, toTitleCase } from 'common/string';
 import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
-import { Box, ByondUi, Button, Flex, Icon, LabeledList, Input, Section, Table } from '../components';
+import {
+  Box,
+  ByondUi,
+  Button,
+  Flex,
+  Icon,
+  LabeledList,
+  Input,
+  Section,
+  Table,
+} from '../components';
 import { Window } from '../layouts';
 import { CrewManifestContent } from './CrewManifest';
 

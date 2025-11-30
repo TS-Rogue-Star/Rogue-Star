@@ -3,11 +3,11 @@ import { Box, LabeledList, ProgressBar, Stack } from '../../../components';
 
 export const ChargeStatus = (
   props: {
-    name: string;
-    color: string;
-    charge: number | null;
-    max: number | null;
-    volume: number | null;
+    readonly name: string;
+    readonly color: string;
+    readonly charge: number | null;
+    readonly max: number | null;
+    readonly volume: number | null;
   },
   context
 ) => {

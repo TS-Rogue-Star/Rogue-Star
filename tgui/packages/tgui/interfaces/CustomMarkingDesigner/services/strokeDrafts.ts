@@ -1,9 +1,18 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////
 // Created by Lira for Rogue Star November 2025: Stroke draft storage for custom marking designer //
 // /////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2025: Updated to support 64x64 markings /////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////
 
 import type { DiffEntry } from '../../../utils/character-preview';
-import { arePixelListsEqual, clearAllLocalDraftsInStore, getStoredStrokeDraftsFromStore, mergeStrokePixels, normalizeStrokeKey, updateStrokeDraftsInStore } from '../utils';
+import {
+  arePixelListsEqual,
+  clearAllLocalDraftsInStore,
+  getStoredStrokeDraftsFromStore,
+  mergeStrokePixels,
+  normalizeStrokeKey,
+  updateStrokeDraftsInStore,
+} from '../utils';
 import type { StrokeDraftState } from '../types';
 
 type ContextLike = {
@@ -33,7 +42,7 @@ export type StrokeDraftManager = {
   ) => void;
   clearAllLocalDrafts: () => void;
   appendStrokePreviewPixels: (stroke: unknown, pixels: DiffEntry[]) => void;
-  removeStrokeDraft: (stroke: unknown) => void;
+  removeStrokeDraft: (stroke: unknown, sessionKey?: string | null) => void;
   clearSessionDrafts: (targetSessionKey?: string) => void;
   getPendingDraftSessions: () => PendingDraftSession[];
   removeLastLocalStroke: () => boolean;
@@ -104,24 +113,28 @@ export const createStrokeDraftManager = (
       const next = { ...prev };
       next[storageKey] = existing
         ? {
-          ...existing,
-          pixels: mergedPixels,
-        }
+            ...existing,
+            pixels: mergedPixels,
+          }
         : {
-          stroke: logicalStrokeKey,
-          session: localSessionKey,
-          dirKey: currentDirKey,
-          part: currentPartKey,
-          sequence: allocateDraftSequence(),
-          pixels: mergedPixels,
-        };
+            stroke: logicalStrokeKey,
+            session: localSessionKey,
+            dirKey: currentDirKey,
+            part: currentPartKey,
+            sequence: allocateDraftSequence(),
+            pixels: mergedPixels,
+          };
       return next;
     });
   };
 
-  const removeStrokeDraft = (stroke: unknown) => {
+  const removeStrokeDraft = (
+    stroke: unknown,
+    targetSessionKey?: string | null
+  ) => {
     const strokeKey = normalizeStrokeKey(stroke);
-    if (!strokeKey) {
+    const sessionKey = targetSessionKey || getLocalSessionKey();
+    if (!strokeKey || !sessionKey) {
       return;
     }
     updateStrokeDrafts((prev) => {
@@ -129,7 +142,7 @@ export const createStrokeDraftManager = (
       const next = { ...prev };
       for (const key of Object.keys(prev)) {
         const entry = prev[key];
-        if (entry?.stroke !== strokeKey) {
+        if (entry?.stroke !== strokeKey || entry.session !== sessionKey) {
           continue;
         }
         delete next[key];

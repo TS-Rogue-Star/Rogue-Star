@@ -1,7 +1,14 @@
 import { toFixed } from 'common/math';
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Box, Button, Flex, LabeledList, Section, NoticeBox } from '../components';
+import {
+  Box,
+  Button,
+  Flex,
+  LabeledList,
+  Section,
+  NoticeBox,
+} from '../components';
 import { Window } from '../layouts';
 import { RankIcon } from './common/RankIcon';
 

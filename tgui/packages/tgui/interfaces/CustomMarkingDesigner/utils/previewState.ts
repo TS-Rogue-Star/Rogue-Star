@@ -1,10 +1,32 @@
 // //////////////////////////////////////////////////////////////////////////////////////////////////
 // Created by Lira for Rogue Star November 2025: Preview state helpers for custom marking designer //
 // //////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2025: Updated to support 64x64 markings //////////////////
+// //////////////////////////////////////////////////////////////////////////////////////////////////
 
-import { GENERIC_PART_KEY, applyDiffToGrid, cloneGridData, createBlankGrid, getReferenceGridFromAsset, getReferencePartMapFromAssets } from '../../../utils/character-preview';
-import type { DiffEntry, PreviewDirState, PreviewDirectionSource, PreviewState } from '../../../utils/character-preview';
-import type { BodyPartEntry, CustomMarkingDesignerData, DirectionCanvasSourceOptions, DirectionCanvasSourceResult } from '../types';
+import {
+  GENERIC_PART_KEY,
+  applyDiffToGrid,
+  cloneGridData,
+  createBlankGrid,
+  getPreviewGridFromAsset,
+  getPreviewPartMapFromAssets,
+  getPreviewGridListFromAssets,
+  IconAssetPayload,
+} from '../../../utils/character-preview';
+import { CANVAS_FIT_TARGET } from '../constants';
+import type {
+  DiffEntry,
+  PreviewDirState,
+  PreviewDirectionSource,
+  PreviewState,
+} from '../../../utils/character-preview';
+import type {
+  BodyPartEntry,
+  CustomMarkingDesignerData,
+  DirectionCanvasSourceOptions,
+  DirectionCanvasSourceResult,
+} from '../types';
 import { convertCompositeGridToUi } from './gridConversion';
 
 export const buildLocalSessionKey = (dirKey: number, partKey: string) =>
@@ -38,20 +60,46 @@ export const resolveDirectionCanvasSources = (
     signalAssetUpdate,
   } = options;
   const activeDirState = derivedPreviewState.dirs[currentDirectionKey];
+  const overlayLayers =
+    getPreviewGridListFromAssets(
+      activeDirState?.overlayAssets,
+      canvasWidth,
+      canvasHeight,
+      signalAssetUpdate
+    ) || null;
+  const largeOverlayLayers = pickLargeOverlayLayers(
+    activeDirState?.overlayAssets,
+    overlayLayers
+  );
   const referenceParts: Record<string, string[][]> | null =
-    getReferencePartMapFromAssets(
+    getPreviewPartMapFromAssets(
       activeDirState?.referencePartAssets,
       canvasWidth,
       canvasHeight,
       signalAssetUpdate
     ) || null;
   const referenceGrid: string[][] | null =
-    getReferenceGridFromAsset(
+    getPreviewGridFromAsset(
       activeDirState?.bodyAsset || activeDirState?.compositeAsset,
       canvasWidth,
       canvasHeight,
       signalAssetUpdate
     ) || null;
+  const overlayGrid =
+    canvasWidth > CANVAS_FIT_TARGET || canvasHeight > CANVAS_FIT_TARGET
+      ? normalizeOverlayGrid(
+          mergeOverlayLayers(largeOverlayLayers),
+          canvasWidth,
+          canvasHeight
+        )
+      : null;
+  const referencePartsWithOverlays =
+    overlayGrid && overlayGrid.length
+      ? {
+          ...(referenceParts || {}),
+          overlay: overlayGrid,
+        }
+      : referenceParts;
   const previewPartGrid = activeDirState?.customParts?.[activePartKey]?.grid;
   const overlaySourceGrid =
     currentDirectionKey === activeDirKey &&
@@ -69,7 +117,7 @@ export const resolveDirectionCanvasSources = (
     fallbackLayerGrid ||
     createBlankGrid(canvasWidth, canvasHeight)) as string[][];
   return {
-    referenceParts,
+    referenceParts: referencePartsWithOverlays,
     referenceGrid,
     serverDiffPayload,
     serverDiffSeq,
@@ -515,6 +563,122 @@ export const buildOverlayLayerParts = (
     }
   }
   return Object.keys(overlayParts).length ? overlayParts : null;
+};
+
+const mergeOverlayLayers = (layers: string[][][] | null): string[][] | null => {
+  if (!layers || !layers.length) {
+    return null;
+  }
+  let maxWidth = 0;
+  let maxHeight = 0;
+  for (const layer of layers) {
+    if (!Array.isArray(layer) || !layer.length) {
+      continue;
+    }
+    maxWidth = Math.max(maxWidth, layer.length);
+    for (const column of layer) {
+      if (Array.isArray(column)) {
+        maxHeight = Math.max(maxHeight, column.length);
+      }
+    }
+  }
+  if (!maxWidth || !maxHeight) {
+    return null;
+  }
+  const merged = createBlankGrid(maxWidth, maxHeight);
+  for (const layer of layers) {
+    if (!Array.isArray(layer)) {
+      continue;
+    }
+    for (let x = 0; x < layer.length; x += 1) {
+      const column = layer[x];
+      if (!Array.isArray(column)) {
+        continue;
+      }
+      for (let y = 0; y < column.length; y += 1) {
+        const color = column[y];
+        if (!color) {
+          continue;
+        }
+        merged[x][y] = color;
+      }
+    }
+  }
+  return merged;
+};
+
+const pickLargeOverlayLayers = (
+  assets: IconAssetPayload[] | undefined,
+  layers: string[][][] | null
+): string[][][] | null => {
+  if (!Array.isArray(assets) || !assets.length || !Array.isArray(layers)) {
+    return null;
+  }
+  const result: string[][][] = [];
+  const count = Math.min(assets.length, layers.length);
+  for (let i = 0; i < count; i += 1) {
+    const asset = assets[i];
+    const layer = layers[i];
+    if (
+      !asset ||
+      !layer ||
+      (!asset.width && !asset.height) ||
+      !Array.isArray(layer) ||
+      !layer.length
+    ) {
+      continue;
+    }
+    const isLarge =
+      (asset.width || 0) > CANVAS_FIT_TARGET ||
+      (asset.height || 0) > CANVAS_FIT_TARGET;
+    if (isLarge) {
+      result.push(layer);
+    }
+  }
+  return result.length ? result : null;
+};
+
+const normalizeOverlayGrid = (
+  grid: string[][] | null,
+  targetWidth: number,
+  targetHeight: number
+): string[][] | null => {
+  if (!grid || !grid.length || targetWidth <= 0 || targetHeight <= 0) {
+    return grid;
+  }
+  const sourceWidth = grid.length;
+  const sourceHeight = grid[0]?.length || 0;
+  if (!sourceWidth || !sourceHeight) {
+    return grid;
+  }
+  if (sourceWidth === targetWidth && sourceHeight === targetHeight) {
+    return grid;
+  }
+  const targetGrid = createBlankGrid(
+    Math.max(1, targetWidth),
+    Math.max(1, targetHeight)
+  );
+  const xOffset = Math.round((targetWidth - sourceWidth) / 2);
+  const yOffset = targetHeight - sourceHeight;
+  for (let x = 0; x < sourceWidth; x += 1) {
+    const column = grid[x];
+    if (!Array.isArray(column)) {
+      continue;
+    }
+    for (let y = 0; y < column.length; y += 1) {
+      const value = column[y];
+      if (!value) {
+        continue;
+      }
+      const tx = x + xOffset;
+      const ty = y + yOffset;
+      if (tx < 0 || tx >= targetWidth || ty < 0 || ty >= targetHeight) {
+        continue;
+      }
+      targetGrid[tx][ty] = value;
+    }
+  }
+  return targetGrid;
 };
 
 export const buildBodyPartLabelMap = (

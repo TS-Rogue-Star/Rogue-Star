@@ -1,19 +1,40 @@
 // ///////////////////////////////////////////////////////////////////////////////////////////////////
 // Created by Lira for Rogue Star November 2025: Paint handler builders for custom marking designer //
 // ///////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2025: Updated to support 64x64 markings ///////////////////
+// ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-import { buildBrushPixels, buildLinePixels, isValidCanvasPoint, normalizeStrokeKey } from './index';
+import {
+  buildBrushPixels,
+  buildLinePixels,
+  isValidCanvasPoint,
+  mirrorStrokePixelsHorizontally,
+  normalizeStrokeKey,
+} from './index';
 import type { DiffEntry } from '../../../utils/character-preview';
+
+type PaintToolContext = {
+  previewColorForBlend: string;
+  isBrushTool: boolean;
+  mirrorBrush: boolean;
+  blendMode: string;
+};
 
 type PaintHandlerOptions = {
   canvasWidth: number;
   canvasHeight: number;
   size: number;
-  previewColorForBlend: string;
-  isBrushTool: boolean;
+  resolveToolContext: (tool: string) => PaintToolContext;
   appendStrokePreviewPixels: (stroke: unknown, pixels: DiffEntry[]) => void;
-  decoratePreviewPixels: (pixels: DiffEntry[]) => DiffEntry[];
-  buildFillPreviewDiff: (x: number, y: number) => DiffEntry[];
+  decoratePreviewPixels: (
+    pixels: DiffEntry[],
+    blendModeOverride?: string
+  ) => DiffEntry[];
+  buildFillPreviewDiff: (
+    x: number,
+    y: number,
+    blendModeOverride?: string
+  ) => DiffEntry[];
   buildClearPreviewDiff: () => DiffEntry[];
   sampleEyedropperPixelColor: (x: number, y: number) => string | null;
   applyBrushColorChange: (hex: string) => Promise<void>;
@@ -27,11 +48,13 @@ export type PaintHandlers = {
     y,
     stroke,
     brushSize,
+    tool,
   }: {
     x: number;
     y: number;
     stroke: unknown;
     brushSize: number;
+    tool?: string;
   }) => void;
   onLine: ({
     x1,
@@ -40,6 +63,7 @@ export type PaintHandlers = {
     y2,
     stroke,
     brushSize,
+    tool,
   }: {
     x1: number;
     y1: number;
@@ -47,9 +71,18 @@ export type PaintHandlers = {
     y2: number;
     stroke: unknown;
     brushSize: number;
+    tool?: string;
   }) => void;
-  onFill: ({ x, y }: { x: number; y: number }) => void;
-  onEyedropper: ({ x, y }: { x: number; y: number }) => Promise<void>;
+  onFill: ({ x, y, tool }: { x: number; y: number; tool?: string }) => void;
+  onEyedropper: ({
+    x,
+    y,
+    tool,
+  }: {
+    x: number;
+    y: number;
+    tool?: string;
+  }) => Promise<void>;
   queueCanvasClearPreview: () => boolean;
 };
 
@@ -57,12 +90,14 @@ export const createPaintHandlers = (
   options: PaintHandlerOptions
 ): PaintHandlers => {
   const queueBrushStampPreview = (
+    tool: string,
     stroke: unknown,
     x: number,
     y: number,
     brushSize?: number
   ) => {
-    if (!options.isBrushTool) {
+    const toolContext = options.resolveToolContext(tool);
+    if (!toolContext.isBrushTool) {
       return;
     }
     const strokeKey = normalizeStrokeKey(stroke);
@@ -73,11 +108,17 @@ export const createPaintHandlers = (
       x,
       y,
       brushSize || options.size,
-      options.previewColorForBlend,
+      toolContext.previewColorForBlend,
       options.canvasWidth,
       options.canvasHeight
     );
-    const resolvedPixels = options.decoratePreviewPixels(pixels);
+    const withMirror = toolContext.mirrorBrush
+      ? mirrorStrokePixelsHorizontally(pixels, options.canvasWidth)
+      : pixels;
+    const resolvedPixels = options.decoratePreviewPixels(
+      withMirror,
+      toolContext.blendMode
+    );
     if (!resolvedPixels.length) {
       return;
     }
@@ -85,6 +126,7 @@ export const createPaintHandlers = (
   };
 
   const queueBrushLinePreview = (
+    tool: string,
     stroke: unknown,
     x1: number,
     y1: number,
@@ -92,7 +134,8 @@ export const createPaintHandlers = (
     y2: number,
     brushSize?: number
   ) => {
-    if (!options.isBrushTool) {
+    const toolContext = options.resolveToolContext(tool);
+    if (!toolContext.isBrushTool) {
       return;
     }
     const strokeKey = normalizeStrokeKey(stroke);
@@ -105,18 +148,25 @@ export const createPaintHandlers = (
       x2,
       y2,
       brushSize || options.size,
-      options.previewColorForBlend,
+      toolContext.previewColorForBlend,
       options.canvasWidth,
       options.canvasHeight
     );
-    const resolvedPixels = options.decoratePreviewPixels(pixels);
+    const withMirror = toolContext.mirrorBrush
+      ? mirrorStrokePixelsHorizontally(pixels, options.canvasWidth)
+      : pixels;
+    const resolvedPixels = options.decoratePreviewPixels(
+      withMirror,
+      toolContext.blendMode
+    );
     if (!resolvedPixels.length) {
       return;
     }
     options.appendStrokePreviewPixels(strokeKey, resolvedPixels);
   };
 
-  const onPaint = ({ x, y, stroke, brushSize }) => {
+  const onPaint = ({ x, y, stroke, brushSize, tool }) => {
+    const resolvedTool = tool || 'brush';
     const brushFootprint = Math.max(
       1,
       Math.floor(brushSize || options.size || 1)
@@ -127,20 +177,22 @@ export const createPaintHandlers = (
     ) {
       return;
     }
-    queueBrushStampPreview(stroke, x, y, brushFootprint);
+    queueBrushStampPreview(resolvedTool, stroke, x, y, brushFootprint);
   };
 
-  const onLine = ({ x1, y1, x2, y2, stroke, brushSize }) => {
+  const onLine = ({ x1, y1, x2, y2, stroke, brushSize, tool }) => {
+    const resolvedTool = tool || 'brush';
     if (stroke !== undefined && stroke !== null) {
-      queueBrushLinePreview(stroke, x1, y1, x2, y2, brushSize);
+      queueBrushLinePreview(resolvedTool, stroke, x1, y1, x2, y2, brushSize);
     }
   };
 
-  const onFill = ({ x, y }: { x: number; y: number }) => {
+  const onFill = ({ x, y, tool }: { x: number; y: number; tool?: string }) => {
     if (!isValidCanvasPoint(x, y, options.canvasWidth, options.canvasHeight)) {
       return;
     }
-    const diff = options.buildFillPreviewDiff(x, y);
+    const toolContext = options.resolveToolContext(tool || 'brush');
+    const diff = options.buildFillPreviewDiff(x, y, toolContext.blendMode);
     if (!diff.length) {
       return;
     }
@@ -148,7 +200,14 @@ export const createPaintHandlers = (
     options.appendStrokePreviewPixels(strokeKey, diff);
   };
 
-  const onEyedropper = async ({ x, y }: { x: number; y: number }) => {
+  const onEyedropper = async ({
+    x,
+    y,
+  }: {
+    x: number;
+    y: number;
+    tool?: string;
+  }) => {
     if (!isValidCanvasPoint(x, y, options.canvasWidth, options.canvasHeight)) {
       return;
     }

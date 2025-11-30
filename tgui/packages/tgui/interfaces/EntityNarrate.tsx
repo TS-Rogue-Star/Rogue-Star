@@ -1,6 +1,14 @@
 import { BooleanLike } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
-import { Flex, Tabs, Section, Button, Box, TextArea, Divider } from '../components';
+import {
+  Flex,
+  Tabs,
+  Section,
+  Button,
+  Box,
+  TextArea,
+  Divider,
+} from '../components';
 import { Window } from '../layouts';
 
 type data = {

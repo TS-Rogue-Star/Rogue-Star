@@ -5,7 +5,11 @@
 import { useLocalState } from '../../backend';
 import type { PreviewState } from '../../utils/character-preview';
 import { buildDefaultCustomColorSlots } from './utils';
-import type { CustomColorSlotsState, PendingCloseMessage, SavingProgressState } from './types';
+import type {
+  CustomColorSlotsState,
+  PendingCloseMessage,
+  SavingProgressState,
+} from './types';
 
 type Setter<T> = (value: T) => void;
 

@@ -3,9 +3,18 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star November 2025: Refactor moving most of the work to TGUI and adding new options to overlay and replace parts //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2025: Updated to support 64x64 markings /////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define CUSTOM_MARKING_DEFAULT_WIDTH 32
 #define CUSTOM_MARKING_DEFAULT_HEIGHT 32
+
+#ifndef CUSTOM_MARKING_CANVAS_MAX_WIDTH
+#define CUSTOM_MARKING_CANVAS_MAX_WIDTH 64
+#endif
+#ifndef CUSTOM_MARKING_CANVAS_MAX_HEIGHT
+#define CUSTOM_MARKING_CANVAS_MAX_HEIGHT 64
+#endif
 
 #ifndef CUSTOM_MARKING_CHECK_TICK
 #define CUSTOM_MARKING_CHECK_TICK custom_marking_yield_heartbeat()
@@ -56,6 +65,7 @@
 	var/saved = save_marking_changes(mark_dirty, TRUE)
 	. = ..()
 	if(saved && prefs && user)
+		prefs.skip_custom_marking_cache_invalidation_once = TRUE
 		prefs.ShowChoices(user)
 	if(prefs)
 		prefs.custom_marking_designer_ui = null
@@ -243,10 +253,49 @@
 		var/current = mark.is_part_render_priority(normalized)
 		if(current_defined && current == state_value)
 			continue
-		mark.set_part_render_priority(normalized, state_value)
-		changed = TRUE
+		if(mark.set_part_render_priority(normalized, state_value))
+			changed = TRUE
 	if(changed)
 		set_mark_dirty(TRUE)
+		preview_revision++
+	return changed
+
+// Apply canvas size overrides coming from the client
+/datum/tgui_module/custom_marking_designer/proc/apply_part_canvas_size_payload(list/payload)
+	if(!mark || !islist(payload))
+		return FALSE
+	var/changed = FALSE
+	for(var/key in payload)
+		if(isnull(key))
+			continue
+		var/value = payload[key]
+		var/normalized = mark.normalize_part(key)
+		if(isnull(normalized) || normalized == "generic")
+			continue
+		if(!ensure_body_part_registered(normalized))
+			continue
+		var/state_defined = FALSE
+		var/state_value = null
+		if(isnum(value))
+			state_defined = TRUE
+			state_value = !!value
+		else if(istext(value))
+			var/lower_value = lowertext(value)
+			if(lower_value in list("1", "true", "yes", "on"))
+				state_defined = TRUE
+				state_value = TRUE
+			else if(lower_value in list("0", "false", "no", "off"))
+				state_defined = TRUE
+				state_value = FALSE
+		if(!state_defined)
+			continue
+		if(mark.is_part_large_canvas(normalized) == state_value)
+			continue
+		if(mark.set_part_canvas_size(normalized, state_value))
+			changed = TRUE
+	if(changed)
+		set_mark_dirty(TRUE)
+		body_part_layer_revision++
 		preview_revision++
 	return changed
 
@@ -271,6 +320,11 @@
 		mark.body_parts -= part
 		mark.clear_part_replacement(part)
 		mark.clear_part_render_priority(part)
+		var/list/size_map = mark.get_canvas_size_map()
+		if(islist(size_map))
+			size_map -= part
+			if(!size_map.len && islist(mark.options))
+				mark.options -= "large_canvas_parts"
 		for(var/dir in dirs)
 			var/session_key = mark.frame_key(dir, part)
 			if(islist(sessions) && sessions[session_key])
@@ -364,20 +418,28 @@
 /datum/tgui_module/custom_marking_designer/proc/save_marking_changes(force_save = TRUE, refresh_browser = FALSE)
 	if(!mark)
 		return FALSE
+	var/log_ckey = prefs?.client_ckey || prefs?.client?.ckey || mark?.owner_ckey || "unknown"
 	var/committed = commit_all_sessions()
 	var/pruned = prune_empty_body_parts()
-	if(!force_save && !mark_dirty && !committed && !pruned)
+	var/shrank = mark.shrink_large_parts_if_safe()
+	if(shrank)
+		set_mark_dirty(TRUE)
+		body_part_layer_revision++
+		preview_revision++
+	if(!force_save && !mark_dirty && !committed && !pruned && !shrank)
 		return FALSE
-	var/needs_save = committed || mark_dirty || pruned
+	var/needs_save = committed || mark_dirty || pruned || shrank
 	if(!needs_save)
 		return FALSE
 	mark.bump_revision()
+	log_debug("CustomMarkings: [log_ckey] saved marking '[mark?.name]' ([mark?.id]) rev=[mark?.style_revision]")
 	register_mark_with_prefs()
 	sync_preference_assignment()
 	mark_dirty = FALSE
 	is_new_mark = FALSE
 	initial_snapshot = mark.to_save()
 	if(prefs && !QDELETED(prefs))
+		prefs.skip_custom_marking_cache_invalidation_once = TRUE
 		prefs.refresh_custom_marking_assets(TRUE, TRUE, mark, TRUE)
 	preview_revision++
 	if(refresh_browser && prefs)
@@ -496,10 +558,51 @@
 	data["body_parts"] = parts
 	data["width"] = get_canvas_width()
 	data["height"] = get_canvas_height()
+	data["max_width"] = CUSTOM_MARKING_CANVAS_MAX_WIDTH
+	data["max_height"] = CUSTOM_MARKING_CANVAS_MAX_HEIGHT
+	data["default_width"] = CUSTOM_MARKING_DEFAULT_WIDTH
+	data["default_height"] = CUSTOM_MARKING_DEFAULT_HEIGHT
 	var/list/replacement_dependents = build_replacement_dependents_payload()
 	if(islist(replacement_dependents) && replacement_dependents.len)
 		data["replacement_dependents"] = replacement_dependents
+	var/list/canvas_backgrounds = build_canvas_background_options()
+	if(islist(canvas_backgrounds) && canvas_backgrounds.len)
+		data["canvas_backgrounds"] = canvas_backgrounds
+		data["default_canvas_background"] = "default"
 	return data
+
+// Create backrounds for the custom markings designer
+/datum/tgui_module/custom_marking_designer/proc/build_canvas_background_options()
+	var/list/backgrounds = list(list(
+		"id" = "default",
+		"label" = "Default",
+		"asset" = null
+	))
+	var/list/season_state_map = list(
+		"spring" = "grass-spring4",
+		"summer" = "grass-summer4",
+		"fall" = "grass-autumn4",
+		"winter" = "grass-winter4"
+	)
+	for(var/season in season_state_map)
+		var/state = season_state_map[season]
+		if(!istext(state) || !length(state))
+			continue
+		var/icon/I = icon('icons/seasonal/turf.dmi', state)
+		if(!isicon(I))
+			continue
+		var/list/asset = build_icon_asset(I)
+		if(!islist(asset))
+			continue
+		var/label = capitalize(season)
+		if(season == "fall")
+			label = "Fall"
+		backgrounds += list(list(
+			"id" = season,
+			"label" = label,
+			"asset" = asset
+		))
+	return backgrounds
 
 // Provide the live editing payload for TGUI rendering
 /datum/tgui_module/custom_marking_designer/tgui_data(mob/user)
@@ -520,9 +623,16 @@
 	data["can_finalize"] = FALSE
 	data["width"] = get_canvas_width()
 	data["height"] = get_canvas_height()
+	data["max_width"] = CUSTOM_MARKING_CANVAS_MAX_WIDTH
+	data["max_height"] = CUSTOM_MARKING_CANVAS_MAX_HEIGHT
+	data["default_width"] = CUSTOM_MARKING_DEFAULT_WIDTH
+	data["default_height"] = CUSTOM_MARKING_DEFAULT_HEIGHT
+	data["active_canvas_width"] = mark ? mark.get_part_canvas_width(active_body_part) : get_canvas_width()
+	data["active_canvas_height"] = mark ? mark.get_part_canvas_height(active_body_part) : get_canvas_height()
 	data["selected_body_parts"] = mark?.body_parts?.Copy() || list()
 	data["part_replacements"] = mark?.get_part_replacement_payload()
 	data["part_render_priority"] = mark?.get_part_render_priority_payload()
+	data["part_canvas_size"] = mark?.get_part_canvas_size_payload()
 	data["active_body_part"] = active_body_part
 	data["active_body_part_label"] = get_body_part_label(active_body_part)
 	var/list/layers = build_body_part_layers(active_dir)
@@ -534,6 +644,10 @@
 	if(islist(preview_bundle))
 		data["preview_sources"] = preview_bundle["dirs"]
 		data["preview_revision"] = preview_bundle["revision"]
+	var/list/canvas_backgrounds_live = build_canvas_background_options()
+	if(islist(canvas_backgrounds_live) && canvas_backgrounds_live.len)
+		data["canvas_backgrounds"] = canvas_backgrounds_live
+		data["default_canvas_background"] = "default"
 	data["ui_locked"] = FALSE
 	return data
 
@@ -550,7 +664,7 @@
 	return default_body_part()
 
 // Echo diff + ack sequence back to the client
-/datum/tgui_module/custom_marking_designer/proc/send_diff_ack(list/diff_payload, width, height, stroke_id = null)
+/datum/tgui_module/custom_marking_designer/proc/send_diff_ack(list/diff_payload, width, height, stroke_id = null, list/extra = null)
 	diff_sequence++
 	var/list/custom = list(
 		"diff" = diff_payload,
@@ -562,6 +676,9 @@
 	)
 	if(!isnull(stroke_id))
 		custom["stroke"] = stroke_id
+	if(islist(extra))
+		for(var/key in extra)
+			custom[key] = extra[key]
 	custom["grid"] = get_session(active_dir, active_body_part)?.get_grid()
 	var/datum/tgui/active_ui = SStgui.get_open_ui(usr, src)
 	if(active_ui)
@@ -586,16 +703,79 @@
 		active_dir = dir_override
 		set_active_body_part(part)
 		var/datum/custom_marking_session/session = get_session(active_dir, part)
-		if(session?.apply_client_diff(diff, params?["height"]))
+		var/list/diff_result = session?.apply_client_diff(diff, params?["height"], params?["width"])
+		var/pixels_changed = FALSE
+		var/canvas_changed = FALSE
+		if(islist(diff_result))
+			pixels_changed = !!diff_result["changed"]
+			canvas_changed = !!diff_result["canvas_resized"]
+		else
+			pixels_changed = !!diff_result
+		if(pixels_changed || canvas_changed)
 			set_mark_dirty(TRUE)
 			body_part_layer_revision++
 			preview_revision++
-		send_diff_ack(diff, params?["width"], params?["height"], params?["stroke"])
+		var/list/extra_update = null
+		if(canvas_changed)
+			extra_update = list(
+				"part_canvas_size" = mark?.get_part_canvas_size_payload(),
+				"part_render_priority" = mark?.get_part_render_priority_payload(),
+				"active_canvas_width" = mark ? mark.get_part_canvas_width(active_body_part) : get_canvas_width(),
+				"active_canvas_height" = mark ? mark.get_part_canvas_height(active_body_part) : get_canvas_height()
+			)
+		send_diff_ack(diff, params?["width"], params?["height"], params?["stroke"], extra_update)
 		commit_session(session)
+		if(canvas_changed)
+			SStgui.update_uis(src)
+	else if(action == "set_canvas_size")
+		var/new_width = params?["width"]
+		var/new_height = params?["height"]
+		var/resized = FALSE
+		if(mark)
+			resized = mark.resize_canvas(new_width, new_height)
+		if(resized)
+			register_custom_marking_style(mark, TRUE)
+			sessions = list()
+			body_part_layer_revision++
+			preview_revision++
+			set_mark_dirty(TRUE)
+		SStgui.update_uis(src)
+		return TRUE
+	else if(action == "set_part_canvas_size")
+		if(!mark)
+			return TRUE
+		var/part = resolve_action_part(params)
+		if(!ensure_body_part_registered(part))
+			return TRUE
+		var/state_value = params?["large"]
+		var/desired = null
+		if(isnum(state_value))
+			desired = !!state_value
+		else if(istext(state_value))
+			var/lower_value = lowertext(state_value)
+			if(lower_value in list("1", "true", "yes", "on"))
+				desired = TRUE
+			else if(lower_value in list("0", "false", "no", "off"))
+				desired = FALSE
+		if(isnull(desired))
+			desired = !mark.is_part_large_canvas(part)
+		if(mark.set_part_canvas_size(part, desired))
+			register_custom_marking_style(mark, TRUE)
+			set_mark_dirty(TRUE)
+			body_part_layer_revision++
+			preview_revision++
+		SStgui.update_uis(src)
+		return TRUE
+	// Added to avoid race condition (Lira, November 2025)
+	else if(action == "discard_and_close")
+		discard_changes()
+		SStgui.close_uis(src)
+		return FALSE
 	else if(action == "save_and_close")
 		var/replacements_updated = apply_part_replacement_payload(params?["part_replacements"])
 		var/priority_updated = apply_part_render_priority_payload(params?["part_render_priority"])
-		if(replacements_updated || priority_updated)
+		var/canvas_updated = apply_part_canvas_size_payload(params?["part_canvas_size"])
+		if(replacements_updated || priority_updated || canvas_updated)
 			register_custom_marking_style(mark, TRUE)
 		save_marking_changes(TRUE, TRUE)
 		SStgui.close_uis(src)
@@ -603,7 +783,8 @@
 	else if(action == "save_progress")
 		var/replacements_updated = apply_part_replacement_payload(params?["part_replacements"])
 		var/priority_updated = apply_part_render_priority_payload(params?["part_render_priority"])
-		if(replacements_updated || priority_updated)
+		var/canvas_updated = apply_part_canvas_size_payload(params?["part_canvas_size"])
+		if(replacements_updated || priority_updated || canvas_updated)
 			register_custom_marking_style(mark, TRUE)
 		save_marking_changes(TRUE, TRUE)
 		SStgui.update_uis(src)
@@ -685,11 +866,21 @@
 
 // Resolve the current canvas width with sensible defaults
 /datum/tgui_module/custom_marking_designer/proc/get_canvas_width()
-	return max(1, mark ? mark.width : CUSTOM_MARKING_DEFAULT_WIDTH)
+	var/value = mark ? mark.get_effective_canvas_width() : CUSTOM_MARKING_DEFAULT_WIDTH
+	return clamp_custom_marking_dimension(value, CUSTOM_MARKING_DEFAULT_WIDTH, CUSTOM_MARKING_CANVAS_MAX_WIDTH)
 
 // Resolve the current canvas height with sensible defaults
 /datum/tgui_module/custom_marking_designer/proc/get_canvas_height()
-	return max(1, mark ? mark.height : CUSTOM_MARKING_DEFAULT_HEIGHT)
+	var/value = mark ? mark.get_effective_canvas_height() : CUSTOM_MARKING_DEFAULT_HEIGHT
+	return clamp_custom_marking_dimension(value, CUSTOM_MARKING_DEFAULT_HEIGHT, CUSTOM_MARKING_CANVAS_MAX_HEIGHT)
+
+// Return the canvas width
+/datum/tgui_module/custom_marking_designer/proc/get_preview_canvas_width()
+	return CUSTOM_MARKING_CANVAS_MAX_WIDTH
+
+// Return the canvas height
+/datum/tgui_module/custom_marking_designer/proc/get_preview_canvas_height()
+	return CUSTOM_MARKING_CANVAS_MAX_HEIGHT
 
 // Build a map of composite grids for each part in a direction
 /datum/tgui_module/custom_marking_designer/proc/build_custom_grid_map(dir)
@@ -777,7 +968,7 @@
 	if(!mark)
 		return null
 	var/list/dirs = direction_order || list(NORTH, SOUTH, EAST, WEST)
-	var/updated = ensure_reference_payload_bundle(get_canvas_width(), get_canvas_height())
+	var/updated = ensure_reference_payload_bundle(get_preview_canvas_width(), get_preview_canvas_height())
 	var/list/result = list()
 	for(var/dir in dirs)
 		var/list/entry = build_preview_source_for_dir(dir)
@@ -1082,10 +1273,14 @@
 	for(var/icon/overlay_icon as anything in overlay_icons)
 		if(!istype(overlay_icon, /icon))
 			continue
+		var/is_large_overlay = (overlay_icon.Width() > CUSTOM_MARKING_DEFAULT_WIDTH) || (overlay_icon.Height() > CUSTOM_MARKING_DEFAULT_HEIGHT)
+		if(is_large_overlay && (width > CUSTOM_MARKING_DEFAULT_WIDTH || height > CUSTOM_MARKING_DEFAULT_HEIGHT))
+			offset_icon_shift(overlay_icon, 8, 0)
 		var/list/overlay_asset = build_icon_asset(overlay_icon)
 		if(islist(overlay_asset))
 			overlay_assets += list(overlay_asset)
-		composite_icon.Blend(overlay_icon, ICON_OVERLAY)
+		if(!is_large_overlay)
+			composite_icon.Blend(overlay_icon, ICON_OVERLAY)
 	var/list/part_icons = list()
 	var/list/part_marking_icons = list()
 	var/list/part_order = list()
@@ -1119,7 +1314,6 @@
 				directional_icon = shift_icon_for_reference(directional_icon, O.pixel_x, O.pixel_y)
 			if(!directional_icon)
 				continue
-			part_icons[normalized] = directional_icon
 			var/icon/marking_overlay = null
 			if(islist(O.markings))
 				for(var/M in O.markings)
@@ -1154,10 +1348,10 @@
 						marking_overlay.Blend(mark_directional, ICON_OVERLAY)
 			var/icon/head_eye_overlay = build_reference_head_eye_overlay(O, dir)
 			if(head_eye_overlay)
-				if(marking_overlay)
-					marking_overlay.Blend(head_eye_overlay, ICON_OVERLAY)
-				else
-					marking_overlay = new/icon(head_eye_overlay)
+				var/icon/body_with_eyes = new/icon(directional_icon)
+				body_with_eyes.Blend(head_eye_overlay, ICON_OVERLAY)
+				directional_icon = body_with_eyes
+			part_icons[normalized] = directional_icon
 			if(marking_overlay)
 				part_marking_icons[normalized] = marking_overlay
 			if(!(normalized in part_order))
@@ -1232,8 +1426,8 @@
 /datum/tgui_module/custom_marking_designer/proc/get_reference_payload_entry(dir_override = null)
 	if(!prefs)
 		return null
-	var/width = get_canvas_width()
-	var/height = get_canvas_height()
+	var/width = get_preview_canvas_width()
+	var/height = get_preview_canvas_height()
 	if(width <= 0 || height <= 0)
 		return null
 	var/dir = dir_override
@@ -1470,11 +1664,27 @@
 		return
 	icon_shift_map -= ref_id
 
+// Set the offset for an icon
+/datum/tgui_module/custom_marking_designer/proc/offset_icon_shift(icon/source, delta_x, delta_y)
+	if(!isicon(source))
+		return
+	var/list/existing = get_icon_shift(source)
+	var/current_x = isnum(existing?["x"]) ? existing["x"] : 0
+	var/current_y = isnum(existing?["y"]) ? existing["y"] : 0
+	set_icon_shift(source, current_x + delta_x, current_y + delta_y)
+
 // Apply BYOND pixel offsets to a cloned icon for reference usage
 /datum/tgui_module/custom_marking_designer/proc/shift_icon_for_reference(icon/source, shift_x, shift_y)
 	if(!istype(source, /icon))
 		return null
 	var/icon/result = new/icon(source)
+	var/pad_left = max(0, -shift_x)
+	var/pad_bottom = max(0, -shift_y)
+	if(pad_left || pad_bottom)
+		var/icon/padded = icon('icons/effects/effects.dmi', "nothing", null, 1, 0)
+		padded.Scale(result.Width() + pad_left, result.Height() + pad_bottom)
+		padded.Blend(result, ICON_OVERLAY, 1 + pad_left, 1 + pad_bottom)
+		result = padded
 	var/list/original_shift = get_icon_shift(source)
 	var/total_shift_x = original_shift["x"]
 	var/total_shift_y = original_shift["y"]
@@ -1523,6 +1733,8 @@
 
 #undef CUSTOM_MARKING_DEFAULT_WIDTH
 #undef CUSTOM_MARKING_DEFAULT_HEIGHT
+#undef CUSTOM_MARKING_CANVAS_MAX_WIDTH
+#undef CUSTOM_MARKING_CANVAS_MAX_HEIGHT
 #ifdef CUSTOM_MARKING_CHECK_TICK_DEFINED_IN_DESIGNER
 #undef CUSTOM_MARKING_CHECK_TICK
 #undef CUSTOM_MARKING_CHECK_TICK_DEFINED_IN_DESIGNER

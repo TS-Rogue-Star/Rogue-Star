@@ -288,7 +288,7 @@
 				var/list/f_chord = compiled_chords[ch_idx]
 				var/list/targets = band_leader.hearing_mobs?.Copy() || list()
 				targets |= hearing_mobs
-				var/delay = max(0, round(band_delay_ds, world.tick_lag))
+				var/delay = max(0, round(band_delay_ds, get_instrument_time_step())) // RS Edit: Remove FPS dependency (Lira, November 2025)
 				if(delay)
 					var/list/targets_snapshot = targets.Copy()
 					addtimer(CALLBACK(src, PROC_REF(play_chord_if_playing), f_chord, targets_snapshot), delay)
@@ -369,13 +369,20 @@
 				stop_playing()
 				return
 
+// RS Add: Base timing on SSinstruments cadence to decouple tempo from FPS (Lira, November 2025)
+/datum/song/proc/get_instrument_time_step()
+	return SSinstruments?.wait || world.tick_lag
+
 /**
  * Converts a tempodiv to ticks to elapse before playing the next chord, taking into account our tempo.
  */
 /datum/song/proc/tempodiv_to_delay(tempodiv)
 	if(!tempodiv)
 		tempodiv = 1 // no division by 0. some song converters tend to use 0 for when it wants to have no div, for whatever reason.
-	return max(1, round((tempo/tempodiv) / world.tick_lag, 1))
+	// RS Edit Start: Remove FPS dependency (Lira, November 2025)
+	var/time_step = get_instrument_time_step()
+	return max(1, round((tempo/tempodiv) / time_step, 1))
+	// RS Edit End
 
 /**
  * Compiles chords.
@@ -398,11 +405,14 @@
 	return QDELETED(parent) || !using_instrument || !playing
 
 /**
- * Sanitizes tempo to a value that makes sense and fits the current world.tick_lag.
+ * Sanitizes tempo to a value that makes sense and fits the current instrument processing interval.
  */
 /datum/song/proc/sanitize_tempo(new_tempo)
 	new_tempo = abs(new_tempo)
-	return clamp(round(new_tempo, world.tick_lag), world.tick_lag, 5 SECONDS)
+	// RS Edit Start: Remove FPS dependency (Lira, November 2025)
+	var/time_step = get_instrument_time_step()
+	return clamp(round(new_tempo, time_step), time_step, 5 SECONDS)
+	// RS Edit End
 
 /**
  * Gets our beats per minute based on our tempo.
@@ -425,9 +435,11 @@
 /datum/song/process(wait)
 	if(!playing)
 		return PROCESS_KILL
-	// it's expected this ticks at every world.tick_lag. if it lags, do not attempt to catch up.
-	process_song(world.tick_lag)
-	process_decay(world.tick_lag)
+	// it's expected this ticks at every instrument subsystem interval. if it lags, do not attempt to catch up.
+	// RS Edit Start: Remove FPS dependency (Lira, November 2025)
+	process_song(wait)
+	process_decay(wait)
+	// RS Edit End
 
 /**
  * Updates our cached linear/exponential falloff stuff, saving calculations down the line.
@@ -787,7 +799,7 @@
 		//Union of leader and follower targets so everyone in either range hears
 		var/list/targets = hearing_mobs.Copy()
 		targets |= S.hearing_mobs
-		var/delay = max(0, round(S.band_delay_ds, world.tick_lag))
+		var/delay = max(0, round(S.band_delay_ds, get_instrument_time_step())) // RS Edit: Remove FPS dependency (Lira, November 2025)
 		if(delay)
 			//Schedule with delay, snapshot targets
 			var/list/targets_snapshot = targets.Copy()

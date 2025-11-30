@@ -1,7 +1,20 @@
 import { toTitleCase } from 'common/string';
 import { Fragment } from 'inferno';
 import { useBackend, useLocalState, useSharedState } from '../backend';
-import { Box, Button, Flex, Icon, LabeledList, ProgressBar, Section, Tabs, Input, NumberInput, Table, Divider } from '../components';
+import {
+  Box,
+  Button,
+  Flex,
+  Icon,
+  LabeledList,
+  ProgressBar,
+  Section,
+  Tabs,
+  Input,
+  NumberInput,
+  Table,
+  Divider,
+} from '../components';
 import { Window } from '../layouts';
 
 const ResearchConsoleViewResearch = (props, context) => {

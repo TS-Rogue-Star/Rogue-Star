@@ -402,8 +402,10 @@
 		if(mark_style.do_colouration && istext(mark_color) && length(mark_color))
 			mark_s.Blend(mark_color, mark_style.color_blend_mode)
 		// RS Edit End
-		add_overlay(mark_s) //So when it's not on your body, it has icons
-		mob_icon.Blend(mark_s, ICON_OVERLAY) //So when it's on your body, it has icons
+		// RS Edit Start: Custom markings support (Lira, November 2025)
+		var/mark_offset_x = get_marking_icon_offset_x(mark_s)
+		apply_marking_icon(src, mark_s, mob_icon, mark_offset_x) //So when it's not on your body, it has icons
+		// RS Edit End
 		icon_cache_key += "[M][mark_color]"
 
 	if(eyes_over_markings && eyecon) //VOREStation edit -- toggle to render eyes above markings.

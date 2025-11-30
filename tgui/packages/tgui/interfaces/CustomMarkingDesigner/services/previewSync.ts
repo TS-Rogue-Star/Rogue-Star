@@ -3,7 +3,11 @@
 // ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import { selectBackend } from '../../../backend';
-import { PREVIEW_DIFF_ACK_TIMEOUT, PREVIEW_DIFF_CHUNK_DELAY, PREVIEW_DIFF_CHUNK_SIZE } from '../constants';
+import {
+  PREVIEW_DIFF_ACK_TIMEOUT,
+  PREVIEW_DIFF_CHUNK_DELAY,
+  PREVIEW_DIFF_CHUNK_SIZE,
+} from '../constants';
 import { buildSessionDraftDiff, chunkDiffEntries } from '../utils';
 import type { CustomMarkingDesignerData, StrokeDraftState } from '../types';
 

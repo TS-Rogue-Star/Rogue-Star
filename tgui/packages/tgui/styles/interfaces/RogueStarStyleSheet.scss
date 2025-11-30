@@ -1,6 +1,8 @@
 // ////////////////////////////////////////////////////////////////////////////////
 // Created by Lira for Rogue Star November 2025: Rogue Star interface stylesheet //
 // ////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2025: Tweaks and new styles ////////////
+// ////////////////////////////////////////////////////////////////////////////////
 
 @use '../colors.scss';
 
@@ -33,7 +35,8 @@ $titlebar-height: 38px;
     width: 100%;
     border: 1px solid rgba(190, 140, 255, 0.45);
     border-radius: 0;
-    background: linear-gradient(
+    background:
+      linear-gradient(
         120deg,
         rgba(11, 2, 23, 0.98),
         rgba(31, 13, 54, 0.95) 52%,
@@ -55,8 +58,10 @@ $titlebar-height: 38px;
         transparent 60%
       );
     // Lighter shadow so it doesn't cast a dark tint onto the first section.
-    box-shadow: 0 12px 28px rgba(2, 0, 9, 0.55),
-      0 0 24px rgba(81, 33, 156, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    box-shadow:
+      0 12px 28px rgba(2, 0, 9, 0.55),
+      0 0 24px rgba(81, 33, 156, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
     color: #fdf5ff;
     overflow: hidden;
     backdrop-filter: blur(16px);
@@ -67,7 +72,8 @@ $titlebar-height: 38px;
     position: absolute;
     inset: 0;
     pointer-events: none;
-    background: repeating-linear-gradient(
+    background:
+      repeating-linear-gradient(
         120deg,
         rgba(255, 255, 255, 0.04) 0,
         rgba(255, 255, 255, 0.04) 6px,
@@ -121,7 +127,8 @@ $titlebar-height: 38px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: #fffafd;
-    text-shadow: 0 0 12px rgba(111, 63, 211, 0.65),
+    text-shadow:
+      0 0 12px rgba(111, 63, 211, 0.65),
       0 0 18px rgba(229, 188, 106, 0.35);
     overflow: hidden;
     white-space: nowrap;
@@ -144,13 +151,17 @@ $titlebar-height: 38px;
   .TitleBar__clickable {
     color: #fdf3ff;
     background: transparent;
-    transition: color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+    transition:
+      color 150ms ease,
+      box-shadow 150ms ease,
+      transform 150ms ease;
   }
 
   .TitleBar__clickable:hover {
     color: #fff;
     transform: translateY(-1px);
-    box-shadow: 0 0 18px rgba(229, 188, 106, 0.45),
+    box-shadow:
+      0 0 18px rgba(229, 188, 106, 0.45),
       0 0 12px rgba(129, 76, 255, 0.35);
   }
 
@@ -164,11 +175,8 @@ $titlebar-height: 38px;
     font-weight: 600;
     text-align: center;
     border-left: 1px solid rgba(229, 188, 106, 0.35);
-    background: linear-gradient(
-        180deg,
-        rgba(33, 12, 57, 0.95),
-        rgba(146, 76, 216, 0.35)
-      ),
+    background:
+      linear-gradient(180deg, rgba(33, 12, 57, 0.95), rgba(146, 76, 216, 0.35)),
       radial-gradient(
         circle at 50% 0%,
         rgba(229, 188, 106, 0.4),
@@ -178,7 +186,8 @@ $titlebar-height: 38px;
   }
 
   .TitleBar__close:hover {
-    background: linear-gradient(
+    background:
+      linear-gradient(
         180deg,
         rgba(38, 13, 64, 0.98),
         rgba(229, 188, 106, 0.55)
@@ -202,7 +211,8 @@ $titlebar-height: 38px;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    box-shadow: 0 12px 24px rgba(229, 188, 106, 0.4),
+    box-shadow:
+      0 12px 24px rgba(229, 188, 106, 0.4),
       0 0 14px rgba(229, 188, 106, 0.35);
   }
 }
@@ -211,7 +221,8 @@ $titlebar-height: 38px;
   position: relative;
   min-height: 100%;
   padding: 24px;
-  background: radial-gradient(
+  background:
+    radial-gradient(
       circle at 18% 18%,
       rgba(118, 63, 211, 0.22),
       transparent 52%
@@ -221,7 +232,11 @@ $titlebar-height: 38px;
       rgba(229, 188, 106, 0.12),
       transparent 48%
     ),
-    radial-gradient(circle at 78% 5%, rgba(255, 96, 214, 0.12), transparent 45%),
+    radial-gradient(
+      circle at 78% 5%,
+      rgba(255, 96, 214, 0.12),
+      transparent 45%
+    ),
     radial-gradient(circle at 65% 45%, rgba(63, 35, 102, 0.4), transparent 58%),
     repeating-radial-gradient(
       circle at 25% 25%,
@@ -231,7 +246,13 @@ $titlebar-height: 38px;
       transparent 6px
     ),
     linear-gradient(165deg, #28103f 0%, #0b0217 55%, #010005 100%);
-  background-size: auto, auto, auto, auto, 420px 420px, auto;
+  background-size:
+    auto,
+    auto,
+    auto,
+    auto,
+    420px 420px,
+    auto;
   color: #f8f1ff;
   overflow: hidden;
 
@@ -246,7 +267,8 @@ $titlebar-height: 38px;
   }
 
   &::before {
-    background: radial-gradient(
+    background:
+      radial-gradient(
         circle at 30% 40%,
         rgba(111, 63, 255, 0.35),
         transparent 42%
@@ -263,12 +285,16 @@ $titlebar-height: 38px;
         transparent 1px,
         transparent 8px
       );
-    background-size: auto, auto, 500px 500px;
+    background-size:
+      auto,
+      auto,
+      500px 500px;
     filter: blur(70px);
   }
 
   &::after {
-    background: radial-gradient(
+    background:
+      radial-gradient(
         circle at 70% 10%,
         rgba(255, 75, 182, 0.25),
         transparent 45%
@@ -282,8 +308,10 @@ $titlebar-height: 38px;
     background: $panel-bg;
     border: 1px solid $border-color;
     border-radius: 24px;
-    box-shadow: 0 28px 60px rgba(3, 0, 9, 0.85),
-      0 0 25px rgba(0, 0, 0, 0.35) inset, 0 0 35px rgba(81, 33, 156, 0.35);
+    box-shadow:
+      0 28px 60px rgba(3, 0, 9, 0.85),
+      0 0 25px rgba(0, 0, 0, 0.35) inset,
+      0 0 35px rgba(81, 33, 156, 0.35);
     backdrop-filter: blur(16px);
   }
 
@@ -299,7 +327,8 @@ $titlebar-height: 38px;
   .Section__titleText {
     font-weight: 700;
     color: #fdf5ff;
-    text-shadow: 0 0 12px rgba(85, 41, 136, 0.6),
+    text-shadow:
+      0 0 12px rgba(85, 41, 136, 0.6),
       0 0 18px rgba(229, 188, 106, 0.2);
   }
 
@@ -343,7 +372,9 @@ $titlebar-height: 38px;
     rgba(27, 10, 47, 0.95),
     rgba(5, 2, 14, 0.95)
   );
-  box-shadow: 0 25px 50px rgba(3, 0, 9, 0.9), 0 0 25px rgba(244, 201, 111, 0.18);
+  box-shadow:
+    0 25px 50px rgba(3, 0, 9, 0.9),
+    0 0 25px rgba(244, 201, 111, 0.18);
 }
 
 .RogueStar__toolbarGroup {
@@ -377,7 +408,10 @@ $titlebar-height: 38px;
   letter-spacing: 0.08em;
   font-size: 0.72rem;
   box-shadow: inset 0 0 0 rgba(0, 0, 0, 0);
-  transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease,
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease,
+    background 120ms ease,
     border-color 120ms ease;
 }
 
@@ -390,7 +424,8 @@ $titlebar-height: 38px;
     rgba(21, 9, 39, 0.95)
   );
   border-color: rgba(217, 171, 255, 0.6);
-  box-shadow: 0 8px 24px rgba(111, 64, 226, 0.35),
+  box-shadow:
+    0 8px 24px rgba(111, 64, 226, 0.35),
     0 0 14px rgba(229, 188, 106, 0.22);
 }
 
@@ -403,33 +438,69 @@ $titlebar-height: 38px;
   );
   border-color: rgba(255, 214, 255, 0.8);
   color: #fff;
-  box-shadow: 0 12px 30px rgba(144, 70, 234, 0.65),
+  box-shadow:
+    0 12px 30px rgba(144, 70, 234, 0.65),
     0 0 16px rgba(229, 188, 106, 0.3);
 }
 
 .RogueStar__chip.RogueStar__glowButton--positive {
   border-color: rgba(124, 255, 194, 0.7);
-  box-shadow: 0 0 20px rgba(94, 255, 194, 0.5),
+  box-shadow:
+    0 0 20px rgba(94, 255, 194, 0.5),
     0 0 32px rgba(96, 188, 255, 0.25);
 }
 
 .RogueStar__chip.RogueStar__glowButton--positive:hover,
 .RogueStar__chip.RogueStar__glowButton--positive:focus {
   border-color: rgba(142, 255, 205, 0.9);
-  box-shadow: 0 0 25px rgba(124, 255, 194, 0.7),
+  box-shadow:
+    0 0 25px rgba(124, 255, 194, 0.7),
     0 0 40px rgba(96, 188, 255, 0.35);
 }
 
 .RogueStar__chip.RogueStar__glowButton--negative {
   border-color: rgba(255, 88, 88, 0.85);
-  box-shadow: 0 0 22px rgba(255, 74, 74, 0.7), 0 0 32px rgba(255, 38, 99, 0.45);
+  box-shadow:
+    0 0 22px rgba(255, 74, 74, 0.7),
+    0 0 32px rgba(255, 38, 99, 0.45);
 }
 
 .RogueStar__chip.RogueStar__glowButton--negative:hover,
 .RogueStar__chip.RogueStar__glowButton--negative:focus {
   border-color: rgba(255, 111, 111, 0.95);
-  box-shadow: 0 0 28px rgba(255, 74, 74, 0.85),
+  box-shadow:
+    0 0 28px rgba(255, 74, 74, 0.85),
     0 0 42px rgba(255, 43, 122, 0.55);
+}
+
+.RogueStar__chip.RogueStar__chip--goldGlow {
+  border-color: rgba(255, 215, 128, 0.9);
+  box-shadow:
+    0 0 20px rgba(255, 196, 118, 0.55),
+    0 0 32px rgba(255, 223, 157, 0.35);
+}
+
+.RogueStar__chip.RogueStar__chip--goldGlow:hover,
+.RogueStar__chip.RogueStar__chip--goldGlow:focus {
+  border-color: rgba(255, 225, 170, 1);
+  box-shadow:
+    0 0 24px rgba(255, 210, 134, 0.75),
+    0 0 36px rgba(255, 223, 157, 0.45);
+}
+
+.RogueStar__chip.RogueStar__chip--whiteGlow {
+  border-color: rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 0 18px rgba(255, 255, 255, 0.35),
+    0 0 28px rgba(255, 255, 255, 0.25);
+}
+
+.RogueStar__chip.RogueStar__chip--whiteGlow:hover,
+.RogueStar__chip.RogueStar__chip--whiteGlow:focus {
+  border-color: rgba(255, 255, 255, 1);
+  box-shadow:
+    0 0 22px rgba(255, 255, 255, 0.55),
+    0 0 32px rgba(255, 255, 255, 0.35);
 }
 
 .RogueStar__chip.Button--disabled {
@@ -456,7 +527,10 @@ $titlebar-height: 38px;
   border: 1px solid rgba(231, 192, 255, 0.5);
   color: #fff;
   box-shadow: 0 12px 28px rgba(58, 19, 105, 0.45);
-  transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease,
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease,
+    background 120ms ease,
     border-color 120ms ease;
 }
 
@@ -489,14 +563,18 @@ $titlebar-height: 38px;
   border: 1px solid rgba(173, 126, 255, 0.25);
   color: #f7ecff;
   letter-spacing: 0.04em;
-  transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease,
+    background 120ms ease;
   box-shadow: none;
 }
 
 .RogueStar__pillButton:hover,
 .RogueStar__pillButton:focus {
   transform: translateY(-1px);
-  box-shadow: 0 10px 24px rgba(90, 46, 194, 0.4),
+  box-shadow:
+    0 10px 24px rgba(90, 46, 194, 0.4),
     0 0 10px rgba(229, 188, 106, 0.18);
   border-color: rgba(218, 173, 255, 0.6);
 }
@@ -510,7 +588,8 @@ $titlebar-height: 38px;
   );
   border-color: rgba(255, 214, 255, 0.8);
   color: #fff;
-  box-shadow: 0 12px 30px rgba(118, 62, 232, 0.65),
+  box-shadow:
+    0 12px 30px rgba(118, 62, 232, 0.65),
     0 0 14px rgba(229, 188, 106, 0.25);
 }
 
@@ -535,14 +614,12 @@ $titlebar-height: 38px;
 }
 
 .RogueStar__gradientDial.NumberInput {
-  background: linear-gradient(
-      120deg,
-      rgba(32, 12, 57, 0.95),
-      rgba(11, 4, 23, 0.9)
-    ),
+  background:
+    linear-gradient(120deg, rgba(32, 12, 57, 0.95), rgba(11, 4, 23, 0.9)),
     radial-gradient(circle at 80% 0%, rgba(229, 188, 106, 0.3), transparent 55%);
   border: 1px solid rgba(205, 158, 255, 0.6);
-  box-shadow: inset 0 0 12px rgba(110, 70, 190, 0.35),
+  box-shadow:
+    inset 0 0 12px rgba(110, 70, 190, 0.35),
     0 0 18px rgba(229, 188, 106, 0.35);
 }
 
@@ -561,7 +638,9 @@ $titlebar-height: 38px;
   height: 18px;
   border-radius: 6px;
   border: 1px solid rgba(245, 205, 138, 0.65);
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4), 0 0 10px rgba(229, 188, 106, 0.25);
+  box-shadow:
+    0 0 15px rgba(0, 0, 0, 0.4),
+    0 0 10px rgba(229, 188, 106, 0.25);
 }
 
 .RogueStar__canvasScroll {
@@ -577,20 +656,25 @@ $titlebar-height: 38px;
 }
 
 .RogueStar__leftFill {
-  margin-top: auto;
+  margin-top: 0;
 }
 
 .RogueStar__canvasFrame {
-  display: inline-block;
-  padding: 10px;
-  border-radius: 18px;
+  display: inline-flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 0;
+  border-radius: 0;
   border: 1px solid rgba(187, 137, 255, 0.35);
+  overflow: hidden;
   background: linear-gradient(
     145deg,
     rgba(16, 8, 30, 0.95),
     rgba(4, 2, 10, 0.95)
   );
-  box-shadow: 0 25px 40px rgba(2, 0, 9, 0.9), 0 0 35px rgba(132, 79, 206, 0.2);
+  box-shadow:
+    0 25px 40px rgba(2, 0, 9, 0.9),
+    0 0 35px rgba(132, 79, 206, 0.2);
 }
 
 .RogueStar__previewCard {
@@ -601,7 +685,8 @@ $titlebar-height: 38px;
   border: 1px solid rgba(190, 140, 255, 0.35);
   background: rgba(10, 5, 20, 0.9);
   padding: 1rem;
-  box-shadow: 0 20px 35px rgba(3, 0, 9, 0.75),
+  box-shadow:
+    0 20px 35px rgba(3, 0, 9, 0.75),
     0 0 22px rgba(229, 188, 106, 0.18);
 }
 
@@ -610,14 +695,15 @@ $titlebar-height: 38px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  gap: 0.5rem;
+  gap: 10px;
 }
 
 .RogueStar__previewTitle {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #f7ebff;
-  text-shadow: 0 0 14px rgba(120, 66, 184, 0.6),
+  text-shadow:
+    0 0 14px rgba(120, 66, 184, 0.6),
     0 0 10px rgba(229, 188, 106, 0.25);
 
   &.RogueStar__previewTitle--center {
@@ -627,24 +713,22 @@ $titlebar-height: 38px;
 }
 
 .RogueStar__previewItem {
-  padding: 0.5rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.RogueStar__previewItem:last-child {
-  border-bottom: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
 }
 
 .RogueStar__previewCanvasFrame {
   overflow: hidden;
-  border-radius: 16px;
+  border-radius: 0;
   border: 1px solid rgba(204, 158, 255, 0.4);
   background: radial-gradient(
     circle at 30% 30%,
     rgba(28, 16, 48, 0.95),
     rgba(6, 4, 14, 0.95)
   );
-  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.65),
+  box-shadow:
+    inset 0 0 25px rgba(0, 0, 0, 0.65),
     0 0 18px rgba(229, 188, 106, 0.18);
 }
 
@@ -666,7 +750,9 @@ $titlebar-height: 38px;
 
 .RogueStar__sessionButtons .Button.Button--selected,
 .RogueStar__sessionButtons .Button:hover {
-  box-shadow: 0 12px 22px rgba(4, 0, 12, 0.6), 0 0 12px rgba(229, 188, 106, 0.2);
+  box-shadow:
+    0 12px 22px rgba(4, 0, 12, 0.6),
+    0 0 12px rgba(229, 188, 106, 0.2);
 }
 
 .RogueStar__canvasScroll::-webkit-scrollbar {
@@ -734,8 +820,10 @@ $titlebar-height: 38px;
       rgba(23, 10, 45, 0.85),
       rgba(6, 2, 16, 0.9)
     );
-    box-shadow: 0 16px 35px rgba(3, 0, 9, 0.65),
-      0 0 24px rgba(147, 94, 255, 0.25), inset 0 0 18px rgba(64, 31, 110, 0.55);
+    box-shadow:
+      0 16px 35px rgba(3, 0, 9, 0.65),
+      0 0 24px rgba(147, 94, 255, 0.25),
+      inset 0 0 18px rgba(64, 31, 110, 0.55);
     color: #f9f2ff;
   }
 
@@ -745,13 +833,15 @@ $titlebar-height: 38px;
       rgba(147, 94, 255, 0.95),
       rgba(229, 188, 106, 0.9)
     );
-    box-shadow: 0 8px 30px rgba(147, 94, 255, 0.5),
+    box-shadow:
+      0 8px 30px rgba(147, 94, 255, 0.5),
       0 0 20px rgba(229, 188, 106, 0.45);
   }
 
   .ProgressBar__content {
     font-weight: 700;
-    text-shadow: 0 0 12px rgba(69, 40, 119, 0.6),
+    text-shadow:
+      0 0 12px rgba(69, 40, 119, 0.6),
       0 0 18px rgba(229, 188, 106, 0.25);
   }
 }

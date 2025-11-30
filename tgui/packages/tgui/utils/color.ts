@@ -79,13 +79,9 @@ export const hexToRgb = (hex: string): RgbTuple | null => {
 };
 
 export const rgbToHex = (r: number, g: number, b: number): string =>
-  `#${clampChannel(r)
+  `#${clampChannel(r).toString(16).padStart(2, '0')}${clampChannel(g)
     .toString(16)
-    .padStart(2, '0')}${clampChannel(g)
-    .toString(16)
-    .padStart(2, '0')}${clampChannel(b)
-    .toString(16)
-    .padStart(2, '0')}`;
+    .padStart(2, '0')}${clampChannel(b).toString(16).padStart(2, '0')}`;
 
 const normalizeHue = (h: number): number => {
   if (!Number.isFinite(h)) {

@@ -149,6 +149,7 @@ var/list/preferences_datums = list()
 	var/datum/custom_marking/pending_custom_marking_refresh // Queue a marking refresh until previews are ready (Lira, November 2025)
 	var/pending_custom_marking_force_preview = FALSE // Force preview rebuild when deferred refresh fires (Lira, November 2025)
 	var/pending_custom_marking_reset_cache = FALSE // Clear caches when deferred refresh fires (Lira, November 2025)
+	var/skip_custom_marking_cache_invalidation_once = FALSE // One-shot skip for designer-driven preview updates (Lira, November 2025)
 	// RS Add End
 
 	var/list/flavor_texts = list()

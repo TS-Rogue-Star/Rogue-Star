@@ -1,4 +1,11 @@
-import { ProgressBar, NumberInput, Button, Section, Box, Flex } from '../components';
+import {
+  ProgressBar,
+  NumberInput,
+  Button,
+  Section,
+  Box,
+  Flex,
+} from '../components';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 

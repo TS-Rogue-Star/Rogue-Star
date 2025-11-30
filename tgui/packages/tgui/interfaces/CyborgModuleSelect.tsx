@@ -76,8 +76,8 @@ const ModulePanel = (_props, context) => {
   const previewCountText =
     reselectionsRemaining > 0
       ? `${reselectionsRemaining} preview${
-        reselectionsRemaining === 1 ? '' : 's'
-      } remaining`
+          reselectionsRemaining === 1 ? '' : 's'
+        } remaining`
       : 'No previews remaining';
   const previewCountSentence = hasModule ? `${previewCountText}.` : '';
   const finalizeHint =

@@ -3,7 +3,16 @@
 // ////////////////////////////////////////////////////////////////////////////////
 
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, ColorBox, LabeledList, NoticeBox, NumberInput, Section, Stack } from '../components';
+import {
+  Box,
+  Button,
+  ColorBox,
+  LabeledList,
+  NoticeBox,
+  NumberInput,
+  Section,
+  Stack,
+} from '../components';
 import { Window } from '../layouts';
 
 type LightingSummary = {

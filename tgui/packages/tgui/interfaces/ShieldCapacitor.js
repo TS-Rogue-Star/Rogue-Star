@@ -1,6 +1,13 @@
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Button, Box, Section, LabeledList, NumberInput, AnimatedNumber } from '../components';
+import {
+  Button,
+  Box,
+  Section,
+  LabeledList,
+  NumberInput,
+  AnimatedNumber,
+} from '../components';
 import { round } from 'common/math';
 import { formatSiUnit, formatPower } from '../format';
 

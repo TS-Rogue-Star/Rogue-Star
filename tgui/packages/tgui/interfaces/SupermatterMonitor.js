@@ -1,5 +1,13 @@
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, ProgressBar, Section, Flex, AnimatedNumber } from '../components';
+import {
+  Box,
+  Button,
+  LabeledList,
+  ProgressBar,
+  Section,
+  Flex,
+  AnimatedNumber,
+} from '../components';
 import { Window } from '../layouts';
 import { round } from 'common/math';
 import { toTitleCase } from 'common/string';

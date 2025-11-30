@@ -266,6 +266,24 @@
 	mannequin.update_tail_showing()
 	mannequin.ImmediateOverlayUpdate()
 
+	// RS Add Start: Custom markings support (Lira, November 2025)
+	var/skip_invalidation = skip_custom_marking_cache_invalidation_once
+	skip_custom_marking_cache_invalidation_once = FALSE
+	if(!skip_invalidation)
+		// Any change to the mannequin means cached custom-marking references are stale.
+		custom_marking_reference_signature = null
+		custom_marking_reference_payload_cache = null
+		custom_marking_reference_mannequin_signature = null
+
+		// If the designer is open, clear its caches and nudge the UI to rebuild previews.
+		if(custom_marking_designer_ui && !QDELETED(custom_marking_designer_ui))
+			custom_marking_designer_ui.reference_cache_signature = null
+			custom_marking_designer_ui.reference_payload_cache = null
+			custom_marking_designer_ui.reference_mannequin_signature = null
+			custom_marking_designer_ui.preview_revision++
+			SStgui.update_uis(custom_marking_designer_ui)
+	// RS Add End
+
 	update_character_previews(new /mutable_appearance(mannequin))
 	custom_marking_preview_overlays = null // RS Add: Custom markings support (Lira, September 2025)
 
