@@ -1,6 +1,8 @@
 // ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Created by Lira for Rogue Star November 2025: Grid conversion helpers for custom marking designer //
 // ////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2025: Updated to support 64x64 markings ////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import { TRANSPARENT_HEX } from '../../../utils/color';
 
@@ -12,6 +14,7 @@ export const convertCompositeGridToUi = (
   if (!Array.isArray(grid) || !grid.length) {
     return null;
   }
+  const sourceWidth = grid.length;
   const resolvedWidth = Math.max(1, Number(width) || grid.length);
   let resolvedHeight = Number(height) || 0;
   if (!resolvedHeight) {
@@ -22,12 +25,17 @@ export const convertCompositeGridToUi = (
     }
   }
   resolvedHeight = Math.max(1, resolvedHeight);
+  const xOffset = Math.max(0, Math.round((resolvedWidth - sourceWidth) / 2));
   const result: string[][] = Array.from({ length: resolvedWidth }, () =>
     Array.from({ length: resolvedHeight }, () => TRANSPARENT_HEX)
   );
   for (let x = 1; x <= resolvedWidth; x += 1) {
     const targetColumn = result[x - 1];
-    const sourceColumn = Array.isArray(grid[x - 1]) ? grid[x - 1] : [];
+    const sourceX = x - xOffset;
+    const sourceColumn =
+      sourceX >= 1 && sourceX <= sourceWidth && Array.isArray(grid[sourceX - 1])
+        ? grid[sourceX - 1]
+        : [];
     for (let y = 1; y <= resolvedHeight; y += 1) {
       const rawColor = sourceColumn[y - 1];
       const normalized =

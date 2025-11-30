@@ -1,9 +1,12 @@
 // //////////////////////////////////////////////////////////////////////////////////
 // Created by Lira for Rogue Star November 2025: Types for custom marking designer //
 // //////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2025: Updated to support 64x64 markings //
+// //////////////////////////////////////////////////////////////////////////////////
 
 import type {
   DiffEntry,
+  IconAssetPayload,
   PreviewDirectionEntry,
   PreviewDirectionSource,
   PreviewState,
@@ -59,6 +62,10 @@ export type CustomMarkingDesignerData = {
   is_new?: boolean;
   width: number;
   height: number;
+  max_width?: number;
+  max_height?: number;
+  default_width?: number;
+  default_height?: number;
   session_token?: string;
   state_token?: string;
   ui_locked?: boolean;
@@ -67,12 +74,11 @@ export type CustomMarkingDesignerData = {
   part_replacements?: Record<string, boolean>;
   part_render_priority?: Record<string, boolean>;
   replacement_dependents?: Record<string, string[]>;
-};
-
-export type CustomMarkingDesignerState = {
-  tool: string;
-  size: number;
-  stroke: number;
+  part_canvas_size?: Record<string, boolean>;
+  active_canvas_width?: number;
+  active_canvas_height?: number;
+  canvas_backgrounds?: CanvasBackgroundOption[];
+  default_canvas_background?: string;
 };
 
 export type CustomColorSlotsState = Array<string | null>;
@@ -85,6 +91,7 @@ export type BooleanMapState = {
 
 export type PartReplacementState = BooleanMapState;
 export type PartRenderPriorityState = BooleanMapState;
+export type PartCanvasSizeState = BooleanMapState;
 
 export type PendingCloseMessage = {
   title?: string;
@@ -94,6 +101,12 @@ export type PendingCloseMessage = {
 export type SavingProgressState = {
   value: number | null;
   label?: string;
+};
+
+export type CanvasBackgroundOption = {
+  id: string;
+  label: string;
+  asset?: IconAssetPayload | null;
 };
 
 export type DirectionCanvasSourceOptions = {

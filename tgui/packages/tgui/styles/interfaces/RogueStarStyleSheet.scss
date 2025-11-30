@@ -1,6 +1,8 @@
 // ////////////////////////////////////////////////////////////////////////////////
 // Created by Lira for Rogue Star November 2025: Rogue Star interface stylesheet //
 // ////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2025: Tweaks and new styles ////////////
+// ////////////////////////////////////////////////////////////////////////////////
 
 @use '../colors.scss';
 
@@ -471,6 +473,36 @@ $titlebar-height: 38px;
     0 0 42px rgba(255, 43, 122, 0.55);
 }
 
+.RogueStar__chip.RogueStar__chip--goldGlow {
+  border-color: rgba(255, 215, 128, 0.9);
+  box-shadow:
+    0 0 20px rgba(255, 196, 118, 0.55),
+    0 0 32px rgba(255, 223, 157, 0.35);
+}
+
+.RogueStar__chip.RogueStar__chip--goldGlow:hover,
+.RogueStar__chip.RogueStar__chip--goldGlow:focus {
+  border-color: rgba(255, 225, 170, 1);
+  box-shadow:
+    0 0 24px rgba(255, 210, 134, 0.75),
+    0 0 36px rgba(255, 223, 157, 0.45);
+}
+
+.RogueStar__chip.RogueStar__chip--whiteGlow {
+  border-color: rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 0 18px rgba(255, 255, 255, 0.35),
+    0 0 28px rgba(255, 255, 255, 0.25);
+}
+
+.RogueStar__chip.RogueStar__chip--whiteGlow:hover,
+.RogueStar__chip.RogueStar__chip--whiteGlow:focus {
+  border-color: rgba(255, 255, 255, 1);
+  box-shadow:
+    0 0 22px rgba(255, 255, 255, 0.55),
+    0 0 32px rgba(255, 255, 255, 0.35);
+}
+
 .RogueStar__chip.Button--disabled {
   background: rgba(255, 255, 255, 0.12) !important;
   border-color: rgba(255, 255, 255, 0.08) !important;
@@ -624,14 +656,17 @@ $titlebar-height: 38px;
 }
 
 .RogueStar__leftFill {
-  margin-top: auto;
+  margin-top: 0;
 }
 
 .RogueStar__canvasFrame {
-  display: inline-block;
-  padding: 10px;
-  border-radius: 18px;
+  display: inline-flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 0;
+  border-radius: 0;
   border: 1px solid rgba(187, 137, 255, 0.35);
+  overflow: hidden;
   background: linear-gradient(
     145deg,
     rgba(16, 8, 30, 0.95),
@@ -660,7 +695,7 @@ $titlebar-height: 38px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  gap: 0.5rem;
+  gap: 10px;
 }
 
 .RogueStar__previewTitle {
@@ -678,17 +713,14 @@ $titlebar-height: 38px;
 }
 
 .RogueStar__previewItem {
-  padding: 0.5rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.RogueStar__previewItem:last-child {
-  border-bottom: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
 }
 
 .RogueStar__previewCanvasFrame {
   overflow: hidden;
-  border-radius: 16px;
+  border-radius: 0;
   border: 1px solid rgba(204, 158, 255, 0.4);
   background: radial-gradient(
     circle at 30% 30%,

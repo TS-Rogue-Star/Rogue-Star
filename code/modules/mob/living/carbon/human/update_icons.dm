@@ -295,6 +295,11 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 		if(isnull(part) || part.is_stump() || part.is_hidden_by_sprite_accessory() || (hide_worn_head && organ_tag == BP_HEAD)) //VOREStation Edit allowing tails to prevent bodyparts rendering, granting more spriter freedom for taur/digitigrade stuff. || RS Edit: Hide head (Lira, October 2025)
 			icon_key += "0"
 			continue
+		// RS Add Start: Custom markings support (Lira, November 2025)
+		var/replaced_by_markings = part.is_hidden_by_markings()
+		if(replaced_by_markings)
+			icon_key += "R"
+		// RS Add End
 		if(part)
 			wholeicontransparent &&= part.transparent //VORESTATION EDIT: transparent instead of nonsolid
 			icon_key += "[part.species.get_race_key(part.owner)]"
@@ -378,7 +383,12 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 		for(var/obj/item/organ/external/part in organs)
 			if(isnull(part) || part.is_stump() || part == chest || part.is_hidden_by_sprite_accessory() || (hide_worn_head && part.organ_tag == BP_HEAD)) //VOREStation Edit allowing tails to prevent bodyparts rendering, granting more spriter freedom for taur/digitigrade stuff. || RS Edit: Hide head (Lira, October 2025)
 				continue
+			var/replaced_by_markings = part.is_hidden_by_markings() // RS Add: Custom markings support (Lira, November 2025)
 			var/icon/temp = part.get_icon(skeleton, !wholeicontransparent)
+			// RS Add: Custom markings support (Lira, November 2025)
+			if(replaced_by_markings)
+				apply_markings_for_replaced_part(base_icon, part, temp, digitigrade)
+				continue
 
 			if((part.organ_tag in list(BP_L_LEG, BP_R_LEG, BP_L_FOOT, BP_R_FOOT)) && Cutter)
 				temp.Blend(Cutter, ICON_AND, x = icon_x_offset, y = icon_y_offset)
@@ -470,13 +480,51 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 			var/icon/mark_icon = get_cached_marking_icon(mark_style, part.organ_tag, mark_color, check_digi ? digitigrade_state : FALSE)
 			if(!mark_icon)
 				continue
+			var/mark_offset_x = get_marking_icon_offset_x(mark_icon) // RS Add: Custom markings support (Lira, November 2025)
 			var/image/top_image = image(mark_icon)
+			// RS Add: Custom markings support (Lira, November 2025)
+			if(mark_offset_x)
+				top_image.pixel_x -= mark_offset_x
 			top_image.layer = CUSTOM_MARKING_RENDER_LAYER
 			top_overlays += top_image
 	if(!top_overlays.len)
 		return
 	overlays_standing[CUSTOM_MARKING_LAYER] = top_overlays
 	apply_layer(CUSTOM_MARKING_LAYER)
+
+// RS Add: When a marking hides its base part, still render that marking while suppressing the body (Lira, November 2025)
+/mob/living/carbon/human/proc/apply_markings_for_replaced_part(icon/base_icon, obj/item/organ/external/part, icon/_unused, var/digitigrade_state = FALSE)
+	if(!isicon(base_icon) || isnull(part) || !islist(part.markings))
+		return
+	var/check_digi = istype(part, /obj/item/organ/external/leg) || istype(part, /obj/item/organ/external/foot)
+	var/digitigrade = check_digi ? digitigrade_state : FALSE
+	for(var/M in part.markings)
+		var/list/mark_data = part.markings[M]
+		if(!islist(mark_data) || !mark_data["on"])
+			continue
+		var/datum/sprite_accessory/marking/mark_style = mark_data["datum"]
+		if(!istype(mark_style))
+			mark_style = body_marking_styles_list?[M]
+		if(!istype(mark_style))
+			continue
+		if(mark_style.render_above_body)
+			continue
+		if(check_digi)
+			var/acceptance = mark_style.digitigrade_acceptance
+			if(!(acceptance & (digitigrade ? MARKING_DIGITIGRADE_ONLY : MARKING_NONDIGI_ONLY)))
+				continue
+		var/mark_color = mark_data["color"]
+		var/icon/mark_icon = get_cached_marking_icon(mark_style, part.organ_tag, mark_color, digitigrade)
+		if(!mark_icon)
+			continue
+		var/mark_offset_x = get_marking_icon_offset_x(mark_icon)
+		var/icon/blend_icon = mark_offset_x ? new/icon(mark_icon) : mark_icon
+		if(mark_offset_x)
+			if(mark_offset_x > 0)
+				blend_icon.Shift(WEST, mark_offset_x)
+			else if(mark_offset_x < 0)
+				blend_icon.Shift(EAST, -mark_offset_x)
+		base_icon.Blend(blend_icon, ICON_OVERLAY)
 
 /mob/living/carbon/human/proc/update_skin()
 	if(QDESTROYING(src))
@@ -546,6 +594,9 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 
 	var/obj/item/organ/external/head/head_organ = get_organ(BP_HEAD)
 	if(!head_organ || head_organ.is_stump() )
+		return
+	// RS Add: Custom markings support (Lira, November 2025)
+	if(head_organ.is_hidden_by_markings())
 		return
 
 	//masks and helmets can obscure our hair.
@@ -659,6 +710,9 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 	//Get the head, we'll need it later.
 	var/obj/item/organ/external/head/head_organ = get_organ(BP_HEAD)
 	if(!head_organ || head_organ.is_stump() )
+		return
+	// RS Add: Custom markings support (Lira, November 2025)
+	if(head_organ.is_hidden_by_markings())
 		return
 
 	//The eyes store the color themselves, funny enough.
@@ -1383,7 +1437,7 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 		ears_s.Blend(rgb(src.r_ears, src.g_ears, src.b_ears), species.color_mult ? ICON_MULTIPLY : ICON_ADD)
 		return ears_s
 
-	var/icon/rendered // RS EDIT (Port of VS PR#16513 'Adds a second ear slot.')
+	var/list/ear_icons = list() // RS EDIT (Port of VS PR#16513 'Adds a second ear slot.') || Tweaked to fix horn positioning issues (Lira, November 2025)
 
 	if(ear_style && !(head && (head.flags_inv & (BLOCKHEADHAIR | HIDEHEAD)))) // RS Edit: Hide head (Lira, October 2025)
 		var/icon/ears_s = new/icon("icon" = ear_style.icon, "icon_state" = ear_style.icon_state)
@@ -1399,7 +1453,7 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 			overlay.Blend(rgb(src.r_ears3, src.g_ears3, src.b_ears3), ear_style.color_blend_mode)
 			ears_s.Blend(overlay, ICON_OVERLAY)
 			qdel(overlay)
-		rendered = ears_s // RS EDIT START (Port of VS PR#16513 'Adds a second ear slot.')
+		ear_icons += ears_s // RS EDIT START (Port of VS PR#16513 'Adds a second ear slot.') || Tweaked to fix horn positioning issues (Lira, November 2025)
 
 	// todo: this is utterly horrible but i don't think i should be violently refactoring sprite acc rendering in a feature PR ~silicons
 	if(ear_secondary_style && !(head && (head.flags_inv & (BLOCKHEADHAIR | HIDEHEAD)))) // RS Edit: Hide head (Lira, October 2025)
@@ -1422,10 +1476,31 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 				overlay.Blend(color, ear_secondary_style.color_blend_mode)
 			ears_s.Blend(overlay, ICON_OVERLAY)
 			qdel(overlay)
-		if(!rendered)
-			rendered = ears_s
-		else
-			rendered.Blend(ears_s, ICON_OVERLAY)
+		ear_icons += ears_s // Tweaked to fix horn positioning issues (Lira, November 2025)
+
+	// RS Add Start: Fix for horn positioning issues (Lira, November 2025)
+	if(!ear_icons.len)
+		return null
+
+	var/max_width = 0
+	var/max_height = 0
+	for(var/icon/ear_icon in ear_icons)
+		max_width = max(max_width, ear_icon.Width())
+		max_height = max(max_height, ear_icon.Height())
+
+	var/icon/rendered = new/icon(ear_icons[1])
+	rendered.Crop(1, 1, max_width, max_height) // Expand canvas to fit widest/tallest ear.
+	rendered.DrawBox(rgb(0, 0, 0, 0), 1, 1, max_width, max_height) // Clear to transparent.
+	for(var/icon/ear_icon in ear_icons)
+		var/icon/icon_copy = new/icon(ear_icon)
+		var/orig_width = icon_copy.Width()
+		icon_copy.Crop(1, 1, max_width, max_height) // Grow the canvas before shifting.
+		var/dx = round((max_width - orig_width) / 2)
+		if(dx)
+			icon_copy.Shift(EAST, dx) // Center horizontally on the max canvas.
+		// Keep vertical alignment at the base so shorter ears don't float upward on taller canvases.
+		rendered.Blend(icon_copy, ICON_OVERLAY)
+	// RS Add End
 
 	return rendered // RS EDIT END (Port of VS PR#16513 'Adds a second ear slot.')
 
