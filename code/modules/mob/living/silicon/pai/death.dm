@@ -12,5 +12,5 @@
 			qdel(card)
 			..(gibbed)
 		else
-			card.add_overlay("pai-dead")
+			card.add_overlay(card.dead_overlay_state) // RS Edit: Off duty AI support (Lira, November 2025)
 			..(gibbed,deathmessage)
