@@ -206,8 +206,12 @@ GLOBAL_LIST_BOILERPLATE(all_deactivated_AI_cores, /obj/structure/AIcore/deactiva
 	transfer.control_disabled = 0
 	transfer.aiRadio.disabledAi = 0
 	transfer.loc = get_turf(src)
+	transfer.canmove = FALSE // RS Add: Off duty AI support (Lira, November 2025)
+	transfer.density = TRUE // RS Add: Off duty AI support (Lira, November 2025)
 	transfer.create_eyeobj()
 	transfer.cancel_camera()
+	transfer.update_icon() // RS Add: Off duty AI support (Lira, November 2025)
+	transfer.announce_duty_status(TRUE) // RS Add: Off duty AI support (Lira, November 2025)
 	to_chat(user, "<span class='notice'>Transfer successful:</span> [transfer.name] placed within stationary core.")
 	to_chat(transfer, "You have been transferred into a stationary core. Remote device connection restored.")
 

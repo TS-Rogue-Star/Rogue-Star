@@ -549,14 +549,53 @@
 	set category = "pAI Commands"
 	set desc = "Upload your personality to the cloud and wipe your software from the card. This is functionally equivalent to cryo or robotic storage, freeing up your job slot."
 
+	// RS Add Start: Off duty AI support (Lira, November 2025)
+
+	var/is_offduty = istype(src, /mob/living/silicon/pai/ai_offduty)
+	var/mob/living/silicon/pai/ai_offduty/offduty = is_offduty ? src : null
+
+	if(offduty)
+		if(!offduty.stored_core || QDELETED(offduty.stored_core))
+			to_chat(src, span("warning", "Your AI core is missing; unable to enter storage."))
+			return
+
+		var/turf/core_turf = get_turf(offduty.stored_core)
+		if(!core_turf || get_dist(src, core_turf) > 1)
+			to_chat(src, span("warning", "You must be adjacent to your AI core to enter storage."))
+			return
+
+	// RS Add End
+
 	// Make sure people don't kill themselves accidentally
 	if(tgui_alert(usr, "WARNING: This will immediately wipe your software and ghost you, removing your character from the round permanently (similar to cryo and robotic storage). Are you entirely sure you want to do this?", "Wipe Software", list("No", "Yes")) != "Yes")
 		return
 
+	// RS Add: Off duty AI support (Lira, November 2025)
+	if(offduty && offduty.stored_core && !QDELETED(offduty.stored_core))
+		var/mob/living/silicon/ai/core = offduty.stored_core
+		var/turf/core_turf = get_turf(core)
+		core.close_off_duty_core_slot()
+		if(global_announcer)
+			global_announcer.autosay("[core] has been moved to intelligence storage.", "Artificial Intelligence Oversight")
+		if(core_turf)
+			empty_playable_ai_cores += new /obj/structure/AIcore/deactivated(core_turf)
+		QDEL_NULL(offduty.stored_core)
+
 	close_up()
-	visible_message("<span class='filter_notice'><b>[src]</b> fades away from the screen, the pAI device goes silent.</span>")
 	card.removePersonality()
+
+	// RS Add Start: Off duty AI support (Lira, November 2025)
+	if(offduty)
+		visible_message("<span class='filter_notice'><b>[src]</b> is stored back into their AI core.</span>")
+	else
+		visible_message("<span class='filter_notice'><b>[src]</b> fades away from the screen, the pAI device goes silent.</span>")
+	// RS Add End
+
 	clear_client()
+
+	// RS Add: Off duty AI support (Lira, November 2025)
+	if(offduty)
+		qdel(src)
 
 /mob/living/silicon/pai/ClickOn(atom/A, params) //RS ADD START
 	. = ..()

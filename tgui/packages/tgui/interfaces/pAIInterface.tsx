@@ -9,17 +9,39 @@ type Data = {
   available_ram: number;
   emotions: { id: string; name: string }[];
   current_emotion: string;
+  dark_mode?: BooleanLike; // RS Add: Off duty AI support (Lira, November 2025)
 };
 
 export const pAIInterface = (props, context) => {
   const { act, data } = useBackend<Data>(context);
 
-  const { bought, not_bought, available_ram, emotions, current_emotion } = data;
+  // RS Edit Start: Off duty AI support (Lira, November 2025)
+  const {
+    bought,
+    not_bought,
+    available_ram,
+    emotions,
+    current_emotion,
+    dark_mode,
+  } = data;
+  const showDarkMode = dark_mode !== undefined;
+  const darkModeEnabled = !!dark_mode;
+  // RS Edit End
 
   return (
     <Window width={450} height={600} resizable>
       <Window.Content scrollable>
         <Section title="Emotion">
+          {/* RS Add Start: Off duty AI support (Lira, November 2025) */}
+          {showDarkMode && (
+            <Button
+              icon="adjust"
+              content={`Dark Mode: ${darkModeEnabled ? 'On' : 'Off'}`}
+              selected={darkModeEnabled}
+              onClick={() => act('toggle_dark_mode')}
+            />
+          )}
+          {/* RS Add End */}
           {emotions.map((emote) => (
             <Button
               key={emote.id}

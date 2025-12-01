@@ -1054,7 +1054,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			var/obj/item/device/paicard/PP = p
 			if(PP.pai == null)
 				count++
-				PP.add_overlay("pai-ghostalert")
+				PP.add_overlay(PP.ghostalert_overlay_state) // RS Add: Off duty AI support (Lira, November 2025)
 				PP.alertUpdate()
 				spawn(54)
 					PP.cut_overlays()
