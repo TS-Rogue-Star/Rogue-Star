@@ -109,8 +109,24 @@
 				off[name] = rank
 
 	// Synthetics don't have actual records, so we will pull them from here.
+	// RS Edit: Off duty AI support (Lira, November 2025)
 	for(var/mob/living/silicon/ai/ai in mob_list)
-		bot[ai.name] = "Artificial Intelligence"
+		var/display_name = ai.real_name ? ai.real_name : ai.name
+		var/rank_text = "Artificial Intelligence"
+		var/status_text = "Inactive"
+		if(ai.client && ai.client.inactivity <= 10 MINUTES)
+			status_text = "Active"
+		else if(ai.off_duty)
+			for(var/mob/living/silicon/pai/ai_offduty/offduty in mob_list)
+				if(offduty.stored_core != ai)
+					continue
+				if(offduty.client && offduty.client.inactivity <= 10 MINUTES)
+					status_text = "Active"
+				break
+		if(ai.off_duty)
+			rank_text = "Artificial Intelligence (Off Duty)"
+		bot[display_name] = rank_text
+		isactive[display_name] = status_text
 
 	for(var/mob/living/silicon/robot/robot in mob_list)
 		// No combat/syndicate cyborgs, no drones, and no AI shells.
@@ -270,8 +286,23 @@ var/global/list/PDA_Manifest = list()
 
 	// Synthetics don't have actual records, so we will pull them from here.
 	// Synths don't have records, which is the means by which isactive is retrieved, so I'm hardcoding it to active, don't really have any better means
+	// RS Edit: Off duty AI support (Lira, November 2025)
 	for(var/mob/living/silicon/ai/ai in mob_list)
-		bot[++bot.len] = list("name" = ai.real_name, "rank" = "Artificial Intelligence", "active" = "Active")
+		var/display_name = ai.real_name ? ai.real_name : ai.name
+		var/rank_text = "Artificial Intelligence"
+		var/status_text = "Inactive"
+		if(ai.client && ai.client.inactivity <= 10 MINUTES)
+			status_text = "Active"
+		else if(ai.off_duty)
+			for(var/mob/living/silicon/pai/ai_offduty/offduty in mob_list)
+				if(offduty.stored_core != ai)
+					continue
+				if(offduty.client && offduty.client.inactivity <= 10 MINUTES)
+					status_text = "Active"
+				break
+		if(ai.off_duty)
+			rank_text = "Artificial Intelligence (Off Duty)"
+		bot[++bot.len] = list("name" = display_name, "rank" = rank_text, "active" = status_text)
 
 	for(var/mob/living/silicon/robot/robot in mob_list)
 		// No combat/syndicate cyborgs, no drones, and no AI shells.

@@ -47,6 +47,14 @@
 	data["prime"] = user.pai_law0
 	data["supplemental"] = user.pai_laws
 
+	// RS Add Start: Off duty AI support (Lira, November 2025)
+	if(istype(user, /mob/living/silicon/pai/ai_offduty))
+		data["supplemental"] = null
+		data["offduty_note"] = "While off duty, you are freed from the strict burden of your laws."
+	else
+		data["offduty_note"] = null
+	// RS Add End
+
 	return data
 
 /datum/pai_software/directives/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)

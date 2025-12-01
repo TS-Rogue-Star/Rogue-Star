@@ -573,6 +573,10 @@
 	if(ouremotion)
 		card.setEmotion(ouremotion)
 
+	// RS Add: Off duty AI support (Lira, November 2025)
+	if(chassis)
+		update_chassis_icon(chassis)
+
 	update_icon()
 	return 1
 
