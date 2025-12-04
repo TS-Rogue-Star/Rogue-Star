@@ -26,7 +26,7 @@
 		html += "<A align='right' href='?src=\ref[src];back=1'>Back</A><br>"
 		html += "Time till start: [round(event_time / 600, 0.1)]<br>"
 		html += "<div class='block'>"
-		html += "<h2>Available [severity_to_string[selected_event_container.severity]] Events (queued & running events will not be displayed)</h2>"
+		html += "<h2>Available [selected_event_container.severity] Events (queued & running events will not be displayed)</h2>" // RS EDIT - 516.1648+ compatibility
 		html += "<table[table_options]>"
 		html += "<tr><td[row_options2]>Name </td><td>Weight </td><td>MinWeight </td><td>MaxWeight </td><td>OneShot </td><td>Enabled </td><td><span class='alert'>CurrWeight </span></td><td>Remove</td></tr>"
 		var/list/active_with_role = number_active_with_role()
@@ -64,11 +64,11 @@
 
 		html += "<table[table_options]>"
 		html += "<tr><td[row_options1]>Severity</td><td[row_options1]>Starts At</td><td[row_options1]>Starts In</td><td[row_options3]>Adjust Start</td><td[row_options1]>Pause</td><td[row_options1]>Interval Mod</td></tr>"
-		for(var/severity = EVENT_LEVEL_MUNDANE to EVENT_LEVEL_MAJOR)
+		for(var/severity in EVENT_LEVELS) // RS EDIT - 516.1648+ compatibility
 			var/datum/event_container/EC = event_containers[severity]
 			var/next_event_at = max(0, EC.next_event_time - world.time)
 			html += "<tr>"
-			html += "<td>[severity_to_string[severity]]</td>"
+			html += "<td>[severity]</td>" // RS EDIT - 516.1648+ compatibility
 			html += "<td>[worldtime2stationtime(max(EC.next_event_time, world.time))]</td>"
 			html += "<td>[round(next_event_at / 600, 0.1)]</td>"
 			html += "<td>"
@@ -91,11 +91,11 @@
 		html += "<h2>Next Event</h2>"
 		html += "<table[table_options]>"
 		html += "<tr><td[row_options1]>Severity</td><td[row_options2]>Name</td><td[row_options3]>Event Rotation</td><td>Clear</td></tr>"
-		for(var/severity = EVENT_LEVEL_MUNDANE to EVENT_LEVEL_MAJOR)
+		for(var/severity in EVENT_LEVELS) // RS EDIT - 516.1648+ compatibility
 			var/datum/event_container/EC = event_containers[severity]
 			var/datum/event_meta/EM = EC.next_event
 			html += "<tr>"
-			html += "<td>[severity_to_string[severity]]</td>"
+			html += "<td>[severity]</td>" // RS EDIT - 516.1648+ compatibility
 			html += "<td><A align='right' href='?src=\ref[src];select_event=\ref[EC]'>[EM ? EM.name : "Random"]</A></td>"
 			html += "<td><A align='right' href='?src=\ref[src];view_events=\ref[EC]'>View</A></td>"
 			html += "<td><A align='right' href='?src=\ref[src];clear=\ref[EC]'>Clear</A></td>"
@@ -115,7 +115,7 @@
 			var/ends_at = E.startedAt + (E.lastProcessAt() * 20)	// A best estimate, based on how often the alarm manager processes
 			var/ends_in = max(0, round((ends_at - world.time) / 600, 0.1))
 			html += "<tr>"
-			html += "<td>[severity_to_string[EM.severity]]</td>"
+			html += "<td>[EM.severity]</td>" // RS EDIT - 516.1648+ compatibility
 			html += "<td>[EM.name]</td>"
 			html += "<td>[worldtime2stationtime(ends_at)]</td>"
 			html += "<td>[ends_in]</td>"
@@ -137,21 +137,21 @@
 		var/datum/event_container/EC = locate(href_list["event"])
 		var/decrease = 60 * (10 ** text2num(href_list["dec_timer"]))
 		EC.next_event_time -= decrease
-		log_and_message_admins("decreased timer for [severity_to_string[EC.severity]] events by [decrease/600] minute(s).")
+		log_and_message_admins("decreased timer for [EC.severity] events by [decrease/600] minute(s).") // RS EDIT - 516.1648+ compatibility
 	else if(href_list["inc_timer"])
 		var/datum/event_container/EC = locate(href_list["event"])
 		var/increase = 60 * (10 ** text2num(href_list["inc_timer"]))
 		EC.next_event_time += increase
-		log_and_message_admins("increased timer for [severity_to_string[EC.severity]] events by [increase/600] minute(s).")
+		log_and_message_admins("increased timer for [EC.severity] events by [increase/600] minute(s).") // RS EDIT - 516.1648+ compatibility
 	else if(href_list["select_event"])
 		var/datum/event_container/EC = locate(href_list["select_event"])
 		var/datum/event_meta/EM = EC.SelectEvent()
 		if(EM)
-			log_and_message_admins("has queued the [severity_to_string[EC.severity]] event '[EM.name]'.")
+			log_and_message_admins("has queued the [EC.severity] event '[EM.name]'.") // RS EDIT - 516.1648+ compatibility
 	else if(href_list["pause"])
 		var/datum/event_container/EC = locate(href_list["pause"])
 		EC.delayed = !EC.delayed
-		log_and_message_admins("has [EC.delayed ? "paused" : "resumed"] countdown for [severity_to_string[EC.severity]] events.")
+		log_and_message_admins("has [EC.delayed ? "paused" : "resumed"] countdown for [EC.severity] events.") // RS EDIT - 516.1648+ compatibility
 	else if(href_list["pause_all"])
 		config.allow_random_events = text2num(href_list["pause_all"])
 		log_and_message_admins("has [config.allow_random_events ? "resumed" : "paused"] countdown for all events.")
@@ -160,13 +160,13 @@
 		if(delay && delay > 0)
 			var/datum/event_container/EC = locate(href_list["interval"])
 			EC.delay_modifier = delay
-			log_and_message_admins("has set the interval modifier for [severity_to_string[EC.severity]] events to [EC.delay_modifier].")
+			log_and_message_admins("has set the interval modifier for [EC.severity] events to [EC.delay_modifier].") // RS EDIT - 516.1648+ compatibility
 	else if(href_list["stop"])
 		if(tgui_alert(usr, "Stopping an event may have unintended side-effects. Continue?","Stopping Event!",list("Yes","No")) != "Yes")
 			return
 		var/datum/event/E = locate(href_list["stop"])
 		var/datum/event_meta/EM = E.event_meta
-		log_and_message_admins("has stopped the [severity_to_string[EM.severity]] event '[EM.name]'.")
+		log_and_message_admins("has stopped the [EM.severity] event '[EM.name]'.") // RS EDIT - 516.1648+ compatibility
 		E.kill()
 	else if(href_list["view_events"])
 		selected_event_container = locate(href_list["view_events"])
@@ -188,23 +188,23 @@
 			var/datum/event_meta/EM = locate(href_list["set_weight"])
 			EM.weight = weight
 			if(EM != new_event)
-				log_and_message_admins("has changed the weight of the [severity_to_string[EM.severity]] event '[EM.name]' to [EM.weight].")
+				log_and_message_admins("has changed the weight of the [EM.severity] event '[EM.name]' to [EM.weight].") // RS EDIT - 516.1648+ compatibility
 	else if(href_list["toggle_oneshot"])
 		var/datum/event_meta/EM = locate(href_list["toggle_oneshot"])
 		EM.one_shot = !EM.one_shot
 		if(EM != new_event)
-			log_and_message_admins("has [EM.one_shot ? "set" : "unset"] the oneshot flag for the [severity_to_string[EM.severity]] event '[EM.name]'.")
+			log_and_message_admins("has [EM.one_shot ? "set" : "unset"] the oneshot flag for the [EM.severity] event '[EM.name]'.") // RS EDIT - 516.1648+ compatibility
 	else if(href_list["toggle_enabled"])
 		var/datum/event_meta/EM = locate(href_list["toggle_enabled"])
 		EM.enabled = !EM.enabled
-		log_and_message_admins("has [EM.enabled ? "enabled" : "disabled"] the [severity_to_string[EM.severity]] event '[EM.name]'.")
+		log_and_message_admins("has [EM.enabled ? "enabled" : "disabled"] the [EM.severity] event '[EM.name]'.") // RS EDIT - 516.1648+ compatibility
 	else if(href_list["remove"])
 		if(tgui_alert(usr, "This will remove the event from rotation. Continue?","Removing Event!",list("Yes","No")) != "Yes")
 			return
 		var/datum/event_meta/EM = locate(href_list["remove"])
 		var/datum/event_container/EC = locate(href_list["EC"])
 		EC.available_events -= EM
-		log_and_message_admins("has removed the [severity_to_string[EM.severity]] event '[EM.name]'.")
+		log_and_message_admins("has removed the [EM.severity] event '[EM.name]'.") // RS EDIT - 516.1648+ compatibility
 	else if(href_list["add"])
 		if(!new_event.name || !new_event.event_type)
 			return
@@ -212,12 +212,12 @@
 			return
 		new_event.severity = selected_event_container.severity
 		selected_event_container.available_events += new_event
-		log_and_message_admins("has added \a [severity_to_string[new_event.severity]] event '[new_event.name]' of type [new_event.event_type] with weight [new_event.weight].")
+		log_and_message_admins("has added \a [new_event.severity] event '[new_event.name]' of type [new_event.event_type] with weight [new_event.weight].") // RS EDIT - 516.1648+ compatibility
 		new_event = new
 	else if(href_list["clear"])
 		var/datum/event_container/EC = locate(href_list["clear"])
 		if(EC.next_event)
-			log_and_message_admins("has dequeued the [severity_to_string[EC.severity]] event '[EC.next_event.name]'.")
+			log_and_message_admins("has dequeued the [EC.severity] event '[EC.next_event.name]'.") // RS EDIT - 516.1648+ compatibility
 			EC.next_event = null
 
 	Interact(usr)

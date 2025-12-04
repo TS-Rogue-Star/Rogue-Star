@@ -38,7 +38,7 @@ SUBSYSTEM_DEF(events)
 		if (MC_TICK_CHECK)
 			return
 
-	for(var/i = EVENT_LEVEL_MUNDANE to EVENT_LEVEL_MAJOR)
+	for(var/i in EVENT_LEVELS) // RS EDIT - 516.1648+ compatibility
 		var/datum/event_container/EC = event_containers[i]
 		EC.process()
 
