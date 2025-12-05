@@ -1,6 +1,8 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////
 // Created by Lira for Rogue Star November 2025: Preview plumbing for custom marking designer //
 // /////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star December 2025: Updated to support loaout and job gear ////////
+// /////////////////////////////////////////////////////////////////////////////////////////////
 
 import {
   applyDraftDiffsToLayerMap,
@@ -36,6 +38,8 @@ type Params = Readonly<{
   resolvedPartPriorityMap: Record<string, boolean>;
   resolvedPartReplacementMap: Record<string, boolean>;
   sessionToken: string | null;
+  showJobGear: boolean;
+  showLoadoutGear: boolean;
 }>;
 
 export const useDesignerPreview = ({
@@ -54,6 +58,8 @@ export const useDesignerPreview = ({
   resolvedPartPriorityMap,
   resolvedPartReplacementMap,
   sessionToken,
+  showJobGear,
+  showLoadoutGear,
 }: Params) => {
   const serverActivePartKey = data.active_body_part || GENERIC_PART_KEY;
   const serverCanvasGrid = convertCompositeGridToUi(
@@ -101,6 +107,27 @@ export const useDesignerPreview = ({
     ? layerOrder.filter((part) => part !== activePartKey)
     : layerOrder;
 
+  const localSessionKey = buildLocalSessionKey(
+    currentDirectionKey,
+    activePartKey
+  );
+  const activeDraftDiff = buildSessionDraftDiff(
+    strokeDraftState,
+    localSessionKey,
+    canvasWidth,
+    canvasHeight
+  );
+  const draftPixelLookup = buildDraftPixelLookup(activeDraftDiff);
+  const partPaintPresenceMap = buildPartPaintPresenceMap({
+    dirStates: derivedPreviewState.dirs,
+    draftDiffIndex,
+    activeDirKey: currentDirectionKey,
+    activePartKey,
+    activeDraftDiff,
+    canvasWidth,
+    canvasHeight,
+    replacementDependents: data.replacement_dependents,
+  });
   const {
     referenceParts,
     referenceGrid,
@@ -122,27 +149,10 @@ export const useDesignerPreview = ({
     diffSeq: data.diff_seq,
     stroke: data.stroke,
     signalAssetUpdate: notifyAssetReady,
-  });
-
-  const localSessionKey = buildLocalSessionKey(
-    currentDirectionKey,
-    activePartKey
-  );
-  const activeDraftDiff = buildSessionDraftDiff(
-    strokeDraftState,
-    localSessionKey,
-    canvasWidth,
-    canvasHeight
-  );
-  const draftPixelLookup = buildDraftPixelLookup(activeDraftDiff);
-  const partPaintPresenceMap = buildPartPaintPresenceMap({
-    dirStates: derivedPreviewState.dirs,
-    draftDiffIndex,
-    activeDirKey: currentDirectionKey,
-    activePartKey,
-    activeDraftDiff,
-    canvasWidth,
-    canvasHeight,
+    showJobGear,
+    showLoadoutGear,
+    partPaintPresenceMap,
+    partReplacementMap: resolvedPartReplacementMap,
   });
   const renderedPreviewDirs = buildRenderedPreviewDirs(
     derivedPreviewState.dirs,
@@ -157,6 +167,8 @@ export const useDesignerPreview = ({
     resolvedPartPriorityMap,
     resolvedPartReplacementMap,
     partPaintPresenceMap,
+    showJobGear,
+    showLoadoutGear,
     notifyAssetReady
   );
 

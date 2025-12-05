@@ -1,20 +1,24 @@
 // //////////////////////////////////////////////////////////////////////////////////////////////
 // Created by Lira for Rogue Star November 2025: Character preview helpers for custom markings //
 // //////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star December 2025: Updated to support loaout and job gear /////////
+// //////////////////////////////////////////////////////////////////////////////////////////////
 
 import { normalizeHex, TRANSPARENT_HEX } from '../color';
-import type { IconAssetPayload } from './assets';
+import type { GearOverlayAsset, IconAssetPayload } from './assets';
 import {
   getPreviewGridFromAsset,
   getPreviewGridListFromAssets,
+  getPreviewGridMapFromGearAssets,
   getPreviewPartMapFromAssets,
 } from './assets';
 
-export type { IconAssetPayload } from './assets';
+export type { IconAssetPayload, GearOverlayAsset } from './assets';
 export {
   getPreviewGridFromAsset,
   getPreviewGridListFromAssets,
   getPreviewPartMapFromAssets,
+  getPreviewGridMapFromGearAssets,
   getReferenceGridFromAsset,
   getReferencePartMapFromAssets,
 } from './assets';
@@ -32,6 +36,7 @@ export type PreviewLayerEntry = {
   key: string;
   label?: string;
   grid?: string[][];
+  opacity?: number;
 };
 
 export type PreviewDirectionEntry = {
@@ -47,7 +52,9 @@ export type PreviewDirectionSource = {
   composite_asset?: IconAssetPayload;
   reference_part_assets?: Record<string, IconAssetPayload>;
   reference_part_marking_assets?: Record<string, IconAssetPayload>;
-  overlay_assets?: IconAssetPayload[];
+  overlay_assets?: GearOverlayAsset[] | IconAssetPayload[];
+  job_overlay_assets?: GearOverlayAsset[] | IconAssetPayload[];
+  loadout_overlay_assets?: GearOverlayAsset[] | IconAssetPayload[];
   custom_parts?: Record<string, string[][]>;
   part_order?: string[];
 };
@@ -64,7 +71,9 @@ export type PreviewDirState = {
   compositeAsset?: IconAssetPayload;
   referencePartAssets?: Record<string, IconAssetPayload>;
   referencePartMarkingAssets?: Record<string, IconAssetPayload>;
-  overlayAssets?: IconAssetPayload[];
+  overlayAssets?: GearOverlayAsset[] | IconAssetPayload[];
+  gearJobOverlayAssets?: GearOverlayAsset[];
+  gearLoadoutOverlayAssets?: GearOverlayAsset[];
   partOrder?: string[];
   customParts: Record<string, PreviewCustomPartState>;
 };
@@ -185,12 +194,20 @@ export const buildRenderedPreviewDirs = (
       canvasHeight,
       signalAssetUpdate || (() => undefined)
     );
-    const previewOverlayLayers = getPreviewGridListFromAssets(
+    const overlayLayersMap = getPreviewGridMapFromGearAssets(
       dirState.overlayAssets,
       canvasWidth,
       canvasHeight,
       signalAssetUpdate || (() => undefined)
     );
+    const previewOverlayLayers = overlayLayersMap
+      ? (Object.values(overlayLayersMap) as string[][][])
+      : getPreviewGridListFromAssets(
+          dirState.overlayAssets as IconAssetPayload[],
+          canvasWidth,
+          canvasHeight,
+          signalAssetUpdate || (() => undefined)
+        );
     const layers = composePreviewLayers(
       dirState,
       labelMap,

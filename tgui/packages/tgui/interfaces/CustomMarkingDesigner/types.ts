@@ -1,8 +1,10 @@
-// //////////////////////////////////////////////////////////////////////////////////
-// Created by Lira for Rogue Star November 2025: Types for custom marking designer //
-// //////////////////////////////////////////////////////////////////////////////////
-// Updated by Lira for Rogue Star November 2025: Updated to support 64x64 markings //
-// //////////////////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////////////////////////
+// Created by Lira for Rogue Star November 2025: Types for custom marking designer ///////
+// ///////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2025: Updated to support 64x64 markings ///////
+// ///////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star December 2025: Updated to support loaout and job gear //
+// ///////////////////////////////////////////////////////////////////////////////////////
 
 import type {
   DiffEntry,
@@ -79,6 +81,8 @@ export type CustomMarkingDesignerData = {
   active_canvas_height?: number;
   canvas_backgrounds?: CanvasBackgroundOption[];
   default_canvas_background?: string;
+  show_job_gear?: boolean;
+  show_loadout_gear?: boolean;
 };
 
 export type CustomColorSlotsState = Array<string | null>;
@@ -123,6 +127,10 @@ export type DirectionCanvasSourceOptions = {
   diffSeq?: number;
   stroke?: string | number;
   signalAssetUpdate: () => void;
+  showJobGear?: boolean;
+  showLoadoutGear?: boolean;
+  partPaintPresenceMap?: Record<string, boolean>;
+  partReplacementMap?: Record<string, boolean>;
 };
 
 export type DirectionCanvasSourceResult = {

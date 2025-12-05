@@ -3,6 +3,8 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star November 2025: Updated to support 64x64 markings /////////////////////
 // /////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star December 2025: Updated to support loaout and job gear ////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import { Component, createRef } from 'inferno';
 import { Box } from '../../../components';
@@ -79,18 +81,26 @@ export class DirectionPreviewCanvas extends Component<DirectionPreviewCanvasProp
     pixelSize: number
   ) {
     for (const layer of layers) {
-      this.drawLayer(ctx, layer?.grid, pixelSize);
+      const opacity =
+        typeof layer?.opacity === 'number'
+          ? Math.max(0, Math.min(1, layer.opacity))
+          : 1;
+      this.drawLayer(ctx, layer?.grid, pixelSize, opacity);
     }
   }
 
   drawLayer(
     ctx: CanvasRenderingContext2D,
     grid?: string[][],
-    pixelSize?: number
+    pixelSize?: number,
+    opacity?: number
   ) {
     if (!Array.isArray(grid) || !pixelSize) {
       return;
     }
+    const alpha = typeof opacity === 'number' ? opacity : 1;
+    const restoreAlpha = ctx.globalAlpha;
+    ctx.globalAlpha = alpha;
     for (let x = 0; x < grid.length; x++) {
       const column = grid[x];
       if (!Array.isArray(column)) {
@@ -105,6 +115,7 @@ export class DirectionPreviewCanvas extends Component<DirectionPreviewCanvasProp
         ctx.fillRect(x * pixelSize, y * pixelSize, pixelSize, pixelSize);
       }
     }
+    ctx.globalAlpha = restoreAlpha;
   }
 
   drawBackground(

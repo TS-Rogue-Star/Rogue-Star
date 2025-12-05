@@ -1,6 +1,8 @@
 // //////////////////////////////////////////////////////////////////////////////////////////////////
 // Created by Lira for Rogue Star November 2025: Preview layer helpers for custom marking designer //
 // //////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star December 2025: Updated to support loaout and job gear /////////////
+// //////////////////////////////////////////////////////////////////////////////////////////////////
 
 import {
   GENERIC_PART_KEY,
@@ -8,11 +10,15 @@ import {
   cloneGridData,
   createBlankGrid,
   getPreviewGridFromAsset,
-  getPreviewGridListFromAssets,
   getPreviewPartMapFromAssets,
   gridHasPixels,
   resolveBodyPartLabel,
 } from '../../../utils/character-preview';
+import type {
+  GearOverlayAsset,
+  IconAssetPayload,
+} from '../../../utils/character-preview';
+import { collectReplacementCascadeTargets } from './flags';
 import type {
   DiffEntry,
   PreviewDirectionEntry,
@@ -20,6 +26,33 @@ import type {
   PreviewLayerEntry,
 } from '../../../utils/character-preview';
 import { TRANSPARENT_HEX } from '../../../utils/color';
+
+const OVERLAY_SLOT_PRIORITY_MAP: Record<string, number> = {
+  tail_lower: 7,
+  wing_lower: 8,
+  shoes: 9,
+  uniform: 10,
+  id: 11,
+  gloves: 13,
+  belt: 14,
+  suit: 15,
+  tail_upper: 16,
+  glasses: 17,
+  suit_store: 19,
+  back: 20,
+  hair: 21,
+  hair_accessory: 22,
+  ears: 23,
+  eyes: 24,
+  mask: 25,
+  head: 27,
+  wing_upper: 32,
+  tail_upper_alt: 33,
+  modifier: 34,
+  vore_belly: 38,
+  vore_tail: 39,
+  custom_marking: 40,
+};
 
 type PartPaintPresenceOptions = {
   dirStates: Record<number, PreviewDirState>;
@@ -29,6 +62,15 @@ type PartPaintPresenceOptions = {
   activeDraftDiff?: DiffEntry[] | null;
   canvasWidth: number;
   canvasHeight: number;
+  replacementDependents?: Record<string, string[]>;
+};
+
+type OrderedOverlayLayer = {
+  grid: string[][];
+  layer: number | null;
+  slot?: string | null;
+  source: 'base' | 'job' | 'loadout';
+  order: number;
 };
 
 export const buildPartPaintPresenceMap = (
@@ -42,6 +84,7 @@ export const buildPartPaintPresenceMap = (
     activeDraftDiff,
     canvasWidth,
     canvasHeight,
+    replacementDependents,
   } = options;
   const presence: Record<string, boolean> = {};
   const processedDirs = new Set<number>();
@@ -111,6 +154,23 @@ export const buildPartPaintPresenceMap = (
       processDir(dirKey);
     });
   }
+  if (replacementDependents && Object.keys(replacementDependents).length) {
+    Object.keys(presence).forEach((partId) => {
+      if (!presence[partId]) {
+        return;
+      }
+      const cascadeTargets = collectReplacementCascadeTargets(
+        partId,
+        replacementDependents
+      );
+      cascadeTargets.forEach((target) => {
+        if (!target || target === GENERIC_PART_KEY) {
+          return;
+        }
+        presence[target] = true;
+      });
+    });
+  }
   return presence;
 };
 
@@ -127,6 +187,8 @@ export const buildRenderedPreviewDirs = (
   partRenderPriorityMap?: Record<string, boolean>,
   partReplacementMap?: Record<string, boolean>,
   partPaintPresenceMap?: Record<string, boolean>,
+  showJobGear?: boolean,
+  showLoadoutGear?: boolean,
   signalAssetUpdate?: () => void
 ): PreviewDirectionEntry[] => {
   const orderedDirs =
@@ -160,11 +222,70 @@ export const buildRenderedPreviewDirs = (
       canvasHeight,
       signalAssetUpdate || (() => undefined)
     );
-    const previewOverlayLayers = getPreviewGridListFromAssets(
-      dirState.overlayAssets,
+    const shouldReplaceHead = shouldApplyReplacement(
+      'head',
+      partReplacementMap,
+      partPaintPresenceMap
+    );
+    const overlayAssets = dirState.overlayAssets as
+      | (GearOverlayAsset | IconAssetPayload)[]
+      | undefined;
+    const overlayLayers = buildOrderedOverlayLayers(
+      overlayAssets,
       canvasWidth,
       canvasHeight,
-      signalAssetUpdate || (() => undefined)
+      'base',
+      signalAssetUpdate || (() => undefined),
+      (slot) =>
+        !(
+          shouldReplaceHead &&
+          slot &&
+          (slot === 'hair' || slot === 'hair_accessory' || slot === 'ears')
+        )
+    );
+    const allowLoadout = showLoadoutGear !== false;
+    const allowJob = showJobGear !== false;
+    const loadoutOverlayLayers = allowLoadout
+      ? buildOrderedOverlayLayers(
+          dirState.gearLoadoutOverlayAssets as
+            | (GearOverlayAsset | IconAssetPayload)[]
+            | undefined,
+          canvasWidth,
+          canvasHeight,
+          'loadout',
+          signalAssetUpdate || (() => undefined),
+          undefined,
+          overlayLayers.length
+        )
+      : [];
+    const loadoutSlots = new Set(
+      loadoutOverlayLayers
+        .map((entry) => entry.slot)
+        .filter((slot): slot is string => !!slot)
+    );
+    const jobOverlayLayersUnfiltered = allowJob
+      ? buildOrderedOverlayLayers(
+          dirState.gearJobOverlayAssets as
+            | (GearOverlayAsset | IconAssetPayload)[]
+            | undefined,
+          canvasWidth,
+          canvasHeight,
+          'job',
+          signalAssetUpdate || (() => undefined),
+          undefined,
+          overlayLayers.length + loadoutOverlayLayers.length
+        )
+      : [];
+    const jobOverlayLayers =
+      allowLoadout && allowJob
+        ? jobOverlayLayersUnfiltered.filter(
+            (entry) => !entry.slot || !loadoutSlots.has(entry.slot)
+          )
+        : jobOverlayLayersUnfiltered;
+    const orderedOverlayLayers = mergeOverlayLayerLists(
+      overlayLayers,
+      jobOverlayLayers,
+      loadoutOverlayLayers
     );
     const layers = composePreviewLayers(
       dirState,
@@ -181,7 +302,9 @@ export const buildRenderedPreviewDirs = (
       previewReferenceParts,
       previewReferencePartMarkings,
       previewBodyGrid,
-      previewOverlayLayers
+      orderedOverlayLayers,
+      showJobGear,
+      showLoadoutGear
     );
     if (!layers.length) {
       continue;
@@ -210,7 +333,9 @@ const composePreviewLayers = (
   resolvedReferenceParts?: Record<string, string[][]> | null,
   resolvedReferencePartMarkings?: Record<string, string[][]> | null,
   resolvedBodyGrid?: string[][] | null,
-  resolvedOverlayLayers?: string[][][] | null
+  orderedOverlayLayers?: OrderedOverlayLayer[] | null,
+  showJobGear?: boolean,
+  showLoadoutGear?: boolean
 ): PreviewLayerEntry[] => {
   const orderedPartLayers: PreviewLayerEntry[] = [];
   const floatingCustomLayers: PreviewLayerEntry[] = [];
@@ -334,19 +459,32 @@ const composePreviewLayers = (
       }
     }
   }
-  const overlayLayers = resolvedOverlayLayers || [];
-  overlayLayers.forEach((grid, index) => {
-    const cloned = cloneGridData(grid);
-    if (!gridHasPixels(cloned)) {
-      return;
-    }
-    overlayEntries.push({
-      type: 'overlay',
-      key: `overlay_${index}`,
-      label: 'Overlay',
-      grid: cloned,
+  if (Array.isArray(orderedOverlayLayers) && orderedOverlayLayers.length) {
+    orderedOverlayLayers.forEach((entry, index) => {
+      const cloned = cloneGridData(entry.grid);
+      if (!gridHasPixels(cloned)) {
+        return;
+      }
+      const opacity =
+        entry.source === 'job' && showJobGear === false
+          ? 0
+          : entry.source === 'loadout' && showLoadoutGear === false
+            ? 0
+            : 1;
+      overlayEntries.push({
+        type: 'overlay',
+        key: `overlay_${entry.source}_${index}`,
+        label:
+          entry.source === 'job'
+            ? 'Job Gear'
+            : entry.source === 'loadout'
+              ? 'Loadout Gear'
+              : 'Overlay',
+        grid: cloned,
+        opacity,
+      });
     });
-  });
+  }
   const mergedLayers = [
     ...orderedPartLayers,
     ...overlayEntries,
@@ -354,6 +492,88 @@ const composePreviewLayers = (
   ];
   return normalizeLayerDimensions(mergedLayers, canvasWidth, canvasHeight);
 };
+
+const buildOrderedOverlayLayers = (
+  assets: (GearOverlayAsset | IconAssetPayload)[] | undefined,
+  canvasWidth: number,
+  canvasHeight: number,
+  source: OrderedOverlayLayer['source'],
+  signalAssetUpdate: () => void,
+  slotFilter?: (slot: string | null | undefined) => boolean,
+  orderOffset = 0
+): OrderedOverlayLayer[] => {
+  if (!Array.isArray(assets) || !assets.length) {
+    return [];
+  }
+  const layers: OrderedOverlayLayer[] = [];
+  const updateSignal = signalAssetUpdate || (() => undefined);
+  for (let i = 0; i < assets.length; i += 1) {
+    const entry = assets[i] as GearOverlayAsset | IconAssetPayload;
+    const payload =
+      (entry as GearOverlayAsset)?.asset ||
+      ((entry as IconAssetPayload)?.token ? (entry as IconAssetPayload) : null);
+    if (!payload) {
+      continue;
+    }
+    const slot =
+      (entry as GearOverlayAsset)?.slot !== undefined
+        ? (entry as GearOverlayAsset).slot
+        : null;
+    if (slotFilter && !slotFilter(slot || null)) {
+      continue;
+    }
+    const grid = getPreviewGridFromAsset(
+      payload,
+      canvasWidth,
+      canvasHeight,
+      updateSignal
+    );
+    if (!grid) {
+      continue;
+    }
+    const hasSlotPriority =
+      !!slot &&
+      Object.prototype.hasOwnProperty.call(OVERLAY_SLOT_PRIORITY_MAP, slot);
+    const fallbackLayer = hasSlotPriority
+      ? OVERLAY_SLOT_PRIORITY_MAP[slot as string]
+      : null;
+    const rawLayer = (entry as GearOverlayAsset)?.layer;
+    let layerValue: number | null = null;
+    if (typeof rawLayer === 'number') {
+      layerValue = rawLayer;
+    } else if (hasSlotPriority && fallbackLayer !== null) {
+      layerValue = fallbackLayer;
+    } else {
+      layerValue = orderOffset + i;
+    }
+    layers.push({
+      grid: grid as string[][],
+      layer: layerValue,
+      slot: (slot as string | null) || null,
+      source,
+      order: orderOffset + i,
+    });
+  }
+  return layers;
+};
+
+const mergeOverlayLayerLists = (
+  baseLayers: OrderedOverlayLayer[],
+  jobLayers: OrderedOverlayLayer[],
+  loadoutLayers: OrderedOverlayLayer[]
+): OrderedOverlayLayer[] =>
+  [...baseLayers, ...jobLayers, ...loadoutLayers].sort((a, b) => {
+    const layerA = Number.isFinite(a.layer)
+      ? (a.layer as number)
+      : Number.MAX_SAFE_INTEGER;
+    const layerB = Number.isFinite(b.layer)
+      ? (b.layer as number)
+      : Number.MAX_SAFE_INTEGER;
+    if (layerA !== layerB) {
+      return layerA - layerB;
+    }
+    return a.order - b.order;
+  });
 
 const buildPreviewPartOrderForState = (
   preferredOrder: string[] | undefined,

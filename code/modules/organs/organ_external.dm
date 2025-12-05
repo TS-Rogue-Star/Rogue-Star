@@ -205,6 +205,9 @@
 
 //new function to check for markings
 /obj/item/organ/external/proc/is_hidden_by_markings()
+	// RS Add: Custom markings support (Lira, December 2025)
+	if(owner?.ignore_sprite_accessory_body_hide)
+		return 0
 	for(var/M in markings)
 		var/datum/sprite_accessory/marking/mark_style = markings[M]["datum"]
 		if(istype(mark_style,/datum/sprite_accessory/marking) && (organ_tag in mark_style.hide_body_parts))
@@ -1425,6 +1428,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 				return 1
 
 /obj/item/organ/external/proc/is_hidden_by_sprite_accessory(var/clothing_only = FALSE)			// Clothing only will mean the check should only be used in places where we want to hide clothing icon, not organ itself.
+	// RS Add: Custom markings support (Lira, December 2025)
+	if(owner?.ignore_sprite_accessory_body_hide)
+		return 0
 	if(owner && owner.tail_style && owner.tail_style.hide_body_parts && (organ_tag in owner.tail_style.hide_body_parts))
 		return 1
 	if(clothing_only && markings.len)
