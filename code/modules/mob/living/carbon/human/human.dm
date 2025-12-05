@@ -21,6 +21,7 @@
 	var/tmp/preview_species_signature	// Cached preference signature for preview short-circuiting.
 	var/tmp/preview_trait_signature	// Cached custom trait signature for preview short-circuiting.
 	var/tmp/preview_slot_id				// Tracks which preference slot last populated this mob.
+	var/tmp/ignore_sprite_accessory_body_hide = FALSE // When TRUE, always render organs even if sprite accessories request hiding them (Lira, December 2025)
 	// RS Add End
 
 	var/can_defib = 1					//Horrible damage (like beheadings) will prevent defibbing organics.

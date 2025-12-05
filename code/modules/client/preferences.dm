@@ -150,6 +150,8 @@ var/list/preferences_datums = list()
 	var/pending_custom_marking_force_preview = FALSE // Force preview rebuild when deferred refresh fires (Lira, November 2025)
 	var/pending_custom_marking_reset_cache = FALSE // Clear caches when deferred refresh fires (Lira, November 2025)
 	var/skip_custom_marking_cache_invalidation_once = FALSE // One-shot skip for designer-driven preview updates (Lira, November 2025)
+	var/datum/tgui_module/custom_marking_designer_loading/custom_marking_designer_loading_ui // Loading splash while the designer spins up (Lira, December 2025)
+	var/custom_marking_ui_refresh_scheduled = FALSE // Collapse designer refreshes (Lira, December 2025)
 	// RS Add End
 
 	var/list/flavor_texts = list()
@@ -223,6 +225,7 @@ var/list/preferences_datums = list()
 	custom_markings = null
 	custom_marking_preview_overlays = null
 	QDEL_NULL(custom_marking_designer_ui)
+	QDEL_NULL(custom_marking_designer_loading_ui)
 	custom_marking_reference_payload_cache = null
 	custom_marking_reference_signature = null
 	custom_marking_reference_mannequin_signature = null
@@ -257,6 +260,28 @@ var/list/preferences_datums = list()
 	LAZYINITLIST(custom_markings)
 	custom_markings[mark.id] = mark
 	return mark
+
+// Open loading window for the custom marking designer (Lira, December 2025)
+/datum/preferences/proc/open_custom_marking_designer_loading(mob/user)
+	if(!user)
+		return
+	if(custom_marking_designer_loading_ui && QDELETED(custom_marking_designer_loading_ui))
+		custom_marking_designer_loading_ui = null
+	if(!custom_marking_designer_loading_ui)
+		custom_marking_designer_loading_ui = new(src)
+	custom_marking_designer_loading_ui?.tgui_interact(user)
+
+// Close the designer loading window (Lira, December 2025)
+/datum/preferences/proc/close_custom_marking_designer_loading()
+	if(!custom_marking_designer_loading_ui)
+		return
+	if(QDELETED(custom_marking_designer_loading_ui))
+		custom_marking_designer_loading_ui = null
+		return
+	SStgui.close_uis(custom_marking_designer_loading_ui)
+	if(custom_marking_designer_loading_ui && !QDELETED(custom_marking_designer_loading_ui))
+		qdel(custom_marking_designer_loading_ui)
+	custom_marking_designer_loading_ui = null
 
 // Build the payload
 /datum/preferences/proc/get_custom_markings_payload()
@@ -405,12 +430,14 @@ var/list/preferences_datums = list()
 /datum/preferences/proc/open_custom_marking_designer(mob/user, id)
 	if(!user)
 		return
+	open_custom_marking_designer_loading(user)
 	var/datum/custom_marking/mark = null
 	if(id && custom_markings)
 		mark = custom_markings[id]
 	if(!id && !mark)
 		mark = get_primary_custom_marking()
 	if(id && !mark)
+		close_custom_marking_designer_loading()
 		return
 	var/datum/tgui_module/custom_marking_designer/module = custom_marking_designer_ui
 	if(module)
@@ -464,6 +491,7 @@ var/list/preferences_datums = list()
 	if(custom_marking_designer_ui && !QDELETED(custom_marking_designer_ui))
 		qdel(custom_marking_designer_ui)
 	custom_marking_designer_ui = null
+	close_custom_marking_designer_loading()
 
 // Allow reopening the designer cleanly after cache resets (Lira, November 2025)
 /datum/preferences/proc/restart_custom_marking_designer(mob/user, id)
@@ -471,6 +499,22 @@ var/list/preferences_datums = list()
 		user = client.mob
 	close_custom_marking_designer()
 	open_custom_marking_designer(user, id)
+
+// Debounce designer refreshes so bursty wardrobe changes only trigger one update
+/datum/preferences/proc/queue_custom_marking_designer_refresh()
+	if(custom_marking_ui_refresh_scheduled)
+		return
+	custom_marking_ui_refresh_scheduled = TRUE
+	addtimer(CALLBACK(src, .proc/flush_custom_marking_designer_refresh), 1)
+
+// Clear refresh schedule (Lira, December 2025)
+/datum/preferences/proc/flush_custom_marking_designer_refresh()
+	custom_marking_ui_refresh_scheduled = FALSE
+	if(custom_marking_designer_ui && QDELETED(custom_marking_designer_ui))
+		custom_marking_designer_ui = null
+	if(custom_marking_designer_ui)
+		custom_marking_designer_ui.preview_revision++
+		SStgui.update_uis(custom_marking_designer_ui)
 
 // Ensure saved custom markings keep their preference entry when loading slots
 /datum/preferences/proc/sync_loaded_custom_marking(datum/custom_marking/mark)

@@ -193,13 +193,16 @@
 	g_skin = green
 	b_skin = blue
 
-/datum/preferences/proc/dress_preview_mob(var/mob/living/carbon/human/mannequin, fast_preview = FALSE) // RS Edit: Custom markings support (Lira, September 2025)
+/datum/preferences/proc/dress_preview_mob(var/mob/living/carbon/human/mannequin, fast_preview = FALSE, equip_mask_override = null) // RS Edit: Custom markings support (Lira, September 2025)
 	if(!mannequin.dna) // Special handling for preview icons before SSAtoms has initailized.
 		mannequin.dna = new /datum/dna(null)
 	copy_to(mannequin, TRUE, fast_preview) // RS Edit: Custom markings support (Lira, September 2025)
 
-	if(!equip_preview_mob)
+	// RS Edit Start: Custom markings support(Lira, December 2025)
+	var/equip_mask = isnum(equip_mask_override) ? equip_mask_override : equip_preview_mob
+	if(!equip_mask)
 		return
+	// RS Edit End
 
 	var/datum/job/previewJob
 	// Determine what job is marked as 'High' priority, and dress them up as such.
@@ -221,7 +224,7 @@
 				previewJob = job
 				break
 
-	if((equip_preview_mob & EQUIP_PREVIEW_LOADOUT) && !(previewJob && (equip_preview_mob & EQUIP_PREVIEW_JOB) && (previewJob.type == /datum/job/ai || previewJob.type == /datum/job/cyborg)))
+	if((equip_mask & EQUIP_PREVIEW_LOADOUT) && !(previewJob && (equip_mask & EQUIP_PREVIEW_JOB) && (previewJob.type == /datum/job/ai || previewJob.type == /datum/job/cyborg))) // RS Edit: Custom markings support(Lira, December 2025)
 		var/list/equipped_slots = list()
 		for(var/thing in gear)
 			var/datum/gear/G = gear_datums[thing]
@@ -248,7 +251,7 @@
 						if(G.slot != slot_tie)
 							equipped_slots += G.slot
 
-	if((equip_preview_mob & EQUIP_PREVIEW_JOB) && previewJob)
+	if((equip_mask & EQUIP_PREVIEW_JOB) && previewJob) // RS Edit: Custom markings support(Lira, December 2025)
 		mannequin.job = previewJob.title
 		previewJob.equip_preview(mannequin, player_alt_titles[previewJob.title])
 
@@ -280,8 +283,7 @@
 			custom_marking_designer_ui.reference_cache_signature = null
 			custom_marking_designer_ui.reference_payload_cache = null
 			custom_marking_designer_ui.reference_mannequin_signature = null
-			custom_marking_designer_ui.preview_revision++
-			SStgui.update_uis(custom_marking_designer_ui)
+			queue_custom_marking_designer_refresh()
 	// RS Add End
 
 	update_character_previews(new /mutable_appearance(mannequin))

@@ -1669,6 +1669,15 @@ const buildLayerOrder = (prioritizedOrder, referenceKeys, layerParts) => {
   };
 
   push('generic');
+  const preferredOverlayKeys = ['gear_job', 'gear_loadout', 'overlay'];
+  for (const key of preferredOverlayKeys) {
+    if (
+      (Array.isArray(referenceKeys) && referenceKeys.includes(key)) ||
+      (layerParts && Object.prototype.hasOwnProperty.call(layerParts, key))
+    ) {
+      push(key);
+    }
+  }
   if (Array.isArray(prioritizedOrder)) {
     for (const key of prioritizedOrder) {
       push(key);

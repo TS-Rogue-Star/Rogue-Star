@@ -5,6 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star November 2025: Updated to support 64x64 markings /////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star December 2025: Updated to support loaout and job gear ////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define CUSTOM_MARKING_DEFAULT_WIDTH 32
 #define CUSTOM_MARKING_DEFAULT_HEIGHT 32
@@ -45,6 +47,8 @@
 	var/list/reference_payload_cache // Cached mannequin payloads
 	var/reference_cache_signature // Signature key for reference payload cache
 	var/reference_mannequin_signature // Signature key for mannequin state cache
+	var/reference_build_in_progress = FALSE // Prevent overlapping mannequin rebuilds
+	var/list/reference_pending_request // Latest pending mannequin rebuild request
 	var/reference_asset_token_counter = 0 // Asset token generator
 	var/list/icon_shift_map // Per-icon shift tracking
 
@@ -58,6 +62,8 @@
 	var/datum/tgui/instanced_ui = SStgui.get_open_ui(user, src)
 	if(instanced_ui)
 		instanced_ui.set_autoupdate(FALSE)
+	if(prefs)
+		prefs.close_custom_marking_designer_loading()
 	return instanced_ui
 
 // Finalize edits and refresh previews when the UI closes
@@ -649,6 +655,8 @@
 		data["canvas_backgrounds"] = canvas_backgrounds_live
 		data["default_canvas_background"] = "default"
 	data["ui_locked"] = FALSE
+	data["show_job_gear"] = !!(prefs?.equip_preview_mob & EQUIP_PREVIEW_JOB)
+	data["show_loadout_gear"] = !!(prefs?.equip_preview_mob & EQUIP_PREVIEW_LOADOUT)
 	return data
 
 // Normalize a part key from incoming params
@@ -955,6 +963,12 @@
 		var/list/composite_asset = payload["composite_asset"]
 		if(islist(composite_asset))
 			entry["composite_asset"] = composite_asset
+		var/list/job_overlay_assets = payload["job_overlay_assets"]
+		if(islist(job_overlay_assets) && job_overlay_assets.len)
+			entry["job_overlay_assets"] = job_overlay_assets
+		var/list/loadout_overlay_assets = payload["loadout_overlay_assets"]
+		if(islist(loadout_overlay_assets) && loadout_overlay_assets.len)
+			entry["loadout_overlay_assets"] = loadout_overlay_assets
 	var/list/custom_parts = build_custom_grid_map(dir)
 	if(islist(custom_parts))
 		entry["custom_parts"] = custom_parts
@@ -1091,6 +1105,15 @@
 			list(prefs.r_ears2, prefs.g_ears2, prefs.b_ears2),
 			list(prefs.r_ears3, prefs.g_ears3, prefs.b_ears3)
 		),
+		"preview_overlay_rev" = 1,
+		"job_pref_high" = list(
+			"civilian" = prefs.job_civilian_high,
+			"medsci" = prefs.job_medsci_high,
+			"engsec" = prefs.job_engsec_high
+		),
+		"equip_preview_mask" = prefs.equip_preview_mob,
+		"gear_loadout" = prefs.gear?.Copy(),
+		"player_alt_titles" = prefs.player_alt_titles?.Copy(),
 		"body_markings" = get_body_marking_cache_signature()
 	)
 	if(islist(prefs.ear_secondary_colors))
@@ -1099,16 +1122,43 @@
 		payload["descriptors"] = prefs.body_descriptors.Copy()
 	return json_encode(payload)
 
+// Trigger a queued mannequin rebuild after the current one finishes
+/datum/tgui_module/custom_marking_designer/proc/process_pending_reference_build()
+	if(!islist(reference_pending_request))
+		return
+	var/list/pending = reference_pending_request
+	reference_pending_request = null
+	spawn(0)
+		ensure_reference_payload_bundle(pending["width"], pending["height"])
+
 // Ensure cached reference payloads exist for each direction at the requested size
 /datum/tgui_module/custom_marking_designer/proc/ensure_reference_payload_bundle(width, height)
+	var/list/yield_context = custom_marking_begin_manual_yield()
+	var/target_signature = get_reference_cache_signature(width, height)
+	if(reference_build_in_progress)
+		if(!islist(reference_pending_request) || (reference_pending_request["signature"] != target_signature))
+			reference_pending_request = list(
+				"width" = width,
+				"height" = height,
+				"signature" = target_signature
+			)
+		custom_marking_end_manual_yield(yield_context)
+		return FALSE
+	reference_build_in_progress = TRUE
+	reference_pending_request = null
 	var/updated = FALSE
 	if(!prefs)
+		reference_build_in_progress = FALSE
+		custom_marking_end_manual_yield(yield_context)
+		process_pending_reference_build()
 		return updated
 	if(width <= 0 || height <= 0)
+		reference_build_in_progress = FALSE
+		custom_marking_end_manual_yield(yield_context)
+		process_pending_reference_build()
 		return updated
-	var/signature = get_reference_cache_signature(width, height)
-	if(reference_cache_signature != signature || !islist(reference_payload_cache))
-		reference_cache_signature = signature
+	if(reference_cache_signature != target_signature || !islist(reference_payload_cache))
+		reference_cache_signature = target_signature
 		reference_payload_cache = list()
 		if(prefs)
 			prefs.custom_marking_reference_signature = reference_cache_signature
@@ -1125,18 +1175,43 @@
 		var/key = reference_payload_key(dir, width, height)
 		if(!islist(reference_payload_cache[key]))
 			missing += dir
-	if(!missing.len)
-		return updated
 	var/mob/living/carbon/human/dummy/mannequin/mannequin = get_reference_mannequin()
 	if(!mannequin)
+		reference_build_in_progress = FALSE
+		custom_marking_end_manual_yield(yield_context)
+		process_pending_reference_build()
 		return updated
+	var/original_ignore_hide = mannequin.ignore_sprite_accessory_body_hide
+	mannequin.ignore_sprite_accessory_body_hide = TRUE
+	if(!missing.len)
+		mannequin.ignore_sprite_accessory_body_hide = original_ignore_hide
+		reference_build_in_progress = FALSE
+		custom_marking_end_manual_yield(yield_context)
+		process_pending_reference_build()
+		return updated
+	var/static/list/gear_overlay_layers = list(
+		9,  // SHOES_LAYER_ALT
+		10, // UNIFORM_LAYER
+		11, // ID_LAYER
+		12, // SHOES_LAYER
+		13, // GLOVES_LAYER
+		14, // BELT_LAYER
+		15, // SUIT_LAYER
+		17, // GLASSES_LAYER
+		18, // BELT_LAYER_ALT
+		19, // SUIT_STORE_LAYER
+		20, // BACK_LAYER
+		25, // FACEMASK_LAYER
+		26, // GLASSES_LAYER_ALT
+		27  // HEAD_LAYER
+	)
 	var/original_disable = mannequin.disable_vore_layers
 	mannequin.disable_vore_layers = TRUE
 	if(!mannequin.dna)
 		mannequin.dna = new /datum/dna(null)
-	if(reference_mannequin_signature != signature)
+	if(reference_mannequin_signature != target_signature)
 		copy_preferences_to_mannequin_without_marking(mannequin)
-		reference_mannequin_signature = signature
+		reference_mannequin_signature = target_signature
 		if(prefs)
 			prefs.custom_marking_reference_mannequin_signature = reference_mannequin_signature
 	mannequin.delete_inventory(TRUE)
@@ -1166,12 +1241,35 @@
 		mannequin.set_dir(dir)
 		mannequin.ImmediateOverlayUpdate()
 		var/list/payload = build_reference_payload_internal(mannequin, dir, width, height)
+		if(islist(payload) && prefs && islist(gear_overlay_layers) && gear_overlay_layers.len)
+			prefs.dress_preview_mob(mannequin, TRUE, EQUIP_PREVIEW_JOB)
+			mannequin.set_dir(dir)
+			mannequin.ImmediateOverlayUpdate()
+			payload["job_overlay_assets"] = build_overlay_assets_for_layers(mannequin, dir, width, height, gear_overlay_layers)
+			mannequin.delete_inventory(TRUE)
+			clear_mannequin_preview_overlays(mannequin)
+			mannequin.ImmediateOverlayUpdate()
+			prefs.dress_preview_mob(mannequin, TRUE, EQUIP_PREVIEW_LOADOUT)
+			mannequin.set_dir(dir)
+			mannequin.ImmediateOverlayUpdate()
+			payload["loadout_overlay_assets"] = build_overlay_assets_for_layers(mannequin, dir, width, height, gear_overlay_layers)
+			mannequin.delete_inventory(TRUE)
+			clear_mannequin_preview_overlays(mannequin)
+			mannequin.ImmediateOverlayUpdate()
 		if(islist(payload))
-			reference_payload_cache[reference_payload_key(dir, width, height)] = payload
+			if(!islist(reference_payload_cache))
+				reference_payload_cache = list()
+			var/key = reference_payload_key(dir, width, height)
+			if(key)
+				reference_payload_cache[key] = payload
 			updated = TRUE
 	mannequin.disable_vore_layers = original_disable
+	mannequin.ignore_sprite_accessory_body_hide = original_ignore_hide
 	mannequin.delete_inventory(TRUE)
 	mannequin.ImmediateOverlayUpdate()
+	custom_marking_end_manual_yield(yield_context)
+	reference_build_in_progress = FALSE
+	process_pending_reference_build()
 	return updated
 
 // Copy preferences to the mannequin while excluding the current custom marking
@@ -1260,27 +1358,36 @@
 	var/icon/body_icon = icon(mannequin.icon, null, dir, 1, 0)
 	var/list/body_asset = build_icon_asset(body_icon)
 	var/icon/composite_icon = new/icon(body_icon)
-	var/list/overlay_icons = list()
+	var/list/overlay_assets = list()
 	if(islist(mannequin.overlays_standing))
 		for(var/i = 1 to mannequin.overlays_standing.len)
+			CUSTOM_MARKING_CHECK_TICK
 			if(!should_include_preview_overlay_layer(i))
 				continue
 			var/entry = mannequin.overlays_standing[i]
 			if(!entry)
 				continue
+			var/list/overlay_icons = list()
 			collect_reference_overlays(overlay_icons, entry, dir)
-	var/list/overlay_assets = list()
-	for(var/icon/overlay_icon as anything in overlay_icons)
-		if(!istype(overlay_icon, /icon))
-			continue
-		var/is_large_overlay = (overlay_icon.Width() > CUSTOM_MARKING_DEFAULT_WIDTH) || (overlay_icon.Height() > CUSTOM_MARKING_DEFAULT_HEIGHT)
-		if(is_large_overlay && (width > CUSTOM_MARKING_DEFAULT_WIDTH || height > CUSTOM_MARKING_DEFAULT_HEIGHT))
-			offset_icon_shift(overlay_icon, 8, 0)
-		var/list/overlay_asset = build_icon_asset(overlay_icon)
-		if(islist(overlay_asset))
-			overlay_assets += list(overlay_asset)
-		if(!is_large_overlay)
-			composite_icon.Blend(overlay_icon, ICON_OVERLAY)
+			for(var/icon/overlay_icon as anything in overlay_icons)
+				CUSTOM_MARKING_CHECK_TICK
+				if(!istype(overlay_icon, /icon))
+					continue
+				var/is_large_overlay = (overlay_icon.Width() > CUSTOM_MARKING_DEFAULT_WIDTH) || (overlay_icon.Height() > CUSTOM_MARKING_DEFAULT_HEIGHT)
+				if(is_large_overlay && (width > CUSTOM_MARKING_DEFAULT_WIDTH || height > CUSTOM_MARKING_DEFAULT_HEIGHT))
+					offset_icon_shift(overlay_icon, 8, 0)
+				var/list/overlay_asset = build_icon_asset(overlay_icon)
+				if(islist(overlay_asset))
+					var/list/overlay_entry = list(
+						"asset" = overlay_asset,
+						"layer" = i
+					)
+					var/overlay_slot = get_preview_character_overlay_slot(i)
+					if(overlay_slot)
+						overlay_entry["slot"] = overlay_slot
+					overlay_assets += list(overlay_entry)
+				if(!is_large_overlay)
+					composite_icon.Blend(overlay_icon, ICON_OVERLAY)
 	var/list/part_icons = list()
 	var/list/part_marking_icons = list()
 	var/list/part_order = list()
@@ -1288,9 +1395,8 @@
 	var/icon/directional_icon
 	if(islist(mannequin.organs))
 		for(var/obj/item/organ/external/O in mannequin.organs)
+			CUSTOM_MARKING_CHECK_TICK
 			if(!istype(O))
-				continue
-			if(O.is_hidden_by_sprite_accessory())
 				continue
 			normalized = null
 			directional_icon = null
@@ -1307,7 +1413,7 @@
 					digitigrade = O.owner.digitigrade
 				else if(O.dna)
 					digitigrade = O.dna.digitigrade
-			directional_icon = get_directional_part_icon(O, dir, check_digi ? digitigrade : FALSE)
+			directional_icon = get_directional_part_icon(O, dir, check_digi ? digitigrade : FALSE, TRUE)
 			if(!isicon(directional_icon))
 				continue
 			if(O.pixel_x || O.pixel_y)
@@ -1388,6 +1494,71 @@
 		"part_order" = part_order
 	)
 
+// Build overlay assets restricted to a whitelist of layers (Lira, December 2025)
+/datum/tgui_module/custom_marking_designer/proc/get_preview_overlay_slot(layer_index)
+	if(!isnum(layer_index))
+		return null
+	switch(layer_index)
+		if(9, 12) // SHOES_LAYER_ALT, SHOES_LAYER
+			return "shoes"
+		if(10) // UNIFORM_LAYER
+			return "uniform"
+		if(11) // ID_LAYER
+			return "id"
+		if(13) // GLOVES_LAYER
+			return "gloves"
+		if(14, 18) // BELT_LAYER, BELT_LAYER_ALT
+			return "belt"
+		if(15) // SUIT_LAYER
+			return "suit"
+		if(17, 26) // GLASSES_LAYER, GLASSES_LAYER_ALT
+			return "glasses"
+		if(19) // SUIT_STORE_LAYER
+			return "suit_store"
+		if(20) // BACK_LAYER
+			return "back"
+		if(25) // FACEMASK_LAYER
+			return "mask"
+		if(27) // HEAD_LAYER
+			return "head"
+	return null
+
+// Layer overlay assets (Lira, December 2025)
+/datum/tgui_module/custom_marking_designer/proc/build_overlay_assets_for_layers(mob/living/carbon/human/dummy/mannequin/mannequin, dir, width, height, list/allowed_layers)
+	if(!mannequin || !islist(allowed_layers) || !allowed_layers.len)
+		return null
+	var/list/overlay_assets = list()
+	if(islist(mannequin.overlays_standing))
+		for(var/i = 1 to mannequin.overlays_standing.len)
+			CUSTOM_MARKING_CHECK_TICK
+			if(!(i in allowed_layers))
+				continue
+			var/entry = mannequin.overlays_standing[i]
+			if(!entry)
+				continue
+			var/list/overlay_icons = list()
+			collect_reference_overlays(overlay_icons, entry, dir, TRUE)
+			if(!overlay_icons.len)
+				continue
+			var/slot = get_preview_overlay_slot(i)
+			for(var/icon/overlay_icon as anything in overlay_icons)
+				CUSTOM_MARKING_CHECK_TICK
+				if(!istype(overlay_icon, /icon))
+					continue
+				var/is_large_overlay = (overlay_icon.Width() > CUSTOM_MARKING_DEFAULT_WIDTH) || (overlay_icon.Height() > CUSTOM_MARKING_DEFAULT_HEIGHT)
+				if(is_large_overlay && (width > CUSTOM_MARKING_DEFAULT_WIDTH || height > CUSTOM_MARKING_DEFAULT_HEIGHT))
+					offset_icon_shift(overlay_icon, 8, 0)
+				var/list/overlay_asset = build_icon_asset(overlay_icon)
+				if(islist(overlay_asset))
+					var/list/overlay_entry = list(
+						"asset" = overlay_asset,
+						"layer" = i
+					)
+					if(slot)
+						overlay_entry["slot"] = slot
+					overlay_assets += list(overlay_entry)
+	return overlay_assets.len ? overlay_assets : null
+
 // Compose eye overlays for head references
 /datum/tgui_module/custom_marking_designer/proc/build_reference_head_eye_overlay(obj/item/organ/external/O, dir)
 	if(!istype(O, /obj/item/organ/external/head))
@@ -1447,28 +1618,32 @@
 	return null
 
 // Recursively gather icons/images that contribute to the reference sprite
-/datum/tgui_module/custom_marking_designer/proc/collect_reference_overlays(list/accum, datum/entry, dir)
+/datum/tgui_module/custom_marking_designer/proc/collect_reference_overlays(list/accum, datum/entry, dir, use_flatten = FALSE)
 	if(!entry)
 		return
 	if(islist(entry))
 		for(var/element in entry)
-			collect_reference_overlays(accum, element, dir)
+			collect_reference_overlays(accum, element, dir, use_flatten)
 		return
 	if(isicon(entry))
 		var/icon/icon_copy = icon(entry, null, dir, 1, 0)
 		accum += new/icon(icon_copy)
 		return
-	if(istype(entry, /image))
-		var/image/img = entry
-		var/icon/overlay_icon = reference_icon_from_image(img, dir)
+	if(istype(entry, /image) || istype(entry, /mutable_appearance))
+		var/icon/overlay_icon = reference_icon_from_image(entry, dir, use_flatten)
 		if(!overlay_icon)
 			return
-		overlay_icon = shift_icon_for_reference(overlay_icon, img.pixel_x, img.pixel_y)
+		var/shift_x = 0
+		var/shift_y = 0
+		if(isdatum(entry))
+			shift_x = entry:pixel_x
+			shift_y = entry:pixel_y
+		overlay_icon = shift_icon_for_reference(overlay_icon, shift_x, shift_y)
 		accum += overlay_icon
 		return
 
 // Build directional icon for an organ, respecting gendered/digi rules
-/datum/tgui_module/custom_marking_designer/proc/get_directional_part_icon(obj/item/organ/external/O, dir, digitigrade = FALSE)
+/datum/tgui_module/custom_marking_designer/proc/get_directional_part_icon(obj/item/organ/external/O, dir, digitigrade = FALSE, include_hidden = FALSE)
 	if(!istype(O))
 		return null
 	var/original_gendered = O.gendered_icon
@@ -1483,8 +1658,35 @@
 		return null
 	var/icon/directional = icon(source_icon, null, dir, 1, 0)
 	if(!icon_has_visible_pixels(directional))
-		return null
+		if(include_hidden)
+			directional = get_unhidden_part_icon(O, dir, digitigrade)
+		if(!icon_has_visible_pixels(directional))
+			return null
 	return directional
+
+// Get part icon (Lira, December 2025)
+/datum/tgui_module/custom_marking_designer/proc/get_unhidden_part_icon(obj/item/organ/external/O, dir, digitigrade = FALSE)
+	if(!istype(O))
+		return null
+	var/mob/living/carbon/human/human = O.owner
+	var/datum/species/species = human?.species
+	if(!species)
+		return null
+	var/icon/icon_reference = resolve_organ_icon_resource(O, species, human, digitigrade)
+	if(!icon_reference)
+		return null
+	var/state_name = O.icon_name
+	if(!istext(state_name) || !length(state_name))
+		return null
+	if(O.gendered_icon && organ_has_gendered_icon_state(O, digitigrade))
+		var/gender_suffix = get_organ_gender_suffix(O, human)
+		if(istext(gender_suffix) && length(gender_suffix))
+			state_name = "[state_name]_[gender_suffix]"
+	var/icon/base_icon = icon(icon_reference, state_name, dir, 1, 0)
+	if(!isicon(base_icon))
+		return null
+	O.apply_colouration(base_icon)
+	return base_icon
 
 // Check if a gendered icon state exists for an organ
 /datum/tgui_module/custom_marking_designer/proc/organ_has_gendered_icon_state(obj/item/organ/external/O, digitigrade)
@@ -1574,6 +1776,61 @@
 	)
 	return layer_index in allowed_layers
 
+// Return slow type(Lira, December 2025)
+/datum/tgui_module/custom_marking_designer/proc/get_preview_character_overlay_slot(layer_index)
+	if(!isnum(layer_index))
+		return null
+	switch(layer_index)
+		if(7)
+			return "tail_lower"
+		if(8)
+			return "wing_lower"
+		if(16)
+			return "tail_upper"
+		if(21)
+			return "hair"
+		if(22)
+			return "hair_accessory"
+		if(23)
+			return "ears"
+		if(24)
+			return "eyes"
+		if(32)
+			return "wing_upper"
+		if(33)
+			return "tail_upper_alt"
+		if(34)
+			return "modifier"
+		if(38)
+			return "vore_belly"
+		if(39)
+			return "vore_tail"
+		if(40)
+			return "custom_marking"
+	return null
+
+// Gear-specific overlays for optional preview rendering (Lira, Decemeber 2025)
+/datum/tgui_module/custom_marking_designer/proc/should_include_gear_overlay_layer(layer_index)
+	if(!isnum(layer_index))
+		return FALSE
+	var/static/list/gear_layers = list(
+		9,  // SHOES_LAYER_ALT
+		10, // UNIFORM_LAYER
+		11, // ID_LAYER
+		12, // SHOES_LAYER
+		13, // GLOVES_LAYER
+		14, // BELT_LAYER
+		15, // SUIT_LAYER
+		17, // GLASSES_LAYER
+		18, // BELT_LAYER_ALT
+		19, // SUIT_STORE_LAYER
+		20, // BACK_LAYER
+		25, // FACEMASK_LAYER
+		26, // GLASSES_LAYER_ALT
+		27  // HEAD_LAYER
+	)
+	return layer_index in gear_layers
+
 // Strip blood/damage overlays from mannequin to keep references clean
 /datum/tgui_module/custom_marking_designer/proc/clear_mannequin_preview_overlays(mob/living/carbon/human/dummy/mannequin/mannequin)
 	if(!mannequin)
@@ -1584,20 +1841,36 @@
 			mannequin.remove_layer(index)
 			mannequin.overlays_standing[index] = null
 
-// Safely convert an image overlay into an icon for caching
-/datum/tgui_module/custom_marking_designer/proc/reference_icon_from_image(image/source, dir)
-	if(!source)
+// Safely convert an appearance overlay (image/mutable appearance) into an icon for caching
+/datum/tgui_module/custom_marking_designer/proc/reference_icon_from_image(var/source, dir, use_flatten = FALSE)
+	if(!source || !isdatum(source))
 		return null
-	if(source.alpha == 0)
+	var/should_flatten = use_flatten || istype(source, /mutable_appearance)
+	if(should_flatten)
+		if(isnum(source:alpha) && source:alpha == 0)
+			return null
+		var/render_dir = dir
+		if(!render_dir)
+			render_dir = source:dir || SOUTH
+		else if(source:dir && (source:dir & (source:dir - 1)) && !(render_dir & (render_dir - 1)))
+			render_dir = source:dir
+		var/icon/flat_icon = getFlatIcon(source, render_dir, source:icon, source:icon_state, source:blend_mode, TRUE, TRUE)
+		if(!isicon(flat_icon))
+			return null
+		return flat_icon
+	if(!istype(source, /image))
+		return null
+	var/image/img = source
+	if(img.alpha == 0)
 		return null
 	var/icon/base_icon
-	var/icon_path = source.icon
-	var/icon_state = source.icon_state
+	var/icon_path = img.icon
+	var/icon_state = img.icon_state
 	var/render_dir = dir
 	if(!render_dir)
-		render_dir = source.dir || SOUTH
-	else if(source.dir && (source.dir & (source.dir - 1)) && !(render_dir & (render_dir - 1)))
-		render_dir = source.dir
+		render_dir = img.dir || SOUTH
+	else if(img.dir && (img.dir & (img.dir - 1)) && !(render_dir & (render_dir - 1)))
+		render_dir = img.dir
 	if(icon_path)
 		if(isicon(icon_path))
 			base_icon = icon(icon_path, null, render_dir, 1, 0)
@@ -1605,18 +1878,23 @@
 			base_icon = icon(icon_path, icon_state, render_dir, 1, 0)
 	else
 		base_icon = icon('icons/effects/effects.dmi', "nothing", null, 1, 0)
-	if(source.alpha && source.alpha < 255)
-		base_icon.Blend(rgb(255, 255, 255, source.alpha), ICON_MULTIPLY)
-	if(istext(source.color))
-		base_icon.Blend(source.color, ICON_MULTIPLY)
-	else if(islist(source.color) && length(source.color) >= 20)
-		base_icon.MapColors(arglist(source.color))
-	if(islist(source.overlays))
-		for(var/image/sub_overlay in source.overlays)
-			var/icon/sub_icon = reference_icon_from_image(sub_overlay, dir)
+	if(img.alpha && img.alpha < 255)
+		base_icon.Blend(rgb(255, 255, 255, img.alpha), ICON_MULTIPLY)
+	if(istext(img.color))
+		base_icon.Blend(img.color, ICON_MULTIPLY)
+	else if(islist(img.color) && length(img.color) >= 20)
+		base_icon.MapColors(arglist(img.color))
+	if(islist(img.overlays))
+		for(var/overlay in img.overlays)
+			var/icon/sub_icon = reference_icon_from_image(overlay, dir)
 			if(!sub_icon)
 				continue
-			sub_icon = shift_icon_for_reference(sub_icon, sub_overlay.pixel_x, sub_overlay.pixel_y)
+			var/shift_x = 0
+			var/shift_y = 0
+			if(isdatum(overlay))
+				shift_x = overlay:pixel_x
+				shift_y = overlay:pixel_y
+			sub_icon = shift_icon_for_reference(sub_icon, shift_x, shift_y)
 			base_icon.Blend(sub_icon, ICON_OVERLAY)
 	return base_icon
 
@@ -1682,7 +1960,9 @@
 	var/pad_bottom = max(0, -shift_y)
 	if(pad_left || pad_bottom)
 		var/icon/padded = icon('icons/effects/effects.dmi', "nothing", null, 1, 0)
-		padded.Scale(result.Width() + pad_left, result.Height() + pad_bottom)
+		var/padded_width = max(1, result.Width() + pad_left)
+		var/padded_height = max(1, result.Height() + pad_bottom)
+		padded.Scale(padded_width, padded_height)
 		padded.Blend(result, ICON_OVERLAY, 1 + pad_left, 1 + pad_bottom)
 		result = padded
 	var/list/original_shift = get_icon_shift(source)

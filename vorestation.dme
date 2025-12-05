@@ -4146,6 +4146,7 @@
 #include "code\modules\tgui\modules\crew_manifest.dm"
 #include "code\modules\tgui\modules\crew_monitor.dm"
 #include "code\modules\tgui\modules\custom_marking_designer.dm"
+#include "code\modules\tgui\modules\custom_marking_designer_loading.dm"
 #include "code\modules\tgui\modules\cyborg_module_selector.dm"
 #include "code\modules\tgui\modules\gyrotron_control.dm"
 #include "code\modules\tgui\modules\law_manager.dm"
