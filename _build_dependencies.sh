@@ -6,7 +6,7 @@ export NODE_VERSION=20 #RS EDIT
 # Byond Major
 export BYOND_MAJOR=516 #RS EDIT
 # Byond Minor
-export BYOND_MINOR=1666 #RS EDIT
+export BYOND_MINOR=1670 #RS EDIT
 # Macro Count
 export MACRO_COUNT=4
 # Rust-G Version
