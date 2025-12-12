@@ -710,7 +710,7 @@
 			to_chat(user, span("notice", "Band-selected [i] mobs."))
 			return
 
-/obj/effect/bmode/buildmode/proc/get_path_from_partial_text(default_path)
+/proc/get_path_from_partial_text(default_path)	//RS EDIT - Doesn't need to be a part of build mode let's use it everywhere!!! :D
 	var/desired_path = tgui_input_text(usr, "Enter full or partial typepath.","Typepath","[default_path]")
 
 	if(!desired_path)	//VOREStation Add - If you don't give it anything it builds a list of every possible thing in the game and crashes your client.
