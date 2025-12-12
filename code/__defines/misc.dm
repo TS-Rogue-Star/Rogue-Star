@@ -89,12 +89,9 @@
 #define MAX_TEXTFILE_LENGTH 128000		// 512GQ file
 
 // Event defines.
-// RS EDIT - 516.1648+ compatibility
-#define EVENT_LEVEL_MUNDANE  "Mundane"
-#define EVENT_LEVEL_MODERATE "Moderate"
-#define EVENT_LEVEL_MAJOR    "Major"
-#define EVENT_LEVELS         list(EVENT_LEVEL_MUNDANE, EVENT_LEVEL_MODERATE, EVENT_LEVEL_MAJOR)
-// RS EDIT END
+#define EVENT_LEVEL_MUNDANE  1
+#define EVENT_LEVEL_MODERATE 2
+#define EVENT_LEVEL_MAJOR    3
 
 //General-purpose life speed define for plants.
 #define HYDRO_SPEED_MULTIPLIER 1

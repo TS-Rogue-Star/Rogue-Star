@@ -15,9 +15,9 @@ SUBSYSTEM_DEF(events)
 /datum/controller/subsystem/events/Initialize()
 	allEvents = subtypesof(/datum/event)
 	event_containers = list(
-			EVENT_LEVEL_MUNDANE 	= new/datum/event_container/mundane,
-			EVENT_LEVEL_MODERATE	= new/datum/event_container/moderate,
-			EVENT_LEVEL_MAJOR 		= new/datum/event_container/major
+		new/datum/event_container/mundane,
+		new/datum/event_container/moderate,
+		new/datum/event_container/major
 		)
 	add_seasonal_events()	//RS ADD
 	if(global.using_map.use_overmap)
@@ -38,7 +38,7 @@ SUBSYSTEM_DEF(events)
 		if (MC_TICK_CHECK)
 			return
 
-	for(var/i in EVENT_LEVELS) // RS EDIT - 516.1648+ compatibility
+	for(var/i = EVENT_LEVEL_MUNDANE to EVENT_LEVEL_MAJOR)
 		var/datum/event_container/EC = event_containers[i]
 		EC.process()
 

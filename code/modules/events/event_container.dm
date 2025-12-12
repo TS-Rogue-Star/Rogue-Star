@@ -8,8 +8,19 @@
 #define ASSIGNMENT_SCIENTIST "Scientist"
 #define ASSIGNMENT_SECURITY "Security"
 
+/proc/event_severity_to_string(severity)
+	var/severityRounded = round(severity)
+	case(severityRounded)
+		if (EVENT_LEVEL_MUNDANE)
+			return "Mundane"
+		if (EVENT_LEVEL_MODERATE)
+			return "Moderate"
+		if (EVENT_LEVEL_MAJOR)
+			return "Major"
+		return "Unknown"
+
 /datum/event_container
-	var/severity = "None" // RS EDIT - 516.1648+ compatibility
+	var/severity = -1
 	var/delayed = 0
 	var/delay_modifier = 1
 	var/next_event_time = 0
@@ -46,7 +57,7 @@
 
 		new next_event.event_type(next_event)	// Events are added and removed from the processing queue in their New/kill procs
 
-		log_debug("Starting event '[next_event.name]' of severity [severity].")
+		log_debug("Starting event '[next_event.name]' of severity [severity_to_string(severity)].")
 		next_event = null						// When set to null, a random event will be selected next time
 	else
 		// If not, wait for one minute, instead of one tick, before checking again.
@@ -114,7 +125,7 @@
 		var/event_delay = rand(config.event_delay_lower[severity], config.event_delay_upper[severity]) * playercount_modifier
 		next_event_time = world.time + event_delay
 
-	log_debug("Next event of severity [severity] in [(next_event_time - world.time)/600] minutes.")
+	log_debug("Next event of severity [event_severity_to_string(severity)] in [(next_event_time - world.time)/600] minutes.")
 
 /datum/event_container/proc/SelectEvent()
 	var/datum/event_meta/EM = tgui_input_list(usr, "Select an event to queue up.", "Event Selection", available_events)
