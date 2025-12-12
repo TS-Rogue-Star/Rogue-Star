@@ -1,6 +1,8 @@
-// /////////////////////////////////////////////////////////////////////////////////////
-// Created by Lira for Rogue Star November 2025: UI state for custom marking designer //
-// /////////////////////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////////////////////////
+// Created by Lira for Rogue Star November 2025: UI state for custom marking designer ////
+// ///////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star December 2025: Updated to support loaout and job gear //
+// ///////////////////////////////////////////////////////////////////////////////////////
 
 import { useLocalState } from '../../backend';
 import type { PreviewState } from '../../utils/character-preview';
@@ -45,11 +47,18 @@ export type DesignerUiState = {
   setAssetRevision: Setter<number>;
   savingProgress: SavingProgressState | null;
   setSavingProgress: Setter<SavingProgressState | null>;
+  showJobGear: boolean;
+  setShowJobGear: Setter<boolean>;
+  showLoadoutGear: boolean;
+  setShowLoadoutGear: Setter<boolean>;
+  loadingOverlay: boolean;
+  setLoadingOverlay: Setter<boolean>;
 };
 
 export const useDesignerUiState = (
   context: any,
-  stateToken: string
+  stateToken: string,
+  defaults?: { showJobGear?: boolean; showLoadoutGear?: boolean }
 ): DesignerUiState => {
   const [size, setSize] = useLocalState(context, `size-${stateToken}`, 1);
   const [blendMode, setBlendMode] = useLocalState(
@@ -134,6 +143,21 @@ export const useDesignerUiState = (
       `savingProgress-${stateToken}`,
       null
     );
+  const [loadingOverlay, setLoadingOverlay] = useLocalState<boolean>(
+    context,
+    `loadingOverlay-${stateToken}`,
+    true
+  );
+  const [showJobGear, setShowJobGear] = useLocalState<boolean>(
+    context,
+    `showJobGear-${stateToken}`,
+    defaults?.showJobGear ?? true
+  );
+  const [showLoadoutGear, setShowLoadoutGear] = useLocalState<boolean>(
+    context,
+    `showLoadoutGear-${stateToken}`,
+    defaults?.showLoadoutGear ?? true
+  );
   return {
     size,
     setSize,
@@ -166,5 +190,11 @@ export const useDesignerUiState = (
     setAssetRevision,
     savingProgress,
     setSavingProgress,
+    loadingOverlay,
+    setLoadingOverlay,
+    showJobGear,
+    setShowJobGear,
+    showLoadoutGear,
+    setShowLoadoutGear,
   };
 };

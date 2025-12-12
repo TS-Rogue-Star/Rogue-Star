@@ -3,6 +3,8 @@
 // ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star November 2025: Updated to support 64x64 markings ////////////////////
 // ////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star December 2025: Updated to support loaout and job gear ///////////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export type IconAssetPayload = {
   token: string;
@@ -11,6 +13,12 @@ export type IconAssetPayload = {
   height: number;
   shift_x?: number | null;
   shift_y?: number | null;
+};
+
+export type GearOverlayAsset = {
+  slot?: string | null;
+  layer?: number | null;
+  asset: IconAssetPayload;
 };
 
 type ColorGrid = (string | null)[][];
@@ -35,9 +43,29 @@ type PreviewCachedGrid = CachedGrid;
 type GridMap = Record<string, string[][]>;
 
 const decodedAssetCache: Record<string, IconDecodedAsset> = {};
-const decodingAssetPromises: Record<string, Promise<void>> = {};
+const decodingAssetPromises: Record<string, Promise<void> | undefined> = {};
+const decodingAssetSignatures: Record<string, string> = {};
+const lastSignatureByToken: Record<string, string> = {};
 
 const dataUriPrefix = 'data:image/png;base64,';
+
+const createPayloadSignature = (payload: IconAssetPayload): string =>
+  [
+    payload.width,
+    payload.height,
+    normalizeShift(payload.shift_x),
+    normalizeShift(payload.shift_y),
+    payload.png,
+  ].join(':');
+
+const payloadMatchesCache = (
+  cached: IconDecodedAsset | undefined,
+  payload: IconAssetPayload,
+  signature: string
+): boolean => !!cached && createPayloadSignature(cached.payload) === signature;
+
+const buildCacheKey = (token: string, signature: string) =>
+  `${token}:${signature}`;
 
 export const getReferenceGridFromAsset = (
   payload: IconAssetPayload | undefined,
@@ -118,6 +146,42 @@ export const getPreviewGridListFromAssets = (
   return layers.length ? layers : null;
 };
 
+export const getPreviewGridMapFromGearAssets = (
+  assets: GearOverlayAsset[] | IconAssetPayload[] | undefined,
+  canvasWidth: number,
+  canvasHeight: number,
+  onUpdated: () => void
+): Record<string, string[][]> | null => {
+  if (!Array.isArray(assets) || !assets.length) {
+    return null;
+  }
+  const map: Record<string, string[][]> = {};
+  let counter = 0;
+  for (const entry of assets) {
+    const payload =
+      (entry as GearOverlayAsset)?.asset || (entry as IconAssetPayload);
+    if (!payload) {
+      continue;
+    }
+    const grid = getPreviewGridFromAsset(
+      payload,
+      canvasWidth,
+      canvasHeight,
+      onUpdated
+    );
+    if (!grid) {
+      continue;
+    }
+    const slotValue = (entry as GearOverlayAsset)?.slot;
+    const slot =
+      slotValue && String(slotValue).length
+        ? String(slotValue)
+        : `slot_${counter++}`;
+    map[slot] = grid as string[][];
+  }
+  return Object.keys(map).length ? map : null;
+};
+
 export const getReferencePartMapFromAssets = (
   assets: Record<string, IconAssetPayload> | undefined,
   canvasWidth: number,
@@ -186,19 +250,39 @@ const ensureDecodedAsset = (
     return null;
   }
   const token = payload.token;
-  const cached = decodedAssetCache[token];
-  if (cached) {
+  const signature = createPayloadSignature(payload);
+  const cacheKey = buildCacheKey(token, signature);
+  const cached = decodedAssetCache[cacheKey];
+  if (payloadMatchesCache(cached, payload, signature)) {
     return cached;
   }
-  if (!decodingAssetPromises[token]) {
-    decodingAssetPromises[token] = decodeIconAsset(payload)
+  const previousSignature = lastSignatureByToken[token];
+  if (previousSignature && previousSignature !== signature) {
+    const previousKey = buildCacheKey(token, previousSignature);
+    delete decodedAssetCache[previousKey];
+    delete decodingAssetPromises[previousKey];
+    delete decodingAssetSignatures[previousKey];
+  }
+  lastSignatureByToken[token] = signature;
+  if (!decodingAssetPromises[cacheKey]) {
+    const expectedSignature = signature;
+    decodingAssetSignatures[cacheKey] = expectedSignature;
+    decodingAssetPromises[cacheKey] = decodeIconAsset(payload)
       .then((decoded) => {
-        decodedAssetCache[token] = decoded;
+        if (decodingAssetSignatures[cacheKey] === expectedSignature) {
+          decodedAssetCache[cacheKey] = decoded;
+        }
       })
       .catch(() => {})
       .finally(() => {
-        delete decodingAssetPromises[token];
-        onUpdated();
+        const signatureMatch =
+          decodingAssetSignatures[cacheKey] === expectedSignature &&
+          lastSignatureByToken[token] === expectedSignature;
+        delete decodingAssetPromises[cacheKey];
+        delete decodingAssetSignatures[cacheKey];
+        if (signatureMatch) {
+          onUpdated();
+        }
       });
   }
   return null;
