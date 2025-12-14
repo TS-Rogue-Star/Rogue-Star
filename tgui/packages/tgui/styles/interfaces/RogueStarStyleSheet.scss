@@ -1,10 +1,8 @@
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Created by Lira for Rogue Star November 2025: Rogue Star interface stylesheet ///////////////////////////
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Updated by Lira for Rogue Star November 2025: Tweaks and new styles /////////////////////////////////////
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Updated by Lira for Rogue Star December 2025: Additional styles as part of body markings tab interface //
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////
+// Created by Lira for Rogue Star November 2025: Rogue Star interface stylesheet //
+// ////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2025: Tweaks and new styles ////////////
+// ////////////////////////////////////////////////////////////////////////////////
 
 @use '../colors.scss';
 
@@ -143,70 +141,11 @@ $titlebar-height: 38px;
     bottom: 0;
     display: inline-flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: flex-end;
     gap: 0.4rem;
     width: auto;
-    margin-left: 1rem;
+    margin-left: auto;
     pointer-events: initial;
-  }
-
-  .RogueStar__titleTabs {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    background: transparent;
-    align-items: center;
-    gap: 0.35rem;
-  }
-
-  .RogueStar__titleTabs.Tabs--horizontal {
-    margin: 0;
-    padding: 0;
-  }
-
-  .RogueStar__titleTabs .Tab {
-    min-height: 0;
-    height: calc($titlebar-height - 10px);
-    padding: 0 0.9rem;
-    border-radius: 999px;
-    border: 1px solid rgba(229, 188, 106, 0.35);
-    background: rgba(255, 255, 255, 0.06);
-    color: #fffafd;
-    box-shadow:
-      0 0 10px rgba(14, 5, 32, 0.35),
-      0 0 10px rgba(129, 76, 255, 0.25);
-  }
-
-  .RogueStar__titleTabs .Tab__text {
-    margin: 0 0.45rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .RogueStar__titleTabs .Tab__left {
-    min-width: 1.1em;
-    margin-left: 0.25rem;
-  }
-
-  .RogueStar__titleTabs .Tab:not(.Tab--selected):hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(229, 188, 106, 0.55);
-    box-shadow:
-      0 0 12px rgba(229, 188, 106, 0.35),
-      0 0 12px rgba(129, 76, 255, 0.3);
-  }
-
-  .RogueStar__titleTabs .Tab--selected {
-    background: linear-gradient(
-      120deg,
-      rgba(229, 188, 106, 0.35),
-      rgba(129, 76, 255, 0.45)
-    );
-    border-color: rgba(229, 188, 106, 0.85);
-    color: #fff6e8;
-    box-shadow:
-      0 0 14px rgba(229, 188, 106, 0.5),
-      0 0 18px rgba(129, 76, 255, 0.45);
   }
 
   .TitleBar__clickable {
@@ -751,115 +690,12 @@ $titlebar-height: 38px;
     0 0 22px rgba(229, 188, 106, 0.18);
 }
 
-.RogueStar__previewCard--flush {
-  padding-left: 0;
-  padding-right: 0;
-
-  > .Section__rest > .Section__content {
-    padding-left: 0;
-    padding-right: 0;
-  }
-}
-
 .RogueStar__previewList {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   gap: 10px;
-}
-
-.RogueStar__markingGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 5px;
-  align-items: stretch;
-}
-
-.RogueStar__markingTile {
-  cursor: pointer;
-  background: rgba(14, 8, 20, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  padding: 0.6rem;
-  box-shadow:
-    0 12px 24px rgba(0, 0, 0, 0.55),
-    0 0 16px rgba(132, 79, 206, 0.15);
-  transition:
-    border-color 120ms ease,
-    box-shadow 120ms ease,
-    transform 120ms ease;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  min-height: 160px;
-}
-
-.RogueStar__markingTile:hover {
-  border-color: rgba(229, 188, 106, 0.35);
-  box-shadow:
-    0 14px 26px rgba(0, 0, 0, 0.6),
-    0 0 10px rgba(229, 188, 106, 0.35),
-    0 0 24px rgba(229, 188, 106, 0.45);
-  transform: translateY(-1px);
-}
-
-.RogueStar__markingTile--selected {
-  border-width: 2px;
-  border-color: rgba(229, 188, 106, 0.75);
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.65);
-}
-
-.RogueStar__markingTile--selected:hover {
-  border-color: rgba(229, 188, 106, 0.85);
-}
-
-.RogueStar__markingTilePreviewGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  gap: 0;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-}
-
-.RogueStar__markingTilePreview {
-  background: transparent;
-  border: 0;
-  border-radius: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.RogueStar__markingTileLabel {
-  font-size: 12px;
-  text-align: center;
-  color: rgba(244, 231, 255, 0.9);
-  text-shadow: 0 0 6px rgba(229, 188, 106, 0.12);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.RogueStar__markingTile .RogueStar__previewCanvas {
-  padding: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.RogueStar__markingTile .RogueStar__previewCanvasFrame {
-  width: 100% !important;
-  height: 100% !important;
-  margin: 0 !important;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
 }
 
 .RogueStar__previewTitle {

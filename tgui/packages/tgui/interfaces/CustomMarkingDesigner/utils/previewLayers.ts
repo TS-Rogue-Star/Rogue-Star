@@ -3,8 +3,6 @@
 // //////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star December 2025: Updated to support loaout and job gear /////////////
 // //////////////////////////////////////////////////////////////////////////////////////////////////
-// Updated by Lira for Rogue Star December 2025: Updated to support new body marking selector ///////
-// //////////////////////////////////////////////////////////////////////////////////////////////////
 
 import {
   GENERIC_PART_KEY,
@@ -320,118 +318,6 @@ export const buildRenderedPreviewDirs = (
   return result;
 };
 
-const buildHiddenPartsMap = (
-  hiddenBodyParts?: string[] | null
-): Record<string, boolean> => {
-  const map: Record<string, boolean> = {};
-  if (!Array.isArray(hiddenBodyParts)) {
-    return map;
-  }
-  for (const partId of hiddenBodyParts) {
-    if (!partId || partId === GENERIC_PART_KEY) {
-      continue;
-    }
-    map[partId] = true;
-  }
-  return map;
-};
-
-type ReferenceLayerAppendOptions = {
-  orderedPartLayers: PreviewLayerEntry[];
-  partId: string;
-  normalizedPart: string | null;
-  labelMap: Record<string, string>;
-  referenceGrid?: string[][] | null;
-  markingReferenceGrid?: string[][] | null;
-  isReplacedPart: boolean;
-  isHiddenPart: boolean;
-};
-
-const appendReferenceLayersForPart = ({
-  orderedPartLayers,
-  partId,
-  normalizedPart,
-  labelMap,
-  referenceGrid,
-  markingReferenceGrid,
-  isReplacedPart,
-  isHiddenPart,
-}: ReferenceLayerAppendOptions) => {
-  const resolvedLabel = resolveBodyPartLabel(normalizedPart, labelMap);
-  if (isHiddenPart) {
-    if (markingReferenceGrid && gridHasPixels(markingReferenceGrid)) {
-      orderedPartLayers.push({
-        type: 'reference_part',
-        key: `ref_${partId}_markings`,
-        label: `${resolvedLabel} Markings`,
-        grid: markingReferenceGrid,
-      });
-    }
-    return;
-  }
-  if (!isReplacedPart && referenceGrid && gridHasPixels(referenceGrid)) {
-    orderedPartLayers.push({
-      type: 'reference_part',
-      key: `ref_${partId}`,
-      label: `${resolvedLabel} Base`,
-      grid: referenceGrid,
-    });
-    return;
-  }
-  if (
-    isReplacedPart &&
-    markingReferenceGrid &&
-    gridHasPixels(markingReferenceGrid)
-  ) {
-    orderedPartLayers.push({
-      type: 'reference_part',
-      key: `ref_${partId}_markings`,
-      label: `${resolvedLabel} Markings`,
-      grid: markingReferenceGrid,
-    });
-  }
-};
-
-const appendOverlayEntries = ({
-  overlayEntries,
-  orderedOverlayLayers,
-  showJobGear,
-  showLoadoutGear,
-}: {
-  overlayEntries: PreviewLayerEntry[];
-  orderedOverlayLayers?: OrderedOverlayLayer[] | null;
-  showJobGear?: boolean;
-  showLoadoutGear?: boolean;
-}) => {
-  if (!Array.isArray(orderedOverlayLayers) || !orderedOverlayLayers.length) {
-    return;
-  }
-  orderedOverlayLayers.forEach((entry, index) => {
-    const cloned = cloneGridData(entry.grid);
-    if (!gridHasPixels(cloned)) {
-      return;
-    }
-    const opacity =
-      entry.source === 'job' && showJobGear === false
-        ? 0
-        : entry.source === 'loadout' && showLoadoutGear === false
-          ? 0
-          : 1;
-    overlayEntries.push({
-      type: 'overlay',
-      key: `overlay_${entry.source}_${index}`,
-      label:
-        entry.source === 'job'
-          ? 'Job Gear'
-          : entry.source === 'loadout'
-            ? 'Loadout Gear'
-            : 'Overlay',
-      grid: cloned,
-      opacity,
-    });
-  });
-};
-
 const composePreviewLayers = (
   dirState: PreviewDirState,
   labelMap: Record<string, string>,
@@ -471,13 +357,11 @@ const composePreviewLayers = (
   const clonedBodyGrid = resolvedBodyGrid
     ? cloneGridData(resolvedBodyGrid)
     : undefined;
-  const hiddenPartsMap = buildHiddenPartsMap(dirState.hiddenBodyParts);
   const bodyGrid = maskBodyGridForReplacements(
     clonedBodyGrid,
     referenceParts,
     partReplacementMap,
-    partPaintPresenceMap,
-    hiddenPartsMap
+    partPaintPresenceMap
   );
   if (!hasReferenceParts && bodyGrid) {
     orderedPartLayers.push({
@@ -493,10 +377,7 @@ const composePreviewLayers = (
     customParts
   );
   for (const partId of partOrder) {
-    const isHiddenPart = !!hiddenPartsMap[partId];
-    const hasReference = hasReferenceForPart(partId);
-    const hasCustom = !!customParts[partId]?.grid;
-    if (!hasReference && !hasCustom) {
+    if (!hasReferenceForPart(partId)) {
       continue;
     }
     const normalizedPart = partId === GENERIC_PART_KEY ? null : partId;
@@ -514,16 +395,25 @@ const composePreviewLayers = (
       partReplacementMap,
       partPaintPresenceMap
     );
-    appendReferenceLayersForPart({
-      orderedPartLayers,
-      partId,
-      normalizedPart,
-      labelMap,
-      referenceGrid,
-      markingReferenceGrid,
-      isReplacedPart: !!isReplacedPart,
-      isHiddenPart,
-    });
+    if (!isReplacedPart && referenceGrid && gridHasPixels(referenceGrid)) {
+      orderedPartLayers.push({
+        type: 'reference_part',
+        key: `ref_${partId}`,
+        label: `${resolveBodyPartLabel(normalizedPart, labelMap)} Base`,
+        grid: referenceGrid,
+      });
+    } else if (
+      isReplacedPart &&
+      markingReferenceGrid &&
+      gridHasPixels(markingReferenceGrid)
+    ) {
+      orderedPartLayers.push({
+        type: 'reference_part',
+        key: `ref_${partId}_markings`,
+        label: `${resolveBodyPartLabel(normalizedPart, labelMap)} Markings`,
+        grid: markingReferenceGrid,
+      });
+    }
     let customGrid = customParts[partId]?.grid
       ? cloneGridData(customParts[partId].grid)
       : undefined;
@@ -569,12 +459,32 @@ const composePreviewLayers = (
       }
     }
   }
-  appendOverlayEntries({
-    overlayEntries,
-    orderedOverlayLayers,
-    showJobGear,
-    showLoadoutGear,
-  });
+  if (Array.isArray(orderedOverlayLayers) && orderedOverlayLayers.length) {
+    orderedOverlayLayers.forEach((entry, index) => {
+      const cloned = cloneGridData(entry.grid);
+      if (!gridHasPixels(cloned)) {
+        return;
+      }
+      const opacity =
+        entry.source === 'job' && showJobGear === false
+          ? 0
+          : entry.source === 'loadout' && showLoadoutGear === false
+            ? 0
+            : 1;
+      overlayEntries.push({
+        type: 'overlay',
+        key: `overlay_${entry.source}_${index}`,
+        label:
+          entry.source === 'job'
+            ? 'Job Gear'
+            : entry.source === 'loadout'
+              ? 'Loadout Gear'
+              : 'Overlay',
+        grid: cloned,
+        opacity,
+      });
+    });
+  }
   const mergedLayers = [
     ...orderedPartLayers,
     ...overlayEntries,
@@ -711,38 +621,20 @@ const maskBodyGridForReplacements = (
   bodyGrid?: string[][],
   referenceParts?: Record<string, string[][]>,
   replacements?: Record<string, boolean>,
-  partPaintPresenceMap?: Record<string, boolean>,
-  hiddenParts?: Record<string, boolean> | null
+  partPaintPresenceMap?: Record<string, boolean>
 ): string[][] | undefined => {
-  if (!Array.isArray(bodyGrid) || !referenceParts) {
+  if (!Array.isArray(bodyGrid) || !replacements || !referenceParts) {
     return bodyGrid;
   }
-  if (replacements) {
-    for (const partId of Object.keys(replacements)) {
-      if (!shouldApplyReplacement(partId, replacements, partPaintPresenceMap)) {
-        continue;
-      }
-      const maskGrid = referenceParts[partId];
-      if (!maskGrid) {
-        continue;
-      }
-      applyReplacementMaskToGrid(bodyGrid, maskGrid);
+  for (const partId of Object.keys(replacements)) {
+    if (!shouldApplyReplacement(partId, replacements, partPaintPresenceMap)) {
+      continue;
     }
-  }
-  if (hiddenParts) {
-    for (const partId of Object.keys(hiddenParts)) {
-      if (!hiddenParts[partId]) {
-        continue;
-      }
-      if (!partId || partId === GENERIC_PART_KEY) {
-        continue;
-      }
-      const maskGrid = referenceParts[partId];
-      if (!maskGrid) {
-        continue;
-      }
-      applyReplacementMaskToGrid(bodyGrid, maskGrid);
+    const maskGrid = referenceParts[partId];
+    if (!maskGrid) {
+      continue;
     }
+    applyReplacementMaskToGrid(bodyGrid, maskGrid);
   }
   return bodyGrid;
 };

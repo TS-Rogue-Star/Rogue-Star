@@ -82,12 +82,6 @@ $fg-map: colors.$fg-map !default;
   transition: background-color 0;
 }
 
-// RS Add: Disabled tab style (Lira, December 2025)
-.Tab--disabled {
-  pointer-events: none;
-  opacity: 0.5;
-}
-
 .Tab--selected {
   background-color: $tab-color-selected;
   color: $text-color-selected;

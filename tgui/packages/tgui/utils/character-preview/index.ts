@@ -3,8 +3,6 @@
 // //////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star December 2025: Updated to support loaout and job gear /////////
 // //////////////////////////////////////////////////////////////////////////////////////////////
-// Updated by Lira for Rogue Star December 2025: Updated to support new body marking selector ///
-// //////////////////////////////////////////////////////////////////////////////////////////////
 
 import { normalizeHex, TRANSPARENT_HEX } from '../color';
 import type { GearOverlayAsset, IconAssetPayload } from './assets';
@@ -59,7 +57,6 @@ export type PreviewDirectionSource = {
   loadout_overlay_assets?: GearOverlayAsset[] | IconAssetPayload[];
   custom_parts?: Record<string, string[][]>;
   part_order?: string[];
-  hidden_body_parts?: string[];
 };
 
 export type PreviewCustomPartState = {
@@ -78,7 +75,6 @@ export type PreviewDirState = {
   gearJobOverlayAssets?: GearOverlayAsset[];
   gearLoadoutOverlayAssets?: GearOverlayAsset[];
   partOrder?: string[];
-  hiddenBodyParts?: string[];
   customParts: Record<string, PreviewCustomPartState>;
 };
 

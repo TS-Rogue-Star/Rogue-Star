@@ -135,19 +135,7 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 
 /datum/preferences/proc/mass_edit_marking_list(var/marking, var/change_on = TRUE, var/change_color = TRUE, var/marking_value = null, var/on = TRUE, var/color = "#000000")
 	var/datum/sprite_accessory/marking/mark_datum = body_marking_styles_list[marking]
-	// RS Edit Start: New body marking selector support (Lira, December 2025)
-	var/list/new_marking
-	if(islist(marking_value))
-		new_marking = list()
-		for(var/key in marking_value)
-			new_marking[key] = marking_value[key]
-	else if(mark_datum && islist(mark_datum.body_parts))
-		new_marking = list()
-		for(var/key in mark_datum.body_parts)
-			new_marking[key] = mark_datum.body_parts[key]
-	else
-		new_marking = list()
-	// RS Edit End
+	var/list/new_marking = marking_value||mark_datum.body_parts
 	// RS Add Start: Default color (Lira, September 2025)
 	var/default_color = color
 	if(mark_datum && !mark_datum.do_colouration)
@@ -1095,7 +1083,7 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 
 	// RS Add Start: Support enabling, editing, and disabling the custom marking slot (Lira, September 2025)
 	else if(href_list["custom_markings_enable"])
-		var/confirm = tgui_alert(user, pref.get_custom_markings_enable_disclaimer(), "Enable Custom Markings?", list("Cancel", "Agree"))
+		var/confirm = tgui_alert(user, "This is an advanced character editing tool that allows you to edit individual pixels on your character to adjust or create new markings.  Custom markings have the same standards as markings added to the RogueStar codebase.  They should make realistic sense and must be SFW.  If it wouldn't get approved to add to the code, it should not be done here.  If you are uncertain about something, please let us know and we're happy to chatter about it.", "Enable Custom Markings?", list("Cancel", "Agree"))
 		if(confirm != "Agree")
 			return TOPIC_NOACTION
 		var/datum/custom_marking/enabled_mark = pref.ensure_primary_custom_marking()
@@ -1119,9 +1107,9 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 		return TOPIC_REFRESH_UPDATE_PREVIEW
 	// RS Add End
 
-	// RS Edit: Open new markings gallery (Lira, December 2025)
 	else if(href_list["marking_gallery"])
-		pref.open_body_markings_designer(user)
+		var/search = href_list["marking_gallery_search_term"] ? url_decode(href_list["marking_gallery_search_term"]) : null
+		markings_gallery_window(user, "heads", 1, search)
 		return TOPIC_HANDLED
 
 	else if(href_list["marking_gallery_search"])

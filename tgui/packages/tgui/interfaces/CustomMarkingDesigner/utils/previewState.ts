@@ -5,8 +5,6 @@
 // //////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star December 2025: Updated to support loaout and job gear /////////////
 // //////////////////////////////////////////////////////////////////////////////////////////////////
-// Updated by Lira for Rogue Star December 2025: Updated to support new body marking selector ///////
-// //////////////////////////////////////////////////////////////////////////////////////////////////
 
 import {
   GENERIC_PART_KEY,
@@ -533,8 +531,6 @@ export const mergePreviewSourceState = (
   next.gearLoadoutOverlayAssets =
     source.loadout_overlay_assets as typeof next.gearLoadoutOverlayAssets;
   next.partOrder = source.part_order || existing?.partOrder;
-  next.hiddenBodyParts =
-    source.hidden_body_parts || existing?.hiddenBodyParts || undefined;
   if (source.custom_parts) {
     for (const partId of Object.keys(source.custom_parts)) {
       const partGrid = source.custom_parts[partId];

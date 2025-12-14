@@ -1,8 +1,6 @@
-// /////////////////////////////////////////////////////////////////////////////////////////////
-// Created by Lira for Rogue Star November 2025: Color utilities for TGUI //////////////////////
-// /////////////////////////////////////////////////////////////////////////////////////////////
-// Updated by Lira for Rogue Star December 2025: Updated to support new body marking selector //
-// /////////////////////////////////////////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////
+// Created by Lira for Rogue Star November 2025: Color utilities for TGUI //
+// /////////////////////////////////////////////////////////////////////////
 
 import { clamp01 } from 'common/math';
 
@@ -24,7 +22,6 @@ export const TRANSPARENT_HEX = '#00000000';
 
 type NormalizeHexOptions = {
   preserveTransparent?: boolean;
-  preserveAlpha?: boolean;
 };
 
 const HEX_PATTERN = /^#([0-9a-f]{3}|[0-9a-f]{6}|[0-9a-f]{8})$/;
@@ -59,7 +56,7 @@ export const normalizeHex = (
     if (hex === TRANSPARENT_HEX && !options?.preserveTransparent) {
       return null;
     }
-    return options?.preserveAlpha ? hex : hex.slice(0, 7);
+    return hex.slice(0, 7);
   }
   return hex;
 };

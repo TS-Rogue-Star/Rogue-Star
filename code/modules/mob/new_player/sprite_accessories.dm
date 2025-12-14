@@ -82,7 +82,7 @@ GLOBAL_LIST_INIT(fancy_sprite_accessory_color_channel_names, list("Primary", "Se
 
 	var/genetic = TRUE
 	var/organ_override = FALSE
-	var/list/body_parts = list() //A list of bodyparts this covers, in organ_tag defines || RS Edit: Make list var (Lira, December 2025)
+	var/body_parts = list() //A list of bodyparts this covers, in organ_tag defines
 	//Reminder: BP_L_FOOT,BP_R_FOOT,BP_L_LEG,BP_R_LEG,BP_L_ARM,BP_R_ARM,BP_L_HAND,BP_R_HAND,BP_TORSO,BP_GROIN,BP_HEAD
 
 	var/digitigrade_acceptance = MARKING_NONDIGI_ONLY

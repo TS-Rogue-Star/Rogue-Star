@@ -1,8 +1,6 @@
 // ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Created by Lira for Rogue Star November 2025: Part flag state helpers for custom marking designer //
 // ////////////////////////////////////////////////////////////////////////////////////////////////////
-// Updated by Lira for Rogue Star December 2025: Updated to support new body marking selector /////////
-// ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import { useLocalState } from '../../../backend';
 import {
@@ -142,12 +140,6 @@ export const usePartFlagState = ({
     replacementDependents,
   });
 
-  const resetFlagStates = () => {
-    setReplacementState(serverReplacementState);
-    setPriorityState(serverPriorityState);
-    setCanvasSizeState(serverCanvasSizeState);
-  };
-
   return {
     resolvedReplacementState,
     resolvedPriorityState,
@@ -158,6 +150,5 @@ export const usePartFlagState = ({
     resolvePartLayeringState,
     togglePartLayerPriority,
     togglePartReplacement,
-    resetFlagStates,
   };
 };

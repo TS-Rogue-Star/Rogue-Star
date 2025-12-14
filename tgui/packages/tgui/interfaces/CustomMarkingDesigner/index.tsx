@@ -7,38 +7,43 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star December 2025: Updated to support loaout and job gear ////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Updated by Lira for Rogue Star December 2025: Updated to support new body marking selector //////////////////////////
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-import { selectBackend, useBackend, useLocalState } from '../../backend';
-import { Box, Flex, Tabs } from '../../components';
+import { Component } from 'inferno';
+import { useBackend, useLocalState } from '../../backend';
+import { Box, Button, Flex, Section } from '../../components';
 import { Window } from '../../layouts';
 import { normalizeHex } from '../../utils/color';
 import {
   GENERIC_PART_KEY,
   resolveBodyPartLabel,
 } from '../../utils/character-preview';
+import { PaintCanvas } from '../Canvas';
 import {
-  CanvasSection,
-  type CanvasHandlers,
-  type CanvasToolbarProps,
-  DesignerLeftColumn,
-  DesignerUndoHotkeyListener,
-  EnableCustomMarkingsGate,
-  EnableCustomMarkingsScheduler,
+  DirectionPreviewCanvas,
+  MarkingInfoSection,
+  PaintToolsSection,
   PhantomClickScheduler,
   LoadingOverlay,
-  PreviewColumn,
-  SavingOverlayGate,
+  SavingOverlay,
+  SessionControls,
   ToolBootstrapReset,
   ToolBootstrapScheduler,
-  UnsavedChangesOverlay,
 } from './components';
-import { ERASER_PREVIEW_COLOR, COLOR_PICKER_CUSTOM_SLOTS } from './constants';
+import {
+  CANVAS_FIT_TARGET,
+  DOT_SIZE,
+  PREVIEW_PIXEL_SIZE,
+  DEFAULT_GENERIC_REFERENCE_OPACITY,
+  DEFAULT_BODY_PART_REFERENCE_OPACITY,
+  ERASER_PREVIEW_COLOR,
+  COLOR_PICKER_CUSTOM_SLOTS,
+  PLACEHOLDER_TOOL,
+  CHIP_BUTTON_CLASS,
+  TOOLBAR_GROUP_CLASS,
+} from './constants';
 import {
   useBrushColorController,
   useCanvasBackground,
-  useCanvasDisplayState,
   useDesignerPreview,
   usePartFlagState,
   useSyncedDirectionState,
@@ -55,97 +60,918 @@ import {
 } from './utils/canvasSampling';
 import { createPaintHandlers } from './utils/paintHandlers';
 import {
-  applyPreviewInitialization,
-  areAllPreviewLayersLoaded,
-  buildCanvasKey,
   buildBodyPartLabelMap,
-  buildBodyMarkingDefinitions,
-  buildBodyMarkingSavePayload,
-  buildBodyMarkingChunkPlan,
-  buildBodySavedStateFromPayload,
-  createReferenceOpacityControls,
-  getCanvasFrameStyle,
   buildLocalSessionKey,
+  buildReferenceOpacityMapForDesigner,
   convertCompositeLayerMap,
   createSavingHandlers,
-  deepCopyMarkings,
   initializeColorPickerSlotsIfNeeded,
 } from './utils';
+const OVERLAY_PART_KEY = 'overlay';
+const HEAD_PART_KEY = 'head';
 import type {
   CustomMarkingDesignerData,
   CanvasBackgroundOption,
   StrokeDraftState,
-  BodyMarkingColorTarget,
-  BodyMarkingEntry,
-  BodyMarkingsPayload,
-  BodyMarkingsSavedState,
-  BooleanMapState,
 } from './types';
 import { useDesignerUiState } from './state';
 import CustomEyeIconAsset from '../../../../public/Icons/Rogue Star/eye 1.png';
-import { BodyMarkingsTab } from './BodyMarkingsTab';
 
-type DesignerTabId = 'custom' | 'body';
+type UndoHotkeyListenerProps = Readonly<{
+  canUndo: boolean;
+  onUndo: () => void;
+}>;
 
-const resolveCustomDesignerTabIcon = (allowCustomTab: boolean) =>
-  allowCustomTab ? 'paint-brush' : 'lock';
+type CanvasBackgroundToggleProps = Readonly<{
+  options: CanvasBackgroundOption[];
+  resolvedCanvasBackground: CanvasBackgroundOption | null;
+  onCycle: () => void;
+}>;
 
-const resolveCustomDesignerTabTooltip = (allowCustomTab: boolean) =>
-  allowCustomTab ? undefined : 'Enable Custom Markings to use the designer.';
+const CanvasBackgroundToggle = ({
+  options,
+  resolvedCanvasBackground,
+  onCycle,
+}: CanvasBackgroundToggleProps) => {
+  if (!options.length) {
+    return null;
+  }
+  return (
+    <Button
+      className={CHIP_BUTTON_CLASS}
+      icon="image"
+      tooltip={`Change canvas background (current: ${resolvedCanvasBackground?.label || 'Default'})`}
+      onClick={onCycle}>
+      {resolvedCanvasBackground?.label || 'Background'}
+    </Button>
+  );
+};
+
+type PreviewColumnProps = Readonly<{
+  renderedPreviewDirs: ReadonlyArray<any>;
+  previewRevision: number;
+  previewFitToFrame: boolean;
+  canvasWidth: number;
+  canvasHeight: number;
+  resolvedCanvasBackground: CanvasBackgroundOption | null;
+  backgroundFallbackColor: string;
+  canvasBackgroundScale: number;
+}>;
+
+const PreviewColumn = ({
+  renderedPreviewDirs,
+  previewRevision,
+  previewFitToFrame,
+  canvasWidth,
+  canvasHeight,
+  resolvedCanvasBackground,
+  backgroundFallbackColor,
+  canvasBackgroundScale,
+}: PreviewColumnProps) => {
+  if (!renderedPreviewDirs.length) {
+    return null;
+  }
+  return (
+    <Flex.Item basis="280px" grow={0} shrink={0}>
+      <Box className="RogueStar__previewCard" height="100%">
+        <Box
+          color="label"
+          fontWeight="bold"
+          mb={1}
+          className="RogueStar__previewTitle RogueStar__previewTitle--center">
+          Live Preview
+        </Box>
+        <Box className="RogueStar__previewList">
+          {renderedPreviewDirs.map((entry) => (
+            <Box
+              key={`${entry.dir}-${previewFitToFrame ? 'fit' : 'crop'}`}
+              className="RogueStar__previewItem">
+              <DirectionPreviewCanvas
+                layers={entry.layers}
+                pixelSize={Math.max(1, PREVIEW_PIXEL_SIZE)}
+                width={canvasWidth}
+                height={canvasHeight}
+                fitToFrame={previewFitToFrame}
+                backgroundImage={
+                  resolvedCanvasBackground?.asset?.png
+                    ? `data:image/png;base64,${resolvedCanvasBackground.asset.png}`
+                    : null
+                }
+                backgroundColor={backgroundFallbackColor}
+                backgroundScale={canvasBackgroundScale}
+                backgroundTileWidth={
+                  resolvedCanvasBackground?.asset?.width
+                    ? resolvedCanvasBackground.asset.width *
+                      canvasBackgroundScale
+                    : undefined
+                }
+                backgroundTileHeight={
+                  resolvedCanvasBackground?.asset?.height
+                    ? resolvedCanvasBackground.asset.height *
+                      canvasBackgroundScale
+                    : undefined
+                }
+              />
+            </Box>
+          ))}
+        </Box>
+      </Box>
+    </Flex.Item>
+  );
+};
+
+type SavingOverlayGateProps = Readonly<{
+  pendingClose: boolean;
+  pendingSave: boolean;
+  pendingCloseMessage: { title?: string; subtitle?: string } | null;
+  savingProgress: any;
+}>;
+
+const SavingOverlayGate = ({
+  pendingClose,
+  pendingSave,
+  pendingCloseMessage,
+  savingProgress,
+}: SavingOverlayGateProps) => {
+  if (!pendingClose && !pendingSave) {
+    return null;
+  }
+  return (
+    <SavingOverlay
+      title={pendingClose ? pendingCloseMessage?.title : 'Saving your changes…'}
+      subtitle={
+        pendingClose
+          ? pendingCloseMessage?.subtitle
+          : 'Please keep the client open while we sync your work. The designer will stay open afterward.'
+      }
+      progress={savingProgress}
+    />
+  );
+};
+
+class DesignerUndoHotkeyListener extends Component<UndoHotkeyListenerProps> {
+  handleKeyDown = (event: KeyboardEvent) => {
+    const isModifier = event.ctrlKey || event.metaKey;
+    if (!isModifier || event.shiftKey) {
+      return;
+    }
+    const keyName = (event.key || '').toLowerCase();
+    if (keyName !== 'z') {
+      return;
+    }
+    event.preventDefault();
+    event.stopPropagation();
+    if (this.props.canUndo) {
+      this.props.onUndo();
+    }
+  };
+
+  componentDidMount() {
+    window.addEventListener('keydown', this.handleKeyDown, true);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.handleKeyDown, true);
+  }
+
+  render() {
+    return null;
+  }
+}
+
+type CanvasDisplayState = Readonly<{
+  canvasWidth: number;
+  canvasHeight: number;
+  canvasPixelSize: number;
+  canvasDisplayWidthPx: number;
+  canvasDisplayHeightPx: number;
+  canvasTransform: string;
+  canvasFitToFrame: boolean;
+  previewFitToFrame: boolean;
+  toggleCanvasFit: () => void;
+}>;
+
+const useCanvasDisplayState = (
+  context: any,
+  stateToken: string,
+  data: CustomMarkingDesignerData
+): CanvasDisplayState => {
+  const maxCanvasWidth = Math.max(1, data.max_width || 64);
+  const maxCanvasHeight = Math.max(1, data.max_height || 64);
+  const defaultCanvasWidth = Math.max(1, data.default_width || 32);
+  const defaultCanvasHeight = Math.max(1, data.default_height || 32);
+  const canvasWidth = maxCanvasWidth;
+  const canvasHeight = maxCanvasHeight;
+  const activeCanvasWidth = Math.min(
+    maxCanvasWidth,
+    Math.max(1, data.active_canvas_width || data.width || defaultCanvasWidth)
+  );
+  const activeCanvasHeight = Math.min(
+    maxCanvasHeight,
+    Math.max(1, data.active_canvas_height || data.height || defaultCanvasHeight)
+  );
+  const baseDisplayUnits = defaultCanvasWidth || CANVAS_FIT_TARGET;
+  const canvasTargetDisplayPx = baseDisplayUnits * DOT_SIZE;
+  const canvasFitDefault = false;
+  const [canvasFitToFrame, setCanvasFitToFrame] = useLocalState(
+    context,
+    `canvasFitToFrame-${stateToken}`,
+    canvasFitDefault
+  );
+  const previewFitDefault = false;
+  const [previewFitToFrame, setPreviewFitToFrame] = useLocalState(
+    context,
+    `previewFitToFrame-${stateToken}`,
+    previewFitDefault
+  );
+  const largestCanvasDimension = Math.max(
+    canvasWidth,
+    canvasHeight,
+    activeCanvasWidth,
+    activeCanvasHeight
+  );
+  const canvasPixelSize = Math.max(
+    1,
+    Math.floor(canvasTargetDisplayPx / Math.max(largestCanvasDimension, 1))
+  );
+  const canvasDisplayWidthPx = Math.max(
+    1,
+    Math.round(canvasPixelSize * canvasWidth)
+  );
+  const canvasDisplayHeightPx = Math.max(
+    1,
+    Math.round(canvasPixelSize * canvasHeight)
+  );
+  const canvasZoomScale =
+    canvasFitToFrame || canvasWidth <= baseDisplayUnits
+      ? 1
+      : Math.max(
+          canvasWidth / baseDisplayUnits,
+          canvasHeight / baseDisplayUnits
+        );
+  const canvasOffsetY =
+    canvasFitToFrame || canvasZoomScale === 1
+      ? 0
+      : -1 * ((canvasZoomScale - 1) / canvasZoomScale) * canvasDisplayHeightPx +
+        1;
+  const canvasOffsetX =
+    canvasFitToFrame || canvasZoomScale === 1
+      ? 0
+      : ((1 - canvasZoomScale) * canvasDisplayWidthPx) / (2 * canvasZoomScale) +
+        191;
+  const canvasTransform = `translate(${canvasOffsetX}px, ${canvasOffsetY}px) scale(${canvasZoomScale})`;
+  const toggleCanvasFit = () => {
+    const next = !canvasFitToFrame;
+    setCanvasFitToFrame(next);
+    setPreviewFitToFrame(next);
+  };
+  return {
+    canvasWidth,
+    canvasHeight,
+    canvasPixelSize,
+    canvasDisplayWidthPx,
+    canvasDisplayHeightPx,
+    canvasTransform,
+    canvasFitToFrame,
+    previewFitToFrame,
+    toggleCanvasFit,
+  };
+};
+
+const areAllPreviewLayersLoaded = ({
+  previewRevision,
+  renderedPreviewDirs,
+  directions,
+}: {
+  previewRevision: number;
+  renderedPreviewDirs: ReadonlyArray<any>;
+  directions: CustomMarkingDesignerData['directions'];
+}) =>
+  previewRevision > 0 &&
+  renderedPreviewDirs.length > 0 &&
+  directions.every((dir) =>
+    renderedPreviewDirs.some((entry) => entry.dir === dir.dir)
+  );
+
+type PreviewInitializationParams = Readonly<{
+  loadingOverlay: boolean;
+  allPreviewLayersLoaded: boolean;
+  setLoadingOverlay: (value: boolean) => void;
+  colorPickerSlotsLocked: boolean;
+  colorPickerSlotsSignature: string | null;
+  setColorPickerSlotsLocked: (value: boolean) => void;
+}>;
+
+const applyPreviewInitialization = ({
+  loadingOverlay,
+  allPreviewLayersLoaded,
+  setLoadingOverlay,
+  colorPickerSlotsLocked,
+  colorPickerSlotsSignature,
+  setColorPickerSlotsLocked,
+}: PreviewInitializationParams) => {
+  if (loadingOverlay && allPreviewLayersLoaded) {
+    setTimeout(() => setLoadingOverlay(false), 50);
+  }
+
+  if (
+    allPreviewLayersLoaded &&
+    !colorPickerSlotsLocked &&
+    colorPickerSlotsSignature
+  ) {
+    setColorPickerSlotsLocked(true);
+  }
+};
+
+type ReferenceOpacityControls = Readonly<{
+  currentReferenceOpacity: number;
+  genericReferenceOpacity: number;
+  resolvedReferenceOpacityMap: Record<string, number>;
+  getReferenceOpacityForPart: (partId: string) => number;
+  setReferenceOpacityForPart: (partId: string, value: number) => void;
+}>;
+
+const createReferenceOpacityControls = ({
+  referenceOpacityByPart,
+  setReferenceOpacityByPart,
+  referenceParts,
+  bodyParts,
+  showJobGear,
+  showLoadoutGear,
+  activePartKey,
+}: {
+  referenceOpacityByPart: Record<string, number>;
+  setReferenceOpacityByPart: (map: Record<string, number>) => void;
+  referenceParts: any;
+  bodyParts: CustomMarkingDesignerData['body_parts'];
+  showJobGear: boolean;
+  showLoadoutGear: boolean;
+  activePartKey: string;
+}): ReferenceOpacityControls => {
+  const getDefaultReferenceOpacityForPart = (partId: string) =>
+    partId === GENERIC_PART_KEY
+      ? DEFAULT_GENERIC_REFERENCE_OPACITY
+      : DEFAULT_BODY_PART_REFERENCE_OPACITY;
+
+  const getReferenceOpacityForPart = (partId: string) => {
+    const targetId =
+      partId === OVERLAY_PART_KEY ? GENERIC_PART_KEY : partId || HEAD_PART_KEY;
+    const stored = referenceOpacityByPart[targetId];
+    if (typeof stored === 'number') {
+      return stored;
+    }
+    return getDefaultReferenceOpacityForPart(targetId);
+  };
+
+  const setReferenceOpacityForPart = (partId: string, value: number) => {
+    const clamped = Math.min(1, Math.max(0, value));
+    const targetId =
+      partId === OVERLAY_PART_KEY ? GENERIC_PART_KEY : partId || HEAD_PART_KEY;
+    setReferenceOpacityByPart({
+      ...referenceOpacityByPart,
+      [targetId]: clamped,
+    });
+  };
+
+  const currentReferenceOpacity = getReferenceOpacityForPart(activePartKey);
+  const genericReferenceOpacity = getReferenceOpacityForPart(GENERIC_PART_KEY);
+
+  const referenceOpacityMap = buildReferenceOpacityMapForDesigner(
+    referenceParts,
+    bodyParts,
+    getReferenceOpacityForPart
+  );
+  const resolvedReferenceOpacityMap: Record<string, number> = {
+    ...referenceOpacityMap,
+    overlay: genericReferenceOpacity,
+  };
+  if (referenceParts?.gear_job) {
+    resolvedReferenceOpacityMap.gear_job = showJobGear
+      ? genericReferenceOpacity
+      : 0;
+  }
+  if (referenceParts?.gear_loadout) {
+    resolvedReferenceOpacityMap.gear_loadout = showLoadoutGear
+      ? genericReferenceOpacity
+      : 0;
+  }
+
+  return {
+    currentReferenceOpacity,
+    genericReferenceOpacity,
+    resolvedReferenceOpacityMap,
+    getReferenceOpacityForPart,
+    setReferenceOpacityForPart,
+  };
+};
+
+type CanvasToolbarProps = Readonly<{
+  canvasFitToFrame: boolean;
+  toggleCanvasFit: () => void;
+  canvasBackgroundOptions: CanvasBackgroundOption[];
+  resolvedCanvasBackground: CanvasBackgroundOption | null;
+  cycleCanvasBackground: () => void;
+  showJobGear: boolean;
+  onToggleJobGear: () => void;
+  showLoadoutGear: boolean;
+  onToggleLoadout: () => void;
+}>;
+
+const CanvasToolbar = ({
+  canvasFitToFrame,
+  toggleCanvasFit,
+  canvasBackgroundOptions,
+  resolvedCanvasBackground,
+  cycleCanvasBackground,
+  showJobGear,
+  onToggleJobGear,
+  showLoadoutGear,
+  onToggleLoadout,
+}: CanvasToolbarProps) => (
+  <Flex
+    align="center"
+    justify="flex-start"
+    gap={0.5}
+    className={TOOLBAR_GROUP_CLASS}
+    mb={1}>
+    <Button
+      className={CHIP_BUTTON_CLASS}
+      icon={canvasFitToFrame ? 'compress-arrows-alt' : 'expand-arrows-alt'}
+      selected={canvasFitToFrame}
+      tooltip="Shrink to show the full 64x64 grid"
+      onClick={() => toggleCanvasFit()}>
+      Full grid
+    </Button>
+    <CanvasBackgroundToggle
+      options={canvasBackgroundOptions}
+      resolvedCanvasBackground={resolvedCanvasBackground}
+      onCycle={cycleCanvasBackground}
+    />
+    <Button
+      className={CHIP_BUTTON_CLASS}
+      icon="id-card"
+      selected={showJobGear}
+      tooltip="Show or hide job gear overlays."
+      onClick={onToggleJobGear}>
+      Job gear
+    </Button>
+    <Button
+      className={CHIP_BUTTON_CLASS}
+      icon="toolbox"
+      selected={showLoadoutGear}
+      tooltip="Show or hide loadout overlays."
+      onClick={onToggleLoadout}>
+      Loadout
+    </Button>
+  </Flex>
+);
+
+type DesignerLeftColumnProps = Readonly<{
+  data: CustomMarkingDesignerData;
+  currentDirectionKey: number;
+  setDirection: (dir: number) => void;
+  activePartKey: string;
+  activePartLabel: string;
+  resolvedPartReplacementMap: Record<string, any>;
+  partPaintPresenceMap: Record<string, any>;
+  resolvedPartCanvasSizeMap: Record<string, any>;
+  resolvePartLayeringState: any;
+  togglePartLayerPriority: (partKey: string) => void;
+  togglePartReplacement: (partKey: string) => void;
+  setBodyPart: (partKey: string) => void;
+  uiLocked: boolean;
+  getReferenceOpacityForPart: (partId: string) => number;
+  setReferenceOpacityForPart: (partId: string, value: number) => void;
+  pendingSave: boolean;
+  pendingClose: boolean;
+  handleSaveProgress: () => void;
+  handleSafeClose: () => void;
+  handleDiscardAndClose: () => void;
+  handleImport: (type: 'png' | 'dmi') => Promise<void>;
+  handleExport: (type: 'png' | 'dmi') => Promise<void>;
+  primaryTool: string | null;
+  secondaryTool: string | null;
+  onPrimarySelect: (tool: string) => void;
+  onSecondarySelect: (tool: string) => void;
+  blendMode: string;
+  setBlendMode: (mode: string) => void;
+  analogStrength: number;
+  setAnalogStrength: (value: number) => void;
+  canUndoDrafts: boolean;
+  handleUndo: () => void;
+  handleClear: (confirm: boolean) => void;
+  size: number;
+  setSize: (value: number) => void;
+  brushColor: string;
+  customColorSlots: (string | null)[];
+  handleCustomColorUpdate: (colors: (string | null)[]) => void;
+  handleColorPickerApply: (hex: string) => void;
+}>;
+
+const DesignerLeftColumn = ({
+  data,
+  currentDirectionKey,
+  setDirection,
+  activePartKey,
+  activePartLabel,
+  resolvedPartReplacementMap,
+  partPaintPresenceMap,
+  resolvedPartCanvasSizeMap,
+  resolvePartLayeringState,
+  togglePartLayerPriority,
+  togglePartReplacement,
+  setBodyPart,
+  uiLocked,
+  getReferenceOpacityForPart,
+  setReferenceOpacityForPart,
+  pendingSave,
+  pendingClose,
+  handleSaveProgress,
+  handleSafeClose,
+  handleDiscardAndClose,
+  handleImport,
+  handleExport,
+  primaryTool,
+  secondaryTool,
+  onPrimarySelect,
+  onSecondarySelect,
+  blendMode,
+  setBlendMode,
+  analogStrength,
+  setAnalogStrength,
+  canUndoDrafts,
+  handleUndo,
+  handleClear,
+  size,
+  setSize,
+  brushColor,
+  customColorSlots,
+  handleCustomColorUpdate,
+  handleColorPickerApply,
+}: DesignerLeftColumnProps) => (
+  <Flex.Item basis="600px" shrink={0}>
+    <Flex
+      direction="column"
+      gap={2}
+      height="100%"
+      className="RogueStar__column"
+      justify="space-between">
+      <Flex.Item>
+        <SessionControls
+          pendingSave={pendingSave}
+          pendingClose={pendingClose}
+          uiLocked={uiLocked}
+          handleSaveProgress={handleSaveProgress}
+          handleSafeClose={handleSafeClose}
+          handleDiscardAndClose={handleDiscardAndClose}
+          handleImport={handleImport}
+          handleExport={handleExport}
+        />
+      </Flex.Item>
+
+      <Flex.Item>
+        <MarkingInfoSection
+          bodyParts={data.body_parts}
+          directions={data.directions}
+          currentDirectionKey={currentDirectionKey}
+          setDirection={setDirection}
+          activePartKey={activePartKey}
+          activePartLabel={activePartLabel}
+          resolvedPartReplacementMap={resolvedPartReplacementMap}
+          partPaintPresenceMap={partPaintPresenceMap}
+          resolvedPartCanvasSizeMap={resolvedPartCanvasSizeMap}
+          resolvePartLayeringState={resolvePartLayeringState}
+          togglePartLayerPriority={togglePartLayerPriority}
+          togglePartReplacement={togglePartReplacement}
+          setBodyPart={setBodyPart}
+          uiLocked={uiLocked}
+          getReferenceOpacityForPart={getReferenceOpacityForPart}
+          setReferenceOpacityForPart={setReferenceOpacityForPart}
+        />
+      </Flex.Item>
+
+      <Flex.Item>
+        <Box className="RogueStar__leftFill">
+          <PaintToolsSection
+            primaryTool={primaryTool}
+            secondaryTool={secondaryTool}
+            onPrimarySelect={onPrimarySelect}
+            onSecondarySelect={onSecondarySelect}
+            blendMode={blendMode}
+            setBlendMode={setBlendMode}
+            analogStrength={analogStrength}
+            setAnalogStrength={setAnalogStrength}
+            canUndoDrafts={canUndoDrafts}
+            handleUndo={handleUndo}
+            handleClear={handleClear}
+            size={size}
+            setSize={setSize}
+            brushColor={brushColor}
+            customColorSlots={customColorSlots}
+            handleCustomColorUpdate={handleCustomColorUpdate}
+            handleColorPickerApply={handleColorPickerApply}
+          />
+        </Box>
+      </Flex.Item>
+    </Flex>
+  </Flex.Item>
+);
+
+type CanvasHandlers = Readonly<{
+  onFill: (payload: any) => void;
+  onEyedropper: (payload: any) => void;
+  onPaint: (payload: any) => void;
+  onLine: (payload: any) => void;
+  resolveCanvasTool: (toolUsed: string | null, button: number) => any;
+  handleUndo: () => void;
+  handleDiffApplied: (stroke?: unknown) => void;
+}>;
+
+type CanvasSectionProps = Readonly<{
+  title: string;
+  canvasFrameStyle: Record<string, any>;
+  canvasBackgroundStyle?: Record<string, any> | null;
+  canvasTransform: string;
+  canvasKey: string;
+  backgroundImage: string | null;
+  backgroundFallbackColor: string;
+  canvasDisplayWidthPx: number;
+  canvasDisplayHeightPx: number;
+  canvasPixelSize: number;
+  canvasToolbarProps: CanvasToolbarProps;
+  referenceGrid: any;
+  referenceParts: any;
+  currentReferenceOpacity: number;
+  resolvedReferenceOpacityMap: Record<string, number>;
+  overlayLayerParts: any;
+  overlayLayerOrder: any;
+  layerRevision: number;
+  uiCanvasGrid: any;
+  serverDiffPayload: any;
+  serverDiffSeq?: number;
+  serverDiffStroke: unknown;
+  activePartKey: string;
+  genericReferenceOpacity: number;
+  activePrimaryTool: string | null;
+  activeSecondaryTool: string | null;
+  size: number;
+  brushColor: string;
+  strokeDraftState: StrokeDraftState;
+  strokeDraftSession: string;
+  canvasFlushToken: number;
+  canvasHandlers: CanvasHandlers;
+  resolveToolForButton: (button: number) => string | null;
+}>;
+
+const CanvasSection = ({
+  title,
+  canvasFrameStyle,
+  canvasBackgroundStyle,
+  canvasTransform,
+  canvasKey,
+  backgroundImage,
+  backgroundFallbackColor,
+  canvasDisplayWidthPx,
+  canvasDisplayHeightPx,
+  canvasPixelSize,
+  canvasToolbarProps,
+  referenceGrid,
+  referenceParts,
+  currentReferenceOpacity,
+  resolvedReferenceOpacityMap,
+  overlayLayerParts,
+  overlayLayerOrder,
+  layerRevision,
+  uiCanvasGrid,
+  serverDiffPayload,
+  serverDiffSeq,
+  serverDiffStroke,
+  activePartKey,
+  genericReferenceOpacity,
+  activePrimaryTool,
+  activeSecondaryTool,
+  size,
+  brushColor,
+  strokeDraftState,
+  strokeDraftSession,
+  canvasFlushToken,
+  canvasHandlers,
+  resolveToolForButton,
+}: CanvasSectionProps) => {
+  const {
+    onFill,
+    onEyedropper,
+    onPaint,
+    onLine,
+    resolveCanvasTool,
+    handleUndo,
+    handleDiffApplied,
+  } = canvasHandlers;
+
+  const resolveInteractionTool = (toolUsed: string | null, button: number) =>
+    resolveCanvasTool(toolUsed, button);
+
+  const handleCanvasClick = (
+    x: number,
+    y: number,
+    brushSize: number,
+    stroke: unknown,
+    toolUsed: string | null,
+    button: number
+  ) => {
+    const resolvedTool = resolveInteractionTool(toolUsed, button);
+    if (resolvedTool === 'fill') {
+      return onFill({ x, y, tool: resolvedTool });
+    }
+    if (resolvedTool === 'eyedropper') {
+      return onEyedropper({ x, y, tool: resolvedTool });
+    }
+    return onPaint({
+      x,
+      y,
+      brushSize,
+      stroke,
+      tool: resolvedTool,
+    });
+  };
+
+  const handleCanvasLine = (
+    x1: number,
+    y1: number,
+    x2: number,
+    y2: number,
+    brushSize: number,
+    stroke: unknown,
+    toolUsed: string | null,
+    button: number
+  ) =>
+    onLine({
+      x1,
+      y1,
+      x2,
+      y2,
+      brushSize,
+      stroke,
+      tool: resolveInteractionTool(toolUsed, button),
+    });
+
+  const handleCanvasFill = (
+    x: number,
+    y: number,
+    toolUsed: string | null,
+    button: number
+  ) =>
+    onFill({
+      x,
+      y,
+      tool: resolveInteractionTool(toolUsed, button),
+    });
+
+  const handleEyedropper = (
+    x: number,
+    y: number,
+    toolUsed: string | null,
+    button: number
+  ) =>
+    onEyedropper({
+      x,
+      y,
+      tool: resolveInteractionTool(toolUsed, button),
+    });
+
+  return (
+    <Flex.Item grow basis="0">
+      <Section title={title} fill>
+        <Box className="RogueStar__canvasScroll" height="100%">
+          <CanvasToolbar {...canvasToolbarProps} />
+          <Box className="RogueStar__canvasFrame" style={canvasFrameStyle}>
+            <Box
+              style={{
+                position: 'absolute',
+                inset: 0,
+                zIndex: 0,
+                ...(canvasBackgroundStyle || {}),
+              }}
+            />
+            <PaintCanvas
+              key={canvasKey}
+              value={uiCanvasGrid || []}
+              reference={referenceGrid}
+              referenceParts={referenceParts}
+              referenceOpacity={
+                referenceGrid ? currentReferenceOpacity : undefined
+              }
+              referenceOpacityMap={resolvedReferenceOpacityMap}
+              layerParts={overlayLayerParts}
+              layerOrder={overlayLayerOrder}
+              layerRevision={layerRevision}
+              backgroundImage={backgroundImage}
+              backgroundColor={backgroundFallbackColor}
+              diff={serverDiffPayload}
+              diffSeq={serverDiffSeq}
+              diffStroke={serverDiffStroke}
+              activeLayerKey={activePartKey}
+              otherLayerOpacity={genericReferenceOpacity}
+              dotsize={canvasPixelSize}
+              legacyGridGuideSize={CANVAS_FIT_TARGET}
+              tool={activePrimaryTool ? activePrimaryTool : PLACEHOLDER_TOOL}
+              secondaryTool={activeSecondaryTool || undefined}
+              resolveToolForButton={(button) => resolveToolForButton(button)}
+              size={size}
+              previewColor={brushColor}
+              finalized={false}
+              allowUndoShortcut
+              style={{
+                position: 'relative',
+                zIndex: 1,
+                width: `${canvasDisplayWidthPx}px`,
+                height: `${canvasDisplayHeightPx}px`,
+                transform: canvasTransform,
+                transformOrigin: 'top left',
+                backgroundColor: 'transparent',
+              }}
+              onUndo={() => handleUndo()}
+              onCanvasClick={(x, y, brushSize, stroke, toolUsed, button) =>
+                handleCanvasClick(x, y, brushSize, stroke, toolUsed, button)
+              }
+              onCanvasLine={(
+                x1,
+                y1,
+                x2,
+                y2,
+                brushSize,
+                stroke,
+                toolUsed,
+                button
+              ) =>
+                handleCanvasLine(
+                  x1,
+                  y1,
+                  x2,
+                  y2,
+                  brushSize,
+                  stroke,
+                  toolUsed,
+                  button
+                )
+              }
+              onCanvasFill={(x, y, toolUsed, button) =>
+                handleCanvasFill(x, y, toolUsed, button)
+              }
+              onEyedropper={(x, y, toolUsed, button) =>
+                handleEyedropper(x, y, toolUsed, button)
+              }
+              strokeDrafts={strokeDraftState}
+              strokeDraftSession={strokeDraftSession}
+              onDiffApplied={handleDiffApplied}
+              flushToken={canvasFlushToken}
+            />
+          </Box>
+        </Box>
+      </Section>
+    </Flex.Item>
+  );
+};
+
+const getCanvasFrameStyle = (
+  resolvedCanvasBackground: CanvasBackgroundOption | null,
+  backgroundFallbackColor: string,
+  canvasDisplayWidthPx: number,
+  canvasDisplayHeightPx: number
+) => ({
+  position: 'relative',
+  width: `${canvasDisplayWidthPx}px`,
+  height: `${canvasDisplayHeightPx}px`,
+  borderColor:
+    resolvedCanvasBackground && resolvedCanvasBackground.id !== 'default'
+      ? backgroundFallbackColor
+      : undefined,
+  boxShadow:
+    resolvedCanvasBackground && resolvedCanvasBackground.id !== 'default'
+      ? `0 0 12px ${backgroundFallbackColor}`
+      : undefined,
+});
+
+const buildCanvasKey = ({
+  sessionToken,
+  dirKey,
+  partKey,
+  canvasWidth,
+  canvasHeight,
+  backgroundId,
+}: {
+  sessionToken: string | null;
+  dirKey: number;
+  partKey: string;
+  canvasWidth: number;
+  canvasHeight: number;
+  backgroundId: string;
+}) =>
+  `${sessionToken || 'session'}-${dirKey}-${partKey}-${canvasWidth}x${canvasHeight}-bg:${backgroundId}`;
 
 export const CustomMarkingDesigner = (_props, context) => {
   const { act, data } = useBackend<CustomMarkingDesignerData>(context);
   const stateToken = data.state_token || 'session';
-  const [activeTab, setActiveTab] = useLocalState<DesignerTabId>(
-    context,
-    'customMarkingTab',
-    'custom'
-  );
-  const [lastInitialTab, setLastInitialTab] =
-    useLocalState<DesignerTabId | null>(
-      context,
-      `customMarkingLastInitialTab-${stateToken}`,
-      null
-    );
-  const allowCustomTab = data.allow_custom_tab ?? true;
-  const enableCustomDisclaimer =
-    data.custom_marking_enable_disclaimer ||
-    "This is an advanced character editing tool that allows you to edit individual pixels on your character to adjust or create new markings.  Custom markings have the same standards as markings added to the RogueStar codebase.  They should make realistic sense and must be SFW.  If it wouldn't get approved to add to the code, it should not be done here.  If you are uncertain about something, please let us know and we're happy to chatter about it.";
-  const [enableCustomPromptOpen, setEnableCustomPromptOpen] =
-    useLocalState<boolean>(
-      context,
-      `customMarkingEnablePromptOpen-${stateToken}`,
-      false
-    );
-  const [enableCustomPromptBusy, setEnableCustomPromptBusy] =
-    useLocalState<boolean>(
-      context,
-      `customMarkingEnablePromptBusy-${stateToken}`,
-      false
-    );
-  const [enableCustomSwitchPending, setEnableCustomSwitchPending] =
-    useLocalState<boolean>(
-      context,
-      `customMarkingEnablePromptSwitchPending-${stateToken}`,
-      false
-    );
-  let desiredTab: DesignerTabId | null = null;
-  if (data.initial_tab === 'body' || data.initial_tab === 'custom') {
-    desiredTab = data.initial_tab;
-  }
-  if (!allowCustomTab) {
-    desiredTab = 'body';
-  }
-  if (desiredTab && desiredTab !== lastInitialTab) {
-    if (desiredTab !== activeTab) {
-      setActiveTab(desiredTab);
-    }
-    setLastInitialTab(desiredTab);
-  }
-  if (!allowCustomTab && activeTab === 'custom') {
-    setActiveTab('body');
-  }
-  const resolvedActiveTab: DesignerTabId = allowCustomTab ? activeTab : 'body';
   const {
     isPlaceholderTool,
     activePrimaryTool,
@@ -223,101 +1049,10 @@ export const CustomMarkingDesigner = (_props, context) => {
     showJobGear: !!data.show_job_gear,
     showLoadoutGear: !!data.show_loadout_gear,
   });
-  const [reloadPending, setReloadPending] = useLocalState<boolean>(
-    context,
-    `customMarkingDesignerReloadPending-${stateToken}`,
-    false
-  );
-  const [reloadTargetRevision, setReloadTargetRevision] = useLocalState<number>(
-    context,
-    `customMarkingDesignerReloadTargetRevision-${stateToken}`,
-    0
-  );
-  const [reloadOverlayMinUntil, setReloadOverlayMinUntil] =
-    useLocalState<number>(
-      context,
-      `customMarkingDesignerReloadOverlayMinUntil-${stateToken}`,
-      0
-    );
-  const [bodyReloadPending, setBodyReloadPending] = useLocalState<boolean>(
-    context,
-    `bodyMarkingsReloadPending-${stateToken}`,
-    false
-  );
-  const [, setBodyMarkingsLoadInProgress] = useLocalState<boolean>(
-    context,
-    `bodyMarkingsLoadInProgress-${stateToken}`,
-    false
-  );
-  const [bodyPayload, setBodyPayload] =
-    useLocalState<BodyMarkingsPayload | null>(
-      context,
-      'bodyPayload',
-      data.body_markings_payload || null
-    );
-  const [bodyMarkingsState, setBodyMarkingsState] = useLocalState<
-    Record<string, BodyMarkingEntry>
-  >(
-    context,
-    'bodyMarkingsState',
-    deepCopyMarkings(data.body_markings_payload?.body_markings)
-  );
-  const [bodyMarkingsOrder, setBodyMarkingsOrder] = useLocalState<string[]>(
-    context,
-    'bodyMarkingsOrder',
-    (data.body_markings_payload?.order as string[]) || []
-  );
-  const [bodyMarkingsSelected, setBodyMarkingsSelected] = useLocalState<
-    string | null
-  >(
-    context,
-    'bodyMarkingsSelected',
-    (data.body_markings_payload?.order?.[0] as string) || null
-  );
-  const [bodyMarkingsDirty, setBodyMarkingsDirty] = useLocalState<boolean>(
-    context,
-    'bodyMarkingsDirty',
-    false
-  );
-  const [, setBodyColorTarget] = useLocalState<BodyMarkingColorTarget | null>(
-    context,
-    'bodyMarkingsColorTarget',
-    null
-  );
-  const [, setBodyPreviewColor] = useLocalState<string | null>(
-    context,
-    'bodyMarkingsPreviewColor',
-    null
-  );
-  const [bodySavedState, setBodySavedState] =
-    useLocalState<BodyMarkingsSavedState>(
-      context,
-      'bodyMarkingsSavedState',
-      buildBodySavedStateFromPayload(data.body_markings_payload)
-    );
-  const [bodyPendingSave, setBodyPendingSave] = useLocalState<boolean>(
-    context,
-    'bodyMarkingsPendingSave',
-    false
-  );
-  const [bodyPendingClose, setBodyPendingClose] = useLocalState<boolean>(
-    context,
-    'bodyMarkingsPendingClose',
-    false
-  );
   const [strokeDraftState] = useLocalState<StrokeDraftState>(
     context,
     'strokeDrafts',
     {}
-  );
-  const [tabSwitchPrompt, setTabSwitchPrompt] = useLocalState<{
-    sourceTab: DesignerTabId;
-    targetTab: DesignerTabId;
-  } | null>(context, 'customMarkingTabSwitchPrompt', null);
-  const [tabSwitchBusy, setTabSwitchBusy] = useLocalState(
-    context,
-    'customMarkingTabSwitchBusy',
-    false
   );
   const notifyAssetReady = () =>
     setAssetRevision((assetRevision + 1) % 1000000);
@@ -372,7 +1107,6 @@ export const CustomMarkingDesigner = (_props, context) => {
     resolvePartLayeringState,
     togglePartLayerPriority,
     togglePartReplacement,
-    resetFlagStates,
   } = usePartFlagState({
     context,
     stateToken,
@@ -437,30 +1171,9 @@ export const CustomMarkingDesigner = (_props, context) => {
     directions: data.directions,
   });
 
-  const referenceBuildInProgress = !!data.reference_build_in_progress;
-  if (referenceBuildInProgress) {
-    if (reloadTargetRevision) {
-      setReloadTargetRevision(0);
-    }
-    if (reloadPending) {
-      setReloadPending(false);
-    }
-    if (!loadingOverlay) {
-      const now = Date.now();
-      setLoadingOverlay(true);
-      if (!reloadOverlayMinUntil || reloadOverlayMinUntil < now) {
-        setReloadOverlayMinUntil(now + 400);
-      }
-    }
-  }
-
   applyPreviewInitialization({
     loadingOverlay,
     allPreviewLayersLoaded,
-    previewRevision,
-    loadingOverlayTargetRevision: reloadTargetRevision,
-    loadingOverlayMinUntil: reloadOverlayMinUntil,
-    referenceBuildInProgress,
     setLoadingOverlay,
     colorPickerSlotsLocked,
     colorPickerSlotsSignature,
@@ -566,41 +1279,27 @@ export const CustomMarkingDesigner = (_props, context) => {
       resolveBodyPartLabel(partKey, bodyPartLabelMap),
   });
 
-  const rawSavingHandlers = createSavingHandlers({
-    pendingClose,
-    pendingSave,
-    setPendingClose,
-    setPendingSave,
-    setPendingCloseMessage,
-    syncAllPendingDraftSessions,
-    resolvedReplacementState,
-    resolvedPartReplacementMap,
-    resolvedPriorityState,
-    resolvedPartPriorityMap,
-    resolvedCanvasSizeState,
-    resolvedPartCanvasSizeMap,
-    sendActionAfterSync,
-    clearAllLocalDrafts,
-    setSavingProgress,
-    sendAction,
-    reportClientWarning,
-    formatError: describeError,
-  });
-  const handleSaveProgress = async () => {
-    const wasDirty = detectCustomUnsaved();
-    await rawSavingHandlers.handleSaveProgress();
-    if (wasDirty) {
-      setBodyReloadPending(true);
-    }
-  };
-  const handleSafeClose = async () => {
-    const wasDirty = detectCustomUnsaved();
-    await rawSavingHandlers.handleSafeClose();
-    if (wasDirty) {
-      setBodyReloadPending(true);
-    }
-  };
-  const handleDiscardAndClose = rawSavingHandlers.handleDiscardAndClose;
+  const { handleSafeClose, handleSaveProgress, handleDiscardAndClose } =
+    createSavingHandlers({
+      pendingClose,
+      pendingSave,
+      setPendingClose,
+      setPendingSave,
+      setPendingCloseMessage,
+      syncAllPendingDraftSessions,
+      resolvedReplacementState,
+      resolvedPartReplacementMap,
+      resolvedPriorityState,
+      resolvedPartPriorityMap,
+      resolvedCanvasSizeState,
+      resolvedPartCanvasSizeMap,
+      sendActionAfterSync,
+      clearAllLocalDrafts,
+      setSavingProgress,
+      sendAction,
+      reportClientWarning,
+      formatError: describeError,
+    });
 
   const handleDiffApplied = (stroke?: unknown) => {
     if (stroke !== undefined && stroke !== null) {
@@ -746,15 +1445,6 @@ export const CustomMarkingDesigner = (_props, context) => {
 
   const shouldShowLoadingOverlay =
     loadingOverlay && !pendingSave && !pendingClose;
-  const customTabLoading = resolvedActiveTab === 'custom' && loadingOverlay;
-  const bodyTabLoading = resolvedActiveTab === 'body' && !bodyPayload;
-  const tabSwitchBusyState =
-    tabSwitchBusy ||
-    pendingSave ||
-    pendingClose ||
-    bodyPendingSave ||
-    bodyPendingClose;
-  const tabsLocked = tabSwitchBusyState || customTabLoading || bodyTabLoading;
 
   const canvasBackgroundId = resolvedCanvasBackground?.id || 'default';
   const directionTitle = `Direction: ${resolveDirectionLabel(
@@ -800,342 +1490,6 @@ export const CustomMarkingDesigner = (_props, context) => {
     handleDiffApplied,
   };
 
-  const detectCustomUnsaved = () => {
-    const sharedState = selectBackend(context.store.getState()).shared || {};
-    const replacementState =
-      (sharedState[`partReplacements-${stateToken}`] as BooleanMapState) ||
-      resolvedReplacementState;
-    const priorityState =
-      (sharedState[`partRenderPriority-${stateToken}`] as BooleanMapState) ||
-      resolvedPriorityState;
-    const canvasSizeState =
-      (sharedState[`partCanvasSize-${stateToken}`] as BooleanMapState) ||
-      resolvedCanvasSizeState;
-    const draftsPending = getPendingDraftSessions().length > 0;
-    const flagDirty =
-      replacementState?.dirty || priorityState?.dirty || canvasSizeState?.dirty;
-    return draftsPending || flagDirty;
-  };
-
-  const detectBodyUnsaved = () => {
-    const sharedState = selectBackend(context.store.getState()).shared || {};
-    const dirtyFlag =
-      typeof sharedState.bodyMarkingsDirty === 'boolean'
-        ? (sharedState.bodyMarkingsDirty as boolean)
-        : bodyMarkingsDirty;
-    return !!dirtyFlag;
-  };
-
-  const resolveBodyReloadPending = () => {
-    const sharedState = selectBackend(context.store.getState()).shared || {};
-    const pendingValue = sharedState[`bodyMarkingsReloadPending-${stateToken}`];
-    if (typeof pendingValue === 'boolean') {
-      return pendingValue;
-    }
-    return bodyReloadPending;
-  };
-
-  const resolveLatestBodyPayload = () => {
-    const sharedState = selectBackend(context.store.getState()).shared || {};
-    const payload = sharedState.bodyPayload as
-      | BodyMarkingsPayload
-      | null
-      | undefined;
-    return payload !== undefined ? payload : bodyPayload;
-  };
-
-  const resolveUnsavedForTab = (tab: DesignerTabId) =>
-    tab === 'custom' ? detectCustomUnsaved() : detectBodyUnsaved();
-
-  const clearCustomChanges = () => {
-    clearAllLocalDrafts();
-    resetFlagStates();
-    requestCanvasFlush();
-  };
-
-  const saveBodyChanges = async (): Promise<boolean> => {
-    const wasDirty = detectBodyUnsaved();
-    if (!wasDirty) {
-      return true;
-    }
-    const definitions = buildBodyMarkingDefinitions(bodyPayload);
-    if (!Object.keys(definitions).length) {
-      return false;
-    }
-    const { body_markings: outgoing, order: outgoingOrder } =
-      buildBodyMarkingSavePayload({
-        order: bodyMarkingsOrder,
-        markings: bodyMarkingsState,
-        definitions,
-      });
-    setBodyPendingSave(true);
-    setBodyPendingClose(false);
-    try {
-      if (!outgoingOrder.length) {
-        await act('save_body_markings', {
-          body_markings: outgoing,
-          order: outgoingOrder,
-          close: false,
-        });
-      } else {
-        const { chunkId, chunks } = buildBodyMarkingChunkPlan({
-          order: outgoingOrder,
-          markings: outgoing,
-          maxEntriesPerChunk: 1,
-        });
-        const totalChunks = Math.max(chunks.length, 1);
-        for (let idx = 0; idx < totalChunks; idx += 1) {
-          const payload: Record<string, unknown> = {
-            chunk_id: chunkId,
-            chunk_index: idx,
-            chunk_total: totalChunks,
-            body_markings: chunks[idx] || {},
-          };
-          if (idx === 0) {
-            payload.order = outgoingOrder;
-          }
-          await act('save_body_markings', payload);
-        }
-      }
-      const nextSelected = bodyMarkingsSelected || outgoingOrder[0] || null;
-      setBodyMarkingsDirty(false);
-      setBodySavedState({
-        order: [...outgoingOrder],
-        markings: deepCopyMarkings(outgoing),
-        selectedId: nextSelected,
-      });
-      if (bodyPayload) {
-        const updatedPayload: BodyMarkingsPayload = {
-          ...bodyPayload,
-          body_markings: outgoing,
-          order: outgoingOrder,
-        };
-        setBodyPayload(updatedPayload);
-      }
-      return true;
-    } catch (error) {
-      return false;
-    } finally {
-      setBodyPendingSave(false);
-      setBodyPendingClose(false);
-    }
-  };
-
-  const discardBodyChanges = () => {
-    const fallbackSaved = bodySavedState
-      ? {
-          ...bodySavedState,
-          markings: deepCopyMarkings(bodySavedState.markings),
-        }
-      : buildBodySavedStateFromPayload(bodyPayload);
-    const nextOrder = fallbackSaved?.order || [];
-    const nextMarkings = deepCopyMarkings(fallbackSaved?.markings);
-    const nextSelected = fallbackSaved?.selectedId || nextOrder[0] || null;
-    setBodyMarkingsState(nextMarkings);
-    setBodyMarkingsOrder([...nextOrder]);
-    setBodyMarkingsSelected(nextSelected);
-    setBodyColorTarget(null);
-    setBodyPreviewColor(null);
-    if (bodyPayload) {
-      const updatedPayload: BodyMarkingsPayload = {
-        ...bodyPayload,
-        body_markings: nextMarkings,
-        order: nextOrder,
-      };
-      setBodyPayload(updatedPayload);
-    }
-    setBodyMarkingsDirty(false);
-  };
-
-  const handleTabChange = (nextTab: DesignerTabId) => {
-    if (tabsLocked) {
-      return;
-    }
-    if (nextTab === 'custom' && !allowCustomTab) {
-      return;
-    }
-    if (nextTab === resolvedActiveTab) {
-      return;
-    }
-    if (resolveUnsavedForTab(resolvedActiveTab)) {
-      setTabSwitchPrompt({
-        sourceTab: resolvedActiveTab,
-        targetTab: nextTab,
-      });
-      return;
-    }
-    if (nextTab === 'custom' && reloadPending) {
-      setLoadingOverlay(true);
-      setReloadOverlayMinUntil(Date.now() + 400);
-      setReloadPending(false);
-    }
-    if (nextTab === 'body') {
-      setBodyColorTarget({ type: 'galleryPreview' });
-      const latestBodyPayload = resolveLatestBodyPayload();
-      const latestReloadPending = resolveBodyReloadPending();
-      if (!latestBodyPayload || latestReloadPending) {
-        setBodyPayload(null);
-        setBodyMarkingsLoadInProgress(true);
-        act('load_body_markings');
-        if (latestReloadPending) {
-          setBodyReloadPending(false);
-        }
-      }
-    }
-    act('set_active_tab', { tab: nextTab });
-    setActiveTab(nextTab);
-  };
-
-  const handleEnableCustomMarkings = async () => {
-    if (enableCustomPromptBusy) {
-      return;
-    }
-    setEnableCustomPromptBusy(true);
-    try {
-      await act('enable_custom_markings');
-      setEnableCustomSwitchPending(true);
-    } finally {
-      setEnableCustomPromptBusy(false);
-    }
-  };
-
-  const handleEnableCustomReady = () => {
-    setEnableCustomSwitchPending(false);
-    setEnableCustomPromptOpen(false);
-    handleTabChange('custom');
-  };
-
-  const handleTabSwitchSave = async () => {
-    if (!tabSwitchPrompt) {
-      return;
-    }
-    const wasBodyDirty =
-      tabSwitchPrompt.sourceTab === 'body' && detectBodyUnsaved();
-    const wasCustomDirty =
-      tabSwitchPrompt.sourceTab === 'custom' && detectCustomUnsaved();
-    const startingPreviewRevision = previewRevision;
-    setTabSwitchBusy(true);
-    setTabSwitchPrompt(null);
-    try {
-      if (tabSwitchPrompt.sourceTab === 'custom') {
-        await handleSaveProgress();
-        if (detectCustomUnsaved()) {
-          setTabSwitchPrompt(tabSwitchPrompt);
-          return;
-        }
-      } else {
-        const saved = await saveBodyChanges();
-        if (!saved || detectBodyUnsaved()) {
-          setTabSwitchPrompt(tabSwitchPrompt);
-          return;
-        }
-      }
-      if (
-        tabSwitchPrompt.targetTab === 'custom' &&
-        (reloadPending || wasBodyDirty)
-      ) {
-        if (wasBodyDirty) {
-          setReloadTargetRevision(startingPreviewRevision + 1);
-        }
-        setLoadingOverlay(true);
-        setReloadOverlayMinUntil(Date.now() + 400);
-        setReloadPending(false);
-      }
-      if (tabSwitchPrompt.targetTab === 'body') {
-        setBodyColorTarget({ type: 'galleryPreview' });
-        if (!bodyPayload || bodyReloadPending || wasCustomDirty) {
-          setBodyPayload(null);
-          setBodyMarkingsLoadInProgress(true);
-          await act('load_body_markings');
-          if (bodyReloadPending) {
-            setBodyReloadPending(false);
-          }
-          if (wasCustomDirty && !bodyReloadPending) {
-            setBodyReloadPending(false);
-          }
-        }
-      }
-      act('set_active_tab', { tab: tabSwitchPrompt.targetTab });
-      setActiveTab(tabSwitchPrompt.targetTab);
-    } finally {
-      setTabSwitchBusy(false);
-    }
-  };
-
-  const handleTabSwitchDiscard = async () => {
-    if (!tabSwitchPrompt) {
-      return;
-    }
-    setTabSwitchBusy(true);
-    setTabSwitchPrompt(null);
-    try {
-      if (tabSwitchPrompt.sourceTab === 'custom') {
-        clearCustomChanges();
-      } else {
-        discardBodyChanges();
-      }
-      if (resolveUnsavedForTab(tabSwitchPrompt.sourceTab)) {
-        setTabSwitchPrompt(tabSwitchPrompt);
-        return;
-      }
-      if (tabSwitchPrompt.targetTab === 'custom' && reloadPending) {
-        setLoadingOverlay(true);
-        setReloadOverlayMinUntil(Date.now() + 400);
-        setReloadPending(false);
-      }
-      if (tabSwitchPrompt.targetTab === 'body') {
-        setBodyColorTarget({ type: 'galleryPreview' });
-        if (!bodyPayload || bodyReloadPending) {
-          setBodyPayload(null);
-          setBodyMarkingsLoadInProgress(true);
-          await act('load_body_markings');
-          if (bodyReloadPending) {
-            setBodyReloadPending(false);
-          }
-        }
-      }
-      act('set_active_tab', { tab: tabSwitchPrompt.targetTab });
-      setActiveTab(tabSwitchPrompt.targetTab);
-    } finally {
-      setTabSwitchBusy(false);
-    }
-  };
-
-  const titleTabs = (
-    <Tabs className="RogueStar__titleTabs">
-      <Tabs.Tab
-        selected={resolvedActiveTab === 'body'}
-        icon="list"
-        className={tabsLocked ? 'Tab--disabled' : undefined}
-        aria-disabled={tabsLocked}
-        onClick={() => {
-          if (!tabsLocked) {
-            handleTabChange('body');
-          }
-        }}>
-        Body Markings
-      </Tabs.Tab>
-      <Tabs.Tab
-        selected={resolvedActiveTab === 'custom'}
-        icon={resolveCustomDesignerTabIcon(allowCustomTab)}
-        className={tabsLocked ? 'Tab--disabled' : undefined}
-        aria-disabled={tabsLocked}
-        tooltip={resolveCustomDesignerTabTooltip(allowCustomTab)}
-        onClick={() => {
-          if (tabsLocked) {
-            return;
-          }
-          if (!allowCustomTab) {
-            setEnableCustomPromptOpen(true);
-            return;
-          }
-          handleTabChange('custom');
-        }}>
-        Custom Marking Designer
-      </Tabs.Tab>
-    </Tabs>
-  );
-
   return (
     <Window
       theme="nanotrasen rogue-star-window"
@@ -1143,18 +1497,12 @@ export const CustomMarkingDesigner = (_props, context) => {
       height={950}
       resizable
       canClose={false}
-      statusIcon={customStatusIcon}
-      buttons={titleTabs}>
+      statusIcon={customStatusIcon}>
       <ToolBootstrapScheduler
         isPlaceholderTool={isPlaceholderTool}
         toolBootstrapScheduled={toolBootstrapScheduled}
         setToolBootstrapScheduled={setToolBootstrapScheduled}
         setTool={setPrimaryTool}
-      />
-      <EnableCustomMarkingsScheduler
-        allowCustomTab={allowCustomTab}
-        switchPending={enableCustomSwitchPending}
-        onReady={handleEnableCustomReady}
       />
       <PhantomClickScheduler
         phantomClickScheduled={phantomClickScheduled}
@@ -1169,154 +1517,104 @@ export const CustomMarkingDesigner = (_props, context) => {
       />
       <DesignerUndoHotkeyListener canUndo={canUndoDrafts} onUndo={handleUndo} />
       <Window.Content scrollable overflowX="auto">
-        {resolvedActiveTab === 'custom' ? (
-          <Box className="RogueStar" position="relative" minHeight="100%">
-            <Flex direction="row" fill gap={2} wrap={false} align="stretch">
-              <DesignerLeftColumn
-                data={data}
-                currentDirectionKey={currentDirectionKey}
-                setDirection={setDirection}
-                activePartKey={activePartKey}
-                activePartLabel={activePartLabel}
-                resolvedPartReplacementMap={resolvedPartReplacementMap}
-                partPaintPresenceMap={partPaintPresenceMap}
-                resolvedPartCanvasSizeMap={resolvedPartCanvasSizeMap}
-                resolvePartLayeringState={resolvePartLayeringState}
-                togglePartLayerPriority={togglePartLayerPriority}
-                togglePartReplacement={togglePartReplacement}
-                setBodyPart={setBodyPart}
-                uiLocked={uiLocked}
-                getReferenceOpacityForPart={getReferenceOpacityForPart}
-                setReferenceOpacityForPart={setReferenceOpacityForPart}
-                pendingSave={pendingSave}
-                pendingClose={pendingClose}
-                handleSaveProgress={handleSaveProgress}
-                handleSafeClose={handleSafeClose}
-                handleDiscardAndClose={handleDiscardAndClose}
-                handleImport={handleImport}
-                handleExport={handleExport}
-                primaryTool={activePrimaryTool}
-                secondaryTool={activeSecondaryTool}
-                onPrimarySelect={assignPrimaryTool}
-                onSecondarySelect={assignSecondaryTool}
-                blendMode={blendMode}
-                setBlendMode={setBlendMode}
-                analogStrength={analogStrength}
-                setAnalogStrength={setAnalogStrength}
-                canUndoDrafts={canUndoDrafts}
-                handleUndo={handleUndo}
-                handleClear={handleClear}
-                size={size}
-                setSize={setSize}
-                brushColor={brushColor}
-                customColorSlots={customColorSlots}
-                handleCustomColorUpdate={handleCustomColorUpdate}
-                handleColorPickerApply={handleColorPickerApply}
-              />
-              <CanvasSection
-                title={directionTitle}
-                canvasFrameStyle={canvasFrameStyle}
-                canvasBackgroundStyle={canvasBackgroundStyle}
-                canvasTransform={canvasTransform}
-                canvasKey={canvasKey}
-                backgroundImage={backgroundImage}
-                backgroundFallbackColor={backgroundFallbackColor}
-                canvasDisplayWidthPx={canvasDisplayWidthPx}
-                canvasDisplayHeightPx={canvasDisplayHeightPx}
-                canvasPixelSize={canvasPixelSize}
-                canvasToolbarProps={canvasToolbarProps}
-                referenceGrid={referenceGrid}
-                referenceParts={referenceParts}
-                currentReferenceOpacity={currentReferenceOpacity}
-                resolvedReferenceOpacityMap={resolvedReferenceOpacityMap}
-                overlayLayerParts={overlayLayerParts}
-                overlayLayerOrder={overlayLayerOrder}
-                layerRevision={data.body_part_layer_revision || 0}
-                uiCanvasGrid={uiCanvasGrid}
-                serverDiffPayload={serverDiffPayload}
-                serverDiffSeq={serverDiffSeq}
-                serverDiffStroke={serverDiffStroke}
-                activePartKey={activePartKey}
-                genericReferenceOpacity={genericReferenceOpacity}
-                activePrimaryTool={activePrimaryTool}
-                activeSecondaryTool={activeSecondaryTool}
-                size={size}
-                brushColor={brushColor}
-                strokeDraftState={strokeDraftState}
-                strokeDraftSession={localSessionKey}
-                canvasFlushToken={canvasFlushToken}
-                canvasHandlers={canvasHandlers}
-                resolveToolForButton={resolveToolForButton}
-              />
-              <PreviewColumn
-                renderedPreviewDirs={renderedPreviewDirs}
-                previewRevision={previewRevision}
-                previewFitToFrame={previewFitToFrame}
-                canvasWidth={canvasWidth}
-                canvasHeight={canvasHeight}
-                resolvedCanvasBackground={resolvedCanvasBackground}
-                backgroundFallbackColor={backgroundFallbackColor}
-                canvasBackgroundScale={canvasBackgroundScale}
-              />
-            </Flex>
-            {shouldShowLoadingOverlay ? <LoadingOverlay /> : null}
-            <SavingOverlayGate
-              pendingClose={pendingClose}
+        <Box className="RogueStar" position="relative" minHeight="100%">
+          <Flex direction="row" fill gap={2} wrap={false} align="stretch">
+            <DesignerLeftColumn
+              data={data}
+              currentDirectionKey={currentDirectionKey}
+              setDirection={setDirection}
+              activePartKey={activePartKey}
+              activePartLabel={activePartLabel}
+              resolvedPartReplacementMap={resolvedPartReplacementMap}
+              partPaintPresenceMap={partPaintPresenceMap}
+              resolvedPartCanvasSizeMap={resolvedPartCanvasSizeMap}
+              resolvePartLayeringState={resolvePartLayeringState}
+              togglePartLayerPriority={togglePartLayerPriority}
+              togglePartReplacement={togglePartReplacement}
+              setBodyPart={setBodyPart}
+              uiLocked={uiLocked}
+              getReferenceOpacityForPart={getReferenceOpacityForPart}
+              setReferenceOpacityForPart={setReferenceOpacityForPart}
               pendingSave={pendingSave}
-              pendingCloseMessage={pendingCloseMessage}
-              savingProgress={savingProgress}
+              pendingClose={pendingClose}
+              handleSaveProgress={handleSaveProgress}
+              handleSafeClose={handleSafeClose}
+              handleDiscardAndClose={handleDiscardAndClose}
+              handleImport={handleImport}
+              handleExport={handleExport}
+              primaryTool={activePrimaryTool}
+              secondaryTool={activeSecondaryTool}
+              onPrimarySelect={assignPrimaryTool}
+              onSecondarySelect={assignSecondaryTool}
+              blendMode={blendMode}
+              setBlendMode={setBlendMode}
+              analogStrength={analogStrength}
+              setAnalogStrength={setAnalogStrength}
+              canUndoDrafts={canUndoDrafts}
+              handleUndo={handleUndo}
+              handleClear={handleClear}
+              size={size}
+              setSize={setSize}
+              brushColor={brushColor}
+              customColorSlots={customColorSlots}
+              handleCustomColorUpdate={handleCustomColorUpdate}
+              handleColorPickerApply={handleColorPickerApply}
             />
-          </Box>
-        ) : (
-          <BodyMarkingsTab
-            data={data}
-            setPendingClose={setPendingClose}
-            setPendingSave={setPendingSave}
-            canvasBackgroundOptions={canvasBackgroundOptions}
-            resolvedCanvasBackground={resolvedCanvasBackground}
-            backgroundFallbackColor={backgroundFallbackColor}
-            cycleCanvasBackground={cycleCanvasBackground}
-            canvasBackgroundScale={canvasBackgroundScale}
-            showJobGear={showJobGear}
-            onToggleJobGear={() => setShowJobGear(!showJobGear)}
-            showLoadoutGear={showLoadoutGear}
-            onToggleLoadout={() => setShowLoadoutGear(!showLoadoutGear)}
+            <CanvasSection
+              title={directionTitle}
+              canvasFrameStyle={canvasFrameStyle}
+              canvasBackgroundStyle={canvasBackgroundStyle}
+              canvasTransform={canvasTransform}
+              canvasKey={canvasKey}
+              backgroundImage={backgroundImage}
+              backgroundFallbackColor={backgroundFallbackColor}
+              canvasDisplayWidthPx={canvasDisplayWidthPx}
+              canvasDisplayHeightPx={canvasDisplayHeightPx}
+              canvasPixelSize={canvasPixelSize}
+              canvasToolbarProps={canvasToolbarProps}
+              referenceGrid={referenceGrid}
+              referenceParts={referenceParts}
+              currentReferenceOpacity={currentReferenceOpacity}
+              resolvedReferenceOpacityMap={resolvedReferenceOpacityMap}
+              overlayLayerParts={overlayLayerParts}
+              overlayLayerOrder={overlayLayerOrder}
+              layerRevision={data.body_part_layer_revision || 0}
+              uiCanvasGrid={uiCanvasGrid}
+              serverDiffPayload={serverDiffPayload}
+              serverDiffSeq={serverDiffSeq}
+              serverDiffStroke={serverDiffStroke}
+              activePartKey={activePartKey}
+              genericReferenceOpacity={genericReferenceOpacity}
+              activePrimaryTool={activePrimaryTool}
+              activeSecondaryTool={activeSecondaryTool}
+              size={size}
+              brushColor={brushColor}
+              strokeDraftState={strokeDraftState}
+              strokeDraftSession={localSessionKey}
+              canvasFlushToken={canvasFlushToken}
+              canvasHandlers={canvasHandlers}
+              resolveToolForButton={resolveToolForButton}
+            />
+            <PreviewColumn
+              renderedPreviewDirs={renderedPreviewDirs}
+              previewRevision={previewRevision}
+              previewFitToFrame={previewFitToFrame}
+              canvasWidth={canvasWidth}
+              canvasHeight={canvasHeight}
+              resolvedCanvasBackground={resolvedCanvasBackground}
+              backgroundFallbackColor={backgroundFallbackColor}
+              canvasBackgroundScale={canvasBackgroundScale}
+            />
+          </Flex>
+          {shouldShowLoadingOverlay ? <LoadingOverlay /> : null}
+          <SavingOverlayGate
+            pendingClose={pendingClose}
+            pendingSave={pendingSave}
+            pendingCloseMessage={pendingCloseMessage}
+            savingProgress={savingProgress}
           />
-        )}
+        </Box>
       </Window.Content>
-      {tabSwitchPrompt ? (
-        <UnsavedChangesOverlay
-          title="Unsaved changes"
-          subtitle={`You have unsaved changes in the ${
-            tabSwitchPrompt.sourceTab === 'custom'
-              ? 'Custom Marking Designer'
-              : 'Body Markings tab'
-          }. Save them before switching?`}
-          saveLabel="Save and switch"
-          discardLabel="Discard and switch"
-          busy={tabSwitchBusyState}
-          onSave={handleTabSwitchSave}
-          onDiscard={handleTabSwitchDiscard}
-          onCancel={() => {
-            if (!tabSwitchBusyState) {
-              setTabSwitchPrompt(null);
-            }
-          }}
-        />
-      ) : null}
-      <EnableCustomMarkingsGate
-        open={enableCustomPromptOpen}
-        allowCustomTab={allowCustomTab}
-        message={enableCustomDisclaimer}
-        busy={enableCustomPromptBusy}
-        onConfirm={handleEnableCustomMarkings}
-        onCancel={() => {
-          if (!enableCustomPromptBusy) {
-            setEnableCustomPromptOpen(false);
-            setEnableCustomSwitchPending(false);
-          }
-        }}
-      />
     </Window>
   );
 };
