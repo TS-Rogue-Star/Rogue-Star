@@ -7,6 +7,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star December 2025: Updated to support loaout and job gear ////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star December 2025: New body marking selection tab added //////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define CUSTOM_MARKING_DEFAULT_WIDTH 32
 #define CUSTOM_MARKING_DEFAULT_HEIGHT 32
@@ -18,18 +20,46 @@
 #define CUSTOM_MARKING_CANVAS_MAX_HEIGHT 64
 #endif
 
+#define BODY_MARKING_CHUNK_PENDING -7
+#define BODY_MARKING_SELECTION_LIMIT 40
+
 #ifndef CUSTOM_MARKING_CHECK_TICK
 #define CUSTOM_MARKING_CHECK_TICK custom_marking_yield_heartbeat()
 #define CUSTOM_MARKING_CHECK_TICK_DEFINED_IN_DESIGNER
 #endif
 
+// Shared cache for the global body marking definitions payload (Lira, December 2025)
+var/global/list/custom_marking_body_definition_cache = null
+
+// Helper used to build the cache (Lira, December 2025)
+/datum/tgui_module/custom_marking_designer/cache_builder/New()
+	prefs = new /datum/preferences
+	state_session_token = "cache"
+	reference_asset_token_counter = 0
+	icon_shift_map = list()
+	return
+
+// Build body marking definition cache (Lira, December 2025)
+/proc/build_body_marking_definition_cache()
+	if(islist(custom_marking_body_definition_cache))
+		return custom_marking_body_definition_cache
+	if(!islist(body_marking_styles_list) || !body_marking_styles_list.len)
+		return null
+	var/datum/tgui_module/custom_marking_designer/cache_builder/helper = new
+	custom_marking_body_definition_cache = helper.build_body_marking_definitions()
+	return custom_marking_body_definition_cache
+
 // TGUI module for editing and previewing custom markings
 /datum/tgui_module/custom_marking_designer
-	name = "Custom Marking Designer"
+	name = "Marking Designer"
 	tgui_id = "CustomMarkingDesigner"
 
 	var/datum/preferences/prefs // Owning preferences datum
 	var/datum/custom_marking/mark // Marking being edited
+	var/initial_tab = "custom" // Which tab to show on open
+	var/active_tab = "custom" // Which tab the client is currently viewing
+	var/last_preview_bundle_revision = 0 // Tracks latest preview revision sent with preview_sources
+	var/allow_custom_tab = TRUE // Gate custom tab when no mark exists
 	var/active_dir = NORTH // Active direction (NORTH/SOUTH/EAST/WEST)
 	var/active_body_part // Currently active body part for editing
 	var/is_new_mark = FALSE // Track whether this marking was created during this editor session
@@ -43,14 +73,37 @@
 	var/state_session_token // Token for syncing local UI state
 	var/body_part_layer_revision = 0 // Revisions for overlay layers
 	var/preview_revision = 1 // Revisions for preview bundles
+	var/body_preview_revision = 1 // Revisions for stripped body preview bundles
 	var/mark_dirty = FALSE // Dirty flag for pending save
+	var/body_markings_refresh_pending = FALSE // Defer body preview rebuild until body tab is opened
 	var/list/reference_payload_cache // Cached mannequin payloads
 	var/reference_cache_signature // Signature key for reference payload cache
 	var/reference_mannequin_signature // Signature key for mannequin state cache
 	var/reference_build_in_progress = FALSE // Prevent overlapping mannequin rebuilds
 	var/list/reference_pending_request // Latest pending mannequin rebuild request
+	var/list/body_reference_payload_cache // Cached stripped mannequin payloads for body tab
+	var/body_reference_cache_signature // Signature key for stripped reference cache
+	var/body_reference_mannequin_signature // Signature key for stripped mannequin state cache
+	var/body_reference_build_in_progress = FALSE // Prevent overlapping stripped mannequin rebuilds
+	var/list/body_reference_pending_request // Latest pending stripped mannequin rebuild request
 	var/reference_asset_token_counter = 0 // Asset token generator
 	var/list/icon_shift_map // Per-icon shift tracking
+	var/body_marking_chunk_token // Active chunk token for body markings tab saves
+	var/list/body_marking_chunk_buffer // Accumulator for chunked body marking payloads
+	var/list/body_marking_chunk_order // Accumulator for body marking order across chunks
+	var/body_marking_chunk_expected = 0 // Expected chunk count for current body marking save
+	var/body_marking_chunk_received = 0 // Received chunk counter for current body marking save
+
+// Broadcast a partial update about reference build state without forcing tgui_data  (Lira, December 2025)
+/datum/tgui_module/custom_marking_designer/proc/broadcast_reference_build_state(state)
+	var/key = "[REF(src)]"
+	var/list/open_list = SStgui.open_uis_by_src?[key]
+	if(!islist(open_list) || !open_list.len)
+		return
+	for(var/datum/tgui/ui in open_list)
+		if(!ui || ui.src_object != src || !ui.user)
+			continue
+		ui.send_update(list("reference_build_in_progress" = !!state), TRUE)
 
 // Use the standard always-open TGUI state for this editor
 /datum/tgui_module/custom_marking_designer/tgui_state(mob/user)
@@ -75,10 +128,11 @@
 		prefs.ShowChoices(user)
 	if(prefs)
 		prefs.custom_marking_designer_ui = null
+	reset_body_marking_chunk_state()
 	return .
 
 // Set up the designer for an existing or newly created marking
-/datum/tgui_module/custom_marking_designer/New(datum/preferences/pref, datum/custom_marking/existing)
+/datum/tgui_module/custom_marking_designer/New(datum/preferences/pref, datum/custom_marking/existing, initial_tab_override = "custom", skip_mark_create = FALSE)
 	..()
 	prefs = pref
 	if(prefs)
@@ -89,9 +143,13 @@
 		reference_payload_cache = null
 		reference_cache_signature = null
 		reference_mannequin_signature = null
+	if(istext(initial_tab_override) && length(initial_tab_override))
+		initial_tab = initial_tab_override
+	else
+		initial_tab = "custom"
 	if(existing)
 		mark = existing
-	else
+	else if(!skip_mark_create)
 		var/owner = pref?.client_ckey || pref?.client?.ckey || "custom"
 		var/id = generate_custom_marking_id(owner)
 		mark = new(id, "New Custom Marking", list(BP_TORSO), owner)
@@ -100,9 +158,18 @@
 			LAZYINITLIST(pref.custom_markings)
 			pref.custom_markings[mark.id] = mark
 		is_new_mark = TRUE
+	else
+		mark = null
+		is_new_mark = FALSE
+	allow_custom_tab = !!mark
+	if(!allow_custom_tab && initial_tab == "custom")
+		initial_tab = "body"
 	preview_revision = 1
+	last_preview_bundle_revision = preview_revision
+	active_tab = initial_tab
 	initial_snapshot = mark?.to_save()
-	register_custom_marking_style(mark, TRUE)
+	if(mark)
+		register_custom_marking_style(mark, TRUE)
 	original_mark_id = mark?.id
 	original_style_name = mark?.get_style_name()
 	direction_order = list(NORTH, SOUTH, EAST, WEST)
@@ -421,7 +488,7 @@
 	original_style_name = current_style
 
 // Commit edits, refresh caches, and update preview assets
-/datum/tgui_module/custom_marking_designer/proc/save_marking_changes(force_save = TRUE, refresh_browser = FALSE)
+/datum/tgui_module/custom_marking_designer/proc/save_marking_changes(force_save = TRUE, refresh_browser = FALSE, refresh_preview_assets = TRUE)
 	if(!mark)
 		return FALSE
 	var/log_ckey = prefs?.client_ckey || prefs?.client?.ckey || mark?.owner_ckey || "unknown"
@@ -445,23 +512,38 @@
 	is_new_mark = FALSE
 	initial_snapshot = mark.to_save()
 	if(prefs && !QDELETED(prefs))
-		prefs.skip_custom_marking_cache_invalidation_once = TRUE
-		prefs.refresh_custom_marking_assets(TRUE, TRUE, mark, TRUE)
-	preview_revision++
+		if(refresh_preview_assets || refresh_browser)
+			prefs.skip_custom_marking_cache_invalidation_once = TRUE
+		if(refresh_preview_assets)
+			prefs.refresh_custom_marking_assets(TRUE, TRUE, mark, TRUE)
+	if(refresh_preview_assets)
+		preview_revision++
 	if(refresh_browser && prefs)
-		var/mob/user = usr
-		if(!user && prefs.client)
-			user = prefs.client.mob
-		if(user && user.client)
-			var/visible = winget(user, "preferences_window", "is-visible")
-			if(istext(visible) && lowertext(visible) == "true")
-				INVOKE_ASYNC(prefs, /datum/preferences/proc/ShowChoices, user)
+		refresh_preferences_window_if_visible()
 	return TRUE
+
+// Refresh the legacy character setup browser and preview if it's already open (Lira, December 2025)
+/datum/tgui_module/custom_marking_designer/proc/refresh_preferences_window_if_visible(refresh_preview = TRUE)
+	if(!prefs)
+		return FALSE
+	var/mob/user = usr
+	if(!user && prefs.client)
+		user = prefs.client.mob
+	if(!user || !user.client)
+		return FALSE
+	var/visible = winget(user, "preferences_window", "is-visible")
+	if(istext(visible) && lowertext(visible) == "true")
+		if(refresh_preview)
+			INVOKE_ASYNC(prefs, /datum/preferences/proc/update_preview_icon, TRUE)
+		INVOKE_ASYNC(prefs, /datum/preferences/proc/ShowChoices, user)
+		return TRUE
+	return FALSE
 
 // Revert or remove edits depending on whether this is a new mark
 /datum/tgui_module/custom_marking_designer/proc/discard_changes()
 	if(!mark)
 		return
+	reset_body_marking_chunk_state()
 	if(is_new_mark)
 		if(prefs)
 			prefs.custom_markings -= mark.id
@@ -615,6 +697,12 @@
 	var/list/data = list()
 	data["marking_id"] = mark?.id
 	data["mark_name"] = mark?.name
+	data["initial_tab"] = initial_tab
+	if(!allow_custom_tab && active_tab == "custom")
+		active_tab = "body"
+	data["active_tab"] = active_tab
+	data["allow_custom_tab"] = allow_custom_tab
+	data["custom_marking_enable_disclaimer"] = prefs?.get_custom_markings_enable_disclaimer()
 	data["active_dir"] = direction_label(active_dir)
 	data["active_dir_key"] = active_dir
 	data["is_new"] = is_new_mark
@@ -646,10 +734,13 @@
 		data["body_part_layers"] = layers
 		data["body_part_layer_order"] = mark?.body_parts?.Copy()
 	data["body_part_layer_revision"] = body_part_layer_revision
-	var/list/preview_bundle = build_preview_source_bundle()
-	if(islist(preview_bundle))
-		data["preview_sources"] = preview_bundle["dirs"]
-		data["preview_revision"] = preview_bundle["revision"]
+	data["preview_revision"] = isnum(last_preview_bundle_revision) ? last_preview_bundle_revision : preview_revision
+	if(active_tab == "custom")
+		var/list/preview_bundle = build_preview_source_bundle()
+		if(islist(preview_bundle))
+			data["preview_sources"] = preview_bundle["dirs"]
+			data["preview_revision"] = preview_bundle["revision"]
+			last_preview_bundle_revision = preview_bundle["revision"]
 	var/list/canvas_backgrounds_live = build_canvas_background_options()
 	if(islist(canvas_backgrounds_live) && canvas_backgrounds_live.len)
 		data["canvas_backgrounds"] = canvas_backgrounds_live
@@ -657,7 +748,41 @@
 	data["ui_locked"] = FALSE
 	data["show_job_gear"] = !!(prefs?.equip_preview_mob & EQUIP_PREVIEW_JOB)
 	data["show_loadout_gear"] = !!(prefs?.equip_preview_mob & EQUIP_PREVIEW_LOADOUT)
+	data["reference_build_in_progress"] = reference_build_in_progress
 	return data
+
+// Build the payload for the standard body markings tab (Lira, December 2025)
+/datum/tgui_module/custom_marking_designer/proc/build_body_markings_payload()
+	var/list/yield_context = custom_marking_begin_manual_yield()
+	if(!prefs)
+		custom_marking_end_manual_yield(yield_context)
+		return null
+	var/list/payload = list()
+	payload["digitigrade"] = !!prefs.digitigrade
+	payload["body_marking_definitions"] = build_body_marking_definitions()
+	var/list/original_body_markings = prefs.body_markings ? prefs.body_markings.Copy() : list()
+	payload["body_markings"] = original_body_markings ? original_body_markings.Copy() : list()
+	var/list/order = list()
+	if(islist(original_body_markings))
+		for(var/mark in original_body_markings)
+			order += mark
+	payload["order"] = order
+	var/list/preview_bundle = null
+	var/old_body_markings = prefs.body_markings
+	prefs.body_markings = null
+	preview_bundle = build_preview_source_bundle(TRUE)
+	prefs.body_markings = old_body_markings
+	if(islist(preview_bundle))
+		payload["preview_sources"] = preview_bundle["dirs"]
+		payload["preview_revision"] = preview_bundle["revision"]
+	payload["preview_width"] = get_preview_canvas_width()
+	payload["preview_height"] = get_preview_canvas_height()
+	var/list/canvas_backgrounds_live = build_canvas_background_options()
+	if(islist(canvas_backgrounds_live) && canvas_backgrounds_live.len)
+		payload["canvas_backgrounds"] = canvas_backgrounds_live
+		payload["default_canvas_background"] = "default"
+	custom_marking_end_manual_yield(yield_context)
+	return payload
 
 // Normalize a part key from incoming params
 /datum/tgui_module/custom_marking_designer/proc/resolve_action_part(list/params)
@@ -699,6 +824,39 @@
 	if(..())
 		return TRUE
 	var/handled = TRUE
+	if(action == "set_active_tab")
+		var/tab = params?["tab"]
+		if(istext(tab) && length(tab))
+			tab = lowertext(tab)
+			if(!allow_custom_tab && tab == "custom")
+				tab = "body"
+			active_tab = tab
+			if(active_tab == "custom")
+				SStgui.update_uis(src)
+		return TRUE
+	if(action == "enable_custom_markings")
+		if(!prefs)
+			return TRUE
+		var/datum/custom_marking/enabled_mark = prefs.ensure_primary_custom_marking()
+		if(!istype(enabled_mark))
+			return TRUE
+		if(mark != enabled_mark)
+			mark = enabled_mark
+			is_new_mark = FALSE
+			sessions = list()
+			active_body_part = default_body_part()
+			initial_snapshot = mark.to_save()
+			original_mark_id = mark.id
+			original_style_name = mark.get_style_name()
+			body_part_layer_revision++
+			preview_revision++
+		allow_custom_tab = TRUE
+		register_custom_marking_style(mark, TRUE)
+		if(prefs)
+			prefs.refresh_custom_marking_assets(FALSE, TRUE, mark, TRUE)
+		refresh_preferences_window_if_visible(TRUE)
+		SStgui.update_uis(src)
+		return TRUE
 	if(action == "apply_preview_diff")
 		var/list/diff = params?["diff"]
 		if(!islist(diff) || !diff.len)
@@ -785,7 +943,9 @@
 		var/canvas_updated = apply_part_canvas_size_payload(params?["part_canvas_size"])
 		if(replacements_updated || priority_updated || canvas_updated)
 			register_custom_marking_style(mark, TRUE)
-		save_marking_changes(TRUE, TRUE)
+		var/saved = save_marking_changes(TRUE, TRUE, FALSE)
+		if(saved)
+			body_markings_refresh_pending = TRUE
 		SStgui.close_uis(src)
 		return FALSE
 	else if(action == "save_progress")
@@ -794,8 +954,47 @@
 		var/canvas_updated = apply_part_canvas_size_payload(params?["part_canvas_size"])
 		if(replacements_updated || priority_updated || canvas_updated)
 			register_custom_marking_style(mark, TRUE)
-		save_marking_changes(TRUE, TRUE)
+		var/saved = save_marking_changes(TRUE, TRUE, FALSE)
+		if(saved)
+			body_markings_refresh_pending = TRUE
 		SStgui.update_uis(src)
+	else if(action == "load_body_markings")
+		if(body_markings_refresh_pending)
+			if(mark)
+				register_custom_marking_style(mark, FALSE)
+			reference_cache_signature = null
+			reference_mannequin_signature = null
+			reference_payload_cache = null
+			if(prefs)
+				prefs.custom_marking_reference_signature = null
+				prefs.custom_marking_reference_payload_cache = null
+				prefs.custom_marking_reference_mannequin_signature = null
+			body_markings_refresh_pending = FALSE
+		var/list/body_payload = build_body_markings_payload()
+		if(islist(body_payload))
+			var/list/update = list("body_markings_payload" = body_payload)
+			var/datum/tgui/active_ui = SStgui.get_open_ui(usr, src)
+			if(active_ui)
+				active_ui.send_update(update)
+			else
+				SStgui.update_uis(src, update)
+		return TRUE
+	else if(action == "save_body_markings")
+		var/close_ui = params?["close"]
+		var/list/save_payload = resolve_body_marking_chunk_payload(params)
+		if(save_payload == BODY_MARKING_CHUNK_PENDING)
+			return TRUE
+		if(islist(save_payload) && apply_body_marking_payload(save_payload))
+			refresh_preferences_window_if_visible(TRUE)
+			if(close_ui)
+				SStgui.close_uis(src)
+				return FALSE
+			SStgui.update_uis(src)
+		return TRUE
+	else if(action == "close_body_markings")
+		reset_body_marking_chunk_state()
+		SStgui.close_uis(src)
+		return FALSE
 	else if(action == "discard_changes")
 		discard_changes()
 		SStgui.update_uis(src)
@@ -891,11 +1090,11 @@
 	return CUSTOM_MARKING_CANVAS_MAX_HEIGHT
 
 // Build a map of composite grids for each part in a direction
-/datum/tgui_module/custom_marking_designer/proc/build_custom_grid_map(dir)
+/datum/tgui_module/custom_marking_designer/proc/build_custom_grid_map(dir, use_stripped_reference = FALSE)
 	if(!mark)
 		return list()
 	var/list/result = list()
-	var/list/parts = get_preview_part_order(dir)
+	var/list/parts = get_preview_part_order(dir, use_stripped_reference)
 	if(!islist(parts) || !parts.len)
 		parts = list("generic")
 	for(var/part in parts)
@@ -910,9 +1109,9 @@
 	return result
 
 // Build ordering the client should use for preview layers
-/datum/tgui_module/custom_marking_designer/proc/get_preview_part_order(dir_override = null)
+/datum/tgui_module/custom_marking_designer/proc/get_preview_part_order(dir_override = null, use_stripped_reference = FALSE)
 	var/list/order = list("generic")
-	var/list/reference_order = get_reference_part_order(dir_override)
+	var/list/reference_order = get_reference_part_order(dir_override, use_stripped_reference)
 	if(islist(reference_order))
 		for(var/ref_part in reference_order)
 			if(!istext(ref_part) || !length(ref_part))
@@ -939,14 +1138,12 @@
 	return order
 
 // Construct preview source payload for a specific direction
-/datum/tgui_module/custom_marking_designer/proc/build_preview_source_for_dir(dir)
-	if(!mark)
-		return null
+/datum/tgui_module/custom_marking_designer/proc/build_preview_source_for_dir(dir, use_stripped_reference = FALSE)
 	var/list/entry = list(
 		"dir" = dir,
 		"label" = direction_label(dir)
 	)
-	var/list/payload = get_reference_payload_entry(dir)
+	var/list/payload = get_reference_payload_entry(dir, use_stripped_reference)
 	if(islist(payload))
 		var/list/part_assets = payload["part_assets"]
 		if(islist(part_assets) && part_assets.len)
@@ -969,28 +1166,39 @@
 		var/list/loadout_overlay_assets = payload["loadout_overlay_assets"]
 		if(islist(loadout_overlay_assets) && loadout_overlay_assets.len)
 			entry["loadout_overlay_assets"] = loadout_overlay_assets
-	var/list/custom_parts = build_custom_grid_map(dir)
+		var/list/hidden_body_parts = payload["hidden_body_parts"]
+		if(islist(hidden_body_parts))
+			entry["hidden_body_parts"] = hidden_body_parts
+		else
+			entry["hidden_body_parts"] = list()
+	var/list/custom_parts = build_custom_grid_map(dir, use_stripped_reference)
 	if(islist(custom_parts))
 		entry["custom_parts"] = custom_parts
-	var/list/part_order = get_preview_part_order(dir)
+	var/list/part_order = get_preview_part_order(dir, use_stripped_reference)
 	if(islist(part_order) && part_order.len)
 		entry["part_order"] = part_order
 	return entry
 
 // Build preview sources for all directions and bump revision on updates
-/datum/tgui_module/custom_marking_designer/proc/build_preview_source_bundle()
-	if(!mark)
+/datum/tgui_module/custom_marking_designer/proc/build_preview_source_bundle(use_stripped_reference = FALSE)
+	if(!prefs)
 		return null
 	var/list/dirs = direction_order || list(NORTH, SOUTH, EAST, WEST)
-	var/updated = ensure_reference_payload_bundle(get_preview_canvas_width(), get_preview_canvas_height())
+	var/updated = ensure_reference_payload_bundle(get_preview_canvas_width(), get_preview_canvas_height(), use_stripped_reference)
 	var/list/result = list()
 	for(var/dir in dirs)
-		var/list/entry = build_preview_source_for_dir(dir)
+		var/list/entry = build_preview_source_for_dir(dir, use_stripped_reference)
 		if(islist(entry))
 			result += list(entry)
 	if(updated)
-		preview_revision++
-	return list("dirs" = result, "revision" = preview_revision)
+		if(use_stripped_reference)
+			body_preview_revision++
+		else
+			preview_revision++
+	return list(
+		"dirs" = result,
+		"revision" = use_stripped_reference ? body_preview_revision : preview_revision
+	)
 
 // Build a stable cache signature that incorporates sprite dimensions
 /datum/tgui_module/custom_marking_designer/proc/get_reference_cache_signature(width, height)
@@ -1131,63 +1339,119 @@
 	spawn(0)
 		ensure_reference_payload_bundle(pending["width"], pending["height"])
 
+// Trigger a queued stripped mannequin rebuild after the current one finishes (Lira, December 2025)
+/datum/tgui_module/custom_marking_designer/proc/process_pending_body_reference_build()
+	if(!islist(body_reference_pending_request))
+		return
+	var/list/pending = body_reference_pending_request
+	body_reference_pending_request = null
+	spawn(0)
+		ensure_reference_payload_bundle(pending["width"], pending["height"], TRUE)
+
 // Ensure cached reference payloads exist for each direction at the requested size
-/datum/tgui_module/custom_marking_designer/proc/ensure_reference_payload_bundle(width, height)
+/datum/tgui_module/custom_marking_designer/proc/ensure_reference_payload_bundle(width, height, use_stripped_reference = FALSE)
 	var/list/yield_context = custom_marking_begin_manual_yield()
 	var/target_signature = get_reference_cache_signature(width, height)
-	if(reference_build_in_progress)
-		if(!islist(reference_pending_request) || (reference_pending_request["signature"] != target_signature))
-			reference_pending_request = list(
+	var/build_in_progress = use_stripped_reference ? body_reference_build_in_progress : reference_build_in_progress
+	var/list/pending_request = use_stripped_reference ? body_reference_pending_request : reference_pending_request
+	if(build_in_progress)
+		if(!islist(pending_request) || (pending_request["signature"] != target_signature))
+			pending_request = list(
 				"width" = width,
 				"height" = height,
 				"signature" = target_signature
 			)
+		if(use_stripped_reference)
+			body_reference_pending_request = pending_request
+		else
+			reference_pending_request = pending_request
 		custom_marking_end_manual_yield(yield_context)
 		return FALSE
-	reference_build_in_progress = TRUE
-	reference_pending_request = null
+	if(use_stripped_reference)
+		body_reference_build_in_progress = TRUE
+		body_reference_pending_request = null
+	else
+		reference_build_in_progress = TRUE
+		reference_pending_request = null
 	var/updated = FALSE
 	if(!prefs)
-		reference_build_in_progress = FALSE
-		custom_marking_end_manual_yield(yield_context)
-		process_pending_reference_build()
+		if(use_stripped_reference)
+			body_reference_build_in_progress = FALSE
+			custom_marking_end_manual_yield(yield_context)
+			process_pending_body_reference_build()
+		else
+			reference_build_in_progress = FALSE
+			custom_marking_end_manual_yield(yield_context)
+			process_pending_reference_build()
 		return updated
 	if(width <= 0 || height <= 0)
-		reference_build_in_progress = FALSE
-		custom_marking_end_manual_yield(yield_context)
-		process_pending_reference_build()
+		if(use_stripped_reference)
+			body_reference_build_in_progress = FALSE
+			custom_marking_end_manual_yield(yield_context)
+			process_pending_body_reference_build()
+		else
+			reference_build_in_progress = FALSE
+			custom_marking_end_manual_yield(yield_context)
+			process_pending_reference_build()
 		return updated
-	if(reference_cache_signature != target_signature || !islist(reference_payload_cache))
-		reference_cache_signature = target_signature
-		reference_payload_cache = list()
-		if(prefs)
-			prefs.custom_marking_reference_signature = reference_cache_signature
-			prefs.custom_marking_reference_payload_cache = reference_payload_cache
+	var/list/cache = use_stripped_reference ? body_reference_payload_cache : reference_payload_cache
+	var/cache_signature = use_stripped_reference ? body_reference_cache_signature : reference_cache_signature
+	var/mannequin_signature = use_stripped_reference ? body_reference_mannequin_signature : reference_mannequin_signature
+	if(cache_signature != target_signature || !islist(cache))
+		cache_signature = target_signature
+		cache = list()
+		if(!use_stripped_reference && prefs)
+			prefs.custom_marking_reference_signature = cache_signature
+			prefs.custom_marking_reference_payload_cache = cache
 		updated = TRUE
-	else if(prefs)
-		if(prefs.custom_marking_reference_payload_cache != reference_payload_cache)
-			prefs.custom_marking_reference_payload_cache = reference_payload_cache
-		if(prefs.custom_marking_reference_signature != reference_cache_signature)
-			prefs.custom_marking_reference_signature = reference_cache_signature
+	else if(!use_stripped_reference && prefs)
+		if(prefs.custom_marking_reference_payload_cache != cache)
+			prefs.custom_marking_reference_payload_cache = cache
+		if(prefs.custom_marking_reference_signature != cache_signature)
+			prefs.custom_marking_reference_signature = cache_signature
 	var/list/dirs = direction_order || list(NORTH, SOUTH, EAST, WEST)
 	var/list/missing = list()
 	for(var/dir in dirs)
 		var/key = reference_payload_key(dir, width, height)
-		if(!islist(reference_payload_cache[key]))
+		if(!islist(cache[key]))
 			missing += dir
 	var/mob/living/carbon/human/dummy/mannequin/mannequin = get_reference_mannequin()
 	if(!mannequin)
-		reference_build_in_progress = FALSE
-		custom_marking_end_manual_yield(yield_context)
-		process_pending_reference_build()
+		if(use_stripped_reference)
+			body_reference_payload_cache = cache
+			body_reference_cache_signature = cache_signature
+			body_reference_mannequin_signature = mannequin_signature
+			body_reference_build_in_progress = FALSE
+			custom_marking_end_manual_yield(yield_context)
+			process_pending_body_reference_build()
+		else
+			reference_payload_cache = cache
+			reference_cache_signature = cache_signature
+			reference_mannequin_signature = mannequin_signature
+			reference_build_in_progress = FALSE
+			custom_marking_end_manual_yield(yield_context)
+			process_pending_reference_build()
 		return updated
+	if(missing.len && !use_stripped_reference)
+		broadcast_reference_build_state(TRUE)
 	var/original_ignore_hide = mannequin.ignore_sprite_accessory_body_hide
 	mannequin.ignore_sprite_accessory_body_hide = TRUE
 	if(!missing.len)
 		mannequin.ignore_sprite_accessory_body_hide = original_ignore_hide
-		reference_build_in_progress = FALSE
-		custom_marking_end_manual_yield(yield_context)
-		process_pending_reference_build()
+		if(use_stripped_reference)
+			body_reference_payload_cache = cache
+			body_reference_cache_signature = cache_signature
+			body_reference_mannequin_signature = mannequin_signature
+			body_reference_build_in_progress = FALSE
+			custom_marking_end_manual_yield(yield_context)
+			process_pending_body_reference_build()
+		else
+			reference_payload_cache = cache
+			reference_cache_signature = cache_signature
+			reference_mannequin_signature = mannequin_signature
+			reference_build_in_progress = FALSE
+			custom_marking_end_manual_yield(yield_context)
+			process_pending_reference_build()
 		return updated
 	var/static/list/gear_overlay_layers = list(
 		9,  // SHOES_LAYER_ALT
@@ -1209,11 +1473,11 @@
 	mannequin.disable_vore_layers = TRUE
 	if(!mannequin.dna)
 		mannequin.dna = new /datum/dna(null)
-	if(reference_mannequin_signature != target_signature)
+	if(mannequin_signature != target_signature)
 		copy_preferences_to_mannequin_without_marking(mannequin)
-		reference_mannequin_signature = target_signature
-		if(prefs)
-			prefs.custom_marking_reference_mannequin_signature = reference_mannequin_signature
+		mannequin_signature = target_signature
+		if(!use_stripped_reference && prefs)
+			prefs.custom_marking_reference_mannequin_signature = mannequin_signature
 	mannequin.delete_inventory(TRUE)
 	if(islist(mannequin.all_underwear))
 		mannequin.all_underwear.Cut()
@@ -1257,19 +1521,30 @@
 			clear_mannequin_preview_overlays(mannequin)
 			mannequin.ImmediateOverlayUpdate()
 		if(islist(payload))
-			if(!islist(reference_payload_cache))
-				reference_payload_cache = list()
+			if(!islist(cache))
+				cache = list()
 			var/key = reference_payload_key(dir, width, height)
 			if(key)
-				reference_payload_cache[key] = payload
+				cache[key] = payload
 			updated = TRUE
 	mannequin.disable_vore_layers = original_disable
 	mannequin.ignore_sprite_accessory_body_hide = original_ignore_hide
 	mannequin.delete_inventory(TRUE)
 	mannequin.ImmediateOverlayUpdate()
 	custom_marking_end_manual_yield(yield_context)
-	reference_build_in_progress = FALSE
-	process_pending_reference_build()
+	if(use_stripped_reference)
+		body_reference_payload_cache = cache
+		body_reference_cache_signature = cache_signature
+		body_reference_mannequin_signature = mannequin_signature
+		body_reference_build_in_progress = FALSE
+		process_pending_body_reference_build()
+	else
+		reference_payload_cache = cache
+		reference_cache_signature = cache_signature
+		reference_mannequin_signature = mannequin_signature
+		reference_build_in_progress = FALSE
+		broadcast_reference_build_state(FALSE)
+		process_pending_reference_build()
 	return updated
 
 // Copy preferences to the mannequin while excluding the current custom marking
@@ -1358,6 +1633,24 @@
 	var/icon/body_icon = icon(mannequin.icon, null, dir, 1, 0)
 	var/list/body_asset = build_icon_asset(body_icon)
 	var/icon/composite_icon = new/icon(body_icon)
+	var/list/hidden_body_parts = list()
+	if(islist(mannequin.organs))
+		var/original_ignore_hide = mannequin.ignore_sprite_accessory_body_hide
+		mannequin.ignore_sprite_accessory_body_hide = FALSE
+		for(var/obj/item/organ/external/O in mannequin.organs)
+			CUSTOM_MARKING_CHECK_TICK
+			if(!istype(O))
+				continue
+			if(!O.is_hidden_by_markings())
+				continue
+			var/hidden_normalized = null
+			if(istext(O.organ_tag) && length(O.organ_tag))
+				hidden_normalized = lowertext(O.organ_tag)
+			else if(isnum(O.organ_tag))
+				hidden_normalized = "[O.organ_tag]"
+			if(istext(hidden_normalized) && length(hidden_normalized) && !(hidden_normalized in hidden_body_parts))
+				hidden_body_parts += hidden_normalized
+		mannequin.ignore_sprite_accessory_body_hide = original_ignore_hide
 	var/list/overlay_assets = list()
 	if(islist(mannequin.overlays_standing))
 		for(var/i = 1 to mannequin.overlays_standing.len)
@@ -1491,7 +1784,8 @@
 		"overlay_assets" = overlay_assets,
 		"part_assets" = part_assets,
 		"part_marking_assets" = part_marking_assets,
-		"part_order" = part_order
+		"part_order" = part_order,
+		"hidden_body_parts" = hidden_body_parts
 	)
 
 // Build overlay assets restricted to a whitelist of layers (Lira, December 2025)
@@ -1594,7 +1888,7 @@
 	return directional
 
 // Convert an icon into a 2D color grid for painting overlays
-/datum/tgui_module/custom_marking_designer/proc/get_reference_payload_entry(dir_override = null)
+/datum/tgui_module/custom_marking_designer/proc/get_reference_payload_entry(dir_override = null, use_stripped_reference = FALSE)
 	if(!prefs)
 		return null
 	var/width = get_preview_canvas_width()
@@ -1604,12 +1898,13 @@
 	var/dir = dir_override
 	if(isnull(dir))
 		dir = active_dir || NORTH
-	ensure_reference_payload_bundle(width, height)
-	return reference_payload_cache?[reference_payload_key(dir, width, height)]
+	ensure_reference_payload_bundle(width, height, use_stripped_reference)
+	var/list/cache = use_stripped_reference ? body_reference_payload_cache : reference_payload_cache
+	return cache?[reference_payload_key(dir, width, height)]
 
 // Return part order from cached reference payload
-/datum/tgui_module/custom_marking_designer/proc/get_reference_part_order(dir_override = null)
-	var/list/payload = get_reference_payload_entry(dir_override)
+/datum/tgui_module/custom_marking_designer/proc/get_reference_part_order(dir_override = null, use_stripped_reference = FALSE)
+	var/list/payload = get_reference_payload_entry(dir_override, use_stripped_reference)
 	if(!islist(payload))
 		return null
 	var/list/order = payload["part_order"]
@@ -2011,6 +2306,220 @@
 	clear_icon_shift(source)
 	return payload
 
+// Resolve category for a body marking
+/datum/tgui_module/custom_marking_designer/proc/get_body_marking_category(marking_id)
+	if(!istext(marking_id) || !length(marking_id))
+		return "all"
+	if(body_marking_heads && (marking_id in body_marking_heads))
+		return "heads"
+	if(body_marking_bodies && (marking_id in body_marking_bodies))
+		return "bodies"
+	if(body_marking_limbs && (marking_id in body_marking_limbs))
+		return "limbs"
+	if(body_marking_addons && (marking_id in body_marking_addons))
+		return "addons"
+	if(body_marking_skintone && (marking_id in body_marking_skintone))
+		return "skintone"
+	if(body_marking_teshari && (marking_id in body_marking_teshari))
+		return "teshari"
+	if(body_marking_vox && (marking_id in body_marking_vox))
+		return "vox"
+	if(body_marking_augment && (marking_id in body_marking_augment))
+		return "augment"
+	return "all"
+
+// Helper to pick the default color for a marking
+/datum/tgui_module/custom_marking_designer/proc/get_body_marking_default_color(datum/sprite_accessory/marking/style)
+	if(istype(style) && !style.do_colouration)
+		return "#FFFFFF"
+	return "#000000"
+
+// Build icon assets for each covered body part for a marking
+/datum/tgui_module/custom_marking_designer/proc/build_marking_part_assets(datum/sprite_accessory/marking/style, dir, digitigrade = FALSE)
+	if(!istype(style))
+		return null
+	var/icon/icon_source = digitigrade && style.digitigrade_icon ? style.digitigrade_icon : style.icon
+	if(!icon_source)
+		return null
+	var/list/result = list()
+	for(var/part in style.body_parts)
+		CUSTOM_MARKING_CHECK_TICK
+		if(!istext(part) || !length(part))
+			continue
+		var/state_name = "[style.icon_state]-[part]"
+		var/list/state_list = icon_states(icon_source)
+		if(!islist(state_list) || !(state_name in state_list))
+			continue
+		var/icon/mark_icon = icon(icon_source, state_name, dir, 1, 0)
+		if(!isicon(mark_icon))
+			continue
+		if(!icon_has_visible_pixels(mark_icon))
+			continue
+		var/list/asset = build_icon_asset(mark_icon)
+		if(!islist(asset))
+			continue
+		result[part] = asset
+	return result
+
+// Build the full set of body marking definitions for the UI
+/datum/tgui_module/custom_marking_designer/proc/build_body_marking_definitions()
+	if(islist(custom_marking_body_definition_cache))
+		return custom_marking_body_definition_cache
+	var/list/definitions = list()
+	for(var/marking_id in body_marking_styles_list)
+		CUSTOM_MARKING_CHECK_TICK
+		var/datum/sprite_accessory/marking/style = body_marking_styles_list[marking_id]
+		if(!istype(style))
+			continue
+		var/list/def = list(
+			"id" = marking_id,
+			"name" = style.get_display_name(),
+			"category" = get_body_marking_category(marking_id),
+			"body_parts" = style.body_parts?.Copy() || list(),
+			"hide_body_parts" = islist(style.hide_body_parts) ? style.hide_body_parts.Copy() : null,
+			"do_colouration" = !!style.do_colouration,
+			"color_blend_mode" = style.color_blend_mode,
+			"render_above_body" = !!style.render_above_body,
+			"render_above_body_parts" = islist(style.render_above_body_parts) ? style.render_above_body_parts.Copy() : null,
+			"digitigrade_acceptance" = style.digitigrade_acceptance,
+			"hide_from_gallery" = !!style.hide_from_marking_gallery,
+			"default_color" = get_body_marking_default_color(style)
+		)
+		var/list/default_entry = prefs?.mass_edit_marking_list(marking_id, TRUE, TRUE, null, TRUE, def["default_color"])
+		if(islist(default_entry))
+			def["default_entry"] = default_entry
+		var/list/dir_assets = list()
+		var/list/dir_digi_assets = list()
+		for(var/dir in list(NORTH, SOUTH, EAST, WEST))
+			CUSTOM_MARKING_CHECK_TICK
+			var/list/assets = build_marking_part_assets(style, dir, FALSE)
+			if(islist(assets) && assets.len)
+				dir_assets["[dir]"] = assets // numeric keys as associative to avoid sparse index runtimes
+			CUSTOM_MARKING_CHECK_TICK
+			var/list/digi_assets = build_marking_part_assets(style, dir, TRUE)
+			if(islist(digi_assets) && digi_assets.len)
+				dir_digi_assets["[dir]"] = digi_assets
+		if(dir_assets.len)
+			def["assets"] = dir_assets
+		if(dir_digi_assets.len)
+			def["digitigrade_assets"] = dir_digi_assets
+		definitions += list(def)
+	custom_marking_body_definition_cache = definitions
+	return definitions
+
+// Sanitize an incoming body marking entry from the client
+/datum/tgui_module/custom_marking_designer/proc/sanitize_body_marking_entry(marking_id, datum/sprite_accessory/marking/style, list/incoming)
+	if(!istext(marking_id) || !istype(style))
+		return null
+	var/default_color = get_body_marking_default_color(style)
+	var/list/base_entry = prefs?.mass_edit_marking_list(marking_id, TRUE, TRUE, null, TRUE, default_color)
+	if(!islist(base_entry))
+		return null
+	if(!islist(incoming))
+		return base_entry
+	if(incoming["color"])
+		if(style.do_colouration)
+			base_entry["color"] = sanitize_hexcolor(incoming["color"], default_color)
+	for(var/part in incoming)
+		if(part == "color")
+			continue
+		if(!istext(part))
+			continue
+		if(!(part in style.body_parts))
+			continue
+		var/list/part_state = base_entry[part]
+		if(!islist(part_state))
+			part_state = list("on" = TRUE, "color" = default_color)
+		var/list/raw_part = incoming[part]
+		if(islist(raw_part))
+			if("on" in raw_part)
+				part_state["on"] = !!raw_part["on"]
+			if(style.do_colouration && raw_part["color"])
+				part_state["color"] = sanitize_hexcolor(raw_part["color"], default_color)
+		base_entry[part] = part_state
+	return base_entry
+
+// Reset any in-progress chunked body markings save
+/datum/tgui_module/custom_marking_designer/proc/reset_body_marking_chunk_state()
+	body_marking_chunk_token = null
+	body_marking_chunk_buffer = null
+	body_marking_chunk_order = null
+	body_marking_chunk_expected = 0
+	body_marking_chunk_received = 0
+
+// Merge chunked payload data and return the full payload once complete
+/datum/tgui_module/custom_marking_designer/proc/resolve_body_marking_chunk_payload(list/params)
+	if(!islist(params))
+		reset_body_marking_chunk_state()
+		return null
+	var/chunk_total = text2num_safe(params?["chunk_total"])
+	var/chunk_index = text2num_safe(params?["chunk_index"])
+	var/chunk_token = params?["chunk_id"]
+	if(!istext(chunk_token) || !chunk_total || chunk_total <= 0 || isnull(chunk_index))
+		reset_body_marking_chunk_state()
+		return params
+	if(chunk_total > 256)
+		chunk_total = 256
+	if(chunk_token != body_marking_chunk_token)
+		reset_body_marking_chunk_state()
+		body_marking_chunk_token = chunk_token
+	body_marking_chunk_expected = max(body_marking_chunk_expected, chunk_total)
+	if(islist(params?["order"]))
+		body_marking_chunk_order = params["order"]
+	var/list/chunk_map = params?["body_markings"]
+	if(islist(chunk_map))
+		if(!islist(body_marking_chunk_buffer))
+			body_marking_chunk_buffer = list()
+		for(var/id in chunk_map)
+			if(istext(id))
+				body_marking_chunk_buffer[id] = chunk_map[id]
+	body_marking_chunk_received = max(body_marking_chunk_received, chunk_index + 1)
+	if(body_marking_chunk_expected > 0 && body_marking_chunk_received >= body_marking_chunk_expected)
+		var/list/final_map = islist(body_marking_chunk_buffer) ? body_marking_chunk_buffer : list()
+		var/list/final_order = islist(body_marking_chunk_order) ? body_marking_chunk_order : list()
+		if(!final_order.len && final_map.len)
+			for(var/mark_id in final_map)
+				final_order += mark_id
+		reset_body_marking_chunk_state()
+		return list(
+			"body_markings" = final_map,
+			"order" = final_order
+		)
+	return BODY_MARKING_CHUNK_PENDING
+
+// Apply a body markings payload coming from the client
+/datum/tgui_module/custom_marking_designer/proc/apply_body_marking_payload(list/params)
+	if(!prefs)
+		return FALSE
+	var/list/incoming_map = params?["body_markings"]
+	if(!islist(incoming_map))
+		return FALSE
+	var/list/order = params?["order"]
+	var/list/ordered_marks = list()
+	if(islist(order) && order.len)
+		for(var/id in order)
+			ordered_marks += id
+	else
+		for(var/id in incoming_map)
+			ordered_marks += id
+	var/list/new_payload = list()
+	for(var/mark_id in ordered_marks)
+		if(new_payload.len >= BODY_MARKING_SELECTION_LIMIT)
+			break
+		if(!istext(mark_id) || !incoming_map[mark_id])
+			continue
+		var/datum/sprite_accessory/marking/style = body_marking_styles_list[mark_id]
+		if(!istype(style))
+			continue
+		var/list/sanitized = sanitize_body_marking_entry(mark_id, style, incoming_map[mark_id])
+		if(!islist(sanitized))
+			continue
+		new_payload[mark_id] = sanitized
+	prefs.body_markings = new_payload
+	prefs.sanitize_body_styles()
+	return TRUE
+
+#undef BODY_MARKING_SELECTION_LIMIT
 #undef CUSTOM_MARKING_DEFAULT_WIDTH
 #undef CUSTOM_MARKING_DEFAULT_HEIGHT
 #undef CUSTOM_MARKING_CANVAS_MAX_WIDTH

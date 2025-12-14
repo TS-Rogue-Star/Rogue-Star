@@ -1,10 +1,12 @@
-// ///////////////////////////////////////////////////////////////////////////////////////
-// Created by Lira for Rogue Star November 2025: Types for custom marking designer ///////
-// ///////////////////////////////////////////////////////////////////////////////////////
-// Updated by Lira for Rogue Star November 2025: Updated to support 64x64 markings ///////
-// ///////////////////////////////////////////////////////////////////////////////////////
-// Updated by Lira for Rogue Star December 2025: Updated to support loaout and job gear //
-// ///////////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////
+// Created by Lira for Rogue Star November 2025: Types for custom marking designer ////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2025: Updated to support 64x64 markings ////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star December 2025: Updated to support loaout and job gear ///////////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star December 2025: Updated to support new body marking selector /////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import type {
   DiffEntry,
@@ -44,6 +46,9 @@ export type DraftStrokePayload = {
 export type CustomMarkingDesignerData = {
   marking_id?: string;
   mark_name?: string;
+  initial_tab?: 'custom' | 'body';
+  allow_custom_tab?: boolean;
+  custom_marking_enable_disclaimer?: string;
   active_dir: string;
   active_dir_key: number;
   active_body_part: string | null;
@@ -73,6 +78,7 @@ export type CustomMarkingDesignerData = {
   ui_locked?: boolean;
   preview_sources?: PreviewDirectionSource[];
   preview_revision?: number;
+  reference_build_in_progress?: boolean;
   part_replacements?: Record<string, boolean>;
   part_render_priority?: Record<string, boolean>;
   replacement_dependents?: Record<string, string[]>;
@@ -83,6 +89,7 @@ export type CustomMarkingDesignerData = {
   default_canvas_background?: string;
   show_job_gear?: boolean;
   show_loadout_gear?: boolean;
+  body_markings_payload?: BodyMarkingsPayload | null;
 };
 
 export type CustomColorSlotsState = Array<string | null>;
@@ -111,6 +118,57 @@ export type CanvasBackgroundOption = {
   id: string;
   label: string;
   asset?: IconAssetPayload | null;
+};
+
+export type BodyMarkingPartState = {
+  on?: boolean;
+  color?: string | null;
+};
+
+export type BodyMarkingColorTarget =
+  | { type: 'mark'; markId: string; partId?: string | null }
+  | { type: 'galleryPreview' };
+
+export type BodyMarkingEntry = {
+  color?: string | null;
+  [partId: string]: BodyMarkingPartState | string | null | undefined;
+};
+
+export type BodyMarkingDefinition = {
+  id: string;
+  name: string;
+  category: string;
+  body_parts: string[];
+  hide_body_parts?: string[] | null;
+  do_colouration: boolean;
+  color_blend_mode: number;
+  render_above_body: boolean;
+  render_above_body_parts?: Record<string, boolean> | null;
+  digitigrade_acceptance?: number;
+  hide_from_gallery?: boolean;
+  default_color?: string;
+  default_entry?: BodyMarkingEntry;
+  assets?: Record<number, Record<string, IconAssetPayload>>;
+  digitigrade_assets?: Record<number, Record<string, IconAssetPayload>>;
+};
+
+export type BodyMarkingsPayload = {
+  body_marking_definitions: BodyMarkingDefinition[];
+  body_markings: Record<string, BodyMarkingEntry>;
+  order: string[];
+  digitigrade?: boolean;
+  preview_sources?: PreviewDirectionSource[];
+  preview_revision?: number;
+  preview_width?: number;
+  preview_height?: number;
+  canvas_backgrounds?: CanvasBackgroundOption[];
+  default_canvas_background?: string;
+};
+
+export type BodyMarkingsSavedState = {
+  order: string[];
+  markings: Record<string, BodyMarkingEntry>;
+  selectedId: string | null;
 };
 
 export type DirectionCanvasSourceOptions = {
