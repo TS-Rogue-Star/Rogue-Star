@@ -1,12 +1,14 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // Created by Lira for Rogue Star December 2025: Loading screen for the custom marking designer //
 //////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star December 2025: Title updated for expanded purpose //////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define CUSTOM_MARKING_DESIGNER_UI_WIDTH 1720
 #define CUSTOM_MARKING_DESIGNER_UI_HEIGHT 950
 
 /datum/tgui_module/custom_marking_designer_loading
-	name = "Custom Marking Designer"
+	name = "Marking Designer"
 	tgui_id = "CustomMarkingDesignerLoading"
 
 	var/datum/preferences/prefs

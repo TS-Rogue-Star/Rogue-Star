@@ -1,6 +1,8 @@
 // ///////////////////////////////////////////////////////////////////////////////////////////
 // Created by Lira for Rogue Star November 2025: Hex-ring + triangle RS color picker widget //
 // ///////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star December 2025: Make custom colors optional /////////////////
+// ///////////////////////////////////////////////////////////////////////////////////////////
 
 import { clamp } from 'common/math';
 import { Component, createRef } from 'inferno';
@@ -25,6 +27,7 @@ type RogueStarColorPickerProps = {
   readonly onChange?: (hex: string) => void;
   readonly onCommit?: (hex: string) => void;
   readonly showPreview?: boolean;
+  readonly showCustomColors?: boolean;
 };
 
 type RgbState = {
@@ -117,7 +120,6 @@ export class RogueStarColorPicker extends Component<
             customSelection: prev.customSelection,
           }),
           () => {
-            this.emitPreview(incoming);
             this.renderTriangleCanvas();
           }
         );
@@ -138,7 +140,12 @@ export class RogueStarColorPicker extends Component<
   }
 
   render() {
-    const { currentColor, onCustomColorsChange, showPreview } = this.props;
+    const {
+      currentColor,
+      onCustomColorsChange,
+      showPreview,
+      showCustomColors,
+    } = this.props;
     const { hue, saturation, value, hex, rgb, hexInput, customSelection } =
       this.state;
     const displayRotation = this.getDisplayRotation();
@@ -152,8 +159,9 @@ export class RogueStarColorPicker extends Component<
       normalizeHex(currentColor) ||
       normalizeHex(this.props.color) ||
       DEFAULT_COLOR;
-    const customColors = this.getCustomColors();
     const shouldRenderPreview = showPreview !== false;
+    const shouldRenderCustomColors = showCustomColors !== false;
+    const customColors = shouldRenderCustomColors ? this.getCustomColors() : [];
 
     return (
       <Box className="RogueStarColorPicker">
@@ -201,33 +209,35 @@ export class RogueStarColorPicker extends Component<
               </div>
             </div>
           </div>
-          <div className="RogueStarColorPicker__customRow">
-            {customColors.map((color, index) => (
-              <button
-                key={`custom-${index}`}
-                type="button"
-                className={[
-                  'RogueStarColorPicker__swatch',
-                  customSelection === index
-                    ? 'RogueStarColorPicker__swatch--selected'
-                    : '',
-                ]
-                  .filter(Boolean)
-                  .join(' ')}
-                style={{
-                  background: color || 'transparent',
-                }}
-                onClick={() => this.handleCustomSwatchSelect(index, color)}
+          {shouldRenderCustomColors ? (
+            <div className="RogueStarColorPicker__customRow">
+              {customColors.map((color, index) => (
+                <button
+                  key={`custom-${index}`}
+                  type="button"
+                  className={[
+                    'RogueStarColorPicker__swatch',
+                    customSelection === index
+                      ? 'RogueStarColorPicker__swatch--selected'
+                      : '',
+                  ]
+                    .filter(Boolean)
+                    .join(' ')}
+                  style={{
+                    background: color || 'transparent',
+                  }}
+                  onClick={() => this.handleCustomSwatchSelect(index, color)}
+                />
+              ))}
+              <Button
+                icon="plus"
+                content="Save"
+                className="RogueStarColorPicker__saveButton"
+                disabled={!onCustomColorsChange}
+                onClick={() => this.handleAddCustomColor()}
               />
-            ))}
-            <Button
-              icon="plus"
-              content="Save"
-              className="RogueStarColorPicker__saveButton"
-              disabled={!onCustomColorsChange}
-              onClick={() => this.handleAddCustomColor()}
-            />
-          </div>
+            </div>
+          ) : null}
         </div>
 
         <div className="RogueStarColorPicker__controlColumn">

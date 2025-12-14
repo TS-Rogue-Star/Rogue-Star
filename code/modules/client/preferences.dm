@@ -236,6 +236,10 @@ var/list/preferences_datums = list()
 
 // RS Add Start: Custom markings support (Lira, September 2025)
 
+// Disclaimer text for enabling custom markings (Lira, December 2025)
+/datum/preferences/proc/get_custom_markings_enable_disclaimer()
+	return "This is an advanced character editing tool that allows you to edit individual pixels on your character to adjust or create new markings.  Custom markings have the same standards as markings added to the RogueStar codebase.  They should make realistic sense and must be SFW.  If it wouldn't get approved to add to the code, it should not be done here.  If you are uncertain about something, please let us know and we're happy to chatter about it."
+
 // Return custom marking
 /datum/preferences/proc/get_primary_custom_marking()
 	RETURN_TYPE(/datum/custom_marking)
@@ -451,6 +455,30 @@ var/list/preferences_datums = list()
 	if(!module)
 		module = new(src, mark)
 		custom_marking_designer_ui = module
+	module.tgui_interact(user)
+
+// RS Add: Open the body markings gallery tab (Lira, December 2025)
+/datum/preferences/proc/open_body_markings_designer(mob/user)
+	if(!user)
+		return
+	var/datum/custom_marking/mark = get_primary_custom_marking()
+	var/datum/tgui_module/custom_marking_designer/module = custom_marking_designer_ui
+	if(module)
+		if(QDELETED(module) || module.host != src)
+			custom_marking_designer_ui = null
+			module = null
+		else if(mark && module.mark != mark)
+			qdel(module)
+			custom_marking_designer_ui = null
+			module = null
+	if(!module)
+		module = new(src, mark, "body", TRUE)
+		custom_marking_designer_ui = module
+	else
+		module.initial_tab = "body"
+		module.active_tab = "body"
+		module.allow_custom_tab = !!mark
+		SStgui.update_uis(module)
 	module.tgui_interact(user)
 
 // Provide a user-friendly label for a stored body marking key
