@@ -16,6 +16,13 @@ GLOBAL_VAR_INIT(custom_marking_allow_yield, FALSE)
 GLOBAL_VAR_INIT(custom_marking_yield_budget, 0)
 GLOBAL_VAR_INIT(custom_marking_yield_epoch, 0)
 
+// Build global cache when server initializes (Lira, December 2025)
+/datum/controller/subsystem/custom_marking/Initialize(timeofday)
+	. = ..(timeofday)
+	if(!islist(build_body_marking_definition_cache()))
+		addtimer(CALLBACK(GLOBAL_PROC, /proc/build_body_marking_definition_cache), 10, TIMER_UNIQUE | TIMER_NO_HASH_WAIT)
+	return .
+
 // Process queued callbacks while honoring MC tick limits
 /datum/controller/subsystem/custom_marking/fire(resumed = FALSE)
 	if(!task_queue.len)
