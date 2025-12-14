@@ -10,14 +10,15 @@
 
 /proc/event_severity_to_string(severity)
 	var/severityRounded = round(severity)
-	case(severityRounded)
+	switch(severityRounded)
 		if (EVENT_LEVEL_MUNDANE)
 			return "Mundane"
 		if (EVENT_LEVEL_MODERATE)
 			return "Moderate"
 		if (EVENT_LEVEL_MAJOR)
 			return "Major"
-		return "Unknown"
+		else
+			return "Unknown"
 
 /datum/event_container
 	var/severity = -1
@@ -57,7 +58,7 @@
 
 		new next_event.event_type(next_event)	// Events are added and removed from the processing queue in their New/kill procs
 
-		log_debug("Starting event '[next_event.name]' of severity [severity_to_string(severity)].")
+		log_debug("Starting event '[next_event.name]' of severity [event_severity_to_string(severity)].")
 		next_event = null						// When set to null, a random event will be selected next time
 	else
 		// If not, wait for one minute, instead of one tick, before checking again.
