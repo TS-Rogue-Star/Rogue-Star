@@ -16,6 +16,9 @@ const BODY_MARKING_CHUNK_CHAR_BUDGET = 7000;
 const BODY_MARKING_CHUNK_ENTRY_CAP = 16;
 const BODY_MARKING_CHUNK_OVERHEAD = 256;
 
+export const isBodyMarkingPartEnabled = (value: unknown) =>
+  value !== false && value !== 0 && value !== '0';
+
 export const deepCopyMarkings = (value?: Record<string, BodyMarkingEntry>) =>
   JSON.parse(JSON.stringify(value || {}));
 
@@ -119,7 +122,7 @@ export const buildBodyMarkingSavePayload = ({
       def.body_parts.forEach((partId) => {
         const state = entry[partId] as BodyMarkingPartState;
         const partState: BodyMarkingPartState = {
-          on: state?.on !== false,
+          on: isBodyMarkingPartEnabled(state?.on),
         };
         if (def.do_colouration && typeof state?.color === 'string') {
           partState.color = normalizeHex(state.color);
@@ -138,7 +141,7 @@ export const buildBodyMarkingSavePayload = ({
       }
       const state = rawState as BodyMarkingPartState;
       const partState: BodyMarkingPartState = {
-        on: state.on !== false,
+        on: isBodyMarkingPartEnabled(state.on),
       };
       if (typeof state.color === 'string') {
         partState.color = normalizeHex(state.color);

@@ -148,6 +148,12 @@ export const usePartFlagState = ({
     setCanvasSizeState(serverCanvasSizeState);
   };
 
+  const commitFlagStates = () => {
+    setReplacementState(buildFlagStateFromServer(resolvedReplacementState.map));
+    setPriorityState(buildFlagStateFromServer(resolvedPriorityState.map));
+    setCanvasSizeState(buildFlagStateFromServer(resolvedCanvasSizeState.map));
+  };
+
   return {
     resolvedReplacementState,
     resolvedPriorityState,
@@ -159,5 +165,6 @@ export const usePartFlagState = ({
     togglePartLayerPriority,
     togglePartReplacement,
     resetFlagStates,
+    commitFlagStates,
   };
 };

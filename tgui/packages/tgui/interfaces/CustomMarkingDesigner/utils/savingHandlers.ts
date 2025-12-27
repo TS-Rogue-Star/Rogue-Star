@@ -109,15 +109,16 @@ export const createSavingHandlers = ({
     }
   };
 
-  const handleSaveProgress = async () => {
+  const handleSaveProgress = async (): Promise<boolean> => {
     if (pendingClose || pendingSave) {
-      return;
+      return false;
     }
     setPendingSave(true);
     setSavingProgress({
       value: null,
       label: 'Syncing your changes…',
     });
+    let saved = false;
     try {
       await syncAllPendingDraftSessions();
       setSavingProgress({
@@ -133,6 +134,7 @@ export const createSavingHandlers = ({
         ...(priorityPayload ? { part_render_priority: priorityPayload } : {}),
         ...(canvasPayload ? { part_canvas_size: canvasPayload } : {}),
       });
+      saved = true;
     } catch (error) {
       reportClientWarning(
         'Progress save failed. Your latest brush strokes are still local and not on the server.',
@@ -145,6 +147,7 @@ export const createSavingHandlers = ({
       setPendingSave(false);
       setSavingProgress(null);
     }
+    return saved;
   };
 
   const handleDiscardAndClose = async () => {

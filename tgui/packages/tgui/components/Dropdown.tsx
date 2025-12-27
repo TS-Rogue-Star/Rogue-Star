@@ -1,6 +1,7 @@
 import { createPopper, VirtualElement } from '@popperjs/core';
 import { classes } from 'common/react';
 import { Component, findDOMfromVNode, InfernoNode, render } from 'inferno';
+import { tguiScalePopperModifier } from '../utils/uiScale'; // RS Add: Scaling tool (Lira, December 2025)
 import { Box, BoxProps } from './Box';
 import { Button } from './Button';
 import { Icon } from './Icon';
@@ -38,6 +39,7 @@ const DEFAULT_OPTIONS = {
       name: 'eventListeners',
       enabled: false,
     },
+    tguiScalePopperModifier, // RS Add: Scaling tool (Lira, December 2025)
   ],
 };
 const NULL_RECT: DOMRect = {

@@ -75,6 +75,9 @@ export const createReferenceOpacityControls = ({
     ...referenceOpacityMap,
     overlay: genericReferenceOpacity,
   };
+  if (referenceParts?.markings) {
+    resolvedReferenceOpacityMap.markings = genericReferenceOpacity;
+  }
   if (referenceParts?.gear_job) {
     resolvedReferenceOpacityMap.gear_job = showJobGear
       ? genericReferenceOpacity
