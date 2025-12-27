@@ -26,8 +26,28 @@ const logger = createLogger('Window');
 
 const DEFAULT_SIZE = [400, 600];
 
+// RS Add Start: Scaling tool (Lira, December 2025)
+const DEFAULT_SCALE = 1;
+
+const normalizeWindowScale = (value) => {
+  const scale = Number(value);
+  if (!isFinite(scale) || scale <= 0) {
+    return DEFAULT_SCALE;
+  }
+  return scale;
+};
+
+const setDocumentWindowScale = (scale) => {
+  if (typeof document === 'undefined' || !document.documentElement?.dataset) {
+    return;
+  }
+  document.documentElement.dataset.tguiScale = String(scale);
+};
+// RS Add End
+
 export class Window extends Component {
   componentDidMount() {
+    setDocumentWindowScale(normalizeWindowScale(this.props.scale)); // RS Add: Scaling tool (Lira, December 2025)
     const { suspended } = useBackend(this.context);
     const { canClose = true } = this.props;
     if (suspended) {
@@ -41,24 +61,40 @@ export class Window extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    const scaleChanged = this.props.scale !== prevProps.scale; // RS Add: Scaling tool (Lira, December 2025)
     // prettier-ignore
     const shouldUpdateGeometry = (
       this.props.width !== prevProps.width
       || this.props.height !== prevProps.height
+      || scaleChanged // RS Add: Scaling tool (Lira, December 2025)
     );
     if (shouldUpdateGeometry) {
       this.updateGeometry();
     }
+    setDocumentWindowScale(normalizeWindowScale(this.props.scale)); // RS Add: Scaling tool (Lira, December 2025)
+  }
+
+  // RS Add: Scaling tool (Lira, December 2025)
+  componentWillUnmount() {
+    setDocumentWindowScale(DEFAULT_SCALE);
   }
 
   updateGeometry() {
     const { config } = useBackend(this.context);
+    const scale = normalizeWindowScale(this.props.scale); // RS Add: Scaling tool (Lira, December 2025)
     const options = {
       size: DEFAULT_SIZE,
       ...config.window,
     };
     if (this.props.width && this.props.height) {
       options.size = [this.props.width, this.props.height];
+    }
+    // RS Add: Scaling tool (Lira, December 2025)
+    if (Array.isArray(options.size) && options.size.length >= 2) {
+      options.size = [
+        Math.round(options.size[0] * scale),
+        Math.round(options.size[1] * scale),
+      ];
     }
     if (config.window?.key) {
       setWindowKey(config.window.key);
@@ -67,6 +103,7 @@ export class Window extends Component {
   }
 
   render() {
+    const scale = normalizeWindowScale(this.props.scale); // RS Add: Scaling tool (Lira, December 2025)
     const {
       canClose = true,
       theme,
@@ -87,53 +124,74 @@ export class Window extends Component {
         ? config.status < UI_DISABLED
         : config.status < UI_INTERACTIVE
     );
+    const windowContents = // RS Add: Scaling tool (Lira, December 2025)
+      (
+        <>
+          <TitleBar
+            className="Window__titleBar"
+            title={!suspended && (title || decodeHtmlEntities(config.title))}
+            status={config.status}
+            fancy={fancy}
+            statusIcon={statusIcon} // RS Add: Set status icon (Lira, November 2025)
+            onDragStart={dragStartHandler}
+            onClose={() => {
+              // RS Add: Close function (Lira, November 2025)
+              if (typeof onClose === 'function') {
+                try {
+                  onClose();
+                } catch (error) {
+                  logger.error('onClose handler threw', error);
+                }
+              }
+              logger.log('pressed close');
+              dispatch(backendSuspendStart());
+            }}
+            canClose={canClose}>
+            {buttons}
+          </TitleBar>
+          <div
+            className={classes([
+              'Window__rest',
+              debugLayout && 'debug-layout',
+            ])}>
+            {!suspended && children}
+            {showDimmer && <div className="Window__dimmer" />}
+          </div>
+          {fancy && (
+            <>
+              <div
+                className="Window__resizeHandle__e"
+                onMousedown={resizeStartHandler(1, 0)}
+              />
+              <div
+                className="Window__resizeHandle__s"
+                onMousedown={resizeStartHandler(0, 1)}
+              />
+              <div
+                className="Window__resizeHandle__se"
+                onMousedown={resizeStartHandler(1, 1)}
+              />
+            </>
+          )}
+        </>
+      );
+
+    // RS Add Start: Scaling tool (Lira, December 2025)
+    const scaled = scale !== DEFAULT_SCALE;
     return (
       <Layout className="Window" theme={theme}>
-        <TitleBar
-          className="Window__titleBar"
-          title={!suspended && (title || decodeHtmlEntities(config.title))}
-          status={config.status}
-          fancy={fancy}
-          statusIcon={statusIcon} // RS Add: Set status icon (Lira, November 2025)
-          onDragStart={dragStartHandler}
-          onClose={() => {
-            // RS Add: Close function (Lira, November 2025)
-            if (typeof onClose === 'function') {
-              try {
-                onClose();
-              } catch (error) {
-                logger.error('onClose handler threw', error);
-              }
-            }
-            logger.log('pressed close');
-            dispatch(backendSuspendStart());
-          }}
-          canClose={canClose}>
-          {buttons}
-        </TitleBar>
-        <div
-          className={classes(['Window__rest', debugLayout && 'debug-layout'])}>
-          {!suspended && children}
-          {showDimmer && <div className="Window__dimmer" />}
-        </div>
-        {fancy && (
-          <>
-            <div
-              className="Window__resizeHandle__e"
-              onMousedown={resizeStartHandler(1, 0)}
-            />
-            <div
-              className="Window__resizeHandle__s"
-              onMousedown={resizeStartHandler(0, 1)}
-            />
-            <div
-              className="Window__resizeHandle__se"
-              onMousedown={resizeStartHandler(1, 1)}
-            />
-          </>
-        )}
+        {(scaled && (
+          <div
+            style={`position:absolute;top:0;left:0;width:${
+              100 / scale
+            }%;height:${100 / scale}%;transform:scale(${scale});transform-origin:0 0;`}>
+            {windowContents}
+          </div>
+        )) ||
+          windowContents}
       </Layout>
     );
+    // RS Add End
   }
 }
 

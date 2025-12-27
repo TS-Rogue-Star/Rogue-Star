@@ -23,7 +23,17 @@ import {
 } from '../../components';
 import { normalizeHex, TRANSPARENT_HEX } from '../../utils/color';
 import {
+  applyBodyColorToPreview,
+  buildPartPaintPresenceMap,
   buildRenderedPreviewDirs as buildDesignerPreviewDirs,
+  buildBasicStateFromPayload,
+  clampChannel,
+  ICON_BLEND_MODE,
+  parseHex,
+  recolorGrid,
+  resolveBlendMode,
+  tintGrid,
+  toHex,
   updatePreviewStateFromPayload,
 } from './utils';
 import {
@@ -31,12 +41,21 @@ import {
   cloneGridData,
   createBlankGrid,
   getPreviewGridFromAsset,
+  getPreviewPartMapFromAssets,
   gridHasPixels,
+  type GearOverlayAsset,
+  type IconAssetPayload,
   PreviewDirectionEntry,
+  type PreviewLayerEntry,
+  type PreviewDirState,
 } from '../../utils/character-preview';
 import { DirectionPreviewCanvas, LoadingOverlay } from './components';
 import { CHIP_BUTTON_CLASS, PREVIEW_PIXEL_SIZE } from './constants';
 import type {
+  BasicAppearanceAccessoryDefinition,
+  BasicAppearanceGradientDefinition,
+  BasicAppearancePayload,
+  BasicAppearanceState,
   BodyMarkingColorTarget,
   BodyMarkingDefinition,
   BodyMarkingEntry,
@@ -54,6 +73,7 @@ import {
   buildBodySavedStateFromPayload,
   cloneEntry,
   deepCopyMarkings,
+  isBodyMarkingPartEnabled,
   resolveBodyMarkingColorTarget,
 } from './utils/bodyMarkings';
 
@@ -66,6 +86,8 @@ type BodyMarkingsTabProps = Readonly<{
   backgroundFallbackColor: string;
   cycleCanvasBackground: () => void;
   canvasBackgroundScale: number;
+  resolvedPartPriorityMap: Record<string, boolean>;
+  resolvedPartReplacementMap: Record<string, boolean>;
   showJobGear: boolean;
   onToggleJobGear: () => void;
   showLoadoutGear: boolean;
@@ -80,6 +102,29 @@ type MarkingLayer = {
 type PartMarkingLayers = {
   normal: MarkingLayer[];
   priority: MarkingLayer[];
+};
+
+type OrderedOverlayLayer = {
+  grid: string[][];
+  layer: number | null;
+  slot?: string | null;
+  source: 'base' | 'job' | 'loadout';
+  order: number;
+};
+
+type MarkingLayersCacheEntry = {
+  entry: BodyMarkingEntry;
+  defId: string;
+  doColouration: boolean;
+  blendMode: number;
+  renderAboveBody: boolean;
+  renderAboveBodyPartsSig: string;
+  digitigrade: boolean;
+  canvasWidth: number;
+  canvasHeight: number;
+  offsetX: number;
+  assetRevision: number;
+  built: Record<string, PartMarkingLayers>;
 };
 
 type SelectMarkingOptions = Readonly<{
@@ -101,113 +146,240 @@ const CATEGORY_LABELS: Record<string, string> = {
   augment: 'Augment',
 };
 
-const ICON_BLEND_MODE = {
-  ADD: 0,
-  SUBTRACT: 1,
-  MULTIPLY: 2,
-  OVERLAY: 3,
-  AND: 4,
-  OR: 5,
+const OVERLAY_SLOT_PRIORITY_MAP: Record<string, number> = {
+  tail_lower: 7,
+  wing_lower: 8,
+  shoes: 9,
+  uniform: 10,
+  id: 11,
+  gloves: 13,
+  belt: 14,
+  suit: 15,
+  tail_upper: 16,
+  glasses: 17,
+  suit_store: 19,
+  back: 20,
+  hair: 21,
+  hair_accessory: 22,
+  ears: 23,
+  eyes: 24,
+  mask: 25,
+  head: 27,
+  wing_upper: 32,
+  tail_upper_alt: 33,
+  modifier: 34,
+  vore_belly: 38,
+  vore_tail: 39,
+  custom_marking: 40,
 };
 
-const CUSTOM_MARKING_LAYER_INDEX = 40;
-
-const clampChannel = (value: number) =>
-  Math.max(0, Math.min(255, Math.floor(value)));
+const HIDDEN_LEG_PARTS = new Set(['l_leg', 'r_leg', 'l_foot', 'r_foot']);
+const TAUR_CLOTHING_SLOTS = new Set(['uniform', 'belt', 'suit', 'back']);
+const APPEARANCE_OVERLAY_SLOTS = new Set([
+  'hair',
+  'hair_accessory',
+  'ears',
+  'tail_lower',
+  'tail_upper',
+  'tail_upper_alt',
+  'wing_lower',
+  'wing_upper',
+]);
 
 let assetUpdateScheduled = false;
 
 const BODY_MARKINGS_PREVIEW_TIMEOUT_MS = 5000;
 
-const resolveBlendMode = (mode?: number) => {
-  switch (mode) {
-    case ICON_BLEND_MODE.ADD:
-    case ICON_BLEND_MODE.SUBTRACT:
-    case ICON_BLEND_MODE.MULTIPLY:
-    case ICON_BLEND_MODE.OVERLAY:
-    case ICON_BLEND_MODE.AND:
-    case ICON_BLEND_MODE.OR:
-      return mode;
-    default:
-      return ICON_BLEND_MODE.MULTIPLY;
+const collectBodyColorExcludedParts = (
+  dirStates: Record<number, PreviewDirState> | null | undefined
+): Set<string> | null => {
+  if (!dirStates) {
+    return null;
   }
+  const excluded = new Set<string>();
+  for (const dirState of Object.values(dirStates)) {
+    const parts = dirState?.bodyColorExcludedParts;
+    if (!Array.isArray(parts)) {
+      continue;
+    }
+    for (const partId of parts) {
+      if (typeof partId === 'string' && partId.length) {
+        excluded.add(partId);
+      }
+    }
+  }
+  return excluded.size ? excluded : null;
 };
 
-const blendChannel = (base: number, tint: number, mode: number) => {
-  switch (resolveBlendMode(mode)) {
-    case ICON_BLEND_MODE.MULTIPLY:
-      return clampChannel((base * tint) / 255);
-    case ICON_BLEND_MODE.OVERLAY:
-      return clampChannel(tint);
-    case ICON_BLEND_MODE.SUBTRACT:
-      return clampChannel(base - tint);
-    case ICON_BLEND_MODE.AND:
-      return base & tint;
-    case ICON_BLEND_MODE.OR:
-      return base | tint;
-    default:
-      return clampChannel(base + tint);
-  }
-};
+const colorDistance = (
+  r: number,
+  g: number,
+  b: number,
+  target: [number, number, number]
+) =>
+  Math.abs(r - target[0]) + Math.abs(g - target[1]) + Math.abs(b - target[2]);
 
-const parseHex = (hex?: string | null): [number, number, number, number] => {
-  if (!hex || typeof hex !== 'string') {
-    return [0, 0, 0, 0];
-  }
-  const cleaned = normalizeHex(hex, {
-    preserveTransparent: true,
-    preserveAlpha: true,
-  });
-  if (!cleaned) {
-    return [0, 0, 0, 0];
-  }
-  const raw = cleaned.startsWith('#') ? cleaned.slice(1) : cleaned;
-  const safeRaw = raw || '';
-  const r = parseInt(safeRaw.slice(0, 2), 16) || 0;
-  const g = parseInt(safeRaw.slice(2, 4), 16) || 0;
-  const b = parseInt(safeRaw.slice(4, 6), 16) || 0;
-  const a = safeRaw.length >= 8 ? parseInt(safeRaw.slice(6, 8), 16) || 0 : 255;
-  return [r, g, b, a];
-};
+const EYE_COLOR_MATCH_THRESHOLD = 90;
+const EYE_COLOR_BODY_MARGIN = 12;
 
-const toHex = (r: number, g: number, b: number, a?: number) => {
-  const channel = (v: number) =>
-    (v < 16 ? '0' : '') + Math.max(0, Math.min(255, v)).toString(16);
-  if (typeof a === 'number') {
-    return `#${channel(r)}${channel(g)}${channel(b)}${channel(a)}`;
-  }
-  return `#${channel(r)}${channel(g)}${channel(b)}`;
-};
-
-const tintGrid = (
+const shiftEyeColorGrid = (
   grid: string[][],
-  tintHex: string,
-  mode: number
+  baseHex: string,
+  targetHex: string,
+  bodyHex?: string | null
 ): string[][] => {
-  const blendMode = resolveBlendMode(mode);
-  const [tr, tg, tb] = parseHex(tintHex);
-  const tinted: string[][] = [];
+  const [br, bg, bb] = parseHex(baseHex);
+  const [tr, tg, tb] = parseHex(targetHex);
+  if (br === tr && bg === tg && bb === tb) {
+    return grid;
+  }
+  const hasBody = typeof bodyHex === 'string' && normalizeHex(bodyHex) !== null;
+  const [bodyR, bodyG, bodyB] = hasBody
+    ? parseHex(bodyHex as string)
+    : ([0, 0, 0] as [number, number, number]);
+  const deltaR = tr - br;
+  const deltaG = tg - bg;
+  const deltaB = tb - bb;
+  const recolored: string[][] = [];
   for (let x = 0; x < grid.length; x += 1) {
     const column = grid[x];
     if (!Array.isArray(column)) {
-      tinted[x] = [];
+      recolored[x] = [];
       continue;
     }
-    tinted[x] = [];
+    recolored[x] = [];
     for (let y = 0; y < column.length; y += 1) {
       const px = column[y];
       if (typeof px !== 'string' || px === TRANSPARENT_HEX) {
-        tinted[x][y] = TRANSPARENT_HEX;
+        recolored[x][y] = TRANSPARENT_HEX;
         continue;
       }
       const [r, g, b, a] = parseHex(px);
-      const rr = blendChannel(r, tr, blendMode);
-      const gg = blendChannel(g, tg, blendMode);
-      const bb = blendChannel(b, tb, blendMode);
-      tinted[x][y] = toHex(rr, gg, bb, a);
+      const eyeDist = colorDistance(r, g, b, [br, bg, bb]);
+      const bodyDist = hasBody
+        ? colorDistance(r, g, b, [bodyR, bodyG, bodyB])
+        : Number.POSITIVE_INFINITY;
+      const matchesEye =
+        eyeDist <= EYE_COLOR_MATCH_THRESHOLD ||
+        eyeDist + EYE_COLOR_BODY_MARGIN <= bodyDist;
+      if (!matchesEye) {
+        recolored[x][y] = px;
+        continue;
+      }
+      recolored[x][y] = toHex(
+        clampChannel(r + deltaR),
+        clampChannel(g + deltaG),
+        clampChannel(b + deltaB),
+        a
+      );
     }
   }
-  return tinted;
+  return recolored;
+};
+
+export const applyEyeColorToPreview = (
+  preview: PreviewDirectionEntry[],
+  baseHex: string | null,
+  targetHex: string | null,
+  bodyHex?: string | null
+): PreviewDirectionEntry[] => {
+  const base = normalizeHex(baseHex);
+  const target = normalizeHex(targetHex);
+  if (!base || !target || base === target) {
+    return preview;
+  }
+  let changed = false;
+  const next = preview.map((entry) => {
+    let layersChanged = false;
+    const layers = (entry.layers || []).map((layer) => {
+      if (!layer?.grid || layer.type !== 'reference_part') {
+        return layer;
+      }
+      if (
+        typeof layer.key !== 'string' ||
+        !layer.key.startsWith('ref_') ||
+        layer.key.endsWith('_markings')
+      ) {
+        return layer;
+      }
+      const partId = layer.key.slice(4).toLowerCase();
+      if (partId !== 'head' && partId !== 'face' && partId !== 'eyes') {
+        return layer;
+      }
+      const shifted = shiftEyeColorGrid(layer.grid, base, target, bodyHex);
+      if (shifted === layer.grid) {
+        return layer;
+      }
+      layersChanged = true;
+      return {
+        ...layer,
+        grid: shifted,
+      };
+    });
+    if (!layersChanged) {
+      return entry;
+    }
+    changed = true;
+    return {
+      ...entry,
+      layers,
+    };
+  });
+  return changed ? next : preview;
+};
+
+const pixelHasColor = (value?: string): boolean =>
+  typeof value === 'string' && value.length > 0 && value !== TRANSPARENT_HEX;
+
+const compositePixel = (base: string | undefined, overlay: string): string => {
+  if (!pixelHasColor(overlay)) {
+    return base || TRANSPARENT_HEX;
+  }
+  if (!pixelHasColor(base)) {
+    return overlay;
+  }
+  const [sr, sg, sb, sa] = parseHex(overlay);
+  if (sa >= 255) {
+    return overlay;
+  }
+  if (sa <= 0) {
+    return base || TRANSPARENT_HEX;
+  }
+  const [dr, dg, db, da] = parseHex(base);
+  const srcA = sa / 255;
+  const dstA = da / 255;
+  const outA = srcA + dstA * (1 - srcA);
+  if (outA <= 0) {
+    return TRANSPARENT_HEX;
+  }
+  const outR = Math.round((sr * srcA + dr * dstA * (1 - srcA)) / outA);
+  const outG = Math.round((sg * srcA + dg * dstA * (1 - srcA)) / outA);
+  const outB = Math.round((sb * srcA + db * dstA * (1 - srcA)) / outA);
+  const outAlpha = Math.round(outA * 255);
+  if (outAlpha <= 0) {
+    return TRANSPARENT_HEX;
+  }
+  return toHex(outR, outG, outB, outAlpha);
+};
+
+const addPixel = (base: string | undefined, overlay: string): string => {
+  if (!pixelHasColor(overlay)) {
+    return base || TRANSPARENT_HEX;
+  }
+  const [sr, sg, sb, sa] = parseHex(overlay);
+  if (sa <= 0) {
+    return base || TRANSPARENT_HEX;
+  }
+  const [dr, dg, db, da] = pixelHasColor(base) ? parseHex(base) : [0, 0, 0, 0];
+  const alphaFactor = sa / 255;
+  const outR = clampChannel(dr + Math.round(sr * alphaFactor));
+  const outG = clampChannel(dg + Math.round(sg * alphaFactor));
+  const outB = clampChannel(db + Math.round(sb * alphaFactor));
+  const outA = clampChannel(Math.max(da, sa));
+  if (outA <= 0) {
+    return TRANSPARENT_HEX;
+  }
+  return toHex(outR, outG, outB, outA);
 };
 
 const mergeGrid = (target: string[][], source?: string[][] | null) => {
@@ -227,13 +399,32 @@ const mergeGrid = (target: string[][], source?: string[][] | null) => {
       if (typeof val !== 'string' || val === TRANSPARENT_HEX) {
         continue;
       }
-      target[x][y] = val;
+      target[x][y] = compositePixel(target[x][y], val);
     }
   }
 };
 
-const pixelHasColor = (value?: string): boolean =>
-  typeof value === 'string' && value.length > 0 && value !== TRANSPARENT_HEX;
+const mergeGridAdd = (target: string[][], source?: string[][] | null) => {
+  if (!Array.isArray(target) || !Array.isArray(source)) {
+    return;
+  }
+  for (let x = 0; x < source.length; x += 1) {
+    const srcCol = source[x];
+    if (!Array.isArray(srcCol)) {
+      continue;
+    }
+    if (!Array.isArray(target[x])) {
+      target[x] = [];
+    }
+    for (let y = 0; y < srcCol.length; y += 1) {
+      const val = srcCol[y];
+      if (typeof val !== 'string' || val === TRANSPARENT_HEX) {
+        continue;
+      }
+      target[x][y] = addPixel(target[x][y], val);
+    }
+  }
+};
 
 const applyMaskToGrid = (target: string[][], mask: string[][]) => {
   if (!Array.isArray(target) || !Array.isArray(mask)) {
@@ -254,6 +445,414 @@ const applyMaskToGrid = (target: string[][], mask: string[][]) => {
       targetColumn[y] = TRANSPARENT_HEX;
     }
   }
+};
+
+const applyClipMaskToGrid = (target: string[][], mask: string[][]) => {
+  if (!Array.isArray(target) || !Array.isArray(mask)) {
+    return;
+  }
+  const width = Math.min(target.length, mask.length);
+  for (let x = 0; x < width; x += 1) {
+    const targetColumn = target[x];
+    const maskColumn = mask[x];
+    if (!Array.isArray(targetColumn) || !Array.isArray(maskColumn)) {
+      continue;
+    }
+    const height = Math.min(targetColumn.length, maskColumn.length);
+    for (let y = 0; y < height; y += 1) {
+      if (!pixelHasColor(targetColumn[y])) {
+        continue;
+      }
+      if (pixelHasColor(maskColumn[y])) {
+        targetColumn[y] = TRANSPARENT_HEX;
+      }
+    }
+  }
+};
+
+const collectHiddenLegParts = (hiddenBodyParts?: string[] | null): string[] => {
+  if (!Array.isArray(hiddenBodyParts)) {
+    return [];
+  }
+  const parts: string[] = [];
+  for (const partId of hiddenBodyParts) {
+    if (typeof partId === 'string' && HIDDEN_LEG_PARTS.has(partId)) {
+      parts.push(partId);
+    }
+  }
+  return parts;
+};
+
+const buildHiddenBodyPartsByDir = (
+  previewDirStates: Record<number, PreviewDirState>
+): Record<number, Record<string, boolean>> => {
+  const result: Record<number, Record<string, boolean>> = {};
+  for (const dirState of Object.values(previewDirStates)) {
+    const hiddenParts = dirState?.hiddenBodyParts;
+    if (!dirState || !Array.isArray(hiddenParts) || !hiddenParts.length) {
+      continue;
+    }
+    const hiddenMap: Record<string, boolean> = {};
+    for (const partId of hiddenParts) {
+      if (typeof partId === 'string' && partId.length) {
+        hiddenMap[partId] = true;
+      }
+    }
+    if (Object.keys(hiddenMap).length) {
+      result[dirState.dir] = hiddenMap;
+    }
+  }
+  return result;
+};
+
+const maskGridForHiddenLegParts = (
+  grid: string[][],
+  referenceParts: Record<string, string[][]>,
+  hiddenLegParts: string[]
+) => {
+  if (!hiddenLegParts.length) {
+    return;
+  }
+  for (const partId of hiddenLegParts) {
+    const maskGrid = referenceParts[partId];
+    if (!maskGrid) {
+      continue;
+    }
+    applyClipMaskToGrid(grid, maskGrid);
+  }
+};
+
+const buildHairGradientOverlayGrid = (options: {
+  hairTexture: string[][] | null;
+  gradientMask: string[][] | null;
+  gradientColor: string | null;
+}): string[][] | null => {
+  const { hairTexture, gradientMask, gradientColor } = options;
+  const normalizedGradientColor = normalizeHex(gradientColor);
+  if (!normalizedGradientColor || !hairTexture || !gradientMask) {
+    return null;
+  }
+  const [tr, tg, tb] = parseHex(normalizedGradientColor);
+  const width = hairTexture.length;
+  if (!width) {
+    return null;
+  }
+  const height = Array.isArray(hairTexture[0]) ? hairTexture[0].length : 0;
+  if (!height) {
+    return null;
+  }
+  const overlay = createBlankGrid(width, height);
+  let hasPixels = false;
+  for (let x = 0; x < hairTexture.length; x += 1) {
+    const hairColumn = hairTexture[x];
+    if (!Array.isArray(hairColumn)) {
+      continue;
+    }
+    const maskColumn = gradientMask[x];
+    const overlayColumn = overlay[x];
+    for (let y = 0; y < hairColumn.length; y += 1) {
+      const hairPixel = hairColumn[y];
+      if (
+        typeof hairPixel !== 'string' ||
+        hairPixel.length === 0 ||
+        hairPixel === TRANSPARENT_HEX
+      ) {
+        continue;
+      }
+      const [hr, hg, hb, ha] = parseHex(hairPixel);
+      if (ha <= 0) {
+        continue;
+      }
+      const maskPixel = Array.isArray(maskColumn) ? maskColumn[y] : null;
+      if (typeof maskPixel !== 'string' || maskPixel.length === 0) {
+        continue;
+      }
+      const maskAlpha = parseHex(maskPixel)[3];
+      if (maskAlpha <= 0) {
+        continue;
+      }
+      const outAlpha = clampChannel(Math.round((ha * maskAlpha) / 255));
+      if (outAlpha <= 0) {
+        continue;
+      }
+      const outR = clampChannel(Math.round((hr * tr) / 255));
+      const outG = clampChannel(Math.round((hg * tg) / 255));
+      const outB = clampChannel(Math.round((hb * tb) / 255));
+      overlayColumn[y] = toHex(outR, outG, outB, outAlpha);
+      hasPixels = true;
+    }
+  }
+  if (!hasPixels) {
+    return null;
+  }
+  return overlay;
+};
+
+const shiftGrid = (
+  source: string[][],
+  offsetX: number,
+  offsetY: number,
+  width: number,
+  height: number
+): string[][] => {
+  const target = createBlankGrid(width, height);
+  for (let x = 0; x < source.length; x += 1) {
+    const col = source[x];
+    if (!Array.isArray(col)) {
+      continue;
+    }
+    for (let y = 0; y < col.length; y += 1) {
+      const val = col[y];
+      if (typeof val !== 'string') {
+        continue;
+      }
+      const nx = x + offsetX;
+      const ny = y + offsetY;
+      if (nx < 0 || ny < 0 || nx >= width || ny >= height) {
+        continue;
+      }
+      target[nx][ny] = val;
+    }
+  }
+  return target;
+};
+
+const buildAccessoryGrid = (options: {
+  def: BasicAppearanceAccessoryDefinition;
+  dir: number;
+  canvasWidth: number;
+  canvasHeight: number;
+  colors: (string | null)[];
+  signalAssetUpdate: () => void;
+  extraOffsetX?: number;
+}): string[][] | null => {
+  const {
+    def,
+    dir,
+    canvasWidth,
+    canvasHeight,
+    colors,
+    signalAssetUpdate,
+    extraOffsetX,
+  } = options;
+  const assetsForDir = def.assets?.[dir];
+  if (!assetsForDir || !assetsForDir.length) {
+    return null;
+  }
+  let combined: string[][] | null = null;
+  for (let channel = 0; channel < assetsForDir.length; channel += 1) {
+    const payload = assetsForDir[channel];
+    if (!payload) {
+      continue;
+    }
+    const grid = getPreviewGridFromAsset(
+      payload,
+      canvasWidth,
+      canvasHeight,
+      signalAssetUpdate
+    );
+    if (!grid) {
+      continue;
+    }
+    let working = grid as string[][];
+    const color = colors[channel];
+    if (def.do_colouration && typeof color === 'string' && color.length) {
+      working = tintGrid(
+        working,
+        color,
+        typeof def.color_blend_mode === 'number'
+          ? def.color_blend_mode
+          : ICON_BLEND_MODE.MULTIPLY
+      );
+    }
+    if (typeof extraOffsetX === 'number' && extraOffsetX) {
+      working = shiftGrid(
+        working,
+        extraOffsetX,
+        0,
+        Math.max(canvasWidth, working.length),
+        canvasHeight
+      );
+    }
+    if (!combined) {
+      combined = cloneGridData(working);
+      continue;
+    }
+    mergeGrid(combined, working);
+  }
+  if (combined && gridHasPixels(combined)) {
+    return combined;
+  }
+  return null;
+};
+
+const buildHairGridWithGradient = (options: {
+  hairDef: BasicAppearanceAccessoryDefinition;
+  gradientDef: BasicAppearanceGradientDefinition | null;
+  dir: number;
+  canvasWidth: number;
+  canvasHeight: number;
+  hairColor: string | null;
+  gradientColor: string | null;
+  signalAssetUpdate: () => void;
+}): string[][] | null => {
+  const {
+    hairDef,
+    gradientDef,
+    dir,
+    canvasWidth,
+    canvasHeight,
+    hairColor,
+    gradientColor,
+    signalAssetUpdate,
+  } = options;
+  const assetsForDir = hairDef.assets?.[dir];
+  if (!assetsForDir || !assetsForDir.length) {
+    return null;
+  }
+  const basePayload = assetsForDir[0];
+  if (!basePayload) {
+    return null;
+  }
+  const baseGrid = getPreviewGridFromAsset(
+    basePayload,
+    canvasWidth,
+    canvasHeight,
+    signalAssetUpdate
+  ) as string[][] | null;
+  if (!baseGrid) {
+    return null;
+  }
+  if (!hairDef?.do_colouration) {
+    return baseGrid;
+  }
+
+  const resolvedHairColor = normalizeHex(hairColor) || '#ffffff';
+  const base = tintGrid(baseGrid, resolvedHairColor, ICON_BLEND_MODE.MULTIPLY);
+  const addPayload = assetsForDir.length > 1 ? assetsForDir[1] : null;
+  if (addPayload) {
+    const addGrid = getPreviewGridFromAsset(
+      addPayload,
+      canvasWidth,
+      canvasHeight,
+      signalAssetUpdate
+    ) as string[][] | null;
+    if (addGrid) {
+      mergeGridAdd(base, addGrid);
+    }
+  }
+
+  if (!gradientDef) {
+    return base;
+  }
+  const gradPayload = gradientDef.assets?.[dir];
+  if (!gradPayload) {
+    return base;
+  }
+  const gradGrid = getPreviewGridFromAsset(
+    gradPayload,
+    canvasWidth,
+    canvasHeight,
+    signalAssetUpdate
+  );
+  if (!gradGrid) {
+    return base;
+  }
+  const overlay = buildHairGradientOverlayGrid({
+    hairTexture: baseGrid,
+    gradientMask: gradGrid as string[][],
+    gradientColor,
+  });
+  if (!overlay) {
+    return base;
+  }
+  mergeGrid(base, overlay);
+  return base;
+};
+
+const buildOrderedOverlayLayers = (
+  assets: (GearOverlayAsset | IconAssetPayload)[],
+  canvasWidth: number,
+  canvasHeight: number,
+  source: OrderedOverlayLayer['source'],
+  signalAssetUpdate?: () => void,
+  orderOffset = 0
+): OrderedOverlayLayer[] => {
+  const layers: OrderedOverlayLayer[] = [];
+  const updateSignal = signalAssetUpdate || (() => undefined);
+  for (let i = 0; i < assets.length; i += 1) {
+    const entry = assets[i] as GearOverlayAsset | IconAssetPayload;
+    const payload =
+      (entry as GearOverlayAsset)?.asset ||
+      ((entry as IconAssetPayload)?.token ? (entry as IconAssetPayload) : null);
+    if (!payload) {
+      continue;
+    }
+    const grid = getPreviewGridFromAsset(
+      payload,
+      canvasWidth,
+      canvasHeight,
+      updateSignal
+    );
+    if (!grid) {
+      continue;
+    }
+    const slot =
+      (entry as GearOverlayAsset)?.slot !== undefined
+        ? ((entry as GearOverlayAsset).slot as string | null)
+        : null;
+    const hasSlotPriority =
+      !!slot &&
+      Object.prototype.hasOwnProperty.call(OVERLAY_SLOT_PRIORITY_MAP, slot);
+    const fallbackLayer = hasSlotPriority
+      ? OVERLAY_SLOT_PRIORITY_MAP[slot as string]
+      : null;
+    const rawLayer = (entry as GearOverlayAsset)?.layer;
+    let layerValue: number | null = null;
+    if (typeof rawLayer === 'number') {
+      layerValue = rawLayer;
+    } else if (hasSlotPriority && fallbackLayer !== null) {
+      layerValue = fallbackLayer;
+    } else {
+      layerValue = orderOffset + i;
+    }
+    layers.push({
+      grid: grid as string[][],
+      layer: layerValue,
+      slot,
+      source,
+      order: orderOffset + i,
+    });
+  }
+  return layers;
+};
+
+const mergeOverlayLayerLists = (
+  baseLayers: OrderedOverlayLayer[],
+  jobLayers: OrderedOverlayLayer[],
+  loadoutLayers: OrderedOverlayLayer[]
+): OrderedOverlayLayer[] =>
+  [...baseLayers, ...jobLayers, ...loadoutLayers].sort((a, b) => {
+    const layerA = Number.isFinite(a.layer)
+      ? (a.layer as number)
+      : Number.MAX_SAFE_INTEGER;
+    const layerB = Number.isFinite(b.layer)
+      ? (b.layer as number)
+      : Number.MAX_SAFE_INTEGER;
+    if (layerA !== layerB) {
+      return layerA - layerB;
+    }
+    return a.order - b.order;
+  });
+
+const resolveSelectedDef = <T extends { id: string }>(
+  defs: T[] | undefined,
+  id: string | null
+): T | null => {
+  if (!id || !Array.isArray(defs)) {
+    return null;
+  }
+  return defs.find((entry) => entry.id === id) || null;
 };
 
 const buildReferencePartMaskMap = (
@@ -315,7 +914,7 @@ const buildHiddenBodyPartsMapForSingleMarking = (
       continue;
     }
     const partState = entry?.[partId] as BodyMarkingPartState;
-    if (partState && partState.on === false) {
+    if (!isBodyMarkingPartEnabled(partState?.on)) {
       continue;
     }
     hidden[partId] = true;
@@ -344,7 +943,7 @@ const buildHiddenBodyPartsMapForMarkings = (
         continue;
       }
       const partState = entry?.[partId] as BodyMarkingPartState;
-      if (partState && partState.on === false) {
+      if (!isBodyMarkingPartEnabled(partState?.on)) {
         continue;
       }
       hidden[partId] = true;
@@ -360,6 +959,19 @@ const applyGridOffset = (
   width: number,
   height: number
 ): string[][] => {
+  if (!offsetX && !offsetY && source.length === width) {
+    let matchesTargetSize = true;
+    for (let x = 0; x < source.length; x += 1) {
+      const col = source[x];
+      if (!Array.isArray(col) || col.length !== height) {
+        matchesTargetSize = false;
+        break;
+      }
+    }
+    if (matchesTargetSize) {
+      return source;
+    }
+  }
   const target = createBlankGrid(width, height);
   for (let x = 0; x < source.length; x += 1) {
     const col = source[x];
@@ -404,7 +1016,7 @@ const buildMarkingLayersForDir = (
   const result: Record<string, PartMarkingLayers> = {};
   for (const [partId, asset] of Object.entries(assetsByDir)) {
     const partState = entry?.[partId] as BodyMarkingPartState;
-    if (partState && partState.on === false) {
+    if (!isBodyMarkingPartEnabled(partState?.on)) {
       continue;
     }
     const partColor =
@@ -444,12 +1056,671 @@ const buildMarkingLayersForDir = (
 
 const resolveLayerPartId = (layer: { key?: string; type?: string }) => {
   if (typeof layer?.key === 'string' && layer.key.startsWith('ref_')) {
-    return layer.key.slice('ref_'.length);
+    const raw = layer.key.slice('ref_'.length);
+    if (!raw) {
+      return null;
+    }
+    if (raw.endsWith('_markings')) {
+      const trimmed = raw.slice(0, -'_markings'.length);
+      return trimmed || null;
+    }
+    return raw;
+  }
+  if (
+    layer?.type === 'custom' &&
+    typeof layer?.key === 'string' &&
+    layer.key.startsWith('custom_')
+  ) {
+    const raw = layer.key.slice('custom_'.length);
+    return raw || null;
   }
   if (layer?.key === 'body' || layer?.type === 'body') {
     return 'generic';
   }
   return null;
+};
+
+const splitOverlayLayers = <T extends { type?: string }>(layers: T[]) => {
+  const firstOverlayIndex = layers.findIndex(
+    (layer) => layer?.type === 'overlay'
+  );
+  if (firstOverlayIndex === -1) {
+    return { before: layers, overlay: [], after: [] };
+  }
+  let lastOverlayIndex = firstOverlayIndex;
+  for (let idx = layers.length - 1; idx >= 0; idx -= 1) {
+    if (layers[idx]?.type === 'overlay') {
+      lastOverlayIndex = idx;
+      break;
+    }
+  }
+  return {
+    before: layers.slice(0, firstOverlayIndex),
+    overlay: layers.slice(firstOverlayIndex, lastOverlayIndex + 1),
+    after: layers.slice(lastOverlayIndex + 1),
+  };
+};
+
+export type AppearancePreviewContext = Readonly<{
+  canApplyAppearance: boolean;
+  appearanceState: BasicAppearanceState;
+  hairDef: BasicAppearanceAccessoryDefinition | null;
+  gradientDef: BasicAppearanceGradientDefinition | null;
+  facialHairDef: BasicAppearanceAccessoryDefinition | null;
+  earDef: BasicAppearanceAccessoryDefinition | null;
+  hornDef: BasicAppearanceAccessoryDefinition | null;
+  tailDef: BasicAppearanceAccessoryDefinition | null;
+  wingDef: BasicAppearanceAccessoryDefinition | null;
+  previewBaseBodyColor: string | null;
+  previewTargetBodyColor: string;
+  previewBaseEyeColor: string | null;
+  previewTargetEyeColor: string;
+  appearanceSignature: string;
+  digitigrade: boolean;
+  previewDirStatesForLive: Record<number, PreviewDirState>;
+  bodyColorExcludedParts: Set<string> | null;
+}>;
+
+type BodyMarkingsPreviewBaseResult = Readonly<{
+  basePreview: PreviewDirectionEntry[];
+  liveBasePreview: PreviewDirectionEntry[];
+  appearanceContext: AppearancePreviewContext;
+}>;
+
+export const resolveAppearanceContext = (options: {
+  previewDirStates: Record<number, PreviewDirState>;
+  basicPayload: BasicAppearancePayload | null;
+  basicAppearanceState: BasicAppearanceState;
+  fallbackDigitigrade: boolean;
+}): AppearancePreviewContext => {
+  const {
+    previewDirStates,
+    basicPayload,
+    basicAppearanceState,
+    fallbackDigitigrade,
+  } = options;
+  const canApplyAppearance = !!basicPayload;
+  const appearanceState = basicAppearanceState;
+  const hair_styles = basicPayload?.hair_styles;
+  const gradient_styles = basicPayload?.gradient_styles;
+  const facial_hair_styles = basicPayload?.facial_hair_styles;
+  const ear_styles = basicPayload?.ear_styles;
+  const tail_styles = basicPayload?.tail_styles;
+  const wing_styles = basicPayload?.wing_styles;
+  const hairDef = canApplyAppearance
+    ? resolveSelectedDef(hair_styles, appearanceState.hair_style)
+    : null;
+  const gradientDef = canApplyAppearance
+    ? resolveSelectedDef(gradient_styles, appearanceState.hair_gradient_style)
+    : null;
+  const facialHairDef = canApplyAppearance
+    ? resolveSelectedDef(facial_hair_styles, appearanceState.facial_hair_style)
+    : null;
+  const earDef = canApplyAppearance
+    ? resolveSelectedDef(ear_styles, appearanceState.ear_style)
+    : null;
+  const hornDef = canApplyAppearance
+    ? resolveSelectedDef(ear_styles, appearanceState.horn_style)
+    : null;
+  const tailDef = canApplyAppearance
+    ? resolveSelectedDef(tail_styles, appearanceState.tail_style)
+    : null;
+  const wingDef = canApplyAppearance
+    ? resolveSelectedDef(wing_styles, appearanceState.wing_style)
+    : null;
+  const previewBaseBodyColor = normalizeHex(basicPayload?.body_color);
+  const previewTargetBodyColor =
+    normalizeHex(appearanceState.body_color) || '#ffffff';
+  const previewBaseEyeColor = normalizeHex(basicPayload?.eye_color);
+  const previewTargetEyeColor =
+    normalizeHex(appearanceState.eye_color) || '#ffffff';
+  const appearanceSignature = canApplyAppearance
+    ? [
+        appearanceState.digitigrade ? 'd' : 'p',
+        appearanceState.body_color || 'bc',
+        appearanceState.eye_color || 'ec',
+        appearanceState.hair_style || 'hs',
+        appearanceState.hair_color || 'hc',
+        appearanceState.hair_gradient_style || 'gs',
+        appearanceState.hair_gradient_color || 'gc',
+        appearanceState.facial_hair_style || 'fs',
+        appearanceState.facial_hair_color || 'fc',
+        appearanceState.ear_style || 'es',
+        appearanceState.horn_style || 'hos',
+        appearanceState.tail_style || 'ts',
+        appearanceState.wing_style || 'ws',
+        (appearanceState.ear_colors || []).join('|'),
+        (appearanceState.horn_colors || []).join('|'),
+        (appearanceState.tail_colors || []).join('|'),
+        (appearanceState.wing_colors || []).join('|'),
+      ].join('::')
+    : 'no-appearance';
+  const digitigrade = canApplyAppearance
+    ? !!appearanceState.digitigrade
+    : fallbackDigitigrade;
+  const tailHideParts = tailDef?.hide_body_parts;
+  const tailHiddenBodyParts = Array.isArray(tailHideParts)
+    ? tailHideParts.filter(
+        (part): part is string => typeof part === 'string' && part.length > 0
+      )
+    : [];
+  const previewDirStatesForLive =
+    tailHiddenBodyParts.length > 0
+      ? Object.values(previewDirStates).reduce(
+          (acc, dirState) => {
+            if (!dirState) {
+              return acc;
+            }
+            const currentHidden = Array.isArray(dirState.hiddenBodyParts)
+              ? dirState.hiddenBodyParts
+              : [];
+            const mergedHidden = Array.from(
+              new Set([...currentHidden, ...tailHiddenBodyParts])
+            );
+            if (mergedHidden.length === currentHidden.length) {
+              acc[dirState.dir] = dirState;
+              return acc;
+            }
+            acc[dirState.dir] = {
+              ...dirState,
+              hiddenBodyParts: mergedHidden,
+            };
+            return acc;
+          },
+          {} as Record<number, PreviewDirState>
+        )
+      : previewDirStates;
+  const bodyColorExcludedParts = collectBodyColorExcludedParts(
+    previewDirStatesForLive
+  );
+  return {
+    canApplyAppearance,
+    appearanceState,
+    hairDef,
+    gradientDef,
+    facialHairDef,
+    earDef,
+    hornDef,
+    tailDef,
+    wingDef,
+    previewBaseBodyColor,
+    previewTargetBodyColor,
+    previewBaseEyeColor,
+    previewTargetEyeColor,
+    appearanceSignature,
+    digitigrade,
+    previewDirStatesForLive,
+    bodyColorExcludedParts,
+  };
+};
+
+const buildAppearanceOverlayEntriesForDir = (options: {
+  dir: number;
+  dirState?: PreviewDirState;
+  appearanceState: BasicAppearanceState;
+  hairDef: BasicAppearanceAccessoryDefinition | null;
+  gradientDef: BasicAppearanceGradientDefinition | null;
+  facialHairDef: BasicAppearanceAccessoryDefinition | null;
+  earDef: BasicAppearanceAccessoryDefinition | null;
+  hornDef: BasicAppearanceAccessoryDefinition | null;
+  tailDef: BasicAppearanceAccessoryDefinition | null;
+  wingDef: BasicAppearanceAccessoryDefinition | null;
+  previewBaseEyeColor: string | null;
+  previewTargetEyeColor: string | null;
+  canvasWidth: number;
+  canvasHeight: number;
+  showJobGear: boolean;
+  showLoadoutGear: boolean;
+  signalAssetUpdate: () => void;
+}): PreviewLayerEntry[] => {
+  const {
+    dir,
+    dirState,
+    appearanceState,
+    hairDef,
+    gradientDef,
+    facialHairDef,
+    earDef,
+    hornDef,
+    tailDef,
+    wingDef,
+    previewBaseEyeColor,
+    previewTargetEyeColor,
+    canvasWidth,
+    canvasHeight,
+    showJobGear,
+    showLoadoutGear,
+    signalAssetUpdate,
+  } = options;
+  if (!dirState) {
+    return [];
+  }
+  const hiddenLegParts = collectHiddenLegParts(dirState.hiddenBodyParts);
+  const hideShoes =
+    hiddenLegParts.includes('l_foot') || hiddenLegParts.includes('r_foot');
+  const referenceParts =
+    hiddenLegParts.length > 0
+      ? getPreviewPartMapFromAssets(
+          dirState.referencePartAssets,
+          canvasWidth,
+          canvasHeight,
+          signalAssetUpdate
+        )
+      : null;
+  const overlayAssetsRaw = Array.isArray(dirState.overlayAssets)
+    ? (dirState.overlayAssets as Array<GearOverlayAsset | IconAssetPayload>)
+    : [];
+  const overlayAssets = overlayAssetsRaw.filter((entry) => {
+    const slot = (entry as GearOverlayAsset)?.slot;
+    return !slot || !APPEARANCE_OVERLAY_SLOTS.has(String(slot));
+  });
+  const baseOverlayLayers = buildOrderedOverlayLayers(
+    overlayAssets,
+    canvasWidth,
+    canvasHeight,
+    'base',
+    signalAssetUpdate
+  );
+  const loadoutLayers = showLoadoutGear
+    ? buildOrderedOverlayLayers(
+        (dirState.gearLoadoutOverlayAssets as (
+          | GearOverlayAsset
+          | IconAssetPayload
+        )[]) || [],
+        canvasWidth,
+        canvasHeight,
+        'loadout',
+        signalAssetUpdate,
+        baseOverlayLayers.length
+      )
+    : [];
+  const loadoutSlots = new Set(
+    loadoutLayers
+      .map((entry) => entry.slot)
+      .filter((slot): slot is string => !!slot)
+  );
+  const jobLayersUnfiltered = showJobGear
+    ? buildOrderedOverlayLayers(
+        (dirState.gearJobOverlayAssets as (
+          | GearOverlayAsset
+          | IconAssetPayload
+        )[]) || [],
+        canvasWidth,
+        canvasHeight,
+        'job',
+        signalAssetUpdate,
+        baseOverlayLayers.length + loadoutLayers.length
+      )
+    : [];
+  const jobLayers =
+    showLoadoutGear && showJobGear
+      ? jobLayersUnfiltered.filter(
+          (entry) => !entry.slot || !loadoutSlots.has(entry.slot)
+        )
+      : jobLayersUnfiltered;
+
+  const appearanceLayers: OrderedOverlayLayer[] = [];
+
+  let hairCompositeGrid: string[][] | null = null;
+  if (facialHairDef) {
+    hairCompositeGrid = buildAccessoryGrid({
+      def: facialHairDef,
+      dir,
+      canvasWidth,
+      canvasHeight,
+      colors: [appearanceState.facial_hair_color],
+      signalAssetUpdate,
+    });
+  }
+  if (hairDef) {
+    const hairGrid = buildHairGridWithGradient({
+      hairDef,
+      gradientDef,
+      dir,
+      canvasWidth,
+      canvasHeight,
+      hairColor: appearanceState.hair_color,
+      gradientColor: appearanceState.hair_gradient_color,
+      signalAssetUpdate,
+    });
+    if (hairGrid) {
+      if (!hairCompositeGrid) {
+        hairCompositeGrid = cloneGridData(hairGrid);
+      } else {
+        mergeGrid(hairCompositeGrid, hairGrid);
+      }
+    }
+  }
+  if (earDef) {
+    const earsGrid = buildAccessoryGrid({
+      def: earDef,
+      dir,
+      canvasWidth,
+      canvasHeight,
+      colors: appearanceState.ear_colors,
+      signalAssetUpdate,
+    });
+    if (earsGrid) {
+      if (!hairCompositeGrid) {
+        hairCompositeGrid = cloneGridData(earsGrid);
+      } else {
+        mergeGrid(hairCompositeGrid, earsGrid);
+      }
+    }
+  }
+  if (hornDef) {
+    const hornsGrid = buildAccessoryGrid({
+      def: hornDef,
+      dir,
+      canvasWidth,
+      canvasHeight,
+      colors: appearanceState.horn_colors,
+      signalAssetUpdate,
+    });
+    if (hornsGrid) {
+      if (!hairCompositeGrid) {
+        hairCompositeGrid = cloneGridData(hornsGrid);
+      } else {
+        mergeGrid(hairCompositeGrid, hornsGrid);
+      }
+    }
+  }
+  if (hairCompositeGrid && gridHasPixels(hairCompositeGrid)) {
+    appearanceLayers.push({
+      grid: hairCompositeGrid,
+      layer: OVERLAY_SLOT_PRIORITY_MAP.hair,
+      slot: 'hair',
+      source: 'base',
+      order: 1000,
+    });
+  }
+
+  if (tailDef) {
+    const tailGrid = buildAccessoryGrid({
+      def: tailDef,
+      dir,
+      canvasWidth,
+      canvasHeight,
+      colors: appearanceState.tail_colors,
+      signalAssetUpdate,
+    });
+    if (tailGrid) {
+      const lowerDirs = Array.isArray(tailDef.lower_layer_dirs)
+        ? tailDef.lower_layer_dirs
+        : [2];
+      const isLower = lowerDirs.includes(dir);
+      const slot = isLower ? 'tail_lower' : 'tail_upper';
+      appearanceLayers.push({
+        grid: tailGrid,
+        layer: OVERLAY_SLOT_PRIORITY_MAP[slot],
+        slot,
+        source: 'base',
+        order: 1030,
+      });
+    }
+  }
+
+  if (wingDef) {
+    const frontGrid = buildAccessoryGrid({
+      def: wingDef,
+      dir,
+      canvasWidth,
+      canvasHeight,
+      colors: appearanceState.wing_colors,
+      signalAssetUpdate,
+    });
+    if (frontGrid) {
+      appearanceLayers.push({
+        grid: frontGrid,
+        layer: OVERLAY_SLOT_PRIORITY_MAP.wing_upper,
+        slot: 'wing_upper',
+        source: 'base',
+        order: 1040,
+      });
+    }
+    if (wingDef.multi_dir && wingDef.back_assets) {
+      const backAssets = wingDef.back_assets?.[dir];
+      if (backAssets && backAssets.length) {
+        const backDef: BasicAppearanceAccessoryDefinition = {
+          ...wingDef,
+          assets: { [dir]: backAssets } as any,
+        };
+        const backGrid = buildAccessoryGrid({
+          def: backDef,
+          dir,
+          canvasWidth,
+          canvasHeight,
+          colors: appearanceState.wing_colors,
+          signalAssetUpdate,
+        });
+        if (backGrid) {
+          appearanceLayers.push({
+            grid: backGrid,
+            layer: OVERLAY_SLOT_PRIORITY_MAP.wing_lower,
+            slot: 'wing_lower',
+            source: 'base',
+            order: 1035,
+          });
+        }
+      }
+    }
+  }
+
+  const merged = mergeOverlayLayerLists(
+    [...baseOverlayLayers, ...appearanceLayers],
+    jobLayers,
+    loadoutLayers
+  );
+  const overlayEntries: PreviewLayerEntry[] = [];
+  merged.forEach((entry, index) => {
+    if (hideShoes && entry.slot === 'shoes') {
+      return;
+    }
+    let grid = cloneGridData(entry.grid);
+    if (entry.slot === 'eyes' && previewBaseEyeColor && previewTargetEyeColor) {
+      grid = recolorGrid(grid, previewBaseEyeColor, previewTargetEyeColor);
+    }
+    if (referenceParts && entry.slot && TAUR_CLOTHING_SLOTS.has(entry.slot)) {
+      maskGridForHiddenLegParts(grid, referenceParts, hiddenLegParts);
+    }
+    if (!gridHasPixels(grid)) {
+      return;
+    }
+    overlayEntries.push({
+      type: 'overlay',
+      key: `overlay_body_${dir}_${entry.source}_${entry.slot || index}_${index}`,
+      label:
+        entry.source === 'job'
+          ? 'Job Gear'
+          : entry.source === 'loadout'
+            ? 'Loadout Gear'
+            : 'Overlay',
+      source: entry.source,
+      grid,
+      opacity: 1,
+    });
+  });
+  return overlayEntries;
+};
+
+export const applyAppearanceOverlaysToPreview = (options: {
+  preview: PreviewDirectionEntry[];
+  previewDirStatesForLive: Record<number, PreviewDirState>;
+  appearanceContext: AppearancePreviewContext;
+  canvasWidth: number;
+  canvasHeight: number;
+  showJobGear: boolean;
+  showLoadoutGear: boolean;
+  signalAssetUpdate: () => void;
+}): PreviewDirectionEntry[] => {
+  const {
+    preview,
+    previewDirStatesForLive,
+    appearanceContext,
+    canvasWidth,
+    canvasHeight,
+    showJobGear,
+    showLoadoutGear,
+    signalAssetUpdate,
+  } = options;
+  if (!appearanceContext.canApplyAppearance) {
+    return preview;
+  }
+  return preview.map((dirEntry) => {
+    const layers = dirEntry.layers || [];
+    const { before, after } = splitOverlayLayers(layers);
+    const overlayEntries = buildAppearanceOverlayEntriesForDir({
+      dir: dirEntry.dir,
+      dirState: previewDirStatesForLive[dirEntry.dir],
+      appearanceState: appearanceContext.appearanceState,
+      hairDef: appearanceContext.hairDef,
+      gradientDef: appearanceContext.gradientDef,
+      facialHairDef: appearanceContext.facialHairDef,
+      earDef: appearanceContext.earDef,
+      hornDef: appearanceContext.hornDef,
+      tailDef: appearanceContext.tailDef,
+      wingDef: appearanceContext.wingDef,
+      previewBaseEyeColor: appearanceContext.previewBaseEyeColor,
+      previewTargetEyeColor: appearanceContext.previewTargetEyeColor,
+      canvasWidth,
+      canvasHeight,
+      showJobGear,
+      showLoadoutGear,
+      signalAssetUpdate,
+    });
+    return {
+      ...dirEntry,
+      layers: [...before, ...overlayEntries, ...after],
+    };
+  });
+};
+
+const buildBodyMarkingsPreviewBases = (options: {
+  previewDirStates: Record<number, PreviewDirState>;
+  bodyPayload: BodyMarkingsPayload | null;
+  basicPayload: BasicAppearancePayload | null;
+  basicAppearanceState: BasicAppearanceState;
+  data: CustomMarkingDesignerData;
+  bodyPartLabels: Record<string, string>;
+  canvasWidth: number;
+  canvasHeight: number;
+  resolvedPartPriorityMap: Record<string, boolean>;
+  resolvedPartReplacementMap: Record<string, boolean>;
+  showJobGear: boolean;
+  showLoadoutGear: boolean;
+  signalAssetUpdate: () => void;
+}): BodyMarkingsPreviewBaseResult => {
+  const {
+    previewDirStates,
+    bodyPayload,
+    basicPayload,
+    basicAppearanceState,
+    data,
+    bodyPartLabels,
+    canvasWidth,
+    canvasHeight,
+    resolvedPartPriorityMap,
+    resolvedPartReplacementMap,
+    showJobGear,
+    showLoadoutGear,
+    signalAssetUpdate,
+  } = options;
+  const appearanceContext = resolveAppearanceContext({
+    previewDirStates,
+    basicPayload,
+    basicAppearanceState,
+    fallbackDigitigrade: !!bodyPayload?.digitigrade,
+  });
+  const hasReplacementFlags = Object.values(
+    resolvedPartReplacementMap || {}
+  ).some(Boolean);
+  const partPaintPresenceMap =
+    bodyPayload?.preview_sources && hasReplacementFlags
+      ? buildPartPaintPresenceMap({
+          dirStates: appearanceContext.previewDirStatesForLive,
+          activeDirKey: data.active_dir_key,
+          activePartKey: data.active_body_part || 'generic',
+          canvasWidth,
+          canvasHeight,
+          replacementDependents: data.replacement_dependents,
+        })
+      : undefined;
+  const basePreviewRaw = bodyPayload?.preview_sources
+    ? buildBasePreviewDirs(
+        appearanceContext.previewDirStatesForLive,
+        data.directions,
+        bodyPartLabels,
+        canvasWidth,
+        canvasHeight,
+        signalAssetUpdate
+      )
+    : [];
+  const liveBasePreviewRaw = bodyPayload?.preview_sources
+    ? buildDesignerPreviewDirs(
+        appearanceContext.previewDirStatesForLive,
+        data.directions,
+        bodyPartLabels,
+        canvasWidth,
+        canvasHeight,
+        data.active_dir_key,
+        'generic',
+        null,
+        null,
+        resolvedPartPriorityMap,
+        resolvedPartReplacementMap,
+        partPaintPresenceMap,
+        showJobGear,
+        showLoadoutGear,
+        signalAssetUpdate
+      )
+    : [];
+  const basePreviewColored = applyEyeColorToPreview(
+    applyBodyColorToPreview(
+      basePreviewRaw,
+      appearanceContext.previewBaseBodyColor,
+      appearanceContext.previewTargetBodyColor,
+      appearanceContext.bodyColorExcludedParts
+    ),
+    appearanceContext.previewBaseEyeColor,
+    appearanceContext.previewTargetEyeColor,
+    appearanceContext.previewTargetBodyColor
+  );
+  const liveBasePreviewColored = applyEyeColorToPreview(
+    applyBodyColorToPreview(
+      liveBasePreviewRaw,
+      appearanceContext.previewBaseBodyColor,
+      appearanceContext.previewTargetBodyColor,
+      appearanceContext.bodyColorExcludedParts
+    ),
+    appearanceContext.previewBaseEyeColor,
+    appearanceContext.previewTargetEyeColor,
+    appearanceContext.previewTargetBodyColor
+  );
+  const basePreview = applyAppearanceOverlaysToPreview({
+    preview: basePreviewColored,
+    previewDirStatesForLive: appearanceContext.previewDirStatesForLive,
+    appearanceContext,
+    canvasWidth,
+    canvasHeight,
+    showJobGear,
+    showLoadoutGear,
+    signalAssetUpdate,
+  });
+  const liveBasePreview = applyAppearanceOverlaysToPreview({
+    preview: liveBasePreviewColored,
+    previewDirStatesForLive: appearanceContext.previewDirStatesForLive,
+    appearanceContext,
+    canvasWidth,
+    canvasHeight,
+    showJobGear,
+    showLoadoutGear,
+    signalAssetUpdate,
+  });
+  return {
+    basePreview,
+    liveBasePreview,
+    appearanceContext,
+  };
 };
 
 type BodyMarkingsInitializerProps = Readonly<{
@@ -459,6 +1730,7 @@ type BodyMarkingsInitializerProps = Readonly<{
   setPayloadSignature: (signature: string | null) => void;
   requestPayload: () => void;
   syncPayload: (payload: BodyMarkingsPayload) => void;
+  syncPreviewPayload: (payload: BodyMarkingsPayload) => void;
   loadInProgress: boolean;
   setLoadInProgress: (value: boolean) => void;
 }>;
@@ -505,18 +1777,56 @@ class BodyMarkingsInitializer extends Component<BodyMarkingsInitializerProps> {
       payloadSignature,
       setPayloadSignature,
       syncPayload,
+      syncPreviewPayload,
       loadInProgress,
       setLoadInProgress,
     } = this.props;
     if (!dataPayload) {
+      if (bodyPayload) {
+        const bodySignature = buildBodyPayloadSignature(bodyPayload);
+        if (bodySignature !== payloadSignature) {
+          setPayloadSignature(bodySignature);
+        }
+      }
       this.lastPayloadSignature = null;
       this.lastDataPayload = null;
       return;
     }
+    const isPreviewOnly = !!dataPayload.preview_only;
+    if (bodyPayload && !loadInProgress && !isPreviewOnly) {
+      const bodySignature = buildBodyPayloadSignature(bodyPayload);
+      if (bodySignature !== payloadSignature) {
+        setPayloadSignature(bodySignature);
+      }
+      return;
+    }
     const nextSignature = buildBodyPayloadSignature(dataPayload);
+    if (isPreviewOnly && bodyPayload) {
+      const localRevision = bodyPayload.preview_revision || 0;
+      const incomingRevision = dataPayload.preview_revision || 0;
+      if (localRevision > incomingRevision) {
+        this.lastDataPayload = dataPayload;
+        this.lastPayloadSignature = nextSignature;
+        if (loadInProgress) {
+          setLoadInProgress(false);
+        }
+        return;
+      }
+    }
+    const signatureChanged = nextSignature !== this.lastPayloadSignature;
     const hadLastDataPayload = this.lastDataPayload !== null;
     const dataRefChanged = dataPayload !== this.lastDataPayload;
-    if (!dataRefChanged && nextSignature === this.lastPayloadSignature) {
+    if (!dataRefChanged && !signatureChanged) {
+      return;
+    }
+    if (dataPayload.preview_only) {
+      this.lastDataPayload = dataPayload;
+      this.lastPayloadSignature = nextSignature;
+      setPayloadSignature(nextSignature);
+      syncPreviewPayload(dataPayload);
+      if (loadInProgress) {
+        setLoadInProgress(false);
+      }
       return;
     }
     this.lastDataPayload = dataPayload;
@@ -666,6 +1976,11 @@ type MarkingTileProps = Readonly<{
   onToggle: () => void;
   canvasWidth: number;
   canvasHeight: number;
+  backgroundImage: string | null;
+  backgroundColor: string;
+  backgroundScale: number;
+  backgroundTileWidth?: number;
+  backgroundTileHeight?: number;
 }>;
 
 class MarkingTile extends Component<MarkingTileProps> {
@@ -674,13 +1989,29 @@ class MarkingTile extends Component<MarkingTileProps> {
       next.selected !== this.props.selected ||
       next.previews !== this.props.previews ||
       next.def.id !== this.props.def.id ||
-      next.def.name !== this.props.def.name
+      next.def.name !== this.props.def.name ||
+      next.backgroundImage !== this.props.backgroundImage ||
+      next.backgroundColor !== this.props.backgroundColor ||
+      next.backgroundScale !== this.props.backgroundScale ||
+      next.backgroundTileWidth !== this.props.backgroundTileWidth ||
+      next.backgroundTileHeight !== this.props.backgroundTileHeight
     );
   }
 
   render() {
-    const { def, selected, previews, onToggle, canvasWidth, canvasHeight } =
-      this.props;
+    const {
+      def,
+      selected,
+      previews,
+      onToggle,
+      canvasWidth,
+      canvasHeight,
+      backgroundImage,
+      backgroundColor,
+      backgroundScale,
+      backgroundTileWidth,
+      backgroundTileHeight,
+    } = this.props;
     return (
       <Box
         className={`RogueStar__markingTile${
@@ -697,7 +2028,11 @@ class MarkingTile extends Component<MarkingTileProps> {
                 pixelSize={MARKING_TILE_PIXEL_SIZE}
                 width={canvasWidth}
                 height={canvasHeight}
-                backgroundColor="#000000"
+                backgroundImage={backgroundImage}
+                backgroundColor={backgroundColor}
+                backgroundScale={backgroundScale}
+                backgroundTileWidth={backgroundTileWidth}
+                backgroundTileHeight={backgroundTileHeight}
               />
             </Box>
           ))}
@@ -721,6 +2056,11 @@ type MarkingTileSectionProps = Readonly<{
   tileDirectionsSignature: string;
   previewColorSignature: string;
   assetRevision: number;
+  backgroundImage: string | null;
+  backgroundColor: string;
+  backgroundScale: number;
+  backgroundTileWidth?: number;
+  backgroundTileHeight?: number;
   markings: Record<string, BodyMarkingEntry>;
   markingKeysSignature: string;
   getTilePreviewEntries: (
@@ -749,7 +2089,12 @@ class MarkingTileSection extends Component<MarkingTileSectionProps> {
       next.tileDirectionsSignature !== this.props.tileDirectionsSignature ||
       next.previewColorSignature !== this.props.previewColorSignature ||
       next.assetRevision !== this.props.assetRevision ||
-      next.definitions !== this.props.definitions
+      next.definitions !== this.props.definitions ||
+      next.backgroundImage !== this.props.backgroundImage ||
+      next.backgroundColor !== this.props.backgroundColor ||
+      next.backgroundScale !== this.props.backgroundScale ||
+      next.backgroundTileWidth !== this.props.backgroundTileWidth ||
+      next.backgroundTileHeight !== this.props.backgroundTileHeight
     );
   }
 
@@ -765,6 +2110,11 @@ class MarkingTileSection extends Component<MarkingTileSectionProps> {
       tileDirectionsSignature: _,
       previewColorSignature: __,
       markings,
+      backgroundImage,
+      backgroundColor,
+      backgroundScale,
+      backgroundTileWidth,
+      backgroundTileHeight,
       getTilePreviewEntries,
       applyAdd,
       applyRemove,
@@ -817,6 +2167,11 @@ class MarkingTileSection extends Component<MarkingTileSectionProps> {
                 previews={tilePreviews}
                 canvasWidth={canvasWidth}
                 canvasHeight={canvasHeight}
+                backgroundImage={backgroundImage}
+                backgroundColor={backgroundColor}
+                backgroundScale={backgroundScale}
+                backgroundTileWidth={backgroundTileWidth}
+                backgroundTileHeight={backgroundTileHeight}
                 onToggle={() => {
                   if (!canToggle) {
                     return;
@@ -891,6 +2246,11 @@ type BodyMarkingsGallerySectionProps = Readonly<{
   getTilePreviewEntries: (
     def: BodyMarkingDefinition
   ) => PreviewDirectionEntry[];
+  backgroundImage: string | null;
+  backgroundColor: string;
+  backgroundScale: number;
+  backgroundTileWidth?: number;
+  backgroundTileHeight?: number;
   applyAdd: (id: string) => void;
   applyRemove: (id: string) => void;
 }>;
@@ -914,6 +2274,11 @@ const BodyMarkingsGallerySection = ({
   markings,
   markingKeysSignature,
   getTilePreviewEntries,
+  backgroundImage,
+  backgroundColor,
+  backgroundScale,
+  backgroundTileWidth,
+  backgroundTileHeight,
   applyAdd,
   applyRemove,
 }: BodyMarkingsGallerySectionProps) => (
@@ -979,6 +2344,11 @@ const BodyMarkingsGallerySection = ({
       markingKeysSignature={markingKeysSignature}
       previewColorSignature={previewTint || 'default'}
       getTilePreviewEntries={getTilePreviewEntries}
+      backgroundImage={backgroundImage}
+      backgroundColor={backgroundColor}
+      backgroundScale={backgroundScale}
+      backgroundTileWidth={backgroundTileWidth}
+      backgroundTileHeight={backgroundTileHeight}
       applyAdd={applyAdd}
       applyRemove={applyRemove}
     />
@@ -1197,7 +2567,7 @@ const BodyMarkingsActiveSection = ({
                   label={bodyPartLabels[partId] || partId}>
                   <Button.Checkbox
                     className={CHIP_BUTTON_CLASS}
-                    checked={partState?.on !== false}
+                    checked={isBodyMarkingPartEnabled(partState?.on)}
                     onClick={() => togglePart(selectedDef.id, partId)}>
                     Enabled
                   </Button.Checkbox>
@@ -1241,6 +2611,8 @@ type BodyMarkingsPreviewColumnProps = Readonly<{
   markedPreview: PreviewDirectionEntry[];
   canvasWidth: number;
   canvasHeight: number;
+  previewFitToFrame: boolean;
+  onTogglePreviewFit: () => void;
   previewBackgroundImage: string | null;
   backgroundFallbackColor: string;
   canvasBackgroundScale: number;
@@ -1261,6 +2633,8 @@ const BodyMarkingsPreviewColumn = ({
   markedPreview,
   canvasWidth,
   canvasHeight,
+  previewFitToFrame,
+  onTogglePreviewFit,
   previewBackgroundImage,
   backgroundFallbackColor,
   canvasBackgroundScale,
@@ -1289,6 +2663,13 @@ const BodyMarkingsPreviewColumn = ({
           mr={0.5}>
           Live Preview
         </Box>
+        <Button
+          className={CHIP_BUTTON_CLASS}
+          icon={previewFitToFrame ? 'compress-arrows-alt' : 'expand-arrows-alt'}
+          selected={previewFitToFrame}
+          tooltip="Shrink to show the full 64x64 grid"
+          onClick={onTogglePreviewFit}
+        />
         <Button
           className={CHIP_BUTTON_CLASS}
           icon="id-card"
@@ -1326,7 +2707,7 @@ const BodyMarkingsPreviewColumn = ({
               pixelSize={Math.max(1, PREVIEW_PIXEL_SIZE)}
               width={canvasWidth}
               height={canvasHeight}
-              fitToFrame={false}
+              fitToFrame={previewFitToFrame}
               backgroundImage={previewBackgroundImage}
               backgroundColor={backgroundFallbackColor}
               backgroundScale={canvasBackgroundScale}
@@ -1342,8 +2723,8 @@ const BodyMarkingsPreviewColumn = ({
         <RogueStarColorPicker
           color={colorPickerValue}
           currentColor={colorPickerValue}
-          onChange={(hex) => applyColorTarget(hex)}
-          onCommit={(hex) => applyColorTarget(hex)}
+          onChange={applyColorTarget}
+          onCommit={applyColorTarget}
           showPreview={false}
           showCustomColors={false}
         />
@@ -1362,6 +2743,8 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
     backgroundFallbackColor,
     cycleCanvasBackground,
     canvasBackgroundScale,
+    resolvedPartPriorityMap,
+    resolvedPartReplacementMap,
     showJobGear,
     onToggleJobGear,
     showLoadoutGear,
@@ -1370,6 +2753,16 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
   const { act } = useBackend<CustomMarkingDesignerData>(context);
   const uiLocked = data.ui_locked ?? false;
   const stateToken = data.state_token || 'session';
+  const [, setCanvasFitToFrame] = useLocalState<boolean>(
+    context,
+    `canvasFitToFrame-${stateToken}`,
+    false
+  );
+  const [previewFitToFrame, setPreviewFitToFrame] = useLocalState<boolean>(
+    context,
+    `previewFitToFrame-${stateToken}`,
+    false
+  );
   const [, setReloadPending] = useLocalState<boolean>(
     context,
     `customMarkingDesignerReloadPending-${stateToken}`,
@@ -1378,6 +2771,11 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
   const [, setReloadTargetRevision] = useLocalState<number>(
     context,
     `customMarkingDesignerReloadTargetRevision-${stateToken}`,
+    0
+  );
+  const [previewRefreshSkips, setPreviewRefreshSkips] = useLocalState<number>(
+    context,
+    `customMarkingDesignerPreviewRefreshSkips-${stateToken}`,
     0
   );
   const [loadInProgress, setLoadInProgress] = useLocalState<boolean>(
@@ -1391,6 +2789,16 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
       'bodyPayload',
       data.body_markings_payload || null
     );
+  const [basicPayload] = useLocalState<BasicAppearancePayload | null>(
+    context,
+    'basicPayload',
+    data.basic_appearance_payload || null
+  );
+  const [basicAppearanceState] = useLocalState<BasicAppearanceState>(
+    context,
+    'basicAppearanceState',
+    buildBasicStateFromPayload(data.basic_appearance_payload)
+  );
   const [markings, setMarkings] = useLocalState<
     Record<string, BodyMarkingEntry>
   >(
@@ -1458,6 +2866,9 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
   const [tilePreviewCache] = useLocalState<
     Record<string, { sig: string; previews: PreviewDirectionEntry[] }>
   >(context, 'bodyMarkingsTilePreviewCache', {});
+  const [markingLayersCache] = useLocalState<
+    Record<string, MarkingLayersCacheEntry>
+  >(context, 'bodyMarkingsMarkingLayersCache', {});
   const [assetRevision] = useLocalState<number>(
     context,
     'bodyMarkingsAssetRevision',
@@ -1468,6 +2879,11 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
     `bodyMarkingsPreviewTimedOut-${stateToken}`,
     false
   );
+  const togglePreviewFit = () => {
+    const next = !previewFitToFrame;
+    setPreviewFitToFrame(next);
+    setCanvasFitToFrame(next);
+  };
 
   const updateSharedState = function <T>(opts: {
     key: string;
@@ -1562,24 +2978,19 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
       maxW = Math.max(maxW, asset.width || 0);
       maxH = Math.max(maxH, asset.height || 0);
     };
+    const considerMap = (
+      assets?: Record<string, { width?: number; height?: number }> | null
+    ) => {
+      if (!assets) return;
+      for (const asset of Object.values(assets)) {
+        consider(asset);
+      }
+    };
     for (const entry of bodyPayload?.preview_sources || []) {
       consider(entry?.body_asset);
       consider(entry?.composite_asset);
-      const allOverlays = [
-        ...(entry?.overlay_assets || []),
-        ...((entry as any)?.job_overlay_assets || []),
-        ...((entry as any)?.loadout_overlay_assets || []),
-      ];
-      for (const raw of allOverlays) {
-        const overlayEntry = raw as any;
-        const overlayLayer =
-          typeof overlayEntry?.layer === 'number' ? overlayEntry.layer : null;
-        if (overlayLayer === CUSTOM_MARKING_LAYER_INDEX) {
-          continue;
-        }
-        const overlayAsset = overlayEntry?.asset || raw;
-        consider(overlayAsset);
-      }
+      considerMap(entry?.reference_part_assets);
+      considerMap(entry?.reference_part_marking_assets);
     }
     return { maxW, maxH };
   };
@@ -1655,14 +3066,23 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
     if (!activeColorTarget) {
       return;
     }
+    const normalized = normalizeHex(hex) || '#ffffff';
     if (activeColorTarget.type === 'galleryPreview') {
-      setPreviewColor(normalizeHex(hex) || '#ffffff');
+      const current = previewTint || '#ffffff';
+      if (current === normalized) {
+        return;
+      }
+      setPreviewColor(normalized);
       return;
     }
     if (activeColorTarget.type === 'mark' && activeColorTarget.partId) {
-      setPartColor(activeColorTarget.markId, activeColorTarget.partId, hex);
+      setPartColor(
+        activeColorTarget.markId,
+        activeColorTarget.partId,
+        normalized
+      );
     } else {
-      setMarkColor(activeColorTarget.markId, hex);
+      setMarkColor(activeColorTarget.markId, normalized);
     }
   };
 
@@ -1694,6 +3114,10 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
     });
     setTilePage(0);
     setDirty(false);
+  };
+
+  const syncPreviewPayload = (payload: BodyMarkingsPayload) => {
+    setBodyPayload(payload);
   };
 
   const applyAdd = (id: string) => {
@@ -1826,7 +3250,7 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
           (current[partId] as BodyMarkingPartState) ||
             ({} as BodyMarkingPartState)
         ) || ({} as BodyMarkingPartState);
-      part.on = !part.on;
+      part.on = !isBodyMarkingPartEnabled(part.on);
       current[partId] = part;
       return {
         ...prev,
@@ -1837,6 +3261,16 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
   };
 
   const setPartColor = (markId: string, partId: string, color: string) => {
+    const normalized = normalizeHex(color) || '#ffffff';
+    const { latestMarkings } = resolveLatestBodyState();
+    const existingEntry = latestMarkings[markId];
+    const existingPartState = existingEntry?.[partId] as
+      | BodyMarkingPartState
+      | undefined;
+    const existingColor = normalizeHex(existingPartState?.color) || null;
+    if (existingEntry?.color === null && existingColor === normalized) {
+      return;
+    }
     updateMarkingsState((prev) => {
       const current = cloneEntry<BodyMarkingEntry>(
         prev[markId] || ({} as BodyMarkingEntry)
@@ -1846,7 +3280,7 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
           (current[partId] as BodyMarkingPartState) ||
             ({} as BodyMarkingPartState)
         ) || ({} as BodyMarkingPartState);
-      part.color = normalizeHex(color);
+      part.color = normalized;
       current[partId] = part;
       current.color = null;
       return {
@@ -1854,16 +3288,35 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
         [markId]: current,
       };
     });
-    setDirty(true);
+    if (!dirty) {
+      setDirty(true);
+    }
   };
 
   const setMarkColor = (markId: string, color: string) => {
     const def = definitions[markId];
+    const normalized = normalizeHex(color) || '#ffffff';
+    const { latestMarkings } = resolveLatestBodyState();
+    const existingEntry = latestMarkings[markId];
+    const existingEntryColor = normalizeHex(existingEntry?.color) || null;
+    if (existingEntryColor === normalized) {
+      const parts = def?.body_parts || [];
+      const matches = parts.every((partId) => {
+        const partState = existingEntry?.[partId] as BodyMarkingPartState;
+        const partColor = normalizeHex(partState?.color) || null;
+        return (
+          isBodyMarkingPartEnabled(partState?.on) && partColor === normalized
+        );
+      });
+      if (matches) {
+        return;
+      }
+    }
     updateMarkingsState((prev) => {
       const current = cloneEntry<BodyMarkingEntry>(
         prev[markId] || ({} as BodyMarkingEntry)
       );
-      current.color = normalizeHex(color);
+      current.color = normalized;
       if (def?.body_parts) {
         for (const partId of def.body_parts) {
           const part =
@@ -1871,8 +3324,8 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
               (current[partId] as BodyMarkingPartState) ||
                 ({} as BodyMarkingPartState)
             ) || ({} as BodyMarkingPartState);
-          part.color = normalizeHex(color);
-          part.on = part.on !== false;
+          part.color = normalized;
+          part.on = isBodyMarkingPartEnabled(part.on);
           current[partId] = part;
         }
       }
@@ -1881,7 +3334,9 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
         [markId]: current,
       };
     });
-    setDirty(true);
+    if (!dirty) {
+      setDirty(true);
+    }
   };
 
   const normalizeEntryPartState = (
@@ -1899,7 +3354,7 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
         continue;
       }
       normalized[partId] = {
-        on: raw.on !== false,
+        on: isBodyMarkingPartEnabled(raw.on),
         color: raw.color ? normalizeHex(raw.color) : raw.color,
       } as BodyMarkingPartState;
     }
@@ -1949,6 +3404,9 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
       setPendingCloseLocal(true);
     }
     try {
+      if (wasDirty) {
+        setPreviewRefreshSkips((previewRefreshSkips || 0) + 1);
+      }
       const { body_markings: outgoing, order: outgoingOrder } =
         buildBodyMarkingSavePayload({
           order: nextOrder,
@@ -2003,6 +3461,7 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
             order: outgoingOrder,
           };
           setBodyPayload(updatedPayload);
+          setPayloadSignature(buildBodyPayloadSignature(updatedPayload));
         }
       }
     } finally {
@@ -2048,36 +3507,27 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
             canvasGrid: null,
           }
         ).dirs
-      : ({} as Record<number, any>);
-    const basePreview = bodyPayload?.preview_sources
-      ? buildBasePreviewDirs(
-          previewDirStates,
-          data.directions,
-          bodyPartLabels,
-          canvasWidth,
-          canvasHeight,
-          signalAssetUpdate
-        )
-      : [];
-    const liveBasePreview = bodyPayload?.preview_sources
-      ? buildDesignerPreviewDirs(
-          previewDirStates,
-          data.directions,
-          bodyPartLabels,
-          canvasWidth,
-          canvasHeight,
-          data.active_dir_key,
-          'generic',
-          null,
-          null,
-          undefined,
-          undefined,
-          undefined,
-          showJobGear,
-          showLoadoutGear,
-          signalAssetUpdate
-        )
-      : [];
+      : ({} as Record<number, PreviewDirState>);
+    const { basePreview, liveBasePreview, appearanceContext } =
+      buildBodyMarkingsPreviewBases({
+        previewDirStates,
+        bodyPayload,
+        basicPayload,
+        basicAppearanceState,
+        data,
+        bodyPartLabels,
+        canvasWidth,
+        canvasHeight,
+        resolvedPartPriorityMap,
+        resolvedPartReplacementMap,
+        showJobGear,
+        showLoadoutGear,
+        signalAssetUpdate,
+      });
+    const hiddenPartsByDir = buildHiddenBodyPartsByDir(
+      appearanceContext.previewDirStatesForLive
+    );
+    const { appearanceSignature, digitigrade } = appearanceContext;
     const basePreviewByDir = basePreview.reduce(
       (acc, entry) => {
         acc[entry.dir] = entry;
@@ -2094,7 +3544,6 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
       .map((entry) => entry.dir)
       .join('|');
 
-    const digitigrade = !!bodyPayload?.digitigrade;
     const expectedPreviewDirs = (() => {
       const previewSources = bodyPayload?.preview_sources;
       const payloadDirs = Array.isArray(previewSources)
@@ -2166,53 +3615,59 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
           );
           const baseLayers = baseDir.layers || [];
           const overlayLayers = baseLayers.filter(
-            (layer) => layer.type === 'overlay'
+            (layer) =>
+              layer.type === 'overlay' &&
+              layer.source !== 'job' &&
+              layer.source !== 'loadout'
           );
           const nonOverlayLayers = baseLayers.filter(
             (layer) => layer.type !== 'overlay'
           );
-          const referenceMasks = hasHiddenParts
-            ? buildReferencePartMaskMap(
-                nonOverlayLayers as Array<{
-                  key?: string;
-                  type?: string;
-                  grid?: string[][];
-                }>
-              )
-            : {};
+          const suppressedPartsMap = hiddenPartsByDir[dir.dir];
+          const hasSuppressedParts =
+            !!suppressedPartsMap && Object.keys(suppressedPartsMap).length > 0;
+          const combinedHiddenPartsMap = hasSuppressedParts
+            ? { ...hiddenPartsMap, ...suppressedPartsMap }
+            : hiddenPartsMap;
+          const referenceMasks =
+            hasHiddenParts || hasSuppressedParts
+              ? buildReferencePartMaskMap(
+                  nonOverlayLayers as Array<{
+                    key?: string;
+                    type?: string;
+                    grid?: string[][];
+                  }>
+                )
+              : {};
+          const canMaskGeneric = Object.keys(referenceMasks).length > 0;
           const normalStack: typeof baseLayers = [];
           const priorityStack: typeof baseLayers = [];
-          nonOverlayLayers.forEach((layer) => {
-            const partId = resolveLayerPartId(layer);
-            const isHiddenPart = !!(partId && hiddenPartsMap[partId]);
-            let resolvedLayer = layer;
-            if (
-              partId === 'generic' &&
-              hasHiddenParts &&
-              Array.isArray(layer.grid)
-            ) {
-              resolvedLayer = {
-                ...layer,
-                grid: buildMaskedGenericGrid(
-                  layer.grid as string[][],
-                  referenceMasks,
-                  hiddenPartsMap
-                ),
-              };
-            }
-            if (!isHiddenPart) {
-              normalStack.push(resolvedLayer);
-            }
-            if (!partId || !layersForDir[partId]) {
+          const handledParts = new Set<string>();
+          const appendPartLayers = (partId: string) => {
+            const partLayers = layersForDir[partId];
+            if (!partLayers) {
               return;
             }
-            const partLayers = layersForDir[partId];
+            const isSuppressedPart =
+              !!suppressedPartsMap && !!suppressedPartsMap[partId];
+            const shouldMaskGeneric =
+              partId === 'generic' && hasSuppressedParts && canMaskGeneric;
+            if (isSuppressedPart && partId !== 'generic') {
+              return;
+            }
             partLayers.normal.forEach((markLayer, idx) => {
               normalStack.push({
                 type: 'custom',
                 key: `tile-${def.id}-${dir.dir}-${partId}-n-${idx}`,
                 label: markLayer.label,
-                grid: markLayer.grid,
+                grid:
+                  shouldMaskGeneric && Array.isArray(markLayer.grid)
+                    ? buildMaskedGenericGrid(
+                        markLayer.grid,
+                        referenceMasks,
+                        suppressedPartsMap || {}
+                      )
+                    : markLayer.grid,
               });
             });
             partLayers.priority.forEach((markLayer, idx) => {
@@ -2220,9 +3675,57 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
                 type: 'overlay',
                 key: `tile-${def.id}-${dir.dir}-${partId}-p-${idx}`,
                 label: markLayer.label,
-                grid: markLayer.grid,
+                grid:
+                  shouldMaskGeneric && Array.isArray(markLayer.grid)
+                    ? buildMaskedGenericGrid(
+                        markLayer.grid,
+                        referenceMasks,
+                        suppressedPartsMap || {}
+                      )
+                    : markLayer.grid,
               });
             });
+          };
+          nonOverlayLayers.forEach((layer) => {
+            const partId = resolveLayerPartId(layer);
+            const isHiddenPart = !!(partId && hiddenPartsMap[partId]);
+            const isSuppressedPart = !!(partId && suppressedPartsMap?.[partId]);
+            let resolvedLayer = layer;
+            if (
+              partId === 'generic' &&
+              (hasHiddenParts || hasSuppressedParts) &&
+              Array.isArray(layer.grid)
+            ) {
+              resolvedLayer = {
+                ...layer,
+                grid: buildMaskedGenericGrid(
+                  layer.grid as string[][],
+                  referenceMasks,
+                  combinedHiddenPartsMap
+                ),
+              };
+            }
+            if (
+              !isSuppressedPart &&
+              (!isHiddenPart || layer?.type === 'custom')
+            ) {
+              normalStack.push(resolvedLayer);
+            }
+            if (!partId || !layersForDir[partId] || handledParts.has(partId)) {
+              return;
+            }
+            handledParts.add(partId);
+            appendPartLayers(partId);
+          });
+          Object.keys(layersForDir || {}).forEach((partId) => {
+            if (handledParts.has(partId)) {
+              return;
+            }
+            if (suppressedPartsMap?.[partId] && partId !== 'generic') {
+              return;
+            }
+            handledParts.add(partId);
+            appendPartLayers(partId);
           });
           return {
             dir: dir.dir,
@@ -2245,6 +3748,7 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
         canvasHeight,
         markingOffsetX,
         bodyPayload?.preview_revision || 0,
+        appearanceSignature,
         assetRevision,
         tileDirections.map((entry) => entry.dir).join(','),
         previewTint || 'default',
@@ -2270,16 +3774,52 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
         if (!def || !entry) {
           continue;
         }
-        const built = buildMarkingLayersForDir(
-          def,
-          entry,
-          dir.dir,
-          digitigrade,
-          canvasWidth,
-          canvasHeight,
-          markingOffsetX,
-          signalAssetUpdate
-        );
+        const cacheKey = `${markId}:${dir.dir}`;
+        const blendMode = resolveBlendMode(def.color_blend_mode);
+        const renderAboveBodyPartsSig = def.render_above_body_parts
+          ? Object.keys(def.render_above_body_parts).sort().join(',')
+          : '';
+        const cached = markingLayersCache[cacheKey];
+        const built =
+          cached &&
+          cached.entry === entry &&
+          cached.defId === def.id &&
+          cached.doColouration === !!def.do_colouration &&
+          cached.blendMode === blendMode &&
+          cached.renderAboveBody === !!def.render_above_body &&
+          cached.renderAboveBodyPartsSig === renderAboveBodyPartsSig &&
+          cached.digitigrade === digitigrade &&
+          cached.canvasWidth === canvasWidth &&
+          cached.canvasHeight === canvasHeight &&
+          cached.offsetX === markingOffsetX &&
+          cached.assetRevision === assetRevision
+            ? cached.built
+            : buildMarkingLayersForDir(
+                def,
+                entry,
+                dir.dir,
+                digitigrade,
+                canvasWidth,
+                canvasHeight,
+                markingOffsetX,
+                signalAssetUpdate
+              );
+        if (cached?.built !== built) {
+          markingLayersCache[cacheKey] = {
+            entry,
+            defId: def.id,
+            doColouration: !!def.do_colouration,
+            blendMode,
+            renderAboveBody: !!def.render_above_body,
+            renderAboveBodyPartsSig,
+            digitigrade,
+            canvasWidth,
+            canvasHeight,
+            offsetX: markingOffsetX,
+            assetRevision,
+            built,
+          };
+        }
         for (const [partId, partLayers] of Object.entries(built)) {
           if (!layersByDir[dir.dir][partId]) {
             layersByDir[dir.dir][partId] = { normal: [], priority: [] };
@@ -2299,54 +3839,56 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
     const markedPreview = previewBase.map((dirEntry) => {
       const layerGroup = layersByDir[dirEntry.dir] || {};
       const baseLayers = dirEntry.layers || [];
-      const overlayLayers = baseLayers.filter(
-        (layer) => layer.type === 'overlay'
-      );
-      const nonOverlayLayers = baseLayers.filter(
-        (layer) => layer.type !== 'overlay'
-      );
-      const referenceMasks = hasHiddenParts
-        ? buildReferencePartMaskMap(
-            nonOverlayLayers as Array<{
-              key?: string;
-              type?: string;
-              grid?: string[][];
-            }>
-          )
-        : {};
+      const {
+        before: nonOverlayLayers,
+        overlay: overlayLayers,
+        after,
+      } = splitOverlayLayers(baseLayers);
+      const suppressedPartsMap = hiddenPartsByDir[dirEntry.dir];
+      const hasSuppressedParts =
+        !!suppressedPartsMap && Object.keys(suppressedPartsMap).length > 0;
+      const combinedHiddenPartsMap = hasSuppressedParts
+        ? { ...hiddenPartsMap, ...suppressedPartsMap }
+        : hiddenPartsMap;
+      const referenceMasks =
+        hasHiddenParts || hasSuppressedParts
+          ? buildReferencePartMaskMap(
+              nonOverlayLayers as Array<{
+                key?: string;
+                type?: string;
+                grid?: string[][];
+              }>
+            )
+          : {};
+      const canMaskGeneric = Object.keys(referenceMasks).length > 0;
       const normalLayers: typeof baseLayers = [];
       const priorityLayers: typeof baseLayers = [];
-      nonOverlayLayers.forEach((layer) => {
-        const partId = resolveLayerPartId(layer);
-        const isHiddenPart = !!(partId && hiddenPartsMap[partId]);
-        let resolvedLayer = layer;
-        if (
-          partId === 'generic' &&
-          hasHiddenParts &&
-          Array.isArray(layer.grid)
-        ) {
-          resolvedLayer = {
-            ...layer,
-            grid: buildMaskedGenericGrid(
-              layer.grid as string[][],
-              referenceMasks,
-              hiddenPartsMap
-            ),
-          };
-        }
-        if (!isHiddenPart) {
-          normalLayers.push(resolvedLayer);
-        }
-        if (!partId || !layerGroup[partId]) {
+      const handledParts = new Set<string>();
+      const appendPartLayers = (partId: string) => {
+        const partLayers = layerGroup[partId];
+        if (!partLayers) {
           return;
         }
-        const partLayers = layerGroup[partId];
+        const isSuppressedPart =
+          !!suppressedPartsMap && !!suppressedPartsMap[partId];
+        const shouldMaskGeneric =
+          partId === 'generic' && hasSuppressedParts && canMaskGeneric;
+        if (isSuppressedPart && partId !== 'generic') {
+          return;
+        }
         partLayers.normal.forEach((markLayer, idx) => {
           normalLayers.push({
             type: 'custom',
             key: `mark-${dirEntry.dir}-${partId}-n-${idx}`,
             label: markLayer.label,
-            grid: markLayer.grid,
+            grid:
+              shouldMaskGeneric && Array.isArray(markLayer.grid)
+                ? buildMaskedGenericGrid(
+                    markLayer.grid,
+                    referenceMasks,
+                    suppressedPartsMap || {}
+                  )
+                : markLayer.grid,
           });
         });
         partLayers.priority.forEach((markLayer, idx) => {
@@ -2354,13 +3896,63 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
             type: 'overlay',
             key: `mark-priority-${dirEntry.dir}-${partId}-p-${idx}`,
             label: markLayer.label,
-            grid: markLayer.grid,
+            grid:
+              shouldMaskGeneric && Array.isArray(markLayer.grid)
+                ? buildMaskedGenericGrid(
+                    markLayer.grid,
+                    referenceMasks,
+                    suppressedPartsMap || {}
+                  )
+                : markLayer.grid,
           });
         });
+      };
+      nonOverlayLayers.forEach((layer) => {
+        const partId = resolveLayerPartId(layer);
+        const isHiddenPart = !!(partId && hiddenPartsMap[partId]);
+        const isSuppressedPart = !!(partId && suppressedPartsMap?.[partId]);
+        let resolvedLayer = layer;
+        if (
+          partId === 'generic' &&
+          (hasHiddenParts || hasSuppressedParts) &&
+          Array.isArray(layer.grid)
+        ) {
+          resolvedLayer = {
+            ...layer,
+            grid: buildMaskedGenericGrid(
+              layer.grid as string[][],
+              referenceMasks,
+              combinedHiddenPartsMap
+            ),
+          };
+        }
+        if (!isSuppressedPart && (!isHiddenPart || layer?.type === 'custom')) {
+          normalLayers.push(resolvedLayer);
+        }
+        if (!partId || !layerGroup[partId] || handledParts.has(partId)) {
+          return;
+        }
+        handledParts.add(partId);
+        appendPartLayers(partId);
+      });
+      Object.keys(layerGroup).forEach((partId) => {
+        if (handledParts.has(partId)) {
+          return;
+        }
+        if (suppressedPartsMap?.[partId] && partId !== 'generic') {
+          return;
+        }
+        handledParts.add(partId);
+        appendPartLayers(partId);
       });
       return {
         ...dirEntry,
-        layers: [...normalLayers, ...priorityLayers, ...overlayLayers],
+        layers: [
+          ...normalLayers,
+          ...priorityLayers,
+          ...overlayLayers,
+          ...after,
+        ],
       };
     });
 
@@ -2419,6 +4011,10 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
             setPayloadSignature(buildBodyPayloadSignature(payload));
             syncPayload(payload);
           }}
+          syncPreviewPayload={(payload) => {
+            setPayloadSignature(buildBodyPayloadSignature(payload));
+            syncPreviewPayload(payload);
+          }}
         />
         <BodyMarkingsPreviewLoadCoordinator
           bodyPayload={bodyPayload}
@@ -2450,6 +4046,10 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
         syncPayload={(payload) => {
           setPayloadSignature(buildBodyPayloadSignature(payload));
           syncPayload(payload);
+        }}
+        syncPreviewPayload={(payload) => {
+          setPayloadSignature(buildBodyPayloadSignature(payload));
+          syncPreviewPayload(payload);
         }}
       />
       <BodyMarkingsPreviewLoadCoordinator
@@ -2485,6 +4085,11 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
               getTilePreviewEntries={getTilePreviewEntries}
               applyAdd={applyAdd}
               applyRemove={applyRemove}
+              backgroundImage={previewBackgroundImage}
+              backgroundColor={backgroundFallbackColor}
+              backgroundScale={canvasBackgroundScale}
+              backgroundTileWidth={previewBackgroundTileWidth}
+              backgroundTileHeight={previewBackgroundTileHeight}
             />
           </Flex>
         </Flex.Item>
@@ -2524,6 +4129,8 @@ export const BodyMarkingsTab = (props: BodyMarkingsTabProps, context) => {
             markedPreview={markedPreview}
             canvasWidth={canvasWidth}
             canvasHeight={canvasHeight}
+            previewFitToFrame={previewFitToFrame}
+            onTogglePreviewFit={togglePreviewFit}
             previewBackgroundImage={previewBackgroundImage}
             backgroundFallbackColor={backgroundFallbackColor}
             canvasBackgroundScale={canvasBackgroundScale}

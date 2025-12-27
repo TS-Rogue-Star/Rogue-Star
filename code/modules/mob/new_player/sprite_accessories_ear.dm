@@ -743,7 +743,7 @@
 	icon_state = "synthhorns_thick"
 	do_colouration = TRUE
 	color_blend_mode = ICON_MULTIPLY
-	extra_overlay = "synthhorns_thick_light"
+	extra_overlay = "synthhorns_thick_lights" // RS Edit: Fix typo (Lira, December 2025)
 
 /datum/sprite_accessory/ears/synthhorns_curly
 	name = "Synth horns, curly"

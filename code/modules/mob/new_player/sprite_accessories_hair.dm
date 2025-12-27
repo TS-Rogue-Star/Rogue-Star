@@ -205,20 +205,24 @@
 	icon_state = "hair_bonnie"
 	flags = HAIR_TIEABLE
 
+/* RS Edit: Comment out for missing sprites (Lira, December 2025)
 /datum/sprite_accessory/hair/bonniealt
 	name = "Bonnie Alt"
 	icon_state = "hair_bonniealt"
 	flags = HAIR_TIEABLE
+*/
 
 /datum/sprite_accessory/hair/bonnielong
 	name = "Bonnie, Long"
 	icon_state = "hair_bonnie_long"
 	flags = HAIR_TIEABLE
 
+/* RS Edit: Comment out for missing sprites (Lira, December 2025)
 /datum/sprite_accessory/hair/bonniealtlong
 	name = "Bonnie Alt, Long"
 	icon_state = "hair_bonniealt_long"
 	flags = HAIR_TIEABLE
+*/
 
 /datum/sprite_accessory/hair/bonnieshort
 	name = "Bonnie, Short"

@@ -595,10 +595,6 @@ var/global/list/damage_icon_parts = list() //see UpdateDamageIcon()
 	var/obj/item/organ/external/head/head_organ = get_organ(BP_HEAD)
 	if(!head_organ || head_organ.is_stump() )
 		return
-	// RS Add: Custom markings support (Lira, November 2025)
-	if(head_organ.is_hidden_by_markings())
-		return
-
 	//masks and helmets can obscure our hair.
 	if( (head && (head.flags_inv & (BLOCKHAIR | HIDEHEAD))) || (wear_mask && (wear_mask.flags_inv & BLOCKHAIR))) // RS Edit: Hide head (Lira, October 2025)
 		return

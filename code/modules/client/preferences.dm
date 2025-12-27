@@ -146,6 +146,9 @@ var/list/preferences_datums = list()
 	var/list/custom_marking_reference_payload_cache // Cached mannequin reference payloads reused by the designer UI
 	var/custom_marking_reference_signature // Signature of the mannequin cache payload currently stored
 	var/custom_marking_reference_mannequin_signature // Tracks which signature is applied to the shared reference mannequin
+	var/list/custom_marking_body_reference_payload_cache // Cached stripped mannequin reference payloads reused by body/basic tabs (Lira, December 2025)
+	var/custom_marking_body_reference_signature // Signature of the stripped mannequin cache payload currently stored (Lira, December 2025)
+	var/custom_marking_body_reference_mannequin_signature // Tracks which signature is applied to the stripped reference mannequin (Lira, December 2025)
 	var/datum/custom_marking/pending_custom_marking_refresh // Queue a marking refresh until previews are ready (Lira, November 2025)
 	var/pending_custom_marking_force_preview = FALSE // Force preview rebuild when deferred refresh fires (Lira, November 2025)
 	var/pending_custom_marking_reset_cache = FALSE // Clear caches when deferred refresh fires (Lira, November 2025)
@@ -229,6 +232,9 @@ var/list/preferences_datums = list()
 	custom_marking_reference_payload_cache = null
 	custom_marking_reference_signature = null
 	custom_marking_reference_mannequin_signature = null
+	custom_marking_body_reference_payload_cache = null
+	custom_marking_body_reference_signature = null
+	custom_marking_body_reference_mannequin_signature = null
 	pending_custom_marking_refresh = null
 	pending_custom_marking_force_preview = FALSE
 	pending_custom_marking_reset_cache = FALSE
@@ -356,6 +362,9 @@ var/list/preferences_datums = list()
 	custom_marking_reference_payload_cache = null
 	custom_marking_reference_signature = null
 	custom_marking_reference_mannequin_signature = null
+	custom_marking_body_reference_payload_cache = null
+	custom_marking_body_reference_signature = null
+	custom_marking_body_reference_mannequin_signature = null
 	if(clear_preview_overlays)
 		custom_marking_preview_overlays = null
 	custom_marking_layer_refresh_pending = FALSE
@@ -472,11 +481,11 @@ var/list/preferences_datums = list()
 			custom_marking_designer_ui = null
 			module = null
 	if(!module)
-		module = new(src, mark, "body", TRUE)
+		module = new(src, mark, "basic", TRUE)
 		custom_marking_designer_ui = module
 	else
-		module.initial_tab = "body"
-		module.active_tab = "body"
+		module.initial_tab = "basic"
+		module.active_tab = "basic"
 		module.allow_custom_tab = !!mark
 		SStgui.update_uis(module)
 	module.tgui_interact(user)
@@ -542,6 +551,7 @@ var/list/preferences_datums = list()
 		custom_marking_designer_ui = null
 	if(custom_marking_designer_ui)
 		custom_marking_designer_ui.preview_revision++
+		custom_marking_designer_ui.preview_refresh_token++
 		SStgui.update_uis(custom_marking_designer_ui)
 
 // Ensure saved custom markings keep their preference entry when loading slots
@@ -585,6 +595,21 @@ var/list/preferences_datums = list()
 	for(var/existing in remove_queue)
 		current -= existing
 	current["datum"] = style
+	if(islist(body_markings))
+		var/list/custom_cleanup = list()
+		for(var/key in body_markings)
+			if(!istext(key) || key == "color" || key == style_name)
+				continue
+			var/datum/sprite_accessory/marking/entry_style = body_marking_styles_list?[key]
+			if(!istype(entry_style))
+				entry_style = body_markings[key]?["datum"]
+			var/is_custom = istype(entry_style, /datum/sprite_accessory/marking/custom)
+			if(!is_custom && findtext(key, " (Custom "))
+				is_custom = TRUE
+			if(is_custom)
+				custom_cleanup += key
+		for(var/key in custom_cleanup)
+			body_markings -= key
 
 // Allow queueing heavy marking refreshes through SScustom_marking (Lira, November 2025)
 /datum/preferences/proc/refresh_custom_marking_assets(force_preview = TRUE, reset_cache = FALSE, datum/custom_marking/target_mark = null, use_queue = FALSE)

@@ -93,6 +93,8 @@ export class RogueStarColorPicker extends Component<
   private triangleRef = createRef<HTMLDivElement>();
   private triangleCanvasRef = createRef<HTMLCanvasElement>();
   private dragTarget: DragTarget = null;
+  private previewFrame: number | null = null;
+  private pendingPreviewHex: string | null = null;
 
   constructor(props: RogueStarColorPickerProps) {
     super(props);
@@ -114,29 +116,24 @@ export class RogueStarColorPicker extends Component<
       const incoming = normalizeHex(this.props.color) || DEFAULT_COLOR;
       if (incoming !== this.state.hex) {
         const nextState = this.buildColorState(incoming);
-        this.setState(
-          (prev) => ({
-            ...nextState,
-            customSelection: prev.customSelection,
-          }),
-          () => {
-            this.renderTriangleCanvas();
-          }
-        );
+        this.setState((prev) => ({
+          ...nextState,
+          customSelection: prev.customSelection,
+        }));
         return;
       }
     }
-    if (
-      prevState.hue !== this.state.hue ||
-      prevState.saturation !== this.state.saturation ||
-      prevState.value !== this.state.value
-    ) {
+    if (prevState.hue !== this.state.hue) {
       this.renderTriangleCanvas();
     }
   }
 
   componentWillUnmount() {
     this.detachDrag();
+    if (this.previewFrame !== null) {
+      window.cancelAnimationFrame(this.previewFrame);
+      this.previewFrame = null;
+    }
   }
 
   render() {
@@ -329,9 +326,21 @@ export class RogueStarColorPicker extends Component<
   }
 
   private emitPreview(hex: string) {
-    if (this.props.onChange) {
-      this.props.onChange(hex);
+    if (!this.props.onChange) {
+      return;
     }
+    this.pendingPreviewHex = hex;
+    if (this.previewFrame !== null) {
+      return;
+    }
+    this.previewFrame = window.requestAnimationFrame(() => {
+      this.previewFrame = null;
+      const next = this.pendingPreviewHex;
+      this.pendingPreviewHex = null;
+      if (next && this.props.onChange) {
+        this.props.onChange(next);
+      }
+    });
   }
 
   private renderTriangleCanvas() {

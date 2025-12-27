@@ -55,6 +55,9 @@ const OVERLAY_SLOT_PRIORITY_MAP: Record<string, number> = {
   vore_tail: 39,
   custom_marking: 40,
 };
+const HIDDEN_LEG_PARTS = new Set(['l_leg', 'r_leg', 'l_foot', 'r_foot']);
+const TAUR_CLOTHING_SLOTS = new Set(['uniform', 'belt', 'suit', 'back']);
+const MARKING_MASK_ALPHA_THRESHOLD = 250;
 
 type PartPaintPresenceOptions = {
   dirStates: Record<number, PreviewDirState>;
@@ -191,7 +194,8 @@ export const buildRenderedPreviewDirs = (
   partPaintPresenceMap?: Record<string, boolean>,
   showJobGear?: boolean,
   showLoadoutGear?: boolean,
-  signalAssetUpdate?: () => void
+  signalAssetUpdate?: () => void,
+  stripReferenceMarkings?: boolean
 ): PreviewDirectionEntry[] => {
   const orderedDirs =
     directions && directions.length
@@ -206,44 +210,47 @@ export const buildRenderedPreviewDirs = (
     if (!dirState) {
       continue;
     }
-    const previewReferenceParts = getPreviewPartMapFromAssets(
+    let previewReferenceParts = getPreviewPartMapFromAssets(
       dirState.referencePartAssets,
       canvasWidth,
       canvasHeight,
       signalAssetUpdate || (() => undefined)
     );
-    const previewReferencePartMarkings = getPreviewPartMapFromAssets(
+    let previewReferencePartMarkings = getPreviewPartMapFromAssets(
       dirState.referencePartMarkingAssets,
       canvasWidth,
       canvasHeight,
       signalAssetUpdate || (() => undefined)
     );
-    const previewBodyGrid = getPreviewGridFromAsset(
+    let previewBodyGrid = getPreviewGridFromAsset(
       dirState.bodyAsset,
       canvasWidth,
       canvasHeight,
       signalAssetUpdate || (() => undefined)
     );
-    const shouldReplaceHead = shouldApplyReplacement(
-      'head',
-      partReplacementMap,
-      partPaintPresenceMap
-    );
+    if (stripReferenceMarkings) {
+      const stripped = stripReferenceMarkingsFromSources({
+        referenceParts: previewReferenceParts,
+        referencePartMarkings: previewReferencePartMarkings,
+        bodyGrid: previewBodyGrid,
+      });
+      previewReferenceParts = stripped.referenceParts ?? null;
+      previewBodyGrid = stripped.bodyGrid ?? null;
+      previewReferencePartMarkings = null;
+    }
     const overlayAssets = dirState.overlayAssets as
       | (GearOverlayAsset | IconAssetPayload)[]
       | undefined;
+    const overlaySlotFilter = stripReferenceMarkings
+      ? (slot: string | null | undefined) => slot !== 'custom_marking'
+      : undefined;
     const overlayLayers = buildOrderedOverlayLayers(
       overlayAssets,
       canvasWidth,
       canvasHeight,
       'base',
       signalAssetUpdate || (() => undefined),
-      (slot) =>
-        !(
-          shouldReplaceHead &&
-          slot &&
-          (slot === 'hair' || slot === 'hair_accessory' || slot === 'ears')
-        )
+      overlaySlotFilter
     );
     const allowLoadout = showLoadoutGear !== false;
     const allowJob = showJobGear !== false;
@@ -256,7 +263,7 @@ export const buildRenderedPreviewDirs = (
           canvasHeight,
           'loadout',
           signalAssetUpdate || (() => undefined),
-          undefined,
+          overlaySlotFilter,
           overlayLayers.length
         )
       : [];
@@ -274,7 +281,7 @@ export const buildRenderedPreviewDirs = (
           canvasHeight,
           'job',
           signalAssetUpdate || (() => undefined),
-          undefined,
+          overlaySlotFilter,
           overlayLayers.length + loadoutOverlayLayers.length
         )
       : [];
@@ -334,6 +341,35 @@ const buildHiddenPartsMap = (
     map[partId] = true;
   }
   return map;
+};
+
+const collectHiddenLegParts = (
+  hiddenPartsMap: Record<string, boolean>
+): string[] => {
+  const parts: string[] = [];
+  for (const partId of Object.keys(hiddenPartsMap)) {
+    if (hiddenPartsMap[partId] && HIDDEN_LEG_PARTS.has(partId)) {
+      parts.push(partId);
+    }
+  }
+  return parts;
+};
+
+const maskGridForHiddenParts = (
+  grid: string[][],
+  referenceParts: Record<string, string[][]>,
+  hiddenParts: string[]
+) => {
+  if (!hiddenParts.length) {
+    return;
+  }
+  for (const partId of hiddenParts) {
+    const maskGrid = referenceParts[partId];
+    if (!maskGrid) {
+      continue;
+    }
+    applyReplacementMaskToGrid(grid, maskGrid);
+  }
 };
 
 type ReferenceLayerAppendOptions = {
@@ -397,17 +433,37 @@ const appendOverlayEntries = ({
   orderedOverlayLayers,
   showJobGear,
   showLoadoutGear,
+  hiddenLegParts,
+  hideShoes,
+  referenceParts,
 }: {
   overlayEntries: PreviewLayerEntry[];
   orderedOverlayLayers?: OrderedOverlayLayer[] | null;
   showJobGear?: boolean;
   showLoadoutGear?: boolean;
+  hiddenLegParts?: string[];
+  hideShoes?: boolean;
+  referenceParts?: Record<string, string[][]> | null;
 }) => {
   if (!Array.isArray(orderedOverlayLayers) || !orderedOverlayLayers.length) {
     return;
   }
+  const shouldMaskOverlays =
+    !!referenceParts && !!hiddenLegParts && hiddenLegParts.length > 0;
   orderedOverlayLayers.forEach((entry, index) => {
+    if (hideShoes && entry.slot === 'shoes') {
+      return;
+    }
     const cloned = cloneGridData(entry.grid);
+    if (
+      shouldMaskOverlays &&
+      referenceParts &&
+      hiddenLegParts &&
+      entry.slot &&
+      TAUR_CLOTHING_SLOTS.has(entry.slot)
+    ) {
+      maskGridForHiddenParts(cloned, referenceParts, hiddenLegParts);
+    }
     if (!gridHasPixels(cloned)) {
       return;
     }
@@ -472,6 +528,8 @@ const composePreviewLayers = (
     ? cloneGridData(resolvedBodyGrid)
     : undefined;
   const hiddenPartsMap = buildHiddenPartsMap(dirState.hiddenBodyParts);
+  const hiddenLegParts = collectHiddenLegParts(hiddenPartsMap);
+  const hideShoes = !!hiddenPartsMap['l_foot'] || !!hiddenPartsMap['r_foot'];
   const bodyGrid = maskBodyGridForReplacements(
     clonedBodyGrid,
     referenceParts,
@@ -574,6 +632,9 @@ const composePreviewLayers = (
     orderedOverlayLayers,
     showJobGear,
     showLoadoutGear,
+    hiddenLegParts,
+    hideShoes,
+    referenceParts,
   });
   const mergedLayers = [
     ...orderedPartLayers,
@@ -749,9 +810,11 @@ const maskBodyGridForReplacements = (
 
 const applyReplacementMaskToGrid = (
   target: string[][],
-  mask: string[][]
+  mask: string[][],
+  options?: { alphaThreshold?: number }
 ): boolean => {
   let changed = false;
+  const alphaThreshold = options?.alphaThreshold;
   const width = Math.min(target.length, mask.length);
   for (let x = 0; x < width; x += 1) {
     const targetColumn = target[x];
@@ -761,7 +824,10 @@ const applyReplacementMaskToGrid = (
     }
     const height = Math.min(targetColumn.length, maskColumn.length);
     for (let y = 0; y < height; y += 1) {
-      if (!pixelHasColor(maskColumn[y]) || !pixelHasColor(targetColumn[y])) {
+      if (
+        !pixelHasColor(maskColumn[y], alphaThreshold) ||
+        !pixelHasColor(targetColumn[y])
+      ) {
         continue;
       }
       targetColumn[y] = TRANSPARENT_HEX;
@@ -771,8 +837,94 @@ const applyReplacementMaskToGrid = (
   return changed;
 };
 
-const pixelHasColor = (value?: string): boolean =>
-  typeof value === 'string' && value.length > 0 && value !== TRANSPARENT_HEX;
+const parseAlphaChannel = (value: string): number | null => {
+  if (value.length === 9 && value.startsWith('#')) {
+    const alpha = parseInt(value.slice(7, 9), 16);
+    return Number.isNaN(alpha) ? null : alpha;
+  }
+  return null;
+};
+
+const pixelHasColor = (value?: string, alphaThreshold?: number): boolean => {
+  if (typeof value !== 'string' || !value.length) {
+    return false;
+  }
+  if (value === TRANSPARENT_HEX) {
+    return false;
+  }
+  if (alphaThreshold === undefined) {
+    return true;
+  }
+  const alpha = parseAlphaChannel(value);
+  if (alpha === null) {
+    return true;
+  }
+  return alpha >= alphaThreshold;
+};
+
+const stripReferenceMarkingsFromSources = (options: {
+  referenceParts?: Record<string, string[][]> | null;
+  referencePartMarkings?: Record<string, string[][]> | null;
+  bodyGrid?: string[][] | null;
+}): {
+  referenceParts: Record<string, string[][]> | null;
+  bodyGrid: string[][] | null;
+} => {
+  const { referenceParts, referencePartMarkings, bodyGrid } = options;
+  if (!referencePartMarkings || !Object.keys(referencePartMarkings).length) {
+    return {
+      referenceParts: referenceParts ?? null,
+      bodyGrid: bodyGrid ?? null,
+    };
+  }
+  let nextReferenceParts = referenceParts;
+  let nextBodyGrid = bodyGrid;
+  let partsCloned = false;
+  let bodyCloned = false;
+  const ensureParts = () => {
+    if (partsCloned) {
+      return;
+    }
+    nextReferenceParts = { ...(referenceParts || {}) };
+    partsCloned = true;
+  };
+  const ensureBody = () => {
+    if (bodyCloned || !bodyGrid) {
+      return;
+    }
+    nextBodyGrid = cloneGridData(bodyGrid);
+    bodyCloned = true;
+  };
+  for (const [partId, markingGrid] of Object.entries(referencePartMarkings)) {
+    if (!partId || !gridHasPixels(markingGrid)) {
+      continue;
+    }
+    if (nextBodyGrid) {
+      ensureBody();
+      applyReplacementMaskToGrid(nextBodyGrid, markingGrid, {
+        alphaThreshold: MARKING_MASK_ALPHA_THRESHOLD,
+      });
+    }
+    const basePartGrid = (nextReferenceParts ||
+      referenceParts ||
+      ({} as Record<string, string[][]>))[partId];
+    if (!basePartGrid) {
+      continue;
+    }
+    ensureParts();
+    const strippedPart = cloneGridData(basePartGrid);
+    applyReplacementMaskToGrid(strippedPart, markingGrid, {
+      alphaThreshold: MARKING_MASK_ALPHA_THRESHOLD,
+    });
+    if (nextReferenceParts) {
+      nextReferenceParts[partId] = strippedPart;
+    }
+  }
+  return {
+    referenceParts: nextReferenceParts ?? null,
+    bodyGrid: nextBodyGrid ?? null,
+  };
+};
 
 const getGridDimensions = (
   grid?: string[][]
@@ -856,4 +1008,67 @@ const padGrid = (
     }
   }
   return result;
+};
+
+export type CustomLayerUpdateResult = {
+  entry: PreviewDirectionEntry;
+  updated: boolean;
+  requiresRebuild: boolean;
+};
+
+export const updatePreviewEntryCustomLayer = (options: {
+  entry: PreviewDirectionEntry;
+  partKey: string;
+  baseGrid?: string[][] | null;
+  diff?: DiffEntry[] | null;
+  canvasWidth: number;
+  canvasHeight: number;
+}): CustomLayerUpdateResult => {
+  const { entry, partKey, baseGrid, diff, canvasWidth, canvasHeight } = options;
+  const layers = Array.isArray(entry.layers) ? entry.layers : [];
+  const layerKey = `custom_${partKey}`;
+  const layerIndex = layers.findIndex(
+    (layer) => layer?.type === 'custom' && layer.key === layerKey
+  );
+  const resolvedDiff = Array.isArray(diff) && diff.length > 0 ? diff : null;
+  if (layerIndex === -1) {
+    if (!resolvedDiff && !gridHasPixels(baseGrid ?? undefined)) {
+      return { entry, updated: false, requiresRebuild: false };
+    }
+    return { entry, updated: false, requiresRebuild: true };
+  }
+  if (!resolvedDiff) {
+    return { entry, updated: false, requiresRebuild: false };
+  }
+  const existingLayer = layers[layerIndex];
+  const seedGrid =
+    (Array.isArray(baseGrid) && baseGrid.length ? baseGrid : null) ||
+    existingLayer?.grid ||
+    createBlankGrid(canvasWidth, canvasHeight);
+  const nextGrid = applyDiffToGrid(
+    seedGrid,
+    resolvedDiff,
+    canvasWidth,
+    canvasHeight
+  );
+  const addsColor = resolvedDiff.some(
+    (pixel) => pixel && pixel.color && pixel.color !== TRANSPARENT_HEX
+  );
+  if (!addsColor && !gridHasPixels(nextGrid)) {
+    return { entry, updated: false, requiresRebuild: true };
+  }
+  const nextLayer =
+    existingLayer?.grid === nextGrid
+      ? existingLayer
+      : { ...existingLayer, grid: nextGrid };
+  if (nextLayer === existingLayer) {
+    return { entry, updated: false, requiresRebuild: false };
+  }
+  const nextLayers = layers.slice();
+  nextLayers[layerIndex] = nextLayer;
+  return {
+    entry: { ...entry, layers: nextLayers },
+    updated: true,
+    requiresRebuild: false,
+  };
 };

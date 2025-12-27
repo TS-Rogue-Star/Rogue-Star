@@ -7,7 +7,6 @@
 import type { DiffEntry } from '../../../utils/character-preview';
 import {
   arePixelListsEqual,
-  clearAllLocalDraftsInStore,
   getStoredStrokeDraftsFromStore,
   mergeStrokePixels,
   normalizeStrokeKey,
@@ -33,6 +32,7 @@ type StrokeDraftManagerOptions = {
   getActivePartKey: () => string;
   getCurrentDirectionKey: () => number;
   allocateDraftSequence: () => number;
+  notifyDraftMutation?: () => void;
 };
 
 export type StrokeDraftManager = {
@@ -57,6 +57,7 @@ export const createStrokeDraftManager = (
     getActivePartKey,
     getCurrentDirectionKey,
     allocateDraftSequence,
+    notifyDraftMutation,
   } = options;
 
   const getStoredStrokeDrafts = (): StrokeDraftState =>
@@ -69,7 +70,17 @@ export const createStrokeDraftManager = (
   };
 
   const clearAllLocalDrafts = () => {
-    clearAllLocalDraftsInStore(context.store);
+    let changed = false;
+    updateStrokeDrafts((prev) => {
+      if (!prev || !Object.keys(prev).length) {
+        return prev;
+      }
+      changed = true;
+      return {};
+    });
+    if (changed && notifyDraftMutation) {
+      notifyDraftMutation();
+    }
   };
 
   const buildStrokeDraftKey = (
@@ -137,8 +148,8 @@ export const createStrokeDraftManager = (
     if (!strokeKey || !sessionKey) {
       return;
     }
+    let changed = false;
     updateStrokeDrafts((prev) => {
-      let changed = false;
       const next = { ...prev };
       for (const key of Object.keys(prev)) {
         const entry = prev[key];
@@ -150,6 +161,9 @@ export const createStrokeDraftManager = (
       }
       return changed ? next : prev;
     });
+    if (changed && notifyDraftMutation) {
+      notifyDraftMutation();
+    }
   };
 
   const clearSessionDrafts = (targetSessionKey?: string) => {
@@ -157,8 +171,8 @@ export const createStrokeDraftManager = (
     if (!sessionToClear) {
       return;
     }
+    let changed = false;
     updateStrokeDrafts((prev) => {
-      let changed = false;
       const next = { ...prev };
       for (const key of Object.keys(prev)) {
         if (prev[key]?.session === sessionToClear) {
@@ -168,6 +182,9 @@ export const createStrokeDraftManager = (
       }
       return changed ? next : prev;
     });
+    if (changed && notifyDraftMutation) {
+      notifyDraftMutation();
+    }
   };
 
   const getPendingDraftSessions = (): PendingDraftSession[] => {
@@ -230,6 +247,9 @@ export const createStrokeDraftManager = (
       delete next[targetKey];
       return next;
     });
+    if (notifyDraftMutation) {
+      notifyDraftMutation();
+    }
     return true;
   };
 

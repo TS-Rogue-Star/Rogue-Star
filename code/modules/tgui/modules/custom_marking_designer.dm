@@ -9,6 +9,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star December 2025: New body marking selection tab added //////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star December 2025: New basic appearence tab added ////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define CUSTOM_MARKING_DEFAULT_WIDTH 32
 #define CUSTOM_MARKING_DEFAULT_HEIGHT 32
@@ -31,10 +33,34 @@
 // Shared cache for the global body marking definitions payload (Lira, December 2025)
 var/global/list/custom_marking_body_definition_cache = null
 
+// Shared cache for the global basic appearance definitions payload (Lira, December 2025)
+var/global/list/custom_marking_basic_appearance_definition_cache = null
+
+// Shared cache for canvas background payloads (Lira, December 2025)
+var/global/list/custom_marking_canvas_background_cache = null
+
+// Shared cache for icon visibility checks (Lira, December 2025)
+var/global/list/custom_marking_visible_pixel_cache = null
+
 // Helper used to build the cache (Lira, December 2025)
 /datum/tgui_module/custom_marking_designer/cache_builder/New()
 	prefs = new /datum/preferences
 	state_session_token = "cache"
+	reference_asset_token_counter = 0
+	icon_shift_map = list()
+	return
+
+// Helper used to build the basic appearance cache (Lira, December 2025)
+/datum/tgui_module/custom_marking_designer/basic_appearance_cache_builder/New()
+	prefs = new /datum/preferences
+	state_session_token = "cache-basic-appearance"
+	reference_asset_token_counter = 0
+	icon_shift_map = list()
+	return
+
+// Helper used to build canvas background cache (Lira, December 2025)
+/datum/tgui_module/custom_marking_designer/background_cache_builder/New()
+	state_session_token = "cache-background"
 	reference_asset_token_counter = 0
 	icon_shift_map = list()
 	return
@@ -46,12 +72,34 @@ var/global/list/custom_marking_body_definition_cache = null
 	if(!islist(body_marking_styles_list) || !body_marking_styles_list.len)
 		return null
 	var/datum/tgui_module/custom_marking_designer/cache_builder/helper = new
-	custom_marking_body_definition_cache = helper.build_body_marking_definitions()
+	custom_marking_body_definition_cache = helper.build_body_marking_definitions(TRUE)
 	return custom_marking_body_definition_cache
+
+// Build basic appearance definition cache (Lira, December 2025)
+/proc/build_basic_appearance_definition_cache()
+	if(islist(custom_marking_basic_appearance_definition_cache))
+		return custom_marking_basic_appearance_definition_cache
+	if(!islist(hair_styles_list) || !hair_styles_list.len)
+		return null
+	if(!islist(facial_hair_styles_list) || !facial_hair_styles_list.len)
+		return null
+	var/list/yield_context = custom_marking_begin_manual_yield()
+	var/datum/tgui_module/custom_marking_designer/basic_appearance_cache_builder/helper = new
+	custom_marking_basic_appearance_definition_cache = helper.build_basic_appearance_definitions()
+	custom_marking_end_manual_yield(yield_context)
+	return custom_marking_basic_appearance_definition_cache
+
+// Build canvas background cache (Lira, December 2025)
+/proc/build_custom_marking_canvas_background_cache()
+	if(islist(custom_marking_canvas_background_cache))
+		return custom_marking_canvas_background_cache
+	var/datum/tgui_module/custom_marking_designer/background_cache_builder/helper = new
+	custom_marking_canvas_background_cache = helper.build_canvas_background_options_internal()
+	return custom_marking_canvas_background_cache
 
 // TGUI module for editing and previewing custom markings
 /datum/tgui_module/custom_marking_designer
-	name = "Marking Designer"
+	name = "Character Designer"
 	tgui_id = "CustomMarkingDesigner"
 
 	var/datum/preferences/prefs // Owning preferences datum
@@ -74,6 +122,7 @@ var/global/list/custom_marking_body_definition_cache = null
 	var/body_part_layer_revision = 0 // Revisions for overlay layers
 	var/preview_revision = 1 // Revisions for preview bundles
 	var/body_preview_revision = 1 // Revisions for stripped body preview bundles
+	var/preview_refresh_token = 0 // Tracks external preview refresh triggers
 	var/mark_dirty = FALSE // Dirty flag for pending save
 	var/body_markings_refresh_pending = FALSE // Defer body preview rebuild until body tab is opened
 	var/list/reference_payload_cache // Cached mannequin payloads
@@ -139,10 +188,16 @@ var/global/list/custom_marking_body_definition_cache = null
 		reference_payload_cache = islist(prefs.custom_marking_reference_payload_cache) ? prefs.custom_marking_reference_payload_cache : null
 		reference_cache_signature = prefs.custom_marking_reference_signature
 		reference_mannequin_signature = prefs.custom_marking_reference_mannequin_signature
+		body_reference_payload_cache = islist(prefs.custom_marking_body_reference_payload_cache) ? prefs.custom_marking_body_reference_payload_cache : null
+		body_reference_cache_signature = prefs.custom_marking_body_reference_signature
+		body_reference_mannequin_signature = prefs.custom_marking_body_reference_mannequin_signature
 	else
 		reference_payload_cache = null
 		reference_cache_signature = null
 		reference_mannequin_signature = null
+		body_reference_payload_cache = null
+		body_reference_cache_signature = null
+		body_reference_mannequin_signature = null
 	if(istext(initial_tab_override) && length(initial_tab_override))
 		initial_tab = initial_tab_override
 	else
@@ -659,8 +714,15 @@ var/global/list/custom_marking_body_definition_cache = null
 		data["default_canvas_background"] = "default"
 	return data
 
-// Create backrounds for the custom markings designer
+// Create backgrounds for the custom markings designer (Lira, December 2025)
 /datum/tgui_module/custom_marking_designer/proc/build_canvas_background_options()
+	var/list/cache = build_custom_marking_canvas_background_cache()
+	if(islist(cache) && cache.len)
+		return cache
+	return build_canvas_background_options_internal()
+
+// Build background payloads without caching
+/datum/tgui_module/custom_marking_designer/proc/build_canvas_background_options_internal()
 	var/list/backgrounds = list(list(
 		"id" = "default",
 		"label" = "Default",
@@ -735,12 +797,7 @@ var/global/list/custom_marking_body_definition_cache = null
 		data["body_part_layer_order"] = mark?.body_parts?.Copy()
 	data["body_part_layer_revision"] = body_part_layer_revision
 	data["preview_revision"] = isnum(last_preview_bundle_revision) ? last_preview_bundle_revision : preview_revision
-	if(active_tab == "custom")
-		var/list/preview_bundle = build_preview_source_bundle()
-		if(islist(preview_bundle))
-			data["preview_sources"] = preview_bundle["dirs"]
-			data["preview_revision"] = preview_bundle["revision"]
-			last_preview_bundle_revision = preview_bundle["revision"]
+	data["preview_refresh_token"] = preview_refresh_token
 	var/list/canvas_backgrounds_live = build_canvas_background_options()
 	if(islist(canvas_backgrounds_live) && canvas_backgrounds_live.len)
 		data["canvas_backgrounds"] = canvas_backgrounds_live
@@ -758,13 +815,24 @@ var/global/list/custom_marking_body_definition_cache = null
 		custom_marking_end_manual_yield(yield_context)
 		return null
 	var/list/payload = list()
-	payload["digitigrade"] = !!prefs.digitigrade
+	var/digitigrade_allowed = is_digitigrade_allowed()
+	payload["digitigrade"] = digitigrade_allowed ? !!prefs.digitigrade : FALSE
 	payload["body_marking_definitions"] = build_body_marking_definitions()
 	var/list/original_body_markings = prefs.body_markings ? prefs.body_markings.Copy() : list()
-	payload["body_markings"] = original_body_markings ? original_body_markings.Copy() : list()
-	var/list/order = list()
+	var/list/filtered_body_markings = list()
 	if(islist(original_body_markings))
 		for(var/mark in original_body_markings)
+			CUSTOM_MARKING_CHECK_TICK
+			var/datum/sprite_accessory/marking/style = body_marking_styles_list[mark]
+			if(!istype(style))
+				continue
+			if(!is_body_marking_allowed(style))
+				continue
+			filtered_body_markings[mark] = original_body_markings[mark]
+	payload["body_markings"] = filtered_body_markings.Copy()
+	var/list/order = list()
+	if(islist(filtered_body_markings))
+		for(var/mark in filtered_body_markings)
 			order += mark
 	payload["order"] = order
 	var/list/preview_bundle = null
@@ -775,6 +843,466 @@ var/global/list/custom_marking_body_definition_cache = null
 	if(islist(preview_bundle))
 		payload["preview_sources"] = preview_bundle["dirs"]
 		payload["preview_revision"] = preview_bundle["revision"]
+	payload["preview_width"] = get_preview_canvas_width()
+	payload["preview_height"] = get_preview_canvas_height()
+	var/list/canvas_backgrounds_live = build_canvas_background_options()
+	if(islist(canvas_backgrounds_live) && canvas_backgrounds_live.len)
+		payload["canvas_backgrounds"] = canvas_backgrounds_live
+		payload["default_canvas_background"] = "default"
+	custom_marking_end_manual_yield(yield_context)
+	return payload
+
+// Check if the current species can use digitigrade legs (Lira, December 2025)
+/datum/tgui_module/custom_marking_designer/proc/is_digitigrade_allowed()
+	if(!prefs)
+		return FALSE
+	var/datum/species/mob_species = GLOB.all_species?[prefs.species]
+	return istype(mob_species) && mob_species.digi_allowed
+
+// Count color channels for a sprite accessory (Lira, December 2025)
+/datum/tgui_module/custom_marking_designer/proc/get_basic_accessory_channel_count(datum/sprite_accessory/style)
+	if(!istype(style) || !style.do_colouration)
+		return 0
+	var/count = 1
+	if(style:extra_overlay)
+		count++
+	if(style:extra_overlay2)
+		count++
+	return count
+
+// Placeholder name check (Lira, December 2025)
+/datum/tgui_module/custom_marking_designer/proc/is_basic_appearance_placeholder_name(style_name)
+	if(!istext(style_name) || !length(style_name))
+		return FALSE
+	var/normalized = lowertext(style_name)
+	return findtext(normalized, "you should not see this") ? TRUE : FALSE
+
+// Build global definitions for the basic appearance tab (Lira, December 2025)
+/datum/tgui_module/custom_marking_designer/proc/build_basic_appearance_definitions()
+	if(islist(custom_marking_basic_appearance_definition_cache))
+		return custom_marking_basic_appearance_definition_cache
+	var/list/cache = list()
+	cache["hair_styles_by_name"] = build_basic_appearance_hair_definition_map()
+	cache["gradient_styles"] = build_basic_appearance_gradient_definitions()
+	cache["facial_hair_styles_by_name"] = build_basic_appearance_facial_hair_definition_map()
+	cache["ear_styles_by_name"] = build_basic_appearance_ear_definition_map()
+	cache["tail_styles_by_name"] = build_basic_appearance_tail_definition_map()
+	cache["wing_styles_by_name"] = build_basic_appearance_wing_definition_map()
+	custom_marking_basic_appearance_definition_cache = cache
+	return cache
+
+// Build hair definitions for basic appearance tab (Lira, December 2025)
+/datum/tgui_module/custom_marking_designer/proc/build_basic_appearance_hair_definition_map()
+	var/list/defs = list()
+	defs["Normal"] = list("id" = "Normal", "name" = "Normal")
+	if(!islist(global.hair_styles_list) || !global.hair_styles_list.len)
+		return defs
+	for(var/style_name in global.hair_styles_list)
+		CUSTOM_MARKING_CHECK_TICK
+		var/datum/sprite_accessory/hair/style = global.hair_styles_list[style_name]
+		if(!istype(style))
+			continue
+		if(is_basic_appearance_placeholder_name(style_name))
+			continue
+		var/list/def = list("id" = style_name, "name" = style_name)
+		def["do_colouration"] = !!style.do_colouration
+		def["color_blend_mode"] = style.color_blend_mode
+		def["channel_count"] = style.do_colouration ? 1 : 0
+		var/list/dir_assets = list()
+		var/icon_source = style.icon
+		if(icon_source)
+			for(var/dir in list(NORTH, SOUTH, EAST, WEST))
+				CUSTOM_MARKING_CHECK_TICK
+				var/state_name = "[style.icon_state]_s"
+				var/icon/hair_icon = icon(icon_source, state_name, dir, 1, 0)
+				var/list/assets_for_dir = list()
+				var/list/asset_payload = null
+				if(isicon(hair_icon) && icon_has_visible_pixels(hair_icon, "[icon_source]|[state_name]|[dir]"))
+					asset_payload = build_icon_asset(hair_icon)
+				assets_for_dir += list(asset_payload)
+				if(style.do_colouration && style.icon_add)
+					var/icon/hair_add_icon = icon(style.icon_add, state_name, dir, 1, 0)
+					var/list/add_payload = null
+					if(isicon(hair_add_icon) && icon_has_visible_pixels(hair_add_icon, "[style.icon_add]|[state_name]|[dir]"))
+						add_payload = build_icon_asset(hair_add_icon)
+					assets_for_dir += list(add_payload)
+				dir_assets["[dir]"] = assets_for_dir
+		if(dir_assets.len)
+			def["assets"] = dir_assets
+		defs[style_name] = def
+	return defs
+
+// Build hair gradiant definitions for basic appearance tab (Lira, December 2025)
+/datum/tgui_module/custom_marking_designer/proc/build_basic_appearance_gradient_definitions()
+	var/list/grad_defs = list()
+	if(!islist(GLOB.hair_gradients) || !GLOB.hair_gradients.len)
+		return grad_defs
+	for(var/gname in GLOB.hair_gradients)
+		CUSTOM_MARKING_CHECK_TICK
+		var/icon_state = GLOB.hair_gradients[gname]
+		var/list/def = list(
+			"id" = gname,
+			"name" = gname,
+			"icon_state" = icon_state
+		)
+		var/list/dir_assets = list()
+		if(istext(icon_state) && length(icon_state))
+			for(var/dir in list(NORTH, SOUTH, EAST, WEST))
+				CUSTOM_MARKING_CHECK_TICK
+				var/icon/grad_icon = icon('icons/mob/hair_gradients.dmi', icon_state, dir, 1, 0)
+				if(isicon(grad_icon) && icon_has_visible_pixels(grad_icon, "hair_gradients|[icon_state]|[dir]"))
+					var/list/asset_payload = build_icon_asset(grad_icon)
+					if(islist(asset_payload))
+						dir_assets["[dir]"] = asset_payload
+		if(dir_assets.len && dir_assets.len < 4)
+			var/list/fallback_asset = dir_assets["[SOUTH]"]
+			if(!islist(fallback_asset))
+				fallback_asset = dir_assets["[NORTH]"]
+			if(!islist(fallback_asset))
+				fallback_asset = dir_assets["[EAST]"]
+			if(!islist(fallback_asset))
+				fallback_asset = dir_assets["[WEST]"]
+			if(islist(fallback_asset))
+				for(var/dir in list(NORTH, SOUTH, EAST, WEST))
+					if(isnull(dir_assets["[dir]"]))
+						dir_assets["[dir]"] = fallback_asset
+		if(dir_assets.len)
+			def["assets"] = dir_assets
+		grad_defs += list(def)
+	return grad_defs
+
+// Build facial hair definitions for basic appearance tab (Lira, December 2025)
+/datum/tgui_module/custom_marking_designer/proc/build_basic_appearance_facial_hair_definition_map()
+	var/list/defs = list()
+	defs["Normal"] = list("id" = "Normal", "name" = "Normal")
+	defs["Shaved"] = list("id" = "Shaved", "name" = "Shaved")
+	if(!islist(global.facial_hair_styles_list) || !global.facial_hair_styles_list.len)
+		return defs
+	for(var/style_name in global.facial_hair_styles_list)
+		CUSTOM_MARKING_CHECK_TICK
+		var/datum/sprite_accessory/facial_hair/style = global.facial_hair_styles_list[style_name]
+		if(!istype(style))
+			continue
+		if(is_basic_appearance_placeholder_name(style_name))
+			continue
+		var/list/def = list("id" = style_name, "name" = style_name)
+		def["do_colouration"] = !!style.do_colouration
+		def["color_blend_mode"] = style.color_blend_mode
+		def["channel_count"] = style.do_colouration ? 1 : 0
+		var/list/dir_assets = list()
+		var/icon_source = style.icon
+		if(icon_source)
+			for(var/dir in list(NORTH, SOUTH, EAST, WEST))
+				CUSTOM_MARKING_CHECK_TICK
+				var/state_name = "[style.icon_state]_s"
+				var/icon/facial_icon = icon(icon_source, state_name, dir, 1, 0)
+				var/list/assets_for_dir = list()
+				var/list/asset_payload = null
+				if(isicon(facial_icon) && icon_has_visible_pixels(facial_icon, "[icon_source]|[state_name]|[dir]"))
+					asset_payload = build_icon_asset(facial_icon)
+				assets_for_dir += list(asset_payload)
+				dir_assets["[dir]"] = assets_for_dir
+		if(dir_assets.len)
+			def["assets"] = dir_assets
+		defs[style_name] = def
+	return defs
+
+// Build ear definitions for basic appearance tab (Lira, December 2025)
+/datum/tgui_module/custom_marking_designer/proc/build_basic_appearance_ear_definition_map()
+	var/list/defs = list()
+	defs["Normal"] = list("id" = "Normal", "name" = "Normal")
+	if(!islist(global.ear_styles_list) || !global.ear_styles_list.len)
+		return defs
+	for(var/path in global.ear_styles_list)
+		CUSTOM_MARKING_CHECK_TICK
+		var/datum/sprite_accessory/ears/style = global.ear_styles_list[path]
+		if(!istype(style))
+			continue
+		var/style_name = style.name
+		if(!istext(style_name) || !length(style_name))
+			continue
+		if(is_basic_appearance_placeholder_name(style_name))
+			continue
+		var/list/def = list("id" = style_name, "name" = style_name)
+		def["do_colouration"] = !!style.do_colouration
+		def["color_blend_mode"] = style.color_blend_mode
+		def["channel_count"] = get_basic_accessory_channel_count(style)
+		var/list/dir_assets = list()
+		if(style.icon && style.icon_state)
+			for(var/dir in list(NORTH, SOUTH, EAST, WEST))
+				CUSTOM_MARKING_CHECK_TICK
+				var/list/assets_for_dir = list()
+				var/icon/base_icon = icon(style.icon, style.icon_state, dir, 1, 0)
+				assets_for_dir += list((isicon(base_icon) && icon_has_visible_pixels(base_icon, "[style.icon]|[style.icon_state]|[dir]")) ? build_icon_asset(base_icon) : null)
+				if(style.extra_overlay)
+					var/icon/overlay1 = icon(style.icon, style.extra_overlay, dir, 1, 0)
+					assets_for_dir += list((isicon(overlay1) && icon_has_visible_pixels(overlay1, "[style.icon]|[style.extra_overlay]|[dir]")) ? build_icon_asset(overlay1) : null)
+				if(style.extra_overlay2)
+					var/icon/overlay2 = icon(style.icon, style.extra_overlay2, dir, 1, 0)
+					assets_for_dir += list((isicon(overlay2) && icon_has_visible_pixels(overlay2, "[style.icon]|[style.extra_overlay2]|[dir]")) ? build_icon_asset(overlay2) : null)
+				dir_assets["[dir]"] = assets_for_dir
+		if(dir_assets.len)
+			def["assets"] = dir_assets
+		defs[style_name] = def
+	return defs
+
+// Build tail definitions for basic appearance tab (Lira, December 2025)
+/datum/tgui_module/custom_marking_designer/proc/build_basic_appearance_tail_definition_map()
+	var/list/defs = list()
+	defs["Normal"] = list("id" = "Normal", "name" = "Normal")
+	if(!islist(global.tail_styles_list) || !global.tail_styles_list.len)
+		return defs
+	for(var/path in global.tail_styles_list)
+		CUSTOM_MARKING_CHECK_TICK
+		var/datum/sprite_accessory/tail/style = global.tail_styles_list[path]
+		if(!istype(style))
+			continue
+		var/style_name = style.name
+		if(!istext(style_name) || !length(style_name))
+			continue
+		if(is_basic_appearance_placeholder_name(style_name))
+			continue
+		var/list/def = list("id" = style_name, "name" = style_name)
+		def["do_colouration"] = !!style.do_colouration
+		def["color_blend_mode"] = style.color_blend_mode
+		def["channel_count"] = get_basic_accessory_channel_count(style)
+		def["hide_body_parts"] = islist(style.hide_body_parts) ? style.hide_body_parts.Copy() : null
+		def["lower_layer_dirs"] = islist(style.lower_layer_dirs) ? style.lower_layer_dirs.Copy() : list(SOUTH)
+		var/list/dir_assets = list()
+		if(style.icon && style.icon_state)
+			for(var/dir in list(NORTH, SOUTH, EAST, WEST))
+				CUSTOM_MARKING_CHECK_TICK
+				var/list/assets_for_dir = list()
+				var/icon/base_icon = icon(style.icon, style.icon_state, dir, 1, 0)
+				assets_for_dir += list((isicon(base_icon) && icon_has_visible_pixels(base_icon, "[style.icon]|[style.icon_state]|[dir]")) ? build_icon_asset(base_icon) : null)
+				if(style.extra_overlay)
+					var/icon/overlay1 = icon(style.icon, style.extra_overlay, dir, 1, 0)
+					assets_for_dir += list((isicon(overlay1) && icon_has_visible_pixels(overlay1, "[style.icon]|[style.extra_overlay]|[dir]")) ? build_icon_asset(overlay1) : null)
+				if(style.extra_overlay2)
+					var/icon/overlay2 = icon(style.icon, style.extra_overlay2, dir, 1, 0)
+					assets_for_dir += list((isicon(overlay2) && icon_has_visible_pixels(overlay2, "[style.icon]|[style.extra_overlay2]|[dir]")) ? build_icon_asset(overlay2) : null)
+				dir_assets["[dir]"] = assets_for_dir
+		if(dir_assets.len)
+			def["assets"] = dir_assets
+		defs[style_name] = def
+	return defs
+
+// Build wing definitions for basic appearance tab (Lira, December 2025)
+/datum/tgui_module/custom_marking_designer/proc/build_basic_appearance_wing_definition_map()
+	var/list/defs = list()
+	defs["Normal"] = list("id" = "Normal", "name" = "Normal")
+	if(!islist(global.wing_styles_list) || !global.wing_styles_list.len)
+		return defs
+	for(var/path in global.wing_styles_list)
+		CUSTOM_MARKING_CHECK_TICK
+		var/datum/sprite_accessory/wing/style = global.wing_styles_list[path]
+		if(!istype(style))
+			continue
+		var/style_name = style.name
+		if(!istext(style_name) || !length(style_name))
+			continue
+		if(is_basic_appearance_placeholder_name(style_name))
+			continue
+		var/list/def = list("id" = style_name, "name" = style_name)
+		def["do_colouration"] = !!style.do_colouration
+		def["color_blend_mode"] = style.color_blend_mode
+		def["channel_count"] = get_basic_accessory_channel_count(style)
+		def["multi_dir"] = !!(style:multi_dir)
+		def["wing_offset"] = isnum(style:wing_offset) ? style:wing_offset : 0
+		var/list/dir_assets = list()
+		var/list/dir_back_assets = list()
+		if(style.icon && style.icon_state)
+			for(var/dir in list(NORTH, SOUTH, EAST, WEST))
+				CUSTOM_MARKING_CHECK_TICK
+				var/list/assets_for_dir = list()
+				var/state_front = style.icon_state
+				if(style:multi_dir)
+					state_front = "[state_front]_front"
+				var/icon/front_icon = icon(style.icon, state_front, dir, 1, 0)
+				assets_for_dir += list((isicon(front_icon) && icon_has_visible_pixels(front_icon, "[style.icon]|[state_front]|[dir]")) ? build_icon_asset(front_icon) : null)
+				if(style.extra_overlay)
+					var/icon/overlay1 = icon(style.icon, style.extra_overlay, dir, 1, 0)
+					assets_for_dir += list((isicon(overlay1) && icon_has_visible_pixels(overlay1, "[style.icon]|[style.extra_overlay]|[dir]")) ? build_icon_asset(overlay1) : null)
+				if(style.extra_overlay2)
+					var/icon/overlay2 = icon(style.icon, style.extra_overlay2, dir, 1, 0)
+					assets_for_dir += list((isicon(overlay2) && icon_has_visible_pixels(overlay2, "[style.icon]|[style.extra_overlay2]|[dir]")) ? build_icon_asset(overlay2) : null)
+				dir_assets["[dir]"] = assets_for_dir
+				if(style:multi_dir)
+					var/list/back_assets_for_dir = list()
+					var/state_back = "[style.icon_state]_back"
+					var/icon/back_icon = icon(style.icon, state_back, dir, 1, 0)
+					back_assets_for_dir += list((isicon(back_icon) && icon_has_visible_pixels(back_icon, "[style.icon]|[state_back]|[dir]")) ? build_icon_asset(back_icon) : null)
+					if(style.extra_overlay)
+						var/icon/overlay1b = icon(style.icon, style.extra_overlay, dir, 1, 0)
+						back_assets_for_dir += list((isicon(overlay1b) && icon_has_visible_pixels(overlay1b, "[style.icon]|[style.extra_overlay]|[dir]")) ? build_icon_asset(overlay1b) : null)
+					if(style.extra_overlay2)
+						var/icon/overlay2b = icon(style.icon, style.extra_overlay2, dir, 1, 0)
+						back_assets_for_dir += list((isicon(overlay2b) && icon_has_visible_pixels(overlay2b, "[style.icon]|[style.extra_overlay2]|[dir]")) ? build_icon_asset(overlay2b) : null)
+					dir_back_assets["[dir]"] = back_assets_for_dir
+		if(dir_assets.len)
+			def["assets"] = dir_assets
+		if(dir_back_assets.len)
+			def["back_assets"] = dir_back_assets
+		defs[style_name] = def
+	return defs
+
+// Build payload for the basic appearance tab (Lira, December 2025)
+/datum/tgui_module/custom_marking_designer/proc/build_basic_appearance_payload(preview_digitigrade = null, preview_only = FALSE)
+	var/list/yield_context = custom_marking_begin_manual_yield()
+	if(!prefs)
+		custom_marking_end_manual_yield(yield_context)
+		return null
+	var/list/payload = list()
+	var/digitigrade_allowed = is_digitigrade_allowed()
+	var/digitigrade_value = digitigrade_allowed ? !!prefs.digitigrade : FALSE
+	if(!isnull(preview_digitigrade))
+		digitigrade_value = digitigrade_allowed ? !!preview_digitigrade : FALSE
+	payload["digitigrade_allowed"] = digitigrade_allowed
+	payload["digitigrade"] = digitigrade_value
+	if(preview_only)
+		payload["preview_only"] = TRUE
+	payload["body_color"] = rgb(prefs.r_skin, prefs.g_skin, prefs.b_skin)
+	payload["eye_color"] = rgb(prefs.r_eyes, prefs.g_eyes, prefs.b_eyes)
+	payload["hair_style"] = prefs.h_style
+	payload["hair_color"] = rgb(prefs.r_hair, prefs.g_hair, prefs.b_hair)
+	var/grad_style_value = prefs.grad_style
+	if(istext(grad_style_value) && length(grad_style_value))
+		var/lower_grad = lowertext(grad_style_value)
+		if(lower_grad == "none" || !(grad_style_value in GLOB.hair_gradients))
+			grad_style_value = null
+	payload["hair_gradient_style"] = grad_style_value
+	payload["hair_gradient_color"] = rgb(prefs.r_grad, prefs.g_grad, prefs.b_grad)
+	payload["facial_hair_style"] = prefs.f_style
+	payload["facial_hair_color"] = rgb(prefs.r_facial, prefs.g_facial, prefs.b_facial)
+	payload["ear_style"] = prefs.ear_style
+	payload["ear_colors"] = list(
+		rgb(prefs.r_ears, prefs.g_ears, prefs.b_ears),
+		rgb(prefs.r_ears2, prefs.g_ears2, prefs.b_ears2),
+		rgb(prefs.r_ears3, prefs.g_ears3, prefs.b_ears3)
+	)
+	payload["horn_style"] = prefs.ear_secondary_style
+	payload["horn_colors"] = islist(prefs.ear_secondary_colors) ? prefs.ear_secondary_colors.Copy() : list()
+	payload["tail_style"] = prefs.tail_style
+	payload["tail_colors"] = list(
+		rgb(prefs.r_tail, prefs.g_tail, prefs.b_tail),
+		rgb(prefs.r_tail2, prefs.g_tail2, prefs.b_tail2),
+		rgb(prefs.r_tail3, prefs.g_tail3, prefs.b_tail3)
+	)
+	payload["wing_style"] = prefs.wing_style
+	payload["wing_colors"] = list(
+		rgb(prefs.r_wing, prefs.g_wing, prefs.b_wing),
+		rgb(prefs.r_wing2, prefs.g_wing2, prefs.b_wing2),
+		rgb(prefs.r_wing3, prefs.g_wing3, prefs.b_wing3)
+	)
+	var/list/definition_cache = islist(custom_marking_basic_appearance_definition_cache) ? custom_marking_basic_appearance_definition_cache : build_basic_appearance_definition_cache()
+	var/list/hair_defs_by_name = islist(definition_cache) ? definition_cache["hair_styles_by_name"] : null
+	var/list/grad_defs = islist(definition_cache) ? definition_cache["gradient_styles"] : null
+	var/list/facial_defs_by_name = islist(definition_cache) ? definition_cache["facial_hair_styles_by_name"] : null
+	var/list/ear_defs_by_name = islist(definition_cache) ? definition_cache["ear_styles_by_name"] : null
+	var/list/tail_defs_by_name = islist(definition_cache) ? definition_cache["tail_styles_by_name"] : null
+	var/list/wing_defs_by_name = islist(definition_cache) ? definition_cache["wing_styles_by_name"] : null
+	if(!islist(hair_defs_by_name))
+		hair_defs_by_name = build_basic_appearance_hair_definition_map()
+	if(!islist(grad_defs))
+		grad_defs = build_basic_appearance_gradient_definitions()
+	if(!islist(facial_defs_by_name))
+		facial_defs_by_name = build_basic_appearance_facial_hair_definition_map()
+	if(!islist(ear_defs_by_name))
+		ear_defs_by_name = build_basic_appearance_ear_definition_map()
+	if(!islist(tail_defs_by_name))
+		tail_defs_by_name = build_basic_appearance_tail_definition_map()
+	if(!islist(wing_defs_by_name))
+		wing_defs_by_name = build_basic_appearance_wing_definition_map()
+	var/list/hair_defs = list()
+	var/list/hair_styles = prefs.get_available_styles(global.hair_styles_list)
+	if(islist(hair_styles) && hair_styles.len)
+		for(var/style_name in hair_styles)
+			CUSTOM_MARKING_CHECK_TICK
+			var/list/def = hair_defs_by_name?[style_name]
+			if(!islist(def))
+				def = list("id" = style_name, "name" = style_name)
+			hair_defs += list(def)
+	payload["hair_styles"] = hair_defs
+	payload["gradient_styles"] = grad_defs
+	var/list/facial_defs = list()
+	var/list/facial_styles = prefs.get_available_styles(global.facial_hair_styles_list)
+	if(islist(facial_styles) && facial_styles.len)
+		for(var/style_name in facial_styles)
+			CUSTOM_MARKING_CHECK_TICK
+			var/list/def = facial_defs_by_name?[style_name]
+			if(!islist(def))
+				def = list("id" = style_name, "name" = style_name)
+			facial_defs += list(def)
+	payload["facial_hair_styles"] = facial_defs
+	var/list/ear_defs = list()
+	var/list/ear_styles = prefs.get_available_styles(global.ear_styles_list)
+	if(islist(ear_styles) && ear_styles.len)
+		for(var/style_name in ear_styles)
+			CUSTOM_MARKING_CHECK_TICK
+			var/list/def = ear_defs_by_name?[style_name]
+			if(!islist(def))
+				def = list("id" = style_name, "name" = style_name)
+			ear_defs += list(def)
+	payload["ear_styles"] = ear_defs
+	var/list/tail_defs = list()
+	var/list/tail_styles = prefs.get_available_styles(global.tail_styles_list)
+	if(islist(tail_styles) && tail_styles.len)
+		for(var/style_name in tail_styles)
+			CUSTOM_MARKING_CHECK_TICK
+			var/list/def = tail_defs_by_name?[style_name]
+			if(!islist(def))
+				def = list("id" = style_name, "name" = style_name)
+			tail_defs += list(def)
+	payload["tail_styles"] = tail_defs
+	var/list/wing_defs = list()
+	var/list/wing_styles = prefs.get_available_styles(global.wing_styles_list)
+	if(islist(wing_styles) && wing_styles.len)
+		for(var/style_name in wing_styles)
+			CUSTOM_MARKING_CHECK_TICK
+			var/list/def = wing_defs_by_name?[style_name]
+			if(!islist(def))
+				def = list("id" = style_name, "name" = style_name)
+			wing_defs += list(def)
+	payload["wing_styles"] = wing_defs
+	var/list/preview_bundle = null
+	var/list/preview_bundle_alt = null
+	var/original_digitigrade = prefs.digitigrade
+	var/original_hair = prefs.h_style
+	var/original_grad = prefs.grad_style
+	var/original_facial = prefs.f_style
+	var/original_ears = prefs.ear_style
+	var/original_horns = prefs.ear_secondary_style
+	var/original_tail = prefs.tail_style
+	var/original_wing = prefs.wing_style
+	var/original_body_markings = prefs.body_markings
+	prefs.h_style = null
+	prefs.grad_style = null
+	prefs.f_style = "Shaved"
+	prefs.ear_style = null
+	prefs.ear_secondary_style = null
+	prefs.wing_style = null
+	prefs.tail_style = "hide species-sprite tail"
+	prefs.digitigrade = digitigrade_value
+	prefs.body_markings = null
+	preview_bundle = build_preview_source_bundle(TRUE)
+	if(digitigrade_allowed)
+		prefs.digitigrade = !digitigrade_value
+		preview_bundle_alt = build_preview_source_bundle(TRUE)
+	prefs.body_markings = original_body_markings
+	prefs.h_style = original_hair
+	prefs.grad_style = original_grad
+	prefs.f_style = original_facial
+	prefs.ear_style = original_ears
+	prefs.ear_secondary_style = original_horns
+	prefs.tail_style = original_tail
+	prefs.wing_style = original_wing
+	prefs.digitigrade = original_digitigrade
+	if(islist(preview_bundle))
+		payload["preview_sources"] = preview_bundle["dirs"]
+		payload["preview_revision"] = preview_bundle["revision"]
+	if(islist(preview_bundle_alt))
+		payload["preview_sources_alt"] = preview_bundle_alt["dirs"]
+		payload["preview_revision_alt"] = preview_bundle_alt["revision"]
 	payload["preview_width"] = get_preview_canvas_width()
 	payload["preview_height"] = get_preview_canvas_height()
 	var/list/canvas_backgrounds_live = build_canvas_background_options()
@@ -959,18 +1487,34 @@ var/global/list/custom_marking_body_definition_cache = null
 			body_markings_refresh_pending = TRUE
 		SStgui.update_uis(src)
 	else if(action == "load_body_markings")
+		var/preview_only = FALSE
+		var/preview_only_raw = params?["preview_only"]
+		if(isnum(preview_only_raw))
+			preview_only = !!preview_only_raw
+		else if(istext(preview_only_raw))
+			var/lower_preview = lowertext(preview_only_raw)
+			if(lower_preview in list("1", "true", "yes", "on"))
+				preview_only = TRUE
 		if(body_markings_refresh_pending)
 			if(mark)
 				register_custom_marking_style(mark, FALSE)
 			reference_cache_signature = null
 			reference_mannequin_signature = null
 			reference_payload_cache = null
+			body_reference_cache_signature = null
+			body_reference_mannequin_signature = null
+			body_reference_payload_cache = null
 			if(prefs)
 				prefs.custom_marking_reference_signature = null
 				prefs.custom_marking_reference_payload_cache = null
 				prefs.custom_marking_reference_mannequin_signature = null
+				prefs.custom_marking_body_reference_signature = null
+				prefs.custom_marking_body_reference_payload_cache = null
+				prefs.custom_marking_body_reference_mannequin_signature = null
 			body_markings_refresh_pending = FALSE
 		var/list/body_payload = build_body_markings_payload()
+		if(islist(body_payload) && preview_only)
+			body_payload["preview_only"] = TRUE
 		if(islist(body_payload))
 			var/list/update = list("body_markings_payload" = body_payload)
 			var/datum/tgui/active_ui = SStgui.get_open_ui(usr, src)
@@ -979,6 +1523,47 @@ var/global/list/custom_marking_body_definition_cache = null
 			else
 				SStgui.update_uis(src, update)
 		return TRUE
+	else if(action == "load_basic_appearance")
+		var/preview_only = FALSE
+		var/preview_only_raw = params?["preview_only"]
+		if(isnum(preview_only_raw))
+			preview_only = !!preview_only_raw
+		else if(istext(preview_only_raw))
+			var/lower_preview = lowertext(preview_only_raw)
+			if(lower_preview in list("1", "true", "yes", "on"))
+				preview_only = TRUE
+		var/digi_override = null
+		if(preview_only)
+			var/digi_raw = params?["digitigrade"]
+			if(isnum(digi_raw))
+				digi_override = !!digi_raw
+			else if(istext(digi_raw))
+				var/lower = lowertext(digi_raw)
+				if(lower in list("1", "true", "yes", "on"))
+					digi_override = TRUE
+				else if(lower in list("0", "false", "no", "off"))
+					digi_override = FALSE
+		var/list/basic_payload = build_basic_appearance_payload(digi_override, preview_only)
+		if(islist(basic_payload))
+			var/list/update = list("basic_appearance_payload" = basic_payload)
+			var/datum/tgui/active_ui = SStgui.get_open_ui(usr, src)
+			if(active_ui)
+				active_ui.send_update(update)
+			else
+				SStgui.update_uis(src, update)
+		return TRUE
+	else if(action == "save_basic_appearance")
+		var/close_ui = params?["close"]
+		if(apply_basic_appearance_payload(params))
+			refresh_preferences_window_if_visible(TRUE)
+			if(close_ui)
+				SStgui.close_uis(src)
+				return FALSE
+			SStgui.update_uis(src)
+		return TRUE
+	else if(action == "close_basic_appearance")
+		SStgui.close_uis(src)
+		return FALSE
 	else if(action == "save_body_markings")
 		var/close_ui = params?["close"]
 		var/list/save_payload = resolve_body_marking_chunk_payload(params)
@@ -1005,6 +1590,164 @@ var/global/list/custom_marking_body_definition_cache = null
 	else
 		handled = FALSE
 	return handled ? TRUE : FALSE
+
+// Apply a basic appearance payload coming from the client (Lira, December 2025)
+/datum/tgui_module/custom_marking_designer/proc/apply_basic_appearance_payload(list/params)
+	if(!prefs)
+		return FALSE
+	if(!islist(params))
+		return FALSE
+	var/safe_hex
+	var/digi_raw = params?["digitigrade"]
+	var/digi_value = null
+	if(isnum(digi_raw))
+		digi_value = !!digi_raw
+	else if(istext(digi_raw))
+		var/lower = lowertext(digi_raw)
+		if(lower in list("1", "true", "yes", "on"))
+			digi_value = TRUE
+		else if(lower in list("0", "false", "no", "off"))
+			digi_value = FALSE
+	if(!isnull(digi_value))
+		if(is_digitigrade_allowed())
+			prefs.digitigrade = digi_value
+	var/body_color = params?["body_color"]
+	if(istext(body_color) && length(body_color))
+		safe_hex = sanitize_hexcolor(body_color, rgb(prefs.r_skin, prefs.g_skin, prefs.b_skin))
+		prefs.r_skin = hex2num(copytext(safe_hex, 2, 4))
+		prefs.g_skin = hex2num(copytext(safe_hex, 4, 6))
+		prefs.b_skin = hex2num(copytext(safe_hex, 6, 8))
+	var/eye_color = params?["eye_color"]
+	if(istext(eye_color) && length(eye_color))
+		safe_hex = sanitize_hexcolor(eye_color, rgb(prefs.r_eyes, prefs.g_eyes, prefs.b_eyes))
+		prefs.r_eyes = hex2num(copytext(safe_hex, 2, 4))
+		prefs.g_eyes = hex2num(copytext(safe_hex, 4, 6))
+		prefs.b_eyes = hex2num(copytext(safe_hex, 6, 8))
+	var/hair_style = params?["hair_style"]
+	if(istext(hair_style) && length(hair_style))
+		var/list/hair_styles = prefs.get_available_styles(global.hair_styles_list)
+		if(islist(hair_styles) && (hair_style in hair_styles))
+			prefs.h_style = (hair_style == "Normal") ? null : hair_style
+	else if(isnull(hair_style))
+		prefs.h_style = null
+	var/hair_color = params?["hair_color"]
+	if(istext(hair_color) && length(hair_color))
+		safe_hex = sanitize_hexcolor(hair_color, rgb(prefs.r_hair, prefs.g_hair, prefs.b_hair))
+		prefs.r_hair = hex2num(copytext(safe_hex, 2, 4))
+		prefs.g_hair = hex2num(copytext(safe_hex, 4, 6))
+		prefs.b_hair = hex2num(copytext(safe_hex, 6, 8))
+	var/grad_style = params?["hair_gradient_style"]
+	if(istext(grad_style) && length(grad_style))
+		var/lower = lowertext(grad_style)
+		if(lower == "none")
+			prefs.grad_style = null
+		else if(grad_style in GLOB.hair_gradients)
+			prefs.grad_style = grad_style
+	else if(isnull(grad_style))
+		prefs.grad_style = null
+	var/grad_color = params?["hair_gradient_color"]
+	if(istext(grad_color) && length(grad_color))
+		safe_hex = sanitize_hexcolor(grad_color, rgb(prefs.r_grad, prefs.g_grad, prefs.b_grad))
+		prefs.r_grad = hex2num(copytext(safe_hex, 2, 4))
+		prefs.g_grad = hex2num(copytext(safe_hex, 4, 6))
+		prefs.b_grad = hex2num(copytext(safe_hex, 6, 8))
+	var/facial_style = params?["facial_hair_style"]
+	if(istext(facial_style) && length(facial_style))
+		var/list/facial_styles = prefs.get_available_styles(global.facial_hair_styles_list)
+		if(islist(facial_styles) && (facial_style in facial_styles))
+			prefs.f_style = (facial_style == "Normal") ? "Shaved" : facial_style
+	else if(isnull(facial_style))
+		prefs.f_style = "Shaved"
+	var/facial_color = params?["facial_hair_color"]
+	if(istext(facial_color) && length(facial_color))
+		safe_hex = sanitize_hexcolor(facial_color, rgb(prefs.r_facial, prefs.g_facial, prefs.b_facial))
+		prefs.r_facial = hex2num(copytext(safe_hex, 2, 4))
+		prefs.g_facial = hex2num(copytext(safe_hex, 4, 6))
+		prefs.b_facial = hex2num(copytext(safe_hex, 6, 8))
+	var/list/ear_styles = prefs.get_available_styles(global.ear_styles_list)
+	var/ear_style = params?["ear_style"]
+	if(istext(ear_style) && length(ear_style) && islist(ear_styles) && (ear_style in ear_styles))
+		prefs.ear_style = (ear_style == "Normal") ? null : ear_style
+	else if(isnull(ear_style))
+		prefs.ear_style = null
+	var/horn_style = params?["horn_style"]
+	if(istext(horn_style) && length(horn_style) && islist(ear_styles) && (horn_style in ear_styles))
+		prefs.ear_secondary_style = (horn_style == "Normal") ? null : horn_style
+	else if(isnull(horn_style))
+		prefs.ear_secondary_style = null
+	var/list/ear_colors = params?["ear_colors"]
+	if(islist(ear_colors))
+		if(istext(ear_colors[1]) && length(ear_colors[1]))
+			safe_hex = sanitize_hexcolor(ear_colors[1], rgb(prefs.r_ears, prefs.g_ears, prefs.b_ears))
+			prefs.r_ears = hex2num(copytext(safe_hex, 2, 4))
+			prefs.g_ears = hex2num(copytext(safe_hex, 4, 6))
+			prefs.b_ears = hex2num(copytext(safe_hex, 6, 8))
+		if(istext(ear_colors[2]) && length(ear_colors[2]))
+			safe_hex = sanitize_hexcolor(ear_colors[2], rgb(prefs.r_ears2, prefs.g_ears2, prefs.b_ears2))
+			prefs.r_ears2 = hex2num(copytext(safe_hex, 2, 4))
+			prefs.g_ears2 = hex2num(copytext(safe_hex, 4, 6))
+			prefs.b_ears2 = hex2num(copytext(safe_hex, 6, 8))
+		if(istext(ear_colors[3]) && length(ear_colors[3]))
+			safe_hex = sanitize_hexcolor(ear_colors[3], rgb(prefs.r_ears3, prefs.g_ears3, prefs.b_ears3))
+			prefs.r_ears3 = hex2num(copytext(safe_hex, 2, 4))
+			prefs.g_ears3 = hex2num(copytext(safe_hex, 4, 6))
+			prefs.b_ears3 = hex2num(copytext(safe_hex, 6, 8))
+	var/list/horn_colors = params?["horn_colors"]
+	if(islist(horn_colors))
+		var/list/new_colors = list()
+		for(var/i = 1 to length(horn_colors))
+			var/value = horn_colors[i]
+			if(istext(value) && length(value))
+				new_colors += sanitize_hexcolor(value, "#ffffff")
+		prefs.ear_secondary_colors = new_colors
+	var/list/tail_styles = prefs.get_available_styles(global.tail_styles_list)
+	var/tail_style = params?["tail_style"]
+	if(istext(tail_style) && length(tail_style) && islist(tail_styles) && (tail_style in tail_styles))
+		prefs.tail_style = (tail_style == "Normal") ? null : tail_style
+	else if(isnull(tail_style))
+		prefs.tail_style = null
+	var/list/tail_colors = params?["tail_colors"]
+	if(islist(tail_colors))
+		if(istext(tail_colors[1]) && length(tail_colors[1]))
+			safe_hex = sanitize_hexcolor(tail_colors[1], rgb(prefs.r_tail, prefs.g_tail, prefs.b_tail))
+			prefs.r_tail = hex2num(copytext(safe_hex, 2, 4))
+			prefs.g_tail = hex2num(copytext(safe_hex, 4, 6))
+			prefs.b_tail = hex2num(copytext(safe_hex, 6, 8))
+		if(istext(tail_colors[2]) && length(tail_colors[2]))
+			safe_hex = sanitize_hexcolor(tail_colors[2], rgb(prefs.r_tail2, prefs.g_tail2, prefs.b_tail2))
+			prefs.r_tail2 = hex2num(copytext(safe_hex, 2, 4))
+			prefs.g_tail2 = hex2num(copytext(safe_hex, 4, 6))
+			prefs.b_tail2 = hex2num(copytext(safe_hex, 6, 8))
+		if(istext(tail_colors[3]) && length(tail_colors[3]))
+			safe_hex = sanitize_hexcolor(tail_colors[3], rgb(prefs.r_tail3, prefs.g_tail3, prefs.b_tail3))
+			prefs.r_tail3 = hex2num(copytext(safe_hex, 2, 4))
+			prefs.g_tail3 = hex2num(copytext(safe_hex, 4, 6))
+			prefs.b_tail3 = hex2num(copytext(safe_hex, 6, 8))
+	var/list/wing_styles = prefs.get_available_styles(global.wing_styles_list)
+	var/wing_style = params?["wing_style"]
+	if(istext(wing_style) && length(wing_style) && islist(wing_styles) && (wing_style in wing_styles))
+		prefs.wing_style = (wing_style == "Normal") ? null : wing_style
+	else if(isnull(wing_style))
+		prefs.wing_style = null
+	var/list/wing_colors = params?["wing_colors"]
+	if(islist(wing_colors))
+		if(istext(wing_colors[1]) && length(wing_colors[1]))
+			safe_hex = sanitize_hexcolor(wing_colors[1], rgb(prefs.r_wing, prefs.g_wing, prefs.b_wing))
+			prefs.r_wing = hex2num(copytext(safe_hex, 2, 4))
+			prefs.g_wing = hex2num(copytext(safe_hex, 4, 6))
+			prefs.b_wing = hex2num(copytext(safe_hex, 6, 8))
+		if(istext(wing_colors[2]) && length(wing_colors[2]))
+			safe_hex = sanitize_hexcolor(wing_colors[2], rgb(prefs.r_wing2, prefs.g_wing2, prefs.b_wing2))
+			prefs.r_wing2 = hex2num(copytext(safe_hex, 2, 4))
+			prefs.g_wing2 = hex2num(copytext(safe_hex, 4, 6))
+			prefs.b_wing2 = hex2num(copytext(safe_hex, 6, 8))
+		if(istext(wing_colors[3]) && length(wing_colors[3]))
+			safe_hex = sanitize_hexcolor(wing_colors[3], rgb(prefs.r_wing3, prefs.g_wing3, prefs.b_wing3))
+			prefs.r_wing3 = hex2num(copytext(safe_hex, 2, 4))
+			prefs.g_wing3 = hex2num(copytext(safe_hex, 4, 6))
+			prefs.b_wing3 = hex2num(copytext(safe_hex, 6, 8))
+	prefs.sanitize_body_styles()
+	return TRUE
 
 // Log and relay client-side warnings
 /datum/tgui_module/custom_marking_designer/proc/handle_client_warning(mob/user, list/params)
@@ -1171,6 +1914,11 @@ var/global/list/custom_marking_body_definition_cache = null
 			entry["hidden_body_parts"] = hidden_body_parts
 		else
 			entry["hidden_body_parts"] = list()
+		var/list/body_color_excluded_parts = payload["body_color_excluded_parts"]
+		if(islist(body_color_excluded_parts))
+			entry["body_color_excluded_parts"] = body_color_excluded_parts
+		else
+			entry["body_color_excluded_parts"] = list()
 	var/list/custom_parts = build_custom_grid_map(dir, use_stripped_reference)
 	if(islist(custom_parts))
 		entry["custom_parts"] = custom_parts
@@ -1285,6 +2033,7 @@ var/global/list/custom_marking_body_definition_cache = null
 		"r_skin" = prefs.r_skin,
 		"g_skin" = prefs.g_skin,
 		"b_skin" = prefs.b_skin,
+		"eye_color" = list(prefs.r_eyes, prefs.g_eyes, prefs.b_eyes),
 		"synth_color" = prefs.synth_color,
 		"r_synth" = prefs.r_synth,
 		"g_synth" = prefs.g_synth,
@@ -1322,6 +2071,7 @@ var/global/list/custom_marking_body_definition_cache = null
 		"equip_preview_mask" = prefs.equip_preview_mob,
 		"gear_loadout" = prefs.gear?.Copy(),
 		"player_alt_titles" = prefs.player_alt_titles?.Copy(),
+		"custom_marking_id" = mark?.id,
 		"body_markings" = get_body_marking_cache_signature()
 	)
 	if(islist(prefs.ear_secondary_colors))
@@ -1397,18 +2147,46 @@ var/global/list/custom_marking_body_definition_cache = null
 	var/list/cache = use_stripped_reference ? body_reference_payload_cache : reference_payload_cache
 	var/cache_signature = use_stripped_reference ? body_reference_cache_signature : reference_cache_signature
 	var/mannequin_signature = use_stripped_reference ? body_reference_mannequin_signature : reference_mannequin_signature
-	if(cache_signature != target_signature || !islist(cache))
+	var/list/cache_map = null
+	var/list/mannequin_signature_map = null
+	if(use_stripped_reference)
+		cache_map = islist(body_reference_payload_cache) ? body_reference_payload_cache : list()
+		cache = islist(cache_map[target_signature]) ? cache_map[target_signature] : null
 		cache_signature = target_signature
-		cache = list()
-		if(!use_stripped_reference && prefs)
-			prefs.custom_marking_reference_signature = cache_signature
-			prefs.custom_marking_reference_payload_cache = cache
-		updated = TRUE
-	else if(!use_stripped_reference && prefs)
-		if(prefs.custom_marking_reference_payload_cache != cache)
-			prefs.custom_marking_reference_payload_cache = cache
-		if(prefs.custom_marking_reference_signature != cache_signature)
-			prefs.custom_marking_reference_signature = cache_signature
+		mannequin_signature_map = islist(body_reference_mannequin_signature) ? body_reference_mannequin_signature : list()
+		if(istext(body_reference_mannequin_signature) && !mannequin_signature_map.len)
+			mannequin_signature_map[target_signature] = body_reference_mannequin_signature
+		mannequin_signature = mannequin_signature_map[target_signature]
+		if(!islist(cache))
+			var/legacy_key = reference_payload_key(NORTH, width, height)
+			if(islist(cache_map[legacy_key]))
+				cache = cache_map
+				cache_map = list()
+				cache_map[target_signature] = cache
+			else
+				cache = list()
+				cache_map[target_signature] = cache
+				updated = TRUE
+		body_reference_payload_cache = cache_map
+		body_reference_cache_signature = cache_signature
+		body_reference_mannequin_signature = mannequin_signature_map
+		if(prefs)
+			prefs.custom_marking_body_reference_payload_cache = cache_map
+			prefs.custom_marking_body_reference_signature = cache_signature
+			prefs.custom_marking_body_reference_mannequin_signature = mannequin_signature_map
+	else
+		if(cache_signature != target_signature || !islist(cache))
+			cache_signature = target_signature
+			cache = list()
+			if(prefs)
+				prefs.custom_marking_reference_signature = cache_signature
+				prefs.custom_marking_reference_payload_cache = cache
+			updated = TRUE
+		else if(prefs)
+			if(prefs.custom_marking_reference_payload_cache != cache)
+				prefs.custom_marking_reference_payload_cache = cache
+			if(prefs.custom_marking_reference_signature != cache_signature)
+				prefs.custom_marking_reference_signature = cache_signature
 	var/list/dirs = direction_order || list(NORTH, SOUTH, EAST, WEST)
 	var/list/missing = list()
 	for(var/dir in dirs)
@@ -1418,9 +2196,19 @@ var/global/list/custom_marking_body_definition_cache = null
 	var/mob/living/carbon/human/dummy/mannequin/mannequin = get_reference_mannequin()
 	if(!mannequin)
 		if(use_stripped_reference)
-			body_reference_payload_cache = cache
+			if(!islist(cache_map))
+				cache_map = list()
+			cache_map[target_signature] = cache
+			if(!islist(mannequin_signature_map))
+				mannequin_signature_map = list()
+			mannequin_signature_map[target_signature] = mannequin_signature
+			body_reference_payload_cache = cache_map
 			body_reference_cache_signature = cache_signature
-			body_reference_mannequin_signature = mannequin_signature
+			body_reference_mannequin_signature = mannequin_signature_map
+			if(prefs)
+				prefs.custom_marking_body_reference_payload_cache = cache_map
+				prefs.custom_marking_body_reference_signature = cache_signature
+				prefs.custom_marking_body_reference_mannequin_signature = mannequin_signature_map
 			body_reference_build_in_progress = FALSE
 			custom_marking_end_manual_yield(yield_context)
 			process_pending_body_reference_build()
@@ -1439,9 +2227,19 @@ var/global/list/custom_marking_body_definition_cache = null
 	if(!missing.len)
 		mannequin.ignore_sprite_accessory_body_hide = original_ignore_hide
 		if(use_stripped_reference)
-			body_reference_payload_cache = cache
+			if(!islist(cache_map))
+				cache_map = list()
+			cache_map[target_signature] = cache
+			if(!islist(mannequin_signature_map))
+				mannequin_signature_map = list()
+			mannequin_signature_map[target_signature] = mannequin_signature
+			body_reference_payload_cache = cache_map
 			body_reference_cache_signature = cache_signature
-			body_reference_mannequin_signature = mannequin_signature
+			body_reference_mannequin_signature = mannequin_signature_map
+			if(prefs)
+				prefs.custom_marking_body_reference_payload_cache = cache_map
+				prefs.custom_marking_body_reference_signature = cache_signature
+				prefs.custom_marking_body_reference_mannequin_signature = mannequin_signature_map
 			body_reference_build_in_progress = FALSE
 			custom_marking_end_manual_yield(yield_context)
 			process_pending_body_reference_build()
@@ -1476,8 +2274,18 @@ var/global/list/custom_marking_body_definition_cache = null
 	if(mannequin_signature != target_signature)
 		copy_preferences_to_mannequin_without_marking(mannequin)
 		mannequin_signature = target_signature
-		if(!use_stripped_reference && prefs)
+		if(use_stripped_reference)
+			if(!islist(mannequin_signature_map))
+				mannequin_signature_map = list()
+			mannequin_signature_map[target_signature] = mannequin_signature
+			body_reference_mannequin_signature = mannequin_signature_map
+			if(prefs)
+				prefs.custom_marking_body_reference_mannequin_signature = mannequin_signature_map
+		else if(prefs)
 			prefs.custom_marking_reference_mannequin_signature = mannequin_signature
+	strip_custom_marking_from_mannequin(mannequin)
+	var/list/original_body_markings = prefs?.body_markings
+	var/list/pruned_body_markings = prune_custom_body_markings(original_body_markings)
 	mannequin.delete_inventory(TRUE)
 	if(islist(mannequin.all_underwear))
 		mannequin.all_underwear.Cut()
@@ -1498,6 +2306,7 @@ var/global/list/custom_marking_body_definition_cache = null
 	mannequin.update_wing_showing()
 	mannequin.ImmediateOverlayUpdate()
 	clear_mannequin_preview_overlays(mannequin)
+	var/list/payloads_by_dir = list()
 	for(var/dir in dirs)
 		if(!(dir in missing))
 			continue
@@ -1505,37 +2314,67 @@ var/global/list/custom_marking_body_definition_cache = null
 		mannequin.set_dir(dir)
 		mannequin.ImmediateOverlayUpdate()
 		var/list/payload = build_reference_payload_internal(mannequin, dir, width, height)
-		if(islist(payload) && prefs && islist(gear_overlay_layers) && gear_overlay_layers.len)
-			prefs.dress_preview_mob(mannequin, TRUE, EQUIP_PREVIEW_JOB)
-			mannequin.set_dir(dir)
-			mannequin.ImmediateOverlayUpdate()
-			payload["job_overlay_assets"] = build_overlay_assets_for_layers(mannequin, dir, width, height, gear_overlay_layers)
-			mannequin.delete_inventory(TRUE)
-			clear_mannequin_preview_overlays(mannequin)
-			mannequin.ImmediateOverlayUpdate()
-			prefs.dress_preview_mob(mannequin, TRUE, EQUIP_PREVIEW_LOADOUT)
-			mannequin.set_dir(dir)
-			mannequin.ImmediateOverlayUpdate()
-			payload["loadout_overlay_assets"] = build_overlay_assets_for_layers(mannequin, dir, width, height, gear_overlay_layers)
-			mannequin.delete_inventory(TRUE)
-			clear_mannequin_preview_overlays(mannequin)
-			mannequin.ImmediateOverlayUpdate()
 		if(islist(payload))
+			payloads_by_dir["[dir]"] = payload
 			if(!islist(cache))
 				cache = list()
 			var/key = reference_payload_key(dir, width, height)
 			if(key)
 				cache[key] = payload
 			updated = TRUE
+	if(payloads_by_dir.len && prefs && islist(gear_overlay_layers) && gear_overlay_layers.len)
+		if(pruned_body_markings)
+			prefs.body_markings = pruned_body_markings
+		var/list/tail_override = apply_preview_tail_override(mannequin)
+		prefs.dress_preview_mob(mannequin, TRUE, EQUIP_PREVIEW_JOB)
+		for(var/dir_key in payloads_by_dir)
+			CUSTOM_MARKING_CHECK_TICK
+			var/dir = text2num(dir_key)
+			if(!dir)
+				continue
+			var/list/payload = payloads_by_dir[dir_key]
+			mannequin.set_dir(dir)
+			mannequin.ImmediateOverlayUpdate()
+			payload["job_overlay_assets"] = build_overlay_assets_for_layers(mannequin, dir, width, height, gear_overlay_layers)
+		mannequin.delete_inventory(TRUE)
+		clear_mannequin_preview_overlays(mannequin)
+		mannequin.ImmediateOverlayUpdate()
+		prefs.dress_preview_mob(mannequin, TRUE, EQUIP_PREVIEW_LOADOUT)
+		for(var/dir_key in payloads_by_dir)
+			CUSTOM_MARKING_CHECK_TICK
+			var/dir = text2num(dir_key)
+			if(!dir)
+				continue
+			var/list/payload = payloads_by_dir[dir_key]
+			mannequin.set_dir(dir)
+			mannequin.ImmediateOverlayUpdate()
+			payload["loadout_overlay_assets"] = build_overlay_assets_for_layers(mannequin, dir, width, height, gear_overlay_layers)
+		mannequin.delete_inventory(TRUE)
+		clear_mannequin_preview_overlays(mannequin)
+		mannequin.ImmediateOverlayUpdate()
+		if(tail_override)
+			restore_preview_tail_override(tail_override)
+		if(pruned_body_markings)
+			prefs.body_markings = original_body_markings
 	mannequin.disable_vore_layers = original_disable
 	mannequin.ignore_sprite_accessory_body_hide = original_ignore_hide
 	mannequin.delete_inventory(TRUE)
 	mannequin.ImmediateOverlayUpdate()
 	custom_marking_end_manual_yield(yield_context)
 	if(use_stripped_reference)
-		body_reference_payload_cache = cache
+		if(!islist(cache_map))
+			cache_map = list()
+		cache_map[target_signature] = cache
+		if(!islist(mannequin_signature_map))
+			mannequin_signature_map = list()
+		mannequin_signature_map[target_signature] = mannequin_signature
+		body_reference_payload_cache = cache_map
 		body_reference_cache_signature = cache_signature
-		body_reference_mannequin_signature = mannequin_signature
+		body_reference_mannequin_signature = mannequin_signature_map
+		if(prefs)
+			prefs.custom_marking_body_reference_payload_cache = cache_map
+			prefs.custom_marking_body_reference_signature = cache_signature
+			prefs.custom_marking_body_reference_mannequin_signature = mannequin_signature_map
 		body_reference_build_in_progress = FALSE
 		process_pending_body_reference_build()
 	else
@@ -1552,16 +2391,121 @@ var/global/list/custom_marking_body_definition_cache = null
 	if(!prefs || !mannequin)
 		return
 	var/list/original_body_markings = prefs.body_markings
-	var/list/temp_body_markings = null
-	var/style_name = mark?.get_style_name()
-	if(istext(style_name) && length(style_name) && islist(original_body_markings) && (style_name in original_body_markings))
-		temp_body_markings = original_body_markings.Copy()
-		temp_body_markings -= style_name
+	var/list/temp_body_markings = prune_custom_body_markings(original_body_markings)
+	if(temp_body_markings)
 		prefs.body_markings = temp_body_markings
 	prefs.copy_to(mannequin)
 	if(temp_body_markings)
 		prefs.body_markings = original_body_markings
 	ensure_default_tail_style(mannequin)
+
+// Remove the edited custom marking from a mannequin before baking previews (Lira, December 2025)
+/datum/tgui_module/custom_marking_designer/proc/strip_custom_marking_from_mannequin(mob/living/carbon/human/dummy/mannequin/mannequin)
+	if(!mannequin || !mark)
+		return FALSE
+	var/style_name = mark.get_style_name()
+	var/removed = FALSE
+	if(islist(mannequin.organs))
+		for(var/obj/item/organ/external/O in mannequin.organs)
+			if(!istype(O))
+				continue
+			if(!islist(O.markings) || !O.markings.len)
+				continue
+			var/list/mark_keys = O.markings.Copy()
+			for(var/key in mark_keys)
+				var/remove_entry = FALSE
+				if(istext(style_name) && length(style_name) && key == style_name)
+					remove_entry = TRUE
+				else
+					var/list/mark_data = O.markings[key]
+					var/datum/sprite_accessory/marking/mark_style = mark_data?["datum"]
+					if(istype(mark_style, /datum/sprite_accessory/marking/custom))
+						remove_entry = TRUE
+					else if(!mark_style && findtext(key, " (Custom "))
+						remove_entry = TRUE
+				if(remove_entry)
+					O.markings -= key
+					removed = TRUE
+	if(removed && isnum(mannequin.markings_len) && mannequin.markings_len > 0)
+		mannequin.markings_len = max(mannequin.markings_len - 1, 0)
+	return removed
+
+// Return a copy of body_markings without custom entries (Lira, December 2025)
+/datum/tgui_module/custom_marking_designer/proc/prune_custom_body_markings(list/original)
+	if(!islist(original) || !original.len)
+		return null
+	var/style_name = mark?.get_style_name()
+	var/list/pruned = original.Copy()
+	var/list/remove_keys = list()
+	for(var/key in pruned)
+		if(!istext(key) || key == "color")
+			continue
+		var/datum/sprite_accessory/marking/entry_style = body_marking_styles_list?[key]
+		if(!istype(entry_style))
+			entry_style = pruned[key]?["datum"]
+		var/is_custom = istype(entry_style, /datum/sprite_accessory/marking/custom)
+		if(!is_custom && istext(style_name) && key == style_name)
+			is_custom = TRUE
+		if(!is_custom && findtext(key, " (Custom "))
+			is_custom = TRUE
+		if(is_custom)
+			remove_keys += key
+	if(!remove_keys.len)
+		return null
+	for(var/key in remove_keys)
+		pruned -= key
+	return pruned
+
+// Temporarily apply mannequin tail defaults to prefs while dressing gear previews (Lira, December 2025)
+/datum/tgui_module/custom_marking_designer/proc/apply_preview_tail_override(mob/living/carbon/human/dummy/mannequin/mannequin)
+	if(!prefs || !mannequin)
+		return null
+	if(istext(prefs.tail_style) && length(prefs.tail_style))
+		return null
+	var/datum/sprite_accessory/tail/style = mannequin.tail_style
+	if(!istype(style))
+		return null
+	var/style_name = style.name
+	if(!istext(style_name) || !length(style_name))
+		return null
+	var/list/override = list(
+		"tail_style" = prefs.tail_style,
+		"r_tail" = prefs.r_tail,
+		"g_tail" = prefs.g_tail,
+		"b_tail" = prefs.b_tail,
+		"r_tail2" = prefs.r_tail2,
+		"g_tail2" = prefs.g_tail2,
+		"b_tail2" = prefs.b_tail2,
+		"r_tail3" = prefs.r_tail3,
+		"g_tail3" = prefs.g_tail3,
+		"b_tail3" = prefs.b_tail3
+	)
+	prefs.tail_style = style_name
+	prefs.r_tail = mannequin.r_tail
+	prefs.g_tail = mannequin.g_tail
+	prefs.b_tail = mannequin.b_tail
+	prefs.r_tail2 = mannequin.r_tail2
+	prefs.g_tail2 = mannequin.g_tail2
+	prefs.b_tail2 = mannequin.b_tail2
+	prefs.r_tail3 = mannequin.r_tail3
+	prefs.g_tail3 = mannequin.g_tail3
+	prefs.b_tail3 = mannequin.b_tail3
+	return override
+
+// Restore prefs tail fields after a temporary override (Lira, December 2025)
+/datum/tgui_module/custom_marking_designer/proc/restore_preview_tail_override(list/override)
+	if(!prefs || !islist(override))
+		return
+	prefs.tail_style = override["tail_style"]
+	prefs.r_tail = override["r_tail"]
+	prefs.g_tail = override["g_tail"]
+	prefs.b_tail = override["b_tail"]
+	prefs.r_tail2 = override["r_tail2"]
+	prefs.g_tail2 = override["g_tail2"]
+	prefs.b_tail2 = override["b_tail2"]
+	prefs.r_tail3 = override["r_tail3"]
+	prefs.g_tail3 = override["g_tail3"]
+	prefs.b_tail3 = override["b_tail3"]
 
 // Dictionary of tail styles to use with interface
 /datum/tgui_module/custom_marking_designer/proc/ensure_default_tail_style(mob/living/carbon/human/dummy/mannequin/mannequin)
@@ -1641,7 +2585,7 @@ var/global/list/custom_marking_body_definition_cache = null
 			CUSTOM_MARKING_CHECK_TICK
 			if(!istype(O))
 				continue
-			if(!O.is_hidden_by_markings())
+			if(!(O.is_hidden_by_markings() || O.is_hidden_by_sprite_accessory()))
 				continue
 			var/hidden_normalized = null
 			if(istext(O.organ_tag) && length(O.organ_tag))
@@ -1666,16 +2610,22 @@ var/global/list/custom_marking_body_definition_cache = null
 				CUSTOM_MARKING_CHECK_TICK
 				if(!istype(overlay_icon, /icon))
 					continue
+				var/overlay_slot = get_preview_character_overlay_slot(i)
 				var/is_large_overlay = (overlay_icon.Width() > CUSTOM_MARKING_DEFAULT_WIDTH) || (overlay_icon.Height() > CUSTOM_MARKING_DEFAULT_HEIGHT)
 				if(is_large_overlay && (width > CUSTOM_MARKING_DEFAULT_WIDTH || height > CUSTOM_MARKING_DEFAULT_HEIGHT))
-					offset_icon_shift(overlay_icon, 8, 0)
+					var/shift_delta = 8
+					if(overlay_slot == "wing_lower" || overlay_slot == "wing_upper")
+						var/list/icon_shift = get_icon_shift(overlay_icon)
+						var/raw_shift_x = icon_shift?["x"]
+						if(isnum(raw_shift_x) && raw_shift_x < 0)
+							shift_delta = max(shift_delta, round(abs(raw_shift_x) / 2))
+					offset_icon_shift(overlay_icon, shift_delta, 0)
 				var/list/overlay_asset = build_icon_asset(overlay_icon)
 				if(islist(overlay_asset))
 					var/list/overlay_entry = list(
 						"asset" = overlay_asset,
 						"layer" = i
 					)
-					var/overlay_slot = get_preview_character_overlay_slot(i)
 					if(overlay_slot)
 						overlay_entry["slot"] = overlay_slot
 					overlay_assets += list(overlay_entry)
@@ -1684,6 +2634,7 @@ var/global/list/custom_marking_body_definition_cache = null
 	var/list/part_icons = list()
 	var/list/part_marking_icons = list()
 	var/list/part_order = list()
+	var/list/body_color_excluded_parts = list()
 	var/normalized
 	var/icon/directional_icon
 	if(islist(mannequin.organs))
@@ -1706,6 +2657,13 @@ var/global/list/custom_marking_body_definition_cache = null
 					digitigrade = O.owner.digitigrade
 				else if(O.dna)
 					digitigrade = O.dna.digitigrade
+			if(O.robotic >= ORGAN_ROBOT)
+				var/datum/robolimb/franchise = null
+				if(istext(O.model) && length(O.model))
+					franchise = all_robolimbs?[O.model]
+				if(!(franchise && (franchise.skin_tone || franchise.skin_color)))
+					if(!(normalized in body_color_excluded_parts))
+						body_color_excluded_parts += normalized
 			directional_icon = get_directional_part_icon(O, dir, check_digi ? digitigrade : FALSE, TRUE)
 			if(!isicon(directional_icon))
 				continue
@@ -1785,7 +2743,8 @@ var/global/list/custom_marking_body_definition_cache = null
 		"part_assets" = part_assets,
 		"part_marking_assets" = part_marking_assets,
 		"part_order" = part_order,
-		"hidden_body_parts" = hidden_body_parts
+		"hidden_body_parts" = hidden_body_parts,
+		"body_color_excluded_parts" = body_color_excluded_parts
 	)
 
 // Build overlay assets restricted to a whitelist of layers (Lira, December 2025)
@@ -1899,7 +2858,11 @@ var/global/list/custom_marking_body_definition_cache = null
 	if(isnull(dir))
 		dir = active_dir || NORTH
 	ensure_reference_payload_bundle(width, height, use_stripped_reference)
-	var/list/cache = use_stripped_reference ? body_reference_payload_cache : reference_payload_cache
+	var/list/cache = reference_payload_cache
+	if(use_stripped_reference)
+		var/cache_signature = get_reference_cache_signature(width, height)
+		var/list/cache_map = islist(body_reference_payload_cache) ? body_reference_payload_cache : null
+		cache = islist(cache_map) ? cache_map[cache_signature] : null
 	return cache?[reference_payload_key(dir, width, height)]
 
 // Return part order from cached reference payload
@@ -1998,7 +2961,7 @@ var/global/list/custom_marking_body_definition_cache = null
 	var/icon/icon_reference = resolve_organ_icon_resource(O, species, human, digitigrade)
 	if(!icon_reference)
 		return TRUE
-	var/list/state_list = icon_states(icon_reference)
+	var/list/state_list = cached_icon_states(icon_reference)
 	if(!islist(state_list) || !state_list.len)
 		return TRUE
 	return state_name in state_list
@@ -2033,16 +2996,26 @@ var/global/list/custom_marking_body_definition_cache = null
 	return "m"
 
 // Basic pixel visibility check for icons
-/datum/tgui_module/custom_marking_designer/proc/icon_has_visible_pixels(icon/source)
+/datum/tgui_module/custom_marking_designer/proc/icon_has_visible_pixels(icon/source, cache_key = null)
 	if(!isicon(source))
 		return FALSE
+	var/use_cache = istext(cache_key) && length(cache_key)
+	if(use_cache)
+		if(!islist(custom_marking_visible_pixel_cache))
+			custom_marking_visible_pixel_cache = list()
+		else if(cache_key in custom_marking_visible_pixel_cache)
+			return !!custom_marking_visible_pixel_cache[cache_key]
 	var/width = max(1, source.Width())
 	var/height = max(1, source.Height())
 	for(var/x = 1 to width)
 		for(var/y = 1 to height)
 			var/pixel = source.GetPixel(x, y)
 			if(istext(pixel) && pixel != "#00000000" && length(pixel))
+				if(use_cache)
+					custom_marking_visible_pixel_cache[cache_key] = TRUE
 				return TRUE
+	if(use_cache)
+		custom_marking_visible_pixel_cache[cache_key] = FALSE
 	return FALSE
 
 // Whitelist specific mannequin overlay indices for previews
@@ -2334,6 +3307,20 @@ var/global/list/custom_marking_body_definition_cache = null
 		return "#FFFFFF"
 	return "#000000"
 
+// Check if a body marking is allowed for the current preferences (Lira, December 2025)
+/datum/tgui_module/custom_marking_designer/proc/is_body_marking_allowed(datum/sprite_accessory/marking/style)
+	if(!istype(style) || !prefs)
+		return TRUE
+	if(!islist(style.species_allowed) || !style.species_allowed.len)
+		return TRUE
+	var/species = prefs.species
+	if(istext(species) && length(species) && (species in style.species_allowed))
+		return TRUE
+	var/custom_base = prefs.custom_base
+	if(istext(custom_base) && length(custom_base) && (custom_base in style.species_allowed))
+		return TRUE
+	return FALSE
+
 // Build icon assets for each covered body part for a marking
 /datum/tgui_module/custom_marking_designer/proc/build_marking_part_assets(datum/sprite_accessory/marking/style, dir, digitigrade = FALSE)
 	if(!istype(style))
@@ -2341,19 +3328,19 @@ var/global/list/custom_marking_body_definition_cache = null
 	var/icon/icon_source = digitigrade && style.digitigrade_icon ? style.digitigrade_icon : style.icon
 	if(!icon_source)
 		return null
+	var/list/state_list = cached_icon_states(icon_source)
 	var/list/result = list()
 	for(var/part in style.body_parts)
 		CUSTOM_MARKING_CHECK_TICK
 		if(!istext(part) || !length(part))
 			continue
 		var/state_name = "[style.icon_state]-[part]"
-		var/list/state_list = icon_states(icon_source)
 		if(!islist(state_list) || !(state_name in state_list))
 			continue
 		var/icon/mark_icon = icon(icon_source, state_name, dir, 1, 0)
 		if(!isicon(mark_icon))
 			continue
-		if(!icon_has_visible_pixels(mark_icon))
+		if(!icon_has_visible_pixels(mark_icon, "[icon_source]|[state_name]|[dir]"))
 			continue
 		var/list/asset = build_icon_asset(mark_icon)
 		if(!islist(asset))
@@ -2362,50 +3349,65 @@ var/global/list/custom_marking_body_definition_cache = null
 	return result
 
 // Build the full set of body marking definitions for the UI
-/datum/tgui_module/custom_marking_designer/proc/build_body_marking_definitions()
-	if(islist(custom_marking_body_definition_cache))
-		return custom_marking_body_definition_cache
-	var/list/definitions = list()
-	for(var/marking_id in body_marking_styles_list)
+/datum/tgui_module/custom_marking_designer/proc/build_body_marking_definitions(skip_filter = FALSE)
+	var/list/base_definitions = islist(custom_marking_body_definition_cache) ? custom_marking_body_definition_cache : null
+	if(!islist(base_definitions))
+		base_definitions = list()
+		for(var/marking_id in body_marking_styles_list)
+			CUSTOM_MARKING_CHECK_TICK
+			var/datum/sprite_accessory/marking/style = body_marking_styles_list[marking_id]
+			if(!istype(style))
+				continue
+			var/list/def = list(
+				"id" = marking_id,
+				"name" = style.get_display_name(),
+				"category" = get_body_marking_category(marking_id),
+				"body_parts" = style.body_parts?.Copy() || list(),
+				"hide_body_parts" = islist(style.hide_body_parts) ? style.hide_body_parts.Copy() : null,
+				"do_colouration" = !!style.do_colouration,
+				"color_blend_mode" = style.color_blend_mode,
+				"render_above_body" = !!style.render_above_body,
+				"render_above_body_parts" = islist(style.render_above_body_parts) ? style.render_above_body_parts.Copy() : null,
+				"digitigrade_acceptance" = style.digitigrade_acceptance,
+				"hide_from_gallery" = !!style.hide_from_marking_gallery,
+				"default_color" = get_body_marking_default_color(style)
+			)
+			var/list/default_entry = prefs?.mass_edit_marking_list(marking_id, TRUE, TRUE, null, TRUE, def["default_color"])
+			if(islist(default_entry))
+				def["default_entry"] = default_entry
+			var/list/dir_assets = list()
+			var/list/dir_digi_assets = list()
+			for(var/dir in list(NORTH, SOUTH, EAST, WEST))
+				CUSTOM_MARKING_CHECK_TICK
+				var/list/assets = build_marking_part_assets(style, dir, FALSE)
+				if(islist(assets) && assets.len)
+					dir_assets["[dir]"] = assets // numeric keys as associative to avoid sparse index runtimes
+				CUSTOM_MARKING_CHECK_TICK
+				var/list/digi_assets = build_marking_part_assets(style, dir, TRUE)
+				if(islist(digi_assets) && digi_assets.len)
+					dir_digi_assets["[dir]"] = digi_assets
+			if(dir_assets.len)
+				def["assets"] = dir_assets
+			if(dir_digi_assets.len)
+				def["digitigrade_assets"] = dir_digi_assets
+			base_definitions += list(def)
+		custom_marking_body_definition_cache = base_definitions
+	if(skip_filter || !prefs)
+		return base_definitions
+	var/list/filtered_definitions = list()
+	for(var/entry in base_definitions)
 		CUSTOM_MARKING_CHECK_TICK
+		var/list/def = entry
+		if(!islist(def))
+			continue
+		var/marking_id = def["id"]
 		var/datum/sprite_accessory/marking/style = body_marking_styles_list[marking_id]
 		if(!istype(style))
 			continue
-		var/list/def = list(
-			"id" = marking_id,
-			"name" = style.get_display_name(),
-			"category" = get_body_marking_category(marking_id),
-			"body_parts" = style.body_parts?.Copy() || list(),
-			"hide_body_parts" = islist(style.hide_body_parts) ? style.hide_body_parts.Copy() : null,
-			"do_colouration" = !!style.do_colouration,
-			"color_blend_mode" = style.color_blend_mode,
-			"render_above_body" = !!style.render_above_body,
-			"render_above_body_parts" = islist(style.render_above_body_parts) ? style.render_above_body_parts.Copy() : null,
-			"digitigrade_acceptance" = style.digitigrade_acceptance,
-			"hide_from_gallery" = !!style.hide_from_marking_gallery,
-			"default_color" = get_body_marking_default_color(style)
-		)
-		var/list/default_entry = prefs?.mass_edit_marking_list(marking_id, TRUE, TRUE, null, TRUE, def["default_color"])
-		if(islist(default_entry))
-			def["default_entry"] = default_entry
-		var/list/dir_assets = list()
-		var/list/dir_digi_assets = list()
-		for(var/dir in list(NORTH, SOUTH, EAST, WEST))
-			CUSTOM_MARKING_CHECK_TICK
-			var/list/assets = build_marking_part_assets(style, dir, FALSE)
-			if(islist(assets) && assets.len)
-				dir_assets["[dir]"] = assets // numeric keys as associative to avoid sparse index runtimes
-			CUSTOM_MARKING_CHECK_TICK
-			var/list/digi_assets = build_marking_part_assets(style, dir, TRUE)
-			if(islist(digi_assets) && digi_assets.len)
-				dir_digi_assets["[dir]"] = digi_assets
-		if(dir_assets.len)
-			def["assets"] = dir_assets
-		if(dir_digi_assets.len)
-			def["digitigrade_assets"] = dir_digi_assets
-		definitions += list(def)
-	custom_marking_body_definition_cache = definitions
-	return definitions
+		if(!is_body_marking_allowed(style))
+			continue
+		filtered_definitions += list(def)
+	return filtered_definitions
 
 // Sanitize an incoming body marking entry from the client
 /datum/tgui_module/custom_marking_designer/proc/sanitize_body_marking_entry(marking_id, datum/sprite_accessory/marking/style, list/incoming)
@@ -2510,6 +3512,8 @@ var/global/list/custom_marking_body_definition_cache = null
 			continue
 		var/datum/sprite_accessory/marking/style = body_marking_styles_list[mark_id]
 		if(!istype(style))
+			continue
+		if(!is_body_marking_allowed(style))
 			continue
 		var/list/sanitized = sanitize_body_marking_entry(mark_id, style, incoming_map[mark_id])
 		if(!islist(sanitized))
