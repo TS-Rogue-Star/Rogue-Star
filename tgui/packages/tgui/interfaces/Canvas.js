@@ -225,6 +225,35 @@ const getCursorForTool = (tool) => {
   return cursor;
 };
 
+const haveOverlayPropsChanged = (prevProps, nextProps) =>
+  prevProps.reference !== nextProps.reference ||
+  prevProps.referenceParts !== nextProps.referenceParts ||
+  prevProps.referenceOpacity !== nextProps.referenceOpacity ||
+  prevProps.referenceOpacityMap !== nextProps.referenceOpacityMap ||
+  prevProps.referenceSignature !== nextProps.referenceSignature ||
+  prevProps.layerParts !== nextProps.layerParts ||
+  prevProps.layerOrder !== nextProps.layerOrder ||
+  prevProps.layerRevision !== nextProps.layerRevision ||
+  prevProps.otherLayerOpacity !== nextProps.otherLayerOpacity ||
+  prevProps.activeLayerKey !== nextProps.activeLayerKey;
+
+const shouldRedrawCanvas = (
+  prevProps,
+  nextProps,
+  shouldRedraw,
+  hoverChanged,
+  overlayPropsChanged
+) =>
+  shouldRedraw ||
+  hoverChanged ||
+  overlayPropsChanged ||
+  prevProps.legacyGridGuideSize !== nextProps.legacyGridGuideSize ||
+  prevProps.tool !== nextProps.tool ||
+  prevProps.size !== nextProps.size ||
+  prevProps.previewColor !== nextProps.previewColor ||
+  prevProps.strokeDrafts !== nextProps.strokeDrafts ||
+  prevProps.strokeDraftSession !== nextProps.strokeDraftSession;
+
 // RS Add End
 
 export class PaintCanvas extends Component {
@@ -370,22 +399,20 @@ export class PaintCanvas extends Component {
 
     const hoverChanged = !!prevState && prevState.hover !== this.state.hover;
 
+    const overlayPropsChanged = haveOverlayPropsChanged(prevProps, this.props);
+
+    if (overlayPropsChanged) {
+      this.overlayCache = null;
+    }
+
     if (
-      shouldRedraw ||
-      hoverChanged ||
-      prevProps.reference !== this.props.reference ||
-      prevProps.referenceParts !== this.props.referenceParts ||
-      prevProps.referenceOpacity !== this.props.referenceOpacity ||
-      prevProps.referenceOpacityMap !== this.props.referenceOpacityMap ||
-      prevProps.layerParts !== this.props.layerParts ||
-      prevProps.layerRevision !== this.props.layerRevision ||
-      prevProps.otherLayerOpacity !== this.props.otherLayerOpacity ||
-      prevProps.legacyGridGuideSize !== this.props.legacyGridGuideSize ||
-      prevProps.tool !== this.props.tool ||
-      prevProps.size !== this.props.size ||
-      prevProps.previewColor !== this.props.previewColor ||
-      prevProps.strokeDrafts !== this.props.strokeDrafts ||
-      prevProps.strokeDraftSession !== this.props.strokeDraftSession
+      shouldRedrawCanvas(
+        prevProps,
+        this.props,
+        shouldRedraw,
+        hoverChanged,
+        overlayPropsChanged
+      )
     ) {
       // RS Add End
       this.drawCanvas(this.props);
@@ -566,6 +593,7 @@ export class PaintCanvas extends Component {
     const activeLayerKey = propSource.activeLayerKey || null;
     const otherLayerOpacity = propSource.otherLayerOpacity;
     const referenceOpacityMap = propSource.referenceOpacityMap || null;
+    const referenceSignature = propSource.referenceSignature || '';
     const referencePartKeys = referenceParts ? Object.keys(referenceParts) : [];
     const fallbackReference = resolveFallbackReference(
       referenceParts,
@@ -619,6 +647,7 @@ export class PaintCanvas extends Component {
       referenceParts,
       referencePartKeys,
       referenceOpacityMap,
+      referenceSignature,
       resolvedGenericOpacity,
       layerParts,
       layerOrder,
@@ -644,6 +673,10 @@ export class PaintCanvas extends Component {
       if (!element) continue; // RS Add: Custom marking support (Lira, September 2025)
       for (let y = 0; y < element.length; y++) {
         const color = element[y];
+        // RS Add: Fix blank canvases (Lira, December 2025)
+        if (typeof color !== 'string' || !color.length) {
+          continue;
+        }
         ctx.fillStyle = color;
         ctx.fillRect(x, y, 1, 1);
       }
@@ -822,6 +855,7 @@ export class PaintCanvas extends Component {
       referenceParts,
       referencePartKeys,
       referenceOpacityMap,
+      referenceSignature,
       resolvedGenericOpacity,
       layerParts,
       layerOrder,
@@ -836,6 +870,7 @@ export class PaintCanvas extends Component {
       activeLayerKey || '',
       Math.round(normalizedOpacity * 1000) / 1000,
       opacitySignature,
+      referenceSignature || '',
       Math.round(resolvedGenericOpacity * 1000) / 1000,
       canvas.width,
       canvas.height,
@@ -1669,7 +1704,12 @@ const buildLayerOrder = (prioritizedOrder, referenceKeys, layerParts) => {
   };
 
   push('generic');
-  const preferredOverlayKeys = ['gear_job', 'gear_loadout', 'overlay'];
+  const preferredOverlayKeys = [
+    'markings',
+    'gear_job',
+    'gear_loadout',
+    'overlay',
+  ];
   for (const key of preferredOverlayKeys) {
     if (
       (Array.isArray(referenceKeys) && referenceKeys.includes(key)) ||

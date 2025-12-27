@@ -46,7 +46,7 @@ export type DraftStrokePayload = {
 export type CustomMarkingDesignerData = {
   marking_id?: string;
   mark_name?: string;
-  initial_tab?: 'custom' | 'body';
+  initial_tab?: 'custom' | 'body' | 'basic';
   allow_custom_tab?: boolean;
   custom_marking_enable_disclaimer?: string;
   active_dir: string;
@@ -78,6 +78,7 @@ export type CustomMarkingDesignerData = {
   ui_locked?: boolean;
   preview_sources?: PreviewDirectionSource[];
   preview_revision?: number;
+  preview_refresh_token?: number;
   reference_build_in_progress?: boolean;
   part_replacements?: Record<string, boolean>;
   part_render_priority?: Record<string, boolean>;
@@ -90,6 +91,7 @@ export type CustomMarkingDesignerData = {
   show_job_gear?: boolean;
   show_loadout_gear?: boolean;
   body_markings_payload?: BodyMarkingsPayload | null;
+  basic_appearance_payload?: BasicAppearancePayload | null;
 };
 
 export type CustomColorSlotsState = Array<string | null>;
@@ -157,6 +159,7 @@ export type BodyMarkingsPayload = {
   body_markings: Record<string, BodyMarkingEntry>;
   order: string[];
   digitigrade?: boolean;
+  preview_only?: boolean;
   preview_sources?: PreviewDirectionSource[];
   preview_revision?: number;
   preview_width?: number;
@@ -169,6 +172,83 @@ export type BodyMarkingsSavedState = {
   order: string[];
   markings: Record<string, BodyMarkingEntry>;
   selectedId: string | null;
+};
+
+export type BasicAppearanceAccessoryDefinition = {
+  id: string;
+  name: string;
+  do_colouration?: boolean;
+  color_blend_mode?: number;
+  channel_count?: number;
+  assets?: Record<number, (IconAssetPayload | null)[]>;
+  hide_body_parts?: string[] | null;
+  lower_layer_dirs?: number[];
+  multi_dir?: boolean;
+  wing_offset?: number;
+  back_assets?: Record<number, (IconAssetPayload | null)[]>;
+};
+
+export type BasicAppearanceGradientDefinition = {
+  id: string;
+  name: string;
+  icon_state?: string | null;
+  assets?: Record<number, IconAssetPayload>;
+};
+
+export type BasicAppearancePayload = {
+  hair_styles?: BasicAppearanceAccessoryDefinition[];
+  ear_styles?: BasicAppearanceAccessoryDefinition[];
+  tail_styles?: BasicAppearanceAccessoryDefinition[];
+  wing_styles?: BasicAppearanceAccessoryDefinition[];
+  gradient_styles?: BasicAppearanceGradientDefinition[];
+  facial_hair_styles?: BasicAppearanceAccessoryDefinition[];
+  hair_style?: string | null;
+  hair_color?: string | null;
+  hair_gradient_style?: string | null;
+  hair_gradient_color?: string | null;
+  facial_hair_style?: string | null;
+  facial_hair_color?: string | null;
+  ear_style?: string | null;
+  ear_colors?: (string | null)[];
+  horn_style?: string | null;
+  horn_colors?: (string | null)[];
+  tail_style?: string | null;
+  tail_colors?: (string | null)[];
+  wing_style?: string | null;
+  wing_colors?: (string | null)[];
+  eye_color?: string | null;
+  body_color?: string | null;
+  digitigrade?: boolean;
+  digitigrade_allowed?: boolean;
+  preview_only?: boolean;
+  preview_sources_alt?: PreviewDirectionSource[];
+  preview_revision_alt?: number;
+  preview_sources?: PreviewDirectionSource[];
+  preview_revision?: number;
+  preview_width?: number;
+  preview_height?: number;
+  canvas_backgrounds?: CanvasBackgroundOption[];
+  default_canvas_background?: string;
+};
+
+export type BasicAppearanceState = {
+  hair_style: string | null;
+  hair_color: string | null;
+  hair_gradient_style: string | null;
+  hair_gradient_color: string | null;
+  facial_hair_style: string | null;
+  facial_hair_color: string | null;
+  ear_style: string | null;
+  ear_colors: (string | null)[];
+  horn_style: string | null;
+  horn_colors: (string | null)[];
+  tail_style: string | null;
+  tail_colors: (string | null)[];
+  wing_style: string | null;
+  wing_colors: (string | null)[];
+  eye_color: string | null;
+  body_color: string | null;
+  digitigrade: boolean;
 };
 
 export type DirectionCanvasSourceOptions = {
@@ -189,11 +269,14 @@ export type DirectionCanvasSourceOptions = {
   showLoadoutGear?: boolean;
   partPaintPresenceMap?: Record<string, boolean>;
   partReplacementMap?: Record<string, boolean>;
+  referencePartMarkingGrids?: Record<string, string[][]> | null;
+  hiddenBodyPartsOverride?: string[] | null;
 };
 
 export type DirectionCanvasSourceResult = {
   referenceParts: Record<string, string[][]> | null;
   referenceGrid: string[][] | null;
+  referenceSignature?: string;
   serverDiffPayload: DiffEntry[] | null;
   serverDiffSeq?: number;
   serverDiffStroke?: string | number;
@@ -208,4 +291,17 @@ export type ColorPickerInitOptions = {
   previewRevision: number;
   colorSignature: string | null;
   setColorSignature: (signature: string | null) => void;
+};
+
+export type CustomPreviewOverride = {
+  custom_parts?: Record<string, string[][]>;
+  part_order?: string[];
+};
+
+export type CustomPreviewOverrideMap = Record<number, CustomPreviewOverride>;
+
+export type PendingPreviewOverrides = {
+  overrides: CustomPreviewOverrideMap;
+  pendingBody: boolean;
+  pendingBasic: boolean;
 };

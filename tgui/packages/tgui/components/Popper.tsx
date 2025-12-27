@@ -1,6 +1,7 @@
 import { createPopper } from '@popperjs/core';
 import { ArgumentsOf } from 'common/types';
 import { Component, findDOMfromVNode, InfernoNode, render } from 'inferno';
+import { tguiScalePopperModifier } from '../utils/uiScale'; // RS Add: Scaling tool (Lira, December 2025)
 
 type PopperProps = {
   readonly popperContent: InfernoNode;
@@ -47,12 +48,17 @@ export class Popper extends Component<PopperProps> {
       if (!domNode) {
         return;
       }
+      // RS Edit Start: Scaling tool (Lira, December 2025)
+      const modifiers = [...(options?.modifiers ?? [])];
+      if (!modifiers.some((modifier) => modifier?.name === 'tguiScale')) {
+        modifiers.push(tguiScalePopperModifier);
+      }
 
-      this.popperInstance = createPopper(
-        domNode,
-        this.renderedContent,
-        options
-      );
+      this.popperInstance = createPopper(domNode, this.renderedContent, {
+        ...options,
+        modifiers,
+      });
+      // RS Edit End
     });
   }
 

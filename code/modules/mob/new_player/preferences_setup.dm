@@ -277,12 +277,18 @@
 		custom_marking_reference_signature = null
 		custom_marking_reference_payload_cache = null
 		custom_marking_reference_mannequin_signature = null
+		custom_marking_body_reference_signature = null
+		custom_marking_body_reference_payload_cache = null
+		custom_marking_body_reference_mannequin_signature = null
 
 		// If the designer is open, clear its caches and nudge the UI to rebuild previews.
 		if(custom_marking_designer_ui && !QDELETED(custom_marking_designer_ui))
 			custom_marking_designer_ui.reference_cache_signature = null
 			custom_marking_designer_ui.reference_payload_cache = null
 			custom_marking_designer_ui.reference_mannequin_signature = null
+			custom_marking_designer_ui.body_reference_cache_signature = null
+			custom_marking_designer_ui.body_reference_payload_cache = null
+			custom_marking_designer_ui.body_reference_mannequin_signature = null
 			queue_custom_marking_designer_refresh()
 	// RS Add End
 

@@ -25,6 +25,8 @@ export { ToolBootstrapReset } from './ToolBootstrapReset';
 export type { ToolBootstrapResetProps } from './ToolBootstrapReset';
 export { ToolBootstrapScheduler } from './ToolBootstrapScheduler';
 export { PhantomClickScheduler } from './PhantomClickScheduler';
+export { PayloadPrefetchScheduler } from './PayloadPrefetchScheduler';
+export { PreviewOverrideScheduler } from './PreviewOverrideScheduler';
 export { PaintToolsSection } from './PaintToolsSection';
 export { MarkingInfoSection } from './MarkingInfoSection';
 export { SessionControls } from './SessionControls';

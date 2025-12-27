@@ -34,6 +34,7 @@ export type CanvasSectionProps = Readonly<{
   referenceParts: any;
   currentReferenceOpacity: number;
   resolvedReferenceOpacityMap: Record<string, number>;
+  referenceSignature?: string;
   overlayLayerParts: any;
   overlayLayerOrder: any;
   layerRevision: number;
@@ -70,6 +71,7 @@ export const CanvasSection = ({
   referenceParts,
   currentReferenceOpacity,
   resolvedReferenceOpacityMap,
+  referenceSignature,
   overlayLayerParts,
   overlayLayerOrder,
   layerRevision,
@@ -189,6 +191,7 @@ export const CanvasSection = ({
               value={uiCanvasGrid || []}
               reference={referenceGrid}
               referenceParts={referenceParts}
+              referenceSignature={referenceSignature}
               referenceOpacity={
                 referenceGrid ? currentReferenceOpacity : undefined
               }
