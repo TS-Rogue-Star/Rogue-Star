@@ -1,6 +1,8 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////
 // Created by Lira for Rogue Star November 2025: Marking info section for custom marking designer //
 // /////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2025: Updated to support 64x64 markings /////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////
 
 import {
   Button,
@@ -15,9 +17,9 @@ import type { BodyPartEntry, DirectionEntry } from '../types';
 import { CHIP_BUTTON_CLASS } from '../constants';
 
 type FadeControlProps = {
-  tooltip: string;
-  value: number;
-  onChange: (value: number) => void;
+  readonly tooltip: string;
+  readonly value: number;
+  readonly onChange: (value: number) => void;
 };
 
 const FadeControl = ({ tooltip, value, onChange }: FadeControlProps) => (
@@ -38,20 +40,24 @@ const FadeControl = ({ tooltip, value, onChange }: FadeControlProps) => (
 );
 
 type MarkingInfoSectionProps = {
-  bodyParts: BodyPartEntry[];
-  directions: DirectionEntry[];
-  currentDirectionKey: number;
-  setDirection: (dir: number) => void;
-  activePartKey: string;
-  activePartLabel: string;
-  resolvedPartReplacementMap: Record<string, boolean>;
-  resolvePartLayeringState: (partKey: string | null | undefined) => boolean;
-  togglePartLayerPriority: (partKey?: string) => void;
-  togglePartReplacement: (partKey?: string) => void;
-  setBodyPart: (id: string) => void;
-  uiLocked: boolean;
-  getReferenceOpacityForPart: (partId: string) => number;
-  setReferenceOpacityForPart: (partId: string, value: number) => void;
+  readonly bodyParts: BodyPartEntry[];
+  readonly directions: DirectionEntry[];
+  readonly currentDirectionKey: number;
+  readonly setDirection: (dir: number) => void;
+  readonly activePartKey: string;
+  readonly activePartLabel: string;
+  readonly resolvedPartReplacementMap: Record<string, boolean>;
+  readonly partPaintPresenceMap: Record<string, boolean>;
+  readonly resolvePartLayeringState: (
+    partKey: string | null | undefined
+  ) => boolean;
+  readonly togglePartLayerPriority: (partKey?: string) => void;
+  readonly togglePartReplacement: (partKey?: string) => void;
+  readonly resolvedPartCanvasSizeMap: Record<string, boolean>;
+  readonly setBodyPart: (id: string) => void;
+  readonly uiLocked: boolean;
+  readonly getReferenceOpacityForPart: (partId: string) => number;
+  readonly setReferenceOpacityForPart: (partId: string, value: number) => void;
 };
 
 export const MarkingInfoSection = ({
@@ -62,9 +68,11 @@ export const MarkingInfoSection = ({
   activePartKey,
   activePartLabel,
   resolvedPartReplacementMap,
+  partPaintPresenceMap,
   resolvePartLayeringState,
   togglePartLayerPriority,
   togglePartReplacement,
+  resolvedPartCanvasSizeMap,
   setBodyPart,
   uiLocked,
   getReferenceOpacityForPart,
@@ -79,15 +87,27 @@ export const MarkingInfoSection = ({
             const canToggleExtras = part.id !== GENERIC_PART_KEY;
             const partLayeringOnTop = resolvePartLayeringState(part.id);
             const isPartReplaced = !!resolvedPartReplacementMap[part.id];
+            const usesLargeCanvas = !!resolvedPartCanvasSizeMap[part.id];
+            const hasPaint = !!partPaintPresenceMap[part.id];
+            const glowClass = usesLargeCanvas
+              ? ' RogueStar__chip--goldGlow'
+              : hasPaint
+                ? ' RogueStar__chip--whiteGlow'
+                : '';
             return (
               <Flex.Item key={part.id} basis="15%">
                 <Flex align="center" gap={0.5}>
                   <Flex.Item grow>
                     <Button
-                      className={CHIP_BUTTON_CLASS}
+                      className={`${CHIP_BUTTON_CLASS}${glowClass}`}
                       fluid
                       selected={isActive}
                       disabled={uiLocked}
+                      tooltip={
+                        usesLargeCanvas
+                          ? 'Automatically switched to a 64x64 canvas for this part.'
+                          : undefined
+                      }
                       onClick={() => setBodyPart(part.id)}>
                       {part.label}
                     </Button>
@@ -99,7 +119,7 @@ export const MarkingInfoSection = ({
                           className={CHIP_BUTTON_CLASS}
                           icon="layer-group"
                           selected={partLayeringOnTop}
-                          disabled={uiLocked}
+                          disabled={uiLocked || usesLargeCanvas}
                           onClick={() => togglePartLayerPriority(part.id)}
                         />
                       </Tooltip>

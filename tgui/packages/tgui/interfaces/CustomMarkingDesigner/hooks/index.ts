@@ -1,0 +1,13 @@
+// //////////////////////////////////////////////////////////////////////////////////////////////
+// Created by Lira for Rogue Star November 2025: Hook exports for custom marking designer ///////
+// //////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star December 2025: Updated to support new body marking selector ///
+// //////////////////////////////////////////////////////////////////////////////////////////////
+
+export * from './brushColor';
+export * from './syncedDirection';
+export * from './canvasBackground';
+export * from './designerPreview';
+export * from './partFlagState';
+export * from './toolState';
+export * from './canvasDisplay';

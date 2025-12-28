@@ -111,9 +111,12 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 		var/datum/sprite_accessory/instance = style_list[path]
 		if(!istype(instance))
 			continue
+		// RS Add: Remove false entries (Lira, December 2025)
+		if(istext(instance.name) && findtext(lowertext(instance.name), "you should not see this"))
+			continue
 		if(instance.ckeys_allowed && (!client || !(client.ckey in instance.ckeys_allowed)))
 			continue
-		if(instance.species_allowed && (!species || !(species in instance.species_allowed)) && (!client || !check_rights(R_ADMIN | R_EVENT | R_FUN, 0, client)) && (!custom_base || !(custom_base in instance.species_allowed))) //VOREStation Edit: Custom Species
+		if(instance.species_allowed && (!species || !(species in instance.species_allowed)) && (!custom_base || !(custom_base in instance.species_allowed))) //VOREStation Edit: Custom Species || RS Edit: Keep admin views consistent (Lira, December 2025)
 			continue
 		.[instance.name] = instance
 
@@ -129,13 +132,25 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 			continue
 		if(instance.ckeys_allowed && (!client || !(client.ckey in instance.ckeys_allowed)))
 			continue
-		if(instance.species_allowed && (!species || !(species in instance.species_allowed)) && (!client || !check_rights(R_ADMIN | R_EVENT | R_FUN, 0, client)) && (!custom_base || !(custom_base in instance.species_allowed))) //VOREStation Edit: Custom Species
+		if(instance.species_allowed && (!species || !(species in instance.species_allowed)) && (!custom_base || !(custom_base in instance.species_allowed))) //VOREStation Edit: Custom Species || RS Edit: Keep admin views consistent (Lira, December 2025)
 			continue
 		return instance.name
 
 /datum/preferences/proc/mass_edit_marking_list(var/marking, var/change_on = TRUE, var/change_color = TRUE, var/marking_value = null, var/on = TRUE, var/color = "#000000")
 	var/datum/sprite_accessory/marking/mark_datum = body_marking_styles_list[marking]
-	var/list/new_marking = marking_value||mark_datum.body_parts
+	// RS Edit Start: New body marking selector support (Lira, December 2025)
+	var/list/new_marking
+	if(islist(marking_value))
+		new_marking = list()
+		for(var/key in marking_value)
+			new_marking[key] = marking_value[key]
+	else if(mark_datum && islist(mark_datum.body_parts))
+		new_marking = list()
+		for(var/key in mark_datum.body_parts)
+			new_marking[key] = mark_datum.body_parts[key]
+	else
+		new_marking = list()
+	// RS Edit End
 	// RS Add Start: Default color (Lira, September 2025)
 	var/default_color = color
 	if(mark_datum && !mark_datum.do_colouration)
@@ -650,6 +665,13 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 	else
 		. += "<br><br>"
 
+	// RS Edit Start: Move code (Lira, December 2025)
+	. += "<b>Allow Synth markings:</b> <a href='?src=\ref[src];synth_markings=1'><b>[pref.synth_markings ? "Yes" : "No"]</b></a><br>"
+	. += "<b>Allow Synth color:</b> <a href='?src=\ref[src];synth_color=1'><b>[pref.synth_color ? "Yes" : "No"]</b></a><br>"
+	if(pref.synth_color)
+		. += "<a href='?src=\ref[src];synth2_color=1'>Change Color</a> [color_square(pref.r_synth, pref.g_synth, pref.b_synth)]"
+	// RS Edit End
+
 	if(LAZYLEN(pref.body_descriptors))
 		. += "<table>"
 		for(var/entry in pref.body_descriptors)
@@ -664,131 +686,7 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 	. += "<br><a href='?src=\ref[src];toggle_animations=1'>[pref.animations_toggle ? "Stop animations" : "Show animations"]</a>"
 	. += "</td></tr></table>"
 
-	. += "<b>Hair</b><br>"
-	if(has_flag(mob_species, HAS_HAIR_COLOR))
-		. += "<a href='?src=\ref[src];hair_color=1'>Change Color</a> [color_square(pref.r_hair, pref.g_hair, pref.b_hair)] "
-	. += " Style: <a href='?src=\ref[src];hair_gallery=1'>[pref.h_style]</a><br>"  //RS Edit: Opens new gallery (Lira, August 2025)
-
-	. += "<b>Gradient</b><br>"
-	. += "<a href='?src=\ref[src];grad_color=1'>Change Color</a> [color_square(pref.r_grad, pref.g_grad, pref.b_grad)] "
-	. += " Style: <a href='?src=\ref[src];grad_gallery=1'>[pref.grad_style]</a><br>"  //RS Edit: Opens new gallery (Lira, August 2025)
-
-	. += "<br><b>Facial</b><br>"
-	if(has_flag(mob_species, HAS_HAIR_COLOR))
-		. += "<a href='?src=\ref[src];facial_color=1'>Change Color</a> [color_square(pref.r_facial, pref.g_facial, pref.b_facial)] "
-	. += " Style: <a href='?src=\ref[src];facial_gallery=1'>[pref.f_style]</a><br>"   //RS Edit: Opens new gallery (Lira, August 2025)
-
-	if(has_flag(mob_species, HAS_EYE_COLOR))
-		. += "<br><b>Eyes</b><br>"
-		. += "<a href='?src=\ref[src];eye_color=1'>Change Color</a> [color_square(pref.r_eyes, pref.g_eyes, pref.b_eyes)]<br>"
-
-	if(has_flag(mob_species, HAS_SKIN_COLOR))
-		. += "<br><b>Body Color</b><br>"
-		. += "<a href='?src=\ref[src];skin_color=1'>Change Color</a> [color_square(pref.r_skin, pref.g_skin, pref.b_skin)]<br>"
-
-	if(mob_species.digi_allowed)
-		. += "<br><b>Digitigrade?:</b> <a href='?src=\ref[src];digitigrade=1'><b>[pref.digitigrade ? "Yes" : "No"]</b></a><br>"
-
-	. += "<h2>Genetics Settings</h2>"
-
-	var/list/ear_styles = pref.get_available_styles(global.ear_styles_list)
-	var/datum/sprite_accessory/ears/ear = ear_styles[pref.ear_style]
-	. += "<b>Ears</b><br>"
-	if(istype(ear))
-		. += " Style: <a href='?src=\ref[src];ears_gallery=1'>[ear.name]</a> <a href='?src=\ref[src];ears_clear=1' style='color:#ffffff;background-color:#cc0000;border-color:#000000;' onmouseover=\"this.style.backgroundColor='#ffffff'; this.style.color='#cc0000';\" onmouseout=\"this.style.backgroundColor='#cc0000'; this.style.color='#ffffff';\">X</a><br>"  //RS Edit: Opens new gallery (Lira, August 2025) || Clear button (Lira, October 2025)
-		if(ear.do_colouration)
-			. += "<a href='?src=\ref[src];ear_color=1'>Change Color</a> [color_square(pref.r_ears, pref.g_ears, pref.b_ears)]<br>"
-		if(ear.extra_overlay)
-			. += "<a href='?src=\ref[src];ear_color2=1'>Change Secondary Color</a> [color_square(pref.r_ears2, pref.g_ears2, pref.b_ears2)]<br>"
-		if(ear.extra_overlay2)
-			. += "<a href='?src=\ref[src];ear_color3=1'>Change Tertiary Color</a> [color_square(pref.r_ears3, pref.g_ears3, pref.b_ears3)]<br>"
-	else
-		. += " Style: <a href='?src=\ref[src];ears_gallery=1'>Select</a><br>" //RS Edit: Opens new gallery (Lira, August 2025)
-
-	var/datum/sprite_accessory/ears/ears_secondary = ear_styles[pref.ear_secondary_style] // RS EDIT START (Port of VS PR#16513 'Adds a second ear slot.')
-	. += "<b>Horns</b><br>"
-	if(istype(ears_secondary))
-		. += " Style: <a href='?src=\ref[src];horns_gallery=1'>[ears_secondary.name]</a> <a href='?src=\ref[src];horns_clear=1' style='color:#ffffff;background-color:#cc0000;border-color:#000000;' onmouseover=\"this.style.backgroundColor='#ffffff'; this.style.color='#cc0000';\" onmouseout=\"this.style.backgroundColor='#cc0000'; this.style.color='#ffffff';\">X</a><br>" //RS Edit: Opens new gallery (Lira, August 2025) || Clear button (Lira, October 2025)
-		for(var/channel in 1 to min(ears_secondary.get_color_channel_count(), length(GLOB.fancy_sprite_accessory_color_channel_names)))
-			. += "<a href='?src=\ref[src];ear_secondary_color=[channel]'>Change [GLOB.fancy_sprite_accessory_color_channel_names[channel]] Color</a> [color_square(hex = LAZYACCESS(pref.ear_secondary_colors, channel) || "#ffffff")]<br>"
-	else
-		. += " Style: <a href='?src=\ref[src];horns_gallery=1'>Select</a><br>"  //RS Edit: Opens new gallery (Lira, August 2025)
-	// RS EDIT END (Port of VS PR#16513 'Adds a second ear slot.')
-
-	var/list/tail_styles = pref.get_available_styles(global.tail_styles_list)
-	var/datum/sprite_accessory/tail/tail = tail_styles[pref.tail_style]
-	. += "<b>Tail</b><br>"
-	if(istype(tail))
-		. += " Style: <a href='?src=\ref[src];tails_gallery=1'>[tail.name]</a> <a href='?src=\ref[src];tail_clear=1' style='color:#ffffff;background-color:#cc0000;border-color:#000000;' onmouseover=\"this.style.backgroundColor='#ffffff'; this.style.color='#cc0000';\" onmouseout=\"this.style.backgroundColor='#cc0000'; this.style.color='#ffffff';\">X</a><br>" //RS Edit: Opens new gallery (Lira, August 2025) || Clear button (Lira, October 2025)
-		if(tail.do_colouration)
-			. += "<a href='?src=\ref[src];tail_color=1'>Change Color</a> [color_square(pref.r_tail, pref.g_tail, pref.b_tail)]<br>"
-		if(tail.extra_overlay)
-			. += "<a href='?src=\ref[src];tail_color2=1'>Change Secondary Color</a> [color_square(pref.r_tail2, pref.g_tail2, pref.b_tail2)]<br>"
-		if(tail.extra_overlay2)
-			. += "<a href='?src=\ref[src];tail_color3=1'>Change Tertiary Color</a> [color_square(pref.r_tail3, pref.g_tail3, pref.b_tail3)]<br>"
-	else
-		. += " Style: <a href='?src=\ref[src];tails_gallery=1'>Select</a><br>" //RS Edit: Opens new gallery (Lira, August 2025)
-
-	var/list/wing_styles = pref.get_available_styles(global.wing_styles_list)
-	var/datum/sprite_accessory/wing/wings = wing_styles[pref.wing_style]
-	. += "<b>Wing</b><br>"
-	if(istype(wings))
-		. += " Style: <a href='?src=\ref[src];wings_gallery=1'>[wings.name]</a> <a href='?src=\ref[src];wings_clear=1' style='color:#ffffff;background-color:#cc0000;border-color:#000000;' onmouseover=\"this.style.backgroundColor='#ffffff'; this.style.color='#cc0000';\" onmouseout=\"this.style.backgroundColor='#cc0000'; this.style.color='#ffffff';\">X</a><br>" //RS Edit: Opens new gallery (Lira, August 2025) || Clear button (Lira, October 2025)
-		if(wings.do_colouration)
-			. += "<a href='?src=\ref[src];wing_color=1'>Change Color</a> [color_square(pref.r_wing, pref.g_wing, pref.b_wing)]<br>"
-		if(wings.extra_overlay)
-			. += "<a href='?src=\ref[src];wing_color2=1'>Change Secondary Color</a> [color_square(pref.r_wing2, pref.g_wing2, pref.b_wing2)]<br>"
-		if(wings.extra_overlay2)
-			. += "<a href='?src=\ref[src];wing_color3=1'>Change Tertiary Color</a> [color_square(pref.r_wing3, pref.g_wing3, pref.b_wing3)]<br>" //RS Edit: Typo fix (Lira, August 2025)
-	else
-		. += " Style: <a href='?src=\ref[src];wings_gallery=1'>Select</a><br>" //RS Edit: Opens new gallery (Lira, August 2025)
-
-	. += "<br><a href='?src=\ref[src];marking_gallery=1'>Body Markings +</a><br>" //RS Edit: Opens new gallery (Lira, August 2025)
-	. += "<br><table>"
-	for(var/M in pref.body_markings)
-		// RS Add Start: Custom markings support (Lira, September 2025)
-		var/datum/sprite_accessory/marking/style = body_marking_styles_list[M]
-		var/display_name = pref.get_marking_display_name(M)
-		var/allow_color = style ? style.do_colouration : TRUE
-		var/current_color = pref.body_markings[M]["color"]
-		if(!istext(current_color))
-			current_color = allow_color ? "#000000" : "#FFFFFF"
-		var/color_control
-		if(allow_color)
-			color_control = "<a href='?src=\ref[src];marking_color=[M]'>Color</a>"
-		else
-			color_control = "<span class='disabled'>Color</span>"
-		var/reorder = pref.body_markings.len > 1 ? "<a href='?src=\ref[src];marking_up=[M]'>&#708;</a> <a href='?src=\ref[src];marking_down=[M]'>&#709;</a> <a href='?src=\ref[src];marking_move=[M]'>mv</a> " : ""
-		var/remove_control
-		if(style?.hide_from_marking_gallery)
-			remove_control = "<span class='disabled'>-</span>"
-		else
-			remove_control = "<a href='?src=\ref[src];marking_remove=[M]'>-</a>"
-		. += "<tr><td>[display_name]</td><td>[reorder][remove_control] [color_control][color_square(hex = current_color)] - <a href='?src=\ref[src];marking_submenu=[M]'>Customize</a></td></tr>"
-		// RS Add End
-
-	. += "</table>"
-	. += "<br>"
-	// RS Add Start: Surface control for the player's custom marking slot. (Lira)
-	var/datum/custom_marking/current_mark = pref.get_primary_custom_marking()
-	if(istype(current_mark))
-		var/mark_id = current_mark.id ? url_encode(current_mark.id) : null
-		var/display = current_mark.name ? html_encode(current_mark.name) : "(Custom Marking)"
-		var/list/chunks = list()
-		chunks += "<b>Custom Marking:</b> Enabled"
-		chunks += display
-		if(mark_id)
-			chunks += "<a href='?src=\ref[src];custom_markings_edit=[mark_id]'>Edit</a>"
-		chunks += "<a href='?src=\ref[src];custom_markings_disable=1'>Disable</a>"
-		var/line = jointext(chunks, " ")
-		. += "[line]<br>"
-	else
-		. += "<b>Custom Marking:</b> Disabled <a href='?src=\ref[src];custom_markings_enable=1'>Enable</a><br><br>"
-	// RS Add End
-	. += "<b>Allow Synth markings:</b> <a href='?src=\ref[src];synth_markings=1'><b>[pref.synth_markings ? "Yes" : "No"]</b></a><br>"
-	. += "<b>Allow Synth color:</b> <a href='?src=\ref[src];synth_color=1'><b>[pref.synth_color ? "Yes" : "No"]</b></a><br>"
-	if(pref.synth_color)
-		. += "<a href='?src=\ref[src];synth2_color=1'>Change Color</a> [color_square(pref.r_synth, pref.g_synth, pref.b_synth)]"
+	. += "<br><a href='?src=\ref[src];marking_gallery=1' style='display:inline-block;background:#6d28d9;color:#fff;padding:2px 6px;border:1px solid #6d28d9;border-radius:3px;text-decoration:none;font-weight:bold;' onmouseover=\"this.style.background='#fff';this.style.color='#6d28d9';\" onmouseout=\"this.style.background='#6d28d9';this.style.color='#fff';\">Character Designer</a><br>" //RS Edit: Opens new gallery (Lira, August 2025)
 
 	. = jointext(.,null)
 
@@ -1083,7 +981,7 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 
 	// RS Add Start: Support enabling, editing, and disabling the custom marking slot (Lira, September 2025)
 	else if(href_list["custom_markings_enable"])
-		var/confirm = tgui_alert(user, "This is an advanced character editing tool that allows you to edit individual pixels on your character to adjust or create new markings.  Custom markings have the same standards as markings added to the RogueStar codebase.  They should make realistic sense and must be SFW.  If it wouldn't get approved to add to the code, it should not be done here.  If you are uncertain about something, please let us know and we're happy to chatter about it.", "Enable Custom Markings?", list("Cancel", "Agree"))
+		var/confirm = tgui_alert(user, pref.get_custom_markings_enable_disclaimer(), "Enable Custom Markings?", list("Cancel", "Agree"))
 		if(confirm != "Agree")
 			return TOPIC_NOACTION
 		var/datum/custom_marking/enabled_mark = pref.ensure_primary_custom_marking()
@@ -1107,9 +1005,10 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 		return TOPIC_REFRESH_UPDATE_PREVIEW
 	// RS Add End
 
+	// RS Edit: Open new markings gallery (Lira, December 2025)
 	else if(href_list["marking_gallery"])
-		var/search = href_list["marking_gallery_search_term"] ? url_decode(href_list["marking_gallery_search_term"]) : null
-		markings_gallery_window(user, "heads", 1, search)
+		log_debug("[key_name(user)] opened Character Designer from character setup.")
+		pref.open_body_markings_designer(user)
 		return TOPIC_HANDLED
 
 	else if(href_list["marking_gallery_search"])

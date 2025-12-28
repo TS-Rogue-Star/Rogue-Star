@@ -131,7 +131,8 @@ var/list/admin_verbs_admin = list(
 	/client/proc/make_mentor,
 	/client/proc/unmake_mentor,
 	/client/proc/removetickets,
-	/client/proc/delbook
+	/client/proc/delbook,
+	/datum/admins/proc/EtchingViewer	// RS Add: Etching viewer support (Lira, December 2025)
 	)
 
 var/list/admin_verbs_ban = list(

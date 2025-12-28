@@ -146,9 +146,15 @@ var/list/preferences_datums = list()
 	var/list/custom_marking_reference_payload_cache // Cached mannequin reference payloads reused by the designer UI
 	var/custom_marking_reference_signature // Signature of the mannequin cache payload currently stored
 	var/custom_marking_reference_mannequin_signature // Tracks which signature is applied to the shared reference mannequin
+	var/list/custom_marking_body_reference_payload_cache // Cached stripped mannequin reference payloads reused by body/basic tabs (Lira, December 2025)
+	var/custom_marking_body_reference_signature // Signature of the stripped mannequin cache payload currently stored (Lira, December 2025)
+	var/custom_marking_body_reference_mannequin_signature // Tracks which signature is applied to the stripped reference mannequin (Lira, December 2025)
 	var/datum/custom_marking/pending_custom_marking_refresh // Queue a marking refresh until previews are ready (Lira, November 2025)
 	var/pending_custom_marking_force_preview = FALSE // Force preview rebuild when deferred refresh fires (Lira, November 2025)
 	var/pending_custom_marking_reset_cache = FALSE // Clear caches when deferred refresh fires (Lira, November 2025)
+	var/skip_custom_marking_cache_invalidation_once = FALSE // One-shot skip for designer-driven preview updates (Lira, November 2025)
+	var/datum/tgui_module/custom_marking_designer_loading/custom_marking_designer_loading_ui // Loading splash while the designer spins up (Lira, December 2025)
+	var/custom_marking_ui_refresh_scheduled = FALSE // Collapse designer refreshes (Lira, December 2025)
 	// RS Add End
 
 	var/list/flavor_texts = list()
@@ -222,15 +228,23 @@ var/list/preferences_datums = list()
 	custom_markings = null
 	custom_marking_preview_overlays = null
 	QDEL_NULL(custom_marking_designer_ui)
+	QDEL_NULL(custom_marking_designer_loading_ui)
 	custom_marking_reference_payload_cache = null
 	custom_marking_reference_signature = null
 	custom_marking_reference_mannequin_signature = null
+	custom_marking_body_reference_payload_cache = null
+	custom_marking_body_reference_signature = null
+	custom_marking_body_reference_mannequin_signature = null
 	pending_custom_marking_refresh = null
 	pending_custom_marking_force_preview = FALSE
 	pending_custom_marking_reset_cache = FALSE
 	// RS Add End
 
 // RS Add Start: Custom markings support (Lira, September 2025)
+
+// Disclaimer text for enabling custom markings (Lira, December 2025)
+/datum/preferences/proc/get_custom_markings_enable_disclaimer()
+	return "This is an advanced character editing tool that allows you to edit individual pixels on your character to adjust or create new markings.  Custom markings have the same standards as markings added to the RogueStar codebase.  They should make realistic sense and must be SFW.  If it wouldn't get approved to add to the code, it should not be done here.  If you are uncertain about something, please let us know and we're happy to chatter about it."
 
 // Return custom marking
 /datum/preferences/proc/get_primary_custom_marking()
@@ -256,6 +270,28 @@ var/list/preferences_datums = list()
 	LAZYINITLIST(custom_markings)
 	custom_markings[mark.id] = mark
 	return mark
+
+// Open loading window for the custom marking designer (Lira, December 2025)
+/datum/preferences/proc/open_custom_marking_designer_loading(mob/user)
+	if(!user)
+		return
+	if(custom_marking_designer_loading_ui && QDELETED(custom_marking_designer_loading_ui))
+		custom_marking_designer_loading_ui = null
+	if(!custom_marking_designer_loading_ui)
+		custom_marking_designer_loading_ui = new(src)
+	custom_marking_designer_loading_ui?.tgui_interact(user)
+
+// Close the designer loading window (Lira, December 2025)
+/datum/preferences/proc/close_custom_marking_designer_loading()
+	if(!custom_marking_designer_loading_ui)
+		return
+	if(QDELETED(custom_marking_designer_loading_ui))
+		custom_marking_designer_loading_ui = null
+		return
+	SStgui.close_uis(custom_marking_designer_loading_ui)
+	if(custom_marking_designer_loading_ui && !QDELETED(custom_marking_designer_loading_ui))
+		qdel(custom_marking_designer_loading_ui)
+	custom_marking_designer_loading_ui = null
 
 // Build the payload
 /datum/preferences/proc/get_custom_markings_payload()
@@ -326,6 +362,9 @@ var/list/preferences_datums = list()
 	custom_marking_reference_payload_cache = null
 	custom_marking_reference_signature = null
 	custom_marking_reference_mannequin_signature = null
+	custom_marking_body_reference_payload_cache = null
+	custom_marking_body_reference_signature = null
+	custom_marking_body_reference_mannequin_signature = null
 	if(clear_preview_overlays)
 		custom_marking_preview_overlays = null
 	custom_marking_layer_refresh_pending = FALSE
@@ -404,12 +443,14 @@ var/list/preferences_datums = list()
 /datum/preferences/proc/open_custom_marking_designer(mob/user, id)
 	if(!user)
 		return
+	open_custom_marking_designer_loading(user)
 	var/datum/custom_marking/mark = null
 	if(id && custom_markings)
 		mark = custom_markings[id]
 	if(!id && !mark)
 		mark = get_primary_custom_marking()
 	if(id && !mark)
+		close_custom_marking_designer_loading()
 		return
 	var/datum/tgui_module/custom_marking_designer/module = custom_marking_designer_ui
 	if(module)
@@ -423,6 +464,30 @@ var/list/preferences_datums = list()
 	if(!module)
 		module = new(src, mark)
 		custom_marking_designer_ui = module
+	module.tgui_interact(user)
+
+// RS Add: Open the body markings gallery tab (Lira, December 2025)
+/datum/preferences/proc/open_body_markings_designer(mob/user)
+	if(!user)
+		return
+	var/datum/custom_marking/mark = get_primary_custom_marking()
+	var/datum/tgui_module/custom_marking_designer/module = custom_marking_designer_ui
+	if(module)
+		if(QDELETED(module) || module.host != src)
+			custom_marking_designer_ui = null
+			module = null
+		else if(mark && module.mark != mark)
+			qdel(module)
+			custom_marking_designer_ui = null
+			module = null
+	if(!module)
+		module = new(src, mark, "basic", TRUE)
+		custom_marking_designer_ui = module
+	else
+		module.initial_tab = "basic"
+		module.active_tab = "basic"
+		module.allow_custom_tab = !!mark
+		SStgui.update_uis(module)
 	module.tgui_interact(user)
 
 // Provide a user-friendly label for a stored body marking key
@@ -463,6 +528,7 @@ var/list/preferences_datums = list()
 	if(custom_marking_designer_ui && !QDELETED(custom_marking_designer_ui))
 		qdel(custom_marking_designer_ui)
 	custom_marking_designer_ui = null
+	close_custom_marking_designer_loading()
 
 // Allow reopening the designer cleanly after cache resets (Lira, November 2025)
 /datum/preferences/proc/restart_custom_marking_designer(mob/user, id)
@@ -470,6 +536,23 @@ var/list/preferences_datums = list()
 		user = client.mob
 	close_custom_marking_designer()
 	open_custom_marking_designer(user, id)
+
+// Debounce designer refreshes so bursty wardrobe changes only trigger one update
+/datum/preferences/proc/queue_custom_marking_designer_refresh()
+	if(custom_marking_ui_refresh_scheduled)
+		return
+	custom_marking_ui_refresh_scheduled = TRUE
+	addtimer(CALLBACK(src, .proc/flush_custom_marking_designer_refresh), 1)
+
+// Clear refresh schedule (Lira, December 2025)
+/datum/preferences/proc/flush_custom_marking_designer_refresh()
+	custom_marking_ui_refresh_scheduled = FALSE
+	if(custom_marking_designer_ui && QDELETED(custom_marking_designer_ui))
+		custom_marking_designer_ui = null
+	if(custom_marking_designer_ui)
+		custom_marking_designer_ui.preview_revision++
+		custom_marking_designer_ui.preview_refresh_token++
+		SStgui.update_uis(custom_marking_designer_ui)
 
 // Ensure saved custom markings keep their preference entry when loading slots
 /datum/preferences/proc/sync_loaded_custom_marking(datum/custom_marking/mark)
@@ -512,6 +595,21 @@ var/list/preferences_datums = list()
 	for(var/existing in remove_queue)
 		current -= existing
 	current["datum"] = style
+	if(islist(body_markings))
+		var/list/custom_cleanup = list()
+		for(var/key in body_markings)
+			if(!istext(key) || key == "color" || key == style_name)
+				continue
+			var/datum/sprite_accessory/marking/entry_style = body_marking_styles_list?[key]
+			if(!istype(entry_style))
+				entry_style = body_markings[key]?["datum"]
+			var/is_custom = istype(entry_style, /datum/sprite_accessory/marking/custom)
+			if(!is_custom && findtext(key, " (Custom "))
+				is_custom = TRUE
+			if(is_custom)
+				custom_cleanup += key
+		for(var/key in custom_cleanup)
+			body_markings -= key
 
 // Allow queueing heavy marking refreshes through SScustom_marking (Lira, November 2025)
 /datum/preferences/proc/refresh_custom_marking_assets(force_preview = TRUE, reset_cache = FALSE, datum/custom_marking/target_mark = null, use_queue = FALSE)

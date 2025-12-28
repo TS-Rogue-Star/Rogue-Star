@@ -5,10 +5,10 @@
 import { Component } from 'inferno';
 
 type ToolBootstrapSchedulerProps = {
-  isPlaceholderTool: boolean;
-  toolBootstrapScheduled: boolean;
-  setToolBootstrapScheduled: (value: boolean) => void;
-  setTool: (tool: string) => void;
+  readonly isPlaceholderTool: boolean;
+  readonly toolBootstrapScheduled: boolean;
+  readonly setToolBootstrapScheduled: (value: boolean) => void;
+  readonly setTool: (tool: string) => void;
 };
 
 export class ToolBootstrapScheduler extends Component<ToolBootstrapSchedulerProps> {

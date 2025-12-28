@@ -6,14 +6,14 @@ import { Button, Flex, Section } from '../../../components';
 import { CHIP_BUTTON_CLASS } from '../constants';
 
 type SessionControlsProps = {
-  pendingSave: boolean;
-  pendingClose: boolean;
-  uiLocked: boolean;
-  handleSaveProgress: () => void;
-  handleSafeClose: () => void;
-  handleDiscardAndClose: () => void;
-  handleImport: (type: 'png' | 'dmi') => Promise<void>;
-  handleExport: (type: 'png' | 'dmi') => Promise<void>;
+  readonly pendingSave: boolean;
+  readonly pendingClose: boolean;
+  readonly uiLocked: boolean;
+  readonly handleSaveProgress: () => void;
+  readonly handleSafeClose: () => void;
+  readonly handleDiscardAndClose: () => void;
+  readonly handleImport: (type: 'png' | 'dmi') => Promise<void>;
+  readonly handleExport: (type: 'png' | 'dmi') => Promise<void>;
 };
 
 export const SessionControls = ({

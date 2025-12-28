@@ -3,6 +3,8 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star November 2025: Refactored to be more efficient /////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2025: Updated to support 64x64 markings ///////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Schema version for serialized custom marking payloads
 #define CUSTOM_MARKING_VERSION 1
@@ -10,6 +12,10 @@
 // Default canvas resolution for humanoid overlays
 #define CUSTOM_MARKING_CANVAS_WIDTH  32
 #define CUSTOM_MARKING_CANVAS_HEIGHT 32
+
+// Maximum canvas resolution allowed by the designer
+#define CUSTOM_MARKING_CANVAS_MAX_WIDTH 64
+#define CUSTOM_MARKING_CANVAS_MAX_HEIGHT 64
 
 // Convenience macro to iterate over cardinal directions in painting payloads
 #define CUSTOM_MARKING_DIRECTIONS list(NORTH, SOUTH, EAST, WEST)
@@ -23,6 +29,7 @@
 #define CUSTOM_MARKING_OPTION_RENDER_ON_TOP "render_on_top"
 #define CUSTOM_MARKING_OPTION_REPLACE_MAP "replace_parts"
 #define CUSTOM_MARKING_OPTION_RENDER_PRIORITY_MAP "render_priority_parts"
+#define CUSTOM_MARKING_OPTION_LARGE_CANVAS_MAP "large_canvas_parts"
 
 // Global registry for custom markings, populated at runtime
 GLOBAL_LIST_INIT(custom_markings_by_id, list())
@@ -206,6 +213,13 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 		return text2num(value)
 	return null
 
+// Clamp canvas dimensions to sane bounds
+/proc/clamp_custom_marking_dimension(value, default_value, max_value)
+	var/result = isnum(value) ? round(value) : default_value
+	result = max(1, result)
+	result = min(max_value, result)
+	return result
+
 // Definition for player-authored custom markings and paint data
 /datum/custom_marking
 	var/id // Stable identifier, unique within save scope
@@ -345,16 +359,21 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 	if(!islist(frames))
 		frames = list()
 	var/datum/custom_marking_frame/frame = frames[key]
-	if(!istype(frame))
-		var/frame_width = isnum(width) ? max(1, round(width)) : CUSTOM_MARKING_CANVAS_WIDTH
-		var/frame_height = isnum(height) ? max(1, round(height)) : CUSTOM_MARKING_CANVAS_HEIGHT
-		frame = new /datum/custom_marking_frame(frame_width, frame_height)
-		if(part_value != "generic")
-			var/base_key = frame_key(dir_value, "generic")
-			var/datum/custom_marking_frame/base = frames[base_key]
-			if(istype(base))
-				frame.copy_from(base)
-		frames[key] = frame
+	var/frame_width = get_part_canvas_width(part_value)
+	var/frame_height = get_part_canvas_height(part_value)
+	if(istype(frame))
+		if(frame.width != frame_width || frame.height != frame_height)
+			frame.resize(frame_width, frame_height)
+		return frame
+	frame = new /datum/custom_marking_frame(frame_width, frame_height)
+	if(part_value != "generic")
+		var/base_key = frame_key(dir_value, "generic")
+		var/datum/custom_marking_frame/base = frames[base_key]
+		if(istype(base))
+			frame.copy_from(base)
+			if(frame.width != frame_width || frame.height != frame_height)
+				frame.resize(frame_width, frame_height)
+	frames[key] = frame
 	return frame
 
 // Retrieve an existing frame, falling back to generic data when allowed
@@ -367,6 +386,10 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 	var/key = frame_key(dir_value, part_value)
 	var/datum/custom_marking_frame/frame = frames[key]
 	if(istype(frame))
+		var/frame_width = get_part_canvas_width(part_value)
+		var/frame_height = get_part_canvas_height(part_value)
+		if(frame.width != frame_width || frame.height != frame_height)
+			frame.resize(frame_width, frame_height)
 		return frame
 	if(!create)
 		if(part_value != "generic")
@@ -376,6 +399,91 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 				return fallback
 		return null
 	return ensure_frame(dir_value, part_value)
+
+// Resize canvas dimensions and crop/pad existing frames
+/datum/custom_marking/proc/resize_canvas(new_width, new_height)
+	var/base_width = clamp_custom_marking_dimension(new_width, get_base_canvas_width(), CUSTOM_MARKING_CANVAS_MAX_WIDTH)
+	var/base_height = clamp_custom_marking_dimension(new_height, get_base_canvas_height(), CUSTOM_MARKING_CANVAS_MAX_HEIGHT)
+	var/changed = (base_width != width) || (base_height != height)
+	width = base_width
+	height = base_height
+	if(!islist(frames))
+		frames = list()
+	for(var/key in frames)
+		var/datum/custom_marking_frame/frame = frames[key]
+		if(!istype(frame))
+			continue
+		var/list/components = resolve_frame_components(key, null)
+		var/part = components?["part"]
+		var/target_width = get_part_canvas_width(part)
+		var/target_height = get_part_canvas_height(part)
+		if(frame.resize(target_width, target_height))
+			changed = TRUE
+	if(changed)
+		bump_revision()
+	return changed
+
+// Resolve the default canvas width for non-expanded parts
+/datum/custom_marking/proc/get_base_canvas_width()
+	return clamp_custom_marking_dimension(width, CUSTOM_MARKING_CANVAS_WIDTH, CUSTOM_MARKING_CANVAS_MAX_WIDTH)
+
+// Resolve the default canvas height for non-expanded parts
+/datum/custom_marking/proc/get_base_canvas_height()
+	return clamp_custom_marking_dimension(height, CUSTOM_MARKING_CANVAS_HEIGHT, CUSTOM_MARKING_CANVAS_MAX_HEIGHT)
+
+// Track which parts should use the expanded 64x64 canvas
+/datum/custom_marking/proc/get_canvas_size_map(create = FALSE)
+	if(!islist(options))
+		if(!create)
+			return null
+		options = list()
+	var/list/map = options[CUSTOM_MARKING_OPTION_LARGE_CANVAS_MAP]
+	if(!islist(map) && create)
+		map = list()
+		options[CUSTOM_MARKING_OPTION_LARGE_CANVAS_MAP] = map
+	return map
+
+// Determine whether any parts are flagged for the larger canvas
+/datum/custom_marking/proc/has_large_canvas_parts()
+	var/list/map = options?[CUSTOM_MARKING_OPTION_LARGE_CANVAS_MAP]
+	if(!islist(map) || !map.len)
+		return FALSE
+	for(var/part in map)
+		if(map[part])
+			return TRUE
+	return FALSE
+
+// Check whether a specific part should use a 64x64 canvas
+/datum/custom_marking/proc/is_part_large_canvas(part)
+	var/normalized = normalize_part(part, null)
+	if(isnull(normalized) || normalized == "generic")
+		return FALSE
+	var/list/map = options?[CUSTOM_MARKING_OPTION_LARGE_CANVAS_MAP]
+	if(!islist(map))
+		return FALSE
+	return !!map[normalized]
+
+// Resolve the target canvas width for a part
+/datum/custom_marking/proc/get_part_canvas_width(part)
+	return is_part_large_canvas(part) ? CUSTOM_MARKING_CANVAS_MAX_WIDTH : get_base_canvas_width()
+
+// Resolve the target canvas height for a part
+/datum/custom_marking/proc/get_part_canvas_height(part)
+	return is_part_large_canvas(part) ? CUSTOM_MARKING_CANVAS_MAX_HEIGHT : get_base_canvas_height()
+
+// Resolve the maximum canvas width needed for the marking
+/datum/custom_marking/proc/get_effective_canvas_width()
+	var/result = get_base_canvas_width()
+	if(has_large_canvas_parts())
+		result = max(result, CUSTOM_MARKING_CANVAS_MAX_WIDTH)
+	return result
+
+// Resolve the maximum canvas height needed for the marking
+/datum/custom_marking/proc/get_effective_canvas_height()
+	var/result = get_base_canvas_height()
+	if(has_large_canvas_parts())
+		result = max(result, CUSTOM_MARKING_CANVAS_MAX_HEIGHT)
+	return result
 
 // Determine whether this marking should render on top of all body sprites
 /datum/custom_marking/proc/is_render_above_body()
@@ -418,6 +526,8 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 	var/normalized = normalize_part(part, null)
 	if(isnull(normalized) || normalized == "generic")
 		return FALSE
+	if(is_part_large_canvas(normalized))
+		return TRUE
 	var/list/map = options?[CUSTOM_MARKING_OPTION_RENDER_PRIORITY_MAP]
 	if(!islist(map))
 		return is_render_above_body()
@@ -433,6 +543,9 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 	if(!islist(body_parts) || !(normalized in body_parts))
 		return FALSE
 	var/override_defined = !isnull(state)
+	var/force_on_top = is_part_large_canvas(normalized)
+	if(force_on_top && override_defined && !state)
+		return FALSE
 	var/list/map = options?[CUSTOM_MARKING_OPTION_RENDER_PRIORITY_MAP]
 	if(!override_defined)
 		if(islist(map))
@@ -466,7 +579,8 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 		if(isnull(part) || part == "generic")
 			continue
 		var/value = islist(map) ? map[part] : null
-		var/on_top = isnull(value) ? default_state : !!value
+		var/force_on_top = is_part_large_canvas(part)
+		var/on_top = force_on_top ? TRUE : (isnull(value) ? default_state : !!value)
 		if(on_top)
 			result[part] = TRUE
 	return copy_list ? result.Copy() : result
@@ -474,15 +588,116 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 // Present overrides for UI consumption
 /datum/custom_marking/proc/get_part_render_priority_payload()
 	var/list/map = options?[CUSTOM_MARKING_OPTION_RENDER_PRIORITY_MAP]
+	var/list/size_map = options?[CUSTOM_MARKING_OPTION_LARGE_CANVAS_MAP]
+	if((!islist(map) || !map.len) && (!islist(size_map) || !size_map.len))
+		return null
+	var/list/result = list()
+	if(islist(map))
+		for(var/part in map)
+			if(isnull(part) || part == "generic")
+				continue
+			if(!islist(body_parts) || !(part in body_parts))
+				continue
+			var/force_on_top = is_part_large_canvas(part)
+			result[part] = force_on_top ? TRUE : !!map[part]
+	if(islist(size_map))
+		for(var/part in size_map)
+			if(isnull(part) || part == "generic")
+				continue
+			if(!islist(body_parts) || !(part in body_parts))
+				continue
+			if(size_map[part])
+				result[part] = TRUE
+	return result.len ? result : null
+
+// Toggle whether a part should use the expanded 64x64 canvas
+/datum/custom_marking/proc/set_part_canvas_size(part, state)
+	var/normalized = normalize_part(part, null)
+	if(isnull(normalized) || normalized == "generic")
+		return FALSE
+	if(!islist(body_parts) || !(normalized in body_parts))
+		return FALSE
+	var/use_large = !!state
+	var/list/map = get_canvas_size_map(TRUE)
+	var/current = !!map[normalized]
+	if(use_large)
+		map[normalized] = TRUE
+	else
+		map -= normalized
+		if(!map.len && islist(options))
+			options -= CUSTOM_MARKING_OPTION_LARGE_CANVAS_MAP
+	var/changed = (use_large != current)
+	if(islist(frames))
+		for(var/key in frames)
+			var/datum/custom_marking_frame/frame = frames[key]
+			if(!istype(frame))
+				continue
+			var/list/components = resolve_frame_components(key, null)
+			var/frame_part = components?["part"]
+			if(frame_part != normalized)
+				continue
+			if(frame.resize(get_part_canvas_width(normalized), get_part_canvas_height(normalized)))
+				changed = TRUE
+	if(use_large)
+		set_part_render_priority(normalized, TRUE)
+	else
+		set_part_render_priority(normalized, FALSE)
+	if(changed)
+		bump_revision()
+	return changed
+
+// Determine whether any direction for this part spills outside the base canvas
+/datum/custom_marking/proc/part_has_pixels_outside_base(part)
+	var/normalized = normalize_part(part, null)
+	if(isnull(normalized) || normalized == "generic")
+		return FALSE
+	var/base_width = get_base_canvas_width()
+	var/base_height = get_base_canvas_height()
+	var/list/dirs = CUSTOM_MARKING_DIRECTIONS
+	if(!islist(dirs) || !dirs.len)
+		dirs = list(NORTH, SOUTH, EAST, WEST)
+	for(var/dir in dirs)
+		if(!isnum(dir))
+			continue
+		var/datum/custom_marking_frame/frame = get_frame(dir, normalized, FALSE)
+		if(!frame)
+			continue
+		if(frame.has_pixels_outside_area(base_width, base_height))
+			return TRUE
+	return FALSE
+
+// Attempt to shrink oversized canvases back to the base size when safe
+/datum/custom_marking/proc/shrink_large_parts_if_safe(list/limit_parts = null)
+	var/list/map = options?[CUSTOM_MARKING_OPTION_LARGE_CANVAS_MAP]
 	if(!islist(map) || !map.len)
+		return FALSE
+	var/changed = FALSE
+	for(var/part in map)
+		if(isnull(part) || part == "generic")
+			continue
+		if(limit_parts && !(part in limit_parts))
+			continue
+		if(!map[part])
+			continue
+		if(part_has_pixels_outside_base(part))
+			continue
+		if(set_part_canvas_size(part, FALSE))
+			changed = TRUE
+	return changed
+
+// Present per-part canvas sizing overrides for UI consumption
+/datum/custom_marking/proc/get_part_canvas_size_payload()
+	var/list/map = options?[CUSTOM_MARKING_OPTION_LARGE_CANVAS_MAP]
+	if(!islist(map))
 		return null
 	var/list/result = list()
 	for(var/part in map)
 		if(isnull(part) || part == "generic")
 			continue
-		if(!islist(body_parts) || !(part in body_parts))
+		if(islist(body_parts) && !(part in body_parts))
 			continue
-		result[part] = !!map[part]
+		if(map[part])
+			result[part] = TRUE
 	return result.len ? result : null
 
 // Accessor for the replacement map stored inside options
@@ -582,8 +797,8 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 	out["owner_ckey"] = owner_ckey
 	out["body_parts"] = body_parts?.Copy()
 	out["options"] = options?.Copy()
-	out["width"] = width
-	out["height"] = height
+	out["width"] = get_base_canvas_width()
+	out["height"] = get_base_canvas_height()
 	out["version"] = CUSTOM_MARKING_VERSION
 	out["style_revision"] = style_revision
 	var/list/frame_payload = list()
@@ -624,8 +839,8 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 	if(!body_parts.len)
 		body_parts += BP_TORSO
 	options = data["options"] ? data["options"] : list()
-	width = max(1, text2num_safe(data["width"]) || CUSTOM_MARKING_CANVAS_WIDTH)
-	height = max(1, text2num_safe(data["height"]) || CUSTOM_MARKING_CANVAS_HEIGHT)
+	width = clamp_custom_marking_dimension(data["width"], CUSTOM_MARKING_CANVAS_WIDTH, CUSTOM_MARKING_CANVAS_MAX_WIDTH)
+	height = clamp_custom_marking_dimension(data["height"], CUSTOM_MARKING_CANVAS_HEIGHT, CUSTOM_MARKING_CANVAS_MAX_HEIGHT)
 	version = data["version"] || 0
 	style_revision = text2num_safe(data["style_revision"]) || 0
 	var/list/frame_payload = data["frames"]
@@ -641,7 +856,7 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 			var/list/raw = frame_payload[dir_key]
 			if(!islist(raw))
 				continue
-			var/datum/custom_marking_frame/frame = new(width, height)
+			var/datum/custom_marking_frame/frame = new(get_part_canvas_width(part_name), get_part_canvas_height(part_name))
 			frame.from_save(raw)
 			var/save_key = frame_key(dir_key)
 			frames[save_key] = frame
@@ -740,6 +955,41 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 					return TRUE
 	return FALSE
 
+// Check whether any painted pixels live outside a target area
+/datum/custom_marking_frame/proc/has_pixels_outside_area(base_width, base_height)
+	if(!isnum(base_width) || !isnum(base_height))
+		return FALSE
+	var/target_width = round(base_width)
+	var/target_height = round(base_height)
+	if(target_width >= width && target_height >= height)
+		return FALSE
+	var/x_offset = round((width - target_width) / 2)
+	if(x_offset < 0)
+		x_offset = 0
+	var/min_x = max(1, 1 + x_offset)
+	var/max_x = min(width, target_width + x_offset)
+	var/min_y = 1
+	var/max_y = min(height, target_height)
+	if(min_x <= 1 && max_x >= width && min_y <= 1 && max_y >= height)
+		return FALSE
+	if(!islist(layers))
+		return FALSE
+	for(var/list/layer in layers)
+		if(!islist(layer))
+			continue
+		for(var/x in 1 to width)
+			CUSTOM_MARKING_CHECK_TICK
+			var/list/column = layer[x]
+			if(!islist(column))
+				continue
+			for(var/y in 1 to height)
+				var/pixel = column[y]
+				if(!istext(pixel) || !length(pixel))
+					continue
+				if(x < min_x || x > max_x || y < min_y || y > max_y)
+					return TRUE
+	return FALSE
+
 // Copy pixel payloads from another frame into this one
 /datum/custom_marking_frame/proc/copy_from(datum/custom_marking_frame/other)
 	if(!istype(other))
@@ -780,6 +1030,45 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 					new_column[y] = column[y]
 			layer[x] = new_column
 	return layer
+
+// Resize the frame while preserving overlapping pixels
+/datum/custom_marking_frame/proc/resize(new_width, new_height)
+	var/target_width = isnum(new_width) ? max(1, round(new_width)) : width
+	var/target_height = isnum(new_height) ? max(1, round(new_height)) : height
+	if(target_width == width && target_height == height)
+		return FALSE
+	var/original_width = width
+	if(!islist(layers))
+		reset()
+	if(!islist(layers))
+		return FALSE
+	var/x_offset = round((target_width - original_width) / 2)
+	var/y_offset = 0
+	var/list/new_layers = list()
+	new_layers.len = max(1, layers.len)
+	for(var/i in 1 to new_layers.len)
+		var/list/source_layer = ensure_layer(i)
+		var/list/new_layer = list()
+		new_layer.len = target_width
+		for(var/x in 1 to target_width)
+			var/list/new_column = list()
+			new_column.len = target_height
+			var/source_x = x - x_offset
+			if(source_x >= 1 && source_x <= source_layer.len)
+				var/list/source_column = source_layer[source_x]
+				if(islist(source_column))
+					for(var/y in 1 to target_height)
+						var/source_y = y - y_offset
+						if(source_y < 1 || source_y > source_column.len)
+							continue
+						new_column[y] = source_column[source_y]
+			new_layer[x] = new_column
+		new_layers[i] = new_layer
+	layers = new_layers
+	width = target_width
+	height = target_height
+	invalidate()
+	return TRUE
 
 // Fetch the stored color at a coordinate from a given layer
 /datum/custom_marking_frame/proc/get_pixel(x, y, layer_index = 1)
@@ -917,7 +1206,7 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 /datum/sprite_accessory/marking/custom/proc/get_cache_key()
 	if(source?.bake_hash)
 		return source.bake_hash
-	var/hash_input = list(source?.id, source?.name, source?.width, source?.height)
+	var/hash_input = list(source?.id, source?.name, source?.get_effective_canvas_width(), source?.get_effective_canvas_height())
 	var/list/parts = source?.body_parts?.Copy() || list()
 	hash_input += list(list("parts" = parts))
 	var/list/hash_dirs = CUSTOM_MARKING_DIRECTIONS
@@ -974,10 +1263,10 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 	if(!source || !source.id)
 		GLOB.custom_marking_allow_yield = original_allow
 		return result
-	var/desired_width = text2num_safe(source.width)
+	var/desired_width = source?.get_effective_canvas_width() || CUSTOM_MARKING_CANVAS_WIDTH
 	if(!isnum(desired_width) || desired_width < 1)
 		desired_width = CUSTOM_MARKING_CANVAS_WIDTH
-	var/desired_height = text2num_safe(source.height)
+	var/desired_height = source?.get_effective_canvas_height() || CUSTOM_MARKING_CANVAS_HEIGHT
 	if(!isnum(desired_height) || desired_height < 1)
 		desired_height = CUSTOM_MARKING_CANVAS_HEIGHT
 	var/list/render_queue = list()
@@ -1034,10 +1323,11 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 	frame_icon.Scale(target_width, target_height)
 	var/icon/current_target = target
 	var/last_yield_epoch = GLOB.custom_marking_yield_epoch
+	var/grid_width = grid.len
+	var/x_offset = max(0, round((target_width - grid_width) / 2))
+	var/y_offset = 0 // keep the bottom of smaller canvases aligned so 32x32 parts don't shift when mixed with 64x64
 	try
-		for(var/x in 1 to target_width)
-			if(grid.len < x)
-				continue
+		for(var/x in 1 to grid_width)
 			CUSTOM_MARKING_CHECK_TICK
 			if(last_yield_epoch != GLOB.custom_marking_yield_epoch)
 				frame_icon = new/icon(frame_icon)
@@ -1046,18 +1336,22 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 			var/list/column = grid[x]
 			if(!islist(column))
 				continue
-			for(var/y in 1 to target_height)
-				if(column.len < y)
-					continue
+			var/draw_x = x + x_offset
+			if(draw_x < 1 || draw_x > target_width)
+				continue
+			for(var/y in 1 to column.len)
 				CUSTOM_MARKING_CHECK_TICK
 				if(last_yield_epoch != GLOB.custom_marking_yield_epoch)
 					frame_icon = new/icon(frame_icon)
 					current_target = new/icon(current_target)
 					last_yield_epoch = GLOB.custom_marking_yield_epoch
+				var/draw_y = y + y_offset
+				if(draw_y < 1 || draw_y > target_height)
+					continue
 				var/color = column[y]
 				if(!istext(color))
 					continue
-				frame_icon.DrawBox(color, x, y, x, y)
+				frame_icon.DrawBox(color, draw_x, draw_y, draw_x, draw_y)
 		if(frame_icon.Width() != target_width || frame_icon.Height() != target_height)
 			frame_icon.Scale(target_width, target_height)
 		current_target = custom_marking_insert_icon(current_target, frame_icon, state_name, dir, 3)
@@ -1088,3 +1382,4 @@ GLOBAL_LIST_INIT(custom_marking_replacement_children, list(
 #undef CUSTOM_MARKING_OPTION_RENDER_ON_TOP
 #undef CUSTOM_MARKING_OPTION_REPLACE_MAP
 #undef CUSTOM_MARKING_OPTION_RENDER_PRIORITY_MAP
+#undef CUSTOM_MARKING_OPTION_LARGE_CANVAS_MAP

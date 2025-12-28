@@ -1,6 +1,8 @@
 // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star September 2025 to make painting more authentic and add a new drawing tablet with a variety of advanced functions //
 // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2025 to support Custom Marking Designer Interface ////////////////////////////////////////////////////////
+// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import { Component, createRef } from 'inferno';
 import { useBackend, useLocalState } from '../backend'; // RS Edit: Add useLocalState (Lira, September 2025)
@@ -19,6 +21,12 @@ const TOOL_CURSOR_SPECS = {
     size: 24,
     hotX: 6,
     hotY: 20,
+  },
+  'mirror-brush': {
+    codePoint: 0xf07e,
+    size: 24,
+    hotX: 2,
+    hotY: 12,
   },
   eraser: {
     codePoint: 0xf12d,
@@ -217,6 +225,35 @@ const getCursorForTool = (tool) => {
   return cursor;
 };
 
+const haveOverlayPropsChanged = (prevProps, nextProps) =>
+  prevProps.reference !== nextProps.reference ||
+  prevProps.referenceParts !== nextProps.referenceParts ||
+  prevProps.referenceOpacity !== nextProps.referenceOpacity ||
+  prevProps.referenceOpacityMap !== nextProps.referenceOpacityMap ||
+  prevProps.referenceSignature !== nextProps.referenceSignature ||
+  prevProps.layerParts !== nextProps.layerParts ||
+  prevProps.layerOrder !== nextProps.layerOrder ||
+  prevProps.layerRevision !== nextProps.layerRevision ||
+  prevProps.otherLayerOpacity !== nextProps.otherLayerOpacity ||
+  prevProps.activeLayerKey !== nextProps.activeLayerKey;
+
+const shouldRedrawCanvas = (
+  prevProps,
+  nextProps,
+  shouldRedraw,
+  hoverChanged,
+  overlayPropsChanged
+) =>
+  shouldRedraw ||
+  hoverChanged ||
+  overlayPropsChanged ||
+  prevProps.legacyGridGuideSize !== nextProps.legacyGridGuideSize ||
+  prevProps.tool !== nextProps.tool ||
+  prevProps.size !== nextProps.size ||
+  prevProps.previewColor !== nextProps.previewColor ||
+  prevProps.strokeDrafts !== nextProps.strokeDrafts ||
+  prevProps.strokeDraftSession !== nextProps.strokeDraftSession;
+
 // RS Add End
 
 export class PaintCanvas extends Component {
@@ -231,15 +268,19 @@ export class PaintCanvas extends Component {
     this.lastPos = null;
     this.strokeSeq = 0;
     this.currentStroke = null;
+    this.currentStrokeTool = null;
+    this.currentStrokeButton = null;
     this.pendingStrokeSegments = 0;
     this.overlayCache = null;
     this.gridBuffer = this.cloneGrid(props.value || []);
     this.lastDiffSeq = props.diffSeq || 0;
+    this.seedStrokeSequence(props);
     this.handleGlobalMouseUp = this.handleGlobalMouseUp.bind(this);
     this.handleGlobalKeyDown = this.handleGlobalKeyDown.bind(this);
     this.handleCursorUpdate = this.handleCursorUpdate.bind(this);
     this.isInside = false;
     this.cursorReady = false;
+    this.backgroundImageCache = null; // RS Add: Cache decoded background image (Nov 2025)
     // RS Add End
   }
 
@@ -352,29 +393,40 @@ export class PaintCanvas extends Component {
       }
     }
 
+    if (prevProps.dotsize !== this.props.dotsize) {
+      shouldRedraw = true;
+    }
+
     const hoverChanged = !!prevState && prevState.hover !== this.state.hover;
 
+    const overlayPropsChanged = haveOverlayPropsChanged(prevProps, this.props);
+
+    if (overlayPropsChanged) {
+      this.overlayCache = null;
+    }
+
     if (
-      shouldRedraw ||
-      hoverChanged ||
-      prevProps.reference !== this.props.reference ||
-      prevProps.referenceParts !== this.props.referenceParts ||
-      prevProps.referenceOpacity !== this.props.referenceOpacity ||
-      prevProps.referenceOpacityMap !== this.props.referenceOpacityMap ||
-      prevProps.layerParts !== this.props.layerParts ||
-      prevProps.layerRevision !== this.props.layerRevision ||
-      prevProps.otherLayerOpacity !== this.props.otherLayerOpacity ||
-      prevProps.tool !== this.props.tool ||
-      prevProps.size !== this.props.size ||
-      prevProps.previewColor !== this.props.previewColor ||
-      prevProps.strokeDrafts !== this.props.strokeDrafts ||
-      prevProps.strokeDraftSession !== this.props.strokeDraftSession
+      shouldRedrawCanvas(
+        prevProps,
+        this.props,
+        shouldRedraw,
+        hoverChanged,
+        overlayPropsChanged
+      )
     ) {
       // RS Add End
       this.drawCanvas(this.props);
     }
-
     // RS Add Start: Custom marking support (Lira, November 2025)
+    if (
+      prevProps.strokeDrafts !== this.props.strokeDrafts ||
+      prevProps.strokeDraftSession !== this.props.strokeDraftSession
+    ) {
+      const sessionChanged =
+        prevProps.strokeDraftSession !== this.props.strokeDraftSession;
+      this.seedStrokeSequence(this.props, !sessionChanged);
+    }
+
     if (prevProps.strokeJoinLimit !== this.props.strokeJoinLimit) {
       this.handleStrokeJoinLimitChange();
     }
@@ -404,7 +456,10 @@ export class PaintCanvas extends Component {
   isBrushTool(tool) {
     const normalized = tool || 'brush';
     return (
-      normalized === 'brush' || normalized === 'eraser' || normalized === 'line'
+      normalized === 'brush' ||
+      normalized === 'mirror-brush' ||
+      normalized === 'eraser' ||
+      normalized === 'line'
     );
   }
 
@@ -477,6 +532,36 @@ export class PaintCanvas extends Component {
     // RS Add End
   }
 
+  // RS Add: Stroke management (Lira, November 2025)
+  seedStrokeSequence(props, allowRaiseOnly = false) {
+    const sessionKey = props && props.strokeDraftSession;
+    const drafts = props && props.strokeDrafts;
+    if (!sessionKey || !drafts) {
+      return;
+    }
+    let maxSeq = 0;
+    for (const entry of Object.values(drafts)) {
+      if (!entry || entry.session !== sessionKey) {
+        continue;
+      }
+      const strokeVal = Number(entry.stroke);
+      const seqVal = Number(entry.sequence);
+      const candidate = Number.isFinite(strokeVal)
+        ? strokeVal
+        : Number.isFinite(seqVal)
+          ? seqVal
+          : 0;
+      if (candidate > maxSeq) {
+        maxSeq = candidate;
+      }
+    }
+    if (allowRaiseOnly) {
+      this.strokeSeq = Math.max(this.strokeSeq || 0, maxSeq);
+    } else {
+      this.strokeSeq = maxSeq;
+    }
+  }
+
   // RS Edit: Allow overlaying species reference guides when painting custom markings (Lira, September 2025)
   drawCanvas(propSource) {
     // RS Add Start: Custom marking support (Lira, September 2025)
@@ -486,11 +571,20 @@ export class PaintCanvas extends Component {
     }
     // RS Add End
     const ctx = canvas.getContext('2d'); // RS Edit: Custom marking support (Lira, September 2025)
+    // RS Add Start: Custom markings support (Lira, November 2025)
+    const bgColor = propSource.backgroundColor || 'rgba(0,0,0,0)';
+    const bgImageSrc = propSource.backgroundImage || null;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // RS Add End
     const grid =
       Array.isArray(this.gridBuffer) && this.gridBuffer.length
         ? this.gridBuffer
         : propSource.value || []; // RS Edit: Custom marking support (Lira, September 2025)
 
+    // RS Add Start: Custom markings support (Lira, November 2025)
+    const renderNudgePxX = 0;
+    const renderNudgePxY = 0;
+    // RS Add End
     // RS Add Start: Resolve part overlays so each slot can supply custom guidance art (Lira, September 2025)
     const reference = propSource.reference || null;
     const referenceParts = propSource.referenceParts || null;
@@ -499,6 +593,7 @@ export class PaintCanvas extends Component {
     const activeLayerKey = propSource.activeLayerKey || null;
     const otherLayerOpacity = propSource.otherLayerOpacity;
     const referenceOpacityMap = propSource.referenceOpacityMap || null;
+    const referenceSignature = propSource.referenceSignature || '';
     const referencePartKeys = referenceParts ? Object.keys(referenceParts) : [];
     const fallbackReference = resolveFallbackReference(
       referenceParts,
@@ -519,7 +614,6 @@ export class PaintCanvas extends Component {
       this.overlayCache = null;
       return;
     }
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
     const x_scale = Math.max(1, Math.round(canvas.width / x_size));
     const y_scale = Math.max(1, Math.round(canvas.height / y_size));
     // RS Edit End
@@ -553,6 +647,7 @@ export class PaintCanvas extends Component {
       referenceParts,
       referencePartKeys,
       referenceOpacityMap,
+      referenceSignature,
       resolvedGenericOpacity,
       layerParts,
       layerOrder,
@@ -563,12 +658,25 @@ export class PaintCanvas extends Component {
 
     ctx.save();
     ctx.scale(x_scale, y_scale);
+    // RS Add Start: Custom markings support (Lira, November 2025)
+    if (renderNudgePxX || renderNudgePxY) {
+      const tx = x_scale ? renderNudgePxX / x_scale : 0;
+      const ty = y_scale ? renderNudgePxY / y_scale : 0;
+      if (tx || ty) {
+        ctx.translate(tx, ty);
+      }
+    }
+    // RS Add End
     ctx.imageSmoothingEnabled = false; // RS Add: Custom marking support (Lira, September 2025)
     for (let x = 0; x < grid.length; x++) {
       const element = grid[x];
       if (!element) continue; // RS Add: Custom marking support (Lira, September 2025)
       for (let y = 0; y < element.length; y++) {
         const color = element[y];
+        // RS Add: Fix blank canvases (Lira, December 2025)
+        if (typeof color !== 'string' || !color.length) {
+          continue;
+        }
         ctx.fillStyle = color;
         ctx.fillRect(x, y, 1, 1);
       }
@@ -580,11 +688,77 @@ export class PaintCanvas extends Component {
     ctx.restore();
     if (overlayCanvas) {
       ctx.save();
+      if (renderNudgePxX || renderNudgePxY) {
+        ctx.translate(renderNudgePxX, renderNudgePxY);
+      }
+      ctx.save();
       ctx.globalCompositeOperation = 'destination-over';
       ctx.drawImage(overlayCanvas, 0, 0);
       ctx.restore();
+      ctx.restore();
     }
+    ctx.save();
+    if (renderNudgePxX || renderNudgePxY) {
+      ctx.translate(renderNudgePxX, renderNudgePxY);
+    }
+    this.renderLegacyGridGuide(
+      ctx,
+      propSource,
+      x_scale,
+      y_scale,
+      x_size,
+      y_size
+    );
+    ctx.restore();
+    ctx.save();
+    ctx.globalCompositeOperation = 'destination-over';
+    if (bgImageSrc) {
+      const img = this.ensureBackgroundImage(bgImageSrc, () => {
+        this.drawCanvas(propSource);
+      });
+      if (img && img.complete && img.naturalWidth > 0) {
+        const pattern = ctx.createPattern(img, 'repeat');
+        if (pattern) {
+          ctx.fillStyle = pattern;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+      } else {
+        ctx.fillStyle = bgColor;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
+    } else {
+      ctx.fillStyle = bgColor;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+    ctx.restore();
     // RS Add End
+  }
+
+  // RS Add: Custom markings support (Lira, November 2025)
+  ensureBackgroundImage(src, onLoad) {
+    if (!src) {
+      this.backgroundImageCache = null;
+      return null;
+    }
+    const cached = this.backgroundImageCache;
+    if (cached && cached.src === src && cached.image) {
+      return cached.image;
+    }
+    const image = new Image();
+    image.onload = () => {
+      if (this.backgroundImageCache?.src !== src) {
+        this.backgroundImageCache = { src, image };
+      }
+      if (typeof onLoad === 'function') {
+        onLoad();
+      }
+    };
+    image.onerror = () => {
+      this.backgroundImageCache = null;
+    };
+    image.src = src;
+    this.backgroundImageCache = { src, image };
+    return image;
   }
 
   // RS Add: Render uncommitted draft pixels for multi-segment strokes (Lira, November 2025)
@@ -618,7 +792,7 @@ export class PaintCanvas extends Component {
     if (this.props.finalized) {
       return;
     }
-    const tool = this.props.tool || 'brush';
+    const tool = this.currentStrokeTool || this.props.tool || 'brush';
     if (tool !== 'line' || !this.lineStart || !this.state.hover) {
       return;
     }
@@ -636,7 +810,40 @@ export class PaintCanvas extends Component {
     });
   }
 
-  // RS Add: Custom marking support (Lira, Septembe 2025)
+  // RS Add: Custom markings support (Lira, November 2025)
+  renderLegacyGridGuide(ctx, propSource, xScale, yScale, xSize, ySize) {
+    const guideSize = Number(propSource.legacyGridGuideSize);
+    if (!Number.isFinite(guideSize) || guideSize <= 0) {
+      return;
+    }
+    if (xSize < guideSize || ySize < guideSize) {
+      return;
+    }
+    const guideWidth = Math.min(guideSize, xSize);
+    const guideHeight = Math.min(guideSize, ySize);
+    const startX = Math.floor((xSize - guideWidth) / 2) * xScale;
+    const startY = (ySize - guideHeight) * yScale; // Bottom-center anchor
+    const guideWidthPx = guideWidth * xScale;
+    const guideHeightPx = guideHeight * yScale;
+    if (guideWidthPx <= 1 || guideHeightPx <= 1) {
+      return;
+    }
+    const strokeX = startX + 0.5;
+    const strokeY = startY + 0.5;
+    const strokeW = guideWidthPx - 1;
+    const strokeH = guideHeightPx - 1;
+    const dashLength = Math.max(4, Math.round(Math.min(xScale, yScale) / 2));
+    ctx.save();
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgba(0, 0, 0, 0.45)';
+    ctx.strokeRect(strokeX, strokeY, strokeW, strokeH);
+    ctx.setLineDash([dashLength, dashLength]);
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
+    ctx.strokeRect(strokeX, strokeY, strokeW, strokeH);
+    ctx.restore();
+  }
+
+  // RS Add: Custom marking support (Lira, September 2025)
   getOverlayCanvas(options) {
     const {
       source,
@@ -648,6 +855,7 @@ export class PaintCanvas extends Component {
       referenceParts,
       referencePartKeys,
       referenceOpacityMap,
+      referenceSignature,
       resolvedGenericOpacity,
       layerParts,
       layerOrder,
@@ -662,10 +870,14 @@ export class PaintCanvas extends Component {
       activeLayerKey || '',
       Math.round(normalizedOpacity * 1000) / 1000,
       opacitySignature,
+      referenceSignature || '',
       Math.round(resolvedGenericOpacity * 1000) / 1000,
       canvas.width,
       canvas.height,
       referencePartKeys.join(','),
+      Math.round(xScale * 1000) / 1000,
+      Math.round(yScale * 1000) / 1000,
+      ySize,
     ].join('|');
     if (this.overlayCache && this.overlayCache.key === overlayKey) {
       return this.overlayCache.canvas;
@@ -724,10 +936,16 @@ export class PaintCanvas extends Component {
       return null; // RS Edit: Add null (Lira, September 2025)
     }
     const y_size = Array.isArray(grid[0]) ? grid[0].length : 0; // RS Edit: Custom marking support (Lira, September 2025)
-    const x_scale = this.canvasRef.current.width / x_size;
-    const y_scale = this.canvasRef.current.height / y_size;
-    const x = Math.floor(event.offsetX / x_scale) + 1;
-    const y = Math.floor(event.offsetY / y_scale) + 1;
+    // RS Edit Start: Custom markings support (Lira, November 2025)
+    const rect = this.canvasRef.current.getBoundingClientRect();
+    const x_scale = rect.width / x_size;
+    const y_scale = rect.height / y_size;
+    if (!x_scale || !y_scale) {
+      return null;
+    }
+    const x = Math.floor((event.clientX - rect.left) / x_scale) + 1;
+    const y = Math.floor((event.clientY - rect.top) / y_scale) + 1;
+    // RS Edit End
     // RS Add Start: Ignore outside of drawable grid (Lira< September 2025)
     if (x < 1 || x > x_size || y < 1 || y > y_size) {
       return null;
@@ -736,33 +954,70 @@ export class PaintCanvas extends Component {
     // RS Add End
   }
 
+  // RS Add: Custom markings support (Lira, November 2025)
+  resolveToolForEvent(event) {
+    const button =
+      event && typeof event.button === 'number' ? event.button : undefined;
+    if (typeof this.props.resolveToolForButton === 'function') {
+      const resolved = this.props.resolveToolForButton(button);
+      if (resolved) {
+        return resolved;
+      }
+    }
+    if (button === 2 && this.props.secondaryTool) {
+      return this.props.secondaryTool;
+    }
+    return this.props.tool || 'brush';
+  }
+
+  // RS Add: Custom markings support (Lira, November 2025)
+  resolveButton(event) {
+    return event && typeof event.button === 'number' ? event.button : undefined;
+  }
+
   // RS Add: New clickwrapper event to support new painting system (Lira, September 2025)
   clickwrapper(event) {
     const pos = this.getGridCoord(event);
     if (!pos) return;
     const [x, y] = pos;
-    const tool = this.props.tool || 'brush';
-    if (tool === 'fill' && this.props.onCanvasFill) {
-      this.props.onCanvasFill(x, y);
+    const tool = this.resolveToolForEvent(event);
+    const button = this.resolveButton(event);
+    if (tool === 'fill' || tool === 'eyedropper') {
       return;
-    }
-    if (tool === 'eyedropper' && this.props.onEyedropper) {
-      this.props.onEyedropper(x, y);
     }
   }
 
   // RS Add: Process the start of a stroke (Lira, September 2025)
   mousedownwrapper(event) {
-    const tool = this.props.tool || 'brush';
+    const tool = this.resolveToolForEvent(event);
+    const button = this.resolveButton(event);
     const pos = this.getGridCoord(event);
-    if (!pos) return;
+    if (!pos) {
+      this.currentStrokeTool = null;
+      this.currentStrokeButton = null;
+      return;
+    }
+    this.currentStrokeTool = tool;
+    this.currentStrokeButton = button;
+    if (tool === 'fill') {
+      if (this.props.onCanvasFill) {
+        this.props.onCanvasFill(pos[0], pos[1], tool, button);
+      }
+      return;
+    }
+    if (tool === 'eyedropper') {
+      if (this.props.onEyedropper) {
+        this.props.onEyedropper(pos[0], pos[1], tool, button);
+      }
+      return;
+    }
     if (tool === 'line') {
       this.lineStart = { x: pos[0], y: pos[1] };
       const strokeId = this.ensureStrokeId();
       this.currentStroke = strokeId;
       return;
     }
-    if (tool === 'brush' || tool === 'eraser') {
+    if (tool === 'brush' || tool === 'mirror-brush' || tool === 'eraser') {
       const strokeId = this.ensureStrokeId();
       this.currentStroke = strokeId;
       this.dragging = true;
@@ -772,7 +1027,9 @@ export class PaintCanvas extends Component {
           this.lastPos.x,
           this.lastPos.y,
           this.props.size || 1,
-          strokeId
+          strokeId,
+          tool,
+          button
         );
       }
     }
@@ -780,9 +1037,15 @@ export class PaintCanvas extends Component {
 
   // RS Add: Process finishing of current tool action (Lira, September 2025)
   mouseupwrapper(event) {
-    const tool = this.props.tool || 'brush';
+    const tool = this.currentStrokeTool || this.resolveToolForEvent(event);
+    const button =
+      this.resolveButton(event) ?? this.currentStrokeButton ?? undefined;
     if (tool === 'line') {
-      if (!this.lineStart) return;
+      if (!this.lineStart) {
+        this.currentStrokeTool = null;
+        this.currentStrokeButton = null;
+        return;
+      }
       const pos = this.getGridCoord(event);
       if (!pos) return;
       const x1 = this.lineStart.x;
@@ -796,18 +1059,22 @@ export class PaintCanvas extends Component {
           x2,
           y2,
           this.props.size || 1,
-          this.currentStroke
+          this.currentStroke,
+          tool,
+          button
         );
       }
       if (this.currentStroke) {
         this.handleStrokeSegmentComplete(true);
       }
+      this.currentStrokeTool = null;
+      this.currentStrokeButton = null;
       return;
     }
-    if (tool === 'brush' || tool === 'eraser') {
+    if (tool === 'brush' || tool === 'mirror-brush' || tool === 'eraser') {
       if (this.dragging && this.currentStroke) {
         if (this.props.onCanvasClick) {
-          this.props.onCanvasClick(0, 0, 0, this.currentStroke);
+          this.props.onCanvasClick(0, 0, 0, this.currentStroke, tool, button);
         }
         this.handleStrokeSegmentComplete(true);
       } else if (this.currentStroke) {
@@ -815,17 +1082,34 @@ export class PaintCanvas extends Component {
       }
       this.dragging = false;
       this.lastPos = null;
+      this.currentStrokeTool = null;
+      this.currentStrokeButton = null;
+    }
+    if (
+      tool !== 'line' &&
+      tool !== 'brush' &&
+      tool !== 'mirror-brush' &&
+      tool !== 'eraser'
+    ) {
+      this.currentStrokeTool = null;
+      this.currentStrokeButton = null;
     }
   }
 
   // RS Add: Process movement of mouse (Lira, September 2025)
   mousemovewrapper(event) {
-    const tool = this.props.tool || 'brush';
+    const tool =
+      this.currentStrokeTool || this.resolveToolForEvent(event) || 'brush';
+    const button =
+      this.currentStrokeButton ?? this.resolveButton(event) ?? undefined;
     const pos = this.getGridCoord(event);
     if (!pos) {
       if (tool === 'line') {
         this.setState({ hover: null });
-      } else if (tool === 'brush' && this.dragging) {
+      } else if (
+        (tool === 'brush' || tool === 'mirror-brush' || tool === 'eraser') &&
+        this.dragging
+      ) {
         // Break the segment without ending the stroke
         this.lastPos = null;
       }
@@ -835,7 +1119,10 @@ export class PaintCanvas extends Component {
       this.setState({ hover: pos });
       return;
     }
-    if ((tool === 'brush' || tool === 'eraser') && this.dragging) {
+    if (
+      (tool === 'brush' || tool === 'mirror-brush' || tool === 'eraser') &&
+      this.dragging
+    ) {
       const [x2, y2] = pos;
       if (this.lastPos) {
         if (this.lastPos.x !== x2 || this.lastPos.y !== y2) {
@@ -846,7 +1133,9 @@ export class PaintCanvas extends Component {
               x2,
               y2,
               this.props.size || 1,
-              this.currentStroke
+              this.currentStroke,
+              tool,
+              button
             );
           }
           this.lastPos = { x: x2, y: y2 };
@@ -858,7 +1147,9 @@ export class PaintCanvas extends Component {
             x2,
             y2,
             this.props.size || 1,
-            this.currentStroke
+            this.currentStroke,
+            tool,
+            button
           );
         }
         this.lastPos = { x: x2, y: y2 };
@@ -868,7 +1159,8 @@ export class PaintCanvas extends Component {
 
   // RS Add: Handle off-canvas mouseup (Lira, September 2025)
   handleGlobalMouseUp() {
-    const tool = this.props.tool || 'brush';
+    const tool = this.currentStrokeTool || this.props.tool || 'brush';
+    const button = this.currentStrokeButton ?? undefined;
     if (tool === 'line') {
       if (this.currentStroke) {
         this.commitCurrentStroke();
@@ -877,19 +1169,31 @@ export class PaintCanvas extends Component {
         this.lineStart = null;
         this.setState({ hover: null });
       }
+      this.currentStrokeTool = null;
+      this.currentStrokeButton = null;
       return;
     }
-    if (tool !== 'brush' && tool !== 'eraser') return;
-    if (!this.dragging) return;
+    if (tool !== 'brush' && tool !== 'mirror-brush' && tool !== 'eraser') {
+      this.currentStrokeTool = null;
+      this.currentStrokeButton = null;
+      return;
+    }
+    if (!this.dragging) {
+      this.currentStrokeTool = null;
+      this.currentStrokeButton = null;
+      return;
+    }
     if (this.currentStroke) {
       const sid = this.currentStroke;
       if (this.props.onCanvasClick) {
-        this.props.onCanvasClick(0, 0, 0, sid);
+        this.props.onCanvasClick(0, 0, 0, sid, tool, button);
       }
       this.handleStrokeSegmentComplete(true);
     }
     this.dragging = false;
     this.lastPos = null;
+    this.currentStrokeTool = null;
+    this.currentStrokeButton = null;
   }
 
   // RS Add: Keyboard handler for Undo (Lira, September 2025)
@@ -935,12 +1239,15 @@ export class PaintCanvas extends Component {
       value,
       dotsize = PX_PER_UNIT,
       // RS Add Start: Reference support (Lira, September 2025)
+      secondaryTool: _secondaryTool,
+      resolveToolForButton: _resolveToolForButton,
       reference: _reference,
       referenceOpacity: _referenceOpacity,
       strokeDrafts: _strokeDrafts,
       diffStroke: _diffStroke,
       onDiffApplied: _onDiffApplied,
       strokeDraftSession: _strokeDraftSession,
+      legacyGridGuideSize: _legacyGridGuideSize,
       // RS Add End
       ...rest
     } = this.props;
@@ -1378,6 +1685,7 @@ const drawLinePixels = (x1, y1, x2, y2, plot) => {
 // RS Add End
 
 // RS Add Start: Custom marking support (Lira, September 2025)
+
 const resolveGenericOpacity = (opacityMap, fallback) => {
   if (opacityMap && opacityMap.generic !== undefined) {
     return clamp(opacityMap.generic, 0, 1);
@@ -1396,6 +1704,20 @@ const buildLayerOrder = (prioritizedOrder, referenceKeys, layerParts) => {
   };
 
   push('generic');
+  const preferredOverlayKeys = [
+    'markings',
+    'gear_job',
+    'gear_loadout',
+    'overlay',
+  ];
+  for (const key of preferredOverlayKeys) {
+    if (
+      (Array.isArray(referenceKeys) && referenceKeys.includes(key)) ||
+      (layerParts && Object.prototype.hasOwnProperty.call(layerParts, key))
+    ) {
+      push(key);
+    }
+  }
   if (Array.isArray(prioritizedOrder)) {
     for (const key of prioritizedOrder) {
       push(key);
@@ -1465,7 +1787,7 @@ const shouldRenderOverlay = ({
   return false;
 };
 
-// RS Add: Gather draft pixels for the active session to preview strokes (Lira, November 2025)
+// Gather draft pixels for the active session to preview strokes (Lira, November 2025)
 const extractDraftPixels = (draftMap, sessionKey) => {
   if (!draftMap || !sessionKey) {
     return [];
@@ -1483,7 +1805,7 @@ const extractDraftPixels = (draftMap, sessionKey) => {
   return pixels;
 };
 
-// RS Add: Set fallback reference layer when specific parts are missing (Lira, November 2025)
+// Set fallback reference layer when specific parts are missing (Lira, November 2025)
 const resolveFallbackReference = (
   referenceParts,
   referencePartKeys,
@@ -1503,7 +1825,7 @@ const resolveFallbackReference = (
   return reference;
 };
 
-const drawGridLayer = (ctx, grid, yLimit) => {
+const drawGridLayer = (ctx, grid, yLimit, mask) => {
   if (!grid) {
     return;
   }
@@ -1512,6 +1834,9 @@ const drawGridLayer = (ctx, grid, yLimit) => {
     if (!column) continue;
     const limit = Math.min(column.length, yLimit);
     for (let y = 0; y < limit; y++) {
+      if (mask && mask[x] && mask[x][y]) {
+        continue;
+      }
       const color = column[y];
       if (!color) continue;
       ctx.fillStyle = color;
@@ -1535,6 +1860,8 @@ const drawReferenceGuides = (
   activeLayerKey,
   layerOpacity
 ) => {
+  const overlayMask =
+    referenceParts && referenceParts.overlay ? referenceParts.overlay : null;
   const orderedKeys = buildLayerOrder(
     layerOrder,
     referencePartKeys,
@@ -1561,11 +1888,13 @@ const drawReferenceGuides = (
           : resolvedGenericOpacity;
       if (opacity > 0) {
         ctx.globalAlpha = opacity;
-        drawGridLayer(ctx, refGrid, yLimit);
+        const mask = key === 'generic' ? overlayMask : null;
+        drawGridLayer(ctx, refGrid, yLimit, mask);
       }
     } else if (key === 'generic' && reference && reference.length) {
       ctx.globalAlpha = resolvedGenericOpacity;
-      drawGridLayer(ctx, reference, yLimit);
+      const mask = overlayMask;
+      drawGridLayer(ctx, reference, yLimit, mask);
     }
 
     if (
@@ -1586,9 +1915,11 @@ const drawReferenceGuides = (
     (!layerParts || layerOpacity <= 0)
   ) {
     ctx.globalAlpha = resolvedGenericOpacity;
-    drawGridLayer(ctx, reference, yLimit);
+    const mask = overlayMask;
+    drawGridLayer(ctx, reference, yLimit, mask);
   }
 
   ctx.restore();
 };
+
 // RS Add End

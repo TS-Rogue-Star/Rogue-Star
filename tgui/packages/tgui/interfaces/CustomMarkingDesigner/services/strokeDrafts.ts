@@ -1,11 +1,12 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////
 // Created by Lira for Rogue Star November 2025: Stroke draft storage for custom marking designer //
 // /////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2025: Updated to support 64x64 markings /////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////
 
 import type { DiffEntry } from '../../../utils/character-preview';
 import {
   arePixelListsEqual,
-  clearAllLocalDraftsInStore,
   getStoredStrokeDraftsFromStore,
   mergeStrokePixels,
   normalizeStrokeKey,
@@ -31,6 +32,7 @@ type StrokeDraftManagerOptions = {
   getActivePartKey: () => string;
   getCurrentDirectionKey: () => number;
   allocateDraftSequence: () => number;
+  notifyDraftMutation?: () => void;
 };
 
 export type StrokeDraftManager = {
@@ -40,7 +42,7 @@ export type StrokeDraftManager = {
   ) => void;
   clearAllLocalDrafts: () => void;
   appendStrokePreviewPixels: (stroke: unknown, pixels: DiffEntry[]) => void;
-  removeStrokeDraft: (stroke: unknown) => void;
+  removeStrokeDraft: (stroke: unknown, sessionKey?: string | null) => void;
   clearSessionDrafts: (targetSessionKey?: string) => void;
   getPendingDraftSessions: () => PendingDraftSession[];
   removeLastLocalStroke: () => boolean;
@@ -55,6 +57,7 @@ export const createStrokeDraftManager = (
     getActivePartKey,
     getCurrentDirectionKey,
     allocateDraftSequence,
+    notifyDraftMutation,
   } = options;
 
   const getStoredStrokeDrafts = (): StrokeDraftState =>
@@ -67,7 +70,17 @@ export const createStrokeDraftManager = (
   };
 
   const clearAllLocalDrafts = () => {
-    clearAllLocalDraftsInStore(context.store);
+    let changed = false;
+    updateStrokeDrafts((prev) => {
+      if (!prev || !Object.keys(prev).length) {
+        return prev;
+      }
+      changed = true;
+      return {};
+    });
+    if (changed && notifyDraftMutation) {
+      notifyDraftMutation();
+    }
   };
 
   const buildStrokeDraftKey = (
@@ -126,17 +139,21 @@ export const createStrokeDraftManager = (
     });
   };
 
-  const removeStrokeDraft = (stroke: unknown) => {
+  const removeStrokeDraft = (
+    stroke: unknown,
+    targetSessionKey?: string | null
+  ) => {
     const strokeKey = normalizeStrokeKey(stroke);
-    if (!strokeKey) {
+    const sessionKey = targetSessionKey || getLocalSessionKey();
+    if (!strokeKey || !sessionKey) {
       return;
     }
+    let changed = false;
     updateStrokeDrafts((prev) => {
-      let changed = false;
       const next = { ...prev };
       for (const key of Object.keys(prev)) {
         const entry = prev[key];
-        if (entry?.stroke !== strokeKey) {
+        if (entry?.stroke !== strokeKey || entry.session !== sessionKey) {
           continue;
         }
         delete next[key];
@@ -144,6 +161,9 @@ export const createStrokeDraftManager = (
       }
       return changed ? next : prev;
     });
+    if (changed && notifyDraftMutation) {
+      notifyDraftMutation();
+    }
   };
 
   const clearSessionDrafts = (targetSessionKey?: string) => {
@@ -151,8 +171,8 @@ export const createStrokeDraftManager = (
     if (!sessionToClear) {
       return;
     }
+    let changed = false;
     updateStrokeDrafts((prev) => {
-      let changed = false;
       const next = { ...prev };
       for (const key of Object.keys(prev)) {
         if (prev[key]?.session === sessionToClear) {
@@ -162,6 +182,9 @@ export const createStrokeDraftManager = (
       }
       return changed ? next : prev;
     });
+    if (changed && notifyDraftMutation) {
+      notifyDraftMutation();
+    }
   };
 
   const getPendingDraftSessions = (): PendingDraftSession[] => {
@@ -224,6 +247,9 @@ export const createStrokeDraftManager = (
       delete next[targetKey];
       return next;
     });
+    if (notifyDraftMutation) {
+      notifyDraftMutation();
+    }
     return true;
   };
 

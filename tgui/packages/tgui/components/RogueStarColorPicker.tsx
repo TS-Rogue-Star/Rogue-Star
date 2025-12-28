@@ -1,6 +1,8 @@
 // ///////////////////////////////////////////////////////////////////////////////////////////
 // Created by Lira for Rogue Star November 2025: Hex-ring + triangle RS color picker widget //
 // ///////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star December 2025: Make custom colors optional /////////////////
+// ///////////////////////////////////////////////////////////////////////////////////////////
 
 import { clamp } from 'common/math';
 import { Component, createRef } from 'inferno';
@@ -18,13 +20,14 @@ import {
 } from '../utils/color';
 
 type RogueStarColorPickerProps = {
-  color?: string;
-  currentColor?: string;
-  customColors?: (string | null)[];
-  onCustomColorsChange?: (colors: (string | null)[]) => void;
-  onChange?: (hex: string) => void;
-  onCommit?: (hex: string) => void;
-  showPreview?: boolean;
+  readonly color?: string;
+  readonly currentColor?: string;
+  readonly customColors?: (string | null)[];
+  readonly onCustomColorsChange?: (colors: (string | null)[]) => void;
+  readonly onChange?: (hex: string) => void;
+  readonly onCommit?: (hex: string) => void;
+  readonly showPreview?: boolean;
+  readonly showCustomColors?: boolean;
 };
 
 type RgbState = {
@@ -90,6 +93,8 @@ export class RogueStarColorPicker extends Component<
   private triangleRef = createRef<HTMLDivElement>();
   private triangleCanvasRef = createRef<HTMLCanvasElement>();
   private dragTarget: DragTarget = null;
+  private previewFrame: number | null = null;
+  private pendingPreviewHex: string | null = null;
 
   constructor(props: RogueStarColorPickerProps) {
     super(props);
@@ -111,34 +116,33 @@ export class RogueStarColorPicker extends Component<
       const incoming = normalizeHex(this.props.color) || DEFAULT_COLOR;
       if (incoming !== this.state.hex) {
         const nextState = this.buildColorState(incoming);
-        this.setState(
-          (prev) => ({
-            ...nextState,
-            customSelection: prev.customSelection,
-          }),
-          () => {
-            this.emitPreview(incoming);
-            this.renderTriangleCanvas();
-          }
-        );
+        this.setState((prev) => ({
+          ...nextState,
+          customSelection: prev.customSelection,
+        }));
         return;
       }
     }
-    if (
-      prevState.hue !== this.state.hue ||
-      prevState.saturation !== this.state.saturation ||
-      prevState.value !== this.state.value
-    ) {
+    if (prevState.hue !== this.state.hue) {
       this.renderTriangleCanvas();
     }
   }
 
   componentWillUnmount() {
     this.detachDrag();
+    if (this.previewFrame !== null) {
+      window.cancelAnimationFrame(this.previewFrame);
+      this.previewFrame = null;
+    }
   }
 
   render() {
-    const { currentColor, onCustomColorsChange, showPreview } = this.props;
+    const {
+      currentColor,
+      onCustomColorsChange,
+      showPreview,
+      showCustomColors,
+    } = this.props;
     const { hue, saturation, value, hex, rgb, hexInput, customSelection } =
       this.state;
     const displayRotation = this.getDisplayRotation();
@@ -152,8 +156,9 @@ export class RogueStarColorPicker extends Component<
       normalizeHex(currentColor) ||
       normalizeHex(this.props.color) ||
       DEFAULT_COLOR;
-    const customColors = this.getCustomColors();
     const shouldRenderPreview = showPreview !== false;
+    const shouldRenderCustomColors = showCustomColors !== false;
+    const customColors = shouldRenderCustomColors ? this.getCustomColors() : [];
 
     return (
       <Box className="RogueStarColorPicker">
@@ -201,33 +206,35 @@ export class RogueStarColorPicker extends Component<
               </div>
             </div>
           </div>
-          <div className="RogueStarColorPicker__customRow">
-            {customColors.map((color, index) => (
-              <button
-                key={`custom-${index}`}
-                type="button"
-                className={[
-                  'RogueStarColorPicker__swatch',
-                  customSelection === index
-                    ? 'RogueStarColorPicker__swatch--selected'
-                    : '',
-                ]
-                  .filter(Boolean)
-                  .join(' ')}
-                style={{
-                  background: color || 'transparent',
-                }}
-                onClick={() => this.handleCustomSwatchSelect(index, color)}
+          {shouldRenderCustomColors ? (
+            <div className="RogueStarColorPicker__customRow">
+              {customColors.map((color, index) => (
+                <button
+                  key={`custom-${index}`}
+                  type="button"
+                  className={[
+                    'RogueStarColorPicker__swatch',
+                    customSelection === index
+                      ? 'RogueStarColorPicker__swatch--selected'
+                      : '',
+                  ]
+                    .filter(Boolean)
+                    .join(' ')}
+                  style={{
+                    background: color || 'transparent',
+                  }}
+                  onClick={() => this.handleCustomSwatchSelect(index, color)}
+                />
+              ))}
+              <Button
+                icon="plus"
+                content="Save"
+                className="RogueStarColorPicker__saveButton"
+                disabled={!onCustomColorsChange}
+                onClick={() => this.handleAddCustomColor()}
               />
-            ))}
-            <Button
-              icon="plus"
-              content="Save"
-              className="RogueStarColorPicker__saveButton"
-              disabled={!onCustomColorsChange}
-              onClick={() => this.handleAddCustomColor()}
-            />
-          </div>
+            </div>
+          ) : null}
         </div>
 
         <div className="RogueStarColorPicker__controlColumn">
@@ -319,9 +326,21 @@ export class RogueStarColorPicker extends Component<
   }
 
   private emitPreview(hex: string) {
-    if (this.props.onChange) {
-      this.props.onChange(hex);
+    if (!this.props.onChange) {
+      return;
     }
+    this.pendingPreviewHex = hex;
+    if (this.previewFrame !== null) {
+      return;
+    }
+    this.previewFrame = window.requestAnimationFrame(() => {
+      this.previewFrame = null;
+      const next = this.pendingPreviewHex;
+      this.pendingPreviewHex = null;
+      if (next && this.props.onChange) {
+        this.props.onChange(next);
+      }
+    });
   }
 
   private renderTriangleCanvas() {

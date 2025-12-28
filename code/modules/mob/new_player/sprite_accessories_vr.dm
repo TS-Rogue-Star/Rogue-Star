@@ -258,11 +258,13 @@
 
 
 //Skrell 'hairstyles' - these were requested for a chimera and screw it, if one wants to eat seafood, go nuts
+/* RS Edit: Comment out for missing sprites (Lira, December 2025)
 /datum/sprite_accessory/hair/skr_tentacle_veryshort
 	name = "Skrell Very Short Tentacles"
 	icon_state = "skrell_hair_veryshort"
 	//species_allowed = list(SPECIES_SKRELL, SPECIES_XENOCHIMERA, SPECIES_PROTEAN)		//RS EDIT
 	gender = MALE
+*/
 
 /datum/sprite_accessory/hair/skr_tentacle_short
 	name = "Skrell Short Tentacles"

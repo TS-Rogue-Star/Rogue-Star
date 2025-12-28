@@ -2,17 +2,19 @@ import { useBackend } from '../backend';
 import { Box, Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
+// RS Edit: Off duty AI support (Lira, November 2025)
 type Data = {
-  master: string;
-  dna: string;
+  master: string | null;
+  dna: string | null;
   prime: string;
-  supplemental: string;
+  supplemental: string | null;
+  offduty_note?: string;
 };
 
 export const pAIDirectives = (props, context) => {
   const { act, data } = useBackend<Data>(context);
 
-  const { master, dna, prime, supplemental } = data;
+  const { master, dna, prime, supplemental, offduty_note } = data; // RS Edit: Off duty AI support (Lira, November 2025)
 
   return (
     <Window width={450} height={600} resizable>
@@ -22,7 +24,9 @@ export const pAIDirectives = (props, context) => {
             <LabeledList.Item label="Master">
               {(master && (
                 <Box>
-                  {master} ({dna})
+                  {master}
+                  {/* RS Edit: Off duty AI support (Lira, November 2025) */}
+                  {dna ? ` (${dna})` : ''}
                   <Button
                     icon="syringe"
                     content="Request Sample"
@@ -40,22 +44,32 @@ export const pAIDirectives = (props, context) => {
               {supplemental || 'None'}
             </LabeledList.Item>
           </LabeledList>
-          <Box mt={1} italic>
-            Recall, personality, that you are a complex piece of software with
-            tremendous social skills. Unlike station AI models, you are focused
-            entirely on sapient-software interfacing. You may parse the
-            &quot;spirit&quot; of a directive and follow its intent, rather than
-            tripping over pedantics and getting snared by technicalities. Above
-            all, you should strive to be seen as the ideal, unwavering digital
-            companion that you are.
-          </Box>
-          <Box mt={1} bold>
-            Your prime directive comes before all others. Should a supplemental
-            directive conflict with it, you are capable of simply discarding
-            this inconsistency, ignoring the conflicting supplemental directive
-            and continuing to fulfill your prime directive to the best of your
-            ability.
-          </Box>
+          {/* RS Edit Start: Off duty AI support (Lira, November 2025) */}
+          {offduty_note ? (
+            <Box mt={1} italic>
+              {offduty_note}
+            </Box>
+          ) : (
+            <>
+              <Box mt={1} italic>
+                Recall, personality, that you are a complex piece of software
+                with tremendous social skills. Unlike station AI models, you are
+                focused entirely on sapient-software interfacing. You may parse
+                the &quot;spirit&quot; of a directive and follow its intent,
+                rather than tripping over pedantics and getting snared by
+                technicalities. Above all, you should strive to be seen as the
+                ideal, unwavering digital companion that you are.
+              </Box>
+              <Box mt={1} bold>
+                Your prime directive comes before all others. Should a
+                supplemental directive conflict with it, you are capable of
+                simply discarding this inconsistency, ignoring the conflicting
+                supplemental directive and continuing to fulfill your prime
+                directive to the best of your ability.
+              </Box>
+            </>
+          )}
+          {/* RS Edit End */}
         </Section>
       </Window.Content>
     </Window>

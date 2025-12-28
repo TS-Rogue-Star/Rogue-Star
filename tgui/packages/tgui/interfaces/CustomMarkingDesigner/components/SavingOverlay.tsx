@@ -6,9 +6,9 @@ import { Box, Icon, ProgressBar } from '../../../components';
 import type { SavingProgressState } from '../types';
 
 export type SavingOverlayProps = {
-  title?: string;
-  subtitle?: string;
-  progress?: SavingProgressState | null;
+  readonly title?: string;
+  readonly subtitle?: string;
+  readonly progress?: SavingProgressState | null;
 };
 
 export const SavingOverlay = ({
