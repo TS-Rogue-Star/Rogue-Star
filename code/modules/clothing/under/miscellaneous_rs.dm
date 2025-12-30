@@ -70,3 +70,11 @@
 	icon_override = 'icons/inventory/head/mob_rs.dmi'
 	icon_state = "talon_officer_beret"
 	item_state = "talon_officer_beret"
+
+/obj/item/clothing/under/hyperfiber/bluespace/skirt
+	name = "bluespace jumpskirt"
+	icon = 'icons/inventory/uniform/item_rs.dmi'
+	icon_override = 'icons/inventory/uniform/mob_rs.dmi'
+	icon_state = "bluespace_skirt"
+	item_state = "bluespace_skirt"
+	worn_state = "bluespace_skirt"

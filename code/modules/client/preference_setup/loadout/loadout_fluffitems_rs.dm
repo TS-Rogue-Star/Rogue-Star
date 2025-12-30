@@ -167,3 +167,11 @@
 	display_name = "Portal Plushie"
 	ckeywhitelist = list("googlyfox")
 	character_name = null
+
+/datum/gear/fluff/bluespace_jumpskirt
+	path = /obj/item/clothing/under/hyperfiber/bluespace/skirt
+	display_name = "Bluespace Jumpskirt"
+	ckeywhitelist = list("dameonowen")
+	character_name = null
+	slot = slot_w_uniform
+	cost = 3 // Equivalent to the deluxe size standardization bracelet

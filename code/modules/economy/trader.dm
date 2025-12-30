@@ -328,6 +328,7 @@
 		/obj/item/device/slow_sizegun = 25,
 		/obj/item/clothing/accessory/collar/shock/bluespace = 25,
 		/obj/item/weapon/implant/sizecontrol = 25,
+		/obj/item/clothing/under/hyperfiber/bluespace/skirt = 25,
 		/obj/item/clothing/under/hyperfiber/bluespace = 25,
 		/obj/item/device/nif/authentic = 1,
 		/obj/item/toy/bosunwhistle = 50,
@@ -355,6 +356,7 @@
 		/obj/item/device/slow_sizegun = 10,
 		/obj/item/clothing/accessory/collar/shock/bluespace = 10,
 		/obj/item/weapon/implant/sizecontrol = 10,
+		/obj/item/clothing/under/hyperfiber/bluespace/skirt = 10,
 		/obj/item/clothing/under/hyperfiber/bluespace = 10,
 		/obj/item/device/nif/authentic = 100,
 		/obj/item/toy/bosunwhistle = 1,
@@ -380,6 +382,7 @@
 		/obj/item/device/slow_sizegun = 2,
 		/obj/item/clothing/accessory/collar/shock/bluespace = 2,
 		/obj/item/weapon/implant/sizecontrol = 2,
+		/obj/item/clothing/under/hyperfiber/bluespace/skirt = 2,
 		/obj/item/clothing/under/hyperfiber/bluespace = 2,
 		/obj/item/weapon/reagent_containers/food/snacks/jellyfishcore = 10
 		)

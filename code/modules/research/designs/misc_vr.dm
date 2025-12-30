@@ -14,6 +14,15 @@
 	build_path = /obj/item/clothing/under/hyperfiber/bluespace
 	sort_string = "TAVAB"
 
+// RS Add: Bluespace Jumpskirt
+/datum/design/item/general/bluespace_jumpskirt
+	name = "Bluespace jumpskirt"
+	id = "bsjumpskirt"
+	req_tech = list(TECH_BLUESPACE = 2, TECH_MATERIAL = 3, TECH_POWER = 2)
+	materials = list(MAT_STEEL = 4000, MAT_GLASS = 4000)
+	build_path = /obj/item/clothing/under/hyperfiber/bluespace/skirt
+	sort_string = "TAVAC"
+
 /datum/design/item/general/sizegun
 	name = "Size gun"
 	id = "sizegun"
