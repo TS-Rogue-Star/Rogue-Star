@@ -14,6 +14,7 @@ SUBSYSTEM_DEF(events)
 
 /datum/controller/subsystem/events/Initialize()
 	allEvents = subtypesof(/datum/event)
+	// RS Edit - Remove strict assignments that cause alist errors
 	event_containers = list(
 		new/datum/event_container/mundane,
 		new/datum/event_container/moderate,
