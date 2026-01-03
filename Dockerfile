@@ -5,7 +5,7 @@ FROM --platform=linux/386 debian:trixie AS base
 
 #RS EDIT START
 ARG BYOND_MAJOR=516
-ARG BYOND_MINOR=1666
+ARG BYOND_MINOR=1670
 #RS EDIT END
 
 RUN apt-get update \
