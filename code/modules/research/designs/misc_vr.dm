@@ -6,28 +6,25 @@
 	build_path = /obj/item/clothing/under/hyperfiber
 	sort_string = "TAVAA"
 
+// RS Add: Bluespace & HYPER Jumpskirt
+/datum/design/item/general/hyperfiber_jumpsuit/skirt
+	name = "HYPER jumpskirt"
+	id = "hfjumpskirt"
+	build_path = /obj/item/clothing/under/hyperfiber/skirt
+	sort_string = "TAVAB"
+
 /datum/design/item/general/bluespace_jumpsuit
 	name = "Bluespace jumpsuit"
 	id = "bsjumpsuit"
 	req_tech = list(TECH_BLUESPACE = 2, TECH_MATERIAL = 3, TECH_POWER = 2)
 	materials = list(MAT_STEEL = 4000, MAT_GLASS = 4000)
 	build_path = /obj/item/clothing/under/hyperfiber/bluespace
-	sort_string = "TAVAB"
-
-// RS Add: Bluespace & HYPER Jumpskirt
-/datum/design/item/general/hyperfiber_jumpskirt
-	name = "HYPER jumpskirt"
-	id = "hfjumpskirt"
-	req_tech = list(TECH_BLUESPACE = 2)
-	materials = list(MAT_STEEL = 2000, MAT_GLASS = 1000)
-	build_path = /obj/item/clothing/under/hyperfiber/skirt
 	sort_string = "TAVAC"
 
-/datum/design/item/general/bluespace_jumpskirt
+// RS Add: Bluespace & HYPER Jumpskirt
+/datum/design/item/general/bluespace_jumpsuit/skirt
 	name = "Bluespace jumpskirt"
 	id = "bsjumpskirt"
-	req_tech = list(TECH_BLUESPACE = 2, TECH_MATERIAL = 3, TECH_POWER = 2)
-	materials = list(MAT_STEEL = 4000, MAT_GLASS = 4000)
 	build_path = /obj/item/clothing/under/hyperfiber/bluespace/skirt
 	sort_string = "TAVAD"
 
