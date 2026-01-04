@@ -1,6 +1,6 @@
 /datum/category_item/player_setup_item/player_global/pai
 	name = "pAI"
-	sort_order = 3
+	sort_order = 4 // RS Edit: Tweaked for menu order (Lira, January 2026)
 
 	var/datum/paiCandidate/candidate
 
