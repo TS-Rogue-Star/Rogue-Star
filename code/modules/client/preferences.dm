@@ -198,6 +198,7 @@ var/list/preferences_datums = list()
 
 	///If they are currently in the process of swapping slots, don't let them open 999 windows for it and get confused
 	var/selecting_slots = FALSE
+	var/last_preferences_export_round_id = 0 // RS Add: Export gating (Lira, January 2026)
 
 /datum/preferences/New(client/C)
 	player_setup = new(src)
