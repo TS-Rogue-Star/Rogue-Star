@@ -53,7 +53,8 @@ export class TextArea extends Component {
     this.handleKeyDown = (e) => {
       const { editing } = this.state;
       const { onChange, onInput, onEnter, onKey } = this.props;
-      if (e.keyCode === KEY_ENTER) {
+      // RS Edit: Holding shift makes a new line (Lira, January 2026)
+      if (e.keyCode === KEY_ENTER && !e.shiftKey) {
         this.setEditing(false);
         if (onChange) {
           onChange(e, e.target.value);
