@@ -201,6 +201,17 @@
 	// Close all tgui datums based on window_id.
 	SStgui.force_close_window(user, window_id)
 
+ // RS Add: Clears a stale chunk buffer if it hasn't been updated since the timer was set (Lira, January 2026)
+/client/proc/clear_tgui_chunk_buffer(chunk_key, last_time)
+	if(!tgui_chunk_buffers)
+		return
+	var/list/buffer = tgui_chunk_buffers[chunk_key]
+	if(!islist(buffer))
+		return
+	if(buffer["last_time"] != last_time)
+		return
+	tgui_chunk_buffers -= chunk_key
+
 /**
  * Middleware for /client/Topic.
  *
@@ -241,6 +252,66 @@
 			// #endif
 			SStgui.force_close_window(usr, window_id)
 			return FALSE
+	// RS Add Start: Handle chunked payloads (Lira, January 2026)
+	if(type == "chunk")
+		if(!usr || !usr.client)
+			return TRUE
+		var/client/C = usr.client
+		var/chunk_id = href_list["chunk_id"]
+		var/chunk_type = href_list["chunk_type"]
+		var/chunk_index = text2num(href_list["chunk_index"])
+		var/chunk_total = text2num(href_list["chunk_total"])
+		var/chunk_data = href_list["payload"] || ""
+		if(!window_id || !chunk_id || !chunk_type || !chunk_total || !chunk_index)
+			return TRUE
+		if(chunk_total > TGUI_CHUNK_MAX_PARTS)
+			return TRUE
+		if(chunk_index < 1 || chunk_index > chunk_total)
+			return TRUE
+		if(!C.tgui_chunk_buffers)
+			C.tgui_chunk_buffers = list()
+		var/chunk_key = "tgui:[window_id]:[chunk_id]"
+		var/list/buffer = C.tgui_chunk_buffers[chunk_key]
+		if(buffer)
+			if(buffer["type"] != chunk_type || buffer["total"] != chunk_total || world.time - buffer["last_time"] > TGUI_CHUNK_TIMEOUT)
+				C.tgui_chunk_buffers -= chunk_key
+				buffer = null
+		if(!buffer)
+			buffer = list(
+				"type" = chunk_type,
+				"total" = chunk_total,
+				"received" = 0,
+				"parts" = list(),
+				"size" = 0,
+				"last_time" = world.time
+			)
+			C.tgui_chunk_buffers[chunk_key] = buffer
+		else
+			buffer["last_time"] = world.time
+		addtimer(CALLBACK(C, TYPE_PROC_REF(/client, clear_tgui_chunk_buffer), chunk_key, buffer["last_time"]), TGUI_CHUNK_TIMEOUT)
+		var/list/parts = buffer["parts"]
+		if(length(parts) < chunk_index)
+			parts.len = chunk_index
+		if(isnull(parts[chunk_index]))
+			var/new_size = (buffer["size"] || 0) + length(chunk_data)
+			if(new_size > TGUI_CHUNK_MAX_PAYLOAD)
+				C.tgui_chunk_buffers -= chunk_key
+				return TRUE
+			parts[chunk_index] = chunk_data
+			buffer["size"] = new_size
+			buffer["received"] = (buffer["received"] || 0) + 1
+		if(buffer["received"] >= chunk_total)
+			var/full_payload = ""
+			for(var/i in 1 to chunk_total)
+				full_payload += parts[i]
+			C.tgui_chunk_buffers -= chunk_key
+			var/decoded_payload = null
+			if(length(full_payload))
+				decoded_payload = json_decode(full_payload)
+			if(window)
+				window.on_message(chunk_type, decoded_payload, href_list)
+		return TRUE
+	// RS Add End
 	// Decode payload
 	var/payload
 	if(href_list["payload"])

@@ -28,6 +28,15 @@
 	"%7b%22type%22%3a%22[type]%22%2c%22payload%22%3a[url_encode(json_encode(payload))]%7d" \
 )
 
+// RS Add Start: TGUI message chunking (Lira, January 2026)
+/// Max number of chunks accepted for a single chunked payload.
+#define TGUI_CHUNK_MAX_PARTS 256
+/// Max assembled payload size (in characters) for chunked payloads.
+#define TGUI_CHUNK_MAX_PAYLOAD 131072
+/// Drop incomplete chunk buffers after this age.
+#define TGUI_CHUNK_TIMEOUT 10 SECONDS
+// RS Add End
+
 /// Max length for Modal Input
 #define TGUI_MODAL_INPUT_MAX_LENGTH 1024
 /// Max length for Modal Input for names

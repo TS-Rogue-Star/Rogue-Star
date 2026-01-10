@@ -163,7 +163,18 @@
 
 /mob/proc/custom_emote(var/m_type = VISIBLE_MESSAGE, var/message, var/range = world.view)
 
-	if((usr && stat) || (!use_me && usr == src))
+	if(usr && stat)
+		// RS Add Start: Echo message when unconscious (Lira, January 2026)
+		if(stat == UNCONSCIOUS && message)
+			var/safe_message = sanitize(message, max_length = MAX_MESSAGE_LEN)
+			to_chat(src, safe_message)
+			to_chat(src, "<span class='warning'>^ You are unconscious and cannot emote; your message was not sent. ^</span>")
+		else
+			to_chat(src, "You are unable to emote.")
+		return
+		// RS Add End
+
+	if(!use_me && usr == src)
 		to_chat(src, "You are unable to emote.")
 		return
 

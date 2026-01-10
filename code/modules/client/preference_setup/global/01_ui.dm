@@ -16,6 +16,7 @@
 	S["tgui_input_lock"]		>> pref.tgui_input_lock
 	S["tgui_large_buttons"]		>> pref.tgui_large_buttons
 	S["tgui_swapped_buttons"]	>> pref.tgui_swapped_buttons
+	S["tgui_input_window_scale"]	>> pref.tgui_input_window_scale // RS Add: TGUI window scaling (Lira, January 2026)
 	S["chat_timestamp"]			>> pref.chat_timestamp
 
 /datum/category_item/player_setup_item/player_global/ui/save_preferences(var/savefile/S)
@@ -32,6 +33,7 @@
 	S["tgui_input_lock"]		<< pref.tgui_input_lock
 	S["tgui_large_buttons"]		<< pref.tgui_large_buttons
 	S["tgui_swapped_buttons"]	<< pref.tgui_swapped_buttons
+	S["tgui_input_window_scale"]	<< pref.tgui_input_window_scale // RS Add: TGUI window scaling (Lira, January 2026)
 	S["chat_timestamp"]			<< pref.chat_timestamp
 
 /datum/category_item/player_setup_item/player_global/ui/sanitize_preferences()
@@ -48,6 +50,7 @@
 	pref.tgui_input_lock	= sanitize_integer(pref.tgui_input_lock, 0, 1, initial(pref.tgui_input_lock))
 	pref.tgui_large_buttons	= sanitize_integer(pref.tgui_large_buttons, 0, 1, initial(pref.tgui_large_buttons))
 	pref.tgui_swapped_buttons	= sanitize_integer(pref.tgui_swapped_buttons, 0, 1, initial(pref.tgui_swapped_buttons))
+	pref.tgui_input_window_scale = sanitize_integer(pref.tgui_input_window_scale, 1, 3, initial(pref.tgui_input_window_scale)) // RS Add: TGUI window scaling (Lira, January 2026)
 	pref.chat_timestamp		= sanitize_integer(pref.chat_timestamp, 0, 1, initial(pref.chat_timestamp))
 
 /datum/category_item/player_setup_item/player_global/ui/content(var/mob/user)
@@ -64,6 +67,14 @@
 	. += "<b>TGUI Input Lock:</b> <a href='?src=\ref[src];tgui_input_lock=1'><b>[(pref.tgui_input_lock) ? "Enabled" : "Disabled (default)"]</b></a><br>"
 	. += "<b>TGUI Large Buttons:</b> <a href='?src=\ref[src];tgui_large_buttons=1'><b>[(pref.tgui_large_buttons) ? "Enabled (default)" : "Disabled"]</b></a><br>"
 	. += "<b>TGUI Swapped Buttons:</b> <a href='?src=\ref[src];tgui_swapped_buttons=1'><b>[(pref.tgui_swapped_buttons) ? "Enabled" : "Disabled (default)"]</b></a><br>"
+	// RS Add Start: TGUI window scaling (Lira, January 2026)
+	var/static/list/tgui_input_window_scale_labels = list(
+		"Default (1x)",
+		"Double (2x)",
+		"Triple (3x)"
+	)
+	. += "<b>TGUI Message Window Size:</b> <a href='?src=\ref[src];tgui_input_window_scale=1'><b>[tgui_input_window_scale_labels[pref.tgui_input_window_scale]]</b></a><br>"
+	// RS Add End
 	. += "<b>Chat Timestamps:</b> <a href='?src=\ref[src];chat_timestamps=1'><b>[(pref.chat_timestamp) ? "Enabled" : "Disabled (default)"]</b></a><br>"
 	if(can_select_ooc_color(user))
 		. += "<b>OOC Color:</b>"
@@ -148,6 +159,15 @@
 
 	else if(href_list["tgui_swapped_buttons"])
 		pref.tgui_swapped_buttons = !pref.tgui_swapped_buttons
+		return TOPIC_REFRESH
+
+	// RS Add: TGUI window scaling (Lira, January 2026)
+	else if(href_list["tgui_input_window_scale"])
+		var/list/window_scale_options = list("Default (1x)", "Double (2x)", "Triple (3x)")
+		var/choice = tgui_input_list(user, "Choose the default size for TGUI message windows.", "Global Preference", window_scale_options, window_scale_options[pref.tgui_input_window_scale])
+		if(!choice || !CanUseTopic(user))
+			return TOPIC_NOACTION
+		pref.tgui_input_window_scale = window_scale_options.Find(choice)
 		return TOPIC_REFRESH
 
 	else if(href_list["chat_timestamps"])

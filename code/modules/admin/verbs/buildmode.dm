@@ -735,6 +735,7 @@
 		result = tgui_input_list(usr, "Select an atom type", "Spawn Atom", matches, strict_modern = TRUE)
 	return result
 
+// RS Edit: Updated to fix dynamic lighting issues (Lira, January 2026)
 /obj/effect/bmode/buildmode/proc/make_rectangle(var/turf/A, var/turf/B, var/turf/wall_type, var/turf/floor_type, var/area_enabled, var/area_name)
 	if(!A || !B) // No coords
 		return
@@ -773,27 +774,41 @@
 	var/origin_y = lower_left_corner.y + round((abs(height)/2))
 	var/turf/origin
 
+	var/list/turf/changed_turfs = list()
 	for(var/i = low_bound_x, i <= high_bound_x, i++)
 		for(var/j = low_bound_y, j <= high_bound_y, j++)
 			var/turf/T = locate(i, j, z_level)
+			var/turf/current_turf = null
 			if(i == low_bound_x || i == high_bound_x || j == low_bound_y || j == high_bound_y)
 				if(isturf(wall_type))
-					T.ChangeTurf(wall_type)
+					current_turf = T.ChangeTurf(wall_type.type)
+				else if(ispath(wall_type, /turf))
+					current_turf = T.ChangeTurf(wall_type)
 				else
 					new wall_type(T)
 
 			else
-				if(T.x == origin_x && T.y == origin_y) //Get the middle of the square.
-					origin = T
 				if(isturf(floor_type))
-					T.ChangeTurf(floor_type)
+					current_turf = T.ChangeTurf(floor_type.type)
+				else if(ispath(floor_type, /turf))
+					current_turf = T.ChangeTurf(floor_type)
 				else
 					new floor_type(T)
+			if(!current_turf)
+				current_turf = locate(i, j, z_level)
+			if(current_turf)
+				changed_turfs |= current_turf
+	origin = locate(origin_x, origin_y, z_level)
 	if(area_enabled) //Let's try not to make a new area unless you got walls and a floor.
-		create_buildmode_area(area_name, origin) //Generates a new area.
+		create_buildmode_area(area_name, origin, changed_turfs) //Generates a new area.
 
-/proc/create_buildmode_area(var/area_name, var/turf/origin)
-	var/turfs = detect_room_buildmode(origin)
+// RS Edit: Updated to fix dynamic lighting issues (Lira, January 2026)
+/proc/create_buildmode_area(var/area_name, var/turf/origin, var/list/turf/turfs_override)
+	var/list/turf/turfs = turfs_override
+	if(!islist(turfs) || !turfs.len)
+		turfs = detect_room_buildmode(origin)
+		if(!islist(turfs))
+			return
 
 	var/area/newA
 	var/area/oldA = get_area(origin)
@@ -802,15 +817,15 @@
 	if(!str || !length(str)) //cancel
 		return
 	newA = new /area/buildmode
-	newA.dynamic_lighting = FALSE // Without this it's pitch black if you build anywhere but space.
-	newA.luminosity = TRUE // Without this it's pitch black if you build anywhere but space.
+	var/lighting_setting = oldA.dynamic_lighting
+	if(lighting_setting == DYNAMIC_LIGHTING_DISABLED)
+		lighting_setting = DYNAMIC_LIGHTING_ENABLED
+	newA.dynamic_lighting = lighting_setting
+	newA.luminosity = lighting_setting ? 0 : 1
 	newA.setup(str)
 	newA.has_gravity = oldA.has_gravity
 
-	for(var/i in 1 to length(turfs)) //Fix lighting. Praise the lord.
-		var/turf/thing = turfs[i]
-		newA.contents += thing
-		thing.change_area(oldA, newA)
+	move_turfs_to_area(turfs, newA)
 
 	set_area_machinery(newA, newA.name, oldA.name)// Change the name and area defines of all the machinery to the correct area.
 	oldA.power_check() //Simply makes the area turn the power off if you nicked an APC from it.

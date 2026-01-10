@@ -14,8 +14,9 @@
  * * multiline -  Bool that determines if the input box is much larger. Good for large messages, laws, etc.
  * * encode - Toggling this determines if input is filtered via html_encode. Setting this to FALSE gives raw input.
  * * timeout - The timeout of the textbox, after which the modal will close and qdel itself. Set to zero for no timeout.
+ * * use_message_window_scale - If true, applies the user's message window size preference. || RS Add: TGUI window scaling (Lira, January 2026)
  */
-/proc/tgui_input_text(mob/user, message = "", title = "Text Input", default, max_length = INFINITY, multiline = FALSE, encode = FALSE, timeout = 0, prevent_enter = FALSE)
+/proc/tgui_input_text(mob/user, message = "", title = "Text Input", default, max_length = INFINITY, multiline = FALSE, encode = FALSE, timeout = 0, prevent_enter = FALSE, use_message_window_scale = FALSE) // RS Edit: TGUI window scaling (Lira, January 2026)
 	if (istext(user))
 		stack_trace("tgui_input_text() received text for user instead of mob")
 		return
@@ -44,7 +45,13 @@
 	if(user.client.prefs.tgui_input_lock)
 		prevent_enter = TRUE
 
-	var/datum/tgui_input_text/text_input = new(user, message, title, default, max_length, multiline, encode, timeout, prevent_enter)
+	// RS Add Start: TGUI window scaling (Lira, January 2026)
+	var/window_scale = 1
+	if(use_message_window_scale && user.client && user.client.prefs)
+		window_scale = user.client.prefs.tgui_input_window_scale
+	// RS Add End
+
+	var/datum/tgui_input_text/text_input = new(user, message, title, default, max_length, multiline, encode, timeout, prevent_enter, window_scale) // RS Edit: TGUI window scaling (Lira, January 2026)
 	text_input.tgui_interact(user)
 	text_input.wait()
 	if (text_input)
@@ -78,16 +85,23 @@
 	var/timeout
 	/// The title of the TGUI window
 	var/title
+	/// RS Add: Window scale factor for message inputs (Lira, January 2026)
+	var/window_scale = 1
 
 	var/prevent_enter
 
-/datum/tgui_input_text/New(mob/user, message, title, default, max_length, multiline, encode, timeout, prevent_enter)
+/datum/tgui_input_text/New(mob/user, message, title, default, max_length, multiline, encode, timeout, prevent_enter, window_scale) // RS Edit: TGUI window scaling (Lira, January 2026)
 	src.default = default
 	src.encode = encode
 	src.max_length = max_length
 	src.message = message
 	src.multiline = multiline
 	src.title = title
+	// RS Add Start: TGUI window scaling (Lira, January 2026)
+	if(!isnum(window_scale))
+		window_scale = 1
+	src.window_scale = clamp(window_scale, 1, 3)
+	// RS Add End
 	if (timeout)
 		src.timeout = timeout
 		start_time = world.time
@@ -126,6 +140,7 @@
 	data["message"] = message
 	data["multiline"] = multiline
 	data["placeholder"] = default // Default is a reserved keyword
+	data["window_scale"] = window_scale // RS Add: TGUI window scaling (Lira, January 2026)
 	data["swapped_buttons"] = !user.client.prefs.tgui_swapped_buttons
 	data["title"] = title
 	data["prevent_enter"] = prevent_enter

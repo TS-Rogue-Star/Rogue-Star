@@ -36,6 +36,7 @@ var/list/preferences_datums = list()
 	var/tgui_input_lock = FALSE
 	var/tgui_large_buttons = TRUE
 	var/tgui_swapped_buttons = FALSE
+	var/tgui_input_window_scale = 1 	// RS Add: TGUI window scaling (Lira, January 2026)
 	var/chat_timestamp = FALSE
 
 	//character preferences

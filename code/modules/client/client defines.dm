@@ -81,6 +81,9 @@
 	// Runechat messages
 	var/list/seen_messages
 
+	// RS Add: TGUI payload chunk buffers keyed by window id and chunk id (Lira, January 2026)
+	var/list/tgui_chunk_buffers
+
 	//Hide top bars
 	var/fullscreen = FALSE
 	//Hide status bar
