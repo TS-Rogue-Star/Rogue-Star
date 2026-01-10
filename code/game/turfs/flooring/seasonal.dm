@@ -260,6 +260,8 @@ var/world_time_day
 
 /turf/simulated/floor/outdoors/grass/seasonal/notrees
 	tree_chance = 0
+/turf/simulated/floor/outdoors/grass/seasonal/nosnow
+	snow_chance = 0
 /turf/simulated/floor/outdoors/grass/seasonal/nomobs
 	animal_chance = 0
 /turf/simulated/floor/outdoors/grass/seasonal/notrees_nomobs
@@ -283,6 +285,8 @@ var/world_time_day
 	tree_chance = 5
 /turf/simulated/floor/outdoors/grass/seasonal/dark/notrees
 	tree_chance = 0
+/turf/simulated/floor/outdoors/grass/seasonal/dark/nosnow
+	snow_chance = 0
 /turf/simulated/floor/outdoors/grass/seasonal/dark/nomobs
 	animal_chance = 0
 /turf/simulated/floor/outdoors/grass/seasonal/dark/notrees_nomobs
