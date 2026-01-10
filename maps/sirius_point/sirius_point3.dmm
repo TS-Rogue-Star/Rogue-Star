@@ -331,9 +331,7 @@
 /turf/simulated/floor/tiled/white,
 /area/medical/moonbase/upperlevel)
 "be" = (
-/turf/simulated/floor/outdoors/grass/seasonal/dark/notrees_nomobs{
-	outdoors = 0
-	},
+/turf/simulated/floor/outdoors/grass/seasonal/dark/notrees_nomobs_nosnow,
 /area/crew_quarters/bar)
 "bf" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
@@ -2234,6 +2232,7 @@
 /obj/structure/table/steel,
 /obj/item/weapon/folder/red,
 /obj/item/weapon/folder/red,
+/obj/item/weapon/paper/dockingcodes/sp,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/moonbase/pilotroom)
 "fX" = (
@@ -2512,6 +2511,7 @@
 	pixel_y = -24;
 	dir = 1
 	},
+/obj/effect/floor_decal/steeldecal/steel_decals5,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/moonbase/pilotroom)
 "gL" = (
@@ -10337,9 +10337,7 @@
 /area/crew_quarters/bar)
 "zr" = (
 /obj/machinery/light/bigfloorlamp,
-/turf/simulated/floor/outdoors/grass/seasonal/dark/notrees_nomobs{
-	outdoors = 0
-	},
+/turf/simulated/floor/outdoors/grass/seasonal/dark/notrees_nomobs_nosnow,
 /area/crew_quarters/bar)
 "zs" = (
 /obj/structure/sign/warning/docking_area,
@@ -18627,6 +18625,7 @@
 	pixel_x = 0;
 	pixel_y = 28
 	},
+/obj/item/weapon/paper/dockingcodes/sp,
 /turf/simulated/floor/carpet/blue2,
 /area/crew_quarters/captain/moonbase/office)
 "Um" = (

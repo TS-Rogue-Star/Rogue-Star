@@ -53,7 +53,8 @@ export class TextArea extends Component {
     this.handleKeyDown = (e) => {
       const { editing } = this.state;
       const { onChange, onInput, onEnter, onKey } = this.props;
-      if (e.keyCode === KEY_ENTER) {
+      // RS Edit: Holding shift makes a new line (Lira, January 2026)
+      if (e.keyCode === KEY_ENTER && !e.shiftKey) {
         this.setEditing(false);
         if (onChange) {
           onChange(e, e.target.value);
@@ -183,6 +184,7 @@ export class TextArea extends Component {
       scrollbar,
       noborder,
       displayedValue,
+      spellcheck = true, // RS Add: Spellcheck (Lira, January 2026)
       ...boxProps
     } = this.props;
     // Box props
@@ -227,6 +229,7 @@ export class TextArea extends Component {
           onBlur={this.handleBlur}
           onScroll={this.handleScroll}
           maxLength={maxLength}
+          spellcheck={spellcheck} // RS Add: Spellcheck (Lira, January 2026)
           style={{
             'color': displayedValue ? 'rgba(0, 0, 0, 0)' : 'inherit',
           }}
