@@ -2234,6 +2234,7 @@
 /obj/structure/table/steel,
 /obj/item/weapon/folder/red,
 /obj/item/weapon/folder/red,
+/obj/item/weapon/paper/dockingcodes/sp,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/moonbase/pilotroom)
 "fX" = (
@@ -2512,6 +2513,7 @@
 	pixel_y = -24;
 	dir = 1
 	},
+/obj/effect/floor_decal/steeldecal/steel_decals5,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/moonbase/pilotroom)
 "gL" = (
@@ -18627,6 +18629,7 @@
 	pixel_x = 0;
 	pixel_y = 28
 	},
+/obj/item/weapon/paper/dockingcodes/sp,
 /turf/simulated/floor/carpet/blue2,
 /area/crew_quarters/captain/moonbase/office)
 "Um" = (

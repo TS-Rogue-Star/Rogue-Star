@@ -113,6 +113,16 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
+/obj/structure/table/standard,
+/obj/item/stack/cable_coil{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/stack/cable_coil{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/clothing/gloves/yellow,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/solars)
 "adm" = (
@@ -2958,6 +2968,10 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/rnd/moonbase/rndlab)
+"bDN" = (
+/obj/structure/prop/rock/round,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/moonbase/surface/levelone/west)
 "bDQ" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 8
@@ -2984,7 +2998,7 @@
 /area/maintenance/moonbase/level1/northeast)
 "bEm" = (
 /obj/effect/map_effect/perma_light/brighter,
-/turf/simulated/floor/outdoors/grass/seasonal/dark{
+/turf/simulated/floor/outdoors/grass/seasonal/dark/nosnow{
 	outdoors = 0
 	},
 /area/crew_quarters/bar)
@@ -5245,9 +5259,7 @@
 /area/hallway/moonbase/central)
 "cXy" = (
 /obj/structure/flora/lily1,
-/turf/simulated/floor/water/seasonal{
-	outdoors = 0s
-	},
+/turf/simulated/floor/water/indoors,
 /area/crew_quarters/bar)
 "cXM" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
@@ -6492,6 +6504,9 @@
 /obj/item/weapon/book/bundle/custom_library/nonfiction/viabilityofcorporategov,
 /obj/item/weapon/book/custom_library/nonfiction/freesirisailightbulbs,
 /obj/item/weapon/book/manual/synthetic_life,
+/obj/structure/sign/painting/library_secure{
+	pixel_y = 30
+	},
 /turf/simulated/floor/wood,
 /area/library)
 "dNw" = (
@@ -8596,7 +8611,7 @@
 /area/rnd/research_foyer_auxiliary)
 "fkD" = (
 /obj/effect/map_effect/perma_light/brighter,
-/turf/simulated/floor/outdoors/grass/seasonal{
+/turf/simulated/floor/outdoors/grass/seasonal/nosnow{
 	outdoors = 0
 	},
 /area/crew_quarters/bar)
@@ -10044,6 +10059,14 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/rnd/research_foyer)
+"ggF" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/moonbase/surface/levelone/north)
 "ght" = (
 /obj/structure/railing/grey,
 /turf/simulated/open,
@@ -11740,7 +11763,7 @@
 /area/moonbase/dorms)
 "hoC" = (
 /obj/effect/landmark/stardog,
-/turf/simulated/floor/outdoors/grass/seasonal{
+/turf/simulated/floor/outdoors/grass/seasonal/nosnow{
 	outdoors = 0
 	},
 /area/crew_quarters/bar)
@@ -13017,9 +13040,7 @@
 /area/maintenance/moonbase/level1/northeast)
 "ihk" = (
 /obj/effect/map_effect/interval/effect_emitter/steam/less_frequent,
-/turf/simulated/floor/water/deep/seasonal{
-	outdoors = 0
-	},
+/turf/simulated/floor/water/deep/indoors,
 /area/crew_quarters/bar)
 "ihI" = (
 /obj/structure/table/steel_reinforced,
@@ -13037,7 +13058,7 @@
 /obj/machinery/camera/network/civilian{
 	dir = 5
 	},
-/turf/simulated/floor/outdoors/grass/seasonal/dark{
+/turf/simulated/floor/outdoors/grass/seasonal/dark/nosnow{
 	outdoors = 0
 	},
 /area/crew_quarters/bar)
@@ -13122,6 +13143,9 @@
 /area/bridge)
 "inP" = (
 /obj/structure/closet/secure_closet/hop2,
+/obj/structure/sign/painting/library_secure{
+	pixel_x = -30
+	},
 /turf/simulated/floor/carpet/sblucarpet,
 /area/crew_quarters/heads/hop)
 "inQ" = (
@@ -13290,6 +13314,18 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/security/warden)
+"isy" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/level1/northwest)
 "isF" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/maintenance,
@@ -13411,7 +13447,7 @@
 /turf/simulated/floor/carpet,
 /area/quartermaster/moonbase/hallway)
 "iuE" = (
-/turf/simulated/floor/outdoors/grass/seasonal{
+/turf/simulated/floor/outdoors/grass/seasonal/nosnow{
 	outdoors = 0
 	},
 /area/crew_quarters/bar)
@@ -14096,6 +14132,9 @@
 /obj/item/weapon/book/custom_library/religious/storyoflordganesha,
 /obj/item/weapon/book/custom_library/religious/sungoddessofkorea,
 /obj/item/weapon/book/custom_library/religious/wayofbleedingswan,
+/obj/structure/sign/painting/library_secure{
+	pixel_y = 30
+	},
 /turf/simulated/floor/wood,
 /area/library)
 "iSJ" = (
@@ -14324,9 +14363,7 @@
 /area/rnd/xenobiology/xenoflora)
 "iYn" = (
 /obj/structure/prop/rock/small/wateralt,
-/turf/simulated/floor/water/seasonal{
-	outdoors = 0s
-	},
+/turf/simulated/floor/water/indoors,
 /area/crew_quarters/bar)
 "iZy" = (
 /obj/machinery/disposal/wall{
@@ -15745,7 +15782,7 @@
 /obj/machinery/light/lamppost{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/grass/seasonal/dark{
+/turf/simulated/floor/outdoors/grass/seasonal/dark/nosnow{
 	outdoors = 0
 	},
 /area/crew_quarters/bar)
@@ -17282,9 +17319,7 @@
 /area/quartermaster/moonbase/hallway)
 "kQE" = (
 /obj/machinery/camera/network/civilian,
-/turf/simulated/floor/water/deep/seasonal{
-	outdoors = 0
-	},
+/turf/simulated/floor/water/deep/indoors,
 /area/crew_quarters/bar)
 "kRf" = (
 /obj/machinery/conveyor{
@@ -17516,7 +17551,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/grass/seasonal/dark{
+/turf/simulated/floor/outdoors/grass/seasonal/dark/nosnow{
 	outdoors = 0
 	},
 /area/crew_quarters/bar)
@@ -17623,6 +17658,7 @@
 /obj/structure/table/darkglass,
 /obj/item/weapon/folder/blue,
 /obj/item/weapon/folder/blue,
+/obj/item/weapon/paper/dockingcodes/sp,
 /turf/simulated/floor/tiled,
 /area/bridge)
 "lcw" = (
@@ -18102,9 +18138,7 @@
 /area/medical/surgery2)
 "ltF" = (
 /obj/structure/waterfall/top,
-/turf/simulated/floor/water/deep/seasonal{
-	outdoors = 0
-	},
+/turf/simulated/floor/water/deep/indoors,
 /area/crew_quarters/bar)
 "ltS" = (
 /obj/structure/cable{
@@ -19319,7 +19353,7 @@
 /obj/machinery/camera/network/civilian{
 	dir = 1
 	},
-/turf/simulated/floor/outdoors/grass/seasonal{
+/turf/simulated/floor/outdoors/grass/seasonal/nosnow{
 	outdoors = 0
 	},
 /area/crew_quarters/bar)
@@ -20560,6 +20594,9 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/easthall)
+"mYj" = (
+/turf/simulated/floor/water/indoors,
+/area/crew_quarters/bar)
 "mYk" = (
 /obj/machinery/vending/hydronutrients,
 /obj/effect/floor_decal/milspec/color/green/half{
@@ -20802,6 +20839,9 @@
 /obj/structure/bed/chair/sofa/corp/left{
 	dir = 8
 	},
+/obj/structure/sign/painting/library_secure{
+	pixel_x = 30
+	},
 /turf/simulated/floor/carpet/sblucarpet,
 /area/crew_quarters/heads/hop)
 "nlw" = (
@@ -20865,6 +20905,12 @@
 "nnC" = (
 /turf/simulated/floor/tiled,
 /area/crew_quarters/locker)
+"nnM" = (
+/obj/structure/sign/painting/library_secure{
+	pixel_y = 30
+	},
+/turf/simulated/floor/carpet/turcarpet,
+/area/library)
 "nnR" = (
 /obj/structure/cable{
 	icon_state = "2-8"
@@ -20872,7 +20918,6 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/effect/wire_deleter,
 /turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
@@ -22413,7 +22458,7 @@
 /area/chapel/main)
 "oso" = (
 /obj/effect/landmark/vines,
-/turf/simulated/floor/outdoors/grass/seasonal{
+/turf/simulated/floor/outdoors/grass/seasonal/nosnow{
 	outdoors = 0
 	},
 /area/crew_quarters/bar)
@@ -22953,6 +22998,11 @@
 	pixel_x = -32;
 	pixel_y = 36
 	},
+/obj/structure/sign/directions/engineering/solars{
+	dir = 9;
+	pixel_x = -32;
+	pixel_y = 42
+	},
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/easthall)
 "oGz" = (
@@ -23354,9 +23404,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/security/lobby)
 "oTr" = (
-/turf/simulated/floor/water/deep/seasonal{
-	outdoors = 0
-	},
+/turf/simulated/floor/water/deep/indoors,
 /area/crew_quarters/bar)
 "oTC" = (
 /turf/simulated/wall/r_wall,
@@ -23752,7 +23800,7 @@
 /area/medical/moonbase/traumaward)
 "pli" = (
 /obj/machinery/firealarm,
-/turf/simulated/floor/outdoors/grass/seasonal{
+/turf/simulated/floor/outdoors/grass/seasonal/nosnow{
 	outdoors = 0
 	},
 /area/crew_quarters/bar)
@@ -24328,9 +24376,7 @@
 "pFT" = (
 /obj/structure/waterfall,
 /obj/structure/waterfall/mist,
-/turf/simulated/floor/water/deep/seasonal{
-	outdoors = 0
-	},
+/turf/simulated/floor/water/deep/indoors,
 /area/crew_quarters/bar)
 "pGe" = (
 /obj/structure/disposalpipe/segment,
@@ -24682,7 +24728,7 @@
 	dir = 8
 	},
 /obj/machinery/light/bigfloorlamp,
-/turf/simulated/floor/outdoors/grass/seasonal/dark{
+/turf/simulated/floor/outdoors/grass/seasonal/dark/nosnow{
 	outdoors = 0
 	},
 /area/crew_quarters/bar)
@@ -24726,7 +24772,7 @@
 /obj/machinery/light/lamppost{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/grass/seasonal{
+/turf/simulated/floor/outdoors/grass/seasonal/nosnow{
 	outdoors = 0
 	},
 /area/crew_quarters/bar)
@@ -24999,7 +25045,7 @@
 /turf/simulated/floor/carpet,
 /area/quartermaster/moonbase/hallway)
 "qdD" = (
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/hyper{
 	dir = 4
 	},
 /obj/structure/cable{
@@ -26411,9 +26457,7 @@
 /area/security/lobby)
 "rbU" = (
 /obj/structure/flora/lily2,
-/turf/simulated/floor/water/seasonal{
-	outdoors = 0s
-	},
+/turf/simulated/floor/water/indoors,
 /area/crew_quarters/bar)
 "rcg" = (
 /obj/structure/table/steel_reinforced,
@@ -26573,7 +26617,7 @@
 /obj/machinery/camera/network/civilian{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/grass/seasonal/dark{
+/turf/simulated/floor/outdoors/grass/seasonal/dark/nosnow{
 	outdoors = 0
 	},
 /area/crew_quarters/bar)
@@ -26798,6 +26842,10 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/easthall)
+"rpG" = (
+/obj/effect/map_effect/perma_light/brighter,
+/turf/simulated/floor/water/indoors,
+/area/crew_quarters/bar)
 "rpK" = (
 /obj/effect/floor_decal/corner/beige{
 	dir = 9
@@ -27688,6 +27736,14 @@
 /obj/structure/prop/machine/stamper,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/workshop)
+"rTr" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/moonbase/surface/levelone/north)
 "rTQ" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -28159,6 +28215,26 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/easthall)
+"sez" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/sign/directions/engineering/solars{
+	dir = 8;
+	pixel_x = -32;
+	pixel_y = -23
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/level1/west)
 "seO" = (
 /turf/simulated/wall/r_wall,
 /area/crew_quarters/coffee_shop)
@@ -28187,7 +28263,7 @@
 	dir = 4;
 	pixel_x = 27
 	},
-/turf/simulated/floor/outdoors/grass/seasonal{
+/turf/simulated/floor/outdoors/grass/seasonal/nosnow{
 	outdoors = 0
 	},
 /area/crew_quarters/bar)
@@ -28288,9 +28364,7 @@
 /area/maintenance/moonbase/level1/west)
 "sly" = (
 /obj/structure/flora/lily3,
-/turf/simulated/floor/water/seasonal{
-	outdoors = 0s
-	},
+/turf/simulated/floor/water/indoors,
 /area/crew_quarters/bar)
 "slC" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -28309,6 +28383,8 @@
 /obj/machinery/alarm{
 	dir = 8
 	},
+/obj/item/device/geiger,
+/obj/item/device/floor_painter,
 /turf/simulated/floor/tiled,
 /area/engineering/workshop)
 "sml" = (
@@ -28681,8 +28757,7 @@
 /obj/structure/window/reinforced,
 /obj/effect/floor_decal/milspec/color/orange/half,
 /obj/structure/table/reinforced,
-/obj/item/device/geiger,
-/obj/item/device/floor_painter,
+/obj/item/weapon/storage/box/nifsofts_engineering,
 /turf/simulated/floor/tiled,
 /area/engineering/workshop)
 "sxk" = (
@@ -30952,7 +31027,7 @@
 /obj/machinery/camera/network/civilian{
 	dir = 5
 	},
-/turf/simulated/floor/outdoors/grass/seasonal{
+/turf/simulated/floor/outdoors/grass/seasonal/nosnow{
 	outdoors = 0
 	},
 /area/crew_quarters/bar)
@@ -31338,6 +31413,13 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/shop)
+"ugR" = (
+/obj/structure/bookcase,
+/obj/structure/sign/painting/library_secure{
+	pixel_x = 30
+	},
+/turf/simulated/floor/wood,
+/area/library)
 "uhh" = (
 /obj/structure/stairs/spawner/south,
 /obj/structure/railing/grey{
@@ -31641,7 +31723,7 @@
 /obj/machinery/camera/network/civilian{
 	dir = 8
 	},
-/turf/simulated/floor/outdoors/grass/seasonal{
+/turf/simulated/floor/outdoors/grass/seasonal/nosnow{
 	outdoors = 0
 	},
 /area/crew_quarters/bar)
@@ -32591,7 +32673,7 @@
 /turf/simulated/floor/tiled/steel_dirty,
 /area/moonbase/basement/caves/level2)
 "vbn" = (
-/turf/simulated/floor/outdoors/grass/seasonal/dark{
+/turf/simulated/floor/outdoors/grass/seasonal/dark/nosnow{
 	outdoors = 0
 	},
 /area/crew_quarters/bar)
@@ -32665,6 +32747,9 @@
 /area/ai_cyborg_station)
 "vfG" = (
 /obj/structure/bookcase/manuals/medical,
+/obj/structure/sign/painting/library_secure{
+	pixel_y = -30
+	},
 /turf/simulated/floor/wood,
 /area/library)
 "vfP" = (
@@ -32678,6 +32763,9 @@
 /obj/machinery/librarypubliccomp,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
+	},
+/obj/structure/sign/painting/library_secure{
+	pixel_y = 30
 	},
 /turf/simulated/floor/wood,
 /area/library)
@@ -33081,7 +33169,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = 24
 	},
-/turf/simulated/floor/outdoors/grass/seasonal/dark{
+/turf/simulated/floor/outdoors/grass/seasonal/dark/nosnow{
 	outdoors = 0
 	},
 /area/crew_quarters/bar)
@@ -33350,7 +33438,9 @@
 /obj/structure/marker_beacon{
 	mapped_in_color = "Lime"
 	},
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
 /area/maintenance/moonbase/level1/solars)
 "vIu" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5,
@@ -33796,7 +33886,6 @@
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
-/obj/effect/wire_deleter,
 /turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
@@ -34200,6 +34289,11 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/sign/directions/engineering/solars{
+	dir = 1;
+	pixel_x = 32;
+	pixel_y = 24
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/northwest)
@@ -34867,6 +34961,10 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/weapon/paper/dockingcodes/sp{
+	pixel_x = 0;
+	pixel_y = 6
+	},
 /turf/simulated/floor/carpet/sblucarpet,
 /area/crew_quarters/heads/hop)
 "wJG" = (
@@ -34891,7 +34989,7 @@
 /obj/machinery/light/lamppost{
 	dir = 4
 	},
-/turf/simulated/floor/outdoors/grass/seasonal{
+/turf/simulated/floor/outdoors/grass/seasonal/nosnow{
 	outdoors = 0
 	},
 /area/crew_quarters/bar)
@@ -35461,9 +35559,7 @@
 /area/chapel/main)
 "xfe" = (
 /obj/structure/flora/log1,
-/turf/simulated/floor/water/seasonal{
-	outdoors = 0s
-	},
+/turf/simulated/floor/water/indoors,
 /area/crew_quarters/bar)
 "xfi" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -35760,9 +35856,7 @@
 /area/tcommsat/chamber)
 "xqd" = (
 /obj/structure/prop/rock/small/water,
-/turf/simulated/floor/water/seasonal{
-	outdoors = 0s
-	},
+/turf/simulated/floor/water/indoors,
 /area/crew_quarters/bar)
 "xqO" = (
 /obj/structure/railing/grey{
@@ -36370,7 +36464,6 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
-/obj/effect/wire_deleter,
 /turf/simulated/floor/airless/moonbaseplating/outdoors{
 	edge_blending_priority = 1
 	},
@@ -36582,6 +36675,11 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/structure/sign/directions/engineering/solars{
+	dir = 1;
+	pixel_x = -32;
+	pixel_y = 24
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/west)
@@ -37013,6 +37111,9 @@
 /area/hallway/moonbase/southhall)
 "ybv" = (
 /obj/structure/bookcase/manuals/engineering,
+/obj/structure/sign/painting/library_secure{
+	pixel_y = -30
+	},
 /turf/simulated/floor/wood,
 /area/library)
 "ybV" = (
@@ -40299,7 +40400,7 @@ gCA
 wVi
 gCA
 xKO
-fvp
+rTr
 xKO
 ube
 aOv
@@ -40439,11 +40540,11 @@ fvp
 xKO
 fvp
 xKO
-fvp
+rTr
 xKO
-fvp
+rTr
 xKO
-fvp
+rTr
 xKO
 fvp
 xKO
@@ -40580,13 +40681,13 @@ pVr
 rud
 pVr
 rud
-pVr
+ggF
 nnR
-pVr
+ggF
 vVH
-pVr
+ggF
 xGI
-pVr
+ggF
 aXV
 pVr
 aXV
@@ -41460,7 +41561,7 @@ fgg
 fgg
 fgg
 fgg
-fgg
+jJq
 fgg
 fgg
 fgg
@@ -41607,7 +41708,7 @@ fgg
 fgg
 fgg
 fgg
-fgg
+bDN
 fgg
 dUL
 hKf
@@ -41883,13 +41984,13 @@ anM
 anM
 anM
 anM
+isy
 anM
 anM
 anM
 anM
-anM
-anM
-anM
+isy
+isy
 anM
 anM
 anM
@@ -43038,7 +43139,7 @@ pcZ
 ukP
 ukP
 ukP
-dVw
+sez
 xnU
 onb
 wtR
@@ -46395,7 +46496,7 @@ hEo
 hEo
 hEo
 nSL
-hpH
+mYj
 rbU
 iuE
 iuE
@@ -46537,9 +46638,9 @@ hEo
 hEo
 hEo
 nSL
-hpH
-hpH
-hpH
+mYj
+mYj
+mYj
 iuE
 iuE
 iuE
@@ -46679,9 +46780,9 @@ hEo
 hEo
 uYd
 ozD
-hpH
-hkH
-hpH
+mYj
+rpG
+mYj
 iuE
 iuE
 iuE
@@ -46821,9 +46922,9 @@ hEo
 hEo
 nSL
 iYn
-hpH
-hpH
-hpH
+mYj
+mYj
+mYj
 iuE
 iuE
 vbn
@@ -47107,7 +47208,7 @@ cPP
 ltF
 pFT
 ihk
-hpH
+mYj
 hoC
 iuE
 xNS
@@ -47249,7 +47350,7 @@ nSL
 kQE
 oTr
 oTr
-hpH
+mYj
 iuE
 iuE
 xNS
@@ -47389,9 +47490,9 @@ hEo
 hEo
 nSL
 xqd
-hpH
-hpH
-hpH
+mYj
+mYj
+mYj
 iuE
 iuE
 vbn
@@ -47531,8 +47632,8 @@ hEo
 hEo
 rPc
 nHw
-hpH
-hkH
+mYj
+rpG
 sly
 iuE
 iuE
@@ -47674,7 +47775,7 @@ hEo
 hEo
 nSL
 cXy
-hpH
+mYj
 iuE
 iuE
 iuE
@@ -47815,7 +47916,7 @@ hEo
 hEo
 hEo
 nSL
-hpH
+mYj
 iuE
 iuE
 iuE
@@ -51720,7 +51821,7 @@ whd
 oYc
 efg
 lJm
-uwI
+nnM
 ehl
 fjk
 wuO
@@ -51867,7 +51968,7 @@ uVF
 iUU
 rcA
 eRF
-gZh
+ugR
 eRF
 bIH
 pJE
