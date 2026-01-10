@@ -47,7 +47,18 @@
 		usr.emote_vr(message)
 
 /mob/proc/custom_emote_vr(var/m_type=1,var/message = null,var/mode_selection = FALSE) //This would normally go in emote.dm
-	if(stat || !use_me && usr == src)
+	if(stat)
+		// RS Add Start: Echo message when unconscious (Lira, January 2026)
+		if(stat == UNCONSCIOUS && message)
+			var/safe_message = sanitize(message, max_length = MAX_MESSAGE_LEN)
+			to_chat(src, safe_message)
+			to_chat(src, "<span class='warning'>^ You are unconscious and cannot emote; your message was not sent. ^</span>")
+		else
+			to_chat(src, "You are unable to emote.")
+		return
+		// RS Add End
+
+	if(!use_me && usr == src)
 		to_chat(src, "You are unable to emote.")
 		return
 

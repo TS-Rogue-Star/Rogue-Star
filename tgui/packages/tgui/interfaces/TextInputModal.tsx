@@ -13,6 +13,7 @@ type TextInputData = {
   timeout: number;
   title: string;
   prevent_enter: boolean;
+  window_scale: number; // RS Add: TGUI window scaling (Lira, January 2026)
 };
 
 export const TextInputModal = (props, context) => {
@@ -26,6 +27,7 @@ export const TextInputModal = (props, context) => {
     timeout,
     title,
     prevent_enter,
+    window_scale, // RS Add: TGUI window scaling (Lira, January 2026)
   } = data;
   const [input, setInput] = useLocalState<string>(
     context,
@@ -38,15 +40,20 @@ export const TextInputModal = (props, context) => {
     }
     setInput(value);
   };
-  // Dynamically changes the window height based on the message.
-  const windowHeight =
+  // Dynamically changes the window height based on the message. || RS Edit Start: TGUI window scaling (Lira, January 2026)
+  const windowScale = Math.min(Math.max(window_scale || 1, 1), 3);
+  const baseWindowHeight =
     135 +
     (message.length > 30 ? Math.ceil(message.length / 4) : 0) +
     (multiline || input.length >= 30 ? 75 : 0) +
     (message.length && large_buttons ? 5 : 0);
+  const windowHeight = baseWindowHeight * windowScale;
+  const windowWidth = 325 * windowScale;
+  // RS Edit End
 
   return (
-    <Window title={title} width={325} height={windowHeight}>
+    // RS Edit: TGUI window scaling (Lira, January 2026)
+    <Window title={title} width={windowWidth} height={windowHeight}>
       {timeout && <Loader value={timeout} />}
       <Window.Content
         onEscape={() => act('cancel')}
