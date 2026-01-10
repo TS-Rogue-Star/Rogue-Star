@@ -184,6 +184,7 @@ export class TextArea extends Component {
       scrollbar,
       noborder,
       displayedValue,
+      spellcheck = true, // RS Add: Spellcheck (Lira, January 2026)
       ...boxProps
     } = this.props;
     // Box props
@@ -228,6 +229,7 @@ export class TextArea extends Component {
           onBlur={this.handleBlur}
           onScroll={this.handleScroll}
           maxLength={maxLength}
+          spellcheck={spellcheck} // RS Add: Spellcheck (Lira, January 2026)
           style={{
             'color': displayedValue ? 'rgba(0, 0, 0, 0)' : 'inherit',
           }}
