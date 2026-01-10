@@ -142,9 +142,9 @@
 
 	var/lowered = lowertext(trimmed)
 	if(startswith(lowered, "say "))
-		return TRUE
+		return has_say_message_after_prefix(trimmed, "say ")
 	if(startswith(lowered, "me "))
-		return TRUE
+		return has_non_space_after_prefix(trimmed, "me ")
 
 	return FALSE
 
@@ -152,6 +152,23 @@
 	if(length(text) < length(prefix))
 		return FALSE
 	return copytext(text, 1, length(prefix) + 1) == prefix
+
+/mob/proc/has_non_space_after_prefix(var/text, var/prefix)
+	if(length(text) <= length(prefix))
+		return FALSE
+	var/remainder = copytext(text, length(prefix) + 1)
+	return length(trim_left(remainder)) > 0
+
+/mob/proc/has_say_message_after_prefix(var/text, var/prefix)
+	if(length(text) <= length(prefix))
+		return FALSE
+	var/remainder = trim_left(copytext(text, length(prefix) + 1))
+	if(!length(remainder))
+		return FALSE
+	if(copytext(remainder, 1, 2) == "\"")
+		var/after_quote = copytext(remainder, 2)
+		return length(trim_left(after_quote)) > 0
+	return TRUE
 
 #undef TYPING_INDICATOR_POLL
 #undef TYPING_INDICATOR_INPUT_CONTROL
