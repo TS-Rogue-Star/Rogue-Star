@@ -588,6 +588,10 @@
 	pixel_x = -27
 	},
 /obj/machinery/alarm,
+/obj/fiftyspawner/glass,
+/obj/fiftyspawner/glass,
+/obj/fiftyspawner/steel,
+/obj/fiftyspawner/steel,
 /turf/simulated/floor/tiled,
 /area/rnd/moonbase/rndlab)
 "akR" = (
@@ -2968,10 +2972,6 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/rnd/moonbase/rndlab)
-"bDN" = (
-/obj/structure/prop/rock/round,
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
-/area/moonbase/surface/levelone/west)
 "bDQ" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 8
@@ -10059,14 +10059,6 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/rnd/research_foyer)
-"ggF" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/airless/moonbaseplating/outdoors{
-	edge_blending_priority = 1
-	},
-/area/moonbase/surface/levelone/north)
 "ght" = (
 /obj/structure/railing/grey,
 /turf/simulated/open,
@@ -10775,6 +10767,10 @@
 /obj/effect/catwalk_plated,
 /turf/simulated/floor/plating/eris,
 /area/rnd/research_storage)
+"gHm" = (
+/obj/structure/prop/rock/round,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/area/moonbase/surface/levelone/west)
 "gHn" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -11547,6 +11543,18 @@
 /obj/effect/landmark/start/security,
 /turf/simulated/floor/tiled/eris/dark/cargo,
 /area/security/lobby)
+"his" = (
+/obj/machinery/door/firedoor/glass,
+/obj/structure/grille,
+/obj/structure/window/reinforced/full,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/level1/northwest)
 "hiw" = (
 /turf/simulated/wall/r_wall,
 /area/engineering/moonbase/powerroom)
@@ -13314,18 +13322,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/security/warden)
-"isy" = (
-/obj/machinery/door/firedoor/glass,
-/obj/structure/grille,
-/obj/structure/window/reinforced/full,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/maintenance/moonbase/level1/northwest)
 "isF" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/maintenance,
@@ -19291,6 +19287,14 @@
 	},
 /turf/simulated/floor/tiled,
 /area/ai_monitored/storage/eva)
+"mcY" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/moonbase/surface/levelone/north)
 "mdf" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 4
@@ -20905,12 +20909,6 @@
 "nnC" = (
 /turf/simulated/floor/tiled,
 /area/crew_quarters/locker)
-"nnM" = (
-/obj/structure/sign/painting/library_secure{
-	pixel_y = 30
-	},
-/turf/simulated/floor/carpet/turcarpet,
-/area/library)
 "nnR" = (
 /obj/structure/cable{
 	icon_state = "2-8"
@@ -27736,14 +27734,6 @@
 /obj/structure/prop/machine/stamper,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/workshop)
-"rTr" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/airless/moonbaseplating/outdoors{
-	edge_blending_priority = 1
-	},
-/area/moonbase/surface/levelone/north)
 "rTQ" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -28215,26 +28205,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/easthall)
-"sez" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/sign/directions/engineering/solars{
-	dir = 8;
-	pixel_x = -32;
-	pixel_y = -23
-	},
-/turf/simulated/floor/plating,
-/area/maintenance/moonbase/level1/west)
 "seO" = (
 /turf/simulated/wall/r_wall,
 /area/crew_quarters/coffee_shop)
@@ -30831,6 +30801,12 @@
 	},
 /turf/simulated/floor/tiled,
 /area/rnd/moonbase/rndlab)
+"tJt" = (
+/obj/structure/sign/painting/library_secure{
+	pixel_y = 30
+	},
+/turf/simulated/floor/carpet/turcarpet,
+/area/library)
 "tJy" = (
 /obj/structure/reagent_dispensers/foam,
 /turf/simulated/floor/plating,
@@ -31413,13 +31389,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/shop)
-"ugR" = (
-/obj/structure/bookcase,
-/obj/structure/sign/painting/library_secure{
-	pixel_x = 30
-	},
-/turf/simulated/floor/wood,
-/area/library)
 "uhh" = (
 /obj/structure/stairs/spawner/south,
 /obj/structure/railing/grey{
@@ -34217,6 +34186,13 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/locker_room)
+"wjd" = (
+/obj/structure/bookcase,
+/obj/structure/sign/painting/library_secure{
+	pixel_x = 30
+	},
+/turf/simulated/floor/wood,
+/area/library)
 "wjh" = (
 /obj/structure/sink{
 	pixel_y = 20
@@ -36026,6 +36002,26 @@
 /obj/effect/landmark/start/warden,
 /turf/simulated/floor/tiled/dark,
 /area/security/lobby)
+"xuL" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/sign/directions/engineering/solars{
+	dir = 8;
+	pixel_x = -32;
+	pixel_y = -23
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/moonbase/level1/west)
 "xuZ" = (
 /obj/structure/disposalpipe/up{
 	dir = 8
@@ -36364,6 +36360,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/north)
+"xCG" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/moonbase/surface/levelone/north)
 "xCW" = (
 /obj/structure/bed/chair/sofa/corp/corner,
 /obj/structure/window/reinforced{
@@ -40400,7 +40404,7 @@ gCA
 wVi
 gCA
 xKO
-rTr
+mcY
 xKO
 ube
 aOv
@@ -40540,11 +40544,11 @@ fvp
 xKO
 fvp
 xKO
-rTr
+mcY
 xKO
-rTr
+mcY
 xKO
-rTr
+mcY
 xKO
 fvp
 xKO
@@ -40681,13 +40685,13 @@ pVr
 rud
 pVr
 rud
-ggF
+xCG
 nnR
-ggF
+xCG
 vVH
-ggF
+xCG
 xGI
-ggF
+xCG
 aXV
 pVr
 aXV
@@ -41708,7 +41712,7 @@ fgg
 fgg
 fgg
 fgg
-bDN
+gHm
 fgg
 dUL
 hKf
@@ -41984,13 +41988,13 @@ anM
 anM
 anM
 anM
-isy
+his
 anM
 anM
 anM
 anM
-isy
-isy
+his
+his
 anM
 anM
 anM
@@ -43139,7 +43143,7 @@ pcZ
 ukP
 ukP
 ukP
-sez
+xuL
 xnU
 onb
 wtR
@@ -51821,7 +51825,7 @@ whd
 oYc
 efg
 lJm
-nnM
+tJt
 ehl
 fjk
 wuO
@@ -51968,7 +51972,7 @@ uVF
 iUU
 rcA
 eRF
-ugR
+wjd
 eRF
 bIH
 pJE
