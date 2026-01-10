@@ -174,7 +174,7 @@
 	set hidden = 1
 
 	set_typing_indicator(TRUE)
-	var/message = tgui_input_text(usr, "Type your message:", "Emote", multiline = TRUE)
+	var/message = tgui_input_text(usr, "Type your message:", "Emote", multiline = TRUE, use_message_window_scale = TRUE) // RS Edit: TGUI window scaling (Lira, January 2026)
 	set_typing_indicator(FALSE)
 
 	if(message)
@@ -214,7 +214,7 @@
 	set name = ".Subtle"
 	set hidden = 1
 
-	var/message = tgui_input_text(usr, "Type your message:", "Subtle", multiline = TRUE)
+	var/message = tgui_input_text(usr, "Type your message:", "Subtle", multiline = TRUE, use_message_window_scale = TRUE) // RS Edit: TGUI window scaling (Lira, January 2026)
 
 	if(message)
 		me_verb_subtle(message)
