@@ -336,10 +336,14 @@
 		// PERSON BEING HIT: CAN BE DROP PRED, ALLOWS THROW VORE.
 		// PERSON BEING THROWN: DEVOURABLE, ALLOWS THROW VORE, CAN BE DROP PREY.
 		if(spont_pref_check(src,thrown_mob,THROW_VORE)) //Prey thrown into pred.	//RS EDIT
-			vore_selected.nom_mob(thrown_mob) //Eat them!!!
-			visible_message("<span class='warning'>[thrown_mob] is thrown right into [src]'s [lowertext(vore_selected.name)]!</span>")
-			if(thrown_mob.loc != vore_selected)
-				thrown_mob.forceMove(vore_selected) //Double check. Should never happen but...Weirder things have happened!
+			// RS Edit Start: Use spont belly (Lira, January 2026)
+			var/obj/belly/dest_belly = get_spontaneous_belly(THROW_VORE)
+			if(dest_belly)
+				dest_belly.nom_mob(thrown_mob) //Eat them!!!
+				visible_message("<span class='warning'>[thrown_mob] is thrown right into [src]'s [lowertext(dest_belly.name)]!</span>")
+				if(thrown_mob.loc != dest_belly)
+					thrown_mob.forceMove(dest_belly) //Double check. Should never happen but...Weirder things have happened!
+			// RS Edit End
 			on_throw_vore_special(TRUE, thrown_mob)
 			add_attack_logs(thrown_mob.thrower,src,"Devoured [thrown_mob.name] via throw vore.")
 			return //We can stop here. We don't need to calculate damage or anything else. They're eaten.
@@ -347,10 +351,14 @@
 		// PERSON BEING HIT: CAN BE DROP PREY, ALLOWS THROW VORE, AND IS DEVOURABLE.
 		// PERSON BEING THROWN: CAN BE DROP PRED, ALLOWS THROW VORE.
 		else if(spont_pref_check(thrown_mob,src,THROW_VORE)) //Pred thrown into prey.	//RS EDIT
-			visible_message("<span class='warning'>[src] suddenly slips inside of [thrown_mob]'s [lowertext(thrown_mob.vore_selected.name)] as [thrown_mob] flies into them!</span>")
-			thrown_mob.vore_selected.nom_mob(src) //Eat them!!!
-			if(src.loc != thrown_mob.vore_selected)
-				src.forceMove(thrown_mob.vore_selected) //Double check. Should never happen but...Weirder things have happened!
+			// RS Edit Start: Use spont belly (Lira, January 2026)
+			var/obj/belly/dest_belly = thrown_mob.get_spontaneous_belly(THROW_VORE)
+			if(dest_belly)
+				visible_message("<span class='warning'>[src] suddenly slips inside of [thrown_mob]'s [lowertext(dest_belly.name)] as [thrown_mob] flies into them!</span>")
+				dest_belly.nom_mob(src) //Eat them!!!
+				if(src.loc != dest_belly)
+					src.forceMove(dest_belly) //Double check. Should never happen but...Weirder things have happened!
+			// RS Edit End
 			add_attack_logs(thrown_mob.LAssailant,src,"Was Devoured by [thrown_mob.name] via throw vore.")
 			return
 	//VORESTATION EDIT END - Allows for thrown vore!

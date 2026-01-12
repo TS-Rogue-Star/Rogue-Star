@@ -61,7 +61,8 @@
 		usr = M
 
 	if(food_inserted_micros && food_inserted_micros.len)
-		if(M.vore_selected)	//RS EDIT
+		var/obj/belly/belly_target = M.get_spontaneous_belly(FOOD_VORE) // RS Add: Use spont belly (Lira, January 2026)
+		if(belly_target)	//RS EDIT
 			for(var/mob/living/F in food_inserted_micros)
 				if(!spont_pref_check(M,F,FOOD_VORE))	//RS EDIT
 					continue
@@ -76,7 +77,7 @@
 						do_nom = TRUE
 
 				if(do_nom)
-					F.forceMove(M.vore_selected)
+					F.forceMove(belly_target) // RS Edit: Use spont belly (Lira, January 2026)
 					food_inserted_micros -= F
 
 	if(!reagents.total_volume)
