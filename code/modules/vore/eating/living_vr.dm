@@ -260,6 +260,8 @@
 	P.throw_vore = src.throw_vore
 	P.food_vore = src.food_vore
 	P.stumble_vore = src.stumble_vore
+	P.buckle_vore = src.buckle_vore // RS Add: Split from stumble (Lira, January 2026)
+	P.spont_belly_prefs = islist(src.spont_belly_prefs) ? src.spont_belly_prefs.Copy() : list() // RS Add: Spont belly prefs (Lira, January 2026)
 	P.glowy_belly = src.glowy_belly
 	P.eating_privacy_global = src.eating_privacy_global
 
@@ -316,8 +318,10 @@
 	slip_vore = P.slip_vore
 	throw_vore = P.throw_vore
 	stumble_vore = P.stumble_vore
+	buckle_vore = P.buckle_vore // RS Add: Split from stumble (Lira, January 2026)
 	glowy_belly = P.glowy_belly
 	food_vore = P.food_vore
+	spont_belly_prefs = islist(P.spont_belly_prefs) ? P.spont_belly_prefs.Copy() : list() // RS Add: Spont belly prefs (Lira, January 2026)
 	eating_privacy_global = P.eating_privacy_global
 
 	nutrition_message_visible = P.nutrition_message_visible
@@ -557,6 +561,21 @@
 //
 // Eating procs depending on who clicked what
 //
+
+// RS Add: Use spont belly (Lira, January 2026)
+/mob/living/proc/get_spontaneous_belly(var/preftype, var/fallback_preftype)
+	if(!preftype || !islist(spont_belly_prefs))
+		return vore_selected
+	var/desired_name = spont_belly_prefs[preftype]
+	if(!desired_name && fallback_preftype)
+		desired_name = spont_belly_prefs[fallback_preftype]
+	if(!desired_name)
+		return vore_selected
+	for(var/obj/belly/B as anything in vore_organs)
+		if(B.name == desired_name)
+			return B
+	return vore_selected
+
 /mob/living/proc/feed_grabbed_to_self(mob/living/user, mob/living/prey)
 	var/belly = user.vore_selected
 	return perform_the_nom(user, prey, user, belly)
@@ -758,9 +777,9 @@
     gas = list(
         "nitrogen" = 100)
 
-
-/mob/living/proc/feed_grabbed_to_self_falling_nom(var/mob/living/user, var/mob/living/prey)
-	var/belly = user.vore_selected
+// RS Edit: Use spont belly (Lira, January 2026)
+/mob/living/proc/feed_grabbed_to_self_falling_nom(var/mob/living/user, var/mob/living/prey, var/obj/belly/belly_override)
+	var/obj/belly/belly = belly_override ? belly_override : user.vore_selected
 	return perform_the_nom(user, prey, user, belly, delay = 1) //1/10th of a second is probably fine.
 
 /mob/living/proc/glow_toggle()
@@ -1172,6 +1191,7 @@
 	dispvoreprefs += "<b>Slip Vore:</b> [(spont_pref_check(user,src,SLIP_VORE) && slip_vore) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
 	dispvoreprefs += "<b>Throw vore:</b> [(spont_pref_check(user,src,THROW_VORE) && throw_vore) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
 	dispvoreprefs += "<b>Stumble Vore:</b> [(spont_pref_check(user,src,STUMBLE_VORE) && stumble_vore) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
+	dispvoreprefs += "<b>Buckle Vore:</b> [(spont_pref_check(user,src,BUCKLE_VORE) && buckle_vore) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>" // RS Add: Split from stumble (Lira, January 2026)
 	dispvoreprefs += "<b>Food Vore:</b> [(spont_pref_check(user,src,FOOD_VORE) && food_vore) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"
 	dispvoreprefs += "<u><b>-OTHER PREFERENCES-</b></u><br>"
 	dispvoreprefs += "<b>Size changing:</b> [(spont_pref_check(user,src,RESIZING) && resizable) ? "<font color='green'>Enabled</font>" : "<font color='red'>Disabled</font>"]<br>"

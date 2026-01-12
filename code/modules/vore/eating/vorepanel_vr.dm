@@ -7,6 +7,8 @@
 //////////////////////////////////////////////////////////////////////////////////
 //Updated by Lira for Rogue Star October 2025 to integrate RSUI health bars///////
 //////////////////////////////////////////////////////////////////////////////////
+//Updated by Lira for Rogue Star January 2026 to add spont vore prefs/////////////
+//////////////////////////////////////////////////////////////////////////////////
 
 //INSERT COLORIZE-ONLY STOMACHS HERE
 var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
@@ -50,6 +52,12 @@ var/static/list/vore_trustlist_preference_map = list(
 		"client_var" = "stumble_vore",
 		"trust_key" = STUMBLE_VORE,
 	),
+	// RS Add: Split from stumble (Lira, January 2026)
+	"buckle_vore" = list(
+		"host_var" = "buckle_vore",
+		"client_var" = "buckle_vore",
+		"trust_key" = BUCKLE_VORE,
+	),
 	"throw_vore" = list(
 		"host_var" = "throw_vore",
 		"client_var" = "throw_vore",
@@ -75,6 +83,17 @@ var/static/list/vore_trustlist_preference_map = list(
 		"client_var" = "resizable",
 		"trust_key" = RESIZING,
 	)
+)
+
+// RS Add: Spont vore prefs (Lira, January 2026)
+var/static/list/spontaneous_belly_pref_keys = list(
+	DROP_VORE_ON_OTHER,
+	DROP_VORE_ON_YOU,
+	SLIP_VORE,
+	STUMBLE_VORE,
+	BUCKLE_VORE,
+	THROW_VORE,
+	FOOD_VORE
 )
 
 // RS Add Start: Add RSUI healthbars to vore panel (Lira, October 2025)
@@ -597,8 +616,10 @@ var/global/list/rsui_healthbar_preview_cache = list()
 		"drop_vore" = host.drop_vore,
 		"slip_vore" = host.slip_vore,
 		"stumble_vore" = host.stumble_vore,
+		"buckle_vore" = host.buckle_vore, // RS Add: Split from stumble (Lira, January 2026)
 		"throw_vore" = host.throw_vore,
 		"food_vore" = host.food_vore,
+		"spont_belly_prefs" = islist(host.spont_belly_prefs) ? host.spont_belly_prefs.Copy() : list(), // RS Add: Spont vore prefs (Lira, January 2026)
 		"nutrition_message_visible" = host.nutrition_message_visible,
 		"nutrition_messages" = host.nutrition_messages,
 		"weight_message_visible" = host.weight_message_visible,
@@ -965,11 +986,42 @@ var/global/list/rsui_healthbar_preview_cache = list()
 		if("toggle_stumble_vore")
 			set_trustlist_preference_state("stumble_vore") // RS Add: Trustlist integration (Lira, September 2025)
 			return TRUE
+		// RS Add: Split from stumble (Lira, January 2026)
+		if("toggle_buckle_vore")
+			set_trustlist_preference_state("buckle_vore")
+			return TRUE
 		if("toggle_throw_vore")
 			set_trustlist_preference_state("throw_vore") // RS Add: Trustlist integration (Lira, September 2025)
 			return TRUE
 		if("toggle_food_vore")
 			set_trustlist_preference_state("food_vore") // RS Add: Trustlist integration (Lira, September 2025)
+			return TRUE
+		// RS Add: Spont vore prefs (Lira, January 2026)
+		if("set_spont_belly_pref")
+			var/pref_id = params["pref"]
+			if(!(pref_id in spontaneous_belly_pref_keys))
+				return TRUE
+			if(!islist(host.spont_belly_prefs))
+				host.spont_belly_prefs = list()
+			var/default_label = "Default (Selected Belly)"
+			var/list/belly_choices = list(default_label)
+			for(var/obj/belly/B as anything in host.vore_organs)
+				belly_choices += B.name
+			var/current_choice = host.spont_belly_prefs[pref_id]
+			if(!current_choice)
+				current_choice = default_label
+			var/choice = tgui_input_list(usr, "Which belly should [pref_id] send prey to?", "Spontaneous Vore Belly", belly_choices, current_choice)
+			if(!choice)
+				return TRUE
+			if(choice == default_label)
+				host.spont_belly_prefs[pref_id] = null
+			else
+				host.spont_belly_prefs[pref_id] = choice
+			if(host.client && host.client.prefs_vr)
+				if(!islist(host.client.prefs_vr.spont_belly_prefs))
+					host.client.prefs_vr.spont_belly_prefs = list()
+				host.client.prefs_vr.spont_belly_prefs[pref_id] = host.spont_belly_prefs[pref_id]
+			unsaved_changes = TRUE
 			return TRUE
 		if("switch_selective_mode_pref")
 			host.selective_preference = tgui_input_list(usr, "What would you prefer happen to you with selective bellymode?","Selective Bellymode", list(DM_DEFAULT, DM_DIGEST, DM_ABSORB, DM_DRAIN))

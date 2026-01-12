@@ -16,10 +16,12 @@
 	var/noisy = FALSE					// Toggle audible hunger.
 	var/permit_healbelly = TRUE
 	var/stumble_vore = TRUE				//Enabled by default since you have to enable drop pred/prey to do this anyway
+	var/buckle_vore = TRUE				//Enabled by default since you have to enable drop pred/prey to do this anyway || RS Add: Split from stumble (Lira, January 2026)
 	var/slip_vore = TRUE				//Enabled by default since you have to enable drop pred/prey to do this anyway
 	var/drop_vore = TRUE				//Enabled by default since you have to enable drop pred/prey to do this anyway
 	var/throw_vore = TRUE				//Enabled by default since you have to enable drop pred/prey to do this anyway
 	var/food_vore = TRUE				//Enabled by default since you have to enable drop pred/prey to do this anyway
+	var/list/spont_belly_prefs = list() // RS Add: Spont prefs (Lira, January 2026)
 	var/can_be_drop_prey = FALSE
 	var/can_be_drop_pred = FALSE
 	var/allow_spontaneous_tf = FALSE	// Obviously.

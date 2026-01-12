@@ -99,12 +99,16 @@
 	if (loaded && reagents.total_volume > 0)
 		reagents.trans_to_mob(M, reagents.total_volume, CHEM_INGEST)
 		if(food_inserted_micros && food_inserted_micros.len)
+			var/obj/belly/belly_target = M.get_spontaneous_belly(FOOD_VORE) // RS Add: Spont pref tum (Lira, January 2026)
 			for(var/mob/living/F in food_inserted_micros)
 				food_inserted_micros -= F
 				if(!spont_pref_check(M,F,FOOD_VORE))	//RS EDIT
 					F.forceMove(get_turf(src))
+				// RS Add: Spont pref tum (Lira, January 2026)
+				else if(belly_target)
+					F.forceMove(belly_target)
 				else
-					F.forceMove(M.vore_selected)
+					F.forceMove(get_turf(src)) // RS Edit: Spont pref tum (Lira, January 2026)
 		if(M == user)
 			if(!M.can_eat(loaded))
 				return

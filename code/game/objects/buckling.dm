@@ -132,13 +132,16 @@
 	//RSEdit Begin - Adds buckling spont vore
 	if(has_buckled_mobs() && buckled_mobs.len >= max_buckled_mobs)
 		for(var/mob/living/L in buckled_mobs)
-			if(istype(L) && spont_pref_check(M, L, STUMBLE_VORE))
+			if(istype(L) && spont_pref_check(M, L, BUCKLE_VORE)) // Seperate from stumble vore (Lira, January 2026)
 				unbuckle_mob(L, TRUE)
 				if(M == user)
 					M.visible_message("<span class='warning'>[M.name] sits down on [L.name]!</span>")
 				else
 					M.visible_message("<span class='warning'>[M.name] is forced to sit down on [L.name] by [user.name]!</span>")
-				M.perform_the_nom(user, L, M, M.vore_selected, 1)
+				// Use spont vore pref (Lira, January 2026)
+				var/obj/belly/belly = M.get_spontaneous_belly(BUCKLE_VORE)
+				if(belly)
+					M.perform_the_nom(user, L, M, belly, 1)
 	//RSEdit End
 
 	//can't buckle unless you share locs so try to move M to the obj.
@@ -215,10 +218,10 @@
 		return FALSE
 
 	if(has_buckled_mobs() && buckled_mobs.len >= max_buckled_mobs) //Handles trying to buckle yourself to the chair when someone is on it
-		//RSEdit Start - Add buckling spont vore
-		if(can_do_spont_vore && is_vore_predator(M) && M.vore_selected)
+		//RSEdit Start - Add buckling spont vore || Tweaked for spont vore prefs (Lira, January 2026)
+		if(can_do_spont_vore && is_vore_predator(M) && M.get_spontaneous_belly(BUCKLE_VORE))
 			for(var/mob/living/buckled in buckled_mobs)
-				if(spont_pref_check(M, buckled, STUMBLE_VORE))
+				if(spont_pref_check(M, buckled, BUCKLE_VORE))
 					return TRUE
 		//RSEdit End
 		to_chat(M, "<span class='notice'>\The [src] can't buckle any more people.</span>")
