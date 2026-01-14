@@ -44,13 +44,15 @@
 	var/mob/living/prey = src
 	var/fallloc = prey.loc
 	if(spont_pref_check(pred,prey,DROP_VORE))	//RS EDIT
-		pred.feed_grabbed_to_self_falling_nom(pred,prey)
+		var/obj/belly/belly = pred.get_spontaneous_belly(DROP_VORE_ON_OTHER, DROP_VORE) // RS Add: Use spont belly (Lira, January 2026)
+		pred.feed_grabbed_to_self_falling_nom(pred, prey, belly) // RS Edit: Use spont belly (Lira, January 2026)
 		pred.loc = fallloc
 		if(!safe_fall)
 			pred.Weaken(8)
 		pred.visible_message("<span class='danger'>\The [pred] falls right onto \the [prey]!</span>")
 	else if(spont_pref_check(prey,pred,DROP_VORE))	//RS EDIT
-		prey.feed_grabbed_to_self_falling_nom(prey,pred)
+		var/obj/belly/belly = prey.get_spontaneous_belly(DROP_VORE_ON_YOU, DROP_VORE) // RS Add: Use spont belly (Lira, January 2026)
+		prey.feed_grabbed_to_self_falling_nom(prey, pred, belly) // RS Edit: Use spont belly (Lira, January 2026)
 		prey.Weaken(4)
 		prey.visible_message("<span class='danger'>\The [pred] falls right into \the [prey]!</span>")
 	else
