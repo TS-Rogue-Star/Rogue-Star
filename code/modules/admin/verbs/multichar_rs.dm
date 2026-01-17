@@ -276,3 +276,9 @@
 		var/mob/M = usr
 		if(M.client)
 			M.client.register_multichar()
+
+/mob/Login()
+	. = ..()
+	if(client?.multichar)
+		if(client.multichar_active)
+			client.multichar.toggle_visible()
