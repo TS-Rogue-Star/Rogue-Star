@@ -585,6 +585,7 @@ const VoreSelectedBellyOptions = (props, context) => {
     egg_type,
     selective_preference,
     save_digest_mode,
+    allow_external_feeding, // RS Add: Allow external feeding option (Lira, January 2026)
     eating_privacy_local,
     silicon_belly_overlay_preference,
     visible_belly_minimum_prey,
@@ -686,6 +687,17 @@ const VoreSelectedBellyOptions = (props, context) => {
               icon={save_digest_mode ? 'toggle-on' : 'toggle-off'}
               selected={save_digest_mode}
               content={save_digest_mode ? 'True' : 'False'}
+            />
+          </LabeledList.Item>
+          {/* RS Add: Allow external feeding option (Lira, January 2026) */}
+          <LabeledList.Item label="Allow External Feeding">
+            <Button
+              onClick={() =>
+                act('set_attribute', { attribute: 'b_allow_external_feeding' })
+              }
+              icon={allow_external_feeding ? 'toggle-on' : 'toggle-off'}
+              selected={allow_external_feeding}
+              content={allow_external_feeding ? 'Yes' : 'No'}
             />
           </LabeledList.Item>
         </LabeledList>

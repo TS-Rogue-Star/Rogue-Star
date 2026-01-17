@@ -367,6 +367,14 @@
 			if(new_save_digest_mode == 1)
 				new_belly.save_digest_mode = TRUE
 
+		// RS Add: Allow external feeding option (Lira, January 2026)
+		if(isnum(belly_data["allow_external_feeding"]))
+			var/new_allow_external_feeding = belly_data["allow_external_feeding"]
+			if(new_allow_external_feeding == 0)
+				new_belly.allow_external_feeding = FALSE
+			if(new_allow_external_feeding == 1)
+				new_belly.allow_external_feeding = TRUE
+
 		if(isnum(belly_data["emote_active"]))
 			var/new_emote_active = belly_data["emote_active"]
 			if(new_emote_active == 0)
