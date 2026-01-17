@@ -219,7 +219,7 @@
 /obj/effect/multichar_button
 	icon = 'icons/rogue-star/misc.dmi'
 	icon_state = "box"
-	plane = PLANE_LIGHTING_ABOVE
+	plane = PLANE_PLAYER_HUD
 
 /obj/effect/multichar_button/multichar_pick
 	name = "Pick Character"
