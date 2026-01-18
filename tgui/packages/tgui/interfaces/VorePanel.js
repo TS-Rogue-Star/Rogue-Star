@@ -3,6 +3,8 @@
 // /////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star October 2025 to integrate RSUI health bars ///////
 // /////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star January 2026 to add spont vore prefs /////////////
+// /////////////////////////////////////////////////////////////////////////////////
 
 import { capitalize } from 'common/string';
 import { Fragment } from 'inferno';
@@ -583,6 +585,7 @@ const VoreSelectedBellyOptions = (props, context) => {
     egg_type,
     selective_preference,
     save_digest_mode,
+    allow_external_feeding, // RS Add: Allow external feeding option (Lira, January 2026)
     eating_privacy_local,
     silicon_belly_overlay_preference,
     visible_belly_minimum_prey,
@@ -684,6 +687,17 @@ const VoreSelectedBellyOptions = (props, context) => {
               icon={save_digest_mode ? 'toggle-on' : 'toggle-off'}
               selected={save_digest_mode}
               content={save_digest_mode ? 'True' : 'False'}
+            />
+          </LabeledList.Item>
+          {/* RS Add: Allow external feeding option (Lira, January 2026) */}
+          <LabeledList.Item label="Allow External Feeding">
+            <Button
+              onClick={() =>
+                act('set_attribute', { attribute: 'b_allow_external_feeding' })
+              }
+              icon={allow_external_feeding ? 'toggle-on' : 'toggle-off'}
+              selected={allow_external_feeding}
+              content={allow_external_feeding ? 'Yes' : 'No'}
             />
           </LabeledList.Item>
         </LabeledList>
@@ -2152,9 +2166,11 @@ const VoreUserPreferences = (props, context) => {
     noisy,
     drop_vore,
     stumble_vore,
+    buckle_vore, // RS Add: Split from stumble (Lira, January 2026)
     slip_vore,
     throw_vore,
     food_vore,
+    spont_belly_prefs, // Spont vore prefs (Lira, January 2026)
     nutrition_message_visible,
     weight_message_visible,
     eating_privacy_global,
@@ -2166,6 +2182,70 @@ const VoreUserPreferences = (props, context) => {
   } = data.prefs;
 
   const { show_pictures } = data;
+
+  // RS Add Start: Spont vore prefs (Lira, January 2026)
+  const spontBellyPrefs = spont_belly_prefs || {};
+  const getSpontBellyLabel = (key, fallback) =>
+    spontBellyPrefs[key] || fallback || 'Selected Belly';
+  const spontBellyOptions = [
+    {
+      key: 'Drop Vore (You Drop On Them)',
+      label: 'Drop Vore (You Drop on Them)',
+      fallbackKey: 'Drop Vore',
+      tooltip:
+        'If you drop onto someone and vore happens, prey will go to this belly. ' +
+        'Select "Default (Selected Belly)" to clear.',
+    },
+    {
+      key: 'Drop Vore (They Drop On You)',
+      label: 'Drop Vore (They Drop on You)',
+      fallbackKey: 'Drop Vore',
+      tooltip:
+        'If someone drops onto you and vore happens, prey will go to this belly. ' +
+        'Select "Default (Selected Belly)" to clear.',
+    },
+    {
+      key: 'Slip Vore',
+      label: 'Slip Vore Belly',
+      tooltip:
+        'Slip vore will place prey into this belly. ' +
+        'Select "Default (Selected Belly)" to clear.',
+    },
+    {
+      key: 'Stumble Vore',
+      label: 'Stumble Vore Belly',
+      tooltip:
+        'Stumble vore will place prey into this belly. ' +
+        'Select "Default (Selected Belly)" to clear.',
+    },
+    {
+      key: 'Buckle Vore',
+      label: 'Buckle Vore Belly',
+      tooltip:
+        'Buckle vore will place prey into this belly. ' +
+        'Select "Default (Selected Belly)" to clear.',
+    },
+    {
+      key: 'Throw Vore',
+      label: 'Throw Vore Belly',
+      tooltip:
+        'Throw vore will place prey into this belly. ' +
+        'Select "Default (Selected Belly)" to clear.',
+    },
+    {
+      key: 'Food Vore',
+      label: 'Food Vore Belly',
+      tooltip:
+        'Food vore (micros in food/drink) will place prey into this belly. ' +
+        'Select "Default (Selected Belly)" to clear.',
+    },
+  ];
+  const spontBellySplitIndex = Math.ceil(spontBellyOptions.length / 2);
+  const spontBellyColumns = [
+    spontBellyOptions.slice(0, spontBellySplitIndex),
+    spontBellyOptions.slice(spontBellySplitIndex),
+  ];
+  // RS Add End
 
   // RS Add Start: Trustlist integration (Lira, September 2025)
   const trustlistRaw = data.trustlist_toggles || [];
@@ -2376,6 +2456,26 @@ const VoreUserPreferences = (props, context) => {
         enabled: 'Stumble Vore Enabled',
         trustlist: 'Stumble Vore: Trust List', // RS Add: Trustlist integration (Lira, September 2025)
         disabled: 'Stumble Vore Disabled',
+      },
+    },
+    // RS Add: Split from stumble (Lira, January 2026)
+    toggle_buckle_vore: {
+      id: 'buckle_vore',
+      state: prefState(buckle_vore, 'Buckle Vore'),
+      action: 'toggle_buckle_vore',
+      test: buckle_vore,
+      tooltip: {
+        main:
+          'Allows for buckle related spontaneous vore to occur. ' +
+          ' Note, you still need spontaneous vore pred and/or prey enabled.',
+        enable: 'Click here to allow for buckle vore.',
+        trustlist: 'Click here to restrict buckle vore to trusted users.',
+        disable: 'Click here to disable buckle vore.',
+      },
+      content: {
+        enabled: 'Buckle Vore Enabled',
+        trustlist: 'Buckle Vore: Trust List',
+        disabled: 'Buckle Vore Disabled',
       },
     },
     toggle_throw_vore: {
@@ -2800,6 +2900,11 @@ const VoreUserPreferences = (props, context) => {
           <Flex.Item basis="32%">
             <VoreUserPreferenceItem spec={preferences.toggle_stumble_vore} />
           </Flex.Item>
+          {/* RS Add Start: Split from stumble (Lira, January 2026) */}
+          <Flex.Item basis="32%">
+            <VoreUserPreferenceItem spec={preferences.toggle_buckle_vore} />
+          </Flex.Item>
+          {/* RS Add End */}
           <Flex.Item basis="32%">
             <VoreUserPreferenceItem spec={preferences.toggle_throw_vore} />
           </Flex.Item>
@@ -2821,6 +2926,39 @@ const VoreUserPreferences = (props, context) => {
         </Flex>
       </Section>
       {/* RS Edit End */}
+      {/* RS Add Start: Spontaneous preferences (Lira, January 2026) */}
+      <Section title="Spontaneous Preferences" mt={2}>
+        <Flex spacing={1} wrap="wrap" align="start">
+          {spontBellyColumns.map((column, columnIndex) => (
+            <Flex.Item key={`spont-belly-col-${columnIndex}`} basis="50%">
+              <Box
+                pr={columnIndex === 0 ? 1 : 0}
+                pl={columnIndex === 1 ? 1 : 0}>
+                <LabeledList>
+                  {column.map((option) => (
+                    <LabeledList.Item key={option.key} label={option.label}>
+                      <Button
+                        fluid
+                        content={getSpontBellyLabel(
+                          option.key,
+                          option.fallbackKey
+                            ? spontBellyPrefs[option.fallbackKey]
+                            : null
+                        )}
+                        tooltip={option.tooltip}
+                        onClick={() =>
+                          act('set_spont_belly_pref', { pref: option.key })
+                        }
+                      />
+                    </LabeledList.Item>
+                  ))}
+                </LabeledList>
+              </Box>
+            </Flex.Item>
+          ))}
+        </Flex>
+      </Section>
+      {/* RS Add End */}
       {/* RS Edit: Cleanup spacing (Lira, September 2025) */}
       <Section title="Aesthetic Preferences" mt={2}>
         <Flex spacing={1} wrap="wrap" justify="center">

@@ -160,6 +160,7 @@
 		SPONT_PRED,
 		DROP_VORE,
 		STUMBLE_VORE,
+		BUCKLE_VORE, // Seperated out from stumble vore (Lira, January 2026)
 		SLIP_VORE,
 		THROW_VORE,
 		FOOD_VORE,
@@ -251,6 +252,15 @@
 					return FALSE
 			if(pred.client)
 				if(!pred.client.prefs_vr.stumble_vore)
+					return FALSE
+
+		// Seperate out from stumble vore (Lira, September 2026)
+		if(BUCKLE_VORE)
+			if(prey.client)
+				if(!prey.client.prefs_vr.buckle_vore)
+					return FALSE
+			if(pred.client)
+				if(!pred.client.prefs_vr.buckle_vore)
 					return FALSE
 
 		if(SLIP_VORE)
@@ -410,6 +420,15 @@
 	else
 		variance = inactive
 	dat += {"<a href='?src=\ref[src];toggle_vore_trustlist=[STUMBLE_VORE]'>[variance] [STUMBLE_VORE]</a><br>"}
+
+	// Seperate out from stumble vore (Lira, January 2026)
+	if(!client.prefs_vr.buckle_vore)
+		variance = disabled
+	else if(BUCKLE_VORE in client.prefs_vr.vore_whitelist_toggles)
+		variance = active
+	else
+		variance = inactive
+	dat += {"<a href='?src=\ref[src];toggle_vore_trustlist=[BUCKLE_VORE]'>[variance] [BUCKLE_VORE]</a><br>"}
 
 	if(!client.prefs_vr.slip_vore)
 		variance = disabled
