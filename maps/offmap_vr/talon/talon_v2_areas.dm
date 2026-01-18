@@ -41,6 +41,7 @@
 	icon_state = "gray"
 /area/talon_v2/medical
 	name = "\improper Talon - Medical"
+	ambience = AMBIENCE_MEDBAY
 	icon_state = "green"
 /area/talon_v2/workroom
 	name = "\improper Talon - Workroom"
