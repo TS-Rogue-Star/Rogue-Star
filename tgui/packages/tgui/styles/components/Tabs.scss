@@ -4,7 +4,7 @@
  */
 
 @use 'sass:color';
-@use "sass:math";
+@use 'sass:math';
 @use '../base.scss';
 @use '../colors.scss';
 
@@ -80,6 +80,12 @@ $fg-map: colors.$fg-map !default;
 .Tab:not(.Tab--selected):hover {
   background-color: $tab-color-hovered;
   transition: background-color 0;
+}
+
+// RS Add: Disabled tab style (Lira, December 2025)
+.Tab--disabled {
+  pointer-events: none;
+  opacity: 0.5;
 }
 
 .Tab--selected {

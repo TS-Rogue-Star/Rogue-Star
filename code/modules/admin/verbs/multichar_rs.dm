@@ -6,6 +6,25 @@
 	var/mob/living/multichar_last
 	var/multichar_pet_mode = FALSE
 
+// Restore character link from teleops on login (Lira, October 2025)
+/client/proc/rebuild_multichar_state_from_teleops()
+	if(multichar_list && multichar_list.len)
+		return FALSE
+	if(!isliving(mob))
+		return FALSE
+	var/list/linked_mobs = list()
+	for(var/mob/living/L in living_mob_list)
+		if(L.teleop == mob)
+			linked_mobs += L
+	if(!linked_mobs.len)
+		return FALSE
+	for(var/mob/living/L in linked_mobs)
+		multichar_list |= L
+	multichar_list |= mob
+	if(!multichar_last || !(multichar_last in multichar_list))
+		multichar_last = linked_mobs[1]
+	return TRUE
+
 /client/Destroy()
 	. = ..()
 	if(multichar)
@@ -31,6 +50,7 @@
 	set desc = "Swap between you and your pet!"
 	set category = "IC"
 
+	client?.rebuild_multichar_state_from_teleops() // Restore character link from teleops on login (Lira, October 2025)
 	client.multichar_pet_mode = TRUE
 
 	if(!client.multichar)
@@ -199,7 +219,7 @@
 /obj/effect/multichar_button
 	icon = 'icons/rogue-star/misc.dmi'
 	icon_state = "box"
-	plane = PLANE_LIGHTING_ABOVE
+	plane = PLANE_PLAYER_HUD
 
 /obj/effect/multichar_button/multichar_pick
 	name = "Pick Character"
@@ -256,3 +276,9 @@
 		var/mob/M = usr
 		if(M.client)
 			M.client.register_multichar()
+
+/mob/Login()
+	. = ..()
+	if(client?.multichar)
+		if(client.multichar_active)
+			client.multichar.toggle_visible()

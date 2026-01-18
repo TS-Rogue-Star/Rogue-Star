@@ -1,7 +1,18 @@
 import { round } from 'common/math';
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, Flex, Icon, LabeledList, ProgressBar, Section, Table, Tooltip } from '../components';
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  Flex,
+  Icon,
+  LabeledList,
+  ProgressBar,
+  Section,
+  Table,
+  Tooltip,
+} from '../components';
 import { Window } from '../layouts';
 
 const stats = [
@@ -78,15 +89,15 @@ const mapTwoByTwo = (a, c) => {
 const reduceOrganStatus = (A) => {
   return A.length > 0
     ? A.reduce((a, s) =>
-      a === null ? (
-        s
-      ) : (
-        <Fragment>
-          {a}
-          {!!s && <Box>{s}</Box>}
-        </Fragment>
+        a === null ? (
+          s
+        ) : (
+          <Fragment>
+            {a}
+            {!!s && <Box>{s}</Box>}
+          </Fragment>
+        )
       )
-    )
     : null;
 };
 

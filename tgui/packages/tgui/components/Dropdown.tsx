@@ -1,6 +1,7 @@
 import { createPopper, VirtualElement } from '@popperjs/core';
 import { classes } from 'common/react';
 import { Component, findDOMfromVNode, InfernoNode, render } from 'inferno';
+import { tguiScalePopperModifier } from '../utils/uiScale'; // RS Add: Scaling tool (Lira, December 2025)
 import { Box, BoxProps } from './Box';
 import { Button } from './Button';
 import { Icon } from './Icon';
@@ -12,21 +13,21 @@ export interface DropdownEntry {
 }
 
 type DropdownUniqueProps = {
-  options: string[] | DropdownEntry[];
-  icon?: string;
-  iconRotation?: number;
-  clipSelectedText?: boolean;
-  width?: string;
-  menuWidth?: string;
-  over?: boolean;
-  color?: string;
-  nochevron?: boolean;
-  displayText?: string | number | InfernoNode;
-  onClick?: (event) => void;
+  readonly options: string[] | DropdownEntry[];
+  readonly icon?: string;
+  readonly iconRotation?: number;
+  readonly clipSelectedText?: boolean;
+  readonly width?: string;
+  readonly menuWidth?: string;
+  readonly over?: boolean;
+  readonly color?: string;
+  readonly nochevron?: boolean;
+  readonly displayText?: string | number | InfernoNode;
+  readonly onClick?: (event) => void;
   // you freaks really are just doing anything with this shit
-  selected?: any;
-  onSelected?: (selected: any) => void;
-  buttons?: boolean;
+  readonly selected?: any;
+  readonly onSelected?: (selected: any) => void;
+  readonly buttons?: boolean;
 };
 
 export type DropdownProps = BoxProps & DropdownUniqueProps;
@@ -38,6 +39,7 @@ const DEFAULT_OPTIONS = {
       name: 'eventListeners',
       enabled: false,
     },
+    tguiScalePopperModifier, // RS Add: Scaling tool (Lira, December 2025)
   ],
 };
 const NULL_RECT: DOMRect = {

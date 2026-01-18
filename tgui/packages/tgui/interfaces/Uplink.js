@@ -1,7 +1,17 @@
 import { createSearch, decodeHtmlEntities } from 'common/string';
 import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Flex, Input, Section, Table, Tabs, NoticeBox, LabeledList } from '../components';
+import {
+  Box,
+  Button,
+  Flex,
+  Input,
+  Section,
+  Table,
+  Tabs,
+  NoticeBox,
+  LabeledList,
+} from '../components';
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 

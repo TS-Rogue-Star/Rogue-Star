@@ -42,7 +42,9 @@
 
 	drop_vore = client.prefs_vr.drop_vore
 	stumble_vore = client.prefs_vr.stumble_vore
+	buckle_vore = client.prefs_vr.buckle_vore // RS Add: Split from stumble vore (Lira, January 2026)
 	slip_vore = client.prefs_vr.slip_vore
+	spont_belly_prefs = islist(client.prefs_vr.spont_belly_prefs) ? client.prefs_vr.spont_belly_prefs.Copy() : list() // RS Add: Spont prefs (Lira, January 2026)
 
 	resizable = client.prefs_vr.resizable
 	show_vore_fx = client.prefs_vr.show_vore_fx

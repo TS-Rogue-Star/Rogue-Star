@@ -1,6 +1,13 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, ProgressBar, Section, NoticeBox } from '../components';
+import {
+  Box,
+  Button,
+  LabeledList,
+  ProgressBar,
+  Section,
+  NoticeBox,
+} from '../components';
 import { Window } from '../layouts';
 import { toTitleCase } from 'common/string';
 import { Materials } from './ExosuitFabricator';

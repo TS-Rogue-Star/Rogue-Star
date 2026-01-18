@@ -229,10 +229,12 @@
 	new_mob.appendage_alt_setting = appendage_alt_setting
 	new_mob.drop_vore = drop_vore
 	new_mob.stumble_vore = stumble_vore
+	new_mob.buckle_vore = buckle_vore // RS Add: Split from stumble (Lira, January 2026)
 	new_mob.glowy_belly = glowy_belly
 	new_mob.slip_vore = slip_vore
 	new_mob.throw_vore = throw_vore
 	new_mob.food_vore = food_vore
+	new_mob.spont_belly_prefs = islist(spont_belly_prefs) ? spont_belly_prefs.Copy() : list() // RS Add: Spont prefs (Lira, January 2026)
 	new_mob.resizable = resizable
 	new_mob.show_vore_fx = show_vore_fx
 	new_mob.step_mechanics_pref = step_mechanics_pref

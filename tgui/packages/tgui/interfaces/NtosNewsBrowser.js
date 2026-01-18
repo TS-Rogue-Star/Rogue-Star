@@ -1,6 +1,12 @@
 /* eslint react/no-danger: "off" */
 import { useBackend } from '../backend';
-import { Button, LabeledList, ProgressBar, Section, NoticeBox } from '../components';
+import {
+  Button,
+  LabeledList,
+  ProgressBar,
+  Section,
+  NoticeBox,
+} from '../components';
 import { NtosWindow } from '../layouts';
 import { resolveAsset } from '../assets';
 import { Fragment } from 'inferno';

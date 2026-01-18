@@ -1,10 +1,11 @@
 import { createPopper, Placement, VirtualElement } from '@popperjs/core';
 import { Component, findDOMfromVNode, InfernoNode, render } from 'inferno';
+import { tguiScalePopperModifier } from '../utils/uiScale'; // RS Add: Scaling tool (Lira, December 2025)
 
 type TooltipProps = {
-  children?: InfernoNode;
-  content: InfernoNode;
-  position?: Placement;
+  readonly children?: InfernoNode;
+  readonly content: InfernoNode;
+  readonly position?: Placement;
 };
 
 type TooltipState = {
@@ -17,6 +18,7 @@ const DEFAULT_OPTIONS = {
       name: 'eventListeners',
       enabled: false,
     },
+    tguiScalePopperModifier, // RS Add: Scaling tool (Lira, December 2025)
   ],
 };
 

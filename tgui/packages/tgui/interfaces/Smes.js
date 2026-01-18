@@ -1,5 +1,13 @@
 import { useBackend } from '../backend';
-import { Box, Button, Flex, LabeledList, ProgressBar, Section, Slider } from '../components';
+import {
+  Box,
+  Button,
+  Flex,
+  LabeledList,
+  ProgressBar,
+  Section,
+  Slider,
+} from '../components';
 import { formatPower } from '../format';
 import { Window } from '../layouts';
 import { round } from 'common/math';

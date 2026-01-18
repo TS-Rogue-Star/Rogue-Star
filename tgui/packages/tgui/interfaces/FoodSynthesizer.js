@@ -1,7 +1,17 @@
 import { classes } from 'common/react';
 import { filter, sortBy } from 'common/collections';
 import { useBackend, useSharedState } from '../backend';
-import { Box, Button, LabeledList, Section, Flex, Tabs, ProgressBar, Stack, Icon } from '../components';
+import {
+  Box,
+  Button,
+  LabeledList,
+  Section,
+  Flex,
+  Tabs,
+  ProgressBar,
+  Stack,
+  Icon,
+} from '../components';
 import { Window } from '../layouts';
 import { flow } from 'common/fp';
 

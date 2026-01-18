@@ -228,7 +228,7 @@
 	if(!istype(user, /mob/living/carbon/human))
 		return
 	user.set_machine(src)
-	var/dat = {"<TT>
+	var/dat = {"<html><TT>
 			<A href='?src=\ref[src];power=1'>Turn [on ? "Off" : "On"]</A><BR>
 			<B>Frequency/Code</B> for collar:<BR>
 			Frequency:
@@ -245,7 +245,7 @@
 
 			Tag:
 			<A href='?src=\ref[src];tag=1'>Set tag</A><BR>
-			</TT>"}
+			</TT></html>"} // RS Edit: Fix html tag (Lira, January 2026)
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")
 	return
@@ -434,7 +434,7 @@
 	if(!istype(user, /mob/living/carbon/human))
 		return
 	user.set_machine(src)
-	var/dat = {"<TT>
+	var/dat = {"<html><TT>
 			<B>Frequency/Code</B> for collar:<BR>
 			Frequency:
 			<A href='byond://?src=\ref[src];freq=-10'>-</A>
@@ -453,7 +453,7 @@
 
 			Size:
 			<A href='?src=\ref[src];size=100'>Set size</A><BR>
-			</TT>"}
+			</TT></html>"} // RS Edit: Fix html tag (Lira, January 2026)
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")
 	return
@@ -536,7 +536,7 @@
 	if(!istype(user, /mob/living/carbon/human))
 		return
 	user.set_machine(src) //Doesn't need code or size options as the code now just defines the size.
-	var/dat = {"<TT>
+	var/dat = {"<html><TT>
 			<B>Frequency/Code</B> for collar:<BR>
 			Frequency:
 			<A href='byond://?src=\ref[src];freq=-10'>-</A>
@@ -548,7 +548,7 @@
 			<A href='?src=\ref[src];tag=1'>Set tag</A><BR>
 
 			The size control of the collar is determined by two times the value of the code it recieves, to a minimum of 26 (code 13).
-			</TT>"}
+			</TT></html>"} // RS Edit: Fix html tag (Lira, January 2026)
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")
 	return

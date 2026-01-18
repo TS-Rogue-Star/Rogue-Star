@@ -38,6 +38,7 @@
 	var/transferchance = 0 					// % Chance of prey being trasnsfered, goes from 0-100%
 	var/transferchance_secondary = 0 		// % Chance of prey being transfered to transferchance_secondary, also goes 0-100%
 	var/save_digest_mode = TRUE				// Whether this belly's digest mode persists across rounds
+	var/allow_external_feeding = TRUE		// RS Add: Whether this belly can be chosen by external feeding prompts (Lira, January 2026)
 	var/can_taste = FALSE					// If this belly prints the flavor of prey when it eats someone.
 	var/bulge_size = 0.25					// The minimum size the prey has to be in order to show up on examine.
 	var/display_absorbed_examine = FALSE	// Do we display absorption examine messages for this belly at all?
@@ -340,6 +341,7 @@
 	"colorization_enabled",
 	"egg_type",
 	"save_digest_mode",
+	"allow_external_feeding", // RS Add: Allow external feeding option (Lira, January 2026)
 	"eating_privacy_local",
 	"silicon_belly_overlay_preference",
 	"visible_belly_minimum_prey",
@@ -579,6 +581,7 @@
 				L.clear_fullscreen("belly4")
 			var/obj/screen/fullscreen/F5 = L.overlay_fullscreen("belly5", /obj/screen/fullscreen/belly/colorized/overlay) // Reagent bellies || RS Add || Chomp Port
 			F5.icon_state = belly_fullscreen //Reagent bellies || RS Add || Chomp Port
+			F5.cut_overlays() // RS Add: Fix sticky overlays (Lira, November 2025)
 			if(L.liquidbelly_visuals && mush_overlay && (owner.nutrition > 0 || max_mush == 0 || min_mush > 0)) // Reagent bellies start || RS Add || Chomp Port
 				ReagentImages = image('icons/mob/vore/bubbles.dmi', "mush")
 				ReagentImages.color = mush_color
@@ -607,6 +610,7 @@
 			var/obj/screen/fullscreen/F5 = L.overlay_fullscreen("belly5", /obj/screen/fullscreen/belly/colorized/overlay) //Reagent bellies || RS Add || Chomp Port
 			F.icon_state = belly_fullscreen
 			F5.icon_state = belly_fullscreen //Reagent bellies || RS Add || Chomp Port
+			F5.cut_overlays() // RS Add: Fix sticky overlays (Lira, November 2025)
 			if(L.liquidbelly_visuals && mush_overlay && (owner.nutrition > 0 || max_mush == 0 || min_mush > 0)) // Reagent bellies start || RS Add || Chomp Port
 				ReagentImages = image('icons/mob/vore/bubbles.dmi', "mush")
 				ReagentImages.color = mush_color
@@ -668,6 +672,7 @@
 				F4.icon_state = "[belly_fullscreen]_nc"
 			var/obj/screen/fullscreen/F5 = L.overlay_fullscreen("belly5", /obj/screen/fullscreen/belly/colorized/overlay)  //Reagent bellies || RS Add || Chomp Port
 			F5.icon_state = belly_fullscreen //Reagent bellies || RS Add || Chomp Port
+			F5.cut_overlays() // RS Add: Fix sticky overlays (Lira, November 2025)
 			if(L.liquidbelly_visuals && mush_overlay && (owner.nutrition > 0 || max_mush == 0 || min_mush > 0)) // Reagent bellies start || RS Add || Chomp Port
 				ReagentImages = image('icons/mob/vore/bubbles.dmi', "mush")
 				ReagentImages.color = mush_color
@@ -696,6 +701,7 @@
 			var/obj/screen/fullscreen/F5 = L.overlay_fullscreen("belly5", /obj/screen/fullscreen/belly/colorized/overlay) //Reagent bellies || RS Add || Chomp Port
 			F.icon_state = belly_fullscreen
 			F5.icon_state = belly_fullscreen //Reagent bellies || RS Add || Chomp Port
+			F5.cut_overlays() // RS Add: Fix sticky overlays (Lira, November 2025)
 			if(L.liquidbelly_visuals && mush_overlay && (owner.nutrition > 0 || max_mush == 0 || min_mush > 0)) // Reagent bellies start || RS Add || Chomp Port
 				ReagentImages = image('icons/mob/vore/bubbles.dmi', "mush")
 				ReagentImages.color = mush_color
@@ -1962,6 +1968,7 @@
 	dupe.emote_active = emote_active
 	dupe.selective_preference = selective_preference
 	dupe.save_digest_mode = save_digest_mode
+	dupe.allow_external_feeding = allow_external_feeding // RS Add: Allow external feeding option (Lira, January 2026)
 	dupe.eating_privacy_local = eating_privacy_local
 	dupe.silicon_belly_overlay_preference = silicon_belly_overlay_preference
 	dupe.visible_belly_minimum_prey	= visible_belly_minimum_prey

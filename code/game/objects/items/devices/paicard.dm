@@ -35,6 +35,81 @@ GLOBAL_LIST_BOILERPLATE(all_pai_cards, /obj/item/device/paicard)
 	var/screen_color = "#00ff0d"
 	var/last_notify = 0
 	var/screen_msg
+	var/off_overlay_state = "pai-off" // RS Add: Off duty AI support (Lira, November 2025)
+	var/dead_overlay_state = "pai-dead" // RS Add: Off duty AI support (Lira, November 2025)
+	var/ghostalert_overlay_state = "pai-ghostalert" // RS Add: Off duty AI support (Lira, November 2025)
+
+// RS Add Start: Off duty AI support (Lira, November 2025)
+
+/obj/item/device/paicard/ai_offduty
+	parent_type = /obj/item/device/paicard/typeb
+	name = "compact AI shell"
+	desc = "A folded AI core configured for off-duty operation."
+	icon = 'icons/rogue-star/paicard.dmi'
+	icon_state = "ai_pai"
+	item_state = "pai"
+	off_overlay_state = "ai_pai-blank"
+	dead_overlay_state = "ai_pai-dead"
+	ghostalert_overlay_state = "ai_pai-ghostalert"
+
+/obj/item/device/paicard/ai_offduty/New()
+	..()
+	cut_overlays()
+	qdel(screen_layer)
+	screen_layer = null
+	setEmotion(16)
+
+/obj/item/device/paicard/ai_offduty/setEmotion(var/emotion)
+	current_emotion = emotion
+	cut_overlays()
+	qdel(screen_layer)
+	screen_layer = null
+
+	if(pai)
+		var/state = null
+		var/prefix = "ai_pai"
+		var/suffix = "-b"
+		var/off_state = off_overlay_state
+		var/mob/living/silicon/pai/ai_offduty/offduty_pai = pai
+		if(offduty_pai && offduty_pai.dark_mode)
+			suffix = ""
+			off_state = "ai_pai-blank"
+		switch(emotion)
+			if(1) state = "[prefix]-neutral[suffix]"
+			if(2) state = "[prefix]-what[suffix]"
+			if(3) state = "[prefix]-happy[suffix]"
+			if(4) state = "[prefix]-cat[suffix]"
+			if(5) state = "[prefix]-extremely-happy[suffix]"
+			if(6) state = "[prefix]-face[suffix]"
+			if(7) state = "[prefix]-laugh[suffix]"
+			if(8) state = "[prefix]-sad[suffix]"
+			if(9) state = "[prefix]-angry[suffix]"
+			if(10) state = "[prefix]-silly[suffix]"
+			if(11) state = "[prefix]-nose[suffix]"
+			if(12) state = "[prefix]-smirk[suffix]"
+			if(13) state = "[prefix]-exclamation[suffix]"
+			if(14) state = "[prefix]-question[suffix]"
+			if(15) state = "[prefix]-blank[suffix]"
+			if(16) state = off_state
+		if(!state)
+			state = "[prefix]-neutral[suffix]"
+		icon_state = "ai_pai"
+		screen_layer = image(icon, state)
+		if(state != off_state)
+			screen_layer.color = pai.eye_color
+		add_overlay(screen_layer)
+	else
+		if(emotion == 16)
+			var/blank_state = off_overlay_state
+			if(istype(pai, /mob/living/silicon/pai/ai_offduty))
+				var/mob/living/silicon/pai/ai_offduty/offduty_pai_blank = pai
+				if(offduty_pai_blank && offduty_pai_blank.dark_mode)
+					blank_state = "ai_pai-blank"
+			icon_state = blank_state
+		else
+			icon_state = "ai_pai"
+
+// RS Add End
 
 /obj/item/device/paicard/relaymove(var/mob/user, var/direction)
 	if(user.stat || user.stunned)
@@ -45,7 +120,7 @@ GLOBAL_LIST_BOILERPLATE(all_pai_cards, /obj/item/device/paicard)
 
 /obj/item/device/paicard/New()
 	..()
-	add_overlay("pai-off")
+	add_overlay(off_overlay_state) // RS Edit: Off duty AI support(Lira, November 2025)
 
 /obj/item/device/paicard/Destroy()
 	//Will stop people throwing friend pAIs into the singularity so they can respawn
@@ -265,7 +340,7 @@ GLOBAL_LIST_BOILERPLATE(all_pai_cards, /obj/item/device/paicard)
 				</td>
 			</table>
 		"}
-		if(pai && (!pai.master_dna || !pai.master))
+		if(pai && (!pai.master_dna || !pai.master) && !istype(pai, /mob/living/silicon/pai/ai_offduty)) // RS Add: Off duty AI support (Lira, November 2025)
 			dat += {"
 				<table>
 					<td class="button">
@@ -345,6 +420,11 @@ GLOBAL_LIST_BOILERPLATE(all_pai_cards, /obj/item/device/paicard)
 		return
 
 	if(href_list["setdna"])
+		// RS Add: Off duty AI support (Lira, November 2025)
+		if(istype(pai, /mob/living/silicon/pai/ai_offduty))
+			to_chat(usr, "<span class='warning'>This compact AI shell cannot be imprinted with a master.</span>")
+			to_chat(pai, "<span class='notice'>Imprinting attempt declined. Off-duty mode does not support masters.</span>")
+			return
 		if(pai.master_dna)
 			return
 		var/mob/M = usr
@@ -420,9 +500,11 @@ GLOBAL_LIST_BOILERPLATE(all_pai_cards, /obj/item/device/paicard)
 			if(13) screen_layer = image(icon, "pai-exclamation")
 			if(14) screen_layer = image(icon, "pai-question")
 			if(15) screen_layer = image(icon, "pai-blank")
-			if(16) screen_layer = image(icon, "pai-off")
+			if(16) screen_layer = image(icon, off_overlay_state) // RS Add: Off duty AI support (Lira, November 2025)
 
-		screen_layer.color = pai.eye_color
+		// RS Edit: Off duty AI support (Lira, November 2025)
+		if(screen_layer)
+			screen_layer.color = pai.eye_color
 		add_overlay(screen_layer)
 		current_emotion = emotion
 

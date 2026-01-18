@@ -2,8 +2,19 @@ import { filter, sortBy } from 'common/collections';
 import { Fragment } from 'inferno';
 import { formatTime } from '../format';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, LabeledList, Section, Tabs, AnimatedNumber, Stack } from '../components';
-import { ComplexModal, modalRegisterBodyOverride } from '../interfaces/common/ComplexModal';
+import {
+  Box,
+  Button,
+  LabeledList,
+  Section,
+  Tabs,
+  AnimatedNumber,
+  Stack,
+} from '../components';
+import {
+  ComplexModal,
+  modalRegisterBodyOverride,
+} from '../interfaces/common/ComplexModal';
 import { Window } from '../layouts';
 import { flow } from 'common/fp';
 

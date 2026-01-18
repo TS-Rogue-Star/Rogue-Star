@@ -373,6 +373,153 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 	return result
 
+/proc/vchat_get_round_elapsed_ds(var/round_id, var/use_all_rounds = FALSE)
+	if(use_all_rounds || !istext(round_id) || !length(round_id) || round_id == GLOB.vchat_current_round_id)
+		return round_duration_in_ds
+
+	var/list/rows = vchat_exec_query(list("SELECT start_time, end_time FROM rounds WHERE id = ? LIMIT 1", round_id))
+	if(!islist(rows) || !rows.len)
+		return 0
+
+	var/list/row = rows[1]
+	if(!islist(row))
+		return 0
+
+	var/start_time = row["start_time"]
+	if(istext(start_time))
+		start_time = text2num(start_time)
+	var/end_time = row["end_time"]
+	if(istext(end_time))
+		end_time = text2num(end_time)
+
+	if(!isnum(start_time) || start_time <= 0)
+		return 0
+	if(isnum(end_time) && end_time > 0)
+		return max(end_time - start_time, 0)
+
+	return max(world.realtime - start_time, 0)
+
+/proc/vchat_format_round_elapsed_segment(var/elapsed_ds)
+	if(!isnum(elapsed_ds) || elapsed_ds < 0)
+		elapsed_ds = 0
+	var/mins = round((elapsed_ds % 36000) / 600)
+	var/hours = round(elapsed_ds / 36000)
+	mins = add_zero(num2text(mins), 2)
+	hours = add_zero(num2text(hours), 2)
+	return "[hours]_[mins]"
+
+/proc/vchat_format_round_timestamp_segment(var/value)
+	if(isnull(value))
+		return null
+
+	if(istext(value))
+		value = text2num(value)
+
+	if(!isnum(value) || value <= 0)
+		return null
+
+	return time2text(value, "YYYY-MM-DD_hh")
+
+/proc/vchat_get_round_time_bounds(var/round_id, var/use_all_rounds = FALSE)
+	var/list/rows
+	var/is_open = FALSE
+
+	if(use_all_rounds)
+		rows = vchat_exec_query("SELECT MIN(start_time) AS start_time, MAX(end_time) AS end_time FROM rounds")
+		var/list/open_round = vchat_exec_query("SELECT id FROM rounds WHERE end_time IS NULL OR end_time = 0 ORDER BY start_time DESC LIMIT 1")
+		if(islist(open_round) && open_round.len)
+			is_open = TRUE
+	else
+		if(!istext(round_id) || !length(round_id))
+			return null
+		rows = vchat_exec_query(list("SELECT start_time, end_time FROM rounds WHERE id = ? LIMIT 1", round_id))
+
+	if(!islist(rows) || !rows.len)
+		return null
+
+	var/list/row = rows[1]
+	if(!islist(row))
+		return null
+
+	var/start_time = row["start_time"]
+	if(istext(start_time))
+		start_time = text2num(start_time)
+
+	var/end_time = row["end_time"]
+	if(istext(end_time))
+		end_time = text2num(end_time)
+
+	if(!use_all_rounds)
+		is_open = (!isnum(end_time) || end_time <= 0)
+
+	return list("start_time" = start_time, "end_time" = end_time, "is_open" = is_open)
+
+/proc/vchat_format_round_id_for_export(var/round_id, var/use_all_rounds = FALSE)
+	if(use_all_rounds)
+		return "AllRounds"
+	if(!istext(round_id) || !length(round_id))
+		return "round_unknown"
+
+	var/cleaned = vchat_trim_whitespace(round_id)
+	if(!length(cleaned))
+		return "round_unknown"
+
+	if(findtext(cleaned, "round_") == 1)
+		cleaned = copytext(cleaned, 7)
+
+	var/list/parts = splittext(cleaned, "_")
+	if(parts.len >= 2)
+		var/date_part = parts[1]
+		if(istext(date_part) && length(date_part) == 8 && isnum(text2num(date_part)))
+			parts[1] = "[copytext(date_part, 1, 5)]-[copytext(date_part, 5, 7)]-[copytext(date_part, 7, 9)]"
+
+	var/formatted = list2text(parts, "_")
+	if(length(formatted) > 9)
+		formatted = copytext(formatted, 1, length(formatted) - 8)
+	return formatted
+
+/proc/vchat_build_export_filename(var/round_id, var/use_all_rounds = FALSE)
+	var/target_round = round_id
+	if(!use_all_rounds && (!istext(target_round) || !length(target_round)))
+		target_round = GLOB.vchat_current_round_id
+
+	var/round_segment = vchat_format_round_id_for_export(target_round, use_all_rounds)
+	var/suffix = "Full"
+	if(!use_all_rounds && istext(target_round) && length(target_round) && target_round == GLOB.vchat_current_round_id)
+		var/elapsed_ds = vchat_get_round_elapsed_ds(target_round, FALSE)
+		var/time_segment = vchat_format_round_elapsed_segment(elapsed_ds)
+		suffix = "T[time_segment]"
+	else if(use_all_rounds)
+		var/list/bounds = vchat_get_round_time_bounds(null, TRUE)
+		if(islist(bounds))
+			var/start_segment = vchat_format_round_timestamp_segment(bounds["start_time"])
+			var/end_segment = vchat_format_round_timestamp_segment(bounds["end_time"])
+			if(bounds["is_open"])
+				var/elapsed_ds = vchat_get_round_elapsed_ds(GLOB.vchat_current_round_id, FALSE)
+				var/time_segment = vchat_format_round_elapsed_segment(elapsed_ds)
+				if(start_segment && end_segment && time_segment)
+					suffix = "S[start_segment]-E[end_segment]-T[time_segment]"
+				else if(start_segment && time_segment)
+					suffix = "S[start_segment]-T[time_segment]"
+				else if(end_segment && time_segment)
+					suffix = "E[end_segment]-T[time_segment]"
+				else if(time_segment)
+					suffix = "T[time_segment]"
+				else if(start_segment)
+					suffix = "S[start_segment]"
+				else if(end_segment)
+					suffix = "E[end_segment]"
+			else
+				if(start_segment && end_segment)
+					suffix = "S[start_segment]-E[end_segment]"
+				else if(start_segment)
+					suffix = "S[start_segment]"
+				else if(end_segment)
+					suffix = "E[end_segment]"
+
+	var/filename = "RSLog-[round_segment]-[suffix].html"
+	return vchat_sanitize_filename(filename)
+
 // RS Add End
 
 //The main object attached to clients, created when they connect, and has start() called on it in client/New()
@@ -387,6 +534,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	var/last_topic_time = 0
 	var/too_many_topics = 0
 	var/topic_spam_limit = 10 //Just enough to get over the startup and such
+	var/pending_start_retry = FALSE // RS Add: Retry startup once a mob attaches (Lira, November 2025)
 
 /datum/chatOutput/New(client/C)
 	. = ..()
@@ -435,10 +583,16 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		owner << browse_rsc(file(filename))
 	resources_sent = TRUE
 
+// RS Edit: Retry chat startup if the mob isn't attached yet (Lira, Novemember 2025)
 //Called from client/New() in a spawn()
 /datum/chatOutput/proc/start()
 	if(!owner)
 		qdel(src)
+		return FALSE
+	if(!owner?.mob)
+		if(!pending_start_retry)
+			pending_start_retry = TRUE
+			addtimer(CALLBACK(src, PROC_REF(_retry_start)), 1 SECOND)
 		return FALSE
 
 	if(!winexists(owner, "htmloutput"))
@@ -466,6 +620,14 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		load()
 
 	return TRUE
+
+// RS Add: Finish initializing chat once the client has a mob (Lira, November 2025)
+/datum/chatOutput/proc/_retry_start()
+	pending_start_retry = FALSE
+	if(owner)
+		start()
+	else
+		qdel(src)
 
 //Attempts to actually load the HTML page into the client's UI
 /datum/chatOutput/proc/load()
@@ -846,10 +1008,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 	rustg_file_write(text_blob, tmp_path)
 
-	var/export_name = filename
-	if(!istext(export_name) || !length(export_name))
-		var/date_segment = time2text(world.timeofday, "YYYY_MM_DD_(hh_mm)")
-		export_name = "log_[date_segment].html"
+	var/export_name = vchat_build_export_filename(round_id, use_all_rounds)
 
 	owner << ftp(file(tmp_path), export_name)
 
@@ -1006,7 +1165,7 @@ var/to_chat_src
 	rustg_file_write(text_blob, o_file)
 
 	// Send the log to the client
-	src << ftp(file(o_file), "log_[time2text(world.timeofday, "YYYY_MM_DD_(hh_mm)")].html")
+	src << ftp(file(o_file), vchat_build_export_filename(GLOB.vchat_current_round_id, FALSE)) // RS Edit: Use new file name (Lira, January 2026)
 
 	// clean up the file on our end
 	spawn(10 SECONDS)

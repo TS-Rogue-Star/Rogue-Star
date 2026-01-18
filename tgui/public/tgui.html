@@ -198,6 +198,33 @@
     }
   };
 
+  // RS Add Start: Use chunking for large payloads (Lira, January 2026)
+  var TGUI_MAX_URL_LENGTH = 1800;
+  var TGUI_CHUNK_SIZE = 512;
+  var tguiChunkCounter = 0;
+
+  var estimateUrlLength = function (path, params) {
+    var urlLength = (path || '').length + 1;
+    var i = 0;
+    if (params) {
+      for (var key in params) {
+        if (hasOwn.call(params, key)) {
+          if (i++ > 0) {
+            urlLength += 1;
+          }
+          var value = params[key];
+          if (value === null || value === undefined) {
+            value = '';
+          }
+          urlLength += encodeURIComponent(key).length + 1
+            + encodeURIComponent(value).length;
+        }
+      }
+    }
+    return urlLength;
+  };
+  // RS Add End
+
   Byond.sendMessage = function (type, payload) {
     var message = typeof type === 'string'
       ? { type: type, payload: payload }
@@ -211,6 +238,32 @@
       tgui: 1,
       window_id: Byond.windowId,
     });
+    // RS Add Start: Use chunking for large payloads (Lira, January 2026)
+    var hasPayload = typeof message.payload === 'string';
+    if (hasPayload && estimateUrlLength('', message) >= TGUI_MAX_URL_LENGTH
+      && typeof message.type === 'string') {
+      var payloadStr = message.payload || '';
+      var chunkId = (++tguiChunkCounter).toString();
+      var total = Math.ceil(payloadStr.length / TGUI_CHUNK_SIZE) || 1;
+      for (var i = 0; i < total; i++) {
+        var chunk = payloadStr.substring(
+          i * TGUI_CHUNK_SIZE,
+          (i + 1) * TGUI_CHUNK_SIZE
+        );
+        Byond.topic({
+          tgui: 1,
+          window_id: Byond.windowId,
+          type: 'chunk',
+          chunk_id: chunkId,
+          chunk_index: i + 1,
+          chunk_total: total,
+          chunk_type: message.type,
+          payload: chunk,
+        });
+      }
+      return;
+    }
+    // RS Add End
     Byond.topic(message);
   };
 

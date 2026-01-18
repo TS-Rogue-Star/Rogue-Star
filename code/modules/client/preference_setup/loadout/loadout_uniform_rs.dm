@@ -28,3 +28,18 @@
 	description = "An expertly manufacted uniform worn often by ITV Talon operators. This variant of the suit has been given more thought, as it's made with formaility in mind."
 	path = /obj/item/clothing/under/rank/talon/command/refreshed
 	allowed_roles = list("Talon Captain")
+
+/datum/gear/uniform/hfjumpskirt
+	display_name = "HYPER jumpskirt"
+	path = /obj/item/clothing/under/hyperfiber/skirt
+	cost = 2
+
+/datum/gear/uniform/bsjumpsuit
+	path = /obj/item/clothing/under/hyperfiber/bluespace
+	display_name = "bluespace jumpsuit"
+	cost = 4
+
+/datum/gear/uniform/bsjumpskirt
+	path = /obj/item/clothing/under/hyperfiber/bluespace/skirt
+	display_name = "bluespace jumpskirt"
+	cost = 4

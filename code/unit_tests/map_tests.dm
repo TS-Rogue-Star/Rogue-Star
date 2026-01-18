@@ -69,6 +69,114 @@
 
 	return 1
 
+// RS Edit Start - Atmospherics & Disposal Pipe Tests
+/datum/unit_test/pipe_test
+	name = "MAP: Pipe Test (Defined Z-Levels)"
+
+/datum/unit_test/pipe_test/start_test()
+	set background=1
+
+	var/pipe_test_count = 0
+	var/bad_tests = 0
+	var/turf/T = null
+	var/obj/machinery/atmospherics/pipe/P = null
+	var/list/pipe_turfs = list()
+	var/list/dirs_checked = list()
+
+	var/list/exempt_from_pipes = list()
+	exempt_from_pipes += using_map.unit_test_exempt_from_pipes.Copy()
+
+	var/list/zs_to_test = using_map.unit_test_z_levels || list(1) //Either you set it, or you just get z1
+
+	finding_pipe_turfs:
+		for(P in world)
+			T = null
+			T = get_turf(P)
+			var/area/A = get_area(T)
+			if(T && (T.z in zs_to_test) && !(A.type in exempt_from_pipes))
+				for(var/color in pipe_colors)
+					if(P.pipe_color == pipe_colors[color] || P.color == pipe_colors[color])
+						pipe_turfs |= T
+						continue finding_pipe_turfs // Pipes only have one color
+
+	for(var/color in pipe_colors)
+		for(T in pipe_turfs)
+			var/bad_msg = "--------------- [T.name] \[[T.x] / [T.y] / [T.z]\] [color]"
+			dirs_checked.Cut()
+			for(P in T)
+				pipe_test_count++
+				if(istype(P, /obj/machinery/atmospherics/pipe/zpipe))
+					continue // Do not check zpipes. They are magic.
+				if(P.pipe_color == pipe_colors[color] || P.color == pipe_colors[color]) // It's okay to have different color pipes in the same direction (supply/waste)
+					if(P.dir in dirs_checked)
+						bad_tests++
+						log_unit_test("[bad_msg] Contains multiple pipes with same direction on top of each other.")
+					dirs_checked.Add(P.dir)
+
+		log_unit_test("[color] pipes checked.")
+
+	if(bad_tests)
+		fail("\[[bad_tests] / [pipe_test_count]\] Some turfs had overlapping pipes going the same direction.")
+	else
+		pass("All \[[pipe_test_count]\] pipes had no overlapping going the same direction.")
+
+	return 1
+
+/datum/unit_test/disposals_test
+	name = "MAP: Disposal Pipe Test (Defined Z-Levels)"
+
+/datum/unit_test/disposals_test/start_test()
+	set background=1
+
+	var/pipe_test_count = 0
+	var/bad_tests = 0
+	var/turf/T = null
+	var/obj/structure/disposalpipe/P = null
+	var/list/pipe_turfs = list()
+	var/list/dirs_checked = list()
+	var/other_pipe_on_turf = FALSE
+	var/pipe_segment = FALSE
+
+	var/list/exempt_from_pipes = list()
+	exempt_from_pipes += using_map.unit_test_exempt_from_pipes.Copy()
+
+	var/list/zs_to_test = using_map.unit_test_z_levels || list(1) //Either you set it, or you just get z1
+
+	for(P in world)
+		T = null
+		T = get_turf(P)
+		var/area/A = get_area(T)
+		if(T && (T.z in zs_to_test) && !(A.type in exempt_from_pipes))
+			pipe_turfs |= T
+
+	for(T in pipe_turfs)
+		var/bad_msg = "--------------- [T.name] \[[T.x] / [T.y] / [T.z]\]"
+		other_pipe_on_turf = FALSE
+		dirs_checked.Cut()
+
+		for(P in T)
+			pipe_test_count++
+
+			pipe_segment = FALSE
+			pipe_segment = istype(P, /obj/structure/disposalpipe/segment)
+			if (!pipe_segment)
+				other_pipe_on_turf = TRUE
+
+			// Check if there are pipes with duplicate directions, or if there is a 3 or 4 way pipe on the turf, but also a segment
+			if ((pipe_segment && (P.dir in dirs_checked)) || (dirs_checked.len > 0 && other_pipe_on_turf) || (pipe_segment && other_pipe_on_turf))
+				bad_tests++
+				log_unit_test("[bad_msg] Contains multiple pipes on top of each other.")
+			dirs_checked.Add(P.dir)
+
+	if(bad_tests)
+		fail("\[[bad_tests] / [pipe_test_count]\] Some turfs had overlapping disposal pipes going the same direction.")
+	else
+		pass("All \[[pipe_test_count]\] disposal pipes had no overlapping going the same direction.")
+
+	return 1
+
+//RS Edit End
+
 /datum/unit_test/wire_test
 	name = "MAP: Cable Test (Defined Z-Levels)"
 

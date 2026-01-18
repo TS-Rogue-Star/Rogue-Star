@@ -1207,6 +1207,10 @@ window "mainwindow"
 		is-default = true
 		border = sunken
 		saved-params = "command"
+		// RS Add Start: Track typing bar focus (Lira, October 2025)
+		on-focus = ".TypingIndicatorFocus"
+		on-unfocus = ".TypingIndicatorBlur"
+		// RS Add End
 	elem "saybutton"
 		type = BUTTON
 		pos = 520,420

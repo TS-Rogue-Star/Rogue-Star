@@ -168,6 +168,7 @@
 			belly_data["bulge_size"] = B.bulge_size
 			belly_data["display_absorbed_examine"] = B.display_absorbed_examine
 			belly_data["save_digest_mode"] = B.save_digest_mode
+			belly_data["allow_external_feeding"] = B.allow_external_feeding // RS Add: Allow external feeding option (Lira, January 2026)
 			belly_data["emote_active"] = B.emote_active
 			belly_data["emote_time"] = B.emote_time
 			belly_data["shrink_grow_size"] = B.shrink_grow_size

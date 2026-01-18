@@ -1,6 +1,14 @@
 import { createSearch } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Collapsible, Dropdown, Flex, Input, Section } from '../components';
+import {
+  Box,
+  Button,
+  Collapsible,
+  Dropdown,
+  Flex,
+  Input,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 import { MiningUser } from './common/Mining';
 

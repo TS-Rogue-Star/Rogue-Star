@@ -4,7 +4,14 @@
  * @license MIT
  */
 
-import { Middleware, Reducer, Store, applyMiddleware, combineReducers, createStore } from 'common/redux';
+import {
+  Middleware,
+  Reducer,
+  Store,
+  applyMiddleware,
+  combineReducers,
+  createStore,
+} from 'common/redux';
 import { backendMiddleware, backendReducer } from './backend';
 import { debugMiddleware, debugReducer, relayMiddleware } from './debug';
 
@@ -25,8 +32,8 @@ type ConfigureStoreOptions = {
 type StackAugmentor = (stack: string, error?: Error) => string;
 
 type StoreProviderProps = {
-  store: Store;
-  children: any;
+  readonly store: Store;
+  readonly children: any;
 };
 
 const logger = createLogger('store');
@@ -44,11 +51,11 @@ export const configureStore = (options: ConfigureStoreOptions = {}): Store => {
   const middlewares: Middleware[] = !sideEffects
     ? []
     : [
-      ...(middleware?.pre || []),
-      assetMiddleware,
-      backendMiddleware,
-      ...(middleware?.post || []),
-    ];
+        ...(middleware?.pre || []),
+        assetMiddleware,
+        backendMiddleware,
+        ...(middleware?.post || []),
+      ];
 
   if (process.env.NODE_ENV !== 'production') {
     // We are using two if statements because Webpack is capable of

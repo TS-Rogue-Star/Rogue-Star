@@ -264,6 +264,10 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/carpet/blue2,
 /area/crew_quarters/captain/moonbase/bedroom)
 "aS" = (
@@ -327,9 +331,7 @@
 /turf/simulated/floor/tiled/white,
 /area/medical/moonbase/upperlevel)
 "be" = (
-/turf/simulated/floor/outdoors/grass/seasonal/dark/notrees_nomobs{
-	outdoors = 0
-	},
+/turf/simulated/floor/outdoors/grass/seasonal/dark/notrees_nomobs_nosnow,
 /area/crew_quarters/bar)
 "bf" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
@@ -1110,6 +1112,12 @@
 	pixel_x = -24;
 	pixel_y = 23
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
 /turf/simulated/floor/tiled,
 /area/rnd/moonbase/serverroom)
 "dc" = (
@@ -1595,9 +1603,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -1947,9 +1952,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -2230,6 +2232,7 @@
 /obj/structure/table/steel,
 /obj/item/weapon/folder/red,
 /obj/item/weapon/folder/red,
+/obj/item/weapon/paper/dockingcodes/sp,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/moonbase/pilotroom)
 "fX" = (
@@ -2508,6 +2511,7 @@
 	pixel_y = -24;
 	dir = 1
 	},
+/obj/effect/floor_decal/steeldecal/steel_decals5,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/moonbase/pilotroom)
 "gL" = (
@@ -4108,6 +4112,7 @@
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/carpet/blue2,
 /area/crew_quarters/captain/moonbase/bedroom)
 "ky" = (
@@ -4453,11 +4458,11 @@
 /obj/structure/cable/white{
 	icon_state = "2-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level2/east)
@@ -6536,6 +6541,12 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/rnd/moonbase/serverroom)
 "qb" = (
@@ -7163,6 +7174,9 @@
 /obj/machinery/alarm{
 	dir = 4
 	},
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 1
+	},
 /turf/simulated/floor/tiled,
 /area/rnd/moonbase/serverroom)
 "rs" = (
@@ -7250,6 +7264,7 @@
 /obj/machinery/camera/network/research{
 	dir = 1
 	},
+/obj/machinery/atmospherics/unary/vent_scrubber/on,
 /turf/simulated/floor/tiled,
 /area/rnd/moonbase/serverroom)
 "rD" = (
@@ -10322,9 +10337,7 @@
 /area/crew_quarters/bar)
 "zr" = (
 /obj/machinery/light/bigfloorlamp,
-/turf/simulated/floor/outdoors/grass/seasonal/dark/notrees_nomobs{
-	outdoors = 0
-	},
+/turf/simulated/floor/outdoors/grass/seasonal/dark/notrees_nomobs_nosnow,
 /area/crew_quarters/bar)
 "zs" = (
 /obj/structure/sign/warning/docking_area,
@@ -10597,24 +10610,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology)
-"Aa" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/tiled,
-/area/security/moonbase/legal)
 "Ab" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/book/manual/security_space_law,
@@ -11556,6 +11551,7 @@
 	pixel_x = -2;
 	pixel_y = 7
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/carpet/blue2,
 /area/crew_quarters/captain/moonbase/bedroom)
 "CL" = (
@@ -12076,6 +12072,8 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/carpet/blue2,
 /area/crew_quarters/captain/moonbase/bedroom)
 "DY" = (
@@ -12555,6 +12553,9 @@
 /area/hallway/moonbase/central)
 "Fh" = (
 /obj/structure/bed/chair/sofa/corp/corner,
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 8
+	},
 /turf/simulated/floor/carpet/blue2,
 /area/crew_quarters/captain/moonbase/bedroom)
 "Fi" = (
@@ -16132,6 +16133,9 @@
 /obj/machinery/alarm{
 	dir = 8
 	},
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 8
+	},
 /turf/simulated/floor/carpet/blue2,
 /area/crew_quarters/captain/moonbase/bedroom)
 "Od" = (
@@ -17949,6 +17953,9 @@
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level2/east)
 "SA" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
 /turf/simulated/floor/tiled,
 /area/rnd/moonbase/serverroom)
 "SB" = (
@@ -18618,6 +18625,7 @@
 	pixel_x = 0;
 	pixel_y = 28
 	},
+/obj/item/weapon/paper/dockingcodes/sp,
 /turf/simulated/floor/carpet/blue2,
 /area/crew_quarters/captain/moonbase/office)
 "Um" = (
@@ -20561,6 +20569,9 @@
 /area/bridge_hallway)
 "Zo" = (
 /obj/structure/bed/chair/sofa/corp/right,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
 /turf/simulated/floor/carpet/blue2,
 /area/crew_quarters/captain/moonbase/bedroom)
 "Zp" = (
@@ -25868,7 +25879,7 @@ Ya
 sF
 qB
 bh
-Aa
+GE
 Wn
 OW
 md

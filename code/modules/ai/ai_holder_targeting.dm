@@ -341,7 +341,7 @@
 	if(!belly_attack)
 		if(isbelly(holder.loc))
 			return FALSE
-	if(!grab_hostile && holder.health == holder.maxHealth)
+	if((!grab_hostile && holder.health == holder.maxHealth) && !check_attacker(attacker))	//RS EDIT - Less forgiveness for people who attacked us.
 		ai_log("react_to_attack() : Was attacked by [attacker], but they did no damage and the AI has grab_hostile set to false.", AI_LOG_TRACE)
 		return FALSE
 	if(holder.IIsAlly(attacker)) // I'll overlook it THIS time...

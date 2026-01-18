@@ -10,6 +10,7 @@ var/list/ai_verbs_default = list(
 	/mob/living/silicon/ai/proc/ai_network_change,
 	/mob/living/silicon/ai/proc/ai_statuschange,
 	/mob/living/silicon/ai/proc/ai_store_location,
+	/mob/living/silicon/ai/proc/ai_go_off_duty, // RS Add: Off duty AI support (Lira, November 2025)
 	/mob/living/silicon/ai/proc/control_integrated_radio,
 	/mob/living/silicon/ai/proc/pick_icon,
 	/mob/living/silicon/ai/proc/sensor_mode,
@@ -47,6 +48,7 @@ var/list/ai_verbs_default = list(
 	density = TRUE
 	status_flags = CANSTUN|CANPARALYSE|CANPUSH
 	shouldnt_see = list(/mob/observer/eye, /obj/effect/rune)
+	var/obj/structure/AIcore/deactivated/off_duty_placeholder = null // RS Add: Off duty AI support (Lira, November 2025)
 	var/list/network = list(NETWORK_DEFAULT)
 	var/obj/machinery/camera/camera = null
 	var/aiRestorePowerRoutine = 0
@@ -86,6 +88,7 @@ var/list/ai_verbs_default = list(
 	var/datum/ai_icon/selected_sprite			// The selected icon set
 	var/custom_sprite 	= 0 					// Whether the selected icon is custom
 	var/carded
+	var/off_duty = FALSE // RS Add: Off duty AI support (Lira, November 2025)
 
 	// Multicam Vars
 	var/multicam_allowed = TRUE
@@ -823,6 +826,111 @@ var/list/ai_verbs_default = list(
 	//VOREStation Add End
 	to_chat(usr, "<span class='filter_notice'>Your hologram will [hologram_follow ? "follow" : "no longer follow"] you now.</span>")
 
+// RS Add Start: Off duty AI support (Lira, November 2025)
+
+/mob/living/silicon/ai/proc/ai_go_off_duty()
+	set category = "AI Commands"
+	set name = "Go Off Duty"
+	set desc = "Leave your core and operate in a mobile chassis."
+
+	if(deployed_shell)
+		to_chat(src, span("warning", "You must recall your remote shell before leaving your core."))
+		return
+	if(carded)
+		to_chat(src, span("warning", "Remote projection unavailable while carded."))
+		return
+	if(stat != CONSCIOUS)
+		to_chat(src, span("warning", "You are not in a stable state to leave your core."))
+		return
+	if(!client)
+		to_chat(src, span("warning", "No controlling user detected; off-duty mode aborted."))
+		return
+
+	if(connected_robots)
+		for(var/mob/living/silicon/robot/R in connected_robots)
+			if(R && R.connected_ai == src)
+				R.connected_ai = null
+		connected_robots.Cut()
+
+	var/turf/T = get_turf(src)
+	if(!T)
+		to_chat(src, span("warning", "Unable to determine a safe deployment location."))
+		return
+
+	var/turf/deploy_turf = get_step(T, SOUTH)
+	if(!istype(deploy_turf, /turf) || is_blocked_turf(deploy_turf, TRUE))
+		deploy_turf = T
+
+	var/obj/item/device/paicard/ai_offduty/offduty_card = new(deploy_turf)
+	var/mob/living/silicon/pai/ai_offduty/mobile = new(offduty_card)
+	if(!mobile)
+		to_chat(src, span("warning", "Mobile platform initialization failed."))
+		return
+
+	if(offduty_card)
+		offduty_card.set_dir(dir)
+
+	mobile.set_dir(dir)
+	mobile.setup_from_ai(src)
+	if(offduty_card)
+		offduty_card.setPersonality(mobile)
+	visible_message(span("notice", "[src] folds into a compact off-duty shell."), span("notice", "You fold your core into a compact off-duty shell."))
+
+	var/datum/mind/current_mind = mind
+	if(current_mind)
+		current_mind.transfer_to(mobile)
+
+	icon_state = "ai-empty"
+	set_light(0)
+	density = FALSE
+	announce_duty_status(FALSE)
+	open_ai_maintenance_hatches()
+
+/mob/living/silicon/ai/proc/open_off_duty_core_slot()
+	if(off_duty_placeholder && !QDELETED(off_duty_placeholder))
+		return
+	var/turf/core_turf = get_turf(src)
+	if(!core_turf)
+		return
+	var/obj/structure/AIcore/deactivated/off_duty/placeholder = new(core_turf)
+	placeholder.off_duty_owner = src
+	off_duty_placeholder = placeholder
+	if(!(placeholder in empty_playable_ai_cores))
+		empty_playable_ai_cores += placeholder
+
+/mob/living/silicon/ai/proc/close_off_duty_core_slot()
+	if(!off_duty_placeholder)
+		return
+	if(off_duty_placeholder in empty_playable_ai_cores)
+		empty_playable_ai_cores -= off_duty_placeholder
+	QDEL_NULL(off_duty_placeholder)
+
+/mob/living/silicon/ai/proc/announce_duty_status(var/on_duty)
+	off_duty = !on_duty
+	if(on_duty)
+		close_off_duty_core_slot()
+	else
+		open_off_duty_core_slot()
+	if(data_core)
+		var/display_name = real_name ? real_name : name
+		var/assignment = on_duty ? "Artificial Intelligence" : "Artificial Intelligence (Off Duty)"
+		data_core.manifest_modify(display_name, assignment, "Artificial Intelligence")
+	if(!global_announcer)
+		return
+
+	var/display_name = real_name ? real_name : name
+	var/list/zlevels
+	var/z_level = get_z(src)
+	if(z_level)
+		zlevels = using_map.get_map_levels(z_level)
+
+	var/message = "AI [display_name] has moved Off-Duty."
+	if(on_duty)
+		message = "AI [display_name] has returned On-Duty."
+
+	global_announcer.autosay(message, "Artificial Intelligence Oversight", "Common", zlevels)
+
+// RS Add End
 
 /mob/living/silicon/ai/proc/check_unable(var/flags = 0, var/feedback = 1)
 	if(stat == DEAD)
@@ -994,6 +1102,44 @@ var/list/ai_verbs_default = list(
 	set name = "Add Multicam Viewport"
 	set category = "AI Commands"
 	drop_new_multicam()
+
+// RS Add Start: Off duty AI support (Lira, November 2025)
+
+/mob/living/silicon/ai/proc/open_ai_maintenance_hatches()
+	var/turf/core_turf = get_turf(src)
+	if(!core_turf)
+		return
+
+	for(var/obj/machinery/door/blast/B in range(2, core_turf))
+		if(QDELETED(B) || B.operating)
+			continue
+		var/id_text = lowertext("[B.id]")
+		var/name_text = lowertext(B.name)
+		if(id_text == "aicore" || (name_text && findtext(name_text, "ai") && (findtext(name_text, "maintenance") || findtext(name_text, "core"))))
+			if(B.density)
+				B.force_open()
+
+	for(var/obj/machinery/door/airlock/A in range(2, core_turf))
+		if(QDELETED(A) || A.operating)
+			continue
+		var/name_text = lowertext(A.name)
+		if(!(name_text && findtext(name_text, "ai") && (findtext(name_text, "maintenance") || findtext(name_text, "core"))))
+			continue
+		if(A.locked)
+			A.unlock(TRUE)
+		if(A.density)
+			A.open()
+
+/obj/structure/AIcore/deactivated/off_duty
+	var/mob/living/silicon/ai/off_duty_owner = null
+
+/obj/structure/AIcore/deactivated/off_duty/Destroy()
+	if(off_duty_owner && !QDELETED(off_duty_owner))
+		if(off_duty_owner.off_duty_placeholder == src)
+			off_duty_owner.off_duty_placeholder = null
+	return ..()
+
+// RS Add End
 
 //Special subtype kept around for global announcements
 /mob/living/silicon/ai/announcer

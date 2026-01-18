@@ -1,0 +1,1017 @@
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Created by Lira for Rogue Star November 2025: Rogue Star interface stylesheet ///////////////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star November 2025: Tweaks and new styles /////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star December 2025: Additional styles as part of body markings tab interface //
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+@use '../colors.scss';
+
+$border-color: rgba(168, 110, 255, 0.35);
+$panel-bg: rgba(7, 4, 17, 0.92);
+$accent-glow: rgba(129, 76, 255, 0.45);
+$gold-accent: #e5bc6a;
+$gold-glow: rgba(229, 188, 106, 0.35);
+$gold-shadow: rgba(156, 99, 15, 0.25);
+$star-sparkle: rgba(255, 255, 255, 0.1);
+$star-sparkle-dim: rgba(255, 255, 255, 0.05);
+$titlebar-height: 38px;
+
+.rogue-star-window {
+  .Window__titleBar {
+    height: $titlebar-height;
+    padding: 0 1.25rem;
+    box-sizing: border-box;
+    display: flex;
+    align-items: stretch;
+    background: transparent;
+  }
+
+  .Window__rest {
+    top: $titlebar-height;
+  }
+
+  .TitleBar {
+    position: relative;
+    width: 100%;
+    border: 1px solid rgba(190, 140, 255, 0.45);
+    border-radius: 0;
+    background:
+      linear-gradient(
+        120deg,
+        rgba(11, 2, 23, 0.98),
+        rgba(31, 13, 54, 0.95) 52%,
+        rgba(91, 31, 130, 0.92)
+      ),
+      radial-gradient(
+        circle at 20% 25%,
+        rgba(118, 63, 211, 0.35),
+        transparent 55%
+      ),
+      radial-gradient(
+        circle at 78% 20%,
+        rgba(229, 188, 106, 0.35),
+        transparent 45%
+      ),
+      radial-gradient(
+        circle at 45% 85%,
+        rgba(63, 35, 102, 0.4),
+        transparent 60%
+      );
+    // Lighter shadow so it doesn't cast a dark tint onto the first section.
+    box-shadow:
+      0 12px 28px rgba(2, 0, 9, 0.55),
+      0 0 24px rgba(81, 33, 156, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    color: #fdf5ff;
+    overflow: hidden;
+    backdrop-filter: blur(16px);
+  }
+
+  .TitleBar::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      repeating-linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0.04) 0,
+        rgba(255, 255, 255, 0.04) 6px,
+        transparent 6px,
+        transparent 16px
+      ),
+      radial-gradient(
+        circle at 72% 35%,
+        rgba(229, 188, 106, 0.3),
+        transparent 55%
+      ),
+      radial-gradient(
+        circle at 18% 75%,
+        rgba(129, 76, 255, 0.35),
+        transparent 60%
+      );
+    opacity: 0.55;
+    mix-blend-mode: screen;
+  }
+
+  .TitleBar__dragZone {
+    height: 100%;
+    border-radius: inherit;
+  }
+
+  .TitleBar__statusIcon {
+    left: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.35rem;
+    line-height: $titlebar-height !important;
+    text-shadow: none;
+  }
+
+  .RogueStar__statusIcon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    filter: none;
+  }
+
+  .TitleBar__title {
+    left: 78px;
+    right: 140px;
+    line-height: $titlebar-height;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #fffafd;
+    text-shadow:
+      0 0 12px rgba(111, 63, 211, 0.65),
+      0 0 18px rgba(229, 188, 106, 0.35);
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .TitleBar__buttons {
+    position: relative;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.4rem;
+    flex: 1 1 auto;
+    min-width: 0;
+    width: auto;
+    margin-left: 1rem;
+    pointer-events: none;
+
+    > * {
+      pointer-events: auto;
+    }
+  }
+
+  .RogueStar__titleTabs {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .RogueStar__titleTabs.Tabs--horizontal {
+    margin: 0;
+    padding: 0;
+  }
+
+  .RogueStar__titleTabs .Tab {
+    min-height: 0;
+    height: calc($titlebar-height - 10px);
+    padding: 0 0.9rem;
+    border-radius: 999px;
+    border: 1px solid rgba(229, 188, 106, 0.35);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fffafd;
+    box-shadow:
+      0 0 10px rgba(14, 5, 32, 0.35),
+      0 0 10px rgba(129, 76, 255, 0.25);
+  }
+
+  .RogueStar__titleTabs .Tab__text {
+    margin: 0 0.45rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .RogueStar__titleTabs .Tab__left {
+    min-width: 1.1em;
+    margin-left: 0.25rem;
+  }
+
+  .RogueStar__titleTabs .Tab:not(.Tab--selected):hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(229, 188, 106, 0.55);
+    box-shadow:
+      0 0 12px rgba(229, 188, 106, 0.35),
+      0 0 12px rgba(129, 76, 255, 0.3);
+  }
+
+  .RogueStar__titleTabs .Tab--selected {
+    background: linear-gradient(
+      120deg,
+      rgba(229, 188, 106, 0.35),
+      rgba(129, 76, 255, 0.45)
+    );
+    border-color: rgba(229, 188, 106, 0.85);
+    color: #fff6e8;
+    box-shadow:
+      0 0 14px rgba(229, 188, 106, 0.5),
+      0 0 18px rgba(129, 76, 255, 0.45);
+  }
+
+  .TitleBar__clickable {
+    color: #fdf3ff;
+    background: transparent;
+    transition:
+      color 150ms ease,
+      box-shadow 150ms ease,
+      transform 150ms ease;
+  }
+
+  .TitleBar__clickable:hover {
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow:
+      0 0 18px rgba(229, 188, 106, 0.45),
+      0 0 12px rgba(129, 76, 255, 0.35);
+  }
+
+  .TitleBar__close {
+    top: 0;
+    right: 0;
+    width: 76px;
+    height: 100%;
+    font-size: 1.5rem;
+    line-height: $titlebar-height;
+    font-weight: 600;
+    text-align: center;
+    border-left: 1px solid rgba(229, 188, 106, 0.35);
+    background:
+      linear-gradient(180deg, rgba(33, 12, 57, 0.95), rgba(146, 76, 216, 0.35)),
+      radial-gradient(
+        circle at 50% 0%,
+        rgba(229, 188, 106, 0.4),
+        transparent 55%
+      );
+    box-shadow: inset 0 0 18px rgba(229, 188, 106, 0.25);
+  }
+
+  .TitleBar__close:hover {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(38, 13, 64, 0.98),
+        rgba(229, 188, 106, 0.55)
+      ),
+      radial-gradient(
+        circle at 50% 0%,
+        rgba(229, 188, 106, 0.5),
+        transparent 55%
+      );
+  }
+
+  .TitleBar__devBuildIndicator {
+    top: 50%;
+    right: 88px;
+    transform: translateY(-50%);
+    min-width: 0;
+    padding: 0.15rem 0.65rem;
+    border-radius: 999px;
+    background: rgba($gold-accent, 0.85);
+    color: #1e0b33;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    box-shadow:
+      0 12px 24px rgba(229, 188, 106, 0.4),
+      0 0 14px rgba(229, 188, 106, 0.35);
+  }
+}
+
+.RogueStar {
+  position: relative;
+  min-height: 100%;
+  padding: 24px;
+  background:
+    radial-gradient(
+      circle at 18% 18%,
+      rgba(118, 63, 211, 0.22),
+      transparent 52%
+    ),
+    radial-gradient(
+      circle at 12% 88%,
+      rgba(229, 188, 106, 0.12),
+      transparent 48%
+    ),
+    radial-gradient(
+      circle at 78% 5%,
+      rgba(255, 96, 214, 0.12),
+      transparent 45%
+    ),
+    radial-gradient(circle at 65% 45%, rgba(63, 35, 102, 0.4), transparent 58%),
+    repeating-radial-gradient(
+      circle at 25% 25%,
+      $star-sparkle 0,
+      $star-sparkle 1px,
+      transparent 1px,
+      transparent 6px
+    ),
+    linear-gradient(165deg, #28103f 0%, #0b0217 55%, #010005 100%);
+  background-size:
+    auto,
+    auto,
+    auto,
+    auto,
+    420px 420px,
+    auto;
+  color: #f8f1ff;
+  overflow: hidden;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    opacity: 0.35;
+  }
+
+  &::before {
+    background:
+      radial-gradient(
+        circle at 30% 40%,
+        rgba(111, 63, 255, 0.35),
+        transparent 42%
+      ),
+      radial-gradient(
+        circle at 70% 20%,
+        rgba(77, 34, 126, 0.4),
+        transparent 55%
+      ),
+      repeating-radial-gradient(
+        circle at 60% 40%,
+        $star-sparkle-dim 0,
+        $star-sparkle-dim 1px,
+        transparent 1px,
+        transparent 8px
+      );
+    background-size:
+      auto,
+      auto,
+      500px 500px;
+    filter: blur(70px);
+  }
+
+  &::after {
+    background:
+      radial-gradient(
+        circle at 70% 10%,
+        rgba(255, 75, 182, 0.25),
+        transparent 45%
+      ),
+      radial-gradient(circle at 85% 75%, $gold-glow, transparent 48%),
+      radial-gradient(circle at 30% 85%, rgba(62, 32, 89, 0.4), transparent 50%);
+    filter: blur(85px);
+  }
+
+  .Section {
+    background: $panel-bg;
+    border: 1px solid $border-color;
+    border-radius: 24px;
+    box-shadow:
+      0 28px 60px rgba(3, 0, 9, 0.85),
+      0 0 25px rgba(0, 0, 0, 0.35) inset,
+      0 0 35px rgba(81, 33, 156, 0.35);
+    backdrop-filter: blur(16px);
+  }
+
+  .Section__title {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.8rem;
+    color: #fdf5ff;
+    background: transparent;
+  }
+
+  .Section__titleText {
+    font-weight: 700;
+    color: #fdf5ff;
+    text-shadow:
+      0 0 12px rgba(85, 41, 136, 0.6),
+      0 0 18px rgba(229, 188, 106, 0.2);
+  }
+
+  .Section__buttons {
+    gap: 0.25rem;
+  }
+
+  .LabeledList {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  .LabeledList__cell {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 0.85rem 0.35rem;
+  }
+
+  .LabeledList__row:last-child .LabeledList__cell {
+    border-bottom: 0;
+  }
+
+  .LabeledList__label--nowrap {
+    color: rgba(244, 223, 255, 0.75);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+  }
+}
+
+.RogueStar__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.65rem 1rem;
+  padding: 0.85rem 1.25rem;
+  border: 1px solid rgba(157, 102, 243, 0.45);
+  border-radius: 24px;
+  background: linear-gradient(
+    120deg,
+    rgba(27, 10, 47, 0.95),
+    rgba(5, 2, 14, 0.95)
+  );
+  box-shadow:
+    0 25px 50px rgba(3, 0, 9, 0.9),
+    0 0 25px rgba(244, 201, 111, 0.18);
+}
+
+.RogueStar__toolbarGroup {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.RogueStar__toolbarLabel {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(244, 223, 255, 0.85);
+  text-shadow: 0 0 8px rgba(69, 40, 119, 0.6);
+}
+
+.RogueStar__chip {
+  margin: 0;
+  line-height: 1.2;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  background: linear-gradient(
+    135deg,
+    rgba(18, 9, 34, 0.92),
+    rgba(29, 16, 52, 0.88)
+  );
+  border: 1px solid rgba(184, 134, 255, 0.35);
+  color: #fdf3ff;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+  box-shadow: inset 0 0 0 rgba(0, 0, 0, 0);
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease,
+    background 120ms ease,
+    border-color 120ms ease;
+}
+
+.RogueStar__chip:hover,
+.RogueStar__chip:focus {
+  transform: translateY(-1px);
+  background: linear-gradient(
+    135deg,
+    rgba(38, 18, 65, 0.95),
+    rgba(21, 9, 39, 0.95)
+  );
+  border-color: rgba(217, 171, 255, 0.6);
+  box-shadow:
+    0 8px 24px rgba(111, 64, 226, 0.35),
+    0 0 14px rgba(229, 188, 106, 0.22);
+}
+
+.RogueStar__chip.Button--selected {
+  background: linear-gradient(
+    90deg,
+    #05010b 0%,
+    #4d178e 55%,
+    rgba($gold-accent, 0.85) 100%
+  );
+  border-color: rgba(255, 214, 255, 0.8);
+  color: #fff;
+  box-shadow:
+    0 12px 30px rgba(144, 70, 234, 0.65),
+    0 0 16px rgba(229, 188, 106, 0.3);
+}
+
+.RogueStar__chip.RogueStar__glowButton--positive {
+  border-color: rgba(124, 255, 194, 0.7);
+  box-shadow:
+    0 0 20px rgba(94, 255, 194, 0.5),
+    0 0 32px rgba(96, 188, 255, 0.25);
+}
+
+.RogueStar__chip.RogueStar__glowButton--positive:hover,
+.RogueStar__chip.RogueStar__glowButton--positive:focus {
+  border-color: rgba(142, 255, 205, 0.9);
+  box-shadow:
+    0 0 25px rgba(124, 255, 194, 0.7),
+    0 0 40px rgba(96, 188, 255, 0.35);
+}
+
+.RogueStar__chip.RogueStar__glowButton--negative {
+  border-color: rgba(255, 88, 88, 0.85);
+  box-shadow:
+    0 0 22px rgba(255, 74, 74, 0.7),
+    0 0 32px rgba(255, 38, 99, 0.45);
+}
+
+.RogueStar__chip.RogueStar__glowButton--negative:hover,
+.RogueStar__chip.RogueStar__glowButton--negative:focus {
+  border-color: rgba(255, 111, 111, 0.95);
+  box-shadow:
+    0 0 28px rgba(255, 74, 74, 0.85),
+    0 0 42px rgba(255, 43, 122, 0.55);
+}
+
+.RogueStar__chip.RogueStar__chip--goldGlow {
+  border-color: rgba(255, 215, 128, 0.9);
+  box-shadow:
+    0 0 20px rgba(255, 196, 118, 0.55),
+    0 0 32px rgba(255, 223, 157, 0.35);
+}
+
+.RogueStar__chip.RogueStar__chip--goldGlow:hover,
+.RogueStar__chip.RogueStar__chip--goldGlow:focus {
+  border-color: rgba(255, 225, 170, 1);
+  box-shadow:
+    0 0 24px rgba(255, 210, 134, 0.75),
+    0 0 36px rgba(255, 223, 157, 0.45);
+}
+
+.RogueStar__chip.RogueStar__chip--whiteGlow {
+  border-color: rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 0 18px rgba(255, 255, 255, 0.35),
+    0 0 28px rgba(255, 255, 255, 0.25);
+}
+
+.RogueStar__chip.RogueStar__chip--whiteGlow:hover,
+.RogueStar__chip.RogueStar__chip--whiteGlow:focus {
+  border-color: rgba(255, 255, 255, 1);
+  box-shadow:
+    0 0 22px rgba(255, 255, 255, 0.55),
+    0 0 32px rgba(255, 255, 255, 0.35);
+}
+
+.RogueStar__chip.Button--disabled {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  color: rgba(255, 255, 255, 0.4) !important;
+  box-shadow: none !important;
+  cursor: not-allowed;
+}
+
+.RogueStar__pillGroup {
+  gap: 0.65rem;
+}
+
+.RogueStar__titleButton.Button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 10px;
+  background: #2a0a4a;
+  border: 1px solid rgba(231, 192, 255, 0.5);
+  color: #fff;
+  box-shadow: 0 12px 28px rgba(58, 19, 105, 0.45);
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease,
+    background 120ms ease,
+    border-color 120ms ease;
+}
+
+.RogueStar__titleButton .Icon {
+  font-size: 1.25rem;
+  color: #fdf3ff;
+}
+
+.RogueStar__titleButton.Button:hover,
+.RogueStar__titleButton.Button:focus {
+  transform: translateY(-1px);
+  background: #3a0f66;
+  border-color: rgba(255, 224, 255, 0.8);
+  box-shadow: 0 14px 30px rgba(92, 31, 152, 0.5);
+}
+
+.RogueStar__titleButton.Button.Button--disabled {
+  background: rgba(42, 10, 74, 0.4);
+  border-color: rgba(231, 192, 255, 0.25);
+  color: rgba(255, 255, 255, 0.6);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.RogueStar__pillButton {
+  margin: 0;
+  padding: 0.55rem;
+  border-radius: 12px;
+  background: rgba(11, 6, 22, 0.9);
+  border: 1px solid rgba(173, 126, 255, 0.25);
+  color: #f7ecff;
+  letter-spacing: 0.04em;
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease,
+    background 120ms ease;
+  box-shadow: none;
+}
+
+.RogueStar__pillButton:hover,
+.RogueStar__pillButton:focus {
+  transform: translateY(-1px);
+  box-shadow:
+    0 10px 24px rgba(90, 46, 194, 0.4),
+    0 0 10px rgba(229, 188, 106, 0.18);
+  border-color: rgba(218, 173, 255, 0.6);
+}
+
+.RogueStar__pillButton.Button--selected {
+  background: linear-gradient(
+    90deg,
+    #080212 0%,
+    #5a1c99 60%,
+    rgba($gold-accent, 0.9) 100%
+  );
+  border-color: rgba(255, 214, 255, 0.8);
+  color: #fff;
+  box-shadow:
+    0 12px 30px rgba(118, 62, 232, 0.65),
+    0 0 14px rgba(229, 188, 106, 0.25);
+}
+
+.RogueStar__numberInput.NumberInput {
+  border-radius: 12px;
+  padding: 0.25rem 0.6rem;
+  background: rgba(13, 6, 28, 0.9);
+  border: 1px solid rgba(171, 119, 255, 0.35);
+  color: #fdf4ff;
+}
+
+.RogueStar__numberInput .NumberInput__barContainer {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.RogueStar__numberInput .NumberInput__bar {
+  background: linear-gradient(180deg, #f990ff, #2b0d4a);
+}
+
+.RogueStar__numberInput .NumberInput__content {
+  font-weight: 600;
+}
+
+.RogueStar__gradientDial.NumberInput {
+  background:
+    linear-gradient(120deg, rgba(32, 12, 57, 0.95), rgba(11, 4, 23, 0.9)),
+    radial-gradient(circle at 80% 0%, rgba(229, 188, 106, 0.3), transparent 55%);
+  border: 1px solid rgba(205, 158, 255, 0.6);
+  box-shadow:
+    inset 0 0 12px rgba(110, 70, 190, 0.35),
+    0 0 18px rgba(229, 188, 106, 0.35);
+}
+
+.RogueStar__gradientDial .NumberInput__barContainer {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.RogueStar__gradientDial .NumberInput__bar {
+  background: linear-gradient(90deg, #ff66d8, #ffd966, #6af0c1, #5ea0ff);
+}
+
+.RogueStar__colorSwatch {
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  border: 1px solid rgba(245, 205, 138, 0.65);
+  box-shadow:
+    0 0 15px rgba(0, 0, 0, 0.4),
+    0 0 10px rgba(229, 188, 106, 0.25);
+}
+
+.RogueStar__canvasScroll {
+  overflow: auto;
+  padding: 0.25rem;
+  border-radius: 18px;
+  background: rgba(7, 3, 15, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.RogueStar__column {
+  height: 100%;
+}
+
+.RogueStar__leftFill {
+  margin-top: 0;
+}
+
+.RogueStar__canvasFrame {
+  display: inline-flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 0;
+  border-radius: 0;
+  border: 1px solid rgba(187, 137, 255, 0.35);
+  overflow: hidden;
+  background: linear-gradient(
+    145deg,
+    rgba(16, 8, 30, 0.95),
+    rgba(4, 2, 10, 0.95)
+  );
+  box-shadow:
+    0 25px 40px rgba(2, 0, 9, 0.9),
+    0 0 35px rgba(132, 79, 206, 0.2);
+}
+
+.RogueStar__previewCard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: 18px;
+  border: 1px solid rgba(190, 140, 255, 0.35);
+  background: rgba(10, 5, 20, 0.9);
+  padding: 1rem;
+  box-shadow:
+    0 20px 35px rgba(3, 0, 9, 0.75),
+    0 0 22px rgba(229, 188, 106, 0.18);
+}
+
+.RogueStar__previewCard--flush {
+  padding-left: 0;
+  padding-right: 0;
+
+  > .Section__rest > .Section__content {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.RogueStar__previewList {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.RogueStar__markingGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 5px;
+  align-items: stretch;
+}
+
+.RogueStar__markingTile {
+  cursor: pointer;
+  background: rgba(14, 8, 20, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 0.6rem;
+  box-shadow:
+    0 12px 24px rgba(0, 0, 0, 0.55),
+    0 0 16px rgba(132, 79, 206, 0.15);
+  transition:
+    border-color 120ms ease,
+    box-shadow 120ms ease,
+    transform 120ms ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-height: 160px;
+}
+
+.RogueStar__markingTile:hover {
+  border-color: rgba(229, 188, 106, 0.35);
+  box-shadow:
+    0 14px 26px rgba(0, 0, 0, 0.6),
+    0 0 10px rgba(229, 188, 106, 0.35),
+    0 0 24px rgba(229, 188, 106, 0.45);
+  transform: translateY(-1px);
+}
+
+.RogueStar__markingTile--selected {
+  border-width: 2px;
+  border-color: rgba(229, 188, 106, 0.75);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.65);
+}
+
+.RogueStar__markingTile--selected:hover {
+  border-color: rgba(229, 188, 106, 0.85);
+}
+
+.RogueStar__markingTilePreviewGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 0;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+}
+
+.RogueStar__markingTilePreview {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.RogueStar__markingTileLabel {
+  font-size: 12px;
+  text-align: center;
+  color: rgba(244, 231, 255, 0.9);
+  text-shadow: 0 0 6px rgba(229, 188, 106, 0.12);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.RogueStar__markingTile .RogueStar__previewCanvas {
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.RogueStar__markingTile .RogueStar__previewCanvasFrame {
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.RogueStar__previewTitle {
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #f7ebff;
+  text-shadow:
+    0 0 14px rgba(120, 66, 184, 0.6),
+    0 0 10px rgba(229, 188, 106, 0.25);
+
+  &.RogueStar__previewTitle--center {
+    text-align: center;
+    width: 100%;
+  }
+}
+
+.RogueStar__previewItem {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+.RogueStar__previewCanvasFrame {
+  overflow: hidden;
+  border-radius: 0;
+  border: 1px solid rgba(204, 158, 255, 0.4);
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(28, 16, 48, 0.95),
+    rgba(6, 4, 14, 0.95)
+  );
+  box-shadow:
+    inset 0 0 25px rgba(0, 0, 0, 0.65),
+    0 0 18px rgba(229, 188, 106, 0.18);
+}
+
+.RogueStar__previewCanvasLabel {
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(244, 231, 255, 0.85);
+  text-shadow: 0 0 6px rgba(229, 188, 106, 0.15);
+}
+
+.RogueStar__sessionButtons {
+  gap: 1rem;
+}
+
+.RogueStar__sessionButtons .Button {
+  width: 100%;
+  box-shadow: 0 12px 22px rgba(4, 0, 12, 0.6);
+}
+
+.RogueStar__sessionButtons .Button.Button--selected,
+.RogueStar__sessionButtons .Button:hover {
+  box-shadow:
+    0 12px 22px rgba(4, 0, 12, 0.6),
+    0 0 12px rgba(229, 188, 106, 0.2);
+}
+
+.RogueStar__canvasScroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.RogueStar__colorModal {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+.RogueStar__inlineColorPicker {
+  .RogueStarColorPicker {
+    padding: 1rem;
+  }
+
+  .RogueStarColorPicker__inputLabel {
+    color: rgba(255, 245, 255, 0.8);
+  }
+
+  .RogueStarColorPicker__hexInput.Input {
+    background: rgba(13, 6, 28, 0.85);
+    border-radius: 12px;
+    border: 1px solid rgba(205, 158, 255, 0.45);
+    color: #fff;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.6);
+  }
+
+  .RogueStarColorPicker__rgbGrid .NumberInput {
+    border-radius: 12px;
+    padding: 0.25rem 0.6rem;
+    background: rgba(13, 6, 28, 0.9);
+    border: 1px solid rgba(171, 119, 255, 0.35);
+    color: #fdf4ff;
+    width: 70px;
+  }
+
+  .RogueStarColorPicker__rgbGrid .NumberInput__barContainer {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .RogueStarColorPicker__rgbGrid .NumberInput__bar {
+    background: linear-gradient(180deg, #f990ff, #2b0d4a);
+  }
+}
+
+.RogueStar__canvasScroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    90deg,
+    rgba(244, 201, 111, 0.4),
+    rgba(165, 98, 255, 0.8)
+  );
+  border-radius: 999px;
+}
+
+.RogueStar__savingProgress {
+  .ProgressBar {
+    border: 1px solid rgba(157, 102, 243, 0.55);
+    border-radius: 14px;
+    overflow: hidden;
+    background: linear-gradient(
+      120deg,
+      rgba(23, 10, 45, 0.85),
+      rgba(6, 2, 16, 0.9)
+    );
+    box-shadow:
+      0 16px 35px rgba(3, 0, 9, 0.65),
+      0 0 24px rgba(147, 94, 255, 0.25),
+      inset 0 0 18px rgba(64, 31, 110, 0.55);
+    color: #f9f2ff;
+  }
+
+  .ProgressBar__fill {
+    background: linear-gradient(
+      90deg,
+      rgba(147, 94, 255, 0.95),
+      rgba(229, 188, 106, 0.9)
+    );
+    box-shadow:
+      0 8px 30px rgba(147, 94, 255, 0.5),
+      0 0 20px rgba(229, 188, 106, 0.45);
+  }
+
+  .ProgressBar__content {
+    font-weight: 700;
+    text-shadow:
+      0 0 12px rgba(69, 40, 119, 0.6),
+      0 0 18px rgba(229, 188, 106, 0.25);
+  }
+}
