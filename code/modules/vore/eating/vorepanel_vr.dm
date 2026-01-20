@@ -409,6 +409,7 @@ var/global/list/rsui_healthbar_preview_cache = list()
 			"digest_clone" = selected.digest_clone,
 			"bulge_size" = selected.bulge_size,
 			"save_digest_mode" = selected.save_digest_mode,
+			"allow_external_feeding" = selected.allow_external_feeding, // RS Add: Allow external feeding option (Lira, January 2026)
 			"display_absorbed_examine" = selected.display_absorbed_examine,
 			"shrink_grow_size" = selected.shrink_grow_size,
 			"emote_time" = selected.emote_time,
@@ -1963,6 +1964,10 @@ var/global/list/rsui_healthbar_preview_cache = list()
 			. = TRUE
 		if("b_save_digest_mode")
 			host.vore_selected.save_digest_mode = !host.vore_selected.save_digest_mode
+			. = TRUE
+		// RS Add: Allow external feeding option (Lira, January 2026)
+		if("b_allow_external_feeding")
+			host.vore_selected.allow_external_feeding = !host.vore_selected.allow_external_feeding
 			. = TRUE
 		if("b_del")
 			var/alert = tgui_alert(usr, "Are you sure you want to delete your [lowertext(host.vore_selected.name)]?","Confirmation",list("Cancel","Delete"))

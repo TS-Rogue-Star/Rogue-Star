@@ -3778,6 +3778,10 @@
 	outdoors = 1
 	},
 /area/tether_away/snowbase/outside)
+"Mo" = (
+/obj/fiftyspawner/log,
+/turf/simulated/mineral/floor/icey/snowbase/ignore_mapgen,
+/area/tether_away/snowbase/outside)
 "My" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -4737,6 +4741,7 @@
 	dir = 8
 	},
 /obj/machinery/firealarm,
+/obj/structure/medical_stand,
 /turf/simulated/floor/tiled,
 /area/tether_away/snowbase/morgue)
 "Tu" = (
@@ -22796,7 +22801,7 @@ Wo
 Wo
 Wo
 MD
-bK
+Mo
 bK
 bK
 Wo

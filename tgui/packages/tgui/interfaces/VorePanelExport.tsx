@@ -89,6 +89,7 @@ type Belly = {
   bulge_size: number;
   display_absorbed_examine: BooleanLike;
   save_digest_mode: BooleanLike;
+  allow_external_feeding: BooleanLike; // RS Add: Allow external feeding option (Lira, January 2026)
   emote_active: BooleanLike;
   emote_time: number;
   shrink_grow_size: number;
@@ -188,6 +189,7 @@ const generateBellyString = (belly: Belly, index: number) => {
     bulge_size,
     display_absorbed_examine,
     save_digest_mode,
+    allow_external_feeding, // RS Add: Allow external feeding option (Lira, January 2026)
     emote_active,
     emote_time,
     shrink_grow_size,
@@ -480,6 +482,7 @@ const generateBellyString = (belly: Belly, index: number) => {
   result += '<li class="list-group-item">Required Examine Size: ' + bulge_size * 100 + '%</li>';
   result += '<li class="list-group-item">Display Absorbed Examines: ' + (display_absorbed_examine ? '<span style="color: green;">True' : '<span style="color: red;">False') + '</li>';
   result += '<li class="list-group-item">Save Digest Mode: ' + (save_digest_mode ? '<span style="color: green;">True' : '<span style="color: red;">False') + '</li>';
+  result += '<li class="list-group-item">Allow External Feeding: ' + (allow_external_feeding ? '<span style="color: green;">Yes' : '<span style="color: red;">No') + '</li>'; // RS Add: Allow external feeding option (Lira, January 2026)
   result += '<li class="list-group-item">Idle Emotes: ' + (emote_active ? '<span style="color: green;">Active' : '<span style="color: red;">Inactive') + '</li>';
   result += '<li class="list-group-item">Idle Emote Delay: ' + emote_time + ' seconds</li>';
   result += '<li class="list-group-item">Shrink/Grow Size: ' + shrink_grow_size * 100 + '%</li>';

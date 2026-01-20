@@ -576,6 +576,14 @@
 			return B
 	return vore_selected
 
+// RS Add: Allow external feeding option (Lira, January 2026)
+/mob/living/proc/get_external_feeding_bellies()
+	var/list/choices = list()
+	for(var/obj/belly/B as anything in vore_organs)
+		if(B.allow_external_feeding)
+			choices += B
+	return choices
+
 /mob/living/proc/feed_grabbed_to_self(mob/living/user, mob/living/prey)
 	var/belly = user.vore_selected
 	return perform_the_nom(user, prey, user, belly)
@@ -585,7 +593,13 @@
 	if(user != pred)
 		if(!pred.ssd_vore_check(user))	//RS ADD
 			return FALSE				//RS ADD
-		belly = tgui_input_list(usr, "Choose Belly", "Belly Choice", pred.vore_organs)
+		// RS Edit Start: Allow external feeding option (Lira, January 2026)
+		var/list/belly_choices = pred.get_external_feeding_bellies()
+		if(!LAZYLEN(belly_choices))
+			to_chat(user, "<span class='warning'>[pred] doesn't have any bellies available for external feeding.</span>")
+			return FALSE
+		belly = tgui_input_list(usr, "Choose Belly", "Belly Choice", belly_choices)
+		// RS Edit End
 	else
 		if(!prey.ssd_vore_check(user))	//RS ADD
 			return FALSE				//RS ADD
@@ -595,7 +609,13 @@
 /mob/living/proc/feed_self_to_grabbed(mob/living/user, mob/living/pred)
 	if(!pred.ssd_vore_check(user))	//RS ADD
 		return FALSE				//RS ADD
-	var/belly = tgui_input_list(usr, "Choose Belly", "Belly Choice", pred.vore_organs)
+	// RS Edit Start: Allow external feeding option (Lira, January 2026)
+	var/list/belly_choices = pred.get_external_feeding_bellies()
+	if(!LAZYLEN(belly_choices))
+		to_chat(user, "<span class='warning'>[pred] doesn't have any bellies available for external feeding.</span>")
+		return FALSE
+	var/belly = tgui_input_list(usr, "Choose Belly", "Belly Choice", belly_choices)
+	// RS Edit End
 	return perform_the_nom(user, user, pred, belly)
 
 /mob/living/proc/feed_grabbed_to_other(mob/living/user, mob/living/prey, mob/living/pred)
@@ -604,7 +624,13 @@
 	if(!prey.ssd_vore_check(user))	//RS ADD
 		return FALSE				//RS ADD
 
-	var/belly = tgui_input_list(usr, "Choose Belly", "Belly Choice", pred.vore_organs)
+	// RS Edit Start: Allow external feeding option (Lira, January 2026)
+	var/list/belly_choices = pred.get_external_feeding_bellies()
+	if(!LAZYLEN(belly_choices))
+		to_chat(user, "<span class='warning'>[pred] doesn't have any bellies available for external feeding.</span>")
+		return FALSE
+	var/belly = tgui_input_list(usr, "Choose Belly", "Belly Choice", belly_choices)
+	// RS Edit End
 	return perform_the_nom(user, prey, pred, belly)
 
 //
