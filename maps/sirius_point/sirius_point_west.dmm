@@ -698,6 +698,12 @@
 	},
 /turf/simulated/floor/water/indoors,
 /area/moonbase/fixedpoi/homestead)
+"fM" = (
+/obj/machinery/suspension_gen,
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/moonbase/surface/west_crater)
 "fP" = (
 /turf/simulated/wall/r_wall,
 /area/outpost/research/anomaly_storage)
@@ -2314,6 +2320,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/outpost/research/anomaly)
+"xx" = (
+/obj/structure/anomaly_container,
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/moonbase/surface/west_crater)
 "xy" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/snacks/ratpacktaco,
@@ -18348,7 +18360,7 @@ XR
 XR
 yh
 yh
-yh
+Wv
 yh
 yh
 gR
@@ -18774,7 +18786,7 @@ yh
 yh
 yh
 yh
-Wv
+yh
 yh
 yh
 Ez
@@ -19343,7 +19355,7 @@ yh
 yh
 yh
 yh
-yh
+Wv
 yh
 Ez
 nk
@@ -20620,8 +20632,8 @@ XR
 XR
 yh
 yh
-yh
-yh
+HF
+xx
 ys
 mG
 Lt
@@ -20762,8 +20774,8 @@ XR
 XR
 yh
 yh
-yh
-yh
+HF
+xx
 xu
 Ea
 Gb
@@ -20902,10 +20914,10 @@ yh
 XR
 XR
 XR
-yh
-yh
-yh
-yh
+XR
+XR
+XR
+xx
 xu
 yq
 Gb
@@ -21044,10 +21056,10 @@ yh
 XR
 XR
 XR
-yh
-yh
-Wv
-yh
+XR
+XR
+XR
+fM
 xu
 Nz
 Gb
@@ -21186,10 +21198,10 @@ yh
 XR
 XR
 XR
+Wv
 yh
-yh
-yh
-yh
+HF
+fM
 xu
 Gb
 Gb
@@ -21330,8 +21342,8 @@ XR
 XR
 yh
 yh
-yh
-yh
+HF
+fM
 ys
 mM
 Mh
