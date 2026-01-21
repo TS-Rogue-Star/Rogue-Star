@@ -3,9 +3,9 @@
   "name": "tgui-bench",
   "version": "4.3.0",
   "dependencies": {
-    "@fastify/static": "^5.0.2",
+    "@fastify/static": "^9.0.0",
     "common": "workspace:*",
-    "fastify": "^3.29.5",
+    "fastify": "^5.7.1",
     "inferno": "^9.0.10",
     "inferno-vnode-flags": "^9.0.10",
     "lodash": "^4.17.23",
