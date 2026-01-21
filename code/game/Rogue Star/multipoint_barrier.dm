@@ -62,6 +62,8 @@ var/global/list/event_barrier_list = list()
 		return
 	if(!isliving(usr))
 		return
+	if(!user.ckey)	//Players only
+		return
 	var/mob/living/L = usr
 	L.visible_message("\The [L] touches \the [src]...","You touch \the [src]...",runemessage = "tuch...")
 	trigger_check(usr)
