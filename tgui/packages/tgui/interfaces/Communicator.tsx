@@ -310,20 +310,14 @@ const hasNotifications = (app, context) => {
     invitesSent,
     video_comm,
   } = data;
-
-  if (app === 'Phone') {
-    if (
+  // RS Edit - Sonar
+  return (app === 'Phone' && (
       voice_mobs.length ||
       communicating.length ||
       requestsReceived.length ||
       invitesSent.length ||
       video_comm
-    ) {
-      return true;
-    }
-  }
-
-  return false;
+    ));
 };
 
 /* Tabs Below this point */

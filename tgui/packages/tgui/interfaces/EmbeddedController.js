@@ -154,8 +154,9 @@ const StandardControls = (props, context) => {
   if (data['interior_status'] && data.interior_status.state === 'open') {
     externalForceSafe = false;
   } else if (data['external_pressure'] && data['chamber_pressure']) {
-    externalForceSafe = !(
-      Math.abs(data['external_pressure'] - data['chamber_pressure']) > 5
+    // RS Edit - Sonar
+    externalForceSafe = (
+      Math.abs(data['external_pressure'] - data['chamber_pressure']) <= 5
     );
   }
 
@@ -163,8 +164,9 @@ const StandardControls = (props, context) => {
   if (data['exterior_status'] && data.exterior_status.state === 'open') {
     internalForceSafe = false;
   } else if (data['internal_pressure'] && data['chamber_pressure']) {
-    internalForceSafe = !(
-      Math.abs(data['internal_pressure'] - data['chamber_pressure']) > 5
+    // RS Edit - Sonar
+    internalForceSafe = (
+      Math.abs(data['internal_pressure'] - data['chamber_pressure']) <= 5
     );
   }
 

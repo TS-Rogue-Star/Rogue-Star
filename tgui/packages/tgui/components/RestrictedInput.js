@@ -96,7 +96,6 @@ export class RestrictedInput extends Component {
         this.setEditing(false);
         e.target.value = this.props.value;
         e.target.blur();
-        return;
       }
     };
   }
@@ -130,15 +129,14 @@ export class RestrictedInput extends Component {
     const prevValue = prevProps.value?.toString();
     const nextValue = this.props.value?.toString();
     const input = this.inputRef.current;
-    if (input && !editing) {
-      if (nextValue !== prevValue && nextValue !== input.value) {
-        input.value = getClampedNumber(
-          nextValue,
-          minValue,
-          maxValue,
-          allowFloats
-        );
-      }
+    // RS Edit - Sonar
+    if (input && !editing && nextValue !== prevValue && nextValue !== input.value) {
+      input.value = getClampedNumber(
+        nextValue,
+        minValue,
+        maxValue,
+        allowFloats
+      );
     }
   }
 

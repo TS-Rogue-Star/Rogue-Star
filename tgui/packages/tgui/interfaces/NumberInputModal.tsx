@@ -26,10 +26,8 @@ export const NumberInputModal = (props, context) => {
     setInput(value);
   };
   const onClick = (value: number) => {
-    if (value === input) {
-      return;
-    }
-    setInput(value);
+    // RS Edit - Sonar
+    onChange(value);
   };
   // Dynamically changes the window height based on the message.
   const windowHeight =

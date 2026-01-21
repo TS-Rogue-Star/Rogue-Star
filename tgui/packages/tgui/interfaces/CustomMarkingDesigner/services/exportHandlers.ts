@@ -80,8 +80,8 @@ const loadImageFromBlob = async (blob: Blob): Promise<ImageSource | null> => {
   }
   if (typeof createImageBitmap === 'function') {
     try {
-      const bitmap = await createImageBitmap(blob);
-      return bitmap;
+      // RS Edit - Sonar
+      return await createImageBitmap(blob);
     } catch {}
   }
   return await new Promise((resolve) => {
@@ -611,10 +611,8 @@ export const createExportController = (
       'custom_marking'
     );
     const fileName = `${baseName}_full.dmi`;
-    if (!saveBlob(exportBlob, fileName, '.dmi')) {
-      if (typeof window !== 'undefined') {
-        window.alert('Could not start download; client environment missing.');
-      }
+    if (!saveBlob(exportBlob, fileName, '.dmi') && typeof window !== 'undefined') {
+      window.alert('Could not start download; client environment missing.');
     }
   };
 
