@@ -69,6 +69,8 @@ var/global/list/event_barrier_list = list()
 /obj/barrier_trigger/proc/trigger_check(var/mob/living/user)
 	if(!isliving(user))
 		return
+	if(!user.ckey)	//Players only
+		return
 	var/msg = TRUE
 	if(!triggered_key)
 		visible_message("\The [src] clicks audibly as it is triggered...",runemessage = "click...")
