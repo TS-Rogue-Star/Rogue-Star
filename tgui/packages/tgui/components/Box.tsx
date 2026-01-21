@@ -5,7 +5,8 @@
  */
 
 import { BooleanLike, classes, pureComponentHooks } from 'common/react';
-import { createVNode, InfernoNode, SFC } from 'inferno';
+import { createVNode } from 'inferno'; // RS Edit: Inferno 7 to 9 (Lira, January 2026)
+import type { Inferno, InfernoNode } from 'inferno'; // RS Edit: Inferno 7 to 9 (Lira, January 2026)
 import { ChildFlags, VNodeFlags } from 'inferno-vnode-flags';
 import { CSS_COLORS } from '../constants';
 
@@ -221,7 +222,7 @@ const styleMapperByPropName = {
 };
 
 export const computeBoxProps = (props: BoxProps) => {
-  const computedProps: HTMLAttributes<any> = {};
+  const computedProps: Inferno.HTMLAttributes<any> = {}; // RS Edit: Inferno 7 to 9 (Lira, January 2026)
   const computedStyles = {};
   // Compute props
   for (let propName of Object.keys(props)) {
@@ -268,7 +269,8 @@ export const computeBoxClassName = (props: BoxProps) => {
   ]);
 };
 
-export const Box: SFC<BoxProps> = (props: BoxProps) => {
+export const Box: Inferno.SFC<BoxProps> = (props: BoxProps) => {
+  // RS Edit: Inferno 7 to 9 (Lira, January 2026)
   const { as = 'div', className, children, ...rest } = props;
   // Render props
   if (typeof children === 'function') {
