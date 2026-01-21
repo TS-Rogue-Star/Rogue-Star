@@ -611,7 +611,10 @@ export const createExportController = (
       'custom_marking'
     );
     const fileName = `${baseName}_full.dmi`;
-    if (!saveBlob(exportBlob, fileName, '.dmi') && typeof window !== 'undefined') {
+    if (
+      !saveBlob(exportBlob, fileName, '.dmi') &&
+      typeof window !== 'undefined'
+    ) {
       window.alert('Could not start download; client environment missing.');
     }
   };

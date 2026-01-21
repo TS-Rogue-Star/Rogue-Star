@@ -8,7 +8,7 @@
     "fastify": "^3.29.5",
     "inferno": "^9.0.10",
     "inferno-vnode-flags": "^9.0.10",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "platform": "^1.3.6",
     "tgui": "workspace:*"
   }

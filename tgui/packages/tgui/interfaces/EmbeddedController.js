@@ -155,9 +155,8 @@ const StandardControls = (props, context) => {
     externalForceSafe = false;
   } else if (data['external_pressure'] && data['chamber_pressure']) {
     // RS Edit - Sonar
-    externalForceSafe = (
-      Math.abs(data['external_pressure'] - data['chamber_pressure']) <= 5
-    );
+    externalForceSafe =
+      Math.abs(data['external_pressure'] - data['chamber_pressure']) <= 5;
   }
 
   let internalForceSafe = true;
@@ -165,9 +164,8 @@ const StandardControls = (props, context) => {
     internalForceSafe = false;
   } else if (data['internal_pressure'] && data['chamber_pressure']) {
     // RS Edit - Sonar
-    internalForceSafe = (
-      Math.abs(data['internal_pressure'] - data['chamber_pressure']) <= 5
-    );
+    internalForceSafe =
+      Math.abs(data['internal_pressure'] - data['chamber_pressure']) <= 5;
   }
 
   return (

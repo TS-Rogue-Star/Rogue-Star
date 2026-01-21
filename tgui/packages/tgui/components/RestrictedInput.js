@@ -130,7 +130,12 @@ export class RestrictedInput extends Component {
     const nextValue = this.props.value?.toString();
     const input = this.inputRef.current;
     // RS Edit - Sonar
-    if (input && !editing && nextValue !== prevValue && nextValue !== input.value) {
+    if (
+      input &&
+      !editing &&
+      nextValue !== prevValue &&
+      nextValue !== input.value
+    ) {
       input.value = getClampedNumber(
         nextValue,
         minValue,

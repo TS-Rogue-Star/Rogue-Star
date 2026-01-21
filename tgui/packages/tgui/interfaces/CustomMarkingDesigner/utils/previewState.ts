@@ -287,6 +287,7 @@ const maskReferenceSourcesForHiddenParts = (
   let maskedGrid = referenceGrid;
   let partsMutated = false;
   let gridMutated = false;
+  // eslint-disable-next-line sonar/no-identical-functions
   const ensureMaskedParts = () => {
     if (partsMutated) {
       return;
@@ -294,6 +295,7 @@ const maskReferenceSourcesForHiddenParts = (
     maskedParts = { ...(maskedParts || {}) };
     partsMutated = true;
   };
+  // eslint-disable-next-line sonar/no-identical-functions
   const ensureMaskedGrid = () => {
     if (gridMutated || !referenceGrid) {
       return;

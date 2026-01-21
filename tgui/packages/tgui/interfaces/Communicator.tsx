@@ -311,13 +311,14 @@ const hasNotifications = (app, context) => {
     video_comm,
   } = data;
   // RS Edit - Sonar
-  return (app === 'Phone' && (
-      voice_mobs.length ||
+  return (
+    app === 'Phone' &&
+    (voice_mobs.length ||
       communicating.length ||
       requestsReceived.length ||
       invitesSent.length ||
-      video_comm
-    ));
+      video_comm)
+  );
 };
 
 /* Tabs Below this point */
