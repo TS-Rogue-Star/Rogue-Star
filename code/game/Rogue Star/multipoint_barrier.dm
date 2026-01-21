@@ -62,6 +62,7 @@ var/global/list/event_barrier_list = list()
 		return
 	if(!isliving(usr))
 		return
+	var/mob/living/user = usr
 	if(!user.ckey)	//Players only
 		return
 	var/mob/living/L = usr
