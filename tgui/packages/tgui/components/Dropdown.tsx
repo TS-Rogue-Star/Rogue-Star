@@ -1,6 +1,6 @@
 import { createPopper, VirtualElement } from '@popperjs/core';
 import { classes } from 'common/react';
-import { Component, findDOMfromVNode, InfernoNode, render } from 'inferno';
+import { Component, findDOMFromVNode, InfernoNode, render } from 'inferno'; // RS Edit: Inferno 7 to 9 (Lira, January 2026)
 import { tguiScalePopperModifier } from '../utils/uiScale'; // RS Add: Scaling tool (Lira, December 2025)
 import { Box, BoxProps } from './Box';
 import { Button } from './Button';
@@ -83,7 +83,7 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
   };
 
   getDOMNode() {
-    return findDOMfromVNode(this.$LI, true);
+    return findDOMFromVNode(this.$LI, true); // RS Edit: Inferno 7 to 9 (Lira, January 2026)
   }
 
   componentDidMount() {
