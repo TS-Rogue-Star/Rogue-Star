@@ -310,15 +310,16 @@ const hasNotifications = (app, context) => {
     invitesSent,
     video_comm,
   } = data;
-  // RS Edit - Sonar
-  return (
-    app === 'Phone' &&
+  // RS Edit - Sonar - do not remove ignore - breaks types in tsx
+  // eslint-disable-next-line sonar/prefer-single-boolean-return
+  if (app === 'Phone' &&
     (voice_mobs.length ||
       communicating.length ||
       requestsReceived.length ||
       invitesSent.length ||
       video_comm)
-  );
+  ) { return true; }
+  return false;
 };
 
 /* Tabs Below this point */
