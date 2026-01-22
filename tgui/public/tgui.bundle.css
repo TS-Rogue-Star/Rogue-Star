@@ -556,7 +556,7 @@ a:hover, a:active {
 .Button--color--black {
   transition: color 50ms, background-color 50ms;
   background-color: black;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--black:hover {
@@ -569,13 +569,13 @@ a:hover, a:active {
 
 .Button--color--black:hover, .Button--color--black:focus {
   background-color: rgb(19.125, 19.125, 19.125);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--white {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(216.75, 216.75, 216.75);
-  color: rgb(0, 0, 0);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--white:hover {
@@ -588,13 +588,13 @@ a:hover, a:active {
 
 .Button--color--white:hover, .Button--color--white:focus {
   background-color: hsl(0, 0%, 105.25%);
-  color: rgb(0, 0, 0);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--red {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(188.5747011952, 31.5752988048, 31.5752988048);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--red:hover {
@@ -607,13 +607,13 @@ a:hover, a:active {
 
 .Button--color--red:hover, .Button--color--red:focus {
   background-color: rgb(219.3009312749, 72.1215687251, 72.1215687251);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--orange {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(217.06875, 93.7125, 12.43125);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--orange:hover {
@@ -626,13 +626,13 @@ a:hover, a:active {
 
 .Button--color--orange:hover, .Button--color--orange:focus {
   background-color: rgb(239.76375, 132.855, 62.41125);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--yellow {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(216.6416334661, 184.1892430279, 3.5083665339);
-  color: rgb(0, 0, 0);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--yellow:hover {
@@ -645,13 +645,13 @@ a:hover, a:active {
 
 .Button--color--yellow:hover, .Button--color--yellow:focus {
   background-color: rgb(245.6123256972, 215.1897758964, 45.8101743028);
-  color: rgb(0, 0, 0);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--olive {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(153.85, 173.4, 20.4);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--olive:hover {
@@ -664,13 +664,13 @@ a:hover, a:active {
 
 .Button--color--olive:hover, .Button--color--olive:focus {
   background-color: rgb(196.0525, 218.535, 42.585);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--green {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(27.2, 150.45, 56.1);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--green:hover {
@@ -683,13 +683,13 @@ a:hover, a:active {
 
 .Button--color--green:hover, .Button--color--green:focus {
   background-color: rgb(50.405, 192.1425, 83.64);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--teal {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(0, 153.85, 147.05);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--teal:hover {
@@ -702,13 +702,13 @@ a:hover, a:active {
 
 .Button--color--teal:hover, .Button--color--teal:focus {
   background-color: rgb(19.125, 196.0525, 188.2325);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--blue {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(28.05, 113.05, 176.8);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--blue:hover {
@@ -721,13 +721,13 @@ a:hover, a:active {
 
 .Button--color--blue:hover, .Button--color--blue:focus {
   background-color: rgb(57.5392686722, 148.2529616183, 216.2882313278);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--violet {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(85, 45.05, 170.85);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--violet:hover {
@@ -740,13 +740,13 @@ a:hover, a:active {
 
 .Button--color--violet:hover, .Button--color--violet:focus {
   background-color: rgb(120.9680511811, 82.150492126, 204.384507874);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--purple {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(138.55, 43.35, 170);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--purple:hover {
@@ -759,13 +759,13 @@ a:hover, a:active {
 
 .Button--color--purple:hover, .Button--color--purple:focus {
   background-color: rgb(173.4476643426, 78.930373506, 204.672126494);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--pink {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(206.5165938865, 32.3334061135, 130.3766375546);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--pink:hover {
@@ -778,13 +778,13 @@ a:hover, a:active {
 
 .Button--color--pink:hover, .Button--color--pink:focus {
   background-color: rgb(226.2609989083, 86.6665010917, 165.2406495633);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--brown {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(140.25, 87.55, 53.55);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--brown:hover {
@@ -797,13 +797,13 @@ a:hover, a:active {
 
 .Button--color--brown:hover, .Button--color--brown:focus {
   background-color: rgb(180.4125, 119.8075, 80.7075);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--grey {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(100.3, 100.3, 100.3);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--grey:hover {
@@ -816,13 +816,13 @@ a:hover, a:active {
 
 .Button--color--grey:hover, .Button--color--grey:focus {
   background-color: rgb(134.47, 134.47, 134.47);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--good {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(77.35, 144.5, 33.15);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--good:hover {
@@ -835,13 +835,13 @@ a:hover, a:active {
 
 .Button--color--good:hover, .Button--color--good:focus {
   background-color: rgb(108.0775, 185.3, 57.2475);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--average {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(205.4984189723, 121.7448616601, 12.9515810277);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--average:hover {
@@ -854,13 +854,13 @@ a:hover, a:active {
 
 .Button--color--average:hover, .Button--color--average:focus {
   background-color: rgb(236.2871492095, 156.6397974308, 53.1803507905);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--bad {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(188.5747011952, 31.5752988048, 31.5752988048);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--bad:hover {
@@ -873,13 +873,13 @@ a:hover, a:active {
 
 .Button--color--bad:hover, .Button--color--bad:focus {
   background-color: rgb(219.3009312749, 72.1215687251, 72.1215687251);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--label {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(100.997235023, 121.6557603687, 148.052764977);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--label:hover {
@@ -892,13 +892,13 @@ a:hover, a:active {
 
 .Button--color--label:hover, .Button--color--label:focus {
   background-color: rgb(145.0161693548, 160.2174596774, 179.6413306452);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--default {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(62.05, 96.9, 136.85);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--default:hover {
@@ -911,13 +911,13 @@ a:hover, a:active {
 
 .Button--color--default:hover, .Button--color--default:focus {
   background-color: rgb(91.4894230769, 130.6286538462, 175.4955769231);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--caution {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(216.6416334661, 184.1892430279, 3.5083665339);
-  color: rgb(0, 0, 0);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--caution:hover {
@@ -930,13 +930,13 @@ a:hover, a:active {
 
 .Button--color--caution:hover, .Button--color--caution:focus {
   background-color: rgb(245.6123256972, 215.1897758964, 45.8101743028);
-  color: rgb(0, 0, 0);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--danger {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(188.5747011952, 31.5752988048, 31.5752988048);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--danger:hover {
@@ -949,13 +949,13 @@ a:hover, a:active {
 
 .Button--color--danger:hover, .Button--color--danger:focus {
   background-color: rgb(219.3009312749, 72.1215687251, 72.1215687251);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--transparent {
   transition: color 50ms, background-color 50ms;
   background-color: #252525;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--transparent:hover {
@@ -968,7 +968,7 @@ a:hover, a:active {
 
 .Button--color--transparent:hover, .Button--color--transparent:focus {
   background-color: rgb(61.675, 61.675, 61.675);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--color--transparent {
@@ -983,7 +983,7 @@ a:hover, a:active {
 .Button--selected {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(27.2, 150.45, 56.1);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--selected:hover {
@@ -996,7 +996,7 @@ a:hover, a:active {
 
 .Button--selected:hover, .Button--selected:focus {
   background-color: rgb(50.405, 192.1425, 83.64);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 
 .Button--flex {
@@ -1629,7 +1629,7 @@ a:hover, a:active {
   box-shadow: none;
   font-weight: bold;
   font-style: italic;
-  color: rgb(0, 0, 0);
+  color: if(scss($luminance > 0.35): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
   background-color: #bb9b68;
   background-image: repeating-linear-gradient(-45deg, transparent, transparent 0.8333333333em, rgba(0, 0, 0, 0.1) 0.8333333333em, rgba(0, 0, 0, 0.1) 1.6666666667em);
 }
@@ -5592,7 +5592,7 @@ a:hover, a:active {
 .theme-abductor .Button--color--default {
   transition: color 50ms, background-color 50ms;
   background-color: #ad2350;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-abductor .Button--color--default:hover {
   transition: color 0ms, background-color 0ms;
@@ -5602,12 +5602,12 @@ a:hover, a:active {
 }
 .theme-abductor .Button--color--default:hover, .theme-abductor .Button--color--default:focus {
   background-color: rgb(210.4120192308, 67.0379807692, 113.7903846154);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-abductor .Button--color--caution {
   transition: color 50ms, background-color 50ms;
   background-color: #be6209;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-abductor .Button--color--caution:hover {
   transition: color 0ms, background-color 0ms;
@@ -5617,12 +5617,12 @@ a:hover, a:active {
 }
 .theme-abductor .Button--color--caution:hover, .theme-abductor .Button--color--caution:focus {
   background-color: rgb(235.1010050251, 131.8668341709, 31.9989949749);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-abductor .Button--color--danger {
   transition: color 50ms, background-color 50ms;
   background-color: #9a9d00;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-abductor .Button--color--danger:hover {
   transition: color 0ms, background-color 0ms;
@@ -5632,12 +5632,12 @@ a:hover, a:active {
 }
 .theme-abductor .Button--color--danger:hover, .theme-abductor .Button--color--danger:focus {
   background-color: rgb(196.225, 199.675, 19.125);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-abductor .Button--color--transparent {
   transition: color 50ms, background-color 50ms;
   background-color: #2a314a;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-abductor .Button--color--transparent:hover {
   transition: color 0ms, background-color 0ms;
@@ -5647,7 +5647,7 @@ a:hover, a:active {
 }
 .theme-abductor .Button--color--transparent:hover, .theme-abductor .Button--color--transparent:focus {
   background-color: rgb(67.425, 75.475, 104.225);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-abductor .Button--color--transparent {
   background-color: rgba(42, 49, 74, 0);
@@ -5659,7 +5659,7 @@ a:hover, a:active {
 .theme-abductor .Button--selected {
   transition: color 50ms, background-color 50ms;
   background-color: #465899;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-abductor .Button--selected:hover {
   transition: color 0ms, background-color 0ms;
@@ -5669,7 +5669,7 @@ a:hover, a:active {
 }
 .theme-abductor .Button--selected:hover, .theme-abductor .Button--selected:focus {
   background-color: rgb(109.367264574, 125.8417040359, 185.332735426);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-abductor .Button--flex {
   display: inline-flex;
@@ -5810,7 +5810,7 @@ a:hover, a:active {
   box-shadow: none;
   font-weight: bold;
   font-style: italic;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.35): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
   background-color: #a82d55;
   background-image: repeating-linear-gradient(-45deg, transparent, transparent 0.8333333333em, rgba(0, 0, 0, 0.1) 0.8333333333em, rgba(0, 0, 0, 0.1) 1.6666666667em);
 }
@@ -6525,7 +6525,7 @@ a:hover, a:active {
 .theme-cardtable .Button--color--default {
   transition: color 50ms, background-color 50ms;
   background-color: #117039;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-cardtable .Button--color--default:hover {
   transition: color 0ms, background-color 0ms;
@@ -6535,12 +6535,12 @@ a:hover, a:active {
 }
 .theme-cardtable .Button--color--default:hover, .theme-cardtable .Button--color--default:focus {
   background-color: rgb(38.675, 147.925, 84.675);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-cardtable .Button--color--caution {
   transition: color 50ms, background-color 50ms;
   background-color: #be6209;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-cardtable .Button--color--caution:hover {
   transition: color 0ms, background-color 0ms;
@@ -6550,12 +6550,12 @@ a:hover, a:active {
 }
 .theme-cardtable .Button--color--caution:hover, .theme-cardtable .Button--color--caution:focus {
   background-color: rgb(235.1010050251, 131.8668341709, 31.9989949749);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-cardtable .Button--color--danger {
   transition: color 50ms, background-color 50ms;
   background-color: #9a9d00;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-cardtable .Button--color--danger:hover {
   transition: color 0ms, background-color 0ms;
@@ -6565,12 +6565,12 @@ a:hover, a:active {
 }
 .theme-cardtable .Button--color--danger:hover, .theme-cardtable .Button--color--danger:focus {
   background-color: rgb(196.225, 199.675, 19.125);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-cardtable .Button--color--transparent {
   transition: color 50ms, background-color 50ms;
   background-color: #117039;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-cardtable .Button--color--transparent:hover {
   transition: color 0ms, background-color 0ms;
@@ -6580,7 +6580,7 @@ a:hover, a:active {
 }
 .theme-cardtable .Button--color--transparent:hover, .theme-cardtable .Button--color--transparent:focus {
   background-color: rgb(38.675, 147.925, 84.675);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-cardtable .Button--color--transparent {
   background-color: rgba(17, 112, 57, 0);
@@ -6592,7 +6592,7 @@ a:hover, a:active {
 .theme-cardtable .Button--selected {
   transition: color 50ms, background-color 50ms;
   background-color: #9d0808;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-cardtable .Button--selected:hover {
   transition: color 0ms, background-color 0ms;
@@ -6602,7 +6602,7 @@ a:hover, a:active {
 }
 .theme-cardtable .Button--selected:hover, .theme-cardtable .Button--selected:focus {
   background-color: rgb(199.675, 28.325, 28.325);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-cardtable .Button--flex {
   display: inline-flex;
@@ -7287,7 +7287,7 @@ a:hover, a:active {
 .theme-hackerman .Button--color--default {
   transition: color 50ms, background-color 50ms;
   background-color: #00ff00;
-  color: rgb(0, 0, 0);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-hackerman .Button--color--default:hover {
   transition: color 0ms, background-color 0ms;
@@ -7297,12 +7297,12 @@ a:hover, a:active {
 }
 .theme-hackerman .Button--color--default:hover, .theme-hackerman .Button--color--default:focus {
   background-color: rgb(76.5, 255, 76.5);
-  color: rgb(0, 0, 0);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-hackerman .Button--color--caution {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(216.6416334661, 184.1892430279, 3.5083665339);
-  color: rgb(0, 0, 0);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-hackerman .Button--color--caution:hover {
   transition: color 0ms, background-color 0ms;
@@ -7312,12 +7312,12 @@ a:hover, a:active {
 }
 .theme-hackerman .Button--color--caution:hover, .theme-hackerman .Button--color--caution:focus {
   background-color: rgb(245.6123256972, 215.1897758964, 45.8101743028);
-  color: rgb(0, 0, 0);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-hackerman .Button--color--danger {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(188.5747011952, 31.5752988048, 31.5752988048);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-hackerman .Button--color--danger:hover {
   transition: color 0ms, background-color 0ms;
@@ -7327,12 +7327,12 @@ a:hover, a:active {
 }
 .theme-hackerman .Button--color--danger:hover, .theme-hackerman .Button--color--danger:focus {
   background-color: rgb(219.3009312749, 72.1215687251, 72.1215687251);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-hackerman .Button--color--transparent {
   transition: color 50ms, background-color 50ms;
   background-color: #121b12;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-hackerman .Button--color--transparent:hover {
   transition: color 0ms, background-color 0ms;
@@ -7342,7 +7342,7 @@ a:hover, a:active {
 }
 .theme-hackerman .Button--color--transparent:hover, .theme-hackerman .Button--color--transparent:focus {
   background-color: rgb(39.825, 50.175, 39.825);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-hackerman .Button--color--transparent {
   background-color: rgba(18, 27, 18, 0);
@@ -7354,7 +7354,7 @@ a:hover, a:active {
 .theme-hackerman .Button--selected {
   transition: color 50ms, background-color 50ms;
   background-color: #00ff00;
-  color: rgb(0, 0, 0);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-hackerman .Button--selected:hover {
   transition: color 0ms, background-color 0ms;
@@ -7364,7 +7364,7 @@ a:hover, a:active {
 }
 .theme-hackerman .Button--selected:hover, .theme-hackerman .Button--selected:focus {
   background-color: rgb(76.5, 255, 76.5);
-  color: rgb(0, 0, 0);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-hackerman .Button--flex {
   display: inline-flex;
@@ -7954,7 +7954,7 @@ a:hover, a:active {
 .theme-malfunction .Button--color--default {
   transition: color 50ms, background-color 50ms;
   background-color: #910101;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-malfunction .Button--color--default:hover {
   transition: color 0ms, background-color 0ms;
@@ -7964,12 +7964,12 @@ a:hover, a:active {
 }
 .theme-malfunction .Button--color--default:hover, .theme-malfunction .Button--color--default:focus {
   background-color: rgb(185.875, 20.275, 20.275);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-malfunction .Button--color--caution {
   transition: color 50ms, background-color 50ms;
   background-color: #be6209;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-malfunction .Button--color--caution:hover {
   transition: color 0ms, background-color 0ms;
@@ -7979,12 +7979,12 @@ a:hover, a:active {
 }
 .theme-malfunction .Button--color--caution:hover, .theme-malfunction .Button--color--caution:focus {
   background-color: rgb(235.1010050251, 131.8668341709, 31.9989949749);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-malfunction .Button--color--danger {
   transition: color 50ms, background-color 50ms;
   background-color: #9a9d00;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-malfunction .Button--color--danger:hover {
   transition: color 0ms, background-color 0ms;
@@ -7994,12 +7994,12 @@ a:hover, a:active {
 }
 .theme-malfunction .Button--color--danger:hover, .theme-malfunction .Button--color--danger:focus {
   background-color: rgb(196.225, 199.675, 19.125);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-malfunction .Button--color--transparent {
   transition: color 50ms, background-color 50ms;
   background-color: #1b3443;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-malfunction .Button--color--transparent:hover {
   transition: color 0ms, background-color 0ms;
@@ -8009,7 +8009,7 @@ a:hover, a:active {
 }
 .theme-malfunction .Button--color--transparent:hover, .theme-malfunction .Button--color--transparent:focus {
   background-color: rgb(50.175, 78.925, 96.175);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-malfunction .Button--color--transparent {
   background-color: rgba(27, 52, 67, 0);
@@ -8021,7 +8021,7 @@ a:hover, a:active {
 .theme-malfunction .Button--selected {
   transition: color 50ms, background-color 50ms;
   background-color: #1e5881;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-malfunction .Button--selected:hover {
   transition: color 0ms, background-color 0ms;
@@ -8031,7 +8031,7 @@ a:hover, a:active {
 }
 .theme-malfunction .Button--selected:hover, .theme-malfunction .Button--selected:focus {
   background-color: rgb(53.625, 120.325, 167.475);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-malfunction .Button--flex {
   display: inline-flex;
@@ -8172,7 +8172,7 @@ a:hover, a:active {
   box-shadow: none;
   font-weight: bold;
   font-style: italic;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.35): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
   background-color: #1a3f57;
   background-image: repeating-linear-gradient(-45deg, transparent, transparent 0.8333333333em, rgba(0, 0, 0, 0.1) 0.8333333333em, rgba(0, 0, 0, 0.1) 1.6666666667em);
 }
@@ -8875,7 +8875,7 @@ a:hover, a:active {
 .theme-neutral .Button--color--default {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(178.5, 125.3, 0);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-neutral .Button--color--default:hover {
   transition: color 0ms, background-color 0ms;
@@ -8885,12 +8885,12 @@ a:hover, a:active {
 }
 .theme-neutral .Button--color--default:hover, .theme-neutral .Button--color--default:focus {
   background-color: rgb(224.4, 163.22, 19.125);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-neutral .Button--color--caution {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(216.6416334661, 184.1892430279, 3.5083665339);
-  color: rgb(0, 0, 0);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-neutral .Button--color--caution:hover {
   transition: color 0ms, background-color 0ms;
@@ -8900,12 +8900,12 @@ a:hover, a:active {
 }
 .theme-neutral .Button--color--caution:hover, .theme-neutral .Button--color--caution:focus {
   background-color: rgb(245.6123256972, 215.1897758964, 45.8101743028);
-  color: rgb(0, 0, 0);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-neutral .Button--color--danger {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(188.5747011952, 31.5752988048, 31.5752988048);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-neutral .Button--color--danger:hover {
   transition: color 0ms, background-color 0ms;
@@ -8915,12 +8915,12 @@ a:hover, a:active {
 }
 .theme-neutral .Button--color--danger:hover, .theme-neutral .Button--color--danger:focus {
   background-color: rgb(219.3009312749, 72.1215687251, 72.1215687251);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-neutral .Button--color--transparent {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(153, 107.4, 0);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-neutral .Button--color--transparent:hover {
   transition: color 0ms, background-color 0ms;
@@ -8930,7 +8930,7 @@ a:hover, a:active {
 }
 .theme-neutral .Button--color--transparent:hover, .theme-neutral .Button--color--transparent:focus {
   background-color: rgb(195.075, 142.635, 19.125);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-neutral .Button--color--transparent {
   background-color: rgba(153, 107.4, 0, 0);
@@ -8942,7 +8942,7 @@ a:hover, a:active {
 .theme-neutral .Button--selected {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(27.2, 150.45, 56.1);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-neutral .Button--selected:hover {
   transition: color 0ms, background-color 0ms;
@@ -8952,7 +8952,7 @@ a:hover, a:active {
 }
 .theme-neutral .Button--selected:hover, .theme-neutral .Button--selected:focus {
   background-color: rgb(50.405, 192.1425, 83.64);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-neutral .Button--flex {
   display: inline-flex;
@@ -9493,7 +9493,7 @@ a:hover, a:active {
 .theme-ntos .Button--color--default {
   transition: color 50ms, background-color 50ms;
   background-color: #384e68;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-ntos .Button--color--default:hover {
   transition: color 0ms, background-color 0ms;
@@ -9503,12 +9503,12 @@ a:hover, a:active {
 }
 .theme-ntos .Button--color--default:hover, .theme-ntos .Button--color--default:focus {
   background-color: rgb(83.525, 108.825, 138.725);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-ntos .Button--color--caution {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(216.6416334661, 184.1892430279, 3.5083665339);
-  color: rgb(0, 0, 0);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-ntos .Button--color--caution:hover {
   transition: color 0ms, background-color 0ms;
@@ -9518,12 +9518,12 @@ a:hover, a:active {
 }
 .theme-ntos .Button--color--caution:hover, .theme-ntos .Button--color--caution:focus {
   background-color: rgb(245.6123256972, 215.1897758964, 45.8101743028);
-  color: rgb(0, 0, 0);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-ntos .Button--color--danger {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(188.5747011952, 31.5752988048, 31.5752988048);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-ntos .Button--color--danger:hover {
   transition: color 0ms, background-color 0ms;
@@ -9533,12 +9533,12 @@ a:hover, a:active {
 }
 .theme-ntos .Button--color--danger:hover, .theme-ntos .Button--color--danger:focus {
   background-color: rgb(219.3009312749, 72.1215687251, 72.1215687251);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-ntos .Button--color--transparent {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(30.8, 42.9, 57.2);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-ntos .Button--color--transparent:hover {
   transition: color 0ms, background-color 0ms;
@@ -9548,7 +9548,7 @@ a:hover, a:active {
 }
 .theme-ntos .Button--color--transparent:hover, .theme-ntos .Button--color--transparent:focus {
   background-color: rgb(54.545, 68.46, 84.905);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-ntos .Button--color--transparent {
   background-color: rgba(30.8, 42.9, 57.2, 0);
@@ -9560,7 +9560,7 @@ a:hover, a:active {
 .theme-ntos .Button--selected {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(27.2, 150.45, 56.1);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-ntos .Button--selected:hover {
   transition: color 0ms, background-color 0ms;
@@ -9570,7 +9570,7 @@ a:hover, a:active {
 }
 .theme-ntos .Button--selected:hover, .theme-ntos .Button--selected:focus {
   background-color: rgb(50.405, 192.1425, 83.64);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-ntos .Button--flex {
   display: inline-flex;
@@ -10358,7 +10358,7 @@ a:hover, a:active {
 .theme-paper .Button--color--default {
   transition: color 50ms, background-color 50ms;
   background-color: #e8e4c9;
-  color: rgb(0, 0, 0);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-paper .Button--color--default:hover {
   transition: color 0ms, background-color 0ms;
@@ -10368,12 +10368,12 @@ a:hover, a:active {
 }
 .theme-paper .Button--color--default:hover, .theme-paper .Button--color--default:focus {
   background-color: hsl(52.2580645161, 40.2597402597%, 105.137254902%);
-  color: rgb(0, 0, 0);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-paper .Button--color--caution {
   transition: color 50ms, background-color 50ms;
   background-color: #be6209;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-paper .Button--color--caution:hover {
   transition: color 0ms, background-color 0ms;
@@ -10383,12 +10383,12 @@ a:hover, a:active {
 }
 .theme-paper .Button--color--caution:hover, .theme-paper .Button--color--caution:focus {
   background-color: rgb(235.1010050251, 131.8668341709, 31.9989949749);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-paper .Button--color--danger {
   transition: color 50ms, background-color 50ms;
   background-color: #9a9d00;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-paper .Button--color--danger:hover {
   transition: color 0ms, background-color 0ms;
@@ -10398,12 +10398,12 @@ a:hover, a:active {
 }
 .theme-paper .Button--color--danger:hover, .theme-paper .Button--color--danger:focus {
   background-color: rgb(196.225, 199.675, 19.125);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-paper .Button--color--transparent {
   transition: color 50ms, background-color 50ms;
   background-color: #ffffff;
-  color: rgb(0, 0, 0);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-paper .Button--color--transparent:hover {
   transition: color 0ms, background-color 0ms;
@@ -10413,7 +10413,7 @@ a:hover, a:active {
 }
 .theme-paper .Button--color--transparent:hover, .theme-paper .Button--color--transparent:focus {
   background-color: hsl(0, 0%, 122.5%);
-  color: rgb(0, 0, 0);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-paper .Button--color--transparent {
   background-color: rgba(255, 255, 255, 0);
@@ -10425,7 +10425,7 @@ a:hover, a:active {
 .theme-paper .Button--selected {
   transition: color 50ms, background-color 50ms;
   background-color: #9d0808;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-paper .Button--selected:hover {
   transition: color 0ms, background-color 0ms;
@@ -10435,7 +10435,7 @@ a:hover, a:active {
 }
 .theme-paper .Button--selected:hover, .theme-paper .Button--selected:focus {
   background-color: rgb(199.675, 28.325, 28.325);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-paper .Button--flex {
   display: inline-flex;
@@ -10999,7 +10999,7 @@ a:hover, a:active {
 .theme-pda-retro .Button--color--black {
   transition: color 50ms, background-color 50ms;
   background-color: black;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--black:hover {
   transition: color 0ms, background-color 0ms;
@@ -11009,12 +11009,12 @@ a:hover, a:active {
 }
 .theme-pda-retro .Button--color--black:hover, .theme-pda-retro .Button--color--black:focus {
   background-color: rgb(19.125, 19.125, 19.125);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--white {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(216.75, 216.75, 216.75);
-  color: rgb(0, 0, 0);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--white:hover {
   transition: color 0ms, background-color 0ms;
@@ -11024,12 +11024,12 @@ a:hover, a:active {
 }
 .theme-pda-retro .Button--color--white:hover, .theme-pda-retro .Button--color--white:focus {
   background-color: hsl(0, 0%, 105.25%);
-  color: rgb(0, 0, 0);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--red {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(188.5747011952, 31.5752988048, 31.5752988048);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--red:hover {
   transition: color 0ms, background-color 0ms;
@@ -11039,12 +11039,12 @@ a:hover, a:active {
 }
 .theme-pda-retro .Button--color--red:hover, .theme-pda-retro .Button--color--red:focus {
   background-color: rgb(219.3009312749, 72.1215687251, 72.1215687251);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--orange {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(217.06875, 93.7125, 12.43125);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--orange:hover {
   transition: color 0ms, background-color 0ms;
@@ -11054,12 +11054,12 @@ a:hover, a:active {
 }
 .theme-pda-retro .Button--color--orange:hover, .theme-pda-retro .Button--color--orange:focus {
   background-color: rgb(239.76375, 132.855, 62.41125);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--yellow {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(216.6416334661, 184.1892430279, 3.5083665339);
-  color: rgb(0, 0, 0);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--yellow:hover {
   transition: color 0ms, background-color 0ms;
@@ -11069,12 +11069,12 @@ a:hover, a:active {
 }
 .theme-pda-retro .Button--color--yellow:hover, .theme-pda-retro .Button--color--yellow:focus {
   background-color: rgb(245.6123256972, 215.1897758964, 45.8101743028);
-  color: rgb(0, 0, 0);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--olive {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(153.85, 173.4, 20.4);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--olive:hover {
   transition: color 0ms, background-color 0ms;
@@ -11084,12 +11084,12 @@ a:hover, a:active {
 }
 .theme-pda-retro .Button--color--olive:hover, .theme-pda-retro .Button--color--olive:focus {
   background-color: rgb(196.0525, 218.535, 42.585);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--green {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(27.2, 150.45, 56.1);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--green:hover {
   transition: color 0ms, background-color 0ms;
@@ -11099,12 +11099,12 @@ a:hover, a:active {
 }
 .theme-pda-retro .Button--color--green:hover, .theme-pda-retro .Button--color--green:focus {
   background-color: rgb(50.405, 192.1425, 83.64);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--teal {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(0, 153.85, 147.05);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--teal:hover {
   transition: color 0ms, background-color 0ms;
@@ -11114,12 +11114,12 @@ a:hover, a:active {
 }
 .theme-pda-retro .Button--color--teal:hover, .theme-pda-retro .Button--color--teal:focus {
   background-color: rgb(19.125, 196.0525, 188.2325);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--blue {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(28.05, 113.05, 176.8);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--blue:hover {
   transition: color 0ms, background-color 0ms;
@@ -11129,12 +11129,12 @@ a:hover, a:active {
 }
 .theme-pda-retro .Button--color--blue:hover, .theme-pda-retro .Button--color--blue:focus {
   background-color: rgb(57.5392686722, 148.2529616183, 216.2882313278);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--violet {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(85, 45.05, 170.85);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--violet:hover {
   transition: color 0ms, background-color 0ms;
@@ -11144,12 +11144,12 @@ a:hover, a:active {
 }
 .theme-pda-retro .Button--color--violet:hover, .theme-pda-retro .Button--color--violet:focus {
   background-color: rgb(120.9680511811, 82.150492126, 204.384507874);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--purple {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(138.55, 43.35, 170);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--purple:hover {
   transition: color 0ms, background-color 0ms;
@@ -11159,12 +11159,12 @@ a:hover, a:active {
 }
 .theme-pda-retro .Button--color--purple:hover, .theme-pda-retro .Button--color--purple:focus {
   background-color: rgb(173.4476643426, 78.930373506, 204.672126494);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--pink {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(206.5165938865, 32.3334061135, 130.3766375546);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--pink:hover {
   transition: color 0ms, background-color 0ms;
@@ -11174,12 +11174,12 @@ a:hover, a:active {
 }
 .theme-pda-retro .Button--color--pink:hover, .theme-pda-retro .Button--color--pink:focus {
   background-color: rgb(226.2609989083, 86.6665010917, 165.2406495633);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--brown {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(140.25, 87.55, 53.55);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--brown:hover {
   transition: color 0ms, background-color 0ms;
@@ -11189,12 +11189,12 @@ a:hover, a:active {
 }
 .theme-pda-retro .Button--color--brown:hover, .theme-pda-retro .Button--color--brown:focus {
   background-color: rgb(180.4125, 119.8075, 80.7075);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--grey {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(100.3, 100.3, 100.3);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--grey:hover {
   transition: color 0ms, background-color 0ms;
@@ -11204,12 +11204,12 @@ a:hover, a:active {
 }
 .theme-pda-retro .Button--color--grey:hover, .theme-pda-retro .Button--color--grey:focus {
   background-color: rgb(134.47, 134.47, 134.47);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--good {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(77.35, 144.5, 33.15);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--good:hover {
   transition: color 0ms, background-color 0ms;
@@ -11219,12 +11219,12 @@ a:hover, a:active {
 }
 .theme-pda-retro .Button--color--good:hover, .theme-pda-retro .Button--color--good:focus {
   background-color: rgb(108.0775, 185.3, 57.2475);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--average {
   transition: color 50ms, background-color 50ms;
   background-color: black;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--average:hover {
   transition: color 0ms, background-color 0ms;
@@ -11234,12 +11234,12 @@ a:hover, a:active {
 }
 .theme-pda-retro .Button--color--average:hover, .theme-pda-retro .Button--color--average:focus {
   background-color: rgb(19.125, 19.125, 19.125);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--bad {
   transition: color 50ms, background-color 50ms;
   background-color: rgb(188.5747011952, 31.5752988048, 31.5752988048);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--bad:hover {
   transition: color 0ms, background-color 0ms;
@@ -11249,12 +11249,12 @@ a:hover, a:active {
 }
 .theme-pda-retro .Button--color--bad:hover, .theme-pda-retro .Button--color--bad:focus {
   background-color: rgb(219.3009312749, 72.1215687251, 72.1215687251);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--label {
   transition: color 50ms, background-color 50ms;
   background-color: black;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--label:hover {
   transition: color 0ms, background-color 0ms;
@@ -11264,12 +11264,12 @@ a:hover, a:active {
 }
 .theme-pda-retro .Button--color--label:hover, .theme-pda-retro .Button--color--label:focus {
   background-color: rgb(19.125, 19.125, 19.125);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--default {
   transition: color 50ms, background-color 50ms;
   background-color: #e8e4c9;
-  color: rgb(0, 0, 0);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--default:hover {
   transition: color 0ms, background-color 0ms;
@@ -11279,12 +11279,12 @@ a:hover, a:active {
 }
 .theme-pda-retro .Button--color--default:hover, .theme-pda-retro .Button--color--default:focus {
   background-color: hsl(52.2580645161, 40.2597402597%, 105.137254902%);
-  color: rgb(0, 0, 0);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--caution {
   transition: color 50ms, background-color 50ms;
   background-color: #be6209;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--caution:hover {
   transition: color 0ms, background-color 0ms;
@@ -11294,12 +11294,12 @@ a:hover, a:active {
 }
 .theme-pda-retro .Button--color--caution:hover, .theme-pda-retro .Button--color--caution:focus {
   background-color: rgb(235.1010050251, 131.8668341709, 31.9989949749);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--danger {
   transition: color 50ms, background-color 50ms;
   background-color: #9a9d00;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--danger:hover {
   transition: color 0ms, background-color 0ms;
@@ -11309,12 +11309,12 @@ a:hover, a:active {
 }
 .theme-pda-retro .Button--color--danger:hover, .theme-pda-retro .Button--color--danger:focus {
   background-color: rgb(196.225, 199.675, 19.125);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--transparent {
   transition: color 50ms, background-color 50ms;
   background-color: #6f7961;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--transparent:hover {
   transition: color 0ms, background-color 0ms;
@@ -11324,7 +11324,7 @@ a:hover, a:active {
 }
 .theme-pda-retro .Button--color--transparent:hover, .theme-pda-retro .Button--color--transparent:focus {
   background-color: rgb(146.3841743119, 155.9300458716, 133.0199541284);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--color--transparent {
   background-color: rgba(111, 121, 97, 0);
@@ -11336,7 +11336,7 @@ a:hover, a:active {
 .theme-pda-retro .Button--selected {
   transition: color 50ms, background-color 50ms;
   background-color: #9d0808;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--selected:hover {
   transition: color 0ms, background-color 0ms;
@@ -11346,7 +11346,7 @@ a:hover, a:active {
 }
 .theme-pda-retro .Button--selected:hover, .theme-pda-retro .Button--selected:focus {
   background-color: rgb(199.675, 28.325, 28.325);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-pda-retro .Button--flex {
   display: inline-flex;
@@ -12041,7 +12041,7 @@ a:hover, a:active {
 .theme-retro .Button--color--default {
   transition: color 50ms, background-color 50ms;
   background-color: #e8e4c9;
-  color: rgb(0, 0, 0);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-retro .Button--color--default:hover {
   transition: color 0ms, background-color 0ms;
@@ -12051,12 +12051,12 @@ a:hover, a:active {
 }
 .theme-retro .Button--color--default:hover, .theme-retro .Button--color--default:focus {
   background-color: hsl(52.2580645161, 40.2597402597%, 105.137254902%);
-  color: rgb(0, 0, 0);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-retro .Button--color--caution {
   transition: color 50ms, background-color 50ms;
   background-color: #be6209;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-retro .Button--color--caution:hover {
   transition: color 0ms, background-color 0ms;
@@ -12066,12 +12066,12 @@ a:hover, a:active {
 }
 .theme-retro .Button--color--caution:hover, .theme-retro .Button--color--caution:focus {
   background-color: rgb(235.1010050251, 131.8668341709, 31.9989949749);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-retro .Button--color--danger {
   transition: color 50ms, background-color 50ms;
   background-color: #9a9d00;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-retro .Button--color--danger:hover {
   transition: color 0ms, background-color 0ms;
@@ -12081,12 +12081,12 @@ a:hover, a:active {
 }
 .theme-retro .Button--color--danger:hover, .theme-retro .Button--color--danger:focus {
   background-color: rgb(196.225, 199.675, 19.125);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-retro .Button--color--transparent {
   transition: color 50ms, background-color 50ms;
   background-color: #e8e4c9;
-  color: rgb(0, 0, 0);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-retro .Button--color--transparent:hover {
   transition: color 0ms, background-color 0ms;
@@ -12096,7 +12096,7 @@ a:hover, a:active {
 }
 .theme-retro .Button--color--transparent:hover, .theme-retro .Button--color--transparent:focus {
   background-color: hsl(52.2580645161, 40.2597402597%, 105.137254902%);
-  color: rgb(0, 0, 0);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-retro .Button--color--transparent {
   background-color: rgba(232, 228, 201, 0);
@@ -12108,7 +12108,7 @@ a:hover, a:active {
 .theme-retro .Button--selected {
   transition: color 50ms, background-color 50ms;
   background-color: #9d0808;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-retro .Button--selected:hover {
   transition: color 0ms, background-color 0ms;
@@ -12118,7 +12118,7 @@ a:hover, a:active {
 }
 .theme-retro .Button--selected:hover, .theme-retro .Button--selected:focus {
   background-color: rgb(199.675, 28.325, 28.325);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-retro .Button--flex {
   display: inline-flex;
@@ -12677,7 +12677,7 @@ a:hover, a:active {
 .theme-syndicate .Button--color--default {
   transition: color 50ms, background-color 50ms;
   background-color: #397439;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-syndicate .Button--color--default:hover {
   transition: color 0ms, background-color 0ms;
@@ -12687,12 +12687,12 @@ a:hover, a:active {
 }
 .theme-syndicate .Button--color--default:hover, .theme-syndicate .Button--color--default:focus {
   background-color: rgb(84.675, 152.525, 84.675);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-syndicate .Button--color--caution {
   transition: color 50ms, background-color 50ms;
   background-color: #be6209;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-syndicate .Button--color--caution:hover {
   transition: color 0ms, background-color 0ms;
@@ -12702,12 +12702,12 @@ a:hover, a:active {
 }
 .theme-syndicate .Button--color--caution:hover, .theme-syndicate .Button--color--caution:focus {
   background-color: rgb(235.1010050251, 131.8668341709, 31.9989949749);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-syndicate .Button--color--danger {
   transition: color 50ms, background-color 50ms;
   background-color: #9a9d00;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-syndicate .Button--color--danger:hover {
   transition: color 0ms, background-color 0ms;
@@ -12717,12 +12717,12 @@ a:hover, a:active {
 }
 .theme-syndicate .Button--color--danger:hover, .theme-syndicate .Button--color--danger:focus {
   background-color: rgb(196.225, 199.675, 19.125);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-syndicate .Button--color--transparent {
   transition: color 50ms, background-color 50ms;
   background-color: #550202;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-syndicate .Button--color--transparent:hover {
   transition: color 0ms, background-color 0ms;
@@ -12732,7 +12732,7 @@ a:hover, a:active {
 }
 .theme-syndicate .Button--color--transparent:hover, .theme-syndicate .Button--color--transparent:focus {
   background-color: rgb(116.875, 21.425, 21.425);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-syndicate .Button--color--transparent {
   background-color: rgba(85, 2, 2, 0);
@@ -12744,7 +12744,7 @@ a:hover, a:active {
 .theme-syndicate .Button--selected {
   transition: color 50ms, background-color 50ms;
   background-color: #9d0808;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-syndicate .Button--selected:hover {
   transition: color 0ms, background-color 0ms;
@@ -12754,7 +12754,7 @@ a:hover, a:active {
 }
 .theme-syndicate .Button--selected:hover, .theme-syndicate .Button--selected:focus {
   background-color: rgb(199.675, 28.325, 28.325);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-syndicate .Button--flex {
   display: inline-flex;
@@ -12895,7 +12895,7 @@ a:hover, a:active {
   box-shadow: none;
   font-weight: bold;
   font-style: italic;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.35): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
   background-color: #910101;
   background-image: repeating-linear-gradient(-45deg, transparent, transparent 0.8333333333em, rgba(0, 0, 0, 0.1) 0.8333333333em, rgba(0, 0, 0, 0.1) 1.6666666667em);
 }
@@ -13610,7 +13610,7 @@ a:hover, a:active {
 .theme-wizard .Button--color--default {
   transition: color 50ms, background-color 50ms;
   background-color: #1596b6;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-wizard .Button--color--default:hover {
   transition: color 0ms, background-color 0ms;
@@ -13620,12 +13620,12 @@ a:hover, a:active {
 }
 .theme-wizard .Button--color--default:hover, .theme-wizard .Button--color--default:focus {
   background-color: rgb(48.5689655172, 188.4354679803, 223.1310344828);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-wizard .Button--color--caution {
   transition: color 50ms, background-color 50ms;
   background-color: #be6209;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-wizard .Button--color--caution:hover {
   transition: color 0ms, background-color 0ms;
@@ -13635,12 +13635,12 @@ a:hover, a:active {
 }
 .theme-wizard .Button--color--caution:hover, .theme-wizard .Button--color--caution:focus {
   background-color: rgb(235.1010050251, 131.8668341709, 31.9989949749);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-wizard .Button--color--danger {
   transition: color 50ms, background-color 50ms;
   background-color: #b30707;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-wizard .Button--color--danger:hover {
   transition: color 0ms, background-color 0ms;
@@ -13650,12 +13650,12 @@ a:hover, a:active {
 }
 .theme-wizard .Button--color--danger:hover, .theme-wizard .Button--color--danger:focus {
   background-color: rgb(224.975, 27.175, 27.175);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-wizard .Button--color--transparent {
   transition: color 50ms, background-color 50ms;
   background-color: #213e4e;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-wizard .Button--color--transparent:hover {
   transition: color 0ms, background-color 0ms;
@@ -13665,7 +13665,7 @@ a:hover, a:active {
 }
 .theme-wizard .Button--color--transparent:hover, .theme-wizard .Button--color--transparent:focus {
   background-color: rgb(57.075, 90.425, 108.825);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-wizard .Button--color--transparent {
   background-color: rgba(33, 62, 78, 0);
@@ -13677,7 +13677,7 @@ a:hover, a:active {
 .theme-wizard .Button--selected {
   transition: color 50ms, background-color 50ms;
   background-color: #465899;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-wizard .Button--selected:hover {
   transition: color 0ms, background-color 0ms;
@@ -13687,7 +13687,7 @@ a:hover, a:active {
 }
 .theme-wizard .Button--selected:hover, .theme-wizard .Button--selected:focus {
   background-color: rgb(109.367264574, 125.8417040359, 185.332735426);
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.4): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
 }
 .theme-wizard .Button--flex {
   display: inline-flex;
@@ -13828,7 +13828,7 @@ a:hover, a:active {
   box-shadow: none;
   font-weight: bold;
   font-style: italic;
-  color: rgb(255, 255, 255);
+  color: if(scss($luminance > 0.35): rgb(0, 0, 0); else: (rgb(255, 255, 255),));
   background-color: #a82d55;
   background-image: repeating-linear-gradient(-45deg, transparent, transparent 0.8333333333em, rgba(0, 0, 0, 0.1) 0.8333333333em, rgba(0, 0, 0, 0.1) 1.6666666667em);
 }
