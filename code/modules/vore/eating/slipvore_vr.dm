@@ -36,12 +36,20 @@
 	var/mob/living/target = AM
 	if(istype(target) && !target.incorporeal_move && !src.incorporeal_move)	//The slip vore begins
 		if(can_slip_vore(target) && !src.slip_vore_in_progress && !target.slip_vore_in_progress)	//If we can vore them go for it
-			perform_the_nom(src,target,src,src.vore_selected,1)
+			// RS Edit Start: Use spont belly (Lira, January 2026)
+			var/obj/belly/belly = src.get_spontaneous_belly(SLIP_VORE)
+			if(belly)
+				perform_the_nom(src, target, src, belly, 1)
+			// RS Edit End
 			target.slip_vore_in_progress = FALSE
 			target.is_slipping = FALSE
 			return
 		else if(can_be_slip_vored_by(target) && !src.slip_vore_in_progress && !target.slip_vore_in_progress) //Otherwise, if they can vore us, make it happen.
-			perform_the_nom(target,src,target,target.vore_selected,1)
+			// RS Edit Start: Use spont belly (Lira, January 2026)
+			var/obj/belly/belly = target.get_spontaneous_belly(SLIP_VORE)
+			if(belly)
+				perform_the_nom(target, src, target, belly, 1)
+			// RS Edit End
 			slip_vore_in_progress = FALSE
 			is_slipping = FALSE
 			return

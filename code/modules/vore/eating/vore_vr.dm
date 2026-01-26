@@ -63,9 +63,11 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	// These are 'modifier' prefs, do nothing on their own but pair with drop_prey/drop_pred settings.
 	var/drop_vore = TRUE
 	var/stumble_vore = TRUE
+	var/buckle_vore = TRUE // RS Add: Split from stumble (Lira, January 2026)
 	var/slip_vore = TRUE
 	var/throw_vore = TRUE
 	var/food_vore = TRUE
+	var/list/spont_belly_prefs = list() // RS Add: Add spont prefs (Lira, January 2026)
 
 	var/resizable = TRUE
 	var/show_vore_fx = TRUE
@@ -204,6 +206,8 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	food_vore = json_from_file["food_vore"]
 	throw_vore = json_from_file["throw_vore"]
 	stumble_vore = json_from_file["stumble_vore"]
+	buckle_vore = json_from_file["buckle_vore"] // RS Add: Split from stumble (Lira, January 2026)
+	spont_belly_prefs = json_from_file["spont_belly_prefs"] // RS Add: Add spont prefs (Lira, January 2026)
 	nutrition_message_visible = json_from_file["nutrition_message_visible"]
 	nutrition_messages = json_from_file["nutrition_messages"]
 	weight_message_visible = json_from_file["weight_message_visible"]
@@ -262,8 +266,14 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 		throw_vore = TRUE
 	if(isnull(stumble_vore))
 		stumble_vore = TRUE
+	// RS Add: Split from stumble (Lira, January 2026)
+	if(isnull(buckle_vore))
+		buckle_vore = stumble_vore
 	if(isnull(food_vore))
 		food_vore = TRUE
+	// RS Add: Use spont belly (Lira, January 2026)
+	if(!islist(spont_belly_prefs))
+		spont_belly_prefs = list()
 	if(isnull(autotransferable)) //RS Add || Port Chomp 3200
 		autotransferable = TRUE
 	if(isnull(nutrition_message_visible))
@@ -347,8 +357,10 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 			"drop_vore"				= drop_vore,
 			"slip_vore"				= slip_vore,
 			"stumble_vore"			= stumble_vore,
+			"buckle_vore"			= buckle_vore, // RS Add: Split from stumble (Lira, January 2026)
 			"throw_vore" 			= throw_vore,
 			"food_vore" 			= food_vore,
+			"spont_belly_prefs"		= spont_belly_prefs, // RS Add: Use spont belly (Lira, January 2026)
 			"nutrition_message_visible"	= nutrition_message_visible,
 			"nutrition_messages"		= nutrition_messages,
 			"weight_message_visible"	= weight_message_visible,

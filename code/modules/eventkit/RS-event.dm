@@ -182,7 +182,7 @@ GLOBAL_VAR(special_station_name)
 		to_chat(usr, "Admin jumping disabled")
 		return
 
-	var/choice = tgui_alert(usr, "What range do you want to summon people at?","Summoning",list("This Z","Global","Cancel"))
+	var/choice = tgui_alert(usr, "What range do you want to summon people at?","Summoning",list("Cancel","This Z","Global"))
 
 	if(!choice || choice == "Cancel") return
 
