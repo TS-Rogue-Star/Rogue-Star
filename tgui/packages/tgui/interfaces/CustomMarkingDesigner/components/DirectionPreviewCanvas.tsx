@@ -546,7 +546,7 @@ export class DirectionPreviewCanvas extends Component<DirectionPreviewCanvasProp
             width={canvasWidth}
             height={canvasHeight}
             style={{
-              imageRendering: 'pixelated',
+              'image-rendering': 'pixelated', // RS Edit: Inferno 7 to 9 (Lira, January 2026)
               position: 'absolute',
               left: `${offsetLeft}px`,
               top: `${offsetTop}px`,

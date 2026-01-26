@@ -1,12 +1,17 @@
 import { createPopper } from '@popperjs/core';
 import { ArgumentsOf } from 'common/types';
-import { Component, findDOMfromVNode, InfernoNode, render } from 'inferno';
+import { Component, findDOMFromVNode, InfernoNode, render } from 'inferno'; // RS Edit: Inferno 7 to 9 (Lira, January 2026)
+import type { Inferno } from 'inferno'; // RS Edit: Inferno 7 to 9 (Lira, January 2026)
 import { tguiScalePopperModifier } from '../utils/uiScale'; // RS Add: Scaling tool (Lira, December 2025)
 
 type PopperProps = {
   readonly popperContent: InfernoNode;
   readonly options?: ArgumentsOf<typeof createPopper>[2];
-  readonly additionalStyles?: CSSProperties;
+  // RS Edit: Inferno 7 to 9 (Lira, January 2026)
+  readonly additionalStyles?: Exclude<
+    Inferno.HTMLAttributes<HTMLElement>['style'],
+    string | null | undefined
+  >;
 };
 
 export class Popper extends Component<PopperProps> {
@@ -44,7 +49,7 @@ export class Popper extends Component<PopperProps> {
       // This code is copied from `findDOMNode` in inferno-extras.
       // Because this component is written in TypeScript, we will know
       // immediately if this internal variable is removed.
-      const domNode = findDOMfromVNode(this.$LI, true);
+      const domNode = findDOMFromVNode(this.$LI, true); // RS Edit: Inferno 7 to 9 (Lira, January 2026)
       if (!domNode) {
         return;
       }

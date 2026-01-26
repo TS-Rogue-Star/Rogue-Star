@@ -1,10 +1,11 @@
+import type { InfernoNode } from 'inferno'; // RS Edit: Inferno 7 to 9 (Lira, January 2026)
 import { Box, Tooltip } from 'tgui/components';
 import { createRenderer } from 'tgui/renderer';
 
 const render = createRenderer();
 
 export const ListOfTooltips = () => {
-  const nodes: JSX.Element[] = [];
+  const nodes: InfernoNode[] = []; // RS Edit: Inferno 7 to 9 (Lira, January 2026)
 
   for (let i = 0; i < 100; i++) {
     nodes.push(

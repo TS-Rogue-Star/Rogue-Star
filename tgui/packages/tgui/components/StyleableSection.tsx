@@ -1,8 +1,9 @@
-import { SFC } from 'inferno';
+import type { Inferno } from 'inferno'; // RS Edit: Inferno 7 to 9 (Lira, January 2026)
 import { Box } from './Box';
 
 // The cost of flexibility and prettiness.
-export const StyleableSection: SFC<{
+export const StyleableSection: Inferno.SFC<{
+  // RS Edit: Inferno 7 to 9 (Lira, January 2026)
   style?;
   titleStyle?;
   textStyle?;
