@@ -105,10 +105,9 @@ SUBSYSTEM_DEF(rs_ui)
 
 	tracked = tracked_mob
 	RegisterSignal(tracked,COMSIG_PARENT_QDELETING,PROC_REF(cleanup),TRUE)		//Register signals immediately so we don't forget!
-	RegisterSignal(tracked,COMSIG_MOB_LOGOUT,PROC_REF(cleanup),TRUE)			//We are making ourself visible to the client and when they log out the client dies! So let's clean up here too.
 	holder = holder_mob
 	RegisterSignal(holder,COMSIG_PARENT_QDELETING,PROC_REF(cleanup),TRUE)
-	RegisterSignal(holder,COMSIG_MOB_LOGOUT,PROC_REF(cleanup),TRUE)
+	RegisterSignal(holder,COMSIG_MOB_CLIENT_LOGIN,PROC_REF(attach_to_holder),TRUE)	// Reattach after multichar swaps / reconnects (Lira, January 2026)
 
 	//Setup the actual UI!!!
 	name = tracked.name
@@ -122,15 +121,27 @@ SUBSYSTEM_DEF(rs_ui)
 
 	build_icon()	//Start building the icon!
 
-	holder.client.screen += src	//And finally, we add the ui to the player's hud
+	attach_to_holder()	//And finally, we add the ui to the player's hud || call new proc (Lira, January 2026)
 
 	return TRUE	//Tell new that we're valid, yay for us!!
 
+// Attaches ui to player hud (Lira, January 2026)
+/obj/screen/movable/rs_ui/healthbar/proc/attach_to_holder(mob/user, client/CL)
+	SIGNAL_HANDLER
+	if(!holder)
+		return
+	if(user && user != holder)
+		return
+	if(!CL)
+		CL = holder.client
+	if(!CL)
+		return
+	CL.screen |= src
+
 /obj/screen/movable/rs_ui/healthbar/cleanup()
 	UnregisterSignal(tracked,COMSIG_PARENT_QDELETING)	//Clean up our signals
-	UnregisterSignal(tracked,COMSIG_MOB_LOGOUT)
 	UnregisterSignal(holder,COMSIG_PARENT_QDELETING)
-	UnregisterSignal(holder,COMSIG_MOB_LOGOUT)
+	UnregisterSignal(holder,COMSIG_MOB_CLIENT_LOGIN)	//Added for re-login (Lira, January 2026)
 	holder.client?.screen -= src						//Remove ourself from the one peeking at us if they are around!
 	tracked.transform = original_transform				//Give tracked back their transform
 	tracked.update_transform()							//Update it so that they actually turn back
