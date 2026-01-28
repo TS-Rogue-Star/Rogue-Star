@@ -129,6 +129,7 @@ var/global/list/multipoint_triggerable_list = list()	//Rather than searching the
 
 	else
 		icon_state = inactive_state
+		set_light(0)
 
 /obj/multipoint/teleporter/proc/teleport(var/to_teleport)
 	if(!to_teleport)
