@@ -78,7 +78,6 @@ export class Input extends Component {
         this.setEditing(false);
         e.target.value = toInputValue(this.props.value);
         e.target.blur();
-        return;
       }
     };
   }

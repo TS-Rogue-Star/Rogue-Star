@@ -281,12 +281,12 @@ export const createCanvasSamplingHelpers = (
     if (nextStartColor === startColor) {
       return [];
     }
-    const changedPixels = resolvedPixels.filter((entry) => {
+    // RS Edit - Sonar
+    return resolvedPixels.filter((entry) => {
       const prevColor = sampleCurrentPixelColor(entry.x, entry.y);
       const nextColor = normalizeDiffColor(entry.color);
       return nextColor !== prevColor;
     });
-    return changedPixels;
   };
 
   const buildClearPreviewDiff = (): DiffEntry[] => {

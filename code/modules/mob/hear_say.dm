@@ -122,7 +122,7 @@
 		if(check_mentioned(multilingual_to_message(message_pieces)) && is_preference_enabled(/datum/client_preference/check_mention))
 			message_to_send = "<font size='3'><b>[message_to_send]</b></font>"
 
-		on_hear_say(message_to_send)
+		on_hear_say(message_to_send, speaker) // RS Edit: Add speaker (Lira, January 2026)
 		create_chat_message(speaker, combined["raw"], italics, list())
 
 		if(speech_sound && (get_dist(speaker, src) <= world.view && z == speaker.z))
@@ -137,7 +137,7 @@
 	if(has_AI()) // Won't happen if no ai_holder exists or there's a player inside w/o autopilot active.
 		ai_holder.on_hear_say(speaker, multilingual_to_message(message_pieces))
 
-/mob/proc/on_hear_say(var/message)
+/mob/proc/on_hear_say(var/message, var/mob/speaker = null) // RS Edit: Add speaker (Lira, January 2026)
 	var/time = say_timestamp()
 	if(client)
 		if(client.prefs.chat_timestamp)
@@ -145,13 +145,13 @@
 		else
 			to_chat(src, "<span class='game say'>[message]</span>")
 	else if(teleop)
-		if(src in teleop.client?.multichar_list)	//RS EDIT
+		if(speaker && speaker.client && (speaker in teleop.client?.multichar_list))	//RS EDIT || adjusted to speaker (Lira, January 2026)
 			return
 		to_chat(teleop, "<span class='game say'>[create_text_tag("body", "BODY:", teleop.client)]\<[SPAN_NOTICE(src)]\>: [message]</span>")	//RS EDIT - Makes teleop messages a little more informative
 	else
 		to_chat(src, "<span class='game say'>[message]</span>")
 
-/mob/living/silicon/on_hear_say(var/message)
+/mob/living/silicon/on_hear_say(var/message, var/mob/speaker = null) // RS Edit: Add speaker (Lira, January 2026)
 	var/time = say_timestamp()
 	if(client)
 		if(client.prefs.chat_timestamp)
@@ -159,7 +159,7 @@
 		else
 			to_chat(src, "<span class='game say'>[message]</span>")
 	else if(teleop)
-		if(src in teleop.client.multichar_list)
+		if(speaker && speaker.client && (speaker in teleop.client?.multichar_list)) // RS Edit: Adjusted to speaker (Lira, January 2026)
 			return
 		to_chat(teleop, "<span class='game say'>[create_text_tag("body", "BODY:", teleop.client)]\<[SPAN_NOTICE(src)]\>: [message]</span>")	//RS EDIT - Makes teleop messages a little more informative
 	else

@@ -592,6 +592,7 @@
 /obj/fiftyspawner/glass,
 /obj/fiftyspawner/steel,
 /obj/fiftyspawner/steel,
+/obj/random/powercell,
 /turf/simulated/floor/tiled,
 /area/rnd/moonbase/rndlab)
 "akR" = (
@@ -19032,6 +19033,7 @@
 /obj/fiftyspawner/steel,
 /obj/fiftyspawner/steel,
 /obj/fiftyspawner/steel,
+/obj/random/powercell,
 /turf/simulated/floor/tiled/steel,
 /area/rnd/moonbase/robotics)
 "lUj" = (
@@ -26508,6 +26510,21 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/ai_monitored/storage/eva)
+"ren" = (
+/obj/structure/table/reinforced,
+/obj/effect/floor_decal/milspec/color/emerald/half{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/cell_charger{
+	pixel_x = 0;
+	pixel_y = 4
+	},
+/obj/random/powercell,
+/turf/simulated/floor/tiled,
+/area/rnd/moonbase/robotics)
 "reO" = (
 /obj/effect/floor_decal/milspec/color/orange/half{
 	dir = 5
@@ -36080,6 +36097,9 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
 /turf/simulated/floor/tiled,
 /area/rnd/moonbase/rndlab)
 "xwl" = (
@@ -36272,9 +36292,11 @@
 "xAf" = (
 /obj/effect/floor_decal/milspec/color/emerald/half,
 /obj/structure/table/standard,
-/obj/machinery/recharger{
+/obj/machinery/cell_charger{
+	pixel_x = 0;
 	pixel_y = 4
 	},
+/obj/random/powercell,
 /turf/simulated/floor/tiled,
 /area/rnd/moonbase/rndlab)
 "xAA" = (
@@ -45968,7 +45990,7 @@ wjo
 uHz
 obn
 lzm
-glK
+ren
 goE
 mhc
 yfR

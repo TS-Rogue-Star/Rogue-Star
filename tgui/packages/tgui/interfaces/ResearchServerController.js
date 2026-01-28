@@ -94,17 +94,13 @@ const ResearchServerAccess = (props, context) => {
   const { consoles } = data;
 
   const hasUploadAccess = (server, console) => {
-    if (server.id_with_upload.indexOf(console.id) !== -1) {
-      return true;
-    }
-    return false;
+    // RS Edit - Sonar
+    return server.id_with_upload.indexOf(console.id) !== -1;
   };
 
   const hasDownloadAccess = (server, console) => {
-    if (server.id_with_download.indexOf(console.id) !== -1) {
-      return true;
-    }
-    return false;
+    // RS Edit - Sonar
+    return server.id_with_download.indexOf(console.id) !== -1;
   };
 
   return (

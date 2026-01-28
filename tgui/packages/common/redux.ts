@@ -103,6 +103,7 @@ export const applyMiddleware = (
 
       const storeApi: MiddlewareAPI = {
         getState: store.getState,
+        // eslint-disable-next-line sonar/no-extra-arguments
         dispatch: (action, ...args) => dispatch(action, ...args),
       };
 

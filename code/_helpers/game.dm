@@ -319,6 +319,13 @@
 					if(M.is_preference_enabled(/datum/client_preference/ghost_sight))
 						mobs |= M
 
+	// RS Add: Allow multichar characters to hear in containers (Lira, January 2026)
+	for(var/mob/living/M in living_mob_list)
+		if(!M || M.client || !M.teleop || !M.teleop.client)
+			continue
+		if(get_turf(M) in hearturfs)
+			mobs |= M
+
 	//For objects below the top level who still want to hear
 	for(var/obj in listening_objects)
 		if(get_turf(obj) in hearturfs)
