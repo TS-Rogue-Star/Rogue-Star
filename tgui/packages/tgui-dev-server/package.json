@@ -4,10 +4,10 @@
   "version": "4.4.1",
   "type": "module",
   "dependencies": {
-    "axios": "^0.27.2",
-    "glob": "^8.1.0",
+    "axios": "^1.13.2",
+    "glob": "^13.0.0",
     "source-map": "^0.7.6",
     "stacktrace-parser": "^0.1.11",
-    "ws": "^8.18.3"
+    "ws": "^8.19.0"
   }
 }

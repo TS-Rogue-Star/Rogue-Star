@@ -7,6 +7,7 @@ import type { BasicAppearancePayload, BasicAppearanceState } from '../types';
 
 export const buildBasicStateFromPayload = (
   payload?: BasicAppearancePayload | null
+  // eslint-disable-next-line complexity
 ): BasicAppearanceState => {
   const rawGradientStyle =
     typeof payload?.hair_gradient_style === 'string'

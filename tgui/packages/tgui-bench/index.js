@@ -67,7 +67,7 @@ const setup = async () => {
   });
 
   try {
-    await server.listen(3002, '0.0.0.0');
+    await server.listen({ port: 3002, host: '0.0.0.0' }); // RS Edit - Fastify updates
   } catch (err) {
     console.error(err);
     process.exit(1);

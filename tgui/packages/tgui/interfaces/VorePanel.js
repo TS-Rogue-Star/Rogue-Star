@@ -856,14 +856,8 @@ const VoreSelectedMobTypeBellyButtons = (props, context) => {
         </LabeledList>
       </Section>
     );
-  } else if (is_vore_simple_mob) {
-    return (
-      // For now, we're only returning empty. TODO: Simple mob belly controls
-      <LabeledList>
-        <LabeledList.Item />
-      </LabeledList>
-    );
   } else {
+    // RS Edit - Sonar
     return (
       // Returning Empty element
       <LabeledList>

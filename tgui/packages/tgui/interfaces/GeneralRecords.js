@@ -74,14 +74,14 @@ const selectRecords = (records, searchText = '') => {
   const nameSearch = createSearch(searchText, (record) => record.name);
   const idSearch = createSearch(searchText, (record) => record.id);
   const dnaSearch = createSearch(searchText, (record) => record.b_dna);
-  let fl = flow([
+  // RS Edit - Sonar
+  return flow([
     // Optional search term
     searchText &&
       filter((record) => {
         return nameSearch(record) || idSearch(record) || dnaSearch(record);
       }),
   ])(records);
-  return fl;
 };
 
 const GeneralRecordsList = (_properties, context) => {

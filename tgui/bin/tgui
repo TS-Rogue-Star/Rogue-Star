@@ -190,7 +190,7 @@ fi
 if [[ ${1} == '--lint-harder' ]]; then
   shift 1
   task-install
-  task-lint -c .eslintrc-harder.yml "${@}"
+  task-lint -c eslintrc-harder.config.mjs "${@}" # RS Edit: New ESLint
   exit 0
 fi
 

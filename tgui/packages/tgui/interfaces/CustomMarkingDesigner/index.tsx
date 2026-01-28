@@ -1253,6 +1253,7 @@ const handlePreviewRefreshTokenUpdate = (options: {
   }
 };
 
+// eslint-disable-next-line complexity
 export const CustomMarkingDesigner = (_props, context) => {
   const { act, data } = useBackend<CustomMarkingDesignerData>(context);
   const stateToken = data.state_token || 'session';

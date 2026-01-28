@@ -69,7 +69,7 @@ export const SecureSafe = (props, context) => {
           )}
           <Section height="60px">
             <Box textAlign="center" position="center" fontSize="35px">
-              {(code && code) || (
+              {code || (
                 <Box textColor={locked ? 'red' : 'green'}>
                   {locked ? 'LOCKED' : 'UNLOCKED'}
                 </Box>

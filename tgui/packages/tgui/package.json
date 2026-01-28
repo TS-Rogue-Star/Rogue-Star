@@ -4,15 +4,13 @@
   "version": "4.4.1",
   "dependencies": {
     "@popperjs/core": "^2.11.8",
-    "@types/marked": "^4.3.2",
     "common": "workspace:*",
     "dateformat": "^5.0.3",
-    "dompurify": "^2.5.8",
+    "dompurify": "^3.3.1",
     "highlight.js": "^11.11.1",
     "inferno": "^9.0.10",
     "inferno-vnode-flags": "^9.0.10",
     "js-yaml": "^4.1.1",
-    "marked": "^4.3.0",
     "tgui-dev-server": "workspace:*",
     "tgui-polyfill": "workspace:*"
   }

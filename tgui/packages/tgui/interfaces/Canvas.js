@@ -1328,7 +1328,8 @@ export const Canvas = (props, context) => {
   const previewColor = brushColor || data.held_color || '#000000';
   const capW = 760;
   const capH = 900;
-  const uiExtra = data.finalized ? 70 : limited ? 140 : 140;
+  // RS Edit - Sonar
+  const uiExtra = data.finalized ? 70 : 140;
   // RS Add End
   return (
     <Window
