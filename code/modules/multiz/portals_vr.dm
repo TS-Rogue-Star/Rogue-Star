@@ -167,14 +167,15 @@
 	if (!open) //RS EDIT START
 		to_chat(M, "<span class='notice'>\The [src] seems inert for now...</span>")
 		return
-	var/turf/ourturf = find_our_turf(M)
-	if(!ourturf.check_density(TRUE,TRUE))	//Make sure there isn't a wall there
-		M.unbuckle_all_mobs(TRUE)
-		if(isliving(M))
-			var/mob/living/ourmob = M
-			ourmob.stop_pulling()
-		do_safe_teleport(M, ourturf, 0)
-		post_crossed(M)
+	var/turf/ourturf = find_opposite_side_or_randomize(M,src,target)	//RS EDIT START
+	if(ourturf.check_density(TRUE,TRUE))	//Make sure there isn't a wall there
+		return
+	M.unbuckle_all_mobs(TRUE)
+	if(isliving(M))
+		var/mob/living/ourmob = M
+		ourmob.stop_pulling()
+	do_safe_teleport(M, ourturf, 0)
+	post_crossed(M)	//RS EDIT END
 
 /obj/structure/portal_event/proc/find_our_turf(var/atom/movable/AM)
 	var/offset_x = x - AM.x

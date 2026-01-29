@@ -68,7 +68,7 @@
 	if(!target.special_condition(M))
 		return
 
-	var/turf/ourturf = find_our_turf(M)		//Find the turf on the opposite side of the target
+	var/turf/ourturf = find_opposite_side_or_randomize(M,src,target)		//Find the turf on the opposite side of the target	//RS EDIT
 	if(!ourturf.check_density(TRUE,TRUE))	//Make sure there isn't a wall there
 		M.unbuckle_all_mobs(TRUE)
 		M.stop_pulling()
@@ -76,14 +76,6 @@
 		M.forceMove(ourturf)		//Let's just do forcemove, I don't really want people teleporting to weird places if they have bluespace stuff
 	else
 		to_chat(M, "<span class='notice'>Something blocks your way.</span>")
-
-/obj/machinery/cryopod/robot/door/gateway/redgate/proc/find_our_turf(var/atom/movable/AM)	//This finds the turf on the opposite side of the target gate from where you are
-	var/offset_x = x - AM.x										//used for more smooth teleporting
-	var/offset_y = y - AM.y
-
-	var/turf/temptarg = locate((target.x + offset_x),(target.y + offset_y),target.z)
-
-	return temptarg
 
 /obj/machinery/cryopod/robot/door/gateway/redgate/update_icon()
 	return
