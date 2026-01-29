@@ -233,3 +233,36 @@
 	has_custom_open_sprites = TRUE
 	has_vore_belly_sprites = FALSE
 	rest_sprite_options = list("Default", "Bellyup")
+
+
+// dullahan sprite stuff cont.
+
+/datum/robot_sprite/dogborg/tall/dullahanengineeringmodule
+	module_type = "Engineering"
+	sprite_icon = 'icons/mob/dullahanborg/dullahan_eng.dmi'
+
+/datum/robot_sprite/dogborg/tall/dullahanengineeringmodule/do_equipment_glamour(var/obj/item/weapon/robot_module/module)
+	if(!has_custom_equipment_sprites)
+		return
+
+	..()
+
+	var/obj/item/device/dogborg/sleeper/compactor/decompiler/DC = locate() in module.modules
+	if(DC)
+		DC.icon_state = "decompiler"
+
+/datum/robot_sprite/dogborg/tall/dullahanengineeringmodule/dullahanengineering
+	name = "Dullahan"
+	sprite_icon_state = "dullahaneng"
+	has_eye_light_sprites = TRUE
+	has_custom_open_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit")
+
+/datum/robot_sprite/dogborg/tall/dullahanengineeringmodule/dullahanengineeringalt
+	name = "Dullahan v2"
+	sprite_icon_state = "dullahaneng_alt"
+	has_eye_light_sprites = TRUE
+	has_custom_open_sprites = TRUE
+	has_vore_belly_sprites = TRUE
+	rest_sprite_options = list("Default", "Sit")
