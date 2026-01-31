@@ -188,7 +188,7 @@ var/list/admin_verbs_fun = list(
 	/client/proc/admin_lighting_manager,	// RS ADD: New Lighting Manager Panel (Lira, October 2025)
 	/client/proc/tag_game,					//RS ADD
 	/client/proc/report_all_objectives,		//RS ADD
-	/client/proc/reset_barrier_trigger		//RS ADD
+	/client/proc/reset_multipoint_trigger		//RS ADD
 
 	)
 
