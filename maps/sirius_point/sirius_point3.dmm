@@ -331,7 +331,9 @@
 /turf/simulated/floor/tiled/white,
 /area/medical/moonbase/upperlevel)
 "be" = (
-/turf/simulated/floor/outdoors/grass/seasonal/dark/notrees_nomobs_nosnow,
+/turf/simulated/floor/outdoors/grass/seasonal/dark/notrees_nomobs_nosnow{
+	outdoors = 0
+	},
 /area/crew_quarters/bar)
 "bf" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
@@ -3611,7 +3613,7 @@
 /area/hallway/arrival/moonbase/main)
 "jf" = (
 /obj/machinery/hologram/holopad,
-/turf/simulated/floor/carpet/blue2,
+/turf/simulated/floor/plating/eris,
 /area/bridge/meeting_room)
 "jg" = (
 /turf/simulated/wall/r_wall,
@@ -4903,7 +4905,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/eris/bcircuit,
+/turf/simulated/floor/plating/eris,
 /area/bridge_hallway)
 "mn" = (
 /obj/structure/window/reinforced{
@@ -5223,7 +5225,8 @@
 	dir = 8
 	},
 /obj/machinery/computer/guestpass{
-	pixel_y = 25
+	dir = 8;
+	pixel_x = 25
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/hallway/arrival/moonbase/dockingbays)
@@ -6254,8 +6257,7 @@
 	icon_state = "1-2"
 	},
 /obj/effect/catwalk_plated,
-/turf/simulated/floor/tiled,
-/turf/simulated/floor/tiled/eris/bcircuit,
+/turf/simulated/floor/plating/eris,
 /area/bridge_hallway)
 "pu" = (
 /obj/structure/bed/chair/backed_red{
@@ -8033,7 +8035,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/tiled/eris/bcircuit,
+/turf/simulated/floor/plating/eris,
 /area/bridge_hallway)
 "tx" = (
 /obj/effect/floor_decal/milspec/color/green/half{
@@ -8631,6 +8633,9 @@
 /obj/effect/floor_decal/milspec/color/red/half,
 /obj/structure/closet/secure_closet/pilot,
 /obj/item/weapon/tank/jetpack/carbondioxide,
+/obj/machinery/alarm{
+	dir = 1
+	},
 /turf/simulated/floor/tiled,
 /area/crew_quarters/moonbase/pilotroom)
 "vl" = (
@@ -10169,7 +10174,7 @@
 /obj/machinery/light_switch{
 	dir = 4;
 	pixel_x = -24;
-	pixel_y = 23
+	pixel_y = -23
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -10337,7 +10342,9 @@
 /area/crew_quarters/bar)
 "zr" = (
 /obj/machinery/light/bigfloorlamp,
-/turf/simulated/floor/outdoors/grass/seasonal/dark/notrees_nomobs_nosnow,
+/turf/simulated/floor/outdoors/grass/seasonal/dark/notrees_nomobs_nosnow{
+	outdoors = 0
+	},
 /area/crew_quarters/bar)
 "zs" = (
 /obj/structure/sign/warning/docking_area,
@@ -11457,7 +11464,7 @@
 /area/shuttle/excursion/cargo)
 "Cu" = (
 /obj/effect/catwalk_plated,
-/turf/simulated/floor/tiled/eris/bcircuit,
+/turf/simulated/floor/plating/eris,
 /area/bridge_hallway)
 "Cv" = (
 /turf/simulated/wall/r_wall,
@@ -11681,7 +11688,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/tiled/eris/bcircuit,
+/turf/simulated/floor/plating/eris,
 /area/bridge_hallway)
 "Db" = (
 /obj/structure/prop/rock/small/water,
@@ -12677,6 +12684,11 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/hydroponics)
+"Fv" = (
+/obj/structure/table/fancyblack,
+/obj/item/weapon/book/manual/security_space_law,
+/turf/simulated/floor/wood,
+/area/bridge/meeting_room)
 "Fx" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
@@ -13578,7 +13590,8 @@
 "HR" = (
 /obj/machinery/button/windowtint/multitint{
 	id = "headmeetingroom";
-	pixel_y = -24
+	pixel_y = -24;
+	pixel_x = -9
 	},
 /turf/simulated/floor/carpet/blue2,
 /area/bridge/meeting_room)
@@ -14532,10 +14545,10 @@
 /area/engineering/aft_hallway)
 "Kr" = (
 /obj/structure/table/darkglass,
-/obj/item/weapon/folder/red,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/item/weapon/book/manual/security_space_law,
 /turf/simulated/floor/carpet/sblucarpet,
 /area/security/briefing_room)
 "Ks" = (
@@ -15920,6 +15933,10 @@
 	dir = 8;
 	icon_state = "pipe-j2"
 	},
+/obj/machinery/photocopier/faxmachine{
+	department = "Captain's Office"
+	},
+/obj/structure/table/darkglass,
 /turf/simulated/floor/carpet/blue2,
 /area/crew_quarters/captain/moonbase/office)
 "Nx" = (
@@ -17356,8 +17373,8 @@
 /turf/simulated/floor/tiled/steel_dirty,
 /area/crew_quarters/moonbase/abandonedoffice)
 "Rf" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/window/reinforced/full,
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/window/basic/full,
 /turf/simulated/floor/outdoors/grass/forest{
 	outdoors = 0
 	},
@@ -17769,7 +17786,7 @@
 /area/crew_quarters/courtroom)
 "RY" = (
 /obj/machinery/hologram/holopad,
-/turf/simulated/floor/tiled/dark,
+/turf/simulated/floor/plating/eris,
 /area/security/briefing_room)
 "RZ" = (
 /turf/simulated/floor/plating,
@@ -17985,6 +18002,10 @@
 /turf/simulated/floor/tiled/monotile,
 /area/rnd/xenobiology)
 "SE" = (
+/obj/structure/closet/walllocker_double/command/west,
+/obj/item/weapon/book/manual/security_space_law,
+/obj/item/weapon/book/manual/standard_operating_procedure,
+/obj/item/weapon/book/manual/command_guide,
 /turf/simulated/floor/wood,
 /area/crew_quarters/captain/moonbase/office)
 "SF" = (
@@ -19281,6 +19302,13 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/security/tactical)
+"VT" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/window/basic/full,
+/turf/simulated/floor/outdoors/grass/forest{
+	outdoors = 0
+	},
+/area/crew_quarters/moonbase/pilotroom)
 "VU" = (
 /obj/machinery/hologram/holopad,
 /obj/machinery/camera/network/engineering{
@@ -19841,6 +19869,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/solars)
+"Xi" = (
+/obj/structure/table/darkglass,
+/obj/item/weapon/folder/red{
+	pixel_x = 0;
+	pixel_y = 4
+	},
+/turf/simulated/floor/carpet/sblucarpet,
+/area/security/briefing_room)
 "Xj" = (
 /obj/structure/cable{
 	icon_state = "1-4"
@@ -20255,7 +20291,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/eris/bcircuit,
+/turf/simulated/floor/plating/eris,
 /area/bridge_hallway)
 "YD" = (
 /obj/structure/cable{
@@ -29415,7 +29451,7 @@ VX
 eH
 Kr
 ZU
-ZU
+Xi
 rw
 Ga
 nq
@@ -30839,7 +30875,7 @@ QX
 QX
 Ez
 cn
-cn
+Fv
 cn
 Ri
 iD
@@ -37886,7 +37922,7 @@ gF
 kK
 Un
 uY
-Rf
+VT
 dX
 ed
 Mt

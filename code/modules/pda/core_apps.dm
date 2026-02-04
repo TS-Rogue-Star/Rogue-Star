@@ -204,3 +204,16 @@
 		news.Swap(1, 3) // List is sorted in ascending order of timestamp, we want descending
 
 	return news
+
+// RS Add Start: SOP App (Lira, February 2026)
+/datum/data/pda/app/sop
+	name = "SOP"
+	title = "Standard Operating Procedure"
+	icon = "book"
+	template = "pda_sop"
+	category = "General"
+	var/sop_page = "index.php?title=Standard_Operating_Procedure&action=render"
+
+/datum/data/pda/app/sop/update_ui(mob/user as mob, list/data)
+	data["sop_url"] = config.wikiurl ? "[config.wikiurl][sop_page]" : null
+// RS Add End

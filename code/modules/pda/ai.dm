@@ -9,7 +9,8 @@
 		new/datum/data/pda/app/main_menu,
 		new/datum/data/pda/app/notekeeper,
 		new/datum/data/pda/app/news,
-		new/datum/data/pda/app/messenger)
+		new/datum/data/pda/app/messenger,
+		new/datum/data/pda/app/sop) // RS Add: SOP App (Lira, February 2026)
 
 /obj/item/device/pda/ai/proc/set_name_and_job(newname as text, newjob as text, newrank as null|text)
 	owner = newname

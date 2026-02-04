@@ -58,6 +58,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		new/datum/data/pda/app/news,
 		new/datum/data/pda/app/messenger,
 		new/datum/data/pda/app/manifest,
+		new/datum/data/pda/app/sop, // RS Add: SOP App (Lira, February 2026)
 		new/datum/data/pda/app/atmos_scanner,
 		new/datum/data/pda/utility/scanmode/notes,
 		new/datum/data/pda/utility/flashlight)
