@@ -46,6 +46,27 @@
 			],
 			"group": "build",
 			"label": "tgui: prettybuild"
+		},
+		// RS Add Start: VChat lint and uglify (Lira, January 2026)
+		{
+			"type": "shell",
+			"command": "yarn install && yarn run lint && yarn run uglify",
+			"windows": {
+				"command": "cmd",
+				"args": [
+					"/c",
+					"yarn install && yarn run lint && yarn run uglify"
+				]
+			},
+			"options": {
+				"cwd": "code/modules/vchat"
+			},
+			"problemMatcher": [
+				"$eslint-stylish"
+			],
+			"group": "build",
+			"label": "vchat: build"
 		}
+		// RS Add End
 	]
 }

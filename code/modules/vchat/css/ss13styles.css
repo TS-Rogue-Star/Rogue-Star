@@ -235,13 +235,21 @@ img.icon.bigicon		{max-height: 32px;}
 .debug_debug					{color:#0000FF;}
 .debug_trace					{color:#888888;}
 
-/* Log animations */
-.msgsanim-enter-active {
+/* Log animations || RS Edit: Tweaked for Vue 3 (Lira, January 2026*/
+.msgsanim-enter-active,
+.msgsanim-appear-active {
 	transition: opacity 0.5s, transform 0.5s;
 }
-.msgsanim-enter {
+.msgsanim-enter,
+.msgsanim-enter-from,
+.msgsanim-appear-from {
 	opacity: 0;
 	transform: translateX(15px);
+}
+.msgsanim-enter-to,
+.msgsanim-appear-to {
+	opacity: 1;
+	transform: translateX(0);
 }
 
 /* Dog mode */
@@ -263,6 +271,30 @@ img.icon.bigicon		{max-height: 32px;}
 img.icon:not([src^="data:image/"]) {
     display: none !important;
 }
+
+/* RS Add Start: Font family selector spacing (Lira, January 2026) */
+.fontfamily-reset {
+	margin-left: 0.5rem;
+}
+
+.fontfamily-controls {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	flex-wrap: nowrap;
+}
+
+.fontfamily-controls .ui.dropdown {
+	margin: 0;
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.fontfamily-controls .fontfamily-reset {
+	flex: 0 0 auto;
+	white-space: nowrap;
+}
+/* RS Add End */
 
 /* RS Add Start: Round selector and history viewer (Lira, September 2025) */
 .round-selector-backdrop {

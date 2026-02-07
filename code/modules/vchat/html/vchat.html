@@ -78,8 +78,9 @@
 							<div class="ui form">
 								<div class="grouped fields">
 									<div class="field" v-for="type in type_table" :title="type.tooltip">
-										<div v-show="!type.admin || is_admin" class="ui slider checkbox" :class="{ inverted: inverted, disabled: type.required || active_tab.immutable, checked: type.required || active_tab.immutable }">
-											<input type="checkbox" id="type.becomes" :value="type.becomes" v-model="active_tab.categories" :disabled="type.required || active_tab.immutable" :checked="type.required || active_tab.immutable"><label :for="type.becomes">{{type.pretty}}</label>
+										<!--RS Edit: Tweaked for Vue 3 (Lira, January 2026)-->
+										<div v-show="!type.admin || is_admin" class="ui slider checkbox" :class="{ inverted: inverted, disabled: type.required || active_tab.immutable, checked: is_category_checked(type) }">
+											<input type="checkbox" :id="type.becomes" :value="type.becomes" :checked="is_category_checked(type)" :disabled="type.required || active_tab.immutable" @change="toggle_category(type, $event)"><label :for="type.becomes">{{type.pretty}}</label>
 										</div>
 									</div>
 								</div>
@@ -138,10 +139,12 @@
 								<!--RS Add Start: Font selection (Lira, September 2025)-->
 								<div class="field" title="Font family stack used for chat text">
 									<label for="fontfamily-select">Font Family</label>
-									<select id="fontfamily-select" class="ui dropdown" v-model="fontfamily">
-										<option v-for="option in fontfamily_options" :key="option.value" :value="option.value">{{ option.label }}</option>
-									</select>
-									<button class="ui button" type="button" @click="reset_fontfamily">Reset</button>
+									<div class="fontfamily-controls">  <!--Tweaked for Vue 3-->
+										<select id="fontfamily-select" class="ui dropdown" v-model="fontfamily">
+											<option v-for="option in fontfamily_options" :key="option.value" :value="option.value">{{ option.label }}</option>
+										</select>
+										<button class="ui button fontfamily-reset" type="button" @click="reset_fontfamily">Reset</button>
+									</div>
 								<!--RS Add End-->
 								</div>
 							</div>

@@ -362,7 +362,7 @@
 	var/report = SPAN_DANGER("SCORE REPORT START:<br>")
 
 	while(subjects.len)
-		var/greatest = get_greatest(subjects)
+		var/greatest = list_get_greatest(subjects)
 
 		subjects -= greatest
 
@@ -372,25 +372,6 @@
 
 	if(tgui_alert(user,"Would you like to show the report to everyone?","Global report?",list("Yes","No")) == "Yes")
 		to_world(report)
-
-
-/obj/score_keeper/proc/get_greatest(var/list/ourlist = list())
-	if(!ourlist)
-		log_and_message_admins("get_greatest was called on [src] but did not provide a list")
-		return
-
-	var/greatest
-
-	for(var/thing in ourlist)
-		if(!greatest)
-			greatest = thing
-			continue
-		else if(ourlist[thing] > ourlist[greatest])
-			greatest = thing
-		else if(ourlist[thing] == ourlist[greatest])
-			continue
-
-	return greatest
 
 /////DISPENSER/////
 

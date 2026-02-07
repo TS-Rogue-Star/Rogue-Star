@@ -181,10 +181,12 @@ function start_vchat() {
 //Loads vue for chat usage
 var vueapp;
 function start_vue() {
+	// RS Edit Start: Updated for Vue 3 (Lira, January 2026)
 	/* eslint-disable-next-line no-undef */ // Present in vue.min.js, imported in HTML
-	vueapp = new Vue({
-		el: '#app',
-		data: {
+	let app = Vue.createApp({
+		data: function() {
+			return {
+	// RS Edit End
 			messages: [], //List o messages from byond
 			shown_messages: [], //Used on filtered tabs, but not "Main" because it has 0len categories list, which bypasses filtering for speed
 			unshown_messages: 0, //How many messages in archive would be shown but aren't
@@ -250,6 +252,8 @@ function start_vue() {
 				active_round_id: '',
 				last_loaded_round_id: '',
 				pending_main_round_id: '',
+				pending_main_request_id: '', // RS Add: Prevent cleared chat (Lira, January 2026)
+				main_request_counter: 0, // RS Add: Prevent cleared chat (Lira, January 2026)
 				fontfamily_options: [
 					{ label: 'Verdana (Default)', value: 'Verdana, Arial, sans-serif' },
 					{ label: 'Bahnschrift', value: 'Bahnschrift, "Segoe UI", Arial, sans-serif' },
@@ -438,7 +442,8 @@ function start_vue() {
 					required: false,
 					admin: false
 				}
-			],
+			]
+			};
 		},
 		mounted: function() {
 			//Load our settings
@@ -464,6 +469,7 @@ function start_vue() {
 			try {
 				window.addEventListener('scroll', this._boundScrollHandler, { passive: true });
 			} catch(error) {
+				void error; // RS Add: Vue 3 Migration (Lira, January 2026)
 				window.addEventListener('scroll', this._boundScrollHandler);
 			}
 			this.$nextTick((function() {
@@ -482,7 +488,7 @@ function start_vue() {
 			// RS Add End
 		},
 		// RS Add: Scrolling Support (Lira, September 2025)
-		beforeDestroy: function() {
+		beforeUnmount: function() { // RS Edit: Vue 3 Migration (Lira, January 2026)
 			if(this._boundScrollHandler) {
 				window.removeEventListener('scroll', this._boundScrollHandler);
 				this._boundScrollHandler = null;
@@ -633,9 +639,9 @@ function start_vue() {
 		methods: {
 			//Load the chat settings
 			load_settings: function() {
-				this.inverted = get_storage("darkmode", false);
+				this.inverted = !!get_storage("darkmode", false); // RS Edit: Toggle fix (Lira, January 2026)
 				this.crushing = get_storage("crushing", 3);
-				this.animated = get_storage("animated", false);
+				this.animated = !!get_storage("animated", false); // RS Edit: Toggle fix (Lira, January 2026)
 				this.fontsize = get_storage("fontsize", 0.9);
 				this.lineheight = get_storage("lineheight", 130);
 				this.fontfamily = get_storage("fontfamily", this.fontfamily_default); // RS Add: Font setting (Lira, September 2025)
@@ -722,6 +728,46 @@ function start_vue() {
 				this.apply_filter(this.current_categories);
 				this.update_archived_filter(this.current_categories); // RS Add: Update category archive (Lira, September 2025)
 			},
+			// RS Add Start: Prevent chat clear (Lira, January 2026)
+			is_category_checked: function(type) {
+				if(!type || typeof type !== 'object') {
+					return false;
+				}
+				if(type.required) {
+					return true;
+				}
+				let tab = this.active_tab;
+				if(!tab || !Array.isArray(tab.categories)) {
+					return false;
+				}
+				return tab.categories.indexOf(type.becomes) > -1;
+			},
+			toggle_category: function(type, event) {
+				if(!type || typeof type !== 'object') {
+					return;
+				}
+				let tab = this.active_tab;
+				if(!tab || tab.immutable || type.required) {
+					return;
+				}
+				if(!Array.isArray(tab.categories)) {
+					tab.categories = [];
+				}
+				let value = type.becomes;
+				if(typeof value !== 'string' || !value.length) {
+					return;
+				}
+				let checked = !!(event && event.target && event.target.checked);
+				let index = tab.categories.indexOf(value);
+				if(checked) {
+					if(index === -1) {
+						tab.categories.push(value);
+					}
+				} else if(index !== -1) {
+					tab.categories.splice(index, 1);
+				}
+			},
+			// RS Add End
 			//Toggle edit mode
 			editmode: function() {
 				this.editing = !this.editing;
@@ -760,6 +806,18 @@ function start_vue() {
 					this.paused = shouldPause;
 				}
 			},
+			// RS Add Start: Vue 3 Migration (Lira, January 2026)
+			schedule_autoscroll: function() {
+				if(this.editing || this.paused)
+					return;
+				let scrollAction = this.scroll_to_latest.bind(this);
+				if(typeof this.$nextTick === 'function') {
+					this.$nextTick(scrollAction);
+				} else {
+					setTimeout(scrollAction, 0);
+				}
+			},
+			// RS Add End
 			resume_autoscroll: function() {
 				let wasPaused = this.manual_paused || this.scroll_paused || this.paused;
 				this.manual_paused = false;
@@ -1024,25 +1082,37 @@ function start_vue() {
 			},
 			load_current_round_history: function() {
 				let target = this.active_round_id || '';
-				this.reset_chat_log();
 				this.request_main_history(target);
 			},
 			request_main_history: function(roundId) {
 				let target = typeof roundId === 'string' ? roundId : '';
 				this.pending_main_round_id = target || (this.round_overview && this.round_overview.currentRoundId) || '';
+				// RS Add Start: Prevent chat clear (Lira, January 2026)
+				this.main_request_counter += 1;
+				let requestId = 'main-' + this.main_request_counter + '-' + Date.now();
+				this.pending_main_request_id = requestId;
+				// RS Add End
 				try {
 					const payload = {
 						round_id: target,
-						source: 'main'
+						source: 'main',
+						request_id: requestId // RS Add: Prevent chat clear (Lira, January 2026)
 					};
 					push_Topic("request_history&param[data]=" + encodeURIComponent(JSON.stringify(payload)));
 				} catch (err) {
 					console.error(err);
 					this.pending_main_round_id = '';
+					this.pending_main_request_id = ''; // RS Add Start: Prevent chat clear (Lira, January 2026)
 				}
 			},
 			load_main_history: function(event) {
-				let entries = Array.isArray(event.messages) ? event.messages : [];
+				// RS Edit Start: Prevent chat clear (Lira, January 2026)
+				let entries = Array.isArray(event.messages) ? event.messages : null;
+				if(!entries) {
+					this.internal_message("Unable to load chat history.");
+					return;
+				}
+				// RS Edit End
 				let resolvedRound = this.resolve_event_round(event);
 				this.last_loaded_round_id = resolvedRound || '';
 
@@ -1151,6 +1221,7 @@ function start_vue() {
 				newmessage.id = ++vchat_state.lastId;
 				this.attempt_archive();
 				this.messages.push(newmessage);
+				this.schedule_autoscroll(); // RS Add: Vue 3 Migration (Lira, January 2026)
 			},
 			//Push an internally generated message into our array
 			internal_message: function(message) {
@@ -1161,6 +1232,7 @@ function start_vue() {
 				};
 				newmessage.id = ++vchat_state.lastId;
 				this.messages.push(newmessage);
+				this.schedule_autoscroll(); // RS Add: Vue 3 Migration (Lira, January 2026)
 			},
 			// RS Edit: Updated for new features (Lira, September 2025)
 			on_mouseup: function(event) {
@@ -1435,15 +1507,33 @@ function start_vue() {
 
 				let source = typeof event.source === 'string' ? event.source : 'viewer';
 				if(source === 'main') {
+					// RS Add Start: Prevent chat clear (Lira, January 2026)
+					let pendingId = this.pending_main_request_id;
+					let eventId = typeof event.request_id === 'string' ? event.request_id : '';
+					if(pendingId && eventId && eventId !== pendingId)
+						return;
+ 					if(pendingId && !eventId) {
+						this.internal_message("History response missing request id; ignoring.");
+						return;
+					}
+					// RS Add End
 					this.pending_main_round_id = '';
 					let resolved = this.resolve_event_round(event);
 					if(this.active_round_id && resolved && resolved !== this.active_round_id)
 						return;
 					if(event.error && typeof event.error === 'string' && event.error.length) {
-						this.reset_chat_log();
+						this.pending_main_request_id = ''; // RS Add: Prevent chat clear (Lira, January 2026)
 						this.internal_message(event.error);
 						return;
 					}
+					// RS Add Start: Prevent chat clear (Lira, January 2026)
+					if(!Array.isArray(event.messages)) {
+						this.pending_main_request_id = '';
+						this.internal_message("Unable to load chat history.");
+						return;
+					}
+					this.pending_main_request_id = '';
+					// RS Add End
 					this.load_main_history(event);
 					return;
 				}
@@ -1676,6 +1766,8 @@ function start_vue() {
 			}
 		}
 	});
+
+	vueapp = app.mount('#app'); // RS Add: Vue 3 Migration (Lira, January 2026)
 }
 
 /***********

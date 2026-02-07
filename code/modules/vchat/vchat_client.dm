@@ -874,9 +874,6 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 // Fetch stored chat messages for a specific round or all rounds on demand
 /datum/chatOutput/proc/round_history_request(var/data)
-	if(!owner)
-		return list("evttype" = "round_history", "round_id" = null, "messages" = list(), "error" = "Client unavailable", "current_round_id" = GLOB.vchat_current_round_id)
-
 	var/list/payload
 	if(istext(data))
 		payload = json_decode(data)
@@ -886,6 +883,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	var/round_id = null
 	var/use_all_rounds = FALSE
 	var/source = null
+	var/request_id = null // RS Add: Prevent chat clear (Lira, January 2026)
 	if(islist(payload))
 		if(istext(payload["round_id"]))
 			var/tmp_round = vchat_trim_whitespace(payload["round_id"])
@@ -896,19 +894,54 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 					round_id = tmp_round
 		if(istext(payload["source"]))
 			source = payload["source"]
+	// RS Add Start: Prevent chat clear (Lira, January 2026)
+		if(istext(payload["request_id"]))
+			request_id = payload["request_id"]
+
+	if(!owner)
+		var/list/response = list(
+			"evttype" = "round_history",
+			"round_id" = null,
+			"messages" = list(),
+			"error" = "Client unavailable",
+			"current_round_id" = GLOB.vchat_current_round_id,
+			"source" = source)
+		if(request_id)
+			response["request_id"] = request_id
+		return response
+	// RS Add End
 
 	if(isnull(round_id) && !use_all_rounds)
 		round_id = GLOB.vchat_current_round_id
 
 	var/list/messages = vchat_get_messages(owner.ckey, null, use_all_rounds ? null : round_id)
-	if(!LAZYLEN(messages))
-		return list(
+	// RS Edit Start: Prevent chat clear (Lira, January 2026)
+	if(!islist(messages))
+		var/list/response = list(
 			"evttype" = "round_history",
 			"round_id" = round_id,
 			"messages" = list(),
-			"error" = "No messages found for that round.",
+			"error" = "Unable to load chat history.",
 			"current_round_id" = GLOB.vchat_current_round_id,
-			"use_all_rounds" = use_all_rounds)
+			"use_all_rounds" = use_all_rounds,
+			"source" = source)
+		if(request_id)
+			response["request_id"] = request_id
+		return response
+
+	if(!messages.len)
+		var/list/response = list(
+			"evttype" = "round_history",
+			"round_id" = round_id,
+			"messages" = list(),
+			"message_count" = 0,
+			"current_round_id" = GLOB.vchat_current_round_id,
+			"use_all_rounds" = use_all_rounds,
+			"source" = source)
+		if(request_id)
+			response["request_id"] = request_id
+		return response
+	// RS Edit End
 
 	var/list/output = list()
 	var/message_count = 0
@@ -934,7 +967,8 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		message_count++
 		CHECK_TICK
 
-	return list(
+	// RS Edit Start: Prevent chat clear (Lira, January 2026)
+	var/list/response = list(
 		"evttype" = "round_history",
 		"round_id" = round_id,
 		"messages" = output,
@@ -942,6 +976,10 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		"current_round_id" = GLOB.vchat_current_round_id,
 		"use_all_rounds" = use_all_rounds,
 		"source" = source)
+	if(request_id)
+		response["request_id"] = request_id
+	return response
+	// RS Edit End
 
 // Perform the server-side chatlog export workflow and stream the file to the client
 /datum/chatOutput/proc/save_chatlog_to_disk(var/list/categories, var/filename, var/round_id, var/use_all_rounds = FALSE)

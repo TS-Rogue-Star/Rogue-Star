@@ -84,6 +84,7 @@
 	..()
 
 /mob/living/carbon/attack_hand(mob/M as mob)
+	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, M)	//RS ADD
 	if(!istype(M, /mob/living/carbon)) return
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M

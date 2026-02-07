@@ -1,6 +1,10 @@
+//RS FILE
+
 GLOBAL_VAR_INIT(ghost_mob_spawn_count, 0)
 //Keep it organized!!!
 GLOBAL_LIST_INIT(ghost_spawnable_mobs,list(
+	"Ant" = /mob/living/simple_mob/vore/ant,
+	"Ant - Queen" = /mob/living/simple_mob/vore/ant/queen,
 	"Bat - Giant" = /mob/living/simple_mob/vore/bat,
 	"Bear - Space" = /mob/living/simple_mob/animal/space/bear,
 	"Bumblebee" = /mob/living/simple_mob/vore/bee,
@@ -31,7 +35,7 @@ GLOBAL_LIST_INIT(ghost_spawnable_mobs,list(
 		"Chubby Otie" = /mob/living/simple_mob/vore/otie/friendly/chubby,
 		"Tamed Otie" = /mob/living/simple_mob/vore/otie/cotie,
 		"Chubby Tamed Otie" = /mob/living/simple_mob/vore/otie/cotie/chubby,
-		"Cargo Otie" = /mob/living/simple_mob/vore/otie/cargo, //RS Add (cargo otie)
+		"Cargo Otie" = /mob/living/simple_mob/vore/otie/cargo,
 		"Guard Otie" = /mob/living/simple_mob/vore/otie/security,
 		"Chubby Guard Otie" = /mob/living/simple_mob/vore/otie/security/chubby,
 		"Mutated Otie" =/mob/living/simple_mob/vore/otie/feral,
@@ -120,7 +124,22 @@ GLOBAL_LIST_INIT(ghost_spawnable_mobs,list(
 
 	if(!MayRespawn(1))
 		return
+
+	if(z == using_map.z_list["z_misc"] || z == using_map.z_list["z_centcom"])
+		to_chat(src, "<span class='danger'>You can't spawn on this Z level.</span>")
+		return
+
 	var/turf/ourturf = get_turf(src)
+
+	if(istype(ourturf, /turf/unsimulated/map))
+		to_chat(src, "<span class='danger'>You can't spawn on the overmap.</span>")
+		return
+
+	var/area/ourarea = get_area(ourturf)
+
+	if(ourarea.block_phase_shift)
+		to_chat(src, "<span class='danger'>You can't spawn here.</span>")
+		return
 
 	if(ourturf.check_density())
 		to_chat(src, "<span class='danger'>Something is in the way! Try somewhere else!</span>")
@@ -166,9 +185,9 @@ GLOBAL_LIST_INIT(ghost_spawnable_mobs,list(
 		if(sus.ckey)
 			to_chat(src, "<span class='danger'>\The [sus] can see you here, try somewhere more discreet!</span>")
 			return
-	for(var/atom/movable/look_spoiler/eye in view(world.view,ourturf))	//RS ADD START - Also don't spawn where people are looking, this covers cameras now too!
+	for(var/atom/movable/look_spoiler/eye in view(world.view,ourturf))	//Also don't spawn where people are looking, this covers cameras now too!
 		to_chat(src, "<span class='danger'>[eye] is looking here. Try somewhere else!</span>")
-		return	//RS ADD START
+		return
 
 	var/mob/living/simple_mob/newPred = new mobtype(ourturf)
 	qdel(newPred.ai_holder)

@@ -788,4 +788,5 @@
 #define COMSIG_DIGESTED "mob_digested"
 #define COMSIG_VORE_HEALTHBAR_UPDATE "vore_healthbar_update"
 #define COMSIG_VORE_HEALTHBAR_CLEANUP "vore_healthbar_cleanup"
+#define HIDE_AND_SEEK_ROUND_END "round_end"
 //RS ADD END

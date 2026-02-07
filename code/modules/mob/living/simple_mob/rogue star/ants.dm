@@ -147,6 +147,8 @@
 	if(squish)
 		new /obj/effect/decal/cleanable/bug_remains(T)
 		qdel(src)
+	if(player_login_key_log)
+		return
 	if(queen > 0)
 		var/extra = FALSE
 		if(queen > 4)	//Don't crash my server
