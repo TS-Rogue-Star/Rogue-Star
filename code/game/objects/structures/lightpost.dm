@@ -31,6 +31,8 @@
 		var/image/bow = image(icon_state = "[icon_state]-festive")
 		add_overlay(bow)
 
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON) // RS Add: Update signal (Lira, February 2026)
+
 /obj/structure/lightpost/unlit
 	lit = FALSE
 

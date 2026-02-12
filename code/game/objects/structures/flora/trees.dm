@@ -116,6 +116,7 @@
 	icon_state = "[base_state]_stump"
 	cut_overlays() // For the Sif tree and other future glowy trees.
 	set_light(0)
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON) // RS Add: Update signal (Lira, February 2026)
 
 /obj/structure/flora/tree/ex_act(var/severity)
 	adjust_health(-(max_health / severity), TRUE)
@@ -295,4 +296,3 @@
 		set_light(bulbs, 1, "#33ccff")	// 5 variants, missing bulbs. 5th has no bulbs, so no glow.
 		add_overlay(mutable_appearance(icon, "[base_state][bulbs]_glow"))
 		add_overlay(emissive_appearance(icon, "[base_state][bulbs]_glow"))
-	

@@ -359,12 +359,16 @@
 
 /obj/machinery/power/rtg/reg/update_icon()
 	pixel_x = -32
+	var/old_icon_state = icon_state // RS Add: Update signal (Lira, February 2026)
 	if(panel_open)
 		icon_state = "reg-o"
 	else if(buckled_mobs && buckled_mobs.len > 0)
 		icon_state = "reg-a"
 	else
 		icon_state = "reg"
+	// RS Add: Update signal (Lira, February 2026)
+	if(icon_state != old_icon_state)
+		SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON)
 
 /obj/machinery/power/rtg/reg/process()
 	..()

@@ -30,3 +30,4 @@
 	icon_state = "[icon_state]_stump"
 	cut_overlays()
 	set_light(0)
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON) // RS Add: Update signal (Lira, February 2026)

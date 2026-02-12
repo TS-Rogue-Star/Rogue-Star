@@ -8,9 +8,11 @@
 #define NEARBY_TRANSPARENCY_BLOCKED_CHUNK_STATE "nearby_blocked_chunk"
 #define NEARBY_TRANSPARENCY_BLOCKED_MARKER_ALPHA 255
 #define NEARBY_TRANSPARENCY_LIGHTPOST_LAYER_OFFSET -2
+#define NEARBY_TRANSPARENCY_BLOCKED_CHUNK_CACHE_LIMIT 4096
 
 var/global/icon/nearby_transparency_mask_default
 var/global/icon/nearby_transparency_mask_look_focus
+var/global/list/nearby_transparency_blocked_chunk_cache = list()
 
 var/global/list/nearby_transparency_supported_mob_plane_obj_types = typecacheof(list(
 	/obj/structure/flora/tree,
@@ -26,6 +28,7 @@ var/global/list/nearby_transparency_supported_mob_plane_obj_types = typecacheof(
 	var/list/tracked_mob_plane_obj_images
 	var/list/tracked_mob_plane_obj_hides
 	var/list/tracked_blocked_turf_markers
+	var/list/tracked_blocked_turf_marker_keys
 	var/look_focus_active = FALSE
 
 /datum/component/nearby_transparency/Initialize()
@@ -221,16 +224,17 @@ var/global/list/nearby_transparency_supported_mob_plane_obj_types = typecacheof(
 		return FALSE
 	return !!O.density
 
-/datum/component/nearby_transparency/proc/_build_blocked_marker_chunk(obj/O)
+/datum/component/nearby_transparency/proc/_build_blocked_marker_chunk(obj/O, effective_pixel_x, effective_pixel_y)
 	if(!O || !O.icon)
 		return null
 
-	var/effective_pixel_x = O.pixel_x
-	var/effective_pixel_y = O.pixel_y
-	if(ismovable(O))
-		var/atom/movable/movable_obj = O
-		effective_pixel_x += movable_obj.step_x
-		effective_pixel_y += movable_obj.step_y
+	if(!isnum(effective_pixel_x) || !isnum(effective_pixel_y))
+		effective_pixel_x = O.pixel_x
+		effective_pixel_y = O.pixel_y
+		if(ismovable(O))
+			var/atom/movable/movable_obj = O
+			effective_pixel_x += movable_obj.step_x
+			effective_pixel_y += movable_obj.step_y
 
 	var/list/chunk = _build_blocked_marker_chunk_from_icon(icon(O.icon, O.icon_state, O.dir), effective_pixel_x, effective_pixel_y)
 	if(chunk)
@@ -239,6 +243,25 @@ var/global/list/nearby_transparency_supported_mob_plane_obj_types = typecacheof(
 	if(chunk)
 		return chunk
 	return _build_blocked_marker_chunk_from_icon(icon(O.icon, O.icon_state), effective_pixel_x, effective_pixel_y)
+
+/datum/component/nearby_transparency/proc/_get_or_build_cached_blocked_marker_chunk(obj/O, cache_key, effective_pixel_x, effective_pixel_y)
+	if(!O)
+		return null
+
+	if(!nearby_transparency_blocked_chunk_cache)
+		nearby_transparency_blocked_chunk_cache = list()
+
+	if(cache_key in nearby_transparency_blocked_chunk_cache)
+		var/cached = nearby_transparency_blocked_chunk_cache[cache_key]
+		return cached ? cached : null
+
+	var/list/chunk = _build_blocked_marker_chunk(O, effective_pixel_x, effective_pixel_y)
+
+	if(nearby_transparency_blocked_chunk_cache.len >= NEARBY_TRANSPARENCY_BLOCKED_CHUNK_CACHE_LIMIT)
+		nearby_transparency_blocked_chunk_cache.Cut()
+
+	nearby_transparency_blocked_chunk_cache[cache_key] = chunk ? chunk : FALSE
+	return chunk
 
 /datum/component/nearby_transparency/proc/_build_blocked_marker_chunk_from_icon(icon/full_icon, effective_pixel_x, effective_pixel_y)
 	if(!full_icon)
@@ -296,6 +319,8 @@ var/global/list/nearby_transparency_supported_mob_plane_obj_types = typecacheof(
 		M.client.images -= marker
 	if(tracked_blocked_turf_markers)
 		tracked_blocked_turf_markers.Remove(O)
+	if(tracked_blocked_turf_marker_keys)
+		tracked_blocked_turf_marker_keys.Remove(O)
 
 /datum/component/nearby_transparency/proc/_clear_blocked_markers()
 	if(!tracked_blocked_turf_markers || !tracked_blocked_turf_markers.len)
@@ -313,23 +338,46 @@ var/global/list/nearby_transparency_supported_mob_plane_obj_types = typecacheof(
 		return
 
 	var/turf/T = get_turf(O)
-	var/list/chunk = _build_blocked_marker_chunk(O)
 	if(!_is_tracked_obj_blocking(O) || !T)
 		_remove_blocked_marker_for_obj(O)
 		return
+
+	var/effective_pixel_x = O.pixel_x
+	var/effective_pixel_y = O.pixel_y
+	if(ismovable(O))
+		var/atom/movable/movable_obj = O
+		effective_pixel_x += movable_obj.step_x
+		effective_pixel_y += movable_obj.step_y
+
+	var/cache_key = "[O.icon]|[O.icon_state]|[O.color]|[O.alpha]|[O.dir]|[effective_pixel_x]|[effective_pixel_y]|[world.icon_size]"
+	var/image/marker = tracked_blocked_turf_markers?[O]
+	if(marker && tracked_blocked_turf_marker_keys?[O] == cache_key)
+		marker.loc = T
+		marker.plane = TURF_PLANE
+		marker.layer = ABOVE_TURF_LAYER
+		marker.alpha = NEARBY_TRANSPARENCY_BLOCKED_MARKER_ALPHA
+		marker.color = null
+		marker.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		if(!M.client.images.Find(marker))
+			M.client.images += marker
+		return
+
+	var/list/chunk = _get_or_build_cached_blocked_marker_chunk(O, cache_key, effective_pixel_x, effective_pixel_y)
 	if(!chunk)
 		_remove_blocked_marker_for_obj(O)
 		return
 
 	if(!tracked_blocked_turf_markers)
 		tracked_blocked_turf_markers = list()
+	if(!tracked_blocked_turf_marker_keys)
+		tracked_blocked_turf_marker_keys = list()
 
 	var/icon/chunk_icon = chunk["icon"]
 	var/chunk_state = chunk["state"]
 	var/chunk_pixel_x = chunk["pixel_x"]
 	var/chunk_pixel_y = chunk["pixel_y"]
 
-	var/image/marker = tracked_blocked_turf_markers[O]
+	marker = tracked_blocked_turf_markers[O]
 	if(!marker)
 		marker = image(icon = chunk_icon, loc = T, icon_state = chunk_state)
 		marker.plane = TURF_PLANE
@@ -340,6 +388,7 @@ var/global/list/nearby_transparency_supported_mob_plane_obj_types = typecacheof(
 		marker.pixel_x = chunk_pixel_x
 		marker.pixel_y = chunk_pixel_y
 		tracked_blocked_turf_markers[O] = marker
+		tracked_blocked_turf_marker_keys[O] = cache_key
 		M.client.images += marker
 		return
 
@@ -353,6 +402,7 @@ var/global/list/nearby_transparency_supported_mob_plane_obj_types = typecacheof(
 	marker.alpha = NEARBY_TRANSPARENCY_BLOCKED_MARKER_ALPHA
 	marker.color = null
 	marker.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	tracked_blocked_turf_marker_keys[O] = cache_key
 	if(!M.client.images.Find(marker))
 		M.client.images += marker
 
@@ -433,9 +483,6 @@ var/global/list/nearby_transparency_supported_mob_plane_obj_types = typecacheof(
 		nearby_supported[O] = TRUE
 		if(!tracked_mob_plane_obj_hides?[O])
 			_track_mob_plane_obj(O)
-		else
-			_refresh_mob_plane_obj_image(O)
-			_refresh_blocked_marker_for_obj(O)
 
 	if(!tracked_mob_plane_obj_hides || !tracked_mob_plane_obj_hides.len)
 		return
@@ -552,6 +599,7 @@ var/global/list/nearby_transparency_supported_mob_plane_obj_types = typecacheof(
 	tracked_mob_plane_obj_images = null
 	tracked_mob_plane_obj_hides = null
 	tracked_blocked_turf_markers = null
+	tracked_blocked_turf_marker_keys = null
 	above_obj_filter = null
 	above_mob_filter = null
 	above_obj_pm = null
@@ -574,6 +622,9 @@ var/global/list/nearby_transparency_supported_mob_plane_obj_types = typecacheof(
 	var/mob/M = mob
 	if(isnull(M))
 		to_chat(usr, "<span class='warning'>You can't toggle this without a mob!</span>")
+		return
+	if(isobserver(M))
+		to_chat(usr, "<span class='warning'>Ghosts can't use nearby transparency.</span>")
 		return
 	if(isnull(M.loc))
 		to_chat(usr, "<span class='warning'>You can't toggle this in nullspace!</span>")
