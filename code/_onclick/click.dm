@@ -53,6 +53,9 @@
 		return				//RS ADD END
 
 	var/list/modifiers = params2list(params)
+	// RS Add: Nearby Transparency Toggle Support (Lira, February 2026)
+	if(!modifiers["middle"] && !modifiers["right"])
+		A = get_nearby_transparency_passthrough_target(A, params)
 	if(modifiers["shift"] && modifiers["ctrl"])
 		CtrlShiftClickOn(A)
 		return 1
@@ -159,6 +162,141 @@
 
 			trigger_aiming(TARGET_CAN_CLICK)
 	return 1
+
+// RS Add Start: Nearby Transparency Toggle Support (Lira, February 2026)
+/mob/proc/get_nearby_transparency_passthrough_target(var/atom/original_target, var/params)
+	if(!isobj(original_target))
+		return original_target
+
+	var/datum/component/nearby_transparency/fade = GetComponent(/datum/component/nearby_transparency)
+	if(!fade || !fade.active)
+		return original_target
+	if(!fade.tracked_mob_plane_obj_hides?[original_target])
+		return original_target
+
+	var/list/click_params = params2list(params)
+	var/click_icon_x_raw = click_params?["icon-x"]
+	var/click_icon_y_raw = click_params?["icon-y"]
+	if(isnull(click_icon_x_raw) || isnull(click_icon_y_raw))
+		return original_target
+	var/click_icon_x = text2num(click_icon_x_raw)
+	var/click_icon_y = text2num(click_icon_y_raw)
+	if(!isnum(click_icon_x) || !isnum(click_icon_y))
+		return original_target
+
+	var/turf/T = null
+	if(click_params && click_params["screen-loc"])
+		T = screen_loc2turf(click_params["screen-loc"], get_turf(src), src)
+	if(!T)
+		T = get_turf(original_target)
+	if(!T)
+		return original_target
+
+	if(nearby_transparency_click_hits_original_base(original_target, fade, click_icon_x, click_icon_y))
+		return original_target
+
+	var/atom/best_target = null
+	for(var/atom/C as anything in T)
+		if(C == original_target)
+			continue
+		if(fade.tracked_mob_plane_obj_hides?[C])
+			continue
+		if(!C.mouse_opacity)
+			continue
+		if(C.invisibility > see_invisible)
+			continue
+		if(!nearby_transparency_target_contains_click_pixel(C, original_target, click_icon_x, click_icon_y))
+			continue
+		if(!best_target || C.plane > best_target.plane || (C.plane == best_target.plane && C.layer > best_target.layer))
+			best_target = C
+
+	if(best_target)
+		return best_target
+
+	return T
+
+/mob/proc/nearby_transparency_click_hits_original_base(var/atom/target, var/datum/component/nearby_transparency/fade, var/click_icon_x, var/click_icon_y)
+	if(!isobj(target) || target.alpha <= 0 || !fade)
+		return FALSE
+	if(!isnum(click_icon_x) || !isnum(click_icon_y))
+		return FALSE
+
+	var/image/blocked_marker = fade.tracked_blocked_turf_markers?[target]
+	if(blocked_marker && nearby_transparency_target_contains_click_pixel(blocked_marker, target, click_icon_x, click_icon_y))
+		return TRUE
+
+	var/icon/I = icon(target.icon, target.icon_state, target.dir)
+	if(!I)
+		I = icon(target.icon, target.icon_state, SOUTH)
+	if(!I)
+		I = icon(target.icon, target.icon_state)
+	if(!I)
+		return FALSE
+
+	var/local_x = round(click_icon_x)
+	var/local_y = round(click_icon_y)
+	if(local_x < 1 || local_x > I.Width() || local_y < 1 || local_y > I.Height())
+		return FALSE
+
+	var/effective_pixel_x = target.pixel_x
+	var/effective_pixel_y = target.pixel_y
+	if(ismovable(target))
+		var/atom/movable/movable_target = target
+		effective_pixel_x += movable_target.step_x
+		effective_pixel_y += movable_target.step_y
+
+	var/visible_x1 = max(1, 1 - effective_pixel_x)
+	var/visible_y1 = max(1, 1 - effective_pixel_y)
+	var/visible_x2 = min(I.Width(), world.icon_size - effective_pixel_x)
+	var/visible_y2 = min(I.Height(), world.icon_size - effective_pixel_y)
+	if(visible_x1 > visible_x2 || visible_y1 > visible_y2)
+		return FALSE
+	if(local_x < visible_x1 || local_x > visible_x2 || local_y < visible_y1 || local_y > visible_y2)
+		return FALSE
+
+	return !!I.GetPixel(local_x, local_y)
+
+/mob/proc/nearby_transparency_target_contains_click_pixel(var/atom/target, var/atom/reference_target, var/click_icon_x, var/click_icon_y)
+	if(!target || !reference_target || target.alpha <= 0)
+		return FALSE
+	if(!isnum(click_icon_x) || !isnum(click_icon_y))
+		return FALSE
+
+	var/reference_pixel_x = reference_target.pixel_x
+	var/reference_pixel_y = reference_target.pixel_y
+	if(ismovable(reference_target))
+		var/atom/movable/reference_movable = reference_target
+		reference_pixel_x += reference_movable.step_x
+		reference_pixel_y += reference_movable.step_y
+
+	var/target_pixel_x = target.pixel_x
+	var/target_pixel_y = target.pixel_y
+	if(ismovable(target))
+		var/atom/movable/target_movable = target
+		target_pixel_x += target_movable.step_x
+		target_pixel_y += target_movable.step_y
+
+	var/turf/reference_turf = get_turf(reference_target)
+	var/turf/target_turf = get_turf(target)
+	var/tile_delta_x = 0
+	var/tile_delta_y = 0
+	if(reference_turf && target_turf && reference_turf.z == target_turf.z)
+		tile_delta_x = (reference_turf.x - target_turf.x) * world.icon_size
+		tile_delta_y = (reference_turf.y - target_turf.y) * world.icon_size
+
+	var/local_x = round(click_icon_x + reference_pixel_x + tile_delta_x - target_pixel_x)
+	var/local_y = round(click_icon_y + reference_pixel_y + tile_delta_y - target_pixel_y)
+
+	var/icon/I = icon(target.icon, target.icon_state, target.dir)
+	if(!I)
+		return FALSE
+	if(local_x < 1 || local_x > I.Width() || local_y < 1 || local_y > I.Height())
+		return FALSE
+	if(target.mouse_opacity == MOUSE_OPACITY_OPAQUE)
+		return TRUE
+
+	return !!I.GetPixel(local_x, local_y)
+// RS Add End
 
 /mob/proc/setClickCooldown(var/timeout)
 	next_click = max(world.time + timeout, next_click)
@@ -388,7 +526,7 @@
 		C.swap_hand()
 	else
 		var/list/P = params2list(params)
-		var/turf/T = screen_loc2turf(P["screen-loc"], get_turf(usr))
+		var/turf/T = screen_loc2turf(P["screen-loc"], get_turf(usr), usr) // RS Edit: Nearby Transparency Toggle Support (Lira, February 2026)
 		if(T)
 			if(modifiers["shift"])
 				usr.face_atom(T)

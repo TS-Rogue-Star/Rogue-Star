@@ -264,6 +264,25 @@
 		healths.screen_loc = ui_health
 		hud_elements |= healths
 
+	//RS ADD START
+	var/obj/screen/trans = new /obj/screen()
+	trans.icon = 'icons/rogue-star/misc.dmi'
+	trans.icon_state = "see"
+	trans.name = "Nearby Transparency"
+	trans.screen_loc = "EAST-1:16,CENTER-1:24"
+	hud_elements |= trans
+	adding |= trans
+
+	trans = new /obj/screen()
+	trans.icon = 'icons/rogue-star/misc.dmi'
+	trans.icon_state = "self"
+	trans.name = "Self Transparency"
+	trans.screen_loc = "EAST:8,CENTER-1:24"
+	hud_elements |= trans
+	adding |= trans
+
+	//RS ADD END
+
 	autowhisper_display = new /obj/screen()
 	autowhisper_display.icon = 'icons/mob/screen/minimalist.dmi'
 	autowhisper_display.icon_state = "autowhisper"

@@ -5,7 +5,12 @@
 	icon_state = "lantern"
 	desc = "A mining lantern."
 	light_range = 6			// luminosity when on
-	light_color = "FF9933" // A slight yellow/orange color.
+	light_color = "#FF9933" // A slight yellow/orange color.	//RS EDIT - the color doesn't work without the #
+
+/obj/item/device/flashlight/lantern/powerless	//RS ADD START - For SPOOKY EVENTS
+	light_system = MOVABLE_LIGHT	//I like it better this way...
+	persist_storable = FALSE	//Please do not save the unlimited lantern
+	power_usage = FALSE	//RS ADD END
 
 /*****************************Pickaxe********************************/
 

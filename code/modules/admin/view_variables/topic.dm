@@ -51,12 +51,14 @@
 	else if(href_list["varnamemass"] && href_list["datummass"])
 		if(!check_rights(R_VAREDIT))	return
 
-		var/atom/A = locate(href_list["datummass"])
-		if(!istype(A))
-			to_chat(usr, "This can only be used on instances of type /atom")
+		// RS Edit Start: Enhanced mass edit (Lira, February 2026)
+		var/D = locate(href_list["datummass"])
+		if(!istype(D,/datum) && !istype(D,/client))
+			to_chat(usr, "This can only be used on instances of types /client or /datum")
 			return
 
-		cmd_mass_modify_object_variables(A, href_list["varnamemass"])
+		cmd_mass_modify_object_variables(D, href_list["varnamemass"])
+		// RS Edit End
 
 	else if(href_list["mob_player_panel"])
 		if(!check_rights(0))	return

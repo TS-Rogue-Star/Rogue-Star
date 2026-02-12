@@ -1264,15 +1264,29 @@ var/mob/dview/dview_mob = new
 	global.dview_mob = new
 	return ..()
 
-/proc/screen_loc2turf(scr_loc, turf/origin)
+// RS Edit: Nearby Transparency Toggle Support (Lira, February 2026)
+/proc/screen_loc2turf(scr_loc, turf/origin, mob/viewer = null)
+	if(!scr_loc || !origin)
+		return null
+
+	var/origin_x = origin.x
+	var/origin_y = origin.y
+	// Account for camera look offsets (e.g. look-over-there) so screen-loc maps to the viewed area.
+	if(viewer?.client)
+		origin_x += round(viewer.client.pixel_x / world.icon_size)
+		origin_y += round(viewer.client.pixel_y / world.icon_size)
+
 	var/tX = splittext(scr_loc, ",")
 	var/tY = splittext(tX[2], ":")
 	var/tZ = origin.z
+	var/list/view_size = viewer?.client ? getviewsize(viewer.client.view) : getviewsize(world.view)
+	var/view_center_x = CEILING((view_size[1] + 1) / 2, 1)
+	var/view_center_y = CEILING((view_size[2] + 1) / 2, 1)
 	tY = tY[1]
 	tX = splittext(tX[1], ":")
 	tX = tX[1]
-	tX = max(1, min(world.maxx, origin.x + (text2num(tX) - (world.view + 1))))
-	tY = max(1, min(world.maxy, origin.y + (text2num(tY) - (world.view + 1))))
+	tX = max(1, min(world.maxx, origin_x + (text2num(tX) - view_center_x)))
+	tY = max(1, min(world.maxy, origin_y + (text2num(tY) - view_center_y)))
 	return locate(tX, tY, tZ)
 
 // Displays something as commonly used (non-submultiples) SI units.

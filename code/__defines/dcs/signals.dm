@@ -784,7 +784,9 @@
 #define COMSIG_GET_ATTACK_SPEED "get_attack_speed"
 #define COMSIG_MOB_SMELLED "mob_smelled"
 #define COMSIG_MOB_WASHED "mob_washed"
+#define COMSIG_LOOK_FOCUS_START "look_focus_start" // Nearby Transparency Toggle Support (Lira, February 2026)
 #define COMSIG_LOOK_RESET "look_reset"
+#define COMSIG_LOOK_RECENTER_COMPLETE "look_recenter_complete" // Nearby Transparency Toggle Support (Lira, February 2026)
 #define COMSIG_DIGESTED "mob_digested"
 #define COMSIG_VORE_HEALTHBAR_UPDATE "vore_healthbar_update"
 #define COMSIG_VORE_HEALTHBAR_CLEANUP "vore_healthbar_cleanup"

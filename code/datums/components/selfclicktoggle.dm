@@ -3,6 +3,7 @@
 	var/atom/movable/clickthroughatom
 	var/image/selfinvis
 	var/image/clickthroughimage
+	var/active = FALSE
 
 /datum/component/selfclicktoggle/Initialize()
 	. = ..()
@@ -75,11 +76,13 @@
 		parentmob.client.images -= selfinvis
 		parentmob.client.images -= clickthroughimage
 		_clickthrough_unregister_signals()
+		active = FALSE
 	else
 		parentmob.client.images += clickthroughimage
 		parentmob.client.images += selfinvis
 		_update_clickthrough_image()
 		_clickthrough_register_signals()
+		active = TRUE
 
 /client/verb/toggle_clickthroughself()
 	set name = "Self-Click Toggle"
@@ -95,3 +98,4 @@
 
 	var/datum/component/selfclicktoggle/transparency = M.LoadComponent(/datum/component/selfclicktoggle)
 	transparency.do_the_thing()
+	return transparency.active

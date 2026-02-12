@@ -193,6 +193,12 @@
 	SEND_SIGNAL(src,COMSIG_LOOK_RESET)
 	if(client)
 		animate(client,0.75 SECOND,FALSE,SINE_EASING,pixel_x = 0,pixel_y = 0)
+	// Nearby Transparency Toggle Support (Lira, February 2026)
+		spawn(0.75 SECOND)
+			if(src)
+				SEND_SIGNAL(src, COMSIG_LOOK_RECENTER_COMPLETE)
+	else
+		SEND_SIGNAL(src, COMSIG_LOOK_RECENTER_COMPLETE)
 
 /datum/modifier/look_over_there
 	name = "Looking"
@@ -211,6 +217,7 @@
 	RegisterSignal(holder, COMSIG_MOB_FIRED_GUN, PROC_REF(expire))
 	RegisterSignal(holder, COMSIG_CLICK, PROC_REF(expire))
 	RegisterSignal(holder, COMSIG_LOOK_RESET, PROC_REF(expire))
+	SEND_SIGNAL(holder, COMSIG_LOOK_FOCUS_START) // Nearby Transparency Toggle Support (Lira, February 2026)
 
 	modifier_update(new_origin)
 
