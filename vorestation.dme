@@ -1672,6 +1672,7 @@
 #include "code\game\Rogue Star\waddle.dm"
 #include "code\game\Rogue Star\_HELPERS\mobs.dm"
 #include "code\game\Rogue Star\_HELPERS\teleport.dm"
+#include "code\game\Rogue Star\abilities\return.dm"
 #include "code\game\Rogue Star\catborgs\catborgs.dm"
 #include "code\game\Rogue Star\fluff\sari-outfit-fluff.dm"
 #include "code\game\Rogue Star\obj\spookytrees.dm"
