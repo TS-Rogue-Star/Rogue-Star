@@ -175,29 +175,94 @@
 
 // RS Add End
 
+// RS Add: TGUI emote interface (Lira, February 2026)
+/mob/proc/dispatch_unified_say_emote_input(var/list/input_payload)
+	if(!islist(input_payload))
+		return
+
+	var/message = input_payload["message"]
+	if(!message)
+		return
+
+	var/mode = lowertext("[input_payload["mode"]]")
+	var/subtle_enabled = input_payload["subtle"] ? TRUE : FALSE
+	var/subtle_mode = input_payload["subtle_mode"]
+	var/emote_vore_mode = sanitize_unified_say_emote_vore_mode(input_payload["emote_vore_mode"], "none")
+	var/default_channel = (mode == "emote") ? (subtle_enabled ? "subtle" : "emote") : (subtle_enabled ? "whisper" : "say")
+	var/channel = sanitize_unified_say_emote_channel(input_payload["channel"], default_channel)
+
+	if(channel == "ooc")
+		client?.submit_ooc_message(message)
+		return
+
+	if(channel == "looc")
+		client?.submit_looc_message(message)
+		return
+
+	if(channel == "psay")
+		psay(message)
+		return
+
+	if(channel == "pme")
+		pme(message)
+		return
+
+	if(channel == "nsay")
+		nsay(message)
+		return
+
+	if(channel == "nme")
+		nme(message)
+		return
+
+	if(subtle_mode == "Psay/Pme")
+		if(channel == "subtle")
+			pme(message)
+			return
+		if(channel == "custom_subtle")
+			pme(message)
+			return
+		if(channel == "whisper")
+			psay(message)
+			return
+
+	var/message_sent = FALSE
+	switch(channel)
+		if("emote")
+			message_sent = me_verb(message) ? TRUE : FALSE
+		if("subtle")
+			message_sent = me_verb_subtle(message) ? TRUE : FALSE
+		if("custom_subtle")
+			message_sent = me_verb_subtle_with_mode(message, subtle_mode) ? TRUE : FALSE
+		if("whisper")
+			message_sent = whisper(message) ? TRUE : FALSE
+		else
+			message_sent = say_verb(message) ? TRUE : FALSE
+
+	if(message_sent && emote_vore_mode != "none" && istype(src, /mob/living))
+		if(channel == "say" || channel == "whisper" || channel == "emote" || channel == "subtle" || channel == "custom_subtle")
+			var/mob/living/L = src
+			L.handle_emote_vore_mode(emote_vore_mode)
+
 /mob/verb/say_wrapper()
 	set name = ".Say"
 	set hidden = 1
 
 	set_typing_indicator(TRUE)
-	var/message = tgui_input_text(usr, "Type your message:", "Say")
+	var/list/input_payload = tgui_input_say_emote(usr, "Say", "say", FALSE, "Type your message:") // RS Edit: TGUI emote interface (Lira, February 2026)
 	set_typing_indicator(FALSE)
-
-	if(message)
-		say_verb(message)
+	dispatch_unified_say_emote_input(input_payload) // RS Edit: TGUI emote interface (Lira, February 2026)
 
 /mob/verb/me_wrapper()
 	set name = ".Me"
 	set hidden = 1
 
 	set_typing_indicator(TRUE)
-	var/message = tgui_input_text(usr, "Type your message:", "Emote", multiline = TRUE, use_message_window_scale = TRUE) // RS Edit: TGUI window scaling (Lira, January 2026)
+	var/list/input_payload = tgui_input_say_emote(usr, "Emote", "emote", FALSE, "Type your message:") // RS Edit: TGUI emote interface (Lira, February 2026)
 	set_typing_indicator(FALSE)
+	dispatch_unified_say_emote_input(input_payload) // RS Add: TGUI emote interface (Lira, February 2026)
 
-	if(message)
-		me_verb(message)
-
-// RS Add Start: New client me and say verbs that call the hotkey wrappers (Lira, October 2025)
+// RS Add Start: New client communication verbs that call the hotkey wrappers (Lira, October 2025, February 2026)
 /client/verb/say_panel()
 	set name = "Say"
 	set category = "IC"
@@ -215,6 +280,51 @@
 		return
 
 	mob.me_wrapper()
+
+/client/verb/whisper_panel()
+	set name = "Whisper"
+	set category = "IC"
+
+	if(!mob)
+		return
+
+	mob.whisper_wrapper()
+
+/client/verb/subtle_panel()
+	set name = "Subtle"
+	set category = "IC"
+
+	if(!mob)
+		return
+
+	mob.subtle_wrapper()
+
+/client/verb/subtle_custom_panel()
+	set name = "Subtle (Custom)"
+	set category = "IC"
+
+	if(!mob)
+		return
+
+	mob.subtle_custom_wrapper()
+
+/client/verb/psay_panel()
+	set name = "Psay"
+	set category = "IC"
+
+	if(!mob)
+		return
+
+	mob.psay(null)
+
+/client/verb/pme_panel()
+	set name = "Pme"
+	set category = "IC"
+
+	if(!mob)
+		return
+
+	mob.pme(null)
 // RS Add End
 
 // No typing indicators here, but this is the file where the wrappers are, so...
@@ -222,16 +332,31 @@
 	set name = ".Whisper"
 	set hidden = 1
 
-	var/message = tgui_input_text(usr, "Type your message:", "Whisper")
-
-	if(message)
-		whisper(message)
+	// RS Edit Start: TGUI emote interface (Lira, February 2026)
+	var/list/input_payload = tgui_input_say_emote(usr, "Whisper", "say", TRUE, "Type your message:")
+	dispatch_unified_say_emote_input(input_payload)
+	// RS Edit End
 
 /mob/verb/subtle_wrapper()
 	set name = ".Subtle"
 	set hidden = 1
 
-	var/message = tgui_input_text(usr, "Type your message:", "Subtle", multiline = TRUE, use_message_window_scale = TRUE) // RS Edit: TGUI window scaling (Lira, January 2026)
+	// RS Edit Start: TGUI emote interface (Lira, February 2026)
+	var/list/input_payload = tgui_input_say_emote(usr, "Subtle", "emote", TRUE, "Type your message:")
+	dispatch_unified_say_emote_input(input_payload)
+	// RS Edit End
 
-	if(message)
-		me_verb_subtle(message)
+// RS Add: TGUI emote interface (Lira, February 2026)
+/mob/verb/subtle_custom_wrapper()
+	set name = ".SubtleCustom"
+	set hidden = 1
+
+	if(client?.prefs?.tgui_input_mode)
+		var/list/input_payload = tgui_input_say_emote(usr, "Subtle (Custom)", "emote", TRUE, "Type your message:", "custom_subtle")
+		dispatch_unified_say_emote_input(input_payload)
+		return
+
+	var/message = input(usr, "Choose an emote to display.", "Subtle (Custom)") as message|null
+	if(isnull(message))
+		return
+	me_verb_subtle_custom(message)

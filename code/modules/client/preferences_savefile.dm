@@ -1,5 +1,5 @@
 #define SAVEFILE_VERSION_MIN	8
-#define SAVEFILE_VERSION_MAX	11
+#define SAVEFILE_VERSION_MAX	12 // RS Edit: Update to 12 (Lira, February 2026)
 
 //handles converting savefiles to new formats
 //MAKE SURE YOU KEEP THIS UP TO DATE!
@@ -48,6 +48,13 @@
 			return 0
 
 	player_setup.load_preferences(S)
+
+	// RS Add: One-time migration TGUI input default (Lira, February 2026)
+	if(savefile_version < 12)
+		tgui_input_mode = TRUE
+		savefile_version = SAVEFILE_VERSION_MAX
+		save_preferences()
+
 	return 1
 
 /datum/preferences/proc/save_preferences()

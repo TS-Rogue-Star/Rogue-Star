@@ -4,13 +4,14 @@
 /mob/verb/whisper(message as text)
 	set name = "Whisper"
 	set category = "IC"
+	set hidden = 1 // RS Add: Hidden and replaced with client verb (Lira, February 2026)
 	//VOREStation Addition Start
 	if(forced_psay)
 		psay(message)
-		return
+		return FALSE // RS Edit: emote vore tweaks (Lira, February 2026)
 	//VOREStation Addition End
 
-	usr.say(message,whispering=1)
+	return usr.say(message,whispering=1) // RS Edit: emote vore tweaks (Lira, February 2026)
 
 /mob/verb/say_verb(message as text)
 	set name = "Say"
@@ -19,11 +20,11 @@
 	//VOREStation Addition Start
 	if(forced_psay)
 		psay(message)
-		return
+		return FALSE // RS Edit: emote vore tweaks (Lira, February 2026)
 	//VOREStation Addition End
 
 	set_typing_indicator(FALSE)
-	usr.say(message)
+	return usr.say(message) // RS Edit: emote vore tweaks (Lira, February 2026)
 
 /mob/verb/me_verb(message as message)
 	set name = "Me"
@@ -32,19 +33,26 @@
 
 	if(say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<font color='red'>Speech is currently admin-disabled.</font>")
-		return
+		return FALSE // RS Edit: emote vore tweaks (Lira, February 2026)
+	// RS Edit: emote vore tweaks (Lira, February 2026)
+	if(client && (client.prefs.muted & MUTE_IC))
+		to_chat(src, "<span class='warning'>You cannot send IC messages (muted).</span>")
+		return FALSE
 	//VOREStation Addition Start
 	if(forced_psay)
 		pme(message)
-		return
+		return FALSE // RS Edit: emote vore tweaks (Lira, February 2026)
 	//VOREStation Addition End
 
 	//VOREStation Edit Start
 	if(muffled)
-		return me_verb_subtle(message)
+		return me_verb_subtle(message) ? TRUE : FALSE // RS Edit: emote vore tweaks (Lira, February 2026)
 	if(autowhisper)
-		return me_verb_subtle(message)
+		return me_verb_subtle(message) ? TRUE : FALSE // RS Edit: emote vore tweaks (Lira, February 2026)
 	message = sanitize_or_reflect(message,src) //VOREStation Edit - Reflect too-long messages (within reason)
+	// RS Edit: emote vore tweaks (Lira, February 2026)
+	if(!message)
+		return FALSE
 	//VOREStation Edit End
 
 	set_typing_indicator(FALSE)
@@ -52,6 +60,7 @@
 		custom_emote(usr.emote_type, message)
 	else
 		usr.emote(message)
+	return TRUE // RS Edit: emote vore tweaks (Lira, February 2026)
 
 /mob/proc/say_dead(var/message)
 	if(say_disabled)	//This is here to try to identify lag problems

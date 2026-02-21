@@ -2,32 +2,83 @@
 ////////////////////SUBTLE COMMAND////////////////////
 //////////////////////////////////////////////////////
 
+//RS Add: TGUI emote interface (Lira, February 2026)
+/proc/get_subtle_mode_options(var/include_psay = FALSE)
+	var/static/list/subtle_mode_options = list(
+		"Adjacent Turfs (Default)",
+		"My Turf",
+		"My Table",
+		"Current Belly (Prey)",
+		"Specific Belly (Pred)",
+		"Specific Person"
+	)
+	var/static/list/subtle_mode_options_psay = list(
+		"Adjacent Turfs (Default)",
+		"My Turf",
+		"My Table",
+		"Current Belly (Prey)",
+		"Specific Belly (Pred)",
+		"Specific Person",
+		"Psay/Pme"
+	)
+	return include_psay ? subtle_mode_options_psay.Copy() : subtle_mode_options.Copy()
+
+//RS Add: TGUI emote interface (Lira, February 2026)
+/proc/sanitize_subtle_mode_choice(var/choice, var/include_psay = FALSE)
+	var/list/options = get_subtle_mode_options(include_psay)
+	if(choice in options)
+		return choice
+	return options[1]
+
+// RS Edit: emote interface tweaks (Lira, February 2026)
 /mob/verb/me_verb_subtle(message as message) //This would normally go in say.dm
 	set name = "Subtle"
 	set category = "IC"
 	set desc = "Emote to nearby people (and your pred/prey)"
+	set hidden = 1
 
 	if(say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "Speech is currently admin-disabled.")
-		return
+		return FALSE
 	if(forced_psay)
 		pme(message)
-		return
+		return FALSE
 
 	message = sanitize_or_reflect(message,src) // Reflect too-long messages (within reason)
 	if(!message)
-		return
+		return FALSE
 
 	set_typing_indicator(FALSE)
 	if(use_me)
-		usr.emote_vr("me",4,message)
+		return usr.emote_vr("me",4,message) ? TRUE : FALSE
 	else
-		usr.emote_vr(message)
+		return usr.emote_vr(message) ? TRUE : FALSE
+
+// RS Edit: emote interface tweaks (Lira, February 2026)
+/mob/proc/me_verb_subtle_with_mode(message as message, subtle_mode)
+	if(say_disabled)	//This is here to try to identify lag problems
+		to_chat(usr, "Speech is currently admin-disabled.")
+		return FALSE
+	if(forced_psay)
+		pme(message)
+		return FALSE
+
+	message = sanitize_or_reflect(message,src) // Reflect too-long messages (within reason)
+	if(!message)
+		return FALSE
+
+	subtle_mode = sanitize_subtle_mode_choice(subtle_mode)
+	set_typing_indicator(FALSE)
+	if(use_me)
+		return usr.emote_vr("me",4,message,FALSE,subtle_mode) ? TRUE : FALSE
+	else
+		return usr.emote_vr(message, null, null, FALSE, subtle_mode) ? TRUE : FALSE
 
 /mob/verb/me_verb_subtle_custom(message as message) // Literally same as above but with mode_selection set to true
 	set name = "Subtle (Custom)"
 	set category = "IC"
 	set desc = "Emote to nearby people, with ability to choose which specific portion of people you wish to target."
+	set hidden = 1 // RS Add: Hidden and replaced with client verb (Lira, February 2026)
 
 	if(say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "Speech is currently admin-disabled.")
@@ -46,7 +97,8 @@
 	else
 		usr.emote_vr(message)
 
-/mob/proc/custom_emote_vr(var/m_type=1,var/message = null,var/mode_selection = FALSE) //This would normally go in emote.dm
+// RS Edit: emote interface tweaks (Lira, February 2026)
+/mob/proc/custom_emote_vr(var/m_type=1,var/message = null,var/mode_selection = FALSE,var/subtle_mode_override = null) //This would normally go in emote.dm
 	if(stat)
 		// RS Add Start: Echo message when unconscious (Lira, January 2026)
 		if(stat == UNCONSCIOUS && message)
@@ -55,33 +107,36 @@
 			to_chat(src, "<span class='warning'>^ You are unconscious and cannot emote; your message was not sent. ^</span>")
 		else
 			to_chat(src, "You are unable to emote.")
-		return
+		return FALSE
 		// RS Add End
 
 	if(!use_me && usr == src)
 		to_chat(src, "You are unable to emote.")
-		return
+		return FALSE
 
 	//VOREStation Addition Start
 	if(forced_psay)
 		pme(message)
-		return
+		return FALSE
 	//VOREStation Addition End
 
 	var/muzzled = is_muzzled()
-	if(m_type == 2 && muzzled) return
+	if(m_type == 2 && muzzled)
+		return FALSE
 
 	var/subtle_mode
-	if(autowhisper && autowhisper_mode && !mode_selection)
+	if(!isnull(subtle_mode_override))
+		subtle_mode = sanitize_subtle_mode_choice(subtle_mode_override)
+	if(isnull(subtle_mode_override) && autowhisper && autowhisper_mode && !mode_selection)
 		if(autowhisper_mode != "Psay/Pme")	//This isn't actually a custom subtle mode, so we shouldn't use it!
 			subtle_mode = autowhisper_mode
 	if(mode_selection && !subtle_mode)
-		subtle_mode = tgui_input_list(src, "Select Custom Subtle Mode", "Custom Subtle Mode", list("Adjacent Turfs (Default)", "My Turf", "My Table", "Current Belly (Prey)", "Specific Belly (Pred)", "Specific Person"))
+		subtle_mode = tgui_input_list(src, "Select Custom Subtle Mode", "Custom Subtle Mode", get_subtle_mode_options())
 	if(!subtle_mode)
 		if(mode_selection)
 			if(message)
 				to_chat(src, "<span class='warning'>Subtle mode not selected. Your input has not been sent, but preserved:</span> [message]")
-			return
+			return FALSE
 		else
 			subtle_mode = "Adjacent Turfs (Default)"
 
@@ -97,7 +152,7 @@
 		if(!(subtle_mode == "Adjacent Turfs (Default)"))
 			message = "<B>(T) </B>" + message
 	else
-		return
+		return FALSE
 
 	if (message)
 		var/undisplayed_message = "<span class='emote'><B>[src]</B> <I>does something too subtle for you to see.</I></span>"
@@ -128,7 +183,7 @@
 						tablelist |= T.get_all_connected_tables()
 				if(!(tablelist.len))
 					to_chat(src, "<span class='warning'>No nearby tables detected. Your input has not been sent, but preserved:</span> [input]")
-					return
+					return FALSE
 				for(var/obj/structure/table/T in tablelist)
 					for(var/mob/M in vis_mobs)
 						var/dist = get_dist(T, M)
@@ -144,7 +199,7 @@
 				var/obj/belly/B = get_belly(src)
 				if(!istype(B))
 					to_chat(src, "<span class='warning'>You are currently not in the belly. Your input has not been sent, but preserved:</span> [input]")
-					return
+					return FALSE
 				vis = get_mobs_and_objs_in_view_fast(get_turf(src),0,2)
 				vis_mobs = vis["mobs"]
 				vis_objs = vis["objs"]
@@ -165,15 +220,15 @@
 			if("Specific Belly (Pred)")
 				if(!isliving(src))
 					to_chat(src, "<span class='warning'>You do not appear to be a living mob capable of having bellies. Your input has not been sent, but preserved:</span> [input]")
-					return
+					return FALSE
 				var/mob/living/L = src
 				if(!(L.vore_organs) || !(L.vore_organs.len))
 					to_chat(src, "<span class='warning'>You do not have any bellies. Your input has not been sent, but preserved:</span> [input]")
-					return
+					return FALSE
 				var/obj/belly/B = tgui_input_list(src, "Which belly do you want to sent the subtle to?","Select Belly", L.vore_organs)
 				if(!B || !istype(B))
 					to_chat(src, "<span class='warning'>You have not selected a valid belly. Your input has not been sent, but preserved:</span> [input]")
-					return
+					return FALSE
 				vis = get_mobs_and_objs_in_view_fast(get_turf(src),0,2)
 				vis_mobs = vis["mobs"]
 				vis_objs = vis["objs"]
@@ -225,11 +280,11 @@
 
 				if(!(vis_mobs.len))
 					to_chat(src, "<span class='warning'>No valid targets found. Your input has not been sent, but preserved:</span> [input]")
-					return
+					return FALSE
 				var/target = tgui_input_list(src, "Who do we send our message to?","Select Target", vis_mobs)
 				if(!(target))
 					to_chat(src, "<span class='warning'>No target selected. Your input has not been sent, but preserved:</span> [input]")
-					return
+					return FALSE
 				vis_mobs = list(target, src)
 
 		for(var/mob/M as anything in vis_mobs)
@@ -247,10 +302,13 @@
 		for(var/obj/O as anything in vis_objs)
 			spawn(0)
 				O.see_emote(src, message, 2)
+		return TRUE
 
-/mob/proc/emote_vr(var/act, var/type, var/message, var/mode_selection) //This would normally go in say.dm
+	return FALSE
+
+/mob/proc/emote_vr(var/act, var/type, var/message, var/mode_selection, var/subtle_mode_override) //This would normally go in say.dm || RS Edit: TGUI emote interface (Lira, February 2026)
 	if(act == "me")
-		return custom_emote_vr(type, message, mode_selection)
+		return custom_emote_vr(type, message, mode_selection, subtle_mode_override) // RS Edit: TGUI emote interface (Lira, February 2026)
 
 #define MAX_HUGE_MESSAGE_LEN 8192
 #define POST_DELIMITER_STR "\<\>"
@@ -293,12 +351,21 @@
 	set category = "IC"
 	set name = "Psay"
 	set desc = "Talk to people affected by complete absorbed or dominate predator/prey."
+	set hidden = 1 // RS Add: Hidden and replaced with client verb (Lira, February 2026)
 
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "<span class='warning'>You cannot speak in IC (muted).</span>")
 			return
 	if (!message)
+		// RS Add Start: TGUI emote interface (Lira, February 2026)
+		if(client?.prefs?.tgui_input_mode)
+			var/list/input_payload = tgui_input_say_emote(usr, "Psay", "say", TRUE, "Type your message:", "psay")
+			if(!islist(input_payload))
+				return
+			dispatch_unified_say_emote_input(input_payload)
+			return
+		// RS Add End
 		message = tgui_input_text(usr, "Type a message to say.","Psay")
 	message = sanitize_or_reflect(message,src)
 	if (!message)
@@ -390,12 +457,21 @@
 	set category = "IC"
 	set name = "Pme"
 	set desc = "Emote to people affected by complete absorbed or dominate predator/prey."
+	set hidden = 1 // RS Add: Hidden and replaced with client verb (Lira, February 2026)
 
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "<span class='warning'>You cannot speak in IC (muted).</span>")
 			return
 	if (!message)
+		// RS Add: TGUI emote interface (Lira, February 2026)
+		if(client?.prefs?.tgui_input_mode)
+			var/list/input_payload = tgui_input_say_emote(usr, "Pme", "emote", TRUE, "Type your message:", "pme")
+			if(!islist(input_payload))
+				return
+			dispatch_unified_say_emote_input(input_payload)
+			return
+		// RS Add End
 		message = tgui_input_text(usr, "Type a message to emote.","Pme")
 	message = sanitize_or_reflect(message,src)
 	if (!message)

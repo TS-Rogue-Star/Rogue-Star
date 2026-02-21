@@ -46,14 +46,14 @@
 	if((. = ..()))
 		//nif.set_flag(NIF_O_SCOTHERS,NIF_FLAGS_OTHER)	//Only required on install if the flag is in the default setting_flags list defined few lines above.
 		if(nif?.human)
-			nif.human.verbs |= /mob/proc/nsay
-			nif.human.verbs |= /mob/proc/nme
+			nif.human.verbs |= /mob/proc/nsay_panel // RS Edit: TGUI emote interface (Lira, February 2026)
+			nif.human.verbs |= /mob/proc/nme_panel // RS Edit: TGUI emote interface (Lira, February 2026)
 
 /datum/nifsoft/soulcatcher/uninstall()
 	QDEL_LIST_NULL(brainmobs)
 	if((. = ..()) && nif?.human) //Sometimes NIFs are deleted outside of a human
-		nif.human.verbs -= /mob/proc/nsay
-		nif.human.verbs -= /mob/proc/nme
+		nif.human.verbs -= /mob/proc/nsay_panel // RS Edit: TGUI emote interface (Lira, February 2026)
+		nif.human.verbs -= /mob/proc/nme_panel // RS Edit: TGUI emote interface (Lira, February 2026)
 
 /datum/nifsoft/soulcatcher/proc/save_settings()
 	if(!nif)
@@ -472,12 +472,18 @@
 
 ///////////////////
 //Verbs for humans
+
+// RS Edit: TGUI emote interface (Lira, February 2026)
 /mob/proc/nsay(message as text)
+	src.nsay_act(message)
+
+// RS Edit: TGUI emote interface (Lira, February 2026)
+/mob/proc/nsay_panel()
 	set name = "NSay"
 	set desc = "Speak into your NIF's Soulcatcher."
 	set category = "IC"
 
-	src.nsay_act(message)
+	src.nsay_act(null)
 
 /mob/proc/nsay_act(message as text)
 	to_chat(src, SPAN_WARNING("You must be a humanoid with a NIF implanted to use that."))
@@ -497,17 +503,29 @@
 		to_chat(src,SPAN_WARNING("You need a loaded mind to use NSay."))
 		return
 	if(!message)
+		// RS Add: TGUI emote interface (Lira, February 2026)
+		if(client?.prefs?.tgui_input_mode)
+			var/list/input_payload = tgui_input_say_emote(src, "NSay", "say", FALSE, "Type your message:", "nsay")
+			if(!islist(input_payload))
+				return
+			dispatch_unified_say_emote_input(input_payload)
+			return
 		message = tgui_input_text(usr, "Type a message to say.","Speak into Soulcatcher")
 	if(message)
 		var/sane_message = sanitize(message)
 		SC.say_into(sane_message,src)
 
+// RS Edit: TGUI emote interface (Lira, February 2026)
 /mob/proc/nme(message as message)
+	src.nme_act(message)
+
+// RS Edit: TGUI emote interface (Lira, February 2026)
+/mob/proc/nme_panel()
 	set name = "NMe"
 	set desc = "Emote into your NIF's Soulcatcher."
 	set category = "IC"
 
-	src.nme_act(message)
+	src.nme_act(null)
 
 /mob/proc/nme_act(message as message)
 	to_chat(src, SPAN_WARNING("You must be a humanoid with a NIF implanted to use that."))
@@ -528,10 +546,45 @@
 		return
 
 	if(!message)
+		// RS Add: TGUI emote interface (Lira, February 2026)
+		if(client?.prefs?.tgui_input_mode)
+			var/list/input_payload = tgui_input_say_emote(src, "NMe", "emote", FALSE, "Type your message:", "nme")
+			if(!islist(input_payload))
+				return
+			dispatch_unified_say_emote_input(input_payload)
+			return
 		message = tgui_input_text(usr, "Type an action to perform.","Emote into Soulcatcher")
 	if(message)
 		var/sane_message = sanitize(message)
 		SC.emote_into(sane_message,src)
+
+// RS Add: TGUI emote interface (Lira, February 2026)
+/mob/living/carbon/brain/caught_soul/nsay_act(message as text)
+	if(!message)
+		if(client?.prefs?.tgui_input_mode)
+			var/list/input_payload = tgui_input_say_emote(src, "NSay", "say", FALSE, "Type your message:", "nsay")
+			if(!islist(input_payload))
+				return
+			dispatch_unified_say_emote_input(input_payload)
+			return
+		message = tgui_input_text(usr, "Type a message to say.","Speak into Soulcatcher")
+	if(message)
+		var/sane_message = sanitize(message)
+		soulcatcher.say_into(sane_message,src,null)
+
+// RS Add: TGUI emote interface (Lira, February 2026)
+/mob/living/carbon/brain/caught_soul/nme_act(message as message)
+	if(!message)
+		if(client?.prefs?.tgui_input_mode)
+			var/list/input_payload = tgui_input_say_emote(src, "NMe", "emote", FALSE, "Type your message:", "nme")
+			if(!islist(input_payload))
+				return
+			dispatch_unified_say_emote_input(input_payload)
+			return
+		message = tgui_input_text(usr, "Type an action to perform.","Emote into Soulcatcher")
+	if(message)
+		var/sane_message = sanitize(message)
+		soulcatcher.emote_into(sane_message,src,null)
 
 ///////////////////
 //Verbs for soulbrains
@@ -577,24 +630,18 @@
 	QDEL_NULL(eyeobj)
 	soulcatcher.notify_into("[src] ended AR projection.")
 
-/mob/living/carbon/brain/caught_soul/verb/nsay_brain(message as text)
+// RS Edit: TGUI emote interface (Lira, February 2026)
+/mob/living/carbon/brain/caught_soul/verb/nsay_brain()
 	set name = "NSay"
 	set desc = "Speak into the NIF's Soulcatcher (circumventing AR speaking)."
 	set category = "Soulcatcher"
 
-	if(!message)
-		message = tgui_input_text(usr, "Type a message to say.","Speak into Soulcatcher")
-	if(message)
-		var/sane_message = sanitize(message)
-		soulcatcher.say_into(sane_message,src,null)
+	nsay_act(null)
 
-/mob/living/carbon/brain/caught_soul/verb/nme_brain(message as message)
+// RS Edit: TGUI emote interface (Lira, February 2026)
+/mob/living/carbon/brain/caught_soul/verb/nme_brain()
 	set name = "NMe"
 	set desc = "Emote into the NIF's Soulcatcher (circumventing AR speaking)."
 	set category = "Soulcatcher"
 
-	if(!message)
-		message = tgui_input_text(usr, "Type an action to perform.","Emote into Soulcatcher")
-	if(message)
-		var/sane_message = sanitize(message)
-		soulcatcher.emote_into(sane_message,src,null)
+	nme_act(null)

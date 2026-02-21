@@ -164,6 +164,7 @@
 		SLIP_VORE,
 		THROW_VORE,
 		FOOD_VORE,
+		EMOTE_VORE, // Add emote spont vore (Lira, February 2026)
 		MICRO_PICKUP,
 		"Whitelist Pred/Prey"
 		)
@@ -285,6 +286,15 @@
 					return FALSE
 			if(pred.client)
 				if(!pred.client.prefs_vr.food_vore)
+					return FALSE
+
+		// Add emote spont vore (Lira, February 2026)
+		if(EMOTE_VORE)
+			if(prey.client)
+				if(!prey.client.prefs_vr.emote_vore)
+					return FALSE
+			if(pred.client)
+				if(!pred.client.prefs_vr.emote_vore)
 					return FALSE
 
 	return TRUE
@@ -453,6 +463,15 @@
 	else
 		variance = inactive
 	dat += {"<a href='?src=\ref[src];toggle_vore_trustlist=[FOOD_VORE]'>[variance] [FOOD_VORE]</a> - "}
+
+	// Add emote spont vore (Lira, February 2026)
+	if(!client.prefs_vr.emote_vore)
+		variance = disabled
+	else if(EMOTE_VORE in client.prefs_vr.vore_whitelist_toggles)
+		variance = active
+	else
+		variance = inactive
+	dat += {"<a href='?src=\ref[src];toggle_vore_trustlist=[EMOTE_VORE]'>[variance] [EMOTE_VORE]</a><br>"}
 
 	if(!(pickup_pref && pickup_active))
 		variance = disabled

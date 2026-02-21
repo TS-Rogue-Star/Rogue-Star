@@ -4199,6 +4199,7 @@
 #include "code\modules\tgui_input\checkboxes.dm"
 #include "code\modules\tgui_input\list.dm"
 #include "code\modules\tgui_input\number.dm"
+#include "code\modules\tgui_input\say_emote.dm"
 #include "code\modules\tgui_input\text.dm"
 #include "code\modules\tooltip\tooltip.dm"
 #include "code\modules\turbolift\_turbolift.dm"

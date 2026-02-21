@@ -1,19 +1,57 @@
 
-/client/verb/ooc(msg as text)
+// RS Edit: TGUI emote interface (Lira, February 2026)
+/client/verb/ooc()
 	set name = "OOC"
 	set category = "OOC"
 
-	if(say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, "<span class='warning'>Speech is currently admin-disabled.</span>")
+	open_unified_ooc_input("ooc")
+
+// RS Edit: TGUI emote interface (Lira, February 2026)
+/client/verb/looc()
+	set name = "LOOC"
+	set desc = "Local OOC, seen only by those in view."
+	set category = "OOC"
+
+	open_unified_ooc_input("looc")
+
+// RS Add: TGUI emote interface (Lira, February 2026)
+/client/proc/open_unified_ooc_input(default_channel = "ooc")
+	if(!mob)
 		return
 
-	if(!mob)	return
+	var/channel = sanitize_unified_say_emote_channel(default_channel, "ooc")
+	var/title = (channel == "looc") ? "LOOC" : "OOC"
+
+	if(prefs?.tgui_input_mode)
+		var/list/input_payload = tgui_input_say_emote(mob, title, "say", FALSE, "Type your message:", channel)
+		mob.dispatch_unified_say_emote_input(input_payload)
+		return
+
+	var/msg = input(src, "Type your message:", title) as text|null
+	if(isnull(msg))
+		return
+
+	if(channel == "looc")
+		submit_looc_message(msg)
+	else
+		submit_ooc_message(msg)
+
+/client/proc/submit_ooc_message(msg)
+	if(say_disabled)	//This is here to try to identify lag problems
+		to_chat(src, "<span class='warning'>Speech is currently admin-disabled.</span>") // RS Edit: Cleanup (Lira, February 2026)
+		return
+
+	// RS Edit: Formating (Lira, February 2026)
+	if(!mob)
+		return
 	if(IsGuestKey(key))
 		to_chat(src, "Guests may not use OOC.")
 		return
 
 	msg = sanitize(msg)
-	if(!msg)	return
+	// RS Edit: Formating (Lira, February 2026)
+	if(!msg)
+		return
 
 	if(!is_preference_enabled(/datum/client_preference/show_ooc))
 		to_chat(src, "<span class='warning'>You have OOC muted.</span>")
@@ -24,7 +62,7 @@
 			to_chat(src, "<span class='danger'>OOC is globally muted.</span>")
 			return
 		if(!config.dooc_allowed && (mob.stat == DEAD))
-			to_chat(usr, "<span class='danger'>OOC for dead mobs has been turned off.</span>")
+			to_chat(src, "<span class='danger'>OOC for dead mobs has been turned off.</span>") // RS Edit: Cleanup (Lira, February 2026)
 			return
 		if(prefs.muted & MUTE_OOC)
 			to_chat(src, "<span class='danger'>You cannot use OOC (muted).</span>")
@@ -80,13 +118,10 @@
 			else
 				to_chat(target, "<span class='ooc'><span class='[ooc_style]'>" + create_text_tag("ooc", "OOC:", target) + " <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></span>")
 
-/client/verb/looc(msg as text)
-	set name = "LOOC"
-	set desc = "Local OOC, seen only by those in view."
-	set category = "OOC"
-
+// RS Edit: TGUI emote interface (Lira, February 2026)
+/client/proc/submit_looc_message(msg)
 	if(say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
+		to_chat(src, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
 	if(!mob)
@@ -109,7 +144,7 @@
 			to_chat(src, "<span class='danger'>LOOC is globally muted.</span>")
 			return
 		if(!config.dooc_allowed && (mob.stat == DEAD))
-			to_chat(usr, "<span class='danger'>OOC for dead mobs has been turned off.</span>")
+			to_chat(src, "<span class='danger'>OOC for dead mobs has been turned off.</span>") // RS Edit: Cleanup (Lira, February 2026)
 			return
 		if(prefs.muted & MUTE_OOC)
 			to_chat(src, "<span class='danger'>You cannot use OOC (muted).</span>")

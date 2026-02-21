@@ -21,6 +21,7 @@
 	var/drop_vore = TRUE				//Enabled by default since you have to enable drop pred/prey to do this anyway
 	var/throw_vore = TRUE				//Enabled by default since you have to enable drop pred/prey to do this anyway
 	var/food_vore = TRUE				//Enabled by default since you have to enable drop pred/prey to do this anyway
+	var/emote_vore = TRUE				//Enabled by default since you have to enable drop pred/prey to do this anyway || RS Add: New emote spont vore (Lira, February 2026)
 	var/list/spont_belly_prefs = list() // RS Add: Spont prefs (Lira, January 2026)
 	var/can_be_drop_prey = FALSE
 	var/can_be_drop_pred = FALSE

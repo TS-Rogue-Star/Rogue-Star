@@ -5,6 +5,8 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star December 2025: Additional styles as part of body markings tab interface //
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star February 2026: Add scroll bar, dropdown, and notice bar //////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @use '../colors.scss';
 
@@ -17,6 +19,56 @@ $gold-shadow: rgba(156, 99, 15, 0.25);
 $star-sparkle: rgba(255, 255, 255, 0.1);
 $star-sparkle-dim: rgba(255, 255, 255, 0.05);
 $titlebar-height: 38px;
+
+@mixin rogue-star-scrollbar($size: 8px, $cross-size: $size) {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(170, 102, 255, 0.88) rgba(10, 4, 22, 0.9);
+
+  &::-webkit-scrollbar {
+    width: $size;
+    height: $cross-size;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 999px;
+    background: linear-gradient(
+      180deg,
+      rgba(16, 7, 33, 0.92),
+      rgba(6, 2, 15, 0.98)
+    );
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+      inset 0 0 8px rgba(0, 0, 0, 0.5);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    border: 1px solid rgba(16, 7, 33, 0.95);
+    background: linear-gradient(
+      180deg,
+      rgba(244, 201, 111, 0.72),
+      rgba(165, 98, 255, 0.92)
+    );
+    box-shadow:
+      0 0 10px rgba(229, 188, 106, 0.28),
+      0 0 8px rgba(129, 76, 255, 0.32);
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(
+      180deg,
+      rgba(251, 214, 135, 0.9),
+      rgba(186, 126, 255, 1)
+    );
+    box-shadow:
+      0 0 12px rgba(229, 188, 106, 0.4),
+      0 0 10px rgba(129, 76, 255, 0.45);
+  }
+
+  &::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+}
 
 .rogue-star-window {
   .Window__titleBar {
@@ -426,6 +478,14 @@ $titlebar-height: 38px;
   }
 }
 
+.RogueStar--sayEmote {
+  padding: 12px;
+}
+
+.RogueStar--sayEmote .TextArea__textarea:focus {
+  outline: none !important;
+}
+
 .RogueStar__toolbar {
   display: flex;
   flex-wrap: wrap;
@@ -457,6 +517,32 @@ $titlebar-height: 38px;
   text-transform: uppercase;
   color: rgba(244, 223, 255, 0.85);
   text-shadow: 0 0 8px rgba(69, 40, 119, 0.6);
+}
+
+.RogueStar__noticeBar {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.45rem 0.7rem;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 215, 128, 0.75);
+  background: linear-gradient(
+    120deg,
+    rgba(53, 25, 11, 0.82),
+    rgba(24, 11, 39, 0.88)
+  );
+  box-shadow:
+    0 0 20px rgba(255, 202, 115, 0.2),
+    inset 0 0 16px rgba(255, 205, 129, 0.08);
+}
+
+.RogueStar__noticeText {
+  min-width: 0;
+  flex: 1;
+  color: #fff6e3;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  word-break: break-word;
 }
 
 .RogueStar__chip {
@@ -660,6 +746,148 @@ $titlebar-height: 38px;
     0 0 14px rgba(229, 188, 106, 0.25);
 }
 
+.RogueStar__dropdown.Dropdown__control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+  width: 16.5rem;
+  min-height: 22px;
+  height: 22px;
+  line-height: 1.2;
+  font-size: 0.72rem;
+  box-sizing: border-box;
+  overflow: hidden;
+  border-radius: 999px;
+  background: linear-gradient(
+    135deg,
+    rgba(18, 9, 34, 0.92),
+    rgba(29, 16, 52, 0.88)
+  );
+  border: 1px solid rgba(184, 134, 255, 0.35);
+  color: #fdf3ff;
+  box-shadow: inset 0 0 0 rgba(0, 0, 0, 0);
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease,
+    background 120ms ease,
+    border-color 120ms ease;
+}
+
+.RogueStar__dropdown.Dropdown__control:hover,
+.RogueStar__dropdown.Dropdown__control:focus {
+  transform: translateY(-1px);
+  background: linear-gradient(
+    135deg,
+    rgba(38, 18, 65, 0.95),
+    rgba(21, 9, 39, 0.95)
+  );
+  border-color: rgba(217, 171, 255, 0.6);
+  box-shadow:
+    0 8px 24px rgba(111, 64, 226, 0.35),
+    0 0 14px rgba(229, 188, 106, 0.22);
+  outline: none;
+}
+
+.RogueStar__dropdown .Dropdown__selected-text {
+  display: inline-flex;
+  align-items: center;
+  flex: 1 1 auto;
+  min-width: 0;
+  width: auto;
+  padding-left: 0.55rem;
+  padding-right: 0.3rem;
+  box-sizing: border-box;
+  height: 100%;
+  line-height: 1.2;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  color: #fdf3ff;
+}
+
+.RogueStar__dropdown .Dropdown__arrow-button {
+  float: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 1.8rem;
+  border-left: 1px solid rgba(184, 134, 255, 0.3);
+  height: 100%;
+  width: 1.8rem;
+  line-height: 1;
+  padding-left: 0;
+  color: rgba(253, 243, 255, 0.85);
+}
+
+.Dropdown__menu--rogue-star {
+  border-radius: 14px;
+  border: 1px solid rgba(190, 140, 255, 0.45);
+  overflow-y: auto !important;
+  overflow-x: hidden;
+  max-height: calc(100vh - 1rem);
+  overscroll-behavior: contain;
+  background:
+    linear-gradient(
+      120deg,
+      rgba(11, 2, 23, 0.98),
+      rgba(31, 13, 54, 0.95) 52%,
+      rgba(68, 24, 105, 0.92)
+    ),
+    radial-gradient(
+      circle at 20% 25%,
+      rgba(118, 63, 211, 0.3),
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at 78% 20%,
+      rgba(229, 188, 106, 0.25),
+      transparent 45%
+    );
+  box-shadow:
+    0 12px 28px rgba(2, 0, 9, 0.55),
+    0 0 24px rgba(81, 33, 156, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  @include rogue-star-scrollbar;
+}
+
+.Dropdown__menu--rogue-star:focus {
+  outline: none;
+}
+
+.Dropdown__menu--rogue-star .Dropdown__menuentry {
+  border-radius: 10px;
+  margin: 0.18rem 0.25rem;
+  padding: 0.3rem 0.55rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.7rem;
+  color: rgba(253, 243, 255, 0.92);
+}
+
+.Dropdown__menu--rogue-star .Dropdown__menuentry:hover {
+  background: linear-gradient(
+    90deg,
+    rgba(74, 31, 138, 0.8),
+    rgba(229, 188, 106, 0.45)
+  );
+  box-shadow:
+    0 0 12px rgba(229, 188, 106, 0.3),
+    0 0 10px rgba(129, 76, 255, 0.35);
+}
+
+.Dropdown__menu--rogue-star .Dropdown__menuentry.selected {
+  background: linear-gradient(
+    90deg,
+    rgba(93, 38, 162, 0.92),
+    rgba(229, 188, 106, 0.55)
+  );
+  border: 1px solid rgba(255, 214, 255, 0.75);
+  box-shadow:
+    0 10px 24px rgba(111, 64, 226, 0.45),
+    0 0 12px rgba(229, 188, 106, 0.35);
+}
+
 .RogueStar__numberInput.NumberInput {
   border-radius: 12px;
   padding: 0.25rem 0.6rem;
@@ -716,6 +944,7 @@ $titlebar-height: 38px;
   border-radius: 18px;
   background: rgba(7, 3, 15, 0.75);
   border: 1px solid rgba(255, 255, 255, 0.05);
+  @include rogue-star-scrollbar(6px);
 }
 
 .RogueStar__column {
@@ -925,10 +1154,6 @@ $titlebar-height: 38px;
     0 0 12px rgba(229, 188, 106, 0.2);
 }
 
-.RogueStar__canvasScroll::-webkit-scrollbar {
-  height: 6px;
-}
-
 .RogueStar__colorModal {
   background: transparent;
   border: none;
@@ -969,15 +1194,6 @@ $titlebar-height: 38px;
   .RogueStarColorPicker__rgbGrid .NumberInput__bar {
     background: linear-gradient(180deg, #f990ff, #2b0d4a);
   }
-}
-
-.RogueStar__canvasScroll::-webkit-scrollbar-thumb {
-  background: linear-gradient(
-    90deg,
-    rgba(244, 201, 111, 0.4),
-    rgba(165, 98, 255, 0.8)
-  );
-  border-radius: 999px;
 }
 
 .RogueStar__savingProgress {

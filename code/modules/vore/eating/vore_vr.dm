@@ -67,6 +67,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	var/slip_vore = TRUE
 	var/throw_vore = TRUE
 	var/food_vore = TRUE
+	var/emote_vore = TRUE // RS Add: New emote spont vore (Lira, February 2026)
 	var/list/spont_belly_prefs = list() // RS Add: Add spont prefs (Lira, January 2026)
 
 	var/resizable = TRUE
@@ -207,6 +208,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	throw_vore = json_from_file["throw_vore"]
 	stumble_vore = json_from_file["stumble_vore"]
 	buckle_vore = json_from_file["buckle_vore"] // RS Add: Split from stumble (Lira, January 2026)
+	emote_vore = json_from_file["emote_vore"] // RS Add: New emote spont vore (Lira, February 2026)
 	spont_belly_prefs = json_from_file["spont_belly_prefs"] // RS Add: Add spont prefs (Lira, January 2026)
 	nutrition_message_visible = json_from_file["nutrition_message_visible"]
 	nutrition_messages = json_from_file["nutrition_messages"]
@@ -271,6 +273,9 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 		buckle_vore = stumble_vore
 	if(isnull(food_vore))
 		food_vore = TRUE
+	// RS Add: New emote spont vore (Lira, February 2026)
+	if(isnull(emote_vore))
+		emote_vore = TRUE
 	// RS Add: Use spont belly (Lira, January 2026)
 	if(!islist(spont_belly_prefs))
 		spont_belly_prefs = list()
@@ -360,6 +365,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 			"buckle_vore"			= buckle_vore, // RS Add: Split from stumble (Lira, January 2026)
 			"throw_vore" 			= throw_vore,
 			"food_vore" 			= food_vore,
+			"emote_vore"			= emote_vore, // RS Add: New emote spont vore (Lira, February 2026)
 			"spont_belly_prefs"		= spont_belly_prefs, // RS Add: Use spont belly (Lira, January 2026)
 			"nutrition_message_visible"	= nutrition_message_visible,
 			"nutrition_messages"		= nutrition_messages,
