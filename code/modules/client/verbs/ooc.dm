@@ -1,18 +1,33 @@
 
 // RS Edit: TGUI emote interface (Lira, February 2026)
-/client/verb/ooc()
+/client/verb/ooc(msg as text|null)
 	set name = "OOC"
 	set category = "OOC"
+
+	if(!isnull(msg) && length(msg))
+		submit_ooc_message(msg)
+		return
 
 	open_unified_ooc_input("ooc")
 
 // RS Edit: TGUI emote interface (Lira, February 2026)
-/client/verb/looc()
+/client/verb/looc(msg as text|null)
 	set name = "LOOC"
 	set desc = "Local OOC, seen only by those in view."
 	set category = "OOC"
 
+	if(!isnull(msg) && length(msg))
+		submit_looc_message(msg)
+		return
+
 	open_unified_ooc_input("looc")
+
+// RS Add: TGUI emote interface (Lira, February 2026)
+/client/verb/ooc_wrapper()
+	set name = ".ooc"
+	set hidden = TRUE
+
+	open_unified_ooc_input("ooc")
 
 // RS Add: TGUI emote interface (Lira, February 2026)
 /client/proc/open_unified_ooc_input(default_channel = "ooc")
