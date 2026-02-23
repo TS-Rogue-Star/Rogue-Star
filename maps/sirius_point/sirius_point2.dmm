@@ -27126,9 +27126,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/tcommsat/computer)
 "rti" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/structure/trash_pile,
 /turf/simulated/floor/plating,
 /area/moonbase/basement/caves/level2)
 "rud" = (
@@ -27877,6 +27875,13 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/southhall)
+"rRW" = (
+/obj/structure/closet/crate,
+/obj/random/maintenance,
+/obj/random/maintenance,
+/obj/random/maintenance,
+/turf/simulated/floor/plating,
+/area/moonbase/basement/caves/level2)
 "rSn" = (
 /turf/simulated/floor/tiled/steel_dirty,
 /area/moonbase/basement/caves/level2)
@@ -28431,6 +28436,12 @@
 	outdoors = 0
 	},
 /area/hallway/moonbase/easthall)
+"sib" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/moonbase/basement/caves/level2)
 "siq" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -34289,10 +34300,6 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/janitor)
-"wcy" = (
-/obj/structure/trash_pile,
-/turf/simulated/floor/plating,
-/area/moonbase/basement/caves/level2)
 "wdf" = (
 /obj/effect/floor_decal/steeldecal/steel_decals10,
 /obj/effect/floor_decal/steeldecal/steel_decals10{
@@ -34549,13 +34556,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/central)
-"woc" = (
-/obj/structure/closet/crate,
-/obj/random/maintenance,
-/obj/random/maintenance,
-/obj/random/maintenance,
-/turf/simulated/floor/plating,
-/area/moonbase/basement/caves/level2)
 "woe" = (
 /obj/structure/cable/pink{
 	icon_state = "1-8"
@@ -54887,7 +54887,7 @@ qaM
 qaM
 qaM
 qaM
-wcy
+rti
 hIC
 hIC
 sKV
@@ -55029,9 +55029,9 @@ qaM
 gBr
 dun
 qaM
-woc
+rRW
 hIC
-rti
+sib
 sKV
 qaM
 sKV

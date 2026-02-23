@@ -30,6 +30,21 @@
 	outdoors = 0
 	},
 /area/security/main)
+"ag" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/storage/emergency_storage/emergency5)
 "ah" = (
 /obj/effect/floor_decal/milspec/color/red,
 /obj/structure/table/rack/shelf/steel,
@@ -10911,21 +10926,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/rnd/moonbase/serverroom)
-"AZ" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/floor_decal/steeldecal/steel_decals5{
-	dir = 8
-	},
-/turf/simulated/floor/tiled,
-/area/storage/emergency_storage/emergency5)
 "Ba" = (
 /turf/simulated/open/vacuum/outdoors,
 /area/moonbase/surface/leveltwo/east)
@@ -16383,21 +16383,6 @@
 	},
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology)
-"OD" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/effect/floor_decal/steeldecal/steel_decals5{
-	dir = 4
-	},
-/turf/simulated/floor/tiled,
-/area/hallway/arrival/moonbase/main)
 "OE" = (
 /obj/structure/bed/chair/sofa/corp/left{
 	dir = 8
@@ -20254,6 +20239,21 @@
 /obj/item/device/gps/science/rd,
 /turf/simulated/floor/carpet/purple,
 /area/rnd/rdoffice)
+"Yh" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/hallway/arrival/moonbase/main)
 "Yi" = (
 /obj/structure/lattice,
 /turf/simulated/open,
@@ -38753,7 +38753,7 @@ Dw
 Dw
 Vo
 nx
-OD
+Yh
 qY
 DH
 tG
@@ -39037,7 +39037,7 @@ Dw
 Dw
 kH
 rH
-AZ
+ag
 GQ
 kH
 XC
