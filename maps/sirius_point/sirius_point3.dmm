@@ -808,7 +808,8 @@
 "ck" = (
 /obj/machinery/door/blast/regular{
 	dir = 4;
-	name = "xenopen2vent"
+	name = "External Vent";
+	id = "xenopen2vent"
 	},
 /turf/simulated/floor/reinforced,
 /area/rnd/xenobiology)
@@ -2304,6 +2305,11 @@
 /obj/structure/dogbed,
 /mob/living/simple_mob/animal/passive/dog/void_puppy/nulle,
 /obj/machinery/firealarm,
+/obj/machinery/button/windowtint/multitint{
+	id = "capoffice";
+	pixel_x = 0;
+	pixel_y = 24
+	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/captain/moonbase/office)
 "gi" = (
@@ -6236,6 +6242,14 @@
 	},
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/general)
+"pr" = (
+/obj/machinery/camera/network/research/xenobio{
+	dir = 9;
+	network = list("Xenobiology")
+	},
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor/tiled/eris/techmaint_cargo,
+/area/rnd/xenobiology)
 "ps" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/stamp/ce,
@@ -7311,14 +7325,8 @@
 /turf/simulated/floor/tiled,
 /area/hallway/arrival/moonbase/dockingbays)
 "rH" = (
-/obj/machinery/portable_atmospherics/powered/pump/filled,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/hyper{
-	dir = 1
-	},
-/turf/simulated/floor/tiled,
+/obj/structure/railing/grey,
+/turf/simulated/open,
 /area/storage/emergency_storage/emergency5)
 "rI" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5{
@@ -8270,6 +8278,11 @@
 	},
 /turf/simulated/open,
 /area/crew_quarters/bar)
+"ud" = (
+/obj/structure/disposaloutlet,
+/obj/structure/disposalpipe/trunk,
+/turf/simulated/floor/tiled/eris/techmaint_cargo,
+/area/rnd/xenobiology)
 "ue" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
@@ -10405,7 +10418,7 @@
 "zy" = (
 /obj/machinery/door/blast/regular{
 	dir = 4;
-	name = "xenopen57combo"
+	id = "xenopen57combo"
 	},
 /turf/simulated/floor/reinforced,
 /area/rnd/xenobiology)
@@ -10546,6 +10559,14 @@
 	},
 /turf/simulated/floor/tiled/steel,
 /area/shuttle/excursion/cargo)
+"zR" = (
+/obj/machinery/camera/network/research/xenobio{
+	dir = 5;
+	network = list("Xenobiology")
+	},
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor/tiled/eris/techmaint_cargo,
+/area/rnd/xenobiology)
 "zS" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock{
@@ -10890,6 +10911,21 @@
 	},
 /turf/simulated/floor/tiled,
 /area/rnd/moonbase/serverroom)
+"AZ" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
+/area/storage/emergency_storage/emergency5)
 "Ba" = (
 /turf/simulated/open/vacuum/outdoors,
 /area/moonbase/surface/leveltwo/east)
@@ -12148,6 +12184,7 @@
 /area/rnd/xenobiology)
 "Ee" = (
 /obj/structure/closet/secure_closet/captains,
+/obj/item/clothing/glasses/omnihud/all,
 /turf/simulated/floor/carpet/blue2,
 /area/crew_quarters/captain/moonbase/bedroom)
 "Ef" = (
@@ -13676,7 +13713,7 @@
 /turf/simulated/open/vacuum/outdoors,
 /area/moonbase/surface/leveltwo/south)
 "Ij" = (
-/obj/machinery/door/airlock/engineeringatmos{
+/obj/machinery/door/airlock/maintenance{
 	name = "Emergency Storage"
 	},
 /obj/machinery/door/firedoor/glass,
@@ -13781,6 +13818,12 @@
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor/carpet/tealcarpet,
 /area/crew_quarters/heads/cmo)
+"IB" = (
+/obj/machinery/power/apc/hyper,
+/obj/structure/cable,
+/obj/machinery/floodlight,
+/turf/simulated/floor/tiled,
+/area/storage/emergency_storage/emergency5)
 "ID" = (
 /obj/machinery/power/apc,
 /obj/structure/cable/white{
@@ -14225,14 +14268,14 @@
 	base_turf = /turf/simulated/floor/reinforced/airless/outdoors
 	})
 "JG" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/tiled,
 /area/storage/emergency_storage/emergency5)
@@ -15382,6 +15425,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/tiled,
 /area/storage/emergency_storage/emergency5)
 "Mi" = (
@@ -16153,6 +16199,9 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
 	},
+/obj/item/device/perfect_tele{
+	name = "manager's translocator"
+	},
 /turf/simulated/floor/carpet/blue2,
 /area/crew_quarters/captain/moonbase/bedroom)
 "Od" = (
@@ -16334,6 +16383,21 @@
 	},
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology)
+"OD" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/effect/floor_decal/steeldecal/steel_decals5{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
+/area/hallway/arrival/moonbase/main)
 "OE" = (
 /obj/structure/bed/chair/sofa/corp/left{
 	dir = 8
@@ -17250,7 +17314,9 @@
 "QO" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/grille,
-/obj/structure/window/reinforced/polarized/full,
+/obj/structure/window/reinforced/polarized/full{
+	id = "capoffice"
+	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -18260,7 +18326,7 @@
 "Tl" = (
 /obj/machinery/door/blast/regular{
 	dir = 4;
-	name = "xenopen46combo"
+	id = "xenopen46combo"
 	},
 /turf/simulated/floor/reinforced,
 /area/rnd/xenobiology)
@@ -19569,10 +19635,10 @@
 /turf/simulated/floor/tiled/white,
 /area/medical/medbay_primary_storage)
 "Wy" = (
-/obj/machinery/portable_atmospherics/powered/pump/filled,
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/structure/railing/grey,
 /turf/simulated/floor/tiled,
 /area/storage/emergency_storage/emergency5)
 "Wz" = (
@@ -19710,6 +19776,15 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /turf/simulated/floor/tiled,
 /area/storage/emergency_storage/emergency5)
+"WK" = (
+/obj/structure/disposaloutlet{
+	dir = 1
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/eris/techmaint_cargo,
+/area/rnd/xenobiology)
 "WM" = (
 /obj/machinery/door/window/brigdoor/eastright{
 	req_access = null
@@ -19847,7 +19922,9 @@
 /turf/simulated/floor/tiled,
 /area/engineering/engine_room)
 "Xd" = (
-/obj/machinery/floodlight,
+/obj/structure/closet/emergsuit_wall{
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled,
 /area/storage/emergency_storage/emergency5)
 "Xf" = (
@@ -26884,9 +26961,9 @@ em
 nY
 Ed
 Tl
-em
-nY
-Ed
+Za
+zR
+WK
 qj
 qj
 aE
@@ -28300,9 +28377,9 @@ LY
 pg
 vV
 qj
-Ed
-RN
-nP
+ud
+pr
+pm
 zy
 Ed
 RN
@@ -38676,7 +38753,7 @@ Dw
 Dw
 Vo
 nx
-Up
+OD
 qY
 DH
 tG
@@ -38960,11 +39037,11 @@ Dw
 Dw
 kH
 rH
-JG
-PY
+AZ
+GQ
 kH
 XC
-Ba
+XC
 Ba
 Ba
 Ba
@@ -39103,7 +39180,7 @@ Dw
 kH
 Wy
 Mg
-GQ
+PY
 kH
 XC
 Ba
@@ -39244,10 +39321,10 @@ Dw
 Dw
 kH
 Xd
-vE
-NG
+JG
+IB
 kH
-Uj
+XC
 Uj
 Uj
 Uj
@@ -39385,9 +39462,9 @@ Dw
 Dw
 Dw
 kH
-WJ
-vG
-bG
+Xd
+vE
+NG
 kH
 Ba
 Ba
@@ -39527,9 +39604,9 @@ Dw
 Dw
 Dw
 kH
-WX
-WX
-WX
+WJ
+vG
+bG
 kH
 Ba
 Ba
@@ -39668,11 +39745,11 @@ Dw
 Dw
 Dw
 Dw
-xq
-XC
-XC
-XC
-Ba
+kH
+WX
+WX
+WX
+kH
 Ba
 Ba
 Ba
@@ -39810,11 +39887,11 @@ Dw
 Dw
 Dw
 Dw
-xq
+gA
 XC
 XC
 XC
-Ba
+XC
 Ba
 Ba
 Ba
@@ -39956,7 +40033,7 @@ zs
 XC
 XC
 XC
-Ba
+XC
 Ba
 Ba
 Ba
@@ -40098,8 +40175,8 @@ XC
 XC
 XC
 XC
-Ba
-Ba
+XC
+XC
 Ba
 Ba
 Ba
@@ -40240,8 +40317,8 @@ XC
 XC
 XC
 XC
-Ba
-Ba
+XC
+XC
 Ba
 Ba
 Ba
@@ -40382,9 +40459,9 @@ XC
 XC
 XC
 XC
-Ba
-Ba
-Ba
+XC
+XC
+XC
 Ba
 Ba
 Ba
