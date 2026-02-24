@@ -358,6 +358,7 @@
 		t = replacetext(t, "\[row\]", "</td><tr>")
 		t = replacetext(t, "\[cell\]", "<td>")
 		t = replacetext(t, "\[logo\]", "<img src = ntlogo.png>")
+		t = replacetext(t, "\[logo\]", "<img src = talonlogo.png>")
 		t = replacetext(t, "\[sglogo\]", "<img src = sglogo.png>")
 
 		t = "<font face=\"[deffont]\" color=[P ? P.colour : "black"]>[t]</font>"
