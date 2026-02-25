@@ -167,7 +167,7 @@ var/global/list/latejoin_talon = list()
 
 /obj/item/weapon/paper/talon_shields
 	name = "to whatever asshole"
-	info = {"to whatever <b>asshole</b> keeps resetting the shield generator,<br>\
+	info = {"<center>to whatever <b>asshole</b> keeps resetting the shield generator,<br>\
 please stop fucking around before you get us all killed. thanks.<br>\
 <br>\
 to whoever has to fix this,<br>\
@@ -182,7 +182,7 @@ good luck<br>\
 
 /obj/item/weapon/paper/talon_power
 	name = "new power setup"
-	info = {"to whoever's saddled with running this rustbucket this week,<br>\
+	info = {"<center>to whoever's saddled with running this rustbucket this week,<br>\
 good news! you may have noticed the entire ship was replaced pretty much overnight.<br>\
 that or it changed shape or something? whatever, not important.<br>\
 what <b>is</b> important is that it no longer runs off solar arrays. now we have a pair of radioisotope thermoelectric generators (or 'RTGs' as the kids call them) and a PTTO (or 'potato'... don't ask) mini reactor.<br>\
@@ -282,6 +282,17 @@ if you have to punch out, do it whilst the ship is in open space. the pod has <b
 personally I recommend using the ship's boat if you need to evacuate, but if you're stuck with the pod then... good luck!<br>\
 <br>\
 <i>Harry Townes</i>"}
+
+/obj/item/weapon/paper/secret_vendornote
+	name = "secret note"
+	info = {"well, if you're reading this note, then I've managed to install, a couple of funny things inside the vending machine.<br>\
+these things are there as a funny reminder that ITV Talon was once a more weaponized ship. <br>\
+to be honest, looking at the previous concept of the ship, it looks funny and more dangerous for those who want to fight with it.<br>\
+<b>however</b>, now it has lost that belligerence and has become a merchant ship.<br>\
+it's not bad and cool, but it's a pity that there's almost nothing left about the memories of the last ship, but I hope to fix it by adding this machete, which the crew used to have by default as a sign of recognition and a small reminder of the last ship.<br>\
+so... Use it wisely and good luck!<br>\
+<br>\
+<i>mysterious creator of the vending machine</i>"}
 
 //Prevents remote control of drones
 /obj/machinery/drone_fabricator/talon
@@ -559,6 +570,32 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 	idle_power_usage = 211 //refrigerator - believe it or not, this is actually the average power consumption of a refrigerated vending machine according to NRCan.
 	req_log_access = access_talon
 	has_logs = 1
+
+/obj/machinery/vending/talondrobe
+	name = "Talon Uniforms official"
+	desc = "Created for those who want to look the latest in Talon fashion!"
+	icon = 'icons/obj/vending_rs.dmi'
+	product_slogans = "TALON - Trading Any Location On Navigation"
+	description_fluff = "The vending machine is designed to store and dispense various types of uniforms for the crew of Talon ships."
+	product_ads = "It's time to try something new or take a proven old one!;The seller should always look beautiful.;Did you feel cold? Don't forget to take a bomber jacket for yourself!"
+	icon_state = "talondrobe"
+	req_access = list(access_talon)
+	products = list(/obj/item/clothing/head/soft/talon = 10,
+				/obj/item/clothing/head/soft/talon/refreshed = 10,
+				/obj/item/clothing/suit/storage/hooded/wintercoat/talon = 10,
+				/obj/item/clothing/suit/storage/hooded/wintercoat/talon/refreshed = 10,
+				/obj/item/clothing/head/beret/talon = 10,
+				/obj/item/clothing/head/beret/talon/refreshed = 10,
+				/obj/item/clothing/suit/storage/toggle/hoodie/talon = 10,
+				/obj/item/clothing/under/rank/talon/basic = 10,
+				/obj/item/clothing/under/rank/talon/basic/refreshed = 10,
+				/obj/item/clothing/suit/storage/toggle/labcoat/talon = 3)
+	contraband = list(/obj/item/paper/secret_vendornote = 1,
+				/obj/item/clothing/accessory/holster/machete = 1,
+				/obj/item/weapon/material/knife/machete = 1)
+	req_log_access = access_talon
+	has_logs = 1
+	can_rotate = 0
 
 ///////////////////////////
 //// Computers
