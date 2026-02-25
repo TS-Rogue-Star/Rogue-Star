@@ -167,7 +167,7 @@ var/global/list/latejoin_talon = list()
 
 /obj/item/weapon/paper/talon_shields
 	name = "to whatever asshole"
-	info = {"<center>to whatever <b>asshole</b> keeps resetting the shield generator,<br>\
+	info = {"to whatever <b>asshole</b> keeps resetting the shield generator,<br>\
 please stop fucking around before you get us all killed. thanks.<br>\
 <br>\
 to whoever has to fix this,<br>\
@@ -182,7 +182,7 @@ good luck<br>\
 
 /obj/item/weapon/paper/talon_power
 	name = "new power setup"
-	info = {"<center>to whoever's saddled with running this rustbucket this week,<br>\
+	info = {"to whoever's saddled with running this rustbucket this week,<br>\
 good news! you may have noticed the entire ship was replaced pretty much overnight.<br>\
 that or it changed shape or something? whatever, not important.<br>\
 what <b>is</b> important is that it no longer runs off solar arrays. now we have a pair of radioisotope thermoelectric generators (or 'RTGs' as the kids call them) and a PTTO (or 'potato'... don't ask) mini reactor.<br>\
@@ -590,7 +590,7 @@ so... Use it wisely and good luck!<br>\
 				/obj/item/clothing/under/rank/talon/basic = 10,
 				/obj/item/clothing/under/rank/talon/basic/refreshed = 10,
 				/obj/item/clothing/suit/storage/toggle/labcoat/talon = 3)
-	contraband = list(/obj/item/paper/secret_vendornote = 1,
+	contraband = list(/obj/item/weapon/paper/secret_vendornote = 1,
 				/obj/item/clothing/accessory/holster/machete = 1,
 				/obj/item/weapon/material/knife/machete = 1)
 	req_log_access = access_talon
