@@ -376,10 +376,6 @@
 /area/talon_v2/engineering/star_store)
 "aM" = (
 /obj/structure/table/rack/steel,
-/obj/item/clothing/shoes/magboots,
-/obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 4
-	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/armory)
 "aN" = (
@@ -484,21 +480,15 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/talonboat)
 "aX" = (
-/obj/structure/table/rack/shelf/steel,
-/obj/item/weapon/cell/device/weapon{
-	pixel_x = -5;
-	pixel_y = 2
-	},
-/obj/item/weapon/cell/device/weapon,
-/obj/item/clothing/accessory/holster/waist,
-/obj/machinery/atmospherics/unary/vent_scrubber/on{
-	dir = 8
+/obj/structure/closet/secure_closet/guncabinet/fancy/shotgun{
+	req_one_access = list(306)
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/armory)
 "aY" = (
-/obj/structure/table/rack/shelf/steel,
-/obj/item/weapon/gun/energy/netgun,
+/obj/structure/closet/secure_closet/guncabinet/fancy/rifle{
+	req_one_access = list(306)
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/armory)
 "aZ" = (
@@ -556,16 +546,26 @@
 /turf/simulated/wall/shull,
 /area/talon_v2/ofd_ops)
 "be" = (
-/obj/structure/table/rack/shelf/steel,
-/obj/item/weapon/cell/device/weapon{
-	pixel_x = -5;
-	pixel_y = 2
-	},
-/obj/item/weapon/cell/device/weapon,
-/obj/item/clothing/accessory/holster/waist,
 /obj/machinery/light_switch{
 	dir = 1;
 	pixel_y = -26
+	},
+/obj/structure/table/rack/shelf/steel,
+/obj/item/weapon/cell/device/weapon{
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/obj/item/weapon/cell/device/weapon{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/weapon/cell/device/weapon{
+	pixel_x = 5;
+	pixel_y = -6
+	},
+/obj/item/weapon/cell/device/weapon{
+	pixel_x = -6;
+	pixel_y = -6
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/armory)
@@ -615,8 +615,11 @@
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/atmospherics)
 "bj" = (
-/obj/structure/table/rack/shelf/steel,
+/obj/structure/closet/secure_closet/guncabinet/fancy/pistol{
+	req_one_access = list(306)
+	},
 /obj/item/weapon/gun/energy/gun,
+/obj/item/weapon/gun/energy/netgun,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/armory)
 "bn" = (
@@ -863,15 +866,10 @@
 /turf/simulated/wall/shull,
 /area/talon_v2/crew_quarters/bar)
 "cc" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
-	},
 /obj/structure/cable/green{
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/armory)
 "cd" = (
@@ -879,8 +877,8 @@
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/star_store)
 "ce" = (
-/obj/machinery/cryopod/talon,
 /obj/machinery/camera/network/talon,
+/obj/structure/flora/pottedplant/minitree,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/central_hallway)
 "cf" = (
@@ -1333,9 +1331,15 @@
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/atmospherics)
 "dN" = (
-/obj/structure/table/rack/shelf/steel,
-/obj/item/clothing/suit/space/void/refurb/talon,
-/obj/item/clothing/head/helmet/space/void/refurb/talon,
+/obj/structure/table/steel,
+/obj/item/clothing/accessory/talon,
+/obj/item/clothing/accessory/talon,
+/obj/item/clothing/accessory/talon,
+/obj/item/clothing/accessory/talon,
+/obj/item/clothing/accessory/talon,
+/obj/machinery/computer/cryopod{
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/secure_storage)
 "dO" = (
@@ -1791,9 +1795,8 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/engineering/star_store)
 "fd" = (
-/obj/structure/table/rack/shelf/steel,
-/obj/item/device/suit_cooling_unit,
-/obj/item/device/suit_cooling_unit,
+/obj/machinery/vending/talondrobe,
+/obj/machinery/camera/network/talon,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/secure_storage)
 "ff" = (
@@ -1934,6 +1937,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light,
+/obj/item/clothing/head/caphat/talon/refreshed,
 /turf/simulated/floor/wood,
 /area/talon_v2/crew_quarters/cap_room)
 "fA" = (
@@ -1946,6 +1950,9 @@
 "fF" = (
 /obj/structure/cable/green{
 	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/armory)
@@ -2128,6 +2135,14 @@
 /obj/structure/closet/walllocker_double/emergency_engi/west,
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway)
+"gq" = (
+/obj/machinery/cryopod/talon,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 26
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/talon_v2/secure_storage)
 "gr" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/aux{
 	dir = 6
@@ -2172,7 +2187,9 @@
 	pixel_x = 5;
 	pixel_y = 24
 	},
-/obj/item/clothing/accessory/holster/waist,
+/obj/item/weapon/storage/backpack/satchel/talon,
+/obj/item/weapon/storage/backpack/satchel/talon,
+/obj/item/weapon/storage/backpack/satchel/talon,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/armory)
 "gx" = (
@@ -3234,6 +3251,16 @@
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway/fore)
+"kp" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/talon_v2/armory)
 "kt" = (
 /obj/structure/cable/green{
 	icon_state = "1-2"
@@ -3625,7 +3652,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/tiled/techmaint,
-/area/talon_v2/secure_storage)
+/area/talon_v2/eva_storage)
 "lK" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
@@ -3692,6 +3719,15 @@
 "lU" = (
 /turf/simulated/wall/shull,
 /area/talon_v2/crew_quarters/pilot_room)
+"lV" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/landmark/talon,
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/talon_v2/secure_storage)
 "lX" = (
 /obj/machinery/door/firedoor/glass/talon,
 /obj/machinery/door/airlock/maintenance/common,
@@ -3945,6 +3981,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/atmospherics)
+"mY" = (
+/obj/structure/table/rack/shelf/steel,
+/obj/item/weapon/storage/backpack/talon,
+/obj/item/weapon/storage/backpack/talon,
+/obj/item/weapon/storage/backpack/talon,
+/turf/simulated/floor/tiled/techfloor,
+/area/talon_v2/armory)
 "mZ" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/tiled/techfloor,
@@ -4911,10 +4954,8 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/brig)
 "qo" = (
-/obj/machinery/cryopod/talon{
-	dir = 4
-	},
 /obj/machinery/camera/network/talon,
+/obj/structure/flora/pottedplant/crystal,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/central_hallway)
 "qq" = (
@@ -4933,7 +4974,6 @@
 /turf/simulated/wall/shull,
 /area/talon_v2/crew_quarters/med_room)
 "qs" = (
-/obj/effect/landmark/talon,
 /obj/structure/handrail,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/central_hallway)
@@ -5089,17 +5129,19 @@
 /turf/simulated/floor/wood,
 /area/talon_v2/crew_quarters/eng_room)
 "qO" = (
-/obj/machinery/cryopod/robot/talon,
+/obj/structure/table/rack/shelf/steel,
+/obj/item/clothing/accessory/holster/waist,
+/obj/item/clothing/accessory/holster/waist,
 /turf/simulated/floor/tiled/techfloor,
-/area/talon_v2/central_hallway)
+/area/talon_v2/armory)
 "qP" = (
-/obj/effect/landmark/talon,
-/obj/structure/handrail,
-/obj/machinery/computer/cryopod{
-	pixel_y = 32
-	},
-/turf/simulated/floor/tiled/techfloor,
-/area/talon_v2/central_hallway)
+/obj/structure/table/rack/shelf/steel,
+/obj/item/clothing/suit/space/void/refurb/talon,
+/obj/item/clothing/head/helmet/space/void/refurb/talon,
+/obj/item/clothing/shoes/magboots,
+/obj/item/weapon/tank/oxygen,
+/turf/simulated/floor/tiled/techmaint,
+/area/talon_v2/eva_storage)
 "qQ" = (
 /obj/effect/floor_decal/industrial/loading{
 	dir = 4
@@ -6176,7 +6218,8 @@
 "uJ" = (
 /obj/effect/floor_decal/industrial/warning,
 /obj/machinery/light_switch{
-	pixel_y = 24
+	pixel_y = 26;
+	pixel_x = -11
 	},
 /obj/machinery/camera/network/talon,
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -6594,7 +6637,7 @@
 	pixel_x = 26
 	},
 /turf/simulated/floor/tiled/techmaint,
-/area/talon_v2/secure_storage)
+/area/talon_v2/eva_storage)
 "wi" = (
 /obj/machinery/door/airlock/glass_external{
 	req_one_access = list(306)
@@ -7016,6 +7059,8 @@
 	pixel_y = -24
 	},
 /obj/structure/cable/green,
+/obj/item/clothing/accessory/holster/waist,
+/obj/item/clothing/accessory/holster/waist,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/armory)
 "xB" = (
@@ -7070,9 +7115,8 @@
 /turf/simulated/floor/plating,
 /area/talon_v2/maintenance/wing_starboard)
 "xP" = (
-/obj/structure/closet/walllocker/emerglocker/west,
-/obj/machinery/light{
-	dir = 8
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/secure_storage)
@@ -7120,11 +7164,8 @@
 /area/talon_v2/engineering/starboard)
 "xZ" = (
 /obj/structure/closet/walllocker/emerglocker/east,
-/obj/machinery/light{
-	dir = 4
-	},
 /turf/simulated/floor/tiled/techmaint,
-/area/talon_v2/secure_storage)
+/area/talon_v2/eva_storage)
 "ya" = (
 /obj/structure/table/standard,
 /obj/item/weapon/storage/toolbox/electrical,
@@ -7402,14 +7443,18 @@
 /area/talon_v2/engineering/atmospherics)
 "yY" = (
 /obj/structure/table/rack/shelf/steel,
-/obj/item/weapon/tank/jetpack/carbondioxide,
-/obj/item/weapon/tank/jetpack/carbondioxide,
-/obj/item/weapon/tank/jetpack/carbondioxide,
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/item/clothing/suit/space/void/refurb/talon,
+/obj/item/clothing/head/helmet/space/void/refurb/talon,
+/obj/item/clothing/shoes/magboots,
+/obj/item/weapon/tank/oxygen,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/techfloor,
-/area/talon_v2/secure_storage)
+/area/talon_v2/eva_storage)
 "yZ" = (
 /obj/machinery/alarm/talon{
 	dir = 4;
@@ -7428,6 +7473,15 @@
 /obj/item/weapon/mining_scanner,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/refining)
+"zc" = (
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/green{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/talon_v2/central_hallway/port)
 "zd" = (
 /obj/structure/fitness/weightlifter,
 /obj/machinery/camera/network/talon{
@@ -7451,13 +7505,12 @@
 /area/talon_v2/engineering/port)
 "zj" = (
 /obj/structure/table/rack/steel,
-/obj/item/clothing/suit/space/void/refurb/talon,
-/obj/item/clothing/head/helmet/space/void/refurb/talon,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/item/device/bluespaceradio/talon_prelinked,
 /turf/simulated/floor/tiled/techfloor,
-/area/talon_v2/secure_storage)
+/area/talon_v2/eva_storage)
 "zk" = (
 /obj/structure/cable/green{
 	icon_state = "4-8"
@@ -7552,8 +7605,10 @@
 /obj/item/clothing/suit/space/void/refurb/talon,
 /obj/item/clothing/head/helmet/space/void/refurb/talon,
 /obj/machinery/camera/network/talon,
+/obj/item/clothing/shoes/magboots,
+/obj/item/weapon/tank/oxygen,
 /turf/simulated/floor/tiled/techfloor,
-/area/talon_v2/secure_storage)
+/area/talon_v2/eva_storage)
 "zC" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
@@ -7762,11 +7817,29 @@
 /turf/simulated/floor/wood,
 /area/talon_v2/crew_quarters/mine_room)
 "Az" = (
-/obj/structure/table/rack/steel,
-/obj/item/device/suit_cooling_unit,
-/obj/item/device/suit_cooling_unit,
+/obj/machinery/alarm/talon{
+	pixel_y = 28
+	},
+/obj/structure/table/steel,
+/obj/item/device/radio/off{
+	channels = list("Talon" = 1);
+	pixel_y = 6
+	},
+/obj/item/device/radio/off{
+	channels = list("Talon" = 1);
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/device/radio/off{
+	channels = list("Talon" = 1);
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/device/radio/off{
+	channels = list("Talon" = 1)
+	},
 /turf/simulated/floor/tiled/techfloor,
-/area/talon_v2/secure_storage)
+/area/talon_v2/eva_storage)
 "AB" = (
 /obj/structure/catwalk,
 /obj/machinery/light/small{
@@ -7827,15 +7900,7 @@
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering)
 "AN" = (
-/obj/structure/table/rack/shelf/steel,
-/obj/item/clothing/head/beret/talon,
-/obj/item/clothing/head/beret/talon,
-/obj/item/clothing/head/beret/talon,
-/obj/item/clothing/head/beret/talon,
-/obj/item/clothing/suit/storage/hooded/wintercoat/talon,
-/obj/item/clothing/suit/storage/hooded/wintercoat/talon,
-/obj/item/clothing/suit/storage/hooded/wintercoat/talon,
-/obj/item/clothing/suit/storage/hooded/wintercoat/talon,
+/obj/structure/closet/walllocker_double/hydrant/west,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/secure_storage)
 "AO" = (
@@ -7856,12 +7921,13 @@
 /turf/simulated/floor/plating,
 /area/talon_v2/central_hallway/fore)
 "AQ" = (
-/obj/structure/table/rack/shelf/steel,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/shoes/magboots,
-/turf/simulated/floor/tiled/techfloor,
-/area/talon_v2/secure_storage)
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/talon_v2/eva_storage)
 "AS" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
@@ -7918,9 +7984,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/engineering)
 "Ba" = (
-/obj/structure/table/rack/shelf/steel,
-/obj/item/device/suit_cooling_unit,
-/obj/item/weapon/tank/oxygen,
+/obj/structure/closet/walllocker/emerglocker/east,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/secure_storage)
 "Bb" = (
@@ -7958,14 +8022,8 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/maintenance/wing_starboard)
 "Bi" = (
-/obj/structure/table/rack/shelf/steel,
-/obj/item/clothing/suit/space/void/refurb/talon,
-/obj/machinery/light_switch{
-	dir = 1;
-	pixel_y = -26
-	},
-/turf/simulated/floor/tiled/techfloor,
-/area/talon_v2/secure_storage)
+/turf/simulated/wall/shull,
+/area/talon_v2/eva_storage)
 "Bj" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -7994,34 +8052,21 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/bridge)
 "Bt" = (
-/obj/structure/table/steel,
-/obj/item/device/radio/off{
-	channels = list("Talon" = 1);
-	pixel_y = 6
-	},
-/obj/item/device/radio/off{
-	channels = list("Talon" = 1);
-	pixel_x = -6;
-	pixel_y = 4
-	},
-/obj/item/device/radio/off{
-	channels = list("Talon" = 1);
-	pixel_x = 6;
-	pixel_y = 4
-	},
-/obj/item/device/radio/off{
-	channels = list("Talon" = 1)
+/obj/structure/table/rack/steel,
+/obj/item/weapon/tank/jetpack/carbondioxide,
+/obj/item/weapon/tank/jetpack/carbondioxide,
+/obj/item/weapon/tank/jetpack/carbondioxide,
+/obj/item/weapon/tank/jetpack/carbondioxide,
+/obj/item/weapon/tank/jetpack/carbondioxide,
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
-/area/talon_v2/secure_storage)
+/area/talon_v2/eva_storage)
 "Bu" = (
-/obj/machinery/alarm/talon{
-	dir = 1;
-	pixel_y = -25
-	},
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/simulated/floor/tiled/techfloor,
-/area/talon_v2/secure_storage)
+/area/talon_v2/eva_storage)
 "Bv" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -8190,7 +8235,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/tiled/techmaint,
-/area/talon_v2/secure_storage)
+/area/talon_v2/eva_storage)
 "Cd" = (
 /obj/structure/closet/secure_closet/talon_pilot,
 /obj/item/device/radio/off{
@@ -8208,7 +8253,8 @@
 /obj/item/clothing/mask/breath,
 /obj/item/weapon/storage/belt/archaeology,
 /obj/machinery/light_switch{
-	pixel_y = 24
+	pixel_y = 26;
+	pixel_x = -11
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/anomaly_storage)
@@ -8385,7 +8431,7 @@
 "CP" = (
 /obj/machinery/suit_cycler/vintage/tcrew,
 /turf/simulated/floor/tiled/techfloor,
-/area/talon_v2/secure_storage)
+/area/talon_v2/eva_storage)
 "CR" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -8424,10 +8470,15 @@
 	pixel_y = -24
 	},
 /obj/structure/table/standard,
-/obj/item/weapon/paper_bin,
+/obj/item/weapon/paper_bin{
+	pixel_x = 6
+	},
 /obj/item/weapon/pen,
 /obj/structure/cable/green{
 	icon_state = "0-8"
+	},
+/obj/item/weapon/stamp/talon{
+	pixel_x = -6
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/workroom)
@@ -8588,7 +8639,8 @@
 	},
 /obj/structure/catwalk,
 /obj/machinery/light_switch{
-	pixel_y = 24
+	pixel_y = 26;
+	pixel_x = -11
 	},
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/atmospherics)
@@ -8908,11 +8960,17 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/maintenance/wing_port)
 "ES" = (
-/obj/structure/table/rack/shelf/steel,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/shoes/magboots,
-/turf/simulated/floor/tiled/techfloor,
-/area/talon_v2/secure_storage)
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/talon_v2/eva_storage)
 "ET" = (
 /obj/structure/railing/grey,
 /obj/machinery/light{
@@ -8951,10 +9009,14 @@
 /turf/simulated/floor/reinforced/airless,
 /area/talon_v2/maintenance/aft_starboard)
 "Fc" = (
-/obj/structure/table/rack/shelf/steel,
-/obj/item/weapon/tank/oxygen,
-/obj/item/weapon/tank/oxygen,
-/turf/simulated/floor/tiled/techfloor,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/landmark/talon,
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/obj/effect/floor_decal/emblem/talon,
+/turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/secure_storage)
 "Fd" = (
 /obj/structure/disposalpipe/segment{
@@ -9288,6 +9350,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/holoposter{
+	dir = 1;
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway/port)
 "Ga" = (
@@ -9371,6 +9437,12 @@
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/port_store)
+"Go" = (
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/talon_v2/armory)
 "Gp" = (
 /obj/structure/cable/green{
 	icon_state = "1-2"
@@ -9834,6 +9906,17 @@
 /obj/structure/loot_pile/maint/trash,
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering)
+"HJ" = (
+/obj/structure/cable/green{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/talon{
+	dir = 1;
+	name = "north bump";
+	pixel_y = 28
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/talon_v2/secure_storage)
 "HK" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
@@ -10731,8 +10814,10 @@
 /turf/simulated/wall/shull,
 /area/talon_v2/maintenance/fore_port)
 "KC" = (
-/obj/structure/closet/walllocker_double/hydrant/west,
-/turf/simulated/floor/tiled/techmaint,
+/obj/machinery/cryopod/talon{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/secure_storage)
 "KE" = (
 /obj/structure/cable/green{
@@ -10883,11 +10968,11 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway/star)
 "Li" = (
-/obj/structure/flora/pottedplant/minitree,
 /obj/machinery/holoposter{
 	dir = 1;
 	pixel_y = 32
 	},
+/obj/structure/flora/pottedplant/unusual,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/central_hallway)
 "Lj" = (
@@ -11842,7 +11927,7 @@
 /obj/structure/window/reinforced/full,
 /obj/machinery/door/firedoor/glass/talon,
 /turf/simulated/floor/plating,
-/area/talon_v2/secure_storage)
+/area/talon_v2/eva_storage)
 "NZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -11929,6 +12014,19 @@
 	can_open = 1
 	},
 /area/talon_v2/engineering/star_store)
+"Om" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/door/firedoor/glass/talon,
+/obj/machinery/door/airlock{
+	name = "Cryogenic Storage";
+	req_one_access = list(301)
+	},
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/talon_v2/secure_storage)
 "On" = (
 /obj/machinery/door/firedoor/glass/talon,
 /obj/machinery/door/airlock/maintenance/common,
@@ -12337,6 +12435,8 @@
 	pixel_y = 24
 	},
 /obj/item/weapon/storage/backpack/dufflebag/talon,
+/obj/item/weapon/storage/backpack/dufflebag/talon,
+/obj/item/weapon/storage/backpack/dufflebag/talon,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/armory)
 "PC" = (
@@ -12345,8 +12445,9 @@
 	pixel_x = 5;
 	pixel_y = 24
 	},
-/obj/item/clothing/accessory/holster/waist,
-/obj/item/clothing/accessory/holster/waist,
+/obj/item/weapon/storage/backpack/messenger/talon,
+/obj/item/weapon/storage/backpack/messenger/talon,
+/obj/item/weapon/storage/backpack/messenger/talon,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/armory)
 "PD" = (
@@ -12420,7 +12521,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock{
-	name = "Storage Room"
+	name = "Cryo Storage"
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/gen_store)
@@ -12636,7 +12737,7 @@
 "QD" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/tiled/techfloor,
-/area/talon_v2/secure_storage)
+/area/talon_v2/eva_storage)
 "QE" = (
 /turf/simulated/wall/rshull,
 /area/talon_v2/central_hallway/fore)
@@ -13090,20 +13191,16 @@
 /turf/simulated/floor/wood,
 /area/talon_v2/crew_quarters/meditation)
 "So" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/holoposter{
-	dir = 1;
-	pixel_y = 32
+/obj/effect/catwalk_plated/techmaint,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/structure/cable/green{
+	icon_state = "1-2"
 	},
-/turf/simulated/floor/tiled/techmaint,
+/turf/simulated/floor/plating,
 /area/talon_v2/central_hallway/port)
 "Sr" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -13398,6 +13495,16 @@
 /obj/item/weapon/storage/box/handcuffs,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/brig)
+"Tj" = (
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 8
+	},
+/obj/machinery/alarm/talon{
+	dir = 8;
+	pixel_x = 22
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/talon_v2/secure_storage)
 "Tk" = (
 /obj/machinery/door/firedoor/glass/talon,
 /obj/machinery/door/airlock/maintenance/engi{
@@ -13453,6 +13560,7 @@
 /turf/simulated/wall/rshull,
 /area/shuttle/talonboat)
 "Tw" = (
+/obj/effect/floor_decal/emblem/talon,
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/talonboat)
 "Tz" = (
@@ -13576,6 +13684,13 @@
 	},
 /turf/simulated/floor/reinforced/airless,
 /area/space)
+"TS" = (
+/obj/machinery/cryopod/robot/talon,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/talon_v2/secure_storage)
 "TW" = (
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
@@ -14180,6 +14295,12 @@
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/anomaly_storage)
+"VR" = (
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/talon_v2/armory)
 "VS" = (
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/refining)
@@ -14303,7 +14424,7 @@
 /area/space)
 "Wm" = (
 /turf/simulated/floor/tiled/techmaint,
-/area/talon_v2/secure_storage)
+/area/talon_v2/eva_storage)
 "Wo" = (
 /obj/structure/cable/green{
 	icon_state = "4-8"
@@ -14387,7 +14508,8 @@
 	dir = 1
 	},
 /obj/machinery/light_switch{
-	pixel_y = 24
+	pixel_y = 26;
+	pixel_x = -11
 	},
 /obj/structure/disposalpipe/junction{
 	dir = 8;
@@ -15160,8 +15282,17 @@
 	pixel_y = 28
 	},
 /obj/structure/table/rack/steel,
+/obj/machinery/light_switch{
+	pixel_y = 26;
+	pixel_x = -11
+	},
+/obj/item/device/suit_cooling_unit,
+/obj/item/device/suit_cooling_unit,
+/obj/item/device/suit_cooling_unit,
+/obj/item/device/suit_cooling_unit,
+/obj/item/device/suit_cooling_unit,
 /turf/simulated/floor/tiled/techfloor,
-/area/talon_v2/secure_storage)
+/area/talon_v2/eva_storage)
 "YY" = (
 /obj/machinery/autolathe,
 /turf/simulated/floor/tiled/techfloor,
@@ -15251,9 +15382,12 @@
 /area/talon_v2/engineering/port_store)
 "Zm" = (
 /obj/structure/table/rack/shelf/steel,
+/obj/item/clothing/suit/space/void/refurb/talon,
 /obj/item/clothing/head/helmet/space/void/refurb/talon,
+/obj/item/clothing/shoes/magboots,
+/obj/item/weapon/tank/oxygen,
 /turf/simulated/floor/tiled/techfloor,
-/area/talon_v2/secure_storage)
+/area/talon_v2/eva_storage)
 "Zn" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -15379,8 +15513,10 @@
 /turf/simulated/floor/reinforced/airless,
 /area/space)
 "ZF" = (
-/obj/structure/table/rack/shelf/steel,
-/obj/item/weapon/tank/jetpack/carbondioxide,
+/obj/machinery/cryopod/robot/talon,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/secure_storage)
 "ZH" = (
@@ -23218,18 +23354,18 @@ XG
 XG
 vY
 db
-ZF
-Wm
+HJ
+TB
 Fc
-Wm
-AQ
-Dd
+lV
+HA
+Om
 So
-Si
+zc
 Oj
 PC
 OP
-Qu
+mY
 OP
 Qu
 Zc
@@ -23361,9 +23497,9 @@ db
 db
 db
 dN
-Wm
-Wm
-Wm
+Tj
+TS
+gq
 Ba
 Dd
 FO
@@ -23502,11 +23638,11 @@ zv
 vp
 uW
 db
-Fc
-Wm
-ES
-Wm
-Bi
+Dd
+Dd
+Dd
+Dd
+Dd
 Dd
 FZ
 Si
@@ -23645,18 +23781,18 @@ VY
 ui
 db
 zB
-Wm
+qP
 yY
-Wm
+qP
 Zm
 NW
 Rp
 Si
 Nh
 ai
-OP
+Go
 aM
-OP
+VR
 bb
 Zc
 ZB
@@ -23788,15 +23924,15 @@ db
 db
 YX
 Cb
-TB
-HA
-HA
+ES
+AQ
+AQ
 lJ
 Gm
 bz
 hQ
 qv
-qv
+kp
 cc
 fF
 xx
@@ -23932,12 +24068,12 @@ Az
 Wm
 zj
 Wm
-Bt
+QD
 NW
 Rp
 Si
 Nh
-Qu
+qO
 OP
 aX
 OP
@@ -24070,16 +24206,16 @@ ED
 VY
 ui
 db
-QD
-xZ
 CP
+xZ
+Bt
 wh
 Bu
-Dd
+Bi
 Ew
 eS
 Oj
-Qu
+qO
 SN
 aY
 XW
@@ -24212,12 +24348,12 @@ db
 db
 db
 db
-Dd
-Dd
-Dd
-Dd
-Dd
-Dd
+Bi
+Bi
+Bi
+Bi
+Bi
+Bi
 Gq
 KE
 Oj
@@ -24630,7 +24766,7 @@ ma
 ol
 bp
 NC
-qO
+rK
 UB
 sF
 fV
@@ -26050,7 +26186,7 @@ nN
 op
 ov
 qr
-qO
+rK
 pG
 sF
 fV
@@ -26192,7 +26328,7 @@ Fq
 oq
 oV
 qr
-qP
+qs
 pG
 hr
 tU
