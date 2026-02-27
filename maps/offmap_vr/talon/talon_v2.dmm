@@ -2182,17 +2182,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/maintenance/wing_port)
-"gw" = (
-/obj/structure/table/rack/shelf/steel,
-/obj/machinery/recharger/wallcharger{
-	pixel_x = 5;
-	pixel_y = 24
-	},
-/obj/item/weapon/storage/backpack/satchel/talon,
-/obj/item/weapon/storage/backpack/satchel/talon,
-/obj/item/weapon/storage/backpack/satchel/talon,
-/turf/simulated/floor/tiled/techfloor,
-/area/talon_v2/armory)
 "gx" = (
 /obj/effect/floor_decal/industrial/warning/dust{
 	dir = 1
@@ -3982,13 +3971,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering/atmospherics)
-"mY" = (
-/obj/structure/table/rack/shelf/steel,
-/obj/item/weapon/storage/backpack/talon,
-/obj/item/weapon/storage/backpack/talon,
-/obj/item/weapon/storage/backpack/talon,
-/turf/simulated/floor/tiled/techfloor,
-/area/talon_v2/armory)
 "mZ" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/tiled/techfloor,
@@ -7509,7 +7491,11 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
-/obj/item/device/bluespaceradio/talon_prelinked,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/shoes/magboots,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/eva_storage)
 "zk" = (
@@ -7822,22 +7808,23 @@
 	pixel_y = 28
 	},
 /obj/structure/table/steel,
-/obj/item/device/radio/off{
-	channels = list("Talon" = 1);
-	pixel_y = 6
-	},
-/obj/item/device/radio/off{
-	channels = list("Talon" = 1);
-	pixel_x = -6;
-	pixel_y = 4
-	},
-/obj/item/device/radio/off{
-	channels = list("Talon" = 1);
-	pixel_x = 6;
-	pixel_y = 4
+/obj/item/device/bluespaceradio/talon_prelinked{
+	pixel_y = 10
 	},
 /obj/item/device/radio/off{
 	channels = list("Talon" = 1)
+	},
+/obj/item/device/radio/off{
+	channels = list("Talon" = 1);
+	pixel_x = 6
+	},
+/obj/item/device/radio/off{
+	channels = list("Talon" = 1);
+	pixel_x = -6
+	},
+/obj/item/device/radio/off{
+	channels = list("Talon" = 1);
+	pixel_x = 10
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/eva_storage)
@@ -12435,20 +12422,6 @@
 	pixel_x = 5;
 	pixel_y = 24
 	},
-/obj/item/weapon/storage/backpack/dufflebag/talon,
-/obj/item/weapon/storage/backpack/dufflebag/talon,
-/obj/item/weapon/storage/backpack/dufflebag/talon,
-/turf/simulated/floor/tiled/techfloor,
-/area/talon_v2/armory)
-"PC" = (
-/obj/structure/table/rack/shelf/steel,
-/obj/machinery/recharger/wallcharger{
-	pixel_x = 5;
-	pixel_y = 24
-	},
-/obj/item/weapon/storage/backpack/messenger/talon,
-/obj/item/weapon/storage/backpack/messenger/talon,
-/obj/item/weapon/storage/backpack/messenger/talon,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/armory)
 "PD" = (
@@ -23356,9 +23329,9 @@ Om
 So
 zc
 Oj
-PC
+PB
 OP
-mY
+Qu
 OP
 Qu
 Zc
@@ -23498,7 +23471,7 @@ Dd
 FO
 Si
 Oj
-gw
+PB
 OP
 OP
 OP
