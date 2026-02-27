@@ -589,7 +589,11 @@ so... Use it wisely and good luck!<br>\
 				/obj/item/clothing/suit/storage/toggle/hoodie/talon = 10,
 				/obj/item/clothing/under/rank/talon/basic = 10,
 				/obj/item/clothing/under/rank/talon/basic/refreshed = 10,
-				/obj/item/clothing/suit/storage/toggle/labcoat/talon = 3)
+				/obj/item/clothing/suit/storage/toggle/labcoat/talon = 10,
+				/obj/item/weapon/storage/backpack/messenger/talon = 7,
+				/obj/item/weapon/storage/backpack/talon = 7,
+				/obj/item/weapon/storage/backpack/satchel/talon = 7,
+				/obj/item/weapon/storage/backpack/dufflebag/talon = 7)
 	contraband = list(/obj/item/weapon/paper/secret_vendornote = 1,
 				/obj/item/clothing/accessory/holster/machete = 1,
 				/obj/item/weapon/material/knife/machete = 1)
