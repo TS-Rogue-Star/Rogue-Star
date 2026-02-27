@@ -49,6 +49,7 @@ var/list/preferences_datums = list()
 	var/real_name						//our character's name
 	var/be_random_name = 0				//whether we are a random name every round
 	var/nickname						//our character's nickname
+	var/name_color						// RS Add: Name colors (Lira, February 2026)
 	var/age = 30						//age of character
 	var/bday_month = 0					//Birthday month
 	var/bday_day = 0					//Birthday day

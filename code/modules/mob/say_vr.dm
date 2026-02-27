@@ -141,6 +141,10 @@
 			subtle_mode = "Adjacent Turfs (Default)"
 
 	var/input
+	// RS Add Start: Name colors (Lira, February 2026)
+	var/subtle_display_name = "[src]"
+	var/mob/subtle_name_color_source = get_true_identity_name_color_source(src, subtle_display_name)
+	// RS Add End
 	if(!message)
 		input = sanitize_or_reflect(tgui_input_text(src,"Choose an emote to display."), src)
 	else
@@ -148,14 +152,14 @@
 
 	if(input)
 		log_subtle(message,src)
-		message = "<span class='emote_subtle'><B>[src]</B> <I>[input]</I></span>"
+		message = "<span class='emote_subtle'>[format_chat_name(subtle_name_color_source, subtle_display_name, TRUE)] <I>[input]</I></span>" // RS Edit: Name colors (Lira, February 2026)
 		if(!(subtle_mode == "Adjacent Turfs (Default)"))
 			message = "<B>(T) </B>" + message
 	else
 		return FALSE
 
 	if (message)
-		var/undisplayed_message = "<span class='emote'><B>[src]</B> <I>does something too subtle for you to see.</I></span>"
+		var/undisplayed_message = "<span class='emote'>[format_chat_name(subtle_name_color_source, subtle_display_name, TRUE)] <I>does something too subtle for you to see.</I></span>" // RS Edit: Name colors (Lira, February 2026)
 		message = encode_html_emphasis(message)
 
 		var/list/vis
@@ -576,7 +580,10 @@
 	if(stat)
 		to_chat(src, "<span class= 'warning'>You need to be concious to narrate: [message]</span>")
 		return
-	message = "<span class='name'>([name])</span> <span class='pnarrate'>[message]</span>"
+	// RS Add Start: Name colors (Lira, February 2026)
+	var/narrator_name = format_chat_name(get_true_identity_name_color_source(src, "[name]"), "([name])")
+	message = "[narrator_name] <span class='pnarrate'>[message]</span>"
+	// RS Add End
 
 	//Below here stolen from emotes
 	var/turf/T = get_turf(src)
