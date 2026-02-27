@@ -196,15 +196,23 @@ h1.alert, h2.alert		{color: #000000;}
 .gray					{color: #A9A9A9;}
 .red					{color: #FF0000;}
 .orange					{color: #FF8C00;}
-.blue					{color: #0000FF;}
+.yellow					{color: #FFD700;} /* RS Add: Text color (Lira, February 2026) */
 .green					{color: #00DD00;}
+.cyan					{color: #00FFFF;} /* RS Add: Text color (Lira, February 2026) */
+.blue					{color: #0000FF;}
+.purple					{color: #800080;} /* RS Add: Text color (Lira, February 2026) */
+.pink					{color: #FF69B4;} /* RS Add: Text color (Lira, February 2026) */
 .inverted .black			{color: #606060;}
 .inverted .darkgray			{color: #808080;}
 .inverted .gray				{color: #A9A9A9;}
 .inverted .red				{color: #FF4444;}
 .inverted .orange			{color: #FF8C00;}
-.inverted .blue				{color: #6666FF;}
+.inverted .yellow			{color: #FFE97A;} /* RS Add: Text color (Lira, February 2026) */
 .inverted .green			{color: #44FF44;}
+.inverted .cyan				{color: #66E5FF;} /* RS Add: Text color (Lira, February 2026) */
+.inverted .blue				{color: #6666FF;}
+.inverted .purple			{color: #C070FF;} /* RS Add: Text color (Lira, February 2026) */
+.inverted .pink				{color: #FF99D6;} /* RS Add: Text color (Lira, February 2026) */
 
 .pnarrate					{color: #009AB2;}
 
