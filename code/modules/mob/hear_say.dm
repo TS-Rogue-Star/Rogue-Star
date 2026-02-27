@@ -185,14 +185,129 @@
 /mob/living/silicon/ai/special_mentions()
 	return list("AI") // AI door!
 
-/proc/encode_html_emphasis(message)
-    var/tagged_message = message
-    for(var/delimiter in GLOB.speech_toppings)
-        var/regex/R = new("\\[delimiter](.+?)\\[delimiter]","g")
-        var/tag = GLOB.speech_toppings[delimiter]
-        tagged_message = R.Replace(tagged_message,"<[tag]>$1</[tag]>")
+// RS Add: Text color (Lira, February 2026)
+/proc/replace_wrapped_token(var/text, var/token, var/prefix, var/suffix)
+	if(!istext(text) || !istext(token) || !length(token))
+		return text
 
-    return tagged_message
+	var/token_len = length(token)
+	var/scan_pos = 1
+	var/processed = ""
+	while(TRUE)
+		var/open_pos = findtext(text, token, scan_pos)
+		if(!open_pos)
+			break
+		var/close_pos = findtext(text, token, open_pos + token_len)
+		if(!close_pos)
+			break
+		processed += copytext(text, scan_pos, open_pos)
+		processed += "[prefix][copytext(text, open_pos + token_len, close_pos)][suffix]"
+		scan_pos = close_pos + token_len
+
+	if(scan_pos == 1)
+		return text
+
+	processed += copytext(text, scan_pos)
+	return processed
+
+// RS Add: Text color (Lira, February 2026)
+/proc/is_valid_hex_color_code(var/color_text)
+	if(!istext(color_text))
+		return FALSE
+
+	var/len = length(color_text)
+	if(len != 4 && len != 7)
+		return FALSE
+
+	if(copytext(color_text, 1, 2) != "#")
+		return FALSE
+
+	for(var/i in 2 to len)
+		var/ch = copytext(color_text, i, i + 1)
+		var/ascii_val = text2ascii(ch)
+		if(!ascii_val)
+			return FALSE
+		if((ascii_val >= 48 && ascii_val <= 57) || (ascii_val >= 65 && ascii_val <= 70) || (ascii_val >= 97 && ascii_val <= 102))
+			continue
+		return FALSE
+
+	return TRUE
+
+// RS Add: Text color (Lira, February 2026)
+/proc/replace_hex_color_tags(var/text)
+	if(!istext(text) || !length(text))
+		return text
+
+	var/static/open_token = "\[color="
+	var/static/open_len = length(open_token)
+	var/static/close_token = "\[/color\]"
+	var/static/close_len = length(close_token)
+	var/scan_pos = 1
+	var/processed = ""
+	while(TRUE)
+		var/open_pos = findtext(text, open_token, scan_pos)
+		if(!open_pos)
+			break
+
+		var/open_end = findtext(text, "]", open_pos + open_len)
+		if(!open_end)
+			break
+
+		var/color_code = copytext(text, open_pos + open_len, open_end)
+		if(!is_valid_hex_color_code(color_code))
+			scan_pos = open_pos + 1
+			continue
+
+		var/content_start = open_end + 1
+		var/close_pos = findtext(text, close_token, content_start)
+		if(!close_pos)
+			break
+
+		processed += copytext(text, scan_pos, open_pos)
+		processed += "<span style='color: [uppertext(color_code)];'>[copytext(text, content_start, close_pos)]</span>"
+		scan_pos = close_pos + close_len
+
+	if(scan_pos == 1)
+		return text
+
+	processed += copytext(text, scan_pos)
+	return processed
+
+/proc/encode_html_emphasis(message)
+	var/tagged_message = message
+
+	// RS Add Start: Text color (Lira, February 2026)
+	tagged_message = replace_hex_color_tags(tagged_message)
+
+	var/static/list/rainbow_markers = list(
+		"\[r\]" = "red",
+		"\[R\]" = "red",
+		"\[o\]" = "orange",
+		"\[O\]" = "orange",
+		"\[y\]" = "yellow",
+		"\[Y\]" = "yellow",
+		"\[g\]" = "green",
+		"\[G\]" = "green",
+		"\[c\]" = "cyan",
+		"\[C\]" = "cyan",
+		"\[b\]" = "blue",
+		"\[B\]" = "blue",
+		"\[p\]" = "purple",
+		"\[P\]" = "purple",
+		"\[pi\]" = "pink",
+		"\[PI\]" = "pink"
+	)
+	for(var/marker in rainbow_markers)
+		var/css_class = rainbow_markers[marker]
+		tagged_message = replace_wrapped_token(tagged_message, marker, "<span class='[css_class]'>", "</span>")
+	// RS Add End
+
+	for(var/delimiter in GLOB.speech_toppings)
+		var/regex/R = new("\\[delimiter](.+?)\\[delimiter]","g")
+		var/tag = GLOB.speech_toppings[delimiter]
+		tagged_message = R.Replace(tagged_message,"<[tag]>$1</[tag]>")
+
+	return tagged_message
 
 /mob/proc/hear_radio(var/list/message_pieces, var/verb = "says", var/part_a, var/part_b, var/part_c, var/part_d, var/part_e, var/mob/speaker = null, var/hard_to_hear = 0, var/vname = "")
 	if(!client)
