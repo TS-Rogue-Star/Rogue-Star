@@ -95,7 +95,12 @@
 
 	if(use_emote.message_type == AUDIBLE_MESSAGE && is_muzzled())
 		var/muffle_message = use_emote.emote_message_muffled || "makes a muffled sound."
-		audible_message("<b>\The [src]</b> [muffle_message]", runemessage = "[muffle_message]")
+		// RS Edit Start: Name colors (Lira, February 2026)
+		var/muffled_name_display = "\The [src]"
+		var/mob/muffled_name_color_source = get_true_identity_name_color_source(src, "[src]")
+		var/muffled_name = format_chat_name(muffled_name_color_source, muffled_name_display, TRUE)
+		audible_message("[muffled_name] [muffle_message]", runemessage = "[muffle_message]")
+		// RS Edit End
 		return
 
 	next_emote = world.time + use_emote.emote_delay
@@ -157,8 +162,14 @@
 	pretext = capitalize(html_encode(pretext))
 	nametext = html_encode(nametext)
 	subtext = html_encode(subtext)
-	// Store the player's name in a nice bold, naturalement
-	nametext = "<B>[emoter]</B>"
+	// RS Edit Start: Name colors (Lira, February 2026)
+	var/emoter_display_name = "[emoter]"
+	var/atom/emoter_name_color_source = emoter
+	if(ismob(emoter))
+		var/mob/M = emoter
+		emoter_name_color_source = get_true_identity_name_color_source(M, emoter_display_name)
+	nametext = format_chat_name(emoter_name_color_source, emoter_display_name, TRUE)
+	// RS Edit End
 	return list("pretext" = pretext, "nametext" = nametext, "subtext" = subtext)
 
 /mob/proc/custom_emote(var/m_type = VISIBLE_MESSAGE, var/message, var/range = world.view)
@@ -186,6 +197,10 @@
 
 	var/list/formatted
 	var/runemessage
+	// RS Add Start: Name colors (Lira, February 2026)
+	var/emote_display_name = "[src]"
+	var/mob/emote_name_color_source = get_true_identity_name_color_source(src, emote_display_name)
+	// RS Add End
 	if(input)
 		formatted = format_emote(src, message)
 		if(!islist(formatted))
@@ -199,7 +214,7 @@
 
 	if(input)
 		log_emote(message,src) //Log before we add junk
-		message = "<span class='emote'><B>[src]</B> [input]</span>"
+		message = "<span class='emote'>[format_chat_name(emote_name_color_source, emote_display_name, TRUE)] [input]</span>" // RS Edit: Name colors (Lira, February 2026)
 	else
 		return
 
@@ -229,7 +244,7 @@
 			spawn(0) // It's possible that it could be deleted in the meantime, or that it runtimes.
 				if(M)
 					if(isobserver(M))
-						message = "<span class='emote'><B>[src]</B> ([ghost_follow_link(src, M)]) [input]</span>"
+						message = "<span class='emote'>[format_chat_name(emote_name_color_source, emote_display_name, TRUE)] ([ghost_follow_link(src, M)]) [input]</span>" // RS Edit: Name colors (Lira, February 2026)
 					//RSEdit start: Ports CHOMPStation PR4296 || If you are in the same tile, right next to, or being held by a person doing an emote, you should be able to see it while blind
 					if(m_type != AUDIBLE_MESSAGE && (src.Adjacent(M) || (istype(src.loc, /obj/item/weapon/holder) && src.loc.loc == M)))
 						M.show_message(message)
@@ -279,11 +294,15 @@
 		return
 
 	log_subtle(message,src)
-	message = "<span class='emote_subtle'><B>[src]</B> <I>[message]</I></span>"
+	// RS Edit Start: Name colors (Lira, February 2026)
+	var/subtle_display_name = "[src]"
+	var/mob/subtle_name_color_source = get_true_identity_name_color_source(src, subtle_display_name)
+	message = "<span class='emote_subtle'>[format_chat_name(subtle_name_color_source, subtle_display_name, TRUE)] <I>[message]</I></span>"
+	// RS Edit End
 	message = "<B>(From within \the [s]) </B>" + message
 	message = encode_html_emphasis(message)
 
-	var/undisplayed_message = "<span class='emote'><B>[src]</B> <I>does something too subtle for you to see.</I></span>"
+	var/undisplayed_message = "<span class='emote'>[format_chat_name(subtle_name_color_source, subtle_display_name, TRUE)] <I>does something too subtle for you to see.</I></span>" // RS Edit: Name colors (Lira, February 2026)
 	var/list/vis = get_mobs_and_objs_in_view_fast(get_turf(s),1,2)
 	var/list/vis_mobs = vis["mobs"]
 	vis_mobs |= src

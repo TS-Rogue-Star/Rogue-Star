@@ -55,6 +55,82 @@
 			else			return default
 	return .
 
+// RS Add: Name colors (Lira, February 2026)
+/proc/hex_digit_value(var/ch)
+	if(!istext(ch) || length(ch) != 1)
+		return -1
+	var/ascii = text2ascii(ch, 1)
+	switch(ascii)
+		if(48 to 57)	return ascii - 48
+		if(65 to 70)	return ascii - 55
+		if(97 to 102)	return ascii - 87
+	return -1
+
+// RS Add: Name colors (Lira, February 2026)
+/proc/hex_byte_value(var/color_text, var/start_index)
+	var/high = hex_digit_value(copytext(color_text, start_index, start_index + 1))
+	var/low = hex_digit_value(copytext(color_text, start_index + 1, start_index + 2))
+	if(high < 0 || low < 0)
+		return -1
+	return (high * 16) + low
+
+// RS Add: Name colors (Lira, February 2026)
+/proc/sanitize_chat_name_color(color, default = null)
+	if(isnull(color) || !istext(color) || !length(color))
+		return default
+
+	var/safe = sanitize_hexcolor(color, null)
+	if(!safe)
+		return default
+
+	if(isnull(default) && safe == "#000000")
+		return null
+
+	var/r
+	var/g
+	var/b
+	if(length(safe) == 4)
+		var/red_digit = hex_digit_value(copytext(safe, 2, 3))
+		var/green_digit = hex_digit_value(copytext(safe, 3, 4))
+		var/blue_digit = hex_digit_value(copytext(safe, 4, 5))
+		if(red_digit < 0 || green_digit < 0 || blue_digit < 0)
+			return default
+		r = red_digit * 17
+		g = green_digit * 17
+		b = blue_digit * 17
+	else
+		r = hex_byte_value(safe, 2)
+		g = hex_byte_value(safe, 4)
+		b = hex_byte_value(safe, 6)
+		if(r < 0 || g < 0 || b < 0)
+			return default
+
+	var/luminance = (r * 299 + g * 587 + b * 114) / 1000
+	var/static/min_luminance = 75
+	var/static/max_luminance = 180
+
+	if(luminance < min_luminance)
+		if(luminance <= 0)
+			r = min_luminance
+			g = min_luminance
+			b = min_luminance
+		else
+			var/adjustment_up = (min_luminance - luminance) / (255 - luminance)
+			r = round(r + ((255 - r) * adjustment_up))
+			g = round(g + ((255 - g) * adjustment_up))
+			b = round(b + ((255 - b) * adjustment_up))
+	else if(luminance > max_luminance)
+		var/adjustment_down = max_luminance / luminance
+		r = round(r * adjustment_down)
+		g = round(g * adjustment_down)
+		b = round(b * adjustment_down)
+
+	r = min(255, max(0, r))
+	g = min(255, max(0, g))
+	b = min(255, max(0, b))
+
+	return sanitize_hexcolor(rgb(r, g, b), default)
+
 //Valid format codes: YY, YEAR, MM, DD, hh, mm, ss, :, -. " " (space). Invalid format will return default.
 /proc/sanitize_time(time, default, format = "hh:mm")
 	if(!istext(time) || !(length(time) == length(format)))

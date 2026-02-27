@@ -62,6 +62,43 @@
 	else
 		return stars(SP.message)
 
+// RS Add Start: Name colors (Lira, February 2026)
+/proc/get_chat_name_color(var/atom/name_source)
+	if(!ismob(name_source))
+		return null
+
+	var/mob/M = name_source
+	return sanitize_chat_name_color(M.name_color, null)
+
+/proc/style_chat_name_text(var/atom/name_source, var/name_text)
+	var/safe_name_text = "[name_text]"
+	var/name_color = get_chat_name_color(name_source)
+	if(!name_color)
+		return safe_name_text
+
+	return "<span style='color: [name_color];'>[safe_name_text]</span>"
+
+/proc/format_chat_name(var/atom/name_source, var/name_text = null, var/bold = FALSE)
+	if(isnull(name_text))
+		name_text = "[name_source]"
+
+	var/safe_name_text = "[name_text]"
+	if(bold)
+		safe_name_text = "<b>[safe_name_text]</b>"
+
+	return "<span class='name'>[style_chat_name_text(name_source, safe_name_text)]</span>"
+
+/proc/get_true_identity_name_color_source(var/mob/speaker, var/displayed_name)
+	if(!speaker || !speaker.real_name)
+		return null
+
+	var/safe_displayed_name = "[displayed_name]"
+	if(safe_displayed_name != speaker.real_name && findtext(safe_displayed_name, "[speaker.real_name] (") != 1)
+		return null
+
+	return speaker
+// RS Add End
+
 /mob/proc/hear_say(var/list/message_pieces, var/verb = "says", var/italics = 0, var/mob/speaker = null, var/sound/speech_sound, var/sound_vol)
 	if(!client && !teleop)
 		return FALSE
@@ -111,14 +148,19 @@
 		if(is_preference_enabled(/datum/client_preference/ghost_ears) && (speaker in view(src)))
 			message = "<b>[message]</b>"
 
+	// RS Add Start: Name colors (Lira, February 2026)
+	var/alt_name = speaker ? speaker.GetAltName() : ""
+	var/speaker_name_formatted = format_chat_name(get_true_identity_name_color_source(speaker, speaker_name), speaker_name)
+	// RS Add End
+
 	if(is_deaf() && stat != DEAD) //RS Edit || Ports CHOMPStation PR 5358 - Dead people should be able to hear stuff like ghosts can
 		if(speaker == src)
 			to_chat(src, "<span class='filter_say'><span class='warning'>You cannot hear yourself speak!</span></span>")
 		else
-			to_chat(src, "<span class='filter_say'><span class='name'>[speaker_name]</span>[speaker.GetAltName()] makes a noise, possibly speech, but you cannot hear them.</span>")
+			to_chat(src, "<span class='filter_say'>[speaker_name_formatted][alt_name] makes a noise, possibly speech, but you cannot hear them.</span>") // RS Edit: Name colors (Lira, February 2026)
 	else
 		var/message_to_send = null
-		message_to_send = "<span class='name'>[speaker_name]</span>[speaker.GetAltName()] [track][message]"
+		message_to_send = "[speaker_name_formatted][alt_name] [track][message]" // RS Edit: Name colors (Lira, February 2026)
 		if(check_mentioned(multilingual_to_message(message_pieces)) && is_preference_enabled(/datum/client_preference/check_mention))
 			message_to_send = "<font size='3'><b>[message_to_send]</b></font>"
 
@@ -321,6 +363,7 @@
 
 	var/speaker_name = handle_speaker_name(speaker, vname, hard_to_hear)
 	var/track = handle_track(message, verb, speaker, speaker_name, hard_to_hear)
+	var/speaker_name_formatted = hard_to_hear ? speaker_name : style_chat_name_text(get_true_identity_name_color_source(speaker, speaker_name), speaker_name) // RS Add: Name colors (Lira, February 2026)
 
 	message = "[encode_html_emphasis(message)][part_d]"
 
@@ -328,7 +371,7 @@
 		if(prob(20))
 			to_chat(src, "<span class='warning'>You feel your headset vibrate but can hear nothing from it!</span>")
 	else
-		on_hear_radio(part_a, part_b, speaker_name, track, part_c, message, part_d, part_e)
+		on_hear_radio(part_a, part_b, speaker_name_formatted, track, part_c, message, part_d, part_e) // RS Edit: Name colors (Lira, February 2026)
 
 /proc/say_timestamp()
 	return "<span class='say_quote'>\[[time2text(world.timeofday, "hh:mm")]\]</span>"
@@ -371,8 +414,9 @@
 	if(!client)
 		return
 
+	var/speaker_name = format_chat_name(speaker, null, TRUE) // RS Add: Name colors (Lira, February 2026)
 	if(say_understands(speaker, language))
-		message = "<span class='game say'><B>[speaker]</B> [verb_understood], \"[message]\"</span>"
+		message = "<span class='game say'>[speaker_name] [verb_understood], \"[message]\"</span>" // RS Edit: Name colors (Lira, February 2026)
 	else if(!(language.ignore_adverb))
 		var/adverb
 		var/length = length(message) * pick(0.8, 0.9, 1.0, 1.1, 1.2)	//Adds a little bit of fuzziness
@@ -382,9 +426,9 @@
 			if(30 to 48)	adverb = " a message"
 			if(48 to 90)	adverb = " a lengthy message"
 			else			adverb = " a very lengthy message"
-		message = "<span class='game say'><B>[speaker]</B> [verb][adverb].</span>"
+		message = "<span class='game say'>[speaker_name] [verb][adverb].</span>" // RS Edit: Name colors (Lira, February 2026)
 	else
-		message = "<span class='game say'><B>[speaker]</B> [verb].</span>"
+		message = "<span class='game say'>[speaker_name] [verb].</span>" // RS Edit: Name colors (Lira, February 2026)
 
 	show_message(message, type = speech_type) // Type 1 is visual message
 
@@ -435,5 +479,5 @@
 	if(!say_understands(speaker))
 		name = speaker.voice_name
 
-	var/rendered = "<span class='game say'><span class='name'>[name]</span> [message]</span>"
+	var/rendered = "<span class='game say'>[format_chat_name(speaker, name)] [message]</span>" // RS Edit: Name colors (Lira, February 2026)
 	to_chat(src, rendered)

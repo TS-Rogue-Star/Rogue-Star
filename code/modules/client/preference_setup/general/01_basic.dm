@@ -13,6 +13,7 @@
 /datum/category_item/player_setup_item/general/basic/load_character(var/savefile/S)
 	S["real_name"]				>> pref.real_name
 	S["nickname"]				>> pref.nickname
+	S["name_color"]				>> pref.name_color // RS Add: Name colors (Lira, February 2026)
 	S["name_is_always_random"]	>> pref.be_random_name
 	S["gender"]					>> pref.biological_gender
 	S["id_gender"]				>> pref.identifying_gender
@@ -30,6 +31,7 @@
 /datum/category_item/player_setup_item/general/basic/save_character(var/savefile/S)
 	S["real_name"]				<< pref.real_name
 	S["nickname"]				<< pref.nickname
+	S["name_color"]				<< pref.name_color // RS Add: Name colors (Lira, February 2026)
 	S["name_is_always_random"]	<< pref.be_random_name
 	S["gender"]					<< pref.biological_gender
 	S["id_gender"]				<< pref.identifying_gender
@@ -55,6 +57,7 @@
 	if(!pref.real_name)
 		pref.real_name      = random_name(pref.identifying_gender, pref.species)
 	pref.nickname		= sanitize_name(pref.nickname)
+	pref.name_color		= sanitize_chat_name_color(pref.name_color, null) // RS Add: Name colors (Lira, February 2026)
 	pref.spawnpoint         = sanitize_inlist(pref.spawnpoint, spawntypes, initial(pref.spawnpoint))
 	pref.be_random_name     = sanitize_integer(pref.be_random_name, 0, 1, initial(pref.be_random_name))
 
@@ -74,6 +77,7 @@
 		character.dna.real_name = character.real_name
 
 	character.nickname = pref.nickname
+	character.name_color = sanitize_chat_name_color(pref.name_color, null) // RS Add: Name colors (Lira, February 2026)
 
 	character.gender = pref.biological_gender
 	character.identifying_gender = pref.identifying_gender
@@ -91,6 +95,15 @@
 	. += "<a href='?src=\ref[src];nickname=1'><b>[pref.nickname]</b></a>"
 	. += "(<a href='?src=\ref[src];reset_nickname=1'>Clear</A>)"
 	. += "<br>"
+	// RS Add Start: Name colors (Lira, February 2026)
+	. += "<b>Name Color:</b> "
+	if(pref.name_color)
+		. += "<a href='?src=\ref[src];name_color=1'><b>[pref.name_color]</b></a> [color_square(hex = pref.name_color)]"
+		. += "(<a href='?src=\ref[src];reset_name_color=1'>Reset</A>)"
+	else
+		. += "<a href='?src=\ref[src];name_color=1'><b>Default</b></a>"
+	. += "<br>"
+	// RS Add End
 	. += "<b>Biological Sex:</b> <a href='?src=\ref[src];bio_gender=1'><b>[gender2text(pref.biological_gender)]</b></a><br>"
 	. += "<b>Pronouns:</b> <a href='?src=\ref[src];id_gender=1'><b>[gender2text(pref.identifying_gender)]</b></a><br>"
 	. += "<b>Age:</b> <a href='?src=\ref[src];age=1'>[pref.age]</a> <b>Birthday:</b> <a href='?src=\ref[src];bday_month=1'>[pref.bday_month]</a><b>/</b><a href='?src=\ref[src];bday_day=1'>[pref.bday_day]</a> - <b>Announce?:</b> <a href='?src=\ref[src];bday_announce=1'>[pref.bday_announce ? "Yes" : "No"]</a><br>"
@@ -137,6 +150,17 @@
 		if(nick_choice == "Yes")
 			pref.nickname = null
 		return TOPIC_REFRESH
+	// RS Add Start: Name colors (Lira, February 2026)
+	else if(href_list["name_color"])
+		var/color_choice = input(user, "Choose your character's name color (auto-adjusted for readability):", "Character Name Color", pref.name_color || "#7f7f7f") as color|null
+		if(!isnull(color_choice) && CanUseTopic(user))
+			pref.name_color = sanitize_chat_name_color(color_choice, null)
+		return TOPIC_REFRESH
+
+	else if(href_list["reset_name_color"])
+		pref.name_color = null
+		return TOPIC_REFRESH
+	// RS Add End
 
 	else if(href_list["bio_gender"])
 		var/new_gender = tgui_input_list(user, "Choose your character's biological sex:", "Character Preference", get_genders(), pref.biological_gender)

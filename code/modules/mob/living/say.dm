@@ -365,7 +365,7 @@ var/list/channel_to_radio_key = new
 			if(M && src) //If we still exist, when the spawn processes
 				//VOREStation Add - Ghosts don't hear whispers
 				if(whispering && !(is_preference_enabled(/datum/client_preference/whisubtle_vis) || (isbelly(M.loc) && src == M.loc:owner)) && isobserver(M) && !M.client?.holder) //RSEdit: Ports CHOMPStation PR4296
-					M.show_message("<span class='game say'><span class='name'>[src.name]</span> [w_not_heard].</span>", 2)
+					M.show_message("<span class='game say'>[format_chat_name(src, src.name)] [w_not_heard].</span>", 2) // RS Edit: Name colors (Lira, February 2026)
 					return
 				//VOREStation Add End
 
@@ -386,7 +386,7 @@ var/list/channel_to_radio_key = new
 								images_to_clients[I2] |= M.client
 								M << I2
 					if(dst > w_scramble_range && dst <= world.view) //Inside whisper 'visible' range
-						M.show_message("<span class='game say'><span class='name'>[name]</span> [w_not_heard].</span>", 2)
+						M.show_message("<span class='game say'>[format_chat_name(src, name)] [w_not_heard].</span>", 2) // RS Edit: Name colors (Lira, February 2026)
 
 	//Object message delivery
 	for(var/obj/O in listening_obj)
