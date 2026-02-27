@@ -188,3 +188,12 @@
 	name = "Kitsune Taur (Eight-Tail)"
 	icon = 'icons/mob/vore/tails_64x32.dmi'
 	icon_state = "eighttailkitsunetaur"
+
+//Added 12/26/2026
+
+/datum/sprite_accessory/tail/taur/synthcow
+ 	name = "SynthCow dual-color (Taur)"
+ 	icon = 'icons/mob/vore/taurs_rs.dmi'
+ 	icon_state = "synthcow_s"
+ 	extra_overlay = "synthcow_markings1"
+ 	extra_overlay2 = "synthcow_markings2"
