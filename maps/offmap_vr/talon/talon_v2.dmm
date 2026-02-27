@@ -230,6 +230,7 @@
 	dir = 4
 	},
 /obj/machinery/camera/network/talon,
+/obj/structure/closet/walllocker_double/emergency_engi/north,
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/central_hallway/port)
 "az" = (
@@ -1840,7 +1841,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
-/obj/structure/closet/walllocker_double/east,
+/obj/structure/closet/walllocker_double/emergency_engi/east,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/talon_v2/engineering/star_store)
 "fj" = (
@@ -14257,14 +14258,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/anomaly_storage)
-"VL" = (
-/obj/structure/cable/green{
-	icon_state = "4-8"
-	},
-/obj/structure/catwalk,
-/obj/structure/closet/walllocker_double/emergency_engi/south,
-/turf/simulated/floor/plating,
-/area/talon_v2/engineering)
 "VM" = (
 /obj/machinery/atmospherics/pipe/tank/nitrogen{
 	dir = 8
@@ -25645,7 +25638,7 @@ AZ
 gC
 ar
 aD
-VL
+GA
 IK
 ep
 LJ
@@ -27225,7 +27218,7 @@ iH
 tS
 lj
 wD
-wD
+in
 in
 in
 in
