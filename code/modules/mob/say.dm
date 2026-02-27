@@ -201,6 +201,9 @@
 		// The first character in the selection will always be the prefix (if this is a valid language invocation)
 		var/prefix = copytext(selection, 1, 2)
 		var/language_key = copytext(selection, 2, 3)
+		// RS Add: Text color (Lira, February 2026)
+		if(prefix == "#" && i > 1 && copytext(message, i - 1, i) == "=")
+			continue
 		if(is_language_prefix(prefix))
 			// Okay, we're definitely now trying to invoke a language (probably)
 			// This "[]" is probably unnecessary but BYOND will runtime if a number is used
@@ -246,6 +249,9 @@
 		// The first character in the selection will always be the prefix (if this is a valid language invocation)
 		var/prefix = copytext(selection, 1, 2)
 		var/language_key = copytext(selection, 2, 3)
+		// RS Add: Text color (Lira, February 2026)
+		if(prefix == "#" && i > 1 && copytext(message, i - 1, i) == "=")
+			continue
 		if(is_language_prefix(prefix))
 			var/datum/language/L = GLOB.language_keys["[language_key]"]
 			if(L)
