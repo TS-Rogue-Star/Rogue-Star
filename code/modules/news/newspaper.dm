@@ -22,7 +22,7 @@
 /obj/item/weapon/newspaper/attack_self(mob/user as mob)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
-		var/dat
+		var/dat ="<html>" // RS Edit: Missing html tag (Lira, February 2026)
 		pages = 0
 		switch(screen)
 			if(0) //Cover
@@ -93,7 +93,7 @@
 			else
 				dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com"
 
-		dat+="<BR><HR><div align='center'>[curr_page+1]</div>"
+		dat+="<BR><HR><div align='center'>[curr_page+1]</div></html>" // RS Edit: Missing html tag (Lira, February 2026)
 		human_user << browse(dat, "window=newspaper_main;size=300x400")
 		onclose(human_user, "newspaper_main")
 	else
