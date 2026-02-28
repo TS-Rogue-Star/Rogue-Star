@@ -7,6 +7,8 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star February 2026: Add scroll bar, dropdown, and notice bar //////////////////
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star February 2026: Add button push ///////////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @use '../colors.scss';
 
@@ -662,6 +664,34 @@ $titlebar-height: 38px;
   color: rgba(255, 255, 255, 0.4) !important;
   box-shadow: none !important;
   cursor: not-allowed;
+}
+
+@keyframes rogueStarChipPressPulse {
+  0% {
+    transform: translateY(-1px) scale(1);
+    border-color: rgba(217, 171, 255, 0.6);
+    box-shadow:
+      0 8px 24px rgba(111, 64, 226, 0.35),
+      0 0 14px rgba(229, 188, 106, 0.22);
+  }
+  45% {
+    transform: translateY(1px) scale(0.96);
+    border-color: rgba(255, 216, 126, 0.95);
+    box-shadow:
+      0 0 24px rgba(255, 209, 120, 0.8),
+      0 0 36px rgba(150, 92, 255, 0.45);
+  }
+  100% {
+    transform: translateY(-1px) scale(1);
+    border-color: rgba(217, 171, 255, 0.6);
+    box-shadow:
+      0 8px 24px rgba(111, 64, 226, 0.35),
+      0 0 14px rgba(229, 188, 106, 0.22);
+  }
+}
+
+.RogueStar__chip.RogueStar__chip--pressPulse:not(.Button--disabled) {
+  animation: rogueStarChipPressPulse 220ms ease-out;
 }
 
 .RogueStar__pillGroup {

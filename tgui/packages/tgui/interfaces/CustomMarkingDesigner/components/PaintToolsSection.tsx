@@ -31,6 +31,9 @@ type PaintToolsSectionProps = {
   readonly handleClear: (confirm: boolean) => void;
   readonly size: number;
   readonly setSize: (size: number) => void;
+  readonly canMirrorWestToEast: boolean;
+  readonly mirrorDirectionLabel: string;
+  readonly onMirrorWestToEast: () => void;
   readonly brushColor: string;
   readonly customColorSlots: CustomColorSlotsState;
   readonly handleCustomColorUpdate: (colors: (string | null)[]) => void;
@@ -51,6 +54,9 @@ export const PaintToolsSection = ({
   handleClear,
   size,
   setSize,
+  canMirrorWestToEast,
+  mirrorDirectionLabel,
+  onMirrorWestToEast,
   brushColor,
   customColorSlots,
   handleCustomColorUpdate,
@@ -89,6 +95,22 @@ export const PaintToolsSection = ({
         {label}
       </Button>
     );
+  };
+
+  const handleMirrorButtonClick = (event: any) => {
+    const target = event?.currentTarget as HTMLElement | null;
+    if (target?.classList) {
+      target.classList.remove('RogueStar__chip--pressPulse');
+      void target.offsetWidth;
+      target.classList.add('RogueStar__chip--pressPulse');
+      window.setTimeout(() => {
+        target.classList.remove('RogueStar__chip--pressPulse');
+      }, 240);
+      if (typeof target.blur === 'function') {
+        target.blur();
+      }
+    }
+    onMirrorWestToEast();
   };
 
   return (
@@ -182,6 +204,23 @@ export const PaintToolsSection = ({
                     {value}
                   </Button>
                 ))}
+              </Box>
+            </LabeledList.Item>
+
+            <LabeledList.Item label="Mirror">
+              <Box className={TOOLBAR_GROUP_CLASS}>
+                <Button
+                  className={CHIP_BUTTON_CLASS}
+                  icon="arrows-left-right"
+                  tooltip={
+                    canMirrorWestToEast
+                      ? 'Mirror between West and East for this body part (source is the current side).'
+                      : 'Mirror is only available on the West or East canvas.'
+                  }
+                  disabled={!canMirrorWestToEast}
+                  onClick={(event) => handleMirrorButtonClick(event)}>
+                  West &lt;-&gt; East
+                </Button>
               </Box>
             </LabeledList.Item>
 
