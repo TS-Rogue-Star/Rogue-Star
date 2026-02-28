@@ -18,3 +18,7 @@ export const PREVIEW_DIFF_CHUNK_DELAY = 1;
 export const PREVIEW_DIFF_CHUNK_SIZE = 25;
 export const PREVIEW_PIXEL_SIZE = 6;
 export const TOOLBAR_GROUP_CLASS = 'RogueStar__toolbarGroup';
+export const NORTH = 1;
+export const SOUTH = 2;
+export const EAST = 4;
+export const WEST = 8;

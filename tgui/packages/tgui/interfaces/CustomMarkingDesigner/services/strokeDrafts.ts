@@ -42,6 +42,13 @@ export type StrokeDraftManager = {
   ) => void;
   clearAllLocalDrafts: () => void;
   appendStrokePreviewPixels: (stroke: unknown, pixels: DiffEntry[]) => void;
+  appendStrokePreviewPixelsForTarget: (options: {
+    stroke: unknown;
+    pixels: DiffEntry[];
+    dirKey: number;
+    partKey: string;
+    sessionKey: string;
+  }) => void;
   removeStrokeDraft: (stroke: unknown, sessionKey?: string | null) => void;
   clearSessionDrafts: (targetSessionKey?: string) => void;
   getPendingDraftSessions: () => PendingDraftSession[];
@@ -101,6 +108,27 @@ export const createStrokeDraftManager = (
     const localSessionKey = getLocalSessionKey();
     const currentDirKey = getCurrentDirectionKey();
     const currentPartKey = getActivePartKey();
+    appendStrokePreviewPixelsForTarget({
+      stroke,
+      pixels,
+      dirKey: currentDirKey,
+      partKey: currentPartKey,
+      sessionKey: localSessionKey || '',
+    });
+  };
+
+  const appendStrokePreviewPixelsForTarget = (options: {
+    stroke: unknown;
+    pixels: DiffEntry[];
+    dirKey: number;
+    partKey: string;
+    sessionKey: string;
+  }) => {
+    const stroke = options.stroke;
+    const pixels = options.pixels;
+    const localSessionKey = options.sessionKey;
+    const currentDirKey = options.dirKey;
+    const currentPartKey = options.partKey;
     const storageKey = buildStrokeDraftKey(stroke, localSessionKey);
     const logicalStrokeKey = normalizeStrokeKey(stroke);
     if (
@@ -125,6 +153,8 @@ export const createStrokeDraftManager = (
       next[storageKey] = existing
         ? {
             ...existing,
+            dirKey: currentDirKey,
+            part: currentPartKey,
             pixels: mergedPixels,
           }
         : {
@@ -258,6 +288,7 @@ export const createStrokeDraftManager = (
     updateStrokeDrafts,
     clearAllLocalDrafts,
     appendStrokePreviewPixels,
+    appendStrokePreviewPixelsForTarget,
     removeStrokeDraft,
     clearSessionDrafts,
     getPendingDraftSessions,
