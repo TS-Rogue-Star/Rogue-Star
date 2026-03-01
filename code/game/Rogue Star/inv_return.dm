@@ -62,11 +62,12 @@ SUBSYSTEM_DEF(inventory_return)
 /datum/controller/subsystem/inventory_return/proc/dispense(var/to_dispense, var/turf/dispense_loc)
 	if(!to_dispense || !dispense_loc)
 		return FALSE
-	if(sorted_inv[to_dispense]?.len <= 0)
+	var/list/ourlist = sorted_inv[to_dispense]
+	if(ourlist?.len <= 0)
 		return FALSE
 	if(!isturf(dispense_loc))
 		dispense_loc = get_turf(dispense_loc)
-	for(var/obj/item/I in sorted_inv[to_dispense])
+	for(var/obj/item/I in ourlist)
 		if(I.loc)
 			if(!isbelly(I.loc))	//If we're tracking it and it's not in a belly then someone may be using it or looking at it, so if it isn't in nullspace or in a belly we will assume someone wanted to hold on to it.
 				continue
