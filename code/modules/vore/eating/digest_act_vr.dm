@@ -55,14 +55,14 @@
 				var/obj/item/device/pda/P = src
 				if(P.id)
 					P.id = null
-			for(var/obj/item/O in contents)	//RS REMOVE START - Do not affect the inventories of objects we are going to preserve
+			for(var/obj/item/O in contents)
 				if(istype(O,/obj/item/weapon/storage/internal)) //Dump contents from dummy pockets.
 					for(var/obj/item/SO in O)
 						if(item_storage)
 							SO.forceMove(item_storage)
 						qdel(O)
 				else if(item_storage)
-					O.forceMove(item_storage)
+					O.forceMove(item_storage)	//RS EDIT END
 		if(istype(src,/obj/item/stack))
 			var/obj/item/stack/S = src
 			if(S.get_amount() <= 1)
