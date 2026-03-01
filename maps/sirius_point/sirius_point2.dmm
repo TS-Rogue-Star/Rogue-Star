@@ -4770,7 +4770,6 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
-/obj/inventory_recovery,
 /turf/simulated/floor/tiled/white,
 /area/medical/moonbase/resleeving)
 "cEI" = (
@@ -12152,13 +12151,13 @@
 /obj/effect/floor_decal/corner/paleblue/full{
 	dir = 8
 	},
-/obj/machinery/vending/loadout/uniform,
 /obj/structure/cable/cyan{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
-	dir = 1
+	dir = 8
 	},
+/obj/inventory_recovery,
 /turf/simulated/floor/tiled/white,
 /area/medical/moonbase/resleeving)
 "hAw" = (
@@ -22629,6 +22628,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/machinery/vending/loadout/uniform,
 /turf/simulated/floor/tiled/white,
 /area/medical/moonbase/resleeving)
 "ovD" = (

@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(inventory_return)
 /datum/controller/subsystem/inventory_return/proc/catalogue_object(var/obj/item/I)
 	if(!I)
 		return FALSE
-	if(I.type in blacklisted_types)
+	if(is_type_in_list(I.type in blacklisted_types))
 		return FALSE
 	if(!isitem(I))
 		return FALSE
@@ -81,11 +81,23 @@ SUBSYSTEM_DEF(inventory_return)
 /obj/inventory_recovery
 	name = "Inventory Recovery"
 	desc = "It's a marvel of modern technology!"
-	icon = 'icons/rogue-star/misc_32x64.dmi'
-	icon_state = "scorekeeper"
+	icon = 'icons/rogue-star/misc32x96.dmi'
+	icon_state = "item_recovery"
 
 	anchored = TRUE
 	density = FALSE
+
+/obj/inventory_recovery/Initialize(mapload)
+	. = ..()
+	update_icon()
+
+/obj/inventory_recovery/update_icon()
+	. = ..()
+	cut_overlays()
+
+	var/image/I = image(icon,null,"[icon_state]_g")
+	I.plane = PLANE_LIGHTING_ABOVE
+	add_overlay(I)
 
 /obj/inventory_recovery/attack_hand(mob/user)
 	. = ..()
