@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(inventory_return)
 /datum/controller/subsystem/inventory_return/proc/catalogue_object(var/obj/item/I)
 	if(!I)
 		return FALSE
-	if(is_type_in_list(I.type in blacklisted_types))
+	if(is_type_in_list(I.type, blacklisted_types))
 		return FALSE
 	if(!isitem(I))
 		return FALSE
