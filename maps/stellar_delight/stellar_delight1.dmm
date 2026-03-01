@@ -7057,6 +7057,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
+/obj/inventory_recovery,
 /turf/simulated/floor/tiled/dark,
 /area/stellardelight/deck1/resleeving)
 "oi" = (

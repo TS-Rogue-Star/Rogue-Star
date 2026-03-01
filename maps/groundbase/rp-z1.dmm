@@ -13637,6 +13637,7 @@
 /obj/effect/floor_decal/corner/paleblue{
 	dir = 10
 	},
+/obj/inventory_recovery,
 /turf/simulated/floor/tiled/dark,
 /area/groundbase/medical/autoresleeving)
 "lVW" = (
