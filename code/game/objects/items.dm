@@ -969,7 +969,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	closeToolTip(usr)
 
 /obj/item/proc/openTip(location, control, params, user)
-	openToolTip(user, src, params, title = name, content = desc)
+	openToolTip(user, src, params, title = name, content = get_examine_desc()) // RS Edit: Desc formatting (Lira, March 2026)
 
 // These procs are for RPEDs and part ratings. The concept for this was borrowed from /vg/station.
 // Gets the rating of the item, used in stuff like machine construction.

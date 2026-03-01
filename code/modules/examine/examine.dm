@@ -57,7 +57,7 @@
 
 	description_holders["name"] = "[A.name]"
 	description_holders["icon"] = "\icon[A.examine_icon()]"
-	description_holders["desc"] = A.desc
+	description_holders["desc"] = A.get_examine_desc() // RS Edit: Desc formatting (Lira, March 2026)
 
 /mob/Stat()
 	. = ..()

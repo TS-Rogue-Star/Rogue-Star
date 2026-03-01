@@ -221,7 +221,40 @@
 	return found
 
 /atom/proc/get_examine_desc()
-	return desc
+	// RS Add Start: Desc formatting (Lira, March 2026)
+	var/examine_desc = desc
+	if(!istext(examine_desc) || !length(examine_desc))
+		return examine_desc
+
+	examine_desc = replace_hex_color_tags(examine_desc)
+
+	var/static/list/color_shortcuts = list(
+		"\[r\]" = "red",
+		"\[R\]" = "red",
+		"\[o\]" = "orange",
+		"\[O\]" = "orange",
+		"\[y\]" = "yellow",
+		"\[Y\]" = "yellow",
+		"\[g\]" = "green",
+		"\[G\]" = "green",
+		"\[c\]" = "cyan",
+		"\[C\]" = "cyan",
+		"\[b\]" = "blue",
+		"\[B\]" = "blue",
+		"\[p\]" = "purple",
+		"\[P\]" = "purple",
+		"\[pi\]" = "pink",
+		"\[PI\]" = "pink"
+	)
+	for(var/shortcut in color_shortcuts)
+		examine_desc = replace_wrapped_token(examine_desc, shortcut, "<span style='color: [color_shortcuts[shortcut]];'>", "</span>")
+
+	for(var/delimiter in GLOB.speech_toppings)
+		var/regex/emphasis_regex = new("\\[delimiter](.+?)\\[delimiter]", "g")
+		var/tag = GLOB.speech_toppings[delimiter]
+		examine_desc = emphasis_regex.Replace(examine_desc, "<[tag]>$1</[tag]>")
+	// RS Add End
+	return examine_desc // RS Edit: Desc formatting (Lira, March 2026)
 
 //All atoms
 /atom/proc/examine(mob/user, var/infix = "", var/suffix = "")
