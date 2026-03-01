@@ -77,6 +77,7 @@ SUBSYSTEM_DEF(inventory_return)
 		master_inv -= I
 		sorted_inv[to_dispense] -= I
 		I.visible_message("\The [I] appears!",runemessage = "clunk")
+		UnregisterSignal(I,COMSIG_PARENT_QDELETING)
 
 	return TRUE
 
