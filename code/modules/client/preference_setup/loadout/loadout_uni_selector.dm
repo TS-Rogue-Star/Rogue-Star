@@ -596,7 +596,7 @@
 // New Talon Uniforms
 /datum/gear/uniform/talon
 	display_name = "Talon's Uniforms"
-	description = "Select from a range of outfits available to all Talon crew's."
+	description = "Select from a range of outfits available to all Talon crews."
 	allowed_roles = list("Talon Captain","Talon Doctor","Talon Engineer","Talon Pilot","Talon Guard","Talon Miner")
 	path = /obj/item/clothing/under/rank/talon/basic/refreshed
 	sort_category = "Uniforms"
