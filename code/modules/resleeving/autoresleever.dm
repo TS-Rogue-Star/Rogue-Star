@@ -20,9 +20,11 @@
 	else
 		icon_state = "autoresleever"
 
+/*	//RS REMOVE START
 /obj/machinery/transhuman/autoresleever/power_change()
 	. = ..()
 	update_icon()
+*/	//RS REMOVE END
 
 /obj/machinery/transhuman/autoresleever/attack_ghost(mob/observer/dead/user as mob)
 	update_icon()
@@ -58,9 +60,9 @@
 		return
 
 /obj/machinery/transhuman/autoresleever/proc/autoresleeve(var/mob/observer/dead/ghost)
-	if(stat)
-		to_chat(ghost, "<span class='warning'>This machine is not functioning...</span>")
-		return
+//	if(stat)	//RS REMOVE START
+//		to_chat(ghost, "<span class='warning'>This machine is not functioning...</span>")
+//		return	//RS REMOVE END
 	if(!istype(ghost,/mob/observer/dead))
 		return
 	if(ghost.mind && ghost.mind.current && ghost.mind.current.stat != DEAD)
