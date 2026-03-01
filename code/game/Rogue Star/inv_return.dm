@@ -79,13 +79,15 @@ SUBSYSTEM_DEF(inventory_return)
 	return TRUE
 
 /obj/inventory_recovery
-	name = "Inventory Recovery"
-	desc = "It's a marvel of modern technology!"
+	name = "\improper \a Utility Reclamation Platform"
+	desc = "It's a marvel of modern technology! The U.R.P. tracks a user's belongings and can usually recover them from certain inconvenient places, such as <span class='cult'>particularly cramped organic environments</span>!"
 	icon = 'icons/rogue-star/misc32x96.dmi'
 	icon_state = "item_recovery"
 
 	anchored = TRUE
 	density = FALSE
+	plane = MOB_PLANE
+	layer = MOB_LAYER
 
 /obj/inventory_recovery/Initialize(mapload)
 	. = ..()
