@@ -12,13 +12,7 @@ SUBSYSTEM_DEF(inventory_return)
 	)
 
 /datum/controller/subsystem/inventory_return/proc/catalogue_object(var/obj/item/I)
-	if(!I)
-		return FALSE
-	if(is_type_in_list(I.type, blacklisted_types))
-		return FALSE
-	if(!isitem(I))
-		return FALSE
-	if(!isliving(I.loc))	//If it's not on a mob then we don't have a good way of knowing who it belongs to, and so can't really determine who to return it to
+	if(!check_viability(I))
 		return FALSE
 	var/mob/living/L = I.loc
 	master_inv |= I
@@ -26,6 +20,8 @@ SUBSYSTEM_DEF(inventory_return)
 		sorted_inv[L.real_name] = list(I)
 	else
 		sorted_inv[L.real_name] |= I
+
+	RegisterSignal(I, COMSIG_PARENT_QDELETING, PROC_REF(unregister_item), TRUE)
 
 	return TRUE
 
@@ -38,20 +34,26 @@ SUBSYSTEM_DEF(inventory_return)
 		var/mob/living/L = I.loc
 		L.unEquip(I,force = TRUE)	//Unequip it just to be sure
 
-	mob_check(I,I.loc)	//Check to make sure there's no mobs hidden inside of it, we're about to send it to nullspace, so we want to make extra super sure
+	mob_check(I)	//Check to make sure there's no mobs hidden inside of it, we're about to send it to nullspace, so we want to make extra super sure
 	I.moveToNullspace()
 	I.digest_stage = null	//Reset its digest damage back to normal
 	return TRUE
 
-/datum/controller/subsystem/inventory_return/proc/mob_check(var/atom/movable/AM,var/atom/movable/droploc)
-	if(!droploc)	//This check is recursive, so we need to make sure we know of a safe place we can put the mobs
-		return
+/datum/controller/subsystem/inventory_return/proc/mob_check(var/atom/movable/AM,var/atom/droploc)
 	if(!AM)
 		return
+
+	if(!droploc)
+		droploc = find_belly_or_turf(AM)
+
 	for(var/thing in AM.contents)
 		if(isliving(thing))
 			var/mob/living/L = thing
 			L.forceMove(droploc)
+			continue
+		if(istype(thing,/obj/item/weapon/holder/micro))	//Micro holders always hold mobs! If we find one we don't even need to think about it
+			var/obj/item/weapon/holder/micro/M = thing
+			M.forceMove(droploc)
 			continue
 		if(istype(thing,/obj/item/device/paicard))	//PAIs are mobs that are often hidden in an object, we can't store their cards so let's treat them like a mob
 			var/obj/item/device/paicard/P = thing
@@ -77,6 +79,54 @@ SUBSYSTEM_DEF(inventory_return)
 		I.visible_message("\The [I] appears!",runemessage = "clunk")
 
 	return TRUE
+
+/datum/controller/subsystem/inventory_return/proc/check_viability(var/obj/item/candidate)
+	if(!candidate)
+		return FALSE
+	if(is_type_in_list(candidate.type, blacklisted_types))
+		return FALSE
+	if(!isitem(candidate))
+		return FALSE
+	if(!isliving(candidate.loc))	//If it's not on a mob then we don't have a good way of knowing who it belongs to, and so can't really determine who to return it to
+		return FALSE
+	var/mob/living/L = candidate.loc
+	if(!L.player_login_key_log)
+		return FALSE
+	return TRUE
+
+/datum/controller/subsystem/inventory_return/proc/check_item(var/obj/item/candidate)
+	if(!candidate)
+		return FALSE
+	if(candidate in master_inv)
+		return TRUE
+
+	return check_viability(candidate)
+
+/datum/controller/subsystem/inventory_return/proc/unregister_item()
+	var/obj/item/I = args[1]	//args got from signal
+
+	if(!I)
+		return
+
+	UnregisterSignal(I,COMSIG_PARENT_QDELETING)
+
+	master_inv -= I
+
+	for(var/thing in sorted_inv)
+		if(!islist(sorted_inv[thing]))
+			continue
+		sorted_inv[thing] -= I
+
+/proc/find_belly_or_turf(var/atom/movable/AM)
+	if(!AM)
+		return FALSE
+	if(isturf(AM.loc) || isbelly(AM.loc))
+		return AM.loc
+
+	return find_belly_or_turf(AM.loc)
+
+
+////////////////////////////////////////////////////////////////////////////////
 
 /obj/inventory_recovery
 	name = "\improper \a Utility Reclamation Platform"
