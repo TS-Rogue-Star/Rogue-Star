@@ -1664,6 +1664,7 @@
 #include "code\game\Rogue Star\extra_global_preferences.dm"
 #include "code\game\Rogue Star\Goliath.dm"
 #include "code\game\Rogue Star\hide_and_seek.dm"
+#include "code\game\Rogue Star\inv_return.dm"
 #include "code\game\Rogue Star\kiss.dm"
 #include "code\game\Rogue Star\multipoint_barrier.dm"
 #include "code\game\Rogue Star\objective_objects.dm"

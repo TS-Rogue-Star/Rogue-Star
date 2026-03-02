@@ -51,8 +51,8 @@
 "abe" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/phoron{
-	req_one_access = list(26);
-	name = "Janitorial"
+	name = "Janitorial";
+	req_one_access = list(26)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -167,8 +167,7 @@
 /area/chapel/chapel_morgue)
 "aeu" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_y = 27;
-	pixel_x = 0
+	pixel_y = 27
 	},
 /obj/structure/table/reinforced,
 /obj/random/tech_supply,
@@ -244,9 +243,7 @@
 	dir = 8
 	},
 /obj/structure/closet/secure_closet/hydroponics/sci,
-/obj/structure/cable/white{
-	icon_state = "0-1"
-	},
+/obj/structure/cable/white,
 /obj/machinery/power/apc/hyper{
 	dir = 8
 	},
@@ -374,9 +371,7 @@
 /area/medical/moonbase/traumaward)
 "ahP" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable/blue{
 	icon_state = "1-2"
 	},
@@ -682,7 +677,6 @@
 	dir = 1
 	},
 /obj/structure/sign/warning/caution{
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/simulated/floor/airless/moonbaseplating,
@@ -1021,9 +1015,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
@@ -1219,9 +1211,7 @@
 /obj/structure/cable/white{
 	icon_state = "16-0"
 	},
-/obj/structure/cable/white{
-	icon_state = "0-1"
-	},
+/obj/structure/cable/white,
 /obj/machinery/atmospherics/pipe/zpipe/up/scrubbers{
 	dir = 1
 	},
@@ -1391,7 +1381,6 @@
 	},
 /obj/structure/table/woodentable,
 /obj/structure/sign/painting/public{
-	pixel_x = 0;
 	pixel_y = -30
 	},
 /turf/simulated/floor/wood,
@@ -1741,9 +1730,9 @@
 	dir = 4
 	},
 /obj/machinery/light_switch{
+	dir = 1;
 	pixel_x = 23;
-	pixel_y = -24;
-	dir = 1
+	pixel_y = -24
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 8;
@@ -2505,7 +2494,6 @@
 	dir = 1
 	},
 /obj/machinery/light/floortube{
-	pixel_x = 0;
 	pixel_y = -3
 	},
 /obj/effect/floor_decal/steeldecal/steel_decals5,
@@ -2566,9 +2554,7 @@
 	},
 /obj/structure/catwalk,
 /obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/open,
 /area/moonbase/basement/caves/level2)
@@ -2774,8 +2760,7 @@
 /area/maintenance/moonbase/level1/east)
 "btm" = (
 /obj/structure/sign/warning/airlock{
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
@@ -3290,7 +3275,6 @@
 /area/crew_quarters/heads/hop)
 "bKx" = (
 /obj/machinery/hologram/holopad{
-	pixel_x = 0;
 	pixel_y = 1
 	},
 /turf/simulated/floor/tiled/monotile,
@@ -3596,9 +3580,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/moonbase/level1/northeast)
@@ -3631,8 +3613,7 @@
 /obj/effect/floor_decal/milspec/color/orange/half,
 /obj/machinery/light/floortube{
 	dir = 1;
-	pixel_y = 4;
-	pixel_x = 0
+	pixel_y = 4
 	},
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 1
@@ -3874,18 +3855,14 @@
 "ccC" = (
 /obj/structure/sign/directions/evac{
 	dir = 1;
-	pixel_y = -6;
-	pixel_x = 0
+	pixel_y = -6
 	},
 /obj/structure/sign/directions/cargo{
-	pixel_x = 0;
-	pixel_y = 0;
 	dir = 1
 	},
 /obj/structure/sign/directions/command{
 	dir = 1;
-	pixel_y = 6;
-	pixel_x = 0
+	pixel_y = 6
 	},
 /turf/simulated/wall/r_wall,
 /area/moonbase/dorms)
@@ -4049,8 +4026,8 @@
 	dir = 1
 	},
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
-	pixel_y = 24;
-	id_tag = "se_airlock"
+	id_tag = "se_airlock";
+	pixel_y = 24
 	},
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
 /turf/simulated/floor/tiled/eris/dark/danger,
@@ -4068,9 +4045,7 @@
 /turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
 /area/moonbase/surface/levelone/north)
 "cjj" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/moonbase/basement/caves/level2)
@@ -4393,8 +4368,8 @@
 	desc = "A remote control switch for the medbay foyer.";
 	id = "MedbayFoyer";
 	name = "Medbay Doors Control";
-	pixel_y = 26;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 26
 	},
 /turf/simulated/floor/carpet/sblucarpet,
 /area/medical/reception)
@@ -4903,8 +4878,7 @@
 	dir = 6
 	},
 /obj/structure/sign/department/interrogation{
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /turf/simulated/floor/tiled/dark,
 /area/security/lobby)
@@ -5012,8 +4986,7 @@
 	req_access = list(25)
 	},
 /obj/structure/sign/painting/public{
-	pixel_x = 30;
-	pixel_y = 0
+	pixel_x = 30
 	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/coffee_shop)
@@ -5084,8 +5057,8 @@
 	},
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
 	dir = 4;
-	pixel_x = -24;
-	id_tag = "med_airlock"
+	id_tag = "med_airlock";
+	pixel_x = -24
 	},
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
 /turf/simulated/floor/tiled/eris/dark/danger,
@@ -5356,9 +5329,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/engineering/moonbase/powerroom)
 "daG" = (
@@ -5428,9 +5399,9 @@
 	},
 /obj/machinery/button/remote/blast_door{
 	id = "chemshutters";
-	pixel_y = 6;
+	name = "Chemistry Shutters";
 	pixel_x = -26;
-	name = "Chemistry Shutters"
+	pixel_y = 6
 	},
 /turf/simulated/floor/tiled/white,
 /area/medical/chemistry)
@@ -5459,9 +5430,7 @@
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/southwesthall)
 "dgi" = (
-/obj/structure/cable/white{
-	icon_state = "0-1"
-	},
+/obj/structure/cable/white,
 /obj/machinery/power/apc{
 	dir = 4
 	},
@@ -5626,7 +5595,6 @@
 /obj/structure/table/hardwoodtable,
 /obj/machinery/chemical_dispenser/bar_alc/full{
 	dir = 8;
-	pixel_x = 0;
 	pixel_y = 4
 	},
 /turf/simulated/floor/wood,
@@ -5705,9 +5673,7 @@
 /turf/simulated/floor/tiled/white,
 /area/medical/moonbase/traumaward)
 "dnK" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
@@ -5750,8 +5716,7 @@
 /obj/machinery/optable,
 /obj/effect/floor_decal/milspec_sterile/green,
 /obj/machinery/oxygen_pump/anesthetic{
-	pixel_x = -32;
-	pixel_y = 0
+	pixel_x = -32
 	},
 /turf/simulated/floor/tiled/milspec/sterile,
 /area/medical/surgery2)
@@ -5777,7 +5742,6 @@
 "dqm" = (
 /obj/structure/railing/grey,
 /obj/structure/sign/warning/caution{
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /turf/simulated/floor/airless/moonbaseplating,
@@ -5796,8 +5760,8 @@
 /obj/effect/floor_decal/milspec/color/orange/half,
 /obj/machinery/light/floortube{
 	dir = 1;
-	pixel_y = 4;
-	pixel_x = -1
+	pixel_x = -1;
+	pixel_y = 4
 	},
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 1
@@ -6266,8 +6230,7 @@
 	dir = 4
 	},
 /obj/structure/sign/department/rnd{
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /turf/simulated/floor/tiled,
 /area/rnd/research)
@@ -6556,7 +6519,6 @@
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
 /obj/effect/map_helper/airlock/sensor/chamber_sensor,
 /obj/machinery/airlock_sensor{
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /turf/simulated/floor/tiled/eris/dark/danger,
@@ -6612,8 +6574,7 @@
 	dir = 8
 	},
 /obj/structure/sign/department/bridge{
-	pixel_x = -32;
-	pixel_y = 0
+	pixel_x = -32
 	},
 /turf/simulated/floor/tiled,
 /area/bridge/moonbase/waitingroom)
@@ -6893,9 +6854,7 @@
 /obj/structure/lattice,
 /obj/effect/catwalk_plated,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable/blue{
 	icon_state = "1-2"
 	},
@@ -7537,9 +7496,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/northeast)
@@ -7788,8 +7745,7 @@
 /obj/machinery/optable,
 /obj/effect/floor_decal/milspec_sterile/green,
 /obj/machinery/oxygen_pump/anesthetic{
-	pixel_x = -32;
-	pixel_y = 0
+	pixel_x = -32
 	},
 /turf/simulated/floor/tiled/milspec/sterile,
 /area/medical/surgery)
@@ -8374,9 +8330,9 @@
 	dir = 6
 	},
 /obj/machinery/light_switch{
+	dir = 1;
 	pixel_x = -23;
-	pixel_y = -24;
-	dir = 1
+	pixel_y = -24
 	},
 /turf/simulated/floor/tiled/milspec/sterile,
 /area/medical/surgery)
@@ -8648,8 +8604,8 @@
 	icon_state = "pipe-c"
 	},
 /obj/machinery/conveyor{
-	id = "cargounload";
-	dir = 6
+	dir = 6;
+	id = "cargounload"
 	},
 /turf/simulated/floor/tiled/milspec,
 /area/quartermaster/storage)
@@ -8712,9 +8668,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/zpipe/down/supply,
-/obj/machinery/atmospherics/pipe/zpipe/down/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/zpipe/down/scrubbers,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/northwest)
 "fpe" = (
@@ -8796,9 +8750,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/southeast)
@@ -9001,9 +8953,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/light_switch{
+	dir = 1;
 	pixel_x = -23;
-	pixel_y = -24;
-	dir = 1
+	pixel_y = -24
 	},
 /turf/simulated/floor/tiled/dark,
 /area/security/warden)
@@ -9475,9 +9427,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -9842,15 +9792,6 @@
 "fXR" = (
 /turf/simulated/wall/r_wall,
 /area/medical/psych)
-"fYk" = (
-/obj/machinery/door/firedoor/glass,
-/obj/machinery/door/airlock/multi_tile/glass{
-	dir = 1;
-	name = "Engineering";
-	req_one_access = list(10)
-	},
-/turf/simulated/floor/tiled/steel_ridged,
-/area/engineering/foyer)
 "fYv" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled,
@@ -10412,8 +10353,7 @@
 	dir = 4
 	},
 /obj/structure/sign/department/atmos{
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /turf/simulated/floor/tiled,
 /area/engineering/aft_hallway)
@@ -10539,9 +10479,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/moonbase/basement/caves/level2)
@@ -10779,8 +10717,8 @@
 	dir = 1
 	},
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
-	pixel_y = 24;
-	id_tag = "main_eva"
+	id_tag = "main_eva";
+	pixel_y = 24
 	},
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
 /turf/simulated/floor/tiled/eris/dark/danger,
@@ -10895,8 +10833,7 @@
 /area/rnd/moonbase/rndlab)
 "gLU" = (
 /obj/structure/sign/painting/public{
-	pixel_x = 30;
-	pixel_y = 0
+	pixel_x = 30
 	},
 /turf/simulated/floor/tiled/dark,
 /area/chapel/main)
@@ -11126,9 +11063,8 @@
 	dir = 9
 	},
 /obj/machinery/requests_console/preset/cargo{
-	pixel_y = 0;
-	pixel_x = -28;
-	dir = 4
+	dir = 4;
+	pixel_x = -28
 	},
 /turf/simulated/floor/tiled,
 /area/quartermaster/storage)
@@ -11171,8 +11107,7 @@
 	dir = 4
 	},
 /obj/structure/sign/department/robo{
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /turf/simulated/floor/tiled,
 /area/rnd/research)
@@ -11340,8 +11275,8 @@
 	},
 /obj/effect/map_helper/airlock/sensor/ext_sensor,
 /obj/machinery/airlock_sensor/airlock_exterior{
-	pixel_x = -24;
-	dir = 4
+	dir = 4;
+	pixel_x = -24
 	},
 /turf/simulated/floor/airless/moonbaseplating,
 /area/engineering/moonbase/eva)
@@ -11446,8 +11381,8 @@
 "hev" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/multi_tile/glass{
-	req_one_access = list(5);
-	name = "Paramedic Bay"
+	name = "Paramedic Bay";
+	req_one_access = list(5)
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/medical/medbay_emt_bay)
@@ -11773,8 +11708,7 @@
 /obj/machinery/door/airlock/multi_tile/glass,
 /obj/machinery/door/firedoor/glass,
 /obj/structure/sign/department/bar{
-	pixel_x = -32;
-	pixel_y = 0
+	pixel_x = -32
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/bar)
@@ -11869,8 +11803,7 @@
 	dir = 1
 	},
 /obj/machinery/status_display{
-	pixel_y = -32;
-	pixel_x = 0
+	pixel_y = -32
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/hallway/moonbase/northhall)
@@ -12203,8 +12136,8 @@
 /area/maintenance/moonbase/level1/south)
 "hzp" = (
 /obj/machinery/conveyor{
-	id = "cargounload";
-	dir = 1
+	dir = 1;
+	id = "cargounload"
 	},
 /turf/simulated/floor/tiled/milspec,
 /area/quartermaster/storage)
@@ -12218,13 +12151,13 @@
 /obj/effect/floor_decal/corner/paleblue/full{
 	dir = 8
 	},
-/obj/machinery/vending/loadout/uniform,
 /obj/structure/cable/cyan{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
-	dir = 1
+	dir = 8
 	},
+/obj/inventory_recovery,
 /turf/simulated/floor/tiled/white,
 /area/medical/moonbase/resleeving)
 "hAw" = (
@@ -12650,9 +12583,9 @@
 	dir = 1;
 	id_tag = "xenobot_airlock_control";
 	name = "Xenobotany Access Console";
+	pixel_y = -25;
 	tag_exterior_door = "xenobot_airlock_exterior";
-	tag_interior_door = "xenobot_airlock_interior";
-	pixel_y = -25
+	tag_interior_door = "xenobot_airlock_interior"
 	},
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology/xenoflora)
@@ -12866,8 +12799,6 @@
 /area/engineering/break_room)
 "iaw" = (
 /obj/structure/sign/directions/evac{
-	pixel_x = 0;
-	pixel_y = 0;
 	dir = 4
 	},
 /turf/simulated/wall/r_wall,
@@ -13178,9 +13109,8 @@
 /area/medical/medbay_emt_bay)
 "ing" = (
 /obj/machinery/requests_console/preset/bridge{
-	pixel_x = -28;
-	pixel_y = 0;
-	dir = 4
+	dir = 4;
+	pixel_x = -28
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /turf/simulated/floor/tiled/monotile,
@@ -13339,9 +13269,7 @@
 "ish" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/maintenance,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/moonbase/basement/caves/level2)
@@ -13366,18 +13294,14 @@
 /area/maintenance/moonbase/level1/west)
 "isL" = (
 /obj/structure/sign/directions/security{
-	dir = 8;
-	pixel_x = 0;
-	pixel_y = 0
+	dir = 8
 	},
 /obj/structure/sign/directions/bar{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = 6
 	},
 /obj/structure/sign/directions/engineering{
 	dir = 8;
-	pixel_x = 0;
 	pixel_y = -6
 	},
 /turf/simulated/wall/r_wall,
@@ -13463,8 +13387,7 @@
 	},
 /obj/machinery/light/floortube{
 	dir = 8;
-	pixel_x = -4;
-	pixel_y = 0
+	pixel_x = -4
 	},
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 8
@@ -13704,17 +13627,13 @@
 /area/maintenance/moonbase/level1/south)
 "iCE" = (
 /obj/structure/sign/directions/cargo{
-	pixel_x = 0;
-	pixel_y = 6;
-	dir = 4
+	dir = 4;
+	pixel_y = 6
 	},
 /obj/structure/sign/directions/dock{
-	dir = 4;
-	pixel_x = 0;
-	pixel_y = 0
+	dir = 4
 	},
 /obj/structure/sign/directions/recreation{
-	pixel_x = 0;
 	pixel_y = -6
 	},
 /turf/simulated/wall/r_wall,
@@ -13769,11 +13688,11 @@
 	},
 /obj/machinery/button/remote/airlock{
 	desc = "A remote control switch for the medbay foyer.";
+	dir = 1;
 	id = "MedbayFoyer";
 	name = "Medbay Doors Control";
-	pixel_y = -26;
 	pixel_x = -4;
-	dir = 1
+	pixel_y = -26
 	},
 /turf/simulated/floor/carpet/sblucarpet,
 /area/medical/reception)
@@ -13840,8 +13759,7 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
 /obj/structure/sign/department/ass{
-	pixel_x = -32;
-	pixel_y = 0
+	pixel_x = -32
 	},
 /turf/simulated/floor/plating,
 /area/storage/primary)
@@ -14234,8 +14152,7 @@
 	id = "cargoload"
 	},
 /obj/machinery/status_display/supply_display{
-	pixel_y = -32;
-	pixel_x = 0
+	pixel_y = -32
 	},
 /turf/simulated/floor/tiled/milspec,
 /area/quartermaster/storage)
@@ -14740,9 +14657,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/southeast)
@@ -14753,9 +14668,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/light_switch{
+	dir = 1;
 	pixel_x = -23;
-	pixel_y = -24;
-	dir = 1
+	pixel_y = -24
 	},
 /obj/structure/disposalpipe/tagger{
 	dir = 1;
@@ -14962,9 +14877,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/northeast)
 "jqV" = (
@@ -15789,9 +15702,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/southeast)
@@ -15827,8 +15738,7 @@
 	},
 /obj/structure/sign/directions/ladderwell{
 	dir = 4;
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/central)
@@ -15922,9 +15832,7 @@
 /area/rnd/moonbase/robotics/synthetics)
 "jUL" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/structure/cable/blue{
 	icon_state = "1-8"
 	},
@@ -16349,8 +16257,8 @@
 /obj/machinery/atmospherics/unary/vent_pump/high_volume,
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
 	dir = 8;
-	pixel_x = 24;
-	id_tag = "eng_eva"
+	id_tag = "eng_eva";
+	pixel_x = 24
 	},
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
 /turf/simulated/floor/tiled/eris/dark/danger,
@@ -16576,9 +16484,7 @@
 	req_one_access = list(16)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable/blue{
 	icon_state = "1-2"
 	},
@@ -16902,7 +16808,6 @@
 /area/ai)
 "kDe" = (
 /obj/machinery/airlock_sensor/airlock_interior{
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/effect/map_helper/airlock/sensor/int_sensor,
@@ -17000,7 +16905,6 @@
 /area/engineering/locker_room)
 "kGQ" = (
 /obj/item/weapon/book/manual/evaguide{
-	pixel_x = 0;
 	pixel_y = 7
 	},
 /obj/structure/table/reinforced,
@@ -17119,7 +17023,6 @@
 	dir = 8
 	},
 /obj/structure/sign/department/chem{
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/simulated/floor/tiled/white,
@@ -17131,9 +17034,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/maintenance/moonbase/level1/northeast)
 "kJE" = (
@@ -17324,9 +17225,7 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -17451,8 +17350,8 @@
 	},
 /obj/structure/disposalpipe/sortjunction{
 	dir = 4;
-	sortType = "Trash";
-	name = "Trash"
+	name = "Trash";
+	sortType = "Trash"
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/easthall)
@@ -17608,8 +17507,8 @@
 	},
 /obj/machinery/light/floortube{
 	dir = 1;
-	pixel_y = 3;
-	pixel_x = -1
+	pixel_x = -1;
+	pixel_y = 3
 	},
 /obj/effect/floor_decal/steeldecal/steel_decals5{
 	dir = 1
@@ -17658,8 +17557,7 @@
 "kYG" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/sign/warning/mail_delivery{
-	pixel_x = -32;
-	pixel_y = 0
+	pixel_x = -32
 	},
 /obj/machinery/light{
 	dir = 8
@@ -17779,8 +17677,7 @@
 /area/medical/moonbase/traumaward)
 "ldP" = (
 /obj/structure/sign/warning/airlock{
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /turf/simulated/floor/tiled/monotile,
@@ -17866,8 +17763,8 @@
 "liB" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/maintenance{
-	req_one_access = list(5);
-	name = "Morgue"
+	name = "Morgue";
+	req_one_access = list(5)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -17927,9 +17824,7 @@
 	},
 /obj/structure/catwalk,
 /obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/alarm{
 	dir = 8
@@ -18130,7 +18025,6 @@
 	dir = 1
 	},
 /obj/machinery/cell_charger{
-	pixel_x = 0;
 	pixel_y = 4
 	},
 /obj/random/powercell,
@@ -18173,9 +18067,8 @@
 	},
 /obj/effect/map_helper/airlock/sensor/int_sensor,
 /obj/machinery/airlock_sensor/airlock_interior{
-	pixel_x = -24;
-	pixel_y = 0;
-	dir = 4
+	dir = 4;
+	pixel_x = -24
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/west)
@@ -18403,8 +18296,7 @@
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/window/basic/full,
 /obj/machinery/status_display{
-	pixel_y = -32;
-	pixel_x = 0
+	pixel_y = -32
 	},
 /turf/simulated/floor/outdoors/grass/forest{
 	outdoors = 0
@@ -18446,7 +18338,6 @@
 /area/rnd/moonbase/robotics/mechbay)
 "lzI" = (
 /obj/structure/sign/department/cargo_dock{
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /obj/structure/disposalpipe/segment{
@@ -18684,9 +18575,9 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/light_switch{
+	dir = 1;
 	pixel_x = -23;
-	pixel_y = -24;
-	dir = 1
+	pixel_y = -24
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
@@ -18940,9 +18831,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
@@ -19155,9 +19044,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/light_switch{
+	dir = 1;
 	pixel_x = -23;
-	pixel_y = -24;
-	dir = 1
+	pixel_y = -24
 	},
 /turf/simulated/floor/carpet,
 /area/quartermaster/qm)
@@ -19227,9 +19116,7 @@
 /obj/structure/cable/cyan{
 	icon_state = "16-0"
 	},
-/obj/structure/cable/cyan{
-	icon_state = "0-1"
-	},
+/obj/structure/cable/cyan,
 /obj/machinery/atmospherics/pipe/zpipe/up/supply{
 	dir = 1
 	},
@@ -19913,7 +19800,6 @@
 /area/engineering/aft_hallway)
 "mqH" = (
 /obj/machinery/hologram/holopad{
-	pixel_x = 0;
 	pixel_y = 1
 	},
 /turf/simulated/floor/tiled/monotile,
@@ -19946,8 +19832,8 @@
 	},
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
 	dir = 4;
-	pixel_x = -24;
-	id_tag = "nw_airlock"
+	id_tag = "nw_airlock";
+	pixel_x = -24
 	},
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
 /turf/simulated/floor/tiled/eris/dark/danger,
@@ -20580,9 +20466,9 @@
 	dir = 6
 	},
 /obj/machinery/light_switch{
+	dir = 1;
 	pixel_x = -23;
-	pixel_y = -24;
-	dir = 1
+	pixel_y = -24
 	},
 /turf/simulated/floor/tiled/milspec/sterile,
 /area/medical/surgery2)
@@ -20632,8 +20518,8 @@
 "mVw" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/security{
-	name = "Security Bathroom";
-	id_tag = "secbathroom1"
+	id_tag = "secbathroom1";
+	name = "Security Bathroom"
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/security/security_bathroom)
@@ -20655,7 +20541,6 @@
 	},
 /obj/structure/bed/chair/backed_red,
 /obj/structure/sign/department/robo{
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/simulated/floor/tiled,
@@ -20996,19 +20881,15 @@
 /area/hallway/moonbase/southwesthall)
 "nmt" = (
 /obj/structure/sign/directions/security{
-	dir = 1;
-	pixel_x = 0;
-	pixel_y = 0
+	dir = 1
 	},
 /obj/structure/sign/directions/engineering{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = -6
 	},
 /obj/structure/sign/directions/command{
 	dir = 1;
-	pixel_y = 6;
-	pixel_x = 0
+	pixel_y = 6
 	},
 /turf/simulated/wall/r_wall,
 /area/hallway/moonbase/easthall)
@@ -21457,8 +21338,8 @@
 	dir = 4
 	},
 /obj/machinery/conveyor{
-	id = "cargounload";
-	dir = 4
+	dir = 4;
+	id = "cargounload"
 	},
 /turf/simulated/floor/tiled/milspec,
 /area/quartermaster/storage)
@@ -21637,9 +21518,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
@@ -21988,7 +21867,6 @@
 /obj/item/weapon/towel/random,
 /obj/item/weapon/towel/random,
 /obj/machinery/vending/wallmed1/public{
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on{
@@ -22247,8 +22125,8 @@
 "ogR" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/maintenance/engi{
-	req_one_access = null;
-	req_access = list(5,10)
+	req_access = list(5,10);
+	req_one_access = null
 	},
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
@@ -22379,7 +22257,6 @@
 	},
 /obj/effect/map_helper/airlock/sensor/chamber_sensor,
 /obj/machinery/airlock_sensor{
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
@@ -22751,6 +22628,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/machinery/vending/loadout/uniform,
 /turf/simulated/floor/tiled/white,
 /area/medical/moonbase/resleeving)
 "ovD" = (
@@ -22899,8 +22777,8 @@
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/multi_tile/glass{
 	dir = 1;
-	req_one_access = list(1);
-	name = "Security"
+	name = "Security";
+	req_one_access = list(1)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
@@ -23249,9 +23127,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/moonbase/level1/northeast)
 "oKL" = (
@@ -23289,7 +23165,6 @@
 	dir = 1
 	},
 /obj/machinery/requests_console/preset/security{
-	pixel_x = 0;
 	pixel_y = 28
 	},
 /turf/simulated/floor/tiled/dark,
@@ -23350,9 +23225,7 @@
 /obj/machinery/computer/rdconsole/robotics{
 	dir = 4
 	},
-/obj/structure/cable/white{
-	icon_state = "0-1"
-	},
+/obj/structure/cable/white,
 /obj/machinery/power/apc{
 	dir = 8
 	},
@@ -23517,7 +23390,6 @@
 	dir = 1
 	},
 /obj/structure/sign/department/prison{
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /turf/simulated/floor/tiled/dark,
@@ -23772,8 +23644,8 @@
 "pgH" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/mining{
-	req_one_access = list(31);
-	name = "Cargo Equipment"
+	name = "Cargo Equipment";
+	req_one_access = list(31)
 	},
 /obj/structure/cable/green{
 	icon_state = "1-2"
@@ -24151,9 +24023,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/light_switch{
+	dir = 1;
 	pixel_x = -23;
-	pixel_y = -24;
-	dir = 1
+	pixel_y = -24
 	},
 /turf/simulated/floor/tiled,
 /area/quartermaster/moonbase/lockerrom)
@@ -24186,9 +24058,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/landmark/vermin,
 /turf/simulated/floor/tiled/steel_dirty,
@@ -24351,8 +24221,7 @@
 	pixel_y = -5
 	},
 /obj/structure/sign/directions/medical{
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /obj/structure/sign/directions/cargo{
 	pixel_x = 32;
@@ -24651,7 +24520,6 @@
 	dir = 1
 	},
 /obj/structure/sign/department/chapel{
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /obj/machinery/camera/network/halls,
@@ -24734,8 +24602,8 @@
 "pOp" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/glass{
-	req_one_access = list(25);
-	name = "Kitchen"
+	name = "Kitchen";
+	req_one_access = list(25)
 	},
 /obj/structure/cable/green{
 	icon_state = "1-2"
@@ -24902,8 +24770,8 @@
 "pTL" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/multi_tile/glass{
-	req_one_access = list(10);
-	dir = 1
+	dir = 1;
+	req_one_access = list(10)
 	},
 /obj/structure/cable/orange{
 	icon_state = "4-8"
@@ -25068,13 +24936,9 @@
 	dir = 1
 	},
 /obj/item/weapon/storage/toolbox/mechanical{
-	pixel_y = 8;
-	pixel_x = 0
+	pixel_y = 8
 	},
-/obj/item/weapon/storage/toolbox/mechanical{
-	pixel_y = 0;
-	pixel_x = 0
-	},
+/obj/item/weapon/storage/toolbox/mechanical,
 /turf/simulated/floor/airless,
 /area/moonbase/surface/levelone/west)
 "qbv" = (
@@ -25313,8 +25177,8 @@
 	},
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
-	pixel_y = 24;
-	id_tag = "solars_airlock"
+	id_tag = "solars_airlock";
+	pixel_y = 24
 	},
 /obj/machinery/light,
 /turf/simulated/floor/tiled/eris/dark/danger,
@@ -25576,7 +25440,6 @@
 "qvz" = (
 /obj/effect/floor_decal/milspec/color/emerald/half,
 /obj/structure/reagent_dispensers/acid{
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /turf/simulated/floor/tiled,
@@ -25613,8 +25476,8 @@
 /area/rnd/research_foyer)
 "qwu" = (
 /obj/machinery/door/airlock/multi_tile/glass{
-	req_one_access = list(5);
-	name = "Paramedic Bay"
+	name = "Paramedic Bay";
+	req_one_access = list(5)
 	},
 /obj/machinery/door/firedoor/glass,
 /turf/simulated/floor/tiled/steel_ridged,
@@ -25708,8 +25571,7 @@
 "qyU" = (
 /obj/machinery/conveyor_switch/oneway{
 	id = "cargodelivery";
-	pixel_x = -9;
-	pixel_y = 0
+	pixel_x = -9
 	},
 /obj/effect/floor_decal/steeldecal/steel_decals10{
 	dir = 10
@@ -25813,7 +25675,6 @@
 "qDa" = (
 /obj/structure/window/reinforced,
 /obj/machinery/light/floortube{
-	pixel_x = 0;
 	pixel_y = -2
 	},
 /obj/effect/floor_decal/steeldecal/steel_decals5,
@@ -25851,9 +25712,9 @@
 	},
 /obj/effect/map_helper/airlock/sensor/int_sensor,
 /obj/machinery/airlock_sensor/airlock_interior{
-	pixel_y = -32;
+	dir = 4;
 	pixel_x = -24;
-	dir = 4
+	pixel_y = -32
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden{
 	dir = 8
@@ -25915,9 +25776,9 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/light_switch{
+	dir = 1;
 	pixel_x = -23;
-	pixel_y = -24;
-	dir = 1
+	pixel_y = -24
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/engineering/locker_room)
@@ -26231,12 +26092,8 @@
 /obj/structure/cable{
 	icon_state = "16-0"
 	},
-/obj/machinery/atmospherics/pipe/zpipe/up/supply{
-	dir = 2
-	},
-/obj/machinery/atmospherics/pipe/zpipe/up/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/zpipe/up/supply,
+/obj/machinery/atmospherics/pipe/zpipe/up/scrubbers,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/north)
 "qSl" = (
@@ -26285,8 +26142,8 @@
 "qTI" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/security{
-	name = "Security Bathroom";
-	id_tag = "secbathroom2"
+	id_tag = "secbathroom2";
+	name = "Security Bathroom"
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/security/security_bathroom)
@@ -26377,8 +26234,8 @@
 	},
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
 	dir = 4;
-	pixel_x = -24;
-	id_tag = "ne_airlock"
+	id_tag = "ne_airlock";
+	pixel_x = -24
 	},
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
 /turf/simulated/floor/tiled/eris/dark/danger,
@@ -26421,8 +26278,7 @@
 "qXW" = (
 /obj/machinery/door/firedoor/glass,
 /obj/structure/sign/department/bar{
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/crew_quarters/bar)
@@ -26657,7 +26513,6 @@
 	dir = 1
 	},
 /obj/machinery/cell_charger{
-	pixel_x = 0;
 	pixel_y = 4
 	},
 /obj/random/powercell,
@@ -26669,7 +26524,6 @@
 	},
 /obj/structure/closet/emcloset,
 /obj/structure/sign/department/engine{
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/simulated/floor/tiled,
@@ -26755,7 +26609,6 @@
 	dir = 4
 	},
 /obj/structure/sign/calendar{
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/simulated/floor/carpet/sblucarpet,
@@ -26890,13 +26743,13 @@
 	pixel_y = -38
 	},
 /obj/structure/sign/directions/evac{
+	dir = 4;
 	pixel_x = 32;
-	pixel_y = -26;
-	dir = 4
+	pixel_y = -26
 	},
 /obj/structure/sign/directions/command{
-	pixel_x = 32;
 	dir = 8;
+	pixel_x = 32;
 	pixel_y = -32
 	},
 /turf/simulated/floor/tiled,
@@ -27033,8 +26886,7 @@
 /area/maintenance/moonbase/level1/west)
 "rqo" = (
 /obj/structure/sign/painting/public{
-	pixel_x = -30;
-	pixel_y = 0
+	pixel_x = -30
 	},
 /turf/simulated/floor/tiled/dark,
 /area/chapel/main)
@@ -27772,7 +27624,6 @@
 /area/crew_quarters/bar)
 "rPI" = (
 /obj/machinery/hologram/holopad{
-	pixel_x = 0;
 	pixel_y = 1
 	},
 /turf/simulated/floor/tiled/monotile,
@@ -27832,8 +27683,8 @@
 	dir = 2
 	},
 /obj/machinery/door/window/brigdoor/northright{
-	req_one_access = list(29,47);
-	req_access = null
+	req_access = null;
+	req_one_access = list(29,47)
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/rnd/moonbase/robotics)
@@ -28092,9 +27943,7 @@
 "rYn" = (
 /obj/structure/catwalk,
 /obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/open,
 /area/moonbase/basement/caves/level2)
@@ -28165,7 +28014,6 @@
 /obj/effect/floor_decal/milspec/color/blue,
 /obj/structure/table/darkglass,
 /obj/random/paicard{
-	pixel_x = 0;
 	pixel_y = 8
 	},
 /turf/simulated/floor/tiled,
@@ -28449,9 +28297,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/northeast)
@@ -28660,10 +28506,7 @@
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/westhall)
 "soo" = (
-/obj/structure/sign/department/rnd{
-	pixel_x = 0;
-	pixel_y = 0
-	},
+/obj/structure/sign/department/rnd,
 /turf/simulated/wall/r_wall,
 /area/rnd/moonbase/rndlab)
 "soD" = (
@@ -28886,9 +28729,9 @@
 "svr" = (
 /obj/machinery/button/remote/blast_door{
 	id = "bridgelockdown";
-	pixel_y = 36;
+	name = "Bridge Lockdown";
 	pixel_x = -6;
-	name = "Bridge Lockdown"
+	pixel_y = 36
 	},
 /turf/simulated/floor/tiled,
 /area/bridge)
@@ -29163,8 +29006,8 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/sortjunction/flipped{
-	sortType = "Security";
-	name = "Security"
+	name = "Security";
+	sortType = "Security"
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/easthall)
@@ -29212,7 +29055,6 @@
 "sCM" = (
 /obj/structure/table/woodentable,
 /obj/random/paicard{
-	pixel_x = 0;
 	pixel_y = 6
 	},
 /turf/simulated/floor/outdoors/newdirt{
@@ -29227,7 +29069,6 @@
 	dir = 4
 	},
 /obj/structure/sign/calendar{
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /turf/simulated/floor/carpet/sblucarpet,
@@ -29295,7 +29136,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/light_switch{
-	pixel_x = -23;
+	pixel_x = 21;
 	pixel_y = 24
 	},
 /turf/simulated/floor/tiled/white,
@@ -29691,8 +29532,8 @@
 "sSi" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/maintenance{
-	req_one_access = list(5);
-	name = "Morgue"
+	name = "Morgue";
+	req_one_access = list(5)
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/medical/morgue)
@@ -29703,9 +29544,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/west)
 "sSK" = (
@@ -29813,7 +29652,6 @@
 /obj/item/device/healthanalyzer/guide,
 /obj/item/device/healthanalyzer/guide,
 /obj/structure/sign/department/operational{
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/simulated/floor/tiled/white,
@@ -29950,9 +29788,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/atmospherics/pipe/zpipe/up/scrubbers,
-/obj/machinery/atmospherics/pipe/zpipe/up/supply{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/zpipe/up/supply,
 /turf/simulated/floor/tiled/techfloor,
 /area/maintenance/moonbase/level1/northwest)
 "sZJ" = (
@@ -30256,9 +30092,7 @@
 	req_one_access = list(16)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable/blue{
 	icon_state = "1-2"
 	},
@@ -30340,9 +30174,9 @@
 	},
 /obj/effect/map_helper/airlock/sensor/int_sensor,
 /obj/machinery/airlock_sensor/airlock_interior{
-	pixel_y = 32;
+	dir = 4;
 	pixel_x = -24;
-	dir = 4
+	pixel_y = 32
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/solars)
@@ -30649,9 +30483,8 @@
 /area/engineering/moonbase/techstorage)
 "tzM" = (
 /obj/machinery/airlock_sensor/airlock_interior{
-	pixel_x = -24;
-	pixel_y = 0;
-	dir = 4
+	dir = 4;
+	pixel_x = -24
 	},
 /obj/effect/map_helper/airlock/sensor/int_sensor,
 /obj/machinery/atmospherics/pipe/simple/hidden{
@@ -30782,8 +30615,7 @@
 /area/rnd/xenobiology/xenoflora)
 "tDa" = (
 /obj/structure/sign/department/morgue{
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /obj/machinery/camera/network/medbay{
 	dir = 8
@@ -30912,9 +30744,9 @@
 "tGf" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/multi_tile/glass{
-	req_one_access = list(10);
 	dir = 1;
-	name = "Engineering"
+	name = "Engineering";
+	req_one_access = list(10)
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/engineering/foyer)
@@ -32072,7 +31904,6 @@
 /obj/structure/table/hardwoodtable,
 /obj/machinery/chemical_dispenser/bar_soft/full{
 	dir = 8;
-	pixel_x = 0;
 	pixel_y = 4
 	},
 /obj/machinery/light/small/fairylights{
@@ -32146,9 +31977,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/segment{
 	dir = 8;
@@ -32567,7 +32396,6 @@
 	},
 /obj/item/weapon/pen,
 /obj/machinery/requests_console/preset/medical{
-	pixel_x = 0;
 	pixel_y = 28
 	},
 /turf/simulated/floor/carpet/sblucarpet,
@@ -32583,9 +32411,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
@@ -32886,8 +32712,8 @@
 "vcI" = (
 /obj/machinery/door/firedoor/glass,
 /obj/machinery/door/airlock/phoron{
-	req_one_access = list(26);
-	name = "Janitorial"
+	name = "Janitorial";
+	req_one_access = list(26)
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -32920,9 +32746,9 @@
 /area/ai_monitored/storage/eva)
 "vfh" = (
 /obj/machinery/light_switch{
+	dir = 1;
 	pixel_x = -23;
-	pixel_y = -24;
-	dir = 1
+	pixel_y = -24
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ai_cyborg_station)
@@ -33121,7 +32947,6 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/cell_charger{
-	pixel_x = 0;
 	pixel_y = 4
 	},
 /obj/random/powercell,
@@ -33389,9 +33214,9 @@
 	dir = 8
 	},
 /obj/machinery/airlock_sensor/airlock_interior{
+	dir = 8;
 	pixel_x = 24;
-	pixel_y = -32;
-	dir = 8
+	pixel_y = -32
 	},
 /obj/effect/map_helper/airlock/sensor/int_sensor,
 /obj/machinery/atmospherics/pipe/simple/hidden{
@@ -33464,9 +33289,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/light_switch{
+	dir = 1;
 	pixel_x = -23;
-	pixel_y = -24;
-	dir = 1
+	pixel_y = -24
 	},
 /turf/simulated/floor/tiled/white,
 /area/medical/chemistry)
@@ -33478,9 +33303,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /turf/simulated/floor/carpet/blue2,
 /area/moonbase/dorms)
 "vCk" = (
@@ -33817,9 +33640,7 @@
 /area/rnd/research_foyer_auxiliary)
 "vOZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/plating,
 /area/moonbase/basement/caves/level2)
 "vPn" = (
@@ -33868,8 +33689,8 @@
 	frequency = 1379;
 	master_tag = "xenobot_airlock_control";
 	name = "Xenobotany Access Button";
-	req_one_access = list(47,55);
-	pixel_y = 24
+	pixel_y = 24;
+	req_one_access = list(47,55)
 	},
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -33941,8 +33762,7 @@
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/window/basic/full,
 /obj/machinery/status_display{
-	pixel_y = -32;
-	pixel_x = 0
+	pixel_y = -32
 	},
 /turf/simulated/floor/outdoors/grass/forest{
 	outdoors = 0
@@ -34123,8 +33943,7 @@
 	},
 /obj/item/weapon/reagent_containers/glass/beaker/sulphuric,
 /obj/structure/reagent_dispensers/acid{
-	pixel_x = -32;
-	pixel_y = 0
+	pixel_x = -32
 	},
 /turf/simulated/floor/tiled/steel,
 /area/rnd/moonbase/robotics)
@@ -34146,9 +33965,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/maintenance/moonbase/level1/northeast)
 "vXd" = (
@@ -34163,7 +33980,6 @@
 	dir = 1
 	},
 /obj/random/paicard{
-	pixel_x = 0;
 	pixel_y = 6
 	},
 /turf/simulated/floor/carpet/green,
@@ -34187,8 +34003,7 @@
 	dir = 10
 	},
 /obj/structure/sign/warning/airlock{
-	pixel_x = -32;
-	pixel_y = 0
+	pixel_x = -32
 	},
 /turf/simulated/floor/tiled,
 /area/ai_monitored/storage/eva)
@@ -34804,7 +34619,6 @@
 	dir = 8
 	},
 /obj/structure/sign/department/operational{
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/simulated/floor/tiled/white,
@@ -34858,9 +34672,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/maintenance/moonbase/level1/northeast)
@@ -35166,7 +34978,6 @@
 	dir = 8
 	},
 /obj/item/weapon/paper/dockingcodes/sp{
-	pixel_x = 0;
 	pixel_y = 6
 	},
 /turf/simulated/floor/carpet/sblucarpet,
@@ -35651,7 +35462,6 @@
 	},
 /obj/effect/map_helper/airlock/sensor/chamber_sensor,
 /obj/machinery/airlock_sensor{
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/effect/map_helper/airlock/atmos/chamber_pump,
@@ -36146,8 +35956,8 @@
 	dir = 4
 	},
 /obj/machinery/conveyor{
-	id = "cargounload";
-	dir = 4
+	dir = 4;
+	id = "cargounload"
 	},
 /turf/simulated/floor/tiled/milspec,
 /area/quartermaster/storage)
@@ -36327,7 +36137,6 @@
 "xwV" = (
 /obj/structure/closet/l3closet/janitor,
 /obj/machinery/requests_console/preset/janitor{
-	pixel_x = 0;
 	pixel_y = 28
 	},
 /turf/simulated/floor/tiled/monotile,
@@ -36455,8 +36264,8 @@
 	},
 /obj/structure/sign/directions/evac{
 	dir = 4;
-	pixel_y = 41;
-	pixel_x = 32
+	pixel_x = 32;
+	pixel_y = 41
 	},
 /obj/structure/sign/directions/chapel{
 	dir = 4;
@@ -36493,9 +36302,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/northeast)
 "xzS" = (
@@ -36511,7 +36318,6 @@
 /obj/effect/floor_decal/milspec/color/emerald/half,
 /obj/structure/table/standard,
 /obj/machinery/cell_charger{
-	pixel_x = 0;
 	pixel_y = 4
 	},
 /obj/random/powercell,
@@ -36776,9 +36582,8 @@
 	},
 /obj/effect/floor_decal/milspec/color/orange,
 /obj/machinery/requests_console/preset/engineering{
-	pixel_x = 0;
-	pixel_y = -28;
-	dir = 1
+	dir = 1;
+	pixel_y = -28
 	},
 /turf/simulated/floor/tiled,
 /area/engineering/engineering_monitoring)
@@ -36811,11 +36616,10 @@
 	dir = 4
 	},
 /obj/machinery/conveyor{
-	id = "cargounload";
-	dir = 5
+	dir = 5;
+	id = "cargounload"
 	},
 /obj/machinery/status_display/supply_display{
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /turf/simulated/floor/tiled/milspec,
@@ -37174,7 +36978,6 @@
 	name = "lightsout"
 	},
 /obj/machinery/hologram/holopad{
-	pixel_x = 0;
 	pixel_y = 1
 	},
 /turf/simulated/floor/tiled/monotile,
@@ -37230,9 +37033,9 @@
 	icon_state = "pipe-c"
 	},
 /obj/machinery/light_switch{
+	dir = 1;
 	pixel_x = -23;
-	pixel_y = -24;
-	dir = 1
+	pixel_y = -24
 	},
 /turf/simulated/floor/tiled/dark,
 /area/security/checkpoint)
@@ -37303,9 +37106,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
@@ -37466,7 +37267,6 @@
 /area/quartermaster/moonbase/hallway)
 "ygX" = (
 /obj/structure/sign/painting/public{
-	pixel_x = 0;
 	pixel_y = -30
 	},
 /turf/simulated/floor/carpet/purcarpet,
@@ -44110,7 +43910,7 @@ map
 rlg
 evn
 bBV
-fYk
+tGf
 evn
 xUS
 lbM

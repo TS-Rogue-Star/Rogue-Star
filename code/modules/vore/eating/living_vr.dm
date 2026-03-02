@@ -398,13 +398,13 @@
 //
 // Clearly super important. Obviously.
 //
-/mob/living/proc/lick(mob/living/tasted in living_mobs_in_view(1, TRUE)) //RS Add Chomp port #7484 | no cross dimensional licking
+/mob/living/proc/lick(mob/living/tasted in (living_mobs_in_view(1, TRUE) - src)) //RS Add Chomp port #7484 | no cross dimensional licking || RS Edit: No self licking or smelling (Lira, March 2026)
 	set name = "Lick"
 	set category = "IC"
 	set desc = "Lick someone nearby!"
 	set popup_menu = FALSE // Stop licking by accident!
 
-	if(!istype(tasted))
+	if(!istype(tasted) || tasted == src) // RS Edit: No self licking or smelling (Lira, March 2026)
 		return
 
 	if(!checkClickCooldown() || incapacitated(INCAPACITATION_ALL))
@@ -439,7 +439,7 @@
 
 
 //This is just the above proc but switched about.
-/mob/living/proc/smell(mob/living/smelled  in living_mobs_in_view(1, TRUE)) //RS Add Chomp port #7484 | no cross dimensional Sniffing <- I kinda like the sniffing tho it funny
+/mob/living/proc/smell(mob/living/smelled  in (living_mobs_in_view(1, TRUE) - src)) //RS Add Chomp port #7484 | no cross dimensional Sniffing <- I kinda like the sniffing tho it funny || RS Edit: No self licking or smelling (Lira, March 2026)
 	set name = "Smell"
 	set category = "IC"
 	set desc = "Smell someone nearby!"

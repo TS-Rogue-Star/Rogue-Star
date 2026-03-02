@@ -1152,13 +1152,15 @@
 			for(var/slot in slots)
 				var/obj/item/I = M.get_equipped_item(slot = slot)
 				if(I)
-					M.unEquip(I,force = TRUE)
-					if(contaminates)
+					if(contaminates)	//RS EDIT START
 						I.gurgle_contaminate(contents, contamination_flavor, contamination_color) //We do an initial contamination pass to get stuff like IDs wet.
-					if(item_digest_mode == IM_HOLD)
-						items_preserved |= I
-					else if(item_digest_mode == IM_DIGEST_FOOD && !(istype(I,/obj/item/weapon/reagent_containers/food) || istype(I,/obj/item/organ)))
-						items_preserved |= I
+					if(!SSinventory_return.preserve_object(I))
+						M.unEquip(I,force = TRUE)
+						if(item_digest_mode == IM_HOLD)
+							items_preserved |= I
+						else if(item_digest_mode == IM_DIGEST_FOOD && !(istype(I,/obj/item/weapon/reagent_containers/food) || istype(I,/obj/item/organ)))
+							items_preserved |= I
+					//RS EDIT END
 
 	//Reagent transfer
 	if(ishuman(owner))
