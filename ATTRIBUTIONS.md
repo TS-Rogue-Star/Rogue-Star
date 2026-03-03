@@ -588,9 +588,15 @@ Link: https://github.com/TS-Rogue-Star/Rogue-Star/pull/987<br>
 **License:** Licensed for use by Rogue Star; unlicensed for further use without permission of copyright holder<br>
 **Notes:** All files and icon-states within this folder are covered under the above license, as per the included attribution.txt file
 <br>
-File: icons/mob/vore/taurs_rs.dmi<br>
-Icon-States: synthcow_s, synthcow_markings, synthcow_markings2<br>
-Creator: ClaraCow <br>
-Link: https://github.com/TS-Rogue-Star/Rogue-Star/pull/1249<br>
-License: CC BY-SA 3.0<br>
+**File**: icons/mob/vore/taurs_rs.dmi<br>
+**Icon-States**: synthcow_s, synthcow_markings, synthcow_markings2<br>
+**Creator**: ClaraCow <br>
+**Link**: https://github.com/TS-Rogue-Star/Rogue-Star/pull/1249<br>
+**License**: CC BY-SA 3.0<br>
+<br>
+**File**: icons/mob/talk_vr.dmi<br>
+**Icon-States**: cow_talking, cow0, cow1, cow2<br>
+**Creator**: Claracow<br>
+**Link**:https://github.com/TS-Rogue-Star/Rogue-Star/pull/1264<br>
+**License**: CC BY-SA 3.0<br>
 <br>
