@@ -10,6 +10,11 @@
 	var/busy_bank = FALSE
 	var/static/list/item_takers = list()
 	var/static/list/unlockable_takers = list()	//RS ADD
+	// RS Add Start: New Item Bank Interface (Lira, March 2026)
+	var/static/list/item_preview_cache = list()
+	var/const/general_compartment_capacity = 50
+	var/static/personal_compartment_capacity = null
+	// RS Add End
 
 /obj/machinery/item_bank/proc/persist_item_savefile_path(mob/user)
 	return "data/player_saves/[copytext(user.ckey, 1, 2)]/[user.ckey]/persist_item.sav"
@@ -62,26 +67,22 @@
 /obj/machinery/item_bank/Initialize()
 	. = ..()
 
+// RS Edit Start: New Item Bank Interface (Lira, March 2026)
 /obj/machinery/item_bank/attack_hand(mob/living/user)
 	. = ..()
-	if(!ishuman(user))
+	if(!can_use_bank(user, announce = TRUE))
 		return
-	if(istype(user) && Adjacent(user))
-		if(inoperable() || panel_open)
-			to_chat(user, "<span class='warning'>\The [src] seems to be nonfunctional...</span>")
-		else
-			start_using(user)
+	start_using(user)
 
 /obj/machinery/item_bank/proc/start_using(mob/living/user)
-	if(!ishuman(user))
+	if(!can_use_bank(user, announce = TRUE))
 		return
 	if(busy_bank)
 		to_chat(user, "<span class='warning'>\The [src] is already in use.</span>")
 		return
 	busy_bank = TRUE
-	if(legacy_detect(user))	//RS EDIT START
+	if(legacy_detect(user))
 		if(tgui_alert(user, "A legacy item has been detected in storage. This item must be bound to a character. Would you like to add it to [user.real_name]'s general storage?", "[src] legacy item detected", list("Yes","No"), timeout = 10 SECONDS) == "Yes")
-
 			var/itemname = persist_item_savefile_load(user, "name")
 			var/itemtype = persist_item_savefile_load(user, "type")
 			user.etching.legacy_conversion(itemname,itemtype)
@@ -90,149 +91,375 @@
 			log_debug("<span class = 'danger'>[user]/[user.ckey] converted a legacy item persist file to an item_storage state. Item was, [itemname] - [itemtype]</span>")
 			busy_bank = FALSE
 			return
-	var/choice = tgui_alert(user, "What would you like to do [src]?", "[src]", list("General", "Personal","Coin", "Info", "Cancel"), timeout = 10 SECONDS)
-	if(!choice || choice == "Cancel" || !Adjacent(user) || inoperable() || panel_open)
-		busy_bank = FALSE
-		return
-	else if(choice == "General")	//RS EDIT END
-		if(user.hands_are_full())
-			to_chat(user,"<span class='notice'>Your hands are full!</span>")
-			busy_bank = FALSE
-			return
-		if(user.ckey in item_takers)
-			to_chat(user, "<span class='warning'>You have already taken something out of \the [src] this shift.</span>")
-			busy_bank = FALSE
-			return
-		var/list/our_item = list()	//RS EDIT START
-		if(user.etching.item_storage.len)
-			our_item = tgui_input_list(user, "Which item would you like to retrieve?", "[src] - General Compartment",user.etching.item_storage)
-			if(!our_item)
-				busy_bank = FALSE
-				return
+	busy_bank = FALSE
+	tgui_interact(user)
+
+/obj/machinery/item_bank/tgui_state(mob/user)
+	return GLOB.tgui_physical_state
+
+/obj/machinery/item_bank/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ItemBank", name)
+		ui.open()
+		user.playsound_local(get_turf(src), 'sound/rogue-star/lockbox jingle.ogg', 50, FALSE)
+
+/obj/machinery/item_bank/proc/can_use_bank(mob/living/user, announce = FALSE)
+	if(!ishuman(user) || !Adjacent(user))
+		return FALSE
+	if(inoperable() || panel_open)
+		if(announce)
+			to_chat(user, "<span class='warning'>\The [src] seems to be nonfunctional...</span>")
+		return FALSE
+	return TRUE
+
+/obj/machinery/item_bank/proc/get_info_text()
+	return "The lockbox can store items for you between shifts. Anything that has been retrieved from the general compartment cannot be stored again in the same shift. Anyone can withdraw from the general compartment one time per shift. Some items are not accepted by the lockbox."
+
+/obj/machinery/item_bank/proc/resolve_item_type(var/item_type)
+	if(ispath(item_type))
+		return item_type
+	if(istext(item_type))
+		return text2path(item_type)
+	return null
+
+/obj/machinery/item_bank/proc/is_personal_item_claimed(mob/living/carbon/human/user, var/item_name, var/item_type)
+	if(!user || !istext(item_name))
+		return FALSE
+
+	var/claimed_key = "[user.real_name] - [item_name]"
+	if(claimed_key in unlockable_takers)
+		return TRUE
+
+	if(ispath(item_type))
+		var/default_name = "[initial(item_type:name)]"
+		if(istext(default_name) && length(default_name) && default_name != item_name)
+			var/default_claimed_key = "[user.real_name] - [default_name]"
+			if(default_claimed_key in unlockable_takers)
+				return TRUE
+
+	return FALSE
+
+/obj/machinery/item_bank/proc/get_unlockable_display_name(var/item_name, var/item_type)
+	if(item_name == "unlockable_name" && ispath(item_type))
+		return "[initial(item_type:name)]"
+	return item_name
+
+/obj/machinery/item_bank/proc/get_type_preview(var/item_type)
+	if(!ispath(item_type))
+		return null
+
+	var/icon_ref = initial(item_type:icon)
+	if(!icon_ref)
+		return null
+
+	var/icon_state = initial(item_type:icon_state)
+	var/cache_key = "[item_type]|[icon_ref]|[icon_state]"
+	if(cache_key in item_preview_cache)
+		var/cached_preview = item_preview_cache[cache_key]
+		return length(cached_preview) ? cached_preview : null
+
+	var/icon/preview_icon = icon(icon_ref, icon_state ? icon_state : "", SOUTH, 1, FALSE)
+	var/encoded_preview = null
+	if(preview_icon)
+		encoded_preview = icon2base64(preview_icon)
+	if(!istext(encoded_preview))
+		encoded_preview = null
+
+	item_preview_cache[cache_key] = encoded_preview ? encoded_preview : ""
+	return encoded_preview ? encoded_preview : null
+
+/obj/machinery/item_bank/proc/get_general_entries(mob/living/carbon/human/user)
+	var/list/entries = list()
+	if(!user || !user.etching || !islist(user.etching.item_storage) || !user.etching.item_storage.len)
+		return entries
+
+	var/list/item_keys = list()
+	for(var/item_name in user.etching.item_storage)
+		item_keys += "[item_name]"
+	item_keys = sortList(item_keys)
+
+	for(var/item_name in item_keys)
+		var/raw_type = user.etching.item_storage[item_name]
+		var/item_type = resolve_item_type(raw_type)
+		entries += list(list(
+			"id" = item_name,
+			"label" = item_name,
+			"type" = item_type ? "[item_type]" : "[raw_type]",
+			"preview" = get_type_preview(item_type)
+		))
+
+	return entries
+
+/obj/machinery/item_bank/proc/get_personal_entries(mob/living/carbon/human/user)
+	var/list/entries = list()
+	if(!user || !user.etching || !islist(user.etching.unlockables) || !user.etching.unlockables.len)
+		return entries
+
+	var/list/item_keys = list()
+	for(var/item_name in user.etching.unlockables)
+		item_keys += "[item_name]"
+	item_keys = sortList(item_keys)
+
+	for(var/item_name in item_keys)
+		var/raw_type = user.etching.unlockables[item_name]
+		var/item_type = resolve_item_type(raw_type)
+		var/display_name = get_unlockable_display_name(item_name, item_type)
+		entries += list(list(
+			"id" = item_name,
+			"label" = display_name,
+			"type" = item_type ? "[item_type]" : "[raw_type]",
+			"preview" = get_type_preview(item_type),
+			"claimed" = is_personal_item_claimed(user, item_name, item_type)
+		))
+
+	return entries
+
+/obj/machinery/item_bank/proc/get_personal_capacity()
+	if(isnum(personal_compartment_capacity))
+		return personal_compartment_capacity
+
+	var/list/name_registry = list()
+	if(islist(permanent_unlockables))
+		for(var/raw_type in permanent_unlockables)
+			var/item_type = resolve_item_type(raw_type)
+			if(!ispath(item_type))
+				continue
+			var/item_name = initial(item_type:name)
+			if(!istext(item_name) || !length(item_name))
+				continue
+			name_registry[item_name] = TRUE
+
+	personal_compartment_capacity = name_registry.len
+	return personal_compartment_capacity
+
+/obj/machinery/item_bank/tgui_data(mob/user)
+	var/list/data = list()
+	var/mob/living/carbon/human/human_user = user
+	if(!istype(human_user))
+		return data
+
+	data["busy"] = busy_bank
+	data["characterName"] = human_user.real_name
+	data["infoText"] = get_info_text()
+	data["generalTaken"] = (human_user.ckey in item_takers)
+	data["handsFull"] = human_user.hands_are_full()
+	data["generalItems"] = get_general_entries(human_user)
+	data["personalItems"] = get_personal_entries(human_user)
+	data["generalCapacity"] = general_compartment_capacity
+	data["personalCapacity"] = get_personal_capacity()
+	data["triangles"] = human_user.etching ? human_user.etching.triangles : 0
+	return data
+
+/obj/machinery/item_bank/proc/do_coin_withdrawal(mob/living/carbon/human/user, var/withdrawal_amount)
+	if(busy_bank)
+		to_chat(user, "<span class='warning'>\The [src] is already in use.</span>")
+		return FALSE
+	if(!user.etching)
+		to_chat(user, "<span class='warning'>No etching data was found.</span>")
+		return FALSE
+
+	var/datum/etching/E = user.etching
+	if(E.triangles <= 0)
+		to_chat(user, "<span class='warning'>You haven't got any coins banked...</span>")
+		return FALSE
+
+	withdrawal_amount = round(withdrawal_amount)
+	if(withdrawal_amount <= 0)
+		return FALSE
+
+	if(withdrawal_amount > E.triangles)
+		to_chat(user, "<span class='warning'>\The [src] buzzes at you and flashes red. You do not have ◬:[withdrawal_amount] banked. You have a balance of ◬:[E.triangles]...</span>")
+		return FALSE
+
+	busy_bank = TRUE
+	E.triangles -= withdrawal_amount
+	E.needs_saving = TRUE
+	visible_message("<span class='notice'>\The [src] rattles as it dispenses coins!</span>")
+	var/turf/here = get_turf(src)
+	var/obj/item/weapon/aliencoin/A
+	while(withdrawal_amount > 0)
+		if(withdrawal_amount >= 1000)
+			A = new /obj/item/weapon/aliencoin/exotic(here)
+		else if(withdrawal_amount >= 100)
+			A = new /obj/item/weapon/aliencoin/diamond(here)
+		else if(withdrawal_amount >= 20)
+			A = new /obj/item/weapon/aliencoin/phoron(here)
+		else if(withdrawal_amount >= 10)
+			A = new /obj/item/weapon/aliencoin/gold(here)
+		else if(withdrawal_amount >= 5)
+			A = new /obj/item/weapon/aliencoin/silver(here)
 		else
-			to_chat(user, "<span class='warning'>\The [src] doesn't seem to have anything for you...</span>")
-			busy_bank = FALSE
-			return
-		choice = tgui_alert(user, "If you remove \the [our_item] from the bank, it will be unable to be stored again. Do you still want to remove it?", "[src]", list("No", "Yes"), timeout = 10 SECONDS)	//RS EDIT END
-		icon_state = "item_bank_o"
-		if(!choice || choice == "No" || !Adjacent(user) || inoperable() || panel_open)
-			busy_bank = FALSE
-			icon_state = "item_bank"
-			return
-		else if(!do_after(user, 10 SECONDS, src, exclusive = TASK_ALL_EXCLUSIVE) || inoperable())
-			busy_bank = FALSE
-			icon_state = "item_bank"
-			return
-		var/ourtype = user.etching.item_storage[our_item]	//RS EDIT START
-		var/backup
-		if(!ispath(ourtype))
-			backup = ourtype
-			ourtype = text2path(ourtype)
+			A = new /obj/item/weapon/aliencoin/basic(here)
+		withdrawal_amount -= A.value
+	busy_bank = FALSE
+	return TRUE
 
-		if(!ourtype)
-			user.etching.item_storage -= our_item
-			log_and_message_admins("<span class = 'danger'>[user]/[user.ckey] attempted to retrieve an invalid item: [our_item] - [backup]</span>")
+/obj/machinery/item_bank/proc/do_general_retrieval(mob/living/carbon/human/user, var/item_name)
+	if(busy_bank)
+		to_chat(user, "<span class='warning'>\The [src] is already in use.</span>")
+		return FALSE
+	if(user.hands_are_full())
+		to_chat(user, "<span class='notice'>Your hands are full!</span>")
+		return FALSE
+	if(user.ckey in item_takers)
+		to_chat(user, "<span class='warning'>You have already taken something out of \the [src] this shift.</span>")
+		return FALSE
+	if(!user.etching || !islist(user.etching.item_storage) || !user.etching.item_storage.len)
+		to_chat(user, "<span class='warning'>\The [src] doesn't seem to have anything for you...</span>")
+		return FALSE
+	if(!(item_name in user.etching.item_storage))
+		to_chat(user, "<span class='warning'>\The [src] buzzes. That item is no longer available.</span>")
+		return FALSE
 
-			return
-		var/obj/N = new ourtype(get_turf(src))				//RS EDIT END
-		log_admin("[key_name_admin(user)] retrieved [N] from the item bank.")
-		visible_message("<span class='notice'>\The [src] dispenses the [N] to \the [user].</span>")
-		user.put_in_hands(N)
-		N.persist_storable = FALSE
-		item_takers += user.ckey
-		user.etching.item_storage -= our_item	//RS EDIT
-		user.etching.needs_saving = TRUE		//RS EDIT
+	busy_bank = TRUE
+	icon_state = "item_bank_o"
+	if(!can_use_bank(user) || !do_after(user, 10 SECONDS, src, exclusive = TASK_ALL_EXCLUSIVE) || inoperable())
 		busy_bank = FALSE
 		icon_state = "item_bank"
+		return FALSE
 
-	else if(choice == "Info")
-		to_chat(user, "<span class='notice'>\The [src] can store items for you between shifts! Anything that has been retrieved from the bank cannot be stored again in the same shift. Anyone can withdraw from the bank one time per shift. Some items are not able to be accepted by the bank.</span>")	//RS EDIT START
-		busy_bank = FALSE
-		return
-	else if(choice == "Personal")
-		if(!user.etching.unlockables.len)
-			to_chat(user, "<span class='warning'>Your personal storage is empty...</span>")
-			busy_bank = FALSE
-			return
-		var/our_item = tgui_input_list(user, "Which item would you like to retrieve?", "[src] - Personal Compartment",user.etching.unlockables)
-		if(!our_item)
-			busy_bank = FALSE
-			return
-
-		icon_state = "item_bank_o"
-		if(!choice || choice == "No" || !Adjacent(user) || inoperable() || panel_open)
-			busy_bank = FALSE
-			icon_state = "item_bank"
-			return
-
-		if("[user.real_name] - [our_item]" in unlockable_takers)
-			to_chat(user, "<span class='warning'>\The [src] buzzes. You have already claimed your [our_item] this shift.</span>")
-			busy_bank = FALSE
-			return
-
-		else if(!do_after(user, 10 SECONDS, src, exclusive = TASK_ALL_EXCLUSIVE) || inoperable())
-			busy_bank = FALSE
-			icon_state = "item_bank"
-			return
-		var/ourtype = user.etching.unlockables[our_item]
-		//RS EDIT START
-		var/backup
-		if(!ispath(ourtype))
-			backup = ourtype
-			ourtype = text2path(ourtype)
-
-		if(!ourtype)
-			user.etching.unlockables -= our_item
-			log_and_message_admins("<span class = 'danger'>[user]/[user.ckey] attempted to retrieve an invalid unlockable item: [our_item] - [backup]</span>")
-			return
-		//RS EDIT END
-		var/obj/N = new ourtype(get_turf(src))
-		log_admin("[key_name_admin(user)] retrieved [N] from the item bank.")
-		visible_message("<span class='notice'>\The [src] dispenses the [N] to \the [user].</span>")
-		user.put_in_hands(N)
-		N.name = "[user]'s [N.name]"
-		N.persist_storable = FALSE
-		unlockable_takers += "[user.real_name] - [our_item]"
+	var/raw_type = user.etching.item_storage[item_name]
+	var/item_type = resolve_item_type(raw_type)
+	if(!item_type)
+		user.etching.item_storage -= item_name
+		log_and_message_admins("<span class = 'danger'>[user]/[user.ckey] attempted to retrieve an invalid item: [item_name] - [raw_type]</span>")
 		busy_bank = FALSE
 		icon_state = "item_bank"
+		return FALSE
 
-	else if(choice == "Coin")
+	var/obj/item/new_item = new item_type(get_turf(src))
+	log_admin("[key_name_admin(user)] retrieved [new_item] from the item bank.")
+	visible_message("<span class='notice'>\The [src] dispenses the [new_item] to \the [user].</span>")
+	user.put_in_hands(new_item)
+	new_item.persist_storable = FALSE
+	item_takers += user.ckey
+	user.etching.item_storage -= item_name
+	user.etching.needs_saving = TRUE
+	busy_bank = FALSE
+	icon_state = "item_bank"
+	return TRUE
+
+/obj/machinery/item_bank/proc/do_personal_retrieval(mob/living/carbon/human/user, var/item_name)
+	if(busy_bank)
+		to_chat(user, "<span class='warning'>\The [src] is already in use.</span>")
+		return FALSE
+	if(user.hands_are_full())
+		to_chat(user, "<span class='notice'>Your hands are full!</span>")
+		return FALSE
+	if(!user.etching)
+		to_chat(user, "<span class='warning'>Your personal storage is empty...</span>")
+		return FALSE
+	if(!islist(user.etching.unlockables) || !user.etching.unlockables.len)
+		to_chat(user, "<span class='warning'>Your personal storage is empty...</span>")
+		return FALSE
+	if(!(item_name in user.etching.unlockables))
+		to_chat(user, "<span class='warning'>\The [src] buzzes. That item is no longer available.</span>")
+		return FALSE
+
+	var/claimed_item_type = resolve_item_type(user.etching.unlockables[item_name])
+	var/display_name = get_unlockable_display_name(item_name, claimed_item_type)
+	if(is_personal_item_claimed(user, item_name, claimed_item_type))
+		to_chat(user, "<span class='warning'>\The [src] buzzes. You have already claimed your [display_name] this shift.</span>")
+		return FALSE
+
+	busy_bank = TRUE
+	icon_state = "item_bank_o"
+	if(!can_use_bank(user) || !do_after(user, 10 SECONDS, src, exclusive = TASK_ALL_EXCLUSIVE) || inoperable())
+		busy_bank = FALSE
+		icon_state = "item_bank"
+		return FALSE
+
+	var/raw_type = user.etching.unlockables[item_name]
+	var/item_type = resolve_item_type(raw_type)
+	if(!item_type)
+		user.etching.unlockables -= item_name
+		log_and_message_admins("<span class = 'danger'>[user]/[user.ckey] attempted to retrieve an invalid unlockable item: [item_name] - [raw_type]</span>")
+		busy_bank = FALSE
+		icon_state = "item_bank"
+		return FALSE
+
+	var/obj/item/new_item = new item_type(get_turf(src))
+	log_admin("[key_name_admin(user)] retrieved [new_item] from the item bank.")
+	visible_message("<span class='notice'>\The [src] dispenses the [new_item] to \the [user].</span>")
+	user.put_in_hands(new_item)
+	new_item.name = "[user]'s [new_item.name]"
+	new_item.persist_storable = FALSE
+	var/claimed_key = "[user.real_name] - [item_name]"
+	unlockable_takers += claimed_key
+	var/default_name = "[initial(item_type:name)]"
+	if(istext(default_name) && length(default_name) && default_name != item_name)
+		unlockable_takers += "[user.real_name] - [default_name]"
+	busy_bank = FALSE
+	icon_state = "item_bank"
+	return TRUE
+
+/obj/machinery/item_bank/proc/store_active_hand(mob/living/carbon/human/user)
+	if(busy_bank)
+		to_chat(user, "<span class='warning'>\The [src] is already in use.</span>")
+		return FALSE
+
+	var/obj/item/held = user.get_active_hand()
+	if(!held)
+		to_chat(user, "<span class='notice'>You are not holding anything in your active hand.</span>")
+		return FALSE
+
+	busy_bank = TRUE
+	if(istype(held, /obj/item/weapon/aliencoin))
 		if(user.etching)
-			var/datum/etching/E = user.etching
-			if(E.triangles <= 0)
-				to_chat(user, "<span class='warning'>You haven't got any coins banked...</span>")
-				busy_bank = FALSE
-				return
-			else
-				var/ourtris = tgui_input_number(user, "How much would you like to withdraw? You have ◬:[E.triangles] banked.", "Withdraw", timeout = 10 SECONDS)
-				if(ourtris <= 0)
-					busy_bank = FALSE
-					return
-				if(ourtris > E.triangles)
-					to_chat(user, "<span class='warning'>\The [src] buzzes at you and flashes red. You do not have ◬:[ourtris] banked. You have a balance of ◬:[E.triangles]...</span>")
-					busy_bank = FALSE
-					return
-				ourtris = round(ourtris)
-				E.triangles -= ourtris
-				visible_message("<span class='notice'>\The [src] rattles as it dispenses coins!</span>")
-				busy_bank = FALSE
-				var/turf/here = get_turf(src)
-				var/obj/item/weapon/aliencoin/A
-				while(ourtris > 0)
-					if(ourtris >= 1000)
-						A = new /obj/item/weapon/aliencoin/exotic(here)
-					else if(ourtris >= 100)
-						A = new /obj/item/weapon/aliencoin/diamond(here)
-					else if(ourtris >= 20)
-						A = new /obj/item/weapon/aliencoin/phoron(here)
-					else if(ourtris >= 10)
-						A = new /obj/item/weapon/aliencoin/gold(here)
-					else if(ourtris >= 5)
-						A = new /obj/item/weapon/aliencoin/silver(here)
-					else
-						A = new /obj/item/weapon/aliencoin/basic(here)
-					ourtris -= A.value
-				//RS EDIT END
+			var/obj/item/weapon/aliencoin/coin = held
+			user.update_etching("triangles", coin.value)
+			user.drop_item()
+			to_chat(user, "<span class='warning'>\The [src] SCHLORPS up \the [held]!!!</span>")
+			qdel(held)
+		busy_bank = FALSE
+		return TRUE
+
+	if(!user.etching)
+		to_chat(user, "<span class='warning'>No etching data was found.</span>")
+		busy_bank = FALSE
+		return FALSE
+
+	user.etching.store_item(held, src, TRUE)
+	return TRUE
+
+/obj/machinery/item_bank/tgui_act(action, params)
+	if(..())
+		return TRUE
+
+	var/mob/living/carbon/human/user = usr
+	if(!istype(user))
+		return TRUE
+	if(!can_use_bank(user, announce = TRUE))
+		return TRUE
+
+	switch(action)
+		if("retrieve_general")
+			var/item_name = params["id"]
+			var/confirm = text2num(params["confirm"])
+			if(confirm && istext(item_name))
+				do_general_retrieval(user, item_name)
+			return TRUE
+		if("retrieve_personal")
+			var/item_name = params["id"]
+			var/confirm = text2num(params["confirm"])
+			if(confirm && istext(item_name))
+				do_personal_retrieval(user, item_name)
+			return TRUE
+		if("withdraw_triangles")
+			var/confirm = text2num(params["confirm"])
+			var/withdrawal_amount = text2num(params["amount"])
+			if(confirm)
+				do_coin_withdrawal(user, withdrawal_amount)
+			return TRUE
+		if("store_active_hand")
+			var/confirm = text2num(params["confirm"])
+			if(confirm)
+				store_active_hand(user)
+			return TRUE
+
+	return FALSE
+// RS Edit End
 
 /obj/machinery/item_bank/attackby(obj/item/O, mob/living/user)
 	if(!ishuman(user))
