@@ -196,8 +196,12 @@
 		return original_target
 
 	var/atom/best_target = null
+	var/datum/component/selfclicktoggle/self_clickthrough = GetComponent(/datum/component/selfclicktoggle)
+	var/skip_self_target = !!self_clickthrough?.active
 	for(var/atom/C as anything in T)
 		if(C == original_target)
+			continue
+		if(skip_self_target && C == src)
 			continue
 		if(fade.tracked_mob_plane_obj_hides?[C])
 			continue

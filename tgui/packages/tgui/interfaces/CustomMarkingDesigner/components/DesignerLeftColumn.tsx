@@ -44,6 +44,9 @@ export type DesignerLeftColumnProps = Readonly<{
   handleClear: (confirm: boolean) => void;
   size: number;
   setSize: (value: number) => void;
+  canMirrorWestToEast: boolean;
+  mirrorDirectionLabel: string;
+  onMirrorWestToEast: () => void;
   brushColor: string;
   customColorSlots: (string | null)[];
   handleCustomColorUpdate: (colors: (string | null)[]) => void;
@@ -86,6 +89,9 @@ export const DesignerLeftColumn = ({
   handleClear,
   size,
   setSize,
+  canMirrorWestToEast,
+  mirrorDirectionLabel,
+  onMirrorWestToEast,
   brushColor,
   customColorSlots,
   handleCustomColorUpdate,
@@ -148,6 +154,9 @@ export const DesignerLeftColumn = ({
             handleClear={handleClear}
             size={size}
             setSize={setSize}
+            canMirrorWestToEast={canMirrorWestToEast}
+            mirrorDirectionLabel={mirrorDirectionLabel}
+            onMirrorWestToEast={onMirrorWestToEast}
             brushColor={brushColor}
             customColorSlots={customColorSlots}
             handleCustomColorUpdate={handleCustomColorUpdate}

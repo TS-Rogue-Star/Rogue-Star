@@ -112,11 +112,23 @@ var/list/runechat_image_cache = list()
 	if(length_char(text) > maxlen)
 		text = copytext_char(text, 1, maxlen + 1) + "..." // BYOND index moment
 
-	// Calculate target color if not already present
-	if(!target.chat_color || target.chat_color_name != target.name)
-		target.chat_color = colorize_string(target.name)
-		target.chat_color_darkened = colorize_string(target.name, 0.85, 0.85)
-		target.chat_color_name = target.name
+	// Calculate target color if not already present.
+	// RS Edit Start: Name colors (Lira, February 2026)
+	var/name_color = null
+	if(ismob(target))
+		var/mob/target_mob = target
+		name_color = get_chat_name_color(get_true_identity_name_color_source(target_mob, target_mob.name))
+
+	var/color_cache_key = "[target.name]|[name_color || ""]"
+	if(!target.chat_color || target.chat_color_name != color_cache_key)
+		if(name_color)
+			target.chat_color = name_color
+			target.chat_color_darkened = sanitize_hexcolor(BlendRGB(name_color, "#000000", 0.15), name_color)
+		else
+			target.chat_color = colorize_string(target.name)
+			target.chat_color_darkened = colorize_string(target.name, 0.85, 0.85)
+		target.chat_color_name = color_cache_key
+	// RS Edit End
 
 	// Get rid of any URL schemes that might cause BYOND to automatically wrap something in an anchor tag
 	var/static/regex/url_scheme = new(@"[A-Za-z][A-Za-z0-9+-\.]*:\/\/", "g")

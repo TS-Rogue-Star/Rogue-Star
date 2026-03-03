@@ -235,7 +235,7 @@ macro "borghotkeymode"
 		command = ".options"
 	elem
 		name = "F2"
-		command = "ooc"
+		command = ".ooc"
 	elem
 		name = "F2+REP"
 		command = ".screenshot auto"
@@ -468,7 +468,7 @@ macro "macro"
 		command = ".options"
 	elem
 		name = "F2"
-		command = "ooc"
+		command = ".ooc"
 	elem
 		name = "F2+REP"
 		command = ".screenshot auto"
@@ -758,7 +758,7 @@ macro "hotkeymode"
 		command = ".options"
 	elem
 		name = "F2"
-		command = "ooc"
+		command = ".ooc"
 	elem
 		name = "F2+REP"
 		command = ".screenshot auto"
@@ -985,7 +985,7 @@ macro "borgmacro"
 		command = ".options"
 	elem
 		name = "F2"
-		command = "ooc"
+		command = ".ooc"
 	elem
 		name = "F2+REP"
 		command = ".screenshot auto"
@@ -1257,7 +1257,7 @@ window "mapwindow"
 		saved-params = "icon-size"
 		on-show = ".winset\"mainwindow.mainvsplit.left=mapwindow\""
 		on-hide = ".winset\"mainwindow.mainvsplit.left=\""
-        style = ".center { text-align: center; } .runechatdiv {background-color: #20202070} .black_outline { -dm-text-outline: 1px black } .boldtext { font-weight: bold; } .maptext { font-family: 'Small Fonts'; font-size: 7px; color: white; line-height: 1.1; } .command_headset { font-weight: bold;\tfont-size: 8px; } .small { font-size: 6px; } .very_small { font-size: 5px;} .big { font-size: 8px; } .reallybig { font-size: 8px; } .extremelybig { font-size: 8px; } .greentext { color: #00FF00; font-size: 7px; } .redtext { color: #FF0000; font-size: 7px; } .clown { color: #FF69Bf; font-size: 7px;  font-weight: bold; } .his_grace { color: #15D512; } .hypnophrase { color: #0d0d0d; font-weight: bold; } .yell { font-weight: bold; } .italics { font-size: 7px; font-style: italic; } .musicnote { font-size: 10px; font-weight: bold; }" //RS Edit: Music note style (Lira, August 2025)
+        style = ".center { text-align: center; } .runechatdiv {background-color: #20202070} .black_outline { -dm-text-outline: 1px black } .boldtext { font-weight: bold; } .maptext { font-family: 'Small Fonts'; font-size: 7px; color: white; line-height: 1.1; } .command_headset { font-weight: bold;\tfont-size: 8px; } .small { font-size: 6px; } .very_small { font-size: 5px;} .big { font-size: 8px; } .reallybig { font-size: 8px; } .extremelybig { font-size: 8px; } .greentext { color: #00FF00; font-size: 7px; } .redtext { color: #FF0000; font-size: 7px; } .clown { color: #FF69Bf; font-size: 7px;  font-weight: bold; } .his_grace { color: #15D512; } .hypnophrase { color: #0d0d0d; font-weight: bold; } .yell { font-weight: bold; } .italics { font-size: 7px; font-style: italic; } .musicnote { font-size: 10px; font-weight: bold; } .red { color: #FF0000; } .orange { color: #FF8C00; } .yellow { color: #FFD700; } .green { color: #00DD00; } .cyan { color: #00FFFF; } .blue { color: #0000FF; } .purple { color: #800080; } .pink { color: #FF69B4; }" //RS Edit: Music note style (Lira, August 2025) || Text color (Lira, February 2026)
 
 window "outputwindow"
 	elem "outputwindow"

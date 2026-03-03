@@ -70,6 +70,7 @@
 	var/slurring = null		//Carbon
 	var/real_name = null
 	var/nickname = null
+	var/name_color = null // RS Add: Name colors (Lira, February 2026)
 	var/flavor_text = ""
 	var/med_record = ""
 	var/sec_record = ""

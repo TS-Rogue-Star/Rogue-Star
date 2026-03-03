@@ -17,6 +17,7 @@ type DropdownUniqueProps = {
   readonly icon?: string;
   readonly iconRotation?: number;
   readonly clipSelectedText?: boolean;
+  readonly dropdownStyle?: string; // RS Add: Improvements for emote interface (Lira, February 2026)
   readonly width?: string;
   readonly menuWidth?: string;
   readonly over?: boolean;
@@ -61,6 +62,8 @@ type DropdownState = {
 
 const DROPDOWN_DEFAULT_CLASSNAMES = 'Layout Dropdown__menu';
 const DROPDOWN_SCROLL_CLASSNAMES = 'Layout Dropdown__menu-scroll';
+const VIEWPORT_MENU_PADDING = 8; // RS Add: Improvements for emote interface (Lira, February 2026)
+const MIN_ROGUE_STAR_MENU_HEIGHT = 120; // RS Add: emote interface tweaks (Lira, February 2026)
 
 export class Dropdown extends Component<DropdownProps, DropdownState> {
   static renderedMenu: HTMLDivElement | undefined;
@@ -75,6 +78,7 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
     open: false,
     selected: this.props.selected,
   };
+  menuPlacement: 'bottom-start' | 'top-start' = 'bottom-start'; // RS Add: emote interface tweaks (Lira, February 2026)
 
   handleClick = () => {
     if (this.state.open) {
@@ -112,6 +116,25 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
       // Hack, but domNode should *always* be the parent control meaning it will have width
       // @ts-ignore
       `${domNode.offsetWidth}px`;
+    // RS Add Start: Improvements for emote interface (Lira, February 2026)
+    const isRogueStarDropdown =
+      this.props.dropdownStyle?.trim() === 'rogue-star';
+    if (isRogueStarDropdown) {
+      const triggerBounds = domNode.getBoundingClientRect();
+      const availableBelow =
+        window.innerHeight - triggerBounds.bottom - VIEWPORT_MENU_PADDING;
+      const availableAbove = triggerBounds.top - VIEWPORT_MENU_PADDING;
+      const shouldPlaceAbove =
+        availableBelow < MIN_ROGUE_STAR_MENU_HEIGHT &&
+        availableAbove > availableBelow;
+      this.menuPlacement = shouldPlaceAbove ? 'top-start' : 'bottom-start';
+      const availableSpace = shouldPlaceAbove ? availableAbove : availableBelow;
+      renderedMenu.style.maxHeight = `${Math.max(1, Math.floor(availableSpace))}px`;
+    } else {
+      this.menuPlacement = 'bottom-start';
+      renderedMenu.style.maxHeight = '';
+    }
+    // RS Add End
     renderedMenu.style.opacity = '1';
     renderedMenu.style.pointerEvents = 'auto';
 
@@ -147,10 +170,25 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
     if (!renderedMenu) {
       return;
     }
+    // RS Add Start: Improvements for emote interface (Lira, February 2026)
+    const { dropdownStyle } = this.props;
+    const menuStyleClass =
+      dropdownStyle && `Dropdown__menu--${dropdownStyle.trim()}`;
+    // RS Add End
     if (renderedMenu.offsetHeight > 200) {
-      renderedMenu.className = DROPDOWN_SCROLL_CLASSNAMES;
+      // RS Edit Start: Improvements for emote interface (Lira, February 2026)
+      renderedMenu.className = classes([
+        DROPDOWN_SCROLL_CLASSNAMES,
+        menuStyleClass,
+      ]);
+      // RS Edit End
     } else {
-      renderedMenu.className = DROPDOWN_DEFAULT_CLASSNAMES;
+      // RS Edit Start: Improvements for emote interface (Lira, February 2026)
+      renderedMenu.className = classes([
+        DROPDOWN_DEFAULT_CLASSNAMES,
+        menuStyleClass,
+      ]);
+      // RS Edit End
     }
 
     const { options = [] } = this.props;
@@ -186,23 +224,31 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
       <div>{to_render}</div>,
       renderedMenu,
       () => {
+        // RS Add Start: Improvements for emote interface (Lira, February 2026)
+        const isRogueStarDropdown =
+          this.props.dropdownStyle?.trim() === 'rogue-star';
+        const popperModifiers: any[] = [...DEFAULT_OPTIONS.modifiers];
+        if (isRogueStarDropdown) {
+          popperModifiers.push({ name: 'flip', enabled: false });
+          popperModifiers.push({ name: 'preventOverflow', enabled: false });
+        }
+        const popperOptions: Parameters<typeof createPopper>[2] = {
+          ...DEFAULT_OPTIONS,
+          placement: isRogueStarDropdown ? this.menuPlacement : 'bottom-start',
+          modifiers: popperModifiers,
+        };
+        // RS Add End
         let singletonPopper = Dropdown.singletonPopper;
         if (singletonPopper === undefined) {
           singletonPopper = createPopper(
             Dropdown.virtualElement,
             renderedMenu!,
-            {
-              ...DEFAULT_OPTIONS,
-              placement: 'bottom-start',
-            }
+            popperOptions // RS Add: Improvements for emote interface (Lira, February 2026)
           );
 
           Dropdown.singletonPopper = singletonPopper;
         } else {
-          singletonPopper.setOptions({
-            ...DEFAULT_OPTIONS,
-            placement: 'bottom-start',
-          });
+          singletonPopper.setOptions(popperOptions); // RS Edit: Improvements for emote interface (Lira, February 2026)
 
           singletonPopper.update();
         }

@@ -84,6 +84,13 @@
 	// RS Add: TGUI payload chunk buffers keyed by window id and chunk id (Lira, January 2026)
 	var/list/tgui_chunk_buffers
 
+	// RS Add: Per-round unified say/emote window sizing (Lira, February 2026)
+	var/tgui_input_round_say_whisper_width
+	var/tgui_input_round_say_whisper_height
+	var/tgui_input_round_emote_subtle_width
+	var/tgui_input_round_emote_subtle_height
+	var/tgui_input_round_subtle_mode
+
 	//Hide top bars
 	var/fullscreen = FALSE
 	//Hide status bar

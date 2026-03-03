@@ -29,8 +29,8 @@ var/global/list/emotes_by_key
 	var/emote_message_radio_synthetic                   // As above, but for synthetics.
 	var/emote_message_muffled                           // A message to show if the emote is audible and the user is muzzled.
 
-	var/list/emote_sound                                // A sound for the emote to play. 
-	                                                    // Can either be a single sound, a list of sounds to pick from, or an 
+	var/list/emote_sound                                // A sound for the emote to play.
+	                                                    // Can either be a single sound, a list of sounds to pick from, or an
 	                                                    // associative array of gender to single sounds/a list of sounds.
 	var/list/emote_sound_synthetic                      // As above, but used when check_synthetic() is true.
 	var/emote_volume = 50                               // Volume of sound to play.
@@ -42,7 +42,7 @@ var/global/list/emotes_by_key
 	var/check_range                                     // falsy, or a range outside which the emote will not work
 	var/conscious = TRUE                                // Do we need to be awake to emote this?
 	var/emote_range = 0                                 // If >0, restricts emote visibility to viewers within range.
-	
+
 	var/sound_preferences = list(/datum/client_preference/emote_noises) // Default emote sound_preferences is just emote_noises. Belch emote overrides this list for pref-checks.
 	var/sound_vary = FALSE
 
@@ -121,7 +121,14 @@ var/global/list/emotes_by_key
 		if(target)
 			raw_3p = replace_target_tokens(raw_3p, target)
 		prefinal_3p = replace_user_tokens(raw_3p, user)
-		use_3p = "<span class='emote'><b>\The [user]</b> [prefinal_3p]</span>"
+		// RS Edit Start: Name colors (Lira, February 2026)
+		var/atom/user_name_source = user
+		if(ismob(user))
+			var/mob/M = user
+			user_name_source = get_true_identity_name_color_source(M, "[M]")
+		var/user_name_for_emote = format_chat_name(user_name_source, "\The [user]", TRUE)
+		use_3p = "<span class='emote'>[user_name_for_emote] [prefinal_3p]</span>"
+		// RS Edit End
 	var/use_radio = get_radio_message(user)
 	if(use_radio)
 		if(target)
@@ -155,7 +162,14 @@ var/global/list/emotes_by_key
 		. = replacetext(., "TARGET_THEM",  target_gender.him)
 		. = replacetext(., "TARGET_THEIR", target_gender.his)
 		. = replacetext(., "TARGET_SELF",  target_gender.himself)
-		. = replacetext(., "TARGET",       "<b>\the [target]</b>")
+		// RS Edit Start: Name colors (Lira, February 2026)
+		var/atom/target_name_source = target
+		if(ismob(target))
+			var/mob/M = target
+			target_name_source = get_true_identity_name_color_source(M, "[M]")
+		var/target_name = format_chat_name(target_name_source, "\the [target]", TRUE)
+		. = replacetext(., "TARGET",       target_name)
+		// RS Edit End
 
 /decl/emote/proc/replace_user_tokens(var/msg, var/atom/user)
 	. = msg
@@ -164,7 +178,14 @@ var/global/list/emotes_by_key
 		. = replacetext(., "USER_THEM",  user_gender.him)
 		. = replacetext(., "USER_THEIR", user_gender.his)
 		. = replacetext(., "USER_SELF",  user_gender.himself)
-		. = replacetext(., "USER",       "<b>\the [user]</b>")
+		// RS Edit Start: Name colors (Lira, February 2026)
+		var/atom/user_name_source = user
+		if(ismob(user))
+			var/mob/M = user
+			user_name_source = get_true_identity_name_color_source(M, "[M]")
+		var/user_name = format_chat_name(user_name_source, "\the [user]", TRUE)
+		. = replacetext(., "USER",       user_name)
+		// RS Edit End
 
 /decl/emote/proc/get_radio_message(var/atom/user)
 	if(emote_message_radio_synthetic && check_synthetic(user))

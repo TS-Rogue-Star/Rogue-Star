@@ -62,6 +62,43 @@
 	else
 		return stars(SP.message)
 
+// RS Add Start: Name colors (Lira, February 2026)
+/proc/get_chat_name_color(var/atom/name_source)
+	if(!ismob(name_source))
+		return null
+
+	var/mob/M = name_source
+	return sanitize_chat_name_color(M.name_color, null)
+
+/proc/style_chat_name_text(var/atom/name_source, var/name_text)
+	var/safe_name_text = "[name_text]"
+	var/name_color = get_chat_name_color(name_source)
+	if(!name_color)
+		return safe_name_text
+
+	return "<span style='color: [name_color];'>[safe_name_text]</span>"
+
+/proc/format_chat_name(var/atom/name_source, var/name_text = null, var/bold = FALSE)
+	if(isnull(name_text))
+		name_text = "[name_source]"
+
+	var/safe_name_text = "[name_text]"
+	if(bold)
+		safe_name_text = "<b>[safe_name_text]</b>"
+
+	return "<span class='name'>[style_chat_name_text(name_source, safe_name_text)]</span>"
+
+/proc/get_true_identity_name_color_source(var/mob/speaker, var/displayed_name)
+	if(!speaker || !speaker.real_name)
+		return null
+
+	var/safe_displayed_name = "[displayed_name]"
+	if(safe_displayed_name != speaker.real_name && findtext(safe_displayed_name, "[speaker.real_name] (") != 1)
+		return null
+
+	return speaker
+// RS Add End
+
 /mob/proc/hear_say(var/list/message_pieces, var/verb = "says", var/italics = 0, var/mob/speaker = null, var/sound/speech_sound, var/sound_vol)
 	if(!client && !teleop)
 		return FALSE
@@ -111,14 +148,19 @@
 		if(is_preference_enabled(/datum/client_preference/ghost_ears) && (speaker in view(src)))
 			message = "<b>[message]</b>"
 
+	// RS Add Start: Name colors (Lira, February 2026)
+	var/alt_name = speaker ? speaker.GetAltName() : ""
+	var/speaker_name_formatted = format_chat_name(get_true_identity_name_color_source(speaker, speaker_name), speaker_name)
+	// RS Add End
+
 	if(is_deaf() && stat != DEAD) //RS Edit || Ports CHOMPStation PR 5358 - Dead people should be able to hear stuff like ghosts can
 		if(speaker == src)
 			to_chat(src, "<span class='filter_say'><span class='warning'>You cannot hear yourself speak!</span></span>")
 		else
-			to_chat(src, "<span class='filter_say'><span class='name'>[speaker_name]</span>[speaker.GetAltName()] makes a noise, possibly speech, but you cannot hear them.</span>")
+			to_chat(src, "<span class='filter_say'>[speaker_name_formatted][alt_name] makes a noise, possibly speech, but you cannot hear them.</span>") // RS Edit: Name colors (Lira, February 2026)
 	else
 		var/message_to_send = null
-		message_to_send = "<span class='name'>[speaker_name]</span>[speaker.GetAltName()] [track][message]"
+		message_to_send = "[speaker_name_formatted][alt_name] [track][message]" // RS Edit: Name colors (Lira, February 2026)
 		if(check_mentioned(multilingual_to_message(message_pieces)) && is_preference_enabled(/datum/client_preference/check_mention))
 			message_to_send = "<font size='3'><b>[message_to_send]</b></font>"
 
@@ -185,14 +227,129 @@
 /mob/living/silicon/ai/special_mentions()
 	return list("AI") // AI door!
 
-/proc/encode_html_emphasis(message)
-    var/tagged_message = message
-    for(var/delimiter in GLOB.speech_toppings)
-        var/regex/R = new("\\[delimiter](.+?)\\[delimiter]","g")
-        var/tag = GLOB.speech_toppings[delimiter]
-        tagged_message = R.Replace(tagged_message,"<[tag]>$1</[tag]>")
+// RS Add: Text color (Lira, February 2026)
+/proc/replace_wrapped_token(var/text, var/token, var/prefix, var/suffix)
+	if(!istext(text) || !istext(token) || !length(token))
+		return text
 
-    return tagged_message
+	var/token_len = length(token)
+	var/scan_pos = 1
+	var/processed = ""
+	while(TRUE)
+		var/open_pos = findtext(text, token, scan_pos)
+		if(!open_pos)
+			break
+		var/close_pos = findtext(text, token, open_pos + token_len)
+		if(!close_pos)
+			break
+		processed += copytext(text, scan_pos, open_pos)
+		processed += "[prefix][copytext(text, open_pos + token_len, close_pos)][suffix]"
+		scan_pos = close_pos + token_len
+
+	if(scan_pos == 1)
+		return text
+
+	processed += copytext(text, scan_pos)
+	return processed
+
+// RS Add: Text color (Lira, February 2026)
+/proc/is_valid_hex_color_code(var/color_text)
+	if(!istext(color_text))
+		return FALSE
+
+	var/len = length(color_text)
+	if(len != 4 && len != 7)
+		return FALSE
+
+	if(copytext(color_text, 1, 2) != "#")
+		return FALSE
+
+	for(var/i in 2 to len)
+		var/ch = copytext(color_text, i, i + 1)
+		var/ascii_val = text2ascii(ch)
+		if(!ascii_val)
+			return FALSE
+		if((ascii_val >= 48 && ascii_val <= 57) || (ascii_val >= 65 && ascii_val <= 70) || (ascii_val >= 97 && ascii_val <= 102))
+			continue
+		return FALSE
+
+	return TRUE
+
+// RS Add: Text color (Lira, February 2026)
+/proc/replace_hex_color_tags(var/text)
+	if(!istext(text) || !length(text))
+		return text
+
+	var/static/open_token = "\[color="
+	var/static/open_len = length(open_token)
+	var/static/close_token = "\[/color\]"
+	var/static/close_len = length(close_token)
+	var/scan_pos = 1
+	var/processed = ""
+	while(TRUE)
+		var/open_pos = findtext(text, open_token, scan_pos)
+		if(!open_pos)
+			break
+
+		var/open_end = findtext(text, "]", open_pos + open_len)
+		if(!open_end)
+			break
+
+		var/color_code = copytext(text, open_pos + open_len, open_end)
+		if(!is_valid_hex_color_code(color_code))
+			scan_pos = open_pos + 1
+			continue
+
+		var/content_start = open_end + 1
+		var/close_pos = findtext(text, close_token, content_start)
+		if(!close_pos)
+			break
+
+		processed += copytext(text, scan_pos, open_pos)
+		processed += "<span style='color: [uppertext(color_code)];'>[copytext(text, content_start, close_pos)]</span>"
+		scan_pos = close_pos + close_len
+
+	if(scan_pos == 1)
+		return text
+
+	processed += copytext(text, scan_pos)
+	return processed
+
+/proc/encode_html_emphasis(message)
+	var/tagged_message = message
+
+	// RS Add Start: Text color (Lira, February 2026)
+	tagged_message = replace_hex_color_tags(tagged_message)
+
+	var/static/list/rainbow_markers = list(
+		"\[r\]" = "red",
+		"\[R\]" = "red",
+		"\[o\]" = "orange",
+		"\[O\]" = "orange",
+		"\[y\]" = "yellow",
+		"\[Y\]" = "yellow",
+		"\[g\]" = "green",
+		"\[G\]" = "green",
+		"\[c\]" = "cyan",
+		"\[C\]" = "cyan",
+		"\[b\]" = "blue",
+		"\[B\]" = "blue",
+		"\[p\]" = "purple",
+		"\[P\]" = "purple",
+		"\[pi\]" = "pink",
+		"\[PI\]" = "pink"
+	)
+	for(var/marker in rainbow_markers)
+		var/css_class = rainbow_markers[marker]
+		tagged_message = replace_wrapped_token(tagged_message, marker, "<span class='[css_class]'>", "</span>")
+	// RS Add End
+
+	for(var/delimiter in GLOB.speech_toppings)
+		var/regex/R = new("\\[delimiter](.+?)\\[delimiter]","g")
+		var/tag = GLOB.speech_toppings[delimiter]
+		tagged_message = R.Replace(tagged_message,"<[tag]>$1</[tag]>")
+
+	return tagged_message
 
 /mob/proc/hear_radio(var/list/message_pieces, var/verb = "says", var/part_a, var/part_b, var/part_c, var/part_d, var/part_e, var/mob/speaker = null, var/hard_to_hear = 0, var/vname = "")
 	if(!client)
@@ -206,6 +363,7 @@
 
 	var/speaker_name = handle_speaker_name(speaker, vname, hard_to_hear)
 	var/track = handle_track(message, verb, speaker, speaker_name, hard_to_hear)
+	var/speaker_name_formatted = hard_to_hear ? speaker_name : style_chat_name_text(get_true_identity_name_color_source(speaker, speaker_name), speaker_name) // RS Add: Name colors (Lira, February 2026)
 
 	message = "[encode_html_emphasis(message)][part_d]"
 
@@ -213,7 +371,7 @@
 		if(prob(20))
 			to_chat(src, "<span class='warning'>You feel your headset vibrate but can hear nothing from it!</span>")
 	else
-		on_hear_radio(part_a, part_b, speaker_name, track, part_c, message, part_d, part_e)
+		on_hear_radio(part_a, part_b, speaker_name_formatted, track, part_c, message, part_d, part_e) // RS Edit: Name colors (Lira, February 2026)
 
 /proc/say_timestamp()
 	return "<span class='say_quote'>\[[time2text(world.timeofday, "hh:mm")]\]</span>"
@@ -256,8 +414,9 @@
 	if(!client)
 		return
 
+	var/speaker_name = format_chat_name(speaker, null, TRUE) // RS Add: Name colors (Lira, February 2026)
 	if(say_understands(speaker, language))
-		message = "<span class='game say'><B>[speaker]</B> [verb_understood], \"[message]\"</span>"
+		message = "<span class='game say'>[speaker_name] [verb_understood], \"[message]\"</span>" // RS Edit: Name colors (Lira, February 2026)
 	else if(!(language.ignore_adverb))
 		var/adverb
 		var/length = length(message) * pick(0.8, 0.9, 1.0, 1.1, 1.2)	//Adds a little bit of fuzziness
@@ -267,9 +426,9 @@
 			if(30 to 48)	adverb = " a message"
 			if(48 to 90)	adverb = " a lengthy message"
 			else			adverb = " a very lengthy message"
-		message = "<span class='game say'><B>[speaker]</B> [verb][adverb].</span>"
+		message = "<span class='game say'>[speaker_name] [verb][adverb].</span>" // RS Edit: Name colors (Lira, February 2026)
 	else
-		message = "<span class='game say'><B>[speaker]</B> [verb].</span>"
+		message = "<span class='game say'>[speaker_name] [verb].</span>" // RS Edit: Name colors (Lira, February 2026)
 
 	show_message(message, type = speech_type) // Type 1 is visual message
 
@@ -320,5 +479,5 @@
 	if(!say_understands(speaker))
 		name = speaker.voice_name
 
-	var/rendered = "<span class='game say'><span class='name'>[name]</span> [message]</span>"
+	var/rendered = "<span class='game say'>[format_chat_name(speaker, name)] [message]</span>" // RS Edit: Name colors (Lira, February 2026)
 	to_chat(src, rendered)

@@ -11,6 +11,8 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star December 2025: New basic appearence tab added ////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star February 2026: West - east mirror tool added /////////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import { selectBackend, useBackend, useLocalState } from '../../backend';
 import { Box, Button, Flex, Tabs } from '../../components';
@@ -46,7 +48,9 @@ import {
 import {
   CHIP_BUTTON_CLASS,
   COLOR_PICKER_CUSTOM_SLOTS,
+  EAST,
   ERASER_PREVIEW_COLOR,
+  WEST,
 } from './constants';
 import {
   useBrushColorController,
@@ -90,6 +94,7 @@ import {
   parseHex,
   resolveExportGridForDirPart,
   resolveReferencePartId,
+  sampleGridColorAt,
   toHex,
 } from './utils';
 import {
@@ -1867,6 +1872,7 @@ export const CustomMarkingDesigner = (_props, context) => {
   const {
     getStoredStrokeDrafts,
     appendStrokePreviewPixels,
+    appendStrokePreviewPixelsForTarget,
     removeStrokeDraft,
     updateStrokeDrafts,
     clearSessionDrafts,
@@ -2450,6 +2456,78 @@ export const CustomMarkingDesigner = (_props, context) => {
       return;
     }
     setUiDirectionKey(dir);
+    requestCanvasFlush();
+  };
+
+  const canMirrorWestToEast =
+    currentDirectionKey === WEST || currentDirectionKey === EAST;
+  const mirrorSourceDir = currentDirectionKey === EAST ? EAST : WEST;
+  const mirrorTargetDir = mirrorSourceDir === EAST ? WEST : EAST;
+  const mirrorDirectionLabel =
+    mirrorSourceDir === EAST ? 'East -> West' : 'West -> East';
+
+  const handleMirrorWestToEast = () => {
+    if (uiLocked || !canMirrorWestToEast || !activePartKey) {
+      return;
+    }
+    const sourceGrid = resolveExportGridForDirPart({
+      dirState: derivedPreviewState.dirs?.[mirrorSourceDir],
+      dirKey: mirrorSourceDir,
+      partKey: activePartKey,
+      canvasWidth,
+      canvasHeight,
+      dirDrafts: draftDiffIndex?.[mirrorSourceDir] || null,
+      activeDirKey: currentDirectionKey,
+      activePartKey,
+      activeDraftDiff,
+    });
+    if (!sourceGrid?.length) {
+      return;
+    }
+    const targetGrid = resolveExportGridForDirPart({
+      dirState: derivedPreviewState.dirs?.[mirrorTargetDir],
+      dirKey: mirrorTargetDir,
+      partKey: activePartKey,
+      canvasWidth,
+      canvasHeight,
+      dirDrafts: draftDiffIndex?.[mirrorTargetDir] || null,
+      activeDirKey: currentDirectionKey,
+      activePartKey,
+      activeDraftDiff,
+    });
+    const mirrorDiff: DiffEntry[] = [];
+    for (let x = 1; x <= canvasWidth; x += 1) {
+      for (let y = 1; y <= canvasHeight; y += 1) {
+        const sourceColor = sampleGridColorAt(sourceGrid, x, y);
+        if (!sourceColor) {
+          continue;
+        }
+        const mirroredX = canvasWidth - x + 1;
+        const targetColor = sampleGridColorAt(targetGrid, mirroredX, y);
+        if (targetColor === sourceColor) {
+          continue;
+        }
+        mirrorDiff.push({
+          x: mirroredX,
+          y,
+          color: sourceColor,
+        });
+      }
+    }
+    if (!mirrorDiff.length) {
+      return;
+    }
+    const mirrorStrokeKey = `mirror-we-${Date.now().toString(36)}-${Math.random()
+      .toString(36)
+      .slice(2, 8)}`;
+    appendStrokePreviewPixelsForTarget({
+      stroke: mirrorStrokeKey,
+      pixels: mirrorDiff,
+      dirKey: mirrorTargetDir,
+      partKey: activePartKey,
+      sessionKey: buildLocalSessionKey(mirrorTargetDir, activePartKey),
+    });
+    setDraftMutationToken((draftMutationToken + 1) % 1000000);
     requestCanvasFlush();
   };
 
@@ -3235,6 +3313,9 @@ export const CustomMarkingDesigner = (_props, context) => {
                 handleClear={handleClear}
                 size={size}
                 setSize={setSize}
+                canMirrorWestToEast={canMirrorWestToEast}
+                mirrorDirectionLabel={mirrorDirectionLabel}
+                onMirrorWestToEast={handleMirrorWestToEast}
                 brushColor={brushColor}
                 customColorSlots={customColorSlots}
                 handleCustomColorUpdate={handleCustomColorUpdate}

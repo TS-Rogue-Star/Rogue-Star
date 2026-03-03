@@ -13,7 +13,8 @@ GLOBAL_VAR(special_station_name)
 		/mob/living/proc/vore_leap_attack,
 		/mob/living/proc/sense_ghosts,
 		/mob/living/proc/set_size,
-		/mob/living/proc/pomf
+		/mob/living/proc/pomf,
+		/mob/living/proc/register_home
 		)
 
 	var/choice = tgui_input_list(usr, "Which verb would you like to add/remove?", "Event Verb", possible_verbs)
@@ -36,6 +37,10 @@ GLOBAL_VAR(special_station_name)
 	if(choice in target.verbs)
 		if(tgui_alert(usr, "[target] has access to [choice] already. Would you like to remove this verb from them?", "Remove Verb",list("No","Yes")) == "Yes")
 			target.verbs.Remove(choice)
+			if(choice == /mob/living/proc/register_home)
+				var/datum/modifier/return_home/mod = target.get_modifier_of_type(/datum/modifier/return_home)
+				if(mod)
+					mod.expire()
 			to_chat(usr,"<span class = 'warning'>Removed [choice] from [target].</span>")
 	else
 		if(tgui_alert(usr, "Would you like to add [choice] to [target]?", "Add Verb",list("No","Yes")) == "Yes")

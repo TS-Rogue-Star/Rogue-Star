@@ -233,11 +233,13 @@
 					if(H.allow_stripping)		//RS EDIT START
 						for(var/slot in slots)
 							var/obj/item/I = H.get_equipped_item(slot = slot)
-							if(I && H.unEquip(I, force = FALSE))
-								handle_digesting_item(I,H)
-								digestion_noise_chance = 25
-								to_update = TRUE
-								break // Digest off one by one, not all at once	//RS EDIT END
+							if(I)	//RS EDIT START - Enable inventory return
+								SSinventory_return.catalogue_object(I)
+								if(H.unEquip(I, force = FALSE))	//RS EDIT END
+									handle_digesting_item(I,H)
+									digestion_noise_chance = 25
+									to_update = TRUE
+									break // Digest off one by one, not all at once	//RS EDIT END
 
 		//get rid of things like blood drops and gibs that end up in there
 		else if(istype(A, /obj/effect/decal/cleanable))

@@ -2164,6 +2164,7 @@ const VoreUserPreferences = (props, context) => {
     slip_vore,
     throw_vore,
     food_vore,
+    emote_vore, // RS Add: New emote spont vore (Lira, February 2026)
     spont_belly_prefs, // Spont vore prefs (Lira, January 2026)
     nutrition_message_visible,
     weight_message_visible,
@@ -2231,6 +2232,14 @@ const VoreUserPreferences = (props, context) => {
       label: 'Food Vore Belly',
       tooltip:
         'Food vore (micros in food/drink) will place prey into this belly. ' +
+        'Select "Default (Selected Belly)" to clear.',
+    },
+    // New emote spont vore (Lira, February 2026)
+    {
+      key: 'Emote Vore',
+      label: 'Emote Vore Belly',
+      tooltip:
+        'Emote vore from Say/Whisper/Subtle/Emote will place prey into this belly. ' +
         'Select "Default (Selected Belly)" to clear.',
     },
   ];
@@ -2508,6 +2517,26 @@ const VoreUserPreferences = (props, context) => {
         enabled: 'Food Vore Enabled',
         trustlist: 'Food Vore: Trust List', // RS Add: Trustlist integration (Lira, September 2025)
         disabled: 'Food Vore Disabled',
+      },
+    },
+    // RS Add: New emote spont vore (Lira, February 2026)
+    toggle_emote_vore: {
+      id: 'emote_vore',
+      state: prefState(emote_vore, 'Emote Vore'),
+      action: 'toggle_emote_vore',
+      test: emote_vore,
+      tooltip: {
+        main:
+          'Allows emote-triggered spontaneous vore via Say/Whisper/Subtle/Emote input. ' +
+          'Note, you still need spontaneous vore pred and/or prey enabled.',
+        enable: 'Click here to allow emote vore.',
+        trustlist: 'Click here to restrict emote vore to trusted users.',
+        disable: 'Click here to disable emote vore.',
+      },
+      content: {
+        enabled: 'Emote Vore Enabled',
+        trustlist: 'Emote Vore: Trust List',
+        disabled: 'Emote Vore Disabled',
       },
     },
     inbelly_spawning: {
@@ -2905,6 +2934,11 @@ const VoreUserPreferences = (props, context) => {
           <Flex.Item basis="32%">
             <VoreUserPreferenceItem spec={preferences.toggle_food_vore} />
           </Flex.Item>
+          {/* RS Add Start: New emote spont vore (Lira, February 2026) */}
+          <Flex.Item basis="32%">
+            <VoreUserPreferenceItem spec={preferences.toggle_emote_vore} />
+          </Flex.Item>
+          {/* RS Add End */}
           <Flex.Item basis="32%">
             <VoreUserPreferenceItem spec={preferences.resize} />
           </Flex.Item>

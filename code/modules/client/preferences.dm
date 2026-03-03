@@ -32,17 +32,24 @@ var/list/preferences_datums = list()
 
 	var/tgui_fancy = TRUE
 	var/tgui_lock = FALSE
-	var/tgui_input_mode = FALSE			// All the Input Boxes (Text,Number,List,Alert)
+	var/tgui_input_mode = TRUE			// All the Input Boxes (Text,Number,List,Alert) || RS Edit: Change to true (Lira, February 2026)
 	var/tgui_input_lock = FALSE
 	var/tgui_large_buttons = TRUE
 	var/tgui_swapped_buttons = FALSE
 	var/tgui_input_window_scale = 1 	// RS Add: TGUI window scaling (Lira, January 2026)
+	// RS Add Start: Unified say/emote scaling (Lira, February 2026)
+	var/tgui_input_say_whisper_width = 460
+	var/tgui_input_say_whisper_height = 259
+	var/tgui_input_emote_subtle_width = 460
+	var/tgui_input_emote_subtle_height = 259
+	// RS Add End
 	var/chat_timestamp = FALSE
 
 	//character preferences
 	var/real_name						//our character's name
 	var/be_random_name = 0				//whether we are a random name every round
 	var/nickname						//our character's nickname
+	var/name_color						// RS Add: Name colors (Lira, February 2026)
 	var/age = 30						//age of character
 	var/bday_month = 0					//Birthday month
 	var/bday_day = 0					//Birthday day
