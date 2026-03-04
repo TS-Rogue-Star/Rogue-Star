@@ -53,6 +53,12 @@ var/const/access_pilot = 67
 	desc = "Talon Security"
 	access_type = ACCESS_TYPE_PRIVATE
 
+/var/const/access_talon_pilot = 307
+/datum/access/talon_pilot
+	id = access_talon_pilot
+	desc = "Talon Pilot"
+	access_type = ACCESS_TYPE_PRIVATE
+
 /var/const/access_xenobotany = 77
 /datum/access/xenobotany
 	id = access_xenobotany

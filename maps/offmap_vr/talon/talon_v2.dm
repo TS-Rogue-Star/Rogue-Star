@@ -68,7 +68,7 @@ var/global/list/latejoin_talon = list()
 /obj/machinery/computer/shuttle_control/explore/talonboat
 	name = "shuttle control console"
 	shuttle_tag = "Talon's Shuttle"
-	req_one_access = list(access_talon_bridge)
+	req_one_access = list(access_talon_pilot)
 
 /obj/effect/overmap/visitable/ship/landable/talon_boat
 	name = "ITV Talon Shuttle"
@@ -314,7 +314,7 @@ so... Use it wisely and good luck!<br>\
 
 /obj/item/weapon/card/id/synthetic/talon/Initialize()
 	. = ..()
-	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, access_synth)
+	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, access_talon_pilot, access_synth)
 
 /obj/machinery/power/smes/buildable/offmap_spawn/New()
 	..(1)
@@ -502,7 +502,7 @@ so... Use it wisely and good luck!<br>\
 
 /obj/structure/closet/secure_closet/talon_pilot
 	name = "talon pilot's locker"
-	req_access = list(access_talon)
+	req_access = list(access_talon_pilot)
 	closet_appearance = /decl/closet_appearance/secure_closet/talon/pilot
 
 	starts_with = list(

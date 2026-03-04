@@ -29,8 +29,8 @@
 	pto_type = PTO_TALON
 	timeoff_factor = 1
 	dept_time_required = 60
-	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security)
-	minimal_access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security)
+	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, access_talon_pilot)
+	minimal_access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, access_talon_pilot)
 	alt_titles = list("Talon Commander" = /datum/alt_title/talon_commander, "Rogue Trader" = /datum/alt_title/rogue_trader)
 
 /datum/alt_title/talon_commander
@@ -58,8 +58,8 @@
 	playtime_only = TRUE
 	pto_type = PTO_TALON
 	timeoff_factor = 1
-	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security)
-	minimal_access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security)
+	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, access_talon_pilot)
+	minimal_access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, access_talon_pilot)
 	alt_titles = list("Talon Medic" = /datum/alt_title/talon_medic)
 
 /datum/alt_title/talon_medic
@@ -85,8 +85,8 @@
 	playtime_only = TRUE
 	pto_type = PTO_TALON
 	timeoff_factor = 1
-	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security)
-	minimal_access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security)
+	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, access_talon_pilot)
+	minimal_access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, access_talon_pilot)
 	alt_titles = list("Talon Technician" = /datum/alt_title/talon_tech)
 
 /datum/alt_title/talon_tech
@@ -112,8 +112,8 @@
 	playtime_only = TRUE
 	pto_type = PTO_TALON
 	timeoff_factor = 1
-	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security)
-	minimal_access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security)
+	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, access_talon_pilot)
+	minimal_access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, access_talon_pilot)
 	alt_titles = list("Talon Helmsman" = /datum/alt_title/talon_helmsman)
 
 /datum/alt_title/talon_helmsman
@@ -139,8 +139,8 @@
 	playtime_only = TRUE
 	pto_type = PTO_TALON
 	timeoff_factor = 1
-	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security)
-	minimal_access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security)
+	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, access_talon_pilot)
+	minimal_access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, access_talon_pilot)
 	alt_titles = list("Talon Security" = /datum/alt_title/talon_security)
 
 /datum/alt_title/talon_security
@@ -165,8 +165,8 @@
 	playtime_only = TRUE
 	pto_type = PTO_TALON
 	timeoff_factor = 1
-	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security)
-	minimal_access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security)
+	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, , access_talon_pilot)
+	minimal_access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, , access_talon_pilot)
 	alt_titles = list("Talon Excavator" = /datum/alt_title/talon_excavator)
 
 /datum/alt_title/talon_excavator

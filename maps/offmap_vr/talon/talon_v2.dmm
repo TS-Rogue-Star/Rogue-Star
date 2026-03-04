@@ -490,6 +490,7 @@
 /obj/structure/closet/secure_closet/guncabinet/fancy/rifle{
 	req_one_access = list(306)
 	},
+/obj/item/weapon/gun/energy/netgun,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/armory)
 "aZ" = (
@@ -620,7 +621,6 @@
 	req_one_access = list(306)
 	},
 /obj/item/weapon/gun/energy/gun,
-/obj/item/weapon/gun/energy/netgun,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/armory)
 "bn" = (
@@ -3486,7 +3486,7 @@
 /area/talon_v2/engineering/starboard)
 "lm" = (
 /obj/machinery/computer/ship/helm{
-	req_one_access = list(301)
+	req_one_access = list(307)
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/talonboat)
@@ -5429,7 +5429,7 @@
 /obj/machinery/door/airlock{
 	id_tag = "talon_pilotdoor";
 	name = "Pilot's Cabin";
-	req_one_access = list(302)
+	req_one_access = list(307)
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/crew_quarters/pilot_room)
@@ -9176,7 +9176,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/airlock/voidcraft{
 	name = "Cabin Access";
-	req_one_access = list(302)
+	req_one_access = list(307)
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/shuttle/talonboat)
@@ -9901,7 +9901,8 @@
 /obj/machinery/power/apc/talon{
 	dir = 1;
 	name = "north bump";
-	pixel_y = 28
+	pixel_y = 28;
+	nightshift_setting = 3
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/secure_storage)
@@ -13325,7 +13326,7 @@
 /obj/machinery/door/airlock{
 	id_tag = "talon_pilotdoor";
 	name = "Pilot's Cabin";
-	req_one_access = list(302)
+	req_one_access = list(307)
 	},
 /obj/structure/cable/green{
 	icon_state = "1-2"
