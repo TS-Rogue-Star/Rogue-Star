@@ -595,7 +595,7 @@
 	gear_tweaks += new/datum/gear_tweak/path(sortAssoc(selector_uniforms))
 // New Talon Uniforms
 /datum/gear/uniform/talon
-	display_name = "Talon's Uniforms"
+	display_name = "Talon Uniforms"
 	description = "Select from a range of outfits available to all Talon crews."
 	allowed_roles = list("Talon Captain","Talon Doctor","Talon Engineer","Talon Pilot","Talon Guard","Talon Miner")
 	path = /obj/item/clothing/under/rank/talon/basic/refreshed
@@ -611,8 +611,8 @@
 	gear_tweaks += new/datum/gear_tweak/path(sortAssoc(selector_uniforms))
 
 /datum/gear/uniform/talon_captain
-	display_name = "Talon - Captain's Uniforms"
-	description = "Select from a range of outfits available to all Talon Captain's."
+	display_name = "Talon - Captain Uniforms"
+	description = "Select from a range of outfits available to all Talon Captain."
 	allowed_roles = list("Talon Captain")
 	path = /obj/item/clothing/under/rank/talon/command/refreshed
 	sort_category = "Uniforms"
@@ -627,8 +627,8 @@
 	gear_tweaks += new/datum/gear_tweak/path(sortAssoc(selector_uniforms))
 
 /datum/gear/uniform/talon_pilot
-	display_name = "Talon - Pilot's Uniforms"
-	description = "Select from a range of outfits available to all Talon Pilot's."
+	display_name = "Talon - Pilot Uniforms"
+	description = "Select from a range of outfits available to all Talon Pilot."
 	allowed_roles = list("Talon Pilot")
 	path = /obj/item/clothing/under/rank/talon/pilot/refreshed
 	sort_category = "Uniforms"
@@ -643,8 +643,8 @@
 	gear_tweaks += new/datum/gear_tweak/path(sortAssoc(selector_uniforms))
 
 /datum/gear/uniform/talon_security
-	display_name = "Talon - Guard's Uniforms"
-	description = "Select from a range of outfits available to all Talon Guard's."
+	display_name = "Talon - Guard Uniforms"
+	description = "Select from a range of outfits available to all Talon Guard."
 	allowed_roles = list("Talon Guard")
 	path = /obj/item/clothing/under/rank/talon/security/refreshed
 	sort_category = "Uniforms"
@@ -659,7 +659,7 @@
 	gear_tweaks += new/datum/gear_tweak/path(sortAssoc(selector_uniforms))
 
 /datum/gear/uniform/talon_medical
-	display_name = "Talon - Doctor's Uniforms"
+	display_name = "Talon - Doctor Uniforms"
 	description = "Select from a range of outfits available to all Talon Doctor's."
 	allowed_roles = list("Talon Doctor")
 	path = /obj/item/clothing/under/rank/talon/proper/refreshed
