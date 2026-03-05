@@ -24,12 +24,13 @@
 	to_world("<span class='alert'>[custom_event_msg]</span>")
 	to_world("<br>")
 
-	SSwebhooks.send(
-		WEBHOOK_CUSTOM_EVENT,
-		list(
-			"text" = custom_event_msg,
+	if(tgui_alert(usr, "Would you like to ping the Discord for this custom event?", "Discord Ping", list("Yes", "No")) == "Yes") // RS Add: Make Discord ping optional (Lira, March 2026)
+		SSwebhooks.send(
+			WEBHOOK_CUSTOM_EVENT,
+			list(
+				"text" = custom_event_msg,
+			)
 		)
-	)
 
 // normal verb for players to view info
 /client/verb/cmd_view_custom_event()
