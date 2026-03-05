@@ -185,7 +185,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	head = /obj/item/clothing/head/caphat/talon/refreshed
 	uniform = /obj/item/clothing/under/rank/talon/command/refreshed
-	suit = /obj/item/clothing/suit/talon/capcoat
+	suit = /obj/item/clothing/suit/storage/talonbomberjacket/captain
 	shoes = /obj/item/clothing/shoes/laceup // RS Edit
 	backpack = /obj/item/weapon/storage/backpack/talon
 	satchel_one = /obj/item/weapon/storage/backpack/satchel/talon
