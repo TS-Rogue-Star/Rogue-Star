@@ -9,6 +9,8 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star February 2026: Add button push ///////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star March 2026: Add Item Bank styles /////////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @use '../colors.scss';
 
@@ -536,6 +538,42 @@ $titlebar-height: 38px;
   box-shadow:
     0 0 20px rgba(255, 202, 115, 0.2),
     inset 0 0 16px rgba(255, 205, 129, 0.08);
+}
+
+.RogueStar__noticeBar--yellow {
+  border: 1px solid rgba(255, 215, 128, 0.75);
+  background: linear-gradient(
+    120deg,
+    rgba(53, 25, 11, 0.82),
+    rgba(24, 11, 39, 0.88)
+  );
+  box-shadow:
+    0 0 20px rgba(255, 202, 115, 0.2),
+    inset 0 0 16px rgba(255, 205, 129, 0.08);
+}
+
+.RogueStar__noticeBar--green {
+  border: 1px solid rgba(121, 255, 203, 0.75);
+  background: linear-gradient(
+    120deg,
+    rgba(18, 53, 33, 0.82),
+    rgba(24, 11, 39, 0.88)
+  );
+  box-shadow:
+    0 0 20px rgba(109, 255, 190, 0.2),
+    inset 0 0 16px rgba(127, 255, 209, 0.08);
+}
+
+.RogueStar__noticeBar--blue {
+  border: 1px solid rgba(132, 204, 255, 0.75);
+  background: linear-gradient(
+    120deg,
+    rgba(13, 34, 57, 0.82),
+    rgba(24, 11, 39, 0.88)
+  );
+  box-shadow:
+    0 0 20px rgba(120, 187, 255, 0.2),
+    inset 0 0 16px rgba(139, 214, 255, 0.08);
 }
 
 .RogueStar__noticeText {
@@ -1260,4 +1298,420 @@ $titlebar-height: 38px;
       0 0 12px rgba(69, 40, 119, 0.6),
       0 0 18px rgba(229, 188, 106, 0.25);
   }
+}
+
+.RogueStar--itemBank {
+  padding: 18px;
+  overflow: hidden;
+}
+
+@keyframes rogueStarItemBankBootOverlayFade {
+  0% {
+    opacity: 1;
+  }
+  72% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes rogueStarItemBankBootSweep {
+  0% {
+    transform: translateX(-140%);
+  }
+  100% {
+    transform: translateX(220%);
+  }
+}
+
+@keyframes rogueStarItemBankContentReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(5px) scale(0.995);
+    filter: saturate(0.86);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: saturate(1);
+  }
+}
+
+.RogueStar__itemBankBootOverlay {
+  position: absolute;
+  inset: 18px;
+  z-index: 2;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  border: 1px solid rgba(180, 132, 255, 0.5);
+  background:
+    radial-gradient(
+      120% 95% at 50% 18%,
+      rgba(172, 113, 255, 0.32),
+      rgba(6, 2, 16, 0)
+    ),
+    linear-gradient(145deg, rgba(17, 7, 35, 0.94), rgba(5, 2, 14, 0.96));
+  box-shadow:
+    0 18px 48px rgba(0, 0, 0, 0.6),
+    inset 0 0 22px rgba(138, 88, 255, 0.22);
+  overflow: hidden;
+  animation: rogueStarItemBankBootOverlayFade 2.85s ease-out forwards;
+}
+
+.RogueStar__itemBankBootOverlay::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 28%;
+  background: linear-gradient(
+    90deg,
+    rgba(168, 115, 255, 0),
+    rgba(208, 170, 255, 0.32),
+    rgba(168, 115, 255, 0)
+  );
+  animation: rogueStarItemBankBootSweep 0.95s ease-out 0s 3;
+}
+
+.RogueStar__itemBankBootText {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
+  color: rgba(244, 230, 255, 0.96);
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-shadow: 0 0 16px rgba(193, 149, 255, 0.52);
+}
+
+.RogueStar__itemBankBootLine {
+  text-align: center;
+}
+
+.RogueStar__itemBankContent {
+  position: relative;
+  z-index: 1;
+  animation: rogueStarItemBankContentReveal 0.5s ease-out 2.25s both;
+}
+
+.RogueStar__itemBankTitleInfo {
+  display: inline-block;
+  pointer-events: auto;
+  cursor: help;
+  border-bottom: 1px dotted rgba(244, 223, 255, 0.45);
+}
+
+.RogueStar__itemBankTopStatus {
+  margin-bottom: 0.65rem;
+}
+
+.RogueStar__itemBankTopStatus .RogueStar__noticeBar {
+  margin-bottom: 0.35rem;
+}
+
+.RogueStar__itemBankTopStatus .RogueStar__noticeBar:last-child {
+  margin-bottom: 0;
+}
+
+.RogueStar__itemBankWithdrawSection {
+  margin-bottom: 0.65rem;
+}
+
+.RogueStar__itemBankWithdrawRow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.RogueStar__itemBankWithdrawLabel {
+  flex: 0 0 auto;
+  color: rgba(244, 223, 255, 0.9);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.RogueStar__itemBankWithdrawInput.NumberInput {
+  margin: 0;
+  width: 10.5rem;
+}
+
+.RogueStar__itemBankActions--inline {
+  margin-left: auto;
+}
+
+.RogueStar__itemBankSearch.Input {
+  border-radius: 12px;
+  background: rgba(13, 6, 28, 0.88);
+  border: 1px solid rgba(171, 119, 255, 0.35);
+  color: #fdf4ff;
+  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.45);
+}
+
+.RogueStar__itemBankList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(66px, 1fr));
+  gap: 0.5rem;
+  max-height: 280px;
+  overflow: auto;
+  padding: 0.15rem;
+  @include rogue-star-scrollbar(6px);
+}
+
+.RogueStar__itemBankTile.Button {
+  margin: 0;
+  min-height: 66px;
+  padding: 0.35rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  border: 1px solid rgba(190, 140, 255, 0.35);
+  background: rgba(8, 4, 18, 0.9);
+  box-shadow:
+    0 12px 24px rgba(0, 0, 0, 0.45),
+    0 0 18px rgba(111, 63, 255, 0.14);
+}
+
+.RogueStar__itemBankTile.Button .Button__content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.RogueStar__itemBankTile.Button:hover:not(.Button--disabled),
+.RogueStar__itemBankTile.Button:focus-visible:not(.Button--disabled) {
+  border-color: rgba(231, 197, 123, 0.8);
+  box-shadow:
+    0 0 0 1px rgba(231, 197, 123, 0.32),
+    0 12px 24px rgba(0, 0, 0, 0.45),
+    0 0 20px rgba(166, 110, 255, 0.35);
+}
+
+.RogueStar__itemBankTile--claimed.Button {
+  background: rgba(15, 9, 25, 0.9);
+  border-color: rgba(255, 201, 124, 0.4);
+}
+
+.RogueStar__itemBankTile.Button.Button--disabled {
+  background: linear-gradient(
+    145deg,
+    rgba(14, 8, 26, 0.96),
+    rgba(7, 4, 14, 0.96)
+  ) !important;
+  border-color: rgba(118, 83, 166, 0.72);
+  box-shadow:
+    inset 0 0 0 1px rgba(95, 63, 142, 0.42),
+    0 8px 16px rgba(0, 0, 0, 0.55);
+  opacity: 0.9;
+}
+
+.RogueStar__itemBankTile.Button.Button--disabled::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  background: repeating-linear-gradient(
+    135deg,
+    rgba(164, 116, 240, 0.14) 0 5px,
+    rgba(21, 10, 40, 0) 5px 10px
+  );
+  pointer-events: none;
+}
+
+.RogueStar__itemBankTile.Button.Button--disabled
+  .RogueStar__itemBankPreviewImage {
+  opacity: 0.5;
+  filter: saturate(0.45) brightness(0.72);
+}
+
+.RogueStar__itemBankTile.Button.Button--disabled
+  .RogueStar__itemBankPreviewFallback {
+  color: rgba(181, 150, 219, 0.62);
+}
+
+.RogueStar__itemBankTileBadge {
+  position: absolute;
+  left: 0.35rem;
+  right: 0.35rem;
+  bottom: 0.25rem;
+  padding: 0.12rem 0.2rem;
+  border-radius: 6px;
+  background: rgba(255, 201, 124, 0.18);
+  color: rgba(255, 222, 166, 0.95);
+  font-size: 0.5rem;
+  line-height: 1.1;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
+
+.RogueStar__itemBankTileCount {
+  position: absolute;
+  top: 0.24rem;
+  right: 0.24rem;
+  min-width: 1.5rem;
+  padding: 0.08rem 0.24rem;
+  border-radius: 999px;
+  border: 1px solid rgba(245, 208, 135, 0.52);
+  background: rgba(35, 18, 62, 0.95);
+  color: rgba(255, 233, 184, 0.96);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-align: center;
+  pointer-events: none;
+}
+
+.RogueStar__itemBankPreview {
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  border-radius: 10px;
+  border: 1px solid rgba(229, 188, 106, 0.35);
+  background: linear-gradient(
+    145deg,
+    rgba(17, 8, 33, 0.95),
+    rgba(6, 3, 15, 0.95)
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.RogueStar__itemBankPreview--large {
+  width: 88px;
+  height: 88px;
+  flex: 0 0 88px;
+  margin-bottom: 0.5rem;
+}
+
+.RogueStar__itemBankPreview--tile {
+  width: 100%;
+  height: 100%;
+  flex: 1 1 auto;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.RogueStar__itemBankPreviewImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.RogueStar__itemBankPreviewFallback {
+  font-size: 0.54rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(244, 223, 255, 0.65);
+}
+
+.RogueStar__itemBankEntryBody {
+  min-width: 0;
+  flex: 1;
+}
+
+.RogueStar__itemBankEntryTitle {
+  font-weight: 700;
+  color: #fdf6ff;
+  letter-spacing: 0.02em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.RogueStar__itemBankEntryMeta {
+  color: rgba(244, 223, 255, 0.74);
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.RogueStar__itemBankEntryClaimed {
+  margin-top: 0.22rem;
+  color: rgba(255, 201, 124, 0.9);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.RogueStar__itemBankActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.4rem;
+}
+
+.RogueStar__itemBankActions .Button {
+  margin: 0;
+}
+
+.RogueStar__itemBankEmpty {
+  border-radius: 12px;
+  border: 1px dashed rgba(190, 140, 255, 0.28);
+  background: rgba(8, 3, 17, 0.55);
+  padding: 0.85rem;
+  text-align: center;
+}
+
+.RogueStar__itemBankStatusRow {
+  margin-top: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.65rem;
+  border-radius: 12px;
+  border: 1px solid rgba(190, 140, 255, 0.28);
+  background: rgba(9, 4, 20, 0.72);
+  color: #f6ecff;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+}
+
+.RogueStar__itemBankStatusRow--inline {
+  margin-top: 0;
+  flex: 0 0 auto;
+  min-width: 0;
+  width: fit-content;
+  justify-content: flex-start;
+  gap: 0.28rem;
+  white-space: nowrap;
+}
+
+.RogueStar__itemBankHandCard {
+  display: flex;
+  flex-direction: column;
+}
+
+.RogueStar__itemBankCoinMeta {
+  margin-top: 0.4rem;
+  color: rgba(255, 214, 156, 0.9);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
