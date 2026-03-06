@@ -51,7 +51,8 @@ var/global/list/permanent_unlockables = list(
 	var/nif_durability = 0						//The durability of your nif
 	var/nif_savedata = list()
 
-/datum/etching/proc/store_item(item,var/obj/machinery/item_bank/bank)
+// RS Edit: New Item Bank Interface (Lira, March 2026)
+/datum/etching/proc/store_item(item,var/obj/machinery/item_bank/bank,var/skip_confirmation = FALSE)
 	if(!isobj(item))
 		bank.busy_bank = FALSE
 		return
@@ -61,14 +62,17 @@ var/global/list/permanent_unlockables = list(
 		bank.busy_bank = FALSE
 		return
 	if(O.type in permanent_unlockables)
-		if(O.name in unlockables)
+		var/unlockable_name = "[O.name]"
+		if(!islist(unlockables))
+			unlockables = list()
+		if(unlockable_name in unlockables || has_unlockable_type(O.type))
 			to_chat(ourmob, "<span class='warning'>\The [bank] has already catalogued \the [O] for you.</span>")
 			bank.busy_bank = FALSE
 			return
-		unlockables += list(O.name = O.type)
+		unlockables[unlockable_name] = O.type
 		to_chat(ourmob, "<span class='notice'>\The [bank] scans your [item]. It catalogues this to your personal storage! You will be able to retrieve \the [item] again in future shifts.</span>")
 		needs_saving = TRUE
-		bank.unlockable_takers += "[ourmob.real_name] - [item]"
+		bank.unlockable_takers += "[ourmob.real_name] - [unlockable_name]"
 		bank.busy_bank = FALSE
 		O.persist_storable = FALSE
 		log_admin("[key_name_admin(ourmob)] has unlocked [O]/[O.type] for [ourmob].")
@@ -79,13 +83,17 @@ var/global/list/permanent_unlockables = list(
 			to_chat(ourmob, "<span class='warning'>You can not store \the [O]. Your lockbox is too full.</span>")
 			bank.busy_bank = FALSE
 			return
-		var/choice = tgui_alert(ourmob, "If you store \the [O], anything it contains may be lost to \the [bank]. Are you sure?", "[bank]", list("Store", "Cancel"), timeout = 10 SECONDS)
-		if(!choice || choice == "Cancel" || !bank.Adjacent(ourmob) || bank.inoperable() || bank.panel_open)
+		if(!bank.can_use_bank(ourmob))
 			bank.busy_bank = FALSE
 			return
 		for(var/obj/check in O.contents)
 			if(!check.persist_storable)
 				to_chat(ourmob, "<span class='warning'>\The [bank] buzzes. \The [O] contains [check], which cannot be stored. Please remove this item before attempting to store \the [O]. As a reminder, any contents of \the [O] will be lost if you store it with contents.</span>")
+				bank.busy_bank = FALSE
+				return
+		if(!skip_confirmation)
+			var/choice = tgui_alert(ourmob, "If you store \the [O], anything it contains may be lost to \the [bank]. Are you sure?", "[bank]", list("Store", "Cancel"), timeout = 10 SECONDS)
+			if(choice != "Store" || !bank.can_use_bank(ourmob))
 				bank.busy_bank = FALSE
 				return
 		ourmob.visible_message("<span class='notice'>\The [ourmob] begins storing \the [O] in \the [bank].</span>","<span class='notice'>You begin storing \the [O] in \the [bank].</span>")
@@ -112,6 +120,27 @@ var/global/list/permanent_unlockables = list(
 /datum/etching/proc/legacy_conversion(I_name,I_type)
 	item_storage += list("[I_name] - [time2text(world.timeofday, "YYYYMMDDhhmmss")]" = I_type)
 	needs_saving = TRUE
+
+// RS Add: New Item Bank Interface (Lira, March 2026)
+/datum/etching/proc/has_unlockable_type(var/target_type)
+	if(!islist(unlockables) || !unlockables.len)
+		return FALSE
+
+	var/target_path = target_type
+	if(!ispath(target_path) && istext(target_path))
+		target_path = text2path(target_path)
+	if(!ispath(target_path))
+		return FALSE
+
+	for(var/item_name in unlockables)
+		var/stored_type = unlockables[item_name]
+		var/stored_path = stored_type
+		if(!ispath(stored_path) && istext(stored_path))
+			stored_path = text2path(stored_path)
+		if(ispath(stored_path) && stored_path == target_path)
+			return TRUE
+
+	return FALSE
 
 /datum/etching/update_etching(mode, value)
 	. = ..()
