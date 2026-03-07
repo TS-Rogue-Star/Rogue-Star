@@ -82,6 +82,9 @@
 /datum/category_collection/player_setup_collection/proc/header()
 	var/dat = ""
 	for(var/datum/category_group/player_setup_category/PS in categories)
+		// RS Add: Hide skills and antagonism (Lira, March 2026)
+		if(istype(PS, /datum/category_group/player_setup_category/skill_preferences) || istype(PS, /datum/category_group/player_setup_category/appearance_preferences))
+			continue
 		if(PS == selected_category)
 			dat += "[PS.name] "	// TODO: Check how to properly mark a href/button selected in a classic browser window
 		else
