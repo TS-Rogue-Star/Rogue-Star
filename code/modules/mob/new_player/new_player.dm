@@ -74,7 +74,7 @@
 			else
 				output += "<p><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A></p>"
 
-	output += "<p><a href='byond://?src=\ref[src];open_changelog=1'>View Changelog</A></p>"
+	// output += "<p><a href='byond://?src=\ref[src];open_changelog=1'>View Changelog</A></p>" || RS Edit: Hide legacy changelog link (Lira, March 2026)
 
 	if(SSsqlite.can_submit_feedback(client))
 		output += "<p>[href(src, list("give_feedback" = 1), "Give Feedback")]</p>"
