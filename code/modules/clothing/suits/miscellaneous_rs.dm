@@ -21,7 +21,7 @@
 	item_state = "talon_capcoat"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 	flags_inv = HIDEHOLSTER
-	hoodtype = null
+	hoodtype = NULL
 
 /obj/item/clothing/suit/storage/toggle/labcoat/talon
 	name = "Talon labcoat"
