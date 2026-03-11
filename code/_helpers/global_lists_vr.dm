@@ -965,6 +965,9 @@ var/global/list/selectable_speech_bubbles = list(
 	"textbox",
 	"posessed",
 	"square",
+// RS ADD START - This is placed here as to not be among the profession bubbles
+	"cow",
+// RS ADD END
 	"medical",
 	"medical_square",
 	"cardiogram",

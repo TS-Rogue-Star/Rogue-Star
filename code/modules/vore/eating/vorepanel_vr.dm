@@ -825,9 +825,9 @@ var/global/list/rsui_healthbar_preview_cache = list()
 				if(choice != "Yes, save.")
 					return TRUE
 			if(!host.save_vore_prefs())
-				tgui_alert_async(usr, "ERROR: Virgo-specific preferences failed to save!","Error")
+				tgui_alert_async(usr, "ERROR: Rogue Star-specific preferences failed to save!","Error") // RS Edit: Change server name reference (Lira, March 2026)
 			else
-				to_chat(usr, "<span class='notice'>Virgo-specific preferences saved!</span>")
+				to_chat(usr, "<span class='notice'>Rogue Star-specific preferences saved!</span>") // RS Edit: Change server name reference (Lira, March 2026)
 				unsaved_changes = FALSE
 			return TRUE
 		if("reloadprefs")
@@ -835,9 +835,9 @@ var/global/list/rsui_healthbar_preview_cache = list()
 			if(alert != "Reload")
 				return FALSE
 			if(!host.apply_vore_prefs())
-				tgui_alert_async(usr, "ERROR: Virgo-specific preferences failed to apply!","Error")
+				tgui_alert_async(usr, "ERROR: Rogue Star-specific preferences failed to apply!","Error") // RS Edit: Change server name reference (Lira, March 2026)
 			else
-				to_chat(usr,"<span class='notice'>Virgo-specific preferences applied from active slot!</span>")
+				to_chat(usr,"<span class='notice'>Rogue Star-specific preferences applied from active slot!</span>") // RS Edit: Change server name reference (Lira, March 2026)
 				unsaved_changes = FALSE
 			return TRUE
 		if("exportpanel")

@@ -594,6 +594,17 @@ Link: https://github.com/TS-Rogue-Star/Rogue-Star/pull/987<br>
 **Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/1249<br>
 **License:** CC BY-SA 3.0<br>
 <br>
+**File**: icons/mob/vore/taurs_rs.dmi<br>
+**Icon-States**: synthcow_s, synthcow_markings, synthcow_markings2<br>
+**Creator**: ClaraCow <br>
+**Link**: https://github.com/TS-Rogue-Star/Rogue-Star/pull/1249<br>
+**License**: CC BY-SA 3.0<br>
+<br>
+**File**: icons/mob/talk_vr.dmi<br>
+**Icon-States**: cow_talking, cow0, cow1, cow2<br>
+**Creator**: Claracow<br>
+**Link**:https://github.com/TS-Rogue-Star/Rogue-Star/pull/1264<br>
+**License**: CC BY-SA 3.0<br>
 <br>
 **File:** `icons/inventory/head/item_vr_altevian.dmi, icons/inventory/head/mob_vr_altevian.dmi, icons/inventory/suit/item_vr_altevian.dmi, icons/inventory/suit/mob_vr_altevian.dmi`<br>
 **Icon-States:** rig0-vintagecrew, rig-vintagecrew, rig0-vintageengi, rig-vintageengi, rig0-vintagemedic, rig0-vintagepilot, rig-vintagemedic, rig0-vintagemarine, rig-vintagemarine, rig0-vintageofficer, rig-vintageofficer, rig0-vintagepilotalt, rig-vintagepilot, rig0-vintagescientist, rig-vintagescientist, rig0-vintageminer, rig-vintageminer, rig0-vintagemerc, rig-vintagemerc<br>
@@ -601,11 +612,9 @@ Link: https://github.com/TS-Rogue-Star/Rogue-Star/pull/987<br>
 **Link:** https://github.com/VOREStation/VOREStation/pull/7978
 **License:** CC BY-SA 3.0<br>
 <br>
-<br>
 **File:** `html/images/talonlogo.png`<br>
 **Creator:** Unknown. Modified by Azzy.Dreemurr<br>
 **License:** CC BY-SA 3.0<br>
-<br>
 <br>
 **File:** `icons/obj/bureaucracy.dmi`<br>
 **Icon-States:** stamp-tal, paper_stamp-tal, paperplane_stamp-tal<br>
