@@ -97,4 +97,4 @@
 /client/proc/ZASSettings()
 	set category = "Debug"
 
-	vsc.SetDefault(mob)
+	GLOB.vsc.SetDefault(mob) // RS Edit: vsc global fix (Lira, March 2026)

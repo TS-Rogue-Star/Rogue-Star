@@ -155,7 +155,7 @@ Class Procs:
 	if(air.temperature >= PHORON_FLASHPOINT && !(src in air_master.active_fire_zones) && air.check_combustability() && contents.len)
 		var/turf/T = pick(contents)
 		if(istype(T))
-			T.create_fire(vsc.fire_firelevel_multiplier)
+			T.create_fire(GLOB.vsc.fire_firelevel_multiplier) // RS Edit: vsc global fix (Lira, March 2026)
 
 	if(air.check_tile_graphic(graphic_add, graphic_remove))
 		for(var/turf/simulated/T in contents)
