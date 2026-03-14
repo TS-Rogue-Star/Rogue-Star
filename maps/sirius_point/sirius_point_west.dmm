@@ -3590,7 +3590,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 4;
 	frequency = 1445;
-	id = "homestead_airs";
+	id = burn_in;
 	volume_rate = 700
 	},
 /turf/simulated/floor/reinforced/airless,
