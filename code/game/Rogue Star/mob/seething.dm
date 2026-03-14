@@ -55,7 +55,7 @@
 
 /mob/living/simple_mob/hostile/seething/death()
 	. = ..()
-	new /obj/particle_emitter(get_turf(src))
+	new /obj/particle_emitter/seething/limited(get_turf(src))
 	new /obj/effect/decal/cleanable/blood/gibs/core(get_turf(src))
 	mouse_opacity = FALSE
 	name = "dust"
@@ -246,7 +246,7 @@
 /mob/living/simple_mob/hostile/seething_spawner/death()
 	. = ..()
 	lightning_strike(get_turf(src),TRUE)
-	new /obj/particle_emitter(get_turf(src))
+	new /obj/particle_emitter/seething/limited(get_turf(src))
 	mouse_opacity = FALSE
 	name = "dust"
 
@@ -328,40 +328,10 @@
 /particles/seething/active
 	spawning = 6
 
-/obj/particle_emitter
-	name = "particle emitter"
-	desc = "You shouldn't see this"
-	icon = null
-	icon_state = null
-	mouse_opacity = 0
+/obj/particle_emitter/seething
 	particles = new/particles/seething/active
-	plane = PLANE_LIGHTING_ABOVE
-	anchored = TRUE
-	density = FALSE
-	var/lifespan = 2
-	var/delete_at_time
-
-/obj/particle_emitter/Initialize(mapload)
-	. = ..()
-	START_PROCESSING(SSfastprocess,src)
-
-/obj/particle_emitter/Destroy()
-	. = ..()
-	STOP_PROCESSING(SSfastprocess,src)
-
-/obj/particle_emitter/process()
-	if(lifespan < 0)
-		return
-	if(lifespan > 0)
-		lifespan --
-	if(lifespan <= 0)
-		if(!delete_at_time)
-			particles.spawning = 0
-			delete_at_time = world.time + particles.lifespan + 1 SECOND
-			return
-	if(delete_at_time)
-		if(world.time >= delete_at_time)
-			qdel(src)
+/obj/particle_emitter/seething/limited
+	lifespan = 2
 
 /obj/item/projectile/red_energy
 	name = "???"
