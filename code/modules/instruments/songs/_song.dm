@@ -327,8 +327,9 @@
 			var/atom/anchor = get_holder() || parent
 			if(anchor)
 				//Show a musical note above the performer/instrument to viewers in instrument range
-				var/note = pick("♪", "♫")
-				anchor.runechat_message(note, instrument_range, FALSE, list("musicnote", "black_outline"))
+//				var/note = pick("♪", "♫")	//RS EDIT START
+//				anchor.runechat_message(note, instrument_range, FALSE, list("musicnote", "black_outline"))
+				new /obj/particle_emitter/music(get_turf(anchor))	//RS EDIT END
 			last_note_fx_time = world.time
 
 	if(band_is_follower()) //RS Add: Followers don't advance their own chord progression; leader drives playback (Lira, August 2025)

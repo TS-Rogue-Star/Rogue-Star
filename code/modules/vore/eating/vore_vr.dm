@@ -123,6 +123,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 
 	var/ssd_vore = FALSE	//RS ADD
 	var/list/vore_whitelist_toggles = list()	//RS ADD - A list of the prefs that are dictated by whitelist
+	var/belch_color = "#129606"	//RS ADD
 
 /datum/vore_preferences/New(client/C)
 	if(istype(C))
@@ -222,6 +223,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	allow_stripping = json_from_file["allow_stripping"] // RS edit
 	vore_whitelist_toggles = json_from_file["vore_whitelist_toggles"]	//RS ADD
 	autotransferable = json_from_file["autotransferable"] //RS Add || Chomp Port 3200
+	belch_color = json_from_file["belch_color"]	//RS ADD
 
 	//Quick sanitize
 	if(isnull(digestable))
@@ -330,6 +332,8 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 		glowy_belly =  FALSE //RS ADD
 	if(isnull(vore_whitelist_toggles))	//RS ADD
 		vore_whitelist_toggles = list()	//RS ADD
+	if(isnull(belch_color))	//RS ADD
+		belch_color = "#129606"	//RS ADD
 	return TRUE
 
 /datum/vore_preferences/proc/save_vore()
@@ -379,6 +383,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 			"allow_stripping" 		= allow_stripping, // RS edit
 			"vore_whitelist_toggles" = vore_whitelist_toggles, //RS ADD
 			"autotransferable"		= autotransferable, //RS Add || Port Chomp 3200
+			"belch_color"			= belch_color, //RS ADD
 		)
 
 	//List to JSON

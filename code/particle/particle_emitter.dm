@@ -16,7 +16,8 @@
 	icon = null
 	icon_state = null
 	. = ..()
-	START_PROCESSING(SSfastprocess,src)
+	if(lifespan > 0)
+		START_PROCESSING(SSfastprocess,src)
 
 /obj/particle_emitter/Destroy()
 	. = ..()
