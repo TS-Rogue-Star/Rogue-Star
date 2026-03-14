@@ -228,3 +228,20 @@
 	var/color_choice = input(src, "Choose your belch color", "Belch Color", client.prefs_vr.belch_color) as color|null
 	if(color_choice)
 		client.prefs_vr.belch_color = sanitize_hexcolor(color_choice)
+
+/particles/sword_rain
+	icon = 'icons/rogue-star/misc.dmi'
+	icon_state = "wind_blade"
+	width = 500
+	height = 500
+	count = 1000
+	spawning = 1
+	bound1 = list(-1000, -300, -1000)
+	lifespan = 10
+	position = generator("box", list(-300,250,0), list(300,250,0))
+	friction = 0.0
+	velocity = list(1,-50)
+	spin = -100
+
+/obj/particle_emitter/sword_rain
+	particles = new/particles/sword_rain
