@@ -4,8 +4,10 @@
 	desc = "Just your average shambling seething horror. You probably don't want this to touch you."
 	icon = 'icons/rogue-star/mobx32.dmi'
 	icon_state = "seething"
+	icon_dead = "seething_dead"
 
 	faction = "seething"
+	load_owner = "seriouslydontsavethis"
 
 	movement_cooldown = 6
 	melee_damage_lower = 1
@@ -48,12 +50,17 @@
 	max_n2 = 0
 	unsuitable_atoms_damage = 0
 
-	ai_holder_type = /datum/ai_holder/seething
+	ai_holder_type = /datum/ai_holder/seething	//PUT THIS BACK
+	particles = new/particles/seething
 
 /mob/living/simple_mob/hostile/seething/death()
 	. = ..()
-	new /obj/effect/gibspawner/generic(get_turf(src))
-	qdel(src)
+	new /obj/particle_emitter(get_turf(src))
+	new /obj/effect/decal/cleanable/blood/gibs/core(get_turf(src))
+	mouse_opacity = FALSE
+	name = "dust"
+	plane = DECAL_PLANE
+	layer = DECAL_LAYER
 
 /mob/living/simple_mob/hostile/seething/Initialize()
 	. = ..()
@@ -154,3 +161,216 @@
 	can_flee = FALSE
 	flee_when_dying = FALSE
 	autopilot = TRUE
+
+///SPAWNER///
+
+/mob/living/simple_mob/hostile/seething_spawner
+	name = "???"
+	desc = "Your head aches to behold this thing. It appears to be emanating an enormous amount of energy."
+	icon = 'icons/rogue-star/mobx128.dmi'
+	icon_state = "horrible"
+
+	faction = "seething"
+	density = FALSE
+	plane = PLANE_LIGHTING_ABOVE
+
+	pixel_x = -48
+	default_pixel_x = -48
+
+	movement_cooldown = 6
+	melee_damage_lower = 0
+	melee_damage_upper = 0
+	attack_sound = 'sound/weapons/bite.ogg'
+	attacktext = list("bitten","chomped","slashed","tackled","slammed")
+	maxHealth = 500
+	health = 500
+	movement_cooldown = 999999
+	grab_resist = 100
+	devourable = FALSE
+	load_owner = "seriouslydontsavethis"
+
+	armor = list(
+		"melee" = 0,
+		"bullet" = 0,
+		"laser" = 0,
+		"energy" = 0,
+		"bomb" = 0,
+		"bio" = 0,
+		"rad" = 0)
+
+	armor_soak = list(
+		"melee" = 0,
+		"bullet" = 0,
+		"laser" = 0,
+		"energy" = 0,
+		"bomb" = 0,
+		"bio" = 0,
+		"rad" = 0
+		)
+
+	minbodytemp = -1
+	maxbodytemp = 350
+	heat_damage_per_tick = 3
+	cold_damage_per_tick = 0
+	min_oxy = 0
+	max_oxy = 0
+	min_tox = 0
+	max_tox = 0
+	min_co2 = 0
+	max_co2 = 0
+	min_n2 = 0
+	max_n2 = 0
+	unsuitable_atoms_damage = 0
+
+	projectiletype = /obj/item/projectile/red_energy
+	projectilesound = 'sound/weapons/Laser.ogg'
+	projectile_dispersion = 10
+	needs_reload = TRUE
+	reload_max = 7
+	reload_time = 10 SECONDS
+
+	ai_holder_type = /datum/ai_holder/seething
+	particles = new/particles/seething/active
+
+/mob/living/simple_mob/hostile/seething_spawner/adjustBruteLoss(amount, include_robo)
+	. = ..()
+	if(amount > 0)
+		if(prob(25))
+			warp()
+/mob/living/simple_mob/hostile/seething_spawner/adjustFireLoss(amount, include_robo)
+	. = ..()
+	if(amount > 0)
+		if(prob(25))
+			warp()
+
+/mob/living/simple_mob/hostile/seething_spawner/death()
+	. = ..()
+	lightning_strike(get_turf(src),TRUE)
+	new /obj/particle_emitter(get_turf(src))
+	mouse_opacity = FALSE
+	name = "dust"
+
+/mob/living/simple_mob/hostile/seething_spawner/Initialize()
+	. = ..()
+	var/list/adj = list(
+		"terrifying",
+		"horrifying",
+		"horrible",
+		"terrible",
+		"singing",
+		"radiant"
+	)
+
+	name = "[pick(adj)] thing"
+
+/mob/living/simple_mob/hostile/seething_spawner/Life()
+	. = ..()
+	if(prob(10))
+		var/turf/T = get_turf(src)
+		if(T.check_density(FALSE,TRUE))
+			return
+		new /mob/living/simple_mob/hostile/seething(T)
+
+/mob/living/simple_mob/hostile/seething_spawner/try_reload()
+	warp(FALSE)
+	. = ..()
+
+/mob/living/simple_mob/hostile/seething_spawner/proc/warp(var/do_spawn = TRUE)
+	var/turf/T = get_turf(src)
+	var/turf/destination = find_clear_turf()
+	lightning_strike(T,TRUE)
+	if(do_spawn && prob(25))
+		spawn_seething()
+	if(isturf(destination))
+		visible_message(SPAN_WARNING("\The [src] disappears!"))
+		forceMove(destination)
+		visible_message(SPAN_WARNING("\The [src] reappears!"))
+		lightning_strike(destination,TRUE)
+
+/mob/living/simple_mob/hostile/seething_spawner/proc/spawn_seething()
+	var/howmany = rand(1,5)
+	var/where = get_turf(src)
+	if(!where)
+		return
+	while(howmany > 0)
+		new /mob/living/simple_mob/hostile/seething(where)
+		howmany --
+
+/mob/living/simple_mob/hostile/seething_spawner/proc/find_clear_turf(var/checks = 0)
+	var/turf/T = locate(x + rand(-7,7),y + rand(-7,7),z)
+	checks ++
+	if(T.check_density(FALSE, FALSE) || isspace(T))
+		if(checks < 10)
+			return find_clear_turf()
+		return FALSE
+
+	return T
+
+///PARTICLES///
+
+/particles/seething
+	icon = 'icons/rogue-star/smokepuff.dmi'
+	icon_state = list("s1","s2","s3","s4","s5","s6","s7","s8")
+	width = 500     // 500 x 500 image to cover a moderately sized map
+	height = 800
+	count = 100
+	spawning = 0	// per 0.1s
+	bound1 = list(-1000, -300, -1000)   // end particles at Y=-300
+	lifespan = 10
+	position = list(0,0,0)
+	gravity = list(0, 10)
+	friction = 0.1
+	drift = generator("sphere", 0, 5)
+	fade = 1.5 SECONDS
+	velocity = generator("vector",list(-50,0),list(50,0))
+	spin = generator("num", -100,100)
+
+/particles/seething/active
+	spawning = 6
+
+/obj/particle_emitter
+	name = "particle emitter"
+	desc = "You shouldn't see this"
+	icon = null
+	icon_state = null
+	mouse_opacity = 0
+	particles = new/particles/seething/active
+	plane = PLANE_LIGHTING_ABOVE
+	anchored = TRUE
+	density = FALSE
+	var/lifespan = 2
+	var/delete_at_time
+
+/obj/particle_emitter/Initialize(mapload)
+	. = ..()
+	START_PROCESSING(SSfastprocess,src)
+
+/obj/particle_emitter/Destroy()
+	. = ..()
+	STOP_PROCESSING(SSfastprocess,src)
+
+/obj/particle_emitter/process()
+	if(lifespan < 0)
+		return
+	if(lifespan > 0)
+		lifespan --
+	if(lifespan <= 0)
+		if(!delete_at_time)
+			particles.spawning = 0
+			delete_at_time = world.time + particles.lifespan + 1 SECOND
+			return
+	if(delete_at_time)
+		if(world.time >= delete_at_time)
+			qdel(src)
+
+/obj/item/projectile/red_energy
+	name = "???"
+	icon_state = "red_pellet"
+	damage = 5
+	damage_type = BURN
+	range = 10
+	penetrating = TRUE
+	check_armour = "melee"
+	combustion = FALSE
+	homing = TRUE
+	speed = 2
