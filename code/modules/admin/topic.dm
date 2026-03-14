@@ -2002,14 +2002,15 @@
 		if(check_rights(R_ADMIN|R_SERVER))
 			populate_inactive_customitems_list(src.owner)
 
+	// RS Edit: vsc global fix (Lira, March 2026)
 	else if(href_list["vsc"])
 		if(check_rights(R_ADMIN|R_SERVER|R_EVENT))
 			if(href_list["vsc"] == "airflow")
-				vsc.ChangeSettingsDialog(usr,vsc.settings)
+				GLOB.vsc.ChangeSettingsDialog(usr,GLOB.vsc.settings)
 			if(href_list["vsc"] == "phoron")
-				vsc.ChangeSettingsDialog(usr,vsc.plc.settings)
+				GLOB.vsc.ChangeSettingsDialog(usr,GLOB.vsc.plc.settings)
 			if(href_list["vsc"] == "default")
-				vsc.SetDefault(usr)
+				GLOB.vsc.SetDefault(usr)
 
 	else if(href_list["toglang"])
 		if(check_rights(R_SPAWN)) //VOREStation Edit

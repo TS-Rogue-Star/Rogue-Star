@@ -49,7 +49,7 @@ SUBSYSTEM_DEF(airflow)
 			target.airflow_process_delay = 0
 
 		target.airflow_speed = min(target.airflow_speed, 15)
-		target.airflow_speed -= vsc.airflow_speed_decay
+		target.airflow_speed -= GLOB.vsc.airflow_speed_decay // RS Edit: vsc global fix (Lira, March 2026)
 		if (!target.airflow_skip_speedcheck)
 			if (target.airflow_speed > 7)
 				if (target.airflow_time++ >= target.airflow_speed - 7)
@@ -93,7 +93,7 @@ SUBSYSTEM_DEF(airflow)
 		step_towards(target, target.airflow_dest)
 		var/mob/M = target
 		if (ismob(target) && M.client)
-			M.setMoveCooldown(vsc.airflow_mob_slowdown)
+			M.setMoveCooldown(GLOB.vsc.airflow_mob_slowdown) // RS Edit: vsc global fix (Lira, March 2026)
 
 		if (MC_TICK_CHECK)
 			return
@@ -108,7 +108,7 @@ SUBSYSTEM_DEF(airflow)
 	var/tmp/airflow_skip_speedcheck
 
 /atom/movable/proc/prepare_airflow(n)
-	if (!airflow_dest || airflow_speed < 0 || last_airflow > world.time - vsc.airflow_delay)
+	if (!airflow_dest || airflow_speed < 0 || last_airflow > world.time - GLOB.vsc.airflow_delay) // RS Edit: vsc global fix (Lira, March 2026)
 		return FALSE
 	if (airflow_speed)
 		airflow_speed = n / max(get_dist(src, airflow_dest), 1)
