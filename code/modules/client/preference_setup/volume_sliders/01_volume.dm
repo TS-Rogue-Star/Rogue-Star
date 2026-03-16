@@ -44,6 +44,9 @@
 			if(isnum(value))
 				value = CLAMP(value, 0, 200)
 				pref.volume_channels["[channel]"] = (value / 100)
+				// RS Add: Browser-based instrument audio (Lira, March 2026)
+				if(channel == VOLUME_CHANNEL_MASTER || channel == VOLUME_CHANNEL_INSTRUMENTS)
+					user?.client?.refresh_instrument_audio()
 			return TOPIC_REFRESH
 	return ..()
 
@@ -74,7 +77,7 @@
 /datum/volume_panel/tgui_data(mob/user)
 	if(!user.client || !user.client.prefs)
 		return list("error" = TRUE)
-	
+
 	var/list/data = ..()
 	data["volume_channels"] = user.client.prefs.volume_channels
 	return data
@@ -93,6 +96,9 @@
 			if(channel in P.volume_channels)
 				P.volume_channels["[channel]"] = clamp(params["vol"], 0, 2)
 				SScharacter_setup.queue_preferences_save(P)
+				// RS Add: Browser-based instrument audio (Lira, March 2026)
+				if(channel == VOLUME_CHANNEL_MASTER || channel == VOLUME_CHANNEL_INSTRUMENTS)
+					usr.client.refresh_instrument_audio()
 				return TRUE
 
 /client/verb/volume_panel()
