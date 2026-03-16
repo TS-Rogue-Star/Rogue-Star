@@ -86,7 +86,7 @@
 			dat += "<BR>"
 		else
 			dat += "<SPAN CLASS='linkOn'>Play</SPAN> <A href='?src=[REF(src)];stop=1'>Stop</A><BR>"
-			dat += "Repeats left: <B>[repeat]</B><BR>"
+			dat += "Repeats left: <B>[get_repeats_left()]</B><BR>" // RS Edit: Browser-based instrument audio (Lira, March 2026)
 	if(!editing)
 		dat += "<BR><B><A href='?src=[REF(src)];edit=2'>Show Editor</A></B><BR>"
 	else
@@ -135,6 +135,7 @@
  */
 /datum/song/proc/ParseSong(text)
 	set waitfor = FALSE
+	var/was_playing = playing // RS Add: Browser-based instrument audio (Lira, March 2026)
 	//split into lines
 	lines = splittext(text, "\n")
 	if(lines.len)
@@ -155,6 +156,8 @@
 				lines.Remove(l)
 			else
 				linenum++
+		compile_chords() // RS Add: Browser-based instrument audio (Lira, March 2026)
+		refresh_browser_playback(TRUE, was_playing) // RS Add: Browser-based instrument audio (Lira, March 2026)
 		updateDialog(usr) // make sure updates when complete
 
 /datum/song/Topic(href, href_list)
@@ -169,6 +172,7 @@
 		lines = new()
 		tempo = sanitize_tempo(5) // default 120 BPM
 		name = ""
+		refresh_browser_playback(TRUE) // RS Add: Browser-based instrument audio (Lira, March 2026)
 
 	else if(href_list["import"])
 		var/t = ""
@@ -201,6 +205,7 @@
 
 	else if(href_list["tempo"])
 		tempo = sanitize_tempo(tempo + text2num(href_list["tempo"]))
+		refresh_browser_playback(TRUE) // RS Add: Browser-based instrument audio (Lira, March 2026)
 
 	else if(href_list["play"])
 		band_paused_manually = FALSE //RS Add: Clear manual pause when the user explicitly plays again (Lira, August 2025)
@@ -281,6 +286,7 @@
 		var/amount = tgui_input_number(usr, "Set note shift", "Note Shift")
 		if(!isnull(amount))
 			note_shift = clamp(amount, note_shift_min, note_shift_max)
+			refresh_browser_playback(TRUE) // RS Add: Browser-based instrument audio (Lira, March 2026)
 
 	else if(href_list["setsustainmode"])
 		var/choice = tgui_input_list(usr, "Choose a sustain mode", "Sustain Mode", list("Linear", "Exponential"))
@@ -289,9 +295,11 @@
 				sustain_mode = SUSTAIN_LINEAR
 			if("Exponential")
 				sustain_mode = SUSTAIN_EXPONENTIAL
+		refresh_browser_playback(TRUE) // RS Add: Browser-based instrument audio (Lira, March 2026)
 
 	else if(href_list["togglesustainhold"])
 		full_sustain_held_note = !full_sustain_held_note
+		refresh_browser_playback(TRUE) // RS Add: Browser-based instrument audio (Lira, March 2026)
 
 	//RS Add Start: Define band sync hrefs (Lira, August 2025)
 
@@ -299,6 +307,7 @@
 		var/seconds = tgui_input_number(usr, "Set band sync delay (seconds)", "Band Sync Delay", band_delay_ds / 10)
 		if(!isnull(seconds))
 			band_delay_ds = clamp(round(seconds * 10, get_instrument_time_step()), 0, 5 SECONDS) // RS Edit: Remove FPS dependency (Lira, November 2025)
+			refresh_browser_playback(TRUE) // RS Add: Browser-based instrument audio (Lira, March 2026)
 
 	else if(href_list["toggleautoplay"])
 		band_autoplay = !band_autoplay

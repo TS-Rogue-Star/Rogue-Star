@@ -295,6 +295,11 @@ var/list/_client_preferences_by_type
 	description ="Hear In-game Instruments"
 	key = "SOUND_INSTRUMENT"
 
+// RS Add: Browser-based instrument audio (Lira, March 2026)
+/datum/client_preference/instrument_toggle/toggled(var/mob/preference_mob, var/enabled)
+	. = ..()
+	preference_mob?.client?.refresh_instrument_audio()
+
 /datum/client_preference/vchat_enable
 	description = "Enable/Disable VChat"
 	key = "VCHAT_ENABLE"

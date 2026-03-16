@@ -45,6 +45,8 @@
 	var/admin_only = FALSE
 	/// Volume multiplier. Synthesized instruments are quite loud and I don't like to cut off potential detail via editing. (someone correct me if this isn't a thing)
 	var/volume_multiplier = 0.33
+	/// RS Add: Browser-backed playback support flag (Lira, March 2026)
+	var/browser_audio_supported = TRUE
 
 /datum/instrument/New()
 	if(isnull(id))
@@ -67,6 +69,14 @@
 	else if(instrument_flags & INSTRUMENT_DO_NOT_AUTOSAMPLE)
 		return length(samples)
 	return (length(samples) >= 128)
+
+// RS Add: Browser-based instrument audio (Lira, March 2026)
+/datum/instrument/proc/supports_browser_audio()
+	if(!browser_audio_supported)
+		return FALSE
+	if(instrument_flags & INSTRUMENT_LEGACY)
+		return lowertext(legacy_instrument_ext || "") == "ogg"
+	return TRUE
 
 /datum/instrument/Destroy()
 	SSinstruments.instrument_data -= id

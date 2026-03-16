@@ -1480,6 +1480,16 @@ window "rpane"
 		background-color = none
 		is-visible = false
 		saved-params = ""
+	// RS Add: Browser-based instrument audio (Lira, March 2026)
+	elem "instrumentpanel"
+		type = BROWSER
+		pos = 392,25
+		size = 1x1
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		background-color = none
+		is-visible = false
+		saved-params = ""
 
 window "browserwindow"
 	elem "browserwindow"
