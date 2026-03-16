@@ -441,9 +441,11 @@
 
 /datum/map_template/station_map/spw/on_map_loaded(z)
 	seed_submaps(list(Z_LEVEL_MOONBASE_WEST), 210, /area/moonbase/surface/west_crater/unexplored, /datum/map_template/surface/moonbase/west_crater)
+	new /datum/random_map/noise/ore(null, 1, 1, Z_LEVEL_MOONBASE_MINING, 64, 64)
 
 /datum/map_template/station_map/spe/on_map_loaded(z)
 	seed_submaps(list(Z_LEVEL_MOONBASE_EAST), 210, /area/moonbase/surface/east_crater/unexplored, /datum/map_template/surface/moonbase/east_crater)
+	new /datum/random_map/noise/ore(null, 1, 1, Z_LEVEL_MOONBASE_MINING, 64, 64)
 
 /datum/map_template/station_map/spm/on_map_loaded(z)
 	. = ..()

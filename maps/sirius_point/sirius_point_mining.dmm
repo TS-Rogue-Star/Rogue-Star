@@ -187,6 +187,10 @@
 	},
 /turf/simulated/floor/tiled,
 /area/outpost/mining_main/break_room)
+"mJ" = (
+/obj/machinery/suspension_gen,
+/turf/simulated/floor/airless/moonbaseplating,
+/area/moonbasemine/explored)
 "oG" = (
 /obj/structure/cable{
 	icon_state = "2-4"
@@ -329,6 +333,10 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/outpost/mining_main/break_room)
+"uU" = (
+/obj/structure/anomaly_container,
+/turf/simulated/floor/airless/moonbaseplating,
+/area/moonbasemine/explored)
 "uZ" = (
 /obj/machinery/vending/fitness{
 	dir = 8
@@ -9730,9 +9738,9 @@ ks
 ks
 ks
 ks
-ks
-ks
-ks
+uU
+uU
+mJ
 UM
 UM
 UM
@@ -9872,9 +9880,9 @@ ks
 ks
 ks
 ks
-ks
-ks
-UM
+uU
+ai
+mJ
 UM
 Sb
 UM
@@ -10014,9 +10022,9 @@ ks
 ks
 ks
 ks
-ks
-UM
-UM
+uU
+ai
+mJ
 UM
 UM
 UM
@@ -10155,8 +10163,8 @@ ks
 ks
 ks
 ks
-ks
-ks
+UM
+UM
 UM
 UM
 UM
@@ -10579,7 +10587,7 @@ ks
 ks
 ks
 ks
-UM
+Sb
 UM
 UM
 UM
