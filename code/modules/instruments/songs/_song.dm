@@ -12,6 +12,8 @@
 ////////////////////////////////////////////////////////////////////////////////////
 //Updated by Lira for Rogue Star August 2025 to support forming synchronized bands//
 ////////////////////////////////////////////////////////////////////////////////////
+//Updated by Lira for Rogue Star March 2026 for browser-based instrument audio//////
+////////////////////////////////////////////////////////////////////////////////////
 
 /datum/song
 	/// Name of the song
@@ -39,6 +41,8 @@
 
 	/// Repeats left
 	var/repeat = 0
+	/// RS Add: Browser-based instrument audio (Lira, March 2026)
+	var/repeats_left = 0
 	/// Maximum times we can repeat
 	var/max_repeats = 10
 
@@ -85,12 +89,42 @@
 	var/list/channels_idle = list()
 	/// Person playing us
 	var/mob/user_playing
+
+	// RS Add Start: Browser-based instrument audio (Lira, March 2026)
+	var/band_active_chord_index = 0
+	var/band_active_chord_started_at = 0
+	var/band_active_chord_duration_ds = 0
+	var/list/channel_playback_data = list()
+	var/list/synth_fallback_listeners = list()
+	var/list/browser_preserved_note_listeners = list()
+	var/playback_generation = 0
+	// RS Add End
+
 	//////////////////////////////////////////////////////
 
 	/// Last world.time we checked for who can hear us
 	var/last_hearcheck = 0
 	/// The list of mobs that can hear us
 	var/list/hearing_mobs
+
+	// RS Add Start: Browser-based instrument audio (Lira, March 2026)
+	var/browser_timeline_json
+	var/browser_timeline_key
+	var/browser_timeline_build_serial = 0
+	var/browser_timeline_building = FALSE
+	var/list/browser_sample_manifest = list()
+	var/browser_timeline_duration_ds = 0
+	var/browser_playback_start_time = 0
+	var/browser_listener_launch_time = 0
+	var/browser_timeline_start_chord_index = 1
+	var/browser_timeline_repeats_after_start = 0
+	var/browser_timeline_initial_time_ds = 0
+	var/list/browser_active_listeners = list()
+	var/list/browser_tracked_listeners = list()
+	var/list/browser_tracked_sources = list()
+	var/browser_resync_suspended = FALSE
+	// RS Add End
+
 	/// If this is enabled, some things won't be strictly cleared when they usually are (liked compiled_chords on play stop)
 	var/debug_mode = FALSE
 	/// Max sound channels to occupy
@@ -151,6 +185,8 @@
 	var/band_autoplay = TRUE
 	/// Set true when the user manually clicked Stop; prevents auto-resume until they Play again
 	var/band_paused_manually = FALSE
+	/// RS Add: Browser-based instrument audio (Lira, March 2026)
+	var/band_browser_resync_pending = FALSE
 
 	//RS Add: Note range filter (Lira, August 2025)
 	/// Enable/disable note range filter per performer
@@ -192,21 +228,33 @@
 /**
  * Checks and stores which mobs can hear us. Terminates sounds for mobs that leave our range.
  */
+// RS Edit: Track browser-backed listener enter and exit state during hearchecks (Lira, March 2026)
 /datum/song/proc/do_hearcheck()
 	last_hearcheck = world.time
 	var/list/old = hearing_mobs.Copy()
+	for(var/mob/M as anything in old)
+		if(!M)
+			old -= M
 	hearing_mobs.len = 0
 	var/turf/source = get_turf(parent)
 	var/list/in_range = get_mobs_and_objs_in_view_fast(source, instrument_range, remote_ghosts = FALSE)
 	for(var/mob/M in in_range["mobs"])
+		if(!M)
+			continue
 		hearing_mobs[M] = get_dist(M, source)
 	var/list/exited = old - hearing_mobs
-	for(var/i in exited)
-		terminate_sound_mob(i)
+	for(var/mob/M as anything in exited)
+		if(!M)
+			continue
+		terminate_sound_mob(M)
+		synth_fallback_listeners -= M
+		browser_preserved_note_listeners -= M
+	browser_hearcheck_update(old, exited)
 
 /**
  * Sets our instrument, caching anything necessary for faster accessing. Accepts an ID, typepath, or instantiated instrument datum.
  */
+// RS Edit: Browser-based instrument audio (Lira, March 2026)
 /datum/song/proc/set_instrument(datum/instrument/I)
 	terminate_all_sounds()
 	var/old_legacy
@@ -234,10 +282,13 @@
 		if(isnull(old_legacy) || (old_legacy != instrument_legacy))
 			if(playing)
 				compile_chords()
+	if(playing)
+		refresh_browser_playback(TRUE)
 
 /**
  * Attempts to start playing our song.
  */
+// RS Edit: Browser-based instrument audio (Lira, March 2026)
 /datum/song/proc/start_playing(mob/user)
 	if(playing)
 		return
@@ -251,22 +302,17 @@
 	if(band_is_follower() && band_leader?.playing) //RS Add: If we're a band follower and the leader is currently playing, mirror the leader's lines and tempo so chord indices align (Lira, August 2025)
 		lines = band_leader.lines?.Copy() || list()
 		tempo = band_leader.tempo
+		repeat = band_leader.repeat
 	compile_chords()
 	if(!length(compiled_chords))
 		to_chat(user, "<span class='warning'>Song is empty.</span>")
 		return
-	playing = TRUE
-	updateDialog(user_playing)
-	//we can not afford to runtime, since we are going to be doing sound channel reservations and if we runtime it means we have a channel allocation leak.
-	//wrap the rest of the stuff to ensure stop_playing() is called.
-	do_hearcheck()
-	SEND_SIGNAL(parent, COMSIG_SONG_START)
-	elapsed_delay = 0
-	delay_by = 0
-	current_chord = 1
-	user_playing = user
-	last_note_fx_time = world.time - note_fx_interval_ds //RS Add: Prime visual cue so the first note shows quickly (Lira, August 2025)
-	START_PROCESSING(SSinstruments, src)
+	var/playback_start_time = world.time
+	if(band_is_follower() && band_leader?.playing)
+		playback_start_time = band_leader.browser_playback_start_time || world.time
+	begin_playback(user, playback_start_time)
+	if(debug_mode)
+		report_playback_debug(user)
 
 	//RS Add Start: Band playing (Lira, August 2025)
 	//If we're a band leader with selected followers, start them now
@@ -274,31 +320,14 @@
 		band_start_followers(user)
 	//If we just started as a follower while leader is mid-song, immediately sync by playing the leader's current chord so we "catch up".
 	else if(band_is_follower() && band_leader?.playing)
-		//Only sync if we're ready (held and in range)
-		if(band_ready_for(band_leader))
-			//Ensure hearing lists are fresh
-			if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > band_leader.last_hearcheck)
-				band_leader.do_hearcheck()
-			if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > last_hearcheck)
-				do_hearcheck()
-			var/ch_idx = clamp(band_leader.current_chord, 1, length(compiled_chords))
-			if(ch_idx <= length(compiled_chords))
-				//Reflect our current chord to match leader for UI consistency
-				current_chord = ch_idx
-				var/list/f_chord = compiled_chords[ch_idx]
-				var/list/targets = band_leader.hearing_mobs?.Copy() || list()
-				targets |= hearing_mobs
-				var/delay = max(0, round(band_delay_ds, get_instrument_time_step())) // RS Edit: Remove FPS dependency (Lira, November 2025)
-				if(delay)
-					var/list/targets_snapshot = targets.Copy()
-					addtimer(CALLBACK(src, PROC_REF(play_chord_if_playing), f_chord, targets_snapshot), delay)
-				else
-					play_chord_if_playing(f_chord, targets)
+		band_sync_join_current_chord(band_leader)
+		request_band_browser_resync()
 	//RS Add End
 
 /**
  * Stops playing, terminating all sounds if in synthesized mode. Clears hearing_mobs.
  */
+// RS Edit: Browser-based instrument audio (Lira, March 2026)
 /datum/song/proc/stop_playing(keep_band = FALSE) //RS Edit: End band by default (Lira, August 2025)
 	if(!playing)
 		return
@@ -308,8 +337,27 @@
 	STOP_PROCESSING(SSinstruments, src)
 	SEND_SIGNAL(parent, COMSIG_SONG_END)
 	terminate_all_sounds(TRUE)
+	stop_browser_audio(legacy)
+	browser_preserved_note_listeners.Cut()
 	hearing_mobs.len = 0
 	user_playing = null
+	repeats_left = 0
+	browser_timeline_build_serial++
+	browser_timeline_building = FALSE
+	browser_playback_start_time = 0
+	browser_listener_launch_time = 0
+	browser_timeline_duration_ds = 0
+	browser_timeline_start_chord_index = 1
+	browser_timeline_repeats_after_start = 0
+	browser_timeline_initial_time_ds = 0
+	band_active_chord_index = 0
+	band_active_chord_started_at = 0
+	band_active_chord_duration_ds = 0
+	band_browser_resync_pending = FALSE
+	browser_resync_suspended = FALSE
+	browser_timeline_json = null
+	browser_timeline_key = null
+	browser_sample_manifest.Cut()
 	//RS Add Start: Band stop playing (Lira, August 2025)
 	if(band_leader == src)
 		band_stop_followers_playback()
@@ -317,9 +365,35 @@
 		band_leave()
 	//RS Add End
 
+// RS Add: Browser-based instrument audio (Lira, March 2026)
+/datum/song/proc/reset_active_playback_cursor(playback_start_time = world.time)
+	if(!playing)
+		return FALSE
+	playback_generation++
+	elapsed_delay = 0
+	delay_by = 0
+	current_chord = length(compiled_chords) ? 1 : 0
+	repeats_left = repeat
+	band_active_chord_index = 0
+	band_active_chord_started_at = 0
+	band_active_chord_duration_ds = 0
+	browser_playback_start_time = playback_start_time
+	browser_listener_launch_time = playback_start_time
+	browser_preserved_note_listeners.Cut()
+	return TRUE
+
+// RS Add: Browser-based instrument audio (Lira, March 2026)
+/datum/song/proc/restart_active_playback(playback_start_time = world.time)
+	if(!playing)
+		return FALSE
+	terminate_all_sounds(TRUE, get_browser_listener_targets())
+	stop_browser_audio()
+	return reset_active_playback_cursor(playback_start_time)
+
 /**
  * Processes our song.
  */
+// RS Edit: Browser-based instrument audio (Lira, March 2026)
 /datum/song/proc/process_song(wait)
 	if(playing) //RS Add: Visual cue when playing (Lira, August 2025)
 		//Throttle to once every note_fx_interval_ds deciseconds
@@ -340,6 +414,9 @@
 		return
 	var/list/chord = compiled_chords[current_chord]
 	if(++elapsed_delay >= delay_by)
+		var/chord_duration = tempodiv_to_delay(chord[length(chord)])
+		var/chord_duration_ds = chord_duration * get_instrument_time_step()
+		var/browser_resync_resume_delay = 0
 		//RS Add Start: Band logic (Lira, August 2025)
 		var/list/targets_override
 		if(band_is_leader())
@@ -353,17 +430,25 @@
 				if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > S.last_hearcheck)
 					S.do_hearcheck()
 				targets_override |= S.hearing_mobs
+			if(band_browser_resync_pending)
+				browser_resync_resume_delay = chord_duration_ds + band_prepare_browser_resync()
+				band_browser_resync_pending = FALSE
 		play_chord(chord, targets_override)
+		band_active_chord_index = current_chord
+		band_active_chord_started_at = world.time
+		band_active_chord_duration_ds = chord_duration_ds
 		//Broadcast this chord to followers (if any)
 		if(band_is_leader())
 			band_broadcast_play(current_chord)
+		if(browser_resync_resume_delay)
+			addtimer(CALLBACK(src, PROC_REF(band_finish_browser_resync)), max(get_instrument_time_step(), browser_resync_resume_delay))
 		//RS Add End
 		elapsed_delay = 0
-		delay_by = tempodiv_to_delay(chord[length(chord)])
+		delay_by = chord_duration
 		current_chord++
 		if(current_chord > length(compiled_chords))
-			if(repeat)
-				repeat--
+			if(repeats_left)
+				repeats_left--
 				current_chord = 1
 				return
 			else
@@ -388,16 +473,32 @@
 /**
  * Compiles chords.
  */
+// RS Edit: Browser-based instrument audio (Lira, March 2026)
 /datum/song/proc/compile_chords()
+	compiled_chords = null
 	legacy ? compile_legacy() : compile_synthesized()
 
 /**
  * Plays a chord.
  */
+// RS Edit: Browser-based instrument audio (Lira, March 2026)
 /datum/song/proc/play_chord(list/chord, list/targets_override) //RS Edit: Adds band override (Lira, August 2025)
+	if(!islist(targets_override) && ((world.time - MUSICIAN_HEARCHECK_MINDELAY) > last_hearcheck))
+		do_hearcheck()
+	if(legacy && browser_timeline_json)
+		sync_all_browser_listeners()
+	var/list/current_targets = islist(targets_override) ? targets_override : hearing_mobs
+	var/list/fallback_targets = get_note_fallback_targets(targets_override)
+	if(!length(fallback_targets))
+		if(!legacy && length(channels_playing))
+			terminate_all_sounds(FALSE, islist(targets_override) ? targets_override : get_browser_listener_targets())
+		if(!legacy && synth_should_track_browser_fallback_state(current_targets))
+			for(var/i in 1 to (length(chord) - 1))
+				register_synth_channel_state(chord[i])
+		return
 	// last value is timing information
 	for(var/i in 1 to (length(chord) - 1))
-		legacy? playkey_legacy(chord[i][1], chord[i][2], chord[i][3], user_playing, targets_override) : playkey_synth(chord[i], user_playing, targets_override) //RS Edit: Adds band override (Lira, August 2025)
+		legacy? playkey_legacy(chord[i][1], chord[i][2], chord[i][3], user_playing, fallback_targets) : playkey_synth(chord[i], user_playing, fallback_targets) //RS Edit: Adds band override (Lira, August 2025)
 
 /**
  * Checks if we should halt playback.
@@ -421,11 +522,53 @@
 /datum/song/proc/get_bpm()
 	return 600 / tempo
 
+// RS Add: Browser-based instrument audio (Lira, March 2026)
+/datum/song/proc/get_repeats_left()
+	if(band_is_follower() && band_leader?.playing)
+		return band_leader.get_repeats_left()
+	return repeats_left
+
 /**
  * Sets our tempo from a beats-per-minute, sanitizing it to a valid number first.
  */
+ // RS Edit: Browser-based instrument audio (Lira, March 2026)
 /datum/song/proc/set_bpm(bpm)
 	tempo = sanitize_tempo(600 / bpm)
+	refresh_browser_playback(TRUE)
+
+// RS Add: Browser-based instrument audio (Lira, March 2026)
+/datum/song/proc/refresh_browser_playback(rebuild_timeline = FALSE, restart_playback = FALSE)
+	if(!playing)
+		return
+	if(rebuild_timeline)
+		request_band_browser_resync()
+		if(restart_playback)
+			restart_active_playback()
+		if(band_is_leader())
+			band_sync_followers_for_timeline_rebuild(restart_playback)
+		rebuild_browser_timeline_for_active_playback()
+	do_hearcheck()
+	sync_all_browser_listeners()
+
+// RS Add: Browser-based instrument audio (Lira, March 2026)
+/datum/song/proc/report_playback_debug(mob/user)
+	if(!user?.client)
+		return
+	var/message
+	if(browser_handles_listener(user))
+		message = "browser-backed playback active on your client"
+	else if(browser_timeline_building)
+		message = "browser timeline building in the background; your client is using legacy fallback until ready"
+	else if(browser_timeline_json)
+		if(user.client.instrument_audio?.song_is_priming(src))
+			message = "browser timeline prepared and priming on your client; legacy fallback will be used until samples finish loading"
+		else
+			message = "browser timeline prepared, but your client is currently using legacy fallback"
+	else if(using_instrument?.supports_browser_audio())
+		message = "legacy fallback active; browser timeline was not prepared"
+	else
+		message = "legacy note-by-note fallback only"
+	to_chat(user, span_notice("Instrument debug: [message]."))
 
 /**
  * Updates the window for our users. Override down the line.
@@ -460,6 +603,7 @@
 /datum/song/proc/set_volume(volume)
 	src.volume = clamp(volume, max(0, min_volume), min(100, max_volume))
 	update_sustain()
+	refresh_browser_playback() // RS Add: Browser-based instrument audio (Lira, March 2026)
 	updateDialog()
 
 /**
@@ -468,6 +612,7 @@
 /datum/song/proc/set_dropoff_volume(volume)
 	sustain_dropoff_volume = clamp(volume, INSTRUMENT_MIN_SUSTAIN_DROPOFF, 100)
 	update_sustain()
+	refresh_browser_playback(TRUE) // RS Add: Browser-based instrument audio (Lira, March 2026)
 	updateDialog()
 
 /**
@@ -476,6 +621,7 @@
 /datum/song/proc/set_exponential_drop_rate(drop)
 	sustain_exponential_dropoff = clamp(drop, INSTRUMENT_EXP_FALLOFF_MIN, INSTRUMENT_EXP_FALLOFF_MAX)
 	update_sustain()
+	refresh_browser_playback(TRUE) // RS Add: Browser-based instrument audio (Lira, March 2026)
 	updateDialog()
 
 /**
@@ -484,6 +630,7 @@
 /datum/song/proc/set_linear_falloff_duration(duration)
 	sustain_linear_duration = clamp(duration, 0.1, INSTRUMENT_MAX_TOTAL_SUSTAIN)
 	update_sustain()
+	refresh_browser_playback(TRUE) // RS Add: Browser-based instrument audio (Lira, March 2026)
 	updateDialog()
 
 /datum/song/vv_edit_var(var_name, var_value)
@@ -525,7 +672,7 @@
 	var/obj/structure/musician/M = parent
 	return M.should_stop_playing(user)
 
-//RS Add Start: Band sync support procs (Lira, August 2025)
+//RS Add Start: Band sync support procs (Lira, August 2025) || Browser-based instrument audio (Lira, March 2026)
 
 //Returns the mob holding this instrument if handheld, or null otherwise
 /datum/song/proc/get_holder()
@@ -553,6 +700,105 @@
 		return FALSE
 	return (get_dist(lt, ft) <= leader.band_range)
 
+/datum/song/proc/band_get_active_chord_state()
+	if(!playing || !length(compiled_chords) || !band_active_chord_index || band_active_chord_duration_ds <= 0)
+		return null
+	if(band_active_chord_index < 1 || band_active_chord_index > length(compiled_chords))
+		return null
+	var/chord_end_time = band_active_chord_started_at + band_active_chord_duration_ds
+	if(world.time >= chord_end_time)
+		return null
+	return list(
+		"chord_index" = band_active_chord_index,
+		"start_time" = band_active_chord_started_at,
+		"end_time" = chord_end_time
+	)
+
+/datum/song/proc/band_sync_join_current_chord(datum/song/leader)
+	if(!playing || !band_ready_for(leader))
+		return FALSE
+	if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > leader.last_hearcheck)
+		leader.do_hearcheck()
+	if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > last_hearcheck)
+		do_hearcheck()
+	current_chord = clamp(leader.current_chord, 1, length(compiled_chords))
+	var/list/chord_state = leader.band_get_active_chord_state()
+	if(!islist(chord_state))
+		return FALSE
+	var/ch_idx = clamp(chord_state["chord_index"], 1, length(compiled_chords))
+	if(ch_idx > length(compiled_chords))
+		return FALSE
+	var/band_delay = max(0, round(band_delay_ds, get_instrument_time_step()))
+	var/follower_start_time = chord_state["start_time"] + band_delay
+	var/list/f_chord = compiled_chords[ch_idx]
+	var/list/targets = leader.hearing_mobs?.Copy() || list()
+	targets |= hearing_mobs
+	var/start_delay = max(0, follower_start_time - world.time)
+	var/current_playback_generation = playback_generation
+	if(start_delay)
+		var/list/targets_snapshot = targets.Copy()
+		addtimer(CALLBACK(src, PROC_REF(play_chord_if_playing), f_chord, targets_snapshot, current_playback_generation), start_delay)
+	else
+		play_chord_if_playing(f_chord, targets, current_playback_generation)
+	return TRUE
+
+/datum/song/proc/request_band_browser_resync()
+	if(!playing)
+		return FALSE
+	if(band_is_follower())
+		if(band_leader?.playing)
+			band_leader.band_browser_resync_pending = TRUE
+			return TRUE
+		return FALSE
+	if(!band_is_leader())
+		return FALSE
+	band_browser_resync_pending = TRUE
+	return TRUE
+
+/datum/song/proc/browser_stop_active_listeners_for_resync()
+	browser_resync_suspended = TRUE
+	for(var/client/C as anything in browser_active_listeners.Copy())
+		var/mob/M = get_browser_active_listener_mob(C)
+		if(!M)
+			continue
+		browser_stop_listener(M, FALSE, TRUE)
+
+/datum/song/proc/band_prepare_browser_resync()
+	var/max_delay = 0
+	if(playing)
+		browser_stop_active_listeners_for_resync()
+	for(var/datum/song/S as anything in band_followers)
+		if(!S?.playing || !S.band_ready_for(src))
+			continue
+		S.browser_stop_active_listeners_for_resync()
+		max_delay = max(max_delay, max(0, round(S.band_delay_ds, get_instrument_time_step())))
+	return max_delay
+
+/datum/song/proc/band_finish_browser_resync()
+	if(!playing || !band_is_leader())
+		return FALSE
+	if(browser_timeline_building)
+		addtimer(CALLBACK(src, PROC_REF(band_finish_browser_resync)), get_instrument_time_step())
+		return FALSE
+	for(var/datum/song/S as anything in band_followers)
+		if(!S?.playing || !S.band_ready_for(src))
+			continue
+		if(S.browser_timeline_building)
+			addtimer(CALLBACK(src, PROC_REF(band_finish_browser_resync)), get_instrument_time_step())
+			return FALSE
+	browser_resync_suspended = FALSE
+	do_hearcheck()
+	sync_all_browser_listeners()
+	for(var/datum/song/S as anything in band_followers)
+		if(!S?.playing)
+			continue
+		S.browser_resync_suspended = FALSE
+		if(!S.band_ready_for(src))
+			continue
+		S.do_hearcheck()
+		S.sync_all_browser_listeners()
+	return TRUE
+
 //Enable and set inclusive note range filter (0-127 keys)
 /datum/song/proc/set_note_filter_bounds(low, high)
 	low = clamp(round(low), INSTRUMENT_MIN_KEY, INSTRUMENT_MAX_KEY)
@@ -564,16 +810,20 @@
 	note_filter_min = low
 	note_filter_max = high
 	note_filter_enabled = TRUE
+	refresh_browser_playback(TRUE)
 	updateDialog()
 
 //Disable note range filter
 /datum/song/proc/clear_note_filter()
 	note_filter_enabled = FALSE
+	refresh_browser_playback(TRUE)
 	updateDialog()
 
  //Plays a chord only if we are still playing
-/datum/song/proc/play_chord_if_playing(list/chord, list/targets_override)
+/datum/song/proc/play_chord_if_playing(list/chord, list/targets_override, expected_playback_generation = null)
 	if(!playing)
+		return
+	if(!isnull(expected_playback_generation) && expected_playback_generation != playback_generation)
 		return
 	play_chord(chord, targets_override)
 
@@ -636,6 +886,7 @@
 		//Always push current song/tempo to followers so they are primed, even if autoplay is disabled; this lets them press Play and sync
 		S.lines = src.lines?.Copy() || list()
 		S.tempo = src.tempo
+		S.repeat = src.repeat
 		S.compile_chords()
 		//Reset manual pause on new leader start; obey follower autoplay
 		S.band_paused_manually = FALSE
@@ -645,13 +896,7 @@
 			if(S.playing)
 				S.stop_playing(TRUE)
 			//Start their processing; progression is driven by leader
-			S.playing = TRUE
-			S.elapsed_delay = 0
-			S.delay_by = 0
-			S.current_chord = 1
-			S.user_playing = user
-			SEND_SIGNAL(S.parent, COMSIG_SONG_START)
-			START_PROCESSING(SSinstruments, S)
+			S.begin_playback(user, browser_playback_start_time)
 		else
 			//Ensure not playing if not ready
 			if(S.playing)
@@ -686,6 +931,39 @@
 		band_leader.band_followers -= src
 	band_leader = null
 
+/datum/song/proc/shared_song_state_matches(datum/song/other)
+	if(!istype(other))
+		return FALSE
+	if(tempo != other.tempo || repeat != other.repeat)
+		return FALSE
+	if(length(lines) != length(other.lines))
+		return FALSE
+	for(var/i in 1 to length(lines))
+		if(lines[i] != other.lines[i])
+			return FALSE
+	return TRUE
+
+/datum/song/proc/band_sync_followers_for_timeline_rebuild(restart_playback = FALSE)
+	if(!band_is_leader())
+		return FALSE
+	for(var/datum/song/S as anything in band_followers.Copy())
+		if(QDELETED(S) || QDELETED(S.parent))
+			band_followers -= S
+			continue
+		var/shared_song_changed = restart_playback || !S.shared_song_state_matches(src)
+		S.band_join(src)
+		if(shared_song_changed)
+			S.lines = src.lines?.Copy() || list()
+			S.tempo = src.tempo
+			S.repeat = src.repeat
+			S.compile_chords()
+		if(!S.playing || !shared_song_changed)
+			continue
+		if(restart_playback)
+			S.restart_active_playback(browser_playback_start_time)
+		S.rebuild_browser_timeline_for_active_playback()
+	return TRUE
+
 
 //Transfer band leadership from this leader to one of its followers
 /datum/song/proc/band_transfer_leadership(datum/song/new_leader)
@@ -706,6 +984,7 @@
 	//Prime the new leader with our song data
 	new_leader.lines = src.lines?.Copy() || list()
 	new_leader.tempo = src.tempo
+	new_leader.repeat = src.repeat
 	new_leader.compile_chords()
 
 	//New leader becomes a leader
@@ -732,7 +1011,8 @@
 	//If we were playing, start the new leader and sync to our current chord
 	if(was_playing)
 		if(!new_leader.playing)
-			new_leader.start_playing(user_playing)
+			new_leader.begin_playback(user_playing, browser_playback_start_time)
+		new_leader.repeats_left = repeats_left
 		//Align chord index for continuity
 		new_leader.current_chord = clamp(prev_chord, 1, length(new_leader.compiled_chords))
 		new_leader.elapsed_delay = 0
@@ -779,20 +1059,21 @@
 			S.band_paused_manually = FALSE
 			continue
 		//Update follower hearing list too
-			if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > S.last_hearcheck)
-				S.do_hearcheck()
+		if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > S.last_hearcheck)
+			S.do_hearcheck()
 		//Autoplay auto-resume: If follower is ready, not playing, autoplay enabled, and not manually paused, start them now synced to the leader's current chord
 		if(!S.playing && S.band_autoplay && !S.band_paused_manually)
 			S.lines = src.lines?.Copy() || list()
 			S.tempo = src.tempo
+			S.repeat = src.repeat
 			S.compile_chords()
-			S.playing = TRUE
+			S.begin_playback(user_playing, browser_playback_start_time)
 			S.elapsed_delay = 0
-			S.delay_by = 0
 			S.current_chord = clamp(chord_index, 1, length(S.compiled_chords))
-			S.user_playing = user_playing
-			SEND_SIGNAL(S.parent, COMSIG_SONG_START)
-			START_PROCESSING(SSinstruments, S)
+			if(length(S.compiled_chords))
+				var/list/ch = S.compiled_chords[S.current_chord]
+				S.delay_by = S.tempodiv_to_delay(ch[length(ch)])
+			S.request_band_browser_resync()
 		//Ensure chords exist
 		if(chord_index > length(S.compiled_chords))
 			continue
@@ -801,10 +1082,11 @@
 		var/list/targets = hearing_mobs.Copy()
 		targets |= S.hearing_mobs
 		var/delay = max(0, round(S.band_delay_ds, get_instrument_time_step())) // RS Edit: Remove FPS dependency (Lira, November 2025)
+		var/current_playback_generation = S.playback_generation
 		if(delay)
 			//Schedule with delay, snapshot targets
 			var/list/targets_snapshot = targets.Copy()
-			addtimer(CALLBACK(S, PROC_REF(play_chord_if_playing), f_chord, targets_snapshot), delay)
+			addtimer(CALLBACK(S, PROC_REF(play_chord_if_playing), f_chord, targets_snapshot, current_playback_generation), delay)
 		else
-			S.play_chord_if_playing(f_chord, targets)
+			S.play_chord_if_playing(f_chord, targets, current_playback_generation)
 //RS Add End
