@@ -118,6 +118,7 @@
 		"panels.css" = 'html/panels.css',
 		"loading.gif" = 'html/images/loading.gif',
 		"ntlogo.png" = 'html/images/ntlogo.png',
+		"talonlogo.png" = 'html/images/talonlogo.png',
 		"sglogo.png" = 'html/images/sglogo.png',
 		"talisman.png" = 'html/images/talisman.png',
 		"paper_bg.png" = 'html/images/paper_bg.png',

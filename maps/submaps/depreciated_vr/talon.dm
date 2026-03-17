@@ -173,7 +173,7 @@ Once in open space, consider disabling nonessential power-consuming electronics 
 
 /obj/item/weapon/card/id/synthetic/talon/Initialize()
 	. = ..()
-	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_sec, access_synth)
+	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_sec, access_talon_pilot, access_synth)
 
 /obj/machinery/power/smes/buildable/offmap_spawn/New()
 	..(1)

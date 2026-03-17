@@ -32,7 +32,7 @@
 	name = "Talon pilot suit cycler"
 	model_text = "Talon pilot"
 	icon_state = "dark_cycler"
-	req_access = list(access_talon)
+	req_access = list(access_talon_pilot)
 	departments = list(/datum/suit_cycler_choice/department/talon/pilot)
 
 /obj/machinery/suit_cycler/vintage/tengi
