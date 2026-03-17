@@ -406,7 +406,8 @@ so... Use it wisely and good luck!<br>\
 	closet_appearance = /decl/closet_appearance/secure_closet/talon/captain
 
 	starts_with = list(
-		/obj/item/weapon/storage/backpack/dufflebag/captain,
+		/obj/item/weapon/storage/backpack/dufflebag/talon,
+		/obj/item/clothing/under/rank/talon/command/refreshed,
 		/obj/item/clothing/head/beret/talon/command,
 		/obj/item/clothing/suit/storage/vest,
 		/obj/item/clothing/head/helmet,
@@ -432,6 +433,7 @@ so... Use it wisely and good luck!<br>\
 		/obj/item/clothing/head/helmet,
 		/obj/item/clothing/under/utility,
 		/obj/item/clothing/head/soft/talon,
+		/obj/item/clothing/under/rank/talon/security/refreshed,
 		/obj/item/clothing/shoes/boots/jackboots,
 		/obj/item/clothing/shoes/boots/jackboots/toeless,
 		/obj/item/weapon/handcuffs = 2,
@@ -463,6 +465,7 @@ so... Use it wisely and good luck!<br>\
 		/obj/item/clothing/under/rank/nurse,
 		/obj/item/clothing/head/soft/talon,
 		/obj/item/clothing/under/rank/orderly,
+		/obj/item/clothing/under/rank/talon/proper/refreshed,
 		/obj/item/clothing/accessory/solgov/department/medical/army,
 		/obj/item/clothing/suit/storage/toggle/labcoat/modern,
 		/obj/item/clothing/suit/storage/toggle/fr_jacket,
@@ -482,6 +485,7 @@ so... Use it wisely and good luck!<br>\
 
 	starts_with = list(
 		/obj/item/clothing/accessory/storage/brown_vest,
+		/obj/item/clothing/under/rank/talon/basic/refreshed
 		/obj/item/clothing/accessory/solgov/department/engineering/army,
 		/obj/item/clothing/glasses/omnihud/eng/meson,
 		/obj/item/device/flashlight,
@@ -510,6 +514,7 @@ so... Use it wisely and good luck!<br>\
 		/obj/item/clothing/accessory/solgov/department/service/army,
 		/obj/item/clothing/head/pilot,
 		/obj/item/clothing/under/rank/pilot1,
+		/obj/item/clothing/under/rank/talon/pilot/refreshed,
 		/obj/item/clothing/suit/storage/toggle/bomber/pilot,
 		/obj/item/clothing/gloves/fingerless,
 		/obj/item/weapon/reagent_containers/food/snacks/liquidfood,
@@ -536,6 +541,7 @@ so... Use it wisely and good luck!<br>\
 
 	starts_with = list(
 		/obj/item/device/radio/headset/talon,
+		/obj/item/clothing/under/rank/talon/basic/refreshed,
 		/obj/item/clothing/head/soft/talon,
 		/obj/item/clothing/head/helmet/space/void/refurb/mining/talon,
 		/obj/item/clothing/suit/space/void/refurb/mining/talon,
