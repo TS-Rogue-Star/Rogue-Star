@@ -485,7 +485,7 @@ so... Use it wisely and good luck!<br>\
 
 	starts_with = list(
 		/obj/item/clothing/accessory/storage/brown_vest,
-		/obj/item/clothing/under/rank/talon/basic/refreshed
+		/obj/item/clothing/under/rank/talon/basic/refreshed,
 		/obj/item/clothing/accessory/solgov/department/engineering/army,
 		/obj/item/clothing/glasses/omnihud/eng/meson,
 		/obj/item/device/flashlight,
