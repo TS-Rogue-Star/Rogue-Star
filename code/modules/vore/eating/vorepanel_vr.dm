@@ -261,6 +261,7 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			"max_mush" = selected.max_mush,
 			"min_mush" = selected.min_mush,
 			 // End reagent bellies
+			 "private_struggle" = selected.private_struggle //RS Edit || Ports CHOMPStation PR7443
 		)
 
 		var/list/addons = list()
@@ -692,6 +693,12 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 				host.client.prefs_vr.autotransferable = host.autotransferable
 			unsaved_changes = TRUE
 			return TRUE //RS Add End
+		//RS Add start || Ports CHOMPStation PR7443
+		if("private_struggle")
+			host.vore_selected.private_struggle = !host.vore_selected.private_struggle
+			unsaved_changes = TRUE
+			return TRUE
+		//RS Add end
 		if("toggle_drop_vore")
 			host.drop_vore = !host.drop_vore
 			unsaved_changes = TRUE
@@ -1318,6 +1325,11 @@ var/global/list/belly_colorable_only_fullscreens = list("a_synth_flesh_mono",
 			host.vore_selected.release_sound = "Splatter"
 			// defaults as to avoid potential bugs
 			. = TRUE
+		//RS Edit || Ports CHOMPStation PR7443
+		if("b_private_struggle")
+			host.vore_selected.private_struggle = !host.vore_selected.private_struggle
+			. = TRUE
+		//RS Edit end
 		if("b_release")
 			var/choice
 			if(host.vore_selected.fancy_vore)

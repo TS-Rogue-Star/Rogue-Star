@@ -566,6 +566,7 @@ const VoreSelectedBellyOptions = (props, context) => {
     override_min_prey_size,
     override_min_prey_num,
     drainmode, // RS Edit || ports VOREStation PR 15876
+    private_struggle, // RS Edit || ports VOREStation PR 7443
   } = belly;
 
   return (
@@ -651,7 +652,16 @@ const VoreSelectedBellyOptions = (props, context) => {
               content={capitalize(eating_privacy_local)}
             />
           </LabeledList.Item>
-
+          <LabeledList.Item label="Toggle Struggle Privacy">
+            <Button
+              onClick={() =>
+                act('set_attribute', { attribute: 'b_private_struggle' })
+              }
+              icon={private_struggle ? 'toggle-on' : 'toggle-off'}
+              selected={private_struggle}
+              content={private_struggle ? 'Private' : 'Loud'}
+            />
+          </LabeledList.Item>
           <LabeledList.Item label="Save Digest Mode">
             <Button
               onClick={() =>
