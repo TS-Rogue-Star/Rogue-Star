@@ -73,11 +73,13 @@ var/global/list/multipoint_trigger_list = list()		// Used for admin-only reset v
 	var/static/list/overlays_cache = list()
 
 /obj/multipoint/teleporter/trigger()
-	density = FALSE
+	if(density)
+		return
 	assess_activity()
 
 /obj/multipoint/teleporter/untrigger()
-	density = TRUE
+	if(!density)
+		return
 	toggle_active()
 
 /obj/multipoint/teleporter/New(loc, ...)

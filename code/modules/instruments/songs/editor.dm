@@ -6,6 +6,30 @@
 //Updated by Lira for Rogue Star August 2025 to support forming synchronized bands//
 ////////////////////////////////////////////////////////////////////////////////////
 
+// RS Edit: Advanced synth (Lira, March 2026)
+/datum/song/proc/get_current_instrument_label()
+	return using_instrument?.name || "unconfigured"
+
+// RS Edit: Advanced synth (Lira, March 2026)
+/datum/song/proc/prompt_allowed_instrument_choice(mob/user, category_title = "Instrument Category", instrument_title = "Instrument Selection")
+	if(!length(allowed_instrument_ids))
+		return null
+	if(length(allowed_instrument_ids) == 1)
+		return allowed_instrument_ids[1]
+	var/list/categories = list()
+	for(var/i in allowed_instrument_ids)
+		var/datum/instrument/I = SSinstruments.get_instrument(i)
+		if(I)
+			LAZYSET(categories[I.category || "ERROR CATEGORY"], I.name, I.id)
+	var/cat = tgui_input_list(user, "Select Category", category_title, categories)
+	if(!cat)
+		return null
+	var/list/instruments = categories[cat]
+	var/choice = tgui_input_list(user, "Select Instrument", instrument_title, instruments)
+	if(!choice)
+		return null
+	return instruments[choice]
+
 /datum/song/proc/instrument_status_ui()
 	. = list()
 	. += "<div class='statusDisplay'>"
@@ -13,7 +37,7 @@
 	if(!using_instrument)
 		. += "<span class='danger'>No instrument loaded!</span><br>"
 	else
-		. += "[using_instrument.name]<br>"
+		. += "[get_current_instrument_label()]<br>" // RS Edit: Advanced synth (Lira, March 2026)
 	. += "Playback Settings:<br>"
 	if(can_noteshift)
 		. += "<a href='?src=[REF(src)];setnoteshift=1'>Note Shift/Note Transpose</a>: [note_shift] keys / [round(note_shift / 12, 0.01)] octaves<br>"
@@ -47,7 +71,7 @@
 			var/turf/lt = get_turf(parent)
 			for(var/datum/song/S as anything in band_followers)
 				var/member_name = (S.parent && S.parent.name) ? S.parent.name : "instrument"
-				var/configured_name = (S.using_instrument && S.using_instrument.name) ? S.using_instrument.name : "unconfigured"
+				var/configured_name = S.get_current_instrument_label()
 				var/status
 				var/mob/holder = S.get_holder()
 				if(!holder)
@@ -63,7 +87,7 @@
 			. += "No members yet.<br>"
 	else if(band_leader)
 		var/leader_name = (band_leader.parent && band_leader.parent.name) ? band_leader.parent.name : "instrument"
-		var/leader_configured = (band_leader.using_instrument && band_leader.using_instrument.name) ? band_leader.using_instrument.name : "unconfigured"
+		var/leader_configured = band_leader.get_current_instrument_label()
 		. += "<br><b>Band (Member)</b>: Leader is [band_leader.get_holder_name()] ([leader_name]: [leader_configured]) | <a href='?src=[REF(src)];leaveband=1'>Leave</a><br>"
 	else
 		. += "<br><b>Band</b>: <a href='?src=[REF(src)];createband=1'>Create Sync</a><br>"
@@ -261,24 +285,7 @@
 			set_dropoff_volume(round(amount, 0.01))
 
 	else if(href_list["switchinstrument"])
-		if(!length(allowed_instrument_ids))
-			return
-		else if(length(allowed_instrument_ids) == 1)
-			set_instrument(allowed_instrument_ids[1])
-			return
-		var/list/categories = list()
-		for(var/i in allowed_instrument_ids)
-			var/datum/instrument/I = SSinstruments.get_instrument(i)
-			if(I)
-				LAZYSET(categories[I.category || "ERROR CATEGORY"], I.name, I.id)
-		var/cat = tgui_input_list(usr, "Select Category", "Instrument Category", categories)
-		if(!cat)
-			return
-		var/list/instruments = categories[cat]
-		var/choice = tgui_input_list(usr, "Select Instrument", "Instrument Selection", instruments)
-		if(!choice)
-			return
-		choice = instruments[choice] //get id
+		var/choice = prompt_allowed_instrument_choice(usr) // RS Edit: Advanced synth (Lira, March 2026)
 		if(choice)
 			set_instrument(choice)
 
@@ -311,6 +318,8 @@
 
 	else if(href_list["toggleautoplay"])
 		band_autoplay = !band_autoplay
+		if(band_autoplay)
+			clear_band_autoplay_start_failure()
 
 	else if(href_list["setnotefilter"])
 		var/low = tgui_input_number(usr, "Lowest note key (0-127)", "Note Range Low", note_filter_min)

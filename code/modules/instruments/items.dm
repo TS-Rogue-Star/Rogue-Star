@@ -17,10 +17,12 @@
 	var/list/allowed_instrument_ids
 	/// How far away our song datum can be heard.
 	var/instrument_range = 15
+	/// RS Add: Advanced synth (Lira, March 2026)
+	var/song_type = /datum/song/handheld
 
 /obj/item/instrument/Initialize(mapload)
 	. = ..()
-	song = new(src, allowed_instrument_ids, instrument_range)
+	song = new song_type(src, allowed_instrument_ids, instrument_range) // RS Edit: Advanced synth (Lira, March 2026)
 	allowed_instrument_ids = null //We don't need this clogging memory after it's used.
 
 /obj/item/instrument/Destroy()
@@ -70,6 +72,24 @@
 /obj/item/instrument/piano_synth/Initialize(mapload)
 	. = ..()
 	song.allowed_instrument_ids = SSinstruments.synthesizer_instrument_ids
+
+// RS Add: Advanced synth (Lira, March 2026)
+/obj/item/instrument/piano_synth/advanced
+	name = "advanced synthesizer"
+	desc = "An upgraded synthesizer that can layer up to three synthesized instruments at once."
+	icon_state = "synth"
+	allowed_instrument_ids = "r3grand"
+	song_type = /datum/song/handheld/multisynth
+
+// RS Add: Advanced synth (Lira, March 2026)
+/obj/item/instrument/piano_synth/advanced/Initialize(mapload)
+	. = ..()
+	var/datum/song/handheld/multisynth/M = song
+	if(length(SSinstruments.layerable_synth_instrument_ids))
+		M.allowed_instrument_ids = SSinstruments.layerable_synth_instrument_ids.Copy()
+	else
+		M.allowed_instrument_ids = list()
+	M.initialize_multisynth_layers()
 
 /obj/item/instrument/piano_synth/headphones
 	name = "headphones"

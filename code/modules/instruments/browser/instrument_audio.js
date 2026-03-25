@@ -630,27 +630,28 @@
 			var startReference = Math.max(elapsed, eventData.t);
 			var noteStartAt = launchTime + Math.max(0, eventData.t - elapsed);
 			var decayStart = eventData.d;
-			var endGain = typeof eventData.g === 'number' ? eventData.g : 1;
+			var baseGain = typeof eventData.v === 'number' ? Math.max(eventData.v, 0) : 1;
+			var endGain = (typeof eventData.g === 'number' ? eventData.g : 1) * baseGain;
 			var epsilon = 0.0001;
 			var mode = eventData.m || 0;
 			var currentGain;
 			gain.cancelScheduledValues(launchTime);
 			if (!mode || typeof decayStart !== 'number' || decayStart >= stopAt) {
-				gain.setValueAtTime(1, noteStartAt);
+				gain.setValueAtTime(baseGain, noteStartAt);
 				return;
 			}
 			if (elapsed < decayStart) {
-				gain.setValueAtTime(1, noteStartAt);
+				gain.setValueAtTime(baseGain, noteStartAt);
 				if (mode === 1) {
-					gain.setValueAtTime(1, noteStartAt + (decayStart - startReference));
+					gain.setValueAtTime(baseGain, noteStartAt + (decayStart - startReference));
 					gain.linearRampToValueAtTime(endGain, launchTime + (stopAt - elapsed));
 				} else {
-					gain.setValueAtTime(1, noteStartAt + (decayStart - startReference));
+					gain.setValueAtTime(Math.max(baseGain, epsilon), noteStartAt + (decayStart - startReference));
 					gain.exponentialRampToValueAtTime(Math.max(endGain, epsilon), launchTime + (stopAt - elapsed));
 				}
 				return;
 			}
-			currentGain = this.getEnvelopeGain(eventData, elapsed, stopAt);
+			currentGain = this.getEnvelopeGain(eventData, elapsed, stopAt, baseGain);
 			if (mode === 1) {
 				gain.setValueAtTime(currentGain, noteStartAt);
 				gain.linearRampToValueAtTime(endGain, launchTime + (stopAt - elapsed));
@@ -660,27 +661,31 @@
 			}
 		},
 
-		getEnvelopeGain: function (eventData, elapsed, stopAt) {
+		getEnvelopeGain: function (eventData, elapsed, stopAt, baseGain) {
 			var decayStart = eventData.d;
-			var endGain = typeof eventData.g === 'number' ? eventData.g : 1;
+			var startGain = typeof baseGain === 'number' ? Math.max(baseGain, 0) : 1;
+			var endGain = (typeof eventData.g === 'number' ? eventData.g : 1) * startGain;
 			var progress;
 			if (elapsed <= decayStart || stopAt <= decayStart) {
-				return 1;
+				return startGain;
 			}
 			progress = (elapsed - decayStart) / (stopAt - decayStart);
 			if (progress <= 0) {
-				return 1;
+				return startGain;
 			}
 			if (progress >= 1) {
 				return endGain;
 			}
 			if ((eventData.m || 0) === 1) {
-				return 1 - ((1 - endGain) * progress);
+				return startGain - ((startGain - endGain) * progress);
+			}
+			if (startGain <= 0) {
+				return 0;
 			}
 			if (endGain <= 0) {
 				endGain = 0.0001;
 			}
-			return Math.exp(Math.log(endGain) * progress);
+			return Math.exp(Math.log(endGain / Math.max(startGain, 0.0001)) * progress) * startGain;
 		},
 
 		updateGain: function (songId, gain, positionX, positionZ) {

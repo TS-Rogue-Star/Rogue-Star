@@ -17,6 +17,18 @@
 /datum/song/proc/can_use_browser_audio()
 	return !!(using_instrument?.supports_browser_audio() && length(compiled_chords))
 
+/datum/song/proc/get_browser_master_volume_multiplier()
+	if(legacy)
+		return using_instrument?.volume_multiplier || 1
+	var/list/synth_instruments = get_synth_playback_instruments()
+	var/master_multiplier = 0
+	for(var/datum/instrument/I as anything in synth_instruments)
+		if(I)
+			master_multiplier = max(master_multiplier, I.volume_multiplier || 1)
+	if(master_multiplier > 0)
+		return master_multiplier
+	return using_instrument?.volume_multiplier || 1
+
 /datum/song/proc/browser_handles_listener(mob/M)
 	return !!M?.client?.instrument_audio?.song_uses_browser(src)
 
@@ -202,6 +214,8 @@
 	return TRUE
 
 /datum/song/proc/begin_playback(mob/user, playback_start_time = world.time)
+	if(!can_begin_playback())
+		return FALSE
 	playing = TRUE
 	playback_generation++
 	browser_resync_suspended = FALSE
@@ -224,6 +238,7 @@
 	update_browser_source_tracking()
 	sync_all_browser_listeners()
 	START_PROCESSING(SSinstruments, src)
+	return TRUE
 
 /datum/song/proc/get_browser_registered_listeners()
 	var/list/listeners = browser_tracked_listeners.Copy()
@@ -359,10 +374,13 @@
 
 /datum/song/proc/build_browser_timeline_synth(list/sample_manifest)
 	var/list/schedule = build_browser_chord_schedule()
+	var/list/synth_instruments = get_synth_playback_instruments()
+	if(!length(synth_instruments))
+		return null
 	var/list/all_events = list()
 	var/time_step = get_instrument_time_step()
 	var/song_stop_ds = max(time_step, get_browser_timeline_offset_ds() + time_step)
-	var/list/held_event = null
+	var/list/held_events_by_layer = list()
 	for(var/list/entry as anything in schedule)
 		CHECK_TICK
 		var/start_ds = entry["time_ds"]
@@ -370,24 +388,28 @@
 		var/chord_duration_ds = tempodiv_to_delay(chord[length(chord)]) * time_step
 		song_stop_ds = max(song_stop_ds, start_ds + chord_duration_ds)
 		for(var/i in 1 to (length(chord) - 1))
-			CHECK_TICK
-			var/list/note_data = browser_resolve_synth_note(chord[i])
-			if(!note_data)
-				continue
-			if(full_sustain_held_note && held_event)
-				browser_begin_decay(held_event, start_ds)
-			var/alias = instrument_audio_sample_alias(note_data["sample"])
-			sample_manifest[alias] = note_data["sample"]
-			var/list/event = list(
-				"_sample" = alias,
-				"_start_ds" = start_ds,
-				"_rate" = note_data["rate"]
-			)
-			all_events += list(event)
-			if(full_sustain_held_note)
-				held_event = event
-			else
-				browser_begin_decay(event, start_ds)
+			for(var/datum/instrument/I as anything in synth_instruments)
+				CHECK_TICK
+				var/list/note_data = browser_resolve_synth_note(chord[i], I)
+				if(!note_data)
+					continue
+				var/layer_key = get_synth_playback_layer_key(I)
+				var/list/held_event = held_events_by_layer[layer_key]
+				if(full_sustain_held_note && held_event)
+					browser_begin_decay(held_event, start_ds)
+				var/alias = instrument_audio_sample_alias(note_data["sample"])
+				sample_manifest[alias] = note_data["sample"]
+				var/list/event = list(
+					"_sample" = alias,
+					"_start_ds" = start_ds,
+					"_rate" = note_data["rate"],
+					"_volume" = note_data["volume_multiplier"]
+				)
+				all_events += list(event)
+				if(full_sustain_held_note)
+					held_events_by_layer[layer_key] = event
+				else
+					browser_begin_decay(event, start_ds)
 	if(!length(all_events))
 		return null
 
@@ -400,18 +422,28 @@
 		"duration_ds" = song_stop_ds
 	)
 
-/datum/song/proc/browser_resolve_synth_note(key)
+/datum/song/proc/browser_resolve_synth_note(key, datum/instrument/instrument_override = null)
 	if(can_noteshift)
 		key = clamp(key + note_shift, key_min, key_max)
 	if(note_filter_enabled && (key < note_filter_min || key > note_filter_max))
 		return null
-	var/datum/instrument_key/K = using_instrument?.samples[num2text(key)]
+	var/datum/instrument/active_instrument = instrument_override || using_instrument
+	var/datum/instrument_key/K = active_instrument?.samples[num2text(key)]
 	if(!K?.sample)
 		return null
 	return list(
 		"sample" = "[K.sample]",
-		"rate" = K.frequency || 1
+		"rate" = K.frequency || 1,
+		"volume_multiplier" = get_browser_synth_event_volume_multiplier(active_instrument)
 	)
+
+/datum/song/proc/get_browser_synth_event_volume_multiplier(datum/instrument/instrument_override = null)
+	var/datum/instrument/active_instrument = instrument_override || using_instrument
+	var/event_multiplier = active_instrument?.volume_multiplier || 1
+	var/master_multiplier = get_browser_master_volume_multiplier()
+	if(master_multiplier <= 0)
+		return event_multiplier
+	return event_multiplier / master_multiplier
 
 /datum/song/proc/browser_begin_decay(list/event, start_ds)
 	if(isnull(event["_decay_ds"]))
@@ -462,8 +494,11 @@
 			"r" = round(event["_rate"], 0.0001),
 			"e" = round(event["_stop_ds"] / 10, 0.001)
 		)
+		var/event_volume = event["_volume"]
 		var/decay_ds = event["_decay_ds"]
 		var/end_gain = event["_end_gain"]
+		if(isnum(event_volume) && abs(event_volume - 1) > 0.0001)
+			export_event["v"] = round(max(0, event_volume), 0.0001)
 		if(isnum(decay_ds) && decay_ds < event["_stop_ds"] && isnum(end_gain) && end_gain < 0.9999)
 			export_event["d"] = round(decay_ds / 10, 0.001)
 			export_event["m"] = event["_mode"]
@@ -542,7 +577,7 @@
 	var/turf/target = get_turf(M)
 	if(!source || !target || source.z != target.z)
 		return 0
-	var/adjusted_volume = volume * using_instrument.volume_multiplier
+	var/adjusted_volume = volume * get_browser_master_volume_multiplier()
 	adjusted_volume *= M.client.get_preference_volume_channel(VOLUME_CHANNEL_INSTRUMENTS)
 	adjusted_volume *= M.client.get_preference_volume_channel(VOLUME_CHANNEL_MASTER)
 	adjusted_volume -= max(get_dist(target, source) - world.view, 0) * 2

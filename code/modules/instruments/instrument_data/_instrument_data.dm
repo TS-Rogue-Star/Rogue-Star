@@ -8,6 +8,19 @@
 		if(!I.admin_only)
 			. += I.id
 
+// RS Add: Get all non-admin synthesized instruments for advanced synth (Lira, March 2026)
+/proc/get_layerable_synth_instrument_ids()
+	. = list()
+	for(var/id in SSinstruments.instrument_data)
+		var/datum/instrument/I = SSinstruments.instrument_data[id]
+		if(I.admin_only)
+			continue
+		if(I.instrument_flags & INSTRUMENT_LEGACY)
+			continue
+		if(!I.supports_browser_audio())
+			continue
+		. += I.id
+
 /**
  * # Instrument Datums
  *
@@ -80,8 +93,9 @@
 
 /datum/instrument/Destroy()
 	SSinstruments.instrument_data -= id
-	for(var/datum/song/S as anything in songs_using)
-		S.set_instrument(null)
+	// RS Edit: Advanced synth (Lira, March 2026)
+	for(var/datum/song/S as anything in songs_using?.Copy())
+		S.handle_destroyed_instrument(src)
 	real_samples = null
 	samples = null
 	songs_using = null

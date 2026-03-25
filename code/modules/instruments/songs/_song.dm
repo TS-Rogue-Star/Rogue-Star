@@ -131,8 +131,8 @@
 	var/max_sound_channels = CHANNELS_PER_INSTRUMENT
 	/// Current channels, so we can save a length() call.
 	var/using_sound_channels = 0
-	/// Last channel to play. text.
-	var/last_channel_played
+	/// Last channel to play. text. || RS Edit: Advanced synth (Lira, March 2026)
+	var/list/held_synth_channels_by_layer = list()
 	/// Should we not decay our last played note?
 	var/full_sustain_held_note = TRUE
 
@@ -185,7 +185,9 @@
 	var/band_autoplay = TRUE
 	/// Set true when the user manually clicked Stop; prevents auto-resume until they Play again
 	var/band_paused_manually = FALSE
-	/// RS Add: Browser-based instrument audio (Lira, March 2026)
+	/// Suppresses autoplay retries after a failed follower start until readiness/config changes (Lira, March 2026)
+	var/band_autoplay_start_failed = FALSE
+	/// Browser-based instrument audio (Lira, March 2026)
 	var/band_browser_resync_pending = FALSE
 
 	//RS Add: Note range filter (Lira, August 2025)
@@ -224,6 +226,15 @@
 	band_followers = null //RS Edit: Destory the followers (Lira, August 2025)
 	band_leader = null //RS Edit: Destory the followers (Lira, August 2025)
 	return ..()
+
+// RS Add: Advanced synth (Lira, March 2026)
+/datum/song/proc/handle_destroyed_instrument(datum/instrument/I)
+	if(I && (using_instrument == I))
+		set_instrument(null)
+
+// RS Add: Advanced synth (Lira, March 2026)
+/datum/song/proc/get_max_sound_channels()
+	return max_sound_channels
 
 /**
  * Checks and stores which mobs can hear us. Terminates sounds for mobs that leave our range.
@@ -282,6 +293,7 @@
 		if(isnull(old_legacy) || (old_legacy != instrument_legacy))
 			if(playing)
 				compile_chords()
+	clear_band_autoplay_start_failure()
 	if(playing)
 		refresh_browser_playback(TRUE)
 
@@ -299,6 +311,7 @@
 		to_chat(user, "<span class='warning'>Band leader is not currently playing; no active song to sync.</span>")
 		return
 	band_paused_manually = FALSE //RS Add: User explicitly started playback; clear any manual pause state
+	clear_band_autoplay_start_failure()
 	if(band_is_follower() && band_leader?.playing) //RS Add: If we're a band follower and the leader is currently playing, mirror the leader's lines and tempo so chord indices align (Lira, August 2025)
 		lines = band_leader.lines?.Copy() || list()
 		tempo = band_leader.tempo
@@ -310,7 +323,8 @@
 	var/playback_start_time = world.time
 	if(band_is_follower() && band_leader?.playing)
 		playback_start_time = band_leader.browser_playback_start_time || world.time
-	begin_playback(user, playback_start_time)
+	if(!begin_playback(user, playback_start_time))
+		return
 	if(debug_mode)
 		report_playback_debug(user)
 
@@ -489,16 +503,22 @@
 		sync_all_browser_listeners()
 	var/list/current_targets = islist(targets_override) ? targets_override : hearing_mobs
 	var/list/fallback_targets = get_note_fallback_targets(targets_override)
+	var/list/synth_instruments = legacy ? null : get_synth_playback_instruments()
 	if(!length(fallback_targets))
 		if(!legacy && length(channels_playing))
 			terminate_all_sounds(FALSE, islist(targets_override) ? targets_override : get_browser_listener_targets())
-		if(!legacy && synth_should_track_browser_fallback_state(current_targets))
+		if(!legacy && length(synth_instruments) && synth_should_track_browser_fallback_state(current_targets))
 			for(var/i in 1 to (length(chord) - 1))
-				register_synth_channel_state(chord[i])
+				for(var/datum/instrument/I as anything in synth_instruments)
+					register_synth_channel_state(chord[i], I)
 		return
 	// last value is timing information
 	for(var/i in 1 to (length(chord) - 1))
-		legacy? playkey_legacy(chord[i][1], chord[i][2], chord[i][3], user_playing, fallback_targets) : playkey_synth(chord[i], user_playing, fallback_targets) //RS Edit: Adds band override (Lira, August 2025)
+		if(legacy)
+			playkey_legacy(chord[i][1], chord[i][2], chord[i][3], user_playing, fallback_targets) //RS Edit: Adds band override (Lira, August 2025)
+			continue
+		for(var/datum/instrument/I as anything in synth_instruments)
+			playkey_synth(chord[i], user_playing, fallback_targets, I) //RS Edit: Adds band override (Lira, August 2025)
 
 /**
  * Checks if we should halt playback.
@@ -651,6 +671,14 @@
 
 /datum/song/handheld/updateDialog(mob/user)
 	parent.interact(user || usr)
+
+// RS Add: Advanced synth (Lira, March 2026)
+/datum/song/proc/can_begin_playback()
+	return !!using_instrument?.ready()
+
+// RS Add: Advanced synth (Lira, March 2026)
+/datum/song/proc/clear_band_autoplay_start_failure()
+	band_autoplay_start_failed = FALSE
 
 /datum/song/handheld/should_stop_playing(mob/user)
 	. = ..()
@@ -890,13 +918,16 @@
 		S.compile_chords()
 		//Reset manual pause on new leader start; obey follower autoplay
 		S.band_paused_manually = FALSE
+		S.clear_band_autoplay_start_failure()
 		//Only start ready followers (held and in range) and with autoplay enabled
 		if(S.band_autoplay && S.band_ready_for(src))
 			//Ensure they are not already playing solo
 			if(S.playing)
 				S.stop_playing(TRUE)
 			//Start their processing; progression is driven by leader
-			S.begin_playback(user, browser_playback_start_time)
+			if(!S.begin_playback(user, browser_playback_start_time))
+				S.band_autoplay_start_failed = TRUE
+				continue
 		else
 			//Ensure not playing if not ready
 			if(S.playing)
@@ -921,7 +952,10 @@
 
 //A follower joins the given leader
 /datum/song/proc/band_join(datum/song/leader)
+	var/leader_changed = band_leader != leader
 	band_leader = leader
+	if(leader_changed)
+		clear_band_autoplay_start_failure()
 	if(!(src in leader.band_followers))
 		leader.band_followers += src
 
@@ -979,6 +1013,8 @@
 	all_members |= src
 
 	var/was_playing = playing
+	if(was_playing && !new_leader.can_begin_playback())
+		return
 	var/prev_chord = current_chord
 
 	//Prime the new leader with our song data
@@ -1057,17 +1093,20 @@
 				S.stop_playing(TRUE)
 			//Clear manual pause when follower becomes unready so that returning to ready state can auto-resume if autoplay is enabled
 			S.band_paused_manually = FALSE
+			S.clear_band_autoplay_start_failure()
 			continue
 		//Update follower hearing list too
 		if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > S.last_hearcheck)
 			S.do_hearcheck()
 		//Autoplay auto-resume: If follower is ready, not playing, autoplay enabled, and not manually paused, start them now synced to the leader's current chord
-		if(!S.playing && S.band_autoplay && !S.band_paused_manually)
+		if(!S.playing && S.band_autoplay && !S.band_paused_manually && !S.band_autoplay_start_failed)
 			S.lines = src.lines?.Copy() || list()
 			S.tempo = src.tempo
 			S.repeat = src.repeat
 			S.compile_chords()
-			S.begin_playback(user_playing, browser_playback_start_time)
+			if(!S.begin_playback(user_playing, browser_playback_start_time))
+				S.band_autoplay_start_failed = TRUE
+				continue
 			S.elapsed_delay = 0
 			S.current_chord = clamp(chord_index, 1, length(S.compiled_chords))
 			if(length(S.compiled_chords))
