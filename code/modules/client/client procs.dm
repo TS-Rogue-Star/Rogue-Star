@@ -49,7 +49,15 @@
 	if(href_list["instrument_audio_song_ready"])
 		var/song_id = url_decode(href_list["instrument_audio_song_ready"])
 		var/timeline_key = href_list["instrument_audio_timeline_key"] ? url_decode(href_list["instrument_audio_timeline_key"]) : null
-		instrument_audio?.browser_song_ready(song_id, timeline_key)
+		var/duration_seconds = href_list["instrument_audio_duration"] ? text2num(url_decode(href_list["instrument_audio_duration"])) : null
+		instrument_audio?.browser_song_ready(song_id, timeline_key, duration_seconds)
+		return
+
+	if(href_list["instrument_audio_request_samples"])
+		var/requested_song_id = url_decode(href_list["instrument_audio_request_samples"])
+		var/raw_aliases = href_list["instrument_audio_aliases"] ? url_decode(href_list["instrument_audio_aliases"]) : null
+		var/datum/song/S = locate(requested_song_id)
+		instrument_audio?.request_song_samples(S, raw_aliases ? splittext(raw_aliases, ",") : list())
 		return
 	// RS Add End
 

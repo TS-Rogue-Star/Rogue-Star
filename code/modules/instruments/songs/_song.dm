@@ -1,6 +1,12 @@
 #define MUSICIAN_HEARCHECK_MINDELAY 4
 #define MUSIC_MAXLINES 1000
 #define MUSIC_MAXLINECHARS 300
+// RS Add Start: Midi support (Lira, March 2026)
+#define INSTRUMENT_PLAYBACK_SOURCE_NOTES "notes"
+#define INSTRUMENT_PLAYBACK_SOURCE_UPLOADED_MIDI "uploaded_midi"
+#define INSTRUMENT_UPLOADED_MIDI_PRIMING_LEAD 1 SECOND
+#define INSTRUMENT_UPLOADED_MIDI_READY_TIMEOUT 5 SECONDS
+// RS Add End
 
 /**
  * # Song datum
@@ -55,6 +61,17 @@
 
 	/// What instruments our built in picker can use. The picker won't show unless this is longer than one.
 	var/list/allowed_instrument_ids = list("r3grand")
+
+	// RS Add Start: Midi support (Lira, March 2026)
+	var/playback_source = INSTRUMENT_PLAYBACK_SOURCE_NOTES
+	var/uploaded_midi_name
+	var/uploaded_midi_resource
+	var/uploaded_midi_alias
+	var/uploaded_midi_duration_ds = 0
+	var/uploaded_midi_serial = 0
+	var/uploaded_midi_ready_confirmed = FALSE
+	var/uploaded_midi_waiting_for_initial_ready = FALSE
+	// RS Add End
 
 	//////////// Cached instrument variables /////////////
 	/// Instrument we are currently using
@@ -112,6 +129,7 @@
 	var/browser_timeline_key
 	var/browser_timeline_build_serial = 0
 	var/browser_timeline_building = FALSE
+	var/browser_timeline_uploaded_midi = FALSE
 	var/list/browser_sample_manifest = list()
 	var/browser_timeline_duration_ds = 0
 	var/browser_playback_start_time = 0
@@ -307,8 +325,41 @@
 	if(!using_instrument?.ready())
 		to_chat(user, "<span class='warning'>An error has occurred with [src]. Please reset the instrument.</span>")
 		return
-	if(band_is_follower() && !(band_leader?.playing)) //RS Add: If we're a band member and the leader isn't playing, block manual start (Lira, August 2025)
+	if(band_is_follower() && !(band_leader?.playing))
 		to_chat(user, "<span class='warning'>Band leader is not currently playing; no active song to sync.</span>")
+		return
+	var/datum/song/active_uploaded_midi_source = get_active_uploaded_midi_source_song()
+	if(active_uploaded_midi_source)
+		if(!uploaded_midi_uses_selected_instrument())
+			if(active_uploaded_midi_source == src)
+				to_chat(user, "<span class='warning'>Uploaded MIDI currently only works with browser-playable synth instruments.</span>")
+			else
+				to_chat(user, "<span class='warning'>Your current instrument cannot play the band leader's uploaded MIDI.</span>")
+			return
+		if(active_uploaded_midi_source == src)
+			if(!user?.client?.instrument_audio?.supports_browser_audio())
+				to_chat(user, "<span class='warning'>Uploaded MIDI playback requires browser audio support on your client.</span>")
+				return
+			if(!user.client.is_preference_enabled(/datum/client_preference/instrument_toggle))
+				to_chat(user, "<span class='warning'>Enable instrument audio in your client preferences before playing uploaded MIDI.</span>")
+				return
+		band_paused_manually = FALSE
+		clear_band_autoplay_start_failure()
+		var/playback_start_time = world.time
+		if(active_uploaded_midi_source == src && should_delay_uploaded_midi_playback_for_listeners(user))
+			playback_start_time += INSTRUMENT_UPLOADED_MIDI_PRIMING_LEAD
+		if(band_is_follower() && band_leader?.playing)
+			playback_start_time = band_leader.browser_playback_start_time || world.time
+		if(!begin_playback(user, playback_start_time))
+			return
+		if(debug_mode)
+			report_playback_debug(user)
+		if(active_uploaded_midi_source == src)
+			log_uploaded_midi_action(user, "played", uploaded_midi_name)
+		if(band_is_leader())
+			band_start_followers(user)
+		else if(band_is_follower() && band_leader?.playing)
+			request_band_browser_resync()
 		return
 	band_paused_manually = FALSE //RS Add: User explicitly started playback; clear any manual pause state
 	clear_band_autoplay_start_failure()
@@ -356,8 +407,11 @@
 	hearing_mobs.len = 0
 	user_playing = null
 	repeats_left = 0
+	uploaded_midi_ready_confirmed = FALSE
+	uploaded_midi_waiting_for_initial_ready = FALSE
 	browser_timeline_build_serial++
 	browser_timeline_building = FALSE
+	browser_timeline_uploaded_midi = FALSE
 	browser_playback_start_time = 0
 	browser_listener_launch_time = 0
 	browser_timeline_duration_ds = 0
@@ -374,7 +428,10 @@
 	browser_sample_manifest.Cut()
 	//RS Add Start: Band stop playing (Lira, August 2025)
 	if(band_leader == src)
-		band_stop_followers_playback()
+		if(using_uploaded_midi_playback() && !keep_band)
+			band_finish_uploaded_midi_followers_after_leader_stop()
+		else
+			band_stop_followers_playback()
 	if(!keep_band && band_is_follower())
 		band_leave()
 	//RS Add End
@@ -391,6 +448,7 @@
 	band_active_chord_index = 0
 	band_active_chord_started_at = 0
 	band_active_chord_duration_ds = 0
+	uploaded_midi_waiting_for_initial_ready = FALSE
 	browser_playback_start_time = playback_start_time
 	browser_listener_launch_time = playback_start_time
 	browser_preserved_note_listeners.Cut()
@@ -403,6 +461,28 @@
 	terminate_all_sounds(TRUE, get_browser_listener_targets())
 	stop_browser_audio()
 	return reset_active_playback_cursor(playback_start_time)
+
+// RS Add: Midi support (Lira, March 2026)
+/datum/song/proc/refresh_uploaded_midi_listener_sync()
+	if(!playing || !get_active_uploaded_midi_source_song())
+		return FALSE
+	var/listener_targets_changed = FALSE
+	if(band_is_leader())
+		for(var/datum/song/S as anything in band_followers.Copy())
+			if(QDELETED(S) || QDELETED(S.parent))
+				band_followers -= S
+				continue
+			if(!S.band_ready_for(src))
+				continue
+			if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > S.last_hearcheck)
+				S.do_hearcheck()
+				listener_targets_changed = TRUE
+	if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > last_hearcheck)
+		do_hearcheck()
+		listener_targets_changed = TRUE
+	if(listener_targets_changed)
+		sync_all_browser_listeners()
+	return listener_targets_changed
 
 /**
  * Processes our song.
@@ -419,6 +499,27 @@
 //				anchor.runechat_message(note, instrument_range, FALSE, list("musicnote", "black_outline"))
 				new /obj/particle_emitter/music(get_turf(anchor))	//RS EDIT END
 			last_note_fx_time = world.time
+
+	var/datum/song/active_uploaded_midi_source = get_active_uploaded_midi_source_song()
+	if(active_uploaded_midi_source)
+		if(!uploaded_midi_uses_selected_instrument())
+			stop_playing(TRUE)
+			return
+		if(should_stop_playing(user_playing))
+			stop_playing(active_uploaded_midi_source != src)
+			return
+		refresh_uploaded_midi_listener_sync()
+		if(uploaded_midi_ready_timed_out())
+			stop_playing(TRUE)
+			return
+		if(browser_timeline_duration_ds > 0 && browser_playback_start_time > 0 && world.time >= (browser_playback_start_time + browser_timeline_duration_ds))
+			stop_playing(active_uploaded_midi_source != src)
+			return
+		if(active_uploaded_midi_source != src)
+			return
+		if(using_uploaded_midi_playback() && band_is_leader())
+			band_manage_uploaded_midi_followers()
+		return
 
 	if(band_is_follower()) //RS Add: Followers don't advance their own chord progression; leader drives playback (Lira, August 2025)
 		return
@@ -560,7 +661,22 @@
 /datum/song/proc/refresh_browser_playback(rebuild_timeline = FALSE, restart_playback = FALSE)
 	if(!playing)
 		return
+	var/datum/song/active_uploaded_midi_source = get_active_uploaded_midi_source_song()
 	if(rebuild_timeline)
+		if(active_uploaded_midi_source)
+			if(!uploaded_midi_uses_selected_instrument())
+				stop_playing(TRUE)
+				return
+			reset_uploaded_midi_ready_timeout()
+			var/coordinate_band_resync = band_is_leader() || band_is_follower()
+			if(coordinate_band_resync)
+				request_band_browser_resync()
+			queue_browser_timeline_build()
+			if(coordinate_band_resync)
+				return
+			do_hearcheck()
+			sync_all_browser_listeners()
+			return
 		request_band_browser_resync()
 		if(restart_playback)
 			restart_active_playback()
@@ -570,12 +686,129 @@
 	do_hearcheck()
 	sync_all_browser_listeners()
 
+// RS Add: Midi support (Lira, March 2026)
+/datum/song/proc/uploaded_midi_listener_supported(mob/M)
+	var/datum/instrument_audio_manager/manager = M?.client?.instrument_audio
+	if(!manager?.supports_browser_audio())
+		return FALSE
+	if(manager.owner?.mob != M)
+		return FALSE
+	if(!uploaded_midi_uses_selected_instrument())
+		return FALSE
+	if(M.ear_deaf > 0)
+		return FALSE
+	return M.client.is_preference_enabled(/datum/client_preference/instrument_toggle)
+
+// RS Add: Midi support (Lira, March 2026)
+/datum/song/proc/uploaded_midi_browser_ready()
+	if(browser_timeline_building || !browser_timeline_json)
+		return FALSE
+	var/list/listener_targets = get_browser_listener_targets()
+	var/current_launch_time = max(browser_playback_start_time, browser_listener_launch_time)
+	for(var/mob/M as anything in listener_targets)
+		var/datum/instrument_audio_manager/manager = M?.client?.instrument_audio
+		if(!manager?.song_is_primed(src))
+			continue
+		if(!manager.browser_listener_supported(src, M))
+			continue
+		if(get_browser_listener_gain(M) <= 0)
+			continue
+		uploaded_midi_ready_confirmed = TRUE
+		if(uploaded_midi_waiting_for_initial_ready && world.time < current_launch_time)
+			uploaded_midi_waiting_for_initial_ready = FALSE
+		return TRUE
+	return FALSE
+
+// RS Add: Midi support (Lira, March 2026)
+/datum/song/proc/uploaded_midi_browser_priming()
+	if(browser_timeline_building || !browser_timeline_json)
+		return FALSE
+	var/list/listener_targets = get_browser_listener_targets()
+	for(var/mob/M as anything in listener_targets)
+		var/datum/instrument_audio_manager/manager = M?.client?.instrument_audio
+		if(!manager?.song_is_priming(src))
+			continue
+		if(!manager.browser_listener_supported(src, M))
+			continue
+		if(get_browser_listener_gain(M) <= 0)
+			continue
+		return TRUE
+	return FALSE
+
+// RS Add: Midi support (Lira, March 2026)
+/datum/song/proc/reset_uploaded_midi_ready_timeout(anchor_time = world.time)
+	if(!playing || !get_active_uploaded_midi_source_song())
+		return FALSE
+	if(!isnum(anchor_time))
+		anchor_time = world.time
+	uploaded_midi_ready_confirmed = FALSE
+	browser_listener_launch_time = max(browser_playback_start_time, anchor_time)
+	return TRUE
+
+// RS Add: Midi support (Lira, March 2026)
+/datum/song/proc/uploaded_midi_ready_timed_out()
+	var/ready_timeout_anchor = browser_listener_launch_time || browser_playback_start_time
+	if(ready_timeout_anchor <= 0)
+		return FALSE
+	if(browser_timeline_building)
+		return FALSE
+	if(uploaded_midi_ready_confirmed)
+		return FALSE
+	if(uploaded_midi_browser_ready())
+		return FALSE
+	if(uploaded_midi_browser_priming())
+		return FALSE
+	return world.time >= (ready_timeout_anchor + INSTRUMENT_UPLOADED_MIDI_READY_TIMEOUT)
+
+// RS Add: Midi support (Lira, March 2026)
+/datum/song/proc/should_delay_uploaded_midi_playback_for_listeners(mob/user)
+	if(!using_uploaded_midi_playback())
+		return FALSE
+	if(uploaded_midi_listener_supported(user))
+		return TRUE
+	var/list/checked_clients = list()
+	if(user?.client)
+		checked_clients += user.client
+	var/list/songs_to_check = list(src)
+	if(band_is_leader())
+		for(var/datum/song/S as anything in band_followers)
+			if(!S?.band_autoplay || !S.band_ready_for(src) || !S.can_begin_playback())
+				continue
+			songs_to_check += S
+	for(var/datum/song/S as anything in songs_to_check)
+		var/turf/source = get_turf(S.parent)
+		if(!source)
+			continue
+		var/list/in_range = get_mobs_and_objs_in_view_fast(source, S.instrument_range, remote_ghosts = FALSE)
+		for(var/mob/M in in_range["mobs"])
+			var/client/C = M?.client
+			if(!C || (C in checked_clients))
+				continue
+			checked_clients += C
+			if(S.uploaded_midi_listener_supported(M))
+				return TRUE
+	return FALSE
+
 // RS Add: Browser-based instrument audio (Lira, March 2026)
 /datum/song/proc/report_playback_debug(mob/user)
 	if(!user?.client)
 		return
 	var/message
-	if(browser_handles_listener(user))
+	if(selected_uploaded_midi_source())
+		if(browser_handles_listener(user))
+			message = "uploaded MIDI browser playback active on your client"
+		else if(browser_timeline_building)
+			message = "uploaded MIDI timeline building in the background"
+		else if(browser_timeline_json)
+			if(user.client.instrument_audio?.song_is_priming(src))
+				message = "uploaded MIDI priming on your client; playback will start once the file and samples finish loading"
+			else
+				message = "uploaded MIDI prepared, but your client is not using it yet"
+		else if(has_uploaded_midi())
+			message = "uploaded MIDI is loaded, but browser playback is not ready on your client"
+		else
+			message = "no uploaded MIDI is currently loaded"
+	else if(browser_handles_listener(user))
 		message = "browser-backed playback active on your client"
 	else if(browser_timeline_building)
 		message = "browser timeline building in the background; your client is using legacy fallback until ready"
@@ -676,6 +909,145 @@
 /datum/song/proc/can_begin_playback()
 	return !!using_instrument?.ready()
 
+// RS Add: Midi support (Lira, March 2026)
+/datum/song/proc/selected_uploaded_midi_source()
+	return playback_source == INSTRUMENT_PLAYBACK_SOURCE_UPLOADED_MIDI
+
+// RS Add: Midi support (Lira, March 2026)
+/datum/song/proc/selected_uploaded_browser_source()
+	return selected_uploaded_midi_source()
+
+// RS Add: Midi support (Lira, March 2026)
+/datum/song/proc/has_uploaded_midi()
+	return !!(uploaded_midi_name && uploaded_midi_resource && uploaded_midi_alias)
+
+// RS Add: Midi support (Lira, March 2026)
+/datum/song/proc/using_uploaded_midi_playback()
+	return selected_uploaded_midi_source() && has_uploaded_midi()
+
+// RS Add: Midi support (Lira, March 2026)
+/datum/song/proc/get_active_uploaded_midi_source_song()
+	if(band_is_follower() && band_leader)
+		if(band_leader.playing && band_leader.using_uploaded_midi_playback())
+			return band_leader
+		if(playing && browser_timeline_uploaded_midi)
+			return band_leader
+		return null
+	if(using_uploaded_midi_playback())
+		return src
+	return null
+
+// RS Add: Midi support (Lira, March 2026)
+/datum/song/proc/uploaded_midi_uses_selected_instrument()
+	return !!(using_instrument && !legacy && using_instrument.supports_browser_audio())
+
+// RS Add: Midi support (Lira, March 2026)
+/datum/song/proc/can_manage_uploaded_midi(mob/user)
+	if(!user?.client?.instrument_audio?.supports_browser_audio())
+		return FALSE
+	if(!user.client.is_preference_enabled(/datum/client_preference/instrument_toggle))
+		return FALSE
+	return uploaded_midi_uses_selected_instrument()
+
+// RS Add: Midi support (Lira, March 2026)
+/datum/song/proc/get_uploaded_midi_duration_seconds()
+	if(uploaded_midi_duration_ds <= 0)
+		return null
+	return round(uploaded_midi_duration_ds / 10, 0.1)
+
+// RS Add: Midi support (Lira, March 2026)
+/datum/song/proc/get_audio_log_context()
+	var/turf/T = get_turf(parent)
+	if(!T)
+		return "[parent] (unknown location)"
+	return "[parent] at [T.x],[T.y],[T.z]"
+
+// RS Add: Midi support (Lira, March 2026)
+/datum/song/proc/log_uploaded_midi_action(mob/user, action, file_name)
+	if(!action || !file_name)
+		return
+	var/user_text = user ? "[key_name(user)]" : "Unknown user"
+	log_game("[user_text] [action] instrument MIDI '[file_name]' on [get_audio_log_context()].")
+
+// RS Add: Midi support (Lira, March 2026)
+/datum/song/proc/set_playback_source(new_source)
+	if(new_source != INSTRUMENT_PLAYBACK_SOURCE_UPLOADED_MIDI)
+		new_source = INSTRUMENT_PLAYBACK_SOURCE_NOTES
+	else if(!has_uploaded_midi())
+		return FALSE
+	if(playback_source == new_source)
+		return FALSE
+	if(new_source == INSTRUMENT_PLAYBACK_SOURCE_NOTES)
+		var/datum/song/active_uploaded_midi_source = get_active_uploaded_midi_source_song()
+		if(active_uploaded_midi_source && active_uploaded_midi_source != src && band_is_follower())
+			band_paused_manually = TRUE
+	if(playing)
+		stop_playing(TRUE)
+	playback_source = new_source
+	return TRUE
+
+// RS Add: Midi support (Lira, March 2026)
+/datum/song/proc/reset_browser_payload_state()
+	browser_timeline_build_serial++
+	browser_timeline_building = FALSE
+	browser_timeline_uploaded_midi = FALSE
+	browser_timeline_json = null
+	browser_timeline_key = null
+	browser_timeline_duration_ds = 0
+	browser_sample_manifest.Cut()
+
+// RS Add: Midi support (Lira, March 2026)
+/datum/song/proc/upload_midi(uploaded_file, mob/user)
+	if(!uploaded_file)
+		return FALSE
+	var/upload_name = "[uploaded_file]"
+	var/lower_name = lowertext(upload_name)
+	var/dot = findlasttext(lower_name, ".")
+	var/ext = dot ? copytext(lower_name, dot) : ""
+	if(ext != ".mid" && ext != ".midi")
+		to_chat(user, "<span class='warning'>Only .mid and .midi uploads are supported for browser playback.</span>")
+		return FALSE
+	var/had_upload = has_uploaded_midi()
+	var/old_name = uploaded_midi_name
+	var/old_alias = uploaded_midi_alias
+	var/using_uploaded_timeline = old_alias && browser_sample_manifest[old_alias]
+	var/upload_hash = md5("[REF(src)]#[uploaded_midi_serial + 1]#[upload_name]")
+	if(playing)
+		stop_playing(TRUE)
+	else if(using_uploaded_timeline)
+		reset_browser_payload_state()
+	uploaded_midi_serial++
+	uploaded_midi_name = upload_name
+	uploaded_midi_resource = uploaded_file
+	uploaded_midi_alias = "instrument_upload_[upload_hash][ext]"
+	uploaded_midi_duration_ds = 0
+	playback_source = INSTRUMENT_PLAYBACK_SOURCE_UPLOADED_MIDI
+	if(had_upload)
+		log_game("[key_name(user)] replaced instrument MIDI '[old_name]' with '[upload_name]' on [get_audio_log_context()].")
+	else
+		log_uploaded_midi_action(user, "uploaded", upload_name)
+	return TRUE
+
+// RS Add: Midi support (Lira, March 2026)
+/datum/song/proc/clear_uploaded_midi(mob/user, action = "cleared")
+	var/had_upload = has_uploaded_midi()
+	var/old_name = uploaded_midi_name
+	var/old_alias = uploaded_midi_alias
+	var/using_uploaded_timeline = old_alias && browser_sample_manifest[old_alias]
+	if(playing && selected_uploaded_midi_source())
+		stop_playing(TRUE)
+	if(using_uploaded_timeline)
+		reset_browser_payload_state()
+	uploaded_midi_name = null
+	uploaded_midi_resource = null
+	uploaded_midi_alias = null
+	uploaded_midi_duration_ds = 0
+	if(selected_uploaded_midi_source())
+		playback_source = INSTRUMENT_PLAYBACK_SOURCE_NOTES
+	if(had_upload && action)
+		log_uploaded_midi_action(user, action, old_name)
+	return had_upload
+
 // RS Add: Advanced synth (Lira, March 2026)
 /datum/song/proc/clear_band_autoplay_start_failure()
 	band_autoplay_start_failed = FALSE
@@ -715,6 +1087,10 @@
 	var/mob/M = get_holder()
 	return M ? M.name : "(unheld)"
 
+/datum/song/proc/get_autoplay_user(mob/fallback_user = null)
+	var/mob/holder = get_holder()
+	return holder || fallback_user
+
 //Returns TRUE if follower is held and within range of the given leader
 /datum/song/proc/band_ready_for(datum/song/leader)
 	if(!leader || QDELETED(leader) || QDELETED(leader.parent) || QDELETED(parent))
@@ -726,7 +1102,25 @@
 	var/turf/ft = get_turf(parent)
 	if(!lt || !ft)
 		return FALSE
-	return (get_dist(lt, ft) <= leader.band_range)
+	if(get_dist(lt, ft) > leader.band_range)
+		return FALSE
+	if(leader.using_uploaded_midi_playback() && !uploaded_midi_uses_selected_instrument())
+		return FALSE
+	return TRUE
+
+/datum/song/proc/get_band_readiness_status(datum/song/leader)
+	if(!leader || QDELETED(leader) || QDELETED(leader.parent) || QDELETED(parent))
+		return "Not ready"
+	var/mob/holder = get_holder()
+	if(!holder)
+		return "Not ready (unheld)"
+	var/turf/lt = get_turf(leader.parent)
+	var/turf/ft = get_turf(parent)
+	if(!lt || !ft || (get_dist(lt, ft) > leader.band_range))
+		return "Not ready (out of range)"
+	if(leader.using_uploaded_midi_playback() && !uploaded_midi_uses_selected_instrument())
+		return "Not ready (incompatible instrument)"
+	return "Ready"
 
 /datum/song/proc/band_get_active_chord_state()
 	if(!playing || !length(compiled_chords) || !band_active_chord_index || band_active_chord_duration_ds <= 0)
@@ -902,20 +1296,94 @@
             to_chat(holder, "<span class='notice'>You joined [requester?.name]'s band.</span>")
             to_chat(requester, "<span class='notice'>[holder.name] joined your band.</span>")
 
+/datum/song/proc/band_manage_uploaded_midi_followers()
+	if(!band_is_leader() || !using_uploaded_midi_playback())
+		return FALSE
+	var/leader_listener_sync_needed = band_browser_resync_pending
+	var/resync_followers = band_browser_resync_pending
+	for(var/datum/song/S as anything in band_followers.Copy())
+		if(QDELETED(S) || QDELETED(S.parent))
+			band_followers -= S
+			continue
+		if(!S.band_ready_for(src))
+			if(S.playing)
+				S.stop_playing(TRUE)
+				leader_listener_sync_needed = TRUE
+			S.band_paused_manually = FALSE
+			S.clear_band_autoplay_start_failure()
+			continue
+		if(!S.playing && S.band_autoplay && !S.band_paused_manually && !S.band_autoplay_start_failed)
+			if(!S.begin_playback(S.get_autoplay_user(user_playing), browser_playback_start_time))
+				S.band_autoplay_start_failed = TRUE
+				continue
+			leader_listener_sync_needed = TRUE
+			resync_followers = TRUE
+	if((leader_listener_sync_needed || resync_followers) && uploaded_midi_band_resync_waiting_on_builds())
+		band_browser_resync_pending = TRUE
+		return TRUE
+	if(leader_listener_sync_needed || resync_followers)
+		band_browser_resync_pending = FALSE
+	var/list/resync_targets
+	var/resync_time = 0
+	if(resync_followers)
+		resync_targets = list()
+		for(var/datum/song/S as anything in band_followers)
+			if(!S?.playing || !S.band_ready_for(src))
+				continue
+			resync_targets += S
+	if(leader_listener_sync_needed || length(resync_targets))
+		if(!islist(resync_targets))
+			resync_targets = list()
+		resync_time = world.time + get_instrument_time_step()
+		relaunch_browser_listeners(resync_time)
+	if(length(resync_targets))
+		if(!resync_time)
+			resync_time = world.time + get_instrument_time_step()
+		for(var/datum/song/S as anything in resync_targets)
+			S.relaunch_browser_listeners(resync_time)
+	return TRUE
+
+/datum/song/proc/uploaded_midi_band_resync_waiting_on_builds()
+	if(browser_timeline_building)
+		return TRUE
+	for(var/datum/song/S as anything in band_followers)
+		if(!S?.playing || !S.band_ready_for(src))
+			continue
+		if(S.browser_timeline_building)
+			return TRUE
+	return FALSE
+
+/datum/song/proc/relaunch_browser_listeners(resume_time = null)
+	if(!playing || !browser_timeline_json)
+		return FALSE
+	if(!isnum(resume_time))
+		resume_time = world.time + get_instrument_time_step()
+	resume_time = max(world.time + get_instrument_time_step(), resume_time)
+	browser_stop_active_listeners_for_resync()
+	browser_listener_launch_time = max(browser_playback_start_time, resume_time)
+	browser_resync_suspended = FALSE
+	do_hearcheck()
+	sync_all_browser_listeners()
+	if(browser_listener_launch_time > world.time)
+		schedule_browser_listener_resync(browser_listener_launch_time)
+	return TRUE
+
 //Start all collected followers: copy song state and start their processing
 /datum/song/proc/band_start_followers(mob/user)
 	if(!band_is_leader())
 		return
+	var/leader_using_uploaded_midi = using_uploaded_midi_playback()
 	for(var/datum/song/S as anything in band_followers.Copy())
 		if(QDELETED(S) || QDELETED(S.parent))
 			band_followers -= S
 			continue
 		S.band_join(src)
 		//Always push current song/tempo to followers so they are primed, even if autoplay is disabled; this lets them press Play and sync
-		S.lines = src.lines?.Copy() || list()
-		S.tempo = src.tempo
-		S.repeat = src.repeat
-		S.compile_chords()
+		if(!leader_using_uploaded_midi)
+			S.lines = src.lines?.Copy() || list()
+			S.tempo = src.tempo
+			S.repeat = src.repeat
+			S.compile_chords()
 		//Reset manual pause on new leader start; obey follower autoplay
 		S.band_paused_manually = FALSE
 		S.clear_band_autoplay_start_failure()
@@ -925,7 +1393,7 @@
 			if(S.playing)
 				S.stop_playing(TRUE)
 			//Start their processing; progression is driven by leader
-			if(!S.begin_playback(user, browser_playback_start_time))
+			if(!S.begin_playback(S.get_autoplay_user(user), browser_playback_start_time))
 				S.band_autoplay_start_failed = TRUE
 				continue
 		else
@@ -948,6 +1416,17 @@
 	for(var/datum/song/S as anything in band_followers)
 		if(QDELETED(S))
 			continue
+		S.stop_playing(TRUE)
+
+/datum/song/proc/band_finish_uploaded_midi_followers_after_leader_stop()
+	for(var/datum/song/S as anything in band_followers)
+		if(QDELETED(S))
+			continue
+		if(!S.playing)
+			continue
+		if(S.browser_timeline_uploaded_midi && S.browser_timeline_duration_ds > 0 && S.browser_playback_start_time > 0)
+			if(world.time < (S.browser_playback_start_time + S.browser_timeline_duration_ds))
+				continue
 		S.stop_playing(TRUE)
 
 //A follower joins the given leader
@@ -1013,6 +1492,8 @@
 	all_members |= src
 
 	var/was_playing = playing
+	if(was_playing && using_uploaded_midi_playback() && !new_leader.uploaded_midi_uses_selected_instrument())
+		return
 	if(was_playing && !new_leader.can_begin_playback())
 		return
 	var/prev_chord = current_chord
@@ -1021,6 +1502,13 @@
 	new_leader.lines = src.lines?.Copy() || list()
 	new_leader.tempo = src.tempo
 	new_leader.repeat = src.repeat
+	new_leader.playback_source = src.using_uploaded_midi_playback() ? INSTRUMENT_PLAYBACK_SOURCE_UPLOADED_MIDI : INSTRUMENT_PLAYBACK_SOURCE_NOTES
+	new_leader.uploaded_midi_name = src.uploaded_midi_name
+	new_leader.uploaded_midi_resource = src.uploaded_midi_resource
+	new_leader.uploaded_midi_alias = src.uploaded_midi_alias
+	new_leader.uploaded_midi_duration_ds = src.uploaded_midi_duration_ds
+	new_leader.uploaded_midi_serial = src.uploaded_midi_serial
+	new_leader.uploaded_midi_ready_confirmed = src.uploaded_midi_ready_confirmed
 	new_leader.compile_chords()
 
 	//New leader becomes a leader
@@ -1047,7 +1535,7 @@
 	//If we were playing, start the new leader and sync to our current chord
 	if(was_playing)
 		if(!new_leader.playing)
-			new_leader.begin_playback(user_playing, browser_playback_start_time)
+			new_leader.begin_playback(new_leader.get_autoplay_user(user_playing), browser_playback_start_time)
 		new_leader.repeats_left = repeats_left
 		//Align chord index for continuity
 		new_leader.current_chord = clamp(prev_chord, 1, length(new_leader.compiled_chords))
@@ -1104,7 +1592,7 @@
 			S.tempo = src.tempo
 			S.repeat = src.repeat
 			S.compile_chords()
-			if(!S.begin_playback(user_playing, browser_playback_start_time))
+			if(!S.begin_playback(S.get_autoplay_user(user_playing), browser_playback_start_time))
 				S.band_autoplay_start_failed = TRUE
 				continue
 			S.elapsed_delay = 0

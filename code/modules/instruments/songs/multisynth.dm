@@ -221,7 +221,7 @@
 		return
 	return ..()
 
-/datum/song/handheld/multisynth/instrument_status_ui()
+/datum/song/handheld/multisynth/instrument_status_ui(mob/user)
 	. = list()
 	. += "<div class='statusDisplay'>"
 	. += "<b>Loaded synth layers</b>: [get_active_multisynth_layer_count()]/[max_instrument_layers]<br>"
@@ -238,6 +238,33 @@
 		else
 			. += " | <span class='linkOff'>Clear</span>"
 		. += ")<br>"
+	var/can_manage_midi_upload = can_manage_uploaded_midi(user)
+	var/midi_toggle_text = can_manage_midi_upload ? "<a href='?src=[REF(src)];source=midi'>Use Uploaded MIDI</a>" : "Uploaded MIDI"
+	var/source_name = selected_uploaded_midi_source() ? "Uploaded MIDI" : "Song Notes"
+	. += "<b>Playback Source</b>: [source_name] ("
+	if(selected_uploaded_midi_source())
+		. += "<a href='?src=[REF(src)];source=notes'>Use Notes</a> | <span class='linkOn'>Uploaded MIDI</span>"
+	else
+		. += "<span class='linkOn'>Notes</span> | [midi_toggle_text]"
+	. += ")<br>"
+	. += "<b>Uploaded MIDI</b>: "
+	if(has_uploaded_midi())
+		. += "[uploaded_midi_name]"
+		var/upload_duration = get_uploaded_midi_duration_seconds()
+		if(upload_duration)
+			. += " ([upload_duration]s)"
+	else
+		. += "None loaded"
+	if(can_manage_midi_upload)
+		. += " (<a href='?src=[REF(src)];uploadmidi=1'>Upload</a>"
+		if(has_uploaded_midi())
+			. += " | <a href='?src=[REF(src)];clearmidiupload=1'>Clear</a>"
+		. += ")"
+	else
+		. += " (Browser audio, instrument audio enabled, and a browser-playable synth instrument are required.)"
+	. += "<br>"
+	if(selected_uploaded_browser_source())
+		. += "Uploaded MIDI uses all loaded synth layers for playback.<br>"
 	. += "Playback Settings:<br>"
 	if(can_noteshift)
 		. += "<a href='?src=[REF(src)];setnoteshift=1'>Note Shift/Note Transpose</a>: [note_shift] keys / [round(note_shift / 12, 0.01)] octaves<br>"
@@ -270,20 +297,10 @@
 		. += "<br><b>Band (Leader)</b>: <a href='?src=[REF(src)];inviteband=1'>Invite Nearby</a> | <a href='?src=[REF(src)];dissolveband=1'>Dissolve</a><br>"
 		if(length(band_followers))
 			. += "Members:<br>"
-			var/turf/lt = get_turf(parent)
 			for(var/datum/song/S as anything in band_followers)
 				var/member_name = (S.parent && S.parent.name) ? S.parent.name : "instrument"
 				var/configured_name = S.get_current_instrument_label()
-				var/status
-				var/mob/holder = S.get_holder()
-				if(!holder)
-					status = "Not ready (unheld)"
-				else
-					var/turf/ft = get_turf(S.parent)
-					if(!ft || !lt || (get_dist(lt, ft) > band_range))
-						status = "Not ready (out of range)"
-					else
-						status = "Ready"
+				var/status = S.get_band_readiness_status(src)
 				. += "- [S.get_holder_name()] ([member_name]: [configured_name]) - [status] <a href='?src=[REF(src)];kick=[REF(S)]'>Kick</a> | <a href='?src=[REF(src)];promote=[REF(S)]'>Make Leader</a><br>"
 		else
 			. += "No members yet.<br>"

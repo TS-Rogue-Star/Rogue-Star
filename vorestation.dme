@@ -4422,6 +4422,7 @@
 #include "maps\atoll\atoll_decals.dm"
 #include "maps\atoll\atoll_objs.dm"
 #include "maps\atoll\atoll_turfs.dm"
+#include "maps\example\event_example.dm"
 #include "maps\expedition_vr\beach\submaps\mountains.dm"
 #include "maps\expedition_vr\beach\submaps\mountains_areas.dm"
 #include "maps\gateway_archive_vr\blackmarketpackers.dm"

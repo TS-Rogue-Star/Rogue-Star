@@ -19,18 +19,20 @@
 				   "60"='sound/instruments/synthesis_samples/guitar/crisis_nylon/c4.ogg',
 				   "72"='sound/instruments/synthesis_samples/guitar/crisis_nylon/c5.ogg')
 
+// RS Edit: Linux Fix (Lira, March 2026)
 /datum/instrument/guitar/clean_crisis
 	name = "Crisis Clean Guitar"
 	id = "ccleangt"
-	real_samples = list("36"='sound/instruments/synthesis_samples/guitar/crisis_clean/c2.ogg',
-				   "48"='sound/instruments/synthesis_samples/guitar/crisis_clean/c3.ogg',
-				   "60"='sound/instruments/synthesis_samples/guitar/crisis_clean/c4.ogg',
-				   "72"='sound/instruments/synthesis_samples/guitar/crisis_clean/c5.ogg')
+	real_samples = list("36"='sound/instruments/synthesis_samples/guitar/crisis_clean/C2.ogg',
+				   "48"='sound/instruments/synthesis_samples/guitar/crisis_clean/C3.ogg',
+				   "60"='sound/instruments/synthesis_samples/guitar/crisis_clean/C4.ogg',
+				   "72"='sound/instruments/synthesis_samples/guitar/crisis_clean/C5.ogg')
 
+// RS Edit: Linux Fix (Lira, March 2026)
 /datum/instrument/guitar/muted_crisis
 	name = "Crisis Muted Guitar"
 	id = "cmutedgt"
-	real_samples = list("36"='sound/instruments/synthesis_samples/guitar/crisis_muted/c2.ogg',
-				   "48"='sound/instruments/synthesis_samples/guitar/crisis_muted/c3.ogg',
-				   "60"='sound/instruments/synthesis_samples/guitar/crisis_muted/c4.ogg',
-				   "72"='sound/instruments/synthesis_samples/guitar/crisis_muted/c5.ogg')
+	real_samples = list("36"='sound/instruments/synthesis_samples/guitar/crisis_muted/C2.ogg',
+				   "48"='sound/instruments/synthesis_samples/guitar/crisis_muted/C3.ogg',
+				   "60"='sound/instruments/synthesis_samples/guitar/crisis_muted/C4.ogg',
+				   "72"='sound/instruments/synthesis_samples/guitar/crisis_muted/C5.ogg')

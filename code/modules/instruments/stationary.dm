@@ -17,7 +17,7 @@
 /obj/structure/musician/attack_hand(mob/M)
 	if(!M.IsAdvancedToolUser())
 		return
-	
+
 	interact(M)
 
 /obj/structure/musician/proc/should_stop_playing(mob/user)
@@ -25,7 +25,17 @@
 		return TRUE
 	if(!user)
 		return FALSE
+	// RS Add: Midi support (Lira, March 2026)
+	if(is_admin_ghost_playback_body(user))
+		return user.incapacitated()
 	return !CanUseTopic(user)
+
+// RS Add: Midi support (Lira, March 2026)
+/obj/structure/musician/proc/is_admin_ghost_playback_body(mob/user)
+	if(!user)
+		return FALSE
+	var/mob/observer/dead/ghost = user.teleop
+	return istype(ghost) && ghost.client && ghost.admin_ghosted && ghost.mind == user.mind
 
 /obj/structure/musician/interact(mob/user)
 	. = ..()

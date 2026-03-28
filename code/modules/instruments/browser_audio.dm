@@ -13,8 +13,11 @@
 	if(!instrument_audio?.supports_browser_audio())
 		return
 	for(var/datum/song/S as anything in SSinstruments.songs)
-		if(S?.playing)
-			S.sync_browser_listener(mob)
+		if(!S?.playing)
+			continue
+		if(S.get_active_uploaded_midi_source_song() && instrument_audio.song_has_state(S))
+			S.reset_uploaded_midi_ready_timeout(world.time)
+		S.sync_browser_listener(mob)
 
 /client/proc/cleanup_instrument_audio()
 	if(!instrument_audio)
@@ -23,6 +26,11 @@
 	instrument_audio = null
 	qdel(manager)
 	return TRUE
+
+/mob/Login()
+	. = ..()
+	if(client)
+		addtimer(CALLBACK(client, TYPE_PROC_REF(/client, refresh_instrument_audio)), 0)
 
 /datum/instrument_audio_manager
 	var/client/owner
@@ -129,6 +137,13 @@
 	var/timeline_key = S.browser_timeline_key || md5(S.browser_timeline_json || "")
 	return priming_songs[song_id] == timeline_key
 
+/datum/instrument_audio_manager/proc/song_is_primed(datum/song/S)
+	if(!supports_browser_audio() || !S)
+		return FALSE
+	var/song_id = S.browser_song_id()
+	var/timeline_key = S.browser_timeline_key || md5(S.browser_timeline_json || "")
+	return primed_songs[song_id] == timeline_key
+
 /datum/instrument_audio_manager/proc/song_has_state(datum/song/S)
 	if(!S)
 		return FALSE
@@ -156,6 +171,7 @@
 		return FALSE
 	var/song_id = S.browser_song_id()
 	var/timeline_key = S.browser_timeline_key || md5(S.browser_timeline_json)
+	var/list/priming_samples = S.get_browser_initial_sample_manifest()
 	if(primed_songs[song_id] == timeline_key)
 		return TRUE
 	if(priming_songs[song_id] == timeline_key)
@@ -172,7 +188,7 @@
 		"timeline_key" = timeline_key
 	)
 	var/waiting_samples = 0
-	for(var/alias in S.browser_sample_manifest)
+	for(var/alias in priming_samples)
 		if(sent_sample_aliases[alias])
 			continue
 		var/list/dependents = queued_sample_dependents[alias]
@@ -184,7 +200,7 @@
 			waiting_samples++
 		if(queued_sample_paths[alias])
 			continue
-		queued_sample_paths[alias] = S.browser_sample_manifest[alias]
+		queued_sample_paths[alias] = priming_samples[alias]
 		queued_sample_aliases += alias
 	if(waiting_samples)
 		song_waiting_samples[song_id] = waiting_samples
@@ -192,6 +208,53 @@
 	else
 		send_song_payload(song_id)
 	return FALSE
+
+/datum/instrument_audio_manager/proc/send_sample_resource(alias, sample_path)
+	if(!owner || QDELETED(owner) || !alias)
+		return FALSE
+	if(istext(sample_path))
+		owner << browse_rsc(file(sample_path), alias)
+	else
+		owner << browse_rsc(sample_path, alias)
+	sent_sample_aliases[alias] = TRUE
+	return TRUE
+
+/datum/instrument_audio_manager/proc/dispatch_sample(alias, sample_path = null)
+	if(!alias || sent_sample_aliases[alias])
+		return FALSE
+	queued_sample_aliases -= alias
+	if(isnull(sample_path))
+		sample_path = queued_sample_paths[alias]
+	queued_sample_paths -= alias
+	if(sample_path)
+		send_sample_resource(alias, sample_path)
+	var/list/dependents = queued_sample_dependents[alias]
+	queued_sample_dependents -= alias
+	if(islist(dependents))
+		for(var/song_id in dependents)
+			var/waiting = song_waiting_samples[song_id]
+			if(!isnum(waiting))
+				continue
+			waiting--
+			if(waiting <= 0)
+				song_waiting_samples -= song_id
+				send_song_payload(song_id)
+			else
+				song_waiting_samples[song_id] = waiting
+	return !!sample_path
+
+/datum/instrument_audio_manager/proc/request_song_samples(datum/song/S, list/aliases)
+	if(!supports_browser_audio() || !S || !song_has_state(S) || !islist(aliases) || !length(aliases))
+		return FALSE
+	var/sent_any = FALSE
+	for(var/alias in aliases)
+		if(!istext(alias) || sent_sample_aliases[alias])
+			continue
+		var/sample_path = S.browser_sample_manifest[alias]
+		if(isnull(sample_path) && !queued_sample_paths[alias])
+			continue
+		sent_any = dispatch_sample(alias, sample_path) || sent_any
+	return sent_any
 
 /datum/instrument_audio_manager/proc/process_sample_queue()
 	if(processing_sample_queue)
@@ -206,25 +269,7 @@
 	var/sent_this_tick = 0
 	while(sent_this_tick < INSTRUMENT_AUDIO_SAMPLE_BATCH_SIZE && length(queued_sample_aliases))
 		var/alias = queued_sample_aliases[1]
-		queued_sample_aliases.Cut(1, 2)
-		var/sample_path = queued_sample_paths[alias]
-		queued_sample_paths -= alias
-		if(sample_path)
-			owner << browse_rsc(file(sample_path), alias)
-			sent_sample_aliases[alias] = TRUE
-		var/list/dependents = queued_sample_dependents[alias]
-		queued_sample_dependents -= alias
-		if(islist(dependents))
-			for(var/song_id in dependents)
-				var/waiting = song_waiting_samples[song_id]
-				if(!isnum(waiting))
-					continue
-				waiting--
-				if(waiting <= 0)
-					song_waiting_samples -= song_id
-					send_song_payload(song_id)
-				else
-					song_waiting_samples[song_id] = waiting
+		dispatch_sample(alias)
 		sent_this_tick++
 	if(length(queued_sample_aliases))
 		addtimer(CALLBACK(src, PROC_REF(process_sample_queue_tick)), INSTRUMENT_AUDIO_SAMPLE_BATCH_DELAY)
@@ -241,7 +286,7 @@
 	owner << output(list2params(list(song_id, payload_data["payload"], payload_data["timeline_key"])), "[INSTRUMENT_AUDIO_WINDOW_ID]:instrumentAudio.prime")
 	return TRUE
 
-/datum/instrument_audio_manager/proc/browser_song_ready(song_id, timeline_key)
+/datum/instrument_audio_manager/proc/browser_song_ready(song_id, timeline_key, duration_seconds)
 	if(!supports_browser_audio() || !song_id || !timeline_key)
 		return FALSE
 	var/datum/song/S = locate(song_id)
@@ -253,6 +298,7 @@
 	primed_songs[song_id] = timeline_key
 	priming_songs -= song_id
 	priming_started_at -= song_id
+	S.browser_timeline_ready(timeline_key, duration_seconds)
 	if(owner && !QDELETED(owner) && owner.mob)
 		S.sync_browser_listener(owner.mob)
 	return TRUE
