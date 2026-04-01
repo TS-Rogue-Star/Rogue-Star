@@ -68,6 +68,7 @@ var/global/list/possible_station_maps = list(
 		using_map = new DEFAULT_MAP		//Something has gone wrong, let's try to make an emergency map object!
 
 	if(using_map)
+		setup_fax_admin_departments() // Fax machine fix (Lira, March 2026)
 		log_debug("[using_map.name] was created successfully.")
 	else
 		error("initialise_map_list() failed to create a map object. No maps will load.")
