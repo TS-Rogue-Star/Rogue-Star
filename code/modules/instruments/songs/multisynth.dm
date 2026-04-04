@@ -263,6 +263,22 @@
 	else
 		. += " (Browser audio, instrument audio enabled, and a browser-playable synth instrument are required.)"
 	. += "<br>"
+	if(has_uploaded_midi())
+		var/midi_channel_status = "Unknown"
+		if(uploaded_midi_channel_scan_in_progress)
+			midi_channel_status = "Analyzing on your client..."
+		else if(uploaded_midi_channel_scan_failed)
+			midi_channel_status = "<span class='warning'>Scan failed</span>"
+		else if(uploaded_midi_channel_data_ready())
+			midi_channel_status = format_uploaded_midi_channel_metadata()
+		. += "<b>MIDI Channels</b>: [midi_channel_status]"
+		if(can_manage_midi_upload)
+			. += " (<a href='?src=[REF(src)];scanmidichannels=1'>Refresh</a>)"
+		. += "<br>"
+		. += "<b>MIDI Playback Channels</b>: [get_midi_playback_channel_filter_summary()]"
+		if(can_manage_midi_upload)
+			. += " (<a href='?src=[REF(src)];setmidichannels=1'>Set</a> | <a href='?src=[REF(src)];clearmidichannels=1'>Play All</a>)"
+		. += "<br>"
 	if(selected_uploaded_browser_source())
 		. += "Uploaded MIDI uses all loaded synth layers for playback.<br>"
 	. += "Playback Settings:<br>"
@@ -301,7 +317,12 @@
 				var/member_name = (S.parent && S.parent.name) ? S.parent.name : "instrument"
 				var/configured_name = S.get_current_instrument_label()
 				var/status = S.get_band_readiness_status(src)
-				. += "- [S.get_holder_name()] ([member_name]: [configured_name]) - [status] <a href='?src=[REF(src)];kick=[REF(S)]'>Kick</a> | <a href='?src=[REF(src)];promote=[REF(S)]'>Make Leader</a><br>"
+				. += "- [S.get_holder_name()] ([member_name]: [configured_name]) - [status]"
+				if(has_uploaded_midi())
+					. += " | MIDI Channels: [S.get_midi_playback_channel_filter_summary()]"
+					if(can_manage_midi_upload)
+						. += " (<a href='?src=[REF(src)];setmembermidichannels=[REF(S)]'>Set</a> | <a href='?src=[REF(src)];clearmembermidichannels=[REF(S)]'>All</a>)"
+				. += " <a href='?src=[REF(src)];kick=[REF(S)]'>Kick</a> | <a href='?src=[REF(src)];promote=[REF(S)]'>Make Leader</a><br>"
 		else
 			. += "No members yet.<br>"
 	else if(band_leader)

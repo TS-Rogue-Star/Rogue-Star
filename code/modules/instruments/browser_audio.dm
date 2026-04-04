@@ -46,6 +46,7 @@
 	var/list/queued_sample_dependents = list()
 	var/list/queued_song_payloads = list()
 	var/list/song_waiting_samples = list()
+	var/list/pending_midi_inspections = list()
 	var/processing_sample_queue = FALSE
 
 /datum/instrument_audio_manager/New(client/C)
@@ -88,6 +89,13 @@
 	queued_sample_dependents.Cut()
 	queued_song_payloads.Cut()
 	song_waiting_samples.Cut()
+	for(var/song_id in pending_midi_inspections)
+		var/midi_serial = pending_midi_inspections[song_id]
+		var/datum/song/S = locate(song_id)
+		if(!istype(S))
+			continue
+		S.reset_uploaded_midi_channel_scan_request(midi_serial)
+	pending_midi_inspections.Cut()
 	processing_sample_queue = FALSE
 
 /datum/instrument_audio_manager/proc/clear_song_listener_state()
@@ -219,6 +227,17 @@
 	sent_sample_aliases[alias] = TRUE
 	return TRUE
 
+/datum/instrument_audio_manager/proc/inspect_uploaded_midi(datum/song/S)
+	if(!supports_browser_audio() || !S?.has_uploaded_midi() || !S.uploaded_midi_alias || !S.uploaded_midi_resource)
+		return FALSE
+	pending_midi_inspections[S.browser_song_id()] = S.uploaded_midi_serial
+	if(!sent_sample_aliases[S.uploaded_midi_alias])
+		send_sample_resource(S.uploaded_midi_alias, S.uploaded_midi_resource)
+	if(!owner || QDELETED(owner))
+		return FALSE
+	owner << output(list2params(list(S.browser_song_id(), S.uploaded_midi_alias, "[S.uploaded_midi_serial]")), "[INSTRUMENT_AUDIO_WINDOW_ID]:instrumentAudio.inspectMidi")
+	return TRUE
+
 /datum/instrument_audio_manager/proc/dispatch_sample(alias, sample_path = null)
 	if(!alias || sent_sample_aliases[alias])
 		return FALSE
@@ -301,6 +320,24 @@
 	S.browser_timeline_ready(timeline_key, duration_seconds)
 	if(owner && !QDELETED(owner) && owner.mob)
 		S.sync_browser_listener(owner.mob)
+	return TRUE
+
+/datum/instrument_audio_manager/proc/browser_song_midi_channels(song_id, midi_serial, metadata_json, successful)
+	if(!supports_browser_audio() || !song_id)
+		return FALSE
+	var/expected_serial = pending_midi_inspections[song_id]
+	if(isnull(expected_serial) || expected_serial != midi_serial)
+		return FALSE
+	pending_midi_inspections -= song_id
+	var/datum/song/S = locate(song_id)
+	if(!istype(S))
+		return FALSE
+	var/list/channel_data = null
+	if(successful && metadata_json)
+		channel_data = json_decode(metadata_json)
+		if(!islist(channel_data))
+			successful = FALSE
+	S.receive_uploaded_midi_channel_metadata(channel_data, midi_serial, successful, owner?.mob)
 	return TRUE
 
 /datum/instrument_audio_manager/proc/start_song(datum/song/S, elapsed_seconds, gain, position_x = 0, position_z = 0)

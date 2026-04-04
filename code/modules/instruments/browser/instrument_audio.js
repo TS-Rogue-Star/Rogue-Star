@@ -16,6 +16,40 @@
 		legacySoundHeightBias: 1,
 		defaultSoundRolloff: 0.5,
 		defaultSoundMaxDistance: 10000,
+		generalMidiProgramNames: [
+			'Acoustic Grand Piano', 'Bright Acoustic Piano', 'Electric Grand Piano', 'Honky-tonk Piano',
+			'Electric Piano 1', 'Electric Piano 2', 'Harpsichord', 'Clavi',
+			'Celesta', 'Glockenspiel', 'Music Box', 'Vibraphone',
+			'Marimba', 'Xylophone', 'Tubular Bells', 'Dulcimer',
+			'Drawbar Organ', 'Percussive Organ', 'Rock Organ', 'Church Organ',
+			'Reed Organ', 'Accordion', 'Harmonica', 'Tango Accordion',
+			'Acoustic Guitar (nylon)', 'Acoustic Guitar (steel)', 'Electric Guitar (jazz)', 'Electric Guitar (clean)',
+			'Electric Guitar (muted)', 'Overdriven Guitar', 'Distortion Guitar', 'Guitar Harmonics',
+			'Acoustic Bass', 'Electric Bass (finger)', 'Electric Bass (pick)', 'Fretless Bass',
+			'Slap Bass 1', 'Slap Bass 2', 'Synth Bass 1', 'Synth Bass 2',
+			'Violin', 'Viola', 'Cello', 'Contrabass',
+			'Tremolo Strings', 'Pizzicato Strings', 'Orchestral Harp', 'Timpani',
+			'String Ensemble 1', 'String Ensemble 2', 'Synth Strings 1', 'Synth Strings 2',
+			'Choir Aahs', 'Voice Oohs', 'Synth Voice', 'Orchestra Hit',
+			'Trumpet', 'Trombone', 'Tuba', 'Muted Trumpet',
+			'French Horn', 'Brass Section', 'Synth Brass 1', 'Synth Brass 2',
+			'Soprano Sax', 'Alto Sax', 'Tenor Sax', 'Baritone Sax',
+			'Oboe', 'English Horn', 'Bassoon', 'Clarinet',
+			'Piccolo', 'Flute', 'Recorder', 'Pan Flute',
+			'Blown Bottle', 'Shakuhachi', 'Whistle', 'Ocarina',
+			'Lead 1 (square)', 'Lead 2 (sawtooth)', 'Lead 3 (calliope)', 'Lead 4 (chiff)',
+			'Lead 5 (charang)', 'Lead 6 (voice)', 'Lead 7 (fifths)', 'Lead 8 (bass + lead)',
+			'Pad 1 (new age)', 'Pad 2 (warm)', 'Pad 3 (polysynth)', 'Pad 4 (choir)',
+			'Pad 5 (bowed)', 'Pad 6 (metallic)', 'Pad 7 (halo)', 'Pad 8 (sweep)',
+			'FX 1 (rain)', 'FX 2 (soundtrack)', 'FX 3 (crystal)', 'FX 4 (atmosphere)',
+			'FX 5 (brightness)', 'FX 6 (goblins)', 'FX 7 (echoes)', 'FX 8 (sci-fi)',
+			'Sitar', 'Banjo', 'Shamisen', 'Koto',
+			'Kalimba', 'Bagpipe', 'Fiddle', 'Shanai',
+			'Tinkle Bell', 'Agogo', 'Steel Drums', 'Woodblock',
+			'Taiko Drum', 'Melodic Tom', 'Synth Drum', 'Reverse Cymbal',
+			'Guitar Fret Noise', 'Breath Noise', 'Seashore', 'Bird Tweet',
+			'Telephone Ring', 'Helicopter', 'Applause', 'Gunshot'
+		],
 		context: null,
 		ready: false,
 		capable: false,
@@ -465,6 +499,240 @@
 			window.location.href = href;
 		},
 
+		inspectMidi: function (songId, midiAlias, midiSerial) {
+			var self = this;
+			if (!songId || !midiAlias) {
+				return;
+			}
+			this.loadBinary(midiAlias, function (ok, buffer) {
+				var parsed = null;
+				var channels = [];
+				if (ok && buffer) {
+					try {
+						parsed = self.parseMidiFile(buffer, true);
+					} catch (error) {
+						void error;
+						parsed = null;
+					}
+				}
+				if (parsed && parsed.noteEvents) {
+					channels = self.describeMidiChannels(parsed.noteEvents, parsed.programEvents);
+				}
+				self.reportMidiChannels(songId, midiSerial, channels, !!parsed);
+			});
+		},
+
+		describeMidiChannels: function (noteEvents, programEvents) {
+			var channels = {};
+			var summary = [];
+			var sortedProgramEvents = programEvents ? programEvents.slice() : [];
+			var currentPrograms = {};
+			var programIndex = 0;
+			var eventData;
+			var programEvent;
+			var channel;
+			var channelData;
+			var program;
+			var keys;
+			var i;
+			if (!noteEvents || !noteEvents.length) {
+				return summary;
+			}
+			noteEvents = noteEvents.slice();
+			noteEvents.sort(function (left, right) {
+				if (left.tick !== right.tick) {
+					return left.tick - right.tick;
+				}
+				return (left.order || 0) - (right.order || 0);
+			});
+			sortedProgramEvents.sort(function (left, right) {
+				if (left.tick !== right.tick) {
+					return left.tick - right.tick;
+				}
+				return (left.order || 0) - (right.order || 0);
+			});
+			for (i = 0; i < noteEvents.length; i++) {
+				eventData = noteEvents[i];
+				if (!eventData || !eventData.on) {
+					continue;
+				}
+				while (programIndex < sortedProgramEvents.length) {
+					programEvent = sortedProgramEvents[programIndex];
+					if (programEvent.tick > eventData.tick) {
+						break;
+					}
+					if (programEvent.tick === eventData.tick && (programEvent.order || 0) > (eventData.order || 0)) {
+						break;
+					}
+					currentPrograms[programEvent.channel] = programEvent.program;
+					programIndex++;
+				}
+				channel = parseInt(eventData.channel, 10);
+				if (!isFinite(channel) || channel < 0 || channel > 15) {
+					continue;
+				}
+				channelData = channels[channel];
+				if (!channelData) {
+					channelData = {
+						channel: channel,
+						note_count: 0,
+						program_counts: {},
+						group_counts: {},
+					};
+					channels[channel] = channelData;
+				}
+				channelData.note_count += 1;
+				if (channel === 9) {
+					channelData.instrument_label = 'Percussion';
+					channelData.group_counts.percussion = (channelData.group_counts.percussion || 0) + 1;
+					continue;
+				}
+				program = currentPrograms.hasOwnProperty(channel) ? currentPrograms[channel] : 0;
+				if (!isFinite(program) || program < 0 || program > 127) {
+					program = 0;
+				}
+				channelData.program_counts[program] = (channelData.program_counts[program] || 0) + 1;
+				var programGroup = this.getGeneralMidiProgramGroup(program);
+				channelData.group_counts[programGroup.key] = (channelData.group_counts[programGroup.key] || 0) + 1;
+			}
+			keys = Object.keys(channels);
+			keys.sort(function (left, right) {
+				return (parseInt(left, 10) || 0) - (parseInt(right, 10) || 0);
+			});
+			for (i = 0; i < keys.length; i++) {
+				channelData = channels[keys[i]];
+				var primaryGroup = this.describeMidiChannelGroup(channelData);
+				channelData.instrument_label = channelData.instrument_label || this.describeMidiChannelInstrument(channelData);
+				summary.push({
+					channel: channelData.channel,
+					note_count: channelData.note_count,
+					instrument_label: channelData.instrument_label,
+					group_key: primaryGroup.key,
+					group_label: primaryGroup.label,
+				});
+			}
+			return summary;
+		},
+
+		describeMidiChannelInstrument: function (channelData) {
+			var counts = channelData && channelData.program_counts ? channelData.program_counts : {};
+			var programKeys = Object.keys(counts);
+			var names = [];
+			var i;
+			if (channelData && channelData.channel === 9) {
+				return 'Percussion';
+			}
+			programKeys.sort(function (left, right) {
+				var leftCount = counts[left] || 0;
+				var rightCount = counts[right] || 0;
+				if (leftCount !== rightCount) {
+					return rightCount - leftCount;
+				}
+				return (parseInt(left, 10) || 0) - (parseInt(right, 10) || 0);
+			});
+			for (i = 0; i < programKeys.length; i++) {
+				names.push(this.getGeneralMidiProgramName(parseInt(programKeys[i], 10)));
+			}
+			if (!names.length) {
+				return this.getGeneralMidiProgramName(0);
+			}
+			if (names.length <= 3) {
+				return names.join(', ');
+			}
+			return names.slice(0, 3).join(', ') + ', +' + (names.length - 3) + ' more';
+		},
+
+		getGeneralMidiProgramName: function (program) {
+			if (!isFinite(program) || program < 0 || program >= this.generalMidiProgramNames.length) {
+				return 'Program ' + (parseInt(program, 10) + 1 || 1);
+			}
+			return this.generalMidiProgramNames[program];
+		},
+
+		getGeneralMidiProgramGroup: function (program) {
+			if (!isFinite(program) || program < 0 || program > 127) {
+				program = 0;
+			}
+			if (program <= 7) {
+				return { key: 'piano', label: 'Piano' };
+			}
+			if (program <= 15) {
+				return { key: 'percussion', label: 'Percussion' };
+			}
+			if (program <= 23) {
+				return { key: 'organ', label: 'Organ' };
+			}
+			if (program <= 31) {
+				return { key: 'guitar', label: 'Guitar' };
+			}
+			if (program <= 39) {
+				return { key: 'bass', label: 'Bass' };
+			}
+			if (program <= 55) {
+				return { key: 'strings', label: 'Strings' };
+			}
+			if (program <= 79) {
+				return { key: 'wind', label: 'Wind' };
+			}
+			if (program <= 103) {
+				return { key: 'synth', label: 'Synth' };
+			}
+			if (program <= 111) {
+				return { key: 'ethnic', label: 'Ethnic' };
+			}
+			if (program <= 119) {
+				return { key: 'percussion', label: 'Percussion' };
+			}
+			return { key: 'sfx', label: 'SFX' };
+		},
+
+		describeMidiChannelGroup: function (channelData) {
+			var counts = channelData && channelData.group_counts ? channelData.group_counts : {};
+			var groupKeys = Object.keys(counts);
+			if (channelData && channelData.channel === 9) {
+				return { key: 'percussion', label: 'Percussion' };
+			}
+			groupKeys.sort(function (left, right) {
+				var leftCount = counts[left] || 0;
+				var rightCount = counts[right] || 0;
+				if (leftCount !== rightCount) {
+					return rightCount - leftCount;
+				}
+				return left.localeCompare(right);
+			});
+			if (!groupKeys.length) {
+				return this.getGeneralMidiProgramGroup(0);
+			}
+			return this.getGeneralMidiProgramGroupLabel(groupKeys[0]);
+		},
+
+		getGeneralMidiProgramGroupLabel: function (groupKey) {
+			switch (groupKey) {
+			case 'piano':
+				return { key: 'piano', label: 'Piano' };
+			case 'percussion':
+				return { key: 'percussion', label: 'Percussion' };
+			case 'organ':
+				return { key: 'organ', label: 'Organ' };
+			case 'guitar':
+				return { key: 'guitar', label: 'Guitar' };
+			case 'bass':
+				return { key: 'bass', label: 'Bass' };
+			case 'strings':
+				return { key: 'strings', label: 'Strings' };
+			case 'wind':
+				return { key: 'wind', label: 'Wind' };
+			case 'synth':
+				return { key: 'synth', label: 'Synth' };
+			case 'ethnic':
+				return { key: 'ethnic', label: 'Ethnic' };
+			case 'sfx':
+				return { key: 'sfx', label: 'SFX' };
+			default:
+				return { key: 'other', label: 'Other' };
+			}
+		},
+
 		loadBinary: function (alias, callback, attempt) {
 			var waiters;
 			if (this.binaryCache[alias]) {
@@ -893,6 +1161,20 @@
 			window.location.href = href;
 		},
 
+		reportMidiChannels: function (songId, midiSerial, channels, successful) {
+			var href;
+			if (!songId) {
+				return;
+			}
+			href = '?instrument_audio_midi_channels=' + encodeURIComponent(songId)
+				+ '&instrument_audio_midi_serial=' + encodeURIComponent(midiSerial || 0)
+				+ '&instrument_audio_midi_ok=' + encodeURIComponent(successful ? 1 : 0);
+			if (channels) {
+				href += '&instrument_audio_midi_data=' + encodeURIComponent(JSON.stringify(channels));
+			}
+			window.location.href = href;
+		},
+
 		getSongDuration: function (song) {
 			var duration = 0;
 			var eventData;
@@ -1004,6 +1286,7 @@
 			var division;
 			var tempoEvents = [{ tick: 0, mpqn: 500000 }];
 			var noteEvents = includeNotes ? [] : null;
+			var programEvents = includeNotes ? [] : null;
 			var totalTicks = 0;
 			var trackIndex;
 			var trackLength;
@@ -1102,7 +1385,23 @@
 					}
 					highNibble = status & 0xF0;
 					channel = status & 0x0F;
-					if (highNibble === 0xC0 || highNibble === 0xD0) {
+					if (highNibble === 0xC0) {
+						if (offset >= trackEnd) {
+							return null;
+						}
+						data1 = view.getUint8(offset);
+						offset += 1;
+						if (includeNotes) {
+							programEvents.push({
+								tick: tick,
+								order: sequence++,
+								channel: channel,
+								program: data1,
+							});
+						}
+						continue;
+					}
+					if (highNibble === 0xD0) {
 						if (offset >= trackEnd) {
 							return null;
 						}
@@ -1137,6 +1436,7 @@
 			}
 			if (includeNotes) {
 				midiInfo.noteEvents = noteEvents;
+				midiInfo.programEvents = programEvents;
 			}
 			return midiInfo;
 		},
@@ -1145,6 +1445,7 @@
 			var timelineEvents = [];
 			var rawEvents = (midiInfo && midiInfo.noteEvents) ? midiInfo.noteEvents.slice() : [];
 			var activeNotes = {};
+			var enabledChannels = this.getEnabledMidiChannels(payload);
 			var rawEvent;
 			var queueKey;
 			var queue;
@@ -1159,6 +1460,9 @@
 			});
 			for (i = 0; i < rawEvents.length; i++) {
 				rawEvent = rawEvents[i];
+				if (enabledChannels && !enabledChannels[rawEvent.channel]) {
+					continue;
+				}
 				queueKey = rawEvent.channel + ':' + rawEvent.key;
 				queue = activeNotes[queueKey];
 				if (!queue) {
@@ -1204,6 +1508,26 @@
 				return (a.e || 0) - (b.e || 0);
 			});
 			return timelineEvents;
+		},
+
+		getEnabledMidiChannels: function (payload) {
+			var enabled = {};
+			var raw = payload && payload.enabled_channels;
+			var channel;
+			var i;
+			var hasEntries = false;
+			if (!raw || !raw.length) {
+				return null;
+			}
+			for (i = 0; i < raw.length; i++) {
+				channel = parseInt(raw[i], 10);
+				if (!isFinite(channel) || channel < 0 || channel > 15) {
+					continue;
+				}
+				enabled[channel] = true;
+				hasEntries = true;
+			}
+			return hasEntries ? enabled : null;
 		},
 
 		normalizeMidiMappings: function (mapping) {

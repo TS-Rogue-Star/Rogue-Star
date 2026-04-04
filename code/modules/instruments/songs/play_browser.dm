@@ -388,6 +388,9 @@
 		"linear_drop_per_ds" = round(max(cached_linear_dropoff / 100, 0), 0.0001),
 		"exponential_dropoff" = round(max(cached_exponential_dropoff, 0), 0.0001)
 	)
+	var/list/enabled_channels = get_midi_playback_channel_filter_payload()
+	if(islist(enabled_channels) && length(enabled_channels))
+		payload["enabled_channels"] = enabled_channels
 	if(timeline_offset_ds > 0)
 		payload["start_offset_seconds"] = round(timeline_offset_ds / 10, 0.001)
 	if(midi_source.uploaded_midi_duration_ds > 0)

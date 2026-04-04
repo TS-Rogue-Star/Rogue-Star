@@ -53,6 +53,14 @@
 		instrument_audio?.browser_song_ready(song_id, timeline_key, duration_seconds)
 		return
 
+	if(href_list["instrument_audio_midi_channels"])
+		var/song_id = url_decode(href_list["instrument_audio_midi_channels"])
+		var/midi_serial = href_list["instrument_audio_midi_serial"] ? text2num(url_decode(href_list["instrument_audio_midi_serial"])) : 0
+		var/metadata_json = href_list["instrument_audio_midi_data"] ? url_decode(href_list["instrument_audio_midi_data"]) : null
+		var/successful = href_list["instrument_audio_midi_ok"] ? !!text2num(url_decode(href_list["instrument_audio_midi_ok"])) : FALSE
+		instrument_audio?.browser_song_midi_channels(song_id, midi_serial, metadata_json, successful)
+		return
+
 	if(href_list["instrument_audio_request_samples"])
 		var/requested_song_id = url_decode(href_list["instrument_audio_request_samples"])
 		var/raw_aliases = href_list["instrument_audio_aliases"] ? url_decode(href_list["instrument_audio_aliases"]) : null

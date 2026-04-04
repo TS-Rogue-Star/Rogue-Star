@@ -71,6 +71,11 @@
 	var/uploaded_midi_serial = 0
 	var/uploaded_midi_ready_confirmed = FALSE
 	var/uploaded_midi_waiting_for_initial_ready = FALSE
+	var/list/uploaded_midi_channel_data
+	var/uploaded_midi_channel_data_serial = 0
+	var/uploaded_midi_channel_scan_in_progress = FALSE
+	var/uploaded_midi_channel_scan_failed = FALSE
+	var/list/midi_playback_channel_filter
 	// RS Add End
 
 	//////////// Cached instrument variables /////////////
@@ -955,6 +960,440 @@
 		return null
 	return round(uploaded_midi_duration_ds / 10, 0.1)
 
+// RS Add: Midi support (Lira, April 2026)
+/datum/song/proc/uploaded_midi_channel_data_ready(datum/song/midi_source = src)
+	if(!istype(midi_source) || !midi_source.has_uploaded_midi())
+		return FALSE
+	if(!islist(midi_source.uploaded_midi_channel_data))
+		return FALSE
+	return midi_source.uploaded_midi_channel_data_serial == midi_source.uploaded_midi_serial
+
+// RS Add: Midi support (Lira, April 2026)
+/datum/song/proc/get_uploaded_midi_channel_data(datum/song/midi_source = src)
+	if(!uploaded_midi_channel_data_ready(midi_source))
+		return null
+	return midi_source.uploaded_midi_channel_data
+
+// RS Add: Midi support (Lira, April 2026)
+/datum/song/proc/reset_uploaded_midi_channel_metadata()
+	uploaded_midi_channel_data = null
+	uploaded_midi_channel_data_serial = 0
+	uploaded_midi_channel_scan_in_progress = FALSE
+	uploaded_midi_channel_scan_failed = FALSE
+
+// RS Add: Midi support (Lira, April 2026)
+/datum/song/proc/reset_uploaded_midi_channel_scan_request(midi_serial = uploaded_midi_serial)
+	if(!uploaded_midi_channel_scan_in_progress)
+		return FALSE
+	if(!isnull(midi_serial) && midi_serial != uploaded_midi_serial)
+		return FALSE
+	uploaded_midi_channel_scan_in_progress = FALSE
+	return TRUE
+
+// RS Add: Midi support (Lira, April 2026)
+/datum/song/proc/reset_uploaded_midi_channel_filters()
+	midi_playback_channel_filter = null
+	if(band_leader != src || !islist(band_followers))
+		return
+	for(var/datum/song/S as anything in band_followers)
+		if(QDELETED(S))
+			continue
+		S.midi_playback_channel_filter = null
+
+// RS Add: Midi support (Lira, April 2026)
+/datum/song/proc/normalize_midi_channel_filter(list/raw_channels)
+	if(!islist(raw_channels) || !length(raw_channels))
+		return null
+	var/list/normalized = list()
+	var/list/seen_channels = list()
+	for(var/channel_value in raw_channels)
+		var/channel = isnum(channel_value) ? round(channel_value) : text2num("[channel_value]")
+		if(!isnum(channel))
+			continue
+		channel = clamp(channel, 0, 15)
+		var/channel_key = num2text(channel)
+		if(seen_channels[channel_key])
+			continue
+		seen_channels[channel_key] = TRUE
+		var/insert_index = 1
+		while(insert_index <= length(normalized) && normalized[insert_index] < channel)
+			insert_index++
+		normalized.Insert(insert_index, channel)
+	return length(normalized) ? normalized : null
+
+// RS Add: Midi support (Lira, April 2026)
+/datum/song/proc/midi_channel_filters_match(list/left_filter, list/right_filter)
+	if(!islist(left_filter) || !length(left_filter))
+		return !islist(right_filter) || !length(right_filter)
+	if(!islist(right_filter) || length(left_filter) != length(right_filter))
+		return FALSE
+	for(var/i in 1 to length(left_filter))
+		if(left_filter[i] != right_filter[i])
+			return FALSE
+	return TRUE
+
+// RS Add: Midi support (Lira, April 2026)
+/datum/song/proc/get_midi_playback_channel_filter_summary()
+	if(!islist(midi_playback_channel_filter) || !length(midi_playback_channel_filter))
+		return "All"
+	var/list/channel_labels = list()
+	for(var/channel in midi_playback_channel_filter)
+		channel_labels += num2text(channel + 1)
+	return channel_labels.Join(", ")
+
+// RS Add: Midi support (Lira, April 2026)
+/datum/song/proc/get_midi_playback_channel_filter_input_value()
+	if(!islist(midi_playback_channel_filter) || !length(midi_playback_channel_filter))
+		return "all"
+	return get_midi_playback_channel_filter_summary()
+
+// RS Add: Midi support (Lira, April 2026)
+/datum/song/proc/set_midi_playback_channel_filter(list/raw_channels, refresh_dialog = TRUE)
+	var/list/normalized = normalize_midi_channel_filter(raw_channels)
+	if(midi_channel_filters_match(midi_playback_channel_filter, normalized))
+		return FALSE
+	midi_playback_channel_filter = normalized
+	refresh_browser_playback(TRUE)
+	if(refresh_dialog)
+		updateDialog()
+	return TRUE
+
+// RS Add: Midi support (Lira, April 2026)
+/datum/song/proc/clear_midi_playback_channel_filter(refresh_dialog = TRUE)
+	return set_midi_playback_channel_filter(null, refresh_dialog)
+
+// RS Add: Midi support (Lira, April 2026)
+/datum/song/proc/get_midi_playback_channel_filter_payload()
+	if(!islist(midi_playback_channel_filter) || !length(midi_playback_channel_filter))
+		return null
+	return midi_playback_channel_filter.Copy()
+
+// RS Add: Midi support (Lira, April 2026)
+/datum/song/proc/normalize_midi_channel_group_token(token)
+	if(isnull(token))
+		return null
+	token = lowertext(trim("[token]"))
+	if(!length(token))
+		return null
+	token = replacetext(token, " ", "")
+	token = replacetext(token, "-", "")
+	token = replacetext(token, "_", "")
+	return token
+
+// RS Add: Midi support (Lira, April 2026)
+/datum/song/proc/get_midi_channel_group_alias_map()
+	return list(
+		"piano" = list("piano"),
+		"pianos" = list("piano"),
+		"organ" = list("organ"),
+		"organs" = list("organ"),
+		"guitar" = list("guitar"),
+		"guitars" = list("guitar"),
+		"bass" = list("bass"),
+		"basses" = list("bass"),
+		"string" = list("strings"),
+		"strings" = list("strings"),
+		"ensemble" = list("strings"),
+		"ensembles" = list("strings"),
+		"wind" = list("wind"),
+		"winds" = list("wind"),
+		"brass" = list("wind"),
+		"reed" = list("wind"),
+		"reeds" = list("wind"),
+		"pipe" = list("wind"),
+		"pipes" = list("wind"),
+		"woodwind" = list("wind"),
+		"woodwinds" = list("wind"),
+		"synth" = list("synth"),
+		"synths" = list("synth"),
+		"lead" = list("synth"),
+		"pad" = list("synth"),
+		"fx" = list("synth"),
+		"percussion" = list("percussion"),
+		"drum" = list("percussion"),
+		"drums" = list("percussion"),
+		"mallet" = list("percussion"),
+		"mallets" = list("percussion"),
+		"ethnic" = list("ethnic"),
+		"world" = list("ethnic"),
+		"sfx" = list("sfx"),
+		"effect" = list("sfx"),
+		"effects" = list("sfx"),
+		"soundfx" = list("sfx"),
+		"soundeffects" = list("sfx"),
+		"keyboard" = list("piano", "organ"),
+		"keyboards" = list("piano", "organ"),
+		"keys" = list("piano", "organ"),
+	)
+
+// RS Add: Midi support (Lira, April 2026)
+/datum/song/proc/get_uploaded_midi_channel_groups(datum/song/midi_source = src)
+	var/list/channel_data = get_uploaded_midi_channel_data(midi_source)
+	if(!islist(channel_data) || !length(channel_data))
+		return list()
+	var/list/group_order = list("piano", "organ", "guitar", "bass", "strings", "wind", "synth", "ethnic", "percussion", "sfx", "other")
+	var/list/group_entries = list()
+	for(var/entry_index in 1 to length(channel_data))
+		var/list/channel_info = channel_data[entry_index]
+		if(!islist(channel_info))
+			continue
+		var/group_key = normalize_midi_channel_group_token(channel_info["group_key"])
+		if(!length(group_key))
+			group_key = "other"
+		var/group_label = channel_info["group_label"]
+		if(!istext(group_label) || !length(group_label))
+			group_label = capitalize(group_key)
+		var/list/group_entry = group_entries[group_key]
+		if(!islist(group_entry))
+			group_entry = list(
+				"group_key" = group_key,
+				"group_label" = group_label,
+				"channels" = list(),
+			)
+			group_entries[group_key] = group_entry
+		var/list/group_channels = group_entry["channels"]
+		group_channels += list(channel_info)
+	var/list/grouped = list()
+	for(var/group_key in group_order)
+		var/list/group_entry = group_entries[group_key]
+		if(islist(group_entry))
+			grouped += list(group_entry)
+			group_entries -= group_key
+	for(var/group_key in group_entries)
+		var/list/group_entry = group_entries[group_key]
+		if(islist(group_entry))
+			grouped += list(group_entry)
+	return grouped
+
+// RS Add: Midi support (Lira, April 2026)
+/datum/song/proc/expand_midi_channel_group_token(token, datum/song/midi_source = src)
+	var/list/channel_data = get_uploaded_midi_channel_data(midi_source)
+	if(!islist(channel_data) || !length(channel_data))
+		return null
+	var/normalized_token = normalize_midi_channel_group_token(token)
+	if(!length(normalized_token))
+		return null
+	var/list/alias_map = get_midi_channel_group_alias_map()
+	var/list/target_groups = alias_map[normalized_token]
+	var/list/matching_channels = list()
+	var/list/seen_channels = list()
+	for(var/entry_index in 1 to length(channel_data))
+		var/list/channel_info = channel_data[entry_index]
+		if(!islist(channel_info))
+			continue
+		var/channel = channel_info["channel"]
+		if(!isnum(channel))
+			continue
+		var/channel_key = num2text(channel)
+		if(seen_channels[channel_key])
+			continue
+		var/group_key = normalize_midi_channel_group_token(channel_info["group_key"])
+		var/group_label = normalize_midi_channel_group_token(channel_info["group_label"])
+		if(normalized_token == group_key || normalized_token == group_label || (islist(target_groups) && (group_key in target_groups)))
+			seen_channels[channel_key] = TRUE
+			matching_channels += channel
+	return length(matching_channels) ? matching_channels : null
+
+// RS Add: Midi support (Lira, April 2026)
+/datum/song/proc/format_uploaded_midi_channel_metadata(datum/song/midi_source = src)
+	var/list/grouped_channels = get_uploaded_midi_channel_groups(midi_source)
+	if(!islist(grouped_channels))
+		return "Unknown"
+	if(!length(grouped_channels))
+		return "No note channels detected"
+	var/list/group_labels = list()
+	for(var/group_index in 1 to length(grouped_channels))
+		var/list/group_entry = grouped_channels[group_index]
+		if(!islist(group_entry))
+			continue
+		var/group_label = group_entry["group_label"]
+		var/list/group_channel_entries = group_entry["channels"]
+		if(!istext(group_label) || !islist(group_channel_entries) || !length(group_channel_entries))
+			continue
+		var/list/channel_labels = list()
+		for(var/channel_index in 1 to length(group_channel_entries))
+			var/list/channel_info = group_channel_entries[channel_index]
+			if(!islist(channel_info))
+				continue
+			var/channel = channel_info["channel"]
+			if(!isnum(channel))
+				continue
+			var/channel_label = "Ch [channel + 1]"
+			var/instrument_label = channel_info["instrument_label"]
+			var/note_count = channel_info["note_count"]
+			var/plural_suffix = ""
+			if(istext(instrument_label) && length(instrument_label))
+				channel_label += " ([instrument_label])"
+			if(isnum(note_count) && note_count > 0)
+				plural_suffix = note_count == 1 ? "" : "s"
+				channel_label += " ([note_count] note[plural_suffix])"
+			channel_labels += channel_label
+		if(length(channel_labels))
+			group_labels += "[group_label]: [channel_labels.Join(", ")]"
+	return length(group_labels) ? group_labels.Join("; ") : "No note channels detected"
+
+// RS Add: Midi support (Lira, April 2026)
+/datum/song/proc/parse_midi_channel_filter_input(input_text, datum/song/midi_source = src)
+	var/list/result = list(
+		"valid" = FALSE,
+		"all" = FALSE,
+		"channels" = null,
+		"error" = null,
+	)
+	if(isnull(input_text))
+		result["error"] = "Selection canceled."
+		return result
+	var/trimmed_input = trim("[input_text]")
+	if(!length(trimmed_input) || lowertext(trimmed_input) == "all")
+		result["valid"] = TRUE
+		result["all"] = TRUE
+		return result
+	var/list/raw_parts = splittext(trimmed_input, ",")
+	var/list/channels = list()
+	for(var/part in raw_parts)
+		var/token = trim("[part]")
+		if(!length(token))
+			continue
+		if(lowertext(token) == "all")
+			result["valid"] = TRUE
+			result["all"] = TRUE
+			return result
+		var/list/group_channels = expand_midi_channel_group_token(token, midi_source)
+		if(islist(group_channels) && length(group_channels))
+			channels += group_channels
+			continue
+		var/compact_token = replacetext(token, " ", "")
+		var/dash_position = findtext(compact_token, "-")
+		if(dash_position)
+			var/start_channel = text2num(copytext(compact_token, 1, dash_position))
+			var/end_channel = text2num(copytext(compact_token, dash_position + 1))
+			if(!isnum(start_channel) || !isnum(end_channel))
+				result["error"] = "Use channel numbers 1-16, commas, ranges such as 1-4, or group names like piano and wind."
+				return result
+			start_channel = clamp(round(start_channel), 1, 16)
+			end_channel = clamp(round(end_channel), 1, 16)
+			if(end_channel < start_channel)
+				var/tmp_channel = start_channel
+				start_channel = end_channel
+				end_channel = tmp_channel
+			for(var/channel in start_channel to end_channel)
+				channels += channel - 1
+			continue
+		var/channel_number = text2num(compact_token)
+		if(!isnum(channel_number))
+			result["error"] = "Use channel numbers 1-16, commas, ranges such as 1-4, or group names like piano and wind."
+			return result
+		channels += clamp(round(channel_number), 1, 16) - 1
+	var/list/normalized = normalize_midi_channel_filter(channels)
+	if(!length(normalized))
+		result["error"] = "Select at least one MIDI channel, or use 'all'."
+		return result
+	result["valid"] = TRUE
+	result["channels"] = normalized
+	return result
+
+// RS Add: Midi support (Lira, April 2026)
+/datum/song/proc/prompt_midi_playback_channel_filter(mob/user, datum/song/midi_source = src, refresh_dialog = TRUE)
+	var/list/channel_data = get_uploaded_midi_channel_data(midi_source)
+	if(!islist(channel_data))
+		if(midi_source.request_uploaded_midi_channel_scan(user, TRUE))
+			to_chat(user, "<span class='notice'>Your client is analyzing the uploaded MIDI. Try setting channels again in a moment.</span>")
+		else
+			to_chat(user, "<span class='warning'>Uploaded MIDI channel data is not available yet.</span>")
+		return FALSE
+	var/message = "Enter the MIDI channels this instrument should play. Use channel numbers 1-16, commas, ranges, or group names such as piano, wind, strings, synth, percussion, or all.\nDetected groups: [midi_source.format_uploaded_midi_channel_metadata(midi_source)]"
+	var/default_value = get_midi_playback_channel_filter_input_value()
+	var/selection_text = tgui_input_text(user, message, "MIDI Playback Channels", default_value)
+	if(isnull(selection_text))
+		return FALSE
+	var/list/parse_result = parse_midi_channel_filter_input(selection_text, midi_source)
+	if(!parse_result["valid"])
+		var/error_text = parse_result["error"] || "Invalid MIDI channel selection."
+		to_chat(user, "<span class='warning'>[error_text]</span>")
+		return FALSE
+	if(parse_result["all"])
+		clear_midi_playback_channel_filter(refresh_dialog)
+		return TRUE
+	set_midi_playback_channel_filter(parse_result["channels"], refresh_dialog)
+	return TRUE
+
+// RS Add: Midi support (Lira, April 2026)
+/datum/song/proc/request_uploaded_midi_channel_scan(mob/user, force = FALSE)
+	if(!has_uploaded_midi() || !user?.client?.instrument_audio?.supports_browser_audio())
+		return FALSE
+	if(!force)
+		if(uploaded_midi_channel_data_ready() || uploaded_midi_channel_scan_in_progress || uploaded_midi_channel_scan_failed)
+			return FALSE
+	uploaded_midi_channel_scan_in_progress = TRUE
+	uploaded_midi_channel_scan_failed = FALSE
+	if(user.client.instrument_audio.inspect_uploaded_midi(src))
+		return TRUE
+	uploaded_midi_channel_scan_in_progress = FALSE
+	return FALSE
+
+// RS Add: Midi support (Lira, April 2026)
+/datum/song/proc/sanitize_uploaded_midi_channel_metadata(list/channel_data)
+	var/list/sanitized = list()
+	if(!islist(channel_data))
+		return sanitized
+	var/list/seen_channels = list()
+	for(var/entry_index in 1 to length(channel_data))
+		var/list/channel_info = channel_data[entry_index]
+		if(!islist(channel_info))
+			continue
+		var/channel = channel_info["channel"]
+		if(!isnum(channel))
+			channel = text2num("[channel]")
+		if(!isnum(channel))
+			continue
+		channel = clamp(round(channel), 0, 15)
+		var/note_count = channel_info["note_count"]
+		if(!isnum(note_count))
+			note_count = text2num("[note_count]")
+		if(!isnum(note_count))
+			note_count = 0
+		var/instrument_label = channel_info["instrument_label"]
+		if(isnull(instrument_label))
+			instrument_label = channel == 9 ? "Percussion" : null
+		else
+			instrument_label = html_encode(copytext("[instrument_label]", 1, 128))
+		var/group_key = normalize_midi_channel_group_token(channel_info["group_key"])
+		if(!length(group_key))
+			group_key = channel == 9 ? "percussion" : "other"
+		var/group_label = channel_info["group_label"]
+		if(!istext(group_label) || !length(group_label))
+			group_label = channel == 9 ? "Percussion" : capitalize(group_key)
+		else
+			group_label = html_encode(copytext("[group_label]", 1, 64))
+		var/channel_key = num2text(channel)
+		if(seen_channels[channel_key])
+			continue
+		seen_channels[channel_key] = TRUE
+		sanitized += list(list(
+			"channel" = channel,
+			"note_count" = max(0, round(note_count)),
+			"instrument_label" = instrument_label,
+			"group_key" = group_key,
+			"group_label" = group_label,
+		))
+	return sanitized
+
+// RS Add: Midi support (Lira, April 2026)
+/datum/song/proc/receive_uploaded_midi_channel_metadata(list/channel_data, midi_serial, successful, mob/user = null)
+	if(midi_serial != uploaded_midi_serial)
+		return FALSE
+	uploaded_midi_channel_scan_in_progress = FALSE
+	uploaded_midi_channel_scan_failed = !successful
+	if(successful)
+		uploaded_midi_channel_data = sanitize_uploaded_midi_channel_metadata(channel_data)
+		uploaded_midi_channel_data_serial = midi_serial
+	else
+		uploaded_midi_channel_data = null
+		uploaded_midi_channel_data_serial = 0
+	if(user)
+		updateDialog(user)
+	return successful
+
 // RS Add: Midi support (Lira, March 2026)
 /datum/song/proc/get_audio_log_context()
 	var/turf/T = get_turf(parent)
@@ -1021,11 +1460,14 @@
 	uploaded_midi_resource = uploaded_file
 	uploaded_midi_alias = "instrument_upload_[upload_hash][ext]"
 	uploaded_midi_duration_ds = 0
+	reset_uploaded_midi_channel_metadata()
+	reset_uploaded_midi_channel_filters()
 	playback_source = INSTRUMENT_PLAYBACK_SOURCE_UPLOADED_MIDI
 	if(had_upload)
 		log_game("[key_name(user)] replaced instrument MIDI '[old_name]' with '[upload_name]' on [get_audio_log_context()].")
 	else
 		log_uploaded_midi_action(user, "uploaded", upload_name)
+	request_uploaded_midi_channel_scan(user, TRUE)
 	return TRUE
 
 // RS Add: Midi support (Lira, March 2026)
@@ -1042,6 +1484,8 @@
 	uploaded_midi_resource = null
 	uploaded_midi_alias = null
 	uploaded_midi_duration_ds = 0
+	reset_uploaded_midi_channel_metadata()
+	reset_uploaded_midi_channel_filters()
 	if(selected_uploaded_midi_source())
 		playback_source = INSTRUMENT_PLAYBACK_SOURCE_NOTES
 	if(had_upload && action)
@@ -1509,6 +1953,10 @@
 	new_leader.uploaded_midi_duration_ds = src.uploaded_midi_duration_ds
 	new_leader.uploaded_midi_serial = src.uploaded_midi_serial
 	new_leader.uploaded_midi_ready_confirmed = src.uploaded_midi_ready_confirmed
+	new_leader.uploaded_midi_channel_data = src.uploaded_midi_channel_data ? src.uploaded_midi_channel_data.Copy() : null
+	new_leader.uploaded_midi_channel_data_serial = src.uploaded_midi_channel_data_serial
+	new_leader.uploaded_midi_channel_scan_in_progress = FALSE
+	new_leader.uploaded_midi_channel_scan_failed = src.uploaded_midi_channel_scan_failed
 	new_leader.compile_chords()
 
 	//New leader becomes a leader
