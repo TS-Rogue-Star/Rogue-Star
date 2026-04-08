@@ -1330,6 +1330,10 @@
 /obj/screen/fullscreen/belly/colorized/overlay
 	icon = 'icons/mob/screen_full_colorized_vore_overlays.dmi'
 
+// RS Add: Regent overlay object (Lira, April 2026)
+/obj/screen/fullscreen/belly/reagent_overlay
+	icon = 'icons/mob/screen_full_colorized_vore_overlays.dmi'
+
 /mob/living/proc/vorebelly_printout() //Spew the vorepanel belly messages into chat window for copypasting.
 	set name = "X-Print Vorebelly Settings"
 	set category = "Preferences"

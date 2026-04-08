@@ -426,7 +426,8 @@ GLOBAL_LIST_BOILERPLATE(all_janitorial_carts, /obj/structure/janitorialcart)
 /obj/structure/bed/chair/janicart/relaymove(mob/living/user, direction)
 	if(user.stat || user.stunned || user.weakened || user.paralysis)
 		unbuckle_mob()
-	if(user.get_type_in_hands(/obj/item/key))
+	var/obj/item/key/jani/J = user.get_type_in_hands(/obj/item/key)	//RS EDIT
+	if(J.lock_id == "jani")	//RS EDIT
 		step(src, direction)
 		update_mob()
 	else
@@ -492,9 +493,10 @@ GLOBAL_LIST_BOILERPLATE(all_janitorial_carts, /obj/structure/janitorialcart)
 	visible_message("<span class='warning'>[Proj] ricochets off the [callme]!</span>")
 
 
-/obj/item/key
+/obj/item/key/jani	//RS EDIT
 	name = "key"
 	desc = "A keyring with a small steel key, and a pink fob reading \"Pussy Wagon\"."
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "keys"
 	w_class = ITEMSIZE_TINY
+	lock_id = "jani"	//RS ADD

@@ -116,7 +116,6 @@
 				if(L.digestable && digest_mode == DM_DIGEST)
 					if(reagents.total_volume)
 						reagents.trans_to(L, affecting_amt, 1, FALSE)
-				vore_fx(L)
 			for(var/obj/item/I in contents)
 				if(reagents.total_volume)
 					reagents.trans_to(I, affecting_amt, 1, FALSE)

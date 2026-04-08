@@ -1678,6 +1678,7 @@
 #include "code\game\Rogue Star\catborgs\catborgs.dm"
 #include "code\game\Rogue Star\fluff\sari-outfit-fluff.dm"
 #include "code\game\Rogue Star\mob\seething.dm"
+#include "code\game\Rogue Star\obj\keys.dm"
 #include "code\game\Rogue Star\obj\listener.dm"
 #include "code\game\Rogue Star\obj\spookytrees.dm"
 #include "code\game\Rogue Star\weapons\Medigun\bork_medigun.dm"
