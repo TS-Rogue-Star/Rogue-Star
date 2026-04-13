@@ -190,28 +190,30 @@
 		to_chat(src, SPAN_NOTICE("[choice] trust list mode enabled."))
 	vorePanel.unsaved_changes = TRUE
 
-/proc/spont_pref_check(var/mob/living/pred,var/mob/living/prey,var/preftype)
+/proc/spont_pref_check(var/mob/living/pred,var/mob/living/prey,var/preftype,var/allow_self_compare = FALSE)
 	if(!preftype)
+		return FALSE
+	if(!allow_self_compare && pred == prey)
 		return FALSE
 
 	if(preftype == MICRO_PICKUP)
 		if(!pred.pickup_pref || !pred.pickup_active || !prey.pickup_pref || !prey.pickup_active)
 			return FALSE
-		if(pred != prey && !prey.check_vore_whitelist(pred,MICRO_PICKUP))
+		if(!prey.check_vore_whitelist(pred,MICRO_PICKUP))
 			return FALSE
 		return TRUE
 
 	if(preftype == RESIZING)
 		if(!prey.resizable)	//Only check the prey since the pred won't be getting resized, and they might like to resize someone else
 			return FALSE
-		if(pred != prey && !prey.check_vore_whitelist(pred,RESIZING))
+		if(!prey.check_vore_whitelist(pred,RESIZING))
 			return FALSE
 		return TRUE
 
 	if(preftype == SPONT_TF)
 		if(!pred.allow_spontaneous_tf || !prey.allow_spontaneous_tf)
 			return FALSE
-		if(pred != prey && !prey.check_vore_whitelist(pred,SPONT_TF))
+		if(!prey.check_vore_whitelist(pred,SPONT_TF))
 			return FALSE
 		return TRUE
 
@@ -222,11 +224,11 @@
 		return FALSE
 	if(isanimal(pred) && !prey.allowmobvore)
 		return FALSE
-	if(pred != prey && !pred.can_be_drop_pred || !prey.can_be_drop_prey)	//Both of these always need to be true for any of the other spont vore checks to go through
+	if(!pred.can_be_drop_pred || !prey.can_be_drop_prey)	//Both of these always need to be true for any of the other spont vore checks to go through
 		return FALSE
 	if(!pred.client || !prey.client)	//One doesn't have a client, so no chance of whitelist happening.
 		return TRUE
-	if(pred != prey && !check_vore_whitelist_pair(pred,prey,preftype))	//Now let's check the whitelist for the preference, finally!!!
+	if(!check_vore_whitelist_pair(pred,prey,preftype))	//Now let's check the whitelist for the preference, finally!!!
 		return FALSE
 
 	switch(preftype)

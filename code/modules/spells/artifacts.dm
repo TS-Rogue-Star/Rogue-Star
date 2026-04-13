@@ -11,15 +11,22 @@
 	damtype = BURN
 	force = 10
 	hitsound = 'sound/items/welder2.ogg'
+	var/universal = FALSE // RS Add: Universal wizard (Lira, April 2026)
 
 /obj/item/weapon/scrying/attack_self(mob/user as mob)
-	if((user.mind && !wizards.is_antagonist(user.mind)))
+	if(!universal && (user.mind && !wizards.is_antagonist(user.mind))) // RS Edit: Universal wizard (Lira, April 2026)
 		to_chat(user, "<span class='warning'>You stare into the orb and see nothing but your own reflection.</span>")
 		return
 
 	to_chat(user, "<span class='info'>You can see... everything!</span>")
 	visible_message("<span class='danger'>[user] stares into [src], their eyes glazing over.</span>")
-	
+
 	user.teleop = user.ghostize(1)
 	announce_ghost_joinleave(user.teleop, 1, "You feel that they used a powerful artifact to [pick("invade","disturb","disrupt","infest","taint","spoil","blight")] this place with their presence.")
 	return
+
+// RS Add: Universal wizard (Lira, April 2026)
+/obj/item/weapon/scrying/universal
+	name = "universal scrying orb"
+	desc = "An incandescent orb of otherworldly energy, set to focus for the magically uninitiated."
+	universal = TRUE

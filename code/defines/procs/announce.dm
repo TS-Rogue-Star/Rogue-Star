@@ -141,9 +141,17 @@
 /proc/ion_storm_announcement()
 	command_announcement.Announce("It has come to our attention that \the [station_name()] passed through an ion storm.  Please monitor all electronic equipment for malfunctions.", "Anomaly Alert")
 
+// RS Add: Arrivals Notification Z-Fix (Lira, April 2026)
+/proc/GetArrivalAnnouncementZlevels(var/zlevel, var/channel = "Common")
+	if(!zlevel)
+		return null
+	if(channel == "Common" && (zlevel in using_map.station_levels))
+		return get_station_network_zlevels(channel)
+	return using_map.get_map_levels(zlevel, TRUE, om_range = DEFAULT_OVERMAP_RANGE)
+
 /proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank, var/join_message, var/channel = "Common", var/zlevel)
 	if (ticker.current_state == GAME_STATE_PLAYING)
-		var/list/zlevels = zlevel ? using_map.get_map_levels(zlevel, TRUE, om_range = DEFAULT_OVERMAP_RANGE) : null
+		var/list/zlevels = GetArrivalAnnouncementZlevels(zlevel, channel) // RS Edit: Arrivals Notification Z-Fix (Lira, April 2026)
 		if(character.mind.role_alt_title)
 			rank = character.mind.role_alt_title
 		AnnounceArrivalSimple(character.real_name, rank, join_message, channel, zlevels)

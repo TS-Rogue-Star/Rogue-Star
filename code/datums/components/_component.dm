@@ -367,12 +367,16 @@
 	var/list/dc = datum_components
 	if(!dc)
 		return null
-	var/datum/component/C = dc[c_type]
-	if(C)
-		if(length(C))
-			C = C[1]
-		if(C.type == c_type)
+	// RS Edit Start: Component Fix (Lira, April 2026)
+	var/component_or_components = dc[c_type]
+	if(component_or_components)
+		if(islist(component_or_components))
+			var/list/components = component_or_components
+			component_or_components = components[1]
+		var/datum/component/C = component_or_components
+		if(C && C.type == c_type)
 			return C
+	// RS Edit End
 	return null
 
 /**

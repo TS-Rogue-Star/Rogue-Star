@@ -12,7 +12,7 @@ jobs:
     name: Run Linters
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6 # RS Edit - use supported action version
       - name: Ensure +x on CI directory
         run: |
           chmod -R +x ./tools/ci
@@ -21,7 +21,7 @@ jobs:
           bash tools/ci/install_build_deps.sh
       - name: Restore Yarn cache
         if: "${{ contains(github.event.pull_request.labels.*.name, 'Type: TGUI Bundle') }}"
-        uses: actions/cache@v3
+        uses: actions/cache@v5 # RS Edit - use supported action version
         with:
           path: tgui/.yarn/cache
           key: ${{ runner.os }}-yarn-${{ secrets.CACHE_PURGE_KEY }}-${{ hashFiles('tgui/yarn.lock') }}
@@ -38,10 +38,10 @@ jobs:
     name: DreamChecker
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6 # RS Edit - use supported action version
 
       - name: Cache SpacemanDMM
-        uses: actions/cache@v3
+        uses: actions/cache@v5 # RS Edit - use supported action version
         with:
           path: ~/SpacemanDMM
           key: ${{ runner.os }}-dreamchecker-${{ hashFiles('_build_dependencies.sh')}} #RS Edit: Fix dependency file (Lira, August 2025)
@@ -57,6 +57,8 @@ jobs:
           ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
 
       - name: Annotate Linter
+        env:
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true # RS Edit - use supported node version on archived action
         uses: yogstation13/DreamAnnotate@v2
         if: always()
         with:
@@ -71,25 +73,27 @@ jobs:
     # needs: ['file_tests', 'dreamchecker']
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6 # RS Edit - use supported action version
       - name: Ensure +x on CI directory
         run: |
           chmod -R +x ./tools/ci
-      - name: Setup Cache
-        uses: actions/cache@v3
-        with:
-          path: $HOME/BYOND
-          key: ${{ runner.os }}-byond
       - name: Install RUST_G Dependencies
         run: |
           sudo dpkg --add-architecture i386
           sudo apt update || true
           sudo apt install zlib1g-dev:i386 libssl-dev:i386 libcurl4-openssl-dev:i386
           ldd librust_g.so
+      # RS Edit - fix BYOND cache
+      - name: Setup BYOND Cache
+        uses: actions/cache@v5
+        with:
+          path: ~/BYOND
+          key: ${{ runner.os }}-byond
+      # RS Edit Continued - only install BYOND once
+      - name: Install BYOND
+        run: tools/ci/install_byond.sh
       - name: Unit Tests
-        run: |
-          tools/ci/install_byond.sh
-          tools/ci/compile_and_run.sh
+        run: tools/ci/compile_and_run.sh # RS Edit End
         env:
           TEST_DEFINE: "UNIT_TEST"
           TEST_FILE: "code/_unit_tests.dm"
@@ -98,9 +102,7 @@ jobs:
           EXTRA_ARGS: "-D${{ matrix.map }}"   #RS EDIT
           RUN: "1"
       - name: Compile POIs
-        run: |
-          tools/ci/install_byond.sh
-          tools/ci/compile_and_run.sh
+        run: tools/ci/compile_and_run.sh # RS Edit - Only install BYOND once
         env:
           TEST_DEFINE: "MAP_TEST"
           TEST_FILE: "code/_map_tests.dm"
@@ -108,9 +110,7 @@ jobs:
           REPLACE: false
           RUN: "0"
       - name: Compile away missions
-        run: |
-          tools/ci/install_byond.sh
-          tools/ci/compile_and_run.sh
+        run: tools/ci/compile_and_run.sh # RS Edit - Only install BYOND once
         env:
           TEST_DEFINE: "AWAY_MISSION_TEST"
           TEST_FILE: "code/_away_mission_tests.dm"

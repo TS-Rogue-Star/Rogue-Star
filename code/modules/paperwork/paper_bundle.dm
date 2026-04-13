@@ -170,7 +170,7 @@
 			to_chat(usr, "<span class='notice'>You remove the [W.name] from the bundle.</span>")
 
 			if(pages.len <= 1)
-				var/obj/item/weapon/paper/P = src[1]
+				var/obj/item/weapon/P = pages[1] // RS Edit: List fix (Lira, April 2026)
 				usr.drop_from_inventory(src)
 				usr.put_in_hands(P)
 				qdel(src)
