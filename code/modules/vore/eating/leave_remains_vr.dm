@@ -1,29 +1,29 @@
 /datum/species
-	var/skull_type = /obj/item/weapon/digestion_remains/skull
+	var/skull_type = /obj/item/weapon/digestion_remains/organic/skull	//RS EDIT
 /datum/species/tajaran
-	skull_type = /obj/item/weapon/digestion_remains/skull/tajaran
+	skull_type = /obj/item/weapon/digestion_remains/organic/skull/tajaran	//RS EDIT
 /datum/species/unathi
-	skull_type = /obj/item/weapon/digestion_remains/skull/unathi
+	skull_type = /obj/item/weapon/digestion_remains/organic/skull/unathi	//RS EDIT
 /datum/species/skrell
-	skull_type = /obj/item/weapon/digestion_remains/skull/skrell
+	skull_type = /obj/item/weapon/digestion_remains/organic/skull/skrell	//RS EDIT
 /datum/species/spider
-	skull_type = /obj/item/weapon/digestion_remains/skull/vasilissan
+	skull_type = /obj/item/weapon/digestion_remains/organic/skull/vasilissan	//RS EDIT
 /datum/species/akula
-	skull_type = /obj/item/weapon/digestion_remains/skull/akula
+	skull_type = /obj/item/weapon/digestion_remains/organic/skull/akula	//RS EDIT
 /datum/species/harpy
-	skull_type = /obj/item/weapon/digestion_remains/skull/rapala
+	skull_type = /obj/item/weapon/digestion_remains/organic/skull/rapala	//RS EDIT
 /datum/species/vulpkanin
-	skull_type = /obj/item/weapon/digestion_remains/skull/vulpkanin
+	skull_type = /obj/item/weapon/digestion_remains/organic/skull/vulpkanin	//RS EDIT
 /datum/species/sergal
-	skull_type = /obj/item/weapon/digestion_remains/skull/sergal
+	skull_type = /obj/item/weapon/digestion_remains/organic/skull/sergal	//RS EDIT
 /datum/species/hi_zorren
-	skull_type = /obj/item/weapon/digestion_remains/skull/zorren
+	skull_type = /obj/item/weapon/digestion_remains/organic/skull/zorren	//RS EDIT
 /datum/species/nevrean
-	skull_type = /obj/item/weapon/digestion_remains/skull/nevrean
+	skull_type = /obj/item/weapon/digestion_remains/organic/skull/nevrean	//RS EDIT
 /datum/species/teshari
-	skull_type = /obj/item/weapon/digestion_remains/skull/teshari
+	skull_type = /obj/item/weapon/digestion_remains/organic/skull/teshari	//RS EDIT
 /datum/species/vox
-	skull_type = /obj/item/weapon/digestion_remains/skull/vox
+	skull_type = /obj/item/weapon/digestion_remains/organic/skull/vox	//RS EDIT
 
 /obj/belly/proc/handle_remains_leaving(var/mob/living/M)
 	if(!ishuman(M) && !isrobot(M))	//Are we even humanoid or a borg?
@@ -50,14 +50,14 @@
 		return
 
 	if(prob(20) && !H.isSynthetic())	//ribcage surviving whole is some luck //Edit: no robor
-		new /obj/item/weapon/digestion_remains/ribcage(src,owner)
+		new /obj/item/weapon/digestion_remains/organic/ribcage(src,owner)	//RS EDIT
 		bones_amount--
 
 	var/list/organic_bones = list( //Generic bone variation system
-		/obj/item/weapon/digestion_remains,
-		/obj/item/weapon/digestion_remains/variant1,
-		/obj/item/weapon/digestion_remains/variant2,
-		/obj/item/weapon/digestion_remains/variant3
+		/obj/item/weapon/digestion_remains/organic,		//RS EDIT START
+		/obj/item/weapon/digestion_remains/organic/variant1,
+		/obj/item/weapon/digestion_remains/organic/variant2,
+		/obj/item/weapon/digestion_remains/organic/variant3	//RS EDIT END
 	)
 	var/list/synthetic_bones = list(
 		/obj/item/weapon/digestion_remains/synth,
@@ -79,12 +79,12 @@
 	if(skull_amount && H.species.selects_bodytype)
 		// We still haven't found correct skull...
 		if(H.species.base_species == SPECIES_HUMAN)
-			new /obj/item/weapon/digestion_remains/skull/unknown(src,owner)
+			new /obj/item/weapon/digestion_remains/organic/skull/unknown(src,owner)	//RS EDIT
 		else
-			new /obj/item/weapon/digestion_remains/skull/unknown/anthro(src,owner)
+			new /obj/item/weapon/digestion_remains/organic/skull/unknown/anthro(src,owner)	//RS EDIT
 	else if(skull_amount)
 		// Something entirely different...
-		new /obj/item/weapon/digestion_remains/skull/unknown(src,owner)
+		new /obj/item/weapon/digestion_remains/organic/skull/unknown(src,owner)	//RS EDIT
 
 
 /obj/item/weapon/digestion_remains
@@ -100,6 +100,8 @@
 	w_class = ITEMSIZE_SMALL
 	var/pred_ckey
 	var/pred_name
+
+/obj/item/weapon/digestion_remains/organic
 
 /obj/item/weapon/digestion_remains/synth
 	name = "ruined component"
@@ -119,18 +121,18 @@
 		to_chat(user,"<span class='warning'>As you squeeze the [name], it crumbles into dust and falls apart into nothing!</span>")
 		qdel(src)
 
-/obj/item/weapon/digestion_remains/ribcage
+/obj/item/weapon/digestion_remains/organic/ribcage	//RS EDIT
 	name = "ribcage"
 	desc = "A bleached ribcage. It's very white and definitely has seen better times. Hard to tell what it belonged to."
 	icon_state = "ribcage"
 
-/obj/item/weapon/digestion_remains/variant1 //Generic bone variations
+/obj/item/weapon/digestion_remains/organic/variant1 //Generic bone variations	//RS EDIT
 	icon_state = "generic-2"
 
-/obj/item/weapon/digestion_remains/variant2
+/obj/item/weapon/digestion_remains/organic/variant2	//RS EDIT
 	icon_state = "generic-3"
 
-/obj/item/weapon/digestion_remains/variant3
+/obj/item/weapon/digestion_remains/organic/variant3	//RS EDIT
 	icon_state = "generic-4"
 
 /obj/item/weapon/digestion_remains/synth/variant1 //synthbones start
@@ -142,62 +144,62 @@
 /obj/item/weapon/digestion_remains/synth/variant3
 	icon_state = "synth-4"
 
-/obj/item/weapon/digestion_remains/skull
+/obj/item/weapon/digestion_remains/organic/skull	//RS EDIT
 	name = "skull"
 	desc = "A bleached skull. It looks very weakened. Seems like it belonged to a human."
 	icon_state = "skull"
 
-/obj/item/weapon/digestion_remains/skull/tajaran
+/obj/item/weapon/digestion_remains/organic/skull/tajaran	//RS EDIT
 	desc = "A bleached skull. It looks very weakened. Seems like it belonged to a tajara."
 	icon_state = "skull_taj"
 
-/obj/item/weapon/digestion_remains/skull/unathi
+/obj/item/weapon/digestion_remains/organic/skull/unathi	//RS EDIT
 	desc = "A bleached skull. It looks very weakened. Seems like it belonged to an unathi."
 	icon_state = "skull_unathi"
 
-/obj/item/weapon/digestion_remains/skull/skrell
+/obj/item/weapon/digestion_remains/organic/skull/skrell	//RS EDIT
 	desc = "A bleached skull. It looks very weakened. Seems like it belonged to a skrell."
 	icon_state = "skull"
 
-/obj/item/weapon/digestion_remains/skull/vasilissan
+/obj/item/weapon/digestion_remains/organic/skull/vasilissan	//RS EDIT
 	desc = "A bleached skull. It looks very weakened. Seems like it belonged to a vasilissan."
 	icon_state = "skull"
 
-/obj/item/weapon/digestion_remains/skull/akula
+/obj/item/weapon/digestion_remains/organic/skull/akula	//RS EDIT
 	desc = "A bleached skull. It looks very weakened. Seems like it belonged to an akula."
 	icon_state = "skull_unathi"
 
-/obj/item/weapon/digestion_remains/skull/rapala
+/obj/item/weapon/digestion_remains/organic/skull/rapala	//RS EDIT
 	desc = "A bleached skull. It looks very weakened. Seems like it belonged to a rapala."
 	icon_state = "skull"
 
-/obj/item/weapon/digestion_remains/skull/vulpkanin
+/obj/item/weapon/digestion_remains/organic/skull/vulpkanin	//RS EDIT
 	desc = "A bleached skull. It looks very weakened. Seems like it belonged to a vulpkanin."
 	icon_state = "skull_taj"
 
-/obj/item/weapon/digestion_remains/skull/sergal
+/obj/item/weapon/digestion_remains/organic/skull/sergal	//RS EDIT
 	desc = "A bleached skull. It looks very weakened. Seems like it belonged to a sergal."
 	icon_state = "skull_taj"
 
-/obj/item/weapon/digestion_remains/skull/zorren
+/obj/item/weapon/digestion_remains/organic/skull/zorren	//RS EDIT
 	desc = "A bleached skull. It looks very weakened. Seems like it belonged to a zorren."
 	icon_state = "skull_taj"
 
-/obj/item/weapon/digestion_remains/skull/nevrean
+/obj/item/weapon/digestion_remains/organic/skull/nevrean	//RS EDIT
 	desc = "A bleached skull. It looks very weakened. Seems like it belonged to a nevrean."
 	icon_state = "skull_taj"
 
-/obj/item/weapon/digestion_remains/skull/teshari
+/obj/item/weapon/digestion_remains/organic/skull/teshari	//RS EDIT
 	desc = "A bleached skull. It looks very weakened. Seems like it belonged to a teshari."
 	icon_state = "skull_taj"
 
-/obj/item/weapon/digestion_remains/skull/vox
+/obj/item/weapon/digestion_remains/organic/skull/vox	//RS EDIT
 	desc = "A bleached skull. It looks very weakened. Seems like it belonged to a vox."
 	icon_state = "skull_taj"
 
-/obj/item/weapon/digestion_remains/skull/unknown
+/obj/item/weapon/digestion_remains/organic/skull/unknown	//RS EDIT
 	desc = "A bleached skull. It looks very weakened. You can't quite tell what species it belonged to."
 	icon_state = "skull"
 
-/obj/item/weapon/digestion_remains/skull/unknown/anthro
+/obj/item/weapon/digestion_remains/organic/skull/unknown/anthro	//RS EDIT
 	icon_state = "skull_taj"
