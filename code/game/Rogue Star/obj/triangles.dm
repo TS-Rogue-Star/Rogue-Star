@@ -224,6 +224,25 @@
 
 	. += SPAN_OCCULT("If you use this on help intent, you can pick any coin you like. On harm intent, you will empty \the [src]. On any other intent, you will pick a random coin.")
 
+// Creates a colored icon for use by the Loadout Gallery (Lira, April 2026)
+/obj/item/coinpouch/proc/build_colored_icon()
+	var/icon/pouch_icon = icon(icon = src.icon, icon_state = src.icon_state, dir = SOUTH, frame = 1, moving = 0)
+	if(src.color)
+		if(islist(src.color))
+			pouch_icon.MapColors(arglist(src.color))
+		else
+			pouch_icon.Blend(src.color, ICON_MULTIPLY)
+	if(src.accent_color)
+		var/accent_state = "[src.icon_state]-accent"
+		if(accent_state in icon_states(src.icon))
+			var/icon/accent_icon = icon(icon = src.icon, icon_state = accent_state, dir = SOUTH, frame = 1, moving = 0)
+			if(islist(src.accent_color))
+				accent_icon.MapColors(arglist(src.accent_color))
+			else
+				accent_icon.Blend(src.accent_color, ICON_MULTIPLY)
+			pouch_icon.Blend(accent_icon, ICON_OVERLAY)
+	return pouch_icon
+
 /obj/item/coinpouch/Destroy()
 	empty()
 	return ..()
