@@ -407,7 +407,10 @@
 	if(!istype(tasted) || tasted == src) // RS Edit: No self licking or smelling (Lira, March 2026)
 		return
 
-	if(!checkClickCooldown() || incapacitated(INCAPACITATION_ALL))
+	// RS Edit Start: Lick when buckedled and laying down (Lira, April 2026)
+	var/incapacitation_flags = INCAPACITATION_ALL & ~(INCAPACITATION_RESTRAINED | INCAPACITATION_BUCKLED_PARTIALLY | INCAPACITATION_BUCKLED_FULLY | INCAPACITATION_FORCELYING)
+	if(!checkClickCooldown() || incapacitated(incapacitation_flags))
+	// RS Edit End
 		return
 
 	setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
@@ -447,7 +450,10 @@
 
 	if(!istype(smelled) || smelled == src)	//RS EDIT - Don't smell yourself
 		return
-	if(!checkClickCooldown() || incapacitated(INCAPACITATION_ALL))
+	// RS Edit Start: Smell when buckedled and laying down (Lira, April 2026)
+	var/incapacitation_flags = INCAPACITATION_ALL & ~(INCAPACITATION_RESTRAINED | INCAPACITATION_BUCKLED_PARTIALLY | INCAPACITATION_BUCKLED_FULLY | INCAPACITATION_FORCELYING)
+	if(!checkClickCooldown() || incapacitated(incapacitation_flags))
+	// RS Edit End
 		return
 
 	setClickCooldown(DEFAULT_ATTACK_COOLDOWN)

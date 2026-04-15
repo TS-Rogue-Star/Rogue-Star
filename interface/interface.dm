@@ -132,6 +132,7 @@ Hotkey-Mode: (hotkey-mode must be on)
 \tShift+Click = examine
 </font>"}
 
+//RS EDIT - Added things at the end, I would comment where but it's all string down there
 	var/other = {"<font color='purple'>
 Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+a = left
@@ -161,6 +162,8 @@ Any-Mode: (hotkey doesn't need to be on)
 \tPGUP = swap-hand
 \tPGDN = activate held object
 \tEND = throw
+\tAlt+Click = Examine turf if adjacent, otherwise look mode
+\tShift+/ = Search mode
 </font>"}
 
 	var/robot_hotkey_mode = {"<font color='purple'>
@@ -185,6 +188,7 @@ Hotkey-Mode: (hotkey-mode must be on)
 \tShift+Click = examine
 </font>"}
 
+//RS EDIT - Added things at the end, I would comment where but it's all string down there
 	var/robot_other = {"<font color='purple'>
 Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+a = left
@@ -208,6 +212,8 @@ Any-Mode: (hotkey doesn't need to be on)
 \tINS = toggle intents
 \tPGUP = cycle active modules
 \tPGDN = activate held object
+\tAlt+Click = Examine turf if adjacent, otherwise look mode
+\tShift+/ = Search mode
 </font>"}
 
 	if(isrobot(src.mob))

@@ -130,8 +130,6 @@
 
 	var/list/mapobjs = list()
 
-	var/in_throw_mode = 0
-
 	var/inertia_dir = 0
 
 	var/music_lastplayed = "null"

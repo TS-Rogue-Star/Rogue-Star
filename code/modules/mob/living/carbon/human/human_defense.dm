@@ -439,7 +439,7 @@ emp_act
 				I.throwing = 0
 				I.forceMove(vore_selected)
 				return //RSEdit End
-		if(in_throw_mode && speed <= THROWFORCE_SPEED_DIVISOR)	//empty active hand and we're in throw mode
+		if(click_flags & CLICK_THROW && speed <= THROWFORCE_SPEED_DIVISOR)	//empty active hand and we're in throw mode	//RS EDIT
 			if(canmove && !restrained()&& !src.is_incorporeal()) //RS Edit Chomp port #7484 | CHOMPADD - No hands for the phased ones.
 				if(isturf(O.loc))
 					if(can_catch(O))

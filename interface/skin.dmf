@@ -272,6 +272,9 @@ macro "borghotkeymode"
 	elem
 		name = "CTRL+SHIFT+SUBTRACT"
 		command = "planedown"
+	elem
+		name = "SHIFT+/"
+		command = "Toggle-Search"
 
 macro "macro"
 	elem
@@ -505,6 +508,9 @@ macro "macro"
 	elem
 		name = "CTRL+SHIFT+SUBTRACT"
 		command = "planedown"
+	elem
+		name = "SHIFT+/"
+		command = "Toggle-Search"
 
 macro "hotkeymode"
 	elem
@@ -795,6 +801,9 @@ macro "hotkeymode"
 	elem
 		name = "CTRL+SHIFT+SUBTRACT"
 		command = "planedown"
+	elem
+		name = "SHIFT+/"
+		command = "Toggle-Search"
 
 macro "borgmacro"
 	elem
@@ -1022,6 +1031,9 @@ macro "borgmacro"
 	elem
 		name = "CTRL+SHIFT+SUBTRACT"
 		command = "planedown"
+	elem
+		name = "SHIFT+/"
+		command = "Toggle-Search"
 
 menu "menu"
 	elem
