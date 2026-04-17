@@ -539,6 +539,7 @@
 				L.toggle_hud_vis()
 		if((L.stat != DEAD) && L.ai_holder)
 			L.ai_holder.go_wake()
+		L.reset_view_after_container_exit() // RS Add: Fix tum camera bug (Lira, April 2026)
 
 	// Begin RS edit
 	if (istype(owner, /mob/living/carbon/human))
@@ -838,9 +839,14 @@
 		slip.slip_protect = world.time + 25 // This is to prevent slipping back into your pred if they stand on soap or something.
 	//Place them into our drop_location
 	M.forceMove(drop_location())
-	if(ismob(M))
-		var/mob/ourmob = M
-		ourmob.reset_view(null)
+	// RS Edit Start: Fix tum camera bug (Lira, April 2026)
+	if(isliving(M))
+		var/mob/living/released_mob = M
+		released_mob.reset_view_after_container_exit()
+	else if(ismob(M))
+		var/mob/released_mob_generic = M
+		released_mob_generic.reset_view(null)
+	// RS Edit End
 	items_preserved -= M
 
 	//Special treatment for absorbed prey

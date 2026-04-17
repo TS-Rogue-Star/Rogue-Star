@@ -71,7 +71,7 @@ var/list/holder_mob_icon_cache = list()
 /obj/item/weapon/holder/Entered(mob/held, atom/OldLoc, var/do_vis = TRUE)	//RS EDIT
 	if(held_mob)
 		held.forceMove(get_turf(src))
-		held.reset_view(null)
+		held.reset_view_after_container_exit() // RS Edit: Fix micro holder camera bug (Lira, April 2026)
 		return
 	ASSERT(ismob(held))
 	. = ..()
@@ -114,7 +114,7 @@ var/list/holder_mob_icon_cache = list()
 		held_mob.update_transform() //VOREStation edit
 		held_mob.vis_flags = original_vis_flags
 		held_mob.forceMove(get_turf(src))
-		held_mob.reset_view(null)
+		held_mob.reset_view_after_container_exit() // RS Edit: Fix micro holder camera bug (Lira, April 2026)
 		held_mob = null
 	invisibility = INVISIBILITY_ABSTRACT //VOREStation edit
 

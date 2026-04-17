@@ -102,7 +102,6 @@
 
 		if(click_flags & CLICK_SEARCH)
 			A.search()
-			search_off()
 			return TRUE
 	//RS EDIT END
 

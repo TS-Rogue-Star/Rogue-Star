@@ -119,7 +119,7 @@
 			SEND_SIGNAL(src,HIDE_AND_SEEK_ROUND_END)
 		if(HS_PREGAME)
 			halftime = duration_seek * 0.5
-			fifthstime = duration_seek - (duration_seek * 0.1)
+			fifthstime = duration_seek - (duration_seek * 0.2)
 			announce_msg("pregame")
 		if(HS_HIDE_PHASE)
 			announce_msg("hide")

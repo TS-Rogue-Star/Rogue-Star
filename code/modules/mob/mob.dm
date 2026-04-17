@@ -214,6 +214,36 @@
 				client.eye = loc
 		return TRUE
 
+// RS Add: Fix holder camera bug (Lira, April 2026)
+/mob/proc/reset_view_after_container_exit()
+	if(!client || !loc)
+		return FALSE
+	if(isbelly(loc))
+		reset_view(null)
+		return TRUE
+	nudge_container_exit_view()
+	addtimer(CALLBACK(src, PROC_REF(nudge_container_exit_view)), 1)
+	return TRUE
+
+// RS Add: Fix holder camera bug (Lira, April 2026)
+/mob/proc/nudge_container_exit_view()
+	if(!client || !loc || isbelly(loc))
+		return
+	if(!isturf(loc))
+		reset_view(null)
+		return
+
+	var/turf/current_turf = loc
+	client.perspective = EYE_PERSPECTIVE
+	client.eye = current_turf
+	addtimer(CALLBACK(src, PROC_REF(finish_container_exit_view_reset)), 1)
+
+// RS Add: Fix holder camera bug (Lira, April 2026)
+/mob/proc/finish_container_exit_view_reset()
+	if(!client || !loc || isbelly(loc))
+		return
+	reset_view(null)
+
 /mob/verb/pointed(atom/A as mob|obj|turf in view())
 	set name = "Point To"
 	set category = "Object"
