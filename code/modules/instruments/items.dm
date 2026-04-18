@@ -50,7 +50,7 @@
 	desc = "A wooden musical instrument with four strings and a bow. \"The devil went down to space, he was looking for an assistant to grief.\""
 	icon_state = "violin"
 	hitsound = "swing_hit"
-	allowed_instrument_ids = "violin"
+	allowed_instrument_ids = list("violin", "r3violin") // RS Edit: New instruments (Lira, April 2026)
 
 /obj/item/instrument/violin/golden
 	name = "golden violin"
@@ -61,7 +61,7 @@
 	name = "xylophone"
 	desc = "A percussion instrument consisting of a series of wooden bars graduated in length."
 	icon_state = "xylophone"
-	allowed_instrument_ids = "xylophone"
+	allowed_instrument_ids = list("xylophone", "r3xylo") // RS Edit: New instruments (Lira, April 2026)
 
 /obj/item/instrument/piano_synth
 	name = "synthesizer"
@@ -148,7 +148,7 @@
 	icon_state = "banjo"
 	attack_verb = list("scruggs-styled", "hum-diggitied", "shin-dug", "clawhammered")
 	hitsound = 'sound/weapons/banjoslap.ogg'
-	allowed_instrument_ids = "banjo"
+	allowed_instrument_ids = list("banjo", "r3banjo") // RS Edit: New instruments (Lira, April 2026)
 
 /obj/item/instrument/guitar
 	name = "guitar"
@@ -165,7 +165,7 @@
 	force = 12
 	attack_verb = list("played metal on", "shreded", "crashed", "smashed")
 	hitsound = 'sound/weapons/stringsmash.ogg'
-	allowed_instrument_ids = "eguitar"
+	allowed_instrument_ids = list("eguitar", "r3jazzgt", "ccleangt", "cmutedgt", "r3overgt", "r3distgt", "r3harmgt") // RS Edit: New instruments (Lira, April 2026)
 
 /obj/item/instrument/glockenspiel
 	name = "glockenspiel"
@@ -205,7 +205,7 @@
 	name = "saxophone"
 	desc = "This soothing sound will be sure to leave your audience in tears."
 	icon_state = "saxophone"
-	allowed_instrument_ids = "saxophone"
+	allowed_instrument_ids = list("saxophone", "r3tenorsax", "r3sopsax", "r3altosax", "r3barisax") // RS Edit: New instruments (Lira, April 2026)
 
 /obj/item/instrument/saxophone/spectral
 	name = "spectral saxophone"
@@ -252,7 +252,7 @@
 	desc = "Just like in school, playing ability and all."
 	force = 5
 	icon_state = "recorder"
-	allowed_instrument_ids = "recorder"
+	allowed_instrument_ids = list("recorder", "r3recorder") // RS Edit: New instruments (Lira, April 2026)
 
 /obj/item/instrument/harmonica
 	name = "harmonica"

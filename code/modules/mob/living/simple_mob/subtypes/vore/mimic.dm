@@ -164,12 +164,15 @@
 	var/obj/animated_object
 
 // RS Add: Animation Staff Mimic (Lira, April 2026)
-/mob/living/simple_mob/hostile/mimic/copy/Initialize(mapload, var/atom/movable/source, var/mob/creator)
+/mob/living/simple_mob/hostile/mimic/copy/Initialize(mapload, var/atom/movable/source, var/mob/creator, var/inherit_creator_faction = FALSE)
 	. = ..()
 	if(source)
 		copy_source(source)
 	if(creator)
 		friends += creator
+		if(inherit_creator_faction)
+			faction = creator.faction
+			ai_holder?.build_faction_friends()
 
 // RS Add: Animation Staff Mimic (Lira, April 2026)
 /mob/living/simple_mob/hostile/mimic/copy/Destroy()

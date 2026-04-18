@@ -213,6 +213,7 @@
 /obj/item/weapon/gun/energy/staff/animate/universal
 	name = "universal staff of animation"
 	desc = "An artifact that spits bolts of life force, calibrated for the magically uninitiated."
+	projectile_type = /obj/item/projectile/animate/universal
 	universal = TRUE
 
 /obj/item/weapon/gun/energy/staff/focus

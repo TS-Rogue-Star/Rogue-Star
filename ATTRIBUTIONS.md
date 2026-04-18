@@ -99,12 +99,12 @@
 **File**: `icons/rogue-star`<br>
 **Creator:** VerySoft<br>
 **License:** Licensed for use by Rogue Star; unlicensed for further use without permission of copyright holder<br>
-**Notes:** All files and icon-states within this folder are covered under the above license, as per the included attribution.txt file
+**Notes:** All files and icon-states within this folder are covered under the above license, as per the included attribution.txt file<br>
 <br>
 **File**: `sound/rogue-star`<br>
 **Creator:** VerySoft<br>
 **License:** Licensed for use by Rogue Star; unlicensed for further use without permission of copyright holder<br>
-**Notes:** All files within this folder are covered under the above license, as per the included attribution.txt file
+**Notes:** All files within this folder are covered under the above license, as per the included attribution.txt file<br>
 <br>
 **File:** `icons/obj/pet_carrier.dmi`<br>
 **Title:** pet_carrier.dmi<br>
@@ -129,6 +129,8 @@
 **File:** `icons/mob/vore64x32.dmi`<br>
 **Title:** otie, cotie, sotie, photie, secotie, secphotie, badboi, prettyboi, rous, hotie, sechotie, fotie, fcotie, fsotie, photiec, hotiec, direwolf, diredog, direwolfs, diredogs, andrews, rykka, caotie<br>
 **Creator:** Verkister (https://github.com/Verkister)<br>
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
 **File:** `icons/mob/human_races/markings_alt.dmi`<br>
 **Title:** vulp_skull-head, una_skull-head, bellyspiral, fluffy_cuffs, chubby_belly, chubby_belly_s, belly_fluff, chest_fluff, teshari_skull-head, shoulder_markings<br>
 **Creator:** radiantAurora (https://github.com/radiantAurora)<br>
@@ -157,12 +159,12 @@
 **File:** `sound/effects/footstep/shoes/boots.ogg`<br>
 **Creator:** gpag1<br>
 **License:** Pixabay - Free for use<br>
-**Link:** https://pixabay.com/sound-effects/footsteps-boots-101657/
+**Link:** https://pixabay.com/sound-effects/footsteps-boots-101657/<br>
 <br>
 **File:** `icons/obj/flora/pumpkins.dmi`<br>
 **Icon-States:** All except for decor-pumpkin, decor-jackolantern, decor-jackolantern-girly, decor-jackolantern-scream, and decor-jackolantern-owo<br>
 **Creator:** Community project<br>
-**License:** Designs developed by players and translated to sprites by VerySoft; not for further use without consent of developing player
+**License:** Designs developed by players and translated to sprites by VerySoft; not for further use without consent of developing player<br>
 <br>
 **File:** `icons/mob/vore/wings_vr.dmi`<br>
 **Icon-States:** kaiju_spikes_a, kaiju_spikes_a_glow<br>
@@ -460,7 +462,7 @@ digi-inner-thighs
 **File:** `icons/inventory/head/item_rs.dmi, icons/inventory/head/mob_rs.dmi, icons/inventory/uniform/item_rs.dmi, icons/inventory/uniform/mob_rs.dmi, icons/inventory/suit/item_rs.dmi, icons/inventory/suit/mob_rs.dmi`<br>
 **Icon-States:** talon_basic_refreshed, talon_security_refreshed, talon_jumpsuit_refreshed, talon_pilot_refreshed, talon_captain_refreshed, talon_capcoat, talon_pilotjacket, talon_labcoat, taloncoat, talon_caphat, talon_pilothat, talonnewsoft, talon_beret, talon_officer_beret, winterhood_talon<br>
 **Creator:** Comissioned by axietheaxolotl, Imaginos16<br>
-**Link:** https://github.com/tgstation/tgstation/pull/70226, https://github.com/tgstation/tgstation/pull/67286, https://github.com/tgstation/tgstation/pull/69842, https://github.com/tgstation/tgstation/pull/66355, https://github.com/tgstation/tgstation/pull/73795, https://github.com/tgstation/tgstation/pull/71479
+**Link:** https://github.com/tgstation/tgstation/pull/70226, https://github.com/tgstation/tgstation/pull/67286, https://github.com/tgstation/tgstation/pull/69842, https://github.com/tgstation/tgstation/pull/66355, https://github.com/tgstation/tgstation/pull/73795, https://github.com/tgstation/tgstation/pull/71479<br>
 <br>
 **File:** `sound/voice/caw.ogg`<br>
 **Creator:**  Jofae<br>
@@ -529,13 +531,14 @@ Link: https://github.com/TS-Rogue-Star/Rogue-Star/pull/1041<br>
 **File:** `maps/sirius_point/sp_asteroid_wall.dmi`<br>
 **Creator:** Altered by AutumnWolf from walls.dmi<br>
 **Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/1034<br>
-**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)
+**License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
 <br>
 **File:** `icons/effects/weather.dmi`<br>
 **Creator:** AutumnWolf <br>
 **Icon-States:** purpleanomaly<br>
 **Link:** https://github.com/TS-Rogue-Star/Rogue-Star/pull/1034<br>
 **License:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)<br>
+<br>
 Files: `icons/mob/vore/tails_64x32.dmi, icons/mob/vore/Taur_Bellies.dmi`<br>
 Icon-States: eighttailkitsunetaur, ChristyKitsune, ChristyKitsuneTaur, Taur-CKT-1 idle, Taur-CKT-2 idle, Taur-CKT-3 idle <br> 
 Creator: Kligor<br> 
@@ -599,4 +602,19 @@ Link: https://github.com/TS-Rogue-Star/Rogue-Star/pull/987<br>
 **Creator**: Claracow<br>
 **Link**:https://github.com/TS-Rogue-Star/Rogue-Star/pull/1264<br>
 **License**: CC BY-SA 3.0<br>
+<br>
+**Folders**: sound/instruments/synthesis_samples/banjo,<br>
+sound/instruments/synthesis_samples/chromatic/fluid_xylophone,<br>
+sound/instruments/synthesis_samples/guitar/fluid_distortion,<br>
+sound/instruments/synthesis_samples/guitar/fluid_harmonics,<br>
+sound/instruments/synthesis_samples/guitar/fluid_jazz,<br>
+sound/instruments/synthesis_samples/guitar/fluid_overdrive,<br>
+sound/instruments/synthesis_samples/strings/fluid_violin,<br>
+sound/instruments/synthesis_samples/woodwind/fluid_alto_sax,<br>
+sound/instruments/synthesis_samples/woodwind/fluid_baritone_sax,<br>
+sound/instruments/synthesis_samples/woodwind/fluid_recorder,<br>
+sound/instruments/synthesis_samples/woodwind/fluid_soprano_sax,<br>
+sound/instruments/synthesis_samples/woodwind/fluid_tenor_sax,<br>
+**Link**:https://github.com/TS-Rogue-Star/Rogue-Star/pull/1327<br>
+**License**: MIT (licence included in folders with corresponding assets)<br>
 <br>
