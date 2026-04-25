@@ -46,6 +46,15 @@
 	desc = "The legendary book of spells, copied and annotated for use by the magically uninitiated. Under the cover, <i>'Export Edition'</i> is printed."
 	universal = TRUE
 
+// RS Add: Soulstone book (Lira, April 2026)
+/obj/item/weapon/spellbook/proc/grant_soulstone_artificer(var/mob/user)
+	if(!user)
+		return FALSE
+
+	new /obj/item/weapon/storage/belt/soulstone/full(get_turf(user))
+	user.add_spell(new/spell/aoe_turf/conjure/construct)
+	return TRUE
+
 /obj/item/weapon/spellbook/attack_self(mob/user = usr)
 	if(!user)
 		return
@@ -251,8 +260,7 @@
 							max_uses--
 						if("soulstone")
 							feedback_add_details("wizard_spell_learned","SS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							new /obj/item/weapon/storage/belt/soulstone/full(get_turf(H))
-							H.add_spell(new/spell/aoe_turf/conjure/construct)
+							grant_soulstone_artificer(H) // RS Edit: Soulstone book (Lira, April 2026)
 							temp = "You have purchased a belt full of soulstones and have learned the artificer spell."
 							max_uses--
 						if("armor")
@@ -303,20 +311,27 @@
 	..()
 	name += spellname
 
-/obj/item/weapon/spellbook/oneuse/attack_self(mob/user as mob)
-	var/spell/S = new spell(user)
+// RS Edit: Soulstone book (Lira, April 2026)
+/obj/item/weapon/spellbook/oneuse/proc/user_already_knows_spell(mob/user as mob)
 	for(var/spell/knownspell in user.spell_list)
-		if(knownspell.type == S.type)
+		if(knownspell.type == spell)
 			if(user.mind)
 				// TODO: Update to new antagonist system.
 				if(user.mind.special_role == "apprentice" || user.mind.special_role == "Wizard")
 					to_chat(user, "<span class='notice'>You're already far more versed in this spell than this flimsy how-to book can provide.</span>")
 				else
 					to_chat(user, "<span class='notice'>You've already read this one.</span>")
-			return
+			return TRUE
+	return FALSE
+
+// RS Edit: Soulstone book (Lira, April 2026)
+/obj/item/weapon/spellbook/oneuse/attack_self(mob/user as mob)
+	if(user_already_knows_spell(user))
+		return
 	if(used)
 		recoil(user)
 	else
+		var/spell/S = new spell(user)
 		user.add_spell(S)
 		to_chat(user, "<span class='notice'>you rapidly read through the arcane book. Suddenly you realize you understand [spellname]!</span>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='orange'>[user.real_name] ([user.ckey]) learned the spell [spellname] ([S]).</font>")
@@ -331,6 +346,27 @@
 
 /obj/item/weapon/spellbook/oneuse/attackby()
 	return
+
+// RS Add: Soulstone book (Lira, April 2026)
+/obj/item/weapon/spellbook/oneuse/soulstone
+	spell = /spell/aoe_turf/conjure/construct
+	spellname = "soulstone artificer"
+	desc = "This book's margins are covered in diagrams of spirit shards and unfinished construct shells."
+
+// RS Add: Soulstone book (Lira, April 2026)
+/obj/item/weapon/spellbook/oneuse/soulstone/attack_self(mob/user as mob)
+	if(!user)
+		return
+	if(user_already_knows_spell(user))
+		return
+	if(used)
+		recoil(user)
+		return
+
+	grant_soulstone_artificer(user)
+	to_chat(user, "<span class='notice'>You rapidly read through the arcane book. A belt of soul stone shards appears nearby, and you understand the Artificer spell!</span>")
+	user.attack_log += text("\[[time_stamp()]\] <font color='orange'>[user.real_name] ([user.ckey]) used [src] to gain soulstones and learn Artificer.</font>")
+	onlearned(user)
 
 /obj/item/weapon/spellbook/oneuse/fireball
 	spell = /spell/targeted/projectile/dumbfire/fireball

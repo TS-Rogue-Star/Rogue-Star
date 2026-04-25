@@ -22,6 +22,10 @@
 /obj/item/device/soulstone/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	if(!istype(M, /mob/living/carbon/human))//If target is not a human.
 		return ..()
+	// RS Add: Soul stone on tummy (Lira, April 2026)
+	if(M == user)
+		if(capture_digested_soul(M))
+			return
 	if(istype(M, /mob/living/carbon/human/dummy))
 		return..()
 	if(jobban_isbanned(M, "cultist"))
@@ -42,19 +46,151 @@
 /obj/item/device/soulstone/attack_self(mob/user)
 	if (!in_range(src, user))
 		return
+	// RS Add: Soul stone on tummy (Lira, April 2026)
+	if(isliving(user))
+		var/mob/living/living_user = user
+		if(src.imprinted == "empty" && !src.contents.len && capture_digested_soul(living_user))
+			return
 	user.set_machine(src)
-	var/dat = "<TT><B>Soul Stone</B><BR>"
+	var/dat = "<html><body><TT><B>Soul Stone</B><BR>" // RS Edit: Soul stone html fix (Lira, April 2026)
 	for(var/mob/living/simple_mob/construct/shade/A in src)
 		dat += "Captured Soul: [A.name]<br>"
 		dat += {"<A href='byond://?src=\ref[src];choice=Summon'>Summon Shade</A>"}
 		dat += "<br>"
 		dat += {"<a href='byond://?src=\ref[src];choice=Close'> Close</a>"}
+	dat += "</TT></body></html>" // RS Add: Soul stone html fix (Lira, April 2026)
 	user << browse(dat, "window=aicard")
 	onclose(user, "aicard")
 	return
 
 
 
+// RS Add: Soul stone on tummy (Lira, April 2026)
+/obj/item/device/soulstone/proc/get_digested_souls(mob/living/user)
+	var/list/digested_souls = list()
+	if(!istype(user) || !is_vore_predator(user))
+		return digested_souls
+
+	for(var/obj/belly/B as anything in user.vore_organs)
+		for(var/mob/observer/dead/G in B)
+			if(G.key)
+				digested_souls += G
+
+	return digested_souls
+
+// RS Add: Soul stone on tummy (Lira, April 2026)
+/obj/item/device/soulstone/proc/capture_digested_soul(mob/living/user)
+	var/list/digested_souls = get_digested_souls(user)
+	if(!LAZYLEN(digested_souls))
+		return FALSE
+
+	if(src.imprinted != "empty")
+		to_chat(user, "<span class='danger'>Capture failed!</span>: The soul stone has already been imprinted with [src.imprinted]'s mind!")
+		return TRUE
+	if(src.contents.len)
+		to_chat(user, "<span class='danger'>Capture failed!</span>: The soul stone is full! Use or free an existing soul to make room.")
+		return TRUE
+
+	var/mob/observer/dead/G
+	if(digested_souls.len == 1)
+		G = digested_souls[1]
+	else
+		G = tgui_input_list(user, "Which digested soul do you wish to bind?", "Soul Stone", digested_souls)
+	if(!G)
+		return TRUE
+
+	return transfer_digested_ghost(G, user)
+
+// RS Add: Soul stone consent (Lira, April 2026)
+/obj/item/device/soulstone/proc/request_soulstone_consent(var/mob/target_soul, var/mob/user, var/capture_source)
+	var/static/list/pending_soulstone_prompts = list()
+	if(!istype(target_soul) || !target_soul.client)
+		to_chat(user, "<span class='danger'>Capture failed!</span>: The soul is not responsive enough to bind.")
+		return FALSE
+
+	var/source_text = capture_source ? " from [capture_source]" : ""
+	if(pending_soulstone_prompts[target_soul])
+		to_chat(user, "<span class='warning'>The soul stone is already pulling at [target_soul]'s soul.</span>")
+		return FALSE
+
+	pending_soulstone_prompts[target_soul] = TRUE
+	to_chat(user, "<span class='notice'>You begin drawing [target_soul]'s soul into \the [src].</span>")
+	var/response = tgui_alert(target_soul, "[user] is trying to bind your soul[source_text] into \the [src]. Do you accept?", "Soul Stone", list("Accept", "Decline"), timeout = 30 SECONDS)
+	pending_soulstone_prompts -= target_soul
+	if(response != "Accept")
+		to_chat(user, "<span class='warning'>[target_soul] resists the soul stone's pull.</span>")
+		to_chat(target_soul, "<span class='notice'>You resist the soul stone's pull.</span>")
+		return FALSE
+
+	return TRUE
+
+// RS Add: Soul stone on tummy (Lira, April 2026)
+/obj/item/device/soulstone/proc/transfer_digested_ghost(var/mob/observer/dead/G, var/mob/living/user)
+	if(!istype(G) || !istype(user))
+		return FALSE
+
+	var/obj/belly/B = G.loc
+	if(!isbelly(B) || B.owner != user)
+		to_chat(user, "<span class='danger'>Capture failed!</span>: The soul slips away before the soul stone can catch it.")
+		return TRUE
+	if(!G.key)
+		to_chat(user, "<span class='danger'>Capture failed!</span>: The soul has already fled too far to bind.")
+		return TRUE
+	if(jobban_isbanned(G, "cultist"))
+		to_chat(user, "<span class='warning'>This person's soul is too corrupt and cannot be captured!</span>")
+		return TRUE
+	if(src.imprinted != "empty")
+		to_chat(user, "<span class='danger'>Capture failed!</span>: The soul stone has already been imprinted with [src.imprinted]'s mind!")
+		return TRUE
+	if(src.contents.len)
+		to_chat(user, "<span class='danger'>Capture failed!</span>: The soul stone is full! Use or free an existing soul to make room.")
+		return TRUE
+
+	if(!request_soulstone_consent(G, user, "[user]'s [lowertext(B.name)]"))
+		return TRUE
+
+	B = G.loc
+	if(!isbelly(B) || B.owner != user)
+		to_chat(user, "<span class='danger'>Capture failed!</span>: The soul slips away before the soul stone can catch it.")
+		return TRUE
+	if(!G.key)
+		to_chat(user, "<span class='danger'>Capture failed!</span>: The soul has already fled too far to bind.")
+		return TRUE
+	if(src.imprinted != "empty")
+		to_chat(user, "<span class='danger'>Capture failed!</span>: The soul stone has already been imprinted with [src.imprinted]'s mind!")
+		return TRUE
+	if(src.contents.len)
+		to_chat(user, "<span class='danger'>Capture failed!</span>: The soul stone is full! Use or free an existing soul to make room.")
+		return TRUE
+
+	add_attack_logs(user, G, "Soulstone'd from [lowertext(B.name)]")
+
+	var/mob/living/simple_mob/construct/shade/S = new /mob/living/simple_mob/construct/shade(src)
+	S.forceMove(src)
+	S.status_flags |= GODMODE
+	S.canmove = 0
+	S.name = "Shade of [G.real_name]"
+	S.real_name = "Shade of [G.real_name]"
+	S.icon = G.icon
+	S.icon_state = G.icon_state
+	S.overlays = G.overlays
+	S.color = rgb(254,0,0)
+	S.alpha = 127
+	if(G.mind)
+		G.mind.key = G.key
+		G.mind.active = TRUE
+		G.mind.transfer_to(S)
+	else
+		S.key = G.key
+	S.reset_view(src)
+
+	src.icon_state = "soulstone2"
+	src.name = "Soul Stone: [S.real_name]"
+	src.imprinted = "[S.name]"
+	to_chat(S, "Your soul has been pulled from [user]'s [lowertext(B.name)] and captured within the soul stone. You are bound to [user.name]'s will, help them succeed in their goals at all costs.")
+	to_chat(user, "<span class='notice'>Capture successful!</span> : [S.real_name]'s soul has been pulled from your [lowertext(B.name)] and stored within the soul stone.")
+	qdel(G)
+	return TRUE
 
 /obj/item/device/soulstone/Topic(href, href_list)
 	var/mob/U = usr
@@ -78,7 +214,7 @@
 				A.canmove = 1
 				to_chat(A, "<b>You have been released from your prison, but you are still bound to [U.name]'s will. Help them suceed in their goals at all costs.</b>")
 				A.forceMove(U.loc)
-				A.cancel_camera()
+				A.reset_view_after_container_exit() // RS Edit: Camera Fix (Lira, April 2026)
 				src.icon_state = "soulstone"
 	attack_self(U)
 
@@ -119,6 +255,23 @@
 		to_chat(U, "<span class='danger'>Capture failed!</span>: The soul stone is full! Use or free an existing soul to make room.")
 		return
 
+	// RS Add Start: Soul stone consent (Lira, April 2026)
+	if(!request_soulstone_consent(T, U, "your body"))
+		return
+	if(!istype(T) || T.client == null)
+		to_chat(U, "<span class='danger'>Capture failed!</span>: The soul has already fled it's mortal frame.")
+		return
+	if(src.imprinted != "empty")
+		to_chat(U, "<span class='danger'>Capture failed!</span>: The soul stone has already been imprinted with [src.imprinted]'s mind!")
+		return
+	if ((T.health + T.halloss) > config.health_threshold_crit && T.stat != DEAD)
+		to_chat(U, "<span class='danger'>Capture failed!</span>: Kill or maim the victim first!")
+		return
+	if(src.contents.len)
+		to_chat(U, "<span class='danger'>Capture failed!</span>: The soul stone is full! Use or free an existing soul to make room.")
+		return
+	// RS Add End
+
 	for(var/obj/item/W in T)
 		T.drop_from_inventory(W)
 
@@ -145,7 +298,7 @@
 	S.alpha = 127
 	if (T.client)
 		T.client.mob = S
-	S.cancel_camera()
+	S.reset_view(src) // RS Edit: Camera Fix (Lira, April 2026)
 
 
 	src.icon_state = "soulstone2"
@@ -170,6 +323,7 @@
 		return
 
 	T.forceMove(src) //put shade in stone
+	T.reset_view(src) // RS Add: Camera Fix (Lira, April 2026)
 	T.status_flags |= GODMODE
 	T.canmove = 0
 	T.health = T.getMaxHealth()
@@ -177,6 +331,32 @@
 
 	to_chat(T, "Your soul has been recaptured by the soul stone, its arcane energies are reknitting your ethereal form")
 	to_chat(U, "<span class='notice'>Capture successful!</span> : [T.name]'s has been recaptured and stored within the soul stone.")
+
+// RS Add: Soul stone skeletons (Lira, April 2026)
+/obj/item/device/soulstone/proc/transfer_skeleton(var/atom/movable/T,var/mob/U)
+	var/mob/living/simple_mob/construct/shade/A = locate() in src
+	if(!A)
+		to_chat(U, "<span class='danger'>Capture failed!</span>: The soul stone is empty! Go kill someone!")
+		return
+
+	var/turf/spawn_turf = get_turf(T)
+	if(!spawn_turf)
+		to_chat(U, "<span class='danger'>Capture failed!</span>: The remains are beyond the soul stone's reach.")
+		return
+
+	var/mob/living/simple_mob/vore/alienanimals/skeleton/S = new /mob/living/simple_mob/vore/alienanimals/skeleton(spawn_turf)
+	S.faction = A.faction
+	if(A.mind)
+		A.mind.transfer_to(S)
+	else if(A.key)
+		S.key = A.key
+	if(iscultist(U))
+		cult.add_antagonist(S.mind)
+	qdel(T)
+	to_chat(S, "<B>You are playing a skeleton animated by a soul stone. You are still bound to serve [U.name], follow their orders and help them complete their goals at all costs.</B>")
+	to_chat(U, "<span class='notice'>The bones rattle together as [A.name]'s soul animates them.</span>")
+	S.reset_view_after_container_exit()
+	qdel(src)
 
 /obj/item/device/soulstone/proc/transfer_construct(var/obj/structure/constructshell/T,var/mob/U)
 	var/mob/living/simple_mob/construct/shade/A = locate() in src
@@ -193,7 +373,7 @@
 			qdel(T)
 			to_chat(Z, "<B>You are playing a Juggernaut. Though slow, you can withstand extreme punishment, and rip apart enemies and walls alike.</B>")
 			to_chat(Z, "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>")
-			Z.cancel_camera()
+			Z.reset_view_after_container_exit() // RS Edit: Camera Fix (Lira, April 2026)
 			qdel(src)
 		if("Wraith")
 			var/mob/living/simple_mob/construct/wraith/Z = new /mob/living/simple_mob/construct/wraith (get_turf(T.loc))
@@ -203,7 +383,7 @@
 			qdel(T)
 			to_chat(Z, "<B>You are playing a Wraith. Though relatively fragile, you are fast, deadly, and even able to phase through walls.</B>")
 			to_chat(Z, "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>")
-			Z.cancel_camera()
+			Z.reset_view_after_container_exit() // RS Edit: Camera Fix (Lira, April 2026)
 			qdel(src)
 		if("Artificer")
 			var/mob/living/simple_mob/construct/artificer/Z = new /mob/living/simple_mob/construct/artificer (get_turf(T.loc))
@@ -213,7 +393,7 @@
 			qdel(T)
 			to_chat(Z, "<B>You are playing an Artificer. You are incredibly weak and fragile, but you are able to construct fortifications, repair allied constructs (by clicking on them), and even create new constructs</B>")
 			to_chat(Z, "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>")
-			Z.cancel_camera()
+			Z.reset_view_after_container_exit() // RS Edit: Camera Fix (Lira, April 2026)
 			qdel(src)
 		if("Harvester")
 			var/mob/living/simple_mob/construct/harvester/Z = new /mob/living/simple_mob/construct/harvester (get_turf(T.loc))
@@ -223,7 +403,7 @@
 			qdel(T)
 			to_chat(Z, "<B>You are playing a Harvester. You are relatively weak, but your physical frailty is made up for by your ranged abilities.</B>")
 			to_chat(Z, "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>")
-			Z.cancel_camera()
+			Z.reset_view_after_container_exit() // RS Edit: Camera Fix (Lira, April 2026)
 			qdel(src)
 		if("Behemoth")
 			var/mob/living/simple_mob/construct/juggernaut/behemoth/Z = new /mob/living/simple_mob/construct/juggernaut/behemoth (get_turf(T.loc))
@@ -233,7 +413,7 @@
 			qdel(T)
 			to_chat(Z, "<B>You are playing a Behemoth. You are incredibly slow, though your slowness is made up for by the fact your shell is far larger than any of your bretheren. You are the Unstoppable Force, and Immovable Object.</B>")
 			to_chat(Z, "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>")
-			Z.cancel_camera()
+			Z.reset_view_after_container_exit() // RS Edit: Camera Fix (Lira, April 2026)
 			qdel(src)
 
 /obj/item/device/soulstone/proc/transfer_soul(var/choice as text, var/target, var/mob/U as mob)
@@ -242,5 +422,8 @@
 			transfer_human(target,U)
 		if("SHADE")
 			transfer_shade(target,U)
+		// RS Add: Soul stone skeletons (Lira, April 2026)
+		if("SKELETON")
+			transfer_skeleton(target,U)
 		if("CONSTRUCT")
 			transfer_construct(target,U)

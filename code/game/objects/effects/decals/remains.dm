@@ -8,6 +8,14 @@
 /obj/effect/decal/remains/human
 	desc = "They look like human remains. They have a strange aura about them."
 
+// RS Add: Soul stone skeletons (Lira, April 2026)
+/obj/effect/decal/remains/human/attackby(obj/item/O as obj, mob/user as mob)
+	if(istype(O, /obj/item/device/soulstone))
+		var/obj/item/device/soulstone/S = O
+		S.transfer_soul("SKELETON", src, user)
+		return
+	return ..()
+
 /obj/effect/decal/remains/xeno
 	desc = "They look like the remains of something... alien. They have a strange aura about them."
 	icon_state = "remainsxeno"

@@ -119,6 +119,14 @@
 		to_chat(user,"<span class='warning'>As you squeeze the [name], it crumbles into dust and falls apart into nothing!</span>")
 		qdel(src)
 
+// RS Add: Soul stone skeletons (Lira, April 2026)
+/obj/item/weapon/digestion_remains/attackby(obj/item/O as obj, mob/user as mob)
+	if(istype(O, /obj/item/device/soulstone))
+		var/obj/item/device/soulstone/S = O
+		S.transfer_soul("SKELETON", src, user)
+		return
+	return ..()
+
 /obj/item/weapon/digestion_remains/ribcage
 	name = "ribcage"
 	desc = "A bleached ribcage. It's very white and definitely has seen better times. Hard to tell what it belonged to."
