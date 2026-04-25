@@ -3991,6 +3991,7 @@
 #include "code\modules\research\designs\implants_vr.dm"
 #include "code\modules\research\designs\locator_devices.dm"
 #include "code\modules\research\designs\medical.dm"
+#include "code\modules\research\designs\medical_rs.dm"
 #include "code\modules\research\designs\medical_vr.dm"
 #include "code\modules\research\designs\mining_toys.dm"
 #include "code\modules\research\designs\misc.dm"

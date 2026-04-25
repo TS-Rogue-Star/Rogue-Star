@@ -85,8 +85,10 @@
 
 	if(slot != SAVE_RESET)
 		S.cd = "/character[slot]"
+		clear_custom_marking_runtime_data() // RS Add: Custom Marking Clean-Up (Lira, April 2026)
 		player_setup.load_character(S)
 	else
+		clear_custom_marking_runtime_data() // RS Add: Custom Marking Clean-Up (Lira, April 2026)
 		player_setup.load_character(S)
 		S.cd = "/character[default_slot]"
 		player_setup.save_character(S)

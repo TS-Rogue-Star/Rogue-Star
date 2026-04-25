@@ -534,13 +534,13 @@ var/global/floorIsLava = 0
 /datum/admins/proc/Jobbans()
 	if(!check_rights(R_BAN))	return
 
-	var/dat = "<B>Job Bans!</B><HR><table>"
+	var/dat = "<html><B>Job Bans!</B><HR><table>" // RS Edit: Job ban html fix (Lira, April 2026)
 	for(var/t in jobban_keylist)
 		var/r = t
 		if( findtext(r,"##") )
 			r = copytext( r, 1, findtext(r,"##") )//removes the description
 		dat += text("<tr><td>[t] (<A href='?src=\ref[src];[HrefToken()];removejobban=[r]'>unban</A>)</td></tr>")
-	dat += "</table>"
+	dat += "</table></html>" // RS Edit: Job ban html fix (Lira, April 2026)
 	usr << browse(dat, "window=ban;size=400x400")
 
 /datum/admins/proc/Game()

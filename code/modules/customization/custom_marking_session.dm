@@ -25,6 +25,12 @@
 		src.frame = mark.ensure_frame(dir, normalized_part)
 	pending_changes = FALSE
 
+/datum/custom_marking_session/Destroy()
+	mark = null
+	frame = null
+	part = null
+	return ..()
+
 // Expose the current composite grid for UI consumption
 /datum/custom_marking_session/proc/get_grid()
 	if(!frame)

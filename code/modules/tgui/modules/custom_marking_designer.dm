@@ -124,6 +124,7 @@ var/global/list/custom_marking_visible_pixel_cache = null
 	var/body_preview_revision = 1 // Revisions for stripped body preview bundles
 	var/preview_refresh_token = 0 // Tracks external preview refresh triggers
 	var/mark_dirty = FALSE // Dirty flag for pending save
+	var/save_in_progress = FALSE // Server-side guard against duplicate save actions
 	var/body_markings_refresh_pending = FALSE // Defer body preview rebuild until body tab is opened
 	var/list/reference_payload_cache // Cached mannequin payloads
 	var/reference_cache_signature // Signature key for reference payload cache
@@ -179,6 +180,28 @@ var/global/list/custom_marking_visible_pixel_cache = null
 		prefs.custom_marking_designer_ui = null
 	reset_body_marking_chunk_state()
 	return .
+
+/datum/tgui_module/custom_marking_designer/Destroy()
+	if(prefs?.custom_marking_designer_ui == src)
+		prefs.custom_marking_designer_ui = null
+	reset_body_marking_chunk_state()
+	if(islist(sessions))
+		QDEL_LIST_ASSOC_VAL(sessions)
+	prefs = null
+	mark = null
+	initial_snapshot = null
+	direction_order = null
+	sessions = null
+	reference_payload_cache = null
+	reference_cache_signature = null
+	reference_mannequin_signature = null
+	reference_pending_request = null
+	body_reference_payload_cache = null
+	body_reference_cache_signature = null
+	body_reference_mannequin_signature = null
+	body_reference_pending_request = null
+	icon_shift_map = null
+	return ..()
 
 // Set up the designer for an existing or newly created marking
 /datum/tgui_module/custom_marking_designer/New(datum/preferences/pref, datum/custom_marking/existing, initial_tab_override = "custom", skip_mark_create = FALSE)
@@ -546,36 +569,46 @@ var/global/list/custom_marking_visible_pixel_cache = null
 /datum/tgui_module/custom_marking_designer/proc/save_marking_changes(force_save = TRUE, refresh_browser = FALSE, refresh_preview_assets = TRUE)
 	if(!mark)
 		return FALSE
-	var/log_ckey = prefs?.client_ckey || prefs?.client?.ckey || mark?.owner_ckey || "unknown"
-	var/committed = commit_all_sessions()
-	var/pruned = prune_empty_body_parts()
-	var/shrank = mark.shrink_large_parts_if_safe()
-	if(shrank)
-		set_mark_dirty(TRUE)
-		body_part_layer_revision++
-		preview_revision++
-	if(!force_save && !mark_dirty && !committed && !pruned && !shrank)
+	if(save_in_progress)
 		return FALSE
-	var/needs_save = committed || mark_dirty || pruned || shrank
-	if(!needs_save)
-		return FALSE
-	mark.bump_revision()
-	log_debug("CustomMarkings: [log_ckey] saved marking '[mark?.name]' ([mark?.id]) rev=[mark?.style_revision]")
-	register_mark_with_prefs()
-	sync_preference_assignment()
-	mark_dirty = FALSE
-	is_new_mark = FALSE
-	initial_snapshot = mark.to_save()
-	if(prefs && !QDELETED(prefs))
-		if(refresh_preview_assets || refresh_browser)
-			prefs.skip_custom_marking_cache_invalidation_once = TRUE
+	save_in_progress = TRUE
+	try
+		var/log_ckey = prefs?.client_ckey || prefs?.client?.ckey || mark?.owner_ckey || "unknown"
+		var/committed = commit_all_sessions()
+		var/pruned = prune_empty_body_parts()
+		var/shrank = mark.shrink_large_parts_if_safe()
+		if(shrank)
+			set_mark_dirty(TRUE)
+			body_part_layer_revision++
+			preview_revision++
+		if(!force_save && !mark_dirty && !committed && !pruned && !shrank)
+			save_in_progress = FALSE
+			return FALSE
+		var/needs_save = committed || mark_dirty || pruned || shrank
+		if(!needs_save)
+			save_in_progress = FALSE
+			return FALSE
+		mark.bump_revision()
+		log_debug("CustomMarkings: [log_ckey] saved marking '[mark?.name]' ([mark?.id]) rev=[mark?.style_revision]")
+		register_mark_with_prefs()
+		sync_preference_assignment()
+		mark_dirty = FALSE
+		is_new_mark = FALSE
+		initial_snapshot = mark.to_save()
+		if(prefs && !QDELETED(prefs))
+			if(refresh_preview_assets || refresh_browser)
+				prefs.skip_custom_marking_cache_invalidation_once = TRUE
+			if(refresh_preview_assets)
+				prefs.refresh_custom_marking_assets(TRUE, TRUE, mark, TRUE)
 		if(refresh_preview_assets)
-			prefs.refresh_custom_marking_assets(TRUE, TRUE, mark, TRUE)
-	if(refresh_preview_assets)
-		preview_revision++
-	if(refresh_browser && prefs)
-		refresh_preferences_window_if_visible()
-	return TRUE
+			preview_revision++
+		if(refresh_browser && prefs)
+			refresh_preferences_window_if_visible()
+		save_in_progress = FALSE
+		return TRUE
+	catch(var/exception/e)
+		save_in_progress = FALSE
+		throw e
 
 // Refresh the legacy character setup browser and preview if it's already open (Lira, December 2025)
 /datum/tgui_module/custom_marking_designer/proc/refresh_preferences_window_if_visible(refresh_preview = TRUE)
@@ -600,17 +633,25 @@ var/global/list/custom_marking_visible_pixel_cache = null
 		return
 	reset_body_marking_chunk_state()
 	if(is_new_mark)
+		var/datum/custom_marking/old_mark = mark
+		var/old_mark_id = mark.id
 		if(prefs)
-			prefs.custom_markings -= mark.id
-		unregister_custom_marking_style(mark.id)
-		GLOB.custom_markings_by_id -= mark.id
+			prefs.custom_markings -= old_mark_id
+		unregister_custom_marking_style(old_mark_id)
+		GLOB.custom_markings_by_id -= old_mark_id
 		mark = null
+		if(islist(sessions))
+			QDEL_LIST_ASSOC_VAL(sessions)
 		sessions = list()
+		if(istype(old_mark) && !QDELETED(old_mark))
+			qdel(old_mark)
 		SStgui.close_uis(src)
 		return
 	if(initial_snapshot)
 		mark.from_save(initial_snapshot)
 	register_custom_marking_style(mark, TRUE)
+	if(islist(sessions))
+		QDEL_LIST_ASSOC_VAL(sessions)
 	sessions = list()
 	is_new_mark = FALSE
 	mark_dirty = FALSE
@@ -802,7 +843,7 @@ var/global/list/custom_marking_visible_pixel_cache = null
 	if(islist(canvas_backgrounds_live) && canvas_backgrounds_live.len)
 		data["canvas_backgrounds"] = canvas_backgrounds_live
 		data["default_canvas_background"] = "default"
-	data["ui_locked"] = FALSE
+	data["ui_locked"] = save_in_progress
 	data["show_job_gear"] = !!(prefs?.equip_preview_mob & EQUIP_PREVIEW_JOB)
 	data["show_loadout_gear"] = !!(prefs?.equip_preview_mob & EQUIP_PREVIEW_LOADOUT)
 	data["reference_build_in_progress"] = reference_build_in_progress
@@ -1466,6 +1507,9 @@ var/global/list/custom_marking_visible_pixel_cache = null
 		SStgui.close_uis(src)
 		return FALSE
 	else if(action == "save_and_close")
+		if(save_in_progress)
+			SStgui.update_uis(src)
+			return TRUE
 		var/replacements_updated = apply_part_replacement_payload(params?["part_replacements"])
 		var/priority_updated = apply_part_render_priority_payload(params?["part_render_priority"])
 		var/canvas_updated = apply_part_canvas_size_payload(params?["part_canvas_size"])
@@ -1477,6 +1521,9 @@ var/global/list/custom_marking_visible_pixel_cache = null
 		SStgui.close_uis(src)
 		return FALSE
 	else if(action == "save_progress")
+		if(save_in_progress)
+			SStgui.update_uis(src)
+			return TRUE
 		var/replacements_updated = apply_part_replacement_payload(params?["part_replacements"])
 		var/priority_updated = apply_part_render_priority_payload(params?["part_render_priority"])
 		var/canvas_updated = apply_part_canvas_size_payload(params?["part_canvas_size"])

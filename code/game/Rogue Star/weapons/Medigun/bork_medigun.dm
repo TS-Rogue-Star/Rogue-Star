@@ -3,7 +3,7 @@
 #define MEDIGUN_BUSY 2
 
 /obj/item/device/bork_medigun
-	name = "prototype bluespace medigun"
+	name = "bluespace medigun"
 	desc = "The Bork BSM-92 or 'Blue Space Medigun' utilizes advanced bluespace technology to transfer beneficial reagents directly to torn tissue. This way, even larger wounds can be mended efficiently in short periods of time"
 	icon = 'code/game/Rogue Star/icons/itemicons/borkmedigun.dmi'
 	icon_state = "medblaster"

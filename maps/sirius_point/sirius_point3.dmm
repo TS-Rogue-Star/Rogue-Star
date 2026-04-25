@@ -5614,14 +5614,16 @@
 /area/shuttle/excursion/cargo)
 "nU" = (
 /obj/item/weapon/storage/firstaid/mkIhypokit{
-	pixel_x = -6;
-	pixel_y = 5
+	pixel_x = 0;
+	pixel_y = 10
 	},
 /obj/item/weapon/storage/firstaid/mkIhypokit{
-	pixel_x = -3
+	pixel_x = -1;
+	pixel_y = 8
 	},
 /obj/item/weapon/storage/secure/briefcase/ml3m_pack_med{
-	pixel_y = -5
+	pixel_y = 5;
+	pixel_x = -2
 	},
 /obj/structure/table/glass,
 /obj/effect/floor_decal/corner/paleblue{
@@ -5629,6 +5631,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/item/weapon/storage/continuous_medigun_box{
+	pixel_x = 4;
+	pixel_y = 1
 	},
 /turf/simulated/floor/tiled/white,
 /area/medical/medbay_primary_storage)

@@ -21225,14 +21225,20 @@
 	},
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/firstaid/mkIhypokit{
-	pixel_x = -6;
-	pixel_y = 5
+	pixel_x = 2;
+	pixel_y = 8
 	},
 /obj/item/weapon/storage/firstaid/mkIhypokit{
-	pixel_x = -3
+	pixel_x = 2;
+	pixel_y = 5
 	},
 /obj/item/weapon/storage/secure/briefcase/ml3m_pack_med{
-	pixel_y = -5
+	pixel_y = 1;
+	pixel_x = 2
+	},
+/obj/item/weapon/storage/continuous_medigun_box{
+	pixel_x = -2;
+	pixel_y = 0
 	},
 /turf/simulated/floor/tiled/eris/white/bluecorner,
 /area/medical/cmostore)

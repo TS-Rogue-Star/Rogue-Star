@@ -24947,9 +24947,21 @@
 	pixel_y = 11
 	},
 /obj/item/weapon/storage/secure/briefcase/ml3m_pack_med{
-	pixel_y = 5
+	pixel_y = 7;
+	pixel_x = -5
 	},
-/obj/item/weapon/storage/secure/briefcase/ml3m_pack_med,
+/obj/item/weapon/storage/secure/briefcase/ml3m_pack_med{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/weapon/storage/continuous_medigun_box{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/obj/item/weapon/storage/continuous_medigun_box{
+	pixel_x = 7;
+	pixel_y = 3
+	},
 /turf/simulated/floor/tiled/white,
 /area/groundbase/medical/equipment)
 "vCI" = (

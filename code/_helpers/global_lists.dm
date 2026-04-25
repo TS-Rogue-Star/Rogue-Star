@@ -122,8 +122,12 @@ GLOBAL_LIST_EMPTY(mannequins)
 		M = GLOB.mannequins[ckey]
 	return M
 
+// RS Edit: Custom Marking Clean-Up (Lira, April 2026)
 /proc/del_mannequin(var/ckey = "NULL")
-	GLOB.mannequins-= ckey
+	var/mob/living/carbon/human/dummy/mannequin/M = GLOB.mannequins[ckey]
+	GLOB.mannequins -= ckey
+	if(istype(M) && !QDELETED(M))
+		qdel(M)
 
 //////////////////////////
 /////Initial Building/////
