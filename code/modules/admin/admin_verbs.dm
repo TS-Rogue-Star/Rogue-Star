@@ -69,13 +69,17 @@
 		var/mob/observer/dead/ghost
 		if(build_mode)
 			togglebuildmode(body)
-			ghost = body.ghostize(1)
+		// RS Edit Start: Fix aghost in ghost blocked areas (Lira, April 2026)
+		ghost = body.ghostize(1)
+		if(ghost)
 			ghost.admin_ghosted = 1
-			if(build_mode == "Yes")
-				togglebuildmode(ghost)
-		else
-			ghost = body.ghostize(1)
-			ghost.admin_ghosted = 1
+			var/turf/body_turf = get_turf(body)
+			if(body_turf)
+				ghost.forceMove(body_turf)
+			ghost.reset_view(null)
+		if(ghost && build_mode == "Yes")
+			togglebuildmode(ghost)
+		// RS Edit End
 		if(body)
 			body.teleop = ghost
 			if(!body.key)

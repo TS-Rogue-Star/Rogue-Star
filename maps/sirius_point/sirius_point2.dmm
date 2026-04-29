@@ -5252,6 +5252,10 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/moonbase/central)
+"cWC" = (
+/obj/structure/railing/grey,
+/turf/simulated/open/vacuum/outdoors,
+/area/moonbase/surface/levelone/south)
 "cXy" = (
 /obj/structure/flora/lily1,
 /turf/simulated/floor/water/indoors,
@@ -14115,6 +14119,12 @@
 /obj/item/device/healthanalyzer,
 /turf/simulated/floor/tiled/milspec/sterile,
 /area/medical/surgery)
+"iTu" = (
+/obj/structure/railing/grey{
+	dir = 4
+	},
+/turf/simulated/floor/airless/moonbaseplating/outdoors,
+/area/moonbase/surface/levelone/south)
 "iTz" = (
 /obj/effect/floor_decal/steeldecal/steel_decals5,
 /obj/effect/floor_decal/steeldecal/steel_decals6{
@@ -22388,6 +22398,14 @@
 /obj/machinery/camera/network/research,
 /turf/simulated/floor/bluegrid,
 /area/rnd/moonbase/robotics/mechbay)
+"ooU" = (
+/obj/effect/floor_decal/industrial/arrows{
+	dir = 1
+	},
+/turf/simulated/floor/airless/moonbaseplating/outdoors{
+	edge_blending_priority = 1
+	},
+/area/moonbase/surface/levelone/west)
 "opA" = (
 /obj/structure/sink{
 	pixel_y = 20
@@ -25962,6 +25980,9 @@
 /obj/structure/railing/grey,
 /turf/simulated/floor/tiled/monotile,
 /area/hallway/moonbase/northhall)
+"qMd" = (
+/turf/simulated/floor/airless/moonbaseplating/outdoors,
+/area/moonbase/surface/levelone/south)
 "qMf" = (
 /obj/machinery/light/small/fairylights{
 	pixel_y = 5
@@ -26063,9 +26084,6 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/moonbase/level1/northwest)
 "qQA" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 9
 	},
@@ -26677,6 +26695,15 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/maintenance/moonbase/basement/northair)
+"rly" = (
+/obj/structure/railing/grey{
+	dir = 4
+	},
+/obj/structure/railing/grey{
+	dir = 1
+	},
+/turf/simulated/open/vacuum/outdoors,
+/area/moonbase/surface/levelone/south)
 "rlz" = (
 /obj/item/weapon/reagent_containers/food/condiment/small/peppermill{
 	pixel_x = 2;
@@ -29731,6 +29758,15 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/maintenance/moonbase/level1/northwest)
+"sXZ" = (
+/obj/structure/railing/grey{
+	dir = 8
+	},
+/obj/structure/railing/grey{
+	dir = 1
+	},
+/turf/simulated/open/vacuum/outdoors,
+/area/moonbase/surface/levelone/south)
 "sYf" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -29850,6 +29886,12 @@
 	},
 /turf/simulated/floor/tiled,
 /area/quartermaster/moonbase/trashroom)
+"tcU" = (
+/obj/structure/railing/grey{
+	dir = 1
+	},
+/turf/simulated/open/vacuum/outdoors,
+/area/moonbase/surface/levelone/south)
 "tdO" = (
 /obj/structure/bed/chair/office/dark{
 	dir = 1
@@ -33814,7 +33856,9 @@
 /area/maintenance/moonbase/level1/east)
 "vUE" = (
 /obj/effect/floor_decal/milspec/color/green/half,
-/obj/structure/closet/secure_closet/hydroponics/sci,
+/obj/structure/closet/secure_closet/hydroponics/sci{
+	req_access = list(47,55)
+	},
 /turf/simulated/floor/tiled,
 /area/rnd/xenobiology/xenoflora)
 "vUM" = (
@@ -36989,6 +37033,12 @@
 /obj/random/maintenance/morestuff,
 /turf/simulated/floor/tiled/steel_dirty,
 /area/maintenance/moonbase/level1/northeast)
+"xWD" = (
+/obj/structure/railing/grey{
+	dir = 8
+	},
+/turf/simulated/floor/airless/moonbaseplating/outdoors,
+/area/moonbase/surface/levelone/south)
 "xWT" = (
 /obj/effect/floor_decal/milspec/color/green/half{
 	dir = 4
@@ -39365,7 +39415,7 @@ xeq
 fgg
 fgg
 fgg
-fgg
+tcn
 fgg
 fgg
 fgg
@@ -39507,7 +39557,7 @@ ixo
 fgg
 fgg
 fgg
-tcn
+fgg
 fgg
 fgg
 fgg
@@ -40037,7 +40087,7 @@ hEo
 hEo
 hEo
 fgg
-fgg
+tcn
 fgg
 fgg
 fgg
@@ -40952,9 +41002,9 @@ xeq
 tCA
 tCA
 tCA
-rnK
-qix
-kuO
+fgg
+vNb
+vNb
 vNb
 vNb
 vNb
@@ -41094,9 +41144,9 @@ fRq
 tCA
 tCA
 tCA
-twW
-snJ
-riz
+rnK
+qix
+kuO
 vNb
 vNb
 vNb
@@ -41236,9 +41286,9 @@ jvs
 tCA
 tCA
 tCA
-sct
+twW
 snJ
-xly
+riz
 vNb
 vNb
 vNb
@@ -41378,9 +41428,9 @@ gTa
 tCA
 tCA
 tCA
-twW
+sct
 snJ
-riz
+xly
 vNb
 vNb
 vNb
@@ -41520,9 +41570,9 @@ jvs
 tCA
 tCA
 tCA
-sct
+twW
 snJ
-xly
+riz
 vNb
 vNb
 vNb
@@ -41609,7 +41659,7 @@ jJq
 fgg
 fgg
 fgg
-tcn
+fgg
 fgg
 fgg
 dUL
@@ -41662,9 +41712,9 @@ jbU
 tCA
 tCA
 tCA
-twW
+sct
 snJ
-riz
+xly
 vNb
 vNb
 vNb
@@ -41804,9 +41854,9 @@ tCA
 tCA
 tCA
 tCA
-srX
-rmC
-jNm
+twW
+snJ
+riz
 vNb
 vNb
 vNb
@@ -41940,15 +41990,15 @@ kWO
 xeq
 odf
 bYL
+ooU
 tCA
 tCA
 tCA
 tCA
 tCA
-tCA
-fgg
-vNb
-vNb
+srX
+rmC
+jNm
 vNb
 vNb
 vNb
@@ -42089,8 +42139,8 @@ tCA
 tCA
 tCA
 fgg
-vNb
-vNb
+fgg
+fgg
 vNb
 kTJ
 vNb
@@ -42231,8 +42281,8 @@ tCA
 tCA
 tCA
 tCA
-fOq
-fOq
+tCA
+tCA
 fOq
 fOq
 fOq
@@ -42373,8 +42423,8 @@ tCA
 tCA
 tCA
 tCA
-fOq
-fOq
+tCA
+tCA
 fOq
 fOq
 fOq
@@ -42515,8 +42565,8 @@ tCA
 tCA
 tCA
 tCA
-fOq
-fOq
+tCA
+tCA
 fOq
 fOq
 fOq
@@ -42657,8 +42707,8 @@ poT
 oYF
 oYF
 fgg
-vNb
-vNb
+fgg
+fgg
 vNb
 vNb
 vNb
@@ -43522,7 +43572,7 @@ suC
 suC
 suC
 suC
-vNb
+suC
 vNb
 fOq
 fOq
@@ -43807,8 +43857,8 @@ suC
 suC
 suC
 suC
-vNb
-fOq
+cWC
+qMd
 fOq
 fOq
 vNb
@@ -43949,15 +43999,15 @@ suC
 suC
 suC
 suC
-vNb
+cWC
+qMd
 fOq
 fOq
-fOq
 vNb
 vNb
 vNb
 vNb
-vNb
+kTJ
 vNb
 vNb
 vNb
@@ -44091,8 +44141,8 @@ suC
 suC
 suC
 suC
-vNb
-fOq
+cWC
+qMd
 fOq
 fOq
 vNb
@@ -44233,8 +44283,8 @@ suC
 suC
 suC
 suC
-vNb
-fOq
+cWC
+qMd
 fOq
 fOq
 vNb
@@ -44289,7 +44339,7 @@ hEo
 hEo
 hEo
 hEo
-cjg
+hEo
 hEo
 hEo
 hEo
@@ -44375,8 +44425,8 @@ suC
 suC
 suC
 suC
-vNb
-fOq
+cWC
+qMd
 fOq
 fOq
 vNb
@@ -44516,9 +44566,9 @@ suC
 suC
 suC
 suC
-vNb
-vNb
-fOq
+suC
+cWC
+qMd
 fOq
 fOq
 vNb
@@ -44658,7 +44708,7 @@ suC
 suC
 suC
 suC
-vNb
+suC
 vNb
 fOq
 fOq
@@ -44800,7 +44850,7 @@ suC
 suC
 suC
 suC
-vNb
+suC
 vNb
 fOq
 fOq
@@ -45496,7 +45546,7 @@ obJ
 dRJ
 sNl
 olN
-dOq
+vNb
 vNb
 vNb
 vNb
@@ -46224,8 +46274,8 @@ vNb
 vNb
 fOq
 fOq
-fOq
-suC
+qMd
+tcU
 suC
 suC
 suC
@@ -46366,8 +46416,8 @@ vNb
 vNb
 fOq
 fOq
-fOq
-suC
+qMd
+tcU
 suC
 suC
 suC
@@ -46508,8 +46558,8 @@ vNb
 vNb
 fOq
 fOq
-fOq
-suC
+qMd
+tcU
 suC
 suC
 suC
@@ -50336,7 +50386,7 @@ vNb
 vNb
 vNb
 vNb
-vNb
+dOq
 vNb
 vNb
 vNb
@@ -52882,9 +52932,9 @@ uPs
 vNb
 vNb
 vNb
-vNb
-vNb
-vNb
+sXZ
+xWD
+fOq
 fOq
 fOq
 fOq
@@ -53024,9 +53074,9 @@ uPs
 vNb
 vNb
 vNb
-vNb
-vNb
-vNb
+rly
+iTu
+fOq
 fOq
 fOq
 fOq
@@ -55599,7 +55649,7 @@ vNb
 vNb
 vNb
 vNb
-vNb
+dOq
 vNb
 vNb
 vNb

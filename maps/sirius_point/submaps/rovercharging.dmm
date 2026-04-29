@@ -94,7 +94,7 @@
 /obj/machinery/light/lamppost{
 	dir = 8
 	},
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/submap/moonbase/poi/west_crater/rovercharging)
 "w" = (
 /obj/machinery/power/rtg/fake_gen,
@@ -174,13 +174,13 @@
 	},
 /area/submap/moonbase/poi/west_crater/rovercharging)
 "P" = (
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/submap/moonbase/poi/west_crater/rovercharging)
 "Q" = (
 /obj/machinery/light/lamppost{
 	dir = 4
 	},
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/submap/moonbase/poi/west_crater/rovercharging)
 "W" = (
 /obj/effect/floor_decal/industrial/loading/white,

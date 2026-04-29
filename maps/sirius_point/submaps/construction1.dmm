@@ -14,7 +14,7 @@
 /turf/simulated/floor/airless/outdoors,
 /area/submap/moonbase/poi/west_crater/construction1)
 "p" = (
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/submap/moonbase/poi/west_crater/construction1)
 "x" = (
 /turf/simulated/wall,

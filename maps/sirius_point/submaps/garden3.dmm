@@ -230,7 +230,7 @@
 /turf/simulated/wall/r_wall,
 /area/submap/moonbase/poi/west_crater/garden3)
 "Ew" = (
-/turf/simulated/mineral/floor/vacuum/moonbase/outdoors,
+/turf/simulated/mineral/floor/vacuum/moonbase/outdoors/ignore_cavegen,
 /area/submap/moonbase/poi/west_crater/garden3)
 "Ey" = (
 /obj/effect/floor_decal/milspec/color/green/half{

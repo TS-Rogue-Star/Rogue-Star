@@ -316,7 +316,7 @@
 
 //Removed the horrible safety parameter. It was only being used by ninja code anyways.
 //Now checks siemens_coefficient of the affected area by default
-/mob/living/carbon/human/electrocute_act(var/shock_damage, var/obj/source, var/base_siemens_coeff = 1.0, var/def_zone = null)
+/mob/living/carbon/human/electrocute_act(var/shock_damage, var/obj/source, var/base_siemens_coeff = 1.0, var/def_zone = null, var/stun = 1) // RS Edit: Stun var (Lira, April 2026)
 
 	if(status_flags & GODMODE)	return 0	//godmode
 
@@ -335,7 +335,7 @@
 	if(fire_stacks < 0) // Water makes you more conductive.
 		siemens_coeff *= 1.5
 
-	return ..(shock_damage, source, siemens_coeff, def_zone)
+	return ..(shock_damage, source, siemens_coeff, def_zone, stun) // RS Edit: Stun var (Lira, April 2026)
 
 
 /mob/living/carbon/human/Topic(href, href_list)
