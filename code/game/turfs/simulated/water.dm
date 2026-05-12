@@ -6,6 +6,7 @@
 	icon_state = "seashallow" // So it shows up in the map editor as water.
 	var/water_icon = 'icons/turf/outdoors.dmi'
 	var/water_state = "water_shallow"
+	var/water_overlay_layer = WATER_LAYER // RS Edit: Fix beach water (Lira, May 2026)
 	var/under_state = "rock"
 	edge_blending_priority = -1
 	movement_cost = 4
@@ -23,7 +24,11 @@
 
 /turf/simulated/floor/water/Initialize()
 	. = ..()
-	var/decl/flooring/F = get_flooring_data(/decl/flooring/water)
+	// RS Edit Start: Fix beach water (Lira, May 2026)
+	var/decl/flooring/F = flooring
+	if(!F)
+		F = get_flooring_data(/decl/flooring/water)
+	// RS Edit End
 	footstep_sounds = F?.footstep_sounds
 	update_icon()
 	handle_fish()
@@ -32,7 +37,7 @@
 	..() // To get the edges.
 
 	icon_state = under_state // This isn't set at compile time in order for it to show as water in the map editor.
-	var/image/water_sprite = image(icon = water_icon, icon_state = water_state, layer = WATER_LAYER)
+	var/image/water_sprite = image(icon = water_icon, icon_state = water_state, layer = water_overlay_layer) // RS Edit: Fix beach water (Lira, May 2026)
 	add_overlay(water_sprite)
 
 /turf/simulated/floor/water/get_edge_icon_state()

@@ -21,8 +21,14 @@
 	to_chat(user, "<span class='info'>You can see... everything!</span>")
 	visible_message("<span class='danger'>[user] stares into [src], their eyes glazing over.</span>")
 
-	user.teleop = user.ghostize(1)
-	announce_ghost_joinleave(user.teleop, 1, "You feel that they used a powerful artifact to [pick("invade","disturb","disrupt","infest","taint","spoil","blight")] this place with their presence.")
+	// RS Edit Start: No dchat for scrying ghosts (Lira, April 2026)
+	var/mob/observer/dead/scrying_ghost = user.ghostize(1)
+	if(!scrying_ghost)
+		return
+	scrying_ghost.forbid_seeing_deadchat = TRUE
+	user.teleop = scrying_ghost
+	announce_ghost_joinleave(scrying_ghost, 1, "You feel that they used a powerful artifact to [pick("invade","disturb","disrupt","infest","taint","spoil","blight")] this place with their presence.")
+	// RS Edit End
 	return
 
 // RS Add: Universal wizard (Lira, April 2026)
