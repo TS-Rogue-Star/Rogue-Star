@@ -233,6 +233,8 @@
 	configure_browser_full_timeline()
 	queue_browser_timeline_build()
 	updateDialog(user)
+	user_playing = user
+	character_memory_music_listeners.Cut() // Persistent memory system (Lira, May 2026)
 	do_hearcheck()
 	SEND_SIGNAL(parent, COMSIG_SONG_START)
 	elapsed_delay = 0
@@ -241,7 +243,6 @@
 	band_active_chord_index = 0
 	band_active_chord_started_at = 0
 	band_active_chord_duration_ds = 0
-	user_playing = user
 	last_note_fx_time = world.time - note_fx_interval_ds
 	update_browser_source_tracking()
 	sync_all_browser_listeners()

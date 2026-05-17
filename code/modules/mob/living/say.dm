@@ -417,6 +417,7 @@ var/list/channel_to_radio_key = new
 		if(do_sound && message)
 			say_sound(whispering,ending,ourlan)	//RS EDIT
 		log_say(message, src)
+	record_character_memory_recipients(src, listening, whispering ? "whisper" : "say", message_range, FALSE, 0, FALSE, TRUE, character_memory_source_known_contained_recipients(src)) // RS Add: Persistent memory system (Lira, May 2026)
 	return 1
 
 //RS ADD START

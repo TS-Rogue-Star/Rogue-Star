@@ -370,6 +370,7 @@ var/list/holder_mob_icon_cache = list()
 		to_chat(src, "<span class='notice'>\The [grabber] scoops you up!</span>")
 
 	add_attack_logs(grabber, H.held_mob, "Scooped up", FALSE) // Not important enough to notify admins, but still helpful.
+	record_character_memory_pair(grabber, H.held_mob, "picked_up", "as_holder", "as_held") // RS Add: Persistent memory system (Lira, May 2026)
 	return H
 
 /obj/item/weapon/holder/human

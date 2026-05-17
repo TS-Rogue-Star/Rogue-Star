@@ -52,8 +52,15 @@
 	movement_cost = 4 // Water should slow you down, just like the original simulated turf.
 	initial_flooring = /decl/flooring/water
 
+// RS Edit: Fix beach water (Lira, May 2026)
 /turf/simulated/floor/beach/water/ocean
+	parent_type = /turf/simulated/floor/water/deep/ocean
+	icon = 'icons/misc/beach.dmi'
 	icon_state = "seadeep"
+	water_icon = 'icons/misc/beach.dmi'
+	water_state = "water5"
+	water_overlay_layer = MOB_LAYER+0.1
+	under_state = "seadeep"
 	movement_cost = 8 // Deep water should be difficult to wade through.
 	initial_flooring = /decl/flooring/water/beach/deep
 
