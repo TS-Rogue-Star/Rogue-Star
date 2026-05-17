@@ -183,7 +183,8 @@ GLOBAL_VAR_INIT(vchat_current_round_id, null) //RS Add: Round ID (Lira, Septembe
 	return isnum(message_count) && message_count > 0
 
 /proc/vchat_create_legacy_round()
-	var/round_id = "round_legacy_[time2text(vchat_current_realtime(), "YYYYMMDD_hhmmss")]_[rand(1000, 9999)]"
+	var/timestamp = time2text(vchat_current_realtime(), "YYYYMMDD_hhmmss")
+	var/round_id = "round_legacy_[timestamp]_[rand(1000, 9999)]"
 	var/list/rows = vchat_exec_query("SELECT MIN(NULLIF(logged_at, 0)) AS start_time, MAX(NULLIF(logged_at, 0)) AS end_time FROM messages WHERE round_id IS NULL OR round_id = ''")
 	var/start_time = 0
 	var/end_time = vchat_current_realtime()

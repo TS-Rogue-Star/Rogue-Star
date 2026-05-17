@@ -333,9 +333,20 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		return TRUE
 	return (category in categories)
 
-// Format a message plus repeat counter for fallback HTML exports
+/proc/vchat_format_export_message(var/message)
+	if(!istext(message))
+		return ""
+
+	var/carriage_return = ascii2text(13)
+	var/crlf = "[carriage_return]\n"
+	var/result = replacetext(message, crlf, "\n")
+	result = replacetext(result, carriage_return, "\n")
+	result = replacetext(result, "\n", "<br>\n")
+	return result
+
+// Format a message plus repeat counter for HTML log exports
 /proc/vchat_format_saved_message(var/message, var/repeats)
-	var/result = message
+	var/result = vchat_format_export_message(message)
 	if(repeats > 1)
 		result += "(x[repeats])"
 	result += "<br>\n"
@@ -1195,7 +1206,7 @@ var/to_chat_src
 
 	// Write the messages to the log
 	for(var/list/result in results)
-		text_blob += "[result["message"]]<br>"
+		text_blob += vchat_format_saved_message(result["message"], 1)
 		CHECK_TICK
 
 	text_blob += "</body></html>"

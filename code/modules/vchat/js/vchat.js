@@ -1720,7 +1720,7 @@ function start_vue() {
 
 				messagesToSave.forEach( function(message) {
 					if(cats.length === 0 || (cats.indexOf(message.category) >= 0)) { //only in the active tab
-						textToSave += message.content;
+						textToSave += formatChatlogContent(message.content);
 						if(message.repeats > 1) {
 							textToSave += "(x"+message.repeats+")";
 						}
@@ -2006,6 +2006,13 @@ function downloadBlob(blob, fileName) {
 		URL.revokeObjectURL(url);
 		}, 0);
 	}
+}
+
+function formatChatlogContent(message) {
+	if(typeof message !== 'string') {
+		return '';
+	}
+	return message.replace(/\r\n/g, '\n').replace(/\r/g, '\n').replace(/\n/g, '<br>\n');
 }
 
 //RS Add: Save chatlog (Lira, September 2025)
