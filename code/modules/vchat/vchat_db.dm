@@ -144,10 +144,6 @@ GLOBAL_VAR_INIT(vchat_current_round_id, null) //RS Add: Round ID (Lira, Septembe
 	vchat_exec_update("CREATE INDEX IF NOT EXISTS msg_round_ckey_idx ON messages (ckey, round_id)")
 	vchat_exec_update("CREATE INDEX IF NOT EXISTS msg_logged_at_idx ON messages (logged_at)")
 
-	// Assign any legacy rows to the current round once one exists
-	if(GLOB.vchat_current_round_id)
-		vchat_assign_round_to_unassigned(GLOB.vchat_current_round_id)
-
 /proc/vchat_current_realtime()
 	if(isnum(world.realtime))
 		return world.realtime
@@ -171,6 +167,44 @@ GLOBAL_VAR_INIT(vchat_current_round_id, null) //RS Add: Round ID (Lira, Septembe
 		return
 	vchat_exec_update(list("UPDATE messages SET round_id = ? WHERE round_id IS NULL OR round_id = ''", round_id))
 	vchat_exec_update(list("UPDATE messages SET logged_at = ? WHERE (logged_at IS NULL OR logged_at = 0)", vchat_current_realtime()))
+
+/proc/vchat_has_unassigned_messages()
+	var/list/rows = vchat_exec_query("SELECT COUNT(id) AS message_count FROM messages WHERE round_id IS NULL OR round_id = ''")
+	if(!islist(rows) || !rows.len)
+		return FALSE
+
+	var/list/row = rows[1]
+	if(!islist(row))
+		return FALSE
+
+	var/message_count = row["message_count"]
+	if(istext(message_count))
+		message_count = text2num(message_count)
+	return isnum(message_count) && message_count > 0
+
+/proc/vchat_create_legacy_round()
+	var/round_id = "round_legacy_[time2text(vchat_current_realtime(), "YYYYMMDD_hhmmss")]_[rand(1000, 9999)]"
+	var/list/rows = vchat_exec_query("SELECT MIN(NULLIF(logged_at, 0)) AS start_time, MAX(NULLIF(logged_at, 0)) AS end_time FROM messages WHERE round_id IS NULL OR round_id = ''")
+	var/start_time = 0
+	var/end_time = vchat_current_realtime()
+
+	if(islist(rows) && rows.len)
+		var/list/row = rows[1]
+		if(islist(row))
+			start_time = row["start_time"]
+			if(istext(start_time))
+				start_time = text2num(start_time)
+			if(!isnum(start_time) || start_time <= 0)
+				start_time = 0
+
+			end_time = row["end_time"]
+			if(istext(end_time))
+				end_time = text2num(end_time)
+			if(!isnum(end_time) || end_time <= 0)
+				end_time = vchat_current_realtime()
+
+	vchat_exec_update(list("INSERT OR IGNORE INTO rounds (id, start_time, end_time) VALUES (?, ?, ?)", round_id, start_time, end_time))
+	return round_id
 
 // Backfill round rows when an older/broken database has round-aware messages but no round metadata
 /proc/vchat_repair_missing_round_records()
@@ -262,13 +296,18 @@ GLOBAL_VAR_INIT(vchat_current_round_id, null) //RS Add: Round ID (Lira, Septembe
 				previous_round = entry["id"]
 
 	if(previous_round)
+		vchat_assign_round_to_unassigned(previous_round)
+	else if(vchat_has_unassigned_messages())
+		previous_round = vchat_create_legacy_round()
+		vchat_assign_round_to_unassigned(previous_round)
+
+	if(previous_round)
 		vchat_mark_round_closed(previous_round)
 
 	var/new_round = vchat_generate_round_id()
 	vchat_exec_update(list("INSERT INTO rounds (id, start_time) VALUES (?, ?)", new_round, vchat_current_realtime()))
 	GLOB.vchat_current_round_id = new_round
 
-	vchat_assign_round_to_unassigned(new_round)
 	vchat_cleanup_old_rounds()
 
 // RS Add End
