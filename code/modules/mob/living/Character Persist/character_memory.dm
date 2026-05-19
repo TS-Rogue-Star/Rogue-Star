@@ -96,6 +96,8 @@ GLOBAL_DATUM_INIT(tgui_character_memory_state, /datum/tgui_state/character_memor
 		savable = FALSE
 		return
 	normalize_contacts()
+	if(needs_saving)
+		save(force = TRUE)
 
 /datum/character_memory/proc/save(delet = FALSE, force = FALSE)
 	if(!ourmob || !get_tracking_ckey(ourmob))
@@ -215,10 +217,46 @@ GLOBAL_DATUM_INIT(tgui_character_memory_state, /datum/tgui_state/character_memor
 		return FALSE
 	return execute_database_update(list("INSERT OR REPLACE INTO meta (name, value) VALUES (?, ?)", "owner", ourmob?.real_name || ""), "save character memory owner")
 
+/datum/character_memory/proc/normalize_loaded_contact_id(var/contact_id)
+	if(!contact_id)
+		return null
+	var/raw_contact_id = "[contact_id]"
+	var/pipe_position = findtext(raw_contact_id, "|")
+	if(!pipe_position)
+		return raw_contact_id
+	var/contact_ckey = copytext(raw_contact_id, 1, pipe_position)
+	if(copytext(contact_ckey, 1, 2) != "@")
+		return raw_contact_id
+	var/normalized_ckey = ckey(copytext(contact_ckey, 2))
+	if(!normalized_ckey)
+		return raw_contact_id
+	return "[normalized_ckey]|[copytext(raw_contact_id, pipe_position + 1)]"
+
+/datum/character_memory/proc/merge_loaded_contact_notes(var/current_notes, var/incoming_notes, var/source_contact_id)
+	if(isnull(current_notes))
+		current_notes = ""
+	if(isnull(incoming_notes))
+		incoming_notes = ""
+	current_notes = "[current_notes]"
+	incoming_notes = "[incoming_notes]"
+	if(!incoming_notes)
+		return current_notes
+	if(!current_notes || current_notes == incoming_notes)
+		return incoming_notes
+	var/merge_header = "Merged duplicate memory note from [source_contact_id]:"
+	if(findtext(current_notes, merge_header) && findtext(current_notes, incoming_notes))
+		return current_notes
+	var/merged_notes = "[current_notes]\n\n[merge_header]\n[incoming_notes]"
+	needs_saving = TRUE
+	return copytext(merged_notes, 1, CHARACTER_MEMORY_NOTE_LIMIT + 1)
+
 /datum/character_memory/proc/ensure_loaded_contact(var/contact_id, var/display_name, var/last_seen, var/notes)
 	if(!contact_id)
 		return null
-	contact_id = "[contact_id]"
+	var/raw_contact_id = "[contact_id]"
+	contact_id = normalize_loaded_contact_id(raw_contact_id)
+	if(contact_id != raw_contact_id)
+		needs_saving = TRUE
 	var/list/contact = contacts[contact_id]
 	if(!islist(contact))
 		contact = list(
@@ -230,13 +268,17 @@ GLOBAL_DATUM_INIT(tgui_character_memory_state, /datum/tgui_state/character_memor
 		)
 		contacts[contact_id] = contact
 	if(display_name)
-		contact["display_name"] = "[display_name]"
+		if(contact_id == raw_contact_id || !contact["display_name"] || contact["display_name"] == contact_id)
+			contact["display_name"] = "[display_name]"
 	else if(isnull(contact["display_name"]))
 		contact["display_name"] = contact_id
 	if(!isnull(last_seen))
-		contact["last_seen"] = "[last_seen]"
+		var/incoming_last_seen = "[last_seen]"
+		var/current_last_seen = contact["last_seen"]
+		if(!current_last_seen || sorttext("[current_last_seen]", incoming_last_seen) > 0)
+			contact["last_seen"] = incoming_last_seen
 	if(!isnull(notes))
-		contact["notes"] = "[notes]"
+		contact["notes"] = merge_loaded_contact_notes(contact["notes"], notes, raw_contact_id)
 	if(!islist(contact["days"]))
 		contact["days"] = list()
 	if(!islist(contact["totals"]))
@@ -421,8 +463,10 @@ GLOBAL_DATUM_INIT(tgui_character_memory_state, /datum/tgui_state/character_memor
 		return null
 	if(candidate_key && IsGuestKey(candidate_key))
 		return null
+	if(candidate_key && copytext("[candidate_key]", 1, 2) == "@")
+		return null
 	var/normalized_ckey = ckey(candidate_ckey)
-	if(!normalized_ckey || findtext(normalized_ckey, "guest") == 1)
+	if(!normalized_ckey || copytext(normalized_ckey, 1, 2) == "@" || findtext(normalized_ckey, "guest") == 1)
 		return null
 	return normalized_ckey
 
