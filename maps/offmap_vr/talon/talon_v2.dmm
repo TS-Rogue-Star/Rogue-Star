@@ -9907,7 +9907,9 @@
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering)
 "HJ" = (
-/obj/machinery/gear_painter,
+/obj/machinery/gear_painter{
+	pixel_y = 1
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/secure_storage)
 "HK" = (
