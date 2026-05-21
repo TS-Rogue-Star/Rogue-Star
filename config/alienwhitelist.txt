@@ -37,6 +37,8 @@ briargarden - Shadekin
 bricker98 - Protean
 bricker98 - Black-Eyed Shadekin
 bubblebunni - Black-Eyed Shadekin
+bubblebunni - Xenochimera
+bubblebunni - Teppi
 burritojustice - Protean
 calware - Protean
 camanis - Protean
@@ -113,6 +115,7 @@ inuzari - Diona
 iivoracious - Black-Eyed Shadekin
 irkallaepsilon - Protean
 ironicleo - Shadekin
+ironicleo - Xenochimera
 itsgigglez - Black-Eyed Shadekin
 itsgigglez - Promethean Biolinguistics
 itsgigglez - Shadekin
@@ -260,6 +263,7 @@ solazius - Diona
 solazius - Xenochimera
 solazius - Shadekin
 somekamidragon - Protean
+spectralriot - Shadekin
 spirit1299 - Black-Eyed Shadekin
 spotteh - Shadekin
 spring-skipper - Shadekin

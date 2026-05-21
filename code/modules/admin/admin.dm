@@ -259,6 +259,18 @@ var/global/floorIsLava = 0
 	var/datum/tgui_module/admin/client_etching_viewer/A = new(src)
 	A.tgui_interact(usr)
 
+// RS Add: Memory viewer support (Lira, May 2026)
+/datum/admins/proc/MemoryViewer()
+	set category = "Admin"
+	set name = "Memory Viewer"
+	if (!istype(src,/datum/admins))
+		src = usr.client.holder
+	if (!istype(src,/datum/admins))
+		to_chat(usr, "Error: you are not an admin!")
+		return
+	var/datum/tgui_module/admin/client_memory_viewer/A = new(src)
+	A.tgui_interact(usr)
+
 
 /datum/admins/proc/player_has_info(var/key as text)
 	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")

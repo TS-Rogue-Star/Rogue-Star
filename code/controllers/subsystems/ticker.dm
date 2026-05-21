@@ -459,6 +459,7 @@ var/global/datum/controller/subsystem/ticker/ticker
 
 
 /datum/controller/subsystem/ticker/proc/declare_completion()
+	record_character_memory_round_end_inside() // RS Add: Persistent memory system (Lira, May 2026)
 	to_world("<span class='filter_system'><br><br><br><H1>A round of [mode.name] has ended!</H1></span>")
 	for(var/mob/Player in player_list)
 		if(Player.mind && !isnewplayer(Player))

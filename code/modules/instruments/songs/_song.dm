@@ -129,6 +129,9 @@
 	/// The list of mobs that can hear us
 	var/list/hearing_mobs
 
+	// RS Add: Persistent memory system (Lira, May 2026)
+	var/list/character_memory_music_listeners = list()
+
 	// RS Add Start: Browser-based instrument audio (Lira, March 2026)
 	var/browser_timeline_json
 	var/browser_timeline_key
@@ -284,6 +287,54 @@
 		synth_fallback_listeners -= M
 		browser_preserved_note_listeners -= M
 	browser_hearcheck_update(old, exited)
+	record_character_memory_music_listeners(hearing_mobs) // RS Add: Persistent memory system (Lira, May 2026)
+
+// RS Add: Persistent memory system (Lira, May 2026)
+/datum/song/proc/character_memory_music_listener_can_hear(var/mob/M)
+	if(!M)
+		return FALSE
+	if(M.ear_deaf > 0)
+		return FALSE
+	if(M.stat != CONSCIOUS || M.sleeping > 0)
+		return FALSE
+	var/turf/source = get_turf(parent)
+	var/turf/target = get_turf(M)
+	if(!source || !target)
+		return FALSE
+	var/distance = get_dist(target, source)
+	var/pressure_factor = 1
+	var/datum/gas_mixture/hearer_env = target.return_air()
+	var/datum/gas_mixture/source_env = source.return_air()
+	if(hearer_env && source_env)
+		var/pressure = min(hearer_env.return_pressure(), source_env.return_pressure())
+		if(pressure < ONE_ATMOSPHERE)
+			pressure_factor = max((pressure - SOUND_MINIMUM_PRESSURE) / (ONE_ATMOSPHERE - SOUND_MINIMUM_PRESSURE), 0)
+	else
+		pressure_factor = 0
+	if(distance <= 1)
+		pressure_factor = max(pressure_factor, 0.15)
+	if(pressure_factor <= 0)
+		return FALSE
+	return TRUE
+
+// RS Add: Persistent memory system (Lira, May 2026)
+/datum/song/proc/record_character_memory_music_listeners(var/list/listeners)
+	if(!playing || !isliving(user_playing) || !islist(listeners) || !length(listeners))
+		return
+	var/mob/living/performer = user_playing
+	if(!performer.client && !performer.teleop)
+		return
+	var/list/valid_listeners = list()
+	for(var/mob/M as anything in listeners)
+		if(!M || (M in character_memory_music_listeners))
+			continue
+		if(!character_memory_music_listener_can_hear(M))
+			continue
+		valid_listeners += M
+	if(length(valid_listeners))
+		var/list/recorded_listeners = record_character_memory_recipients(performer, valid_listeners, "music", -1, TRUE)
+		for(var/mob/M as anything in recorded_listeners)
+			character_memory_music_listeners += M
 
 /**
  * Sets our instrument, caching anything necessary for faster accessing. Accepts an ID, typepath, or instantiated instrument datum.
@@ -409,6 +460,7 @@
 	terminate_all_sounds(TRUE)
 	stop_browser_audio(legacy)
 	browser_preserved_note_listeners.Cut()
+	character_memory_music_listeners.Cut() // RS Add: Persistent memory system (Lira, May 2026)
 	hearing_mobs.len = 0
 	user_playing = null
 	repeats_left = 0

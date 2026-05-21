@@ -127,6 +127,7 @@ Proc for attack log creation, because really why not
 	log_attack(user_str,target_str,what_done)
 	if(admin_notify)
 		msg_admin_attack("[key_name_admin(user)] vs [target_str]: [what_done]")
+	record_character_memory_attack_log(user, target, what_done) // RS Add: Persistent memory system (Lira, May 2026)
 
 //checks whether this item is a module of the robot it is located in.
 /proc/is_robot_module(var/obj/item/thing)

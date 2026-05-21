@@ -49,6 +49,7 @@
 		to_chat(src, "<span class='notice'>\The [grabber] scoops you up!</span>")
 
 	add_attack_logs(grabber, H.held_mob, "Scooped up", FALSE) // Not important enough to notify admins, but still helpful.
+	record_character_memory_pair(grabber, H.held_mob, "picked_up", "as_holder", "as_held") // RS Add: Persistent memory system (Lira, May 2026)
 	return H
 
 /mob/living/simple_mob/animal/passive/mouse/white/apple
@@ -68,4 +69,3 @@
 		if(isanimal(L))
 			var/mob/living/simple_mob/S = L
 			user.visible_message("<span class='notice'>[user] [S.response_help] \the [S].</span>")
-

@@ -321,7 +321,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			var/list/relayed_levels = list()
 			for(var/obj/machinery/telecomms/relay/R in H.links)
 				if(R.can_receive(signal))
-					relayed_levels |= R.listening_level
+					relayed_levels |= using_map.get_map_levels(R.listening_level) // RS Edit: Multi-Z Coms Fix (Lira, May 2026)
 			if(signal.data["level"] in relayed_levels)
 				return 1
 		return 0
