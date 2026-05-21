@@ -1,6 +1,6 @@
 // New Talon Uniforms
 /datum/gear/uniform/refreshedtalonbasic
-	display_name = "Talon Uniforms"
+	display_name = "Refreshed Talon Jumpsuit"
 	description = "Select from a range of outfits available to all Talon crews."
 	allowed_roles = list("Talon Captain","Talon Doctor","Talon Engineer","Talon Pilot","Talon Guard","Talon Miner")
 	path = /obj/item/clothing/under/rank/talon/basic/refreshed
@@ -10,13 +10,13 @@
 /datum/gear/uniform/refreshedtalonbasic/New()
 	..()
 	var/list/selector_uniforms = list(
-		"Refreshed Talon crew Uniform"=/obj/item/clothing/under/rank/talon/basic/refreshed,
-		"Old Talon crew Uniform"=/obj/item/clothing/under/rank/talon/basic,
+		"Refreshed Talon crew Uniform" = /obj/item/clothing/under/rank/talon/basic/refreshed,
+		"Old Talon crew Uniform"       = /obj/item/clothing/under/rank/talon/basic,
 	)
 	gear_tweaks += new/datum/gear_tweak/path(sortAssoc(selector_uniforms))
 
 /datum/gear/uniform/refreshedtaloncaptain
-	display_name = "Talon - Captain Uniforms"
+	display_name = "Refreshed Talon Command Uniform"
 	description = "Select from a range of outfits available to all Talon Captain."
 	allowed_roles = list("Talon Captain")
 	path = /obj/item/clothing/under/rank/talon/command/refreshed
@@ -26,13 +26,13 @@
 /datum/gear/uniform/refreshedtaloncaptain/New()
 	..()
 	var/list/selector_uniforms = list(
-		"Refreshed Talon Command Uniform"=/obj/item/clothing/under/rank/talon/command/refreshed,
-		"Old Talon Command Uniform"=/obj/item/clothing/under/rank/talon/command,
+		"Refreshed Talon Command Uniform" = /obj/item/clothing/under/rank/talon/command/refreshed,
+		"Old Talon Command Uniform"       = /obj/item/clothing/under/rank/talon/command,
 	)
 	gear_tweaks += new/datum/gear_tweak/path(sortAssoc(selector_uniforms))
 
 /datum/gear/uniform/refreshedtalonpilot
-	display_name = "Talon - Pilot Uniforms"
+	display_name = "Refreshed Talon Pilot Uniform"
 	description = "Select from a range of outfits available to all Talon Pilot."
 	allowed_roles = list("Talon Pilot")
 	path = /obj/item/clothing/under/rank/talon/pilot/refreshed
@@ -42,13 +42,13 @@
 /datum/gear/uniform/refreshedtalonpilot/New()
 	..()
 	var/list/selector_uniforms = list(
-		"Refreshed Talon Pilot Uniform"=/obj/item/clothing/under/rank/talon/pilot/refreshed,
-		"Old Talon Pilot Uniform"=/obj/item/clothing/under/rank/talon/pilot,
+		"Refreshed Talon Pilot Uniform" = /obj/item/clothing/under/rank/talon/pilot/refreshed,
+		"Old Talon Pilot Uniform"       = /obj/item/clothing/under/rank/talon/pilot,
 	)
 	gear_tweaks += new/datum/gear_tweak/path(sortAssoc(selector_uniforms))
 
 /datum/gear/uniform/refreshedtalonsecurity
-	display_name = "Talon - Guard Uniforms"
+	display_name = "Refreshed Talon Security Jumpsuit"
 	description = "Select from a range of outfits available to all Talon Guard."
 	allowed_roles = list("Talon Guard")
 	path = /obj/item/clothing/under/rank/talon/security/refreshed
@@ -58,13 +58,13 @@
 /datum/gear/uniform/refreshedtalonsecurity/New()
 	..()
 	var/list/selector_uniforms = list(
-		"Refreshed Talon Guard Uniform"=/obj/item/clothing/under/rank/talon/security/refreshed,
-		"Old Talon Security Uniform"=/obj/item/clothing/under/rank/talon/security,
+		"Refreshed Talon Guard Uniform" = /obj/item/clothing/under/rank/talon/security/refreshed,
+		"Old Talon Security Uniform"    = /obj/item/clothing/under/rank/talon/security,
 	)
 	gear_tweaks += new/datum/gear_tweak/path(sortAssoc(selector_uniforms))
 
 /datum/gear/uniform/refreshedtalonmedical
-	display_name = "Talon - Doctor Uniforms"
+	display_name = "Refreshed Talon Medical Jumpsuit"
 	description = "Select from a range of outfits available to all Talon Doctor's."
 	allowed_roles = list("Talon Doctor")
 	path = /obj/item/clothing/under/rank/talon/proper/refreshed
@@ -74,8 +74,8 @@
 /datum/gear/uniform/refreshedtalonmedical/New()
 	..()
 	var/list/selector_uniforms = list(
-		"Refreshed Talon Doctor Uniform"=/obj/item/clothing/under/rank/talon/proper/refreshed,
-		"Old Talon Doctor Uniform"=/obj/item/clothing/under/rank/talon/proper,
+		"Refreshed Talon Doctor Uniform" = /obj/item/clothing/under/rank/talon/proper/refreshed,
+		"Old Talon Doctor Uniform"       = /obj/item/clothing/under/rank/talon/proper,
 	)
 	gear_tweaks += new/datum/gear_tweak/path(sortAssoc(selector_uniforms))
 

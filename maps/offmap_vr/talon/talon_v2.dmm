@@ -7104,6 +7104,15 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/machinery/power/apc/talon{
+	name = "north bump";
+	nightshift_setting = 3;
+	pixel_x = -28;
+	dir = 8
+	},
+/obj/structure/cable/green{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/secure_storage)
 "xQ" = (
@@ -9898,15 +9907,7 @@
 /turf/simulated/floor/plating,
 /area/talon_v2/engineering)
 "HJ" = (
-/obj/structure/cable/green{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/talon{
-	dir = 1;
-	name = "north bump";
-	pixel_y = 28;
-	nightshift_setting = 3
-	},
+/obj/machinery/gear_painter,
 /turf/simulated/floor/tiled/techfloor,
 /area/talon_v2/secure_storage)
 "HK" = (
@@ -13564,7 +13565,7 @@
 	dir = 6
 	},
 /obj/structure/cable/green{
-	icon_state = "1-2"
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/talon_v2/secure_storage)
