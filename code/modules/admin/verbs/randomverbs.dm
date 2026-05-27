@@ -113,8 +113,51 @@
 			to_chat(src, "Syndicate messages can only be sent to humans.")
 			return
 
+	if(msg == "Talon HQ")
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(!istype(H.l_ear, /obj/item/device/radio/headset) && !istype(H.r_ear, /obj/item/device/radio/headset))
+				to_chat(src, "The person you are trying to contact is not wearing a headset.")
+				return
+		else
+			to_chat(src, "Talon HQ messages can only be sent to humans.")
+			return
+
+	if(msg == "SolGov")
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(!istype(H.l_ear, /obj/item/device/radio/headset) && !istype(H.r_ear, /obj/item/device/radio/headset))
+				to_chat(src, "The person you are trying to contact is not wearing a headset.")
+				return
+		else
+			to_chat(src, "Talon HQ messages can only be sent to humans.")
+			return
+
+	var/custom_color = "green"
+	var/custom_sender = ""
+	if(msg == "Custom")
+		var/col_choice = tgui_alert(src, "Выберите цвет имени:", "Цвет", list("Green", "Blue", "Honk", "Grey"))
+		if(!col_choice)
+			return
+		switch(col_choice)
+			if("Green") custom_color = "green"
+			if("Blue") custom_color = "#3366ff" // a nice readable blue
+			if("HONK") custom_color = "#ff1493" // deep pink, readable
+			if("Gray") custom_color = "gray"
+
 	if (!msg)
 		return
+
+	if(usr?.client?.holder)
+		switch(source)
+			if("Голос в голове")
+				to_chat(M, "<b>Вы слышите голос в своей голове... <i>[msg]</i></b>")
+			if("ЦК")
+				to_chat(M, "Вы слышите треск в гарнитуре, после чего раздаётся голос: \"На связи <b><font color='blue'>Центральное Командование</font></b>. Прослушайте внимательно следующую информацию: <b>\"[msg]\"</b> Конец связи.\"")
+			if("Синдикат")
+				to_chat(M, "Вы слышите треск в гарнитуре, после чего раздаётся голос: \"Ожидайте сообщение от <b><font color='red'><i>Синдиката</i></font></b>. Слушайте внимательно, агент: <b>\"[msg]\"</b> Конец связи.\"")
+			if("Свой")
+				to_chat(M, "Вы слышите треск в гарнитуре, после чего раздаётся голос: \"Ожидайте сообщение от <b><font color='[custom_color]'>[custom_sender]</font></b>. Сообщение: <b>\"[msg]\"</b> Конец связи.\"")
 
 	if(!(msg[1] == "<" && msg[length(msg)] == ">")) //You can use HTML but only if the whole thing is HTML. Tries to prevent admin 'accidents'.
 		msg = sanitize(msg)
