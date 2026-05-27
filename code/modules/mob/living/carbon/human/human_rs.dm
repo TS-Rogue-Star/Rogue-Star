@@ -49,3 +49,6 @@
 		vore_tail_animation()
 	else
 		return
+
+/mob/living/carbon/human/CanObtainCentcommMessage()
+	return istype(l_ear, /obj/item/device/radio/headset) || istype(r_ear, /obj/item/device/radio/headset)

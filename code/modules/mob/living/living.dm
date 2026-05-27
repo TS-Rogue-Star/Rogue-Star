@@ -1296,7 +1296,7 @@
 /mob/living/proc/disable_spoiler_vision()
 	handle_vision()
 
-/mob/living/proc/CanObtainCentcommMessage()
+/mob/living/proc/CanObtainCentcommMessage() //RS Add
 	return FALSE
 
 /**
