@@ -88,16 +88,36 @@
 
 	var/msg = tgui_input_text(usr, "Message:", text("Subtle PM to [M.key]"))
 
+
+	var/source = tgui_alert(src, "Выберите источник сообщения:", "Subtle Message для [M.key]", list("Голос в голове", "ЦК", "Синдикат", "Свой"))
+	if(!source)
+		return
+
+	if(msg == "CentCom")
+		if(isliving(M))
+			var/mob/living/L = M
+			if(!L.CanObtainCentcommMessage())
+				to_chat(src, "The person you are trying to contact is not wearing a headset.")
+				return
+		else
+			to_chat(src, "CentCom messages can only be sent to living mobs.")
+			return
+
+	if(msg == "Syndicate")
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(!istype(H.l_ear, /obj/item/device/radio/headset) && !istype(H.r_ear, /obj/item/device/radio/headset))
+				to_chat(src, "The person you are trying to contact is not wearing a headset.")
+				return
+		else
+			to_chat(src, "Syndicate messages can only be sent to humans.")
+			return
+
 	if (!msg)
 		return
 
 	if(!(msg[1] == "<" && msg[length(msg)] == ">")) //You can use HTML but only if the whole thing is HTML. Tries to prevent admin 'accidents'.
 		msg = sanitize(msg)
-
-	if(usr)
-		if (usr.client)
-			if(usr.client.holder)
-				to_chat(M, "<B>You hear a voice in your head...</B> <i>[msg]</i>")
 
 	log_admin("SubtlePM: [key_name(usr)] -> [key_name(M)] : [msg]")
 	msg = "<span class='adminnotice'><b> SubtleMessage: [key_name_admin(usr)] -> [key_name_admin(M)] :</b> [msg]</span>"

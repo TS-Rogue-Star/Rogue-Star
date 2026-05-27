@@ -1296,6 +1296,9 @@
 /mob/living/proc/disable_spoiler_vision()
 	handle_vision()
 
+/mob/living/proc/CanObtainCentcommMessage()
+	return FALSE
+
 /**
  * Small helper component to manage the character setup HUD icon
  */
