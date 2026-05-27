@@ -89,11 +89,11 @@
 	var/msg = tgui_input_text(usr, "Message:", text("Subtle PM to [M.key]"))
 
 
-	var/source = tgui_alert(src, "Выберите источник сообщения:", "Subtle Message для [M.key]", list("Голос в голове", "ЦК", "Синдикат", "Свой"))
+	var/source = tgui_alert(src, "Select the message source:", "Subtle Message for [M.key]", list("Subtle Message", "CentCom", "Syndicate", "Talon HQ", "SolGov", "Custom"))
 	if(!source)
 		return
 
-	if(msg == "CentCom")
+	if(source == "CentCom")
 		if(isliving(M))
 			var/mob/living/L = M
 			if(!L.CanObtainCentcommMessage())
@@ -103,7 +103,7 @@
 			to_chat(src, "CentCom messages can only be sent to living mobs.")
 			return
 
-	if(msg == "Syndicate")
+	if(source == "Syndicate")
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(!istype(H.l_ear, /obj/item/device/radio/headset) && !istype(H.r_ear, /obj/item/device/radio/headset))
@@ -113,7 +113,7 @@
 			to_chat(src, "Syndicate messages can only be sent to humans.")
 			return
 
-	if(msg == "Talon HQ")
+	if(source == "Talon HQ")
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(!istype(H.l_ear, /obj/item/device/radio/headset) && !istype(H.r_ear, /obj/item/device/radio/headset))
@@ -123,7 +123,7 @@
 			to_chat(src, "Talon HQ messages can only be sent to humans.")
 			return
 
-	if(msg == "SolGov")
+	if(source == "SolGov")
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(!istype(H.l_ear, /obj/item/device/radio/headset) && !istype(H.r_ear, /obj/item/device/radio/headset))
@@ -135,8 +135,8 @@
 
 	var/custom_color = "green"
 	var/custom_sender = ""
-	if(msg == "Custom")
-		var/col_choice = tgui_alert(src, "Выберите цвет имени:", "Цвет", list("Green", "Blue", "Honk", "Grey"))
+	if(source == "Custom")
+		var/col_choice = tgui_alert(src, "Choose a name color:", "Color", list("Green", "Blue", "Honk", "Grey"))
 		if(!col_choice)
 			return
 		switch(col_choice)
@@ -150,20 +150,24 @@
 
 	if(usr?.client?.holder)
 		switch(source)
-			if("Голос в голове")
-				to_chat(M, "<b>Вы слышите голос в своей голове... <i>[msg]</i></b>")
-			if("ЦК")
-				to_chat(M, "Вы слышите треск в гарнитуре, после чего раздаётся голос: \"На связи <b><font color='blue'>Центральное Командование</font></b>. Прослушайте внимательно следующую информацию: <b>\"[msg]\"</b> Конец связи.\"")
-			if("Синдикат")
-				to_chat(M, "Вы слышите треск в гарнитуре, после чего раздаётся голос: \"Ожидайте сообщение от <b><font color='red'><i>Синдиката</i></font></b>. Слушайте внимательно, агент: <b>\"[msg]\"</b> Конец связи.\"")
-			if("Свой")
-				to_chat(M, "Вы слышите треск в гарнитуре, после чего раздаётся голос: \"Ожидайте сообщение от <b><font color='[custom_color]'>[custom_sender]</font></b>. Сообщение: <b>\"[msg]\"</b> Конец связи.\"")
+			if("Subtle Message")
+				to_chat(M, "<b>You hear a voice in your head... <i>[msg]</i></b>")
+			if("CentCom")
+				to_chat(M, "You hear a crackle in your headset, followed by a voice: \"The <b><font color='blue'>Central Command</font></b> is on touch. Stand by for important message: <b>\"[msg]\"</b> End of transmission.\"")
+			if("Syndicate")
+				to_chat(M, "You hear a crackle in your headset, followed by a voice: \"Expect a message from <b><font color='red'><i>Syndicate</i></font></b>. Listen carefully, Agent: <b>\"[msg]\"</b> End of transmission.\"")
+			if("Talon HQ")
+				to_chat(M, "You hear a crackle in your headset, followed by a voice: \"The <b><font color='orange'>Talon Headquarter</font></b> is on touch. Stand by for important message: <b>\"[msg]\"</b> End of transmission.\"")
+			if("SolGov")
+				to_chat(M, "You hear a crackle in your headset, followed by a voice: \"The <b><font color='gold'>Solar Government</font></b> is on touch. Stand by for important message: <b>\"[msg]\"</b> End of transmission.\"")
+			if("Custom")
+				to_chat(M, "You hear a crackle in your headset, followed by a voice: \"Expect a message from <b><font color='[custom_color]'>[custom_sender]</font></b>. Message: <b>\"[msg]\"</b> End of transmission.\"")
 
 	if(!(msg[1] == "<" && msg[length(msg)] == ">")) //You can use HTML but only if the whole thing is HTML. Tries to prevent admin 'accidents'.
 		msg = sanitize(msg)
 
-	log_admin("SubtlePM: [key_name(usr)] -> [key_name(M)] : [msg]")
-	msg = "<span class='adminnotice'><b> SubtleMessage: [key_name_admin(usr)] -> [key_name_admin(M)] :</b> [msg]</span>"
+	log_admin("SubtlePM([source]): [key_name(usr)] -> [key_name(M)] : [msg]")
+	msg = "<span class='adminnotice'><b> SubtleMessage([source]): [key_name_admin(usr)] -> [key_name_admin(M)] :</b> [msg]</span>"
 	message_admins(msg)
 	admin_ticket_log(M, msg)
 	feedback_add_details("admin_verb","SMS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
