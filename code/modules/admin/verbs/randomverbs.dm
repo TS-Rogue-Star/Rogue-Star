@@ -85,8 +85,8 @@
 	if(!ismob(M))	return
 	if (!holder)
 		return
-
-	var/source = tgui_alert(src, "Select the message source:", "Subtle Message for [M.key]", list("Subtle Message", "CentCom", "Syndicate", "Talon HQ", "SolGov", "Custom"), 500, 250)
+	// RS Add
+	var/source = tgui_input_list(src, "Select the message source:", "Subtle Message for [M.key]", list("Subtle Message", "CentCom", "Syndicate", "Talon HQ", "SolGov", "Custom"))
 	if(!source)
 		return
 
@@ -147,10 +147,10 @@
 			return
 
 	var/msg = tgui_input_text(usr, "Message:", text("Subtle PM to [M.key]"))
-
+	//RS add end
 	if (!msg)
 		return
-
+	//RS add
 	if(usr?.client?.holder)
 		switch(source)
 			if("Subtle Message")
@@ -165,12 +165,12 @@
 				to_chat(M, "You hear a crackle in your headset, followed by a voice: \"The <b><font color='gold'>Solar Government</font></b> is on touch. Stand by for important message: <b>\"[msg]\"</b> End of transmission.\"")
 			if("Custom")
 				to_chat(M, "You hear a crackle in your headset, followed by a voice: \"Expect a message from <b><font color='[custom_color]'>[custom_sender]</font></b>. Message: <b>\"[msg]\"</b> End of transmission.\"")
-
+	//RS add end
 	if(!(msg[1] == "<" && msg[length(msg)] == ">")) //You can use HTML but only if the whole thing is HTML. Tries to prevent admin 'accidents'.
 		msg = sanitize(msg)
-
+	//RS Edit
 	log_admin("SubtlePM([source]): [key_name(usr)] -> [key_name(M)] : [msg]")
-	msg = "<span class='adminnotice'><b> SubtleMessage([source]): [key_name_admin(usr)] -> [key_name_admin(M)] :</b> [msg]</span>"
+	msg = "<span class='adminnotice'><b> SubtleMessage([source]): [key_name_admin(usr)] -> [key_name_admin(M)] :</b> [msg]</span>"//RS Edit End
 	message_admins(msg)
 	admin_ticket_log(M, msg)
 	feedback_add_details("admin_verb","SMS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -1134,7 +1134,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	log_and_message_admins("[key_name(src)] admin cryo'd [key_name(M)].")
 	feedback_add_details("admin_verb","ACRYO") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-	if(isliving(M))
+	if(ishuman(M))
 		var/choice = tgui_input_list(usr,"Select a cryopod to use","Cryopod Choice", human_cryopods)
 		var/obj/machinery/cryopod/CP = human_cryopods[choice]
 		if(!CP)
