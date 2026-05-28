@@ -86,7 +86,7 @@
 	if (!holder)
 		return
 
-	var/source = tgui_alert(src, "Select the message source:", "Subtle Message for [M.key]", list("Subtle Message", "CentCom", "Syndicate", "Talon HQ", "SolGov", "Custom"), width = 500, height = 250)
+	var/source = tgui_alert(src, "Select the message source:", "Subtle Message for [M.key]", list("Subtle Message", "CentCom", "Syndicate", "Talon HQ", "SolGov", "Custom"), 500, 250)
 	if(!source)
 		return
 
