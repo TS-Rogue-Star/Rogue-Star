@@ -618,3 +618,9 @@ sound/instruments/synthesis_samples/woodwind/fluid_tenor_sax,<br>
 **Link**:https://github.com/TS-Rogue-Star/Rogue-Star/pull/1327<br>
 **License**: MIT (licence included in folders with corresponding assets)<br>
 <br>
+<br>
+**File**: code/game/Rogue Star/icons/clothing/storage/RigAcc.dmi<br>
+**Creator**: crossexonar/sari, Toriate <br>
+**Link**: https://github.com/TS-Rogue-Star/Rogue-Star/pull/1354<br>
+**License**: CC BY-SA 3.0<br>
+<br>

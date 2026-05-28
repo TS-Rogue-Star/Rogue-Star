@@ -19,6 +19,9 @@
 	return ..()
 
 /obj/structure/closet/secure_closet/emp_act(severity)
+	if(islocked())	//RS ADD
+		return		//RS ADD
+
 	for(var/obj/O in src)
 		O.emp_act(severity)
 	if(!broken)
@@ -43,6 +46,9 @@
 	if(user.loc == src)
 		to_chat(user, "<span class='notice'>You can't reach the lock from inside.</span>")
 		return
+	if(islocked())	//RS ADD START
+		to_chat(user,SPAN_WARNING("It appears to have a lock on it, which is of course, locked. It can't be opened without using whatever opens it first."))
+		return	//RS ADD END
 	if(allowed(user))
 		locked = !locked
 		playsound(src, 'sound/machines/click.ogg', 15, 1, -3)
@@ -54,6 +60,9 @@
 		to_chat(user, "<span class='notice'>Access Denied</span>")
 
 /obj/structure/closet/secure_closet/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(getlock())	//RS ADD START
+		if(W.getkey())
+			return	//RS ADD END
 	if(W.is_wrench())
 		if(opened)
 			if(anchored)
@@ -84,6 +93,8 @@
 		if(W)
 			W.forceMove(loc)
 	else if(istype(W, /obj/item/weapon/melee/energy/blade))
+		if(islocked())	//RS ADD
+			return		//RS ADD
 		if(emag_act(INFINITY, user, "<span class='danger'>The locker has been sliced open by [user] with \an [W]</span>!", "<span class='danger'>You hear metal being sliced and sparks flying.</span>"))
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, loc)
@@ -96,6 +107,8 @@
 		togglelock(user)
 
 /obj/structure/closet/secure_closet/emag_act(var/remaining_charges, var/mob/user, var/emag_source, var/visual_feedback = "", var/audible_feedback = "")
+	if(islocked())	//RS ADD
+		return		//RS ADD
 	if(!broken)
 		broken = 1
 		locked = 0
@@ -156,3 +169,27 @@
 	broken = 1
 	locked = 0
 	..()
+
+//RS ADD START
+/obj/structure/closet/secure_closet/dungeon_trigger(mob/user)
+	var/datum/component/dungeon_mechanic/lock/ourlock = getlock()
+	if(ourlock)
+		if(ourlock.locked)
+			dungeon_unlock(user)
+		else if(!ourlock.onetime)
+			dungeon_lock(user)
+	else
+		if(locked)
+			dungeon_unlock(user)
+		else
+			dungeon_lock(user)
+
+/obj/structure/closet/secure_closet/dungeon_lock(mob/user)
+	. = ..()
+	locked = TRUE
+	update_icon()
+
+/obj/structure/closet/secure_closet/dungeon_unlock(mob/user)
+	. = ..()
+	locked = FALSE
+	update_icon()

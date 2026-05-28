@@ -1,20 +1,18 @@
-/datum/reagent/toxin/meatcolony
+/datum/reagent/dry/meatcolony	//RS EDIT
 	name = "A colony of meat cells"
 	id = "meatcolony"
-	description = "Specialised cells designed to produce a large amount of meat once activated, whilst manufacturers have managed to stop these cells from taking over the body when ingested, it's still poisonous."
+	description = "Specialised cells designed to produce a large amount of meat once activated, whilst manufacturers have managed to stop these cells from taking over the body when ingested, they will still pull any water they come into contact with, and will cause dehydration."	//RS EDIT
 	taste_description = "a fibrous mess"
 	reagent_state = LIQUID
 	color = "#ff2424"
-	strength = 10
 
-/datum/reagent/toxin/plantcolony
+/datum/reagent/dry/plantcolony	//RS EDIT
 	name = "A colony of plant cells"
 	id = "plantcolony"
-	description = "Specialised cells designed to produce a large amount of nutriment once activated, whilst manufacturers have managed to stop these cells from taking over the body when ingested, it's still poisonous."
+	description = "Specialised cells designed to produce a large amount of nutriment once activated, whilst manufacturers have managed to stop these cells from taking over the body when ingested, they will still pull any water they come into contact with, and will cause dehydration."	//RS EDIT
 	taste_description = "a fibrous mess"
 	reagent_state = LIQUID
 	color = "#7ce01f"
-	strength = 10
 
 /datum/reagent/nutriment/grubshake
 	name = "Grub shake"

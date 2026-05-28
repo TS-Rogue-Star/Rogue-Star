@@ -12,13 +12,15 @@
 	var/portal_enabled = FALSE
 	var/static/list/event_portal_list = list()
 	var/notify_ckey_once // Send a message to this person on next use
-	var/open = TRUE // If it's currently usable
 	var/close_after_uses // Will autoclose after this many uses
 
 /obj/structure/portal_event/Initialize()
 	. = ..()
 	event_portal_list += src
+	seek_link()	//RS ADD
 
+//RS EDIT START - Generalized the logic so I can use it elsewhere too
+/obj/structure/portal_event/proc/seek_link()
 	if(portal_id && !target)
 		for(var/obj/structure/portal_event/P in event_portal_list)
 			if(P == src)
@@ -27,6 +29,7 @@
 				target = P
 				target.target = src
 				toggle_portal()			//RS ADD END
+//RS EDIT END
 
 /obj/structure/portal_event/Destroy()
 	event_portal_list -= src			//RS EDIT
@@ -49,23 +52,10 @@
 		return
 	return
 
-/obj/structure/portal_event/Crossed(AM as mob|obj)
-	if(istype(AM,/mob) && !(istype(AM,/mob/living)))
-		return	//do not send ghosts, zshadows, ai eyes, etc
-	spawn(0)
-		src.teleport(AM)
-		return
-	return
-
 /obj/structure/portal_event/attack_hand(mob/user as mob)
 	if(!istype(user))
 		return
-	if(!target)
-		if(isliving(user))
-			to_chat(user, "<span class='notice'>Your hand scatters \the [src]...</span>")
-			qdel(src)	//Delete portals which aren't set that people mess with.
-		else return		//do not send ghosts, zshadows, ai eyes, etc
-	else if(isliving(user) || istype(user, /mob/observer/dead) && user?.client?.holder)	//unless they're staff
+	if(isliving(user) || istype(user, /mob/observer/dead) && user?.client?.holder)	//unless they're staff	//RS EDIT
 		spawn(0)
 		src.teleport(user)
 
@@ -137,14 +127,16 @@
 	if(target && istype(target, /obj/structure/portal_event) && tgui_alert(user, "Would you like portal's target portal to match this style?", "Both?", list("Yes", "No")) == "Yes")	//RS EDIT
 		target.icon_state = portal_icon_selection	//RS EDIT
 
-/obj/structure/portal_event/proc/teleport(atom/movable/M as mob|obj)
-	if(!portal_enabled && isliving(M))	//RS EDIT
-		to_chat(M, "<span class='notice'>\The [src] wavers as you pass through it... it seems to not accept you through... for now...</span>")	//RS EDIT
-		return	//RS EDIT
-	if(isAI(M) || istype(M,/mob/observer/eye))	//RS EDIT
-		return	//RS EDIT
+/obj/structure/portal_event/proc/teleport(atom/movable/M as mob|obj)	//RS EDIT START
+	if(isAI(M) || istype(M,/mob/observer/eye))
+		return
+
+	if(!portal_enabled && !isobserver(M))
+		if(isliving(M))
+			to_chat(M, "<span class='notice'>\The [src] wavers as you pass through it... it seems to not accept you through... for now...</span>")
+		return
 	// RS Add: Shells can't leave the station (Lira, October 2025)
-	if(ismob(M) && isrobot(M))
+	if(isrobot(M))
 		var/mob/living/silicon/robot/R = M
 		if(R.shell)
 			var/turf/source_turf = get_turf(src)
@@ -154,20 +146,21 @@
 			if(!source_turf || !target_turf || !isStationLevel(source_turf.z) || !isStationLevel(target_turf.z))
 				to_chat(R, "<span class='warning'>The [src] flares and refuses the remote shell.</span>")
 				return
-	if(istype(M, /obj/effect)) //sparks don't teleport
-		return
-	if (M.anchored&&istype(M, /obj/mecha))
-		return
-	if (!target)
-		to_chat(M, "<span class='notice'>\The [src] scatters as you pass through it...</span>")
-		qdel(src)
-		return
-	if (!istype(M, /atom/movable))
-		return
-	if (!open) //RS EDIT START
+
+	var/atom/where
+	if(target)
+		where = target
+	else
+		var/datum/component/dungeon_mechanic/pair/P = pick(get_dungeon_pair())
+		if(P)
+			where = P.parent
+			if(!isatom(where))
+				where = null
+	if (!where)
 		to_chat(M, "<span class='notice'>\The [src] seems inert for now...</span>")
 		return
-	var/turf/ourturf = find_opposite_side_or_randomize(M,src,target)	//RS EDIT START
+
+	var/turf/ourturf = find_opposite_side_or_randomize(M,src,where)
 	if(ourturf.check_density(TRUE,TRUE))	//Make sure there isn't a wall there
 		return
 	M.unbuckle_all_mobs(TRUE)
@@ -190,11 +183,11 @@
 	return temptarg
 
 /obj/structure/portal_event/proc/close()
-	open = FALSE
+	portal_enabled = FALSE	//RS EDIT
 	alpha = 100
 
 /obj/structure/portal_event/proc/open()
-	open = TRUE
+	portal_enabled = TRUE	//RS EDIT
 	alpha = initial(alpha)
 
 /obj/structure/portal_event/proc/post_crossed(atom/movable/M)
@@ -339,4 +332,24 @@
 		else
 			return
 
-//RS ADD END
+//RS ADD
+/obj/structure/portal_event/dungeon_trigger(mob/user)
+	if(portal_enabled)
+		dungeon_lock(user)
+	else
+		dungeon_unlock(user)
+/obj/structure/portal_event/dungeon_lock(mob/user)
+	portal_enabled = FALSE
+	density = FALSE
+
+/obj/structure/portal_event/dungeon_unlock(mob/user)
+	portal_enabled = TRUE
+	density = TRUE
+	visible_message(SPAN_NOTICE("\The [src] opens!!!"),runemessage = "! ! !")
+
+/obj/structure/portal_event/dungeon_pair()
+	. = ..()
+	if(!.)
+		dungeon_lock()
+	else
+		dungeon_unlock()

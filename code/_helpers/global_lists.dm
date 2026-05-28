@@ -63,7 +63,7 @@ GLOBAL_LIST_INIT(custom_species_bases, new) // Species that can be used for a Cu
 var/datum/category_collection/underwear/global_underwear = new()
 
 	//Backpacks
-var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel", "Satchel Alt", "Messenger Bag", "Sports Bag", "Strapless Satchel") //VOREStation edit
+var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel", "Satchel Alt", "Messenger Bag", "Sports Bag", "Strapless Satchel", "R.I.G. module") //VOREStation edit //RS Add, Rig bag Sari Bork 5/20/2026
 var/global/list/pdachoicelist = list("Default", "Slim", "Old", "Rugged", "Holographic", "Wrist-Bound", "Slider")
 var/global/list/exclude_jobs = list(/datum/job/ai,/datum/job/cyborg)
 

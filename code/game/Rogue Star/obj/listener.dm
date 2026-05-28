@@ -70,14 +70,17 @@
 				var/atom/ourpass = pw
 				pw = ourpass.name
 			if(findtext(P.message, pw))
-				trigger()
+				if(cantrigger(M))
+					trigger(M)
 
-/obj/listener/proc/trigger()
-	action()
-/obj/listener/proc/untrigger()
-	action(FALSE)
+/obj/listener/proc/trigger(var/mob/user)
+	SEND_SIGNAL(src,COMSIG_DUNGEON_TRIGGER,user)
+
+/obj/listener/proc/untrigger(var/mob/user)
+	SEND_SIGNAL(src,COMSIG_DUNGEON_UNTRIGGER,user)
 
 /obj/listener/proc/action(var/trigger = TRUE)
+/*
 	var/multipoint_triggered = FALSE
 	for(var/obj/thing as obj in view(world.view,get_turf(src)))
 		if(istype(thing,/obj/machinery/door/blast))
@@ -102,8 +105,9 @@
 					D.close()
 					D.lock()
 			continue
-		if(istype(thing,/obj/event_obstical))
-			var/obj/event_obstical/O = thing
+
+		if(istype(thing,/obj/dungeon_obstacle))
+			var/obj/dungeon_obstacle/O = thing
 			if(listener_id == O.id)
 				if(trigger)
 					if(O.density)
@@ -112,6 +116,7 @@
 					if(!O.density)
 						O.post_trigger()
 			continue
+
 		if(istype(thing,/obj/structure/simple_door))
 			var/obj/structure/simple_door/D = thing
 			if(listener_id == D.lock_id)
@@ -133,6 +138,7 @@
 					else
 						T.untrigger()
 				continue
+*/
 /obj/listener/wall
 	icon_state = "listener"
 	density = FALSE

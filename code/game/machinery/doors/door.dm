@@ -168,6 +168,8 @@
 	return
 
 /obj/machinery/door/bullet_act(var/obj/item/projectile/Proj)
+	if(islocked())	//RS ADD
+		return		//RS ADD
 	..()
 
 	var/damage = Proj.get_structure_damage()
@@ -216,7 +218,14 @@
 	..()
 
 /obj/machinery/door/attackby(obj/item/I as obj, mob/user as mob)
+	if(SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY, I, user) & COMPONENT_CANCEL_ATTACK_CHAIN)	//RS ADD
+		return TRUE	//RS ADD
+
 	src.add_fingerprint(user)
+
+	if(islocked())	//RS ADD START
+		if(I.getkey())
+			return		//RS ADD END
 
 	if(istype(I))
 		if(attackby_vr(I, user))	//VOREStation begin: Fireproofing
@@ -310,6 +319,8 @@
 	return
 
 /obj/machinery/door/emag_act(var/remaining_charges)
+	if(islocked())	//RS ADD
+		return		//RS ADD
 	if(density && operable())
 		do_animate("spark")
 		sleep(6)
@@ -318,6 +329,8 @@
 		return 1
 
 /obj/machinery/door/take_damage(var/damage)
+	if(islocked())	//RS ADD
+		return		//RS ADD
 	var/initialhealth = src.health
 	src.health = max(0, src.health - damage)
 	if(src.health <= 0 && initialhealth > 0)
@@ -354,6 +367,8 @@
 
 
 /obj/machinery/door/emp_act(severity)
+	if(islocked())	//RS ADD
+		return		//RS ADD
 	if(prob(20/severity) && (istype(src,/obj/machinery/door/airlock) || istype(src,/obj/machinery/door/window)) )
 		spawn(0)
 			open()
@@ -361,6 +376,8 @@
 
 
 /obj/machinery/door/ex_act(severity)
+	if(islocked())	//RS ADD
+		return		//RS ADD
 	switch(severity)
 		if(1.0)
 			qdel(src)
@@ -387,6 +404,7 @@
 			take_damage(100)
 
 /obj/machinery/door/update_icon()
+	SEND_SIGNAL(src,COMSIG_ATOM_UPDATE_ICON)	//RS ADD
 	if(density)
 		icon_state = "door1"
 	else

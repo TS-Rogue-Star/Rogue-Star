@@ -48,6 +48,9 @@
 		build_click(src, client.buildmode, params, A)
 		return
 
+	if(client?.dungeon_maker)	//RS ADD
+		dungeon_maker_click(src,client.dungeon_maker, params, A)	//RS ADD
+
 	if(is_incorporeal())	//RS ADD START - don't shoot at or attack people while you are intangible
 		face_atom(A)
 		return				//RS ADD END
