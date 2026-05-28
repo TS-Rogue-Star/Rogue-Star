@@ -86,10 +86,7 @@
 	if (!holder)
 		return
 
-	var/msg = tgui_input_text(usr, "Message:", text("Subtle PM to [M.key]"))
-
-
-	var/source = tgui_alert(src, "Select the message source:", "Subtle Message for [M.key]", list("Subtle Message", "CentCom", "Syndicate", "Talon HQ", "SolGov", "Custom"))
+	var/source = tgui_alert(src, "Select the message source:", "Subtle Message for [M.key]", list("Subtle Message", "CentCom", "Syndicate", "Talon HQ", "SolGov", "Custom"), width = 500, height = 250)
 	if(!source)
 		return
 
@@ -104,33 +101,33 @@
 			return
 
 	if(source == "Syndicate")
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(!istype(H.l_ear, /obj/item/device/radio/headset) && !istype(H.r_ear, /obj/item/device/radio/headset))
+		if(isliving(M))
+			var/mob/living/L = M
+			if(!L.CanObtainCentcommMessage())
 				to_chat(src, "The person you are trying to contact is not wearing a headset.")
 				return
 		else
-			to_chat(src, "Syndicate messages can only be sent to humans.")
+			to_chat(src, "Syndicate messages can only be sent to living mobs.")
 			return
 
 	if(source == "Talon HQ")
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(!istype(H.l_ear, /obj/item/device/radio/headset) && !istype(H.r_ear, /obj/item/device/radio/headset))
+		if(isliving(M))
+			var/mob/living/L = M
+			if(!L.CanObtainCentcommMessage())
 				to_chat(src, "The person you are trying to contact is not wearing a headset.")
 				return
 		else
-			to_chat(src, "Talon HQ messages can only be sent to humans.")
+			to_chat(src, "Talon HQ messages can only be sent to living mobs.")
 			return
 
 	if(source == "SolGov")
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(!istype(H.l_ear, /obj/item/device/radio/headset) && !istype(H.r_ear, /obj/item/device/radio/headset))
+		if(isliving(M))
+			var/mob/living/L = M
+			if(!L.CanObtainCentcommMessage())
 				to_chat(src, "The person you are trying to contact is not wearing a headset.")
 				return
 		else
-			to_chat(src, "Talon HQ messages can only be sent to humans.")
+			to_chat(src, "SolGov messages can only be sent to living mobs.")
 			return
 
 	var/custom_color = "green"
@@ -144,6 +141,12 @@
 			if("Blue") custom_color = "#3366ff" // a nice readable blue
 			if("HONK") custom_color = "#ff1493" // deep pink, readable
 			if("Gray") custom_color = "gray"
+
+		custom_sender = sanitize(input("Enter the sender's name:", text("Sender for [M.key]")) as text)
+		if(!custom_sender)
+			return
+
+	var/msg = tgui_input_text(usr, "Message:", text("Subtle PM to [M.key]"))
 
 	if (!msg)
 		return
@@ -1131,7 +1134,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	log_and_message_admins("[key_name(src)] admin cryo'd [key_name(M)].")
 	feedback_add_details("admin_verb","ACRYO") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-	if(ishuman(M))
+	if(isliving(M))
 		var/choice = tgui_input_list(usr,"Select a cryopod to use","Cryopod Choice", human_cryopods)
 		var/obj/machinery/cryopod/CP = human_cryopods[choice]
 		if(!CP)
