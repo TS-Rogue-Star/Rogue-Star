@@ -45,6 +45,7 @@ avoid code duplication. This includes items that may sometimes act as a standard
 
 //I would prefer to rename this to attack(), but that would involve touching hundreds of files.
 /obj/item/proc/resolve_attackby(atom/A, mob/user, var/attack_modifier = 1, var/click_parameters)
+	SEND_SIGNAL(src,COMSIG_RESOLVE_ATTACKBY,A,user)	//RS ADD
 	add_fingerprint(user)
 	. = pre_attack(A, user, click_parameters)
 	if(.)	// We're returning the value of pre_attack, important if it has a special return.

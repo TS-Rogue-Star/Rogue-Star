@@ -87,6 +87,8 @@
 	..()
 
 /obj/machinery/door/airlock/attack_alien(var/mob/user) //Familiar, right? Doors. -Mechoid
+	if(islocked())	//RS ADD
+		return		//RS ADD
 	if(istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/X = user
 		if(istype(X.species, /datum/species/xenos))
@@ -535,6 +537,8 @@
 		PhoronBurn(exposed_temperature)
 
 /obj/machinery/door/airlock/phoron/proc/PhoronBurn(temperature)
+	if(islocked())	//RS ADD
+		return		//RS ADD
 	for(var/turf/simulated/floor/target_tile in range(2,loc))
 		target_tile.assume_gas("phoron", 35, 400+T0C)
 		spawn (0) target_tile.hotspot_expose(temperature, 400)
@@ -824,6 +828,7 @@ About the new airlock wires panel:
 
 /obj/machinery/door/airlock/update_icon()
 	cut_overlays()
+	SEND_SIGNAL(src,COMSIG_ATOM_UPDATE_ICON)	//RS ADD
 	if(density)
 		if(locked && lights && src.arePowerSystemsOn())
 			icon_state = "door_locked"
@@ -875,6 +880,8 @@ About the new airlock wires panel:
 	return
 
 /obj/machinery/door/airlock/attack_ai(mob/user as mob)
+	if(islocked())	//RS ADD
+		return		//RS ADD
 	tgui_interact(user)
 
 /obj/machinery/door/airlock/attack_ghost(mob/user)
@@ -925,6 +932,8 @@ About the new airlock wires panel:
 	return data
 
 /obj/machinery/door/airlock/proc/hack(mob/user as mob)
+	if(islocked())	//RS ADD
+		return		//RS ADD
 	if(src.aiHacking==0)
 		src.aiHacking=1
 		spawn(20)
@@ -1025,6 +1034,8 @@ About the new airlock wires panel:
 	return
 
 /obj/machinery/door/airlock/tgui_act(action, params)
+	if(islocked())	//RS ADD
+		return		//RS ADD
 	if(..())
 		return TRUE
 	if(!user_allowed(usr))
@@ -1087,6 +1098,8 @@ About the new airlock wires panel:
 	return 1
 
 /obj/machinery/door/airlock/proc/user_allowed(mob/user)
+	if(islocked())		//RS ADD
+		return FALSE	//RS ADD
 	var/allowed = (issilicon(user) && canAIControl(user))
 	if(!allowed && isobserver(user))
 		var/mob/observer/dead/D = user
@@ -1128,7 +1141,12 @@ About the new airlock wires panel:
 	return src.p_open && (operating < 0 || (!operating && welded && !src.arePowerSystemsOn() && density && (!src.locked || (stat & BROKEN))))
 
 /obj/machinery/door/airlock/attackby(obj/item/C, mob/user as mob)
-	//to_world("airlock attackby src [src] obj [C] mob [user]")
+	if(SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY, C, user) & COMPONENT_CANCEL_ATTACK_CHAIN)	//RS ADD START
+		return TRUE
+	if(islocked())
+		if(C.getkey())
+			return		//RS ADD END
+
 	if(!istype(usr, /mob/living/silicon))
 		if(src.isElectrified())
 			if(src.shock(user, 75))
@@ -1163,6 +1181,8 @@ About the new airlock wires panel:
 				src.update_icon()
 				return
 		else
+			if(islocked())	//RS ADD
+				return		//RS ADD
 			src.p_open = TRUE
 			playsound(src, C.usesound, 50, 1)
 			src.update_icon()
@@ -1174,6 +1194,8 @@ About the new airlock wires panel:
 	else if(istype(C, /obj/item/device/assembly/signaler))
 		return src.attack_hand(user)
 	else if(istype(C, /obj/item/weapon/pai_cable))	// -- TLE
+		if(islocked())	//RS ADD
+			return		//RS ADD
 		var/obj/item/weapon/pai_cable/cable = C
 		cable.plugin(src, user)
 	else if(!repairing && C.is_crowbar())
@@ -1310,6 +1332,8 @@ About the new airlock wires panel:
 	return ..()
 
 /obj/machinery/door/airlock/can_open(var/forced=0)
+	if(islocked())		//RS ADD
+		return FALSE	//RS ADD
 	if(!forced)
 		if(!arePowerSystemsOn() || wires.is_cut(WIRE_OPEN_DOOR))
 			return 0
@@ -1539,6 +1563,8 @@ About the new airlock wires panel:
 		electronics.one_access = 1
 
 /obj/machinery/door/airlock/emp_act(var/severity)
+	if(islocked())	//RS ADD
+		return		//RS ADD
 	if(prob(40/severity))
 		var/duration = world.time + SecondsToTicks(30 / severity)
 		if(duration > electrified_until)
@@ -1574,9 +1600,33 @@ About the new airlock wires panel:
 	return FALSE
 
 /obj/machinery/door/airlock/rcd_act(mob/living/user, obj/item/weapon/rcd/the_rcd, passed_mode)
+	if(islocked())		//RS ADD
+		return FALSE	//RS ADD
 	switch(passed_mode)
 		if(RCD_DECONSTRUCT)
 			to_chat(user, span("notice", "You deconstruct \the [src]."))
 			qdel(src)
 			return TRUE
 	return FALSE
+
+//RS ADD START
+/obj/machinery/door/airlock/dungeon_trigger(mob/user)
+	var/datum/component/dungeon_mechanic/lock/ourlock = getlock()
+	if(ourlock)
+		if(ourlock.locked)
+			dungeon_unlock(user)
+		else if(!ourlock.onetime)
+			dungeon_lock(user)
+	else
+		if(locked)
+			dungeon_unlock(user)
+		else
+			dungeon_lock(user)
+
+/obj/machinery/door/airlock/dungeon_unlock()
+	unlock()
+	open()
+	SEND_SIGNAL(src,COMSIG_DUNGEON_TRIGGER)
+/obj/machinery/door/airlock/dungeon_lock()
+	lock()
+	SEND_SIGNAL(src,COMSIG_DUNGEON_UNTRIGGER)

@@ -14,6 +14,9 @@
 	close_sound = 'sound/effects/crate_close.ogg'
 
 /obj/structure/closet/crate/can_open()
+	if(islocked())	//RS ADD START
+		to_chat(usr,SPAN_WARNING("It appears to have a lock on it, which is of course, locked. It can't be opened without using whatever opens it first."))
+		return FALSE	//RS ADD END
 	return 1
 
 /obj/structure/closet/crate/can_close()
@@ -126,6 +129,8 @@
 	else return attack_hand(user)
 
 /obj/structure/closet/crate/ex_act(severity)
+	if(islocked())	//RS ADD
+		return		//RS ADD
 	switch(severity)
 		if(1.0)
 			for(var/obj/O in src.contents)
@@ -153,6 +158,9 @@
 	var/locked = 1
 
 /obj/structure/closet/crate/secure/can_open()
+	if(islocked())	//RS ADD START
+		to_chat(usr,SPAN_WARNING("It appears to have a lock on it, which is of course, locked. It can't be opened without using whatever opens it first."))
+		return FALSE	//RS ADD END
 	return !locked
 
 /obj/structure/closet/crate/secure/update_icon()
@@ -174,6 +182,9 @@
 	if(src.broken)
 		to_chat(user, "<span class='warning'>The crate appears to be broken.</span>")
 		return
+	if(islocked())	//RS ADD START
+		to_chat(user,SPAN_WARNING("It appears to have a lock on it, which is of course, locked. It can't be opened without using whatever opens it first."))
+		return	//RS ADD END
 	if(src.allowed(user))
 		set_locked(!locked, user)
 	else
@@ -210,6 +221,9 @@
 		src.toggle(user)
 
 /obj/structure/closet/crate/secure/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(getlock())	//RS ADD START
+		if(W.getkey())
+			return	//RS ADD END
 	if(is_type_in_list(W, list(/obj/item/weapon/packageWrap, /obj/item/stack/cable_coil, /obj/item/device/radio/electropack, /obj/item/weapon/tool/wirecutters)))
 		return ..()
 	if(istype(W, /obj/item/weapon/melee/energy/blade))
@@ -220,6 +234,8 @@
 	return ..()
 
 /obj/structure/closet/crate/secure/emag_act(var/remaining_charges, var/mob/user)
+	if(islocked())	//RS ADD
+		return		//RS ADD
 	if(!broken)
 		playsound(src, "sparks", 60, 1)
 		locked = 0
@@ -229,6 +245,8 @@
 		return 1
 
 /obj/structure/closet/crate/secure/emp_act(severity)
+	if(islocked())	//RS ADD
+		return		//RS ADD
 	for(var/obj/O in src)
 		O.emp_act(severity)
 	if(!broken && !opened  && prob(50/severity))
@@ -741,3 +759,25 @@
 	closet_appearance = null
 	open_sound = 'sound/effects/wooden_closet_open.ogg'
 	close_sound = 'sound/effects/wooden_closet_close.ogg'
+
+//RS ADD START
+/obj/structure/closet/crate/secure/dungeon_trigger(mob/user)
+	var/datum/component/dungeon_mechanic/lock/ourlock = getlock()
+	if(ourlock)
+		if(ourlock.locked)
+			dungeon_unlock(user)
+		else if(!ourlock.onetime)
+			dungeon_lock(user)
+	else
+		if(locked)
+			dungeon_unlock(user)
+		else
+			dungeon_lock(user)
+
+/obj/structure/closet/crate/secure/dungeon_lock(mob/user)
+	. = ..()
+	set_locked(TRUE,user)
+
+/obj/structure/closet/crate/secure/dungeon_unlock(mob/user)
+	. = ..()
+	set_locked(FALSE,user)
