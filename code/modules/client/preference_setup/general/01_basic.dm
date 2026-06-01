@@ -244,15 +244,15 @@
 		return TOPIC_REFRESH
 
 	else if(href_list["edit_ooc_notes"])
-		var/new_metadata = strip_html_simple(tgui_input_text(usr, "Enter any information you'd like others to see, such as Roleplay-preferences. This will not be saved permanently unless you click save in the Character Setup panel!", "Game Preference" , html_decode(pref.metadata), multiline = TRUE,  prevent_enter = TRUE))
+		var/new_metadata = sanitize_ooc_notes(tgui_input_text(usr, "Enter any information you'd like others to see, such as Roleplay-preferences. This will not be saved permanently unless you click save in the Character Setup panel!", "Game Preference" , ooc_notes_to_text(pref.metadata), multiline = TRUE,  prevent_enter = TRUE)) // RS Edit: Allow special characters (Lira, May 2026)
 		if(new_metadata && CanUseTopic(user))
 			pref.metadata = new_metadata
 	else if(href_list["edit_ooc_note_likes"])
-		var/new_metadata = strip_html_simple(tgui_input_text(usr, "Enter any information you'd like others to see relating to your LIKED roleplay preferences. This will not be saved permanently unless you click save in the Character Setup panel!", "Game Preference" , html_decode(pref.metadata_likes), multiline = TRUE,  prevent_enter = TRUE))
+		var/new_metadata = sanitize_ooc_notes(tgui_input_text(usr, "Enter any information you'd like others to see relating to your LIKED roleplay preferences. This will not be saved permanently unless you click save in the Character Setup panel!", "Game Preference" , ooc_notes_to_text(pref.metadata_likes), multiline = TRUE,  prevent_enter = TRUE)) // RS Edit: Allow special characters (Lira, May 2026)
 		if(new_metadata && CanUseTopic(user))
 			pref.metadata_likes = new_metadata
 	else if(href_list["edit_ooc_note_dislikes"])
-		var/new_metadata = strip_html_simple(tgui_input_text(usr, "Enter any information you'd like others to see relating to your DISLIKED roleplay preferences. This will not be saved permanently unless you click save in the Character Setup panel!", "Game Preference" , html_decode(pref.metadata_dislikes), multiline = TRUE,  prevent_enter = TRUE))
+		var/new_metadata = sanitize_ooc_notes(tgui_input_text(usr, "Enter any information you'd like others to see relating to your DISLIKED roleplay preferences. This will not be saved permanently unless you click save in the Character Setup panel!", "Game Preference" , ooc_notes_to_text(pref.metadata_dislikes), multiline = TRUE,  prevent_enter = TRUE)) // RS Edit: Allow special characters (Lira, May 2026)
 		if(new_metadata && CanUseTopic(user))
 			pref.metadata_dislikes = new_metadata
 	return ..()

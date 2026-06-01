@@ -697,7 +697,7 @@
 
 /datum/map_z_level/common_lateload/talon_v2
 	name = "Talon"
-	flags = MAP_LEVEL_PLAYER|MAP_LEVEL_PERSIST|MAP_LEVEL_MAPPABLE
+	flags = MAP_LEVEL_PLAYER|MAP_LEVEL_PERSIST|MAP_LEVEL_MAPPABLE|MAP_LEVEL_OFFMAP //RS Edit
 	base_turf = /turf/space
 
 /datum/map_z_level/common_lateload/talon_v2/New(datum/map/map, mapZ)		//RS ADD START - Map swap related

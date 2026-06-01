@@ -333,6 +333,7 @@
 
 // Previously this was defined both on /obj/ and /turf/ seperately.  And that's bad.
 /atom/proc/update_icon()
+	SEND_SIGNAL(src,COMSIG_ATOM_UPDATE_ICON)	//RS ADD
 	return
 
 

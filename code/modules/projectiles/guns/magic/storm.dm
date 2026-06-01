@@ -61,11 +61,7 @@
 	new /obj/effect/temporary_effect/lightning_strike(T)
 	playsound(T, 'sound/effects/lightningbolt.ogg', 100, 1)
 
-	var/sound = get_sfx("thunder")
-	for(var/mob/M in player_list)
-		if((P && (M.z in P.expected_z_levels)) || M.z == T.z)
-			if(M.is_preference_enabled(/datum/client_preference/weather_sounds))
-				M.playsound_local(get_turf(M), soundin = sound, vol = 70, vary = FALSE, is_global = TRUE)
+	playsound(T, "thunder", 70, FALSE)
 
 	for(var/atom/movable/AM in range(STORM_STAFF_LIGHTNING_RANGE, T))
 		if(isliving(AM))

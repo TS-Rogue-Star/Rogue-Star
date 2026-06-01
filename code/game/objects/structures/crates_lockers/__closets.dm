@@ -105,6 +105,9 @@
 /obj/structure/closet/proc/can_open()
 	if(sealed)
 		return 0
+	if(islocked())	//RS ADD START
+		to_chat(usr,SPAN_WARNING("It appears to have a lock on it, which is of course, locked. It can't be opened without using whatever opens it first."))
+		return FALSE	//RS ADD END
 	return 1
 
 /obj/structure/closet/proc/can_close()
@@ -232,6 +235,8 @@
 
 // this should probably use dump_contents()
 /obj/structure/closet/ex_act(severity)
+	if(islocked())	//RS ADD
+		return		//RS ADD
 	switch(severity)
 		if(1)
 			for(var/atom/movable/A as mob|obj in src)//pulls everything out of the locker and hits it with an explosion
@@ -254,6 +259,8 @@
 	damage(100)
 
 /obj/structure/closet/proc/damage(var/damage)
+	if(islocked())	//RS ADD
+		return		//RS ADD
 	health -= damage
 	if(health <= 0)
 		for(var/atom/movable/A in src)
@@ -271,6 +278,8 @@
 	return
 
 /obj/structure/closet/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(W.getkey())	//RS ADD
+		return	//RS ADD
 	if(W.is_wrench())
 		if(opened)
 			if(anchored)
@@ -414,6 +423,8 @@
 		icon_state = "closed_unlocked[sealed ? "_welded" : ""]"
 
 /obj/structure/closet/attack_generic(var/mob/user, var/damage, var/attack_message = "destroys")
+	if(islocked())	//RS ADD
+		return		//RS ADD
 	if(damage < STRUCTURE_MIN_DAMAGE_THRESHOLD)
 		return
 	user.do_attack_animation(src)
@@ -493,6 +504,8 @@
 	return return_air()
 
 /obj/structure/closet/take_damage(var/damage)
+	if(islocked())	//RS ADD
+		return		//RS ADD
 	if(damage < STRUCTURE_MIN_DAMAGE_THRESHOLD)
 		return
 	dump_contents()
@@ -543,3 +556,22 @@
 	M.Multiply(matrix(cos(angle), 0, 0, -sin(angle) * closet_appearance.door_anim_squish, 1, 0))
 	M.Translate(closet_appearance.door_hinge, 0)
 	return M
+
+//RS ADD START
+/obj/structure/closet/dungeon_trigger(mob/user)
+	var/datum/component/dungeon_mechanic/lock/ourlock = getlock()
+	if(ourlock)
+		if(ourlock.locked)
+			dungeon_unlock(user)
+		else if(!ourlock.onetime)
+			dungeon_lock(user)
+
+/obj/structure/closet/dungeon_lock(mob/user)
+	SEND_SIGNAL(src,COMSIG_DUNGEON_UNTRIGGER)
+	visible_message(SPAN_WARNING("\The [src] clicks as it is locked."),runemessage = "click. . .")
+	playsound(src, 'sound/machines/click.ogg', 15, 1, -3)
+
+/obj/structure/closet/dungeon_unlock(mob/user)
+	SEND_SIGNAL(src,COMSIG_DUNGEON_TRIGGER)
+	visible_message(SPAN_NOTICE("\The [src] clunks as it is unlocked."),runemessage = "clunk. . .")
+	playsound(src, 'sound/machines/click.ogg', 15, 1, -3)

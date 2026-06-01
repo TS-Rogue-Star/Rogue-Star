@@ -194,7 +194,8 @@ const OvermapNavComputer = (props, context) => {
           </Button>
         </Flex.Item>
       </Flex>
-      <Section mt={1} scrollable height="130px">
+      {/* RS Edit: Helm location scroll (Lira, May 2026) */}
+      <Section mt={1} scrollable fill height="130px">
         <Table>
           <Table.Row header>
             <Table.Cell>Name</Table.Cell>
