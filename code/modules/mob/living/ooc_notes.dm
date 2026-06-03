@@ -1,10 +1,31 @@
+// RS Add: Allow special characters (Lira, May 2026)
+/proc/sanitize_ooc_notes(var/t)
+	if(isnull(t))
+		return
+	var/sanitized = copytext(t, 1, MAX_MESSAGE_LEN)
+	return html_encode(trim(sanitized))
+
+// RS Add: Allow special characters (Lira, May 2026)
+/proc/ooc_notes_to_html(var/t)
+	if(!t)
+		return
+	return replacetext(html_encode(html_decode(t)), "\n", "<BR>")
+
+// RS Add: Allow special characters (Lira, May 2026)
+/proc/ooc_notes_to_text(var/t)
+	if(!t)
+		return
+	return html_decode(t)
+
 /mob/living/proc/ooc_notes_window(mob/user)
 	if(!ooc_notes)
 		return
 	//I tried to get it to accept things like emojis and all that, but, it wouldn't do! It would be cool if it did.
-	var/notes = replacetext(html_decode(src.ooc_notes), "\n", "<BR>")
-	var/likes = replacetext(html_decode(src.ooc_notes_likes), "\n", "<BR>")
-	var/dislikes = replacetext(html_decode(src.ooc_notes_dislikes), "\n", "<BR>")
+	// RS Edit Start: Allow special characters (Lira, May 2026)
+	var/notes = ooc_notes_to_html(src.ooc_notes)
+	var/likes = ooc_notes_to_html(src.ooc_notes_likes)
+	var/dislikes = ooc_notes_to_html(src.ooc_notes_dislikes)
+	// RS Edit End
 	var/dat = {"
 	<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
 	<html>

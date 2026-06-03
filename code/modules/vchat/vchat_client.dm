@@ -336,6 +336,10 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 // Format a message plus repeat counter for fallback HTML exports
 /proc/vchat_format_saved_message(var/message, var/repeats)
 	var/result = message
+	var/carriage_return = ascii2text(13)
+	result = replacetext(result, "[carriage_return]\n", "<br>")
+	result = replacetext(result, "\n", "<br>")
+	result = replacetext(result, carriage_return, "<br>")
 	if(repeats > 1)
 		result += "(x[repeats])"
 	result += "<br>\n"
@@ -836,6 +840,8 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 	var/round_id = null
 	var/use_all_rounds = FALSE
+	var/request_id = null
+	var/autolog = FALSE
 	if(istext(payload["round_id"]))
 		var/tmp_round = vchat_trim_whitespace(payload["round_id"])
 		if(length(tmp_round))
@@ -843,8 +849,12 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 				use_all_rounds = TRUE
 			else
 				round_id = tmp_round
+	if(istext(payload["request_id"]))
+		request_id = vchat_trim_whitespace(copytext(payload["request_id"], 1, 128))
+	if(payload["autolog"])
+		autolog = TRUE
 
-	save_chatlog_to_disk(categories, filename, round_id, use_all_rounds)
+	save_chatlog_to_disk(categories, filename, round_id, use_all_rounds, request_id, autolog)
 
 // Compile the saved round overview sent to the client history UI
 /datum/chatOutput/proc/round_list_request()
@@ -981,17 +991,43 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	return response
 	// RS Edit End
 
+/datum/chatOutput/proc/send_chatlog_export_result(var/request_id, var/round_id, var/use_all_rounds, var/autolog, var/ok, var/error_message, var/filename)
+	if(!request_id && !autolog)
+		return
+	if(!owner || !loaded)
+		return
+
+	var/list/result = list(
+		"evttype" = "chatlog_export_result",
+		"round_id" = round_id,
+		"use_all_rounds" = use_all_rounds,
+		"autolog" = autolog,
+		"ok" = ok
+	)
+	if(request_id)
+		result["request_id"] = request_id
+	if(error_message)
+		result["error"] = error_message
+	if(filename)
+		result["filename"] = filename
+
+	send_event(result)
+
 // Perform the server-side chatlog export workflow and stream the file to the client
-/datum/chatOutput/proc/save_chatlog_to_disk(var/list/categories, var/filename, var/round_id, var/use_all_rounds = FALSE)
+/datum/chatOutput/proc/save_chatlog_to_disk(var/list/categories, var/filename, var/round_id, var/use_all_rounds = FALSE, var/request_id = null, var/autolog = FALSE)
 	if(!owner)
 		return
 
 	if(isnull(round_id) && !use_all_rounds)
 		round_id = GLOB.vchat_current_round_id
 
+	var/error_message
 	var/list/messages = vchat_get_messages(owner.ckey, null, use_all_rounds ? null : round_id)
 	if(!LAZYLEN(messages))
-		to_chat(owner, "<span class='warning'>Error: No messages found! Please inform a dev if you do have messages!</span>")
+		error_message = "No messages found! Please inform a dev if you do have messages!"
+		if(!autolog)
+			to_chat(owner, "<span class='warning'>Error: [error_message]</span>")
+		send_chatlog_export_result(request_id, round_id, use_all_rounds, autolog, FALSE, error_message, null)
 		return
 
 	var/list/allowed_categories = list()
@@ -1030,7 +1066,10 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		output_lines += vchat_format_saved_message(last_message, repeat_count)
 
 	if(!output_lines.len)
-		to_chat(owner, "<span class='warning'>Error: No messages matched the selected filters.</span>")
+		error_message = "No messages matched the selected filters."
+		if(!autolog)
+			to_chat(owner, "<span class='warning'>Error: [error_message]</span>")
+		send_chatlog_export_result(request_id, round_id, use_all_rounds, autolog, FALSE, error_message, null)
 		return
 
 	var/text_blob = "<html><head><style>"
@@ -1040,8 +1079,20 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	text_blob += "</body></html>"
 
 	var/tmp_path = "data/chatlog_tmp/[owner.ckey]_client_chat_log"
+	if(autolog || request_id)
+		var/tmp_segment = request_id
+		if(!istext(tmp_segment) || !length(tmp_segment))
+			tmp_segment = "[world.time]_[rand(1000, 9999)]"
+		tmp_segment = vchat_sanitize_filename(tmp_segment)
+		if(!tmp_segment)
+			tmp_segment = "[world.time]_[rand(1000, 9999)].html"
+		tmp_path = "data/chatlog_tmp/[owner.ckey]_client_chat_log_[tmp_segment]"
+
 	if(fexists(tmp_path) && !fdel(tmp_path))
-		to_chat(owner, "<span class='warning'>Error: Your chat log is already being prepared. Please wait until it's been downloaded before trying again.</span>")
+		error_message = "Your chat log is already being prepared. Please wait until it's been downloaded before trying again."
+		if(!autolog)
+			to_chat(owner, "<span class='warning'>Error: [error_message]</span>")
+		send_chatlog_export_result(request_id, round_id, use_all_rounds, autolog, FALSE, error_message, null)
 		return
 
 	rustg_file_write(text_blob, tmp_path)
@@ -1049,6 +1100,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	var/export_name = vchat_build_export_filename(round_id, use_all_rounds)
 
 	owner << ftp(file(tmp_path), export_name)
+	send_chatlog_export_result(request_id, round_id, use_all_rounds, autolog, TRUE, null, export_name)
 
 	spawn(10 SECONDS)
 		if(fexists(tmp_path) && !fdel(tmp_path))
@@ -1195,7 +1247,7 @@ var/to_chat_src
 
 	// Write the messages to the log
 	for(var/list/result in results)
-		text_blob += "[result["message"]]<br>"
+		text_blob += vchat_format_saved_message(result["message"], 1) // RS Edit: Logging Enhancements (Lira, June 2026)
 		CHECK_TICK
 
 	text_blob += "</body></html>"

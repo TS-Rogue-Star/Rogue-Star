@@ -304,6 +304,50 @@ img.icon:not([src^="data:image/"]) {
 }
 /* RS Add End */
 
+/* RS Add Start: Logging Enhancements (Lira, June 2026) */
+.autolog-panel {
+	margin-top: 1rem;
+	padding-top: 1rem;
+	border-top: 1px solid rgba(34, 36, 38, 0.15);
+}
+
+.autolog-panel.inverted {
+	border-top-color: rgba(255, 255, 255, 0.18);
+}
+
+.autolog-panel h4 {
+	margin: 0 0 0.75rem;
+}
+
+.autolog-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin-bottom: 0.5rem;
+}
+
+.autolog-actions .ui.button {
+	margin: 0;
+}
+
+.autolog-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem 1rem;
+	font-size: 0.9rem;
+	opacity: 0.85;
+}
+
+.autolog-status {
+	margin-top: 0.5rem;
+	font-size: 0.9rem;
+}
+
+.autolog-status.error {
+	color: #db2828;
+}
+/* RS Add End */
+
 /* RS Add Start: Round selector and history viewer (Lira, September 2025) */
 .round-selector-backdrop {
 	position: fixed;
@@ -384,6 +428,28 @@ img.icon:not([src^="data:image/"]) {
 	background: rgba(0, 0, 0, 0.05);
 }
 
+/* RS Add Start: Logging Enhancements (Lira, June 2026) */
+.round-selector-option.saved {
+	background: rgba(33, 186, 69, 0.08);
+	border-left: 0.25rem solid #21ba45;
+	padding-left: 0.75rem;
+}
+
+.round-selector-option.saved:hover {
+	background: rgba(33, 186, 69, 0.14);
+}
+
+.round-selector-option.unsaved {
+	background: rgba(219, 40, 40, 0.07);
+	border-left: 0.25rem solid #db2828;
+	padding-left: 0.75rem;
+}
+
+.round-selector-option.unsaved:hover {
+	background: rgba(219, 40, 40, 0.13);
+}
+/* RS Add End */
+
 .round-selector-modal.inverted .round-selector-option {
 	border-color: rgba(255, 255, 255, 0.15);
 }
@@ -391,6 +457,26 @@ img.icon:not([src^="data:image/"]) {
 .round-selector-modal.inverted .round-selector-option:hover {
 	background: rgba(255, 255, 255, 0.08);
 }
+
+/* RS Add Start: Logging Enhancements (Lira, June 2026) */
+.round-selector-modal.inverted .round-selector-option.saved {
+	background: rgba(33, 186, 69, 0.16);
+	border-left-color: #21ba45;
+}
+
+.round-selector-modal.inverted .round-selector-option.saved:hover {
+	background: rgba(33, 186, 69, 0.22);
+}
+
+.round-selector-modal.inverted .round-selector-option.unsaved {
+	background: rgba(219, 40, 40, 0.14);
+	border-left-color: #db2828;
+}
+
+.round-selector-modal.inverted .round-selector-option.unsaved:hover {
+	background: rgba(219, 40, 40, 0.2);
+}
+/* RS Add End */
 
 .round-selector-option-title {
 	display: flex;
@@ -433,6 +519,16 @@ img.icon:not([src^="data:image/"]) {
 .round-selector-pill.subtle {
 	background: #767676;
 }
+
+/* RS Add Start: Logging Enhancements (Lira, June 2026) */
+.round-selector-pill.saved {
+	background: #21ba45;
+}
+
+.round-selector-pill.unsaved {
+	background: #db2828;
+}
+/* RS Add End */
 
 .round-selector-actions {
 	display: flex;

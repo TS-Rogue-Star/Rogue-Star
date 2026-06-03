@@ -77,22 +77,22 @@ GLOBAL_DATUM(character_directory, /datum/character_directory)
 						strangername = "unknown" //RS Edit || Chomp Port
 			name = strangername //RS Edit || Chomp Port
 			species = "[H.custom_species ? H.custom_species : H.species.name]"
-			ooc_notes = H.ooc_notes
+			ooc_notes = ooc_notes_to_text(H.ooc_notes) // RS Edit: Allow special characters (Lira, May 2026)
 			if(H.ooc_notes_likes)
-				ooc_notes += "\n\nLIKES\n\n[H.ooc_notes_likes]"
+				ooc_notes += "\n\nLIKES\n\n[ooc_notes_to_text(H.ooc_notes_likes)]" // RS Edit: Allow special characters (Lira, May 2026)
 			if(H.ooc_notes_dislikes)
-				ooc_notes += "\n\nDISLIKES\n\n[H.ooc_notes_dislikes]"
+				ooc_notes += "\n\nDISLIKES\n\n[ooc_notes_to_text(H.ooc_notes_dislikes)]" // RS Edit: Allow special characters (Lira, May 2026)
 			flavor_text = H.flavor_texts["general"]
 
 		if(isAI(C.mob))
 			var/mob/living/silicon/ai/A = C.mob
 			name = A.name
 			species = "Artificial Intelligence"
-			ooc_notes = A.ooc_notes
+			ooc_notes = ooc_notes_to_text(A.ooc_notes) // RS Edit: Allow special characters (Lira, May 2026)
 			if(A.ooc_notes_likes)
-				ooc_notes += "\n\nLIKES\n\n[A.ooc_notes_likes]"
+				ooc_notes += "\n\nLIKES\n\n[ooc_notes_to_text(A.ooc_notes_likes)]" // RS Edit: Allow special characters (Lira, May 2026)
 			if(A.ooc_notes_dislikes)
-				ooc_notes += "\n\nDISLIKES\n\n[A.ooc_notes_dislikes]"
+				ooc_notes += "\n\nDISLIKES\n\n[ooc_notes_to_text(A.ooc_notes_dislikes)]" // RS Edit: Allow special characters (Lira, May 2026)
 
 			flavor_text = null // No flavor text for AIs :c
 
@@ -102,11 +102,11 @@ GLOBAL_DATUM(character_directory, /datum/character_directory)
 				continue
 			name = R.name
 			species = "[R.modtype] [R.braintype]"
-			ooc_notes = R.ooc_notes
+			ooc_notes = ooc_notes_to_text(R.ooc_notes) // RS Edit: Allow special characters (Lira, May 2026)
 			if(R.ooc_notes_likes)
-				ooc_notes += "\n\nLIKES\n\n[R.ooc_notes_likes]"
+				ooc_notes += "\n\nLIKES\n\n[ooc_notes_to_text(R.ooc_notes_likes)]" // RS Edit: Allow special characters (Lira, May 2026)
 			if(R.ooc_notes_dislikes)
-				ooc_notes += "\n\nDISLIKES\n\n[R.ooc_notes_dislikes]"
+				ooc_notes += "\n\nDISLIKES\n\n[ooc_notes_to_text(R.ooc_notes_dislikes)]" // RS Edit: Allow special characters (Lira, May 2026)
 
 			flavor_text = R.flavor_text
 
@@ -115,11 +115,11 @@ GLOBAL_DATUM(character_directory, /datum/character_directory)
 			var/mob/living/silicon/pai/P = C.mob
 			name = P.name
 			species = "pAI"
-			ooc_notes = P.ooc_notes
+			ooc_notes = ooc_notes_to_text(P.ooc_notes) // RS Edit: Allow special characters (Lira, May 2026)
 			if(P.ooc_notes_likes)
-				ooc_notes += "\n\nLIKES\n\n[P.ooc_notes_likes]"
+				ooc_notes += "\n\nLIKES\n\n[ooc_notes_to_text(P.ooc_notes_likes)]" // RS Edit: Allow special characters (Lira, May 2026)
 			if(P.ooc_notes_dislikes)
-				ooc_notes += "\n\nDISLIKES\n\n[P.ooc_notes_dislikes]"
+				ooc_notes += "\n\nDISLIKES\n\n[ooc_notes_to_text(P.ooc_notes_dislikes)]" // RS Edit: Allow special characters (Lira, May 2026)
 
 			flavor_text = P.flavor_text
 
@@ -128,9 +128,9 @@ GLOBAL_DATUM(character_directory, /datum/character_directory)
 			name = S.name
 			species = initial(S.name)  //RS Edit
 			if(S.ooc_notes_likes)
-				ooc_notes += "\n\nLIKES\n\n[S.ooc_notes_likes]"
+				ooc_notes += "\n\nLIKES\n\n[ooc_notes_to_text(S.ooc_notes_likes)]" // RS Edit: Allow special characters (Lira, May 2026)
 			if(S.ooc_notes_dislikes)
-				ooc_notes += "\n\nDISLIKES\n\n[S.ooc_notes_dislikes]"
+				ooc_notes += "\n\nDISLIKES\n\n[ooc_notes_to_text(S.ooc_notes_dislikes)]" // RS Edit: Allow special characters (Lira, May 2026)
 
 			flavor_text = S.desc
 		//RS Add End  || Chomp Port

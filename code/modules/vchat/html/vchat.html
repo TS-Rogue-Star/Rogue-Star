@@ -151,6 +151,24 @@
 						</div>
 						<button class="ui primary button" @click="save_chatlog">Export Chatlog</button> <!--RS Edit: Button Style (Lira, September 2025)-->
 						<button class="ui primary button" @click="open_history_viewer">View Chat History</button> <!--RS Add: New chat history viewer (Lira, September 2025)-->
+						<!--RS Add Start: Logging Enhancements (Lira, June 2026)-->
+						<div class="autolog-panel" :class="{ inverted: inverted }">
+							<h4>Round Autolog</h4>
+							<div class="autolog-actions">
+								<button class="ui primary button" type="button" :disabled="autolog.running || round_overview.loading" @click="start_autolog_download">Download Unsaved Rounds</button>
+								<button class="ui button" type="button" :disabled="autolog.running" @click="mark_retained_rounds_saved">Mark All Saved</button>
+								<button class="ui button" type="button" :disabled="autolog.running" @click="reset_autolog_saved_rounds">Reset Saved List</button>
+							</div>
+							<div class="autolog-meta">
+								<span>{{ autolog_unsaved_rounds.length }} unsaved</span>
+								<span>{{ autolog_completed_rounds.length }} completed retained</span>
+								<span v-if="autolog.running">{{ autolog.completed }} / {{ autolog.total }}</span>
+							</div>
+							<div class="autolog-status" v-if="autolog.status">{{ autolog.status }}</div>
+							<div class="autolog-status error" v-if="autolog.error">{{ autolog.error }}</div>
+							<div class="autolog-status" v-if="autolog.lastFilename">Last: {{ autolog.lastFilename }}</div>
+						</div>
+						<!--RS Add End-->
 					</div>
 				</div>
 			</div>
@@ -204,11 +222,15 @@
 				</div>
 				<div class="round-selector-list" v-if="round_selector.options.length">
 					<div class="round-selector-heading">Recent rounds</div>
-					<button v-for="option in round_selector.options" :key="option.id" class="round-selector-option" @click="select_round_option(option)">
+					<button v-for="option in round_selector.options" :key="option.id" class="round-selector-option" :class="{ saved: is_round_export_saved(option), unsaved: is_round_finished(option) && !is_round_export_saved(option) }" @click="select_round_option(option)"> <!--RS Edit: Logging Enhancements (Lira, June 2026)-->
 						<div class="round-selector-option-title">
 							<span>{{ option.startDisplay || option.id }}</span>
 							<span v-if="option.isCurrent" class="round-selector-pill">Current</span>
 							<span v-else-if="option.isOpen" class="round-selector-pill subtle">Ongoing</span>
+							<!--RS Add Start: Logging Enhancements (Lira, June 2026)-->
+							<span v-else-if="is_round_export_saved(option)" class="round-selector-pill saved">Saved</span>
+							<span v-else-if="is_round_finished(option)" class="round-selector-pill unsaved">Unsaved</span>
+							<!--RS Add End-->
 						</div>
 						<div class="round-selector-option-meta">
 							<span class="round-selector-option-id">{{ option.id }}</span>
