@@ -13,7 +13,7 @@
 		"Refreshed Talon crew Uniform" = /obj/item/clothing/under/rank/talon/basic/refreshed,
 		"Old Talon crew Uniform"       = /obj/item/clothing/under/rank/talon/basic,
 	)
-	gear_tweaks += new/datum/gear_tweak/path(sortAssoc(selector_uniforms))
+	gear_tweaks += new/datum/gear_tweak/path(selector_uniforms)
 
 /datum/gear/uniform/refreshedtaloncaptain
 	display_name = "Refreshed Talon Command Uniform"
@@ -29,7 +29,7 @@
 		"Refreshed Talon Command Uniform" = /obj/item/clothing/under/rank/talon/command/refreshed,
 		"Old Talon Command Uniform"       = /obj/item/clothing/under/rank/talon/command,
 	)
-	gear_tweaks += new/datum/gear_tweak/path(sortAssoc(selector_uniforms))
+	gear_tweaks += new/datum/gear_tweak/path(selector_uniforms))
 
 /datum/gear/uniform/refreshedtalonpilot
 	display_name = "Refreshed Talon Pilot Uniform"
@@ -45,7 +45,7 @@
 		"Refreshed Talon Pilot Uniform" = /obj/item/clothing/under/rank/talon/pilot/refreshed,
 		"Old Talon Pilot Uniform"       = /obj/item/clothing/under/rank/talon/pilot,
 	)
-	gear_tweaks += new/datum/gear_tweak/path(sortAssoc(selector_uniforms))
+	gear_tweaks += new/datum/gear_tweak/path(selector_uniforms))
 
 /datum/gear/uniform/refreshedtalonsecurity
 	display_name = "Refreshed Talon Security Jumpsuit"
@@ -61,7 +61,7 @@
 		"Refreshed Talon Guard Uniform" = /obj/item/clothing/under/rank/talon/security/refreshed,
 		"Old Talon Security Uniform"    = /obj/item/clothing/under/rank/talon/security,
 	)
-	gear_tweaks += new/datum/gear_tweak/path(sortAssoc(selector_uniforms))
+	gear_tweaks += new/datum/gear_tweak/path(selector_uniforms))
 
 /datum/gear/uniform/refreshedtalonmedical
 	display_name = "Refreshed Talon Medical Jumpsuit"
@@ -77,7 +77,7 @@
 		"Refreshed Talon Doctor Uniform" = /obj/item/clothing/under/rank/talon/proper/refreshed,
 		"Old Talon Doctor Uniform"       = /obj/item/clothing/under/rank/talon/proper,
 	)
-	gear_tweaks += new/datum/gear_tweak/path(sortAssoc(selector_uniforms))
+	gear_tweaks += new/datum/gear_tweak/path(selector_uniforms))
 
 /datum/gear/uniform/hfjumpskirt
 	display_name = "HYPER jumpskirt"
