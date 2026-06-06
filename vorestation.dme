@@ -2903,6 +2903,7 @@
 #include "code\modules\mob\freelook\mask\cultnet.dm"
 #include "code\modules\mob\freelook\mask\eye.dm"
 #include "code\modules\mob\freelook\mask\update_triggers.dm"
+#include "code\modules\mob\holomob\holomob.dm"
 #include "code\modules\mob\language\animal.dm"
 #include "code\modules\mob\language\generic.dm"
 #include "code\modules\mob\language\language.dm"
