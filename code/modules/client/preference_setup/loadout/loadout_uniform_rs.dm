@@ -1,7 +1,7 @@
 // New Talon Uniforms
 /datum/gear/uniform/refreshedtalonbasic
 	display_name = "Refreshed Talon Jumpsuit"
-	description = "Select from a range of outfits available to all Talon crewzzz."
+	description = "Select from a range of outfits available to all Talon crew."
 	allowed_roles = list("Talon Captain","Talon Doctor","Talon Engineer","Talon Pilot","Talon Guard","Talon Miner")
 	path = /obj/item/clothing/under/rank/talon/basic/refreshed
 	sort_category = "Uniforms"
