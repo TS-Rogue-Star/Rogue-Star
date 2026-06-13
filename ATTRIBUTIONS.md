@@ -614,7 +614,7 @@ Link: https://github.com/TS-Rogue-Star/Rogue-Star/pull/987<br>
 **License:** CC BY-SA 3.0<br>
 <br>
 **File:** `icons/obj/bureaucracy.dmi`<br>
-**Icon-States:** stamp-tal, paper_stamp-tal, paperplane_stamp-tal<br>
+**Icon-States:** stamp-tal, paper_stamp-tal, paper_stamp-square, paperplane_stamp-tal<br>
 **Creator:** Unknown. Modified by Azzy.Dreemurr<br>
 **License:** CC BY-SA 3.0<br>
 **Folders**: sound/instruments/synthesis_samples/banjo,<br>
