@@ -380,11 +380,25 @@
 
 /datum/lore/organization/tsc/nanotrasen/New()
 	..()
-	spawn(1) // BYOND shenanigans means using_map is not initialized yet.  Wait a tick.
-		// Get rid of the current map from the list, so ships flying in don't say they're coming to the current map.
-		var/string_to_test = "[using_map.station_name] in [using_map.starsys_name]"
-		if(string_to_test in destination_names)
-			destination_names.Remove(string_to_test)
+	prune_current_map_destination() // RS Add: Fix Init Order Runtime (Lira, June 2026)
+
+// RS Edit: Fix Init Order Runtime (Lira, June 2026)
+/datum/lore/organization/tsc/nanotrasen/proc/prune_current_map_destination()
+	if(!using_map)
+		return
+
+	// Get rid of the current map from the list, so ships flying in don't say they're coming to the current map.
+	var/string_to_test = "[using_map.station_name] in [using_map.starsys_name]"
+	if(string_to_test in destination_names)
+		destination_names.Remove(string_to_test)
+
+// RS Add: Fix Init Order Runtime (Lira, June 2026)
+/proc/prune_current_map_from_lore_destinations()
+	if(!using_map || !loremaster?.organizations)
+		return
+
+	var/datum/lore/organization/tsc/nanotrasen/nanotrasen = loremaster.organizations[/datum/lore/organization/tsc/nanotrasen]
+	nanotrasen?.prune_current_map_destination()
 
 /datum/lore/organization/tsc/hephaestus
 	name = "Hephaestus Industries"

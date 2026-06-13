@@ -218,6 +218,23 @@ function start_vue() {
 
 				// RS Add Start: New settings for export, history, and font (Lira, September 2025)
 				pending_chatlog: null,
+				autolog_saved_rounds: {},
+				autolog: {
+					running: false,
+					status: '',
+					error: '',
+					queue: [],
+					current: null,
+					pendingRequestId: '',
+					total: 0,
+					completed: 0,
+					failed: 0,
+					skipped: 0,
+					lastFilename: ''
+				},
+				autolog_request_counter: 0,
+				chatlog_export_counter: 0,
+				pending_chatlog_exports: {},
 				round_selector: {
 					visible: false,
 					loading: false,
@@ -634,7 +651,15 @@ function start_vue() {
 					let category = typeof entry.category === 'string' && entry.category.length ? entry.category : 'vc_unsorted';
 					return categories.indexOf(category) > -1;
 				});
+			},
+			// RS Add Start: Logging Enhancements (Lira, June 2026)
+			autolog_completed_rounds: function() {
+				return this.get_completed_round_options();
+			},
+			autolog_unsaved_rounds: function() {
+				return this.get_unsaved_completed_round_options();
 			}
+			// RS Add End
 		},
 		methods: {
 			//Load the chat settings
@@ -671,8 +696,104 @@ function start_vue() {
 				}
 				// RS Add End
 
+				this.load_autolog_saved_rounds(); // RS Add: Logging Enhancements (Lira, June 2026)
 				this.load_tabs();
 			},
+			// RS Add Start: Logging Enhancements (Lira, June 2026)
+			get_autolog_ckey: function() {
+				let ckey = vchat_state.byond_ckey || get_storage("ckey", "");
+				if(typeof ckey !== 'string') {
+					return '';
+				}
+				return ckey;
+			},
+			load_autolog_saved_rounds: function() {
+				let ckey = this.get_autolog_ckey();
+				let raw = get_storage("saved_rounds_v1", "");
+				let manifest = null;
+				if(typeof raw === 'string' && raw.length) {
+					try {
+						manifest = JSON.parse(raw);
+					} catch(error) {
+						void error;
+						manifest = null;
+					}
+				}
+				if(!manifest || typeof manifest !== 'object' || manifest.ckey !== ckey || !manifest.rounds || typeof manifest.rounds !== 'object') {
+					this.autolog_saved_rounds = {};
+					return;
+				}
+				this.autolog_saved_rounds = manifest.rounds;
+			},
+			save_autolog_saved_rounds: function() {
+				let ckey = this.get_autolog_ckey();
+				let manifest = {
+					ckey: ckey,
+					rounds: this.autolog_saved_rounds || {}
+				};
+				set_storage("saved_rounds_v1", JSON.stringify(manifest));
+			},
+			is_round_marked_saved: function(roundId) {
+				return !!(roundId && this.autolog_saved_rounds && this.autolog_saved_rounds[roundId]);
+			},
+			is_round_finished: function(option) {
+				return !!(option && option.id && !option.isCurrent && !option.isOpen);
+			},
+			is_round_export_saved: function(option) {
+				return this.is_round_finished(option) && this.is_round_marked_saved(option.id);
+			},
+			mark_round_saved: function(option, filename) {
+				if(!option || !option.id) {
+					return;
+				}
+				if(!this.autolog_saved_rounds || typeof this.autolog_saved_rounds !== 'object') {
+					this.autolog_saved_rounds = {};
+				}
+				this.autolog_saved_rounds[option.id] = {
+					saved_at: Date.now(),
+					filename: typeof filename === 'string' ? filename : '',
+					message_count: isFinite(option.messageCount) ? option.messageCount : 0
+				};
+				this.save_autolog_saved_rounds();
+			},
+			get_completed_round_options: function() {
+				let options = this.round_overview && Array.isArray(this.round_overview.options) ? this.round_overview.options : [];
+				return options.filter(function(option) {
+					return option && option.id && !option.isCurrent && !option.isOpen;
+				});
+			},
+			get_unsaved_completed_round_options: function() {
+				let completed = this.get_completed_round_options();
+				return completed.filter(function(option) {
+					return !this.is_round_marked_saved(option.id);
+				}, this);
+			},
+			mark_retained_rounds_saved: function() {
+				if(!storage_system) {
+					this.autolog.error = "Unable to track saved rounds because VChat storage is unavailable.";
+					this.autolog.status = '';
+					return;
+				}
+				this.load_autolog_saved_rounds();
+				let completed = this.get_completed_round_options();
+				completed.forEach(function(option) {
+					this.mark_round_saved(option, '');
+				}, this);
+				this.autolog.error = '';
+				this.autolog.status = completed.length ? ("Marked " + completed.length + " retained completed round(s) as saved.") : "No completed rounds are currently retained.";
+			},
+			reset_autolog_saved_rounds: function() {
+				if(!storage_system) {
+					this.autolog.error = "Unable to track saved rounds because VChat storage is unavailable.";
+					this.autolog.status = '';
+					return;
+				}
+				this.autolog_saved_rounds = {};
+				this.save_autolog_saved_rounds();
+				this.autolog.error = '';
+				this.autolog.status = "Saved-round tracking has been reset.";
+			},
+			// RS Add End
 			load_tabs: function() {
 				let loadstring = get_storage("tabs")
 				if(!loadstring)
@@ -1295,6 +1416,129 @@ function start_vue() {
 
 				return category;
 			},
+			// RS Add Start: Logging Enhancements (Lira, June 2026)
+			start_autolog_download: function() {
+				if(this.autolog.running) {
+					return;
+				}
+				if(!storage_system) {
+					this.autolog.error = "Unable to track saved rounds because VChat storage is unavailable.";
+					this.autolog.status = '';
+					return;
+				}
+				if(this.round_overview.loading) {
+					this.autolog.error = '';
+					this.autolog.status = "Round list is still loading.";
+					return;
+				}
+				if(!this.round_overview.loaded) {
+					this.autolog.error = '';
+					this.autolog.status = "Loading round list. Try again once it finishes.";
+					this.request_round_overview();
+					return;
+				}
+
+				this.load_autolog_saved_rounds();
+				let queue = this.get_unsaved_completed_round_options();
+				this.autolog.error = '';
+				this.autolog.lastFilename = '';
+				this.autolog.queue = queue.slice();
+				this.autolog.total = queue.length;
+				this.autolog.completed = 0;
+				this.autolog.failed = 0;
+				this.autolog.skipped = this.get_completed_round_options().length - queue.length;
+				this.autolog.current = null;
+				this.autolog.pendingRequestId = '';
+
+				if(!queue.length) {
+					this.autolog.status = this.autolog.skipped ? "All retained completed rounds are already marked saved." : "No completed rounds are currently retained.";
+					return;
+				}
+
+				this.autolog.running = true;
+				this.autolog.status = "Starting download batch...";
+				this.start_next_autolog_export();
+			},
+			start_next_autolog_export: function() {
+				if(!this.autolog.running) {
+					return;
+				}
+				if(!this.autolog.queue.length) {
+					this.finish_autolog_batch();
+					return;
+				}
+
+				let option = this.autolog.queue.shift();
+				if(!option || !option.id) {
+					this.start_next_autolog_export();
+					return;
+				}
+
+				this.autolog.current = option;
+				this.autolog_request_counter += 1;
+				let requestId = "autolog-" + this.autolog_request_counter + "-" + Date.now();
+				this.autolog.pendingRequestId = requestId;
+				this.autolog.status = "Downloading " + (option.startDisplay || option.id) + "...";
+				this.autolog.error = '';
+
+				if(!requestChatlogSave('', [], option.id, requestId, true)) {
+					this.autolog.failed += 1;
+					this.autolog.error = "Unable to request export for " + option.id + ".";
+					this.autolog.pendingRequestId = '';
+					this.autolog.current = null;
+					setTimeout(this.start_next_autolog_export.bind(this), 500);
+				}
+			},
+			finish_autolog_batch: function() {
+				this.autolog.running = false;
+				this.autolog.current = null;
+				this.autolog.pendingRequestId = '';
+				if(this.autolog.failed) {
+					this.autolog.status = "Downloaded " + this.autolog.completed + " round(s); " + this.autolog.failed + " failed.";
+				} else {
+					this.autolog.status = "Downloaded " + this.autolog.completed + " round(s).";
+				}
+			},
+			receive_chatlog_export_result: function(event) {
+				if(!event || typeof event !== 'object') {
+					return;
+				}
+				let requestId = typeof event.request_id === 'string' ? event.request_id : '';
+				if(!requestId) {
+					return;
+				}
+
+				let ok = event.ok === true || event.ok === 'true' || event.ok === 1 || event.ok === '1';
+				let pendingChatlog = this.pending_chatlog_exports ? this.pending_chatlog_exports[requestId] : null;
+				if(pendingChatlog) {
+					delete this.pending_chatlog_exports[requestId];
+					if(ok && pendingChatlog.option) {
+						let filename = typeof event.filename === 'string' ? event.filename : '';
+						this.mark_round_saved(pendingChatlog.option, filename);
+					}
+					return;
+				}
+
+				if(requestId !== this.autolog.pendingRequestId) {
+					return;
+				}
+				let current = this.autolog.current;
+				if(ok && current) {
+					let filename = typeof event.filename === 'string' ? event.filename : '';
+					this.mark_round_saved(current, filename);
+					this.autolog.completed += 1;
+					this.autolog.lastFilename = filename;
+					this.autolog.error = '';
+				} else {
+					this.autolog.failed += 1;
+					this.autolog.error = typeof event.error === 'string' && event.error.length ? event.error : "Unable to export round.";
+				}
+
+				this.autolog.current = null;
+				this.autolog.pendingRequestId = '';
+				setTimeout(this.start_next_autolog_export.bind(this), 750);
+			},
+			// RS Add End
 			save_chatlog: function() {
 				//RS Edit Start: Adjusted for enhanced save system (Lira, September 2025)
 				const categories = Array.isArray(this.current_categories) ? this.current_categories.slice() : [];
@@ -1709,9 +1953,29 @@ function start_vue() {
 				const categories = Array.isArray(this.pending_chatlog.categories) ? this.pending_chatlog.categories.slice() : [];
 				const filename = this.pending_chatlog.filename;
 				let exportRound = typeof roundId === 'string' ? roundId : '';
+				// RS Add Start: Logging support (Lira, June 2026)
+				let requestId = '';
+				let exportOption = null;
+				if(exportRound && exportRound !== 'all') {
+					exportOption = this.round_overview.options.find(function(option) {
+						return option && option.id === exportRound;
+					});
+					if(this.is_round_finished(exportOption)) {
+						this.chatlog_export_counter += 1;
+						requestId = "chatlog-" + this.chatlog_export_counter + "-" + Date.now();
+						this.pending_chatlog_exports[requestId] = {
+							option: exportOption
+						};
+					}
+				}
+				// RS Add End
 
-				if(requestChatlogSave(filename, categories, exportRound)) {
+				if(requestChatlogSave(filename, categories, exportRound, requestId, false)) { // RS Edit: Logging support (Lira, June 2026)
 					return true;
+				}
+				// RS Add: Logging support (Lira, June 2026)
+				if(requestId && this.pending_chatlog_exports[requestId]) {
+					delete this.pending_chatlog_exports[requestId];
 				}
 
 				let textToSave = "<html><head><style>"+this.ext_styles+"</style></head><body>";
@@ -1886,6 +2150,10 @@ function get_event(event) {
 			set_storage("ip",vchat_state.byond_ip);
 			set_storage("cid",vchat_state.byond_cid);
 			set_storage("ckey",vchat_state.byond_ckey);
+			// RS Add: Logging support (Lira, June 2026)
+			if(vueapp && typeof vueapp.load_autolog_saved_rounds === 'function') {
+				vueapp.load_autolog_saved_rounds();
+			}
 			break;
 
 		//Just a ping.
@@ -1914,6 +2182,12 @@ function get_event(event) {
 		case 'round_history':
 			if(vueapp && typeof vueapp.receive_round_history === 'function') {
 				vueapp.receive_round_history(parsed_event);
+			}
+			break;
+
+		case 'chatlog_export_result':
+			if(vueapp && typeof vueapp.receive_chatlog_export_result === 'function') {
+				vueapp.receive_chatlog_export_result(parsed_event);
 			}
 			break;
 		// RS Add End
@@ -2009,13 +2283,19 @@ function downloadBlob(blob, fileName) {
 }
 
 //RS Add: Save chatlog (Lira, September 2025)
-function requestChatlogSave(fileName, categories, roundId) {
+function requestChatlogSave(fileName, categories, roundId, requestId, autolog) {
 	try {
 		const payload = {
 			filename: fileName,
 			categories: Array.isArray(categories) ? categories : [],
 			round_id: typeof roundId === 'string' ? roundId : ''
 		};
+		if(typeof requestId === 'string' && requestId.length) {
+			payload.request_id = requestId;
+		}
+		if(autolog) {
+			payload.autolog = true;
+		}
 		push_Topic("save_chatlog&param[data]=" + encodeURIComponent(JSON.stringify(payload)));
 		return true;
 	} catch (err) {
