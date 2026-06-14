@@ -11,7 +11,7 @@
 	..()
 	var/list/selector_uniforms = list(
 		"Refreshed Talon crew Uniform" = /obj/item/clothing/under/rank/talon/basic/refreshed,
-		"Old Talon crew Uniform"       = /obj/item/clothing/under/rank/talon/basic,
+		"Old Talon crew Uniform "       = /obj/item/clothing/under/rank/talon/basic,
 	)
 	gear_tweaks += new/datum/gear_tweak/path(selector_uniforms)
 
