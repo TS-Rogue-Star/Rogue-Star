@@ -547,9 +547,8 @@
 		hum.update_fullness()
 	// End RS edit
 
-// RS Edit: Belly overlay and layering enhancements (Lira, April 2026)
+// RS Edit: Belly overlay and layering enhancements (Lira, April 2026) || Overlay caching and DMI improvements (Lira, June 2026)
 /obj/belly/proc/vore_fx(mob/living/L)
-	var/static/list/belly_overlay_states
 	if(!istype(L))
 		return
 	if(!L.client)
@@ -561,38 +560,44 @@
 		L.clear_fullscreen("belly4")
 		L.clear_fullscreen("belly5")
 		return
-	if(!belly_overlay_states)
-		belly_overlay_states = cached_icon_states('icons/mob/screen_full_colorized_vore_overlays.dmi')
 
 	var/image/ReagentImages = null //Reagent bellies || RS Add || Chomp Port
 
 	if(belly_fullscreen)
 		if(colorization_enabled)
 			var/obj/screen/fullscreen/F = L.overlay_fullscreen("belly", /obj/screen/fullscreen/belly/colorized)
+			F.icon = vore_fullscreen_icon(belly_fullscreen, TRUE)
 			F.icon_state = belly_fullscreen
 			F.color = belly_fullscreen_color
 			F.layer = BELLY_FULLSCREEN_BASE_LAYER
-			if("[belly_fullscreen]_l1" in belly_overlay_states)
+			var/layer_one = "[belly_fullscreen]_l1"
+			if(vore_fullscreen_overlay_icon_state_exists(layer_one))
 				var/obj/screen/fullscreen/F2 = L.overlay_fullscreen("belly2", /obj/screen/fullscreen/belly/colorized/overlay)
-				F2.icon_state = "[belly_fullscreen]_l1"
+				F2.icon = vore_fullscreen_overlay_icon(layer_one)
+				F2.icon_state = layer_one
 				F2.color = belly_fullscreen_color_secondary
 				F2.layer = BELLY_FULLSCREEN_LAYER_1
 			else
 				L.clear_fullscreen("belly2")
-			if("[belly_fullscreen]_l2" in belly_overlay_states)
+			var/layer_two = "[belly_fullscreen]_l2"
+			if(vore_fullscreen_overlay_icon_state_exists(layer_two))
 				var/obj/screen/fullscreen/F3 = L.overlay_fullscreen("belly3", /obj/screen/fullscreen/belly/colorized/overlay)
-				F3.icon_state = "[belly_fullscreen]_l2"
+				F3.icon = vore_fullscreen_overlay_icon(layer_two)
+				F3.icon_state = layer_two
 				F3.color = belly_fullscreen_color_trinary
 				F3.layer = BELLY_FULLSCREEN_LAYER_2
 			else
 				L.clear_fullscreen("belly3")
-			if("[belly_fullscreen]_nc" in belly_overlay_states)
+			var/non_colored = "[belly_fullscreen]_nc"
+			if(vore_fullscreen_overlay_icon_state_exists(non_colored))
 				var/obj/screen/fullscreen/F4 = L.overlay_fullscreen("belly4", /obj/screen/fullscreen/belly/colorized/overlay)
-				F4.icon_state = "[belly_fullscreen]_nc"
+				F4.icon = vore_fullscreen_overlay_icon(non_colored)
+				F4.icon_state = non_colored
 				F4.layer = BELLY_FULLSCREEN_LAYER_3
 			else
 				L.clear_fullscreen("belly4")
 			var/obj/screen/fullscreen/F5 = L.overlay_fullscreen("belly5", /obj/screen/fullscreen/belly/reagent_overlay) // Reagent bellies || RS Add || Chomp Port
+			F5.icon = vore_fullscreen_overlay_icon(belly_fullscreen)
 			F5.icon_state = belly_fullscreen //Reagent bellies || RS Add || Chomp Port
 			F5.layer = BELLY_FULLSCREEN_REAGENT_LAYER
 			F5.cut_overlays() // RS Add: Fix sticky overlays (Lira, November 2025)
@@ -619,8 +624,10 @@
 		else
 			var/obj/screen/fullscreen/F = L.overlay_fullscreen("belly", /obj/screen/fullscreen/belly)
 			var/obj/screen/fullscreen/F5 = L.overlay_fullscreen("belly5", /obj/screen/fullscreen/belly/reagent_overlay) //Reagent bellies || RS Add || Chomp Port
+			F.icon = vore_fullscreen_icon(belly_fullscreen)
 			F.icon_state = belly_fullscreen
 			F.layer = BELLY_FULLSCREEN_BASE_LAYER
+			F5.icon = vore_fullscreen_overlay_icon(belly_fullscreen)
 			F5.icon_state = belly_fullscreen //Reagent bellies || RS Add || Chomp Port
 			F5.layer = BELLY_FULLSCREEN_REAGENT_LAYER
 			F5.cut_overlays() // RS Add: Fix sticky overlays (Lira, November 2025)
@@ -662,39 +669,44 @@
 		return custom_reagentalpha
 	return CLAMP(custom_max_volume, belly_fullscreen_alpha, 255)
 
-// RS Edit: Belly overlay and layering enhancements(Lira, April 2026)
+// RS Edit: Belly overlay and layering enhancements (Lira, April 2026) || Overlay caching and DMI improvements (Lira, June 2026)
 /obj/belly/proc/vore_preview(mob/living/L)
-	var/static/list/belly_overlay_states
 	if(!istype(L))
 		return
 	if(!L.client)
 		return
-	if(!belly_overlay_states)
-		belly_overlay_states = cached_icon_states('icons/mob/screen_full_colorized_vore_overlays.dmi')
 
 	var/image/ReagentImages = null //Reagent bellies || RS Add || Chomp Port
 
 	if(belly_fullscreen)
 		if(colorization_enabled)
 			var/obj/screen/fullscreen/F = L.overlay_fullscreen("belly", /obj/screen/fullscreen/belly/colorized)
+			F.icon = vore_fullscreen_icon(belly_fullscreen, TRUE)
 			F.icon_state = belly_fullscreen
 			F.color = belly_fullscreen_color
 			F.layer = BELLY_FULLSCREEN_BASE_LAYER
-			if("[belly_fullscreen]_l1" in belly_overlay_states)
+			var/layer_one = "[belly_fullscreen]_l1"
+			if(vore_fullscreen_overlay_icon_state_exists(layer_one))
 				var/obj/screen/fullscreen/F2 = L.overlay_fullscreen("belly2", /obj/screen/fullscreen/belly/colorized/overlay)
-				F2.icon_state = "[belly_fullscreen]_l1"
+				F2.icon = vore_fullscreen_overlay_icon(layer_one)
+				F2.icon_state = layer_one
 				F2.color = belly_fullscreen_color_secondary
 				F2.layer = BELLY_FULLSCREEN_LAYER_1
-			if("[belly_fullscreen]_l2" in belly_overlay_states)
+			var/layer_two = "[belly_fullscreen]_l2"
+			if(vore_fullscreen_overlay_icon_state_exists(layer_two))
 				var/obj/screen/fullscreen/F3 = L.overlay_fullscreen("belly3", /obj/screen/fullscreen/belly/colorized/overlay)
-				F3.icon_state = "[belly_fullscreen]_l2"
+				F3.icon = vore_fullscreen_overlay_icon(layer_two)
+				F3.icon_state = layer_two
 				F3.color = belly_fullscreen_color_trinary
 				F3.layer = BELLY_FULLSCREEN_LAYER_2
-			if("[belly_fullscreen]_nc" in belly_overlay_states)
+			var/non_colored = "[belly_fullscreen]_nc"
+			if(vore_fullscreen_overlay_icon_state_exists(non_colored))
 				var/obj/screen/fullscreen/F4 = L.overlay_fullscreen("belly4", /obj/screen/fullscreen/belly/colorized/overlay)
-				F4.icon_state = "[belly_fullscreen]_nc"
+				F4.icon = vore_fullscreen_overlay_icon(non_colored)
+				F4.icon_state = non_colored
 				F4.layer = BELLY_FULLSCREEN_LAYER_3
 			var/obj/screen/fullscreen/F5 = L.overlay_fullscreen("belly5", /obj/screen/fullscreen/belly/reagent_overlay)  //Reagent bellies || RS Add || Chomp Port
+			F5.icon = vore_fullscreen_overlay_icon(belly_fullscreen)
 			F5.icon_state = belly_fullscreen //Reagent bellies || RS Add || Chomp Port
 			F5.layer = BELLY_FULLSCREEN_REAGENT_LAYER
 			F5.cut_overlays() // RS Add: Fix sticky overlays (Lira, November 2025)
@@ -721,8 +733,10 @@
 		else
 			var/obj/screen/fullscreen/F = L.overlay_fullscreen("belly", /obj/screen/fullscreen/belly)
 			var/obj/screen/fullscreen/F5 = L.overlay_fullscreen("belly5", /obj/screen/fullscreen/belly/reagent_overlay) //Reagent bellies || RS Add || Chomp Port
+			F.icon = vore_fullscreen_icon(belly_fullscreen)
 			F.icon_state = belly_fullscreen
 			F.layer = BELLY_FULLSCREEN_BASE_LAYER
+			F5.icon = vore_fullscreen_overlay_icon(belly_fullscreen)
 			F5.icon_state = belly_fullscreen //Reagent bellies || RS Add || Chomp Port
 			F5.layer = BELLY_FULLSCREEN_REAGENT_LAYER
 			F5.cut_overlays() // RS Add: Fix sticky overlays (Lira, November 2025)
