@@ -68,7 +68,7 @@ var/global/list/latejoin_talon = list()
 /obj/machinery/computer/shuttle_control/explore/talonboat
 	name = "shuttle control console"
 	shuttle_tag = "Talon's Shuttle"
-	req_one_access = list(access_talon_bridge)
+	req_one_access = list(access_talon_pilot) //RS Edit
 
 /obj/effect/overmap/visitable/ship/landable/talon_boat
 	name = "ITV Talon Shuttle"
@@ -282,6 +282,17 @@ if you have to punch out, do it whilst the ship is in open space. the pod has <b
 personally I recommend using the ship's boat if you need to evacuate, but if you're stuck with the pod then... good luck!<br>\
 <br>\
 <i>Harry Townes</i>"}
+//RS Add
+/obj/item/weapon/paper/secret_vendornote
+	name = "secret note"
+	info = {"well, if you're reading this note, then I've managed to install, a couple of funny things inside the vending machine.<br>\
+these things are there as a funny reminder that ITV Talon was once a more weaponized ship. <br>\
+to be honest, looking at the previous concept of the ship, it looks funny and more dangerous for those who want to fight with it.<br>\
+<b>however</b>, now it has lost that belligerence and has become a merchant ship.<br>\
+it's not bad and cool, but it's a pity that there's almost nothing left about the memories of the last ship, but I hope to fix it by adding this machete, which the crew used to have by default as a sign of recognition and a small reminder of the last ship.<br>\
+so... Use it wisely and good luck!<br>\
+<br>\
+<i>mysterious creator of the vending machine</i>"}
 
 //Prevents remote control of drones
 /obj/machinery/drone_fabricator/talon
@@ -303,7 +314,7 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 
 /obj/item/weapon/card/id/synthetic/talon/Initialize()
 	. = ..()
-	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, access_synth)
+	access = list(access_talon, access_talon_bridge, access_talon_medical, access_talon_engineer, access_talon_cargo, access_talon_security, access_talon_pilot, access_synth) //RS Edit
 
 /obj/machinery/power/smes/buildable/offmap_spawn/New()
 	..(1)
@@ -395,7 +406,9 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 	closet_appearance = /decl/closet_appearance/secure_closet/talon/captain
 
 	starts_with = list(
-		/obj/item/weapon/storage/backpack/dufflebag/captain,
+		/obj/item/weapon/storage/backpack/dufflebag/talon, //RS Add
+		/obj/item/clothing/under/rank/talon/command/refreshed, //RS Add
+		/obj/item/clothing/suit/storage/talonbomberjacket/captain, //RS Add
 		/obj/item/clothing/head/beret/talon/command,
 		/obj/item/clothing/suit/storage/vest,
 		/obj/item/clothing/head/helmet,
@@ -421,6 +434,7 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 		/obj/item/clothing/head/helmet,
 		/obj/item/clothing/under/utility,
 		/obj/item/clothing/head/soft/talon,
+		/obj/item/clothing/under/rank/talon/security/refreshed, //RS Add
 		/obj/item/clothing/shoes/boots/jackboots,
 		/obj/item/clothing/shoes/boots/jackboots/toeless,
 		/obj/item/weapon/handcuffs = 2,
@@ -452,7 +466,9 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 		/obj/item/clothing/under/rank/nurse,
 		/obj/item/clothing/head/soft/talon,
 		/obj/item/clothing/under/rank/orderly,
+		/obj/item/clothing/under/rank/talon/proper/refreshed, //RS Add
 		/obj/item/clothing/accessory/solgov/department/medical/army,
+		/obj/item/clothing/suit/storage/toggle/labcoat/talon, //RS Add
 		/obj/item/clothing/suit/storage/toggle/labcoat/modern,
 		/obj/item/clothing/suit/storage/toggle/fr_jacket,
 		/obj/item/clothing/shoes/white,
@@ -471,6 +487,7 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 
 	starts_with = list(
 		/obj/item/clothing/accessory/storage/brown_vest,
+		/obj/item/clothing/under/rank/talon/basic/refreshed, //RS Add
 		/obj/item/clothing/accessory/solgov/department/engineering/army,
 		/obj/item/clothing/glasses/omnihud/eng/meson,
 		/obj/item/device/flashlight,
@@ -491,7 +508,7 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 
 /obj/structure/closet/secure_closet/talon_pilot
 	name = "talon pilot's locker"
-	req_access = list(access_talon)
+	req_access = list(access_talon_pilot) //RS Edit
 	closet_appearance = /decl/closet_appearance/secure_closet/talon/pilot
 
 	starts_with = list(
@@ -499,6 +516,8 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 		/obj/item/clothing/accessory/solgov/department/service/army,
 		/obj/item/clothing/head/pilot,
 		/obj/item/clothing/under/rank/pilot1,
+		/obj/item/clothing/under/rank/talon/pilot/refreshed, //RS Add
+		/obj/item/clothing/suit/storage/talonbomberjacket, //RS Add
 		/obj/item/clothing/suit/storage/toggle/bomber/pilot,
 		/obj/item/clothing/gloves/fingerless,
 		/obj/item/weapon/reagent_containers/food/snacks/liquidfood,
@@ -525,6 +544,7 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 
 	starts_with = list(
 		/obj/item/device/radio/headset/talon,
+		/obj/item/clothing/under/rank/talon/basic/refreshed, //RS Add
 		/obj/item/clothing/head/soft/talon,
 		/obj/item/clothing/head/helmet/space/void/refurb/mining/talon,
 		/obj/item/clothing/suit/space/void/refurb/mining/talon,
@@ -559,6 +579,38 @@ personally I recommend using the ship's boat if you need to evacuate, but if you
 	idle_power_usage = 211 //refrigerator - believe it or not, this is actually the average power consumption of a refrigerated vending machine according to NRCan.
 	req_log_access = access_talon
 	has_logs = 1
+//RS Add
+/obj/machinery/vending/talondrobe
+	name = "Talon Uniforms official"
+	desc = "Created for those who want to look the latest in Talon fashion!"
+	icon = 'icons/obj/vending_rs.dmi'
+	product_slogans = "TALON - Trading Any Location On Navigation"
+	description_fluff = "The vending machine is designed to store and dispense various types of uniforms for the crew of Talon ships."
+	product_ads = "It's time to try something new or take a proven old one!;The seller should always look beautiful.;Did you feel cold? Don't forget to take a bomber jacket for yourself!"
+	icon_state = "talondrobe"
+	req_access = list(access_talon)
+	products = list(/obj/item/clothing/head/soft/talon = 10,
+				/obj/item/clothing/head/soft/talon/refreshed = 10,
+				/obj/item/clothing/suit/storage/hooded/wintercoat/talon = 10,
+				/obj/item/clothing/suit/storage/hooded/wintercoat/talon/refreshed = 10,
+				/obj/item/clothing/head/beret/talon = 10,
+				/obj/item/clothing/head/beret/talon/refreshed = 10,
+				/obj/item/clothing/suit/storage/toggle/hoodie/talon = 10,
+				/obj/item/clothing/under/rank/talon/basic = 10,
+				/obj/item/clothing/under/rank/talon/basic/refreshed = 10,
+				/obj/item/clothing/suit/storage/toggle/labcoat/talon = 10,
+				/obj/item/weapon/storage/backpack/messenger/talon = 10,
+				/obj/item/weapon/storage/backpack/talon = 10,
+				/obj/item/weapon/storage/backpack/satchel/talon = 10,
+				/obj/item/weapon/storage/backpack/dufflebag/talon = 10,
+				/obj/item/device/radio/headset/talon = 10,
+				/obj/item/device/radio/headset/talon/alt = 10)
+	contraband = list(/obj/item/weapon/paper/secret_vendornote = 1,
+				/obj/item/clothing/accessory/holster/machete = 1,
+				/obj/item/weapon/material/knife/machete = 1)
+	req_log_access = access_talon
+	has_logs = 1
+	can_rotate = 0
 
 ///////////////////////////
 //// Computers

@@ -69,6 +69,7 @@ var/global/list/possible_station_maps = list(
 
 	if(using_map)
 		setup_fax_admin_departments() // Fax machine fix (Lira, March 2026)
+		prune_current_map_from_lore_destinations() // RS Add: Fix Init Order Runtime (Lira, June 2026)
 		log_debug("[using_map.name] was created successfully.")
 	else
 		error("initialise_map_list() failed to create a map object. No maps will load.")

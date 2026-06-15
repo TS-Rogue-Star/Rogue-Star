@@ -6,6 +6,6 @@
 	. = ..()
 	.["embeds"] = list(list(
 		"title" = "A custom event is beginning.",
-		"description" = (data && data["text"]) || "undefined",
+		"description" = (data && data["text"] && readd_quotes(data["text"])) || "undefined", // RS Edit: Discord Hook Character Fix (Lira, June 2026)
 		"color" = COLOR_WEBHOOK_DEFAULT
 	))

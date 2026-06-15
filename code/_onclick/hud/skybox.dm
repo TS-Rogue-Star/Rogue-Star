@@ -38,11 +38,21 @@
 
 	var/turf/T = get_turf(eye)
 	if(T)
+		// RS Add Start: Skybox Overmap Fix (Lira, June 2026)
+		var/skybox_z = T.z
+		var/turf/position_turf = T
+		if(istype(eye, /obj/effect/overmap/visitable))
+			var/obj/effect/overmap/visitable/overmap_eye = eye
+			var/turf/mob_turf = get_turf(mob)
+			if(mob_turf && (mob_turf.z in overmap_eye.map_z))
+				skybox_z = mob_turf.z
+				position_turf = mob_turf
+		// RS Add End
 		if(rebuild)
 			skybox.cut_overlays()
-			skybox.add_overlay(SSskybox.get_skybox(T.z))
+			skybox.add_overlay(SSskybox.get_skybox(skybox_z)) // RS Edit: Skybox Overmap Fix (Lira, June 2026)
 			screen |= skybox
-		skybox.screen_loc = "CENTER:[(world.maxx>>1) - T.x],CENTER:[(world.maxy>>1) - T.y]"
+		skybox.screen_loc = "CENTER:[(world.maxx>>1) - position_turf.x],CENTER:[(world.maxy>>1) - position_turf.y]" // RS Edit: Skybox Overmap Fix (Lira, June 2026)
 
 /mob/Login()
 	. = ..()

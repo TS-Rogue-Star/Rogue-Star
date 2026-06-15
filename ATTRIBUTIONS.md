@@ -603,6 +603,20 @@ Link: https://github.com/TS-Rogue-Star/Rogue-Star/pull/987<br>
 **Link**:https://github.com/TS-Rogue-Star/Rogue-Star/pull/1264<br>
 **License**: CC BY-SA 3.0<br>
 <br>
+**File:** `icons/inventory/head/item_vr_altevian.dmi, icons/inventory/head/mob_vr_altevian.dmi, icons/inventory/suit/item_vr_altevian.dmi, icons/inventory/suit/mob_vr_altevian.dmi`<br>
+**Icon-States:** rig0-vintagecrew, rig-vintagecrew, rig0-vintageengi, rig-vintageengi, rig0-vintagemedic, rig0-vintagepilot, rig-vintagemedic, rig0-vintagemarine, rig-vintagemarine, rig0-vintageofficer, rig-vintageofficer, rig0-vintagepilotalt, rig-vintagepilot, rig0-vintagescientist, rig-vintagescientist, rig0-vintageminer, rig-vintageminer, rig0-vintagemerc, rig-vintagemerc<br>
+**Creator:** Original graphics by KillianKirilenko. Modified by Azzy.Dreemurr<br>
+**Link:** https://github.com/VOREStation/VOREStation/pull/7978
+**License:** CC BY-SA 3.0<br>
+<br>
+**File:** `html/images/talonlogo.png`<br>
+**Creator:** Unknown. Modified by Azzy.Dreemurr<br>
+**License:** CC BY-SA 3.0<br>
+<br>
+**File:** `icons/obj/bureaucracy.dmi`<br>
+**Icon-States:** stamp-tal, paper_stamp-tal, paper_stamp-square, paperplane_stamp-tal<br>
+**Creator:** Unknown. Modified by Azzy.Dreemurr<br>
+**License:** CC BY-SA 3.0<br>
 **Folders**: sound/instruments/synthesis_samples/banjo,<br>
 sound/instruments/synthesis_samples/chromatic/fluid_xylophone,<br>
 sound/instruments/synthesis_samples/guitar/fluid_distortion,<br>

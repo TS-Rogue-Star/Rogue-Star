@@ -562,9 +562,9 @@
 				new_belly.disable_hud = TRUE
 
 		//set the vore belly overlay
-		var/possible_fullscreens = icon_states('icons/mob/screen_full_colorized_vore.dmi')
+		var/possible_fullscreens = vore_fullscreen_icon_states(TRUE) // RS Edit: Overlay caching and DMI improvements (Lira, June 2026)
 		if(!new_belly.colorization_enabled)
-			possible_fullscreens = icon_states('icons/mob/screen_full_vore.dmi')
+			possible_fullscreens = vore_fullscreen_icon_states() // RS Edit: Overlay caching and DMI improvements (Lira, June 2026)
 			possible_fullscreens -= "a_synth_flesh_mono"
 			possible_fullscreens -= "a_synth_flesh_mono_hole"
 			possible_fullscreens -= "a_anim_belly"

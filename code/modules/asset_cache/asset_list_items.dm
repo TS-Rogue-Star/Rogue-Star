@@ -118,6 +118,7 @@
 		"panels.css" = 'html/panels.css',
 		"loading.gif" = 'html/images/loading.gif',
 		"ntlogo.png" = 'html/images/ntlogo.png',
+		"talonlogo.png" = 'html/images/talonlogo.png', //RS Add
 		"sglogo.png" = 'html/images/sglogo.png',
 		"talisman.png" = 'html/images/talisman.png',
 		"paper_bg.png" = 'html/images/paper_bg.png',
@@ -298,19 +299,27 @@
 /datum/asset/spritesheet/vore
 	name = "vore"
 
+// RS Edit: Overlay caching and DMI improvements (Lira, June 2026)
 /datum/asset/spritesheet/vore/register()
-	var/icon/downscaled = icon('icons/mob/screen_full_vore.dmi')
-	downscaled.Scale(240, 240)
-	InsertAll("", downscaled)
+	for(var/vore_icon in vore_fullscreen_icon_files())
+		if(!length(icon_states(vore_icon)))
+			continue
+		var/icon/downscaled = icon(vore_icon)
+		downscaled.Scale(240, 240)
+		InsertAllUnique("", downscaled)
 	..()
 
 /datum/asset/spritesheet/vore_colorized //This should be getting loaded in the TGUI vore panel but the game refuses to do so, for some reason. It only loads the vore spritesheet.
 	name = "colorizedvore"
 
+// RS Edit: Overlay caching and DMI improvements (Lira, June 2026)
 /datum/asset/spritesheet/vore_colorized/register()
-	var/icon/downscaledVC = icon('icons/mob/screen_full_colorized_vore.dmi')
-	downscaledVC.Scale(240, 240)
-	InsertAll("", downscaledVC)
+	for(var/vore_icon in vore_fullscreen_icon_files(TRUE))
+		if(!length(icon_states(vore_icon)))
+			continue
+		var/icon/downscaledVC = icon(vore_icon)
+		downscaledVC.Scale(240, 240)
+		InsertAllUnique("", downscaledVC)
 	..()
 
 
