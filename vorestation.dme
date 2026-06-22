@@ -2647,6 +2647,7 @@
 #include "code\modules\instruments\instrument_data\guitar.dm"
 #include "code\modules\instruments\instrument_data\hardcoded.dm"
 #include "code\modules\instruments\instrument_data\organ.dm"
+#include "code\modules\instruments\instrument_data\percussion.dm"
 #include "code\modules\instruments\instrument_data\piano.dm"
 #include "code\modules\instruments\instrument_data\strings.dm"
 #include "code\modules\instruments\instrument_data\synth_tones.dm"
