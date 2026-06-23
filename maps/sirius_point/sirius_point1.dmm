@@ -9530,6 +9530,7 @@
 /obj/item/instrument/piano_synth,
 /obj/item/instrument/banjo,
 /obj/item/instrument/accordion,
+/obj/item/instrument/drumkit,
 /obj/structure/table/rack/wood,
 /turf/simulated/floor/wood,
 /area/crew_quarters/recreation_area)
