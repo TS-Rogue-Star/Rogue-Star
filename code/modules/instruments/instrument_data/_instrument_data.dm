@@ -1,12 +1,16 @@
 /**
  * Get all non admin_only instruments as a list of text ids.
  */
+// RS Edit: Drumkit (Lira, June 2026)
 /proc/get_allowed_instrument_ids()
 	. = list()
 	for(var/id in SSinstruments.instrument_data)
 		var/datum/instrument/I = SSinstruments.instrument_data[id]
-		if(!I.admin_only)
-			. += I.id
+		if(I.admin_only)
+			continue
+		if(I.id == "r3drums")
+			continue
+		. += I.id
 
 // RS Add: Get all non-admin synthesized instruments for advanced synth (Lira, March 2026)
 /proc/get_layerable_synth_instrument_ids()

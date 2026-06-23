@@ -18350,6 +18350,7 @@
 /obj/structure/table/rack/steel,
 /obj/item/instrument/violin,
 /obj/item/instrument/piano_synth,
+/obj/item/instrument/drumkit,
 /obj/item/instrument/recorder,
 /turf/simulated/floor/tiled/dark,
 /area/crew_quarters/recreation_area)

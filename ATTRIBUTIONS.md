@@ -617,12 +617,14 @@ Link: https://github.com/TS-Rogue-Star/Rogue-Star/pull/987<br>
 **Icon-States:** stamp-tal, paper_stamp-tal, paper_stamp-square, paperplane_stamp-tal<br>
 **Creator:** Unknown. Modified by Azzy.Dreemurr<br>
 **License:** CC BY-SA 3.0<br>
+<br>
 **Folders**: sound/instruments/synthesis_samples/banjo,<br>
 sound/instruments/synthesis_samples/chromatic/fluid_xylophone,<br>
 sound/instruments/synthesis_samples/guitar/fluid_distortion,<br>
 sound/instruments/synthesis_samples/guitar/fluid_harmonics,<br>
 sound/instruments/synthesis_samples/guitar/fluid_jazz,<br>
 sound/instruments/synthesis_samples/guitar/fluid_overdrive,<br>
+sound/instruments/synthesis_samples/percussion/fluid_standard,<br>
 sound/instruments/synthesis_samples/strings/fluid_violin,<br>
 sound/instruments/synthesis_samples/woodwind/fluid_alto_sax,<br>
 sound/instruments/synthesis_samples/woodwind/fluid_baritone_sax,<br>
@@ -631,7 +633,6 @@ sound/instruments/synthesis_samples/woodwind/fluid_soprano_sax,<br>
 sound/instruments/synthesis_samples/woodwind/fluid_tenor_sax,<br>
 **Link**:https://github.com/TS-Rogue-Star/Rogue-Star/pull/1327<br>
 **License**: MIT (licence included in folders with corresponding assets)<br>
-<br>
 <br>
 **File**: code/game/Rogue Star/icons/clothing/storage/RigAcc.dmi<br>
 **Creator**: crossexonar/sari, Toriate <br>
