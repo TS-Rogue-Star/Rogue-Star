@@ -48,6 +48,7 @@
 	var/obj/item/hologram_projector/HP = new(loc,src)
 	forceMove(HP)
 	HP.visible_message(SPAN_WARNING("\The [HP] clatters to the ground..."),runemessage = "clatter. . .")
+	playsound(HP, 'sound/items/drop/ring.ogg', 50, 1)
 
 /mob/living/simple_mob/holomob/apply_attack(atom/A, damage_to_do)
 	if(!safety)
@@ -166,12 +167,33 @@
 	return TRUE
 
 //SUBTYPE
+/mob/living/simple_mob/holomob/tri
+	icon_state = "tri"
+	icon_living = "tri"
+/mob/living/simple_mob/holomob/itri
+	icon_state = "itri"
+	icon_living = "itri"
+
 /mob/living/simple_mob/holomob/light
 	icon_state = "fish"
 	icon_living = "fish"
 	movement_cooldown = -2
-	halloss_mult = 0.25
+	halloss_mult = 0.75
 	maxHealth = 25
+
+/mob/living/simple_mob/holomob/light/hyper
+	icon_state = "critter"
+	icon_living = "critter"
+	movement_cooldown = -3
+	special_attack_cooldown = 5 SECOND
+	special_attack_min_range = 2
+	special_attack_max_range = 7
+
+/mob/living/simple_mob/holomob/light/hyper/do_special_attack(atom/A)
+	if(!A)
+		return
+	throw_at(A,7,10)
+	playsound(src, 'sound/effects/houndstep.ogg', 50, 1)
 
 /mob/living/simple_mob/holomob/heavy
 	icon_state = "fella"
@@ -192,19 +214,18 @@
 	icon_living = "hand"
 	movement_cooldown = 15
 	halloss_mult = 200
-	maxHealth = 20000
+	maxHealth = 200000
 
 /mob/living/simple_mob/holomob/ranged
 	icon_state = "orb"
 	icon_living = "orb"
 	projectiletype = /obj/item/projectile/holobeam
-//	projectilesound				// The sound I make when I do it
-	projectile_accuracy = -10		// Accuracy modifier to add onto the bullet when its fired.
-	projectile_dispersion = 5	// How many degrees to vary when I do it.
-	needs_reload = TRUE							// If TRUE, mob needs to reload occasionally
-	reload_max = 3									// How many shots the mob gets before it has to reload, will not be used if needs_reload is FALSE
-	reload_time = 4 SECONDS							// How long it takes for a mob to reload. This is to buy a player a bit of time to run or fight.
-	reload_sound = 'sound/weapons/flipblade.ogg'	// What sound gets played when the mob successfully reloads. Defaults to the same sound as reloading guns. Can be null.
+	projectile_accuracy = -10
+	projectile_dispersion = 5
+	needs_reload = TRUE
+	reload_max = 3
+	reload_time = 4 SECONDS
+	reload_sound = 'sound/weapons/flipblade.ogg'
 
 /mob/living/simple_mob/holomob/healer
 	icon_state = "bird"
@@ -348,6 +369,8 @@
 	if(isliving(loc))
 		var/mob/living/L = loc
 		L.drop_from_inventory(src)
+	var/turf/T = get_turf(src)
+	playsound(T, 'sound/effects/whistle.ogg', 100, 1)
 	qdel(src)
 
 /obj/effect/landmark/safepoint
