@@ -242,6 +242,19 @@
 	else
 		STOP_AIFASTPROCESSING(src)
 
+// RS Edit: Healer tweaks (Lira, June 2026)
+/datum/ai_holder/proc/start_fast_processing()
+	manage_processing(AI_PROCESSING|AI_FASTPROCESSING)
+
+// RS Edit: Healer tweaks (Lira, June 2026)
+/datum/ai_holder/proc/sync_processing_to_stance()
+	if(stance in fastprocess_stances)
+		manage_processing(AI_PROCESSING|AI_FASTPROCESSING)
+	else if(stance in noprocess_stances)
+		manage_processing(AI_NO_PROCESS)
+	else
+		manage_processing(AI_PROCESSING)
+
 /datum/ai_holder/proc/holder_stat_change(var/mob, old_stat, new_stat)
 	if(old_stat >= DEAD && new_stat <= DEAD) //Revived
 		manage_processing(AI_PROCESSING)
@@ -340,12 +353,8 @@
 		stance_color()
 	update_stance_hud()
 
-	if(new_stance in fastprocess_stances) //Becoming fast
-		manage_processing(AI_PROCESSING|AI_FASTPROCESSING)
-	else if(new_stance in noprocess_stances)
-		manage_processing(AI_NO_PROCESS) //Becoming off
-	else
-		manage_processing(AI_PROCESSING) //Becoming slow
+	// RS Edit: Healer tweaks (Lira, June 2026)
+	sync_processing_to_stance()
 
 // This is called every half a second.
 /datum/ai_holder/proc/handle_stance_tactical()
