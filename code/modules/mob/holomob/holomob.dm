@@ -42,8 +42,10 @@
 	low_priority = FALSE
 	var/safety = TRUE
 	var/halloss_mult = 1
+	var/mob/living/simple_mob/holomob/healer/being_healed_by
 
 /mob/living/simple_mob/holomob/death(gibbed,deathmessage="fades away...")
+	being_healed_by?.clear_healing_reservation(src)
 	. = ..()
 	var/obj/item/hologram_projector/HP = new(loc,src)
 	forceMove(HP)
@@ -77,6 +79,8 @@
 
 /mob/living/simple_mob/holomob/Life()
 	. = ..()
+	if(!. || stat >= DEAD)
+		return
 
 	ask_for_healing()
 
@@ -137,17 +141,31 @@
 /mob/living/simple_mob/holomob/proc/turfcheck()	//This should probably check for some kind of special turf or something for holograms to live on
 	return TRUE
 
+/mob/living/simple_mob/holomob/proc/needs_healing()
+	return stat < DEAD && health <= maxHealth - (maxHealth/4)
+
 /mob/living/simple_mob/holomob/proc/ask_for_healing()
-	if(health > maxHealth - (maxHealth/4))
+	if(being_healed_by)
+		var/mob/living/simple_mob/holomob/healer/current_healer = being_healed_by
+		if(QDELETED(current_healer))
+			being_healed_by = null
+			ai_holder?.set_busy(FALSE)
+		else if(current_healer.stat >= DEAD || current_healer.healing_target != src)
+			current_healer.clear_healing_reservation(src)
+			being_healed_by = null
+			ai_holder?.set_busy(FALSE)
+		else if(!current_healer.can_process_healing_reservation())
+			current_healer.clear_healing_reservation(src)
+	if(!needs_healing())
+		being_healed_by?.clear_healing_reservation(src)
 		return
 	for(var/mob/living/simple_mob/holomob/healer/H in view(world.view,get_turf(src)))
 		if(H == src)
 			continue
 		if(!H.ai_holder)
+			continue
+		if(H.please_heal(src))
 			return
-		visible_message(SPAN_WARNING("\The [src] calls for help!"),runemessage = "!!!!!")
-		H.please_heal(src)
-		return
 
 /mob/living/proc/apply_hologram_damage(var/damage)
 
@@ -238,29 +256,100 @@
 	special_attack_min_range = 1
 	special_attack_max_range = 7
 	var/heal_amount = 100
+	var/mob/living/simple_mob/holomob/healing_target
+	var/healing_target_busy = FALSE
+
+/mob/living/simple_mob/holomob/healer/proc/can_process_healing_reservation()
+	return ai_holder && stat < DEAD && (!key || ai_holder.autopilot)
+
+/mob/living/simple_mob/holomob/healer/proc/clear_healing_reservation(var/mob/living/simple_mob/holomob/holo_target)
+	if(!holo_target)
+		holo_target = healing_target
+	if(holo_target && !QDELETED(holo_target))
+		if(holo_target.being_healed_by == src)
+			holo_target.being_healed_by = null
+		if(healing_target_busy && healing_target == holo_target)
+			holo_target.ai_holder?.set_busy(FALSE)
+	if(healing_target == holo_target)
+		healing_target = null
+	healing_target_busy = FALSE
+	if(!healing_target && can_process_healing_reservation())
+		ai_holder?.sync_processing_to_stance()
 
 /mob/living/simple_mob/holomob/healer/should_special_attack(atom/A)
 	if(!isliving(A))
 		return FALSE
 	var/mob/living/L = A
+	if(L.stat >= DEAD)
+		return FALSE
+	if(healing_target && healing_target != A)
+		return FALSE
 	if(L.faction != faction)
 		return FALSE
-	if(L.health > L.maxHealth - (L.maxHealth/4))
+	var/mob/living/simple_mob/holomob/holo_target
+	if(istype(L, /mob/living/simple_mob/holomob))
+		holo_target = L
+	if(holo_target)
+		if(!holo_target.needs_healing())
+			return FALSE
+	else if(L.health > L.maxHealth - (L.maxHealth/4))
+		return FALSE
+	if(holo_target?.being_healed_by && holo_target.being_healed_by != src)
+		return FALSE
+	var/datum/ai_holder/target_ai = L.ai_holder
+	if(target_ai?.busy && (!holo_target || holo_target.being_healed_by != src))
 		return FALSE
 	return TRUE
 
 /mob/living/simple_mob/holomob/healer/do_special_attack(atom/A)
+	set waitfor = FALSE
+
 	if(!isliving(A))
 		return
-	visible_message(SPAN_DANGER("\The [src] begins focusing..."),runemessage = ". . .")
-	ai_holder?.busy = TRUE
-	if(!do_after(src,3 SECONDS,A,progress = TRUE))
-		ai_holder?.busy = FALSE
-		return
-	ai_holder?.busy = FALSE
-	visible_message(SPAN_DANGER("\The [src] heals its friend!!!"),runemessage = "! ! !")
-
 	var/mob/living/L = A
+	var/mob/living/simple_mob/holomob/holo_target
+	if(istype(L, /mob/living/simple_mob/holomob))
+		holo_target = L
+	if(L.stat >= DEAD)
+		clear_healing_reservation(holo_target)
+		return
+	if(healing_target && healing_target != holo_target)
+		clear_healing_reservation()
+		return
+	if(holo_target?.being_healed_by && holo_target.being_healed_by != src)
+		clear_healing_reservation(holo_target)
+		return
+	var/datum/ai_holder/target_ai = L.ai_holder
+	if(target_ai?.busy && (!holo_target || holo_target.being_healed_by != src))
+		clear_healing_reservation(holo_target)
+		return
+	var/turf/target_turf = get_turf(L)
+	if(target_turf)
+		target_turf.visible_message(SPAN_WARNING("\The [L] calls for help!"),runemessage = "!!!!!")
+	var/turf/source_turf = get_turf(src)
+	if(source_turf)
+		source_turf.visible_message(SPAN_DANGER("\The [src] begins focusing..."),runemessage = ". . .")
+	if(holo_target)
+		holo_target.being_healed_by = src
+		healing_target = holo_target
+		healing_target_busy = TRUE
+	target_ai?.set_busy(TRUE)
+	ai_holder?.set_busy(TRUE)
+	if(!do_after(src,3 SECONDS,A,progress = TRUE))
+		ai_holder?.set_busy(FALSE)
+		target_ai?.set_busy(FALSE)
+		clear_healing_reservation(holo_target)
+		return
+	ai_holder?.set_busy(FALSE)
+	target_ai?.set_busy(FALSE)
+	if(QDELETED(L) || L.stat >= DEAD)
+		clear_healing_reservation(holo_target)
+		return
+	clear_healing_reservation(holo_target)
+	source_turf = get_turf(src)
+	if(source_turf)
+		source_turf.visible_message(SPAN_DANGER("\The [src] heals its friend!!!"),runemessage = "! ! !")
+
 	var/healing_bank = heal_amount
 	if(L.bruteloss)
 		if(L.bruteloss <= healing_bank)
@@ -300,11 +389,29 @@
 
 /mob/living/simple_mob/holomob/healer/proc/please_heal(var/mob/living/L)
 	if(!isliving(L))
-		return
-	if(!ai_holder)
-		return
-	ai_holder.remove_target()
-	ai_holder.give_target(L,TRUE)
+		return FALSE
+	if(L.stat >= DEAD)
+		return FALSE
+	if(!can_process_healing_reservation())
+		return FALSE
+	var/mob/living/simple_mob/holomob/holo_target
+	if(istype(L, /mob/living/simple_mob/holomob))
+		holo_target = L
+	if(holo_target && !holo_target.needs_healing())
+		return FALSE
+	if(healing_target)
+		return healing_target == holo_target
+	if(ai_holder.busy)
+		return FALSE
+	if(holo_target?.being_healed_by)
+		return FALSE
+	if(!ICheckSpecialAttack(L))
+		return FALSE
+	if(holo_target)
+		holo_target.being_healed_by = src
+		healing_target = holo_target
+		ai_holder.start_fast_processing()
+	return TRUE
 
 /mob/living/simple_mob/holomob/healer/can_special_attack(atom/A)
 	. = ..()
@@ -328,10 +435,29 @@
 	if(isliving(the_target))
 		var/mob/living/L = the_target
 		if(L.faction == holder.faction)
-			if(L.health < L.maxHealth - (L.maxHealth/4))
-				if(holder.ICheckSpecialAttack(L))
-					special_attack(L)
-					return
+			return FALSE
+	return ..()
+
+/datum/ai_holder/holomob/healer/handle_special_tactic()
+	var/mob/living/simple_mob/holomob/healer/H = holder
+	if(!H?.healing_target)
+		return
+	if(busy)
+		if(!H.healing_target_busy)
+			H.clear_healing_reservation()
+		return
+	if(!H.ICheckSpecialAttack(H.healing_target))
+		H.clear_healing_reservation()
+		return
+	var/mob/living/simple_mob/holomob/heal_target = H.healing_target
+	H.special_attack_target(heal_target)
+	if(H.healing_target == heal_target && !H.healing_target_busy)
+		H.clear_healing_reservation(heal_target)
+
+/datum/ai_holder/holomob/healer/handle_stance_tactical()
+	var/mob/living/simple_mob/holomob/healer/H = holder
+	if(H?.healing_target)
+		return
 	return ..()
 /*
 /datum/ai_holder/holomob/healer/pre_special_attack(atom/A)
