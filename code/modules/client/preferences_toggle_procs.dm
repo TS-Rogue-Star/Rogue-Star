@@ -122,6 +122,7 @@
 /client/verb/toggle_ahelp_sound()
 	set name = "Toggle Admin Help Sound"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Sound preferences panel (Lira, June 2026)
 	set desc = "Toggles the ability to hear a noise broadcasted when you get an admin message."
 
 	var/pref_path = /datum/client_preference/holder/play_adminhelp_ping
@@ -137,6 +138,7 @@
 /client/verb/toggle_lobby_music()
 	set name = "Toggle Lobby Music"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Sound preferences panel (Lira, June 2026)
 	set desc = "Toggles the ability to hear the music in the lobby."
 
 	var/pref_path = /datum/client_preference/play_lobby_music
@@ -152,6 +154,7 @@
 /client/verb/toggle_admin_midis()
 	set name = "Toggle Admin Music"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Sound preferences panel (Lira, June 2026)
 	set desc = "Toggles the ability to hear music played by admins."
 
 	var/pref_path = /datum/client_preference/play_admin_midis
@@ -167,6 +170,7 @@
 /client/verb/toggle_ambience()
 	set name = "Toggle Ambience"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Sound preferences panel (Lira, June 2026)
 	set desc = "Toggles the ability to hear local ambience."
 
 	var/pref_path = /datum/client_preference/play_ambiance
@@ -182,6 +186,7 @@
 /client/verb/toggle_weather_sounds()
 	set name = "Toggle Weather Sounds"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Sound preferences panel (Lira, June 2026)
 	set desc = "Toggles the ability to hear weather sounds while on a planet."
 
 	var/pref_path = /datum/client_preference/weather_sounds
@@ -197,6 +202,7 @@
 /client/verb/toggle_supermatter_hum()
 	set name = "Toggle SM Hum" // Avoiding using the full 'Supermatter' name to not conflict with the Setup-Supermatter adminverb.
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Sound preferences panel (Lira, June 2026)
 	set desc = "Toggles the ability to hear supermatter hums."
 
 	var/pref_path = /datum/client_preference/supermatter_hum
@@ -212,6 +218,7 @@
 /client/verb/toggle_jukebox()
 	set name = "Toggle Jukebox"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Sound preferences panel (Lira, June 2026)
 	set desc = "Toggles the ability to hear jukebox music."
 
 	var/pref_path = /datum/client_preference/play_jukebox
@@ -242,6 +249,7 @@
 /client/verb/toggle_air_pump_hum()
 	set name = "Toggle Air Vent Noise"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Sound preferences panel (Lira, June 2026)
 	set desc = "Toggles the ability to hear air vent humming."
 
 	var/pref_path = /datum/client_preference/air_pump_noise
@@ -257,6 +265,7 @@
 /client/verb/toggle_old_door_sounds()
 	set name = "Toggle Old Door Sounds"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Sound preferences panel (Lira, June 2026)
 	set desc = "Toggles door sounds between old and new."
 
 	var/pref_path = /datum/client_preference/old_door_sounds
@@ -272,6 +281,7 @@
 /client/verb/toggle_department_door_sounds()
 	set name = "Toggle Department Door Sounds"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Sound preferences panel (Lira, June 2026)
 	set desc = "Toggles hearing of department-specific door sounds."
 
 	var/pref_path = /datum/client_preference/department_door_sounds
@@ -287,6 +297,7 @@
 /client/verb/toggle_pickup_sounds()
 	set name = "Toggle Picked Up Item Sounds"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Sound preferences panel (Lira, June 2026)
 	set desc = "Toggles the ability to hear sounds when items are picked up."
 
 	var/pref_path = /datum/client_preference/pickup_sounds
@@ -302,6 +313,7 @@
 /client/verb/toggle_drop_sounds()
 	set name = "Toggle Dropped Item Sounds"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Sound preferences panel (Lira, June 2026)
 	set desc = "Toggles the ability to hear sounds when items are dropped or thrown."
 
 	var/pref_path = /datum/client_preference/drop_sounds
@@ -356,6 +368,7 @@
 /client/verb/toggle_hear_instruments()
 	set name = "Toggle Hear/Ignore Instruments"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Sound preferences panel (Lira, June 2026)
 	set desc = "Toggles the ability to hear instruments playing."
 
 	var/pref_path = /datum/client_preference/instrument_toggle
@@ -421,6 +434,7 @@
 /client/verb/toggle_radio_sounds()
 	set name = "Toggle Radio Sounds"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Sound preferences panel (Lira, June 2026)
 	set desc = "Toggle hearing a sound when somebody speaks over your headset."
 
 	var/pref_path = /datum/client_preference/radio_sounds
@@ -434,6 +448,7 @@
 /client/verb/toggle_say_sounds()
 	set name = "Sound-Toggle-Say"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Sound preferences panel (Lira, June 2026)
 	set desc = "Toggle hearing a sound when somebody speaks using say."
 
 	var/pref_path = /datum/client_preference/say_sounds
@@ -447,6 +462,7 @@
 /client/verb/toggle_emote_sounds()
 	set name = "Sound-Toggle-Me"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Sound preferences panel (Lira, June 2026)
 	set desc = "Toggle hearing a sound when somebody speaks using me ."
 
 	var/pref_path = /datum/client_preference/emote_sounds
@@ -460,6 +476,7 @@
 /client/verb/toggle_whisper_sounds()
 	set name = "Sound-Toggle-Whisper"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Sound preferences panel (Lira, June 2026)
 	set desc = "Toggle hearing a sound when somebody speaks using whisper."
 
 	var/pref_path = /datum/client_preference/whisper_sounds
@@ -473,6 +490,7 @@
 /client/verb/toggle_subtle_sounds()
 	set name = "Sound-Toggle-Subtle"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Sound preferences panel (Lira, June 2026)
 	set desc = "Toggle hearing a sound when somebody uses subtle."
 
 	var/pref_path = /datum/client_preference/subtle_sounds
@@ -487,6 +505,7 @@
 /client/verb/toggle_looc_sounds()
 	set name = "Sound-Toggle-LOOC"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Sound preferences panel (Lira, June 2026)
 	set desc = "Toggle hearing a sound when somebody uses LOOC."
 
 	var/pref_path = /datum/client_preference/looc_sounds
