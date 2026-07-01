@@ -198,8 +198,9 @@ var/global/list/robot_modules = list(
 /obj/item/weapon/robot_module/robot/New(var/mob/living/silicon/robot/R)
 	..()
 
-	if(R.sprite_datum)
-		R.sprite_datum.do_equipment_glamour(src)
+	// RS Edit: Robot Glamour fix (Lira, June 2026)
+	if(R.icon_selected)
+		R.apply_sprite_equipment_glamour()
 
 // Cyborgs (non-drones), default loadout. This will be given to every module.
 /obj/item/weapon/robot_module/robot/create_equipment(var/mob/living/silicon/robot/robot)
