@@ -209,7 +209,12 @@
 	if(owner?.ignore_sprite_accessory_body_hide)
 		return 0
 	for(var/M in markings)
-		var/datum/sprite_accessory/marking/mark_style = markings[M]["datum"]
+		// RS Edit Start: Fix markings bug (Lira, June 2026)
+		var/list/mark_data = markings[M]
+		if(!islist(mark_data) || !mark_data["on"])
+			continue
+		var/datum/sprite_accessory/marking/mark_style = mark_data["datum"]
+		// RS Edit End
 		if(istype(mark_style,/datum/sprite_accessory/marking) && (organ_tag in mark_style.hide_body_parts))
 			return 1
 
@@ -1435,6 +1440,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 		return 1
 	if(clothing_only && markings.len)
 		for(var/M in markings)
-			var/datum/sprite_accessory/marking/mark = markings[M]["datum"]
-			if(mark.hide_body_parts && (organ_tag in mark.hide_body_parts))
+			// RS Edit Start: Fix markings bug (Lira, June 2026)
+			var/list/mark_data = markings[M]
+			if(!islist(mark_data) || !mark_data["on"])
+				continue
+			var/datum/sprite_accessory/marking/mark = mark_data["datum"]
+			if(istype(mark, /datum/sprite_accessory/marking) && mark.hide_body_parts && (organ_tag in mark.hide_body_parts))
+			// RS Edit End
 				return 1
