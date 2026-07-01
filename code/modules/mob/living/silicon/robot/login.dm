@@ -13,7 +13,8 @@
 		icon_selection_tries = SSrobot_sprites.get_module_sprites_len(modtype, src) + 1
 		choose_icon(icon_selection_tries)
 
-		if(sprite_datum && module)
-			sprite_datum.do_equipment_glamour(module)
+		// RS Edit: Robot Glamour fix (Lira, June 2026)
+		if(icon_selected)
+			apply_sprite_equipment_glamour()
 
 	plane_holder.set_vis(VIS_AUGMENTED, TRUE)
