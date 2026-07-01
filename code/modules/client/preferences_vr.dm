@@ -15,6 +15,7 @@
 /client/verb/toggle_eating_noises()
 	set name = "Toggle Eating Noises"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Sound preferences panel (Lira, June 2026)
 	set desc = "Toggles hearing Vore Eating noises."
 
 	var/pref_path = /datum/client_preference/eating_noises
@@ -31,6 +32,7 @@
 /client/verb/toggle_digestion_noises()
 	set name = "Toggle Digestion Noises"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Sound preferences panel (Lira, June 2026)
 	set desc = "Toggles hearing Vore Digestion noises."
 
 	var/pref_path = /datum/client_preference/digestion_noises
@@ -46,6 +48,7 @@
 /client/verb/toggle_belch_noises()
 	set name = "Toggle Audible Belching"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Sound preferences panel (Lira, June 2026)
 	set desc = "Toggles hearing audible belches."
 
 	var/pref_path = /datum/client_preference/belch_noises
@@ -61,6 +64,7 @@
 /client/verb/toggle_emote_noises()
 	set name = "Toggle Emote Noises"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Sound preferences panel (Lira, June 2026)
 	set desc = "Toggles hearing emote noises."
 
 	var/pref_path = /datum/client_preference/emote_noises
@@ -110,6 +114,7 @@
 /client/verb/toggle_mentorhelp_ping()
 	set name = "Toggle Mentorhelp Ping"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Sound preferences panel (Lira, June 2026)
 	set desc = "Toggles the mentorhelp ping"
 
 	var/pref_path = /datum/client_preference/play_mentorhelp_ping

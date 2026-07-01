@@ -59,6 +59,10 @@
 	. += "<table>"
 	var/mob/pref_mob = preference_mob()
 	for(var/datum/client_preference/client_pref as anything in get_client_preferences())
+		// RS Add Start: Sound preferences panel (Lira, June 2026)
+		if(client_pref.sound_panel_group)
+			continue
+		// RS Add End
 		if(!client_pref.may_toggle(pref_mob))
 			continue
 
@@ -72,12 +76,23 @@
 	. += "</table>"
 	return jointext(., "")
 
+// RS Edit: Sound preferences panel (Lira, June 2026)
 /datum/category_item/player_setup_item/player_global/settings/OnTopic(var/href,var/list/href_list, var/mob/user)
 	var/mob/pref_mob = preference_mob()
+	var/preference_key
+	var/datum/client_preference/client_pref
 	if(href_list["toggle_on"])
-		. = pref_mob.set_preference(href_list["toggle_on"], TRUE)
+		preference_key = href_list["toggle_on"]
+		client_pref = get_client_preference(preference_key)
+		if(client_pref?.sound_panel_group)
+			return TOPIC_NOACTION
+		. = pref_mob.set_preference(preference_key, TRUE)
 	else if(href_list["toggle_off"])
-		. = pref_mob.set_preference(href_list["toggle_off"], FALSE)
+		preference_key = href_list["toggle_off"]
+		client_pref = get_client_preference(preference_key)
+		if(client_pref?.sound_panel_group)
+			return TOPIC_NOACTION
+		. = pref_mob.set_preference(preference_key, FALSE)
 	if(.)
 		return TOPIC_REFRESH
 

@@ -37,6 +37,10 @@ var/list/_client_preferences_by_type
 	var/enabled_by_default = TRUE
 	var/enabled_description = "Yes"
 	var/disabled_description = "No"
+	// RS Add Start: Sound preferences panel (Lira, June 2026)
+	var/sound_panel_group
+	var/sound_panel_sort_order = 0
+	// RS Add End
 
 /datum/client_preference/proc/may_toggle(var/mob/preference_mob)
 	return TRUE
@@ -51,10 +55,18 @@ var/list/_client_preferences_by_type
 /datum/client_preference/play_admin_midis
 	description ="Play admin midis"
 	key = "SOUND_MIDI"
+	// RS Add Start: Sound preferences panel (Lira, June 2026)
+	sound_panel_group = SOUND_PANEL_GROUP_MUSIC
+	sound_panel_sort_order = 30
+	// RS Add End
 
 /datum/client_preference/play_lobby_music
 	description ="Play lobby music"
 	key = "SOUND_LOBBY"
+	// RS Add Start: Sound preferences panel (Lira, June 2026)
+	sound_panel_group = SOUND_PANEL_GROUP_MUSIC
+	sound_panel_sort_order = 10
+	// RS Add End
 
 /datum/client_preference/play_lobby_music/toggled(var/mob/preference_mob, var/enabled)
 	if(!preference_mob.client || !preference_mob.client.media)
@@ -68,6 +80,10 @@ var/list/_client_preferences_by_type
 /datum/client_preference/play_ambiance
 	description ="Play ambience"
 	key = "SOUND_AMBIENCE"
+	// RS Add Start: Sound preferences panel (Lira, June 2026)
+	sound_panel_group = SOUND_PANEL_GROUP_WORLD
+	sound_panel_sort_order = 10
+	// RS Add End
 
 /datum/client_preference/play_ambiance/toggled(var/mob/preference_mob, var/enabled)
 	if(!enabled)
@@ -77,6 +93,10 @@ var/list/_client_preferences_by_type
 /datum/client_preference/play_jukebox
 	description ="Play jukebox music"
 	key = "SOUND_JUKEBOX"
+	// RS Add Start: Sound preferences panel (Lira, June 2026)
+	sound_panel_group = SOUND_PANEL_GROUP_MUSIC
+	sound_panel_sort_order = 20
+	// RS Add End
 
 /datum/client_preference/play_jukebox/toggled(var/mob/preference_mob, var/enabled)
 	if(!enabled)
@@ -90,6 +110,9 @@ var/list/_client_preferences_by_type
 	key = "FOOD EATING_NOISES"
 	enabled_description = "Enabled"
 	disabled_description = "Disabled"
+	// Sound preferences panel (Lira, June 2026)
+	sound_panel_group = SOUND_PANEL_GROUP_VORE
+	sound_panel_sort_order = 10
 //RS ADD END
 
 /datum/client_preference/eating_noises
@@ -97,30 +120,50 @@ var/list/_client_preferences_by_type
 	key = "EATING_NOISES"
 	enabled_description = "Noisy"
 	disabled_description = "Silent"
+	// RS Add Start: Sound preferences panel (Lira, June 2026)
+	sound_panel_group = SOUND_PANEL_GROUP_VORE
+	sound_panel_sort_order = 20
+	// RS Add End
 
 /datum/client_preference/digestion_noises
 	description = "Digestion Noises"
 	key = "DIGEST_NOISES"
 	enabled_description = "Noisy"
 	disabled_description = "Silent"
+	// RS Add Start: Sound preferences panel (Lira, June 2026)
+	sound_panel_group = SOUND_PANEL_GROUP_VORE
+	sound_panel_sort_order = 30
+	// RS Add End
 
 /datum/client_preference/belch_noises // Belching noises - pref toggle for 'em
 	description = "Burping"
 	key = "BELCH_NOISES"
 	enabled_description = "Noisy"
 	disabled_description = "Silent"
+	// RS Add Start: Sound preferences panel (Lira, June 2026)
+	sound_panel_group = SOUND_PANEL_GROUP_VORE
+	sound_panel_sort_order = 40
+	// RS Add End
 
 /datum/client_preference/smooch_noises // Smooching noises - pref toggle for 'em //RS Edit Start
 	description = "Smooches"
 	key = "SMOOCH_NOISES"
 	enabled_description = "Noisy"
 	disabled_description = "Silent" //RS Edit End
+	// RS Add Start: Sound preferences panel (Lira, June 2026)
+	sound_panel_group = SOUND_PANEL_GROUP_VORE
+	sound_panel_sort_order = 50
+	// RS Add End
 
 /datum/client_preference/emote_noises
 	description = "Emote Noises" //MERP
 	key = "EMOTE_NOISES"
 	enabled_description = "Noisy"
 	disabled_description = "Silent"
+	// RS Add Start: Sound preferences panel (Lira, June 2026)
+	sound_panel_group = SOUND_PANEL_GROUP_VORE
+	sound_panel_sort_order = 60
+	// RS Add End
 /datum/client_preference/whisubtle_vis
 	description = "Whi/Subtles Ghost Visible"
 	key = "WHISUBTLE_VIS"
@@ -133,12 +176,20 @@ var/list/_client_preferences_by_type
 	key = "SOUND_WEATHER"
 	enabled_description = "Audible"
 	disabled_description = "Silent"
+	// RS Add Start: Sound preferences panel (Lira, June 2026)
+	sound_panel_group = SOUND_PANEL_GROUP_WORLD
+	sound_panel_sort_order = 20
+	// RS Add End
 
 /datum/client_preference/supermatter_hum
 	description ="Supermatter hum"
 	key = "SOUND_SUPERMATTER"
 	enabled_description = "Audible"
 	disabled_description = "Silent"
+	// RS Add Start: Sound preferences panel (Lira, June 2026)
+	sound_panel_group = SOUND_PANEL_GROUP_WORLD
+	sound_panel_sort_order = 30
+	// RS Add End
 
 /datum/client_preference/ghost_ears
 	description ="Ghost ears"
@@ -169,30 +220,50 @@ var/list/_client_preferences_by_type
 	key = "SOUND_AIRPUMP"
 	enabled_description = "Audible"
 	disabled_description = "Silent"
+	// RS Add Start: Sound preferences panel (Lira, June 2026)
+	sound_panel_group = SOUND_PANEL_GROUP_WORLD
+	sound_panel_sort_order = 40
+	// RS Add End
 
 /datum/client_preference/old_door_sounds
 	description ="Old Door Sounds"
 	key = "SOUND_OLDDOORS"
 	enabled_description = "Old"
 	disabled_description = "New"
+	// RS Add Start: Sound preferences panel (Lira, June 2026)
+	sound_panel_group = SOUND_PANEL_GROUP_WORLD
+	sound_panel_sort_order = 50
+	// RS Add End
 
 /datum/client_preference/department_door_sounds
 	description ="Department-Specific Door Sounds"
 	key = "SOUND_DEPARTMENTDOORS"
 	enabled_description = "Enabled"
 	disabled_description = "Disabled"
+	// RS Add Start: Sound preferences panel (Lira, June 2026)
+	sound_panel_group = SOUND_PANEL_GROUP_WORLD
+	sound_panel_sort_order = 60
+	// RS Add End
 
 /datum/client_preference/pickup_sounds
 	description = "Picked Up Item Sounds"
 	key = "SOUND_PICKED"
 	enabled_description = "Enabled"
 	disabled_description = "Disabled"
+	// RS Add Start: Sound preferences panel (Lira, June 2026)
+	sound_panel_group = SOUND_PANEL_GROUP_ITEMS
+	sound_panel_sort_order = 10
+	// RS Add End
 
 /datum/client_preference/drop_sounds
 	description = "Dropped Item Sounds"
 	key = "SOUND_DROPPED"
 	enabled_description = "Enabled"
 	disabled_description = "Disabled"
+	// RS Add Start: Sound preferences panel (Lira, June 2026)
+	sound_panel_group = SOUND_PANEL_GROUP_ITEMS
+	sound_panel_sort_order = 20
+	// RS Add End
 
 /datum/client_preference/mob_tooltips
 	description ="Mob tooltips"
@@ -294,6 +365,10 @@ var/list/_client_preferences_by_type
 /datum/client_preference/instrument_toggle
 	description ="Hear In-game Instruments"
 	key = "SOUND_INSTRUMENT"
+	// RS Add Start: Sound preferences panel (Lira, June 2026)
+	sound_panel_group = SOUND_PANEL_GROUP_MUSIC
+	sound_panel_sort_order = 40
+	// RS Add End
 
 // RS Add: Browser-based instrument audio (Lira, March 2026)
 /datum/client_preference/instrument_toggle/toggled(var/mob/preference_mob, var/enabled)
@@ -317,30 +392,50 @@ var/list/_client_preferences_by_type
 	key = "RADIO_SOUNDS"
 	enabled_description = "On"
 	disabled_description = "Off"
+	// RS Add Start: Sound preferences panel (Lira, June 2026)
+	sound_panel_group = SOUND_PANEL_GROUP_CHAT
+	sound_panel_sort_order = 10
+	// RS Add End
 
 /datum/client_preference/say_sounds
 	description = "Say Sounds"
 	key = "SAY_SOUNDS"
 	enabled_description = "On"
 	disabled_description = "Off"
+	// RS Add Start: Sound preferences panel (Lira, June 2026)
+	sound_panel_group = SOUND_PANEL_GROUP_CHAT
+	sound_panel_sort_order = 20
+	// RS Add End
 
 /datum/client_preference/emote_sounds
 	description = "Me Sounds"
 	key = "EMOTE_SOUNDS"
 	enabled_description = "On"
 	disabled_description = "Off"
+	// RS Add Start: Sound preferences panel (Lira, June 2026)
+	sound_panel_group = SOUND_PANEL_GROUP_CHAT
+	sound_panel_sort_order = 30
+	// RS Add End
 
 /datum/client_preference/whisper_sounds
 	description = "Whisper Sounds"
 	key = "WHISPER_SOUNDS"
 	enabled_description = "On"
 	disabled_description = "Off"
+	// RS Add Start: Sound preferences panel (Lira, June 2026)
+	sound_panel_group = SOUND_PANEL_GROUP_CHAT
+	sound_panel_sort_order = 40
+	// RS Add End
 
 /datum/client_preference/subtle_sounds
 	description = "Subtle Sounds"
 	key = "SUBTLE_SOUNDS"
 	enabled_description = "On"
 	disabled_description = "Off"
+	// RS Add Start: Sound preferences panel (Lira, June 2026)
+	sound_panel_group = SOUND_PANEL_GROUP_CHAT
+	sound_panel_sort_order = 50
+	// RS Add End
 
 //RS ADDITION
 /datum/client_preference/looc_sounds
@@ -348,6 +443,9 @@ var/list/_client_preferences_by_type
 	key = "LOOC_SOUNDS"
 	enabled_description = "On"
 	disabled_description = "Off"
+	// Sound preferences panel (Lira, June 2026)
+	sound_panel_group = SOUND_PANEL_GROUP_CHAT
+	sound_panel_sort_order = 60
 
 /datum/client_preference/emotes_from_beyond
 	description = "Emotes from Beyond"
@@ -413,6 +511,10 @@ var/list/_client_preferences_by_type
 	key = "SOUND_MENTORHELP"
 	enabled_description = "Hear"
 	disabled_description = "Silent"
+	// RS Add Start: Sound preferences panel (Lira, June 2026)
+	sound_panel_group = SOUND_PANEL_GROUP_STAFF
+	sound_panel_sort_order = 10
+	// RS Add End
 /* Rs removal
 /datum/client_preference/player_tips
 	description = "Receive Tips Periodically"
@@ -476,6 +578,10 @@ var/list/_client_preferences_by_type
 	key = "SOUND_ADMINHELP"
 	enabled_description = "Hear"
 	disabled_description = "Silent"
+	// RS Add Start: Sound preferences panel (Lira, June 2026)
+	sound_panel_group = SOUND_PANEL_GROUP_STAFF
+	sound_panel_sort_order = 20
+	// RS Add End
 
 /datum/client_preference/holder/hear_radio
 	description = "Radio chatter"

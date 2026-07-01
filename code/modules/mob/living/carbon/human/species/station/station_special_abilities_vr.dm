@@ -996,6 +996,7 @@
 /client/verb/toggle_smooch_noises()
 	set name = "Toggle Smooch Sounds"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Sound preferences panel (Lira, June 2026)
 	set desc = "Toggles hearing audible smooches."
 
 	var/pref_path = /datum/client_preference/smooch_noises
