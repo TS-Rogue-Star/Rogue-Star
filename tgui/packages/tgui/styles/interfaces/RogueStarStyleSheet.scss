@@ -11,6 +11,8 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star March 2026: Add Item Bank styles /////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star June 2026: Add sound preference styles ///////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @use '../colors.scss';
 
@@ -86,6 +88,11 @@ $titlebar-height: 38px;
 
   .Window__rest {
     top: $titlebar-height;
+  }
+
+  .Layout__content--scrollable,
+  .Section--scrollable > .Section__rest > .Section__content {
+    @include rogue-star-scrollbar;
   }
 
   .TitleBar {
@@ -430,7 +437,7 @@ $titlebar-height: 38px;
   .Section {
     background: $panel-bg;
     border: 1px solid $border-color;
-    border-radius: 24px;
+    border-radius: 8px;
     box-shadow:
       0 28px 60px rgba(3, 0, 9, 0.85),
       0 0 25px rgba(0, 0, 0, 0.35) inset,
@@ -1719,4 +1726,190 @@ $titlebar-height: 38px;
   font-size: 0.72rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+}
+
+.RogueStar__soundSettings {
+  padding-bottom: 0.5rem;
+
+  .Section {
+    border: 1px solid rgba(190, 140, 255, 0.3);
+    background:
+      linear-gradient(145deg, rgba(10, 4, 24, 0.88), rgba(28, 11, 45, 0.74)),
+      radial-gradient(
+        circle at top right,
+        rgba(229, 188, 106, 0.16),
+        transparent 45%
+      );
+    box-shadow:
+      0 12px 24px rgba(2, 0, 9, 0.32),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .LabeledList__label {
+    color: rgba(255, 238, 210, 0.9);
+    letter-spacing: 0.03em;
+  }
+
+  .Slider {
+    min-width: 180px;
+  }
+}
+
+.RogueStar__soundSettingsSlider.ProgressBar {
+  border: 1px solid rgba(229, 188, 106, 0.7);
+  background:
+    linear-gradient(180deg, rgba(6, 2, 14, 0.92), rgba(18, 8, 34, 0.9)),
+    radial-gradient(
+      circle at 12% 50%,
+      rgba(129, 76, 255, 0.35),
+      transparent 48%
+    );
+  box-shadow:
+    0 0 14px rgba(129, 76, 255, 0.24),
+    inset 0 0 12px rgba(0, 0, 0, 0.45);
+  color: #fff7df;
+
+  .ProgressBar__fill {
+    background: linear-gradient(
+      90deg,
+      rgba(129, 76, 255, 0.88),
+      rgba(229, 188, 106, 0.92)
+    );
+    box-shadow:
+      0 0 12px rgba(229, 188, 106, 0.34),
+      0 0 14px rgba(129, 76, 255, 0.28);
+  }
+
+  .ProgressBar__content {
+    color: #fff8e8;
+    font-weight: 700;
+    text-shadow:
+      0 0 6px rgba(0, 0, 0, 0.75),
+      0 0 8px rgba(129, 76, 255, 0.45);
+  }
+
+  .Slider__cursor {
+    border-left-color: #fff1c9;
+    filter: drop-shadow(0 0 4px rgba(229, 188, 106, 0.75));
+  }
+
+  .Slider__pointer {
+    border-bottom-color: #fff1c9;
+    filter: drop-shadow(0 0 4px rgba(229, 188, 106, 0.75));
+  }
+
+  .Slider__popupValue {
+    border: 1px solid rgba(229, 188, 106, 0.65);
+    background: linear-gradient(
+      145deg,
+      rgba(12, 5, 27, 0.98),
+      rgba(44, 18, 72, 0.96)
+    );
+    color: #fff7df;
+    box-shadow:
+      0 0 14px rgba(129, 76, 255, 0.42),
+      0 0 12px rgba(229, 188, 106, 0.28);
+  }
+}
+
+.RogueStar__soundSettingsReset.Button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.95rem;
+  min-width: 1.95rem;
+  height: 1.7rem;
+  padding: 0;
+  border: 1px solid rgba(229, 188, 106, 0.5);
+  border-radius: 8px;
+  background: linear-gradient(
+    145deg,
+    rgba(23, 9, 44, 0.96),
+    rgba(61, 24, 95, 0.9)
+  );
+  color: #fff5d7;
+  box-shadow:
+    0 0 12px rgba(129, 76, 255, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+
+  .Button__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    line-height: 1;
+  }
+
+  .Icon,
+  .fa,
+  .fas,
+  .far {
+    margin: 0;
+    min-width: 0;
+    text-align: center;
+  }
+}
+
+.RogueStar__soundSettingsReset.Button:hover,
+.RogueStar__soundSettingsReset.Button:focus {
+  transform: translateY(-1px);
+  border-color: rgba(255, 224, 159, 0.9);
+  background: linear-gradient(
+    145deg,
+    rgba(46, 18, 78, 0.98),
+    rgba(93, 39, 131, 0.95)
+  );
+  color: #ffffff;
+  box-shadow:
+    0 0 16px rgba(229, 188, 106, 0.38),
+    0 0 20px rgba(129, 76, 255, 0.36);
+}
+
+.RogueStar__soundSettingsToggleGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 260px));
+  gap: 0.5rem;
+  justify-content: start;
+}
+
+.RogueStar__soundSettingsToggle {
+  min-width: 0;
+}
+
+.RogueStar__soundSettingsToggleButton.Button {
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  min-height: 0;
+  padding: 0.2rem 0.6rem;
+  border-radius: 8px;
+  line-height: 1;
+  text-align: left;
+
+  .Button__content {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 0.5rem;
+    align-items: center;
+    width: 100%;
+    line-height: 1;
+  }
+
+  .Icon {
+    align-self: center;
+    line-height: 1;
+  }
+}
+
+.RogueStar__soundSettingsToggleLabel {
+  min-width: 0;
+  color: #fff8ff;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  text-transform: uppercase;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

@@ -105,6 +105,11 @@
 	if(href_list["category"])
 		var/category = locate(href_list["category"])
 		if(category && (category in categories))
+			// RS Add Start: Sound preferences panel (Lira, June 2026)
+			if(istype(category, /datum/category_group/player_setup_category/volume_sliders))
+				user.client.open_sound_settings_panel()
+				return 1
+			// RS Add End
 			selected_category = category
 		. = 1
 
