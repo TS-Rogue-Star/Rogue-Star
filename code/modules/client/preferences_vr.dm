@@ -80,6 +80,7 @@
 /client/verb/toggle_ghost_quiets()
 	set name = "Toggle Ghost Privacy"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Preference settings panel (Lira, July 2026)
 	set desc = "Toggles ghosts being able to see your subtles/whispers."
 
 	var/pref_path = /datum/client_preference/whisubtle_vis
@@ -145,6 +146,7 @@
 /client/verb/toggle_pain_frequency()
 	set name = "Toggle Pain Frequency"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Preference settings panel (Lira, July 2026)
 	set desc = "When toggled on, increases the cooldown of pain messages sent to chat for minor injuries"
 
 	var/pref_path = /datum/client_preference/pain_frequency
@@ -157,6 +159,7 @@
 /client/verb/toggle_game_participation()
 	set name = "Toggle Game Participation"
 	set category = "Preferences"
+	set hidden = TRUE // Preference settings panel (Lira, July 2026)
 	set desc = "When toggled on, you will participate in a game, and may collect or count for points!"
 
 	var/pref_path = /datum/client_preference/game_toggle
