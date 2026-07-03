@@ -2,6 +2,7 @@
 /client/verb/toggle_ghost_ears()
 	set name = "Toggle Ghost Ears"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Preference settings panel (Lira, July 2026)
 	set desc = "Toggles between seeing all mob speech and only nearby mob speech as an observer."
 
 	var/pref_path = /datum/client_preference/ghost_ears
@@ -17,6 +18,7 @@
 /client/verb/toggle_ghost_vision()
 	set name = "Toggle Ghost Sight"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Preference settings panel (Lira, July 2026)
 	set desc = "Toggles between seeing all mob emotes and only nearby mob emotes as an observer."
 
 	var/pref_path = /datum/client_preference/ghost_sight
@@ -32,6 +34,7 @@
 /client/verb/toggle_ghost_radio()
 	set name = "Toggle Ghost Radio"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Preference settings panel (Lira, July 2026)
 	set desc = "Toggles between seeing all radio chat and only nearby radio chatter as an observer."
 
 	var/pref_path = /datum/client_preference/ghost_radio
@@ -47,6 +50,7 @@
 /client/verb/toggle_deadchat()
 	set name = "Toggle Deadchat"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Preference settings panel (Lira, July 2026)
 	set desc = "Toggles visibility of dead chat."
 
 	var/pref_path = /datum/client_preference/show_dsay
@@ -62,6 +66,7 @@
 /client/verb/toggle_ooc()
 	set name = "Toggle OOC"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Preference settings panel (Lira, July 2026)
 	set desc = "Toggles visibility of global out of character chat."
 
 	var/pref_path = /datum/client_preference/show_ooc
@@ -77,6 +82,7 @@
 /client/verb/toggle_looc()
 	set name = "Toggle LOOC"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Preference settings panel (Lira, July 2026)
 	set desc = "Toggles visibility of local out of character chat."
 
 	var/pref_path = /datum/client_preference/show_looc
@@ -92,6 +98,7 @@
 /client/verb/toggle_precision_placement()
 	set name = "Toggle Precision Placement"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Preference settings panel (Lira, July 2026)
 	set desc = "Toggles whether objects placed on table will be on cursor position or centered."
 
 	var/pref_path = /datum/client_preference/precision_placement
@@ -107,6 +114,7 @@
 /client/verb/toggle_typing()
 	set name = "Toggle Typing Indicator"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Preference settings panel (Lira, July 2026)
 	set desc = "Toggles you having the speech bubble typing indicator."
 
 	var/pref_path = /datum/client_preference/show_typing_indicator
@@ -329,6 +337,7 @@
 /client/verb/toggle_safe_firing()
 	set name = "Toggle Gun Firing Intent Requirement"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Preference settings panel (Lira, July 2026)
 	set desc = "Toggles between safe and dangerous firing. Safe requires a non-help intent to fire, dangerous can be fired on help intent."
 
 	var/pref_path = /datum/client_preference/safefiring
@@ -342,6 +351,7 @@
 /client/verb/toggle_mob_tooltips()
 	set name = "Toggle Mob Tooltips"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Preference settings panel (Lira, July 2026)
 	set desc = "Toggles displaying name/species over mobs when they are moused over."
 
 	var/pref_path = /datum/client_preference/mob_tooltips
@@ -355,6 +365,7 @@
 /client/verb/toggle_inv_tooltips()
 	set name = "Toggle Item Tooltips"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Preference settings panel (Lira, July 2026)
 	set desc = "Toggles displaying name/desc over items when they are moused over (only applies in inventory)."
 
 	var/pref_path = /datum/client_preference/inv_tooltips
@@ -382,6 +393,7 @@
 /client/verb/toggle_vchat()
 	set name = "Toggle VChat"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Preference settings panel (Lira, July 2026)
 	set desc = "Toggles VChat. Reloading VChat and/or reconnecting required to affect changes."
 
 	// RSAdd - Reloading can only happen every 5 seconds
@@ -420,6 +432,7 @@
 /client/verb/toggle_status_indicators()
 	set name = "Toggle Status Indicators"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Preference settings panel (Lira, July 2026)
 	set desc = "Toggles seeing status indicators over peoples' heads."
 
 	var/pref_path = /datum/client_preference/status_indicators
@@ -519,6 +532,7 @@
 /client/verb/toggle_efb()
 	set name = "Toggle Emotes from Beyond"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Preference settings panel (Lira, July 2026)
 	set desc = "Toggle emotes and says from outside of the ship Z level from printing in your chat."
 
 	var/pref_path = /datum/client_preference/emotes_from_beyond
@@ -532,6 +546,7 @@
 /client/verb/toggle_vore_health_bars()
 	set name = "Toggle Vore Health Bars"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Preference settings panel (Lira, July 2026)
 	set desc = "Toggle the display of vore related health bars"
 
 	var/pref_path = /datum/client_preference/vore_health_bars
@@ -586,6 +601,7 @@
 /client/proc/toggle_debug_logs()
 	set name = "Toggle Debug Logs"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Preference settings panel (Lira, July 2026)
 	set desc = "Toggles seeing debug logs."
 
 	var/pref_path = /datum/client_preference/debug/show_debug_logs
@@ -601,6 +617,7 @@
 /client/proc/toggle_attack_logs()
 	set name = "Toggle Attack Logs"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Preference settings panel (Lira, July 2026)
 	set desc = "Toggles seeing attack logs."
 
 	var/pref_path = /datum/client_preference/mod/show_attack_logs
@@ -616,6 +633,7 @@
 /client/proc/toggle_admin_global_looc()
 	set name = "Toggle Admin Global LOOC Visibility"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Preference settings panel (Lira, July 2026)
 	set desc = "Toggles seeing LOOC messages outside your actual LOOC range."
 
 	var/pref_path = /datum/client_preference/holder/show_rlooc
@@ -630,6 +648,7 @@
 /client/proc/toggle_admin_deadchat()
 	set name = "Toggle Admin Living Deadchat"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Preference settings panel (Lira, July 2026)
 	set desc = "Toggles seeing deadchat while not observing."
 
 	var/pref_path = /datum/client_preference/holder/show_staff_dsay
