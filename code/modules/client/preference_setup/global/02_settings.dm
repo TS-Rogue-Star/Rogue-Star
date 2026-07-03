@@ -218,6 +218,18 @@
 			)
 			insert_preference(group_preferences, preference_entry)
 
+		if(group == PREFERENCE_SETTINGS_GROUP_CHAT)
+			var/list/chat_timestamps_entry = list(
+				"key" = "CHAT_TIMESTAMPS",
+				"label" = "Chat Timestamps",
+				"enabled" = user.client.prefs.chat_timestamp ? TRUE : FALSE,
+				"enabled_label" = "Enabled",
+				"disabled_label" = "Disabled",
+				"tooltip" = "Toggles whether or not messages in chat will display timestamps. Enabling this will not add timestamps to messages that have already been sent.",
+				"sort_order" = 45
+			)
+			insert_preference(group_preferences, chat_timestamps_entry)
+
 		if(length(group_preferences))
 			. += list(list(
 				"name" = group,
@@ -294,6 +306,17 @@
 	switch(action)
 		if("set_preference")
 			var/preference_key = params["key"]
+			if(preference_key == "CHAT_TIMESTAMPS")
+				var/enabled = param_number(params["enabled"], FALSE)
+				if(enabled == (usr.client.prefs.chat_timestamp ? TRUE : FALSE))
+					return FALSE
+				if(!can_accept_toggle_action())
+					return FALSE
+
+				usr.client.prefs.chat_timestamp = enabled ? TRUE : FALSE
+				schedule_preferences_save()
+				return TRUE
+
 			var/datum/client_preference/client_pref = get_client_preference(preference_key)
 			if(!client_pref || !client_pref.settings_panel_group || client_pref.sound_panel_group || !client_pref.may_toggle(usr))
 				return FALSE

@@ -93,7 +93,6 @@
 	)
 	. += "<b>TGUI Message Window Size:</b> <a href='?src=\ref[src];tgui_input_window_scale=1'><b>[tgui_input_window_scale_labels[pref.tgui_input_window_scale]]</b></a><br>"
 	// RS Add End
-	. += "<b>Chat Timestamps:</b> <a href='?src=\ref[src];chat_timestamps=1'><b>[(pref.chat_timestamp) ? "Enabled" : "Disabled (default)"]</b></a><br>"
 	if(can_select_ooc_color(user))
 		. += "<b>OOC Color:</b>"
 		if(pref.ooccolor == initial(pref.ooccolor))
@@ -186,10 +185,6 @@
 		if(!choice || !CanUseTopic(user))
 			return TOPIC_NOACTION
 		pref.tgui_input_window_scale = window_scale_options.Find(choice)
-		return TOPIC_REFRESH
-
-	else if(href_list["chat_timestamps"])
-		pref.chat_timestamp = !pref.chat_timestamp
 		return TOPIC_REFRESH
 
 	else if(href_list["reset"])
