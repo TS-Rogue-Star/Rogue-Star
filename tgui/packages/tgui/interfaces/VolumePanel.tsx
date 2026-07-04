@@ -8,6 +8,7 @@ import {
   Box,
   Button,
   LabeledList,
+  NumberInput,
   Section,
   Slider,
   Stack,
@@ -55,7 +56,10 @@ type MediaPlayer = {
 type SoundPreference = {
   key: string;
   label: string;
-  enabled: boolean;
+  type?: string;
+  enabled?: boolean;
+  value?: number;
+  tooltip?: string;
 };
 
 type SoundPreferenceGroup = {
@@ -213,25 +217,39 @@ export const VolumePanel = (props, context) => {
               <Stack.Item key={group.name}>
                 <Section title={group.name}>
                   <Box className="RogueStar__soundSettingsToggleGrid">
-                    {group.preferences.map((preference) => (
-                      <Box
-                        className="RogueStar__soundSettingsToggle"
-                        key={preference.key}>
-                        <Button.Checkbox
-                          className={`${CHIP_BUTTON_CLASS} RogueStar__soundSettingsToggleButton`}
-                          checked={preference.enabled}
-                          onClick={() =>
-                            guardedClickAct('set_preference', {
-                              key: preference.key,
-                              enabled: preference.enabled ? 0 : 1,
-                            })
-                          }>
-                          <Box className="RogueStar__soundSettingsToggleLabel">
-                            {preference.label}
-                          </Box>
-                        </Button.Checkbox>
-                      </Box>
-                    ))}
+                    {group.preferences.map((preference) => {
+                      if (preference.type === 'input') {
+                        return (
+                          <SoundPreferenceInput
+                            key={preference.key}
+                            preference={preference}
+                            act={act}
+                          />
+                        );
+                      }
+
+                      const enabled = !!preference.enabled;
+
+                      return (
+                        <Box
+                          className="RogueStar__soundSettingsToggle"
+                          key={preference.key}>
+                          <Button.Checkbox
+                            className={`${CHIP_BUTTON_CLASS} RogueStar__soundSettingsToggleButton`}
+                            checked={enabled}
+                            onClick={() =>
+                              guardedClickAct('set_preference', {
+                                key: preference.key,
+                                enabled: enabled ? 0 : 1,
+                              })
+                            }>
+                            <Box className="RogueStar__soundSettingsToggleLabel">
+                              {preference.label}
+                            </Box>
+                          </Button.Checkbox>
+                        </Box>
+                      );
+                    })}
                   </Box>
                 </Section>
               </Stack.Item>
@@ -240,5 +258,51 @@ export const VolumePanel = (props, context) => {
         </Box>
       </Window.Content>
     </Window>
+  );
+};
+
+type SoundPreferenceInputProps = {
+  readonly preference: SoundPreference;
+  readonly act: (action: string, payload?: ActionPayload) => void;
+};
+
+const SoundPreferenceInput = (props: SoundPreferenceInputProps) => {
+  const { preference, act } = props;
+  const currentValue =
+    typeof preference.value === 'number' ? preference.value : 0;
+
+  return (
+    <Box className="RogueStar__soundSettingsToggle" key={preference.key}>
+      <Button
+        className={`${CHIP_BUTTON_CLASS} RogueStar__soundSettingsToggleButton RogueStar__soundSettingsInputButton`}
+        icon="percent"
+        tooltip={preference.tooltip}>
+        <Box className="RogueStar__soundSettingsValueLabel">
+          <Box className="RogueStar__soundSettingsToggleLabel">
+            {preference.label}
+          </Box>
+          <NumberInput
+            className="RogueStar__soundSettingsInlineNumber"
+            width="40px"
+            height="13px"
+            lineHeight="13px"
+            minValue={0}
+            maxValue={100}
+            step={1}
+            stepPixelSize={2}
+            wheelStep={1}
+            wheelStepShift={10}
+            wheelUpdateRate={200}
+            value={currentValue}
+            format={(value) => `${round(value, 0)}%`}
+            onChange={(e, value) =>
+              act('set_ambience_chance', {
+                chance: value,
+              })
+            }
+          />
+        </Box>
+      </Button>
+    </Box>
   );
 };

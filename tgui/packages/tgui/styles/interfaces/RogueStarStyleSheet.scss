@@ -1985,3 +1985,77 @@ $titlebar-height: 38px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.RogueStar__soundSettingsValueLabel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.35rem;
+  align-items: center;
+  min-width: 0;
+}
+
+.RogueStar__soundSettingsInputButton .RogueStar__soundSettingsValueLabel {
+  display: block;
+  position: relative;
+  padding-right: 44px;
+}
+
+.RogueStar__soundSettingsInlineNumber.NumberInput {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  box-sizing: border-box;
+  width: 40px;
+  max-width: 40px;
+  min-height: 13px;
+  height: 13px;
+  margin: 0;
+  padding: 0 0.12rem;
+  border-radius: 5px;
+  border-color: transparent;
+  background: transparent;
+  color: #e5bc6a;
+  line-height: 13px;
+  overflow: hidden;
+  transform: translateY(-50%);
+  box-shadow: none;
+}
+
+.RogueStar__soundSettingsInlineNumber .NumberInput__content {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 13px;
+  margin-left: 0.18em;
+  color: #fff8ff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.RogueStar__soundSettingsInlineNumber .NumberInput__barContainer {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.RogueStar__soundSettingsInlineNumber .NumberInput__bar {
+  background: linear-gradient(
+    180deg,
+    rgba(229, 188, 106, 0.7),
+    rgba(77, 23, 142, 0.65)
+  );
+}
+
+.RogueStar__soundSettingsInlineNumber .NumberInput__input {
+  z-index: 2;
+  box-sizing: border-box;
+  background: rgba(34, 13, 58, 0.96);
+  color: #fff8ff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  width: 100%;
+  height: 13px;
+  line-height: 13px;
+  padding: 0 0.12rem;
+  text-align: right;
+}
