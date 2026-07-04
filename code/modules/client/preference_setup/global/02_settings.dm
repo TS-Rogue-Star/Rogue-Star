@@ -222,6 +222,7 @@
 			var/list/chat_timestamps_entry = list(
 				"key" = "CHAT_TIMESTAMPS",
 				"label" = "Chat Timestamps",
+				"type" = "toggle",
 				"enabled" = user.client.prefs.chat_timestamp ? TRUE : FALSE,
 				"enabled_label" = "Enabled",
 				"disabled_label" = "Disabled",
@@ -229,6 +230,23 @@
 				"sort_order" = 45
 			)
 			insert_preference(group_preferences, chat_timestamps_entry)
+
+		if(group == PREFERENCE_SETTINGS_GROUP_STAFF && can_select_ooc_color(user))
+			var/using_default_ooc_color = (user.client.prefs.ooccolor == initial(user.client.prefs.ooccolor))
+			var/list/ooc_color_entry = list(
+				"key" = "OOC_COLOR",
+				"label" = "OOC Color",
+				"type" = "color",
+				"value" = user.client.prefs.ooccolor,
+				"display_value" = using_default_ooc_color ? "Using Default" : user.client.prefs.ooccolor,
+				"using_default" = using_default_ooc_color,
+				"enabled" = TRUE,
+				"enabled_label" = "",
+				"disabled_label" = "",
+				"tooltip" = "Choose a distinct color that is easy to read and does not mix with other chat and radio frequency colors.",
+				"sort_order" = 80
+			)
+			insert_preference(group_preferences, ooc_color_entry)
 
 		if(length(group_preferences))
 			. += list(list(
@@ -303,7 +321,39 @@
 	if(!usr?.client?.prefs)
 		return FALSE
 
+	var/mob/preference_mob = usr
+
 	switch(action)
+		if("set_ooc_color")
+			if(!can_select_ooc_color(preference_mob))
+				return FALSE
+			if(!can_accept_toggle_action())
+				return FALSE
+
+			var/new_ooccolor = input(preference_mob, "Choose OOC color:", "OOC Color", preference_mob.client.prefs.ooccolor) as color|null
+			if(isnull(new_ooccolor) || !preference_mob?.client?.prefs || !can_select_ooc_color(preference_mob))
+				return FALSE
+
+			var/safe_ooccolor = sanitize_hexcolor(new_ooccolor, null)
+			if(!safe_ooccolor || safe_ooccolor == preference_mob.client.prefs.ooccolor)
+				return FALSE
+
+			preference_mob.client.prefs.ooccolor = safe_ooccolor
+			schedule_preferences_save()
+			return TRUE
+
+		if("reset_ooc_color")
+			if(!can_select_ooc_color(preference_mob))
+				return FALSE
+			if(preference_mob.client.prefs.ooccolor == initial(preference_mob.client.prefs.ooccolor))
+				return FALSE
+			if(!can_accept_toggle_action())
+				return FALSE
+
+			preference_mob.client.prefs.ooccolor = initial(preference_mob.client.prefs.ooccolor)
+			schedule_preferences_save()
+			return TRUE
+
 		if("set_preference")
 			var/preference_key = params["key"]
 			if(preference_key == "CHAT_TIMESTAMPS")
@@ -353,3 +403,7 @@
 	set desc = "Allows you to adjust general preference toggles."
 
 	open_preference_settings_panel()
+
+// RS Add: Preference settings panel (Lira, July 2026)
+/proc/can_select_ooc_color(var/mob/user)
+	return config.allow_admin_ooccolor && check_rights(R_ADMIN|R_EVENT|R_FUN, 0, user)

@@ -3,7 +3,7 @@
 // //////////////////////////////////////////////////////////////////////////////
 
 import { useBackend } from '../backend';
-import { Box, Button, Section, Stack } from '../components';
+import { Box, Button, Icon, Section, Stack, Tooltip } from '../components';
 import { Window } from '../layouts';
 import CustomEyeIconAsset from '../../../public/Icons/Rogue Star/eye 1.png';
 
@@ -40,10 +40,14 @@ const sendGuardedClickAction = (
 type Preference = {
   key: string;
   label: string;
+  type?: string;
   enabled: boolean;
   enabled_label: string;
   disabled_label: string;
   tooltip: string;
+  value?: string;
+  display_value?: string;
+  using_default?: boolean;
 };
 
 type PreferenceGroup = {
@@ -108,6 +112,16 @@ export const PreferenceSettings = (props, context) => {
                 <Section title={group.name}>
                   <Box className="RogueStar__soundSettingsToggleGrid">
                     {group.preferences.map((preference) => {
+                      if (preference.type === 'color') {
+                        return (
+                          <PreferenceColorControl
+                            key={preference.key}
+                            preference={preference}
+                            guardedClickAct={guardedClickAct}
+                          />
+                        );
+                      }
+
                       const enabled = !!preference.enabled;
 
                       return (
@@ -139,5 +153,54 @@ export const PreferenceSettings = (props, context) => {
         </Box>
       </Window.Content>
     </Window>
+  );
+};
+
+type PreferenceColorControlProps = {
+  readonly preference: Preference;
+  readonly guardedClickAct: (action: string, payload?: ActionPayload) => void;
+};
+
+const PreferenceColorControl = (props: PreferenceColorControlProps) => {
+  const { preference, guardedClickAct } = props;
+  const usingDefault = !!preference.using_default;
+  const colorValue = preference.value || '#000000';
+  const displayValue = usingDefault
+    ? 'Default'
+    : preference.display_value || colorValue;
+
+  return (
+    <Box
+      className="RogueStar__soundSettingsToggle RogueStar__preferenceSettingsColorControl"
+      key={preference.key}>
+      <Button
+        className={`${CHIP_BUTTON_CLASS} RogueStar__soundSettingsToggleButton RogueStar__preferenceSettingsColorButton`}
+        color="transparent"
+        icon={usingDefault ? 'square-o' : 'square'}
+        iconColor={usingDefault ? undefined : colorValue}
+        tooltip={preference.tooltip}
+        onClick={() => guardedClickAct('set_ooc_color')}>
+        <Box className="RogueStar__preferenceSettingsColorLabel">
+          <Box className="RogueStar__preferenceSettingsColorName">
+            {preference.label}
+          </Box>
+          <Box className="RogueStar__preferenceSettingsColorValue">
+            {displayValue}
+          </Box>
+        </Box>
+        {!usingDefault && (
+          <Tooltip content="Reset OOC color to default">
+            <Box
+              className="RogueStar__preferenceSettingsColorReset"
+              onClick={(event: MouseEvent) => {
+                event.stopPropagation();
+                guardedClickAct('reset_ooc_color');
+              }}>
+              <Icon name="undo" />
+            </Box>
+          </Tooltip>
+        )}
+      </Button>
+    </Box>
   );
 };
