@@ -93,12 +93,6 @@
 	)
 	. += "<b>TGUI Message Window Size:</b> <a href='?src=\ref[src];tgui_input_window_scale=1'><b>[tgui_input_window_scale_labels[pref.tgui_input_window_scale]]</b></a><br>"
 	// RS Add End
-	if(can_select_ooc_color(user))
-		. += "<b>OOC Color:</b>"
-		if(pref.ooccolor == initial(pref.ooccolor))
-			. += "<a href='?src=\ref[src];select_ooc_color=1'><b>Using Default</b></a><br>"
-		else
-			. += "<a href='?src=\ref[src];select_ooc_color=1'><b>[pref.ooccolor]</b></a> [color_square(hex = pref.ooccolor)]<a href='?src=\ref[src];reset=ooc'>reset</a><br>"
 
 /datum/category_item/player_setup_item/player_global/ui/OnTopic(var/href,var/list/href_list, var/mob/user)
 	if(href_list["select_style"])
@@ -118,12 +112,6 @@
 		if(isnull(UI_style_alpha_new) || (UI_style_alpha_new < 50 || UI_style_alpha_new > 255) || !CanUseTopic(user)) return TOPIC_NOACTION
 		pref.UI_style_alpha = UI_style_alpha_new
 		return TOPIC_REFRESH
-
-	else if(href_list["select_ooc_color"])
-		var/new_ooccolor = input(user, "Choose OOC color:", "Global Preference") as color|null
-		if(new_ooccolor && can_select_ooc_color(user) && CanUseTopic(user))
-			pref.ooccolor = new_ooccolor
-			return TOPIC_REFRESH
 
 	else if(href_list["select_tooltip_style"])
 		var/tooltip_style_new = tgui_input_list(user, "Choose tooltip style.", "Global Preference", all_tooltip_styles, pref.tooltipstyle)
@@ -193,11 +181,6 @@
 				pref.UI_style_color = initial(pref.UI_style_color)
 			if("alpha")
 				pref.UI_style_alpha = initial(pref.UI_style_alpha)
-			if("ooc")
-				pref.ooccolor = initial(pref.ooccolor)
 		return TOPIC_REFRESH
 
 	return ..()
-
-/datum/category_item/player_setup_item/player_global/ui/proc/can_select_ooc_color(var/mob/user)
-	return config.allow_admin_ooccolor && check_rights(R_ADMIN|R_EVENT|R_FUN, 0, user)
