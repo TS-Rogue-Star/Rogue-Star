@@ -2,8 +2,17 @@
 // Created by Lira for Rogue Star July 2026 for new preferences settings panel //
 // //////////////////////////////////////////////////////////////////////////////
 
+import { round } from 'common/math';
 import { useBackend } from '../backend';
-import { Box, Button, Icon, Section, Stack, Tooltip } from '../components';
+import {
+  Box,
+  Button,
+  Icon,
+  NumberInput,
+  Section,
+  Stack,
+  Tooltip,
+} from '../components';
 import { Window } from '../layouts';
 import CustomEyeIconAsset from '../../../public/Icons/Rogue Star/eye 1.png';
 
@@ -45,9 +54,12 @@ type Preference = {
   enabled_label: string;
   disabled_label: string;
   tooltip: string;
-  value?: string;
+  value?: string | number;
   display_value?: string;
   using_default?: boolean;
+  min_value?: number;
+  max_value?: number;
+  step?: number;
 };
 
 type PreferenceGroup = {
@@ -122,6 +134,16 @@ export const PreferenceSettings = (props, context) => {
                         );
                       }
 
+                      if (preference.type === 'input') {
+                        return (
+                          <PreferenceNumberControl
+                            key={preference.key}
+                            preference={preference}
+                            guardedClickAct={guardedClickAct}
+                          />
+                        );
+                      }
+
                       const enabled = !!preference.enabled;
 
                       return (
@@ -156,6 +178,58 @@ export const PreferenceSettings = (props, context) => {
   );
 };
 
+type PreferenceNumberControlProps = {
+  readonly preference: Preference;
+  readonly guardedClickAct: (action: string, payload?: ActionPayload) => void;
+};
+
+const PreferenceNumberControl = (props: PreferenceNumberControlProps) => {
+  const { preference, guardedClickAct } = props;
+  const currentValue =
+    typeof preference.value === 'number' ? preference.value : 0;
+  const minValue =
+    typeof preference.min_value === 'number' ? preference.min_value : 0;
+  const maxValue =
+    typeof preference.max_value === 'number' ? preference.max_value : 100;
+  const step = typeof preference.step === 'number' ? preference.step : 1;
+
+  return (
+    <Box className="RogueStar__soundSettingsToggle" key={preference.key}>
+      <Button
+        className={`${CHIP_BUTTON_CLASS} RogueStar__soundSettingsToggleButton RogueStar__soundSettingsInputButton`}
+        icon="expand"
+        tooltip={preference.tooltip}>
+        <Box className="RogueStar__soundSettingsValueLabel">
+          <Box className="RogueStar__soundSettingsToggleLabel">
+            {preference.label}
+          </Box>
+          <NumberInput
+            className="RogueStar__soundSettingsInlineNumber"
+            width="40px"
+            height="13px"
+            lineHeight="13px"
+            minValue={minValue}
+            maxValue={maxValue}
+            step={step}
+            stepPixelSize={8}
+            wheelStep={step}
+            wheelStepShift={step}
+            wheelUpdateRate={200}
+            value={currentValue}
+            format={(value) => `${round(value, 0)}x`}
+            onChange={(e, value) =>
+              guardedClickAct('set_numeric_preference', {
+                key: preference.key,
+                value: round(value, 0),
+              })
+            }
+          />
+        </Box>
+      </Button>
+    </Box>
+  );
+};
+
 type PreferenceColorControlProps = {
   readonly preference: Preference;
   readonly guardedClickAct: (action: string, payload?: ActionPayload) => void;
@@ -164,7 +238,8 @@ type PreferenceColorControlProps = {
 const PreferenceColorControl = (props: PreferenceColorControlProps) => {
   const { preference, guardedClickAct } = props;
   const usingDefault = !!preference.using_default;
-  const colorValue = preference.value || '#000000';
+  const colorValue =
+    typeof preference.value === 'string' ? preference.value : '#000000';
   const displayValue = usingDefault
     ? 'Default'
     : preference.display_value || colorValue;
