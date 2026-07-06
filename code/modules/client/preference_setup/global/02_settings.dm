@@ -190,6 +190,7 @@
 
 	var/list/group_order = list(
 		PREFERENCE_SETTINGS_GROUP_INTERFACE,
+		PREFERENCE_SETTINGS_GROUP_TGUI,
 		PREFERENCE_SETTINGS_GROUP_CHAT,
 		PREFERENCE_SETTINGS_GROUP_RUNECHAT,
 		PREFERENCE_SETTINGS_GROUP_GAMEPLAY,
@@ -217,6 +218,15 @@
 				"sort_order" = client_pref.settings_panel_sort_order
 			)
 			insert_preference(group_preferences, preference_entry)
+
+		if(group == PREFERENCE_SETTINGS_GROUP_TGUI)
+			add_tgui_preference(group_preferences, "TGUI_FANCY", "Fancy TGUI Windows", user.client.prefs.tgui_fancy, "Fancy", "Compatible", "Uses titlebarless, resize-disabled fancy TGUI windows. Turning this off keeps the standard BYOND titlebar and resize handles for compatibility.", 10)
+			add_tgui_preference(group_preferences, "TGUI_FREE_WINDOW_POSITIONING", "Free TGUI Window Positioning", !user.client.prefs.tgui_lock, "Free", "Primary Monitor", "Allows TGUI windows to reopen at their saved positions. Turning this off constrains recalled TGUI window positions to your primary monitor.", 20)
+			add_tgui_preference(group_preferences, "TGUI_INPUT_MODE", "TGUI Input Windows", user.client.prefs.tgui_input_mode, "Enabled", "Disabled", "Uses TGUI windows for text, number, list, checkbox, and alert prompts instead of BYOND's native input dialogs.", 30)
+			add_tgui_preference(group_preferences, "TGUI_ENTER_SUBMITS", "Enter Submits TGUI Input", !user.client.prefs.tgui_input_lock, "Submit", "New Line", "Lets Enter submit TGUI text input. Turning this off makes Enter create a new line where supported.", 40)
+			add_tgui_preference(group_preferences, "TGUI_LARGE_BUTTONS", "Large TGUI Input Buttons", user.client.prefs.tgui_large_buttons, "Large", "Compact", "Makes submit and cancel buttons in TGUI input prompts larger and easier to click.", 50)
+			add_tgui_preference(group_preferences, "TGUI_DEFAULT_BUTTON_ORDER", "Default TGUI Button Order", !user.client.prefs.tgui_swapped_buttons, "Default", "Swapped", "Keeps TGUI input buttons in their default order. Turning this off uses the swapped button order.", 60)
+			insert_preference(group_preferences, build_tgui_message_window_size_preference(user.client.prefs))
 
 		if(group == PREFERENCE_SETTINGS_GROUP_CHAT)
 			var/list/chat_timestamps_entry = list(
@@ -253,6 +263,82 @@
 				"name" = group,
 				"preferences" = group_preferences
 			))
+
+// RS Add: Preference settings panel (Lira, July 2026)
+/datum/preference_settings_panel/proc/add_tgui_preference(list/preference_list, key, label, enabled, enabled_label, disabled_label, tooltip, sort_order)
+	var/list/preference_entry = list(
+		"key" = key,
+		"label" = label,
+		"type" = "toggle",
+		"enabled" = enabled ? TRUE : FALSE,
+		"enabled_label" = enabled_label,
+		"disabled_label" = disabled_label,
+		"tooltip" = tooltip,
+		"sort_order" = sort_order
+	)
+	insert_preference(preference_list, preference_entry)
+
+// RS Add: Preference settings panel (Lira, July 2026)
+/datum/preference_settings_panel/proc/build_tgui_message_window_size_preference(datum/preferences/P)
+	var/current_scale = sanitize_integer(P.tgui_input_window_scale, 1, 3, initial(P.tgui_input_window_scale))
+	return list(
+		"key" = "TGUI_MESSAGE_WINDOW_SIZE",
+		"label" = "TGUI Message Window Size",
+		"type" = "input",
+		"value" = current_scale,
+		"enabled" = TRUE,
+		"enabled_label" = "",
+		"disabled_label" = "",
+		"tooltip" = "Choose the default size for TGUI message windows.",
+		"min_value" = 1,
+		"max_value" = 3,
+		"step" = 1,
+		"sort_order" = 70
+	)
+
+// RS Add: Preference settings panel (Lira, July 2026)
+/datum/preference_settings_panel/proc/get_tgui_preference_value(preference_key, datum/preferences/P)
+	if(!P)
+		return null
+
+	switch(preference_key)
+		if("TGUI_FANCY")
+			return P.tgui_fancy ? TRUE : FALSE
+		if("TGUI_FREE_WINDOW_POSITIONING")
+			return !P.tgui_lock
+		if("TGUI_INPUT_MODE")
+			return P.tgui_input_mode ? TRUE : FALSE
+		if("TGUI_ENTER_SUBMITS")
+			return !P.tgui_input_lock
+		if("TGUI_LARGE_BUTTONS")
+			return P.tgui_large_buttons ? TRUE : FALSE
+		if("TGUI_DEFAULT_BUTTON_ORDER")
+			return !P.tgui_swapped_buttons
+
+	return null
+
+// RS Add: Preference settings panel (Lira, July 2026)
+/datum/preference_settings_panel/proc/set_tgui_preference_value(preference_key, datum/preferences/P, enabled)
+	if(!P)
+		return FALSE
+
+	switch(preference_key)
+		if("TGUI_FANCY")
+			P.tgui_fancy = enabled ? TRUE : FALSE
+		if("TGUI_FREE_WINDOW_POSITIONING")
+			P.tgui_lock = enabled ? FALSE : TRUE
+		if("TGUI_INPUT_MODE")
+			P.tgui_input_mode = enabled ? TRUE : FALSE
+		if("TGUI_ENTER_SUBMITS")
+			P.tgui_input_lock = enabled ? FALSE : TRUE
+		if("TGUI_LARGE_BUTTONS")
+			P.tgui_large_buttons = enabled ? TRUE : FALSE
+		if("TGUI_DEFAULT_BUTTON_ORDER")
+			P.tgui_swapped_buttons = enabled ? FALSE : TRUE
+		else
+			return FALSE
+
+	return TRUE
 
 // RS Add: Preference settings panel (Lira, July 2026)
 /datum/preference_settings_panel/proc/insert_preference(list/preference_list, list/preference_entry)
@@ -354,8 +440,37 @@
 			schedule_preferences_save()
 			return TRUE
 
+		if("set_numeric_preference")
+			var/numeric_preference_key = params["key"]
+			if(numeric_preference_key != "TGUI_MESSAGE_WINDOW_SIZE")
+				return FALSE
+
+			var/new_scale = clamp(round(param_number(params["value"], usr.client.prefs.tgui_input_window_scale)), 1, 3)
+			if(new_scale == usr.client.prefs.tgui_input_window_scale)
+				return FALSE
+			if(!can_accept_toggle_action())
+				return FALSE
+
+			usr.client.prefs.tgui_input_window_scale = new_scale
+			schedule_preferences_save()
+			return TRUE
+
 		if("set_preference")
 			var/preference_key = params["key"]
+			var/tgui_preference_value = get_tgui_preference_value(preference_key, usr.client.prefs)
+			if(!isnull(tgui_preference_value))
+				var/tgui_preference_enabled = param_number(params["enabled"], FALSE)
+				if(tgui_preference_enabled == tgui_preference_value)
+					return FALSE
+				if(!can_accept_toggle_action())
+					return FALSE
+
+				if(!set_tgui_preference_value(preference_key, usr.client.prefs, tgui_preference_enabled))
+					return FALSE
+
+				schedule_preferences_save()
+				return TRUE
+
 			if(preference_key == "CHAT_TIMESTAMPS")
 				var/enabled = param_number(params["enabled"], FALSE)
 				if(enabled == (usr.client.prefs.chat_timestamp ? TRUE : FALSE))

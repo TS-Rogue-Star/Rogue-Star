@@ -411,6 +411,7 @@
 /client/verb/toggle_tgui_inputlock()
 	set name = "Toggle TGUI Input Lock"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Preference settings panel (Lira, July 2026)
 	set desc = "Toggles whether or not pressing the 'Enter' key in TGUI input sends the message or creates a new line."
 
 	prefs.tgui_input_lock = !prefs.tgui_input_lock	//There is no preference datum for tgui input lock, nor for any TGUI prefs.
