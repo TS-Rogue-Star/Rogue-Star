@@ -18,6 +18,7 @@ type DropdownUniqueProps = {
   readonly iconRotation?: number;
   readonly clipSelectedText?: boolean;
   readonly dropdownStyle?: string; // RS Add: Improvements for emote interface (Lira, February 2026)
+  readonly controlContentClassName?: string; // RS Add: Preference settings panel (Lira, July 2026)
   readonly width?: string;
   readonly menuWidth?: string;
   readonly over?: boolean;
@@ -346,6 +347,7 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
       clipSelectedText = true,
       color = 'default',
       dropdownStyle,
+      controlContentClassName, // RS Add: Preference settings panel (Lira, July 2026)
       over,
       nochevron,
       width,
@@ -360,6 +362,32 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
     const { className, ...rest } = boxProps;
 
     const adjustedOpen = over ? !this.state.open : this.state.open;
+    // RS Add Start: Preference settings panel (Lira, July 2026)
+    const controlContent = (
+      <>
+        {icon && (
+          <Icon
+            name={icon}
+            rotation={iconRotation}
+            spin={iconSpin}
+            mr={controlContentClassName ? undefined : 1}
+          />
+        )}
+        <span
+          className="Dropdown__selected-text"
+          style={{
+            overflow: clipSelectedText ? 'hidden' : 'visible',
+          }}>
+          {displayText || this.state.selected}
+        </span>
+        {nochevron || (
+          <span className="Dropdown__arrow-button">
+            <Icon name={adjustedOpen ? 'chevron-up' : 'chevron-down'} />
+          </span>
+        )}
+      </>
+    );
+    // RS Add End
 
     return (
       <Stack fill>
@@ -383,25 +411,10 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
               }
             }}
             {...rest}>
-            {icon && (
-              <Icon
-                name={icon}
-                rotation={iconRotation}
-                spin={iconSpin}
-                mr={1}
-              />
-            )}
-            <span
-              className="Dropdown__selected-text"
-              style={{
-                overflow: clipSelectedText ? 'hidden' : 'visible',
-              }}>
-              {displayText || this.state.selected}
-            </span>
-            {nochevron || (
-              <span className="Dropdown__arrow-button">
-                <Icon name={adjustedOpen ? 'chevron-up' : 'chevron-down'} />
-              </span>
+            {controlContentClassName ? (
+              <div className={controlContentClassName}>{controlContent}</div>
+            ) : (
+              controlContent
             )}
           </Box>
         </Stack.Item>

@@ -72,46 +72,12 @@
 	pref.chat_timestamp		= sanitize_integer(pref.chat_timestamp, 0, 1, initial(pref.chat_timestamp))
 
 /datum/category_item/player_setup_item/player_global/ui/content(var/mob/user)
-	. = "<b>UI Style:</b> <a href='?src=\ref[src];select_style=1'><b>[pref.UI_style]</b></a><br>"
-	. += "<b>Custom UI</b> (recommended for White UI):<br>"
-	. += "-Color: <a href='?src=\ref[src];select_color=1'><b>[pref.UI_style_color]</b></a>�[color_square(hex = pref.UI_style_color)]�<a href='?src=\ref[src];reset=ui'>reset</a><br>"
-	. += "-Alpha(transparency): <a href='?src=\ref[src];select_alpha=1'><b>[pref.UI_style_alpha]</b></a>�<a href='?src=\ref[src];reset=alpha'>reset</a><br>"
-	. += "<b>Tooltip Style:</b> <a href='?src=\ref[src];select_tooltip_style=1'><b>[pref.tooltipstyle]</b></a><br>"
-	. += "<b>Client FPS:</b> <a href='?src=\ref[src];select_client_fps=1'><b>[pref.client_fps]</b></a><br>"
+	. = "" // RS Edit: Preference settings panel (Lira, July 2026)
 
 /datum/category_item/player_setup_item/player_global/ui/OnTopic(var/href,var/list/href_list, var/mob/user)
-	if(href_list["select_style"])
-		var/UI_style_new = tgui_input_list(user, "Choose UI style.", "Character Preference", all_ui_styles, pref.UI_style)
-		if(!UI_style_new || !CanUseTopic(user)) return TOPIC_NOACTION
-		pref.UI_style = UI_style_new
-		return TOPIC_REFRESH
-
-	else if(href_list["select_color"])
-		var/UI_style_color_new = input(user, "Choose UI color, dark colors are not recommended!", "Global Preference", pref.UI_style_color) as color|null
-		if(isnull(UI_style_color_new) || !CanUseTopic(user)) return TOPIC_NOACTION
-		pref.UI_style_color = UI_style_color_new
-		return TOPIC_REFRESH
-
-	else if(href_list["select_alpha"])
-		var/UI_style_alpha_new = tgui_input_number(user, "Select UI alpha (transparency) level, between 50 and 255.", "Global Preference", pref.UI_style_alpha, 255, 50)
-		if(isnull(UI_style_alpha_new) || (UI_style_alpha_new < 50 || UI_style_alpha_new > 255) || !CanUseTopic(user)) return TOPIC_NOACTION
-		pref.UI_style_alpha = UI_style_alpha_new
-		return TOPIC_REFRESH
-
-	else if(href_list["select_tooltip_style"])
-		var/tooltip_style_new = tgui_input_list(user, "Choose tooltip style.", "Global Preference", all_tooltip_styles, pref.tooltipstyle)
-		if(!tooltip_style_new || !CanUseTopic(user)) return TOPIC_NOACTION
-		pref.tooltipstyle = tooltip_style_new
-		return TOPIC_REFRESH
-
-	else if(href_list["select_client_fps"])
-		var/fps_new = tgui_input_number(user, "Input Client FPS (1-200, 0 uses server FPS)", "Global Preference", pref.client_fps, 200, 0)
-		if(isnull(fps_new) || !CanUseTopic(user)) return TOPIC_NOACTION
-		if(fps_new < 0 || fps_new > MAX_CLIENT_FPS) return TOPIC_NOACTION
-		pref.client_fps = fps_new
-		if(pref.client)
-			pref.client.fps = fps_new
-		return TOPIC_REFRESH
+	// RS Edit: Preference settings panel (Lira, July 2026)
+	if(href_list["select_tooltip_style"] || href_list["select_client_fps"])
+		return TOPIC_NOACTION
 	/* //RS Edit. See PR #67 for reference. Commenting this out to prevent href hacks.
 	else if(href_list["select_ambience_freq"])
 		var/ambience_new = tgui_input_number(user, "Input how often you wish to hear ambience repeated! (1-60 MINUTES, 0 for disabled)", "Global Preference", pref.ambience_freq, 60, 0)
@@ -122,13 +88,5 @@
 	*/
 	else if(href_list["select_ambience_chance"])
 		return TOPIC_NOACTION // RS Edit: Sound preferences panel (Lira, July 2026)
-
-	else if(href_list["reset"])
-		switch(href_list["reset"])
-			if("ui")
-				pref.UI_style_color = initial(pref.UI_style_color)
-			if("alpha")
-				pref.UI_style_alpha = initial(pref.UI_style_alpha)
-		return TOPIC_REFRESH
 
 	return ..()
