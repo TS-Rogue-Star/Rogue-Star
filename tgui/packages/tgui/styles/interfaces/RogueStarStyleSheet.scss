@@ -1882,6 +1882,10 @@ $titlebar-height: 38px;
   min-width: 0;
 }
 
+.RogueStar__preferenceSettingsDropdownControl {
+  min-width: 0;
+}
+
 .RogueStar__preferenceSettingsColorLabel {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -1971,6 +1975,85 @@ $titlebar-height: 38px;
     align-self: center;
     line-height: 1;
   }
+}
+
+.RogueStar__preferenceSettingsDropdownButton.Dropdown__control {
+  box-sizing: border-box;
+  margin-right: 0;
+  margin-bottom: 0;
+
+  .RogueStar__preferenceSettingsDropdownContent {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    column-gap: 0.5rem;
+    align-items: center;
+    width: 100%;
+    line-height: 1;
+  }
+
+  .RogueStar__preferenceSettingsDropdownContent > .Icon {
+    align-self: center;
+    min-width: 1.333em;
+    margin-left: -0.25em;
+    margin-right: 0.25em;
+    line-height: 1;
+    text-align: center;
+  }
+
+  .Dropdown__selected-text {
+    display: block;
+    width: auto;
+    height: auto;
+    min-width: 0;
+    line-height: 1;
+  }
+
+  .Dropdown__arrow-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    float: none;
+    width: 1.2em;
+    height: auto;
+    min-height: 0;
+    padding-left: 0;
+    border-left: 0;
+    line-height: 1;
+  }
+}
+
+.RogueStar__preferenceSettingsDropdownLabel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.4rem;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+}
+
+.RogueStar__preferenceSettingsDropdownName {
+  min-width: 0;
+  color: #fff8ff;
+  font-size: 0.74rem;
+  font-weight: 700;
+  line-height: 1.15;
+  text-transform: uppercase;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.RogueStar__preferenceSettingsDropdownValue {
+  min-width: 0;
+  color: #e5bc6a;
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1.15;
+  text-align: right;
+  text-transform: uppercase;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .RogueStar__soundSettingsToggleLabel {

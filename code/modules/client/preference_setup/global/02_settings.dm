@@ -2,9 +2,10 @@
 	var/preferences_enabled = null
 	var/preferences_disabled = null
 
+// RS Edit: Preference settings panel (Lira, July 2026)
 /datum/category_item/player_setup_item/player_global/settings
-	name = "Settings"
-	sort_order = 2
+	name = "Game Options"
+	sort_order = 0
 
 /datum/category_item/player_setup_item/player_global/settings/load_preferences(var/savefile/S)
 	S["lastchangelog"]        >> pref.lastchangelog
@@ -56,8 +57,7 @@
 // RS Edit: Preference settings panel (Lira, July 2026)
 /datum/category_item/player_setup_item/player_global/settings/content(var/mob/user)
 	. = list()
-	. += "<b>Preferences</b><br>"
-	. += "<a href='?src=\ref[src];open_preference_settings=1'>Open Preference Settings</a><br>"
+	. += "<a href='?src=\ref[src];open_preference_settings=1' style='display:inline-block;background:#6d28d9;color:#fff;padding:2px 6px;border:1px solid #6d28d9;border-radius:3px;text-decoration:none;font-weight:bold;' onmouseover=\"this.style.background='#fff';this.style.color='#6d28d9';\" onmouseout=\"this.style.background='#6d28d9';this.style.color='#fff';\">Game Options</a><br>"
 	. += "<br>"
 	return jointext(., "")
 
@@ -148,6 +148,7 @@
 /datum/preference_settings_panel
 	var/client/owner
 	var/next_toggle_action = 0
+	var/next_input_action = 0
 	var/preferences_save_pending = FALSE
 	var/preferences_save_timer
 
@@ -170,7 +171,7 @@
 /datum/preference_settings_panel/tgui_interact(mob/user, datum/tgui/ui, datum/tgui/parent_ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "PreferenceSettings", "Preference Settings")
+		ui = new(user, src, "PreferenceSettings", "Game Options")
 		ui.open()
 
 // RS Add: Preference settings panel (Lira, July 2026)
@@ -228,6 +229,9 @@
 			add_tgui_preference(group_preferences, "TGUI_DEFAULT_BUTTON_ORDER", "Default TGUI Button Order", !user.client.prefs.tgui_swapped_buttons, "Default", "Swapped", "Keeps TGUI input buttons in their default order. Turning this off uses the swapped button order.", 60)
 			insert_preference(group_preferences, build_tgui_message_window_size_preference(user.client.prefs))
 
+		if(group == PREFERENCE_SETTINGS_GROUP_INTERFACE)
+			add_ui_style_preferences(group_preferences, user.client.prefs)
+
 		if(group == PREFERENCE_SETTINGS_GROUP_CHAT)
 			var/list/chat_timestamps_entry = list(
 				"key" = "CHAT_TIMESTAMPS",
@@ -254,6 +258,9 @@
 				"enabled_label" = "",
 				"disabled_label" = "",
 				"tooltip" = "Choose a distinct color that is easy to read and does not mix with other chat and radio frequency colors.",
+				"set_action" = "set_ooc_color",
+				"reset_action" = "reset_ooc_color",
+				"reset_tooltip" = "Reset OOC color to default",
 				"sort_order" = 80
 			)
 			insert_preference(group_preferences, ooc_color_entry)
@@ -286,15 +293,127 @@
 		"label" = "TGUI Message Window Size",
 		"type" = "input",
 		"value" = current_scale,
+		"icon" = "expand",
 		"enabled" = TRUE,
 		"enabled_label" = "",
 		"disabled_label" = "",
 		"tooltip" = "Choose the default size for TGUI message windows.",
+		"set_action" = "set_numeric_preference",
+		"value_param" = "value",
+		"value_suffix" = "x",
 		"min_value" = 1,
 		"max_value" = 3,
 		"step" = 1,
+		"step_pixel_size" = 8,
+		"wheel_step_shift" = 1,
 		"sort_order" = 70
 	)
+
+// RS Add: Preference settings panel (Lira, July 2026)
+/datum/preference_settings_panel/proc/add_ui_style_preferences(list/preference_list, datum/preferences/P)
+	var/list/ui_style_options = list()
+	for(var/ui_style in all_ui_styles)
+		ui_style_options += ui_style
+
+	var/list/tooltip_style_options = list()
+	for(var/tooltip_style in all_tooltip_styles)
+		tooltip_style_options += tooltip_style
+
+	var/list/ui_style_entry = list(
+		"key" = "UI_STYLE",
+		"label" = "UI Style",
+		"type" = "dropdown",
+		"value" = P.UI_style,
+		"display_value" = P.UI_style,
+		"options" = ui_style_options,
+		"icon" = "list",
+		"enabled" = TRUE,
+		"enabled_label" = "",
+		"disabled_label" = "",
+		"tooltip" = "Configure your user interface",
+		"set_action" = "set_ui_style",
+		"sort_order" = 1
+	)
+	insert_preference(preference_list, ui_style_entry)
+
+	var/using_default_ui_color = (P.UI_style_color == initial(P.UI_style_color))
+	var/list/ui_color_entry = list(
+		"key" = "UI_COLOR",
+		"label" = "UI Color",
+		"type" = "color",
+		"value" = P.UI_style_color,
+		"display_value" = using_default_ui_color ? "Using Default" : P.UI_style_color,
+		"using_default" = using_default_ui_color,
+		"enabled" = TRUE,
+		"enabled_label" = "",
+		"disabled_label" = "",
+		"tooltip" = "Choose UI color, dark colors are not recommended!",
+		"set_action" = "set_ui_color",
+		"reset_action" = "reset_ui_color",
+		"reset_tooltip" = "Reset UI color to default",
+		"sort_order" = 2
+	)
+	insert_preference(preference_list, ui_color_entry)
+
+	var/list/ui_alpha_entry = list(
+		"key" = "UI_ALPHA",
+		"label" = "UI Alpha",
+		"type" = "input",
+		"value" = P.UI_style_alpha,
+		"min_value" = 50,
+		"max_value" = 255,
+		"step" = 1,
+		"icon" = "adjust",
+		"enabled" = TRUE,
+		"enabled_label" = "",
+		"disabled_label" = "",
+		"tooltip" = "Select UI alpha (transparency) level, between 50 and 255.",
+		"set_action" = "set_ui_alpha",
+		"value_param" = "alpha",
+		"step_pixel_size" = 2,
+		"wheel_step_shift" = 10,
+		"sort_order" = 3
+	)
+	insert_preference(preference_list, ui_alpha_entry)
+
+	var/list/tooltip_style_entry = list(
+		"key" = "TOOLTIP_STYLE",
+		"label" = "Tooltip Style",
+		"type" = "dropdown",
+		"value" = P.tooltipstyle,
+		"display_value" = P.tooltipstyle,
+		"options" = tooltip_style_options,
+		"icon" = "font",
+		"enabled" = TRUE,
+		"enabled_label" = "",
+		"disabled_label" = "",
+		"tooltip" = "Choose the visual style used by popup tooltips.",
+		"set_action" = "set_tooltip_style",
+		"sort_order" = 4
+	)
+	insert_preference(preference_list, tooltip_style_entry)
+
+	var/current_client_fps = sanitize_integer(P.client_fps, 0, MAX_CLIENT_FPS, initial(P.client_fps))
+	var/list/client_fps_entry = list(
+		"key" = "CLIENT_FPS",
+		"label" = "Client FPS",
+		"type" = "input",
+		"value" = current_client_fps,
+		"min_value" = 0,
+		"max_value" = MAX_CLIENT_FPS,
+		"step" = 1,
+		"icon" = "tachometer-alt",
+		"enabled" = TRUE,
+		"enabled_label" = "",
+		"disabled_label" = "",
+		"tooltip" = "Set your client FPS. 0 uses the server FPS.",
+		"set_action" = "set_client_fps",
+		"value_param" = "fps",
+		"step_pixel_size" = 1,
+		"wheel_step_shift" = 10,
+		"sort_order" = 5
+	)
+	insert_preference(preference_list, client_fps_entry)
 
 // RS Add: Preference settings panel (Lira, July 2026)
 /datum/preference_settings_panel/proc/get_tgui_preference_value(preference_key, datum/preferences/P)
@@ -360,6 +479,14 @@
 		return FALSE
 
 	next_toggle_action = world.time + PREFERENCE_SETTINGS_TOGGLE_ACTION_DELAY
+	return TRUE
+
+// RS Add: Preference settings panel (Lira, July 2026)
+/datum/preference_settings_panel/proc/can_accept_input_action()
+	if(world.time < next_input_action)
+		return FALSE
+
+	next_input_action = world.time + PREFERENCE_SETTINGS_INPUT_ACTION_DELAY
 	return TRUE
 
 // RS Add: Preference settings panel (Lira, July 2026)
@@ -445,13 +572,90 @@
 			if(numeric_preference_key != "TGUI_MESSAGE_WINDOW_SIZE")
 				return FALSE
 
-			var/new_scale = clamp(round(param_number(params["value"], usr.client.prefs.tgui_input_window_scale)), 1, 3)
-			if(new_scale == usr.client.prefs.tgui_input_window_scale)
+			var/new_scale = clamp(round(param_number(params["value"], preference_mob.client.prefs.tgui_input_window_scale)), 1, 3)
+			if(new_scale == preference_mob.client.prefs.tgui_input_window_scale)
+				return FALSE
+			if(!can_accept_input_action())
+				return FALSE
+
+			preference_mob.client.prefs.tgui_input_window_scale = new_scale
+			schedule_preferences_save()
+			return TRUE
+
+		if("set_ui_style")
+			if(!can_accept_toggle_action())
+				return FALSE
+
+			var/new_ui_style = sanitize_inlist(params["style"], all_ui_styles, preference_mob.client.prefs.UI_style)
+			if(new_ui_style == preference_mob.client.prefs.UI_style)
+				return FALSE
+
+			preference_mob.client.prefs.UI_style = new_ui_style
+			preference_mob.apply_ui_preferences_to_hud()
+			schedule_preferences_save()
+			return TRUE
+
+		if("set_tooltip_style")
+			if(!can_accept_toggle_action())
+				return FALSE
+
+			var/new_tooltip_style = sanitize_inlist(params["style"], all_tooltip_styles, preference_mob.client.prefs.tooltipstyle)
+			if(new_tooltip_style == preference_mob.client.prefs.tooltipstyle)
+				return FALSE
+
+			preference_mob.client.prefs.tooltipstyle = new_tooltip_style
+			schedule_preferences_save()
+			return TRUE
+
+		if("set_client_fps")
+			var/new_client_fps = clamp(round(param_number(params["fps"], preference_mob.client.prefs.client_fps)), 0, MAX_CLIENT_FPS)
+			if(new_client_fps == preference_mob.client.prefs.client_fps)
+				return FALSE
+			if(!can_accept_input_action())
+				return FALSE
+
+			preference_mob.client.prefs.client_fps = new_client_fps
+			preference_mob.client.fps = new_client_fps
+			schedule_preferences_save()
+			return TRUE
+
+		if("set_ui_color")
+			if(!can_accept_toggle_action())
+				return FALSE
+
+			var/new_ui_color = input(preference_mob, "Choose UI color, dark colors are not recommended!", "UI Color", preference_mob.client.prefs.UI_style_color) as color|null
+			if(isnull(new_ui_color) || !preference_mob?.client?.prefs)
+				return FALSE
+
+			var/safe_ui_color = sanitize_hexcolor(new_ui_color, null)
+			if(!safe_ui_color || safe_ui_color == preference_mob.client.prefs.UI_style_color)
+				return FALSE
+
+			preference_mob.client.prefs.UI_style_color = safe_ui_color
+			preference_mob.apply_ui_preferences_to_hud()
+			schedule_preferences_save()
+			return TRUE
+
+		if("reset_ui_color")
+			if(preference_mob.client.prefs.UI_style_color == initial(preference_mob.client.prefs.UI_style_color))
 				return FALSE
 			if(!can_accept_toggle_action())
 				return FALSE
 
-			usr.client.prefs.tgui_input_window_scale = new_scale
+			preference_mob.client.prefs.UI_style_color = initial(preference_mob.client.prefs.UI_style_color)
+			preference_mob.apply_ui_preferences_to_hud()
+			schedule_preferences_save()
+			return TRUE
+
+		if("set_ui_alpha")
+			var/new_ui_alpha = clamp(round(param_number(params["alpha"], preference_mob.client.prefs.UI_style_alpha)), 50, 255)
+			if(new_ui_alpha == preference_mob.client.prefs.UI_style_alpha)
+				return FALSE
+			if(!can_accept_input_action())
+				return FALSE
+
+			preference_mob.client.prefs.UI_style_alpha = new_ui_alpha
+			preference_mob.apply_ui_preferences_to_hud()
 			schedule_preferences_save()
 			return TRUE
 
@@ -513,9 +717,9 @@
 
 // RS Add: Preference settings panel (Lira, July 2026)
 /client/verb/preference_settings_panel()
-	set name = "Preference Settings"
+	set name = "Game Options"
 	set category = "Preferences"
-	set desc = "Allows you to adjust general preference toggles."
+	set desc = "Allows you to adjust game options."
 
 	open_preference_settings_panel()
 
