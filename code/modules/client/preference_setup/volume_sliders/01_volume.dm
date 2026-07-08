@@ -132,11 +132,26 @@
 			)
 			insert_sound_preference(group_preferences, preference_entry)
 
+		if(group == SOUND_PANEL_GROUP_WORLD)
+			insert_sound_preference(group_preferences, build_ambience_chance_preference(user.client.prefs))
+
 		if(length(group_preferences))
 			. += list(list(
 				"name" = group,
 				"preferences" = group_preferences
 			))
+
+// RS Add: Sound preferences panel (Lira, July 2026)
+/datum/volume_panel/proc/build_ambience_chance_preference(datum/preferences/P)
+	var/current_chance = clamp(round(P.ambience_chance), 0, 100)
+	return list(
+		"key" = "AMBIENCE_CHANCE",
+		"label" = "Ambience Chance",
+		"type" = "input",
+		"value" = current_chance,
+		"tooltip" = "Input the chance you'd like to hear ambience played to you (On area change, or by random ambience). 35 means a 35% chance to play ambience. This is a range from 0-100. 0 disables ambience playing entirely. This is also affected by Ambience Frequency.",
+		"sort_order" = 15
+	)
 
 // RS Add: Sound preferences panel (Lira, June 2026)
 /datum/volume_panel/proc/insert_sound_preference(list/preference_list, list/preference_entry)
@@ -274,6 +289,16 @@
 				usr.client.media.open()
 				spawn(10)
 					usr.update_music()
+			return TRUE
+		if("set_ambience_chance")
+			var/new_ambience_chance = clamp(round(param_number(params["chance"], P.ambience_chance)), 0, 100)
+			if(new_ambience_chance == P.ambience_chance)
+				return FALSE
+			if(!can_accept_slider_action())
+				return FALSE
+
+			P.ambience_chance = new_ambience_chance
+			schedule_preferences_save()
 			return TRUE
 		if("set_preference")
 			var/preference_key = params["key"]
