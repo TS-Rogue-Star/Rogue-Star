@@ -8,6 +8,7 @@
 	w_class = ITEMSIZE_SMALL
 	force = 0
 	volume = 80
+	description_info = "When feeding other people, your intent matters!"	//RS ADD
 
 	var/bitesize = 1
 	var/bitecount = 0
@@ -223,23 +224,27 @@
 				)
 				feed_verb = pick(smacklist)
 				feeder.visible_message(SPAN_DANGER("\The [feeder] [feed_verb] \the [feedee] with \the [src]!"),runemessage = "! ! !")
-				playsound(feedee, 'sound/rogue-star/plap.ogg', rand(45,75), 1)
+				playsound(feedee, 'sound/rogue-star/plap.ogg', rand(75,100), 1)
 				feedee.Weaken(2)
 				feed_duration = 2
 			if(I_GRAB)
-				//???
+				if(feedee.attempt_to_scoop_into_object(feeder, feedee, src))
+					if(!food_inserted_micros)
+						food_inserted_micros = list()
+					food_inserted_micros += feedee
+					return TRUE
 				return FALSE
 			if(I_HURT)
 				//shove food inside giving nutrition but destroying the food and maybe falling in yourself
 				var/list/feedlist = list(
-					"shoves",
-					"crams",
-					"forces",
-					"jams",
-					"rams"
+					"shove",
+					"cram",
+					"force",
+					"jam",
+					"ram"
 				)
 				feed_verb = pick(feedlist)
-				feeder.visible_message(SPAN_DANGER("\The [feeder] [feed_verb] \the [src] into \the [feedee]!"),runemessage = "! ! !")
+				feeder.visible_message(SPAN_DANGER("\The [feeder] [feed_verb]s \the [src] into \the [feedee]!"),runemessage = "! ! !")
 				feed_duration = 1
 
 		if(!do_mob(feeder, feedee, feed_duration))
@@ -258,14 +263,15 @@
 				feedee.visible_message(SPAN_NOTICE("\The [feeder] manages to [feed_verb] \the [src] to \the [feedee]!!!"),runemessage = "nom")
 			if(I_DISARM)
 				//slap someone with food knocking them down and feeding them a bite and destroying the food
+				var/food_name = name
 				go_on_take_a_bite(feedee)
-				feedee.visible_message(SPAN_DANGER("\The [src] splatters all over \the [feedee]!!!"))
+				feedee.visible_message(SPAN_DANGER("\The [food_name] splatters all over \the [feedee]!!!"))
 				feedee.smelly = TRUE
-				feeder.drop_from_inventory(src)
-				qdel(src)
+				if(!QDELETED(src))
+					feeder.drop_from_inventory(src)
+					qdel(src)
 				return TRUE
 			if(I_GRAB)
-				//???
 				return FALSE
 			if(I_HURT)
 				//shove food inside giving nutrition but destroying the food
