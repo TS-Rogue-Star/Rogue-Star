@@ -133,8 +133,12 @@
 		else
 			blocked = feedee.check_mouth_coverage()
 		if(blocked)
-			to_chat(user, SPAN_WARNING("\The [blocked] is in the way!"))
-			return
+			if(user == feedee)
+				to_chat(user, SPAN_WARNING("\The [blocked] is in the way!"))
+				return
+			else if(user.a_intent != I_GRAB)
+				to_chat(user, SPAN_WARNING("\The [blocked] is in the way!"))
+				return
 
 		//Check to see if we can above, feeding/eating below
 		if(user == feedee)
@@ -233,6 +237,7 @@
 						food_inserted_micros = list()
 					food_inserted_micros += feedee
 					return TRUE
+				to_chat(feeder,SPAN_WARNING("\The [feedee] is too powerful to be shoved into \the [src]..."))
 				return FALSE
 			if(I_HURT)
 				//shove food inside giving nutrition but destroying the food and maybe falling in yourself
