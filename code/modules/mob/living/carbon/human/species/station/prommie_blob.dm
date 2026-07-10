@@ -310,7 +310,7 @@
 	color = new_skin
 	update_icon()
 
-/mob/living/simple_mob/slime/promethean/get_description_interaction()
+/mob/living/simple_mob/slime/promethean/get_description_interaction(var/for_chat = FALSE) // RS Edit: Examine Mode Fix (Lira, July 2026)
 	return
 
 

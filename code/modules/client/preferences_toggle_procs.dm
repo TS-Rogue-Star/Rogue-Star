@@ -574,7 +574,7 @@
 			to_chat(src, "<span class='filter_system'>Examining things will only output the base examine text, and you will not be redirected to the examine panel automatically.</span>")
 
 		if(EXAMINE_MODE_INCLUDE_USAGE)
-			to_chat(src, "<span class='filter_system'>Examining things will also print any extra usage information normally included in the examine panel to the chat.</span>")
+			to_chat(src, "<span class='filter_system'>Examining things will also print extended information normally included in the examine panel to the chat.</span>") // RS Edit: Examine Mode Fix (Lira, July 2026)
 
 		if(EXAMINE_MODE_SWITCH_TO_PANEL)
 			to_chat(src, "<span class='filter_system'>Examining things will direct you to the examine panel, where you can view extended information about the thing.</span>")
