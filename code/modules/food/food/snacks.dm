@@ -192,6 +192,8 @@
 		if(feeder.a_intent == I_HURT && !feedee.feeding)	//Harm mode is mostly the same as feeding mode so let's just do help if they don't like it
 			feed_mode = I_HELP
 		var/feed_verb
+		reagents.update_total()
+		var/reagent_transfer = 0
 		switch(feed_mode)
 			if(I_HELP)
 				if(stuffing)
@@ -218,6 +220,9 @@
 					feeder.visible_message(SPAN_NOTICE("\The [feeder] attempts to [feed_verb] \the [src] to \the [feedee]!"),runemessage = ". . .")
 			if(I_DISARM)
 				//slap someone with food knocking them down and feeding them a bite and destroying the food
+				if(reagents.total_volume >= 35)
+					to_chat(feeder,SPAN_DANGER("\The [src] is too powerful to simply slap someone with..."))
+					return
 				feedee.add_modifier(/datum/modifier/sense/smell,origin = src)
 				feedee.add_modifier(/datum/modifier/sense/taste,origin = src)
 				var/list/smacklist = list(
@@ -241,6 +246,10 @@
 				return FALSE
 			if(I_HURT)
 				//shove food inside giving nutrition but destroying the food and maybe falling in yourself
+				var/datum/modifier/forcefeeding/F = feedee.get_modifier_of_type(/datum/modifier/forcefeeding)
+				if(F)
+					to_chat(feeder,SPAN_WARNING("\The [feedee] is already being forcefed, you will have to wait..."))
+					return
 				var/list/feedlist = list(
 					"shove",
 					"cram",
@@ -250,10 +259,14 @@
 				)
 				feed_verb = pick(feedlist)
 				feeder.visible_message(SPAN_DANGER("\The [feeder] [feed_verb]s \the [src] into \the [feedee]!"),runemessage = "! ! !")
-				feed_duration = 1
-
-		if(!do_mob(feeder, feedee, feed_duration))
+				reagent_transfer = clamp(reagents.total_volume,0,500)
+				feed_duration = reagent_transfer * 2
+				feedee.add_modifier(/datum/modifier/forcefeeding)
+		if(!do_mob(feeder, feedee, feed_duration, exclusive = TRUE))
 			to_chat(feeder,SPAN_WARNING("You were interrupted."))
+			var/datum/modifier/forcefeeding/F = feedee.get_modifier_of_type(/datum/modifier/forcefeeding)
+			if(F)
+				F.expire()
 			return
 
 		switch(feed_mode)
@@ -281,8 +294,14 @@
 			if(I_HURT)
 				//shove food inside giving nutrition but destroying the food
 				go_on_take_a_bite(feedee,TRUE)
-				feedee.adjustHalLoss(25)
-				feedee.visible_message(SPAN_DANGER("\The [feeder] manages to [feed_verb] the whole [src] into \the [feedee]!!!"),runemessage = "U L P")
+				if(QDELETED(src))
+					feedee.visible_message(SPAN_DANGER("\The [feeder] manages to [feed_verb] the whole [src] into \the [feedee]!!!"),runemessage = "U L P")
+				else
+					feedee.visible_message(SPAN_DANGER("\The [feeder] manages to [feed_verb] as much of [src] into \the [feedee] as will fit!!!"),runemessage = "U L P")
+
+				var/datum/modifier/forcefeeding/F = feedee.get_modifier_of_type(/datum/modifier/forcefeeding)
+				if(F)
+					F.expire()
 		return TRUE
 	return FALSE
 
@@ -299,6 +318,13 @@
 	bitecount++
 	On_Consume(L)
 	return TRUE
+
+/datum/modifier/forcefeeding/on_applied()
+	holder.adjustHalLoss(25)
+
+/datum/modifier/forcefeeding/tick()
+	holder.adjustHalLoss(25)
+
 	//RS EDIT END
 
 /obj/item/weapon/reagent_containers/food/snacks/examine(mob/user)
