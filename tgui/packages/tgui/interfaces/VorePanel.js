@@ -3032,11 +3032,20 @@ const VoreUserPreferences = (props, context) => {
           <Flex.Item basis="50%">
             <VoreUserPreferenceItem spec={preferences.examine_weight} />
           </Flex.Item>
-          <Flex.Item basis="50%">
+          {/* RS Edit: Move Belch color to VPrefs (Lira, July 2026)*/}
+          <Flex.Item basis="50%" grow={1}>
             <Button
               fluid
               content="Vore Sprite Color"
               onClick={() => act('set_vs_color')}
+            />
+          </Flex.Item>
+          {/* RS Add: Move Belch color to VPrefs (Lira, July 2026)*/}
+          <Flex.Item basis="50%">
+            <Button
+              fluid
+              content="Set Belch Color"
+              onClick={() => act('set_belch_color')}
             />
           </Flex.Item>
         </Flex>

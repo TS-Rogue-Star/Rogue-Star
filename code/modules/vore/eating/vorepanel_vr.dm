@@ -881,6 +881,15 @@ var/global/list/rsui_healthbar_preview_cache = list()
 			host.vore_smell = new_smell
 			unsaved_changes = TRUE
 			return TRUE
+		// RS Add: Move Belch color to VPrefs (Lira, July 2026)
+		if("set_belch_color")
+			if(!host.client || !host.client.prefs_vr)
+				return TRUE
+			var/color_choice = input(usr, "Choose your belch color", "Belch Color", host.client.prefs_vr.belch_color) as color|null
+			if(color_choice)
+				host.client.prefs_vr.belch_color = sanitize_hexcolor(color_choice)
+				unsaved_changes = TRUE
+			return TRUE
 		if("toggle_dropnom_pred")
 			set_trustlist_preference_state("dropnom_pred") // RS Add: Trustlist integration (Lira, September 2025)
 			return TRUE
