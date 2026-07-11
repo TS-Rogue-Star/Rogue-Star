@@ -194,6 +194,10 @@
 		var/feed_verb
 		reagents.update_total()
 		var/reagent_transfer = 0
+		if(in_use)
+			to_chat(feeder,SPAN_DANGER("\The [src] is already being fed to someone!"))
+			return
+		in_use = TRUE
 		switch(feed_mode)
 			if(I_HELP)
 				if(stuffing)
@@ -222,6 +226,7 @@
 				//slap someone with food knocking them down and feeding them a bite and destroying the food
 				if(reagents.total_volume >= 35)
 					to_chat(feeder,SPAN_DANGER("\The [src] is too powerful to simply slap someone with..."))
+					in_use = FALSE
 					return
 				feedee.add_modifier(/datum/modifier/sense/smell,origin = src)
 				feedee.add_modifier(/datum/modifier/sense/taste,origin = src)
@@ -241,14 +246,17 @@
 					if(!food_inserted_micros)
 						food_inserted_micros = list()
 					food_inserted_micros += feedee
+					in_use = FALSE
 					return TRUE
 				to_chat(feeder,SPAN_WARNING("\The [feedee] is too powerful to be shoved into \the [src]..."))
-				return FALSE
+				in_use = FALSE
+				return
 			if(I_HURT)
 				//shove food inside giving nutrition but destroying the food and maybe falling in yourself
 				var/datum/modifier/forcefeeding/F = feedee.get_modifier_of_type(/datum/modifier/forcefeeding)
 				if(F)
 					to_chat(feeder,SPAN_WARNING("\The [feedee] is already being forcefed, you will have to wait..."))
+					in_use = FALSE
 					return
 				var/list/feedlist = list(
 					"shove",
@@ -262,13 +270,16 @@
 				reagent_transfer = clamp(reagents.total_volume,0,500)
 				feed_duration = reagent_transfer * 2
 				feedee.add_modifier(/datum/modifier/forcefeeding)
-		if(!do_mob(feeder, feedee, feed_duration, exclusive = TRUE))
+
+		if(!do_mob(feeder, feedee, feed_duration, exclusive = TASK_USER_EXCLUSIVE))
 			to_chat(feeder,SPAN_WARNING("You were interrupted."))
 			var/datum/modifier/forcefeeding/F = feedee.get_modifier_of_type(/datum/modifier/forcefeeding)
+			in_use = FALSE
 			if(F)
 				F.expire()
 			return
 
+		in_use = FALSE	//Since everything after do_mob() happens instantly we don't need to care about this anymore
 		switch(feed_mode)
 			if(I_HELP)
 				//normal feeding
@@ -290,7 +301,7 @@
 					qdel(src)
 				return TRUE
 			if(I_GRAB)
-				return FALSE
+				return
 			if(I_HURT)
 				//shove food inside giving nutrition but destroying the food
 				go_on_take_a_bite(feedee,TRUE)
@@ -319,12 +330,15 @@
 	On_Consume(L)
 	return TRUE
 
-/datum/modifier/forcefeeding/on_applied()
-	holder.adjustHalLoss(25)
+/datum/modifier/forcefeeding
+	name = "force feeding"
+	desc = "Ouch!"
+	var/tick_count = 0
 
 /datum/modifier/forcefeeding/tick()
-	holder.adjustHalLoss(25)
-
+	if(tick_count > 0)
+		holder.adjustHalLoss(25)
+	tick_count ++
 	//RS EDIT END
 
 /obj/item/weapon/reagent_containers/food/snacks/examine(mob/user)
