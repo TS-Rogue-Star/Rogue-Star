@@ -224,6 +224,7 @@
 /mob/living/verb/set_belch_color()
 	set name = "Set Belch Color"
 	set category = "Preferences"
+	set hidden = TRUE // RS Add: Move Belch color to VPrefs (Lira, July 2026)
 
 	var/color_choice = input(src, "Choose your belch color", "Belch Color", client.prefs_vr.belch_color) as color|null
 	if(color_choice)
