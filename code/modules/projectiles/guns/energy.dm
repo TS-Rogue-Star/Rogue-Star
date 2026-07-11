@@ -235,16 +235,17 @@
 	START_PROCESSING(SSobj, src)
 	update_icon()
 
-/obj/item/weapon/gun/energy/get_description_interaction()
+// RS Edit: Examine Mode Fix (Lira, July 2026)
+/obj/item/weapon/gun/energy/get_description_interaction(var/for_chat = FALSE)
 	var/list/results = list()
 
 	if(!battery_lock && !self_recharge)
 		if(power_supply)
-			results += "[desc_panel_image("offhand")]to remove the weapon cell."
+			results += "[desc_panel_image("offhand", for_chat)]to remove the weapon cell."
 		else
-			results += "[desc_panel_image("weapon cell")]to add a new weapon cell."
+			results += "[desc_panel_image("weapon cell", for_chat)]to add a new weapon cell."
 
-	results += ..()
+	results += ..(for_chat)
 
 	return results
 
