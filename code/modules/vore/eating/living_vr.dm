@@ -417,6 +417,21 @@
 
 	visible_message("<span class='warning'>[src] licks [tasted]!</span>","<span class='notice'>You lick [tasted]. They taste rather like [tasted.get_taste_message()].</span>","<b>Slurp!</b>")
 
+	//RS ADD START
+	for(var/datum/modifier/sense/taste/T in tasted.modifiers)
+		if(istype(T,/datum/modifier/sense/taste))
+			var/taste_report = "You can also taste "
+			var/iteration = 0
+			for(var/thing in T.flavor)
+				iteration ++
+				if(iteration == 1)
+					taste_report += "[thing]"
+				else if(iteration != T.flavor.len)
+					taste_report += ", [thing]"
+				else if(iteration > 1)
+					taste_report += ", and [thing]"
+			to_chat(src,SPAN_OCCULT("[taste_report]."))
+	//RS ADD END
 
 /mob/living/proc/get_taste_message(allow_generic = 1)
 	if(!vore_taste && !allow_generic)
@@ -459,7 +474,22 @@
 	setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 	visible_message("<span class='warning'>[src] smells [smelled]!</span>","<span class='notice'>You smell [smelled]. They smell like [smelled.get_smell_message()].</span>","<b>Sniff!</b>")
 
-	if(olfaction_track)	//RS ADD START
+	//RS ADD START
+	for(var/datum/modifier/sense/smell/S in smelled.modifiers)
+		if(istype(S,/datum/modifier/sense/smell))
+			var/smell_report = "You can also smell "
+			var/iteration = 0
+			for(var/thing in S.flavor)
+				iteration ++
+				if(iteration == 1)
+					smell_report += "[thing]"
+				else if(iteration != S.flavor.len)
+					smell_report += ", [thing]"
+				else if(iteration > 1)
+					smell_report += ", and [thing]"
+			to_chat(src,SPAN_OCCULT("[smell_report]."))
+
+	if(olfaction_track)
 		SEND_SIGNAL(src,COMSIG_MOB_SMELLED)
 		add_modifier(/datum/modifier/olfaction_track, origin = smelled)	//RS ADD END
 

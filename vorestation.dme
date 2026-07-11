@@ -1676,6 +1676,7 @@
 #include "code\game\Rogue Star\objective_objects.dm"
 #include "code\game\Rogue Star\special_persist.dm"
 #include "code\game\Rogue Star\tag.dm"
+#include "code\game\Rogue Star\tastes_and_smells.dm"
 #include "code\game\Rogue Star\waddle.dm"
 #include "code\game\Rogue Star\_Component\component_adder.dm"
 #include "code\game\Rogue Star\_Component\dungeon_component.dm"
