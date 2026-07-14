@@ -92,6 +92,9 @@
 /datum/alt_title/talon_tech
 	title = "Talon Technician"
 
+/datum/alt_title/talon_atmos
+	title = "Talon Atmospheric Technician"
+
 
 /datum/job/talon_pilot
 	title = "Talon Pilot"
