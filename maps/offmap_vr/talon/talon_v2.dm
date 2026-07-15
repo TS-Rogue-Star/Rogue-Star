@@ -466,7 +466,7 @@ so... Use it wisely and good luck!<br>\
 		/obj/item/clothing/under/rank/nurse,
 		/obj/item/clothing/head/soft/talon,
 		/obj/item/clothing/under/rank/orderly,
-		/obj/item/clothing/under/rank/talon/proper/refreshed, //RS Add
+		/obj/item/clothing/under/rank/talon/medical/refreshed, //RS Add
 		/obj/item/clothing/accessory/solgov/department/medical/army,
 		/obj/item/clothing/suit/storage/toggle/labcoat/talon, //RS Add
 		/obj/item/clothing/suit/storage/toggle/labcoat/modern,
