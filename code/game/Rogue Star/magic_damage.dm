@@ -196,7 +196,7 @@
 
 /obj/aoe
 	name = "ether damage applier"
-	icon = 'icons/rogue-star/misc.dmi'
+	icon = 'icons/rogue-star/bullet.dmi'
 	icon_state = "seething_aoe"
 	anchored = TRUE
 	mouse_opacity = FALSE
