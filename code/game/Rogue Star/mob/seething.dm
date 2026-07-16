@@ -61,6 +61,7 @@
 	name = "dust"
 	plane = DECAL_PLANE
 	layer = DECAL_LAYER
+	playsound(src, "seething_scream", 100, 1)
 
 /mob/living/simple_mob/hostile/seething/Initialize()
 	. = ..()
@@ -82,16 +83,17 @@
 
 	name = "[pick(adj)] thing"
 	movement_cooldown = rand(5,10)
-	default_pixel_x = rand(-10,10)
+	default_pixel_x = default_pixel_x + rand(-10,10)
 	pixel_x = default_pixel_x
 
 /mob/living/simple_mob/hostile/seething/apply_melee_effects(atom/A)
 	. = ..()
 	if(!isliving(A))
 		return
+	var/mob/living/L = A
+	L.adjustEtherDamage(rand(0,3))
 	if(prob(10))
-		forceMove(get_turf(A))
-		var/mob/living/L = A
+		forceMove(get_turf(L))
 		visible_message(span_cult("\The [src] latches on to [L]!!!"),runemessage = "C H O M P")
 		L.add_modifier(/datum/modifier/latched_on,origin = src)
 
@@ -127,6 +129,9 @@
 	if(holder.loc != our_origin.loc)
 		expire()
 		return
+	if(holder.stat == DEAD)
+		expire()
+		return
 
 	var/list/verbs = list(
 		"bites",
@@ -145,15 +150,15 @@
 	switch(chance)
 		if(89,50)
 			holder.Weaken(1)
-			holder.adjustBruteLoss(1)
+			holder.adjustEtherDamage(1)
 		if(49,6)
 			holder.Stun(3)
-			holder.adjustBruteLoss(5)
+			holder.adjustEtherDamage(5)
 			holder.say("*scream")
 		if(5,1)
 			holder.Stun(5)
 			holder.Weaken(5)
-			holder.adjustBruteLoss(10)
+			holder.adjustEtherDamage(10)
 			holder.say("*scream")
 		else
 			return
@@ -245,7 +250,7 @@
 		visible_message(SPAN_WARNING("\The [src] reappears!"))
 		lightning_strike(destination,TRUE)
 
-/mob/living/simple_mob/hostile/seething/spawner/proc/spawn_seething()
+/mob/living/simple_mob/hostile/seething/spawner/spawn_seething()
 	var/howmany = rand(1,5)
 	var/where = get_turf(src)
 	if(!where)
@@ -275,7 +280,7 @@
 	melee_damage_upper = 0
 
 	projectiletype = /obj/item/projectile/seething_shot
-	projectilesound = 'sound/weapons/Laser.ogg'
+	projectilesound = "seething_scream"
 	projectile_dispersion = 10
 	reload_max = 100
 	reload_count = 100
@@ -303,6 +308,25 @@
 		return ..()
 	else
 		return FALSE
+
+//VARIANT
+/mob/living/simple_mob/hostile/seething/furry
+	icon_state = "seething_f"
+	icon_living = "seething_f"
+
+/mob/living/simple_mob/hostile/seething/large
+	icon = 'icons/rogue-star/mobx64.dmi'
+	icon_state = "spooky_seething"
+	icon_living = "spooky_seething"
+	pixel_x = -16
+	default_pixel_x = -16
+	maxHealth = 300
+	movement_sound = "seething_scream"
+
+/mob/living/simple_mob/hostile/seething/large/robot
+	icon_state = "robo_seething"
+	icon_living = "robo_seething"
+	movement_sound = 'sound/effects/houndstep.ogg'
 
 /////AI HOLDERS/////
 /datum/ai_holder/seething
@@ -345,7 +369,8 @@
 
 /obj/item/projectile/seething_shot
 	name = "energy"
-	icon_state = "red_pellet"
+	icon = 'icons/rogue-star/bullet.dmi'
+	icon_state = "seething"
 	damage = 5
 	damage_type = BURN
 	range = 10
@@ -369,3 +394,23 @@
 
 /obj/item/projectile/seething_shot/proc/spawn_AOE()
 	new/obj/aoe(get_turf(src))
+
+//SPECIES SETTINGS
+/datum/species/tajaran
+	seething_type = /mob/living/simple_mob/hostile/seething/furry
+/datum/species/sergal
+	seething_type = /mob/living/simple_mob/hostile/seething/furry
+/datum/species/vulpkanin
+	seething_type = /mob/living/simple_mob/hostile/seething/furry
+/datum/species/fl_zorren
+	seething_type = /mob/living/simple_mob/hostile/seething/furry
+/datum/species/hi_zorren
+	seething_type = /mob/living/simple_mob/hostile/seething/furry
+/datum/species/altevian
+	seething_type = /mob/living/simple_mob/hostile/seething/furry
+/datum/species/xenochimera
+	seething_type = /mob/living/simple_mob/hostile/seething/furry
+/datum/species/custom
+	seething_type = /mob/living/simple_mob/hostile/seething/large
+/datum/species/protean
+	seething_type = /mob/living/simple_mob/hostile/seething/large/robot

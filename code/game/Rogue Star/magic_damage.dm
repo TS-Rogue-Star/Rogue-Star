@@ -16,20 +16,16 @@
 
 /datum/species
 	var/ether_slow = 1
+	var/seething_type
 
 /datum/species/proc/handle_ether_damage(var/mob/living/carbon/human/H)
 	if(!H.stat && (H.health + 100) - H.ether_damage <= 0)
 		H.death()
-		var/mob/living/simple_mob/hostile/seething/S = new(get_turf(H))
-		S.visible_message(SPAN_DANGER("\The [S] seems to climb out of \the [H]!!!"))
 
 /mob/living/proc/ether_death()
 	ether_damage = 0.0
-	var/mob/living/simple_mob/hostile/seething/S = new(get_turf(src))
-	S.visible_message(SPAN_DANGER("\The [S] seems to climb out of \the [src]!!!"))
-
-/mob/living/carbon/human/ether_death()
-	ether_damage = 0.0
+	if(!isbelly(loc))
+		spawn_seething()
 
 /mob/living/proc/getEtherDamage()
 	return ether_damage
@@ -41,6 +37,25 @@
 		ether_damage = 0
 	if(amount > 0)
 		add_modifier(/datum/modifier/ether_damage)
+
+/mob/living/proc/spawn_seething()
+	var/mob/living/simple_mob/hostile/seething/S = new(get_turf(src))
+	S.visible_message(SPAN_DANGER("\The [S] seems to climb out of \the [src]!!!"))
+
+/mob/living/carbon/human/spawn_seething()
+	var/mob/living/simple_mob/hostile/seething/S
+	if(isSynthetic())
+		S = new /mob/living/simple_mob/hostile/seething/large/robot(get_turf(src))
+	else if(species?.seething_type)
+		S = new species.seething_type(get_turf(src))
+	else
+		S = new(get_turf(src))
+	if(custom_species)
+		S.tt_desc = "[custom_species]?"
+	else
+		S.tt_desc = "[species.name]?"
+	S.desc = desc + SPAN_OCCULT(" It reminds you of [src]...")
+	S.visible_message(SPAN_DANGER("\The [S] seems to climb out of \the [src]!!!"))
 
 /datum/modifier/ether_damage
 	name = "Ether Damage"
@@ -61,8 +76,7 @@
 		expire()
 		return
 	if(holder.stat == DEAD)
-		if(!isbelly(holder.loc))
-			holder.ether_death()
+		holder.ether_death()
 		expire()
 		return
 	new /obj/particle_emitter/ether_damage/limited(get_turf(holder))
@@ -164,11 +178,11 @@
 
 /particles/ether_damage/explosion
 	position = list(0,0)
-	velocity = generator("vector",list(generator("num",-50,0),generator("num",-50,0)),list(generator("num",0,50),generator("num",0,50)))
+	velocity = generator("vector",list(generator("num",-5,0),generator("num",-5,0)),list(generator("num",0,5),generator("num",0,5)))
 	gravity = list(0,0)
 	friction = 0
-	count = 100
-	grow = 1
+	count = 10
+//	grow = 0.5
 
 /particles/ether_damage/fullscreen/medium
 	count = 100
@@ -182,14 +196,14 @@
 
 /obj/aoe
 	name = "ether damage applier"
-	icon = null
-	icon_state = null
+	icon = 'icons/rogue-star/misc.dmi'
+	icon_state = "seething_aoe"
 	anchored = TRUE
 	mouse_opacity = FALSE
 	plane = PLANE_LIGHTING_ABOVE
 	particles = new/particles/ether_damage/explosion
-	var/aoe_range = 1	//From center, so 1 is a 3x3 square
-	var/safe_duration = 0.5 SECOND
+	var/aoe_range = 2	//From center, so 1 is a 3x3 square
+	var/safe_duration = 0.25 SECOND
 	var/danger_duration = 3 SECOND
 	var/start_time = 0
 	var/damage_per_tick = 5
@@ -199,11 +213,16 @@
 
 /obj/aoe/Initialize(mapload)
 	. = ..()
+	SetTransform(aoe_range * 3)
 	start_time = world.time
 	START_PROCESSING(SSfastprocess,src)
-	particles.width = 32 + (aoe_range * 64)
-	particles.height = 32 + (aoe_range * 64)
-	ourturfs = circlerange(get_turf(src),aoe_range)
+	particles.width = 32 + (aoe_range * 3)
+	particles.height = 32 + (aoe_range * 3)
+	var/turf/ourturf = get_turf(src)
+	ourturfs = circlerange(ourturf,aoe_range)
+	for(var/turf/T in ourturfs)
+		if(!can_see(ourturf,T,world.view))	//TRY to account for LOS
+			ourturfs -= T
 	next_phase_time = world.time + safe_duration
 
 /obj/aoe/Destroy()
@@ -217,21 +236,22 @@
 			if(world.time > next_phase_time)
 				phase ++
 				next_phase_time = world.time + danger_duration
-				for(var/turf/T in ourturfs)
-					T.color = "#ff0000"
+//				for(var/turf/T in ourturfs)
+//					T.color = "#504ece"
 		if(1)	//Danger
 			if(world.time > next_phase_time)
 				phase ++
 				next_phase_time = world.time + particles.lifespan + 5
 				particles.spawning = 0
-				for(var/turf/T in ourturfs)
-					T.color = null
+//				for(var/turf/T in ourturfs)
+//					T.color = null
 			else
 				for(var/turf/T in ourturfs)
 					for(var/mob/living/L in T.contents)
 						if(isliving(L))
-							L.adjustEtherDamage(damage_per_tick)
-							to_world(SPAN_OCCULT("[L.ether_damage]"))
+							if(L.stat != DEAD)
+								L.adjustEtherDamage(damage_per_tick)
+//							to_world(SPAN_OCCULT("[L.ether_damage]"))
 		if(2)	//Wind Down
 			if(world.time > next_phase_time)
 				qdel(src)
