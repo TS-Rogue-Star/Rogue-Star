@@ -293,7 +293,7 @@
 	rolled_down = 0
 
 //////////////////////TALON JUMPSUITS//////////////////////
-
+//RS Refactor (+ ADD) by Azzy.Dreemurr 2026
 /obj/item/clothing/under/rank/talon
 	name = "Talon jumpsuit"
 	desc = "A basic jumpsuit that bares the ITV Talon logo on the breast."
@@ -310,8 +310,8 @@
 	)
 
 /obj/item/clothing/under/rank/talon/medical
-	name = "Talon medical jumpsuit" //RS Edit
-	desc = "A neat and proper uniform for medical staff ITV Talon." //RS Edit
+	name = "Talon medical jumpsuit"
+	desc = "A neat and proper uniform for medical staff ITV Talon."
 	icon_state = "talon_medical"
 	item_state = "talon_medical"
 
@@ -320,7 +320,7 @@
 	desc = "A sleek, streamlined version of ITV Talon's standard jumpsuit that bares security markings."
 	icon_state = "talon_security"
 	item_state = "talon_security"
-//RS Add
+
 /obj/item/clothing/under/rank/talon/engineer
 	name = "Talon engineer jumpsuit"
 	desc = "A sleek, streamlined version of ITV Talon's standard jumpsuit that bares engineering markings."
@@ -338,7 +338,7 @@
 	desc = "A sleek, streamlined version of ITV Talon's standard jumpsuit that bares security markings."
 	icon_state = "talon_miner"
 	item_state = "talon_miner"
-//RS Add end
+
 /obj/item/clothing/under/rank/talon/pilot
 	name = "Talon pilot jumpsuit"
 	desc = "A sleek, streamlined version of ITV Talon's standard jumpsuit. Made from cushioned fabric to handle intense flight."
@@ -350,7 +350,7 @@
 	desc = "A commanding jumpsuit fit for a commanding officer."
 	icon_state = "talon_captain"
 	item_state = "talon_captain"
-
+//RS Refactor (+ ADD) End
 // Excelsior uniforms
 /obj/item/clothing/under/excelsior
 	name = "\improper Excelsior uniform"
