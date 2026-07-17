@@ -305,9 +305,6 @@
 	rolled_down_icon_override = FALSE
 	rolled_sleeves_icon_override = FALSE
 	default_worn_icon = 'icons/inventory/uniform/mob_vr.dmi'
-	sprite_sheets = list(
-		SPECIES_TESHARI = 'icons/inventory/uniform/mob_teshari.dmi'
-	)
 
 /obj/item/clothing/under/rank/talon/medical
 	name = "Talon medical jumpsuit"
