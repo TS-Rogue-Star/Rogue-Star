@@ -246,3 +246,23 @@
 
 /obj/particle_emitter/sword_rain
 	particles = new/particles/sword_rain
+
+/particles/steam
+	icon = 'icons/rogue-star/steamy.dmi'
+	icon_state = list("1" = 50, "2" = 50, "3" = 50, "4" = 50, "5" = 50, "6" = 50, "7" = 50, "8" = 50, "9" = 1)
+	width = 800
+	height = 800
+	count = 100
+	spawning = 0.05
+	lifespan = 100
+	fade = 50
+	fadein = 10
+	position = generator("box", list(-50,-50,0), list(50,50,0))
+	velocity = generator("vector",list(-1.5,-1.5),list(1.5,1.5))
+	spin = generator("num", -5,5)
+	grow = generator("num",0.01,0.06)
+
+/obj/particle_emitter/steam
+	particles = new/particles/steam
+	plane = MOB_PLANE + 1
+	layer = MOB_LAYER
