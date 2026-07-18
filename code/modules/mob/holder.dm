@@ -348,7 +348,7 @@ var/list/holder_mob_icon_cache = list()
 		return
 	return ..()
 
-/mob/living/proc/get_scooped(var/mob/living/carbon/grabber, var/self_grab)
+/mob/living/proc/get_scooped(var/mob/living/carbon/grabber, var/self_grab, var/silent = FALSE)	//RS EDIT
 
 	if(!holder_type || buckled || pinned.len)
 		return
@@ -362,12 +362,13 @@ var/list/holder_mob_icon_cache = list()
 	grabber.put_in_hands(H)
 
 	if(self_grab)
-		to_chat(grabber, "<span class='notice'>\The [src] clambers onto you!</span>")
-		to_chat(src, "<span class='notice'>You climb up onto \the [grabber]!</span>")
+		if(!silent)	//RS EDIT START
+			to_chat(grabber, "<span class='notice'>\The [src] clambers onto you!</span>")
+			to_chat(src, "<span class='notice'>You climb up onto \the [grabber]!</span>")
 		grabber.equip_to_slot_if_possible(H, slot_back, 0, 1)
-	else
+	else if(!silent)
 		to_chat(grabber, "<span class='notice'>You scoop up \the [src]!</span>")
-		to_chat(src, "<span class='notice'>\The [grabber] scoops you up!</span>")
+		to_chat(src, "<span class='notice'>\The [grabber] scoops you up!</span>")	//RS EDIT END
 
 	add_attack_logs(grabber, H.held_mob, "Scooped up", FALSE) // Not important enough to notify admins, but still helpful.
 	record_character_memory_pair(grabber, H.held_mob, "picked_up", "as_holder", "as_held") // RS Add: Persistent memory system (Lira, May 2026)

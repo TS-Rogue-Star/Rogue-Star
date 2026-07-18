@@ -199,7 +199,7 @@ var/list/preferences_datums = list()
 	var/lastnews // Hash of last seen lobby news content.
 	var/lastlorenews //ID of last seen lore news article.
 
-	var/examine_text_mode = 0 // Just examine text, include usage (description_info), switch to examine panel.
+	var/examine_text_mode = 0 // Just examine text, include extended information, switch to examine panel. || RS Edit: Examine Mode Fix (Lira, July 2026)
 	var/multilingual_mode = 0 // Default behaviour, delimiter-key-space, delimiter-key-delimiter, off
 
 	var/list/volume_channels = list()

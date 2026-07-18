@@ -961,6 +961,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		var/msg_text = entry["message"]
 		if(!istext(msg_text))
 			continue
+		msg_text = replacetext(msg_text, "\n", "<br>") // RS Add: Examine Mode Fix (Lira, July 2026)
 		var/logged_at = entry["logged_at"]
 		if(istext(logged_at))
 			logged_at = text2num(logged_at)

@@ -2165,8 +2165,10 @@ Departamental Swimsuits, for general use
 		return
 	..()
 
-/obj/item/clothing/head/fluff/nikki/get_description_interaction()
-	. = ..()
+// RS Edit Start: Examine Mode Fix (Lira, July 2026)
+/obj/item/clothing/head/fluff/nikki/get_description_interaction(var/for_chat = FALSE)
+	. = ..(for_chat)
+// RS Edit End
 	if (translocator)
 		. += "It has \a [translocator] inside of it. Alt-click while holding it on your inactive hand to remove it."
 		. += "Otherwise, this hat functions exactly as the translocator it has inside while still being a sweet head accessory."

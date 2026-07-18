@@ -283,13 +283,14 @@
 		step_away(baby, src)
 	return baby
 
-/mob/living/simple_mob/slime/xenobio/get_description_interaction()
+// RS Edit: Examine Mode Fix (Lira, July 2026)
+/mob/living/simple_mob/slime/xenobio/get_description_interaction(var/for_chat = FALSE)
 	var/list/results = list()
 
 	if(!stat)
-		results += "[desc_panel_image("slimebaton")]to stun the slime, if it's being bad."
+		results += "[desc_panel_image("slimebaton", for_chat)]to stun the slime, if it's being bad."
 
-	results += ..()
+	results += ..(for_chat)
 
 	return results
 

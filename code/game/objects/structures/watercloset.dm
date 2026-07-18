@@ -265,6 +265,10 @@
 			if(isliving(AM))
 				var/mob/living/L = AM
 				process_heat(L)
+				L.smelly = FALSE	//RS ADD START
+				for(var/datum/modifier/M in L.modifiers)
+					if(istype(M,/datum/modifier/sense))
+						M.expire()	//RS ADD END
 	wash_floor()
 	reagents.add_reagent("water", reagents.get_free_space())
 

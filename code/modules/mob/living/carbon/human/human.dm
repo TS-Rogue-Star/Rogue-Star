@@ -1424,12 +1424,14 @@
 		if(C.body_parts_covered & FEET)
 			feet_exposed = 0
 
-	flavor_text = ""
+	// RS Edit Start: Examine Mode Fix (Lira, July 2026)
+	var/list/visible_flavor_texts = list()
 	for (var/T in flavor_texts)
 		if(flavor_texts[T] && flavor_texts[T] != "")
 			if((T == "general") || (T == "head" && head_exposed) || (T == "face" && face_exposed) || (T == "eyes" && eyes_exposed) || (T == "torso" && torso_exposed) || (T == "arms" && arms_exposed) || (T == "hands" && hands_exposed) || (T == "legs" && legs_exposed) || (T == "feet" && feet_exposed))
-				flavor_text += flavor_texts[T]
-				flavor_text += "\n\n"
+				visible_flavor_texts += flavor_texts[T]
+	flavor_text = visible_flavor_texts.Join("\n\n")
+	// RS Edit End
 	if(!shrink)
 		return flavor_text
 	else
