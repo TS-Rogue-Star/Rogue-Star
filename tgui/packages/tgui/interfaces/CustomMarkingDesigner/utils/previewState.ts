@@ -768,9 +768,7 @@ export const resolveDirectionCanvasSources = (
     hiddenBodyPartsOverride
   );
   const overlayAssets = activeDirState?.overlayAssets as
-    | GearOverlayAsset[]
-    | IconAssetPayload[]
-    | undefined;
+    GearOverlayAsset[] | IconAssetPayload[] | undefined;
   const restrictOverlaySlots =
     canvasWidth > CANVAS_FIT_TARGET || canvasHeight > CANVAS_FIT_TARGET;
   const overlaySlotFilter = buildOverlaySlotFilter(restrictOverlaySlots);

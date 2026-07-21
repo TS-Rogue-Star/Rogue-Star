@@ -590,17 +590,13 @@ const resolvePayloadSnapshots = (options: {
     selectBackend(options.context.store.getState()).shared || {};
   const bodyPayloadSnapshot =
     (sharedStateSnapshot.bodyPayload as
-      | BodyMarkingsPayload
-      | null
-      | undefined) ??
+      BodyMarkingsPayload | null | undefined) ??
     options.bodyPayload ??
     options.dataBodyPayload ??
     null;
   const basicPayloadSnapshot =
     (sharedStateSnapshot.basicPayload as
-      | BasicAppearancePayload
-      | null
-      | undefined) ??
+      BasicAppearancePayload | null | undefined) ??
     options.basicPayload ??
     options.dataBasicPayload ??
     null;
@@ -2713,18 +2709,14 @@ export const CustomMarkingDesigner = (_props, context) => {
   const resolveLatestBodyPayload = () => {
     const sharedState = selectBackend(context.store.getState()).shared || {};
     const payload = sharedState.bodyPayload as
-      | BodyMarkingsPayload
-      | null
-      | undefined;
+      BodyMarkingsPayload | null | undefined;
     return payload !== undefined ? payload : bodyPayload;
   };
 
   const resolveLatestBasicPayload = () => {
     const sharedState = selectBackend(context.store.getState()).shared || {};
     const payload = sharedState.basicPayload as
-      | BasicAppearancePayload
-      | null
-      | undefined;
+      BasicAppearancePayload | null | undefined;
     return payload !== undefined ? payload : basicPayload;
   };
 
