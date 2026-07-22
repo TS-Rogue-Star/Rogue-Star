@@ -253,10 +253,18 @@
 /mob/living/simple_mob/hostile/seething/spawner/spawn_seething()
 	var/howmany = rand(1,5)
 	var/where = get_turf(src)
+	var/seething_types = list(
+		/mob/living/simple_mob/hostile/seething = 20,
+		/mob/living/simple_mob/hostile/seething/furry = 20,
+		/mob/living/simple_mob/hostile/seething/ranged = 1,
+		/mob/living/simple_mob/hostile/seething/large = 5,
+		/mob/living/simple_mob/hostile/seething/large/robot = 5
+	)
 	if(!where)
 		return
 	while(howmany > 0)
-		new /mob/living/simple_mob/hostile/seething(where)
+		var/which = pickweight(seething_types)
+		new which(where)
 		howmany --
 
 /mob/living/simple_mob/hostile/seething/spawner/proc/find_clear_turf(var/checks = 0)
@@ -296,7 +304,7 @@
 		if(reload_count > reload_max)
 			reload_count = reload_max
 
-/mob/living/simple_mob/hostile/seething/ICheckRangedAttack(atom/A)
+/mob/living/simple_mob/hostile/seething/ranged/ICheckRangedAttack(atom/A)
 	if(reload_count < 30)
 		return FALSE
 	return ..()

@@ -19,7 +19,7 @@
 	var/seething_type
 
 /datum/species/proc/handle_ether_damage(var/mob/living/carbon/human/H)
-	if(!H.stat && (H.health + 100) - H.ether_damage <= 0)
+	if(H.stat != DEAD && (H.health + 100) - H.ether_damage <= 0)
 		H.death()
 
 /mob/living/proc/ether_death()
@@ -37,6 +37,7 @@
 		ether_damage = 0
 	if(amount > 0)
 		add_modifier(/datum/modifier/ether_damage)
+	updatehealth()
 
 /mob/living/proc/spawn_seething()
 	var/mob/living/simple_mob/hostile/seething/S = new(get_turf(src))
