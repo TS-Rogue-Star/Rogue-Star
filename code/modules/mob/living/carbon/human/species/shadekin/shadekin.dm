@@ -391,13 +391,13 @@
 
 	if(current_energy == max_energy)
 		if(prob(10))
-			to_chat(H,SPAN_DANGER("You're feeling overloaded."))
+			to_chat(H,span_critical("You're feeling overloaded."))
 		return ..()
 	else
 		var/howmuch = 10
 		if(howmuch > H.ether_damage)
 			howmuch = H.ether_damage
 		H.adjustEtherDamage(-howmuch)
-		set_energy(current_energy + howmuch)
+		set_energy(H, current_energy + howmuch)
 		if(prob(10))
 			to_chat(H, SPAN_OCCULT("You feel stronger."))

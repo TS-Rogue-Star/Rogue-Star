@@ -195,6 +195,9 @@
 	ai_holder_type = /datum/ai_holder/seething
 	particles = new/particles/seething/active
 
+	var/last_healed = 0
+	var/heal_cooldown = 5 SECONDS
+
 /mob/living/simple_mob/hostile/seething/spawner/adjustBruteLoss(amount, include_robo)
 	. = ..()
 	if(amount > 0)
@@ -277,12 +280,21 @@
 
 	return T
 
-/////RANGED/////
-
 /mob/living/simple_mob/hostile/seething/spawner/handle_ether_damage()
-	health = maxHealth
-	ether_damage = 0.0
+	if(last_healed + heal_cooldown > world.time)
+		return
+	if(ether_damage < 100)
+		return
 
+	last_healed = world.time
+	var/howmuch = ether_damage
+	ether_damage = 0.0
+	adjustBruteLoss(-howmuch)
+	adjustFireLoss(-howmuch)
+	var/turf/T = get_turf(src)
+	T.visible_message(span_critical("\The [src] grows stronger in the gloom..."), runemessage = "! ⛛ !")
+
+/////RANGED/////
 /mob/living/simple_mob/hostile/seething/ranged
 	melee_damage_lower = 0
 	melee_damage_upper = 0
