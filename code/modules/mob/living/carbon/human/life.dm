@@ -1464,7 +1464,7 @@
 				var/no_damage = 1
 				var/trauma_val = 0 // Used in calculating softcrit/hardcrit indicators.
 				if(!(species.flags & NO_PAIN))
-					trauma_val = max(traumatic_shock,halloss)/species.total_health
+					trauma_val = max(traumatic_shock,halloss)/species.total_health	//RS EDIT
 				var/limb_trauma_val = trauma_val*0.3
 				// Collect and apply the images all at once to avoid appearance churn.
 				var/list/health_images = list()
@@ -1476,6 +1476,8 @@
 				// Apply a fire overlay if we're burning.
 				if(on_fire)
 					health_images += image('icons/mob/OnFire.dmi',"[get_fire_icon_state()]")
+
+				trauma_val += ether_damage /species.total_health	//RS ADD
 
 				// Show a general pain/crit indicator if needed.
 				if(trauma_val)

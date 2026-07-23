@@ -99,6 +99,7 @@
 		set_stat(CONSCIOUS)
 	else
 		health = getMaxHealth() - getFireLoss() - getBruteLoss()
+		handle_ether_damage()	//RS ADD
 	oxyloss = 0
 	toxloss = 0
 	cloneloss = 0
