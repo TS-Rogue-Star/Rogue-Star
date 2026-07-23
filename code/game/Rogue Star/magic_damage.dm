@@ -43,6 +43,14 @@
 	var/mob/living/simple_mob/hostile/seething/S = new(get_turf(src))
 	S.visible_message(SPAN_DANGER("\The [S] seems to climb out of \the [src]!!!"))
 
+/mob/living/silicon/spawn_seething()
+	var/mob/living/simple_mob/hostile/seething/large/robot/S = new(get_turf(src))
+	S.visible_message(SPAN_DANGER("\The [S] seems to climb out of \the [src]!!!"))
+
+/mob/living/simple_mob/mechanical/spawn_seething()
+	var/mob/living/simple_mob/hostile/seething/large/robot/S = new(get_turf(src))
+	S.visible_message(SPAN_DANGER("\The [S] seems to climb out of \the [src]!!!"))
+
 /mob/living/carbon/human/spawn_seething()
 	var/mob/living/simple_mob/hostile/seething/S
 	if(isSynthetic())
