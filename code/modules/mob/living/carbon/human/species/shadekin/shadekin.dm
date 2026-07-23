@@ -397,7 +397,7 @@
 		var/howmuch = 10
 		if(howmuch > H.ether_damage)
 			howmuch = H.ether_damage
-		H.adjustEtherDamage(-howmuch)
+		H.adjustEtherDamage(-H.ether_damage)
 		set_energy(H, current_energy + howmuch)
 		if(prob(10))
 			to_chat(H, SPAN_OCCULT("You feel stronger."))
