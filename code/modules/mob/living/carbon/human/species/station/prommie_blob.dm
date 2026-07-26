@@ -122,6 +122,7 @@
 	human_brute = humanform.getActualBruteLoss()
 	human_burn = humanform.getActualFireLoss()
 	health = maxHealth - humanform.getOxyLoss() - humanform.getToxLoss() - humanform.getCloneLoss() - human_brute - human_burn
+	handle_ether_damage()	//RS ADD
 
 	//Alive, becoming dead
 	if((stat < DEAD) && (health <= 0))

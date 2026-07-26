@@ -20,6 +20,7 @@
 			. += M.slowdown
 
 	var/health_deficiency = (getMaxHealth() - health)
+	health_deficiency += ether_damage * species.ether_slow	//RS ADD
 	if(istype(src, /mob/living/carbon/human)) //VOREStation Edit Start
 		var/mob/living/carbon/human/H = src
 		health_deficiency *= H.species.trauma_mod //Species pain sensitivity does not apply to painkillers, so we apply it before
