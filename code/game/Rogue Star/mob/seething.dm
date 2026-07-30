@@ -231,11 +231,10 @@
 
 /mob/living/simple_mob/hostile/seething/spawner/Life()
 	. = ..()
+	if(ai_holder.stance == STANCE_IDLE)
+		return
 	if(prob(10))
-		var/turf/T = get_turf(src)
-		if(T.check_density(FALSE,TRUE))
-			return
-		new /mob/living/simple_mob/hostile/seething(T)
+		spawn_seething()
 
 /mob/living/simple_mob/hostile/seething/spawner/try_reload()
 	warp(FALSE)
