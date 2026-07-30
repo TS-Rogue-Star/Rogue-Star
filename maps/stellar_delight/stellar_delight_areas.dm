@@ -206,9 +206,10 @@
 	name = "Resleeving Lab"
 /area/stellardelight/deck1/paramedic
 	name = "Paramedic Equipment"
+	ambience = AMBIENCE_MEDBAY
 /area/stellardelight/deck1/lowermed
 	name = "Lower Medical"
-
+	ambience = AMBIENCE_MEDBAY
 
 /area/stellardelight/deck2
 	name = "Deck Two"
@@ -262,7 +263,7 @@
 
 /area/stellardelight/deck2/triage
 	name = "Triage"
-
+	ambience = AMBIENCE_MEDBAY
 /area/stellardelight/deck2/briefingroom
 	name = "Command Briefing Room"
 	sound_env = SMALL_SOFTFLOOR
