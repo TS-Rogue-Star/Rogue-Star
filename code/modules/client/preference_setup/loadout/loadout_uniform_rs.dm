@@ -26,7 +26,7 @@
 /datum/gear/uniform/refreshedtaloncaptain/New()
 	..()
 	var/list/selector_uniforms = list(
-		"Refreshed Talon Command Uniform" = /obj/item/clothing/under/rank/talon/refreshed/command,
+		"Refreshed Talon Command Uniform" = /obj/item/clothing/under/rank/talon/command/refreshed,
 		"Old Talon Command Uniform"       = /obj/item/clothing/under/rank/talon/command,
 	)
 	gear_tweaks += new/datum/gear_tweak/path(selector_uniforms)
@@ -35,7 +35,7 @@
 	display_name = "Refreshed Talon Pilot Uniform"
 	description = "Select from a range of outfits available to all Talon Pilots."
 	allowed_roles = list("Talon Pilot")
-	path = /obj/item/clothing/under/rank/talon/refreshed/pilot
+	path = /obj/item/clothing/under/rank/talon/pilot/refreshed
 	sort_category = "Uniforms"
 	cost = 1
 
