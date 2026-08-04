@@ -3,15 +3,15 @@
 	display_name = "Refreshed Talon Jumpsuit"
 	description = "Select from a range of outfits available to all Talon crew."
 	allowed_roles = list("Talon Captain","Talon Doctor","Talon Engineer","Talon Pilot","Talon Guard","Talon Miner")
-	path = /obj/item/clothing/under/rank/talon/refreshed
+	path = /obj/item/clothing/under/rank/talon/basic/refreshed
 	sort_category = "Uniforms"
 	cost = 1
 
 /datum/gear/uniform/refreshedtalonbasic/New()
 	..()
 	var/list/selector_uniforms = list(
-		"Refreshed Talon crew Uniform" = /obj/item/clothing/under/rank/talon/refreshed,
-		"Old Talon crew Uniform"       = /obj/item/clothing/under/rank/talon,
+		"Refreshed Talon crew Uniform" = /obj/item/clothing/under/rank/talon/basic/refreshed,
+		"Old Talon crew Uniform"       = /obj/item/clothing/under/rank/talon/basic,
 	)
 	gear_tweaks += new/datum/gear_tweak/path(selector_uniforms)
 
@@ -19,7 +19,7 @@
 	display_name = "Refreshed Talon Command Uniform"
 	description = "Select from a range of outfits available to all Talon Captains."
 	allowed_roles = list("Talon Captain")
-	path = /obj/item/clothing/under/rank/talon/refreshed/command
+	path = /obj/item/clothing/under/rank/talon/command/refreshed
 	sort_category = "Uniforms"
 	cost = 1
 
@@ -42,7 +42,7 @@
 /datum/gear/uniform/refreshedtalonpilot/New()
 	..()
 	var/list/selector_uniforms = list(
-		"Refreshed Talon Pilot Uniform" = /obj/item/clothing/under/rank/talon/refreshed/pilot,
+		"Refreshed Talon Pilot Uniform" = /obj/item/clothing/under/rank/talon/pilot/refreshed,
 		"Old Talon Pilot Uniform"       = /obj/item/clothing/under/rank/talon/pilot,
 	)
 	gear_tweaks += new/datum/gear_tweak/path(selector_uniforms)
@@ -51,14 +51,14 @@
 	display_name = "Refreshed Talon Security Jumpsuit"
 	description = "Select from a range of outfits available to all Talon Guards."
 	allowed_roles = list("Talon Guard")
-	path = /obj/item/clothing/under/rank/talon/refreshed/security
+	path = /obj/item/clothing/under/rank/talon/security/refreshed
 	sort_category = "Uniforms"
 	cost = 1
 
 /datum/gear/uniform/refreshedtalonsecurity/New()
 	..()
 	var/list/selector_uniforms = list(
-		"Refreshed Talon Guard Uniform" = /obj/item/clothing/under/rank/talon/refreshed/security,
+		"Refreshed Talon Guard Uniform" = /obj/item/clothing/under/rank/talon/security/refreshed,
 		"Old Talon Security Uniform"    = /obj/item/clothing/under/rank/talon/security,
 	)
 	gear_tweaks += new/datum/gear_tweak/path(selector_uniforms)
@@ -67,15 +67,15 @@
 	display_name = "Refreshed Talon Medical Jumpsuit"
 	description = "Select from a range of outfits available to all Talon Doctors."
 	allowed_roles = list("Talon Doctor")
-	path = /obj/item/clothing/under/rank/talon/refreshed/medical
+	path = /obj/item/clothing/under/rank/talon/proper/refreshed
 	sort_category = "Uniforms"
 	cost = 1
 
 /datum/gear/uniform/refreshedtalonmedical/New()
 	..()
 	var/list/selector_uniforms = list(
-		"Refreshed Talon Doctor Uniform" = /obj/item/clothing/under/rank/talon/refreshed/medical, //RS Edit
-		"Old Talon Doctor Uniform"       = /obj/item/clothing/under/rank/talon/medical, //RS Edit
+		"Refreshed Talon Doctor Uniform" = /obj/item/clothing/under/rank/talon/proper/refreshed,
+		"Old Talon Doctor Uniform"       = /obj/item/clothing/under/rank/talon/proper,
 	)
 	gear_tweaks += new/datum/gear_tweak/path(selector_uniforms)
 
@@ -83,14 +83,14 @@
 	display_name = "Refreshed Talon Engineer Jumpsuit"
 	description = "Select from a range of outfits available to all Talon Engineers."
 	allowed_roles = list("Talon Engineer")
-	path = /obj/item/clothing/under/rank/talon/refreshed/engineer
+	path = /obj/item/clothing/under/rank/talon/engineer/refreshed
 	sort_category = "Uniforms"
 	cost = 1
 
 /datum/gear/uniform/refreshedtalonengineer/New()
 	..()
 	var/list/selector_uniforms = list(
-		"Refreshed Talon Engineer Uniform" = /obj/item/clothing/under/rank/talon/refreshed/engineer,
+		"Refreshed Talon Engineer Uniform" = /obj/item/clothing/under/rank/talon/engineer/refreshed,
 		"Old Talon Engineer Uniform"       = /obj/item/clothing/under/rank/talon/engineer,
 	)
 	gear_tweaks += new/datum/gear_tweak/path(selector_uniforms)
@@ -99,14 +99,14 @@
 	display_name = "Refreshed Talon Atmos Tech's Jumpsuit"
 	description = "Select from a range of outfits available to all Talon Engineers."
 	allowed_roles = list("Talon Engineer")
-	path = /obj/item/clothing/under/rank/talon/refreshed/atmos
+	path = /obj/item/clothing/under/rank/talon/atmos/refreshed
 	sort_category = "Uniforms"
 	cost = 1
 
 /datum/gear/uniform/refreshedtalonatmos/New()
 	..()
 	var/list/selector_uniforms = list(
-		"Refreshed Talon Atmospheric Technician Uniform" = /obj/item/clothing/under/rank/talon/refreshed/atmos,
+		"Refreshed Talon Atmospheric Technician Uniform" = /obj/item/clothing/under/rank/talon/atmos/refreshed,
 		"Old Talon Talon Atmospheric Technician Uniform" = /obj/item/clothing/under/rank/talon/atmos,
 	)
 	gear_tweaks += new/datum/gear_tweak/path(selector_uniforms)
@@ -115,14 +115,14 @@
 	display_name = "Refreshed Talon Atmos Tech's Jumpsuit"
 	description = "Select from a range of outfits available to all Talon Engineers having a specialization in atmospheric technician."
 	allowed_roles = list("Talon Engineer")
-	path = /obj/item/clothing/under/rank/talon/refreshed/miner
+	path = /obj/item/clothing/under/rank/talon/miner/refreshed
 	sort_category = "Uniforms"
 	cost = 1
 
 /datum/gear/uniform/refreshedtalonminer/New()
 	..()
 	var/list/selector_uniforms = list(
-		"Refreshed Talon Miner Uniform" = /obj/item/clothing/under/rank/talon/refreshed/miner,
+		"Refreshed Talon Miner Uniform" = /obj/item/clothing/under/rank/talon/miner/refreshed,
 		"Old Talon Miner Uniform"       = /obj/item/clothing/under/rank/talon/miner,
 	)
 	gear_tweaks += new/datum/gear_tweak/path(selector_uniforms)
