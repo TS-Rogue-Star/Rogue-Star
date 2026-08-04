@@ -113,7 +113,7 @@
 
 /datum/gear/uniform/refreshedtalonminer
 	display_name = "Refreshed Talon Miner Jumpsuit"
-	description = "Select from a range of outfits available to all Talon Engineers having a specialization in atmospheric technician."
+	description = "Select from a range of outfits available to all Talon Miners."
 	allowed_roles = list("Talon Miner")
 	path = /obj/item/clothing/under/rank/talon/miner/refreshed
 	sort_category = "Uniforms"
