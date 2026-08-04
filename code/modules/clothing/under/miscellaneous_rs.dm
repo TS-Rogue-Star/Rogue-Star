@@ -6,7 +6,7 @@
 	icon_state = "talon_basic_refreshed"
 	item_state = "talon_basic_refreshed"
 
-/obj/item/clothing/under/rank/talon/proper/refreshed
+	/obj/item/clothing/under/rank/talon/medical/refreshed
 	name = "Talon medical jumpsuit"
 	desc = "A expertly made and stretchy jumpsuit that was made for manueverability in mind. It has a belt with a silver belt buckle on the uniform. There is also a ITV Talon patch on the right shoulder, and a white medical ensignia patch on the left shoulder. Snazzy and beneficial."
 	icon = 'icons/inventory/uniform/item_rs.dmi'
