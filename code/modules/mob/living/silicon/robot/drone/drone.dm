@@ -311,6 +311,7 @@ var/list/mob_hat_cache = list()
 		set_stat(CONSCIOUS)
 		return
 	health = maxHealth - (getBruteLoss() + getFireLoss())
+	handle_ether_damage()	//RS ADD
 	return
 
 //Easiest to check this here, then check again in the robot proc.

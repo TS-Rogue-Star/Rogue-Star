@@ -289,6 +289,8 @@
 					'sound/items/pickup/generic1.ogg',
 					'sound/items/pickup/generic2.ogg',
 					'sound/items/pickup/generic3.ogg')
+			if("seething_scream")	//RS ADD
+				soundin = pick(seething_scream)	//RS ADD
 	return soundin
 
 //Are these even used?	//Yes
@@ -342,5 +344,7 @@ var/list/talk_yipyap = list('sound/rogue-star/yip/yip1.ogg', 'sound/rogue-star/y
 'sound/rogue-star/yip/yip15.ogg','sound/rogue-star/yap/yap1.ogg', 'sound/rogue-star/yap/yap2.ogg', 'sound/rogue-star/yap/yap4.ogg', 'sound/rogue-star/yap/yap5.ogg',
 'sound/rogue-star/yap/yap6.ogg', 'sound/rogue-star/yap/yap7.ogg', 'sound/rogue-star/yap/yap8.ogg', 'sound/rogue-star/yap/yap9.ogg', 'sound/rogue-star/yap/yap10.ogg',
 'sound/rogue-star/yap/yap11.ogg', 'sound/rogue-star/yap/yap12.ogg', 'sound/rogue-star/yap/yap13.ogg', 'sound/rogue-star/yap/yap14.ogg')
+
+var/list/seething_scream = list('sound/rogue-star/screm1.ogg', 'sound/rogue-star/screm2.ogg')
 
 //RS ADD END

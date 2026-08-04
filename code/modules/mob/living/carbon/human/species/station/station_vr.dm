@@ -553,6 +553,15 @@
 /datum/species/crew_shadekin/get_bodytype()
 	return SPECIES_SHADEKIN
 
+//RS ADD START
+/datum/species/crew_shadekin/handle_ether_damage(var/mob/living/carbon/human/H)
+	if((H.health + 100) - H.ether_damage <= 0)
+		H.ISay("*scream")
+		H.halloss = 999
+		H.sleeping = 60
+		H.ether_damage = 0
+//RS ADD END
+
 //These species are not really species but are just there for custom species selection
 
 /datum/species/fl_zorren

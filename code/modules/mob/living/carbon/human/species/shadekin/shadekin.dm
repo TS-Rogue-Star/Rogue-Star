@@ -191,6 +191,10 @@
 		else
 			dark_gains = energy_light
 
+	if(H.ether_damage > 0)	//RS ADD START
+		if(dark_gains < 0)
+			dark_gains = 0	//RS ADD END
+
 	set_energy(H, get_energy(H) + dark_gains)
 
 	//Update huds
@@ -373,3 +377,27 @@
 	new_copy.energy_dark = energy_dark
 
 	return new_copy
+
+//RS ADD
+/datum/species/shadekin/handle_ether_damage(var/mob/living/carbon/human/H)
+	if(H.ether_damage <= 0)
+		return
+	var/area/A = get_area(H)
+	if(A.magic_damp)
+		return ..()
+
+	var/current_energy = get_energy(H)
+	var/max_energy = get_max_energy(H)
+
+	if(current_energy == max_energy)
+		if(prob(10))
+			to_chat(H,span_critical("You're feeling overloaded."))
+		return ..()
+	else
+		var/howmuch = 10
+		if(howmuch > H.ether_damage)
+			howmuch = H.ether_damage
+		H.adjustEtherDamage(-H.ether_damage)
+		set_energy(H, current_energy + howmuch)
+		if(prob(10))
+			to_chat(H, SPAN_OCCULT("You feel stronger."))
