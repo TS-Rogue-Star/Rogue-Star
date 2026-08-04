@@ -16,6 +16,7 @@
 		total_burn  += O.burn_dam
 
 	health = getMaxHealth() - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
+	handle_ether_damage()	//RS ADD
 
 	//TODO: fix husking
 	if( ((getMaxHealth() - total_burn) < config.health_threshold_dead * huskmodifier) && stat == DEAD)
