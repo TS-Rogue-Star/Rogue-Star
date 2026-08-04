@@ -1,50 +1,64 @@
-/obj/item/clothing/under/rank/talon/refreshed
+/obj/item/clothing/under/rank/talon/basic/refreshed
 	name = "Talon jumpsuit"
 	desc = "A expertly made and stretchy jumpsuit that was made for manueverability in mind. It has a belt with a silver belt buckle on the uniform. There is also a ITV Talon patch on the right shoulder, and an empty velcro spot for another patch on the left shoulder. Snazzy and beneficial."
 	icon = 'icons/inventory/uniform/item_rs.dmi'
-	default_worn_icon = 'icons/inventory/uniform/mob_rs.dmi'
+	icon_override = 'icons/inventory/uniform/mob_rs.dmi'
 	icon_state = "talon_basic_refreshed"
 	item_state = "talon_basic_refreshed"
 
-/obj/item/clothing/under/rank/talon/refreshed/medical
+/obj/item/clothing/under/rank/talon/proper/refreshed
 	name = "Talon medical jumpsuit"
 	desc = "A expertly made and stretchy jumpsuit that was made for manueverability in mind. It has a belt with a silver belt buckle on the uniform. There is also a ITV Talon patch on the right shoulder, and a white medical ensignia patch on the left shoulder. Snazzy and beneficial."
+	icon = 'icons/inventory/uniform/item_rs.dmi'
+	icon_override = 'icons/inventory/uniform/mob_rs.dmi'
 	icon_state = "talon_medical_refreshed"
 	item_state = "talon_medical_refreshed"
 
-/obj/item/clothing/under/rank/talon/refreshed/security
+/obj/item/clothing/under/rank/talon/security/refreshed
 	name = "Talon security jumpsuit"
 	desc = "A expertly made and stretchy jumpsuit that was made for manueverability in mind. It has a belt with a silver belt buckle on the uniform. There is also a ITV Talon patch on the right shoulder, and a red security ensignia patch on the left shoulder. Snazzy and beneficial."
+	icon = 'icons/inventory/uniform/item_rs.dmi'
+	icon_override = 'icons/inventory/uniform/mob_rs.dmi'
 	icon_state = "talon_security_refreshed"
 	item_state = "talon_security_refreshed"
 
-/obj/item/clothing/under/rank/talon/refreshed/engineer
+/obj/item/clothing/under/rank/talon/engineer/refreshed
 	name = "Talon engineer jumpsuit"
 	desc = "A expertly made and stretchy jumpsuit that was made for manueverability in mind. It has a belt with a silver belt buckle on the uniform. There is also a ITV Talon patch on the right shoulder, and a orange engineering ensignia patch on the left shoulder. Snazzy and beneficial."
+	icon = 'icons/inventory/uniform/item_rs.dmi'
+	icon_override = 'icons/inventory/uniform/mob_rs.dmi'
 	icon_state = "talon_engineer_refreshed"
 	item_state = "talon_engineer_refreshed"
 
-/obj/item/clothing/under/rank/talon/refreshed/atmos
+/obj/item/clothing/under/rank/talon/atmos/refreshed
 	name = "Talon Atmos Tech's jumpsuit"
 	desc = "A expertly made and stretchy jumpsuit that was made for manueverability in mind. It has a belt with a silver belt buckle on the uniform. There is also a ITV Talon patch on the right shoulder, and a cyan engineering ensignia patch on the left shoulder. Snazzy and beneficial."
+	icon = 'icons/inventory/uniform/item_rs.dmi'
+	icon_override = 'icons/inventory/uniform/mob_rs.dmi'
 	icon_state = "talon_atmos_refreshed"
 	item_state = "talon_atmos_refreshed"
 
-/obj/item/clothing/under/rank/talon/refreshed/miner
-	name = "Talon miner jumpsuit"
+/obj/item/clothing/under/rank/talon/miner/refreshed
+	name = "Talon miner uniform"
 	desc = "A formal uniform woven with practical fabric to make a excellent uniform for the ITV Talon cargo personnel, it's comfortable for all occasions. It has a silver nametag on the chest."
+	icon = 'icons/inventory/uniform/item_rs.dmi'
+	icon_override = 'icons/inventory/uniform/mob_rs.dmi'
 	icon_state = "talon_miner_refreshed"
 	item_state = "talon_miner_refreshed"
 
-/obj/item/clothing/under/rank/talon/refreshed/pilot
+/obj/item/clothing/under/rank/talon/pilot/refreshed
 	name = "Talon pilot uniform"
 	desc = "A formal uniform woven with luscious fabric to make a excellent uniform for the ITV Talon piloting personnel, it's comfortable for all occasions. It has a silver nametag on the chest."
+	icon = 'icons/inventory/uniform/item_rs.dmi'
+	icon_override = 'icons/inventory/uniform/mob_rs.dmi'
 	icon_state = "talon_pilot_refreshed"
 	item_state = "talon_pilot_refreshed"
 
-/obj/item/clothing/under/rank/talon/refreshed/command
+/obj/item/clothing/under/rank/talon/command/refreshed
 	name = "Talon command uniform"
 	desc = "A luxurious formal uniform woven with exotic fabric to make a excellent uniform for an ITV Talon commanding officer, it's comfortable for all occasions. It displays golden patterns and designs along the uniform to designate their stature, it has a golden nametag on the chest."
+	icon = 'icons/inventory/uniform/item_rs.dmi'
+	icon_override = 'icons/inventory/uniform/mob_rs.dmi'
 	icon_state = "talon_captain_refreshed"
 	item_state = "talon_captain_refreshed"
 
