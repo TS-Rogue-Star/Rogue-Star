@@ -293,7 +293,6 @@
 	rolled_down = 0
 
 //////////////////////TALON JUMPSUITS//////////////////////
-
 /obj/item/clothing/under/rank/talon/basic
 	name = "Talon jumpsuit"
 	desc = "A basic jumpsuit that bares the ITV Talon logo on the breast."
@@ -305,6 +304,7 @@
 	rolled_sleeves = 0
 	rolled_down_icon_override = FALSE
 	rolled_sleeves_icon_override = FALSE
+
 //RS Edit, proper -> medical
 /obj/item/clothing/under/rank/talon/medical
 	name = "Talon medical jumpsuit"
