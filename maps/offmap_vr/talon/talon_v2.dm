@@ -597,7 +597,7 @@ so... Use it wisely and good luck!<br>\
 				/obj/item/clothing/head/beret/talon = 10,
 				/obj/item/clothing/head/beret/talon/refreshed = 10,
 				/obj/item/clothing/suit/storage/toggle/hoodie/talon = 10,
-				/obj/item/clothing/under/rank/talon = 10,
+				/obj/item/clothing/under/rank/talon/basic = 10,
 				/obj/item/clothing/under/rank/talon/basic/refreshed = 10,
 				/obj/item/clothing/suit/storage/toggle/labcoat/talon = 10,
 				/obj/item/weapon/storage/backpack/messenger/talon = 10,
