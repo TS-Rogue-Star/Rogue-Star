@@ -487,8 +487,8 @@ so... Use it wisely and good luck!<br>\
 
 	starts_with = list(
 		/obj/item/clothing/accessory/storage/brown_vest,
-		/obj/item/clothing/under/rank/talon/basic/engineer/refreshed, //RS Add
-		/obj/item/clothing/under/rank/talon/basic/atmos/refreshed, //RS Add
+		/obj/item/clothing/under/rank/talon/engineer/refreshed, //RS Add
+		/obj/item/clothing/under/rank/talon/atmos/refreshed, //RS Add
 		/obj/item/clothing/accessory/solgov/department/engineering/army,
 		/obj/item/clothing/glasses/omnihud/eng/meson,
 		/obj/item/device/flashlight,
@@ -545,7 +545,7 @@ so... Use it wisely and good luck!<br>\
 
 	starts_with = list(
 		/obj/item/device/radio/headset/talon,
-		/obj/item/clothing/under/rank/talon/basic/miner/refreshed, //RS Add
+		/obj/item/clothing/under/rank/talon/miner/refreshed, //RS Add
 		/obj/item/clothing/head/soft/talon,
 		/obj/item/clothing/head/helmet/space/void/refurb/mining/talon,
 		/obj/item/clothing/suit/space/void/refurb/mining/talon,
