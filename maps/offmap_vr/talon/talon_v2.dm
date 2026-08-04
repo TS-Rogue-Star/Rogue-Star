@@ -487,8 +487,8 @@ so... Use it wisely and good luck!<br>\
 
 	starts_with = list(
 		/obj/item/clothing/accessory/storage/brown_vest,
-		/obj/item/clothing/under/rank/talon/refreshed/engineer, //RS Add
-		/obj/item/clothing/under/rank/talon/refreshed/atmos, //RS Add
+		/obj/item/clothing/under/rank/talon/basic/engineer/refreshed, //RS Add
+		/obj/item/clothing/under/rank/talon/basic/atmos/refreshed, //RS Add
 		/obj/item/clothing/accessory/solgov/department/engineering/army,
 		/obj/item/clothing/glasses/omnihud/eng/meson,
 		/obj/item/device/flashlight,
@@ -545,7 +545,7 @@ so... Use it wisely and good luck!<br>\
 
 	starts_with = list(
 		/obj/item/device/radio/headset/talon,
-		/obj/item/clothing/under/rank/talon/refreshed/miner, //RS Add
+		/obj/item/clothing/under/rank/talon/basic/miner/refreshed, //RS Add
 		/obj/item/clothing/head/soft/talon,
 		/obj/item/clothing/head/helmet/space/void/refurb/mining/talon,
 		/obj/item/clothing/suit/space/void/refurb/mining/talon,
@@ -598,7 +598,7 @@ so... Use it wisely and good luck!<br>\
 				/obj/item/clothing/head/beret/talon/refreshed = 10,
 				/obj/item/clothing/suit/storage/toggle/hoodie/talon = 10,
 				/obj/item/clothing/under/rank/talon = 10,
-				/obj/item/clothing/under/rank/talon/refreshed = 10,
+				/obj/item/clothing/under/rank/talon/basic/refreshed = 10,
 				/obj/item/clothing/suit/storage/toggle/labcoat/talon = 10,
 				/obj/item/weapon/storage/backpack/messenger/talon = 10,
 				/obj/item/weapon/storage/backpack/talon = 10,
