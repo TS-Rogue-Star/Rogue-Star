@@ -67,15 +67,15 @@
 	display_name = "Refreshed Talon Medical Jumpsuit"
 	description = "Select from a range of outfits available to all Talon Doctors."
 	allowed_roles = list("Talon Doctor")
-	path = /obj/item/clothing/under/rank/talon/proper/refreshed
+	path = /obj/item/clothing/under/rank/talon/medical/refreshed
 	sort_category = "Uniforms"
 	cost = 1
 
 /datum/gear/uniform/refreshedtalonmedical/New()
 	..()
 	var/list/selector_uniforms = list(
-		"Refreshed Talon Doctor Uniform" = /obj/item/clothing/under/rank/talon/proper/refreshed,
-		"Old Talon Doctor Uniform"       = /obj/item/clothing/under/rank/talon/proper,
+		"Refreshed Talon Doctor Uniform" = /obj/item/clothing/under/rank/talon/medical/refreshed,
+		"Old Talon Doctor Uniform"       = /obj/item/clothing/under/rank/talon/medical,
 	)
 	gear_tweaks += new/datum/gear_tweak/path(selector_uniforms)
 
