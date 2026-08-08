@@ -2,6 +2,46 @@
 	var/extra_languages = 0
 	var/preferred_language = "common" // VOREStation Edit: Allow selecting a preferred language
 
+// RS Edit: Character Designer - Species and Prosthetics (Lira, August 2026)
+/datum/preferences/proc/reconcile_languages_for_species()
+	if(!islist(alternate_languages))
+		testing("LANGSANI: Sanitizing languages on [client]'s character [real_name || "-name not yet loaded-"] because their character has no languages list")
+		alternate_languages = list()
+	if(!islist(language_custom_keys))
+		language_custom_keys = list()
+	if(!species)
+		return FALSE
+
+	var/datum/species/S = GLOB.all_species[species]
+	if(!istype(S))
+		testing("LANGSANI: Failed sani on [client]'s character [real_name || "-name not yet loaded-"] because their species ([species]) isn't in the global list")
+		return FALSE
+
+	if(alternate_languages.len > (S.num_alternate_languages + extra_languages))
+		testing("LANGSANI: Truncated [client]'s character [real_name || "-name not yet loaded-"] language list because it was too long (len: [alternate_languages.len], allowed: [S.num_alternate_languages])")
+		alternate_languages.len = (S.num_alternate_languages + extra_languages) // Truncate to allowed length
+
+	for(var/language in alternate_languages)
+		var/datum/language/L = GLOB.all_languages[language]
+		if(!istype(L) || (L.flags & RESTRICTED) || (!(language in S.secondary_langs) && client && !is_lang_whitelisted(client, L)))
+			testing("LANGSANI: Removed [L?.name || "lang not found"] from [client]'s character [real_name || "-name not yet loaded-"] because it failed allowed checks")
+			alternate_languages -= language
+
+	// VOREStation Edit Start
+	if((!(preferred_language in alternate_languages) && preferred_language != LANGUAGE_GALCOM && preferred_language != S.language) || !preferred_language)
+		preferred_language = S.language
+	// VOREStation Edit End
+
+	for(var/key in language_custom_keys)
+		var/key_language = language_custom_keys[key]
+		if(!key_language)
+			language_custom_keys.Remove(key)
+			continue
+		if(!((key_language == S.language) || (key_language == S.default_language && S.default_language != S.language) || (key_language in alternate_languages)))
+			language_custom_keys.Remove(key)
+
+	return TRUE
+
 /datum/category_item/player_setup_item/general/language
 	name = "Language"
 	sort_order = 2
@@ -27,45 +67,15 @@
 	S["language_custom_keys"]	<< pref.language_custom_keys
 	S["preflang"]			<< pref.preferred_language // VOREStation Edit
 
+// RS Edit: Character Designer - Species and Prosthetics (Lira, August 2026)
 /datum/category_item/player_setup_item/general/language/sanitize_character()
-	if(!islist(pref.alternate_languages))
-		testing("LANGSANI: Sanitizing languages on [pref.client]'s character [pref.real_name || "-name not yet loaded-"] because their character has no languages list")
-		pref.alternate_languages = list()
-	if(pref.species)
-		var/datum/species/S = GLOB.all_species[pref.species]
-		if(!istype(S))
-			testing("LANGSANI: Failed sani on [pref.client]'s character [pref.real_name || "-name not yet loaded-"] because their species ([pref.species]) isn't in the global list")
-			return
-
-		if(pref.alternate_languages.len > (S.num_alternate_languages + pref.extra_languages))
-			testing("LANGSANI: Truncated [pref.client]'s character [pref.real_name || "-name not yet loaded-"] language list because it was too long (len: [pref.alternate_languages.len], allowed: [S.num_alternate_languages])")
-			pref.alternate_languages.len = (S.num_alternate_languages + pref.extra_languages) // Truncate to allowed length
-
-		// VOREStation Edit Start
-		if((!(pref.preferred_language in pref.alternate_languages) && !(pref.preferred_language == LANGUAGE_GALCOM) && !(pref.preferred_language == S.language)) || !pref.preferred_language) // Safety handling for if our preferred language is ever somehow removed from the character's list of langauges, or they don't have one set
-			pref.preferred_language = S.language // Reset to default, for safety
-		// VOREStation Edit end
-
-		// Sanitize illegal languages
-		for(var/language in pref.alternate_languages)
-			var/datum/language/L = GLOB.all_languages[language]
-			if(!istype(L) || (L.flags & RESTRICTED) || (!(language in S.secondary_langs) && pref.client && !is_lang_whitelisted(pref.client, L)))
-				testing("LANGSANI: Removed [L?.name || "lang not found"] from [pref.client]'s character [pref.real_name || "-name not yet loaded-"] because it failed allowed checks")
-				pref.alternate_languages -= language
+	pref.reconcile_languages_for_species()
 
 	if(isnull(pref.language_prefixes) || !pref.language_prefixes.len)
 		pref.language_prefixes = config.language_prefixes.Copy()
 	for(var/prefix in pref.language_prefixes)
 		if(prefix in forbidden_prefixes)
 			pref.language_prefixes -= prefix
-	if(isnull(pref.language_custom_keys))
-		pref.language_custom_keys = list()
-	var/datum/species/S = GLOB.all_species[pref.species]
-	for(var/key in pref.language_custom_keys)
-		if(!pref.language_custom_keys[key])
-			pref.language_custom_keys.Remove(key)
-		if(!((pref.language_custom_keys[key] == S.language) || (pref.language_custom_keys[key] == S.default_language && S.default_language != S.language) || (pref.language_custom_keys[key] in pref.alternate_languages)))
-			pref.language_custom_keys.Remove(key)
 
 /datum/category_item/player_setup_item/general/language/content()
 	. += "<b>Languages</b><br>"
