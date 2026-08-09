@@ -85,22 +85,92 @@
 	if(!ismob(M))	return
 	if (!holder)
 		return
-
-	var/msg = tgui_input_text(usr, "Message:", text("Subtle PM to [M.key]"))
-
-	if (!msg)
+	// RS Add
+	var/source = tgui_input_list(src, "Select the message source:", "Subtle Message for [M.key]", list("Subtle Message", "CentCom", "Syndicate", "Talon HQ", "SolGov", "Custom"))
+	if(!source)
 		return
 
+	if(source == "CentCom")
+		if(isliving(M))
+			var/mob/living/L = M
+			if(!L.CanObtainCentcommMessage())
+				to_chat(src, "The person you are trying to contact is not wearing a headset.")
+				return
+		else
+			to_chat(src, "CentCom messages can only be sent to living mobs.")
+			return
+
+	if(source == "Syndicate")
+		if(isliving(M))
+			var/mob/living/L = M
+			if(!L.CanObtainCentcommMessage())
+				to_chat(src, "The person you are trying to contact is not wearing a headset.")
+				return
+		else
+			to_chat(src, "Syndicate messages can only be sent to living mobs.")
+			return
+
+	if(source == "Talon HQ")
+		if(isliving(M))
+			var/mob/living/L = M
+			if(!L.CanObtainCentcommMessage())
+				to_chat(src, "The person you are trying to contact is not wearing a headset.")
+				return
+		else
+			to_chat(src, "Talon HQ messages can only be sent to living mobs.")
+			return
+
+	if(source == "SolGov")
+		if(isliving(M))
+			var/mob/living/L = M
+			if(!L.CanObtainCentcommMessage())
+				to_chat(src, "The person you are trying to contact is not wearing a headset.")
+				return
+		else
+			to_chat(src, "SolGov messages can only be sent to living mobs.")
+			return
+
+	var/custom_color = "green"
+	var/custom_sender = ""
+	if(source == "Custom")
+		var/col_choice = tgui_alert(src, "Choose a name color:", "Color", list("Green", "Blue", "Honk", "Grey"))
+		if(!col_choice)
+			return
+		switch(col_choice)
+			if("Green") custom_color = "green"
+			if("Blue") custom_color = "#3366ff" // a nice readable blue
+			if("HONK") custom_color = "#ff1493" // deep pink, readable
+			if("Gray") custom_color = "gray"
+
+		custom_sender = sanitize(input("Enter the sender's name:", text("Sender for [M.key]")) as text)
+		if(!custom_sender)
+			return
+
+	var/msg = tgui_input_text(usr, "Message:", text("Subtle PM to [M.key]"))
+	//RS add end
+	if (!msg)
+		return
+	//RS add
+	if(usr?.client?.holder)
+		switch(source)
+			if("Subtle Message")
+				to_chat(M, "<b>You hear a voice in your head... <i>[msg]</i></b>")
+			if("CentCom")
+				to_chat(M, "You hear a crackle in your headset, followed by a voice: \"<b><font color='blue'>Central Command</font></b> is on touch. Stand by for important message: <b>\"[msg]\"</b> End of transmission.\"")
+			if("Syndicate")
+				to_chat(M, "You hear a crackle in your headset, followed by a voice: \"Expect a message from <b><font color='red'><i>Syndicate</i></font></b>. Listen carefully, Agent: <b>\"[msg]\"</b> End of transmission.\"")
+			if("Talon HQ")
+				to_chat(M, "You hear a crackle in your headset, followed by a voice: \"<b><font color='orange'>Talon Headquarter</font></b> is on touch. Stand by for important message: <b>\"[msg]\"</b> End of transmission.\"")
+			if("SolGov")
+				to_chat(M, "You hear a crackle in your headset, followed by a voice: \"<b><font color='gold'>Solar Government</font></b> is on touch. Stand by for important message: <b>\"[msg]\"</b> End of transmission.\"")
+			if("Custom")
+				to_chat(M, "You hear a crackle in your headset, followed by a voice: \"Expect a message from <b><font color='[custom_color]'>[custom_sender]</font></b>. Message: <b>\"[msg]\"</b> End of transmission.\"")
+	//RS add end
 	if(!(msg[1] == "<" && msg[length(msg)] == ">")) //You can use HTML but only if the whole thing is HTML. Tries to prevent admin 'accidents'.
 		msg = sanitize(msg)
-
-	if(usr)
-		if (usr.client)
-			if(usr.client.holder)
-				to_chat(M, "<B>You hear a voice in your head...</B> <i>[msg]</i>")
-
-	log_admin("SubtlePM: [key_name(usr)] -> [key_name(M)] : [msg]")
-	msg = "<span class='adminnotice'><b> SubtleMessage: [key_name_admin(usr)] -> [key_name_admin(M)] :</b> [msg]</span>"
+	//RS Edit
+	log_admin("SubtlePM([source]): [key_name(usr)] -> [key_name(M)] : [msg]")
+	msg = "<span class='adminnotice'><b> SubtleMessage([source]): [key_name_admin(usr)] -> [key_name_admin(M)] :</b> [msg]</span>"//RS Edit End
 	message_admins(msg)
 	admin_ticket_log(M, msg)
 	feedback_add_details("admin_verb","SMS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
