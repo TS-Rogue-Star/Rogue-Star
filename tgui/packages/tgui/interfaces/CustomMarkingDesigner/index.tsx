@@ -13,17 +13,28 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updated by Lira for Rogue Star February 2026: West - east mirror tool added /////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star August 2026: Character Designer - Species and Prosthetics ////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-import { selectBackend, useBackend, useLocalState } from '../../backend';
-import { Box, Button, Flex, Tabs } from '../../components';
+import { Component } from 'inferno';
+
+import {
+  backendSetSharedStates,
+  selectBackend,
+  useBackend,
+  useLocalState,
+} from '../../backend';
+import { Box, Button, Flex, Icon, Tabs } from '../../components';
 import { Window } from '../../layouts';
 import { normalizeHex, TRANSPARENT_HEX } from '../../utils/color';
 import {
   GENERIC_PART_KEY,
   cloneGridData,
+  isStaticIconAssetRegistryLoaded,
   resolveBodyPartLabel,
   type DiffEntry,
   type PreviewDirectionEntry,
+  type PreviewDirectionSource,
   type PreviewLayerEntry,
   type PreviewState,
 } from '../../utils/character-preview';
@@ -46,7 +57,6 @@ import {
   UnsavedChangesOverlay,
 } from './components';
 import {
-  CHIP_BUTTON_CLASS,
   COLOR_PICKER_CUSTOM_SLOTS,
   EAST,
   ERASER_PREVIEW_COLOR,
@@ -74,15 +84,22 @@ import {
 import { createPaintHandlers } from './utils/paintHandlers';
 import {
   applyBodyColorToPreview,
+  applyEyeColorToPreview,
+  applyLimbHairColorToPreview,
+  applyProstheticsToPreviewSources,
+  applyHeadAppearanceToCanvasReferences,
   applyPreviewInitialization,
   areAllPreviewLayersLoaded,
   buildCanvasKey,
+  buildGenericCanvasReference,
   buildBodyPartLabelMap,
   buildBodyMarkingDefinitions,
   buildBodyMarkingSavePayload,
   buildBodyMarkingChunkPlan,
   buildBodyPayloadSignature,
   buildBasicStateFromPayload,
+  buildProstheticSaveParams,
+  cloneLimbOverrideState,
   buildBodySavedStateFromPayload,
   createReferenceOpacityControls,
   getCanvasFrameStyle,
@@ -91,15 +108,26 @@ import {
   createSavingHandlers,
   deepCopyMarkings,
   initializeColorPickerSlotsIfNeeded,
+  mergeSpeciesBodyPreviewSource,
   parseHex,
   resolveExportGridForDirPart,
   resolveReferencePartId,
+  resolveSharedPreviewSourceSelection,
+  resolveSpeciesBodyPreviewSources,
+  resolveSpeciesIconBaseOptions,
   sampleGridColorAt,
+  buildBasicAppearanceLoadParams,
+  buildBodyMarkingsLoadParams,
+  buildSpeciesSaveCacheParams,
+  mergeBasicAppearancePayload,
+  mergeBodyMarkingsPayload,
+  shouldRetainLocalBasicPayload,
+  syncSpeciesSaveResultState,
   toHex,
 } from './utils';
 import {
-  buildHiddenBodyPartsByDir,
   buildReferencePartMarkingGridsByDir,
+  buildSuppressedMarkingPartsByDir,
 } from './utils/markingOverrides';
 import type {
   CustomMarkingDesignerData,
@@ -114,19 +142,21 @@ import type {
   BooleanMapState,
   CustomPreviewOverrideMap,
   PendingPreviewOverrides,
+  SpeciesPayload,
+  SpeciesSaveResult,
 } from './types';
 import { useDesignerUiState } from './state';
 import CustomEyeIconAsset from '../../../../public/Icons/Rogue Star/eye 1.png';
 import {
   BodyMarkingsTab,
   applyAppearanceOverlaysToPreview,
-  applyEyeColorToPreview,
   resolveAppearanceContext,
   type AppearancePreviewContext,
 } from './BodyMarkingsTab';
 import {
   BasicAppearanceTab,
   applyBodyMarkingsToPreview,
+  buildBasicPayloadSignature,
   resolveBodyMarkingsContext,
   type BodyMarkingDefinitionCache,
   type BodyMarkingsPreviewContext,
@@ -134,8 +164,9 @@ import {
   type BodyMarkingsSignatureCache,
   type MarkingLayersCacheEntry,
 } from './BasicAppearanceTab';
+import { SpeciesTab } from './SpeciesTab';
 
-type DesignerTabId = 'custom' | 'body' | 'basic';
+type DesignerTabId = 'custom' | 'body' | 'basic' | 'species';
 
 type PreviewWithMarkingsCache = {
   signature: string;
@@ -155,6 +186,7 @@ type CustomLayerMap = {
 const REFERENCE_PASSTHROUGH_KEYS = new Set([
   'markings',
   'overlay',
+  'gear_equipment',
   'gear_job',
   'gear_loadout',
 ]);
@@ -167,6 +199,11 @@ const APPEARANCE_OVERLAY_MASK_SLOTS = new Set([
   'tail_upper_alt',
   'wing_lower',
   'wing_upper',
+]);
+const HEAD_APPEARANCE_OVERLAY_SLOTS = new Set([
+  'hair',
+  'hair_accessory',
+  'ears',
 ]);
 
 const resolveOverlaySlotFromKey = (
@@ -243,15 +280,20 @@ const mergeGrid = (target: string[][], source?: string[][] | null) => {
   }
 };
 
-const buildAppearanceOverlayGrid = (
+const buildAppearanceOverlayGrids = (
   preview: PreviewDirectionEntry[],
   dirKey: number
-): string[][] | null => {
+): {
+  head: string[][] | null;
+  other: string[][] | null;
+} => {
   const entry = preview.find((dirEntry) => dirEntry.dir === dirKey);
   if (!entry?.layers) {
-    return null;
+    return { head: null, other: null };
   }
-  const overlayLayers = entry.layers.filter((layer) => {
+  const headLayers: PreviewLayerEntry[] = [];
+  const otherLayers: PreviewLayerEntry[] = [];
+  entry.layers.forEach((layer) => {
     if (
       layer?.type !== 'overlay' ||
       layer?.source !== 'base' ||
@@ -259,26 +301,35 @@ const buildAppearanceOverlayGrid = (
       !layer.key.startsWith('overlay_body_') ||
       !Array.isArray(layer.grid)
     ) {
-      return false;
+      return;
     }
     const slot = resolveOverlaySlotFromKey(
       layer.key,
       dirKey,
       layer.source || 'base'
     );
-    return !!slot && APPEARANCE_OVERLAY_MASK_SLOTS.has(slot);
-  });
-  if (!overlayLayers.length) {
-    return null;
-  }
-  const merged: string[][] = [];
-  overlayLayers.forEach((layer) => {
-    if (!layer.grid || !layer.grid.length) {
+    if (!slot || !APPEARANCE_OVERLAY_MASK_SLOTS.has(slot)) {
       return;
     }
-    mergeGrid(merged, layer.grid);
+    if (HEAD_APPEARANCE_OVERLAY_SLOTS.has(slot)) {
+      headLayers.push(layer);
+    } else {
+      otherLayers.push(layer);
+    }
   });
-  return merged.length ? merged : null;
+  const mergeLayers = (layers: PreviewLayerEntry[]): string[][] | null => {
+    const merged: string[][] = [];
+    layers.forEach((layer) => {
+      if (layer.grid?.length) {
+        mergeGrid(merged, layer.grid);
+      }
+    });
+    return merged.length ? merged : null;
+  };
+  return {
+    head: mergeLayers(headLayers),
+    other: mergeLayers(otherLayers),
+  };
 };
 
 const applyAppearanceToReferenceSources = (options: {
@@ -325,17 +376,22 @@ const applyAppearanceToReferenceSources = (options: {
   const recolored =
     layers.length > 0
       ? applyEyeColorToPreview(
-          applyBodyColorToPreview(
-            [
-              {
-                dir: dirKey,
-                label: '',
-                layers,
-              },
-            ],
-            appearanceContext.previewBaseBodyColor,
-            appearanceContext.previewTargetBodyColor,
-            appearanceContext.bodyColorExcludedParts
+          applyLimbHairColorToPreview(
+            applyBodyColorToPreview(
+              [
+                {
+                  dir: dirKey,
+                  label: '',
+                  layers,
+                },
+              ],
+              appearanceContext.previewBaseBodyColor,
+              appearanceContext.previewTargetBodyColor,
+              appearanceContext.bodyColorExcludedParts,
+              1,
+              appearanceContext.bodyColorBlendMode
+            ),
+            appearanceContext.appearanceState.hair_color
           ),
           appearanceContext.previewBaseEyeColor,
           appearanceContext.previewTargetEyeColor,
@@ -343,7 +399,7 @@ const applyAppearanceToReferenceSources = (options: {
         )
       : null;
   let nextReferenceGrid = referenceGrid;
-  const nextReferenceParts: Record<string, string[][]> = {
+  let nextReferenceParts: Record<string, string[][]> = {
     ...preservedParts,
   };
   if (recolored?.[0]?.layers) {
@@ -365,16 +421,32 @@ const applyAppearanceToReferenceSources = (options: {
       nextReferenceParts[partId] = layer.grid;
     });
   }
-  const appearanceOverlayGrid = buildAppearanceOverlayGrid(preview, dirKey);
-  if (appearanceOverlayGrid) {
+  const mergeIntoCanvasOverlay = (overlayGrid: string[][]) => {
     const existingOverlay = nextReferenceParts.overlay;
     const merged = existingOverlay
       ? cloneGridData(existingOverlay)
-      : cloneGridData(appearanceOverlayGrid);
+      : cloneGridData(overlayGrid);
     if (existingOverlay) {
-      mergeGrid(merged, appearanceOverlayGrid);
+      mergeGrid(merged, overlayGrid);
     }
     nextReferenceParts.overlay = merged;
+  };
+  const appearanceOverlayGrids = buildAppearanceOverlayGrids(preview, dirKey);
+  if (appearanceOverlayGrids.head) {
+    const mergedHeadReferences = applyHeadAppearanceToCanvasReferences({
+      referenceParts: nextReferenceParts,
+      referenceGrid: nextReferenceGrid,
+      overlayGrid: appearanceOverlayGrids.head,
+      mergeGrid,
+    });
+    nextReferenceParts = mergedHeadReferences.referenceParts;
+    nextReferenceGrid = mergedHeadReferences.referenceGrid;
+    if (!mergedHeadReferences.applied) {
+      mergeIntoCanvasOverlay(appearanceOverlayGrids.head);
+    }
+  }
+  if (appearanceOverlayGrids.other) {
+    mergeIntoCanvasOverlay(appearanceOverlayGrids.other);
   }
   const nextSignature =
     appearanceContext.appearanceSignature.length > 0
@@ -398,6 +470,9 @@ const resolveCustomDesignerTabTooltip = (allowCustomTab: boolean) =>
   allowCustomTab ? undefined : 'Enable Custom Markings to use the designer.';
 
 const CLIENT_PREVIEW_EPOCH_STRIDE = 1000000;
+const DESIGNER_ZOOM_LEVELS = [50, 60, 70, 80, 90, 100] as const;
+const DESIGNER_ZOOM_MIN_PERCENT = 50;
+const DESIGNER_ZOOM_MAX_PERCENT = 100;
 
 const buildBooleanMapSignature = (
   map?: Record<string, boolean> | null
@@ -580,32 +655,59 @@ const resolvePayloadSnapshots = (options: {
   context: any;
   bodyPayload: BodyMarkingsPayload | null;
   basicPayload: BasicAppearancePayload | null;
-  dataBodyPayload?: BodyMarkingsPayload | null;
-  dataBasicPayload?: BasicAppearancePayload | null;
 }): {
   bodyPayloadSnapshot: BodyMarkingsPayload | null;
   basicPayloadSnapshot: BasicAppearancePayload | null;
 } => {
   const sharedStateSnapshot =
     selectBackend(options.context.store.getState()).shared || {};
-  const bodyPayloadSnapshot =
-    (sharedStateSnapshot.bodyPayload as
-      | BodyMarkingsPayload
-      | null
-      | undefined) ??
-    options.bodyPayload ??
-    options.dataBodyPayload ??
-    null;
-  const basicPayloadSnapshot =
-    (sharedStateSnapshot.basicPayload as
-      | BasicAppearancePayload
-      | null
-      | undefined) ??
-    options.basicPayload ??
-    options.dataBasicPayload ??
-    null;
+  const hasSharedBodyPayload = Object.prototype.hasOwnProperty.call(
+    sharedStateSnapshot,
+    'bodyPayload'
+  );
+  const hasSharedBasicPayload = Object.prototype.hasOwnProperty.call(
+    sharedStateSnapshot,
+    'basicPayload'
+  );
+  const bodyPayloadSnapshot = hasSharedBodyPayload
+    ? (sharedStateSnapshot.bodyPayload as BodyMarkingsPayload | null)
+    : options.bodyPayload;
+  const basicPayloadSnapshot = hasSharedBasicPayload
+    ? (sharedStateSnapshot.basicPayload as BasicAppearancePayload | null)
+    : options.basicPayload;
   return { bodyPayloadSnapshot, basicPayloadSnapshot };
 };
+
+const isPayloadStaleForSelection = (
+  payload:
+    | Pick<BodyMarkingsPayload, 'species_id' | 'custom_base'>
+    | Pick<BasicAppearancePayload, 'species_id' | 'custom_base'>
+    | null
+    | undefined,
+  speciesId: string | null,
+  iconBase: string | null
+): boolean =>
+  !!payload &&
+  ((!!speciesId && payload.species_id !== speciesId) ||
+    (!!iconBase && payload.custom_base !== iconBase));
+
+const resolveEnableCustomDisclaimer = (
+  data: CustomMarkingDesignerData
+): string =>
+  data.custom_marking_enable_disclaimer ||
+  "This is an advanced character editing tool that allows you to edit individual pixels on your character to adjust or create new markings.  Custom markings have the same standards as markings added to the RogueStar codebase.  They should make realistic sense and must be SFW.  If it wouldn't get approved to add to the code, it should not be done here.  If you are uncertain about something, please let us know and we're happy to chatter about it.";
+
+const resolveCanvasBackgroundDefaults = (
+  data: CustomMarkingDesignerData
+): {
+  canvasBackgroundOptions: CanvasBackgroundOption[];
+  defaultCanvasBackgroundKey: string;
+} => ({
+  canvasBackgroundOptions: Array.isArray(data.canvas_backgrounds)
+    ? data.canvas_backgrounds
+    : [],
+  defaultCanvasBackgroundKey: data.default_canvas_background || 'default',
+});
 
 const resolveDigitigradeAppearanceState = (options: {
   bodyPayloadSnapshot: BodyMarkingsPayload | null;
@@ -632,6 +734,56 @@ const resolveDigitigradeAppearanceState = (options: {
       ? basicAppearanceState
       : { ...basicAppearanceState, digitigrade: resolvedDigitigrade };
   return { resolvedDigitigrade, markingsAppearanceState };
+};
+
+const resolveSpeciesPreviewSelection = (options: {
+  speciesPayload: SpeciesPayload | null;
+  speciesSelection: string | null;
+  speciesIconBaseSelection: string | null;
+  digitigrade: boolean;
+}): {
+  selectedSpeciesId: string | null;
+  selectedIconBase: string | null;
+  selectedSpecies: SpeciesPayload['species'][number] | null;
+  speciesPreviewSources: PreviewDirectionSource[] | null;
+  speciesPreviewSignature: string;
+} => {
+  const {
+    speciesPayload,
+    speciesSelection,
+    speciesIconBaseSelection,
+    digitigrade,
+  } = options;
+  const selectedSpeciesId =
+    speciesSelection || speciesPayload?.selected_species || null;
+  const selectedIconBase =
+    speciesIconBaseSelection ||
+    speciesPayload?.preview_icon_base ||
+    speciesPayload?.selected_icon_base ||
+    null;
+  const selectedSpecies =
+    selectedSpeciesId && speciesPayload?.species
+      ? speciesPayload.species.find(
+          (entry) => entry.id === selectedSpeciesId
+        ) || null
+      : null;
+  return {
+    selectedSpeciesId,
+    selectedIconBase,
+    selectedSpecies,
+    speciesPreviewSources: resolveSpeciesBodyPreviewSources({
+      selectedSpecies,
+      iconBaseOptions: resolveSpeciesIconBaseOptions(
+        speciesPayload,
+        selectedSpeciesId
+      ),
+      iconBaseSelection: selectedIconBase,
+      digitigrade,
+    }),
+    speciesPreviewSignature: `${selectedSpeciesId || ''}:${
+      selectedIconBase || ''
+    }:${digitigrade ? 'digi' : 'normal'}`,
+  };
 };
 
 const resolveMarkingsPreviewState = (options: {
@@ -723,6 +875,7 @@ const buildRenderedPreviewSignature = (options: {
   diffSeq?: number | null;
   assetRevision: number;
   directionSignature: string;
+  showEquipment: boolean;
   showJobGear: boolean;
   showLoadoutGear: boolean;
   partReplacementSignature: string;
@@ -736,6 +889,7 @@ const buildRenderedPreviewSignature = (options: {
     diffSeq,
     assetRevision,
     directionSignature,
+    showEquipment,
     showJobGear,
     showLoadoutGear,
     partReplacementSignature,
@@ -749,6 +903,7 @@ const buildRenderedPreviewSignature = (options: {
     `diff:${diffSeq ?? 0}`,
     `asset:${assetRevision}`,
     directionSignature,
+    showEquipment ? 'equipment1' : 'equipment0',
     showJobGear ? 'job1' : 'job0',
     showLoadoutGear ? 'load1' : 'load0',
     partReplacementSignature,
@@ -759,20 +914,135 @@ const buildRenderedPreviewSignature = (options: {
     .join('|');
 };
 
+const buildSpeciesPreviewSourceMap = (
+  sources?: PreviewDirectionSource[] | null
+): Record<number, PreviewDirectionSource> | null => {
+  if (!Array.isArray(sources) || !sources.length) {
+    return null;
+  }
+  const byDir: Record<number, PreviewDirectionSource> = {};
+  sources.forEach((entry) => {
+    if (entry && typeof entry.dir === 'number') {
+      byDir[entry.dir] = entry;
+    }
+  });
+  return Object.keys(byDir).length ? byDir : null;
+};
+
+const resolveSpeciesPreviewSources = (options: {
+  baseSources: PreviewDirectionSource[] | null;
+  speciesSources: PreviewDirectionSource[] | null;
+}): {
+  sources: PreviewDirectionSource[] | null;
+  hasSpeciesSources: boolean;
+  usingSpeciesOnly: boolean;
+} => {
+  const { baseSources, speciesSources } = options;
+  const hasSpeciesSources =
+    Array.isArray(speciesSources) && speciesSources.length > 0;
+  if (!hasSpeciesSources) {
+    return {
+      sources: baseSources,
+      hasSpeciesSources: false,
+      usingSpeciesOnly: false,
+    };
+  }
+  if (!Array.isArray(baseSources) || !baseSources.length) {
+    return {
+      sources: speciesSources,
+      hasSpeciesSources: true,
+      usingSpeciesOnly: true,
+    };
+  }
+  const speciesByDir = buildSpeciesPreviewSourceMap(speciesSources);
+  if (!speciesByDir) {
+    return {
+      sources: baseSources,
+      hasSpeciesSources: true,
+      usingSpeciesOnly: false,
+    };
+  }
+  const merged = baseSources.map((entry) => {
+    const override = speciesByDir[entry.dir];
+    return override ? mergeSpeciesBodyPreviewSource(entry, override) : entry;
+  });
+  return {
+    sources: merged,
+    hasSpeciesSources: true,
+    usingSpeciesOnly: false,
+  };
+};
+
+const shouldUseSpeciesPreviewOverride = (options: {
+  speciesPreviewSources: PreviewDirectionSource[] | null;
+  selectedSpeciesId: string | null;
+  selectedIconBase: string | null;
+  payloadSpeciesId: string | null;
+  payloadIconBase: string | null;
+}) => {
+  const {
+    speciesPreviewSources,
+    selectedSpeciesId,
+    selectedIconBase,
+    payloadSpeciesId,
+    payloadIconBase,
+  } = options;
+  if (!speciesPreviewSources) {
+    return false;
+  }
+  if (!payloadSpeciesId || selectedSpeciesId !== payloadSpeciesId) {
+    return true;
+  }
+  return !!selectedIconBase && selectedIconBase !== payloadIconBase;
+};
+
+const resolvePreviewSourceKey = (options: {
+  basePreviewSourceKey: string;
+  usingSpeciesOnly: boolean;
+  hasSpeciesSources: boolean;
+  useSpeciesPreviewOverride: boolean;
+  speciesPreviewSignature: string;
+}) => {
+  const {
+    basePreviewSourceKey,
+    usingSpeciesOnly,
+    hasSpeciesSources,
+    useSpeciesPreviewOverride,
+    speciesPreviewSignature,
+  } = options;
+  const resolvedBasePreviewSourceKey = usingSpeciesOnly
+    ? 'species'
+    : basePreviewSourceKey;
+  const speciesKey =
+    hasSpeciesSources && useSpeciesPreviewOverride && speciesPreviewSignature
+      ? `species:${speciesPreviewSignature}`
+      : '';
+  return [resolvedBasePreviewSourceKey, speciesKey]
+    .filter((entry) => entry.length > 0)
+    .join('|');
+};
+
 const resolvePreviewSourceState = (options: {
   data: CustomMarkingDesignerData;
   bodyPayloadSnapshot: BodyMarkingsPayload | null;
   basicPayloadSnapshot: BasicAppearancePayload | null;
   markingsAppearanceState: BasicAppearanceState;
+  selectedSpeciesId: string | null;
+  selectedIconBase: string | null;
+  speciesPreviewSources: PreviewDirectionSource[] | null;
+  speciesPreviewSignature: string;
   previewStateRevision: number;
   clientPreviewEpoch: number;
   setClientPreviewEpoch: (value: number) => void;
+  previewSourceSignature: string;
+  setPreviewSourceSignature: (value: string) => void;
   resolvedPartReplacementMap: Record<string, boolean>;
   resolvedPartPriorityMap: Record<string, boolean>;
   assetRevision: number;
   directionSignature: string;
   canvasWidth: number;
   canvasHeight: number;
+  showEquipment: boolean;
   showJobGear: boolean;
   showLoadoutGear: boolean;
 }): {
@@ -786,58 +1056,100 @@ const resolvePreviewSourceState = (options: {
     bodyPayloadSnapshot,
     basicPayloadSnapshot,
     markingsAppearanceState,
+    selectedSpeciesId,
+    selectedIconBase,
+    speciesPreviewSources,
+    speciesPreviewSignature,
     previewStateRevision,
     clientPreviewEpoch,
     setClientPreviewEpoch,
+    previewSourceSignature,
+    setPreviewSourceSignature,
     resolvedPartReplacementMap,
     resolvedPartPriorityMap,
     assetRevision,
     directionSignature,
     canvasWidth,
     canvasHeight,
+    showEquipment,
     showJobGear,
     showLoadoutGear,
   } = options;
-  const bodyPreviewSourceList = bodyPayloadSnapshot?.preview_sources;
-  const bodyPreviewSources =
-    Array.isArray(bodyPreviewSourceList) && bodyPreviewSourceList.length
-      ? bodyPreviewSourceList
-      : null;
-  const basicPreviewUsesAltSources =
-    !!basicPayloadSnapshot?.preview_sources_alt &&
-    markingsAppearanceState.digitigrade !== !!basicPayloadSnapshot?.digitigrade;
-  const basicPreviewSources = basicPreviewUsesAltSources
-    ? basicPayloadSnapshot?.preview_sources_alt
-    : basicPayloadSnapshot?.preview_sources;
-  const resolvedBasicPreviewSources =
-    Array.isArray(basicPreviewSources) && basicPreviewSources.length
-      ? basicPreviewSources
-      : null;
-  const basicPreviewRevision = basicPreviewUsesAltSources
-    ? (basicPayloadSnapshot?.preview_revision_alt ??
-      basicPayloadSnapshot?.preview_revision ??
-      0)
-    : (basicPayloadSnapshot?.preview_revision ?? 0);
-  const clientPreviewSources =
-    resolvedBasicPreviewSources || bodyPreviewSources || null;
-  const clientPreviewRevisionBase = resolvedBasicPreviewSources
-    ? basicPreviewRevision
-    : bodyPreviewSources
-      ? (bodyPayloadSnapshot?.preview_revision ?? 0)
-      : basicPreviewRevision;
-  const usingClientPreview = !!clientPreviewSources;
-  const clientPreviewRevision = resolveClientPreviewRevision({
-    usingClientPreview,
-    clientPreviewRevisionBase,
-    clientPreviewEpoch,
-    previewStateRevision,
-    setClientPreviewEpoch,
+  const {
+    sources: basePreviewSources,
+    assetRegistry: basePreviewAssetRegistry,
+    revision: basePreviewRevision,
+    sourceKey: basePreviewSourceKey,
+    payloadSpeciesId,
+    payloadIconBaseId: payloadIconBase,
+  } = resolveSharedPreviewSourceSelection({
+    basicPayload: basicPayloadSnapshot,
+    bodyPayload: bodyPayloadSnapshot,
+    digitigrade: markingsAppearanceState.digitigrade,
+    basicAppearanceState: markingsAppearanceState,
   });
+  const useSpeciesPreviewOverride =
+    !basePreviewSources ||
+    shouldUseSpeciesPreviewOverride({
+      speciesPreviewSources,
+      selectedSpeciesId,
+      selectedIconBase,
+      payloadSpeciesId,
+      payloadIconBase,
+    });
+  const activeSpeciesPreviewSources = useSpeciesPreviewOverride
+    ? speciesPreviewSources
+    : null;
+  const transformedSpeciesPreviewSources = applyProstheticsToPreviewSources(
+    activeSpeciesPreviewSources,
+    markingsAppearanceState,
+    basicPayloadSnapshot?.prosthetic_context
+  );
+  const {
+    sources: clientPreviewSources,
+    hasSpeciesSources,
+    usingSpeciesOnly,
+  } = resolveSpeciesPreviewSources({
+    baseSources: basePreviewSources,
+    speciesSources: transformedSpeciesPreviewSources,
+  });
+  const clientPreviewRevisionBase = basePreviewRevision;
+  const usingClientPreview = !!clientPreviewSources;
+  const previewSourceKey = resolvePreviewSourceKey({
+    basePreviewSourceKey,
+    usingSpeciesOnly,
+    hasSpeciesSources,
+    useSpeciesPreviewOverride,
+    speciesPreviewSignature,
+  });
+  const signatureChanged = previewSourceKey !== previewSourceSignature;
+  const signatureInitialized = previewSourceSignature.length > 0;
+  const initialEpoch = clientPreviewEpoch || 1;
+  const requestedEpoch =
+    signatureChanged && signatureInitialized && usingClientPreview
+      ? (initialEpoch % 1000000) + 1
+      : initialEpoch;
+  const { revision: clientPreviewRevision, epoch: resolvedEpoch } =
+    resolveClientPreviewRevision({
+      usingClientPreview,
+      clientPreviewRevisionBase,
+      clientPreviewEpoch: requestedEpoch,
+      previewStateRevision,
+    });
+  if (signatureChanged) {
+    setPreviewSourceSignature(previewSourceKey);
+  }
+  if (usingClientPreview && resolvedEpoch !== clientPreviewEpoch) {
+    setClientPreviewEpoch(resolvedEpoch);
+  }
   const previewData =
     usingClientPreview && clientPreviewSources
       ? {
           ...data,
           preview_sources: clientPreviewSources,
+          preview_asset_registry: usingSpeciesOnly
+            ? undefined
+            : basePreviewAssetRegistry || undefined,
           preview_revision: clientPreviewRevision,
         }
       : data;
@@ -847,13 +1159,6 @@ const resolvePreviewSourceState = (options: {
   const partPrioritySignature = buildBooleanMapSignature(
     resolvedPartPriorityMap
   );
-  const previewSourceKey = resolvedBasicPreviewSources
-    ? basicPreviewUsesAltSources
-      ? 'basic-alt'
-      : 'basic'
-    : bodyPreviewSources
-      ? 'body'
-      : 'none';
   const previewRevisionKey = usingClientPreview
     ? `client:${clientPreviewRevisionBase}`
     : `server:${data.preview_revision ?? 0}`;
@@ -863,6 +1168,7 @@ const resolvePreviewSourceState = (options: {
     diffSeq: data.diff_seq,
     assetRevision,
     directionSignature,
+    showEquipment,
     showJobGear,
     showLoadoutGear,
     partReplacementSignature,
@@ -895,7 +1201,7 @@ const resolvePreviewMarkingSignatures = (options: {
     stripReferenceMarkings,
     resolvedBodyMarkingsSignature,
   } = options;
-  const previewHiddenPartsByDir = buildHiddenBodyPartsByDir(
+  const previewHiddenPartsByDir = buildSuppressedMarkingPartsByDir(
     appearanceContext.previewDirStatesForLive
   );
   const previewHiddenPartsSignature = buildBooleanDirMapSignature(
@@ -968,7 +1274,8 @@ const resolveDesignerTabState = (
   if (
     initialTab === 'body' ||
     initialTab === 'custom' ||
-    initialTab === 'basic'
+    initialTab === 'basic' ||
+    initialTab === 'species'
   ) {
     desiredTab = initialTab;
   }
@@ -1009,17 +1316,15 @@ const resolveClientPreviewRevision = (options: {
   clientPreviewRevisionBase: number;
   clientPreviewEpoch: number;
   previewStateRevision: number;
-  setClientPreviewEpoch: (value: number) => void;
-}): number => {
+}): { revision: number; epoch: number } => {
   const {
     usingClientPreview,
     clientPreviewRevisionBase,
     clientPreviewEpoch,
     previewStateRevision,
-    setClientPreviewEpoch,
   } = options;
   if (!usingClientPreview) {
-    return clientPreviewRevisionBase;
+    return { revision: clientPreviewRevisionBase, epoch: clientPreviewEpoch };
   }
   const initialEpoch = clientPreviewEpoch || 1;
   let resolvedEpoch = initialEpoch;
@@ -1032,12 +1337,11 @@ const resolveClientPreviewRevision = (options: {
           CLIENT_PREVIEW_EPOCH_STRIDE
       ) + 1;
   }
-  if (resolvedEpoch !== clientPreviewEpoch) {
-    setClientPreviewEpoch(resolvedEpoch);
-  }
-  return (
-    clientPreviewRevisionBase + resolvedEpoch * CLIENT_PREVIEW_EPOCH_STRIDE
-  );
+  return {
+    revision:
+      clientPreviewRevisionBase + resolvedEpoch * CLIENT_PREVIEW_EPOCH_STRIDE,
+    epoch: resolvedEpoch,
+  };
 };
 
 const syncCustomPreviewInitialization = (options: {
@@ -1131,52 +1435,380 @@ const syncCustomPreviewInitialization = (options: {
   });
 };
 
-const syncServerBodyPayload = (options: {
+type ServerPayloadSyncSchedulerProps = Readonly<{
   resolvedActiveTab: DesignerTabId;
   serverBodyPayload: BodyMarkingsPayload | null;
-  bodyMarkingsDirty: boolean;
+  serverBasicPayload: BasicAppearancePayload | null;
+  targetSpeciesId: string | null;
+  targetIconBase: string | null;
   bodyPayload: BodyMarkingsPayload | null;
-  bodyPayloadSignature: string | null;
-  setBodyPayloadSignature: (signature: string | null) => void;
+  basicPayload: BasicAppearancePayload | null;
+  bodyMarkingsDirty: boolean;
+  basicAppearanceDirty: boolean;
+  bodyReloadPending: boolean;
+  basicReloadPending: boolean;
+  bodyLoadInProgress: boolean;
+  basicLoadInProgress: boolean;
   setBodyPayload: (payload: BodyMarkingsPayload | null) => void;
+  setBasicPayload: (payload: BasicAppearancePayload | null) => void;
   setBodySavedState: (state: BodyMarkingsSavedState) => void;
   setBodyMarkingsState: (state: Record<string, BodyMarkingEntry>) => void;
   setBodyMarkingsOrder: (order: string[]) => void;
   setBodyMarkingsSelected: (id: string | null) => void;
   setBodyMarkingsDirty: (dirty: boolean) => void;
-}) => {
-  const {
-    resolvedActiveTab,
-    serverBodyPayload,
-    bodyMarkingsDirty,
-    bodyPayload,
-    bodyPayloadSignature,
-    setBodyPayloadSignature,
-    setBodyPayload,
-    setBodySavedState,
-    setBodyMarkingsState,
-    setBodyMarkingsOrder,
-    setBodyMarkingsSelected,
-    setBodyMarkingsDirty,
-  } = options;
-  if (resolvedActiveTab === 'body' || !serverBodyPayload || bodyMarkingsDirty) {
-    return;
+  setBasicAppearanceState: (state: BasicAppearanceState) => void;
+  setBasicSavedState: (state: BasicAppearanceState) => void;
+  setBasicAppearanceDirty: (dirty: boolean) => void;
+  setBodyLoadInProgress: (value: boolean) => void;
+  setBasicLoadInProgress: (value: boolean) => void;
+  clearBodyReloadPending: () => void;
+  clearBasicReloadPending: () => void;
+}>;
+
+class ServerPayloadSyncScheduler extends Component<ServerPayloadSyncSchedulerProps> {
+  private staleBodyPayload: BodyMarkingsPayload | null = null;
+  private staleBasicPayload: BasicAppearancePayload | null = null;
+
+  componentDidMount() {
+    this.sync();
   }
-  const isPreviewOnly = !!serverBodyPayload.preview_only;
-  const localRevision = bodyPayload?.preview_revision || 0;
-  const incomingRevision = serverBodyPayload.preview_revision || 0;
-  const shouldApplyPreview = !bodyPayload || incomingRevision >= localRevision;
-  const nextSignature = buildBodyPayloadSignature(serverBodyPayload);
-  const signatureChanged = nextSignature !== bodyPayloadSignature;
-  if ((!isPreviewOnly || shouldApplyPreview) && signatureChanged) {
-    setBodyPayloadSignature(nextSignature);
-    setBodyPayload(serverBodyPayload);
-    const savedState = buildBodySavedStateFromPayload(serverBodyPayload);
+
+  componentDidUpdate(prevProps: ServerPayloadSyncSchedulerProps) {
+    const bodyWasWaiting =
+      !prevProps.bodyPayload &&
+      (prevProps.bodyReloadPending || prevProps.bodyLoadInProgress);
+    const bodyIsWaiting =
+      !this.props.bodyPayload &&
+      (this.props.bodyReloadPending || this.props.bodyLoadInProgress);
+    if (!bodyWasWaiting && bodyIsWaiting) {
+      this.staleBodyPayload = this.props.serverBodyPayload;
+    }
+    const basicWasWaiting =
+      !prevProps.basicPayload &&
+      (prevProps.basicReloadPending || prevProps.basicLoadInProgress);
+    const basicIsWaiting =
+      !this.props.basicPayload &&
+      (this.props.basicReloadPending || this.props.basicLoadInProgress);
+    if (!basicWasWaiting && basicIsWaiting) {
+      this.staleBasicPayload = this.props.serverBasicPayload;
+    }
+    this.sync();
+  }
+
+  syncBodyPayload() {
+    const {
+      resolvedActiveTab,
+      serverBodyPayload,
+      targetSpeciesId,
+      targetIconBase,
+      bodyPayload,
+      bodyMarkingsDirty,
+      bodyReloadPending,
+      bodyLoadInProgress,
+      setBodyPayload,
+      setBodySavedState,
+      setBodyMarkingsState,
+      setBodyMarkingsOrder,
+      setBodyMarkingsSelected,
+      setBodyMarkingsDirty,
+      setBodyLoadInProgress,
+      clearBodyReloadPending,
+    } = this.props;
+    if (
+      resolvedActiveTab === 'body' ||
+      !serverBodyPayload ||
+      serverBodyPayload.preview_only ||
+      bodyMarkingsDirty
+    ) {
+      return;
+    }
+    const mergedServerBodyPayload = mergeBodyMarkingsPayload(
+      bodyPayload,
+      serverBodyPayload,
+      this.props.basicPayload
+    );
+    if (
+      isPayloadStaleForSelection(
+        mergedServerBodyPayload,
+        targetSpeciesId,
+        targetIconBase
+      )
+    ) {
+      return;
+    }
+    const waitingForReload =
+      !bodyPayload && (bodyReloadPending || bodyLoadInProgress);
+    if (
+      waitingForReload &&
+      this.staleBodyPayload &&
+      serverBodyPayload === this.staleBodyPayload
+    ) {
+      return;
+    }
+    if (bodyPayload && !bodyReloadPending && !bodyLoadInProgress) {
+      this.staleBodyPayload = null;
+      return;
+    }
+    const nextSignature = buildBodyPayloadSignature(mergedServerBodyPayload);
+    const currentSignature = buildBodyPayloadSignature(bodyPayload);
+    if (nextSignature === currentSignature) {
+      if (bodyLoadInProgress) {
+        setBodyLoadInProgress(false);
+      }
+      if (bodyReloadPending) {
+        clearBodyReloadPending();
+      }
+      this.staleBodyPayload = null;
+      return;
+    }
+    const savedState = buildBodySavedStateFromPayload(mergedServerBodyPayload);
+    setBodyPayload(mergedServerBodyPayload);
     setBodySavedState(savedState);
     setBodyMarkingsState(deepCopyMarkings(savedState.markings));
     setBodyMarkingsOrder([...savedState.order]);
     setBodyMarkingsSelected(savedState.selectedId);
     setBodyMarkingsDirty(false);
+    if (bodyLoadInProgress) {
+      setBodyLoadInProgress(false);
+    }
+    if (bodyReloadPending) {
+      clearBodyReloadPending();
+    }
+    this.staleBodyPayload = null;
+  }
+
+  syncBasicPayload() {
+    const {
+      resolvedActiveTab,
+      serverBasicPayload,
+      targetSpeciesId,
+      targetIconBase,
+      basicPayload,
+      basicAppearanceDirty,
+      basicReloadPending,
+      basicLoadInProgress,
+      setBasicPayload,
+      setBasicAppearanceState,
+      setBasicSavedState,
+      setBasicAppearanceDirty,
+      setBasicLoadInProgress,
+      clearBasicReloadPending,
+    } = this.props;
+    if (
+      resolvedActiveTab === 'basic' ||
+      !serverBasicPayload ||
+      serverBasicPayload.preview_only ||
+      basicAppearanceDirty
+    ) {
+      return;
+    }
+    const mergedServerBasicPayload = mergeBasicAppearancePayload(
+      basicPayload,
+      serverBasicPayload,
+      this.props.bodyPayload
+    );
+    if (
+      isPayloadStaleForSelection(
+        mergedServerBasicPayload,
+        targetSpeciesId,
+        targetIconBase
+      )
+    ) {
+      return;
+    }
+    const waitingForReload =
+      !basicPayload && (basicReloadPending || basicLoadInProgress);
+    if (
+      waitingForReload &&
+      this.staleBasicPayload &&
+      serverBasicPayload === this.staleBasicPayload
+    ) {
+      return;
+    }
+    if (
+      shouldRetainLocalBasicPayload({
+        basicPayload,
+        reloadPending: basicReloadPending,
+        loadInProgress: basicLoadInProgress,
+      })
+    ) {
+      this.staleBasicPayload = null;
+      return;
+    }
+    const nextSignature = buildBasicPayloadSignature(mergedServerBasicPayload);
+    const currentSignature = buildBasicPayloadSignature(basicPayload);
+    if (nextSignature === currentSignature) {
+      if (basicLoadInProgress) {
+        setBasicLoadInProgress(false);
+      }
+      if (basicReloadPending) {
+        clearBasicReloadPending();
+      }
+      this.staleBasicPayload = null;
+      return;
+    }
+    const nextState = buildBasicStateFromPayload(mergedServerBasicPayload);
+    setBasicPayload(mergedServerBasicPayload);
+    setBasicAppearanceState(nextState);
+    setBasicSavedState(nextState);
+    setBasicAppearanceDirty(false);
+    if (basicLoadInProgress) {
+      setBasicLoadInProgress(false);
+    }
+    if (basicReloadPending) {
+      clearBasicReloadPending();
+    }
+    this.staleBasicPayload = null;
+  }
+
+  sync() {
+    this.syncBasicPayload();
+    this.syncBodyPayload();
+  }
+
+  render() {
+    return null;
+  }
+}
+
+type SpeciesSaveResultSyncSchedulerProps = Readonly<{
+  speciesSaveResult?: SpeciesSaveResult | null;
+  onSaveResult?: (result: SpeciesSaveResult) => void;
+  speciesPayload: SpeciesPayload | null;
+  bodyPayload: BodyMarkingsPayload | null;
+  basicPayload: BasicAppearancePayload | null;
+  stateToken: string;
+  writeStates: (states: Record<string, unknown>) => void;
+}>;
+
+class SpeciesSaveResultSyncScheduler extends Component<SpeciesSaveResultSyncSchedulerProps> {
+  private lastRevision = 0;
+
+  componentDidMount() {
+    this.sync();
+  }
+
+  componentDidUpdate(prevProps: SpeciesSaveResultSyncSchedulerProps) {
+    if (prevProps.speciesSaveResult !== this.props.speciesSaveResult) {
+      this.sync();
+    }
+  }
+
+  sync() {
+    const {
+      speciesSaveResult,
+      onSaveResult,
+      speciesPayload,
+      bodyPayload,
+      basicPayload,
+      stateToken,
+      writeStates,
+    } = this.props;
+    if (
+      !speciesSaveResult ||
+      !speciesSaveResult.revision ||
+      speciesSaveResult.revision === this.lastRevision
+    ) {
+      return;
+    }
+    this.lastRevision = speciesSaveResult.revision;
+    syncSpeciesSaveResultState(writeStates, {
+      result: speciesSaveResult,
+      stateToken,
+      speciesPayload,
+      bodyPayload,
+      basicPayload,
+    });
+    onSaveResult?.(speciesSaveResult);
+  }
+
+  render() {
+    return null;
+  }
+}
+
+const syncServerSpeciesPayload = (options: {
+  resolvedActiveTab: DesignerTabId;
+  serverSpeciesPayload: SpeciesPayload | null;
+  speciesSavedSelection: string | null;
+  speciesSavedIconBaseSelection: string | null;
+  speciesDirty: boolean;
+  speciesPayload: SpeciesPayload | null;
+  setSpeciesPayload: (payload: SpeciesPayload | null) => void;
+  setSpeciesSelection: (selection: string | null) => void;
+  setSpeciesSavedSelection: (selection: string | null) => void;
+  setSpeciesIconBaseSelection: (selection: string | null) => void;
+  setSpeciesSavedIconBaseSelection: (selection: string | null) => void;
+  setSpeciesDirty: (dirty: boolean) => void;
+  speciesLoadInProgress: boolean;
+  setSpeciesLoadInProgress: (value: boolean) => void;
+  speciesReloadPending: boolean;
+  setSpeciesReloadPending: (value: boolean) => void;
+}) => {
+  const {
+    resolvedActiveTab,
+    serverSpeciesPayload,
+    speciesSavedSelection,
+    speciesSavedIconBaseSelection,
+    speciesDirty,
+    speciesPayload,
+    setSpeciesPayload,
+    setSpeciesSelection,
+    setSpeciesSavedSelection,
+    setSpeciesIconBaseSelection,
+    setSpeciesSavedIconBaseSelection,
+    setSpeciesDirty,
+    speciesLoadInProgress,
+    setSpeciesLoadInProgress,
+    speciesReloadPending,
+    setSpeciesReloadPending,
+  } = options;
+  if (
+    resolvedActiveTab === 'species' ||
+    !serverSpeciesPayload ||
+    speciesDirty
+  ) {
+    if (speciesLoadInProgress && serverSpeciesPayload) {
+      setSpeciesLoadInProgress(false);
+    }
+    return;
+  }
+  const serverSelection = serverSpeciesPayload.selected_species || null;
+  const serverIconBase =
+    serverSpeciesPayload.selected_icon_base ||
+    serverSpeciesPayload.preview_icon_base ||
+    null;
+  const localSelection =
+    speciesSavedSelection || speciesPayload?.selected_species || null;
+  const localIconBase =
+    speciesSavedIconBaseSelection || speciesPayload?.selected_icon_base || null;
+  if (
+    (localSelection !== null && serverSelection !== localSelection) ||
+    (localIconBase !== null && serverIconBase !== localIconBase)
+  ) {
+    if (speciesLoadInProgress && serverSpeciesPayload) {
+      setSpeciesLoadInProgress(false);
+    }
+    return;
+  }
+  if (serverSpeciesPayload !== speciesPayload) {
+    setSpeciesPayload(serverSpeciesPayload);
+    const selected = serverSpeciesPayload.selected_species || null;
+    const selectedIconBase =
+      serverSpeciesPayload.selected_icon_base ||
+      serverSpeciesPayload.preview_icon_base ||
+      null;
+    setSpeciesSelection(selected);
+    setSpeciesSavedSelection(selected);
+    setSpeciesIconBaseSelection(selectedIconBase);
+    setSpeciesSavedIconBaseSelection(selectedIconBase);
+    setSpeciesDirty(false);
+  }
+  if (speciesLoadInProgress) {
+    setSpeciesLoadInProgress(false);
+  }
+  if (speciesReloadPending) {
+    setSpeciesReloadPending(false);
   }
 };
 
@@ -1243,7 +1875,12 @@ const handlePreviewRefreshTokenUpdate = (options: {
   if (bodyPayloadSnapshot) {
     if (resolvedActiveTab === 'body') {
       setBodyMarkingsLoadInProgress(true);
-      act('load_body_markings', { preview_only: 1 });
+      act(
+        'load_body_markings',
+        buildBodyMarkingsLoadParams(bodyPayloadSnapshot, basicPayloadSnapshot, {
+          preview_only: 1,
+        })
+      );
     } else {
       setBodyReloadPending(true);
     }
@@ -1251,7 +1888,14 @@ const handlePreviewRefreshTokenUpdate = (options: {
   if (basicPayloadSnapshot) {
     if (resolvedActiveTab === 'basic') {
       setBasicAppearanceLoadInProgress(true);
-      act('load_basic_appearance', { preview_only: 1 });
+      act(
+        'load_basic_appearance',
+        buildBasicAppearanceLoadParams(
+          basicPayloadSnapshot,
+          bodyPayloadSnapshot,
+          { preview_only: 1 }
+        )
+      );
     } else {
       setBasicReloadPending(true);
     }
@@ -1259,7 +1903,251 @@ const handlePreviewRefreshTokenUpdate = (options: {
 };
 
 // eslint-disable-next-line complexity
-export const CustomMarkingDesigner = (_props, context) => {
+type DesignerTitleTabsProps = Readonly<{
+  resolvedActiveTab: DesignerTabId;
+  tabsLocked: boolean;
+  allowCustomTab: boolean;
+  zoomPercent: number;
+  setZoomPercent: (value: number) => void;
+  setEnableCustomPromptOpen: (value: boolean) => void;
+  onTabChange: (tab: DesignerTabId) => void;
+}>;
+
+const DesignerTitleTabs = ({
+  resolvedActiveTab,
+  tabsLocked,
+  allowCustomTab,
+  zoomPercent,
+  setZoomPercent,
+  setEnableCustomPromptOpen,
+  onTabChange,
+}: DesignerTitleTabsProps) => (
+  <>
+    <Tabs className="RogueStar__titleTabs">
+      <Tabs.Tab
+        selected={resolvedActiveTab === 'species'}
+        icon="paw"
+        className={tabsLocked ? 'Tab--disabled' : undefined}
+        aria-disabled={tabsLocked}
+        onClick={() => {
+          if (!tabsLocked) {
+            onTabChange('species');
+          }
+        }}>
+        Species
+      </Tabs.Tab>
+      <Tabs.Tab
+        selected={resolvedActiveTab === 'basic'}
+        icon="user"
+        className={tabsLocked ? 'Tab--disabled' : undefined}
+        aria-disabled={tabsLocked}
+        onClick={() => {
+          if (!tabsLocked) {
+            onTabChange('basic');
+          }
+        }}>
+        Basic Appearance
+      </Tabs.Tab>
+      <Tabs.Tab
+        selected={resolvedActiveTab === 'body'}
+        icon="list"
+        className={tabsLocked ? 'Tab--disabled' : undefined}
+        aria-disabled={tabsLocked}
+        onClick={() => {
+          if (!tabsLocked) {
+            onTabChange('body');
+          }
+        }}>
+        Body Markings
+      </Tabs.Tab>
+      <Tabs.Tab
+        selected={resolvedActiveTab === 'custom'}
+        icon={resolveCustomDesignerTabIcon(allowCustomTab)}
+        className={tabsLocked ? 'Tab--disabled' : undefined}
+        aria-disabled={tabsLocked}
+        tooltip={resolveCustomDesignerTabTooltip(allowCustomTab)}
+        onClick={() => {
+          if (tabsLocked) {
+            return;
+          }
+          if (!allowCustomTab) {
+            setEnableCustomPromptOpen(true);
+            return;
+          }
+          onTabChange('custom');
+        }}>
+        Custom Marking Designer
+      </Tabs.Tab>
+    </Tabs>
+    <Box
+      className="RogueStar__zoomControl"
+      role="group"
+      aria-label={`Designer zoom, currently ${zoomPercent}%`}
+      ml="auto">
+      <Box className="RogueStar__zoomControlLabel">
+        <Icon name="search" />
+        Zoom
+      </Box>
+      <Box className="RogueStar__zoomTrack">
+        <Box
+          className="RogueStar__zoomTrackFill"
+          style={{
+            transform: `scaleX(${
+              (zoomPercent - DESIGNER_ZOOM_MIN_PERCENT) /
+              (DESIGNER_ZOOM_MAX_PERCENT - DESIGNER_ZOOM_MIN_PERCENT)
+            })`,
+          }}
+        />
+        {DESIGNER_ZOOM_LEVELS.map((percent) => (
+          <Button
+            key={percent}
+            className={`RogueStar__zoomStop${
+              percent < zoomPercent ? ' RogueStar__zoomStop--filled' : ''
+            }`}
+            selected={zoomPercent === percent}
+            aria-label={`Set designer zoom to ${percent}%`}
+            tooltip={
+              zoomPercent === percent
+                ? `Current zoom: ${percent}%`
+                : `Set zoom to ${percent}%`
+            }
+            tooltipPosition="bottom"
+            onClick={() => setZoomPercent(percent)}
+          />
+        ))}
+      </Box>
+      <Box className="RogueStar__zoomValue">{zoomPercent}%</Box>
+    </Box>
+  </>
+);
+
+type TabSwitchPromptState = {
+  sourceTab: DesignerTabId;
+  targetTab: DesignerTabId;
+};
+
+type PendingSpeciesTabSwitch = {
+  prompt: TabSwitchPromptState;
+  speciesId: string;
+  iconBase: string | null;
+};
+
+type TabSwitchOverlayProps = Readonly<{
+  prompt: TabSwitchPromptState | null;
+  busy: boolean;
+  onSave: () => void;
+  onDiscard: () => void;
+  onCancel: () => void;
+}>;
+
+const resolveTabSwitchLabel = (tab: DesignerTabId) => {
+  if (tab === 'custom') {
+    return 'Custom Marking Designer';
+  }
+  if (tab === 'body') {
+    return 'Body Markings tab';
+  }
+  if (tab === 'species') {
+    return 'Species tab';
+  }
+  return 'Basic Appearance tab';
+};
+
+const TabSwitchOverlay = ({
+  prompt,
+  busy,
+  onSave,
+  onDiscard,
+  onCancel,
+}: TabSwitchOverlayProps) => {
+  if (!prompt) {
+    return null;
+  }
+  return (
+    <UnsavedChangesOverlay
+      title="Unsaved changes"
+      subtitle={`You have unsaved changes in the ${resolveTabSwitchLabel(
+        prompt.sourceTab
+      )}. Save them before switching?`}
+      saveLabel="Save and switch"
+      discardLabel="Discard and switch"
+      busy={busy}
+      onSave={onSave}
+      onDiscard={onDiscard}
+      onCancel={() => {
+        if (!busy) {
+          onCancel();
+        }
+      }}
+    />
+  );
+};
+
+const resolveDesignerLoadingState = (options: {
+  resolvedActiveTab: DesignerTabId;
+  loadingOverlay: boolean;
+  pendingSave: boolean;
+  pendingClose: boolean;
+  bodyPayloadSnapshot: BodyMarkingsPayload | null;
+  basicPayloadSnapshot: BasicAppearancePayload | null;
+  speciesPayload: SpeciesPayload | null;
+  tabSwitchBusy: boolean;
+  bodyPendingSave: boolean;
+  bodyPendingClose: boolean;
+  basicPendingSave: boolean;
+  basicPendingClose: boolean;
+  speciesPendingSave: boolean;
+  speciesPendingClose: boolean;
+}) => {
+  const {
+    resolvedActiveTab,
+    loadingOverlay,
+    pendingSave,
+    pendingClose,
+    bodyPayloadSnapshot,
+    basicPayloadSnapshot,
+    speciesPayload,
+    tabSwitchBusy,
+    bodyPendingSave,
+    bodyPendingClose,
+    basicPendingSave,
+    basicPendingClose,
+    speciesPendingSave,
+    speciesPendingClose,
+  } = options;
+  const shouldShowLoadingOverlay =
+    loadingOverlay && !pendingSave && !pendingClose;
+  const customTabLoading = resolvedActiveTab === 'custom' && loadingOverlay;
+  const bodyTabLoading = resolvedActiveTab === 'body' && !bodyPayloadSnapshot;
+  const basicPayloadReady =
+    !!basicPayloadSnapshot && !basicPayloadSnapshot.preview_only;
+  const basicTabLoading = resolvedActiveTab === 'basic' && !basicPayloadReady;
+  const speciesTabLoading = resolvedActiveTab === 'species' && !speciesPayload;
+  const tabSwitchBusyState =
+    tabSwitchBusy ||
+    pendingSave ||
+    pendingClose ||
+    bodyPendingSave ||
+    bodyPendingClose ||
+    basicPendingSave ||
+    basicPendingClose ||
+    speciesPendingSave ||
+    speciesPendingClose;
+  const tabsLocked =
+    tabSwitchBusyState ||
+    customTabLoading ||
+    bodyTabLoading ||
+    basicTabLoading ||
+    speciesTabLoading;
+
+  return {
+    shouldShowLoadingOverlay,
+    tabSwitchBusyState,
+    tabsLocked,
+  };
+};
+
+const CustomMarkingDesignerContent = (_props, context) => {
   const { act, data } = useBackend<CustomMarkingDesignerData>(context);
   const stateToken = data.state_token || 'session';
   const [activeTab, setActiveTab] = useLocalState<DesignerTabId>(
@@ -1273,15 +2161,13 @@ export const CustomMarkingDesigner = (_props, context) => {
       `customMarkingLastInitialTab-${stateToken}`,
       null
     );
-  const [compactMode, setCompactMode] = useLocalState<boolean>(
+  const [zoomPercent, setZoomPercent] = useLocalState<number>(
     context,
-    `customMarkingDesignerCompact-${stateToken}`,
-    false
+    `customMarkingDesignerZoom-${stateToken}`,
+    DESIGNER_ZOOM_MAX_PERCENT
   );
   const allowCustomTab = data.allow_custom_tab ?? true;
-  const enableCustomDisclaimer =
-    data.custom_marking_enable_disclaimer ||
-    "This is an advanced character editing tool that allows you to edit individual pixels on your character to adjust or create new markings.  Custom markings have the same standards as markings added to the RogueStar codebase.  They should make realistic sense and must be SFW.  If it wouldn't get approved to add to the code, it should not be done here.  If you are uncertain about something, please let us know and we're happy to chatter about it.";
+  const enableCustomDisclaimer = resolveEnableCustomDisclaimer(data);
   const [enableCustomPromptOpen, setEnableCustomPromptOpen] =
     useLocalState<boolean>(
       context,
@@ -1327,13 +2213,8 @@ export const CustomMarkingDesigner = (_props, context) => {
     context,
     stateToken,
   });
-  const canvasBackgroundOptions: CanvasBackgroundOption[] = Array.isArray(
-    data.canvas_backgrounds
-  )
-    ? data.canvas_backgrounds
-    : [];
-  const defaultCanvasBackgroundKey =
-    data.default_canvas_background || 'default';
+  const { canvasBackgroundOptions, defaultCanvasBackgroundKey } =
+    resolveCanvasBackgroundDefaults(data);
   const {
     resolvedCanvasBackground,
     backgroundFallbackColor,
@@ -1375,6 +2256,8 @@ export const CustomMarkingDesigner = (_props, context) => {
     setAssetRevision,
     savingProgress,
     setSavingProgress,
+    showEquipment,
+    setShowEquipment,
     showJobGear,
     setShowJobGear,
     showLoadoutGear,
@@ -1382,6 +2265,7 @@ export const CustomMarkingDesigner = (_props, context) => {
     loadingOverlay,
     setLoadingOverlay,
   } = useDesignerUiState(context, stateToken, {
+    showEquipment: !!data.show_equipment,
     showJobGear: !!data.show_job_gear,
     showLoadoutGear: !!data.show_loadout_gear,
   });
@@ -1413,11 +2297,7 @@ export const CustomMarkingDesigner = (_props, context) => {
       false
     );
   const [bodyPayload, setBodyPayload] =
-    useLocalState<BodyMarkingsPayload | null>(
-      context,
-      'bodyPayload',
-      data.body_markings_payload || null
-    );
+    useLocalState<BodyMarkingsPayload | null>(context, 'bodyPayload', null);
   const [bodyMarkingsState, setBodyMarkingsState] = useLocalState<
     Record<string, BodyMarkingEntry>
   >(
@@ -1498,15 +2378,6 @@ export const CustomMarkingDesigner = (_props, context) => {
       'bodyMarkingsSavedState',
       buildBodySavedStateFromPayload(data.body_markings_payload)
     );
-  const [bodyPayloadSignature, setBodyPayloadSignature] = useLocalState<
-    string | null
-  >(
-    context,
-    `bodyMarkingsPayloadSignature-${stateToken}`,
-    data.body_markings_payload
-      ? buildBodyPayloadSignature(data.body_markings_payload)
-      : null
-  );
   const [bodyPendingSave, setBodyPendingSave] = useLocalState<boolean>(
     context,
     'bodyMarkingsPendingSave',
@@ -1547,6 +2418,12 @@ export const CustomMarkingDesigner = (_props, context) => {
     `customMarkingDesignerClientPreviewEpoch-${stateToken}`,
     0
   );
+  const [previewSourceSignature, setPreviewSourceSignature] =
+    useLocalState<string>(
+      context,
+      `customMarkingDesignerPreviewSourceSignature-${stateToken}`,
+      ''
+    );
   const [basicAppearanceLoadInProgress, setBasicAppearanceLoadInProgress] =
     useLocalState<boolean>(
       context,
@@ -1554,11 +2431,7 @@ export const CustomMarkingDesigner = (_props, context) => {
       false
     );
   const [basicPayload, setBasicPayload] =
-    useLocalState<BasicAppearancePayload | null>(
-      context,
-      'basicPayload',
-      data.basic_appearance_payload || null
-    );
+    useLocalState<BasicAppearancePayload | null>(context, 'basicPayload', null);
   const basicInitialState = buildBasicStateFromPayload(
     data.basic_appearance_payload
   );
@@ -1586,6 +2459,68 @@ export const CustomMarkingDesigner = (_props, context) => {
     'basicAppearancePendingClose',
     false
   );
+  const [speciesPayload, setSpeciesPayload] =
+    useLocalState<SpeciesPayload | null>(
+      context,
+      'speciesPayload',
+      data.species_payload || null
+    );
+  const [speciesSelection, setSpeciesSelection] = useLocalState<string | null>(
+    context,
+    'speciesSelection',
+    data.species_payload?.selected_species || null
+  );
+  const [speciesSavedSelection, setSpeciesSavedSelection] = useLocalState<
+    string | null
+  >(
+    context,
+    'speciesSavedSelection',
+    data.species_payload?.selected_species || null
+  );
+  const [speciesIconBaseSelection, setSpeciesIconBaseSelection] = useLocalState<
+    string | null
+  >(
+    context,
+    'speciesIconBaseSelection',
+    data.species_payload?.preview_icon_base ||
+      data.species_payload?.selected_icon_base ||
+      null
+  );
+  const [speciesSavedIconBaseSelection, setSpeciesSavedIconBaseSelection] =
+    useLocalState<string | null>(
+      context,
+      'speciesSavedIconBaseSelection',
+      data.species_payload?.selected_icon_base ||
+        data.species_payload?.preview_icon_base ||
+        null
+    );
+  const [speciesDirty, setSpeciesDirty] = useLocalState<boolean>(
+    context,
+    'speciesDirty',
+    false
+  );
+  const [speciesPendingSave, setSpeciesPendingSave] = useLocalState<boolean>(
+    context,
+    'speciesPendingSave',
+    false
+  );
+  const [speciesPendingClose, setSpeciesPendingClose] = useLocalState<boolean>(
+    context,
+    'speciesPendingClose',
+    false
+  );
+  const [speciesLoadInProgress, setSpeciesLoadInProgress] =
+    useLocalState<boolean>(
+      context,
+      `speciesLoadInProgress-${stateToken}`,
+      false
+    );
+  const [speciesReloadPending, setSpeciesReloadPending] =
+    useLocalState<boolean>(
+      context,
+      `speciesReloadPending-${stateToken}`,
+      false
+    );
   const [strokeDraftState] = useLocalState<StrokeDraftState>(
     context,
     'strokeDrafts',
@@ -1596,15 +2531,23 @@ export const CustomMarkingDesigner = (_props, context) => {
     `customMarkingDraftMutationToken-${stateToken}`,
     0
   );
-  const [tabSwitchPrompt, setTabSwitchPrompt] = useLocalState<{
-    sourceTab: DesignerTabId;
-    targetTab: DesignerTabId;
-  } | null>(context, 'customMarkingTabSwitchPrompt', null);
+  const [tabSwitchPrompt, setTabSwitchPrompt] =
+    useLocalState<TabSwitchPromptState | null>(
+      context,
+      'customMarkingTabSwitchPrompt',
+      null
+    );
   const [tabSwitchBusy, setTabSwitchBusy] = useLocalState(
     context,
     'customMarkingTabSwitchBusy',
     false
   );
+  const [pendingSpeciesTabSwitch, setPendingSpeciesTabSwitch] =
+    useLocalState<PendingSpeciesTabSwitch | null>(
+      context,
+      `customMarkingPendingSpeciesTabSwitch-${stateToken}`,
+      null
+    );
   const notifyAssetReady = () =>
     setAssetRevision((assetRevision + 1) % 1000000);
   const limited = !!data.limited;
@@ -1615,7 +2558,10 @@ export const CustomMarkingDesigner = (_props, context) => {
     canvasPixelSize,
     canvasDisplayWidthPx,
     canvasDisplayHeightPx,
-    canvasTransform,
+    canvasRenderWidthPx,
+    canvasRenderHeightPx,
+    canvasOffsetX,
+    canvasOffsetY,
     canvasFitToFrame,
     previewFitToFrame,
     toggleCanvasFit,
@@ -1676,8 +2622,6 @@ export const CustomMarkingDesigner = (_props, context) => {
       context,
       bodyPayload,
       basicPayload,
-      dataBodyPayload: data.body_markings_payload,
-      dataBasicPayload: data.basic_appearance_payload,
     }
   );
   const directionSignature = resolveDirectionSignature(data.directions);
@@ -1687,6 +2631,17 @@ export const CustomMarkingDesigner = (_props, context) => {
       basicPayloadSnapshot,
       basicAppearanceState,
     });
+  const {
+    selectedSpeciesId,
+    selectedIconBase,
+    speciesPreviewSources,
+    speciesPreviewSignature,
+  } = resolveSpeciesPreviewSelection({
+    speciesPayload,
+    speciesSelection,
+    speciesIconBaseSelection,
+    digitigrade: markingsAppearanceState.digitigrade,
+  });
   const {
     bodyMarkingsContext,
     bodyMarkingsContextSignature,
@@ -1721,18 +2676,26 @@ export const CustomMarkingDesigner = (_props, context) => {
     bodyPayloadSnapshot,
     basicPayloadSnapshot,
     markingsAppearanceState,
+    selectedSpeciesId,
+    selectedIconBase,
+    speciesPreviewSources,
+    speciesPreviewSignature,
     previewStateRevision: previewState.revision,
     clientPreviewEpoch,
     setClientPreviewEpoch,
+    previewSourceSignature,
+    setPreviewSourceSignature,
     resolvedPartReplacementMap,
     resolvedPartPriorityMap,
     assetRevision,
     directionSignature,
     canvasWidth,
     canvasHeight,
+    showEquipment,
     showJobGear,
     showLoadoutGear,
   });
+  const customPreviewEnabled = resolvedActiveTab === 'custom';
   const {
     derivedPreviewState,
     overlayLayerParts,
@@ -1768,6 +2731,7 @@ export const CustomMarkingDesigner = (_props, context) => {
     resolvedPartPriorityMap,
     resolvedPartReplacementMap,
     sessionToken,
+    showEquipment,
     showJobGear,
     showLoadoutGear,
     referencePartMarkingGridsByDir,
@@ -1775,7 +2739,7 @@ export const CustomMarkingDesigner = (_props, context) => {
     renderedPreviewCache,
     renderedPreviewSignature,
     draftMutationToken,
-    enabled: resolvedActiveTab === 'custom',
+    enabled: customPreviewEnabled,
   });
   const appearanceContext = resolveAppearanceContext({
     previewDirStates: derivedPreviewState.dirs,
@@ -1784,11 +2748,16 @@ export const CustomMarkingDesigner = (_props, context) => {
     fallbackDigitigrade: resolvedDigitigrade,
   });
   const previewWithBaseColors = applyEyeColorToPreview(
-    applyBodyColorToPreview(
-      renderedPreviewDirs,
-      appearanceContext.previewBaseBodyColor,
-      appearanceContext.previewTargetBodyColor,
-      appearanceContext.bodyColorExcludedParts
+    applyLimbHairColorToPreview(
+      applyBodyColorToPreview(
+        renderedPreviewDirs,
+        appearanceContext.previewBaseBodyColor,
+        appearanceContext.previewTargetBodyColor,
+        appearanceContext.bodyColorExcludedParts,
+        1,
+        appearanceContext.bodyColorBlendMode
+      ),
+      appearanceContext.appearanceState.hair_color
     ),
     appearanceContext.previewBaseEyeColor,
     appearanceContext.previewTargetEyeColor,
@@ -1800,6 +2769,7 @@ export const CustomMarkingDesigner = (_props, context) => {
     appearanceContext,
     canvasWidth,
     canvasHeight,
+    showEquipment,
     showJobGear,
     showLoadoutGear,
     signalAssetUpdate: notifyAssetReady,
@@ -1821,11 +2791,8 @@ export const CustomMarkingDesigner = (_props, context) => {
     cache: previewWithMarkingsCache,
     signature: previewMarkingsSignature,
   });
-  const {
-    referenceParts: canvasReferenceParts,
-    referenceGrid: canvasReferenceGrid,
-    referenceSignature: canvasReferenceSignature,
-  } = applyAppearanceToReferenceSources({
+  const tabLivePreview = customPreviewEnabled ? previewDirsWithMarkings : [];
+  const canvasReferenceSources = applyAppearanceToReferenceSources({
     referenceParts,
     referenceGrid,
     referenceSignature,
@@ -1833,6 +2800,17 @@ export const CustomMarkingDesigner = (_props, context) => {
     preview: previewWithAppearance,
     dirKey: currentDirectionKey,
   });
+  const canvasReferenceParts = buildGenericCanvasReference({
+    referenceParts: canvasReferenceSources.referenceParts,
+    referenceGrid: canvasReferenceSources.referenceGrid,
+    partOrder: derivedPreviewState.dirs[currentDirectionKey]?.partOrder,
+    canvasWidth,
+    canvasHeight,
+    activePartKey,
+    mergeGrid,
+  });
+  const canvasReferenceGrid = canvasReferenceSources.referenceGrid;
+  const canvasReferenceSignature = canvasReferenceSources.referenceSignature;
   const resolvedReferenceSignature = resolveReferenceSignature({
     canvasReferenceSignature,
     bodyMarkingsContextSignature,
@@ -1915,6 +2893,7 @@ export const CustomMarkingDesigner = (_props, context) => {
     setReferenceOpacityByPart,
     referenceParts: canvasReferenceParts,
     bodyParts: data.body_parts,
+    showEquipment,
     showJobGear,
     showLoadoutGear,
     activePartKey,
@@ -2561,23 +3540,24 @@ export const CustomMarkingDesigner = (_props, context) => {
     />
   );
 
-  const shouldShowLoadingOverlay =
-    loadingOverlay && !pendingSave && !pendingClose;
-  const customTabLoading = resolvedActiveTab === 'custom' && loadingOverlay;
-  const serverBodyPayload = data.body_markings_payload || null;
-  syncServerBodyPayload({
+  const serverSpeciesPayload = data.species_payload || null;
+  syncServerSpeciesPayload({
     resolvedActiveTab,
-    serverBodyPayload,
-    bodyMarkingsDirty,
-    bodyPayload,
-    bodyPayloadSignature,
-    setBodyPayloadSignature,
-    setBodyPayload,
-    setBodySavedState,
-    setBodyMarkingsState,
-    setBodyMarkingsOrder,
-    setBodyMarkingsSelected,
-    setBodyMarkingsDirty,
+    serverSpeciesPayload,
+    speciesSavedSelection,
+    speciesSavedIconBaseSelection,
+    speciesDirty,
+    speciesPayload,
+    setSpeciesPayload,
+    setSpeciesSelection,
+    setSpeciesSavedSelection,
+    setSpeciesIconBaseSelection,
+    setSpeciesSavedIconBaseSelection,
+    setSpeciesDirty,
+    speciesLoadInProgress,
+    setSpeciesLoadInProgress,
+    speciesReloadPending,
+    setSpeciesReloadPending,
   });
   handlePreviewRefreshTokenUpdate({
     serverPreviewRefreshToken,
@@ -2599,20 +3579,23 @@ export const CustomMarkingDesigner = (_props, context) => {
     setBasicReloadPending,
     act,
   });
-  const basicPayloadReady =
-    !!basicPayloadSnapshot && !basicPayloadSnapshot.preview_only;
-  const bodyTabLoading = resolvedActiveTab === 'body' && !bodyPayloadSnapshot;
-  const basicTabLoading = resolvedActiveTab === 'basic' && !basicPayloadReady;
-  const tabSwitchBusyState =
-    tabSwitchBusy ||
-    pendingSave ||
-    pendingClose ||
-    bodyPendingSave ||
-    bodyPendingClose ||
-    basicPendingSave ||
-    basicPendingClose;
-  const tabsLocked =
-    tabSwitchBusyState || customTabLoading || bodyTabLoading || basicTabLoading;
+  const { shouldShowLoadingOverlay, tabSwitchBusyState, tabsLocked } =
+    resolveDesignerLoadingState({
+      resolvedActiveTab,
+      loadingOverlay,
+      pendingSave,
+      pendingClose,
+      bodyPayloadSnapshot,
+      basicPayloadSnapshot,
+      speciesPayload,
+      tabSwitchBusy,
+      bodyPendingSave,
+      bodyPendingClose,
+      basicPendingSave,
+      basicPendingClose,
+      speciesPendingSave,
+      speciesPendingClose,
+    });
 
   const canvasBackgroundId = resolvedCanvasBackground?.id || 'default';
   const directionTitle = `Direction: ${resolveDirectionLabel(
@@ -2640,6 +3623,8 @@ export const CustomMarkingDesigner = (_props, context) => {
     canvasBackgroundOptions,
     resolvedCanvasBackground,
     cycleCanvasBackground,
+    showEquipment,
+    onToggleEquipment: () => setShowEquipment(!showEquipment),
     showJobGear,
     onToggleJobGear: () => setShowJobGear(!showJobGear),
     showLoadoutGear,
@@ -2691,6 +3676,15 @@ export const CustomMarkingDesigner = (_props, context) => {
     return !!dirtyFlag;
   };
 
+  const detectSpeciesUnsaved = () => {
+    const sharedState = selectBackend(context.store.getState()).shared || {};
+    const dirtyFlag =
+      typeof sharedState.speciesDirty === 'boolean'
+        ? (sharedState.speciesDirty as boolean)
+        : speciesDirty;
+    return !!dirtyFlag;
+  };
+
   const resolveBodyReloadPending = () => {
     const sharedState = selectBackend(context.store.getState()).shared || {};
     const pendingValue = sharedState[`bodyMarkingsReloadPending-${stateToken}`];
@@ -2708,6 +3702,20 @@ export const CustomMarkingDesigner = (_props, context) => {
       return pendingValue;
     }
     return basicReloadPending;
+  };
+
+  const resolveSpeciesReloadPending = () => {
+    const sharedState = selectBackend(context.store.getState()).shared || {};
+    const pendingValue = sharedState[`speciesReloadPending-${stateToken}`];
+    if (typeof pendingValue === 'boolean') {
+      return pendingValue;
+    }
+    return speciesReloadPending;
+  };
+
+  const hasSharedStateKey = (key: string) => {
+    const sharedState = selectBackend(context.store.getState()).shared || {};
+    return Object.prototype.hasOwnProperty.call(sharedState, key);
   };
 
   const resolveLatestBodyPayload = () => {
@@ -2728,12 +3736,94 @@ export const CustomMarkingDesigner = (_props, context) => {
     return payload !== undefined ? payload : basicPayload;
   };
 
+  const requestBodyPayload = (
+    extra: Record<string, unknown> = {},
+    retainKnown = true
+  ) =>
+    act(
+      'load_body_markings',
+      buildBodyMarkingsLoadParams(
+        resolveLatestBodyPayload(),
+        resolveLatestBasicPayload(),
+        extra,
+        retainKnown
+      )
+    );
+
+  const requestBasicPayload = (
+    extra: Record<string, unknown> = {},
+    retainKnown = true
+  ) =>
+    act(
+      'load_basic_appearance',
+      buildBasicAppearanceLoadParams(
+        resolveLatestBasicPayload(),
+        resolveLatestBodyPayload(),
+        extra,
+        retainKnown
+      )
+    );
+
+  const resolveLatestSpeciesPayload = () => {
+    const sharedState = selectBackend(context.store.getState()).shared || {};
+    const payload = sharedState.speciesPayload as
+      | SpeciesPayload
+      | null
+      | undefined;
+    return payload !== undefined ? payload : speciesPayload;
+  };
+
+  const resolveBodyPayloadForSwitch = () => {
+    const latestBodyPayload = resolveLatestBodyPayload();
+    const latestReloadPending = resolveBodyReloadPending();
+    const dataBodyPayload = data.body_markings_payload || null;
+    const sharedBodyPayloadCleared =
+      hasSharedStateKey('bodyPayload') && latestBodyPayload === null;
+    const resolvedBodyPayload = sharedBodyPayloadCleared
+      ? null
+      : (latestBodyPayload ?? dataBodyPayload ?? null);
+    return {
+      latestBodyPayload,
+      latestReloadPending,
+      dataBodyPayload,
+      resolvedBodyPayload,
+      sharedBodyPayloadCleared,
+    };
+  };
+
+  const resolveBasicPayloadForSwitch = () => {
+    const latestBasicPayload = resolveLatestBasicPayload();
+    const latestReloadPending = resolveBasicReloadPending();
+    const dataBasicPayload = data.basic_appearance_payload || null;
+    const dataBasicUsable =
+      !!dataBasicPayload && !dataBasicPayload.preview_only;
+    const sharedBasicPayloadCleared =
+      hasSharedStateKey('basicPayload') && latestBasicPayload === null;
+    const resolvedBasicPayload = sharedBasicPayloadCleared
+      ? null
+      : latestBasicPayload && !latestBasicPayload.preview_only
+        ? latestBasicPayload
+        : dataBasicUsable
+          ? dataBasicPayload
+          : null;
+    return {
+      latestBasicPayload,
+      latestReloadPending,
+      dataBasicPayload,
+      dataBasicUsable,
+      resolvedBasicPayload,
+      sharedBasicPayloadCleared,
+    };
+  };
+
   const resolveUnsavedForTab = (tab: DesignerTabId) =>
     tab === 'custom'
       ? detectCustomUnsaved()
       : tab === 'body'
         ? detectBodyUnsaved()
-        : detectBasicUnsaved();
+        : tab === 'basic'
+          ? detectBasicUnsaved()
+          : detectSpeciesUnsaved();
 
   const clearCustomChanges = () => {
     clearAllLocalDrafts();
@@ -2862,6 +3952,10 @@ export const CustomMarkingDesigner = (_props, context) => {
         digitigrade: latestState.digitigrade ? 1 : 0,
         body_color: latestState.body_color,
         eye_color: latestState.eye_color,
+        blood_type: latestState.blood_type,
+        blood_reagent: latestState.blood_reagent,
+        blood_color: latestState.blood_color,
+        needs_glasses: latestState.needs_glasses ? 1 : 0,
         hair_style: latestState.hair_style,
         hair_color: latestState.hair_color,
         hair_gradient_style: latestState.hair_gradient_style,
@@ -2876,11 +3970,21 @@ export const CustomMarkingDesigner = (_props, context) => {
         tail_colors: latestState.tail_colors,
         wing_style: latestState.wing_style,
         wing_colors: latestState.wing_colors,
+        ...buildProstheticSaveParams(
+          latestState,
+          basicPayload?.prosthetic_context
+        ),
         close: false,
       });
+      const committedState: BasicAppearanceState = {
+        ...latestState,
+        limbs: cloneLimbOverrideState(latestState.limbs),
+        limb_operations: [],
+        organ_operations: [],
+      };
       setBasicAppearanceDirty(false);
-      setBasicSavedState(latestState);
-      setBasicAppearanceState(latestState);
+      setBasicSavedState(committedState);
+      setBasicAppearanceState(committedState);
       return true;
     } catch (error) {
       return false;
@@ -2899,9 +4003,130 @@ export const CustomMarkingDesigner = (_props, context) => {
       horn_colors: [...(fallbackSaved.horn_colors || [])],
       tail_colors: [...(fallbackSaved.tail_colors || [])],
       wing_colors: [...(fallbackSaved.wing_colors || [])],
+      limbs: cloneLimbOverrideState(fallbackSaved.limbs),
+      limb_operations: [],
+      organ_operations: [],
     };
     setBasicAppearanceState(next);
     setBasicAppearanceDirty(false);
+  };
+
+  const resolveLatestSpeciesSelection = () => {
+    const sharedState = selectBackend(context.store.getState()).shared || {};
+    const selection = sharedState.speciesSelection as string | null | undefined;
+    return selection !== undefined ? selection : speciesSelection;
+  };
+
+  const resolveLatestSpeciesIconBaseSelection = () => {
+    const sharedState = selectBackend(context.store.getState()).shared || {};
+    const selection = sharedState.speciesIconBaseSelection as
+      | string
+      | null
+      | undefined;
+    return selection !== undefined ? selection : speciesIconBaseSelection;
+  };
+
+  const isPayloadSpeciesStale = (
+    payload?: { species_id?: string | null; custom_base?: string | null } | null
+  ) => {
+    const currentSpecies =
+      resolveLatestSpeciesSelection() ||
+      speciesSavedSelection ||
+      speciesPayload?.selected_species ||
+      data.species_payload?.selected_species ||
+      null;
+    const currentIconBase =
+      resolveLatestSpeciesIconBaseSelection() ||
+      speciesSavedIconBaseSelection ||
+      speciesPayload?.preview_icon_base ||
+      speciesPayload?.selected_icon_base ||
+      data.species_payload?.preview_icon_base ||
+      data.species_payload?.selected_icon_base ||
+      null;
+    return (
+      !!payload &&
+      ((!!currentSpecies && payload.species_id !== currentSpecies) ||
+        (!!currentIconBase && payload.custom_base !== currentIconBase))
+    );
+  };
+
+  const saveSpeciesChanges = async (): Promise<boolean> => {
+    const wasDirty = detectSpeciesUnsaved();
+    if (!wasDirty) {
+      return true;
+    }
+    const latestSelection = resolveLatestSpeciesSelection();
+    if (!latestSelection) {
+      return false;
+    }
+    const latestIconBase = resolveLatestSpeciesIconBaseSelection();
+    const previousSelection = speciesSavedSelection;
+    const previousIconBase = speciesSavedIconBaseSelection;
+    setSpeciesPendingSave(true);
+    setSpeciesPendingClose(false);
+    try {
+      await act('save_species', {
+        species: latestSelection,
+        icon_base: latestIconBase,
+        close: false,
+        ...buildSpeciesSaveCacheParams(
+          resolveLatestBodyPayload(),
+          resolveLatestBasicPayload()
+        ),
+      });
+      setSpeciesDirty(false);
+      setSpeciesSelection(latestSelection);
+      setSpeciesSavedSelection(latestSelection);
+      setSpeciesIconBaseSelection(latestIconBase);
+      setSpeciesSavedIconBaseSelection(latestIconBase);
+      if (speciesPayload) {
+        setSpeciesPayload({
+          ...speciesPayload,
+          selected_species: latestSelection,
+          selected_icon_base: latestIconBase,
+          preview_icon_base: latestIconBase,
+        });
+      }
+      if (
+        previousSelection !== latestSelection ||
+        previousIconBase !== latestIconBase
+      ) {
+        setBodyReloadPending(true);
+        setBasicReloadPending(true);
+        setBodyMarkingsDirty(false);
+        setBasicAppearanceDirty(false);
+        setReloadTargetRevision(0);
+        setReloadPending(true);
+      }
+      return true;
+    } catch (error) {
+      return false;
+    } finally {
+      setSpeciesPendingSave(false);
+      setSpeciesPendingClose(false);
+    }
+  };
+
+  const discardSpeciesChanges = () => {
+    const fallbackSelection =
+      speciesSavedSelection || speciesPayload?.selected_species || null;
+    const fallbackIconBase =
+      speciesSavedIconBaseSelection ||
+      speciesPayload?.selected_icon_base ||
+      speciesPayload?.preview_icon_base ||
+      null;
+    setSpeciesSelection(fallbackSelection);
+    setSpeciesIconBaseSelection(fallbackIconBase);
+    setSpeciesDirty(false);
+    if (speciesPayload && fallbackSelection) {
+      setSpeciesPayload({
+        ...speciesPayload,
+        selected_species: fallbackSelection,
+        preview_species: fallbackSelection,
+        selected_icon_base: fallbackIconBase,
+        preview_icon_base: fallbackIconBase,
+      });
+    }
   };
 
   const handleTabChange = (nextTab: DesignerTabId) => {
@@ -2928,22 +4153,38 @@ export const CustomMarkingDesigner = (_props, context) => {
     }
     if (nextTab === 'body') {
       setBodyColorTarget({ type: 'galleryPreview' });
-      const latestBodyPayload = resolveLatestBodyPayload();
-      const latestReloadPending = resolveBodyReloadPending();
-      const dataBodyPayload = data.body_markings_payload || null;
-      const resolvedBodyPayload = latestBodyPayload ?? dataBodyPayload ?? null;
-      if (!latestBodyPayload && dataBodyPayload && !latestReloadPending) {
-        setBodyPayload(dataBodyPayload);
+      const {
+        latestBodyPayload,
+        latestReloadPending,
+        dataBodyPayload,
+        resolvedBodyPayload,
+        sharedBodyPayloadCleared,
+      } = resolveBodyPayloadForSwitch();
+      if (
+        !sharedBodyPayloadCleared &&
+        !latestBodyPayload &&
+        dataBodyPayload &&
+        !latestReloadPending &&
+        !isPayloadSpeciesStale(dataBodyPayload)
+      ) {
+        setBodyPayload(
+          mergeBodyMarkingsPayload(
+            null,
+            dataBodyPayload,
+            resolveLatestBasicPayload()
+          )
+        );
       }
-      if (!resolvedBodyPayload || latestReloadPending) {
-        if (!resolvedBodyPayload) {
+      const speciesStale = isPayloadSpeciesStale(resolvedBodyPayload);
+      if (!resolvedBodyPayload || latestReloadPending || speciesStale) {
+        if (!resolvedBodyPayload || speciesStale) {
           setBodyPayload(null);
         }
         setBodyMarkingsLoadInProgress(true);
-        if (resolvedBodyPayload && latestReloadPending) {
-          act('load_body_markings', { preview_only: 1 });
+        if (resolvedBodyPayload && latestReloadPending && !speciesStale) {
+          requestBodyPayload({ preview_only: 1 });
         } else {
-          act('load_body_markings');
+          requestBodyPayload();
         }
         if (latestReloadPending) {
           setBodyReloadPending(false);
@@ -2951,40 +4192,65 @@ export const CustomMarkingDesigner = (_props, context) => {
       }
     }
     if (nextTab === 'basic') {
-      const latestBasicPayload = resolveLatestBasicPayload();
-      const latestReloadPending = resolveBasicReloadPending();
-      const dataBasicPayload = data.basic_appearance_payload || null;
-      const dataBasicUsable =
-        !!dataBasicPayload && !dataBasicPayload.preview_only;
-      const resolvedBasicPayload =
-        latestBasicPayload && !latestBasicPayload.preview_only
-          ? latestBasicPayload
-          : dataBasicUsable
-            ? dataBasicPayload
-            : null;
+      const {
+        latestBasicPayload,
+        latestReloadPending,
+        dataBasicPayload,
+        dataBasicUsable,
+        resolvedBasicPayload,
+        sharedBasicPayloadCleared,
+      } = resolveBasicPayloadForSwitch();
       if (
+        !sharedBasicPayloadCleared &&
         (!latestBasicPayload || latestBasicPayload.preview_only) &&
         dataBasicUsable &&
-        !latestReloadPending
+        !latestReloadPending &&
+        !isPayloadSpeciesStale(dataBasicPayload)
       ) {
-        setBasicPayload(dataBasicPayload);
+        setBasicPayload(
+          mergeBasicAppearancePayload(
+            null,
+            dataBasicPayload!,
+            resolveLatestBodyPayload()
+          )
+        );
       }
-      if (!resolvedBasicPayload || latestReloadPending) {
-        if (!resolvedBasicPayload) {
+      const speciesStale = isPayloadSpeciesStale(resolvedBasicPayload);
+      if (!resolvedBasicPayload || latestReloadPending || speciesStale) {
+        if (!resolvedBasicPayload || speciesStale) {
           setBasicPayload(null);
         }
         setBasicAppearanceLoadInProgress(true);
-        if (resolvedBasicPayload && latestReloadPending) {
-          act('load_basic_appearance', { preview_only: 1 });
+        if (resolvedBasicPayload && latestReloadPending && !speciesStale) {
+          requestBasicPayload({ preview_only: 1 });
         } else {
-          act('load_basic_appearance');
+          requestBasicPayload();
         }
         if (latestReloadPending) {
           setBasicReloadPending(false);
         }
       }
     }
-    act('set_active_tab', { tab: nextTab });
+    if (nextTab === 'species') {
+      const latestSpeciesPayload = resolveLatestSpeciesPayload();
+      const latestReloadPending = resolveSpeciesReloadPending();
+      const dataSpeciesPayload = data.species_payload || null;
+      const resolvedSpeciesPayload =
+        latestSpeciesPayload ?? dataSpeciesPayload ?? null;
+      if (!latestSpeciesPayload && dataSpeciesPayload && !latestReloadPending) {
+        setSpeciesPayload(dataSpeciesPayload);
+      }
+      if (!resolvedSpeciesPayload || latestReloadPending) {
+        if (!resolvedSpeciesPayload) {
+          setSpeciesPayload(null);
+        }
+        setSpeciesLoadInProgress(true);
+        act('load_species');
+        if (latestReloadPending) {
+          setSpeciesReloadPending(false);
+        }
+      }
+    }
     setActiveTab(nextTab);
   };
 
@@ -3009,65 +4275,173 @@ export const CustomMarkingDesigner = (_props, context) => {
 
   const ensureBodyPayloadForSwitch = async (forceReload: boolean) => {
     setBodyColorTarget({ type: 'galleryPreview' });
-    const dataBodyPayload = data.body_markings_payload || null;
-    const resolvedBodyPayload = bodyPayload ?? dataBodyPayload ?? null;
-    if (!bodyPayload && dataBodyPayload && !bodyReloadPending) {
-      setBodyPayload(dataBodyPayload);
+    const {
+      latestBodyPayload,
+      latestReloadPending,
+      dataBodyPayload,
+      resolvedBodyPayload,
+      sharedBodyPayloadCleared,
+    } = resolveBodyPayloadForSwitch();
+    if (
+      !forceReload &&
+      !sharedBodyPayloadCleared &&
+      !latestBodyPayload &&
+      dataBodyPayload &&
+      !latestReloadPending &&
+      !isPayloadSpeciesStale(dataBodyPayload)
+    ) {
+      setBodyPayload(
+        mergeBodyMarkingsPayload(
+          null,
+          dataBodyPayload,
+          resolveLatestBasicPayload()
+        )
+      );
     }
+    const speciesStale = isPayloadSpeciesStale(resolvedBodyPayload);
     const shouldReload =
-      !resolvedBodyPayload || bodyReloadPending || forceReload;
+      !resolvedBodyPayload ||
+      latestReloadPending ||
+      forceReload ||
+      speciesStale;
     if (!shouldReload) {
       return;
     }
-    if (!resolvedBodyPayload) {
+    if (forceReload || speciesStale || !resolvedBodyPayload) {
       setBodyPayload(null);
     }
     setBodyMarkingsLoadInProgress(true);
-    if (resolvedBodyPayload && (bodyReloadPending || forceReload)) {
-      await act('load_body_markings', { preview_only: 1 });
+    if (
+      resolvedBodyPayload &&
+      latestReloadPending &&
+      !forceReload &&
+      !speciesStale
+    ) {
+      await requestBodyPayload({ preview_only: 1 });
     } else {
-      await act('load_body_markings');
+      await requestBodyPayload({}, !forceReload && !speciesStale);
     }
-    if (bodyReloadPending || forceReload) {
+    if (latestReloadPending || forceReload) {
       setBodyReloadPending(false);
     }
   };
 
   const ensureBasicPayloadForSwitch = async (forceReload: boolean) => {
-    const latestBasicPayload = resolveLatestBasicPayload();
-    const latestReloadPending = resolveBasicReloadPending();
-    const dataBasicPayload = data.basic_appearance_payload || null;
-    const dataBasicUsable =
-      !!dataBasicPayload && !dataBasicPayload.preview_only;
-    const resolvedBasicPayload =
-      latestBasicPayload && !latestBasicPayload.preview_only
-        ? latestBasicPayload
-        : dataBasicUsable
-          ? dataBasicPayload
-          : null;
+    const {
+      latestBasicPayload,
+      latestReloadPending,
+      dataBasicPayload,
+      dataBasicUsable,
+      resolvedBasicPayload,
+      sharedBasicPayloadCleared,
+    } = resolveBasicPayloadForSwitch();
     if (
+      !forceReload &&
+      !sharedBasicPayloadCleared &&
       (!latestBasicPayload || latestBasicPayload.preview_only) &&
       dataBasicUsable &&
-      !latestReloadPending
+      !latestReloadPending &&
+      !isPayloadSpeciesStale(dataBasicPayload)
     ) {
-      setBasicPayload(dataBasicPayload);
+      setBasicPayload(
+        mergeBasicAppearancePayload(
+          null,
+          dataBasicPayload!,
+          resolveLatestBodyPayload()
+        )
+      );
     }
+    const speciesStale = isPayloadSpeciesStale(resolvedBasicPayload);
     const shouldReload =
-      !resolvedBasicPayload || latestReloadPending || forceReload;
+      !resolvedBasicPayload ||
+      latestReloadPending ||
+      forceReload ||
+      speciesStale;
     if (!shouldReload) {
       return;
     }
-    if (!resolvedBasicPayload) {
+    if (forceReload || speciesStale || !resolvedBasicPayload) {
       setBasicPayload(null);
     }
     setBasicAppearanceLoadInProgress(true);
-    if (resolvedBasicPayload && (latestReloadPending || forceReload)) {
-      await act('load_basic_appearance', { preview_only: 1 });
+    if (
+      resolvedBasicPayload &&
+      latestReloadPending &&
+      !forceReload &&
+      !speciesStale
+    ) {
+      await requestBasicPayload({ preview_only: 1 });
     } else {
-      await act('load_basic_appearance');
+      await requestBasicPayload({}, !forceReload && !speciesStale);
     }
     if (latestReloadPending || forceReload) {
       setBasicReloadPending(false);
+    }
+  };
+
+  const ensureSpeciesPayloadForSwitch = async (forceReload: boolean) => {
+    const latestSpeciesPayload = resolveLatestSpeciesPayload();
+    const latestReloadPending = resolveSpeciesReloadPending();
+    const dataSpeciesPayload = data.species_payload || null;
+    const resolvedSpeciesPayload =
+      latestSpeciesPayload ?? dataSpeciesPayload ?? null;
+    if (!latestSpeciesPayload && dataSpeciesPayload && !latestReloadPending) {
+      setSpeciesPayload(dataSpeciesPayload);
+    }
+    const shouldReload =
+      !resolvedSpeciesPayload || latestReloadPending || forceReload;
+    if (!shouldReload) {
+      return;
+    }
+    if (!resolvedSpeciesPayload) {
+      setSpeciesPayload(null);
+    }
+    setSpeciesLoadInProgress(true);
+    await act('load_species');
+    if (latestReloadPending || forceReload) {
+      setSpeciesReloadPending(false);
+    }
+  };
+
+  const completeSpeciesTabSwitch = async (result: SpeciesSaveResult) => {
+    if (!pendingSpeciesTabSwitch) {
+      return;
+    }
+    if (result.accepted === false) {
+      setPendingSpeciesTabSwitch(null);
+      setTabSwitchPrompt(null);
+      setTabSwitchBusy(false);
+      return;
+    }
+    if (
+      result.species_id !== pendingSpeciesTabSwitch.speciesId ||
+      (!!pendingSpeciesTabSwitch.iconBase &&
+        result.custom_base !== pendingSpeciesTabSwitch.iconBase)
+    ) {
+      return;
+    }
+    const { prompt } = pendingSpeciesTabSwitch;
+    setPendingSpeciesTabSwitch(null);
+    try {
+      if (prompt.targetTab === 'custom') {
+        setReloadTargetRevision(0);
+        setLoadingOverlay(true);
+        setReloadOverlayMinUntil(Date.now() + 400);
+        setReloadPending(false);
+      }
+      if (prompt.targetTab === 'body') {
+        await ensureBodyPayloadForSwitch(false);
+      }
+      if (prompt.targetTab === 'basic') {
+        await ensureBasicPayloadForSwitch(false);
+      }
+      if (prompt.targetTab === 'species') {
+        await ensureSpeciesPayloadForSwitch(false);
+      }
+      setActiveTab(prompt.targetTab);
+      setTabSwitchPrompt(null);
+    } finally {
+      setTabSwitchBusy(false);
     }
   };
 
@@ -3079,6 +4453,10 @@ export const CustomMarkingDesigner = (_props, context) => {
     if (sourceTab === 'body') {
       const saved = await saveBodyChanges();
       return !!saved && !detectBodyUnsaved();
+    }
+    if (sourceTab === 'species') {
+      const saved = await saveSpeciesChanges();
+      return !!saved && !detectSpeciesUnsaved();
     }
     const saved = await saveBasicChanges();
     return !!saved && !detectBasicUnsaved();
@@ -3093,7 +4471,27 @@ export const CustomMarkingDesigner = (_props, context) => {
     const wasCustomDirty =
       prompt.sourceTab === 'custom' && detectCustomUnsaved();
     const wasBasicDirty = prompt.sourceTab === 'basic' && detectBasicUnsaved();
+    const wasSpeciesDirty =
+      prompt.sourceTab === 'species' && detectSpeciesUnsaved();
     setTabSwitchBusy(true);
+    if (wasSpeciesDirty) {
+      const pendingSpecies = resolveLatestSpeciesSelection();
+      if (!pendingSpecies) {
+        setTabSwitchBusy(false);
+        return;
+      }
+      setPendingSpeciesTabSwitch({
+        prompt,
+        speciesId: pendingSpecies,
+        iconBase: resolveLatestSpeciesIconBaseSelection(),
+      });
+      const saved = await saveSpeciesChanges();
+      if (!saved) {
+        setPendingSpeciesTabSwitch(null);
+        setTabSwitchBusy(false);
+      }
+      return;
+    }
     setTabSwitchPrompt(null);
     try {
       const saved = await saveTabBeforeSwitch(prompt.sourceTab);
@@ -3103,7 +4501,7 @@ export const CustomMarkingDesigner = (_props, context) => {
       }
       if (
         prompt.targetTab === 'custom' &&
-        (reloadPending || wasBodyDirty || wasBasicDirty)
+        (reloadPending || wasBodyDirty || wasBasicDirty || wasSpeciesDirty)
       ) {
         if (!reloadPending) {
           setReloadTargetRevision(0);
@@ -3113,12 +4511,14 @@ export const CustomMarkingDesigner = (_props, context) => {
         setReloadPending(false);
       }
       if (prompt.targetTab === 'body') {
-        await ensureBodyPayloadForSwitch(wasCustomDirty);
+        await ensureBodyPayloadForSwitch(wasCustomDirty || wasSpeciesDirty);
       }
       if (prompt.targetTab === 'basic') {
-        await ensureBasicPayloadForSwitch(wasCustomDirty);
+        await ensureBasicPayloadForSwitch(wasCustomDirty || wasSpeciesDirty);
       }
-      act('set_active_tab', { tab: prompt.targetTab });
+      if (prompt.targetTab === 'species') {
+        await ensureSpeciesPayloadForSwitch(wasCustomDirty);
+      }
       setActiveTab(prompt.targetTab);
     } finally {
       setTabSwitchBusy(false);
@@ -3136,6 +4536,8 @@ export const CustomMarkingDesigner = (_props, context) => {
         clearCustomChanges();
       } else if (tabSwitchPrompt.sourceTab === 'body') {
         discardBodyChanges();
+      } else if (tabSwitchPrompt.sourceTab === 'species') {
+        discardSpeciesChanges();
       } else {
         discardBasicChanges();
       }
@@ -3154,7 +4556,9 @@ export const CustomMarkingDesigner = (_props, context) => {
       if (tabSwitchPrompt.targetTab === 'basic') {
         await ensureBasicPayloadForSwitch(false);
       }
-      act('set_active_tab', { tab: tabSwitchPrompt.targetTab });
+      if (tabSwitchPrompt.targetTab === 'species') {
+        await ensureSpeciesPayloadForSwitch(false);
+      }
       setActiveTab(tabSwitchPrompt.targetTab);
     } finally {
       setTabSwitchBusy(false);
@@ -3162,62 +4566,15 @@ export const CustomMarkingDesigner = (_props, context) => {
   };
 
   const titleTabs = (
-    <>
-      <Tabs className="RogueStar__titleTabs">
-        <Tabs.Tab
-          selected={resolvedActiveTab === 'basic'}
-          icon="user"
-          className={tabsLocked ? 'Tab--disabled' : undefined}
-          aria-disabled={tabsLocked}
-          onClick={() => {
-            if (!tabsLocked) {
-              handleTabChange('basic');
-            }
-          }}>
-          Basic Appearance
-        </Tabs.Tab>
-        <Tabs.Tab
-          selected={resolvedActiveTab === 'body'}
-          icon="list"
-          className={tabsLocked ? 'Tab--disabled' : undefined}
-          aria-disabled={tabsLocked}
-          onClick={() => {
-            if (!tabsLocked) {
-              handleTabChange('body');
-            }
-          }}>
-          Body Markings
-        </Tabs.Tab>
-        <Tabs.Tab
-          selected={resolvedActiveTab === 'custom'}
-          icon={resolveCustomDesignerTabIcon(allowCustomTab)}
-          className={tabsLocked ? 'Tab--disabled' : undefined}
-          aria-disabled={tabsLocked}
-          tooltip={resolveCustomDesignerTabTooltip(allowCustomTab)}
-          onClick={() => {
-            if (tabsLocked) {
-              return;
-            }
-            if (!allowCustomTab) {
-              setEnableCustomPromptOpen(true);
-              return;
-            }
-            handleTabChange('custom');
-          }}>
-          Custom Marking Designer
-        </Tabs.Tab>
-      </Tabs>
-      <Button
-        className={CHIP_BUTTON_CLASS}
-        icon={compactMode ? 'search-plus' : 'search-minus'}
-        content={compactMode ? '50%' : '100%'}
-        tooltip={
-          compactMode ? 'Return to normal size.' : 'Toggle compact mode (50%).'
-        }
-        ml="auto"
-        onClick={() => setCompactMode(!compactMode)}
-      />
-    </>
+    <DesignerTitleTabs
+      resolvedActiveTab={resolvedActiveTab}
+      tabsLocked={tabsLocked}
+      allowCustomTab={allowCustomTab}
+      zoomPercent={zoomPercent}
+      setZoomPercent={setZoomPercent}
+      setEnableCustomPromptOpen={setEnableCustomPromptOpen}
+      onTabChange={handleTabChange}
+    />
   );
 
   return (
@@ -3225,7 +4582,7 @@ export const CustomMarkingDesigner = (_props, context) => {
       theme="nanotrasen rogue-star-window"
       width={1720}
       height={950}
-      scale={compactMode ? 0.5 : 1}
+      scale={zoomPercent / 100}
       resizable
       canClose={false}
       statusIcon={customStatusIcon}
@@ -3248,7 +4605,51 @@ export const CustomMarkingDesigner = (_props, context) => {
         setPhantomClickScheduled={setPhantomClickScheduled}
         setTool={setPrimaryTool}
       />
+      <ServerPayloadSyncScheduler
+        resolvedActiveTab={resolvedActiveTab}
+        serverBodyPayload={data.body_markings_payload || null}
+        serverBasicPayload={data.basic_appearance_payload || null}
+        targetSpeciesId={resolveLatestSpeciesSelection()}
+        targetIconBase={resolveLatestSpeciesIconBaseSelection()}
+        bodyPayload={bodyPayload}
+        basicPayload={basicPayload}
+        bodyMarkingsDirty={bodyMarkingsDirty}
+        basicAppearanceDirty={basicAppearanceDirty}
+        bodyReloadPending={bodyReloadPending}
+        basicReloadPending={basicReloadPending}
+        bodyLoadInProgress={bodyMarkingsLoadInProgress}
+        basicLoadInProgress={basicAppearanceLoadInProgress}
+        setBodyPayload={setBodyPayload}
+        setBasicPayload={setBasicPayload}
+        setBodySavedState={setBodySavedState}
+        setBodyMarkingsState={setBodyMarkingsState}
+        setBodyMarkingsOrder={setBodyMarkingsOrder}
+        setBodyMarkingsSelected={setBodyMarkingsSelected}
+        setBodyMarkingsDirty={setBodyMarkingsDirty}
+        setBasicAppearanceState={setBasicAppearanceState}
+        setBasicSavedState={setBasicSavedState}
+        setBasicAppearanceDirty={setBasicAppearanceDirty}
+        setBodyLoadInProgress={setBodyMarkingsLoadInProgress}
+        setBasicLoadInProgress={setBasicAppearanceLoadInProgress}
+        clearBodyReloadPending={() => setBodyReloadPending(false)}
+        clearBasicReloadPending={() => setBasicReloadPending(false)}
+      />
+      <SpeciesSaveResultSyncScheduler
+        speciesSaveResult={data.species_save_result || null}
+        onSaveResult={completeSpeciesTabSwitch}
+        speciesPayload={speciesPayload}
+        bodyPayload={bodyPayload}
+        basicPayload={basicPayload}
+        stateToken={stateToken}
+        writeStates={(states) =>
+          context.store.dispatch(backendSetSharedStates({ states }))
+        }
+      />
       <PayloadPrefetchScheduler
+        enabled={
+          resolvedActiveTab !== 'species' ||
+          (!bodyReloadPending && !basicReloadPending)
+        }
         bodyPayload={bodyPayloadSnapshot}
         basicPayload={basicPayloadSnapshot}
         bodyLoadInProgress={bodyMarkingsLoadInProgress}
@@ -3259,8 +4660,8 @@ export const CustomMarkingDesigner = (_props, context) => {
         setBasicLoadInProgress={setBasicAppearanceLoadInProgress}
         clearBodyReloadPending={() => setBodyReloadPending(false)}
         clearBasicReloadPending={() => setBasicReloadPending(false)}
-        requestBody={() => act('load_body_markings')}
-        requestBasic={() => act('load_basic_appearance')}
+        requestBody={() => requestBodyPayload()}
+        requestBasic={() => requestBasicPayload()}
       />
       <PreviewOverrideScheduler
         pendingOverrides={pendingPreviewOverrides}
@@ -3325,7 +4726,10 @@ export const CustomMarkingDesigner = (_props, context) => {
                 title={directionTitle}
                 canvasFrameStyle={canvasFrameStyle}
                 canvasBackgroundStyle={canvasBackgroundStyle}
-                canvasTransform={canvasTransform}
+                canvasRenderWidthPx={canvasRenderWidthPx}
+                canvasRenderHeightPx={canvasRenderHeightPx}
+                canvasOffsetX={canvasOffsetX}
+                canvasOffsetY={canvasOffsetY}
                 canvasKey={canvasKey}
                 backgroundImage={backgroundImage}
                 backgroundFallbackColor={backgroundFallbackColor}
@@ -3386,8 +4790,30 @@ export const CustomMarkingDesigner = (_props, context) => {
             backgroundFallbackColor={backgroundFallbackColor}
             cycleCanvasBackground={cycleCanvasBackground}
             canvasBackgroundScale={canvasBackgroundScale}
+            livePreview={tabLivePreview}
             resolvedPartPriorityMap={resolvedPartPriorityMap}
             resolvedPartReplacementMap={resolvedPartReplacementMap}
+            showEquipment={showEquipment}
+            onToggleEquipment={() => setShowEquipment(!showEquipment)}
+            showJobGear={showJobGear}
+            onToggleJobGear={() => setShowJobGear(!showJobGear)}
+            showLoadoutGear={showLoadoutGear}
+            onToggleLoadout={() => setShowLoadoutGear(!showLoadoutGear)}
+          />
+        ) : resolvedActiveTab === 'species' ? (
+          <SpeciesTab
+            data={data}
+            setPendingClose={setPendingClose}
+            canvasBackgroundOptions={canvasBackgroundOptions}
+            resolvedCanvasBackground={resolvedCanvasBackground}
+            backgroundFallbackColor={backgroundFallbackColor}
+            cycleCanvasBackground={cycleCanvasBackground}
+            canvasBackgroundScale={canvasBackgroundScale}
+            livePreview={tabLivePreview}
+            resolvedPartPriorityMap={resolvedPartPriorityMap}
+            resolvedPartReplacementMap={resolvedPartReplacementMap}
+            showEquipment={showEquipment}
+            onToggleEquipment={() => setShowEquipment(!showEquipment)}
             showJobGear={showJobGear}
             onToggleJobGear={() => setShowJobGear(!showJobGear)}
             showLoadoutGear={showLoadoutGear}
@@ -3403,8 +4829,11 @@ export const CustomMarkingDesigner = (_props, context) => {
             backgroundFallbackColor={backgroundFallbackColor}
             cycleCanvasBackground={cycleCanvasBackground}
             canvasBackgroundScale={canvasBackgroundScale}
+            livePreview={tabLivePreview}
             resolvedPartPriorityMap={resolvedPartPriorityMap}
             resolvedPartReplacementMap={resolvedPartReplacementMap}
+            showEquipment={showEquipment}
+            onToggleEquipment={() => setShowEquipment(!showEquipment)}
             showJobGear={showJobGear}
             onToggleJobGear={() => setShowJobGear(!showJobGear)}
             showLoadoutGear={showLoadoutGear}
@@ -3412,28 +4841,13 @@ export const CustomMarkingDesigner = (_props, context) => {
           />
         )}
       </Window.Content>
-      {tabSwitchPrompt ? (
-        <UnsavedChangesOverlay
-          title="Unsaved changes"
-          subtitle={`You have unsaved changes in the ${
-            tabSwitchPrompt.sourceTab === 'custom'
-              ? 'Custom Marking Designer'
-              : tabSwitchPrompt.sourceTab === 'body'
-                ? 'Body Markings tab'
-                : 'Basic Appearance tab'
-          }. Save them before switching?`}
-          saveLabel="Save and switch"
-          discardLabel="Discard and switch"
-          busy={tabSwitchBusyState}
-          onSave={handleTabSwitchSave}
-          onDiscard={handleTabSwitchDiscard}
-          onCancel={() => {
-            if (!tabSwitchBusyState) {
-              setTabSwitchPrompt(null);
-            }
-          }}
-        />
-      ) : null}
+      <TabSwitchOverlay
+        prompt={tabSwitchPrompt}
+        busy={tabSwitchBusyState}
+        onSave={handleTabSwitchSave}
+        onDiscard={handleTabSwitchDiscard}
+        onCancel={() => setTabSwitchPrompt(null)}
+      />
       <EnableCustomMarkingsGate
         open={enableCustomPromptOpen}
         allowCustomTab={allowCustomTab}
@@ -3448,5 +4862,136 @@ export const CustomMarkingDesigner = (_props, context) => {
         }}
       />
     </Window>
+  );
+};
+
+type StaticAssetRegistryErrorProps = {
+  readonly message: string;
+  readonly onShown: () => void;
+};
+
+type StaticAssetRegistryReadyProps = {
+  readonly asset: string;
+  readonly revision: number;
+  readonly onReady: () => void;
+};
+
+type StaticAssetFallbackReadyProps = {
+  readonly onReady: () => void;
+};
+
+class StaticAssetRegistryReady extends Component<StaticAssetRegistryReadyProps> {
+  componentDidMount() {
+    this.props.onReady();
+  }
+
+  componentDidUpdate(prevProps: StaticAssetRegistryReadyProps) {
+    if (
+      prevProps.asset !== this.props.asset ||
+      prevProps.revision !== this.props.revision
+    ) {
+      this.props.onReady();
+    }
+  }
+
+  render() {
+    return <CustomMarkingDesignerContent />;
+  }
+}
+
+class StaticAssetFallbackReady extends Component<StaticAssetFallbackReadyProps> {
+  componentDidMount() {
+    this.props.onReady();
+  }
+
+  render() {
+    return <CustomMarkingDesignerContent />;
+  }
+}
+
+class StaticAssetRegistryError extends Component<StaticAssetRegistryErrorProps> {
+  componentDidMount() {
+    this.props.onShown();
+  }
+
+  render() {
+    return (
+      <Window
+        theme="nanotrasen rogue-star-window"
+        width={1720}
+        height={950}
+        resizable>
+        <Window.Content>
+          <Box
+            position="fixed"
+            style={{
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              display: 'flex',
+              'align-items': 'center',
+              'justify-content': 'center',
+              background:
+                'linear-gradient(135deg, rgba(4, 2, 8, 0.97), rgba(18, 6, 32, 0.95))',
+              'text-align': 'center',
+            }}>
+            <Box
+              style={{
+                width: 'min(560px, 90%)',
+                padding: '2.5rem 2rem',
+                'border-radius': '20px',
+                background: 'rgba(14, 7, 26, 0.94)',
+                border: '1px solid rgba(239, 96, 96, 0.55)',
+                'box-shadow': '0 25px 70px rgba(3, 1, 10, 0.85)',
+              }}>
+              <Box fontSize={1.35} bold mb={1}>
+                Sprite atlas could not be loaded
+              </Box>
+              <Box color="label" lineHeight={1.6}>
+                {this.props.message}
+              </Box>
+              <Box color="label" lineHeight={1.6} mt={1}>
+                Close and reopen the designer to retry.
+              </Box>
+            </Box>
+          </Box>
+        </Window.Content>
+      </Window>
+    );
+  }
+}
+
+export const CustomMarkingDesigner = (_props, context) => {
+  const { act, data } = useBackend<CustomMarkingDesignerData>(context);
+  const manifest = data.static_asset_manifest;
+  if (data.static_asset_manifest_fallback) {
+    return (
+      <StaticAssetFallbackReady
+        onReady={() => act('static_asset_manifest_fallback_ready')}
+      />
+    );
+  }
+  if (
+    data.static_asset_manifest_error ||
+    !manifest ||
+    !isStaticIconAssetRegistryLoaded(manifest)
+  ) {
+    return (
+      <StaticAssetRegistryError
+        message={
+          data.static_asset_manifest_error ||
+          'The server did not provide a hydrated sprite atlas manifest.'
+        }
+        onShown={() => act('static_asset_manifest_failed', manifest || {})}
+      />
+    );
+  }
+  return (
+    <StaticAssetRegistryReady
+      asset={manifest.asset}
+      revision={manifest.revision}
+      onReady={() => act('static_asset_manifest_ready', manifest)}
+    />
   );
 };
