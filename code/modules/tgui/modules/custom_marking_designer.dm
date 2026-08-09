@@ -2543,7 +2543,10 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	var/list/underlays = entry:underlays
 	if(islist(underlays))
 		for(var/underlay in underlays)
-			if(!collect_static_gear_appearance_components(components, underlay, dir, effective_colors, effective_alpha, shift_x, shift_y))
+			if(!underlay)
+				continue
+			var/mutable_appearance/underlay_appearance = new /mutable_appearance(underlay)
+			if(!collect_static_gear_appearance_components(components, underlay_appearance, dir, effective_colors, effective_alpha, shift_x, shift_y))
 				return FALSE
 	var/icon_source = entry:icon
 	var/icon_state = entry:icon_state
@@ -2567,7 +2570,10 @@ var/global/custom_marking_static_source_digest_complete = TRUE
 	var/list/overlays = entry:overlays
 	if(islist(overlays))
 		for(var/overlay in overlays)
-			if(!collect_static_gear_appearance_components(components, overlay, dir, effective_colors, effective_alpha, shift_x, shift_y))
+			if(!overlay)
+				continue
+			var/mutable_appearance/overlay_appearance = new /mutable_appearance(overlay)
+			if(!collect_static_gear_appearance_components(components, overlay_appearance, dir, effective_colors, effective_alpha, shift_x, shift_y))
 				return FALSE
 	return TRUE
 
