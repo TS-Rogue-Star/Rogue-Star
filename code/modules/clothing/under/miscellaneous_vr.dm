@@ -293,67 +293,64 @@
 	rolled_down = 0
 
 //////////////////////TALON JUMPSUITS//////////////////////
-
-/obj/item/clothing/under/rank/talon/basic
+//RS Refactor (+ ADD) by Azzy.Dreemurr 2026
+/obj/item/clothing/under/rank/talon
 	name = "Talon jumpsuit"
 	desc = "A basic jumpsuit that bares the ITV Talon logo on the breast."
 	icon = 'icons/inventory/uniform/item_vr.dmi'
 	rolled_down_icon = 'icons/inventory/uniform/mob_vr_rolled_down.dmi'
-	icon_override = 'icons/inventory/uniform/mob_vr.dmi'
 	icon_state = "talon_basic"
 	item_state = "talon_basic"
 	rolled_sleeves = 0
 	rolled_down_icon_override = FALSE
 	rolled_sleeves_icon_override = FALSE
+	default_worn_icon = 'icons/inventory/uniform/mob_vr.dmi'
+	sprite_sheets = list(
+		SPECIES_TESHARI = 'icons/inventory/uniform/mob_teshari.dmi'
+	)
 
-/obj/item/clothing/under/rank/talon/proper
-	name = "Talon proper jumpsuit"
-	desc = "A neat and proper uniform for a proper private ship."
-	icon = 'icons/inventory/uniform/item_vr.dmi'
-	rolled_down_icon = 'icons/inventory/uniform/mob_vr_rolled_down.dmi'
-	icon_override = 'icons/inventory/uniform/mob_vr.dmi'
-	icon_state = "talon_jumpsuit"
-	item_state = "talon_jumpsuit"
-	rolled_sleeves = 0
-	rolled_down_icon_override = FALSE
-	rolled_sleeves_icon_override = FALSE
+/obj/item/clothing/under/rank/talon/medical
+	name = "Talon medical jumpsuit"
+	desc = "A neat and proper uniform for medical staff ITV Talon."
+	icon_state = "talon_medical"
+	item_state = "talon_medical"
 
 /obj/item/clothing/under/rank/talon/security
 	name = "Talon security jumpsuit"
 	desc = "A sleek, streamlined version of ITV Talon's standard jumpsuit that bares security markings."
-	icon = 'icons/inventory/uniform/item_vr.dmi'
-	rolled_down_icon = 'icons/inventory/uniform/mob_vr_rolled_down.dmi'
-	icon_override = 'icons/inventory/uniform/mob_vr.dmi'
 	icon_state = "talon_security"
 	item_state = "talon_security"
-	rolled_sleeves = 0
-	rolled_down_icon_override = FALSE
-	rolled_sleeves_icon_override = FALSE
+
+/obj/item/clothing/under/rank/talon/engineer
+	name = "Talon engineer jumpsuit"
+	desc = "A sleek, streamlined version of ITV Talon's standard jumpsuit that bares engineering markings."
+	icon_state = "talon_engineer"
+	item_state = "talon_engineer"
+
+/obj/item/clothing/under/rank/talon/atmos
+	name = "Talon Atmos Tech's jumpsuit"
+	desc = "A sleek, streamlined version of ITV Talon's standard jumpsuit that bares engineering atmos markings."
+	icon_state = "talon_atmos"
+	item_state = "talon_atmos"
+
+/obj/item/clothing/under/rank/talon/miner
+	name = "Talon miner jumpsuit"
+	desc = "A sleek, streamlined version of ITV Talon's standard jumpsuit that bares security markings."
+	icon_state = "talon_miner"
+	item_state = "talon_miner"
 
 /obj/item/clothing/under/rank/talon/pilot
 	name = "Talon pilot jumpsuit"
 	desc = "A sleek, streamlined version of ITV Talon's standard jumpsuit. Made from cushioned fabric to handle intense flight."
-	icon = 'icons/inventory/uniform/item_vr.dmi'
-	rolled_down_icon = 'icons/inventory/uniform/mob_vr_rolled_down.dmi'
-	icon_override = 'icons/inventory/uniform/mob_vr.dmi'
 	icon_state = "talon_pilot"
 	item_state = "talon_pilot"
-	rolled_sleeves = 0
-	rolled_down_icon_override = FALSE
-	rolled_sleeves_icon_override = FALSE
 
 /obj/item/clothing/under/rank/talon/command
 	name = "Talon command jumpsuit"
 	desc = "A commanding jumpsuit fit for a commanding officer."
-	icon = 'icons/inventory/uniform/item_vr.dmi'
-	rolled_down_icon = 'icons/inventory/uniform/mob_vr_rolled_down.dmi'
-	icon_override = 'icons/inventory/uniform/mob_vr.dmi'
 	icon_state = "talon_captain"
 	item_state = "talon_captain"
-	rolled_sleeves = 0
-	rolled_down_icon_override = FALSE
-	rolled_sleeves_icon_override = FALSE
-
+//RS Refactor (+ ADD) End
 // Excelsior uniforms
 /obj/item/clothing/under/excelsior
 	name = "\improper Excelsior uniform"

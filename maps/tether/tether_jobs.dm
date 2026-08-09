@@ -92,6 +92,9 @@
 /datum/alt_title/talon_tech
 	title = "Talon Technician"
 
+/datum/alt_title/talon_atmos
+	title = "Talon Atmospheric Technician"
+
 
 /datum/job/talon_pilot
 	title = "Talon Pilot"
@@ -222,7 +225,7 @@
 	backpack = /obj/item/weapon/storage/backpack/medic
 	satchel_one = /obj/item/weapon/storage/backpack/satchel/med
 	messenger_bag = /obj/item/weapon/storage/backpack/messenger/med
-	uniform = /obj/item/clothing/under/rank/talon/proper
+	uniform = /obj/item/clothing/under/rank/talon/medical //RS Edit
 	suit = /obj/item/clothing/suit/storage/toggle/labcoat
 	l_hand = /obj/item/weapon/storage/firstaid/regular
 	r_pocket = /obj/item/device/flashlight/pen
@@ -267,7 +270,7 @@
 	backpack = /obj/item/weapon/storage/backpack/industrial
 	satchel_one = /obj/item/weapon/storage/backpack/satchel/eng
 	messenger_bag = /obj/item/weapon/storage/backpack/messenger/engi
-	uniform = /obj/item/clothing/under/rank/talon/basic
+	uniform = /obj/item/clothing/under/rank/talon
 	belt = /obj/item/weapon/storage/belt/utility/atmostech
 	backpack = /obj/item/weapon/storage/backpack/talon
 	satchel_one = /obj/item/weapon/storage/backpack/satchel/talon
@@ -286,7 +289,7 @@
 	shoes = /obj/item/clothing/shoes/boots/workboots
 	r_pocket = /obj/item/weapon/storage/bag/ore
 	l_pocket = /obj/item/weapon/tool/crowbar
-	uniform = /obj/item/clothing/under/rank/talon/basic
+	uniform = /obj/item/clothing/under/rank/talon
 	backpack = /obj/item/weapon/storage/backpack/talon
 	satchel_one = /obj/item/weapon/storage/backpack/satchel/talon
 	messenger_bag = /obj/item/weapon/storage/backpack/messenger/talon
