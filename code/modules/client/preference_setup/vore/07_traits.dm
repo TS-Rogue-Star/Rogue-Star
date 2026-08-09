@@ -379,13 +379,7 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 		. += "<li>- <a href='?src=\ref[src];clicked_neg_trait=[T]'>[trait.name] </a> [get_html_for_trait(trait, pref.neg_traits[T])]</li>"	//RS REMOVAL
 	. += "</ul>"
 
-	. += "<b>Blood Color: </b>" //People that want to use a certain species to have that species traits (xenochimera/promethean/spider) should be able to set their own blood color.
-	. += "<a href='?src=\ref[src];blood_color=1'>Set Color</a>"
-	. += "<a href='?src=\ref[src];blood_reset=1'>R</a><br>"
-	. += "<b>Blood Reagent: </b>"	//Wanna be copper-based? Go ahead.
-	. += "<a href='?src=\ref[src];blood_reagents=1'>[pref.blood_reagents]</a><br>"
 	. += "<br>"
-
 	. += "<b>Custom Say: </b>"
 	. += "<a href='?src=\ref[src];custom_say=1'>Set Say Verb</a>"
 	. += "(<a href='?src=\ref[src];reset_say=1'>Reset</A>)"
@@ -428,24 +422,6 @@ var/global/list/valid_bloodreagents = list("iron","copper","phoron","silver","go
 		if(text_choice in choices)
 			pref.custom_base = text_choice
 		return TOPIC_REFRESH_UPDATE_PREVIEW
-
-	else if(href_list["blood_color"])
-		var/color_choice = input(usr, "Pick a blood color (does not apply to synths)","Blood Color",pref.blood_color) as color
-		if(color_choice)
-			pref.blood_color = sanitize_hexcolor(color_choice, default="#A10808")
-		return TOPIC_REFRESH
-
-	else if(href_list["blood_reset"])
-		var/choice = tgui_alert(usr, "Reset blood color to human default (#A10808)?","Reset Blood Color",list("Reset","Cancel"))
-		if(choice == "Reset")
-			pref.blood_color = "#A10808"
-		return TOPIC_REFRESH
-
-	else if(href_list["blood_reagents"])
-		var/new_blood_reagents = tgui_input_list(user, "Choose your character's blood restoration reagent:", "Character Preference", valid_bloodreagents)
-		if(new_blood_reagents && CanUseTopic(user))
-			pref.blood_reagents = new_blood_reagents
-			return TOPIC_REFRESH
 
 	else if(href_list["clicked_pos_trait"])
 		var/datum/trait/trait = text2path(href_list["clicked_pos_trait"])

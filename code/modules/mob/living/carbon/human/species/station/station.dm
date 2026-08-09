@@ -487,6 +487,37 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/zaddat/(H), slot_wear_mask) // mask has to come first or Shroud helmet will get in the way
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/space/void/zaddat/(H), slot_wear_suit)
 
+// RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
+/datum/species/zaddat/get_species_detail_notes(var/mob/user)
+	. = ..()
+	. += list(list(
+		"section" = "survival",
+		"title" = "Atmosphere & Survival",
+		"id" = "zaddat_station_atmosphere",
+		"label" = "Station Atmosphere",
+		"value" = "Low pressure and toxic nitrogen",
+		"description" = "At roughly 101 kPa, normal station air is below their 220 kPa low-pressure hazard threshold; its nitrogen is also poisonous to them.",
+		"severity" = "critical"
+	))
+	. += list(list(
+		"section" = "survival",
+		"title" = "Atmosphere & Survival",
+		"id" = "zaddat_shroud",
+		"label" = "Survival Gear",
+		"value" = "Hegemony Shroud and Zaddat Veil",
+		"description" = "The Shroud protects them from station underpressure, while the Veil filters poisonous nitrogen.",
+		"severity" = "critical"
+	))
+	. += list(list(
+		"section" = "survival",
+		"title" = "Atmosphere & Survival",
+		"id" = "zaddat_light_exposure",
+		"label" = "Light Exposure",
+		"value" = "Exposed body parts burn",
+		"description" = "Uncovered damageable body parts take burn damage from local light.",
+		"severity" = "critical"
+	))
+
 /datum/species/zaddat/handle_environment_special(var/mob/living/carbon/human/H)
 
 	if(H.inStasisNow())

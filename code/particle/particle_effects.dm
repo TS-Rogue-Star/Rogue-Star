@@ -120,6 +120,7 @@
 			T.particles.position = list(2,10,0)
 			T.particles.gravity = list(2, 0)
 			T.particles.spin = 50
+		T.scale_to_character(L)
 
 /particles/smelly
 	icon = 'icons/rogue-star/particlesx32.dmi'
@@ -149,7 +150,8 @@
 /mob/living/Life()
 	. = ..()
 	if(smelly)
-		new /obj/particle_emitter/smelly(get_turf(src))
+		var/obj/particle_emitter/smelly/S = new(get_turf(src))
+		S.scale_to_character(src)
 
 ///////BELCHING///////
 
@@ -213,6 +215,9 @@
 			B = new /obj/particle_emitter/belch/e(get_turf(src))
 		if(WEST)
 			B = new /obj/particle_emitter/belch/w(get_turf(src))
+	if(!B)
+		return
+	B.scale_to_character(src)
 	if(client?.prefs_vr.belch_color)
 		B.particles.color = client.prefs_vr.belch_color
 

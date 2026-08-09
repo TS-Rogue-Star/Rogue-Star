@@ -136,6 +136,177 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 			continue
 		return instance.name
 
+// RS Edit: Character Designer - Species and Prosthetics (Lira, August 2026)
+/datum/preferences/proc/resolve_chargen_robolimb(company, part_id, mob/user)
+	if(!istext(company) || !length(company) || !(company in chargen_robolimbs))
+		return null
+	var/datum/robolimb/model = chargen_robolimbs[company]
+	if(!istype(model) || !islist(model.parts) || !(part_id in model.parts))
+		return null
+	var/species_id = species ? species : SPECIES_HUMAN
+	if(islist(model.species_cannot_use) && (species_id in model.species_cannot_use))
+		return null
+	var/user_ckey = user?.ckey || client?.ckey
+	if(islist(model.whitelisted_to) && model.whitelisted_to.len && !(user_ckey in model.whitelisted_to))
+		return null
+	return model
+
+// RS Edit: Character Designer - Species and Prosthetics (Lira, August 2026)
+/datum/preferences/proc/apply_chargen_limb_operation(target, new_state, company = null, mob/user = null)
+	if(!istext(target) || !istext(new_state))
+		return FALSE
+	if(!islist(organ_data))
+		organ_data = list()
+	if(!islist(rlimb_data))
+		rlimb_data = list()
+	var/limb = target
+	var/second_limb = null
+	var/third_limb = null
+	var/full_body = target == "full_body"
+	var/species_id = species ? species : SPECIES_HUMAN
+	var/datum/species/current_species = GLOB.all_species[species_id]
+	switch(target)
+		if(BP_TORSO)
+			limb = BP_TORSO
+		if(BP_GROIN)
+			limb = BP_GROIN
+		if(BP_L_LEG)
+			second_limb = BP_L_FOOT
+		if(BP_R_LEG)
+			second_limb = BP_R_FOOT
+		if(BP_L_ARM)
+			second_limb = BP_L_HAND
+		if(BP_R_ARM)
+			second_limb = BP_R_HAND
+		if(BP_L_FOOT)
+			third_limb = BP_L_LEG
+		if(BP_R_FOOT)
+			third_limb = BP_R_LEG
+		if(BP_L_HAND)
+			third_limb = BP_L_ARM
+		if(BP_R_HAND)
+			third_limb = BP_R_ARM
+		if(BP_HEAD)
+			if(organ_data[BP_TORSO] != "cyborg")
+				return FALSE
+		if("full_body")
+			limb = BP_TORSO
+			second_limb = BP_HEAD
+			if(!istype(current_species) || !current_species.has_organ[O_BRAIN])
+				return FALSE
+		else
+			return FALSE
+	var/state = lowertext(new_state)
+	if(state == "normal")
+		if(target == BP_HEAD)
+			return FALSE
+		organ_data[limb] = null
+		rlimb_data[limb] = null
+		if(full_body)
+			for(var/other_limb in BP_ALL - BP_TORSO)
+				organ_data[other_limb] = null
+				rlimb_data[other_limb] = null
+			for(var/internal in O_STANDARD)
+				organ_data[internal] = null
+				rlimb_data[internal] = null
+		else if(target == BP_TORSO)
+			organ_data[BP_HEAD] = null
+			rlimb_data[BP_HEAD] = null
+			organ_data[O_BRAIN] = null
+			rlimb_data[O_BRAIN] = null
+		else if(third_limb)
+			organ_data[third_limb] = null
+			rlimb_data[third_limb] = null
+		return TRUE
+	if(state == "amputated")
+		if(full_body || target == BP_TORSO || target == BP_GROIN || target == BP_HEAD)
+			return FALSE
+		organ_data[limb] = "amputated"
+		rlimb_data[limb] = null
+		if(second_limb)
+			organ_data[second_limb] = "amputated"
+			rlimb_data[second_limb] = null
+		return TRUE
+	if(state != "prosthesis")
+		return FALSE
+	var/datum/robolimb/model = resolve_chargen_robolimb(company, limb, user)
+	if(!istype(model))
+		return FALSE
+	var/static/list/prosthetic_children = list(
+		BP_TORSO = list(BP_HEAD, BP_GROIN, BP_L_ARM, BP_R_ARM),
+		BP_GROIN = list(BP_L_LEG, BP_R_LEG),
+		BP_L_LEG = list(BP_L_FOOT),
+		BP_R_LEG = list(BP_R_FOOT),
+		BP_L_ARM = list(BP_L_HAND),
+		BP_R_ARM = list(BP_R_HAND)
+	)
+	var/list/prosthetic_limbs
+	if(full_body)
+		prosthetic_limbs = BP_ALL
+	else
+		prosthetic_limbs = list(limb)
+		var/list/pending_parents = list(limb)
+		while(pending_parents.len)
+			var/parent_limb = pending_parents[1]
+			pending_parents.Cut(1, 2)
+			for(var/child_limb in prosthetic_children[parent_limb])
+				if(organ_data[child_limb] in list("cyborg", "amputated"))
+					continue
+				prosthetic_limbs += child_limb
+				pending_parents += child_limb
+	for(var/prosthetic_limb in prosthetic_limbs)
+		if(!(prosthetic_limb in model.parts))
+			return FALSE
+	for(var/prosthetic_limb in prosthetic_limbs)
+		rlimb_data[prosthetic_limb] = company
+		organ_data[prosthetic_limb] = "cyborg"
+	if(third_limb && organ_data[third_limb] == "amputated")
+		organ_data[third_limb] = null
+	if(full_body || target == BP_TORSO)
+		var/list/brain_states = current_species.get_chargen_internal_organ_states(O_BRAIN)
+		if(!organ_data[O_BRAIN] && ("assisted" in brain_states))
+			organ_data[O_BRAIN] = "assisted"
+		for(var/internal_organ in list(O_HEART, O_EYES))
+			var/list/supported_states = current_species.get_chargen_internal_organ_states(internal_organ)
+			if("mechanical" in supported_states)
+				organ_data[internal_organ] = "mechanical"
+	return TRUE
+
+// RS Edit: Character Designer - Species and Prosthetics (Lira, August 2026)
+/datum/preferences/proc/apply_chargen_internal_organ_operation(target, new_state)
+	if(!istext(target) || !istext(new_state))
+		return FALSE
+	if(!islist(organ_data))
+		organ_data = list()
+	var/species_id = species ? species : SPECIES_HUMAN
+	var/datum/species/current_species = GLOB.all_species[species_id]
+	if(!istype(current_species))
+		return FALSE
+	var/state = lowertext(new_state)
+	var/list/supported_states = current_species.get_chargen_internal_organ_states(target)
+	if(!(state in supported_states))
+		return FALSE
+	if(target == O_BRAIN)
+		if(state == "normal")
+			if(organ_data[BP_HEAD] == "cyborg")
+				return FALSE
+			organ_data[target] = null
+			return TRUE
+		if(organ_data[BP_HEAD] != "cyborg")
+			return FALSE
+		if(state == "mechanical" && (current_species.spawn_flags & SPECIES_NO_POSIBRAIN))
+			return FALSE
+		if(state == "digital" && (current_species.spawn_flags & SPECIES_NO_DRONEBRAIN))
+			return FALSE
+	else
+		if(state == "normal")
+			if(organ_data[BP_TORSO] == "cyborg")
+				return FALSE
+			organ_data[target] = null
+			return TRUE
+	organ_data[target] = state
+	return TRUE
+
 /datum/preferences/proc/mass_edit_marking_list(var/marking, var/change_on = TRUE, var/change_color = TRUE, var/marking_value = null, var/on = TRUE, var/color = "#000000")
 	var/datum/sprite_accessory/marking/mark_datum = body_marking_styles_list[marking]
 	// RS Edit Start: New body marking selector support (Lira, December 2025)
@@ -549,145 +720,28 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 				else
 					pref.body_descriptors[entry] = CLAMP(last_descriptors[entry], 1, LAZYLEN(descriptor.standalone_value_descriptors))
 
+// RS Edit: Character Designer - Species and Prosthetics (Lira, August 2026)
 /datum/category_item/player_setup_item/general/body/content(var/mob/user)
 	. = list()
-
 	var/datum/species/mob_species = GLOB.all_species[pref.species]
-	. += "<table><tr style='vertical-align:top'><td><b>Body</b> "
-	. += "(<a href='?src=\ref[src];random=1'>&reg;</A>)"
-	. += "<br>"
-	. += "Species: <a href='?src=\ref[src];show_species=1'>[pref.species]</a><br>"
-	. += "Blood Type: <a href='?src=\ref[src];blood_type=1'>[pref.b_type]</a><br>"
-	if(has_flag(mob_species, HAS_SKIN_TONE))
+	var/has_skin_tone = has_flag(mob_species, HAS_SKIN_TONE)
+	if(has_skin_tone || LAZYLEN(pref.body_descriptors))
+		. += "<b>Body</b><br>"
+	if(has_skin_tone)
 		. += "Skin Tone: <a href='?src=\ref[src];skin_tone=1'>[-pref.s_tone + 35]/220</a><br>"
-	. += "Needs Glasses: <a href='?src=\ref[src];disabilities=[NEARSIGHTED]'><b>[pref.disabilities & NEARSIGHTED ? "Yes" : "No"]</b></a><br>"
-	. += "Limbs: <a href='?src=\ref[src];limbs=1'>Adjust</a> <a href='?src=\ref[src];reset_limbs=1'>Reset</a><br>"
-	. += "Internal Organs: <a href='?src=\ref[src];organs=1'>Adjust</a><br>"
-
-	//display limbs below
-	var/ind = 0
-	for(var/name in pref.organ_data)
-		var/status = pref.organ_data[name]
-		var/organ_name = null
-
-		switch(name)
-			if(BP_TORSO)
-				organ_name = "torso"
-			if(BP_GROIN)
-				organ_name = "groin"
-			if(BP_HEAD)
-				organ_name = "head"
-			if(BP_L_ARM)
-				organ_name = "left arm"
-			if(BP_R_ARM)
-				organ_name = "right arm"
-			if(BP_L_LEG)
-				organ_name = "left leg"
-			if(BP_R_LEG)
-				organ_name = "right leg"
-			if(BP_L_FOOT)
-				organ_name = "left foot"
-			if(BP_R_FOOT)
-				organ_name = "right foot"
-			if(BP_L_HAND)
-				organ_name = "left hand"
-			if(BP_R_HAND)
-				organ_name = "right hand"
-			if(O_HEART)
-				organ_name = "heart"
-			if(O_EYES)
-				organ_name = "eyes"
-			if(O_VOICE)
-				organ_name = "larynx"
-			if(O_BRAIN)
-				organ_name = "brain"
-			if(O_LUNGS)
-				organ_name = "lungs"
-			if(O_LIVER)
-				organ_name = "liver"
-			if(O_KIDNEYS)
-				organ_name = "kidneys"
-			if(O_SPLEEN)
-				organ_name = "spleen"
-			if(O_STOMACH)
-				organ_name = "stomach"
-			if(O_INTESTINE)
-				organ_name = "intestines"
-
-		if(status == "cyborg")
-			++ind
-			if(ind > 1)
-				. += ", "
-			var/datum/robolimb/R
-			if(pref.rlimb_data[name] && all_robolimbs[pref.rlimb_data[name]])
-				R = all_robolimbs[pref.rlimb_data[name]]
-			else
-				R = basic_robolimb
-			. += "\t[R.company] [organ_name] prosthesis"
-		else if(status == "amputated")
-			++ind
-			if(ind > 1)
-				. += ", "
-			. += "\tAmputated [organ_name]"
-		else if(status == "mechanical")
-			++ind
-			if(ind > 1)
-				. += ", "
-			switch(organ_name)
-				if ("brain")
-					. += "\tPositronic [organ_name]"
-				else
-					. += "\tSynthetic [organ_name]"
-		else if(status == "digital")
-			++ind
-			if(ind > 1)
-				. += ", "
-			. += "\tDigital [organ_name]"
-		else if(status == "assisted")
-			++ind
-			if(ind > 1)
-				. += ", "
-			switch(organ_name)
-				if("heart")
-					. += "\tPacemaker-assisted [organ_name]"
-				if("lungs")
-					. += "\tAssisted [organ_name]"
-				if("voicebox") //on adding voiceboxes for speaking skrell/similar replacements
-					. += "\tSurgically altered [organ_name]"
-				if("eyes")
-					. += "\tRetinal overlayed [organ_name]"
-				if("brain")
-					. += "\tAssisted-interface [organ_name]"
-				else
-					. += "\tMechanically assisted [organ_name]"
-	if(!ind)
-		. += "\[...\]<br><br>"
-	else
-		. += "<br><br>"
-
-	// RS Edit Start: Move code (Lira, December 2025)
-	. += "<b>Allow Synth markings:</b> <a href='?src=\ref[src];synth_markings=1'><b>[pref.synth_markings ? "Yes" : "No"]</b></a><br>"
-	. += "<b>Allow Synth color:</b> <a href='?src=\ref[src];synth_color=1'><b>[pref.synth_color ? "Yes" : "No"]</b></a><br>"
-	if(pref.synth_color)
-		. += "<a href='?src=\ref[src];synth2_color=1'>Change Color</a> [color_square(pref.r_synth, pref.g_synth, pref.b_synth)]"
-	// RS Edit End
-
 	if(LAZYLEN(pref.body_descriptors))
 		. += "<table>"
 		for(var/entry in pref.body_descriptors)
 			var/datum/mob_descriptor/descriptor = mob_species.descriptors[entry]
 			. += "<tr><td><b>[capitalize(descriptor.chargen_label)]:</b></td><td>[descriptor.get_standalone_value_descriptor(pref.body_descriptors[entry])]</td><td><a href='?src=\ref[src];change_descriptor=[entry]'>Change</a><br/></td></tr>"
 		. += "</table><br>"
-
-	. += "</td><td><b>Preview</b><br>"
-	. += "<br><a href='?src=\ref[src];cycle_bg=1'>Cycle background</a>"
-	. += "<br><a href='?src=\ref[src];toggle_preview_value=[EQUIP_PREVIEW_LOADOUT]'>[pref.equip_preview_mob & EQUIP_PREVIEW_LOADOUT ? "Hide loadout" : "Show loadout"]</a>"
+	. += "<b>Body Preview</b><br>"
+	. += "<a href='?src=\ref[src];cycle_bg=1'>Cycle background</a>"
+	. += "<br><a href='?src=\ref[src];toggle_preview_value=[EQUIP_PREVIEW_EQUIPMENT]'>[pref.equip_preview_mob & EQUIP_PREVIEW_EQUIPMENT ? "Hide equipment" : "Show equipment"]</a>"
 	. += "<br><a href='?src=\ref[src];toggle_preview_value=[EQUIP_PREVIEW_JOB]'>[pref.equip_preview_mob & EQUIP_PREVIEW_JOB ? "Hide job gear" : "Show job gear"]</a>"
+	. += "<br><a href='?src=\ref[src];toggle_preview_value=[EQUIP_PREVIEW_LOADOUT]'>[pref.equip_preview_mob & EQUIP_PREVIEW_LOADOUT ? "Hide loadout" : "Show loadout"]</a>"
 	. += "<br><a href='?src=\ref[src];toggle_animations=1'>[pref.animations_toggle ? "Stop animations" : "Show animations"]</a>"
-	. += "</td></tr></table>"
-
-	. += "<br><a href='?src=\ref[src];marking_gallery=1' style='display:inline-block;background:#6d28d9;color:#fff;padding:2px 6px;border:1px solid #6d28d9;border-radius:3px;text-decoration:none;font-weight:bold;' onmouseover=\"this.style.background='#fff';this.style.color='#6d28d9';\" onmouseout=\"this.style.background='#6d28d9';this.style.color='#fff';\">Character Designer</a><br>" //RS Edit: Opens new gallery (Lira, August 2025)
-
+	. += "<br><br><a href='?src=\ref[src];marking_gallery=1' style='display:inline-block;background:#6d28d9;color:#fff;padding:2px 6px;border:1px solid #6d28d9;border-radius:3px;text-decoration:none;font-weight:bold;' onmouseover=\"this.style.background='#fff';this.style.color='#6d28d9';\" onmouseout=\"this.style.background='#6d28d9';this.style.color='#fff';\">Character Designer</a><br>" //RS Edit: Opens new gallery (Lira, August 2025)
 	. = jointext(.,null)
 
 /datum/category_item/player_setup_item/general/body/proc/has_flag(var/datum/species/mob_species, var/flag)
@@ -1273,111 +1327,53 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 		if(!organ_tag || !CanUseTopic(user)) return TOPIC_NOACTION
 
 		var/limb = null
-		var/second_limb = null // if you try to change the arm, the hand should also change
-		var/third_limb = null  // if you try to unchange the hand, the arm should also change
 
-		// Do not let them amputate their entire body, ty.
+		// Do not let them amputate their entire body, ty. || RS Edit: Character Designer - Species and Prosthetics (Lira, August 2026)
 		var/list/choice_options = list("Normal","Amputated","Prosthesis")
 		switch(organ_tag)
 			if("Left Leg")
-				limb =        BP_L_LEG
-				second_limb = BP_L_FOOT
+				limb = BP_L_LEG
 			if("Right Leg")
-				limb =        BP_R_LEG
-				second_limb = BP_R_FOOT
+				limb = BP_R_LEG
 			if("Left Arm")
-				limb =        BP_L_ARM
-				second_limb = BP_L_HAND
+				limb = BP_L_ARM
 			if("Right Arm")
-				limb =        BP_R_ARM
-				second_limb = BP_R_HAND
+				limb = BP_R_ARM
 			if("Left Foot")
-				limb =        BP_L_FOOT
-				third_limb =  BP_L_LEG
+				limb = BP_L_FOOT
 			if("Right Foot")
-				limb =        BP_R_FOOT
-				third_limb =  BP_R_LEG
+				limb = BP_R_FOOT
 			if("Left Hand")
-				limb =        BP_L_HAND
-				third_limb =  BP_L_ARM
+				limb = BP_L_HAND
 			if("Right Hand")
-				limb =        BP_R_HAND
-				third_limb =  BP_R_ARM
+				limb = BP_R_HAND
 			if("Head")
-				limb =        BP_HEAD
+				limb = BP_HEAD
 				choice_options = list("Prosthesis")
 			if("Full Body")
-				limb =        BP_TORSO
-				second_limb = BP_HEAD
-				third_limb =  BP_GROIN
+				limb = "full_body"
 				choice_options = list("Normal","Prosthesis")
 
 		var/new_state = tgui_input_list(user, "What state do you wish the limb to be in?", "State Choice", choice_options)
 		if(!new_state || !CanUseTopic(user)) return TOPIC_NOACTION
 
-		switch(new_state)
-			if("Normal")
-				pref.organ_data[limb] = null
-				pref.rlimb_data[limb] = null
-				if(limb == BP_TORSO)
-					for(var/other_limb in BP_ALL - BP_TORSO)
-						pref.organ_data[other_limb] = null
-						pref.rlimb_data[other_limb] = null
-						for(var/internal in O_STANDARD)
-							pref.organ_data[internal] = null
-							pref.rlimb_data[internal] = null
-				if(third_limb)
-					pref.organ_data[third_limb] = null
-					pref.rlimb_data[third_limb] = null
-
-			if("Amputated")
-				if(limb == BP_TORSO)
-					return
-				pref.organ_data[limb] = "amputated"
-				pref.rlimb_data[limb] = null
-				if(second_limb)
-					pref.organ_data[second_limb] = "amputated"
-					pref.rlimb_data[second_limb] = null
-
-			if("Prosthesis")
-				var/tmp_species = pref.species ? pref.species : SPECIES_HUMAN
-				var/list/usable_manufacturers = list()
-				for(var/company in chargen_robolimbs)
-					var/datum/robolimb/M = chargen_robolimbs[company]
-					if(!(limb in M.parts))
-						continue
-					if(tmp_species in M.species_cannot_use)
-						continue
-					//VOREStation Add - Cyberlimb whitelisting.
-					if(M.whitelisted_to && !(user.ckey in M.whitelisted_to))
-						continue
-					//VOREStation Add End
-					usable_manufacturers[company] = M
-				if(!usable_manufacturers.len)
-					return
-				var/choice = tgui_input_list(user, "Which manufacturer do you wish to use for this limb?", "Manufacturer Choice", usable_manufacturers)
-				if(!choice)
-					return
-
-				pref.rlimb_data[limb] = choice
-				pref.organ_data[limb] = "cyborg"
-
-				if(second_limb)
-					pref.rlimb_data[second_limb] = choice
-					pref.organ_data[second_limb] = "cyborg"
-				if(third_limb && pref.organ_data[third_limb] == "amputated")
-					pref.organ_data[third_limb] = null
-
-				if(limb == BP_TORSO)
-					for(var/other_limb in BP_ALL - BP_TORSO)
-						if(pref.organ_data[other_limb])
-							continue
-						pref.organ_data[other_limb] = "cyborg"
-						pref.rlimb_data[other_limb] = choice
-					if(!pref.organ_data[O_BRAIN])
-						pref.organ_data[O_BRAIN] = "assisted"
-					for(var/internal_organ in list(O_HEART,O_EYES))
-						pref.organ_data[internal_organ] = "mechanical"
+		// RS Edit Start: Character Designer - Species and Prosthetics (Lira, August 2026)
+		var/choice = null
+		if(new_state == "Prosthesis")
+			var/model_part = limb == "full_body" ? BP_TORSO : limb
+			var/list/usable_manufacturers = list()
+			for(var/company in chargen_robolimbs)
+				var/datum/robolimb/model = pref.resolve_chargen_robolimb(company, model_part, user)
+				if(istype(model))
+					usable_manufacturers[company] = model
+			if(!usable_manufacturers.len)
+				return
+			choice = tgui_input_list(user, "Which manufacturer do you wish to use for this limb?", "Manufacturer Choice", usable_manufacturers)
+			if(!choice)
+				return
+		if(!pref.apply_chargen_limb_operation(limb, new_state, choice, user))
+			return TOPIC_NOACTION
+		// RS Edit End
 
 		return TOPIC_REFRESH_UPDATE_PREVIEW
 
@@ -1432,19 +1428,20 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 		var/new_state = tgui_input_list(user, "What state do you wish the organ to be in?", "State Choice", organ_choices)
 		if(!new_state) return
 
+		// RS Edit Start: Character Designer - Species and Prosthetics (Lira, August 2026)
+		var/internal_state = null
 		switch(new_state)
 			if("Normal")
-				pref.organ_data[organ] = null
-			if("Assisted")
-				pref.organ_data[organ] = "assisted"
-			if("Cybernetic")
-				pref.organ_data[organ] = "assisted"
-			if("Mechanical")
-				pref.organ_data[organ] = "mechanical"
+				internal_state = "normal"
+			if("Assisted", "Cybernetic")
+				internal_state = "assisted"
+			if("Mechanical", "Positronic")
+				internal_state = "mechanical"
 			if("Drone")
-				pref.organ_data[organ] = "digital"
-			if("Positronic")
-				pref.organ_data[organ] = "mechanical"
+				internal_state = "digital"
+		if(!pref.apply_chargen_internal_organ_operation(organ, internal_state))
+			return TOPIC_NOACTION
+		// RS Edit End
 
 		return TOPIC_REFRESH
 
@@ -1459,22 +1456,6 @@ var/global/icon/GLOB_markings_base_preview_icon = null
 
 	else if(href_list["toggle_animations"])
 		pref.animations_toggle = !pref.animations_toggle
-		return TOPIC_REFRESH_UPDATE_PREVIEW
-
-	else if(href_list["synth_color"])
-		pref.synth_color = !pref.synth_color
-		return TOPIC_REFRESH_UPDATE_PREVIEW
-
-	else if(href_list["synth2_color"])
-		var/new_color = input(user, "Choose your character's synth colour: ", "Character Preference", rgb(pref.r_synth, pref.g_synth, pref.b_synth)) as color|null
-		if(new_color && CanUseTopic(user))
-			pref.r_synth = hex2num(copytext(new_color, 2, 4))
-			pref.g_synth = hex2num(copytext(new_color, 4, 6))
-			pref.b_synth = hex2num(copytext(new_color, 6, 8))
-			return TOPIC_REFRESH_UPDATE_PREVIEW
-
-	else if(href_list["synth_markings"])
-		pref.synth_markings = !pref.synth_markings
 		return TOPIC_REFRESH_UPDATE_PREVIEW
 
 	else if(href_list["cycle_bg"])

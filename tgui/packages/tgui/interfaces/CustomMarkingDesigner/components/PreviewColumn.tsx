@@ -1,6 +1,8 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////////
 // Created by Lira for Rogue Star December 2025: Preview column component for custom marking designer //
 // /////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star August 2026: Character Designer - Species and Prosthetics ////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import { Box, Flex } from '../../../components';
 import { PREVIEW_PIXEL_SIZE } from '../constants';
@@ -20,7 +22,7 @@ type PreviewColumnProps = Readonly<{
 
 export const PreviewColumn = ({
   renderedPreviewDirs,
-  previewRevision: _previewRevision,
+  previewRevision,
   previewFitToFrame,
   canvasWidth,
   canvasHeight,
@@ -44,10 +46,11 @@ export const PreviewColumn = ({
         <Box className="RogueStar__previewList">
           {renderedPreviewDirs.map((entry) => (
             <Box
-              key={`${entry.dir}-${previewFitToFrame ? 'fit' : 'crop'}`}
+              key={`${entry.dir}-${previewFitToFrame ? 'fit' : 'crop'}-${previewRevision}`}
               className="RogueStar__previewItem">
               <DirectionPreviewCanvas
                 layers={entry.layers}
+                bodyAlpha={entry.bodyAlpha}
                 pixelSize={Math.max(1, PREVIEW_PIXEL_SIZE)}
                 width={canvasWidth}
                 height={canvasHeight}
