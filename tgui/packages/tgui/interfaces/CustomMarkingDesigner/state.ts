@@ -1,8 +1,10 @@
-// ///////////////////////////////////////////////////////////////////////////////////////
-// Created by Lira for Rogue Star November 2025: UI state for custom marking designer ////
-// ///////////////////////////////////////////////////////////////////////////////////////
-// Updated by Lira for Rogue Star December 2025: Updated to support loaout and job gear //
-// ///////////////////////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////////////////////////////
+// Created by Lira for Rogue Star November 2025: UI state for custom marking designer ////////
+// ///////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star December 2025: Updated to support loaout and job gear //////
+// ///////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star August 2026: Character Designer - Species and Prosthetics //
+// ///////////////////////////////////////////////////////////////////////////////////////////
 
 import { useLocalState } from '../../backend';
 import type { PreviewState } from '../../utils/character-preview';
@@ -47,6 +49,8 @@ export type DesignerUiState = {
   setAssetRevision: Setter<number>;
   savingProgress: SavingProgressState | null;
   setSavingProgress: Setter<SavingProgressState | null>;
+  showEquipment: boolean;
+  setShowEquipment: Setter<boolean>;
   showJobGear: boolean;
   setShowJobGear: Setter<boolean>;
   showLoadoutGear: boolean;
@@ -58,7 +62,11 @@ export type DesignerUiState = {
 export const useDesignerUiState = (
   context: any,
   stateToken: string,
-  defaults?: { showJobGear?: boolean; showLoadoutGear?: boolean }
+  defaults?: {
+    showEquipment?: boolean;
+    showJobGear?: boolean;
+    showLoadoutGear?: boolean;
+  }
 ): DesignerUiState => {
   const [size, setSize] = useLocalState(context, `size-${stateToken}`, 1);
   const [blendMode, setBlendMode] = useLocalState(
@@ -148,6 +156,11 @@ export const useDesignerUiState = (
     `loadingOverlay-${stateToken}`,
     true
   );
+  const [showEquipment, setShowEquipment] = useLocalState<boolean>(
+    context,
+    `showEquipment-${stateToken}`,
+    defaults?.showEquipment ?? true
+  );
   const [showJobGear, setShowJobGear] = useLocalState<boolean>(
     context,
     `showJobGear-${stateToken}`,
@@ -192,6 +205,8 @@ export const useDesignerUiState = (
     setSavingProgress,
     loadingOverlay,
     setLoadingOverlay,
+    showEquipment,
+    setShowEquipment,
     showJobGear,
     setShowJobGear,
     showLoadoutGear,

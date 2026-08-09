@@ -98,6 +98,28 @@
 	var/datum/language/species_language = GLOB.all_languages[default_language]
 	return species_language.get_random_name(gender)
 
+// RS Add: Character Designer - Species and Prosthetics (Lira, August 2026)
+/datum/species/vox/get_species_detail_notes(var/mob/user)
+	. = ..()
+	. += list(list(
+		"section" = "survival",
+		"title" = "Atmosphere & Survival",
+		"id" = "vox_station_atmosphere",
+		"label" = "Station Atmosphere",
+		"value" = "Unsafe without internals",
+		"description" = "Normal station air contains poisonous oxygen and does not supply the phoron Vox breathe.",
+		"severity" = "critical"
+	))
+	. += list(list(
+		"section" = "survival",
+		"title" = "Atmosphere & Survival",
+		"id" = "vox_survival_gear",
+		"label" = "Survival Gear",
+		"value" = "Breath mask and phoron tank",
+		"description" = "Their spawn gear equips a breath mask and full-size phoron tank, then selects the tank as their internal air supply.",
+		"severity" = "critical"
+	))
+
 /datum/species/vox/equip_survival_gear(var/mob/living/carbon/human/H, var/extendedtank = 0,var/comprehensive = 0)
 	. = ..()
 

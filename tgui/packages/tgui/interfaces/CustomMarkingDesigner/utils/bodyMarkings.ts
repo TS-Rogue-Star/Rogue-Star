@@ -1,6 +1,8 @@
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Created by Lira for Rogue Star December 2025: Shared helpers for body markings gallery and parent interactions //
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Updated by Lira for Rogue Star August 2026: Character Designer - Species and Prosthetics ////////////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import { normalizeHex } from '../../../utils/color';
 import type {
@@ -24,6 +26,23 @@ export const deepCopyMarkings = (value?: Record<string, BodyMarkingEntry>) =>
 
 export const cloneEntry = <T extends unknown>(entry?: T): T =>
   JSON.parse(JSON.stringify(entry || ({} as T)));
+
+const buildStableSignatureValue = (value: unknown): string => {
+  if (!value || typeof value !== 'object') {
+    return JSON.stringify(value);
+  }
+  if (Array.isArray(value)) {
+    return `[${value.map(buildStableSignatureValue).join(',')}]`;
+  }
+  const objectValue = value as Record<string, unknown>;
+  return `{${Object.keys(objectValue)
+    .sort()
+    .map(
+      (key) =>
+        `${JSON.stringify(key)}:${buildStableSignatureValue(objectValue[key])}`
+    )
+    .join(',')}}`;
+};
 
 export const normalizeBodyParts = (parts: unknown): string[] => {
   const isPartKey = (key: string) =>
@@ -77,17 +96,24 @@ export const buildBodyPayloadSignature = (
   if (!payload) {
     return null;
   }
-  const defSignature = (payload.body_marking_definitions || [])
-    .map((def) => def.id)
-    .join('|');
+  const defSignature =
+    payload.definition_revision ||
+    (payload.body_marking_definitions || []).map((def) => def.id).join('|');
   const orderSignature = (payload.order || []).join('|');
-  const markingSignature = Object.keys(payload.body_markings || {})
+  const bodyMarkings = payload.body_markings || {};
+  const markingSignature = Object.keys(bodyMarkings)
     .sort()
+    .map(
+      (markId) => `${markId}:${buildStableSignatureValue(bodyMarkings[markId])}`
+    )
     .join('|');
-  const revision = payload.preview_revision || 0;
+  const revision = `${payload.preview_signature || ''}@${
+    payload.preview_revision || 0
+  }`;
   const size = `${payload.preview_width || 0}x${payload.preview_height || 0}`;
   const digitigrade = payload.digitigrade ? 'd' : 'p';
-  return `${revision}:${size}:${digitigrade}:${defSignature}:${orderSignature}:${markingSignature}`;
+  const species = `${payload.species_id || ''}:${payload.custom_base || ''}`;
+  return `${species}:${revision}:${size}:${digitigrade}:${defSignature}:${orderSignature}:${markingSignature}`;
 };
 
 export const buildBodySavedStateFromPayload = (
